@@ -1,85 +1,39 @@
-Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC888BE8
-	for <git@vger.kernel.org>; Fri, 10 May 2024 08:48:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF24D14B963
+	for <git@vger.kernel.org>; Fri, 10 May 2024 09:05:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715330938; cv=none; b=jZYfeWgnRWWiPWNlqQZkEQgmiMJHkbNoEsmbRSKUxvarIPdMW9oaitoH4hXnqhbtrkVWGQtNF/qna9sDKvD6YejovoRKkUaATPP0ahc5rud6MirJHY5aMzdGH7w5bc10AvgM5GjqDuT0fqRQeN2AfFhE1jVrRskUdofA7ny2kiI=
+	t=1715331933; cv=none; b=EZAiCPmqvc/nSYGK+ixWFBEPoHw76VOrgFQBGHEFPjD5rIO6FZynQ5Ltw3fL4gornvfn52MV/weRay6Zv4C7ipDEqwx7VTiMdLM8U5zQFrbKL6fmUDROnghNH8uvD8QV97bmH5inbajKfue2X7fw0u5o+ZnRIiBdE7KBaiCretA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715330938; c=relaxed/simple;
-	bh=O+h3lDmgTU2pdHkz0t/J+aJRbmfIHbMINiYGjfozrIY=;
+	s=arc-20240116; t=1715331933; c=relaxed/simple;
+	bh=X63tLA1Apx67PyaOt9WwJThslNt3u0qU4tC5teZ2HDU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OXI1NAJf7/za67uBDnq5GZH/GQE72kq06u2g6QKbvwrnIaswmek9bKVH8+xwfX8MBXtb2et9gkMXDkz6OCbV9EkUR7DN9HQ6p74AfqZ1jczhzm8XB7Dj8CpSzuqVqp3NywmbdfmHWV7t3H+L/+pp0KpHIn5410xIX8eBwcvdH+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mMNaPhYa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cfuK2p19; arc=none smtp.client-ip=64.147.123.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=cCEzLZBT9bDhaBDBnN9g1wfcahQ6XSB0K8IyKfzz34EFT9R5UnPMJBYM7uOMVgv23VvMOZ5ZTPCpPAOd/HwvLYf7NrSgi5q98h9DfuuP5mHkGY9UOICgnNmCosD+me7tP1hemCyiLQKqFqjttliVaJklfUaCav0TbyucYaL4Tw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FJEjdqU8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mMNaPhYa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cfuK2p19"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.west.internal (Postfix) with ESMTP id E60641C000F3;
-	Fri, 10 May 2024 04:48:55 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Fri, 10 May 2024 04:48:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715330935; x=1715417335; bh=SeomFHX+9n
-	iIhonAM4APdY+geeUveyCLqfU682b2QRg=; b=mMNaPhYaESM1uIANzUmeo67US3
-	CiMwBQMXDk9dKbWIQs05WSLzwV5BhW72AWXQZsCi9pxZaW/Wm+deMMRZuQ5PeFX8
-	sRTEcAd7d1k6Q9bANfQL8cmP7OWhEOAVHXFjF+Emnlpv/ZhqhGGwFQSgbMIERdKW
-	giPBdQkcHm+FP0HhP9YxiaZf6FciguqOK3eDRhpL04lXx0mzcoTx2S02p5tDd0vr
-	j5O11nEFIjIcnC/z3RPuJbR6G5WkvxT+2oDT98GtsY+0atX4Ouijv6InQZW4G0PN
-	OpycNd0t11nEUeQlQV6NNLbMU+DGe2rzQIf3D5xwl8CCEon74wkPZ9ZJjFgA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715330935; x=1715417335; bh=SeomFHX+9niIhonAM4APdY+geeUv
-	eyCLqfU682b2QRg=; b=cfuK2p190sX85wC3oUasTNTb5KYqb5hf6C5ZQAmoNtYg
-	x/hpR6lXcbgVHi1KMmKqItWrVC+CyTzkfc9+Pkg5oRgCbc/fZvlUSNiZoK1Ura7k
-	7k/G2FCv5JCEsJ1tCOxTHQVXZWu+fkR7JeP1kX0gmwucIRfo9WPyCWMcE4bXw2R/
-	+eLgAuJ5ptbNae/F5+o4gKTn81cB+rPW16wYIL4fAfyAn+JiMAcgNypmrq2UUVwe
-	1+dRZe/9Lw3s4QlZqkTbaJwnrzGYwJr1xBOJ7AUUx/KFBVyZYdIi0dJJreiPx02a
-	zPH+2bOiyDAy0+Nb1cfyZKx2lt7IEhwmOJPJGI6IsA==
-X-ME-Sender: <xms:d989Zqty86clbVFqC4mvdc5QuUtRs5Y6R1y4GCcwu7S8Y4wbeLHocg>
-    <xme:d989ZveQR4OraF82QWXOaEm9NuLUuy8JItSaN2rnSp3zW6_RDmUNvtND0kJdhdhHl
-    VZHSjB19LpCCV6VqA>
-X-ME-Received: <xmr:d989Zlz7yv44Z8xyo62sOR3NbqYJ1vJuNSIOx7JpzG5J8pmyErt2J1UN4HnYjfq7FyUmgeDKcL5RgrN7BmdIDSEsZ3wV_6VPlDmyBCBKe-1-56Elzg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefkedgtdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:d989ZlMa9Z9b1zWHko2TTnn0Zx5kiCLnyiLUnfWTKepI1JIa-gIqbA>
-    <xmx:d989Zq-Lysukbigz_AirYOayrJX_llDgodL1ScmGYkhl-NJZwYRwXQ>
-    <xmx:d989ZtVP98ZyEOCgKuj0GYCs_F3EDJGlo9nudRKjxDF1PRxVVzKdGQ>
-    <xmx:d989Zjft_6kHhVMs3BGpYo5Wky6YMVqwXBzyvwkJK84QxODGKbZn8g>
-    <xmx:d989ZuRy3-SZZ92QrhcPUn2lNCog9JJiUAoli8VCiekJ41rIXkilFJvD>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 May 2024 04:48:53 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 78c28c2a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 May 2024 08:48:40 +0000 (UTC)
-Date: Fri, 10 May 2024 10:48:51 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	=?iso-8859-1?Q?Jean-No=EBl?= AVILA <avila.jn@gmail.com>
-Subject: [PATCH v4 10/10] refs: refuse to write pseudorefs
-Message-ID: <640d3b169fc6abaaf121b90f43f5f4c4145ec08d.1715330206.git.ps@pks.im>
-References: <cover.1714398019.git.ps@pks.im>
- <cover.1715330206.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FJEjdqU8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58B1C113CC;
+	Fri, 10 May 2024 09:05:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715331932;
+	bh=X63tLA1Apx67PyaOt9WwJThslNt3u0qU4tC5teZ2HDU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FJEjdqU8tHs5OakNJt6dQTcjktKT+fgTR4nTB1LNEh2yEDZ8rslSJJfX6ogYX79Lp
+	 QjiaDgyHfctGcMD2lVe7vml/C9IIOLkZdF32tiGox8LT8wRL+Go1H37hcZ3HMC94az
+	 zuA39FH0xEUUrkLbIInEIg6KI1Ior3B6Vqj6wiUAsppwwXzyIwwE/a8WGNkunlxiIY
+	 OpP/IddDkjAHSnxfSC0Y/LbGiE2I5B8DOY1Ky8KXI8Lv8D4zD7eFnY6VGqIo1SYNyf
+	 sPlTq/V5dFwc2vleitjDHqSyTU/WfK+1oJlOlbd8TlknjfdhpLxX7QnZdM/CXzK8Rg
+	 B4OLEFSAJCWrg==
+Date: Fri, 10 May 2024 11:05:29 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: git-cherry-pick(1) -- path
+Message-ID: <kk244kap6lhuvtfot55u4yb5k5eddwlzl4izlzqhe4pdj52cx7@slghmpvdswkt>
+References: <e5pklmijfpbsnl2trj4n4czam7n7i37gx7w56med2pfaf6q3yx@wizseio2ickk>
+ <xmqqv83mqxg3.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,107 +41,84 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lATdjkItUUcLaoWe"
+	protocol="application/pgp-signature"; boundary="4mqryouujsaldayj"
 Content-Disposition: inline
-In-Reply-To: <cover.1715330206.git.ps@pks.im>
+In-Reply-To: <xmqqv83mqxg3.fsf@gitster.g>
 
 
---lATdjkItUUcLaoWe
-Content-Type: text/plain; charset=us-ascii
+--4mqryouujsaldayj
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: git-cherry-pick(1) -- path
+References: <e5pklmijfpbsnl2trj4n4czam7n7i37gx7w56med2pfaf6q3yx@wizseio2ickk>
+ <xmqqv83mqxg3.fsf@gitster.g>
+MIME-Version: 1.0
+In-Reply-To: <xmqqv83mqxg3.fsf@gitster.g>
 
-Pseudorefs are not stored in the ref database as by definition, they
-carry additional metadata that essentially makes them not a ref. As
-such, writing pseudorefs via the ref backend does not make any sense
-whatsoever as the ref backend wouldn't know how exactly to store the
-data.
+Hi Junio,
 
-Restrict writing pseudorefs via the ref backend.
+On Thu, May 09, 2024 at 06:15:24PM GMT, Junio C Hamano wrote:
+> Alejandro Colomar <alx@kernel.org> writes:
+>=20
+> > I'd be interested in being able to partially cherry-pick commits, based
+> > on a path filter (similar to how many other git(1) commands behave with
+> > -- path).
+> >
+> > Do you have any opinions on that?
+>=20
+> Opinions? =20
+>=20
+> Personally it is a "Meh" for me, because I would instead do
+>=20
+>     $ git format-patch --stdout -1 $ThatCommit -- $ThisPath |
+>       git am -3
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- refs.c           | 7 +++++++
- t/t5510-fetch.sh | 6 +++---
- 2 files changed, 10 insertions(+), 3 deletions(-)
+Hmmm, I hadn't thought of that; very interesting!
 
-diff --git a/refs.c b/refs.c
-index c882ece6e7..f2507c5a74 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1285,6 +1285,13 @@ int ref_transaction_update(struct ref_transaction *t=
-ransaction,
- 		return -1;
- 	}
-=20
-+	if (!(flags & REF_SKIP_REFNAME_VERIFICATION) &&
-+	    is_pseudo_ref(refname)) {
-+		strbuf_addf(err, _("refusing to update pseudoref '%s'"),
-+			    refname);
-+		return -1;
-+	}
-+
- 	if (flags & ~REF_TRANSACTION_UPDATE_ALLOWED_FLAGS)
- 		BUG("illegal flags 0x%x passed to ref_transaction_update()", flags);
-=20
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 33d34d5ae9..4eb569f4df 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -518,7 +518,7 @@ test_expect_success 'fetch with a non-applying branch.<=
-name>.merge' '
- test_expect_success 'fetch from GIT URL with a non-applying branch.<name>.=
-merge [1]' '
- 	one_head=3D$(cd one && git rev-parse HEAD) &&
- 	this_head=3D$(git rev-parse HEAD) &&
--	git update-ref -d FETCH_HEAD &&
-+	rm .git/FETCH_HEAD &&
- 	git fetch one &&
- 	test $one_head =3D "$(git rev-parse --verify FETCH_HEAD)" &&
- 	test $this_head =3D "$(git rev-parse --verify HEAD)"
-@@ -530,7 +530,7 @@ test_expect_success 'fetch from GIT URL with a non-appl=
-ying branch.<name>.merge
- 	one_ref=3D$(cd one && git symbolic-ref HEAD) &&
- 	git config branch.main.remote blub &&
- 	git config branch.main.merge "$one_ref" &&
--	git update-ref -d FETCH_HEAD &&
-+	rm .git/FETCH_HEAD &&
- 	git fetch one &&
- 	test $one_head =3D "$(git rev-parse --verify FETCH_HEAD)" &&
- 	test $this_head =3D "$(git rev-parse --verify HEAD)"
-@@ -540,7 +540,7 @@ test_expect_success 'fetch from GIT URL with a non-appl=
-ying branch.<name>.merge
- # the merge spec does not match the branch the remote HEAD points to
- test_expect_success 'fetch from GIT URL with a non-applying branch.<name>.=
-merge [3]' '
- 	git config branch.main.merge "${one_ref}_not" &&
--	git update-ref -d FETCH_HEAD &&
-+	rm .git/FETCH_HEAD &&
- 	git fetch one &&
- 	test $one_head =3D "$(git rev-parse --verify FETCH_HEAD)" &&
- 	test $this_head =3D "$(git rev-parse --verify HEAD)"
+Although I have some concerns with git-am(1); basically that it's almost
+clueless when there's a conflict.  With git-cherry-pick(1), at least I
+have the ability to resolve the conflict manually.
+
+If I find some time, I'll check if I can program that (although it would
+be the first time I do some contribution like that to git(1), so I may
+need some help).  :-)
+
+Have a lovely day!
+Alex
+
+> which would be mostly sufficient for my purpose, but I do not see
+> any fundamental reason why it should not exist.
+>=20
+> It is already well known that future merges from the same branch
+> will have to deal with duplicated changes brought in by picking
+> commits with "git cherry-pick".  Having a pathspec-limited variant
+> of "git cherry-pick" would not make the world a worse place.
+
 --=20
-2.45.0
+<https://www.alejandro-colomar.es/>
 
-
---lATdjkItUUcLaoWe
+--4mqryouujsaldayj
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY933IACgkQVbJhu7ck
-PpSvgA//UsXS5LKEykQ3MDVxNvKVZmpHOVLKwynj/cJdPz941+vjvMa84FdICdRF
-GtuFnJXu33AhDnrKjULR1Hhx3/E1PJJ4GzXfvU8CDU6Ay3/J5g+SL//ZCglCjbqC
-1adK09O6jISD/XVg7eW2iBvoqKr2Q1uiH956vQo1d9POcDejbrV8/aq1o/nyWRj5
-Wl4pBiaZnaRs3k6sEiPVv/yjw3uK5scbgjGjOA+kERvmc0GHAS8KWIQzjaX611UI
-9syKGrkc42phoFGKinnD/cRNIqzrkb1JdiGmXnSqeIfb+jem00sbnsNBXQ6jCiOl
-PnL3V7qaX5bQshr8Vm7b82wBqI56NU/RrzgYpO1dvsn2b9KZoNYrsi9h/M+Tpe0W
-gZ8ZQTZzkdFnsjvb2JMjAIB7ogp8O/zSUpUGIV+FHKnDAYcw765geBfDYquo9Ec3
-hvA4BCH6IdUBJEHLUaLnN+yMna336JOyodLdlZOcEufNEmArxbcMRUvs+QnZgTji
-kHyVO6vfz4jFzYLvV8/PyEnD230SfFxhBr5CsjeJ+YzJhFzLvuXihw3l4Mm7Wv8t
-Wfkk1aPrKJl9nj3AS5Ne5ZmoP/Zgdol9uSnc+dx76Aj+UE6FIpfxDWr2VjyTvt+f
-gvtI0x0mVPO8AfUKlVSIelJvww0gPoar7QLsx/ZLvYDoJt1YzGA=
-=Q5rS
+iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmY941kACgkQnowa+77/
+2zI4yQ//cPtDaiDshAzINDKAi5kWNe0ynwdtnPlygSO29yWWmGwshFyyNgsYO6Xl
+Tb7b1+0j3eFj7iRwQ+2hTPVzgWg+lQkJMcxr8Ju1M2ktF2+lgdgEjUiQKbfzNeiE
+zUaZ655CVMWopq1su83YTeQZ7BCnoJgMUnTXLcE2hRcoeMIT7pKAr7VwKnETSjzA
+UNDc6udJBPhD8ggMyCYmpZfdtNwS3K1j4pGCyPePza5vG1Bo2BeB5ia3IBNxBBk3
+DuQ7kLUNErxVMi8SRDGgtz97YhcgNRT9UTy8GYijU2xfYMDyqS+DWvzBBgl/hxFy
+M0mGRSLxpsompR3dQs7wyuIy4VYWO6ujDepSljkYbjMaNLL1sEOgNk+XNbSXHAN0
+C7SMblcWIUZBsvAvnuKS8ouPGkXdRG8aHkGGLeQp6eX7DVvjsen62j2ir+SCpr2S
+MGw9MD0zfKWDW4vr+88/XqbieUzTIqWyI74sM53QVfkjL5sc+P4N61dRCNmaWfIJ
+OgCNTcspLjSLnlOecE9wqfNAyGY3z7IyWjbIHhj2kwKGV3LB6pRkEuCeLUMvREsR
+gmTsFDLENKHG+UMZi27ejd0ZIXUn8rxuzPmQu/85SVvrCo6UezHjnfJr7LTvc7Ow
+F1u6wEKPq6L+Ny5I+ob3VtylWFILr/uFsDk9W0knyGBM1LnDhRI=
+=2wxO
 -----END PGP SIGNATURE-----
 
---lATdjkItUUcLaoWe--
+--4mqryouujsaldayj--
