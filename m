@@ -1,113 +1,75 @@
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A8A13CFBA
-	for <git@vger.kernel.org>; Fri, 10 May 2024 22:12:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437821BDC8
+	for <git@vger.kernel.org>; Fri, 10 May 2024 22:13:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715379173; cv=none; b=gHhFMYfhB4t3cwwi8epdJWei7e5VgPgFMdItXiM0WaiDDXCmjmeqBeOivV9GZ60SFmVcz8igpH0E+QTw+s/D+evbVVxptyMVTNwWUOMIigxBB45LsTwXyRaFQf067mOFjWg/TCA0ZO00mOiD3Q6QprTlo5xbihHDIwtLJZOaqjY=
+	t=1715379206; cv=none; b=tpKiolVLpPBO5Er0I4xwpxN08ild9fegoAsQECwjGERu24Drw/i+NmqUV+T0TkOy7ETTfFsia6IkiCVXXBu1fBcbxCFjrJWVfS8Ij8i39pvdZR0m7J8sZhPsf5QJkByFV/hj9BAe05vhkJznMMUtBb9KP2+gf+tyiWNNs41I7cU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715379173; c=relaxed/simple;
-	bh=4hMSnIZYfaZih9zZ5SxsFEBnWpJdXHDzLrRS2enqesM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=p6rf69bagNPyBGWxmYPTg6Ebh18SIjgJiZmqkO0k3JHUvTB50DPDVrdqJ/swyQvPBcBl8AtZnPTeqqy+3ImJhFsG/71BiGXob+JTjwC9SBs5p5Wgzm6fhx+figIvj3Ra4ylNa7PqSUqsY41gL1IPKulPa2T0vUm0DTkLsJVTD/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr; spf=pass smtp.mailfrom=online.fr; dkim=pass (2048-bit key) header.d=online.fr header.i=@online.fr header.b=YKYHr7b2; arc=none smtp.client-ip=212.27.42.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=online.fr
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=online.fr header.i=@online.fr header.b="YKYHr7b2"
-Received: from [IPV6:2a01:e0a:122:9f40:2c1c:a337:c1ca:2139] (unknown [IPv6:2a01:e0a:122:9f40:2c1c:a337:c1ca:2139])
-	(Authenticated sender: thomas.koutcher@online.fr)
-	by smtp4-g21.free.fr (Postfix) with ESMTPSA id 5379019F522;
-	Sat, 11 May 2024 00:12:42 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=online.fr;
-	s=smtp-20201210; t=1715379163;
-	bh=4hMSnIZYfaZih9zZ5SxsFEBnWpJdXHDzLrRS2enqesM=;
-	h=Date:From:Subject:To:From;
-	b=YKYHr7b2Eg9MdQ00NxbChJtTG1MwDfNJv7VoY4HlnbK8Hah8w4SClK90MIf8rvkOP
-	 HmNQ6NuwGR57TSfog4UTfnyM5Asm9sWpjk6SQRJwocZj7sNOkfZjwKy5Luv9LFQJHq
-	 95ZD9wLfqKpTefPVDpefrQxroq3AfKGyltzaCVSSDOLcIHWkyxijONmWWDVYhoZmy8
-	 sFTsGZoVzcCX/6ZL6C+B49L+C0Q72N+2z+UDI9kIUrUfv+atYurbyo3eil2mg1im7o
-	 pSkkOi3+2+m+OKIA5m/rej+Nc9WMPzKhBkcGvNW86eBAR75WPkF5FOGgEUfbuJ9Z8t
-	 R/FJv4iVY++3w==
-Message-ID: <63ad4c23-0baf-4c40-aa45-0a35c3bf90dc@online.fr>
-Date: Sat, 11 May 2024 00:12:42 +0200
+	s=arc-20240116; t=1715379206; c=relaxed/simple;
+	bh=HgFkQqzYirsB/hMEyc+45P2jHpqZO+KzP0+lRJ0QWac=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uOLR+cp+iYk5OZ9JVIETCM52wnPGMx4VMnf6mSx66jJQzFjP4FNsRwN1SRF+Uq33KqE5QcuXG8kBrzN9rPqOgG3dCm/NAlc4HwEcPTZ9k5z+uCq7gs94uZXiDJd4rJlZ2pS1BhhRrgF7nH0iBZpw2CuKvaA6ADZA6sIzRATk0jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 19627 invoked by uid 109); 10 May 2024 22:13:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 May 2024 22:13:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14080 invoked by uid 111); 10 May 2024 22:13:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 May 2024 18:13:26 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 10 May 2024 18:13:23 -0400
+From: Jeff King <peff@peff.net>
+To: ryenus <ryenus@gmail.com>
+Cc: Bo Anderson <mail@boanderson.me>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Git mailing list <git@vger.kernel.org>
+Subject: Re: Error: failed to store: -25299
+Message-ID: <20240510221323.GA1971112@coredump.intra.peff.net>
+References: <CAKkAvazeFvCfT7tZm3emwA=k-NnzPD7X0v4t2E9Ja4r-GpZfoQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Thomas Koutcher <thomas.koutcher@online.fr>
-Subject: [ANNOUNCE] tig-2.5.10
-Content-Language: en-GB, et, fr
-To: git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAKkAvazeFvCfT7tZm3emwA=k-NnzPD7X0v4t2E9Ja4r-GpZfoQ@mail.gmail.com>
 
-Hi,
+On Fri, May 10, 2024 at 03:52:25PM +0800, ryenus wrote:
 
-I am pleased to announce Tig version 2.5.10 aiming mainly at fixing
-a regression introduced in 2.5.9 related to colouring in the status
-view. See the release notes below for a detailed list of changes.
+> Command I run: `parallel git -C {} fetch ::: repo1 repo2 rep3`, which is
+> to fetch multiple repositories in parallel using GNU parallel.
+> 
+> This worked pretty well for me in the past, however with git version
+> 2.45, maybe 2.44 as well, it would randomly emit below error:
+> 
+> > failed to store: -25299
 
-What is Tig?
-------------
+There's some related discussion over in:
 
-Tig is an ncurses-based text-mode interface for git. It functions mainly
-as a Git repository browser, but can also assist in staging changes for
-commit at chunk level and act as a pager for output from various Git
-commands.
+  https://lore.kernel.org/git/pull.1729.git.1715328467099.gitgitgadget@gmail.com/
 
-- Homepage:https://jonas.github.io/tig/
-- Manual:https://jonas.github.io/tig/doc/manual.html
-- Tarballs:https://github.com/jonas/tig/releases
-- Gitter:https://gitter.im/jonas/tig
-- Q&A:https://stackoverflow.com/questions/tagged/tig
+But most curious to me is:
 
-Release notes
--------------
-Bug fixes:
+> But if I do this without GNU parallel, or `parallel -j1` with only
+> one worker, things work just fine.
+> And when I switched back to git 2.43.2, I don't see such error either.
 
-  - Fix `stat-*` coloring file names in `tig status` instead of just
-    markers (regression in 2.5.9). (#1326)
-  - Fix keybinding with +[cmd] not triggering view refreshing. (#1324)
-  - Fix reopening the blame view from the main view.
-  - Fix editing when stdin is redirected. (#1330)
-  - Fix compilation warnings with ncurses 6.5.
-  - Make `Ctrl-C` to kill only the command running in the foreground. 
-(#1331)
+I would have assumed this was an issue going back to 2011, since each of
+those fetches is going to try storing the successful credential. But if
+older-but-recent versions of Git did not have the problem, it could be
+that we are being more aggressive about invoking storage for some
+reason. Can you bisect?
 
-Change summary
---------------
-The diffstat and log summary for changes made in this release.
+The obvious recent changes to the credential code were brian's
+capability/state series, but those are not yet in a released version
+(and from a quick scan I did not see anything that would obviously
+change things there).
 
-  INSTALL.adoc      |  4 ++--
-  Makefile          |  2 +-
-  NEWS.adoc         | 13 +++++++++++++
-  include/tig/io.h  |  2 +-
-  include/tig/tig.h |  2 ++
-  src/blame.c       | 11 +++++++++--
-  src/display.c     | 15 +++++++--------
-  src/draw.c        | 12 +++++++-----
-  src/io.c          | 18 +++++++++++++++---
-  src/main.c        |  8 ++++++++
-  src/status.c      |  4 ++--
-  src/tree.c        |  5 ++---
-  src/view.c        |  5 +++--
-  13 files changed, 72 insertions(+), 29 deletions(-)
-
-Thomas Koutcher (6):
-       Fix keybinding with +[cmd] not triggering view refreshing (#1324)
-       Fix reopening the blame view from the main view
-       Fix editing when stdin is redirected
-       Fix compilation warnings with ncurses 6.5
-       Make `Ctrl-C` to kill only the command running in the foreground
-       tig-2.5.10
-
-xaizek (1):
-       Fix incorrect filename coloring in tig status (#1326)
-
---
-Thomas Koutcher
-
+-Peff
