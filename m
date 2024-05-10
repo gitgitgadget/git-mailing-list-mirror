@@ -1,126 +1,152 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959E377119
-	for <git@vger.kernel.org>; Fri, 10 May 2024 09:07:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1CF1581E3
+	for <git@vger.kernel.org>; Fri, 10 May 2024 09:29:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715332043; cv=none; b=hQdSh/62DeGrKUKgoxTRwoMtxuKsVkcPUPjhtGYL5Q76qxo2uVmNEnFjiomf85Jd3p4uGpPniVT1ags0v8Sn2S0xiQdczuv9NVv/SgCXslyEXaEcYA8zraq/6bcg1JnWbhm1sSOZZLvojchu3xIPH3A9MN/JZbJc6TZP1dkOrZc=
+	t=1715333362; cv=none; b=C1ZJF7Qiup3R43tXt6R21z2fEL0DQJStLB1F3ksflnSCcv0uzHZaZy3uZlp9gEAP3PVNSbxO4vs7qTywioSybVDU7idVX5jSOaR94MxQqXQ/87wNlHHfPgo8SfVaFn80t8jtQuOO2zHDrxFpXQjmzvZBy43tVPNVnJiW93Qd9z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715332043; c=relaxed/simple;
-	bh=vEitvZNXqxiz58uwJParfu+YoAf0in3ya1zgLyyVN00=;
+	s=arc-20240116; t=1715333362; c=relaxed/simple;
+	bh=hnF8vvKgUBAHYUTGsrIeFvPq79xkOjkcgq0XlcVZDko=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=cTvOfCG4YXBsOj9fqbmXuaWxUghHsyShih5SmlWAf/gvvylIPk1ZcYX4+c2W4rPYFFt12azj29vCRHM0ycpNrhk29e1OEzB+H2JjD7JE5mSXgV4josXbijEFpwULH2TGaOWX33jTJw7l7RCcCA7t6fcLc1qPn9RDxqu9TZv0ojk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XmfVOiv3; arc=none smtp.client-ip=209.85.215.175
+	 To:Content-Type; b=lmsh2qi42HXq06lNRiiBGyjFy+BTCa9YlFT9pc/47AYxs8ZPowtMOT2O5gAjMYS3qbQUegd3TGOYzW9VSWcGivsure/qlpsxvjW/4ayyHNpftIYhNGYcvfjmAABYthqZjEqnAUyx6VOgpHlem93T0hD7Kx36VVLd0H37+/RUPqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z23CU+j+; arc=none smtp.client-ip=209.85.160.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XmfVOiv3"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-517ab9a4a13so1283621a12.1
-        for <git@vger.kernel.org>; Fri, 10 May 2024 02:07:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z23CU+j+"
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-23d621abfb7so786147fac.1
+        for <git@vger.kernel.org>; Fri, 10 May 2024 02:29:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715332042; x=1715936842; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1715333360; x=1715938160; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=mmXgu25TfI4HE3N936kgdLAH6zuwL1LM3pkYuEIcye8=;
-        b=XmfVOiv34owMXbingMEDUDpz6i2lUSoa/5r3qygCsG8sKg+7NZgQPsxTJJpBdZJYvl
-         RPRwSBzEOsWJODZjto9areobQl3opyBm3xhiU4iwAEklXuKZzrrtabpqIsNSGgATKQ4t
-         pzn7aJadrt3lzybrwKmqhjOmQnj5exW9xgKkSojJZwLIuhLWY5QGpsVLIkCxowEBNDyo
-         XeiNx0lmdo5hZW4R+2x3g2jxeFn1RAVksMuAza4dl0EYpU7GE9xKAsyVQOYgiIzd9AbC
-         0cZfEobsg2suYZTagXcOAlGEkmbBGRpi1uQUAkMTD0IvFX8NkRmdZ/kQS9XKeITLt5aY
-         0eTw==
+        bh=hnYaLRRevaFHL/4F8o5+a8/mmZbcVEUWAEPWVMs3zMY=;
+        b=Z23CU+j+uxdjMfkYQGhsGW+Yj2irEL8DjChe93euVb2QS4byXmcFcUFI8N/UuiAZyp
+         GyVO9FinEOllAifdlnoria1/6aq4+OW5AU0PkH+y7lpmnQMWkKZaWZktrPJiebr5eQC2
+         eEZjSSUeTgaGYFVH8D2ZYePWv84ezRFKULuVjb+qd+F4me2GD+QNDlOc3r7SOTc7Dydh
+         RxfbJI4J3qwvY4qAfoiE4XwONqclsFRtdiq9L/H4OaLTB8sRyaa9i+UpeQVjONekvQoB
+         xShaAty008KWzMCO7JfYWYHTvRQWNj75YR7VTd33iu+5EGliL243kZ6rEQdhRYhKMQ5J
+         RBzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715332042; x=1715936842;
+        d=1e100.net; s=20230601; t=1715333360; x=1715938160;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mmXgu25TfI4HE3N936kgdLAH6zuwL1LM3pkYuEIcye8=;
-        b=J4TA43VW0pcA4gRs6lQecb87fG909uL0DF/YBMTiDkrLFDSm+NY2dE9ObGuVpptelZ
-         utbYSZ8qO3svFeFZXDqO5uqeri8zyDJ0ZYZPLa/9p1YyUjVtRE3hR6nAx3ti0dYff2Wj
-         u3IsBsgUlK1TwttAmQ0MlbPj5KSh5fUOgFS1SnJQMJg4UVDGG0LVBPqQobxei92yTsXU
-         P5HKUVkzi+V652Ls4gvip9Ah1T4L80aLdkjK6znkz/YbixZt5sFQ3c88EaL4+UC5W/la
-         OeGuRmEJZRhZbcTfa6MV06uWDsGip29nZYEG1CgvFtuDuBLZeVN1FZ/zGsBfNpZT2ZxY
-         HDyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVKe2Q6/sHmEl0FcouMzOKpDEmCYMkCTEAdb8PuQjtwnIacgU2QLuCV6MAbO++3Y5z1xU3X+tSchV4p2S8f1JCgy0HN
-X-Gm-Message-State: AOJu0Ywh5TUXOnH4Qud2oPxjjQIKp3e3HC0bCGir5JRwd0M9AHVrQBxR
-	bHLa9/aoUI45m2qULCWyAtkQFtGe18SD6DJn15xwvp6W2V4y3ArvN46f0X/pdX+r19Qtq0QquPi
-	ahetPUB0v4O3mNgNqKFL7fun1E5+Agw==
-X-Google-Smtp-Source: AGHT+IHEAaCw+pWYzraac4R4suS7hdCIIrgzjS+DYUUfsnY2Ji8EKm0sr11hCagp0cUzGbqLJWeQ08AUb3BQGWmYOws=
-X-Received: by 2002:a05:6870:d0d4:b0:23e:5cd0:faaa with SMTP id
- 586e51a60fabf-24172f6b2f1mr2331792fac.55.1715331633384; Fri, 10 May 2024
- 02:00:33 -0700 (PDT)
+        bh=hnYaLRRevaFHL/4F8o5+a8/mmZbcVEUWAEPWVMs3zMY=;
+        b=v8r5V0/iFbxQviHzxgTdBbOG/4xa95SHqHy2CiFp+AFeiL97CJVAN/RSwWP5Hd75mE
+         Lp7R2+4KQCzYQioiWKl8c4QOqntaK0BmoaF4nHQdyf7r4uC/DCtMV1ULDtwJdhhA40C9
+         IUS5zVAQKK860JDUo35xrTZMswa34vKxGFxmkg7gaBOqtCPEmOcwF6taBC/4f6hlA/NW
+         WUcCi319nCP27eA4SvD6qkd3Ct86rUGjuxHiP7cWgmtanAwY6wzl7XriVQaL29nOfRLI
+         pKNLpB4t/wl3exteiCPmP9yzUcTEsTWTM5qnxR7dy9F45vFmwacHt6D2AA4xCFY7y7EP
+         1ZMg==
+X-Forwarded-Encrypted: i=1; AJvYcCVEmOBsYC2Z/bnV3fwvxp6AOnDLx/lXzQ6R+RVi7HKKkRv7VvJ1lQX/Qg6w/YNYudWDsDT9L3TtQFt8+wNo7ydpt2B4
+X-Gm-Message-State: AOJu0Yy/6ax812Zmh1Rtc/hQuPWtgABfDF9Wuh7iAiAhITAqjcZK11xZ
+	IFmnsYT2yl6Gcn7BMAKGe5zJojnHWCQYsFS/syu4ziH023F+GSXlnOdZynWLExOhf8GpnLArKm5
+	b3wSOLsujhUpkyYeMdPlsnTg2LkY=
+X-Google-Smtp-Source: AGHT+IGGgiiV0VVrKh8CF4hAuX8PfzDLhyx/8Gvs/rqxUF12NxsQbvuQD2DL64cFQ2KrljvLDX2Fh+DAdsqHhGQEwXI=
+X-Received: by 2002:a05:6871:1d2:b0:233:73b7:5379 with SMTP id
+ 586e51a60fabf-24171e10362mr1071806fac.21.1715333360367; Fri, 10 May 2024
+ 02:29:20 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 10 May 2024 02:00:31 -0700
+ HTTPREST; Fri, 10 May 2024 02:29:19 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <47cee6e25ebaac5af9fd0c9eaad7fc50b2547cad.1714630191.git.ps@pks.im>
-References: <cover.1714630191.git.ps@pks.im> <47cee6e25ebaac5af9fd0c9eaad7fc50b2547cad.1714630191.git.ps@pks.im>
+In-Reply-To: <b4e4db5735beb106511980adca48dc416c4b0d95.1714630191.git.ps@pks.im>
+References: <cover.1714630191.git.ps@pks.im> <b4e4db5735beb106511980adca48dc416c4b0d95.1714630191.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 10 May 2024 02:00:31 -0700
-Message-ID: <CAOLa=ZQ3m3HOxpAUVK8_KASfQwmhXNraYrm-M-T2BTHUm5c5ZQ@mail.gmail.com>
-Subject: Re: [PATCH 01/11] reftable: consistently refer to `reftable_write_options`
- as `opts`
+Date: Fri, 10 May 2024 02:29:19 -0700
+Message-ID: <CAOLa=ZR7=hVXyGr2iSZW2C8mtwR2SHLikuCVKS-qTB7AE+0+hQ@mail.gmail.com>
+Subject: Re: [PATCH 06/11] refs/reftable: allow configuring block size
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000ae3286061815c4e8"
+Content-Type: multipart/mixed; boundary="0000000000009dda7c0618162b02"
 
---000000000000ae3286061815c4e8
+--0000000000009dda7c0618162b02
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Throughout the reftable library the `reftable_write_options` are
-> sometimes referred to as `cfg` and sometimes as `opts`. Unify these to
-> consistently use `opts` to avoid confusion.
+[snip]
+
+> @@ -230,6 +231,23 @@ static int read_ref_without_reload(struct reftable_stack *stack,
+>  	return ret;
+>  }
 >
+> +static int reftable_be_config(const char *var, const char *value,
+> +			      const struct config_context *ctx,
+> +			      void *_opts)
+> +{
+> +	struct reftable_write_options *opts = _opts;
+> +
+> +	if (!strcmp(var, "reftable.blocksize")) {
+> +		unsigned long block_size = git_config_ulong(var, value, ctx->kvi);
+> +		if (block_size > 16777215)
+> +			die("reftable block size cannot exceed 16MB");
+> +		opts->block_size = block_size;
+> +		return 0;
 
-I think one location was missed:
+nit: unecessary return
 
-diff --git a/reftable/stack_test.c b/reftable/stack_test.c
-index 3316d55f19..40eb793b3c 100644
---- a/reftable/stack_test.c
-+++ b/reftable/stack_test.c
-@@ -396,7 +396,7 @@ static void
-test_reftable_stack_auto_compaction_fails_gracefully(void)
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  static struct ref_store *reftable_be_init(struct repository *repo,
+>  					  const char *gitdir,
+>  					  unsigned int store_flags)
+> @@ -245,12 +263,24 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+>  	base_ref_store_init(&refs->base, repo, gitdir, &refs_be_reftable);
+>  	strmap_init(&refs->worktree_stacks);
+>  	refs->store_flags = store_flags;
+> -	refs->write_options.block_size = 4096;
+> +
 
- static void test_reftable_stack_validate_refname(void)
- {
--	struct reftable_write_options cfg = { 0 };
-+	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st = NULL;
- 	int err;
- 	char *dir = get_tmp_dir(__LINE__);
-@@ -410,7 +410,7 @@ static void test_reftable_stack_validate_refname(void)
- 	};
- 	char *additions[] = { "a", "a/b/c" };
+Nit: do we need this newline?
 
--	err = reftable_new_stack(&st, dir, cfg);
-+	err = reftable_new_stack(&st, dir, opts);
- 	EXPECT_ERR(err);
+>  	refs->write_options.hash_id = repo->hash_algo->format_id;
+>  	refs->write_options.default_permissions = calc_shared_perm(0666 & ~mask);
+>  	refs->write_options.disable_auto_compact =
+>  		!git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1);
+>
+> +	git_config(reftable_be_config, &refs->write_options);
+> +
+> +	/*
+> +	 * It is somewhat unfortunate that we have to mirror the default block
+> +	 * size of the reftable library here. But given that the write options
+> +	 * wouldn't be updated by the library here, and given that we require
+> +	 * the proper block size to trim reflog message so that they fit, we
+> +	 * must set up a proper value here.
+> +	 */
+> +	if (!refs->write_options.block_size)
+> +		refs->write_options.block_size = 4096;
+> +
 
- 	err = reftable_stack_add(st, &write_test_ref, &ref);
+Wouldn't it be to import and use `reftable/constants.h` here?
 
-Rest of the patch looks good. Thanks
+[snip]
 
---000000000000ae3286061815c4e8
+--0000000000009dda7c0618162b02
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 213f39d46ed72223_0.1
+X-Attachment-Id: 15f12e2da8953f9a_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZOTRpMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK0dxREFDUENPeEpEYjBQd3ltTVhPdkdUK3BiYlN3NQpJaE1UajdNc2tq
-UW5Xb3pvTW96aFRQN2ROTG0rWlZsblZoa0xraWRGTmdKYmhTSUlkd0ZUVnUyRnhCbjBqcjBJCkJQ
-ZU94dnpYb2lpUXlWMHBLNXh0bmhqdFhWandPcnVJME1VRzV3YlREL0k2VTNqVGI1eEdma0pYK2pj
-czR6RkcKR3h0R3VqYnB3Vk1jQXZEc1krelRmNTRvK2YrcUV2cCtrRWxjazB2TnFkV2Flb3BNcURu
-TEhCSjUvMVJUMnVQMgpkUWJINWVRTUhtZitKNyswd3lPcXlIcTJNNjRYQ0kydGM1QWJWZExzZWR3
-SkZ5ZE0wWkN5TDFwR0JkZEZzaG1uCjNMVisyVUVQMWRrSlF2QzVYTCtvSUZjNnBKT1FCcEk4ZVVo
-L1huZTlWZ3Q5cDdKUHhRQUVKSWVjRHJ5SjVKRSsKZkZjQ1Y2blM2SkJpQk5OVHN3QjFLUFdLYUtW
-N2Qwek5YT2tkazdFMjdIUGdBYkdBV0lvQkNpckJ6akVTK2UvSQo4c0hrZ3p5UVdkRVBnbWhPU1FI
-Slp0Y0lNQURWeGRtNktTNmc5RnNibGI4VXd0OWNlcHJhZ3c0K2VMNFFRSGRrCjlIUTRkZXlET2ht
-enU3a1hGdG9RamphblI3OEhPU1ZJL1RCZ2RQOD0KPU1uQUMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZOTZPMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMHBJREFDU24zbjcwbmhDdTU2LzZqbmhwRE9uR3d5dgo3WUs3cWZLSTNv
+eWxOWnRhaUhjUHVMZFlFbWFFMHk3THZxT2oyVEg4WkM5TFo3a2VWbS9kb0RHUTZiS25wZ2pICkZD
+MVE4cXlISUkyTkdQd3FYQjVjd3gyckVUN3l4bytVQWhYZzlPRzBpRzBoT0RxM28zeGNERi93WFlr
+eDZPbjgKYzFibWxxMmRBaWpPNFdTLzI0UXc1YmREb3diZlR5K1A4YUEza1hGb1IyUzZ3dll5dmcr
+RTh5WVlwOXBGaTEwdgpZNHBXSFR3aDNxQ1k5ci9Qb01tYlRKMTcrZUFnWWtCdE5HSllkeUZRSmhu
+UjVOS2FTaHZjTm5rbmxOREpvdC9RCnl3MTFiOGtwVHljR2FuK2N4Wk5jL3dodEx6SHhsWTdUMFBs
+dGFrZ0E2MXZ3cUlCV2pkeVNPaGlSRlFLMERjd2EKNytPVURJamhubndRcFVJaFpuclFWeHFHMVNj
+VlFSWkJpR08yaDRGdVNyblp6T3BPbUkzSHJLcmI5MDFwREVPMQozUWZEakRCaFZCSzljT2JKSGx0
+aUw0MEtMb2FDNDJOL3hFQUtYVENVK0hwOUl4aTdhSnVZM0hUQjBWVU8zSjRqCmE1U0QrbVVKVGlC
+RkREQ2gvZjhJOC9aUTFWVUt0dlJpb0tOMjJadz0KPWJtYUUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000ae3286061815c4e8--
+--0000000000009dda7c0618162b02--
