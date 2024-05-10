@@ -1,86 +1,84 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F2813B7BD
-	for <git@vger.kernel.org>; Fri, 10 May 2024 21:50:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE9313B5BB
+	for <git@vger.kernel.org>; Fri, 10 May 2024 21:58:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715377812; cv=none; b=ae1cgzETx4wKMU8Kc2l6fhDzeMmpt3PX+Ji/xUu+y5hrzNHi1dt4i2Votx6fiqyD+qiGVf7w/e00sR0+mTCgGqEsryVsS7CgvThIy/gko8A0MDokCXb7Lnrv33yIR99HzRmGQy5hX8l5mgQEdpsw2PRaCXerI+UUL1O+ZXXXKLM=
+	t=1715378282; cv=none; b=mGV+iMiDq/U+RL6d+fdZ2zigLxqiv30aVl8DfF4eooBDjZePMwwyovU9NPOvQ4QKf78GIJEfz1SWMLKhkXYNvNoz0bX/iE0eJru4WUhmoCh1uO9bw3Pbrov7EeMH52CVojDbSpvMTIvC+mjVgL5uJSpvDWpOlT11BKKPF1fMOQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715377812; c=relaxed/simple;
-	bh=bw/y2DKU7voORRVqDRJkhtHr92kM2lw/HIU7wephHL8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G/Np65r8mJtlR30ZHs6+Jund8k1qRS4hLILrjT6RVvl5IsMWra7rc4ZnaRdmIGkqoUQILTw267bd7aNtys0caM7OaB2k4f8weYv8wjie4GBVIELQr/igAK/edK7coKFU/GF71RGpmVirpI7XnojmTNJc8ABGrUbSnKRAfnMEvOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gJUXrMJo; arc=none smtp.client-ip=209.85.210.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715378282; c=relaxed/simple;
+	bh=BMG1lOeQpwOhrY9tQIPrw71VgsLpo16+r6iklCLeqwU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=paECvVvnf3D66QX6egp8BPedUd+06pMP9jbHSRJgb4rVZcpZNLIlvP9byVl6XF+S8m6MhYw12q1ymu8NmY1OnSXljt/a4NlKGZiTOf59ftMr07+07i0ElJRzvcxItfLy7CKIPWsBI2mLWdqeJhCMUXF2IC+yi7J2sa3Qn8I3ihQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=x7jM2X88; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gJUXrMJo"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-6f0f252db4dso348842a34.0
-        for <git@vger.kernel.org>; Fri, 10 May 2024 14:50:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715377810; x=1715982610; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Q3rLTRD76C3Uhr9EUCdV/AKpiH8+G+4bozdD6hKQiaw=;
-        b=gJUXrMJonTdDsFDoVSNj0hNOcGfHOuWscOjhwnl5+eWo3h38dXLMrPyUjo68YMj3J5
-         fQZJP3ldotIsOQHBb9MrUkywqUteABbw+G1D4QEZrHEtHwysQ/RxqunEwwaJZTN1W8aH
-         HidvSUnKj4RbUO+m2/qHPHoNSNxoe6OtbkqV9zlsfRlqJUif0F29cmaAh8SorfbDTopd
-         DvqzvQKn+gpJorDzJddgfkPfw0CyNawk/uQ4a0rG05X+4WgjBXvgfXHC6aVV3CjVoi8x
-         0HQSeCCvY2/uo0RdW6FbWViz3ocohfeWooG/UbKV/uJW1ZZpF67DBmBrwJAKshshDdcO
-         psdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715377810; x=1715982610;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q3rLTRD76C3Uhr9EUCdV/AKpiH8+G+4bozdD6hKQiaw=;
-        b=K1BfrLwAAHqteZWcXs5Iq1Mg5pFe0CuC/0VD1UWA7afrjDxaUwmnnykeesnVbC4Y4z
-         vEuf+wEHEg7+uDQIfaCriqOMQNIIW7NvYBFi0jZZuTalRI8RWtsLeXtZWsIT35Hcz6Zk
-         mBhV5XMzEz5+aGJnmFtyEZHAHYKQSqy3nS1x/ypAOSE/k5gVMst6eT2rBu4stvVypIqY
-         c9+Qv8kl+Z0rG5r955pfyWSnk357e7Q0dEcFby8r6hR/cvMgMD/ikDyNGWKlBXfu6CnB
-         D98W0ocbRKz8aeh/VFX2wb2PwgmJhFh+wMrArqsCNZXkrrE3k0FdHr7bpJMwslx5hOn4
-         nwXg==
-X-Gm-Message-State: AOJu0YxeGKDfttuH3qzDClIDQnzfQiUiVXu9SrkXLA8HlNsA2I9mT1AP
-	EoKdgHttiYL0GtfsAuHeCPhYfkbSgP8FeeVm+1pH9AyFua/nEcGk
-X-Google-Smtp-Source: AGHT+IEwVnHvb2VuCmqEJsfwpPcbsCYK52A/uhWao7PmG2MYdrzUFEqWVdu5MK5Pf2SC6odvgQ4Pig==
-X-Received: by 2002:a05:6830:19cd:b0:6f0:72dc:ae61 with SMTP id 46e09a7af769-6f0e92d0aaamr4111009a34.33.1715377810383;
-        Fri, 10 May 2024 14:50:10 -0700 (PDT)
-Received: from localhost ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-6f0e01b6d01sm838090a34.24.2024.05.10.14.50.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 May 2024 14:50:09 -0700 (PDT)
-Date: Fri, 10 May 2024 16:48:45 -0500
-From: Justin Tobler <jltobler@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="x7jM2X88"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5566A1BADF;
+	Fri, 10 May 2024 17:57:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=BMG1lOeQpwOhrY9tQIPrw71VgsLpo16+r6iklC
+	LeqwU=; b=x7jM2X88rAQiYhzk17MCvl2kJH7jKN/6otkrBpGl2SEN0gtiG474Ik
+	AzRDkwxkFK9MMiHIKll+ffCnEaPrOoYFpB9DqG9va3BQIIv3gpOSPkUYpbG9KwiF
+	NwZ0PXGClBwdZh/TSzlwuekk1zwH/kVI4G80sVRx1zQoKXOz7L15k=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4DC0A1BADE;
+	Fri, 10 May 2024 17:57:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 61A0B1BADD;
+	Fri, 10 May 2024 17:57:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 11/13] reftable/reader: adapt interface to allow reuse of
- iterators
-Message-ID: <odftefkdt65kt4qiptd4tfnlssymmv2wnpzz4uefq6sxycxdsr@b5jm42ulf3b2>
-Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <cover.1715166175.git.ps@pks.im>
- <f688f8f59a05b667b4f4118b7f8c7504bd33329a.1715166175.git.ps@pks.im>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Justin
+ Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 08/11] refs/reftable: allow configuring restart interval
+In-Reply-To: <bc0bf65553c8dd89bf5fcaa592fc3427507f1993.1715336798.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Fri, 10 May 2024 12:29:55 +0200")
+References: <cover.1714630191.git.ps@pks.im> <cover.1715336797.git.ps@pks.im>
+	<bc0bf65553c8dd89bf5fcaa592fc3427507f1993.1715336798.git.ps@pks.im>
+Date: Fri, 10 May 2024 14:57:46 -0700
+Message-ID: <xmqq34qp2uud.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f688f8f59a05b667b4f4118b7f8c7504bd33329a.1715166175.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 56F2FD3C-0F18-11EF-BFF5-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On 24/05/08 01:04PM, Patrick Steinhardt wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> +/* Initialize a reftable iterator for reading refs. */
-> +void reftable_reader_init_ref_iterator(struct reftable_reader *r,
-> +				       struct reftable_iterator *it);
 > +
-> +/* Initialize a reftable iterator for reading refs. */
+> +reftable.restartInterval::
+> +	The interval at which to create restart points. The reftable backend
+> +	determines the restart points at file creation. The process is
+> +	arbitrary, but every 16 or 64 records is recommended. Every 16 may be
 
-I think you meant to say "reading logs" here.
+It is unclear what exactly "The process is arbitrary, but" wants to
+say, especially the use of the noun "process".  The process the user
+uses to choose the inteval value is?  The default value chosen by us
+was arbitrary and out of thin air?
 
-> +void reftable_reader_init_log_iterator(struct reftable_reader *r,
-> +				       struct reftable_iterator *it);
->  
+Just striking the whole sentence (or removing up to ", but" part and
+starting the sentence with "Every 16 or 64") may make the resulting
+paragraph easier to follow, I suspect.
+
+> +	} else if (!strcmp(var, "reftable.restartinterval")) {
+> +		unsigned long restart_interval = git_config_ulong(var, value, ctx->kvi);
+> +		if (restart_interval > UINT16_MAX)
+> +			die("reftable block size cannot exceed %u", (unsigned)UINT16_MAX);
+
+OK.
+
