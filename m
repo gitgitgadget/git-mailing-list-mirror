@@ -1,39 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7FC3BBCC
-	for <git@vger.kernel.org>; Fri, 10 May 2024 20:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9604DA11
+	for <git@vger.kernel.org>; Fri, 10 May 2024 20:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715371526; cv=none; b=Y1dNXGNtnznH8wthy1ZTn8T16WpDykwer2zNePXZEW+MD2tTm4H2HbWzvu+oXLkJcuiAiNDXp+wIBrYA/HyFbwjas4BCuVy0PsYu+FNd0xSHJf4bcjsvPd31jbJegGO4ABNVjzO15DGG5IY2RvUd2jySqiiCnWdrjQa1vGXfNjY=
+	t=1715372033; cv=none; b=cTNYD37ZTLyfHuRDhONlFuDBatpeC1v6cBRrafnTTAr6T0i/lRrbkj5utRu0Tx5901PnH1vPMkjOp1F2cbNWjmEZpWWbQ7lWBDch2uDUywVnhOb+3rtNjHz+NVWR5iAwFg/+YWUD4N4GrL/qETGcdgC1bLgAcmcl87jC/jK//TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715371526; c=relaxed/simple;
-	bh=DpkXOEVc+icDISzvTub8IQ/jLRwitk90O8Q7vN+prw0=;
+	s=arc-20240116; t=1715372033; c=relaxed/simple;
+	bh=/CBwIKRc1ItnehGrZKUNaJqIF+ZvpI0VcrGPxYJID5g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CG8ngCl4Bq+PI054v1rC3VVpTIjq9uKe7vY51rxJGYcbLTAAb+6PKaQV+FBK1xopkbTEQYzvtMNEEHLHBI/TOBu3T/NW0wNzlKxQk0vbwXl7q7EOdb6Lpy/wLIir2q1RJ/LLMUK27W6erdbp+nhrj7dO47M82VF5dYORq/GStyg=
+	 Content-Type:Content-Disposition:In-Reply-To; b=EiyPmItCZVxfxwfyxR0iDzAXBeiFfPba+dGhvimALJlqewMvM5K0tPUFYec2b2e4dreOjbWuKCwuissVyDxqQX7PALBrlc/vGdib7xFMvCk4mVbXg4ktPgqxGRSMP1TWfucKeZqeAIcjZHAP8liFUxKx70X0Sy2WphcUr/keKUg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 18961 invoked by uid 109); 10 May 2024 20:05:23 -0000
+Received: (qmail 18988 invoked by uid 109); 10 May 2024 20:13:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 May 2024 20:05:23 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 May 2024 20:13:49 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12326 invoked by uid 111); 10 May 2024 20:05:25 -0000
+Received: (qmail 12388 invoked by uid 111); 10 May 2024 20:13:51 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 May 2024 16:05:25 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 May 2024 16:13:51 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 10 May 2024 16:05:22 -0400
+Date: Fri, 10 May 2024 16:13:48 -0400
 From: Jeff King <peff@peff.net>
-To: Emily Shaffer <nasamuffin@google.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	git@jeffhostetler.com
-Subject: Re: [PATCH] trace2: intercept all common signals
-Message-ID: <20240510200522.GD1954863@coredump.intra.peff.net>
-References: <20240510172243.3529851-1-emilyshaffer@google.com>
- <xmqqv83l4i86.fsf@gitster.g>
- <CAJoAoZmvzZaLN6cQkH4XeD9-=OwWFjT1adRA1oFHaUVyVWwLXQ@mail.gmail.com>
- <20240510194630.GB1954863@coredump.intra.peff.net>
- <CAJoAoZkXTo69AiowTVFvKyZBCo2B73hPp2ys+oZyOLU5qxAgFw@mail.gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/3] ci: stop installing "gcc-13" for osx-gcc
+Message-ID: <20240510201348.GE1954863@coredump.intra.peff.net>
+References: <20240509162219.GA1707955@coredump.intra.peff.net>
+ <20240509162544.GC1708042@coredump.intra.peff.net>
+ <Zj3F9EVpSmQtyy0R@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,27 +39,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAJoAoZkXTo69AiowTVFvKyZBCo2B73hPp2ys+oZyOLU5qxAgFw@mail.gmail.com>
+In-Reply-To: <Zj3F9EVpSmQtyy0R@tanuki>
 
-On Fri, May 10, 2024 at 12:49:06PM -0700, Emily Shaffer wrote:
+On Fri, May 10, 2024 at 09:00:04AM +0200, Patrick Steinhardt wrote:
 
-> > We have test_match_signal(). Unfortunately it's not integrated with
-> > test_expect_code(), so you have to do:
-> >
-> >   { thing_which_fails; OUT=$?; } &&
-> >   test_match_signal 15 "$OUT"
+> On Thu, May 09, 2024 at 12:25:44PM -0400, Jeff King wrote:
+> [snip]
+> > I'd like to report that this let me get a successful CI run, but I'm
+> > running into the thing where osx jobs seem to randomly hang sometimes
+> > and hit the 6-hour timeout. But I did confirm that this lets us get to
+> > the actual build/test, and not barf while installing dependencies.
 > 
-> Right, what I meant above is that `15` isn't portable, I'd have to get
-> the correct int value of SIGINT/SIGSEGV from some other shell utility
-> at test time.
+> Yeah, this one is puzzling to me. We see the same thing on GitLab CI,
+> and until now I haven't yet figured out why that is.
 
-Yes, but we already rely on it elsewhere (like t0005), and the idea of
-test_match_signal is that it would convert from "standard" numbers to
-something platform specific. Though aside from Windows (where the signal
-number is sometimes lost entirely) we've never had to actually do such
-conversion so far; "15" really is standard.
+Drat. I was hoping maybe it was a problem in GitHub CI and somebody else
+would eventually fix it. ;)
 
-If your primary concern, though, is the trace2 output and not the exit
-code of the program, then it may not be worth worrying too much about.
+It feels like a deadlock somewhere, though whether it is in our code, or
+in our tests, or some system-ish issue with prove, perl, etc, I don't
+know. It would be nice to catch it in the act and see what the process
+tree looks like. I guess poking around in the test environment with
+tmate might work, though I don't know if there's a way to get tmate
+running simultaneously with the hung step (so you'd probably have to
+connect, kick off the "make test" manually and hope it hangs).
+
+> > diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> > index 5f92a50271..13cc0fe807 100644
+> > --- a/.github/workflows/main.yml
+> > +++ b/.github/workflows/main.yml
+> > @@ -285,7 +285,6 @@ jobs:
+> >              pool: macos-13
+> >            - jobname: osx-gcc
+> >              cc: gcc-13
+> > -            cc_package: gcc-13
+> 
+> As far as I can see this means that we don't install GCC at all anymore
+> via Homebrew. Does this mean that we now rely on the GCC version that is
+> preinstalled by Homebrew? Won't this break every time that Homebrew
+> changes the default GCC version?
+>  
+> I may be missing the obvious.
+
+Yes, we'll have to update to a different version when the runner image
+stops carrying gcc-13. But it's not based on homebrew's default.
+According to:
+
+  https://github.com/actions/runner-images/blob/macos-13/20240506.1/images/macos/macos-13-Readme.md
+
+the runner image contains gcc-11, gcc-12, and gcc-13. So presumably it
+would be a while before gcc-13 ages out and we have to bother bumping. I
+do agree it would be nice to just use the latest gcc in the image, but I
+don't think we can specify that here. I guess we could say "gcc-auto" or
+something, and then the actual shell code could poke around for it.
 
 -Peff
