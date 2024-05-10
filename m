@@ -1,82 +1,77 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFF313CFA3
-	for <git@vger.kernel.org>; Fri, 10 May 2024 22:09:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD1613B5AE
+	for <git@vger.kernel.org>; Fri, 10 May 2024 22:12:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715378963; cv=none; b=WgiapBg+yCVsMP+oSXAcUy+HwBtslvgezd7FKqq3qr8SnWzL6ZqCXvWFAxrcCncvasCDINV7h9ENdrKmcnnEJyT/RKBsdK98ggBfPXITvmlZvCHz5iSYgDRV6bkqBwt1vs6fUN5/KQu8YrA/vOjNaTP2pp6ADYKKIbTkjcuqmO8=
+	t=1715379130; cv=none; b=gdCNdLoBLmynX1wati2zEzav7ZbTG8mq98zl89HovGv3zndo7LmzaQ0Dw0q5+yQ7JqssPUIfSw2lszxBj9Dp1oS06kLsom/Sj6TDFauT5Xz550JaLcyYr0EUyf7SUREqfe9lhgIkVV+8a+NgIVoSN4zrBnu5RzoSBu4P9xjUM6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715378963; c=relaxed/simple;
-	bh=+BNUllip+/GSzWAd7ggzcMRmkb9ACB3dCw0IhKOqkSo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aVFvnSxVcQsqjGIk3XdKa9xDqC/sw0Pwc5DpdnJoyP+ruXF99b6Uj2yLHqzI4p4fH7/OmNYb6zKf3j7Bvpd0HFHPUcBF3ImYCXCQVwrPMrSIOwQ+u47WuTMwfr76Ad55/9VsVSIehXM+aYn0PxbS7yTS1Svh86B6hrdb0RNIKoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 19614 invoked by uid 109); 10 May 2024 22:09:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 May 2024 22:09:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14036 invoked by uid 111); 10 May 2024 22:09:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 May 2024 18:09:23 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 10 May 2024 18:09:20 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Bo Anderson <mail@boanderson.me>,
-	Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] osxkeychain: lock for exclusive execution
-Message-ID: <20240510220920.GC1962678@coredump.intra.peff.net>
-References: <pull.1729.git.1715328467099.gitgitgadget@gmail.com>
- <D7A8539F-E33C-44F3-A7BF-5F5D4A26F2A4@boanderson.me>
- <20240510200114.GC1954863@coredump.intra.peff.net>
- <xmqqh6f54czm.fsf@gitster.g>
+	s=arc-20240116; t=1715379130; c=relaxed/simple;
+	bh=1qtPAkslTcmnrLPo5jTzchFg7HQ0i+HbfVaYVTGnjWE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AdCzgMNfFnaVrjXi6jbUNN2LtJctPc1ZwNr/wpolVNajXK3n7smJVRlI9ClJgp3m0eHOrp47Twsp/8g5gXzxL30Rrjc7+AulKArL71btqRRxNjETc5TnTO1ITCyqlPI1Xk9/aPkFUu8ufxnouBjAzpZJIogGqJPLNA2cj58VjfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fnthUAPa; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fnthUAPa"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2769E342BF;
+	Fri, 10 May 2024 18:12:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=1qtPAkslTcmnrLPo5jTzchFg7HQ0i+HbfVaYVT
+	GnjWE=; b=fnthUAPapqsBdLg0wsJNGeMvr3+Ow3AxzGycFkxyEc/sur06e/15Ot
+	6q1sLqjK4bCkwppu4pLwdnGEhiIrb8p2krWm7loi5jf4RJ1Vyl+mPR45k5DdQhii
+	FUA5AjVYbQjga8bC3U3zQZml19L+bpajFdUAaOLPcBO5iBZFgPCsQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EDADF342BE;
+	Fri, 10 May 2024 18:12:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A6ED4342BB;
+	Fri, 10 May 2024 18:12:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Justin
+ Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 10/11] reftable: make the compaction factor configurable
+In-Reply-To: <9d4c1f034038df2ae232b6665a0d9d7ee5833c5f.1715336798.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Fri, 10 May 2024 12:30:05 +0200")
+References: <cover.1714630191.git.ps@pks.im> <cover.1715336797.git.ps@pks.im>
+	<9d4c1f034038df2ae232b6665a0d9d7ee5833c5f.1715336798.git.ps@pks.im>
+Date: Fri, 10 May 2024 15:12:03 -0700
+Message-ID: <xmqqy18h1fm4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh6f54czm.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 5556030A-0F1A-11EF-8C6F-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Fri, May 10, 2024 at 01:40:29PM -0700, Junio C Hamano wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >   - we could remember _which_ helper we got the credential from, and
-> >     avoid invoking it again.
-> >
-> >   - we could record a bit saying that the credential came from a helper,
-> >     and then feed that back to helpers when storing. So osxkeychain
-> >     could then decide not to store it.
-> >
-> > Both of those solve the repeated stores, but still let credentials
-> > populate across helpers (which I still think is a questionable thing to
-> > do by default, per the discussion in that thread, but is the very thing
-> > that some people rely on).
-> 
-> Would "refreshing the last-time-used record" a valid use case for
-> the behaviour that feeds the successful one back to where the
-> credential came from?  Such a helper could instead log the last-time
-> the credential was asked for, and assume that the lack of an explicit
-> "reject" call signals that the use of the value it returned earlier
-> was auccessfully used, but it is a less obvious way to implement
-> such a "this hasn't been successfully used for a long time, perhaps
-> we should expire/ask again/do something else?" logic.
+> When auto-compacting, the reftable library packs references such that
+> the sizes of the tables form a geometric sequence. The factor for this
+> geometric sequence is hardcoded to 2 right now. We're about to expose
+> this as a config option though, so let's expose the factor via write
+> options.
 
-There was some discussion in that old thread about whether that was
-important or not. I don't have a strong opinion there. Not refreshing is
-a more secure default, but possibly more annoying (and a change from the
-status quo).
+Hmph.  It is unclear if having this as uint8_t gives us a useful
+enhancement, but perhaps in the future hosters may find a more
+aggressive geometric sequence is better for their workload or
+something and raise it to 3 or 4?  I was actually wondering if a
+base smaller than 2 (e.g. fibonacci) may work better.
 
-I do think brian's suggestion to use state[] to pass it back means that
-the decision is then in the hands of the helper. So "credential-cache",
-for example, could decide whether to refresh its ttl or not, or we could
-even make it configurable with a command-line option for the helper.
-
--Peff
+Anyway, making it configurable is a good first step.  Allowing a bit
+finer grained setting than just integral values can be done later if
+it proves necessary.
