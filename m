@@ -1,144 +1,129 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7581A172799
-	for <git@vger.kernel.org>; Fri, 10 May 2024 16:19:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B33CA6B
+	for <git@vger.kernel.org>; Fri, 10 May 2024 16:33:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715357963; cv=none; b=S4QfvPT1iLcHZppvspBeVIPv1fVfKq/gF3ZAaRI9kcBznvhN9+5m2spTp0G30O3CI5A+lxVFEODVpE+qc6jWIZGRZFXuWjZovWCbUAh0nJI/7A+zoKATN/EK6/dugXZSr56McODmWVG1Knu35fZEMI8+Ikq+/m/5gOyAVWIBkwk=
+	t=1715358796; cv=none; b=AA1mCTIOvubZypseAYBl33FVWgwzGd+fpf+gL7d2R2Z9uQDm+iUCvK9gpL1G3F902VfRqokvDs8Ur/0bE6q9NCvURF9bMLIZE6CyV+Snq+b58Er0jmSKYmP+0lGvzxa11hqtBQAMuHUy+d0Byg9/Pr07GZsUzjTy/cf8tg+JEyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715357963; c=relaxed/simple;
-	bh=KUq9x8ww8YGLPeAkgC7Qo9Cr2DwIqBKluWp3hVRPTus=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FFpiRmY5oUij8ePrzguw0qyGrRohZsLxyyoXs2gT4PHOlmlEh83xYyrrRTYPC1uqILc1C0oSq93FITD9x7PfJ5xdmuPab9rGC3K6tEl+LKJ2B0NapHnTPrc+4pzdVE/XaNrR2lx5NWDsueXO1r+Mpj7HkUxMxdv/pN6zv90oicE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PVt5Zt5s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CfcCuKgx; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715358796; c=relaxed/simple;
+	bh=1SVOA7oob4lIPb/mDmbnjGEE1DUhSFoj1FAPv1ERzzg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BVk6O/F56GjF3FvPRDkLZkZurLguyCU75Pdda5mUH6h/WDmnRP485rdN3MQMy7LRtHB5nfRzGMX1uuICB5PqqDPLjoFBHYNpqJ1x602DdLyg4yWS7yo8/Igzy+bRBRClOy4VKXklXNe6OpPPbpmXO93KG3gjcgyoOKIQi+l1C/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bIfvDaiL; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PVt5Zt5s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CfcCuKgx"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 4F9081380258;
-	Fri, 10 May 2024 12:19:05 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Fri, 10 May 2024 12:19:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715357945; x=1715444345; bh=dxsBv5Pd9Q
-	fR32nefEivgqWwJ0WWAU9qVrBM3Bq4s0E=; b=PVt5Zt5sms599r7cXPpF4CsESC
-	Eguz4l5UmijnOoaX+8aAvTMyXMWcx4LiTS34FN3VPhrEc8u3atOOxf756KnU/rXY
-	VzjovCRCl/8VY98t/JeOWfZ6RtiIb+3F4yrKBmp6BJcYhbwEyn4tMSxvp/jTCPXx
-	a7a8wVPU6VBUVjGe9S+P6LPLJbae2E4dWVl10IfxOsEucNKrzVtBYJcPTXzuB3mz
-	yFMR18o6fbXwA30MdfCHA4I3FMVYZ0qUb5MbQGoK6et813TOmd2YUV+Zu/koHHix
-	EYvNmrltExC6fAEZFABrgKhQrTigWj4FeMuzbvce3aSnWFt21f+YZ+ZJUiyA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715357945; x=1715444345; bh=dxsBv5Pd9QfR32nefEivgqWwJ0WW
-	AU9qVrBM3Bq4s0E=; b=CfcCuKgxvJCRfLfKw+vsOuvN2ODTozc/OIm++4+sfbzq
-	eT5GEkWpnz/u1QTXupk1dv2B7gwIlm6qv4/XfUcrGxVTK8H7GdNSpe1UDfbH945v
-	nmJZG9990mto/6JGrDYsuqwqhghrVunW3yfl0W64UE9IUfBjXRJLNg4uS3jkk+kp
-	GbchVUpFQunA9upsSHZci8wLR+dGX1gKQusTQTQBRHbYf6X2zOZhw83iKyeyDJli
-	kp0sU9iycc2vxeVrzy9iGY27WwFjjCTY9pg6I4mn/kAr1nuhkjyQc7CXHmKw/uT5
-	yaON/+aPniqs3Db2/epcP4sEMmxRYga7FDcLNrZ1DQ==
-X-ME-Sender: <xms:-Ug-ZtxwM_PiWkWe7QDstlZTTnY-8JIkV-XoYegvpnwg6XJILOy68Q>
-    <xme:-Ug-ZtTREt_RIBu-4puppEiFcg8BOkV63QJ53NL3k9K_zlZMHZERMqcJ_9wZx8-Me
-    QxtsVb7Bi7d_g0IrA>
-X-ME-Received: <xmr:-Ug-ZnUnWCIwhQZiAAwdyusXz9j3iLDEma5YI1oZBLay1lpzeLl9Ako4GFG4Xl7IQkZkbFq7Hc2F3-EiECwvrt71GKt9FxBOn_vjUOvOU0cxlnBaog>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefkedgleekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:-Ug-ZvhWu-0ElAd1LSxn3YtFR4WAQHEBOUBZiVwQ1pFywfxPA317fA>
-    <xmx:-Ug-ZvCbygHQzrHhaDk6MGmbyrzrI2z0lFzj033_7yn6V1ExGVDQBg>
-    <xmx:-Ug-ZoKhhC0_0zSzmE8YrfO8U6p2CDhfItAno0en3ZbXeXCj4g1aPw>
-    <xmx:-Ug-ZuAhCZ3R0tpW1yc_YpIc5PFTb2X9JbHx17skdpub7whhVeKsIg>
-    <xmx:-Ug-ZmP12jlVKnwkRrfRs7vPMDEGiYylf-k8ERnTRZ8Uyke-i2m7gyLL>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 May 2024 12:19:04 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 20b7968a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 May 2024 16:18:49 +0000 (UTC)
-Date: Fri, 10 May 2024 18:19:00 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>
-Subject: Re: What's cooking in git.git (May 2024, #04; Thu, 9)
-Message-ID: <Zj5I9J-l24Pk-10q@framework>
-References: <xmqqfruqsjb6.fsf@gitster.g>
- <Zj3SsbHLp-gH_Jey@tanuki>
- <xmqq5xvl7k97.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bIfvDaiL"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-41c1b75ca31so15576685e9.2
+        for <git@vger.kernel.org>; Fri, 10 May 2024 09:33:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715358793; x=1715963593; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6+J6QbfCLgE5yqvmnlv9nJFB6SY4EDebUXOZJfDVuSM=;
+        b=bIfvDaiL5+fqP/GfxlSqqPFvyQD6sOejmiebFq2oie3FoWqdOFKaDPgDaITTeYdGiI
+         +z13J2nKhFymEWdC2yZjUTTmT1II36mVOQZMUL0+L21RX/ZhrRM+IBB6jED2BblVrTpt
+         jJmYewTElSc7ratFbzTYzy6Sy2+AdXMhf1j/jqMTbYIEzZ5gtjflRzCn71BcLr/G6T/A
+         bi5ff8X1DVXec7joR7JyHxZge1V+DTsHZzwy1VGm8CFHbt/G4a9Pxmrcp/fnDn9XHsV3
+         p+Q15YhTEE9Zn4LHWRsEgYwdbi7imEzK1Eq7szuUoTMifi76+OyvI3GMMk9sZ0rH9FBM
+         ns1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715358793; x=1715963593;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6+J6QbfCLgE5yqvmnlv9nJFB6SY4EDebUXOZJfDVuSM=;
+        b=lhWKMHQc4QdvHy23/DFke0FhSsMvc6rvkQbxsBuYJWLkIv0UujkMWL+IbRHIySYs9Z
+         +LXKaWR1Vf0D8g7DFndntHX1XEk0TIFKGw0h+bOM0K6ii38D9Y0LRpZZAtkUWUFVv7qU
+         U8UmicWDsL2TUvdnVmQCYKugST9NNCeOmbtzBmroxMaMX5S0pFmOrTa9c34mGD+11tbK
+         fwhhOIt+xxM5ivnz3UjDxQMq41y9mmRxioWpJJaZpk6fq/wkc93czlngRtsFEK9T1cvi
+         FCtFkmThM4mLfMK91RW4+h9P143RG4QxB6IVwLJiudRURws05UZtLndYCl06nQ+3q8Yw
+         NYSw==
+X-Forwarded-Encrypted: i=1; AJvYcCVN7B43IYrc1UrVA4I0W3bn+B0xV61jWiGviuQ0vY9hulgDFp7k3Iwt2ljzaz0ypI5MVm8L8eFQy+QupTeLszHPrYlz
+X-Gm-Message-State: AOJu0YyIGVY6/zBIhML6nO7mGk1oHX6yN+RIR27dka4YPyI/zBvv1vTL
+	x3IGbN2zv0wYsDyvgbnmmE1n7HNn5A8bivLdwBpN/yjCWToR9xnU
+X-Google-Smtp-Source: AGHT+IHiC/JUI3VEKwN6KJ3azIuxzwyu6X/85zZ6fOQPgHkXE6o5n+CVLI3JHIahX5fi58LJJXsJMw==
+X-Received: by 2002:a05:600c:450e:b0:41c:2499:fa0e with SMTP id 5b1f17b1804b1-41fea931878mr28535565e9.4.1715358792741;
+        Fri, 10 May 2024 09:33:12 -0700 (PDT)
+Received: from cayenne.localnet ([2a01:e0a:d1:f360:88a3:1fd3:d5ae:2efd])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41fccbe8fa6sm69497325e9.2.2024.05.10.09.33.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 May 2024 09:33:12 -0700 (PDT)
+From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <avila.jn@gmail.com>
+To: Helge Kreutzmann <debian@helgefjell.de>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: Peter Krefting <peter@softwolves.pp.se>, git@vger.kernel.org
+Subject: Re: i18n of git man pages
+Date: Fri, 10 May 2024 18:33:11 +0200
+Message-ID: <1968476.PYKUYFuaPT@cayenne>
+In-Reply-To: <xmqqedacxdv1.fsf@gitster.g>
+References:
+ <Zjuokc2H0zI1JCVH@meinfjell.helgefjelltest.de>
+ <ZjvHoykzIo34YJaT@meinfjell.helgefjelltest.de> <xmqqedacxdv1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="l9FfbspKoAVPWk9c"
-Content-Disposition: inline
-In-Reply-To: <xmqq5xvl7k97.fsf@gitster.g>
-
-
---l9FfbspKoAVPWk9c
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 
-On Fri, May 10, 2024 at 08:35:16AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+Hi Junio,
+
+On Wednesday, 8 May 2024 22:12:02 CEST Junio C Hamano wrote:
+> Helge Kreutzmann <debian@helgefjell.de> writes:
 >=20
-> > Just in case you missed it, there was a review by Justin already [1].
+> > This mentions https://github.com/jnavila/git-manpages-l10n, so I can
+> > point our translator to this source.
 >=20
-> "I read it and have no comments" is somewhere between "an invitation
-> to miss" and "it does not highlight anything, either positive or
-> negative.  Was the topic that uninteresting and uninspiring without
-> anything noteworthy?".
+> That is a good move.
+>=20
+> Perhaps we should make the manpage l10n project easier to discover
+> on our end to help volunteers.
+>=20
+> Possible places are the "SubmittingPatches" document in our tree,
+> and "the Notes from the maintainer" letter that are sent out after
+> major releases.
+>=20
+> Jean-No=EBl, how does the following look?
+>=20
+> Thanks.
+>=20
+>  Documentation/SubmittingPatches | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>=20
+> diff --git c/Documentation/SubmittingPatches w/Documentation/SubmittingPa=
+tches
+> index 384893be1c..b36b3d9919 100644
+> --- c/Documentation/SubmittingPatches
+> +++ w/Documentation/SubmittingPatches
+> @@ -562,6 +562,13 @@ repositories.
+> =20
+>  Patches to these parts should be based on their trees.
+> =20
+> +- The "Git documentation translations" project, led by Jean-No=EBl
+> +  Avila, translates our documentation pages.  Theire work products are
+> +  maintained separately from this project:
+> +
+> +	https://github.com/jnavila/git-manpages-l10n/
+> +
+> +
+>  [[patch-flow]]
+>  =3D=3D An ideal patch flow
+> =20
+>=20
+>=20
+>=20
 
-I figured that this might've been it.
+This looks good to me. At some point, the repo should migrate to a dedicate=
+d organization (maybe git).
 
-> There were mentions of a new document for reviewers, similar to
-> SubmittingPatches is for contributors, and it would make a good
-> section to document recommended ways for reviewers to demonstrate
-> that they understand (1) the area, (2) the goal of the patches, and
-> (3) the implementation presented, better.
+Best regards,
 
-Right, that's good feedback indeed. Ask questions, reexplain what
-happens with your own words to both double check your understanding and
-demonstrate it to others, ask for alternative ways to implement
-something. These are all ways to ACK a patch series that otherwise looks
-good to you already.
+JN
 
-Thanks!
 
-Patrick
-
---l9FfbspKoAVPWk9c
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY+SPMACgkQVbJhu7ck
-PpRp+Q//S6dPRb7/ou/fY+mdm1wBtpurf+e8gRxsuJ138z6RiL+2l8EROoShGSvY
-0y4V4Y1AtpMJg3/QwTN1DJRVoe9a41phuwhG/+SEGcPbZF5cTvm9Nimbf+WtWInr
-2knYfkz2RgEt04wpe+OHNGYDpDQrt+0kKvJfEcl70eRPqcV/PlFoHpcEfCmn45du
-23PuENE25EgUqETVM+KXiK57MkoaHHmIPHfGsTC8uFS7E0H09BjY2D1Za3+iIeEI
-wOyKSi58vz5VtOC7GSDW5acyOqaLNMAme613fVJx9vACARHm+0ir3pHwhVXtTpCf
-bf08M62T0YoewU5iui/XsQr/jkigB7WWJ/85k4O3FxsfHWDzyG938J6GtPyoHFzE
-4TYppxZaagQpDcoxX59/QaTsleJgHGxggFP1H5lxqjyhhNq9Jf+qua8iTNpoy/ZY
-+8wUYjMMrHz6MSj8sxBSiCncVR4S1y9AijMYYRg4IhEttwWTbudaTIuYHSTuw8yi
-nfc2iAAkQzgsx1+RchWtWWfSDKkSSVJlgnXisj1WQfIu2/Y3waZwtdQA2gBbyTyk
-zSNc3mXKUcRdE0GtsCDlNbIwWxUjWsRZFTTID93bhJqNwfKqZWwwkCsqzWC2BHJh
-Hz1elyKd/UzJWI2WPJ/pgr4s50vb4Cc+zhltntXkFZWgQldmdqg=
-=tRe8
------END PGP SIGNATURE-----
-
---l9FfbspKoAVPWk9c--
