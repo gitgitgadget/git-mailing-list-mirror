@@ -1,149 +1,187 @@
-Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772B115279B
-	for <git@vger.kernel.org>; Fri, 10 May 2024 07:00:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D941215EFD6
+	for <git@vger.kernel.org>; Fri, 10 May 2024 07:39:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715324426; cv=none; b=Ue7hTki74YGVJZsEx8//IXYeVbfmJlC2clbKRk1VuQEPsNAoRhq1NZ49MaOCKrI6RwmbIiZ6/aE8VkBccS0QNGgt1F5QOTqHAInOG5UTnHCt4suOKG6muPP5V0ct0ZRwp8QakKoYdGJZq1EgCg85rACI6Mt80rhCKf3MPkoKIbw=
+	t=1715326747; cv=none; b=cXIMOqaU2vaKpx1DT/w9hlBTxJ9KjIKnm7YNkjXVALIPTHvpsH6Sck92CjnGtcoH/4BCgz/iWi5hCW7OJeenkiveVEdUXpoXvC8tJciumpkNoeXw5p8KxBWAOTi3O6qBUdSC/uLbrucR4cbC8QEd6i68Fv2052u5ORKF8Z0ZlI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715324426; c=relaxed/simple;
-	bh=UHEq5UG+Czqj1OFuFNEDrdfe4LcKDSAdu3xBxUxOMkc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rIZPXm5ZJtGkrqF2/yczITem8u0VSpcTGwDFnnAoxar/V+KdNqvvah+LHqmvBRsu04K5jVae2aTCevFJxvvjcqsHCAF8/oI2iWmtomq8OBjwEc9x19e2OBBql5HowXpJJ4KdjCnBFFPW5h8Olc898shA5Ysw5mcqMGAC46jeqQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MHMWaOiQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ks+wYcZa; arc=none smtp.client-ip=64.147.123.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715326747; c=relaxed/simple;
+	bh=i0u066TVnJJiQoajadxNLvLzRDZIRazozG6Qb33AUzM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=oXg7SsCWQyirBwdoFDkCscJozvq+DE13ygD5JQJpT5kJKO9aZaAqMtmJr811k7yoIDoykdheJ0uNi7XwsivVR+qUxzvasZmyWVQ0JRLHYWKQwarn5Qkygq2XxX4jgPr1Mace0GgpFYnnvdDFMpQvbjBnd7VEMpg4Vfl/lF9c90Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B0EZhDbP; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MHMWaOiQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ks+wYcZa"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 95E6C1800114;
-	Fri, 10 May 2024 03:00:20 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Fri, 10 May 2024 03:00:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715324420; x=1715410820; bh=UHEq5UG+Cz
-	qj1OFuFNEDrdfe4LcKDSAdu3xBxUxOMkc=; b=MHMWaOiQbspcFUZqNMTapkA8Df
-	/NCaMiltSNJRR6+jUAwYgIvjWeByTJdFyD9ofoIYNGs7kJg7XjneR4C4R5am0Q+U
-	DylsqVS4G7cA/oS63Axa2TqemUwtKzhO8miIwrJdSxjCUNrQ+0eUW+DiWGsFkBPt
-	0RNEjmCaiHIsWq+iielk6n/gORih+5op23t7Hi8MnEqaWDPJxGG7lq/xurqZACtS
-	xr8e9y1horb0bKztWdJnlAHXfFnvwnfCFu0znxCr3nHH9A0i5OFM+JCZKNcuZqCJ
-	RgWtbIA9fYl4vuQcAYUjiuBXPKL23mUffwkhXuA1d7LQUg4k7JfwLGgOJnbg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715324420; x=1715410820; bh=UHEq5UG+Czqj1OFuFNEDrdfe4LcK
-	DSAdu3xBxUxOMkc=; b=ks+wYcZa+yESzuHkKSP7byAGFE9yerixByeDb/5hjVhR
-	qTkZ2ljGYnjo6fMYOrWK45H6T/gP3zsA9XpPUB3QRkcxe30qY4jBs0KmwyTnNDC/
-	pHm4AHUQ/fOV3/f3ItwMzgtHI2grIhoihqRjy9N3bGWNLUcFq+1ewreAsth5fgKa
-	ia0C4ljJ1Y3FihG64UYYKMnPTOC0eApkRkCbyYWyCcp1oVsk+olaYg9XtVj0QH8e
-	y4TcB/ut+O+hUeakeypsYtWKCcG8mfQC975scBrLX7EfR4OiO5jD4k6TItxPA0SY
-	uKX5El2v7+LtjNOrwk0m8sGqjXDZ/oZwPVQmJ+UsVQ==
-X-ME-Sender: <xms:A8Y9ZoC4V160nRx2cVMX5j9i8yG_QY51Tunh8fUj_eAmscfVRky-YQ>
-    <xme:A8Y9ZqiqEllE9rP3KOd6ZwbgjYnf5iXiJMCM9zIgkWnIg_2Vwcgoiqt8Qwnnb1_Rs
-    7MqFuUiliT27JxNBA>
-X-ME-Received: <xmr:A8Y9ZrnxhaxVG3OWkK1BaYEMOgBB9uPxV56FyJ9nSjWgbHRGPDX2gL5R75mXB9ktuEfCMCLIRd2G3UAdmzBLUzAIzPPA6dfmP_w69ACHPdyFFMj2GA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefjedgudduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:A8Y9ZuyNo1XNLzfpKQM0At33DMV9-m4k14e-OSk7tc7I8Ym9E-U2DA>
-    <xmx:BMY9ZtQ5-SH0nHmetfdRt9XcJWvJWD3qyeqEzGloZqwPD7QVsRIIXg>
-    <xmx:BMY9ZpazaAnsak-ZPehv6NaDr_jXJbqSzs7lbSoovujyZjMqS-J-bA>
-    <xmx:BMY9ZmTM0ie4G8MSjIECIG4tKCgs1EhK0qdYcDL0slIlb1uQ6hg61A>
-    <xmx:BMY9ZoctevDdh_n2eiQTrOQUcgpUxoLsxN5ImdJXkMFYQxDl-mPId1fG>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 May 2024 03:00:19 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id bf31a2a3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 May 2024 07:00:04 +0000 (UTC)
-Date: Fri, 10 May 2024 09:00:14 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] ci: avoid bare "gcc" for osx-gcc job
-Message-ID: <Zj3F_paYzkQUC9fC@tanuki>
-References: <20240509162219.GA1707955@coredump.intra.peff.net>
- <20240509162415.GB1708042@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B0EZhDbP"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-41ff5e3dc3bso2151485e9.1
+        for <git@vger.kernel.org>; Fri, 10 May 2024 00:39:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715326744; x=1715931544; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EYBF+SWmc5dHUTRdLw4/wJvzX7A8LBxCd3d0y/LEUdo=;
+        b=B0EZhDbPjIoxQ4pnGACNqcItTTXVKdQ7LkoBIK4/zvKaNpcTyPlAy+2lRJerh9IOG0
+         R8PY8v4sqNZ0H8KcCNdc5Yvzwiwanw12lhIm/db483DxTE77Ysq/JyPkRmjqVKeW8KRj
+         Yz5it9ZLLCQc4wOw+sKrf9SeIq9ClM0toXjrfZmqnavaiTV1CBsvLWoySsvBg5u4a99x
+         5k+37hgCUiDwRhVwpxqp8HS2Ta4WkotHiTfyjcxozFHp4v3VHsk7LZlNRaqoe6DWU5/1
+         yxhfPdDp62u4dzkkQhHaSiv1yalqj+ztb2EQeeFwZH0G3tnl2pR3i/DZ2g7WtnFFWsly
+         yTNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715326744; x=1715931544;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EYBF+SWmc5dHUTRdLw4/wJvzX7A8LBxCd3d0y/LEUdo=;
+        b=DnqJuMPy0MUuzYjbzlx3KO8+or7IpOJRaDNe6/NkaJ55uGiUm3/vYjExVoI311zkd2
+         8WFsxoCuMMRCgWVYHhLGD672PpJExiBFNg6wIneb5qGAFEe60q6sM55e4T1EduAhIM0f
+         dUle410tz2N7t3zSIcDsQGSCtm02gFyvFzmn0jrPgUYdUUaVJ3/2HgosHdSAWMWlWJ5u
+         U1GPhwrJxCvbogE/k0gvHuhn+lgv8N7fVGB+WJRsClxJF2th0y/AmDCve/rnUW8PvW4n
+         QbbU6FdUdvMdbQjSHdaxfM+jId5BYZt1Tso9P/iBaio1HAPsulNUv7E6iajNRM02sok8
+         J4WA==
+X-Forwarded-Encrypted: i=1; AJvYcCUDoWiU6N7QvNWFUgX8O4llndumTap/ehH3xFNfy7GbkDUNNxScyJQ7S662GIioyDrSgfMIKpS2Fu4DLmFf7t4qzTHo
+X-Gm-Message-State: AOJu0YzJinKai18HLZuHPctM8iN1do6kFO2KEPTu+R9QnumoIz7onRsS
+	S0gmckegs9L8ICOuirdfnpMHUL6WwSif+dp54U+8wwM79PtM8KH6
+X-Google-Smtp-Source: AGHT+IFwjtDr7klfUpoBKLDbBEmc8eyE91zE5uW4Tr2el81p1qX/dz7M8UqRtlyaSsNoBhrS2K5qqA==
+X-Received: by 2002:a05:600c:4ed4:b0:41c:f64:2f5 with SMTP id 5b1f17b1804b1-41fead65a50mr14753045e9.36.1715326743736;
+        Fri, 10 May 2024 00:39:03 -0700 (PDT)
+Received: from cayenne.localnet ([2a01:e0a:d1:f360:a123:39fa:72d0:c0c5])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41ff6cbe992sm13141375e9.6.2024.05.10.00.39.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 May 2024 00:39:03 -0700 (PDT)
+From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <avila.jn@gmail.com>
+To: Peter Krefting <peter@softwolves.pp.se>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: Helge Kreutzmann <debian@helgefjell.de>, git@vger.kernel.org
+Subject: Re: i18n of git man pages
+Date: Fri, 10 May 2024 09:39:02 +0200
+Message-ID: <3298196.44csPzL39Z@cayenne>
+In-Reply-To: <xmqqr0ebuft5.fsf@gitster.g>
+References:
+ <Zjuokc2H0zI1JCVH@meinfjell.helgefjelltest.de>
+ <d130d861-0071-33ef-5d40-9fd703ff97f6@softwolves.pp.se>
+ <xmqqr0ebuft5.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5P8C+aFBO7o/a2+m"
-Content-Disposition: inline
-In-Reply-To: <20240509162415.GB1708042@coredump.intra.peff.net>
-
-
---5P8C+aFBO7o/a2+m
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 
-On Thu, May 09, 2024 at 12:24:15PM -0400, Jeff King wrote:
-> On macOS, a bare "gcc" (without a version) will invoke a wrapper for
-> clang, not actual gcc. Even when gcc is installed via homebrew, that
-> only provides version-specific links in /usr/local/bin (like "gcc-13"),
-> and never a version-agnostic "gcc" wrapper.
-
-That's awful.
-
-> As far as I can tell, this has been the case for a long time, and this
-> osx-gcc job has largely been doing nothing. We can point it at "gcc-13",
-> which will pick up the homebrew-installed version.
+On Thursday, 9 May 2024 18:10:30 CEST Junio C Hamano wrote:
+> Peter Krefting <peter@softwolves.pp.se> writes:
 >=20
-> The fix here is specific to the github workflow file, as the gitlab one
-> does not have a matching job.
-
-Indeed we don't. We could add it, but that certainly does not need to be
-part of this patch series.
-
-> It's a little unfortunate that we cannot just ask for the latest version
-> of gcc which homebrew provides, but as far as I can tell there is no
-> easy alias (you'd have to find the highest number gcc-* in
-> /usr/local/bin yourself).
+> > Should it also be merged into the git.git repository as well, so that
+> > translation can be synced with the upstream version? The problem with
+> > an external project is that it is easy to forget about.
 >=20
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> We'll eventually have to bump "gcc-13" to "gcc-14" here, and so on. I
-> don't think we ever cared about gcc-13 in particular; it's just that
-> older versions of the runner image had some ancient version which we
-> wanted to avoid.
+> Carrying an extra tree that has been (and I suspect will continue to
+> be) managed in a separate workflow and by a separate group does
+> incur coordination cost.
 
-As an alternative we could munge PATH such that Homebrew's GCC is found
-before Apple's.
+I totally agree with Junio. The workflow is different and it is already qui=
+te=20
+difficult to mix the long-running process of translation with the fast-pace=
+d=20
+life of patches in the documentation. Moreover, the translation needs to be=
+=20
+opened to contributor who are not techno-friends and will not be able to=20
 
-Patrick
+>=20
+> > Looks like I had cloned the repo and intended to do a Swedish
+> > translation back in 2019, but never got around to. I guess the lack of
+> > visibility made me forget all about it.
+>=20
+> It is exactly why you are seeing a proposed solution to raise the
+> visibility that is much lightweight and has less chance of doing
+> unnecessary harm than merging of the project into ours.  The help
+> the would-be translators need will be there.   To end-users, I do
+> not think it matters in today's world where the manpages come from.
+> The distro folks are there to absorb different ways translated
+> manual pages are done by different projects, and I can hardly
+> believe that our project is in any way unique.
 
---5P8C+aFBO7o/a2+m
-Content-Type: application/pgp-signature; name="signature.asc"
+It is not unique in using asciidoc as a single source for documentation. In=
+=20
+other projects that I know of, the documentation is a sister project in a=20
+dedicated repository.=20
 
------BEGIN PGP SIGNATURE-----
+I try to present the translation of the man pages as coupled with the=20
+translation of git itself, for consistency purpose. The translation of git =
+is=20
+already a large bite in itself (15481 segments at the moment), but the=20
+translation of the documentation (which only concerns a subset of the whole=
+=20
+documentation) is really a beast:  73976 segment!=20
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY9xf0ACgkQVbJhu7ck
-PpTUhhAAoza89Mottv5uLMSM0rkV3FbW/5xZye0evN7yB/Va8WURkLa0xIus169m
-PS0I1fDnMM/GJ4liFD7x0Fr12rLrVR8Ciun/zgeRLAPqdaG/+knA5xikKDl9LVTh
-IbAcJr/hh6sARExeZaKeQDkbxidG4J6pmxzbJXgSkEgsY+4BpGI4xdDLOj2z0Afx
-2wpcHwddGMWFEvKv7W2e3Lx1xUpcv8k5IbhXowdL50SDmLpOOk1h+R4fO0GO1bWU
-7LAWAwY8J6i5A7oX1Z6ZVvxND2BrnpzLKmMuwNRVeEKKKwMPJa9PXF7vV56Hl7dN
-4AJYrxxZziLFOGr5r1XhK89uvkH26Ht/5dCHvJ4LoKRxfcFsWCLEowDsBezhOxQ/
-xWIW9Q7qi2WA0T52N1koFLItuwb4PJ4zSwObGp3znTGPTGOr8GXOxK7l4rnEOzSY
-pmo9fnPqU9u9SlSiCYV2igyEuBAnMZGnKhHR/IRKiXfOm0NvIPHqtHVOpFKC3tbY
-mBAPZsysPWLjLWwkXzebeu+RQKljHfvzZlbKSDol6Tjpl9v/rAQQhdpkyuC5HGSX
-Gx/Opq8U38Cc99YpnxpEnIn3DHsSCCfIA4LmJZg1KwdDUhhGsEyZkxab6rsQUBRo
-VFOdoJOTyDOS3v4Nupwue3+MlAfcVQqAIna/WH/0TlBozuKteE0=
-=Zo8+
------END PGP SIGNATURE-----
+The absence of visibility is mainly an issue from my side, due to a lack of=
+=20
+communication. I could propose as a reminder to publish the translation sta=
+ts=20
+for each new Git release, if it helps remind developers of the presence of=
+=20
+this project. Honestly, this is not really the targeted audience for this k=
+ind=20
+of work. Currently the main source of translators has been through the litt=
+le=20
+ad on https://git-scm.com, with most of the contributions coming from Webla=
+te.=20
+Giving more visibility to the presence of translated content and to the=20
+project on git-scm.com or in the community of translators may have more imp=
+act=20
+than on  the git mailing list.
+=20
+>=20
+> I would like to hear from Jean-No=EBl how the manpage translation
+> project wants to proceed.  I do not fundamentally object to taking
+> an approach similar to the one we use to manage the po/ part of our
+> project, where I can normally be unaware of what happens in that
+> directory and leave it to i18n coordinator, but I have a feeling
+> that even such a light-weight integration might affect their
+> workflows at the manpage translation project side, which may or may
+> not be acceptable on their end.  Also to go from the work product
+> they have to what our "make -C Documentation all" produces, it may
+> require more build dependencies (like a version of po4a with a patch
+> or two that are yet to be accepted by the upstream), plus updates to
+> Documentation/Makefile, on our side, which might turn out to be an
+> overly high cost relative to the benefits both projects gain.  These
+> unknowns need to be resolved before we consider heavier proposals.
+>=20
 
---5P8C+aFBO7o/a2+m--
+Normally, I would synchronize to the releases of git, by updating the po fi=
+les=20
+and  opening an update window when a rc is tagged. At the end of the releas=
+e=20
+window, I would push a new version of translated asciidoc sources.
+
+The translation process is not fully synchronous with the releases of Git. =
+If=20
+a large chunk of translation changes has been proposed on weblate, I can pu=
+sh=20
+updated versions to the project and publish them on git-scm.com. Note that =
+I'm=20
+not polyglot enough to be able to review the submissions, so except for che=
+cks=20
+on the asciidoc formatting itself (which is mostly scripted now), the=20
+submissions are accepted as-is, like in most translation projects.
+
+The size of the translation files already gives some weight to the project.=
+ The=20
+current repo size is 50MB.
+
+All this tells me that, except for the missing visibility, the current way =
+of=20
+working is good, and trying to merge the doc translation of Git into the ma=
+in=20
+repo would make more trouble than needed.
+
+Regards,
+
+JN
+
+
