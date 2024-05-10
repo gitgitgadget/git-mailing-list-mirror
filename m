@@ -1,198 +1,307 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE921B285
-	for <git@vger.kernel.org>; Fri, 10 May 2024 17:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A23B22F19
+	for <git@vger.kernel.org>; Fri, 10 May 2024 18:26:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715363869; cv=none; b=fZb/3p+nS549qElbZc8pEM24j+sxvXSR0wagGWJwOjNMhZPZ0bwIvTGd8sVgcu1ZzdP6BRhIcL2awB89+vx9vkUsXq1GnvYjJUfiUaWWyslFvnGV8aIdkZ/n1k190PgaVlZz+Mu9KOOHh3uIvRxnqwevFBb78oRwnOQK9GfbVq8=
+	t=1715365577; cv=none; b=sr8sdKABEaOokD25JpIzjyV/j3QwqxBRHB0xZCIhr+goCxF0qJNA+/IFaRQnGNHqt56kjaxM3qO6TkSZVzl9KvKs1NbmAZLgyeGqrNblVejI2vhMT2YHyACYYKgaFA5eorSVAfBV5eQdRrOEPSW8/vS19Bjf92kQn4HjkUmwn6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715363869; c=relaxed/simple;
-	bh=uXO/2JJSTdhkqoJy6FWV1R3xqLRb8p6EGmdlbe+q/I0=;
+	s=arc-20240116; t=1715365577; c=relaxed/simple;
+	bh=Y6l1zQtULSyCbt0RFjBN3DeUnYvBzOQ945rIGAu/BCE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=c5cLQ+a8vNcrG0ZWHHGpL/Fub2q1V9xs3zwnv982f7mZR/QklnCOn9fReqoba/3ozBpTLDD0eDADjj4Un5JxwzTWlNARg1/ncICzUdwa0u2c1uY1EWXVpm/7oMsA80g8oJmJJPqXQfPC8EB/6gnwxYOM9l9bv1QX7DW6qnJAm/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KKci4RgY; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=c9PMRfy6s+65BdUfAXiMmg92Lxszbn6d2bm1VyWghpvKxqCoF92r9caxt9LSVi/2hcwBRUMP6vJQrWc+3+qWFb7Rl+uN7aOJXmWUTCzNeDPp5IV7ORhTMG+QhK0ibOpbdxx7fqsA+BfhS+BmZ11mLNeUlG7hbMOomrzmIpYGQFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b=nROn3Czo; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KKci4RgY"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-43dfe020675so45071cf.0
-        for <git@vger.kernel.org>; Fri, 10 May 2024 10:57:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b="nROn3Czo"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-de60d05adafso2309294276.2
+        for <git@vger.kernel.org>; Fri, 10 May 2024 11:26:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1715363867; x=1715968667; darn=vger.kernel.org;
+        d=gree-net.20230601.gappssmtp.com; s=20230601; t=1715365574; x=1715970374; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bQYtCvk03OYNgRPSoROaZzmlqHXZTmcWcDNzOqVbbrg=;
-        b=KKci4RgYI5rTC7ezLmpDHs6ukupyusgB7J8O3pZP8E2Y6t+nqeDhzBnD+h29euznz6
-         izjw+Xp/dfyfcWnKXviISIgWNO4yUwkvW0F6LFsj2zo0zWQ/wArTGZj9ELI+DH69gPjV
-         LmmI1IAQaEQ7MNmCypY+TQ1qdSJiQibLyeHLUCMUy8EisKj4ozP5UaOCqKAaBsKHwnYC
-         EApPe7z47RQ7lQqlJHQDVpd9gPQIrDSd8X2VRZasRUkjROfR0FObMymWZ7bABw5XI45Q
-         OXjfASkFtFYfsaL3UHKyb+GQRtogfCAc1XuCE4bU4B90lpq11P2KN1SOR3hQaVjEpR9E
-         HSew==
+        bh=KB2o/sYgHuJrCCPlKMfllTVDV+Ti83YijZlQtXojR44=;
+        b=nROn3CzodA0FtlyfG4Af9Wtd94vxZHCmZp1Y5cwbxAAik0tJRpUFU3uus2SSBySXAb
+         B5SwRp7Zz6rGpF7RAkrSRToUu7IhXpcxXqw40aZg9vBMKrAuAEnsexirVzpokLVhEu2j
+         peJn1j6Bxb7xYxp8FROn4BEOp3Q9l4t8M6y5Kxut9RFlGty+bwqOBXMefqmh5Qvn8A4a
+         aZbrfKKPJeKUs3XOIyx6m/N45Nq1070hTExtDPMvInaQk1FIDrtaeh6cuWY245FOL7eF
+         pPmV2CguFzcKWxRXt9Lstvb+6vEvlP1l5TL44E/bmJmtyRVwcwa2gAsOlBz/uDmFE/6M
+         DrzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715363867; x=1715968667;
+        d=1e100.net; s=20230601; t=1715365574; x=1715970374;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bQYtCvk03OYNgRPSoROaZzmlqHXZTmcWcDNzOqVbbrg=;
-        b=jheoDUa7vLM5G5nNxAmHAUT2sKjfA713QCMGEHPug0y+A+Un0kXC2yDmniuqFNVR3R
-         /BriYzU4jfXrOQvex/lgnMbGI1N3KBI7y3UDY0OAXxjuMAOkriKdNAc7rkO8jYYJg7jf
-         tebNT31AqFLYmIkl5n1l9bdBebfKWWZME2aTFKz6xkVCjLeW9EuTwPB+fniSml4wAbZg
-         fkAC+znN6CFGqt8YcDNS9RbRUxOECkFUnPx1sHbq2dAWgydY+Op/qjrxXhPPaZEmHGvv
-         akA3k6mhyE00za52vYjsVTu0uKipCcPj6f8V/eH+qyn5d58hJN3mxEN4hoCu5iAG/MAJ
-         +8fg==
-X-Gm-Message-State: AOJu0Yz+SWETs8QgKBh9lOzPgDhnT9KoNr8WiYc3J/aYLU1l5r5m76FH
-	vuIoAUDcKSoFRBpZ5M7c53EbagzJo7XnKDJLiOaHUjuIeDoY5q358x4+rpFBo6gX8rMGrvTM1Ek
-	2V7Wd2di9/Twfl4hwJMSM8bYEq4lTqtDtAQAGY1Oc1ncWVT/oWtoUY64=
-X-Google-Smtp-Source: AGHT+IEFWzrDj55hilxV7nYr8b+NPgHUZ3OgWXTRhvQwBi1nzEl4HcbuuP7o6u6yR8kqusjhAsW/a+0JN6ppt4uLqkE=
-X-Received: by 2002:a05:622a:2a17:b0:43a:b51c:46ca with SMTP id
- d75a77b69052e-43e09732ec3mr13831cf.29.1715363866812; Fri, 10 May 2024
- 10:57:46 -0700 (PDT)
+        bh=KB2o/sYgHuJrCCPlKMfllTVDV+Ti83YijZlQtXojR44=;
+        b=a529ei0RF/b2lFG0d4SvS2ENWwDenhqTLQI38j01nn8Nq7N6mr5SgLqNKSJITKJQLQ
+         v9Ktl6l+gIIDAoQzDbwzbNde4TEOOsTgSG1i4auPFzP4VGe3bCU2NT6y/UjfZ/qZONSA
+         t2wwZhUYnyECdsZkwVrVsmtn2MHZZ9V1cfKP+mZA0tEwnx7f06hugyy7aGqfr38AS3/+
+         P0xVmLjLuzkYppoXVpJ7iMOsi4knwU93DQHe/RZ2uRhSYJZS9YWs1uJRTMNn62p9juLZ
+         XU9Y/Npj+qJ/FBlC1aKjSpVSKiB9eUpGO8Lj6aNlaFsrlvLlbdqszrbBt6VdKZ7xwHBM
+         vVLA==
+X-Forwarded-Encrypted: i=1; AJvYcCXc9RyHtWBOJk2OP/72NPDI1Jst7xpQRWCQnM0BGzOK1l/V4WCHaVRVcu+ZKk9wFXjmcZjDlCxRzQuUfkhGajWRb0Ps
+X-Gm-Message-State: AOJu0YxElA4iEbbVSkp0qf/huBc8SkVk/KvB3EgMp3NSWI30biXexr5l
+	6XJOnrAVwHkAuD+oy56oo9ONf8HfpE4syAgXgzqeC94oWWQD2xESylaM69kff5Vwqj+T0+n6lBs
+	yvYo31FuBZF8UpdknmrWqpBjSkaOuGowG4Nx1iZFfcD7CxVZ7yL/SEfx8jVKBfFNJ+dZSbh5qCT
+	Cwi6Zy539F9ZoQ37ZzMxiwDDqHWbrv5CALd64k5GOPOTfcZIr32MmI0YbA2MRITfmvRE971fWv5
+	izCczqeVUgIcyXdizWzZMr1lP3/5ccM632SZNbtP3CxfYb9f5UM4HwFfqXsVi0Zx1fEmp8yFvR1
+	ZrQq337gKuI=
+X-Google-Smtp-Source: AGHT+IHIoiKWNm2prHkNZQZDoZUDeErZ0QEhO6L9lxPCg9aKr8ja+jliWLui3uaXzTDS1uDkC/6Pt70zi14ykzSttYo=
+X-Received: by 2002:a5b:f4b:0:b0:dd1:55b6:e671 with SMTP id
+ 3f1490d57ef6-dee4f32d021mr3704051276.21.1715365574050; Fri, 10 May 2024
+ 11:26:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240510172243.3529851-1-emilyshaffer@google.com>
-In-Reply-To: <20240510172243.3529851-1-emilyshaffer@google.com>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Fri, 10 May 2024 10:57:33 -0700
-Message-ID: <CAJoAoZkkDxhJtXfLx-4++9JuaSr5xJ4Da4_ijVZP05DkLhHDcQ@mail.gmail.com>
-Subject: Re: [PATCH] trace2: intercept all common signals
-To: git@vger.kernel.org
-Cc: git@jeffhostetler.com
+References: <pull.1729.git.1715328467099.gitgitgadget@gmail.com> <C0C8F71D-2A01-4C31-9EB6-AB31FA17C3AB@boanderson.me>
+In-Reply-To: <C0C8F71D-2A01-4C31-9EB6-AB31FA17C3AB@boanderson.me>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Sat, 11 May 2024 03:26:03 +0900
+Message-ID: <CAOTNsDzveWCr4wx2vqJF_YfRkF5QyhHpopqfw-CiG2xcNduC2Q@mail.gmail.com>
+Subject: Re: [PATCH] osxkeychain: lock for exclusive execution
+To: Bo Anderson <mail@boanderson.me>
+Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 10, 2024 at 10:22=E2=80=AFAM Emily Shaffer <emilyshaffer@google=
-.com> wrote:
+Thank you for detailed insights.
+
+> SecItemUpdate returning errSecDuplicateItem didn=E2=80=99t make sense to =
+make sense to me so I had a check to see what scenario this happens and it =
+appears to be a scenario where updating in-place fails but replacing it ent=
+irely succeeds. However it seems the item might have ultimately still been =
+updated: https://github.com/apple-oss-distributions/Security/blob/0600e7bab=
+30fbac3adcafcb6c57d3981dc682304/OSX/libsecurity_keychain/lib/SecItem.cpp#L2=
+398
+
+> The behaviour is a bit odd and the associated code comment referencing an=
+ Apple bug number is perhaps is indicative of that. I guess it perhaps make=
+s sense if you are holding references, but that doesn=E2=80=99t apply to us=
+.
+
+> I wonder if a fix here could be to treat errSecDuplicateItem as a success=
+ful operation for SecItemUpdate. Can you confirm the keychain item is succe=
+ssfully updated in that scenario?
+
+I tested osxkeychain with the modification at the end of this note and
+got the following log for
+"git fetch --all --prune --recurse-submodules". SecItemUpdate()
+sometimes returns
+errSecDuplicateItem but the keychain item seems okay -- its value is
+correct after the command
+finished -- perhaps because one of successful operations stores the
+correct value. Even if every
+store operation fails, perhaps the originally stored value is kept and
+no damage occurs.
+
+  XXX: get
+  XXXX: protocol=3Dhttps
+  XXXX: host=3Dgithub.com
+  XXXX: wwwauth[]=3DBasic realm=3D"GitHub"
+  XXX: store
+  XXXX: protocol=3Dhttps
+  XXXX: host=3Dgithub.com
+  XXXX: username=3Djenkins
+  XXXX: password=3Dghq_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  XXXX: -25299
+  XXXXX: 0
+  XXX: get
+  XXXX: protocol=3Dhttps
+  XXXX: host=3Dgithub.com
+  XXXX: wwwauth[]=3DBasic realm=3D"GitHub"
+  XXX: store
+  XXXX: protocol=3Dhttps
+  XXXX: host=3Dgithub.com
+  XXXX: username=3Djenkins
+  XXXX: password=3Dghq_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  XXXX: -25299
+  XXXXX: 0
+  XXX: get
+  XXXX: protocol=3Dhttps
+  XXXX: host=3Dgithub.com
+  XXXX: wwwauth[]=3DBasic realm=3D"GitHub"
+  XXX: store
+  XXXX: protocol=3Dhttps
+  XXXX: host=3Dgithub.com
+  XXXX: username=3Djenkins
+  XXXX: password=3Dghq_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  XXXX: -25299
+  XXXXX: 0
+  XXX: get
+  XXXX: protocol=3Dhttps
+  XXXX: host=3Dgithub.com
+  XXXX: wwwauth[]=3DBasic realm=3D"GitHub"
+  XXX: store
+  XXXX: protocol=3Dhttps
+  XXXX: host=3Dgithub.com
+  XXXX: username=3Djenkins
+  XXXX: password=3Dghq_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  XXXX: -25299
+  XXXXX: -25299
+  failed to store: -25299
+  XXX: get
+  XXXX: protocol=3Dhttps
+  XXXX: host=3Dgithub.com
+  XXXX: wwwauth[]=3DBasic realm=3D"GitHub"
+  XXX: store
+  XXXX: protocol=3Dhttps
+  XXXX: host=3Dgithub.com
+  XXXX: username=3Djenkins
+  XXXX: password=3Dghq_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  XXXX: -25299
+  XXXXX: 0
+  XXX: get
+  XXXX: protocol=3Dhttps
+  XXXX: host=3Dgithub.com
+  XXXX: wwwauth[]=3DBasic realm=3D"GitHub"
+  XXX: store
+  XXXX: protocol=3Dhttps
+  XXXX: host=3Dgithub.com
+  XXXX: username=3Djenkins
+  XXXX: password=3Dghq_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  XXXX: -25299
+  XXXXX: -25299
+  failed to store: -25299
+  ...
+
+This issue however occurs only when fetch.parallel is configured. If
+fetch.parallel is not
+configured, we should not ignore any error (including
+errSecDuplicateItem). Also, the above unstable
+behaviour is essentially caused by running osxkeychain instances in
+parallel where some of them
+treat "get" and others treat "store". I've also considered treating
+errSecDuplicateItem of
+SecItemUpdate() as errSecSuccess, but ended up with the current patch
+for these reasons.
+
+> A broader Git-wide question that you perhaps don=E2=80=99t know the answe=
+r to but someone else here might do is: why are we spamming updates to the =
+credential helper? Every parallel fetch instance performing a store operati=
+on on the same host seems unexpected to me, particularly if there=E2=80=99s=
+ no actual changes.
+
+I agree on this point and would like to know the reason.
+
+Koji Nakamaru
+
+diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+index 6a40917b1e..0373857731 100644
+--- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
++++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+@@ -308,10 +308,12 @@ static OSStatus add_internet_password(void)
+       NULL);
+
+  result =3D SecItemAdd(attrs, NULL);
++ fprintf(stderr, "XXXX: %d\n", result);
+  if (result =3D=3D errSecDuplicateItem) {
+  CFDictionaryRef query;
+  query =3D CREATE_SEC_ATTRIBUTES(NULL);
+  result =3D SecItemUpdate(query, attrs);
++ fprintf(stderr, "XXXXX: %d\n", result);
+  CFRelease(query);
+  }
+
+@@ -333,6 +335,7 @@ static void read_credential(void)
+  if (!strcmp(buf, "\n"))
+  break;
+  buf[line_len-1] =3D '\0';
++ fprintf(stderr, "XXXX: %s\n", buf);
+
+  v =3D strchr(buf, '=3D');
+  if (!v)
+@@ -414,6 +417,7 @@ int main(int argc, const char **argv)
+  if (!argv[1])
+  die("%s", usage);
+
++ fprintf(stderr, "XXX: %s\n", argv[1]);
+  read_credential();
+
+  if (!strcmp(argv[1], "get"))
+
+
+2024=E5=B9=B45=E6=9C=8810=E6=97=A5(=E9=87=91) 23:58 Bo Anderson <mail@boand=
+erson.me>:
 >
-> From: Emily Shaffer <nasamuffin@google.com>
+> Interesting.
 >
-> We already use trace2 to find out about unexpected pipe breakages, which
-> is nice for detecting bugs or system problems, by adding a handler for
-> SIGPIPE which simply writes a trace2 line. However, there are a handful
-> of other common signals which we might want to snoop on:
+> SecItemUpdate returning errSecDuplicateItem didn=E2=80=99t make sense to =
+make sense to me so I had a check to see what scenario this happens and it =
+appears to be a scenario where updating in-place fails but replacing it ent=
+irely succeeds. However it seems the item might have ultimately still been =
+updated: https://github.com/apple-oss-distributions/Security/blob/0600e7bab=
+30fbac3adcafcb6c57d3981dc682304/OSX/libsecurity_keychain/lib/SecItem.cpp#L2=
+398
 >
->  - SIGINT, SIGTERM, or SIGQUIT, when a user manually cancels a command in
->    frustration or mistake (via Ctrl-C, Ctrl-D, or `kill`)
->  - SIGHUP, when the network closes unexpectedly (indicating there may be
->    a problem to solve)
+> The behaviour is a bit odd and the associated code comment referencing an=
+ Apple bug number is perhaps is indicative of that. I guess it perhaps make=
+s sense if you are holding references, but that doesn=E2=80=99t apply to us=
+.
 >
-> There are lots more signals which we might find useful later, but at
-> least let's teach trace2 to report these egregious ones. Conveniently,
-> they're also already covered by the `_common` variants in sigchain.[ch].
+> I wonder if a fix here could be to treat errSecDuplicateItem as a success=
+ful operation for SecItemUpdate. Can you confirm the keychain item is succe=
+ssfully updated in that scenario?
 >
-> Sigchain itself is already tested via helper/test-sigchain.c, and trace2
-> is tested in a number of places - let's also add tests demonstrating
-> that sigchain + trace2 works correctly.
+> A broader Git-wide question that you perhaps don=E2=80=99t know the answe=
+r to but someone else here might do is: why are we spamming updates to the =
+credential helper? Every parallel fetch instance performing a store operati=
+on on the same host seems unexpected to me, particularly if there=E2=80=99s=
+ no actual changes.
 >
-> Signed-off-by: Emily Shaffer <nasamuffin@google.com>
+> Bo
+>
+> On 10 May 2024, at 09:07, Koji Nakamaru via GitGitGadget <gitgitgadget@gm=
+ail.com> wrote:
+>
+> From: Koji Nakamaru <koji.nakamaru@gree.net>
+>
+> Resolves "failed to store: -25299" when "fetch.parallel 0" is configured
+> and there are many submodules.
+>
+> The error code -25299 (errSecDuplicateItem) may be returned by
+> SecItemUpdate() in add_internet_password() if multiple instances of
+> git-credential-osxkeychain run in parallel. This patch introduces an
+> exclusive lock to serialize execution for avoiding this and other
+> potential issues.
+>
+> Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
 > ---
-
-Missed including the CI results. They're passing[1] with the exception
-of the osx-gcc run, which seems to also be failing on the latest
-'master'[2] and looks to be failing in setup rather than in test run.
-
-1: https://github.com/nasamuffin/git/actions/runs/9035666915
-2: https://github.com/nasamuffin/git/actions/runs/9036080205/job/2483220912=
-9
-
->  t/helper/test-trace2.c   | 17 +++++++++++++++++
->  t/t0210-trace2-normal.sh | 22 ++++++++++++++++++++++
->  trace2.c                 |  2 +-
->  3 files changed, 40 insertions(+), 1 deletion(-)
+>    osxkeychain: lock for exclusive execution
 >
-> diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
-> index 1adac29a57..8970956ea8 100644
-> --- a/t/helper/test-trace2.c
-> +++ b/t/helper/test-trace2.c
-> @@ -231,6 +231,22 @@ static int ut_010bug_BUG(int argc UNUSED, const char=
- **argv UNUSED)
->         BUG("a %s message", "BUG");
->  }
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1729%2F=
+KojiNakamaru%2Ffeature%2Fosxkeychian_exlock-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1729/KojiN=
+akamaru/feature/osxkeychian_exlock-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1729
 >
-> +static int ut_011signal(int argc, const char **argv)
-> +{
-> +       const char *usage_error =3D "expect <bool common>";
-> +       int common =3D 0;
-> +
-> +       if (argc !=3D 1 || get_i(&common, argv[0]))
-> +               die("%s", usage_error);
-> +
-> +       /*
-> +        * There is no strong reason SIGSEGV is ignored by trace2 - it's =
-just
-> +        * not included by sigchain_push_common().
-> +        */
-> +       raise(common ? SIGINT : SIGSEGV);
-> +       return 0; /*unreachable*/
-> +}
-> +
->  /*
->   * Single-threaded timer test.  Create several intervals using the
->   * TEST1 timer.  The test script can verify that an aggregate Trace2
-> @@ -482,6 +498,7 @@ static struct unit_test ut_table[] =3D {
->         { ut_008bug,      "008bug",    "" },
->         { ut_009bug_BUG,  "009bug_BUG","" },
->         { ut_010bug_BUG,  "010bug_BUG","" },
-> +       { ut_011signal,   "011signal","" },
+> contrib/credential/osxkeychain/git-credential-osxkeychain.c | 3 +++
+> 1 file changed, 3 insertions(+)
 >
->         { ut_100timer,    "100timer",  "<count> <ms_delay>" },
->         { ut_101timer,    "101timer",  "<count> <ms_delay> <threads>" },
-> diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
-> index c312657a12..c34ccc518c 100755
-> --- a/t/t0210-trace2-normal.sh
-> +++ b/t/t0210-trace2-normal.sh
-> @@ -244,6 +244,28 @@ test_expect_success 'bug messages followed by BUG() =
-are written to trace2' '
->         test_cmp expect actual
->  '
+> diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c =
+b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+> index 6a40917b1ef..0884db48d0a 100644
+> --- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+> +++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+> @@ -414,6 +414,9 @@ int main(int argc, const char **argv)
+> if (!argv[1])
+> die("%s", usage);
 >
-> +test_expect_success 'trace2 reports common signals' '
-> +       test_when_finished "rm trace.normal actual" &&
+> + if (open(argv[0], O_RDONLY | O_EXLOCK) =3D=3D -1)
+> + die("failed to lock %s", argv[0]);
 > +
-> +       # signals are fatal, so expect this to fail
-> +       ! env GIT_TRACE2=3D"$(pwd)/trace.normal" test-tool trace2 011sign=
-al 1 &&
-> +
-> +       perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >act=
-ual &&
-> +
-> +       test_grep "signal elapsed:" actual
-> +'
-> +
-> +test_expect_success 'trace2 ignores uncommon signals' '
-> +       test_when_finished "rm trace.normal actual" &&
-> +
-> +       # signals are fatal, so expect this to fail
-> +       ! env GIT_TRACE2=3D"$(pwd)/trace.normal" test-tool trace2 011sign=
-al 0 &&
-> +
-> +       perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >act=
-ual &&
-> +
-> +       ! test_grep "signal elapsed:" actual
-> +'
-> +
->  sane_unset GIT_TRACE2_BRIEF
+> read_credential();
 >
->  # Now test without environment variables and get all Trace2 settings
-> diff --git a/trace2.c b/trace2.c
-> index f894532d05..3692010f5d 100644
-> --- a/trace2.c
-> +++ b/trace2.c
-> @@ -231,7 +231,7 @@ void trace2_initialize_fl(const char *file, int line)
->         tr2_sid_get();
+> if (!strcmp(argv[1], "get"))
 >
->         atexit(tr2main_atexit_handler);
-> -       sigchain_push(SIGPIPE, tr2main_signal_handler);
-> +       sigchain_push_common(tr2main_signal_handler);
->         tr2tls_init();
->
->         /*
+> base-commit: 0f3415f1f8478b05e64db11eb8aaa2915e48fef6
 > --
-> 2.45.0.118.g7fe29c98d7-goog
+> gitgitgadget
+>
 >
