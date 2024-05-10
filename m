@@ -1,88 +1,109 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E6917C98
-	for <git@vger.kernel.org>; Fri, 10 May 2024 20:01:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399324D117
+	for <git@vger.kernel.org>; Fri, 10 May 2024 20:04:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715371277; cv=none; b=hsawAzYMwqeDsD3UlErH07CUTw2kTfjHV9qZMet6RiaJTQTqkJnLoVh9fWkYXOY8vd1tqkPePH81b8qCng7eRK6Z3O2adW1Is903xz8skJdSp4/BprNl29CSyjCN0z07dgv65jOQ8wcYxETxw5ePy1+1Bfk58tJmpIwnCw04dKY=
+	t=1715371469; cv=none; b=q8NPHkgidS2/u5s+EXdczCBjXdnRIlSsYsHsxPi1TzXeKyUFRgtYQaX4g+FrXJ8q9Xfij9v9EXrjih75pNWszwbyEyNX1GVgoJkpDpMsf+PN+MwCoTDj7GTbrxTRiFfOSF3sDq5XX0YbNkySTATAMAe2N2m3LBoBpqJ8dljIE6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715371277; c=relaxed/simple;
-	bh=/Dt+8yPytouCenSC5urmX/7ZGoCGE9RhGB2+coucZIU=;
+	s=arc-20240116; t=1715371469; c=relaxed/simple;
+	bh=AX3DIEyIByxaCRU9LBJONvBDtko3G5HD6vL35o+fg+A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jt4wMdPgeQxz01vobAtSMW+n2FJTRoj7ymUymt6+FiOnXPntHyffq7ll5xd+HufpcAJj4eKWE7tCde23OGhqWkz2HAJNgQiJwWdxbEJC4n0Fsj1K7DHMiUehjSwI1wMN80YEKpq4Sbb4WVolk0R/nG3I/OLWcSXak29JhOWbXT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 18943 invoked by uid 109); 10 May 2024 20:01:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 May 2024 20:01:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12291 invoked by uid 111); 10 May 2024 20:01:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 May 2024 16:01:16 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 10 May 2024 16:01:14 -0400
-From: Jeff King <peff@peff.net>
-To: Bo Anderson <mail@boanderson.me>
-Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] osxkeychain: lock for exclusive execution
-Message-ID: <20240510200114.GC1954863@coredump.intra.peff.net>
-References: <pull.1729.git.1715328467099.gitgitgadget@gmail.com>
- <D7A8539F-E33C-44F3-A7BF-5F5D4A26F2A4@boanderson.me>
+	 Content-Type:Content-Disposition:In-Reply-To; b=B4ggQeptN6G4Hi7hxzT+xpL3qmDfftpqATgLf8FJxwAi7HSP/h67s7xDehUqENOCnw4HPt1JAiK7ivHEOTkGLnHHeHxxf0YKjf/MS4y9MT5HlEbY+ioESblIF9GXry+in93IoO7STqQleey7irhGHxrizco9QFroR15J+Pex7PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LJPkDuEb; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LJPkDuEb"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1ecddf96313so21152185ad.2
+        for <git@vger.kernel.org>; Fri, 10 May 2024 13:04:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715371467; x=1715976267; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=iu48rBOpTj5rSgpGCSIiHvHvCeVknesRXl48eMxEbik=;
+        b=LJPkDuEbqQGs3/7Z3e4Gt7Mz85WcDbbC0btoErG46CIz5g3zJZf+D6Z9XmMK/qjXMf
+         Wbt9XtEdPlK7zKttJVN9Qj5dg/wYKoQSK/8b6Y7/+PXYM8ID4gDL8FNVsjdQ2Gf1dyAP
+         YoI3pf4icuX3uVRo6pLAUM7mn/qb9pQD/ibTdjh06BxvF4GJB6yAmXO9C0kGaHBSni9r
+         dx5hWvb7Kf+KlJxsJoLehID1WlJQyYX3jQlN/ALRiKxpgo6cBRxIi72K3M+cZ7qnc0Vu
+         otevoWkKwkR7TtFzDo4dMjKClRR5ZhZz55Xhv4ay3OOTliZ8BDFxtqxzseoTEWC/Pbnx
+         GJPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715371467; x=1715976267;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iu48rBOpTj5rSgpGCSIiHvHvCeVknesRXl48eMxEbik=;
+        b=XV4Golun6mrQGuc++PW7g5Vivy+Bs0h2tqtivoBViHvO8r3Q+DM3sxj3Kc6c/v7fAF
+         YBMt9suswkBHPNN8xQnyazGAQr3pcH0FvdSCATsOh16nUSjZXSs1Bqy4XMgEtzoM1PiB
+         Kr3MpzPEJSbKEAInm0zt27fBHX28duOkLilOEVtpHMz5duPsYST7YqkgkVwj6V5U6H8T
+         ZclJ9nPQKqVgGpGzYDiOtrf8YjsoveVzvnBPgeHPQEM3pYp0aEO6e2yuGHV6DjsMhtfA
+         JHiMEXSlTDffPM1DsDI//U1qsS/mE1lJkdDV/qCTjnIyVk/XPtfQlbqEtgerJej0COUA
+         uMCw==
+X-Gm-Message-State: AOJu0Yz0zcY5eqgg+Xc8lErNqMym32pdX4IRAh01yFR94UGjKSdLBQPX
+	Be/W79a6tUgb1ch5xoT0YUD8Aq5C74RsA+A0REQ5vWbf/Nw/o92A
+X-Google-Smtp-Source: AGHT+IFsB3DCicl6LeKDC7EaiGeIDiTmbMtKkKnC1HOa3iKWAoNRyr6Bqxbh4MUPg6PSwPJd4/Qy6A==
+X-Received: by 2002:a17:902:b949:b0:1e4:48e7:3dab with SMTP id d9443c01a7336-1ef43e269ddmr42047755ad.38.1715371467355;
+        Fri, 10 May 2024 13:04:27 -0700 (PDT)
+Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ef0bada3d8sm36345305ad.99.2024.05.10.13.04.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 May 2024 13:04:26 -0700 (PDT)
+Date: Sat, 11 May 2024 01:34:24 +0530
+From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: git@vger.kernel.org, Chandra Pratap <chandrapratap3519@gmail.com>, 
+	Jialuo She <shejialuo@gmail.com>, Christian Couder <christian.couder@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [GSoC] Welcoming our 2024 contributors and thanking our
+ applicants
+Message-ID: <5y4e3tdyzmybhx4zknp7sekfh6me3qhbdejcoqim22u53bngjf@anmatbfglgkm>
+References: <406aa31f-4ea0-496c-aeb6-443be86385c0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <D7A8539F-E33C-44F3-A7BF-5F5D4A26F2A4@boanderson.me>
+In-Reply-To: <406aa31f-4ea0-496c-aeb6-443be86385c0@gmail.com>
 
-On Fri, May 10, 2024 at 04:02:03PM +0100, Bo Anderson wrote:
+On Wed, 08 May 2024, Kaartic Sivaraam <kaartic.sivaraam@gmail.com> wrote:
+> Hello all,
+> 
+> As you may be aware, the results for GSoC 2024 have been officially
+> announced[1]. We have 3 contributors contributing to Git this year[2]. They
+> are as follows:
+> 
+> 
+>   - Chandra Pratap
+> 
+>     Project: Move and improve reftable tests in the unit
+>              testing framework
+>     Mentors: Christian Couder and Patrick Steinhardt
+> 
+> 
+>   - Ghanshyam Thakkar
+> 
+>     Project: Move existing tests to a unit testing framework
+>     Mentors: Christian Couder and Kaartic Sivaraam
+> 
+> 
+>   - Jialuo She
+> 
+>     Project: Implement consistency check for refs
+>     Mentors: Patrick Steinhardt and Karthik Nayak
+> 
+> 
+> Let us welcome them and wish them a good summer of contributing to Git via
+> GSoC!
 
-> A broader Git-wide question that you perhaps don’t know the answer to
-> but someone else here might do is: why are we spamming updates to the
-> credential helper? Every parallel fetch instance performing a store
-> operation on the same host seems unexpected to me, particularly if
-> there’s no actual changes.
+Thank you for this opportunity! Congratulations to Chandra and Jialuo,
+too. I will post the progress on my blog fortnightly. Here is the first
+post:
 
-The short answer is that Git always passes a credential which has been
-used successfully to the helpers to record (if they want to). That's how
-stuff gets stored in the first place. And those parallel fetches have no
-knowledge of what the other ones are doing, so they all try to store.
+https://spectre10.github.io/posts/gsoc_beginning/
 
-But the more interesting question is: why do we tell helpers to store a
-credential that we got from helpers in the first place? The behavior is
-mostly an artifact of how the original implementation behaved, as it did
-not record the source of the credential.
-
-And I think there are several problems with that, besides inefficiency
-and locking. See this old patch, which fixes it by remembering when
-a credential came from a helper:
-
-  https://lore.kernel.org/git/20120407033417.GA13914@sigill.intra.peff.net/
-
-But we didn't merge it because some people rely on the behavior of
-helpers feeding back to themselves. I outlined some solutions there, but
-it would definitely be a change in behavior that people would have to
-adapt to.
-
-Some possible alternatives:
-
-  - we could remember _which_ helper we got the credential from, and
-    avoid invoking it again.
-
-  - we could record a bit saying that the credential came from a helper,
-    and then feed that back to helpers when storing. So osxkeychain
-    could then decide not to store it.
-
-Both of those solve the repeated stores, but still let credentials
-populate across helpers (which I still think is a questionable thing to
-do by default, per the discussion in that thread, but is the very thing
-that some people rely on).
-
--Peff
+Thanks!
