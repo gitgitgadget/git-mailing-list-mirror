@@ -1,117 +1,131 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3490815FA73
-	for <git@vger.kernel.org>; Fri, 10 May 2024 10:00:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDBA15FCE1
+	for <git@vger.kernel.org>; Fri, 10 May 2024 10:00:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715335235; cv=none; b=XOiluMmZxGYamzUFpSdfd1l0Ft8XDV9oT3sU3AncShVfSmW0qD8PUtcHO2nRsiwb7BXILENkmOXfxcSwzzVOFbD6b6DtfoKMCYZA4cZQEcseGDCdRf8sqHQxBSo6sbFncVi5wrVwtvfQi0DzdM5JmcIxoTn/HhO+v2tBqHN48PA=
+	t=1715335244; cv=none; b=R1myN5a1UjvvorNbcV++DKOkyFYTzwqGQZAkql/QfLTxjYdCz4G1PKugQarX9magRynfqCffem/eaF7bDmVY0F0yAoFNn+BZXq4QfddCEKxOSOhs56yZsiOzNQiFWSByJtdLXnC1bRP5JojOnxDUPUHw2xh+QSUBqOJuNqtGtNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715335235; c=relaxed/simple;
-	bh=kX6B2nf6Mqz6mtMI7D+rz4U1wizoZiO56YGr4WIr/fs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SayTsO5eZA/Ur53I6aN1Mp4mWvpB9D+FJU6wtYKiKp4NAXtyJuGt2Polim7sdBmcCCWxwFQum1xxRf04UZWPhu1n08HADQMj5+smz6UMo2AvUbVHMnO6f9EbQ/Yi2n5MAr9sWu/y5TH2lHmhChJFK4mYGm07XmJzXakoKyC304c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ERFff9sR; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1715335244; c=relaxed/simple;
+	bh=mc+6pMarW/sV8Jr5P34LQHETs59B8Z7lX9KgD0qkpUA=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=kAiTgtWuulthYiX/9RpvTv0m75iq45vv00Lqz4yOzg7gXzYjLQmVlqx+fy7hOBhlnKpXI/L67nCQAsYT8Tt5uw9O5zvKG/9Zgf7FZGP6XZnF1w+rVlv2Om1zbHnB0paBbnv85M7ubLCJBu250sRZ1tSNqMRluzTLGBTnoVGWv2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kgdqAnug; arc=none smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ERFff9sR"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-41e82b78387so12578265e9.0
-        for <git@vger.kernel.org>; Fri, 10 May 2024 03:00:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kgdqAnug"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-6f0e190e5adso653418a34.3
+        for <git@vger.kernel.org>; Fri, 10 May 2024 03:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715335232; x=1715940032; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=93KzrOcIi0HYEi9X8cB/+4KjzRDWptYuDOgtC8BZyaI=;
-        b=ERFff9sRjTGORvG7W9g3jHAwgYIAHRPocBHLso9HmtHTZAq1of2FaGmacUabqLHZQs
-         1tLRFgENHi121fDRbFDGU11KH/25lRtPcrPII7o1puPjhmNbYwd6Of0Qxr0KUV+FmuUi
-         0vEpOox1HvinZoxVu9m1GWbiOf3/7LwRb9OcskfAdSPuc7qbsZztBVy9kMGhwXNhX326
-         95CwskcSziLNt63KEEPb/uL/ev3jsHfbGa/vgxjvjGbcvMTpWnd70hb4p2buKsfOu6uY
-         pmyb8V7uyQwoNuv4D3OVsTB2B55rTTu/1vX1jomLn6PynVE9ppTez4WpkMqd/uTBPAih
-         41aA==
+        d=gmail.com; s=20230601; t=1715335241; x=1715940041; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MOptnStBXBs3IF6R3U19w7M+FiWBzDZ7vP7h3V0sJj4=;
+        b=kgdqAnug7Ss0w4CvRzNQcEkOSQvn2+rCB16KlOVc4/P5puedXXlEYQGSPoqc8fbXm/
+         PSshjELuKTarHJS+7fAOYmFc/KFY1prcwlD7mbgYhIgjq+XuEHskVBc1PGkAgpJVVqxJ
+         sTLk332CAFEJhgilkqh6kwGc8OINUzSaFWTd2oaz4yplC8NUi2MFXSw6LYzzQjWfBYl9
+         7zAJG5ORe0IJcGnIjFSgNqPTCxcrgnuaj1JwV5Qd9021WDZ2pwxryX8iL8PWdNA9B5A6
+         DFaT//WQd1D3nGB0rnHLcR//n17hPSoC6Q+rBITMvmjCCizc5rFiYkR7JL8P/dD/PEpl
+         TbyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715335232; x=1715940032;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=93KzrOcIi0HYEi9X8cB/+4KjzRDWptYuDOgtC8BZyaI=;
-        b=BQ+xzvAR/fnNtqdZR4YXy3grFrgLWFik+a9WJESbyzm2TDdDUyO5kXI0saWWOsIF+Y
-         hSdQPH863ae6N1SaygtPWiK5lYvKz5tRcjzCb+May55eod+5Tcy3L2ZGAWfpvyaWgtfu
-         SF3y9VRzQGGFfgtgXYPkaWtTpmx6Zro8Qh+rFWHB6JmnK9LKUE/ujPWthikIirxDDuJ6
-         argHu/9P0KQRiXaVcw81hItUtKu4gxW6g+ICSZyZt5/4ZA42xtGpnQ+mSRkSfyxuHl/u
-         dluwvRdxEosjiE4nbmWv7hk+LiUnr2kI+L95ndkGeDLT6jgUebISF8Lj7/eytyV2kh/v
-         Y+mA==
-X-Gm-Message-State: AOJu0YxIHMpSxMx79XsrLYrpSrpLyq1hq1psd98y41wDHoia1dslOuLD
-	41YKyN2lF2WvScz0U9vDSR3PRHq8c5kx3b/TQS3HhCIBVFvbud26F4fhtk7D
-X-Google-Smtp-Source: AGHT+IF1V448CktjZJQ6txoOC1euWoGRRs/85aRRw/76kKDOuMkmq0bKHFgP40hIV//C+l0YRyfa/g==
-X-Received: by 2002:a05:600c:1383:b0:41c:2992:a3bd with SMTP id 5b1f17b1804b1-41feac5a45fmr16670295e9.27.1715335232401;
-        Fri, 10 May 2024 03:00:32 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1? ([2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41fccee92bcsm57094105e9.36.2024.05.10.03.00.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 May 2024 03:00:32 -0700 (PDT)
-Message-ID: <9b42e684-32e0-4372-8da6-40f9b708b6ca@gmail.com>
-Date: Fri, 10 May 2024 11:00:31 +0100
+        d=1e100.net; s=20230601; t=1715335241; x=1715940041;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MOptnStBXBs3IF6R3U19w7M+FiWBzDZ7vP7h3V0sJj4=;
+        b=UggEZIDUuOa1f/6CfgbqrU3lc5QoolA/queZdu5BfJR+XyHpgJ29znP+TcHQYAY6mW
+         nin7cZZ07k8qfOElEBxXXD5yk70RwDJUuE5E3wLHMUmiaxCxr6TV4JOw2mBhzi3dvd1+
+         Gbv0tNYtWu/RTymO+fnA+niK1dID1oWA6K9Cb8O94uW3DvVa1RJ8ZdCDWv1lNwoWYX+N
+         sbQHPJd6T/pg43FObEdBRzMY0Gu28u3q/OwNQGVu9AYcUvhesmrJGoezRutY47gMRT28
+         oE+1x5Xu4jCjRt/k20gidzl1MRKQ5AwOkkX6ujEtEAdTPMNfkR/3J0f08ban6tHHnpUF
+         F13Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXOBiRfdHpSeA87Qieq02RC3euau2E7RffqkQKjfWXk8ow9qlZH17wRD1wqP9JteD8vrWnb2d32/Np0Mhv0jelNqQNe
+X-Gm-Message-State: AOJu0Yzxq0R0tK2wtxOskKTa+cWLzSqkAJ/lJLWyUARtnlPJYIsXNsKo
+	J7ELac1gCpwzhqPyZoqDnu8TtQJLzJh7wpq/Q/2/8+tRFMDfI30nSxpC2wBHrGBxwJDIU90V8P7
+	rwM+htLxjcAuVPeANL4EKwWMoPeY=
+X-Google-Smtp-Source: AGHT+IE6W3HzgY5f+8/VrEV6q5ZR4hQtYYEu6U9nCGHFtKIzYT+bLCX3feXZOeIcyfdmZwyWsMsLgKd8worNqC96jsA=
+X-Received: by 2002:a05:6870:51ce:b0:23b:caff:be33 with SMTP id
+ 586e51a60fabf-24172fb38f9mr2337377fac.49.1715335241628; Fri, 10 May 2024
+ 03:00:41 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 10 May 2024 03:00:41 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <cover.1714630191.git.ps@pks.im>
+References: <cover.1714630191.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: git-cherry-pick(1) -- path
-To: Alejandro Colomar <alx@kernel.org>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <e5pklmijfpbsnl2trj4n4czam7n7i37gx7w56med2pfaf6q3yx@wizseio2ickk>
- <xmqqv83mqxg3.fsf@gitster.g>
- <kk244kap6lhuvtfot55u4yb5k5eddwlzl4izlzqhe4pdj52cx7@slghmpvdswkt>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <kk244kap6lhuvtfot55u4yb5k5eddwlzl4izlzqhe4pdj52cx7@slghmpvdswkt>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Fri, 10 May 2024 03:00:41 -0700
+Message-ID: <CAOLa=ZTz5k8Ge8Ba1f0AUXE1NRE1sO_g5zrtTeYcthKP9VVeCw@mail.gmail.com>
+Subject: Re: [PATCH 00/11] reftable: expose write options as config
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000bf8fd20618169b33"
 
-Hi Alex and Junio
+--000000000000bf8fd20618169b33
+Content-Type: text/plain; charset="UTF-8"
 
-On 10/05/2024 10:05, Alejandro Colomar wrote:
-> Hi Junio,
-> 
-> On Thu, May 09, 2024 at 06:15:24PM GMT, Junio C Hamano wrote:
->> Alejandro Colomar <alx@kernel.org> writes:
->>
->>> I'd be interested in being able to partially cherry-pick commits, based
->>> on a path filter (similar to how many other git(1) commands behave with
->>> -- path).
->>>
->>> Do you have any opinions on that?
-I'd be happy to see a patch that adds that (I sometimes find myself 
-wishing "git cherry-pick" had a "--patch" option to do something similar 
-but that's a bit of a tangent here)
+Hello Patrick,
 
->>      $ git format-patch --stdout -1 $ThatCommit -- $ThisPath |
->>        git am -3
-> 
-> Hmmm, I hadn't thought of that; very interesting!
-> 
-> Although I have some concerns with git-am(1); basically that it's almost
-> clueless when there's a conflict.
+Patrick Steinhardt <ps@pks.im> writes:
+> Hi,
+>
+> the reftable format has some flexibility with regards to how exactly it
+> writes the respective tables:
+>
+>   - The block size allows you to control how large each block is
+>     supposed to be. The bigger the block, the more records you can fit
+>     into it.
+>
+>   - Restart intervals control how often a restart point is written that
+>     breaks prefix compression. The lower the interval, the less disk
+>     space savings you get.
+>
+>   - Object indices can be enabled or disabled. These are optional and
+>     Git doesn't use them right now, so disabling them may be a sensible
+>     thing to do if you want to save some disk space.
+>
+>   - The geometric factor controls when we compact tables during auto
+>     compaction.
+>
+> This patch series exposes all of these via a new set of configs so that
+> they can be tweaked by the user as-needed. It's not expected that those
+> are really of much importance for the "normal" user -- the defaults
+> should be good enough. But for edge cases (huge repos with millions of
+> refs) and for hosting providers these knobs can be helpful.
+>
+> This patch series applies on top of d4cc1ec35f (Start the 2.46 cycle,
+> 2024-04-30).
+>
+> Patrick
+>
 
-"git am -3" should be fine here as you're guaranteed to have the 
-necessary blobs available to create conflicts - this is what "git rebase 
---apply" does.
+I'v gone through the commits and apart from a few small comments, I
+think it looks great already.
 
-> If I find some time, I'll check if I can program that (although it would
-> be the first time I do some contribution like that to git(1), so I may
-> need some help).  :-)
+Thanks,
+Karthik
 
-As far as the implementation goes I haven't thought too deeply but I 
-suspect we'd want to create a couple of trees based on the commit we 
-want to cherry-pick and its parent filtered by the pathspec and use 
-those in the tree-way merge with HEAD.
+--000000000000bf8fd20618169b33
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: ed42bae51682f196_0.1
 
-Best Wishes
-
-Phillip
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ZOThFY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMTBPREFDRzgreTBSN25zVmwrT0JKMUZQMlJlc0swdgpTTE54ZmxFZGd2
+dGZ5STJWbGJ6RnNXbktaMkJOWVdrSGdDUk1zdjRwZEFTNUVVZ0tpRFptUHFmV096VSs2S1Z3Clh3
+SEZrV0ZaUWdXbFVjR000c2JvK2h3VU9PZk5LUUVkeDVoNzJDSGFJSWxhcXI5dzZvcnIxeWZjZTFm
+Zmk0Um4KQ25sUDEzWFl3MGhnOWFaUDVnamIrVnJ2Z0NRc1VwdXdqcExPYzhiMUMwMzZaK1dnbi9N
+a04yQllyNUpYOERZKwpSS2xxN1VGVUd6WDZrSHQ1Rmdlc3E4eG1BUi9sb1JKU3E2elJNYUY2NEVU
+YnZBdFNEbVVzbVlHWEd6SVhIWk5KCm9PQUQ4NkFRbTM4MGhDY3UzcGVzY1NqOWp0U29HVUJNenNF
+QTVMYnNKK2NkUFNvRmtZMVBoMjlBQ2I5VTZob2MKZDZydC90TllhQTFzVGszOERkTVBVckx4Rklx
+YkxwTzJ6dDQyN0FiL2tCRGdYa2FkQzZUK2RXUHRPRTV1RDFFZgptamsvUFlPT3NTV2VQMVV2dkkx
+UjROdnpHek5zNE5LZWkrMTE0ekROY0RydWMvdk56RXdtOE1RcHBlaXA2Vlh6CkRKb1VOMkxCWWhy
+TjRmQVBGMXZjVDllYk5ZS2RtcVhsb3dLZkd0UT0KPVNiZksKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000bf8fd20618169b33--
