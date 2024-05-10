@@ -1,77 +1,78 @@
 Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBABA16F0E2
-	for <git@vger.kernel.org>; Fri, 10 May 2024 11:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFA1172BCB
+	for <git@vger.kernel.org>; Fri, 10 May 2024 11:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715340368; cv=none; b=jwxLQildDwyOwCa7WH2TDHLONVeMzFMEccIkR4yr3m/33m3aEzpN7OUTY4K9O8yj/YGWs+NCPHV6k8XByavmKv6IAdrscOI/ppaIUPTqp30IMyRtGpc0uZNoxPnOmMMXoLELbtujyvJeAgszbpa7qWP70rXtT4EKE/zMO5RB0u8=
+	t=1715340372; cv=none; b=Ccwq7Tqr3qZr0XA5cdzWbYNneS3aiKMlVip7LUdAvVOHF8+exoFARKwTtPWlBipwQMQAA+fDPTXGDFDMuU4bmdfDkGy7tCwIuPEmMbfU+H5seH2OeES+Eou0SQWOMoqtt+mhjeW7ECWTa433Q55fNsPneWZ5xrbD3KUe5gY58yY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715340368; c=relaxed/simple;
-	bh=MxKIiFAXuNJAqgY3aFGuLoocQ2f29I1cdf7pOqLQ2Fo=;
+	s=arc-20240116; t=1715340372; c=relaxed/simple;
+	bh=ZXIuJbZVLx+/2gobyieSpUcCmrzq4hJ2u/DyULi/JUI=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AfzTkIgNdvkfrLS7QsLIUevEGVGVd9SWrXfjG0zlfppa8Q9SAXDILN5yWFV2QX+p8NF1d9hixn6pOoj5+FVJcKqCX1v6U7QX6ARKmvlGpyVPg0ngz51mX0dOx3H7ZpVnjKolEoUbIf9NR9iM28Lr10tRC0I53IO5Bxsy+/6OQ0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S+7wEqHD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JuH2QGis; arc=none smtp.client-ip=64.147.123.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=m6gq5xgvJVov5QeN+imxxFOI1M1loK7iPGS41xnEPB+IW1cUBNE+PewAdys8sN7XG9RgoTJ5GWP//P76Fq2qKMJulhqNdrvID71yP4jQSTuClwP1E4yTriRdwbI7OklHbvDjmyKMGgG8174sL3n7H5ZUcpkHPX0l3I7578j8B9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AiWPyvwD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PnchUF9+; arc=none smtp.client-ip=64.147.123.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S+7wEqHD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JuH2QGis"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.west.internal (Postfix) with ESMTP id F0F091C00098
-	for <git@vger.kernel.org>; Fri, 10 May 2024 07:26:05 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AiWPyvwD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PnchUF9+"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 79A261C00098
+	for <git@vger.kernel.org>; Fri, 10 May 2024 07:26:10 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Fri, 10 May 2024 07:26:06 -0400
+  by compute6.internal (MEProxy); Fri, 10 May 2024 07:26:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715340365; x=1715426765; bh=qlHTwjIUH1
-	pJBXS8vxqTp7ptIH4W4kfh6uFCNIHKqIo=; b=S+7wEqHDC85J1+1SsbGVUZjoYq
-	X8OyfgmkKakd9tTi2twjgQxmBRtcl5Bmc5EcUEIbW4dLFiL8U48iB6HsXk5m6IG5
-	l/07di1NXDfI0DJCNAg3xhcjzR2TdOhvrwJh74mCHhyacN1oSuhsY+r/QMqu1N6+
-	dNyn4RbBTrRrm0t4QNamSa1dtp+BHk/lj92TwPLgIZXsNG8hUuPqXOhThv4+psv7
-	IbZGKI2HHVU5EmSeLe4rLIpamo5xTiysmRrNhgwrrmy0tKlUKQRkaA6rt+g8vTKH
-	6y+UcqLCwQfK/U4EMVt5zRMLWdaFni3SQSfwa4QjUrOSzLpo3uv0irB7EEVw==
+	:subject:to:to; s=fm3; t=1715340370; x=1715426770; bh=//SFfkeRuj
+	ruQIUAlXSQ+/LT5NPVmkd3QqKz5wTVb5k=; b=AiWPyvwDSDDZClAf8/i3vFkCQF
+	FwsirADJHf52kFj7314TdZHaGHQ+DzmyR6TW/SgaYeY0BIYJVE4EGUE5tFvW8aGC
+	DHI7eSKDhCLc6vPaGv8EAashA3jPxPkdMLhkvp8q8Aqc/poMI4R1FJtbR5sr5+RP
+	r/ETPjSftfJqNA8bNMrtmzNyjXJ/+monyeXoTw0uy6vcjnB4NFCxUcxKcHUObE1d
+	JiCrPt4GnND6dgojexL9RHUlxP2hpUuMN7nHeZAjh8doIhAHN9Cr78EucX9DUue+
+	3jySKzNYc22twJvOh6d8/2UPSJI8J8PMQX7gUQWQbhre7merLc/qrl93u+fw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715340365; x=1715426765; bh=qlHTwjIUH1pJBXS8vxqTp7ptIH4W
-	4kfh6uFCNIHKqIo=; b=JuH2QGisdmSTpNGhRSAkUsKyigCczy2tx1Yn+NFeuSph
-	9fnU6Q+A5IvMLhNElrMsZrqnQVkiyaok0YoXRhk96lwuLGI/AehYSbETauWLoD9y
-	YQWj1ShVyj8Dk7rRpsJJfn8AC5n3hMuBXUc9p7JAL9Rtp1M6ikO8qx/GZZFf6i0F
-	X9x7j0Pel6TU9ZFEXOXS9GP6lL3WIq+bwJZiW1pLDGv6E1siTeFhv+5ZtLwVIUPc
-	pmORR4WeAm31fJ6KyVMAGZ+fWder6y4nUBMOKHzYB5Dboq6ASa9bZVpX+sWRRtXP
-	sJj5fcn4p8obvOqMkIKWMS03Q8GOfF5Ydk/8oAOb8Q==
-X-ME-Sender: <xms:TQQ-ZhA98-MBSL5OytNHQbVASvVoBo5fgOu9quFE_6V2lMfC-nECWQ>
-    <xme:TQQ-Zvh7IwqHi1Zokr9SZFkHtGVva0quYbg4yVPd_Vrrz2OxpiHH-n2Mkj6f-h6n-
-    avJz8v272sTnQ6Msg>
-X-ME-Received: <xmr:TQQ-ZsnwfIJZwAQ65zLeqi0sqO8rBg4ZKMd1zYD1O2EINsrfIuTQi_rB-_QN-fM5Q87Lo4bfKfxFLYmm0-M6FRqlNE_TlqlT_Z040pBbLxklUteyGQ>
+	fm3; t=1715340370; x=1715426770; bh=//SFfkeRujruQIUAlXSQ+/LT5NPV
+	mkd3QqKz5wTVb5k=; b=PnchUF9+uf0JeZZtzUHE2QWbZVjrwxy8yHsDTxH+e+Ve
+	voBmzRBIWAliyywfOF0p+ezO7Chg9JHYbwHR4vQw7Q9/UC3D98olw3Fya44/M3li
+	9MGjb5QO4bsDyB8XiYkoyvhzecPHmy+L0s1+8JEZwx6+tCXJv5dNoxxFwuJOBIic
+	9v5lJ+pZ/B0nHBXwdrKBiIopMVcOB3VBMZNvOSUzr05hE0rpq6JHoCCVOJLynZ46
+	pgniPcwM0wD566s5GnDGb3EFmYAk+kswbKwBrLfqqIZjLVxEGWSD0QsuGeqVHf81
+	2jwm3jnbwkeQs4OypUkTFLSBO0DzlYWxZTaAD5ALOg==
+X-ME-Sender: <xms:UQQ-Zp4xiFFGp0UTw3X3Sgs8wiUwXcZLe8zQEVv7Tzs0enLTcmmwLQ>
+    <xme:UQQ-Zm4wLx0RAEydqcoB0JLg29uHBIV-cOsIl8wQs7Oa68RRe4sdDzG-QWT7flQcI
+    EpVl2D4nAcQIP7Z3Q>
+X-ME-Received: <xmr:UQQ-ZgfLYtNQPV3BXd2yqeD7DPwV5an1kyZrM-X2zw0z7-hksxE6a4JR5SgfrLRFPejYRZgxSpOKUZqbm_UJY3MdRcSnD2a8ZPkdsHQCFBvOm5YiCA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefkedggedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepgeenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:TQQ-ZryHtltmEM017DVFZjHgFmSCCYvFd2OEh9tEKeYoEG5BOsXUHw>
-    <xmx:TQQ-ZmR3PnCMtOvim-i-9cBetbhTwNB4DjiOPGOfP12LA1Dumd8g4g>
-    <xmx:TQQ-ZuZJ8zJe-PXgNVmV9oX0sEDAArTxokzvKW87RiTAtjhjpd72Ww>
-    <xmx:TQQ-ZnSsoExO9Tg9BablLowXJc-Qer3M3-3KB15RXq80mHP7nMzpag>
-    <xmx:TQQ-ZpJOWK4VP8A-bs8peDjP9tGD9wS99SShgCY396loljC6XJGegFPq>
+X-ME-Proxy: <xmx:UQQ-ZiIo0ETZXBqmLe7iAh6sw4ClBWoMNtCvw8WEWyokmDVdynZ0zg>
+    <xmx:UQQ-ZtJmSwg2MUIFxwBlyUkbzMxeWsiRHY1m7-U6vNVaGNlAvyPVPA>
+    <xmx:UQQ-ZrwP-qzU7K9bRvFoxFklB6Swks3jRZQzBo8EptQQPBi7HX9WBQ>
+    <xmx:UQQ-ZpIsiUwYQvXdkswQAtVl4p6fb8eiI8VgPD2IhZbXQAIPMISpeQ>
+    <xmx:UgQ-ZrhVAy4d8J9Fiqug_Gbm2Erq4i2baV5hqRp5SeBB7VqEKD8kUQnf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 10 May 2024 07:26:04 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 10 May 2024 07:26:09 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 84b0150b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id ae43f801 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 10 May 2024 11:25:51 +0000 (UTC)
-Date: Fri, 10 May 2024 13:26:02 +0200
+	Fri, 10 May 2024 11:25:56 +0000 (UTC)
+Date: Fri, 10 May 2024 13:26:07 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 20/21] builtin/config: convert flags to a local variable
-Message-ID: <05254d512b890b4422a72f0fa17794a237a5bf8f.1715339393.git.ps@pks.im>
+Subject: [PATCH 21/21] builtin/config: pass data between callbacks via local
+ variables
+Message-ID: <3a5f059789ae550002e08155faacd4bb3998a489.1715339393.git.ps@pks.im>
 References: <cover.1715339393.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,212 +81,194 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="q82qCbYaXa0EkYRU"
+	protocol="application/pgp-signature"; boundary="zE/WnIZb0e9znfnm"
 Content-Disposition: inline
 In-Reply-To: <cover.1715339393.git.ps@pks.im>
 
 
---q82qCbYaXa0EkYRU
+--zE/WnIZb0e9znfnm
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Both the `do_all` and `use_key_regexp` bits essentially act like flags
-to `get_value()`. Let's convert them to actual flags so that we can get
-rid of the last two remaining global variables that track options.
+We use several global variables to pass data between callers and
+callbacks in `get_color()` and `get_colorbool()`. Convert those to use
+callback data structures instead.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/config.c | 48 +++++++++++++++++++++++++++++-------------------
- 1 file changed, 29 insertions(+), 19 deletions(-)
+ builtin/config.c | 90 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 52 insertions(+), 38 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index e6bc283751..bbb6864453 100644
+index bbb6864453..127bc097b2 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -122,9 +122,6 @@ struct config_display_options {
- 	.key_delim =3D ' ', \
+@@ -517,21 +517,24 @@ static char *normalize_value(const char *key, const c=
+har *value,
+ 	BUG("cannot normalize type %d", type);
  }
 =20
--static int use_key_regexp;
--static int do_all;
--
- #define TYPE_BOOL		1
- #define TYPE_INT		2
- #define TYPE_BOOL_OR_INT	3
-@@ -318,6 +315,9 @@ static int format_config(const struct config_display_op=
-tions *opts,
+-static int get_color_found;
+-static const char *get_color_slot;
+-static const char *get_colorbool_slot;
+-static char parsed_color[COLOR_MAXLEN];
++struct get_color_config_data {
++	int get_color_found;
++	const char *get_color_slot;
++	char parsed_color[COLOR_MAXLEN];
++};
+=20
+ static int git_get_color_config(const char *var, const char *value,
+ 				const struct config_context *ctx UNUSED,
+-				void *cb UNUSED)
++				void *cb)
+ {
+-	if (!strcmp(var, get_color_slot)) {
++	struct get_color_config_data *data =3D cb;
++
++	if (!strcmp(var, data->get_color_slot)) {
+ 		if (!value)
+ 			config_error_nonbool(var);
+-		if (color_parse(value, parsed_color) < 0)
++		if (color_parse(value, data->parsed_color) < 0)
+ 			return -1;
+-		get_color_found =3D 1;
++		data->get_color_found =3D 1;
+ 	}
+ 	return 0;
+ }
+@@ -539,66 +542,77 @@ static int git_get_color_config(const char *var, cons=
+t char *value,
+ static void get_color(const struct config_location_options *opts,
+ 		      const char *var, const char *def_color)
+ {
+-	get_color_slot =3D var;
+-	get_color_found =3D 0;
+-	parsed_color[0] =3D '\0';
+-	config_with_options(git_get_color_config, NULL,
++	struct get_color_config_data data =3D {
++		.get_color_slot =3D var,
++		.parsed_color[0] =3D '\0',
++	};
++
++	config_with_options(git_get_color_config, &data,
+ 			    &opts->source, the_repository,
+ 			    &opts->options);
+=20
+-	if (!get_color_found && def_color) {
+-		if (color_parse(def_color, parsed_color) < 0)
++	if (!data.get_color_found && def_color) {
++		if (color_parse(def_color, data.parsed_color) < 0)
+ 			die(_("unable to parse default color value"));
+ 	}
+=20
+-	fputs(parsed_color, stdout);
++	fputs(data.parsed_color, stdout);
+ }
+=20
+-static int get_colorbool_found;
+-static int get_diff_color_found;
+-static int get_color_ui_found;
++struct get_colorbool_config_data {
++	int get_colorbool_found;
++	int get_diff_color_found;
++	int get_color_ui_found;
++	const char *get_colorbool_slot;
++};
++
+ static int git_get_colorbool_config(const char *var, const char *value,
+ 				    const struct config_context *ctx UNUSED,
+-				    void *data UNUSED)
++				    void *cb)
+ {
+-	if (!strcmp(var, get_colorbool_slot))
+-		get_colorbool_found =3D git_config_colorbool(var, value);
++	struct get_colorbool_config_data *data =3D cb;
++
++	if (!strcmp(var, data->get_colorbool_slot))
++		data->get_colorbool_found =3D git_config_colorbool(var, value);
+ 	else if (!strcmp(var, "diff.color"))
+-		get_diff_color_found =3D git_config_colorbool(var, value);
++		data->get_diff_color_found =3D git_config_colorbool(var, value);
+ 	else if (!strcmp(var, "color.ui"))
+-		get_color_ui_found =3D git_config_colorbool(var, value);
++		data->get_color_ui_found =3D git_config_colorbool(var, value);
  	return 0;
  }
 =20
-+#define GET_VALUE_ALL        (1 << 0)
-+#define GET_VALUE_KEY_REGEXP (1 << 1)
-+
- struct collect_config_data {
- 	const struct config_display_options *display_opts;
- 	struct strbuf_list *values;
-@@ -326,6 +326,7 @@ struct collect_config_data {
- 	regex_t *regexp;
- 	regex_t *key_regexp;
- 	int do_not_match;
-+	unsigned get_value_flags;
- 	unsigned flags;
- };
-=20
-@@ -336,9 +337,11 @@ static int collect_config(const char *key_, const char=
- *value_,
- 	struct strbuf_list *values =3D data->values;
- 	const struct key_value_info *kvi =3D ctx->kvi;
-=20
--	if (!use_key_regexp && strcmp(key_, data->key))
-+	if (!(data->get_value_flags & GET_VALUE_KEY_REGEXP) &&
-+	    strcmp(key_, data->key))
- 		return 0;
--	if (use_key_regexp && regexec(data->key_regexp, key_, 0, NULL, 0))
-+	if ((data->get_value_flags & GET_VALUE_KEY_REGEXP) &&
-+	    regexec(data->key_regexp, key_, 0, NULL, 0))
- 		return 0;
- 	if ((data->flags & CONFIG_FLAGS_FIXED_VALUE) &&
- 	    strcmp(data->value_pattern, (value_?value_:"")))
-@@ -356,19 +359,21 @@ static int collect_config(const char *key_, const cha=
-r *value_,
-=20
- static int get_value(const struct config_location_options *opts,
- 		     const struct config_display_options *display_opts,
--		     const char *key_, const char *regex_, unsigned flags)
-+		     const char *key_, const char *regex_,
-+		     unsigned get_value_flags, unsigned flags)
+ static int get_colorbool(const struct config_location_options *opts,
+ 			 const char *var, int print)
  {
- 	int ret =3D CONFIG_GENERIC_ERROR;
- 	struct strbuf_list values =3D {NULL};
- 	struct collect_config_data data =3D {
- 		.display_opts =3D display_opts,
- 		.values =3D &values,
-+		.get_value_flags =3D get_value_flags,
- 		.flags =3D flags,
- 	};
- 	char *key =3D NULL;
- 	int i;
+-	get_colorbool_slot =3D var;
+-	get_colorbool_found =3D -1;
+-	get_diff_color_found =3D -1;
+-	get_color_ui_found =3D -1;
+-	config_with_options(git_get_colorbool_config, NULL,
++	struct get_colorbool_config_data data =3D {
++		.get_colorbool_slot =3D var,
++		.get_colorbool_found =3D -1,
++		.get_diff_color_found =3D -1,
++		.get_color_ui_found =3D -1,
++	};
++
++	config_with_options(git_get_colorbool_config, &data,
+ 			    &opts->source, the_repository,
+ 			    &opts->options);
 =20
--	if (use_key_regexp) {
-+	if (get_value_flags & GET_VALUE_KEY_REGEXP) {
- 		char *tl;
-=20
- 		/*
-@@ -440,7 +445,7 @@ static int get_value(const struct config_location_optio=
-ns *opts,
-=20
- 	for (i =3D 0; i < values.nr; i++) {
- 		struct strbuf *buf =3D values.items + i;
--		if (do_all || i =3D=3D values.nr - 1)
-+		if ((get_value_flags & GET_VALUE_ALL) || i =3D=3D values.nr - 1)
- 			fwrite(buf->buf, 1, buf->len, stdout);
- 		strbuf_release(buf);
+-	if (get_colorbool_found < 0) {
+-		if (!strcmp(get_colorbool_slot, "color.diff"))
+-			get_colorbool_found =3D get_diff_color_found;
+-		if (get_colorbool_found < 0)
+-			get_colorbool_found =3D get_color_ui_found;
++	if (data.get_colorbool_found < 0) {
++		if (!strcmp(data.get_colorbool_slot, "color.diff"))
++			data.get_colorbool_found =3D data.get_diff_color_found;
++		if (data.get_colorbool_found < 0)
++			data.get_colorbool_found =3D data.get_color_ui_found;
  	}
-@@ -846,11 +851,12 @@ static int cmd_config_get(int argc, const char **argv=
-, const char *prefix)
- 	struct config_display_options display_opts =3D CONFIG_DISPLAY_OPTIONS_INI=
-T;
- 	const char *value_pattern =3D NULL, *url =3D NULL;
- 	int flags =3D 0;
-+	unsigned get_value_flags =3D 0;
- 	struct option opts[] =3D {
- 		CONFIG_LOCATION_OPTIONS(location_opts),
- 		OPT_GROUP(N_("Filter options")),
--		OPT_BOOL(0, "all", &do_all, N_("return all values for multi-valued confi=
-g options")),
--		OPT_BOOL(0, "regexp", &use_key_regexp, N_("interpret the name as a regul=
-ar expression")),
-+		OPT_BIT(0, "all", &get_value_flags, N_("return all values for multi-valu=
-ed config options"), GET_VALUE_ALL),
-+		OPT_BIT(0, "regexp", &get_value_flags, N_("interpret the name as a regul=
-ar expression"), GET_VALUE_KEY_REGEXP),
- 		OPT_STRING(0, "value", &value_pattern, N_("pattern"), N_("show config wi=
-th values matching the pattern")),
- 		OPT_BIT(0, "fixed-value", &flags, N_("use string equality when comparing=
- values to value pattern"), CONFIG_FLAGS_FIXED_VALUE),
- 		OPT_STRING(0, "url", &url, N_("URL"), N_("show config matching the given=
- URL")),
-@@ -870,9 +876,12 @@ static int cmd_config_get(int argc, const char **argv,=
- const char *prefix)
 =20
- 	if ((flags & CONFIG_FLAGS_FIXED_VALUE) && !value_pattern)
- 		die(_("--fixed-value only applies with 'value-pattern'"));
--	if (display_opts.default_value && (do_all || url))
-+	if (display_opts.default_value &&
-+	    ((get_value_flags & GET_VALUE_ALL) || url))
- 		die(_("--default=3D cannot be used with --all or --url=3D"));
--	if (url && (do_all || use_key_regexp || value_pattern))
-+	if (url && ((get_value_flags & GET_VALUE_ALL) ||
-+		    (get_value_flags & GET_VALUE_KEY_REGEXP) ||
-+		    value_pattern))
- 		die(_("--url=3D cannot be used with --all, --regexp or --value"));
+-	if (get_colorbool_found < 0)
++	if (data.get_colorbool_found < 0)
+ 		/* default value if none found in config */
+-		get_colorbool_found =3D GIT_COLOR_AUTO;
++		data.get_colorbool_found =3D GIT_COLOR_AUTO;
 =20
- 	location_options_init(&location_opts, prefix);
-@@ -883,7 +892,8 @@ static int cmd_config_get(int argc, const char **argv, =
-const char *prefix)
- 	if (url)
- 		ret =3D get_urlmatch(&location_opts, &display_opts, argv[0], url);
- 	else
--		ret =3D get_value(&location_opts, &display_opts, argv[0], value_pattern,=
- flags);
-+		ret =3D get_value(&location_opts, &display_opts, argv[0], value_pattern,
-+				get_value_flags, flags);
+-	get_colorbool_found =3D want_color(get_colorbool_found);
++	data.get_colorbool_found =3D want_color(data.get_colorbool_found);
 =20
- 	location_options_release(&location_opts);
- 	return ret;
-@@ -1284,19 +1294,19 @@ static int cmd_config_actions(int argc, const char =
-**argv, const char *prefix)
- 	}
- 	else if (actions =3D=3D ACTION_GET) {
- 		check_argc(argc, 1, 2);
--		ret =3D get_value(&location_opts, &display_opts, argv[0], argv[1], flags=
-);
-+		ret =3D get_value(&location_opts, &display_opts, argv[0], argv[1],
-+				0, flags);
- 	}
- 	else if (actions =3D=3D ACTION_GET_ALL) {
--		do_all =3D 1;
- 		check_argc(argc, 1, 2);
--		ret =3D get_value(&location_opts, &display_opts, argv[0], argv[1], flags=
-);
-+		ret =3D get_value(&location_opts, &display_opts, argv[0], argv[1],
-+				GET_VALUE_ALL, flags);
- 	}
- 	else if (actions =3D=3D ACTION_GET_REGEXP) {
- 		display_opts.show_keys =3D 1;
--		use_key_regexp =3D 1;
--		do_all =3D 1;
- 		check_argc(argc, 1, 2);
--		ret =3D get_value(&location_opts, &display_opts, argv[0], argv[1], flags=
-);
-+		ret =3D get_value(&location_opts, &display_opts, argv[0], argv[1],
-+				GET_VALUE_ALL|GET_VALUE_KEY_REGEXP, flags);
- 	}
- 	else if (actions =3D=3D ACTION_GET_URLMATCH) {
- 		check_argc(argc, 2, 2);
+ 	if (print) {
+-		printf("%s\n", get_colorbool_found ? "true" : "false");
++		printf("%s\n", data.get_colorbool_found ? "true" : "false");
+ 		return 0;
+ 	} else
+-		return get_colorbool_found ? 0 : 1;
++		return data.get_colorbool_found ? 0 : 1;
+ }
+=20
+ static void check_write(const struct git_config_source *source)
 --=20
 2.45.GIT
 
 
---q82qCbYaXa0EkYRU
+--zE/WnIZb0e9znfnm
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY+BEkACgkQVbJhu7ck
-PpSoZQ//fcdiMWHm2US9j1lOcJ3DP3RG2rOuyDbPEAByazVNRHGEq3WPyPWla7wZ
-CICy390SVJKoVPMepnf7OX06PiAyQZ6Bcc/yq6vi1N7lQnfeke+rLvJb+PZvYL8l
-3s6FRMuafRGVyy712emE/ihy6QBVRHW58/W+9CERzvvbQQN/qdErAQo88FrXqbrP
-1WscO+FSCOIP2zQCMmy29xVPqNvabaVtTRNAuc6qsSIFJEyNLzQ89CC79zR4UF+j
-DIW4WjCs02fYoMf/g/kCgCARXuW52rxZrBOHrHWAv3gM4yYfPC57wTZK1P46pmZp
-/OJQ7JiziGx20JPDEwYrEQz0KH2HrDRZqbXnqccpWzMsJMyfZjNTAsqjzQaOSO0O
-BMz39w3H0ceX0GlRbw7K6LpncfkGMnZeuBk+vhB9BUQJtiSd850FuS2wgTtQGUyO
-UBz7QTfau1lLmLN0g7ZiGuA0h+PKuR9D47XIATAYRoTI+Uxuk776utePuYyjO41u
-3Ilq+z8tfMQpoubnonEIn52qcA3MpU9BTzTOBYPchFugb7FaQ/K/9cGoEnAkpYPW
-4YeKgozcmivX1ITIayZDb+KFCX5G76gZt1d47Y5o0959nVDYM+2jAKw5yptiBo1J
-Cx8mgEgQhuZpZq+6I+TJHrcWskoEtjQhjc0lL7hYC/nqb5Mpptc=
-=nEwU
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY+BE4ACgkQVbJhu7ck
+PpRpzg/+POlZaPWa8e8lN3zOuuAbKf3Hr/iIXNSQIh4fpZ3J/h9Ku7ETthw3hjLK
+MarBNicXxZA+JIr48RlRZ1JUEnUZQQDVRgj/0DOse+uLiODLIuN5eMKvcijlXMXp
+IBbOvr/KQQIQTqIlOMxvJ0QXNrr2AFw5YtAqt41Wds2ZSVY/TqzTnoRE83x3gHEi
+N6vD6J+MlS7o6AJkGSBB/u1gPvCM7aMb/emPCa2u6SS6sKeZzaXszCa8XOIepTFa
+aYM73uDSmsPesaMdF7p0es4LsUq54/XjSyaQIGJlRD1adQHrkfUuw92yYddHJXoK
+1KMa384LMFg7yMFmOWWYfmdJ3wFRDgv4kKcc7SKWcCMC7+b4mulLSr1Ct7isf1jB
+VvYgozHPr5w+HDC+zBxhQRxssmWeRfikGjzhz+ggniQvOwHNqvLbfys+dmHA/5S/
+UA0qO2/NoiV5Jds3jIFkiyrmLhaIcJ3ob+sV4lILJRfNMvwhKWLxyZ4Uf7p1MWWw
+xSwowJKImg+HRs5Hf0ljLj/umcsT5mrGR3aD3WdfZ24YIzLPwPAEoB7cjkWf1w1b
+ArzyH21fbijEiNDO5O8nt6MsnQkbYaWS5OIcgJeQWCWWpRDyeRV5DEnhEy9ADu71
+weFBtKEcE2EdrnWCoyGXxvCuJN2HisCZ30gTvKGXucg6jzsZH9Q=
+=xOFb
 -----END PGP SIGNATURE-----
 
---q82qCbYaXa0EkYRU--
+--zE/WnIZb0e9znfnm--
