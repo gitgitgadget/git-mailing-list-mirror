@@ -1,54 +1,54 @@
-Received: from wfhigh1-smtp.messagingengine.com (wfhigh1-smtp.messagingengine.com [64.147.123.152])
+Received: from wfout7-smtp.messagingengine.com (wfout7-smtp.messagingengine.com [64.147.123.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A64168B01
-	for <git@vger.kernel.org>; Fri, 10 May 2024 10:29:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02192168B01
+	for <git@vger.kernel.org>; Fri, 10 May 2024 10:29:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715336971; cv=none; b=AfFCEGEVGU2jZ6v/214KucpSiXcsukF7jwS3oIvsiOX35WLI2pN6dqbJGP0Jrmp/1ihzdKV7gKH16rD8SRFGLDr0zf7wdm1FYmrLbtpYEElCKyTxz3MGEaRwsG0e6MqQaSfzBLJjQjOIkGcX3THUbccjzBTj6zR1Bw40IUYkHa8=
+	t=1715336976; cv=none; b=sq7B0h7OwmQJ9FHvnQCfh+f26MliJ0NGnkIDH+sXBn5UGv0aiSoq3EJiaMm3Ykc/fQpkxgp8fWlE269Xs2RB1suI1iVRJOdo8sPYfb5QNNrNSH8/tCbXRvK+PNcukVwc/fiiYXKrKSihLHtQIR/K7LjNTvWCRxjM9iRUWe1vNEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715336971; c=relaxed/simple;
-	bh=gu/fthYt8H/q7rhSnojtHqzpVupq2uxZt+5jzmWFh7c=;
+	s=arc-20240116; t=1715336976; c=relaxed/simple;
+	bh=1KmcghFF7+83vwY4DcYxDOdcg+gwlwUFWFy/dI0jsds=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HCBBL/VehboUbMHGtTnusLZtkmAjs2jCG7eJ5aBAEkvyDh3jMOCmyVZnIGxknJ5de46waPI58OXVRucVV+YhnvWGiS9n6WxLEnN94B5ofSmrJUJb7rIZ92pTgJEyzyDGfow6RVwHU9/fO+f56qUa9guhymdNhsT128KZSC5y77M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CQEKNUsl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e0VKwEuh; arc=none smtp.client-ip=64.147.123.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=WenhDgm3ekxcR68v4RCSGUcndKlsHYwkoLUIYsvVdYWdWVEadVDejLLwoURleg/PZeK0HFaHNSP1kZaGB7SGA4/zjjWRbMt24ZOpV4CdvIn4jw3lq5/T/64XokTvlpGIIABIqXJCY9mXLB9INogGXvSTIMcJvEf0WUpdEjDN708=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=p93SvoMS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hqmWsqoy; arc=none smtp.client-ip=64.147.123.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CQEKNUsl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e0VKwEuh"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 1AA31180009A;
-	Fri, 10 May 2024 06:29:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="p93SvoMS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hqmWsqoy"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.west.internal (Postfix) with ESMTP id 124231C000E5;
+	Fri, 10 May 2024 06:29:34 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 10 May 2024 06:29:29 -0400
+  by compute5.internal (MEProxy); Fri, 10 May 2024 06:29:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715336968; x=1715423368; bh=3d0FFhFQHf
-	INkXefT8jArDIFCWHcBC6W3EEMM8bSXlA=; b=CQEKNUslGxhrNNxUmU7/SR6bQb
-	Y8brxzBFCmedZpQioPBzECxYV/nqusrn79AX4GpSPzC1FVhKvO6pjLirc4GNfNxf
-	IEkUWPe0dS2LWv/IlgQo5lzXn+9eO3tfRV6hoEJqfNtiKydQi6DA68Tr46lIMfK/
-	1CGhM+Dp7fNho+edmUyNi7JRhWgypJvESpO+OGSbdGPqaq94uxywH/X44DZBxhwG
-	keW3DU/SIqnxQL+18Bz8rtBejaqBJcr0zEtmkMferd8cIQEsTvg6hHceKHj4cvku
-	O8YfX2ZylgjwZP7WTVkPs11kIeklzGlvYiyU7Ttufbl2wvHVQfPYGVUhtalQ==
+	:subject:to:to; s=fm3; t=1715336973; x=1715423373; bh=Tj/KG2yxNu
+	E/1QAgHFbx55l6WQ//XkhmH3M5iWee9b0=; b=p93SvoMS0QE/jgfwdk8AYZ1GWX
+	GEYXo4PQXFV9kGAyySZKnVJml7zRPPC3VHJTQ4pXEFqCNF540salbeTwF4SIi8o0
+	7Gxs2cQUz18i1AadGE2+brX85xFfpOWvzYha613Ace9nxkMwTnI88AMJI7Cc5dIK
+	TMelUPRFM5A8l+KB94TuGXL99kqESnWK95QvY1DQFSyJFQdaw32GJybAh8O4iVrz
+	kHUSgBvQaLCgVkbgYkHnI27qnMy+vyyg0fGNhmENTM562J8V+SbCH16C8X4rj4dp
+	tTNWHFS7oJNUhLmcPBLrnDXTSrEE4msxSPU+gQxxCQV6pul7SErGZnRYYAkg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715336968; x=1715423368; bh=3d0FFhFQHfINkXefT8jArDIFCWHc
-	BC6W3EEMM8bSXlA=; b=e0VKwEuhfV7HD+DbegAaTO4z3Pz9yzprQXK0JNtwQYaW
-	zmsfDjzJsc/5sb8LQNKSVB1jBSmCkV/bckLreXeVI9ZkVQj3usWPHm8DrklAQGZR
-	w9xopBw/7Y5D6mzNMeVb6CK4y8wdQx/RJSQpKD+uXzVvWR7lu643aBaid5RT+Lci
-	LRGVaMmUOo/Fz4tbBOIfIfsUkwOktFTgCmLa2YRPcAnLSZICiOXJJzBbZ/UlByhB
-	FRFzYJsjPmWJMXs7Xchpe2yl2oofowidP4IRX1yn8f8ugChPCpgTGTWoymRrt7nu
-	FNOOaRtgwioW8WzqQNt2NKgaIMTF2xRnKOWQsEnsmQ==
-X-ME-Sender: <xms:CPc9ZkwL6OqVJ5l9zNtQ6msQXy1TdUITgMrhHgE_ZjxWtSS-qckDrw>
-    <xme:CPc9ZoQz-Rjqa64OpYKYV7Q6rkxWgbNTVYUQgcQG9aWf_M4EFuWz8im-m4hIL6Od_
-    LXKuiqV_7J_IofTwQ>
-X-ME-Received: <xmr:CPc9ZmXfc3OxCgGFsuFbzsRlvspLnkE21ccKaxlepNUdo0HjJUusLBY-jztIwPaMJMx2M2ACqSd5ZP6eBeEeeKqSIcGxO-qWgJ7cg2oaB0ptC0KJ3w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefkedgvdekucetufdoteggodetrfdotf
+	fm3; t=1715336973; x=1715423373; bh=Tj/KG2yxNuE/1QAgHFbx55l6WQ//
+	XkhmH3M5iWee9b0=; b=hqmWsqoyhoovCCqvK1715pbRWVlrDTd/DWQokIRvCiSw
+	lM5rUwOI2jLWtOEiX/Tr8jWtYPryn7dMAnePSYSyQZ8JAckc7q0LPVuHu1KhKles
+	6W27tIoXdFXU+Q8UDcQamV5iW3zGvWzm+s/BmMMo4Lj9s7HB/Aiy1DotD4tRa6vp
+	hEGX4g+kpuO9scWWqXlOHTx4WFfwftvPz6iwz9VoYw/Ex4DGoWyENhSpp7uCzRH1
+	YrsciVKRtKu9Guak8/b1ZCyYuX32DdlY4CsM17I0AqX8m7nzOdGyaTAhM8kv+bXB
+	thDf7/LPUp7S7IcsTLkNcYisc4wd9AIJxKgylvTNbQ==
+X-ME-Sender: <xms:Dfc9Zjyo6lbXPLt5LD54RjA3RM4Zgtrf-qzzOswPmh4s_ZRRJGGcYg>
+    <xme:Dfc9ZrSlVTyz4G3v9zsX-gd-eMLom14Mua0NpmuiPV34C27HpZi31FBulmpzetRXp
+    cEnbA9pPYj8URrC0Q>
+X-ME-Received: <xmr:Dfc9ZtWdp3TP5FpX5WHecDCObju5s7wq47K8uDgtifFwNFS762y6ulgUXEvmJ_YHNuoXoqiKSdDOvlp8JdZCYys4jquDh-QnNRVzH_lvr6OVZArMwA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefkedgvdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -56,24 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefkedgvdekucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:CPc9ZihICg-Ut_WKSyrxilsBbM9YAKVJOo70rTpxKhgwv5fDBYCbyg>
-    <xmx:CPc9ZmBtWBWaSUsiK0DL_5E0-i2zpUlgX8Gj2bJ85svCqEP778Naqw>
-    <xmx:CPc9ZjJuUR7GSnr3tEhxjz0fYXTTF_PRTgh-ru6zkxnsHo-JYuN7AA>
-    <xmx:CPc9ZtBoYnaDSNcznRRUd33_KoYobHBrq4saqmPo0ILwFvA3CU884A>
-    <xmx:CPc9ZhOo0lwDgrY6aBv_jFUqvCesy9qj9mJNtL2PEYCKU5oHgjPwd4B5>
+X-ME-Proxy: <xmx:Dfc9Ztj9ar4baox4OCFn7Sm19h5_EuVUPX4vcSVSfepaNByf5s3nBQ>
+    <xmx:Dfc9ZlDpAcMltoR2llkphJjQk_JPrvEIhygiqPaGbvMopoRW86TNTQ>
+    <xmx:Dfc9ZmLTFLYXVhWyf5WvQe22ZbLJk64AS0iOMRSA0YdaMLL1Zdz3fQ>
+    <xmx:Dfc9ZkCevYmmkZJ83PM70SN9NkfWfueuWoKW1Rq4teMsUU0xLubC6A>
+    <xmx:Dfc9ZkODy7h9S2T3HhDjOcHRMTS-dH-fSJlcHGlZ7hrUjqQiL6nyCHCt>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 May 2024 06:29:27 -0400 (EDT)
+ 10 May 2024 06:29:32 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 859208f4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 May 2024 10:29:15 +0000 (UTC)
-Date: Fri, 10 May 2024 12:29:25 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 07043d59 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 May 2024 10:29:19 +0000 (UTC)
+Date: Fri, 10 May 2024 12:29:30 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 02/11] reftable: consistently pass write opts as value
-Message-ID: <e6f8fc09c282e620a331a737c30a190107c76996.1715336798.git.ps@pks.im>
+Subject: [PATCH v2 03/11] reftable/writer: drop static variable used to
+ initialize strbuf
+Message-ID: <aa2903e3e5ac76f82252e12919a8a09178e267ee.1715336798.git.ps@pks.im>
 References: <cover.1714630191.git.ps@pks.im>
  <cover.1715336797.git.ps@pks.im>
 Precedence: bulk
@@ -83,300 +84,79 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AQYfH9+PW73CyrId"
+	protocol="application/pgp-signature"; boundary="nFBGryjD1orb/9DO"
 Content-Disposition: inline
 In-Reply-To: <cover.1715336797.git.ps@pks.im>
 
 
---AQYfH9+PW73CyrId
+--nFBGryjD1orb/9DO
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We sometimes pass the refatble write options as value and sometimes as a
-pointer. This is quite confusing and makes the reader wonder whether the
-options get modified sometimes.
-
-In fact, `reftable_new_writer()` does cause the caller-provided options
-to get updated when some values aren't set up. This is quite unexpected,
-but didn't cause any harm until now.
-
-Refactor the code to consistently pass the options as a value so that
-they are local to the subsystem they are being passed into so that we
-can avoid weirdness like this.
+We have a static variable in the reftable writer code that is merely
+used to initialize the `last_key` of the writer. Convert the code to
+instead use `strbuf_init()` and drop the variable.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/merged_test.c     |  6 +++---
- reftable/readwrite_test.c  | 26 +++++++++++++-------------
- reftable/refname_test.c    |  2 +-
- reftable/reftable-writer.h |  2 +-
- reftable/stack.c           |  4 ++--
- reftable/writer.c          | 12 +++++++-----
- 6 files changed, 27 insertions(+), 25 deletions(-)
+ reftable/writer.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/reftable/merged_test.c b/reftable/merged_test.c
-index 530fc82d1c..4ac81de8d4 100644
---- a/reftable/merged_test.c
-+++ b/reftable/merged_test.c
-@@ -42,7 +42,7 @@ static void write_test_table(struct strbuf *buf,
- 		}
- 	}
-=20
--	w =3D reftable_new_writer(&strbuf_add_void, &noop_flush, buf, &opts);
-+	w =3D reftable_new_writer(&strbuf_add_void, &noop_flush, buf, opts);
- 	reftable_writer_set_limits(w, min, max);
-=20
- 	for (i =3D 0; i < n; i++) {
-@@ -70,7 +70,7 @@ static void write_test_log_table(struct strbuf *buf,
- 		.exact_log_message =3D 1,
- 	};
- 	struct reftable_writer *w =3D NULL;
--	w =3D reftable_new_writer(&strbuf_add_void, &noop_flush, buf, &opts);
-+	w =3D reftable_new_writer(&strbuf_add_void, &noop_flush, buf, opts);
- 	reftable_writer_set_limits(w, update_index, update_index);
-=20
- 	for (i =3D 0; i < n; i++) {
-@@ -403,7 +403,7 @@ static void test_default_write_opts(void)
- 	struct reftable_write_options opts =3D { 0 };
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, opts);
-=20
- 	struct reftable_ref_record rec =3D {
- 		.refname =3D "master",
-diff --git a/reftable/readwrite_test.c b/reftable/readwrite_test.c
-index a6dbd214c5..27631a041b 100644
---- a/reftable/readwrite_test.c
-+++ b/reftable/readwrite_test.c
-@@ -51,7 +51,7 @@ static void write_table(char ***names, struct strbuf *buf=
-, int N,
- 		.hash_id =3D hash_id,
- 	};
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, buf, opts);
- 	struct reftable_ref_record ref =3D { NULL };
- 	int i =3D 0, n;
- 	struct reftable_log_record log =3D { NULL };
-@@ -129,7 +129,7 @@ static void test_log_buffer_size(void)
- 					   .message =3D "commit: 9\n",
- 				   } } };
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, opts);
-=20
- 	/* This tests buffer extension for log compression. Must use a random
- 	   hash, to ensure that the compressed part is larger than the original.
-@@ -172,7 +172,7 @@ static void test_log_overflow(void)
- 		},
- 	};
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, opts);
-=20
- 	memset(msg, 'x', sizeof(msg) - 1);
- 	reftable_writer_set_limits(w, update_index, update_index);
-@@ -199,7 +199,7 @@ static void test_log_write_read(void)
- 	struct reftable_block_source source =3D { NULL };
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, opts);
- 	const struct reftable_stats *stats =3D NULL;
- 	reftable_writer_set_limits(w, 0, N);
- 	for (i =3D 0; i < N; i++) {
-@@ -288,7 +288,7 @@ static void test_log_zlib_corruption(void)
- 	struct reftable_block_source source =3D { 0 };
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, opts);
- 	const struct reftable_stats *stats =3D NULL;
- 	char message[100] =3D { 0 };
- 	int err, i, n;
-@@ -526,7 +526,7 @@ static void test_table_refs_for(int indexed)
-=20
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, opts);
-=20
- 	struct reftable_iterator it =3D { NULL };
- 	int j;
-@@ -619,7 +619,7 @@ static void test_write_empty_table(void)
- 	struct reftable_write_options opts =3D { 0 };
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, opts);
- 	struct reftable_block_source source =3D { NULL };
- 	struct reftable_reader *rd =3D NULL;
- 	struct reftable_ref_record rec =3D { NULL };
-@@ -657,7 +657,7 @@ static void test_write_object_id_min_length(void)
- 	};
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, opts);
- 	struct reftable_ref_record ref =3D {
- 		.update_index =3D 1,
- 		.value_type =3D REFTABLE_REF_VAL1,
-@@ -692,7 +692,7 @@ static void test_write_object_id_length(void)
- 	};
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, opts);
- 	struct reftable_ref_record ref =3D {
- 		.update_index =3D 1,
- 		.value_type =3D REFTABLE_REF_VAL1,
-@@ -726,7 +726,7 @@ static void test_write_empty_key(void)
- 	struct reftable_write_options opts =3D { 0 };
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, opts);
- 	struct reftable_ref_record ref =3D {
- 		.refname =3D "",
- 		.update_index =3D 1,
-@@ -749,7 +749,7 @@ static void test_write_key_order(void)
- 	struct reftable_write_options opts =3D { 0 };
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, opts);
- 	struct reftable_ref_record refs[2] =3D {
- 		{
- 			.refname =3D "b",
-@@ -792,7 +792,7 @@ static void test_write_multiple_indices(void)
- 	struct reftable_reader *reader;
- 	int err, i;
-=20
--	writer =3D reftable_new_writer(&strbuf_add_void, &noop_flush, &writer_buf=
-, &opts);
-+	writer =3D reftable_new_writer(&strbuf_add_void, &noop_flush, &writer_buf=
-, opts);
- 	reftable_writer_set_limits(writer, 1, 1);
- 	for (i =3D 0; i < 100; i++) {
- 		struct reftable_ref_record ref =3D {
-@@ -869,7 +869,7 @@ static void test_write_multi_level_index(void)
- 	struct reftable_reader *reader;
- 	int err;
-=20
--	writer =3D reftable_new_writer(&strbuf_add_void, &noop_flush, &writer_buf=
-, &opts);
-+	writer =3D reftable_new_writer(&strbuf_add_void, &noop_flush, &writer_buf=
-, opts);
- 	reftable_writer_set_limits(writer, 1, 1);
- 	for (size_t i =3D 0; i < 200; i++) {
- 		struct reftable_ref_record ref =3D {
-diff --git a/reftable/refname_test.c b/reftable/refname_test.c
-index b9cc62554e..3468253be7 100644
---- a/reftable/refname_test.c
-+++ b/reftable/refname_test.c
-@@ -30,7 +30,7 @@ static void test_conflict(void)
- 	struct reftable_write_options opts =3D { 0 };
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct reftable_writer *w =3D
--		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, opts);
- 	struct reftable_ref_record rec =3D {
- 		.refname =3D "a/b",
- 		.value_type =3D REFTABLE_REF_SYMREF,
-diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
-index 155bf0bbe2..44cb986465 100644
---- a/reftable/reftable-writer.h
-+++ b/reftable/reftable-writer.h
-@@ -92,7 +92,7 @@ struct reftable_stats {
- struct reftable_writer *
- reftable_new_writer(ssize_t (*writer_func)(void *, const void *, size_t),
- 		    int (*flush_func)(void *),
--		    void *writer_arg, struct reftable_write_options *opts);
-+		    void *writer_arg, struct reftable_write_options opts);
-=20
- /* Set the range of update indices for the records we will add. When writi=
-ng a
-    table into a stack, the min should be at least
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 3979657793..7b4fff7c9e 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -767,7 +767,7 @@ int reftable_addition_add(struct reftable_addition *add,
- 	tab_fd =3D get_tempfile_fd(tab_file);
-=20
- 	wr =3D reftable_new_writer(reftable_fd_write, reftable_fd_flush, &tab_fd,
--				 &add->stack->opts);
-+				 add->stack->opts);
- 	err =3D write_table(wr, arg);
- 	if (err < 0)
- 		goto done;
-@@ -861,7 +861,7 @@ static int stack_compact_locked(struct reftable_stack *=
-st,
- 	}
-=20
- 	wr =3D reftable_new_writer(reftable_fd_write, reftable_fd_flush,
--				 &tab_fd, &st->opts);
-+				 &tab_fd, st->opts);
- 	err =3D stack_write_compact(st, wr, first, last, config);
- 	if (err < 0)
- 		goto done;
 diff --git a/reftable/writer.c b/reftable/writer.c
-index 1d9ff0fbfa..ad2f2e6c65 100644
+index ad2f2e6c65..7df6e53699 100644
 --- a/reftable/writer.c
 +++ b/reftable/writer.c
-@@ -122,20 +122,22 @@ static struct strbuf reftable_empty_strbuf =3D STRBUF=
-_INIT;
+@@ -117,15 +117,12 @@ static void writer_reinit_block_writer(struct reftabl=
+e_writer *w, uint8_t typ)
+ 	w->block_writer->restart_interval =3D w->opts.restart_interval;
+ }
+=20
+-static struct strbuf reftable_empty_strbuf =3D STRBUF_INIT;
+-
  struct reftable_writer *
  reftable_new_writer(ssize_t (*writer_func)(void *, const void *, size_t),
  		    int (*flush_func)(void *),
--		    void *writer_arg, struct reftable_write_options *opts)
-+		    void *writer_arg, struct reftable_write_options opts)
+ 		    void *writer_arg, struct reftable_write_options opts)
  {
  	struct reftable_writer *wp =3D reftable_calloc(1, sizeof(*wp));
- 	strbuf_init(&wp->block_writer_data.last_key, 0);
--	options_set_defaults(opts);
--	if (opts->block_size >=3D (1 << 24)) {
-+
-+	options_set_defaults(&opts);
-+	if (opts.block_size >=3D (1 << 24)) {
- 		/* TODO - error return? */
+-	strbuf_init(&wp->block_writer_data.last_key, 0);
+=20
+ 	options_set_defaults(&opts);
+ 	if (opts.block_size >=3D (1 << 24)) {
+@@ -133,7 +130,8 @@ reftable_new_writer(ssize_t (*writer_func)(void *, cons=
+t void *, size_t),
  		abort();
  	}
-+
- 	wp->last_key =3D reftable_empty_strbuf;
--	REFTABLE_CALLOC_ARRAY(wp->block, opts->block_size);
-+	REFTABLE_CALLOC_ARRAY(wp->block, opts.block_size);
+=20
+-	wp->last_key =3D reftable_empty_strbuf;
++	strbuf_init(&wp->block_writer_data.last_key, 0);
++	strbuf_init(&wp->last_key, 0);
+ 	REFTABLE_CALLOC_ARRAY(wp->block, opts.block_size);
  	wp->write =3D writer_func;
  	wp->write_arg =3D writer_arg;
--	wp->opts =3D *opts;
-+	wp->opts =3D opts;
- 	wp->flush =3D flush_func;
- 	writer_reinit_block_writer(wp, BLOCK_TYPE_REF);
-=20
 --=20
 2.45.0
 
 
---AQYfH9+PW73CyrId
+--nFBGryjD1orb/9DO
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY99wQACgkQVbJhu7ck
-PpSLYw//cMUcwbg258YXkSQilzzSGsLLD0uLeBNtAlalh3LOKZYlEevMPqLEuXcN
-CY/zaw7s0/pIzWCHvGG5VkfZnaCKJkAMYVY3K4hjdZhAWe6kNLOtlfSee1SWZgN4
-iHcMW9SXXCsSXSTOqR86ODJD5ci0DwzZSVH3jNk/pYHzYR3sjS9hE9t0pIDGvPZG
-nzGnBUuxsGrMIu42r4zaulUwGSegHrB95/Agoa7nV9PICrLpXZM+/tPom9zVRT8L
-q5hxq1c86hii536R0f+BlOAKWfy9vZIGg2M0wBdxTXeAB9TkmSlzoqEox4Gk0OOj
-emd5APJwM6vrn8Z110gjr0xfJ6dNEmjHLvgEa94W6CuncxX595JJp9AYgUisiXiA
-P2pUsixKJmXBlKE6Yk8vzPRPC4DAX9LLriVNjFJd3OZOcO7iEd4bf4dziTkGUDPO
-c9DHsGaPNR/152yREqq83fo88YO6XksCPixMzn5dgQjnRGI4rhNHuq42foKyhhNO
-WdOGlAXNCQyB0bjw1oqH3hmPL4L9E5Pj2DyhnEMA9Ia1XTL5GpNr16DRg4Q6Jvu8
-HaAkwu8mbeo5TkqndOKdlueB1aFVebGwLFaMRZdcBZU6ICDN2E9HZJIIMBpPkHeC
-BplF0pxdksRTR+JzwCnQ+bTFmsAG0aIdxM3rBmkRbUlo5ICPOUY=
-=PlvY
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY99wkACgkQVbJhu7ck
+PpRLWA//bHvayPxvvOw+7cNp0DHhNIOwGp3PQRF8lX0ys3T9tWuHh+/UUpLxUQRY
+OXRqW9hIO+sjhZkRei+wxnaQYifnCkQMKf4RXkbb6aRI6tjWnbvwJl7SaLB+TlHr
+gSHF/6JZpf3PlvZBaUuvIKF2EVKWth6Qi/dro4C4OdoBB89k+5Bs0K72V/jggl8u
+GXeamKZWAFObldOUtv/gzNI5vt51cwN0nzpU5OikYfbWGuj827XHUdxMXVtZmN1w
+gNa0o41XQJNU1FSEVnQV6u+hFLlYPA2FMOwWqMZOo+5tkRO0ApR5fy7XqbNqVgH0
+2hkLxWzuFt7OnI64LbcXMQoOMwlT2skbpzueIsCGhKht6datMI4RvypLJUMcLEFp
+6EFltD4WTQVyo5zaGlUKRKV3tPw9c3L9yz5ZskLDzOnVE7AwZFCdPXF18rq3kHn4
+tYTFgKyTp/vXTNaXZb9SvLPo3SgteQLWwfCzV2prFQuHX+KSbzdqsD5Hkko5LxJu
+OD1GIIKiIq7+i/PMuWV2t5a+lA4FuXyu4Mh4eQjsmdK9993OEoDDv/EO1liZpyeS
+A3/3pQt22Se9RRcrDcC0fpM4rXOQ2GbZINCZ6fZtjwvFMI9XnMGLSwj7gm5yBO6o
+eK+YCKmb+xIGKmtkuG0z351ArYJE4HLxde9Mirw3rUz8d0QiVbQ=
+=j+Ye
 -----END PGP SIGNATURE-----
 
---AQYfH9+PW73CyrId--
+--nFBGryjD1orb/9DO--
