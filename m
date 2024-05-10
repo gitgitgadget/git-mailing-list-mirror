@@ -1,147 +1,179 @@
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfhigh1-smtp.messagingengine.com (wfhigh1-smtp.messagingengine.com [64.147.123.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7A44AEFA
-	for <git@vger.kernel.org>; Fri, 10 May 2024 09:55:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBBD15FCE1
+	for <git@vger.kernel.org>; Fri, 10 May 2024 09:57:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715334914; cv=none; b=XLP7+b2Uy5BAAxvuuJbVN4kP8iYZibfO4OnpReCF3++htO9KBg68kvxzw3TJ5Ski0T1fIDLdagDvnhUWpZOrWyKjkN6+8rSk24dlofh7n+xLzmt3O2U1+CwWCZnqkaYyuquao8FRrndCA+1H02+xEFLM/T9KFJfeOK32s3OoJng=
+	t=1715335027; cv=none; b=AipyDevNKAUqZAzd5ZVadW1xUPqH0OpnbaZFNOkz/N60mlJMnlZlJ8bgsanxgNBVx1a8iiKfGvZt6ZkIrT6fht+7eshWQ92vQaNj2a4xg3g21FJxPxY6+wxIVaapNP/tWmB09Lxgi6JLqE6HmCMyMc+m6FTT+uNPjeCt/qqP8eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715334914; c=relaxed/simple;
-	bh=FagifwMvfgEZ6h5vd6EWD0cGiHHZZvR8j733HfNR4NI=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=jkrNDQVlZr6+LrX9uGnp/p/NzZdR81LZzMvz0/HA9jPs7Z+n896Owq7gpE00OyxMRUdPw4TtZ2gmxClDaMTnRin2aVx2vhyQHnj7fykW2ZAKO8DeOsFP72yIYFke/hIKLYYR0ibYAoJft85mnPV+FdyF4GRETMYOinBUG6BetkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A59v4+UV; arc=none smtp.client-ip=209.85.160.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715335027; c=relaxed/simple;
+	bh=S4wEafXKDzj13i11D+SPH6Rq9fUB76PaM5jkyoS2EBw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MKLdvTAzf7E0V2Wv6M2gLY1GzwUJe7ZXe9Ow57jcUG8gHMss05aD/lhP/qVMM+Gpt/eU+FecAH2f3dhERuGcBa2bhg3TsBQ1cgegkRt4OnKRpudMt4hlA4/pR4ed5rgcJgNSDGSizC1LhdA79z1HJ+rigO7V7+UIO3DAXO2idp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m3QLigq5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dw5MrKRD; arc=none smtp.client-ip=64.147.123.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A59v4+UV"
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-23f0d54c5ffso1088344fac.1
-        for <git@vger.kernel.org>; Fri, 10 May 2024 02:55:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715334912; x=1715939712; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cQAxOipOYlKlpvworfVEVSElNmn6R6lXBxfrJYue710=;
-        b=A59v4+UVVbKOvc5oUGD5N+H9tA1fdTf1J1ATMl8vqf7idTb1f6e1qFf2bpTp07ASzl
-         zSjZzXNdkrfbYp4Yrfe7nZVgPjFCTxevTm4FTYtAgxr2TKs/oxygQSAJbFGqj5/OgyFj
-         Lh5y4EUIdG8eO8YIu4DToiiejqbfkuFSYUe7x3OTWFPhp6IBK1Qf3IP0xVJViIt/nHYr
-         IHIo1qPTpF/zU6efBEVrKsNJgYT/DFDplVvnP9adUSAuhD7L8i8xvA6jcWaq7xpQ7LMj
-         ZVFjRf+SftubJkLwWzuys9TTLroZcPRV9G9m4BQeCKji3fCpgZUjjM1AiMXChev1lg4O
-         DC5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715334912; x=1715939712;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cQAxOipOYlKlpvworfVEVSElNmn6R6lXBxfrJYue710=;
-        b=JXvy4JCtHsIOD/omQcPg1BYa78T5b6Zlya1fPvFxffMq2x6Pnn4ZUmrE/W05D7fXX/
-         1aTtNUUyT1XlqZeOjiHDL6DrgKXoZbucsoqtFZ+4ERiqAAZZoRyQB/NeqEQVOpBHJ0Xm
-         x4Op8tXmCE/GajU3KnPErLqn73tyLBBA+mEpeVIswlb3C4ncTjhRRfMjlaHk4OXgo78W
-         /2cYh+L9X1xc5JGK3uiifuPhqGu+jX8paNOSKsXURsNRJ6oL+bwGpnQd9Ec+cl4El0i0
-         /wNU+acUrjpaA57hBpPcC+k2iUR6OIkaVZocu0jYTkOt9lohX9Ay40N6WfoJ+ZqDwg0d
-         p5DA==
-X-Forwarded-Encrypted: i=1; AJvYcCUVpmbfjVXgvKpuPY+CIGtWGvchiqN39qnP7/Dv9g/pH9DbTMeLwkM7DFj365IpLBcdfH99YqCTJydR5UhDLKFSddnK
-X-Gm-Message-State: AOJu0Yx3rZqmlEgkEYNhAv6FyprB1coZtx8c8trKRxcezYn5j4UQdGVt
-	+pZxYM0tjXrdHk/2yOSJQp395WL75EYhVdkeRHmZ1kQXR5Y3pnAKkM0GfOxY6Cx4//UJrm/jgAi
-	hib3ZQAyInXpILkHDefjymTCGliVeJA==
-X-Google-Smtp-Source: AGHT+IEG494o4ey+kTTxg7Jbrbpq2Oa65x2Sr5YlF8hfOXcN65HaJDYQGdefmqj13NK4OXOuxjBHCQQffGHr98iM8jY=
-X-Received: by 2002:a05:6870:4191:b0:229:e689:7c1b with SMTP id
- 586e51a60fabf-24172a3f4a6mr2466296fac.7.1715334911869; Fri, 10 May 2024
- 02:55:11 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 10 May 2024 04:55:10 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <30e2e33479a6b6b07a4652e84eebd78f71fb363a.1714630191.git.ps@pks.im>
-References: <cover.1714630191.git.ps@pks.im> <30e2e33479a6b6b07a4652e84eebd78f71fb363a.1714630191.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m3QLigq5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dw5MrKRD"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.west.internal (Postfix) with ESMTP id BBAFD1800158;
+	Fri, 10 May 2024 05:57:04 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Fri, 10 May 2024 05:57:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1715335024; x=1715421424; bh=VuPnM61KkE
+	Cf81DGiB2rQB/WCcCL6IPlGi4ONhNk/VU=; b=m3QLigq575HzKT62vZE6lKZXtU
+	J1hJcPWcR8ZyiBHTkpf8Mj0K7wejItMGPD9/34Jnbw4xYwPoxyXeKTdvth+7HFR3
+	sidFWjKy1qzHyVNTPLzudd1NqIZP2r4mjVUNvyGypqRvBHhZsYEEMYOQtXRRJMuZ
+	Ir6uIxvzASovOCoJEugWDxtwFiFWCjAWjdUroOZTd28fy+CVH1NmVR7SuBZZ4vCw
+	BDM1gG83nccDT/1rI25dnDnyMuW03T5Rh0qEKBvzwmEqdXHh6VnHir6CcZUKTSJl
+	KWrFZySrSjqt48uLgwQOUq1ezY5sosVWbbaYzGeh4r8rJcsR7czWoL1uMm3Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1715335024; x=1715421424; bh=VuPnM61KkECf81DGiB2rQB/WCcCL
+	6IPlGi4ONhNk/VU=; b=dw5MrKRD3VC6DVbpnNt1myvnmi3sKfVK7KZZLYMDQahr
+	1MSGuoCDtaIbnJXVB3HL4fwRMKV82ve6wU7xF1HVke+aeqZSxG1Pk+Jyt1DK8o9r
+	k/a2NZmzys9NsxCS7bkmYPfAVbXHE77qXZ0zp72T5WdsBT3k92v7ZWClP2OEf4or
+	Gi4MrwGDoD6ftyD65kZDOmj5J1h/LoGu35BgqFIv5Gte0Eqw/Gmz2dw0Yv1fndAO
+	yzuTlLCe+n8eGcQ4MejNgOkztRKCZxGVJJu9xGh1Thvn6GB8mQgD/PDAKZYGhJKT
+	x9Rqd67xE6pijmdDcngbbVhDiECa5HdpYkwpdus39Q==
+X-ME-Sender: <xms:cO89Zjv-hRnlcHYGFNFNyLQuAs4zNjssb1DiIt8LQV0ypgZJc8u6Gw>
+    <xme:cO89Zkdd0BDSdaHCPnUXeeZH3bGg55B5Amt9wC-k5McPoSL1y3IRw8AjqFl8SVcl1
+    d_ZLsVrT-pvjM1hag>
+X-ME-Received: <xmr:cO89ZmzZWeOhJKebVj51jLF3R14mYsfSqplvAg2t2_itPM4GA4co9ceAXadHLMX6ydUC7mjT9rGaUykfdJVhO-FmEboVgFRcpzqPCq8RBJA0n8EnJQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefkedgvddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:cO89ZiMHDOOPa65KDZEUZ-26eK0NbSSTteCjeODV2MP6pez_hEpbKA>
+    <xmx:cO89Zj9AEKUyykAQIqdfEP8bGoVjBvUCcNbpby0s3GytzcH8q4Zs_A>
+    <xmx:cO89ZiWRnj5vRsfndPBsymtkChsL1KxcLylJ09z6svmSzelnkBQvtw>
+    <xmx:cO89ZkecpHYZbFr1nwpbgBTbtcVWtkJbQb_b2Vod9cPQeyllZjrOtQ>
+    <xmx:cO89ZmYWmGlJ9bMHhGWLhxylGcC4TGrFDmCnTFGoOajp_8FCcJPGGU99>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 May 2024 05:57:03 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 25d24da8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 May 2024 09:56:48 +0000 (UTC)
+Date: Fri, 10 May 2024 11:56:58 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+Subject: Re: bug: git config --global --unset doesn't unset configs in corner
+ case
+Message-ID: <Zj3vajAeJKuRaCvn@tanuki>
+References: <20240509021352.se4u7ajaolveyyjf@glandium.org>
+ <xmqqmsozuf7y.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 10 May 2024 04:55:10 -0500
-Message-ID: <CAOLa=ZQMoYM6L_2jwE9pOVUOV1tLep93m7VGLA00nrpHKdy0Vg@mail.gmail.com>
-Subject: Re: [PATCH 10/11] reftable: make the compaction factor configurable
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000017e4470618168830"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tI12pm4Z9/Oum1OC"
+Content-Disposition: inline
+In-Reply-To: <xmqqmsozuf7y.fsf@gitster.g>
 
---00000000000017e4470618168830
-Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+--tI12pm4Z9/Oum1OC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> When auto-compacting, the reftable library packs references such that
-> the sizes of the tables form a geometric sequence. The factor for this
-> geometric sequence is hardcoded to 2 right now. We're about to expose
-> this as a config option though, so let's expose the factor via write
-> options.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  reftable/reftable-writer.h |  6 ++++++
->  reftable/stack.c           | 13 +++++++++----
->  reftable/stack.h           |  3 ++-
->  reftable/stack_test.c      |  4 ++--
->  4 files changed, 19 insertions(+), 7 deletions(-)
->
-> diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
-> index 4cd8ebe6c7..155457b042 100644
-> --- a/reftable/reftable-writer.h
-> +++ b/reftable/reftable-writer.h
-> @@ -49,6 +49,12 @@ struct reftable_write_options {
->
->  	/* boolean: Prevent auto-compaction of tables. */
->  	unsigned disable_auto_compact : 1;
-> +
-> +	/*
-> +	 * Geometric sequence factor used by auto-compaction to decide which
-> +	 * tables to compact. Defaults to 2 if unset.
-> +	 */
-> +	uint8_t auto_compaction_factor;
->  };
->
->  /* reftable_block_stats holds statistics for a single block type */
-> diff --git a/reftable/stack.c b/reftable/stack.c
-> index 7b4fff7c9e..6b0f8e13e7 100644
-> --- a/reftable/stack.c
-> +++ b/reftable/stack.c
-> @@ -1215,12 +1215,16 @@ static int segment_size(struct segment *s)
->  	return s->end - s->start;
->  }
->
-> -struct segment suggest_compaction_segment(uint64_t *sizes, size_t n)
-> +struct segment suggest_compaction_segment(uint64_t *sizes, size_t n,
-> +					  uint8_t factor)
->  {
->  	struct segment seg = { 0 };
->  	uint64_t bytes;
->  	size_t i;
->
-> +	if (!factor)
-> +		factor = 2;
-> +
+On Thu, May 09, 2024 at 09:23:13AM -0700, Junio C Hamano wrote:
+> Mike Hommey <mh@glandium.org> writes:
+>=20
+> > When both ~/.gitconfig and ~/.config/git/config exist, git will read
+> > both. But when using `git config --global --unset`, it will only touch
+> > the first one. So unsetting config items from ~/.config/git/config is
+> > not possible from the command line when ~/.gitconfig exists.
 
-This should probably go in reftable/constants.h
+This actually works as documented:
 
-[snip]
+  --global
 
---00000000000017e4470618168830
+    For writing options: write to global ~/.gitconfig file rather than
+    the repository .git/config, write to $XDG_CONFIG_HOME/git/config
+    file if this file exists and the ~/.gitconfig file doesn=E2=80=99t.
+
+    For reading options: read only from global ~/.gitconfig and from
+    $XDG_CONFIG_HOME/git/config rather than from all available files.
+
+    See also the section called =E2=80=9CFILES=E2=80=9D.
+
+Whether that behaviour is sane is a different question though.
+
+> Interesting observation of an understandable behaviour.
+>=20
+> I think the original intent of limiting the writing to just one was
+> to avoid having both files in the first place.  When both do exist
+> already, I am not sure what the right behaviour on the write side
+> should be.  We could special case "--unset-all" and remove from
+> both, but "--unset" is to remove just one, so when the reading side
+> reads from both, it becomes "which one to remove"?
+>=20
+> Comments from those who are more familiar with the "git config" are
+> certainly appreciated.
+
+Honestly, I even think that the reading behaviour is weird. For almost
+all the other tools that I know of that did the XDG migration, they only
+ever read either the XDG config or the one located in the users' home
+directory. I think this behaviour is quite sensible and leads to less
+surprises overall, also to avoid asymmetric behaviour like the reported
+one.
+
+In any case, I find the expectation that `--unset-all` unsets all config
+reasonable. But what about `--remove-section` and `--rename-section`? If
+a section exists in both files, should it be renamed in both? And
+removed in both? What if you set a value with a value pattern (`git
+config foo.bar baz pattern`)? I think the answers are less clear in
+those cases, and that to me hints that the design of how this feature
+works is off.
+
+As said, the most reasonable behaviour would be if we started to only
+ever use _either_ the XDG _or_ the home config, but never both. This not
+only solves the reported issue, where it's unclear which of the files
+should be modified. It also solves other problems -- would you for
+example know the precedence order of those two files?
+
+I have no idea though whether this is something that we can reasonably
+change now. I doubt that many users rely on having both configs, and
+I cannot think of any reason why they knowingly would. But it would be a
+potentially breaking change regardless of that.
+
+Patrick
+
+--tI12pm4Z9/Oum1OC
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: edd3673acefbe26a_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ZOTd2d1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOUh5Qy85aDREclhEcXpkNHMzbmlMekpYbHVmd1BoUApvY2RPS1ZyYkpL
-a1R5akFtT3NRMFB3dnFHUFEzcTJKenlLMXoxK21mMlpjY0RwTmNSYzBjbHJpZFduZVFFOU1nCi94
-Y2huWjBZb1JUKy9tRjRFL3N1YytsT1J2NVlRSDdIWEE2aGtYMU5yYTdJM3YrYmdXVU5URGdJZlhE
-SHZyZnIKaGdmalVTclVrZkcvQ1VnYlFEbFNheS9vY0lKb091NkZHK3ZFWTNTSktCZ3Iyb0Jhdjg1
-V3oxakVRdHFkWTNNNQpRZXZiRC9XT0l1Y3VFYXBPMlllMEtkeDh2Q3g3aFFUaElBWTNFZDQwMTVZ
-dnYzb3V3R1NRYXVsdlAzSUFZWklPCkRkZDdvcGFmZVo4YlJGQlJVSUxhcXplTWxjekt2RlhBV291
-dGU2Rmd3YlIzNHNGTjArSG5KRnR4cVFWTjhuMm4KQjVhbnlmOHlRQmJ0K3Z0ZHM2TGcrVTZaTk5K
-Qit0Z0ZxRXdPcGpUaHJ1TDBoZWNoc1h3NjMyb1lCR2RtZDAzVwpCN1pnL2J1NFJuOTF1YXdPRE1i
-dmJqa1dmWFMvY24xMk55SlN3QkZlM0NIUDFXRTBRMVJRNHJMYmtNWVRxUkxOCmQrTG9QYTFCSGUv
-SHpWV004aDFuZjI0QmdJek43eXFVTVdmUUJZND0KPUhIODgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000017e4470618168830--
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmY972kACgkQVbJhu7ck
+PpRiiw//aAVhTp7Lz9Kk6L9PTq45pO5wlwnm7t2PBQ4a5nMl1k8lvvXPqq2gGMdM
+IzihuW6qa0dw1xqD1S1w/E3P0FtoC3cqC9Shh7MnO4nhv27DG5UYxIS3kV7xk+VO
+1gOHOc8E3iW0wjsD7uR1tIknDYnYGdbh6eEh4JF6eW1qMsErc4U8XAkJYl9F2gYW
+I8Rs43RisUeKCnZ2FjZNkICegwZGZCUQg7imvr1PWOaqdUz6P2L5/SfOOPzta8PT
+Shgq5BFl2hNBX6KGY+ONaynwFaZ/n42gay60lWsLGNZJ0q5X0ooIYvqr0D7bOH55
+1qPshMOPDq/r3QRm79e4x2ur36KiiFXAxBqt7KEKFQO4I3DbQcM/7BhWNQ6IbM0s
+XuuDpfaqJc7q72pvzHbkhQnbQHhMGjhfx+Ufx1XKpeUKKszb4wUbGM4SWEnkLLtq
+bMNv9vo0tifZobU0U88mZSO4j3ot05Pzuf+M4GwUTkBfhQkmvZb5ZDg+vxtbjxZe
+yeuAtpS1Do5csGtov4j9715j4jq15JPVbIc76ZvWM/5jADDJYAjt4MXq25CpaFV4
+MmQInooNTHZet2y7feHqxpm0Vr3OVDkmqC77NxcOEHj5gdCuSdGP4P/nGq2iTFOK
+zpE6VL8oYqIOURuzXxVWLqrzfNiSOq70S4aPQIQKaij1XXS38T4=
+=+X8S
+-----END PGP SIGNATURE-----
+
+--tI12pm4Z9/Oum1OC--
