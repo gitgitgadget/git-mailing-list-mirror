@@ -1,52 +1,50 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7060913AA3F
-	for <git@vger.kernel.org>; Fri, 10 May 2024 01:05:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5A617C8
+	for <git@vger.kernel.org>; Fri, 10 May 2024 01:15:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715303104; cv=none; b=CqdUVP7UzyrvIL0FKVNO3s5a959IWmC65xc5gsP1gXXrdtWmZwiantJN5HU4ZDbE1MXUESAKeZZBXLeStjSAcJ6nDFXDL3JvZ6MiWXPvTeV59mPjjdEz9ocZWDU90Mk03q2cBBckG9HvgsZlBHWTXFPV3Yr9IdvmINWev/1yQtk=
+	t=1715303728; cv=none; b=WnPUVybZoijq07U4dYbKe+dCjccqCvdZHJRn6hGfjtzdzB9yiDWUvJ8jg0/1reT2bgrFaF9585KedWbZiSXdkJ47oDMe+rxw+2NN254mGoAILTSzr9mDx1xqxjVWOvGZq9IhAGPiHvGXeuBvtUuP3tti7HNzjSmvaD4y2cPRuaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715303104; c=relaxed/simple;
-	bh=iYU2tElntx106lrSft1r+nHELdMagOtaol17Hmyar6Q=;
+	s=arc-20240116; t=1715303728; c=relaxed/simple;
+	bh=8XMUL0SzPVBDAZozBb+pxj4wV+HMrzwLmpZOr2KAUKs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=j5kZ038eItmxZFLtaopbO6KcN1JgPrQmKVfaS57vhyXZMKBsPnjPR+84cN95lbgXw+mqA8YXbtuadxiTtDo9DHJO156cm02xM5RB83swMo9/bdvaosa1Y9SkefGjjjI7UbUGH43xNZtvI0GAFdTCgJOicDFVy9xAK4FgdR4zZK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DyZ8bIAO; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=qJb5WCG/f8xq7WTXZvIJkJkIqCwJLQbB7eWdFo6jhY3TFMh4JgyiuppxfHySE5XQLt3SJbN6mPL6s9wZfplkgjbM2LugMq+oGAk41D1MagU1K7U0wHTzP/lxSLuBptt+oPhqme3IZil0L6kRCjYPSLcnRfHSm5yd3jgYMaxkAwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=HavygCze; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DyZ8bIAO"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 940881D9B1;
-	Thu,  9 May 2024 21:05:01 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HavygCze"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D4C8C29C13;
+	Thu,  9 May 2024 21:15:25 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=iYU2tElntx106lrSft1r+nHELdMagOtaol17Hm
-	yar6Q=; b=DyZ8bIAOvWqSDpT786R8c5YDZGEcFoP3bfX7Te9mVjAX9HH0gdkl8x
-	OV2VbHTlWPAy62Up4ccdbHGMzgr0EnRVuQZ919yaZQrqnXvbxDF/GzcPPWYmcgvC
-	zZbJeK8pclFnBK8VaumTgC9yjtZ0xEiqnKcgw3WzbCz5AWYyZbkTM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 51F2F1D9B0;
-	Thu,  9 May 2024 21:05:01 -0400 (EDT)
+	:content-type; s=sasl; bh=8XMUL0SzPVBDAZozBb+pxj4wV+HMrzwLmpZOr2
+	KAUKs=; b=HavygCzep9fzGckBS2KMaA6o2utqpUecXT6YzSLO13I6mUWDVBUrXL
+	gyFUIKTqAlPuKyfK3Lm/Gnjd4FAGBWfNoUArqI3LyLRjVJBsEIjMVriu6CihZ0NN
+	jM1iv1LXykTagPPVu3loPRR2aT638MwIAhJccgkgJLRsif50VBKcc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE60F29C12;
+	Thu,  9 May 2024 21:15:25 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.153.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 309461D9AF;
-	Thu,  9 May 2024 21:05:00 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3B0FF29C11;
+	Thu,  9 May 2024 21:15:25 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Calvin Wan <calvinwan@google.com>,
-    Jonathan Tan <jonathantanmy@google.com>,
-    Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: What's cooking in git.git (May 2024, #04; Thu, 9)
-In-Reply-To: <xmqqfruqsjb6.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	09 May 2024 15:37:49 -0700")
-References: <xmqqfruqsjb6.fsf@gitster.g>
-Date: Thu, 09 May 2024 18:04:59 -0700
-Message-ID: <xmqq5xvmschw.fsf@gitster.g>
+To: Alejandro Colomar <alx@kernel.org>
+Cc: git@vger.kernel.org
+Subject: Re: git-cherry-pick(1) -- path
+In-Reply-To: <e5pklmijfpbsnl2trj4n4czam7n7i37gx7w56med2pfaf6q3yx@wizseio2ickk>
+	(Alejandro Colomar's message of "Fri, 10 May 2024 00:32:30 +0200")
+References: <e5pklmijfpbsnl2trj4n4czam7n7i37gx7w56med2pfaf6q3yx@wizseio2ickk>
+Date: Thu, 09 May 2024 18:15:24 -0700
+Message-ID: <xmqqv83mqxg3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,43 +54,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 5335A140-0E69-11EF-B8FC-25B3960A682E-77302942!pb-smtp2.pobox.com
+ C7C32FF4-0E6A-11EF-9290-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Alejandro Colomar <alx@kernel.org> writes:
 
-> * cw/git-std-lib (2024-02-28) 4 commits
->  - SQUASH??? get rid of apparent debugging crufts
->  - test-stdlib: show that git-std-lib is independent
->  - git-std-lib: introduce Git Standard Library
->  - pager: include stdint.h because uintmax_t is used
+> I'd be interested in being able to partially cherry-pick commits, based
+> on a path filter (similar to how many other git(1) commands behave with
+> -- path).
 >
->  Split libgit.a out to a separate git-std-lib tor easier reuse.
->
->  Expecting a reroll.
->  source: <cover.1696021277.git.jonathantanmy@google.com>
+> Do you have any opinions on that?
 
-Just a heads-up.  The topic is pushed out of 'seen', as it seems to
-be hated by osx-* jobs when linking programs.  As the topic has been
-expecting a reroll for some time, it is not ultra urgent to fix
-this, but before resurrecting it, we may want to look into it.
+Opinions?  
 
-https://github.com/git/git/actions/runs/9023837489
+Personally it is a "Meh" for me, because I would instead do
 
-is an example run where we see error messages like:
+    $ git format-patch --stdout -1 $ThatCommit -- $ThisPath |
+      git am -3
 
-ld: warning: ignoring duplicate libraries: 'git-std-lib.a', 'libgit.a', 'reftable/libreftable.a', 'xdiff/lib.a'
+which would be mostly sufficient for my purpose, but I do not see
+any fundamental reason why it should not exist.
 
-and
-
-ld: Undefined symbols:
-    _git_config_get_bool, referenced from:
-        _precompose_string_if_needed in git-std-lib.a[11](precompose_utf8.o)
-
-in both clang and gcc jobs.
-
-We did not see these breakages before, and we do not see these
-breakages in today's 'seen' with this topic excluded.  I haven't
-tried to include this but excluding tb/precompose-getcwd topic
-instead, which I suspect might also work.
-
-Thanks.
+It is already well known that future merges from the same branch
+will have to deal with duplicated changes brought in by picking
+commits with "git cherry-pick".  Having a pathspec-limited variant
+of "git cherry-pick" would not make the world a worse place.
