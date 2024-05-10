@@ -1,122 +1,131 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4A31119A
-	for <git@vger.kernel.org>; Fri, 10 May 2024 20:32:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC851567D
+	for <git@vger.kernel.org>; Fri, 10 May 2024 20:33:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715373155; cv=none; b=V7Xo8RQJ0rsnZFQdGrj5H9nldeCnDz0OdS0yopmYsWsiCveq5DElF08apSzdhQVMPWERO2WhPOuEu8Wi2oJwrMY4CVf31rUBrK5A+hnRXV5STEyUI7yjFjQJ9CIwncA+nEbJqmzMDYVKqdnPQqwFUEP6yIzjGlhW0pTVQThlxyU=
+	t=1715373197; cv=none; b=IAtO0yx9+MzXO/c1Ci137EHWLOY1cXZxSMfDcNWGofqaSrn28SctrODx/2i1t3oEBWzmRujmMW5JIb3p/X1IVgTNmg0SvoWrbbOHKjtV1KtC4n2ypJHLSM3rs61KX/Ey6UY8C7B0AxH9w1fIGEWvCuz9nABVZu+vSA6jb1sdiWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715373155; c=relaxed/simple;
-	bh=CuJiyjVWOL6+vBiJIAryNoovsVTBlD4ZkyuxugK7QoI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uBhSaV4ZY/eOd8mTdF4fWkUdxRm61bacrrCUhWYCTWsYzeIK3FbrO5FqBiFJGYIG8y1QsiNYMrsHq0OU1yGr5h2MQrAY3YulTHjurrHLTZ2SDrdH1UNhEBBqeX5kcZjlKifBPKif59EnZzw406qDxcBbqddqEnvC2ClDZ/IcOhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VOX0DcxL; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1715373197; c=relaxed/simple;
+	bh=rnyuQfWIj36/Q81nhNFLlSQvDpG5661HbMRr4eHZ+Pg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WastukCCp/URM0Mp7DXFpYWdpUzw66V/C4osjsQcDk3jg8qr2GIuFRiimphxfEbNT5EtNu4DXUbFLUAzy0vGDyY86y4eFAcWShbqGOAlpvyWZj+SMkXJiKdTbhlZPR0DIrostYtzfgNsgt+yUNQQecLExHTuJunUOVdTvcQAQjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=TXdGttBw; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VOX0DcxL"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a59a609dd3fso429219866b.0
-        for <git@vger.kernel.org>; Fri, 10 May 2024 13:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1715373152; x=1715977952; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dV65fZlE3Z0KS3KTUAi8wzVrU5BHvBln9uHaArfQExw=;
-        b=VOX0DcxLjA4Iqzsxd0jCAOzlH8lQIywT14LpniXms4ve4dgxZVMo7AEjDrXUbExMI2
-         5fTpY+C85h3Bacj9e24ljaqKXFE4w6+h0u3xqQbfiTNepfvcEByIvQbV80A0K2JrMgbL
-         MB0vy2/kRwq4MZwIJb2hQDtAd30oUwXVwvbN5NR2hEBnxBHjcX3rz3LIaYJ3kIC1IqlA
-         5hvomCnMq+y1uauGW7kjeL8/uqYcdj9DKI0Iff4EXyHBPeWT3ZiJfS8RTrHDhl0FPoTb
-         93jgTLZcfWx1K7xab2hRz43SIQxYgiwQ5w2BOd9wsMMeel1MPukw/AUn6CCyHydKx5Sd
-         Qemg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715373152; x=1715977952;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dV65fZlE3Z0KS3KTUAi8wzVrU5BHvBln9uHaArfQExw=;
-        b=fdmqnJ+hfZhdSSxl6dGSTxCOl6rAfoRutGiM/m0CK/5rwcanu7KOBbcRtAujt/Qryw
-         ud8t6l4VuvdiOWXKB3dGXeKIi4gaRv0yN/SPKeaL8BUzoZe5sla4k2GKpRZayGgzJ8h2
-         tAugTZ4ZL3Q+eSAthUimdQuxSC8RM12+nJS45JBslVXV4v0OR6lO0/j1/qSIcC510/J7
-         /5ub9WXtlum9YlbFfSRf/Sr3ltshwfoTV6u3XABiiMI8ClfMOHujzhQYRwd+ppRddPhF
-         G1HbZGvVMFjjFvzL+3tg5js73nk/NZidFAbDhhpG7sg3qSU2UjX6nL+1DiL3rroOSrNP
-         QIxw==
-X-Gm-Message-State: AOJu0YwAIFAsWnoSt0o9RPpSMxrAOKG8t7ocSwm/WdyBPyxZp10I1GzX
-	LrZVTUpr58n4qQ+NVEdA90lT7R3i39Yjx22oTmIxeraJjHanE48MY7p3WCKZxZ3KqbvZ+QbfBeY
-	e8zZ/s7T4iKEs8q7ct9flM2F5xEo5hopluWQOlqhogV8eG21MXw==
-X-Google-Smtp-Source: AGHT+IGuUQjgxA4g0RmqvK4/H3FnvksTla6LAKthzFcL3685xwdwwVy5SQDEdOmCUDiktzAwMRRZnp5SGX+KOvNy4G8=
-X-Received: by 2002:a17:906:70e:b0:a59:a3ad:c3f6 with SMTP id
- a640c23a62f3a-a5a2d18b03fmr328854166b.3.1715373151462; Fri, 10 May 2024
- 13:32:31 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="TXdGttBw"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 496605DA76;
+	Fri, 10 May 2024 20:33:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1715373191;
+	bh=rnyuQfWIj36/Q81nhNFLlSQvDpG5661HbMRr4eHZ+Pg=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=TXdGttBwYVpG5eIMB8D8RDjrutirn5hb1arZLZdR0U0ef2w0F0/SMMzVV0HOqGm3T
+	 2P+UHSbdPHJGVAK9huslIphlTth4korcmi7zZSzCibsH0l6Fkql41nhx8kwmpZxxum
+	 2eJJ7WARsj845IjSNWRNQhofGlEduIbKph6aarp1TYzH6uGlSEzqMYlrRBFEM7IrB9
+	 qYj7YxhUJP7ZLbmaEeTC3zxbfhjzMew4gWiLFykm7ikEXRbahPQLt/QO68A4OHTFOG
+	 hTh5q5M7d9sTPhfXIZg7rROX2b2oisCW1Bh/9yssnNBJutpE5tIihsyc9dDn/QdJrh
+	 TnCc14NY8q9Xl+JWUx4a76fOpoMt7A6quDvvUv4Ypj1GAkMMaROK8QyiB0541tg2TO
+	 vLYoJC4xAtzb/sHnMMbgqSBoBONmYKqdxSIgnZa2fi+VSzFffBQZzxxr3fCLZPSxcP
+	 pIVDrfkO3dyPp+67s776C/x/lOWtns6ZFDIucSYcxdm9CYTI8cL
+Date: Fri, 10 May 2024 20:33:08 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: Bo Anderson <mail@boanderson.me>,
+	Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH] osxkeychain: lock for exclusive execution
+Message-ID: <Zj6EhJi9MgALC5Ti@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Bo Anderson <mail@boanderson.me>,
+	Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+References: <pull.1729.git.1715328467099.gitgitgadget@gmail.com>
+ <D7A8539F-E33C-44F3-A7BF-5F5D4A26F2A4@boanderson.me>
+ <20240510200114.GC1954863@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240509162219.GA1707955@coredump.intra.peff.net> <20240509162415.GB1708042@coredump.intra.peff.net>
-In-Reply-To: <20240509162415.GB1708042@coredump.intra.peff.net>
-From: Kyle Lippincott <spectral@google.com>
-Date: Fri, 10 May 2024 13:32:15 -0700
-Message-ID: <CAO_smVhE25ZQqc1f_fx9oPX-kH8SHxwEc=mqOAi-xQ91+pF1CA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] ci: avoid bare "gcc" for osx-gcc job
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="pGeYBCCNy/14VpY5"
+Content-Disposition: inline
+In-Reply-To: <20240510200114.GC1954863@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--pGeYBCCNy/14VpY5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 9, 2024 at 9:24=E2=80=AFAM Jeff King <peff@peff.net> wrote:
->
-> On macOS, a bare "gcc" (without a version) will invoke a wrapper for
-> clang, not actual gcc. Even when gcc is installed via homebrew, that
-> only provides version-specific links in /usr/local/bin (like "gcc-13"),
-> and never a version-agnostic "gcc" wrapper.
->
-> As far as I can tell, this has been the case for a long time, and this
-> osx-gcc job has largely been doing nothing.
+On 2024-05-10 at 20:01:14, Jeff King wrote:
+> And I think there are several problems with that, besides inefficiency
+> and locking. See this old patch, which fixes it by remembering when
+> a credential came from a helper:
+>=20
+>   https://lore.kernel.org/git/20120407033417.GA13914@sigill.intra.peff.ne=
+t/
+>=20
+> But we didn't merge it because some people rely on the behavior of
+> helpers feeding back to themselves. I outlined some solutions there, but
+> it would definitely be a change in behavior that people would have to
+> adapt to.
+>=20
+> Some possible alternatives:
+>=20
+>   - we could remember _which_ helper we got the credential from, and
+>     avoid invoking it again.
 
-If it's been doing nothing (which I interpreted as "it's doing the
-same thing as osx-clang"), and we've not noticed any issues with that,
-do we need the job at all? Should we just rely on clang and not test
-with gcc on macOS, since it's not a compiler that's provided by the
-platform anymore?
+This will break the new `state[]` feature, which relies on being able to
+see the state after the fact to know whether the operation was
+successful.  As an example of the functionality the current approach
+allows, authentication could use an HOTP (like TOTP, but using a counter
+instead of time) value, and storing the correct used counter on success
+would be important.
 
-> We can point it at "gcc-13",
-> which will pick up the homebrew-installed version.
->
-> The fix here is specific to the github workflow file, as the gitlab one
-> does not have a matching job.
->
-> It's a little unfortunate that we cannot just ask for the latest version
-> of gcc which homebrew provides, but as far as I can tell there is no
-> easy alias (you'd have to find the highest number gcc-* in
-> /usr/local/bin yourself).
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> We'll eventually have to bump "gcc-13" to "gcc-14" here, and so on. I
-> don't think we ever cared about gcc-13 in particular; it's just that
-> older versions of the runner image had some ancient version which we
-> wanted to avoid.
->
->  .github/workflows/main.yml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index 5838986895..5f92a50271 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -284,7 +284,7 @@ jobs:
->              cc: clang
->              pool: macos-13
->            - jobname: osx-gcc
-> -            cc: gcc
-> +            cc: gcc-13
->              cc_package: gcc-13
->              pool: macos-13
->            - jobname: linux-gcc-default
-> --
-> 2.45.0.414.g4009e73179
->
->
+I agree it's not super important if we're just using a username and
+password, but considering I just added support for arbitrary
+authentication schemes, which can include things such as limited-use
+OAuth tokens, one-time use passcodes, and certain types of HMAC-based
+signing, we probably don't want to choose this approach.
+
+>   - we could record a bit saying that the credential came from a helper,
+>     and then feed that back to helpers when storing. So osxkeychain
+>     could then decide not to store it.
+
+This is actually possible with the new `state[]` feature.  `osxkeychain`
+can simply set that field to something like `osxkeychain:seen=3D1` and
+simply do nothing if it sees that field.
+
+All the credential helper needs to do is declare support for that
+functionality with the appropriate capability and emit the field if it
+gets that capability on standard input.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--pGeYBCCNy/14VpY5
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZj6EhAAKCRB8DEliiIei
+gWPKAP42RK3sSTp/3EtdLsp5Tix0TMPCkasmFo4dWoiuSaLjGgD/QM4quxsPvZsx
+1f8zPUkQH3WRbg7HA6I3wvlp26QKHgU=
+=zl7o
+-----END PGP SIGNATURE-----
+
+--pGeYBCCNy/14VpY5--
