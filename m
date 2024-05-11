@@ -1,110 +1,104 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2F613CFBA
-	for <git@vger.kernel.org>; Fri, 10 May 2024 23:12:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9BE1DDE9
+	for <git@vger.kernel.org>; Sat, 11 May 2024 03:18:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715382766; cv=none; b=ahoK53kKlv/heHqK06nRswzCMW018cT1dAeD0Xp2vp1H//YQWBrnLQnan/iJ81drM63h0XvfWHldOj5RYu0gk56w6IjizdnYIUz8dOTw6QwfwTpNBuCwlmVgaRxwfbX4xW8R+MMcSd4sRN6i+PqUt/i5ggwdxY6uWrEBq0b9kmA=
+	t=1715397519; cv=none; b=GM25994NKf4BjfWbG8ZuywJbqYAMpMnB/9jS+UTk9GofSScucP8YxLyocEA8/uqdld/nUax10OZMiQFSuv0EqGuQ4IgL8JC0jgXzXnv/JMOVb7jdIX3laQSd8L054rVrjiPOt1xddDcff6vVrT90uTdfvkrHxLx6KxWqhNQCsvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715382766; c=relaxed/simple;
-	bh=VAkSdgCwtxUpXrKoyC2+tpF9YWOyWlGn2nkLwVCxnf8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HTf0ZrP/smCqeDyFEWKbXaCKM1oVE678xBoEEhojUjc+YjaHlOWEvlBsNnFirPYdcK3DMXNV3/s6NxZ/nM//bWozND2BGy51u2xEBw9T0NaCnXwypVlke92RUeoYDDBHi+JRjZK3RPjcw2LO8wbPynn08pplRgvCUBsIkpNJzwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=LB+72ubs; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1715397519; c=relaxed/simple;
+	bh=OprsZXIhtUd6/RbdE4Ha0UhKW1wDhTqWWof1i54Bl80=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KMht8B4YPohLTkMha2euNju05HK67/RqgmmDK2p4qwJhdYEgk4hQp+udmkeuYICjRg3MJoBM5KI1FZi39RxccDAY7Qzd34erX+1qLNgLZpTJY9fRICA81ym4hIYPYcIfuhxko8nU1C6qtAeTFUZw2WExMKRW5m0d662lW7IVfH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MIXVt/0+; arc=none smtp.client-ip=209.85.167.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="LB+72ubs"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id D8CA95DA7B;
-	Fri, 10 May 2024 23:12:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1715382762;
-	bh=VAkSdgCwtxUpXrKoyC2+tpF9YWOyWlGn2nkLwVCxnf8=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=LB+72ubskG7s25pDkwdZ3peBIeBPNNvswJ4qhsRUPTVcZfxiURm9H6xXw3tAlBJhe
-	 pcxEus/TLxOuQBBY59BSNXRwn6BtqM4ecw7J670VZKZrMgzoCMuBwAWNJndBBRMTHZ
-	 qGllBcnsvJVVDqCfzfTa8ZLDDwP74drm85hrO+p5Dkga/npapZ0WtcTmPKNgNmFnOR
-	 4hwAlQURaCFCKJpFYKx3VUVGl0csMpXMWJaLIGmWQ8t1SgK6nzVretN5chmtqB5XJU
-	 2o20k2GYibyN30RHLG6UMZtWk+QUbMdiAAIvpoOk88QEoL0bwCqrW3iB5R8nTcsAQi
-	 0r0ty3mJGkn8XvHdS8Qndmwhseon/VW+K/GNhY6nhmHb4ZtEuIDamlcAVCh0Ez3WuN
-	 yL1/AIM0ZoCyjtY99xFo7j2KX+PyW+DW2IxF+61AIMZezPibVQz+6vt+3zKIZ7aurF
-	 ojErJ3AQvaLiqMif1EQfmwzQ0fU2c/4gikY7ThPmDinqaa7http
-Date: Fri, 10 May 2024 23:12:41 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: Bo Anderson <mail@boanderson.me>,
-	Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] osxkeychain: lock for exclusive execution
-Message-ID: <Zj6p6df2DOVocbNl@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Bo Anderson <mail@boanderson.me>,
-	Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-References: <pull.1729.git.1715328467099.gitgitgadget@gmail.com>
- <D7A8539F-E33C-44F3-A7BF-5F5D4A26F2A4@boanderson.me>
- <20240510200114.GC1954863@coredump.intra.peff.net>
- <Zj6EhJi9MgALC5Ti@tapette.crustytoothpaste.net>
- <20240510220715.GB1962678@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MIXVt/0+"
+Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3c99fcedac1so121901b6e.0
+        for <git@vger.kernel.org>; Fri, 10 May 2024 20:18:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715397517; x=1716002317; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xJakr6E2QOVZvmCU/YPz8BQqEZ6I9l8wGlIRWbbW/mc=;
+        b=MIXVt/0+QSIl0RIyJ3AmfyNjYvZBKB2b2bBvAtIn/jka2CjNwcxB00+nuxZ9Ft2M5Y
+         zjWj7GxW7e9dBgF81Fxn2lb84nRNzuQrwX44ZjACCSv0b75pQm95PzK3Uy8gLaA+M5Ur
+         /M6ohAD6mwPEe9vxU6M5goy81nWlc0inhQWslbqe347+Ndg9Q1YDYBRCCwjJQ9LOYGgm
+         fsRmIeuTg/Sg+HGvjWu9ABwLEnqmNJaweYPn2QX2KRYoa5pCIe+7BdawY/u/iABQG1md
+         TzKzq+Ztdh7EPaX0LpWGf8wk+AVbF5TkjoAB9RYlWdjCIzi+Yft7KiJAzRZQMe7JO0o0
+         PShQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715397517; x=1716002317;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xJakr6E2QOVZvmCU/YPz8BQqEZ6I9l8wGlIRWbbW/mc=;
+        b=qMIovw90QP+T24GVC8jwJw1mhDB8IseVX3oouCueaODHmsWODzmYQY7qTK4sKX2/dn
+         tJWc2R+oRZNI/0C5jmytl5p9oO4G3VSYnbV0IBBIURZdAAt9GC2w9ThrD0LJxv3pBCB7
+         l19l8yGs7UniUtTDRMyxzjdV51M3ovZzwYqmU/WVo6ubonCBR72IKFt63FUWPHpfH4Dx
+         1XMUoaZSKoUAoQRMUZh86jadSOXanGT7AGEtTc+GgAg5U0HcARgqiUh3WVlvMLealmS0
+         PBz29yDou6exrGA4psEjYI4+YoZW5yaCnpCpo2heu7FXHfXKogb50I2ZZFM6+v6+/p30
+         BE5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWqO/OAI0a1DJd3/3D5NwrubsDWzTSupdh5AoEKF/oErOhRGdqDOEH0oyX7UF75rD3vuIqQ5mM12i/WOhbeH2lYLwxA
+X-Gm-Message-State: AOJu0YxmV08Bo1CehLcwepJBSqhD6n7aibSo3bqxkkAufQzgN0HR/pJj
+	1fplkNL9u2HdFWKlCgIMHCST0RyVP18SnfucpPj0rXNxdUXE1clCZSEewRo8KAkV3nVb1Qv+/cb
+	WdR5kPOFKtW6cUUN8bIVK9qxlYh0=
+X-Google-Smtp-Source: AGHT+IHJkA8wRXy1xdVDHG/LrfKJOfn75JhWQaZ+NyRG32Y3x9HBK6VgytGYN/NjJOL7OhhO/Z3gu7VfqR4GhZqYasY=
+X-Received: by 2002:aca:2307:0:b0:3c9:9294:8d9c with SMTP id
+ 5614622812f47-3c997023e14mr4521838b6e.6.1715397517278; Fri, 10 May 2024
+ 20:18:37 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 10 May 2024 22:18:36 -0500
+From: Linus Arver <linusarver@gmail.com>
+In-Reply-To: <20240510183622.77750-1-dov.murik@linux.dev>
+References: <20240510183622.77750-1-dov.murik@linux.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="SR91JMcvDAOpiw7t"
-Content-Disposition: inline
-In-Reply-To: <20240510220715.GB1962678@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Date: Fri, 10 May 2024 22:18:36 -0500
+Message-ID: <CAMo6p=GuLtJtwiS+N366ArFB2ejrYxnsy3S9Ud4tCeW=R5R57g@mail.gmail.com>
+Subject: Re: [PATCH] doc: git-update-index: add --show-index-version to synopsis
+To: Dov Murik <dov.murik@linux.dev>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Linus Arver <linus@ucla.edu>
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Dov,
 
---SR91JMcvDAOpiw7t
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Dov Murik <dov.murik@linux.dev> writes:
 
-On 2024-05-10 at 22:07:15, Jeff King wrote:
-> On Fri, May 10, 2024 at 08:33:08PM +0000, brian m. carlson wrote:
-> > All the credential helper needs to do is declare support for that
-> > functionality with the appropriate capability and emit the field if it
-> > gets that capability on standard input.
->=20
-> If I understand the protocol, it is just:
->=20
->   printf("capability[]=3Dstate\n");
->   printf("state[]=3Dosxkeychain:seen=3D1\n");
->=20
-> in the helper when it returns a username/password? And I guess the
-> matching parse/check on "store".
->=20
-> Sounds like that would be easy for folks on macOS to play with.
+> Fixes: 606e088d5d9a ("update-index: add --show-index-version")
 
-Yup.  It may receive `state[]` fields from other helpers, so it needs to
-check that the entries are its own (presumably starting with
-`osxkeychain:`) when it reads them, but otherwise, that's it.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+I don't think this trailer is a standard one. Also, the "fixes" doesn't
+really explain much. Perhaps you meant something like
 
---SR91JMcvDAOpiw7t
-Content-Type: application/pgp-signature; name="signature.asc"
+    In 606e088d5d (update-index: add --show-index-version, 2023-09-12),
+    we added the new '--show-index-version' option and documented it,
+    but forgot to add it to the synopsis section. Do so now.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+?
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZj6p6AAKCRB8DEliiIei
-gcNrAQDKMdCt8UFb421FxA6zmVMW9qi8u4kb+z1CoRXhwcoN9AD+PnhU/awhEW/T
-Ay7qSCsOO1QymoB8bv9e3foSXB+iLQ8=
-=wtxY
------END PGP SIGNATURE-----
-
---SR91JMcvDAOpiw7t--
+> Signed-off-by: Dov Murik <dov.murik@linux.dev>
+> ---
+>  Documentation/git-update-index.txt | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+> index 8c47890a6a..7128aed540 100644
+> --- a/Documentation/git-update-index.txt
+> +++ b/Documentation/git-update-index.txt
+> @@ -25,6 +25,7 @@ SYNOPSIS
+>  	     [--really-refresh] [--unresolve] [--again | -g]
+>  	     [--info-only] [--index-info]
+>  	     [-z] [--stdin] [--index-version <n>]
+> +	     [--show-index-version]
+>  	     [--verbose]
+>  	     [--] [<file>...]
+>
+>
+> base-commit: 3402c0e53fb798cb471dd6562eb5c938885b7295
+> --
+> 2.39.3 (Apple Git-146)
