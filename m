@@ -1,101 +1,68 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AB47F
-	for <git@vger.kernel.org>; Sat, 11 May 2024 16:43:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39CC7F
+	for <git@vger.kernel.org>; Sat, 11 May 2024 16:52:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715445805; cv=none; b=LGjmAoXWhMBniDc+OMaq44eg9HCNCiw8CX2VgelFjRAq0DO6jMpoikGaBxsbUwsTL0dQHGepx3w7qnEVwLQ8z4jHcC3yDHEKPDQNkCAwiw/QOIndcliLiawMsy0YlPBYksoVhPojj2tq1+jIXczdwJRXtQiTLG+juBNSuw4nvus=
+	t=1715446339; cv=none; b=fyBEk/jqtXsI/a/HVZ1NDv/l6dAqTIx/7NdkHBA0O42MLQ1B930F5NAVedSTaFgq+pe8Lqvj6lDtqbxoM1L66/e1IdUgRDMP3k0s+imhNZsjn6Awo3kQKFvLOtuIXYVlAV/MF2iA/k2Dw/iNORKySSHxttaAHT3pL2pRkKECkWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715445805; c=relaxed/simple;
-	bh=lX9oXc8b8SbSKJDajdn9HMDGBfvxc7MLtLBiAssalhM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oS+s9piepTPWVbu87xncc5mIyoOq29NlGgaqQ9FjT9+ca/PIDA8IlgTfCu1uki+sIOdoWbDBpSCIfAqxhLTxUeQYCbOQKssk76usAgcnWr6jQnkYywIRQXosK5LN5Y5q/0Tq3F/koSjkNrdXkAdMVNl2Cne3H5yeNX6+E8dWx9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NvtdbMrb; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NvtdbMrb"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 62F991D9C3;
-	Sat, 11 May 2024 12:43:22 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=lX9oXc8b8SbSKJDajdn9HMDGBfvxc7MLtLBiAs
-	salhM=; b=NvtdbMrb9zfc2DZKCspeG+YaGHjKKq7pcz+NvQy0qgnkj7noj+an8o
-	Xi8kv7xs0tAGC0QvXQlZHg6GlbJfrNQKR/Ey1wt2fEB4kURgrd3IzH6rLLj6v1iZ
-	CK51dm/fyAEZKREyTGbjJWz4LwqEhZR7Yzrwn2RJUX6uttsev3eHU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4CCD51D9C2;
-	Sat, 11 May 2024 12:43:22 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AAEB61D9C1;
-	Sat, 11 May 2024 12:43:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Pratyush Yadav <me@yadavpratyush.com>,  Git Mailing List
- <git@vger.kernel.org>
-Subject: Re: Git-GUI change of maintainership
-In-Reply-To: <25c0ec11-4b20-4c78-ba77-8d10ca2ef21b@kdbg.org> (Johannes Sixt's
-	message of "Sat, 11 May 2024 17:25:50 +0200")
-References: <0241021e-0b17-4031-ad9f-8abe8e0c0097@kdbg.org>
-	<mafs0r0eob610.fsf@yadavpratyush.com>
-	<25c0ec11-4b20-4c78-ba77-8d10ca2ef21b@kdbg.org>
-Date: Sat, 11 May 2024 09:43:20 -0700
-Message-ID: <xmqqbk5c1eqf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1715446339; c=relaxed/simple;
+	bh=1tudDssdJPNGCejgPRWQ1srM2JUtyFe4He95zPdSXxM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kXKe4bMch36QDD3iRTLA4TOluE06HTc++PpAsW5d4vIzzF2pCLHlgWGu1JiXtLKVL2iubxK9J0O8Fjb0ez8RypvsnOLH4zauQsl4N8qkrswxZXaUdH16Z+DKXlgQcIc+hlNuyaMafSUISI7THk2BZRaKnmkbobc7JXsPXwuYQqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-78f02c96c52so183461985a.1
+        for <git@vger.kernel.org>; Sat, 11 May 2024 09:52:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715446337; x=1716051137;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1tudDssdJPNGCejgPRWQ1srM2JUtyFe4He95zPdSXxM=;
+        b=blZgs9TFap+CZ5xbKH4UiSwoIBRrCnzIa3w4hkn/XBnMr1YLAunZAfd9TAa4Siwlxm
+         eTLXi8BkuyeCRetME1BBzcp/vt7y2x8NcFYCtHxgM3v2UIlqkTkTfXm76kLjjki5RDO+
+         5qK+P4s4xejso0e6cBStUSFDCLL3UE0b8Oio6AUVpp8gw1FyV1hGfQO9hxTOmj8U3FJv
+         z56+yGEgqxPQyG9ZLK6eSmzafZsgs1SE8ONRc0dNUaHTG28a7wbzdpS/FJKPtB5oHdpP
+         TyUZti6DbAMKLnpYVlfDTu6uVSO9livAlo+fBg+MLqF+vb0VwzPgdF3Ib+KjKI1cBlsQ
+         8lNw==
+X-Gm-Message-State: AOJu0YyRRVOyDB0Ac55ORwD0UJ3M82U2yq5mqFn228W8TiuehDO6MK2h
+	DTnNZMsg1lUW75XMoofUYn/BQUeiAIJfvf7rpNB43iyW70VPVYuXTlj04ENISjTLiFBmtjiNlT2
+	ek2MY4Am6EvYs+zrOcfacbqApyTbkkQ==
+X-Google-Smtp-Source: AGHT+IF0Sd7KBfskIxRbO5z6bF2f8pUlc4dHOpyDMMWtPkunDlEoUWD6hHBtLFzWcQaWC/42zbTthKzPX7eN9PSb5s0=
+X-Received: by 2002:a05:6214:5c03:b0:6a0:cd2a:8ae2 with SMTP id
+ 6a1803df08f44-6a1681676b9mr65259816d6.21.1715446336657; Sat, 11 May 2024
+ 09:52:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 93EEE096-0FB5-11EF-8D12-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <cover.1715339393.git.ps@pks.im> <625216a7741b64b63717c72fd3c906b04c256bbf.1715339393.git.ps@pks.im>
+In-Reply-To: <625216a7741b64b63717c72fd3c906b04c256bbf.1715339393.git.ps@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sat, 11 May 2024 12:52:05 -0400
+Message-ID: <CAPig+cSf1BcAYKk4Mg4Nn8TV6L_VRQg0tXvUcNykFcnwdiFf3w@mail.gmail.com>
+Subject: Re: [PATCH 19/21] builtin/config: track "fixed value" option via
+ flags only
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Sat, May 11, 2024 at 8:11=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> We track the "fixed value" option via two separate bits: once via the
+> global variable `fixed_value`, and once via the CONFIG_FLAGS_FIXED_VALUE
+> bit in `flags`. This is confusing and may easily lead to issues when one
+> is not aware that this is tracked via two separate mechanisms.
+>
+> Refactor the code to use the flag exclusively. We already pass it to all
+> the require callsites anyway, except for `collect_config()`.
 
-> I am about to apply the patch below to note the new maintainer.
+s/require/required/
 
-Thanks.  I have these planned.
-
-
-diff --git i/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
-index 384893be1c..0690ae2140 100644
---- i/Documentation/SubmittingPatches
-+++ w/Documentation/SubmittingPatches
-@@ -545,9 +545,9 @@ not a text/plain, it's something else.
- Some parts of the system have dedicated maintainers with their own
- repositories.
- 
--- `git-gui/` comes from git-gui project, maintained by Pratyush Yadav:
-+- `git-gui/` comes from git-gui project, maintained by Johannes Sixt:
- 
--	https://github.com/prati0100/git-gui.git
-+        https://github.com/j6t/git-gui
- 
- - `gitk-git/` comes from Paul Mackerras's gitk project:
- 
-
-diff --git a/MaintNotes b/MaintNotes
-index b1f0e63..00ffa91 100644
---- a/MaintNotes
-+++ b/MaintNotes
-@@ -278,9 +278,9 @@ and enhancements in contrib/ area to the primary contributors of them.
- Although the following are included in git.git repository, they have their
- own authoritative repository and maintainers:
- 
-- - git-gui/ comes from git-gui project, maintained by Pratyush Yadav:
-+ - git-gui/ comes from git-gui project, maintained by Johannes Sixt:
- 
--        https://github.com/prati0100/git-gui.git
-+        https://github.com/j6t/git-gui
- 
-  - gitk-git/ comes from Paul Mackerras's gitk project:
- 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
