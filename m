@@ -1,58 +1,27 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930B41E526
-	for <git@vger.kernel.org>; Sat, 11 May 2024 15:01:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4764256448
+	for <git@vger.kernel.org>; Sat, 11 May 2024 15:26:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715439683; cv=none; b=W17CGoB//XqAW+p/BKR9qesEH3kq0VP2clX9SxcsfCFzEq3x1RbfPaMwR0yLiicKbiErdhbZO/eCA1bGFVCnHIbJUtbglSYcbG3zu2RiEWuTQZEXBTUrcta7p2ppyk9hLPSas3EYNXdTAJtRwoMz8g7uIvuG6pS4E8L5onHyXrk=
+	t=1715441170; cv=none; b=pDyt9lQmZ1Rt0jGGy+As6qNqoqB5sFHMSab9JuvNHtxYV4d91Wwp3hNDlA7yyoaePOkJcXvm3l2ZbMUPhBXELkyLpwU+CRJzPI9bCX/UajMuB6/ZyD1JGW1OUHCHvFn23aQqw9f8gNzooK81Z1i7x1MCStYspoKPozlBaYD5jKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715439683; c=relaxed/simple;
-	bh=0eztHubc5jYNm4q6/yIg1OoprVH8f5K6KsZOVcuZ0b0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=NDw/oSQ8Tz8uuvEtttJ2zHc7O0/M7YQwtnZJs13BVFgrPPdmsrcIZ/rvCtsInlqzIGlrlnPTvL/nLq3rR3D4BZQClLcV/Vcme+yoSP0GQ+sJRWT8ldPQngqFuM4jchIhFrwjZgXy94wZ7J+bNRYUj/TCBEPkz0pET8pJdlmW9VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OMoBVsiV; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OMoBVsiV"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4200ee78f35so4602945e9.1
-        for <git@vger.kernel.org>; Sat, 11 May 2024 08:01:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715439680; x=1716044480; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aUTZbL62LA7wpFbzmyZLTWD5BSgCgB54kcKipiBVqFs=;
-        b=OMoBVsiVUteaUzGFRbTKSDNM+5A37mrCqsP2VAyK0PyW3n8XCEK2Fg0sZTSh42iHqt
-         S+jQwEvdihYGKPkjWG8SWEsns0bI4qwFDbLRrkxns1Hi/Xo/haF4RRy6kvCXC+YV26HQ
-         r4mdX5+cKB3lghkSM9p0gcpqgdWgwsFrgnJha5u2z9sQAxn5z24l9pkn8Q/TCit4D8PK
-         V6pEKb6izGOTyFytWKEsmS+nrKdIlG77fwMzbhaokVGXJRntU+Blc6dvUpHnUqNno5W6
-         skliJvQNcPMG0ML+yw77nnRR8nPk8DQCShHEJxvRJp6v08jcu5u4gLXi+gdY/DeWZ4/D
-         Z3VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715439680; x=1716044480;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aUTZbL62LA7wpFbzmyZLTWD5BSgCgB54kcKipiBVqFs=;
-        b=AaC2r+0Uvfo6teV+M7MJDAveLYtt0VLXiBDCGB07WBwzwmqzqA5FNU4/TJJRPesDWB
-         2Mkdqv1krNFpSj+HimIO/+TXfGozuDA0zjqD8t3IEcpJVZEd5/NNRLfg9mNYQ4jbxKEd
-         Mz0cIw8kaoaCfOd14/acAxK2EBRLml60b2xQNWPzfJF8LEchXBl9Z6mrlPAMqkhgWLs1
-         AehGKk7mCYhtlbnF/YiP2W/HAwF/JAR6vf1QLdz5hdvzxFIphAxX9/Z+dRIzxmoFM2CW
-         Ho+508CzABNxZT02HHSqc+3NZQ4DuaWqVr2Qyqxsx6q0zTRTwX0juDFRlG49xMN1XGjT
-         JpCg==
-X-Gm-Message-State: AOJu0YyVEhtLyDesyiVaWWB3j/L3XPN260OrfD4LbR8z6zd3FFtRiEGX
-	kQ5ZQwErrT8Dy8DkPnKnmJbq0fbUYWG+fqZi9SYAAPf2eXfSsdyV
-X-Google-Smtp-Source: AGHT+IHyQsct4vFCKb2im+hmrLtFVmqQmChnEyGZRy3gtndYUhY1Jqt3ShTsyjqKRBSUywMQwQG6RA==
-X-Received: by 2002:a05:600c:314e:b0:41a:8055:8b89 with SMTP id 5b1f17b1804b1-41fea931ac6mr62605215e9.6.1715439679752;
-        Sat, 11 May 2024 08:01:19 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1? ([2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41fccee962esm100119215e9.31.2024.05.11.08.01.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 May 2024 08:01:19 -0700 (PDT)
-Message-ID: <3a48b2fe-78c0-41f4-9e60-4146f15dfa97@gmail.com>
-Date: Sat, 11 May 2024 16:01:18 +0100
+	s=arc-20240116; t=1715441170; c=relaxed/simple;
+	bh=RFw+uJJfQ3+2v5zllj7lpju4LVjoU90rvadle/c/cRw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CqPNZ7vsiAgnN8s0Eh7TzJ71PIC8QuytZ1l+0MBjnShz9hKBfdbNMdsOa9teGj+zvntydvJqDS0mI0/Xs5HJZuhN3dookt1Gcn8QcS6s4bxqdMxyNDNgcVqPTNO/Tt3uVaepTbfTu1KmQnSyRuU8f+z1xIPIXWMLvYE8bl4lZfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.107])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4Vc8j43Jmxz5vSt
+	for <git@vger.kernel.org>; Sat, 11 May 2024 17:26:00 +0200 (CEST)
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4Vc8ht73LXzRnmK;
+	Sat, 11 May 2024 17:25:50 +0200 (CEST)
+Message-ID: <25c0ec11-4b20-4c78-ba77-8d10ca2ef21b@kdbg.org>
+Date: Sat, 11 May 2024 17:25:50 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,88 +29,72 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: git-cherry-pick(1) -- path
-To: Alejandro Colomar <alx@kernel.org>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <e5pklmijfpbsnl2trj4n4czam7n7i37gx7w56med2pfaf6q3yx@wizseio2ickk>
- <xmqqv83mqxg3.fsf@gitster.g>
- <kk244kap6lhuvtfot55u4yb5k5eddwlzl4izlzqhe4pdj52cx7@slghmpvdswkt>
- <9b42e684-32e0-4372-8da6-40f9b708b6ca@gmail.com> <xmqqcypt61lo.fsf@gitster.g>
- <bpjfsabhstkbuvo6ksj3owoxvutgquripmqmqi63ykaquhky2u@r7mfrwucgnye>
+Subject: Re: Git-GUI change of maintainership
+To: Pratyush Yadav <me@yadavpratyush.com>
+Cc: Git Mailing List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <0241021e-0b17-4031-ad9f-8abe8e0c0097@kdbg.org>
+ <mafs0r0eob610.fsf@yadavpratyush.com>
 Content-Language: en-US
-In-Reply-To: <bpjfsabhstkbuvo6ksj3owoxvutgquripmqmqi63ykaquhky2u@r7mfrwucgnye>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <mafs0r0eob610.fsf@yadavpratyush.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hi Alex and Junio
-
-On 11/05/2024 12:46, Alejandro Colomar wrote:
-> Hi Phillip, Junio,
-> 
-> On Fri, May 10, 2024 at 10:03:31AM GMT, Junio C Hamano wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
+Am 29.04.24 um 16:24 schrieb Pratyush Yadav:
+> On Sat, Apr 27 2024, Johannes Sixt wrote:
+>> Since Git-GUI is an important tool in my toolbox, I would
+>> volunteer to pick up the task.
 >>
->>>>>       $ git format-patch --stdout -1 $ThatCommit -- $ThisPath |
->>>>>         git am -3
->>>> Hmmm, I hadn't thought of that; very interesting!
->>>> Although I have some concerns with git-am(1); basically that it's
->>>> almost
->>>> clueless when there's a conflict.
->>>
->>> "git am -3" should be fine here as you're guaranteed to have the
->>> necessary blobs available to create conflicts - this is what "git
->>> rebase --apply" does.
+>> Pratyush, please let us know if this would be OK for you.
+> 
+> Yes, certainly! Thanks for taking this up and thanks for your work on
+> git-gui in the past :-)
+> 
+> Acked-by: Pratyush Yadav <me@yadavpratyush.com>
+> 
 >>
->> Good thing to point out.  "am -3" is just as good for this purpose
->> and "almost clueless" is a derogatory comment that requires an
->> apology ;-)
-> 
-> Huh, I am quite surprised by `git am -3`.  I've tried it just now, and
-> it's amazing.  I certainly must apologize.  :-)
-> 
-> I tried it yesterday, but the patches were from a different repo, and
-> not available locally, so it really didn't do anything.  But now I tried
-> it within the same repo, and it's really nice!
-> 
->>> As far as the implementation goes I haven't thought too deeply but I
->>> suspect we'd want to create a couple of trees based on the commit we
->>> want to cherry-pick and its parent filtered by the pathspec and use
->>> those in the tree-way merge with HEAD.
->>
->> If we were to use the ort machinery, it may not be too bad to use
->> the pathspec only at the final writeout phase.
+>> I will let you all know if and when I have set up a repository to pull
+>> from or to fork.
 
-That would be tempting if cherry-pick didn't have a "--strategy" option. 
-I think we need something more generic to cope with that.
+The Git-GUI repository that I now maintain is at
+https://github.com/j6t/git-gui. I have cherry-picked a few commits from
+the Git repository so that at this time its master branch is
+tree-identical to the version shipped with Git v2.45.0, i.e.,
+v2.45.0:git-gui =~ 8c60bdfc0dce.
 
->>  That is, perform a
->> full cherry-pick in the in-core index, reset all the entries in the
->> in-core index back to HEAD that are outside the given pathspec, and
->> then write out the result to the working tree.  That way, an old
->> change that was made to paths at the original location can be cherry
->> picked to a much newer tree after these paths have been moved to a
->> different location.  Doing the same with the recursive machinery
->> would be missier but perhaps the more recent merge-tree that uses
->> the ort machinery to work purely in-core might be a good way to go.
+I am about to apply the patch below to note the new maintainer.
 
-My hope was that the changes required to create a couple of new trees 
-that are then used instead of the original commits when a pathspec is 
-given would be fairly localized.
+> Would also be good to send a patch to update Documentation/git-gui.txt
+> and Documentation/SubmittingPatches.
 
-> I didn't understand the last part well, but I guess I may do when I
-> start researching into it.  :)
-> 
-> Apart from <builtin/revert.c>, do you recommend I look into any
-> particular files?
+I'll follow-up later this weekend.
 
-sequencer.c. If we go for the "write new trees and use those in the 
-merge" approach then we'd need to change do_pick_commit() to create the 
-trees and we'd probably want to change do_recursive_merge() to take 
-trees rather than commits. We'd also need to add a new pathspec member 
-to struct replay_opts to pass the pathspec around.
+----- 8< -----
+Subject: [PATCH] git-gui: note the new maintainer
 
-Best Wishes
+Pratyush Yadev has relinquished, and Johannes Sixt has taken over,
+maintainership of Git-GUI.
 
-Phillip
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ README.md | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/README.md b/README.md
+index b460b64..948e925 100644
+--- a/README.md
++++ b/README.md
+@@ -42,8 +42,8 @@ You probably need to have root/admin permissions to install.
+ 
+ # Contributing
+ 
+-The project is currently maintained by Pratyush Yadav over at
+-https://github.com/prati0100/git-gui. Even though the project is hosted at
++The project is currently maintained by Johannes Sixt at
++https://github.com/j6t/git-gui. Even though the project is hosted at
+ GitHub, the development does not happen over GitHub Issues and Pull Requests.
+ Instead, an email based workflow is used. The Git mailing list
+ [git@vger.kernel.org](mailto:git@vger.kernel.org) is where the patches are
+-- 
+2.45.0.271.gd8a10d2f05
+
