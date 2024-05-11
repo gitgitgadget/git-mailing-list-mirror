@@ -1,142 +1,66 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC00D56B65
-	for <git@vger.kernel.org>; Sat, 11 May 2024 16:17:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546117F
+	for <git@vger.kernel.org>; Sat, 11 May 2024 16:42:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715444263; cv=none; b=Q8+D0XbstCaQ7cVxRUyRd1xxjo/XKV9ht8/8nTVz4vh/ovf8U61dMiuQIR3aZAUMFj1Amb6v0SbR7c2FBDUUUsTlhHFYiQvrnMbgg1EKGg/tIWrgH9I1VtRsGfV6sV+kIO5VbA2nRKu2dJMka5ePSdgzmUg8WicTtttS6UquDc0=
+	t=1715445775; cv=none; b=Br/rU/FfqxBOB1UrnmKUf1F8WJUVeGP4KXNKfDEZ23GzbAHQCIy+s8IRyQtRz4s2V6GwDz1jgbZi4H2eSnUW0DyeGA6QkLc1+WH1yCazCvJX0542EP83acsid2lQy398LxBdj1zlmOc8Ls38UcY7g/4g9BnBBYr3nerbGjKLhjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715444263; c=relaxed/simple;
-	bh=4sOcPhbfNF0IHDDsrpUzUxvnjLVPAIYo+GXNGqzSxcs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MdgM/Ze6dojzas/734FyMmE9hc8nal2MqXlJO+YbDNy+xBrF3Y3TMJMNaGyDu/vv+GkaaC8GqDzqRl87jlsnF6keU1AhlGhL9/NS2uu58FVAXjTjVT08/yMZXXvtGUMKQeBEPECAWna6O19EZ07uEu1lXM8ZNG/dLGdYo2LqwRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bAGrM9gJ; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bAGrM9gJ"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 85BCC305DC;
-	Sat, 11 May 2024 12:17:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=4sOcPhbfNF0IHDDsrpUzUxvnjLVPAIYo+GXNGq
-	zSxcs=; b=bAGrM9gJ3M0HFVzIRhRKR5j+wCi++GauYMRsZ3JBuioggHBo1PWdpc
-	BTMS6oKF3ofHGz4s5w7d5iK7i3SXuuzIXckFWC9RmypbR6EvEVcCQUJweJmTyPVv
-	WmnbS+/lg5jfJUPyXBKawWuOcE49vElb+v425+EE2nDu9gtnt9axw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7EC44305DB;
-	Sat, 11 May 2024 12:17:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E9026305DA;
-	Sat, 11 May 2024 12:17:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Gerald Pfeifer <gerald@pfeifer.com>
-Cc: git@vger.kernel.org
-Subject: Re: git shortlog --committer=name is documented, alas not implemented
-In-Reply-To: <77e42d15-fcaf-5c1b-3a00-f1f1e3cedfc4@pfeifer.com> (Gerald
-	Pfeifer's message of "Sat, 11 May 2024 14:34:12 +0200 (CEST)")
-References: <77e42d15-fcaf-5c1b-3a00-f1f1e3cedfc4@pfeifer.com>
-Date: Sat, 11 May 2024 09:17:38 -0700
-Message-ID: <xmqqfruo1fx9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1715445775; c=relaxed/simple;
+	bh=QMUJyrYmcq4Rrzx79HU6B8d+VA9fuTDk9Kh6IfRFJoM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=USCwnPw9NF8e5yElSvl56i+liqVrn9Hto9+GHG6f4m8R5K+kk1R1lV2JjI9AM86BodMPWsUxPUxwYlTo5a2a/ruZVjLFZ7yEi1s7r5Xwaal8INDlbe092txIVie43thGQgOLy+3l6a77uIw9AG+BV3qK8wwhDWpBeNaNXlfRKhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6a0c8fb3540so22462566d6.1
+        for <git@vger.kernel.org>; Sat, 11 May 2024 09:42:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715445772; x=1716050572;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QMUJyrYmcq4Rrzx79HU6B8d+VA9fuTDk9Kh6IfRFJoM=;
+        b=O2l14lihlFkquyaai+p+EqBoQmtCvTZ2E97j/wpCkboOltyHl4a6iSjyPf8nNjbQYJ
+         6dFLG+j/b+LqOMiI+g3P035z/LVTVKGTWAh6/wjeCwUhVVPFa4fDkK2SiWUEmTYunDaP
+         biDaQDPHBRAr9dJWyt732ilnawMVT+agqBBo0Cg2BhYi+9PcLgCdjna7JgGaJoeePUO2
+         K5xzemkaz/5DbmeAy8uM05f/NoB3FYBPs1eZTYaFJ518BeqybUoGYziabeTAmdDD1n0s
+         i7Zqrdc1a67LcrzHq30FXSatEnBSTAevAwX0v4nxOIY8nJPlODI59V2+1x2/UwSpvlOr
+         0jDA==
+X-Gm-Message-State: AOJu0YxAz8oIWKuoojaQLYDcAH71AjHUPWV/Ue5NStAjro1kaWJXWhem
+	n6DepMcmnS/t2EMYPvJ6dmwXkHRRTEA8edrbm9I6e0jWsk3o7MZMPAyucnjKBuM1zkL5vPq/vHL
+	MNi70iQ5e61ily5lUbMUkdYXThcle9lBZ
+X-Google-Smtp-Source: AGHT+IHlGHFhmU54oBrJrRKzO3okvLEbr0Olte7gCVUoxjRF+1y42J3twr6F7XnUiI9eVhfeUKBxfaghHhl7e7q9pu8=
+X-Received: by 2002:a05:6214:334:b0:6a0:b93f:e678 with SMTP id
+ 6a1803df08f44-6a15cbc452fmr152992486d6.10.1715445772259; Sat, 11 May 2024
+ 09:42:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- FCFAC342-0FB1-11EF-A34B-25B3960A682E-77302942!pb-smtp2.pobox.com
+References: <cover.1715339393.git.ps@pks.im> <2b40b784fe146b4d17de9accd4afc53144c93812.1715339393.git.ps@pks.im>
+In-Reply-To: <2b40b784fe146b4d17de9accd4afc53144c93812.1715339393.git.ps@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sat, 11 May 2024 12:42:39 -0400
+Message-ID: <CAPig+cT9ZiZCzPL682Y8aos_=Ptq=doV9UCQd3M4c4kr6qzhvA@mail.gmail.com>
+Subject: Re: [PATCH 14/21] builtin/config: convert `do_not_match` to a local variable
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Gerald Pfeifer <gerald@pfeifer.com> writes:
+On Sat, May 11, 2024 at 5:25=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> The `do_not_match` variable is used by the `format_config()` callback as
+> an indicator whteher or not the passed regular expression is negated. It
+> is only ever set up by its only caller, `collect_config()` and can thus
+> easily be moved into the `collect_config_data` structure.
 
-> `man git shortlog` (from git 2.45.0) has the following:
+s/whteher/whether/
+
+> Do so to remove our reliance on global state.
 >
->    --author=<pattern>, --committer=<pattern>
->        Limit the commits output to ones with author/committer header lines 
->        that match the specified pattern (regular expression). With more 
->        than one --author=<pattern>, commits whose author matches any of 
->        the given patterns are chosen (similarly for multiple 
->        --committer=<pattern>).
->
-> Now `git shortlog --author=gerald` works as expected.
->
-> However `git shortlog --committer=gerald` results in an error:
->
->   error: option `committer' takes no value
->
-> This is either a doc bug or an implementation issue?
-
-It is a UI and documentation issue.
-
-For those who do not want to understand the underlying issue, a
-workaround is to use the "shortlog" in the fitler mode, and use a
-separate "log" as the commit selector, e.g.
-
-    $ git log --pretty=fuller --committer=gerald |
-      git shortlog [--committer] [-s] ...
-
-The upstream of this pipeline finds only commits by gerald and shows
-them with both Author: and Committer: header lines.  The downstream
-of this pipeline reads the "log" stream, and does the usual "shortlog"
-thing as a filter.
-
-The "--committer" option of the "shortlog" command does not take a
-value; it is a boolean that tells the command "I know you usually
-group commits by authors, but in this invocation I want you to group
-them by committers".  So if you have multiple "--committer=<who>"
-things on the upstream "git log" side, you can sift these commits by
-committer on the downstream "git shortlog".
-
-Now for those who want to understand the underlying issue, the
-"shortlog" command works in two modes.  One is the filtering mode we
-just saw.  The other, which is more commonly used these days, is to
-invoke the "git log" command that it reads from in the "filtering"
-mode internally.  Which means that "shortlog" command now needs to
-understand options and arguments for "git log" family of commands,
-like
-
- - limiting the commits to a revision range, e.g.,
-   "v2.44.0..v2.45.0",
-
- - finding patterns in the commit object, e.g., "--grep=<pattern>"
-   and "--author gerald",
-
- - limiting the commits that touch specified paths, e.g.,
-   "Documentation/"
-
-as well as its own options, like "-s" "-n" "--committer", that
-affects how it summarizes the "log" stream.
-
-So, now you see where one of the two problems you observed, i.e. the
-manual page talks about --author=<who> and --committer=<who>
-limiting, comes from.  It is because the documentation of the
-"shortlog" command tries to borrow from parts of the documentation
-of the "log" command.
-
-And the other one you observed is now easy to understand. As the
-"shortlog" needs "--committer" as a boolean "are we grouping with
-the committer?", it thinks that you told it to do that but by
-mistake you added the option an unwanted value when you said
-"--committer=gerald".
-
-An 80%-OK-fix may be to teach the command option parser of shortlog
-that "--committer" (which it currently thinks is a strict boolean)
-is now an option that takes an optiona value, and when it is given
-with a value, ignore it and pass it down to the underlying "git log".
-Unlike the real "git log" where you can say "git log --committer gerald",
-with such a fix, you can only say "git shortlog --committer=gerald" (i.e.,
-you are forced to use the "--option=value" form and "--option value" form
-is not allowed), but that may probably be OK.
-
-With such a 80%-OK-fix, the documentation bug will disappear, which
-would be a big plus ;-)
-
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
