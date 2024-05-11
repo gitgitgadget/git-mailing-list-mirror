@@ -1,73 +1,65 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from hamza.pair.com (hamza.pair.com [209.68.5.143])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB4728F3
-	for <git@vger.kernel.org>; Sat, 11 May 2024 12:20:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58107E9
+	for <git@vger.kernel.org>; Sat, 11 May 2024 12:40:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.68.5.143
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715430041; cv=none; b=aI9QZ2C3H+VXBWveki6DmsPv627GTsYoHQSGQ24XM5bKBXIlQgvLNqOvzt8kUUGw7QjnVgDWYue2YKMSv6xnGeXWa0Mr/5i1xUtfymg3A/aPajEWqaj2JzJe/xhFYwmvqp2ih05gnpBHYPnSq3goNRvgDm44/cw4Q7kWfDhxIGg=
+	t=1715431229; cv=none; b=ulQursGJhx3lMSAmHmW+RFcnjRSCLx8aivNME7NzlWlHCyyb3Sw2FnvWhZUj5xMFPV+vJHHMDAZTkXqjz6iTM6R9e3SGVMVtQzw5Qb0CK11OnVtA5j3qs1CRgHxym8QojrqfqULQkIxFZmhojTg8KOYK14YKcnFZhgMRI3ZBqPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715430041; c=relaxed/simple;
-	bh=erhs5OMCt199N8MYdmRTANAOjSdIErn+7odrX6wFoXs=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=T26Ki56wG2K311h86u2ul8nbmyYuBUQGcn5RiGHIa/hXffyWovWncFsdcjNuUUm14lHiJYEB/W89KDIN74UGKS7moG3rD8HXrp/HTQpmCyjcOaPT2BNap7HbJdhmeixypkR6vWEtdLloRvYxFiJaK+WsPfhd3pdkfw7eFhwS4Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b=JC8+Fmyi; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
+	s=arc-20240116; t=1715431229; c=relaxed/simple;
+	bh=vOezWw0VFD1Qi6+j7pKeu+37RK107IpzoR2LVZcC5uk=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=BzkwH5j15eyebAVsQlr+wX9zUG/6TIuKOKvyHv2ztfw9+hzdOgn3GsIQvH/G+kQVbB+LfVFCS48AAtxK8pQPI7XXxl6xPf8ZLh0P6y+hfuX8b7BKi8L8dnL9KR14ekshga47zgOe8GB91D7vbqvuDuFCSLkO3QFISB6+SrFrfhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pfeifer.com; spf=pass smtp.mailfrom=pfeifer.com; dkim=pass (2048-bit key) header.d=pfeifer.com header.i=@pfeifer.com header.b=YLAs3Vls; arc=none smtp.client-ip=209.68.5.143
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pfeifer.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pfeifer.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b="JC8+Fmyi"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dee52317cbdso1527081276.3
-        for <git@vger.kernel.org>; Sat, 11 May 2024 05:20:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gree-net.20230601.gappssmtp.com; s=20230601; t=1715430038; x=1716034838; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=erhs5OMCt199N8MYdmRTANAOjSdIErn+7odrX6wFoXs=;
-        b=JC8+FmyiAjE6ocTqPpmzQtBIF5NXrBtSIp8eAuq7cWo67E9u38IzxALhgfyAZUUvcz
-         TLR9RVy6Atd97nZpMiysm2ZAHk2dj5jdUuCpCDW3e36A00IU+prJtrYKd2s/jCLsp3KS
-         rtNHaoMXL/47oYiHdEibyS55ARhVDrVOtzdFftl5OJ07SZnF/+tseNIEYvF9tyLqarPw
-         x/QLLIWL+f91VH/wEMATX5UxvzLhis4wr0Ip3kX4hjQwdb0Ar78vtO1jNe6TiJZdFyU6
-         L/wVhk1tjXVdGjbVldSHw5tZV6sRiD4dDYEk8w79hctONGh4gfP814P9aFOMLlevUzQm
-         rtuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715430038; x=1716034838;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=erhs5OMCt199N8MYdmRTANAOjSdIErn+7odrX6wFoXs=;
-        b=e9/k5sBFSYBfawiHuDaZkhbB/7Wi8uaLXPsL/BuMT6KO37xrfq9oJP3ZEtQx/d/cUm
-         y8bswK2Vg7z8nep8a9U4k6H4cVk0V2RZDVrUBrxvKf+EGShlH1r8BJwnS4s3DYImKRna
-         Y10tyykUg1JvpdKaF+cCkHfOkui7lB1Bre6TTGQ/07eD7N5LhYLia42rz2a0eXJ2Kets
-         FMGe9EWCCSQBjjJlV3tvUySLwQgNGBDnW3pFxlWlQqPX2jz2qyNfVp0pvxgOVi9EqS5W
-         VOcZAGARRWBSmPf06t+50YgTrErNz9s5e8fOi5FHVlDnA6l+2quIiAQp6XGQcsRTBrpT
-         Vyuw==
-X-Gm-Message-State: AOJu0YxWS8QPlEQr3RcklXvnk1kR7lpI2OMYvIJ6G2uTRpl0B30C0yxG
-	q+VZAKb9lxIZ3UW/1TId3UN0541IHBksVdK0Ba/x7h3XPz9lPu6uDgjYf1ParaeqiyYKbDjhYWP
-	+lQeHAjiNH2YZLi7q+LD3lLpdmckVCNQQCQTcyd7eAw+RBiaBqCGD2tLhyK52ygpXj7YiXFRCHG
-	DWjvBQ22119+oSAYRhworj4cmfdoYtn3JcQ5hhmfPxYh8/attdhkHkBWsMv1RLasmrfTsXAdrhm
-	n7Xy8eicctZ+MYRnVrYZ9zdMjne7JIZlSmZo5a+rs9B7MYM3Nx3y7bgqsrfAsjoGd8QE5BvteDJ
-	IoqAgVLZoTs=
-X-Google-Smtp-Source: AGHT+IHlH3vdsEqjHWOx2/iqyTTOPVW8fX8HPDWqpG+ifJK1NSohjQ4inmKQyLJza0UKaIAPxpBscOeBjjEDCBeMQ+Y=
-X-Received: by 2002:a05:6902:390:b0:de6:80a:f7fb with SMTP id
- 3f1490d57ef6-dee4f2cf742mr5061346276.17.1715430038446; Sat, 11 May 2024
- 05:20:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pfeifer.com header.i=@pfeifer.com header.b="YLAs3Vls"
+Received: from hamza.pair.com (localhost [127.0.0.1])
+	by hamza.pair.com (Postfix) with ESMTP id 9AC0733E87
+	for <git@vger.kernel.org>; Sat, 11 May 2024 08:34:18 -0400 (EDT)
+Received: from daya.localdomain (188-23-56-169.adsl.highway.telekom.at [188.23.56.169])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by hamza.pair.com (Postfix) with ESMTPSA id 28CAA33E86
+	for <git@vger.kernel.org>; Sat, 11 May 2024 08:34:18 -0400 (EDT)
+Date: Sat, 11 May 2024 14:34:12 +0200 (CEST)
+From: Gerald Pfeifer <gerald@pfeifer.com>
+To: git@vger.kernel.org
+Subject: git shortlog --committer=name is documented, alas not implemented
+Message-ID: <77e42d15-fcaf-5c1b-3a00-f1f1e3cedfc4@pfeifer.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Koji Nakamaru <koji.nakamaru@gree.net>
-Date: Sat, 11 May 2024 21:20:27 +0900
-Message-ID: <CAOTNsDxmKfPeXhAWSeHUfzwKQjqB_ZgS9E08buXT-jOeKntnsg@mail.gmail.com>
-Subject: Re: [PATCH] osxkeychain: lock for exclusive execution
-To: sandals@crustytoothpaste.net
-Cc: git@vger.kernel.org, 
-	Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, Bo Anderson <mail@boanderson.me>, peff@peff.net, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pfeifer.com; h=date:from:to:subject:message-id:mime-version:content-type; s=pair-202402271039; bh=bJMAbauIdirl74Pn7CmMaSk1Tgyxxv3DUFP+05Ltn4U=; b=YLAs3Vls3qlp1sqoxvj05vDJmz7p9s1GrMPlcZqDiH2DfMp0TI3vC88PxNtnn0fiKz7SaQxe45GqojMDMTBWnBG5K1F1W81dZk2RFFr0hxyhE5xvoGr6PZdyFSIRiqmml042bGkCBTB1bKlP+YMIl8P2IbfZV+UMOs5wDgPSvwiIyIszW0p73wTCe6jFbpkkOPLsPCNVnhwTRteaq7jq6O/uu4lPQbWZbw91s8kHKNyAPQzND7AAKL4MHJ7ajdyGAVXXJuaPIIhkHWpR20qu4vvDJSRHULDs0FxwUiCPZ0FMUshQ0Cp5XdKHkOfWTbV6mYPJj4L6vxwAZsieijw09A==
+X-Scanned-By: mailmunge 3.11 on 209.68.5.143
 
-Thank you all for your discussion and suggestion. I updated the patch to
-utilize the state[] feature. I keep the original "exlock" logic as I
-think it is still appropriate, but if it should be removed, please let
-me know.
+`man git shortlog` (from git 2.45.0) has the following:
 
-Koji Nakamaru
+   --author=<pattern>, --committer=<pattern>
+       Limit the commits output to ones with author/committer header lines 
+       that match the specified pattern (regular expression). With more 
+       than one --author=<pattern>, commits whose author matches any of 
+       the given patterns are chosen (similarly for multiple 
+       --committer=<pattern>).
+
+Now `git shortlog --author=gerald` works as expected.
+
+However `git shortlog --committer=gerald` results in an error:
+
+  error: option `committer' takes no value
+
+This is either a doc bug or an implementation issue?
+
+
+Also, how does one list all commits by a certain committer (as opposed 
+to author) then?
+
+
+Thanks,
+Gerald
