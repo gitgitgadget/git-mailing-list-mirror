@@ -1,131 +1,105 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A495159167
-	for <git@vger.kernel.org>; Mon, 13 May 2024 19:21:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B2978283
+	for <git@vger.kernel.org>; Mon, 13 May 2024 19:47:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715628090; cv=none; b=fgvn/5DdaPzrqEfTaOKKShHhOBMXOG+Fo9BuhcHl30evlmY3va6itw3EL269XZqZq+lGB080ngCBOO55t+IIXstKoEkLYRQn4xGIwAwGflbSJoiffP6yK2o7q/73WiUICvjAGhfdmwjJJJI6uNejJ+SDcGWGruSSQ9s8J86bXfU=
+	t=1715629632; cv=none; b=KU5+EEEZoUooLI2bXIJhR1mHvrb36wVnFMKosq/soVZB/sOsI2/AmW3EERsF5tUm4FTWHg0KypzSnznUZlisuytfUxM1PAqmNoueGF5W4RHJfuUuknSTkHg4r+p6yoZdmlc/NOkUUTVJXv18Pe4AfNvdNaoXiTWUbKrkIpiCAjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715628090; c=relaxed/simple;
-	bh=wqp7w1zyWlp7wA3i3qZ2C5LBLi2axcaLx7ZSnkFISWc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZM62pHYEe25HQmPz+Lh1qz7HCUUF3wlaJmjE2bHHko0xIcDOFb4Stc7Kj8oOz5sj01ru5WINi/LXGlb+5y2lbFYpGt89vtbT4yAcXDqYELThHzQgLnMyxTFfjXkx/3DuoiHtlvuEnLHGLhbgQGwz073HcHZsjndx0HFu5hI+YoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Yw1Yf9ry; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1715629632; c=relaxed/simple;
+	bh=IfJmXldN4kzvHKKOIU0rgUElt9/0IEBEWiVZ1oCu9YI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hbaM/U7nuaanv1qMMTxf+3wN9t98oByKljuXDslqLo2MUjqtejDxE6WRNrfiaNDSGD4UBE8Ds9qVUp0qaV9fNQqaeZ+FXhV+iujtzETPoHtsU+1Mx9bkmKEY56dj42NG5nT9db1ZOfYi6l80K0tRcdceUKF8FO7a/AyR4shg2To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=iFcZekx7; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Yw1Yf9ry"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 64F22279AB;
-	Mon, 13 May 2024 15:21:27 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=wqp7w1zyWlp7wA3i3qZ2C5LBL
-	i2axcaLx7ZSnkFISWc=; b=Yw1Yf9ry6LK9NMLxzwNGylqATZMCvOEF5iyb7oK40
-	QKiK+GykMIIKFSinX/uWxQpzzepmVwIehESLkFQNNi9iWpjAVQK6FucBnyqaQbxo
-	Z4G//yfLayV9s4IkBGTTZtg72zyMa5Ki2zGDG8HB8oNxea+PFKhXlDAPHp+Cp5fA
-	rA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5CB16279AA;
-	Mon, 13 May 2024 15:21:27 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C54B4279A9;
-	Mon, 13 May 2024 15:21:26 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 4/4] builtin/hash-object: fix uninitialized hash function
-Date: Mon, 13 May 2024 12:21:12 -0700
-Message-ID: <20240513192112.866021-5-gitster@pobox.com>
-X-Mailer: git-send-email 2.45.0-145-g3e4a232f6e
-In-Reply-To: <20240513192112.866021-1-gitster@pobox.com>
-References: <cover.1715582857.git.ps@pks.im>
- <20240513192112.866021-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="iFcZekx7"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-61bee45d035so49357717b3.1
+        for <git@vger.kernel.org>; Mon, 13 May 2024 12:47:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1715629630; x=1716234430; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=T99MBf0nl63CklueBJ6l+rwD6AWoXckiL5U/kn0dPCw=;
+        b=iFcZekx7KgIShZipR9NXwTDP0cFnLoy+NjnE2QnS9DQVsdYskA7yC1UyQ0FBPUNBsX
+         8L8o2D9G0Y8fMk3fY8YPI8fTcqdGMi/6fmPa0kDdQ82D1FgC7SZQPMZv5IALFwm/dchR
+         kniudPCukHfYqSLGjQmblmXJG5cvdapFFQTFLTd1P07OH1pxfLeB+mloLaTMNuSFce+d
+         eJm3w+qm167Ff+DJyGAKJA3Hff0C2Cmt5wcVoumpLWva1BnwkOWdT7hq61+NRXdEf9zl
+         LbVzBDrBQxuoAl0fi5rx5gbg0+3bx83+qj4OHNkJ+JzT4iu4POuN+a95s/QbWxTQf5yQ
+         rFag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715629630; x=1716234430;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=T99MBf0nl63CklueBJ6l+rwD6AWoXckiL5U/kn0dPCw=;
+        b=hcW2P9nc+qpFD8/CBHeidUtSv2NHjUj9vfphW9LTt9eo2IJNin8K3M6V0UdJtOOg5C
+         9GoY381A2cb+KUApDhs7wK3/Xcczn2Ho2azXPSPqrlx3J1OabL4OlfRWMuze6HxsbMol
+         zfPyBemoOz3dulUetHgG1ZAz6L96cDAQGCacYSRQKWmivH3OzKa315RuhqE62QKrOAit
+         /L/iAKignkwR5qaq7Qg1Smhx0zFd5wQejo3slko3+LdKbu2gvPZuGIDiuA6P4+Ey/8rY
+         bMh01nZ2BMFgPJtnHcpiohrT/4jgxpOiDeTpeutBXQFJ5T4MuM8NW3auTq9iXzbo7ZXx
+         wk3g==
+X-Gm-Message-State: AOJu0YxHExfBOfSQm94u4PZolHMi22YURYopRoojxZWYsxtb9BsXhI9m
+	neehDycVtqZmKJmg4HejD73GbKLt2VjdCKblzFdYLrFUEPq9GR5FXA5cbKsfkb0=
+X-Google-Smtp-Source: AGHT+IGKyK+V+1qFO0T4yEi60l7fLUT4zXe0BXgVOkxdLZrY/pEwvPOf0a74+YD2f8neIWRtFBX1Mw==
+X-Received: by 2002:a81:9149:0:b0:61b:418:139 with SMTP id 00721157ae682-622afff635bmr95154677b3.27.1715629629890;
+        Mon, 13 May 2024 12:47:09 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43e12b42801sm23250861cf.55.2024.05.13.12.47.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 May 2024 12:47:09 -0700 (PDT)
+Date: Mon, 13 May 2024 15:47:01 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 01/23] Documentation/technical: describe pseudo-merge
+ bitmaps format
+Message-ID: <ZkJuNSWLRcPjPT6S@nand.local>
+References: <cover.1710972293.git.me@ttaylorr.com>
+ <cover.1714422410.git.me@ttaylorr.com>
+ <43fd5e3597151a86254e18e08ffd8cadbcb6e4f0.1714422410.git.me@ttaylorr.com>
+ <ZjjEjNRp2BAMWJ47@tanuki>
+ <ZjkHT9XVl7ua8E14@nand.local>
+ <Zj4JM3ATSMice5do@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Pobox-Relay-ID:
- FE529172-115D-11EF-80A8-25B3960A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Zj4JM3ATSMice5do@tanuki>
 
-From: Patrick Steinhardt <ps@pks.im>
+On Fri, May 10, 2024 at 01:46:59PM +0200, Patrick Steinhardt wrote:
+> > > > +* An (optional) extended lookup table (written if and only if there is
+> > > > +  at least one commit which appears in more than one pseudo-merge).
+> > > > +  There are as many entries as commits which appear in multiple
+> > > > +  pseudo-merges. Each entry contains the following:
+> > > > +
+> > > > +  ** `N`, a 4-byte unsigned value equal to the number of pseudo-merges
+> > > > +     which contain a given commit.
+> > >
+> > > How exactly is the given commit identified? Or in other words, given an
+> > > entry in the lookup table here, how do I figure out what commit it
+> > > belongs to?
+> >
+> > They aren't identified within this section. The extended lookup table is
+> > indexed into via the lookup table with an offset that is stored in the
+> > `offset` field when the MSB is set.
+>
+> Okay. Would this explanation be a good addition to the document?
 
-The git-hash-object(1) command allows users to hash an object even
-without a repository. Starting with c8aed5e8da (repository: stop setting
-SHA1 as the default object hash, 2024-05-07), this will make us hit an
-uninitialized hash function, which subsequently leads to a segfault.
+I think we already have this written down in the section above. See in
+the previous bullet point the section reading "containing either one of
+two possible offsets, deepening on whether or not the most-significant
+bit is set: [...]"
 
-Fix this by falling back to SHA-1 explicitly when running outside of a
-Git repository. Eventually, we should expose this function as a command
-line option to the users so that they can pick which object hash to use
-by themselves.
+Does that work?
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/hash-object.c   | 7 +++++++
- t/t1007-hash-object.sh  | 6 ++++++
- t/t1517-outside-repo.sh | 2 +-
- 3 files changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index 82ca6d2bfd..0855f4f8aa 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -123,6 +123,13 @@ int cmd_hash_object(int argc, const char **argv, con=
-st char *prefix)
- 	else
- 		prefix =3D setup_git_directory_gently(&nongit);
-=20
-+	/*
-+	 * TODO: Allow the hash algorithm to be configured by the user via a
-+	 *       command line option when not using `-w`.
-+	 */
-+	if (nongit)
-+		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	if (vpath && prefix) {
- 		vpath_free =3D prefix_filename(prefix, vpath);
- 		vpath =3D vpath_free;
-diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index 64aea38486..4c138c6ca4 100755
---- a/t/t1007-hash-object.sh
-+++ b/t/t1007-hash-object.sh
-@@ -260,4 +260,10 @@ test_expect_success '--literally with extra-long typ=
-e' '
- 	echo example | git hash-object -t $t --literally --stdin
- '
-=20
-+test_expect_success '--stdin outside of repository' '
-+	nongit git hash-object --stdin <hello >actual &&
-+	echo "$(test_oid hello)" >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-index ac5f3191cc..854bb8f343 100755
---- a/t/t1517-outside-repo.sh
-+++ b/t/t1517-outside-repo.sh
-@@ -30,7 +30,7 @@ test_expect_success 'compute a patch-id outside reposit=
-ory' '
- 	test_cmp patch-id.expect patch-id.actual
- '
-=20
--test_expect_failure 'hash-object outside repository' '
-+test_expect_success 'hash-object outside repository' '
- 	git hash-object --stdin <sample.patch >hash.expect &&
- 	(
- 		cd non-repo &&
---=20
-2.45.0-145-g3e4a232f6e
-
+Thanks,
+Taylor
