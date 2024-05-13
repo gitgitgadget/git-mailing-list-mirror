@@ -1,278 +1,110 @@
-Received: from wfout3-smtp.messagingengine.com (wfout3-smtp.messagingengine.com [64.147.123.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C51714C5A4
-	for <git@vger.kernel.org>; Mon, 13 May 2024 10:23:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF4D26AE9
+	for <git@vger.kernel.org>; Mon, 13 May 2024 11:43:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715595832; cv=none; b=hxqgVUu0yB6dtAB0VFACnEAgEHPnY3PyudU5sIfkOvzBPpOUrpSZsUM11G9z7a4hJHBgMACGjj0uAzIoY7CVZf34zWIvlJ+d7ddOVJBU0Q3/F3YwR2Jhn7FKLr4O2HcQonYHt9kg4mzSzkPuAlOwr+JScofcHYMlc3zylSgj36E=
+	t=1715600618; cv=none; b=sUBZOhxLB6DA/LKxkBdPbErmwMOoa+U9BTZvVjeTyzAken6lpEoAy+onAAgHHjKPAKlOHLX+0DT8rLjoG5p5nqoWMPKjPtfAQc87TjW5EP4LExM7AkL2yiuKJ333EqLT/1j3yRIk3EDOlq643ZVoOd7g4h6FR85Z17A4SMfK22w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715595832; c=relaxed/simple;
-	bh=LakW0QPJ72Y9w+9TXhiZmRaiwz3ZMgeJ1dxmYM6mCR4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ndU0gHo0ubriIfFFa/0RuO1KY/EbUEX4wqTxNwfSTu3EGobbKyn71FkwoAdLDsQYLcqdVd5h1wq+EXRVTM3w7D7acdd49+DOH0Qd+lB2duFwRz69vpqh8z9xzTKT01obR2/Fq+YQfgG9o6QKWjrAEEom9Pq702K69w+9L57vdjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jMaS8k/H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y5kcipnq; arc=none smtp.client-ip=64.147.123.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715600618; c=relaxed/simple;
+	bh=VdmqMyyOv1ST4pJqt8t109rA7MJs0LPiefUxd1Fkd5k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XGrVFaJwN1rE09PankcQlLqsQH0zBve/9tBPCnBeV+vRTgD8tYgRT4gv6wbmssaVw+RwwyEdI2vnyBdKhy3IommziYzdr9EI9CDZE1YZviuQ+X1PDS7wXnbd7B2ze/PdH3nJMkR33E/GmRaSnEN8yjDukKj3paBse07Z/O7RV18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=It7LPwae; arc=none smtp.client-ip=209.85.161.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jMaS8k/H";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y5kcipnq"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.west.internal (Postfix) with ESMTP id DCD111C000E9;
-	Mon, 13 May 2024 06:23:49 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 13 May 2024 06:23:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715595829; x=1715682229; bh=PN+5w1nSra
-	jxn1EU0stqW8VQU2ibPlKXE7+0ayd3Rb0=; b=jMaS8k/H0CBXHLitZs3l6GDqiU
-	yrycFBXTmrgMxlElBRMpwRUwd12l7rQLduHBjwmMi8X2/HkyOm/5iO+WZOp7cEh6
-	hx3apKqFfJ/Am7R7z3shjk5+XOypJ6IH1jaoUZBFFJOS7LtNSGtagUwAY5mCliSP
-	LnSjoli+Uyv3hOOU9ysUUA3TDQa2A74uFA3YYeuAwKK/n0sgBAs+EZPI3cGjmMFc
-	nWD+OdfGM7EODzywT/Y7ekQu+BiGe1TgKaGya9NFga9djJ6oS/AcRs1M5SSnudek
-	CfuLX7CeIT0w/PqwsHprIqB90yKh4fBoa8lHKUCVWevo6qQqyo8fQNyZwx2Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715595829; x=1715682229; bh=PN+5w1nSrajxn1EU0stqW8VQU2ib
-	PlKXE7+0ayd3Rb0=; b=Y5kcipnqNzxUs7zdd3c7SUm9Rhg+XPGgeLjgQln9a6n6
-	aj558KX86nw9Vec/UrD6jV0gTqmNSN1cVVfDkFYS/BFoTibtG4HKGPDsR7hJqy9o
-	aqi3LHZ37FI0c9NDP5ofHMN7RnElNhM/6205ysJ9s4w0SjukZrhR4+vUAOL+JUgL
-	ZMCrzpdC0/wBJZzNSXZGvzYjBbVrNQW5vb/ddak2bpZPOlIhDNLZn5kw1Y0cLAb4
-	7U04byf+q0poV/vMhBo0+hm+PBMGcGUnrnIC4guyWaN9dwPL7t9Y2sU2++x/MvcL
-	CEM47EK6Ww1JsdKa/t9h2cjqvqTyhQBWhR/uAumHWA==
-X-ME-Sender: <xms:NepBZjGf8vxZp1JsP3SMEAkbvUXtRpo2DzZ6qdw4kvuF7QB1Su-rBg>
-    <xme:NepBZgXqdTWDSQMSvTmwF8my4PXr0LWiOAf2TvlGo3kA5pAhYNPz1YEcXadY6OPe8
-    UVHkV9hys2mJgA2GQ>
-X-ME-Received: <xmr:NepBZlJ6cb20iMnV970EB0uRmfMBAYrje6xQre2LCZV7hDT1orqldCsKweezBjsKf5LPC_36dCWVAVvtu_U0Bvp4RTtyaKqbWZFAOo2Vn4DjXvk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgvdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:NepBZhEtssEWXuZz0a7_VHifliF4dJ3VVUu_LDqLkgi8h23zre0x-w>
-    <xmx:NepBZpU6ShORSJYSSp9zJMtyQKd-6pHOIRbJ1l_ps7ot46ThzqJ18g>
-    <xmx:NepBZsNrf580jVH7g0xP5du-TuWeenRHGm_5wEcUBjk40uvHZ8AR7w>
-    <xmx:NepBZo2lc0iMDyv0v-ln7DlmIDmrVtOAxbbySDg8z8AGu1KWWFy5bw>
-    <xmx:NepBZvx4DQCn1a-CFmAOST-8Fslg4b3_EBrn9aFBrelkgU4i40vuNM3A>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 May 2024 06:23:48 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id a12007ab (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 May 2024 10:23:29 +0000 (UTC)
-Date: Mon, 13 May 2024 12:23:45 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kyle Lippincott <spectral@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 21/21] builtin/config: pass data between callbacks via
- local variables
-Message-ID: <0496b958e24a4d0191821d3f6c8c0d2028f36452.1715595550.git.ps@pks.im>
-References: <cover.1715339393.git.ps@pks.im>
- <cover.1715595550.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="It7LPwae"
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5b273b9f1deso2276707eaf.3
+        for <git@vger.kernel.org>; Mon, 13 May 2024 04:43:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715600616; x=1716205416; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=C/AdGUztfXnjgCUXkk5XXlmReRbiCx9JAQI9Gbt4P+o=;
+        b=It7LPwaeIeqX6N4xMm9GAX+83aYtfK7ruDfSGGj2A9fR8pNcHOAC3ESbv8RAEHfy5D
+         YzOcvzUEPOb0ZEq4WDpxTTt6t3RgVl9DqXT1Z8il4IaDFagrykWKZJ9ae0ZZePJ/p11b
+         a9avZjOSicSCkSetc2b9LuXrKSNeNRCs+q9gGH2hUY8iL0K6J8HGtIqpOoXRUp6If1k/
+         RoyDg+H4Xr13Cdu/z4U0irS46EpdDZFUHolQAVh3fZI4byGxRSSIpU7jV1bkChaEaUBU
+         Fffhdo+Vyt9/OEFklUGBZTp9VmcNmEaHFcHKc+SgQyear97cw/kpB3e8IZLJ4hdfvWfA
+         XV6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715600616; x=1716205416;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C/AdGUztfXnjgCUXkk5XXlmReRbiCx9JAQI9Gbt4P+o=;
+        b=WJQnx4fx/PE5LtVDdga0TNTD+eSriCQ+XbY9vhxbwGbtL7mC/N0TcZiXiGavfA0ZkR
+         vw/d4rYTERWsPo9UBaMDutTNXmHGhRLgcrflW4KrKr2P1avOKizeamoy2wgTpPQxohQ0
+         dNPG+FKFyW+wb5Eari6VCwg4UshZoII66RA3hcGDlpV8IhoIdCZ/tt1yrS7W+xyKYfdU
+         wS2OFySyCrXcre2lAdP7cd7Z/fORH8mqF+xSQEtO90ID8/EPkMIcRszRg7xt2eYaObtg
+         bT0+y2vZ8EwX//VyYbomg0OX3R3HTEYv7/LAMnssrKq3jnQmzqvCVfuxlzNMGi93QNq0
+         EOYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWwQ577KUui6eXugo8+zfN5VpMJdlX5h+jEt1/fD3Gl/M+WgrkWMOpUZHO7wRVO3XyF1+ZzprgT86IUX27+9LlWOD53
+X-Gm-Message-State: AOJu0YyZQyPclARpqV77UE3RvmVj60dJZVwnccGIaBvVcAUstO4DAQjD
+	fcJOQTpbXAJg+SqPKB23CBfKcby726CYX84dNpBsSZxs/9s5aqiFof/JzKcv4FF+DfFEL0YKsAt
+	UGfmzoH2Q3QLW/LZBjCU0MvtYRMs=
+X-Google-Smtp-Source: AGHT+IGYCbDIxn+6FVsDIWXWromKAsfwUgi42xE8yqm5n5KFSi7Lho0nCLPaHbQQH5BBko7z7qVWReoaK5YOZN/qJJc=
+X-Received: by 2002:a4a:5141:0:b0:5aa:396b:6537 with SMTP id
+ 006d021491bc7-5b281a1b4a0mr10330159eaf.7.1715600615743; Mon, 13 May 2024
+ 04:43:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="f8P0wlRgdY8wzPL/"
-Content-Disposition: inline
-In-Reply-To: <cover.1715595550.git.ps@pks.im>
+References: <CAKkAvazeFvCfT7tZm3emwA=k-NnzPD7X0v4t2E9Ja4r-GpZfoQ@mail.gmail.com>
+ <20240510221323.GA1971112@coredump.intra.peff.net>
+In-Reply-To: <20240510221323.GA1971112@coredump.intra.peff.net>
+From: ryenus <ryenus@gmail.com>
+Date: Mon, 13 May 2024 19:43:24 +0800
+Message-ID: <CAKkAvaxFbcLZNdz5cdAF8ZFNtVT1qQYKWcmkniQ3Uzu8mdEt5w@mail.gmail.com>
+Subject: Re: Error: failed to store: -25299
+To: Bo Anderson <mail@boanderson.me>
+Cc: Jeff King <peff@peff.net>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
+On Sat, 11 May 2024 at 06:13, Jeff King <peff@peff.net> wrote:
+>
+> On Fri, May 10, 2024 at 03:52:25PM +0800, ryenus wrote:
+>
+> > Command I run: `parallel git -C {} fetch ::: repo1 repo2 rep3`, which is
+> > to fetch multiple repositories in parallel using GNU parallel.
+> >
+> > This worked pretty well for me in the past, however with git version
+> > 2.45, maybe 2.44 as well, it would randomly emit below error:
+> >
+> > > failed to store: -25299
+>
+> There's some related discussion over in:
+>
+>   https://lore.kernel.org/git/pull.1729.git.1715328467099.gitgitgadget@gmail.com/
+>
+> But most curious to me is:
+>
+> > But if I do this without GNU parallel, or `parallel -j1` with only
+> > one worker, things work just fine.
+> > And when I switched back to git 2.43.2, I don't see such error either.
+>
+> I would have assumed this was an issue going back to 2011, since each of
+> those fetches is going to try storing the successful credential. But if
+> older-but-recent versions of Git did not have the problem, it could be
+> that we are being more aggressive about invoking storage for some
+> reason. Can you bisect?
+>
+> The obvious recent changes to the credential code were brian's
+> capability/state series, but those are not yet in a released version
+> (and from a quick scan I did not see anything that would obviously
+> change things there).
+>
+> -Peff
 
---f8P0wlRgdY8wzPL/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+@Bo98, possible to share any insight? It appears related to the following patch:
 
-We use several global variables to pass data between callers and
-callbacks in `get_color()` and `get_colorbool()`. Convert those to use
-callback data structures instead.
+* osxkeychain: replace deprecated SecKeychain API [1]
+[1]: https://github.com/git/git/commit/9abe31f5f161be4d69118bdfae00103cd6efa510
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/config.c | 90 ++++++++++++++++++++++++++++--------------------
- 1 file changed, 52 insertions(+), 38 deletions(-)
-
-diff --git a/builtin/config.c b/builtin/config.c
-index 2ab7d24b62..945a1fd82d 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -517,21 +517,24 @@ static char *normalize_value(const char *key, const c=
-har *value,
- 	BUG("cannot normalize type %d", type);
- }
-=20
--static int get_color_found;
--static const char *get_color_slot;
--static const char *get_colorbool_slot;
--static char parsed_color[COLOR_MAXLEN];
-+struct get_color_config_data {
-+	int get_color_found;
-+	const char *get_color_slot;
-+	char parsed_color[COLOR_MAXLEN];
-+};
-=20
- static int git_get_color_config(const char *var, const char *value,
- 				const struct config_context *ctx UNUSED,
--				void *cb UNUSED)
-+				void *cb)
- {
--	if (!strcmp(var, get_color_slot)) {
-+	struct get_color_config_data *data =3D cb;
-+
-+	if (!strcmp(var, data->get_color_slot)) {
- 		if (!value)
- 			config_error_nonbool(var);
--		if (color_parse(value, parsed_color) < 0)
-+		if (color_parse(value, data->parsed_color) < 0)
- 			return -1;
--		get_color_found =3D 1;
-+		data->get_color_found =3D 1;
- 	}
- 	return 0;
- }
-@@ -539,66 +542,77 @@ static int git_get_color_config(const char *var, cons=
-t char *value,
- static void get_color(const struct config_location_options *opts,
- 		      const char *var, const char *def_color)
- {
--	get_color_slot =3D var;
--	get_color_found =3D 0;
--	parsed_color[0] =3D '\0';
--	config_with_options(git_get_color_config, NULL,
-+	struct get_color_config_data data =3D {
-+		.get_color_slot =3D var,
-+		.parsed_color[0] =3D '\0',
-+	};
-+
-+	config_with_options(git_get_color_config, &data,
- 			    &opts->source, the_repository,
- 			    &opts->options);
-=20
--	if (!get_color_found && def_color) {
--		if (color_parse(def_color, parsed_color) < 0)
-+	if (!data.get_color_found && def_color) {
-+		if (color_parse(def_color, data.parsed_color) < 0)
- 			die(_("unable to parse default color value"));
- 	}
-=20
--	fputs(parsed_color, stdout);
-+	fputs(data.parsed_color, stdout);
- }
-=20
--static int get_colorbool_found;
--static int get_diff_color_found;
--static int get_color_ui_found;
-+struct get_colorbool_config_data {
-+	int get_colorbool_found;
-+	int get_diff_color_found;
-+	int get_color_ui_found;
-+	const char *get_colorbool_slot;
-+};
-+
- static int git_get_colorbool_config(const char *var, const char *value,
- 				    const struct config_context *ctx UNUSED,
--				    void *data UNUSED)
-+				    void *cb)
- {
--	if (!strcmp(var, get_colorbool_slot))
--		get_colorbool_found =3D git_config_colorbool(var, value);
-+	struct get_colorbool_config_data *data =3D cb;
-+
-+	if (!strcmp(var, data->get_colorbool_slot))
-+		data->get_colorbool_found =3D git_config_colorbool(var, value);
- 	else if (!strcmp(var, "diff.color"))
--		get_diff_color_found =3D git_config_colorbool(var, value);
-+		data->get_diff_color_found =3D git_config_colorbool(var, value);
- 	else if (!strcmp(var, "color.ui"))
--		get_color_ui_found =3D git_config_colorbool(var, value);
-+		data->get_color_ui_found =3D git_config_colorbool(var, value);
- 	return 0;
- }
-=20
- static int get_colorbool(const struct config_location_options *opts,
- 			 const char *var, int print)
- {
--	get_colorbool_slot =3D var;
--	get_colorbool_found =3D -1;
--	get_diff_color_found =3D -1;
--	get_color_ui_found =3D -1;
--	config_with_options(git_get_colorbool_config, NULL,
-+	struct get_colorbool_config_data data =3D {
-+		.get_colorbool_slot =3D var,
-+		.get_colorbool_found =3D -1,
-+		.get_diff_color_found =3D -1,
-+		.get_color_ui_found =3D -1,
-+	};
-+
-+	config_with_options(git_get_colorbool_config, &data,
- 			    &opts->source, the_repository,
- 			    &opts->options);
-=20
--	if (get_colorbool_found < 0) {
--		if (!strcmp(get_colorbool_slot, "color.diff"))
--			get_colorbool_found =3D get_diff_color_found;
--		if (get_colorbool_found < 0)
--			get_colorbool_found =3D get_color_ui_found;
-+	if (data.get_colorbool_found < 0) {
-+		if (!strcmp(data.get_colorbool_slot, "color.diff"))
-+			data.get_colorbool_found =3D data.get_diff_color_found;
-+		if (data.get_colorbool_found < 0)
-+			data.get_colorbool_found =3D data.get_color_ui_found;
- 	}
-=20
--	if (get_colorbool_found < 0)
-+	if (data.get_colorbool_found < 0)
- 		/* default value if none found in config */
--		get_colorbool_found =3D GIT_COLOR_AUTO;
-+		data.get_colorbool_found =3D GIT_COLOR_AUTO;
-=20
--	get_colorbool_found =3D want_color(get_colorbool_found);
-+	data.get_colorbool_found =3D want_color(data.get_colorbool_found);
-=20
- 	if (print) {
--		printf("%s\n", get_colorbool_found ? "true" : "false");
-+		printf("%s\n", data.get_colorbool_found ? "true" : "false");
- 		return 0;
- 	} else
--		return get_colorbool_found ? 0 : 1;
-+		return data.get_colorbool_found ? 0 : 1;
- }
-=20
- static void check_write(const struct git_config_source *source)
---=20
-2.45.GIT
-
-
---f8P0wlRgdY8wzPL/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB6jAACgkQVbJhu7ck
-PpRc0Q//b0vHpvh46X5+FId/bh402zlNh8LCgelfcQj7Cv8KVnBhubzZvOwwboJF
-u1FTD5heBI4qeXIP9z4cCe4VWPdCGbjOfpkGt52IAJxrz80k97ndFg6y9tR+HXjH
-lMvjVC4rJiHYMYONueKbRYMr51IqxV8qjSktEvrCRnVlMpOAHzH7uLDSR9WN0B4q
-UZHb3wbTTdLpFQBtpSDubs4T6JRnf/QjpXb2RUpHMVxxscxs2Q1qaOV3fS45hu68
-/KYxhAMvAp2rKQT7AKBABg+ogr4ChFutYH9RT9w9SfK3cRoG31cRnScA+IA/ySpr
-Q6ebWN/WrbgexltAcH+ZO3/8Ggai8q3TCmIJLxWg+Gc4Xf1rP1W67ClcCVzAOYui
-8YejskzIOzPcxIydp7Oy6i/Mt4oeN7Bgsv/6l3yGFMn62pLeD66WmVZaCzaJXQVL
-euraGtB2XB2T8lpKQ+Fug4lv2qlQrBut/HQeM/1JkTwqDlp1O9HoAeb9CiHVoUU4
-kzjq7APEnSeKXCoNh1g4xclcmJt5NSFhC79oS+I42sU3N/+ja+yiilIWLMXlX8we
-7e805T6iI09TGvgMIUCF51x4dv2NZMro7rUY05Dj3Wt2IstV8Rqwe93QgkwIxT59
-T04BtwZ6SmwPbjokf1Dz31USWDilThGUNv04ds/lbS7m6ZlbaOg=
-=Y0+9
------END PGP SIGNATURE-----
-
---f8P0wlRgdY8wzPL/--
+Apologize if I'm guessing it wrong :-)
