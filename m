@@ -1,78 +1,78 @@
-Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
+Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2208147C90
-	for <git@vger.kernel.org>; Mon, 13 May 2024 08:47:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE65B147C88
+	for <git@vger.kernel.org>; Mon, 13 May 2024 08:47:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715590032; cv=none; b=jjHFOz/Eatnd4G4mpXIoX2fIqijcLCpV19RKTVz1a2Sck92Sy+OotchZeYXh4OjCCL/Qwn7KIFKFFPdaa70wOdgT8O0XpAlwvzofmjijGMVGjWXVMHEWRUYPtobmm42seN5nD2hXTfmkiNXyPsDPPAdLcz/2Z7l7KBRN+9bJIAI=
+	t=1715590038; cv=none; b=mHH5ZhPP6toMB5S3U8Nnlc98mlFgG5pyIlCOKwaVT26tSQ0jlCapH8/i7EIMoEnyE63ZlipEDqQTJcImTdrahxbOnJjNada22nI/2lDs6PezQCWuRbP9ngpKrahEZ31Hf0fO689s11F8Sr1aG4+fUz/FGNMdiCU47vCC5LupwlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715590032; c=relaxed/simple;
-	bh=2l7pvMDNRTEdXVtuOXwNH+EVkqdoHZmL2btydQLH7B0=;
+	s=arc-20240116; t=1715590038; c=relaxed/simple;
+	bh=RkT5upg2N3jlXzXX1utzuF3wWYpP21nbkZZFBAdhQ6c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TFTS1/xtHxYOdVLCYl+Wu9VZpwmUUQ6AOdXOqYfdFOtUKGP4QaiP0a5gXYVM6KXjhYcE97SLun1hhDA7SZ52blzHa/EFxpHfpUtsddzir8gf9Lh+ZteooHRZ1VggZq/lI+ayt7tF2i2eTQ9J18txvSTRabr7FDUjU+6K6qKaX7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KTN8AMVv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KK+7GBQp; arc=none smtp.client-ip=64.147.123.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ibl/Q9gHjw4xWESloBGFnakJCLXOuJ3yx7c0qV6glagzWBxtAC6nUlaPkV45DF+h6393uIa8Gdw6VpbMrPZgJRmbB+8nWmbYNOa1qOpV1h1j62xLA5TcGhqy74aE1uVnLv2qKzC6RMYhc1EpysxEribCaq5VGk/nO8r00ETyXZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=J8YRXz0B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VSds1IU0; arc=none smtp.client-ip=64.147.123.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KTN8AMVv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KK+7GBQp"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.west.internal (Postfix) with ESMTP id 1B21C1C00065;
-	Mon, 13 May 2024 04:47:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J8YRXz0B";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VSds1IU0"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfhigh.west.internal (Postfix) with ESMTP id EA5B0180013C;
+	Mon, 13 May 2024 04:47:15 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 13 May 2024 04:47:10 -0400
+  by compute3.internal (MEProxy); Mon, 13 May 2024 04:47:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715590029; x=1715676429; bh=N0+vRGR+ww
-	7zn1Oyq8eSjpiWvSjEmsRPvOH18PkQMYw=; b=KTN8AMVvATtFf+sZPVVm7g4tav
-	PRWoFKD0Ma3D7IA4DUNDImloBNqFSpFwcQg1h+jCMq/8y6hm7LItqi26oufJ5+ov
-	TDNZHlsg4hM8IM9q82KWwhn8Uih66hkJ88M4LbrX1R+nVUYEP8BiRqlQ+cyOcPPl
-	Qu8mR0qjzYH7Gr8l8Ky+BNeWmLYiXgReoms3OvN/0Nht2vk24RK2gyzDN2CZwA8W
-	2vjDOkUKValI6KaE2oUU3zW6to3lcPtyltVj7n+T60I0jp6f7t0r0aTqqFZ/36v3
-	1WQEud93U+vB+5FVSE9MUnb003AuNNNlo3Z5QTwB6A+UsMW43roqLZK+8ceA==
+	:subject:to:to; s=fm3; t=1715590035; x=1715676435; bh=kL+ieS8zjx
+	1w8se1Ln+W441riKCQleRbZAJG/7Uhnn0=; b=J8YRXz0BGNWx7ErHfAt1auQn1Z
+	/KcNhpar5Skdb5vbpeC2LYQ5Flle3fM6pf9AbZ8wtWzcAJUj1IrJRFp0OrbfvQlU
+	z+eQPI/ayOLUrVwN2LxDQ5euoq5janRgshnEOVMHMnm1Qbp/nx593LPoQnNDcdlt
+	ft8+MKi6u+ANTfogOyw7I/MLayOFY8VeVn+KGM/1YVx8jJi1sHEZ8Au6jiVmvbiY
+	/3Y4MUl5vNM0oK2pvCrEmMQUpt+m6IiWOwJegPCb59FGLgAfK39wzCORt9XyszIv
+	30ImRi6mgMj/S5NlGxDH07i/HK9oHGjEQ0yJ1CDdefiJXZU8VDy8Fdhd6Wcg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715590029; x=1715676429; bh=N0+vRGR+ww7zn1Oyq8eSjpiWvSjE
-	msRPvOH18PkQMYw=; b=KK+7GBQpWK+qnJCPCx1bZ78VIITgF0ozZhDCr/cEM8Rq
-	ChsEfNrsNGHI/x7IKl/7u1H72UbuUtfZ9fcOnTb/AI0yL9ZE+SsHMh6A5pgSz9Ef
-	Ovcv2brzWRpjLuTPw6F9Tt1Uy+kbEeRbBvmtIb0I/6/1WT8ArTkfZbK9YFo7NCF5
-	Nj2yYr0O4v+KgOgj+WQn4hp/a3rZd5D9a+4V7vbQElLWxyCoMkRUpcISudNHYOAY
-	yvYUxDUyY/14lii8taUcLSh2rIH8QMe7xmbthk1cCxnUqBSV0Sw0JcSvsssULV6x
-	jlxtiPygwkYq9rga4MatoUrQyxWUrQa0cg/jgGmytA==
-X-ME-Sender: <xms:jdNBZlbw8tsClL-30rKxHV3Lk6n5w6LKIonr4Ghd_qE9pmcxIMZPUg>
-    <xme:jdNBZsa0m1WqZ9IH9uqCDEg85fI_dmYgcZeFVayRnUcBA8-Exxwf_rhRh5yoq5KT0
-    v2Zilsy98pYUgYjag>
-X-ME-Received: <xmr:jdNBZn80nqky3RPW2RwoLKDN7d4QdvOiBtdaU1WvzliFKFfgrShz9VCW89r2ILPartlJcLROzvOD7RfMTGdb2uteeY3sm63KJjd5gd5sGthacHI>
+	fm3; t=1715590035; x=1715676435; bh=kL+ieS8zjx1w8se1Ln+W441riKCQ
+	leRbZAJG/7Uhnn0=; b=VSds1IU0jQdNj0znodBcWrW/BgcjQz73Mr7dwHmAkBFF
+	DNA9Kr2Vak9Gm95LBvQQFpjY1BffI6K8I0b2NnH8Uj8wdASyomiL/s9tZ0aaQBrV
+	Dt/G9JQ8kBSOkzYmvWyCZEV0K0o/6kSXKQJm2/z08f/XzFd8uqrQpcQRCB+20E+g
+	XWo6ZvjefFsllPFZEcQXoUMwxhvE9bHCpWga5ofWjFj+hMLNKyncyyxfj0JM8dVM
+	N/fniiocfzFLMqJ/USpFsxmtpJznL3SbylfmLsj3kioCg5aqmKLSAyyibcGCOubl
+	me5fAEGt6GTez6p3uPT8qYvN4taz4IOQX9y6gJH+FQ==
+X-ME-Sender: <xms:k9NBZgeFGffShCONi3GFl6w0k2E3puBFcgbDJp5qC31P2hulcSwe8A>
+    <xme:k9NBZiMKzB8V0VTNjpQOZNi1XZZxjwPfD6rkFjgVcYyOWqbey1hxXmDnJ_5tCkbvR
+    Yr-5dPAsvYqGTlTDg>
+X-ME-Received: <xmr:k9NBZhgboIRM4h5b13goXED7rDvJHwIhDcXxGo5graywDlLKYr8O3qQ0KySun_lbOttEqAiyQdWuqdDcBMCB6jcWtj8m56ynbMWaGdF2GkaTTFI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgtdejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:jdNBZjrgfSc3WpqqzsEG6s8k184ev7rK4R1bvn6yVgeCfVHbIaY9_Q>
-    <xmx:jdNBZgpZyCXzWZlvQF8zt5Gljfgm-e0IEbE8TZ30t0HZ7fgOF5kx4A>
-    <xmx:jdNBZpSBa1hZH-rFYIwZkNlcXli2aL61R_uUTfMeVyNDPSrv7fIt7A>
-    <xmx:jdNBZoq1PntGIHARy6D6d1nm7IRhm0aGt7lEKsJR00E3-6__AbOChw>
-    <xmx:jdNBZrUFY7ctoEk0n8v_iHt_xRKbIRFZDrXvrVTJDt1IPDdtuppfg56N>
+X-ME-Proxy: <xmx:k9NBZl-Fhl-BY77oZjfRgiDwcfGsMiYSWQ24ApVKlqOAu8J5GFs6UQ>
+    <xmx:k9NBZsvn8RmLd4GnTcBISG6z5GDW-BCMp3d0I-_tOQZkKZ5Q3i9DcA>
+    <xmx:k9NBZsGvSpzjs8FA6jNQKq0ERUEOP4uxy7zQ0A2RIY44oORnIVrhSw>
+    <xmx:k9NBZrPMPXzW4HQrU0j350pnnPZrR66x0AR6_Gw0yoSU89SR3hQfEw>
+    <xmx:k9NBZoLsVrTdXORQgu72cSfRnNS04kbNDpufDITXDGYbOBGdrRQY0dRE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 May 2024 04:47:08 -0400 (EDT)
+ 13 May 2024 04:47:14 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id b3477757 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 May 2024 08:46:50 +0000 (UTC)
-Date: Mon, 13 May 2024 10:47:06 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 78277313 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 May 2024 08:46:55 +0000 (UTC)
+Date: Mon, 13 May 2024 10:47:11 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 02/13] reftable/reader: avoid copying index iterator
-Message-ID: <bdbebdbd363fc264c6327e7bf0af29ee5357e83d.1715589670.git.ps@pks.im>
+Subject: [PATCH v2 03/13] reftable/reader: unify indexed and linear seeking
+Message-ID: <716863a580f9e1ef8ea796c25c97e50c63585a7b.1715589670.git.ps@pks.im>
 References: <cover.1715166175.git.ps@pks.im>
  <cover.1715589670.git.ps@pks.im>
 Precedence: bulk
@@ -82,147 +82,168 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="z02SRw2OJq1PbcFa"
+	protocol="application/pgp-signature"; boundary="z7g68tUQntogGc2U"
 Content-Disposition: inline
 In-Reply-To: <cover.1715589670.git.ps@pks.im>
 
 
---z02SRw2OJq1PbcFa
+--z7g68tUQntogGc2U
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When doing an indexed seek we need to walk down the multi-level index
-until we finally hit a record of the desired indexed type. This loop
-performs a copy of the index iterator on every iteration, which is both
-hard to understand and completely unnecessary.
+In `reader_seek_internal()` we either end up doing an indexed seek when
+there is one or a linear seek otherwise. These two code paths are
+disjunct without a good reason, where the indexed seek will cause us to
+exit early.
 
-Refactor the code so that we use a single iterator to walk down the
-indices, only.
-
-Note that while this should improve performance, the improvement is
-negligible in all but the most unreasonable repositories. This is
-because the effect is only really noticeable when we have to walk down
-many levels of indices, which is not something that a repository would
-typically have. So the motivation for this change is really only about
-readability.
+Refactor the two code paths such that it becomes possible to share a bit
+more code between them.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/reader.c | 38 ++++++++++++++------------------------
- 1 file changed, 14 insertions(+), 24 deletions(-)
+ reftable/reader.c | 42 ++++++++++++++++--------------------------
+ 1 file changed, 16 insertions(+), 26 deletions(-)
 
 diff --git a/reftable/reader.c b/reftable/reader.c
-index 481dff10d4..6bfadcad71 100644
+index 6bfadcad71..cf7f126d8d 100644
 --- a/reftable/reader.c
 +++ b/reftable/reader.c
-@@ -510,13 +510,11 @@ static int reader_seek_indexed(struct reftable_reader=
- *r,
+@@ -425,7 +425,7 @@ static int reader_seek_linear(struct table_iter *ti,
+ 	struct strbuf want_key =3D STRBUF_INIT;
+ 	struct strbuf got_key =3D STRBUF_INIT;
+ 	struct reftable_record rec;
+-	int err =3D -1;
++	int err;
+=20
+ 	reftable_record_init(&rec, reftable_record_type(want));
+ 	reftable_record_key(want, &want_key);
+@@ -499,8 +499,8 @@ static int reader_seek_linear(struct table_iter *ti,
+ 	return err;
+ }
+=20
+-static int reader_seek_indexed(struct reftable_reader *r,
+-			       struct reftable_iterator *it,
++static int reader_seek_indexed(struct table_iter *ti,
++			       struct reftable_reader *r,
+ 			       struct reftable_record *rec)
+ {
+ 	struct reftable_record want_index =3D {
+@@ -510,13 +510,9 @@ static int reader_seek_indexed(struct reftable_reader =
+*r,
  		.type =3D BLOCK_TYPE_INDEX,
  		.u.idx =3D { .last_key =3D STRBUF_INIT },
  	};
--	struct table_iter index_iter =3D TABLE_ITER_INIT;
--	struct table_iter empty =3D TABLE_ITER_INIT;
--	struct table_iter next =3D TABLE_ITER_INIT;
-+	struct table_iter ti =3D TABLE_ITER_INIT, *malloced;
- 	int err =3D 0;
+-	struct table_iter ti =3D TABLE_ITER_INIT, *malloced;
+-	int err =3D 0;
++	int err;
 =20
  	reftable_record_key(rec, &want_index.u.idx.last_key);
--	err =3D reader_start(r, &index_iter, reftable_record_type(rec), 1);
-+	err =3D reader_start(r, &ti, reftable_record_type(rec), 1);
- 	if (err < 0)
- 		goto done;
+-	err =3D reader_start(r, &ti, reftable_record_type(rec), 1);
+-	if (err < 0)
+-		goto done;
 =20
-@@ -526,7 +524,7 @@ static int reader_seek_indexed(struct reftable_reader *=
+ 	/*
+ 	 * The index may consist of multiple levels, where each level may have
+@@ -524,7 +520,7 @@ static int reader_seek_indexed(struct reftable_reader *=
 r,
  	 * highest layer that identifies the relevant index block as well as
  	 * the record inside that block that corresponds to our wanted key.
  	 */
--	err =3D reader_seek_linear(&index_iter, &want_index);
-+	err =3D reader_seek_linear(&ti, &want_index);
+-	err =3D reader_seek_linear(&ti, &want_index);
++	err =3D reader_seek_linear(ti, &want_index);
  	if (err < 0)
  		goto done;
 =20
-@@ -552,44 +550,36 @@ static int reader_seek_indexed(struct reftable_reader=
+@@ -550,36 +546,30 @@ static int reader_seek_indexed(struct reftable_reader=
  *r,
  		 * all levels of the index only to find out that the key does
  		 * not exist.
  		 */
--		err =3D table_iter_next(&index_iter, &index_result);
-+		err =3D table_iter_next(&ti, &index_result);
+-		err =3D table_iter_next(&ti, &index_result);
++		err =3D table_iter_next(ti, &index_result);
  		if (err !=3D 0)
  			goto done;
 =20
--		err =3D reader_table_iter_at(r, &next, index_result.u.idx.offset,
--					   0);
-+		err =3D reader_table_iter_at(r, &ti, index_result.u.idx.offset, 0);
+-		err =3D reader_table_iter_at(r, &ti, index_result.u.idx.offset, 0);
++		err =3D reader_table_iter_at(r, ti, index_result.u.idx.offset, 0);
  		if (err !=3D 0)
  			goto done;
 =20
--		err =3D block_iter_seek_key(&next.bi, &next.br, &want_index.u.idx.last_k=
-ey);
-+		err =3D block_iter_seek_key(&ti.bi, &ti.br, &want_index.u.idx.last_key);
+-		err =3D block_iter_seek_key(&ti.bi, &ti.br, &want_index.u.idx.last_key);
++		err =3D block_iter_seek_key(&ti->bi, &ti->br, &want_index.u.idx.last_key=
+);
  		if (err < 0)
  			goto done;
 =20
--		if (next.typ =3D=3D reftable_record_type(rec)) {
-+		if (ti.typ =3D=3D reftable_record_type(rec)) {
+-		if (ti.typ =3D=3D reftable_record_type(rec)) {
++		if (ti->typ =3D=3D reftable_record_type(rec)) {
  			err =3D 0;
  			break;
  		}
 =20
--		if (next.typ !=3D BLOCK_TYPE_INDEX) {
-+		if (ti.typ !=3D BLOCK_TYPE_INDEX) {
+-		if (ti.typ !=3D BLOCK_TYPE_INDEX) {
++		if (ti->typ !=3D BLOCK_TYPE_INDEX) {
  			err =3D REFTABLE_FORMAT_ERROR;
--			break;
-+			goto done;
+ 			goto done;
  		}
--
--		table_iter_close(&index_iter);
--		index_iter =3D next;
--		next =3D empty;
  	}
 =20
--	if (err =3D=3D 0) {
--		struct table_iter *malloced =3D reftable_calloc(1, sizeof(*malloced));
--		*malloced =3D next;
--		next =3D empty;
--		iterator_from_table_iter(it, malloced);
--	}
-+	REFTABLE_ALLOC_ARRAY(malloced, 1);
-+	*malloced =3D ti;
-+	iterator_from_table_iter(it, malloced);
-=20
+-	REFTABLE_ALLOC_ARRAY(malloced, 1);
+-	*malloced =3D ti;
+-	iterator_from_table_iter(it, malloced);
+-
  done:
--	table_iter_close(&next);
--	table_iter_close(&index_iter);
-+	if (err)
-+		table_iter_close(&ti);
+-	if (err)
+-		table_iter_close(&ti);
  	reftable_record_release(&want_index);
  	reftable_record_release(&index_result);
  	return err;
+@@ -595,15 +585,15 @@ static int reader_seek_internal(struct reftable_reade=
+r *r,
+ 	struct table_iter ti =3D TABLE_ITER_INIT, *p;
+ 	int err;
+=20
+-	if (idx > 0)
+-		return reader_seek_indexed(r, it, rec);
+-
+-	err =3D reader_start(r, &ti, reftable_record_type(rec), 0);
++	err =3D reader_start(r, &ti, reftable_record_type(rec), !!idx);
+ 	if (err < 0)
+ 		goto out;
+=20
+-	err =3D reader_seek_linear(&ti, rec);
+-	if (err < 0)
++	if (idx)
++		err =3D reader_seek_indexed(&ti, r, rec);
++	else
++		err =3D reader_seek_linear(&ti, rec);
++	if (err)
+ 		goto out;
+=20
+ 	REFTABLE_ALLOC_ARRAY(p, 1);
 --=20
 2.45.GIT
 
 
---z02SRw2OJq1PbcFa
+--z7g68tUQntogGc2U
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB04kACgkQVbJhu7ck
-PpRpOQ/+OWpz8vNDauzwFUmy+XRFXloAlGomBtjTswQofnBvqsAiLcXgaKqfk7Qj
-+zFWtCua+JrCCDlB5utPdRqZ1Mt4vXw7MGwGQoVDr9plaoih7ojTj3bEm3j7IYHG
-Qskt5jZLo7N52edL7XPi1YuzN0qBfOBLko55JX8vx8JsFOjhk24J82ANkqPChaNP
-uFAPb72nIvPiPf/n2E2mVFUKgBvIu4ntU1mIFVrSB0bw1dKP4tk5xvNiEIEVn+lp
-MOuopeGncc3bk+xj6PLf4hQccw8NKHIWybADqw006toAyrRZ6Sl0VVd4w3SNwZpu
-Qr5T9294tdL3pROstXZPOYstEsVaXdaKHWka6OUVm3W4l8Gm7D/Xp50rc6SoB+jH
-WaPMPLgpAp7QbedUzVkAkaTow5WAAcIFwbohFEXDYJcUk251Wcsa4vV0hWQZAvxV
-YdEXwuRRvauH7apKhjEazxGpcS7Dmgmd/pCF+X0IDi2WPDVTY2p1ozjk7rlqo9ty
-MitDWk3cLAlSNMMSwG2D4nOvB42hDccAu6+7mZw27+bh+RVs4NfbPbCf+1wu2a9P
-fxROfaPQDA31mVDqYPJxBTxbOGhODN1TVRRiLBkWD2+i8okOljJs/ceNbTLn/gm3
-wnjUWuIdx4jMCbI8E0yzXXdwKkfx+05/wSZnYcOHx42qMPtYblQ=
-=TtXh
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB044ACgkQVbJhu7ck
+PpTuBxAAqYRgzGOvGzvd+p5tYAhr/ZTbsKzoYDWayxlKjnfvqCWCkIYihhvWvxvJ
+TjVIoVWYNRMpdddtbM4ADe0prE95LxZT0RbgrSpGiRrJ/NZlBkj6/NJ2+7TUPBVq
+VH/n4zOezbjTiq6WNHLGCxs9t3hCzfF7lAMrTzq+3c9aJzX4s0Q/YAYB618mrjMa
+J9osMNw/L0fKRtr1BngyJL4V5S/6C4Kher5bx5rdO0ZJf8fzZTbpObTgE/12UukH
+S/7fhZWR7DyTIqeoHHG8skS9ySzCwAmmjwC2yVb/oCeeUeEkx/Z+m4KjqAQGRkYA
+mW6JNVlfRCSV072wBRw9HZsqpOyBP2+Z8Z/aMKY1kmkZKi/W9brCaukfZpmnxFOz
+aSJQqCtRBTf4TKEtSSaanWAKsNS3RGca5Fv4eqLJ5bITBoPFRZV+5m3ZYh+SzliR
+Fmf4L6an/7sLW30uNBD/yVqU+mqgdwrQ69JOsXGhXZa3ThdsZ2sUeGsdA0POwmny
+4NTGCzN7/j9RtOZlKUq9syd0MecThUIxGx2eouXeKTOOAHpxXKxXoz5haB5TS7Mv
+ZjQLzj3ixP1nsfW9Ite7QBDwZLmEOIOjQjj9r7QV4/QcwWKGyCZkDM+5/h17Bcot
+QsE3V7Dfy6FpG+eoEXZlAhMZpYe4lK6QC8VHrQNVYzkdu5O+0Nk=
+=deED
 -----END PGP SIGNATURE-----
 
---z02SRw2OJq1PbcFa--
+--z7g68tUQntogGc2U--
