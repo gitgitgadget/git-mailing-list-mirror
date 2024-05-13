@@ -1,110 +1,75 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62BB84D3E
-	for <git@vger.kernel.org>; Mon, 13 May 2024 22:41:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7599653E30
+	for <git@vger.kernel.org>; Mon, 13 May 2024 22:42:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715640112; cv=none; b=QZJPxPjN9yJZKb9yYRE84K9zAS3rEji1RSGGqnNlQCiHcg0sS+SOtPnLrRnEz8coMDBCZneEj/yU1IujYYDCFd+K97oI7ylD3ctmpSs6D99Wuu6BW59MjIA4H1hxb80DDOGCTLulgqtkNAk6Rdcf98DPGN2YHPYx+afq8R3wRyA=
+	t=1715640154; cv=none; b=miq8GGXThDNQBIs9xDa4KHSaehvwSMA1+JiPfW7ersEeJ/2RxtpHPp9X8AQmHAGO3liBG7OLyxmG+aaFohFXPQVbgAKMeJSiFulEbCrdHJ2lAOX8x8Pmtj7rjo8KAOC/SgAloEuqVgtojfpIw5cy5nyBTwBnctFGniMWSfk9NJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715640112; c=relaxed/simple;
-	bh=kEs6DeEpbwAw7fGYbxlSXnlCp2EAfZ5PwfnNVEf8G0k=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lXABwhABxyjQ49Sp1bmvo+/qM3dU3QJ5G2CH8eyZlDJ3iAy4Wc0N1znui6gbIttLIjaIiEBHXLB39ciKBif0DUb+Zs0pknzf05M4VlczN9vvZECxyHcHWfkOBcyhG4bOR3O9j15gIikP79cfa64A1KaP3gmpu2TttuoBthCLdKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wW/y9BVD; arc=none smtp.client-ip=173.228.157.52
+	s=arc-20240116; t=1715640154; c=relaxed/simple;
+	bh=ZhlpyvdTQXem4lsxtqGQRj3ukupuYRk4GioDjey9p3Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Aejucsv5AxDe9N16GNZZxPDcU0aauEHP2URxBJ6ULEwssTdqrPHrxTU3UXuC25LcQjhEgosUIgBZiyMRiCdnrhgGTO25Z2Irl0UZxBShIukW6nvOeo/T2hVrJ1XWO9vKQSsde6Az40psu/8jbYoe5SZTk/9U/UlL1Y576txJKr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=P2gRbOkT; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wW/y9BVD"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4FAC337B78;
-	Mon, 13 May 2024 18:41:50 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=kEs6DeEpbwAw7fGYbxlSXnlCp
-	2EAfZ5PwfnNVEf8G0k=; b=wW/y9BVDLKHxs7KHq0VzClo3J1GYL2kx9Ta7NjB5K
-	H0mMy//bD9jRz95a4l+0euAAZGhgzuUP3NTdEqdRID7c1i/lAbU8tydtilcA1S5J
-	zHAmXJwJq9FpTwJE0YltGMmfZL3MO4mrnQxxZggdeCZh9qew8ZEx0faunDhHIO3L
-	tM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 497A337B77;
-	Mon, 13 May 2024 18:41:50 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P2gRbOkT"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5045728E34;
+	Mon, 13 May 2024 18:42:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=ZhlpyvdTQXem4lsxtqGQRj3ukupuYRk4GioDje
+	y9p3Y=; b=P2gRbOkTUtWSbEkYc5d2+VpNOgNpTy3A+3VhP8LI4ADjfRiQB4GTyz
+	tLMwNi0FRgWho/aVEL35B8sIofGWgHb5GnY7Zn68RrENBYaKOM6BYzeUxfazwbbR
+	T5gtYySSCEZkyX8M1j/B02sAxkA7xkT0AoNTT+LdIIMJt0shclynk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 466FC28E33;
+	Mon, 13 May 2024 18:42:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.153.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ACC7237B76;
-	Mon, 13 May 2024 18:41:45 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 40F1F28E32;
+	Mon, 13 May 2024 18:42:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v3 5/5] apply: fix uninitialized hash function
-Date: Mon, 13 May 2024 15:41:27 -0700
-Message-ID: <20240513224127.2042052-6-gitster@pobox.com>
-X-Mailer: git-send-email 2.45.0-145-g3e4a232f6e
-In-Reply-To: <20240513224127.2042052-1-gitster@pobox.com>
-References: <cover.1715582857.git.ps@pks.im>
- <20240513224127.2042052-1-gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Justin
+ Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 05/11] reftable/dump: support dumping a table's block
+ structure
+In-Reply-To: <ed1c150d909da836a760bc0699f585722d5988e9.1715336798.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Fri, 10 May 2024 12:29:40 +0200")
+References: <cover.1714630191.git.ps@pks.im> <cover.1715336797.git.ps@pks.im>
+	<ed1c150d909da836a760bc0699f585722d5988e9.1715336798.git.ps@pks.im>
+Date: Mon, 13 May 2024 15:42:30 -0700
+Message-ID: <xmqq34qle3l5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- FA252A8A-1179-11EF-91C8-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ 154D96F8-117A-11EF-9E99-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-"git apply" can work outside a repository as a better "GNU patch",
-but when it does so, it still assumed that it can access
-the_hash_algo, which is no longer true in the new world order.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Make sure we explicitly fall back to SHA-1 algorithm for backward
-compatibility.
+> We're about to introduce new configs that will allow users to have more
+> control over how exactly reftables are written. To verify that these
+> configs are effective we will need to take a peak into the actual blocks
+> written by the reftable backend.
+>
+> Introduce a new mode to the dumping logic that prints out the block
+> structure. This logic can be invoked via `test-tool dump-reftables -b`.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/apply.c         | 4 ++++
- t/t1517-outside-repo.sh | 2 +-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+This step somehow looks familiar.  Perhaps that is because I read it
+more carefully than other steps during the last round.
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 861a01910c..e9175f820f 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -1,6 +1,7 @@
- #include "builtin.h"
- #include "gettext.h"
- #include "repository.h"
-+#include "hash.h"
- #include "apply.h"
-=20
- static const char * const apply_usage[] =3D {
-@@ -18,6 +19,9 @@ int cmd_apply(int argc, const char **argv, const char *=
-prefix)
- 	if (init_apply_state(&state, the_repository, prefix))
- 		exit(128);
-=20
-+	if (!the_hash_algo)
-+		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	argc =3D apply_parse_options(argc, argv,
- 				   &state, &force_apply, &options,
- 				   apply_usage);
-diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-index 80261e43c7..89d89cf3f0 100755
---- a/t/t1517-outside-repo.sh
-+++ b/t/t1517-outside-repo.sh
-@@ -42,7 +42,7 @@ test_expect_success 'hash-object outside repository' '
- 	test_cmp hash.expect hash.actual
- '
-=20
--test_expect_failure 'apply a patch outside repository' '
-+test_expect_success 'apply a patch outside repository' '
- 	(
- 		cd non-repo &&
- 		cp ../nums.old nums &&
---=20
-2.45.0-145-g3e4a232f6e
-
+Looking good to me.
