@@ -1,105 +1,163 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B2978283
-	for <git@vger.kernel.org>; Mon, 13 May 2024 19:47:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5127D3F4
+	for <git@vger.kernel.org>; Mon, 13 May 2024 19:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715629632; cv=none; b=KU5+EEEZoUooLI2bXIJhR1mHvrb36wVnFMKosq/soVZB/sOsI2/AmW3EERsF5tUm4FTWHg0KypzSnznUZlisuytfUxM1PAqmNoueGF5W4RHJfuUuknSTkHg4r+p6yoZdmlc/NOkUUTVJXv18Pe4AfNvdNaoXiTWUbKrkIpiCAjI=
+	t=1715629700; cv=none; b=SFjFy59/7Kb3XmX9g+lnYyz1GEpYCwABefdcqBCpSmZLe5JAD2f37+IQHDBUuSNDW0V1JB8htBLQ8v4c6hxSGhRKoJ1Qi0R3B76cJhLk1XhOopSXiWpO5NgG4/lyLfyhQpTDUhOQAcRu1iGxq8myg47uj3lCxI8XER7CIHGztTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715629632; c=relaxed/simple;
-	bh=IfJmXldN4kzvHKKOIU0rgUElt9/0IEBEWiVZ1oCu9YI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hbaM/U7nuaanv1qMMTxf+3wN9t98oByKljuXDslqLo2MUjqtejDxE6WRNrfiaNDSGD4UBE8Ds9qVUp0qaV9fNQqaeZ+FXhV+iujtzETPoHtsU+1Mx9bkmKEY56dj42NG5nT9db1ZOfYi6l80K0tRcdceUKF8FO7a/AyR4shg2To=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=iFcZekx7; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1715629700; c=relaxed/simple;
+	bh=IUQlzc22kQXYYzdG6Ht0BJUR3Ea0YVja6Lf+xJhmRxg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hJAg+Zuyu8Z6n21P6rpwFBiWiGEJyXaDj9hE1VirMHPQkQNfcr0fJZn2cZ/+RHwUF0aGVXsjlbGAK4J2IAKruNFjsrPsdmKK1+wHUuXtceESYcPanGP0E2ExHhHic60ysPMVsfWwHXYcoW7JCmtXv+wEbDdpjsQvDe2LswNiU0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=c+pLWXnN; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="iFcZekx7"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-61bee45d035so49357717b3.1
-        for <git@vger.kernel.org>; Mon, 13 May 2024 12:47:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="c+pLWXnN"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a5a1054cf61so1279867366b.1
+        for <git@vger.kernel.org>; Mon, 13 May 2024 12:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1715629630; x=1716234430; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=T99MBf0nl63CklueBJ6l+rwD6AWoXckiL5U/kn0dPCw=;
-        b=iFcZekx7KgIShZipR9NXwTDP0cFnLoy+NjnE2QnS9DQVsdYskA7yC1UyQ0FBPUNBsX
-         8L8o2D9G0Y8fMk3fY8YPI8fTcqdGMi/6fmPa0kDdQ82D1FgC7SZQPMZv5IALFwm/dchR
-         kniudPCukHfYqSLGjQmblmXJG5cvdapFFQTFLTd1P07OH1pxfLeB+mloLaTMNuSFce+d
-         eJm3w+qm167Ff+DJyGAKJA3Hff0C2Cmt5wcVoumpLWva1BnwkOWdT7hq61+NRXdEf9zl
-         LbVzBDrBQxuoAl0fi5rx5gbg0+3bx83+qj4OHNkJ+JzT4iu4POuN+a95s/QbWxTQf5yQ
-         rFag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715629630; x=1716234430;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1715629697; x=1716234497; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=T99MBf0nl63CklueBJ6l+rwD6AWoXckiL5U/kn0dPCw=;
-        b=hcW2P9nc+qpFD8/CBHeidUtSv2NHjUj9vfphW9LTt9eo2IJNin8K3M6V0UdJtOOg5C
-         9GoY381A2cb+KUApDhs7wK3/Xcczn2Ho2azXPSPqrlx3J1OabL4OlfRWMuze6HxsbMol
-         zfPyBemoOz3dulUetHgG1ZAz6L96cDAQGCacYSRQKWmivH3OzKa315RuhqE62QKrOAit
-         /L/iAKignkwR5qaq7Qg1Smhx0zFd5wQejo3slko3+LdKbu2gvPZuGIDiuA6P4+Ey/8rY
-         bMh01nZ2BMFgPJtnHcpiohrT/4jgxpOiDeTpeutBXQFJ5T4MuM8NW3auTq9iXzbo7ZXx
-         wk3g==
-X-Gm-Message-State: AOJu0YxHExfBOfSQm94u4PZolHMi22YURYopRoojxZWYsxtb9BsXhI9m
-	neehDycVtqZmKJmg4HejD73GbKLt2VjdCKblzFdYLrFUEPq9GR5FXA5cbKsfkb0=
-X-Google-Smtp-Source: AGHT+IGKyK+V+1qFO0T4yEi60l7fLUT4zXe0BXgVOkxdLZrY/pEwvPOf0a74+YD2f8neIWRtFBX1Mw==
-X-Received: by 2002:a81:9149:0:b0:61b:418:139 with SMTP id 00721157ae682-622afff635bmr95154677b3.27.1715629629890;
-        Mon, 13 May 2024 12:47:09 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43e12b42801sm23250861cf.55.2024.05.13.12.47.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 May 2024 12:47:09 -0700 (PDT)
-Date: Mon, 13 May 2024 15:47:01 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 01/23] Documentation/technical: describe pseudo-merge
- bitmaps format
-Message-ID: <ZkJuNSWLRcPjPT6S@nand.local>
-References: <cover.1710972293.git.me@ttaylorr.com>
- <cover.1714422410.git.me@ttaylorr.com>
- <43fd5e3597151a86254e18e08ffd8cadbcb6e4f0.1714422410.git.me@ttaylorr.com>
- <ZjjEjNRp2BAMWJ47@tanuki>
- <ZjkHT9XVl7ua8E14@nand.local>
- <Zj4JM3ATSMice5do@tanuki>
+        bh=+msAoHSUJ1/zg0KV2I3Bd5c0Arr78aKERu6jNWG72Rs=;
+        b=c+pLWXnNN0JAaI+wsSwSct9rgX0vRwjin5uXxeWXhf2relvoGzEgRfImZ1CAgY9KAW
+         pUbWZSttnbZNT7lpRfsen4fdbIpan7zYf5FQQ/7aAVmjRCU2jW1aEk8lS4LPHXu8YQk2
+         uNyMGnS68cLgcP46wDwEpNhZrR9WhqET6v2Y4S1XjPh4D4GGbdZHcbKKaYRtMZjEwoAm
+         0HxRZ1R5boJNLu4025KWkp0iQQcR+J4juq74vhhsYeHXIzqckvuZgZQVWjCLDwdbUQ0x
+         ZPYDpBu+Ty6rIFnv7533BIYtfG2oXr7ZtsW0DLDXX53WkTWuvWnVjmQCFyRia1Aa4ONb
+         SruQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715629697; x=1716234497;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+msAoHSUJ1/zg0KV2I3Bd5c0Arr78aKERu6jNWG72Rs=;
+        b=rS/9wcl1UH9/dYRpo6PtxrRiCw6qm0FhD/DGGUcrPHIJv1G60/IWzGqV3cwKYaVEeI
+         j80rghM/NitoBl73w/7JmfdLTVWyxtMXohQsauHe5vAUWCbf3YeDUfqn1L3P42hyJS/J
+         EClLHFVMMe5i9ea32HDI9eRJAgkDsFMd78+YXR9dti0kg5hknH6wFGnJTZFZHTapa9LC
+         pAR/9CpXaiipr2gHhgdUxlqinOBK3pgg6HViMJH1Ho1ICHTK2F+WbpBDdE/I3E/c3Eu8
+         1hJLQ0lrZsrxwDCrgMf28bAhOuQyw7DjhQ0d5i4jNcVcxNKcGTO9MNlcF/ZhdsqzwTCm
+         DcAA==
+X-Gm-Message-State: AOJu0YyZyol/DgDy42Pzr5UcAkRhdBgFb8Pk5ZKnZNweKHZraDHq9A4G
+	5J9Gfh+dBsRwVddzit8XTvHueG4OV42hLuMDJnqwgvtO00tI96PLivtUE6QXiG3bV/wlIABszgH
+	tCQmoHenzAPocPFfrsPffcHz0gBpnSpg8CY2YeMVxgWbwaGGHgg==
+X-Google-Smtp-Source: AGHT+IF+jppmjGRm1vFARvdJ2a3rgyjTFD+zo8BC44FDNn0NcrQ8qCK5FGJcIeHJcrkBMRP2KQ8fA1GLdOXLGS3OJ2c=
+X-Received: by 2002:a17:907:747:b0:a59:a3ef:21f5 with SMTP id
+ a640c23a62f3a-a5a2d65ed16mr1379746366b.57.1715629696778; Mon, 13 May 2024
+ 12:48:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Zj4JM3ATSMice5do@tanuki>
+References: <cover.1715582857.git.ps@pks.im> <20240513192112.866021-1-gitster@pobox.com>
+ <20240513192112.866021-2-gitster@pobox.com>
+In-Reply-To: <20240513192112.866021-2-gitster@pobox.com>
+From: Kyle Lippincott <spectral@google.com>
+Date: Mon, 13 May 2024 12:48:05 -0700
+Message-ID: <CAO_smVhxCGUD2D5m9eDj+CBmteauBuGG=6RgjADnuXgBeB5O8A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] setup: add an escape hatch for "no more default
+ hash algorithm" change
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 10, 2024 at 01:46:59PM +0200, Patrick Steinhardt wrote:
-> > > > +* An (optional) extended lookup table (written if and only if there is
-> > > > +  at least one commit which appears in more than one pseudo-merge).
-> > > > +  There are as many entries as commits which appear in multiple
-> > > > +  pseudo-merges. Each entry contains the following:
-> > > > +
-> > > > +  ** `N`, a 4-byte unsigned value equal to the number of pseudo-merges
-> > > > +     which contain a given commit.
-> > >
-> > > How exactly is the given commit identified? Or in other words, given an
-> > > entry in the lookup table here, how do I figure out what commit it
-> > > belongs to?
-> >
-> > They aren't identified within this section. The extended lookup table is
-> > indexed into via the lookup table with an offset that is stored in the
-> > `offset` field when the MSB is set.
+On Mon, May 13, 2024 at 12:21=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> Okay. Would this explanation be a good addition to the document?
+> Partially revert c8aed5e8 (repository: stop setting SHA1 as the
+> default object hash, 2024-05-07), to keep end-user systems still
+> broken when we have gap in our test coverage but yet give them an
+> escape hatch to set the GIT_TEST_DEFAULT_HASH_IS_SHA1=3D1 environment
+> variable to revert to the previous behaviour.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  repository.c  | 24 ++++++++++++++++++++++++
 
-I think we already have this written down in the section above. See in
-the previous bullet point the section reading "containing either one of
-two possible offsets, deepening on whether or not the most-significant
-bit is set: [...]"
+Nice idea, this concept LG.
 
-Does that work?
+>  t/test-lib.sh |  4 ++++
+>  2 files changed, 28 insertions(+)
+>
+> diff --git a/repository.c b/repository.c
+> index 15c10015b0..6f67966e35 100644
+> --- a/repository.c
+> +++ b/repository.c
+> @@ -26,6 +26,30 @@ void initialize_repository(struct repository *repo)
+>         repo->parsed_objects =3D parsed_object_pool_new();
+>         ALLOC_ARRAY(repo->index, 1);
+>         index_state_init(repo->index, repo);
+> +
+> +       /*
+> +        * Unfortunately, we need to keep this hack around for the time b=
+eing:
 
-Thanks,
-Taylor
+Nit: the comment says we need to keep it around, but it's actually
+defaulted to off. We may want to add clarification of the current
+status to the comment (or replace the entire comment with a comment
+describing that we added a hack to the hack, and that it should be
+removed "soon").
+
+> +        *
+> +        *   - Not setting up the hash algorithm for `the_repository` lea=
+ds to
+> +        *     crashes because `the_hash_algo` is a macro that expands to
+> +        *     `the_repository->hash_algo`. So if Git commands try to acc=
+ess
+> +        *     `the_hash_algo` without a Git directory we crash.
+> +        *
+> +        *   - Setting up the hash algorithm to be SHA1 by default breaks=
+ other
+> +        *     commands when running with SHA256.
+> +        *
+> +        * This is another point in case why having global state is a bad=
+ idea.
+> +        * Eventually, we should remove this hack and stop setting the ha=
+sh
+> +        * algorithm in this function altogether. Instead, it should only=
+ ever
+> +        * be set via our repository setup procedures. But that requires =
+more
+> +        * work.
+> +        *
+> +        * As we discover the code paths that need fixing, we may remove =
+this
+> +        * code completely, but we are not there yet.
+> +        */
+> +       if (repo =3D=3D the_repository &&
+> +           git_env_bool("GIT_TEST_DEFAULT_HASH_IS_SHA1", 0))
+> +               repo_set_hash_algo(repo, GIT_HASH_SHA1);
+>  }
+>
+>  static void expand_base_dir(char **out, const char *in,
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 79d3e0e7d9..36d311fb4a 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -542,6 +542,10 @@ export EDITOR
+>
+>  GIT_DEFAULT_HASH=3D"${GIT_TEST_DEFAULT_HASH:-sha1}"
+>  export GIT_DEFAULT_HASH
+> +
+> +GIT_TEST_DEFAULT_HASH_IS_SHA1=3D0
+
+This is the default as being established in this commit, correct?
+Should we add a comment saying this is the default and describe why we
+have it here anyway?
+
+> +export GIT_TEST_DEFAULT_HASH_IS_SHA1
+> +
+>  GIT_DEFAULT_REF_FORMAT=3D"${GIT_TEST_DEFAULT_REF_FORMAT:-files}"
+>  export GIT_DEFAULT_REF_FORMAT
+>  GIT_TEST_MERGE_ALGORITHM=3D"${GIT_TEST_MERGE_ALGORITHM:-ort}"
+> --
+> 2.45.0-145-g3e4a232f6e
+>
+>
