@@ -1,54 +1,54 @@
-Received: from wfout3-smtp.messagingengine.com (wfout3-smtp.messagingengine.com [64.147.123.146])
+Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFDB146D76
-	for <git@vger.kernel.org>; Mon, 13 May 2024 10:22:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4AA146D76
+	for <git@vger.kernel.org>; Mon, 13 May 2024 10:22:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715595729; cv=none; b=C0MPyi3JUWpj+AGOaO3AHYUhO7Ek4w/NP/JGqWYjWlNn6vXj+jz5iTmfiIgt/rRfOaj6caSHmTlp0QlmIk+sKWD8H3xOUbw6MjQRtMsi6n818TLlJRi3JnC8rvVG64Wgbs6A6cUjbTMWvtfNydmgzm82OxiJfYOCxy4mZAUIWZc=
+	t=1715595734; cv=none; b=KsBu3a6UUUoghf7dJnBnaXDamMZHROhzsVsR21UZX0SgzZFMTAVhm7RylUkT63xrgWzLZOlYLQNCP+226K97DIVzE5VJftleh0SLGRXqsehXEzFikOSOpJMAd5GT6B69pPhOvst6TrKjhOkLYrGfqh164S/18TJkIHOMjq8PjPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715595729; c=relaxed/simple;
-	bh=tiy3CYyWMnHEtVtKrk2U8dgDGw4+ZjNM10dbjZEkVLQ=;
+	s=arc-20240116; t=1715595734; c=relaxed/simple;
+	bh=xWJOfc864Bk7vru1mAPK8FXw8+h9n45qB4ToOyJz/A4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kXzI3Rh+C+vA4Zc8T1C8IZNRYDFDZ51JRGb3ZtXmKV4qBe3vnGdrjL3D9iLsGluCFvfCm0VtkfN6dIY/yPIKFzd0JC+WWxfhGJMWpXAL9PKERVGI43jSrjLCJS2PiEV0QvzkzRVB5Fp0Wy18igUPOzDrFyW5G880j7I2UGL04dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ccuRLSUH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FT0wwnRG; arc=none smtp.client-ip=64.147.123.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=rtOYPkd5du6hyyh0J4QNO3G41htj8MvlINwotsKcc86LiUTOXIYTZ3WwR4yqjMKX1b8RivcolMrPbrOyRox5by+qLCwNIRRZVmji843jaRBYmMrZmHez2AFGTOc+1fd6ZqO2SYbVkI16oH7mXDAfxjVdJmdMO5GQBLRdtQwRG9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LO3h1cRn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KkaPkKBK; arc=none smtp.client-ip=64.147.123.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ccuRLSUH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FT0wwnRG"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.west.internal (Postfix) with ESMTP id 12C781C0012E;
-	Mon, 13 May 2024 06:22:07 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LO3h1cRn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KkaPkKBK"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 1834B1800076;
+	Mon, 13 May 2024 06:22:12 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 13 May 2024 06:22:07 -0400
+  by compute4.internal (MEProxy); Mon, 13 May 2024 06:22:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715595726; x=1715682126; bh=e3FKSpqPOH
-	qCV79Zh0pWZVLfOVj/ZgesYWhGkcUuHQo=; b=ccuRLSUHyykB/GlAr7Z0XS3ntN
-	io0+8re61ub0qobEFzFZn5Yeff+ILqMhkCB+L9YbZQ05ayIC7PD3pFDYw8KG3DG9
-	SzKiZf+TRohtPMlgj2MmE9kHhavdl+QT3O+S9eNYT77JDxYq0yQ41ChPpwCqvtqw
-	Bx7aa7wMHQjZ1qSOf2OkHP66Acnckpdada3qePVAwA20kddJ1PeZiTYhxI/85KyU
-	WBKyaKLa0KLLvi4X123IqwSl8fB97ZeWUPTfEFRrW0j80VRqBukzy5GmEIvGTLnz
-	gsEEEeeaf9rT2ZAHwP70Ok2sMo1+HXXzuDoNbvS/EciS9z+A6g1PD6Y/qIrg==
+	:subject:to:to; s=fm3; t=1715595731; x=1715682131; bh=1q8INptvvm
+	EodmPr7DQ/PNMt/0rC/CZE0a1/eh86yfk=; b=LO3h1cRnIZ2ZxEB0MPn4v0jt34
+	NW2DNz8Rg0gtfbGMnPlg34OhY+vtkvxezPLQwdSbhsqamb801Gpnuy9YUCy/u/lK
+	mddpl0K705FTVM4qKl/qB2mTq65TefeYdETTf4qN0C/2hVog05vIKUfUxuGATrWP
+	GWO59OnSPo2dAu7tU4Pm0ZaD026DCC0nUHAypidMDnT6EWqeFHPn4fy/wRUiMelg
+	gBvmCuRhJ+Y8y53dlS0yEiTSWsY4KhmWUN5Mccx1oYO6KTfvofWvoP8gC4h0fLin
+	NDrgF9WmVzN/7VB6TF2JX7Qn2vZOSTB79WB9dMuDbmTXdR56yjxaa+HPK11g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715595726; x=1715682126; bh=e3FKSpqPOHqCV79Zh0pWZVLfOVj/
-	ZgesYWhGkcUuHQo=; b=FT0wwnRGCaa3mjbES91b4wzTacCqBuCUELUd/ptXko9b
-	Wm4MPi/ohVPp6v7WJ1APJA7NRKg9w5tdyM9PlOh/f71u8dQgFdtR+BayWOSBvvwV
-	ANrkYHAMM6dclEQ+4KQEDHrLsUy0155k9PVKHMG4Ib+j9TB7aVtKGFFOGVpLA5/7
-	3KeelzQhHWMsR5DFcVH3wa4iGOWbRrCDSKA410JY8UePY4YuTPxivuLNRVZpOy3s
-	4YGznZHFSRadmoN4UxRRXe+mhsGh2qNmdgJMDEExu1hGXw2sSfSWLyau/JXrIupM
-	hAguD/3wHjw+v3AKF8LBv8Ot78utokJH4F45X2/Xyg==
-X-ME-Sender: <xms:zulBZoKNg6Y_A4iOz5Jhqem1Bqw68jpiz-mPM8nXpU0cAvCVfLr9dg>
-    <xme:zulBZoIo9I4zYh1c20utF-6Wvccn3n6x1-bYfd1ijF5fcLavYhUzlbtACpTMlf_NA
-    wZ-t7sL_vHwTpd_kg>
-X-ME-Received: <xmr:zulBZotjkkUZyVkkTukXCP_ORFm5LYWHexljEE_mYp8TAj8HbudjqPPU2p4RUTGD71BSEaJ_-NJcl7_1Yqrr8tPxmaJiZMd7E4ChmNOgTjGUyZg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgvdejucetufdoteggodetrfdotf
+	fm3; t=1715595731; x=1715682131; bh=1q8INptvvmEodmPr7DQ/PNMt/0rC
+	/CZE0a1/eh86yfk=; b=KkaPkKBKy7L4Xa7BNTd5a6jn7m4FOkg5mpNIlPfiG4sd
+	7a1YLsSy36he9cy2jRs43aqsToK//Nggfkpcad6SLjwNVazZAOtjG7W+sJofa2lc
+	bGuPMA8PDNistcBwLFhk2dHC8sIUWpCdH9YGnJowbkoZzKFAMq9Yb4U0zq+krS21
+	AtSd9Oeit0byiPCV9xfIoFbeQgZhZEaXaGB042cNvl0DVVEERqIdNVoOKU/9oRuo
+	B91pyVXiLjnkvY96qo8op2culcz2eaYYQwrnNsJEFd7o5EON2SPhdOpS4BrthDKQ
+	/2vXXzijrOjSiou958kgOsJQ9KwHkds50yl7tpI0wA==
+X-ME-Sender: <xms:0-lBZmcyRbpzKIyjdM7NuBvd5YKp8Rz4vaq4S9PiYRG29Wuko3jUKg>
+    <xme:0-lBZgMcqYtTnn7dl0HTW_fX1TZXLcbGqWMtvgGhx93dl0XjNSDW0MI0nWblnhZQz
+    m0Wx9JmMUB0xcRVgw>
+X-ME-Received: <xmr:0-lBZnj3T8rKkratjmDPG-jPzhU9n22zH5cRPsSInDs5SVL5zCiXT_u-i8ZqTZ_FQ_fCZFs66pjMCdjxmHqrDGKCdOkMgdDw4WyYR0YCrnajexs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgvdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -56,25 +56,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgvdejucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:zulBZlawyrfmRA9JUt1w6dv9mxPNSuk1sR97g8Lt4YGLjMbuSSrtow>
-    <xmx:zulBZvYcRrsvHojpx_uzgnAeInsLoSRYcaq9vtmuW59WqrWDiGOzDw>
-    <xmx:zulBZhD1jULCKWO2zhpRt-bI0EJBiRf-YhVBFo72k7k9rODIMozN4w>
-    <xmx:zulBZlZJ-x17agvbX5GMixVV2R7v5Z0jianJIf1bx5QFRilEtP1LEw>
-    <xmx:zulBZuVsUEjpZJS5yoT3DXiv0WuMZmDf2RwFDIpjQn6ZuTrg-QQVZ2sv>
+X-ME-Proxy: <xmx:0-lBZj-a5XOrxHDfzCSZg8MZ4UH6T6wUaWh-KT3-wXzL48oScWbWSw>
+    <xmx:0-lBZisLr7Fhtw94Xd-pvOPUzhIHg19P8MVavrUp6gh4rqLYk4UodQ>
+    <xmx:0-lBZqH_GgJBZ80oQBfva2dhpFXQbEOi5OU7OBaERZVbqx6eZCaFLQ>
+    <xmx:0-lBZhMPM-Cje54gadmoBO_g5S7s-hoXrsdcEGRZqLbJyHZoJFRw9w>
+    <xmx:0-lBZkJNouxaoSdtaZeT9VK8NCIQ5hgJh6Khsia4mGnmkxHUPKcGBCj->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 May 2024 06:22:05 -0400 (EDT)
+ 13 May 2024 06:22:10 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 0f3f0ccd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 May 2024 10:21:47 +0000 (UTC)
-Date: Mon, 13 May 2024 12:22:03 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 58c8a9ae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 May 2024 10:21:52 +0000 (UTC)
+Date: Mon, 13 May 2024 12:22:08 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Kyle Lippincott <spectral@google.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 01/21] builtin/config: stop printing full usage on misuse
-Message-ID: <0ba76281267b324dd7fe8094132dbce11e9f2182.1715595550.git.ps@pks.im>
+Subject: [PATCH v2 02/21] builtin/config: move legacy mode into its own
+ function
+Message-ID: <663e1f74f82b8c1acdd0c35ad87736c071eafb33.1715595550.git.ps@pks.im>
 References: <cover.1715339393.git.ps@pks.im>
  <cover.1715595550.git.ps@pks.im>
 Precedence: bulk
@@ -84,190 +85,125 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3BdTSBzmJvuVP42Z"
+	protocol="application/pgp-signature"; boundary="P1L2TQ8J5KqKO0Pc"
 Content-Disposition: inline
 In-Reply-To: <cover.1715595550.git.ps@pks.im>
 
 
---3BdTSBzmJvuVP42Z
+--P1L2TQ8J5KqKO0Pc
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When invoking git-config(1) with a wrong set of arguments we end up
-calling `usage_builtin_config()` after printing an error message that
-says what was wrong. As that function ends up printing the full list of
-options, which is quite long, the actual error message will be buried by
-a wall of text. This makes it really hard to figure out what exactly
-caused the error.
+In `cmd_config()` we first try to parse the provided arguments as
+subcommands and, if this is successful, call the respective functions
+of that subcommand. Otherwise we continue with the "legacy" mode that
+uses implicit actions and/or flags.
 
-Furthermore, now that we have recently introduced subcommands, the usage
-information may actually be misleading as we unconditionally print
-options of the subcommand-less mode.
-
-Fix both of these issues by just not printing the options at all
-anymore. Instead, we call `usage()` that makes us report in a single
-line what has gone wrong. This should be way more discoverable for our
-users and addresses the inconsistency.
-
-Furthermore, this change allow us to inline the options into the
-respective functions that use them to parse the command line.
+Disentangle this by moving the legacy mode into its own function. This
+allows us to move the options into the respective functions and clearly
+separates concerns.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/config.c  | 28 +++++++++++-----------------
- t/t1300-config.sh |  3 ++-
- 2 files changed, 13 insertions(+), 18 deletions(-)
+ builtin/config.c | 43 ++++++++++++++++++++++++-------------------
+ 1 file changed, 24 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index 80aa9d8a66..3a71d3253f 100644
+index 3a71d3253f..f6c7e7a082 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -125,8 +125,6 @@ static const char *comment_arg;
- 	{ OPTION_CALLBACK, (s), (l), (v), NULL, (h), PARSE_OPT_NOARG | \
- 	PARSE_OPT_NONEG, option_parse_type, (i) }
-=20
--static NORETURN void usage_builtin_config(void);
--
- static int option_parse_type(const struct option *opt, const char *arg,
- 			     int unset)
- {
-@@ -171,7 +169,7 @@ static int option_parse_type(const struct option *opt, =
-const char *arg,
- 		 * --type=3Dint'.
- 		 */
- 		error(_("only one type at a time"));
--		usage_builtin_config();
-+		exit(129);
- 	}
- 	*to_type =3D new_type;
-=20
-@@ -187,7 +185,7 @@ static void check_argc(int argc, int min, int max)
- 	else
- 		error(_("wrong number of arguments, should be from %d to %d"),
- 		      min, max);
--	usage_builtin_config();
-+	exit(129);
- }
-=20
- static void show_config_origin(const struct key_value_info *kvi,
-@@ -672,7 +670,7 @@ static void handle_config_location(const char *prefix)
- 	    use_worktree_config +
- 	    !!given_config_source.file + !!given_config_source.blob > 1) {
- 		error(_("only one config file at a time"));
--		usage_builtin_config();
-+		exit(129);
- 	}
-=20
- 	if (!startup_info->have_repository) {
-@@ -802,11 +800,6 @@ static struct option builtin_config_options[] =3D {
+@@ -1069,31 +1069,13 @@ static struct option builtin_subcommand_options[] =
+=3D {
  	OPT_END(),
  };
 =20
--static NORETURN void usage_builtin_config(void)
--{
--	usage_with_options(builtin_config_usage, builtin_config_options);
--}
--
- static int cmd_config_list(int argc, const char **argv, const char *prefix)
+-int cmd_config(int argc, const char **argv, const char *prefix)
++static int cmd_config_actions(int argc, const char **argv, const char *pre=
+fix)
  {
- 	struct option opts[] =3D {
-@@ -1110,7 +1103,7 @@ int cmd_config(int argc, const char **argv, const cha=
-r *prefix)
+ 	char *value =3D NULL, *comment =3D NULL;
+ 	int flags =3D 0;
+ 	int ret =3D 0;
+ 	struct key_value_info default_kvi =3D KVI_INIT;
 =20
- 	if ((actions & (ACTION_GET_COLOR|ACTION_GET_COLORBOOL)) && type) {
- 		error(_("--get-color and variable type are incoherent"));
--		usage_builtin_config();
-+		exit(129);
- 	}
-=20
- 	if (actions =3D=3D 0)
-@@ -1119,30 +1112,31 @@ int cmd_config(int argc, const char **argv, const c=
-har *prefix)
- 		case 2: actions =3D ACTION_SET; break;
- 		case 3: actions =3D ACTION_SET_ALL; break;
- 		default:
--			usage_builtin_config();
-+			error(_("no action specified"));
-+			exit(129);
- 		}
- 	if (omit_values &&
- 	    !(actions =3D=3D ACTION_LIST || actions =3D=3D ACTION_GET_REGEXP)) {
- 		error(_("--name-only is only applicable to --list or --get-regexp"));
--		usage_builtin_config();
-+		exit(129);
- 	}
-=20
- 	if (show_origin && !(actions &
- 		(ACTION_GET|ACTION_GET_ALL|ACTION_GET_REGEXP|ACTION_LIST))) {
- 		error(_("--show-origin is only applicable to --get, --get-all, "
- 			"--get-regexp, and --list"));
--		usage_builtin_config();
-+		exit(129);
- 	}
-=20
- 	if (default_value && !(actions & ACTION_GET)) {
- 		error(_("--default is only applicable to --get"));
--		usage_builtin_config();
-+		exit(129);
- 	}
-=20
- 	if (comment_arg &&
- 	    !(actions & (ACTION_ADD|ACTION_SET|ACTION_SET_ALL|ACTION_REPLACE_ALL)=
-)) {
- 		error(_("--comment is only applicable to add/set/replace operations"));
--		usage_builtin_config();
-+		exit(129);
- 	}
-=20
- 	/* check usage of --fixed-value */
-@@ -1175,7 +1169,7 @@ int cmd_config(int argc, const char **argv, const cha=
-r *prefix)
-=20
- 		if (!allowed_usage) {
- 			error(_("--fixed-value only applies with 'value-pattern'"));
--			usage_builtin_config();
-+			exit(129);
- 		}
-=20
- 		flags |=3D CONFIG_FLAGS_FIXED_VALUE;
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index f3c4d28e06..d90a69b29f 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -596,7 +596,8 @@ test_expect_success 'get bool variable with empty value=
-' '
-=20
- test_expect_success 'no arguments, but no crash' '
- 	test_must_fail git config >output 2>&1 &&
--	test_grep usage output
-+	echo "error: no action specified" >expect &&
-+	test_cmp expect output
- '
-=20
- cat > .git/config << EOF
+-	given_config_source.file =3D xstrdup_or_null(getenv(CONFIG_ENVIRONMENT));
+-
+-	/*
+-	 * This is somewhat hacky: we first parse the command line while
+-	 * keeping all args intact in order to determine whether a subcommand
+-	 * has been specified. If so, we re-parse it a second time, but this
+-	 * time we drop KEEP_ARGV0. This is so that we don't munge the command
+-	 * line in case no subcommand was given, which would otherwise confuse
+-	 * us when parsing the legacy-style modes that don't use subcommands.
+-	 */
+-	argc =3D parse_options(argc, argv, prefix, builtin_subcommand_options, bu=
+iltin_config_usage,
+-			     PARSE_OPT_SUBCOMMAND_OPTIONAL|PARSE_OPT_KEEP_ARGV0|PARSE_OPT_KEEP_=
+UNKNOWN_OPT);
+-	if (subcommand) {
+-		argc =3D parse_options(argc, argv, prefix, builtin_subcommand_options, b=
+uiltin_config_usage,
+-		       PARSE_OPT_SUBCOMMAND_OPTIONAL|PARSE_OPT_KEEP_UNKNOWN_OPT);
+-		return subcommand(argc, argv, prefix);
+-	}
+-
+ 	argc =3D parse_options(argc, argv, prefix, builtin_config_options,
+ 			     builtin_config_usage,
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
+@@ -1306,3 +1288,26 @@ int cmd_config(int argc, const char **argv, const ch=
+ar *prefix)
+ 	free(value);
+ 	return ret;
+ }
++
++int cmd_config(int argc, const char **argv, const char *prefix)
++{
++	given_config_source.file =3D xstrdup_or_null(getenv(CONFIG_ENVIRONMENT));
++
++	/*
++	 * This is somewhat hacky: we first parse the command line while
++	 * keeping all args intact in order to determine whether a subcommand
++	 * has been specified. If so, we re-parse it a second time, but this
++	 * time we drop KEEP_ARGV0. This is so that we don't munge the command
++	 * line in case no subcommand was given, which would otherwise confuse
++	 * us when parsing the legacy-style modes that don't use subcommands.
++	 */
++	argc =3D parse_options(argc, argv, prefix, builtin_subcommand_options, bu=
+iltin_config_usage,
++			     PARSE_OPT_SUBCOMMAND_OPTIONAL|PARSE_OPT_KEEP_ARGV0|PARSE_OPT_KEEP_=
+UNKNOWN_OPT);
++	if (subcommand) {
++		argc =3D parse_options(argc, argv, prefix, builtin_subcommand_options, b=
+uiltin_config_usage,
++		       PARSE_OPT_SUBCOMMAND_OPTIONAL|PARSE_OPT_KEEP_UNKNOWN_OPT);
++		return subcommand(argc, argv, prefix);
++	}
++
++	return cmd_config_actions(argc, argv, prefix);
++}
 --=20
 2.45.GIT
 
 
---3BdTSBzmJvuVP42Z
+--P1L2TQ8J5KqKO0Pc
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB6coACgkQVbJhu7ck
-PpS6vRAAht9Z519u4F7jrWnYW/k8b9zvLJyaeVPaVYK5ljAA/gRz+zDzYBjQqC/y
-B13x/HLTdW1GlPePWGjVBPw+n2JWoh6QWNNaazjX95Yiwad5VQ0VUBBslZUW9PZS
-ldAi9a3L4Xb9giyNwUJBAdZnRNNu86tivQpnmMVUC4+J4obAb2sAzXa6pQXe+Vl8
-iF4WdV3/EwTGhx/nSdwXO5IjIX861GRseBk6mp+/uaC8NLYcMisckRNjVMLh3hUV
-XUjR7nqyo+QqH+VIDdMerHjbph+L2gfArIf3fkQr1VkwthU469CLlPArzWmukyfV
-rtwbfIaj4rdfp+xyGpG7ZBgq5ihiwl7K+r2Z6LAfByhpqlnHv6Y/1vhNued9KWxH
-HquVJDULFwcTufBCWEWMVUn/puvl2HDeSki5waW65dY49pxvGZxbHivnTUWkdsrd
-yXjChedtIo+UFLAiIHEHyYTGPsYdnnpuKrJ3ZNRGTLbSl3duYS/YrEWoAJfFEi9L
-n35k3+2Ov0OkozRO1fKlbe8Y6Dj6MjxAEFIUsyWGrVScI+8WctgNTSUpDfr/9jH9
-NFALywDu5A74ULI3QjGd1a68ITK2W6N5m937B4oWXbiL9S86xHK9JjQmrGHtTmpw
-notFBij3Ga28YouqBg2KTOCP4ASzwXL/7PwiVrI5hPaItJMfoLc=
-=96Qz
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB6c8ACgkQVbJhu7ck
+PpR4ZQ/+MUcaKNPevqP4L8ApYudh7XvJsOAnogGf2ASdRpUpMoZVLiSf7lGtECb/
+xNbIZPLt771gOWG48Y25KBQkLHPUGx9ZZ719rd2JfLqjkznwol+Puequdx28IwJz
+NzCaKIO76bxi3gdsp+4+OijFgNDTDl7GTPx7UUfySNEpQ69mxQtYSfXbzPM5suDr
+Hi/G7n9MGvgvOBqdptvnEqI7JE1B4/Milu1v9McbQ3mS1AnU5c88r7cObQPNIskG
+9vcriMRDNpz/EQ40v7Lgd0NvRX4ehkgIZdkynhpprfzirCyf82iYTSQ/R5I3/fsa
+yUBYlRNFOVvy/HihXY4ZYau1IYquNicnyYDT2PcLgY2fvFpIWg1qZB19LWzU+CR0
+bOcmjZjzpjY+BTqWDZn04PsgqueMyBnfGKsoncx3sPrYvCW0bcaNARxejcs0d3i6
+9zLa0XQtSjUfG2hXSAuCSh4vPjqxsJaWO7pG746eNqGM9rhGx0RG6EamV1LXqHGX
+Uljf1QQ2pj3gGteCnX46OHOiFotdOk2cjonzAPUN2i0zEAmjIM2V60zsKZQKGJfi
+59yG2lOUJu2RDCiei5plZevTmK080dAb1SrUHVt0YQVs6URtZmqqJvLobwM7s1Dg
+qPGozlCfZ+79Km1aRDcIevt2UU92hr788ZIDp1+yUrrvpCE58zo=
+=1pYQ
 -----END PGP SIGNATURE-----
 
---3BdTSBzmJvuVP42Z--
+--P1L2TQ8J5KqKO0Pc--
