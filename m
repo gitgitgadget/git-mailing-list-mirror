@@ -1,81 +1,81 @@
 Received: from wfout3-smtp.messagingengine.com (wfout3-smtp.messagingengine.com [64.147.123.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7547C14A0B3
-	for <git@vger.kernel.org>; Mon, 13 May 2024 10:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F5F146D76
+	for <git@vger.kernel.org>; Mon, 13 May 2024 10:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715595791; cv=none; b=IdGRqgJa5qxUPoTjSRQcEKjfE6mAdlUtaPwITe3JygoevzfUrNi3ex116jo/AiB3KaOksekjpLJFkSXeALuxd5LozcikTlj5xU+VvCsIgcrrDgxgtC6lLZ3PnE5klZQESKaQJHSBfDPbFFFGRdGxXHn2iFkmlP/9mY/VonCRjQI=
+	t=1715595796; cv=none; b=maNn8Dlr+IwTtbp+D1oSYrc6kcR1KgtfaoM0lO5cOCx8FCWQgdkuwc7Mye7gPOFbCO8LAAZol4LkLJ59u9RxEgnjL9GkwTkiWkxKFVnavO/UwginbwKnPrgPVuNSWOiHdWlGl/HKJBzn8514+fkL6hAdnw0885qdO5g9rbgEd8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715595791; c=relaxed/simple;
-	bh=wKFiycv++UqKM/uMcRbrn9g55w9IPeMzxhQIisrFL98=;
+	s=arc-20240116; t=1715595796; c=relaxed/simple;
+	bh=R4fB6rnmK8nEaqOCs9pdnVKnJIx6eAoIYT+5xCS2cfg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OL0FBhGqPaIiIxF/IqnipuwmHa/Yh72f6Qk8Z2NLySAqt7rnn3ObRnfAnXeVi5uTsjcd2ZDf6s+h+dPMgLY7+LAKhoRRCSmfCQE2DgJMoFg8PlqN6snaruDBPBDk+LAJCEzyy6D+JyqXi+DrChtsSy1UQJUvlCTCDqNoT5q453g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N4wECiY6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lBATKGm+; arc=none smtp.client-ip=64.147.123.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=PbPGqD6mleXOjKRZ7NwCUjol4PJBPWBUe9fuBbM+9gjKJog3Ld3Of5POuuBJax+jkKY6gGfxGAWKNTHXmJKRyY5YCJWJExahowmJ6+keCEIn7umY/6SPPIutM2bEaNXQj1OI58rSRCXgqr4VH3AMaR7WqhcV4wft2k5IjNapQiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tjNyBr4o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hiuBV7V0; arc=none smtp.client-ip=64.147.123.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N4wECiY6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lBATKGm+"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.west.internal (Postfix) with ESMTP id 816DF1C000F2;
-	Mon, 13 May 2024 06:23:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tjNyBr4o";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hiuBV7V0"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.west.internal (Postfix) with ESMTP id 8B3A51C00143;
+	Mon, 13 May 2024 06:23:14 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Mon, 13 May 2024 06:23:09 -0400
+  by compute1.internal (MEProxy); Mon, 13 May 2024 06:23:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715595789; x=1715682189; bh=dI48/ibUBF
-	a3LKZ8yvFIJi5AZcLU7Qk4IOTEvqCst4A=; b=N4wECiY6o5GfbSJK1Eix3QNcEv
-	4+x78FJRjgb11q/pfyVCSqOYNPAH1q9lKYx3qvpIJ5d1mNQGbHmDA4U/nW0V1yrd
-	g2TauvatcKRRtPWxqr8tP6voPyGWq/7WG0dDR4n/t0SG8GLoFivOuO4bNVqPiZA5
-	Wj4/jmF5Csqye9KlN38Loi4gcEkLumb4PDWLTYIvuLwsHSsHyBAy4CnqaG57SHG1
-	TVR6whAiJqlAgP8YWhTTFfmQrKQB+ivCM/xnUkEgw4oDPYXhSj8qsZkiypSIecrT
-	ZrFePhyvs3PUMlV676ir/e41hQ00w/tTiEBXZF9zlpkF8vKeIsEo41fiBOlg==
+	:subject:to:to; s=fm3; t=1715595794; x=1715682194; bh=NGeJi3MsXF
+	Ih44XipEkCZywtnFykP48Rr2BrF3f0kTM=; b=tjNyBr4oaaLh5F1BKtde6XRCIm
+	BmmnMgdZ0iAROIGBCqpZj7cYFveZfxFUIxqUxAC8erWqOH5S6IzwneBmcXHZBnsr
+	RzmXblwY5A7qS52cex9N3mS3L0959ugUZVEWOMakPWqln0ykymWtv2iUS3Wv+dj6
+	F6jdx/Vgz6qv1SBoQ2G9U4uty7Fo63eL3voPHenyFtQsozgL82aq0RcWAlobrKeZ
+	x+ldXaRaguKsq1FHmqhbyjXMRfkmL8p0+eN77Lsy245z1kM+Zb7jsAl4D/Io7sr+
+	QV3DsE/QlCsJtMpzNJX+Z+Pi1MC3QCji+HxjXnTuZH5zGJw6vKfoc0iZYMIQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715595789; x=1715682189; bh=dI48/ibUBFa3LKZ8yvFIJi5AZcLU
-	7Qk4IOTEvqCst4A=; b=lBATKGm+t0s7pmfBxtCoxu23s6rVtImHHFGWw4c6DVDY
-	5tIzyzmCESz3o6bbUIV5ubCxnawZBfqiSk82vV38ofrxO9DoD3MjbVKJJ51gl4UY
-	iYAyNSiofY53IHIew+FRvxJfJb+fRlQt96H30dQfJvIWwCtn9lOeDzcJE1NybR/F
-	Fgd+v5FzGZD/Da4yQTyIA1b7lhYHoN8yuY4XBt3cYVBHQqAkQGrBdYyUBGPFwnAQ
-	V4vEqCijW+C/NZVD1JCkZwmmDez6SzlO6AS3bFDIla0dZo6iJExlaoISS6ai7Ajv
-	TeLEsK6faVICrDLh0vV4lRfULOO2RXmI4YEPzNhi8Q==
-X-ME-Sender: <xms:DOpBZjbAI3LS47hVIXj1NrbVozU01nVuZzIEUrpwEbKHlKA2AmvR4A>
-    <xme:DOpBZiZ3pwUQk3EozrESR2zwXoV_8vhblv7xlapXW4jUGR3JRB9xSAlJtxSIkQHao
-    _FB0ihvEAuyhBTazw>
-X-ME-Received: <xmr:DOpBZl83wp89-EF3wfRCa4jc8PcQAECLSLD-aNBVc-Cxmygg9a5MFdwmbVaMfXHsdwRJJBxe357fKip1h6_gGIGG_F8Gx23v4l-YM3EZdPTFR30>
+	fm3; t=1715595794; x=1715682194; bh=NGeJi3MsXFIh44XipEkCZywtnFyk
+	P48Rr2BrF3f0kTM=; b=hiuBV7V0LKB6Dum050pjB/VldW4ig7TMzwUV/bFe7NP7
+	rBnvvzJqjb8EWzLpeY56djIkeKCCF0xLVKb3+nESi6IjDXfgDO/q2DE/aboWslBS
+	jK6mnDfWsE8T3CgcL7xw7GcvrA7ymrimnff/wstvX5wDCELcs8qIZJnXu7ZiymPC
+	7DErdDbOmWZ6i6EFFKarptGm1EK00B0eEqIWykbMSuSdFz7nG2PpugSkRX2pUCzb
+	PFqwYgOZTLvt77Bzc10l4Bz3GkBPKOAZQOnHqS3LRTfI+NrnrGlMhldYxC4YRM7M
+	H/NWULSgjTFSTHvZfh655JYdKlMRiJU/CPPCsjtgzg==
+X-ME-Sender: <xms:EepBZjKdFKKRg5D69K6Z9HBXZR0RfAWlBfgHCTKXupU3H3HUz4TpfA>
+    <xme:EepBZnL2DxbdbZl97ShDPP3tEyJ7efNvG-o1rWL4Xr21oJJDTTRxS2qMPFfN0uVFw
+    x0ROchm8PNTs1dvfQ>
+X-ME-Received: <xmr:EepBZruyrsDghE_mCmkgXoF0-4l5PiMfCk3SGkQD9hH8eABKJg8QNjRIeYuVVWxWMfdnQle3GvN3Mk6GY8kSHYiumusv7WVN2tjeG4J_aXlnQ_w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgvdejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:DOpBZppZ6DWhV7PK6mCgjuP-rh_N4MQkiRpRYbh3KVaXnh6YWkbhpA>
-    <xmx:DepBZupGqhbjxKdMxNWkUICog70Jaschuq0FfhVVu1Ki43ct5tpGmA>
-    <xmx:DepBZvQJ1W4Ot832BkWnGHQOU2HiElsWwZXvBxKCpu1T8zWeHXsZpw>
-    <xmx:DepBZmoGNM8KZdnaVB4wstXSWPGeE8Ig6DkUkY-4PcZ9y3kJKgWIQA>
-    <xmx:DepBZnk49B1n1t5Np66Trfe_M6RNIhG9UDqHPN2Pncb37ejv04326Y1b>
+X-ME-Proxy: <xmx:EupBZsaHPTKLZ3UKfdoMYMeDaPK1S2I84meVxpKEMJ-9b83aOa07Hw>
+    <xmx:EupBZqZ3-sZgMCI2XzfTPgZ8ZQN6tbOxljAfH8yVHm4010o9sWkCBw>
+    <xmx:EupBZgCyEoI6jPqH75KsluHMxKl7F9MgEa8u8M1ZyLn16JxC6d-b1Q>
+    <xmx:EupBZoZbf7hMKD5yS8X5MUPZyt4pjHvJf6OVVq3Ft3CG3VNEU1I-1w>
+    <xmx:EupBZhWVkqvK3Zo7CM8swR5SovDO3v70c9yTwmS9ecnLQ23nDmpQZhGa>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 May 2024 06:23:08 -0400 (EDT)
+ 13 May 2024 06:23:13 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ec6955b3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 May 2024 10:22:49 +0000 (UTC)
-Date: Mon, 13 May 2024 12:23:05 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 86d79767 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 May 2024 10:22:54 +0000 (UTC)
+Date: Mon, 13 May 2024 12:23:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Kyle Lippincott <spectral@google.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 13/21] builtin/config: move `respect_includes_opt` into
- location options
-Message-ID: <8a6b555b58ef4db5d7fe7e427fb4d6403f228095.1715595550.git.ps@pks.im>
+Subject: [PATCH v2 14/21] builtin/config: convert `do_not_match` to a local
+ variable
+Message-ID: <0dd22bf51a4e16161b3704295b8026b8e32a835b.1715595550.git.ps@pks.im>
 References: <cover.1715339393.git.ps@pks.im>
  <cover.1715595550.git.ps@pks.im>
 Precedence: bulk
@@ -85,125 +85,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6nj2F6ilmNnwiNmy"
+	protocol="application/pgp-signature"; boundary="jMFD5VowELv/8ooi"
 Content-Disposition: inline
 In-Reply-To: <cover.1715595550.git.ps@pks.im>
 
 
---6nj2F6ilmNnwiNmy
+--jMFD5VowELv/8ooi
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The variable tracking whether or not we want to honor includes is
-tracked via a global variable. Move it into the location options
-instead.
+The `do_not_match` variable is used by the `format_config()` callback as
+an indicator whether or not the passed regular expression is negated. It
+is only ever set up by its only caller, `collect_config()` and can thus
+easily be moved into the `collect_config_data` structure.
+
+Do so to remove our reliance on global state.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/config.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ builtin/config.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index dcccb89037..3424d602f2 100644
+index 3424d602f2..16d92ab176 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -78,8 +78,11 @@ struct config_location_options {
- 	int use_system_config;
- 	int use_local_config;
- 	int use_worktree_config;
-+	int respect_includes_opt;
- };
--#define CONFIG_LOCATION_OPTIONS_INIT {0}
-+#define CONFIG_LOCATION_OPTIONS_INIT { \
-+	.respect_includes_opt =3D -1, \
-+}
-=20
- #define CONFIG_TYPE_OPTIONS(type) \
- 	OPT_GROUP(N_("Type")), \
-@@ -126,7 +129,6 @@ static regex_t *regexp;
+@@ -128,7 +128,6 @@ static const char *value_pattern;
+ static regex_t *regexp;
  static int use_key_regexp;
  static int do_all;
- static int do_not_match;
--static int respect_includes_opt =3D -1;
+-static int do_not_match;
  static int fixed_value;
 =20
  #define TYPE_BOOL		1
-@@ -774,10 +776,10 @@ static void location_options_init(struct config_locat=
-ion_options *opts,
- 		opts->source.scope =3D CONFIG_SCOPE_COMMAND;
- 	}
+@@ -327,6 +326,7 @@ static int format_config(const struct config_display_op=
+tions *opts,
+ struct collect_config_data {
+ 	const struct config_display_options *display_opts;
+ 	struct strbuf_list *values;
++	int do_not_match;
+ };
 =20
--	if (respect_includes_opt =3D=3D -1)
-+	if (opts->respect_includes_opt =3D=3D -1)
- 		opts->options.respect_includes =3D !opts->source.file;
- 	else
--		opts->options.respect_includes =3D respect_includes_opt;
-+		opts->options.respect_includes =3D opts->respect_includes_opt;
- 	if (startup_info->have_repository) {
- 		opts->options.commondir =3D get_git_common_dir();
- 		opts->options.git_dir =3D get_git_dir();
-@@ -806,7 +808,8 @@ static int cmd_config_list(int argc, const char **argv,=
- const char *prefix)
- 		CONFIG_LOCATION_OPTIONS(location_opts),
- 		CONFIG_DISPLAY_OPTIONS(display_opts),
- 		OPT_GROUP(N_("Other")),
--		OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direc=
-tives on lookup")),
-+		OPT_BOOL(0, "includes", &location_opts.respect_includes_opt,
-+			 N_("respect include directives on lookup")),
- 		OPT_END(),
- 	};
+ static int collect_config(const char *key_, const char *value_,
+@@ -343,7 +343,7 @@ static int collect_config(const char *key_, const char =
+*value_,
+ 	if (fixed_value && strcmp(value_pattern, (value_?value_:"")))
+ 		return 0;
+ 	if (regexp !=3D NULL &&
+-	    (do_not_match ^ !!regexec(regexp, (value_?value_:""), 0, NULL, 0)))
++	    (data->do_not_match ^ !!regexec(regexp, (value_?value_:""), 0, NULL, =
+0)))
+ 		return 0;
 =20
-@@ -848,7 +851,8 @@ static int cmd_config_get(int argc, const char **argv, =
-const char *prefix)
- 		OPT_STRING(0, "url", &url, N_("URL"), N_("show config matching the given=
- URL")),
- 		CONFIG_DISPLAY_OPTIONS(display_opts),
- 		OPT_GROUP(N_("Other")),
--		OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direc=
-tives on lookup")),
-+		OPT_BOOL(0, "includes", &location_opts.respect_includes_opt,
-+			 N_("respect include directives on lookup")),
- 		OPT_STRING(0, "default", &display_opts.default_value,
- 			   N_("value"), N_("use default value when missing entry")),
- 		OPT_END(),
-@@ -1131,7 +1135,8 @@ static int cmd_config_actions(int argc, const char **=
-argv, const char *prefix)
- 			   N_("value"), N_("with --get, use default value when missing entry")),
- 		OPT_STRING(0, "comment", &comment_arg, N_("value"), N_("human-readable c=
-omment string (# will be prepended as needed)")),
- 		OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when co=
-mparing values to 'value-pattern'")),
--		OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direc=
-tives on lookup")),
-+		OPT_BOOL(0, "includes", &location_opts.respect_includes_opt,
-+			 N_("respect include directives on lookup")),
- 		OPT_END(),
- 	};
- 	char *value =3D NULL, *comment =3D NULL;
+ 	ALLOC_GROW(values->items, values->nr + 1, values->alloc);
+@@ -400,7 +400,7 @@ static int get_value(const struct config_location_optio=
+ns *opts,
+ 		value_pattern =3D regex_;
+ 	else if (regex_) {
+ 		if (regex_[0] =3D=3D '!') {
+-			do_not_match =3D 1;
++			data.do_not_match =3D 1;
+ 			regex_++;
+ 		}
+=20
 --=20
 2.45.GIT
 
 
---6nj2F6ilmNnwiNmy
+--jMFD5VowELv/8ooi
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB6ggACgkQVbJhu7ck
-PpSFVA/9FkJlTVf2cGH5pDA3Aphz7xVXfo8q78UrQ2fTvd+VJMBhwPVCcvn+IIR6
-QznRPvNaqXfxizR71OYCY2tYYPQhhulpu3KE6MuTtA4VIRF5XI+r2C8wmfhf0bh9
-PskhrODbH0W0Jru++OQrUFlsfLTrEdW0t1n+V7APcul/fixSka78s9M86RjVPdXC
-rSwQbVmZD4uzZQvpRXSHeBSX7Za83aD88M430qIa22BGpfv/7aE4ZIVtwgSL3ogW
-y2CtBw2I4Iq9+G3OklJqRvvUjuYEWkT+KxPQmN9XJiFrwal3Ywaan/t6fVnmdEc3
-RXDCc9tyJ26myCqG8Qbwn2M/6mIsYy18j4RO/N1Pt0sc60EdmmxiJ2LvokTQhv3d
-X7PT2/RQLz5cOWpQ9vYAN6jJdBsUzqd1WZXSd8Y+DMbzdIyWf+NoN+D7Tw0/Bc6g
-UIBuXPj+RvrPPHipGyJ3XuzEY27iD5j0YQM8AzKXO2LItzcJSibdh9VmZAdNsvfs
-u5AgMGmNLlWo5BnCfdzIGm7hZKObskZ7weLRyrc1HbKQ55dni4W1wxIrs2lBweRe
-728jmLyYe/ZQtm+kWHs8bm35cN4ciqD/oh/UDZa5kTBOCTPrf7zankB4YrUpTXAE
-8EoF39/jnaRBx1dlBoMWMS9gqmYPHeSGFLSeUXGwyiVWTIvyOr4=
-=wI1G
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB6g0ACgkQVbJhu7ck
+PpTdzw/9HKedh8NrqpAeLT4fi5bRPoDlV2Mpss9cU8mBGkp5vmKr/5TVKGxCzZhB
+AYXwU95xdDXOlh0WN9nTVuNd/5UI6WfIGHI1RLH1JRJOZPSZ2paOAJod8Xto+xri
+KxC7T8X+3DCvrHFqhLUkU2OWWPQNXteZi5FOqu3AK7cVT03p/9NO43pO1tsmLncP
+bK5aff9ET3HpSxA0QNgi2ic8EMj3g6Kx2ppdjweJTJ4zXRI6UwjVCxJQHyDuyuh4
+KvnbknkcyhrVZ2ZQk4T9Du6FtPvZcUBkmiig2RQW6XPfamRc3xiit33cuZIVInaJ
+blJhsyQupK4kRPk9abGojGz8rRbB+iCOoMcscIJPyWquWiRtQp6yU2HnJF1xG8iA
+bYAu+9DEHx8yzLJa3jTMiRY87UndfxLBVPf0+WSRQpnQJ4CCHXHisf2m1qCpFsb/
+rYlr3OeYfLJrEEVYyLAhTzu25JzCGVtJIv995+s8Zzk5WQYkeREC5P7Gzh1kkBue
+DhADNLFKG/LItkW3yBkQsPToIZweXuha04OVKWt4Ff4gw3isE/vOANz576C0wKXR
+pvUtZsq5jGJvW8z3iLyWDjwuBj0Z2ELASwuta9TGm1FYmYlNQfzgx2wW8nfUBxnK
+zNcGVpJdMF3jA6Pzleof2AMbwRu4VPXd6hI6yEumOJiJqk+7MuE=
+=4HrB
 -----END PGP SIGNATURE-----
 
---6nj2F6ilmNnwiNmy--
+--jMFD5VowELv/8ooi--
