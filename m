@@ -1,81 +1,80 @@
 Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0EB1474BF
-	for <git@vger.kernel.org>; Mon, 13 May 2024 08:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17131474BF
+	for <git@vger.kernel.org>; Mon, 13 May 2024 08:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715589380; cv=none; b=pa5I33a6UpxRhUkY0TY8vWFF6Qh1fE/hnLnM0FbNpBS34D/g9IjX6MtpEt2EXG0sH5EkMTFCw4LUPSalMHXXF1aXBr9y8ZZtCoqTEI2IwNwxyhxY3swOjAp6vD40XdEfcWBQha8XAVlBRo3g4iDSUfF/jKqTJrxCl4BUMrSmf9Y=
+	t=1715589384; cv=none; b=TgVCb0ev+lC0wAc86F6ZeVudrwISs/NUyBT5sYXIeTfL5r69rG5TXFGU4j6+KdnT5rIxeEo9Il6spskPukeh49qDLguhP/92SGcJ/KZwh4Is8txjOAzx44D6RHWAHmXcpNa5Hb0bzv23Xkj2iP/U//30IFrDk/ICxOsWKjQa3kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715589380; c=relaxed/simple;
-	bh=EdF+D6Lq5LIWqBwyTW67of9UG+804s4aDMeo+Jyxtw0=;
+	s=arc-20240116; t=1715589384; c=relaxed/simple;
+	bh=1HzhTbgqIBrs1AtMUe/Y1jeaj9A4HVaIHHWXSY71rFw=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DvpYMRLvj7rgrk153fcNp4JCtG1PF9YmI6PCOJo9iGdQNKLRFCKg/iiKVLBpIivi3E4HHyK4JmpnCpFMFTpDA0ArbKmiyqaykYYe1YZ7lxvIASKpuxsqZjbVxCnqIzQTqV44jAFu4VM2DFdN3qBPKnS1qybTKPZcaa4lkrIsrtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bG4JnMoJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FyUiA69g; arc=none smtp.client-ip=64.147.123.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=MebsJhp3xGADYWKYeCqNz9ogpmlw/XWNz8eq41vg22SqfMBt84fJIhrOjC1nMJKWv6axYIXzEOuz9biVIxzgidXnsHy549LRGkqcXC5dzC1gby2J2pRgW5FwWfncTz5esiVvGc2pqa7BtNle8uNg1JFh37rfTuI8MyGJ5EiA3d4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=om26pNkY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jg0IaOXE; arc=none smtp.client-ip=64.147.123.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bG4JnMoJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FyUiA69g"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.west.internal (Postfix) with ESMTP id 87E551C000F7
-	for <git@vger.kernel.org>; Mon, 13 May 2024 04:36:18 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="om26pNkY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jg0IaOXE"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 1D9F11C000DC
+	for <git@vger.kernel.org>; Mon, 13 May 2024 04:36:22 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 13 May 2024 04:36:18 -0400
+  by compute6.internal (MEProxy); Mon, 13 May 2024 04:36:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715589378; x=1715675778; bh=/X4AsFjaig
-	d6HPuHCiLZEFEgU3QN0hqh7e7ekKMWyVU=; b=bG4JnMoJ1n90JPDFz+YRCI7hu0
-	NlGlUXS0H8jYgRjTV6bULUoP9K+JBZz5png/0QY4jfkN/xsQeecUXpZOjrvISyzW
-	f7ElwG6fG7OMSg9iCTld3IBqpeTs3nAvhfK8UzmmPm9RJW+N8Ufz1DzsWTQw5pGf
-	WmYWF9aJ+9dSz5blmxxF4Wy+ceSTOOqh0sHSZjFOwymeq/VEbrKUpL26fzyH9KBn
-	3dNvxwo4YyMqc4FLj0RWGOcc2nhQ6lX4Qd/xQhFhODs0N7tkrCeAZzKORA2CGxEB
-	0Us5clOW3MS/Pp/0b9PKbBX/9e9BSXaVr9yLjcXjnb9lg0xex5EaFlU6NoWg==
+	:subject:to:to; s=fm3; t=1715589381; x=1715675781; bh=1HzhTbgqIB
+	rs1AtMUe/Y1jeaj9A4HVaIHHWXSY71rFw=; b=om26pNkYmsECcOfGGcJbCMY8ZK
+	EPPQDcvRFtAigv3xKGmlNSi0g/s+czAtXybsekBjCQtXnrVYW+dhH5MtkXA3/vV7
+	ivnGoLsjRzWq5JnkD4L7n+SQ/9wUxVIQo7o/GPyDs8R+blPTQLFDOxKL+CP4raW5
+	1zCC8RseDw3IPTDpZvCK/iDKEXbthoKjb9+jtS7dV+uKUQFHet1EPn8lKRsqUv0s
+	bV0x7QEBs1AKA+xIRea114YGR6N1UF+5Pc9vPqF0bv5zGKA6iXyzArmeP32w7SjQ
+	SntiBhC8O1wQO9G2U1JAKLJHAEsrGnFGJ6pCkr3SNd3GUMevfg9F64YGWb/Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715589378; x=1715675778; bh=/X4AsFjaigd6HPuHCiLZEFEgU3QN
-	0hqh7e7ekKMWyVU=; b=FyUiA69gFddznYVpVByyTacEkpxxqrbnY1gKZzmyKaqn
-	Gx75M9k1AUnIkfKOOM2VYkhwgpBA+zZU+4ulDisRtNkh90UuGzN0pcw52jc53oUd
-	20G7crwa0xa3/DXLMyi+Rsa0gkWk5X9NzVw0DhrcSh1iymf1GuCeKy1MnGnjoqbp
-	MO8x9w/Mw0TbAD/hF0MqT7TvwlnUmPNpvpDQIvaIiKoAcS9MsYWsgwt7BbPe8ySN
-	N/rdeOsA+zrvomJt3lC9Gi6QqYS7F7EtbaJSBsKb97OQ65p6y7+oJX5YviDzIYAP
-	VYy0PxV0f/FDFqAciKm8I7rbIwVUSzZtXRCcHX3pgA==
-X-ME-Sender: <xms:AdFBZif1TZFnk5Hv4W9CIHTwNZroNOzFMnMKU7C3JpyGCRMV3JqAPw>
-    <xme:AdFBZsOHXALraCPLAT_CFLQJnh9HUsdRFUQJVbi4NUDA2HgEfruZMVnw9ciA7IIsy
-    3fmPQ6m2jA-b28cpQ>
-X-ME-Received: <xmr:AdFBZjhYg1xSzP-h9tHtrbY3nI6J2jllM77Ic9mq8cJkoAupcWP0HVJoI4nr0M0zCDa3y2pjYUsoVC8dwlfVavNo3MInIEJDtcxwpGIQYdLkWcU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgtdehucetufdoteggodetrfdotf
+	fm3; t=1715589381; x=1715675781; bh=1HzhTbgqIBrs1AtMUe/Y1jeaj9A4
+	HVaIHHWXSY71rFw=; b=jg0IaOXEVt4OWmcSayiJsONI+xbIzzBUPt3zTvDwFcZJ
+	deVwxB2kkZwxfFzwp4nClkUCu2ezoQONtsc227BoS6Bw0HNGHa0EEQjzMZNDJN2X
+	0MpkEPOF9odxWgwBh6bh9xFNQS6UNph8dBlGUthWd02E4yX5+FBpadQca4juZ3mW
+	PQBdEhugxsK4ubkXiVchrFjGlMwIc1inGreDN1i/PX4714WfvsEF5whBAYnzU8lf
+	WR6NKqkFDyucgxk05IFX/xHOx0LsnKybyICQczmb33I3SG8X/wLvKXb64I9OlcnI
+	6UEMANhRpExK0phTeAUlBf9tkwmLYRcOaoJNO+Ccrw==
+X-ME-Sender: <xms:BdFBZjPnJ_AA5J8ivYrKfCd6C0vU-V_yUIgGowKulGa0whVrBJn0-A>
+    <xme:BdFBZt9er78Xee3dV3kN6cWXhN8bJ-wiG_UbR3wL2q828oiVrrF3xwZIRsq0X364J
+    IOGPQNS2FZGC7CF9w>
+X-ME-Received: <xmr:BdFBZiQX3PuQGGfOgH9BoTEy3s__Y5tBCI1OBSQK82eYWYmtlvpYbvBBnTZ91u263RAlBDWjryOl4jEJiXpONqraZOCBXaIa-d6VLOO-YhsRLm0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgtdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:AtFBZv9Lso2pNw0vUGQlycCfZTkQXVo2IICiKkm0SKDn_3xMa2qQJw>
-    <xmx:AtFBZus5ifIvVCbnzthvgCkS_ufc9EkHjFKwRskizNSTsZ2W_r_Qsg>
-    <xmx:AtFBZmFnAT7y6auKrZFo6iV-jPLj_c9v9ajE1HMmu8JIJsTlgqga_A>
-    <xmx:AtFBZtO7g4de8gi_juzHS4vTRLpwL8QCeNCcRZ0edst6xqYK_2bL_A>
-    <xmx:AtFBZjU4YXkGRkfMHGHQXnDDJjYNgf1GdVubsZQ_QKEi65BLLk9tqCyo>
+X-ME-Proxy: <xmx:BdFBZnuek8sPbYBy_UTMKPG5Q2lupf65_wPhV6c6Lkp74MthxonxRw>
+    <xmx:BdFBZrfA5E2DyxqHe0AmRmKjZSdk3xztuu_Pw2Blgv-SN5cV-fdyKw>
+    <xmx:BdFBZj0UJYvkJjgIqzBT6kQVP9XUzlKLolh5FoGqp2_y2f2Ynw2F_Q>
+    <xmx:BdFBZn_90Y9MvBm8qfTkiTsEnobXxbqQ4P0SDxFDQkZB6ewq4oAunw>
+    <xmx:BdFBZjHek1U-caKbm48kytXevhfBoUftabbWGGImjzyXYzjofikKy6i3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 13 May 2024 04:36:17 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 13 May 2024 04:36:20 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id cd58d0ba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id ad48c2ab (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 13 May 2024 08:35:55 +0000 (UTC)
-Date: Mon, 13 May 2024 10:36:11 +0200
+	Mon, 13 May 2024 08:36:02 +0000 (UTC)
+Date: Mon, 13 May 2024 10:36:18 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: Re: [PATCH 07/13] reftable/merged: split up initialization and
- seeking of records
-Message-ID: <ZkHQ-yAtzm1GNqFY@tanuki>
+Subject: Re: [PATCH 08/13] reftable/merged: simplify indices for subiterators
+Message-ID: <ZkHRApu7WvdihQBe@tanuki>
 References: <cover.1715166175.git.ps@pks.im>
- <21b3e3ab5f04e66fdd352187b1da699d1ab67cee.1715166175.git.ps@pks.im>
- <dqnhhjdingkhhwwp5nwut2hsnkkze7m2ls4kscddqxm3txjzbf@5knvdk4vc6eg>
+ <f0f42cd56b9e54e9c7d58be41fcc4e226d5c76ff.1715166175.git.ps@pks.im>
+ <uecirknp6pdo5amkv6kvfvxryiptqrgblttbu6dhz3vh74obzd@7dwnx3agsllr>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,80 +82,63 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="c2QSM1du739nQu4w"
+	protocol="application/pgp-signature"; boundary="RY0AzqVUC4892qif"
 Content-Disposition: inline
-In-Reply-To: <dqnhhjdingkhhwwp5nwut2hsnkkze7m2ls4kscddqxm3txjzbf@5knvdk4vc6eg>
+In-Reply-To: <uecirknp6pdo5amkv6kvfvxryiptqrgblttbu6dhz3vh74obzd@7dwnx3agsllr>
 
 
---c2QSM1du739nQu4w
+--RY0AzqVUC4892qif
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 10, 2024 at 02:18:16PM -0500, Justin Tobler wrote:
+On Fri, May 10, 2024 at 02:25:09PM -0500, Justin Tobler wrote:
 > On 24/05/08 01:04PM, Patrick Steinhardt wrote:
-> > To initialize a `struct merged_iter`, we need to seek all subiterators
-> > to the wanted record and then add their results to the priority queue
-> > used to sort the records. This logic is split up across two functions,
-> > `merged_table_seek_record()` and `merged_table_iter()`. The scope of
+> > When seeking on a merged table, we perform the seek for each of the
+> > subiterators. If the subiterator hasa the desired record we add it to
 >=20
-> Did we mean `merged_iter_init` instead of `merged_table_iter()` here?
+> s/hasa/has/
 
-Indeed, good catch.
+Fixed.
 
-> > @@ -246,32 +230,33 @@ static int merged_table_seek_record(struct reftab=
-le_merged_table *mt,
-> >  				    struct reftable_iterator *it,
-> >  				    struct reftable_record *rec)
-> >  {
-> > -	struct merged_iter merged =3D {
-> > -		.typ =3D reftable_record_type(rec),
-> > -		.hash_id =3D mt->hash_id,
-> > -		.suppress_deletions =3D mt->suppress_deletions,
-> > -		.advance_index =3D -1,
-> > -	};
-> > -	struct merged_iter *p;
-> > +	struct merged_iter merged, *p;
-> >  	int err;
-> > =20
-> > -	REFTABLE_CALLOC_ARRAY(merged.subiters, mt->stack_len);
-> > +	merged_iter_init(&merged, mt);
-> > +
-> >  	for (size_t i =3D 0; i < mt->stack_len; i++) {
-> > +		reftable_record_init(&merged.subiters[merged.stack_len].rec,
-> > +				     reftable_record_type(rec));
+> > the priority queue, otherwise we skip it and don't add it to the stack
+> > of subiterators hosted by the merged table.
+> >=20
+> > The consequence of this is that the index of the subiterator in the
+> > merged table does not necessarily correspond to the index of it in the
+> > merged iterator. Next to being potentially confusing, it also means that
+> > we won't easily be able to re-seek the merged iterator because we have
+> > no clear connection between both of the data structures.
 >=20
-> I find it somewhat confusing how we increment the subiterator index
-> here. I assume this is because when a record is not found we don't want
-> to add it to the index. Might be nice to add a comment here explaining
-> this.
+> Ah, I also found this a bit confusing. I think this is a good change.
+> >=20
+> > Refactor the code so that the index stays the same in both structures.
 >=20
-> Edit: Looks like you address this in the next commit so I guess we are
-> good :)
+> Was there any advantage to not adding subiterators to the stack
+> originally? It looks like it adding them doesn't affect anything.
 
-Seconded. And yes, as you noticed, this is one of the reasons why I
-change this in the next patch.
+Not to the best of my knowledge, no.
 
 Patrick
 
---c2QSM1du739nQu4w
+--RY0AzqVUC4892qif
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB0PoACgkQVbJhu7ck
-PpQzsg/9Gkux8r38xI5KEFgutLm1mObfYX+Jj/9czffqn/KSxgn+Ebp0jyV+06Jj
-xstJm3geBPWeXkKhdzxeXC7wHzbSjQY36Of5mdIJjlW5cTaD86u6BtlIfP+AN8ju
-Jzemm2yuSMDW0Z46rt9TyGkuG2vxKS8zyfV1XJwmn4tMGaR0IdWgfT1tLkSKW2HE
-VQ05/kmfwRYEkKQh1KopmU167dCFqVSksjmYoNpBiFmueGK6YsKFxlIMfBXO2wAV
-kdopV/HQMRP1qo5zCzrQSFasT5QS9Bw3xMqgmfi8Z0U3pOwcVnvdSdXCQxNCXnvs
-wL6AkpzIs22a3z8YKZVKx/trolwp7LCmgY0L5quCNKON1kmcwAqjEBdQdLkzuGH6
-WAvjrUhlVb42un7OWSYO7EveBO74z3p6R/w22/ps6ApgxEmBinfK1hc228SGZ0hg
-9ttfj4yTSA/2B5TzTE2qpdPqKW9iYZTfOmPqyd3491hM2gt0q6EyO4JtLxumJijk
-3hm3lwx30MTjlyywGVdHTAdo0xl4QXRRrKGjQFlfv6KsejvOR3tZN+vpeRWhyHcv
-/57FXh3yDji9bEkG/Z0BkcKOl7rcqhEiRL3XwB2gLjZ/Hl0nCVXwC2ep3aiYou57
-vhmd7Jj8My1hukvLMS9fnydCx902CsjAHsizfE0nnnFCeAVQRv8=
-=MHeJ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB0QEACgkQVbJhu7ck
+PpQgDw/+Pmv701xJG3AiBEDxuFlidpxv5aNY0XkFXOn/FkV7EX3uX8vNf5HHrmId
+ATGK/ZTanVSHlJ1QCdpwIMJdTKcJif26nulMX1MOn144kA6yUJyW1T9F2EySJ5bF
+Y8IiHYo+SJXua5illOwkySu0sqjlYCo+xdkfQHLJHiwKZwGc5cO7+AFShD4ZC0Nz
+cW/7TJChsqZoDUg7Fd1krxEIVNN84yC9zPUrHJxKULb1IiCRpVeIu7KgMIltLYcQ
+Gyb6ZBo4LAPTZ+aMN70LCD6O2rUTLkBut8xd0SqAw7t6fQZD/KeXLVKW3oQcg+WN
+FzY+i4WDq4cD9gfrC19reN2KsFQeiqxH7WznFTSAHqCp9yBSfztzCsja2TgD5kw+
+gKKK6ie/e38N99AmqIAna4/eT5aTeW/CBVPphmxkYGIqhXB5RuUtncdenVmI7o/S
++Zsikm+VX8AJRQjdLHrXqRX11WNVWzEKJk3jjBfQl7vFfi2caS2hyIX/rc4c0fzM
+DvjQCa51MArejXRbUb3ycrBtA/cvgJ76J91GO8mmHz5adgUVHpmuLNMkb29HEyDL
+QN4S99BkIgJ19d8hpprtB+12shV7XdosexK8ih5fogKYOLCQQqpAEYPWiEdUsTD8
+CzN+Z9ZNONjl7f/vsePm63WqCXd00jPPiljBGm+g0lEigBUXoq4=
+=uyLB
 -----END PGP SIGNATURE-----
 
---c2QSM1du739nQu4w--
+--RY0AzqVUC4892qif--
