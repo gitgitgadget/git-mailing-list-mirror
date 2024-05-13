@@ -1,168 +1,92 @@
-Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9988146A6D
-	for <git@vger.kernel.org>; Mon, 13 May 2024 07:15:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574C7146A78
+	for <git@vger.kernel.org>; Mon, 13 May 2024 07:26:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715584519; cv=none; b=m/qmPdnN5pD+s9N+qp4yu937gytDKlDuYQSB68MKypCNFtYBKMouL01fXbBdraXtC9ymvzaWfUlmi77A5do35tKqr0r6XmJzjmaC2wEELrvr1qwDgg+n76O331KcxLtE4ocdWcVSKw5aY01yzfrhidCstLzNa1KF2Ailw67gMWk=
+	t=1715585174; cv=none; b=d2mc603bwxQn9pfbwcehH6xitbgugDoek9vH37lGUPROTYvXp28m7K1S2SKE7ULKf4KZ/MwPPgwiHpBsVBO7Jus1LcAD7oSBM6iAw5zL8O5JIUdpDJ9wqK2Ig9GycPpr6Ko7WeLgPLEkgffxPa0X2Tb7lq8sIR9/YvDQMHGruZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715584519; c=relaxed/simple;
-	bh=cwR8RZ+MjJ/jR1GSUtvG7ceK+Op+3hw7TRxreQjcVqI=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VutgoNVbwqI+T7miBV67/3/b00T2bk5fwB3hcPBUFGJ9SAtT0/cFL60w5P6qb3jkTy7SLeT/WxUiuYorEdu+IcAyrvS0+iukcXi4poh46g8nTT9KUfLxALdqQ4VIr6QoJPvI1bPFkJw0HwUTKwvu0uFxzTuxHoHh2xHrO4VFMSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WHx3ZvJ9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Js8xhx9v; arc=none smtp.client-ip=64.147.123.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715585174; c=relaxed/simple;
+	bh=FFLfk7YPtXHYyPH5W9lVp29eJnzRJ8YMiWTkW01Dx80=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=fya6d5dTX4OseruqmXw0rzvf0JxDLiX9GvO1lqm2NZNAIRPw8jNToL3Cg0mwZc7lKGykDOCHLujgfjxMkaTTmlCBtB8ryK8+sIpKc92CEGfCbmXOWm9xZKYAym6M16vfMdLsNcluWAITuhggUWjZJyPqqmcX5N6wj6pb8sDNd2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wir6z171; arc=none smtp.client-ip=209.85.166.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WHx3ZvJ9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Js8xhx9v"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id EB0EE18000EA
-	for <git@vger.kernel.org>; Mon, 13 May 2024 03:15:16 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 13 May 2024 03:15:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715584516; x=1715670916; bh=cAw33wxL0r
-	E1Of8yKWOb3wo7VdAzwQZSUWUj8Y78Wf0=; b=WHx3ZvJ9MszoHYPAWt/4+aEXWg
-	ia4qsXWHzoZapjckNgnyvfq1W3gK2Utyg2BZMptqkGOhNM18i51C2ptTn+xFfE0B
-	M3f4CsIM81B+ze7bbQeOncFIo+nlVVluWOqz8aHXKumXvWsJTDjH1q70VGosTNXU
-	n5CbM7bvi6xe0dA+UJmWA+yYza9m0c9kXA64MHg0RqeglPm252cKhU3A7RFPB0lU
-	p3aboY5EJYELuSDXSvC03NQu0rTLo0dp5ZqbLjZGoQTzuAbNdP/j700NrsEkx8cL
-	825BxqA+t2pFVZJn+v+RJ/aOlK4+1VLMqYDzukN05kWMXyCwjY8qqU/1esXg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715584516; x=1715670916; bh=cAw33wxL0rE1Of8yKWOb3wo7VdAz
-	wQZSUWUj8Y78Wf0=; b=Js8xhx9vsosF9INOwOPqjXNOf79IAfAkhw9/jtJekZrH
-	DTfw8Sn8MnG3jWj6l9qQHb78PLXNs0Sv+bQBiKQAEZnOrj2ZzRP3Wr/Gu1Wscz4K
-	v8EYgMx/PvviVPyg66btuA+S5MclE6aT8292+OFcqXSrbxcODph2gCACfwNzp0Nw
-	cVnctwqcUWM95pSLGpqO4Qp/+5Pv0Fo7FGSIGilCOpjI884FLOSKANj+wYAzLBhh
-	XsVcC1xsPFMuZEEkMq9uLGm1yKsWCuVwPp8kRjVywLE96m3IDaP1/hQ6qFfYTqLu
-	+AEYmvW4ptLXRUaQz1G2qGYsFm+7A0qIWq8/IJKkiw==
-X-ME-Sender: <xms:BL5BZnIY1bzYhQs-Go1_B7FYagTZ_mC2sqy8K7NpLDmLikrDkHZZ1Q>
-    <xme:BL5BZrLwv4fTVqigZy0fOUejWbH-2Xz5Z8_YzBUchgVq5E8uXIUTGJIJB7dh3VYGt
-    SnoVxPDnqFiOvtdYg>
-X-ME-Received: <xmr:BL5BZvu_cXYI1_j8IZNcOPnr1BaDMjmWvEew9DDqrtNSjrbSYRRwk9QVGp-xfn2t1NME-7YN97yelgS4l24piAvP2zaHrQE-MX0lSY-aoob8MsM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdegfedguddugecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
-    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:BL5BZgasMYshuwVDD2urRnq8DStLeRZ-vxySmy3uCdU4axozOrRnLg>
-    <xmx:BL5BZuZmf-plug_dZ9xMz56pwwWh1YoPOOfLOxDj7fKntozImL1BNQ>
-    <xmx:BL5BZkAQoB_D6n1prEU8cakCY2TXduWocYOBdc_KyuyDEjS0ZIWeWg>
-    <xmx:BL5BZsb8XTMiJmvFYKJ_Jf795Kg4oYSd9y5OAC7Sroto2TJ0DcNPtg>
-    <xmx:BL5BZhzyc3087PxmoV_aRXCPWAaLWBBykSLLT3coA7-LChMIZ2RGuCQd>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 13 May 2024 03:15:15 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 2e98752b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Mon, 13 May 2024 07:14:57 +0000 (UTC)
-Date: Mon, 13 May 2024 09:15:13 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH 2/2] builtin/hash-object: fix uninitialized hash function
-Message-ID: <1e010f798ce50e51100bd46564a69ddbd31d29ea.1715582857.git.ps@pks.im>
-References: <cover.1715582857.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wir6z171"
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-36c67760b1aso19966475ab.1
+        for <git@vger.kernel.org>; Mon, 13 May 2024 00:26:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715585172; x=1716189972; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=FFLfk7YPtXHYyPH5W9lVp29eJnzRJ8YMiWTkW01Dx80=;
+        b=Wir6z171NT6q8B2XPTHYYG5yuVQHSMtFggxLqOG8f6alqe2OqA3KEh/khRFWN7Vdbn
+         VokY+EYaSiWebuu+RPew2fTA0SCFai1e+xAgaUIUZA+2FpC78+UcVse5LwMNOMENXAA7
+         Y0lEY6uUka/TC0u3ATYt9JuHxtL/tYDUylis9x1PNSswC0NIJtNum3u/BHVQ2YIxIRCu
+         +WAdbkqNtN/XHLD0CcNc8aGrjFwo1J2qNkUZm9VNfEplvu6tOlnRz5xpxBVhNmTjqEvK
+         AREsCr3aXWFSUDe3yu8EU/3rE9Jr/GIwnRmmEonStOl6tdTPqu673WB2bplUMQB1zShN
+         OFRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715585172; x=1716189972;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FFLfk7YPtXHYyPH5W9lVp29eJnzRJ8YMiWTkW01Dx80=;
+        b=ABgngmDNJGTMWhDZneVoPD/s7XhCZnIf5omzrRdaeH5mjXyKNiWW/AWX10BzQL5/2h
+         8ZCUpguzdQAHWn2B0fiiZ9NCiWK1Ek3p/cjFQ+hApF35Q/KFJSdPUzWvE2cnT4xYUkMl
+         OolXk+KBe71MTZ0JjgQeFJntmYFlYl4GyAUz4h5N3PtPxjxji/pdcAVLolb+6Urks3ru
+         ykamDXPODjC7F7j+DH0MlCs/jNp5WJNJTvCLI0wmaLasf6LGY5MBeHKNT+3IJvwBLZHl
+         NH2tnaVwunu3Ru/sKHG1c9+XLjxCtutWQZjdbLMYBW1PfWAkiCefmy2Rsi8S0OEp+bqv
+         Ubvw==
+X-Gm-Message-State: AOJu0YwPjZ0vqCfTUIxLQU4Yc8rktgKukQgtmOc3NENsL/27Hr/fFj0z
+	M0u6swC1hggFmed5zfcIrFvdZZi9IaGsmNRhneE+P6HJzinqKrt0vswYLcY2eut8fQeTsLBNt3w
+	pOO4cBeF1KWSoExScPZ0z2lEr6vQx7qp2
+X-Google-Smtp-Source: AGHT+IHRPdq6Xf6hQgCejPO9acIYhcpKnr7YMR53Pqkuj9M8Q4J/MxUI3vcI5RMlJgc4VLoGfl2g9pJv1QCVUJOcfa4=
+X-Received: by 2002:a05:6e02:1c29:b0:36b:bec:18ce with SMTP id
+ e9e14a558f8ab-36cc16eea25mr102541445ab.31.1715585172261; Mon, 13 May 2024
+ 00:26:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KSdK3nYZjwMNJxwp"
-Content-Disposition: inline
-In-Reply-To: <cover.1715582857.git.ps@pks.im>
+From: Ondra Medek <xmedeko@gmail.com>
+Date: Mon, 13 May 2024 09:26:00 +0200
+Message-ID: <CAJsoDaEJn1Y0CgtxpkGqVRsTiDnMxjNFrtbTuUVOvT87N23JNg@mail.gmail.com>
+Subject: Checkout to different directory at certain commit without changing index
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Hello,
+I need a simple script for unskilled users to do a fast checkout (LFS
+friendly) of the current local Git clone at a certain commit to a
+different directory I.e. something like "copy at a point in history".
+IMO all possible solutions are summarized in this thread
+https://stackoverflow.com/questions/160608/do-a-git-export-like-svn-export
+I describe some of them with my remarks:
 
---KSdK3nYZjwMNJxwp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+- git checkout-index : works with HEAD only.
+- git archive: influenced by export-ignore and export-subst
+attributes, so may not produce exact copy of sources. (And needs tar).
+- git worktree add -d : needs cleanup: git prune or git remove.
+- git clone: Unfortunately, -b param cannot work with commit hash and
+does not respect local worktree settings (e.g. autocrlf). So, a
+solution may be a bit complicated: git clone -s -n . dest/path ; cp
+.git/config dest/path/.git ; cd dest/path ; git co -q <commit-ish> ;
+rm -rf .git
+- git checkout: Unfortunately, modifies Git index, so some action to
+revert index is necessary after: git --work-tree=/path/to/checkout/
+checkout -f -q <tree-ish> -- ./
 
-The git-hash-object(1) command allows users to hash an object even
-without a repository. Starting with c8aed5e8da (repository: stop setting
-SHA1 as the default object hash, 2024-05-07), this will make us hit an
-uninitialized hash function, which subsequently leads to a segfault.
+For me, the best solution is with git clone, because it does not
+modify Git index nor any source working tree settings, so no cleanup
+is necessary. But it's a bit complicated, though. It seems to me that
+"git checkout" could do this better and simpler if it would have some
+param to not modify the Git index. Is it possible to enhance git
+checkout? Or is there any other simple solution not mentioned in the
+SO thread?
 
-Fix this by falling back to SHA-1 explicitly when running outside of a
-Git repository. Eventually, we should expose this function as a command
-line option to the users so that they can pick which object hash to use
-by themselves.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/hash-object.c  | 7 +++++++
- t/t1007-hash-object.sh | 6 ++++++
- 2 files changed, 13 insertions(+)
-
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index 82ca6d2bfd..0855f4f8aa 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -123,6 +123,13 @@ int cmd_hash_object(int argc, const char **argv, const=
- char *prefix)
- 	else
- 		prefix =3D setup_git_directory_gently(&nongit);
-=20
-+	/*
-+	 * TODO: Allow the hash algorithm to be configured by the user via a
-+	 *       command line option when not using `-w`.
-+	 */
-+	if (nongit)
-+		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	if (vpath && prefix) {
- 		vpath_free =3D prefix_filename(prefix, vpath);
- 		vpath =3D vpath_free;
-diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index 64aea38486..4c138c6ca4 100755
---- a/t/t1007-hash-object.sh
-+++ b/t/t1007-hash-object.sh
-@@ -260,4 +260,10 @@ test_expect_success '--literally with extra-long type'=
- '
- 	echo example | git hash-object -t $t --literally --stdin
- '
-=20
-+test_expect_success '--stdin outside of repository' '
-+	nongit git hash-object --stdin <hello >actual &&
-+	echo "$(test_oid hello)" >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
---=20
-2.45.GIT
-
-
---KSdK3nYZjwMNJxwp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZBvgAACgkQVbJhu7ck
-PpSB4A/8C1yeSyLu60ESp5mI+909sGnGeioZdsQ1Bd+CPaFsjGmeanEfReJNvL3G
-+LIJBoe0gocUpAiS2mX9kYDq0UENWAf+tZaQatElB/P6taTLDHY5n20GHKSFFNuY
-CN5G9TQSqAYKnV0rLNkUOid9vPrdrUW5KP0+C7iXHRPFPgv7Ij1v6QbEoGmtLm3r
-z3UPxoO3qv5AQxuDthTzlwOSnKzMcRldx438HlG+EX/Fqscaaxsvzzk6mq6ppTVK
-6hArcaSleIJXCm0MjgiKEYmgHJHH/QPJJFAEHK9ZSCtTyEDOL+hQ8BzdaAM0dqTN
-B5YxZTFSB04QbQh7c1CyN/IEXm4YqOTW4FBK8+NDcv03GaaJoZ89l24EVBM/p3dw
-zXMVnwT2TX+lceIdw6p9HtGaxzhx/VeF/o8reKjwF+ehA738Z9gjPhLMzS0EM8kq
-uqrkrYvapedeHzcbWQdEl4N3PdE/oHyHzErvfW+z1wsrVAVrLO4/6jNuYaqg2thY
-mW0eOu94LRLTwpOtKr/mC3HbNZge8xJBMCTgx6sisfH4bRanBCT6We/G8M7PTJPL
-HJ9PENagC+OgrQVrLAl+1YQavyHzUlEvNcsMhbjFIf8ubb41FO4zVHGTKHMIjfId
-RN/6L3HKUMufnxEZWhS1sEmyFkefhtolexYuiJcoLoHVu49Alwc=
-=f5kg
------END PGP SIGNATURE-----
-
---KSdK3nYZjwMNJxwp--
+Thank you
+Ondra Medek
