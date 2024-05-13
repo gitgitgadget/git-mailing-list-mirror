@@ -1,107 +1,121 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C362D1DA24
-	for <git@vger.kernel.org>; Mon, 13 May 2024 21:07:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF59B824A3
+	for <git@vger.kernel.org>; Mon, 13 May 2024 21:20:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715634478; cv=none; b=GrSYGsTkeQmfayBQO3eJJEzpzoJ90JbaJQ/jeVoM+chraAuheDAMHK+9gPapynw+/YhidA3ml9rUe0dF+X3VR3QMDqN24Z1dpubiiZxDjD0pbKOogB6La1bHONFbkWLoG9KQENoITmhD2hhB99/3EcdUtOODJNerO20ALEforSo=
+	t=1715635203; cv=none; b=LalxNqNq6LXUpJo2VygA5fLc5on7G9bLUUi3iGZf9UUP6fUb1MMXQJHXl+zB+BCEuq86SmDtGDCFj5GQIP5jP1leb2aWfPpkpTdLx7ud7VX1qs2rKKQenIbmKsBtYLVj9s64CyhVNjXyd9iVjtnSGpnuMFyCjqraFIYOPhI7VAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715634478; c=relaxed/simple;
-	bh=FvpWS3UW1S+/FHdJ6g/wPusxTdSAvkXVz3NwIWKZJ3w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=J2E5Cjp8VF4nkpRLv1wju3DpNMZn/yehgDL3bu0S40NnDds/6+CIzKk2sWIxElT6Jk2Z7oTm8RfQFj80Rm2DJxC7b8IM4GqIOIdzwRFaTqHT5+s3m76W9EzdGu1DvtTaunZfynj7yz8N2AEo1qkNHCwFAmD674EjV2zPITb6b8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hcDDdq6x; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1715635203; c=relaxed/simple;
+	bh=SjKGpdbThgdNCcHr7Mn/S7ZSzG4WfPOeG70IxN4OZtc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZB2CBXUj/AvmHkFgdy06yNWiD4fOkfUgMg2fLJgzcBbSrHLL7Yk/UArJNzIflkBPM0bWrJcxMzhbfblXtyKDn4ovW6ldA8SQMoOjhFv4IYI1g6Uh/tbVFLnPOkjdsxkN2qg25we6nZLK91jRxFPs1ct4mxcgw9K+I3mHjY0PF0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=my/aS5tY; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hcDDdq6x"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-51fdc9af005so7808390e87.3
-        for <git@vger.kernel.org>; Mon, 13 May 2024 14:07:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1715634475; x=1716239275; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lFLN7fwEUl9PpVXN1aSrT39LqWVkjSKYwK+ljI4Bc+I=;
-        b=hcDDdq6xc0mL1e5alRMZ8k/TVUBcaw85Xh4H59oFtH5QiVQHiE2ql6/9sFwvj4Bd3b
-         gH5mkaGGDxrr3e2P3/XxRsICdnQD3fIKCigC8uNZVO2S2JLZUHOdmLU3gxEKGVVX/hVL
-         euKlqztLMYC0O6OOAOIVjc5sJ65Nj/X8yhHNcDJ85ey4HnDLCNoZBQZQXzVfYIgm929H
-         z8u5StoxgoOimuvLrmFm/pDr93iPPElkP+kyJucSpm+joVGTOjjdibqNosHmvjRVnnc3
-         G93RcC9JC+ohpjP/PHbt6Qvto+gLXdh6z35ABBMTT5YWs5fW9nYEXGchhCuIamXEqT3U
-         cUGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715634475; x=1716239275;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lFLN7fwEUl9PpVXN1aSrT39LqWVkjSKYwK+ljI4Bc+I=;
-        b=XNnzx3c9+LuI3V1PrDtWZt3z6d6hDyp7NkY262BFrAtwZGvqjo2wYVl12w9FLLhWqz
-         l3qoaAMYr5UiNoeA2Nc+N8FoYN+4AqtNwMF+Vbi8xU47BA8m9MO3o1KrgKdIqTcnjmwO
-         X2FQBCazExf/slSIC8wI8EI5vTse8BlT9EArdl2rAJZcWAkGhWr9uRiDkK6YcrTs94FV
-         INgGDd+Y6/FZlqX9sBJzpfK6+066PCQ1d7yXfyTXMEW7GSfI8EQLuY3JiRjUOA1vzWXQ
-         tZkn5CLr0DWLsblh7v7mGMUAySqjg3kG+MrMojH9dig/kM2wMqOmcAyMXcJLdyGL4K/U
-         aWNA==
-X-Gm-Message-State: AOJu0YwItDvM/7DQxj8znoTrfnleltxofiiTOgwTTQkXguH8H7w8/27q
-	ZnhgDkUMfpoYKAjGDWv4jMgAOr9jEdkg4qLpj1J67kB+RkRCbjND5xMdoWLE0QysSU4HtBMn+QV
-	IdpnIpk7RP8Cn2bDXt41O/K6iC0Dl5pXnUaOQ
-X-Google-Smtp-Source: AGHT+IELigGJh09XfbdBYZceD23/RlmQaj3MFSuZCP+zkZfpgmQudqUP83kxcO7Xig9hDgaak+fUdCRLfLy3r4r1pj8=
-X-Received: by 2002:a19:2d04:0:b0:51c:778f:b569 with SMTP id
- 2adb3069b0e04-5220fe7931fmr7522882e87.29.1715634474759; Mon, 13 May 2024
- 14:07:54 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="my/aS5tY"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 4356D5DA7D;
+	Mon, 13 May 2024 21:19:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1715635194;
+	bh=SjKGpdbThgdNCcHr7Mn/S7ZSzG4WfPOeG70IxN4OZtc=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=my/aS5tYmUsAMBONhmQ8yq5QhaSSQnD55eL+V9+vt16qNI5UPLNKRCd1opIREAxw5
+	 3YLgtimsTxgxZl7ir5dZPkS3oMGba/r5a+O6fa8PPGsUUNQBWi27hPijBfQmGXjaxq
+	 fdT5lDKlEVzo/tZ85W9LjBWwP7FalQ1SFyBeWnLPgLujgKH+5Cm+nOegvrhCKk1OCB
+	 dLD6OOZVX19k2sjLhuKOKclsqdaIeq9gnpKK1uHsn8nZHvxzz5CGUIkgHaEsPwqdm7
+	 URuEAv+8QstJ5g+Bmwc8Dp8mp7zvHP3tW4ckfW4PVC7RrIkR2/vrT4RnLfCjHhVegU
+	 fz2pSzFHyCJui4fD705jcgcKX1HC/8R1ZC2R7lct1g7YyRO6qkXw+5MEa/tpKkBeU/
+	 CeV6nYpZfUs9/EdtSIU8KMB1jUPS9qvrZ+nNj9YPyhrV5PrM+P7Fk9fQ5hzdh3jET9
+	 7rD+HEORPeI425CdRwgFhid51MAhL+DwVvlH0wY/OY8CGlYRoeJ
+Date: Mon, 13 May 2024 21:19:51 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: lbdyck@gmail.com
+Cc: 'Junio C Hamano' <gitster@pobox.com>,
+	'Sean Allred' <allred.sean@gmail.com>, git@vger.kernel.org
+Subject: Re: git client enhancement request
+Message-ID: <ZkKD95VBlmsUJdB5@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	lbdyck@gmail.com, 'Junio C Hamano' <gitster@pobox.com>,
+	'Sean Allred' <allred.sean@gmail.com>, git@vger.kernel.org
+References: <02f201daa547$503df630$f0b9e290$@gmail.com>
+ <m0pltptx3h.fsf@epic96565.epic.com>
+ <xmqq8r0dfsvd.fsf@gitster.g>
+ <051d01daa567$caa22750$5fe675f0$@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1715582857.git.ps@pks.im> <20240513192112.866021-1-gitster@pobox.com>
- <20240513192112.866021-3-gitster@pobox.com> <CAO_smVg7mdQHp+sg4-vVUEOVRBEoZjqXZu=Kk8PuYc9mtYeMXg@mail.gmail.com>
- <xmqqy18de9kq.fsf@gitster.g> <xmqqseyle8aw.fsf@gitster.g>
-In-Reply-To: <xmqqseyle8aw.fsf@gitster.g>
-From: Kyle Lippincott <spectral@google.com>
-Date: Mon, 13 May 2024 14:07:38 -0700
-Message-ID: <CAO_smVgj85+LdGyhwgyzrCV-KYJ7r+zhJq-cBq_2wa+Qs1bbjQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] t1517: test commands that are designed to be run
- outside repository
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="L0zrESb3a81w8rFN"
+Content-Disposition: inline
+In-Reply-To: <051d01daa567$caa22750$5fe675f0$@gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--L0zrESb3a81w8rFN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 13, 2024 at 2:00=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Kyle Lippincott <spectral@google.com> writes:
-> >
-> >> Do we only expect failure because of a temporary condition (the bug
-> >> that is mentioned in the commit message)? If so, we should probably
-> >> add a TODO, FIXME, or some other similar style of comment that
-> >> describes that this should be fixed.
-> >
-> > test_expect_failure is description enough for that purpose.
->
-> We say this in t/README:
->
->  - test_expect_failure [<prereq>] <message> <script>
->
->    This is NOT the opposite of test_expect_success, but is used
->    to mark a test that demonstrates a known breakage.  Unlike
->    the usual test_expect_success tests, which say "ok" on
->    success and "FAIL" on failure, this will say "FIXED" on
->    success and "still broken" on failure.  Failures from these
->    tests won't cause -i (immediate) to stop.
+On 2024-05-13 at 19:00:14, lbdyck@gmail.com wrote:
+> I have to interject here that the git client doing a push must be fully
+> authenticated which implies to me that all the information required is
+> available to do so and allow the server repository to be updated.
 
-Got it, thanks for explaining. With that, this change looks good to me.
+First of all, the authentication required to _create_ a repository need
+not be the same as to _read_ or _write_ a repository.  It might require
+a totally different set of scopes or privileges to create a new
+repository, which many users will have avoided giving to their
+credentials for least-privilege reasons.
 
->
-> Which means that when somebody rans out of things to do, grepping
-> for test_expect_failure may give them a good place to start ;-).
->
-> Note that there were a few very rare occasions that what was marked
-> as "known breakage" with test_expect_failure turned out to be what
-> was working as intended.
->
-> Thanks.
+Second, there's no standard API to perform that functionality, and the
+implementation varies widely on different forges.  There are also people
+who don't use forges at all, or use tooling like gitolite[0] that handles
+this differently.  Adding such functionality into the Git protocol
+requires intertwining that functionality and the services that provide
+it with the standard forge API, so it's likely to be very complex for
+forges to implement using the same functionality as Git uses currently.
+
+Third, we specifically try not to prioritize any individual piece of
+software or project here.  Even if there are many common forges, we
+won't ship tooling that's specific to GitHub, GitLab, or Bitbucket,
+since that prioritizes those users over others.  Since there's no
+standard API for this, we won't be adding any forge-specific
+functionality to Git.
+
+Even if we decided to implement a standard API for doing this, it
+doesn't mean that forges would adopt it.  Many forges don't implement
+`git-archive` over SSH, for example, since it's hard to cache versus
+using HTTP.
+
+[0] gitolite actually allows you to create repositories by just pushing
+to them if you have permissions to do so in the configuration.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--L0zrESb3a81w8rFN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZkKD9wAKCRB8DEliiIei
+gQq7AQCrQ40vBcCWhoDFwco7fhAL0hHhgRNjTVpqKJbZnu07XgEAqin+EbjpbSE8
+zbk+UN3BW78gV9RviBvmvDCD34r+uAw=
+=n/b2
+-----END PGP SIGNATURE-----
+
+--L0zrESb3a81w8rFN--
