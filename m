@@ -1,246 +1,303 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528467E0F3
-	for <git@vger.kernel.org>; Mon, 13 May 2024 20:16:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1E976056
+	for <git@vger.kernel.org>; Mon, 13 May 2024 20:19:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715631416; cv=none; b=CCkM9s5nlMPRy1U0mUpKwMFHdh+rBLOZgHoXN7B9kv0UcRFeQQlr2OOsPH0aSsNPahVcRmMJYhhoq7N5+RqJ0/ABoIuYtFzxoQWr9OKm2tazIWu9ncIS+y5WWO1HdPWID8RePYkGA+rNqAw8k3tiG/CxJavvo/0+SXxIu0CRihg=
+	t=1715631588; cv=none; b=CtJWVKrxYEKtDxX3WeTLrLx3BoNUGJON1y8ealclFhElE7rPD7opCQ2wW3LIO7RveH9hwZhz0PNvsjjRmGV+BB3duazsXeQ3kUl7B3KASZ7rn1YISFxqyaFcJIaLVNMZIH9r8cyA/K0huKpOCWyqYRK2EZJERQqgC375Ek/ACrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715631416; c=relaxed/simple;
-	bh=s2JeG92ybTSxDGIwf0Ez0YtIVBsmEQrSik0IJ2cYE5A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ftyPudoNy/rkr5C/nEEV8454Qcq0Tegd9MK66/PTPwIT30RsrFYmqnrrmkztrJDJ18yZ0hn3IE0u+TR+OyohQq6hxXdzQqiY2MuDWEswvoMNRi5X1Goote+BPKtylhanUqNaQ/Prmlef1g+A8Fp54GqqsG703LBJ2tdKTQMsXFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=icPfRFux; arc=none smtp.client-ip=209.85.160.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715631588; c=relaxed/simple;
+	bh=exjJKwbORFJLBE/wHJDrXMuEFL3MggMRlP81Afi+ErE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M647vUGMAkYJog3oK5y9gLWm+B7LKQFOeYozmmCb8E3OlnKf255U17Vyqx2R7eQYSdFgdEeXtd1tYErnvV1F1cl6Q09yogX3/f2fPD2jonG9xMoiFyNpsOSGucJtjBsAgNtz7INHSy9BJWulZy5BLVeLD/SXJfUMl/FwVI5jqKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=KRvtKVdF; arc=none smtp.client-ip=209.85.210.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="icPfRFux"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-43e09ff93d3so627231cf.1
-        for <git@vger.kernel.org>; Mon, 13 May 2024 13:16:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="KRvtKVdF"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6f1027cf826so1043132a34.1
+        for <git@vger.kernel.org>; Mon, 13 May 2024 13:19:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715631414; x=1716236214; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s7Hwru7c74M4x6NWNYMW3/uQgX8nfUy2C0QOkqNrc2Q=;
-        b=icPfRFux8bJaDNMGKjMPO90v+izVufoV3uiQ2muWQjTRZOjrG4Tfqw+fSx2z6SpVAG
-         AxX7eOjUsKZaXz6Aqq6Lr0mO/5E/P65JNHfEwoMLZPIAateb5vZ62fkUpM9Pxq9GjwRS
-         lYROTXiD0+k/dO2DBul4CobaGyo0zEMnKhcyQ1FmmSIRmUqHGEVb0HLcUd/pJtE7FQkX
-         YHVnFmSZk3fKKXVeXOth5BVNz8p14blR+bA5LclzOE0ikgPTHl5lh1Ja2i/V4F8cnxcJ
-         fpUM8k0OUmWyk8eMIW1aPv55+YADQo2UZhmKMxi9yW9tPZ5Fu2NRX7ISA6MN58M63qvy
-         rR3A==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1715631586; x=1716236386; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=TTpe4anGibiKOOUrZYpBeIfNBUulx4yzzy9YLlJKaGs=;
+        b=KRvtKVdFeKqtaSLd3YhdBH9PcYcqkkTuQspyImhWcTaQhK56v+sbmXdjEbtGoaVzjS
+         FzpU1f4OoE+WbV2IG27Ymy3CUPap7BEbBqdgqScz6httYcbBNLayxuCel/vZWJiZqWUs
+         QiN2OcvUXirCAAQ1/HiCwcl0v6RN3McAGbAOug0aIaCTFC+KGm2Zd6+Xx3r/2IFzHYbH
+         IDdlLvl6rWrxbhLApRjw15TWQKwla+qrHpqH1YeH+7GxJWxrNMO/OOIkAr8454Nnm96w
+         tjC0ruqGvZc+33QBJi0igUFoM4dJOHNw4rpuRgK8+wq9IsbappEpVz8h/l7xPJJ2WVxh
+         vj/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715631414; x=1716236214;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=s7Hwru7c74M4x6NWNYMW3/uQgX8nfUy2C0QOkqNrc2Q=;
-        b=vzcAdNDv9CjiZQMay6GH6MLcNuNuEJHj/1bs61SlQhEF1Psf8uUpSELYwn6af0XeLS
-         KoT1gg4IeP3TlPgxG7/GPisDb8yLvW94yPQb4THnPx1aL8L8TvoEeJmiutv2EOGiTU+D
-         g5b0SdelJEsru6FynTTCBhmssmvRX7Wj4lgVLpMHrKMfuUC8I6KtGacSYMvmg9HS3q6p
-         xYzUhyFklr8zMbe6juKPcGt+LBu2zWvMlRJO0UhA2IPZgaxxOL7OkRujlAuPynNUj/Il
-         2ivpaY0WyxZ5Xm1GEGY1XhGnIJ/8SesZMvBsrmHEcUoiVE4krrl7WM6y7wjsAc4ApDZo
-         A0Dw==
-X-Gm-Message-State: AOJu0YxkBIgt6jhv8akG+F3dJTKaMZRRZ15WHP7oZgpsez+HDfRGJOFc
-	PSsNPg6LFsDyVSLO/79FribiHtQ1dseAG82HxOvijyr9UfdXT5bX
-X-Google-Smtp-Source: AGHT+IErdvLLNcyzbbyAto2vy3oUlL8mEPLwfcWGmQ3AG7F0kGGXR1Xipv3OrePA92/vh9JwCCBF0g==
-X-Received: by 2002:a05:622a:1a94:b0:43d:e0cf:a46 with SMTP id d75a77b69052e-43dfdb67d61mr132401711cf.3.1715631414097;
-        Mon, 13 May 2024 13:16:54 -0700 (PDT)
-Received: from [169.254.204.239] (pool-74-105-67-34.nwrknj.fios.verizon.net. [74.105.67.34])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43df56d05a4sm59651721cf.85.2024.05.13.13.16.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 May 2024 13:16:53 -0700 (PDT)
-From: John Cai <johncai86@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
- Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
- Dhruva Krishnamurthy <dhruvakm@gmail.com>
-Subject: Re: Re* using tree as attribute source is slow, was Re: Help
- troubleshoot performance regression cloning with depth: git 2.44 vs git 2.42
-Date: Mon, 13 May 2024 16:16:53 -0400
-X-Mailer: MailMate (1.14r5937)
-Message-ID: <1BDD4F51-4B62-463D-A876-FB16E38E86C2@gmail.com>
-In-Reply-To: <xmqqzft6aozg.fsf_-_@gitster.g>
-References: <CAKOHPAn1btewYTdLYWpW+fOaXMY+JQZsLCQxUSwoUqnnFN_ohA@mail.gmail.com>
- <20240501220030.GA1442509@coredump.intra.peff.net>
- <ZjLfcCxjLq4o7hpw@nand.local> <ZjPOd83r+tkmsv3o@nand.local>
- <xmqqfrv0ds7f.fsf@gitster.g> <ZjPTlrMdpI+jXxyW@nand.local>
- <CAOLa=ZRe6eWJ_ZyH+HRq=6Lh0-xZ=1X2Z2f3HW4+EVXNquaDTQ@mail.gmail.com>
- <xmqqbk5ndiqk.fsf@gitster.g>
- <CAKOHPA==xgRBLXmyURkdZ9X4LqQoBHYy=XD0Q_KTQHbK54DOFg@mail.gmail.com>
- <xmqqzft6aozg.fsf_-_@gitster.g>
+        d=1e100.net; s=20230601; t=1715631586; x=1716236386;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TTpe4anGibiKOOUrZYpBeIfNBUulx4yzzy9YLlJKaGs=;
+        b=i+j77WuUwHRemWnBq828NqElXYd+Sl7YX6AUJwDUvoTnVX1lper5KyUA/8NYpGjgxk
+         tDtmQ40KOMksFYmjSmuIcRAwn9O2apPjB1duWK2VT2ESKEkcQFb4oeijJSYJKoUc9vQ/
+         Xe+CxulBuGxIG23AdqFVam+SA78DkWbuUoP5baD18O0NUPZSm2GckQHVK3J+Co5+Kx3N
+         D75gyWdfdfkyiby06/AvKkub8UrFU8kKI5JnERDqeHrPznp40TYk7ekbe0CHZAuGzWxu
+         6+9L1+ABJk5sxOTr7t/zssfpZajkQ0nvk1MWKqYhpokLzkQsLo1fAEQoXK3fWZs+nybl
+         82NA==
+X-Gm-Message-State: AOJu0Yy3EUUnvGn6POWWLm06UEMESSf3En4eDiEVxtIVHv9W+HOohLyb
+	j310BoKTVhxDQi9PRGWPr8W8bh24woEuvFWkmN8FoNeb4rXU2HIwiXoa6j0PWnfGFbK7dzvtE47
+	k
+X-Google-Smtp-Source: AGHT+IGIzlnxXw6rMUh5TQH3+7Qw7BrXBwPOr6cdsFkh7hEpzbrueGYHd6CnIhJwHnvsoOciTXzKrA==
+X-Received: by 2002:a05:6830:1e47:b0:6ef:9ec1:2bf8 with SMTP id 46e09a7af769-6f0e92a7e7amr12236428a34.23.1715631585802;
+        Mon, 13 May 2024 13:19:45 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-792bf2fc7e4sm490621985a.97.2024.05.13.13.19.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 May 2024 13:19:45 -0700 (PDT)
+Date: Mon, 13 May 2024 16:19:44 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 06/23] pack-bitmap-write: support storing pseudo-merge
+ commits
+Message-ID: <ZkJ14LHreSas23ZV@nand.local>
+References: <cover.1710972293.git.me@ttaylorr.com>
+ <cover.1714422410.git.me@ttaylorr.com>
+ <ee33a70324589a98c2239530b03cc2d7afbdfb9e.1714422410.git.me@ttaylorr.com>
+ <20240513184246.GA2675586@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240513184246.GA2675586@coredump.intra.peff.net>
 
+On Mon, May 13, 2024 at 02:42:46PM -0400, Jeff King wrote:
+> On Mon, Apr 29, 2024 at 04:43:15PM -0400, Taylor Blau wrote:
+>
+> > diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+> > index 9bc41a9e145..fef02cd745a 100644
+> > --- a/pack-bitmap-write.c
+> > +++ b/pack-bitmap-write.c
+> > @@ -24,7 +24,7 @@ struct bitmapped_commit {
+> >  	struct ewah_bitmap *write_as;
+> >  	int flags;
+> >  	int xor_offset;
+> > -	uint32_t commit_pos;
+> > +	unsigned pseudo_merge : 1;
+> >  };
+>
+> The addition of the bit flag here makes sense, but dropping commit_pos
+> caught me by surprise. But...it looks like that flag is simply unused
+> cruft even before this patch?
+>
+> It might be worth noting that in the commit message, or better still,
+> pulling its removal out to a preparatory patch.
 
-On 3 May 2024, at 11:34, Junio C Hamano wrote:
+Hah, so this is a funny one :-).
 
-> Dhruva Krishnamurthy <dhruvakm@gmail.com> writes:
->
->> On Thu, May 2, 2024 at 2:08=E2=80=AFPM Junio C Hamano <gitster@pobox.c=
-om> wrote:
->>> We could drop [1/2] from the series in the meantime to make it a
->>> GitLab installation specific issue where they explicitly use
->>> attr.tree to point at HEAD ;-) That is not solving anything for
->>> those who set attr.tree (in a sense, they are buying the feature
->>> with overhead of reading attributes from the named tree), but at
->>> least for most people who are used to seeing the bare repository
->>> ignoring the attributes, it would be an improvement to drop the
->>> "bare repositories the tree of the HEAD commit is used to look up
->>> attributes files by default" half from the series.
->>>
->>
->> A hack (without knowing side effects if any) is to use an empty tree
->> for attr source:
->> $ git config --add attr.tree $(git hash-object -t tree /dev/null)
->>
->> This gives me performance comparable to git 2.42
->
-> That is clever.  Instead of crawling a potentially large tree that
-> is at the HEAD of the main project payload to find ".gitattributes"
-> files that may be relevant (and often not), folks can set an empty
-> tree to attr.tree to the configuration until this gets corrected.
->
-> And for folks who had been happy with the pre 2.42 behaviour,
-> we could do something like the attached as the first step to a real fix=
-=2E
->
-> ----- >8 --------- >8 --------- >8 --------- >8 -----
-> Subject: [PATCH] stop using HEAD for attributes in bare repository by d=
-efault
->
-> With 23865355 (attr: read attributes from HEAD when bare repo,
-> 2023-10-13), we started to use the HEAD tree as the default
-> attribute source in a bare repository.  One argument for such a
-> behaviour is that it would make things like "git archive" run in
-> bare and non-bare repositories for the same commit consistent.
-> This changes was merged to Git 2.43 but without an explicit mention
-> in its release notes.
->
-> It turns out that this change destroys performance of shallowly
-> cloning from a bare repository.  As the "server" installations are
-> expected to be mostly bare, and "git pack-objects", which is the
-> core of driving the other side of "git clone" and "git fetch" wants
-> to see if a path is set not to delta with blobs from other paths via
-> the attribute system, the change forces the server side to traverse
-> the tree of the HEAD commit needlessly to find if each and every
-> paths the objects it sends out has the attribute that controls the
-> deltification.  Given that (1) most projects do not configure such
-> an attribute, and (2) it is dubious for the server side to honor
-> such an end-user supplied attribute anyway, this was a poor choice
-> of the default.
->
-> To mitigate the current situation, let's revert the change that uses
-> the tree of HEAD in a bare repository by default as the attribute
-> source.  This will help most people who have been happy with the
-> behaviour of Git 2.42 and before.
+I was following your suggestion to pull out the deletion into its own
+patch[^1] and starting to dig out back-references to indicate why it was
+safe to remove this field.
 
-This change makes sense to me, and glad it got uncovered. Thanks to all w=
-ho
-chimed in with this root cause analysis and the proposed patches. Sorry I=
+But the only reference to commit_pos is from 7cc8f971085 (pack-objects:
+implement bitmap writing, 2013-12-21), which is the commit that added
+this field in the first place. Looking at:
 
-haven't replied until now-I was traveling the past two weeks.
+    $ git log -p -S commit_pos 7cc8f971085 -- pack-bitmap-write.c
 
-thanks
-John
+doesn't really show us anything interesting, either.
 
+But! There is an array called commit_positions, which I suspected was
+for holding the values of commit_pos in the same order as they appear in
+the writer.selected array.
+
+So I think the right patch is something like this (which I'll put in the
+next round of this series):
+
+--- 8< ---
+Subject: [PATCH] pack-bitmap-write.c: move commit_positions into commit_pos
+ fields
+
+In 7cc8f971085 (pack-objects: implement bitmap writing, 2013-12-21), the
+bitmapped_commit struct was introduced, including the 'commit_pos'
+field, which has been unused ever since its introduction more than a
+decade ago.
+
+Instead, we have used the nearby `commit_positions` array leaving the
+bitmapped_commit struct with an unused 4-byte field.
+
+We could drop the `commit_pos` field as unused, and continue to store
+the values in the auxiliary array. But we could also drop the array and
+store the data for each bitmapped_commit struct inside of the structure
+itself, which is what this patch does.
+
+In any spot that we previously read `commit_positions[i]`, we can now
+instead read `writer.selected[i].commit_pos`. There are a few spots that
+need changing as a result:
+
+  - write_selected_commits_v1() is a simple transformation, since we're
+    just reading the field. As a result, the function no longer needs an
+    explicit argument to pass the commit_positions array.
+
+  - write_lookup_table() also no longer needs the explicit
+    commit_positions array passed in as an argument. But it still needs
+    to sort an array of indices into the writer.selected array to read
+    them in commit_pos order, so table_cmp() is adjusted accordingly.
+
+  - bitmap_writer_finish() no longer needs to allocate, populate, and
+    free the commit_positions table. Instead, we can just write the data
+    directly into each struct bitmapped_commit.
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ pack-bitmap-write.c | 42 ++++++++++++++++--------------------------
+ 1 file changed, 16 insertions(+), 26 deletions(-)
+
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 473a0fa0d40..26f57e48804 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -679,9 +679,7 @@ static const struct object_id *oid_access(size_t pos, const void *table)
+ 	return &index[pos]->oid;
+ }
+
+-static void write_selected_commits_v1(struct hashfile *f,
+-				      uint32_t *commit_positions,
+-				      off_t *offsets)
++static void write_selected_commits_v1(struct hashfile *f, off_t *offsets)
+ {
+ 	int i;
+
+@@ -691,7 +689,7 @@ static void write_selected_commits_v1(struct hashfile *f,
+ 		if (offsets)
+ 			offsets[i] = hashfile_total(f);
+
+-		hashwrite_be32(f, commit_positions[i]);
++		hashwrite_be32(f, stored->commit_pos);
+ 		hashwrite_u8(f, stored->xor_offset);
+ 		hashwrite_u8(f, stored->flags);
+
+@@ -699,23 +697,20 @@ static void write_selected_commits_v1(struct hashfile *f,
+ 	}
+ }
+
+-static int table_cmp(const void *_va, const void *_vb, void *_data)
++static int table_cmp(const void *_va, const void *_vb)
+ {
+-	uint32_t *commit_positions = _data;
+-	uint32_t a = commit_positions[*(uint32_t *)_va];
+-	uint32_t b = commit_positions[*(uint32_t *)_vb];
++	struct bitmapped_commit *a = &writer.selected[*(uint32_t *)_va];
++	struct bitmapped_commit *b = &writer.selected[*(uint32_t *)_vb];
+
+-	if (a > b)
++	if (a->commit_pos < b->commit_pos)
++		return -1;
++	else if (a->commit_pos > b->commit_pos)
+ 		return 1;
+-	else if (a < b)
+-		return -1;
+
+ 	return 0;
+ }
+
+-static void write_lookup_table(struct hashfile *f,
+-			       uint32_t *commit_positions,
+-			       off_t *offsets)
++static void write_lookup_table(struct hashfile *f, off_t *offsets)
+ {
+ 	uint32_t i;
+ 	uint32_t *table, *table_inv;
+@@ -731,7 +726,7 @@ static void write_lookup_table(struct hashfile *f,
+ 	 * bitmap corresponds to j'th bitmapped commit (among the selected
+ 	 * commits) in lex order of OIDs.
+ 	 */
+-	QSORT_S(table, writer.selected_nr, table_cmp, commit_positions);
++	QSORT(table, writer.selected_nr, table_cmp);
+
+ 	/* table_inv helps us discover that relationship (i'th bitmap
+ 	 * to j'th commit by j = table_inv[i])
+@@ -762,7 +757,7 @@ static void write_lookup_table(struct hashfile *f,
+ 			xor_row = 0xffffffff;
+ 		}
+
+-		hashwrite_be32(f, commit_positions[table[i]]);
++		hashwrite_be32(f, writer.selected[table[i]].commit_pos);
+ 		hashwrite_be64(f, (uint64_t)offsets[table[i]]);
+ 		hashwrite_be32(f, xor_row);
+ 	}
+@@ -798,7 +793,6 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 	static uint16_t flags = BITMAP_OPT_FULL_DAG;
+ 	struct strbuf tmp_file = STRBUF_INIT;
+ 	struct hashfile *f;
+-	uint32_t *commit_positions = NULL;
+ 	off_t *offsets = NULL;
+ 	uint32_t i;
+
+@@ -823,22 +817,19 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 	if (options & BITMAP_OPT_LOOKUP_TABLE)
+ 		CALLOC_ARRAY(offsets, index_nr);
+
+-	ALLOC_ARRAY(commit_positions, writer.selected_nr);
+-
+ 	for (i = 0; i < writer.selected_nr; i++) {
+ 		struct bitmapped_commit *stored = &writer.selected[i];
+-		int commit_pos = oid_pos(&stored->commit->object.oid, index, index_nr, oid_access);
++		stored->commit_pos = oid_pos(&stored->commit->object.oid, index,
++					     index_nr, oid_access);
+
+-		if (commit_pos < 0)
++		if (stored->commit_pos < 0)
+ 			BUG(_("trying to write commit not in index"));
+-
+-		commit_positions[i] = commit_pos;
+ 	}
+
+-	write_selected_commits_v1(f, commit_positions, offsets);
++	write_selected_commits_v1(f, offsets);
+
+ 	if (options & BITMAP_OPT_LOOKUP_TABLE)
+-		write_lookup_table(f, commit_positions, offsets);
++		write_lookup_table(f, offsets);
+
+ 	if (options & BITMAP_OPT_HASH_CACHE)
+ 		write_hash_cache(f, index, index_nr);
+@@ -853,6 +844,5 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 		die_errno("unable to rename temporary bitmap file to '%s'", filename);
+
+ 	strbuf_release(&tmp_file);
+-	free(commit_positions);
+ 	free(offsets);
+ }
+
+--
+2.45.0.57.gee4186f79f3
+
+--- >8 ---
+
+> > +static inline int bitmap_writer_selected_nr(void)
+> > +{
+> > +	return writer.selected_nr - writer.pseudo_merges_nr;
+> > +}
 >
-> Two things to note:
->
->  * If you are stuck with versions of Git 2.43 or newer, that is
->    older than the release this fix appears in, you can explicitly
->    set the attr.tree configuration variable to point at an empty
->    tree object, i.e.
->
-> 	$ git config attr.tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
->
->  * If you like the behaviour we are reverting, you can explicitly
->    set the attr.tree configuration variable to HEAD, i.e.
->
-> 	$ git config attr.tree HEAD
->
-> The right fix for this is to optimize the code paths that allow
-> accesses to attributes in tree objects, but that is a much more
-> involved change and is left as a longer-term project, outside the
-> scope of this "first step" fix.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  attr.c                  |  7 -------
->  t/t0003-attributes.sh   | 10 ++++++++--
->  t/t5001-archive-attr.sh |  3 ++-
->  3 files changed, 10 insertions(+), 10 deletions(-)
->
-> diff --git c/attr.c w/attr.c
-> index 679e42258c..6af7151088 100644
-> --- c/attr.c
-> +++ w/attr.c
-> @@ -1223,13 +1223,6 @@ static void compute_default_attr_source(struct o=
-bject_id *attr_source)
->  		ignore_bad_attr_tree =3D 1;
->  	}
->
-> -	if (!default_attr_source_tree_object_name &&
-> -	    startup_info->have_repository &&
-> -	    is_bare_repository()) {
-> -		default_attr_source_tree_object_name =3D "HEAD";
-> -		ignore_bad_attr_tree =3D 1;
-> -	}
-> -
->  	if (!default_attr_source_tree_object_name || !is_null_oid(attr_source=
-))
->  		return;
->
-> diff --git c/t/t0003-attributes.sh w/t/t0003-attributes.sh
-> index 774b52c298..d755cc3c29 100755
-> --- c/t/t0003-attributes.sh
-> +++ w/t/t0003-attributes.sh
-> @@ -398,13 +398,19 @@ test_expect_success 'bad attr source defaults to =
-reading .gitattributes file' '
->  	)
->  '
->
-> -test_expect_success 'bare repo defaults to reading .gitattributes from=
- HEAD' '
-> +test_expect_success 'bare repo no longer defaults to reading .gitattri=
-butes from HEAD' '
->  	test_when_finished rm -rf test bare_with_gitattribute &&
->  	git init test &&
->  	test_commit -C test gitattributes .gitattributes "f/path test=3Dval" =
-&&
->  	git clone --bare test bare_with_gitattribute &&
-> -	echo "f/path: test: val" >expect &&
-> +
-> +	echo "f/path: test: unspecified" >expect &&
->  	git -C bare_with_gitattribute check-attr test -- f/path >actual &&
-> +	test_cmp expect actual &&
-> +
-> +	echo "f/path: test: val" >expect &&
-> +	git -C bare_with_gitattribute -c attr.tree=3DHEAD \
-> +		check-attr test -- f/path >actual &&
->  	test_cmp expect actual
->  '
->
-> diff --git c/t/t5001-archive-attr.sh w/t/t5001-archive-attr.sh
-> index eaf959d8f6..7310774af5 100755
-> --- c/t/t5001-archive-attr.sh
-> +++ w/t/t5001-archive-attr.sh
-> @@ -133,7 +133,8 @@ test_expect_success 'git archive vs. bare' '
->  '
->
->  test_expect_success 'git archive with worktree attributes, bare' '
-> -	(cd bare && git archive --worktree-attributes HEAD) >bare-worktree.ta=
-r &&
-> +	(cd bare &&
-> +	git -c attr.tree=3DHEAD archive --worktree-attributes HEAD) >bare-wor=
-ktree.tar &&
->  	(mkdir bare-worktree && cd bare-worktree && "$TAR" xf -) <bare-worktr=
-ee.tar
->  '
+> OK, so now most spots should use this new function instead of looking at
+> writer.selected_nr directly. But if anybody accidentally uses the old
+> field directly, it is presumably disastrous. Is it worth renaming it to
+> make sure we caught all references?
+
+We only need to check within this file, since the bitmap_writer
+structure definition is defined within the pack-bitmap-writer.c
+compilation unit.
+
+I took a careful look through the file, and am confident that we touched
+all of the spots that needed attention.
+
+Thanks,
+Taylor
+
+[^1]: If memory serves, that was my original intention when writing this
+  series for the first time, but I must have forgotten when I was
+  actually splitting out the individual patches and staged the removal
+  alongside the rest of this change.
