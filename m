@@ -1,81 +1,81 @@
 Received: from wfout3-smtp.messagingengine.com (wfout3-smtp.messagingengine.com [64.147.123.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BA514A097
-	for <git@vger.kernel.org>; Mon, 13 May 2024 10:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A84414A097
+	for <git@vger.kernel.org>; Mon, 13 May 2024 10:22:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715595770; cv=none; b=UroJIORPHst1C351OJncSFn/TCZ9sVEoLcGVWbricXy/mpCmZsWk460o2Y7OcANcFv4MUuM7sPAPMmGiJ/2Tce40Zh7Zx1Sra8Rx+b58Lo+47wIE5eeWVLyr9NiCwT+kpdXykBP8alYPdIimJ90y7QMkjX33IvEQtMeZae9uDXs=
+	t=1715595776; cv=none; b=Q4/rnQDjzi//baEJny8n0PtCM6Au7/YU3I94HlLoiNS4pVU9qYnlINEOTbRidXpM/0huEzWCEXJMUZALbZw6Ewsp9FFGM5CYh85drFudlyysKCVsNGI6pqCPOxijX9igo2ZpJMqEOQyjHnEhXZzomYfDfgF13P6092sAEmmbKTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715595770; c=relaxed/simple;
-	bh=GmiogVNobWWnq7D3tv122e6B3pvV9b0Yq7jaFxMEzR8=;
+	s=arc-20240116; t=1715595776; c=relaxed/simple;
+	bh=0Y0olY73uw+h+g60v07DeJbsRiK0DhvevSF4Z+zlrK0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KXKUyjXDq8tg2Wc+8XRlC13uyDOYmsc3MGy5Lua6PPFFdV83gCXZ1naaJYkMBS4jfWjSzlvOYJWWDWsQZ5YG0HzTtVyG9cS3sX3qr9+1CPPqN3u+i9vIw9Xq093U9ELRwuzrf9gDHosbsDGw89cR8H9ECuw5/CKqx0j99QhN7Vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZC4GNLp2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L+Lp25IU; arc=none smtp.client-ip=64.147.123.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=OFYfM93B71STTiEgHE566IheLLL2yW/A/9bbN17Z0bsRBEv5vy8oG3BAP7HoSM0oFQ+aZBB4h/VnE5Qo6dwmYZbvf29+eaPuAx6+53cPPa2/SHXn1iVvGilDvyaHFWi7bprfsRKqsz8CuB1mCSDdElGLTZWQ5eIgVRJQWj3ztg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bxwz6bK7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O69mHQ7w; arc=none smtp.client-ip=64.147.123.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZC4GNLp2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L+Lp25IU"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.west.internal (Postfix) with ESMTP id 66EBE1C000F2;
-	Mon, 13 May 2024 06:22:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bxwz6bK7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O69mHQ7w"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.west.internal (Postfix) with ESMTP id 6A6181C0009A;
+	Mon, 13 May 2024 06:22:53 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Mon, 13 May 2024 06:22:47 -0400
+  by compute4.internal (MEProxy); Mon, 13 May 2024 06:22:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715595767; x=1715682167; bh=Z+tvmaDW57
-	zUI651ik8ZCX+RPXzjQQIdOxp1AtG2tJE=; b=ZC4GNLp2KagdFvWT4q1KPuiNlq
-	w5Cyr93pdeAqSz4m+2bw2eMLGWOzCcs8SrYwdae0nP6yPi1u0qbY9CRPu80n+UXc
-	KlwCIqqPycWMp7yTH1/HzgKkYDzqgJQTgPKmfuqrhHtqiQZKiDtwXeLplYd2367N
-	9ubucXlTQHCj5F7eZqFa/Kjqz/PfugzD0Y/1Bffo97fufdCzrJCbS9JbTl65vdzh
-	gwOndNI93Itui8ksVqhne8dE0mjVamcHEue7o1HAQxkjqDPHRQO1KoazYhsN4bW0
-	1oUkcKRD3AuAqpZ8M1ndFNEfSIJYRifdXzo7ehxVOA8wtuSI09uUbwAbq6yA==
+	:subject:to:to; s=fm3; t=1715595773; x=1715682173; bh=qM3lgkDQ+H
+	UVnXpul4lK0qpNm5LUlyI2bgdZ5H5r0yg=; b=bxwz6bK79Qa6f6e56Yc7p8vOBI
+	DlCRJ0eSC6q/V13RcUtWOysWXDduhBiz2Xgv0cWcka2SXT7uU5wuzAeZBHukGRkL
+	CSk2pnzq0jT69Zxo0GgrnufkObZbBO+yYdhUE2siD5C3qVlds3vySh6OYf9dam6A
+	RCM/0xqm3WhZg98CxQ3noyYoDN7x3yFeQkH3s73R10Tl/srmBMZTOEBr8QjffhiT
+	rwvS3I+JTMrXMOVKXxYdJSP1nKkROefFxarcrbNXjsAv1NFQ4h2s4s+pxa4uLG2x
+	B0HJiDfFfDE5eLegWuBQKpyw4z8GXljgxSC+7BDZVBWFg3lTWdjyL2OlI4kg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715595767; x=1715682167; bh=Z+tvmaDW57zUI651ik8ZCX+RPXzj
-	QQIdOxp1AtG2tJE=; b=L+Lp25IUKHytoRpHRaAlGIy+Qrm6Is2L7ZkInwG6iX6u
-	XKu9Gy9oKrDH19kHKVHic1jsrJGqp4sXW/6+PzsumIey/CgN977DmDUmos1TOl6a
-	05qsbv6e/Rr4pNTMGhlKNyzUCjMgxV+r8VPkkGQXPAFLYRtuCnSElr4UraLBGYSU
-	/WdbdZ6wMnwF0GTXBnzNpCg8Je15/ccUgppGPTJnplIwTKqtB9/YX8clJ5hqEw8o
-	jG5KdcMGmKYRzM1IMpmG6oTVzGjwIEU6woIr23sfUlh7M0andZrGQEM7mhSPGaPO
-	6UvS7q2ouZTQaqVGkTN/zgtGuRPFxCdghyHafL5Kaw==
-X-ME-Sender: <xms:9ulBZo9L_X5zXaIv8EEKFv0RZdWimMkI735tuh_6Qsm_BRagdzis8Q>
-    <xme:9ulBZgvChZUIphsXY8Ibp5YPgkbQzzLLE0uYnfWbGu3BppnNLq6S-Qw9dY0hnXl3f
-    1kJ8fUahwRFOMaI_Q>
-X-ME-Received: <xmr:9ulBZuDYzTmgkFSlEIWAzv1sSnyWkOKfVT5gQzOfeYfelaTU6oLVJ4pXwEjaKpiKSEg634Zokx7PY-dsf62IFJdVpn2VgGGdZeLqEED5SMR1npA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgvdejucetufdoteggodetrfdotf
+	fm3; t=1715595773; x=1715682173; bh=qM3lgkDQ+HUVnXpul4lK0qpNm5LU
+	lyI2bgdZ5H5r0yg=; b=O69mHQ7wvMSf2kchpeZQRHBB/byvDmYZ5zC7sDmrxtE4
+	fr+seMCry8SiSrm8mmYpxGeo+e0gLggS32D3i4y26yFbBr0KUm3xdeTWHKW5o9Xi
+	WPvHesGXqVyIuHaFKCDyGtirTCG7XGum+As4cIfXOjaerH4pydJDrYwXXRdooWXo
+	50Nr5XkLDbd76iKIZH8JHodhPyShI/TBX5lKxk8InSZrSK4JHVe/WcC314Bony06
+	ybzTqO4ZHRLbGFd1GcaI0gplxN4N5YZaOUE08WMXzhix8xADX9ufm84GIKCHRGuA
+	m4pSbPrPNkjqEpDjstxN0MO6rYw5/N+0GEPkUEN//g==
+X-ME-Sender: <xms:_OlBZkZ_TiGaVfhC5XRDUO_9qJgL2mS00o8OhE3UHuGzCt5ax_Wp-w>
+    <xme:_OlBZvYwQwV-2bUpNWrpED-P1vwEGX4bWzIJnp_eooJI13Qg8MgTu7YXr6KN1XsyH
+    AAr4CVsMP8Dt_iAZQ>
+X-ME-Received: <xmr:_OlBZu80wQm4-2tx-izR1QHzZAjcUzJY92NzGfpjQTTc4svMEOBklQUwIH3NL_Oi_mHUohkydG2AUieRFoSPUFrBmTaH5D28MLE9B5RcsJQPTQ4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgvdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:9ulBZocD4gDHfZwNMXp2ww-4M-f1BlUjFzy9gJz1IiXpzaqZhdFlbQ>
-    <xmx:9ulBZtOOHv5mZhp75Yca8s6OJABFAHX0ZlaWTQis3HGBqt4H8wklXg>
-    <xmx:9ulBZin-vszgI6sK2mgj8qlLkOUlazXnRx65cB7nIpekqNYqBc7WeA>
-    <xmx:9ulBZvueFBSxTQsgz6zFXB5flFXELhMymwcabSHhj4O-RlKg-DY2QA>
-    <xmx:9-lBZirynpk1x_xNqjqyjTb_H-3C0E0ON8w1chZE5qy1CUOQQrA_HA8z>
+X-ME-Proxy: <xmx:_OlBZuqvCRBx3UMH9Dz5ZbYpvDKtpkpg7RUqry9atMiF75-3t0TxwQ>
+    <xmx:_OlBZvrmJ9w2d7dNgjJBf0vGTnetzuE-dgqDX_m-6kHjrATeFw9XXQ>
+    <xmx:_OlBZsSQ4NFDIeeD6Uu91vW6S1YCRB9I_c3ZPWUZKPCeLyjVuLHUmA>
+    <xmx:_OlBZvpM-_0zzgrhGXSMsNLjPG1QtiaOIkDXVY4u2c7x0--DJ9TByA>
+    <xmx:_elBZgnBR43FV509p7480SUzZojg5XcKOHr_5xfQNnUgA3w0sM4F-1PU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 May 2024 06:22:45 -0400 (EDT)
+ 13 May 2024 06:22:51 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id b08a646e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 May 2024 10:22:27 +0000 (UTC)
-Date: Mon, 13 May 2024 12:22:43 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 4a33adbf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 May 2024 10:22:32 +0000 (UTC)
+Date: Mon, 13 May 2024 12:22:49 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Kyle Lippincott <spectral@google.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 09/21] builtin/config: move location options into local
+Subject: [PATCH v2 10/21] builtin/config: move display options into local
  variables
-Message-ID: <b5d43b6f852d99021236b187ad016dfe7b5f3d09.1715595550.git.ps@pks.im>
+Message-ID: <d66e14af30062a0d5acfb51d02cdc072f8336f2f.1715595550.git.ps@pks.im>
 References: <cover.1715339393.git.ps@pks.im>
  <cover.1715595550.git.ps@pks.im>
 Precedence: bulk
@@ -85,841 +85,521 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ZQaZ/m8HGbEbursa"
+	protocol="application/pgp-signature"; boundary="fDViYqr5apx/vVUl"
 Content-Disposition: inline
 In-Reply-To: <cover.1715595550.git.ps@pks.im>
 
 
---ZQaZ/m8HGbEbursa
+--fDViYqr5apx/vVUl
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The location options are tracked via a set of global variables. Move
+The display options are tracked via a set of global variables. Move
 them into a self-contained structure so that we can easily parse all
 relevant options and hand them over to the various functions that
 require them.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/config.c | 311 ++++++++++++++++++++++++++---------------------
- 1 file changed, 174 insertions(+), 137 deletions(-)
+ builtin/config.c | 171 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 101 insertions(+), 70 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index 155564b832..c309497e23 100644
+index c309497e23..24ad8e7476 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -62,6 +62,25 @@ static const char *const builtin_config_edit_usage[] =3D=
- {
- 	NULL
+@@ -81,25 +81,42 @@ struct config_location_options {
  };
+ #define CONFIG_LOCATION_OPTIONS_INIT {0}
 =20
-+#define CONFIG_LOCATION_OPTIONS(opts) \
-+	OPT_GROUP(N_("Config file location")), \
-+	OPT_BOOL(0, "global", &opts.use_global_config, N_("use global config file=
-")), \
-+	OPT_BOOL(0, "system", &opts.use_system_config, N_("use system config file=
-")), \
-+	OPT_BOOL(0, "local", &opts.use_local_config, N_("use repository config fi=
-le")), \
-+	OPT_BOOL(0, "worktree", &opts.use_worktree_config, N_("use per-worktree c=
-onfig file")), \
-+	OPT_STRING('f', "file", &opts.source.file, N_("file"), N_("use given conf=
-ig file")), \
-+	OPT_STRING(0, "blob", &opts.source.blob, N_("blob-id"), N_("read config f=
-rom given blob object"))
++#define CONFIG_DISPLAY_OPTIONS(opts) \
++	OPT_GROUP(N_("Display options")), \
++	OPT_BOOL('z', "null", &opts.end_nul, N_("terminate values with NUL byte")=
+), \
++	OPT_BOOL(0, "name-only", &opts.omit_values, N_("show variable names only"=
+)), \
++	OPT_BOOL(0, "show-origin", &opts.show_origin, N_("show origin of config (=
+file, standard input, blob, command line)")), \
++	OPT_BOOL(0, "show-scope", &opts.show_scope, N_("show scope of config (wor=
+ktree, local, global, system, command)")), \
++	OPT_BOOL(0, "show-names", &opts.show_keys, N_("show config keys in additi=
+on to their values"))
 +
-+struct config_location_options {
-+	struct git_config_source source;
-+	struct config_options options;
-+	int use_global_config;
-+	int use_system_config;
-+	int use_local_config;
-+	int use_worktree_config;
++struct config_display_options {
++	int end_nul;
++	int omit_values;
++	int show_origin;
++	int show_scope;
++	int show_keys;
++	/* Populated via `display_options_init()`. */
++	int term;
++	int delim;
++	int key_delim;
 +};
-+#define CONFIG_LOCATION_OPTIONS_INIT {0}
++#define CONFIG_DISPLAY_OPTIONS_INIT { \
++	.term =3D '\n', \
++	.delim =3D '=3D', \
++	.key_delim =3D ' ', \
++}
 +
  static char *key;
  static regex_t *key_regexp;
  static const char *value_pattern;
-@@ -75,14 +94,10 @@ static char delim =3D '=3D';
- static char key_delim =3D ' ';
- static char term =3D '\n';
+ static regex_t *regexp;
+-static int show_keys;
+-static int omit_values;
+ static int use_key_regexp;
+ static int do_all;
+ static int do_not_match;
+-static char delim =3D '=3D';
+-static char key_delim =3D ' ';
+-static char term =3D '\n';
 =20
--static int use_global_config, use_system_config, use_local_config;
--static int use_worktree_config;
--static struct git_config_source given_config_source;
  static int type;
  static char *default_value;
- static int end_nul;
+-static int end_nul;
  static int respect_includes_opt =3D -1;
--static struct config_options config_options;
- static int show_origin;
- static int show_scope;
+-static int show_origin;
+-static int show_scope;
  static int fixed_value;
-@@ -298,7 +313,8 @@ static int collect_config(const char *key_, const char =
-*value_,
- 	return format_config(&values->items[values->nr++], key_, value_, kvi);
+=20
+ #define TYPE_BOOL		1
+@@ -177,24 +194,26 @@ static void check_argc(int argc, int min, int max)
+ 	exit(129);
  }
 =20
--static int get_value(const char *key_, const char *regex_, unsigned flags)
-+static int get_value(const struct config_location_options *opts,
-+		     const char *key_, const char *regex_, unsigned flags)
+-static void show_config_origin(const struct key_value_info *kvi,
++static void show_config_origin(const struct config_display_options *opts,
++			       const struct key_value_info *kvi,
+ 			       struct strbuf *buf)
+ {
+-	const char term =3D end_nul ? '\0' : '\t';
++	const char term =3D opts->end_nul ? '\0' : '\t';
+=20
+ 	strbuf_addstr(buf, config_origin_type_name(kvi->origin_type));
+ 	strbuf_addch(buf, ':');
+-	if (end_nul)
++	if (opts->end_nul)
+ 		strbuf_addstr(buf, kvi->filename ? kvi->filename : "");
+ 	else
+ 		quote_c_style(kvi->filename ? kvi->filename : "", buf, NULL, 0);
+ 	strbuf_addch(buf, term);
+ }
+=20
+-static void show_config_scope(const struct key_value_info *kvi,
++static void show_config_scope(const struct config_display_options *opts,
++			      const struct key_value_info *kvi,
+ 			      struct strbuf *buf)
+ {
+-	const char term =3D end_nul ? '\0' : '\t';
++	const char term =3D opts->end_nul ? '\0' : '\t';
+ 	const char *scope =3D config_scope_name(kvi->scope);
+=20
+ 	strbuf_addstr(buf, N_(scope));
+@@ -203,24 +222,25 @@ static void show_config_scope(const struct key_value_=
+info *kvi,
+=20
+ static int show_all_config(const char *key_, const char *value_,
+ 			   const struct config_context *ctx,
+-			   void *cb UNUSED)
++			   void *cb)
+ {
++	const struct config_display_options *opts =3D cb;
+ 	const struct key_value_info *kvi =3D ctx->kvi;
+=20
+-	if (show_origin || show_scope) {
++	if (opts->show_origin || opts->show_scope) {
+ 		struct strbuf buf =3D STRBUF_INIT;
+-		if (show_scope)
+-			show_config_scope(kvi, &buf);
+-		if (show_origin)
+-			show_config_origin(kvi, &buf);
++		if (opts->show_scope)
++			show_config_scope(opts, kvi, &buf);
++		if (opts->show_origin)
++			show_config_origin(opts, kvi, &buf);
+ 		/* Use fwrite as "buf" can contain \0's if "end_null" is set. */
+ 		fwrite(buf.buf, 1, buf.len, stdout);
+ 		strbuf_release(&buf);
+ 	}
+-	if (!omit_values && value_)
+-		printf("%s%c%s%c", key_, delim, value_, term);
++	if (!opts->omit_values && value_)
++		printf("%s%c%s%c", key_, opts->delim, value_, opts->term);
+ 	else
+-		printf("%s%c", key_, term);
++		printf("%s%c", key_, opts->term);
+ 	return 0;
+ }
+=20
+@@ -230,18 +250,19 @@ struct strbuf_list {
+ 	int alloc;
+ };
+=20
+-static int format_config(struct strbuf *buf, const char *key_,
++static int format_config(const struct config_display_options *opts,
++			 struct strbuf *buf, const char *key_,
+ 			 const char *value_, const struct key_value_info *kvi)
+ {
+-	if (show_scope)
+-		show_config_scope(kvi, buf);
+-	if (show_origin)
+-		show_config_origin(kvi, buf);
+-	if (show_keys)
++	if (opts->show_scope)
++		show_config_scope(opts, kvi, buf);
++	if (opts->show_origin)
++		show_config_origin(opts, kvi, buf);
++	if (opts->show_keys)
+ 		strbuf_addstr(buf, key_);
+-	if (!omit_values) {
+-		if (show_keys)
+-			strbuf_addch(buf, key_delim);
++	if (!opts->omit_values) {
++		if (opts->show_keys)
++			strbuf_addch(buf, opts->key_delim);
+=20
+ 		if (type =3D=3D TYPE_INT)
+ 			strbuf_addf(buf, "%"PRId64,
+@@ -283,18 +304,24 @@ static int format_config(struct strbuf *buf, const ch=
+ar *key_,
+ 			strbuf_addstr(buf, value_);
+ 		} else {
+ 			/* Just show the key name; back out delimiter */
+-			if (show_keys)
++			if (opts->show_keys)
+ 				strbuf_setlen(buf, buf->len - 1);
+ 		}
+ 	}
+-	strbuf_addch(buf, term);
++	strbuf_addch(buf, opts->term);
+ 	return 0;
+ }
+=20
++struct collect_config_data {
++	const struct config_display_options *display_opts;
++	struct strbuf_list *values;
++};
++
+ static int collect_config(const char *key_, const char *value_,
+ 			  const struct config_context *ctx, void *cb)
+ {
+-	struct strbuf_list *values =3D cb;
++	struct collect_config_data *data =3D cb;
++	struct strbuf_list *values =3D data->values;
+ 	const struct key_value_info *kvi =3D ctx->kvi;
+=20
+ 	if (!use_key_regexp && strcmp(key_, key))
+@@ -310,14 +337,20 @@ static int collect_config(const char *key_, const cha=
+r *value_,
+ 	ALLOC_GROW(values->items, values->nr + 1, values->alloc);
+ 	strbuf_init(&values->items[values->nr], 0);
+=20
+-	return format_config(&values->items[values->nr++], key_, value_, kvi);
++	return format_config(data->display_opts, &values->items[values->nr++],
++			     key_, value_, kvi);
+ }
+=20
+ static int get_value(const struct config_location_options *opts,
++		     const struct config_display_options *display_opts,
+ 		     const char *key_, const char *regex_, unsigned flags)
  {
  	int ret =3D CONFIG_GENERIC_ERROR;
  	struct strbuf_list values =3D {NULL};
-@@ -353,8 +369,8 @@ static int get_value(const char *key_, const char *rege=
-x_, unsigned flags)
++	struct collect_config_data data =3D {
++		.display_opts =3D display_opts,
++		.values =3D &values,
++	};
+ 	int i;
+=20
+ 	if (use_key_regexp) {
+@@ -368,7 +401,7 @@ static int get_value(const struct config_location_optio=
+ns *opts,
+ 		}
  	}
 =20
- 	config_with_options(collect_config, &values,
--			    &given_config_source, the_repository,
--			    &config_options);
-+			    &opts->source, the_repository,
-+			    &opts->options);
+-	config_with_options(collect_config, &values,
++	config_with_options(collect_config, &data,
+ 			    &opts->source, the_repository,
+ 			    &opts->options);
 =20
- 	if (!values.nr && default_value) {
- 		struct key_value_info kvi =3D KVI_INIT;
-@@ -464,14 +480,15 @@ static int git_get_color_config(const char *var, cons=
-t char *value,
- 	return 0;
+@@ -380,7 +413,7 @@ static int get_value(const struct config_location_optio=
+ns *opts,
+ 		ALLOC_GROW(values.items, values.nr + 1, values.alloc);
+ 		item =3D &values.items[values.nr++];
+ 		strbuf_init(item, 0);
+-		if (format_config(item, key_, default_value, &kvi) < 0)
++		if (format_config(display_opts, item, key_, default_value, &kvi) < 0)
+ 			die(_("failed to format default config value: %s"),
+ 				default_value);
+ 	}
+@@ -591,10 +624,12 @@ static int urlmatch_collect_fn(const char *var, const=
+ char *value,
  }
 =20
--static void get_color(const char *var, const char *def_color)
-+static void get_color(const struct config_location_options *opts,
-+		      const char *var, const char *def_color)
- {
- 	get_color_slot =3D var;
- 	get_color_found =3D 0;
- 	parsed_color[0] =3D '\0';
- 	config_with_options(git_get_color_config, NULL,
--			    &given_config_source, the_repository,
--			    &config_options);
-+			    &opts->source, the_repository,
-+			    &opts->options);
-=20
- 	if (!get_color_found && def_color) {
- 		if (color_parse(def_color, parsed_color) < 0)
-@@ -497,15 +514,16 @@ static int git_get_colorbool_config(const char *var, =
-const char *value,
- 	return 0;
- }
-=20
--static int get_colorbool(const char *var, int print)
-+static int get_colorbool(const struct config_location_options *opts,
-+			 const char *var, int print)
- {
- 	get_colorbool_slot =3D var;
- 	get_colorbool_found =3D -1;
- 	get_diff_color_found =3D -1;
- 	get_color_ui_found =3D -1;
- 	config_with_options(git_get_colorbool_config, NULL,
--			    &given_config_source, the_repository,
--			    &config_options);
-+			    &opts->source, the_repository,
-+			    &opts->options);
-=20
- 	if (get_colorbool_found < 0) {
- 		if (!strcmp(get_colorbool_slot, "color.diff"))
-@@ -527,15 +545,15 @@ static int get_colorbool(const char *var, int print)
- 		return get_colorbool_found ? 0 : 1;
- }
-=20
--static void check_write(void)
-+static void check_write(const struct git_config_source *source)
- {
--	if (!given_config_source.file && !startup_info->have_repository)
-+	if (!source->file && !startup_info->have_repository)
- 		die(_("not in a git directory"));
-=20
--	if (given_config_source.use_stdin)
-+	if (source->use_stdin)
- 		die(_("writing to stdin is not supported"));
-=20
--	if (given_config_source.blob)
-+	if (source->blob)
- 		die(_("writing config blobs is not supported"));
- }
-=20
-@@ -572,7 +590,8 @@ static int urlmatch_collect_fn(const char *var, const c=
-har *value,
- 	return 0;
- }
-=20
--static int get_urlmatch(const char *var, const char *url)
-+static int get_urlmatch(const struct config_location_options *opts,
-+			const char *var, const char *url)
+ static int get_urlmatch(const struct config_location_options *opts,
++			const struct config_display_options *_display_opts,
+ 			const char *var, const char *url)
  {
  	int ret;
  	char *section_tail;
-@@ -599,8 +618,8 @@ static int get_urlmatch(const char *var, const char *ur=
-l)
++	struct config_display_options display_opts =3D *_display_opts;
+ 	struct string_list_item *item;
+ 	struct urlmatch_config config =3D URLMATCH_CONFIG_INIT;
+ 	struct string_list values =3D STRING_LIST_INIT_DUP;
+@@ -611,10 +646,10 @@ static int get_urlmatch(const struct config_location_=
+options *opts,
+ 	if (section_tail) {
+ 		*section_tail =3D '\0';
+ 		config.key =3D section_tail + 1;
+-		show_keys =3D 0;
++		display_opts.show_keys =3D 0;
+ 	} else {
+ 		config.key =3D NULL;
+-		show_keys =3D 1;
++		display_opts.show_keys =3D 1;
  	}
 =20
  	config_with_options(urlmatch_config_entry, &config,
--			    &given_config_source, the_repository,
--			    &config_options);
-+			    &opts->source, the_repository,
-+			    &opts->options);
+@@ -627,7 +662,7 @@ static int get_urlmatch(const struct config_location_op=
+tions *opts,
+ 		struct urlmatch_current_candidate_value *matched =3D item->util;
+ 		struct strbuf buf =3D STRBUF_INIT;
 =20
- 	ret =3D !values.nr;
-=20
-@@ -638,34 +657,40 @@ static char *default_user_config(void)
- 	return strbuf_detach(&buf, NULL);
+-		format_config(&buf, item->string,
++		format_config(&display_opts, &buf, item->string,
+ 			      matched->value_is_null ? NULL : matched->value.buf,
+ 			      &matched->kvi);
+ 		fwrite(buf.buf, 1, buf.len, stdout);
+@@ -743,11 +778,12 @@ static void location_options_release(struct config_lo=
+cation_options *opts)
+ 	free((char *) opts->source.file);
  }
 =20
--static void handle_config_location(const char *prefix)
-+static void location_options_init(struct config_location_options *opts,
-+				  const char *prefix)
- {
--	if (use_global_config + use_system_config + use_local_config +
--	    use_worktree_config +
--	    !!given_config_source.file + !!given_config_source.blob > 1) {
-+	if (!opts->source.file)
-+		opts->source.file =3D xstrdup_or_null(getenv(CONFIG_ENVIRONMENT));
-+	else
-+		opts->source.file =3D xstrdup(opts->source.file);
-+
-+	if (opts->use_global_config + opts->use_system_config +
-+	    opts->use_local_config + opts->use_worktree_config +
-+	    !!opts->source.file + !!opts->source.blob > 1) {
- 		error(_("only one config file at a time"));
- 		exit(129);
- 	}
-=20
- 	if (!startup_info->have_repository) {
--		if (use_local_config)
-+		if (opts->use_local_config)
- 			die(_("--local can only be used inside a git repository"));
--		if (given_config_source.blob)
-+		if (opts->source.blob)
- 			die(_("--blob can only be used inside a git repository"));
--		if (use_worktree_config)
-+		if (opts->use_worktree_config)
- 			die(_("--worktree can only be used inside a git repository"));
- 	}
-=20
--	if (given_config_source.file &&
--			!strcmp(given_config_source.file, "-")) {
--		given_config_source.file =3D NULL;
--		given_config_source.use_stdin =3D 1;
--		given_config_source.scope =3D CONFIG_SCOPE_COMMAND;
-+	if (opts->source.file &&
-+			!strcmp(opts->source.file, "-")) {
-+		opts->source.file =3D NULL;
-+		opts->source.use_stdin =3D 1;
-+		opts->source.scope =3D CONFIG_SCOPE_COMMAND;
- 	}
-=20
--	if (use_global_config) {
--		given_config_source.file =3D git_global_config();
--		if (!given_config_source.file)
-+	if (opts->use_global_config) {
-+		opts->source.file =3D git_global_config();
-+		if (!opts->source.file)
- 			/*
- 			 * It is unknown if HOME/.gitconfig exists, so
- 			 * we do not know if we should write to XDG
-@@ -673,17 +698,17 @@ static void handle_config_location(const char *prefix)
- 			 * is set and points at a sane location.
- 			 */
- 			die(_("$HOME not set"));
--		given_config_source.scope =3D CONFIG_SCOPE_GLOBAL;
--	} else if (use_system_config) {
--		given_config_source.file =3D git_system_config();
--		given_config_source.scope =3D CONFIG_SCOPE_SYSTEM;
--	} else if (use_local_config) {
--		given_config_source.file =3D git_pathdup("config");
--		given_config_source.scope =3D CONFIG_SCOPE_LOCAL;
--	} else if (use_worktree_config) {
-+		opts->source.scope =3D CONFIG_SCOPE_GLOBAL;
-+	} else if (opts->use_system_config) {
-+		opts->source.file =3D xstrdup_or_null(git_system_config());
-+		opts->source.scope =3D CONFIG_SCOPE_SYSTEM;
-+	} else if (opts->use_local_config) {
-+		opts->source.file =3D xstrdup_or_null(git_pathdup("config"));
-+		opts->source.scope =3D CONFIG_SCOPE_LOCAL;
-+	} else if (opts->use_worktree_config) {
- 		struct worktree **worktrees =3D get_worktrees();
- 		if (the_repository->repository_format_worktree_config)
--			given_config_source.file =3D git_pathdup("config.worktree");
-+			opts->source.file =3D git_pathdup("config.worktree");
- 		else if (worktrees[0] && worktrees[1])
- 			die(_("--worktree cannot be used with multiple "
- 			      "working trees unless the config\n"
-@@ -691,28 +716,33 @@ static void handle_config_location(const char *prefix)
- 			      "Please read \"CONFIGURATION FILE\"\n"
- 			      "section in \"git help worktree\" for details"));
- 		else
--			given_config_source.file =3D git_pathdup("config");
--		given_config_source.scope =3D CONFIG_SCOPE_LOCAL;
-+			opts->source.file =3D git_pathdup("config");
-+		opts->source.scope =3D CONFIG_SCOPE_LOCAL;
- 		free_worktrees(worktrees);
--	} else if (given_config_source.file) {
--		if (!is_absolute_path(given_config_source.file) && prefix)
--			given_config_source.file =3D
--				prefix_filename(prefix, given_config_source.file);
--		given_config_source.scope =3D CONFIG_SCOPE_COMMAND;
--	} else if (given_config_source.blob) {
--		given_config_source.scope =3D CONFIG_SCOPE_COMMAND;
-+	} else if (opts->source.file) {
-+		if (!is_absolute_path(opts->source.file) && prefix)
-+			opts->source.file =3D
-+				prefix_filename(prefix, opts->source.file);
-+		opts->source.scope =3D CONFIG_SCOPE_COMMAND;
-+	} else if (opts->source.blob) {
-+		opts->source.scope =3D CONFIG_SCOPE_COMMAND;
- 	}
-=20
- 	if (respect_includes_opt =3D=3D -1)
--		config_options.respect_includes =3D !given_config_source.file;
-+		opts->options.respect_includes =3D !opts->source.file;
- 	else
--		config_options.respect_includes =3D respect_includes_opt;
-+		opts->options.respect_includes =3D respect_includes_opt;
- 	if (startup_info->have_repository) {
--		config_options.commondir =3D get_git_common_dir();
--		config_options.git_dir =3D get_git_dir();
-+		opts->options.commondir =3D get_git_common_dir();
-+		opts->options.git_dir =3D get_git_dir();
- 	}
- }
-=20
-+static void location_options_release(struct config_location_options *opts)
+-static void handle_nul(void) {
+-	if (end_nul) {
+-		term =3D '\0';
+-		delim =3D '\n';
+-		key_delim =3D '\n';
++static void display_options_init(struct config_display_options *opts)
 +{
-+	free((char *) opts->source.file);
-+}
-+
- static void handle_nul(void) {
- 	if (end_nul) {
- 		term =3D '\0';
-@@ -721,15 +751,6 @@ static void handle_nul(void) {
++	if (opts->end_nul) {
++		opts->term =3D '\0';
++		opts->delim =3D '\n';
++		opts->key_delim =3D '\n';
  	}
  }
 =20
--#define CONFIG_LOCATION_OPTIONS \
--	OPT_GROUP(N_("Config file location")), \
--	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")), \
--	OPT_BOOL(0, "system", &use_system_config, N_("use system config file")), \
--	OPT_BOOL(0, "local", &use_local_config, N_("use repository config file"))=
-, \
--	OPT_BOOL(0, "worktree", &use_worktree_config, N_("use per-worktree config=
- file")), \
--	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use gi=
-ven config file")), \
--	OPT_STRING(0, "blob", &given_config_source.blob, N_("blob-id"), N_("read =
-config from given blob object"))
--
- #define CONFIG_TYPE_OPTIONS \
- 	OPT_GROUP(N_("Type")), \
- 	OPT_CALLBACK('t', "type", &type, N_("type"), N_("value is given this type=
-"), option_parse_type), \
-@@ -749,8 +770,9 @@ static void handle_nul(void) {
+@@ -761,19 +797,13 @@ static void handle_nul(void) {
+ 	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directo=
+ry name)"), TYPE_PATH), \
+ 	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date")=
+, TYPE_EXPIRY_DATE)
 =20
+-#define CONFIG_DISPLAY_OPTIONS \
+-	OPT_GROUP(N_("Display options")), \
+-	OPT_BOOL('z', "null", &end_nul, N_("terminate values with NUL byte")), \
+-	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")), \
+-	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file,=
+ standard input, blob, command line)")), \
+-	OPT_BOOL(0, "show-scope", &show_scope, N_("show scope of config (worktree=
+, local, global, system, command)"))
+-
  static int cmd_config_list(int argc, const char **argv, const char *prefix)
  {
-+	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
+ 	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
 INIT;
++	struct config_display_options display_opts =3D CONFIG_DISPLAY_OPTIONS_INI=
+T;
  	struct option opts[] =3D {
--		CONFIG_LOCATION_OPTIONS,
-+		CONFIG_LOCATION_OPTIONS(location_opts),
- 		CONFIG_DISPLAY_OPTIONS,
+ 		CONFIG_LOCATION_OPTIONS(location_opts),
+-		CONFIG_DISPLAY_OPTIONS,
++		CONFIG_DISPLAY_OPTIONS(display_opts),
  		OPT_GROUP(N_("Other")),
  		OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direc=
 tives on lookup")),
-@@ -760,30 +782,32 @@ static int cmd_config_list(int argc, const char **arg=
+ 		OPT_END(),
+@@ -783,11 +813,11 @@ static int cmd_config_list(int argc, const char **arg=
 v, const char *prefix)
- 	argc =3D parse_options(argc, argv, prefix, opts, builtin_config_list_usag=
-e, 0);
  	check_argc(argc, 0, 0);
 =20
--	handle_config_location(prefix);
-+	location_options_init(&location_opts, prefix);
- 	handle_nul();
+ 	location_options_init(&location_opts, prefix);
+-	handle_nul();
++	display_options_init(&display_opts);
 =20
  	setup_auto_pager("config", 1);
 =20
- 	if (config_with_options(show_all_config, NULL,
--				&given_config_source, the_repository,
--				&config_options) < 0) {
--		if (given_config_source.file)
-+				&location_opts.source, the_repository,
-+				&location_opts.options) < 0) {
-+		if (location_opts.source.file)
- 			die_errno(_("unable to read config file '%s'"),
--				  given_config_source.file);
-+				  location_opts.source.file);
- 		else
- 			die(_("error processing config file(s)"));
- 	}
-=20
-+	location_options_release(&location_opts);
- 	return 0;
- }
-=20
+-	if (config_with_options(show_all_config, NULL,
++	if (config_with_options(show_all_config, &display_opts,
+ 				&location_opts.source, the_repository,
+ 				&location_opts.options) < 0) {
+ 		if (location_opts.source.file)
+@@ -804,6 +834,7 @@ static int cmd_config_list(int argc, const char **argv,=
+ const char *prefix)
  static int cmd_config_get(int argc, const char **argv, const char *prefix)
  {
-+	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
+ 	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
 INIT;
++	struct config_display_options display_opts =3D CONFIG_DISPLAY_OPTIONS_INI=
+T;
  	const char *value_pattern =3D NULL, *url =3D NULL;
  	int flags =3D 0;
  	struct option opts[] =3D {
--		CONFIG_LOCATION_OPTIONS,
-+		CONFIG_LOCATION_OPTIONS(location_opts),
- 		CONFIG_TYPE_OPTIONS,
- 		OPT_GROUP(N_("Filter options")),
- 		OPT_BOOL(0, "all", &do_all, N_("return all values for multi-valued confi=
-g options")),
-@@ -811,26 +835,28 @@ static int cmd_config_get(int argc, const char **argv=
+@@ -815,8 +846,7 @@ static int cmd_config_get(int argc, const char **argv, =
+const char *prefix)
+ 		OPT_STRING(0, "value", &value_pattern, N_("pattern"), N_("show config wi=
+th values matching the pattern")),
+ 		OPT_BIT(0, "fixed-value", &flags, N_("use string equality when comparing=
+ values to value pattern"), CONFIG_FLAGS_FIXED_VALUE),
+ 		OPT_STRING(0, "url", &url, N_("URL"), N_("show config matching the given=
+ URL")),
+-		CONFIG_DISPLAY_OPTIONS,
+-		OPT_BOOL(0, "show-names", &show_keys, N_("show config keys in addition t=
+o their values")),
++		CONFIG_DISPLAY_OPTIONS(display_opts),
+ 		OPT_GROUP(N_("Other")),
+ 		OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direc=
+tives on lookup")),
+ 		OPT_STRING(0, "default", &default_value, N_("value"), N_("use default va=
+lue when missing entry")),
+@@ -836,14 +866,14 @@ static int cmd_config_get(int argc, const char **argv=
 , const char *prefix)
- 	if (url && (do_all || use_key_regexp || value_pattern))
  		die(_("--url=3D cannot be used with --all, --regexp or --value"));
 =20
--	handle_config_location(prefix);
-+	location_options_init(&location_opts, prefix);
- 	handle_nul();
+ 	location_options_init(&location_opts, prefix);
+-	handle_nul();
++	display_options_init(&display_opts);
 =20
  	setup_auto_pager("config", 1);
 =20
  	if (url)
--		ret =3D get_urlmatch(argv[0], url);
-+		ret =3D get_urlmatch(&location_opts, argv[0], url);
+-		ret =3D get_urlmatch(&location_opts, argv[0], url);
++		ret =3D get_urlmatch(&location_opts, &display_opts, argv[0], url);
  	else
--		ret =3D get_value(argv[0], value_pattern, flags);
-+		ret =3D get_value(&location_opts, argv[0], value_pattern, flags);
+-		ret =3D get_value(&location_opts, argv[0], value_pattern, flags);
++		ret =3D get_value(&location_opts, &display_opts, argv[0], value_pattern,=
+ flags);
 =20
-+	location_options_release(&location_opts);
+ 	location_options_release(&location_opts);
  	return ret;
- }
-=20
- static int cmd_config_set(int argc, const char **argv, const char *prefix)
- {
-+	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
-INIT;
- 	const char *value_pattern =3D NULL, *comment_arg =3D NULL;
- 	char *comment =3D NULL;
- 	int flags =3D 0, append =3D 0;
- 	struct option opts[] =3D {
--		CONFIG_LOCATION_OPTIONS,
-+		CONFIG_LOCATION_OPTIONS(location_opts),
- 		CONFIG_TYPE_OPTIONS,
- 		OPT_GROUP(N_("Filter")),
- 		OPT_BIT(0, "all", &flags, N_("replace multi-valued config option with ne=
-w value"), CONFIG_FLAGS_MULTI_REPLACE),
-@@ -858,23 +884,24 @@ static int cmd_config_set(int argc, const char **argv=
-, const char *prefix)
-=20
- 	comment =3D git_config_prepare_comment_string(comment_arg);
-=20
--	handle_config_location(prefix);
--	check_write();
-+	location_options_init(&location_opts, prefix);
-+	check_write(&location_opts.source);
-=20
- 	value =3D normalize_value(argv[0], argv[1], &default_kvi);
-=20
- 	if ((flags & CONFIG_FLAGS_MULTI_REPLACE) || value_pattern) {
--		ret =3D git_config_set_multivar_in_file_gently(given_config_source.file,
-+		ret =3D git_config_set_multivar_in_file_gently(location_opts.source.file,
- 							     argv[0], value, value_pattern,
- 							     comment, flags);
- 	} else {
--		ret =3D git_config_set_in_file_gently(given_config_source.file,
-+		ret =3D git_config_set_in_file_gently(location_opts.source.file,
- 						    argv[0], comment, value);
- 		if (ret =3D=3D CONFIG_NOTHING_SET)
- 			error(_("cannot overwrite multiple values with a single value\n"
- 			"       Use a regexp, --add or --replace-all to change %s."), argv[0]);
- 	}
-=20
-+	location_options_release(&location_opts);
- 	free(comment);
- 	free(value);
- 	return ret;
-@@ -882,10 +909,11 @@ static int cmd_config_set(int argc, const char **argv=
-, const char *prefix)
-=20
- static int cmd_config_unset(int argc, const char **argv, const char *prefi=
-x)
- {
-+	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
-INIT;
- 	const char *value_pattern =3D NULL;
- 	int flags =3D 0;
- 	struct option opts[] =3D {
--		CONFIG_LOCATION_OPTIONS,
-+		CONFIG_LOCATION_OPTIONS(location_opts),
- 		OPT_GROUP(N_("Filter")),
- 		OPT_BIT(0, "all", &flags, N_("replace multi-valued config option with ne=
-w value"), CONFIG_FLAGS_MULTI_REPLACE),
- 		OPT_STRING(0, "value", &value_pattern, N_("pattern"), N_("show config wi=
-th values matching the pattern")),
-@@ -901,24 +929,26 @@ static int cmd_config_unset(int argc, const char **ar=
-gv, const char *prefix)
- 	if ((flags & CONFIG_FLAGS_FIXED_VALUE) && !value_pattern)
- 		die(_("--fixed-value only applies with 'value-pattern'"));
-=20
--	handle_config_location(prefix);
--	check_write();
-+	location_options_init(&location_opts, prefix);
-+	check_write(&location_opts.source);
-=20
- 	if ((flags & CONFIG_FLAGS_MULTI_REPLACE) || value_pattern)
--		ret =3D git_config_set_multivar_in_file_gently(given_config_source.file,
-+		ret =3D git_config_set_multivar_in_file_gently(location_opts.source.file,
- 							     argv[0], NULL, value_pattern,
- 							     NULL, flags);
- 	else
--		ret =3D git_config_set_in_file_gently(given_config_source.file, argv[0],
-+		ret =3D git_config_set_in_file_gently(location_opts.source.file, argv[0],
- 						    NULL, NULL);
-=20
-+	location_options_release(&location_opts);
- 	return ret;
- }
-=20
- static int cmd_config_rename_section(int argc, const char **argv, const ch=
-ar *prefix)
- {
-+	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
-INIT;
- 	struct option opts[] =3D {
--		CONFIG_LOCATION_OPTIONS,
-+		CONFIG_LOCATION_OPTIONS(location_opts),
- 		OPT_END(),
- 	};
- 	int ret;
-@@ -927,10 +957,10 @@ static int cmd_config_rename_section(int argc, const =
-char **argv, const char *pr
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 	check_argc(argc, 2, 2);
-=20
--	handle_config_location(prefix);
--	check_write();
-+	location_options_init(&location_opts, prefix);
-+	check_write(&location_opts.source);
-=20
--	ret =3D git_config_rename_section_in_file(given_config_source.file,
-+	ret =3D git_config_rename_section_in_file(location_opts.source.file,
- 						argv[0], argv[1]);
- 	if (ret < 0)
- 		goto out;
-@@ -939,13 +969,15 @@ static int cmd_config_rename_section(int argc, const =
-char **argv, const char *pr
- 	ret =3D 0;
-=20
- out:
-+	location_options_release(&location_opts);
- 	return ret;
- }
-=20
- static int cmd_config_remove_section(int argc, const char **argv, const ch=
-ar *prefix)
- {
-+	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
-INIT;
- 	struct option opts[] =3D {
--		CONFIG_LOCATION_OPTIONS,
-+		CONFIG_LOCATION_OPTIONS(location_opts),
- 		OPT_END(),
- 	};
- 	int ret;
-@@ -954,10 +986,10 @@ static int cmd_config_remove_section(int argc, const =
-char **argv, const char *pr
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 	check_argc(argc, 1, 1);
-=20
--	handle_config_location(prefix);
--	check_write();
-+	location_options_init(&location_opts, prefix);
-+	check_write(&location_opts.source);
-=20
--	ret =3D git_config_rename_section_in_file(given_config_source.file,
-+	ret =3D git_config_rename_section_in_file(location_opts.source.file,
- 						argv[0], NULL);
- 	if (ret < 0)
- 		goto out;
-@@ -966,24 +998,25 @@ static int cmd_config_remove_section(int argc, const =
-char **argv, const char *pr
- 	ret =3D 0;
-=20
- out:
-+	location_options_release(&location_opts);
- 	return ret;
- }
-=20
--static int show_editor(void)
-+static int show_editor(struct config_location_options *opts)
- {
- 	char *config_file;
-=20
--	if (!given_config_source.file && !startup_info->have_repository)
-+	if (!opts->source.file && !startup_info->have_repository)
- 		die(_("not in a git directory"));
--	if (given_config_source.use_stdin)
-+	if (opts->source.use_stdin)
- 		die(_("editing stdin is not supported"));
--	if (given_config_source.blob)
-+	if (opts->source.blob)
- 		die(_("editing blobs is not supported"));
- 	git_config(git_default_config, NULL);
--	config_file =3D given_config_source.file ?
--			xstrdup(given_config_source.file) :
-+	config_file =3D opts->source.file ?
-+			xstrdup(opts->source.file) :
- 			git_pathdup("config");
--	if (use_global_config) {
-+	if (opts->use_global_config) {
- 		int fd =3D open(config_file, O_CREAT | O_EXCL | O_WRONLY, 0666);
- 		if (fd >=3D 0) {
- 			char *content =3D default_user_config();
-@@ -1002,18 +1035,22 @@ static int show_editor(void)
-=20
- static int cmd_config_edit(int argc, const char **argv, const char *prefix)
- {
-+	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
-INIT;
- 	struct option opts[] =3D {
--		CONFIG_LOCATION_OPTIONS,
-+		CONFIG_LOCATION_OPTIONS(location_opts),
- 		OPT_END(),
- 	};
-+	int ret;
-=20
- 	argc =3D parse_options(argc, argv, prefix, opts, builtin_config_edit_usag=
-e, 0);
- 	check_argc(argc, 0, 0);
-=20
--	handle_config_location(prefix);
--	check_write();
-+	location_options_init(&location_opts, prefix);
-+	check_write(&location_opts.source);
-=20
--	return show_editor();
-+	ret =3D show_editor(&location_opts);
-+	location_options_release(&location_opts);
-+	return ret;
- }
-=20
- static int cmd_config_actions(int argc, const char **argv, const char *pre=
-fix)
-@@ -1036,10 +1073,11 @@ static int cmd_config_actions(int argc, const char =
-**argv, const char *prefix)
- 		ACTION_GET_COLORBOOL =3D (1<<14),
+@@ -1074,6 +1104,7 @@ static int cmd_config_actions(int argc, const char **=
+argv, const char *prefix)
  		ACTION_GET_URLMATCH =3D (1<<15),
  	};
-+	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
+ 	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
 INIT;
++	struct config_display_options display_opts =3D CONFIG_DISPLAY_OPTIONS_INI=
+T;
  	const char *comment_arg =3D NULL;
  	int actions =3D 0;
  	struct option opts[] =3D {
--		CONFIG_LOCATION_OPTIONS,
-+		CONFIG_LOCATION_OPTIONS(location_opts),
- 		OPT_GROUP(N_("Action")),
- 		OPT_CMDMODE(0, "get", &actions, N_("get value: name [<value-pattern>]"),=
- ACTION_GET),
- 		OPT_CMDMODE(0, "get-all", &actions, N_("get all values: key [<value-patt=
-ern>]"), ACTION_GET_ALL),
-@@ -1073,7 +1111,7 @@ static int cmd_config_actions(int argc, const char **=
+@@ -1094,7 +1125,7 @@ static int cmd_config_actions(int argc, const char **=
 argv, const char *prefix)
- 			     builtin_config_usage,
+ 		OPT_CMDMODE(0, "get-color", &actions, N_("find the color configured: slo=
+t [<default>]"), ACTION_GET_COLOR),
+ 		OPT_CMDMODE(0, "get-colorbool", &actions, N_("find the color setting: sl=
+ot [<stdout-is-tty>]"), ACTION_GET_COLORBOOL),
+ 		CONFIG_TYPE_OPTIONS,
+-		CONFIG_DISPLAY_OPTIONS,
++		CONFIG_DISPLAY_OPTIONS(display_opts),
+ 		OPT_GROUP(N_("Other")),
+ 		OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, us=
+e default value when missing entry")),
+ 		OPT_STRING(0, "comment", &comment_arg, N_("value"), N_("human-readable c=
+omment string (# will be prepended as needed)")),
+@@ -1112,7 +1143,7 @@ static int cmd_config_actions(int argc, const char **=
+argv, const char *prefix)
  			     PARSE_OPT_STOP_AT_NON_OPTION);
 =20
--	handle_config_location(prefix);
-+	location_options_init(&location_opts, prefix);
- 	handle_nul();
+ 	location_options_init(&location_opts, prefix);
+-	handle_nul();
++	display_options_init(&display_opts);
 =20
  	if ((actions & (ACTION_GET_COLOR|ACTION_GET_COLORBOOL)) && type) {
-@@ -1162,94 +1200,94 @@ static int cmd_config_actions(int argc, const char =
+ 		error(_("--get-color and variable type are incoherent"));
+@@ -1128,13 +1159,13 @@ static int cmd_config_actions(int argc, const char =
 **argv, const char *prefix)
+ 			error(_("no action specified"));
+ 			exit(129);
+ 		}
+-	if (omit_values &&
++	if (display_opts.omit_values &&
+ 	    !(actions =3D=3D ACTION_LIST || actions =3D=3D ACTION_GET_REGEXP)) {
+ 		error(_("--name-only is only applicable to --list or --get-regexp"));
+ 		exit(129);
+ 	}
+=20
+-	if (show_origin && !(actions &
++	if (display_opts.show_origin && !(actions &
+ 		(ACTION_GET|ACTION_GET_ALL|ACTION_GET_REGEXP|ACTION_LIST))) {
+ 		error(_("--show-origin is only applicable to --get, --get-all, "
+ 			"--get-regexp, and --list"));
+@@ -1199,7 +1230,7 @@ static int cmd_config_actions(int argc, const char **=
+argv, const char *prefix)
+=20
  	if (actions =3D=3D ACTION_LIST) {
  		check_argc(argc, 0, 0);
- 		if (config_with_options(show_all_config, NULL,
--					&given_config_source, the_repository,
--					&config_options) < 0) {
--			if (given_config_source.file)
-+					&location_opts.source, the_repository,
-+					&location_opts.options) < 0) {
-+			if (location_opts.source.file)
- 				die_errno(_("unable to read config file '%s'"),
--					  given_config_source.file);
-+					  location_opts.source.file);
- 			else
- 				die(_("error processing config file(s)"));
- 		}
- 	}
- 	else if (actions =3D=3D ACTION_EDIT) {
--		ret =3D show_editor();
-+		ret =3D show_editor(&location_opts);
- 	}
- 	else if (actions =3D=3D ACTION_SET) {
--		check_write();
-+		check_write(&location_opts.source);
- 		check_argc(argc, 2, 2);
- 		value =3D normalize_value(argv[0], argv[1], &default_kvi);
--		ret =3D git_config_set_in_file_gently(given_config_source.file, argv[0],=
- comment, value);
-+		ret =3D git_config_set_in_file_gently(location_opts.source.file, argv[0]=
-, comment, value);
- 		if (ret =3D=3D CONFIG_NOTHING_SET)
- 			error(_("cannot overwrite multiple values with a single value\n"
- 			"       Use a regexp, --add or --replace-all to change %s."), argv[0]);
- 	}
- 	else if (actions =3D=3D ACTION_SET_ALL) {
--		check_write();
-+		check_write(&location_opts.source);
- 		check_argc(argc, 2, 3);
- 		value =3D normalize_value(argv[0], argv[1], &default_kvi);
--		ret =3D git_config_set_multivar_in_file_gently(given_config_source.file,
-+		ret =3D git_config_set_multivar_in_file_gently(location_opts.source.file,
- 							     argv[0], value, argv[2],
- 							     comment, flags);
- 	}
- 	else if (actions =3D=3D ACTION_ADD) {
--		check_write();
-+		check_write(&location_opts.source);
- 		check_argc(argc, 2, 2);
- 		value =3D normalize_value(argv[0], argv[1], &default_kvi);
--		ret =3D git_config_set_multivar_in_file_gently(given_config_source.file,
-+		ret =3D git_config_set_multivar_in_file_gently(location_opts.source.file,
- 							     argv[0], value,
- 							     CONFIG_REGEX_NONE,
- 							     comment, flags);
- 	}
- 	else if (actions =3D=3D ACTION_REPLACE_ALL) {
--		check_write();
-+		check_write(&location_opts.source);
- 		check_argc(argc, 2, 3);
- 		value =3D normalize_value(argv[0], argv[1], &default_kvi);
--		ret =3D git_config_set_multivar_in_file_gently(given_config_source.file,
-+		ret =3D git_config_set_multivar_in_file_gently(location_opts.source.file,
- 							     argv[0], value, argv[2],
- 							     comment, flags | CONFIG_FLAGS_MULTI_REPLACE);
+-		if (config_with_options(show_all_config, NULL,
++		if (config_with_options(show_all_config, &display_opts,
+ 					&location_opts.source, the_repository,
+ 					&location_opts.options) < 0) {
+ 			if (location_opts.source.file)
+@@ -1248,23 +1279,23 @@ static int cmd_config_actions(int argc, const char =
+**argv, const char *prefix)
  	}
  	else if (actions =3D=3D ACTION_GET) {
  		check_argc(argc, 1, 2);
--		ret =3D get_value(argv[0], argv[1], flags);
-+		ret =3D get_value(&location_opts, argv[0], argv[1], flags);
+-		ret =3D get_value(&location_opts, argv[0], argv[1], flags);
++		ret =3D get_value(&location_opts, &display_opts, argv[0], argv[1], flags=
+);
  	}
  	else if (actions =3D=3D ACTION_GET_ALL) {
  		do_all =3D 1;
  		check_argc(argc, 1, 2);
--		ret =3D get_value(argv[0], argv[1], flags);
-+		ret =3D get_value(&location_opts, argv[0], argv[1], flags);
+-		ret =3D get_value(&location_opts, argv[0], argv[1], flags);
++		ret =3D get_value(&location_opts, &display_opts, argv[0], argv[1], flags=
+);
  	}
  	else if (actions =3D=3D ACTION_GET_REGEXP) {
- 		show_keys =3D 1;
+-		show_keys =3D 1;
++		display_opts.show_keys =3D 1;
  		use_key_regexp =3D 1;
  		do_all =3D 1;
  		check_argc(argc, 1, 2);
--		ret =3D get_value(argv[0], argv[1], flags);
-+		ret =3D get_value(&location_opts, argv[0], argv[1], flags);
+-		ret =3D get_value(&location_opts, argv[0], argv[1], flags);
++		ret =3D get_value(&location_opts, &display_opts, argv[0], argv[1], flags=
+);
  	}
  	else if (actions =3D=3D ACTION_GET_URLMATCH) {
  		check_argc(argc, 2, 2);
--		ret =3D get_urlmatch(argv[0], argv[1]);
-+		ret =3D get_urlmatch(&location_opts, argv[0], argv[1]);
+-		ret =3D get_urlmatch(&location_opts, argv[0], argv[1]);
++		ret =3D get_urlmatch(&location_opts, &display_opts, argv[0], argv[1]);
  	}
  	else if (actions =3D=3D ACTION_UNSET) {
--		check_write();
-+		check_write(&location_opts.source);
- 		check_argc(argc, 1, 2);
- 		if (argc =3D=3D 2)
--			ret =3D git_config_set_multivar_in_file_gently(given_config_source.file,
-+			ret =3D git_config_set_multivar_in_file_gently(location_opts.source.fil=
-e,
- 								     argv[0], NULL, argv[1],
- 								     NULL, flags);
- 		else
--			ret =3D git_config_set_in_file_gently(given_config_source.file,
-+			ret =3D git_config_set_in_file_gently(location_opts.source.file,
- 							    argv[0], NULL, NULL);
- 	}
- 	else if (actions =3D=3D ACTION_UNSET_ALL) {
--		check_write();
-+		check_write(&location_opts.source);
- 		check_argc(argc, 1, 2);
--		ret =3D git_config_set_multivar_in_file_gently(given_config_source.file,
-+		ret =3D git_config_set_multivar_in_file_gently(location_opts.source.file,
- 							     argv[0], NULL, argv[1],
- 							     NULL, flags | CONFIG_FLAGS_MULTI_REPLACE);
- 	}
- 	else if (actions =3D=3D ACTION_RENAME_SECTION) {
--		check_write();
-+		check_write(&location_opts.source);
- 		check_argc(argc, 2, 2);
--		ret =3D git_config_rename_section_in_file(given_config_source.file,
-+		ret =3D git_config_rename_section_in_file(location_opts.source.file,
- 							argv[0], argv[1]);
- 		if (ret < 0)
- 			goto out;
-@@ -1259,9 +1297,9 @@ static int cmd_config_actions(int argc, const char **=
-argv, const char *prefix)
- 			ret =3D 0;
- 	}
- 	else if (actions =3D=3D ACTION_REMOVE_SECTION) {
--		check_write();
-+		check_write(&location_opts.source);
- 		check_argc(argc, 1, 1);
--		ret =3D git_config_rename_section_in_file(given_config_source.file,
-+		ret =3D git_config_rename_section_in_file(location_opts.source.file,
- 							argv[0], NULL);
- 		if (ret < 0)
- 			goto out;
-@@ -1272,16 +1310,17 @@ static int cmd_config_actions(int argc, const char =
-**argv, const char *prefix)
- 	}
- 	else if (actions =3D=3D ACTION_GET_COLOR) {
- 		check_argc(argc, 1, 2);
--		get_color(argv[0], argv[1]);
-+		get_color(&location_opts, argv[0], argv[1]);
- 	}
- 	else if (actions =3D=3D ACTION_GET_COLORBOOL) {
- 		check_argc(argc, 1, 2);
- 		if (argc =3D=3D 2)
- 			color_stdout_is_tty =3D git_config_bool("command line", argv[1]);
--		ret =3D get_colorbool(argv[0], argc =3D=3D 2);
-+		ret =3D get_colorbool(&location_opts, argv[0], argc =3D=3D 2);
- 	}
-=20
- out:
-+	location_options_release(&location_opts);
- 	free(comment);
- 	free(value);
- 	return ret;
-@@ -1301,8 +1340,6 @@ int cmd_config(int argc, const char **argv, const cha=
-r *prefix)
- 		OPT_END(),
- 	};
-=20
--	given_config_source.file =3D xstrdup_or_null(getenv(CONFIG_ENVIRONMENT));
--
- 	/*
- 	 * This is somewhat hacky: we first parse the command line while
- 	 * keeping all args intact in order to determine whether a subcommand
+ 		check_write(&location_opts.source);
 --=20
 2.45.GIT
 
 
---ZQaZ/m8HGbEbursa
+--fDViYqr5apx/vVUl
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB6fIACgkQVbJhu7ck
-PpRqjhAAmF7w00Yq8/6xy0X3V4LNO1MCAldm5qpwkVqbyha3t/fe8ys/yr17S/Nv
-S5a5mPfJT3vgT3uSi55XRT5tv0GRld+02A8DGYsVNxmYLmQlwYCvEwt05WPmAyuE
-ZeMZhywLFbPR/ntdH9vXEIo7cxkXbptURpo70AH17eLNAZ6DZEsa1iPrvR+WmUqE
-MHmCWXySNKobJcmyhxv4AxVlr9T05HSbB054hhcFkibjIDbriPl8876U9j5bQxD3
-+jtE1Ec47wnNG7C5BPXpJxDa6+hCyyZHR+PEHf9ZWZskbb3m993YvHXleWY7ZTiZ
-vBoT66n4byoypxf7vzTSU5bGKR6rjCguTgWgjN1XIzQplsVhc2DCCYau94wpizZ4
-vwDd/8gEC5a7yheMdXSAi9ApWDN+zLy+CXnciWzlPpl7Q2KV7HA270Z8VZEFBL/5
-AB7vu/CNbKkIJdm8AmEDMUtEVTljdZCk29XVnNXVPjXelkvb+9AtpWTMWcIyIwwQ
-koEnbs7Nxg6llTAQK5OYaNV7ekZ1Ig6uvRKlQjMBPDfR5DJzxvjNFhLXP3oSr+A+
-uB2SweZBzi6e1kIRwinkA5toYO7RRPz6f5Nx9FdeK4Z/9pIlkWdp1F68JlThOayh
-jHUe8tZpJW142mzqRVOtuCIhPoRxdXB5mGzoLuStECuX8UfJoms=
-=EDLt
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB6fgACgkQVbJhu7ck
+PpQjpQ//R/nTBXwlDfyAv7hvs4jfS7e16moqWe4QoU55yXee6NAC3LCrs0kCIPYL
+sj6kFRwL6GdWZUpMyQRMWSmY8anTHQTdwKeRy0nHOfHRneRX/te9HJqkEVV82bo1
+CPM3ck+jY6z5/NzPJmHunAmav4NLmphuDwlH9G+1AWTurXyVTskEFYXVbYkmeJ4C
+rVKgXwDwLyJK2Vk0u5Uv2OU734kpxLqNJzcMUH6gm55j7T8HFb75yS1yzquhO1t0
+F32t5/EIaSQSJvzMVhtxwAOB288LR4nfwjN+kOEI7vWyYdI0a0NQK9xczr9nkIl0
++wJqs14/yhHeqxvYp7ajSR0HWeCKzBDBsAvKuQYRqgs4lDkGX7JWqLegq/9PQVxq
+PPws0e0/JnIK+xatWevOMnuDhAnPRtY0XQb5qBIUUxF1jVNDD0md6d4MF/WO8nNb
+aum28LOuDSl59AcOyUMk6qMxDTqw6OSN2mGOlGKzNxXXm31xmZZCC5/WFjW+MB3X
+ohIFQnNIWqalgLHHz1ym+prwL1iW3FyMdpyK26W7pW9yZPiYEonJ6Lk+gVUKxU2m
+zEuG7QOGvI4FdTq9UxN7qUnaaHesKKOApvdc/EOmPet3FSQAqQGz5RG8xH0C1Jk3
+JZFswdEykHXRgy6Hf0OLHq9BYdL15COrFW7YCNKmY/CXGWMZ4x4=
+=yrUH
 -----END PGP SIGNATURE-----
 
---ZQaZ/m8HGbEbursa--
+--fDViYqr5apx/vVUl--
