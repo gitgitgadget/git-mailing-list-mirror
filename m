@@ -1,81 +1,79 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
+Received: from wfout3-smtp.messagingengine.com (wfout3-smtp.messagingengine.com [64.147.123.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5861146A98
-	for <git@vger.kernel.org>; Mon, 13 May 2024 08:48:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5DB148FE3
+	for <git@vger.kernel.org>; Mon, 13 May 2024 10:00:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715590088; cv=none; b=af2/daydwUF044wtZbGmCslXDrblrOqxZsbI8P+YlaIG+trq4bCZfbIh2svxBYiN7yWo9zMZwMq7K2IcSfH6+FK6ag9RF0moVK+eAcGntuzKoOwTnv8ci+p9CY0X3IsH2Nk1+HEbHFrVB7U8QLIafd/SWMqh+0B2fqSKZMpHIh0=
+	t=1715594419; cv=none; b=gmS+byHw3+7aLHq5m4STF0OPRJfcLxZero5Pt88UdgoMP6NjUat0/MZ3VkDfrpZi58wGmhpuiz9DoZdlG5WClUKyIOmrH4IzVEB5DMv12Z50+t+42U0rL/LW5tp12vN+PSLebDYEV+VMjHbKQWLg3y7yWVbU31Iu6kf49zM7GiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715590088; c=relaxed/simple;
-	bh=QtjfV7V6NdXsRv6YoAtrU4ClCr6LLIowABt20MWHtow=;
+	s=arc-20240116; t=1715594419; c=relaxed/simple;
+	bh=Rr9UA6hHqWsMoAW6yhjYTVo7taKR7QOkcvOMq6g9vdk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nFoPZWFX6AZMo9viaDux28ienH/qiZcJYyHB/wN+oO0RLRaPf7AVA/cAplJ1jfG/vh0zXiWGuNBA32MnrVknWqB8Lq7cVhLHVD5K/9X8g3slCppwHnWALR+dfq+SAzYxCNanZvuWKEwjgepLC7AmBwBGsNnI4gzWN/9iYq2MI7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lsjQeSBk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T565MZBe; arc=none smtp.client-ip=64.147.123.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=SmfRY6Nt24TWgBYT5AOBS3rVCXC2nNUL3H2jOoIDp/xiFOvtKYb97+BunxnHBAfy8baX/jFiw89fcE8AjZ6scC6ZbzU2aJru4IaCI+qiwVIRI/6CiRDMcbskAS++uj1Q5KOfhHhLPgLhT0EtESfjKQ1OmZZkMm9qOARYdMTNf4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MHnqwuEo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JEDGEGVo; arc=none smtp.client-ip=64.147.123.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lsjQeSBk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T565MZBe"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 0E6F71800080;
-	Mon, 13 May 2024 04:48:05 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MHnqwuEo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JEDGEGVo"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.west.internal (Postfix) with ESMTP id AF8051C0011E;
+	Mon, 13 May 2024 06:00:16 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 13 May 2024 04:48:06 -0400
+  by compute4.internal (MEProxy); Mon, 13 May 2024 06:00:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715590085; x=1715676485; bh=rVWkdb9tcW
-	iNoEPv0KKrWd5SlqWtdfPc10uR6zVEQdM=; b=lsjQeSBk/IW135B+4231k+0QzH
-	fdtOwFLRs+8zOPDFbhspraTxaqGxWIioKghiiV0qtMNLbi05xN0N0YAy18kWSLUR
-	EfyG/oonYGR/AOKtO6BLQBdm+oksQPDzR3GxirJGy8DeMgyvQ0Cvsphvodwpq7WW
-	F/7nCzX3G8UesuEErRbYyxUdsjjSvgRXVjMnjDqMlywmcA7Ku6IogWuKix/wPp44
-	ZoPs/jPTEB/7HmVPSCI5CTFV0D5OAvK+vSh4Sun60XfMRL+/o+dz2nSu6KtDd0Ah
-	RdLX+cjrHfNXgZ5EfrwtN4hhcd0goj2kZQadzRh2iRUVtjee06/9qmWAG4tw==
+	:subject:to:to; s=fm3; t=1715594416; x=1715680816; bh=8tprjyt+/L
+	36q54wmZ4UnUjtq74WlguCgf99iFj3Z84=; b=MHnqwuEoVGZmUjpxz5xyRVZGg8
+	yVtdUwMzgKXXVeEgjfOkHY+EFie03sYBkYu+Szh/pw6bBVvuXL+4Saa7MYKh2O9y
+	aMSEu3hNkOb18sB9jzQ4kx4FDWIZyz4zj9iI7uz3XTB0SNjAZSNKEKnTzKpCtCk0
+	2pw7Fv1M+cpOY2ujQYOrajRdeebr23ZIz5bRTex/eK0AI9hgjsQzaETGDBMTo8e3
+	ugaGP6CUy+ChMDLAIGuU1XEF+kYe6RPKA955EUPNt4/d4mMbTN7aKubUDEpRujtS
+	uweNvX0DHYN06eBHyAUbnDSnHfVR0TZBDqwYjIRZGqZ7fy3+9IVw/rEeP94A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715590085; x=1715676485; bh=rVWkdb9tcWiNoEPv0KKrWd5SlqWt
-	dfPc10uR6zVEQdM=; b=T565MZBe06fkLIjKA66ZHSa9DANUBa4OxbL3qHosCRAP
-	CHabEBaDgJrTdfLKqURkz/L8VBodgTH8PmAbVDSm4oMCaymkT3TYfPTq87HjzXZS
-	mpcqpvmEtocp9UWaWKleVL4N2EidEBN11CnCASLU8k1hqqxEuW4A24TTS1endqTu
-	h0thT2i1TJjotQc0X7d+6cor93Sld5krhtlUBny+B/o8sq2eHjcLtI+Puj3sZuG8
-	gyfDuRh27cexvOuq03eAOnvXu8aWriCAVuJ4SXPA7UscKSfImVUMY1K7vfAkDzY7
-	TDUGq/TRDiboWx0zTd4VesdYUBybXxNxXiaz9LGwzw==
-X-ME-Sender: <xms:xdNBZi1ILSVL1S1-XLl_mGmt7Ckz91_Zqh-D91Y_xK_pg31qe_ovnw>
-    <xme:xdNBZlFFklqF6ALnk3migZxEn7bjt7ARM7KzEHnz2JhVH8V3ub99YZe9IZ6vXdbIn
-    NvZyW6XMIcnyVWb-A>
-X-ME-Received: <xmr:xdNBZq6hmhYbCW4aCe46osDeUkPdsD2hduK281270M8Ze15rdm-LXKqsiHXNYDGbeeqiEd_tgq66v93mIA2hfeE8qSWWJy8kf9aul17YJaPpJc8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgtdejucetufdoteggodetrfdotf
+	fm3; t=1715594416; x=1715680816; bh=8tprjyt+/L36q54wmZ4UnUjtq74W
+	lguCgf99iFj3Z84=; b=JEDGEGVoI6mU/5UQTyuwD7j3y/8IxEKfUGzKvuBlHwYt
+	NtkheJrnQC+vyYLNj21tim+ELjej+3oLARjIOuoag86NRQXqlaHRwJEa0Xspxqpp
+	IPZ7krAo8AH3QQhX2Szierzt2lfNwScg89m8l1akfrmQmnIrw68LeNBr0hbD2Di3
+	i07B5z4AVcLWsFDDjhuCRg1Yz8y86enabxhRMGsrKnh8oqvTxcfkUCYyaAtISB1y
+	iYZH9mzSYmN/3Lax2XWmopUIZu0l4W9rn+Jr1MgOYnofxjPVkoZO/GsNph1CNVoO
+	wwZojXRJ0+KEwGa7SYa6mwULlekr+6OB0xyT+ev/vQ==
+X-ME-Sender: <xms:sORBZsAWDZTT9RuSde9eMd9l-R7i9oXm4M_5Fb0r9LWj3hQblDrx0w>
+    <xme:sORBZuhL-YyUYLcKPsv11BfVTigtbgRfiXSO78uOVHrwCJroIfPGC6XEMPMpBJYwf
+    4teRdLyFRZMurEv1w>
+X-ME-Received: <xmr:sORBZvkZmCH6-dg4H3qQOVZa4QL-aKMBlC9Xrkq5ja0aUDSpc7Sr1WgRkSOV9tsON8Ex_RxsvtApt4VM06wWfytqtab4ezCsQe0nG-SRQRkil40>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgvddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeljeetffevheeggeetkeetieduieeiie
+    egieegtdffheegkefhjeehfeekhfevleenucffohhmrghinhepghhithhhuhgsrdgtohhm
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:xdNBZj2XZMKrU0fYMa-yo29I1E5ovTN6u8-WHy59DHpENa10uWDq5g>
-    <xmx:xdNBZlH3NLOq6ekeU9sx0EZ6HSnIEOkHhwg-GIpZ588_ecEPLq59XA>
-    <xmx:xdNBZs-vUqH4O8R35yKl9n4WWHoAH2nZLRi__NYRpWZh6zLmfYWrtQ>
-    <xmx:xdNBZqlmmgGz2hnQ3oHNinDm1I17Y__leKo6IGw5Hf6b1vZ1OpvLEA>
-    <xmx:xdNBZlCgbQbTqOjujQ-XmFPK-7Q3WX87hQlvCO4EV3Fc2KwELzgSnVUq>
+X-ME-Proxy: <xmx:sORBZiwxiBnTxPSAIn2sF8RyTa-A4KgmA8TKj1xncqrN4JHUTJaweQ>
+    <xmx:sORBZhQ8_vPcK5rXzQULR9xmEREZl57QalQuWfKioIwjm94dZ4rkKA>
+    <xmx:sORBZtYokIihTEyhkm8qXvizXNWuXOjbxoHRzNWSZoGxXtvRdBp57g>
+    <xmx:sORBZqQ491XNTSlyIDTa9qzXVdLHzAhM841XTNazgbh3xszTdanpCA>
+    <xmx:sORBZsc3xTKoWmACnzfPNi6JFXaMDDDovcPDEHRoPuJF9MKyeM51nfwl>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 May 2024 04:48:04 -0400 (EDT)
+ 13 May 2024 06:00:15 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 38b09d1a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 May 2024 08:47:45 +0000 (UTC)
-Date: Mon, 13 May 2024 10:48:01 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id e7cbd887 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 May 2024 09:59:54 +0000 (UTC)
+Date: Mon, 13 May 2024 12:00:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 13/13] reftable/merged: adapt interface to allow reuse of
- iterators
-Message-ID: <2586e93c448e5df2fab51ba231e413c12e522f0e.1715589670.git.ps@pks.im>
-References: <cover.1715166175.git.ps@pks.im>
- <cover.1715589670.git.ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] compat/regex: fix argument order to calloc(3)
+Message-ID: <ZkHkiBa2hSbjcmZd@tanuki>
+References: <xmqqbk5bim2n.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,236 +81,73 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3Z9mbsZxUBxaaPMS"
+	protocol="application/pgp-signature"; boundary="3h4COUpms57mP4o0"
 Content-Disposition: inline
-In-Reply-To: <cover.1715589670.git.ps@pks.im>
+In-Reply-To: <xmqqbk5bim2n.fsf@gitster.g>
 
 
---3Z9mbsZxUBxaaPMS
+--3h4COUpms57mP4o0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Refactor the interfaces exposed by `struct reftable_merged_table` and
-`struct merged_iter` such that they support iterator reuse. This is done
-by separating initialization of the iterator and seeking on it.
+On Sat, May 11, 2024 at 11:25:04PM -0700, Junio C Hamano wrote:
+> Windows compiler suddenly started complaining that calloc(3) takes
+> its arguments in <nmemb, size> order.  Indeed, there are many calls
+> that has their arguments in a _wrong_ order.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/merged.c          | 35 -----------------------------------
- reftable/merged_test.c     | 19 +++++++++++++------
- reftable/reftable-merged.h | 15 ---------------
- reftable/stack.c           | 14 +++++++++-----
- 4 files changed, 22 insertions(+), 61 deletions(-)
+I think this is actually new to GCC 14. The release notes include this
+bit:
 
-diff --git a/reftable/merged.c b/reftable/merged.c
-index d127f99360..0da9dba265 100644
---- a/reftable/merged.c
-+++ b/reftable/merged.c
-@@ -262,41 +262,6 @@ void merged_table_init_iter(struct reftable_merged_tab=
-le *mt,
- 	iterator_from_merged_iter(it, mi);
- }
-=20
--int reftable_merged_table_seek_ref(struct reftable_merged_table *mt,
--				   struct reftable_iterator *it,
--				   const char *name)
--{
--	struct reftable_record rec =3D {
--		.type =3D BLOCK_TYPE_REF,
--		.u.ref =3D {
--			.refname =3D (char *)name,
--		},
--	};
--	merged_table_init_iter(mt, it, BLOCK_TYPE_REF);
--	return iterator_seek(it, &rec);
--}
--
--int reftable_merged_table_seek_log_at(struct reftable_merged_table *mt,
--				      struct reftable_iterator *it,
--				      const char *name, uint64_t update_index)
--{
--	struct reftable_record rec =3D { .type =3D BLOCK_TYPE_LOG,
--				       .u.log =3D {
--					       .refname =3D (char *)name,
--					       .update_index =3D update_index,
--				       } };
--	merged_table_init_iter(mt, it, BLOCK_TYPE_LOG);
--	return iterator_seek(it, &rec);
--}
--
--int reftable_merged_table_seek_log(struct reftable_merged_table *mt,
--				   struct reftable_iterator *it,
--				   const char *name)
--{
--	uint64_t max =3D ~((uint64_t)0);
--	return reftable_merged_table_seek_log_at(mt, it, name, max);
--}
--
- uint32_t reftable_merged_table_hash_id(struct reftable_merged_table *mt)
- {
- 	return mt->hash_id;
-diff --git a/reftable/merged_test.c b/reftable/merged_test.c
-index 530fc82d1c..33a17efcde 100644
---- a/reftable/merged_test.c
-+++ b/reftable/merged_test.c
-@@ -12,6 +12,7 @@ license that can be found in the LICENSE file or at
-=20
- #include "basics.h"
- #include "blocksource.h"
-+#include "constants.h"
- #include "reader.h"
- #include "record.h"
- #include "test_framework.h"
-@@ -145,7 +146,10 @@ static void test_merged_between(void)
- 	int i;
- 	struct reftable_ref_record ref =3D { NULL };
- 	struct reftable_iterator it =3D { NULL };
--	int err =3D reftable_merged_table_seek_ref(mt, &it, "a");
-+	int err;
-+
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-+	err =3D reftable_iterator_seek_ref(&it, "a");
- 	EXPECT_ERR(err);
-=20
- 	err =3D reftable_iterator_next_ref(&it, &ref);
-@@ -217,14 +221,15 @@ static void test_merged(void)
- 	struct reftable_reader **readers =3D NULL;
- 	struct reftable_merged_table *mt =3D
- 		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 3);
--
- 	struct reftable_iterator it =3D { NULL };
--	int err =3D reftable_merged_table_seek_ref(mt, &it, "a");
-+	int err;
- 	struct reftable_ref_record *out =3D NULL;
- 	size_t len =3D 0;
- 	size_t cap =3D 0;
- 	int i =3D 0;
-=20
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-+	err =3D reftable_iterator_seek_ref(&it, "a");
- 	EXPECT_ERR(err);
- 	EXPECT(reftable_merged_table_hash_id(mt) =3D=3D GIT_SHA1_FORMAT_ID);
- 	EXPECT(reftable_merged_table_min_update_index(mt) =3D=3D 1);
-@@ -348,14 +353,15 @@ static void test_merged_logs(void)
- 	struct reftable_reader **readers =3D NULL;
- 	struct reftable_merged_table *mt =3D merged_table_from_log_records(
- 		logs, &bs, &readers, sizes, bufs, 3);
--
- 	struct reftable_iterator it =3D { NULL };
--	int err =3D reftable_merged_table_seek_log(mt, &it, "a");
-+	int err;
- 	struct reftable_log_record *out =3D NULL;
- 	size_t len =3D 0;
- 	size_t cap =3D 0;
- 	int i =3D 0;
-=20
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
-+	err =3D reftable_iterator_seek_log(&it, "a");
- 	EXPECT_ERR(err);
- 	EXPECT(reftable_merged_table_hash_id(mt) =3D=3D GIT_SHA1_FORMAT_ID);
- 	EXPECT(reftable_merged_table_min_update_index(mt) =3D=3D 1);
-@@ -377,7 +383,8 @@ static void test_merged_logs(void)
- 						 GIT_SHA1_RAWSZ));
- 	}
-=20
--	err =3D reftable_merged_table_seek_log_at(mt, &it, "a", 2);
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
-+	err =3D reftable_iterator_seek_log_at(&it, "a", 2);
- 	EXPECT_ERR(err);
- 	reftable_log_record_release(&out[0]);
- 	err =3D reftable_iterator_next_log(&it, &out[0]);
-diff --git a/reftable/reftable-merged.h b/reftable/reftable-merged.h
-index c91a2d83a2..14d5fc9f05 100644
---- a/reftable/reftable-merged.h
-+++ b/reftable/reftable-merged.h
-@@ -36,21 +36,6 @@ int reftable_new_merged_table(struct reftable_merged_tab=
-le **dest,
- 			      struct reftable_table *stack, size_t n,
- 			      uint32_t hash_id);
-=20
--/* returns an iterator positioned just before 'name' */
--int reftable_merged_table_seek_ref(struct reftable_merged_table *mt,
--				   struct reftable_iterator *it,
--				   const char *name);
--
--/* returns an iterator for log entry, at given update_index */
--int reftable_merged_table_seek_log_at(struct reftable_merged_table *mt,
--				      struct reftable_iterator *it,
--				      const char *name, uint64_t update_index);
--
--/* like reftable_merged_table_seek_log_at but look for the newest entry. */
--int reftable_merged_table_seek_log(struct reftable_merged_table *mt,
--				   struct reftable_iterator *it,
--				   const char *name);
--
- /* returns the max update_index covered by this merged table. */
- uint64_t
- reftable_merged_table_max_update_index(struct reftable_merged_table *mt);
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 03f95935e1..7af4c3fd66 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -925,7 +925,8 @@ static int stack_write_compact(struct reftable_stack *s=
-t,
- 		goto done;
- 	}
-=20
--	err =3D reftable_merged_table_seek_ref(mt, &it, "");
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-+	err =3D reftable_iterator_seek_ref(&it, "");
- 	if (err < 0)
- 		goto done;
-=20
-@@ -949,7 +950,8 @@ static int stack_write_compact(struct reftable_stack *s=
-t,
- 	}
- 	reftable_iterator_destroy(&it);
-=20
--	err =3D reftable_merged_table_seek_log(mt, &it, "");
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
-+	err =3D reftable_iterator_seek_log(&it, "");
- 	if (err < 0)
- 		goto done;
-=20
-@@ -1340,9 +1342,11 @@ int reftable_stack_read_ref(struct reftable_stack *s=
-t, const char *refname,
- int reftable_stack_read_log(struct reftable_stack *st, const char *refname,
- 			    struct reftable_log_record *log)
- {
--	struct reftable_iterator it =3D { NULL };
--	struct reftable_merged_table *mt =3D reftable_stack_merged_table(st);
--	int err =3D reftable_merged_table_seek_log(mt, &it, refname);
-+	struct reftable_iterator it =3D {0};
-+	int err;
-+
-+	reftable_stack_init_log_iterator(st, &it);
-+	err =3D reftable_iterator_seek_log(&it, refname);
- 	if (err)
- 		goto done;
-=20
---=20
-2.45.GIT
+    -Walloc-size and -Wcalloc-transposed-args warnings are enabled for C++ =
+as well
 
+It's a bit puzzling that this seemingly only changed for C++, but oh,
+well.
 
---3Z9mbsZxUBxaaPMS
+> Fix them all.
+>=20
+> A sample breakage can be seen at
+>=20
+>   https://github.com/git/git/actions/runs/9046793153/job/24857988702#step=
+:4:272
+>=20
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>=20
+>  * I wonder if there is an easier way to deal with toolchain and/or
+>    platform changes (I am assuming that is what caused this
+>    breakage) than just seeing and then reacting to a breakage after
+>    it happens.
+
+I think the best thing we can do is to be proactive and be faster than
+our toolchain to enable (sensible) warnings. Over time all the compilers
+tend to become stricter, and if we are already as strict as possible
+then chances are less likely that we'll have to do anything about
+upstream changes.
+
+But other than that I don't really have much of an idea.
+
+The patch itself looks obviously good to me, thanks!
+
+--3h4COUpms57mP4o0
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB08AACgkQVbJhu7ck
-PpQz2w//WUkHroLuKBWTv1ojKRYS0A5bWkJ52bfUYQ8/xtRwqoZgr70wIIaNC/aE
-0slLdUhmh0biqPlDNXH/BIQYoqHdIALmj0NN4XZwkwkpBNkx/qnjNac6V1IHKTV3
-zqjrPT/LQ254eZ0DrIzDutQ+rzvNd6Rs+70VM7mg59gBMl8kVA9VNR6jRiZFZ8Jv
-FeN6whlyoBrxqEr/bgTEndcK3e32a7wolPpmLMCrQrjLkpHc0CWw+mkz4p4s8njr
-PRJ2zyVw28LECf3gFSH8aGmS4L8SALLNVyV+u/HFtrUUrQE6A9+CBqUeLXfY+9Mc
-HOLwfnu67hPpcPqKVkRWvxUNCXW3qdIdQ4Y9Vbbbaai8Jtt7BFowFK94QzeOeunD
-Yqp0CNkB+nwTXy5f9R9d2qbgzEvH7JWXFUG0z+aYP5YppkZaZyRpVUw5Fl4KGWer
-xV8jrTRsWrIWEE4azpnrDKN0Kds0dbHlD25VKwUTIz6iHbHqW+IAP0YQ/jtKLN7a
-15AKvTMf0IR4Lj8sBpJaSKDp7e4yNAIuxP9f8V0N6P1upOD6GBlJr1L0Vj52mOoj
-jt1CN5iztmvk72qGyQ6qn1933GYB35/E2ksjWrsq9oMDfUSMGRDYAXxBNDJRp/o2
-Sr3x4h7XULQiEomRX0p0qQTxb2XTtgwWuOsU/DBCDxQNU/aWTYQ=
-=YkTJ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB5KkACgkQVbJhu7ck
+PpSSVw/+IiNnUZzpcACsNkzjMteyw/eSiX5yzqP5igYgI+9SAO6YZSfaoefUGbfh
+knuE7ZhSEzYlbB4d+sc9Wc2aChbAQ7sbpI9ibvQVS2gXONQzEBznP4ryAc42Hji+
+xGCFR7XfjipIt/G7/IfqmaAwB1ulwjTs+m2PY1iXd9TPUrDVBZxnO20fiuoz1/Gh
+MTaU57gEzJDlDi3qTCYj6j81eX296YY9ZrluwVbJlR/siL/9Y+KgUWbWsCDVM/hW
+i4ct+7qA6Kzhy6U4ZNOF7cun15dGyar19lyGPpc09FC0aK7Z0d0Io0gP3gnBLkAR
+1Lg98vEqKAu0AzdW0oJtAW5PZEPoCi9iTr9RIKWjWfu0SgvKFC2VQIiYltXOqTux
+G2Jab5gynfsW109m1WM3jq7onGOdUAO11Lqjkx4kYExSJTAwqkfGBxUTEClSc0t/
+/YQJWbHVFTbhvUVxDnauMNyN7JdGPn2BaSWqfsUoQ7GqPeNx2TbYr4vLu9HXYPar
+LXMGFgkvCZpc+gWd3M6WHuZ2j4i0ExltwzD6pt1ssO8XS5gyotiE3IkGcIUi2yK/
+hy7WEsEVHBVokfSaKFYkTwp/g6fSTptiqmagXCy+tjMu3Qsl5uoKaM/Bm8rs72Ur
+ePFwy5ZudVj5u5KULrwaa5I1ZEJwuudcyehLQtUxKYGpR7aUlf8=
+=V90L
 -----END PGP SIGNATURE-----
 
---3Z9mbsZxUBxaaPMS--
+--3h4COUpms57mP4o0--
