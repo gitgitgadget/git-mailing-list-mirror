@@ -1,47 +1,47 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C0757CAA
-	for <git@vger.kernel.org>; Mon, 13 May 2024 19:21:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAF957CAE
+	for <git@vger.kernel.org>; Mon, 13 May 2024 19:21:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715628083; cv=none; b=Q98w53RoJwpU1TEXr6rQDmIrv9FaXeWQ5+/nzHYFfy9wsZzIT65drCSyKzFOy7i5Jk4yy7Q9BXb5VDrh6b15j6QrMPwhAEiW/Yt+hk+WUzT1XYJ7CrNWa6jjC9iuOyj+MU1F11BXsPV4C15wgDC2rSaTQbm5oc02/K9jxZiuwlQ=
+	t=1715628084; cv=none; b=CYpXUeP8vwWiwPD2D9DbL/B6Tkdk6OfSY7WJC5hf5JEzXYwSTvGWzUfaHTPGM3jKjiFM7NEARe5LGRoX7Uha9cpl7NfssWtebLZBXd+WeCZjd+ki6kAl186RRuMr3jTmb90aaEz0fAhiHRKHnSTQ9O6HCVgBLaNMJiapk4QmOT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715628083; c=relaxed/simple;
-	bh=jWmxPVP1x66j4eH0cYbxPbQ2Xbo294/+TxzAs/pGItQ=;
+	s=arc-20240116; t=1715628084; c=relaxed/simple;
+	bh=oYr8Oqnu4MezpIunZaO7dlaBxQxTQH7/B1+n9FmeDKQ=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BbgIWLguLfNZ9KmrSm/FH7lOsnSKmRGqnb29bkkXImSKBoGzIEYt7nh4jq9tUfuaO4lhFY1RvnqY1rZZ5jZ2J5HTNKnqRhgmWKoWL34rlVOeM29OjBfQufj/cpNWI7lqOgP73gMHeirCk1n6e+//CcZXH8QjHsHsgn8OTpKzgWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TgipXJGF; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version; b=cjlXETD1X2gg98dyVZk7YcpLrN/q2twIkz/tNlOZqP0WjyH09ExmHlBQrzHOjtjXh7l5KVu4MiCoRjfHBU0RG7y3rQQe7hh7WkN9CEz5Z7IhswU7QxAojTCmfboaRJptcZ6kR7tOJ+LWzbyfQez0dDNli5Yoms4KgjiZidJo/9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vkWVHrfr; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TgipXJGF"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 986FB36513;
-	Mon, 13 May 2024 15:21:21 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vkWVHrfr"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 19D9A35A9F;
+	Mon, 13 May 2024 15:21:22 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=jWmxPVP1x66j4eH0cYbxPbQ2X
-	bo294/+TxzAs/pGItQ=; b=TgipXJGF/buNRmSL6/HWDBOlNrOjprG5mLi5qjLXY
-	q/9lMpmV5brdB4ma4HqyTBQW9ygrK8XNCoxFwOWNV/UPefYGxlwmQM6GGxQ6yzta
-	6bz1O2ggkwnvw6GWvTu8x7Li7iCbZXyl4mNg/pzvjH0sZUj8zVjaNVXgAtgEQS2S
-	u0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9088F36512;
-	Mon, 13 May 2024 15:21:21 -0400 (EDT)
+	:content-transfer-encoding; s=sasl; bh=oYr8Oqnu4MezpIunZaO7dlaBx
+	QxTQH7/B1+n9FmeDKQ=; b=vkWVHrfrpEPYAI2QqKKIRENjLCtlf8adTED71OqN+
+	2lkwVNCPtA6h7n6NjFmf+KcN87az3hJ90VkRF2WzHCDs5cmxTm0unPg4ROkIk0n9
+	zbitSpui9NdfrKnEkkdjkIS7NfzVlaNmDS+kGO8Gy21YAoJes0sixyZuKN7ml+QQ
+	wo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 12CA135A9E;
+	Mon, 13 May 2024 15:21:22 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.153.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1C91D3650E;
-	Mon, 13 May 2024 15:21:18 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 79D3035A9D;
+	Mon, 13 May 2024 15:21:21 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v2 1/4] setup: add an escape hatch for "no more default hash algorithm" change
-Date: Mon, 13 May 2024 12:21:09 -0700
-Message-ID: <20240513192112.866021-2-gitster@pobox.com>
+Subject: [PATCH v2 2/4] t1517: test commands that are designed to be run outside repository
+Date: Mon, 13 May 2024 12:21:10 -0700
+Message-ID: <20240513192112.866021-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.45.0-145-g3e4a232f6e
 In-Reply-To: <20240513192112.866021-1-gitster@pobox.com>
 References: <cover.1715582857.git.ps@pks.im>
@@ -53,71 +53,86 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-Pobox-Relay-ID:
- F92458DE-115D-11EF-94A3-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ FB28375E-115D-11EF-A593-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-Partially revert c8aed5e8 (repository: stop setting SHA1 as the
-default object hash, 2024-05-07), to keep end-user systems still
-broken when we have gap in our test coverage but yet give them an
-escape hatch to set the GIT_TEST_DEFAULT_HASH_IS_SHA1=3D1 environment
-variable to revert to the previous behaviour.
+A few commands, like "git apply" and "git patch-id", have been
+broken with a recent change to stop setting the default hash
+algorithm to SHA-1.  Test them and fix them in later commits.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- repository.c  | 24 ++++++++++++++++++++++++
- t/test-lib.sh |  4 ++++
- 2 files changed, 28 insertions(+)
+ t/t1517-outside-repo.sh | 61 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
+ create mode 100755 t/t1517-outside-repo.sh
 
-diff --git a/repository.c b/repository.c
-index 15c10015b0..6f67966e35 100644
---- a/repository.c
-+++ b/repository.c
-@@ -26,6 +26,30 @@ void initialize_repository(struct repository *repo)
- 	repo->parsed_objects =3D parsed_object_pool_new();
- 	ALLOC_ARRAY(repo->index, 1);
- 	index_state_init(repo->index, repo);
+diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+new file mode 100755
+index 0000000000..e0fd495ec1
+--- /dev/null
++++ b/t/t1517-outside-repo.sh
+@@ -0,0 +1,61 @@
++#!/bin/sh
 +
-+	/*
-+	 * Unfortunately, we need to keep this hack around for the time being:
-+	 *
-+	 *   - Not setting up the hash algorithm for `the_repository` leads to
-+	 *     crashes because `the_hash_algo` is a macro that expands to
-+	 *     `the_repository->hash_algo`. So if Git commands try to access
-+	 *     `the_hash_algo` without a Git directory we crash.
-+	 *
-+	 *   - Setting up the hash algorithm to be SHA1 by default breaks other
-+	 *     commands when running with SHA256.
-+	 *
-+	 * This is another point in case why having global state is a bad idea.
-+	 * Eventually, we should remove this hack and stop setting the hash
-+	 * algorithm in this function altogether. Instead, it should only ever
-+	 * be set via our repository setup procedures. But that requires more
-+	 * work.
-+	 *
-+	 * As we discover the code paths that need fixing, we may remove this
-+	 * code completely, but we are not there yet.
-+	 */
-+	if (repo =3D=3D the_repository &&
-+	    git_env_bool("GIT_TEST_DEFAULT_HASH_IS_SHA1", 0))
-+		repo_set_hash_algo(repo, GIT_HASH_SHA1);
- }
-=20
- static void expand_base_dir(char **out, const char *in,
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 79d3e0e7d9..36d311fb4a 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -542,6 +542,10 @@ export EDITOR
-=20
- GIT_DEFAULT_HASH=3D"${GIT_TEST_DEFAULT_HASH:-sha1}"
- export GIT_DEFAULT_HASH
++test_description=3D'check random commands outside repo'
 +
-+GIT_TEST_DEFAULT_HASH_IS_SHA1=3D0
-+export GIT_TEST_DEFAULT_HASH_IS_SHA1
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
++. ./test-lib.sh
 +
- GIT_DEFAULT_REF_FORMAT=3D"${GIT_TEST_DEFAULT_REF_FORMAT:-files}"
- export GIT_DEFAULT_REF_FORMAT
- GIT_TEST_MERGE_ALGORITHM=3D"${GIT_TEST_MERGE_ALGORITHM:-ort}"
++test_expect_success 'set up a non-repo directory and test file' '
++	GIT_CEILING_DIRECTORIES=3D$(pwd) &&
++	export GIT_CEILING_DIRECTORIES &&
++	mkdir non-repo &&
++	(
++		cd non-repo &&
++		# confirm that git does not find a repo
++		test_must_fail git rev-parse --git-dir
++	) &&
++	test_write_lines one two three four >nums &&
++	git add nums &&
++	cp nums nums.old &&
++	test_write_lines five >>nums &&
++	git diff >sample.patch
++'
++
++test_expect_failure 'compute a patch-id outside repository' '
++	git patch-id <sample.patch >patch-id.expect &&
++	(
++		cd non-repo &&
++		git patch-id <../sample.patch >../patch-id.actual
++	) &&
++	test_cmp patch-id.expect patch-id.actual
++'
++
++test_expect_failure 'hash-object outside repository' '
++	git hash-object --stdin <sample.patch >hash.expect &&
++	(
++		cd non-repo &&
++		git hash-object --stdin <../sample.patch >../hash.actual
++	) &&
++	test_cmp hash.expect hash.actual
++'
++
++test_expect_failure 'apply a patch outside repository' '
++	(
++		cd non-repo &&
++		cp ../nums.old nums &&
++		git apply ../sample.patch
++	) &&
++	test_cmp nums non-repo/nums
++'
++
++test_expect_success 'grep outside repository' '
++	git grep --cached two >expect &&
++	(
++		cd non-repo &&
++		cp ../nums.old nums &&
++		git grep --no-index two >../actual
++	) &&
++	test_cmp expect actual
++'
++
++test_done
 --=20
 2.45.0-145-g3e4a232f6e
 
