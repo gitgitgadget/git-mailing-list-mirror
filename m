@@ -1,53 +1,53 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
+Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3AB1487CD
-	for <git@vger.kernel.org>; Mon, 13 May 2024 07:53:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4638146A90
+	for <git@vger.kernel.org>; Mon, 13 May 2024 07:54:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715586839; cv=none; b=b1RsAnKsMP8/UUkTWc1R647yUalfI3zmdhn4WIif7XtgQ2a1+1bNxXVNh4TG9L5Cro/qMZJcd7M5qs5qd/55gBtktUUgR9S/9Kd01VtBT/PKXTlnkgIGZ3+b21A4XYjSuMTa5JvDmGsdbrVYtpdDFzPw3b6p5OYoDPvGH1z+pXg=
+	t=1715586850; cv=none; b=D+hIh9JekdCy0i4zqEQFoHcildhaGZaQzKxNNo9Pmbvi9RkYLTTR3bMLMhazof3zSur7+k23YagFS34i3Oo4WlcQI9ejCWVhgaNOr9/AotGBxTBKvnw5+u6xCT41CcTu3zeJEmZNu5F+WFyvWwt+QNCIm2Ff/06djHMurT6Wm50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715586839; c=relaxed/simple;
-	bh=fopM8gA0Fl/ZSBa1W+dFpr5eNFX80fdFviiweNkPAKY=;
+	s=arc-20240116; t=1715586850; c=relaxed/simple;
+	bh=8LjAPzqG8IYCQH23r9P4qdlpgdWbnJ4KJmZ3a6Vtu0U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u54kLmjmYLMKkkMcuyQ6ty/o6i+im9MAIh+sW1IGvY+Sq1HU57t40jgBrQKrYZwjepdcTh3zOkAoNiPt0WdtN0xp0yhJo34wRQNIGBSSEDw3cILpnc3MpINYFzPDBVmdEgKeWL1H/xENRcLPhygTRQ3CNJ27liS7EOxNWOHxnGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=q0b+OVk0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MOKzq8QS; arc=none smtp.client-ip=64.147.123.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=L+cu8/od6ar0irpi6IIqmnTwBLVuuiJAmwd21CuQiQnxediQyUjaoz+KkPIdd+MJuKvJt5ObadyEYuDr2YkaCCHBkbFidwpiM4VbnYSSv9BzzN6VGr1pdF0XW5ogHIrAHenPOLvUVMfTiTLmDC5z/498m15GP+poR0JUz+md7vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=joS75vP6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TstsdBR4; arc=none smtp.client-ip=64.147.123.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="q0b+OVk0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MOKzq8QS"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.west.internal (Postfix) with ESMTP id A427D180012A;
-	Mon, 13 May 2024 03:53:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="joS75vP6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TstsdBR4"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id D5B851C0011C;
+	Mon, 13 May 2024 03:54:06 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Mon, 13 May 2024 03:53:56 -0400
+  by compute6.internal (MEProxy); Mon, 13 May 2024 03:54:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715586836; x=1715673236; bh=KA8lZO3KUU
-	LUif3VUu20Y6BAmcTgFKUj2dFQV2oLBn0=; b=q0b+OVk04tJJZ3TOkau7qzMN0e
-	X6YNEHou9QzgVpzF9+Ww5WP8s/fACiRXFllYgEPZIJgslavJITWMWCy+CtDWc0wI
-	G0k1MFIP+1zc65l4/XkQTIoQan0vJ5DgU41Q8ngfIpg19NehMvPxEUzvYcNiw4ho
-	DgMuhiAB7JKbLdf8Yoc2gMSdAjibhhjQfON5CsL842xJ3wK8F8hZojLtaAxsc7Sw
-	t0SumElHUEXtZaSP1VEAlXLORol+az3LuzXq2gBn2tZQUimyqQMforOARl5M1wgw
-	OMwyGYAL3tUsY4pXjLekx1pCrO/O9CbyZMGYatkFcLvKuvT4qFWC/mv44Tow==
+	:subject:to:to; s=fm3; t=1715586846; x=1715673246; bh=C30iV0HCQq
+	00PeUzHLKbciMnYL5Kg4ZFjaOWZ8iUgXs=; b=joS75vP6leopnE9snwtfVPLACb
+	c2B7WbMAM635a9gzcaMm77APRfD+JObFf+FMJW1vXvO0aEeisp3ogTtJEaIcxJ/F
+	m2SFmEt2XvHzB3H7c8HRYTcukodTHIg9Cm/v0fZBgtrOYlHZ99wCHlwAtvBO2LX9
+	UFZCpBTEuFBmp0GK5U7G8VLHYaiiR2gdbgTgQQw3CPiIb2ZvGav+8qAxfj6bCOXJ
+	9Q5orf5VbfTTsVT44/dhCoquXQaibJSIx1gWvXVD21zg23XCfmeXHeSYPV8un5bN
+	4FY1aOUzwdJ3aHY1Z1ZZVsavC53OMcwItBnKqtm2v2VFIPDlkd65b05bYrIg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715586836; x=1715673236; bh=KA8lZO3KUULUif3VUu20Y6BAmcTg
-	FKUj2dFQV2oLBn0=; b=MOKzq8QS1XYLhRYzTgzpESfERPrA6YICGD0Nbcl/hk/G
-	brSlF+C86QDkTWJJihHm+BlNQW7yMx8eHkjCyG46weiC/pd3jP3VvXhD3teIxtPr
-	Fv/w/bCf+78XP28knJHaE1exI0eBANzjbi9BEK/oMBBp8xYlvi9po3zScOH65Esa
-	SQ2GxWJVjpEfXRgOfmWcsXRis3pbGDcM7scYDZtZruiKenj1waIUz8BDoSBqePaS
-	iWp00x9FL+vaUgkFt+5j313nWo4Txk7HC5j+Z4N/v3zpPv8Gm/ttC8AJfK5sp072
-	p1qxU7a2MIVxd2QtA8ILIqbB/bJkEdeVC9QRv5mb9w==
-X-ME-Sender: <xms:FMdBZqSwl3Gwa6LM0L7RvY30Q1GRVtyXSLIozZh3V0U_2FuIhM_AMQ>
-    <xme:FMdBZvypb_2l_fXKCk5X53AQO2hPRfUIXhl7xN8fGIL2llRHnR_-xZnhCSRtIyB1H
-    faeQT6qsnvfmebyWg>
-X-ME-Received: <xmr:FMdBZn0g9G4IHsMvhQaw-6iSH4qZWIDY8zHn-JhujaUR5o48oL9wVaam7VsyMLJ5_bpx2EedJElZ3HBd4MBAPpsftFKvsCAf5MfwNT2AMBjs1r0>
+	fm3; t=1715586846; x=1715673246; bh=C30iV0HCQq00PeUzHLKbciMnYL5K
+	g4ZFjaOWZ8iUgXs=; b=TstsdBR44JJF6eVGJ3BfE9NTbOtGlTST1QJlfWATxzRb
+	1Hg0O1CHAAM9HHIWpPe8Lnx5tc4KZjs7jSRe47ZeH5KpfHS+VJeJ5i/FiOnmywUx
+	XNKSDqumRC0tNj+xQuWE1gaGJlMMm7EEyH+Rzkoy6GwCYtXRXi9sT+kDQ1PG8yrW
+	AALhZAesHwrQ0YWjhzSO0cbtQR3BUUvqvenpOC5asyAt1RZEbkPXc8zWQBvYl2dV
+	aFeVrS6tmGXrzfS8BrY3IpIBzEb12Smc9KTwAM6gGcE+9AKgqVf7NTJ58yZ12KJ+
+	HveqwNjDYe3dYkEy+mSAwsNhSgJd5DrXq3qfaBKZ5w==
+X-ME-Sender: <xms:HsdBZhR167_wUoOspJc6lZwuVHqN3ZJ8Cx2-cqgAPo_9UTb4acjCcQ>
+    <xme:HsdBZqzt1tD15CQSBD5RBP6Es9MDdEVuEMKRYbtqdIoFofCDaR669dfNiE0yOkDLr
+    FpqifWxXVhn4die1Q>
+X-ME-Received: <xmr:HsdBZm0S_D7Zpf8GneF225JF5goc2bjW10mFzsLx1vmfa97jn_aidgmoyhNrMSXOpdkldDAzxuVSMz8Rq0DEPhRtk-FBOQ4EJ-H_qlQv8ejSc1s>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdegfedguddvfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
@@ -56,29 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdegfedguddvfecutefuodetgg
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
     teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:FMdBZmCPQTHD-Vxjn8i47BZZ-VrZNbBgWYlCiEmJxIH5jlwngqHxSg>
-    <xmx:FMdBZjgQfogwfrkp_nhaX-Ytr3N5X70I15LFuBAk1hsShyXvzmz9-Q>
-    <xmx:FMdBZirUxWRPLmtXIqRdfPj2jXXenPcBB5Ud0nV2LosixKcK1Ea3PA>
-    <xmx:FMdBZmijLhoum65Orx3tbcjc5exwMnx3G3DdlCEPXBwg-MCdj1wxAQ>
-    <xmx:FMdBZjc3euJhXNsMVP6H3nGyV4p_V4RYkWdF7rgl6k299bT8rD6qTnJd>
+X-ME-Proxy: <xmx:HsdBZpAyQRGYrag_Tk9eBfBeJsu6lUqdByFuEFVimKiqq-n0IexaOQ>
+    <xmx:HsdBZqirM6WlC87RlqEBMxy_SghYfIelM1tPG_mGPwI5RXeTvXCsjQ>
+    <xmx:HsdBZtqi_zKTtHou2pmhY1YwYP9olLb2PnVb1LJhL5_yTAPiTGpTVw>
+    <xmx:HsdBZljEvQILRO1C006G2zlHBAYCm5bYl4SBRN4iDrcBLWhSPS3D8A>
+    <xmx:HsdBZieGEpXoyCRoHzvyzPb2sk_OLIj4z7HsRRKTWgiCV5BrxJmmo3gw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 May 2024 03:53:55 -0400 (EDT)
+ 13 May 2024 03:54:05 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id e88a8b42 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 May 2024 07:53:36 +0000 (UTC)
-Date: Mon, 13 May 2024 09:53:52 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id f86c7eca (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 May 2024 07:53:46 +0000 (UTC)
+Date: Mon, 13 May 2024 09:54:02 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 04/11] reftable/writer: improve error when passed an
- invalid block size
-Message-ID: <ZkHHEG27YA4EhjU1@tanuki>
+Subject: Re: [PATCH v2 08/11] refs/reftable: allow configuring restart
+ interval
+Message-ID: <ZkHHGtbI2oyxNlhV@tanuki>
 References: <cover.1714630191.git.ps@pks.im>
  <cover.1715336797.git.ps@pks.im>
- <5e7cbb7b193c578f7c946a5077a79421b0ac57f2.1715336798.git.ps@pks.im>
- <xmqqo79d2wc7.fsf@gitster.g>
+ <bc0bf65553c8dd89bf5fcaa592fc3427507f1993.1715336798.git.ps@pks.im>
+ <xmqq34qp2uud.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,75 +86,60 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="fvJTvNOqf5if7kM3"
+	protocol="application/pgp-signature"; boundary="2vr/CkD489bCDfho"
 Content-Disposition: inline
-In-Reply-To: <xmqqo79d2wc7.fsf@gitster.g>
+In-Reply-To: <xmqq34qp2uud.fsf@gitster.g>
 
 
---fvJTvNOqf5if7kM3
+--2vr/CkD489bCDfho
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 10, 2024 at 02:25:28PM -0700, Junio C Hamano wrote:
+On Fri, May 10, 2024 at 02:57:46PM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > The reftable format only supports block sizes up to 16MB. When the
-> > writer is being passed a value bigger than that it simply calls
-> > abort(3P), which isn't all that helpful due to the lack of a proper
-> > error message.
-> >
-> > Improve this by calling `BUG()` instead.
+> > +
+> > +reftable.restartInterval::
+> > +	The interval at which to create restart points. The reftable backend
+> > +	determines the restart points at file creation. The process is
+> > +	arbitrary, but every 16 or 64 records is recommended. Every 16 may be
 >=20
-> As a "git" person, I do not mind this at all.
->=20
-> But doesn't the reftable/ library codebase want to avoid things like
-> BUG() that are very much tied to our codebase, for the same reason
-> as it avoids things like xmalloc(), xcalloc(), and ALLOC_GROW()?
->=20
-> We may have crossed the bridge long time ago, though.  We see a
-> handful calls to BUG() already inside reftable/ directory.
+> It is unclear what exactly "The process is arbitrary, but" wants to
+> say, especially the use of the noun "process".  The process the user
+> uses to choose the inteval value is?  The default value chosen by us
+> was arbitrary and out of thin air?
 
-Exactly. No matter what, once there will be a second user of the
-reftable library we will have to figure out a maintainable way to ensure
-that the library can be used by other projects, too. And that will
-require some larger refactorings anyway.
+The latter is what I wanted to say, but I agree that it's hard to parse.
+And honestly, I don't even know how arbitrary it is, so I should
+probably not claim something like this in the first place.
 
-I think initially, the intent was to have a "system.h" header that
-contains a bunch of wrappers that bridge the gap between reftables and
-Git. I feel like this abstraction does not make any sense though in its
-current form as it is simply being included by the reftable code, which
-then uses the Git functions directly.
+> Just striking the whole sentence (or removing up to ", but" part and
+> starting the sentence with "Every 16 or 64") may make the resulting
+> paragraph easier to follow, I suspect.
 
-I think eventually, we will have to adapt this such that the Git
-includes do not leak into the reftable code at all. Instead, we should
-have a shim "system.c" that carries the Git-specific includes and then
-implements a couple of wrapper functions. "system.h" would then only be
-carrying function declarations of those wrappers.
-
-That's a larger topic though, and I think that tackling this now would
-be premature without any potential users of the reftable library.
+Will do.
 
 Patrick
 
---fvJTvNOqf5if7kM3
+--2vr/CkD489bCDfho
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZBxw8ACgkQVbJhu7ck
-PpS2vg/8Dt+XMrhTsHdfb3paF08Zlhi349nu9aC4NgrM081GwZXPpXe9Djb+XONL
-aXlRwu1ycHW0PQP/BM65I0UnaZqJOz9bj8fhdnEpGIfe9D50kA5FHmEXyVY6GVCu
-hJe9uV4q0qjV0ceBKqIQMFczVhoM6ivwI2JxKtiC6+Lf+pqmCu8yu8TY8bky6Mdo
-Jde+Tqm44sX2Xp3+1kxJdCU8TUfaitKKBHoDwGsiohckPY2kyv8O1lMaueMXfd7B
-Nq0hnIHynVuR/dYIHWTBNgG8c4kparP7MDWdOM8N8oUlS+2fAOO8zzBZEtSQIGUB
-ijygTQPLvTVvh45izFQ4wl4mlFz7HRXtouERJU2/x2TTFtXlo2jGOyXkiKwujJDP
-v+uhfToOy51d0BL5NjbVXxDa4ke0nrhvyouHydzEJ5+jsaQi6uZ4lh3c5Hjl+ter
-ORZIQRtBjSybrSsHi7TwwWkG3c/IoK5y0igbQqwtXlitydH//xHIiKKw75LG7r78
-z1y1c0R836D4yMNUHf72jtr2VK+Bj7WhNs0YpsBMmAM+BLJVZeg49V3xVdxQ0Dua
-gNuK8+uqYtMCa9d8ItsYc6k6G5oYn+4Z8KEzAyzsDwBobF7zffAOMxcUo4fhKgKS
-NoyOLJ1ysADoGct2Kyvw404CQQeAH7K31uRBw3Ke+1/wrYaqJ50=
-=Tp7e
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZBxxoACgkQVbJhu7ck
+PpS9+Q//YtNgodkMd3ZkUfkfjUAKtSVK4qei2LPdxKGLoHQ/Ioc445aIFnGX/Qoc
+064jSSoEFnWAqujCe4oXsnE/GoyzKgqhmbpjSb82lNSzABMRkjGQ4JDDbQkD8tMv
+3UZGcR8E2YTFHHJV8sQRZy3SWpVwShm/ySOIId1In5lbx5/Gx7GzJooqufUGBPQI
+LWeYVgf1oqEHb2vAp0CK2jp4Q8DfkE3flTSMAxh2xtnPBipORSGB+zkKnVBD47cO
+wcVgMV+LmMPDHEg/eRgNddtajVdksvmx0sh+z0BRpPS1qWkK6xzVmE9IvUMSzFQS
+NL1bxBqndZ3IGqHhmt2L9xWcdLqfPcka5yp/7qNXcfWwl7KCLHrdbPKomIwnlcdm
+VWf2XaxNK99sSvc2A9HIPl+/Eg+Tdckvhe3wrlNCpKkC/70vPjqDFyZnGM8Dosnt
+Dd5keKWZc4Pr8gh4PR9UvxGco6jhSWU7EKd5jRCqf5ft1892WSr/QFor870sfNaW
+hoYOjgehOUAkMLJIpGv1r2kUHxCk0e93fsl3p9Jt1TmoUPK1VmpCHKsk9entnYpF
+DbncokFJKTLBDOvagHiMI1AZOq/DUI5RhqgNtRag0MyzZ2ZrWDZ9ippfYcMmI9yf
+LZVpmYAeS0Sz/az/Jkn1LsM+0qIKedgR+4QNykaiTE8GMAvSv1g=
+=4/kH
 -----END PGP SIGNATURE-----
 
---fvJTvNOqf5if7kM3--
+--2vr/CkD489bCDfho--
