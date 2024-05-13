@@ -1,121 +1,118 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF59B824A3
-	for <git@vger.kernel.org>; Mon, 13 May 2024 21:20:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E4983CD9
+	for <git@vger.kernel.org>; Mon, 13 May 2024 21:28:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715635203; cv=none; b=LalxNqNq6LXUpJo2VygA5fLc5on7G9bLUUi3iGZf9UUP6fUb1MMXQJHXl+zB+BCEuq86SmDtGDCFj5GQIP5jP1leb2aWfPpkpTdLx7ud7VX1qs2rKKQenIbmKsBtYLVj9s64CyhVNjXyd9iVjtnSGpnuMFyCjqraFIYOPhI7VAg=
+	t=1715635712; cv=none; b=UQiGiO7VK/UqT+5x96P19smLqrNzsHlG7T+8v8pvBiTojC8QIiMX091ZjG2NeUPD2AVSlwQBBSowOJAbdl/gUndsaYDH1RBSp1DWqmUGhSgnAAWZHUrDYtDAkF6bQLeAOTdv19DvymIbSKAHrtVPHDBrPlQIXLn5Gn6d+yrPBz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715635203; c=relaxed/simple;
-	bh=SjKGpdbThgdNCcHr7Mn/S7ZSzG4WfPOeG70IxN4OZtc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZB2CBXUj/AvmHkFgdy06yNWiD4fOkfUgMg2fLJgzcBbSrHLL7Yk/UArJNzIflkBPM0bWrJcxMzhbfblXtyKDn4ovW6ldA8SQMoOjhFv4IYI1g6Uh/tbVFLnPOkjdsxkN2qg25we6nZLK91jRxFPs1ct4mxcgw9K+I3mHjY0PF0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=my/aS5tY; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1715635712; c=relaxed/simple;
+	bh=VJeLUojzryaTaArCz3Bye5MZieVMQ/Cfc/mgO5lPlDY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=n3RJLSa6rbVXUBxbHLkTb4D5qvfcvqYZQWNzY5xk5r/ovnQ1uRMi/XGM5pk9RI2ubZaSI8pRjTIwQJxrsD4PA/6W2NpkU7efi7bp+r059IaPHcacDKzz+O6azReTzCLlYqH3neKZzsTNKrjh2OD6WGbdJIB4z0JZM73snFjViX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=aUsQ4DBQ; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="my/aS5tY"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aUsQ4DBQ"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 292D8369A6;
+	Mon, 13 May 2024 17:28:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=VJeLUojzryaTaArCz3Bye5MZieVMQ/Cfc/mgO5
+	lPlDY=; b=aUsQ4DBQ84bo0oBzg+92b3UVvGYXH3UMbudZiLuQTeotCakDvhffth
+	RuFiiAE18ZOc9Mz9+3o8KoCr3gM/jl3QWbe/o28bqh2z9MZDLGRF8x88GCAVz7Xa
+	Vb8ZmdzFlWouqDADUciHTb4nEgZPv2H453bTk43CDq8tvMprU1dDs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 20746369A5;
+	Mon, 13 May 2024 17:28:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 4356D5DA7D;
-	Mon, 13 May 2024 21:19:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1715635194;
-	bh=SjKGpdbThgdNCcHr7Mn/S7ZSzG4WfPOeG70IxN4OZtc=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=my/aS5tYmUsAMBONhmQ8yq5QhaSSQnD55eL+V9+vt16qNI5UPLNKRCd1opIREAxw5
-	 3YLgtimsTxgxZl7ir5dZPkS3oMGba/r5a+O6fa8PPGsUUNQBWi27hPijBfQmGXjaxq
-	 fdT5lDKlEVzo/tZ85W9LjBWwP7FalQ1SFyBeWnLPgLujgKH+5Cm+nOegvrhCKk1OCB
-	 dLD6OOZVX19k2sjLhuKOKclsqdaIeq9gnpKK1uHsn8nZHvxzz5CGUIkgHaEsPwqdm7
-	 URuEAv+8QstJ5g+Bmwc8Dp8mp7zvHP3tW4ckfW4PVC7RrIkR2/vrT4RnLfCjHhVegU
-	 fz2pSzFHyCJui4fD705jcgcKX1HC/8R1ZC2R7lct1g7YyRO6qkXw+5MEa/tpKkBeU/
-	 CeV6nYpZfUs9/EdtSIU8KMB1jUPS9qvrZ+nNj9YPyhrV5PrM+P7Fk9fQ5hzdh3jET9
-	 7rD+HEORPeI425CdRwgFhid51MAhL+DwVvlH0wY/OY8CGlYRoeJ
-Date: Mon, 13 May 2024 21:19:51 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: lbdyck@gmail.com
-Cc: 'Junio C Hamano' <gitster@pobox.com>,
-	'Sean Allred' <allred.sean@gmail.com>, git@vger.kernel.org
-Subject: Re: git client enhancement request
-Message-ID: <ZkKD95VBlmsUJdB5@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	lbdyck@gmail.com, 'Junio C Hamano' <gitster@pobox.com>,
-	'Sean Allred' <allred.sean@gmail.com>, git@vger.kernel.org
-References: <02f201daa547$503df630$f0b9e290$@gmail.com>
- <m0pltptx3h.fsf@epic96565.epic.com>
- <xmqq8r0dfsvd.fsf@gitster.g>
- <051d01daa567$caa22750$5fe675f0$@gmail.com>
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 86BE5369A4;
+	Mon, 13 May 2024 17:28:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 5/4] apply: fix uninitialized hash function
+In-Reply-To: <20240513192112.866021-1-gitster@pobox.com> (Junio C. Hamano's
+	message of "Mon, 13 May 2024 12:21:08 -0700")
+References: <cover.1715582857.git.ps@pks.im>
+	<20240513192112.866021-1-gitster@pobox.com>
+Date: Mon, 13 May 2024 14:28:27 -0700
+Message-ID: <xmqqcyppe70k.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="L0zrESb3a81w8rFN"
-Content-Disposition: inline
-In-Reply-To: <051d01daa567$caa22750$5fe675f0$@gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BD3C38FC-116F-11EF-A52B-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
+"git apply" can work outside a repository as a better "GNU patch",
+but when it does so, it still assumed that it can access
+the_hash_algo, which is no longer true in the new world order.
 
---L0zrESb3a81w8rFN
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Make sure we explicitly fall back to SHA-1 algorithm for backward
+compatibility.  Just like we argued for hash-objects, we probably
+should have a mechanism to specify the hash algorithm used outside
+a repository.
 
-On 2024-05-13 at 19:00:14, lbdyck@gmail.com wrote:
-> I have to interject here that the git client doing a push must be fully
-> authenticated which implies to me that all the information required is
-> available to do so and allow the server repository to be updated.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-First of all, the authentication required to _create_ a repository need
-not be the same as to _read_ or _write_ a repository.  It might require
-a totally different set of scopes or privileges to create a new
-repository, which many users will have avoided giving to their
-credentials for least-privilege reasons.
+ * After finishing these steps, it started to dawn on me that we
+   probably can instead add GIT_DEFAULT_HASH_ALGO environment
+   variable for exactly that purpose.  Then the escape hatch I
+   introduced in [1/4] can become just that.
 
-Second, there's no standard API to perform that functionality, and the
-implementation varies widely on different forges.  There are also people
-who don't use forges at all, or use tooling like gitolite[0] that handles
-this differently.  Adding such functionality into the Git protocol
-requires intertwining that functionality and the services that provide
-it with the standard forge API, so it's likely to be very complex for
-forges to implement using the same functionality as Git uses currently.
+ builtin/apply.c         | 4 ++++
+ t/t1517-outside-repo.sh | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-Third, we specifically try not to prioritize any individual piece of
-software or project here.  Even if there are many common forges, we
-won't ship tooling that's specific to GitHub, GitLab, or Bitbucket,
-since that prioritizes those users over others.  Since there's no
-standard API for this, we won't be adding any forge-specific
-functionality to Git.
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 861a01910c..e9175f820f 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -1,6 +1,7 @@
+ #include "builtin.h"
+ #include "gettext.h"
+ #include "repository.h"
++#include "hash.h"
+ #include "apply.h"
+ 
+ static const char * const apply_usage[] = {
+@@ -18,6 +19,9 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 	if (init_apply_state(&state, the_repository, prefix))
+ 		exit(128);
+ 
++	if (!the_hash_algo)
++		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
++
+ 	argc = apply_parse_options(argc, argv,
+ 				   &state, &force_apply, &options,
+ 				   apply_usage);
+diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+index 854bb8f343..6f32a40c6d 100755
+--- a/t/t1517-outside-repo.sh
++++ b/t/t1517-outside-repo.sh
+@@ -39,7 +39,7 @@ test_expect_success 'hash-object outside repository' '
+ 	test_cmp hash.expect hash.actual
+ '
+ 
+-test_expect_failure 'apply a patch outside repository' '
++test_expect_success 'apply a patch outside repository' '
+ 	(
+ 		cd non-repo &&
+ 		cp ../nums.old nums &&
+-- 
+2.45.0-145-g3e4a232f6e
 
-Even if we decided to implement a standard API for doing this, it
-doesn't mean that forges would adopt it.  Many forges don't implement
-`git-archive` over SSH, for example, since it's hard to cache versus
-using HTTP.
-
-[0] gitolite actually allows you to create repositories by just pushing
-to them if you have permissions to do so in the configuration.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---L0zrESb3a81w8rFN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZkKD9wAKCRB8DEliiIei
-gQq7AQCrQ40vBcCWhoDFwco7fhAL0hHhgRNjTVpqKJbZnu07XgEAqin+EbjpbSE8
-zbk+UN3BW78gV9RviBvmvDCD34r+uAw=
-=n/b2
------END PGP SIGNATURE-----
-
---L0zrESb3a81w8rFN--
