@@ -1,84 +1,80 @@
 Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA56146D50
-	for <git@vger.kernel.org>; Mon, 13 May 2024 07:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1853E146D44
+	for <git@vger.kernel.org>; Mon, 13 May 2024 07:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715586856; cv=none; b=ufKNgfJI6tN1DdLJmOEnRFTzjhK6r4FlbOBXRwOvpTj04CvicRd2AkXiwShFVmTv+L0YUhsS5z90C1K/ahuVRo4hj1MpBYqkHKz6aKWnjAu4ZrZHyC47GANFfm+ZVWj4lWhPDQqG81mnSs5Rz+4Ypsc9Ahi6SX9TtdKjc95NHd4=
+	t=1715586944; cv=none; b=TX8TtnAqnFXKLil5W22BJ3G0QZqxkqE0eB9jIt8RJwi5xysOLLAKSuVvHkmIxh6GCTbmdHermkbnFxjZCJjQNCfp121Wr1wi4IgJu72O/mtSa9f4wyebiNKy+tyB6aycnTjz5vLgM978UKgCBnlekOCqw9QVGRd1EAO2zEtBmqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715586856; c=relaxed/simple;
-	bh=YI2GZXd+yBM41nXkXBt7QsZASvBsJBxsHxBQF6FvZd8=;
+	s=arc-20240116; t=1715586944; c=relaxed/simple;
+	bh=x3XbekC4eSox2zBhGRwW1cMuxnr3JP78pRA1GfTd+ec=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g7QVzk6ccaPXh1lIp4/xSwZI1L2FGNaPjSwondWyTl+bVJzooruhNVPVUPVSDvme9c7Wtr+GUSqNyjMFtKtPdvRZVhqwvgSDqLm5BDHAzeL/TX5YGmUuQCFf1qSTiIJpisK6D4hgWLHd+1QzI7Kr9j3PopsBuBxq8k/4G7ufh7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kxlNbZAg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kq6CZ3Ld; arc=none smtp.client-ip=64.147.123.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=e3CH7EnQG2xePbb2aXOUJAQO3UL1wpiXfCZSFYItGyx9DrA0fUMh9oFOv5+uQ1ErhcUEnRcE1FwuYEXg6uB98PIOD7uKnotXuKcUHA9Ciqx7I4LOYSr0jqK9vBmntIaToego0CvDq9w6oOGs5uypEUOxkj1Fi0nJzeu1Ucwkqvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DUi/XVjC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WHOeWpZk; arc=none smtp.client-ip=64.147.123.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kxlNbZAg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kq6CZ3Ld"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 30FDE180012A;
-	Mon, 13 May 2024 03:54:14 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Mon, 13 May 2024 03:54:14 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DUi/XVjC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WHOeWpZk"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 12E74180013F;
+	Mon, 13 May 2024 03:55:41 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Mon, 13 May 2024 03:55:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715586853; x=1715673253; bh=wTRbn7ToTn
-	rLdnJfX5Mt0Btb0QtAaK004ipc4se/GXA=; b=kxlNbZAgYjzq/8XjMYWBKNXYg2
-	ENitOlz79tOgqzD1IVht/jHMbYn3x37phqH0Z1qe7jHGm5gLeZVe+Zr8MjkTPcF2
-	8royXVC+0vfqecp2avL0hbVk0CrRfXBVz9ofOLI5PGYUh9TpAqA231kV9u9NzX/m
-	EHBTiEYjVLBfB1LSUpx1anP5SQTskBW4Jnryjq7YgtHd4M6Sk3MlIDHgob/e8TcJ
-	MzmbcQTydYJz4tB34Szb9N6QnPnbTm+B1uOLUYM/+LrM1VOY0IZ6VC8pK11EBA59
-	V12upwlI/RIaTX4omAzTgP57BHAf4bnxe8zAQhJ2yBL86zh7SXkMZyuOmMDQ==
+	:subject:to:to; s=fm3; t=1715586940; x=1715673340; bh=TVLEjcKrsZ
+	PdvQMH834GHC3AixQ5W/oiVmZ454Du130=; b=DUi/XVjCYMq/+gSTuq4eMRPSSG
+	Pdzho6zhdKNtwfBSGtnCdY77be+z3eVCWjHkkdGM59yKL7z5SLGyf+6zQdyVlqYg
+	FAnrft6MifYEENTg6zi3GpMg92gIczcSTAO+lyKAdly0fxmvlNH2NGWc+MI9teQR
+	I0aQpyfDyF1XkP8G4oTowOLrjOfhKK03keyE1rUbyIOIzgyBm41DodBxkhF/3cGW
+	VXO8tnHZtCaDakljZ/vyzOvjMvHO3WzqXUxEQ2VQykG2cvsnscBKX05aleouAp+2
+	cCBPYLdCgw3udWQ5uyRlOMUCQceSUGlAGymfkMeEGt+pDv6XTSe010XfHR5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715586853; x=1715673253; bh=wTRbn7ToTnrLdnJfX5Mt0Btb0QtA
-	aK004ipc4se/GXA=; b=Kq6CZ3LdSQ6uWn4Y2/x4+nYZB4owlzzr8fspioad/kY9
-	dsIXAy0052tg1C4lNL0UGujJJHKJ/7rcS8pecrYl9PnjKsHqThGSZyf5Nwd2QylH
-	yRMMCfUTJTvVzujsLKVa7URTKVewQ99XStVuWZIe3j7ew4SNG5xMl3Gp0LGN0Fze
-	b+6zAXUUsvaismSPit9exDB8cGE0AVUcGmpykzdWNHsjq5dZUHpDphKBOVWI3t+q
-	8oex41T/Fxv6KLbXFZR8NqtFc1Q/NUxNb/+sUTNTHzh3Q/kFv0mnYOmorucBePK2
-	/aah8asVLMS/2FBZvWPpMoAgjGXMkBoszPwwOIAbvQ==
-X-ME-Sender: <xms:JcdBZgfVmCWAd6fSDk5LV7bQUNgbI3DwFU2fPeMgUyGWlyoSEty9ig>
-    <xme:JcdBZiMa4Q0RAXMhOSRzAGUhoi_5I0sVAKKp9S9_5avOE2hmt-vr9JiWDsv3C8vK8
-    PgZ7_fcqTGnV4-mNg>
-X-ME-Received: <xmr:JcdBZhjr948YZkgW_K5k8x1M-gD7_LQNC8uALz-2FP-A82iJJR0rZGKq_igKjw-3ojTZVNAqWqf-1kj4D2Rarsb-OBw0-zyKvotJmYpE6VCJmIE>
+	fm3; t=1715586940; x=1715673340; bh=TVLEjcKrsZPdvQMH834GHC3AixQ5
+	W/oiVmZ454Du130=; b=WHOeWpZkUvKHLwvV971MTYtbqcvGzGnhE53sh4v4b6ty
+	Dqhsi4W01l43tr++T2ZQ2SoewYOuIvrX2xQ4jZAROwMmKAno75qalpKWvbPgtv6Y
+	yB8DPYDiAMKLNby+rO7bdM/Hc7dq1UrecmSIQp5epcyantBgnMsJ1EWImgvvCUNk
+	4qpE9k3b/fqAKH8VOUdkkcVYtuZisnp3oY5CYlXF5SNVrUnIcf3EezBeI4WLsixz
+	QDf4aVJVzYNleyAF15IV0q3zKcOENbBAmf3smJwyH3UjHpjiDUqm1ypsV7eYjK2c
+	tZUQBSMPcKg0sdje36AachD+y3fN6OzpshEzJfagcg==
+X-ME-Sender: <xms:fMdBZo3UQ10bkJJL4XEF4yQuiTX_1HTI4ei-zSlSVNztw2gJ7GLAQQ>
+    <xme:fMdBZjFKyiY-RI6Lz0_-mLcNN1PFTQherjTMUxQjF6w6X7gXp_q1GWbWxtLe2pHc_
+    522Vi9YXhL8OW4W3A>
+X-ME-Received: <xmr:fMdBZg71VR3YcP2igxPIo_aa4CGNPAYvf9n-nprYGAs-IqB4OGlNtZmUggKx5GW9UcSspcb9H7CsKaZW86o4VJNfAuVFoY2hpw0LTKdZ85qJ9-M>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdegfedguddvfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeiveektdfggfeluefgvdelvdeftdfhgeeugeefveejleeufeekgeefffehgfel
-    gfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:JcdBZl8VytgmwTOvbwqOD00SKdFOEamzuHgTWAsrgahpi6cW-o9KZQ>
-    <xmx:JcdBZss3Fi-rPnqcvOGgHCGhKJUYnt9i5pt4datGirKFxCVU7hULjg>
-    <xmx:JcdBZsG_oPzS7auFSWVczCUvRijGgeQsIgJ_wtXTd39FhQu_LZyqeg>
-    <xmx:JcdBZrOcQpPsbC0plviHa_6Dez2PRrbl3T4YOQ_29i2blQS82afYQQ>
-    <xmx:JcdBZmW4ah76rtoEGFk0XVCG0sK4eCJT-h007_05DmmCbjGVrRur_Hgh>
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnheptdeiteevvedukeekheeiueevtdeigf
+    fgtefhkeelgeevtdejueelleffteeuieeunecuffhomhgrihhnpehpkhhsrdhimhenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhm
+X-ME-Proxy: <xmx:fMdBZh1Xjwk4w8B8lcGzv1UdPI4zVfobVd2_94jmYBK8K2jN5Yj60Q>
+    <xmx:fMdBZrHpS4sZ2jXM23Ok5X717-ij89BZ6yRK56af7DtSjR1WC6ocTQ>
+    <xmx:fMdBZq8iWvFjaODRcFdfU2iUCT0eDxvT_w112z0rqNTKoZL0UG0x0g>
+    <xmx:fMdBZgmQe-w4y2EpKH87mMR01yx_moPWC6MZImPwI1Tc9h6Z-9OGdQ>
+    <xmx:fMdBZgQcTo2HSRJcsQAmVJ7KNr1A-0G261x8KkWiTRPTPATtnuOKVpjg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 May 2024 03:54:12 -0400 (EDT)
+ 13 May 2024 03:55:39 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 8e03def2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 May 2024 07:53:54 +0000 (UTC)
-Date: Mon, 13 May 2024 09:54:10 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 2c3460fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 May 2024 07:55:20 +0000 (UTC)
+Date: Mon, 13 May 2024 09:55:37 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 10/11] reftable: make the compaction factor
- configurable
-Message-ID: <ZkHHIgyeWq9FCYuq@tanuki>
-References: <cover.1714630191.git.ps@pks.im>
- <cover.1715336797.git.ps@pks.im>
- <9d4c1f034038df2ae232b6665a0d9d7ee5833c5f.1715336798.git.ps@pks.im>
- <xmqqy18h1fm4.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (May 2024, #05; Sat, 11)
+Message-ID: <ZkHHebHbhGtN0OLr@tanuki>
+References: <xmqqy18ghqqh.fsf@gitster.g>
+ <ZkGp9TqxO8Y5_kM_@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,68 +82,64 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OjJ4whwvjS08USe3"
+	protocol="application/pgp-signature"; boundary="qHjZYbrSV48bhxau"
 Content-Disposition: inline
-In-Reply-To: <xmqqy18h1fm4.fsf@gitster.g>
+In-Reply-To: <ZkGp9TqxO8Y5_kM_@tanuki>
 
 
---OjJ4whwvjS08USe3
+--qHjZYbrSV48bhxau
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 10, 2024 at 03:12:03PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Mon, May 13, 2024 at 07:49:41AM +0200, Patrick Steinhardt wrote:
+> On Sat, May 11, 2024 at 04:29:42PM -0700, Junio C Hamano wrote:
+[snip]
+> > * ps/reftable-write-options (2024-05-10) 11 commits
+> >  - refs/reftable: allow configuring geometric factor
+> >  - reftable: make the compaction factor configurable
+> >  - refs/reftable: allow disabling writing the object index
+> >  - refs/reftable: allow configuring restart interval
+> >  - reftable: use `uint16_t` to track restart interval
+> >  - refs/reftable: allow configuring block size
+> >  - reftable/dump: support dumping a table's block structure
+> >  - reftable/writer: improve error when passed an invalid block size
+> >  - reftable/writer: drop static variable used to initialize strbuf
+> >  - reftable: consistently pass write opts as value
+> >  - reftable: consistently refer to `reftable_write_options` as `opts`
+> >=20
+> >  The knobs to tweak how reftable files are written have been made
+> >  available as configuration variables.
+> >=20
+> >  Will merge to 'next'?
+> >  source: <cover.1715336797.git.ps@pks.im>
 >=20
-> > When auto-compacting, the reftable library packs references such that
-> > the sizes of the tables form a geometric sequence. The factor for this
-> > geometric sequence is hardcoded to 2 right now. We're about to expose
-> > this as a config option though, so let's expose the factor via write
-> > options.
->=20
-> Hmph.  It is unclear if having this as uint8_t gives us a useful
-> enhancement, but perhaps in the future hosters may find a more
-> aggressive geometric sequence is better for their workload or
-> something and raise it to 3 or 4?  I was actually wondering if a
-> base smaller than 2 (e.g. fibonacci) may work better.
->=20
-> Anyway, making it configurable is a good first step.  Allowing a bit
-> finer grained setting than just integral values can be done later if
-> it proves necessary.
+> This one is ready from my point of view.
 
-That's a fair point indeed. I had similar issues with git-repack(1)'s
-`--geometric=3D` option, where you can also only pick integers. There's
-also a similar discussion in the patch series by Taylor [1], where I
-proposed to maybe introduce floats into git-config(1).
-
-So this may be good enough for now, and when we gain the ability to
-parse floats we may convert this to accept floats, as well. An
-alternative would be to convert this to percent, where the default value
-would be 200. That should give sufficient flexibility without having to
-introduce floats.
+Ah, I only just now read your comments. I think overall this version is
+good enough to land, but I also agree with your comments. I'll send a v2
+in a bit.
 
 Patrick
 
-[1]: https://lore.kernel.org/git/Zjk2UIV3kEwZUDW+@nand.local/
-
---OjJ4whwvjS08USe3
+--qHjZYbrSV48bhxau
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZBxyEACgkQVbJhu7ck
-PpQtJA/7BWSZrZIev8hMYerX/kIJqw72PDk38g1ktWxWENfYgknH9qXgWY+T45UQ
-fg5skv/C/MIpUcf6w9qGIGCd4Wpd6vMTyI5Jn9XOrrs0EGgOZzyHMJNa/lj7BoMy
-Qdm26AHGzsrwNkxWRFQzFkKGXfvn9Anjamspkk2Om5iXHdM9NgvgRdljd222RtGT
-Pio9ZMW5r6EXS82eHz/cV8jDs1nJCKVEC/DZ9YWhYb4Q+32KGgJl6XJy5Ipiupq7
-jtqHWImdR6uDSQJ5ATqVWMHcSalK+4XP2c4c9C7J3ktU1gfIldXf9rV9CCGNUxsE
-ko/lBFZrx1mB101JJFFRdwAkjlbejnBal8Lgah8TbYKwj5B31PevaWj9Xx1GMdAq
-6IiIf4rh4ap2AlEsXgTdivWw9pYHxGFGuqWuMlS5fxnEoh7ATWVIWa75PHAnoT5I
-9qE8F2A7RKBqZnWKVHLa9/avc1YNxZi0uEHcDxjrgPrW3eX46JRIx/e4RfhBD3ZQ
-6jvWYborvCY4nYkOu02oE5Xs9ixb1oyT1toULpVQvblatr7tGq9Keo/0xXokRHKX
-LAKHjTwC5IypJvwiEQzdUuUQsffwW9P8IMl78ngYgz+NGY71466Ngy4Tb6VGI0hu
-dul/13oCaZ41eo/nFBhIZU2WT9LAPT7iLRGNVBRdFnhINusrfx8=
-=msFY
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZBx3gACgkQVbJhu7ck
+PpRSrQ/+KrFIqAS6m2Ljq7N2k4jurXJb4qGwLULzLP6bUAKONV0iHQoI9t5WJ61f
+6YRIpIDfe66jw5yMWag4DHeg0fO3X/cAR77jbXZFvI0Q0c72ZsfQ79djXpZq525G
+bvde/0GijLGcRtx/TUDy3oLeoz007V7CgEEI5FbmkAdoFrRgXNAO7IAAe6g3jn3n
+JEp1zW+06LU/pa6aNYWUZebmUtQo2gvFZfgM2fIIkY5AR5apDcooY/veNjMFBY+t
+KYKkmMQl25zNreP2TkeNmzIzYJb537ancxTUftEblDXQ+xwC/u4hYfpVAavjLWbY
+mIm8qvvZUue/uW6XcUgtaxn62Zo+nmw5vipV2Vlfh8nDOML2UNbxxIlgMepM9aQ/
+A4UMXRXslCbDfueZlhWBVnGRnj00gmipCD2qoaY8lcC0VVEkNT/fGj/rzd0y8mKz
+U9HDsrsLCwS/Ifjfsf8YWFIQUXAyIKDq8inHM6hsb+8aKRKmBIcArMD1RZ/Si8A2
+9ZtUN0alQCu3uQ1ToCk/Z/cuyGaah4hR8jQZYxUSeywN0hkuBZPoVtHzsrDss5Qm
+Ax6gG5hxDiJL8asL20TdQ5WJ5lB66cp0fROJ7VdvK5AdyACcZvMv8l8DdoZ7kWWM
+KQKxYan1Etb5fcY7QqIUuOTUfl+MiZPHLY8UnRHLwiE0OAbZ5K4=
+=xx4Q
 -----END PGP SIGNATURE-----
 
---OjJ4whwvjS08USe3--
+--qHjZYbrSV48bhxau--
