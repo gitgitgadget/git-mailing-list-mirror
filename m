@@ -1,81 +1,81 @@
 Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650FC31A67
-	for <git@vger.kernel.org>; Mon, 13 May 2024 10:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2500F31A67
+	for <git@vger.kernel.org>; Mon, 13 May 2024 10:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715595749; cv=none; b=nlessVY8tyc8SQ1gpHzIx8tRJW2AsExasQHWpyQsV99VjhMuBTF4QODaAFOcmxH3Zt4ZKCU1IWZH7chWyZ/g/4XFU/UYW34at51MsQMgNuejxmGSSMoEhM9iU8eSVkD9sP5pTN21CXUHbIrrdLmt7wEYDeO2XkeQeJrjLhH6X5k=
+	t=1715595754; cv=none; b=ZHMJp8wbFedRuGHOlXmWCBYCPOSg/C34OUzgNyM2fwdb2inigRzxVgWkx31x366nM91tDW2345Gim8oaVQQzgIlquiPuppAJGmivAQKkyq7TPnA+UKEmGRt/jRBnMrRnhMJcXJ3Q/Ckoawd5by3Dbi/G/wW05gt/DKcMfPIyJCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715595749; c=relaxed/simple;
-	bh=mT6zu9eLLZyXuOIlhl5hDQS0ALUMAlR8ESLr+C5z9EM=;
+	s=arc-20240116; t=1715595754; c=relaxed/simple;
+	bh=i29iRBgL2LTrt5uzgeMDZJ7WFiZED+XrIH2axjZ2GTQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pIw1ROcU8SomOPXH/RF2bMi+PUmJHqMu6S1yA+IBkV1y+zfJ4X2NXzmG9c38ssNP/tc5HRbWR0B9xlM4siEMIvUCssBYEQPTMiXms5Qg1G7D1ef5xGo7FSzXC585+txed2WQuPu6aSKcEfI9cREpI6Zb/AzUc0RWAThtLllBfYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AZmZBgSA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LIwcGXIf; arc=none smtp.client-ip=64.147.123.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=ClWWEMiWFACyXwsnBjHmMzugoKZHUZXJp15uT9R2i26cpgtRUbwht6Sij9lL4qGnTHPUYmvUtNuV724OP9DI4Uj9CRD5KDWEUFCOTk8LXZwtl/0BZJ9Qgn+neeMVJzPd7Y3TJrKeZiL7L1HAE99adOdEpHUDO0FBmdKmp4eRQOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uP36Y5Om; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y/pkpKZl; arc=none smtp.client-ip=64.147.123.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AZmZBgSA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LIwcGXIf"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 3111E180012A;
-	Mon, 13 May 2024 06:22:27 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uP36Y5Om";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y/pkpKZl"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 4CF23180012E;
+	Mon, 13 May 2024 06:22:32 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 13 May 2024 06:22:27 -0400
+  by compute6.internal (MEProxy); Mon, 13 May 2024 06:22:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715595746; x=1715682146; bh=4l+p2hD2Ou
-	KLPkyu/cwI44fKsEEqTpE2N+9MJLku4es=; b=AZmZBgSA/zNoCPMapbg97fJd/I
-	x5mYTRlkUprB9LNr6ip9YtWD5/PyyPCYVpZttO5FnVc9Ms7J5UUqGOoTZSxg7k35
-	3pqU/m024seqj4LHz8CEvn9ScYtuGgwC58nSgb5QzYYLqtocbNenombX1GrqmuEO
-	IFKYAQ6PwUdcjehOTCWtMENM5xrqsS0JEQ1KWnaVgm9kou6JJ/wDb/SgvBMi6vJE
-	zckeG2iTGR6MucAz/0bIcKWpTQN3Zfxoj92JRuHs/QDwzFI6H53nLMXdxi1Yr9iG
-	yA8RdUbDDV/hjDDVjjesKEwuSDYGKmxzcCEZk4pBuJIJhbIiMNURk4YgxPWQ==
+	:subject:to:to; s=fm3; t=1715595751; x=1715682151; bh=tJphtNqawJ
+	863crK1scVIM/jvmWpUMz/5NtFEQPSzZU=; b=uP36Y5OmuSj6Ljr4URbp1qObP6
+	IO4Ac5i6v5Cw1HK/3ru0QI0YvY/inVD/RZ9my93bEMkXW9MKZ4LDfibtBxVfuN4S
+	IYdAEXu5LERwEdqWk4JgVda5bsUNcjA0pU7VYlWNQzlQMXfXYG766I75qEouMDDE
+	tVS0Z5u/0PQzD8mBS2j+XzE3Cla1sHvN/envqLQG9EWtXsETdzXLRoM3NlKjfYn/
+	cEvyH7XpKf94c0PtUev/NQlk+2O10R5lveJX2Z/8A5zcGRbPHasfP7u7/8gfMgoQ
+	k1nlr8O2+3fsZAmFg5SgdZ4k+DLcD2jkKPhzgPTuxcFZZR48C612jJMymbGA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715595746; x=1715682146; bh=4l+p2hD2OuKLPkyu/cwI44fKsEEq
-	TpE2N+9MJLku4es=; b=LIwcGXIfgmUaywIrgKo8SitdRmB7PqmltlTmdAMDPslj
-	N1jYh+t0UdCWXDsWiRgns0qXbSEPIFK3X05LP55IXpt36Sjh52Am1tXC4G1qh0Oq
-	gA3+L7GnM7iU7Vj/hF9t0BV76rqdms1lukbxOz1lT4x+DZrLMPyOlFP/TgQQUlnk
-	ndQ+ym2sMChcqvzbzTNKCSzUUFcq/9eE00Cj3O87vHGkqp0ALgB+qly86i2n80+7
-	xKNm/LzJXx8KywRWHumRasv9NKy7D6KtrL+rEE3NeP8KHTD8SwWYNgVDpm0SGmaa
-	LnFlpRKrtwWFW0KsZYT2aldlXHMqSVLozfI92iWWsA==
-X-ME-Sender: <xms:4ulBZoNGhj64AXdksNRJiJ8HjcMBXtheC1F4qb5ZLhFRygod90OrJg>
-    <xme:4ulBZu_TPyXBWy7unQ_wtUsNv6BfHRChip8vxOuQ9kiJGuMdZZ6m2MX5HIibfBqni
-    5v5yONnpUsZJIebmA>
-X-ME-Received: <xmr:4ulBZvROSs4mcX2W-iTPjMxH_PkJ-4meT0MU1-jy8bnH-UeaYwLOkhdgzxTffejZTI4e37j2nwM32e62-8-cObjrukuCvL8BHB7gkiPYCp36WUM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgvdeiucetufdoteggodetrfdotf
+	fm3; t=1715595751; x=1715682151; bh=tJphtNqawJ863crK1scVIM/jvmWp
+	UMz/5NtFEQPSzZU=; b=Y/pkpKZlspiwGHWl4navVN0us9ps8cfvNeYg1pvWmIKG
+	vc4qcNdf283r1xP/6kTmU/0XHvaYrtAt6hJC9HfWXMPse73tVAwLiB96Nbx1NK6m
+	XxqFTdmAqaZz9VuS33/67AaB0woTqwYVss97v7WjAZKDWTox3xZPwzAf/l91GXS6
+	nJgqGOODN3+1ONGr5oYu///JSepl1RLeXK1l272Qcyr95cx/2U8eS3PqSeOu8fga
+	Ll8B16BD7KHDjRDKJdGAyWdDIq/+Yly2b4GfK/7H3nwandZA2JWFST9p2cLLDIU7
+	3nWwqpWTkUkzlIzCnPinf7uxyoNCCIDufOGJ3E3qIA==
+X-ME-Sender: <xms:5-lBZhtq5Mfk5tEjlgXWrYqjy8p7yWeo_xCibrkRFv6FSXv1DhqmJg>
+    <xme:5-lBZqeLb9ax_S6UJI-RNJhFVQSG2BOAXtTRhzJm6eyhcsPqqFRBrihNcIlDoA0lu
+    ZZDJxSUIyptfXmNYw>
+X-ME-Received: <xmr:5-lBZkzYSgzIneKwW6ys_VuPnepJve6TnaYk9-9S2mdJHHKLGMq-YAXf5AwLEWsh_gjZcbRgNvRF7_Bz9Dqx1iAEJDZwGmKklANSdj3PHp_agws>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgvdejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:4ulBZgtCZj7G1qJJ25q2BjH2Ts5RClhWWpsKQyiVOehzSkTb7cGtUQ>
-    <xmx:4ulBZgfFRxn3L7JyNimSWL2PKxuwOIDoXq_91rz6WB4nykaCZ6RYuA>
-    <xmx:4ulBZk3K7XMJVHDMiYvXIbyMa6ynQjuOwfdhYopOWGL2gQFmEWOgRg>
-    <xmx:4ulBZk_imbfhwc0KxPCrql_DqkvIyVZybtypoLYsqe9StL5pjgSHyw>
-    <xmx:4ulBZv7LwVlz-PZO2kaqtzsYQv7LemjMFUTcvR-OZvR0BZ984NabSMFf>
+X-ME-Proxy: <xmx:5-lBZoPMJQ1_Oj15TuMgxt1TCTAmFyS82y-kq7zcX2A5QauPTGq2hw>
+    <xmx:5-lBZh-K3e0IuMVfLK35XnGKoTYOlFf-s65OfD8duXRNbJTPKl7ImA>
+    <xmx:5-lBZoVF5gig0ZJHztpeP9V77-W2Zlwoyj4SCFYz3KNnCqMty8lurA>
+    <xmx:5-lBZiepuotOb1mwyn_CfPSWys8igUw3mQpBifep3d52s2e4DSKFlw>
+    <xmx:5-lBZtaVs_K0Fz4nLEiRDF5KX_H1hCvGKHEdrUSzFuzzpbT60MHPIr3r>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 May 2024 06:22:25 -0400 (EDT)
+ 13 May 2024 06:22:30 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 2a658b85 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 May 2024 10:22:06 +0000 (UTC)
-Date: Mon, 13 May 2024 12:22:23 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id fea539cd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 May 2024 10:22:11 +0000 (UTC)
+Date: Mon, 13 May 2024 12:22:28 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Kyle Lippincott <spectral@google.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 05/21] builtin/config: move actions into
- `cmd_config_actions()`
-Message-ID: <0a6ecae2ccc55789bce3f9c42900b3f41c1cb06a.1715595550.git.ps@pks.im>
+Subject: [PATCH v2 06/21] builtin/config: check for writeability after source
+ is set up
+Message-ID: <7ab99a27c16718ad4dff1f7862e80c52b48c3812.1715595550.git.ps@pks.im>
 References: <cover.1715339393.git.ps@pks.im>
  <cover.1715595550.git.ps@pks.im>
 Precedence: bulk
@@ -85,124 +85,155 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4jlxYz9+OI402wCJ"
+	protocol="application/pgp-signature"; boundary="CFikwyUvDDp7QM/S"
 Content-Disposition: inline
 In-Reply-To: <cover.1715595550.git.ps@pks.im>
 
 
---4jlxYz9+OI402wCJ
+--CFikwyUvDDp7QM/S
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We only use actions in the legacy mode. Convert them to an enum and move
-them into `cmd_config_actions()` to clearly demonstrate that they are
-not used anywhere else.
+The `check_write()` function verifies that we do not try to write to a
+config source that cannot be written to, like for example stdin. But
+while the new subcommands do call this function, they do so before
+calling `handle_config_location()`. Consequently, we only end up
+checking the default config location for writeability, not the location
+that was actually specified by the caller of git-config(1).
+
+Fix this by calling `check_write()` after `handle_config_location()`. We
+will further clarify the relationship between those two functions in a
+subsequent commit where we remove the global state that both implicitly
+rely on.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/config.c | 48 +++++++++++++++++++++++-------------------------
- 1 file changed, 23 insertions(+), 25 deletions(-)
+ builtin/config.c  | 10 +++++-----
+ t/t1300-config.sh |  6 ++++++
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index e9956574fe..0842e4f198 100644
+index 0842e4f198..9866d1a055 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -87,30 +87,6 @@ static int show_origin;
- static int show_scope;
- static int fixed_value;
+@@ -843,7 +843,6 @@ static int cmd_config_set(int argc, const char **argv, =
+const char *prefix)
 =20
--#define ACTION_GET (1<<0)
--#define ACTION_GET_ALL (1<<1)
--#define ACTION_GET_REGEXP (1<<2)
--#define ACTION_REPLACE_ALL (1<<3)
--#define ACTION_ADD (1<<4)
--#define ACTION_UNSET (1<<5)
--#define ACTION_UNSET_ALL (1<<6)
--#define ACTION_RENAME_SECTION (1<<7)
--#define ACTION_REMOVE_SECTION (1<<8)
--#define ACTION_LIST (1<<9)
--#define ACTION_EDIT (1<<10)
--#define ACTION_SET (1<<11)
--#define ACTION_SET_ALL (1<<12)
--#define ACTION_GET_COLOR (1<<13)
--#define ACTION_GET_COLORBOOL (1<<14)
--#define ACTION_GET_URLMATCH (1<<15)
--
--/*
-- * The actions "ACTION_LIST | ACTION_GET_*" which may produce more than
-- * one line of output and which should therefore be paged.
-- */
--#define PAGING_ACTIONS (ACTION_LIST | ACTION_GET_ALL | \
--			ACTION_GET_REGEXP | ACTION_GET_URLMATCH)
--
- #define TYPE_BOOL		1
- #define TYPE_INT		2
- #define TYPE_BOOL_OR_INT	3
-@@ -1031,6 +1007,24 @@ static int cmd_config_edit(int argc, const char **ar=
-gv, const char *prefix)
+ 	argc =3D parse_options(argc, argv, prefix, opts, builtin_config_set_usage,
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
+-	check_write();
+ 	check_argc(argc, 2, 2);
 =20
- static int cmd_config_actions(int argc, const char **argv, const char *pre=
-fix)
- {
-+	enum {
-+		ACTION_GET =3D (1<<0),
-+		ACTION_GET_ALL =3D (1<<1),
-+		ACTION_GET_REGEXP =3D (1<<2),
-+		ACTION_REPLACE_ALL =3D (1<<3),
-+		ACTION_ADD =3D (1<<4),
-+		ACTION_UNSET =3D (1<<5),
-+		ACTION_UNSET_ALL =3D (1<<6),
-+		ACTION_RENAME_SECTION =3D (1<<7),
-+		ACTION_REMOVE_SECTION =3D (1<<8),
-+		ACTION_LIST =3D (1<<9),
-+		ACTION_EDIT =3D (1<<10),
-+		ACTION_SET =3D (1<<11),
-+		ACTION_SET_ALL =3D (1<<12),
-+		ACTION_GET_COLOR =3D (1<<13),
-+		ACTION_GET_COLORBOOL =3D (1<<14),
-+		ACTION_GET_URLMATCH =3D (1<<15),
-+	};
- 	const char *comment_arg =3D NULL;
- 	int actions =3D 0;
- 	struct option opts[] =3D {
-@@ -1147,7 +1141,11 @@ static int cmd_config_actions(int argc, const char *=
-*argv, const char *prefix)
-=20
+ 	if ((flags & CONFIG_FLAGS_FIXED_VALUE) && !value_pattern)
+@@ -856,6 +855,7 @@ static int cmd_config_set(int argc, const char **argv, =
+const char *prefix)
  	comment =3D git_config_prepare_comment_string(comment_arg);
 =20
--	if (actions & PAGING_ACTIONS)
-+	/*
-+	 * The following actions may produce more than one line of output and
-+	 * should therefore be paged.
-+	 */
-+	if (actions & (ACTION_LIST | ACTION_GET_ALL | ACTION_GET_REGEXP | ACTION_=
-GET_URLMATCH))
- 		setup_auto_pager("config", 1);
+ 	handle_config_location(prefix);
++	check_write();
 =20
- 	if (actions =3D=3D ACTION_LIST) {
+ 	value =3D normalize_value(argv[0], argv[1], &default_kvi);
+=20
+@@ -891,13 +891,13 @@ static int cmd_config_unset(int argc, const char **ar=
+gv, const char *prefix)
+=20
+ 	argc =3D parse_options(argc, argv, prefix, opts, builtin_config_unset_usa=
+ge,
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
+-	check_write();
+ 	check_argc(argc, 1, 1);
+=20
+ 	if ((flags & CONFIG_FLAGS_FIXED_VALUE) && !value_pattern)
+ 		die(_("--fixed-value only applies with 'value-pattern'"));
+=20
+ 	handle_config_location(prefix);
++	check_write();
+=20
+ 	if ((flags & CONFIG_FLAGS_MULTI_REPLACE) || value_pattern)
+ 		return git_config_set_multivar_in_file_gently(given_config_source.file,
+@@ -918,10 +918,10 @@ static int cmd_config_rename_section(int argc, const =
+char **argv, const char *pr
+=20
+ 	argc =3D parse_options(argc, argv, prefix, opts, builtin_config_rename_se=
+ction_usage,
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
+-	check_write();
+ 	check_argc(argc, 2, 2);
+=20
+ 	handle_config_location(prefix);
++	check_write();
+=20
+ 	ret =3D git_config_rename_section_in_file(given_config_source.file,
+ 						argv[0], argv[1]);
+@@ -943,10 +943,10 @@ static int cmd_config_remove_section(int argc, const =
+char **argv, const char *pr
+=20
+ 	argc =3D parse_options(argc, argv, prefix, opts, builtin_config_remove_se=
+ction_usage,
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
+-	check_write();
+ 	check_argc(argc, 1, 1);
+=20
+ 	handle_config_location(prefix);
++	check_write();
+=20
+ 	ret =3D git_config_rename_section_in_file(given_config_source.file,
+ 						argv[0], NULL);
+@@ -997,10 +997,10 @@ static int cmd_config_edit(int argc, const char **arg=
+v, const char *prefix)
+ 	};
+=20
+ 	argc =3D parse_options(argc, argv, prefix, opts, builtin_config_edit_usag=
+e, 0);
+-	check_write();
+ 	check_argc(argc, 0, 0);
+=20
+ 	handle_config_location(prefix);
++	check_write();
+=20
+ 	return show_editor();
+ }
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index d90a69b29f..9de2d95f06 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -2835,6 +2835,12 @@ test_expect_success 'specifying multiple modes cause=
+s failure' '
+ 	test_cmp expect err
+ '
+=20
++test_expect_success 'writing to stdin is rejected' '
++	echo "fatal: writing to stdin is not supported" >expect &&
++	test_must_fail git config ${mode_set} --file - foo.bar baz 2>err &&
++	test_cmp expect err
++'
++
+ done
+=20
+ test_done
 --=20
 2.45.GIT
 
 
---4jlxYz9+OI402wCJ
+--CFikwyUvDDp7QM/S
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB6d4ACgkQVbJhu7ck
-PpS2rA/9HLJRvoAkQj+ikKcacan96bKKmxMzt7sNVQuttrGgqV4a9Ia4f7j1ZD0b
-MoHWHNLPDOEto3K5Pp6eXWS4umMuv5MbtPeDLExa08YweGVncKZH+vCH37h+jrJZ
-Rhymzqo6To0LdZnSTwBijWDiuofw0T3uRBy37/nmcNMob5MI5EgKK0Xa63J0IDsX
-+AKYXhERKVieVa062U0i9i/vobnYZFH8KYSPMmZXiwWBQvTx7ljj2m5MRxw3FQhH
-uhNDgT1m2833hQFnXhS84Zz+PUmrvoUcdgHBXhYXbPk2/pmDN7aRqn+Q1AhfTXzJ
-gPCxFwuQjU0KLC3tJOdj8Sl0ZTSlgX87JXS2YwYIN84vvxqY51Bt+hO+yULjYQ56
-ogTF+ysMqEmxul2tsSqUXBUDm5ksCgeYdO3ddeQNz3k3yZbBIImEOUSY1A+MJoK4
-PCDG1EnIDV2/+FKe6BxanCxOlooFuqr8x1TebrCEqng2d5GF/UadFRIkpXB8x+PI
-nNaYOvqYTzLuXUBxdGg3nAdlUGK5w6meNxS1osQkQ+5ya/V94kvN1X/Dq/hifsbm
-iFKRcxe1zwJSdcUogJcfprxOnMyq0JqsjZm98FfOWTucf3xpSK7wc8RISXAgJu3G
-HUX6ms6HWYS79i8uazxdRL2/RHkjQaCzNuoV0zZSrgRAFbfrAfE=
-=2+2A
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB6eMACgkQVbJhu7ck
+PpSVsg/9HfMnRnYPsQI8rh2UaeOZb8Elfjca7lEML+yXCjC2+AuXxbyCnlfZJHHK
+DwwnfTeeXhI7FyVcB9yv5+1z9FjULqUsiXtZzwGUqKUL+FCFMPp3CxLzPEAaQ1Pi
+vpj7+8OVxL8JWv7xyOLFgEKBiB0hUct4rGxFslpasCtXZxGwXwyUjsi8p1clb5n7
+GOe2tQnTfzyhx62xYQn6Q3kGFM5+RctEODuB6lXtQYAJIFPruuo7xoy9LUhwpw+n
+DAhDMmd6UswjJD++JXbfSVnWl2tiQ9wZFLz6IHlWFdPrTLzrZ1Wu09CgZRz0DxDt
+rerM1RJ4t+U6qwbPkuFiD8l2GLulppHTtOHhX7bSJB5Bw+b7rRNB7p1Gu1R4MAEK
+SnuP+cxR1e9QxfaSwPsAqg3GF+LhwelUEAIBJbw1mcGzRyd1j3EHu8CcT90LZymk
+dqmZQddLcDjqJ5/HUEHI5ke7xKzrdMjtTWZ4NhEIWBgKGmZTeloYRJ1B0smm6lnw
+CyQupDvxNtV7Ic9k501yyDt46P+M9QgxEym4jsr2DkGyS2XeKk4AUogkH5oMtrrA
+VilCe11gjM4AkFNIHofuvauaFR9ZKmychDmBEngaJkypD78V05PD03uGRWt/8124
+8hmqHYiqaCgWzJRGtlq9loNrcbOswXzst1lOJEIfn9pxK4/ZbeA=
+=S8EH
 -----END PGP SIGNATURE-----
 
---4jlxYz9+OI402wCJ--
+--CFikwyUvDDp7QM/S--
