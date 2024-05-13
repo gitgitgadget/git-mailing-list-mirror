@@ -1,79 +1,79 @@
-Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
+Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BF2146A98
-	for <git@vger.kernel.org>; Mon, 13 May 2024 08:47:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24D6146A98
+	for <git@vger.kernel.org>; Mon, 13 May 2024 08:48:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715590077; cv=none; b=arNWwpsUGdONWzuC8PHqHPR3ErMN/p/2q9ChERMUYvwv87VPT3COEUAZW7bvVGahmgdB5Som2OjICKFftW8UKUb5WRp6ycO7siPljg3tKiENwD/6MrftD228gUTbTkrVUoyi4uXFfmpYJPybjGaUHnoMLQZSBc+Qti2kJO5gCk8=
+	t=1715590082; cv=none; b=ZLDI632Cf+LKZWbwYlWNJAVGlUOvHAGQ7GlAhilvPCthI48lcII3v6pG9Zs4XdoIVt78ZdBPBl07YZMcUlwVcKQYAHb6hBfWBepTWlfTDoxCXMxuY7reRtFJm2L8H0akH87h52buSrEFD98HEaxctae2kr7YYp9O0swn/Op9TwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715590077; c=relaxed/simple;
-	bh=kF4Pnx5zR/vtKIi7nIFh1h3dOXH22SN+24bh68IazCY=;
+	s=arc-20240116; t=1715590082; c=relaxed/simple;
+	bh=qbbNgnBPf8oJ4xbMLZ5l1OdXbo0p1RripaMdjgM+WAM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dn51JU50t8mIVdPXlcgy3FSNcYU1zU9RJKbdS0m83B8ppMaCZTgsywSbWfZts2o+5+asp+bxGqevAGjEuWZJgqeRpp6PyyEwRITPssg9z9q7D3Qr3yCi0B1T0iDidrGkjue63hQGN2l23zT3PT7Uvnf3eJef04ETRrOIIwPqMVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tJPl5tid; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jzgYwkzP; arc=none smtp.client-ip=64.147.123.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=nUB+hCoo3oB+ytxzF9XGkwlTrp/h9csi2A60j1SxRggvOw/1aFrgmYn2mU9pA5Zx3B3CUpDwmjRAekbF+CSC6qtN0+Ohe0YGQrgYAfZaVqC4abYWwNzRHGu/vCtYKSYrG2ptw5pqfN8EKVqNJT4Y2MkKsclpJxhiKXPib4T+xhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GZznd0TB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WM7ANPvR; arc=none smtp.client-ip=64.147.123.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tJPl5tid";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jzgYwkzP"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.west.internal (Postfix) with ESMTP id 6AC871C000E3;
-	Mon, 13 May 2024 04:47:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GZznd0TB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WM7ANPvR"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 3B17A180013A;
+	Mon, 13 May 2024 04:48:00 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 13 May 2024 04:47:55 -0400
+  by compute4.internal (MEProxy); Mon, 13 May 2024 04:48:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715590075; x=1715676475; bh=oDSx4O1DdP
-	DnXTNU+VrbiULKCzP5hm9rw/H9XPM8sN0=; b=tJPl5tidVqiBKyESSdas/F0dif
-	8zb1ZTYzAFLU6zhF3ySjKpxykDkMZxnN6Xh9GP7yhjRQMwsEL7Vyzqqz+puv0zYu
-	cGgKZBrVZxUWU7CS3TGPURcIRmsPD8TQbHqQkEQfbPNeO94l+OManKTpcqUciFpV
-	PdxsaYn3xb3blXe0Cipk4vm5DYyWBD9s13lV7MtSLSWyr1P37KBJ1DoKomTsIuQm
-	0ajbB7qbvWN4tjM4dqehkpthKwTP9SESAfPcTX3zkCQ7/mOINdQlThwBCa48P8+U
-	ZqFwAngDb75Tkr3DcTCUaRoECnphf8E4fcofkFoNzLv8wuULvOUm5zIEIG2A==
+	:subject:to:to; s=fm3; t=1715590079; x=1715676479; bh=KAVOa4X+aA
+	HRMB4NJ/2vr/1D3jRVHa4GmHXoAKuL7jk=; b=GZznd0TB+pKOBaM1ppim8+0QHi
+	e3eNj3PHrHKJ5lPMQ/7TgupnkSFlE5EtGwB1dCPWK5Via+eRU8yV29VC5tmVmsu2
+	bn93cxXvzd42JNZRRd8QvkT32FwNyzQWApVgTOuaVzbf7VEqOUZhonXaZJoizGwk
+	TgtPys5VdUx5qymseCz9ngTQnFooxEF413APlw4jymbRcKm3trxMpVWz72ka0dkL
+	opMwGHRWJGhthb3Un6EpBxr+eBWoYhsFytesUP37WHW0CVO/l05qi6qnpyiImfJP
+	kGKYXw0hdKWfAbTbF9cUBH7iGjf/FVlJGPH+ExSKsoTJOpyUoEcp7qRqorBA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715590075; x=1715676475; bh=oDSx4O1DdPDnXTNU+VrbiULKCzP5
-	hm9rw/H9XPM8sN0=; b=jzgYwkzPXNTM4KYtW6WQ0BtPWQ5ChoLwfaPkBuYtMlvr
-	JqC4t3FDbXTAHz6UmJbsowJnBAP1rQOv8mRf27vkdpPMsWO55teFyzYRKdAs04Ac
-	qdUaqQFiO1R9v17t+4c4hiV/qUDu2F5e8Wwx4i6RFNoygChR1t3bZ1JuiMZSrjJy
-	PeNElIiKo03geiJfzZQhFVlWajvsBkoI4bVTiDf0hvAgZtd3bkOWb7u1c+XNotXH
-	6Hst0yajRDcWZRWNQHrVHkscch5ox+peaJ2+Md3UHYsyFWY0zbNuQicObkpCvtvv
-	2C4hYerbxDwskBJrybaku/bNiCRy8gTkDJjRhbJkkA==
-X-ME-Sender: <xms:utNBZpT4oO1e0qIo3JmIrFtIh-EgfllGthI8dyQ9BBxCChO_W6gGmw>
-    <xme:utNBZizrRJXQE7QPXOytdVnT2MVhRayCV6ls_absqJQbi6j1AYqczHTwEAvzwJ1p9
-    uDKdktTi7W2og2W9w>
-X-ME-Received: <xmr:utNBZu0BkmXR6bOVPa_x-Zty9e6sKynz-sMv1m2N9SGPArlsaccGWTmMpDkutzN9i9ibjrX0xiQHzmMNDWCmtkA34J4YMB9h-1p1Iku0ZmZ9TZM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgtdekucetufdoteggodetrfdotf
+	fm3; t=1715590079; x=1715676479; bh=KAVOa4X+aAHRMB4NJ/2vr/1D3jRV
+	Ha4GmHXoAKuL7jk=; b=WM7ANPvRzP5kw+PsGMIXjOkE5PbPcGeyNfnc1lCaRrfr
+	hVuWJ7Vf7fQPkRBZIc1yOktnCzzg6JDZ2ANFOJL2wIokOj55IzqsTLSKKWpYqqK6
+	03huvT6hILXkV/s3wkNLcSPdhKDLUtU7TzAtDreC6mRJPS1KNjjzsOvJzLbUc+Cj
+	5EcCqj96lI/bHhG7Nkv7Q/5dne0mK7BOt78gD7RwpYRbJTHcwo/uHQ+gaC75G3St
+	8RiUiwWRD1UhH3EbqtXcfwq8HtxKRx/6b2pUXLCPpDF3DrCV6fSkiYJZKzEeI+Kj
+	G6/f0l6k84QLtq+M9cDkxaS7ZbH9+oPFvt7GqnwzFA==
+X-ME-Sender: <xms:v9NBZmuHiYe2iJ7IGAcwFKrRYyLqy8z7QoqJAcEeSb4y5pe1GuKG4w>
+    <xme:v9NBZrfm0i3DqTd4RBTCd8dLc5xxXkE7asV0Mo7R2PFU3zZJtKLXPz4C31OjbhhSN
+    R3iw2wTD7aeH8ACEw>
+X-ME-Received: <xmr:v9NBZhz-KFgwH--q6ksxrFJPWu6zyxBIgpDVThPu7c8p9j7XXxEUVfMC-fTcNjjeFYRnyojIhyk56OCvVgchIlZzzFEe1PdKzwxYK0MLLNh4feM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgtdejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepvefhuefhudetfeeltedvheeufeejuddtueeiieeitdeffffhieevuedukeevteeg
-    necuffhomhgrihhnpehosghjpghofhhfshgvthhsrdhishenucevlhhushhtvghrufhiii
-    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:utNBZhAsRf5KvyMmgf6Ho1gOzHIxIFnUxq7Kkod7yUb1vvjFd6n8jg>
-    <xmx:utNBZijnDST0u69tn4_b04wZPoWcMA0XWUW3Kw5M3CnTzHaNJNsa8Q>
-    <xmx:utNBZlr4XyGh4VR-0ygSHdxns_Wo0CuVJ_VTNZoVtK1Vot686Aa1kQ>
-    <xmx:utNBZtgrk-CXI9KyYenkDlrASc9_SarOs2A9FzCfO186VvNrGa4Z0Q>
-    <xmx:u9NBZjtPSZkzym5ZXIpqSEf7jnTE4do98hYZVtaP86jSS6CRU_aohAJa>
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:v9NBZhPGdCyxom2RxcJM2rlcbBYtYUmT7BmbOhIV8TrZOi0zSGvmvw>
+    <xmx:v9NBZm8sdSeda-RiolLOwt5sZN2HDsrvFgwaZbkzwct7z9pOCmHFSQ>
+    <xmx:v9NBZpVBCsyIGreM1X6BBjtamHMh_zLGxLOfqzQDkL11gUROqDbNkQ>
+    <xmx:v9NBZvdbQzXFpR3NSDVdOiTo7pmqGN1DK7FmlH_2OJ-c18DWfddzNg>
+    <xmx:v9NBZtZkP5cKdyaTqDkjG8ZZheT-QMgp-CGqZg_5SyrMIhz0R5kU3ySQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 May 2024 04:47:54 -0400 (EDT)
+ 13 May 2024 04:47:58 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 239f03fb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 May 2024 08:47:35 +0000 (UTC)
-Date: Mon, 13 May 2024 10:47:52 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 0d6f608d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 May 2024 08:47:40 +0000 (UTC)
+Date: Mon, 13 May 2024 10:47:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 11/13] reftable/reader: adapt interface to allow reuse of
- iterators
-Message-ID: <07459516508c6982ad185c5f9409be523878bc50.1715589670.git.ps@pks.im>
+Subject: [PATCH v2 12/13] reftable/stack: provide convenience functions to
+ create iterators
+Message-ID: <51480c43287ee3164d108859725ca819b3466df5.1715589670.git.ps@pks.im>
 References: <cover.1715166175.git.ps@pks.im>
  <cover.1715589670.git.ps@pks.im>
 Precedence: bulk
@@ -83,277 +83,376 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KLY5ZiH7nRMAd3iP"
+	protocol="application/pgp-signature"; boundary="c3Wku7l6wJb/kN+q"
 Content-Disposition: inline
 In-Reply-To: <cover.1715589670.git.ps@pks.im>
 
 
---KLY5ZiH7nRMAd3iP
+--c3Wku7l6wJb/kN+q
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Refactor the interfaces exposed by `struct reftable_reader` and `struct
-table_iterator` such that they support iterator reuse. This is done by
-separating initialization of the iterator and seeking on it.
+There exist a bunch of call sites in the reftable backend that want to
+create iterators for a reftable stack. This is rather convoluted right
+now, where you always have to go via the merged table. And it is about
+to become even more convoluted when we split up iterator initialization
+and seeking in the next commit.
+
+Introduce convenience functions that allow the caller to create an
+iterator from a reftable stack directly without going through the merged
+table. Adapt callers accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/reader.c          | 31 ++++----------------------
- reftable/readwrite_test.c  | 35 +++++++++++++++++++----------
- reftable/reftable-reader.h | 45 ++++++--------------------------------
- 3 files changed, 35 insertions(+), 76 deletions(-)
+ refs/reftable-backend.c   | 48 +++++++++++++++++----------------------
+ reftable/merged.c         |  6 ++---
+ reftable/merged.h         |  6 +++++
+ reftable/reftable-stack.h | 18 +++++++++++++++
+ reftable/stack.c          | 15 ++++++++++++
+ 5 files changed, 63 insertions(+), 30 deletions(-)
 
-diff --git a/reftable/reader.c b/reftable/reader.c
-index a5a13cb0b9..bbdb4bdafa 100644
---- a/reftable/reader.c
-+++ b/reftable/reader.c
-@@ -621,39 +621,16 @@ static void reader_init_iter(struct reftable_reader *=
-r,
- 	}
- }
-=20
--int reftable_reader_seek_ref(struct reftable_reader *r,
--			     struct reftable_iterator *it, const char *name)
-+void reftable_reader_init_ref_iterator(struct reftable_reader *r,
-+				       struct reftable_iterator *it)
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 010ef811b6..7ac2772bcb 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -15,7 +15,6 @@
+ #include "../reftable/reftable-record.h"
+ #include "../reftable/reftable-error.h"
+ #include "../reftable/reftable-iterator.h"
+-#include "../reftable/reftable-merged.h"
+ #include "../setup.h"
+ #include "../strmap.h"
+ #include "parse.h"
+@@ -462,7 +461,6 @@ static struct reftable_ref_iterator *ref_iterator_for_s=
+tack(struct reftable_ref_
+ 							    const char *prefix,
+ 							    int flags)
  {
--	struct reftable_record rec =3D {
--		.type =3D BLOCK_TYPE_REF,
--		.u.ref =3D {
--			.refname =3D (char *)name,
--		},
--	};
- 	reader_init_iter(r, it, BLOCK_TYPE_REF);
--	return iterator_seek(it, &rec);
- }
+-	struct reftable_merged_table *merged_table;
+ 	struct reftable_ref_iterator *iter;
+ 	int ret;
 =20
--int reftable_reader_seek_log_at(struct reftable_reader *r,
--				struct reftable_iterator *it, const char *name,
--				uint64_t update_index)
-+void reftable_reader_init_log_iterator(struct reftable_reader *r,
-+				       struct reftable_iterator *it)
- {
--	struct reftable_record rec =3D {
--		.type =3D BLOCK_TYPE_LOG,
--		.u.log =3D {
--			.refname =3D (char *)name,
--			.update_index =3D update_index,
--		},
--	};
- 	reader_init_iter(r, it, BLOCK_TYPE_LOG);
--	return iterator_seek(it, &rec);
--}
+@@ -482,9 +480,8 @@ static struct reftable_ref_iterator *ref_iterator_for_s=
+tack(struct reftable_ref_
+ 	if (ret)
+ 		goto done;
+=20
+-	merged_table =3D reftable_stack_merged_table(stack);
 -
--int reftable_reader_seek_log(struct reftable_reader *r,
--			     struct reftable_iterator *it, const char *name)
--{
--	uint64_t max =3D ~((uint64_t)0);
--	return reftable_reader_seek_log_at(r, it, name, max);
- }
+-	ret =3D reftable_merged_table_seek_ref(merged_table, &iter->iter, prefix);
++	reftable_stack_init_ref_iterator(stack, &iter->iter);
++	ret =3D reftable_iterator_seek_ref(&iter->iter, prefix);
+ 	if (ret)
+ 		goto done;
 =20
- void reader_close(struct reftable_reader *r)
-diff --git a/reftable/readwrite_test.c b/reftable/readwrite_test.c
-index a6dbd214c5..d99543bbd6 100644
---- a/reftable/readwrite_test.c
-+++ b/reftable/readwrite_test.c
-@@ -239,7 +239,9 @@ static void test_log_write_read(void)
- 	err =3D init_reader(&rd, &source, "file.log");
- 	EXPECT_ERR(err);
+@@ -1015,8 +1012,6 @@ static int transaction_update_cmp(const void *a, cons=
+t void *b)
+ static int write_transaction_table(struct reftable_writer *writer, void *c=
+b_data)
+ {
+ 	struct write_transaction_table_arg *arg =3D cb_data;
+-	struct reftable_merged_table *mt =3D
+-		reftable_stack_merged_table(arg->stack);
+ 	uint64_t ts =3D reftable_stack_next_update_index(arg->stack);
+ 	struct reftable_log_record *logs =3D NULL;
+ 	struct ident_split committer_ident =3D {0};
+@@ -1051,6 +1046,8 @@ static int write_transaction_table(struct reftable_wr=
+iter *writer, void *cb_data
+ 			struct reftable_log_record log =3D {0};
+ 			struct reftable_iterator it =3D {0};
 =20
--	err =3D reftable_reader_seek_ref(&rd, &it, names[N - 1]);
-+	reftable_reader_init_ref_iterator(&rd, &it);
++			reftable_stack_init_log_iterator(arg->stack, &it);
 +
-+	err =3D reftable_iterator_seek_ref(&it, names[N - 1]);
- 	EXPECT_ERR(err);
+ 			/*
+ 			 * When deleting refs we also delete all reflog entries
+ 			 * with them. While it is not strictly required to
+@@ -1060,7 +1057,7 @@ static int write_transaction_table(struct reftable_wr=
+iter *writer, void *cb_data
+ 			 * Unfortunately, we have no better way than to delete
+ 			 * all reflog entries one by one.
+ 			 */
+-			ret =3D reftable_merged_table_seek_log(mt, &it, u->refname);
++			ret =3D reftable_iterator_seek_log(&it, u->refname);
+ 			while (ret =3D=3D 0) {
+ 				struct reftable_log_record *tombstone;
 =20
- 	err =3D reftable_iterator_next_ref(&it, &ref);
-@@ -252,7 +254,9 @@ static void test_log_write_read(void)
- 	reftable_iterator_destroy(&it);
- 	reftable_ref_record_release(&ref);
-=20
--	err =3D reftable_reader_seek_log(&rd, &it, "");
-+	reftable_reader_init_log_iterator(&rd, &it);
-+
-+	err =3D reftable_iterator_seek_log(&it, "");
- 	EXPECT_ERR(err);
-=20
- 	i =3D 0;
-@@ -330,7 +334,8 @@ static void test_log_zlib_corruption(void)
- 	err =3D init_reader(&rd, &source, "file.log");
- 	EXPECT_ERR(err);
-=20
--	err =3D reftable_reader_seek_log(&rd, &it, "refname");
-+	reftable_reader_init_log_iterator(&rd, &it);
-+	err =3D reftable_iterator_seek_log(&it, "refname");
- 	EXPECT(err =3D=3D REFTABLE_ZLIB_ERROR);
-=20
- 	reftable_iterator_destroy(&it);
-@@ -358,7 +363,8 @@ static void test_table_read_write_sequential(void)
- 	err =3D init_reader(&rd, &source, "file.ref");
- 	EXPECT_ERR(err);
-=20
--	err =3D reftable_reader_seek_ref(&rd, &it, "");
-+	reftable_reader_init_ref_iterator(&rd, &it);
-+	err =3D reftable_iterator_seek_ref(&it, "");
- 	EXPECT_ERR(err);
-=20
- 	while (1) {
-@@ -412,7 +418,8 @@ static void test_table_read_api(void)
- 	err =3D init_reader(&rd, &source, "file.ref");
- 	EXPECT_ERR(err);
-=20
--	err =3D reftable_reader_seek_ref(&rd, &it, names[0]);
-+	reftable_reader_init_ref_iterator(&rd, &it);
-+	err =3D reftable_iterator_seek_ref(&it, names[0]);
- 	EXPECT_ERR(err);
-=20
- 	err =3D reftable_iterator_next_log(&it, &log);
-@@ -457,7 +464,8 @@ static void test_table_read_write_seek(int index, int h=
-ash_id)
- 	}
-=20
- 	for (i =3D 1; i < N; i++) {
--		int err =3D reftable_reader_seek_ref(&rd, &it, names[i]);
-+		reftable_reader_init_ref_iterator(&rd, &it);
-+		err =3D reftable_iterator_seek_ref(&it, names[i]);
- 		EXPECT_ERR(err);
- 		err =3D reftable_iterator_next_ref(&it, &ref);
- 		EXPECT_ERR(err);
-@@ -472,7 +480,8 @@ static void test_table_read_write_seek(int index, int h=
-ash_id)
- 	strbuf_addstr(&pastLast, names[N - 1]);
- 	strbuf_addstr(&pastLast, "/");
-=20
--	err =3D reftable_reader_seek_ref(&rd, &it, pastLast.buf);
-+	reftable_reader_init_ref_iterator(&rd, &it);
-+	err =3D reftable_iterator_seek_ref(&it, pastLast.buf);
- 	if (err =3D=3D 0) {
- 		struct reftable_ref_record ref =3D { NULL };
- 		int err =3D reftable_iterator_next_ref(&it, &ref);
-@@ -576,7 +585,8 @@ static void test_table_refs_for(int indexed)
- 		rd.obj_offsets.is_present =3D 0;
- 	}
-=20
--	err =3D reftable_reader_seek_ref(&rd, &it, "");
-+	reftable_reader_init_ref_iterator(&rd, &it);
-+	err =3D reftable_iterator_seek_ref(&it, "");
- 	EXPECT_ERR(err);
- 	reftable_iterator_destroy(&it);
-=20
-@@ -639,7 +649,8 @@ static void test_write_empty_table(void)
- 	err =3D reftable_new_reader(&rd, &source, "filename");
- 	EXPECT_ERR(err);
-=20
--	err =3D reftable_reader_seek_ref(rd, &it, "");
-+	reftable_reader_init_ref_iterator(rd, &it);
-+	err =3D reftable_iterator_seek_ref(&it, "");
- 	EXPECT_ERR(err);
-=20
- 	err =3D reftable_iterator_next_ref(&it, &rec);
-@@ -846,7 +857,8 @@ static void test_write_multiple_indices(void)
- 	 * Seeking the log uses the log index now. In case there is any
- 	 * confusion regarding indices we would notice here.
+@@ -1354,7 +1351,6 @@ static int write_copy_table(struct reftable_writer *w=
+riter, void *cb_data)
+ {
+ 	struct write_copy_arg *arg =3D cb_data;
+ 	uint64_t deletion_ts, creation_ts;
+-	struct reftable_merged_table *mt =3D reftable_stack_merged_table(arg->sta=
+ck);
+ 	struct reftable_ref_record old_ref =3D {0}, refs[2] =3D {0};
+ 	struct reftable_log_record old_log =3D {0}, *logs =3D NULL;
+ 	struct reftable_iterator it =3D {0};
+@@ -1488,7 +1484,8 @@ static int write_copy_table(struct reftable_writer *w=
+riter, void *cb_data)
+ 	 * copy over all log entries from the old reflog. Last but not least,
+ 	 * when renaming we also have to delete all the old reflog entries.
  	 */
--	err =3D reftable_reader_seek_log(reader, &it, "");
-+	reftable_reader_init_log_iterator(reader, &it);
-+	err =3D reftable_iterator_seek_log(&it, "");
- 	EXPECT_ERR(err);
+-	ret =3D reftable_merged_table_seek_log(mt, &it, arg->oldname);
++	reftable_stack_init_log_iterator(arg->stack, &it);
++	ret =3D reftable_iterator_seek_log(&it, arg->oldname);
+ 	if (ret < 0)
+ 		goto done;
 =20
- 	reftable_iterator_destroy(&it);
-@@ -901,7 +913,8 @@ static void test_write_multi_level_index(void)
+@@ -1694,7 +1691,6 @@ static struct ref_iterator_vtable reftable_reflog_ite=
+rator_vtable =3D {
+ static struct reftable_reflog_iterator *reflog_iterator_for_stack(struct r=
+eftable_ref_store *refs,
+ 								  struct reftable_stack *stack)
+ {
+-	struct reftable_merged_table *merged_table;
+ 	struct reftable_reflog_iterator *iter;
+ 	int ret;
+=20
+@@ -1711,9 +1707,8 @@ static struct reftable_reflog_iterator *reflog_iterat=
+or_for_stack(struct reftabl
+ 	if (ret < 0)
+ 		goto done;
+=20
+-	merged_table =3D reftable_stack_merged_table(stack);
+-
+-	ret =3D reftable_merged_table_seek_log(merged_table, &iter->iter, "");
++	reftable_stack_init_log_iterator(stack, &iter->iter);
++	ret =3D reftable_iterator_seek_log(&iter->iter, "");
+ 	if (ret < 0)
+ 		goto done;
+=20
+@@ -1771,7 +1766,6 @@ static int reftable_be_for_each_reflog_ent_reverse(st=
+ruct ref_store *ref_store,
+ 	struct reftable_ref_store *refs =3D
+ 		reftable_be_downcast(ref_store, REF_STORE_READ, "for_each_reflog_ent_rev=
+erse");
+ 	struct reftable_stack *stack =3D stack_for(refs, refname, &refname);
+-	struct reftable_merged_table *mt =3D NULL;
+ 	struct reftable_log_record log =3D {0};
+ 	struct reftable_iterator it =3D {0};
+ 	int ret;
+@@ -1779,8 +1773,8 @@ static int reftable_be_for_each_reflog_ent_reverse(st=
+ruct ref_store *ref_store,
+ 	if (refs->err < 0)
+ 		return refs->err;
+=20
+-	mt =3D reftable_stack_merged_table(stack);
+-	ret =3D reftable_merged_table_seek_log(mt, &it, refname);
++	reftable_stack_init_log_iterator(stack, &it);
++	ret =3D reftable_iterator_seek_log(&it, refname);
+ 	while (!ret) {
+ 		ret =3D reftable_iterator_next_log(&it, &log);
+ 		if (ret < 0)
+@@ -1808,7 +1802,6 @@ static int reftable_be_for_each_reflog_ent(struct ref=
+_store *ref_store,
+ 	struct reftable_ref_store *refs =3D
+ 		reftable_be_downcast(ref_store, REF_STORE_READ, "for_each_reflog_ent");
+ 	struct reftable_stack *stack =3D stack_for(refs, refname, &refname);
+-	struct reftable_merged_table *mt =3D NULL;
+ 	struct reftable_log_record *logs =3D NULL;
+ 	struct reftable_iterator it =3D {0};
+ 	size_t logs_alloc =3D 0, logs_nr =3D 0, i;
+@@ -1817,8 +1810,8 @@ static int reftable_be_for_each_reflog_ent(struct ref=
+_store *ref_store,
+ 	if (refs->err < 0)
+ 		return refs->err;
+=20
+-	mt =3D reftable_stack_merged_table(stack);
+-	ret =3D reftable_merged_table_seek_log(mt, &it, refname);
++	reftable_stack_init_log_iterator(stack, &it);
++	ret =3D reftable_iterator_seek_log(&it, refname);
+ 	while (!ret) {
+ 		struct reftable_log_record log =3D {0};
+=20
+@@ -1855,7 +1848,6 @@ static int reftable_be_reflog_exists(struct ref_store=
+ *ref_store,
+ 	struct reftable_ref_store *refs =3D
+ 		reftable_be_downcast(ref_store, REF_STORE_READ, "reflog_exists");
+ 	struct reftable_stack *stack =3D stack_for(refs, refname, &refname);
+-	struct reftable_merged_table *mt =3D reftable_stack_merged_table(stack);
+ 	struct reftable_log_record log =3D {0};
+ 	struct reftable_iterator it =3D {0};
+ 	int ret;
+@@ -1868,7 +1860,8 @@ static int reftable_be_reflog_exists(struct ref_store=
+ *ref_store,
+ 	if (ret < 0)
+ 		goto done;
+=20
+-	ret =3D reftable_merged_table_seek_log(mt, &it, refname);
++	reftable_stack_init_log_iterator(stack, &it);
++	ret =3D reftable_iterator_seek_log(&it, refname);
+ 	if (ret < 0)
+ 		goto done;
+=20
+@@ -1966,8 +1959,6 @@ struct write_reflog_delete_arg {
+ static int write_reflog_delete_table(struct reftable_writer *writer, void =
+*cb_data)
+ {
+ 	struct write_reflog_delete_arg *arg =3D cb_data;
+-	struct reftable_merged_table *mt =3D
+-		reftable_stack_merged_table(arg->stack);
+ 	struct reftable_log_record log =3D {0}, tombstone =3D {0};
+ 	struct reftable_iterator it =3D {0};
+ 	uint64_t ts =3D reftable_stack_next_update_index(arg->stack);
+@@ -1975,12 +1966,14 @@ static int write_reflog_delete_table(struct reftabl=
+e_writer *writer, void *cb_da
+=20
+ 	reftable_writer_set_limits(writer, ts, ts);
+=20
++	reftable_stack_init_log_iterator(arg->stack, &it);
++
  	/*
- 	 * Seeking the last ref should work as expected.
+ 	 * In order to delete a table we need to delete all reflog entries one
+ 	 * by one. This is inefficient, but the reftable format does not have a
+ 	 * better marker right now.
  	 */
--	err =3D reftable_reader_seek_ref(reader, &it, "refs/heads/199");
-+	reftable_reader_init_ref_iterator(reader, &it);
-+	err =3D reftable_iterator_seek_ref(&it, "refs/heads/199");
- 	EXPECT_ERR(err);
+-	ret =3D reftable_merged_table_seek_log(mt, &it, arg->refname);
++	ret =3D reftable_iterator_seek_log(&it, arg->refname);
+ 	while (ret =3D=3D 0) {
+ 		ret =3D reftable_iterator_next_log(&it, &log);
+ 		if (ret < 0)
+@@ -2116,7 +2109,6 @@ static int reftable_be_reflog_expire(struct ref_store=
+ *ref_store,
+ 	struct reftable_ref_store *refs =3D
+ 		reftable_be_downcast(ref_store, REF_STORE_WRITE, "reflog_expire");
+ 	struct reftable_stack *stack =3D stack_for(refs, refname, &refname);
+-	struct reftable_merged_table *mt =3D reftable_stack_merged_table(stack);
+ 	struct reftable_log_record *logs =3D NULL;
+ 	struct reftable_log_record *rewritten =3D NULL;
+ 	struct reftable_ref_record ref_record =3D {0};
+@@ -2135,7 +2127,9 @@ static int reftable_be_reflog_expire(struct ref_store=
+ *ref_store,
+ 	if (ret < 0)
+ 		goto done;
 =20
- 	reftable_iterator_destroy(&it);
-diff --git a/reftable/reftable-reader.h b/reftable/reftable-reader.h
-index 4a4bc2fdf8..52e4942b7b 100644
---- a/reftable/reftable-reader.h
-+++ b/reftable/reftable-reader.h
-@@ -36,48 +36,17 @@ struct reftable_table;
- int reftable_new_reader(struct reftable_reader **pp,
- 			struct reftable_block_source *src, const char *name);
-=20
--/* reftable_reader_seek_ref returns an iterator where 'name' would be inse=
-rted
--   in the table.  To seek to the start of the table, use name =3D "".
--
--   example:
--
--   struct reftable_reader *r =3D NULL;
--   int err =3D reftable_new_reader(&r, &src, "filename");
--   if (err < 0) { ... }
--   struct reftable_iterator it  =3D {0};
--   err =3D reftable_reader_seek_ref(r, &it, "refs/heads/master");
--   if (err < 0) { ... }
--   struct reftable_ref_record ref  =3D {0};
--   while (1) {
--   err =3D reftable_iterator_next_ref(&it, &ref);
--   if (err > 0) {
--   break;
--   }
--   if (err < 0) {
--   ..error handling..
--   }
--   ..found..
--   }
--   reftable_iterator_destroy(&it);
--   reftable_ref_record_release(&ref);
--*/
--int reftable_reader_seek_ref(struct reftable_reader *r,
--			     struct reftable_iterator *it, const char *name);
-+/* Initialize a reftable iterator for reading refs. */
-+void reftable_reader_init_ref_iterator(struct reftable_reader *r,
-+				       struct reftable_iterator *it);
+-	ret =3D reftable_merged_table_seek_log(mt, &it, refname);
++	reftable_stack_init_log_iterator(stack, &it);
 +
-+/* Initialize a reftable iterator for reading logs. */
-+void reftable_reader_init_log_iterator(struct reftable_reader *r,
-+				       struct reftable_iterator *it);
++	ret =3D reftable_iterator_seek_log(&it, refname);
+ 	if (ret < 0)
+ 		goto done;
 =20
- /* returns the hash ID used in this table. */
- uint32_t reftable_reader_hash_id(struct reftable_reader *r);
+diff --git a/reftable/merged.c b/reftable/merged.c
+index fc7946d90d..d127f99360 100644
+--- a/reftable/merged.c
++++ b/reftable/merged.c
+@@ -253,9 +253,9 @@ reftable_merged_table_min_update_index(struct reftable_=
+merged_table *mt)
+ 	return mt->min;
+ }
 =20
--/* seek to logs for the given name, older than update_index. To seek to the
--   start of the table, use name =3D "".
--*/
--int reftable_reader_seek_log_at(struct reftable_reader *r,
--				struct reftable_iterator *it, const char *name,
--				uint64_t update_index);
--
--/* seek to newest log entry for given name. */
--int reftable_reader_seek_log(struct reftable_reader *r,
--			     struct reftable_iterator *it, const char *name);
--
- /* closes and deallocates a reader. */
- void reftable_reader_free(struct reftable_reader *);
+-static void merged_table_init_iter(struct reftable_merged_table *mt,
+-				   struct reftable_iterator *it,
+-				   uint8_t typ)
++void merged_table_init_iter(struct reftable_merged_table *mt,
++			    struct reftable_iterator *it,
++			    uint8_t typ)
+ {
+ 	struct merged_iter *mi =3D reftable_malloc(sizeof(*mi));
+ 	merged_iter_init(mi, mt, typ);
+diff --git a/reftable/merged.h b/reftable/merged.h
+index a2571dbc99..a10469f58e 100644
+--- a/reftable/merged.h
++++ b/reftable/merged.h
+@@ -26,4 +26,10 @@ struct reftable_merged_table {
 =20
+ void merged_table_release(struct reftable_merged_table *mt);
+=20
++struct reftable_iterator;
++
++void merged_table_init_iter(struct reftable_merged_table *mt,
++			    struct reftable_iterator *it,
++			    uint8_t typ);
++
+ #endif
+diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
+index 1b602dda58..26740e6073 100644
+--- a/reftable/reftable-stack.h
++++ b/reftable/reftable-stack.h
+@@ -66,6 +66,24 @@ int reftable_stack_add(struct reftable_stack *st,
+ 					  void *write_arg),
+ 		       void *write_arg);
+=20
++struct reftable_iterator;
++
++/*
++ * Initialize an iterator for the merged tables contained in the stack tha=
+t can
++ * be used to iterate through refs. The iterator is valid until the next r=
+eload
++ * or write.
++ */
++void reftable_stack_init_ref_iterator(struct reftable_stack *st,
++				      struct reftable_iterator *it);
++
++/*
++ * Initialize an iterator for the merged tables contained in the stack tha=
+t can
++ * be used to iterate through logs. The iterator is valid until the next r=
+eload
++ * or write.
++ */
++void reftable_stack_init_log_iterator(struct reftable_stack *st,
++				      struct reftable_iterator *it);
++
+ /* returns the merged_table for seeking. This table is valid until the
+  * next write or reload, and should not be closed or deleted.
+  */
+diff --git a/reftable/stack.c b/reftable/stack.c
+index a59ebe038d..03f95935e1 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -10,6 +10,7 @@ license that can be found in the LICENSE file or at
+=20
+ #include "../write-or-die.h"
+ #include "system.h"
++#include "constants.h"
+ #include "merged.h"
+ #include "reader.h"
+ #include "reftable-error.h"
+@@ -130,6 +131,20 @@ int read_lines(const char *filename, char ***namesp)
+ 	return err;
+ }
+=20
++void reftable_stack_init_ref_iterator(struct reftable_stack *st,
++				      struct reftable_iterator *it)
++{
++	merged_table_init_iter(reftable_stack_merged_table(st),
++			       it, BLOCK_TYPE_REF);
++}
++
++void reftable_stack_init_log_iterator(struct reftable_stack *st,
++				      struct reftable_iterator *it)
++{
++	merged_table_init_iter(reftable_stack_merged_table(st),
++			       it, BLOCK_TYPE_LOG);
++}
++
+ struct reftable_merged_table *
+ reftable_stack_merged_table(struct reftable_stack *st)
+ {
 --=20
 2.45.GIT
 
 
---KLY5ZiH7nRMAd3iP
+--c3Wku7l6wJb/kN+q
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB07cACgkQVbJhu7ck
-PpRgeBAApDWLnejTXY2bdiQot7NkA9sSiK7QSE+Eaj4PuJPfe/M43cS3N+UOOJzu
-ddI76c55nCmGIH+VdmfYBLyf0iEzwpL9hxNnW5p8ImFh/bhPfBCq5xErtQlCpoPT
-CNVH+wIDQ5yck4f5b0s+1lvuAnVoYKiZg6qtnUQE1bGhOVTJ0Zw8pTTQWl2sKXsB
-nX5Z3PBWG0O6dT5HxGO/Lgo0+FFdihvG+9+ADmyu9tPfbRlNucTeTqMIebBrgac8
-jNtfmHuhqPGIynrY8cMLXuDmGWXbZ1PWU7QgeZdEx0TiAPIWH6qL/iEqVDcq6PX5
-Pp2RD9WyAL+2w5JJUkmmciNZXAQVW2GHPp32Zbr8z2EALDLAkNs3AZRq1tPWEvYI
-mrvF+Rz1f2A6QtZxQjZmjhJg9lY9tFZg6I7Ausj2HoazKJAl/JySlFTfs05TOaAE
-6pcoAPH4sIWavPEXfLPlYnEopv5iUlJTbbqaklroj/G3pQlpbF9IYX4C7I47dKFO
-hPiiP9WiZHnbYRIU4rqnmzaWM9FVRpO/dHgjOVqLZ3Y0H2T/fM5ryB8uEdacRiLj
-mwVp4XsnsqcjgOCmPlrffgU8AfFXHJ9+FGsI46WMJdNMTtBv/NTRumLMTWvLJ99n
-W2zSqeaeF4P69Q0BVcELfOBmn5Lwio5Sim6HE+XN5qjzpTNWkzI=
-=Yyrd
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZB07sACgkQVbJhu7ck
+PpRPzw//Ss0ABo+ai335sypXqIiGazJGzSsN55KLj2+Ct4zhkiabZodxiLJgx1ag
+lZgjeY4SPrm4ujhyHyQBvb8hP5G8i0sdNKJMxMuSoEIDB8XlklPd4z9AL9YOI3VH
+G8kB26il34/su5ZxFWpqqF7ntgt6ZZWvvI8DWVLRBNPBMdnQQO7qZw5lvHmxUU2b
+BeWBqFXQWHqz1lhmB1WcM4VRDzO5lNiLYRYG3S77HZ+/gUfJ9aZrS2Do8m4sFRyy
+QHa+Fn1fxw2bXa6WGB1l2dXaP45pfl2wxNvNOnzs6UCczMOE+N2yg9KYM2WDyLSL
+uxRBlNHgQWA2Q0+uHbVLTAirY+ziBw4oihTHyA+EGBepiSQPXq3ee75paVJGiy7Q
+ah614Jjs6reMPVTyjlwlEf07EIa7nftl+ZaD703rmobHKFz05CUzGY33MgH4ao2p
+kcdC+BXi8kF4Ao7PLKCCu4KwDBSEIdwaieofKr/ApOJ/deBqdLeyRjTBKNTNKkWU
+/O5LK25xYQLeHwaE6NFDt6ML5gxZTfjmP3k2+LRByGWAMJt59OurroYNpA6mMdW5
+PMG9jWTOA4XSTmKJhK2kXvUh9X7n29rFTgoMN80Z+XAkCMcYlD8Bj/7WjHnA8ynt
+M1yPpEo4l/kQJH9ssym80HiFhytbBdvg3ZGHjmL2gRQYW7+6jxk=
+=0MS9
 -----END PGP SIGNATURE-----
 
---KLY5ZiH7nRMAd3iP--
+--c3Wku7l6wJb/kN+q--
