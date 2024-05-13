@@ -1,81 +1,80 @@
 Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC23146D6B
-	for <git@vger.kernel.org>; Mon, 13 May 2024 08:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5D6146D5D
+	for <git@vger.kernel.org>; Mon, 13 May 2024 08:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715588281; cv=none; b=ha6Domux5obH3fOFkcOxQ/P2M460/j7DbpwHz4lyZt9cgHNz66qelBka08ApGE+wost7W8uSkK0InhxaZX930MJ8Q79BbLSb+PqnWzZnFFAWfugO6CWQtK2Eg4zki12Luo9JGl1PYTfAta2B/lkSBlWvaTMbiKEsS24eHE4mN2M=
+	t=1715588286; cv=none; b=hHnmZU3LsCS8xLEjDKhMJrYA0oQDmIgh8PEwUgCLDxl4TXxI4Cmw/M/DkBxqxxxOw3rdaBsmdtlbNZz90LHdqvBnWk6DLH+55mk7cO6hBYZVw0ljIyq6YhcfFUBMB1+ki7aphXrctiAoqaL8aZZtu/4+IVyO4O8xF3zFU9W50w8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715588281; c=relaxed/simple;
-	bh=vV+qWDOx/XpFE9wVIX94qQBHDwMyUGjSrprgEFpgueE=;
+	s=arc-20240116; t=1715588286; c=relaxed/simple;
+	bh=tFfHR21NRcDmKzyptCPdQG8VDMMBi2RaMn8yh2J9Avk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d9Mp2B67jc2HfkgBgCwuHEdmPqqRoo6b2N1XM+Ux4kzCc08JZ9WTPAwqEsSRgelafkgdggMDsUlp6uUEo9rI3D4Z+rRLwOLkhgPSD+1T+LZsI9ZhqPgmakXy/UbaJFqiom0mhKIjZqw68vdIQYA3t0Fh6faWSBtoo00m0Bzyw1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AyMe2rA8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=etRKtyTn; arc=none smtp.client-ip=64.147.123.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=naVODy9wUWtKFL3PkhHGIzaTVKsZG5MMdagDM2xZ8RVbruAhV/REYg3rKrz+vYV8OmrbCaWc+hI/cfTKt66h2Zh8TXV5xD5z4doeZECKxQ02eOO9FuHoKG8AYE5rOVaoe0LSBa/czfnxcTCkkpstOjgSssxh4MZWqZEeHOibXAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hmGSdqgE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UhLJiVMy; arc=none smtp.client-ip=64.147.123.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AyMe2rA8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="etRKtyTn"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.west.internal (Postfix) with ESMTP id A00E51C00111;
-	Mon, 13 May 2024 04:17:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hmGSdqgE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UhLJiVMy"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfout.west.internal (Postfix) with ESMTP id BFBA81C000E5;
+	Mon, 13 May 2024 04:18:03 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Mon, 13 May 2024 04:17:58 -0400
+  by compute7.internal (MEProxy); Mon, 13 May 2024 04:18:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715588278; x=1715674678; bh=pfmSqCkthq
-	8J6nonuCQmQQOrFuU4ZevyJT0SZsXIFzg=; b=AyMe2rA8ZtLO/IVwaJOKtRZqnT
-	rm+5/5Kqn9D1mFPL1f5Rn1PFX0VtniiT9TkTlWIkYjb0qduws+lLuGSiiEXfKDxC
-	D+fdsB3QERzQUEfNKSA1mBIDiSmRKOuNIQKJxpSZIyo4pT7qjlm3ibxpt8QQreJu
-	NNKFNJDv/4Onk/nLAN138+rUvzAwJ7syKUsXv61izaBqeRwgniatWz0nPikDwsyD
-	KShFm7k4sdO6gKK0ZIWHigDBTEQZC8lSy0YJUuY1JIajKqUvtUan1Ce0B0J4V9on
-	EtsxFHIT4QMISkC9Ja7d7g6irhHNnM14RlBJAxFl2cWlLc9SlnpBtvcIkmsQ==
+	:subject:to:to; s=fm3; t=1715588283; x=1715674683; bh=T8bkwO9wPg
+	UsRV5Jrf5E1hzcW3zYfh4ZIbltPC3tN/4=; b=hmGSdqgERskBjwPAjN3HUcCkU5
+	n1FlDMvzmhVPStu1curx/oHNJSLWlQCcaturtFqX7L48ml7qngOWs5lKi5aMhelb
+	9zj6R7enqvhA/1R0Zi8xGWdR9AOheiKjbAsRzi+i8PHRIcXjzfYZD+EM4Sjfet+9
+	INwDhsqcs4t7R9cKHcJ32uP4G6miFSMhR67bTYEyJuqroIDcRefSjmZxeDhDktFe
+	NYKYoClCrJV1eMU+l2HpI7BdsZ922cGQTvMCEgLqNvxc3qKqCknH0YhsMMiUxUQv
+	7AF0QHRO8qoxP0kOfjdEToQQbddQ9eukX0vr+lOaqx2a9HeYwgb3ouet2Bfg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715588278; x=1715674678; bh=pfmSqCkthq8J6nonuCQmQQOrFuU4
-	ZevyJT0SZsXIFzg=; b=etRKtyTnM5X9gCgjtJe9BQ8I++lXdNDd/ZCErv8eBR8R
-	VcxSFdfRPvpWqlDY3vqi5Dsty70ywwQmuH006YibLi9iIDlc2GFjOs/WH4zirhjQ
-	xz/o/065vKgT826JUdVUSaWg4dnkqfr91M31jp1heYN+IojpHDvD7qUMxbdea8Sj
-	WfI8Kn9x1EXY3Orwk9s+Ph6F/TQV+sKtX0n9DHg7oIsSWYy6+Qg+X34/30IDMwrC
-	CThTNdReuCgtFlMAlbY660TLqRExyltUCCt4hHcSc4jdFVsMoodYy63s70Se4cj4
-	yOnoNaLmKTuRI/a6n1fFr5gmhGI3Bszz04oGToixNg==
-X-ME-Sender: <xms:tsxBZttS_TSa3c2YsQBqG9FyGt_OyxsC2qkdtrAeQDmqy_oWEtFUZA>
-    <xme:tsxBZmclJ7xIwY_bubBs3IUftqsLshNaZ86GI_kFC7oCi0pOnTZJ8-Bei2lQi6opq
-    DrVerQjJ4NnKgwNkg>
-X-ME-Received: <xmr:tsxBZgzPmQxNqCkwQQVdkVDSvpJ0dewh0pXhOZrtwQSUQ4pZiBiUvqBxO3yhIxMUW3z6Fs64IZY6eL9bO7aGPORfiWailCrxOSmBFAamR6VUmlE>
+	fm3; t=1715588283; x=1715674683; bh=T8bkwO9wPgUsRV5Jrf5E1hzcW3zY
+	fh4ZIbltPC3tN/4=; b=UhLJiVMycoMEFuHbi7dfgFDCs8MEpFfF4c+wTcfPNACf
+	iAdmT/2ORH6Be3XzmeLXt4kNYw65+pwAeCZdayvCWhb0QVtGTB/ns2BrYF8pG4J1
+	PJHvizGcfGxV3IQoKWTUHwOBCUTKavxBFcqAQ+NomRhVq0DOtSu2g0HA/hR5TzkV
+	UNyFhltcEveBppHvE2Dc5f5H9AXo28QjMLo5wB0Oxb1pc/65JWRxpC4Je6s+/G8j
+	Rx14gw0O0POlBVAI01kV2dEkYfJUQvxtkNXwIjKbv8/BOvmZKrY/JzQkHuRacn6i
+	Ji2mignnondnBoat8jf+p1EoGQn7t0CNnLjhIOBrmw==
+X-ME-Sender: <xms:u8xBZvcvY_0PPX9-P1YAj5WJaIFPMYGgutBE1Ln4_hG4DGM2HeOr7A>
+    <xme:u8xBZlNy_bHUHkxpF1QH91pJPRvK8_tL3L8feK-jK2Y-SjTbPsPtRK9nMFEXJ8KlK
+    nJIi8O-oyfmUj4vsw>
+X-ME-Received: <xmr:u8xBZoiXhNMj6XjngSzyE-cq6m_0ajTaALSej2dCihvOaNW4Zy1D_MNxiyMI4jRukjiBti2jJ-GPb1kk8jGwk7EZestQ-iwCz1QQue7rd9xL_wU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeggedgtdduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:tsxBZkNcdRnYKwS9c4UREIkHtJaxzcbsKlavad2-kjB5U_m0jgDr8w>
-    <xmx:tsxBZt8-5KuXuK0IA3xx0DqA_LyOJmcyK2yqXrweEO8ToI9vBA0-mg>
-    <xmx:tsxBZkW7JRlF3OOGhHMBPiPrmbK3QnFYin0i7jT3ssy1Lnwq3iTdGA>
-    <xmx:tsxBZudLiofdJW3K7qoaJH6RodoRD2T1JKcvV733iRMNT-ybL2lAHg>
-    <xmx:tsxBZpbQTCTLqj76PDHIuAdQ_83HqsuXPWz05M8n2D_F5xzn7q8Lj33S>
+X-ME-Proxy: <xmx:u8xBZg8h3BUAojzpUcoYUzd5hAqF4xngx9rFuCdU32dluv8ttlY-pw>
+    <xmx:u8xBZrtRhcwhPGKK0qPhFcsAyJSmORLFNKUEYH04RCXwVgWXxk8LRQ>
+    <xmx:u8xBZvFqfN-onMPMH5Ic8mmJNQ_W4claKgMhWIw1hj62i71TcNmvyw>
+    <xmx:u8xBZiOg1_bBvHHxIkJYW48b-oRLlKjfkq31y1P1fZJrnLtpw57zwg>
+    <xmx:u8xBZlLwQfVemwbDxVQ1Zvj_1kBm1FTZB1UbqRNXOL-n43NnYeRIkkGs>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 May 2024 04:17:57 -0400 (EDT)
+ 13 May 2024 04:18:02 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 6fe717c9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 May 2024 08:17:38 +0000 (UTC)
-Date: Mon, 13 May 2024 10:17:54 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id b4d9c65e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 May 2024 08:17:43 +0000 (UTC)
+Date: Mon, 13 May 2024 10:17:59 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 01/11] reftable: consistently refer to
- `reftable_write_options` as `opts`
-Message-ID: <71f4e31cf7c03b7679fc7d5c018063b938a6ee35.1715587849.git.ps@pks.im>
+Subject: [PATCH v3 02/11] reftable: pass opts as constant pointer
+Message-ID: <f1c9914a77ab9bfe27a62e324cc3eb388f4118d9.1715587849.git.ps@pks.im>
 References: <cover.1714630191.git.ps@pks.im>
  <cover.1715587849.git.ps@pks.im>
 Precedence: bulk
@@ -85,688 +84,420 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="V8a5hW/IDvTv9uSb"
+	protocol="application/pgp-signature"; boundary="0A2S/AlExYzz6xgg"
 Content-Disposition: inline
 In-Reply-To: <cover.1715587849.git.ps@pks.im>
 
 
---V8a5hW/IDvTv9uSb
+--0A2S/AlExYzz6xgg
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Throughout the reftable library the `reftable_write_options` are
-sometimes referred to as `cfg` and sometimes as `opts`. Unify these to
-consistently use `opts` to avoid confusion.
+We sometimes pass the refatble write options as value and sometimes as a
+pointer. This is quite confusing and makes the reader wonder whether the
+options get modified sometimes.
 
-While at it, touch up the coding style a bit by removing unneeded braces
-around one-line statements and newlines between variable declarations.
+In fact, `reftable_new_writer()` does cause the caller-provided options
+to get updated when some values aren't set up. This is quite unexpected,
+but didn't cause any harm until now.
+
+Adapt the code so that we do not modify the caller-provided values
+anymore. While at it, refactor the code to code to consistently pass the
+options as a constant pointer to clarify that the caller-provided opts
+will not ever get modified.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/dump.c           |   4 +-
- reftable/reftable-stack.h |   2 +-
- reftable/stack.c          |  41 +++++++-------
- reftable/stack.h          |   2 +-
- reftable/stack_test.c     | 114 +++++++++++++++++---------------------
- 5 files changed, 74 insertions(+), 89 deletions(-)
+ refs/reftable-backend.c    |  6 ++---
+ reftable/dump.c            |  2 +-
+ reftable/reftable-stack.h  |  2 +-
+ reftable/reftable-writer.h |  2 +-
+ reftable/stack.c           |  7 ++++--
+ reftable/stack_test.c      | 48 +++++++++++++++++++-------------------
+ reftable/writer.c          | 17 +++++++++-----
+ 7 files changed, 46 insertions(+), 38 deletions(-)
 
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 010ef811b6..f8f930380d 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -129,7 +129,7 @@ static struct reftable_stack *stack_for(struct reftable=
+_ref_store *store,
+ 				    store->base.repo->commondir, wtname_buf.buf);
+=20
+ 			store->err =3D reftable_new_stack(&stack, wt_dir.buf,
+-							store->write_options);
++							&store->write_options);
+ 			assert(store->err !=3D REFTABLE_API_ERROR);
+ 			strmap_put(&store->worktree_stacks, wtname_buf.buf, stack);
+ 		}
+@@ -263,7 +263,7 @@ static struct ref_store *reftable_be_init(struct reposi=
+tory *repo,
+ 	}
+ 	strbuf_addstr(&path, "/reftable");
+ 	refs->err =3D reftable_new_stack(&refs->main_stack, path.buf,
+-				       refs->write_options);
++				       &refs->write_options);
+ 	if (refs->err)
+ 		goto done;
+=20
+@@ -280,7 +280,7 @@ static struct ref_store *reftable_be_init(struct reposi=
+tory *repo,
+ 		strbuf_addf(&path, "%s/reftable", gitdir);
+=20
+ 		refs->err =3D reftable_new_stack(&refs->worktree_stack, path.buf,
+-					       refs->write_options);
++					       &refs->write_options);
+ 		if (refs->err)
+ 			goto done;
+ 	}
 diff --git a/reftable/dump.c b/reftable/dump.c
-index 26e0393c7d..9c770a10cc 100644
+index 9c770a10cc..586f3eb288 100644
 --- a/reftable/dump.c
 +++ b/reftable/dump.c
-@@ -27,9 +27,9 @@ license that can be found in the LICENSE file or at
- static int compact_stack(const char *stackdir)
- {
+@@ -29,7 +29,7 @@ static int compact_stack(const char *stackdir)
  	struct reftable_stack *stack =3D NULL;
--	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_write_options opts =3D { 0 };
+ 	struct reftable_write_options opts =3D { 0 };
 =20
--	int err =3D reftable_new_stack(&stack, stackdir, cfg);
-+	int err =3D reftable_new_stack(&stack, stackdir, opts);
+-	int err =3D reftable_new_stack(&stack, stackdir, opts);
++	int err =3D reftable_new_stack(&stack, stackdir, &opts);
  	if (err < 0)
  		goto done;
 =20
 diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
-index 1b602dda58..9c8e4eef49 100644
+index 9c8e4eef49..c15632c401 100644
 --- a/reftable/reftable-stack.h
 +++ b/reftable/reftable-stack.h
 @@ -29,7 +29,7 @@ struct reftable_stack;
   *  stored in 'dir'. Typically, this should be .git/reftables.
   */
  int reftable_new_stack(struct reftable_stack **dest, const char *dir,
--		       struct reftable_write_options config);
-+		       struct reftable_write_options opts);
+-		       struct reftable_write_options opts);
++		       const struct reftable_write_options *opts);
 =20
  /* returns the update_index at which a next table should be written. */
  uint64_t reftable_stack_next_update_index(struct reftable_stack *st);
+diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
+index b601a69a40..03df3a4963 100644
+--- a/reftable/reftable-writer.h
++++ b/reftable/reftable-writer.h
+@@ -88,7 +88,7 @@ struct reftable_stats {
+ struct reftable_writer *
+ reftable_new_writer(ssize_t (*writer_func)(void *, const void *, size_t),
+ 		    int (*flush_func)(void *),
+-		    void *writer_arg, struct reftable_write_options *opts);
++		    void *writer_arg, const struct reftable_write_options *opts);
+=20
+ /* Set the range of update indices for the records we will add. When writi=
+ng a
+    table into a stack, the min should be at least
 diff --git a/reftable/stack.c b/reftable/stack.c
-index a59ebe038d..54e7473f3a 100644
+index 54e7473f3a..d2e68be7e8 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
-@@ -54,15 +54,14 @@ static int reftable_fd_flush(void *arg)
+@@ -54,12 +54,15 @@ static int reftable_fd_flush(void *arg)
  }
 =20
  int reftable_new_stack(struct reftable_stack **dest, const char *dir,
--		       struct reftable_write_options config)
-+		       struct reftable_write_options opts)
+-		       struct reftable_write_options opts)
++		       const struct reftable_write_options *_opts)
  {
  	struct reftable_stack *p =3D reftable_calloc(1, sizeof(*p));
  	struct strbuf list_file_name =3D STRBUF_INIT;
++	struct reftable_write_options opts =3D {0};
  	int err =3D 0;
 =20
--	if (config.hash_id =3D=3D 0) {
--		config.hash_id =3D GIT_SHA1_FORMAT_ID;
--	}
-+	if (opts.hash_id =3D=3D 0)
-+		opts.hash_id =3D GIT_SHA1_FORMAT_ID;
++	if (_opts)
++		opts =3D *_opts;
+ 	if (opts.hash_id =3D=3D 0)
+ 		opts.hash_id =3D GIT_SHA1_FORMAT_ID;
 =20
- 	*dest =3D NULL;
-=20
-@@ -73,7 +72,7 @@ int reftable_new_stack(struct reftable_stack **dest, cons=
-t char *dir,
- 	p->list_file =3D strbuf_detach(&list_file_name, NULL);
- 	p->list_fd =3D -1;
- 	p->reftable_dir =3D xstrdup(dir);
--	p->config =3D config;
-+	p->opts =3D opts;
-=20
- 	err =3D reftable_stack_reload_maybe_reuse(p, 1);
- 	if (err < 0) {
-@@ -255,7 +254,7 @@ static int reftable_stack_reload_once(struct reftable_s=
-tack *st, char **names,
-=20
- 	/* success! */
- 	err =3D reftable_new_merged_table(&new_merged, new_tables,
--					new_readers_len, st->config.hash_id);
-+					new_readers_len, st->opts.hash_id);
- 	if (err < 0)
- 		goto done;
-=20
-@@ -578,8 +577,8 @@ static int reftable_stack_init_addition(struct reftable=
-_addition *add,
- 		}
- 		goto done;
- 	}
--	if (st->config.default_permissions) {
--		if (chmod(add->lock_file->filename.buf, st->config.default_permissions) =
-< 0) {
-+	if (st->opts.default_permissions) {
-+		if (chmod(add->lock_file->filename.buf, st->opts.default_permissions) < =
-0) {
- 			err =3D REFTABLE_IO_ERROR;
- 			goto done;
- 		}
-@@ -678,7 +677,7 @@ int reftable_addition_commit(struct reftable_addition *=
-add)
- 	if (err)
- 		goto done;
-=20
--	if (!add->stack->config.disable_auto_compact) {
-+	if (!add->stack->opts.disable_auto_compact) {
- 		/*
- 		 * Auto-compact the stack to keep the number of tables in
- 		 * control. It is possible that a concurrent writer is already
-@@ -756,9 +755,9 @@ int reftable_addition_add(struct reftable_addition *add,
- 		err =3D REFTABLE_IO_ERROR;
- 		goto done;
- 	}
--	if (add->stack->config.default_permissions) {
-+	if (add->stack->opts.default_permissions) {
- 		if (chmod(get_tempfile_path(tab_file),
--			  add->stack->config.default_permissions)) {
-+			  add->stack->opts.default_permissions)) {
- 			err =3D REFTABLE_IO_ERROR;
- 			goto done;
- 		}
-@@ -766,7 +765,7 @@ int reftable_addition_add(struct reftable_addition *add,
- 	tab_fd =3D get_tempfile_fd(tab_file);
-=20
- 	wr =3D reftable_new_writer(reftable_fd_write, reftable_fd_flush, &tab_fd,
--				 &add->stack->config);
-+				 &add->stack->opts);
- 	err =3D write_table(wr, arg);
- 	if (err < 0)
- 		goto done;
-@@ -849,14 +848,14 @@ static int stack_compact_locked(struct reftable_stack=
- *st,
- 	}
- 	tab_fd =3D get_tempfile_fd(tab_file);
-=20
--	if (st->config.default_permissions &&
--	    chmod(get_tempfile_path(tab_file), st->config.default_permissions) < =
-0) {
-+	if (st->opts.default_permissions &&
-+	    chmod(get_tempfile_path(tab_file), st->opts.default_permissions) < 0)=
- {
- 		err =3D REFTABLE_IO_ERROR;
- 		goto done;
- 	}
-=20
- 	wr =3D reftable_new_writer(reftable_fd_write, reftable_fd_flush,
--				 &tab_fd, &st->config);
-+				 &tab_fd, &st->opts);
- 	err =3D stack_write_compact(st, wr, first, last, config);
- 	if (err < 0)
- 		goto done;
-@@ -904,7 +903,7 @@ static int stack_write_compact(struct reftable_stack *s=
-t,
- 				   st->readers[last]->max_update_index);
-=20
- 	err =3D reftable_new_merged_table(&mt, subtabs, subtabs_len,
--					st->config.hash_id);
-+					st->opts.hash_id);
- 	if (err < 0) {
- 		reftable_free(subtabs);
- 		goto done;
-@@ -1094,9 +1093,9 @@ static int stack_compact_range(struct reftable_stack =
-*st,
- 		goto done;
- 	}
-=20
--	if (st->config.default_permissions) {
-+	if (st->opts.default_permissions) {
- 		if (chmod(get_lock_file_path(&tables_list_lock),
--			  st->config.default_permissions) < 0) {
-+			  st->opts.default_permissions) < 0) {
- 			err =3D REFTABLE_IO_ERROR;
- 			goto done;
- 		}
-@@ -1286,7 +1285,7 @@ static uint64_t *stack_table_sizes_for_compaction(str=
-uct reftable_stack *st)
- {
- 	uint64_t *sizes =3D
- 		reftable_calloc(st->merged->stack_len, sizeof(*sizes));
--	int version =3D (st->config.hash_id =3D=3D GIT_SHA1_FORMAT_ID) ? 1 : 2;
-+	int version =3D (st->opts.hash_id =3D=3D GIT_SHA1_FORMAT_ID) ? 1 : 2;
- 	int overhead =3D header_size(version) - 1;
- 	int i =3D 0;
- 	for (i =3D 0; i < st->merged->stack_len; i++) {
-@@ -1435,11 +1434,11 @@ int reftable_stack_clean(struct reftable_stack *st)
- int reftable_stack_print_directory(const char *stackdir, uint32_t hash_id)
- {
- 	struct reftable_stack *stack =3D NULL;
--	struct reftable_write_options cfg =3D { .hash_id =3D hash_id };
-+	struct reftable_write_options opts =3D { .hash_id =3D hash_id };
+@@ -1438,7 +1441,7 @@ int reftable_stack_print_directory(const char *stackd=
+ir, uint32_t hash_id)
  	struct reftable_merged_table *merged =3D NULL;
  	struct reftable_table table =3D { NULL };
 =20
--	int err =3D reftable_new_stack(&stack, stackdir, cfg);
-+	int err =3D reftable_new_stack(&stack, stackdir, opts);
+-	int err =3D reftable_new_stack(&stack, stackdir, opts);
++	int err =3D reftable_new_stack(&stack, stackdir, &opts);
  	if (err < 0)
  		goto done;
 =20
-diff --git a/reftable/stack.h b/reftable/stack.h
-index d43efa4760..97d7ebc043 100644
---- a/reftable/stack.h
-+++ b/reftable/stack.h
-@@ -20,7 +20,7 @@ struct reftable_stack {
-=20
- 	char *reftable_dir;
-=20
--	struct reftable_write_options config;
-+	struct reftable_write_options opts;
-=20
- 	struct reftable_reader **readers;
- 	size_t readers_len;
 diff --git a/reftable/stack_test.c b/reftable/stack_test.c
-index 7889f818d1..e17ad4dc62 100644
+index e17ad4dc62..d15f11d712 100644
 --- a/reftable/stack_test.c
 +++ b/reftable/stack_test.c
-@@ -150,7 +150,7 @@ static void test_reftable_stack_add_one(void)
- 	char *dir =3D get_tmp_dir(__LINE__);
- 	struct strbuf scratch =3D STRBUF_INIT;
- 	int mask =3D umask(002);
--	struct reftable_write_options cfg =3D {
-+	struct reftable_write_options opts =3D {
- 		.default_permissions =3D 0660,
- 	};
- 	struct reftable_stack *st =3D NULL;
 @@ -163,7 +163,7 @@ static void test_reftable_stack_add_one(void)
  	};
  	struct reftable_ref_record dest =3D { NULL };
  	struct stat stat_result =3D { 0 };
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	err =3D reftable_stack_add(st, &write_test_ref, &ref);
-@@ -186,7 +186,7 @@ static void test_reftable_stack_add_one(void)
- 	strbuf_addstr(&scratch, "/tables.list");
- 	err =3D stat(scratch.buf, &stat_result);
- 	EXPECT(!err);
--	EXPECT((stat_result.st_mode & 0777) =3D=3D cfg.default_permissions);
-+	EXPECT((stat_result.st_mode & 0777) =3D=3D opts.default_permissions);
-=20
- 	strbuf_reset(&scratch);
- 	strbuf_addstr(&scratch, dir);
-@@ -195,7 +195,7 @@ static void test_reftable_stack_add_one(void)
- 	strbuf_addstr(&scratch, st->readers[0]->name);
- 	err =3D stat(scratch.buf, &stat_result);
- 	EXPECT(!err);
--	EXPECT((stat_result.st_mode & 0777) =3D=3D cfg.default_permissions);
-+	EXPECT((stat_result.st_mode & 0777) =3D=3D opts.default_permissions);
- #else
- 	(void) stat_result;
- #endif
-@@ -209,7 +209,7 @@ static void test_reftable_stack_add_one(void)
-=20
- static void test_reftable_stack_uptodate(void)
- {
--	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_write_options opts =3D { 0 };
- 	struct reftable_stack *st1 =3D NULL;
- 	struct reftable_stack *st2 =3D NULL;
- 	char *dir =3D get_tmp_dir(__LINE__);
 @@ -232,10 +232,10 @@ static void test_reftable_stack_uptodate(void)
  	/* simulate multi-process access to the same stack
  	   by creating two stacks for the same directory.
  	 */
--	err =3D reftable_new_stack(&st1, dir, cfg);
-+	err =3D reftable_new_stack(&st1, dir, opts);
+-	err =3D reftable_new_stack(&st1, dir, opts);
++	err =3D reftable_new_stack(&st1, dir, &opts);
  	EXPECT_ERR(err);
 =20
--	err =3D reftable_new_stack(&st2, dir, cfg);
-+	err =3D reftable_new_stack(&st2, dir, opts);
+-	err =3D reftable_new_stack(&st2, dir, opts);
++	err =3D reftable_new_stack(&st2, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	err =3D reftable_stack_add(st1, &write_test_ref, &ref1);
-@@ -257,8 +257,7 @@ static void test_reftable_stack_uptodate(void)
- static void test_reftable_stack_transaction_api(void)
- {
- 	char *dir =3D get_tmp_dir(__LINE__);
--
--	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_write_options opts =3D { 0 };
- 	struct reftable_stack *st =3D NULL;
- 	int err;
- 	struct reftable_addition *add =3D NULL;
-@@ -271,8 +270,7 @@ static void test_reftable_stack_transaction_api(void)
+@@ -270,7 +270,7 @@ static void test_reftable_stack_transaction_api(void)
  	};
  	struct reftable_ref_record dest =3D { NULL };
 =20
--
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	reftable_addition_destroy(add);
-@@ -301,12 +299,12 @@ static void test_reftable_stack_transaction_api(void)
- static void test_reftable_stack_transaction_api_performs_auto_compaction(v=
-oid)
- {
- 	char *dir =3D get_tmp_dir(__LINE__);
--	struct reftable_write_options cfg =3D {0};
-+	struct reftable_write_options opts =3D {0};
- 	struct reftable_addition *add =3D NULL;
+@@ -304,7 +304,7 @@ static void test_reftable_stack_transaction_api_perform=
+s_auto_compaction(void)
  	struct reftable_stack *st =3D NULL;
  	int i, n =3D 20, err;
 =20
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	for (i =3D 0; i <=3D n; i++) {
-@@ -325,7 +323,7 @@ static void test_reftable_stack_transaction_api_perform=
-s_auto_compaction(void)
- 		 * we can ensure that we indeed honor this setting and have
- 		 * better control over when exactly auto compaction runs.
- 		 */
--		st->config.disable_auto_compact =3D i !=3D n;
-+		st->opts.disable_auto_compact =3D i !=3D n;
-=20
- 		err =3D reftable_stack_new_addition(&add, st);
- 		EXPECT_ERR(err);
-@@ -361,13 +359,13 @@ static void test_reftable_stack_auto_compaction_fails=
-_gracefully(void)
- 		.value_type =3D REFTABLE_REF_VAL1,
- 		.value.val1 =3D {0x01},
- 	};
--	struct reftable_write_options cfg =3D {0};
-+	struct reftable_write_options opts =3D {0};
- 	struct reftable_stack *st;
- 	struct strbuf table_path =3D STRBUF_INIT;
+@@ -365,7 +365,7 @@ static void test_reftable_stack_auto_compaction_fails_g=
+racefully(void)
  	char *dir =3D get_tmp_dir(__LINE__);
  	int err;
 =20
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	err =3D reftable_stack_add(st, write_test_ref, &ref);
-@@ -404,8 +402,7 @@ static int write_error(struct reftable_writer *wr, void=
- *arg)
- static void test_reftable_stack_update_index_check(void)
- {
- 	char *dir =3D get_tmp_dir(__LINE__);
--
--	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_write_options opts =3D { 0 };
- 	struct reftable_stack *st =3D NULL;
- 	int err;
- 	struct reftable_ref_record ref1 =3D {
-@@ -421,7 +418,7 @@ static void test_reftable_stack_update_index_check(void)
+@@ -418,7 +418,7 @@ static void test_reftable_stack_update_index_check(void)
  		.value.symref =3D "master",
  	};
 =20
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	err =3D reftable_stack_add(st, &write_test_ref, &ref1);
-@@ -436,12 +433,11 @@ static void test_reftable_stack_update_index_check(vo=
-id)
- static void test_reftable_stack_lock_failure(void)
- {
- 	char *dir =3D get_tmp_dir(__LINE__);
--
--	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_write_options opts =3D { 0 };
+@@ -437,7 +437,7 @@ static void test_reftable_stack_lock_failure(void)
  	struct reftable_stack *st =3D NULL;
  	int err, i;
 =20
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
  	for (i =3D -1; i !=3D REFTABLE_EMPTY_TABLE_ERROR; i--) {
  		err =3D reftable_stack_add(st, &write_error, &i);
-@@ -456,7 +452,7 @@ static void test_reftable_stack_add(void)
- {
- 	int i =3D 0;
- 	int err =3D 0;
--	struct reftable_write_options cfg =3D {
-+	struct reftable_write_options opts =3D {
- 		.exact_log_message =3D 1,
- 		.default_permissions =3D 0660,
- 		.disable_auto_compact =3D 1,
-@@ -469,7 +465,7 @@ static void test_reftable_stack_add(void)
+@@ -465,7 +465,7 @@ static void test_reftable_stack_add(void)
  	struct stat stat_result;
  	int N =3D ARRAY_SIZE(refs);
 =20
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	for (i =3D 0; i < N; i++) {
-@@ -528,7 +524,7 @@ static void test_reftable_stack_add(void)
- 	strbuf_addstr(&path, "/tables.list");
- 	err =3D stat(path.buf, &stat_result);
- 	EXPECT(!err);
--	EXPECT((stat_result.st_mode & 0777) =3D=3D cfg.default_permissions);
-+	EXPECT((stat_result.st_mode & 0777) =3D=3D opts.default_permissions);
-=20
- 	strbuf_reset(&path);
- 	strbuf_addstr(&path, dir);
-@@ -537,7 +533,7 @@ static void test_reftable_stack_add(void)
- 	strbuf_addstr(&path, st->readers[0]->name);
- 	err =3D stat(path.buf, &stat_result);
- 	EXPECT(!err);
--	EXPECT((stat_result.st_mode & 0777) =3D=3D cfg.default_permissions);
-+	EXPECT((stat_result.st_mode & 0777) =3D=3D opts.default_permissions);
- #else
- 	(void) stat_result;
- #endif
-@@ -555,7 +551,7 @@ static void test_reftable_stack_add(void)
- static void test_reftable_stack_log_normalize(void)
- {
- 	int err =3D 0;
--	struct reftable_write_options cfg =3D {
-+	struct reftable_write_options opts =3D {
- 		0,
- 	};
- 	struct reftable_stack *st =3D NULL;
-@@ -579,7 +575,7 @@ static void test_reftable_stack_log_normalize(void)
+@@ -575,7 +575,7 @@ static void test_reftable_stack_log_normalize(void)
  		.update_index =3D 1,
  	};
 =20
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	input.value.update.message =3D "one\ntwo";
-@@ -612,8 +608,7 @@ static void test_reftable_stack_tombstone(void)
- {
- 	int i =3D 0;
- 	char *dir =3D get_tmp_dir(__LINE__);
--
--	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_write_options opts =3D { 0 };
- 	struct reftable_stack *st =3D NULL;
- 	int err;
- 	struct reftable_ref_record refs[2] =3D { { NULL } };
-@@ -622,8 +617,7 @@ static void test_reftable_stack_tombstone(void)
+@@ -617,7 +617,7 @@ static void test_reftable_stack_tombstone(void)
  	struct reftable_ref_record dest =3D { NULL };
  	struct reftable_log_record log_dest =3D { NULL };
 =20
--
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	/* even entries add the refs, odd entries delete them. */
-@@ -691,8 +685,7 @@ static void test_reftable_stack_tombstone(void)
- static void test_reftable_stack_hash_id(void)
- {
- 	char *dir =3D get_tmp_dir(__LINE__);
--
--	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_write_options opts =3D { 0 };
- 	struct reftable_stack *st =3D NULL;
- 	int err;
-=20
-@@ -702,24 +695,24 @@ static void test_reftable_stack_hash_id(void)
- 		.value.symref =3D "target",
- 		.update_index =3D 1,
- 	};
--	struct reftable_write_options cfg32 =3D { .hash_id =3D GIT_SHA256_FORMAT_=
-ID };
-+	struct reftable_write_options opts32 =3D { .hash_id =3D GIT_SHA256_FORMAT=
-_ID };
- 	struct reftable_stack *st32 =3D NULL;
--	struct reftable_write_options cfg_default =3D { 0 };
-+	struct reftable_write_options opts_default =3D { 0 };
+@@ -701,18 +701,18 @@ static void test_reftable_stack_hash_id(void)
  	struct reftable_stack *st_default =3D NULL;
  	struct reftable_ref_record dest =3D { NULL };
 =20
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	err =3D reftable_stack_add(st, &write_test_ref, &ref);
  	EXPECT_ERR(err);
 =20
  	/* can't read it with the wrong hash ID. */
--	err =3D reftable_new_stack(&st32, dir, cfg32);
-+	err =3D reftable_new_stack(&st32, dir, opts32);
+-	err =3D reftable_new_stack(&st32, dir, opts32);
++	err =3D reftable_new_stack(&st32, dir, &opts32);
  	EXPECT(err =3D=3D REFTABLE_FORMAT_ERROR);
 =20
--	/* check that we can read it back with default config too. */
--	err =3D reftable_new_stack(&st_default, dir, cfg_default);
-+	/* check that we can read it back with default opts too. */
-+	err =3D reftable_new_stack(&st_default, dir, opts_default);
+ 	/* check that we can read it back with default opts too. */
+-	err =3D reftable_new_stack(&st_default, dir, opts_default);
++	err =3D reftable_new_stack(&st_default, dir, &opts_default);
  	EXPECT_ERR(err);
 =20
  	err =3D reftable_stack_read_ref(st_default, "master", &dest);
-@@ -752,8 +745,7 @@ static void test_suggest_compaction_segment_nothing(voi=
-d)
- static void test_reflog_expire(void)
- {
- 	char *dir =3D get_tmp_dir(__LINE__);
--
--	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_write_options opts =3D { 0 };
- 	struct reftable_stack *st =3D NULL;
- 	struct reftable_log_record logs[20] =3D { { NULL } };
- 	int N =3D ARRAY_SIZE(logs) - 1;
-@@ -764,8 +756,7 @@ static void test_reflog_expire(void)
+@@ -756,7 +756,7 @@ static void test_reflog_expire(void)
  	};
  	struct reftable_log_record log =3D { NULL };
 =20
--
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	for (i =3D 1; i <=3D N; i++) {
-@@ -828,21 +819,19 @@ static int write_nothing(struct reftable_writer *wr, =
-void *arg)
-=20
- static void test_empty_add(void)
- {
--	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_write_options opts =3D { 0 };
- 	struct reftable_stack *st =3D NULL;
- 	int err;
+@@ -825,13 +825,13 @@ static void test_empty_add(void)
  	char *dir =3D get_tmp_dir(__LINE__);
--
  	struct reftable_stack *st2 =3D NULL;
 =20
--
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	err =3D reftable_stack_add(st, &write_nothing, NULL);
  	EXPECT_ERR(err);
 =20
--	err =3D reftable_new_stack(&st2, dir, cfg);
-+	err =3D reftable_new_stack(&st2, dir, opts);
+-	err =3D reftable_new_stack(&st2, dir, opts);
++	err =3D reftable_new_stack(&st2, dir, &opts);
  	EXPECT_ERR(err);
  	clear_dir(dir);
  	reftable_stack_destroy(st);
-@@ -861,16 +850,15 @@ static int fastlog2(uint64_t sz)
-=20
- static void test_reftable_stack_auto_compaction(void)
- {
--	struct reftable_write_options cfg =3D {
-+	struct reftable_write_options opts =3D {
- 		.disable_auto_compact =3D 1,
- 	};
- 	struct reftable_stack *st =3D NULL;
- 	char *dir =3D get_tmp_dir(__LINE__);
--
+@@ -858,7 +858,7 @@ static void test_reftable_stack_auto_compaction(void)
  	int err, i;
  	int N =3D 100;
 =20
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	for (i =3D 0; i < N; i++) {
-@@ -900,13 +888,13 @@ static void test_reftable_stack_auto_compaction(void)
-=20
- static void test_reftable_stack_add_performs_auto_compaction(void)
- {
--	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_write_options opts =3D { 0 };
- 	struct reftable_stack *st =3D NULL;
- 	struct strbuf refname =3D STRBUF_INIT;
+@@ -894,7 +894,7 @@ static void test_reftable_stack_add_performs_auto_compa=
+ction(void)
  	char *dir =3D get_tmp_dir(__LINE__);
  	int err, i, n =3D 20;
 =20
--	err =3D reftable_new_stack(&st, dir, cfg);
-+	err =3D reftable_new_stack(&st, dir, opts);
+-	err =3D reftable_new_stack(&st, dir, opts);
++	err =3D reftable_new_stack(&st, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	for (i =3D 0; i <=3D n; i++) {
-@@ -921,7 +909,7 @@ static void test_reftable_stack_add_performs_auto_compa=
-ction(void)
- 		 * we can ensure that we indeed honor this setting and have
- 		 * better control over when exactly auto compaction runs.
- 		 */
--		st->config.disable_auto_compact =3D i !=3D n;
-+		st->opts.disable_auto_compact =3D i !=3D n;
-=20
- 		strbuf_reset(&refname);
- 		strbuf_addf(&refname, "branch-%04d", i);
-@@ -948,14 +936,13 @@ static void test_reftable_stack_add_performs_auto_com=
-paction(void)
-=20
- static void test_reftable_stack_compaction_concurrent(void)
- {
--	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_write_options opts =3D { 0 };
- 	struct reftable_stack *st1 =3D NULL, *st2 =3D NULL;
- 	char *dir =3D get_tmp_dir(__LINE__);
--
+@@ -942,7 +942,7 @@ static void test_reftable_stack_compaction_concurrent(v=
+oid)
  	int err, i;
  	int N =3D 3;
 =20
--	err =3D reftable_new_stack(&st1, dir, cfg);
-+	err =3D reftable_new_stack(&st1, dir, opts);
+-	err =3D reftable_new_stack(&st1, dir, opts);
++	err =3D reftable_new_stack(&st1, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	for (i =3D 0; i < N; i++) {
-@@ -972,7 +959,7 @@ static void test_reftable_stack_compaction_concurrent(v=
+@@ -959,7 +959,7 @@ static void test_reftable_stack_compaction_concurrent(v=
 oid)
  		EXPECT_ERR(err);
  	}
 =20
--	err =3D reftable_new_stack(&st2, dir, cfg);
-+	err =3D reftable_new_stack(&st2, dir, opts);
+-	err =3D reftable_new_stack(&st2, dir, opts);
++	err =3D reftable_new_stack(&st2, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	err =3D reftable_stack_compact_all(st1, NULL);
-@@ -998,14 +985,13 @@ static void unclean_stack_close(struct reftable_stack=
- *st)
-=20
- static void test_reftable_stack_compaction_concurrent_clean(void)
- {
--	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_write_options opts =3D { 0 };
- 	struct reftable_stack *st1 =3D NULL, *st2 =3D NULL, *st3 =3D NULL;
- 	char *dir =3D get_tmp_dir(__LINE__);
--
+@@ -991,7 +991,7 @@ static void test_reftable_stack_compaction_concurrent_c=
+lean(void)
  	int err, i;
  	int N =3D 3;
 =20
--	err =3D reftable_new_stack(&st1, dir, cfg);
-+	err =3D reftable_new_stack(&st1, dir, opts);
+-	err =3D reftable_new_stack(&st1, dir, opts);
++	err =3D reftable_new_stack(&st1, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	for (i =3D 0; i < N; i++) {
-@@ -1022,7 +1008,7 @@ static void test_reftable_stack_compaction_concurrent=
+@@ -1008,7 +1008,7 @@ static void test_reftable_stack_compaction_concurrent=
 _clean(void)
  		EXPECT_ERR(err);
  	}
 =20
--	err =3D reftable_new_stack(&st2, dir, cfg);
-+	err =3D reftable_new_stack(&st2, dir, opts);
+-	err =3D reftable_new_stack(&st2, dir, opts);
++	err =3D reftable_new_stack(&st2, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	err =3D reftable_stack_compact_all(st1, NULL);
-@@ -1031,7 +1017,7 @@ static void test_reftable_stack_compaction_concurrent=
+@@ -1017,7 +1017,7 @@ static void test_reftable_stack_compaction_concurrent=
 _clean(void)
  	unclean_stack_close(st1);
  	unclean_stack_close(st2);
 =20
--	err =3D reftable_new_stack(&st3, dir, cfg);
-+	err =3D reftable_new_stack(&st3, dir, opts);
+-	err =3D reftable_new_stack(&st3, dir, opts);
++	err =3D reftable_new_stack(&st3, dir, &opts);
  	EXPECT_ERR(err);
 =20
  	err =3D reftable_stack_clean(st3);
+diff --git a/reftable/writer.c b/reftable/writer.c
+index 10eccaaa07..4cc6e2ebd8 100644
+--- a/reftable/writer.c
++++ b/reftable/writer.c
+@@ -122,20 +122,25 @@ static struct strbuf reftable_empty_strbuf =3D STRBUF=
+_INIT;
+ struct reftable_writer *
+ reftable_new_writer(ssize_t (*writer_func)(void *, const void *, size_t),
+ 		    int (*flush_func)(void *),
+-		    void *writer_arg, struct reftable_write_options *opts)
++		    void *writer_arg, const struct reftable_write_options *_opts)
+ {
+ 	struct reftable_writer *wp =3D reftable_calloc(1, sizeof(*wp));
+-	strbuf_init(&wp->block_writer_data.last_key, 0);
+-	options_set_defaults(opts);
+-	if (opts->block_size >=3D (1 << 24)) {
++	struct reftable_write_options opts =3D {0};
++
++	if (_opts)
++		opts =3D *_opts;
++	options_set_defaults(&opts);
++	if (opts.block_size >=3D (1 << 24)) {
+ 		/* TODO - error return? */
+ 		abort();
+ 	}
++
++	strbuf_init(&wp->block_writer_data.last_key, 0);
+ 	wp->last_key =3D reftable_empty_strbuf;
+-	REFTABLE_CALLOC_ARRAY(wp->block, opts->block_size);
++	REFTABLE_CALLOC_ARRAY(wp->block, opts.block_size);
+ 	wp->write =3D writer_func;
+ 	wp->write_arg =3D writer_arg;
+-	wp->opts =3D *opts;
++	wp->opts =3D opts;
+ 	wp->flush =3D flush_func;
+ 	writer_reinit_block_writer(wp, BLOCK_TYPE_REF);
+=20
 --=20
 2.45.GIT
 
 
---V8a5hW/IDvTv9uSb
+--0A2S/AlExYzz6xgg
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZBzLEACgkQVbJhu7ck
-PpQ0fw/+MaNfLucR0v8rYESaHpmp/K4cWqwo0fjwKU1bw2DOMvgnQjziLei1z+UH
-tBkj1kntsoTQRQjDKLKVCCFUt7HgcycQee+hNi7R7vHouDIP4psdEj/7Fz1CyrCo
-7TNNT/wM4KASWeRU5afkB6BqoAJTEDP5OXYCJFhB+dFHrv0b6AgpUg0MyOc4b3h9
-qYNns7gzWHHuA2u+uizyqLNqK9PQzHM+vqmTBNFtKFKlEm1DBU7dxkb+eFZYN4tl
-3Zbmppfiovo3jqHQnzO5JcaV/WVcx4LYDoBaWvTpAzxZCMrFN/N9zNLJnJGbUBct
-rUH4WV0yzzix/gU+NECLycP/lxQyiFN9a7+dr37zd8kvrAA+vA8+w54P2qyctO+y
-0wt/NOeJ6+8g8Xjv0ppLgMnJ01grdI9v54swqBRuzmm36wSb//S3AFxLS6n6hNOe
-4//g6aKJr3o9X3qXro25cnTdoQMr932qJtldY24khlb0c1/uxb7kenudJWQGGHlj
-uHe8kdqm/BjlAsEXNPRNJznHwbKdOhS5frgeFYI1XFcY/8CtQSCMt6ZkrEn9J1GE
-4BsXSzUxe5lkQKt9pzV7tfSTSe0qCn84v5o3YtqZj5+owpG7SW+xx1w21mMPg6o8
-YnlqOt2hm/BPvKRqF4VIqAPVmIExGUc6x1Gtr/JwDlQdtoNlqug=
-=TDj5
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZBzLYACgkQVbJhu7ck
+PpTptg//d5ofBMXZeBPqMyIl5B7xaiMAk73E5IFmYRhyQY0HEOLE+M80IG/OpKXG
+wdiQjv1X5ty8yTkb7JITkSSCvyj1xfdkuJGCLxcvMzvHetCAsgDEnrWgo3aGDCnh
+VO4Wy+N+HDtownu1GkY5L2QuoWD6FSrdUw3eMGT1VCClwyJWPiXdal4R3HQs5AZN
+sPdxnfSqpQqfigcV9MgkUgMPb5GfAHRw3zfZ+M0SvjbBlY9LtvWCtGXso13dPbIF
+tcL0fUZ7RhGr0CmlBQcZXQVVeZ20t4gcD0wXWgBmOI2QwuXy+AaGqi2rrCQ8YCYt
+wbQcroYjCY6ZIkokn8LxVPsTwvUo54heN0FayhxJEPVQyiQvuJ6CXwxOdR7bfQmo
+3FeKF5p3Dds/ypBUJO5hPJgw8cu9tvJInRlsZtJMII6CYhbHhlftXpoRdas49QNU
+jpiC2WYTljoezetEy6GbKUqFm+HmqXX0mzi++3t+21AhwLfuUgq5YDNNdLwq4P1H
+9LgCTPCO5BW74r7z6kd2DQbrV5Jhx1dhWvIyqVuCjviMdjBTjgAu0TF59WrBtvvK
+foRwjhhWFpVqQwk4aNMr95n4hMGgZQWZAnr6AYefgPatYS2s1rOCkGCasaA1QrOz
+BCD6ifbcekhvzH+IjONGyvm3CiG7mWfHDJXYJ9KE7+33BxZRXbw=
+=FlZe
 -----END PGP SIGNATURE-----
 
---V8a5hW/IDvTv9uSb--
+--0A2S/AlExYzz6xgg--
