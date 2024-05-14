@@ -1,102 +1,167 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7898717BB3A
-	for <git@vger.kernel.org>; Tue, 14 May 2024 16:53:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153311E481;
+	Tue, 14 May 2024 17:06:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715705587; cv=none; b=JptxvyijFcq9X+3s3CWTAiabf6UijI3NoELo1jk1F9aJSx8lxJbw5GBRtvtFivPmDE+jdBoj+QimFp9M0AutP+KLGLW1I/63tEDHGU/F6MzvWBVRNw/MTCy5tV2oVbrsDuEuIWfFkyjJA5xLKI+F5R5bPz85B/W6Z6WWBKBEbEc=
+	t=1715706374; cv=none; b=khsPx7Z09prcdeVuAdNd17uVu1a9vezoV/WEnJ4gSmDim5NDyz+KDwcJvBCPqI7A4j9hzR/V1B77rww58qIeaNxMb8f/T6uVHupa8Yz4Us6oyXegMX/CxkRsZX6NEqnhKZsnxCbNwd1RwXHFH17QSXFxtN1WXyp7jlao8fRSxNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715705587; c=relaxed/simple;
-	bh=w9YbShUA6ke5BGtSBNHqS/AhwzKnDTZm3qnPdckMlDk=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=VUwt1+F3po20b6gl1NBKQhTjY20Cf8XNPTAlEUKWKjOuNehw+b/GDlCbXC45EATVh+0VIsPG+mjJ6L/ND+fpfey8N/WmNPpJ43S04Yk9vNbHoSaasuRWHHKHdJen8yNScZTGN419o4ZMHukMvP5VALe+HOYxby2M9/GeXjDkhR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IK6rkPBi; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715706374; c=relaxed/simple;
+	bh=OlcChcA2au/wBXzMTkA1+TK5Grh+/q6FUIeZZ8fVvvw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=r3Bct62O9tmYPqmUXeNRa7JPiwZzu9q3/CKmByHT7YlUDeN44tEbBRICirhgo0SuVzwQjO21e3jrpshA7D4XznYF+ZKlQx3Mt1jpr/RLh7vUaJjdjTXbcFJYkrf1zH0Vj3gFg6ktJFcnqcfGqo6W96aZnXBHivpq67ugE6oFaQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RG6JTOPZ; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IK6rkPBi"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-41fd5dc0480so36947355e9.1
-        for <git@vger.kernel.org>; Tue, 14 May 2024 09:53:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715705584; x=1716310384; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JPNzkbWD8i4J5O2KAPDIm35ToEV/nZ7tEURNb69gLZQ=;
-        b=IK6rkPBim8/5W9Oi4wu7sS4K4UX9gz2d0OSGqlDc1HBrrRLQ38QziEdvWNDY0v/4me
-         0liVcPeyDbbmawSmy4zgQpdRDyZDPUmOxKXJluthiIxN+rnleUN9iP5R0dqAigpAylNo
-         yv3ezVUhsd9Qa6u0/AoXre1xdFMRSoMDY3KUR88B9iIGB4Xy3JpCykNiM9jjyaHFLoD1
-         pDv6uFt9fpN+711GsHC5Z4gycoTMt3iGhNmbTqKr+876/9zwo1HJ4aY8r0/5ZrBTYfDQ
-         +mpoNQTFoeeryn9OGtbNEUI7FBDY/u+0M0IzG7W/KYHzWM4F0VKM/g6Q7P16H1cJIqoa
-         Kaow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715705584; x=1716310384;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JPNzkbWD8i4J5O2KAPDIm35ToEV/nZ7tEURNb69gLZQ=;
-        b=DHCuL9uQk/gio0BDDsdkPmwFPd0lBuWklrERQ4kuwbm3fYzISF4e0afUaT9L2QqNyI
-         ND1BhAKNQh7GkClAlxnQP7Q8zIPKmtbFmX6CAEYNsQzGT3J+j8QP05VxV+uBaniGbrsX
-         iax0EW4B3bCYBuvavQ12xlSIG8h1Gl7uDFGcGcFib4M7gv878n0YckCaMAeuKVye8rKE
-         zQN5/db6wLgiCXgMX5JGERCkLvmNwkW4f7Fl+7b4Op0jNFfAt1Y2iEIi0w2780/yLX+L
-         3fcsIn9Uzav9oitSiBSA+se8rfSN555Aq93QygrMY4cZPCrT49zJoZDpS+47TeBMMasQ
-         cPqg==
-X-Gm-Message-State: AOJu0Yy6LoU3Cwa4/mAHwEwvsTC9V22GKVrDMOrVQF4z/S+3NBMiWaaS
-	yTEv9lMVyfmLz8lOu4TEPLN+N8EH8CR91Cq+4nRas4M9U/2Ri9HfM5xmCg==
-X-Google-Smtp-Source: AGHT+IFFkSp3jZacfD4Ln5BJxjIaBDddZHsulx/rqXzTPY+D0gYnkyIA/XKZpeiI6pf8h0vtPSbeHg==
-X-Received: by 2002:a05:600c:1c02:b0:419:f27f:6b05 with SMTP id 5b1f17b1804b1-41feaa2f438mr87935865e9.8.1715705584389;
-        Tue, 14 May 2024 09:53:04 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42014c21260sm88371385e9.3.2024.05.14.09.53.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 May 2024 09:53:03 -0700 (PDT)
-Message-Id: <pull.1720.git.git.1715705582609.gitgitgadget@gmail.com>
-From: "Timofey Vasenin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 14 May 2024 16:53:02 +0000
-Subject: [PATCH] gitignore.txt: fix slash-rules example
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RG6JTOPZ"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B7352F749;
+	Tue, 14 May 2024 13:06:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=O
+	lcChcA2au/wBXzMTkA1+TK5Grh+/q6FUIeZZ8fVvvw=; b=RG6JTOPZJRyMhJfz7
+	eQx2wzenifCmJaEfYB2i64kmkWumHJRsiD3Y4PxTWWJ0isw6yT9GlaFzzYnyPUop
+	WfUFXzqDcivJ3FrxJa+BPG0+oTlNGS7FRdHLt1bf+ww7oFwNg1+rFYP0vTWMdIxj
+	GEFxLRTG3PnuENpTJ5hPcIgq6g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 507732F748;
+	Tue, 14 May 2024 13:06:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9D8242F747;
+	Tue, 14 May 2024 13:06:05 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
+    git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git v2.45.1 and friends
+Date: Tue, 14 May 2024 10:06:04 -0700
+Message-ID: <xmqqv83g4937.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Timofey Vasenin <timofey.vasenin@gmail.com>,
-    Timofey Vasenin <timofey.vasenin@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4025AFF6-1214-11EF-80E0-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-From: Timofey Vasenin <timofey.vasenin@gmail.com>
+A maintenance release Git v2.45.1, together with releases for older
+maintenance tracks v2.44.1, v2.43.4, v2.42.2, v2.41.1, v2.40.2, and
+v2.39.4, are now available at the usual places.  These are to address
+a handful of security issues.
 
-Fix an apparent typo, introduced in:
-1a58bad014 (gitignore.txt: make slash-rules more readable, 2019-06-04)
+The tarballs are found at:
 
-Reported-by: Andrey Strizhkin <astrizhkin@biarum.com>
-Signed-off-by: Timofey Vasenin <timofey.vasenin@gmail.com>
----
-    gitignore.txt: fix slash-rules example
+    https://www.kernel.org/pub/software/scm/git/
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1720%2Ftvasenin%2Ftvasenin%2Fgitignore-slash-rules-example-fix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1720/tvasenin/tvasenin/gitignore-slash-rules-example-fix-v1
-Pull-Request: https://github.com/git/git/pull/1720
+The following public repositories all have a copy of the 'v2.45.1'
+tag, as well as the tags for older maintenance tracks listed above.
 
- Documentation/gitignore.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  url = https://git.kernel.org/pub/scm/git/git
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://github.com/gitster/git
 
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 5e0964ef419..7142fa10acc 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -100,7 +100,7 @@ PATTERN FORMAT
-    will only match directories, otherwise the pattern can match both
-    files and directories.
- 
-- - For example, a pattern `doc/frotz/` matches `doc/frotz` directory,
-+ - For example, a pattern `/doc/frotz/` matches `doc/frotz` directory,
-    but not `a/doc/frotz` directory; however `frotz/` matches `frotz`
-    and `a/frotz` that is a directory (all paths are relative from
-    the `.gitignore` file).
+The addressed issues are all listed in the release notes for Git
+2.39.4, attached below.
 
-base-commit: 3e4a232f6e3bd3b7dd920bb07b21cf1c8b4e1a7f
--- 
-gitgitgadget
+Note: There is a regression for Git LFS users.  The defense-in-depth
+protection this update contains is at odds with the way Git LFS
+currently works when cloning a new repository that wants to use the
+post-checkout hook during the initial cloning.  The users can fix it
+after the fact by running `git lfs pull`, if the checkout stage is
+stopped, as a workaround.  The error message given after a failed
+clone also gives an alternative workaround to disable the added
+safety with the use of the GIT_CLONE_PROTECTION_ACTIVE environment
+variable that the users and the scripts can use.
+
+--------------------------------------------------
+Git v2.39.4 Release Notes
+=========================
+
+This addresses the security issues CVE-2024-32002, CVE-2024-32004,
+CVE-2024-32020 and CVE-2024-32021.
+
+This release also backports fixes necessary to let the CI builds pass
+successfully.
+
+Fixes since v2.39.3
+-------------------
+
+ * CVE-2024-32002:
+
+   Recursive clones on case-insensitive filesystems that support symbolic
+   links are susceptible to case confusion that can be exploited to
+   execute just-cloned code during the clone operation.
+
+ * CVE-2024-32004:
+
+   Repositories can be configured to execute arbitrary code during local
+   clones. To address this, the ownership checks introduced in v2.30.3
+   are now extended to cover cloning local repositories.
+
+ * CVE-2024-32020:
+
+   Local clones may end up hardlinking files into the target repository's
+   object database when source and target repository reside on the same
+   disk. If the source repository is owned by a different user, then
+   those hardlinked files may be rewritten at any point in time by the
+   untrusted user.
+
+ * CVE-2024-32021:
+
+   When cloning a local source repository that contains symlinks via the
+   filesystem, Git may create hardlinks to arbitrary user-readable files
+   on the same filesystem as the target repository in the objects/
+   directory.
+
+ * CVE-2024-32465:
+
+   It is supposed to be safe to clone untrusted repositories, even those
+   unpacked from zip archives or tarballs originating from untrusted
+   sources, but Git can be tricked to run arbitrary code as part of the
+   clone.
+
+ * Defense-in-depth: submodule: require the submodule path to contain
+   directories only.
+
+ * Defense-in-depth: clone: when symbolic links collide with directories, keep
+   the latter.
+
+ * Defense-in-depth: clone: prevent hooks from running during a clone.
+
+ * Defense-in-depth: core.hooksPath: add some protection while cloning.
+
+ * Defense-in-depth: fsck: warn about symlink pointing inside a gitdir.
+
+ * Various fix-ups on HTTP tests.
+
+ * Test update.
+
+ * HTTP Header redaction code has been adjusted for a newer version of
+   cURL library that shows its traces differently from earlier
+   versions.
+
+ * Fix was added to work around a regression in libcURL 8.7.0 (which has
+   already been fixed in their tip of the tree).
+
+ * Replace macos-12 used at GitHub CI with macos-13.
+
+ * ci(linux-asan/linux-ubsan): let's save some time
+
+ * Tests with LSan from time to time seem to emit harmless message that makes
+   our tests unnecessarily flakey; we work it around by filtering the
+   uninteresting output.
+
+ * Update GitHub Actions jobs to avoid warnings against using deprecated
+   version of Node.js.
+
+
