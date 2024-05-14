@@ -1,157 +1,110 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from 20.mo583.mail-out.ovh.net (20.mo583.mail-out.ovh.net [91.121.55.239])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE0017EBA5
-	for <git@vger.kernel.org>; Tue, 14 May 2024 19:07:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7945B1802A1
+	for <git@vger.kernel.org>; Tue, 14 May 2024 19:26:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.121.55.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715713667; cv=none; b=BB1hfpR0eFV5bnEMwWDxDjOa7lmvZYQAoD9bQKBK8l/8p5vjAR7HSAvmVR90Hyu7rb3+8GvUSfe+I14x6v6n1M2iTHHmqXhnol/ciAvtet6ipXT1Qn06XNfCRzSha8dI8kfROlLInVDzwYaN9hXnl3ww9MMvlhd5RzCDq6JLj+A=
+	t=1715714821; cv=none; b=FU3MuB/cbQyV5LLXPxF115WstTd0SkxKgeky4eX5XO/3zfAkAsxH00Irw2di24bQyWlXp1QTppF9PYokkyoLKWh+O03u1lCXpi6f24sAHqU0DMzAADw+0NoLrv030upEFN0m0nNczVbu8zbghPqvK3uy0SlcQn9ycNBHFWLVN0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715713667; c=relaxed/simple;
-	bh=wCmgEBaiYvSwsTi2NXOhfNskWNUjjvwgCH0hNxvEU0A=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=gWf1P5aZiVBNwIFLn2Foim2dMQx4Hp6qGNt0ItMN7FCZabiSQpnOjTcvuWzbwMRYVps4J4Wouvyxd2kqhb2B4vF6TsFHl57Vxs4ubQhE/XP0IV8bWOb55pX1zmrBpPuu4c6vL6av+HsbNM9IhH1CBJa1n7I0zNrNg/vA+kPxghw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=SQRuNVPv; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="SQRuNVPv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1715713650; x=1716318450;
-	i=johannes.schindelin@gmx.de;
-	bh=OsPTRV1N2J8uQLWTHcDNE2Yvsf5EAQVduFmafp+DaPM=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=SQRuNVPv9sqYJ1rw5qaYTSTUQpHy1rKxXdtjzfWFONYyaBrqz8+uSU/OaCM0HwHe
-	 SxWWEk08bvIcjqy2+RhQtS/XUWewdGO27ZutoU0GwOdnEoKecigkKPG5jaY1Ex466
-	 H78WE6Bb3V+MqVIMebTV5uGJRYKvHHKHR7GgxvOj95381GEBnJZ634+d2jfjJMd4d
-	 5moK7DnzLPTtHmiVHrcr7hCvNrHirnMHhOz+P0XNBDVLOXDIBTePg29SpB2NU/exS
-	 E0NsF+Fzm1XP+paJrkO10HlWdu0DkXbA6T9R5AWdvsqUYOEORSknTw2k5hqiFGky3
-	 o/RL/CGzv4wOBuPDUg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.216.58]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MRTNF-1rudGx0gdx-00NSJM; Tue, 14
- May 2024 21:07:30 +0200
-Date: Tue, 14 May 2024 21:07:28 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Revert defense-in-depth patches breaking Git LFS
-In-Reply-To: <20240514181641.150112-1-sandals@crustytoothpaste.net>
-Message-ID: <0f7597aa-6697-9a70-0405-3dcbb9649d68@gmx.de>
-References: <20240514181641.150112-1-sandals@crustytoothpaste.net>
+	s=arc-20240116; t=1715714821; c=relaxed/simple;
+	bh=sY5L7R5vOvkNsq00lEGIY2QKWOQxPxpF6yIXqeNMguY=;
+	h=Content-Type:Mime-Version:Date:Message-Id:Subject:From:To; b=bvlmRSpKDjdsVEcZEvENikgFzcDgrdgoyB2EknqQjl1LZDQ65CHiTQL8DyLzmfkHJQyi4LnYkDWMsMB1kYC2AhrvrOVl2qBMG7ON03Y0fHSX5qvNwD1zTvOFDl5GwHBKiHxHyzL2gJ/Z+xOon66Gc14IYpq50cxom/o3ADZ7AI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=strongly-typed-thoughts.net; spf=pass smtp.mailfrom=strongly-typed-thoughts.net; arc=none smtp.client-ip=91.121.55.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=strongly-typed-thoughts.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=strongly-typed-thoughts.net
+Received: from director5.ghost.mail-out.ovh.net (unknown [10.109.176.72])
+	by mo583.mail-out.ovh.net (Postfix) with ESMTP id 4Vf4hD4lXWz1DPF
+	for <git@vger.kernel.org>; Tue, 14 May 2024 18:31:56 +0000 (UTC)
+Received: from ghost-submission-6684bf9d7b-x8rbc (unknown [10.110.113.129])
+	by director5.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 7ECBF1FE02
+	for <git@vger.kernel.org>; Tue, 14 May 2024 18:31:56 +0000 (UTC)
+Received: from strongly-typed-thoughts.net ([37.59.142.97])
+	by ghost-submission-6684bf9d7b-x8rbc with ESMTPSA
+	id Tqy/HByuQ2Yw1QIAVddejQ
+	(envelope-from <hadronized@strongly-typed-thoughts.net>)
+	for <git@vger.kernel.org>; Tue, 14 May 2024 18:31:56 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-97G00223fcc50d-9769-43b6-bfa1-6ae73d753498,
+                    DD3B9C83DD9E44B838259978FAD451B914511980) smtp.auth=hadronized@strongly-typed-thoughts.net
+X-OVh-ClientIp:193.250.76.216
+Content-Type: multipart/signed;
+ boundary=40eed3404897462763e9a80a690e74a1ddba21adca4e12fa1d86e6db438c;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:zfBLJBk3o0UVcgDWihZj1VMfMJNVu+CGUmkQZnnAx0r6sqoQZLv
- nCYAtKDyl7QCSEqDxbYMNelbq/LF4FoidnesCHFDFXYL2k0umamqCx0QmsLNPx0GnPijgm+
- HLaatm9+yB1glKPzg898IYWKJ/yMIomshZmDQZypJR5WXyhUXhWDd1x83F7FAmqEZl6B1n5
- 53VJJv10ue+o3vMJKwRnQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:9RJo8mlYc0s=;1OEeYK5SfcKFIl4kEJoKsZK+70+
- 8T7lmkBVi/UGiSeClnGP2+GVR5JdzMoCC32JD2LI09N5ZdtmujH7r+xMB8f8DM9CFFw8XkTPq
- Gs4DvkMk6YiVfHprUXXHHgsowWFPCAWNxLy7h9Q0dqvRUVMje4ZYK/ys0Z0wDLtDieu6rSKbu
- IiSAJFezSRYSX5h6W1cchFpyk/zNFQ5v4ehBgk6SYjK7cuU49qsbWH0GeFO7Ra/Pb6OZ4y5zu
- iiJLfBUOHcSYOFx+CyOsH3YjY2Nd8pd8otC/XGmh4z3o7q7NDEyBTnwmL/nT5x1IfxoTneR0N
- qHHrJ3xcxRSbAvQ65nURkwMUi6qLxK8hpDeMQ+JLoI5IGv35qU5zFNwjFuNuWJQGuyd/aplap
- std80fZjMHAK8txz66SDDLiEHvkIzMwNUs/PaoyLJS8g6+Il2qR+9eAowIvg127PQYNDfMtGL
- t7EwmAgdVxJV4QqFTcP2udQ3mXwqb3GvHtAvgTwZ0iQeRJIakd+FTKi9FjS0pBnNqI7M9I19t
- SCZJvAHYubtvkp7HfNhwVTzFGvd1DY6VJIqdjeC1p8fjphVf74PJZA7WQK7YQq8Y5Jd/fzrAn
- ZdHLN/fjKYG9Fb3+jY9D1jpK0Y7R37eUlMbDhaR/Ef2+YKKvAqJc3R9asgfB61A1Kz06gUIK/
- FOkRYsrzuqDzCN23B+KLn3phQ86eES/hDCkIfJ8pa6EA2ZBwYVGxRujCi7lXqTx2drlL0fC5f
- jZy3wmhG24SmbVzsqjVSGQBski7+wcXnIWgSCQ62LxGfMdmNUuV0t8WwCBGdBzwDuudwItKpd
- 7Ktu25sRTS+vkJYQITCIxDuw9zFSALUvC6gQTJUFcocyM=
+Mime-Version: 1.0
+Date: Tue, 14 May 2024 20:31:55 +0200
+Message-Id: <D19KZ1CBA7JF.27PYPL5X68543@strongly-typed-thoughts.net>
+Subject: Author signature
+From: "Dimitri Sabadie" <hadronized@strongly-typed-thoughts.net>
+To: <git@vger.kernel.org>
+X-Mailer: aerc 0.17.0
+X-Ovh-Tracer-Id: 12545902664953835515
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvledrvdegiedguddvgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurheptgggfffkuffhvffosehgtderreertdejnecuhfhrohhmpedfffhimhhithhrihcuufgrsggrughivgdfuceohhgrughrohhnihiivggusehsthhrohhnghhlhidqthihphgvugdqthhhohhughhhthhsrdhnvghtqeenucggtffrrghtthgvrhhnpedtieduhedvveekkeegteeihfejvddtueejleegffefjeeftdekjeduudeikedvudenucfkphepuddvjedrtddrtddruddpudelfedrvdehtddrjeeirddvudeipdefjedrheelrddugedvrdeljeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhephhgrughrohhnihiivggusehsthhrohhnghhlhidqthihphgvugdqthhhohhughhhthhsrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheekfedpmhhouggvpehsmhhtphhouhht
+
+--40eed3404897462763e9a80a690e74a1ddba21adca4e12fa1d86e6db438c
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-brian,
+Hello!
 
-On Tue, 14 May 2024, brian m. carlson wrote:
+I=E2=80=99ve moved away from the PR/MR git workflow to the email one and I=
+=E2=80=99ve
+been delighted by it. However, there is one thing that feels a bit like
+a regression to me.
 
-> The recent defense-in-depth patches to restrict hooks while cloning
-> broke Git LFS because it installs necessary hooks when it is invoked by
-> Git's smudge filter.  This means that currently, anyone with Git LFS
-> installed who attempts to clone a repository with at least one LFS file
-> will see a message like the following (fictitious example):
->
-> ----
-> $ git clone https://github.com/octocat/xyzzy.git
-> Cloning into 'pull-bug'...
-> remote: Enumerating objects: 1275, done.
-> remote: Counting objects: 100% (343/343), done.
-> remote: Compressing objects: 100% (136/136), done.
-> remote: Total 1275 (delta 221), reused 327 (delta 206), pack-reused 932
-> Receiving objects: 100% (1275/1275), 290.78 KiB | 2.88 MiB/s, done.
-> Resolving deltas: 100% (226/226), done.
-> Filtering content: 100% (504/504), 1.86 KiB | 0 bytes/s, done.
-> fatal: active `post-checkout` hook found during `git clone`:
->         /home/octocat/xyzzy/.git/hooks/post-checkout
-> For security reasons, this is disallowed by default.
-> If this is intentional and the hook should actually be run, please
-> run the command again with `GIT_CLONE_PROTECTION_ACTIVE=3Dfalse`
-> warning: Clone succeeded, but checkout failed.
-> You can inspect what was checked out with 'git status'
-> and retry with 'git restore --source=3DHEAD :/'
-> ----
->
-> This causes most CI systems to be broken in such a case, as well as a
-> confusing message for the user.
+On the PR/MR workflow, if someone wants to contribute to my project,
+they can simply make a couple of commits and open a =E2=80=9CPull Request=
+=E2=80=9D or
+=E2=80=9CMerge Request.=E2=80=9D Once reviewed, I can decide to merge via s=
+everal
+options:
 
-When using `actions/checkout` in GitHub workflows, nothing is broken
-because `actions/checkout` uses a fetch + checkout (to allow for things
-like sparse checkout), which obviously lacks the clone protections because
-it is not a clone.
+* Creating a merge commit.
+* Rebasing their commits.
+* Asking the UI of the (centralized) system (GitHub, GitLab, etc.) to do
 
-> It's not really possible to avoid the need to install the hooks at this
-> location because the post-checkout hook must be ready during the
-> checkout that's part of the clone in order to properly adjust
-> permissions on files.  Thus, we'll need to revert the changes to
-> restrict hooks while cloning, which this series does.
+Whatever is decided, the commits end up in my repository and the author
+might have signed the commits and their signature is still there.
 
-Dropping protections is in general a bad idea. While previously, hackers
-wishing to exploit weaknesses in Git might have been unaware of the
-particular attack vector we want to prevent with these defense-in-depth
-measurements, we now must assume that they are fully aware. Reverting
-those protections can be seen as a very public invitation to search for
-ways to exploit the now re-introduced avenues to craft Remote Code
-Execution attacks.
+With the email workflow, from what I understand, `git am` has no way to
+keep the signature of the author =E2=80=94 and I have not found anything go=
+ing
+that direction with `git send-email` and `git format-patch`, and I think
+that the reason why is because the commit is modified to introduce the
+committer (committer being me here; the author being the contributor who
+sent the patch), whence the commit SHA changes. The author signature is
+simply dropped, and `git log --show-signature` only shows my GPG
+signature; not the author=E2=80=99s anymore!
 
-I have pointed out several times that there are alternatives while
-discussing this under embargo, even sent them to the git-security list
-before the embargo was lifted, and have not received any reply. One
-proposal was to introduce a way to cross-check the SHA-256 of hooks that
-_were_ written during a clone operation against a list of known-good ones.
-Another alternative was to special-case Git LFS by matching the hooks'
-contents against a regular expression that matches Git LFS' current
-hooks'.
+So=E2=80=A6 I was wondering: since we can only sign commits, is there any
+way / work in progress to attach the author signature to a commit? To
+me, it would make sense to have something hierarchical: the comitter
+simply signs above what the author signed, and the author doesn=E2=80=99t s=
+ign
+the whole commit (I guess?), since we want to be able to change the
+commit hash.
 
-Both alternatives demonstrate that we are far from _needing_ to revert the
-changes that were designed to prevent future vulnerabilities from
-immediately becoming critical Remote Code Executions. It might be an
-easier way to address the Git LFS breakage, but "easy" does not equal
-"right".
+What do you think?
 
-I did not yet get around to sending these patches to the Git mailing list
-solely because I am still busy with a lot of follow-up work of the
-embargoed release. It was an unwelcome surprise to see this here patch
-series in my inbox and still no reply to the patches I had sent to the
-git-security list for comments.
+Cheers,
+Dimitri
 
-I am still busy wrapping up follow-up work and won't be able to
-participate in this here mail thread meaningfully for the next hours. I do
-want to invite you to think about alternative ways to address the Git LFS
-issues, alternatives that do not re-open weaknesses we had hoped to
-address for good.
+--40eed3404897462763e9a80a690e74a1ddba21adca4e12fa1d86e6db438c
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I do want to extend the invitation to work with me on that, for example by
-reviewing those patches I sent to the git-security mailing list (or even
-to send them to the Git mailing list for public review on my behalf, that
-would be helpful).
+-----BEGIN PGP SIGNATURE-----
 
-Ciao,
-Johannes
+iHUEABYKAB0WIQRsmRqgbXp8KFc3mc6pQ4aopiUuywUCZkOuGwAKCRCpQ4aopiUu
+ywt8AP4jHsqTs/9SjOmOzGvAWv+YOIoaHfNaDGLTF92B4pEk3wD8Cj73VceyH4RS
+Kh2b+WwsO7b1QjfsAyG8RmjW0tnm5Q4=
+=BUXJ
+-----END PGP SIGNATURE-----
+
+--40eed3404897462763e9a80a690e74a1ddba21adca4e12fa1d86e6db438c--
