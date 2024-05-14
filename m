@@ -1,250 +1,185 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E0712EBCE
-	for <git@vger.kernel.org>; Tue, 14 May 2024 11:22:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1C3219E8
+	for <git@vger.kernel.org>; Tue, 14 May 2024 12:30:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685747; cv=none; b=NifwEy3mHdcMoC9ollwUkp+oc3SAOjSXl5rB2LyVOBApzWFl+u6YkreXnLhYuwlYMLf0Js25F3baCo4UMAb0TRAmTx+LbEDf+zjlpC9VE7tXE/Ig3MdEftO/ct5AqGEtl6qyWUFnq11EPcFaO+JPurZYJDbAhNG304pZm/jseP8=
+	t=1715689848; cv=none; b=uNKWQy16LP6zDO5A3RI2DEFfHUwuvcK9oNfsqNZueh/MV2zlwCkyl8cNKSk48M/0g1QquuTrmvXjKunMUZ8u/mtQSa89mTtgneVGBRI1ZTD3xzLx34Hs33eRMYDz4VP3ZINT+CgjO71/yn8EEVx37QIj/e+mgHl7jarDTyLPSic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685747; c=relaxed/simple;
-	bh=N7qwqDLa/dhrNnGNnwhh6qMO4/cw5UaLk8zx8qCB97I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fwRrN5cTSEhDzU3f4UeArKrgoyA9F6WGpJf7y5+kdg5LVBTVWfNdyq/t5lx9jGSzt49Av02aApo7jWZb3tiJp7afsHVZSvtA41NsdUZLjAQ+qby15TA8AfeR9yDYjgi1qT6KOxKG/qPjAXheEY/979qspHLmP82P9K1L42WvrCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VFIupYCE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ji4dj7mU; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715689848; c=relaxed/simple;
+	bh=X0xWq4yxjOZR3mBwhIbYFVU5IVPJV4YmJ7IfNrFxP74=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mBrebbMoqcn5uOw50JokjVinX9CkRY1L8pQmxDuslROpX70oN6Ch4iZqNVUS5pWszV/LDHJF5h8lLIa4v1erDUtagZl8gsyt7/z2CpKdu0KUz5StceqOvq5suEnkleAvYjSkFOfcFp2zGSL6+yJAzgNYVpt9wNa+o4CQSqd8esU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Su/uLu/s; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VFIupYCE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ji4dj7mU"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 0409C1140185;
-	Tue, 14 May 2024 07:22:24 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 14 May 2024 07:22:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715685743; x=1715772143; bh=oEm+qz7rcb
-	YzhjnCMMkOaVltIO/bKM00LDO05j4DnRU=; b=VFIupYCEoyjpcbAv9T+k145YPJ
-	DGPBwkn7VjBtrcjw9E/Zl4u6TqLmiKlNSCaqYN6ZcJq+Y4JMYknOe4JK/6FLD2/u
-	M1YMW9VgA64ONI8I+mxN9eY9pj7fuVzSBfNZe19TZ6sX1woqYL+K4L5cVsSfMSZa
-	f+/UKGy3yVMQiZlcnEG/oQPFfgDeWq4qO53Jdzi4GNP2HrPEqqu71fwn6vw4NlG6
-	nSn+AIICI4p1jsxvBnXYaJUa9KYZRPDe8GGfRDgurO+52oeYdAsM51O1ExiXGbvM
-	dwlElVjJywUVpx0hl+OAj1/CIHFia/NSR1KLI3B+py2FBzkTN1BaGWtNWDGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715685743; x=1715772143; bh=oEm+qz7rcbYzhjnCMMkOaVltIO/b
-	KM00LDO05j4DnRU=; b=ji4dj7mUaViTsA9q01b804yhsHxwFiNzIP1hYBEhgII+
-	KhWzxPNGMi/36/gp7EDXzQv7IdaeBvvMXfdJEORU6bWM8ALMsbx+0P2u6LvxgQCp
-	HJVHS6C5ODFZhg5GOHNrlQ/vuZMilVtryNO7R1a8J9uPoJTbK+Q+IFVH7dxu1g1m
-	nxg4CR3JCYUOHEPnhrR/51WPZGfHLY+u+V7uZwKjKrjRgl4I1aLSaIaVnrShbB/t
-	Up6QBqabg27K5kFN9eEP1j1bgdtQqPoimdk+UBEcNF/IYKoHwNOYWMV9afltzeiW
-	0aCyuNiFY+UiVcmZ3dUP896oc+AG+7A5+GqvW/x+TQ==
-X-ME-Sender: <xms:b0lDZlR-t9TXUKVocneucciJRvwfgaBeHH_2h_IN3u5u7lQZ0KnvXw>
-    <xme:b0lDZuxdBgOdJv1TGf-A7uSzbXBQat0wVJSuKb1l4Y_04QPdj-DjIcjPzyZ35z1As
-    Dgls3jaQcNWWoVUmQ>
-X-ME-Received: <xmr:b0lDZq1dCDd0iw3PPb33OYGsuS5tWteXexrs4T5ogvaTGi66-GXyJaI7AiKINwGlLrBwA2NPP6GYJEp1PxgeXNozJjf_EQk9QceqkgFW-Fe-n8OZ3Z9B>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdegiedgfeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:b0lDZtC8GJkIj37eWc2EXGRDMGi9mMUomD-T7BSudyyE-czk3nIbDw>
-    <xmx:b0lDZugILxXH3hgSf_qxugEUfoFNjfG90zMOKeo5-kU0wwxYlPG4LA>
-    <xmx:b0lDZhrXzS1_5XFEB3pFeoE074yd3osMJxuv97_tQNq6_BmXpZD7qw>
-    <xmx:b0lDZpiDe7ouTOym2kRudQeTKoy9vDrBJEvOmoMA3vRjOz2c6iUc9w>
-    <xmx:b0lDZig7s9LnWddYyNNL4fVok2SmXQ04xCn11eIvQYHpcVG5Y400AUtB>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 May 2024 07:22:22 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 067b3f0b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 14 May 2024 11:21:59 +0000 (UTC)
-Date: Tue, 14 May 2024 13:22:17 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Dragan Simic <dsimic@manjaro.org>
-Subject: Re: [RFC PATCH v2] docs: document upcoming breaking changes
-Message-ID: <ZkNJaaKTTKbns8wo@tanuki>
-References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
- <2ef53ff98b12fe9373a15ec3a795235f040d9049.1715667067.git.ps@pks.im>
- <CAOLa=ZRkLpi-DSNsTgVf5OCk6gEP7VTx2SeJRKT_Lv+pVu1Nyw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Su/uLu/s"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-51f40b5e059so6483733e87.0
+        for <git@vger.kernel.org>; Tue, 14 May 2024 05:30:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715689845; x=1716294645; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=07dwgWL80h3ybHEwShiqjRRhohdpjKkp0jEghxc3NGI=;
+        b=Su/uLu/sLUtb2gK4e2eQu5Mt9Z884GQnoZfZM8yTSv8LHyn4y+W6NtfztR/F/Aj7Cu
+         DwQRJFeLOKgJM1PHjwVa44qfaFBslOOXiCupMMVsSDvJa9VdEZCikF3wzAwxGBZJwqCn
+         BG/8e5BBFI0D75fD/L6cKpuxqZ//T2GhpzharAmOORVqy3/oeJqnDR8+ylGSYjrRR3Dl
+         h0scVPl81ghHgliJ5k+5YNljUfbU3u1PVhdCiOy3U/wAwWRp9kqW5qHC2SJbj794tfg6
+         TqxL9odx/jT75VPmfJ0dXdlp+g+/KoArGsiocia+n74nYfjduYGZlEc1BwL9DwJWFT6N
+         7yZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715689845; x=1716294645;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=07dwgWL80h3ybHEwShiqjRRhohdpjKkp0jEghxc3NGI=;
+        b=nhBG53Pk8y0UFmwiPYIEqGHvVplnybykahUqA+Po+pmxtEyvdlAKs102OPsh2+YnIm
+         lplZHASlZGL55QQMuhjxTB8qcsTj9Ug1DIOholo82XIaGpy84ziwYUrb6CMuH7gpvDA2
+         /j1HsY1SPljGCF7IciKthOeqJ7+qMgbG+Ewf3YrM1iMl+cVlvHmL8Tf6XE/I4Bz99v99
+         I9l41KwnIYHNPNfAw+4XE9NE+D7ZyDjhCaJIRyqbd+7KShmxGzIUVDAnqOUev2qytttu
+         72+Weg66eqIIzfAL/1SuO39sAi2Y6xaEcaBi6pRevxMLWXy7zCatxPohMniM+Y5T6NHD
+         QqAQ==
+X-Gm-Message-State: AOJu0Yx+zb6ExJx9LKlLGsZDX7NFDC7SL2K9GGhtUogwLGmkBNyKTp/j
+	aLgAL8ytLwb9h75eoi/UjtMdsb3e3txZyBrvfgCnGOZNZpbMRftS
+X-Google-Smtp-Source: AGHT+IE/6j2It8TSmj57PfkR1Qxo9yPfSEIbH3IWV/jxyHbfakto5jJp4a5QHMfPid3yIdrSuMnJHQ==
+X-Received: by 2002:a05:6512:1105:b0:51c:dc6:a1cf with SMTP id 2adb3069b0e04-5220fc734ecmr9548368e87.34.1715689844274;
+        Tue, 14 May 2024 05:30:44 -0700 (PDT)
+Received: from localhost.localdomain ([185.223.147.210])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-574ec273185sm155346a12.42.2024.05.14.05.30.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 May 2024 05:30:43 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
+To: karthik.188@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com
+Subject: [PATCH] SubmittingPatches: add section for iterating patches
+Date: Tue, 14 May 2024 14:30:39 +0200
+Message-ID: <20240514123039.1029081-1-knayak@gitlab.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KIhYWLiDQMdurs7i"
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZRkLpi-DSNsTgVf5OCk6gEP7VTx2SeJRKT_Lv+pVu1Nyw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
+From: Karthik Nayak <karthik.188@gmail.com>
 
---KIhYWLiDQMdurs7i
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Add a section to explain how to work around other in-flight patches and
+how to navigate conflicts which arise as a series is being iterated.
+This will provide the necessary steps that users can follow to reduce
+friction with other ongoing topics and also provides guidelines on how
+the users can also communicate this to the list efficiently.
 
-On Tue, May 14, 2024 at 06:48:38AM -0400, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-[snip]
-> I think it is worthwhile also looking at the number of commands we have
-> and see that some of these could possibly be marked deprecated, maybe
-> removal could follow too:
->=20
-> * add, stage
-> Here, `stage` is synonym and can be just dropped.
+Co-authored-by: Junio C Hamano <gitster@pobox.com>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
 
-I wonder whether there are any arguments in favor of git-stage(1). I
-myself haven't even been aware of this command and have never seen it
-out there in the wild. Which would be an indicator that we can safely
-remove it.
+This came off a discussion wherein I sent a series based on `next`
+instead of merging in conflicts [1]. This is mostly worded by Junio and
+I've just put it together into a patch.
 
-Comments?
+This is based off master, with 'jc/patch-flow-updates' merged in.
 
-> * prune, prune-packed
-> `prune-packed` prunes objects from packed files, perhaps could be a
-> sub-command on the existing `prune` command.
+[1]: https://lore.kernel.org/git/xmqqy18lpoqg.fsf@gitster.g/
 
-I think we should refrain from adding anything to this document that is
-not yet feasible. In other words, once git-prune(1) learns to prune
-packed objects we may want to think about whether git-prune-packed(1)
-can be deprecated, but not beforehand.
+ Documentation/SubmittingPatches | 79 +++++++++++++++++++++++++++++++++
+ 1 file changed, 79 insertions(+)
 
-> * annotate, blame, pickaxe
-> You've mentioned `annotate` below, but we could also remove `pickaxe`.
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 8332073e27..2fd94dc8de 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -608,6 +608,85 @@ patch, format it as "multipart/signed", not a text/plain message
+ that starts with `-----BEGIN PGP SIGNED MESSAGE-----`.  That is
+ not a text/plain, it's something else.
+ 
++=== Handling Conflicts and Iterating Patches
++
++When revising changes made to your patches, it's important to
++acknowledge the possibility of conflicts with other ongoing topics. To
++navigate these potential conflicts effectively, follow the recommended
++steps outlined below:
++
++. Build on a suitable base branch, see the <<choose-starting-point, section above>>,
++and format-patch the series. If you are doing "rebase -i" in-place to
++update from the previous round, this will reuse the previous base so
++(2) and (3) may become trivial.
++
++. Find the base of where the last round was queued
+++
++    $ mine='kn/ref-transaction-symref'
++    $ git checkout "origin/seen^{/^Merge branch '$mine'}...master"
++
++. Apply your format-patch result.  There are two cases
++.. Things apply cleanly and tests fine.  Go to (4).
++.. Things apply cleanly but does not build or test fails, or things do
++not apply cleanly.
+++
++In the latter case, you have textual or semantic conflicts coming from
++the difference between the old base and the base you used to build in
++(1).  Identify what caused the breakages (e.g., a topic or two may have
++merged since the base used by (2) until the base used by (1)).
+++
++Check out the latest 'origin/master' (which may be newer than the base
++used by (2)), "merge --no-ff" the topics you newly depend on in there,
++and use the result of the merge(s) as the base, rebuild the series and
++test again.  Run format-patch from the last such merges to the tip of
++your topic.  If you did
+++
++    $ git checkout origin/master
++    $ git merge --no-ff --into-name kn/ref-transaction-symref fo/obar
++    $ git merge --no-ff --into-name kn/ref-transaction-symref ba/zqux
++    ... rebuild the topic ...
+++
++Then you'd just format your topic above these "preparing the ground"
++merges, e.g.
+++
++    $ git format-patch "HEAD^{/^Merge branch 'ba/zqux'}"..HEAD
+++
++Do not forget to write in the cover letter you did this, including the
++topics you have in your base on top of 'master'.  Then go to (4).
++
++. Make a trial merge of your topic into 'next' and 'seen', e.g.
+++
++    $ git checkout --detach 'origin/seen' &&
++    $ git revert -m 1 <the merge of the previous iteration into seen> &&
++    $ git merge kn/ref-transaction-symref
+++
++The "revert" is needed if the previous iteration of your topic is
++already in 'seen' (like in this case).  You could choose to rebuild
++master..origin/seen from scratch while excluding your previous
++iteration, which may emulate what happens on the maintainers end more
++closely.
+++
++This trial merge may conflict.  It is primarily to see what conflicts
++_other_ topics may have with your topic.  In other words, you do not
++have to depend on to make your topic work on 'master'.  It may become
++the job of the other topic owners to resolve conflicts if your topic
++goes to 'next' before theirs.
+++
++Make a note on what conflict you saw in the cover letter.  You do not
++necessarily have to resolve them, but it would be a good opportunity to
++learn what others are doing in an related area.
+++
++    $ git checkout --detach 'origin/next' &&
++    $ git merge kn/ref-transaction-symref
+++
++This is to see what conflicts your topic has with other topics that are
++already cooking.  This should not conflict if (3)-2 prepared a base on
++top of updated master plus dependent topics taken from 'next'.  Unless
++the context is severe (one way to tell is try the same trial merge with
++your old iteration, which may conflict in a similar way), expect that it
++will be handled on maintainers end (if it gets unmanageable, I'll ask to
++rebase when I receive your patches).
++
+ == Subsystems with dedicated maintainers
+ 
+ Some parts of the system have dedicated maintainers with their own
+-- 
+2.43.GIT
 
-I think most oldtimers use git-blame(1), whereas git-annotate(1) has
-been introduced to make the command less judgemental. I'd thus say that
-this falls into the category of commands that we wouldn't want to
-deprecate because they are both used.
-
-For git-pickaxe(1) it's a bit of a different story though. We do not
-even have a manpage for it anymore. I wouldn't mind deprecating that one
-fully.
-
-> * log, whatchanged, shortlog
-> Here `log` already handles what the other two commands do.
-
-Does git-log(1) really support everything that git-shortlog(1) does? If
-so then this would be entirely new to me, but you never know with Git :)
-
-git-whatchanged(1) has been essentially deprecated already. So that may
-be a worthwhile addition.
-
-> * for-each-ref, show-ref
-> These two commands do very similar things, i.e. list references. Both
-> diverge in the features they provided, but its not clear why we have the
-> two.
-
-True, they have clear overlap and both are part of plumbing. I never
-quite know which one to pick. But git-show-ref(1) handles things that
-git-for-each-ref(1) doesn't ("--exists", "--verify") and the other way
-round ("--stdin", "--sort=3D", many more).
-
-Honestly, I think that both of these are not ideal. I think we should
-think bigger in this context and introduce a new command with proper
-subcommands to make the whole story around refs more coherent and
-discoverable:
-
-  # Replaces git-show-ref(1) and git-for-each-ref(1).
-  $ git refs list
-
-  # Replaces `git show-ref --exists`.
-  $ git refs exist
-
-  # Replaces `git show-ref --verify <ref>`.
-  $ git refs show
-
-  # Replaces git-symbolic-ref(1) to show a ref.
-  $ git refs resolve
-
-  # Replaces git-pack-ref(1).
-  $ git refs pack
-
-  # Replaces git-update-ref(1).
-  $ git refs write
-
-  # Replaces git-check-ref-format(1).
-  $ git refs check-format
-
-This is of course a much larger topic and something that is very much up
-for discussion. But in any case, it indicates that a deprecation would
-be premature at this point in time.
-
-> * verify-commit, verify-pack, verify-tag
-> These could probably be subcommands under the verify command.
-
-Same here -- as we don't have the command yet, I think it's premature
-the old commands to a list of deprecations.
-
-> * diff, diff-files, diff-index, diff-tree
-> Here, `diff` seems to handle everything that the others do.
-
-These do have different scopes though. While git-diff(1) is part of
-porcelain, the others are all part of the plumbing layer. As such, we
-provide different guarantees. In practice it's likely a different story
-though as my assumption is that git-diff(1) will be used in scripts a
-lot. But in any case, I think that this is a separate topic that would
-first need some discussion.
-
-> > +## Superseded features that will not be deprecated
-> > +
-> > +Some features have gained newer replacements that aim to improve the d=
-esign in
-> > +certain ways. The fact that there is a replacement does not automatica=
-lly mean
-> > +that the old way of doing things will eventually be removed. This sect=
-ion tracks
-> > +those superseded features.
-> > +
-> > + - git-annotate(1) is an alias for git-blame(1) with the `-c` flag. As
-> > +   the maintenance burden of carrying both of these commands is neglig=
-ible, both
-> > +   commands will stay.
-> > +
-> >
->=20
-> While maintenance burden is an issue for us. There is also an user
-> experience point of view, having similar commands doing similar
-> operations is often a cause for confusion.
-
-In this case I think it's okay as the documentation of git-annotate(1)
-clearly states that it is the same as git-blame(1). But it is certainly
-true that synonyms also add to perceived complexity of Git.
-
-Patrick
-
---KIhYWLiDQMdurs7i
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZDSWgACgkQVbJhu7ck
-PpQL4Q/+N5jQweI1haXgcPdyl7h/cp+c1fEyu+EIFd5WUPO15wIZiGiq4tTGg0BB
-cTiPS24zk+FeCfFljGB0A2ZPxVECLTTUJ4hQJSGg5U4GEQzLO7qWf7H7qlBdxCKk
-2OIbIbDRECBlLJBPhu7erqefGN8tBwGdQdtEDpG6Tc4nyALbsq6ClO4Nu+PTkPOj
-uBCLeQwYr9nA2Ix6NUdAPyWSsBThmi12f9si/hU6jLHuWAwWgOqQFJONbH7ZbH3S
-3RYRSijdx5Xu478U3GGVlcuhL+2WuPjxcwTHY3DNB/8WeFN+QPSgYHHmInIwK59v
-pcmrp1oWI0Mq8CqKVMoQtOjHu3EQBrM88/vE6VQOI1JaX8TCdBXSwUacpxOgVXt7
-Q42EKDSaAMqbZyI4jiQCZWfWBMJgxhpFf6S1Wior0VEDH+mLzzclSMoTdUPx+Mla
-pgI05u+NL+wW+dtB8b+yxjyws94at0nWmmgloyoIq5BL2V08HiG9QBqz/TtliG1g
-7Wnb8mNB5wtATfNaEKFe5pjy5QzUHs0IPXiQ4hw3S7Qb71zWBU36NHOmVsmdEYrA
-sMAqsV0vm7iiMHuf/3TM9Tfceuenjjll0+zRM5q9LtOM5mx9E3cEBsOg9EcsslB3
-KV8F2CXLuQo6X6zkPiO8Dn6yh+RuqVoXYO4cLNSnKS31JXeOU1U=
-=vAlv
------END PGP SIGNATURE-----
-
---KIhYWLiDQMdurs7i--
