@@ -1,63 +1,63 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9B0181318
-	for <git@vger.kernel.org>; Tue, 14 May 2024 19:57:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE3C181318
+	for <git@vger.kernel.org>; Tue, 14 May 2024 19:57:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715716627; cv=none; b=LmCTICpT+gO/N+ZNGPuEdSxobfy+Z84kB8mDWJf5ggghHbC/zV0J6aOC67L4CdD/M2pNZ2xQmE0knKLMGGVifvt10xwTR9OecJnzqcYGZpJZa5N7X0Zm+xHqQpu4CyXVV48DIJrshO44npsJ0iEx8hLKyOyMZLWCsw0YN1lTxcE=
+	t=1715716631; cv=none; b=KqVsb2oa3UAvUSQzZgzFoSnLhMafcQDXKx4p1+PDBThoS+y0aaPKMIq0hACkIovhLMDaYPqXd3EZ+4VlYjAIDGCfaujjEEh0quOlPnRoTVAovoDBB9dXYSP6wmvBmDL+3vGUmwVmIrwatJO73RmYfNvPn50cJ01dFYy/mhGxJzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715716627; c=relaxed/simple;
-	bh=ehEDVivmep7w6WGkel4lNQPZf1Xt4TZePOhGGrZXy5g=;
+	s=arc-20240116; t=1715716631; c=relaxed/simple;
+	bh=T1NtMAMuReya1kZzMDsEaWvRJdt5rM5vXjCrr0ZDE98=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P75CldDwjZ3DrHajIl6JX5F2Gp+qOW/SE049zYP1I8lnyH8/gSd6KlCWaKNlsRA/dHZNQMUZaNHQhdZZ2jhGB+BgZ4nsUTMWKY6TE5ERpNMnB/FJw+SszccXDqTt05a6HhVq0+0wvOBXOWzguHstbj38MsXiqXg+tx2yqFvo+RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=dddn6YLj; arc=none smtp.client-ip=209.85.222.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=Apsp4BuM6EHtYaEZ3LrUD/06WSaJtNkpKIvxY9UMUV2dXJHM4eJnmf4Zwod6AJGurwea38GbPjoS4tmGA6U9709wnfZod6Zab2EVfpuNQvxmUMN4xMux13d4B8nZJ87KsTU/jwDdXraSynrI/o0LQYncmGIUZe2r7K9R2OqvvmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=2z/aLNmG; arc=none smtp.client-ip=209.85.219.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="dddn6YLj"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-792c34f891eso506895085a.1
-        for <git@vger.kernel.org>; Tue, 14 May 2024 12:57:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="2z/aLNmG"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-69b4454e2f1so19043156d6.0
+        for <git@vger.kernel.org>; Tue, 14 May 2024 12:57:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1715716625; x=1716321425; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1715716629; x=1716321429; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zXpcyD6elpXjKhMRArstPpg3pnBL+H9lyD65uiqsPYo=;
-        b=dddn6YLjkoN2ENaKF7XQe++slBq3Z05QZSk9Qe/FHt0XB9LHEkJIwNvtwx1mQW8lab
-         B44onIVq0d/sGww5eIvUK7XUHxudUcLv4w0QPB2FCqBFqyc0CchZ7BaYWYc9fEiwCUtc
-         hru8vtfJFKWjH7Xui2M8EtSuaDGOsWSv1x5jNupdlq7cefwguP/C6gThL3PAz23fmKkb
-         Dl14b7FAKslZHfAlcxdszsQTGkAQc0K8QVOG6Pwm1w4Nj2h4ydEp891wrD5pCfpISxcs
-         mCBs+j6nFnT90enIiSwNGYg6dXEd+p7QNtlnwCPt7cLsdN0pDXiNEY7Z6QNghZ5FRg8M
-         9WpA==
+        bh=NIxL665DLt7fNGh/Hz5PY1VgAibPgHVSqFosj4OscVs=;
+        b=2z/aLNmG5pB33RsEVxnq8ctes98mA1omvU+wX6cLF7++Zjq2+S/prGStrbggdbT0mu
+         jUU5zBF/SBqxSaKU0/TBiAp/eVzcWXYyKpMWb8zd+jphLMy06mFkDkzy6f+WVR3leKXu
+         lp1Z/UnzeVXg7Cl4fvVo9ImA/b22nX9/mt0d0YV2Tzl3z2OSTX4F5iAflJjyZ39kAAB/
+         P0nqHhkoBnzN/yfVg7vmb6xsn4T8Ki0z6qQh209Z5MGK+nx9LizaglY9g0Ko7kLeB2Du
+         EaMpevvFbE0ibjAdfjRK6/VkIGMMcFoLvSr5r98JLA4yLE1MTiH1yGIogMPMWEboYcrW
+         3bGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715716625; x=1716321425;
+        d=1e100.net; s=20230601; t=1715716629; x=1716321429;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zXpcyD6elpXjKhMRArstPpg3pnBL+H9lyD65uiqsPYo=;
-        b=vKTiHzvYKUIlYcmvPgTY223uYb7Z40fo/9o3QuW9MICBCM0cXSsz9X0ZFY3FNdm7cz
-         UMLuivYz3hd86Iidn5QqVPZKVN/1CyJIKb9pq9S2dFy6zliTB/d5oIWIrP2nw4v4M9/i
-         ics01Rrjn5+dl5+1FFQp30yc4P9XZKW6Rd0oUbp+KXASqaiY3/QdZdDmW+ImpPvKzvTK
-         gR0z6Ay5i1MtEjIV17R1Q+N0dGMeskPD0d4h/ODEpkPe13jt+s6TKBCvtNxNVqNnFoq7
-         P67dT3OlPmCQwibsqInolXWO8MaiMCApNV0buET5utz+8o961JhqS44efu9QnzopWm64
-         MgLQ==
-X-Gm-Message-State: AOJu0Yyvv2QTl1E+j8C6mazYXzjrGZvJfdgtxiA6P67jZ0TybREpgd03
-	IVCW0GjNHVVOAoc6+dLaNPyqJ3/42urMhEC3zqu30rceEVjINYMy3HQDa0DtMYNcyNmG4TN9MFP
-	m
-X-Google-Smtp-Source: AGHT+IFZzahmB72zz7OcBqPCZUa4VvXfsTszbH4/YcS+DJNhRdKglN0BxJq9GAR4seG/mHkFLFpRnQ==
-X-Received: by 2002:a05:620a:9:b0:792:905f:667e with SMTP id af79cd13be357-792c759adfbmr1693785785a.28.1715716625267;
-        Tue, 14 May 2024 12:57:05 -0700 (PDT)
+        bh=NIxL665DLt7fNGh/Hz5PY1VgAibPgHVSqFosj4OscVs=;
+        b=vVW5GwLpP4thC6HsNpsVZNJu42sI3s+PqSP18H8Y6zihZ993fvIiw2jD6tBGV30qE8
+         fDACtr+WlvOrJo15ff9oELXOs0sma+IQPnTCN6JBMIAMLcDeDjS8Fyf5VJLFfdnnbANd
+         Wuh5Hvpz3U+e07HMn38X9cvi2s8bM/BsJThjL0WsROOQeke7H/GaqaPhM4ZUcT0p1VqK
+         6oJqb+yEeSEs/WbNtfi0K9vdO+AbaO6T0npTRvOaNA35BbSxlL6+IQiA13+4KCQWu0as
+         rNC5i8qfcWgLQrNlGfEVUmsc52FRUjtO1qk8OaJQDgPw+/c2bmXB2G03A3B6+OEA6OqP
+         dc1w==
+X-Gm-Message-State: AOJu0YwOJlMzn0IqZZ16M0ii4NHT4nqgho4PAJNLlm3ODjdm5cNJoA37
+	ibNt2Pj1sP0l+PWMzTosUFSZK6jmDUJ5T5VmRMBpBTCc5Y61yEIQJYZ0FBQAwDiw62aT8FV97d7
+	q
+X-Google-Smtp-Source: AGHT+IHnTEF8rMPuPzTok8LQKbS2Dcq4oDMeJTQLIRPY98WBu7dJ2dHNmfrjsGbQdPnr+tTh7aVm7A==
+X-Received: by 2002:a05:6214:5988:b0:6a0:4fda:af51 with SMTP id 6a1803df08f44-6a1681b4514mr173170306d6.37.1715716628733;
+        Tue, 14 May 2024 12:57:08 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-792c3ef7caesm541282285a.57.2024.05.14.12.57.04
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6a15f1cd22dsm56630156d6.100.2024.05.14.12.57.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 May 2024 12:57:04 -0700 (PDT)
-Date: Tue, 14 May 2024 15:57:03 -0400
+        Tue, 14 May 2024 12:57:08 -0700 (PDT)
+Date: Tue, 14 May 2024 15:57:06 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/6] pack-bitmap-write.c: avoid uninitialized 'write_as' field
-Message-ID: <f16175295f5c786fea2d56ebffc2b9a6beb07aa0.1715716605.git.me@ttaylorr.com>
+Subject: [PATCH 6/6] pack-bitmap: introduce `bitmap_writer_free()`
+Message-ID: <bf65967764f34adc2ca00d4c8195840ad3e4e127.1715716605.git.me@ttaylorr.com>
 References: <cover.1715716605.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -69,41 +69,104 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1715716605.git.me@ttaylorr.com>
 
-Prepare to free() memory associated with bitmapped_commit structs by
-zero'ing the 'write_as' field.
-
-In ideal cases, it is fine to do something like:
-
-    for (i = 0; i < writer->selected_nr; i++) {
-        struct bitmapped_commit *bc = &writer->selected[i];
-        if (bc->write_as != bc->bitmap)
-            ewah_free(bc->write_as);
-        ewah_free(bc->bitmap);
-    }
-
-but if not all of the 'write_as' fields were populated (e.g., because
-the packing_data given does not form a reachability closure), then we
-may attempt to free uninitialized memory.
-
-Guard against this by preemptively zero'ing this field just in case.
+Now that there is clearer memory ownership around the bitmap_writer
+structure, introduce a bitmap_writer_free() function that callers may
+use to free any memory associated with their instance of the
+bitmap_writer structure.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap-write.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/pack-objects.c |  3 ++-
+ midx-write.c           |  1 +
+ pack-bitmap-write.c    | 23 +++++++++++++++++++++++
+ pack-bitmap.h          |  1 +
+ 4 files changed, 27 insertions(+), 1 deletion(-)
 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 10e69fdc8e..26a6d0d791 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1245,7 +1245,6 @@ static void write_pack_file(void)
+ 	uint32_t nr_remaining = nr_result;
+ 	time_t last_mtime = 0;
+ 	struct object_entry **write_order;
+-	struct bitmap_writer bitmap_writer;
+ 
+ 	if (progress > pack_to_stdout)
+ 		progress_state = start_progress(_("Writing objects"), nr_result);
+@@ -1315,6 +1314,7 @@ static void write_pack_file(void)
+ 		if (!pack_to_stdout) {
+ 			struct stat st;
+ 			struct strbuf tmpname = STRBUF_INIT;
++			struct bitmap_writer bitmap_writer;
+ 			char *idx_tmp_name = NULL;
+ 
+ 			/*
+@@ -1370,6 +1370,7 @@ static void write_pack_file(void)
+ 				bitmap_writer_finish(&bitmap_writer,
+ 						     written_list, nr_written,
+ 						     tmpname.buf, write_bitmap_options);
++				bitmap_writer_free(&bitmap_writer);
+ 				write_bitmap_index = 0;
+ 				strbuf_setlen(&tmpname, tmpname_len);
+ 			}
+diff --git a/midx-write.c b/midx-write.c
+index 78fb0a2c8c..7c0c08c64b 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -853,6 +853,7 @@ static int write_midx_bitmap(const char *midx_name,
+ cleanup:
+ 	free(index);
+ 	free(bitmap_name);
++	bitmap_writer_free(&writer);
+ 
+ 	trace2_region_leave("midx", "write_midx_bitmap", the_repository);
+ 
 diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index c0087dab12..420f17c2e0 100644
+index 420f17c2e0..6cae670412 100644
 --- a/pack-bitmap-write.c
 +++ b/pack-bitmap-write.c
-@@ -112,6 +112,7 @@ static inline void push_bitmapped_commit(struct bitmap_writer *writer,
+@@ -32,6 +32,29 @@ void bitmap_writer_init(struct bitmap_writer *writer)
+ 	memset(writer, 0, sizeof(struct bitmap_writer));
+ }
  
- 	writer->selected[writer->selected_nr].commit = commit;
- 	writer->selected[writer->selected_nr].bitmap = NULL;
-+	writer->selected[writer->selected_nr].write_as = NULL;
- 	writer->selected[writer->selected_nr].flags = 0;
++void bitmap_writer_free(struct bitmap_writer *writer)
++{
++	uint32_t i;
++
++	if (!writer)
++		return;
++
++	ewah_free(writer->commits);
++	ewah_free(writer->trees);
++	ewah_free(writer->blobs);
++	ewah_free(writer->tags);
++
++	kh_destroy_oid_map(writer->bitmaps);
++
++	for (i = 0; i < writer->selected_nr; i++) {
++		struct bitmapped_commit *bc = &writer->selected[i];
++		if (bc->write_as != bc->bitmap)
++			ewah_free(bc->write_as);
++		ewah_free(bc->bitmap);
++	}
++	free(writer->selected);
++}
++
+ void bitmap_writer_show_progress(struct bitmap_writer *writer, int show)
+ {
+ 	writer->show_progress = show;
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index b2d13d40eb..3091095f33 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -139,6 +139,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
+ 			  uint32_t index_nr,
+ 			  const char *filename,
+ 			  uint16_t options);
++void bitmap_writer_free(struct bitmap_writer *writer);
+ char *midx_bitmap_filename(struct multi_pack_index *midx);
+ char *pack_bitmap_filename(struct packed_git *p);
  
- 	writer->selected_nr++;
 -- 
 2.45.1.151.g7cc3499008c
-
