@@ -1,64 +1,68 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458807602A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC27D7602B
 	for <git@vger.kernel.org>; Tue, 14 May 2024 12:44:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715690657; cv=none; b=p8zGvetmKQJl2/r/X7z57X0rNIl4Y9CEmQCsBlC3DJI63zJjcPgqv8c4fkLlNpyUPzHy2ovh/EeeURWZuCPlTCjlKyMzGyTfH9Rivb5RaR5uvE67H0dVYw3BpIb3xhVBR/hgyquACj76rMQRn26JcVuyuOOiLouOwUqcEWGOJFw=
+	t=1715690658; cv=none; b=slBwf1D5qIOqiYkXazTwGkUpIP7K/Ln4WbowLLo9vrO4XN1vM0gcAWTmHLo81CzZSwFOqoTelNq245szCITnZNZt/q1q7VTJVHp/WQN3ZwyLo3MjSUOJGmHHrZyODi4RN6hx9QbSiO6vxl4rVG8ytZIca5rgKbwdwz9EAUO0Xmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715690657; c=relaxed/simple;
-	bh=aWowG0PR6sJ4lF3lBbqtgy4ogw8JRuuovhpZInohed8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HPPXPwa5VZZhUUyFj+mDA7EQl6qp9tonAOHEZhEam40sZpoKZM954AaXdbUcx5lIZj2UVpuDNiZ62b+uvRoAczQnjOcxwqUSOncqhCfODv9lLRsz0GOMEreL/QF+N2CE3tFMR+y9KstklCR/5wLKlVPlrr0ntUQwx29rZT/5Y+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mw90Iknx; arc=none smtp.client-ip=209.85.208.43
+	s=arc-20240116; t=1715690658; c=relaxed/simple;
+	bh=KgA2jC44PpTa+28JFgW5tZEP7a/G3RSFnF53ijNDPiE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FNjowwH6cXrzzAULpO1Ig+6q5wgcO8Ogz5G7a2BgSmc8y/C3s4rwIgPKhzRyab1DNj1glGeEPWR+bfiym9B446X0uB7ug7zlmJCKg0yW0IPHxVmQ+nETF80qsBl989ana2Q3rbB6MWrVNwVHY1DNf35/glNlNOgmVEGZgRYF0tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RI/hdyL4; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mw90Iknx"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-574b3d6c0f3so52590a12.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RI/hdyL4"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a59a609dd3fso4942566b.0
         for <git@vger.kernel.org>; Tue, 14 May 2024 05:44:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1715690655; x=1716295455; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EwGaUfTFRMSbVFQh9+jhYhGLgj+HXWgI0D8E4g4JsPg=;
-        b=mw90IknxKGYc/vpQzKDKRbZCWqL+/u5mK/pzE3lfnoCkIB/H7vE9J4HpH6rr0CVrF1
-         sIxsfgKZfYO+AAPtMYbl3KpgTKVjC5SeNn1QJc9WIzByXEyGu21YqpFWdXvGBsSmqWl7
-         LFnUA0SqtE62VMhDVRkPma58gbgC+rBMzo0CvivqA3eA1JZ0dnRuS2mZBhEkAO5mwcpD
-         74OFL0cCl7DsXznrXCgVb4GtovIgD9o+tZ7+h6zVAgakuFfqR1g7z4j2L+ir0H1AIZAw
-         ml8OcufG7y/NvoWmrxAjcJlA8XqvcvCvaQ74GCsWcZtpocZ8pGMxDXj6y3bqEaRyf1JL
-         1Ysg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+qRNmx8sfuubAEq7EZzRrw6AhcgYR8Hnw0Vxj6RbbPw=;
+        b=RI/hdyL4tx8QU6y71yZsusDzbLw37QizYKeh/z1KAfNBNbkBQPG2ZHidZi+/tHEmZo
+         m08tScIF0J4ggLTVEluMZGvKQCm+/n9l3KDORis7Sob3GzzW7eZWJwfNwsK9GCH/GQTb
+         HAwwol2LfjuyWtACojNMHpQBcgr157Cq4TVD3j343Gdy6oAv5fQn2PTSwvy7oYzmYqeL
+         56QJmGE+2PBUiofaHst+XuOGMpUFAC3TxIZ6woJcJ61imDCXITJS4SbGHDRXcCqbOES+
+         H493A0U10zDw63asbAgxPDT399zCUJByZnJrXTUK9EeekBcM/FZkKBvJ8bsaTuC4HbC0
+         xlAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1715690655; x=1716295455;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EwGaUfTFRMSbVFQh9+jhYhGLgj+HXWgI0D8E4g4JsPg=;
-        b=bbaMX+FOFPuZPk9tJbLOVwMm6G3vPemWojiONePVu1RyxfY4jpHoDg9wjVg4psGPXu
-         vvHNI75gmKVLy0hL/pA9U0kmhur8aApr0QE3RDldcupgV9pnnjcGpX5gCukU/xUt/fOY
-         97lDrrpUuv9ZZoKEciOOcLExxPtNDGjYw/ePBwpwieA3SYwUWVI5cwUpX7Mpbws5TiHA
-         DqWevKrd1aDDavs65lqhVHULdFwTeTY4UOk4/C1/wWwdWrsUye+oJByOmVJAEkq1JJPq
-         6y9Jkz3P2TVJPuFk6GYEySpoUxC+OsqbsmivZmGUflehuXcDap2F55SQxyx93TlUCiCz
-         /l7A==
-X-Gm-Message-State: AOJu0YxonLbTZFRYfo5BFKpOMOBmR+GRX9YLjK/4lnkX52vNWE2dt5aO
-	5uWLhhDdtksufuXENfWA5CywrvQjJzr12p0YotYyDhAxAzmWqoDD/twavg==
-X-Google-Smtp-Source: AGHT+IEWTSaO5X0cUubtoFXuSyZ2BU8+SrVnIHrV3sVTVj0nWvWdoZUMCwelghuisbqDWScVXA9tTA==
-X-Received: by 2002:a17:906:b1d3:b0:a59:9a68:7327 with SMTP id a640c23a62f3a-a5a2d66aa45mr872629366b.54.1715690654353;
-        Tue, 14 May 2024 05:44:14 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+qRNmx8sfuubAEq7EZzRrw6AhcgYR8Hnw0Vxj6RbbPw=;
+        b=B/u7kpt6hyr8+ylMuGfxgGivp+dmklsTZDfHEP+N9oMzwmwt806crv+Yov+PjHMGUU
+         F77S9KVNSa2qyrpdDz/QKxqrLFySQvs372zIVnMPjH41N8NdnAJiAdeiMH6LPBgXu5Dl
+         FPLe9hfnJLX7PQD1SWLOBxVax6LZ9FSUdvOIl8nlBE7aU+glYdi9xwoPWVywMF2q544o
+         UrSnTh3G9uWC7/rOampjekAnSxL8CCGJOARpWFcOjH8MItVFsippYMjo/7Z4vUcLCvQf
+         EC3FKP2rng3MgY/jzSvKWx9/jj7hbHjFCfDDXTsqoAloHd6aHX78upZGQUo6iw6kQr6u
+         iZYQ==
+X-Gm-Message-State: AOJu0YwocLNYrVsqdUtd2XkRh+SD98iJIDR/Qn+YmT4yA8ujdJEL+GAi
+	210pe0anYwrSymTrTks8MGK3vhCxvU0LFvs/Zgx4EBVZtgmbsLo5
+X-Google-Smtp-Source: AGHT+IEQ+nOgE4szKC2n6w/UCy4WYGEpzwRvZfzVCrUGAsCy/nz8Qh4ZkZ4b7MNnltl7yr54JUjUiw==
+X-Received: by 2002:a17:906:7c59:b0:a59:c62c:344d with SMTP id a640c23a62f3a-a5a115e7606mr1343695366b.9.1715690655141;
+        Tue, 14 May 2024 05:44:15 -0700 (PDT)
 Received: from localhost.localdomain ([185.223.147.210])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a17b019edsm730530566b.174.2024.05.14.05.44.13
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a17b019edsm730530566b.174.2024.05.14.05.44.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 May 2024 05:44:13 -0700 (PDT)
+        Tue, 14 May 2024 05:44:14 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org,
 	gitster@pobox.com,
 	ps@pks.im
-Subject: [PATCH 0/6] update-ref: add symref support for --stdin
-Date: Tue, 14 May 2024 14:44:05 +0200
-Message-ID: <20240514124411.1037019-1-knayak@gitlab.com>
+Subject: [PATCH 1/6] refs: create and use `ref_update_ref_must_exist()`
+Date: Tue, 14 May 2024 14:44:06 +0200
+Message-ID: <20240514124411.1037019-2-knayak@gitlab.com>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240514124411.1037019-1-knayak@gitlab.com>
+References: <20240514124411.1037019-1-knayak@gitlab.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,53 +73,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-The 'update-ref' command is used to update refs using transactions. The
-command allows users to also utilize a '--stdin' mode to provide a
-batch of sub-commands which can be processed in a transaction.
-      
-Currently, the sub-commands involve {verify, delete, create, update}
-and they allow users to work with regular refs in the repository. To
-work with symrefs, users only have the option of using
-'git-symbolic-ref', which doesn't provide transaction support to the
-users eventhough it uses the same behind the hood. 
+The files and reftable backend, need to check if a ref must exist, so
+that the required validation can be done. A ref must exist only when the
+`old_oid` value of the update has been explicitly set and it is not the
+`null_oid` value.
 
-Recently, we modified the reference backend to add symref support,
-following which, 'git-symbolic-ref' also uses the transaction backend.
-But, it doesn't expose this to the user. To allow users to work with
-symrefs via transaction, this series adds support for new sub-commands
-{symrer-verify, symref-delete, symref-create, symref-update} to the
-'--stdin' mode of update-ref. These complement the existing
-sub-commands.
+Since we also support symrefs now, we need to ensure that even when
+`old_target` is set a ref must exist. While this was missed when we
+added symref support in transactions, there are no active users of this
+path. As we introduce the 'symref-verify' command in the upcoming
+commits, it is important to fix this.
 
-The patches 1, 5 fix small issues in the reference backends. The other
-patches 2, 3, 4 & 6, each add one of the new sub-commands.
+So let's export this to a function called `ref_update_ref_must_exist()`
+and expose it internally via 'refs-internal.h'.
 
-The series is based off master, with 'kn/ref-transaction-symref' merged
-in. 
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ refs.c                  | 6 ++++++
+ refs/files-backend.c    | 3 +--
+ refs/refs-internal.h    | 6 ++++++
+ refs/reftable-backend.c | 2 +-
+ 4 files changed, 14 insertions(+), 3 deletions(-)
 
-Karthik Nayak (6):
-  refs: create and use `ref_update_ref_must_exist()`
-  update-ref: add support for 'symref-verify' command
-  update-ref: add support for 'symref-delete' command
-  update-ref: add support for 'symref-create' command
-  reftable: pick either 'oid' or 'target' for new updates
-  update-ref: add support for 'symref-update' command
-
- Documentation/git-update-ref.txt |  25 ++
- builtin/clone.c                  |   2 +-
- builtin/fetch.c                  |   2 +-
- builtin/receive-pack.c           |   3 +-
- builtin/update-ref.c             | 230 +++++++++++++++++-
- refs.c                           |  34 ++-
- refs.h                           |   6 +-
- refs/files-backend.c             |   3 +-
- refs/refs-internal.h             |   6 +
- refs/reftable-backend.c          |   7 +-
- t/t0600-reffiles-backend.sh      |  32 +++
- t/t1400-update-ref.sh            | 404 ++++++++++++++++++++++++++++++-
- t/t1416-ref-transaction-hooks.sh |  54 +++++
- 13 files changed, 775 insertions(+), 33 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index fa5471d219..59858fafdb 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2863,3 +2863,9 @@ int ref_update_check_old_target(const char *referent, struct ref_update *update,
+ 			    referent, update->old_target);
+ 	return -1;
+ }
++
++int ref_update_ref_must_exist(struct ref_update *update)
++{
++	return (update->flags & REF_HAVE_OLD) &&
++		(!is_null_oid(&update->old_oid) || update->old_target);
++}
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 3957bfa579..2df204f891 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2411,8 +2411,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 			       struct strbuf *err)
+ {
+ 	struct strbuf referent = STRBUF_INIT;
+-	int mustexist = (update->flags & REF_HAVE_OLD) &&
+-		!is_null_oid(&update->old_oid);
++	int mustexist = ref_update_ref_must_exist(update);
+ 	int ret = 0;
+ 	struct ref_lock *lock;
+ 
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 53a6c5d842..5da3029e6c 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -765,4 +765,10 @@ int ref_update_has_null_new_value(struct ref_update *update);
+ int ref_update_check_old_target(const char *referent, struct ref_update *update,
+ 				struct strbuf *err);
+ 
++/*
++ * Check if the ref must exist, this means that the old_oid or
++ * old_target is non NULL.
++ */
++int ref_update_ref_must_exist(struct ref_update *update);
++
+ #endif /* REFS_REFS_INTERNAL_H */
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 98cebbcf39..975061d103 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -825,7 +825,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 					      &current_oid, &referent, &u->type);
+ 		if (ret < 0)
+ 			goto done;
+-		if (ret > 0 && (!(u->flags & REF_HAVE_OLD) || is_null_oid(&u->old_oid))) {
++		if (ret > 0 && !ref_update_ref_must_exist(u)) {
+ 			/*
+ 			 * The reference does not exist, and we either have no
+ 			 * old object ID or expect the reference to not exist.
 -- 
 2.43.GIT
 
