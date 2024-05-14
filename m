@@ -1,528 +1,167 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA411862A
-	for <git@vger.kernel.org>; Tue, 14 May 2024 06:16:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4F319BDC
+	for <git@vger.kernel.org>; Tue, 14 May 2024 06:29:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715667414; cv=none; b=RqJ7YkeZAatouNxPCXGOZhVJGIX0LzkIh0I67gS4vHNnEacKPX/zInkeUPpE6okI8YG+l/xS4Abh0FLc6ccAj/kMv8A/uDCs3CMX4ZOtMQTpZpE/wmUrDFTTbLhm/QWnjQBj4IZO3hvv3hYmUduX9FMy7tY8s2+Lkzh1j605Bwg=
+	t=1715668198; cv=none; b=ge0oXE5RXnaokPYqWP9d0pC3qTekm8PjELM75LI3ATQ+QTe62xtxReu2TQIFcgzg8lLXSLRk2Y5hQ6s+ByHsA4M+a1d02B1duoyn24hBJlvwCVaVhHV+5xa/9e6VBzQQ9ksCVtk4rQ0M9xVyoUDR40FTFhbEXw6kgIudur51FEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715667414; c=relaxed/simple;
-	bh=YZF8NDaTyTy2VFxwnwQSU3Wvw4EcRE1+/AfyJu1uHi4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XWxSxnemcQXDyjEGxTHYrwFgJo3cLGJXWsxfMvCgaofuMIoHZzYqO9Xvt3D62sGYIUXv1KjnjcOBQIqg6RKviXYXagiwOdus9RHsejJbbMgH0NflWIzWa8jsIHsmkakctrfJ9IaeQf7V1uktuOTHYba91DMy41E9m8qYQ0FdgsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eJ0Cre1J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V6vQ33Po; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715668198; c=relaxed/simple;
+	bh=2dJFOGB2gFo7OcM+O4mECwo6TMsx2F5J1V1LLDLnFZA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fKBECrVe3BXeYaS6hdkqIJpEW+4nEOIY7duKpQekufZ/SkrD+htlhz6Sp7YcsW3K2czD8k8E09FYc3NeEhFwCvSvJLot/Kq8ZhLvFDTwtH2LD0K+otpAzzEUQ2hpLwMgmqnGZaXIZ/cz+c0pMYexmTGJhldfoxsHm6hwl9AJpu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DyR8Mj+Z; arc=none smtp.client-ip=209.85.166.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eJ0Cre1J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V6vQ33Po"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id CB10511401C2;
-	Tue, 14 May 2024 02:16:50 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Tue, 14 May 2024 02:16:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715667410; x=1715753810; bh=2DwAZQ3+Q9
-	Fjq/ujIF7cw/QO0VN8fOhzzKAXUNG1+Ic=; b=eJ0Cre1JJ2yMLCJwYuC+joKR91
-	jrUKDn7A1Bsi/Do+Ab3K8SP1eDCYnFDpi/B5xVVXPRUNuLTxjPDn+OeVivoi/UgS
-	Y8pwQ/0H8s5p9MR/aYXXJdaa+kvN7SUg+c5JFaLu7nCimWoQfEUlTwod1eN3jv5o
-	wsqVHFYTtfLcjDIM/hGgoUm30AjVM97wwSj+845FOR/tnCteOLq7bsyGiG/gslE+
-	sP9qdiqBUcichuadTvKfr0b08ZLC4OCjDoLXvqJWdB357gl36wS4bRpb37OwLEUH
-	S0T8cJ1ZGMHWJLq4JP3umtmJtfLgkhmSItxguzghji7B4ZI1Liib4Y63OFJw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715667410; x=1715753810; bh=2DwAZQ3+Q9Fjq/ujIF7cw/QO0VN8
-	fOhzzKAXUNG1+Ic=; b=V6vQ33Po7GrwCDq20AXGzff/zzTiv+AtNPl/VVaD3sIK
-	Y/lzfmunh0/OBuGHQ1imKlwHjzZFeWX/pNu77ud4OC33ICSLw+kvFaqIjXcdAcyp
-	9AKZzSNKxWZocG2vbkP6GEK3valDhQwiglzwZ4ujCJuo004sxCGkZDtR/kKiFa/6
-	Lj2ZZAM5/SwFFKpIRajkoO0bwHWNKgwuY+yTli/XL4k9xfRjQfTyOx6Apnou5mSq
-	93iHuId9YAWQYjkjdpOG+BpbQH8sLlMaoM2uzoHALvA49DXtaE61t9e2ZorcbWCU
-	zyctIgGAJYV9bmdTc0UP1D5GqaLAkt8XHpCSBnnbWQ==
-X-ME-Sender: <xms:0gFDZv2vOVPzlDyzcGrSKSJBqibUtnzQOaxiENyfXxciWnHMiGWTtA>
-    <xme:0gFDZuFY3y6z_W3KfJapuzibxhUz3fKtLl3qn0-YNbt5PAkJXTZBQ5eE2bXaEkfhU
-    TBZJEEOrNRtpyVE-w>
-X-ME-Received: <xmr:0gFDZv5Vv6Po5090l7mZn7gT4B7MyzDuKcyWwcaNge1fIbKprJH5JFGD3pZH76PfWxNCDriKLEBUlPy2WKkUi8-3i7kJppu01ILz6iQpYe4TsBEnss73>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeghedgleejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhephefgjeeigeektdfhffeuteeuuddtkeffheejgeefjeeigfeivedtgfffheefvdel
-    necuffhomhgrihhnpehhthhtphgurghvrdhsuhhpphhorhhtpdhgihhthhhusgdrtghomh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
-    phhkshdrihhm
-X-ME-Proxy: <xmx:0gFDZk09xW5CmYpJl400zQlL2ZVAABxo4sOtUbooFQR6mGZ6HVPwCw>
-    <xmx:0gFDZiEMTuSDgqzVyI3U_LDQFV3Njt9pZp74PByqWNakLy_DfoJABw>
-    <xmx:0gFDZl9sc6FwlSzq121DOMkh-suN6Z9_ii5bWxqZKfqKgOcHXgcSqQ>
-    <xmx:0gFDZvkPtC19WZf9o8LKz6dQOGWvbsoJHDvWabJHkAVoAxakm9b7vQ>
-    <xmx:0gFDZn4OF9-wRZjqxfjvnP1MH0SCb1lurvq-3ILceDr_zMRgSQdIbJsm>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 May 2024 02:16:49 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id bc0aa320 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 14 May 2024 06:16:26 +0000 (UTC)
-Date: Tue, 14 May 2024 08:16:44 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Dragan Simic <dsimic@manjaro.org>
-Subject: [RFC PATCH v2] docs: document upcoming breaking changes
-Message-ID: <2ef53ff98b12fe9373a15ec3a795235f040d9049.1715667067.git.ps@pks.im>
-References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DyR8Mj+Z"
+Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-7e1fcd2e6a4so7247639f.0
+        for <git@vger.kernel.org>; Mon, 13 May 2024 23:29:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715668196; x=1716272996; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=wCm0QdLzu7His4U5+Yu0OlVKutGPWgZ6tGwE/39QpJQ=;
+        b=DyR8Mj+ZhM6pPAaUIPualddkJtfISiyk06Sk1roF/DWKCRrBy0wKsUl8uqOXkyR3cv
+         vcCirN5zBS8MuNLbBpFimtVhL1viRkiUYugpS+Xj5pL7sX0RZ5jJjsdLdGm5pHPaoWjQ
+         WYSWEc9KjjuSk9/TjruB0eIWUgdd0wRcVaNg7T+7K77AProqiZP7SBQT7f4EnP+228Zk
+         3fuupelXW8usQRK6R1NLxFIe8gECXGsOxrHVuY243+kOBm2jJyEOxvRdlno9/JiwFyJB
+         3rPfC9LL3AUkq4UxADJk25IbzgWkRLu4Yxr+BXQQx80G+YMhRacDHC7QBUI93COZMh0j
+         qm8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715668196; x=1716272996;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wCm0QdLzu7His4U5+Yu0OlVKutGPWgZ6tGwE/39QpJQ=;
+        b=aBXirinQOzbq+ZxWKsAf+GtyKdkkb3OK94FDFaKuwzoE7IcoZP2Qxi2huhoDdHoWmA
+         MS/ptS/5sUgx2OB55L6SK1P+1OU4AkWtyp2oVxOrM2IU3+5FCjMbrthK22oVII48MruY
+         meVfjdnNZgjjjfJRwB9LXhswdke/yt+/6fZ2Fqux2RsFb9zjI+aljIqyVc0RRw0WVAwn
+         lAIv8A3U996z6H5XQJ4x1aWHmJE1tttZBeneVG5bG7rF9WH0zwMrRe8cKDRbHN+72H6W
+         aSUhVPAWAYs0svNhU6y9DV1VhR7xMZoAzGh4vaccZFtqszNP7GGxY7vWYLTzasdG3L4f
+         gwsw==
+X-Gm-Message-State: AOJu0YyLS9scRuDwyELwFR84QlKm7gtROXjq8jr+MOYB1FXZ6fgbDy7F
+	946njz/ny/KB62u8HXiPKBYCQNndqeC3USFwu8tSvxzpVn53N9jVC5MwpalHUGWD33958cNQLeP
+	PMPN/rdyDCMXiuRRHeZndu41guXkbdwvW
+X-Google-Smtp-Source: AGHT+IE9y4SF++183Ssf3r0vh8z1DWIg/VsFHnPMDFrb1YvTKUWwN0tfvBsBB0bdL4RxwG1iM2hKl1mdG1maG1iGXKY=
+X-Received: by 2002:a05:6e02:17ca:b0:36b:85e:7d69 with SMTP id
+ e9e14a558f8ab-36cc144b718mr210491385ab.10.1715668196316; Mon, 13 May 2024
+ 23:29:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="euz7EljrVthpqnX+"
-Content-Disposition: inline
-In-Reply-To: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
+References: <CAJsoDaEJn1Y0CgtxpkGqVRsTiDnMxjNFrtbTuUVOvT87N23JNg@mail.gmail.com>
+ <13fa579b-8987-4430-967c-42b9de8acb6d@gmail.com> <CAJsoDaFhTcm0fEw3+Ba4PvTjPYxscALeLN2kBgs4YYz8Bg-R7g@mail.gmail.com>
+In-Reply-To: <CAJsoDaFhTcm0fEw3+Ba4PvTjPYxscALeLN2kBgs4YYz8Bg-R7g@mail.gmail.com>
+From: Ondra Medek <xmedeko@gmail.com>
+Date: Tue, 14 May 2024 08:29:45 +0200
+Message-ID: <CAJsoDaHu1xgfwXHqOGgctQoi5Qb5D1aESeMvaVHaQV0zjyzRRg@mail.gmail.com>
+Subject: Re: Checkout to different directory at certain commit without
+ changing index
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Phillip,
 
---euz7EljrVthpqnX+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+your trick with different index file works with git checkout, too, e.g.
 
-Over time, Git has grown quite a lot. With this evolution, many ideas
-that were sensible at the time they were introduced are not anymore and
-are thus considered to be deprecated. And while some deprecations may be
-noted in manpages, most of them are actually deprecated in the "hive
-mind" of the Git community, only.
+GIT_INDEX_FILE="$destdir"/.git git --work-tree="$destdir" checkout -f
+-q "$commit" -- ./
+rm -f "$destdir"/.git
 
-Introduce a new document that lists upcoming breaking changes, but also
-deprecations which we are not willing to go through with, to address
-this issue. This document serves multiple purposes:
+Sincerely
+Ondra
 
-  - It is a way to facilitate discussion around proposed deprecations.
-
-  - It allows users to learn about deprecations and speak up in case
-    they have good reasons why a certain feature should not be
-    deprecated.
-
-  - It states intent and documents where the Git project wants to go,
-    both in the case where we want to deprecate, but also in the case
-    where we don't want to deprecate a specific feature.
-
-The document is _not_ intended to cast every single discussion into
-stone. It is supposed to be a living document that may change over time
-when there are good reasons for it to change.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-
-I have tried to accommodate for all feedback to v1. Most notably:
-
-  - I have introduced a new section that documents concepts that are
-    _not_ to be deprecated. The intent is to capture discussions around
-    proposed deprecations where we ultimately decide that we do not
-    (yet) want to deprecate it.
-
-  - I have added some more proposed deprecations. As before, all of this
-    is up for discussion and I do not want to force any of the proposed
-    deprecations onto anybody.
-
-  - I have dropped the "$GITDIR/hooks" deprecation item for now. It is
-    premature to have it at this point in time given that the
-    config-based approach isn't even close to landing.
-
-Patrick
-
-Range-diff against v1:
-1:  a78d68ecc2 ! 1:  2ef53ff98b docs: document upcoming breaking changes
-    @@ Commit message
-         noted in manpages, most of them are actually deprecated in the "hi=
-ve
-         mind" of the Git community, only.
-    =20
-    -    Introduce a new document that lists upcoming breaking changes to a=
-ddress
-    +    Introduce a new document that lists upcoming breaking changes, but=
- also
-    +    deprecations which we are not willing to go through with, to addre=
-ss
-         this issue. This document serves multiple purposes:
-    =20
-           - It is a way to facilitate discussion around proposed deprecati=
-ons.
-    @@ Commit message
-             they have good reasons why a certain feature should not be
-             deprecated.
-    =20
-    -      - It states intent and documents where the Git project wants to =
-go.
-    +      - It states intent and documents where the Git project wants to =
-go,
-    +        both in the case where we want to deprecate, but also in the c=
-ase
-    +        where we don't want to deprecate a specific feature.
-    =20
-         The document is _not_ intended to cast every single discussion into
-         stone. It is supposed to be a living document that may change over=
- time
-    @@ Documentation/UpcomingBreakingChanges.md (new)
-     @@
-     +# Upcoming breaking changes
-     +
-    ++The Git project aims to ensure backwards compatibility to the best ex=
-tent
-    ++possible. Minor releases will not break backwards compatibility unles=
-s there is
-    ++a very strong reason to do so, like for example a security vulnerabil=
-ity.
-    ++
-    ++Regardless of that, due to the age of the Git project, it is only nat=
-ural to
-    ++accumulate a backlog of backwards-incompatible changes that will even=
-tually be
-    ++required to keep the project aligned with a changing world. These cha=
-nges fall
-    ++into several categories:
-    ++
-    ++  - Changes to long established defaults.
-    ++
-    ++  - Concepts that have been replaced with a superior design.
-    ++
-    ++  - Concepts, commands, configuration or options that have been lacki=
-ng in major
-    ++    ways and that cannot be fixed.
-    ++
-    ++The Git project will thus irregularly release major versions that del=
-iberately
-    ++break backwards compatibility with older versions. This is done to en=
-sure that
-    ++Git remains relevant, safe and maintainable going forward. The releas=
-e cadence
-    ++of major versions is typically measured in multiple years.
-    ++
-     +The intent of this document is to track upcoming deprecations for the=
- next major
-    -+Git release. It is supposed to be a living document where proposed ch=
-anges and
-    ++Git release. Furthermore, this document also tracks what will _not_ be
-    ++deprecated. This is done such that the outcome of discussions documen=
-te both
-    ++when the discussion favors deprecation, but also when it rejects a de=
-precation.
-    ++
-    ++It is supposed to be a living document where proposed changes and
-     +deprecations are up for discussion.
-     +
-     +## Git 3.0
-    @@ Documentation/UpcomingBreakingChanges.md (new)
-     +
-     +### Removals
-     +
-    -+ - git-config(1) has learned to use subcommands that replace implicit=
- actions
-    -+   (e.g. `git config foo.bar baz`) as well as the action flags (e.g. =
-`git config
-    -+   --unset-all`). The actions will be removed in favor of subcommands.
-    -+   Prerequisite for this change is that the new subcommands have been=
- out for at
-    -+   least for two years to give script authors time to migrate.
-    -+
-    -+   Cf. <ZjiL7vu5kCVwpsLd@tanuki>.
-    -+
-     + - git-http-push(1) can be used to push objects to a remote repositor=
-y via
-     +   HTTP/DAV. Support for write support via WebDAV is not in widesprea=
-d use
-     +   nowadays anymore and will be removed together with the command.
-    @@ Documentation/UpcomingBreakingChanges.md (new)
-     +   shorthands for URLs for git-fetch(1), git-pull(1) and git-push(1).=
- This
-     +   concept has long been replaced by remotes and will thus be removed.
-     +
-    -+ - git-annotate(1) is an alias for git-blame(1) with the `-c` flag. I=
-t will
-    -+   be removed in favor of git-blame(1).
-    -+
-     + - "gitweb" and git-instaweb(1) can be used to browse Git repositorie=
-s via an
-     +   HTTP server. These scripts have been unmaintained for a significan=
-t amount of
-     +   time and will be removed.
-    @@ Documentation/UpcomingBreakingChanges.md (new)
-     +   very slow, hard to use and has many gotchas. It will thus be remov=
-ed in favor
-     +   of [git-filter-repo](https://github.com/newren/git-filter-repo).
-     +
-    -+ - githooks(5) can be installed by placing them into `$GIT_DIR/hooks/=
-`. This has
-    -+   been a source of multiple remote code execution vulnerabilities. T=
-he feature
-    -+   will be removed in favor of `core.hooksDirectory` and the new conf=
-ig-based
-    -+   hooks.
-    ++ - The "dashed form", i.e. support for calling `git-<command>` instea=
-d of
-    ++   `git <command>` in scripts, has been deprecated for a long time an=
-d will be
-    ++   removed.
-    ++
-    ++ - The command to import patches from Quilt seems to be used rarely, =
-if
-    ++   ever, and will be removed.
-    ++
-    ++ - Support for importing repositories from GNU Arch will be removed b=
-ecause
-    ++   it would not appear to have any users.
-    ++
-    ++ - Support for interacting with CVS repositories (via `cvsimport`,
-    ++   `cvsexportcommit` and `cvsserver`) is of dubious use by now, judgi=
-ng by
-    ++   the number of times these commands have been mentioned recently. T=
-he
-    ++   code has been essentially unmaintained, too, and will be removed.
-    ++
-    ++ - Support for grafting commits has long been superseded by git-repla=
-ce(1).
-    ++   Grafts are inferior to replacement refs as the mechanism can lead =
-to
-    ++   hard-to-diagnose problems when transferring objects between reposi=
-tories.
-    ++   They have been outdated since e650d0643b (docs: mark info/grafts a=
-s outdated,
-    ++   2014-03-05) and will be removed.
-    ++
-    ++## Superseded features that will not be deprecated
-    ++
-    ++Some features have gained newer replacements that aim to improve the =
-design in
-    ++certain ways. The fact that there is a replacement does not automatic=
-ally mean
-    ++that the old way of doing things will eventually be removed. This sec=
-tion tracks
-    ++those superseded features.
-    ++
-    ++ - git-annotate(1) is an alias for git-blame(1) with the `-c` flag. As
-    ++   the maintenance burden of carrying both of these commands is negli=
-gible, both
-    ++   commands will stay.
-    ++
-    ++ - git-restore(1) and git-switch(1) have been introduced as a replace=
-ment for
-    ++   git-checkout(1). As git-checkout(1) is quite established, and as t=
-he benefit
-    ++   of switching to git-restore(1) and git-switch(1) is contended, all=
- three
-    ++   commands will stay.
-    ++
-    ++ - git-config(1) has learned to use subcommands that replace implicit=
- actions
-    ++   (e.g. `git config foo.bar baz`) as well as the action flags (e.g. =
-`git config
-    ++   --unset-all`). The action flags will not be removed in the next ma=
-jor Git
-    ++   release as there likely exist a lot of scripts out there that use =
-the old
-    ++   syntax.
-    ++
-    ++   Cf. <ZjiL7vu5kCVwpsLd@tanuki>.
-
- Documentation/UpcomingBreakingChanges.md | 119 +++++++++++++++++++++++
- 1 file changed, 119 insertions(+)
- create mode 100644 Documentation/UpcomingBreakingChanges.md
-
-diff --git a/Documentation/UpcomingBreakingChanges.md b/Documentation/Upcom=
-ingBreakingChanges.md
-new file mode 100644
-index 0000000000..8c7a5f2f38
---- /dev/null
-+++ b/Documentation/UpcomingBreakingChanges.md
-@@ -0,0 +1,119 @@
-+# Upcoming breaking changes
-+
-+The Git project aims to ensure backwards compatibility to the best extent
-+possible. Minor releases will not break backwards compatibility unless the=
-re is
-+a very strong reason to do so, like for example a security vulnerability.
-+
-+Regardless of that, due to the age of the Git project, it is only natural =
-to
-+accumulate a backlog of backwards-incompatible changes that will eventuall=
-y be
-+required to keep the project aligned with a changing world. These changes =
-fall
-+into several categories:
-+
-+  - Changes to long established defaults.
-+
-+  - Concepts that have been replaced with a superior design.
-+
-+  - Concepts, commands, configuration or options that have been lacking in=
- major
-+    ways and that cannot be fixed.
-+
-+The Git project will thus irregularly release major versions that delibera=
-tely
-+break backwards compatibility with older versions. This is done to ensure =
-that
-+Git remains relevant, safe and maintainable going forward. The release cad=
-ence
-+of major versions is typically measured in multiple years.
-+
-+The intent of this document is to track upcoming deprecations for the next=
- major
-+Git release. Furthermore, this document also tracks what will _not_ be
-+deprecated. This is done such that the outcome of discussions documente bo=
-th
-+when the discussion favors deprecation, but also when it rejects a depreca=
-tion.
-+
-+It is supposed to be a living document where proposed changes and
-+deprecations are up for discussion.
-+
-+## Git 3.0
-+
-+### Changes
-+
-+  - The default initial branch name will be changed from "master" to "main=
-".
-+
-+    Cf. <pull.762.git.1605221038.gitgitgadget@gmail.com>,
-+    <CAMP44s3BJ3dGsLJ-6yA-Po459=3D+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>.
-+
-+  - The default hash function for new repositories will be changed from "s=
-ha1"
-+    to "sha256".
-+
-+  - The default ref backend for new repositories will be changed from "fil=
-es" to
-+    "reftable".
-+
-+### Removals
-+
-+ - git-http-push(1) can be used to push objects to a remote repository via
-+   HTTP/DAV. Support for write support via WebDAV is not in widespread use
-+   nowadays anymore and will be removed together with the command.
-+
-+ - The dumb HTTP protocol can be used to serve repositories via a plain HT=
-TP
-+   server like Apache. The protocol has not seen any updates recently and =
-is
-+   neither compatible with alternative hash functions nor with alternative=
- ref
-+   backends. It will thus be removed.
-+
-+ - git-update-server-info(1) generates data required when serving data via=
- the
-+   dumb HTTP protocol. Given the removal of that protocol, it serves no pu=
-rpose
-+   anymore and will be removed together with the protocol. This includes t=
-he
-+   "receive.updateServerInfo" and "repack.updateServerInfo" config keys an=
-d the
-+   `git repack -n` flag.
-+
-+ - `$GIT_DIR/branches/` and `$GIT_DIR/remotes/` can be used to specify
-+   shorthands for URLs for git-fetch(1), git-pull(1) and git-push(1). This
-+   concept has long been replaced by remotes and will thus be removed.
-+
-+ - "gitweb" and git-instaweb(1) can be used to browse Git repositories via=
- an
-+   HTTP server. These scripts have been unmaintained for a significant amo=
-unt of
-+   time and will be removed.
-+
-+ - git-filter-branch(1) can be used to rewrite history of a repository. It=
- is
-+   very slow, hard to use and has many gotchas. It will thus be removed in=
- favor
-+   of [git-filter-repo](https://github.com/newren/git-filter-repo).
-+
-+ - The "dashed form", i.e. support for calling `git-<command>` instead of
-+   `git <command>` in scripts, has been deprecated for a long time and wil=
-l be
-+   removed.
-+
-+ - The command to import patches from Quilt seems to be used rarely, if
-+   ever, and will be removed.
-+
-+ - Support for importing repositories from GNU Arch will be removed because
-+   it would not appear to have any users.
-+
-+ - Support for interacting with CVS repositories (via `cvsimport`,
-+   `cvsexportcommit` and `cvsserver`) is of dubious use by now, judging by
-+   the number of times these commands have been mentioned recently. The
-+   code has been essentially unmaintained, too, and will be removed.
-+
-+ - Support for grafting commits has long been superseded by git-replace(1).
-+   Grafts are inferior to replacement refs as the mechanism can lead to
-+   hard-to-diagnose problems when transferring objects between repositorie=
-s.
-+   They have been outdated since e650d0643b (docs: mark info/grafts as out=
-dated,
-+   2014-03-05) and will be removed.
-+
-+## Superseded features that will not be deprecated
-+
-+Some features have gained newer replacements that aim to improve the desig=
-n in
-+certain ways. The fact that there is a replacement does not automatically =
-mean
-+that the old way of doing things will eventually be removed. This section =
-tracks
-+those superseded features.
-+
-+ - git-annotate(1) is an alias for git-blame(1) with the `-c` flag. As
-+   the maintenance burden of carrying both of these commands is negligible=
-, both
-+   commands will stay.
-+
-+ - git-restore(1) and git-switch(1) have been introduced as a replacement =
-for
-+   git-checkout(1). As git-checkout(1) is quite established, and as the be=
-nefit
-+   of switching to git-restore(1) and git-switch(1) is contended, all three
-+   commands will stay.
-+
-+ - git-config(1) has learned to use subcommands that replace implicit acti=
-ons
-+   (e.g. `git config foo.bar baz`) as well as the action flags (e.g. `git =
-config
-+   --unset-all`). The action flags will not be removed in the next major G=
-it
-+   release as there likely exist a lot of scripts out there that use the o=
-ld
-+   syntax.
-+
-+   Cf. <ZjiL7vu5kCVwpsLd@tanuki>.
---=20
-2.45.GIT
-
-
---euz7EljrVthpqnX+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZDAcsACgkQVbJhu7ck
-PpQIXA//e9xr1V2rObUnDmI+mrB6ofRU4sTeilD//vJgOQy1tSrUjkFxS/Ev4m/L
-rPkmdswHbfpVGU9Zww72u9Sfj0ZhBRAMqVgF7llD2UYkVuioAkK+XZsZGwYmDA6T
-KS8hxaDRXDcDs/aTV2oa4fe9Yyk8eXKPuQpFVdppWcQf46rA2hvNxODiXuFy4KzB
-mnxvlLPY+CxzZBtCn/DD2u5DwBGcY70iXoW53z/KFkcbyvMXS5f4fHqRp5Kf1GlG
-uUM7pS9eWSNPYquWAx+6r8ze+hOHyRzISNhO1T4EY3GXn+6qZdxCG0fkgFoLLb3N
-SZIRh9FQRd6z3SfplfJGNDscofXpsgaNBUv9wi5OIrQjQEB6RWkZPnO5ZPRqFRPJ
-IkjWFipBR8+wP+4DHT+nm+YZgX0El5wHYyJ4NfHSjcu1NnN35eseaFO97ScxfstH
-cHxIqHwh+KHQFgnLUQL+5DH3yVQeFLazb6lRg6HpoUsY6Y2jXuDloTqHJkZEHo1Q
-niFD/UabFn6dxrLUmiGsKTtLI0D3bH7ZhZswdZ5PiE40oCU4sgtBx2tK3TAK+JsG
-Z5AT79sUOErgNhoU3/SoKAvc59wCu+uBo4w5v9hW3fYNx7dXwLA80O3ZELunan/s
-woTIprkt3HV/H3gCE12QapcDwwGG+wKnys1dDElk/k7FCILEJOE=
-=VC0k
------END PGP SIGNATURE-----
-
---euz7EljrVthpqnX+--
+On Mon, 13 May 2024 at 19:23, Ondra Medek <xmedeko@gmail.com> wrote:
+>
+> Hi Phillip,
+>
+> besides dependency on tar, I do not want to use git-archive because
+> it's influenced by export-ignore and export-subst attributes, too (as
+> I have mentioned).
+>
+> Thanks for git read-tree, seems it's exactly what I need. Just git
+> read-tree has complained that -u switch needs -m or --reset switches.
+> And I have simplified it to
+>
+> git --work-tree="$destdir" read-tree --index-output="$destdir".git -u
+> --reset "$commit"
+> rm -f "$destdir"/.git
+>
+> May I post this solution to the SO thread I have mentioned?
+>
+> Thanks very much
+>
+> Ondra
+>
+> On Mon, 13 May 2024 at 17:28, Phillip Wood <phillip.wood123@gmail.com> wrote:
+> >
+> > Hi Ondra
+> >
+> > On 13/05/2024 08:26, Ondra Medek wrote:
+> > > Hello,
+> > > I need a simple script for unskilled users to do a fast checkout (LFS
+> > > friendly) of the current local Git clone at a certain commit to a
+> > > different directory I.e. something like "copy at a point in history".
+> >
+> > I think using
+> >
+> >      git archive "$commit" --format=tar |
+> >         { cd "$output_directory" && tar -xf -; }
+> >
+> > is probably the simplest solution. If you don't want to rely on tar then
+> > something like
+> >
+> >      GIT_DIR="$(git rev-parse --path-format=absolute --git-dir)" &&
+> >      GIT_COMMON_DIR="$(git rev-parse --path-format=absolute
+> > --git-common-dir)" || exit
+> >      GIT_INDEX_FILE="$GIT_DIR/tmp-index-$$"
+> >      export GIT_DIR GIT_COMMON_DIR GIT_INDEX_FILE
+> >      unset GIT_WORK_TREE
+> >      mkdir "$output_directory" && cd "$output_directory" &&
+> >      git read-tree -u "$commit"
+> >      status=$?
+> >      rm "$GIT_INDEX_FILE"
+> >      exit $status
+> >
+> > Which uses a temporary index file should work (note I haven't tested
+> > it). You may want to add "--recurse-submodules" and/or
+> > "--no-sparse-checkout" to the "git read-tree" commandline.
+> >
+> > Best Wishes
+> >
+> > Phillip
+> >
+> > > IMO all possible solutions are summarized in this thread
+> > > https://stackoverflow.com/questions/160608/do-a-git-export-like-svn-export
+> > > I describe some of them with my remarks:
+> > >
+> > > - git checkout-index : works with HEAD only.
+> > > - git archive: influenced by export-ignore and export-subst
+> > > attributes, so may not produce exact copy of sources. (And needs tar).
+> > > - git worktree add -d : needs cleanup: git prune or git remove.
+> > > - git clone: Unfortunately, -b param cannot work with commit hash and
+> > > does not respect local worktree settings (e.g. autocrlf). So, a
+> > > solution may be a bit complicated: git clone -s -n . dest/path ; cp
+> > > .git/config dest/path/.git ; cd dest/path ; git co -q <commit-ish> ;
+> > > rm -rf .git
+> > > - git checkout: Unfortunately, modifies Git index, so some action to
+> > > revert index is necessary after: git --work-tree=/path/to/checkout/
+> > > checkout -f -q <tree-ish> -- ./
+> > >
+> > > For me, the best solution is with git clone, because it does not
+> > > modify Git index nor any source working tree settings, so no cleanup
+> > > is necessary. But it's a bit complicated, though. It seems to me that
+> > > "git checkout" could do this better and simpler if it would have some
+> > > param to not modify the Git index. Is it possible to enhance git
+> > > checkout? Or is there any other simple solution not mentioned in the
+> > > SO thread?
+> > >
+> > > Thank you
+> > > Ondra Medek
+> > >
