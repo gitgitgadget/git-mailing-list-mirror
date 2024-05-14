@@ -1,177 +1,185 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFAE12E4A
-	for <git@vger.kernel.org>; Tue, 14 May 2024 06:50:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108975915A
+	for <git@vger.kernel.org>; Tue, 14 May 2024 10:01:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715669455; cv=none; b=nsH6MQ2l8yLVXjaD+yGOQgNW2gHFJ6FWtMP6BezMsUDDiyfB1yNIfT9I2B2C5etUoKKQlETivqUsydQOfDXa+U7ByEipTO7jS4oHq7rNiTnWGykpg9MNmbm/BBrYwufhUBvuaBd6eKdZmIzeRJakR6vS1Oly1I2IoOs+hTOZ4NE=
+	t=1715680900; cv=none; b=mAcAzc0eGN6NLyqTArYvxLyosAP3ub2ObaB9ynP3jGDyaXo25ClD4t+6p70sbIpHSBaWqZ6dDRMXxIuMHLn6gG+fY90cYNb4FZGF7/xvDuJbqnTui6BHK7pSyK9ZNXx1Shi9DrmIGfZwyAkzrA30jkQKGAUQ76QxFt9t9MaFAW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715669455; c=relaxed/simple;
-	bh=fxkbu5EYuDcoKOcwhWZWTJOZzvHL949Uv0XaHSp/IEk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M8hkQbPh/PXRlcYFnZRmplnwjYSG+de4pChG6UOrfEeYQHk2pJxeWgmTlSuJ7k0/5VaZfcgWqLUUq7LK2BJ7TeQ10ufEeoDp5yZd/c7ZUGgO4IfDxaNHszCrKsWhD4RZD6xYJgW+oG4sk9v4tDjErQfit+Z7HTvqqmDPeT5+3Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UyyxUdC3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YlzZGQUf; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715680900; c=relaxed/simple;
+	bh=kO02UEUK7Y/KpY3XJddUP4XYLdHXF7MldBFm8OyzJKg=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Qa3WxhK4CW/M43aE9qnrBB6tmlqD41l+A4vzhTAiZLSG8AAPvu8eUsHLHq1Xcilsl7fRnL1KED7gVkI0lhcGn3QtMRxgNWD8XE/9Jf+K5ALZAt6ShDpAcX6pG7ZsgkKQwaFstP1bn46IGFEBn0kqvAXoPHBkMo0f+Qer/Il1Fgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NPXHC85J; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UyyxUdC3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YlzZGQUf"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 54F071381493;
-	Tue, 14 May 2024 02:50:52 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 14 May 2024 02:50:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715669452; x=1715755852; bh=uU0srnd2lF
-	CIwaz6vdtE/g0wkG42Ojo7mOticFdlE/8=; b=UyyxUdC3jlho+X8k52DzqVJNcY
-	z0c4xDn6DKCuBjAc5eSyoCCQ8mm+J+j6Ya68XgRRMYCAMGrbMXrAXF0ZS5WfH6Bo
-	oFjO4CUKKoyAsn6PtH7OKgVj/OVGvzq7ANMfvizZoG8IDVDTUw9ehMyWRU06ptVz
-	e3KjVZwoozUGYNtFzpEE0TzzBIbs2lBwMIZMpwGQWdrqRLiKicNvvvXSue59NgD9
-	Cu12c/mG8UZZwu9yiwDbLa12aWhfADI4wo7/o9w1C+Tqdm2SvqP3wLptuXUUadR9
-	pBnYRvkiP3WucABKFYTw2+TWqrD2Vi/NjM2+7qcfSM3+w3qY8n37A+s1A/uA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715669452; x=1715755852; bh=uU0srnd2lFCIwaz6vdtE/g0wkG42
-	Ojo7mOticFdlE/8=; b=YlzZGQUfVq4OibAfBTcyYdlrG0goLoEN/dnLADbquDhS
-	GREgUvhRyHNwfW5gzch4pN2B52x9goGuxWlNHAYISgfrNpIbN0MLRK+ibYXZKU0s
-	8gFIHaBLxHoKW2zLE1/ubtdNzh8qXurcyENeWVOQHaIEAxNmqs7u5YHPuTusX+zK
-	SFP4VoG2wzUNARMyIx0JFx5Bcp9Wb7fFZo3zTCN/tsekkTaXOYFf0NkILRidEyNS
-	feeQDkD810Mq85J/UYsMfgM0oeVpjgauaCjFybxwqCgZMPc1ScNMjYaeU8qQd66W
-	n/PkHaUyu1ysNfuIDU832AJJctxf71DE/1EUdeDj0g==
-X-ME-Sender: <xms:zAlDZkI6If_is29DUkwU8IBrXq7ktdijpJPLx8zqiSAotr-YxriFXw>
-    <xme:zAlDZkI2S7Ra97Ky592WS5xwOHGv7d3hCcgmykviWiZO86t9644Vf3zCzwPr7fiFV
-    OMSZLq2Dbs1MjESvA>
-X-ME-Received: <xmr:zAlDZku-_Y5qdCB_kN3nkLaVA54GQrO8f4sO6Lq_RGwhLVrq5qW3T3JKszXYkU7pMmuhO3SeH6ybsM0Doe3IWSGTEY-jyyi3ZCo9CSdiOTsgH3xat7lc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeghedguddthecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:zAlDZhbUCJfwZrcupxhCf-uVtnLIDK75g-qnyLh6g0fHJVvSCe5j3w>
-    <xmx:zAlDZrbV2RHNObD223fo8EqVxsb52I9K3BKuFteA3ryCVkhVZlSH6w>
-    <xmx:zAlDZtAecKglcJPJsiXy9lxOMDq1BfFHPtGtx4u_vJBmMP89UgLC6A>
-    <xmx:zAlDZhaQya1wtnKpKum_Ib701tcmLIoA7lDqCFLYFVQQMPN788oLFA>
-    <xmx:zAlDZnGOT-PxbeSARUvUoQ8IMAb2nao_B2Y5dCJIoOZzIsqdlzi0nEtc>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 May 2024 02:50:51 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id b05eb5a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 14 May 2024 06:50:29 +0000 (UTC)
-Date: Tue, 14 May 2024 08:50:47 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] docs: document upcoming breaking changes
-Message-ID: <ZkMJxxKdr2hd1mzR@tanuki>
-References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
- <obsrinbe2uvemiq7q22zrbcln2lmfaukn6lqn7nagrassoicb4@ihwb6ifpjomc>
- <xmqq1q6aqnm2.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NPXHC85J"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-41f9ce16ed8so53928775e9.0
+        for <git@vger.kernel.org>; Tue, 14 May 2024 03:01:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715680897; x=1716285697; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0Gpyae8FG6l8VTMLbai8Ub0c40Gnav/UtOmbfeHZKvU=;
+        b=NPXHC85JjKbTbRLX7UqFBnjMhGBDzuZeX3ZgEajs4bboBQWibNfWRReOBd679zf7mN
+         gCb9eqMiXmSIg1MACPjPJ7MjmMfUM7pRcUWCEQI46uhgoEBFjlYwOp5JMg5laFkqRele
+         2EQyLBnlKMmpSd5nTnt8mlU02GlSS5tTmE1SHYqQjI/ASmE5qnIgN8N4uhZPnEZkeVVl
+         EGwg8hnGgT6Dvy+BnHcWlSpYfggcKmJQr/5rT1oEum05kJtI55AekDv2TKvSssJewJCj
+         08jabhs54l5O8vI5Pw+y19WqCnVI9iYbamWaDjPxl3p4OBWm3a7eGZyPvN4sleCJSJa3
+         XZRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715680897; x=1716285697;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0Gpyae8FG6l8VTMLbai8Ub0c40Gnav/UtOmbfeHZKvU=;
+        b=G9viJaQnlqLvguLAOcREyR1+Z7O5nkCrDD/5XwxNRh+yO2bhOz2nkOfcdFYtIQogCu
+         NluosvoO2Xa1T/m2FkxEuxCGqzMuWmPNEx4p8VpDBhy+1v1eJWn0IUX5BA/blKqB8nCB
+         rk8fwZtsmzh9ZZsQSmLyYXIMdO1OiVeF9g8AEZ/rp6Zrn4i9i3UZXTK91hrdYNYpE9qt
+         yx6BPpxL94LfWWkAbYAeEejpyFngEkbu3LJVWzkJnDitWlXSs/p+6hirw43Uo8JXlmY4
+         oqYrU3D/cIh6orj8jRDc8L/k0fDz6cpxutBN/QS8VscQZ7zJ1dKLvuAqUDUhwcVCm9r5
+         XbKw==
+X-Gm-Message-State: AOJu0Yx6uT4oQfiYZJzI9VdbO6hu+f1T1F60FiyN4TZOHxqK3J3CWJII
+	ICuEGWHdxie/NoswHI8RV742N0vDt8U9gvSKdSqsF0OWkGOjyYZb
+X-Google-Smtp-Source: AGHT+IHEfDm/p4St2xQ/+25QMG7fK1uN+WojHltWQn6JXXt0Seltg+ncy8XT68qAZRd0enPlYk+zpQ==
+X-Received: by 2002:a05:600c:6a14:b0:41b:f577:373 with SMTP id 5b1f17b1804b1-41feaa38e45mr119865465e9.15.1715680897217;
+        Tue, 14 May 2024 03:01:37 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1? ([2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42012a025dbsm88076435e9.23.2024.05.14.03.01.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 May 2024 03:01:37 -0700 (PDT)
+Message-ID: <45674580-e7f6-48aa-ac17-3e0b96acace9@gmail.com>
+Date: Tue, 14 May 2024 11:01:36 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EnB7oxiabEToPBCk"
-Content-Disposition: inline
-In-Reply-To: <xmqq1q6aqnm2.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Checkout to different directory at certain commit without
+ changing index
+To: Ondra Medek <xmedeko@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org
+References: <CAJsoDaEJn1Y0CgtxpkGqVRsTiDnMxjNFrtbTuUVOvT87N23JNg@mail.gmail.com>
+ <13fa579b-8987-4430-967c-42b9de8acb6d@gmail.com>
+ <CAJsoDaFhTcm0fEw3+Ba4PvTjPYxscALeLN2kBgs4YYz8Bg-R7g@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAJsoDaFhTcm0fEw3+Ba4PvTjPYxscALeLN2kBgs4YYz8Bg-R7g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Ondra
 
---EnB7oxiabEToPBCk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 13/05/2024 18:23, Ondra Medek wrote:
+> Hi Phillip,
+> 
+> besides dependency on tar, I do not want to use git-archive because
+> it's influenced by export-ignore and export-subst attributes, too (as
+> I have mentioned).
+> 
+> Thanks for git read-tree, seems it's exactly what I need. Just git
+> read-tree has complained that -u switch needs -m or --reset switches.
+> And I have simplified it to
 
-On Thu, May 09, 2024 at 09:47:49PM -0700, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
->=20
-> > I would like to see the double dot and triple dot syntax (".." and "...=
-")
-> > removed from `git-diff(1)` as I think they get easily confused with
-> > revision ranges.
->=20
-> I tend to agree that the double-dot notation does not need to exist
-> as it can be done with a pair of bog-standard revs.  But triple-dot
-> notation needs a replacement syntax that is just as easy to access
-> the feature as the current syntax.  After updating a tip of a topic
-> branch,
->=20
->     $ git diff topic@{1}...topic
->=20
-> is extremely useful (in addition to "git log -p" and the like, of
-> course, with the same range).  Also during a conflicted merge
->=20
->     $ git diff ...MERGE_BASE
->=20
-> and its reverse are very handy.  Having to say "--merge-base" is
-> probably a usability regression.
->=20
-> If somebody wants to pursue this further, my recommendation is to
-> treat the two separately.
->=20
->  * Deprecate and eventually remove double-dot notation.
->=20
->    - First, notice the use of double-dot notation.
->      builtin/diff.c:symdiff_prepare() is the place to do so.  Issue
->      a warning about deprecation and possibility of an eventual
->      removal, and tell the users to use "diff A B" instead of "diff
->      A..B".
->=20
->    - Gain consensus that the removal is a good idea.  Finish these
->      steps long before Git 3.0.
->=20
->    - Remove the support for A..B.
->=20
->  * Deprecate and eventually remove triple-dot notation.
->=20
->    - Introduce a new syntax to allow an access to the "symmetric
->      diff" feature just as easily as the current syntax.  Wait for
->      a handful releases to gauge its acceptance by the end users.
->=20
->    - Then notice the use of triple-dot notation.  The place to do
->      sois the same builtin/diff.c:symdiff_prepare().  Give a warning
->      about deprecation and possibility of an eventual removal, and
->      tell the users to use that new syntax we introduced.
->=20
->    - Gain consensus that the removal is a good idea.  Finish these
->      steps long before Git 3.0.
->=20
->    - Remove the support for A...B.
+Sorry I'd forgotten about that
 
-I'll leave these for a future iteration for now given that there is more
-work that needs to be done in this context.
+> git --work-tree="$destdir" read-tree --index-output="$destdir".git -u
+> --reset "$commit"
 
-Patrick
+You should be aware that --reset will happily overwrite files in the 
+destination directory, using -m instead would stop existing files being 
+overwritten. If you change to -m you must set GIT_INDEX_FILE instead of 
+using --index-output otherwise only the files that differ from the 
+current index will be checked out. Also using a relative path for the 
+index file specified with --index-output or GIT_INDEX_FILE is error 
+prone when running the command from a subdirectory of the repository. I 
+avoided suggesting --work-tree because I wasn't sure how it handled 
+relative paths when run from a subdirectory but I think it is in fact ok.
 
---EnB7oxiabEToPBCk
-Content-Type: application/pgp-signature; name="signature.asc"
+> rm -f "$destdir"/.git
+> 
+> May I post this solution to the SO thread I have mentioned?
 
------BEGIN PGP SIGNATURE-----
+That's entirely up to you but I'd make sure it works with relative paths 
+and note the difference between --reset and -m.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZDCcYACgkQVbJhu7ck
-PpRITxAArtCY7UN+yqJq06Sx48/N8JUuoD/+b78Jumny+mUxgQLUIU+2Zkdszw7p
-B1upd+jhYwsO3bc+SwNROObd+0VcBfgy2PW2V1CKRYDgDKTyX3wPN0H03bzLhhXu
-tq2nisVLoElaFkXPO//BNsADWaHoEs9lhjcezNa7R9jMtjIsHRlH5rrTf6ips2IL
-WnKaPRM7Pkhm1WtyP+WgMnE4bNy/aNumNBU/qtwC+HQZafDcph06FD+0HJ2uaDS8
-ffMc1PCXdzeNjo1wcdvOWwhF2RFm6MYLeY7Yy0g/QfG3sZ9oJW35AvUQKQ70c18q
-KcIIHj4Nf3jUx70neIXQ9CMhCXgdTPKUo/rhzAuPjSxyeSeNcCpyuaWsSF7nytNX
-En5CAxBWtXYt+jYrpKMKN2Ut/Ky2SxRzQhZLXNGm8978RQQ9G/Glp7LE+HhZRFas
-uXB5wmAGzh+U1zbszRF8YumBmMkvJ8wg0iUhM9xhmXFZ65Ky+pPgAiZELg6v074Y
-OTa4bPwYH+lrNSX7VmQCnBa3x65k6Dh4HY9ZrCPA2nTYcX5XY7GV8in282SXjLDH
-n201sMkIOLAXg5Ku5gejIPerJVWYnfMqHY3yfX5z9wZAOtDKZBSQrrD/2jjYTprS
-78Npxo8Yt4nX64s2gidMHB9fOsSS5C0W6wbh5pQKr75pqtkLBVo=
-=gBph
------END PGP SIGNATURE-----
+Best Wishes
 
---EnB7oxiabEToPBCk--
+Phillip
+
+> Thanks very much
+> 
+> Ondra
+> 
+> On Mon, 13 May 2024 at 17:28, Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> Hi Ondra
+>>
+>> On 13/05/2024 08:26, Ondra Medek wrote:
+>>> Hello,
+>>> I need a simple script for unskilled users to do a fast checkout (LFS
+>>> friendly) of the current local Git clone at a certain commit to a
+>>> different directory I.e. something like "copy at a point in history".
+>>
+>> I think using
+>>
+>>       git archive "$commit" --format=tar |
+>>          { cd "$output_directory" && tar -xf -; }
+>>
+>> is probably the simplest solution. If you don't want to rely on tar then
+>> something like
+>>
+>>       GIT_DIR="$(git rev-parse --path-format=absolute --git-dir)" &&
+>>       GIT_COMMON_DIR="$(git rev-parse --path-format=absolute
+>> --git-common-dir)" || exit
+>>       GIT_INDEX_FILE="$GIT_DIR/tmp-index-$$"
+>>       export GIT_DIR GIT_COMMON_DIR GIT_INDEX_FILE
+>>       unset GIT_WORK_TREE
+>>       mkdir "$output_directory" && cd "$output_directory" &&
+>>       git read-tree -u "$commit"
+>>       status=$?
+>>       rm "$GIT_INDEX_FILE"
+>>       exit $status
+>>
+>> Which uses a temporary index file should work (note I haven't tested
+>> it). You may want to add "--recurse-submodules" and/or
+>> "--no-sparse-checkout" to the "git read-tree" commandline.
+>>
+>> Best Wishes
+>>
+>> Phillip
+>>
+>>> IMO all possible solutions are summarized in this thread
+>>> https://stackoverflow.com/questions/160608/do-a-git-export-like-svn-export
+>>> I describe some of them with my remarks:
+>>>
+>>> - git checkout-index : works with HEAD only.
+>>> - git archive: influenced by export-ignore and export-subst
+>>> attributes, so may not produce exact copy of sources. (And needs tar).
+>>> - git worktree add -d : needs cleanup: git prune or git remove.
+>>> - git clone: Unfortunately, -b param cannot work with commit hash and
+>>> does not respect local worktree settings (e.g. autocrlf). So, a
+>>> solution may be a bit complicated: git clone -s -n . dest/path ; cp
+>>> .git/config dest/path/.git ; cd dest/path ; git co -q <commit-ish> ;
+>>> rm -rf .git
+>>> - git checkout: Unfortunately, modifies Git index, so some action to
+>>> revert index is necessary after: git --work-tree=/path/to/checkout/
+>>> checkout -f -q <tree-ish> -- ./
+>>>
+>>> For me, the best solution is with git clone, because it does not
+>>> modify Git index nor any source working tree settings, so no cleanup
+>>> is necessary. But it's a bit complicated, though. It seems to me that
+>>> "git checkout" could do this better and simpler if it would have some
+>>> param to not modify the Git index. Is it possible to enhance git
+>>> checkout? Or is there any other simple solution not mentioned in the
+>>> SO thread?
+>>>
+>>> Thank you
+>>> Ondra Medek
+>>>
