@@ -1,69 +1,115 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1427B180A77
-	for <git@vger.kernel.org>; Tue, 14 May 2024 21:38:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DC2181BA9
+	for <git@vger.kernel.org>; Tue, 14 May 2024 21:45:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715722712; cv=none; b=ZUf+t60I2i168xZJOj7aK5kUedXR+q8M41iyEF5gZ9PY1DvmxnhDpG0PrZz5ZqhzMIeNzVUUHNZLVr1dWEgqS8TEL9kY1Z9RhpfWuQxvObEcga6F5A1IXkMSsgEp0plLLdlA40Z14p/E+zuYqdbTP4GV7RzsXBow0TdZNKG9VVg=
+	t=1715723112; cv=none; b=mmgeYidKJvncff9/CEm+0dLNHPVJr/nbW0SFkyxPFDpQCPhyo9Oi9r/hN9ID2ZFB3cercW7FTUbeKFfQU2dvmppV08UjihSil6ckZj9nUyGI4JH1zIZgysZXmOTZ0a83plnt3XNqejNXPZD2ynjU3fPY7al9rfHkwPR2jsHlkbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715722712; c=relaxed/simple;
-	bh=arjyat1I7NwoAY8Rl/7Rc4u5QLKlJ+lUlJPwvC57Edo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ReHX7eGmgQFDIZ0sYdWemvrsR63MhiIht1GXDvyvJ1AtnWIJFSnPwWg+HMVKYf865xSXKNwv12mn4f1wpnC0LVXd60NUAR7WlzyQZ88RRdmIEAc6RN/+67RB6z5RJHpOwKQ0LSLM0EEkfeaMTz/NWo8CjlEazzHuUYvrH7Tisd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GpCBv/Su; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1715723112; c=relaxed/simple;
+	bh=NMRq3NHS1RaBochdsN3G36zY5ERKhVn5/Vu58VumJWI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p9GlCTI7JJT0ryPZrUcvz4kpCtvMUSSpv3j86zvw7QiBT4yM0RFZWEkD3p9Hpngl0/J1wWE72ES41PdtRTZ8gLuQ7ZiOC3hStFa+K72iUlrCBqSu1yAd1foRXcxETnLC4U8ysmv0wvMnfLpabOdS5Tat+9T+9wnSHnKQQtRRDaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=d7/0C6T8; arc=none smtp.client-ip=209.85.167.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GpCBv/Su"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A27D93EE27;
-	Tue, 14 May 2024 17:38:24 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=arjyat1I7NwoAY8Rl/7Rc4u5QLKlJ+lUlJPwvC
-	57Edo=; b=GpCBv/SubkYAwLXS1cD5Zwjqxqq1J6Xh49DQ/1uT0hHx2M9h+WKSVk
-	/EQrqEKt3z0hP95loL306a/SmUq5a7hGQ2yQK46G+sWKmW2dmjYCN4XbL2b973xf
-	0geOa/st6DxhQUHuhxmBInWEDLKbS3lfZkhgYW1oiadtoem62PlTM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9ABF43EE26;
-	Tue, 14 May 2024 17:38:24 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D6CF63EE25;
-	Tue, 14 May 2024 17:38:22 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Yongmin <revi@omglol.email>,  git@vger.kernel.org
-Subject: Re: git format-patch displays weird chars when filename includes
- non-ascii chars
-In-Reply-To: <ZkPNHqAUemfdfaFD@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Tue, 14 May 2024 20:44:14 +0000")
-References: <ea41a92d-35df-4b71-be70-a736d620b21f@app.fastmail.com>
-	<ZkPNHqAUemfdfaFD@tapette.crustytoothpaste.net>
-Date: Tue, 14 May 2024 14:38:21 -0700
-Message-ID: <xmqq1q643whe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="d7/0C6T8"
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3c96a298d5aso3387580b6e.3
+        for <git@vger.kernel.org>; Tue, 14 May 2024 14:45:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1715723110; x=1716327910; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ctTM93g9328HTFHiDkK68ww2Vqq3Cz0oDYIxWT5y158=;
+        b=d7/0C6T8QxdsfxhsM9aot4cNI/0Q6oY1SIV0MgMjAIi9PAKChjYAHAxOV61COyFQjq
+         Vqq0yoN2mJ6zawYwoO3XSmapFeMo02+nmSzl+OYFgHGAOYL7g+lOOv6tdV3GHJwfTCph
+         1KBKfM8klzK/NjhjE7/nwbbT5ZufkIcu6z9HeMmsCLwAhXMB5YIMiYbl9AyqH1kTaIkd
+         qXyrHOv2+blfNzE2csjw+yK79uWwzXv2di1PGjy8+gBNtHMshFLFpUGbXvph4e4RA1Vb
+         d4F0D3513XNjo3Mk3S+/WZME+5pubJD/KxP/RxqCjD9Upe9jyXyYv2c0RZIwW3iU/EKO
+         BREw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715723110; x=1716327910;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ctTM93g9328HTFHiDkK68ww2Vqq3Cz0oDYIxWT5y158=;
+        b=jayK57GjmkYzLaASMu/4eUmEqHNHGlW0DHZ8m3e0+T2uWyCg6wteScJ+iEDMDaxVfl
+         VOWhBs952hM/FzedB2M83eCRPDT3hUD/V+9rypcC6ScRxxIHU022L+Ts8p9aMj+n4oFJ
+         pBgvz46+rpRz6MlENiOMxNdQxBLzv99BKWm8w4tKONnvMgSkbRdr7At+h7x5f39sMp0R
+         KBTEs4dfI7woQZSiJXzLG5Rs0LuYZ2lUZyOZTR0pAcx7gvwZZnZG2we7c8Lld1SuBItF
+         syZl5GqgVBmASWnxI1RCxGSmQN2mYGzgTfisPVqkFpt+ytNk2SUo4HcZ4DYCxQpvp9pf
+         D5CA==
+X-Gm-Message-State: AOJu0YzX4ypUWmcplNirVDawmFNweWILuuf0VxoQdyjxLyPnEe51eLgx
+	cNoxGl7aJlkypfVSnq4wOioSJy7RBAAC27w1fCOOhcZuvfmut3+cl4oZaYT2qjE=
+X-Google-Smtp-Source: AGHT+IFbCnfgpewjjJ69oa4lOKzRGoR9TiJpPbw6r+3IHG4EXr4iHlGmnM0ViohwloXTXBB9sYgMWg==
+X-Received: by 2002:a05:6808:3ab:b0:3c9:68bd:5786 with SMTP id 5614622812f47-3c9970cec70mr17883134b6e.45.1715723110123;
+        Tue, 14 May 2024 14:45:10 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-792bf340b32sm611934185a.126.2024.05.14.14.45.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 May 2024 14:45:09 -0700 (PDT)
+Date: Tue, 14 May 2024 17:45:08 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Kyle Lippincott <spectral@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 06/21] builtin/config: check for writeability after
+ source is set up
+Message-ID: <ZkPbZGPq6xFrhngN@nand.local>
+References: <cover.1715339393.git.ps@pks.im>
+ <cover.1715595550.git.ps@pks.im>
+ <7ab99a27c16718ad4dff1f7862e80c52b48c3812.1715595550.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 49E58D06-123A-11EF-A524-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7ab99a27c16718ad4dff1f7862e80c52b48c3812.1715595550.git.ps@pks.im>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Mon, May 13, 2024 at 12:22:28PM +0200, Patrick Steinhardt wrote:
+> diff --git a/builtin/config.c b/builtin/config.c
+> index 0842e4f198..9866d1a055 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -843,7 +843,6 @@ static int cmd_config_set(int argc, const char **argv, const char *prefix)
+>
+>  	argc = parse_options(argc, argv, prefix, opts, builtin_config_set_usage,
+>  			     PARSE_OPT_STOP_AT_NON_OPTION);
+> -	check_write();
+>  	check_argc(argc, 2, 2);
+>
+>  	if ((flags & CONFIG_FLAGS_FIXED_VALUE) && !value_pattern)
+> @@ -856,6 +855,7 @@ static int cmd_config_set(int argc, const char **argv, const char *prefix)
+>  	comment = git_config_prepare_comment_string(comment_arg);
+>
+>  	handle_config_location(prefix);
+> +	check_write();
+>
+>  	value = normalize_value(argv[0], argv[1], &default_kvi);
 
-> Thus, Git prefers to encode names in a way that is unambiguous and
-> doesn't lead to mangling.  It is inconvenient that legitimate UTF-8 file
-> names don't get rendered properly, though.  I don't _believe_ there's an
-> option to show the regular UTF-8, but I could be wrong.
+Nice catch.
 
-$ git config --global core.quotepath false
+I thought about suggesting that check_write() could be inlined into
+handle_config_location(). But that is not a good idea, since we only
+care about calling check_write() when we are actually going to write
+something.
 
+In the spots outside of cmd_config_actions() where we explicitly call
+check_write(), we do so because we know we're about to write something
+(e.g., from cmd_config_set(), cmd_config_unset(), etc.).
+
+But in the classic mode we only want to call check_write() when the
+action selected tells us that we're going to write something.
+
+I do wonder if we could set some "initialized" bit on the
+given_config_source variable so that it is a BUG() to call check_write()
+before it is set.
+
+Thanks,
+Taylor
