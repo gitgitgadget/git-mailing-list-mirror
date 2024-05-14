@@ -1,50 +1,46 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FFC1802C6
-	for <git@vger.kernel.org>; Tue, 14 May 2024 18:16:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE0017EBA5
+	for <git@vger.kernel.org>; Tue, 14 May 2024 19:07:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715710610; cv=none; b=haCDbyN1YK8YCHYFqxArPC5Qig16QYq5Lke+LsP0TRXcVSz0vqEkM4NQZUKDHK2v5NAaNsoMqb6G4kQBfufH88NitGLM1Jq9NIXrqtf097KBKGVR9BaU7nSUK5nNU9HijlPi56KojCIYtGzayZuWa8Az6vKExYw7pbJ50HP7XGI=
+	t=1715713667; cv=none; b=BB1hfpR0eFV5bnEMwWDxDjOa7lmvZYQAoD9bQKBK8l/8p5vjAR7HSAvmVR90Hyu7rb3+8GvUSfe+I14x6v6n1M2iTHHmqXhnol/ciAvtet6ipXT1Qn06XNfCRzSha8dI8kfROlLInVDzwYaN9hXnl3ww9MMvlhd5RzCDq6JLj+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715710610; c=relaxed/simple;
-	bh=OdgKVbDMhdazLoFxPcQe0s7DL8mQx2S6s1BEl6HhQTY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FTTBiqvB26POBq6rNlrhcFZSiR8PXAXsYHb4nN1Z02Ym/zCM5h9D76e7EU8GzPTyhdeAi7m1KHm14WKg25DCMOADTqNMPhlbqTrghDHRaSToeZjaWfvGqLljiPcbtkcTQMN0syqUchtZOhx0NJHY0W127ZjliqjxYLlO7ZSDZyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ogFmCh7X; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1715713667; c=relaxed/simple;
+	bh=wCmgEBaiYvSwsTi2NXOhfNskWNUjjvwgCH0hNxvEU0A=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=gWf1P5aZiVBNwIFLn2Foim2dMQx4Hp6qGNt0ItMN7FCZabiSQpnOjTcvuWzbwMRYVps4J4Wouvyxd2kqhb2B4vF6TsFHl57Vxs4ubQhE/XP0IV8bWOb55pX1zmrBpPuu4c6vL6av+HsbNM9IhH1CBJa1n7I0zNrNg/vA+kPxghw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=SQRuNVPv; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ogFmCh7X"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:5e4a:89fa:93b9:2058])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id A87D25DA88;
-	Tue, 14 May 2024 18:16:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1715710605;
-	bh=OdgKVbDMhdazLoFxPcQe0s7DL8mQx2S6s1BEl6HhQTY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=ogFmCh7X3mBfFMlx1+TvEofMeMmLiJt0+xsuwtJQeeAWsya4fKxrQGTFwpYUlBJ/x
-	 KOsot6wquGIcIcAeK4EwS0vDskA76T4zXFrEXejDh8An8LXbTPoHKz5w21dweTjhmA
-	 3+Jhr4WNfp2L5RnVEs/BMaMyOsr1f2IRQuIm1B2j2L1zVlyeu6P/F+M0W05MSa8n+1
-	 Lg1rvsp5H5w+/QGa20WCD30chy5IdfMJeLF/cQKVwRVkDYxMHQ2ri+WatTsUZCmRU1
-	 1HQ5L8dLS1YQDh3NDmcqzZ7dcAmEWyPcJK27GBzcYwu19RO6gKCEH/SagaY6orEVMP
-	 zRwamY6ZU7m4hVvBsro0e68SgOdocfN214n4lB74kX8vNcs5WlcQW36l77xpEW8j/Z
-	 qz7TlPZYuMMk3hacSBrj0VOCpZiq/neVtzXVK6TMEYGQp477Scalkfn+c/Y14l2n8r
-	 E64IZOp/4pwT/iuX4AS/TaiQFzbqmLbanraL9QSLs9Z2BqDPRjb
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/2] Revert "clone: prevent hooks from running during a clone"
-Date: Tue, 14 May 2024 18:16:40 +0000
-Message-ID: <20240514181641.150112-2-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.43.0.381.gb435a96ce8
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="SQRuNVPv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1715713650; x=1716318450;
+	i=johannes.schindelin@gmx.de;
+	bh=OsPTRV1N2J8uQLWTHcDNE2Yvsf5EAQVduFmafp+DaPM=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=SQRuNVPv9sqYJ1rw5qaYTSTUQpHy1rKxXdtjzfWFONYyaBrqz8+uSU/OaCM0HwHe
+	 SxWWEk08bvIcjqy2+RhQtS/XUWewdGO27ZutoU0GwOdnEoKecigkKPG5jaY1Ex466
+	 H78WE6Bb3V+MqVIMebTV5uGJRYKvHHKHR7GgxvOj95381GEBnJZ634+d2jfjJMd4d
+	 5moK7DnzLPTtHmiVHrcr7hCvNrHirnMHhOz+P0XNBDVLOXDIBTePg29SpB2NU/exS
+	 E0NsF+Fzm1XP+paJrkO10HlWdu0DkXbA6T9R5AWdvsqUYOEORSknTw2k5hqiFGky3
+	 o/RL/CGzv4wOBuPDUg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.216.58]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MRTNF-1rudGx0gdx-00NSJM; Tue, 14
+ May 2024 21:07:30 +0200
+Date: Tue, 14 May 2024 21:07:28 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Revert defense-in-depth patches breaking Git LFS
 In-Reply-To: <20240514181641.150112-1-sandals@crustytoothpaste.net>
+Message-ID: <0f7597aa-6697-9a70-0405-3dcbb9649d68@gmx.de>
 References: <20240514181641.150112-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -52,153 +48,110 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:zfBLJBk3o0UVcgDWihZj1VMfMJNVu+CGUmkQZnnAx0r6sqoQZLv
+ nCYAtKDyl7QCSEqDxbYMNelbq/LF4FoidnesCHFDFXYL2k0umamqCx0QmsLNPx0GnPijgm+
+ HLaatm9+yB1glKPzg898IYWKJ/yMIomshZmDQZypJR5WXyhUXhWDd1x83F7FAmqEZl6B1n5
+ 53VJJv10ue+o3vMJKwRnQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:9RJo8mlYc0s=;1OEeYK5SfcKFIl4kEJoKsZK+70+
+ 8T7lmkBVi/UGiSeClnGP2+GVR5JdzMoCC32JD2LI09N5ZdtmujH7r+xMB8f8DM9CFFw8XkTPq
+ Gs4DvkMk6YiVfHprUXXHHgsowWFPCAWNxLy7h9Q0dqvRUVMje4ZYK/ys0Z0wDLtDieu6rSKbu
+ IiSAJFezSRYSX5h6W1cchFpyk/zNFQ5v4ehBgk6SYjK7cuU49qsbWH0GeFO7Ra/Pb6OZ4y5zu
+ iiJLfBUOHcSYOFx+CyOsH3YjY2Nd8pd8otC/XGmh4z3o7q7NDEyBTnwmL/nT5x1IfxoTneR0N
+ qHHrJ3xcxRSbAvQ65nURkwMUi6qLxK8hpDeMQ+JLoI5IGv35qU5zFNwjFuNuWJQGuyd/aplap
+ std80fZjMHAK8txz66SDDLiEHvkIzMwNUs/PaoyLJS8g6+Il2qR+9eAowIvg127PQYNDfMtGL
+ t7EwmAgdVxJV4QqFTcP2udQ3mXwqb3GvHtAvgTwZ0iQeRJIakd+FTKi9FjS0pBnNqI7M9I19t
+ SCZJvAHYubtvkp7HfNhwVTzFGvd1DY6VJIqdjeC1p8fjphVf74PJZA7WQK7YQq8Y5Jd/fzrAn
+ ZdHLN/fjKYG9Fb3+jY9D1jpK0Y7R37eUlMbDhaR/Ef2+YKKvAqJc3R9asgfB61A1Kz06gUIK/
+ FOkRYsrzuqDzCN23B+KLn3phQ86eES/hDCkIfJ8pa6EA2ZBwYVGxRujCi7lXqTx2drlL0fC5f
+ jZy3wmhG24SmbVzsqjVSGQBski7+wcXnIWgSCQ62LxGfMdmNUuV0t8WwCBGdBzwDuudwItKpd
+ 7Ktu25sRTS+vkJYQITCIxDuw9zFSALUvC6gQTJUFcocyM=
+Content-Transfer-Encoding: quoted-printable
 
-From: "brian m. carlson" <bk2204@github.com>
+brian,
 
-This change breaks Git LFS, which relies on the pre-checkout hook to run
-in a clone.  This is to allow files which have the lockable attribute,
-which are usually large binary assets which cannot be merged, to
-be marked read-only when a user doesn't have a lock so as to prevent
-conflicts.
+On Tue, 14 May 2024, brian m. carlson wrote:
 
-Revert this change since it causes functional problems.
+> The recent defense-in-depth patches to restrict hooks while cloning
+> broke Git LFS because it installs necessary hooks when it is invoked by
+> Git's smudge filter.  This means that currently, anyone with Git LFS
+> installed who attempts to clone a repository with at least one LFS file
+> will see a message like the following (fictitious example):
+>
+> ----
+> $ git clone https://github.com/octocat/xyzzy.git
+> Cloning into 'pull-bug'...
+> remote: Enumerating objects: 1275, done.
+> remote: Counting objects: 100% (343/343), done.
+> remote: Compressing objects: 100% (136/136), done.
+> remote: Total 1275 (delta 221), reused 327 (delta 206), pack-reused 932
+> Receiving objects: 100% (1275/1275), 290.78 KiB | 2.88 MiB/s, done.
+> Resolving deltas: 100% (226/226), done.
+> Filtering content: 100% (504/504), 1.86 KiB | 0 bytes/s, done.
+> fatal: active `post-checkout` hook found during `git clone`:
+>         /home/octocat/xyzzy/.git/hooks/post-checkout
+> For security reasons, this is disallowed by default.
+> If this is intentional and the hook should actually be run, please
+> run the command again with `GIT_CLONE_PROTECTION_ACTIVE=3Dfalse`
+> warning: Clone succeeded, but checkout failed.
+> You can inspect what was checked out with 'git status'
+> and retry with 'git restore --source=3DHEAD :/'
+> ----
+>
+> This causes most CI systems to be broken in such a case, as well as a
+> confusing message for the user.
 
-This reverts commit 8db1e8743c0f1ed241f6a1b8bf55b6fef07d6751.
+When using `actions/checkout` in GitHub workflows, nothing is broken
+because `actions/checkout` uses a fetch + checkout (to allow for things
+like sparse checkout), which obviously lacks the clone protections because
+it is not a clone.
 
-Signed-off-by: brian m. carlson <bk2204@github.com>
----
- builtin/clone.c  |  5 -----
- hook.c           | 32 ------------------------------
- t/t5601-clone.sh | 51 ------------------------------------------------
- 3 files changed, 88 deletions(-)
+> It's not really possible to avoid the need to install the hooks at this
+> location because the post-checkout hook must be ready during the
+> checkout that's part of the clone in order to properly adjust
+> permissions on files.  Thus, we'll need to revert the changes to
+> restrict hooks while cloning, which this series does.
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 0e7cf198f5..c66a32feb3 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -987,12 +987,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		usage_msg_opt(_("You must specify a repository to clone."),
- 			builtin_clone_usage, builtin_clone_options);
- 
--	xsetenv("GIT_CLONE_PROTECTION_ACTIVE", "true", 0 /* allow user override */);
- 	template_dir = get_template_dir(option_template);
--	if (*template_dir && !is_absolute_path(template_dir))
--		template_dir = template_dir_dup =
--			absolute_pathdup(template_dir);
--	xsetenv("GIT_CLONE_TEMPLATE_DIR", template_dir, 1);
- 
- 	if (option_depth || option_since || option_not.nr)
- 		deepen = 1;
-diff --git a/hook.c b/hook.c
-index eebc4d4473..f5f46e844e 100644
---- a/hook.c
-+++ b/hook.c
-@@ -11,30 +11,6 @@
- #include "setup.h"
- #include "copy.h"
- 
--static int identical_to_template_hook(const char *name, const char *path)
--{
--	const char *env = getenv("GIT_CLONE_TEMPLATE_DIR");
--	const char *template_dir = get_template_dir(env && *env ? env : NULL);
--	struct strbuf template_path = STRBUF_INIT;
--	int found_template_hook, ret;
--
--	strbuf_addf(&template_path, "%s/hooks/%s", template_dir, name);
--	found_template_hook = access(template_path.buf, X_OK) >= 0;
--#ifdef STRIP_EXTENSION
--	if (!found_template_hook) {
--		strbuf_addstr(&template_path, STRIP_EXTENSION);
--		found_template_hook = access(template_path.buf, X_OK) >= 0;
--	}
--#endif
--	if (!found_template_hook)
--		return 0;
--
--	ret = do_files_match(template_path.buf, path);
--
--	strbuf_release(&template_path);
--	return ret;
--}
--
- const char *find_hook(const char *name)
- {
- 	static struct strbuf path = STRBUF_INIT;
-@@ -70,14 +46,6 @@ const char *find_hook(const char *name)
- 		}
- 		return NULL;
- 	}
--	if (!git_hooks_path && git_env_bool("GIT_CLONE_PROTECTION_ACTIVE", 0) &&
--	    !identical_to_template_hook(name, path.buf))
--		die(_("active `%s` hook found during `git clone`:\n\t%s\n"
--		      "For security reasons, this is disallowed by default.\n"
--		      "If this is intentional and the hook should actually "
--		      "be run, please\nrun the command again with "
--		      "`GIT_CLONE_PROTECTION_ACTIVE=false`"),
--		    name, path.buf);
- 	return path.buf;
- }
- 
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index deb1c282c7..cc0b953f14 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -788,57 +788,6 @@ test_expect_success 'batch missing blob request does not inadvertently try to fe
- 	git clone --filter=blob:limit=0 "file://$(pwd)/server" client
- '
- 
--test_expect_success 'clone with init.templatedir runs hooks' '
--	git init tmpl/hooks &&
--	write_script tmpl/hooks/post-checkout <<-EOF &&
--	echo HOOK-RUN >&2
--	echo I was here >hook.run
--	EOF
--	git -C tmpl/hooks add . &&
--	test_tick &&
--	git -C tmpl/hooks commit -m post-checkout &&
--
--	test_when_finished "git config --global --unset init.templateDir || :" &&
--	test_when_finished "git config --unset init.templateDir || :" &&
--	(
--		sane_unset GIT_TEMPLATE_DIR &&
--		NO_SET_GIT_TEMPLATE_DIR=t &&
--		export NO_SET_GIT_TEMPLATE_DIR &&
--
--		git -c core.hooksPath="$(pwd)/tmpl/hooks" \
--			clone tmpl/hooks hook-run-hookspath 2>err &&
--		test_grep ! "active .* hook found" err &&
--		test_path_is_file hook-run-hookspath/hook.run &&
--
--		git -c init.templateDir="$(pwd)/tmpl" \
--			clone tmpl/hooks hook-run-config 2>err &&
--		test_grep ! "active .* hook found" err &&
--		test_path_is_file hook-run-config/hook.run &&
--
--		git clone --template=tmpl tmpl/hooks hook-run-option 2>err &&
--		test_grep ! "active .* hook found" err &&
--		test_path_is_file hook-run-option/hook.run &&
--
--		git config --global init.templateDir "$(pwd)/tmpl" &&
--		git clone tmpl/hooks hook-run-global-config 2>err &&
--		git config --global --unset init.templateDir &&
--		test_grep ! "active .* hook found" err &&
--		test_path_is_file hook-run-global-config/hook.run &&
--
--		# clone ignores local `init.templateDir`; need to create
--		# a new repository because we deleted `.git/` in the
--		# `setup` test case above
--		git init local-clone &&
--		cd local-clone &&
--
--		git config init.templateDir "$(pwd)/../tmpl" &&
--		git clone ../tmpl/hooks hook-run-local-config 2>err &&
--		git config --unset init.templateDir &&
--		test_grep ! "active .* hook found" err &&
--		test_path_is_missing hook-run-local-config/hook.run
--	)
--'
--
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
+Dropping protections is in general a bad idea. While previously, hackers
+wishing to exploit weaknesses in Git might have been unaware of the
+particular attack vector we want to prevent with these defense-in-depth
+measurements, we now must assume that they are fully aware. Reverting
+those protections can be seen as a very public invitation to search for
+ways to exploit the now re-introduced avenues to craft Remote Code
+Execution attacks.
+
+I have pointed out several times that there are alternatives while
+discussing this under embargo, even sent them to the git-security list
+before the embargo was lifted, and have not received any reply. One
+proposal was to introduce a way to cross-check the SHA-256 of hooks that
+_were_ written during a clone operation against a list of known-good ones.
+Another alternative was to special-case Git LFS by matching the hooks'
+contents against a regular expression that matches Git LFS' current
+hooks'.
+
+Both alternatives demonstrate that we are far from _needing_ to revert the
+changes that were designed to prevent future vulnerabilities from
+immediately becoming critical Remote Code Executions. It might be an
+easier way to address the Git LFS breakage, but "easy" does not equal
+"right".
+
+I did not yet get around to sending these patches to the Git mailing list
+solely because I am still busy with a lot of follow-up work of the
+embargoed release. It was an unwelcome surprise to see this here patch
+series in my inbox and still no reply to the patches I had sent to the
+git-security list for comments.
+
+I am still busy wrapping up follow-up work and won't be able to
+participate in this here mail thread meaningfully for the next hours. I do
+want to invite you to think about alternative ways to address the Git LFS
+issues, alternatives that do not re-open weaknesses we had hoped to
+address for good.
+
+I do want to extend the invitation to work with me on that, for example by
+reviewing those patches I sent to the git-security mailing list (or even
+to send them to the Git mailing list for public review on my behalf, that
+would be helpful).
+
+Ciao,
+Johannes
