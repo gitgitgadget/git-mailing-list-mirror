@@ -1,110 +1,112 @@
-Received: from 20.mo583.mail-out.ovh.net (20.mo583.mail-out.ovh.net [91.121.55.239])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7945B1802A1
-	for <git@vger.kernel.org>; Tue, 14 May 2024 19:26:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.121.55.239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E6C1E4B3
+	for <git@vger.kernel.org>; Tue, 14 May 2024 19:37:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715714821; cv=none; b=FU3MuB/cbQyV5LLXPxF115WstTd0SkxKgeky4eX5XO/3zfAkAsxH00Irw2di24bQyWlXp1QTppF9PYokkyoLKWh+O03u1lCXpi6f24sAHqU0DMzAADw+0NoLrv030upEFN0m0nNczVbu8zbghPqvK3uy0SlcQn9ycNBHFWLVN0s=
+	t=1715715465; cv=none; b=DHozy4K/LxfQ/4OzzGVNYTHjqyzkodjzfunI725jfeMsLTHzLO4lNgLJoXlSgNaA997fc4PukHjYQQUq4arvHRdeSPQIvS78ga4JVzwC3hq0cRb0thVUWbAf6Udo0apDO4oGbyBcQsThh+uH4QtzgHu+WAmy5Ga4jPe9w8ZBvB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715714821; c=relaxed/simple;
-	bh=sY5L7R5vOvkNsq00lEGIY2QKWOQxPxpF6yIXqeNMguY=;
-	h=Content-Type:Mime-Version:Date:Message-Id:Subject:From:To; b=bvlmRSpKDjdsVEcZEvENikgFzcDgrdgoyB2EknqQjl1LZDQ65CHiTQL8DyLzmfkHJQyi4LnYkDWMsMB1kYC2AhrvrOVl2qBMG7ON03Y0fHSX5qvNwD1zTvOFDl5GwHBKiHxHyzL2gJ/Z+xOon66Gc14IYpq50cxom/o3ADZ7AI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=strongly-typed-thoughts.net; spf=pass smtp.mailfrom=strongly-typed-thoughts.net; arc=none smtp.client-ip=91.121.55.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=strongly-typed-thoughts.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=strongly-typed-thoughts.net
-Received: from director5.ghost.mail-out.ovh.net (unknown [10.109.176.72])
-	by mo583.mail-out.ovh.net (Postfix) with ESMTP id 4Vf4hD4lXWz1DPF
-	for <git@vger.kernel.org>; Tue, 14 May 2024 18:31:56 +0000 (UTC)
-Received: from ghost-submission-6684bf9d7b-x8rbc (unknown [10.110.113.129])
-	by director5.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 7ECBF1FE02
-	for <git@vger.kernel.org>; Tue, 14 May 2024 18:31:56 +0000 (UTC)
-Received: from strongly-typed-thoughts.net ([37.59.142.97])
-	by ghost-submission-6684bf9d7b-x8rbc with ESMTPSA
-	id Tqy/HByuQ2Yw1QIAVddejQ
-	(envelope-from <hadronized@strongly-typed-thoughts.net>)
-	for <git@vger.kernel.org>; Tue, 14 May 2024 18:31:56 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-97G00223fcc50d-9769-43b6-bfa1-6ae73d753498,
-                    DD3B9C83DD9E44B838259978FAD451B914511980) smtp.auth=hadronized@strongly-typed-thoughts.net
-X-OVh-ClientIp:193.250.76.216
-Content-Type: multipart/signed;
- boundary=40eed3404897462763e9a80a690e74a1ddba21adca4e12fa1d86e6db438c;
- micalg=pgp-sha512; protocol="application/pgp-signature"
+	s=arc-20240116; t=1715715465; c=relaxed/simple;
+	bh=nZYgWMFbdT87tfkAhNvfCuH7c3xFTXDrbTHJT+Ls2e4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kFpiLjcqaBfOUIanLJzkivtlE2FFq5NieQkE4DGRnfkQcc6mvDjdjs2umCkuj/4FaZuhDiG/xgXZmb41XZ6g3KV4HwtB5AfJf9IDHY1ZAJnHD/JtwtvS99+fsIM+1yHaD8iqv8RLTb8DQDY/00wrnMPu881pb1SEXV4XUpJKgio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L1fU0CcB; arc=none smtp.client-ip=209.85.221.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L1fU0CcB"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-4df32efa5baso2017902e0c.2
+        for <git@vger.kernel.org>; Tue, 14 May 2024 12:37:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715715462; x=1716320262; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o42O5V88VITNfxdmUeac51UUPDEqKN1Z5jZ1e8R1bFs=;
+        b=L1fU0CcBqpi5+Y6Dc2bOw9pYNWZtqe2P+LF4m8TYoThh5P5ic3DdkRbguhPdkr/kqj
+         mG+Dgf8YzH7vVguC+9UYw8N11qccwh2LeoYLB3Iukz/UtNjp1N8hS19imKgIHrW5PwbE
+         vLTjf8geCB2NSLpKwUVwOqrLowZY9dTZl4Y7pkoi2KK7/EunTtuLgM3In2CzXc2J4qLz
+         EY6qck6Fh8RZfBANn2R+BEtWjdVZJZk8v3BmaBer76SynBwdHCXnx8aZ2fCv/5qYuNW+
+         CrvDAKXFZ5UVoQqC7NBclLsAa3oD9LP1aLPFwbtJWjFjz/A8DKFHme9m7DwzRu9SqbGA
+         FBUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715715462; x=1716320262;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o42O5V88VITNfxdmUeac51UUPDEqKN1Z5jZ1e8R1bFs=;
+        b=JO3du71xrbt/cHRSeyBbV4jPnzQHfPzRsUXv9zzXsx28yzZ4C2wUgOTFxIbd0aQsCs
+         siOxEViq6SYjVcttuqsR6n+sbd0eOhPLiPQjP79fKPK1Krt7zne1V7Y4sb6YJA9kC87r
+         PyelXlSi1teBbGd44J5cAvKigkG4EWDWU0mV5X+cE5b/fiYfwcabWmFnM8piY+OFxfDm
+         5mHDe4YQYBD1m7fDhDkq5Vi8DMn5QfIiJl4xXNcNoXxvlNuXIljb8Luzx3H45u5zMEss
+         0jz2+coL0zhnYqUwzTJhuPYGQkI6ZdGn/3cD9HBGhQriWPt00ruonvoFIenoEpXM4mjd
+         9xZA==
+X-Forwarded-Encrypted: i=1; AJvYcCVdbOTXppnnL6t7JUgUHh19aIIVGAxPTGCGcTUeiX2w2qu0G/bSvpVntQSkiN5qDgYeW1kbpY7jWHb7cSdPhKFaD9PV
+X-Gm-Message-State: AOJu0YzPIntIj8BT5YoRICiEVFbCpxyMwKFWb5zv4Si6OMJVJJF9CFJX
+	/tobW/9piFg0QPwfyzzhQGK9OXVO+vcO0oXL3VWW/w67K8r23bVvDdIt2lD1FxJkPxGpI5JCjzm
+	hLvZVOnHnQKdQd1pRP3skCJ/zUyoKWCNd
+X-Google-Smtp-Source: AGHT+IGtMVd++SH/wL2hiHcbpXBto1J8D5WWTkrIMnSlvflwfOQfj+3F66b48oSDCFKsCN3VMNPqycD+bdnAb/Bpd48=
+X-Received: by 2002:a05:6122:1d10:b0:4da:704f:7fc6 with SMTP id
+ 71dfb90a1353d-4df88386653mr10511989e0c.15.1715715461099; Tue, 14 May 2024
+ 12:37:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Date: Tue, 14 May 2024 20:31:55 +0200
-Message-Id: <D19KZ1CBA7JF.27PYPL5X68543@strongly-typed-thoughts.net>
-Subject: Author signature
-From: "Dimitri Sabadie" <hadronized@strongly-typed-thoughts.net>
-To: <git@vger.kernel.org>
-X-Mailer: aerc 0.17.0
-X-Ovh-Tracer-Id: 12545902664953835515
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvledrvdegiedguddvgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurheptgggfffkuffhvffosehgtderreertdejnecuhfhrohhmpedfffhimhhithhrihcuufgrsggrughivgdfuceohhgrughrohhnihiivggusehsthhrohhnghhlhidqthihphgvugdqthhhohhughhhthhsrdhnvghtqeenucggtffrrghtthgvrhhnpedtieduhedvveekkeegteeihfejvddtueejleegffefjeeftdekjeduudeikedvudenucfkphepuddvjedrtddrtddruddpudelfedrvdehtddrjeeirddvudeipdefjedrheelrddugedvrdeljeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhephhgrughrohhnihiivggusehsthhrohhnghhlhidqthihphgvugdqthhhohhughhhthhsrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheekfedpmhhouggvpehsmhhtphhouhht
-
---40eed3404897462763e9a80a690e74a1ddba21adca4e12fa1d86e6db438c
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <pull.1656.git.1707411636382.gitgitgadget@gmail.com> <xmqqmssan841.fsf@gitster.g>
+In-Reply-To: <xmqqmssan841.fsf@gitster.g>
+From: Phil Hord <phil.hord@gmail.com>
+Date: Tue, 14 May 2024 12:37:28 -0700
+Message-ID: <CABURp0oNyOcrDySmMtbnGrFLuWWUybeo7-osS4NqPNBD3wKdaA@mail.gmail.com>
+Subject: Re: [PATCH] prune: mark rebase autostash and orig-head as reachable
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Orgad Shaneh <orgads@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
 
-Hello!
+On Thu, Feb 8, 2024 at 10:08=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > Rebase records the oid of HEAD before rebasing and the commit created b=
+y
+> > "--autostash" in files in the rebase state directory. This means that
+...
+> I do not like this kind of special casing in general, but because
+> these are our tools' droppings, I am OK to grandfather them in, as
+> long as we promise ourselves that we will not add more of these
+> ad-hoc "text files" that record object names, loss of which affects
+> correctness.  They should, like "git bisect", be using proper
+> references to protect these objects instead, of course.
 
-I=E2=80=99ve moved away from the PR/MR git workflow to the email one and I=
-=E2=80=99ve
-been delighted by it. However, there is one thing that feels a bit like
-a regression to me.
+I have long wanted to have a special ref named "AUTOSTASH" since it
+supports my workflow of applying workdir changes to previous commits
+during a rebase.  For example, I often do this:
 
-On the PR/MR workflow, if someone wants to contribute to my project,
-they can simply make a couple of commits and open a =E2=80=9CPull Request=
-=E2=80=9D or
-=E2=80=9CMerge Request.=E2=80=9D Once reviewed, I can decide to merge via s=
-everal
-options:
+     $ git rebase -i
+     Created autostash: c0ffeebea0
+     ...
+     <stopped to edit some commit in my history>
+     $ git stash apply c0ffeebea0
+     $ git commit --amend && git rebase --continue
 
-* Creating a merge commit.
-* Rebasing their commits.
-* Asking the UI of the (centralized) system (GitHub, GitLab, etc.) to do
+But it requires me to find the text output after "Created autostash:"
+from the original rebase command which may have scrolled a lot by now.
+It would be easier to say:
+     $ git stash apply AUTOSTASH
 
-Whatever is decided, the commits end up in my repository and the author
-might have signed the commits and their signature is still there.
+I see that MERGE_AUTOSTASH has been added lately. And I am inferring
+that there's a desire to remove (eventually) these file-based info
+trackers such as "rebase-apply/autostash". Is there any reason not to
+raise the rebase/autostash notation to a proper ref now?  Should it be
+named REBASE_AUTOSTASH if I add this?
 
-With the email workflow, from what I understand, `git am` has no way to
-keep the signature of the author =E2=80=94 and I have not found anything go=
-ing
-that direction with `git send-email` and `git format-patch`, and I think
-that the reason why is because the commit is modified to introduce the
-committer (committer being me here; the author being the contributor who
-sent the patch), whence the commit SHA changes. The author signature is
-simply dropped, and `git log --show-signature` only shows my GPG
-signature; not the author=E2=80=99s anymore!
-
-So=E2=80=A6 I was wondering: since we can only sign commits, is there any
-way / work in progress to attach the author signature to a commit? To
-me, it would make sense to have something hierarchical: the comitter
-simply signs above what the author signed, and the author doesn=E2=80=99t s=
-ign
-the whole commit (I guess?), since we want to be able to change the
-commit hash.
-
-What do you think?
-
-Cheers,
-Dimitri
-
---40eed3404897462763e9a80a690e74a1ddba21adca4e12fa1d86e6db438c
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRsmRqgbXp8KFc3mc6pQ4aopiUuywUCZkOuGwAKCRCpQ4aopiUu
-ywt8AP4jHsqTs/9SjOmOzGvAWv+YOIoaHfNaDGLTF92B4pEk3wD8Cj73VceyH4RS
-Kh2b+WwsO7b1QjfsAyG8RmjW0tnm5Q4=
-=BUXJ
------END PGP SIGNATURE-----
-
---40eed3404897462763e9a80a690e74a1ddba21adca4e12fa1d86e6db438c--
+Even if we don't remove the file-based notation immediately
+"rebase-apply/autostash", I would like to add a ref that duplicates
+the information for my workflow. Maybe we can deprecate the file
+itself and remove it in some future version.
