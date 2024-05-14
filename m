@@ -1,135 +1,160 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D73365
-	for <git@vger.kernel.org>; Tue, 14 May 2024 20:44:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78441E491
+	for <git@vger.kernel.org>; Tue, 14 May 2024 21:15:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715719459; cv=none; b=mBz9+zCN0h0U4CASJYjOeANkKSxZHNv5QzZG27VsVtYfqiopkybPu4w9cjv626/HtpGc/KvNgG9KVH1caqWPgd19hGi8QjJFBwLSF8rrx7oORtWF4exVmv7AS56/3eQAFYmZDhqluoUqyRiZgH5nQ+NyX0n2YLDQKHbKr+PZZLM=
+	t=1715721334; cv=none; b=Z+kUFQe4HqehUSe4O2tJ0cMJ1QHY5r7a9pHfHlMW2G1leNZ4f7dZ++z7m5MGCzlBK+pnYAkMg3NTfdFbLAbxfTjnzbU8OsTTOvJsJvT2kJm3X+zO8kjYVhbeqCC5SRzdjHU3gjpsZ6yS2FLMS9pMfq4zycLBe2kQubvj6S//Ahw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715719459; c=relaxed/simple;
-	bh=1w0aLAnk4PeeeA4tmx4MBxTgI3ZZ93m/iJDPl4RivCk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BkdCC2A9/83o6lRLj4vFNH8zkWDz7KLg12eyFaCNnMt4bJC34W0JWrI4m2bhEez6IcHoTHo7pnMEit5OOl+fyvxXUc3njjF33nXVJaf/EHRiY2VyAXbNsD4cqRrDPniJP9UMpL6wwA9wytgc5IjYOnn+R8FOwdzU9xFj79JsrH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=UauRUqzW; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1715721334; c=relaxed/simple;
+	bh=vcfESte53NibxVAqyCi0QeXfX6iRnzeIeYsAHL9zOEA=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=M9HBJN1duc3Mv4IvJuY57CAsTammuH8/yRqbOroFQjp+6VQNIKTdqXUbsDYO8rU6IsthuAGfrpLMUpb+2VnMEbFAVyJCAkP6em3t+NEbTIxLD7OwgD18iwWfMzE8fUyrg5I4Qtm/0KmVrhXmKCTOJ7zkuOg25bLK4tcEX3auEL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M27sOnqo; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="UauRUqzW"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id E43C45DA8A;
-	Tue, 14 May 2024 20:44:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1715719455;
-	bh=1w0aLAnk4PeeeA4tmx4MBxTgI3ZZ93m/iJDPl4RivCk=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=UauRUqzW4cDnekhGCWLomELt9M8ffudkBwxbM6X7LVl9fWtEiECYOFqWj5orbPGL9
-	 S/V//RXFNa265N/ZK4f8obTeiEJ0YO61BJxTdywCOH9EMPEKS9URrMaWNENNelU4CI
-	 TPO4YFPMlNXNrTu8BPBs9ol29UsvooKdIjafy2x8C5T45eBQ+IMIa0fD5VhIRjz2cX
-	 k7dOIOEKxC76ToTb6WbYhEoPG6R+fmnQWIbx/0nag0Z0v/1nASzULB5vRfMtkVjgZx
-	 XStlXIEptNq4kRrWLHhdr7Wy4hCLcCieBd+0fXIf+VCPKs4Cu3A3gopyz0SHL2lBfC
-	 //8DGcPwY+Wiooiazbwnpe2Y2LMemmL/L7k70xQHTiu1Aeg1Ka3MAlfdP1DvSrzmHZ
-	 qq6y/ASjgfqubJ/aogOL7TnMP25keAZ1jbutDTVHN/QZo/4x/uJwAxTIO6Cn74+lua
-	 wvuuXtZveHgCM5ITNY+xIBWSXlnqcNjrwsYOVXfBAx7kV3ylff6
-Date: Tue, 14 May 2024 20:44:14 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Yongmin <revi@omglol.email>
-Cc: git@vger.kernel.org
-Subject: Re: git format-patch displays weird chars when filename includes
- non-ascii chars
-Message-ID: <ZkPNHqAUemfdfaFD@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Yongmin <revi@omglol.email>, git@vger.kernel.org
-References: <ea41a92d-35df-4b71-be70-a736d620b21f@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M27sOnqo"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-350513d2c6aso3391552f8f.2
+        for <git@vger.kernel.org>; Tue, 14 May 2024 14:15:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715721330; x=1716326130; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=XMLFt6i6xQPwGwAmXXE3XsaSnmCdbXxClxYYxBGTmB8=;
+        b=M27sOnqoAHy01qf4oHIdZFzXwOc+I6Wqi9uPkgDhWrqCW4Xpi6eAnfAPswD8OBytbI
+         z+EJmdYbB6VLA/Kite5Gi3Tz5MkY0zgPZA3NnoGoOzEV9UAgsGSkYJwvW2UXv+f4n+Ka
+         lYGr3Z6h+YVe+ftfMemMfqkdYSx/teo0X0aP0LQ3uujCaM/laZrI2qHO24cwvrDNPW1f
+         5mR9cAiADc1GQWStAwZoKpDX57EUVP0xzsziM3KWz2GTEtS96DoBRS1AeIuW/xxkU3jS
+         y40EjCO8OK80q0aCTjuhNCimtPRBCj32KcwUXNs6Myx8hZoJRY0dtC2vWaOXEKbu0Lfa
+         5+Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715721330; x=1716326130;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XMLFt6i6xQPwGwAmXXE3XsaSnmCdbXxClxYYxBGTmB8=;
+        b=E6bU0HRbHnXOCuCJqVLmfg5MFq/2ACuejP6RrCuRyBKM9FK7q5lOENGKfTbG8Ui429
+         hF7L5sNLjc+zqhM32i3VSY/SJAMvVmu5MPkiWcAEbn7WHYNULwZrIGa8oKynZSRMb7fn
+         ySoLlDKTImqojyRxtLRUZAtdzCuYa/2d/0sRqMfGh22/GStmUWqJ0wqmhsMs7ayrB6d5
+         BZ4BqbcV71u+yvKNwXNKAQTPI8Jgyu/+YX2NhHQcnmmWPUOwqGD79S2It8BJuDgGlihA
+         NuOgw3GGfR0stqCKMi+56kxk8NSAvOHPWoclXr+kToWMP+VOQXB3oCmgSikWVFuo2Pln
+         5zAg==
+X-Gm-Message-State: AOJu0YyDkEnQHhbBeQxNuKj2aeKMd5rFnAqcjwPfNK25o2JIdhcQZquH
+	Tj+/d1hiIkWK2J+5Z2sK01K1TPRHpIE4SICGcbPHBCqUzqx8oyKjgZBCLQ==
+X-Google-Smtp-Source: AGHT+IEtHefBdCzHZZlaFyXHRUMH5wmqJMRPFz1iXJn0eJoORf9RqZOV1dEOfemyWwTpjVctDITBmw==
+X-Received: by 2002:a5d:6981:0:b0:34d:9d2c:8eaa with SMTP id ffacd0b85a97d-3504aa62ceamr9803214f8f.67.1715721329025;
+        Tue, 14 May 2024 14:15:29 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3502b896b00sm14519228f8f.45.2024.05.14.14.15.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 May 2024 14:15:28 -0700 (PDT)
+Message-Id: <pull.1719.git.git.1715721327429.gitgitgadget@gmail.com>
+From: "Tom Scogland via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 14 May 2024 21:15:26 +0000
+Subject: [PATCH] archive: make --add-virtual-file honor --prefix
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VY4kbua+h0mOAyXa"
-Content-Disposition: inline
-In-Reply-To: <ea41a92d-35df-4b71-be70-a736d620b21f@app.fastmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+To: git@vger.kernel.org
+Cc: Tom Scogland <scogland1@llnl.gov>,
+    Tom Scogland <scogland1@llnl.gov>
 
+From: Tom Scogland <scogland1@llnl.gov>
 
---VY4kbua+h0mOAyXa
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The documentation for archive states:
 
-On 2024-05-14 at 15:31:43, Yongmin wrote:
-> Hi everybody,
->=20
-> When the file name has non-ascii characters, the file name gets mangled s=
-omehow. Is this anything from my config side error or something gone weird =
-with git?
->=20
->  Steps to reproduce;
-> $ git init
-> $ echo 'BlahBlah' > =ED=85=8C=EC=8A=A4=ED=8A=B8.txt
-> $ git add =ED=85=8C=EC=8A=A4=ED=8A=B8.txt
-> $ git commit -m 'test commit'
-> $ git format-patch --root
-> 0001-test-commit.patch
-> $ cat 0001-test-commit.patch
->=20
-> From d2aa2b2f5aa290edec6a5fd141318a479ac9de8e Mon Sep 17 00:00:00 2001
-> From: Yongmin Hong <revi@omglol.email>
-> Date: Tue, 14 May 2024 15:15:52 +0000
-> Subject: [PATCH] test commit
->=20
-> ---
-> "\355\205\214\354\212\244\355\212\270.txt" | 1 +
-> 1 file changed, 1 insertion(+)
-> create mode 100644 "\355\205\214\354\212\244\355\212\270.txt"
->=20
-> diff --git "a/\355\205\214\354\212\244\355\212\270.txt" "b/\355\205\214\3=
-54\212\244\355\212\270.txt"
+  The path of the file in the archive is built by concatenating the
+  value of the last `--prefix` moption (if any) before this
+  `--add-virtual-file` and <path>.
 
-In some cases, Git uses escaped strings (often octal[0]) to avoid
-problems with encoding when sending patches over email or producing
-unambiguous output.  For example, the file name "\r\n.txt" would
-definitely break sending over email.
+This matches the documentation for --add-file and the behavior works for
+that option, but --prefix is ignored for --add-virtual-file.
 
-In addition, while it appears that you're using UTF-8, which is great,
-Git does not require file names to be in UTF-8, and it's valid to
-specify 0xfe and 0xff (among other byte values) in file names in Git.
-However, if we wrote those bytes in the body of an email, many users
-would be upset when reviewing the patches, since they will usually want
-to write their emails in UTF-8, and it's possible the patches might get
-mishandled or mangled by a mail server or mail client.
+This commit modifies archive.c to include the prefix in the path and
+adds a check into the existing add-virtual-file test to ensure that it
+honors both the most recent prefix before the flag.
 
-Thus, Git prefers to encode names in a way that is unambiguous and
-doesn't lead to mangling.  It is inconvenient that legitimate UTF-8 file
-names don't get rendered properly, though.  I don't _believe_ there's an
-option to show the regular UTF-8, but I could be wrong.
+In looking for others with this issue, I found message
+a143e25a70b44b82b4ee6fa3bb2bcda4@atlas-elektronik.com on the mailing
+list, where Stefan proposed a basically identical patch to archive.c
+back in February, so the main addition here is the test along with that
+patch.
 
-[0] I don't know why we chose octal and I'd much prefer hexadecimal, but
-I wonder if it may have originally been to pipe to printf(1), which
-POSIX requires to accept octal, but unfortunately not hexadecimal,
-escapes.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+Signed-off-by: Tom Scogland <scogland1@llnl.gov>
+---
+    archive: make --add-virtual-file honor --prefix
 
---VY4kbua+h0mOAyXa
-Content-Type: application/pgp-signature; name="signature.asc"
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1719%2Ftrws%2Fhonor-prefix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1719/trws/honor-prefix-v1
+Pull-Request: https://github.com/git/git/pull/1719
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+ archive.c              | 11 +++++------
+ t/t5003-archive-zip.sh |  8 ++++++--
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZkPNHQAKCRB8DEliiIei
-gRCMAQCITe4i87oIgWBET1MqlcTxy82G6+vqD3tdtU8wUtbzTAD/VqSecpAj4txO
-WiqRAfUgO1mQuNPvYzMvHoq5sFeVNgo=
-=IRG/
------END PGP SIGNATURE-----
+diff --git a/archive.c b/archive.c
+index 5287fcdd8e0..90086a1708f 100644
+--- a/archive.c
++++ b/archive.c
+@@ -365,12 +365,11 @@ int write_archive_entries(struct archiver_args *args,
+ 
+ 		put_be64(fake_oid.hash, i + 1);
+ 
++		strbuf_reset(&path_in_archive);
++		if (info->base)
++			strbuf_addstr(&path_in_archive, info->base);
++		strbuf_addstr(&path_in_archive, basename(path));
+ 		if (!info->content) {
+-			strbuf_reset(&path_in_archive);
+-			if (info->base)
+-				strbuf_addstr(&path_in_archive, info->base);
+-			strbuf_addstr(&path_in_archive, basename(path));
+-
+ 			strbuf_reset(&content);
+ 			if (strbuf_read_file(&content, path, info->stat.st_size) < 0)
+ 				err = error_errno(_("cannot read '%s'"), path);
+@@ -381,7 +380,7 @@ int write_archive_entries(struct archiver_args *args,
+ 						  content.buf, content.len);
+ 		} else {
+ 			err = write_entry(args, &fake_oid,
+-					  path, strlen(path),
++					  path_in_archive.buf, path_in_archive.len,
+ 					  canon_mode(info->stat.st_mode),
+ 					  info->content, info->stat.st_size);
+ 		}
+diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
+index 961c6aac256..acc8bc4fcd6 100755
+--- a/t/t5003-archive-zip.sh
++++ b/t/t5003-archive-zip.sh
+@@ -218,14 +218,18 @@ test_expect_success UNZIP 'git archive --format=zip --add-virtual-file' '
+ 	fi &&
+ 	git archive --format=zip >with_file_with_content.zip \
+ 		--add-virtual-file=\""$PATHNAME"\": \
+-		--add-virtual-file=hello:world $EMPTY_TREE &&
++		--add-virtual-file=hello:world \
++		--prefix=subdir/ --add-virtual-file=hello:world \
++		--prefix= $EMPTY_TREE &&
+ 	test_when_finished "rm -rf tmp-unpack" &&
+ 	mkdir tmp-unpack && (
+ 		cd tmp-unpack &&
+ 		"$GIT_UNZIP" ../with_file_with_content.zip &&
+ 		test_path_is_file hello &&
+ 		test_path_is_file "$PATHNAME" &&
+-		test world = $(cat hello)
++		test world = $(cat hello) &&
++		test_path_is_file subdir/hello &&
++		test world = $(cat subdir/hello)
+ 	)
+ '
+ 
 
---VY4kbua+h0mOAyXa--
+base-commit: 786a3e4b8d754d2b14b1208b98eeb0a554ef19a8
+-- 
+gitgitgadget
