@@ -1,52 +1,51 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF28B1F934
-	for <git@vger.kernel.org>; Mon, 13 May 2024 23:56:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB1FB191
+	for <git@vger.kernel.org>; Tue, 14 May 2024 00:16:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715644596; cv=none; b=a7Kpifc4F+BVwImXRFu594XeuY5A+THWQxQRT3PzCqKIXCwCFklUwhWqLGP4CPjuSWJklsmf/gXI75SJqMeP9xbW2C6s5T+WkKZBiJwEDn3nPfUS+xA3TLlX5OuRJQG5eppKVwaNmIeGjAx0WTaqxgZ4J7A9CImzky0eN+eBGU0=
+	t=1715645786; cv=none; b=Ali96GnkNDJVzyDVUOr6FrZG8Xn3EuNglltaFS+SgpoE1i8ss61p9BfJ2b4hxkA4iaiRI7+aZxLLrEK+XVALpuoqFvlF9DQKPQaZr2tc6vHyhZmxFlxuaazrBpSZbC01DbVn3NRDzRD8dShh/7ECU0yGAcWbOz6BbGLmHuLEW1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715644596; c=relaxed/simple;
-	bh=TLnpZsbAlQc5PqHeY4LSYaOL+H4+kCfZziFkHksbJ9U=;
+	s=arc-20240116; t=1715645786; c=relaxed/simple;
+	bh=myzne/wAdUji925qNouLzrw7ltT+Pf/yn9MBSYZ7qgE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SKnKaH5ej8jCc9V2HQ99E0ZaeVI2abZH2BvviJuRDz8F/+NNeS3vSIPG1Heabdnh8iHuhHCHkU+N8/3ERBQUnZkMnB+vUfDfIF5lcdiqLBOwjXoceE+epvTg8ew7IG3lelqeGxdoXgD6rnH8ckPUFSsu/N8K36ALMWJYpRbHmXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dFNyzYjM; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=Kz3CSebJuBcumeXaOxbKGSkWZc9R4acau5cL4wVXvWLjKR9g9rUwSFpebEwbNgLUfWDIR4wR9/uJXUqXZ7zUPwgP9vpbvyftgOAMmaZTQIC2K3S0VUETtav5jysvU7h2U08sNMWZpuWKO1+uNWJohn3iGaUMQTcmvv691cBn2RU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lhOk+RBk; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dFNyzYjM"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 32BA3380D3;
-	Mon, 13 May 2024 19:56:34 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lhOk+RBk"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 67650297EE;
+	Mon, 13 May 2024 20:16:23 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=TLnpZsbAlQc5PqHeY4LSYaOL+H4+kCfZziFkHk
-	sbJ9U=; b=dFNyzYjMuVfjPgvhOJCqrr0kviaclKVLiuqiprYHQf+CzabS3dKAhJ
-	cBkFZpMeWZ37wsPHQLvJxdW+uwcTzm9Kwn6LqNgfnkkp1dTan1WCmde0qFPSv6os
-	HqxsiFFHPD3FhMeVv4gMgjLx+gtENbbVqIgcxddM0Q3e2DMIVp7kw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2B675380D2;
-	Mon, 13 May 2024 19:56:34 -0400 (EDT)
+	:content-type; s=sasl; bh=myzne/wAdUji925qNouLzrw7ltT+Pf/yn9MBSY
+	Z7qgE=; b=lhOk+RBk9Max7ZAW0jc6VQDFnReTgP6Y1Si/A5TDLhrXHpy2PhzLWS
+	8aLyUTot5v8S9yBjhL6PpTPnZ/iiPR7bngtms6fsGqix0djoeUNEr0woNh2VqMFb
+	8g0XSN/Hyjwi2a8m6e9iHdDExrFygXChzYlme0SreMW3cSbeaPWpE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5EA01297ED;
+	Mon, 13 May 2024 20:16:23 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.153.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1574A380D1;
-	Mon, 13 May 2024 19:56:29 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BEE38297EC;
+	Mon, 13 May 2024 20:16:22 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,  git@vger.kernel.org,
-  jonathantanmy@google.com
-Subject: Re: [PATCH] fetch-pack: Remove unused struct 'loose_object_iter'
-In-Reply-To: <ZkHlUkKtqbXSvVNS@tanuki> (Patrick Steinhardt's message of "Mon,
-	13 May 2024 12:02:58 +0200")
-References: <20240512005913.342287-1-dave@treblig.org>
-	<ZkHlUkKtqbXSvVNS@tanuki>
-Date: Mon, 13 May 2024 16:56:27 -0700
-Message-ID: <xmqq34qlcllg.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] builtin/hash-object: fix uninitialized hash function
+In-Reply-To: <1e010f798ce50e51100bd46564a69ddbd31d29ea.1715582857.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Mon, 13 May 2024 09:15:13 +0200")
+References: <cover.1715582857.git.ps@pks.im>
+	<1e010f798ce50e51100bd46564a69ddbd31d29ea.1715582857.git.ps@pks.im>
+Date: Mon, 13 May 2024 17:16:21 -0700
+Message-ID: <xmqqttj1b63u.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,21 +55,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 6A72C5B8-1184-11EF-8478-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 31F1F40E-1187-11EF-804F-25B3960A682E-77302942!pb-smtp2.pobox.com
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Sun, May 12, 2024 at 01:59:13AM +0100, Dr. David Alan Gilbert wrote:
->
-> Tiny nit: we don't capitalize the first letter after the colon in the
-> subject. I don't think this warrants a reroll of this patch though.
->
->> 'loose_object_iter' in fetch-pack.c is unused since
->> commit 97b2fa08b6b9ee3e ("fetch-pack: drop custom loose object cache")
->> Remove it.
->
-> Good catch, and thanks for providing historical context. The patch looks
-> obviously good to me.
+> diff --git a/builtin/hash-object.c b/builtin/hash-object.c
+> index 82ca6d2bfd..0855f4f8aa 100644
+> --- a/builtin/hash-object.c
+> +++ b/builtin/hash-object.c
+> @@ -123,6 +123,13 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
+>  	else
+>  		prefix = setup_git_directory_gently(&nongit);
+>  
+> +	/*
+> +	 * TODO: Allow the hash algorithm to be configured by the user via a
+> +	 *       command line option when not using `-w`.
+> +	 */
+> +	if (nongit)
+> +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
 
-Thanks, both.  Will queue with a slight copy-editing of the proposed
-log message.
+This breaks t1007 when
+
+        linux-sha256)
+                export GIT_TEST_DEFAULT_HASH=sha256
+
+is in effect.
