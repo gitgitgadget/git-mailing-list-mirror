@@ -1,82 +1,86 @@
-Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
+Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353EDB645
-	for <git@vger.kernel.org>; Tue, 14 May 2024 04:32:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AD312E78
+	for <git@vger.kernel.org>; Tue, 14 May 2024 04:54:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715661146; cv=none; b=Nd/9Hf4GGkeYGJ7iNar+e7rp7Y5eorKSnrW1zi9pZVImxELLVVtsHQnIul22D0qK259McH9q/FgIuZsE6w1LEfRIgwIX7GMyZrIt0lkjmvEFFg0VrRaYAgn02hS6BbEvkHWzh/FQTz10lI5pSwXV4tZibL/rggM6oClcTr19Bns=
+	t=1715662488; cv=none; b=ScCiS9nCTXq3bbOGGz5ZXw0TdlzCETLhdZfpja/29v/pOYs+tDh/uoQx1arr7uQc73+Zbh4lY5ZNLCCsNcnTnzyyOpZlNoGpHN08/N/Mkoq9sRbP1QsjFH12kCP6Dftwtv6SDQyG/OcA1mjKC5MLtnaJMnBDXd0VxtR8pSqw0DA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715661146; c=relaxed/simple;
-	bh=bHPQvDeuLDCahAZoCBeghK2tO3mn6E1OC84RCuDzuGE=;
+	s=arc-20240116; t=1715662488; c=relaxed/simple;
+	bh=4QBlKYKkNl0gvYWD/IyhrfV3YL6W8N9uzxbyI292QTQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C7Z88PsNQo8MLGeWFcpjkm6H6fyQB/eFDUPuZ+mN0xSiuTByJwCylfSCkc+kw1kmwucMWsEQ1hcWdHYoTelC+LfUBb8aLQGRTIgMSYo3lpHp2I3Uvisp2Q6nhh2TuhSNV6aQIXLTTvtBZBGWo5sLZFGZUQZ8g0kK9Lgu33dLnFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=orx4L7E1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RBuIEZzD; arc=none smtp.client-ip=64.147.123.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=udZa1QsmjEZ3OCVvaX/tjM0ILxhL496uQq63v7S0FbsBrZbc9Y49DZ9wed0qZPrD8i/k94Z5BRbKyIyBDe2xwMLfpU8Stv3y1cJtM9u6xLaoWpn+h7zDXWx5YUJsAPuqpzBE9sKdh3TLBmhgQxtyXvg1QLBmRPPFQ3HfQINHyk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HK4b5L2U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fzsYaKuM; arc=none smtp.client-ip=64.147.123.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="orx4L7E1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RBuIEZzD"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.west.internal (Postfix) with ESMTP id 587101C000EC;
-	Tue, 14 May 2024 00:32:24 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Tue, 14 May 2024 00:32:24 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HK4b5L2U";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fzsYaKuM"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 60D461800181;
+	Tue, 14 May 2024 00:54:45 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 14 May 2024 00:54:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715661143; x=1715747543; bh=9Sb1WCq4mh
-	t9hF2S8/ZI9z1x0ofBvAtCCpjFWro909c=; b=orx4L7E1OfADKnURt0aFhbcyz3
-	GdaKqVABXmTD9+VhE3gEhjapjfbPpLTMeHppG5CuHbSpA5HQIZSsEVAVKn+UVeg2
-	TDi9umpZGbnWp3MvfvlZ+t+3kFuiKFtScA8ykXMAV93h9JtOLEUCBEswYPoNXG/Q
-	mb89lAyEVfvavHxpwEyT6canjV3TaJwAQqmIR3gZB7lRIdqicIWUDW4z6bCDno5e
-	OpRoFT9Bni0LWRiJ8OJN/qDv+KJPTYJmk2YEihKfI1O5u4cNQ+mVEFNOUd0Kh20g
-	Dk2FR9PedCQuGfOmjIGuTiFhMEgvw74q7gzaF3Emc3cTlOjzSrPkXhbYMOAg==
+	:subject:to:to; s=fm3; t=1715662485; x=1715748885; bh=4wqWJShDz6
+	mFV/uaqzLQnwOj6+XHPhuXwau8B0zoitQ=; b=HK4b5L2Uplht9mjaNxlXA2paMr
+	OLENPwfVf9jtELCyYY97oxYfBLxH9y2ZYJmZbV9oNVqIkYo0DevgniO1Vtp2Uwas
+	B75bfvnVr2B3WuEuLJl/n247CWbVESVFrf+odYp8sOj5AKxS4iuq/28fyXizl+DX
+	RTFx57evVy3jfEvqj2s+cGLUbgJlFVjh6zYuDTQytAiHimi/sIajcH4x+gh8d/NA
+	U0In2Xm2wcboS5K/WdSXy305FHshRkDADSgEW4buFlY4qf3adsvjFpPUJ0qMEx9W
+	q6spKGcJK5zPhuegWQhNtyP/JeqShUyBT51l8Jpub63YgAKYA/K6rIUufkzw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715661143; x=1715747543; bh=9Sb1WCq4mht9hF2S8/ZI9z1x0ofB
-	vAtCCpjFWro909c=; b=RBuIEZzDISQSgaVGQKBZ/aRiIdZ1B3IdBlhPdo1Jgfq0
-	f7Ddoq2drRWPQFufEaQHEjivOo+lYecMm+n8ZlUV+SsrG/Zh1Zo3rvV9Mqecg5qa
-	3T/kXmjL0z+1XBAOYjC3ndVzyfs7E6jkKvfi4NXroSy7VZWYTHR06qD5m4dn6kot
-	rbEBe3ddZA3svF0VnH0wrjkicbV5S5ShWyQzd6ppK4/N66gQLLgE4N/VJhUjXo/w
-	GPPCcIq5jig2EYp6UeUWhtqBWb67nnbyHDfO+HyFzVzcUBlwZTqFR3h+vgbb//HQ
-	6+0AQXO4NpQYJfMkNvZ9t/6HlGGdn9974s7WDsJBBA==
-X-ME-Sender: <xms:V-lCZqx6ZsbMsBVyhBDfRoms9UhK4lLit7GaTX_FNW8RaFOngLguCg>
-    <xme:V-lCZmTfXhLI1Z-nKp4xcUscRf-XrnofA1Eci0w2r1mqYDd5g8nNaEptmD_CvmMtx
-    tYMfHJCVeVVGcyipg>
-X-ME-Received: <xmr:V-lCZsVNqa6PG6ype0cvojYCLzKJj0pCGw_GUJrSDDhNHJNyxTfG-oRo5_lobx7vsFnytqO8Ws0IC7OiZvVKykwfjFwpbAh3QSquIL2ObbRFOBkkdChi>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeghedgjeejucetufdoteggodetrfdotf
+	fm3; t=1715662485; x=1715748885; bh=4wqWJShDz6mFV/uaqzLQnwOj6+XH
+	PhuXwau8B0zoitQ=; b=fzsYaKuMt6yyP2EFfeetStZy/TAPRS1K9udbwjkeGKtL
+	D65eOVM2q7GDPD2rrqc1jhKtXO+BAzV/ciJwWZ4QjIF98NhxgA95IKz0gGPSWTlc
+	JXJ1VTmpwA/oEX/wp7BVyw6QXNOn04JykOQ44BE4CZSl3HX7xlpTTXXAaVVdOFz5
+	yb2uyWfQq7OhmnotEjrPriJd3bz0YEp4gwOHbKn4Dsid+CE5w8G7KHOaiNiWrLX0
+	TXHbd74JoI5JI8M7nU0gfjykVdM6DN5b58HlyyV70aeiKNj5SdXSMXUXz+lEQS4f
+	3yQRKd5WhsBygM0VX35xxIMmIJKNkj8VdxAsjhAjaw==
+X-ME-Sender: <xms:lO5CZgrY3tO4oQUFH9DHuVThqPBbACvEU10Hlos9e3S9xHNnSgA8aw>
+    <xme:lO5CZmoUKYl_QH_JgAjOJjOoKYMLtdNco1zR8dAdElU64TIy-XvNP4I9mcZDDqNNM
+    90a8C834D8RMZs3mw>
+X-ME-Received: <xmr:lO5CZlNF7QM0a2QS-wUg6W7jTynMe9YUT8xo_87SYvqwiIUrlAV7qs7XybeJvm-vwCBuU_CVeRKJ1HHLh5TlgcdtTvrjwTVumZd8Cyuo_Zck3jt6RQJX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeghedgkeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:V-lCZgiHdEb6MiV7hAbVifj28IRgQC9rVvJQeBHsKJ_zqIdbdRSUfQ>
-    <xmx:V-lCZsByklhIr5MPM2CcQqJpJwEgMNLKotzuZv4DTmrk12SHukd6Eg>
-    <xmx:V-lCZhL4WRO_hF-jBgnStMA2lRe9Cl998_IM4hAmVKblmZ65OPyXAA>
-    <xmx:V-lCZjBdZNFPlzhb3-okPxnDa5QYD4jNTUARLaaxEl1tqpf6ksIEIQ>
-    <xmx:V-lCZvMXsfIFSj7NnIigbskutND8KkyspLwCj8QFQAbpCyLSK6Mpfd8T>
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepieevkedtgffgleeugfdvledvfedthfegueegfeevjeelueefkeegfeffhefglefg
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:lO5CZn6Ctv_KQ9kLMtbGLTsGe2QiEialO78Jj3A4Wea6Lf1JYXqNtQ>
+    <xmx:lO5CZv6HXqasqaBXIb9atDic1zRiv2sTsWWr2TPnExcE-jgDvX-g5g>
+    <xmx:lO5CZni3fOdsZyyC7cezjFf-6Sf8QJLtluNaN7GtKpw_fKa2QAOqoA>
+    <xmx:lO5CZp5_LUIT8I0dYPAiN6EBAWkjGiBv7uRjItdgN9aF6TWBjpXMnw>
+    <xmx:le5CZlTLHFE_TUzL4XxwIsx4mOKHaGDkMo6Fxc8uMgdYHZK_3cjAc78C>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 May 2024 00:32:23 -0400 (EDT)
+ 14 May 2024 00:54:43 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 1f8d1e8c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 14 May 2024 04:32:03 +0000 (UTC)
-Date: Tue, 14 May 2024 06:32:21 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id af407b1c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 14 May 2024 04:54:21 +0000 (UTC)
+Date: Tue, 14 May 2024 06:54:39 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 4/5] builtin/hash-object: fix uninitialized hash
- function
-Message-ID: <ZkLpVSVv1XPz-D8v@tanuki>
-References: <cover.1715582857.git.ps@pks.im>
- <20240513224127.2042052-1-gitster@pobox.com>
- <20240513224127.2042052-5-gitster@pobox.com>
- <xmqq7cfxcnlc.fsf@gitster.g>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 10/11] reftable: make the compaction factor
+ configurable
+Message-ID: <ZkLujyOtvKBf2LOM@tanuki>
+References: <cover.1714630191.git.ps@pks.im>
+ <cover.1715336797.git.ps@pks.im>
+ <9d4c1f034038df2ae232b6665a0d9d7ee5833c5f.1715336798.git.ps@pks.im>
+ <xmqqy18h1fm4.fsf@gitster.g>
+ <ZkHHIgyeWq9FCYuq@tanuki>
+ <xmqqmsotheb5.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,88 +88,72 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Vma296TYQzHGJZ4M"
+	protocol="application/pgp-signature"; boundary="nNcFPZbRHHOo6Ql1"
 Content-Disposition: inline
-In-Reply-To: <xmqq7cfxcnlc.fsf@gitster.g>
+In-Reply-To: <xmqqmsotheb5.fsf@gitster.g>
 
 
---Vma296TYQzHGJZ4M
+--nNcFPZbRHHOo6Ql1
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 13, 2024 at 04:13:19PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Mon, May 13, 2024 at 09:22:38AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > From: Patrick Steinhardt <ps@pks.im>
-> >
-> > The git-hash-object(1) command allows users to hash an object even
-> > without a repository. Starting with c8aed5e8da (repository: stop setting
-> > SHA1 as the default object hash, 2024-05-07), this will make us hit an
-> > uninitialized hash function, which subsequently leads to a segfault.
-> >
-> > Fix this by falling back to SHA-1 explicitly when running outside of a
-> > Git repository. Users can use GIT_DEFAULT_HASH_ALGORITHM environment to
-> > specify what hash algorithm they want, so arguably this code should not
-> > be needed.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> > ---
-> >  builtin/hash-object.c   | 3 +++
-> >  t/t1007-hash-object.sh  | 6 ++++++
-> >  t/t1517-outside-repo.sh | 2 +-
-> >  3 files changed, 10 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-> > index 82ca6d2bfd..c767414a0c 100644
-> > --- a/builtin/hash-object.c
-> > +++ b/builtin/hash-object.c
-> > @@ -123,6 +123,9 @@ int cmd_hash_object(int argc, const char **argv, co=
-nst char *prefix)
-> >  	else
-> >  		prefix =3D setup_git_directory_gently(&nongit);
-> > =20
-> > +	if (nongit && !the_hash_algo)
-> > +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+> > So this may be good enough for now, and when we gain the ability to
+> > parse floats we may convert this to accept floats, as well. An
+> > alternative would be to convert this to percent, where the default value
+> > would be 200. That should give sufficient flexibility without having to
+> > introduce floats.
 >=20
-> This is slightly different from your version, which always used SHA-1
-> when nongit is true, in the hope that it would make it more useful if
-> the user can say "GIT_DEFAULT_HASH_ALGORITHM=3Dsha256 git hash-objects"
-> outside a repository.  I am not 100% convinced it is better or we
-> rather should aim for predictability that you'd always and only get
-> SHA-1 outside a repository.
+> There already is an established way to specify float with arbitrary
+> precision on the command line if we limit the value to 0..1, by the
+> way.
+>=20
+> https://lore.kernel.org/git/Pine.LNX.4.58.0505191516350.2322@ppc970.osdl.=
+org/
 
-I'd prefer the latter -- always use SHA-1. As you say, it's easier to
-understand and doesn't create implicit mechanisms that we'll have to
-maintain going forward. Also, users didn't have a desire yet to pick a
-different algorithm than SHA-1, which probably also comes from the fact
-that SHA-256 repositories are still scarce.
+The problem is that we don't want to limit the value to 0..1, but to
+1..n. 1 really is the lowest semi-sensible number you can pick and means
+that all tables should have the same size. And in practice, there is no
+upper limit, even though it's probably not all that reasonable to pick
+anything beyond 10.
 
-Eventually, we should then add a new option `--object-hash=3D` to
-git-hash-object(1) and other commands that may run outside of a Git
-repository to let the user pick their desired hash.
+In any case, I'd propose to keep this as-is for now. The simple reason
+is that we have preexisting commands (`git repack -g`) and in-flight
+series (pseudo-merge bitmaps) that also use plain integers to represent
+the geometric factor. So I'm aiming for consistency. From thereon we can
+then iterate and design a solution that works for all of them, e.g. by
+allowing for floats outside of the 0..1 range in whatever form.
+
+> It is amusing to revisit an ancient discussion thread.  I can see,
+> on the same thread in the discussion following that message, that
+> back in May 2005, we were discussing "intent to add" that did not
+> get invented until mid 2008 already ;-).
+
+:)
 
 Patrick
 
---Vma296TYQzHGJZ4M
+--nNcFPZbRHHOo6Ql1
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZC6VQACgkQVbJhu7ck
-PpTcpg//crGF9+m7ch3ijFR3xqxWXjjmcGnyb9R8yoZi/F8NQfZ5OdDbDz/pfaPG
-Wf0qVgLcRGZ7fgjg00Fk/bjNgQJPeDNProgLqyqflz+4gmuzyQZJN06zSqVLq2fF
-fRXlWLnpkAeaH3S6/h3jwhDPBP+7Ijwh4YbomyJmYNV5I8rPm+bWlt/fVMMlMRwe
-1WgaLCKwnDtcgBFER/xj6owGoObnhrJfiwEhAzOqV4EPr3v88+TbRqdO+ssL3VIO
-X2yVSTKvtgalkOjtngYc18oqZQceAQlM4QNrig9TPmWzGOUfN0Yg+WhkL5n0/+9y
-JU6RuwHnKD1Mclfs4XbwFH6Ydwn1vrZLijJQxiWdCQi9+ZH5XI23VbFhtzzShX/n
-m7dIgMpoPmilDjtpEWfRQygmsSIEin51omPdS0PYe2MqcWsEu4H6Bm/uAOnxtO8j
-F07LxQ8E/kGx5/bs01wTtYTSrKgYNNUiF0Fgh3FPaF5iWXweO+AXzNdFnaC3BDGD
-mjqYoTLxV4wTKixX6gE/nyDZU/5uIK2qeY7C18zxe5GyciQ1SWAmO4/MxusfPZuP
-UIkZIJ5R/m/etdVhQMvYEH4r/4ruywFkurLOtARn7rILHtQeWjvbMadPYAobIa2v
-iaLmLi/qinQ23tFb3+d3b9Ko3irtXGtrRF6nH0GE5fqj1xLWByM=
-=Sr3E
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZC7o4ACgkQVbJhu7ck
+PpT6MxAAkGULfU/gA16RkrdtQ7o+qWV43nt4gPybUBoVAcIdz4fpACUhTT/cOTZ/
+8k7IvgGFSS7Dy+9UgYab5ln7g18goPrjYesWLiokpY6janyynTUx4eZ/cJnFdIo5
+XkQMxrZuQiBkUsGi8cSP6huZ0TlQUjeRA+QaDFenXCBUDbV7YTYW/uZxlnUD76J8
+61Tj90lLGPfOMFiN9rlxN12zjymeIMFFIUtWxWqa1p1WLei5g+Lw1Adq/LHDvemR
+bND6oMtH7fSjAq9ODfALaIx4knfXWaTrEKvanTWqgNT0TphXHSyRjXhXfbF7cjrt
+3rWf1R5V8faEb98+jLnSr8JBDXcnpjMOFeObMouWRXsiVG56yTqG9OapV+TlaCvr
+zDbo0jXXg+8y+jSSK9m3A/UFUQZKmMEWDCKMJQUi/n/UnpbBRh7K59Ju+ncwqS+e
+fh087P29o9G5WIN/PcIY09sYow+vmG27Iy51xFQUiTYklzGCweJY+tCXrBiITd4c
+5OZ577ANS7FIuer2Hl9x5RPne+hHX5nPMSwRIcwxkldbnIw5hOqKQzZEIcVc+M+P
+FmVcJyFlmg/Jpcz7MOjWxRcNcDMzTF/ejkzOb1sDbFJ7465v4GmzuKCWb9fsGrdQ
+bioyQvmIrciedaFGGKbhwmdwB+fjZwZZo9FRU+IVygfaND/C10Q=
+=cMyh
 -----END PGP SIGNATURE-----
 
---Vma296TYQzHGJZ4M--
+--nNcFPZbRHHOo6Ql1--
