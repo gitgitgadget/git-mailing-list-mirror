@@ -1,124 +1,131 @@
-Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AFB1E480
-	for <git@vger.kernel.org>; Tue, 14 May 2024 15:32:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956B217EBA5
+	for <git@vger.kernel.org>; Tue, 14 May 2024 15:45:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715700752; cv=none; b=g3Tc8xeMCF96fTK98PxPmhk7KkASUev4LunefJRBnhReQfa4jkL9mIgENuEsjHisut6pjo3d5rTG8/ichG+cxBJuRL8k5gw5DYzkJLZ7CW6MayXRngqF0GFbdzajuypUXQb48nO2xUzVucwr4X3vl2Y9J2mnxaO0fjN65sX/VmM=
+	t=1715701558; cv=none; b=BjZk+ZN1Fg+vHD4XlaK5U8xnODrbfCwSJj0pyltbzb5lzwq/WZrHCg8mSDjvUCLBswbYdKuHURNx85Ws0O8+QCEww31fDT0oiPM+dzKL00b3n4jE98CMFCoYHKkWW9kZKjqCdoJuW1+5F3HwyvlaGjJfVSMHayFMUbf7N3XixF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715700752; c=relaxed/simple;
-	bh=s9tlSrewquPKMbX0+xvgahHu9KluO33FTF2LhFSbAzI=;
-	h=MIME-Version:Message-Id:Date:From:To:Subject:Content-Type; b=Q/mSMoc1EvtQBSi0PjmW+NMlmLzpW2kK/BDrpnRiFv8b4pr67GGhak//wsQZDqJDs+xEHxMtfjfol2f/xncDreqgDDGLGwkDD7VFrc+DvdIiCM3TqxFaycvMiPKHtlds7KTZ+xP1kbh0OhKsK4j4CundybXs5hNPFJpNjgco/xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=omglol.email; spf=pass smtp.mailfrom=omglol.email; dkim=pass (2048-bit key) header.d=omglol.email header.i=@omglol.email header.b=VplfD+pe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=La5+ZA4s; arc=none smtp.client-ip=64.147.123.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=omglol.email
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=omglol.email
+	s=arc-20240116; t=1715701558; c=relaxed/simple;
+	bh=NcM/jRX635BD7Ll6k51KuW3YuDcFZYXAdiDisd6XtvY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dSjwTpQaC/kWIdQMJPL0CB/37WZ5RTmCwVd5U9TGDEeL7uFu7Uk5KT/ZSfwkEuTRi82DkqmkA5F/u1VSN5NFRATZOM0sM3Kc7KweJOXwSgZf1jjy4f4rh5YslbcmkpwyiJZrgtxRj2d8rcsRGWyoZA1kObyiYpDvqOb+opCTn3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dUa7P/vV; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=omglol.email header.i=@omglol.email header.b="VplfD+pe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="La5+ZA4s"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.west.internal (Postfix) with ESMTP id 29B661C00146;
-	Tue, 14 May 2024 11:32:29 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Tue, 14 May 2024 11:32:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=omglol.email; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1715700748; x=1715787148; bh=s9tlSrewqu
-	PKMbX0+xvgahHu9KluO33FTF2LhFSbAzI=; b=VplfD+peEhqiG2pGvjctwawbqx
-	fISpVWtgiyjevG5zryxOxt/vKq5iEqvp/q0txiyNLZgeF7e/vjr4EMjNnehi6thf
-	kb3STK4t66uWBJUtMsfxlAsUUqfTFEMwjlOA3/Lu8v3R/r69U3y3TqUrHbUsIxTn
-	0AHpYaPXMSwCuR6d/nFjpXlCeCCRVAcGe4n4lUdL7ENnhRe6PmedLM3C7aJBDq7p
-	OnyaDPXWDPkquPZQBARjesNZumRZSRlWc6+anw3FVWCOgznkAW+Vh9uB6fIhjV7U
-	vzEghKdf4wKBMG62F2TPloLKVeDWPcnNO+LiCUWdAFL0rUzdfAREa5MtqBrA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715700748; x=1715787148; bh=s9tlSrewquPKMbX0+xvgahHu9Klu
-	O33FTF2LhFSbAzI=; b=La5+ZA4sIwLTI3Uua+lUvB5stFuf9Uz2FPTls0ePHx5T
-	5O+Z4JSLDaBVP2TBri0nw9T+meM16Vd4eyax2j25s0+/85X+Ex8Kq6kiCVRUGkbu
-	nRDqBCLZuwFGHH9hKnZRMLfaVZbmVHKm97bMc5faXvvW+mZEJJnTkwASk6DGHxUi
-	HUYebTYhbnEh+yo8l8bZjF8W7PXJPa1swZjCv1VtOcrUNZsOMHAl2yaVPI6kbjD/
-	+xHYiSX0XCFHfte8nSiahrzkccFqml1j8CoOBCmEh8jmUQ+Uqb3aPaZVKe+OcFb9
-	+bezn6KQVHILwUo3QPj+hq5uBfGE/Jcvehz1ID3YgA==
-X-ME-Sender: <xms:DIRDZrLw-EcHRPVGXKRVm_4gwXf21hveOKVmnAGFJ8PegpcF9WuW4g>
-    <xme:DIRDZvKDTNXUdhKaJMmtIUcpgZOg9m08h8TxxZdLBOwm9sRNlTSSmQpAO4IoY3qgR
-    FqRuxrEMrcNIZrf53k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdegiedgkeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdludejmdenucfjughrpefofg
-    ggkfffhffvufgtgfesthhqredtreerjeenucfhrhhomhepjghonhhgmhhinhcuoehrvghv
-    ihesohhmghhlohhlrdgvmhgrihhlqeenucggtffrrghtthgvrhhnpeeihfeiveekudetff
-    duteevteeiffdvjeeihfettedvleevgfefjeefveehiedtvdenucffohhmrghinhepphhr
-    ohhnohhunhhsrdhprghgvgdprhgvvhhirdighiiinecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomheprhgvvhhisehomhhglhholhdrvghmrghilh
-X-ME-Proxy: <xmx:DIRDZjvylwYBtDDU0kpe9ZXfpITc13s2Ft6AjloUyjkma3X1PlAssQ>
-    <xmx:DIRDZkaRmg8thI853cyuz-0icgVWfJE5PhrNR8asjVv8cghHKy3-bA>
-    <xmx:DIRDZiaDIGDogrUsb7JEp5aoUi6qrwo86Lyfj-sHQQf2a_3XM-mjWA>
-    <xmx:DIRDZoCXmn_hOXTF9nHdH-Ahyfhz2VYGQ_Mqd5dpkkAaRkV85IxRLA>
-    <xmx:DIRDZlw_nJcJvLxD5_-fNRHS-AFSPWdCS0L-Ls6hz3Dg6qvAR0kNNUv1>
-Feedback-ID: ifc394682:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 770E215A0092; Tue, 14 May 2024 11:32:28 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-455-g0aad06e44-fm-20240509.001-g0aad06e4
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dUa7P/vV"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 178043D558;
+	Tue, 14 May 2024 11:45:57 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=NcM/jRX635BD7Ll6k51KuW3YuDcFZYXAdiDisd
+	6XtvY=; b=dUa7P/vVbvSl+tCGSlpM02XEPmjTsN5LOHFO7HzQ9QuENgfLxWdBjt
+	PE8kBfRu6EFxC3+NTGuaoWklVnkLoRjREEO5ShzjyenDGdloQvS1TCJowqE91fY2
+	fls2PDHeDFvravDze/myo5JreM/EfUY0hJ77GMPfqKpTUZnjgH/wI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0F2413D557;
+	Tue, 14 May 2024 11:45:57 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 937093D554;
+	Tue, 14 May 2024 11:45:51 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Justin Tobler <jltobler@gmail.com>,  Dragan
+ Simic <dsimic@manjaro.org>
+Subject: Re: [RFC PATCH v2] docs: document upcoming breaking changes
+In-Reply-To: <ZkNJaaKTTKbns8wo@tanuki> (Patrick Steinhardt's message of "Tue,
+	14 May 2024 13:22:17 +0200")
+References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
+	<2ef53ff98b12fe9373a15ec3a795235f040d9049.1715667067.git.ps@pks.im>
+	<CAOLa=ZRkLpi-DSNsTgVf5OCk6gEP7VTx2SeJRKT_Lv+pVu1Nyw@mail.gmail.com>
+	<ZkNJaaKTTKbns8wo@tanuki>
+Date: Tue, 14 May 2024 08:45:50 -0700
+Message-ID: <xmqqh6f05rdd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <ea41a92d-35df-4b71-be70-a736d620b21f@app.fastmail.com>
-Date: Wed, 15 May 2024 00:31:43 +0900
-From: Yongmin <revi@omglol.email>
-To: git@vger.kernel.org
-Subject: git format-patch displays weird chars when filename includes non-ascii chars
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0AC12BAC-1209-11EF-9010-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hi everybody,
+Patrick Steinhardt <ps@pks.im> writes:
 
-When the file name has non-ascii characters, the file name gets mangled =
-somehow. Is this anything from my config side error or something gone we=
-ird with git?
+>> * annotate, blame, pickaxe
+>> You've mentioned `annotate` below, but we could also remove `pickaxe`.
+>
+> I think most oldtimers use git-blame(1), whereas git-annotate(1) has
+> been introduced to make the command less judgemental. I'd thus say that
+> this falls into the category of commands that we wouldn't want to
+> deprecate because they are both used.
 
- Steps to reproduce;
-$ git init
-$ echo 'BlahBlah' > =ED=85=8C=EC=8A=A4=ED=8A=B8.txt
-$ git add =ED=85=8C=EC=8A=A4=ED=8A=B8.txt
-$ git commit -m 'test commit'
-$ git format-patch --root
-0001-test-commit.patch
-$ cat 0001-test-commit.patch
+Personally I do not think blame is "judgemental" in the first place,
+and I do not think being "judgemental" is bad to begin with.
 
-From d2aa2b2f5aa290edec6a5fd141318a479ac9de8e Mon Sep 17 00:00:00 2001
-From: Yongmin Hong <revi@omglol.email>
-Date: Tue, 14 May 2024 15:15:52 +0000
-Subject: [PATCH] test commit
+"git annotate" was there first as a Perl script, added by c65e8987
+(Add git-annotate, a tool for assigning blame., 2006-02-20).  It is
+intersting to note that "annotate" was advertised as a tool for
+assigning blame.
 
----
-"\355\205\214\354\212\244\355\212\270.txt" | 1 +
-1 file changed, 1 insertion(+)
-create mode 100644 "\355\205\214\354\212\244\355\212\270.txt"
+"git blame" was written almost around the same time but with "-c"
+compatiblity mode to mimick "git annotate", added by cbfb73d7 (Add
+git-blame, a tool for assigning blame., 2006-02-21).
 
-diff --git "a/\355\205\214\354\212\244\355\212\270.txt" "b/\355\205\214\=
-354\212\244\355\212\270.txt"
-new file mode 100644
-index 0000000..86724be
---- /dev/null
-+++ "b/\355\205\214\354\212\244\355\212\270.txt"
-@@ -0,0 +1 @@
-+BlahBlah
---=20
-2.32.7
+A healthy competition between "annotate" and "blame" continued until
+f789e347 (Remove git-annotate.perl and create a builtin-alias for
+git-blame, 2006-10-09) retired the "git annotate" Perl script, and
+replaced it with an invocation of "git blame -c".
 
-I searched a bit with the keyword 'format-patch ascii' but couldn't find=
- anything useful.
-Thanks in advance!
-----
-revi | =EB=A0=88=EB=B9=84
-- [he/him](https://en.pronouns.page/@revi)
-- [What time is it in my timezone](https://issuetracker.revi.xyz/u/time)
-https://revi.xyz
+"git blame" was rewritten under the codename "git pickaxe" (cf.
+https://lore.kernel.org/git/7vr6xddm7h.fsf@assigned-by-dhcp.cox.net/),
+and was released at cee7f245 (git-pickaxe: blame rewritten.,
+2006-10-19).  acca687f (git-pickaxe: retire pickaxe, 2006-11-08)
+made it take over the old implementation of "git blame".
+
+The name "pickaxe" can be easily removed, as the log message of
+acca687f already said back then.  As everybody noticed, it is not
+even documented.
+
+>> * log, whatchanged, shortlog
+>> Here `log` already handles what the other two commands do.
+>
+> Does git-log(1) really support everything that git-shortlog(1) does?
+
+Of course not.  The filtering behaviour of shortlog is unique to the
+command.
+
+> This is of course a much larger topic and something that is very much up
+> for discussion. But in any case, it indicates that a deprecation would
+> be premature at this point in time.
+
+Yes, please exclude anything that needs new development while
+discussing this topic.  Anybody jumping into this discussion should
+take the word "upcoming" in the title more seriously.
+
+So I won't talk about unifying "describe" and "name-rev" somehow ;-)
+
+>> * verify-commit, verify-pack, verify-tag
+>> These could probably be subcommands under the verify command.
+>
+> Same here -- as we don't have the command yet, I think it's premature
+> the old commands to a list of deprecations.
+>
+>> * diff, diff-files, diff-index, diff-tree
+>> Here, `diff` seems to handle everything that the others do.
+
+No, diff-files, diff-index and diff-tree can do their thing
+without getting broken by end-user configuration.  Writing your
+script with "git diff" and you can keep both halves.
