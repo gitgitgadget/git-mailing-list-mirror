@@ -1,151 +1,186 @@
-Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB79E39FD3
-	for <git@vger.kernel.org>; Wed, 15 May 2024 04:39:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943283B297
+	for <git@vger.kernel.org>; Wed, 15 May 2024 05:07:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715748000; cv=none; b=eU4KZA89/CvfQQ9VFOXTDP+ma8RUgAccBJa+wp4QEk5gGg08TYDOaYT/ejWbhYy4oQXjpYaPvFZx2xYVzV7H5c01N0sSrs/Jc9ndWn0ubsgJVOarJQRYgNcnFNI35CP7uZv0TcxCZWK/h3Tzjv344Nv0M+8FDeaiqVF5upEbnYU=
+	t=1715749638; cv=none; b=rNHh+XnQhtFabH0N8+67uqfxyyuZgpIb55WDEZZhV0mv9pZe8XUmYhkT10JbJAMNkEvbTBMFPlbK9nKq/Q2oQWWiIAKqMh0/0Mb4adJl7E17CKOq0NF/bx1dIN75ws999CEk7M6bkaJA3nkiyRUXCWzZETXWKpLHIRumGeTD1VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715748000; c=relaxed/simple;
-	bh=zXRNNlpgFTsD8DSzhADiOcqky8AdxTX4OYHwysvxG7c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KNLIVd9sjhAYzNC5kThK3Gz0R97aRYNeXIrIh815r8eDbUfQpQ6ROek/8TLCYY6CDdqt1es9vcmJ9fbhOKqiHNZkqmUKb7aMutc/45+Xg0eUcfAqKfCRCIpupWDmBKTXZ2pDLw3R62j/axVXYirOknwA5OdrjW59vAGQ86IompU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Sy11uoP2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XPQ0mOo0; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715749638; c=relaxed/simple;
+	bh=tRHv5I6vSvCinqHtPzbzbEwx2yriXjy9x3dcgzzljOw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iK9xwffQyiM/wOusS/X/TedHgFmiaRPSrHnBTx/Qa41ApOWm56ZQTGszcq1eHfci5MaYqOcVwRn/K8Fd7XitJRvVZ086JEOQm9rsDgJ9jo+++VOF5YdQxggUlPXTvkLa2vEN+uEw1pVCl+SzsUBnTZzZ7F0BcCq3mURgFg+jG3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ao87JtrF; arc=none smtp.client-ip=209.85.166.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Sy11uoP2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XPQ0mOo0"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id C9A6A13814D8;
-	Wed, 15 May 2024 00:39:57 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 15 May 2024 00:39:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715747997; x=1715834397; bh=zXRNNlpgFT
-	sD8DSzhADiOcqky8AdxTX4OYHwysvxG7c=; b=Sy11uoP2FPyhjyFX2bzSZFOe3n
-	nZHYJDWB314sS2jVBEYftzxQJ/GyLD90khBfG0dVYe4Bp5qsVneI1hY50d7kgSjn
-	oTLW+OONrIaaAWuX1Vi33RbsV3H+2nZu+OzztulY6zv3ylmg0sOW1TE/EnHX7kB+
-	2zvWz1FRiJr3qnbkQ0Wxo8qX/o9S3pqYivl8/yffJxTPy4r0Q8AN7S+THGuvVf3k
-	PpfAoeAG5uA067MY1VfPOO5iU+IOWhP1XuINcAHBWsEMu9crRGp7OBI6ItcZljFP
-	lrgr38gzY+kY8MyAkLvP2jn5uTolGZoSNcrjf7Zfiu0rHDL0gGWkoWASSY5A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715747997; x=1715834397; bh=zXRNNlpgFTsD8DSzhADiOcqky8Ad
-	xTX4OYHwysvxG7c=; b=XPQ0mOo0V7QCRMVjNz5LLUeRtjfGf0uPMYsKbkeH5to0
-	fmWVI+O5yXonJVBxgQ+4sN2l8+bnIzx+mW22usnW0xJzbVuJvzwmGqfWnhXlSC5d
-	NJ9Chd2YYHx+xlpKDGxO9eYB8qbVgwlqHch1CgkZ975p4UZKwfFypK8t0C4zj2zP
-	6utjDbzp+qMeB0cK5A2/brRkUh8Bs0dWZobNdOBGRQ6eiIX5VeqFjlB7OD0wtbjH
-	2umwZoBGExZa8vTSBzxT2H4bUYqPyVmC5P2X/4jYQ7h2y8ZwnaFOOOa6QWlwNNsr
-	dED6zSA2+pdUd1JGL3QxCqLlThnPYarRX5rhHxvdpg==
-X-ME-Sender: <xms:nTxEZoOLhFcUVVW5cyqxbfxVIqqVd710HTdxqtlZ1zw98NlKMyPHwQ>
-    <xme:nTxEZu80gde8S0pP1A1bnM7CFmZsI0i-MBdKV0SEIf4EuGAbcjknhV9lCMBfq6tbj
-    uUVZ-zBQXKArPkNaQ>
-X-ME-Received: <xmr:nTxEZvSbRt1fw3_VAiRFOGsaJhnY-Bb7y1i4GQwcJinv0Vv_M-PkqBnEkP_7O-MpwX09B__TkNVJKq6QsAQC_c0VTR2U-52E2QCoO2_mi4Wp1CX5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdegjedgkeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:nTxEZgsLAUn3T5GVHy-9FHqklpcxleEC8467ydRi-K5WzitUdBHBZA>
-    <xmx:nTxEZgdaxfnV9_QobXamSkDtl8dnWS_5bgeF6OD8_BCp5JwwJKI9Gw>
-    <xmx:nTxEZk07RDlbtSq7Bel5H3TZ00vji3c_LaUYeCHELiZdNdONsS-JXQ>
-    <xmx:nTxEZk__7ZJGMw8mDUH3MN22YgJSpJbPptTf5GrMDZqtBr2vXMjgmg>
-    <xmx:nTxEZuvY7UgiiH9-Q5RGbIKVl1DxCrN4bTavC-vlS_PXM-71uOGju1gH>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 May 2024 00:39:56 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id f9bb8e36 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 15 May 2024 04:39:33 +0000 (UTC)
-Date: Wed, 15 May 2024 06:39:52 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH v3 07/10] refs: root refs can be symbolic refs
-Message-ID: <ZkQ8mDrBB2eGg8Ns@tanuki>
-References: <cover.1714398019.git.ps@pks.im>
- <cover.1714637671.git.ps@pks.im>
- <92a71222e1067ca4ce9ecaaa555d78d0cce0d9d0.1714637671.git.ps@pks.im>
- <20240503181339.GH3631237@coredump.intra.peff.net>
- <ZkQ3EiL1OY10Y2JP@tanuki>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ao87JtrF"
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-36c96441a41so27740835ab.3
+        for <git@vger.kernel.org>; Tue, 14 May 2024 22:07:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715749636; x=1716354436; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=k2dS67ymURuWDK86q4uv72MlJ9ztW9bwDViVJbmLMU0=;
+        b=ao87JtrFCqs3xpOoubnP1kVAIQXsrRvQpwLdZgaXptRHadkTAeUxWfHRoHxngAY+dQ
+         jrwdvKI123eaYQTEd+S09Cpc8ntCMgDw/XOuSjGLaFUxQ2jYBd3pWAxoaNfGQpfug3v5
+         S756GsyF0uKgmb+/HWGnn+DS2bMPZftO/5os9lJ99xPVkeuLNf1bjQuCWOrp8h/ej4fr
+         +AgIUF3dTg7FCauuxlna/gVEZzIGPI9pvNeX6HX19wqH059TqOgiELldzckQkiGQk+gg
+         WOCmfM2HJebSiAn2pBZCd/tc1jZSG8rKPaNX79dnCWSR0wPvdFayQj/woE86rz03PofI
+         AR0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715749636; x=1716354436;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k2dS67ymURuWDK86q4uv72MlJ9ztW9bwDViVJbmLMU0=;
+        b=JiDx0xrpTPbZTbCYrvkaBxnmjPQon2v7QjbrjMfmz6WWFEC+aLU9FCdmrwJnv9L5Dh
+         XbjzvNv+oEo1Eszc2VuZNo8dGJZ/kmDFusDagXA0vqYC7movH+gmGDa18owT0b8YK0GJ
+         4ON2i1jbOtyq/eoIVfiY9tzACw2lx52AemCNHZ67mNXzsgnEyBHJNqumB9owUhHAL+Pd
+         hoqK9RRUFNo4icWeNDAaVk+ZL3U0hTCOOUvvyWj8DIGEz4BMs6uLc03lvHdpIJPPDvto
+         SNMidakDoXYn5sx+7z9yUGwyXWHvmOM95W3nEbJbMb8w9EGxOzJTv0zEqs58hPfiqr6G
+         AltA==
+X-Gm-Message-State: AOJu0Yz5Jkehk7bvKZ44WlFi3ad/4qzUU0nlYL0sv0MKx4I3YveSXzLU
+	7vfm81pGXlZERBu/wdQLpKwGMQmWb5NyC5SY1xDXEWrhj0pxlC2zfdOq98gn9Z5iPv2A6YMEACU
+	Kr/ApZVtqSvdj6J/hxBmB3I4PtJZv4KAw
+X-Google-Smtp-Source: AGHT+IHrV0k5gvCoO3wbGv08FrFUaREsGc8T/k2vKZ3WYzlZ3rLd0ONLFNS/2OLgdurpBmz9q0TVL/THZ1jFulQ80V8=
+X-Received: by 2002:a05:6e02:1565:b0:36c:4dab:7716 with SMTP id
+ e9e14a558f8ab-36cc144b143mr238463595ab.11.1715749635632; Tue, 14 May 2024
+ 22:07:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="LpNU2wfjPz6RkV/F"
-Content-Disposition: inline
-In-Reply-To: <ZkQ3EiL1OY10Y2JP@tanuki>
+References: <CAJsoDaEJn1Y0CgtxpkGqVRsTiDnMxjNFrtbTuUVOvT87N23JNg@mail.gmail.com>
+ <13fa579b-8987-4430-967c-42b9de8acb6d@gmail.com> <CAJsoDaFhTcm0fEw3+Ba4PvTjPYxscALeLN2kBgs4YYz8Bg-R7g@mail.gmail.com>
+ <CAJsoDaHu1xgfwXHqOGgctQoi5Qb5D1aESeMvaVHaQV0zjyzRRg@mail.gmail.com> <89b83e3d-dd38-4b3b-8f87-6ac739e4e12f@gmail.com>
+In-Reply-To: <89b83e3d-dd38-4b3b-8f87-6ac739e4e12f@gmail.com>
+From: Ondra Medek <xmedeko@gmail.com>
+Date: Wed, 15 May 2024 07:07:03 +0200
+Message-ID: <CAJsoDaGFh-51y4HJnmDo1t44qLR9zU2q10qoBceYCDbLEv4hZg@mail.gmail.com>
+Subject: Re: Checkout to different directory at certain commit without
+ changing index
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Phillip,
+thanks for your insightful advice.
+Ondra
 
---LpNU2wfjPz6RkV/F
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, May 15, 2024 at 06:16:18AM +0200, Patrick Steinhardt wrote:
-> On Fri, May 03, 2024 at 02:13:39PM -0400, Jeff King wrote:
-> > On Thu, May 02, 2024 at 10:17:42AM +0200, Patrick Steinhardt wrote:
-[snip]
-> > And arguably is_pseudoref_syntax() should be taking into account the
-> > "_HEAD" restriction and special names anyway. It is a bit weird that
-> > even if we tighten up the refname checking to use is_pseudoref_syntax(),
-> > you'd still be able to "git update-ref FOO" but then not see it as a
-> > root ref!
->=20
-> True, as well. I'm less comfortable with doing that change in this
-> series though as it does impose a major restriction that did not exist
-> previously. We probably want some escape hatches so that it would still
-> be possible to modify those refs when really required, for example to
-> delete such broken refs.
->=20
-> I would thus like to defer this to a follow up patch series, if you
-> don't mind.
-
-Arguably, we don't need `is_pseudoref_syntax()` (which is being renamed
-to `is_root_ref_syntax()`) at all anymore after this series lands
-because it can be neatly rolled into `is_root_ref()`. The only caller,
-`is_current_worktree_ref()`, should really call `is_roof_ref()` and not
-`is_root_ref_syntax()`.
-
-But again, I'll defer this to a follow-up patch series.
-
-Patrick
-
---LpNU2wfjPz6RkV/F
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZEPJcACgkQVbJhu7ck
-PpTreA//cN/YYda1LhWm/rSz/UhGgqL+JATVzM6REtEKcHwYnf4PxLUeQWraI28x
-CnLo4eO9AlkUtPYS8brR0ZE9o/CU7RnxR08JC/Uk6+iWyN1PZsWcEKT6j3f2p4bt
-lmn5upmEze7x9b9TlY8b09ixS6PhcbbSnyiQM531/7rdTMYUcruSmYKc2kfWXDCv
-vZFnHGhkyqHL2DlDCrKfTTCFoifAAX/WmxQ/4Ow0IGL7jfU5RH6/4HDJlWO6dPMP
-jQWeycI4dl3/fs4Et0qTWpUu0w6KReD0UzUM7WB3n9GisAa59X9B4Vn0oBSXUBN9
-NKqP4VVr7MZWeX47vhAWk9VQ03T3RfwA5wBMVjl9XYXv82Fu0tbv91xH1Hx25OSg
-AqEEhL1J0xjnt3mcq3mfK5xYqmCmoRLSlDXt+c/phXAhbV4JxBoErDdg89iVgthB
-QY4bfiCxme/NtP3XCu6aICsn+75xjUqBDrk3SxMdPh/sQwexjHgpd2L5OTKPgaAK
-daxEN52fRNw4dA26sReK/CZPH41getbVKQlgrthmkb09aZrYi1SZ1ONOcbVgPJEH
-uunnv8V+ZxRnNKFyqRTFBNk4aWFMhpKNPUhm5OJtiVQ9xzjlX9LE4AOEvJkI8M6B
-GGN1RiUaeP8SCbGC4z0LTPMd2E0LhIRxF1UMy0Iwuni2jXKSC2g=
-=KLHz
------END PGP SIGNATURE-----
-
---LpNU2wfjPz6RkV/F--
+On Tue, 14 May 2024 at 12:07, <phillip.wood123@gmail.com> wrote:
+>
+> Hi Ondra
+>
+> On 14/05/2024 07:29, Ondra Medek wrote:
+> > Hi Phillip,
+> >
+> > your trick with different index file works with git checkout, too, e.g.
+> >
+> > GIT_INDEX_FILE="$destdir"/.git git --work-tree="$destdir" checkout -f
+> > -q "$commit" -- ./
+> > rm -f "$destdir"/.git
+>
+> I'd not thought of that, presumably "git restore" would work as well.
+> Using "./" means it will only work from the repository root, you can use
+> the pathmagic ":/" instead to checkout everything when it is run from a
+> subdirectory  but you need to make sure GIT_INDEX_FILE is an absolute path.
+>
+> Best Wishes
+>
+> Phillip
+>
+> > Sincerely
+> > Ondra
+> >
+> > On Mon, 13 May 2024 at 19:23, Ondra Medek <xmedeko@gmail.com> wrote:
+> >>
+> >> Hi Phillip,
+> >>
+> >> besides dependency on tar, I do not want to use git-archive because
+> >> it's influenced by export-ignore and export-subst attributes, too (as
+> >> I have mentioned).
+> >>
+> >> Thanks for git read-tree, seems it's exactly what I need. Just git
+> >> read-tree has complained that -u switch needs -m or --reset switches.
+> >> And I have simplified it to
+> >>
+> >> git --work-tree="$destdir" read-tree --index-output="$destdir".git -u
+> >> --reset "$commit"
+> >> rm -f "$destdir"/.git
+> >>
+> >> May I post this solution to the SO thread I have mentioned?
+> >>
+> >> Thanks very much
+> >>
+> >> Ondra
+> >>
+> >> On Mon, 13 May 2024 at 17:28, Phillip Wood <phillip.wood123@gmail.com> wrote:
+> >>>
+> >>> Hi Ondra
+> >>>
+> >>> On 13/05/2024 08:26, Ondra Medek wrote:
+> >>>> Hello,
+> >>>> I need a simple script for unskilled users to do a fast checkout (LFS
+> >>>> friendly) of the current local Git clone at a certain commit to a
+> >>>> different directory I.e. something like "copy at a point in history".
+> >>>
+> >>> I think using
+> >>>
+> >>>       git archive "$commit" --format=tar |
+> >>>          { cd "$output_directory" && tar -xf -; }
+> >>>
+> >>> is probably the simplest solution. If you don't want to rely on tar then
+> >>> something like
+> >>>
+> >>>       GIT_DIR="$(git rev-parse --path-format=absolute --git-dir)" &&
+> >>>       GIT_COMMON_DIR="$(git rev-parse --path-format=absolute
+> >>> --git-common-dir)" || exit
+> >>>       GIT_INDEX_FILE="$GIT_DIR/tmp-index-$$"
+> >>>       export GIT_DIR GIT_COMMON_DIR GIT_INDEX_FILE
+> >>>       unset GIT_WORK_TREE
+> >>>       mkdir "$output_directory" && cd "$output_directory" &&
+> >>>       git read-tree -u "$commit"
+> >>>       status=$?
+> >>>       rm "$GIT_INDEX_FILE"
+> >>>       exit $status
+> >>>
+> >>> Which uses a temporary index file should work (note I haven't tested
+> >>> it). You may want to add "--recurse-submodules" and/or
+> >>> "--no-sparse-checkout" to the "git read-tree" commandline.
+> >>>
+> >>> Best Wishes
+> >>>
+> >>> Phillip
+> >>>
+> >>>> IMO all possible solutions are summarized in this thread
+> >>>> https://stackoverflow.com/questions/160608/do-a-git-export-like-svn-export
+> >>>> I describe some of them with my remarks:
+> >>>>
+> >>>> - git checkout-index : works with HEAD only.
+> >>>> - git archive: influenced by export-ignore and export-subst
+> >>>> attributes, so may not produce exact copy of sources. (And needs tar).
+> >>>> - git worktree add -d : needs cleanup: git prune or git remove.
+> >>>> - git clone: Unfortunately, -b param cannot work with commit hash and
+> >>>> does not respect local worktree settings (e.g. autocrlf). So, a
+> >>>> solution may be a bit complicated: git clone -s -n . dest/path ; cp
+> >>>> .git/config dest/path/.git ; cd dest/path ; git co -q <commit-ish> ;
+> >>>> rm -rf .git
+> >>>> - git checkout: Unfortunately, modifies Git index, so some action to
+> >>>> revert index is necessary after: git --work-tree=/path/to/checkout/
+> >>>> checkout -f -q <tree-ish> -- ./
+> >>>>
+> >>>> For me, the best solution is with git clone, because it does not
+> >>>> modify Git index nor any source working tree settings, so no cleanup
+> >>>> is necessary. But it's a bit complicated, though. It seems to me that
+> >>>> "git checkout" could do this better and simpler if it would have some
+> >>>> param to not modify the Git index. Is it possible to enhance git
+> >>>> checkout? Or is there any other simple solution not mentioned in the
+> >>>> SO thread?
+> >>>>
+> >>>> Thank you
+> >>>> Ondra Medek
+> >>>>
