@@ -1,96 +1,83 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF103C466
-	for <git@vger.kernel.org>; Wed, 15 May 2024 19:33:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A3F3BBEA
+	for <git@vger.kernel.org>; Wed, 15 May 2024 19:41:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715801634; cv=none; b=DSe25PindW+2Bl0gQGRB5vx9iVPheoIGmVyii+eGEgHOmXO614qWr1YJ8+SdtUSQi6RVI5Z66csqgtm0P3UPw2JfDaiq+vxmSjFolLBiOaioSAuYRZi/3sM/6wTI9jhBPgG5lvRRLP94gT/XekTv+cLM+2DZyJoqs0bewtFsmQM=
+	t=1715802118; cv=none; b=MzKSy6M8/VMtq+tI3g1UcpFw5KhC47ZIMbdx5PM9tpG8oe8uV8MX6pAszvZA40LoA4YXzN6ae7meZU/NDZc24ZmzIq2881Qb/Mx2LEjB/+Y0r7sV/q4dMBZHtNT9CeG+bjhA1hoq5xIiESYWYhXi45d0ZSapd7tU3UJpAIEuqQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715801634; c=relaxed/simple;
-	bh=A2rX2qkMW4DA9zGm1a0sJfqsTNgmPLMm8Q+pDAyK3WU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=SL8zf2Opee2Bda4aZWh53wccs4xRlOSflDR7BLqIh3EX/yqi1xwoPC/yFR69eOV+h2+yQweDJqx9uCiuqWAMtFN2UQ+aWgKEAdOARiaue0G50fa7tYqec0ssCZ+PwHrvWnDJ/9oi/FSwFVN2aQk1/rvDsyfyK7paj5FFegdMx/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lDok0lfx; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715802118; c=relaxed/simple;
+	bh=2pCqnS/UsYAIvTCcycZF/UlLSnL103hLVPy1JwI/b2c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IFwzZlDTvzYgCFYoWWx5bWVleMSxd3hLx4gla/dqQFCC1JfQYqHU5XRGsIAFLJFNdTcrzNYV4tok//JE0GX10bdeMZvQS8AzFnRFoDOXe4qb93BHHcm5ZnOVPHHoPTn2PLymf98ogmOWrcXIWgTE3cdd7FIkeZUSFwUy/bMUEkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b=1l3wMaen; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lDok0lfx"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-420104e5390so45684645e9.1
-        for <git@vger.kernel.org>; Wed, 15 May 2024 12:33:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b="1l3wMaen"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-61e0c2b5cd2so56652137b3.1
+        for <git@vger.kernel.org>; Wed, 15 May 2024 12:41:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715801632; x=1716406432; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZcJ0hrAP4wOT4cGKqjkb3GIObINonVCxOp5QMEwmDRc=;
-        b=lDok0lfxEEJ2obD8A3xOBasZnd437wTAx4RXn1R4k7gUlA8GV4XSr4JtXGDeKEtlJ/
-         5vuCZ/QZ5vucjIruCux0LF9AMsB/EnIGfJsWuhv/aWAzPMYUR6IT9XbmLMWzFYsSPO7Y
-         Ud5Y2uAPUhbYRlr59Smj9vdO3IWMMlcIxJpQ/WFHutwzATsidpjYtRHf5FdC7F8R3u/3
-         NnbP97vrswpHkiTjzHoOx0AYJL45ih0ICRPbZQqPGZ6Ix1jDDuC1KdvOh50wwdKuydEC
-         m4i2MDAwYAJfzkGhDf04SirgBoraeRr6Vk0pVRYZuqzVjcnbAo515woeNtcKg02fS/MN
-         BMvQ==
+        d=gree-net.20230601.gappssmtp.com; s=20230601; t=1715802115; x=1716406915; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2pCqnS/UsYAIvTCcycZF/UlLSnL103hLVPy1JwI/b2c=;
+        b=1l3wMaene+ARQ/YXSW/K0LZpotFwwwXrrENi8CGQQXxHtf1xFdF0tCTzxlTqruqI6W
+         q58LFXIOZ+9yobZaZf9lkEJ/UGbuQjzlx8HtzWwDdACEPrCGDHc1Wt1ugtiC7Zvw6OQz
+         iK9GQFnUJm1xj5+BKvy5iWeU4AWp2kkQaQS+GLeaUAZ+5wuSOpo5jdq+/K8awiqbSue8
+         yGGvDD2fXehaJUZVz17ZKKbx80K0uPIrFwhaOEE1SMeSvAh2u3XficlBaDMqpqMXg9QV
+         UnbPrZNrVKHZlQAIUX2NCLFHnUtsoLGUX2dUeuA7c5xOdlvXzgEIkae1SGD17fhHYcgq
+         YFhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715801632; x=1716406432;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1715802115; x=1716406915;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZcJ0hrAP4wOT4cGKqjkb3GIObINonVCxOp5QMEwmDRc=;
-        b=SnbCFn3bT/wOd06p4k9CucyGxZ4kHCdgSZKgACmU8/8ED4bktVWgEHUD4E9+ibkkgR
-         f/g2JBVV60EkqZ2PJQ8a8xGnjqb6bTeAaxtojc6u3kpDHFxs6iRIYWXv0hhfwfNfmNPY
-         e8n2orNK1rXZFOKx7Hldv6etBIkGk2mBICiHLgUZwKvjEtZl5QvOdWaMfXS9vhb7qtOJ
-         5OD02MzgFAxRH678GaKcD2qskTV9NRl1xBgCBXpRAbRG2s3aCDelvroXsY9ET3M609KG
-         kw+7wLhBtgzVy/9Kbl/G6TKgqhH/O37OBLcUpVvR3R4Bmo3YQxJTu1pdjRydlMs6ZpFy
-         U6MA==
-X-Forwarded-Encrypted: i=1; AJvYcCX4AXFQoz7nLuUpR/YF5xPY0E3yx818zSgnWb6beSiPCKVc0Ec+s5W0PLD1ovXCKDL96gS6MgCVNUDkiZ7+U1ghoWzt
-X-Gm-Message-State: AOJu0Yy7RfXAq+K1aZSa2vm+QiDtFeh+V0wjxOIKGeNWIMrwztBMwdY/
-	H+OdxjpVeGf0aX5aufIdjSnmdSN6YhGdLn5PiJDb9qt6W4muAvu66ltbnC35
-X-Google-Smtp-Source: AGHT+IExQuxfpJh7QBU+kTW+YrpyTh5F8cBSZpxzSkACu2HAPyTOwC239ipw5etEv00dZfYF+dA1EQ==
-X-Received: by 2002:a05:600c:3d87:b0:420:182e:eb46 with SMTP id 5b1f17b1804b1-420182ef112mr99690065e9.38.1715801631448;
-        Wed, 15 May 2024 12:33:51 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1? ([2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42010b1076dsm161104255e9.41.2024.05.15.12.33.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 May 2024 12:33:51 -0700 (PDT)
-Message-ID: <bd1c80f9-e8c5-42d6-b36b-52e40a78aeda@gmail.com>
-Date: Wed, 15 May 2024 20:33:50 +0100
+        bh=2pCqnS/UsYAIvTCcycZF/UlLSnL103hLVPy1JwI/b2c=;
+        b=VROZDMD52wGMc5GYW0clBs9G4oSttSwMhy31Gt2ZefNcwKTXWDtvL6tbDMIN9iCI/R
+         Zxab7kRwu9F9dyrAWonhcfd1e0U+v8eSf3//oPpvmntEZIlE39llK2wsZaJkWzxLlJXV
+         0EVsCMagUjXsedWLJFGghPuGiJYxpi8wEb1ICOUoTBNGsizpaCGc/xSWZxpjReiQIBe9
+         TE2g6p594dAa1ndIsy98jRITy7pa56SEE8pGKmwfz2p0pVngS9fbUNMAZiGPr9Gbevzf
+         G/PkihWKbx4N0jY33wn+KR8fXs9n/8arvBYoyWUGAMKrsj9czXG7ZEszyVQxK759eSqW
+         mtzw==
+X-Gm-Message-State: AOJu0Yxtf7OS1N7Xiw9ozQI+VAkuCyZ3Oz8Fqnx/RQ48s3taEAcS2cj2
+	PY9hwzvZhxCcjK+fotCuJF0GgtnHQ2u3WHopYu8qdCZl8Qx6ismgXgz2f383OFJRgalquk8BQxv
+	RZOh2W+e03RumMHk93wkEIrkukdf/g5nBFFPAEdeAib5gk1Y/FFKFxFB5ZYqtIScyIC5ppEIoRS
+	MD3Lpil0T6pYZ470IEoMVdPgnkH+w20/DZ38pZUK2KFOSC7q30drBKodQQcUUjj85ubDhOURI0R
+	YzXsiDIHOkRXFb65MnioW4RR6YoWXORSCM/wbZt7RZBFVP5S2DhR/sVp02LuZxstjYvWEhe8HAk
+	vZBDS2u/jKM=
+X-Google-Smtp-Source: AGHT+IFTAfKWlXhQkyK65/lQEU1aeyj8DnSXGqy5/T0X9pLgE5LZQI+oXrBqfHXHPH1VFVyyNPWMlhfoDfhyjI2iKBI=
+X-Received: by 2002:a25:dc92:0:b0:de5:4b29:22e6 with SMTP id
+ 3f1490d57ef6-dee4e47850emr12882939276.1.1715802114627; Wed, 15 May 2024
+ 12:41:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (May 2024, #06; Tue, 14)
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqcypo47p7.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqcypo47p7.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.1729.v2.git.1715428542.gitgitgadget@gmail.com> <pull.1729.v3.git.1715800868.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1729.v3.git.1715800868.gitgitgadget@gmail.com>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Thu, 16 May 2024 04:41:43 +0900
+Message-ID: <CAOTNsDzpCs8fiLn4u8z-MH3sRp=G97ZSy--An=i8DpxkK6ec0Q@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] osxkeychain: lock for exclusive execution
+To: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Bo Anderson <mail@boanderson.me>, Jeff King <peff@peff.net>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Junio
+I thought about the issue further. The approach with the "state[]"
+feature reduces problematic "store" operations a lot in most cases, it
+is however not perfect to avoid the original issue about parallel
+execution.
 
-On 14/05/2024 18:36, Junio C Hamano wrote:
-> * pw/rebase-i-error-message (2024-04-08) 2 commits
->   - rebase -i: improve error message when picking merge
->   - rebase -i: pass struct replay_opts to parse_insn_line()
-> 
->   When the user adds to "git rebase -i" instruction to "pick" a merge
->   commit, the error experience is not pleasant.  Such an error is now
->   caught earlier in the process that parses the todo list.
-> 
->   Expecting a reroll.
->   cf. <88bc0787-e7ae-49e5-99e8-97f6c55ea8c6@gmail.com>
->   source: <pull.1672.v2.git.1712585787.gitgitgadget@gmail.com>
+For example (though quite artificial), let's suppose if two git commands
+start simultaneously where the credential is input automatically by
+"expect" command. Two "osxkeychain store" commands will then run
+simultaneously.
 
-Sorry, I was hoping to re-roll this week but that's going to happen and 
-I'm about to go off the list for a couple of weeks. Feel free to drop 
-this if it causes you trouble and I'll re-roll when I'm back on the list.
+I hope new descriptions are convincing.
 
-Best Wishes
-
-Phillip
+Koji Nakamaru
