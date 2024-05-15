@@ -1,63 +1,63 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089C815AADA
-	for <git@vger.kernel.org>; Wed, 15 May 2024 19:21:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C08315AD90
+	for <git@vger.kernel.org>; Wed, 15 May 2024 19:21:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715800874; cv=none; b=MMI/T4RLbADiUKlpBbQ5hqy+sylbVJ+7UXq0WaMwmutwuslMzY5ZiFOSl7BwldCQqjAFxNyGE7fbsliiu4+xt0201XrABTTCXDhWv7Wu/OW2bWdzw/KZMk9oQWcqO698TpZ6PU633cQpFesweOE0VxhDuJzcUxSFig734liK3Xw=
+	t=1715800876; cv=none; b=bkK4u5Ta2JMpdqEZutXu3IosIFNWPE7JlqmcG9e5lnVl3ca0kFJUf7SRI1wD+YhK2D+c/7qtzADkVpauIla0tfzYtnqwZLtBvgmj/7GB29RtZYZ6PYWkaQkp+ssuxWwgfA2jD26rzJdMeCOvHm1JUdEa2Co+yEdyTkDZX1V0pfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715800874; c=relaxed/simple;
-	bh=NLZDEdYRTIsfIaj9qn3M/gm9DIKDUJpzybWJZW7XR6g=;
+	s=arc-20240116; t=1715800876; c=relaxed/simple;
+	bh=IP58TgRDssv46Ow1ZB9SY/ezEN387JvE+NjCeBFgJx4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rmM9LDIfmg89uOuOKwbJMpAdQ6B0xlK02JyKeEVlT2B2iW5E7B0Lhf751GchP7miC6Yadg0M5cJB4rwy1GefbVDcaDxWFtGdGlkQh/dhwifKBQS/p5Xi9M9VHrLbXgf5kMipQkFAuvQxn61ezqnItp7o9hNCnkPeiuICguzl2oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mh6A7xFO; arc=none smtp.client-ip=209.85.128.46
+	 MIME-Version:To:Cc; b=jxd+fY6/jEUQmWPye7i9sWw8uFxdWzx6k3gTDuQd4dp6uLNVk0C9J8Lsjuc28XIWQKWr/9Wo+A7VZ0tmQ3qAuWnYXFiUDIArcQ3OyP0AEotA+AUh9Vd0a5EazHGCVm4sEeQkGf6cYmZ6kOBLrWKffjM8BuQ8udWMeArzUlqZGtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kBTAx7De; arc=none smtp.client-ip=209.85.208.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mh6A7xFO"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-41ff5e3dc3bso41601795e9.1
-        for <git@vger.kernel.org>; Wed, 15 May 2024 12:21:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kBTAx7De"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2e576057c56so52559641fa.3
+        for <git@vger.kernel.org>; Wed, 15 May 2024 12:21:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715800871; x=1716405671; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1715800872; x=1716405672; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=50goC9gnpuzkLL78yJlIkLlyG0W48ZtTMHzuj9pOAHg=;
-        b=Mh6A7xFO6AHThsJ+KvoIosFwjshGzKN6w8W7DlbOFFzUUY+M0IoGDGyxmE4wm8H6uy
-         8ngmUpXgtjFDHRZ1aJQLEtlxF81jIy/BkNgN1upx5Y2BhYBaxwFe3b+QXzGlCUl02EMC
-         HN/YkURst6lu4lmZ5tR3U9cRBkWrRYJPkG0Q6e6e7UdQ/pd9KD2GYFp44PkSAG1ve/rL
-         kwv5tfe1N6jTQqQoQEUyVt+qLnLUPq6lCSrDbFgWflVVGPfjTH226UENOkyA1xkfnmCI
-         FcMHylyV0qwE2So+jD7v8qPmBy+fvETA5JeCi7i9EWyV/NgIQT6r8RCuHw70kbaDl3Mw
-         L0dg==
+        bh=7YE+yuvJK53dqhT33Vf1e6JjQ0Y9K1FWd4mICZj3iDc=;
+        b=kBTAx7De68UvF3kg8YtuR8DvygQeCg90zy9hZ0M9B7o4+BQVPHhu3cRsgyfZCUiK+U
+         D21PQxgvvNcQRC7vzlnofcvUfjrbxCRb5hlMNuR+J72wbZ9cFUfrl6bvRAiyrsbOUo7I
+         b/YeryFI/Y1DJajYfvEQC0eTGI+/RbTIdVpte9m+92BbbF7uACPs2NjAos6wnp6apFZ/
+         kAltwC3zWQs+1fcXprzxar6uOoUGsriTKPRBsxw/bWAwhtV0WP775ot80zSwKWWo+p6h
+         iMxNR9uzVokY6Cb+vTqg6RFXQhO2gxjsrNzs4AnMikkvVn0Jlk6N6K8Vb71BEpahoRqt
+         GpZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715800871; x=1716405671;
+        d=1e100.net; s=20230601; t=1715800872; x=1716405672;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=50goC9gnpuzkLL78yJlIkLlyG0W48ZtTMHzuj9pOAHg=;
-        b=Ppxjbi0ei0kkCKH+uo13NGHHa8/oiLq/X5uAI5cKaNaKroGBMo4WC1sAXCPeIK7min
-         IrPsjBAVTQhzzFthrXYGn+mmQubafXyPJULBdlrqGaehCj74fN0ONrkfaTX56lYfYH7V
-         W1QrxofIzmayeJMcYmLUSIMFVitcqeWqpeuf8TwbYeR7ECgJD28hGTbS+26ESjad220o
-         WkuaBY66O1MZ5KHwQWZp64elgPOaKHJLR26ty/b2KVz5FFpJulNUPoZhssvaZjftu0zf
-         oafZ0SZIfdCqcaVzgIPWkQDL7Po3A8EkQCEn9he08pVAq9ZWE4xh8AZ7BG3AHKXLjI/e
-         aEQA==
-X-Gm-Message-State: AOJu0YzYMz2xB6TYI3aBGMeXdt3Sq12FdtHmzIGwY1YCQB0spResejaA
-	om8NKxHMl9XeRgkUNNips8gouTl6Bi8Q9ARNpd86CpFUVIIEM5U3678TAg==
-X-Google-Smtp-Source: AGHT+IFlggI36hxn/E8DAvRV5cxw+3uhU63t0ClWxkOoJ4X5N5GuZM09HpEw5RVm3PrxNVBIIjg93A==
-X-Received: by 2002:a05:6000:1010:b0:351:d383:631e with SMTP id ffacd0b85a97d-351d3836377mr596176f8f.24.1715800870712;
-        Wed, 15 May 2024 12:21:10 -0700 (PDT)
+        bh=7YE+yuvJK53dqhT33Vf1e6JjQ0Y9K1FWd4mICZj3iDc=;
+        b=rW4g1C3KxipCgEBQwhhU8Z8FQE6KV+JAQzKVc9Zm1z4PxyoisO9CdIQ5RH8aE3HkYH
+         KxGqmR4U5FsXCWn1DXqTw30aR6/Gb4yNwV4mAxkSekcltIqE/PI3bu60LJRkoq8QCG3x
+         yMJUjXPFUvOkmTNA4NuvkBvAL8nj6MpUs6egwprbrsxnIBARFf+KvBqmsqo+fhNFSl5m
+         1x79LmsIyGzJE/xu+yTjTwOMjFQWe9hS48A1qS8nahKBqsqwmsDupdMDa57aIYCUx3hc
+         drwbEGK2I57Z++bjrwDO62+TsbE3DlhJGHx9eeah8HRM9ZMB85FQMvx4GrtjvhaTYVBE
+         zolg==
+X-Gm-Message-State: AOJu0YzX4ITEtQMwyfWOojcsvIu/YMFX6TYOjpwttIwK7kD9WacI2jqa
+	trXZ1vYelEZhNDshSXd3NCvMb88YF9kXT3fTaJP3RRSg7HYvR5y1LSp4eA==
+X-Google-Smtp-Source: AGHT+IHE0EYqvuhbeNaLutNMJyh+jPpzZRYE932xsSulM17WSww29zjWYYBLRMaD8aRczYvtqF5o4Q==
+X-Received: by 2002:a2e:9584:0:b0:2e4:9606:6b88 with SMTP id 38308e7fff4ca-2e51fc36498mr114734171fa.3.1715800871514;
+        Wed, 15 May 2024 12:21:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3502b8a788fsm17062165f8f.55.2024.05.15.12.21.10
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41f9bc3b12fsm142309165e9.0.2024.05.15.12.21.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 May 2024 12:21:10 -0700 (PDT)
-Message-Id: <3341346c5e6caaad3f222380a82425e1f14b97fa.1715800868.git.gitgitgadget@gmail.com>
+        Wed, 15 May 2024 12:21:11 -0700 (PDT)
+Message-Id: <146b0ae9146f2c575738cb0d6a5008b766aa0c57.1715800868.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1729.v3.git.1715800868.gitgitgadget@gmail.com>
 References: <pull.1729.v2.git.1715428542.gitgitgadget@gmail.com>
 	<pull.1729.v3.git.1715800868.gitgitgadget@gmail.com>
 From: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 15 May 2024 19:21:06 +0000
-Subject: [PATCH v3 1/2] osxkeychain: exclusive lock to serialize execution of
+Date: Wed, 15 May 2024 19:21:07 +0000
+Subject: [PATCH v3 2/2] osxkeychain: state to skip unnecessary store
  operations
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
@@ -79,47 +79,70 @@ Cc: Bo Anderson <mail@boanderson.me>,
 From: Koji Nakamaru <koji.nakamaru@gree.net>
 
 git passes a credential that has been used successfully to the helpers
-to record. If "git-credential-osxkeychain store" commands run in
-parallel (with fetch.parallel configuration and/or by running multiple
-git commands simultaneously), some of them may exit with the error
-"failed to store: -25299". This is because SecItemUpdate() in
-add_internet_password() may return errSecDuplicateItem (-25299) in this
-situation. Apple's documentation [1] also states as below:
+to record. If a credential is already stored,
+"git-credential-osxkeychain store" just records the credential returned
+by "git-credential-osxkeychain get", and unnecessary (sometimes
+problematic) SecItemAdd() and/or SecItemUpdate() are performed.
 
-  In macOS, some of the functions of this API block while waiting for
-  input from the user (for example, when the user is asked to unlock a
-  keychain or give permission to change trust settings). In general, it
-  is safe to use this API in threads other than your main thread, but
-  avoid calling the functions from multiple operations, work queues, or
-  threads concurrently. Instead, serialize function calls or confine
-  them to a single thread.
+We can skip such unnecessary operations by marking a credential returned
+by "git-credential-osxkeychain get". This marking can be done by
+utilizing the "state[]" feature:
 
-The error has not been noticed before, because the former implementation
-ignored the error.
+- The "get" command sets the field "state[]=osxkeychain:seen=1".
 
-Introduce an exclusive lock to serialize execution of operations.
+- The "store" command skips its actual operation if the field
+  "state[]=osxkeychain:seen=1" exists.
 
-[1] https://developer.apple.com/documentation/security/certificate_key_and_trust_services/working_with_concurrency
+Introduce a new state "state[]=osxkeychain:seen=1".
 
+Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
 Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
 ---
- contrib/credential/osxkeychain/git-credential-osxkeychain.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../osxkeychain/git-credential-osxkeychain.c          | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-index 6a40917b1ef..0884db48d0a 100644
+index 0884db48d0a..6ce22a28ed7 100644
 --- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
 +++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-@@ -414,6 +414,9 @@ int main(int argc, const char **argv)
- 	if (!argv[1])
- 		die("%s", usage);
+@@ -12,6 +12,7 @@ static CFStringRef username;
+ static CFDataRef password;
+ static CFDataRef password_expiry_utc;
+ static CFDataRef oauth_refresh_token;
++static int state_seen;
  
-+	if (open(argv[0], O_RDONLY | O_EXLOCK) == -1)
-+		die("failed to lock %s", argv[0]);
+ static void clear_credential(void)
+ {
+@@ -171,6 +172,9 @@ static OSStatus find_internet_password(void)
+ 
+ 	CFRelease(item);
+ 
++	write_item("capability[]", "state", strlen("state"));
++	write_item("state[]", "osxkeychain:seen=1", strlen("osxkeychain:seen=1"));
 +
- 	read_credential();
+ out:
+ 	CFRelease(attrs);
  
- 	if (!strcmp(argv[1], "get"))
+@@ -284,6 +288,9 @@ static OSStatus add_internet_password(void)
+ 	CFDictionaryRef attrs;
+ 	OSStatus result;
+ 
++	if (state_seen)
++		return errSecSuccess;
++
+ 	/* Only store complete credentials */
+ 	if (!protocol || !host || !username || !password)
+ 		return -1;
+@@ -395,6 +402,10 @@ static void read_credential(void)
+ 			oauth_refresh_token = CFDataCreate(kCFAllocatorDefault,
+ 							   (UInt8 *)v,
+ 							   strlen(v));
++		else if (!strcmp(buf, "state[]")) {
++			if (!strcmp(v, "osxkeychain:seen=1"))
++				state_seen = 1;
++		}
+ 		/*
+ 		 * Ignore other lines; we don't know what they mean, but
+ 		 * this future-proofs us when later versions of git do
 -- 
 gitgitgadget
-
