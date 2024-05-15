@@ -1,109 +1,99 @@
-Received: from mx.treblig.org (mx.treblig.org [46.235.229.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD8D5E093
-	for <git@vger.kernel.org>; Wed, 15 May 2024 10:41:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.229.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19BF14AB4
+	for <git@vger.kernel.org>; Wed, 15 May 2024 11:57:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715769721; cv=none; b=QfTA4IWr79nuFbhab+FtwLo+8q0SVygiTEV0bCXylQAq5zTprTkTijrEZiN3djbI0HTGkwz19fIUw1XBELkuGAqbPd5wqPfLqzVUe6fALmadyS1H5ffgTV+NW/BBQ6c5N0vBUx4xakdgpgXIywAZ+VlhzmfCQOjVsvuODD4s7/0=
+	t=1715774238; cv=none; b=MU3FfAjtGn70BoH9LwJIZWP77L23cQ2eu9QSMa2OzkRlcbNTmlklGwvrh14XhULzfbLo0f2Yel1Ydn/EpS8gQDIZHMufwirgoOXaPzsh3AEb1EmgPVY4D24keq6aOj8TUrvrmU+0gTWrNxO+DYhPLlrOIFeRHpeLC18glrG+jfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715769721; c=relaxed/simple;
-	bh=R6vzhyToJ7r4zEZwwjG2WH5ymfeEc2jB6IKm4bMim0s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FCiG2GFdF+e7jig7O4eCxKEAam+n7Jd0abVgv0GbKestZ76f3+65CVAYoy0ALobdQL1adMnjcURycjGhRgICf5Idrcfb+Ag2HfCWasRrwzi9DqyZZm+gvApZ0lbAbHg9mdMODOXwSpwMsWp3eKLo9ZtL+zneVZOCutLfkVENKU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org; spf=pass smtp.mailfrom=treblig.org; dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b=bGxVsupR; arc=none smtp.client-ip=46.235.229.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=treblig.org
+	s=arc-20240116; t=1715774238; c=relaxed/simple;
+	bh=VbAIaomAl4Zugipf2FU2hInoaQq90GIHs9/TWKuUAuk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ETUsbNY9Clp4GtcVQynmKYM3Xpx/iA6LUHMcciv1HVW6fAPIEU0zXoRiUM3JQBeh6Aw7+8iWvvlDQY6O6i5FwS+zu6BUz2gIcpSbSyDshAcJI54SHlyJ6idlyqMbK7Z1u2TGrA4y9VcVyfrDzdJoOD0FlhV7Pvnw6oDxzDzeTgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bBLKUshB; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b="bGxVsupR"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
-	; s=bytemarkmx; h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
-	:Subject; bh=1nWx4qr9D/rYWEOondKKuXUjEvFWm3BzBN2CXEf3gik=; b=bGxVsupR6KYm5WSV
-	tQ2ybQj4ELEDYI6MAuSzWFz7cPpUJusyPfisjy5snjUacPP8sp8WiMkO6v4/OiZpa161NJfezzf1d
-	KDD0CfpG9grCKlbZAZj5zFIaOLohQmEQ1uqvStAg2NNoIg08gPxcyDxVscE2DVDM8+BTtdbXOwpWG
-	+iEiZj//VKQgtNMlfK3tEASJWuxFGkHtz4TbkvMiMset/Xp0b3pRewkHPSzZ6GSbECm653fFU8vEc
-	2m3tn+aL7ndRKZ5XR5OdrPp34WUW0UNP+Dh5RmHWrbz1yUi+VqjXU1iN+tkagzlawTAlKu+8XACWi
-	waUZQjT2Fqbby48+Sg==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
-	(envelope-from <dg@treblig.org>)
-	id 1s7C4z-0012GI-1r;
-	Wed, 15 May 2024 10:41:49 +0000
-Date: Wed, 15 May 2024 10:41:49 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, jonathantanmy@google.com, gitster@pobox.com
-Subject: Re: [PATCH] fetch-pack: Remove unused struct 'loose_object_iter'
-Message-ID: <ZkSRbSgQ-whUdms-@gallifrey>
-References: <20240512005913.342287-1-dave@treblig.org>
- <20240515064658.GE110841@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bBLKUshB"
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-51fc01b6fe7so7352517e87.0
+        for <git@vger.kernel.org>; Wed, 15 May 2024 04:57:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715774235; x=1716379035; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jyhhxoFQdOmWwQ3o36/D7qVJeqt18FCxSPB56ZWKiNQ=;
+        b=bBLKUshBoD+KNNQhTOCslAsmsLl80nTCLvJ4gC9Q5v8Jx/I2KbKBWHeDRrzFQ10ODy
+         7MVapfhbdrfLSrBCvNS3kUWITpTmYZ8UewT+MJEpJWBNqZuvO/9I1VClkvzgR57s3h5w
+         sD0INlcpZa6QcmoCRD72TkbGdnN+Bg+hFpeuWjFQvy4Y6YfuZM13zQ1MmhFFTR2LuY4V
+         J+E8cak1/BHgQq+6u4WK/DDe913J5Omc6lCqQOjPACJR+7l0PcBS2tbKETOJZsFLcjAx
+         7ofm7ORi9g9jHHqGMjkoHVDMDBqiGa9XfzzepEF9HhXPOT8+byoHBVsEkPUR4M5OVBLN
+         6+zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715774235; x=1716379035;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jyhhxoFQdOmWwQ3o36/D7qVJeqt18FCxSPB56ZWKiNQ=;
+        b=RbE0Vthy6IR1C/XE+XbyNbXVRwcgD2k7jmfdfcpo6477LnKwFxvmwObftTOPVhxYUk
+         Qmp/ODu74xWqJVBMvikbSxudaqH5d+lJvUj+3DZbptKC4ao0R62bO3bNuo0+TjQKSSuj
+         ZPoJp+1qu1Hwc5HMKxIb7klJ26tSiDE8n3WhAEpJzEjeQcH+8BwMr8Nr1lPCcyp9dfBQ
+         q2QTbZEcTMfcdGx/4TFS+DKxY8kMuN0027PcGCwD70fzy5nDBQ7dJRDD+dB4rOAMfyFD
+         UyCz+iLPUR7pJG3RlW8fhbif8+Hp/+Lhs3DwKMTqNzDY2CGaD0EwwgYqol0FM/O348ar
+         Zmvw==
+X-Gm-Message-State: AOJu0YxWhac51bSAi7pTeFZ0AezlMQxy9x6Qhw4KoMxvq//5SKP3f/AN
+	7oQHe9WBWFjr4bKfHFBCZtnzCVBRsD7dwo89MjCzgOyUAix6+WundL8gKYFRjMghq0ZT9RYkpvF
+	lmo2JbsEQ0ZF4j2DtTFCXT657a/Q=
+X-Google-Smtp-Source: AGHT+IFDF2fphkgqS3LxdPL7V23gShvMk7DECfVrTzyUUjl5Cg6tOYtoPuWcpDJJqStsD8n6zGd4hDkzmiDS9xZzEXw=
+X-Received: by 2002:a05:6512:3b07:b0:51b:de3a:33ac with SMTP id
+ 2adb3069b0e04-5221058453amr12783661e87.59.1715774234681; Wed, 15 May 2024
+ 04:57:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20240515064658.GE110841@coredump.intra.peff.net>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 10:39:39 up 6 days, 21:53,  1 user,  load average: 0.01, 0.01, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
+References: <xmqqcypo47p7.fsf@gitster.g>
+In-Reply-To: <xmqqcypo47p7.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 15 May 2024 13:57:01 +0200
+Message-ID: <CAP8UFD0q1yBm4aG6pmByOxMAvYcbmwfAWkSK=nyCoAAY3qptig@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2024, #06; Tue, 14)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-* Jeff King (peff@peff.net) wrote:
-> On Sun, May 12, 2024 at 01:59:13AM +0100, Dr. David Alan Gilbert wrote:
-> 
-> > 'loose_object_iter' in fetch-pack.c is unused since
-> > commit 97b2fa08b6b9ee3e ("fetch-pack: drop custom loose object cache")
-> > Remove it.
-> 
-> Thanks, this was my fault for leaving it in. The patch looks obviously
-> good.
+On Tue, May 14, 2024 at 7:36=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 
-Thanks.
-Most projects I've looked at seem to have one or more.
+> * la/hide-trailer-info (2024-05-02) 11 commits
+>  - trailer unit tests: inspect iterator contents
+>  - trailer: document parse_trailers() usage
+>  - trailer: retire trailer_info_get() from API
+>  - trailer: make trailer_info struct private
+>  - trailer: make parse_trailers() return trailer_info pointer
+>  - interpret-trailers: access trailer_info with new helpers
+>  - sequencer: use the trailer iterator
+>  - trailer: teach iterator about non-trailer lines
+>  - trailer: add unit tests for trailer iterator
+>  - Makefile: sort UNIT_TEST_PROGRAMS
+>  - Merge branch 'la/format-trailer-info' into la/hide-trailer-info
+>
+>  The trailer API has been reshuffled a bit.
+>
+>  Waiting for a review response.
+>  cf. <a75133dc-a0bb-4f61-a616-988f2b4d5688@gmail.com>
+>  source: <pull.1696.v4.git.1714625667.gitgitgadget@gmail.com>
 
-> I wish there was a good way to get the compiler to report on unused
-> types, but I don't think there is (it's a complicated problem in
-> general, but file-local ones like this feel like they should be easy to
-> spot).
+Linus replied in the following message:
 
-Alas not.
+https://lore.kernel.org/git/CAMo6p=3DFS3ShvBdutprWBiAVef6A1XjsXB1UJSQBk0s5e=
+uN=3Dtog@mail.gmail.com/
 
-> Here's a really hacky (and quadratic) attempt to find defined structs
-> that aren't mentioned elsewhere:
-> 
->   for i in $(git grep -ho '^struct [a-z_]* {' | cut -d' ' -f2)
->   do
-> 	used=$(git grep -Phc "\b$i\b" |
-> 	       perl -ne '$x += $_; END { print $x }')
-> 	echo "$used $i"
->   done |
->   sort -n
-> 
-> which finds exactly one unused struct, the one in this patch.
+Phillip then agreed with Linus that the improvements he suggested
+could be done later.
 
-My similarly hacky script was:
-  
-  grep -r '^struct [^(=]* {'| tr ':' ' ' |
-  while read FNAME STRUCT NAME TAIL
-  do
-    echo "$FNAME" | grep -q '[.]c$' || continue
-  echo ">>>" $FNAME ' : ' $NAME
-  echo -n "Count: "
-  grep $NAME $FNAME | wc -l 
-  #grep $VARNAME $FNAME
-  done
-
-(A count of 1 being the unused ones).
-
-Dave
-
-
-> 
-> -Peff
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+I took a look at Linus' v4 and I am also fine with it. Thanks.
