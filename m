@@ -1,81 +1,81 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA28445948
-	for <git@vger.kernel.org>; Wed, 15 May 2024 06:42:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2BC50A73
+	for <git@vger.kernel.org>; Wed, 15 May 2024 06:42:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715755351; cv=none; b=D4d2tH2zoMyASnJZGF7hj+VwCgI1uTowhSYSara1PHCuGh5qu9+Bpst1N96WGz5Ha8arNjT9ShkStd3tLrrruH+He+ghxVSSkQ80L1DWY9J7gSOpNFS1cBKFJbHN6GewQoPicZrN2qe/NN7Rb1e3apj29IattsI8wdw3GNXmSpQ=
+	t=1715755356; cv=none; b=jHSTidWUyqF0Z/ydKcD2xfPSH90gcQsSCHDAtJqmRvHyTw6BBTWX+WTsPqs3j9GES2hfiNZYe6EjaOrpnsqqyBOvvM7x7GOVVH4pA4PhKnoKyosM0x7lWIKrCvFhzdEmbIzm6G8vnfxoW5Xjxp7Wu585II1PpBiTka4bbOq/cv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715755351; c=relaxed/simple;
-	bh=FUM7vffGEVbiD1yOzczlw2VZEdIDSJ/1UlOVBYSz+TI=;
+	s=arc-20240116; t=1715755356; c=relaxed/simple;
+	bh=b3595SbwADJ9IkOeE4hWmm0DnUAmsevNdV7G7s8bcqw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hjFab6YfD9SmpjsxUtAI4C34gmB4rbBXl89FS1xU2f+80QculPnNUMa/bxccjJ48sXXXRdlNTYadQqOGIJrQMxo89HMykozld+6s1xmzNm26IQ70sP84g8r1ePvCCgqHPSllskDwoSKe2VogqdDr28/n+LWDYCmIteQjmv+gWZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=csF4SezW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZSyJiY5S; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=V2aY+8YzDUhXMz4WPlYqFlPqg+YusN4/hHow+zLvw29ofMgXbVqGRcyA3T73C5xUfZ+QObc+d27UPHWq++47BCsmtwse3g04Lonv27LpbP4g6aMbACTQsmTDRW90iWzxsbQNNji6MAQdcUt8mpCNt8QJYBBqpe584dfzvrcVMEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AGih56r6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gcy50OqC; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="csF4SezW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZSyJiY5S"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AGih56r6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gcy50OqC"
 Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id F243311400AB;
-	Wed, 15 May 2024 02:42:28 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id 476A51380222;
+	Wed, 15 May 2024 02:42:34 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Wed, 15 May 2024 02:42:28 -0400
+  by compute5.internal (MEProxy); Wed, 15 May 2024 02:42:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715755348; x=1715841748; bh=UWwG16VCC3
-	PCZ1LBfhuNdGcDADG0aVkhl8jD+naDAAY=; b=csF4SezWaoy8EM0aHz6uKAe1dS
-	kf/nS9WxEml5+GeSh/W/2H0EZYEFuGylxDqc0G+DXt8BsoIbqLf6LS79HByxKuY/
-	nPT0BLkuPcG4ThhHgHz/w7fHCxAjYng5VvS6UKv9yQ6D3cn1zz0ITEo1i5Ylslo+
-	UV8PiW/Prz3fcFFHy25Dtx0V3ncDMBPd5JQ/XyuuSAw5YGvFgV5smv7clrrHC8XX
-	17COvipFXZqTAKsEumbHkioSVsspfzGv59kfw3lW9DIffq1t6sBQTXT3kPxbI1JG
-	h4CaT4S1ozcwbl9cOoLXFkola1l/YwR0AVyoFF4O55Svod5a8Hdqmco3rryw==
+	:subject:to:to; s=fm3; t=1715755354; x=1715841754; bh=zefy4FTFRy
+	nr1dyP2vvQzvFaOl1M0bcXawLuEEqm6O0=; b=AGih56r636yPeu8W8ttiBXZolk
+	051mWTvHbl9nugTqPZycFeTDVrft69jnXAG+SHkbz8W2PuQV1QPzbuHOiqm5Jhi9
+	UPU9+GmAOSKUqwe0u04Q3dZ5tg8aSiu/VtrqwEqfRy2erEiR5xSMSxwoUEyIBHM+
+	OFGzV+FvtZA7uKnKlMh/7tMBhOm7LGvhjvMqhsBCK8jqEfp1j4erTsJIlg11oFTr
+	nM2tDFXd5LyL+bAe1Jdt/lUylmEvtyq8kbcp0j5/ZEvlPVkL9H6d3+zTR2qTLLjC
+	Iv0nCUU+v9hE+PNlCTZ873ZQQnPTfSzSWbARtEsCAaSsmXgaykA8K2kugZHA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715755348; x=1715841748; bh=UWwG16VCC3PCZ1LBfhuNdGcDADG0
-	aVkhl8jD+naDAAY=; b=ZSyJiY5Sa4E6DkyNgw/zLlYbjNGraMQcfBUeEZdjFdHG
-	NYsy2QC2R1uugOAZQnTC9BDLoCjYbBHruqaqezDxYFb8xfIn4sfZP57qxu4tsqZ1
-	V80OggNdO/dXNfi15kZpU2llH7eD+7CL1nQWvyq11vxscOcMrHzOQyJzYIPcE8OG
-	g3g8ZAF0D+vdnzkqoazK7Mnv2M4TF6JZKmhdz6zjsu8dVGHEASSV9QQAoxsERadd
-	r/qfrGn0qUmi8E/n/9mmDbOkOPvgqGsoQfAmtXjPMgiLHzR1iTYgIBxhXm07Qb7Q
-	23BRuWUyNI7b5xmg9gqMjcY6gXHGUD7ptHZxQVZjsw==
-X-ME-Sender: <xms:VFlEZg_D8KE6vO5tFhHtPhvqfUhyWnT8Q1lRoHQe0Iz9d8aLHVOBNA>
-    <xme:VFlEZoujjF71REmsfJ7eQ8mgToHU0gpYesuDNHHsICnYvH7M1NKkNQpjdEBdVTyjA
-    19uYOFv3Jq0KPCVAA>
-X-ME-Received: <xmr:VFlEZmDcVOIg3bgtyg_OsrFIBuK_PK6LuhgMm8KdsFVW4CFxjsNDZkuynwzT8afF1r15PGeenI4TRGhdQHeshITukpjSrWgMAlVoVHC8M-qRc82Z>
+	fm3; t=1715755354; x=1715841754; bh=zefy4FTFRynr1dyP2vvQzvFaOl1M
+	0bcXawLuEEqm6O0=; b=gcy50OqC6pqKog/XKw29WLqx8T67RiVPrrq3Q80g+IMe
+	B9fRDb0VwQELIrKdbX3X/CHl3xHutF2qOg+bxLRw/a4R9khPajymFJ1sp9GpdYXR
+	n+CFLCNca9EepP8a3mcyFHrHQhTBDpJgyKPkwwd2ZUErrkoiGBzsZOYD8Q78eutz
+	euhGtjhxd8Jw91vpnSE/q2YPYiiTc2ASFB1yh6FyjcbBUOmvkzB5//Lol7+2Zuvx
+	iLM3tUNq+kbXDisXqxCAd+NLm8ILQtFAm0410mkZIYjwYnHhlM1KoNJNwoO2cKtd
+	9+kWMAvto/VjxO+RfIye5qiu2GM3XsqAIVnMm2GiHA==
+X-ME-Sender: <xms:WllEZquThPgmsQjsDvryuwl_-JgG6mNW-U7_JtaZjcEXIDanGPKmMg>
+    <xme:WllEZveduKC0znEUT1wlI_B8urpvQSTjriJ8cwpg22ZXMbDGpvk00eujaBtqDBOsn
+    eH906IypDjijv40Zw>
+X-ME-Received: <xmr:WllEZlyEmxXGSDUpmglTl5wS2EOg7vTU9gwF0AGpPwytllerQRaJnbcajNhSgIbW6byFULYLy6yJWgOTK0uSbDh8Vhi4tYvophhoeZUvYxq7spFC>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdegjedguddthecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:VFlEZgeBg0lLl9nQC6uk-Pw2nlIHusOmnW1ZvwIoEshLBf1q9rJhaA>
-    <xmx:VFlEZlP-obMbXtPUmlEGYq0QfiiitNGGhWIFFddQmPLozeT78DfQig>
-    <xmx:VFlEZql34vWEcEGrfNeWdOpbML91JKGhz2xOsLD2gKe06EpVr3wCeQ>
-    <xmx:VFlEZntaWHnWm_27FIjSTVrQpbp-t62GfZAJY-XAhQB3kDZNzM4l3g>
-    <xmx:VFlEZqqdTlK4RX1RsKF_Z6rmAxZD2Bs_uhyLXFKliVZzsQo5lKQjpjpe>
+X-ME-Proxy: <xmx:WllEZlNv1f3zROy-j4qTBO3wp8NnVJUdtm85jz-E46mO8EKk_vgYxQ>
+    <xmx:WllEZq-8rKyR_KO5UjgTP4oRawyw6c_NdEv__ZSUHif56qBWIedZ0Q>
+    <xmx:WllEZtUsTOt36uf-1QvAp9tpjNlu3Mhd_DjxbgRNLFM5_HnaA_fCIQ>
+    <xmx:WllEZjcGsBwp9Hj_i21Q7tyBkf6_bzMpooKINSt2lN9GDFqkbNI17Q>
+    <xmx:WllEZuaEcWqdw5V37disOYk1GGHfjR4CS_DGivg8gtjd4CmaQJr3PSCw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 May 2024 02:42:27 -0400 (EDT)
+ 15 May 2024 02:42:33 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id d5487d5c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 15 May 2024 06:42:05 +0000 (UTC)
-Date: Wed, 15 May 2024 08:42:25 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 1f70ae88 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 15 May 2024 06:42:10 +0000 (UTC)
+Date: Wed, 15 May 2024 08:42:30 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Kyle Lippincott <spectral@google.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 11/21] builtin/config: move type options into display
+Subject: [PATCH v3 12/21] builtin/config: move default value into display
  options
-Message-ID: <5579371ad192ae4650e9598760df3350dca3b9c9.1715755055.git.ps@pks.im>
+Message-ID: <05a072d5d1b26c660f2467478fa75ba5373ac928.1715755055.git.ps@pks.im>
 References: <cover.1715339393.git.ps@pks.im>
  <cover.1715755055.git.ps@pks.im>
 Precedence: bulk
@@ -85,296 +85,139 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lAfMLX8NJqPH11tP"
+	protocol="application/pgp-signature"; boundary="oB2F21MR+8jH2l6p"
 Content-Disposition: inline
 In-Reply-To: <cover.1715755055.git.ps@pks.im>
 
 
---lAfMLX8NJqPH11tP
+--oB2F21MR+8jH2l6p
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The type options are tracked via a global variable. Move it into the
+The default value is tracked via a global variable. Move it into the
 display options instead.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/config.c | 60 +++++++++++++++++++++++-------------------------
- 1 file changed, 29 insertions(+), 31 deletions(-)
+ builtin/config.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index 1a67a6caef..ff111d83a9 100644
+index ff111d83a9..8a327e770d 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -82,13 +82,24 @@ struct config_location_options {
- };
- #define CONFIG_LOCATION_OPTIONS_INIT {0}
-=20
-+#define CONFIG_TYPE_OPTIONS(type) \
-+	OPT_GROUP(N_("Type")), \
-+	OPT_CALLBACK('t', "type", &type, N_("type"), N_("value is given this type=
-"), option_parse_type), \
-+	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\"")=
-, TYPE_BOOL), \
-+	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE_I=
-NT), \
-+	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --int"=
-), TYPE_BOOL_OR_INT), \
-+	OPT_CALLBACK_VALUE(0, "bool-or-str", &type, N_("value is --bool or string=
-"), TYPE_BOOL_OR_STR), \
-+	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directo=
-ry name)"), TYPE_PATH), \
-+	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date")=
-, TYPE_EXPIRY_DATE)
-+
- #define CONFIG_DISPLAY_OPTIONS(opts) \
- 	OPT_GROUP(N_("Display options")), \
- 	OPT_BOOL('z', "null", &opts.end_nul, N_("terminate values with NUL byte")=
-), \
- 	OPT_BOOL(0, "name-only", &opts.omit_values, N_("show variable names only"=
-)), \
- 	OPT_BOOL(0, "show-origin", &opts.show_origin, N_("show origin of config (=
-file, standard input, blob, command line)")), \
- 	OPT_BOOL(0, "show-scope", &opts.show_scope, N_("show scope of config (wor=
-ktree, local, global, system, command)")), \
--	OPT_BOOL(0, "show-names", &opts.show_keys, N_("show config keys in additi=
-on to their values"))
-+	OPT_BOOL(0, "show-names", &opts.show_keys, N_("show config keys in additi=
-on to their values")), \
-+	CONFIG_TYPE_OPTIONS(opts.type)
-=20
- struct config_display_options {
- 	int end_nul;
-@@ -96,6 +107,7 @@ struct config_display_options {
- 	int show_origin;
+@@ -108,6 +108,7 @@ struct config_display_options {
  	int show_scope;
  	int show_keys;
-+	int type;
+ 	int type;
++	char *default_value;
  	/* Populated via `display_options_init()`. */
  	int term;
  	int delim;
-@@ -114,8 +126,6 @@ static regex_t *regexp;
+@@ -126,7 +127,6 @@ static regex_t *regexp;
  static int use_key_regexp;
  static int do_all;
  static int do_not_match;
--
--static int type;
- static char *default_value;
+-static char *default_value;
  static int respect_includes_opt =3D -1;
  static int fixed_value;
-@@ -265,13 +275,13 @@ static int format_config(const struct config_display_=
-options *opts,
- 		if (opts->show_keys)
- 			strbuf_addch(buf, opts->key_delim);
 =20
--		if (type =3D=3D TYPE_INT)
-+		if (opts->type =3D=3D TYPE_INT)
- 			strbuf_addf(buf, "%"PRId64,
- 				    git_config_int64(key_, value_ ? value_ : "", kvi));
--		else if (type =3D=3D TYPE_BOOL)
-+		else if (opts->type =3D=3D TYPE_BOOL)
- 			strbuf_addstr(buf, git_config_bool(key_, value_) ?
- 				      "true" : "false");
--		else if (type =3D=3D TYPE_BOOL_OR_INT) {
-+		else if (opts->type =3D=3D TYPE_BOOL_OR_INT) {
- 			int is_bool, v;
- 			v =3D git_config_bool_or_int(key_, value_, kvi,
- 						   &is_bool);
-@@ -279,24 +289,24 @@ static int format_config(const struct config_display_=
-options *opts,
- 				strbuf_addstr(buf, v ? "true" : "false");
- 			else
- 				strbuf_addf(buf, "%d", v);
--		} else if (type =3D=3D TYPE_BOOL_OR_STR) {
-+		} else if (opts->type =3D=3D TYPE_BOOL_OR_STR) {
- 			int v =3D git_parse_maybe_bool(value_);
- 			if (v < 0)
- 				strbuf_addstr(buf, value_);
- 			else
- 				strbuf_addstr(buf, v ? "true" : "false");
--		} else if (type =3D=3D TYPE_PATH) {
-+		} else if (opts->type =3D=3D TYPE_PATH) {
- 			const char *v;
- 			if (git_config_pathname(&v, key_, value_) < 0)
- 				return -1;
- 			strbuf_addstr(buf, v);
- 			free((char *)v);
--		} else if (type =3D=3D TYPE_EXPIRY_DATE) {
-+		} else if (opts->type =3D=3D TYPE_EXPIRY_DATE) {
- 			timestamp_t t;
- 			if (git_config_expiry_date(&t, key_, value_) < 0)
- 				return -1;
- 			strbuf_addf(buf, "%"PRItime, t);
--		} else if (type =3D=3D TYPE_COLOR) {
-+		} else if (opts->type =3D=3D TYPE_COLOR) {
- 			char v[COLOR_MAXLEN];
- 			if (git_config_color(v, key_, value_) < 0)
- 				return -1;
-@@ -444,7 +454,7 @@ static int get_value(const struct config_location_optio=
+@@ -416,7 +416,7 @@ static int get_value(const struct config_location_optio=
 ns *opts,
- }
+ 			    &opts->source, the_repository,
+ 			    &opts->options);
 =20
- static char *normalize_value(const char *key, const char *value,
--			     struct key_value_info *kvi)
-+			     int type, struct key_value_info *kvi)
- {
- 	if (!value)
- 		return NULL;
-@@ -789,16 +799,6 @@ static void display_options_init(struct config_display=
-_options *opts)
+-	if (!values.nr && default_value) {
++	if (!values.nr && display_opts->default_value) {
+ 		struct key_value_info kvi =3D KVI_INIT;
+ 		struct strbuf *item;
+=20
+@@ -424,9 +424,10 @@ static int get_value(const struct config_location_opti=
+ons *opts,
+ 		ALLOC_GROW(values.items, values.nr + 1, values.alloc);
+ 		item =3D &values.items[values.nr++];
+ 		strbuf_init(item, 0);
+-		if (format_config(display_opts, item, key_, default_value, &kvi) < 0)
++		if (format_config(display_opts, item, key_,
++				  display_opts->default_value, &kvi) < 0)
+ 			die(_("failed to format default config value: %s"),
+-				default_value);
++			    display_opts->default_value);
  	}
- }
 =20
--#define CONFIG_TYPE_OPTIONS \
--	OPT_GROUP(N_("Type")), \
--	OPT_CALLBACK('t', "type", &type, N_("type"), N_("value is given this type=
-"), option_parse_type), \
--	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\"")=
-, TYPE_BOOL), \
--	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE_I=
-NT), \
--	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --int"=
-), TYPE_BOOL_OR_INT), \
--	OPT_CALLBACK_VALUE(0, "bool-or-str", &type, N_("value is --bool or string=
-"), TYPE_BOOL_OR_STR), \
--	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directo=
-ry name)"), TYPE_PATH), \
--	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date")=
-, TYPE_EXPIRY_DATE)
--
- static int cmd_config_list(int argc, const char **argv, const char *prefix)
- {
- 	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
-INIT;
-@@ -841,7 +841,6 @@ static int cmd_config_get(int argc, const char **argv, =
+ 	ret =3D !values.nr;
+@@ -850,7 +851,8 @@ static int cmd_config_get(int argc, const char **argv, =
 const char *prefix)
- 	int flags =3D 0;
- 	struct option opts[] =3D {
- 		CONFIG_LOCATION_OPTIONS(location_opts),
--		CONFIG_TYPE_OPTIONS,
- 		OPT_GROUP(N_("Filter options")),
- 		OPT_BOOL(0, "all", &do_all, N_("return all values for multi-valued confi=
-g options")),
- 		OPT_BOOL(0, "regexp", &use_key_regexp, N_("interpret the name as a regul=
-ar expression")),
-@@ -886,10 +885,10 @@ static int cmd_config_set(int argc, const char **argv=
-, const char *prefix)
- 	struct config_location_options location_opts =3D CONFIG_LOCATION_OPTIONS_=
-INIT;
- 	const char *value_pattern =3D NULL, *comment_arg =3D NULL;
- 	char *comment =3D NULL;
--	int flags =3D 0, append =3D 0;
-+	int flags =3D 0, append =3D 0, type =3D 0;
- 	struct option opts[] =3D {
- 		CONFIG_LOCATION_OPTIONS(location_opts),
--		CONFIG_TYPE_OPTIONS,
-+		CONFIG_TYPE_OPTIONS(type),
- 		OPT_GROUP(N_("Filter")),
- 		OPT_BIT(0, "all", &flags, N_("replace multi-valued config option with ne=
-w value"), CONFIG_FLAGS_MULTI_REPLACE),
- 		OPT_STRING(0, "value", &value_pattern, N_("pattern"), N_("show config wi=
-th values matching the pattern")),
-@@ -919,7 +918,7 @@ static int cmd_config_set(int argc, const char **argv, =
-const char *prefix)
- 	location_options_init(&location_opts, prefix);
- 	check_write(&location_opts.source);
-=20
--	value =3D normalize_value(argv[0], argv[1], &default_kvi);
-+	value =3D normalize_value(argv[0], argv[1], type, &default_kvi);
-=20
- 	if ((flags & CONFIG_FLAGS_MULTI_REPLACE) || value_pattern) {
- 		ret =3D git_config_set_multivar_in_file_gently(location_opts.source.file,
-@@ -1126,7 +1125,6 @@ static int cmd_config_actions(int argc, const char **=
-argv, const char *prefix)
- 		OPT_CMDMODE('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
- 		OPT_CMDMODE(0, "get-color", &actions, N_("find the color configured: slo=
-t [<default>]"), ACTION_GET_COLOR),
- 		OPT_CMDMODE(0, "get-colorbool", &actions, N_("find the color setting: sl=
-ot [<stdout-is-tty>]"), ACTION_GET_COLORBOOL),
--		CONFIG_TYPE_OPTIONS,
  		CONFIG_DISPLAY_OPTIONS(display_opts),
  		OPT_GROUP(N_("Other")),
- 		OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, us=
-e default value when missing entry")),
-@@ -1147,7 +1145,7 @@ static int cmd_config_actions(int argc, const char **=
-argv, const char *prefix)
- 	location_options_init(&location_opts, prefix);
- 	display_options_init(&display_opts);
+ 		OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direc=
+tives on lookup")),
+-		OPT_STRING(0, "default", &default_value, N_("value"), N_("use default va=
+lue when missing entry")),
++		OPT_STRING(0, "default", &display_opts.default_value,
++			   N_("value"), N_("use default value when missing entry")),
+ 		OPT_END(),
+ 	};
+ 	int ret;
+@@ -861,7 +863,7 @@ static int cmd_config_get(int argc, const char **argv, =
+const char *prefix)
 =20
--	if ((actions & (ACTION_GET_COLOR|ACTION_GET_COLORBOOL)) && type) {
-+	if ((actions & (ACTION_GET_COLOR|ACTION_GET_COLORBOOL)) && display_opts.t=
-ype) {
- 		error(_("--get-color and variable type are incoherent"));
+ 	if ((flags & CONFIG_FLAGS_FIXED_VALUE) && !value_pattern)
+ 		die(_("--fixed-value only applies with 'value-pattern'"));
+-	if (default_value && (do_all || url))
++	if (display_opts.default_value && (do_all || url))
+ 		die(_("--default=3D cannot be used with --all or --url=3D"));
+ 	if (url && (do_all || use_key_regexp || value_pattern))
+ 		die(_("--url=3D cannot be used with --all, --regexp or --value"));
+@@ -1127,7 +1129,8 @@ static int cmd_config_actions(int argc, const char **=
+argv, const char *prefix)
+ 		OPT_CMDMODE(0, "get-colorbool", &actions, N_("find the color setting: sl=
+ot [<stdout-is-tty>]"), ACTION_GET_COLORBOOL),
+ 		CONFIG_DISPLAY_OPTIONS(display_opts),
+ 		OPT_GROUP(N_("Other")),
+-		OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, us=
+e default value when missing entry")),
++		OPT_STRING(0, "default", &display_opts.default_value,
++			   N_("value"), N_("with --get, use default value when missing entry")),
+ 		OPT_STRING(0, "comment", &comment_arg, N_("value"), N_("human-readable c=
+omment string (# will be prepended as needed)")),
+ 		OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when co=
+mparing values to 'value-pattern'")),
+ 		OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include direc=
+tives on lookup")),
+@@ -1172,7 +1175,7 @@ static int cmd_config_actions(int argc, const char **=
+argv, const char *prefix)
  		exit(129);
  	}
-@@ -1248,7 +1246,7 @@ static int cmd_config_actions(int argc, const char **=
-argv, const char *prefix)
- 	else if (actions =3D=3D ACTION_SET) {
- 		check_write(&location_opts.source);
- 		check_argc(argc, 2, 2);
--		value =3D normalize_value(argv[0], argv[1], &default_kvi);
-+		value =3D normalize_value(argv[0], argv[1], display_opts.type, &default_=
-kvi);
- 		ret =3D git_config_set_in_file_gently(location_opts.source.file, argv[0]=
-, comment, value);
- 		if (ret =3D=3D CONFIG_NOTHING_SET)
- 			error(_("cannot overwrite multiple values with a single value\n"
-@@ -1257,7 +1255,7 @@ static int cmd_config_actions(int argc, const char **=
-argv, const char *prefix)
- 	else if (actions =3D=3D ACTION_SET_ALL) {
- 		check_write(&location_opts.source);
- 		check_argc(argc, 2, 3);
--		value =3D normalize_value(argv[0], argv[1], &default_kvi);
-+		value =3D normalize_value(argv[0], argv[1], display_opts.type, &default_=
-kvi);
- 		ret =3D git_config_set_multivar_in_file_gently(location_opts.source.file,
- 							     argv[0], value, argv[2],
- 							     comment, flags);
-@@ -1265,7 +1263,7 @@ static int cmd_config_actions(int argc, const char **=
-argv, const char *prefix)
- 	else if (actions =3D=3D ACTION_ADD) {
- 		check_write(&location_opts.source);
- 		check_argc(argc, 2, 2);
--		value =3D normalize_value(argv[0], argv[1], &default_kvi);
-+		value =3D normalize_value(argv[0], argv[1], display_opts.type, &default_=
-kvi);
- 		ret =3D git_config_set_multivar_in_file_gently(location_opts.source.file,
- 							     argv[0], value,
- 							     CONFIG_REGEX_NONE,
-@@ -1274,7 +1272,7 @@ static int cmd_config_actions(int argc, const char **=
-argv, const char *prefix)
- 	else if (actions =3D=3D ACTION_REPLACE_ALL) {
- 		check_write(&location_opts.source);
- 		check_argc(argc, 2, 3);
--		value =3D normalize_value(argv[0], argv[1], &default_kvi);
-+		value =3D normalize_value(argv[0], argv[1], display_opts.type, &default_=
-kvi);
- 		ret =3D git_config_set_multivar_in_file_gently(location_opts.source.file,
- 							     argv[0], value, argv[2],
- 							     comment, flags | CONFIG_FLAGS_MULTI_REPLACE);
+=20
+-	if (default_value && !(actions & ACTION_GET)) {
++	if (display_opts.default_value && !(actions & ACTION_GET)) {
+ 		error(_("--default is only applicable to --get"));
+ 		exit(129);
+ 	}
 --=20
 2.45.GIT
 
 
---lAfMLX8NJqPH11tP
+--oB2F21MR+8jH2l6p
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZEWVAACgkQVbJhu7ck
-PpS8TxAAgB0kvUm7tt/kmf2vlJECNvu+3GzdQBoIZKPYs4pXUGi15VlpkkChElA1
-CYh7rA/UiELbgRZ6gRU57gJEbv4/3xAOkpodP6LcnyIkEYIShLDZG5sMqL6XxuH5
-BIi8KCD45zPaNpQQokl7vdR+wanVg6nV1XN7xj8Nr/QhWsNBChGHpMa9t8nGL/i9
-pIC4TwbO0S9nIRBZR1RTmtjgr1MkpwXAmhvbcPKKfo/qTS3BzDFj+QguCSCcxXg3
-g+VZPxoHgE4qbTWW9POxfqbIiGbhUaQpuxbcNS4X11I4gLwnLLtsTrGdmTwIEhFa
-7yVuSHp89Ma7ZWpZuuUdKrlHv5SOnPieLx5O1Cw6u1R1IF+hBGkwCxkAOcDNp0tp
-+cA7fUtjok9cjMKRjA6dgQAQkkkHrhdj2noveoO7YQ2XD909LI8FlqjQVxV65wpy
-cSt6aF5Cwz4EtYjfcUBNMryWgUjloIXTK0Hd6iGDFWayelLN+Vaawr1EkRnYQ89W
-d8cx2jlGXbpgTkXGGnUt1vM5WzXqD55kJ8+724oWYlIP0WiuWvThRBPZXq6IHD1U
-ToNZpw7kDFoT916ykBTYewimU0RMif/sRbHCvISNnHmKXeDAZqkW7Z9jKqbjKE90
-l3D1L+o7QzcwTLOn+s2FN4cXrgtiR2YPlvMUMRHGmhk7ufHRpP0=
-=w6ci
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZEWVUACgkQVbJhu7ck
+PpS1eRAAidR1keoWwPZQFmWUdJcU1ZK28OK/vXuAoGsTyjTo57/7nHVyK76z4pwq
+9vDoDeUoNz/5HRDsY1pc/kSDfNdboHlmhVhHVLjaMeYHXchf5fQePCtUjsv9P840
+7HZQfi4I2IXJ7wWKKAzLnF7FL4l5np5ztk89+5/R8XOLUfoTaxdJ9G15eTj0O3tZ
+ar7To9zwFusI3OfinB2ghvDgN1IpnT6Ao271BWq/Pn7FHQ7LpWg7dkyUikigfN7X
+CIbkGIAqJHrhkSrwJVygoqp4L2qUU0MYmdyUo8TOdI0DZ5dlu73LR/DPUv6xscHG
+EpL7KYLAsbWT8BVJsZscj5yyaYpqPqmDm+hLAIVXWsXBD0XYo9LfluFhtweQZOir
+x7WqlClXkK6CKoUJRpZWYG7witOCAoFOCLoAEWMWKBl9esakP+Z2QSB81lakmzlo
+ky2UmiofP9lZh2ScGHvoPqxIE4jYkX0c0rMX53ApWdXUIZknJ6yxXUHvU8YMtHbg
+XI9Qf8c0eEjpapiwgc9mS10gDl8SZpHXEwapdt9fVQOW6AFmYiak7E1/F3xK1YhG
+0C0vgopJUBGnjxpu/o0OPauCcIP1PZjI2P7BRY4c+2pu3WHeYIZANJRDlcbiDkuG
+UL1yUnKQzaRXW2Z09iUtAXFx+uFezc2DpNzKBkAnpacRfheVAZ8=
+=Vw9P
 -----END PGP SIGNATURE-----
 
---lAfMLX8NJqPH11tP--
+--oB2F21MR+8jH2l6p--
