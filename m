@@ -1,138 +1,245 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C700745D9
-	for <git@vger.kernel.org>; Wed, 15 May 2024 12:24:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91EE824A4
+	for <git@vger.kernel.org>; Wed, 15 May 2024 13:25:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715775898; cv=none; b=Z01YPvyF4mTypQurVq1bgTTMA2GQGmVjUMvjODgVfc5AC2Zidt4tWkGwahEWNaQhjRSVIpWBUiggP2aTFWjh2H5bSrBG7+wH8t1kZ9gXvhE+UjVVWhivCVLr9+q9tbvo/9AUUo85KuoT3b1z3HrSkJwkkGNWWfxfdsfcFM/r5S0=
+	t=1715779561; cv=none; b=ddOi0jiQ0KaYQ03sK7tPDd38kHBMm3dTbvi62cQ+rOahrfte5WLHRDj4XBiasRQ4zwHvFNEQexUsv8p80QGVlvKEgj42Ut10UNoN443KagvtuQMfv9+TK2vUvsNJqYa3mlfoq33viUQ5RrM92pMxcmER1PXWeRXDVo9Ts7SBoG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715775898; c=relaxed/simple;
-	bh=oNZeUiP2A2g5S/iHP5ZN/jTuvv5hT2KXre1IbhkY2I8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AfnMVwvmtPn2EEB/+Oc3Ab1RtkMJcl8WXh/eC9yOg+dtZuevoy32JY6m0d1h9tY+BZZQxWEmn3bYOlK7kmqa42YcutOxJ5i3rJg7sL3regDWD6f87hWBO5m4W4k6lyma5dDSs1AW9ScjaIgtZZH8RoEjeSShENWFuRHvChh8qKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=StMy+vev; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CLFAZCHk; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715779561; c=relaxed/simple;
+	bh=KG0/oIlW41ni4yfiBN4yXwA7Xg7ZK1cOEIoxF5ejiFk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NGrucA55HDYjZ5mxsGPs8ep6rYfxk0BwRTonyE7kJv/jNEU2ZWF5CJkyIp8DChwKRkqjWRq48RJ5E2gp6OUHqJ/wGcVsMA0BQIisgzH62lKoEEaQ1yRDiDJDNOKMw3+kXD6bJu9JIbehizXoy3+17K/RVs9sYfMoZ1ZM1JFrLKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tk4tzBQl; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="StMy+vev";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CLFAZCHk"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 64A751140098;
-	Wed, 15 May 2024 08:24:55 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Wed, 15 May 2024 08:24:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715775895; x=1715862295; bh=PTFp9f1xHg
-	cxP2knWxbNvvPvqpnhGN484tQdE2tkCLE=; b=StMy+vevEb741BCWH9hTg+aUF9
-	j8S1JiDtSpmnAxdno+bn9EbvtiXVapZg4Y4o1c7mNiLbJ0H5gcsHQvL7+WR5pLXe
-	Sd7NgzS+IThWaY4PbVBTphKsEu14A6Jw6XsD3Ze4QwTuqFmZPfijMGhSjGpkivb3
-	6U0EXGwgICkCR5PUZViEisyHI25onjK/QKRkDVNdU6Gg3e0qX570GPp/ZvQRzkuo
-	3PIjmrgfgstquh3y9JuCyzEIPJurWSTWHfUGXT6aP+hjyBxddWMMyU9zbRUxL7XJ
-	31oNjzBGCMEJWOPMB1KbdYQVxxBiICLVSkCpxpzL88tElmzawUmPNgja7jxw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715775895; x=1715862295; bh=PTFp9f1xHgcxP2knWxbNvvPvqpnh
-	GN484tQdE2tkCLE=; b=CLFAZCHkIVHu5rd2NPazBfRJjumKy9VpU141o5F3t6Ey
-	xCvtFOeByQNCJQqbwS36jRqVJDvrgqmYovrTg6jFMyJ66BPowIfyavQDBM9lMkM9
-	MHccC3mrcPnfpJMpy+N3H7qCwN/R4hBZFEB4lfGga3jLEdAs3EyiZQ3PL5/ejzYd
-	ucmKcbM+onDvtlxzcVIgP92GPjUC45j9DMIBpI64f1tlkE6m3hbvZieOzRybxxIB
-	qdr4KGQIxlpmM4dhBoC35xd9c63Qo6QkX/Xaq3vWDcW19dwTZ0/Ff0JOyEaZkbj5
-	jUUtgsSC43FgkP0uftKZN91Y6tW2uoOw/77ZxrJbiQ==
-X-ME-Sender: <xms:l6lEZv1IGmPL2shQUDaSypXpEwUdUC09dmV6-KIYKtyJfBkf6p0uRg>
-    <xme:l6lEZuF99sZvwp8WlPysiR-nkQARlvqbAaxKnS7_LTQZxbIzcsa7fAibcyeAWT68D
-    jHefbgb2qgHDOlvvQ>
-X-ME-Received: <xmr:l6lEZv4W2EyHiUolYD56w0NOqQJlhLI3upMyyIcLeh1eHpqKd278OCzCctf2_PzNzaAiZ1EFC6SaetUxdo_VJTX2s_wdYsVlRZ-Dp6upWZ1AzLAq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdegkedggeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:l6lEZk1qtZdPwskrxu2ba9ErWL-WINv5tG3lwRkWDxST_MXsn4MNqQ>
-    <xmx:l6lEZiE1_5ZMc0O8suWHZy4S5mRhyJ_IRB2Igxb2g-x5mV5geuOaHw>
-    <xmx:l6lEZl_ht62VdKCWn8jUoCmXGPsV8PwGhroNszBsEpm6nawr9daswQ>
-    <xmx:l6lEZvng98OFDECvtr8A1ewyhafbgArrxGT64tfpbvV7wGiO0VqWvQ>
-    <xmx:l6lEZnRldeK2O0-zl8qGY8L5ICXqr9OjZIr-x4fDpT2h8SO75kQS6Tkn>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 May 2024 08:24:54 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id f5a1ab4e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 15 May 2024 12:24:31 +0000 (UTC)
-Date: Wed, 15 May 2024 14:24:51 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v4 2/5] t1517: test commands that are designed to be run
- outside repository
-Message-ID: <ZkSpk3v2kRsdOcbQ@tanuki>
-References: <cover.1715582857.git.ps@pks.im>
- <20240514011437.3779151-1-gitster@pobox.com>
- <20240514011437.3779151-3-gitster@pobox.com>
- <ZkLpTwNgFGFyC4_N@tanuki>
- <xmqqo79877oc.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tk4tzBQl"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-420180b5897so23243035e9.3
+        for <git@vger.kernel.org>; Wed, 15 May 2024 06:25:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715779557; x=1716384357; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XFtFCVfMlXMkA3jBFB2kvJWS+iqT35YBFqX/f36bGVw=;
+        b=Tk4tzBQliEMSw/2byJ6/BGEuEbFPH4/KZzCNlFwjTNIiyQmmZWtWgL1BL9RYHc4z9A
+         sSvkSfxXO0yaSvKvNpe5FSzDVcL+8JUwzDlHZ+yut/30F8KhlGgoJNevPP7A8Obyb3mi
+         +n7Dp9wQeDqP6q5cdzGMnHercaYplI2iXB6jYEhBVWu0oyoR1eaj17o6KU8D/haVxr3i
+         vsUNSCYEa37mvc5Hnb1DnZLsceLJZihK9reKvT03b7ug4Cmlf7opobd6MGCAyMMrAP24
+         cMruhWrqPrHo22WdQXvQDPcnQi//6eeNDVYG2Zc2vqyhg0yn22xnDflHzrP0xxNlAd9/
+         iwZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715779557; x=1716384357;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XFtFCVfMlXMkA3jBFB2kvJWS+iqT35YBFqX/f36bGVw=;
+        b=ny/X8ebn2fWpdJ3OqYJ7OVg2eYwi+LZcnULwlA44HKqnBYlcQSoS7IYzhoxw06jpVZ
+         V2KIUhj4hYJJLK3NcA+qBlGamSz90i0krnK4LUdQkxpSUJV6y+qU64+Sox6Yb+gSVvzs
+         jc6F87mMiEm1lRcWyL7OAKllUmwH+p+nuR/x9NUA07fP4cSwYP1kZ8X11TGYiellWE3N
+         PB2OAPUN1zFfdW0m1fsJPo0LzuA7z5REyRBYexIU2Vntfd/raHQMuV9GGiZGDb04Z+Sf
+         kWtoNXS+0e2EpJMpZbTUBtXWaxd1ehrMlnpNXtepwLmRyCzoFt+IpWioEKhCVxG0B/bq
+         eZGQ==
+X-Gm-Message-State: AOJu0YyKameE7AYMw9XoyGh+ydJqW8VBdIUUGomJAy42aDpUnfKJdhM5
+	QoIeizb/ygSAwYqVOXsLfJ/Kso+tzB/oKTdaCr9yQH6YBBneWqIPhO636g==
+X-Google-Smtp-Source: AGHT+IGgSx+1jZx7C+wcgj8GnjsTaKPtj3EEDvejM945sdsPgRjM6jbpJ4296UNoWUX0kHgojirsIQ==
+X-Received: by 2002:a05:600c:4744:b0:418:f991:8ad4 with SMTP id 5b1f17b1804b1-41fea93213dmr127015615e9.6.1715779557457;
+        Wed, 15 May 2024 06:25:57 -0700 (PDT)
+Received: from christian-Precision-5550.. (176-138-135-207.abo.bbox.fr. [176.138.135.207])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4201592e5f3sm117171695e9.43.2024.05.15.06.25.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 May 2024 06:25:57 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Cai <johncai86@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2 1/3] rev-list: refactor --missing=<missing-action>
+Date: Wed, 15 May 2024 15:25:41 +0200
+Message-ID: <20240515132543.851987-2-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.45.1.148.g0f5efb064b
+In-Reply-To: <20240515132543.851987-1-christian.couder@gmail.com>
+References: <20221012135114.294680-1-christian.couder@gmail.com>
+ <20240515132543.851987-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="UNO1oZ1ZPDERyLEV"
-Content-Disposition: inline
-In-Reply-To: <xmqqo79877oc.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
+Both `git rev-list` and `git pack-objects` support a
+`--missing=<missing-action>` feature, but they currently don't share
+any code for that.
 
---UNO1oZ1ZPDERyLEV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Refactor the support for `--missing=<missing-action>` in
+"builtin/rev-list.c" into new "missing.{c,h}" files. In a following
+commit, that refactored code will be used in "builtin/pack-objects.c"
+too.
 
-On Tue, May 14, 2024 at 08:08:19AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > Is there a specific reason why this needs a whole patch suite, as
-> > opposed to adding the tests to the respective test suites of the
-> > commands?
->=20
-> Yes, testing out-of-repository operations needs certain trick and
-> people forget to write such tests using the GIT_CEILING_DIRECTORIES
-> mechanism.  Having one place where we have an enumeration of
-> commands that are designed to be usable outside repository is a
-> handy way to make sure that we have enough test coverage.  It would
-> make it easy to control how GIT_DEFAULT_HASH environment is set
-> during these tests to have them in all one place.
+In yet a following commit, we are going to add support for a similar
+'missing-action' feature to another command, and we are also going to
+reuse code from the new "missing.{c,h}" files.
 
-We already have the "nogit" command that neatly encapsulates all of this
-logic, so the trickery is contained in a single spot in practice.
+As `enum missing_action` and parse_missing_action_value() are moved to
+"missing.{c,h}", we need to modify the latter a bit, so that it stops
+updating any global variable, but instead returns the parsed value or
+-1 on error.
 
-Patrick
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Makefile           |  1 +
+ builtin/rev-list.c | 43 ++++++++-----------------------------------
+ missing.c          | 20 ++++++++++++++++++++
+ missing.h          | 17 +++++++++++++++++
+ 4 files changed, 46 insertions(+), 35 deletions(-)
+ create mode 100644 missing.c
+ create mode 100644 missing.h
 
---UNO1oZ1ZPDERyLEV
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/Makefile b/Makefile
+index 0285db5630..e0ddcc2cbd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1062,6 +1062,7 @@ LIB_OBJS += merge-recursive.o
+ LIB_OBJS += merge.o
+ LIB_OBJS += midx.o
+ LIB_OBJS += midx-write.o
++LIB_OBJS += missing.o
+ LIB_OBJS += name-hash.o
+ LIB_OBJS += negotiator/default.o
+ LIB_OBJS += negotiator/noop.o
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 77803727e0..40aa770c47 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -20,6 +20,7 @@
+ #include "reflog-walk.h"
+ #include "oidset.h"
+ #include "packfile.h"
++#include "missing.h"
+ 
+ static const char rev_list_usage[] =
+ "git rev-list [<options>] <commit>... [--] [<path>...]\n"
+@@ -71,12 +72,6 @@ static struct oidset omitted_objects;
+ static int arg_print_omitted; /* print objects omitted by filter */
+ 
+ static struct oidset missing_objects;
+-enum missing_action {
+-	MA_ERROR = 0,    /* fail if any missing objects are encountered */
+-	MA_ALLOW_ANY,    /* silently allow ALL missing objects */
+-	MA_PRINT,        /* print ALL missing objects in special section */
+-	MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR objects */
+-};
+ static enum missing_action arg_missing_action;
+ 
+ /* display only the oid of each object encountered */
+@@ -392,34 +387,6 @@ static void print_disk_usage(off_t size)
+ 	strbuf_release(&sb);
+ }
+ 
+-static inline int parse_missing_action_value(const char *value)
+-{
+-	if (!strcmp(value, "error")) {
+-		arg_missing_action = MA_ERROR;
+-		return 1;
+-	}
+-
+-	if (!strcmp(value, "allow-any")) {
+-		arg_missing_action = MA_ALLOW_ANY;
+-		fetch_if_missing = 0;
+-		return 1;
+-	}
+-
+-	if (!strcmp(value, "print")) {
+-		arg_missing_action = MA_PRINT;
+-		fetch_if_missing = 0;
+-		return 1;
+-	}
+-
+-	if (!strcmp(value, "allow-promisor")) {
+-		arg_missing_action = MA_ALLOW_PROMISOR;
+-		fetch_if_missing = 0;
+-		return 1;
+-	}
+-
+-	return 0;
+-}
+-
+ static int try_bitmap_count(struct rev_info *revs,
+ 			    int filter_provided_objects)
+ {
+@@ -569,10 +536,16 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 		if (skip_prefix(arg, "--missing=", &arg)) {
++			int res;
+ 			if (revs.exclude_promisor_objects)
+ 				die(_("options '%s' and '%s' cannot be used together"), "--exclude-promisor-objects", "--missing");
+-			if (parse_missing_action_value(arg))
++			res = parse_missing_action_value(arg);
++			if (res >= 0) {
++				if (res != MA_ERROR)
++					fetch_if_missing = 0;
++				arg_missing_action = res;
+ 				break;
++			}
+ 		}
+ 	}
+ 
+diff --git a/missing.c b/missing.c
+new file mode 100644
+index 0000000000..ce3cf734a8
+--- /dev/null
++++ b/missing.c
+@@ -0,0 +1,20 @@
++#include "git-compat-util.h"
++#include "missing.h"
++#include "object-file.h"
++
++int parse_missing_action_value(const char *value)
++{
++	if (!strcmp(value, "error"))
++		return MA_ERROR;
++
++	if (!strcmp(value, "allow-any"))
++		return MA_ALLOW_ANY;
++
++	if (!strcmp(value, "print"))
++		return MA_PRINT;
++
++	if (!strcmp(value, "allow-promisor"))
++		return MA_ALLOW_PROMISOR;
++
++	return -1;
++}
+diff --git a/missing.h b/missing.h
+new file mode 100644
+index 0000000000..1e378d6215
+--- /dev/null
++++ b/missing.h
+@@ -0,0 +1,17 @@
++#ifndef MISSING_H
++#define MISSING_H
++
++enum missing_action {
++	MA_ERROR = 0,      /* fail if any missing objects are encountered */
++	MA_ALLOW_ANY,      /* silently allow ALL missing objects */
++	MA_PRINT,          /* print ALL missing objects in special section */
++	MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR objects */
++};
++
++/*
++  Return an `enum missing_action` in case parsing is successful or -1
++  if parsing failed.
++*/
++int parse_missing_action_value(const char *value);
++
++#endif /* MISSING_H */
+-- 
+2.45.1.148.g0f5efb064b
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZEqZIACgkQVbJhu7ck
-PpTVtQ/7Btu+R5FC/WW5fi2/w/5bJ4T3wZQS2Lcm7TZkvhAlXX44krkmVtI6L8io
-Iki8nAefQeLXIA5l0mPPXegKZg3KZczwNXPdfZa0tQNV93l3OGFlZi76eZS+Y7cl
-kiLTljgXX+EwGfxTpujg7EN716tYiUpeFlPgCbgGDYDTpD04VVB5i2sgRU1nif/c
-6fTvwhMbHmHOeyiDX5olRhaPrK05j0xUHhuG39/XglnFn3Q9HO8HJGqfJCSvY5b1
-rgLPgC3shAVuPf6kZ9InJvS2patRFI0oGhMpvGeUBwXcsZ5A0dy0eYpBr5Fc7jix
-Ir6x82jUqTXQRl5hH0ZtuSyxgoEbopF+NlZwIly8Qb1xwUKLmHpKOkVvVe6rhddA
-a66C6fFCXS8zh6RsGHdok5lsLP5nfnZre4zFTQhnhHkyY6nMJpXtQLLatLgKvn4Q
-uX9xmXjDFMp8T5hC5dMTl9HC2qrsCWloaTCxxCfRsK+/2S1S040GOccbvl2KfoYf
-3382AwD1bttHsc2l4ux3gJgsB47woCQcbQ0I9WTrKu7Gk2WfG5Kf5BpupKTD7U5y
-1Q5gAamiJoTJtGp9PQqExL/WSQd9YGHBtqSMAM3nJpWrJgQhObK8QXwldAtnI3j8
-3sZYJIktWL2gTEfi4r85NU49hpx8g73AheC4rdUtJYPwHwbYBcU=
-=zu76
------END PGP SIGNATURE-----
-
---UNO1oZ1ZPDERyLEV--
