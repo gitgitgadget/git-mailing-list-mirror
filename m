@@ -1,148 +1,106 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C08315AD90
-	for <git@vger.kernel.org>; Wed, 15 May 2024 19:21:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970423219F
+	for <git@vger.kernel.org>; Wed, 15 May 2024 19:33:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715800876; cv=none; b=bkK4u5Ta2JMpdqEZutXu3IosIFNWPE7JlqmcG9e5lnVl3ca0kFJUf7SRI1wD+YhK2D+c/7qtzADkVpauIla0tfzYtnqwZLtBvgmj/7GB29RtZYZ6PYWkaQkp+ssuxWwgfA2jD26rzJdMeCOvHm1JUdEa2Co+yEdyTkDZX1V0pfA=
+	t=1715801633; cv=none; b=Prfm2PbLr2eW3K8K6MuFn8WEft0DjAOQoHzZmMXBciuKD3+6xMNLsw55QZkiBgqw6khpF72eGHSYM8wGqOAi4ukXsaNXea7MSYL4cL5r5bdmq7jlLMT0FGHnYNXGF9KRMPhCeVgPI2m7b/adgmzrwJRvhU6rzfiTB/TnTAfZlso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715800876; c=relaxed/simple;
-	bh=IP58TgRDssv46Ow1ZB9SY/ezEN387JvE+NjCeBFgJx4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=jxd+fY6/jEUQmWPye7i9sWw8uFxdWzx6k3gTDuQd4dp6uLNVk0C9J8Lsjuc28XIWQKWr/9Wo+A7VZ0tmQ3qAuWnYXFiUDIArcQ3OyP0AEotA+AUh9Vd0a5EazHGCVm4sEeQkGf6cYmZ6kOBLrWKffjM8BuQ8udWMeArzUlqZGtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kBTAx7De; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715801633; c=relaxed/simple;
+	bh=n1thKaLiQ6qaMzV54y4dADsSp0Jo9XQueIL7JN08HTM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nLG+XL91mXjaznHUlWcNtnEdcJWd+kwZ/k4QgCEvHdIeKb4sXNJ/xaeNFawyDU++p8BQD2HtbXrY0MVL3OGkLcmFoqnwmkvXx7wdBGab+lqE+lBmw88pBf7eZy6TH032x7chXalJJE3ljeObo35/wWcOsHsAr8mS8RUPXKJ7+4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=EC1z4ATS; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kBTAx7De"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2e576057c56so52559641fa.3
-        for <git@vger.kernel.org>; Wed, 15 May 2024 12:21:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715800872; x=1716405672; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7YE+yuvJK53dqhT33Vf1e6JjQ0Y9K1FWd4mICZj3iDc=;
-        b=kBTAx7De68UvF3kg8YtuR8DvygQeCg90zy9hZ0M9B7o4+BQVPHhu3cRsgyfZCUiK+U
-         D21PQxgvvNcQRC7vzlnofcvUfjrbxCRb5hlMNuR+J72wbZ9cFUfrl6bvRAiyrsbOUo7I
-         b/YeryFI/Y1DJajYfvEQC0eTGI+/RbTIdVpte9m+92BbbF7uACPs2NjAos6wnp6apFZ/
-         kAltwC3zWQs+1fcXprzxar6uOoUGsriTKPRBsxw/bWAwhtV0WP775ot80zSwKWWo+p6h
-         iMxNR9uzVokY6Cb+vTqg6RFXQhO2gxjsrNzs4AnMikkvVn0Jlk6N6K8Vb71BEpahoRqt
-         GpZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715800872; x=1716405672;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7YE+yuvJK53dqhT33Vf1e6JjQ0Y9K1FWd4mICZj3iDc=;
-        b=rW4g1C3KxipCgEBQwhhU8Z8FQE6KV+JAQzKVc9Zm1z4PxyoisO9CdIQ5RH8aE3HkYH
-         KxGqmR4U5FsXCWn1DXqTw30aR6/Gb4yNwV4mAxkSekcltIqE/PI3bu60LJRkoq8QCG3x
-         yMJUjXPFUvOkmTNA4NuvkBvAL8nj6MpUs6egwprbrsxnIBARFf+KvBqmsqo+fhNFSl5m
-         1x79LmsIyGzJE/xu+yTjTwOMjFQWe9hS48A1qS8nahKBqsqwmsDupdMDa57aIYCUx3hc
-         drwbEGK2I57Z++bjrwDO62+TsbE3DlhJGHx9eeah8HRM9ZMB85FQMvx4GrtjvhaTYVBE
-         zolg==
-X-Gm-Message-State: AOJu0YzX4ITEtQMwyfWOojcsvIu/YMFX6TYOjpwttIwK7kD9WacI2jqa
-	trXZ1vYelEZhNDshSXd3NCvMb88YF9kXT3fTaJP3RRSg7HYvR5y1LSp4eA==
-X-Google-Smtp-Source: AGHT+IHE0EYqvuhbeNaLutNMJyh+jPpzZRYE932xsSulM17WSww29zjWYYBLRMaD8aRczYvtqF5o4Q==
-X-Received: by 2002:a2e:9584:0:b0:2e4:9606:6b88 with SMTP id 38308e7fff4ca-2e51fc36498mr114734171fa.3.1715800871514;
-        Wed, 15 May 2024 12:21:11 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41f9bc3b12fsm142309165e9.0.2024.05.15.12.21.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 May 2024 12:21:11 -0700 (PDT)
-Message-Id: <146b0ae9146f2c575738cb0d6a5008b766aa0c57.1715800868.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1729.v3.git.1715800868.gitgitgadget@gmail.com>
-References: <pull.1729.v2.git.1715428542.gitgitgadget@gmail.com>
-	<pull.1729.v3.git.1715800868.gitgitgadget@gmail.com>
-From: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 15 May 2024 19:21:07 +0000
-Subject: [PATCH v3 2/2] osxkeychain: state to skip unnecessary store
- operations
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EC1z4ATS"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 218FD1F974;
+	Wed, 15 May 2024 15:32:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=n
+	1thKaLiQ6qaMzV54y4dADsSp0Jo9XQueIL7JN08HTM=; b=EC1z4ATS/3Auxt7U3
+	xy1K8PFF6J9/R7Rc5+VCBxu7nsE3ZkMXT3XzFLo67zrbhqiA5Ej5TX0yaFvd+ysA
+	Es8UiN+v7xXCX4bKDhMh46mC5Kkr2zdvtPiF8inB6cLr+rbgOFXfK1uWefYpe/gH
+	TvyswTpXs1PV1Xi+xfrpU9962M=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1A2421F973;
+	Wed, 15 May 2024 15:32:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9C6F01F972;
+	Wed, 15 May 2024 15:32:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: [PATCH] t0017: clarify dubious test set-up
+Date: Wed, 15 May 2024 12:32:42 -0700
+Message-ID: <xmqqcypmx44l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Bo Anderson <mail@boanderson.me>,
-    Jeff King <peff@peff.net>,
-    "brian m. carlson" <sandals@crustytoothpaste.net>,
-    Junio C Hamano <gitster@pobox.com>,
-    Koji Nakamaru <koji.nakamaru@gree.net>,
-    Koji Nakamaru <koji.nakamaru@gree.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E692A3D4-12F1-11EF-9D45-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-From: Koji Nakamaru <koji.nakamaru@gree.net>
+1ff750b1 (tests: make GIT_TEST_GETTEXT_POISON a boolean, 2019-06-21)
+added this test, in which "test-tool -C" is fed a name of a
+directory that does not exist, and expects that it dies because of a
+failure to read the configuration file(s), because the configuration
+setting is screwed up to contain mutual inclusion loop, before it
+notices that the directory to chdir into does not exist and dies.
 
-git passes a credential that has been used successfully to the helpers
-to record. If a credential is already stored,
-"git-credential-osxkeychain store" just records the credential returned
-by "git-credential-osxkeychain get", and unnecessary (sometimes
-problematic) SecItemAdd() and/or SecItemUpdate() are performed.
+It is of dubious value to etch the current order of events, i.e.,
+the configuration needs to be read that early (for initializing
+trace2 subsystem) before we even notice the lack of the directory
+and have a chance to fail, into stone.  Indeed, if you completely
+compile out trace2 subsystem so that it does not even attempt to
+read the configuration that early, we would die with a different
+error message (i.e. "unable to chdir to 'cycle'") and this test will
+fail.
 
-We can skip such unnecessary operations by marking a credential returned
-by "git-credential-osxkeychain get". This marking can be done by
-utilizing the "state[]" feature:
+At least give a bogus argument to "test-tool -C" a name that is
+clearly bogus to make sure we can more easily see what is going on
+with plenty of comments.  
 
-- The "get" command sets the field "state[]=osxkeychain:seen=1".
+We may want to remove this test altogether, instead, though.
 
-- The "store" command skips its actual operation if the field
-  "state[]=osxkeychain:seen=1" exists.
-
-Introduce a new state "state[]=osxkeychain:seen=1".
-
-Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- .../osxkeychain/git-credential-osxkeychain.c          | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ t/t0017-env-helper.sh | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-index 0884db48d0a..6ce22a28ed7 100644
---- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-+++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-@@ -12,6 +12,7 @@ static CFStringRef username;
- static CFDataRef password;
- static CFDataRef password_expiry_utc;
- static CFDataRef oauth_refresh_token;
-+static int state_seen;
+diff --git a/t/t0017-env-helper.sh b/t/t0017-env-helper.sh
+index fc14ba091c..f3a16859cc 100755
+--- a/t/t0017-env-helper.sh
++++ b/t/t0017-env-helper.sh
+@@ -91,9 +91,16 @@ test_expect_success 'test-tool env-helper reads config thanks to trace2' '
+ 		git config -l 2>err &&
+ 	grep "exceeded maximum include depth" err &&
  
- static void clear_credential(void)
- {
-@@ -171,6 +172,9 @@ static OSStatus find_internet_password(void)
++	# This validates that the assumption that we attempt to
++	# read the configuration and fail very early in the start-up
++	# sequence (due to trace2 subsystem), even before we notice
++	# that the directory named with "test-tool -C" does not exist
++	# and die.  It is a dubious thing to test, though.
+ 	test_must_fail \
+ 		env HOME="$(pwd)/home" GIT_TEST_ENV_HELPER=true \
+-		test-tool -C cycle env-helper --type=bool --default=0 --exit-code GIT_TEST_ENV_HELPER 2>err &&
++		test-tool -C no-such-directory \
++		env-helper --type=bool --default=0 \
++		--exit-code GIT_TEST_ENV_HELPER 2>err &&
+ 	grep "exceeded maximum include depth" err
+ '
  
- 	CFRelease(item);
- 
-+	write_item("capability[]", "state", strlen("state"));
-+	write_item("state[]", "osxkeychain:seen=1", strlen("osxkeychain:seen=1"));
-+
- out:
- 	CFRelease(attrs);
- 
-@@ -284,6 +288,9 @@ static OSStatus add_internet_password(void)
- 	CFDictionaryRef attrs;
- 	OSStatus result;
- 
-+	if (state_seen)
-+		return errSecSuccess;
-+
- 	/* Only store complete credentials */
- 	if (!protocol || !host || !username || !password)
- 		return -1;
-@@ -395,6 +402,10 @@ static void read_credential(void)
- 			oauth_refresh_token = CFDataCreate(kCFAllocatorDefault,
- 							   (UInt8 *)v,
- 							   strlen(v));
-+		else if (!strcmp(buf, "state[]")) {
-+			if (!strcmp(v, "osxkeychain:seen=1"))
-+				state_seen = 1;
-+		}
- 		/*
- 		 * Ignore other lines; we don't know what they mean, but
- 		 * this future-proofs us when later versions of git do
 -- 
-gitgitgadget
+2.45.1-190-g19fe900cfc
+
