@@ -1,89 +1,81 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0598E381A4
-	for <git@vger.kernel.org>; Wed, 15 May 2024 06:35:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3EE33FB89
+	for <git@vger.kernel.org>; Wed, 15 May 2024 06:41:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715754960; cv=none; b=fkmgQm3MJ63lFmbigbKqqJDj4cqCMZ8wzoeJCr8FZiKklQ148FV6QovEsOXnS9pOU0MAe3u68wrEbmCDOzEtAm8FrJlbmmFiN4pT6r3bNDOCTPyyyDn2TbYDNbVaHXww+0cvoQDWRh1AUHtj2kXAh061t2KvYQ2nX3PIpA0SgHY=
+	t=1715755301; cv=none; b=Olt1lJyFoVJg9K7EPoa8sdNTR7vIjOM0xmWBtvgqna9RUpkMw/XLgtGLhbSc7LSyorTtnTkD93owDIp6RO3xJDcprukjPxS3Kge0SRYUK2Q4oqfuGZEwzHGs2pqJu+voDKAOXHA17o7ytCbEOazo2k7q51cOSj+RHcr4mjSNkwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715754960; c=relaxed/simple;
-	bh=CCvwPNPgbF9m8X97OMT6aWSwxW3rAA46ncwzpkv9J/o=;
+	s=arc-20240116; t=1715755301; c=relaxed/simple;
+	bh=2p5n6KGdwpbh203GjPRHnYINZSbfidUxY4Ww4hPQTTQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g5oMyS8bUyuGstuHSoIKO7350Aq/hkIFF7fR6AyVE3Xcyej2C6weuJDNKgcwe+scX5c9lMUy4onX3gHVa4ACdk5GquJk+YNXlUbp2Cw5MWzeLusXfCOC6fismRO6hOKZqEKDybesbk9BNB+gIyMmNFrRdfWN147YYpSl6S1UAr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U6NGBUtz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OT7u6e8I; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=dVvM7L67yp/VY/SDggOKrK7iCA8+GVHobC3mYjwB+ttOYl7QAGxf1W1IEtE/5NWYD6L//yY/ZrMN/thT7H/U51rLunlZB/xErpo/tiIJXatJnFOJl5hhZCABlI0UX7IH7OlDOnjyZavdf6ita48E0QupLpoEvCb/OuFc+0yeteY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TTCnKF7C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dJidnPmt; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U6NGBUtz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OT7u6e8I"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 087DB114018E;
-	Wed, 15 May 2024 02:35:58 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Wed, 15 May 2024 02:35:58 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TTCnKF7C";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dJidnPmt"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id BBF5C1380222;
+	Wed, 15 May 2024 02:41:38 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Wed, 15 May 2024 02:41:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715754958; x=1715841358; bh=CCvwPNPgbF
-	9m8X97OMT6aWSwxW3rAA46ncwzpkv9J/o=; b=U6NGBUtzFXBpSN2C8cXoWubpL5
-	E2H/ECK+EJYHN3TeijUaU7PHyqkg1662tdwOZ3CYVx6VvWbYszuwqz/jukQWYUlf
-	e+lZRjey0qj3DRj8Hi+LP8vVpUFY5M11IMT04131fjKIM7Z+4PMzjPMAy52wFIRM
-	9vuCq49IDt3gtQCvDSvmi8RcrUqGDkngC+IxsJL63uFRTlOlOej9uvzJc4ct5t5o
-	qBDOHBGCnAJMTQ3rT0zZxcC563ZFH5gQ0c4GBoIf2cxnZjkK9Ov32bgauEl+67dx
-	uYFROHOU9hOKC6DHxAqApK+qOR1zeRbdBiWyRByjlXkdE/ZClG8gxk7Rp8Xg==
+	:subject:to:to; s=fm3; t=1715755298; x=1715841698; bh=Y1CUYKqmuj
+	kDjMavU40Jy8r7ntYd6ZuYGCLGc7dgVs0=; b=TTCnKF7CJLtTcFYIuM7Cg5EzKD
+	rg4V1BGalXsQ4mPWOIUXpc1/zdulkK14cKll7NcvlWU69mR9oBHr4hFxgk+y6SnJ
+	bIPdcgkBsijLWmwPgUKVUaD9Nh3Tq47Dj67/9PGQnvZrQAig3mq5uXx4FftKBmQW
+	kgiezGdC3d+SUgJaLCl0P4Iy1bRFVfnNI4TQcKbW90vZvSVE8MgqT2KOqIAhX/FZ
+	q6zSwJeoBr8JGjNP/mxhPsILerr3lk6A3cSoIMPx7td4Nz1ZeBKTDAMP0NFi9Fyl
+	EXlRj2wxBFMsqM8/NGZbygdnfBhe0rxqP8GDFPyMxN1lUvz5QusGZ+BgnisQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715754958; x=1715841358; bh=CCvwPNPgbF9m8X97OMT6aWSwxW3r
-	AA46ncwzpkv9J/o=; b=OT7u6e8IVz9wbkPA+Jq2G8a48Gy7gLThgkKv4VgdLhIm
-	Fy0j+wb/iut8jkHVJvGtYaX4nNm0nil8c7Y+HFEoUOvy9G2OTU6wSGlrw88hiJwf
-	d0qzIrOzX08CX9fGXPudPMMtM/otaOZNrN+FKfAnSXxF21om6jxU2mXXacaiiiqm
-	gO+fc0QTQs9E8nIN+t8plFj5lyXJncucKXSQLa2D4kNxYlm3FBi9Qr8NOA8VWYs7
-	6jpTSRIkVV2d1EdMQ2nybfXV4o2usqrZ9yjtlUfvv//2jKX9L1J/riOBj3dEWEt0
-	708a+fj/DgpDUy5d87J7afr/P/EiNBW/W0h4zSfHiw==
-X-ME-Sender: <xms:zVdEZqTDYmqqXHUDxSAEzI9EOZ4oDHYW11f3CPqjXm4bL9y4NSbJ1A>
-    <xme:zVdEZvzA-OJ4bMH44pvcWjKOISuLvtdrkiKa0jthZ6yB6UuIEfzYbNGDP5K8fF1tS
-    i639qcPCx6ipR6Ejg>
-X-ME-Received: <xmr:zVdEZn3r_IhcV6cJVdqHoRRC1jl9aupNP6Sj-shQGCMPREdkpznmCn14O43ul6nb9hajLFXhVZ35eQ0RmCT8GvLe8CdMPyNfDrqd1mjyzuTZaNkG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdegjedguddtgecutefuodetggdotefrod
+	fm3; t=1715755298; x=1715841698; bh=Y1CUYKqmujkDjMavU40Jy8r7ntYd
+	6ZuYGCLGc7dgVs0=; b=dJidnPmtSzH83JashgrYQMszmAeocTh8jT+w1UxziCTq
+	Ef+lxQ+GWJ2ZBan6aclN308hSP2/cANSCy2b0+m3mLhxOFKr0bS6g7rqRfnQA8i6
+	SkQd7E41JL0QcoPy+L1y1Pe5FtY1QjqDxAFZyoV0jGhCx7BWvmIRfQHDhHAIRrVu
+	Ga4UBQ1afItU8WarLzWvPENLi/yQB3fYc/vQRY7hNASFyo1nEsSFSWyl1P7Kq0CY
+	fa3HqZVW+KLzzY+nbfiLXZZC8PiAqY1jkZVxnt2jKfUy2l+PmXEC+KN2uLo92jEV
+	u2o20ryT8xy6jlUtVHGDR0Bf6iF/APBPlXqqGbt5Pw==
+X-ME-Sender: <xms:IllEZiq4yVN8Bn13uZ71BNAlQX7KmD40RwRyw9pnJCKVvOFngjko9w>
+    <xme:IllEZgpCB2Oq54SsNrgqCtq_T3iejKTjmEE-kIeaXoD_2TLc6axK6qeRUqcSbDQUI
+    Pl7WdSC5J2GfLOR7Q>
+X-ME-Received: <xmr:IllEZnNyBDRz69N_BxeunyP-IG6JZngDjDAk6mQbIIAb7Ns-ZT3-cXpr6AJy-BQR6RF9nE9OYOPe4MTyM2D100JAMu0NhZWRkuNXDLtcW2ApP8z9>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdegjedguddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:zVdEZmD-YVGfTmOqR-DGHKVkUMCxQ_RcEg9OdSpbEWU0HxwI_CsNcg>
-    <xmx:zVdEZjhTB66X-ID7pgpgcEIvfn4GVXNljgtks6dKDGuai5GfmfqDRw>
-    <xmx:zVdEZipbaXb8zVrI_6O008DgdXl7QUUYNppBsNNF93nNPbZAgrYR8g>
-    <xmx:zVdEZmgeGfwNf9ieRqPKulPy-5ZivRReE5fbGsZYp1NXI9fueGAgHA>
-    <xmx:zVdEZjiCRHdKq5c5WOtUgqX76iOgPNX3GWz7g5Dh1rrxDwpzSLjlpH3N>
+    gvrhhnpeelgfeitdffkedvteffgeduuedvffdtffehteefleffvedvffehvdffgeelgeeg
+    ieenucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:IllEZh55n6VZqN2OJgqniKR02xLBwCW0fQLsESSmZKBFCHZx4Vl-BA>
+    <xmx:IllEZh5Ko7PigAnKbjyFgvXc8AJUV-KYYLTRjuy6JEZItLIJOEb84Q>
+    <xmx:IllEZhgfrAmBPiGChAroKbqoRmipG94YgXLE5HoE18v1XEQR8zJZqw>
+    <xmx:IllEZr5e9q4tAHUZAfwbnFLnoLIwta2CSqEP1emqFckm9e8IWgRSNA>
+    <xmx:IllEZk3HAZtE7EeEAZwoxEnMnOOGnaBXuuEia46P5EDVeqMDVqLhWYgG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 May 2024 02:35:56 -0400 (EDT)
+ 15 May 2024 02:41:37 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 3a4e49fa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 15 May 2024 06:35:32 +0000 (UTC)
-Date: Wed, 15 May 2024 08:35:52 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 979650c4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 15 May 2024 06:41:13 +0000 (UTC)
+Date: Wed, 15 May 2024 08:41:33 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH v3 07/10] refs: root refs can be symbolic refs
-Message-ID: <ZkRXyH0dX3At3vDm@tanuki>
-References: <cover.1714398019.git.ps@pks.im>
- <cover.1714637671.git.ps@pks.im>
- <92a71222e1067ca4ce9ecaaa555d78d0cce0d9d0.1714637671.git.ps@pks.im>
- <20240503181339.GH3631237@coredump.intra.peff.net>
- <ZkQ3EiL1OY10Y2JP@tanuki>
- <ZkQ8mDrBB2eGg8Ns@tanuki>
- <20240515062220.GC110841@coredump.intra.peff.net>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Kyle Lippincott <spectral@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v3 00/21] builtin/config: remove global state
+Message-ID: <cover.1715755055.git.ps@pks.im>
+References: <cover.1715339393.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,76 +83,219 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+Q6wlJ40QUZrfpmD"
+	protocol="application/pgp-signature"; boundary="O547eMZcW1vMKddp"
 Content-Disposition: inline
-In-Reply-To: <20240515062220.GC110841@coredump.intra.peff.net>
+In-Reply-To: <cover.1715339393.git.ps@pks.im>
 
 
---+Q6wlJ40QUZrfpmD
+--O547eMZcW1vMKddp
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 15, 2024 at 02:22:20AM -0400, Jeff King wrote:
-> On Wed, May 15, 2024 at 06:39:52AM +0200, Patrick Steinhardt wrote:
->=20
-> > On Wed, May 15, 2024 at 06:16:18AM +0200, Patrick Steinhardt wrote:
-> > > On Fri, May 03, 2024 at 02:13:39PM -0400, Jeff King wrote:
-> > > > On Thu, May 02, 2024 at 10:17:42AM +0200, Patrick Steinhardt wrote:
-> > [snip]
-> > > > And arguably is_pseudoref_syntax() should be taking into account the
-> > > > "_HEAD" restriction and special names anyway. It is a bit weird that
-> > > > even if we tighten up the refname checking to use is_pseudoref_synt=
-ax(),
-> > > > you'd still be able to "git update-ref FOO" but then not see it as a
-> > > > root ref!
-> > >=20
-> > > True, as well. I'm less comfortable with doing that change in this
-> > > series though as it does impose a major restriction that did not exist
-> > > previously. We probably want some escape hatches so that it would sti=
-ll
-> > > be possible to modify those refs when really required, for example to
-> > > delete such broken refs.
-> > >=20
-> > > I would thus like to defer this to a follow up patch series, if you
-> > > don't mind.
-> >=20
-> > Arguably, we don't need `is_pseudoref_syntax()` (which is being renamed
-> > to `is_root_ref_syntax()`) at all anymore after this series lands
-> > because it can be neatly rolled into `is_root_ref()`. The only caller,
-> > `is_current_worktree_ref()`, should really call `is_roof_ref()` and not
-> > `is_root_ref_syntax()`.
->=20
-> Yeah, and I'd expect that the more-strict check_refname_format() that I
-> proposed elsewhere would be in the same boat. The only reason I used the
-> "_syntax()" variant is that it was obviously wrong to do existence
-> checks there. Once those are gone, then naturally it should be able to
-> rely on is_root_ref() itself.
+Hi,
 
-This series hasn't been queued/merged yet, right? Do you plan to reroll
-it? I think that the changes in there are a good complementary addition
-to the clarifications in my patch series.
+this is the third version of my patch series that removes global state
+=66rom "builtin/config.c".
+
+There is only a single change compared to v2, namely another set of
+memory leak fixes for patch 9. I have double and triple checked now that
+this does address all the leaks, and all the CI leak jobs (well, all
+jobs in fact [1]) do pass now. Sorry for the noise and not doing this
+properly in v2!
+
+[1]: https://gitlab.com/gitlab-org/git/-/pipelines/1291267388
 
 Patrick
 
---+Q6wlJ40QUZrfpmD
+Patrick Steinhardt (21):
+  builtin/config: stop printing full usage on misuse
+  builtin/config: move legacy mode into its own function
+  builtin/config: move subcommand options into `cmd_config()`
+  builtin/config: move legacy options into `cmd_config()`
+  builtin/config: move actions into `cmd_config_actions()`
+  builtin/config: check for writeability after source is set up
+  config: make the config source const
+  builtin/config: refactor functions to have common exit paths
+  builtin/config: move location options into local variables
+  builtin/config: move display options into local variables
+  builtin/config: move type options into display options
+  builtin/config: move default value into display options
+  builtin/config: move `respect_includes_opt` into location options
+  builtin/config: convert `do_not_match` to a local variable
+  builtin/config: convert `value_pattern` to a local variable
+  builtin/config: convert `regexp` to a local variable
+  builtin/config: convert `key_regexp` to a local variable
+  builtin/config: convert `key` to a local variable
+  builtin/config: track "fixed value" option via flags only
+  builtin/config: convert flags to a local variable
+  builtin/config: pass data between callbacks via local variables
+
+ builtin/config.c  | 970 ++++++++++++++++++++++++++--------------------
+ config.c          |   4 +-
+ config.h          |   2 +-
+ t/t1300-config.sh |   9 +-
+ 4 files changed, 552 insertions(+), 433 deletions(-)
+
+Range-diff against v2:
+ 1:  0ba7628126 =3D  1:  32380a12fd builtin/config: stop printing full usag=
+e on misuse
+ 2:  663e1f74f8 =3D  2:  8b07b280a9 builtin/config: move legacy mode into i=
+ts own function
+ 3:  1239c151d0 =3D  3:  b1de0ff74d builtin/config: move subcommand options=
+ into `cmd_config()`
+ 4:  82964510c5 =3D  4:  1a0c6a8384 builtin/config: move legacy options int=
+o `cmd_config()`
+ 5:  0a6ecae2cc =3D  5:  4950ddcecd builtin/config: move actions into `cmd_=
+config_actions()`
+ 6:  7ab99a27c1 =3D  6:  6de9097fb2 builtin/config: check for writeability =
+after source is set up
+ 7:  1460d3a36c =3D  7:  24053f8f4f config: make the config source const
+ 8:  018ed0226b =3D  8:  9dc1d00f71 builtin/config: refactor functions to h=
+ave common exit paths
+ 9:  b5d43b6f85 !  9:  2ede4a204b builtin/config: move location options int=
+o local variables
+    @@ builtin/config.c: static const char *const builtin_config_edit_usage=
+[] =3D {
+     +struct config_location_options {
+     +	struct git_config_source source;
+     +	struct config_options options;
+    ++	char *file_to_free;
+     +	int use_global_config;
+     +	int use_system_config;
+     +	int use_local_config;
+    @@ builtin/config.c: static char *default_user_config(void)
+     -	    use_worktree_config +
+     -	    !!given_config_source.file + !!given_config_source.blob > 1) {
+     +	if (!opts->source.file)
+    -+		opts->source.file =3D xstrdup_or_null(getenv(CONFIG_ENVIRONMENT));
+    -+	else
+    -+		opts->source.file =3D xstrdup(opts->source.file);
+    ++		opts->source.file =3D opts->file_to_free =3D
+    ++			xstrdup_or_null(getenv(CONFIG_ENVIRONMENT));
+     +
+     +	if (opts->use_global_config + opts->use_system_config +
+     +	    opts->use_local_config + opts->use_worktree_config +
+    @@ builtin/config.c: static char *default_user_config(void)
+     -		given_config_source.file =3D git_global_config();
+     -		if (!given_config_source.file)
+     +	if (opts->use_global_config) {
+    -+		opts->source.file =3D git_global_config();
+    ++		opts->source.file =3D opts->file_to_free =3D git_global_config();
+     +		if (!opts->source.file)
+      			/*
+      			 * It is unknown if HOME/.gitconfig exists, so
+    @@ builtin/config.c: static void handle_config_location(const char *pre=
+fix)
+     -	} else if (use_worktree_config) {
+     +		opts->source.scope =3D CONFIG_SCOPE_GLOBAL;
+     +	} else if (opts->use_system_config) {
+    -+		opts->source.file =3D xstrdup_or_null(git_system_config());
+    ++		opts->source.file =3D opts->file_to_free =3D git_system_config();
+     +		opts->source.scope =3D CONFIG_SCOPE_SYSTEM;
+     +	} else if (opts->use_local_config) {
+    -+		opts->source.file =3D xstrdup_or_null(git_pathdup("config"));
+    ++		opts->source.file =3D opts->file_to_free =3D git_pathdup("config");
+     +		opts->source.scope =3D CONFIG_SCOPE_LOCAL;
+     +	} else if (opts->use_worktree_config) {
+      		struct worktree **worktrees =3D get_worktrees();
+      		if (the_repository->repository_format_worktree_config)
+     -			given_config_source.file =3D git_pathdup("config.worktree");
+    -+			opts->source.file =3D git_pathdup("config.worktree");
+    ++			opts->source.file =3D opts->file_to_free =3D
+    ++				git_pathdup("config.worktree");
+      		else if (worktrees[0] && worktrees[1])
+      			die(_("--worktree cannot be used with multiple "
+      			      "working trees unless the config\n"
+    @@ builtin/config.c: static void handle_config_location(const char *pre=
+fix)
+      		else
+     -			given_config_source.file =3D git_pathdup("config");
+     -		given_config_source.scope =3D CONFIG_SCOPE_LOCAL;
+    -+			opts->source.file =3D git_pathdup("config");
+    ++			opts->source.file =3D opts->file_to_free =3D
+    ++				git_pathdup("config");
+     +		opts->source.scope =3D CONFIG_SCOPE_LOCAL;
+      		free_worktrees(worktrees);
+     -	} else if (given_config_source.file) {
+    @@ builtin/config.c: static void handle_config_location(const char *pre=
+fix)
+     -		given_config_source.scope =3D CONFIG_SCOPE_COMMAND;
+     +	} else if (opts->source.file) {
+     +		if (!is_absolute_path(opts->source.file) && prefix)
+    -+			opts->source.file =3D
+    ++			opts->source.file =3D opts->file_to_free =3D
+     +				prefix_filename(prefix, opts->source.file);
+     +		opts->source.scope =3D CONFIG_SCOPE_COMMAND;
+     +	} else if (opts->source.blob) {
+    @@ builtin/config.c: static void handle_config_location(const char *pre=
+fix)
+     =20
+     +static void location_options_release(struct config_location_options *=
+opts)
+     +{
+    -+	free((char *) opts->source.file);
+    ++	free(opts->file_to_free);
+     +}
+     +
+      static void handle_nul(void) {
+10:  d66e14af30 ! 10:  4d157942e6 builtin/config: move display options into=
+ local variables
+    @@ builtin/config.c: static int get_urlmatch(const struct config_locati=
+on_options *
+      			      &matched->kvi);
+      		fwrite(buf.buf, 1, buf.len, stdout);
+     @@ builtin/config.c: static void location_options_release(struct confi=
+g_location_options *opts)
+    - 	free((char *) opts->source.file);
+    + 	free(opts->file_to_free);
+      }
+     =20
+     -static void handle_nul(void) {
+11:  63436c3416 =3D 11:  5579371ad1 builtin/config: move type options into =
+display options
+12:  106b8ac8a2 =3D 12:  05a072d5d1 builtin/config: move default value into=
+ display options
+13:  8a6b555b58 =3D 13:  15d45ef7d4 builtin/config: move `respect_includes_=
+opt` into location options
+14:  0dd22bf51a =3D 14:  a729286cc5 builtin/config: convert `do_not_match` =
+to a local variable
+15:  b656951f0c =3D 15:  821bc68212 builtin/config: convert `value_pattern`=
+ to a local variable
+16:  b56a07bda0 =3D 16:  bac242caf0 builtin/config: convert `regexp` to a l=
+ocal variable
+17:  323cb05120 =3D 17:  746bdf8733 builtin/config: convert `key_regexp` to=
+ a local variable
+18:  e972e63be8 =3D 18:  f1f390f499 builtin/config: convert `key` to a loca=
+l variable
+19:  d83c3d085e =3D 19:  e4dbb4707e builtin/config: track "fixed value" opt=
+ion via flags only
+20:  294bcd96a4 =3D 20:  abe33015b7 builtin/config: convert flags to a loca=
+l variable
+21:  0496b958e2 =3D 21:  a5cb075fcd builtin/config: pass data between callb=
+acks via local variables
+--=20
+2.45.GIT
+
+
+--O547eMZcW1vMKddp
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZEV8cACgkQVbJhu7ck
-PpTxSA/+NVbwbZbYnvWbTSNhkJgLCw3SLD1Fjs9g58aQcPXscDEgPcD6YFgIHBiC
-WWA2N+UcqMiNY/kNOlyxxe5VSTZPDuNW9enXNbNZB2AVg0ypFr3QyUCQ3tIjM9uB
-OYrbueNbzjlowpypoDwdetF5WtNcOYn5CHGruC5wRTxsUSsFch8O0OixpNNbJG2t
-JKEt/su/brpO44RN5HxcC1FA83G6RTx7bTi6mMn0HNv5U+Xk7rNdkexXdxhrROpZ
-zjbj1ZlM/63A2CsNBLhD0VudS59cZalCIKmcoX6/XRBlBIm+6bytlQqeo72f2b3N
-L7JQ6pxqJJ9w2j3Zoq1M+PSy69enD3z3wmZvwVK9FH9RZ+oiOK1yZyZJqWrfG4hw
-1JNydZIs7tsckQa2OJlP80KJEqHszMOizjk1Z+qa8RUr3sGIPt1mmZVCOMWQcE4E
-LZhUgi22iXZzp2G44bBurcPia4VyyeZ0n5tqTiE6OO3nbHWjsny/3tx8ZaqZUZzT
-zCapeTd8j9b2rRCA9h1b3tcFlQd9b3on/qHBBNyEtgMj6jEqBO9yQaIIChzHbdJ0
-PbkScbx3kdDJaZAdRRUZl3IF8d6EsVb+PcOAQPHRea4P1U2VBWmKdlDP/9DqY1Y/
-Ys5mowJ7DgnwDEKflzozWHvxu/Dp1VmP/P/OAuLgvaar8oabsEk=
-=Kz8L
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZEWRwACgkQVbJhu7ck
+PpRSHBAAhU2OY3oHB+UkxHXcjdlIxZ6Y7qKeR2iuTR2R4ErmO8TAI5LP/M4oedIG
+5g5nm/QKEOdItLqFVNHLhmB1FmqifbPbOMMlSSe3awwbJG06l1lBrgQvCxUTyXVr
+/BKrUhfmjBgXGJqKmIt4eQZlUYLScydIqVnxFPgS/V6BU8zTXcF+/6glNvgpHPoP
+WR6lh8aRLHDeccl5KL3QvM161bnulst8eKEkthXqRFiCs4dMJBqsFZBimXD6mP3t
+KrfSFZUxWv2k4JndvKBrHrRaqtvkdsfih4CMzjQeTMT/8HbAmgxmpHCDaIY1Tp99
+sGVLwpszQxlzU4MCNPImdPRVOGKxzryjrpkICEERvRmxHY6rdxg23bQhbP8BFSBS
+2tefJRHqzD414uSZFARnjX9TyO81EDodcLLdP/lKP/DhqQRsfs0bUr/S32oWmj8H
+CZVa6EI6qtkSezYX9b86fdWpXsuL9mYbsaWysW7Ycn4unMJfggm1PMW9Yjq4GgaB
+764DkRnuAug5HfAGljt0J8ftK+AmhR16qmwtwGUbLHbiJGpbo1XHicXPHmRlqQMp
+18D+rbYwBZ71Rom5Q4JajpZnMYK+C5ND7+ivXHy+cLW3XtQ71NCF3dEWcf4Gy0G4
+sdG21K/TLI3c8P+f3dCICUnMhG4Wm+0Q+tC66vfq2IlSth2id0M=
+=LN8A
 -----END PGP SIGNATURE-----
 
---+Q6wlJ40QUZrfpmD--
+--O547eMZcW1vMKddp--
