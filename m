@@ -1,77 +1,77 @@
 Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75F11369BE
-	for <git@vger.kernel.org>; Thu, 16 May 2024 08:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DA471739
+	for <git@vger.kernel.org>; Thu, 16 May 2024 08:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715846725; cv=none; b=XcOdv8Vu+zIQzYRxtxdlQc2V/BFZxA470ChYG9zGkIi2GIVlo3Y9MwV91GU/YiVDRx4epudanY/mtL6qyDjD62yItIOOZqBYf3bJhs/8vqOpusgQMz3cydtH2a1jUKbxN+xk6Pq7sH8wDuHCBrVzBZ5eyDcYuCYd4P6zEQDr9GY=
+	t=1715846728; cv=none; b=IQvMQ5O5NkOoWNEBUd20fn/dbuavJKdR8VqisTm9MbtIUE/W/Ubw614MRPPDsPdl/TAhlbQLXFLrMasNolq0KEX75Ey0W24bbyesmHRTSPViekKXX7spwgFYW8QVp3OaIwZnE9eI56uNoNvL0Rs3H4qUq2VSMmZVfPFPzNQAqpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715846725; c=relaxed/simple;
-	bh=of00KeCKh7fit4FFaqUli0Wg/xyngjgewbW7g2JqDK0=;
+	s=arc-20240116; t=1715846728; c=relaxed/simple;
+	bh=gHrD8PHPX2sGKJGC6lFYmlwsKp97qFOOnZQjWn33akc=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bTJdLseAU//hrNhLGrzl0Upx0sH/ApCRAfxACmfCtDl47YMYH8GRymvRLhagRJrAtGP/LgMtE4b9T2vTMf2/bxxk/DbY0jQlWxyHB6LQZcVoKQ1vFcSXLkzDSxDP/4f3GL1D2zmLvz1km5XgGZf6JP6JgcjEgdJHxyoEx/VR++0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=t9OTaFpf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MJ5Hp9P8; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=PwRtgRS2rQEnXeWlI0FfeoxE2uED+KZVSiWZg7V5/hqWJ9389xbwMarJzlf7vUvWG7mGrU9toVbNIxWbJucLK9yVhnl++LVlfEzkiYd9ntbn/d0CR/EOy8i0gNCJR5PoJqvxITacO80SX+JsI326lo7UEpb7fsrA2p3zHD63lQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dB1QaVWr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fD2mhAPG; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="t9OTaFpf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MJ5Hp9P8"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id CE9D61140065
-	for <git@vger.kernel.org>; Thu, 16 May 2024 04:05:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dB1QaVWr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fD2mhAPG"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id D0D2611400C8
+	for <git@vger.kernel.org>; Thu, 16 May 2024 04:05:26 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 16 May 2024 04:05:22 -0400
+  by compute6.internal (MEProxy); Thu, 16 May 2024 04:05:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715846722; x=1715933122; bh=h8Cb57n7dG
-	j7zYyVt/pKAMSSElzsL2Jhj1AjSpo5R7o=; b=t9OTaFpftHF0NtGM0PaHkeX7M2
-	Z+XkK/pNxhi+DYL1kcmVbI6DSexDRT4vcUZ1xHk65LcIl/U/0oaxOjKiNO4rBH1K
-	sejV0CF3lW5CbRFlQCG/Oi0oH//U/nnl2UcxoGeRmlvPqtHPFJrW5hTUoa57hpRt
-	RTigC19Cb/ThYbBBuwdcKGQ4ZBAMbQfeGL6LaAozhmxiC2nUUIfhpGLrNvVnLlvp
-	02n6yCdAg/P9YG8twAvcZZLef4TT2Tk2A5mBT1ZQb4XegnkoJL7F2K54Tsx71vNT
-	JqHoCLGzhjVXG8Q9NNAPQ/Y/MAvEaDezsoMHxP2KKT2ACztNgDrbs5ou5qbw==
+	:subject:to:to; s=fm3; t=1715846726; x=1715933126; bh=s6kcr1QYKI
+	Pzm7Vnx+gA/IjC5xrEfZwZdAlB0yDOJjg=; b=dB1QaVWrMawY/PctUCTEruXVTq
+	u02CNpYyzdKeoYYd7IUw1SUgoSTYu6y05Urlxh3LECpVAr2N4o4IQoisXaxAP4sZ
+	ekRR2PNirv+IcX+NVO/eKEo9OupTgRTsDXm94D3uwlhgEBIUHyghDv5HwL5GarJj
+	SRm9cM7rXTwFrchhfSJL3/NUc3/0UPtZa/4ilthTAXH6+cFQfmlvf8YYtdBmndUs
+	sOgpn3Z3iV50WW4S9mguEZYlxGu0NdbBFGBxzCZ7IfuKQYCLZb7vAuDcsZHpZzzh
+	7Mir2Op9EhABSM/nyQHgpkerMRG6fk0PhUbaWF86c1+MJIMd5GAKOrNG5Q3Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715846722; x=1715933122; bh=h8Cb57n7dGj7zYyVt/pKAMSSElzs
-	L2Jhj1AjSpo5R7o=; b=MJ5Hp9P8sTIejFBkvMfUH74/7fDfycWyuhhgoL6TjCgZ
-	8B44/NjDxkbghH5h7DOzv+BYiYi8Yi1hA2bWRGmcwmiAD5UfW3c4wBR82AU6s/LJ
-	/PawhveS2gBSXUqdvK1DBLzuTDsfS421P6656lorER6DNfZgWKTRPzAWGtBrCEOc
-	VXcrHZ62to7G0Hjo9ZGLQNoNS0A0JhFxZdZUpiGxX1UnBORI4cYMhFftpQEOw6BV
-	pNWCjbNz3c0e7DE79Qcrf6XbTzrXHgqwT3pbav4fcV/sxAhoj0tZdIIPK/JU/Pp2
-	ZIToThReGM1b3BCkkoXvecriKgloVvsYAwY8PfCMsw==
-X-ME-Sender: <xms:Qr5FZtdYD9XuELMaQV6Zbz3wegjfNGpy5BKgvI4MPAokpAAfCoEChg>
-    <xme:Qr5FZrMZhCE06wu24ZuoYR9CJmhb2Czp7BscyFSvf4eb0yv2kAfEBQbiyYyq06RNh
-    BhOV8Gv-DZ5tD06Hg>
-X-ME-Received: <xmr:Qr5FZmgbutamKQ514-O_Ufm4YWayUEc1pvX1b1v7HrAN5jzeqEuQSzVP0MM0-oc1mZM-I1jdNOx68hfbAcoGiA67DlZdHEoHqNIVAJOffU9phIA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehtddgtdegucetufdoteggodetrfdotf
+	fm3; t=1715846726; x=1715933126; bh=s6kcr1QYKIPzm7Vnx+gA/IjC5xrE
+	fZwZdAlB0yDOJjg=; b=fD2mhAPGHJO5TtfDCn+7kJPk7qdtDvTw4S6nrrsjzy7C
+	aWpDIyvqSIzGP68k87QxxLlm/pnw1D4zN2D3lcM7u63e1NtboVO38CXkx4Ik0ZqQ
+	MIXvKcayEKUxwFh1lhX/bZ6/4Cif1FFUg6B/ZdhqU3iwt6Mr35ifdcVzJbGSIjwZ
+	aiUQDGbV2LLtII1n0CRk6NXqa33jpJcQZVPJVC4QzBrq2qfQ/eLI5wk+9+v3ikAW
+	VZruHtwJUlLjTcFMi5+3o8SPjCSKk40NWJ59t9guHWyNbmukOtUa3UemF8BvgiF9
+	+l8gVWUr7thT8fCGHZHem0Kp5rXeg+xo/0naQ6w9uQ==
+X-ME-Sender: <xms:Rr5FZk4V3qYFjW4MvoTyHh0M2B-YlHqcW94YHf8G436H69sCk5YMDg>
+    <xme:Rr5FZl5CkSN3ZGtk6B4y_RC1NtqXPo74N6xpsk0yUd-lpm7bPTinjLDdfCsk0mK6w
+    nHiasHMvQ3jsBu_Tg>
+X-ME-Received: <xmr:Rr5FZjcOglBtT0U2k4qOE_owBx8gYmVsHB2F8PU1pl7HmJbaNZeSmTgqA33a_zM8w9wGduzReBqrO2Mla1tOgxI4Mz-wFXpy5Ubo70ICZ4mgvXM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehtddgtdehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:Qr5FZm-HoFr900JA8aBi7LwlnjOOKMaZjey0dS7bO76tDJPx6D9iUQ>
-    <xmx:Qr5FZpsonyjyro41m08LYinv8NAxy-cictwOBOElJjXtN5abWO0yZg>
-    <xmx:Qr5FZlEoCqS9kp0N6HSWJVNVuSYNquZqFJ9kb654As50xmQik9JKWg>
-    <xmx:Qr5FZgOC1dM2dATJ0eOKvmTUOezk87dJEg6P3KwKOAlw-rj7UA-bZw>
-    <xmx:Qr5FZqVxMQI7HtYnnDHnqEtWl4De1hjL9AMwnSY9KXXNj32-PGhS1lMI>
+X-ME-Proxy: <xmx:Rr5FZpLjvDFaBTnLeEimtlLX6K2-GnEl_ORRHr_4LlcwaYqmPBd4ig>
+    <xmx:Rr5FZoLVvYTpJWYI4ldssuJyfdxcp27WWkxcj9CLfxiJM0QOjQbeYA>
+    <xmx:Rr5FZqxQZSNNWLskxD8a3-iRm_qO7acD1Zgr619nPVa-4oSTrjXesA>
+    <xmx:Rr5FZsJyyxFzrelmI6lRuY7noHZWdJjSzvTC-gMau8sU4NfxWVEDrg>
+    <xmx:Rr5FZigPImiLJHKov0ojCUxEchcSo_1aTKn18A9UjTwXnT-bdDv5I4Dz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 16 May 2024 04:05:22 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 16 May 2024 04:05:26 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ef70aece (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id ea7d4bee (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 16 May 2024 08:04:57 +0000 (UTC)
-Date: Thu, 16 May 2024 10:05:19 +0200
+	Thu, 16 May 2024 08:05:01 +0000 (UTC)
+Date: Thu, 16 May 2024 10:05:24 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 14/16] refs/files: use correct repository
-Message-ID: <7ce6b7454df672610da001186949e54672895ae0.1715836916.git.ps@pks.im>
+Subject: [PATCH 15/16] refs/files: remove references to `the_hash_algo`
+Message-ID: <ab0c7937392c3067d56ff43079c91de70d4a19e0.1715836916.git.ps@pks.im>
 References: <cover.1715836916.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,151 +80,73 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="k8hXz3BxzTmEOTZ1"
+	protocol="application/pgp-signature"; boundary="d3xWQL7pVJy0QYQy"
 Content-Disposition: inline
 In-Reply-To: <cover.1715836916.git.ps@pks.im>
 
 
---k8hXz3BxzTmEOTZ1
+--d3xWQL7pVJy0QYQy
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-There are several places in the "files" backend where we use
-`the_repository` instead of the repository associated with the ref store
-itself. Adapt those to use the correct repository.
+Remove references to `the_hash_algo` in favor of the hash algo specified
+by the repository associated with the files ref store.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/files-backend.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ refs/files-backend.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 368df075c1..5294282770 100644
+index 5294282770..5684f1bfc6 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1237,7 +1237,8 @@ static void prune_refs(struct files_ref_store *refs, =
-struct ref_to_prune **refs_
- /*
-  * Return true if the specified reference should be packed.
-  */
--static int should_pack_ref(const char *refname,
-+static int should_pack_ref(struct files_ref_store *refs,
-+			   const char *refname,
- 			   const struct object_id *oid, unsigned int ref_flags,
- 			   struct pack_refs_opts *opts)
- {
-@@ -1253,7 +1254,7 @@ static int should_pack_ref(const char *refname,
- 		return 0;
-=20
- 	/* Do not pack broken refs: */
--	if (!ref_resolves_to_object(refname, the_repository, oid, ref_flags))
-+	if (!ref_resolves_to_object(refname, refs->base.repo, oid, ref_flags))
- 		return 0;
-=20
- 	if (ref_excluded(opts->exclusions, refname))
-@@ -1285,14 +1286,14 @@ static int files_pack_refs(struct ref_store *ref_st=
-ore,
- 	packed_refs_lock(refs->packed_ref_store, LOCK_DIE_ON_ERROR, &err);
-=20
- 	iter =3D cache_ref_iterator_begin(get_loose_ref_cache(refs, 0), NULL,
--					the_repository, 0);
-+					refs->base.repo, 0);
- 	while ((ok =3D ref_iterator_advance(iter)) =3D=3D ITER_OK) {
- 		/*
- 		 * If the loose reference can be packed, add an entry
- 		 * in the packed ref cache. If the reference should be
- 		 * pruned, also add it to refs_to_prune.
- 		 */
--		if (!should_pack_ref(iter->refname, iter->oid, iter->flags, opts))
-+		if (!should_pack_ref(refs, iter->refname, iter->oid, iter->flags, opts))
- 			continue;
-=20
- 		/*
-@@ -1389,7 +1390,8 @@ static int rename_tmp_log(struct files_ref_store *ref=
-s, const char *newrefname)
- 	return ret;
- }
-=20
--static int write_ref_to_lockfile(struct ref_lock *lock,
-+static int write_ref_to_lockfile(struct files_ref_store *refs,
-+				 struct ref_lock *lock,
- 				 const struct object_id *oid,
- 				 int skip_oid_verification, struct strbuf *err);
- static int commit_ref_update(struct files_ref_store *refs,
-@@ -1537,7 +1539,7 @@ static int files_copy_or_rename_ref(struct ref_store =
-*ref_store,
+@@ -1822,7 +1822,7 @@ static int write_ref_to_lockfile(struct files_ref_sto=
+re *refs,
+ 		}
  	}
- 	oidcpy(&lock->old_oid, &orig_oid);
-=20
--	if (write_ref_to_lockfile(lock, &orig_oid, 0, &err) ||
-+	if (write_ref_to_lockfile(refs, lock, &orig_oid, 0, &err) ||
- 	    commit_ref_update(refs, lock, &orig_oid, logmsg, &err)) {
- 		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
- 		strbuf_release(&err);
-@@ -1557,7 +1559,7 @@ static int files_copy_or_rename_ref(struct ref_store =
-*ref_store,
-=20
- 	flag =3D log_all_ref_updates;
- 	log_all_ref_updates =3D LOG_REFS_NONE;
--	if (write_ref_to_lockfile(lock, &orig_oid, 0, &err) ||
-+	if (write_ref_to_lockfile(refs, lock, &orig_oid, 0, &err) ||
- 	    commit_ref_update(refs, lock, &orig_oid, NULL, &err)) {
- 		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
- 		strbuf_release(&err);
-@@ -1791,7 +1793,8 @@ static int files_log_ref_write(struct files_ref_store=
- *refs,
-  * Write oid into the open lockfile, then close the lockfile. On
-  * errors, rollback the lockfile, fill in *err and return -1.
-  */
--static int write_ref_to_lockfile(struct ref_lock *lock,
-+static int write_ref_to_lockfile(struct files_ref_store *refs,
-+				 struct ref_lock *lock,
- 				 const struct object_id *oid,
- 				 int skip_oid_verification, struct strbuf *err)
- {
-@@ -1800,7 +1803,7 @@ static int write_ref_to_lockfile(struct ref_lock *loc=
-k,
- 	int fd;
-=20
- 	if (!skip_oid_verification) {
--		o =3D parse_object(the_repository, oid);
-+		o =3D parse_object(refs->base.repo, oid);
- 		if (!o) {
- 			strbuf_addf(
- 				err,
-@@ -2571,7 +2574,7 @@ static int lock_ref_for_update(struct files_ref_store=
- *refs,
- 			 * value, so we don't need to write it.
- 			 */
- 		} else if (write_ref_to_lockfile(
--				   lock, &update->new_oid,
-+				   refs, lock, &update->new_oid,
- 				   update->flags & REF_SKIP_OID_VERIFICATION,
- 				   err)) {
- 			char *write_err =3D strbuf_detach(err, NULL);
+ 	fd =3D get_lock_file_fd(&lock->lk);
+-	if (write_in_full(fd, oid_to_hex(oid), the_hash_algo->hexsz) < 0 ||
++	if (write_in_full(fd, oid_to_hex(oid), refs->base.repo->hash_algo->hexsz)=
+ < 0 ||
+ 	    write_in_full(fd, &term, 1) < 0 ||
+ 	    fsync_component(FSYNC_COMPONENT_REFERENCE, get_lock_file_fd(&lock->lk=
+)) < 0 ||
+ 	    close_ref_gently(lock) < 0) {
+@@ -3223,7 +3223,7 @@ static int files_reflog_expire(struct ref_store *ref_=
+store,
+ 			rollback_lock_file(&reflog_lock);
+ 		} else if (update &&
+ 			   (write_in_full(get_lock_file_fd(&lock->lk),
+-				oid_to_hex(&cb.last_kept_oid), the_hash_algo->hexsz) < 0 ||
++				oid_to_hex(&cb.last_kept_oid), refs->base.repo->hash_algo->hexsz) < 0 =
+||
+ 			    write_str_in_full(get_lock_file_fd(&lock->lk), "\n") < 0 ||
+ 			    close_ref_gently(lock) < 0)) {
+ 			status |=3D error("couldn't write %s",
 --=20
 2.45.1.190.g19fe900cfc.dirty
 
 
---k8hXz3BxzTmEOTZ1
+--d3xWQL7pVJy0QYQy
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZFvj4ACgkQVbJhu7ck
-PpSK+xAAq9b7BIKFsNdbKusDMb4N2Bc7iX9yYhBWsfp84KMAnPJwBIB5KlXj8ofT
-vgC08PzlM3kwqibPP71BM5KTAn9m08+I22ILRB8AJb4IOhh7L/e989+cUiDEkfTh
-bzbBndIVnRBI1L7aqcpDIes8Gve9tEyOMyJlLyCjZ9XNQ4xgOu05auob56m7T1z9
-9NfDnwZsIiko6vVhnDnrY9ufdjPkRB1HwnQJpX/wVVSpBY0SRfo3EZOtOJZibhv1
-9Ah1OQgEE3pW19qMWSzD1j3wKZ/fN+GTKbWNwrrM2Cmrv3oIYbs9PFkutAj2ZNGH
-9CbQWQXHen3vE21YknAbPUAriQ1NO5d2oLFIf8r2VIaLSf2f9ojxIlYV5wNOF4aB
-JY1c5+UUgycGq4H3M8SnIWz0N8r5C8JfMQG0gPGF8s0tVWzT3Qj3yl1lJvt4cGxg
-PN819kgu5iAzufSWYiuhup3XNZA9G6iGir8Iay3WaIvCViGAdMujpJsTxlaUr2vi
-ZJ8VNqu0jqYOfnsnZMng2e1WP2axuJklEPK8PiO4HqkDMJo4shepn7ywQMvgVCAb
-wGdc8hEIrpvFkRSiMVvnIy+uvnhdGky5hjoHXNhtIczC1vFqaiztZgtqwk1zmr3O
-qTPXEGM0zj61+O0RHoDorsGnmVPSUv5alQ3gSUIjCSse44nljUg=
-=+qZl
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZFvkMACgkQVbJhu7ck
+PpTVRhAAnRSpqyfTYKQ7J9meRsdhYJejs8EfStHF74cxQLwpMvpZnnqJDJFYGzES
+elP5oHozeDdQRjQEX3bqSV+TGkRvCFU0pX6QX6ZRRr/90g0BX10KKEPD/OocPx58
+gMANze/6Wy9ILBIbnnO/xKi7Hxh7qK3dTfy6dnMJKDFrT/fCYDbnAepBLy5UtvO1
+NH1Vlzo8QrHVAqxPNrkzFzK3WxwZJUurv4sBHvDlGBChi0RR1w783b7TDv7KVrmz
+KFrE469sjBFyRWeqws01/Y2ipThzlSHrDswZ9baL0juKCl6f1bxykDTkS2a6ZFHj
+1FwJBKFqvZdXPiYDZnvIlwnuj55HhR0fu1M6Uca64XxsVHsA3uDp8zfOnHqAaG3Y
+53wMzCEfuQYsKzNoBIP+MeuWd4MpxxVnKpbtzUXjZ6y/X4GaYheNZx4rL2Kt7rL7
+gqiai+bRiLblNEe1vGP7zJOY9NkkaVFwWldz7MWGAvdSY76CN1wV76e94mhSABRT
+EjrWRG64YiU0YdP03rJvcLRWPl4PDIKsmKubF+1UOOF2YdqjUBzgrLVwRDS8Q6uv
+kQYBypaticzEWoWNhHKuSM8jro6Y5l6ylOVwf36ghd9VZFQggcKAEJhioStXRj2d
+ItTFauoZieM9Tdlx8dKosDiEKFpU8O0RfBcS09pHR7XcdS+WLwk=
+=m28N
 -----END PGP SIGNATURE-----
 
---k8hXz3BxzTmEOTZ1--
+--d3xWQL7pVJy0QYQy--
