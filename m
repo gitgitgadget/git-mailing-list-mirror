@@ -1,121 +1,107 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D031459F3
-	for <git@vger.kernel.org>; Thu, 16 May 2024 15:15:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF46514884E
+	for <git@vger.kernel.org>; Thu, 16 May 2024 15:32:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715872532; cv=none; b=lgHmicFNURvGsDbWEJk71IarqGLPaVZP7EQ7BWJ91qTpJfTJdknRDHpUdrTn+9Lpv36KCDshRDOe8KiKnzu8TtH1AdksxUybgnZUNoP8IvkCu6EKg0qai2bzGSh7bbytI6tJ04/LHu/vZJ9PE3sXapkIfkNHCYI/FTYGig2o+zY=
+	t=1715873526; cv=none; b=OinPGblVk4PFUnNtXI/VJPYqmMHOVeypdYuCMMRYTWmTlOM2DqXXbt7lHsMTgHmut65tcjZ6H7IHwWSR/DEaViB+Fmjg1YJCDNmA+E0Lv1XnQRvLuW5FxQcB/V5hj79X//DO6C3n+L3TnMPsgP/7WUhj0OT+KAkpeP3WkzK+G6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715872532; c=relaxed/simple;
-	bh=hu8b1Oc2/sJRauENhJ3uYrITzq0Djx15dfkY8B+D/fw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oSBbsCDvD992whpXamYoCc1XPaYLyUpJ2gRd3g+g16Ab9sN07eJtlfx4SYlcUW26O01TbIhov2Hl8stuis4LomwSEREMqT+zQzRkpJj18kjBh29Ur6FUNPhW/6Z6wU5ujR3qPAyYktq2nkY3Cgl+xCnxMjJQzF4oHrIDQwg1gYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=K2R2/znX; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1715873526; c=relaxed/simple;
+	bh=K/vx6Nhb771a6Dwh21CbH2wjr79eus6WVDraIXgLWEw=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oYgDTl48vc9lrgjqdWY1tFkKXXBqKHHfllryRhzVKICest12AsSo0Q6tkfBGG2CzpSK4Wf6tN+pDuVaVhrl6qnuqRE4kkxkiDHGLuIAP4Qp9xb6uSIKUD5Z3LpEFuIkbRAUhcQpp5dgH5cZjv9wnE+FBobdUO68gxyMja+5Oc7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qJDnJLQf; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="K2R2/znX"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qJDnJLQf"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 931AC2682E;
+	Thu, 16 May 2024 11:32:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=K/vx6Nhb771a6Dwh21CbH2wjr79eus6WVDraIX
+	gLWEw=; b=qJDnJLQfAQSvhrbUnP/lAJNvL0s0ArAeWZw7Voft6kECrvUr0Q/heN
+	gphFjH6T34RkyROn6GR3MHq813WkIOkQ1NrHcxemptwxk3gBKbwTYjcoD804i5MQ
+	cFRtrHPCUcZJRuIKwiMIf+Rl7khnnk1EJfBlqagHgtMtry0ArrbiI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8C2192682D;
+	Thu, 16 May 2024 11:32:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id C08885DA90;
-	Thu, 16 May 2024 15:15:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1715872528;
-	bh=hu8b1Oc2/sJRauENhJ3uYrITzq0Djx15dfkY8B+D/fw=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=K2R2/znXl8munk+Z6fOkL+XfXlq9N9Tvf5AmJFENGB6VWk5mPTLL4UuNpnLL3/yCO
-	 6gdimjjnmQQZlE3Om32TLjTNDnpt6SFlPCXCl6pyAJtXtAaVr0e4z+OI/uesZma1Y5
-	 i0oT4HLEZXj51pzNw+r6axbW6GmKodS1Z9WRRUU5p0ejChQgewNA8yLKXNgm7NrKwN
-	 XGKwy0AkWYym4dVhrgXaz7BquNg6pArUivmTwM/7s1P6crSqo8XLYlR7TyN5AT39iT
-	 itP/DInZZDORd8UScn7/qSDtLWm87U7sgx3i/zzfC9UCJfZXqF2uN5D+n0s6xYMVDF
-	 myQ6g8NqFgcuhkC65piKl/NMc6K0xP/7WmZosDk7XEAu0G/mIXHx7qg5yTQFytMqWk
-	 omkDQhjHiDAcgVAObi8JZzTocZyNLWO4Hcj4ELY9S7tmltUJoyHRWFB+OyAxG/7Bzr
-	 TUBEhxO170NEMAPWgUaUj4XJvX4cuLcprQStqLEdtaQFZXNgrlJ
-Date: Thu, 16 May 2024 15:15:27 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Kevin Gale <s7g2vp2@yahoo.co.uk>
-Cc: git@vger.kernel.org
-Subject: Re: Embedding Git Command Line
-Message-ID: <ZkYjD7VGC4zLhRDF@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Kevin Gale <s7g2vp2@yahoo.co.uk>, git@vger.kernel.org
-References: <36B52407-B52F-4394-8DF2-F2DF3D3F0504.ref@yahoo.co.uk>
- <36B52407-B52F-4394-8DF2-F2DF3D3F0504@yahoo.co.uk>
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 13E332682A;
+	Thu, 16 May 2024 11:31:58 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: Re: [PATCH v4 1/5] setup: add an escape hatch for "no more default
+ hash algorithm" change
+In-Reply-To: <xmqqikzg48hm.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	14 May 2024 10:19:01 -0700")
+References: <cover.1715582857.git.ps@pks.im>
+	<20240514011437.3779151-1-gitster@pobox.com>
+	<20240514011437.3779151-2-gitster@pobox.com>
+	<xmqqikzg48hm.fsf@gitster.g>
+Date: Thu, 16 May 2024 08:31:56 -0700
+Message-ID: <xmqqcyplu61f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VutRha6zu1SZejk1"
-Content-Disposition: inline
-In-Reply-To: <36B52407-B52F-4394-8DF2-F2DF3D3F0504@yahoo.co.uk>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 6EC2E898-1399-11EF-AE8A-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---VutRha6zu1SZejk1
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Having done all of this, I actually am very tempted to add the
+> "always default to SHA-1" back as a fallback position to the
+> set_default_hash_algo() function.  We know we are going to get the
+> right hash algorithm when working in the repository, so the only
+> case the default matters in practice is when working outside the
+> repository.
 
-On 2024-05-16 at 12:04:35, Kevin Gale wrote:
-> Hi.
+Not really.  It does not add anything to help either real world or
+our tests.  The current test setting is already bad enough in that,
+unlike in the real world settings, even tests with the SHA-1
+algorithm has GIT_DEFAULT_HASH environment variable set, which means
+that such a "if the environment variable is not set, further fall
+back to SHA-1" does not do anything.
 
-Hey,
+Unless we change t/test-lib.sh not to set GIT_DEFAULT_HASH tweaking
+the fallback default in repository.c:set_default_hash_algo() based
+on GIT_DEFAULT_HASH would not be a workable solution.
 
-> What I would like to know is if integrating with the command line tools w=
-ould still fall foul of the GPLv2 license or if there is an exception like =
-there is for libgit2.
+I wanted to arrange things so that the end-user exectuion by default
+has an extra fallback (perhaps to SHA-1, or GIT_DEFAULT_HASH) to
+avoid disrupting their real-world use, which we can disable in our
+tests to expose code paths that still rely on the "default" set when
+in-core repository struct gets initialized, but that is not possible
+without changing the way t/test-lib.sh uses GIT_DEFAULT_HASH, it
+seems.  So the arrangement unfortunately has to be "we have no
+default, and bugs will break the real-world uses as well as tests
+the same way.  The real-world users have to export an extra
+'workaround' environment variable to force "default" to SHA-1 (or
+GIT_DEFAULT_HASH) --- which may be "workable" but very far from being
+intuitive.  They can set GIT_DEFAULT_HASH but to make it effective
+everywhere, including the "default" given by set_default_hash_algo(),
+they need to set this other "workaround" thing.
 
-First of all, I'm not a lawyer and this is not legal advice.  However,
-having said that, I think the common understanding is that it's fine to
-call out to a GPL binary from your proprietary program without violating
-the license, unless the output is a derivative work.  Usually that's not
-the case; it would only usually be so if the output included part of the
-GPL software's source code, such as a parser generator.  The FSF has a
-FAQ[0] that covers this to some extent, which calls the approach of
-calling out to the program a form of "communicat[ing] at arms length".
+> We already have such a custom code for "git diff --no-index", and we
+> are adding a few more back in here, but they can disappear if we had
+> code to set the fallback default when GIT_DEFAULT_HASH does not
+> exist here.
 
-As a major copyright holder in Git, I don't see a problem from my
-perspective with a proprietary piece of software calling out to Git as a
-separate binary.  Git is designed to provide scripting interfaces so
-it's easy to use from a variety of software.  You would of course need
-to provide the source to the version of Git you distribute and the
-copyright and license information as well, in compliance with the
-license.  Note also that if you are distributing Git, you cannot link it
-against GPL-incompatible software (e.g., OpenSSL) unless that
-GPL-incompatible software is distributed independently as part of the
-operating system.
-
-I also want to be clear that this is my understanding as a layperson and
-my interpretation as a contributor to and copyright holder in Git, but
-it isn't binding on anyone else here.  If you want a legal opinion, you
-need to consult a lawyer licensed in your jurisdiction who has
-experience in FLOSS copyright law.  Nobody here can provide you such
-an opinion.
-
-[0] https://www.gnu.org/licenses/gpl-faq.html#GPLInProprietarySystem
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---VutRha6zu1SZejk1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZkYjDgAKCRB8DEliiIei
-geXmAP9wHqFaLEkb1L7pISuWru9m5iAtZXN73Pi+/W8+O65JngD+N159+jmySOYM
-dI598nF+bAxmL/7wfG7+txE5wUBCnwg=
-=hNOu
------END PGP SIGNATURE-----
-
---VutRha6zu1SZejk1--
+While I think a manual setting of the_hash_algo in "diff --no-index"
+code path should not hardcode "SHA-1" but instead use the hash
+specified by the GIT_DEFAULT_HASH environment to be consistent with
+the use of "git" by the same parent process that had that variable
+exported to the environment, that should not be done globally in
+repository.c:set_default_hash_algo().
