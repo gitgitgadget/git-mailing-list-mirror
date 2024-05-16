@@ -1,184 +1,186 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2824120A
-	for <git@vger.kernel.org>; Thu, 16 May 2024 08:07:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E0A14293
+	for <git@vger.kernel.org>; Thu, 16 May 2024 09:54:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715846828; cv=none; b=tG8rsGbrN1UdiWO38r51UYop9tBAa2ZdeQ+vx2MI8lear+ox4bxm8nY3FGCPUbQ9r81OA4SU+RPImku6qqYQIEou2+josHzsnA3OJ6mNhFWb6jZGiivZQ64l6HUQGUUmZpc3XaREUvIBkG4c4h6E/tiTDlLV6xJ5IITwMdzryMo=
+	t=1715853293; cv=none; b=lzNJnvKPKdSqBgRvNXm6NYHc+tFb9mb3ftSwjJxBGfCxom98Tb95dd2poB9fY1k038nAB6RstIKtPd8AUp+oToA9W4c+Xq713SZTBizOEnWcd0Hr6MtzKRP4iWiWmbjL59vJ4u0rHmOuQOiHUjBudBoQ6dELw9dt91TEcWVEmtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715846828; c=relaxed/simple;
-	bh=NyQwoAGbHpxOB2ZgrA/LQiUOkKiHzHpDfUwpw1HP1JI=;
+	s=arc-20240116; t=1715853293; c=relaxed/simple;
+	bh=Jtza3S8f+DByHwi0gDzea/L23dl8mi4e5BfHlAQBwRk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IKECrej+Oot1rtnJzwgtkB7h85j+yo4qiOjCUl0EIFKKEObm2MK3v+8JOTlIaxHfPiC5PNj9WJCbKMvJVEQ31lqCgvzFz7FpDNtxVAyufTeCo4UHV5siKlQ2TwQbFpxeA/0qDiaN5Gt9JwWrjtchwf1TOZUEWSSBOY4iPv4PBA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 29005 invoked by uid 109); 16 May 2024 08:07:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 May 2024 08:07:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11903 invoked by uid 111); 16 May 2024 08:07:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 May 2024 04:07:09 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 16 May 2024 04:07:04 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 09/23] pseudo-merge: implement support for selecting
- pseudo-merge commits
-Message-ID: <20240516080704.GA85197@coredump.intra.peff.net>
-References: <cover.1710972293.git.me@ttaylorr.com>
- <cover.1714422410.git.me@ttaylorr.com>
- <86a1e4b8b9be99563836d1539fbf2ed4c4a6920d.1714422410.git.me@ttaylorr.com>
- <20240513190340.GC2675586@coredump.intra.peff.net>
- <ZkK3KYkA6+zUxu9A@nand.local>
+	 Content-Type:Content-Disposition:In-Reply-To; b=rKnk600TtogvbnvSNojSpR4tWEe8Pzuz59z+xhbDX0EX/hj0fDnsa/6TMvdc80HW8Nb/4v/pU13ybwCC4dYR2FaA/K1QR1n/RG7AJj5/ED858IMJGxlDFnr3BytTya1ffyiZ6KmpV+bc6vfg7ugC/Igz+i2WHUVP/9ZRTeIPdcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lR6k5Jaz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FhJJDXsP; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lR6k5Jaz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FhJJDXsP"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3B6A611400CF;
+	Thu, 16 May 2024 05:54:50 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Thu, 16 May 2024 05:54:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1715853290; x=1715939690; bh=pvx6D9evXy
+	3ObJRWmw0CbXHA046WL44sFhdUk+9sq6A=; b=lR6k5JaztrTcCEzavZKMEvFLGe
+	5hdTAtgrHNlrmuGI24sJNCCNokyGGxYIDKpaU9o8htDAyCI5qGBbjtGz0nqKa0jg
+	IzjQMdDKrUcMzQ+3QJw5PLGTTGmV4y+1bwKykxPHc2h2Q6ROFrDZOgsdnNvqCuH/
+	BgNF6FfJv3JbkEUbMlbSa78eXtd3tRWUdyjlyvvaUoigjOtSrXXENP/cG37fwOJ7
+	UGgEhr2CtY90MVZ8LUZHXoFMuvD5GB7a7KasfBuukFK1i55Cam0YMCwMYliYOcKx
+	l/VHFJJKsuuYShpW3fv8ScSy0rZFqf3nUZPWhGZpmjUMzy/XDwdvmYbZlrDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1715853290; x=1715939690; bh=pvx6D9evXy3ObJRWmw0CbXHA046W
+	L44sFhdUk+9sq6A=; b=FhJJDXsPTfSm4v1hvcJUcOX/Hro1QFAN+LFTwscdSLZg
+	+/bUC4nEoQJPYNiIpz738QwHZA2WxAHgobhUHGAoiGL5XG8bmBIL0/ywcOlVG9JB
+	lFt4h+QIycHkY0ClNBsUhpWnLZ3I/rYycFSxNdQO+anwbUhK3crerfFeTIlVLT7c
+	gexAKw6xkZ2u6C/v7zL71HkinBv3W+QSTf7StcHa0hWCyvBNFGCH0WnKEYSusr1M
+	pGTAhDqoueBPqeM6JxXD6f4+pKm0F1uv89lQxZ5URyXV/UIJXjELPIMBs3UIdqjh
+	skZ9wa3A6uQ3f6qAdFMqPax3TYhid4bp/6hA3IJptA==
+X-ME-Sender: <xms:6tdFZkoAHuxcYvF7PpDnBbSuZ3_EKLDBsS1Y1Mmbv-G4cO0OP4_4CQ>
+    <xme:6tdFZqq3NjXlMk6eEnUHZfdtwHBzi_UbqrD1UbMWPpxsat8X7xXuavhi8XZ3yHVNI
+    vdOsvC49UTO1BMgAg>
+X-ME-Received: <xmr:6tdFZpNHZ4W-gTlCuYkAZJU9ide05MrS9Zuc4-a7XM-PS5eAfZJzq3RT4dGRXL9Bs04pdis9y8qLCxGnXyAHGND0aTacrRRpGQDe_yF3F7UILwQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehuddgvdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeiveektdfggfeluefgvdelvdeftdfhge
+    eugeefveejleeufeekgeefffehgfelgfenucffohhmrghinhepkhgvrhhnvghlrdhorhhg
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:6tdFZr73rlFsRY289nqFGJ6g3FAYJS0mrWchZoGRQpWWpPuGZdi6FQ>
+    <xmx:6tdFZj70f11MWDt24yaAcZrk8-dsjwJJYddKcEG_WFdE_QYm5vEoQg>
+    <xmx:6tdFZrhO-TI_B0_otqcUKkn4IEMkcSd-vTyiTW1wsznJWfZFm1P3jQ>
+    <xmx:6tdFZt5lHUVJLUO3JBGnwg5lFztPcCoQ1zC2n9gKuio_pCAXf7CWeA>
+    <xmx:6tdFZm2SFhsM1bftMws6rNaPwk9vg8JSoojkGIEAqfA2HH61Ehre9x5g>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 May 2024 05:54:48 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id ddd6eaea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 16 May 2024 09:54:21 +0000 (UTC)
+Date: Thu, 16 May 2024 11:54:44 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Kyle Lippincott <spectral@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/3] ci: avoid bare "gcc" for osx-gcc job
+Message-ID: <ZkXX5MlN3EbaMhNG@tanuki>
+References: <20240509162219.GA1707955@coredump.intra.peff.net>
+ <20240509162415.GB1708042@coredump.intra.peff.net>
+ <CAO_smVhE25ZQqc1f_fx9oPX-kH8SHxwEc=mqOAi-xQ91+pF1CA@mail.gmail.com>
+ <20240510220228.GA1962678@coredump.intra.peff.net>
+ <xmqqseyp1dys.fsf@gitster.g>
+ <Zj-pGGGJEXlH02nR@framework>
+ <20240516071930.GB83658@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="4HaCDIPuHYcaaS1i"
 Content-Disposition: inline
-In-Reply-To: <ZkK3KYkA6+zUxu9A@nand.local>
+In-Reply-To: <20240516071930.GB83658@coredump.intra.peff.net>
 
-On Mon, May 13, 2024 at 08:58:17PM -0400, Taylor Blau wrote:
 
-> > I was going to complain that explanatory text like this should probably
-> > go into the documentation, not a commit message. But I see you do later
-> > add documentation. Which seems to happen when this code is actually
-> > wired up to the bitmap-writer. Maybe a moot point now that I figured it
-> > out, but I think we'd be better off with the two commits squashed
-> > together.
-> 
-> I dunno. This commit is already rather large, and I like the split of
-> "here's how we select these things", versus "now we actually start
-> selecting/writing them".
-> 
-> But maybe it results in a slightly awkward break in the middle that
-> leaves some of the stuff that would otherwise fit well in the EXAMPLES
-> section (as you mention below) in a weird limbo state.
+--4HaCDIPuHYcaaS1i
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It's not the break to me so much as the fact that you end up explaining
-the concepts twice. Is it the same material presented in two ways? Or is
-there stuff in one spot that is not in the other? I think the answer is
-that it's a little bit of both. And as a reviewer (and an author) it's
-hard to put yourself in the shoes of a user who is only going to see
-what's in the docs.
+On Thu, May 16, 2024 at 03:19:30AM -0400, Jeff King wrote:
+> On Sat, May 11, 2024 at 07:21:28PM +0200, Patrick Steinhardt wrote:
+>=20
+> > On Fri, May 10, 2024 at 03:47:39PM -0700, Junio C Hamano wrote:
+> > > Jeff King <peff@peff.net> writes:
+> > [snip]
+> > > > [1] Another quirk is that we run the whole test suite for both
+> > > >     compilers, which is probably overkill. The main value in compar=
+ing
+> > > >     gcc vs clang is that we don't use any constructs that the compi=
+ler
+> > > >     complains about. It's _possible_ for there to be a construct th=
+at
+> > > >     the compiler does not notice but which causes a runtime differe=
+nce
+> > > >     (say, undefined behavior which happens to work out on one compi=
+ler),
+> > > >     but I think we're again hitting diminishing returns.
+> > >=20
+> > > Yeah, that is a very good point.
+> >=20
+> > On Linux, we have the "pedantic" job that runs Fedora and only compiles
+> > the sources with DEVOPTS=3Dpedantic without running any of the tests. We
+> > could do the same on macOS.
+>=20
+> Yeah, I think the infrastructure is there (looks like just resetting
+> $run_tests). We probably could stand to use it in more places. E.g., is
+> there even value in running the tests for linux-gcc and linux-clang?
+> It's _possible_ for there to be a run-time difference in the compiler
+> outputs, but we may be hitting diminishing returns. The main value I
+> think is just seeing what the compilers complain about.
 
-So I'd rather even see the first patch as "here's some config; don't
-worry about what it does too much, as we'll explain it in the next
-commit" and then in the second patch say "go look at the config added by
-this patch". And then we know we're looking at the same thing a user
-will.
+That's certainly the biggest part, yeah. But I have been hitting lots of
+compiler-dependent behaviour. This is mostly in the area of bugs though,
+where for example toolchain A may initialize variables on the stack to
+all zeroes while toolchain B does not.
 
-> There's a good amount of information already in
-> Documentation/technical/bitmap-format.txt, though perhaps some of the
-> pieces mentioned here could be added there. Let me know if you think one
-> is missing something the other has (or if we could move significant
-> portions of the latter into the former).
+I guess this is mostly a question of defaults though, and I think it is
+partially influenced by the overall toolchain environment as configured
+by my distro. Especially hardening options are for example quite likely
+to lead to different behaviour.
 
-I don't think we should expect most users to read anything in
-Documentation/technical. Now I don't expect most users to fiddle with
-this feature at all. But reading over the config docs added by the
-subsequent patch, it's not at all clear to me when I would want to tweak
-the knobs or why.
+I'm not sure whether this is sufficient reason on its own to warrant
+testing with several toolchains. But we can easily combine this with
+additional tuning knobs. Two separate test jobs with GCC and Clang are
+comparatively boring. But if we make it GCC+SHA1 and Clang+SHA256 then
+it becomes more interesting.
 
-I think there might need to be an "advanced packing concepts"
-user-directed manual. Either as part of git-pack-objects(1), or maybe
-broken out into its own page ("gitpacking(7)" or similar). Specifically
-for this feature, I think it would want to cover:
+So I think dropping the compiler coverage completely is rather pointless
+because we already run multiple different jobs per platform anyway. But
+we should investigate whether we can cleverly combine those so that we
+do not need a separate jobs just to test a specific compiler.
 
-  - what is this thing, and why would I want it. You cover this in the
-    format doc, but I think it makes more sense in a user-directed doc
-    (and to leave the format doc strictly as a technical reference).
+Patrick
 
-  - what you wrote in "use cases" there is still, IMHO, introducing
-    things in the wrong order for a regular user. They're going to come
-    to the documentation either with a specific problem, or with an idea
-    to browse around for things that might help them.
+> But I dunno. This thread argues there is value in running the tests with
+> the separate compiler:
+>=20
+>   https://lore.kernel.org/git/pull.266.git.gitgitgadget@gmail.com/
+>=20
+> which I guess would argue for doing the same for osx-clang and osx-gcc
+> (if the latter continues to exist).
+>=20
+> -Peff
 
-    So I feel like it needs to start with the concept and the
-    motivation. Something like (assuming we're following a section on
-    bitmaps in the "advanced packing" page, something I recognize also
-    does not yet exist):
+--4HaCDIPuHYcaaS1i
+Content-Type: application/pgp-signature; name="signature.asc"
 
-      Reachability bitmaps are most efficient when we have on-disk
-      stored bitmaps for one or more of the starting points of a
-      traversal. For this reason, Git prefers storing bitmaps for
-      commits at the tips of refs, because traversals tend to start with
-      those points.
+-----BEGIN PGP SIGNATURE-----
 
-      But if you have a large number of refs, it's not feasible to store
-      a bitmap for _every_ ref tip. It takes up space, and just OR-ing
-      all of those bitmaps together is expensive.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZF1+MACgkQVbJhu7ck
+PpRxdg/+OluHtJom5wZl1djo+HXjiN8s+NIClqSdnqBVNVqMrefKTsYR9o4JFt5V
+F9Gpsx66gx6N3GbgHgOkpwuaWNd4BsUUYz4CHbDVf0Rg3XyD8/TphPpmyzI75cpc
+kNCRYK49uEPnm1SGJW96fAzXGfgQi2Hhlin2SYMrUDD8CvpbRrcnEhawX7XrVCD4
+Z5YcgN9hl+oKCG4iof+KYdNc++bISEwkD8yLMQ9ylZ8pNGf8o8rraaYH5VLDUsXK
+UwglWIY/zW/gBRgY5ndwzjWHaAcQPf+YAiaAfaBSFh8kqpE57n/0ZKX5++hyWD6W
+XgNK66UqgRtljfIsInybSSnODSWx2mA2yk66EpQ3feiCRut7WAeS0lob5NPDtm9Z
+Wy6Cd5chOHvV5p5WHOm7MUvZhXv0F/VAr9V9zWU0tWHBszetDXzVgzmnBS2q3B08
+AUZIyOhkHKr765Pw3+C0kWuCu+Jt5pMw8KoinuoRdTFGKz9zKjz2mhWp8gOnN2QY
+FqSPws0MzTDwCn+HAKRWOZ78cmGkCfHCIEIZ/j1oJXud+kU/X1tm+L5QQ3VUdzt9
+vQ/E40DWJW+e1bh+pYGL4zaoM2XGxCVv2EVi0i9892UDHNtlVS/TZFDc2vuOoxbo
+9Xh0fMT2wiBJ4ZTKns3CMYcBJUR3tez8jGEkJHM76S8h+T0gANA=
+=zIDi
+-----END PGP SIGNATURE-----
 
-      One way we can deal with that is to create bitmaps that represent
-      _groups_ of refs. When a traversal asks about the entire group,
-      then we can use this single bitmap instead of considering each ref
-      individually. Because these bitmaps represent the set of objects
-      which would be reachable in a hypothetical merge of all of the
-      commits, we call them pseudo-merge bitmaps.
-
-   I don't think this is saying anything that your technical doc
-   doesn't, but I think it's more important what it _isn't_ saying.
-   We don't need to talk about commit bitmaps and merge bitmaps at all.
-   We just want the user to have the concept of grouping refs. And then
-   that would hopefully lead naturally into "OK, so how do we group
-   them".
-
-  - OK, so how do we group them? ;) I think there are two concerns here.
-    One is that traversals can only use a pseudo-merge bitmap if _every_
-    commit in its group is included in the traversal. So we want to
-    group the refs along logical boundaries (e.g., tags vs branches vs
-    remotes). Or in the case of shared-object repositories (like
-    GitHub's), by boundaries which only the user knows about.
-
-    And two is that we want groups that don't become invalidated when a
-    ref changes or is removed. So you want a bunch of old, stable tags
-    together, and probably don't want recent branches grouped at all.
-
-    And then when we describe the config knobs you can turn, it should
-    be in the user's mind how they can use them to influence those two
-    things. For "logical boundaries" part, I think the commit message
-    for patch 9 does some of that with the "refs/virtual" example. But
-    that's something I don't see as clearly in the config documentation
-    added in patch 10.
-
-    The knobs for handling age are more complicated and harder to
-    explain. ;) You do mention the power-law decay thing in patch 10,
-    but it's in the technical format docs. I think it should be
-    somewhere more user-accessible.
-
-So hopefully that kind of lays out how I'm thinking about it. Both where
-the docs go, but what I think are the useful ways to be thinking about
-the feature. And not just for users, but as we see if the design is
-doing a good job of fulfilling those needs.
-
-I think the name/pattern config you introduce does cover the logical
-boundaries in a clean and easy-to-understand way. The "age" stuff is
-much fuzzier in my mind. Your power-law decay makes sense to me, though
-it does have a lot of knobs, and I don't think we'll really understand
-how it performs without real-world experimentation.
-
-I do wonder if something stupidly simple like "just make a single group
-including tags older than 3 months, and ignore everything else" (where
-"single" is "single per logical boundary defined by the user") would
-perform OK in practice. The point is to help "--all" and "--not --all"
-when you have a bunch of crufty old refs. So really, the challenge is
-mostly just identifying crufty old refs. ;)
-
-But I do think your power-law stuff should be a functional superset of
-that. And while it's complicated to reason about where the knobs should
-be set, I don't think the code is very complex. And the fact that it
-_has_ knobs gives something to tweak and gather data with.
-
-All of which is to say, I guess, that I think the code is going in a
-reasonable direction. It's hard to say much more without spending a
-bunch of time benchmarking real repositories, their traversal queries,
-and so on.
-
--Peff
+--4HaCDIPuHYcaaS1i--
