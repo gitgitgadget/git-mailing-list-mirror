@@ -1,53 +1,53 @@
 Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC701311B1
-	for <git@vger.kernel.org>; Thu, 16 May 2024 08:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999B5134CE3
+	for <git@vger.kernel.org>; Thu, 16 May 2024 08:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715846698; cv=none; b=af/kIP9ysw587Ds89y09q7mjyn/ZlH4nSnxrQmd1DCEQ0sT8hMcpUo6sV47kmaqsfKjl0R98kTtNUAtB807pPRUD2SRSr/fPo6+YZrRlxM78FsYT4ArCdW76sydqcR45uUBiNQ+npXrgkiJxTH23SVmjdTBb56lgyNTN9k7VZQw=
+	t=1715846704; cv=none; b=hsni4gsRtBM6URkYB598iPr81U+0H0QKIzGYL6mdGAms1/M1B5EP8DA9gWVEOnCuzUHWWTVygCBoozXb+uwCdf75ppPOotUO5+OIYA826OT07Sz5GuXSURW4qrtU+2Ny7L+0VsnyPZOHIitkkn4eWUc5fKf7szubQEq6Lw15iZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715846698; c=relaxed/simple;
-	bh=mMu39OqqWmVANxdAmcQ8xN6Dma87VooSlYYbxUJt+vM=;
+	s=arc-20240116; t=1715846704; c=relaxed/simple;
+	bh=taiIa1uxzmIo04QS9ZMbJcjKUKj1ucXpnvpLb9A4Xq0=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CaeI2FfcyJ6Xp+oBhqFkAz5urnY2UmFZYuytjkSY78b0SMXrMDkTc85TyIQlvAexyn3ZQ7QOGcByChOPisith+X2gaiFa/EiP8wiwtSOcybyjlVW1KMMjJODG+TRSI4iv79NMDdVMwiqNxL+5/6eE5E0Pj6M+0lwg5y8FfL4Tcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dH4qaMIb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j3LxLwDy; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=rEh3TQJKg9yCfVCVXfRTDRL9q5GSe1X5sgQsWQck7ubrsHTp9WlIbo+1uNGqjfipyaxcGZLjusAIalh0uLC7mcSDorhErrKuQZPCMcTzlS+1zKK+6b2NuQl62SsbgrmvNnP54QPerk6e8ELcZ1Runtw595BVnBDe/v4f1y/TX1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eq1YYjVV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vf53g9b9; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dH4qaMIb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j3LxLwDy"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.nyi.internal (Postfix) with ESMTP id EF5921380E54
-	for <git@vger.kernel.org>; Thu, 16 May 2024 04:04:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eq1YYjVV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vf53g9b9"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id EE6A11380282
+	for <git@vger.kernel.org>; Thu, 16 May 2024 04:05:01 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 16 May 2024 04:04:55 -0400
+  by compute1.internal (MEProxy); Thu, 16 May 2024 04:05:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715846695; x=1715933095; bh=Ml2nQ9xdcP
-	448Z5PS94oiBupAgbvPBCJH2dzR3IfHGQ=; b=dH4qaMIbbKSRbpxX6IClOhdPwl
-	4giA+UhgmD1GjAf71Wt4g8f70Q1qffUJNkfk0ENjQbcDxAcKcxoLHUqxK2TOJuED
-	Nchg6qANtuAZ8ahm3aeEASZiNWeZH9/FTpV3i4glcdwCRCR0KvVu4sAz2+v8EtVd
-	L3TKClcHyc/DGed1zFT07s8T15/k8cBsGINFldCNHlrXRpXi5mJLAmH+6clQSgTF
-	VdscipGd8+F7W24/uORxj2qTF1GHWRpHiZ998CgDiOTkUz9zENHEiqfRLQraHpJC
-	ah2Dw8kjwu6vrJRyt+rEe/My3xhUuA2QalIkZwnU2WWhIYdzNIIsUHXjfUDw==
+	:subject:to:to; s=fm3; t=1715846701; x=1715933101; bh=MYxq+RI37q
+	mZTPEZKWLVxaFj83GuyWwEamZLdGg5saw=; b=eq1YYjVVKZOk/b6rx42YzG7+oO
+	wMy1Bs3aNsqZTzErcQoQeMBINGA7ZMNyJkq9hecnA1boI9Jv59I7FX8chLeIPzT4
+	UKs2sN0ZXHdYADMH/N/0/RJZXezPfu71P0BTMi5ZcbennPiMsCZsWqqomVN31ESG
+	s5bKA/pbEvIZMw8hM7r0Pa7xQoLjmuWC2RI0Gj2BWgI2bL0dMpB58GcVUp1gjfbz
+	nGmltbwUoCVWn+cCl0HDm9aKtXRb8HjDEQ5OoY1G4jnJnjCGVkXJ6/kgrqwW05km
+	XfS24PVwN+gtMIAZX0VAxx++RoC6+kW3Y3LyQaaRAmfBejK5vLLYt8mBLynQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715846695; x=1715933095; bh=Ml2nQ9xdcP448Z5PS94oiBupAgbv
-	PBCJH2dzR3IfHGQ=; b=j3LxLwDyYF++G35ZJo12wiLTAsSgJvo0H233VX0+CnuK
-	5JsPMxkWV9aPK5gsydSrVkKkkQ7/2wB7GcvjEUVWKjNq4p4OFP0M4oPVBCVtugTZ
-	BLLCYeSIjELNNaUdqy7PceuvABR2dp3kMu37ScU5hcbqJd2RYXUhZkJjvyXqxms7
-	Cz7y5UnvPLwa3Mq375xod9A+myC+yLpfb4FEpSNkh1iJKyltvo18LmPCWPvCBBas
-	ui266RsKBYTVRlGd+LEe66m7Dq3ynIeBk/Zx/x9nqgLUbbPcVyDF8qQvj7H/tiLH
-	ixA+bSC0s00CvxV5+IRnVLiDX8wJwjO0UoNGV5xnPA==
-X-ME-Sender: <xms:J75FZg7kD_68_HNEZ1lmix8w-GumyATFnFeyPdbW19gdJR0_xBqEFg>
-    <xme:J75FZh7KhhxLsANuJkmud5rULVfEH6Ryl9JiDkHZF9ijKrrTuVk_fVyR9NzxNCfT7
-    _giZ6KrrECVn228tg>
-X-ME-Received: <xmr:J75FZvdaA45uHBMl_OgWFfySQYJR77GSZc5ovTEIGPXyj3aWCUmGW25d42Nmul6IoifqLMWcBt0EbqpjxUxHdcDai5wyyXU3eJctZ3VkpeJLaMs>
+	fm3; t=1715846701; x=1715933101; bh=MYxq+RI37qmZTPEZKWLVxaFj83Gu
+	yWwEamZLdGg5saw=; b=Vf53g9b9Mian8VNijs4dVBzrVTiWy37wUD+8aFfso3qb
+	yArZNXWuJKF1r8v4adkRJWHzdgZeProSS+ICIr78p9L376qlEBWorU3zEFNhWVqA
+	ItAeqzFWTfsalX4fA2gDU0e03Ty+kxV5/fU49lHOi8VKEQk6ldbiJrDcGiHHqGOB
+	BSuElu6dEBdM/4YVHWYIo0Oa5GxBnXupKdWOtpODrX+D08W9SeMX9GbLtnfVBH4Y
+	sVLHlAly2wCXtjIkSPhchkp3HloF+lUtan+IoucTr2xBwwOdj9DfdY6EBNr1ahDw
+	2QOF7mfFpfpe/1RKoU1GYcxEpcN+7GZtTzLwovkhQg==
+X-ME-Sender: <xms:Lb5FZrX0nZJl6sV3pBFIQp5_4nk44tEU4ibICQvtlk-c-SrkZutWpQ>
+    <xme:Lb5FZjnr7St3aRdIrs4MN52TYUdfZARVHMbhliKZrpvvySKBqzKsBIO9CG2W9Zy1d
+    p_2HGhIm-Gc9M1Nhg>
+X-ME-Received: <xmr:Lb5FZna1jrM6Dwfkv1nEWAArQJRWlydqe9XS14G_5VLDy0tGrav65g_PA1GhypkT8pPsX5HGw-koZwsXCJPWs2rptdN8QOL4vypylcfbdfWLYWg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehtddgtdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
@@ -55,23 +55,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehtddgtdegucetufdoteggod
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepfeenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:J75FZlIRv81yunIk5lcI2z2AI2UNE5OjKDN2nJ4kbs_pNBZk9v7kBw>
-    <xmx:J75FZkLQxZOnLkzh5ynb9YX_UWtoPcFb05BlTOW96-yI02BCcWP_hA>
-    <xmx:J75FZmyUE16Qv4dnAN3lfKsWepma5JVC5WPD9igWl_jNy0QvSFCmKg>
-    <xmx:J75FZoLL3JOGXg0qE6L1EPU3fepDfxopEK4KCxNfOijaiehg5WkA0Q>
-    <xmx:J75FZug0lLthR5ACbSSlOVvHTEXtqU29eT-i2ssdpDg1-KjdepL3IMlB>
+X-ME-Proxy: <xmx:Lb5FZmWzdozkmHGpol_bKjh5v7OoDnBAFZpgs5EkGwpasWpxjAWe_Q>
+    <xmx:Lb5FZlnkFqeUsyHyawx4FFgz8hpt-9s2kgK6iwyItoS3ZCiTITC1Rw>
+    <xmx:Lb5FZjfM2easKJNgK_04OFRYEnCmx8dLzAdgZrTSijDEywA2KhfR8A>
+    <xmx:Lb5FZvHuhl8JiyeKhZzgGKi7FmSCRi8W4AZidbliMGE1dCaoFJX3wQ>
+    <xmx:Lb5FZlvmqJij6IHRebV2NEcXFyqVYTV2dBtfqPUoSeabUad2m8EXYcsP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 16 May 2024 04:04:55 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 16 May 2024 04:05:01 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 87b5a060 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 3280460f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 16 May 2024 08:04:30 +0000 (UTC)
-Date: Thu, 16 May 2024 10:04:53 +0200
+	Thu, 16 May 2024 08:04:36 +0000 (UTC)
+Date: Thu, 16 May 2024 10:04:58 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 09/16] refs: pass ref store when detecting dangling symrefs
-Message-ID: <50c5d72c6af22c6f2f40ccb78ea7076d80c385d7.1715836916.git.ps@pks.im>
+Subject: [PATCH 10/16] refs: move object peeling into "object.c"
+Message-ID: <f03626ac0025050e49cad4057e6f3b3e7c7c141c.1715836916.git.ps@pks.im>
 References: <cover.1715836916.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,176 +80,226 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EzvUTxOJedIkR5zg"
+	protocol="application/pgp-signature"; boundary="T5rJbPgkiAdSiV7K"
 Content-Disposition: inline
 In-Reply-To: <cover.1715836916.git.ps@pks.im>
 
 
---EzvUTxOJedIkR5zg
+--T5rJbPgkiAdSiV7K
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Both `warn_dangling_symref()` and `warn_dangling_symrefs()` derive the
-ref store via `the_repository`. Adapt them to instead take in the ref
-store as a parameter. While at it, rename the functions to have a `ref_`
-prefix to align them with other functions that take a ref store.
+Peeling an object has nothing to do with refs, but we still have the
+code in "refs.c". Move it over into "object.c", which is a more natural
+place to put it.
+
+Ideally, we'd also move `peel_iterated_oid()` over into "object.c". But
+this function is tied to the refs interfaces because it uses a global
+ref iterator variable to optimize peeling when the iterator already has
+the peeled object ID readily available.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fetch.c  |  3 ++-
- builtin/remote.c |  3 ++-
- refs.c           | 40 ++++++++++++++++++++--------------------
- refs.h           |  7 ++++---
- 4 files changed, 28 insertions(+), 25 deletions(-)
+ object.c             | 21 +++++++++++++++++++++
+ object.h             | 34 ++++++++++++++++++++++++++++++++++
+ refs.c               | 22 ----------------------
+ refs/refs-internal.h | 34 ----------------------------------
+ 4 files changed, 55 insertions(+), 56 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 3829d66b40..3df1c0c052 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1412,7 +1412,8 @@ static int prune_refs(struct display_state *display_s=
-tate,
- 					   _("(none)"), ref->name,
- 					   &ref->new_oid, &ref->old_oid,
- 					   summary_width);
--			warn_dangling_symref(stderr, dangling_msg, ref->name);
-+			refs_warn_dangling_symref(get_main_ref_store(the_repository),
-+						  stderr, dangling_msg, ref->name);
- 		}
+diff --git a/object.c b/object.c
+index 51e384828e..995041926a 100644
+--- a/object.c
++++ b/object.c
+@@ -207,6 +207,27 @@ struct object *lookup_object_by_type(struct repository=
+ *r,
  	}
+ }
 =20
-diff --git a/builtin/remote.c b/builtin/remote.c
-index ff70d6835a..c0b513cc95 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1477,7 +1477,8 @@ static int prune_remote(const char *remote, int dry_r=
-un)
- 			       abbrev_ref(refname, "refs/remotes/"));
- 	}
++enum peel_status peel_object(const struct object_id *name, struct object_i=
+d *oid)
++{
++	struct object *o =3D lookup_unknown_object(the_repository, name);
++
++	if (o->type =3D=3D OBJ_NONE) {
++		int type =3D oid_object_info(the_repository, name, NULL);
++		if (type < 0 || !object_as_type(o, type, 0))
++			return PEEL_INVALID;
++	}
++
++	if (o->type !=3D OBJ_TAG)
++		return PEEL_NON_TAG;
++
++	o =3D deref_tag_noverify(o);
++	if (!o)
++		return PEEL_INVALID;
++
++	oidcpy(oid, &o->oid);
++	return PEEL_PEELED;
++}
++
+ struct object *parse_object_buffer(struct repository *r, const struct obje=
+ct_id *oid, enum object_type type, unsigned long size, void *buffer, int *e=
+aten_p)
+ {
+ 	struct object *obj;
+diff --git a/object.h b/object.h
+index 9293e703cc..31ccd1bb10 100644
+--- a/object.h
++++ b/object.h
+@@ -256,6 +256,40 @@ struct object *lookup_unknown_object(struct repository=
+ *r, const struct object_i
+ struct object *lookup_object_by_type(struct repository *r, const struct ob=
+ject_id *oid,
+ 				     enum object_type type);
 =20
--	warn_dangling_symrefs(stdout, dangling_msg, &refs_to_prune);
-+	refs_warn_dangling_symrefs(get_main_ref_store(the_repository),
-+				   stdout, dangling_msg, &refs_to_prune);
++enum peel_status {
++	/* object was peeled successfully: */
++	PEEL_PEELED =3D 0,
++
++	/*
++	 * object cannot be peeled because the named object (or an
++	 * object referred to by a tag in the peel chain), does not
++	 * exist.
++	 */
++	PEEL_INVALID =3D -1,
++
++	/* object cannot be peeled because it is not a tag: */
++	PEEL_NON_TAG =3D -2,
++
++	/* ref_entry contains no peeled value because it is a symref: */
++	PEEL_IS_SYMREF =3D -3,
++
++	/*
++	 * ref_entry cannot be peeled because it is broken (i.e., the
++	 * symbolic reference cannot even be resolved to an object
++	 * name):
++	 */
++	PEEL_BROKEN =3D -4
++};
++
++/*
++ * Peel the named object; i.e., if the object is a tag, resolve the
++ * tag recursively until a non-tag is found.  If successful, store the
++ * result to oid and return PEEL_PEELED.  If the object is not a tag
++ * or is not valid, return PEEL_NON_TAG or PEEL_INVALID, respectively,
++ * and leave oid unchanged.
++ */
++enum peel_status peel_object(const struct object_id *name, struct object_i=
+d *oid);
++
+ struct object_list *object_list_insert(struct object *item,
+ 				       struct object_list **list_p);
 =20
- 	string_list_clear(&refs_to_prune, 0);
- 	free_remote_ref_states(&states);
 diff --git a/refs.c b/refs.c
-index 345d6a1e06..e6bae9d52c 100644
+index e6bae9d52c..02d756f24f 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -447,6 +447,7 @@ enum peel_status peel_object(const struct object_id *na=
-me, struct object_id *oid
+@@ -19,7 +19,6 @@
+ #include "object-store-ll.h"
+ #include "object.h"
+ #include "path.h"
+-#include "tag.h"
+ #include "submodule.h"
+ #include "worktree.h"
+ #include "strvec.h"
+@@ -425,27 +424,6 @@ static int for_each_filter_refs(const char *refname,
+ 	return filter->fn(refname, oid, flags, filter->cb_data);
  }
 =20
+-enum peel_status peel_object(const struct object_id *name, struct object_i=
+d *oid)
+-{
+-	struct object *o =3D lookup_unknown_object(the_repository, name);
+-
+-	if (o->type =3D=3D OBJ_NONE) {
+-		int type =3D oid_object_info(the_repository, name, NULL);
+-		if (type < 0 || !object_as_type(o, type, 0))
+-			return PEEL_INVALID;
+-	}
+-
+-	if (o->type !=3D OBJ_TAG)
+-		return PEEL_NON_TAG;
+-
+-	o =3D deref_tag_noverify(o);
+-	if (!o)
+-		return PEEL_INVALID;
+-
+-	oidcpy(oid, &o->oid);
+-	return PEEL_PEELED;
+-}
+-
  struct warn_if_dangling_data {
-+	struct ref_store *refs;
+ 	struct ref_store *refs;
  	FILE *fp;
- 	const char *refname;
- 	const struct string_list *refnames;
-@@ -463,8 +464,7 @@ static int warn_if_dangling_symref(const char *refname,
- 	if (!(flags & REF_ISSYMREF))
- 		return 0;
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index fc77240c93..df9b16a872 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -69,40 +69,6 @@ int ref_resolves_to_object(const char *refname,
+ 			   const struct object_id *oid,
+ 			   unsigned int flags);
 =20
--	resolves_to =3D refs_resolve_ref_unsafe(get_main_ref_store(the_repository=
-),
--					      refname, 0, NULL, NULL);
-+	resolves_to =3D refs_resolve_ref_unsafe(d->refs, refname, 0, NULL, NULL);
- 	if (!resolves_to
- 	    || (d->refname
- 		? strcmp(resolves_to, d->refname)
-@@ -477,28 +477,28 @@ static int warn_if_dangling_symref(const char *refnam=
-e,
- 	return 0;
- }
-=20
--void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refna=
-me)
-+void refs_warn_dangling_symref(struct ref_store *refs, FILE *fp,
-+			       const char *msg_fmt, const char *refname)
- {
--	struct warn_if_dangling_data data;
+-enum peel_status {
+-	/* object was peeled successfully: */
+-	PEEL_PEELED =3D 0,
 -
--	data.fp =3D fp;
--	data.refname =3D refname;
--	data.refnames =3D NULL;
--	data.msg_fmt =3D msg_fmt;
--	refs_for_each_rawref(get_main_ref_store(the_repository),
--			     warn_if_dangling_symref, &data);
-+	struct warn_if_dangling_data data =3D {
-+		.refs =3D refs,
-+		.fp =3D fp,
-+		.refname =3D refname,
-+		.msg_fmt =3D msg_fmt,
-+	};
-+	refs_for_each_rawref(refs, warn_if_dangling_symref, &data);
- }
-=20
--void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct str=
-ing_list *refnames)
-+void refs_warn_dangling_symrefs(struct ref_store *refs, FILE *fp,
-+				const char *msg_fmt, const struct string_list *refnames)
- {
--	struct warn_if_dangling_data data;
+-	/*
+-	 * object cannot be peeled because the named object (or an
+-	 * object referred to by a tag in the peel chain), does not
+-	 * exist.
+-	 */
+-	PEEL_INVALID =3D -1,
 -
--	data.fp =3D fp;
--	data.refname =3D NULL;
--	data.refnames =3D refnames;
--	data.msg_fmt =3D msg_fmt;
--	refs_for_each_rawref(get_main_ref_store(the_repository),
--			     warn_if_dangling_symref, &data);
-+	struct warn_if_dangling_data data =3D {
-+		.refs =3D refs,
-+		.fp =3D fp,
-+		.refnames =3D refnames,
-+		.msg_fmt =3D msg_fmt,
-+	};
-+	refs_for_each_rawref(refs, warn_if_dangling_symref, &data);
- }
-=20
- int refs_for_each_tag_ref(struct ref_store *refs, each_ref_fn fn, void *cb=
-_data)
-diff --git a/refs.h b/refs.h
-index 77f9887235..492ecfa4a1 100644
---- a/refs.h
-+++ b/refs.h
-@@ -388,9 +388,10 @@ static inline const char *has_glob_specials(const char=
- *pattern)
- 	return strpbrk(pattern, "?*[");
- }
-=20
--void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refna=
-me);
--void warn_dangling_symrefs(FILE *fp, const char *msg_fmt,
--			   const struct string_list *refnames);
-+void refs_warn_dangling_symref(struct ref_store *refs, FILE *fp,
-+			       const char *msg_fmt, const char *refname);
-+void refs_warn_dangling_symrefs(struct ref_store *refs, FILE *fp,
-+				const char *msg_fmt, const struct string_list *refnames);
-=20
- /*
-  * Flags for controlling behaviour of pack_refs()
+-	/* object cannot be peeled because it is not a tag: */
+-	PEEL_NON_TAG =3D -2,
+-
+-	/* ref_entry contains no peeled value because it is a symref: */
+-	PEEL_IS_SYMREF =3D -3,
+-
+-	/*
+-	 * ref_entry cannot be peeled because it is broken (i.e., the
+-	 * symbolic reference cannot even be resolved to an object
+-	 * name):
+-	 */
+-	PEEL_BROKEN =3D -4
+-};
+-
+-/*
+- * Peel the named object; i.e., if the object is a tag, resolve the
+- * tag recursively until a non-tag is found.  If successful, store the
+- * result to oid and return PEEL_PEELED.  If the object is not a tag
+- * or is not valid, return PEEL_NON_TAG or PEEL_INVALID, respectively,
+- * and leave oid unchanged.
+- */
+-enum peel_status peel_object(const struct object_id *name, struct object_i=
+d *oid);
+-
+ /**
+  * Information needed for a single ref update. Set new_oid to the new
+  * value or to null_oid to delete the ref. To check the old value
 --=20
 2.45.1.190.g19fe900cfc.dirty
 
 
---EzvUTxOJedIkR5zg
+--T5rJbPgkiAdSiV7K
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZFviQACgkQVbJhu7ck
-PpTDMRAAh+Nyt5B+VGIbgsw8S2/Bbsx2yt3xnVXIEga+Fp/JMAWNVkKcZCK0HyzZ
-SG3ROHVh0ZZXeOVknykT777R/PX1rUQv1wbCYHwbGgC9dGovhnz13NnKGH7fWOqB
-YcU4ISdAUofFPZtTrIbC8loBy8FSEF1QcoxIWFn4hOrNQZXA841dYD8g3EmAmi/r
-fTwikSHJcjT7ZslhxHELrHebw1g3Xu5KHxNf49Z28G2yO0Hv64HVewzkg9a40zkN
-RXUq+qy1iGdnIhi1KyvvBxFODHFGjgPlw72F+8oEiLJOLgWZzQLjPLep30G0KVCh
-lxxpDMeR324K9A1/XwkA4fclPkDJT0zkTyjXnWkXsZ9dr3Y/EOMmn/nP43ACq7ae
-Un2waPVtPW3R/AztGc2Cc3FuqXGCY+474MjVmxb5NqIUgPYJfDMbXMG2ETRzj54t
-6GD45bp0Ci1ix/bXocLw2KEDDAWnCDJowfrncJHL3vqRr2T0RUSqe6xWl/ZKL8xk
-c/k35AKZqWODFrqowsexIpcwABFrt+WgfwxDCbk24yai96ltwzYf9WrnGXFVo1iY
-w9FEl3NKXt2YBKXks/qK9yaneIrusojyiO4nrheYhW/rrIggqni33BKoA6Q6mlO0
-QgTrJVEPmxvR/5+y5K7dxjhU0wN0MW+gsEHBgl81YcEnekIlEko=
-=SK+v
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZFvikACgkQVbJhu7ck
+PpRrFA/7B/r6bYgMiHpkWx26l5V2JyeT6mDZ97gLsxbktcAShffbULIzgazfy3v6
+kddv+soIDuWy1LrzWeWwpjM8llwIO9A/u2hjXeexasLZ9auog4piZeTby3CsFKU3
+JSlrwNfSvrpI6lMBL45M8TmJb4ywdgsjPoXdf6roGqe5YOB4IxQLfkcQreW+B49F
+OpiAQbSNUKPSFdma7GCH3NY2/tVTMReOyo1tbvUt9eckpwc0O9C06R09IU24paxc
+QaOnfD/TYlLs+0Sn1aAfo75h3XL1GDsmwYVvggfJ8+hjsADb1aYcCyzeX80VBr8D
+DC4DMhEr5R535rmK+FfANw+ym2OPtRDM+7YJdPAm5t2EEy58Mu2ZmIx5Kkl7ttQw
+zNuWz/RagMAaTNSMN9lpDJt5pJ1C0z0UNgTAbr1TS2q+wFatOzHAI+vtLXUahLHp
+3JGTwYHm4RVXV7pxm6xTIrgrADmI7BxAWx+gj4sXNBdR2FDhEehQeYZQD8R8tR/X
+VJFFdsfDhAKLwztdYZpTYmaEu2/X6QMTPvED7Rb6lF+8+g/LLIqbFVct+o0UAQY+
+wuOBJoOm5R4Y9dX1O+7g/p3SXOZUUcOJphcot/oOWR6QjldRrKgcErt6CZBbo6OV
+rRoce1t/lzvfal/tr/8bOFRORTjFp5191yIGHWISKAn1+BGvXZA=
+=PrPP
 -----END PGP SIGNATURE-----
 
---EzvUTxOJedIkR5zg--
+--T5rJbPgkiAdSiV7K--
