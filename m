@@ -1,78 +1,78 @@
 Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F25130A7C
-	for <git@vger.kernel.org>; Thu, 16 May 2024 08:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCB04120A
+	for <git@vger.kernel.org>; Thu, 16 May 2024 08:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715846683; cv=none; b=Ki9/R34djJxn8WF4Nrhh1QJGLVu+nzjInQw7T97BgVo4VBWIRIoFu0fYsdp03oXuyPnLsE/eG9XwsmaBMQ9iHJw3nye5CniWsmwhE6TxC2xugf+UaAxlMyzt3GP5wqidASXsw1edLkSbORKw56qKxjIiyXDtyf5hTXQWfLVLd3c=
+	t=1715846688; cv=none; b=Xn5yN+RM0Ev5LMgqirqYjTtaegGP3A8Y+sNc/RTbNDmg6Rh2sFCiYPXxoermiUPXlo4LOOUjhbyXl582OXQUscPb0kVhaQjJ3lm9dLPCgXfVAvMV1tVndV++F0594ZEYoEVGwE4FdNhoSEmNO22i3Xq87NBEGE/+XZaWs6yvl/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715846683; c=relaxed/simple;
-	bh=RiQvg4NR+6SrLvtPDxVDRxF5jXser0Fxmwf70TteTlo=;
+	s=arc-20240116; t=1715846688; c=relaxed/simple;
+	bh=epyjz92EAI/ahcGjHrQ84R0qQia5zZQ2G9z4iXLLsyM=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Oh/HvSMECDthZ2G74T08/Avuvh/NtaAgyM8y/Z8XsV6NHanPACVkpJZC/iIymtXUjxKsNQTTecSxQ35IhWPdtpThmaBePqCVzXW+n6xcdH4sNYriZak2YLZFzpoiSdnxPSVEjVAizebjSRcGthMpzB2AsX7AwNXk/Xe6ZQmRwJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EOCe3Fyh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q59K3WcN; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=iUWKT7ec9RoTqy3hmz+F4TIIf61fO8eozTtDtrFzCLf4zl+rOWOkHbM75NQjAcD+3orfX3L1NJumff6twIRK4hNdpWkRX3oJkHPHCRrRZrx/erhS3eQwIfQEv2wmdm2gO9q1/kmSMSEBEai+2U2OtdtuBVicCOtxoOwLMVN1BeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P6R3U65j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XPPmTR4s; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EOCe3Fyh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q59K3WcN"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 2943A1380282
-	for <git@vger.kernel.org>; Thu, 16 May 2024 04:04:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P6R3U65j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XPPmTR4s"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 1F2BF1380282
+	for <git@vger.kernel.org>; Thu, 16 May 2024 04:04:46 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 16 May 2024 04:04:41 -0400
+  by compute1.internal (MEProxy); Thu, 16 May 2024 04:04:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715846681; x=1715933081; bh=9N2ivfh72J
-	hXuQm/au9koCqc1hN3aSykZcndVoB2vQ8=; b=EOCe3FyhgPHixXoyPtW854yXev
-	naDayW1JYu2pE0F2qmLgRv4jErJ8SEtyQRy0KcaxGGiK8OE5RJx23xMs9D6bgyAx
-	gVpTKqhql86fPuS6gLxklP+ZM9LHZLLgQBXWo42cfGQAJW+dD4yfMl9g+rDq3qY0
-	s9A7h78ehuQsCQctQkYuaaCLbzecD1/T6gPR1bSYt3gpVDZmUiinEIT3SqQSoHJG
-	JGYbxAuxSoiBKTys5yrxtIfoJ1GrsyYhDh4ytRZvSCLu5Qfr8AkxthB+8ct4S+ck
-	OJf3bm68VlxQMvTQ2PrHMr002a9gXjPopSKQfKhWjKf5/NW0EeSyYxzy0Xog==
+	:subject:to:to; s=fm3; t=1715846686; x=1715933086; bh=NLAe59edwt
+	AOnW2lmFNFEWPU3g+vYB+mgdu3sG0MIyI=; b=P6R3U65jGWyWkbh5JvwP+T1b65
+	fKbzzDF9JZDfBOy8trJgXeld/jIy9lIPURw9WKjvuwuoaCgKnaopg+ryGM/l39sZ
+	7Ksl3upcv9/5BKrW+6+bM0ejS1TCV6gEcHqFXpMIdJoqYsUDTC1QD2j5yUlD76er
+	UuFZP2Izol6iidQzxeE2tbDdZOVII74fnOXHSy1M0k+J7EyzgbZB0hbysdFtYPIw
+	mXBZQQWeMQ19buBIKS5wnKXrDv5NcaZlEClbvQe2bhSTGo49qIwt27ROoIoNKQRW
+	rGr7sKQh6dj6lvfHEd4Hf/+yRpSl8dPaQmLt3oKc/M7iZ63+fjHL6dgJjYEw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715846681; x=1715933081; bh=9N2ivfh72JhXuQm/au9koCqc1hN3
-	aSykZcndVoB2vQ8=; b=Q59K3WcNA8+aOR3MkEfjck6e8sDGJ9MEv0I1HyrYPaWl
-	EiCWpRhsdJJgwng+aFh2xy5z9pNpAfrUOJ/X7HLIvT6IIIY8S5AMy3Gk1fnjP0tZ
-	USgT7ac4Z3siANAjoxVsDieF1TxQEL3o5LIjEbslfaCFqdQQSgE2I43+JGkNvgQK
-	Qjb2GuqHyc0zUKs32Pn2v6cWv7iEpj5vraK4mVfHdg9E0h2FyHAg6JPv6VhgN0EX
-	t4CFNczVx+VgjmawhB3JGT5K2zIUW369CJBy7CtvRo9XyVyhneX8TysEgX0L09YW
-	Vm+Za1IMH6h4LjfjyVSqYjbCQ9KWTQ0XRjRCGLp06w==
-X-ME-Sender: <xms:GL5FZgrNBtNBrJ_oNIH2-5NU7UJ1hUz8PtN3TM76bNDNuqVgDgmrtQ>
-    <xme:GL5FZmplSu9d8rk5Ej1N_F_iolQ4d2WQx8mjjOJDkrTIf2tow32Brw88qen162_BF
-    SXRptfxwQJUnhztug>
-X-ME-Received: <xmr:GL5FZlPC4hopDlpqEg1CHrFdvyLYtZu7j_nQ2a-oJb_lgK3hajMAxCK54dwtUWealbS5AqNJiXNxMqhz6nRAkcSUoCHwyDbc8Xe64WgL0dIyqGY>
+	fm3; t=1715846686; x=1715933086; bh=NLAe59edwtAOnW2lmFNFEWPU3g+v
+	YB+mgdu3sG0MIyI=; b=XPPmTR4stgXBt2kqF6om76bms4HvdRegq0mNnl3DKoZM
+	IR0C1//4b/aUQuWBKICF8eMsFH3VO/IDU7mjJGengBSxWrNFdzS+rKDUdm8W0BhE
+	hbuquyBkUXQyhKeOrY5OgPKPaSp7qnFuiNHB9BQwZ80BnuEabuqYcCQXGwcQ/M4Q
+	iu4bjiSL0b3ZPoMgXh9qSav58+B6lhNcflLAN59Q1569D4MxzpisATEjLllf4Pjl
+	ge8124lUVUiKYIsFlZOrHpTKwQTy+KDTvBWK9WG7Ga9kt7Sz/P/IZJQW+wf/Hh6m
+	tVascJ9GA1BI7/I+vejIousGoUNbUrS8OLTlE7SjOA==
+X-ME-Sender: <xms:Hb5FZuQfMIzUcHfLdV197OxCa6wEqSttiRxWdH6scA7OKwh8akQYEA>
+    <xme:Hb5FZjyISlPEFxD2kysJXD_aXfjQXu2JRCu607qr_sVr5PjTFwUGcXCulhGoCE7BX
+    XwhTHCburXGw5jaNA>
+X-ME-Received: <xmr:Hb5FZr1B0gNOqpxwDk8CadfBy_pXPu18J4xp8brCE74pFPolv1qKxfC-DR3qzjEnXuusetfW8OFECBMCm-SlWV03B4zXd1PQbhNAXa6eHLOX37Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehtddgtdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepvdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:GL5FZn67ipCnIre4tY-RTuCZj-JN4PUincZ62Uy13xfTz1mW9aoYeg>
-    <xmx:GL5FZv7M8IdJAu4qA3N4XFk2qJoOgHkcacvJfpIYzPTWUluV5QSufw>
-    <xmx:GL5FZngYwvhTh5SN0p1Jd3y8WzEp3xq_cGvpNkj4ZA1YxpFqIWIIiQ>
-    <xmx:Gb5FZp7M3V0eg-frwAb4MLwNo7LNYHcPMEbbLOwlOp_fVfRf5LWuKQ>
-    <xmx:Gb5FZpR44kLw0DkVtZqmTIw_U-aFcBHSlVbDOYjj6wAHgDiT2fD6E_pJ>
+X-ME-Proxy: <xmx:Hb5FZqA3tUyx9t0_XdJJfm3piYv8frgEWKO4f6hA4h_9uShA8nHKHw>
+    <xmx:Hb5FZngz5rxUHYU63GTERc8qkcYXCDe8T2Iq9Gp6PM84ko_dojYupA>
+    <xmx:Hb5FZmpWyEOyXS8XauaXxYl7TO00PVPQDsvm1rm0FJCiqJdBjKEdHw>
+    <xmx:Hb5FZqiYReLaJQtVgGunDt3EYNwR2N9Bmf6AKKosxQXpDf1vdwJ8_A>
+    <xmx:Hr5FZvaWX_ZeLWZ-JSFRe8vMi6_2j7N0MKxXr7R56X7BFHgOw1tE9em_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 16 May 2024 04:04:40 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 16 May 2024 04:04:45 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 69e04e85 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id dd335ec2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 16 May 2024 08:04:15 +0000 (UTC)
-Date: Thu, 16 May 2024 10:04:38 +0200
+	Thu, 16 May 2024 08:04:20 +0000 (UTC)
+Date: Thu, 16 May 2024 10:04:42 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 06/16] refs: refactor `resolve_gitlink_ref()` to accept a
+Subject: [PATCH 07/16] refs: retrieve worktree ref stores via associated
  repository
-Message-ID: <7b4ea1ffd255245ff7b4f00a7d77599dad61f80b.1715836916.git.ps@pks.im>
+Message-ID: <4d55dbbceb2162aab1ee83f5efe752f6a721bc8f.1715836916.git.ps@pks.im>
 References: <cover.1715836916.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,280 +81,179 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tP5VwzuQulBshtCT"
+	protocol="application/pgp-signature"; boundary="tzgTf8yUjWl9m5Xh"
 Content-Disposition: inline
 In-Reply-To: <cover.1715836916.git.ps@pks.im>
 
 
---tP5VwzuQulBshtCT
+--tzgTf8yUjWl9m5Xh
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In `resolve_gitlink_ref()` we implicitly rely on `the_repository` to
-look up the submodule ref store. Now that we can look up submodule ref
-stores for arbitrary repositories we can improve this function to
-instead accept a repository as parameter for which we want to resolve
-the gitlink.
+Similar as with the preceding commit, the worktree ref stores are always
+looked up via `the_repository`. Also, again, those ref stores are stored
+in a global map.
 
-Do so and adjust callers accordingly.
+Refactor the code so that worktrees have a pointer to their repository.
+Like this, we can move the global map into `struct repository` and stop
+using `the_repository`. With this change, we can now in theory look up
+worktree ref stores for repositories other than `the_repository`. In
+practice, the worktree code will need further changes to look up
+arbitrary worktrees.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- attr.c                      | 3 ++-
- builtin/submodule--helper.c | 8 +++++---
- builtin/update-index.c      | 5 +++--
- combine-diff.c              | 3 ++-
- diff-lib.c                  | 3 ++-
- dir.c                       | 3 ++-
- object-file.c               | 2 +-
- read-cache.c                | 5 +++--
- refs.c                      | 7 ++++---
- refs.h                      | 5 +++--
- unpack-trees.c              | 3 ++-
- 11 files changed, 29 insertions(+), 18 deletions(-)
+ refs.c       | 27 ++++++++++++++-------------
+ repository.c |  4 ++++
+ repository.h |  6 ++++++
+ worktree.c   |  2 ++
+ worktree.h   |  2 ++
+ 5 files changed, 28 insertions(+), 13 deletions(-)
 
-diff --git a/attr.c b/attr.c
-index 33473bdce0..6c6eb05333 100644
---- a/attr.c
-+++ b/attr.c
-@@ -1288,7 +1288,8 @@ static const char *builtin_object_mode_attr(struct in=
-dex_state *istate, const ch
- 			if (pos >=3D 0) {
- 				 if (S_ISGITLINK(istate->cache[pos]->ce_mode))
- 					 mode =3D istate->cache[pos]->ce_mode;
--			} else if (resolve_gitlink_ref(path, "HEAD", &oid) =3D=3D 0) {
-+			} else if (repo_resolve_gitlink_ref(the_repository, path,
-+							    "HEAD", &oid) =3D=3D 0) {
- 				mode =3D S_IFGITLINK;
- 			}
- 		}
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 5076a33500..897f19868e 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2600,7 +2600,8 @@ static int update_submodule(struct update_data *updat=
-e_data)
-=20
- 	if (update_data->just_cloned)
- 		oidcpy(&update_data->suboid, null_oid());
--	else if (resolve_gitlink_ref(update_data->sm_path, "HEAD", &update_data->=
-suboid))
-+	else if (repo_resolve_gitlink_ref(the_repository, update_data->sm_path,
-+					  "HEAD", &update_data->suboid))
- 		return die_message(_("Unable to find current revision in submodule path =
-'%s'"),
- 				   update_data->displaypath);
-=20
-@@ -2627,7 +2628,8 @@ static int update_submodule(struct update_data *updat=
-e_data)
- 						   update_data->sm_path);
- 		}
-=20
--		if (resolve_gitlink_ref(update_data->sm_path, remote_ref, &update_data->=
-oid))
-+		if (repo_resolve_gitlink_ref(the_repository, update_data->sm_path,
-+					     remote_ref, &update_data->oid))
- 			return die_message(_("Unable to find %s revision in submodule path '%s'=
-"),
- 					   remote_ref, update_data->sm_path);
-=20
-@@ -3357,7 +3359,7 @@ static void die_on_repo_without_commits(const char *p=
-ath)
- 	strbuf_addstr(&sb, path);
- 	if (is_nonbare_repository_dir(&sb)) {
- 		struct object_id oid;
--		if (resolve_gitlink_ref(path, "HEAD", &oid) < 0)
-+		if (repo_resolve_gitlink_ref(the_repository, path, "HEAD", &oid) < 0)
- 			die(_("'%s' does not have a commit checked out"), path);
- 	}
- 	strbuf_release(&sb);
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 20aa1c4c68..d343416ae2 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -349,7 +349,8 @@ static int process_directory(const char *path, int len,=
- struct stat *st)
- 		if (S_ISGITLINK(ce->ce_mode)) {
-=20
- 			/* Do nothing to the index if there is no HEAD! */
--			if (resolve_gitlink_ref(path, "HEAD", &oid) < 0)
-+			if (repo_resolve_gitlink_ref(the_repository, path,
-+						     "HEAD", &oid) < 0)
- 				return 0;
-=20
- 			return add_one_path(ce, path, len, st);
-@@ -375,7 +376,7 @@ static int process_directory(const char *path, int len,=
- struct stat *st)
- 	}
-=20
- 	/* No match - should we add it as a gitlink? */
--	if (!resolve_gitlink_ref(path, "HEAD", &oid))
-+	if (!repo_resolve_gitlink_ref(the_repository, path, "HEAD", &oid))
- 		return add_one_path(NULL, path, len, st);
-=20
- 	/* Error out. */
-diff --git a/combine-diff.c b/combine-diff.c
-index d6d6fa1689..4960d904ac 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1066,7 +1066,8 @@ static void show_patch_diff(struct combine_diff_path =
-*elem, int num_parent,
- 			elem->mode =3D canon_mode(st.st_mode);
- 		} else if (S_ISDIR(st.st_mode)) {
- 			struct object_id oid;
--			if (resolve_gitlink_ref(elem->path, "HEAD", &oid) < 0)
-+			if (repo_resolve_gitlink_ref(the_repository, elem->path,
-+						     "HEAD", &oid) < 0)
- 				result =3D grab_blob(opt->repo, &elem->oid,
- 						   elem->mode, &result_size,
- 						   NULL, NULL);
-diff --git a/diff-lib.c b/diff-lib.c
-index 12b1541478..5a5a50c5a1 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -66,7 +66,8 @@ static int check_removed(const struct cache_entry *ce, st=
-ruct stat *st)
- 		 * a directory --- the blob was removed!
- 		 */
- 		if (!S_ISGITLINK(ce->ce_mode) &&
--		    resolve_gitlink_ref(ce->name, "HEAD", &sub))
-+		    repo_resolve_gitlink_ref(the_repository, ce->name,
-+					     "HEAD", &sub))
- 			return 1;
- 	}
- 	return 0;
-diff --git a/dir.c b/dir.c
-index 2d83f3311a..f6066cc01d 100644
---- a/dir.c
-+++ b/dir.c
-@@ -3318,7 +3318,8 @@ static int remove_dir_recurse(struct strbuf *path, in=
-t flag, int *kept_up)
- 	struct object_id submodule_head;
-=20
- 	if ((flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
--	    !resolve_gitlink_ref(path->buf, "HEAD", &submodule_head)) {
-+	    !repo_resolve_gitlink_ref(the_repository, path->buf,
-+				      "HEAD", &submodule_head)) {
- 		/* Do not descend and nuke a nested git work tree. */
- 		if (kept_up)
- 			*kept_up =3D 1;
-diff --git a/object-file.c b/object-file.c
-index 610b1f465c..a40300ce4a 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2669,7 +2669,7 @@ int index_path(struct index_state *istate, struct obj=
-ect_id *oid,
- 		strbuf_release(&sb);
- 		break;
- 	case S_IFDIR:
--		return resolve_gitlink_ref(path, "HEAD", oid);
-+		return repo_resolve_gitlink_ref(the_repository, path, "HEAD", oid);
- 	default:
- 		return error(_("%s: unsupported file type"), path);
- 	}
-diff --git a/read-cache.c b/read-cache.c
-index a6db25a16d..447109aa76 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -271,7 +271,8 @@ static int ce_compare_gitlink(const struct cache_entry =
-*ce)
- 	 *
- 	 * If so, we consider it always to match.
- 	 */
--	if (resolve_gitlink_ref(ce->name, "HEAD", &oid) < 0)
-+	if (repo_resolve_gitlink_ref(the_repository, ce->name,
-+				     "HEAD", &oid) < 0)
- 		return 0;
- 	return !oideq(&oid, &ce->oid);
- }
-@@ -711,7 +712,7 @@ int add_to_index(struct index_state *istate, const char=
- *path, struct stat *st,
-=20
- 	namelen =3D strlen(path);
- 	if (S_ISDIR(st_mode)) {
--		if (resolve_gitlink_ref(path, "HEAD", &oid) < 0)
-+		if (repo_resolve_gitlink_ref(the_repository, path, "HEAD", &oid) < 0)
- 			return error(_("'%s' does not have a commit checked out"), path);
- 		while (namelen && path[namelen-1] =3D=3D '/')
- 			namelen--;
 diff --git a/refs.c b/refs.c
-index 86008ce7b4..40e241216e 100644
+index 40e241216e..03bf5d0e69 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1943,13 +1943,14 @@ int ref_store_create(struct ref_store *refs, int fl=
-ags, struct strbuf *err)
- 	return refs->be->create(refs, flags, err);
+@@ -1960,9 +1960,6 @@ int repo_resolve_gitlink_ref(struct repository *r,
+ 	return 0;
  }
 =20
--int resolve_gitlink_ref(const char *submodule, const char *refname,
--			struct object_id *oid)
-+int repo_resolve_gitlink_ref(struct repository *r,
-+			     const char *submodule, const char *refname,
-+			     struct object_id *oid)
- {
- 	struct ref_store *refs;
- 	int flags;
-=20
--	refs =3D repo_get_submodule_ref_store(the_repository, submodule);
-+	refs =3D repo_get_submodule_ref_store(r, submodule);
- 	if (!refs)
- 		return -1;
-=20
-diff --git a/refs.h b/refs.h
-index fc1a873e8a..5a2b493507 100644
---- a/refs.h
-+++ b/refs.h
-@@ -141,8 +141,9 @@ int peel_iterated_oid(const struct object_id *base, str=
-uct object_id *peeled);
-  * successful, return 0 and set oid to the name of the object;
-  * otherwise, return a non-zero value.
-  */
--int resolve_gitlink_ref(const char *submodule, const char *refname,
--			struct object_id *oid);
-+int repo_resolve_gitlink_ref(struct repository *r,
-+			     const char *submodule, const char *refname,
-+			     struct object_id *oid);
-=20
+-/* A strmap of ref_stores, stored by worktree id: */
+-static struct strmap worktree_ref_stores;
+-
  /*
-  * Return true iff abbrev_name is a possible abbreviation for
-diff --git a/unpack-trees.c b/unpack-trees.c
-index c2b20b80d5..304ea2ed86 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -2318,7 +2318,8 @@ static int verify_clean_subdirectory(const struct cac=
-he_entry *ce,
+  * Look up a ref store by name. If that ref_store hasn't been
+  * registered yet, return NULL.
+@@ -2091,25 +2088,29 @@ struct ref_store *get_worktree_ref_store(const stru=
+ct worktree *wt)
+ 	const char *id;
 =20
- 	if (S_ISGITLINK(ce->ce_mode)) {
- 		struct object_id oid;
--		int sub_head =3D resolve_gitlink_ref(ce->name, "HEAD", &oid);
-+		int sub_head =3D repo_resolve_gitlink_ref(the_repository, ce->name,
-+							"HEAD", &oid);
- 		/*
- 		 * If we are not going to update the submodule, then
- 		 * we don't care.
+ 	if (wt->is_current)
+-		return get_main_ref_store(the_repository);
++		return get_main_ref_store(wt->repo);
+=20
+ 	id =3D wt->id ? wt->id : "/";
+-	refs =3D lookup_ref_store_map(&worktree_ref_stores, id);
++	refs =3D lookup_ref_store_map(&wt->repo->worktree_ref_stores, id);
+ 	if (refs)
+ 		return refs;
+=20
+-	if (wt->id)
+-		refs =3D ref_store_init(the_repository,
+-				      git_common_path("worktrees/%s", wt->id),
++	if (wt->id) {
++		struct strbuf common_path =3D STRBUF_INIT;
++		strbuf_git_common_path(&common_path, wt->repo,
++				      "worktrees/%s", wt->id);
++		refs =3D ref_store_init(wt->repo, common_path.buf,
+ 				      REF_STORE_ALL_CAPS);
+-	else
+-		refs =3D ref_store_init(the_repository,
+-				      get_git_common_dir(),
++		strbuf_release(&common_path);
++	} else {
++		refs =3D ref_store_init(wt->repo, wt->repo->commondir,
+ 				      REF_STORE_ALL_CAPS);
++	}
+=20
+ 	if (refs)
+-		register_ref_store_map(&worktree_ref_stores, "worktree",
+-				       refs, id);
++		register_ref_store_map(&wt->repo->worktree_ref_stores,
++				       "worktree", refs, id);
++
+ 	return refs;
+ }
+=20
+diff --git a/repository.c b/repository.c
+index bb9b9e2b52..d29b0304fb 100644
+--- a/repository.c
++++ b/repository.c
+@@ -337,6 +337,10 @@ void repo_clear(struct repository *repo)
+ 		ref_store_release(e->value);
+ 	strmap_clear(&repo->submodule_ref_stores, 1);
+=20
++	strmap_for_each_entry(&repo->worktree_ref_stores, &iter, e)
++		ref_store_release(e->value);
++	strmap_clear(&repo->worktree_ref_stores, 1);
++
+ 	repo_clear_path_cache(&repo->cached_paths);
+ }
+=20
+diff --git a/repository.h b/repository.h
+index 0389df0461..4bd8969005 100644
+--- a/repository.h
++++ b/repository.h
+@@ -116,6 +116,12 @@ struct repository {
+ 	 */
+ 	struct strmap submodule_ref_stores;
+=20
++	/*
++	 * A strmap of ref_stores, stored by worktree id, accessible via
++	 * `get_worktree_ref_store()`.
++	 */
++	struct strmap worktree_ref_stores;
++
+ 	/*
+ 	 * Contains path to often used file names.
+ 	 */
+diff --git a/worktree.c b/worktree.c
+index cf5eea8c93..12eadacc61 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -65,6 +65,7 @@ static struct worktree *get_main_worktree(int skip_readin=
+g_head)
+ 	strbuf_strip_suffix(&worktree_path, "/.git");
+=20
+ 	CALLOC_ARRAY(worktree, 1);
++	worktree->repo =3D the_repository;
+ 	worktree->path =3D strbuf_detach(&worktree_path, NULL);
+ 	/*
+ 	 * NEEDSWORK: If this function is called from a secondary worktree and
+@@ -98,6 +99,7 @@ struct worktree *get_linked_worktree(const char *id,
+ 	strbuf_strip_suffix(&worktree_path, "/.git");
+=20
+ 	CALLOC_ARRAY(worktree, 1);
++	worktree->repo =3D the_repository;
+ 	worktree->path =3D strbuf_detach(&worktree_path, NULL);
+ 	worktree->id =3D xstrdup(id);
+ 	if (!skip_reading_head)
+diff --git a/worktree.h b/worktree.h
+index f14784a2ff..7cc6d90e66 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -6,6 +6,8 @@
+ struct strbuf;
+=20
+ struct worktree {
++	/* The repository this worktree belongs to. */
++	struct repository *repo;
+ 	char *path;
+ 	char *id;
+ 	char *head_ref;		/* NULL if HEAD is broken or detached */
 --=20
 2.45.1.190.g19fe900cfc.dirty
 
 
---tP5VwzuQulBshtCT
+--tzgTf8yUjWl9m5Xh
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZFvhUACgkQVbJhu7ck
-PpSmbw//e4OdUqYwXBUuGj4i5Jbyzza4VRcUFT9W4g/wlo3bSOXoEUUHEb/yAf/R
-i+oxQLZ6Ygu2BGFLKxr9Hu0Q8lA+Q57XWizBUXn2RA2cgO7iPWvU88OvXC5Nf/o7
-J06GW45f8cfph0nNfRXiMdQpn/4ELfloTV9FFtUiPZ9mBFDUOj29grkD8d6JWtAH
-fUzE/NNUEgJRaJBp0V4xsvkPbI/XdI80pED9ZGCgxFd41ztxHCGgzD1+fFsofWKB
-ru2W1rp0jBwuIChVnKZk2c8WKhjXblQKxyA7Z/r3ixfW7K5iUt8MFnibPN3nM1GY
-86qYBAdRRWBrxaqf9PwNtgZ1eHavcrUT0QJPidKiHA6ljg5ywha3bJ//9HeheL6t
-HMo1jbAl4DLLi2G0OHTSDiEPnSrOBHtj4zbG6Y9i01BuwHLuHmgBudIXlIfsHqbn
-8tb4SqpSnzjJO4aJNmkpvBniAH68vjjBMmpnj1KL8wmkvWSn9hZIAgF96IGxoULc
-Kzg1MgTSO4+SgMriZsIWwwpzCU4weTTrqJmNGOiHwaLd0g34OxPCkKeui2mTh90M
-0h5I+yXUjYwFm8p6C69W8181CgQXNFhOiuWw9av+dAPopftIQHXZRKKvwO7f/zwA
-A/eP3kgJinufMiqb4bbNRpJf6Df3w4fMWAc3Co6GezWyQ5smc6I=
-=KPW7
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZFvhoACgkQVbJhu7ck
+PpTxpBAAmzuGEaitOtIOgUHeM0VpO2ki4zYyQZQi3Zds2XG9GpJGmYL01SFpG3cm
+zJC9/vfH/806kZB+yeOwJS+BWlDk6wRiOrOg0wDZ7JTvwC4OzpudeOBdC7RWVKEU
+cJtjdyg+DRbwsPlNPCeYGg8IBc1IIWlP9OxVxgULdQo/NG6xURAgUFWR3DTx9HfZ
+qILO11nOEVCAL7Y/Dtynl7oqyr551OzXkVpIjnlu2e14AlrAYURNGEK/a4jw+cbk
+yPXXspF99b6vbKVZ+ANquIsFZV0aL88NeVWUoc8ZnpzEEqaINJYwB51WqAZyIhfv
+JVZuOFJRqI5VQemK+HgfOkwebvHzMXuNnQ6oOXVgOEyHvXFzwLvfFJR1hBNysn7+
+70+t7sli8vk4PHC14FXK/1lhn6juS5FfByVGGSMuCRAjF4Zbqu7tFAc8jaZRjN4K
++CJECUD4ei8zNpPXzJa307fP4aspGjxJFuwb4wgApA/vjRpxOT2S4V2RpKUWyqyP
+5E3Ck0H1hO2iLXqPsOju23C2LDxjUG0fPCQxaZM8+jBu+wMyn2mk+yvzFJAPmzG6
+ec/lnLyd0s552WRVNwZBWMYOB4CVzSoq+nu/t7UJvd4hvcqK53hy4KffKy8s5BR0
+Ag6VNngGru4NmhTEh/FuhRSjyncAwd6c8RVVwc2IaDp9sZXB60A=
+=mU+R
 -----END PGP SIGNATURE-----
 
---tP5VwzuQulBshtCT--
+--tzgTf8yUjWl9m5Xh--
