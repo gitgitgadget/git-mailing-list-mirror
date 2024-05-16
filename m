@@ -1,61 +1,61 @@
-Received: from sonic313-20.consmr.mail.ir2.yahoo.com (sonic313-20.consmr.mail.ir2.yahoo.com [77.238.179.187])
+Received: from sonic306-19.consmr.mail.ir2.yahoo.com (sonic306-19.consmr.mail.ir2.yahoo.com [77.238.176.205])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54EC143747
-	for <git@vger.kernel.org>; Thu, 16 May 2024 11:12:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=77.238.179.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6150145A06
+	for <git@vger.kernel.org>; Thu, 16 May 2024 12:04:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=77.238.176.205
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715857958; cv=none; b=uTTMAmxiSA/57trFuhgI8stVTI289RdSqpM7Kdt/tcYCFhqIGvyUmKXXLKzDWnRnZcOf7A6LMr6Uj2CQkBOBmRw5hvDqfgVLJu9WIPfiJArbY0e2eEaxR5rcIosebUL6bLJnTXeqr8GkQ11XbVcVjP/0inSYuZfygXrU9rO+3VU=
+	t=1715861100; cv=none; b=pYX41AVSWvcCGCzjRC7sqH3JLnL/3R2daGfHG0eUCw83Do27jOjMR65T4s7N+i4bGNyKBNV24CuqWkYqKkOuqnP6RwfjohYEzOJCs1f8/oWHE0BfXplLAwAHtBTr6b6OKqDpkYyLYk2bRqD3GfTyYmJFyH8SBGeGHkTSLsmuYto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715857958; c=relaxed/simple;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	s=arc-20240116; t=1715861100; c=relaxed/simple;
+	bh=wnD7+pYlvnatYTBpwuIU2wmL2t+Sh0kP75j+SgnlEi8=;
 	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:
-	 References; b=BQo/MguTIQ2xfnE6NG9Sl16WZwZYuJenJCBVEMo8BepqJNuigt6xTE0hAI73oxETxX6vdbGHGXhZwGJ0KqSdcGr7739piJ+AO/DEhd2J8ewtgCseW6ke3uwO7Z0zUBGZLIP3HruWpdoBpycNA/5iCN7IU9FdHl4n7uFnuPxFHOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.co.uk; spf=pass smtp.mailfrom=yahoo.co.uk; dkim=pass (2048-bit key) header.d=yahoo.co.uk header.i=@yahoo.co.uk header.b=QL/3vko/; arc=none smtp.client-ip=77.238.179.187
+	 References; b=CDmX9VhI9fV0k/appIJwFDVSIQTayBez6MiYVQO1qPj1yne+Lg73b/t2/1sdNPItVKTT+YLrLsarJ7dSZVx+UJFGq4eblhXXaZVNqbFUeanB26BJGVDYIUfBuPC8OfU0EFkCgLJmv/elRBaxROev60fqKwfX5W/IJ58EKh9ExrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.co.uk; spf=pass smtp.mailfrom=yahoo.co.uk; dkim=pass (2048-bit key) header.d=yahoo.co.uk header.i=@yahoo.co.uk header.b=gN7BcVaQ; arc=none smtp.client-ip=77.238.176.205
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.co.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.co.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.co.uk header.i=@yahoo.co.uk header.b="QL/3vko/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s2048; t=1715857953; bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=; h=From:Date:Subject:To:References:From:Subject:Reply-To; b=QL/3vko/u1gGBSjOs1KoIKQQn0Nisq4HC5GYYjG3R3VOpNUiBopJAiXUfZ4veYSQeedU9NfquJT/w3I0DHPDhqaV4sJk4WgmTz4Fnhu5Xqy1DMVQZi7FqKNZrAgbLTDs8Mtd/iY80hFqC8bN1751xSh4fLZN5A+COLzWhlEX51tkDPjtbxv9aqPYjdLg+hFeabW5gZgPmom7skVVRdfUA4dEkFeY0VzIOmHcRd4VjBgX+MMbo8Ih7ewayiGWIpQCS0CwVwqC5X3yC78CPH/7pZgqReGhLW7aXN4FNc4NPz+HnFtDDH8XDtv+Nt6E1a7DdGN+ZUaaZCv321MmZNuWGw==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1715857953; bh=p1ocimwff+hDY2ZmwtsJ2CVH/g49vVBVgz6PzzUjzqK=; h=X-Sonic-MF:From:Date:Subject:To:From:Subject; b=SDDGVU4gxK362B49+h5lfbO1MDG8rm6Amd2c9rbmkKBM/FfKHeD0L8R+tNhEwbYp7oOun1uEWNds4WuKJlhbJ0Y2nsfyzyf3NQ9vv9ZnqIKO6o88z4kf7M8HVX7zHLsRQwHuA4tTZ+k+GB4O+bV1kDOOlvFpwgRmNGqbI1jG5wIMsugm9RkqxpphrHGpsX7lFQaaFnKVdjraTEbDFMNFrFmdvJApCsxQRDYhSnMxUnsTWHE4w8T+89tuMbDMG+F79mI1905hrGqmjV6SNrF2NX6IwHIclK/TMF3iEkVXqWY44oceU7q2gWHSmtZUKtCg+74x3pLggcbnH7YtN6smUw==
-X-YMail-OSG: k_LACIMVM1mRJc0UL6purYU24UJJNVJvhs5NtETAOMQJaZDWfYCPXYIVwHEYsXC
- HFLA85HJOGxZMia_0LNZ5GJcSmTYzBPpPjBn4VKtRg2jvIbe7_8Hi39KpbH2Nb6YuVf3HLWlCnQR
- XhFH1MJXKZu5ulsv3nFwl3.jyoCkYVBO.bODXPOa17d5Ze068DQJOBlhZkxh.xXJ0GRnmnlE2CW7
- UpGFg0Wi80_5l1jspuh9i5.4U4pNvQwauesmDqiTflZ_jcn8Q3tsoS9PRK1sfT9raa1AtQMC0EOo
- azrE0zdB5u60q_QhawKptbSE9aeX73E9PfmsQPgDRlmKhx.nHO4gN2yYcBGR7cMyKlpAJYclgG8w
- YD9dzTYnKe5fGpOZBzMw4kQdZxhob9HR734hau4T_hBf7HPBfJuNYIzkWY5Lt0_1VtIEl_QP7SYZ
- P.y87WKCRTi8Y0Ey7r0zKHyi8nRk1k3KPkuKOADFrm_766O5TgWiKxqf.lKTgKEVQFfwrbdVYp.A
- p7XivNFhLs6Znijj2OA.U6vIAlUkfGM59H3qGtYBEkcYWbcqkUV4i.qf474HHi02WoSXRPejSvki
- 1TnRDP3BirlrSwqkAahum9YKmuPs.MmrlTDXEnwl__OHRssgaPAJyzKQrrIWUNGPcp.XFDC7Qls8
- ZnIMwew86DPP_0nqRI.Ep53nW7cIxDWTPyKfQQ6fcAX98X0vPHu7D8Gcv6VYFOyZGdBlhS4X0Ss6
- C04UF.ewJbOuOccfmxD5kPg22fS8DOweiqVfo1u_0oTDKqrXoi4_bDpe_zU2ZaLtHXZ2Ipd3sVLD
- bRAQwvpYHss4VtjX3Nb.J3sGZM9eJkrt7IfA0lnMr8rmpWCYkUrBYTwFaYZV9H5OYoJ6U4ajFi1v
- cyV.ggNYNAvlb8aAtX71BmZ9xmHYuo0MFZVj9haBLKSEfsbjPxJWyUD53m70Xciio3jmVcdKuhXe
- xjoPPgQxO77AiDrr6DZrwExieMSAF58LDhl3yj9Ch74rRBpziCTqw.hPO7.psMESudkjjxdr5IsQ
- SITHl8R98ek6T0dRQmm0tx0cYzjDFzdf8yG3zEXT39idaT9D83R43dL78_phDIshjddtzo7tRLit
- ipRA0aJ10XtllOv5ihmpuH3bLq9_8ls2OQBn58O2YZ3k4RC1RcEE80.FXkTboSGIppLWLCRCltQ1
- aWTksYszC0s0zRBgeqHkLCxFzsY2t6hEASePB3kPBxbCxIQTsNy.VNZ.Az0UF_4uJXihSV1BWACn
- JBeQue8gr.1MzEb2xRhGQ4Ktjnn5psxMVkXV77baGngrk.O7bjtEuyuGvxWIHlbjcit1iITQcGKA
- pnfGqVo54FWuuOAlcjZJN2Nki8jNN9nYEOAHmKoCIABVhmoxRIXYbDiMH3pRKyljBowmUx603pHo
- KFGe3QgDzgqSKz7_6HnsichryVqQXJOLscgw_BYbjRciUPVFydTCwVRAWuW1EjQKNlX.yIWNScmi
- gmyZQUtphDo6UgbQ.DrUu38gtgkP6s73wm1Bf7vlvsYv0x1gYtI4ohUv4dhRqOtXPKmUd5c5pIbc
- .PqUwSkoVPGwisBQraxxIs.ijErzpjr7Eth3WKjCGppPvJp05UmBhYZR2bdBor8kUoghUjI3jOoj
- XSELWYwymLXl.WBP2yttj0isD5fHc_xrbHxa8Q1Z75q2DVDUASgXYS8c49P77LlfNmJm4Ke26gcg
- pV5osqiVP0fCgiUmCo87_hTocfNKMkIcnQQ4YQFbD5FcxYqTQcKx8FmcD5byqi8NY1MClYJEuM9D
- DdEGxx9R1OSf3UgPKmVfg5FoBx1EonrJqEwubvKf5k4sjpHxQM4gIqSESwWQ7MTe9yjnI_iidqcg
- HzPy_G4TIsxJKpbSFJZhK3hmQaVN2t_H6JraiCJkDBzYRpJGZSidsF7CoB2M7HUy2w0Ys1SOfI5b
- 1uN50TRX2J9zFfNhF.eoC1IE56Nj0HRZbrOCxXJg2mlJkMXwQYT0MK_iJIGXGcu_S8U8CexcnQSS
- SdzBTKU_OlUlqwbWqwEiG989tRBcXvGPo4sZ.ctStBE5Tp3cI.oDBkFjvbrkxKNpFjnbIxbXqFf7
- CnkTK06x5JgLaVbEcIaOKkbMLQakhap1hPfEB4NU.npumgJCKLaEy.XJhcZexPJXNu7dh9aP2i8P
- 6NwvR8bfONxPZJrr.SpmJW0K3r1WJ_k2naYMaTC79jDMR8g01u7mHBOjGn7Q2wwxVAeaWldzy7b.
- EoDFu93ndojIYVwHLzxdPtbDvaBHSJ9z5
+	dkim=pass (2048-bit key) header.d=yahoo.co.uk header.i=@yahoo.co.uk header.b="gN7BcVaQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s2048; t=1715861091; bh=wnD7+pYlvnatYTBpwuIU2wmL2t+Sh0kP75j+SgnlEi8=; h=From:Date:Subject:To:References:From:Subject:Reply-To; b=gN7BcVaQ1JJ+WzwUB4V6zgKC3FiPPSUGrjbThDLpMH2FnIaadfijyPQkI7IHM7EiA7fDXHwMMTe2pQF4M63saxI0tt/tQDhxzfpzjyzvjCAkAPI9/kAiwN6MtLk+TfFPY3n1sQxinjNhTJQ4RaZu8wjhW7cjCE0Wi7BUDZ/+0kvLz0hfaO6mIgiuvkyi4NYZRhCNesj77t8wBit/fvLnqMzM4ePu6yA+1xbAgW3iplR+o4JZnoSJtKyuWaC8EeJ8HJkFaDrVrfAubLPbXRqMUqcMaWdb1nfvHvha21eiQTaasb7wIn6Qmkx+iECZiivqQBUIg71BPnXXKee1nTb51g==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1715861091; bh=OqS5TaTRmJabFcSvhg7pccwGt9wbW4a7QJCJoSFcE5/=; h=X-Sonic-MF:From:Date:Subject:To:From:Subject; b=Y5tKsarqyqWpMmWicogl1G1jOWRCzWx6Nmk/UpwaRaYNi4AqyyGBB9fYESNj7BgsHq4HkKxkMlHwashkkDsRFsXmKYRH2xU6aE/o7yogTq521kKf6dvuo4bPRPM/xbIoxzLB3UvLwovjUtLcM1/8wOhfyBE2tij8HmRtV1TgrHFTC74+r61388Jz/B5y0uOXeE2q0apndm0C1iEyxMyvA5bUjFq+ngkezteptI502DcrW7XCin9NtuOzr1xJMWrK704PMwmKTK+JmnUCjSab6ZHwSH0P+kDUEeshH8jZ1bYhTxAnB+ESeQpU0qVvOijP4qaiPCXzaI3ygU70vOzrhw==
+X-YMail-OSG: _WTjSD4VM1mjo_XU.DyZlLwILKdK50n775BiiMCTGtEPcOm7rT5SfW81HIRBqJf
+ fS4A_OQsi9HsrGzpalBnSkYk1lUcwGgL9_aUf04Jl7DS22RD97KnV.E3jYQX_f451iEhfrzGleqH
+ NTU6_18a3BAPhpIMOCdWHxHXQA5DspRw5CRLDn0T20KhtDPaBEY0IAfXLsjofl4HDvnu.kurqFO7
+ 8XFHaWxyE_QYR7y1AJCowVnDzHfLieBtFYyFXDLmcKRHFeNlG86QJCGlTfm9avHjebDW77paguQG
+ 9KbyHTXeYrbY5A5Q8A2yOMWfiotfiDUiw.sCPf97QUpTNaztQu3OLnvV2UR3L82ONnMSTsRJFKMI
+ tYcd8iMVzdCl72KhRR4cSQg.kE1zX418E04hP2wDskvXnP7wNLBKdhwAk_wXm_u0mIpLgBE5qSh7
+ ORpzn1nvmmhR7G3aozJeC1F2KOrvbIsF3hJdkNadXUHziRGxMSNghA8JVgWRwLdw2DmKI0WLhz8M
+ lBfauAgL2Fz.qRAcIHMzpm.tIwG.2KMdwg512OFLS1PV8iuxP1xObk2eq0DN_DH9QCW1ppOIqumO
+ d3F_MoTi5KmYrsz_NPermdFw69ahREDK_EdtxS5XpWMitEdTXn2IbhRKjTC4xSSLGteFOgo5hqPw
+ dukN438RoFsFeEwMp5fJiRFSQl2aAuxUf4a_jmdIEaflLoEXmU.XXLfVEvqRJN0j7TZAS0fwp_LV
+ OOzkX_ucg4doS8m.QL5fsj8VAiEVyUZbxD.cJdLtinFNAiZuVe6unWh_R78QHIPosIUbaPpIO9ZN
+ 9rz1pBWUzhjY6WK1T2L8L38x9BuzajSp9xpUL7Drlg5ewpSQ5ZPkpGLgx9Lw0hTNTGI8mkWMxFYe
+ ZMNCKvJTH0u80jgTY70Gwc_BCMxoIbrwQ554xStUKuBneiw0ZWGlCnFQnB1uHWaDM5spDCEihp1_
+ acJ_Z6pH4GLSRKcUYUXG5wBd9zUS8jMgFMc9DTDJ.uvnS4NRma4k7rCCdCz1HOD2HtkxgDUiG3oG
+ sKD8.xLvkPl1mgmo_FfuWrLdQNb6J_t9YFSrH6iUAwLB6QK3tistosasuOMaergDSh_ToiEWSNUO
+ ICljN1U2.cgk9MnUhbBFQgo2E0pxccfarCeONx0jxqD8XormMry2S7LM2EiBe_07IKr3SMaffbSW
+ .CG9HwbVqs2RZDVdhmUfNAYSlKodmAmisMnBf1tCQAma6QVtE6dJkQxTgkSpmxyBXDr5UxhMtQXg
+ YLl7QGwmKNk1CvndFQFTdjcVMaSX3nGc8l3FUKGECVMAPTeL_n2q2hK6zDhGuEBhdYurJHYQAR8g
+ AgBDlXf_hnhTePRw1oX6tGPJFvulttYMa36vOzzXOceUnCrDx1T6fd3BAT3Tb5nP0kqKTsJ.xk0K
+ dCHG7lfq69Xw2DSIp1oT7yEMOvDp12lbY8KCz4x0WuZMrr24PP2q9WGJuA_w8DsuAdqHHQffGXB9
+ ZAJaCduus4Iw.3HA7B7KdtFv5zsq32NikBRABP_jsLPJflgE40xGXx9TR45rCNaeZAUFWx.Sv8Ws
+ 41LYIVA4kv53efPiN26bHgEOQJGlgU2_4I.wTgEkMPb9Sc22KK_KbpgfSd_o50A837OpNmdhmLk2
+ H4c_z4qTCX6u6gGMhEMxtoUh2FpMofAuIa.11J9YJaTKm0LaFy34._kdwuAvZTvU.W4z0UudodVL
+ dLDmFBCb41xjdo.wVHv2yy6RVAt2aT6XxHkXoFBUCeiHEamXa.9._oz6o8QuqTKjvEUr.tb4N03U
+ f5sV_6ROkbOlWxCHBCJ3aQaCYyWkEOv0pnSyXBDg53z.GflNbCyoKGUxNp1PzDGhlW8NCoiZfMlq
+ Zv465hhpwp9GXXUQNS_2hexp2o7kOsVuGreKyaYNqYHukLXRFFZsJp8QhVTGz.wmD81FI4WCsqZL
+ AXMiib5DYJ1cBDZ9.U5O8XkCtSSls31wMOBstHB0pIg2kseSgBI8tsngPTA4J1oT29eY7mtgPnRH
+ duOvGXaJCgOs15BaPLXID4JdcKi0I1UJOqrjZIDGqyMnyk0_uE4UmYA6N5Ty6PMSqi2pBpUfQQfq
+ .VPjR6EuDF9fmKFeJyBfWIjrcEHBc.vQsCP7dvA8FeDLxOgCJAeFm9G638XKrNDyuHVzYtjGedaK
+ qMiUIfPbSmSKK7JruhaT8e3iWscMI6w5IjlVcQoAi8w8jiQGq73KZduVX7m7DQrDau.pdt2wp1O0
+ uE3WxKKGcwri3sXQuyxOdyApYNLeIAT8ZWLgI
 X-Sonic-MF: <s7g2vp2@yahoo.co.uk>
-X-Sonic-ID: 8d1c8ee9-ce5a-4bfe-8ea7-873331a24dea
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic313.consmr.mail.ir2.yahoo.com with HTTP; Thu, 16 May 2024 11:12:33 +0000
-Received: by hermes--production-ir2-7b99fc9bb6-mp7rb (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 580fb1362ba9c7d0c3551660a98055e9;
-          Thu, 16 May 2024 11:02:22 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+X-Sonic-ID: 06d48ece-db45-42c6-a2f7-0237b4a96271
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic306.consmr.mail.ir2.yahoo.com with HTTP; Thu, 16 May 2024 12:04:51 +0000
+Received: by hermes--production-ir2-7b99fc9bb6-457mg (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 3bbdae6becebfe83fea37701b618674d;
+          Thu, 16 May 2024 12:04:50 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 From: Kevin Gale <s7g2vp2@yahoo.co.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -63,11 +63,34 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (1.0)
-Date: Thu, 16 May 2024 12:02:12 +0100
-Subject: subscribe
-Message-Id: <AA7553D9-B385-4745-8AA8-31BBFEF6A818@yahoo.co.uk>
+Date: Thu, 16 May 2024 13:04:35 +0100
+Subject: Embedding Git Command Line
+Message-Id: <36B52407-B52F-4394-8DF2-F2DF3D3F0504@yahoo.co.uk>
 To: git@vger.kernel.org
 X-Mailer: iPhone Mail (21F79)
-References: <AA7553D9-B385-4745-8AA8-31BBFEF6A818.ref@yahoo.co.uk>
+References: <36B52407-B52F-4394-8DF2-F2DF3D3F0504.ref@yahoo.co.uk>
 
+Hi.
+
+We are looking to embed version control features into our commercially licen=
+sed proprietary product.
+
+We haven=E2=80=99t made a decision on which technology yet but Git would be a=
+ popular choice.
+
+I=E2=80=99ve read =E2=80=98Appendix B: Embedding Git in your applications=E2=
+=80=99 on the website and determined that our choices would be either to inv=
+oke the Git command line tools or integrate with libgit2.
+
+In theory, the command line tools should be easier to integrate with and we w=
+ould rely on the user=E2=80=99s Git install rather than bundling the Git sof=
+tware.
+
+What I would like to know is if integrating with the command line tools woul=
+d still fall foul of the GPLv2 license or if there is an exception like ther=
+e is for libgit2.
+
+
+TIA
+Kevin=
 
