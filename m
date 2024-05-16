@@ -1,77 +1,77 @@
-Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D120B134751
-	for <git@vger.kernel.org>; Thu, 16 May 2024 08:05:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B580F6EB7A
+	for <git@vger.kernel.org>; Thu, 16 May 2024 08:05:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715846715; cv=none; b=mMXTt58cazkl7mwcwFlHfmm33lODZ+hSViz51Y8PWM0I06R3Ylv50yjTv3vkeVsWCTI1qc6QdMx6IcfOhr9LmmmEw0/P0tuQH+gncqsijR3Z7VNCTE8kexPc/V+j7yfKbICgKujb0Kt+iIMrNxNv4jytAILqPpSh1gdltvO6NaE=
+	t=1715846720; cv=none; b=oRRs32ga3GwDZ4tlAvx9spdcxAYMLSDCg0kjDuZqBdcM78JufsV6X7B+lmaYtKXNRSs2bgF2z+fqrM9SuXDb1CtSGp0DKrLyDD4ufw4tvH3yIfF8UF2SF8mtoSIQHfvYyNxJxYHZk/l3y5pjduVUzwSggZOseIRiI2iiVOu29Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715846715; c=relaxed/simple;
-	bh=29NLNaMne9BcWDHneTr/0xDnhRky03+2o8nupwC8+Y4=;
+	s=arc-20240116; t=1715846720; c=relaxed/simple;
+	bh=UkcZLLGo6apXJ+9UVKOEn/mYkigcX9mekUsCpbGztDE=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q3mJV43PDWWotVd3pAAhimmSMGlyagSRb2ZgOwHo0qW+KSBwL/egmzI47rhWYtiuc82AN3yPPTkhTseJQRufKGcKXHs9xhreMs/MhkY9JIBhs+NJt3OKURp0YPPcyXCvS1F2U4zi6Rt7cF7OGXprmo7njmzhVD6CnlLPdYOm32U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=t32E9/pN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hn7sHm3H; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=RFGKveJme0OWMK70dbCV8tDBjjyL+SREe1eQeeFSCffJqb7Mt1rLZQIa9/DllAsE2bGE6QOdNK6P7h53B0eocf62Ht7R9zVtmOtlAc6nftkE8/grDQIUBEBy+858OleYm6X3bmIrha6YNIttVlxhPiJG7tXRN987zk74rqfp4Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kXdYXAWy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hOUo75Wj; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="t32E9/pN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hn7sHm3H"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id E485A1380282
-	for <git@vger.kernel.org>; Thu, 16 May 2024 04:05:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kXdYXAWy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hOUo75Wj"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id DE1F3114006F
+	for <git@vger.kernel.org>; Thu, 16 May 2024 04:05:17 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 16 May 2024 04:05:12 -0400
+  by compute1.internal (MEProxy); Thu, 16 May 2024 04:05:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715846712; x=1715933112; bh=sDqH7sm5Sj
-	cT57mZOUx/cTEE6+xN/O1tS8WjKfpwrXc=; b=t32E9/pNzZC88OiDk5uCL8UK+R
-	3zqAQIDuKMlsFzR/rb77KPyaXmvL+L6WelI9M96+f+T3FOq/zbl4PVbUWK8d5/F5
-	b3OicyQRF3o3+UpHVwqy9UBQRx3lmEQqrKInaeVYbKAHdM/YPRlxj0H3sB9OtNXE
-	lLjNGmoYriFcH7NR6SplWy8D74hlsFhVdGz8rORxKoHE/RwDt3thITLUGtjmyzVs
-	lW2yb4Zbr3lFttLpaABULDDe+3zGddAxjQF0iqFIwMHf+EFs4iVTZF8eQVaAa+U3
-	RmR1IyaTjgzsWn6znMe+RDpApWmf/Afv5ZQHsIpsiFomgvDgYXZJlZeJEmaQ==
+	:subject:to:to; s=fm3; t=1715846717; x=1715933117; bh=wp53xAXT2z
+	7YH2gofho6DPDe69XaV3HuEPogUPr4QAo=; b=kXdYXAWyQ0FUAZaHgAiNRPllHE
+	Eo0xn5k70n9s7f2jSkNqtTum9EXLCdBZHNBV0vqgrWDKxXUwj5ZUaR3hAb5GgMmx
+	7HLKK0tOikOYIs2g/9KlmFW3JUcyRv0ZI5cLMh2+CYcd59F/ncgvTshEK/g73tPx
+	4vnVLqQv9Fl9Fmv12GEuVuxIFYZIBoZhg1znA8gzbxx/fbUfOa3MyilYnxNB07TS
+	PS5RSE8dvvsh+AD5L8mPPQBnlHWdys8a6S+g2BCueQ9j3A7rCxPpY6jY0plb8wE5
+	4Vx9F2+4KQlH/Ukg64/xCmY+/HZeoEXKvQIjPlI7clhlRY2m1SB/n4WMVpNA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715846712; x=1715933112; bh=sDqH7sm5SjcT57mZOUx/cTEE6+xN
-	/O1tS8WjKfpwrXc=; b=Hn7sHm3HEtBMKvFF2uEXUKikYYepL5RxMh0CrmN0cstG
-	4epVngWCm+Xyb4i/EPkN97UUsewDvnekZGc+ZS4+398arRBtzxS+wbZRTELrmBFL
-	e2YqUyLQwiCQD1G6XVHcQ1rsXn305chB2m9+QPFu/6+GCmjIu8Dsfp+bDKyETqzw
-	eev2Emw2Jd7MuQktcQe0lX53AUz+koq3GNpFk4/mqCUDjlfUDo0QA3whKb1n5pls
-	VCTT0cZB4+YU7wr2xigEV4otud2nhgQQ2zszYmovqeZ0xVjYnqzOxa07gRGXEDWP
-	4NGRaX+Bzrib4w3UTmcB54hLlpHi0kK0wPL/Ri1HrA==
-X-ME-Sender: <xms:OL5FZvl8byO64UPHfQpJpY59fQedE31l5QIfen_Whoryq2zbrlovfA>
-    <xme:OL5FZi0IQqzktTShkPS4Pz0bS5oi9bAh89NYnEg7mCjljeWkVyl0nfM3PV3e1uUmb
-    MIWp6Jce7VcNIY3HQ>
-X-ME-Received: <xmr:OL5FZlpBUjJgJr5tuZq3u-HpW1c0XEbT1XYeAHK3rxXlJhDk6XmZZWcZ_08mlciqZTV3en_VXoZYJaZ0z4X9akSV5dnLb65SDJKoaR_gIYPAcQc>
+	fm3; t=1715846717; x=1715933117; bh=wp53xAXT2z7YH2gofho6DPDe69Xa
+	V3HuEPogUPr4QAo=; b=hOUo75WjDJ5f/iHl2kY6r+NpyPd2a5jOIfunjDfIK0BA
+	57HLyykMFWuoLPRNUAhAR3w3zE2bmWDSnKx5AbN73EcOP6MKieuBwEhcL1SIge9I
+	eJxPT8QMGR4YqHvrXdOSKrZTOKqh1rhudBI08WkbrMUUV/LnB6HZ8yeA/T02jXy2
+	0UR0TggalJOSfa5obufH2T5JVHu4OV4rzNVkBXkD1pxMnmF+BZeWre/KuUE1MBww
+	FVgmHRd1fQgvybQAkTOBUbzlI82vhKut1I4OWujNcHKOdJ/FZViG7EqcqJFyMz+D
+	W+/aGYjT+eUXIJPsBBPHvivKqQSfgDZ3aLrDhTmV+A==
+X-ME-Sender: <xms:Pb5FZgZJP5DpVDuHdsC9vGJu75OnTZPK1YgZkcOYvwi82QW9Xvo76A>
+    <xme:Pb5FZraXCxSOWWlIMyhphNDW27j3i2NhixwikuFePctLvHZkoVooyPFtbJ-j0tk6y
+    bmQGsLrlQ2p0azMPQ>
+X-ME-Received: <xmr:Pb5FZq90ZZrTNGfptKA2lSh7BxneEhrhi2BxQ9S_UPvKxLp1ytFb1vKohExJ38OY8ljfQdIfRy-OoJeutuCZSvA78Uc6ymjjvIJcYO0Nn_Di9LU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehtddgtdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepgeenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:OL5FZnkbmOPTXm-mRYyGIaRMgxWha697KU0U9sl5CbYmLxrPkD1l0w>
-    <xmx:OL5FZt0sQg7jFi7q8ZYKzsA--LzfLe6X0Wa2PjmCe4ryS0lXJlezNw>
-    <xmx:OL5FZmtEHgkDhYD3x1yhwW36fafBMhIG9k_jdjsBvOuZfZvQH2NmPg>
-    <xmx:OL5FZhXVnGLF2ZiIyXg1OLDJ8ONqOn8cbkzaLf11bNBLyAqNiel3aA>
-    <xmx:OL5FZu-8fwpOECTXAEudbNrzw5p6_lSuqsm3xvSrJGPu80hXLgGVgwiS>
+X-ME-Proxy: <xmx:Pb5FZqpUP3xdIzk7NVj4KJVPN8jptsrF3cxkaqwM0Qfar_3N0y1hKw>
+    <xmx:Pb5FZrqMA4J7WqTv99zJsWewGdByqiuCfNy33mEHiL2nWEZF-LfP_Q>
+    <xmx:Pb5FZoSjUBR4r0ZhCoo32_svHBEUK3znZDMrA3wEO8LIfPa1oLSt4A>
+    <xmx:Pb5FZrrIi8GkEASLvEDJhoxLigHooq_22nrTcL0OfQ6XRiS6WnpBsg>
+    <xmx:Pb5FZkCLqEeAGs6KVX25oqgEnHp9YHycUOQgYTgrqbS_4EgcMfme-U9M>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 16 May 2024 04:05:12 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 16 May 2024 04:05:17 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id f19032ba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 7129f1b0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 16 May 2024 08:04:47 +0000 (UTC)
-Date: Thu, 16 May 2024 10:05:10 +0200
+	Thu, 16 May 2024 08:04:52 +0000 (UTC)
+Date: Thu, 16 May 2024 10:05:14 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 12/16] refs: drop `git_default_branch_name()`
-Message-ID: <09ca848e7d8a9c4f4d8927d8f01a1c3cb5d34e8c.1715836916.git.ps@pks.im>
+Subject: [PATCH 13/16] refs: remove `dwim_log()`
+Message-ID: <da10714a45b933ea6306892343e2bb37a2abaa1e.1715836916.git.ps@pks.im>
 References: <cover.1715836916.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,233 +80,125 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MNgHOlTJXMy8HDbK"
+	protocol="application/pgp-signature"; boundary="oZf5Y8OJGnucpjw/"
 Content-Disposition: inline
 In-Reply-To: <cover.1715836916.git.ps@pks.im>
 
 
---MNgHOlTJXMy8HDbK
+--oZf5Y8OJGnucpjw/
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `git_default_branch_name()` function is a thin wrapper around
-`repo_default_branch_name()` with two differences:
-
-  - We implicitly rely on `the_repository`.
-
-  - We cache the default branch name.
-
-None of the callsites of `git_default_branch_name()` are hot code paths
-though, so the caching of the branch name is not really required.
-
-Refactor the callsites to use `repo_default_branch_name()` instead and
-drop `git_default_branch_name()`, thus getting rid of one more case
-where we rely on `the_repository`.
+Remove `dwim_log()` in favor of `repo_dwim_log()` so that we can get rid
+of one more dependency on `the_repository`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/clone.c |  5 ++++-
- builtin/var.c   |  2 +-
- refs.c          | 10 ----------
- refs.h          |  4 +---
- remote.c        | 12 ++++++++----
- setup.c         |  5 ++++-
- 6 files changed, 18 insertions(+), 20 deletions(-)
+ builtin/reflog.c | 2 +-
+ reflog-walk.c    | 4 ++--
+ reflog.c         | 2 +-
+ refs.c           | 5 -----
+ refs.h           | 1 -
+ 5 files changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 554b29768c..bd3e8302ed 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1468,6 +1468,7 @@ int cmd_clone(int argc, const char **argv, const char=
- *prefix)
- 	} else if (remote_head) {
- 		our_head_points_at =3D NULL;
- 	} else {
-+		char *to_free =3D NULL;
- 		const char *branch;
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index b4650cea16..0d2ff95c6e 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -378,7 +378,7 @@ static int cmd_reflog_expire(int argc, const char **arg=
+v, const char *prefix)
+ 		char *ref;
+ 		struct expire_reflog_policy_cb cb =3D { .cmd =3D cmd };
 =20
- 		if (!mapped_refs) {
-@@ -1480,7 +1481,7 @@ int cmd_clone(int argc, const char **argv, const char=
- *prefix)
- 				"refs/heads/", &branch)) {
- 			unborn_head  =3D xstrdup(transport_ls_refs_options.unborn_head_target);
- 		} else {
--			branch =3D git_default_branch_name(0);
-+			branch =3D to_free =3D repo_default_branch_name(the_repository, 0);
- 			unborn_head =3D xstrfmt("refs/heads/%s", branch);
+-		if (!dwim_log(argv[i], strlen(argv[i]), NULL, &ref)) {
++		if (!repo_dwim_log(the_repository, argv[i], strlen(argv[i]), NULL, &ref)=
+) {
+ 			status |=3D error(_("%s points nowhere!"), argv[i]);
+ 			continue;
  		}
+diff --git a/reflog-walk.c b/reflog-walk.c
+index f11b97e889..5f09552c5c 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -191,8 +191,8 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
+ 		reflogs =3D read_complete_reflog(branch);
+ 		if (!reflogs || reflogs->nr =3D=3D 0) {
+ 			char *b;
+-			int ret =3D dwim_log(branch, strlen(branch),
+-					   NULL, &b);
++			int ret =3D repo_dwim_log(the_repository, branch, strlen(branch),
++						NULL, &b);
+ 			if (ret > 1)
+ 				free(b);
+ 			else if (ret =3D=3D 1) {
+diff --git a/reflog.c b/reflog.c
+index 8861c2d606..3c80950186 100644
+--- a/reflog.c
++++ b/reflog.c
+@@ -409,7 +409,7 @@ int reflog_delete(const char *rev, enum expire_reflog_f=
+lags flags, int verbose)
+ 	if (!spec)
+ 		return error(_("not a reflog: %s"), rev);
 =20
-@@ -1496,6 +1497,8 @@ int cmd_clone(int argc, const char **argv, const char=
- *prefix)
- 		 * a match.
- 		 */
- 		our_head_points_at =3D find_remote_branch(mapped_refs, branch);
-+
-+		free(to_free);
+-	if (!dwim_log(rev, spec - rev, NULL, &ref)) {
++	if (!repo_dwim_log(the_repository, rev, spec - rev, NULL, &ref)) {
+ 		status |=3D error(_("no reflog for '%s'"), rev);
+ 		goto cleanup;
  	}
-=20
- 	write_refspec_config(src_ref_prefix, our_head_points_at,
-diff --git a/builtin/var.c b/builtin/var.c
-index cf5567208a..5dc384810c 100644
---- a/builtin/var.c
-+++ b/builtin/var.c
-@@ -46,7 +46,7 @@ static char *pager(int ident_flag UNUSED)
-=20
- static char *default_branch(int ident_flag UNUSED)
- {
--	return xstrdup_or_null(git_default_branch_name(1));
-+	return repo_default_branch_name(the_repository, 1);
- }
-=20
- static char *shell_path(int ident_flag UNUSED)
 diff --git a/refs.c b/refs.c
-index 7aecf11bf4..3618c8f7a4 100644
+index 3618c8f7a4..723bf7af20 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -664,16 +664,6 @@ char *repo_default_branch_name(struct repository *r, i=
-nt quiet)
- 	return ret;
+@@ -775,11 +775,6 @@ int repo_dwim_log(struct repository *r, const char *st=
+r, int len,
+ 	return logs_found;
  }
 =20
--const char *git_default_branch_name(int quiet)
+-int dwim_log(const char *str, int len, struct object_id *oid, char **log)
 -{
--	static char *ret;
--
--	if (!ret)
--		ret =3D repo_default_branch_name(the_repository, quiet);
--
--	return ret;
+-	return repo_dwim_log(the_repository, str, len, oid, log);
 -}
 -
- /*
-  * *string and *len will only be substituted, and *string returned (for
-  * later free()ing) if the string passed in is a magic short-hand form
+ int is_per_worktree_ref(const char *refname)
+ {
+ 	return starts_with(refname, "refs/worktree/") ||
 diff --git a/refs.h b/refs.h
-index 9769a25edd..95c3437443 100644
+index 95c3437443..fe0b6b44c5 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -169,10 +169,8 @@ int dwim_log(const char *str, int len, struct object_i=
-d *oid, char **ref);
+@@ -164,7 +164,6 @@ int expand_ref(struct repository *r, const char *str, i=
+nt len, struct object_id
+ int repo_dwim_ref(struct repository *r, const char *str, int len,
+ 		  struct object_id *oid, char **ref, int nonfatal_dangling_mark);
+ int repo_dwim_log(struct repository *r, const char *str, int len, struct o=
+bject_id *oid, char **ref);
+-int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
+=20
  /*
   * Retrieves the default branch name for newly-initialized repositories.
-  *
-- * The return value of `repo_default_branch_name()` is an allocated string=
-=2E The
-- * return value of `git_default_branch_name()` is a singleton.
-+ * The return value is an allocated string.
-  */
--const char *git_default_branch_name(int quiet);
- char *repo_default_branch_name(struct repository *r, int quiet);
-=20
- /*
-diff --git a/remote.c b/remote.c
-index ec8c158e60..85c390b199 100644
---- a/remote.c
-+++ b/remote.c
-@@ -305,7 +305,7 @@ static void read_remotes_file(struct remote_state *remo=
-te_state,
- static void read_branches_file(struct remote_state *remote_state,
- 			       struct remote *remote)
- {
--	char *frag;
-+	char *frag, *to_free =3D NULL;
- 	struct strbuf buf =3D STRBUF_INIT;
- 	FILE *f =3D fopen_or_warn(git_path("branches/%s", remote->name), "r");
-=20
-@@ -333,7 +333,7 @@ static void read_branches_file(struct remote_state *rem=
-ote_state,
- 	if (frag)
- 		*(frag++) =3D '\0';
- 	else
--		frag =3D (char *)git_default_branch_name(0);
-+		frag =3D to_free =3D repo_default_branch_name(the_repository, 0);
-=20
- 	add_url_alias(remote_state, remote, strbuf_detach(&buf, NULL));
- 	refspec_appendf(&remote->fetch, "refs/heads/%s:refs/heads/%s",
-@@ -345,6 +345,8 @@ static void read_branches_file(struct remote_state *rem=
-ote_state,
- 	 */
- 	refspec_appendf(&remote->push, "HEAD:refs/heads/%s", frag);
- 	remote->fetch_tags =3D 1; /* always auto-follow */
-+
-+	free(to_free);
- }
-=20
- static int handle_config(const char *key, const char *value,
-@@ -2388,11 +2390,13 @@ struct ref *guess_remote_head(const struct ref *hea=
-d,
-=20
- 	/* If a remote branch exists with the default branch name, let's use it. =
-*/
- 	if (!all) {
--		char *ref =3D xstrfmt("refs/heads/%s",
--				    git_default_branch_name(0));
-+		char *default_branch =3D repo_default_branch_name(the_repository, 0);
-+		char *ref =3D xstrfmt("refs/heads/%s", default_branch);
-=20
- 		r =3D find_ref_by_name(refs, ref);
- 		free(ref);
-+		free(default_branch);
-+
- 		if (r && oideq(&r->old_oid, &head->old_oid))
- 			return copy_ref(r);
-=20
-diff --git a/setup.c b/setup.c
-index 4a738f4c90..15ad84d3be 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2046,6 +2046,7 @@ void create_reference_database(unsigned int ref_stora=
-ge_format,
- 			       const char *initial_branch, int quiet)
- {
- 	struct strbuf err =3D STRBUF_INIT;
-+	char *to_free =3D NULL;
- 	int reinit =3D is_reinit();
-=20
- 	repo_set_ref_storage_format(the_repository, ref_storage_format);
-@@ -2060,7 +2061,8 @@ void create_reference_database(unsigned int ref_stora=
-ge_format,
- 		char *ref;
-=20
- 		if (!initial_branch)
--			initial_branch =3D git_default_branch_name(quiet);
-+			initial_branch =3D to_free =3D
-+				repo_default_branch_name(the_repository, quiet);
-=20
- 		ref =3D xstrfmt("refs/heads/%s", initial_branch);
- 		if (check_refname_format(ref, 0) < 0)
-@@ -2077,6 +2079,7 @@ void create_reference_database(unsigned int ref_stora=
-ge_format,
- 			initial_branch);
-=20
- 	strbuf_release(&err);
-+	free(to_free);
- }
-=20
- static int create_default_files(const char *template_path,
 --=20
 2.45.1.190.g19fe900cfc.dirty
 
 
---MNgHOlTJXMy8HDbK
+--oZf5Y8OJGnucpjw/
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZFvjUACgkQVbJhu7ck
-PpSNRg//WM2F9OrWhznkBtz4S2HLAKmaA112UTxeE4nt6tQhz84qVJIyKqqnOFSv
-TEhBKNlRXu7vONrACn6vtmGETAEYwmpeiFmpIDRwZtokbY9GF40EUFxn1E2NN/Bm
-OTAW7L9IxUEEbdEI/XtdWPUTBysC8rECszxpmjq309HQBkMuUkZEb/A7OjCiVJkG
-FgSnWspOhw1lis9qBDuWUoaxtHUjf1JgCeA5int1tUxHCSwgAb5hGaGA4mEZaeOd
-5d3Oo+NqJWi84K4IO1q7Xxz6RatTTuRWyHkm27Aze8880kx4611e9yN0mNN442vr
-irbZ5Ku5km9YKono6VI3KNZvg0DAaLFl+38Y8CzDL2uqfMXWselOtpOZyMWoy2Xz
-UQzo+RGiQYoXI+p//s3lD6aG7TjMn9oSh5fdTdEl7G1FabCgyhEBd2QAD//GvPep
-43jQjrtnkjh8sPxuoP7der3kvNGA+ppHRjYAmlXAMdiIL0QMwXxfS9LUeLJMjki4
-8eaUUyhUv8dSVCE8z0aLxZPSqVyKFhhP0blQGlbqfgEq8ADZPcRtRtuPVmR8RzNU
-sp0a6Jh3ZaDBsPwcDQ4p3xX1VSI2/8LAB8OpzPuliwYk5OlCs19NrlnKsMOSt0cp
-ZIHyVmMNuClcXO8Z1ktSQdJiFRc14jgxVnqxlF+2dknMqaK3M5Y=
-=Oy9E
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZFvjkACgkQVbJhu7ck
+PpT1hQ/9HHbiWv2KyaNiTXW255gfVzX4EDJbVY6GzrOZwYQhbYJz4l4I4Lo66SoM
+hm0JvgJw6HQqUOQlhB1vWysDh/y+SUElVhURjpnDgzXM2Qr3r+qnYQk5rD/HzOrO
+nrITIeLWX+FGpnBRU4g6EJ66jnrNQS5YPi4fJ88jKGpLOjhMkJS8Lg0kWL3bSlcl
+vAZyo08iThyOYLKfi8yVwRtk0uMPkWM3FEyZ/DLyyFVbpuZLkMaj2iOMeXSRZCxt
+GuhOhEZmrMezxyI12Y6Fx6MqNqEiygJJ3PKMVjDW5mZrCiR+zDD2T3+swCrDbQL6
+Ebloi+JVr+Nbi4tOpwODB1xdV/sqQgSemIWlAxERQmaOSaPCSiF29i5an0u2WCDF
+X+AGet9shPeQmhVhoJFuhn/TgDZU+P2I7gx7exvFHUAnjo9SyRrrFIXMp8Wa3+a2
+EszpR85E95fw0xGUyLKJwLDM4h431X6t4B/EDCBtvta1kTC/D801JQMXI1mebVoo
+WgOghc1wazGPQhuwRLAXRIAX8povAMb1HeOaVh07TdBwZBeCZifYPcO7kDlKbrgu
+c8fUW9FOnDncc0cFuN+l6FT3eC28cC6OijzN+t/+a3P11zGoa7bmo0RxNKuNCOzY
+VjObSHZnUvt/LPFtmvq8JPZk/6zV8o8kqSS07Msu87N0m/BdRn8=
+=qRLZ
 -----END PGP SIGNATURE-----
 
---MNgHOlTJXMy8HDbK--
+--oZf5Y8OJGnucpjw/--
