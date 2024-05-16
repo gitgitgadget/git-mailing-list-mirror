@@ -1,101 +1,121 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582971E491
-	for <git@vger.kernel.org>; Thu, 16 May 2024 15:00:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D031459F3
+	for <git@vger.kernel.org>; Thu, 16 May 2024 15:15:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715871630; cv=none; b=VwqOHv2vhOdNg7hUDUF/rb2SHDR1CTKYvP938AaPkaQEU2BrPyysGAG2FJKVcUfJboeAhoukrVE5BEUrD2KF9L6NHqbiSqWwZUcDeJ2LLd89UeW01yNqbqe9wukhuSpRwGF39Ax4Ze0IRCrpHUYKnba/T7lvG/m9NVAT/oKxNec=
+	t=1715872532; cv=none; b=lgHmicFNURvGsDbWEJk71IarqGLPaVZP7EQ7BWJ91qTpJfTJdknRDHpUdrTn+9Lpv36KCDshRDOe8KiKnzu8TtH1AdksxUybgnZUNoP8IvkCu6EKg0qai2bzGSh7bbytI6tJ04/LHu/vZJ9PE3sXapkIfkNHCYI/FTYGig2o+zY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715871630; c=relaxed/simple;
-	bh=6NBJu3H9oiCQXwilWgeQEDFw8Rp9JjPgtspWpNKJymE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=Oby0AHCShNoyCrrLFRJl2LsE6gxnUvW4t62PounukKqN/eGyH6tbI6skn3CAFNE1h0G16vAZGjdnWZfd7QxEYIfW19R8DzI69Ybpr5XrGhadGzqTAwcGOY++v8RijzeIg9jFeNIYWIIvfh8tttpLMlg/z7+NR1KAU1h+CVpE87c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ed/Zm+8s; arc=none smtp.client-ip=209.85.160.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715872532; c=relaxed/simple;
+	bh=hu8b1Oc2/sJRauENhJ3uYrITzq0Djx15dfkY8B+D/fw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oSBbsCDvD992whpXamYoCc1XPaYLyUpJ2gRd3g+g16Ab9sN07eJtlfx4SYlcUW26O01TbIhov2Hl8stuis4LomwSEREMqT+zQzRkpJj18kjBh29Ur6FUNPhW/6Z6wU5ujR3qPAyYktq2nkY3Cgl+xCnxMjJQzF4oHrIDQwg1gYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=K2R2/znX; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ed/Zm+8s"
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-23fb9c871c8so346954fac.1
-        for <git@vger.kernel.org>; Thu, 16 May 2024 08:00:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715871628; x=1716476428; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6NBJu3H9oiCQXwilWgeQEDFw8Rp9JjPgtspWpNKJymE=;
-        b=ed/Zm+8sCU8toaisupb3BKu7HPrRT9Ajk0qiNw9mfb4IUNUXF+gFlq2uJ0O2jEbkG5
-         +Taou0WHL+5AIgqaQcMUEUa+oKTr01NQIR/jtWn7PVTD4e+9kcHHl+ufxS2jyoen5dIo
-         +/RlAf+iIxNMwcxbhZpm4F5nClOnrEAQv4kuGV6CjgvzaeXlRqgMWzbxi0FwHRcLYopR
-         Jk4q968tPDp+WI8dyPQr0mfAXhPp0DBDBaUbvlxWCwvEDqm6CJPWrubI5KDBTCE+S3h5
-         9Wbkf6WYUpLvXA9fYOEsNfRwCHFD0NUbsVxMBu24/GpZCf5bHe7HgGduHWf/FX0tl3dX
-         8apA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715871628; x=1716476428;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6NBJu3H9oiCQXwilWgeQEDFw8Rp9JjPgtspWpNKJymE=;
-        b=sGlKfkVgEERKZIyHhnRuA05pqsKU1T7NOLHZiFAetF7Osq7y1AcinlyN/HqS85nsfm
-         m1a8oDN4KrpFWuyMz0TQJNNGHHoFthl1iLc7tHKTEe98JDTBqbT5bqAauKSBQbYxkXxM
-         xv/ZGsPccBJcaC8oa6VvjjAjH55MmCJYOd1O48QNcwrSbuOA3/IAJ7IfOevBwEYHWXQt
-         y7DAsGFlqSZYl5wLcsjZ/YozHL5/hpGiT6MsHOiChstCcq2xchpvKpJP1G/uEUSKaawT
-         GT02X4ZU1xC5Dm1pyLx0rjTS+/xNS6dwhzQVNGCzzRV3HEFXLw19/iH8LvH160xyWelp
-         GzhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWnkis+lDDwOkkjf7WCNJia07/pwaEL+b5I3IttpcnY+aq235kM9N1bb+CMfrgOGSkppjdMXoSCbM7+Ue99uD4p7FUb
-X-Gm-Message-State: AOJu0YyXofEyB/TPpsnmUkWiN61RYakd5YuM7ArRZtIKZCDH/b9hl7Ah
-	TjlrCvKrVVcsbcekKxhO/FCFfL5SoQQBFAi27qqFVRLkaVpOIx4JEM+zyO9lBPWBtt4b5pQenTX
-	IxkKWj1qE39LeYejXyeJr02BBumw=
-X-Google-Smtp-Source: AGHT+IHpoWYPfgHLvsptR0I7TNUG7AuWkH8ur0TjLvmoCex+riJQFB6bVGJTSGGHC6EWVCYtVAeeRBsTrUdiki5ZWg4=
-X-Received: by 2002:a05:6870:89a4:b0:22e:1487:a94b with SMTP id
- 586e51a60fabf-24172f5dc39mr22017595fac.53.1715871628173; Thu, 16 May 2024
- 08:00:28 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 16 May 2024 10:00:27 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <3cc2b4e5501ebe1464a6d75b7aea9f2ad6030c4a.1715836916.git.ps@pks.im>
-References: <cover.1715836916.git.ps@pks.im> <3cc2b4e5501ebe1464a6d75b7aea9f2ad6030c4a.1715836916.git.ps@pks.im>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="K2R2/znX"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id C08885DA90;
+	Thu, 16 May 2024 15:15:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1715872528;
+	bh=hu8b1Oc2/sJRauENhJ3uYrITzq0Djx15dfkY8B+D/fw=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=K2R2/znXl8munk+Z6fOkL+XfXlq9N9Tvf5AmJFENGB6VWk5mPTLL4UuNpnLL3/yCO
+	 6gdimjjnmQQZlE3Om32TLjTNDnpt6SFlPCXCl6pyAJtXtAaVr0e4z+OI/uesZma1Y5
+	 i0oT4HLEZXj51pzNw+r6axbW6GmKodS1Z9WRRUU5p0ejChQgewNA8yLKXNgm7NrKwN
+	 XGKwy0AkWYym4dVhrgXaz7BquNg6pArUivmTwM/7s1P6crSqo8XLYlR7TyN5AT39iT
+	 itP/DInZZDORd8UScn7/qSDtLWm87U7sgx3i/zzfC9UCJfZXqF2uN5D+n0s6xYMVDF
+	 myQ6g8NqFgcuhkC65piKl/NMc6K0xP/7WmZosDk7XEAu0G/mIXHx7qg5yTQFytMqWk
+	 omkDQhjHiDAcgVAObi8JZzTocZyNLWO4Hcj4ELY9S7tmltUJoyHRWFB+OyAxG/7Bzr
+	 TUBEhxO170NEMAPWgUaUj4XJvX4cuLcprQStqLEdtaQFZXNgrlJ
+Date: Thu, 16 May 2024 15:15:27 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Kevin Gale <s7g2vp2@yahoo.co.uk>
+Cc: git@vger.kernel.org
+Subject: Re: Embedding Git Command Line
+Message-ID: <ZkYjD7VGC4zLhRDF@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Kevin Gale <s7g2vp2@yahoo.co.uk>, git@vger.kernel.org
+References: <36B52407-B52F-4394-8DF2-F2DF3D3F0504.ref@yahoo.co.uk>
+ <36B52407-B52F-4394-8DF2-F2DF3D3F0504@yahoo.co.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 16 May 2024 10:00:27 -0500
-Message-ID: <CAOLa=ZRmMQ=rZTSs-hbWexwnJi5kBZC-t4o7-ZZE3N9ZCeqTYQ@mail.gmail.com>
-Subject: Re: [PATCH 02/16] refs: rename `init_db` callback to avoid confusion
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000e0c5800618937e79"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="VutRha6zu1SZejk1"
+Content-Disposition: inline
+In-Reply-To: <36B52407-B52F-4394-8DF2-F2DF3D3F0504@yahoo.co.uk>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
---000000000000e0c5800618937e79
-Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+--VutRha6zu1SZejk1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Reference backends have two callbacks `init` and `init_db`. The
-> similarity of these two callbacks has repeatedly tripped myself whenever
-> I was looking at those, where I always had to look up which of them does
+On 2024-05-16 at 12:04:35, Kevin Gale wrote:
+> Hi.
 
-Nit: It would read better with something like "repeatedly confused me
-whenever I was looking at them".
+Hey,
 
-[snip]
+> What I would like to know is if integrating with the command line tools w=
+ould still fall foul of the GPLv2 license or if there is an exception like =
+there is for libgit2.
 
---000000000000e0c5800618937e79
+First of all, I'm not a lawyer and this is not legal advice.  However,
+having said that, I think the common understanding is that it's fine to
+call out to a GPL binary from your proprietary program without violating
+the license, unless the output is a derivative work.  Usually that's not
+the case; it would only usually be so if the output included part of the
+GPL software's source code, such as a parser generator.  The FSF has a
+FAQ[0] that covers this to some extent, which calls the approach of
+calling out to the program a form of "communicat[ing] at arms length".
+
+As a major copyright holder in Git, I don't see a problem from my
+perspective with a proprietary piece of software calling out to Git as a
+separate binary.  Git is designed to provide scripting interfaces so
+it's easy to use from a variety of software.  You would of course need
+to provide the source to the version of Git you distribute and the
+copyright and license information as well, in compliance with the
+license.  Note also that if you are distributing Git, you cannot link it
+against GPL-incompatible software (e.g., OpenSSL) unless that
+GPL-incompatible software is distributed independently as part of the
+operating system.
+
+I also want to be clear that this is my understanding as a layperson and
+my interpretation as a contributor to and copyright holder in Git, but
+it isn't binding on anyone else here.  If you want a legal opinion, you
+need to consult a lawyer licensed in your jurisdiction who has
+experience in FLOSS copyright law.  Nobody here can provide you such
+an opinion.
+
+[0] https://www.gnu.org/licenses/gpl-faq.html#GPLInProprietarySystem
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--VutRha6zu1SZejk1
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 492166a46ea03f08_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aR0g0a1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNGdVQy8wU3FpNm42TVBXVzJEamRGZ2FqZVI2OG16Tgp4enMrVzMvNlR6
-UHZSU1E3ODI5L2pvaWdNd3NSYzdsTzJ0SmtZckhLUUlzMUxHU2QwV0JEV1E2TDB2UWltcWFlCmN1
-c1MxMjY1WFFhRWxsUFJTSkowTDBwSk1qbEFxby9JdDROMUtMdnRxcDJPS0lpQzFJUmlwMjRpQ2Nt
-bXp2ODQKNEZHRTMxYk0wejdxUkhYZUJRN0RFdjdaRlVTZzlQU2FqOTN4a0NibTZDaTd0ZUw4ZHFY
-OVYxRGR0YWc2bjN6Zgpqa3BFZ3ZGbHlNUFptVXNYYXZ4dDY1dVhUUzlldFJBZjE0VVNNb2pndDZQ
-ejliNW83WGNhMVlPbjFhZFdJYlJDCkNlR3dBNlY1cTZtY0lEaFRlR1BRcVdHQjA1d0lPTUtzUTVy
-d0V1dFkzZWJaSlBRWk0yZi9OYmFYcTBpVEQ0NHMKRUpoRFIrODB3M1pUUnJwNjBBQ2N6c2lma082
-Y1Z4K1hMSDgxVFJNSWxhTERVa1k5N2dJaDlMbGlPbDdKaDAxegpwRkpZcEI5Wkk1THUxR28weGFY
-NU1ybGZwZ0F1RWRBZFBXYjZWOEVwa3hIemFXRmZYZU0xR0ZmdEtBa3UzaXRxCm9Bb0hNMmJiSzdI
-S0xZRDFnQWk0QzVqVnErYWdCUXp6blQrVG1aWT0KPVRWQlQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000e0c5800618937e79--
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZkYjDgAKCRB8DEliiIei
+geXmAP9wHqFaLEkb1L7pISuWru9m5iAtZXN73Pi+/W8+O65JngD+N159+jmySOYM
+dI598nF+bAxmL/7wfG7+txE5wUBCnwg=
+=hNOu
+-----END PGP SIGNATURE-----
+
+--VutRha6zu1SZejk1--
