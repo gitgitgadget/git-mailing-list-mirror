@@ -1,84 +1,235 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2FA27471
-	for <git@vger.kernel.org>; Fri, 17 May 2024 16:14:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F50A12FB12
+	for <git@vger.kernel.org>; Fri, 17 May 2024 16:21:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715962497; cv=none; b=HXK/W6Y5XVQIHJ2jfZvYOZKGuqkZ4e5D3Q/Zi10Q4X+Gcll+k31D3jseE10kwJkp9+afB+uyOocKZ91z2NGNmt0Rkda5WNMtTRua8ZO7VvXkwD6XKKB+5yuyIhJwoMxq92u2Ckm4fsYO6P3n7eGxgfKR0TnCqUNIVOSQK6thKLc=
+	t=1715962917; cv=none; b=Ne0DpcoUoESuNKilWRwh7mzuE2UtlQjsZNAbU2fiLi1xwzOkl7Sy6iLM9BtXZfZ0O5o+Fe6kc19FnELDn/WIYf7nAmD1+6wkjsiuyAPIl+1CaU/FcOWKoLC0B//+FcteWbgDFJi1CHyN6GPSWmlklMqiFJ7sDXJXOvpen0Zd/p4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715962497; c=relaxed/simple;
-	bh=7FEgyVDKilCjcylkn9d0T0r3yi9MeI24fpOadnGEsaY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u49R6W1cqvoI+6FFw6YbB2zBjivKYeBM6HGgHo1kY/W5j5zENbRjGrxM3rlvGJkt5XKxiM1DDiMJilEvkTMQ/f8rtuv2UGkLg3uVjSqw7ps8zzpK4n3bWGSE8g1X8+pZ+2unT354wIGe04Rf955LImWNqd3gPquU2rt4JNgKtyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KpCEVSdi; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1715962917; c=relaxed/simple;
+	bh=zCmDpGtvepazpW6TL4TAN1hAWCs/o7TZh2ftLjU9DKU=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qcO7A3dAkcU5JDl1mI+ilJopW/8o6VLizC5SvR6t0K+97/Ikujiss204qutXF5NprQgNwXTlsM0t8DJOQ7riW9H+slatbvrR86lfJtvYrVd96ta/etXwMLVtLRlSNpach3TkiV06Iaz6fQgM+VY311wVDX5W/vzm/2064KZOBS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xhb/22s+; arc=none smtp.client-ip=209.85.161.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KpCEVSdi"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 16F872ED38;
-	Fri, 17 May 2024 12:14:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=7FEgyVDKilCjcylkn9d0T0r3yi9MeI24fpOadn
-	GEsaY=; b=KpCEVSdiavmjnA5iRM5KGh8C/fpOoGXVu+DXdZ2OnBCOl1diJvoWXd
-	MVMrW+2ttJaDR+Eg225UniUMUDuK1EPgzyi3GUTy6o36dBGa5pG5gC63ARpORXzX
-	6BrHHgwvuRrxq3roOaukJmtNhtOET+aAwz+8+SfQBvwA0kCfj3YrE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0DDE22ED37;
-	Fri, 17 May 2024 12:14:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 711F62ED36;
-	Fri, 17 May 2024 12:14:48 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: blanet via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
-  blanet <bupt_xingxin@163.com>,  Xing Xin <xingxin.xx@bytedance.com>
-Subject: Re: [PATCH] bundle-uri: refresh packed_git if unbundle succeed
-In-Reply-To: <ZkbkgT46mdNEhcf0@tanuki> (Patrick Steinhardt's message of "Fri,
-	17 May 2024 07:00:49 +0200")
-References: <pull.1730.git.1715742069966.gitgitgadget@gmail.com>
-	<ZkbkgT46mdNEhcf0@tanuki>
-Date: Fri, 17 May 2024 09:14:47 -0700
-Message-ID: <xmqqikzcl8js.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xhb/22s+"
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5b28c209095so227920eaf.0
+        for <git@vger.kernel.org>; Fri, 17 May 2024 09:21:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715962914; x=1716567714; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jWGwnRLMn0sSotiBEFqAinC1voiyHXzEJvyCAssF/bI=;
+        b=Xhb/22s+QIR3ObyIIlBrYcx56ctJhRqBxjdu0YbXiWt63+ZTy1nZrFWGTWbzXOpS+P
+         n5/aa1pU0TGSblqmyDTZ1Gv0ESMwqaKLs5zwFexmHMCC7vzrm7e5r402WF3gks9gvJt7
+         LCJMXsGzSvbOGefjKUv3MrbQ46WwweRmdWTBkVfHtgvUXBKu7q8M0rtLJmX5YkmyxLt4
+         cEHM78VQ1SExcu5czt9JRtoAKSYE2bmgE/2oUc59qTV6iu4LDat0zzQL8M9IOKP7zPJe
+         eyiExYigx2EjDYNKlvVD0fLf5FmTzrPmEW1w5MK2BcytNlIQWa+IeD1BW9EcHiyAI3vl
+         dNRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715962914; x=1716567714;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jWGwnRLMn0sSotiBEFqAinC1voiyHXzEJvyCAssF/bI=;
+        b=CHy85aUlmGf/BwMsdj0veUqJ+qVYpZjwkxHmcVRPBeTlmDqMLeJ0EqSsgV1Qs54xiD
+         oGe8bbIy3CPfQ9zSeW08P73/z7gDOF2sPxFNN9ekVnqmaf8ro9f1evy8xH6C/0DD6sia
+         4uDcbRqK32vuwH0/qnJB3uBdLlOSOq/TgB4ZHAWiltl3T0SILcSwqx6pvCrAZZwEcmZS
+         gK3yVtSsAq/uB8JS0Fy2+mAtkzjKVLneVpnRFISeVtOXgmiCmQlZ79FEQt0XzpIEfjB9
+         QHonmohfz5oL3AnnTwhgJapVmPGscI1YR7H1m8I08slC0fkZTc5H3wHOQfoLqadzDiQN
+         Bhjg==
+X-Gm-Message-State: AOJu0Yy/aHmcr0w4K24nmbgu1XUASWJSTi4iAf9RLvLG9cbUZqbnmYzF
+	wepBFZN+sxp/2TdVxd01vYWBLbh4Y5VH8fDCyRZxdZGCGh+kScJB9WmaRgL79D/18TItgSbI1/Y
+	gwWPDtngqjTcfHd8TYHu0ZhkOTnPkYw==
+X-Google-Smtp-Source: AGHT+IEpi7r1v2nTRygPKgqlOitC5msLIU8Tha7l5oXiwzApYQ+pCekN/HeDZHX3O1/wm/kHlkdDwB6KXuTJ8OyUIBU=
+X-Received: by 2002:a05:6870:d248:b0:238:f752:b1f with SMTP id
+ 586e51a60fabf-24172f719b7mr23664531fac.59.1715962914087; Fri, 17 May 2024
+ 09:21:54 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 17 May 2024 18:21:53 +0200
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ZkXpYep2MKdsyNyV@tanuki>
+References: <20240514124411.1037019-1-knayak@gitlab.com> <20240514124411.1037019-3-knayak@gitlab.com>
+ <ZkXpYep2MKdsyNyV@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 953EA42E-1468-11EF-AF58-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Date: Fri, 17 May 2024 18:21:53 +0200
+Message-ID: <CAOLa=ZSUV1X==x2CBivgu=L7SQryXNZZkLwxgyNth=a+bH9SQg@mail.gmail.com>
+Subject: Re: [PATCH 2/6] update-ref: add support for 'symref-verify' command
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="000000000000f1465e0618a8bfa2"
+
+--000000000000f1465e0618a8bfa2
+Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Now there are two conflicting thoughts here:
+> On Tue, May 14, 2024 at 02:44:07PM +0200, Karthik Nayak wrote:
+>> From: Karthik Nayak <karthik.188@gmail.com>
+>>
+>> The 'symref-verify' command allows users to verify if a provided <ref>
+>> contains the provided <old-target> without changing the <ref>. If
+>> <old-target> is not provided, the command will verify that the <ref>
+>> doesn't exist.
+>>
+>> The command allows users to verify symbolic refs within a transaction,
+>> and this means users can perform a set of changes in a transaction only
+>> when the verification holds good.
+>>
+>> Since we're checking for symbolic refs, this command will only work with
+>> the 'no-deref' mode. This is because any dereferenced symbolic ref will
+>> point to an object and not a ref and the regular 'verify' command can be
+>> used in such situations.
+>>
+>> Add required tests for symref support in 'verify' while also adding
+>> reflog checks for the pre-existing 'verify' tests.
 >
->   - Either we can now drop `REF_SKIP_OID_VERIFICATION` as the object IDs
->     should now be accessible.
+> I'm a bit surprised that you add reflog-related tests, and you don't
+> really explain why you do it. Do we change any behaviour relating to
+> reflogs here? If there is a particular reason that is independent of the
+> new "symref-verify" command, then I'd expect this to be part of a
+> separate commit.
 >
->   - Or we can avoid calling `reprepare_packed_git()` inside the loop and
->     instead call it once after we have fetched all bundles.
+
+Ah! There is no divergence in behavior, rather this is behavior which is
+never captured in tests. So I thought it makes to have tests around it.
+
+> [snip]
+>> diff --git a/refs.c b/refs.c
+>> index 59858fafdb..ee4c6ed99c 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -1331,14 +1331,17 @@ int ref_transaction_delete(struct ref_transaction *transaction,
+>>  int ref_transaction_verify(struct ref_transaction *transaction,
+>>  			   const char *refname,
+>>  			   const struct object_id *old_oid,
+>> +			   const char *old_target,
+>>  			   unsigned int flags,
+>>  			   struct strbuf *err)
+>>  {
+>> -	if (!old_oid)
+>> -		BUG("verify called with old_oid set to NULL");
+>> +	if (!old_target && !old_oid)
+>> +		BUG("verify called with old_oid and old_target set to NULL");
+>> +	if (old_target && !(flags & REF_NO_DEREF))
+>> +		BUG("verify cannot operate on symrefs with deref mode");
 >
-> The second one feels a bit like premature optimization to me. But the
-> first item does feel like it could help us to catch broken bundles
-> because we wouldn't end up creating refs for objects that neither we nor
-> the bundle have.
+> Should we also BUG on `old_target && old_oid`?
+>
 
-I like the way your thoughts are structured around here.
+I didn't do this, because `ref_transaction_add_update` downstream from
+this already does that. But I guess no harm in adding it here too.
 
-I do agree that the latter is a wrong approach---we shouldn't be
-trusting what came from elsewhere over the network without first
-checking.  We should probably be running the "index-pack --fix-thin"
-the unbundling process runs with also the "--fsck-objects" option if
-we are not doing so already, and even then, we should make sure that
-the object we are making our ref point at have everything behind it.
+>> @@ -1641,4 +1647,88 @@ test_expect_success PIPE 'transaction flushes status updates' '
+>>  	test_cmp expected actual
+>>  '
+>>
+>> +create_stdin_buf () {
+>> +	if test "$1" = "-z"
+>> +	then
+>> +		shift
+>> +		printf "$F" "$@" >stdin
+>> +	else
+>> +		echo "$@" >stdin
+>> +	fi
+>> +}
+>
+> I think this would be easier to use if you didn't handle the redirect to
+> "stdin" over here, but at the calling site. Otherwise, the caller needs
+> to be aware of the inner workings.
+>
 
+Not sure what you mean by easier here, but I think it would be nicer to
+read, since the client would now determine the destination of the
+formatting and this would align with what the test needs to do. Will
+change!
+
+>> +for type in "" "-z"
+>> +do
+>> +
+>> +	test_expect_success "stdin ${type} symref-verify fails without --no-deref" '
+>
+> We typically avoid curly braces unless required.
+>
+
+Will change, thanks!
+
+> [snip]
+>> diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
+>> index 067fd57290..fd58b902f4 100755
+>> --- a/t/t1416-ref-transaction-hooks.sh
+>> +++ b/t/t1416-ref-transaction-hooks.sh
+>> @@ -157,4 +157,34 @@ test_expect_success 'hook captures git-symbolic-ref updates' '
+>>  	test_cmp expect actual
+>>  '
+>>
+>> +test_expect_success 'hook gets all queued symref updates' '
+>> +	test_when_finished "rm actual" &&
+>> +
+>> +	git update-ref refs/heads/branch $POST_OID &&
+>> +	git symbolic-ref refs/heads/symref refs/heads/main &&
+>> +
+>> +	test_hook reference-transaction <<-\EOF &&
+>> +	echo "$*" >>actual
+>> +	while read -r line
+>> +	do
+>> +		printf "%s\n" "$line"
+>> +	done >>actual
+>> +	EOF
+>> +
+>> +	cat >expect <<-EOF &&
+>> +	prepared
+>> +	ref:refs/heads/main $ZERO_OID refs/heads/symref
+>> +	committed
+>> +	ref:refs/heads/main $ZERO_OID refs/heads/symref
+>> +	EOF
+>> +
+>> +	git update-ref --no-deref --stdin <<-EOF &&
+>> +	start
+>> +	symref-verify refs/heads/symref refs/heads/main
+>> +	prepare
+>> +	commit
+>> +	EOF
+>> +	test_cmp expect actual
+>> +'
+>> +
+>>  test_done
+>
+> So the reference-transaction hook executes even for "symref-verify"?
+> This feels quite unexpected to me. Do we do the same for "verify"?
+>
+> Patrick
+
+Yes this is the same for verify as well. I was surprised to find this
+too. It's just the way ref update code is written, all updates land
+trigger the hook. This means verify, which is also a form of update,
+with just the new value not set, also triggers the hook. I've kept the
+same behavior with symref-verify.
+
+--000000000000f1465e0618a8bfa2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: efffe9906aa60383_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aSGhCOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meUdzQy85Q1FjeXdjZmJoQVlYdjVFVjhUR3VmVGFmUQp0dmlQNUVscDdL
+WitKZTR1cDFkMm9rSGFTMGxlZUFxcHZSK1lhVk1uYnhZSnBYcnFoQUN5VDBKQVI0d3lTUkVFCjF0
+ZVN0NVlBSEh3QWVhbUFyMDBWMjQvSDJtcjJpcUtSRlp5VVh4N2pFdUs0Qk4xKy9INFcwS3RFSkpQ
+Z2hOOFQKczVFV1hpQUlvblo2MWhsY2MzN0gxTUtYVDQvaTMyay9kWUdUb2QwWnZ3Rk1lRjQ3TzI0
+Y0wxdCtqUmdoOGV3TwpWa1RQNzRkVjlRUWFVZWl3T09BdHdiUzdhRjNGSFZrcXY4OVhpVWRLakNk
+WHBJMy9waUcySk9iRU94Rk9CcUJPCkpSRTlSZHlvSElHWnA5UGkxUmZqZEd3ZG1PWGgvbjZZcXpR
+Umh6aDUyZWR2RXpUdGFhUFgrT0tJcytxa1YwZHoKTk9rMXBoRFY4aXJGWE0rRXo3MG4rUnpxSWZj
+bmFpVDdxeVQyQW9lb3ZqTmdDT3BxOGhVY2NsM0llazQzLzg1QgptbXhWMkw4cWd4d1h1Q1BjRW9G
+K1VGODZCU1Zic2gzWmtXaFJmYjl5SmZXcnBMSkFQRjVOL2JmNW9uOGNJVlMrCm1McWFxUi9ET2Fj
+VS9hUHpNdWdjLzFaREhTczBoZ1ErZzhadXhxdz0KPWsvZEoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f1465e0618a8bfa2--
