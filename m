@@ -1,115 +1,105 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D7041C68
-	for <git@vger.kernel.org>; Fri, 17 May 2024 16:27:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4171112F58F
+	for <git@vger.kernel.org>; Fri, 17 May 2024 16:40:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715963279; cv=none; b=RSV+YepF/Pllzb3Kr3H6BXITBjB9meCFdlpZMzL3wiWLaU3SpuGMI01wO7xnpW2159TngH8TwfxtC4eqPcTR9KVutca04RGZl6G0Jq03tGcgIE9+smIKeM21U9joDZlDs/HOQXAuVlieZCsx1+K88hh1bllhPhKARYFiZXKhcLQ=
+	t=1715964009; cv=none; b=rbltvBlHuWAx2rmW6n/z61lzriG0/jJlYxj1qtpbnv/XkL0/nINFvutl6h28qdeD+w4oxwDN7/qFCZbgVKyKPXRoznYOaQmmpC/qtPy7EBqVyRW7ZlmfwiFWq5H+9wExaKoZ0h0PzHfMEalf3sJ4v/D/Zb3HZEq1ljJN0liXzyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715963279; c=relaxed/simple;
-	bh=OpA7f7m6dRBGmlbYsMn+HtvGBzfdD3W+00yfpl/qMVU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jvOrZyqE/YnuXUGwlQ3q5S4svD8IyCisgJ8T3YA6tslAZykSHQsAYjH4BE8/bCLV30OpG1AExJzMlhpSunEKbk2HQeZ6+8kaW32tPC8zP6BM9zZQv4ayhIswCmEl4k3zD08p6aIkLmPyskLSXhEuOq5oUGMp0erTPuZBM8xZX3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BMLmiAbc; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715964009; c=relaxed/simple;
+	bh=8I/nA6bpefRnM2zv0EUxjO4zPCWQq/bQtS+pBF0uHL8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hwEm8J5QOCz5n9mFsIuyStEJe6MBuZt2XPsHOPOGZDq/Gf65kh8AdUllxJPikEoayQbZAxsPeHOvsVr2aXUuFYcPTemQ9zSevVxN6VhGhiQFJYMinivRgb0rOwgiy1IBQoHkW9CVy8X7ClmPNDUJRaIXoIOVAufPiolSpeNxkm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bOiWE9Hm; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BMLmiAbc"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4202cea9941so2578205e9.1
-        for <git@vger.kernel.org>; Fri, 17 May 2024 09:27:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715963276; x=1716568076; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7gmuXMczf7FmiRUVibgndYfqIdViNHuD6gZ8iexJGFw=;
-        b=BMLmiAbcA4ob0GHY/MgoxsvX6Y9LCIMLZzHIiRkGsfSa32YflqopPa9zxmsv7Mhj3T
-         y+afKflozyuQts3jwKQAEawxXLkC16CI7xDMSZyLPDjNFM2LoMY9VQlaSAPrFkSuo8tj
-         GtAzVPkLSG7Z5vf2SPjSVVvNagU7mxuQD3DNoKipyNn86ebtQa8V21IljWC8A2xTM1oW
-         gAYy5aqpNRYRSf/auoFmXsTUJAYQ94fexuKBXH4Ix7CkCXc+iHeoLPDfG4VED7/KZ98S
-         GHCOyi6M89+UEnk4Q7kqII1ibyXHUpTLj0Y1De91g7Q9HmsF2mj0cVZ6ijBRWExJygQe
-         J6OA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715963276; x=1716568076;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7gmuXMczf7FmiRUVibgndYfqIdViNHuD6gZ8iexJGFw=;
-        b=sML4fd79SwusCtBoVnitJ17h5DMBE7jkFG2VdAgsh++34VfHSTjyLwAJ/en+wWfwdX
-         cpRmX4Be/dJZKfJqLVBnrQStqmMIB2y1wtcyHf76eeWlqLiYOI6QXux9L3ebmt5hiAUW
-         UGnVHsBcS8h1Sifj28z0JrCYRj6QyULXjAmRdse1eo3fPmHlakRyW+dP8sKW4ktZs5uA
-         W82SRbRe6W+CZYx2EtoLoCJ31OFTA+1iK80/ui+8C9a6edChjUdCDo0Svs6TIR7+rgEw
-         9boQ1bRA80YBoU0P47+9ZtFxbrHyHWSF/W1evy+Ro781dnJTe+ZyYW6F7jRh4W2vzDeR
-         NUjg==
-X-Forwarded-Encrypted: i=1; AJvYcCXeRc88wjka+y3G2avmL1dqZjkGLwHuD4Km6qameRbPCHNFb6ivJAEKh+rXZSWqmi2ksRI66/p5YBR5Xe142M+qK/27
-X-Gm-Message-State: AOJu0YzBW4xwu1P5QANGWNk4ed9oCQ1rf8rqf5LxeKYe6jyDSBcmsAte
-	KlFZY66yu3HSuyYkhc5DsxgNoW6h3PGO1Z9ltHXhkmmaIX5pGU3y
-X-Google-Smtp-Source: AGHT+IEuVk+iWW9hVMz0HBBEjS58zZRQb9gwd+G1Ku4Aj9I946lRkxJP/cdl6zmRI+9RHTZ4gJIVNw==
-X-Received: by 2002:a05:600c:4f83:b0:418:2ccf:cbc7 with SMTP id 5b1f17b1804b1-41feaa2f473mr163282645e9.2.1715963276235;
-        Fri, 17 May 2024 09:27:56 -0700 (PDT)
-Received: from gmail.com (93.red-88-14-199.dynamicip.rima-tde.net. [88.14.199.93])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3502baad04dsm22031054f8f.81.2024.05.17.09.27.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 May 2024 09:27:55 -0700 (PDT)
-Message-ID: <c48488d1-3135-493d-a9e8-2f787bdd2b4c@gmail.com>
-Date: Fri, 17 May 2024 18:27:54 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bOiWE9Hm"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 449612F752;
+	Fri, 17 May 2024 12:40:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=8I/nA6bpefRnM2zv0EUxjO4zPCWQq/bQtS+pBF
+	0uHL8=; b=bOiWE9Hm7miktlcevtKJ8u6v+wF6p67njUxRoOqKiI6pqI7qPOxUpI
+	yA83cDs7hEClkUjbqUEP6rJelfJ/fPrB4mIOLaJgEzJlaZsYmFXvPFETPHsTsmov
+	9fn6dnHqd9dAGUcOaLfe9U0fiyriaXB/9OWZBPSked0sdgwZXRGQ4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3C30E2F751;
+	Fri, 17 May 2024 12:40:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AF9492F74D;
+	Fri, 17 May 2024 12:40:03 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Josh Steadmon <steadmon@google.com>,  git@vger.kernel.org,
+  karthik.188@gmail.com,  me@ttaylorr.com,  emrass@google.com,
+  nasamuffin@google.com
+Subject: Re: [PATCH v3] doc: describe the project's decision-making process
+In-Reply-To: <Zkb5WeaTOLg9b5p8@tanuki> (Patrick Steinhardt's message of "Fri,
+	17 May 2024 08:29:45 +0200")
+References: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
+	<5446ca49e042b104923ac2004d845a5f9018c9d9.1715894135.git.steadmon@google.com>
+	<Zkb5WeaTOLg9b5p8@tanuki>
+Date: Fri, 17 May 2024 09:40:02 -0700
+Message-ID: <xmqqy188jst9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] completion: adapt git-config(1) to complete
- subcommands
-Content-Language: en-US
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-References: <e0039edb9b7dce1e33c4cb6e964c50281c815e97.1715835356.git.ps@pks.im>
- <8d43dee33289969a5afbbf7635ac40b7312d8e19.1715926344.git.ps@pks.im>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <8d43dee33289969a5afbbf7635ac40b7312d8e19.1715926344.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1C67C6F8-146C-11EF-AA48-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Fri, May 17, 2024 at 08:13:36AM +0200, Patrick Steinhardt wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
->     ++	__git_resolve_builtins "config"
+>> +This document describes the current decision-making process in the Git
+>> +project. It is a descriptive rather than prescriptive doc; that is, we want to
+>> +describe how things work in practice rather than explicitly recommending any
+>> +particular process or changes to the current process.
+>
+> Nit: I think we _do_ want to recommend a process, but don't want to cast
+> it into stone.
 
-The __git_resolve_builtins() function executes "git config
---git-completion-helper" and caches the result for future calls.  And
-on return ...
+Yup.  How would we rephase it?  "... rather than recommending an
+idealized process that we wish to use (but do not)?"
 
->     ++
->     ++	subcommands="$___git_resolved_builtins"
+>> +When consensus is reached that it is a good idea, the original
+>> +proposer is expected to coordinate the effort to make it happen,
+>> +with help from others who were involved in the discussion, as
+>> +needed.
+>
+> One thing I want to eventually propose is to go further here:
+> documenting the outcome of the discussion, regardless of whether we
+> decided for or against it, in a low-overhead format. This could for
+> example be a small paragraph in a "Documentation/Projects" file that
+> points to the on-list discussion together with a small summary of why
+> the decision was reached.
 
-... it populates the ___git_resolved_builtins variable with the result:
-the available subcommands for "git config".
+Having such a list certainly is handy; the problem is how to keep
+them current, though.
 
->     ++	subcommand="$(__git_find_subcommand "$subcommands")"
+> I don't think that this change needs to be part of your patch though, as
+> your intent is only to document processes as they work right now. But I
+> wanted to bring this up regardless as a foreshadowing.
 
-Then, we look for a subcommand among those returned, at
-${words[__git_cmd_idx+1]}, where a possible command must reside.
+Yup, I agree that it is probably better left out of the scope for
+now.
 
-Nicely done.  This looks good to me.
-
-I wonder, if we might consider the possibility of having "list" as
-a default command:
-
--	subcommand="$(__git_find_subcommand "$subcommands")"
-+	subcommand="$(__git_find_subcommand "$subcommands" list)"
-
-These lines are only meant to express the idea, as other changes are
-also necessary and the documentation needs to be updated.  Of course, it
-could be done in a future series.
-
-I think that "git config -h" is an intuitive enough way to offer the
-help text and that using 'git config' as a shortcut for 'git config
-list' can be convenient.
-
-By the way, having used '__git_find_subcommand' instead of
-'__git_find_on_cmdline' is reassuring when it comes to having a default
-subcommand :-)
-
-Anyway, as I said, this series looks good to me.  Thanks!
+If we are in the "expressing wish" mode, another thing we might find
+it useful, if such a thing existed, is a list of principles for
+designing new things.  E.g., not changing an established behaviour
+to prioritize protecting existing users' muscle memory over whims of
+the day by folks who haven't had enough time to familialize with it.
+E.g., the plumbing output is sacred but the Porcelain output is
+subject to change to improve human-user experience with coloring
+and pagination, etc.
