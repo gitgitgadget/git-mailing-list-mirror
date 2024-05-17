@@ -1,53 +1,53 @@
-Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
+Received: from wfhigh1-smtp.messagingengine.com (wfhigh1-smtp.messagingengine.com [64.147.123.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406C62D044
-	for <git@vger.kernel.org>; Fri, 17 May 2024 08:18:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3282E652
+	for <git@vger.kernel.org>; Fri, 17 May 2024 08:18:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715933914; cv=none; b=oalsunKu5JnrJnYe5Upg6e2DCfiLBxAylHj982/3qJTXjlSd2VDrxuUwKHgCuofTM2t8GJRj+ZEk5pAwCKa7NDwG+g6+IR4qRgT9vEHvZqcrHfoNBduqSRXehEocr4Ktszu2qH3sjVh1HfNSmyX1isAFWr5S3jE9UixhfkqvB+I=
+	t=1715933920; cv=none; b=kaAOaMqi5479jJfDSchFOB/tfcGYGlMVaNbmFTX+NaRh6K5iAPyROFxPvq3XfrOZuwEmqGycQrrXAxI/00wGeTTtdEVdsDWhRljooquRxw+JG/g0FrP8KyYvUxGy1gDKAhtepbnL/qdj5t7EiYj+GMZvt5u1i0Ruav81JU9Crvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715933914; c=relaxed/simple;
-	bh=PnegIze7+EVfUYQRnqi1Gv7y3Pd+Hmr8mtQgtADAm9A=;
+	s=arc-20240116; t=1715933920; c=relaxed/simple;
+	bh=yBl6rn+8NhXBo+p5CbvJixqs7wpevVq0lVTnqojL6L0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SxBAUsmey0z8zKT8JKC58WKL6YOaFy9Azb/0Ne6bM3uOP944bepC5tzewTSd8Az3dHUW1eUl6Ol7cyV7mMseKRCtQ76C+qdLczkZy9ZWUGXmyFrMOHf1SlKe1dRv1hQ24C4mwsoXg/ep42TuWTdJhVMH7PcEH6+DPf3wCATvBvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DlQmIqUT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bg6YRaOL; arc=none smtp.client-ip=64.147.123.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=UmuIuRI+lK2rvV69nbwPBeHiuTRiXhRkXojJpO4E0Xxbwpb5RATDEr/mt8dFSc0iFRcJZJaCRN9m8LSsfpsnXwBJ+jfB4igeBleZMjnejsjuFZqX2QI88gk0voo4n6MjP/qpeDBDvjln11G8T4FXcTC51sc3/vVBcPcmrFPAmBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XvItfleZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rh/I4GXr; arc=none smtp.client-ip=64.147.123.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DlQmIqUT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bg6YRaOL"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.west.internal (Postfix) with ESMTP id 5CA971C00092;
-	Fri, 17 May 2024 04:18:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XvItfleZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rh/I4GXr"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 4CF451800173;
+	Fri, 17 May 2024 04:18:38 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 17 May 2024 04:18:32 -0400
+  by compute6.internal (MEProxy); Fri, 17 May 2024 04:18:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715933912; x=1716020312; bh=Af34vpjTvR
-	2fhCrGeicJzUbgANvzPftkFk2PMQEntdQ=; b=DlQmIqUTHUU2w6XBR93XD6kJak
-	yR3hu6VsFXdbMYlKBeaxHuNvc6npBaglpL3ToEM/YbczJXnLnI4cbm7kioHESjdc
-	5bwGfu1zDmGgZni8uGWCilPdFd4H1e+OIkp40fdOXw7wrm1cbjsaG2wY0G3nGLca
-	yOadp66AbE1v6hdURr29UAmE7KeEtUf0P3u+hme1znrzyZNZiAP3wn7/reEXNbdT
-	3DoN4KwYW3gc1j+Drwo26EtcyGDdt+iv0I4vUYxhPdZfde+7IO1NwfvF4Vbr14ef
-	slXvdzk1SBoq3JmHZy+76WuvJ/3ybfAU6c27nmK5wMD1n5PP47tyQ1F08/pQ==
+	:subject:to:to; s=fm3; t=1715933917; x=1716020317; bh=BbWc4aFKKU
+	mq0OvDhfwO6wG9ew20J1qpN6FkkIBlTf8=; b=XvItfleZfv+SPY3BqQL00q/MRb
+	QbNh8Sq6dl/9F7DpE1F/dblEGkRwycvX8SLoW/zejkOhrgIvsUc350COaBS8Wcsx
+	vcUtGVcgTyHFRrGQR5Ha2g/louQgrr7JZc6Eu5S5ozMvZbyqYfwC3IXouiOqj7r+
+	Nnj2p2L9donQ9c40Cfr3ZCrqpBH3gLzLgw66Z08GOBWdexv+WaWirJH/gDqhwrK0
+	rwOKPJG3POmtNc8/8fTHFojOSw4/VHJkDO+hwrCn3zHk1Ji+HTuAEc8YKvLECbHE
+	iu/ueULPMm+Q1RNSTov5ySsOinT1A2tBqYb9iKm/brBdGp214ZT3sm/TYt6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715933912; x=1716020312; bh=Af34vpjTvR2fhCrGeicJzUbgANvz
-	PftkFk2PMQEntdQ=; b=Bg6YRaOLQOrbje7X/vOGZJYuYszpBLB25DY7SWLkHFOO
-	K3Dw3IUhc43bs1hwuMCF7gAmVmJ2we7pm4fg8OZfk3X4jeG46Ww1FYo3IU4KLXmK
-	L3/V9X4irFnCCPUIU02v6wZLfzJZTEFDWpKVjiUFSBJRcGGD2EK1Vi2rexo8LWFJ
-	eOarh1Zpdpjmvyw/Lq8yv2oBc+NOg9A2kPvP/srEkTPt47usbRC0v3QYTXmT4KgP
-	1Q9sJeAVgEP4Z2SnAwSm/Nh1T1skV/udPIT2hUvo8pKCQiq/1GDzw+xBLL+gH89h
-	m/bR+JBK6366TJJ2gRNc2MU5XlpKE+yltQSwOrHvsA==
-X-ME-Sender: <xms:1xJHZonNdPWHTnuirTy4eee7I7LWVKrNDqqPKB7IrbgH0mMYvzipdQ>
-    <xme:1xJHZn21pgNdyJEKjjb8EaGvevT_OPQqTarxcuW81vl3_fhq5z5NTC3ZmHREKMdU3
-    1s2gnNKBvmZTPYJNA>
-X-ME-Received: <xmr:1xJHZmrspQFORktr2qLElNDaGLB15Mf9KgHJpZ9vRdM5Ax4-oGuH7j3dTXxXDK6VnNHeOiwrr0l_ppb-fqNLKh7XwflfTyTkcBKxRZGUcm8wsdAfvw>
+	fm3; t=1715933917; x=1716020317; bh=BbWc4aFKKUmq0OvDhfwO6wG9ew20
+	J1qpN6FkkIBlTf8=; b=Rh/I4GXrafI+ygZPJAlcjO8TLaKwQcCYWQbvmCw5VujG
+	jFPKY0pkuJ5DP3LAN38i5ygvVg80xn0MVJPFhc4DFyIZpxBhN3o3gE0PPvI7e0Ll
+	uH+29LHWU1G/B2GK/8dAuhhMCGIUbakyo5SwzRfRQpkLfc4uqagzZWDfSkujZeP1
+	Fg+nQC3mdib2sL0FqCQpTAl1TDlVFoMvBzmQCOA8ycnBi7OGcjie+IysIY4MV9ND
+	DIXn2byl4+CbLbOOAT4x+iiGD/wtrqODHy6TUvT7lIxfBKubAM3LC0EJ7uT87Lil
+	Fnyp9qirIc4PNmzAi1/l3Ph9vtJ6BEA58A8T+KmUbQ==
+X-ME-Sender: <xms:3RJHZkwv1-5b2tD2eKtaTZiTsKqqKlXkuK0tvwESoG2xN4n78e0s0Q>
+    <xme:3RJHZoSHI9A_32tj4BzIAymUayEFDumRLeq0GIgw3U6H-BZ-62NV90PRe78LO7Kzi
+    dH66MbPwdOq_B8TdQ>
+X-ME-Received: <xmr:3RJHZmWj8ef7bHQ0SgeU0IrMwOLyUArhRkIyWzcJ5TWvd65z8ww6PbXHUaF8MdW2zRQzsCh4qgX_fs3aKNSa69fleknNmZrMHO3mAfyIus1IiAYRrQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehfedgheekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -56,24 +56,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehfedgheekucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:1xJHZklRqOhtJ6WO9Oxt0ZVsdbXR1RFRHtZCI5SKXLhUvuJfvalGJA>
-    <xmx:1xJHZm32QcI_jXIF8aXF2ucJI5kDd3YLebnGOUa5mx8cRXGOHngogg>
-    <xmx:1xJHZrt23ixmyOPni_gFHpzfE7GIwtfUxhn_8nJUPEigjSRU8GVIYg>
-    <xmx:1xJHZiUhZgqCKC__p3v9De9yHpbEEqczuXzp23_mRlfKHLqluEsp_A>
-    <xmx:1xJHZrzYGigD7ot2mt1LnFayOkBgrWhnmCLxtUJ1hWvqd-GPTkzsFPL2>
+X-ME-Proxy: <xmx:3RJHZii8rlYw_uJAaO3cAS6X4UvoZmUTEjy8T3DGNXvlAC2o1VUu8w>
+    <xmx:3RJHZmDRlUYQzRlXJMvsqNsVgSQA-v7MnBOvUSOejbN61zxDGCnpfw>
+    <xmx:3RJHZjICTW2cqx7GEkdnaJTPS8ok9tGhm9vCQaO45VSxQSzarJVxmg>
+    <xmx:3RJHZtBseI5PkEjSVhJW8s2Typ8YxJU715lGG0l7BfohDZHI1UOGIQ>
+    <xmx:3RJHZhO8LDDVw8vD3e0Cvoq50y7NztQNOe1-_SERKhyz7LkHVV6nBcEo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 May 2024 04:18:30 -0400 (EDT)
+ 17 May 2024 04:18:36 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id c10b93cc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 May 2024 08:18:04 +0000 (UTC)
-Date: Fri, 17 May 2024 10:18:28 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 0fcb5c59 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 May 2024 08:18:09 +0000 (UTC)
+Date: Fri, 17 May 2024 10:18:34 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 04/16] refs: track ref stores via strmap
-Message-ID: <9ca54a12e892a188ba54922c8cbb0e8ceffab0f4.1715929858.git.ps@pks.im>
+Subject: [PATCH v2 05/16] refs: pass repo when retrieving submodule ref store
+Message-ID: <d7f8b2f40db4cf586aa5a2bdd038284ae6d1c9d8.1715929858.git.ps@pks.im>
 References: <cover.1715929858.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,170 +82,281 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VvcyiDtdpRrlfIbo"
+	protocol="application/pgp-signature"; boundary="Z7mpwzzmRPvC1d87"
 Content-Disposition: inline
 In-Reply-To: <cover.1715929858.git.ps@pks.im>
 
 
---VvcyiDtdpRrlfIbo
+--Z7mpwzzmRPvC1d87
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The refs code has two global maps that track the submodule and worktree
-ref stores. Even though both of these maps track values by strings, we
-still use a `struct hashmap` instead of a `struct strmap`. This has the
-benefit of saving us an allocation because we can combine key and value
-in a single struct. But it does introduce significant complexity that is
-completely unneeded.
+Looking up submodule ref stores has two deficiencies:
 
-Refactor the code to use `struct strmap`s instead to reduce complexity.
-It's unlikely that this will have any real-world impact on performance
-given that most repositories likely won't have all that many ref stores.
-Furthermore, this refactoring allows us to de-globalize those maps and
-move them into `struct repository` in a subsequent commit more easily.
+  - The initialized subrepo will be attributed to `the_repository`.
+
+  - The submodule ref store will be tracked in a global map.
+
+This makes it impossible to have submodule ref stores for a repository
+other than `the_repository`.
+
+Modify the function to accept the parent repository as parameter and
+move the global map into `struct repository`. Like this it becomes
+possible to look up submodule ref stores for arbitrary repositories.
+
+Note that this also adds a new reference to `the_repository` in
+`resolve_gitlink_ref()`, which is part of the refs interfaces. This will
+get adjusted in the next patch.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c | 71 ++++++++++++----------------------------------------------
- 1 file changed, 14 insertions(+), 57 deletions(-)
+ builtin/submodule--helper.c |  6 ++++--
+ refs.c                      | 22 +++++++---------------
+ refs.h                      |  3 ++-
+ refs/refs-internal.h        |  2 +-
+ repository.c                |  8 ++++++++
+ repository.h                |  8 ++++++++
+ submodule.c                 |  3 ++-
+ t/helper/test-ref-store.c   |  2 +-
+ 8 files changed, 33 insertions(+), 21 deletions(-)
 
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index e604cb5ddb..5076a33500 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -679,7 +679,8 @@ static void status_submodule(const char *path, const st=
+ruct object_id *ce_oid,
+ 			     displaypath);
+ 	} else if (!(flags & OPT_CACHED)) {
+ 		struct object_id oid;
+-		struct ref_store *refs =3D get_submodule_ref_store(path);
++		struct ref_store *refs =3D repo_get_submodule_ref_store(the_repository,
++								      path);
+=20
+ 		if (!refs) {
+ 			print_status(flags, '-', path, ce_oid, displaypath);
+@@ -903,7 +904,8 @@ static void generate_submodule_summary(struct summary_c=
+b *info,
+=20
+ 	if (!info->cached && oideq(&p->oid_dst, null_oid())) {
+ 		if (S_ISGITLINK(p->mod_dst)) {
+-			struct ref_store *refs =3D get_submodule_ref_store(p->sm_path);
++			struct ref_store *refs =3D repo_get_submodule_ref_store(the_repository,
++									      p->sm_path);
+=20
+ 			if (refs)
+ 				refs_head_ref(refs, handle_submodule_head_ref, &p->oid_dst);
 diff --git a/refs.c b/refs.c
-index 0f4d327c47..01e8453930 100644
+index 01e8453930..1d660d5ace 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -6,7 +6,7 @@
- #include "advice.h"
- #include "config.h"
- #include "environment.h"
--#include "hashmap.h"
-+#include "strmap.h"
- #include "gettext.h"
- #include "hex.h"
- #include "lockfile.h"
-@@ -1960,66 +1960,27 @@ int resolve_gitlink_ref(const char *submodule, cons=
-t char *refname,
+@@ -1949,8 +1949,7 @@ int resolve_gitlink_ref(const char *submodule, const =
+char *refname,
+ 	struct ref_store *refs;
+ 	int flags;
+=20
+-	refs =3D get_submodule_ref_store(submodule);
+-
++	refs =3D repo_get_submodule_ref_store(the_repository, submodule);
+ 	if (!refs)
+ 		return -1;
+=20
+@@ -1960,9 +1959,6 @@ int resolve_gitlink_ref(const char *submodule, const =
+char *refname,
  	return 0;
  }
 =20
--struct ref_store_hash_entry
--{
--	struct hashmap_entry ent;
+-/* A strmap of ref_stores, stored by submodule name: */
+-static struct strmap submodule_ref_stores;
 -
--	struct ref_store *refs;
--
--	/* NUL-terminated identifier of the ref store: */
--	char name[FLEX_ARRAY];
--};
-+/* A strmap of ref_stores, stored by submodule name: */
-+static struct strmap submodule_ref_stores;
+ /* A strmap of ref_stores, stored by worktree id: */
+ static struct strmap worktree_ref_stores;
 =20
--static int ref_store_hash_cmp(const void *cmp_data UNUSED,
--			      const struct hashmap_entry *eptr,
--			      const struct hashmap_entry *entry_or_key,
--			      const void *keydata)
--{
--	const struct ref_store_hash_entry *e1, *e2;
--	const char *name;
--
--	e1 =3D container_of(eptr, const struct ref_store_hash_entry, ent);
--	e2 =3D container_of(entry_or_key, const struct ref_store_hash_entry, ent);
--	name =3D keydata ? keydata : e2->name;
--
--	return strcmp(e1->name, name);
--}
--
--static struct ref_store_hash_entry *alloc_ref_store_hash_entry(
--		const char *name, struct ref_store *refs)
--{
--	struct ref_store_hash_entry *entry;
--
--	FLEX_ALLOC_STR(entry, name, name);
--	hashmap_entry_init(&entry->ent, strhash(name));
--	entry->refs =3D refs;
--	return entry;
--}
--
--/* A hashmap of ref_stores, stored by submodule name: */
--static struct hashmap submodule_ref_stores;
--
--/* A hashmap of ref_stores, stored by worktree id: */
--static struct hashmap worktree_ref_stores;
-+/* A strmap of ref_stores, stored by worktree id: */
-+static struct strmap worktree_ref_stores;
-=20
- /*
-  * Look up a ref store by name. If that ref_store hasn't been
-  * registered yet, return NULL.
-  */
--static struct ref_store *lookup_ref_store_map(struct hashmap *map,
-+static struct ref_store *lookup_ref_store_map(struct strmap *map,
- 					      const char *name)
- {
--	struct ref_store_hash_entry *entry;
--	unsigned int hash;
-+	struct strmap_entry *entry;
-=20
--	if (!map->tablesize)
-+	if (!map->map.tablesize)
- 		/* It's initialized on demand in register_ref_store(). */
- 		return NULL;
-=20
--	hash =3D strhash(name);
--	entry =3D hashmap_get_entry_from_hash(map, hash, name,
--					struct ref_store_hash_entry, ent);
--	return entry ? entry->refs : NULL;
-+	entry =3D strmap_get_entry(map, name);
-+	return entry ? entry->value : NULL;
- }
-=20
- /*
-@@ -2064,18 +2025,14 @@ struct ref_store *get_main_ref_store(struct reposit=
-ory *r)
-  * Associate a ref store with a name. It is a fatal error to call this
-  * function twice for the same name.
-  */
--static void register_ref_store_map(struct hashmap *map,
-+static void register_ref_store_map(struct strmap *map,
- 				   const char *type,
- 				   struct ref_store *refs,
- 				   const char *name)
- {
--	struct ref_store_hash_entry *entry;
--
--	if (!map->tablesize)
--		hashmap_init(map, ref_store_hash_cmp, NULL, 0);
--
--	entry =3D alloc_ref_store_hash_entry(name, refs);
--	if (hashmap_put(map, &entry->ent))
-+	if (!map->map.tablesize)
-+		strmap_init(map);
-+	if (strmap_put(map, name, refs))
+@@ -2036,7 +2032,8 @@ static void register_ref_store_map(struct strmap *map,
  		BUG("%s ref_store '%s' initialized twice", type, name);
  }
+=20
+-struct ref_store *get_submodule_ref_store(const char *submodule)
++struct ref_store *repo_get_submodule_ref_store(struct repository *repo,
++					       const char *submodule)
+ {
+ 	struct strbuf submodule_sb =3D STRBUF_INIT;
+ 	struct ref_store *refs;
+@@ -2057,7 +2054,7 @@ struct ref_store *get_submodule_ref_store(const char =
+*submodule)
+ 		/* We need to strip off one or more trailing slashes */
+ 		submodule =3D to_free =3D xmemdupz(submodule, len);
+=20
+-	refs =3D lookup_ref_store_map(&submodule_ref_stores, submodule);
++	refs =3D lookup_ref_store_map(&repo->submodule_ref_stores, submodule);
+ 	if (refs)
+ 		goto done;
+=20
+@@ -2069,20 +2066,15 @@ struct ref_store *get_submodule_ref_store(const cha=
+r *submodule)
+ 		goto done;
+=20
+ 	subrepo =3D xmalloc(sizeof(*subrepo));
+-	/*
+-	 * NEEDSWORK: Make get_submodule_ref_store() work with arbitrary
+-	 * superprojects other than the_repository. This probably should be
+-	 * done by making it take a struct repository * parameter instead of a
+-	 * submodule path.
+-	 */
+-	if (repo_submodule_init(subrepo, the_repository, submodule,
++
++	if (repo_submodule_init(subrepo, repo, submodule,
+ 				null_oid())) {
+ 		free(subrepo);
+ 		goto done;
+ 	}
+ 	refs =3D ref_store_init(subrepo, submodule_sb.buf,
+ 			      REF_STORE_READ | REF_STORE_ODB);
+-	register_ref_store_map(&submodule_ref_stores, "submodule",
++	register_ref_store_map(&repo->submodule_ref_stores, "submodule",
+ 			       refs, submodule);
+=20
+ done:
+diff --git a/refs.h b/refs.h
+index b11c250e8a..346a81e9e3 100644
+--- a/refs.h
++++ b/refs.h
+@@ -954,7 +954,8 @@ struct ref_store *get_main_ref_store(struct repository =
+*r);
+  * For backwards compatibility, submodule=3D=3D"" is treated the same as
+  * submodule=3D=3DNULL.
+  */
+-struct ref_store *get_submodule_ref_store(const char *submodule);
++struct ref_store *repo_get_submodule_ref_store(struct repository *repo,
++					       const char *submodule);
+ struct ref_store *get_worktree_ref_store(const struct worktree *wt);
+=20
+ /*
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 8624477e19..178a355eb0 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -705,7 +705,7 @@ extern struct ref_storage_be refs_be_packed;
+ /*
+  * A representation of the reference store for the main repository or
+  * a submodule. The ref_store instances for submodules are kept in a
+- * hash map; see get_submodule_ref_store() for more info.
++ * hash map; see repo_get_submodule_ref_store() for more info.
+  */
+ struct ref_store {
+ 	/* The backend describing this ref_store's storage scheme: */
+diff --git a/repository.c b/repository.c
+index c50849fd83..bb9b9e2b52 100644
+--- a/repository.c
++++ b/repository.c
+@@ -14,6 +14,7 @@
+ #include "sparse-index.h"
+ #include "trace2.h"
+ #include "promisor-remote.h"
++#include "refs.h"
+=20
+ /* The main repository */
+ static struct repository the_repo;
+@@ -289,6 +290,9 @@ static void repo_clear_path_cache(struct repo_path_cach=
+e *cache)
+=20
+ void repo_clear(struct repository *repo)
+ {
++	struct hashmap_iter iter;
++	struct strmap_entry *e;
++
+ 	FREE_AND_NULL(repo->gitdir);
+ 	FREE_AND_NULL(repo->commondir);
+ 	FREE_AND_NULL(repo->graft_file);
+@@ -329,6 +333,10 @@ void repo_clear(struct repository *repo)
+ 		FREE_AND_NULL(repo->remote_state);
+ 	}
+=20
++	strmap_for_each_entry(&repo->submodule_ref_stores, &iter, e)
++		ref_store_release(e->value);
++	strmap_clear(&repo->submodule_ref_stores, 1);
++
+ 	repo_clear_path_cache(&repo->cached_paths);
+ }
+=20
+diff --git a/repository.h b/repository.h
+index 41ed22543a..0389df0461 100644
+--- a/repository.h
++++ b/repository.h
+@@ -1,6 +1,8 @@
+ #ifndef REPOSITORY_H
+ #define REPOSITORY_H
+=20
++#include "strmap.h"
++
+ struct config_set;
+ struct fsmonitor_settings;
+ struct git_hash_algo;
+@@ -108,6 +110,12 @@ struct repository {
+ 	 */
+ 	struct ref_store *refs_private;
+=20
++	/*
++	 * A strmap of ref_stores, stored by submodule name, accessible via
++	 * `repo_get_submodule_ref_store()`.
++	 */
++	struct strmap submodule_ref_stores;
++
+ 	/*
+ 	 * Contains path to often used file names.
+ 	 */
+diff --git a/submodule.c b/submodule.c
+index f6313cd99f..759cf1e1cd 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -99,7 +99,8 @@ int is_staging_gitmodules_ok(struct index_state *istate)
+ static int for_each_remote_ref_submodule(const char *submodule,
+ 					 each_ref_fn fn, void *cb_data)
+ {
+-	return refs_for_each_remote_ref(get_submodule_ref_store(submodule),
++	return refs_for_each_remote_ref(repo_get_submodule_ref_store(the_reposito=
+ry,
++								     submodule),
+ 					fn, cb_data);
+ }
+=20
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index 82bbf6e2e6..a5a7609811 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -82,7 +82,7 @@ static const char **get_store(const char **argv, struct r=
+ef_store **refs)
+ 		add_to_alternates_memory(sb.buf);
+ 		strbuf_release(&sb);
+=20
+-		*refs =3D get_submodule_ref_store(gitdir);
++		*refs =3D repo_get_submodule_ref_store(the_repository, gitdir);
+ 	} else if (skip_prefix(argv[0], "worktree:", &gitdir)) {
+ 		struct worktree **p, **worktrees =3D get_worktrees();
 =20
 --=20
 2.45.1.190.g19fe900cfc.dirty
 
 
---VvcyiDtdpRrlfIbo
+--Z7mpwzzmRPvC1d87
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZHEtMACgkQVbJhu7ck
-PpQOjxAAgGHyCn15yvVeJ2TLXyTLEJhziudVy9NrIbEwjK0mcydlCLupQ0y8AJna
-LkpHpMV9PmLwcaDMdjfg3ZfFUJ9puxvhleyQONazSzGjs7EtlSeBfV3DHwmkUfbT
-xg2NrjK3ftAK5epn5LZ9GMwUuovYKlXNfdp56+z31Gmehc1bKpBINdyeT69vBrlL
-/iPxUQS56h0H47O8Dicgwq16htOtpvoI+BMYC47UiCfsGEmaWW1LMgBw7ENhmBCY
-mePBkbLEBb+b+P4FiwB+nGbTbbawMZYwl+U45VYcTFd678CF9kC0xFMj5VGL4qmz
-r3rcilxSDfpSMLEHS0sai0qLmmoI4TimzYG2Ky4Yng9Wzz89ijGoj9uVIF3DSGqR
-TBn+6x2/1r6ZuRow67RmyBK8i0g90jK06kHvxUpDEKCQkrdwW/EVqs7pIg1PnewU
-HPbgTK6Li7hlqCcYF50L6THK9FPPhxrEftm++mM1/ghBOY72p1l0bc26RNkariY7
-FPKruoM+l31ZfYEUfmo3Q/Y2YszgGq33s2oOn5TDoJ9d6DrZ9aOgzWR59L0ZGxjC
-SXgmWp7NMgUFcezb/Zu+6noLxwu8Wk8N1ov8pNn4HWvRpBenAIvrACUxWyrjMr/A
-vSoi/O8kKz87ZI6j/qfKUeukJnpQAcNo5iwrIFNrzlAz82KeuTA=
-=Nh1p
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZHEtkACgkQVbJhu7ck
+PpQlzRAAq4MIeXnY9oSuPuGn+oilG8OrI3Zmcq0F8vxwrOebqrh3/IUBRvdg+3fh
+oahQ/PkHfINwFKdRslrpYHiD3bZmVxzLaHB2XjQupd9HSC3iXwWUcZdy84pz+q0G
+bTrgO/EpGgSC9PTlHtxIvPIHOJtJIn2OLM04lcGyVnsg97ubF7U0kpRf2IEQbeyg
+vCCRxO/m4tWL2x42De37g77m1WCPVzW/yZBHGyEhy/JoGikeur+g3+cV7q9KkVK0
+Li7G8QmS4fN28ejYeGeHD/bpRbZ8cLai7HMt0cY40OvNFQWU0BUMm6j366HimFYa
+Ghl6Ol5B0pcKQV6FjAPxn16xfV81Adl1VSgnxlx1s1BYAvezC01iMy3kf8uXE+B7
+MC4lZsd/SJPWbAz2p8Uf5dBZruC7benVuoP8JvipEf/X+ZDJ0fHpDNcfsYoer1Nd
+TkL+xW05qnbK8pNb0J/Uqm1KHQmpbDpeHHUovXp5TL4h0FrIbUB++PnK5+I0/2yJ
+CZ9DXZ/CuWRstI6De30tF6pVRsGd4h48qI2ISiDAYpd7t0OdOdoOcbwJxtlKv2Mm
+pMyLZ9J+tycUGvERa69Qp/cfVMaPZCHoP0No2Qof0wRpB4AYqmd96Yc4E6eexzxW
+a4BrP6fC3LHCLpxn3YoPYqFaCn0jFfnd3U/XXU8l3qSAY60BZR0=
+=hioK
 -----END PGP SIGNATURE-----
 
---VvcyiDtdpRrlfIbo--
+--Z7mpwzzmRPvC1d87--
