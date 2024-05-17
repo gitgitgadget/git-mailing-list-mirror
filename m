@@ -1,58 +1,62 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A801E891
-	for <git@vger.kernel.org>; Fri, 17 May 2024 23:16:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A9F266A7
+	for <git@vger.kernel.org>; Fri, 17 May 2024 23:16:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715987762; cv=none; b=JyuiO4FmnXGxFz0zsiiS8vTwqchzZybxvVna5XRqgZKzB16epHeskuFvyd1CPc2vZdKGeo6MgT5ewnKeRHJl+T3fPSxx6VRWjib1tG8bibC8NOTB1VIkVygvTxyJDsfjzuTNnKRBzJWeZZXCVHCcT6xJDibnLTb2OkklKrw3iAw=
+	t=1715987763; cv=none; b=HZBnfNCMZZ67eFLKnUtwQJq5842lL2m5py0AUKvBWQbu9QtErbY8lrndyP8ZlanbIInlN5lnLNxhwzw/R+7YfW3xTmuvcNEmGCcLdScXdGC2R2fHbl5y/KC350n+uTIah83AG6qEswJWz0xwwM5GthRW6mSg0VAI/j6iocuBe+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715987762; c=relaxed/simple;
-	bh=QNN4deBq7ohU5/zLCumMlA1i4k5BkAtU1ZAzq33qmt8=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=tVbhJeVGPLZQZ9EyQzB1pL7pJQSSnj4cMYgV7ZupGYbw9is6c3KT+MV0+dWbmVuN4tqGfMT0rysu4Cqoyf73mopVEkvvxyFjCUiIqh7tY17qEeIjrojmq4J3twD5m8xWvrH/nm5BXV1rgNBHhz0BPQ10aaevnIfAKJDYj+aOyCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JRD8pijj; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1715987763; c=relaxed/simple;
+	bh=eomBttJUDugeAh4/E/RHJ5Kl046QR71tdtyo18mV/ck=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=or2JDC1aWz/LgFVpbyw90KK53zCMP9JPL5L+/GWDb8Eme9EEG2KUPzwsqNa1rSCUWybBdFHb98AGbRsoFEz/RQEKaLPbznYbepWKel6pr0mKudm++O+R+RBY/P1nxf/hwkgj6uCzpYJq2oO33GAqiufIYCOzmHJRSa/ZaQ1fZR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FvGpuLXe; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JRD8pijj"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-420298ff5b1so8421345e9.1
-        for <git@vger.kernel.org>; Fri, 17 May 2024 16:16:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FvGpuLXe"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-34da04e44a2so551605f8f.1
+        for <git@vger.kernel.org>; Fri, 17 May 2024 16:16:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715987758; x=1716592558; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1715987760; x=1716592560; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=nbkqGCUIcI0rOG1oeMqdqND6duYv/tdEvYWZ5TX+KJI=;
-        b=JRD8pijjXSWPimmKsXUCqdnTv46fEmVFgCADh/uSsIScM9FObAUF4mxkTf00Unp8ft
-         BVlJWojSaPmUPdXjhAW5+0LHPnMPQgWxF7fmRHwc1LhqCT8KFLP2VYRoKS/N8kNwwZT1
-         8KEV2GSGzHRhwnTVzXewfl7ktE90wmz1y+TwDASNUk5XU6p0qt2eMmgmZB7Q8W1NWnvO
-         pij+sk9jrhs20ukT0VPIZs106CrOR/i/a4B5J4+uy+2qq5o6TpNU3GlhX78FXeND4rnJ
-         6o1xtYCdtTKYHhetyCjIHKn1q/e+gxjAY24m54P8XDj6sZAvtVN442v4GFsbGjeAfsn9
-         o1Sw==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Pa4ywTRMbTP0sOgRCz5rqk9gwHUD4hcDu9QhBPTQQ6M=;
+        b=FvGpuLXeRLmYLbjbwTWl1thmCAuEPKk3XEGNwwkXJoloz3CcTyyNE7b1mXyltF0pmn
+         GYn7tmYyP5tkKRCf0QMpXovulDD458iOWAQ4qGN9ET+/HBxCI6/zWgMPM4jdFC7RLgX8
+         QwLn69VNG9K/SrCGtZnFPaGdurvA0xHBrHfvY9g7ZQFnyQ3v9BMdZvn2TAtYtL4tLozH
+         CMHaG7H4Gz3roV+g6HPtOem+VxPC823c4wEHY5ukj3kK3MEu8oHrOPIsIPyyx3IPGoHW
+         Iyxx8KAvTwAaBFRsCSicuUQd+Jd5XSs5JEKw9S5QkI14otnIAtCjNvPiC4aaCpMk/2+g
+         PCPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715987758; x=1716592558;
+        d=1e100.net; s=20230601; t=1715987760; x=1716592560;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nbkqGCUIcI0rOG1oeMqdqND6duYv/tdEvYWZ5TX+KJI=;
-        b=VdqrNlDYQ3k1u2dHAy6XikoVVbLFzdjDjfYIxFvQ6W6U0xvI+u/JWsHRlEE5aJVr/w
-         OntThWYRw7xUXrhv1wki9MeQP9UdXR4ssSu/4j9+xiSW0f4lV91ZUBkfIpe7c/16QRgz
-         IiW61dCjAnLGJ1Fpy/WMfSAf8FsknorfvMiIA3+sJqYy3VhVEMVZ4eQ2vyQV5iyZ0P16
-         EqzsWCqq9+1Z2Oh7vLvZwWPbfBYZpXYkg4WOZs3bRiLSqv8h/XbMtPvw/2+5NfxdV3qq
-         p0GEXv9nfVU9q3bvGCimdxmLBHNVsabt+Q144fP1/uotzZ1hNzC4RqsJAO3XTOKlnfg/
-         9FHg==
-X-Gm-Message-State: AOJu0Yybi7S0WynaMVDVrNnL4hslXZOp10sbt6pIXE5JHTxqfaM2tYfa
-	MopHYkabsPFnKSdF5e9KYjFGOmKvcG8vY2yI4LfC6FG3SbquNX/MhfmA6A==
-X-Google-Smtp-Source: AGHT+IHe97MuHllp0may0Rtugy6gmVUbx6imFsQDrLuiNWsCMnDThgSgrbvdeXKCBOx7fueYz5davw==
-X-Received: by 2002:a05:600c:3b86:b0:41c:2313:da8d with SMTP id 5b1f17b1804b1-41fea539615mr235155135e9.0.1715987758127;
-        Fri, 17 May 2024 16:15:58 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Pa4ywTRMbTP0sOgRCz5rqk9gwHUD4hcDu9QhBPTQQ6M=;
+        b=EkaVYKSnj/wIAnSjblfB/5yWIdYsjyT/Sv2FvT+E5A7Ohz6eTv8P3GuAtKmELwSAKV
+         lf3S7fDZfXG0xhFcYmHhXuWYm5FI8PityT/NYFdaKhD4lxJlj8fj9nsT91bjE/vFUm0V
+         jks/ckmvv/RBET6o6cfJL1tXpE3jJImTJS7UtDruWWXDr+xPYU7apnBCwul6TPZedCI7
+         IPBDlu23X+V1aBxeFJwYR0LqOJuuwdSVrXrKR80BecFt06lg70WBSpeXi9UeWmRVLOtA
+         Ccbu73zqJoC2696ZXlcZOqXHZ6VdEdZHq9tAJk026dnXWa4l6gqzzoBmud1/JTd1gvy9
+         KaeQ==
+X-Gm-Message-State: AOJu0YwFC0bk6CFt7Dvpis26WwZynLCjmArUOCjxFVCQQxWYqk162qGT
+	W+jnLMe3e6wkEtjIsVJlv60tZF8ztBabcZw6/pUde1C74g58whzaWPq1VA==
+X-Google-Smtp-Source: AGHT+IEFxIDjmH59e/Q62RqP42Em7ovvYCTbH+WcBN2MPslnYBowYiKVuZQlkkdbLqoI/WRzcivn/w==
+X-Received: by 2002:adf:e68e:0:b0:34d:b40e:79cd with SMTP id ffacd0b85a97d-3504a739593mr15999650f8f.42.1715987759658;
+        Fri, 17 May 2024 16:15:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41fe36f373fsm298802595e9.20.2024.05.17.16.15.57
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3502b79bc8esm22521637f8f.15.2024.05.17.16.15.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 May 2024 16:15:57 -0700 (PDT)
-Message-Id: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
+        Fri, 17 May 2024 16:15:58 -0700 (PDT)
+Message-Id: <d4a003bf2ceafcc6d47d01d21b7faff48c9e85aa.1715987756.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
+References: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 17 May 2024 23:15:48 +0000
-Subject: [PATCH 0/8] Various fixes for v2.45.1 and friends
+Date: Fri, 17 May 2024 23:15:49 +0000
+Subject: [PATCH 1/8] hook: plug a new memory leak
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,51 +67,36 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-There have been a couple of issues that were reported about v2.45.1, and in
-addition I have noticed some myself:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
- * a memory leak in the clone protection logic
- * a missed adjustment in the Makefile that leads to an incorrect templates
-   path in v2.39.4, v2.40.2 and v2.41.1 (but not in v2.42.2, ..., v2.45.1)
- * an overzealous core.hooksPath check
- * that Git LFS clone problem where it exits with an error (even if the
-   clone often succeeded...)
+In 8db1e8743c0 (clone: prevent hooks from running during a clone,
+2024-03-28), I introduced an inadvertent memory leak that was
+unfortunately not caught before v2.45.1 was released. Here is a fix.
 
-This patch series is based on maint-2.39 to allow for (relatively) easy
-follow-up versions v2.39.5, ..., v2.45.2.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ hook.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Johannes Schindelin (8):
-  hook: plug a new memory leak
-  init: use the correct path of the templates directory again
-  Revert "core.hooksPath: add some protection while cloning"
-  tests: verify that `clone -c core.hooksPath=/dev/null` works again
-  hook(clone protections): add escape hatch
-  hooks(clone protections): special-case current Git LFS hooks
-  hooks(clone protections): simplify templates hooks validation
-  Revert "Add a helper function to compare file contents"
-
- Documentation/config/safe.txt |   6 ++
- Makefile                      |   2 +-
- builtin/init-db.c             |   7 +++
- cache.h                       |  14 -----
- config.c                      |  13 +----
- copy.c                        |  58 --------------------
- hook.c                        | 100 +++++++++++++++++++++++++++-------
- hook.h                        |  10 ++++
- setup.c                       |   1 +
- t/helper/test-path-utils.c    |  10 ----
- t/t0060-path-utils.sh         |  41 --------------
- t/t1350-config-hooks-path.sh  |   4 ++
- t/t1800-hook.sh               |  40 ++++++++++----
- t/t5601-clone.sh              |  19 +++++++
- 14 files changed, 158 insertions(+), 167 deletions(-)
-
-
-base-commit: 47b6d90e91835082010da926f6a844d4441c57a6
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1732%2Fdscho%2Fvarious-fixes-for-v2.45.1-and-friends-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1732/dscho/various-fixes-for-v2.45.1-and-friends-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1732
+diff --git a/hook.c b/hook.c
+index 632b537b993..fc974cee1d8 100644
+--- a/hook.c
++++ b/hook.c
+@@ -18,8 +18,10 @@ static int identical_to_template_hook(const char *name, const char *path)
+ 		found_template_hook = access(template_path.buf, X_OK) >= 0;
+ 	}
+ #endif
+-	if (!found_template_hook)
++	if (!found_template_hook) {
++		strbuf_release(&template_path);
+ 		return 0;
++	}
+ 
+ 	ret = do_files_match(template_path.buf, path);
+ 
 -- 
 gitgitgadget
+
