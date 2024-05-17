@@ -1,232 +1,219 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CAN01-YQB-obe.outbound.protection.outlook.com (mail-yqbcan01on2117.outbound.protection.outlook.com [40.107.116.117])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708B440870
-	for <git@vger.kernel.org>; Fri, 17 May 2024 12:27:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715948851; cv=none; b=PaYJv+AVTl9eRGpCqVA90chUgN1dsWeIBKQgAlqYWrH2GtG1zm9GGfqx+IAr3B5f4V6r76fUirurpNVKlFX6UaAzJ7SJd+h0xwPY8AzEVMsfpcQTUX6gD1r2z5SUKfoFIOrI8q4VMmVnjMzQddN/AFFG7tLAfcMr98knmc/dzyI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715948851; c=relaxed/simple;
-	bh=A6WKjWsCVCEHEuc52onexQOMFOqqU6MebytgyENT664=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LXhgbB3CW7ZvpwBiZ9aRi47VU1RX420OWimwZzh+KstCS6bB3niG6zXug1lBtpq/fUVWvIDa6gJjEJdcxEF8FSVsxhmG861Xf8kYbdcw1XS8rokS11vmURBzBhAbJhgFDdyq5e8AWp6LRO5k97/MnNFw5G/xsFx/LdllTkW4HnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fisus8nA; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181B53BBE5
+	for <git@vger.kernel.org>; Fri, 17 May 2024 12:42:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.116.117
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1715949767; cv=fail; b=AGP/AslxWRT3/y1WbtdLJOOop5XLeYPDm8iMvOtOn2YPAn7Hthx38E7Eq6QrDa8N8Xg0DbYxYWeGd2GN/OK8G1djXKWDgJR/C/Npps482CPvOzPe53uJMWPTM90gRQ9tmLBCz5wwlj6FRtUiyEJTw+oDnxbuoGax7blIG115fao=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1715949767; c=relaxed/simple;
+	bh=kK/g5zxMzYbkQaYvPmuUmRZVqiDZpwDD5SAmrXoZshM=;
+	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=KXkJVM/BEdyG4MWy7GaaI5ANiEvZtNWTk3nZowWD5oW+uP8jnp0ShFujDLyCHDzk6i5dZbE08FRpw09I6cF3X0neyFglgKdBClaD9gc1TFKZg1MBEbazFRXJLasnww2wqc1OPy8uyqc/SR84h2Pht1qauo2RswQ8pqfU3TjbM9w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=xiplink.com; spf=pass smtp.mailfrom=xiplink.com; dkim=pass (1024-bit key) header.d=xiplink.onmicrosoft.com header.i=@xiplink.onmicrosoft.com header.b=PZ0fgLeC; arc=fail smtp.client-ip=40.107.116.117
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=xiplink.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=xiplink.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fisus8nA"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a5a4bc9578cso416762766b.2
-        for <git@vger.kernel.org>; Fri, 17 May 2024 05:27:29 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=xiplink.onmicrosoft.com header.i=@xiplink.onmicrosoft.com header.b="PZ0fgLeC"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=hagT+a/eXVlHBwOpGbRyKg+q5GPPrP6enAjPAzDXH7Qpu1g+iU201A/30Ag9duz7NM3uE5AXYBnPlvTAEm0pqlZ+paDdkL9ZGa4YM51UtLpVjRNsIwh01wc2Svj1RSKTeJ3yMSNSXP4Hmd4MD3sIUs2OHHM1y0d9+G/Y2/q5rFCnNsYCCtGT5LVp0X5svJVlGZi3MSETY3KYtM5HdzNyjOQAEqfM25lxxolWX8XidwmGXPfVLOdl8XeiclCPIPL1eU3bNBrtK7BtZjCza6LDkBwQz5IkciQyjSHgIrhk1bYahXl2i9IVReM4brQ/OrSAc8O2HfgRG9VFY+iMVopq0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=F/n/1UgBIu7DtWRkq+Bhr2HId2BzT+8GcRW/Qh+AhDo=;
+ b=TX+bgiLy2UgLt9El36rHGOCepHkm64PyCE9l4saqlkI5CF591GSW2er3KzzW7AMSUq0QpPfyJQNeVF/AeS7SZrZZDKpppgN1/as5MtrbSD5JSgYciOIAXv6nYtfH45NLzRiPxHA6QrnQwOPZ+N61q12cKoVwn43whZB594suMBxur7VzJ8EzH48u9VdiFT81kY+nU44wUPV8ctkfwgAkPZ1hEu233WTW4M5ofhhAQNN8Jse30Av9xASA3k45T+VvttjCIY6crxzVsJD11E/aTVk/hfM8kXVygiqYwGeUTKo+ID9h3G2+GCExvGahhAwY7lZWsLYWgVyNNw0ogzER4g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=xiplink.com; dmarc=pass action=none header.from=xiplink.com;
+ dkim=pass header.d=xiplink.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715948848; x=1716553648; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fua9hjDBoa+3DsYaA468ipQsFTEOg8JIp4iobXh6rE0=;
-        b=fisus8nAv6iWAj04ecoYcIjQ0yUcbSdFMeJRckXHFroKOQanveTjgg5gnXZs9GEH+T
-         pgti4Symu2Ll9KlL916TqRkpOR97ObTlXieFUyTOOWLLRR6lqh+LkshM0OFhhuvNhHnW
-         mqzaM5ZWUxwxTmI9q2mE4yNzjRqarrvJDW5oVveVN227zMYQLdEGa1Ln3v+mVkzINYVU
-         mO7PZgeRPWBmnx991LDJqdpNKSVDd1IBPhK14lvVjXPnd6QU3MlvBTAbTJwMMhVJlHp7
-         PJRec+4Kofiu+fYAtO1pzSVal6PX4eFo9O1f5I84i3OyJEHKB/LOs1ARHInQxKWdCER1
-         b+BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715948848; x=1716553648;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fua9hjDBoa+3DsYaA468ipQsFTEOg8JIp4iobXh6rE0=;
-        b=TcPDC7VBcgV5drSnrRov+FBDyJqhgpO52E6pRz01dcXpOjjTZoLEJREb6iXy9kidMs
-         wLiuO+Ac4dfFrCBQHAJTxMR3s+HTWqzPk8nDWOct2tbzZIeN+GoTEqZwHbyzGmt4AXTU
-         wM0O1xM+irkJBVe/wHKdC5Mz+H1DGzNcQZqALTT+wwDbvZtBmr/xahFdMwmVS38fISMY
-         +E6L3UNlitCggieisw23kY6C9lbaDbrVzFopSQ3GGck/bDyaFZYXDm9h16hyVBKuf1oe
-         ckgp4WdyvJkG1fAdClBmMK+aWXUTx/y4m7Ik8gCSZl6Te8+yvb3JtxLJrRSLdXgZpcl+
-         edIQ==
-X-Gm-Message-State: AOJu0Yx1lxcrpFp6tuZvFw0IMSyQ1VqC85f4kpSllXskotwZLjekDqdd
-	ggzKLzzM0vzKMccwyT8LOYrc+2k+u9XwSfChVF2PGkQFxmUvh4T1
-X-Google-Smtp-Source: AGHT+IGabPPkvrLU7kr7lDQwRVq5gPVLjkN1QR5MlHWJsVh4P9FfHAThf6JI8cG92K2YlwDLomwwCw==
-X-Received: by 2002:a17:906:4882:b0:a59:a727:1e81 with SMTP id a640c23a62f3a-a5a2d57a381mr2139265766b.20.1715948847389;
-        Fri, 17 May 2024 05:27:27 -0700 (PDT)
-Received: from laptop.fritz.box ([2a02:2455:826e:4900:4a60:5c46:7b75:202b])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a178a9d9csm1111636466b.74.2024.05.17.05.27.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 May 2024 05:27:26 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
-To: karthik.188@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	ps@pks.im
-Subject: [PATCH v2] SubmittingPatches: add section for iterating patches
-Date: Fri, 17 May 2024 14:27:24 +0200
-Message-ID: <20240517122724.270706-1-knayak@gitlab.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240514123039.1029081-1-knayak@gitlab.com>
-References: <20240514123039.1029081-1-knayak@gitlab.com>
+ d=xiplink.onmicrosoft.com; s=selector1-xiplink-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=F/n/1UgBIu7DtWRkq+Bhr2HId2BzT+8GcRW/Qh+AhDo=;
+ b=PZ0fgLeCUvgZtSJB6hluMFvLliP2pcmmkwbV3F5kTWNgiGnAsyvQa0PSSpwArF6jzD6a6pRR44WTateyv2bKc+ZQvAX/0n2fJb/buodveLSosjJ3q24BhN5jiyZ3W9/P4qguYfWynY7xHCyLwrCgeofw9Hnnn6Lo6gTVuXBa08w=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=xiplink.com;
+Received: from YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:f5::10)
+ by YT4PR01MB10598.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:ee::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.29; Fri, 17 May
+ 2024 12:42:42 +0000
+Received: from YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::fb6d:100d:8309:3ce3]) by YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::fb6d:100d:8309:3ce3%7]) with mapi id 15.20.7587.028; Fri, 17 May 2024
+ 12:42:42 +0000
+Message-ID: <6620412e-a8ea-40fb-8823-13c4b33e9808@xiplink.com>
+Date: Fri, 17 May 2024 08:42:41 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Q] rebase -i: turn "pick" to "edit", make no change, what should
+ happen?
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqy189o94c.fsf@gitster.g>
+Content-Language: en-US
+From: Marc Branchaud <marcnarc@xiplink.com>
+In-Reply-To: <xmqqy189o94c.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: YQBPR0101CA0350.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c01:6b::24) To YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:f5::10)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: YT2PR01MB10537:EE_|YT4PR01MB10598:EE_
+X-MS-Office365-Filtering-Correlation-Id: f195f543-5ee2-4f01-58c6-08dc766ed83c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|1800799015|376005;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?QVVyekVpTWtuVUl3eGRERUtIL3dwWEpzLzMrZm1nTHhtNnUxQktRclRZVEMw?=
+ =?utf-8?B?UloxeWN3V1dKdnhud0x5MW8rL0RROXVCMmZLZElTRTFwend3TEMwUmJublJP?=
+ =?utf-8?B?eTVFSzJWZy9YWlBxYjI2U2VZanE2VjZTYktCbTh0UktBRGE3RGRyTXJ6a3RY?=
+ =?utf-8?B?bklVRzRkZEJXdlplcnhKK0Z5Mi9Pd2JucFAxV0lzOER5SVlsaFVBdlVNamw0?=
+ =?utf-8?B?cHdkOFA4YlVPb01ja3ZOaTNOYVNQeGVEaTJWc1Q5TUwwTVMxMisveHZwZkhn?=
+ =?utf-8?B?RVUvM3cxZ1VlWTNPUjRxSFFjYmJ4WVVxSmNKNDhGZStNNm1SZjZvOXRRTS9U?=
+ =?utf-8?B?NC91a3dhbkZCbCtLL2FBWmUwTkF4RnIzQm1TcUtMTmhlTXhNczR4ZG84emZx?=
+ =?utf-8?B?TSsxclVDRVAzMnpaaXhLUFFSbHBxMXBobDZoUFRUU2NhaGt1QW11YjcyeWZh?=
+ =?utf-8?B?VTdSKzUyUG5vd05hdXlidXlOSVdxRUF0Nkd3dEZlQzlsTkQ1ZzEva3YvalQy?=
+ =?utf-8?B?NzZGelc2TmxyTlhvWms2QmVxOTY2M1dxSnFteFhzdnpxL3ovdW5kMnNCbmtJ?=
+ =?utf-8?B?clVVMWVBaXN2TE84N09Sdkg5Nkp2MHZTZUNYbzZXbzdvQWNxMk1wYVhBV0pM?=
+ =?utf-8?B?OWdKVlIzejZxa2pyQTdpUnFFcy8zMktXeGZaTlVpTUFETWhWY1BBL285Z2du?=
+ =?utf-8?B?Y3N5alhvekdvUjh5cFBMRVR4N0FBTUI4Wkkvb2M4MXlQUWhOY0doMVcrNjBt?=
+ =?utf-8?B?Z29QYld3eDJTZ1FreS9Kay90cjVvckprdlUrbzgrSElPcmo2N21lTjFFdTJn?=
+ =?utf-8?B?MThYTWhjaXFGWnpnaWovWkRUcmRBNVpaYWdxNmx6dFRtbjNQanVVcE4rdUo4?=
+ =?utf-8?B?RGJTdFVjU0I1VVltS0E3RjJidUNqRU5pU1F1YXEybWUwSnBFNVU2YTJlQm9Q?=
+ =?utf-8?B?K2JwSDJSUU13YU5VYzFLSmNrOFhHcDdKZ0N2UmNaellRbENPMW5DeXN0MWd4?=
+ =?utf-8?B?cWhBRzRKdXpXaVVKbmxSUTNVcVM4dmZtcnRrMEtSTDRtNGQ4QnE0WkdmZFlM?=
+ =?utf-8?B?SEtIWHpRbk1OVFRZMGk3cTNyQnN2N0J1SWkzQytFOTRuMnFmU0RyN3hIY1Q4?=
+ =?utf-8?B?UlgzMDRGcVFjUGVYZmVGU1dKMlczRENVQUNWcGllM1ZkK01qRmdDelRuaVNy?=
+ =?utf-8?B?OUpnbWRhMDJkZmQxV3lZT2hYSjVneUR3VGVFaUVBL1AwN2taSTErSTkrQ3FN?=
+ =?utf-8?B?YXAyWnJ5dUt2TzNha0wvL3pjMXREN2t3NkpyaEZkZWFIN2JSVXRnVGx6V1pj?=
+ =?utf-8?B?SVBLSmpwQkVycFB3OWxCMlVDUE00NWpzTk16SHlCWDVtMGFxTjNKcnVhNUVJ?=
+ =?utf-8?B?dTdWRUl4bFBBM20rdkNDUmNab0pxMk5zVlNqd1hkQVNnUm1Vb0xKRzcwc0ps?=
+ =?utf-8?B?M1U0MzdhazNvSjRHS0pzMWJOMkt4eEY5MElFR2E5YzRydXlQdWZOL2dCN1VK?=
+ =?utf-8?B?WHRpL0FkZklTeDRldlpiKyswYVZPRU9FdlZZNnZScmltV2xmM1hBRmRvaUZV?=
+ =?utf-8?B?WlZLUVhyRFZZOEN0MThRWVFIWUJOMlg0OFRUU2VyOFZ6ZjR2Uk02U2ZmUFJD?=
+ =?utf-8?B?b29uZGxDWlA1bTYvMkhNdS9TTkZUdEhrTmVzQzQ1WHBObEU2VElMT3pma0xN?=
+ =?utf-8?B?S0FrcXpUalJTeEVsZkUzeHBmc0Nma1UvTDBuS2I1Ukp3TWNRMkdkRDFnPT0=?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(366007)(1800799015)(376005);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?eWV5RkNGaWYvZCtGMTVJTlBIWnJmYlRURUk3MENJbFBzcGZxenFpdUd6UUNM?=
+ =?utf-8?B?Rng1eHBTeXpNakE5dFpvYit5NzdsWWlLbWZhcnJyZ3hJVTRpWTlVSjhZcjBU?=
+ =?utf-8?B?dDh4eFhQNWRwMGVqcS93dG83TWFkTkNoNVg4UU1NOUFrMXE5ZGdVcjQ1cXZV?=
+ =?utf-8?B?UU51U2RmTHYwd25EanJsLzNoeTdwWWYxR1lMT2FhQ0JTeWVDYVEzV1NpQkht?=
+ =?utf-8?B?VTg1NG40ZUVHeGdZZ1c1QTU1RFN5OE9OeFlGd2ZIMW5qTUZxUnduQmJ4aTFn?=
+ =?utf-8?B?K2ppS1VlUUptK3loMmlIKzJjMk9UT0ZQY0hFb3NxTFRMSEJNL1p4S0RLL2ov?=
+ =?utf-8?B?TkgrU0lTeFlTd0djdzgwYnc0dHZzdlA5bGx3RWJ0U05UV3BrUHQ5ZXJhT3A3?=
+ =?utf-8?B?aGtRaEM4YUJMNSs0RnJnNnZKdURzSzUxNjh5T2FVMm1FbzgyTC9Mb1U1aDJa?=
+ =?utf-8?B?WVROUXlKR3FKYUh0OGUvcTdOYU5kR3NKWDczeXZna0djRFY0VTFudVdqZnhR?=
+ =?utf-8?B?bXJNT1RGdWFoUlNUN0E1ZWdla1JZV1NrNUVxK3NucEs2eUkrM2FpUjJMeFlv?=
+ =?utf-8?B?ZmdNcVpCMjV3ZEd6OGxKa3MzeFB4TjVuVVBkZWM0cXhxUENiL1NXQlJDcnho?=
+ =?utf-8?B?c0FyOU5sOGx4S3lOSFhqaUZrMWlEdTUrQ1ZuOWtkOTN6ZUUxWjZqakN0U29L?=
+ =?utf-8?B?Vm9Edm53bnJNVWoyZFNzdU5ZdDZlcUx4d2RKaWJGcVFscjBySFhjNDU2SVE5?=
+ =?utf-8?B?RllBRDdJMDJDVXY2MlgyZU53ci90VHgyQmYvQWthU3hMUkxreUhjZ1c0OGNO?=
+ =?utf-8?B?OUU2alE5cUVRem93V21saTJkM241dDE5Um8xVmNmN0xrK1RRTlZ5aGFCNWRo?=
+ =?utf-8?B?TDNwM0p1NFdPQzdnbUdYQnpHUGVuOGdlSU9JUkVHeHkzcFBnSTR4UXBWTHpw?=
+ =?utf-8?B?cmNLWW5NR1lmNVFwbi9rMjhVYmJBMFcxYjZrK2ZqNXROOHV5dERXZm44VklL?=
+ =?utf-8?B?MHFDYTBYSkg5bjFVa1dOUHhoUHJmK0h6ZVJXTGZBRVI0NGl6K1lIRGI0TE5N?=
+ =?utf-8?B?SWtqQXRXazVPdEhpOUkrTkZFMXBJa1VkWDJZZkhYRFdEYnNaZFZ3S2E1TkZI?=
+ =?utf-8?B?bjRubUV0bERGOWsraEtlcTdiVW1IeTdvTTNwblVhc3FsSlh1YkxidGpxemRK?=
+ =?utf-8?B?cGhBMEpiQ0g5czBTUWxpRDNnOWtMWWpPZDQ0R3pxemJaREpySG4welBNK3lP?=
+ =?utf-8?B?dE03d1lMQVRaeUtaQUxCTGVNc1NnU2ZsT3FuOFpxTDFoUW9vSFNTTFdWOUNu?=
+ =?utf-8?B?RFFBYnFkZ1V3TWlUckJkWmd5QnM1TEt5Wkd3b1Z1dHBDNnMvNkJzRWpzbDVZ?=
+ =?utf-8?B?Qi95R3RMYXltYzJBRi9abVlma2tPZWhvY0dWSlIwZStXdU8yMnI2VGl2NFNp?=
+ =?utf-8?B?OFpwUGxrVlFtcXhKaHlmUGlOekV0L0ppWC9tRVNFbWRxTjhXcHNOL051ZXdy?=
+ =?utf-8?B?a1JlbHVxampKZTEvdTFkWXFYcHBmdGJBckdURXltSkFxT3kzQTAyU2RhMUhm?=
+ =?utf-8?B?NTBFN2gwbHNoY1ZFaFBmNFJPZzE5cTdReWFZN0FZN1dXcDltT05DUFV2WWtN?=
+ =?utf-8?B?U0YyWDA4amRuMUhjVEp2RW5vQjVLdFhKOXlIZEkxSGdFS3VzcHlObWlGcmdG?=
+ =?utf-8?B?b0tKSjRvWUFCOGFIOURqNitxeFRlT0lmSmJZZXNoajNYd0IyRVJha21iT2NE?=
+ =?utf-8?B?dDBzTXZkcXlwc2JZeFZyUlJsREZTWkptOUZ6SWkrc2hkWVJwZGk5SEg3amxL?=
+ =?utf-8?B?UkxrNVp5OHR0MVhQQ1VpOHIrb1pWZTJUZlZlU3ExRHB5cDNsYlZMQms3a3p2?=
+ =?utf-8?B?bFBoZGFEMnErbWc3T2N3N3ZTMktxd1hNYTZzelc3bGJ5UUVUMDA3MXEyNkl3?=
+ =?utf-8?B?Y0FtbFQzMVgrQThINDgrMjhENWx2aHRoaUN0bUdjQWJPZkFwdVFyY3MwTS9P?=
+ =?utf-8?B?aWJzOC9hcjZEOHAwU0lHRDk4RnU4bGxCSU5jaGFaNS9GeHF3NFgreXpWbDJi?=
+ =?utf-8?B?NElmSjJXc3VIRkxobTZ3TWlTbjd6R0l0N2dIUT09?=
+X-OriginatorOrg: xiplink.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f195f543-5ee2-4f01-58c6-08dc766ed83c
+X-MS-Exchange-CrossTenant-AuthSource: YT2PR01MB10537.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 May 2024 12:42:42.7881
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 14f927ba-c95b-4aa6-b674-375045ee9d4d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GWBTSa+QAZqaUsEfaJxop7Se1AFF8wJApd3wl8SH6ox5KqcwUQNC4if+qRzDqQ8HiXbfmoHaoVXOGomzS6w6cA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT4PR01MB10598
 
-From: Karthik Nayak <karthik.188@gmail.com>
 
-Add a section to explain how to work around other in-flight patches and
-how to navigate conflicts which arise as a series is being iterated.
-This provides the necessary steps that users can follow to reduce
-friction with other ongoing topics and also provides guidelines on how
-the users can also communicate this to the list efficiently.
+On 2024-05-16 15:21, Junio C Hamano wrote:
+> What should happen when I turn "pick" to "edit" in a "rebase -i"
+> session, check what got checked out in the working tree, find it
+> satisfactory and decide not to make any change to the files, and say
+> "rebase --continue"?
+> 
+> The current implementation seems to just move to the next step,
+> without offering a chance to edit the log message.  I do not know
+> offhand if this is something we changed recently, or if it has been
+> that way forever.
 
-Co-authored-by: Junio C Hamano <gitster@pobox.com>
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
+It's been this way forever (or close enough; I've been using Git since 
+~2010).
 
-Changes from v1 include:
-1. Removed ampersands in the example commands.
-2. Fixed grammar in commit message and text. 
+> I personally found this a bit unintuitive, because in my metal
+> model, "reword" is a mere subset of "edit": the latter would give me
+> chances to change both the contents and the log, while the former
+> only would offer me a chance to change the log.
+> 
+> But the actual behaviour does not match that mental model.  "edit"
+> is purely about editing the worktree files, and only if files (hence
+> the tree recorded) are modified, a chance to edit the log is offered
+> to adjust the message to what the new tree brings on top of the
+> parent commit.
 
-Range diff against v1:
+My mental model has always been that "edit" means "amend" -- when I tell 
+"git rebase" I want to "edit" a commit it (usually) means I intend to 
+"git commit --amend" it in some fashion, whether that's to update the 
+tree the commit changes, or to tweak the message, or both.  (Or 
+something else entirely -- since I'm at the shell prompt, I can do 
+anything!  The power!)
 
-1:  ae52d39e2a ! 1:  ea37ff3eb6 SubmittingPatches: add section for iterating patches
-    @@ Commit message
-     
-         Add a section to explain how to work around other in-flight patches and
-         how to navigate conflicts which arise as a series is being iterated.
-    -    This will provide the necessary steps that users can follow to reduce
-    +    This provides the necessary steps that users can follow to reduce
-         friction with other ongoing topics and also provides guidelines on how
-         the users can also communicate this to the list efficiently.
-     
-    @@ Documentation/SubmittingPatches: patch, format it as "multipart/signed", not a t
-     +
-     +. Make a trial merge of your topic into 'next' and 'seen', e.g.
-     ++
-    -+    $ git checkout --detach 'origin/seen' &&
-    -+    $ git revert -m 1 <the merge of the previous iteration into seen> &&
-    ++    $ git checkout --detach 'origin/seen'
-    ++    $ git revert -m 1 <the merge of the previous iteration into seen>
-     +    $ git merge kn/ref-transaction-symref
-     ++
-     +The "revert" is needed if the previous iteration of your topic is
-    @@ Documentation/SubmittingPatches: patch, format it as "multipart/signed", not a t
-     ++
-     +This trial merge may conflict.  It is primarily to see what conflicts
-     +_other_ topics may have with your topic.  In other words, you do not
-    -+have to depend on to make your topic work on 'master'.  It may become
-    -+the job of the other topic owners to resolve conflicts if your topic
-    -+goes to 'next' before theirs.
-    ++have to depend on it to make your topic work on 'master'.  It may
-    ++become the job of the other topic owners to resolve conflicts if your
-    ++topic goes to 'next' before theirs.
-     ++
-     +Make a note on what conflict you saw in the cover letter.  You do not
-     +necessarily have to resolve them, but it would be a good opportunity to
-    -+learn what others are doing in an related area.
-    ++learn what others are doing in related areas.
-     ++
-    -+    $ git checkout --detach 'origin/next' &&
-    ++    $ git checkout --detach 'origin/next'
-     +    $ git merge kn/ref-transaction-symref
-     ++
-     +This is to see what conflicts your topic has with other topics that are
+I like that "edit" does not open the editor if I decide not to change 
+any files, but does open it if I do change any files (and that "git 
+rebase" does the amending for me if I just stage the changes and say 
+"git rebase --continue").  Seeing the editor after I say "git rebase 
+--continue" is also a good reminder to me that I've changed something in 
+the tree being committed.  I've found this helpful if I've been 
+distracted during a rebase session.
 
+If I *know* that I only want to edit the message, then I say "reword".
 
- Documentation/SubmittingPatches | 79 +++++++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+> Of course, we can work it around with "git rebase --edit-todo"
+> before saying "git rebase --continue".
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 8332073e27..3c85ae4344 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -608,6 +608,85 @@ patch, format it as "multipart/signed", not a text/plain message
- that starts with `-----BEGIN PGP SIGNED MESSAGE-----`.  That is
- not a text/plain, it's something else.
- 
-+=== Handling Conflicts and Iterating Patches
-+
-+When revising changes made to your patches, it's important to
-+acknowledge the possibility of conflicts with other ongoing topics. To
-+navigate these potential conflicts effectively, follow the recommended
-+steps outlined below:
-+
-+. Build on a suitable base branch, see the <<choose-starting-point, section above>>,
-+and format-patch the series. If you are doing "rebase -i" in-place to
-+update from the previous round, this will reuse the previous base so
-+(2) and (3) may become trivial.
-+
-+. Find the base of where the last round was queued
-++
-+    $ mine='kn/ref-transaction-symref'
-+    $ git checkout "origin/seen^{/^Merge branch '$mine'}...master"
-+
-+. Apply your format-patch result.  There are two cases
-+.. Things apply cleanly and tests fine.  Go to (4).
-+.. Things apply cleanly but does not build or test fails, or things do
-+not apply cleanly.
-++
-+In the latter case, you have textual or semantic conflicts coming from
-+the difference between the old base and the base you used to build in
-+(1).  Identify what caused the breakages (e.g., a topic or two may have
-+merged since the base used by (2) until the base used by (1)).
-++
-+Check out the latest 'origin/master' (which may be newer than the base
-+used by (2)), "merge --no-ff" the topics you newly depend on in there,
-+and use the result of the merge(s) as the base, rebuild the series and
-+test again.  Run format-patch from the last such merges to the tip of
-+your topic.  If you did
-++
-+    $ git checkout origin/master
-+    $ git merge --no-ff --into-name kn/ref-transaction-symref fo/obar
-+    $ git merge --no-ff --into-name kn/ref-transaction-symref ba/zqux
-+    ... rebuild the topic ...
-++
-+Then you'd just format your topic above these "preparing the ground"
-+merges, e.g.
-++
-+    $ git format-patch "HEAD^{/^Merge branch 'ba/zqux'}"..HEAD
-++
-+Do not forget to write in the cover letter you did this, including the
-+topics you have in your base on top of 'master'.  Then go to (4).
-+
-+. Make a trial merge of your topic into 'next' and 'seen', e.g.
-++
-+    $ git checkout --detach 'origin/seen'
-+    $ git revert -m 1 <the merge of the previous iteration into seen>
-+    $ git merge kn/ref-transaction-symref
-++
-+The "revert" is needed if the previous iteration of your topic is
-+already in 'seen' (like in this case).  You could choose to rebuild
-+master..origin/seen from scratch while excluding your previous
-+iteration, which may emulate what happens on the maintainers end more
-+closely.
-++
-+This trial merge may conflict.  It is primarily to see what conflicts
-+_other_ topics may have with your topic.  In other words, you do not
-+have to depend on it to make your topic work on 'master'.  It may
-+become the job of the other topic owners to resolve conflicts if your
-+topic goes to 'next' before theirs.
-++
-+Make a note on what conflict you saw in the cover letter.  You do not
-+necessarily have to resolve them, but it would be a good opportunity to
-+learn what others are doing in related areas.
-++
-+    $ git checkout --detach 'origin/next'
-+    $ git merge kn/ref-transaction-symref
-++
-+This is to see what conflicts your topic has with other topics that are
-+already cooking.  This should not conflict if (3)-2 prepared a base on
-+top of updated master plus dependent topics taken from 'next'.  Unless
-+the context is severe (one way to tell is try the same trial merge with
-+your old iteration, which may conflict in a similar way), expect that it
-+will be handled on maintainers end (if it gets unmanageable, I'll ask to
-+rebase when I receive your patches).
-+
- == Subsystems with dedicated maintainers
- 
- Some parts of the system have dedicated maintainers with their own
--- 
-2.43.GIT
+Or, more directly, just "git commit --amend".
 
+> But the current behaviour
+> somehow feels optimized for a wrong case.  Admittedly, it is logical
+> that it does not offer a chance to edit the log message if we did
+> not make any change to the working tree.  After all, the reason why
+> it may become necessary to edit the log is because the user made
+> some changes to the tree in the first place.  And by not opening the
+> editor, only to close it without making any change, the command is
+> saving the user some keystrokes.
+
+Yes, and I've always appreciated this behaviour.
+
+		M.
+
+> But given that saying "edit" and not making any changes is a rare
+> case, it feels wrong thing to optimize for.
+> 
+> Anyway.
+> 
