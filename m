@@ -1,185 +1,215 @@
-Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF082BCFD
-	for <git@vger.kernel.org>; Fri, 17 May 2024 11:30:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9644E3D541
+	for <git@vger.kernel.org>; Fri, 17 May 2024 11:33:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715945430; cv=none; b=AQt9XJQ9zTda0j6F0samnyr7zqIaKqP1kG34WUfu7+0o3Uc3ruf62NZ817JbHm0s7SDnJymrREIZcml5prdKI7zSXKsRCSIbIMJ3qCG3tZlSLUxQkrJVcLLqpHamWJbkQUemiEm8MO311ADQl7dZs0pUcj9A58kAnYcfjsKxWjg=
+	t=1715945626; cv=none; b=WwgAZ3ZmjS/H//PMVme4BwUrkmW86jwFvKmZpNBpqhuorHff7v8MjotCN64z9yDnc3O0K/9qNleHcLKFbs6BmHZZnb77ZTT54oCpzV5WExoy7L7Vp0vde8bgekeN7LKTh4/wia2vbNJbbJIgR87mZQbLsE41Od1RoqrrrF+aXIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715945430; c=relaxed/simple;
-	bh=xZoXkcdCg3ZTNXBD/TOq6ilEDsTbBWZsqJAe6yYhoo0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kPTHo4uu0rUb9paZxO+DQ3sePYT3P7Uyz/2MgVf8wTg6cLf+k47O27BPDD5bzJjJwbiAvX2O441lkeNUSyO35KVGi4QiNxHI/1CfBfknlXQTtJDlT2dU7PB2NyCJZhI8kYbDsA9MkEBJE11jbBFX2ArjsAp2BGu0E5gKDl0rci8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mITTEVDm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zs2qlx8K; arc=none smtp.client-ip=64.147.123.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715945626; c=relaxed/simple;
+	bh=hwzQmgSqys7ma2uc4n7QebK1ZeGsI8MLxAjJHGJCpQc=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Znkvg5lwPtobS1+6wa3z0NOrCzNwi9JwHMClouhqDC7MFD/He3Xp7b0GN3tUw+if5ogJwQUytjPLT5i4Mxq5eph8BU3If60DC8gZQ+HO+v0CU/NrMi8pks+BhuNrNB/JwPvbNQppUO0fAfbDf4fLGhqhtiCAx+RM3Y9FNo0iMtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OEs0WqeN; arc=none smtp.client-ip=209.85.161.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mITTEVDm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zs2qlx8K"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.west.internal (Postfix) with ESMTP id E929E1C00169;
-	Fri, 17 May 2024 07:30:26 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Fri, 17 May 2024 07:30:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715945426; x=1716031826; bh=pVxIrbSHoZ
-	cJNYXPrFy/LaSW+mN++PWubd8U99CGCGA=; b=mITTEVDmTGYv6kBIG5wC5yEuRP
-	Y0OZAuqQ6zkxxBoK7oL/hJ8SmHnIcTHWZHe0iK1B9rzGtRp6xQ7qEVzilWhP0DDZ
-	mg+10uJFSePVQasCc4eQeCPCZ0fus+QiOP8CzfGgKUj0B9Ip3nnXzq2DzRvASsAJ
-	fDlxtzfO66bnMHQlhuNQEw4KQKMckJA8CnK7wJFUJ6vBILf+t620mdD2FCJYaAMs
-	3lKwjzd91Gac6iC3q2ghCe/WrgM/mr3YPH5jwfkzRnuMcnCxaquRXxiIKnJgCTjV
-	hn6HOYQ3ZobEyybLD5yxnWbuSELNixwVC8uTnvZj+N9WtUq6mYsz0hFTPmPQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715945426; x=1716031826; bh=pVxIrbSHoZcJNYXPrFy/LaSW+mN+
-	+PWubd8U99CGCGA=; b=Zs2qlx8KlTcxE+X5h9xY4vedDn0npO9l0NuhjgjvEMI5
-	UbGRD3zn/QdYJwMweyuhKZsFugUvlukzTF6dXQonS26hAksgyjcnY4Vc9hdbwWcQ
-	QcqUx/OWQaUwToH8xMbf3cUPGkZVAOquSaABMc/teRe2s6p/ie8Y92DfrCNhcEP9
-	G2wVHJDu4GqgfuGvTSBfZUoQ6tQ140n28pL3II7Y5uIcnudaOaofEzg7/X94n4Ic
-	oPmkaM0uRIxbELyLOtMbfu3vi51OFymJ5ZIsqn8t84LAxRuFwSB2FDzNjwq8PdCN
-	GGoWUMZvYTPZUWzt4iEBcEZg2CMqcrp0SQCtmzDGmQ==
-X-ME-Sender: <xms:0j9HZtiXwT4yQ6W6jPT1YhP4RywRjPvwJKNhhLAc34k8DiIK1dlVuw>
-    <xme:0j9HZiDT7zn9uoO-Y6kfTYnv2YBuYlB2GjvhC1IynTScXVPDy8D5EQ7KvbjjtNHa1
-    CCn0unITCqlf9aKXA>
-X-ME-Received: <xmr:0j9HZtH8q3vWQmt2EYz7UTNUXwieKY0zkkNp43vvQMz6d74IAHdkZxaq_iouYkCxWosSQGUTAT3oIU_vqARJKVZ3LWDkyD5eTm4XzGZyEbRPZ5ZaJA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehfedgleefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:0j9HZiTX7cD4GpZiwxfhXKadbrvbOagAcBIk2FXgTnsqA3yVOnOnbw>
-    <xmx:0j9HZqy2Ap43_Dm84TbTPAIj1vHyONAvl5AUbYRzdXkw4EGPJO459w>
-    <xmx:0j9HZo7rvMZ-zgUAWs5CFCfby1567U0TzuKU25yCjt-0qcB23k_OnQ>
-    <xmx:0j9HZvxwlxdHAIPSY99-Qkx80eLVdXOgyJ3QetasHfECxS_NFM15LQ>
-    <xmx:0j9HZkujD0e5WkwyHgH4bNlwerG1_RV7uxZmvWrTODPBhQEwYJah33Qo>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 May 2024 07:30:25 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 2b6bc1d4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 May 2024 11:29:56 +0000 (UTC)
-Date: Fri, 17 May 2024 13:30:20 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH 3/3] ci: stop installing "gcc-13" for osx-gcc
-Message-ID: <Zkc_zJGjwg0fZkRG@tanuki>
-References: <20240509162219.GA1707955@coredump.intra.peff.net>
- <20240509162544.GC1708042@coredump.intra.peff.net>
- <Zj3F9EVpSmQtyy0R@tanuki>
- <20240510201348.GE1954863@coredump.intra.peff.net>
- <Zj8blb0QqC2zdOAC@framework>
- <ZkX9w6etjDVAh-ln@tanuki>
- <20240517081132.GA1517321@coredump.intra.peff.net>
- <ZkcUcPhrTrbSbZO8@tanuki>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OEs0WqeN"
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-5b278131fe3so23055eaf.0
+        for <git@vger.kernel.org>; Fri, 17 May 2024 04:33:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715945623; x=1716550423; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=u/NtIqKgYWrN8BIazyNHPW+Es9ifBrGD6kKV3cPuTeY=;
+        b=OEs0WqeNt+LQZvzfAeqzT6FYuWCR2cgPCS3iVZb7ZfrxQnJu55jjfHtRb0TbLgO+uK
+         0btgGouBCgXkdJYvuzpItKzBM5gdJY63+BJxE8gQewIYirxBDDsjCQ0dNGQrcBuso1+2
+         ebW/Jr47dC6YEfxhxv3Ro2tIO2jrNh6BiNC5qsAvL0FHB8xcrFrKsLhQIhXEOioKkYXv
+         1wk9mAH7RK33WNhuAPWx9p+NphXC2M5fHbxZ9r14GEK146OBdYWAOAutNPQHshwe86I4
+         piA+2qARsJifiiIjwk01HiV1Wm6HxCeNOVrbdlhQJb+pgAw8jx470aNMRtwx9eeFYP6R
+         TfZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715945623; x=1716550423;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=u/NtIqKgYWrN8BIazyNHPW+Es9ifBrGD6kKV3cPuTeY=;
+        b=LgAcy1IDN9oqS8ZPEtDdx3g8c7TeAMUo3UYkoJOi8HnhoI1KKGDj8j9IxTEKqbWWa7
+         9Fx+8xmdTbeFvkDeC8IZ54K/hZoXO6qwrpZ/j5zbiyfuWCIf7TqAfEYrPDdusNM0jVrg
+         zJ5Nhge+rMHQYlkogxoScfRwSAp3avRhFUUnT6SW/u0TkZiycO6nyO1RfpTiXJIFI5aN
+         hXPdvMS2tx24/FGj0LnVnIsip5Z9zlrmcMmB8ZAZj397QpzhYG3cxdTjlNcvw2CR6OG5
+         0xdRa7BN2b7l4Svq+AQJve0BYnLJUGLTtARlyTXlU3jagPyT7cB6kxtBKOUzp8arcbfJ
+         JpEg==
+X-Gm-Message-State: AOJu0Yyk+re8zCpMc+fdfTt12xdZ5rfH9EZqNtJabzvO7DuoHg1xsW8D
+	hjxEL5ylcq887Y+F0zSttZu9gGodD8nR3eVx6IkhJB2pwd6O/CodwdUkwP7S5oALybOsIKWf7C4
+	QVVTEbNSYkSex5obGyPvYp7aS8ic=
+X-Google-Smtp-Source: AGHT+IHhj75t5i3KMA9vc8FkpoEg5hkhdSQUIQX9kpGkO5UVlg5uAt70JtxMgrsIuLvzxzPewQHbO0XTBFgAu0WxdyI=
+X-Received: by 2002:a05:6871:a913:b0:23d:b3b9:de0 with SMTP id
+ 586e51a60fabf-2417198c4e9mr10167845fac.10.1715945623446; Fri, 17 May 2024
+ 04:33:43 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 17 May 2024 11:33:42 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <Zkbn9_-cOiapWSSb@tanuki>
+References: <20240514123039.1029081-1-knayak@gitlab.com> <Zkbn9_-cOiapWSSb@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qz9YEkXVWE4XpEJw"
-Content-Disposition: inline
-In-Reply-To: <ZkcUcPhrTrbSbZO8@tanuki>
+Date: Fri, 17 May 2024 11:33:42 +0000
+Message-ID: <CAOLa=ZS1bhHAtz59z71sMxOT63jwF0pHYO5YKtY7Lx_V8ubV4A@mail.gmail.com>
+Subject: Re: [PATCH] SubmittingPatches: add section for iterating patches
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="0000000000005708e90618a4b996"
 
+--0000000000005708e90618a4b996
+Content-Type: text/plain; charset="UTF-8"
 
---qz9YEkXVWE4XpEJw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Patrick Steinhardt <ps@pks.im> writes:
 
-On Fri, May 17, 2024 at 10:25:20AM +0200, Patrick Steinhardt wrote:
-> On Fri, May 17, 2024 at 04:11:32AM -0400, Jeff King wrote:
-> > On Thu, May 16, 2024 at 02:36:19PM +0200, Patrick Steinhardt wrote:
+> On Tue, May 14, 2024 at 02:30:39PM +0200, Karthik Nayak wrote:
+>> From: Karthik Nayak <karthik.188@gmail.com>
+>>
+>> Add a section to explain how to work around other in-flight patches and
+>> how to navigate conflicts which arise as a series is being iterated.
+>> This will provide the necessary steps that users can follow to reduce
+>
+> s/This will/This provides/
+>
+
+Thanks, will change!
+
+>> friction with other ongoing topics and also provides guidelines on how
+>> the users can also communicate this to the list efficiently.
+>>
+>> Co-authored-by: Junio C Hamano <gitster@pobox.com>
+>> Suggested-by: Junio C Hamano <gitster@pobox.com>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>
+>> This came off a discussion wherein I sent a series based on `next`
+>> instead of merging in conflicts [1]. This is mostly worded by Junio and
+>> I've just put it together into a patch.
+>>
+>> This is based off master, with 'jc/patch-flow-updates' merged in.
+>
+> :)
+>
+>>
+>> [1]: https://lore.kernel.org/git/xmqqy18lpoqg.fsf@gitster.g/
+>>
+>>  Documentation/SubmittingPatches | 79 +++++++++++++++++++++++++++++++++
+>>  1 file changed, 79 insertions(+)
+>>
+>> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+>> index 8332073e27..2fd94dc8de 100644
+>> --- a/Documentation/SubmittingPatches
+>> +++ b/Documentation/SubmittingPatches
+>> @@ -608,6 +608,85 @@ patch, format it as "multipart/signed", not a text/plain message
+>>  that starts with `-----BEGIN PGP SIGNED MESSAGE-----`.  That is
+>>  not a text/plain, it's something else.
+>>
+>> +=== Handling Conflicts and Iterating Patches
+>> +
+>> +When revising changes made to your patches, it's important to
+>> +acknowledge the possibility of conflicts with other ongoing topics. To
+>> +navigate these potential conflicts effectively, follow the recommended
+>> +steps outlined below:
+>
+> Okay. I was first wondering why we only mention conflicts when revising
+> changes. But I see there are other parts in the document where we
+> already mention the potential for conflicts, so this is fine.
+>
+>> +. Build on a suitable base branch, see the <<choose-starting-point, section above>>,
+>> +and format-patch the series. If you are doing "rebase -i" in-place to
+>> +update from the previous round, this will reuse the previous base so
+>> +(2) and (3) may become trivial.
+>> +
+>> +. Find the base of where the last round was queued
+>
+> It's somewhat unusual for bulleted lists to start with a dot, but this
+> is consistent with the remainder of this document.
+>
+
+Yeah, that's mostly why I added dots instead of asterisks here.
+
+>
 > [snip]
-> > One can guess that scalar is in waitpid() waiting for git-fetch. But
-> > what's fetch waiting on? The other side of upload-pack is dead.
-> > According to lsof, it does have a unix socket open to fsmonitor. So
-> > maybe it's trying to read there?
->=20
-> That was also my guess. I tried whether disabling fsmonitor via
-> `core.fsmonitor=3Dfalse` helps, but that did not seem to be the case.
-> Either because it didn't have the desired effect, or because the root
-> cause is not fsmonitor. No idea which of both it is.
+>> +Do not forget to write in the cover letter you did this, including the
+>> +topics you have in your base on top of 'master'.  Then go to (4).
+>> +
+>> +. Make a trial merge of your topic into 'next' and 'seen', e.g.
+>> ++
+>> +    $ git checkout --detach 'origin/seen' &&
+>> +    $ git revert -m 1 <the merge of the previous iteration into seen> &&
+>> +    $ git merge kn/ref-transaction-symref
+>
+> Let's remove the trailing '&&' lines. The leading dollar indicates that
+> this is interactive, so you wouldn't concatenate the commands like this.
+> Also, preceding code didn't have it.
+>
 
-The root cause actually is the fsmonitor. I was using your tmate hack to
-SSH into one of the failed jobs, and there had been 7 instances of the
-fsmonitor lurking. After killing all of them the job got unstuck and ran
-to completion.
+Yeah, agreed, I will remove here and below
 
-The reason why setting `core.fsmonitor=3Dfalse` is ineffective is because
-in "scalar.c" we always configure `core.fsmonitor=3Dtrue` in the repo
-config and thus override the setting. I was checking whether it would
-make sense to defer enabling the fsmonitor until after the fetch and
-checkout have concluded. But funny enough, the below patch caused the
-pipeline to now hang deterministically.
+>> +The "revert" is needed if the previous iteration of your topic is
+>> +already in 'seen' (like in this case).  You could choose to rebuild
+>> +master..origin/seen from scratch while excluding your previous
+>> +iteration, which may emulate what happens on the maintainers end more
+>> +closely.
+>> ++
+>> +This trial merge may conflict.  It is primarily to see what conflicts
+>> +_other_ topics may have with your topic.  In other words, you do not
+>> +have to depend on to make your topic work on 'master'.  It may become
+>
+> I think there's either a word too many or missing  -- depend on what?
+>
 
-Puzzled.
+'s/depend on/depend on it/' should do I think.
 
-Patrick
+>> +the job of the other topic owners to resolve conflicts if your topic
+>> +goes to 'next' before theirs.
+>> ++
+>> +Make a note on what conflict you saw in the cover letter.  You do not
+>> +necessarily have to resolve them, but it would be a good opportunity to
+>> +learn what others are doing in an related area.
+>
+> s/an/a
+>
 
-diff --git a/scalar.c b/scalar.c
-index 7234049a1b..67f85c7adc 100644
---- a/scalar.c
-+++ b/scalar.c
-@@ -178,13 +178,6 @@ static int set_recommended_config(int reconfigure)
-                     config[i].key, config[i].value);
-    }
-=20
--	if (have_fsmonitor_support()) {
--		struct scalar_config fsmonitor =3D { "core.fsmonitor", "true" };
--		if (set_scalar_config(&fsmonitor, reconfigure))
--			return error(_("could not configure %s=3D%s"),
--				     fsmonitor.key, fsmonitor.value);
--	}
--
-    /*
-     * The `log.excludeDecoration` setting is special because it allows
-     * for multiple values.
-@@ -539,6 +532,13 @@ static int cmd_clone(int argc, const char **argv)
-    if (res)
-        goto cleanup;
-=20
-+	if (have_fsmonitor_support()) {
-+		struct scalar_config fsmonitor =3D { "core.fsmonitor", "true" };
-+		if (set_scalar_config(&fsmonitor, 0))
-+			return error(_("could not configure %s=3D%s"),
-+				     fsmonitor.key, fsmonitor.value);
-+	}
-+
-    res =3D register_dir();
-=20
- cleanup:
+I think it makes sense to make it 's/an related area/related areas/'.
 
---qz9YEkXVWE4XpEJw
+>> ++
+>> +    $ git checkout --detach 'origin/next' &&
+>> +    $ git merge kn/ref-transaction-symref
+>
+> Same comment here regarding the ampersands.
+>
+> Other than that the additions look good to me, thanks!
+>
+> Patrick
+
+Thanks for the review. Will send a follow up version!
+
+--0000000000005708e90618a4b996
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d202888e4639fb90_0.1
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZHP8wACgkQVbJhu7ck
-PpTJNg//fH9dqoLCKLigdvMSPGyHnYJOYOPpJgwzzRfZMpe7k2UlYL34bL9Tk1u0
-3c6Z0wZ8hzB7jrM/v4Xxszwy6ucQVdafKGLaWEi3gQ71DFs6VrVg0Uc15+gOL9ka
-zQ1tShjqBGKEpSNj6rzMh89s6tZ5TjbC73OZjklcsaFgAunHpJsyZNNDzZujQvDQ
-lhywbUmi6lipfv+f4LK29XPGOxtKqXJWKWv5ZgOIhUPaTIFHTGp7kKLsujS2llnr
-GwDd/0EvpTeMZGJnDS4YCuEBqcaihp9wgXTWcTSMDJsQMaz5T8Ol/TD0gfkb+f+V
-PXlP60I+YaF5KfrFXHlcuPdirMfJDkUgmYDX1epNWQTbM1eTvMbdLUygQYAns62o
-82C/kRM7bK4+4NHH1iQg+O5XCRGf0KgfSdsmTjD1IUioRKL3icQgLe8+JLnJSr7A
-q9c5ZViJtXip4u8V5aSytiGc2sAvdH+F+rxpy+hqIXxi3oqNcVao6DzIqKSGaYeq
-c35JKlHSIGGUS7tudQQXxjulsjv15ralmw0t6ZU2nPbLluu7P2sw6a0Gg1I8hzYc
-yvZalIpauBQlHM50k6ML+FhvYLkYeaCahfHMCLMC++RRk5xs0BjjOaCHLQw4uj0b
-eRZodY0zfutyiyH73zasqnob4rHimcZhhZEh3jcKib2CKKHhuM0=
-=GOco
------END PGP SIGNATURE-----
-
---qz9YEkXVWE4XpEJw--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aSFFKVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mLy9RQy9zSHJqVUNlcUp4eXVDb1VDSEpMbFRwaGRwdAp6VzI3SWpqV1V0
+M3BkQnpkYXpvSkhLUStnSjluYm1RdFd5UjF6WGpoRU5nRWt5dmI0TzhrUm0rMm1TQURkVFQ2CnF6
+NThhQXYvbVNvS3I3eWUxMDZGa0d1QTZPbnRBVHY2T3dBZTkwVVcyZmU2ek5VZWdTU09XTm03cmFV
+K1k2Y2wKYStnREVoWDY2S1Y1b2l6K0E0ZzFLV2MzTVNvQUN3ZWJRN1N4R0pxOVROTXRSOUEyMzNS
+bW44aGl1RFMraWgybApGaWdjMTQzamM3RU1idnBIT1VDajhTSjBMWHdjL2NNYVJvNjJNRm1Dc1lh
+b1hjdk5mZ3VZeUhwaFA3a25ZUmUyCnV2NHp2eEJhdXhpQjkzTFdVKzM1TlhDZHdVeTd3UGF4Yk12
+R0pYOHpNaTBjL0VtU2pzVlQycStqS09PaG8xaW8KUlR6Q053eUhTSkJNNmk0aytxdG8wT2RIeGZ6
+bXJuVVQ4SDlxdHV4NXAydzVZVFE2dExySEh6QkYvWldaalVlYwpiZVdWd2RmK0owQkNqQzN6SVRL
+czR4bzNxK1V6bmxvOGNQeGpqUVMxTHQ0aFB0cHlPamw4UkNuRitiQmFvVzA4Cm4rY3h0QjVGSlpa
+aXFsdEVBQnRGVWNyVXFaQ3J5TFZRUlBrMXhSTT0KPWZhU1gKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000005708e90618a4b996--
