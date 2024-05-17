@@ -1,132 +1,118 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B3322084
-	for <git@vger.kernel.org>; Fri, 17 May 2024 08:09:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF9123754
+	for <git@vger.kernel.org>; Fri, 17 May 2024 08:11:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715933371; cv=none; b=ks+YOiDwSgJp6DWJGxPXtpvyA1dGKouDjlZkjytSlycST8Oe777y2zK3VV4HOkv/h7k97oBxrKu9xJViVJAXrGU14PDGHJxDtRKwKG3QzZ3CUMc6ctazmf4RyKi27rbcs1T5o6i6PNuvilhfc0BoCq3WzVXoazitwUU+tT3/Jo8=
+	t=1715933504; cv=none; b=tC2rF4F4X6ORrcoQG5toxOQYCDVsd5YhqkTfSH31GmFNR9Gt3cWsk/9aRiIgFR+qBL5puConeJU1nUlDYr2ENEMezbBtKuB7wvsrYP62EpL4ToXhFBqTPpSJL8p/+W88sJsvRWdmpAvvSer7cW2pfgB62dtD5KbqG7JD4AWFLjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715933371; c=relaxed/simple;
-	bh=tlyyv4wjTGiJWSOVQde8xQIpFyrM+m6LIkZfJgDYxUY=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZtETQRfmiIMV2byidH9aKwz1IZld9Nb2is2Cr1lKkm6KR0jbF5MYeckAU0R336g5qAviuCtbViuoiPi/GFPHB3RDnIgrcQLMbXmoblTIgF4H9+VGkpFRq/uDECw8I7ebalxiMDUmHSj008voD9tti6jSMs6AR178UlnJFdD3GAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dyBcXnbY; arc=none smtp.client-ip=209.85.210.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dyBcXnbY"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-6f1239a2e83so693568a34.3
-        for <git@vger.kernel.org>; Fri, 17 May 2024 01:09:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715933368; x=1716538168; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6RSohVNPLf5rgUFDSuWBd5o73KEZF94ELauQJ9cst28=;
-        b=dyBcXnbYPmCr7h2fPiqgdWhcCN94riRwbNEWGJ6YgoOqtpz2/k8H7ZU7keWKIvqR3N
-         wzmsmQYIUphRV22fYK7Z/D6NlICcUMHm4rPDsBOJQK9Em7lxbyo/daljjpfbeEZUbnzo
-         KkZbu0PDfuJKps3joOUKypH3x/ld3s6Ic/RTeUvUJY3rfzsmXRUrrYDkpz+uK6H0Eki6
-         aKPS9V0z0eRcOLorKeqel1Xmr0Ac97kz0jPFQaVYk/bM6CII6lY2l3bGFviwLTZd2xNc
-         fqFIbw7ZVsSHyNhYwzGjlLgixfOYlFErqFgyWvafzA00M6KORWGx2RAXvg5Djn9+eTpn
-         lMSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715933368; x=1716538168;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6RSohVNPLf5rgUFDSuWBd5o73KEZF94ELauQJ9cst28=;
-        b=sajzVZz2j2rzhuT6a2e7In/C39b55GM0mNIeE9On3H3Hh2tMEooV8FTCBk8ru151Uh
-         932LhyWVxOPfdtEQfqA1aNjeY/QKH85CT3gvf2zhgO1oSAPd7Ht6KID4fWFUSq8FknUf
-         2/MddxwH6EsTvoewSjWk3Me38NzqrM5oZKSPYNsnnrS4dBC+r0eYJE3Qs/ENPrn8Vl0f
-         f8iTx759dGwiQRwij2ez8d+5VUxHrOH5WTBLKyp4JZlCddWbBRgwocXx1LhltiGYCDy/
-         fNIh6k8wLsqQM0FnQM3IpW501yvnMYacWEyrp2yVt3uNW0DP2GyVVrWPDXYlL1wpZbe3
-         ObkA==
-X-Forwarded-Encrypted: i=1; AJvYcCWYA6rmTzvZieKQrD2PF2VZaZMXM1XOTbBC0iCAy5v3ZxTnG0vw22IxVYwWv3znPRqwkFLiHsqnafFuk9Htk18GXqpC
-X-Gm-Message-State: AOJu0YxQbN9u+RLruV1vQKm5kKFPhQr8B70r6ocOkACu252hrmM0DWNW
-	vpgGQ9PQfJa9gdRue3NnWmJbXEgzb0bm6gncRJn24jN7VzeznuCrRsdCKUrHvh052ec85f8izRg
-	n8g6LnnOpNW5YJT1T/vVNmLg1oZ5a0g==
-X-Google-Smtp-Source: AGHT+IFhXZFVIOK0K4DUa5bGqsWIG/wo8UIQPvNaoyailN3DpJ61zb+KDkkFPKECC49r+8/Y+BlNCDn+SHdEljm3VE4=
-X-Received: by 2002:a05:6871:5d2:b0:240:889c:4b26 with SMTP id
- 586e51a60fabf-24172f713a6mr30511615fac.46.1715933368452; Fri, 17 May 2024
- 01:09:28 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 17 May 2024 08:09:27 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <70720af4d3476e30eba2a85c2691d664e02ade31.1715587849.git.ps@pks.im>
-References: <cover.1714630191.git.ps@pks.im> <cover.1715587849.git.ps@pks.im> <70720af4d3476e30eba2a85c2691d664e02ade31.1715587849.git.ps@pks.im>
+	s=arc-20240116; t=1715933504; c=relaxed/simple;
+	bh=kQPwPC+TOIxFGrMzHVfSTgi5MbZU3edPrCkMJrPmR6s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J4gyNS0WqZnWBx6pGL7pQe8/cjSs1Lo7oyKg+2QGEhiL+WEiSC02Jx4xvIZtipvFFAgZr1IKsoWBTxSTTe1vt3wQASSw1+7B48t7h/yBdeVlcKvrAoaizaH4xjHE8WWvv5aJjrobh3KRCrGZM11RUF7TbOGM9J/wAc+biu3KJ+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 7280 invoked by uid 109); 17 May 2024 08:11:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 17 May 2024 08:11:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22940 invoked by uid 111); 17 May 2024 08:11:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 17 May 2024 04:11:37 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 17 May 2024 04:11:32 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 3/3] ci: stop installing "gcc-13" for osx-gcc
+Message-ID: <20240517081132.GA1517321@coredump.intra.peff.net>
+References: <20240509162219.GA1707955@coredump.intra.peff.net>
+ <20240509162544.GC1708042@coredump.intra.peff.net>
+ <Zj3F9EVpSmQtyy0R@tanuki>
+ <20240510201348.GE1954863@coredump.intra.peff.net>
+ <Zj8blb0QqC2zdOAC@framework>
+ <ZkX9w6etjDVAh-ln@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 17 May 2024 08:09:27 +0000
-Message-ID: <CAOLa=ZSkuQ07BbJx-eSaui3WSZZTup54WnPkMSXnWwwnM=LATA@mail.gmail.com>
-Subject: Re: [PATCH v3 06/11] refs/reftable: allow configuring block size
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="000000000000e2bae60618a1de82"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZkX9w6etjDVAh-ln@tanuki>
 
---000000000000e2bae60618a1de82
-Content-Type: text/plain; charset="UTF-8"
+On Thu, May 16, 2024 at 02:36:19PM +0200, Patrick Steinhardt wrote:
 
-Patrick Steinhardt <ps@pks.im> writes:
+> I was spending (or rather wasting?) some more time on this. With the
+> below diff I was able to get a list of processes running after ~50
+> minutes:
 
-> Add a new option `reftable.blockSize` that allows the user to control
-> the block size used by the reftable library.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  Documentation/config.txt          |  2 +
->  Documentation/config/reftable.txt | 14 ++++++
->  refs/reftable-backend.c           | 31 ++++++++++++-
->  t/t0613-reftable-write-options.sh | 72 +++++++++++++++++++++++++++++++
->  4 files changed, 118 insertions(+), 1 deletion(-)
->  create mode 100644 Documentation/config/reftable.txt
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 6f649c997c..cbf0b99c44 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -498,6 +498,8 @@ include::config/rebase.txt[]
->
->  include::config/receive.txt[]
->
-> +include::config/reftable.txt[]
-> +
->  include::config/remote.txt[]
->
->  include::config/remotes.txt[]
-> diff --git a/Documentation/config/reftable.txt b/Documentation/config/reftable.txt
-> new file mode 100644
-> index 0000000000..fa7c4be014
-> --- /dev/null
-> +++ b/Documentation/config/reftable.txt
-> @@ -0,0 +1,14 @@
-> +reftable.blockSize::
-> +	The size in bytes used by the reftable backend when writing blocks.
-> +	The block size is determined by the writer, and does not have to be a
-> +	power of 2. The block size must be larger than the longest reference
-> +	name or log entry used in the repository, as references cannot span
+I was going to say "good, now I don't have to waste time on it". But
+your findings only nerd-sniped me into digging more. ;)
 
-Nit: s/as references cannot/as neither can/
+> So it seems like the issue is t9211, and the hang happens in "scalar
+> clone warns when background maintenance fails" specifically. What
+> exactly the root cause is I have no clue though. Maybe an fsmonitor
+> race, maybe something else entirely. Hard to say as I have never seen
+> this happen on any other platform than macOS, and I do not have access
+> to a Mac myself.
+> 
+> The issue also doesn't seem to occur when running t9211 on its own, but
+> only when running the full test suite. This may further indicate that
+> there is a race condition, where the additional load improves the
+> likelihood of it. Or there is bad interaction with another test.
 
---000000000000e2bae60618a1de82
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 11db06d0252bb028_0.1
+I can reproduce it at will and relatively quickly using "--stress" with
+t9211. I pushed up a hacky commit that removes all CI jobs except for
+os-clang, and it stops short of running the build/tests and opens a
+shell using tmate. For reference (though you'd need to work out
+something similar for GitLab).
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aSEVMVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNmExQy93S29LOG1CQWsvaitrTXBXSTNyT1lnMjJ0ZQpWN2thQTRUN0ll
-SXJGK0xKSW1pVE9oVDVZTlg5VC9qWHBNd0ZjYnBocjMwaDBCQ3A0YlNFZmJsZVkybllFR3dOCjE2
-ZVlJUVUyUm0vYU9xc1N5bkphSDR2Z3krT21LSFBsU1dTRmNTWmdxa050SWhlTlkvOUs5VkFoSjY1
-a3oxWCsKbGIvREJUVUhkUUcyOVBDd3RGM2FIbS9yVWFLd3dZd2Z0QlQwTDZMU3JJKzZuV0FsVUhk
-dUlkdGFOYWlic1I5RQpQQWRZVGRqNVZsTk4ySVRCeXo5Z0FPbndiU2JnS0RSZUc1TTc3UTBCTTJ6
-Vi9GTlAzS3BsT3pSb0JvM0ZQSW5tCjBVcDJYTDdJekJwN0ZnTUF3d1dVbzYyczUzMTFJY3FxZ09S
-S09UUXpmN0JhYzR6czN4RmFSbHl6aFdIM29sWDMKbGV0VlAyYXVEK05KQlUyOVFBbHM2bzFpazVl
-MEZldHZqazV1QzJvNHkyT3NLSkdsWmNlN0tSRVJjdmFnQ0lldAptNnF3M2xodkw0NlRKc3E5bGJQ
-QVJ0MERpcVdvdFd0MFlaTmZBM1BINFM2Q2VKRUcrbkU5anhQby9FbC8wa3QrCk5QVmlpUmJ0bVhY
-MGI3UGRhb0wzaFI1b2R3eGFNKzFPajB3SXpzUT0KPUVvK28KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000e2bae60618a1de82--
+  https://github.com/peff/git/commit/f825fa36ed95bed414b0d6d9e8b21799e2e167e4
+
+And then just:
+
+  make -j8
+  cd t
+  ./t9211-scalar-clone.sh --stress
+
+Give it a minute or two, and you'll see most of the jobs have hung, with
+one or two "winners" continuing (once most of them are hanging, the load
+is low enough that the race doesn't happen). So you'll see 3.17, 3.18,
+3.19, and so on, indicating that job 3 is still going and completing its
+19th run. But everything else is stuck and stops producing output.
+
+You can likewise see processes in "ps" that are a few minutes old, which
+is another way to find the stuck ones. And I get the same three
+processes as you: scalar clone, fetch, and fsmonitor--daemon.
+
+And here's where I ran into tooling issues.
+
+Normally I'd "strace -p" to see what the hung processes are doing. We
+don't have that on macOS. Doing "sudo dtruss -p" runs without complaint,
+but it looks like it doesn't report on the current syscall (where we're
+presumably blocking).
+
+I installed gdb, which does seem to work, but attaching to the running
+processes doesn't show a useful backtrace (even after making sure to
+build with "-g -O0", and confirming that regular "gdb ./git" works OK).
+
+One can guess that scalar is in waitpid() waiting for git-fetch. But
+what's fetch waiting on? The other side of upload-pack is dead.
+According to lsof, it does have a unix socket open to fsmonitor. So
+maybe it's trying to read there?
+
+Curiously killing fsmonitor doesn't un-stick fetch, and nor does killing
+fetch unstick scalar. So either my guesses above are wrong, or there's
+something else weird causing them to hang.
+
+I imagine there may be better tools to poke at things, but I'm at the
+limits of my macOS knowledge. But maybe the recipe above is enough for
+somebody more clueful to recreate and investigate the situation (it
+probably would also be easy to just run the --stress script locally if
+somebody actually has a mac).
+
+-Peff
