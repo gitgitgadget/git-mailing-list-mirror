@@ -1,160 +1,221 @@
-Received: from wfhigh8-smtp.messagingengine.com (wfhigh8-smtp.messagingengine.com [64.147.123.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F27A20B3D
-	for <git@vger.kernel.org>; Fri, 17 May 2024 07:32:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D6417597
+	for <git@vger.kernel.org>; Fri, 17 May 2024 07:36:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715931136; cv=none; b=LI1Xu3m3likGdzVC8JAC4z6o4SMKSKvcPxon+11TCn6dDI1nQwCoA1SXfC+yU8YQPJgAr8fL7JB2ZAjtsu/0YiK31t2aukLEwm3mUXW1Fv//PbCDKw0xWO8M2wU1sZSFIfOsuNiEGh72/9ZvS6oorh2+D8Yr3GZG628zX5C0eHA=
+	t=1715931417; cv=none; b=rn8jXBMrOOmir/hiGj9CGNRq0Q3DJNAnlomVo5TyVt5JNwUNBixzE46JFhVuOYk/CeSLmcs6YdjFrqPbeYdw20vFAFm4AqyUoSJ7JvMY99fote4zOreHVAZfxEP5h+F7GeR80tixOoZIqG64jFw3ElTtOeZ+qOcbyKkspYnVxmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715931136; c=relaxed/simple;
-	bh=QbZpbprAD11GR+Hy/PlsA9l4vgkZ8ecyzrPnDIFby3U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VQSTM5lIrgFWY37B93282kQskxe+QI5MDPpDP6KZNlxFhMUyCzU+moNh915D2FvebHDFX08glt7DsOkBnG0DIZUaXYMWVBYTf/8NS9+6fB4bX33sVpvYH7DhXwVEWm0XjnP24KQdd01NQ7J5z31erQtQwB0j8pGTH+Y4G0W3x+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=g8Wi/NiM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FD1n9vig; arc=none smtp.client-ip=64.147.123.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1715931417; c=relaxed/simple;
+	bh=nSCDkLQPQr9cFXwvM+T4IZ9dh27HyqX6V3ZljfebiT8=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WVIDROUUtdlGwvgxKjlo/Qi1KpL7P+m2vPb4c8e68WaAAqCTafimpVfT0wK3r6oXzsN8/P2sfaZ4sSi11EutU6/2EPsc+JKlAfxYA8PHjdtxSAd5+o1P8et0herx4QAnoOFfh7L4B2uY9fquKdaVj6KqA144r9dyRuzm/HXre64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ALtVC8CJ; arc=none smtp.client-ip=209.85.160.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="g8Wi/NiM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FD1n9vig"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 457C318000FE;
-	Fri, 17 May 2024 03:32:14 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Fri, 17 May 2024 03:32:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715931133; x=1716017533; bh=cOwHBB2v0a
-	jyyp2y0pzWcII5v/f8ge6h2wCDeHtZCt0=; b=g8Wi/NiMrfC4HUm4bMwuygvrJJ
-	ce68qUdC8mIUZn/ix2Geg+pc4DTuThcEYK4LJH3qJd0GXnIM6WOi2R0i5J1G3wJB
-	f2D9eSg7F1mmkhTix8bmY1EW15Evh1kPRaiu9fL+aqyIVtSa0woISG/COP7hvcSn
-	ZPbR7p+vgnQ8NtKzEnUna++GXaHE6SMav2AUUenMgS84hQh7zqz6t4MWLnU+wFxr
-	0hRwu0eCpRPU/uXVzqyUOvgeMnnbAfHTJhTVFUkrOvc+Wx9heKf6iTbqlDXXHsOk
-	gssE7D5EfyArXfblmcJVyut/gbMx+ECvLo0zuq6kk9pcssu5Hwqdm8+ItG7Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715931133; x=1716017533; bh=cOwHBB2v0ajyyp2y0pzWcII5v/f8
-	ge6h2wCDeHtZCt0=; b=FD1n9vigELpewJNJ0tpynHh6ZPGi/RjYaXUV98ojUx5o
-	CmpPz+1/lfe8aOnfDDPvRIXvHhqNB325B8x83TcAWaTv1q+jT1kLmJ2XTwBYnFhA
-	pGP3xdVtqxnXgU1W0C3ra/y3j8ketqUQy2F2C7XOZvFQJXUpIQxYWhDtIvK4jhtH
-	oAUTFHBzZ4cmba83MtafgCiQl5TPnrgX9vrd75pMc9ZEITsjNzi//8DOxbIAEfLv
-	Sp26j591/VIPjw2ksa4PHHszhQSEUL/eC7zhayMLG9TRUz9ZPi9jGiBJA2T0CgBl
-	N+1bKMreoqGygUBObSJuzNla2u3O7N6ZBGwa8zOamA==
-X-ME-Sender: <xms:_QdHZnp_llEPJnailkQrC3L-9TB2kYvffNYKZ_xAVBR78Pqns5QeVg>
-    <xme:_QdHZhr_CYzpzRYInNz8byLUzvKluTinDXpwcoK9Y8nUOJjBPAL0Z_6LPUEE6mqEn
-    tb5NWkh-ByRSwqc7A>
-X-ME-Received: <xmr:_QdHZkNSy0puGF80qoPLAFNrrsHhNAs9Y0r-lNK8Y7O2Qcl7iPpLQROoZLL1YmsmfOfRj8BrqVKb1iLwxIAAvcQuT0BYzgp-a06VkdHisfx_SaVygA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehfedgheefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:_QdHZq6kIbmXuZ2poCRih_t9asxhzk5eN9snsR4XviAMJSisd-G0zA>
-    <xmx:_QdHZm428_3Jem4d2htCcjcf1PlhQwpaDGlhENG9sLguPzxakD8XgA>
-    <xmx:_QdHZiidw7Xopt-Qus0YB1lc5uJPZi9EVCESevcI22DYUOWSnP1M4Q>
-    <xmx:_QdHZo5r-Sbwqyy6w9ueNTKGnFx59sqQlr5Wkh3O5IUT9Bcnb0L9zw>
-    <xmx:_QdHZsl_Q2FxjhV_WnfU8cHU7ba_pwR9hqiFajeM19gqy5-f36MNXL0x>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 May 2024 03:32:12 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id a39f4fce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 May 2024 07:31:43 +0000 (UTC)
-Date: Fri, 17 May 2024 09:32:08 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Sean Allred <allred.sean@gmail.com>, git@vger.kernel.org
-Subject: Re: [Q] rebase -i: turn "pick" to "edit", make no change, what
- should happen?
-Message-ID: <ZkcH-LAkLkf_wvfq@tanuki>
-References: <xmqqy189o94c.fsf@gitster.g>
- <m0seyhs8o2.fsf@epic96565.epic.com>
- <xmqqmsoonccd.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ALtVC8CJ"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-240d0a89bb0so149029fac.0
+        for <git@vger.kernel.org>; Fri, 17 May 2024 00:36:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715931414; x=1716536214; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wp9JKWYH09KowBkenRXNBjRmFcfYL9G4pnCGDQInq64=;
+        b=ALtVC8CJW8HbZ4LtMpt2hqUx5OXos/Pn9sdhcbW+PCu+aUo09zRYHV2S1jIcWDJh4p
+         X+ieur0WOytnCqAEr/eC1mB4eLvBrtV3NHRHymkEtbRV9VWm92E3eXMc8rWQ8Jpm5Z/p
+         rkVsXegoqRGRhxbayayfO8kBf7ENsi/YsXucXy6mOeViNs+Gb+TrsYkFexYPJ7tUJmzw
+         V3JLFZL/zLn5gozWA6ZckwQ5Xn6XVb1ICchGRAxHUfXhMdOAW4y4XK7B2VSF0y/7Jz+B
+         8oak1dCZI+XFqEZ9WSH3vzVQUAsgXjLHCe8nXU498R7M23obJHJa7qLg4UaXIgF6yjws
+         pp5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715931414; x=1716536214;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wp9JKWYH09KowBkenRXNBjRmFcfYL9G4pnCGDQInq64=;
+        b=ZA7CQUGN4k9bKpS0aO43xSYDyIybFI8bpL+BsXYl5Pi8ibuUb/XTXaT6OywC0+M3q0
+         IgBoEYH0TJn981SJZ4qAujcc/W+sxX0dYC8VGNZ/IR2SPsJn53jcP0jR1THA9sjgZH39
+         +4P69dGeZp59Uv/DpI7qGC4i4jHwDFQGh2VCyb9X9XbNjdC3u8xVWZbmYWh+7M76bmIK
+         NE0iVYfBxOIP/0OUbZ1BAnAEaVIDsXuPBhtjJOQa88abd+hF8xJXW6RHYP3qRp6niG4V
+         5nNCmTramF3JKj/Cxs1n/rcu8WOdFjv76mDWK15xTCwAK/0945vDHw0qgw+Jq0EWedUf
+         gZRg==
+X-Forwarded-Encrypted: i=1; AJvYcCXvDtz95AhTYg6YI7+9WHnjq4xF3X0SuwHC1r19ae6D+lf0iVov4JXshYZQmgy4Vfj+s7Wjx4ii4r3SfpxYsN7aSzZi
+X-Gm-Message-State: AOJu0Yx5c/NHNhZ1QCaSlq1S9bF1vsc3NrOKuyIVqJPhmVGQYHTBdokz
+	ey8HFBG+OBDjGt9yEqMSw52YrNblJBXwULSYa/NWLeIf4SJefl+bYUKwyhtfRQtH4i3wupNV93S
+	HoYiKNQSP26p0gjU/hbkWvY6aKkI=
+X-Google-Smtp-Source: AGHT+IHOTE/qx+79JLfg6+36AlA6bFsQGXVqeaoI6CA5bJ25Xp55WN3tO+70gRcp7qU0391YHkv3Z9KbpwSORsCynnY=
+X-Received: by 2002:a05:6871:3794:b0:239:71c2:b2b5 with SMTP id
+ 586e51a60fabf-24171a03b13mr9826627fac.14.1715931414336; Fri, 17 May 2024
+ 00:36:54 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 17 May 2024 07:36:53 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <pull.1730.git.1715742069966.gitgitgadget@gmail.com>
+References: <pull.1730.git.1715742069966.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CmE3bFYaHgG2j80B"
-Content-Disposition: inline
-In-Reply-To: <xmqqmsoonccd.fsf@gitster.g>
+Date: Fri, 17 May 2024 07:36:53 +0000
+Message-ID: <CAOLa=ZT=x6bmnvJO2KtbJvVOvt=4LH1RgU1NMJYpTgW2XXfGVg@mail.gmail.com>
+Subject: Re: [PATCH] bundle-uri: refresh packed_git if unbundle succeed
+To: blanet via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: blanet <bupt_xingxin@163.com>, Xing Xin <xingxin.xx@bytedance.com>
+Content-Type: multipart/mixed; boundary="000000000000693a610618a16ace"
 
+--000000000000693a610618a16ace
+Content-Type: text/plain; charset="UTF-8"
 
---CmE3bFYaHgG2j80B
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+"blanet via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Fri, May 17, 2024 at 12:09:54AM -0700, Junio C Hamano wrote:
-> Sean Allred <allred.sean@gmail.com> writes:
->=20
-> > Setting aside the obvious reality that an actual change here could have
-> > pretty serious UX considerations for folks with muscle-memory, what in
-> > your opinion would be the right thing to do? Why? Are rebase commands
-> > 'shortcuts' or are they intended to be orthogonal? Do they have designed
-> > purposes?
-> >
-> > I'm wondering if you can tease out what the 'ideal' state looks like to
-> > you, then you can identify what if anything there is to be done about
-> > it.
->=20
-> Oh, it would be very simple.
->=20
-> If I say "edit", whether I made a tree change or not, I want to get
-> an editor when I said "rebase --continue".  If I say "reword", I
-> want to get an editor _without_ having a chance to muck with the
-> tree status.  That would be the "ideal" behaviour, iow, the "mental
-> model" is just "edit" gives the users a chance to edit both trees
-> (by first giving control back to a shell prompt) and the log message
-> (by opening the editor upon "--continue"), while "reword" is only
-> about the message so does not give shell prompt back to the user
-> (unless absolutely necessary, that is.  If the "reword" were to
-> conflict due to tree changes in earlier steps, it would need to give
-> control back to a shell prompt to ask the user's help to resolve the
-> conflict.  It is just that when there is no need to edit the tree
-> otherwise, that is skipped).
+> From: Xing Xin <xingxin.xx@bytedance.com>>
+> When using the bundle-uri mechanism with a bundle list containing
+> multiple interrelated bundles, we encountered a bug where tips from
+> downloaded bundles were not being discovered, resulting in rather slow
+> clones. This was particularly problematic when employing the heuristic
+> `creationTokens`.
+>
+> And this is easy to reproduce. Suppose we have a repository with a
+> single branch `main` pointing to commit `A`, firstly we create a base
+> bundle with
+>
+>   git bundle create base.bundle main
+>
+> Then let's add a new commit `B` on top of `A`, so that an incremental
+> bundle for `main` can be created with
+>
+>   git bundle create incr.bundle A..main
+>
+> Now we can generate a bundle list with the following content:
+>
+>   [bundle]
+>       version = 1
+>       mode = all
+>       heuristic = creationToken
+>
+>   [bundle "base"]
+>       uri = base.bundle
+>       creationToken = 1
+>
+>   [bundle "incr"]
+>       uri = incr.bundle
+>       creationToken = 2
+>
+> A fresh clone with the bundle list above would give the expected
+> `refs/bundles/main` pointing at `B` in new repository, in other words we
+> already had everything locally from the bundles, but git would still
+> download everything from server as if we got nothing.
+>
+> So why the `refs/bundles/main` is not discovered? After some digging I
+> found that:
+>
+> 1. when unbundling a downloaded bundle, a `verify_bundle` is called to
 
-I quite frequently use "edit" just to inspect commits, stop at random
-points in the history, run tests and whatnot. So this would be a UX
-regression for me because I do not want to change commit messages and
-don't want to be bothered.
+s/a//
 
-With the introduction of the "break" command you can certainly argue
-that "edit" is the wrong command to use in my case. Muscle memory is
-hard to retrain though :)
+>    check its prerequisites if any. The verify procedure would find oids
+>    so `packed_git` is initialized.
+>
 
-One could potentially make the behaviour configurable so that you get to
-choose how "edit" behaves.
+So the flow is:
+1. `fetch_bundle_list` fetches all the bundles advertised via
+`download_bundle_list` to local files.
+2. It then calls `unbundle_all_bundles` to unbundle all the bundles.
+3. Each bundle is then unbundled using `unbundle_from_file`.
+4. Here, we first read the bundle header to get all the prerequisites
+for the bundle, this is done in `read_bundle_header`.
+5. Then we call `unbundle`, which calls `verify_bundle` to ensure that
+the repository does indeed contain the prerequisites mentioned in the
+bundle. Then it creates the index from the bundle file.
 
-Patrick
+So because the objects are being checked, the `prepare_packed_git`
+function is eventually called, which means that the
+`raw_object_store->packed_git` data gets filled in and
+`packed_git_initialized` is set.
 
---CmE3bFYaHgG2j80B
+This means consecutive calls to `prepare_packed_git` doesn't
+re-initiate `raw_object_store->packed_git` since
+`packed_git_initialized` already is set.
+
+So your explanation makes sense, as a _nit_ I would perhaps add the part
+about why consecutive calls to `prepare_packed_git` are ineffective.
+
+> 2. after unbundled all bundles, we would enter `do_fetch_pack_v2`,
+
+s/unbundled/unbundling
+
+>    during which `mark_complete_and_common_ref` and `mark_tips` would
+>    find oids with `OBJECT_INFO_QUICK` flag set, so no new packs would be
+>    enlisted if `packed_git` has already initialized in 1.
+> Back to the example above, when unbunding `incr.bundle`, `base.pack` is
+> enlisted to `packed_git` bacause of the prerequisites to verify. Then we
+> can not find `B` for negotiation at a latter time bacause `B` exists in
+> `incr.pack` which is not enlisted in `packed_git`.
+>
+> This commit fixes this by adding a `reprepare_packed_git` call for every
+> successfully unbundled bundle, which ensures to enlist all generated
+> packs from bundle uri. And a set of negotiation related tests are added.
+>
+
+The solution makes sense.
+
+> Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
+> ---
+>     bundle-uri: refresh packed_git if unbundle succeed
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1730%2Fblanet%2Fxx%2Fbundle-uri-bug-using-bundle-list-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1730/blanet/xx/bundle-uri-bug-using-bundle-list-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1730
+>
+>  bundle-uri.c                |   3 +
+>  t/t5558-clone-bundle-uri.sh | 129 ++++++++++++++++++++++++++++++++++++
+>  2 files changed, 132 insertions(+)
+>
+> diff --git a/bundle-uri.c b/bundle-uri.c
+> index ca32050a78f..2b9d36cfd8e 100644
+> --- a/bundle-uri.c
+> +++ b/bundle-uri.c
+> @@ -7,6 +7,7 @@
+>  #include "refs.h"
+>  #include "run-command.h"
+>  #include "hashmap.h"
+> +#include "packfile.h"
+>  #include "pkt-line.h"
+>  #include "config.h"
+>  #include "remote.h"
+> @@ -376,6 +377,8 @@ static int unbundle_from_file(struct repository *r, const char *file)
+>  			       VERIFY_BUNDLE_QUIET)))
+>  		return 1;
+>
+> +	reprepare_packed_git(r);
+> +
+>
+
+Would it make sense to move this to `bundle.c:unbundle()`, since that is
+also where the idx is created?
+
+[snip]
+
+--000000000000693a610618a16ace
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 33786abfcbc6b16f_0.1
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZHB/cACgkQVbJhu7ck
-PpRFtg/+Ml6+oCqjK+ZMYFjKJWCa+EEkDvpIpwmQnsy8kUoJxI99NjRgpFCh11p9
-C6sDFzXocesj+4lX4GXgYp7oAshnaz0/afxZNYAqM/1ZpwGZiUpuclDS5SF9NcuY
-QSEBTH7O4X+pvwrfZQ95ySWF8WtuIuh3RFoLzjYboQYi61xxGtAMC+HQc5yG/IjI
-7OZihSq/vV/nf9fUmVCfJz6H4G7Kv706a8P72dKdoG2J6skrA7eGT4xYrETui07s
-Nx6huEZ8jv6VmVLzxH/dchLfFCeYzmSNt+dZHRIDxquV6eNrEh3xzYzdy6BrVjzX
-MQtRdvw6x3qzajgXlm/FR969B7OtQkX4Vp/kgO3PfLBQ25p7FP+z8p56c03Gr1tc
-PInU+oitZ4GHLXV8BpCiDdhBrw9RHgxmErNa+5W0Jc9oG5SOggU6EYisQgYDrXeD
-sSLS3OcIPD3+FfjycbVJjE1VKihgKj361ZQTIhl4vJSWebCcOTNyU8RbM1UyUVGn
-ahSzVyyodzkXbhF5PQBSP/srXn8pMj49Uel4EvgmrNTdRbByFGrG2WtrOqjfg+Wy
-xkZ4OXnVLjdUbHVPGN6FID8bxzr8oDRjVZMjLOjW3UEEN/qIlySN+cAoODT0zdO3
-MqOS3RrzTq4rF0dE/3Lgy3vEZG7T6uTT1T/shDYg9oLhbUtP2rk=
-=Nqvy
------END PGP SIGNATURE-----
-
---CmE3bFYaHgG2j80B--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aSENSTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMnRSQy85QUNnc1B2ell0WW8zK245bXhCSWRwZk1mVgpqY0xzYzBYTFAx
+M1FzcXVqTE5jRHVsbThtZHNBWWJQZjRJdW83OHlmMHl6QmNiSzdzNGFRVTJMczVvSk9kZ0tiClNX
+b2NuRnRLK3h4YjRzNVd3Rk5RNkFIb2RGZTVNR1hTZ3pydW1LRFZyQWM5VnlvVHkxUy92dHMxSXZl
+dWxBbTQKbW55aXY5WjVEQnV6azNnVXNMTEZ6ODY3cVJReWdDUEtNOU04R0xvNytPNHhSektxSllv
+TVV2OTNKOE5jc0E0Sgo0ODgwT3JmRGhWcmlscjhTcUFCRDNzUUpkS3ppUnNkK2pLc0dhcThyRlR5
+OS9BNUViSDRRd0hweWRJQ0l3Y2FTCnF3L2I4Mllrc3FtWEdqa0pHVWtTZGdtZ2FzaFFHVmJHSk1F
+YzR4SGYyeFFlbDNUVjhXV1pVczVEcFUzL3E3R2oKWVBWSUN5Uk85T2lsWHQra0podjdXYTBsVTUv
+bG52aURMQWsrYlBLZldTU1N4NUx0clpJT1oveUN1dEFuQ1VBegpDVERBM1pwNW80dU94RWU4RU1z
+MzN6VGpCVG5KenFmbCt4eXhlNGpsN3RZemczVW9SZUdtVHVJZWhyNVZVN2w4CkwvdVhFNS84ZXYy
+R2lKVFhtUWZYSnZ0Ulo1UTFWcG1Mb0srS3RiYz0KPTZOTTMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000693a610618a16ace--
