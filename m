@@ -1,82 +1,80 @@
-Received: from wfhigh8-smtp.messagingengine.com (wfhigh8-smtp.messagingengine.com [64.147.123.159])
+Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4548014F61
-	for <git@vger.kernel.org>; Fri, 17 May 2024 07:09:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20CB14AA8
+	for <git@vger.kernel.org>; Fri, 17 May 2024 07:09:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715929767; cv=none; b=fCRc+tpjo6F9qO3NRaZ48cDryTy9mh5bgF5luwVTI3c7DYRtk0TRb5s8IT+7QW3L4KikfBqg3ErNpLEcEeeJ8HmR7JpEPccz5DifnFLHcAk0pGhPoXynrN2vLYKNdAzZnNb3/PmjrgcEWdUXatY1DqoJbOoSsiIs34G6/uRYdX0=
+	t=1715929784; cv=none; b=Rifq69ATNH05LmOrky5+jhLuF3VCUg/2SQMcbk2/2zAEuc0tnV+rBlPwGTYOijqE6t7LJ43kkxA3otBq7ypoqE0Ae3Rv029D88ZrJCdvQkmX/q8XvcKf6uxnafjonwYkaI9VqihsIHWAGeQnNU4fHHfwo6FQ/9P/N+ofXQHXa5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715929767; c=relaxed/simple;
-	bh=8zdK5cKSRJl37TRgEbmiEb8KZ9R7skNOk0LYAsvHIiA=;
+	s=arc-20240116; t=1715929784; c=relaxed/simple;
+	bh=Cam/b5a/pDk5qmSBKualt9YOv3ccZ0ue0Q+g3ME4sUI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H6u0JGObAC9u7DSYSdTTzkdfRPu3pjG4ujO3gJHpZXs/IKdsmn8Lfe9CLJ3JqAX1aSrrx3L2bzIfJH7h4PwtR4J90z14cf4d4gxOcbpZYSwHj7UIYChGSf8zfN4QJU642k309oz8HjoByp6TLdwF//yGf6rXGTDi1sAhIfFV7zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HqXnVKV3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kxm5Qd4H; arc=none smtp.client-ip=64.147.123.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q9gDQu5rs6+VPzkugRHcYi+mISnO1LhATcWJGW65XcIBiH1NwF/1tOC+7PSm+w0XhZuSgnaIMIX5DtEKq8pciEgggBjFfEtkqFSd6PYpLJDxMJ7FRd8loEGOGiNQQchOIeE/W/OT6ecU5fZyy8szxBEYE1Mr+KdPymPBbBdrmvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l7E6U4TX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VgyzAbpi; arc=none smtp.client-ip=64.147.123.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HqXnVKV3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kxm5Qd4H"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l7E6U4TX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VgyzAbpi"
 Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 84C48180018A;
-	Fri, 17 May 2024 03:09:25 -0400 (EDT)
+	by mailfout.west.internal (Postfix) with ESMTP id 13CB71C0016F;
+	Fri, 17 May 2024 03:09:42 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Fri, 17 May 2024 03:09:25 -0400
+  by compute5.internal (MEProxy); Fri, 17 May 2024 03:09:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715929765; x=1716016165; bh=enxSXjbUMk
-	cv7kWjHliQtlo2zjTr9OzBO48Ci6eNYUo=; b=HqXnVKV3z3WGhQEyn9pOVGhpzm
-	a9WgKPND2V633oYPKt4WX86pec2TEHKf5KDGg03Ymi4KrGRmMvBYux3fDyUmNyrZ
-	N2fKbU5O9s7qK70wK95Kb3XOQX1oR9vUUAT/ktgRBRsjGoeX5R1yE27tAl5s16fk
-	ap8LzGZyzxw4lES7Lh7k4D5sn5KwfpH1T/tqGIZkqJfXjUEblNhT6EaT1aHscy5l
-	HpsM4j8nPZzRNj22wmdpT+/CzQmuRT43xifhyO200fWHkHYZnQZR3oNpiMF/J2Pu
-	KHHpelQo80wi6M3IPRtQdGq4MnVpHZ2YD4tb5NhfbcPf3Nq+El6+1I/NrKqw==
+	:subject:to:to; s=fm3; t=1715929781; x=1716016181; bh=88Ako6HTHK
+	tGio+daHssSxgV4iLGhzTgAy9Th44OosU=; b=l7E6U4TXKV0iQQHLZhsDAfzRnz
+	fKdR83VBFl6IKLMXLNl2Io9L6f5I1kUyfjlcfYeH8Va7iKidz9xcJ9WBBUtzg+Q3
+	y+HJJRbNK+3RC6AHbGr5R2gT5/dW9Cz+z+KquhS19Q0u1VTKG9yqtW+Jw9ZxuuWQ
+	AXwRAi+FKMHOGOr/+lmvrWqdcMJqUFQhcZhSRCUVEcPndyWj9q0eohX5cyShqAb2
+	c4PjVPELnoYpHa8nsizgafTML3x870bZIyxLTbJCG8QRP12jIK92cRXnvoNn07VP
+	9dAipTf2hXTSfjImQyUAMKMhKFbG4Txywl//jIM4/Q14Sf60XJnGy6jzc6Dg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715929765; x=1716016165; bh=enxSXjbUMkcv7kWjHliQtlo2zjTr
-	9OzBO48Ci6eNYUo=; b=Kxm5Qd4HBg4r9fkacnHpCBho9iXMUo2DcR0JPkXZ7MWf
-	uRbP5n80lq6wnqHMypWfb0tQVrJuF5MuzuP2T6gn1VeNYsD2J51/rgzC1j4fP7rM
-	0ZB8x0BtQXZ5F5mN0JyQ4t2kJSLBR//AMtWsOh+Ue8qID7/3fZQQcv9sPj5zbUoy
-	zrFKurwOthcpUYQ4MQ9wCHfcyNwwS0Kf7WQbIUP+jSUsJ+hFWgOA9dK2UxDKA0Qx
-	kSGGN+APeIHvYCfmJY+483zB2OFpWSFGB90sYmRuOwcsqiwvuhTLTxmuWYGDT/Or
-	DtO7y1zLqEL+OGs3sfYPqGLHx9b+i7smc6jJX5d6oA==
-X-ME-Sender: <xms:pAJHZo_hCuLepIP15rkcoDiv94nKjTUXJWUV58L8V8So3L15Xi_Btg>
-    <xme:pAJHZgugEj9hThEaeSfUh72sAhlCRjJJAJBmDWNRCkhj0Ewkyn4Gwu4iehc-Tkux1
-    7Atbq5GMaKaI8SaUw>
-X-ME-Received: <xmr:pAJHZuBePKJYfn0W-tCSWUZpSDp3gbWFAum33v9RcHpkuUor1MCV26ujF0TaCFHsE83jUTOurGrFkEJhtWLzBs7iLvnFF5Ls_r_9NcaTAra3Kj2h7A>
+	fm3; t=1715929781; x=1716016181; bh=88Ako6HTHKtGio+daHssSxgV4iLG
+	hzTgAy9Th44OosU=; b=VgyzAbpimJxu1iV+R+ZXbnBVNdTaj5SmlgAUCMI051Im
+	FX/rgcKZE28R3+AbVqa5lhHMi/Fzr3p3EJhUzTBiehhfz2Cfr3f6s/N1ho14LZky
+	SVG4qys6EhfxVvV+PJAbzNrYr4LhlHygTj47a0/12dz+3XU5bRcpIwqqNuQCguig
+	GEcNI3BfYLI1z8BqL3xQVYRCRaMvBcQBTawjCi6qTHosPHfWq4/9+Y1i1oo22ukG
+	1LRRFhbWOZ3FMDhoNX7WEOXGEUp2DlfKIvHlamx+glBT8slfuXh8wBVjxwmO9Xe5
+	6aG0jPd9SfqDYeOvPFcFw05VMZGuJVR4pVJO6TZXGw==
+X-ME-Sender: <xms:tQJHZs2Xas1vGiHWOIcvCIHfOgX90EHwtIbQk_nEowYl4wW7ZyQkyg>
+    <xme:tQJHZnHstjld8qjpa6wWNDDUuyheU-7eSL6U7lQs8jnNcy5OzUtnLIAQLN3DtfgTO
+    c8whWqi58HELL7gbA>
+X-ME-Received: <xmr:tQJHZk6K3Nhozo_-ZeYUjdzKeUEtCyG8JloPURk23ZG0I6LR01as_BLyKqZx21N0zxSLoXu-zIC360VGMJbs9NA_IGoxoXkaPr3-vJgpPAYBOot3WA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehfedgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:pQJHZocRVUyHIhGILkir6zMIOe964UrwtklZTspCTZ2kWIbvtV8YAg>
-    <xmx:pQJHZtOEr2QWIaDmuHVdCcq8fJYbIvervQ_jH7GgoNasCejklmbYwg>
-    <xmx:pQJHZim8e332Hz2ZAO3BHHeikZe3-PNhTK42ns62MIGFMs7aluOWlg>
-    <xmx:pQJHZvuEJQ91kbU973bFisibCb8HoIOqVcKEXzrRvfIkjWtTG70A6Q>
-    <xmx:pQJHZuodZpU9GxJLVH1nqOp8Co84BcEE27diOstZPcNhZvLEptpi6buW>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:tQJHZl1j9OJ_O1PDFJ4usf_NUVQDvbM7WizNBpoH7SYVaH-cRD46dQ>
+    <xmx:tQJHZvGgU69UtXPCztN_pYqn1qHk08sVAvMGFemOf_s_oHbxaLvWzA>
+    <xmx:tQJHZu-oRqYQdLE2_l3pO9hJtj1m-F-0l9pJha-y9Z_t8i2QXQqLBQ>
+    <xmx:tQJHZkk5zrgneOWn7MYjXlv-gq4rEYPNUyyran3NMVQMboV0Hyzb7A>
+    <xmx:tQJHZkR7XTns6ShBshJDFUMe1Sl119Ad9DdjMoQ16QzRXLxOtckQPP8h>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 May 2024 03:09:24 -0400 (EDT)
+ 17 May 2024 03:09:40 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id e2b74165 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 May 2024 07:08:57 +0000 (UTC)
-Date: Fri, 17 May 2024 09:09:21 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id cd981cb4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 May 2024 07:09:13 +0000 (UTC)
+Date: Fri, 17 May 2024 09:09:38 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 03/16] refs: implement releasing ref storages
-Message-ID: <ZkcCoY8_S2nSXSyU@tanuki>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 05/16] refs: pass repo when retrieving submodule ref store
+Message-ID: <ZkcCstjnqBJ6zecV@tanuki>
 References: <cover.1715836916.git.ps@pks.im>
- <282fbe35a7c9db715a8a805f93f9b465d42885a5.1715836916.git.ps@pks.im>
- <CAOLa=ZT3VqhrHXt9x-4DN7norTb3RuscBx+VHipn=QxJvwwThQ@mail.gmail.com>
- <xmqqjzjtr602.fsf@gitster.g>
+ <1d48289809d5bff3d168b42b2b7f150e3ee953e2.1715836916.git.ps@pks.im>
+ <xmqqy189ppfi.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,60 +82,66 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="kyy+Uez+FuFaOVYC"
+	protocol="application/pgp-signature"; boundary="CtI7b1FMnq2hDAHl"
 Content-Disposition: inline
-In-Reply-To: <xmqqjzjtr602.fsf@gitster.g>
+In-Reply-To: <xmqqy189ppfi.fsf@gitster.g>
 
 
---kyy+Uez+FuFaOVYC
+--CtI7b1FMnq2hDAHl
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 16, 2024 at 11:01:01AM -0700, Junio C Hamano wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
+On Thu, May 16, 2024 at 11:44:17AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> >> +static void debug_release(struct ref_store *refs)
-> >> +{
-> >> +	struct debug_ref_store *drefs =3D (struct debug_ref_store *)refs;
-> >
-> > We should probably add a trace here, using `trace_printf_key()`
+> > Modify the function to accept the parent repository as parameter and
+> > move the global map into `struct repository`. Like this it becomes
+> > possible to look up submodule ref stores for arbitrary repositories.
 >=20
-> A totally ignorant question.  Should we be adding more traces with
-> trace_* API instead of trace2_* API?  If the latter aims to cover
-> superset of use cases the former did, I was hoping that we can
-> eventually deprecate the former, hence this question.  Of course We
-> could add a compatiblity layer that emulates trace_* API with a thin
-> wrapper around trace2_* API, but if we do not add new callers, it
-> may still be feasible to directly migrate the callers to use trace2_
-> API without having to invent such compatibility wrappers.
+> Hmph.
+>=20
+> > diff --git a/refs.c b/refs.c
+> > index 542acb25ff..86008ce7b4 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> > @@ -1949,8 +1949,7 @@ int resolve_gitlink_ref(const char *submodule, co=
+nst char *refname,
+> >  	struct ref_store *refs;
+> >  	int flags;
+> > =20
+> > -	refs =3D get_submodule_ref_store(submodule);
+> > -
+> > +	refs =3D repo_get_submodule_ref_store(the_repository, submodule);
+> >  	if (!refs)
+> >  		return -1;
+>=20
+> This still wants to work on the_repository, which means at this 5th
+> step of 16-patch series, we cannot do a submodule of a submodule
+> that hangs below the top-level superproject yet?
 
-I cannot really answer this question as I ain't got much of a clue
-around the tracing APIs. But in this case I think we should indeed add
-this via `trace_printf_key()` so that we remain consistent with all the
-other wrappers in the debug store. I'd argue that either all functions
-here should use trace or trace2, but not a mixture.
+Yeah, this gets fixed in the next patch.
 
 Patrick
 
---kyy+Uez+FuFaOVYC
+--CtI7b1FMnq2hDAHl
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZHAqAACgkQVbJhu7ck
-PpRMTQ//aId98TwVKEY8PzLWrdDFXglp2fcY1wJmPYbWwYLz5+UhcCqksBHWgXXP
-bK2SEGYliBybgMNKqaIctdMgyCmO6r7EJQom/hrc6CWDSDBZU2/UOagdeeK+Q8Zp
-EF8K8j5xvYJV/MUwSEUvNfW+uIujBzq58yuB7N2CwcNH2rdEa6o5ea34oLaHxO9q
-7IVKsvIsoryRPQYks32BrB61e/Kif3dt4M8yzyeFljmW+r5ZNIEPwyWiyAfltfv1
-mB8i9YhSFROYIp1kpvaV+gAzY3UgwsaYJ8maNAcJmiV7xTFcoACfd9otW5TzZd0d
-ODmT4fkXE9Iruo1a4pZTkbQsI3OQ/R0NWUSIwS0jrQil3Q0Rfn5stPdKyuyztR2o
-6p+z4lQ3LFkNmq+gpjTRe3w1+/I6PSIwVuo9hdUm2+jSPkguHFpk1rMhwfYV0SL3
-eg1r2ILYu9hsSAfW134h+3cfDQDi++ZNBDGLy3g5hrtqjnRY8r5dynufTXovLQon
-F6JMAIRXqkd4ywp6oIsWxeG6ccBOKjSgMuQ53+6w8IB2jiWywlASMKktkT3hLDvz
-A71H7a70UM2M1LE6/PlX3gO13FLifsITPm4TYTXpj+RT/kcCa1HU6eGP0ykdSCkX
-VaKXMgHm+rakyGCn8zykM6IQzFtpvMv0Oz7Cli39tCDzBKVPaZY=
-=1LGs
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZHArEACgkQVbJhu7ck
+PpQ4WA/+MZVgRdL304uuyLTLaJR8mpiE7i63FIO/FVh5fbpbD3Sltj8dcFFIGWjz
+wzFUdnkZghkvpo9XXZgaR5wzzfYQ2C7zpBWy+i4kALm23wt0Fjq29sMUqyP2ZFFR
+d4wHGZ+Ria8zemGWCRVmequgbk4LvsNP83qqPgtCtb1mYUOf+RjHiekF8XtuOcDX
+QfdcBqEoRvcYgq/qdiVRFhbER2k/q2ns0nrFN/VxrWHesOv0YFygAKpKrMY4VeEp
+YD2ehxkIOK8e6ynJxE12ai2rqfDmgMU63TprYUyvyaHPFUI4/796tbQ2l5jRSW9a
+kmPf5yc5PHbAmPflpuTHq4SJfcfn5GBIN7/WpxF9fCwayFPxkP/Z5hwPy2+ST7Cb
+uCVGPIRiRqYPEdL0CquzbiX5jg6fe0EVDRmtUCFf7twHYvTGtvVEd7jAWq/RwQ1Y
+U1JA7AesTvdQSoctIcxnkbA9v5IBLhzrRViXGdzX0dfPmOB2/A77i/IK9eb9BjXh
+nzZfkifvgiFCwTtv39mrmAPGol+hqFu5686+8YMv2EF/UIKrJaqSBd8GgWOmEGeB
+WVd+c5PrBPoqDKPabjtkb28b1v/yAH+hkbzR4HFUP3OmG3yXFPbiRzVyur9+zAMt
+Ezkmgc112Mvq2KcsnRZEMAaxyaLIDJvcL5bJZt/qLDqTuSl7X+Q=
+=g3um
 -----END PGP SIGNATURE-----
 
---kyy+Uez+FuFaOVYC--
+--CtI7b1FMnq2hDAHl--
