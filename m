@@ -1,81 +1,80 @@
-Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
+Received: from wfhigh8-smtp.messagingengine.com (wfhigh8-smtp.messagingengine.com [64.147.123.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE231426F
-	for <git@vger.kernel.org>; Fri, 17 May 2024 06:29:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D55117BA5
+	for <git@vger.kernel.org>; Fri, 17 May 2024 07:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715927394; cv=none; b=f33Qmdd+x1cMMSOLK+hG1owBPkuVWVYEXg6wa+6BwiobBxmLCw3eyyyK0VwLqoNEY4hd11e36N9DS64JwE8rGvCt1V2e4TR4jRZ6SiGaOee7qdhgA04r0Lz8llzJraSgHFGo3+VCdeRcwQRrcir+ygn5E+Dw1Hk1cgbStrJzNlc=
+	t=1715929724; cv=none; b=R+g/g30Wg6D+pMboY8PbcV2byMn9nq8vQ9PEcQ0Qy2iuGAQcO7pyFDPdzlhsi5vGAoTFlfwd3HB1FEpdZGJbUk/djTnEFc7bg2gTgxv6A1ULHW8TGWFbC1Zgr2MCW1U9OQAri6D1yiX2uZWI1H8lWTI5vr6AYotGZsHsIeIGdl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715927394; c=relaxed/simple;
-	bh=Ig+5li/lSfuzlZzySKlGq148zk2NiJMRWieqyftCSn0=;
+	s=arc-20240116; t=1715929724; c=relaxed/simple;
+	bh=vBKSeXlrVVzMJJ7PCZRdgNadleKw8fmTvD7O1J2s1/E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HRX+LwgrOJVhOEW26k6jbowd5rtvRN5IgeTJDlBhwAQGy7oKqD+OYD1XWv4orhJQ8uBVHWTBW4dOi5VknWx7GdhFPvP0pwdDCFleWtFtQHyH9lEC8XAFcEsxVj4sNVevEYlNu035F1l6LcyaA9TuMaO/BVB5o9FrIigFbifIj3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nJgzKMg8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MrIr+4cL; arc=none smtp.client-ip=64.147.123.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=FCXJjMPuBo+3kKmcXgIp7cH2oZx44OgcZGaRc4kFm5O4qjl9UU5afWOYoxD/ORYDXuILAm3Fgk+JxLwier6DkbsQZEqcTJXOIjNWdvCm8uFk6UqhWXvatt0sKAhINrdRroygixVwthJh8kNr/dUAFyIWaiFOprLo6WBYPiQw7Ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m5/w0AiV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KPDTP2yT; arc=none smtp.client-ip=64.147.123.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nJgzKMg8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MrIr+4cL"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.west.internal (Postfix) with ESMTP id 890471C00102;
-	Fri, 17 May 2024 02:29:51 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Fri, 17 May 2024 02:29:52 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m5/w0AiV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KPDTP2yT"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 9B317180018B;
+	Fri, 17 May 2024 03:08:41 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Fri, 17 May 2024 03:08:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715927391; x=1716013791; bh=Ig+5li/lSf
-	uzlZzySKlGq148zk2NiJMRWieqyftCSn0=; b=nJgzKMg8nYfopHNXNsTYYa/VHy
-	CoZG8V8gTbV8eruF3utOi/7kv3RchDsEHZLCRAw1nKLqqPcW6UzYTkhS6nrv5KUY
-	e5XrXqWUvldrieJFm8ZXMO6QZtvfRradTiVcUET+8+Gk9d5pSWe2LA3zPDekTFDH
-	1RPKrr8ta+T5wztjB4LPCb3Hq3WyMj6V2nXM2hsIWRXNeWoBmbBp4yCBgvUncBgT
-	U1LC/rzLjxYW19lvTzGvk09Xe5DCBe3ABkgDisQfF/Wu8D3d3ppNZ9aRRrqhbXfQ
-	dHUUdqYC0AE94tE5vECyRaMi1sQJNND42A8KjDjtSWWhJedZnRzte5j4mmIQ==
+	:subject:to:to; s=fm3; t=1715929721; x=1716016121; bh=vBKSeXlrVV
+	zMJJ7PCZRdgNadleKw8fmTvD7O1J2s1/E=; b=m5/w0AiV9oVDMU9vmtOeOC/DR0
+	xEfV37vl3ik235YKknv+stusW8S5wxnWH63YazqgaQHQYkV+Xp1KQOwj5Otft/zn
+	WMwsW2LVaBA8xGrwpJH+qKQR6MfRDk+OTAT435WgauktYRiI1qjvuUsT9MrQ5DR8
+	yp7c1k5oh10wepHmzLi1JfDCIfXYq2FTyvpu2QziiLLj/++VCM7nKqgOgPgxaJd5
+	yC9ClN4BfLaJqOicryq1UJZZ74k8WkGkoXECluzyZKfhWdjICtCcdpX3gS/Fa2+D
+	fYv1YaAKShnCT1u26HtW7eOfGm3XdSburVgQJpa1vBp5LBqDahPrW5V4Cx0A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715927391; x=1716013791; bh=Ig+5li/lSfuzlZzySKlGq148zk2N
-	iJMRWieqyftCSn0=; b=MrIr+4cLMsXJFVdkBkCE57huqStaR4GUkI/QDUfS7wxj
-	RQBUCNJeyKPYSYC6i31IEigs0oeqBkvoHZKlLtXH/KC1+JMSPON2FZmJthz0P2JC
-	DcPLuP7DAB+jMYrNUWNcjaofQl058fAmQmxvC0w/3JlbO4rc5SDD2J9y4WvgjceQ
-	7HqVGci61xG1FdNBHOiSWSOx1mxKkK/QOAkKNMxFtnPRae7WxkCBznFqNJ605fF9
-	J/uNTgahpDJDUY9tb45WbE38anXr6anudpsQbInNmo1YyV0T+2QD/kbKpRfYk3cO
-	5Zq4pKblHW0rIeVnVQJMsuCXGghnMG5MEcylTeIViw==
-X-ME-Sender: <xms:XvlGZkrvrYn4Ijlny-yCcBAo1TsbqkJJ5jMWFaWPananaGyJYp62OA>
-    <xme:XvlGZqp6OfBscu-hpZvgz33Bp61Nrf7J5mfAyL4IuVlYE-YSaZG2cmVllQfUWHpmV
-    5hobr-_NuT4PNkxyA>
-X-ME-Received: <xmr:XvlGZpNOxmTh19p-aGGXXNTdqhx-zPLUwAJ6YPASNVVPp5KOAnRJhZepUUKIAbCG725s-ck-yBQvrQNAOtHZ8JsKpJ0Faw-dZ3rwTZr3QvSIwE7now>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehfedggeeiucetufdoteggodetrfdotf
+	fm3; t=1715929721; x=1716016121; bh=vBKSeXlrVVzMJJ7PCZRdgNadleKw
+	8fmTvD7O1J2s1/E=; b=KPDTP2yTYk+yudFX5LzvezIx3pLOx7jssUxVvD73Aq8b
+	J5IwoEOoCJAQEqfXdWFN4tO4xt9TA+TlVQyuf2oUz695RBAWFV3kxRYi+K+Y9hiu
+	92tcMz90nu4z2NCIiMjSHRbrjEEW4fuSlvP+sZ+X/kaV6Abg9R3nxC6FigWJNgXa
+	yd6tUjW1o1y701vQRGbDFfwytyxw7giOTRVZt3MgES1Hs8zR3v6ppkZ3BLtwfCZD
+	tCaUY1EKtq0IGFNfa/BEnNKaBfh9Gb8pReSN0juG1yrkkDlh0mHDikKkETnYijzY
+	/EsnhU6mP73mgNnz+VtmV1bKwQEm+JdkR01FNHdgOA==
+X-ME-Sender: <xms:eQJHZmZoNKRdaoXPYzDrd9_kxQZBUnmTrmxFdzx0hUTE34lY8SrVHg>
+    <xme:eQJHZpYzGvolh9nh1-N4QA3mIBaDAa4xYcGGUCu_QaWmRKnBS4lS5eruxSNz30acz
+    7x5rsUmz0toEeFfnQ>
+X-ME-Received: <xmr:eQJHZg8TKaFLrlI8B3C-b0dCKJWZ9xdeChk_XzCI5T76SRB35AzSPu2qzxo6vlhramKbUR2KVsggzwcGRkL_w-cyzb70uiQ0JYdS7GqAkJ-zeFwWig>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehfedghedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepieevkedtgffgleeugfdvledvfedthfegueegfeevjeelueefkeegfeffhefglefg
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:X_lGZr7ybkG1VJ7RvzYkFkcFHsHsgezthgtnybTut8B4_OkPyidvxg>
-    <xmx:X_lGZj7Tv1EHbnrEemzWwpIa6xYqXMlqqvSfk6ccefq_-81AFmWAtQ>
-    <xmx:X_lGZrhBhSh9yAyjtu3-OioaXT5EM2UXW_DDrsL8QyuOj0LUNpTjCw>
-    <xmx:X_lGZt7cBZL8FDI4591ei7GtU-rJU5eDQSiXvQ41-ihfrCCtaGUXKw>
-    <xmx:X_lGZmYD_7iGr1pOfMJpcxmkO_cINRzGwet-eq4YEk3I2u1n8oM5Oi-V>
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:eQJHZooDVF5mt8H2csURbG5MgKNjHDzNfnm6Kqlj0ZQzFgQrndxd9g>
+    <xmx:eQJHZhpCb9D3PU04MZJuopW6m6b0eNelj9WAoXSiTtGInTT15QwmCQ>
+    <xmx:eQJHZmQdobFji0x0UeegCe3Beze7s9JtJzP7MpHtkCFPTUnNtbPa3w>
+    <xmx:eQJHZhrtzqS4TvM8WRzaZhdtZI8vt1aJzFHC8OSEtw-IhIJPmzL14w>
+    <xmx:eQJHZo248mg4Kz8zhwc3OM9_MJ2uJAAjJH5JrFiE1eT-dgjZK8RVMGS2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 May 2024 02:29:49 -0400 (EDT)
+ 17 May 2024 03:08:40 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 61d0e52d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 May 2024 06:29:20 +0000 (UTC)
-Date: Fri, 17 May 2024 08:29:45 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id c06bdf81 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 May 2024 07:08:11 +0000 (UTC)
+Date: Fri, 17 May 2024 09:08:35 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, karthik.188@gmail.com,
-	me@ttaylorr.com, emrass@google.com, nasamuffin@google.com
-Subject: Re: [PATCH v3] doc: describe the project's decision-making process
-Message-ID: <Zkb5WeaTOLg9b5p8@tanuki>
-References: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
- <5446ca49e042b104923ac2004d845a5f9018c9d9.1715894135.git.steadmon@google.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/16] refs: drop all references to `the_repository`
+Message-ID: <ZkcCc5w6zcj4wYZW@tanuki>
+References: <cover.1715836916.git.ps@pks.im>
+ <CAOLa=ZThWW0ToK3x-GBynSPZ0E_ssKRd_bLH8ayy0QD4gkOGpw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,99 +82,73 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eXAfp2XmRC/pAzCz"
+	protocol="application/pgp-signature"; boundary="7GNtTjxF/23WMo3q"
 Content-Disposition: inline
-In-Reply-To: <5446ca49e042b104923ac2004d845a5f9018c9d9.1715894135.git.steadmon@google.com>
+In-Reply-To: <CAOLa=ZThWW0ToK3x-GBynSPZ0E_ssKRd_bLH8ayy0QD4gkOGpw@mail.gmail.com>
 
 
---eXAfp2XmRC/pAzCz
+--7GNtTjxF/23WMo3q
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 16, 2024 at 02:20:53PM -0700, Josh Steadmon wrote:
-[snip]
-> diff --git a/Documentation/DecisionMaking.txt b/Documentation/DecisionMaking.txt
-> new file mode 100644
-> index 0000000000..274ddfa62c
-> --- /dev/null
-> +++ b/Documentation/DecisionMaking.txt
-> @@ -0,0 +1,74 @@
-> +Decision-Making Process in the Git Project
-> +==========================================
-> +
-> +Introduction
-> +------------
-> +This document describes the current decision-making process in the Git
-> +project. It is a descriptive rather than prescriptive doc; that is, we want to
-> +describe how things work in practice rather than explicitly recommending any
-> +particular process or changes to the current process.
+On Thu, May 16, 2024 at 06:57:46PM +0000, Karthik Nayak wrote:
+> Hello,
+>=20
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > Hi,
+> >
+> > in "ps/refs-without-the-repository", we have removed all functions in
+> > the refs API that could be trivially converted to accept a proper ref
+> > store as input. This was a mechanical change, and because the resulting
+> > patches were quite large by themselves already, I decided to push out
+> > further dependencies on `the_repository` in refs-related code to a
+> > follow up.
+> >
+> > This patch series here is that follow-up and removes all references to
+> > `the_repository` in "refs.c" and "refs/". This includes both explicit
+> > use of `the_repository`, but also implicit use via `the_hash_algo`.
+> >
+> > The series is based on 19fe900cfc (The fourth batch, 2024-05-15) and
+> > pulls in "ps/refs-without-the-repository" at c8f815c208 (refs: remove
+> > functions without ref store, 2024-05-07) as dependency. It applies
+> > cleanly to both next and seen at the current point in time.
+> >
+> > Patrick
+>=20
+> The commits here were easy to follow. Apart from some small nits, I
+> don't have any changes to suggest here. I did confirm we no longer
+> have 'the_repository' anywhere in the refs code. Which is super.
 
-Nit: I think we _do_ want to recommend a process, but don't want to cast
-it into stone.
+Thanks for your review!
 
-[snip]
-> +Larger Discussions (without patches)
-> +------------------------------------
-> +Occasionally, larger discussions might occur without an associated patch series.
-> +These might be very large-scale technical decisions that are beyond the scope of
-> +even a single large patch series, or they might be more open-ended,
-> +policy-oriented discussions (examples:
-> +link:https://lore.kernel.org/git/ZZ77NQkSuiRxRDwt@nand.local/[introducing Rust]
-> +or link:https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/[improving submodule UX]).
-> +In either case, discussion progresses as described above for general patch series.
-> +
-> +For larger discussions without a patch series or other concrete implementation,
-> +it may be hard to judge when consensus has been reached, as there are not any
-> +official guidelines. If discussion stalls at this point, it may be helpful to
-> +restart discussion with an RFC patch series or other specific implementation
-> +that can be more easily debated.
-> +
-> +When consensus is reached that it is a good idea, the original
-> +proposer is expected to coordinate the effort to make it happen,
-> +with help from others who were involved in the discussion, as
-> +needed.
+> BTW, should we also remove the migration code added in refs.h, since
+> 2.45 is now released?
 
-One thing I want to eventually propose is to go further here:
-documenting the outcome of the discussion, regardless of whether we
-decided for or against it, in a low-overhead format. This could for
-example be a small paragraph in a "Documentation/Projects" file that
-points to the on-list discussion together with a small summary of why
-the decision was reached.
-
-In the case of the Rust discussion for example I think we ultimately
-decided against it due to platform limitations of the toolchain. This
-limitation will potentially go away at some point in time, and that
-would allow us to revisit this discussion. Now if we had documented
-somewhere that the decision against Rust was platform support, then it
-is easy to revive the discussion at a later point and point to that
-exact reason, arguing why it's not longer a problem now.
-
-I don't think that this change needs to be part of your patch though, as
-your intent is only to document processes as they work right now. But I
-wanted to bring this up regardless as a foreshadowing.
-
-Overall this document looks good to me, thanks!
+The migration code has only been added in v2.45, so it should only be
+released in v2.46 :)
 
 Patrick
 
---eXAfp2XmRC/pAzCz
+--7GNtTjxF/23WMo3q
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZG+VgACgkQVbJhu7ck
-PpTkkhAAnwdQYSXiGIyEcSTT34Cg4M97HVqCV3BbDX+Lce5tY9o4hUoj1WZgDkys
-sj9QDtJmrPDQgml3OAf7FuzAF4iuh7i8oMqcX2i750pQrbE+/tg7YLXcUaURWpUW
-+NWOa/hdJgvPFyXF5OG4RrdrewKSdJClXRQSSuplBr0JHiKPRvqsO16QiniB2WMk
-KXkfnFg8XZwmarkjjk2Kptksp3o/XPy/VVFeMRi76Cpk0aTZRiMNavkn1j0/nyPy
-u+CNrHqVW+wr83NvzqcvXqNn+S1q1NTtood/Kpr7QEQNSwwm8FS6OiQMtPF8iNWD
-NJm47oDaJgz7e+6Z+J5EdluIvPFiWeJQrRWFtJXHC7M1sFiqS1ZXT65SNsA1BaA/
-PCx/V3mdH3ZhWFDKzpy0IrOcZZXbBgqNMC90rZ9AazKZVX3jCqJN3rWiCLIvRdbJ
-ZPbCODf2ib6DvzZ32NFnxRJYMdY5HgKY1jWh1g67w7gRRKFR2R9dj3hq/6c+hJM4
-VJymZ6hT544EqCgRiitdcyhDvcrH/M674pcZrOUXYuFxKvLgr4ca6A8K59cVPH0M
-/gKgl3tYow36EW4DMXqxO72nTgxSEdTzzNXv/C61OQYWNB4FlDwxw173KIvC/Yo0
-NJHRaQhPjdApMngf4FqEI4NPNpalQE6eo+6SzY7cQcB7f1B/HJ4=
-=jIxU
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZHAnIACgkQVbJhu7ck
+PpQ9ihAAhSU5Zx6XTJwPvsFFre7+ypDwjhC/orMvx1eFkcFDKNv33/WLJray9qGB
+/PB28QPMIj0ACbsVWHEpBRdzrCn7LkiLBYhn+9U1JTBVtoeFfj8DT/xDXZFyvO1J
+XACLVwr+dR3tecuH19CEgIwLmvNRmk2xgt7lm8tOwBNdWCWutgQWjgIQN1QiRK9M
+f4HJ0enupcoKKYDorEcPGTWd4WhrUJ44kqPysKPiPvWEXl9Rr/HZ7UbRgLyyYGMt
+WuLKDqAWSId9aLMlAw9bzZikle9593CyGMynV+AtY0oU90WkYEyTd8wiGcMS1mWL
+F3Gv078anxfmmfLbrwO+UMS210Lk/xXoa9Ms3XWG2dXBG/21+DDte1WG8Sj3IbDj
+4Vma96bQXzLQaxaKReISSJiH07E2bfHrq/XYt5oijeP6p/QsIfxpkaGQDTZ0ykXZ
+sv9/FonUnpE/PdnKTsz8Nw7w/vhOKkysWDA33z04zU9fpXsUAmJOf71eVJ6kFBk/
+gGO3Kdc2C3nTETrUklgM7b2jjHhDDrWaakH22hFlFaZZILWnYQuSv6r/2jwNneWY
+60eLPC3sjXjLn30aRkZ5GufAMDUplGLTY0yAC1xQXsdkwOjXgwPhmGwp54qYUfOK
+J1EVnPCqX1LQDj8WzAWEuIDmsknTTM22YfgvnFN4KL7hIg3rB5E=
+=dKHt
 -----END PGP SIGNATURE-----
 
---eXAfp2XmRC/pAzCz--
+--7GNtTjxF/23WMo3q--
