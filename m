@@ -1,181 +1,164 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB3D50297
-	for <git@vger.kernel.org>; Fri, 17 May 2024 13:08:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332EC524AF
+	for <git@vger.kernel.org>; Fri, 17 May 2024 13:08:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715951325; cv=none; b=JgasfxGXAQ7ALSAztuNyTCmLZzpH2gka/8MeAoUmcGL9ojSyADpqZAdGRO/GCETTHz/hXzQF2HII0Wue+K/Rw7OqkzTQyEvMxAU2kD6ek1ExNUGqVZmx0WhZW3WZXXXi3X/mKNeXq+xBol02+9h0MHekJ/tp5A7ZJbV5gehy9Sc=
+	t=1715951332; cv=none; b=Vd2/8LsYVPJWwA/jMGfY57XNqUtBbKhKjiE2fjGNXqJ/yvsWuQlKriCoW1Kn0kaKw9ikVgysQI5kz7SI0CdUEckUPR1+kQjsUTstfIQW2fP3nTZrzOjIK8+wek7IvWZlAPtaI3pml8Z2HOyihhb+RTqd3fvwTScoI8WcTrH69dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715951325; c=relaxed/simple;
-	bh=+7oK952aGaEXPThQyqfeFqE0fdFa/AMSQeXWF/GtTAs=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N+FqK37qO9j/ggcGB2nyjPXbCHzcar50L341hShJlnpjPyD4tvfTmq8c9zz7O3xQLY2s+2XFAiHojKtHuh57V/xGIWQgOPpm0Y17WdGHwz22QK92HLViCXt/F+y5UhOJWNtRjU7crG69muo0/jlRYqCwDIBz1urF/izh9AXa4iM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JpK9KfGD; arc=none smtp.client-ip=209.85.160.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715951332; c=relaxed/simple;
+	bh=hp8fWV9Ewj9hWOZl94raG1VkfrEldnbpmtUbMMXFYp4=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=mV1JkUM97H4ZI6VhjBoAZMf6djNeFOnJlbTh4EH+jSprpnQxlCJ10FRRXBfzuuuOUn5ClVyo/HxqKdiaFnHDBpiBru9w5MTbGnZeBkwnVJbNhbmSB/WGFE+TDNBcDLUBNcj40YX57uIcyKFuBJApimp8woasa0K0CibvLQIybaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=l+XUZImh; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JpK9KfGD"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-23e78ef3de7so632478fac.1
-        for <git@vger.kernel.org>; Fri, 17 May 2024 06:08:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715951323; x=1716556123; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=c3nObcgur+VIm6CxwK9qTC2QuU9UcCgroiHZig0f2V4=;
-        b=JpK9KfGDLyupjxFo+cumYj0AJhEwfwAP58NgYLMLX81CIqMHnMwIfgUZI4qtZuQJHe
-         UiKGw7SaH3xlIUWmkwkSvEZ/YV+X6So3stV2cW38m97zO3zbBlVTKQDNRJOggzEQ+pDA
-         bJO6UUeic/He7mRY7L+38Ex2TirGfpECQWFNFmmLJ7jYNEoEljZzaNvdQZnMxn/5XdNl
-         Pht/5hEVGiOkk+nWedKigcwdDn/tVTJEY1qUlYx2p6dJch05Xud/typ1TunTrOvil+vj
-         oZil6x06CdVjXw25baWLFCq2jTCHFLucXZNzj4xyVPnwx8dqxAN8VZOvohaYlypHiM7S
-         Dixw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715951323; x=1716556123;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c3nObcgur+VIm6CxwK9qTC2QuU9UcCgroiHZig0f2V4=;
-        b=BkAe5LyR6qsgsIo1xjz+i1kpDHKPPQb75sOFhS6sqYF+A6Hxvfd2lmVjm/pr91TuQ0
-         XwDNECZ9VY+V5nLCkb0Sg/HBC6MtKNF0SKUROkBgX0n56tin45fTF2TPhff6P3d0sjzT
-         NGpo0rglJgqPcP7A0s3QnD2I/AJUv+wjkJjfNw0ntWLHNRBFAYsKwumO+vlLlhdupaEi
-         Om3/dW2li3reYO3XXCJYS2PDtGbDhJW9p94Uztybs1Zl2zmmN+udvALMNRuqrHK7bSy4
-         49DBry+HdDAApq9PNfLOAP3lWcQnr+PRAN/1w+WJ3CpJXNSXlEc29vB7CxVzqgrIH1mb
-         IZ7Q==
-X-Gm-Message-State: AOJu0YxXzi9zSUwIhbp77641SoYs2YKIj+DBjE5Xgq5Wm9MTW3a9rWNu
-	FBSClOKETZrdcmAt8J3QqcnZNQn0A3awGG+a0mKCw1KDPp7btEARJYpkNc6JUS7bCsnsnnyBgSZ
-	dmBTZHdzDDcqnfB+3MGEoPRo3u5khew==
-X-Google-Smtp-Source: AGHT+IGdjvK1i6mJSbyxu8DJCxWkuBbLnPmn729+H5Eyu4aJEWhH2zNKOZy8BtRwXil6OWUj74glhRjFt50z6q95l/8=
-X-Received: by 2002:a05:6870:4209:b0:22e:bcfd:debc with SMTP id
- 586e51a60fabf-24172a90478mr32304674fac.13.1715951322758; Fri, 17 May 2024
- 06:08:42 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 17 May 2024 13:08:41 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZkXpW0BPvR3vr2jx@tanuki>
-References: <20240514124411.1037019-1-knayak@gitlab.com> <20240514124411.1037019-2-knayak@gitlab.com>
- <ZkXpW0BPvR3vr2jx@tanuki>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="l+XUZImh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1715951322; x=1716556122;
+	i=johannes.schindelin@gmx.de;
+	bh=bxtBIVsIrusglN/Iw7jpNkpi4sxbtoewD8MEsq8XoK4=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=l+XUZImhR+1vAvtrNtha5aIg78aytFdfY82i6hIKAFViBT2EH6bsQBRWyBCiWAwS
+	 jxfWoI/O7eHNdRJZECC63gtEyOalnY2dwx0KfNZxII+CUogX+s8a/Pk/GWrqGa3pN
+	 77M1CpZ4XdXudQKUtNgkmlp8MEMIMbWcsTfVLBZ80EwpTsngqeUnkBxDoVkeNcyxb
+	 myegADiXA2o7vA7Ej6aAEq4oO0XZEmcNVRm630PPa4WphfkhedmkEjF0Lw5kjiQhs
+	 iZ5RzwWzRIIdb4ECxZrSORIZz4YN/khBrSCpktda0agF2oJvUUlqVlX9fggUxcgkr
+	 oA36RgpJ+sKIDCZX0w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.77]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MIwzA-1rrwbj3WG2-00JHQF; Fri, 17
+ May 2024 15:08:41 +0200
+Date: Fri, 17 May 2024 15:08:40 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: Brooke Kuhlmann <brooke@alchemists.io>, git@vger.kernel.org
+Subject: Re: Git 2.45.1 - What is the right way to clone with global hooks
+ disabled?
+In-Reply-To: <xmqq4jaxvm8z.fsf@gitster.g>
+Message-ID: <6c5160b3-e5b3-996c-bdfa-90c0a38ba19a@gmx.de>
+References: <FAFA34CB-9732-4A0A-87FB-BDB272E6AEE8@alchemists.io> <5b3b0882-eb98-558b-3fd1-40cc4cec3ba0@gmx.de> <xmqq4jaxvm8z.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 17 May 2024 13:08:41 +0000
-Message-ID: <CAOLa=ZQz=adrazym_bPehDMGOLN1Lt-7QOcd_LgZb5K+trg=EA@mail.gmail.com>
-Subject: Re: [PATCH 1/6] refs: create and use `ref_update_ref_must_exist()`
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="0000000000000b99580618a60d23"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:UoprwgsPVSlDNZO3IR2+TYemi4QSaKq0C8WkyK90hENzmi6Ovb8
+ ZETXAVHAw/Lr/USkM91F/ZvGjBacuCdcIigyDm9RT9/u7iudoL34Y03tQ9tpvDnJ1JWLdTz
+ ANJHu6x8MT71NG01BWu5lyHHOhm/P6IxjiGFFQq8LdFIDrJzEk8uCAwSV9O6WOe20zzMUjP
+ Z3c2Tj5oceQkAkH9tMtaQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:+8uLMnDlo8Y=;H9E3SjVWQ8oAq9c6pmAlQUstdxu
+ CNSdlzLCmkvE7ApWYIdSuq4tmY/kdxBubWq0Q+2PzhwlunWSvJE0hV0BCJoWZpBxIAi4ri1Uw
+ ZCuW04qfoasSa+C/mzbJGgm+xwfRgyk96X+THZAJ2YLh6r2keLr0V1nR4kD4WeiXWr89tfZL7
+ KxdCbmhxgrT+puWPc7JKKFBV/lbHyaPaCgK8HoGMSQI4T9RrxNBxpXLfvlL18SnIFX8aeHW6L
+ WXuE3r5EYzd98ujktpAUyAqT7Zxk5Bgz8cRAw1FXVQfa6+wODCQyKjLaTMEgHJ6bzk6s64Rim
+ 27TYKCxuMyjgf1BX+4kCvhFdBYxqTZIzVn2RqcEpFhoe0p6zCZ7u5UUpQDwQrO/YPFwLDrOsG
+ Jy1gSXoblGvcoI+/6MVC/DS2nHDzanBGsZ8H+mtOxLCHTh3FlPFH6YYSnK/UU9vzifkCIDP8r
+ N55Unl/CZij0/ajW7qbRNHo9gw/Ti7XVdWCngUFupCYcBhaiONZIDu4j6t75awLXZed87S3Br
+ 0Efh0IblkBGOTsD0Hk2RaWbLrWfoe12rYqukE/cW1oUGlMuCaXV5B4rBH2eBxCH9veC9181h7
+ hNyRFQgHx8f7QSpDrCbREPHdqsRLLRt7UBkq7+ueugi3RJEjc0gfFPkHNQcHlUGA73EONXT/T
+ 3G38+l0Rki9b009x113s8OpufdpUrcVjqbsjOky7KunDhT9zG2DbEI7lcILTQ/SJc/QlI6h5j
+ qbRj3ImgaSu5wu7yfGQUp6WXZWm27O1pGUkYkzE2w2bSLUznphNJJ/dlsjjSurlgDi9X879/j
+ VvG0p9aIDfemah4uLHkKappxdnko0HWok2LU5uw1CL7qo=
+Content-Transfer-Encoding: quoted-printable
 
---0000000000000b99580618a60d23
-Content-Type: text/plain; charset="UTF-8"
+Hi Junio,
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Thu, 16 May 2024, Junio C Hamano wrote:
 
-> On Tue, May 14, 2024 at 02:44:06PM +0200, Karthik Nayak wrote:
->> From: Karthik Nayak <karthik.188@gmail.com>
->>
->> The files and reftable backend, need to check if a ref must exist, so
->> that the required validation can be done. A ref must exist only when the
->> `old_oid` value of the update has been explicitly set and it is not the
->> `null_oid` value.
->>
->> Since we also support symrefs now, we need to ensure that even when
->> `old_target` is set a ref must exist. While this was missed when we
->> added symref support in transactions, there are no active users of this
->> path. As we introduce the 'symref-verify' command in the upcoming
->> commits, it is important to fix this.
->>
->> So let's export this to a function called `ref_update_ref_must_exist()`
->> and expose it internally via 'refs-internal.h'.
->>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>  refs.c                  | 6 ++++++
->>  refs/files-backend.c    | 3 +--
->>  refs/refs-internal.h    | 6 ++++++
->>  refs/reftable-backend.c | 2 +-
->>  4 files changed, 14 insertions(+), 3 deletions(-)
->>
->> diff --git a/refs.c b/refs.c
->> index fa5471d219..59858fafdb 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -2863,3 +2863,9 @@ int ref_update_check_old_target(const char *referent, struct ref_update *update,
->>  			    referent, update->old_target);
->>  	return -1;
->>  }
->> +
->> +int ref_update_ref_must_exist(struct ref_update *update)
->> +{
->> +	return (update->flags & REF_HAVE_OLD) &&
->> +		(!is_null_oid(&update->old_oid) || update->old_target);
->> +}
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index 3957bfa579..2df204f891 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -2411,8 +2411,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
->>  			       struct strbuf *err)
->>  {
->>  	struct strbuf referent = STRBUF_INIT;
->> -	int mustexist = (update->flags & REF_HAVE_OLD) &&
->> -		!is_null_oid(&update->old_oid);
->> +	int mustexist = ref_update_ref_must_exist(update);
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> Okay. So we didn't notice this was broken because even though we started
-> writing symrefs via transactions now, none of the calles ever assert
-> that the old ref exists?
+> > I plan on sending out a patch series later either today or tomorrow to
+> > address a couple of regressions introduced by v2.45.1, and this patch
+> > would address your specific scenario:
+> >
+> > -- snip --
+> > diff --git a/config.c b/config.c
+> > index 85b37f2ee09..380f7777a6e 100644
+> > --- a/config.c
+> > +++ b/config.c
+> > @@ -1527,6 +1527,7 @@ static int git_default_core_config(const char *v=
+ar, const char *value, void *cb)
+> >
+> >  	if (!strcmp(var, "core.hookspath")) {
+> >  		if (current_config_scope() =3D=3D CONFIG_SCOPE_LOCAL &&
+> > +		    (!value || (*value && strcmp(value, "/dev/null"))) &&
+> >  		    git_env_bool("GIT_CLONE_PROTECTION_ACTIVE", 0))
+> >  			die(_("active `core.hooksPath` found in the local "
+> >  			      "repository config:\n\t%s\nFor security "
 >
-
-Yup, that's correct. The `git-symbolic-ref(1)` command doesn't ever
-check for the old value and it is the only user of transactional symrefs
-at this point.
-
->>  	int ret = 0;
->>  	struct ref_lock *lock;
->>
->> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
->> index 53a6c5d842..5da3029e6c 100644
->> --- a/refs/refs-internal.h
->> +++ b/refs/refs-internal.h
->> @@ -765,4 +765,10 @@ int ref_update_has_null_new_value(struct ref_update *update);
->>  int ref_update_check_old_target(const char *referent, struct ref_update *update,
->>  				struct strbuf *err);
->>
->> +/*
->> + * Check if the ref must exist, this means that the old_oid or
->> + * old_target is non NULL.
->> + */
->> +int ref_update_ref_must_exist(struct ref_update *update);
+> This does not make much sense to me.  Why is /dev/null so special,
+> compared to say /etc/passwd?
 >
-> Seeing `ref_update_ref_must_exist()` as a standalone function wouldn't
-> quite tell me what it really does. It sounds a bit like this would
-> already assert the ref exists at the time of calling it.
+> I do think the defence-in-depth aspect of the other half of what
+> went into 2.45.1 and friends, around the "hooks" theme has merit,
+> i.e. "any activated hooks in the resulting $GIT_DIR/hooks/ directory
+> that is different from what came from the templates directory is
+> suspicious".  It has a plausible attack scenario to realize such a
+> suspicious configuration by using directory name munging and other
+> tricks to confuse "git clone" into thinking what the repository sent
+> as a part of its payload belongs to $GIT_DIR/.  It did have fallout
+> as the way "git lfs" mucked with user repository's metadata by
+> abusing the overly wide trust the user gave to its smudge filter [*]
+> crashed directly with the reasoning behind the "hooks must match
+> template" protection, which is "Until the clone finishes and gives
+> control back to the end user, external influence like hooks must not
+> muck with the contents checked out without user's knowledge and
+> consent before the user has a chance to inspect the resulting
+> repository".  And it is a reasonable expectation to have when
+> cloning a repository that has not proven to be trustworthy.  So
+> instead of throwing the protection with bathwater, we should add a
+> reasonable (i.e. easy to use for "git lfs" developers to follow)
+> escape hatch that is a bit more nuanced than "rip out the whole
+> protection" revert or "disable all of the GIT_CLONE_PROTECTION
+> mechanisms" escape hatch 2.45.1 and friends had.
 >
-> We could call this `ref_upate_expects_existing_old_ref()`, which might
-> clarify the intent a bit.
+> But I cannot quite tell what the threat model this "core.hookspath"
+> one is trying to protect against.
+
+My thinking was this: if, for whatever reason, it is possible for a `git
+clone` to write to the Git directory during a clone (and I had those
+submodules and recursive clones in mind, in particular), then an attacker
+can not only manipulate Git into writing into the `hooks/` directory, but
+they can also reroute `core.hooksPath`. And if we ignore the latter, the
+former protections can be side-stepped rather easily.
+
+> If some attacker manages to muck with the configuration file, it is
+> already game over, and they have better ways than pointing your
+> hookspath to other places to take advantage of their ability to write to
+> your configuration file to attack you.
+
+Hmm. You have a good point there. The aforementioned `smudge` filter would
+be a prime target.
+
+> So, my recommendation for this one is to just rip the whole new
+> logic added in 2.45.1 and friends out of the "core.hookspath"
+> handling.
+
+I guess that's the easier path for now.
+
+We should seriously think about better ways to protect against config
+manipulations during clone operations, though. In particular with the
+current state of the submodule support code, recursive clones continue to
+seem like highly likely target for attackers.
+
+Ciao,
+Johannes
+
+> [Footnote]
 >
-> Patrick
-
-Yeah, that's better, will change. Thanks.
-
---0000000000000b99580618a60d23
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 545725016c4a8d0a_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aSFZ0Y1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNmwrQy80OWlBVkt0SWNnSE1NOXZIekJ2RUNaeEZiMwo2ODlGMksvTWxt
-MXdHbXYwY3FnWStJNUhSRUYrNUZZcSt4ekRuaUdvSk1IQks4UGJOZFVBMUFkNVI1RTRaeExsCkhp
-ZWlENmNCaHQ5Y0hHK3hsMXp1dTFHb2J1UFdmMUxIYXp2OVpXM0JVYkRlYlNBMDEyU1NqWENncW0y
-SFI5WTgKeS94RjBQdUwyaWFLZFJuQXY2eDliNVFTYitYNkNUQmFUTGtHQTNReGJtaCtlS3kxdFpD
-anc3dmtHRTRHSzYxaApBZmJYYVNRUWtzWWM1WDhCYWVmZGdxUVJqejBGNVlUU3NDRDc3WFoyOXo0
-c2hOWkZMYkZDT0NhaWtLYk9qckdFClFHSEdGc0E2QnNMUkZKY0pJYWJGbGROU05CNWNvbXh4MWxC
-K0JzZ1RaNnNDYmpKSkpwTjRyN3E4Z0xOdTlEY2EKaVdQTVBGZUlTd2VkU0xUbzh5bUlLTFc4TjdG
-Ui8xOFRGVHFsK25iWG5tdWkxRDZKOWhqWWlEMmsvSHU4eEtUbgpNNUxsY2dWRmtRTXpKT3Uvay9F
-RGRNNngyeHVUR3ZKU2pxNEdwQ1lYTWRhQ1dLRTlFUFdTQStxYlpFaHJjanhKCmQ1N1ZmL0lFWG9p
-OU5IbFAvSUFSWnBPVXVnRkJ5Vk9JYWVsSUlGOD0KPUxNZmMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000000b99580618a60d23--
+>  * The user most likely consented only to allow the smudge filter to
+>    transform small token recorded in the object store into a large
+>    blob taken from elsewhere, which means it can read from the
+>    object store and write to the working tree, but the user may not
+>    necessarily agreed to give it full read/write/delete/create
+>    control over anything in $GIT_dir/ or in the configuration files.
+>
