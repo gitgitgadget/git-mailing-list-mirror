@@ -1,235 +1,115 @@
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F50A12FB12
-	for <git@vger.kernel.org>; Fri, 17 May 2024 16:21:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D7041C68
+	for <git@vger.kernel.org>; Fri, 17 May 2024 16:27:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715962917; cv=none; b=Ne0DpcoUoESuNKilWRwh7mzuE2UtlQjsZNAbU2fiLi1xwzOkl7Sy6iLM9BtXZfZ0O5o+Fe6kc19FnELDn/WIYf7nAmD1+6wkjsiuyAPIl+1CaU/FcOWKoLC0B//+FcteWbgDFJi1CHyN6GPSWmlklMqiFJ7sDXJXOvpen0Zd/p4=
+	t=1715963279; cv=none; b=RSV+YepF/Pllzb3Kr3H6BXITBjB9meCFdlpZMzL3wiWLaU3SpuGMI01wO7xnpW2159TngH8TwfxtC4eqPcTR9KVutca04RGZl6G0Jq03tGcgIE9+smIKeM21U9joDZlDs/HOQXAuVlieZCsx1+K88hh1bllhPhKARYFiZXKhcLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715962917; c=relaxed/simple;
-	bh=zCmDpGtvepazpW6TL4TAN1hAWCs/o7TZh2ftLjU9DKU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qcO7A3dAkcU5JDl1mI+ilJopW/8o6VLizC5SvR6t0K+97/Ikujiss204qutXF5NprQgNwXTlsM0t8DJOQ7riW9H+slatbvrR86lfJtvYrVd96ta/etXwMLVtLRlSNpach3TkiV06Iaz6fQgM+VY311wVDX5W/vzm/2064KZOBS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xhb/22s+; arc=none smtp.client-ip=209.85.161.52
+	s=arc-20240116; t=1715963279; c=relaxed/simple;
+	bh=OpA7f7m6dRBGmlbYsMn+HtvGBzfdD3W+00yfpl/qMVU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jvOrZyqE/YnuXUGwlQ3q5S4svD8IyCisgJ8T3YA6tslAZykSHQsAYjH4BE8/bCLV30OpG1AExJzMlhpSunEKbk2HQeZ6+8kaW32tPC8zP6BM9zZQv4ayhIswCmEl4k3zD08p6aIkLmPyskLSXhEuOq5oUGMp0erTPuZBM8xZX3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BMLmiAbc; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xhb/22s+"
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5b28c209095so227920eaf.0
-        for <git@vger.kernel.org>; Fri, 17 May 2024 09:21:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BMLmiAbc"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4202cea9941so2578205e9.1
+        for <git@vger.kernel.org>; Fri, 17 May 2024 09:27:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715962914; x=1716567714; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jWGwnRLMn0sSotiBEFqAinC1voiyHXzEJvyCAssF/bI=;
-        b=Xhb/22s+QIR3ObyIIlBrYcx56ctJhRqBxjdu0YbXiWt63+ZTy1nZrFWGTWbzXOpS+P
-         n5/aa1pU0TGSblqmyDTZ1Gv0ESMwqaKLs5zwFexmHMCC7vzrm7e5r402WF3gks9gvJt7
-         LCJMXsGzSvbOGefjKUv3MrbQ46WwweRmdWTBkVfHtgvUXBKu7q8M0rtLJmX5YkmyxLt4
-         cEHM78VQ1SExcu5czt9JRtoAKSYE2bmgE/2oUc59qTV6iu4LDat0zzQL8M9IOKP7zPJe
-         eyiExYigx2EjDYNKlvVD0fLf5FmTzrPmEW1w5MK2BcytNlIQWa+IeD1BW9EcHiyAI3vl
-         dNRQ==
+        d=gmail.com; s=20230601; t=1715963276; x=1716568076; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7gmuXMczf7FmiRUVibgndYfqIdViNHuD6gZ8iexJGFw=;
+        b=BMLmiAbcA4ob0GHY/MgoxsvX6Y9LCIMLZzHIiRkGsfSa32YflqopPa9zxmsv7Mhj3T
+         y+afKflozyuQts3jwKQAEawxXLkC16CI7xDMSZyLPDjNFM2LoMY9VQlaSAPrFkSuo8tj
+         GtAzVPkLSG7Z5vf2SPjSVVvNagU7mxuQD3DNoKipyNn86ebtQa8V21IljWC8A2xTM1oW
+         gAYy5aqpNRYRSf/auoFmXsTUJAYQ94fexuKBXH4Ix7CkCXc+iHeoLPDfG4VED7/KZ98S
+         GHCOyi6M89+UEnk4Q7kqII1ibyXHUpTLj0Y1De91g7Q9HmsF2mj0cVZ6ijBRWExJygQe
+         J6OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715962914; x=1716567714;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jWGwnRLMn0sSotiBEFqAinC1voiyHXzEJvyCAssF/bI=;
-        b=CHy85aUlmGf/BwMsdj0veUqJ+qVYpZjwkxHmcVRPBeTlmDqMLeJ0EqSsgV1Qs54xiD
-         oGe8bbIy3CPfQ9zSeW08P73/z7gDOF2sPxFNN9ekVnqmaf8ro9f1evy8xH6C/0DD6sia
-         4uDcbRqK32vuwH0/qnJB3uBdLlOSOq/TgB4ZHAWiltl3T0SILcSwqx6pvCrAZZwEcmZS
-         gK3yVtSsAq/uB8JS0Fy2+mAtkzjKVLneVpnRFISeVtOXgmiCmQlZ79FEQt0XzpIEfjB9
-         QHonmohfz5oL3AnnTwhgJapVmPGscI1YR7H1m8I08slC0fkZTc5H3wHOQfoLqadzDiQN
-         Bhjg==
-X-Gm-Message-State: AOJu0Yy/aHmcr0w4K24nmbgu1XUASWJSTi4iAf9RLvLG9cbUZqbnmYzF
-	wepBFZN+sxp/2TdVxd01vYWBLbh4Y5VH8fDCyRZxdZGCGh+kScJB9WmaRgL79D/18TItgSbI1/Y
-	gwWPDtngqjTcfHd8TYHu0ZhkOTnPkYw==
-X-Google-Smtp-Source: AGHT+IEpi7r1v2nTRygPKgqlOitC5msLIU8Tha7l5oXiwzApYQ+pCekN/HeDZHX3O1/wm/kHlkdDwB6KXuTJ8OyUIBU=
-X-Received: by 2002:a05:6870:d248:b0:238:f752:b1f with SMTP id
- 586e51a60fabf-24172f719b7mr23664531fac.59.1715962914087; Fri, 17 May 2024
- 09:21:54 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 17 May 2024 18:21:53 +0200
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZkXpYep2MKdsyNyV@tanuki>
-References: <20240514124411.1037019-1-knayak@gitlab.com> <20240514124411.1037019-3-knayak@gitlab.com>
- <ZkXpYep2MKdsyNyV@tanuki>
+        d=1e100.net; s=20230601; t=1715963276; x=1716568076;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7gmuXMczf7FmiRUVibgndYfqIdViNHuD6gZ8iexJGFw=;
+        b=sML4fd79SwusCtBoVnitJ17h5DMBE7jkFG2VdAgsh++34VfHSTjyLwAJ/en+wWfwdX
+         cpRmX4Be/dJZKfJqLVBnrQStqmMIB2y1wtcyHf76eeWlqLiYOI6QXux9L3ebmt5hiAUW
+         UGnVHsBcS8h1Sifj28z0JrCYRj6QyULXjAmRdse1eo3fPmHlakRyW+dP8sKW4ktZs5uA
+         W82SRbRe6W+CZYx2EtoLoCJ31OFTA+1iK80/ui+8C9a6edChjUdCDo0Svs6TIR7+rgEw
+         9boQ1bRA80YBoU0P47+9ZtFxbrHyHWSF/W1evy+Ro781dnJTe+ZyYW6F7jRh4W2vzDeR
+         NUjg==
+X-Forwarded-Encrypted: i=1; AJvYcCXeRc88wjka+y3G2avmL1dqZjkGLwHuD4Km6qameRbPCHNFb6ivJAEKh+rXZSWqmi2ksRI66/p5YBR5Xe142M+qK/27
+X-Gm-Message-State: AOJu0YzBW4xwu1P5QANGWNk4ed9oCQ1rf8rqf5LxeKYe6jyDSBcmsAte
+	KlFZY66yu3HSuyYkhc5DsxgNoW6h3PGO1Z9ltHXhkmmaIX5pGU3y
+X-Google-Smtp-Source: AGHT+IEuVk+iWW9hVMz0HBBEjS58zZRQb9gwd+G1Ku4Aj9I946lRkxJP/cdl6zmRI+9RHTZ4gJIVNw==
+X-Received: by 2002:a05:600c:4f83:b0:418:2ccf:cbc7 with SMTP id 5b1f17b1804b1-41feaa2f473mr163282645e9.2.1715963276235;
+        Fri, 17 May 2024 09:27:56 -0700 (PDT)
+Received: from gmail.com (93.red-88-14-199.dynamicip.rima-tde.net. [88.14.199.93])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3502baad04dsm22031054f8f.81.2024.05.17.09.27.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 May 2024 09:27:55 -0700 (PDT)
+Message-ID: <c48488d1-3135-493d-a9e8-2f787bdd2b4c@gmail.com>
+Date: Fri, 17 May 2024 18:27:54 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 17 May 2024 18:21:53 +0200
-Message-ID: <CAOLa=ZSUV1X==x2CBivgu=L7SQryXNZZkLwxgyNth=a+bH9SQg@mail.gmail.com>
-Subject: Re: [PATCH 2/6] update-ref: add support for 'symref-verify' command
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="000000000000f1465e0618a8bfa2"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] completion: adapt git-config(1) to complete
+ subcommands
+Content-Language: en-US
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+References: <e0039edb9b7dce1e33c4cb6e964c50281c815e97.1715835356.git.ps@pks.im>
+ <8d43dee33289969a5afbbf7635ac40b7312d8e19.1715926344.git.ps@pks.im>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <8d43dee33289969a5afbbf7635ac40b7312d8e19.1715926344.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
---000000000000f1465e0618a8bfa2
-Content-Type: text/plain; charset="UTF-8"
+On Fri, May 17, 2024 at 08:13:36AM +0200, Patrick Steinhardt wrote:
 
-Patrick Steinhardt <ps@pks.im> writes:
+>     ++	__git_resolve_builtins "config"
 
-> On Tue, May 14, 2024 at 02:44:07PM +0200, Karthik Nayak wrote:
->> From: Karthik Nayak <karthik.188@gmail.com>
->>
->> The 'symref-verify' command allows users to verify if a provided <ref>
->> contains the provided <old-target> without changing the <ref>. If
->> <old-target> is not provided, the command will verify that the <ref>
->> doesn't exist.
->>
->> The command allows users to verify symbolic refs within a transaction,
->> and this means users can perform a set of changes in a transaction only
->> when the verification holds good.
->>
->> Since we're checking for symbolic refs, this command will only work with
->> the 'no-deref' mode. This is because any dereferenced symbolic ref will
->> point to an object and not a ref and the regular 'verify' command can be
->> used in such situations.
->>
->> Add required tests for symref support in 'verify' while also adding
->> reflog checks for the pre-existing 'verify' tests.
->
-> I'm a bit surprised that you add reflog-related tests, and you don't
-> really explain why you do it. Do we change any behaviour relating to
-> reflogs here? If there is a particular reason that is independent of the
-> new "symref-verify" command, then I'd expect this to be part of a
-> separate commit.
->
+The __git_resolve_builtins() function executes "git config
+--git-completion-helper" and caches the result for future calls.  And
+on return ...
 
-Ah! There is no divergence in behavior, rather this is behavior which is
-never captured in tests. So I thought it makes to have tests around it.
+>     ++
+>     ++	subcommands="$___git_resolved_builtins"
 
-> [snip]
->> diff --git a/refs.c b/refs.c
->> index 59858fafdb..ee4c6ed99c 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -1331,14 +1331,17 @@ int ref_transaction_delete(struct ref_transaction *transaction,
->>  int ref_transaction_verify(struct ref_transaction *transaction,
->>  			   const char *refname,
->>  			   const struct object_id *old_oid,
->> +			   const char *old_target,
->>  			   unsigned int flags,
->>  			   struct strbuf *err)
->>  {
->> -	if (!old_oid)
->> -		BUG("verify called with old_oid set to NULL");
->> +	if (!old_target && !old_oid)
->> +		BUG("verify called with old_oid and old_target set to NULL");
->> +	if (old_target && !(flags & REF_NO_DEREF))
->> +		BUG("verify cannot operate on symrefs with deref mode");
->
-> Should we also BUG on `old_target && old_oid`?
->
+... it populates the ___git_resolved_builtins variable with the result:
+the available subcommands for "git config".
 
-I didn't do this, because `ref_transaction_add_update` downstream from
-this already does that. But I guess no harm in adding it here too.
+>     ++	subcommand="$(__git_find_subcommand "$subcommands")"
 
->> @@ -1641,4 +1647,88 @@ test_expect_success PIPE 'transaction flushes status updates' '
->>  	test_cmp expected actual
->>  '
->>
->> +create_stdin_buf () {
->> +	if test "$1" = "-z"
->> +	then
->> +		shift
->> +		printf "$F" "$@" >stdin
->> +	else
->> +		echo "$@" >stdin
->> +	fi
->> +}
->
-> I think this would be easier to use if you didn't handle the redirect to
-> "stdin" over here, but at the calling site. Otherwise, the caller needs
-> to be aware of the inner workings.
->
+Then, we look for a subcommand among those returned, at
+${words[__git_cmd_idx+1]}, where a possible command must reside.
 
-Not sure what you mean by easier here, but I think it would be nicer to
-read, since the client would now determine the destination of the
-formatting and this would align with what the test needs to do. Will
-change!
+Nicely done.  This looks good to me.
 
->> +for type in "" "-z"
->> +do
->> +
->> +	test_expect_success "stdin ${type} symref-verify fails without --no-deref" '
->
-> We typically avoid curly braces unless required.
->
+I wonder, if we might consider the possibility of having "list" as
+a default command:
 
-Will change, thanks!
+-	subcommand="$(__git_find_subcommand "$subcommands")"
++	subcommand="$(__git_find_subcommand "$subcommands" list)"
 
-> [snip]
->> diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
->> index 067fd57290..fd58b902f4 100755
->> --- a/t/t1416-ref-transaction-hooks.sh
->> +++ b/t/t1416-ref-transaction-hooks.sh
->> @@ -157,4 +157,34 @@ test_expect_success 'hook captures git-symbolic-ref updates' '
->>  	test_cmp expect actual
->>  '
->>
->> +test_expect_success 'hook gets all queued symref updates' '
->> +	test_when_finished "rm actual" &&
->> +
->> +	git update-ref refs/heads/branch $POST_OID &&
->> +	git symbolic-ref refs/heads/symref refs/heads/main &&
->> +
->> +	test_hook reference-transaction <<-\EOF &&
->> +	echo "$*" >>actual
->> +	while read -r line
->> +	do
->> +		printf "%s\n" "$line"
->> +	done >>actual
->> +	EOF
->> +
->> +	cat >expect <<-EOF &&
->> +	prepared
->> +	ref:refs/heads/main $ZERO_OID refs/heads/symref
->> +	committed
->> +	ref:refs/heads/main $ZERO_OID refs/heads/symref
->> +	EOF
->> +
->> +	git update-ref --no-deref --stdin <<-EOF &&
->> +	start
->> +	symref-verify refs/heads/symref refs/heads/main
->> +	prepare
->> +	commit
->> +	EOF
->> +	test_cmp expect actual
->> +'
->> +
->>  test_done
->
-> So the reference-transaction hook executes even for "symref-verify"?
-> This feels quite unexpected to me. Do we do the same for "verify"?
->
-> Patrick
+These lines are only meant to express the idea, as other changes are
+also necessary and the documentation needs to be updated.  Of course, it
+could be done in a future series.
 
-Yes this is the same for verify as well. I was surprised to find this
-too. It's just the way ref update code is written, all updates land
-trigger the hook. This means verify, which is also a form of update,
-with just the new value not set, also triggers the hook. I've kept the
-same behavior with symref-verify.
+I think that "git config -h" is an intuitive enough way to offer the
+help text and that using 'git config' as a shortcut for 'git config
+list' can be convenient.
 
---000000000000f1465e0618a8bfa2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: efffe9906aa60383_0.1
+By the way, having used '__git_find_subcommand' instead of
+'__git_find_on_cmdline' is reassuring when it comes to having a default
+subcommand :-)
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aSGhCOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meUdzQy85Q1FjeXdjZmJoQVlYdjVFVjhUR3VmVGFmUQp0dmlQNUVscDdL
-WitKZTR1cDFkMm9rSGFTMGxlZUFxcHZSK1lhVk1uYnhZSnBYcnFoQUN5VDBKQVI0d3lTUkVFCjF0
-ZVN0NVlBSEh3QWVhbUFyMDBWMjQvSDJtcjJpcUtSRlp5VVh4N2pFdUs0Qk4xKy9INFcwS3RFSkpQ
-Z2hOOFQKczVFV1hpQUlvblo2MWhsY2MzN0gxTUtYVDQvaTMyay9kWUdUb2QwWnZ3Rk1lRjQ3TzI0
-Y0wxdCtqUmdoOGV3TwpWa1RQNzRkVjlRUWFVZWl3T09BdHdiUzdhRjNGSFZrcXY4OVhpVWRLakNk
-WHBJMy9waUcySk9iRU94Rk9CcUJPCkpSRTlSZHlvSElHWnA5UGkxUmZqZEd3ZG1PWGgvbjZZcXpR
-Umh6aDUyZWR2RXpUdGFhUFgrT0tJcytxa1YwZHoKTk9rMXBoRFY4aXJGWE0rRXo3MG4rUnpxSWZj
-bmFpVDdxeVQyQW9lb3ZqTmdDT3BxOGhVY2NsM0llazQzLzg1QgptbXhWMkw4cWd4d1h1Q1BjRW9G
-K1VGODZCU1Zic2gzWmtXaFJmYjl5SmZXcnBMSkFQRjVOL2JmNW9uOGNJVlMrCm1McWFxUi9ET2Fj
-VS9hUHpNdWdjLzFaREhTczBoZ1ErZzhadXhxdz0KPWsvZEoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000f1465e0618a8bfa2--
+Anyway, as I said, this series looks good to me.  Thanks!
