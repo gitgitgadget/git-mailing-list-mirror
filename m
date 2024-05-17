@@ -1,54 +1,54 @@
 Received: from wfhigh8-smtp.messagingengine.com (wfhigh8-smtp.messagingengine.com [64.147.123.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF7D1863C
-	for <git@vger.kernel.org>; Fri, 17 May 2024 07:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4548014F61
+	for <git@vger.kernel.org>; Fri, 17 May 2024 07:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715929741; cv=none; b=Ay4kQn9U1VYlh1qLQ93WsTVcxb3kewPaXqCdGAt90tVWTQLERaKW72eW+ofgW+ttjfDnG0w43aEaeDFXyxQfsm32yPwalGZ4V30rIK/UGQrvG2DGP4HaWhwMWNeG56r/Ncr98aK1oj9T24lHqfMxJEo0Tvkb2nWFxB7tODkM3xM=
+	t=1715929767; cv=none; b=fCRc+tpjo6F9qO3NRaZ48cDryTy9mh5bgF5luwVTI3c7DYRtk0TRb5s8IT+7QW3L4KikfBqg3ErNpLEcEeeJ8HmR7JpEPccz5DifnFLHcAk0pGhPoXynrN2vLYKNdAzZnNb3/PmjrgcEWdUXatY1DqoJbOoSsiIs34G6/uRYdX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715929741; c=relaxed/simple;
-	bh=AVxiwphEVHlfYZQ737wqxzDc0r+B52p72/wzxUjvEfw=;
+	s=arc-20240116; t=1715929767; c=relaxed/simple;
+	bh=8zdK5cKSRJl37TRgEbmiEb8KZ9R7skNOk0LYAsvHIiA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TBDNP2DkbEm8XSLnMnyFeRR0NB373UQ2JUST18kOUOfTAIfTm7rLxEjiG3cUp4llU4VGTxcFX06LmWMCF3xhRhHbHIDv3VVWdxoW+ptpiuQtRVZUprQPZsOMvCTTpc0D3bpNPl44ojAv/cAocFiiGF1ZS+5QEsxwVa0ZZBwse24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dCq8XYtp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nbqfhf8s; arc=none smtp.client-ip=64.147.123.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=H6u0JGObAC9u7DSYSdTTzkdfRPu3pjG4ujO3gJHpZXs/IKdsmn8Lfe9CLJ3JqAX1aSrrx3L2bzIfJH7h4PwtR4J90z14cf4d4gxOcbpZYSwHj7UIYChGSf8zfN4QJU642k309oz8HjoByp6TLdwF//yGf6rXGTDi1sAhIfFV7zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HqXnVKV3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kxm5Qd4H; arc=none smtp.client-ip=64.147.123.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dCq8XYtp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nbqfhf8s"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id E27B0180016E;
-	Fri, 17 May 2024 03:08:58 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Fri, 17 May 2024 03:08:59 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HqXnVKV3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kxm5Qd4H"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 84C48180018A;
+	Fri, 17 May 2024 03:09:25 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Fri, 17 May 2024 03:09:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715929738; x=1716016138; bh=svT63Yqdof
-	r7iq4OevGHVtrE/1ry+K0Fu3luXecghYA=; b=dCq8XYtpheHz1oZWKfhyI4FZR/
-	6AWPnJIVfR+gnhHJ0ZVmHVvBB+YCyAZ7JHK3t+m/10SqC2F+x53aMgyoZPXmg92c
-	Vvz/Es3kv6LpgRppPe7+1szbSZ5Ff81abNiIGVKZOB8h9EyndTWyKDxlBcwMmr/4
-	8MAVEir5nSZwisTPH3HB87GqjGGMazjwWe9JmiaO0v1mCdwOxbD7NTxMagzJDUS+
-	g9j+vfYYmtSYHTrpemCsp6pcCI/n9/3TBBdnCfFp1rQVN6xyUqG15nYCE2/EKes1
-	8pj8petg8ng6laklg9U88u1EffE0A0isFyWRbXYP7V8BeA5jwa38IlNoA2mw==
+	:subject:to:to; s=fm3; t=1715929765; x=1716016165; bh=enxSXjbUMk
+	cv7kWjHliQtlo2zjTr9OzBO48Ci6eNYUo=; b=HqXnVKV3z3WGhQEyn9pOVGhpzm
+	a9WgKPND2V633oYPKt4WX86pec2TEHKf5KDGg03Ymi4KrGRmMvBYux3fDyUmNyrZ
+	N2fKbU5O9s7qK70wK95Kb3XOQX1oR9vUUAT/ktgRBRsjGoeX5R1yE27tAl5s16fk
+	ap8LzGZyzxw4lES7Lh7k4D5sn5KwfpH1T/tqGIZkqJfXjUEblNhT6EaT1aHscy5l
+	HpsM4j8nPZzRNj22wmdpT+/CzQmuRT43xifhyO200fWHkHYZnQZR3oNpiMF/J2Pu
+	KHHpelQo80wi6M3IPRtQdGq4MnVpHZ2YD4tb5NhfbcPf3Nq+El6+1I/NrKqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715929738; x=1716016138; bh=svT63Yqdofr7iq4OevGHVtrE/1ry
-	+K0Fu3luXecghYA=; b=Nbqfhf8sbCtasXlTr/ZRoZS53EVvOyyBRC32eDCnEijh
-	S+DlIAGorY78wwi9IKDWqB1sM4fUKUwV9nZXCB4mQReANJbnA7Ug4hcNpYl5YiOd
-	wbfGV2JIhNV3uQm+f1QpcTnYwBLxjKarQx/PrUSBynb4WPFhQSfPov4BcEE4YKEy
-	9CsFP09zterth5t7EjFSls/wYo2kwqe+sdwlXSKg/vVlJ4sqYnXnga5560bs8qVv
-	c9/uqU6XihZ3r/5vIoXS93wx2fFNfIbZA7+HwUScDu+mtDjjcGxoBABk/gc9V/1b
-	bUwdhBfxpphEUWEARb/5c0bCWWhVYSk/P0sQUDNDVg==
-X-ME-Sender: <xms:igJHZl-IXz72Po3Qfmz09vnGzHJ4a1hkYAEfwj83BRzfsl4rGImKLg>
-    <xme:igJHZpuGvMQ7i3OrfqeQNHG-PXhmbkh12mXjC0Z1R18kqHTooQsP8Y3JEc7xJWX6k
-    Jae0DXdLDvQDOepiw>
-X-ME-Received: <xmr:igJHZjDqeJ1CZNbKVN0SpWkzTn3lLp-JkPsrABFDZWjgt3KIQvhMifFPQkpEmztEw1sx3dqZEAqAx-PSpKDC8UkzXO-qZbT-llFJ8d3XY4PWEyyu3A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehfedghedtucetufdoteggodetrfdotf
+	fm3; t=1715929765; x=1716016165; bh=enxSXjbUMkcv7kWjHliQtlo2zjTr
+	9OzBO48Ci6eNYUo=; b=Kxm5Qd4HBg4r9fkacnHpCBho9iXMUo2DcR0JPkXZ7MWf
+	uRbP5n80lq6wnqHMypWfb0tQVrJuF5MuzuP2T6gn1VeNYsD2J51/rgzC1j4fP7rM
+	0ZB8x0BtQXZ5F5mN0JyQ4t2kJSLBR//AMtWsOh+Ue8qID7/3fZQQcv9sPj5zbUoy
+	zrFKurwOthcpUYQ4MQ9wCHfcyNwwS0Kf7WQbIUP+jSUsJ+hFWgOA9dK2UxDKA0Qx
+	kSGGN+APeIHvYCfmJY+483zB2OFpWSFGB90sYmRuOwcsqiwvuhTLTxmuWYGDT/Or
+	DtO7y1zLqEL+OGs3sfYPqGLHx9b+i7smc6jJX5d6oA==
+X-ME-Sender: <xms:pAJHZo_hCuLepIP15rkcoDiv94nKjTUXJWUV58L8V8So3L15Xi_Btg>
+    <xme:pAJHZgugEj9hThEaeSfUh72sAhlCRjJJAJBmDWNRCkhj0Ewkyn4Gwu4iehc-Tkux1
+    7Atbq5GMaKaI8SaUw>
+X-ME-Received: <xmr:pAJHZuBePKJYfn0W-tCSWUZpSDp3gbWFAum33v9RcHpkuUor1MCV26ujF0TaCFHsE83jUTOurGrFkEJhtWLzBs7iLvnFF5Ls_r_9NcaTAra3Kj2h7A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehfedgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -56,26 +56,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehfedghedtucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:igJHZpdCBniiLhgBUnuAEbyPPqoLQCIcHDqgN-aMcQWLfJnceY89UQ>
-    <xmx:igJHZqPI9Utjp5rcqHBvAGQmut_UoPxUDA93CT963FawOeTHtaWb0A>
-    <xmx:igJHZrl7E_uhQoA8i5Cf9xQSWyUDZlDe1HxDHSbqCwuwWsk-NGW_7A>
-    <xmx:igJHZkt1nVfnhYZdb7QDTCoiIZ0RTpEDSz7eVhB0k8tj6PJVOpPMjQ>
-    <xmx:igJHZjYnpmvfXsMkjK-PiYFA_l6nEdmz-FR8CGkYaFIcSLF0XspnTeLA>
+X-ME-Proxy: <xmx:pQJHZocRVUyHIhGILkir6zMIOe964UrwtklZTspCTZ2kWIbvtV8YAg>
+    <xmx:pQJHZtOEr2QWIaDmuHVdCcq8fJYbIvervQ_jH7GgoNasCejklmbYwg>
+    <xmx:pQJHZim8e332Hz2ZAO3BHHeikZe3-PNhTK42ns62MIGFMs7aluOWlg>
+    <xmx:pQJHZvuEJQ91kbU973bFisibCb8HoIOqVcKEXzrRvfIkjWtTG70A6Q>
+    <xmx:pQJHZuodZpU9GxJLVH1nqOp8Co84BcEE27diOstZPcNhZvLEptpi6buW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 May 2024 03:08:57 -0400 (EDT)
+ 17 May 2024 03:09:24 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id d4c902f4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 May 2024 07:08:30 +0000 (UTC)
-Date: Fri, 17 May 2024 09:08:55 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id e2b74165 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 May 2024 07:08:57 +0000 (UTC)
+Date: Fri, 17 May 2024 09:09:21 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
 Subject: Re: [PATCH 03/16] refs: implement releasing ref storages
-Message-ID: <ZkcCh3OhbPOn0HOF@tanuki>
+Message-ID: <ZkcCoY8_S2nSXSyU@tanuki>
 References: <cover.1715836916.git.ps@pks.im>
  <282fbe35a7c9db715a8a805f93f9b465d42885a5.1715836916.git.ps@pks.im>
  <CAOLa=ZT3VqhrHXt9x-4DN7norTb3RuscBx+VHipn=QxJvwwThQ@mail.gmail.com>
+ <xmqqjzjtr602.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,90 +84,60 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2ip/zRLRR652GJrL"
+	protocol="application/pgp-signature"; boundary="kyy+Uez+FuFaOVYC"
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZT3VqhrHXt9x-4DN7norTb3RuscBx+VHipn=QxJvwwThQ@mail.gmail.com>
+In-Reply-To: <xmqqjzjtr602.fsf@gitster.g>
 
 
---2ip/zRLRR652GJrL
+--kyy+Uez+FuFaOVYC
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 16, 2024 at 11:39:36AM -0500, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Thu, May 16, 2024 at 11:01:01AM -0700, Junio C Hamano wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >=20
-> [snip]
->=20
-> > diff --git a/refs/debug.c b/refs/debug.c
-> > index 58fb4557ed..27aae42134 100644
-> > --- a/refs/debug.c
-> > +++ b/refs/debug.c
-> > @@ -33,6 +33,12 @@ struct ref_store *maybe_debug_wrap_ref_store(const c=
-har *gitdir, struct ref_stor
-> >  	return (struct ref_store *)res;
-> >  }
+> >> +static void debug_release(struct ref_store *refs)
+> >> +{
+> >> +	struct debug_ref_store *drefs =3D (struct debug_ref_store *)refs;
 > >
-> > +static void debug_release(struct ref_store *refs)
-> > +{
-> > +	struct debug_ref_store *drefs =3D (struct debug_ref_store *)refs;
+> > We should probably add a trace here, using `trace_printf_key()`
 >=20
-> We should probably add a trace here, using `trace_printf_key()`
+> A totally ignorant question.  Should we be adding more traces with
+> trace_* API instead of trace2_* API?  If the latter aims to cover
+> superset of use cases the former did, I was hoping that we can
+> eventually deprecate the former, hence this question.  Of course We
+> could add a compatiblity layer that emulates trace_* API with a thin
+> wrapper around trace2_* API, but if we do not add new callers, it
+> may still be feasible to directly migrate the callers to use trace2_
+> API without having to invent such compatibility wrappers.
 
-I didn't because we don't have `debug_init()` with a trace, either, and
-because there is no error code that we could report. But on the other
-hand it does not hurt to have it here, so let's just add it.
-
-[snip]
-> > diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> > index a4bb71cd76..6c262c2193 100644
-> > --- a/refs/reftable-backend.c
-> > +++ b/refs/reftable-backend.c
-> > @@ -293,6 +293,27 @@ static struct ref_store *reftable_be_init(struct r=
-epository *repo,
-> >  	return &refs->base;
-> >  }
-> >
-> > +static void reftable_be_release(struct ref_store *ref_store)
-> > +{
-> > +	struct reftable_ref_store *refs =3D reftable_be_downcast(ref_store, 0=
-, "release");
-> > +	struct strmap_entry *entry;
-> > +	struct hashmap_iter iter;
-> > +
-> > +	if (refs->main_stack) {
-> > +		reftable_stack_destroy(refs->main_stack);
-> > +		refs->main_stack =3D NULL;
-> > +	}
-> > +
-> > +	if (refs->worktree_stack) {
-> > +		reftable_stack_destroy(refs->worktree_stack);
-> > +		refs->main_stack =3D NULL;
->=20
-> This should be `refs->worktree_stack`, right?
-
-Good catch, yes.
+I cannot really answer this question as I ain't got much of a clue
+around the tracing APIs. But in this case I think we should indeed add
+this via `trace_printf_key()` so that we remain consistent with all the
+other wrappers in the debug store. I'd argue that either all functions
+here should use trace or trace2, but not a mixture.
 
 Patrick
 
---2ip/zRLRR652GJrL
+--kyy+Uez+FuFaOVYC
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZHAoYACgkQVbJhu7ck
-PpQ8pA/6A7dl1A5Rut4Z/3axOxFmhQZknPxxwiTcYdeOrCZLUQmNdlQ4lBV+VIuv
-q7NSKguCvSxWQLU18wxRz9p6QLe5UGNDJlYOM/KfoiInAiGQgaZHjJ52ONwKP/+3
-zR5oqrdNSbgWIYGSUZUzOG3Pc3/6K7Q8dmlT6XlC8378ot5dwk/HIiLa1v0PgAaL
-Yy0FBiLEmvyFMVEnTVUv83Os4hiREKktIoSdZH447im9E2Q5X0/ZAjhQNCqmdiWR
-gIjZkfpvJQN2NdPhlB0hmOPHPsOVpqH2nK22PtVWpp/NRmKB4WwNgLrlmfOvNzvj
-9KG3FhujYaU3CcavH+IvoXiwSUr32O3oJtl+Jt8fxIP8SaaW8K81JGgi9nO7sCKV
-jP5qEJPNmqrlOPEKK/ywTyt7ddP2fJXDfv0HTRK915IKBVN5kU+++VdsC5QD2zAm
-4Z6rQy8V5jfEOainNOcBLQli/mA7mmJ8JE2rS6A/pNO6Tzv7cXdgWhVg/g+w0/ej
-jdUABPowGA4yQEOuVJmIQ2wJhK/oy62gPCaE67DYWmLWakqpjI7hfoarZZUnN88m
-kGyOkpz2cgmHQ1F/jBMQjyHyU5z0HF9GABW+v21ltX6iPSQNGQ7++d/NhEZ9Zzkd
-N2XwgsG5k/Fp1yoC9nL2Hq06YQmr431u867wSRQsyj5Iabb7CiQ=
-=fCH7
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZHAqAACgkQVbJhu7ck
+PpRMTQ//aId98TwVKEY8PzLWrdDFXglp2fcY1wJmPYbWwYLz5+UhcCqksBHWgXXP
+bK2SEGYliBybgMNKqaIctdMgyCmO6r7EJQom/hrc6CWDSDBZU2/UOagdeeK+Q8Zp
+EF8K8j5xvYJV/MUwSEUvNfW+uIujBzq58yuB7N2CwcNH2rdEa6o5ea34oLaHxO9q
+7IVKsvIsoryRPQYks32BrB61e/Kif3dt4M8yzyeFljmW+r5ZNIEPwyWiyAfltfv1
+mB8i9YhSFROYIp1kpvaV+gAzY3UgwsaYJ8maNAcJmiV7xTFcoACfd9otW5TzZd0d
+ODmT4fkXE9Iruo1a4pZTkbQsI3OQ/R0NWUSIwS0jrQil3Q0Rfn5stPdKyuyztR2o
+6p+z4lQ3LFkNmq+gpjTRe3w1+/I6PSIwVuo9hdUm2+jSPkguHFpk1rMhwfYV0SL3
+eg1r2ILYu9hsSAfW134h+3cfDQDi++ZNBDGLy3g5hrtqjnRY8r5dynufTXovLQon
+F6JMAIRXqkd4ywp6oIsWxeG6ccBOKjSgMuQ53+6w8IB2jiWywlASMKktkT3hLDvz
+A71H7a70UM2M1LE6/PlX3gO13FLifsITPm4TYTXpj+RT/kcCa1HU6eGP0ykdSCkX
+VaKXMgHm+rakyGCn8zykM6IQzFtpvMv0Oz7Cli39tCDzBKVPaZY=
+=1LGs
 -----END PGP SIGNATURE-----
 
---2ip/zRLRR652GJrL--
+--kyy+Uez+FuFaOVYC--
