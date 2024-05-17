@@ -1,78 +1,81 @@
-Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
+Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C44C14F61
-	for <git@vger.kernel.org>; Fri, 17 May 2024 06:13:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE231426F
+	for <git@vger.kernel.org>; Fri, 17 May 2024 06:29:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715926424; cv=none; b=hvFBG0fy9fNONGMa+/9sViVMxQkXdtqvXtOdHGE9ou88yoICk4EF1940AtxDVdUjSnAhTB42ozOEM9PRvpPyQhxh42ldIHAkrlUHHZBod37f/kiqa2xDn+YmjL/3BygVDrEYUiHlI0LpB42m5Uv1r1fvyfvC/l/eDgG6Jc9hWLg=
+	t=1715927394; cv=none; b=f33Qmdd+x1cMMSOLK+hG1owBPkuVWVYEXg6wa+6BwiobBxmLCw3eyyyK0VwLqoNEY4hd11e36N9DS64JwE8rGvCt1V2e4TR4jRZ6SiGaOee7qdhgA04r0Lz8llzJraSgHFGo3+VCdeRcwQRrcir+ygn5E+Dw1Hk1cgbStrJzNlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715926424; c=relaxed/simple;
-	bh=SEBA4o86meakfgt35vMUbSA4tl8KFopU1M4cVbVxTM0=;
+	s=arc-20240116; t=1715927394; c=relaxed/simple;
+	bh=Ig+5li/lSfuzlZzySKlGq148zk2NiJMRWieqyftCSn0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bS/Tb43hjLM/vh47FzuL2tu9tl3UVav74oAjknZe3y4CZs0TIhstqN0L3lGjzcdlHniyaDP2fJy5kkJj4e0kpFqR+e3mh3l7QTrolTmU49JbbrQaItr9jDomWsNYzRWuhaf6ZCbRz4nrfZaq/t7utHabYIIrsFpxCu9HxxlbrvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MXvdb0LM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WtnPtl5E; arc=none smtp.client-ip=64.147.123.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=HRX+LwgrOJVhOEW26k6jbowd5rtvRN5IgeTJDlBhwAQGy7oKqD+OYD1XWv4orhJQ8uBVHWTBW4dOi5VknWx7GdhFPvP0pwdDCFleWtFtQHyH9lEC8XAFcEsxVj4sNVevEYlNu035F1l6LcyaA9TuMaO/BVB5o9FrIigFbifIj3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nJgzKMg8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MrIr+4cL; arc=none smtp.client-ip=64.147.123.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MXvdb0LM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WtnPtl5E"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 755AA180016F;
-	Fri, 17 May 2024 02:13:41 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Fri, 17 May 2024 02:13:41 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nJgzKMg8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MrIr+4cL"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.west.internal (Postfix) with ESMTP id 890471C00102;
+	Fri, 17 May 2024 02:29:51 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Fri, 17 May 2024 02:29:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1715926421; x=1716012821; bh=HmMiOVO5Y7
-	gmuZbH3gCFlfmTuwBXEm2Y1Z7koMJatAQ=; b=MXvdb0LMMOrHHnesTrMH4CLbgX
-	Bd5i//d2ZFCKKuMxrftO6I3nnbiGj0anjU3zpJcX6ZR3p92A8MpZ9k0I4q7oErYA
-	s+TscsOyaRB45QcIt0gtK8vbTnuw/F8RfA5ISxaH1Ppc5Lsc9puPdhoyaxzw7CaG
-	UPdWgKvprY2uZxT7V81kCbHCIbS6uiZqBJQuMY5AKNlaWnJGrKIcKHbttjeDqZDH
-	YDYRkxdhYc7O7Ub7hCAuN+QvvDzb19BgTFUqN6zKM0r1f3nEFASlQ+8suZGXP/+S
-	hQiX6zNjaQlbaEx5p6MVSfifVqXB5zg8SPXVjr3Z2rYIpMRWgmOz0jp98GoA==
+	:subject:to:to; s=fm3; t=1715927391; x=1716013791; bh=Ig+5li/lSf
+	uzlZzySKlGq148zk2NiJMRWieqyftCSn0=; b=nJgzKMg8nYfopHNXNsTYYa/VHy
+	CoZG8V8gTbV8eruF3utOi/7kv3RchDsEHZLCRAw1nKLqqPcW6UzYTkhS6nrv5KUY
+	e5XrXqWUvldrieJFm8ZXMO6QZtvfRradTiVcUET+8+Gk9d5pSWe2LA3zPDekTFDH
+	1RPKrr8ta+T5wztjB4LPCb3Hq3WyMj6V2nXM2hsIWRXNeWoBmbBp4yCBgvUncBgT
+	U1LC/rzLjxYW19lvTzGvk09Xe5DCBe3ABkgDisQfF/Wu8D3d3ppNZ9aRRrqhbXfQ
+	dHUUdqYC0AE94tE5vECyRaMi1sQJNND42A8KjDjtSWWhJedZnRzte5j4mmIQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715926421; x=1716012821; bh=HmMiOVO5Y7gmuZbH3gCFlfmTuwBX
-	Em2Y1Z7koMJatAQ=; b=WtnPtl5E7UB80dNTVUNqqNl6VWmxGqWsvK9LWDUlHtml
-	2Yg3yT4KQAolyZMXc0iUTd8D5rvBba+uXQ8GpkchS0ssgeWPwV9kb+sEjrW+VSKh
-	+DFlai65MEoxFdnVpuR7Qjwn7JvBgnAGj2txeh1Y3RlHew6ZjRpEzf9hZjk4P5WC
-	S/sLFRH7Ml1ZLCDMYrrcKWzVIomr3+XG8Fqm8yFpJmIyxNNIbBazrJmoiLNz68Sh
-	n2hi++E5GaahFBcP4h2IFE0V86bUiYaqMAJL2fT6OwoZWRQfNs9Z9IqN9GOSobwe
-	vYByCSW4CIDKsnxGV1AZ+4iEPxCA62j2R60eDMenhA==
-X-ME-Sender: <xms:lPVGZnu5Sm030rk3UI14NHHuI6U8SVu2i6pQUz-bbpSq-oReLF5biQ>
-    <xme:lPVGZoeXz5qYq4EZHUMoj-PXx6woR0VIWZEr4ppp-ENsbnbpfW9bv5TdO5PiVlqdN
-    Y3500Qp3XgVCAUHtQ>
-X-ME-Received: <xmr:lPVGZqwmWyZUk7c-_wqLbcCIOtZY3J5jTScWG3xPPMoHAyMo5bvjBqmvAcROA2uJb1sjCiE5jidLfRrCvfnMDEL7KlWBkWR_MiS0YZvyTjJZk-dCwQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehfedggeegucetufdoteggodetrfdotf
+	fm3; t=1715927391; x=1716013791; bh=Ig+5li/lSfuzlZzySKlGq148zk2N
+	iJMRWieqyftCSn0=; b=MrIr+4cLMsXJFVdkBkCE57huqStaR4GUkI/QDUfS7wxj
+	RQBUCNJeyKPYSYC6i31IEigs0oeqBkvoHZKlLtXH/KC1+JMSPON2FZmJthz0P2JC
+	DcPLuP7DAB+jMYrNUWNcjaofQl058fAmQmxvC0w/3JlbO4rc5SDD2J9y4WvgjceQ
+	7HqVGci61xG1FdNBHOiSWSOx1mxKkK/QOAkKNMxFtnPRae7WxkCBznFqNJ605fF9
+	J/uNTgahpDJDUY9tb45WbE38anXr6anudpsQbInNmo1YyV0T+2QD/kbKpRfYk3cO
+	5Zq4pKblHW0rIeVnVQJMsuCXGghnMG5MEcylTeIViw==
+X-ME-Sender: <xms:XvlGZkrvrYn4Ijlny-yCcBAo1TsbqkJJ5jMWFaWPananaGyJYp62OA>
+    <xme:XvlGZqp6OfBscu-hpZvgz33Bp61Nrf7J5mfAyL4IuVlYE-YSaZG2cmVllQfUWHpmV
+    5hobr-_NuT4PNkxyA>
+X-ME-Received: <xmr:XvlGZpNOxmTh19p-aGGXXNTdqhx-zPLUwAJ6YPASNVVPp5KOAnRJhZepUUKIAbCG725s-ck-yBQvrQNAOtHZ8JsKpJ0Faw-dZ3rwTZr3QvSIwE7now>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehfedggeeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:lPVGZmNrAU0L9alVtAT1m_94DjQTnLWPZUDPbykJv-KxAi3MLIOYJQ>
-    <xmx:lPVGZn9vnSWY5bcuNgTnenWe8xVC8bvYJJkbxVIpy4BEJ2QHcRnYrg>
-    <xmx:lPVGZmUvL-IDeOeanLWKVAEFrQj6qqn-csK_YJ62AnmcyUOss_8CMA>
-    <xmx:lPVGZod9ZWwedsLjJBc9xcol79Yf2ZSlJ1O3Quwd0hZuvujCDZJw_w>
-    <xmx:lfVGZpJNsVxsUDrDR9qduyqPOWDFTMVVFrWO9CgLjFHlWqNfnevPjnL8>
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepieevkedtgffgleeugfdvledvfedthfegueegfeevjeelueefkeegfeffhefglefg
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:X_lGZr7ybkG1VJ7RvzYkFkcFHsHsgezthgtnybTut8B4_OkPyidvxg>
+    <xmx:X_lGZj7Tv1EHbnrEemzWwpIa6xYqXMlqqvSfk6ccefq_-81AFmWAtQ>
+    <xmx:X_lGZrhBhSh9yAyjtu3-OioaXT5EM2UXW_DDrsL8QyuOj0LUNpTjCw>
+    <xmx:X_lGZt7cBZL8FDI4591ei7GtU-rJU5eDQSiXvQ41-ihfrCCtaGUXKw>
+    <xmx:X_lGZmYD_7iGr1pOfMJpcxmkO_cINRzGwet-eq4YEk3I2u1n8oM5Oi-V>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 May 2024 02:13:40 -0400 (EDT)
+ 17 May 2024 02:29:49 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 38551ac3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 May 2024 06:13:12 +0000 (UTC)
-Date: Fri, 17 May 2024 08:13:36 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 61d0e52d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 May 2024 06:29:20 +0000 (UTC)
+Date: Fri, 17 May 2024 08:29:45 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] completion: adapt git-config(1) to complete subcommands
-Message-ID: <8d43dee33289969a5afbbf7635ac40b7312d8e19.1715926344.git.ps@pks.im>
-References: <e0039edb9b7dce1e33c4cb6e964c50281c815e97.1715835356.git.ps@pks.im>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, karthik.188@gmail.com,
+	me@ttaylorr.com, emrass@google.com, nasamuffin@google.com
+Subject: Re: [PATCH v3] doc: describe the project's decision-making process
+Message-ID: <Zkb5WeaTOLg9b5p8@tanuki>
+References: <b2ef74c1b0c7482fa880a1519fd6ea1032df7789.1713222673.git.steadmon@google.com>
+ <5446ca49e042b104923ac2004d845a5f9018c9d9.1715894135.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,247 +83,99 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4cubYuORRxgIhzGZ"
+	protocol="application/pgp-signature"; boundary="eXAfp2XmRC/pAzCz"
 Content-Disposition: inline
-In-Reply-To: <e0039edb9b7dce1e33c4cb6e964c50281c815e97.1715835356.git.ps@pks.im>
+In-Reply-To: <5446ca49e042b104923ac2004d845a5f9018c9d9.1715894135.git.steadmon@google.com>
 
 
---4cubYuORRxgIhzGZ
+--eXAfp2XmRC/pAzCz
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-With fe3ccc7aab (Merge branch 'ps/config-subcommands', 2024-05-15),
-git-config(1) has gained support for subcommands. These subcommands live
-next to the old, action-based mode, so that both the old and new way
-continue to work.
+On Thu, May 16, 2024 at 02:20:53PM -0700, Josh Steadmon wrote:
+[snip]
+> diff --git a/Documentation/DecisionMaking.txt b/Documentation/DecisionMaking.txt
+> new file mode 100644
+> index 0000000000..274ddfa62c
+> --- /dev/null
+> +++ b/Documentation/DecisionMaking.txt
+> @@ -0,0 +1,74 @@
+> +Decision-Making Process in the Git Project
+> +==========================================
+> +
+> +Introduction
+> +------------
+> +This document describes the current decision-making process in the Git
+> +project. It is a descriptive rather than prescriptive doc; that is, we want to
+> +describe how things work in practice rather than explicitly recommending any
+> +particular process or changes to the current process.
 
-The manpage for this command has been updated to prominently show the
-subcommands, and the action-based modes are marked as deprecated. Update
-Bash completion scripts accordingly to advertise subcommands instead of
-actions.
+Nit: I think we _do_ want to recommend a process, but don't want to cast
+it into stone.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Range-diff against v1:
-1:  e0039edb9b ! 1:  8d43dee332 completion: adapt git-config(1) to complete=
- subcommands
-    @@ contrib/completion/git-completion.bash: __git_complete_config_variab=
-le_name_and_
-     -	case "$prev" in
-     -	--get|--get-all|--unset|--unset-all)
-     -		__gitcomp_nl "$(__git_config_get_set_variables)"
-    -+	local subcommands=3D"list get set unset rename-section remove-sectio=
-n edit"
-    -+	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
-    ++	local subcommands subcommand
-    ++
-    ++	__git_resolve_builtins "config"
-    ++
-    ++	subcommands=3D"$___git_resolved_builtins"
-    ++	subcommand=3D"$(__git_find_subcommand "$subcommands")"
-     +
-     +	if [ -z "$subcommand" ]
-     +	then
+[snip]
+> +Larger Discussions (without patches)
+> +------------------------------------
+> +Occasionally, larger discussions might occur without an associated patch series.
+> +These might be very large-scale technical decisions that are beyond the scope of
+> +even a single large patch series, or they might be more open-ended,
+> +policy-oriented discussions (examples:
+> +link:https://lore.kernel.org/git/ZZ77NQkSuiRxRDwt@nand.local/[introducing Rust]
+> +or link:https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/[improving submodule UX]).
+> +In either case, discussion progresses as described above for general patch series.
+> +
+> +For larger discussions without a patch series or other concrete implementation,
+> +it may be hard to judge when consensus has been reached, as there are not any
+> +official guidelines. If discussion stalls at this point, it may be helpful to
+> +restart discussion with an RFC patch series or other specific implementation
+> +that can be more easily debated.
+> +
+> +When consensus is reached that it is a good idea, the original
+> +proposer is expected to coordinate the effort to make it happen,
+> +with help from others who were involved in the discussion, as
+> +needed.
 
- contrib/completion/git-completion.bash | 42 ++++++++++++++-----
- t/t9902-completion.sh                  | 56 +++++++++++++++++++-------
- 2 files changed, 73 insertions(+), 25 deletions(-)
+One thing I want to eventually propose is to go further here:
+documenting the outcome of the discussion, regardless of whether we
+decided for or against it, in a low-overhead format. This could for
+example be a small paragraph in a "Documentation/Projects" file that
+points to the on-list discussion together with a small summary of why
+the decision was reached.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/gi=
-t-completion.bash
-index 5c0ddeb3d4..60a22d619a 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2989,22 +2989,42 @@ __git_complete_config_variable_name_and_value ()
-=20
- _git_config ()
- {
--	case "$prev" in
--	--get|--get-all|--unset|--unset-all)
--		__gitcomp_nl "$(__git_config_get_set_variables)"
-+	local subcommands subcommand
-+
-+	__git_resolve_builtins "config"
-+
-+	subcommands=3D"$___git_resolved_builtins"
-+	subcommand=3D"$(__git_find_subcommand "$subcommands")"
-+
-+	if [ -z "$subcommand" ]
-+	then
-+		__gitcomp "$subcommands"
- 		return
--		;;
--	*.*)
--		__git_complete_config_variable_value
-+	fi
-+
-+	case "$cur" in
-+	--*)
-+		__gitcomp_builtin "config_$subcommand"
- 		return
- 		;;
- 	esac
--	case "$cur" in
--	--*)
--		__gitcomp_builtin config
-+
-+	case "$subcommand" in
-+	get)
-+		__gitcomp_nl "$(__git_config_get_set_variables)"
- 		;;
--	*)
--		__git_complete_config_variable_name
-+	set)
-+		case "$prev" in
-+		*.*)
-+			__git_complete_config_variable_value
-+			;;
-+		*)
-+			__git_complete_config_variable_name
-+			;;
-+		esac
-+		;;
-+	unset)
-+		__gitcomp_nl "$(__git_config_get_set_variables)"
- 		;;
- 	esac
- }
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 963f865f27..64c9979423 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2742,30 +2742,58 @@ do
- 	'
- done
-=20
--test_expect_success 'git config - section' '
--	test_completion "git config br" <<-\EOF
-+test_expect_success 'git config subcommand' '
-+	test_completion "git config " <<-\EOF
-+	edit Z
-+	get Z
-+	list Z
-+	remove-section Z
-+	rename-section Z
-+	set Z
-+	unset Z
-+	EOF
-+'
-+
-+test_expect_success 'git config subcommand options' '
-+	test_completion "git config get --show-" <<-\EOF
-+	--show-names Z
-+	--show-origin Z
-+	--show-scope Z
-+	EOF
-+'
-+
-+test_expect_success 'git config get' '
-+	test_when_finished "rm -f cfgfile" &&
-+	git config set --file cfgfile foo.bar baz &&
-+	test_completion "git config get --file cfgfile foo." <<-\EOF
-+	foo.bar Z
-+	EOF
-+'
-+
-+test_expect_success 'git config set - section' '
-+	test_completion "git config set br" <<-\EOF
- 	branch.Z
- 	browser.Z
- 	EOF
- '
-=20
--test_expect_success 'git config - section include, includeIf' '
--	test_completion "git config inclu" <<-\EOF
-+test_expect_success 'git config set - section include, includeIf' '
-+	test_completion "git config set inclu" <<-\EOF
- 	include.Z
- 	includeIf.Z
- 	EOF
- '
-=20
--test_expect_success 'git config - variable name' '
--	test_completion "git config log.d" <<-\EOF
-+test_expect_success 'git config set - variable name' '
-+	test_completion "git config set log.d" <<-\EOF
- 	log.date Z
- 	log.decorate Z
- 	log.diffMerges Z
- 	EOF
- '
-=20
--test_expect_success 'git config - variable name include' '
--	test_completion "git config include.p" <<-\EOF
-+test_expect_success 'git config set - variable name include' '
-+	test_completion "git config set include.p" <<-\EOF
- 	include.path Z
- 	EOF
- '
-@@ -2776,8 +2804,8 @@ test_expect_success 'setup for git config submodule t=
-ests' '
- 	git submodule add ./sub
- '
-=20
--test_expect_success 'git config - variable name - submodule and __git_comp=
-ute_first_level_config_vars_for_section' '
--	test_completion "git config submodule." <<-\EOF
-+test_expect_success 'git config set - variable name - submodule and __git_=
-compute_first_level_config_vars_for_section' '
-+	test_completion "git config set submodule." <<-\EOF
- 	submodule.active Z
- 	submodule.alternateErrorStrategy Z
- 	submodule.alternateLocation Z
-@@ -2788,8 +2816,8 @@ test_expect_success 'git config - variable name - sub=
-module and __git_compute_fi
- 	EOF
- '
-=20
--test_expect_success 'git config - variable name - __git_compute_second_lev=
-el_config_vars_for_section' '
--	test_completion "git config submodule.sub." <<-\EOF
-+test_expect_success 'git config set - variable name - __git_compute_second=
-_level_config_vars_for_section' '
-+	test_completion "git config set submodule.sub." <<-\EOF
- 	submodule.sub.url Z
- 	submodule.sub.update Z
- 	submodule.sub.branch Z
-@@ -2799,8 +2827,8 @@ test_expect_success 'git config - variable name - __g=
-it_compute_second_level_con
- 	EOF
- '
-=20
--test_expect_success 'git config - value' '
--	test_completion "git config color.pager " <<-\EOF
-+test_expect_success 'git config set - value' '
-+	test_completion "git config set color.pager " <<-\EOF
- 	false Z
- 	true Z
- 	EOF
+In the case of the Rust discussion for example I think we ultimately
+decided against it due to platform limitations of the toolchain. This
+limitation will potentially go away at some point in time, and that
+would allow us to revisit this discussion. Now if we had documented
+somewhere that the decision against Rust was platform support, then it
+is easy to revive the discussion at a later point and point to that
+exact reason, arguing why it's not longer a problem now.
 
-base-commit: 19fe900cfce8096b7645ec9611a0b981f6bbd154
---=20
-2.45.1.190.g19fe900cfc.dirty
+I don't think that this change needs to be part of your patch though, as
+your intent is only to document processes as they work right now. But I
+wanted to bring this up regardless as a foreshadowing.
 
+Overall this document looks good to me, thanks!
 
---4cubYuORRxgIhzGZ
+Patrick
+
+--eXAfp2XmRC/pAzCz
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZG9Y8ACgkQVbJhu7ck
-PpSc0g//cC8eB+vM0R5Sj/6DU4+YL5sRXzInCBo1p4dU3wJntGpeD+ApAe1rtQBh
-2yI1Yr/KZsL6jVKEjadQHbzle0p7V4cjuqapvhQEAH2kon8RpVx/b2u7bWf4z9GY
-8h0koUaGj6CLZBIk0XPOjttzheMZqNrjhskmJVlmlfPCeabbG1SdAiTy+Q+/qim6
-iTj5GYWaKE+l+PadaWUf1paBL1E5DpJHfoResGsMeZxZKd62/5K8kzHQICoYL76h
-/KUayZDoW/yYOZnXIvXbxwUMYYI1dEC831bmV8Vsj/F8OXIIp5Rt44ya31G2liQW
-5HCP/gd9An1vp23roZObgX7P0+lcf6nIV67J+QSAWREdL757wK35pNR3WeUzltDe
-cpjj80lqaPb8H9ZQG1KmVQD9fl1vBHZ96Qrlqg/GTrzm5VSrYktwXT9BG8wWcTCi
-Xw2Uz2TFjyXFrnZEPAGSh8kLtspBKRqfJTpZs4sRNfb5fKfBgdF/tRn3fQjH4wUm
-Lxs8q6tIYwgon9V2EZc2ucCPKbU/f8IhXFrKad2FJOOxm4O/Gir6JSO8gEwiTMxz
-iNNo6XgmPyo4cdQzP3FvTVEzTBqF10fdGCrbMUh1jeiTy2nY+6jXoUzDu/Z9OogA
-Zwx2C+XEIaDwyHSnbRIqIeueoTTA2I731YELkh7zEOVi3qDo1OE=
-=v4W4
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZG+VgACgkQVbJhu7ck
+PpTkkhAAnwdQYSXiGIyEcSTT34Cg4M97HVqCV3BbDX+Lce5tY9o4hUoj1WZgDkys
+sj9QDtJmrPDQgml3OAf7FuzAF4iuh7i8oMqcX2i750pQrbE+/tg7YLXcUaURWpUW
++NWOa/hdJgvPFyXF5OG4RrdrewKSdJClXRQSSuplBr0JHiKPRvqsO16QiniB2WMk
+KXkfnFg8XZwmarkjjk2Kptksp3o/XPy/VVFeMRi76Cpk0aTZRiMNavkn1j0/nyPy
+u+CNrHqVW+wr83NvzqcvXqNn+S1q1NTtood/Kpr7QEQNSwwm8FS6OiQMtPF8iNWD
+NJm47oDaJgz7e+6Z+J5EdluIvPFiWeJQrRWFtJXHC7M1sFiqS1ZXT65SNsA1BaA/
+PCx/V3mdH3ZhWFDKzpy0IrOcZZXbBgqNMC90rZ9AazKZVX3jCqJN3rWiCLIvRdbJ
+ZPbCODf2ib6DvzZ32NFnxRJYMdY5HgKY1jWh1g67w7gRRKFR2R9dj3hq/6c+hJM4
+VJymZ6hT544EqCgRiitdcyhDvcrH/M674pcZrOUXYuFxKvLgr4ca6A8K59cVPH0M
+/gKgl3tYow36EW4DMXqxO72nTgxSEdTzzNXv/C61OQYWNB4FlDwxw173KIvC/Yo0
+NJHRaQhPjdApMngf4FqEI4NPNpalQE6eo+6SzY7cQcB7f1B/HJ4=
+=jIxU
 -----END PGP SIGNATURE-----
 
---4cubYuORRxgIhzGZ--
+--eXAfp2XmRC/pAzCz--
