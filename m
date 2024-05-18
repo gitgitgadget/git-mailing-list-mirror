@@ -1,134 +1,119 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7032F2C87C
-	for <git@vger.kernel.org>; Sat, 18 May 2024 19:45:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80EE2C87C
+	for <git@vger.kernel.org>; Sat, 18 May 2024 19:47:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716061536; cv=none; b=cl46ErE0XOZMkfrI3LEeL+TpoPEbi4TXGSu0Jk+AaZppHVLdjA1IiNl03M8SsY4q3aC650DYmeiuZWuH/HpMgJh7YKHwUU0JQh+x8Do80Sp0ATsg8xF0M9ou1RKVWirkgGnHxduuApVx8BVRVTKILyME5IjrSLiINauNJZkFnFY=
+	t=1716061648; cv=none; b=RyqhqdVu8ezu3iDOYkMWok+duY82VSMo8Xd6ub5Gidmq4O2nKllSWExj++M7261gWRC4GJx7eFZNpMcxEMH1q1fq3soHWRuQz7h3ucCTw2EPGYaVQtc6wfFp39zFi7Gr/jPMW48ymwggjFewfkgFnPpdPFyn61tKo0NX/GoudZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716061536; c=relaxed/simple;
-	bh=s/cx4WhNiW+WRHCWjJG1m7qIo7xjBJvngVgwiVTVhUM=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=bnIVJr3A9Z0SSBJnGSReV/tAT8WeB6VrMCO7QS2SrSSRaCgdI7q4dTjTHDX5ZaAzfSv32JPoJDXAd7BtikQg07RMj7dbZutqk3D2ShEM9dHZJK0SNeEst+Zw2sdVUnLzjq+yGnaFbwuf93pTi/W53Y4kATbFsWbmW8YOXZ6iKwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=MJ1qpbeb; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="MJ1qpbeb"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1716061524; x=1716666324;
-	i=johannes.schindelin@gmx.de;
-	bh=tArmucQ2mETlj10SCysb71mDqzHhOMnyuGTY8t/+aLc=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=MJ1qpbeb5YaSsks6pUQ3l0n1dvCm7f482kXOq4eO45aH5tQ9Ge7kt21S7g5giMxh
-	 SAdTET+QIfs2jfT3KwqQNG1OftbHzqOhj4nqmlTK5HyjO/IG0J/Oy495t8Estk0ep
-	 EDuTNrpyLWmSvorFJYM9lrx/plJ20OBkQGAjPaiBylLAarkiH7Wu8b90cJFccOS5X
-	 ck1pOakfFSG+wVUqA1VzE9IRyZvq3i1t6crA3NaCWYWSGYMoUmaGkKOPl2BVOFW1M
-	 Xt//ALWvJpdUp68N1TQDxiLDAwD3UEmv6fwKBmlbw7rJ/MN/ahfZYJe9PnKLtfEgu
-	 tNjVRueJhe0HKTZfDg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.77]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mxm3K-1sU64g2gww-00zG5y; Sat, 18
- May 2024 21:45:24 +0200
-Date: Sat, 18 May 2024 21:45:23 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: Marcel Telka <marcel@telka.sk>, git@vger.kernel.org, 
-    Victoria Dye <vdye@github.com>, 
-    Matthew John Cheetham <mjcheetham@outlook.com>
-Subject: Re: [PATCH] scalar: make enlistment delete to work on all POSIX
- platforms
-In-Reply-To: <xmqqbk54go51.fsf@gitster.g>
-Message-ID: <fb20ebe4-e643-211e-29c8-2cbfb4b49abf@gmx.de>
-References: <Zkds81OB7C5bTCl_@telcontar> <xmqqbk54go51.fsf@gitster.g>
+	s=arc-20240116; t=1716061648; c=relaxed/simple;
+	bh=Qe9cPlOWliKle+OCaMXN5QmGzy2wkvJHRGtqjhS10Vo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DFzpSosdP2Kj4e6IWbiGOTGAzpk2Qj2DbPETI4g3AM9ic+ywFa+BL+JhQS1PuIVXb/nQG4t9QNweodLqCs3FSieU4xO0eYORutHVeEZDi9Rlwd8ZNI63Mm1OPjyCnnkHmA4D2Jyoq5tOnnAT3WD0MWkJT62VLl1exNCfJYArwLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 24193 invoked by uid 109); 18 May 2024 19:47:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 May 2024 19:47:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5160 invoked by uid 111); 18 May 2024 19:47:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 May 2024 15:47:26 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 18 May 2024 15:47:24 -0400
+From: Jeff King <peff@peff.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 5/8] hook(clone protections): add escape hatch
+Message-ID: <20240518194724.GB1573807@coredump.intra.peff.net>
+References: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
+ <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
+ <b841db8392ebd924d1893829a7e5e22240f1e9cf.1716028366.git.gitgitgadget@gmail.com>
+ <20240518181432.GA1570600@coredump.intra.peff.net>
+ <c201bbe3-b404-feed-fcef-8333f72068dc@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Qz3ctOxW+KHZ4tqOqmixB4f8sQC7pcgwbZaikcnVyH3W6ahO6XV
- Xb2fY92qILF9q5e4eIy6GHxDrHWJ5TRYKDIJXgMRA6Al08NC/cm13jrbVvz+nnHTmXUDOTv
- JTPn7HKqMBG8vlsnQhzRtV1OYUcp0OBwHsKh7kzpurwNj+VfbCtgVOA0FKUX10k/GOwrGYI
- guVXbgcBC3qf/b4fys6vw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:MZ1FlB5JiqU=;yj3oV4YYTWD5PN98PhMIRF0FYMO
- MHViAx97XkYLXjM+IGUOZxQ6Dnj5e0Xc+psB6yrSRfwwXVau1/JGgCdx8Rv7oD3LyJs9y7V8i
- We3AyzMZENNoRPy2BVNcdy9O//FUrVAHZZNigSu/6VMNreV2meuJesVf+gJ/yjRbJkZnhteH/
- bsO7e5oacUmeEdiJkkhnAg5s1moppyjGHcTbAYr6wnngikWi/Bk5FSk8wi4cbXzvxcyGap67X
- p7b8FADGSqk4wEkeJw21oPQCJ8c9Nn2tAn8mZs0On1DWLoitMa1iec1sh/9abpEQEvvSLOXJZ
- nMBv2jvdr1UrgmHXVlFkR5In3e/MvBaZKrG1c4tzWblY5wNahksSWiXcla6aa5aSMLps5SMYZ
- 9l+Hj2kKjr3DhkdT4jzLRJqQH4UGbz28yEyVEZPuG1Ft9Je6O6wTKZz7rKA/ZeI/ihYFwB41g
- krMXmU3f/qeR78bhiK861EX2lm45+0qNVlwK86h1BuTiq2BTy45sTYVp1uPuRM2b80fiZYkIH
- 1y+Fw8LWwUZkPMrAI6deph6cgYUIpm37sgOy7PoJ0ECX5uWD+8tAgJrtttJCZNakKxm6/dXln
- BQngtw+1REq9rBM9STQLEGxg0IYjzPTsYYHDLHPW7BDdXH5CFqnG1LIH4k4zVN/WDbWRlhplu
- MWo7kGfdbLzLTYc0Nn9BwH/0RCjQ3RfhzigGH1W+zUVFGb4XPy2mHw2K3LyIN7fVXHVhVTcrn
- 3s8LRbJGzpDrbE2H0w7ldYwOk3qMbqR/5dRjDgtlYTBTcyv7Vmv2f93vcjiK894ocgO0VRFiT
- nvJVQLXF6P3NBFr2eNzXkj650bt/dyNkzICKmBjVpvRhE=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c201bbe3-b404-feed-fcef-8333f72068dc@gmx.de>
 
-Hi,
+On Sat, May 18, 2024 at 09:32:07PM +0200, Johannes Schindelin wrote:
 
-On Fri, 17 May 2024, Junio C Hamano wrote:
+> >   - compute the sha256 of the hook (for which we provide no tooling
+> >     support, though hopefully it is obvious how to use other tools)
+> [...]
+> 
+> Well, there is tooling support: With the proposed patches (patch 5, to be
+> precise), Git will complain about hooks that are installed _during_ a
+> clone, and then provide the following advice:
+> 
+> 	If this is intentional and the hook is safe to run,
+> 	please run the following command and try again:
+> 
+> 	  git config --global --add safe.hook.sha256 <hash>
+> 
+> While this won't help with the just-completed clone operation, it assists
+> preventing the same issue in future clones.
 
-> Marcel Telka <marcel@telka.sk> writes:
->
-> > The ability to remove the current working directory is not guaranteed =
-by
-> > POSIX so it is better to go out of the directory we want to delete on
-> > all platforms unconditionally.
-> >
-> > Signed-off-by: Marcel Telka <marcel@telka.sk>
-> > ---
-> >  scalar.c | 4 ----
-> >  1 file changed, 4 deletions(-)
->
-> Let's CC a few folks that had their hands in the delete_enlistment()
-> function over the years for their opinions on this change.
->
-> > diff --git a/scalar.c b/scalar.c
-> > index 7234049a1b..331b91dbdb 100644
-> > --- a/scalar.c
-> > +++ b/scalar.c
-> > @@ -361,16 +361,13 @@ static char *remote_default_branch(const char *u=
-rl)
-> >
-> >  static int delete_enlistment(struct strbuf *enlistment)
-> >  {
-> > -#ifdef WIN32
-> >  	struct strbuf parent =3D STRBUF_INIT;
-> >  	size_t offset;
-> >  	char *path_sep;
-> > -#endif
-> >
-> >  	if (unregister_dir())
-> >  		return error(_("failed to unregister repository"));
-> >
-> > -#ifdef WIN32
-> >  	/*
-> >  	 * Change the current directory to one outside of the enlistment so
-> >  	 * that we may delete everything underneath it.
-> > @@ -385,7 +382,6 @@ static int delete_enlistment(struct strbuf *enlist=
-ment)
-> >  		return res;
-> >  	}
-> >  	strbuf_release(&parent);
-> > -#endif
+What I meant by tooling support was: how do you find out the sha256 hash
+of the hook you're wanting to bless?
 
-Basically, this turns the previously Windows-only logic to `chdir("..")`
-into the now-universal logic.
+I'd imagine you'd reach for the stand-alone "sha256" tool. But there is
+no Git tool to compute the hash (you can't use any of the usual tools
+like "hash-object" because it is not a pure hash of the content). Should
+we provide one? Or at least tell the user which third-party command is
+likely to be used?
 
-I like it!
+> > Implied here is that I also think config-based hooks have a lot of
+> > _other_ advantages, and so would be worth pursuing anyway, and this
+> > extra safety would come along for free. I won't enumerate those
+> > advantages here, but we that can be a separate discussion if need be.
+> 
+> One disadvantage of config-based hooks is that it is quite hard to verify
+> the provenance of the settings: Was it the user who added it, was it a
+> program the user called, or was it exploiting a vulnerability whereby the
+> config was written inadvertently?
 
-Thank you,
-Johannes
+But isn't that true of the safe.hook.sha256 value, too? If I can attack
+.git/config, then I can set it to match the attack hook (not to mention
+the zillion other config options which execute arbitrary code).
 
-> >
-> >  	if (have_fsmonitor_support() && stop_fsmonitor_daemon())
-> >  		return error(_("failed to stop the FSMonitor daemon"));
->
+If we really want to harden .git against attacks which can overwrite
+files in it, then I think the long-term path may be something like:
+
+  - add support for specifying hooks via config. Leave .git/hooks for
+    compatibility.
+
+  - introduce a config option to disable .git/hooks support. Respect it
+    only outside of .git/config. Default to false to start for backwards
+    compatibility. Eventually flip it to true by default.
+
+And then perhaps something similar for in-repo config (add an option to
+disable in-repo config except for repos marked as safe).
+
+> > And of course that feature doesn't yet exist, and is a much larger one.
+> > But besides un-breaking current LFS, I'm not sure that we need to rush
+> > out a more generic version of the feature.
+> 
+> Exactly. We need to unbreak Git LFS-enabled clones and release v2.45.2
+> before I even have the head space to think more about config-based hooks.
+
+To be clear, I'm not proposing doing nothing. I'm proposing un-breaking
+LFS either by rolling back the defense-in-depth or adding hard-coded
+hashes, neither of which introduces a user-visible feature that must be
+supported. And then proceed with new features in the regular cycle.
+
+The hard-coded hashes are obviously a ticking time bomb until lfs
+updates again (and they don't help any as-yet-unknown program which does
+the same thing). So I'd suggest just rolling back the feature entirely
+in the meantime.
+
+-Peff
