@@ -1,119 +1,117 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80EE2C87C
-	for <git@vger.kernel.org>; Sat, 18 May 2024 19:47:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9420526AE3
+	for <git@vger.kernel.org>; Sat, 18 May 2024 19:50:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716061648; cv=none; b=RyqhqdVu8ezu3iDOYkMWok+duY82VSMo8Xd6ub5Gidmq4O2nKllSWExj++M7261gWRC4GJx7eFZNpMcxEMH1q1fq3soHWRuQz7h3ucCTw2EPGYaVQtc6wfFp39zFi7Gr/jPMW48ymwggjFewfkgFnPpdPFyn61tKo0NX/GoudZA=
+	t=1716061807; cv=none; b=VqPg4xjwhvk+XcYRaeJsNJ80veRVSQ28n3NTRUKxYmc+bUS23Q4woasPTljVzXRMNoL2ftpiqifFNT3Q4Vmi1Ldmh9A2lDyK5vq9+5SKBbQ4nV5CHY0/rfLI8OfT6VyQPoAafVHObNue2sreBt+HYKR9rP4sRlp4J5hpniRsA6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716061648; c=relaxed/simple;
-	bh=Qe9cPlOWliKle+OCaMXN5QmGzy2wkvJHRGtqjhS10Vo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DFzpSosdP2Kj4e6IWbiGOTGAzpk2Qj2DbPETI4g3AM9ic+ywFa+BL+JhQS1PuIVXb/nQG4t9QNweodLqCs3FSieU4xO0eYORutHVeEZDi9Rlwd8ZNI63Mm1OPjyCnnkHmA4D2Jyoq5tOnnAT3WD0MWkJT62VLl1exNCfJYArwLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 24193 invoked by uid 109); 18 May 2024 19:47:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 May 2024 19:47:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5160 invoked by uid 111); 18 May 2024 19:47:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 May 2024 15:47:26 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 18 May 2024 15:47:24 -0400
-From: Jeff King <peff@peff.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 5/8] hook(clone protections): add escape hatch
-Message-ID: <20240518194724.GB1573807@coredump.intra.peff.net>
-References: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
- <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
- <b841db8392ebd924d1893829a7e5e22240f1e9cf.1716028366.git.gitgitgadget@gmail.com>
- <20240518181432.GA1570600@coredump.intra.peff.net>
- <c201bbe3-b404-feed-fcef-8333f72068dc@gmx.de>
+	s=arc-20240116; t=1716061807; c=relaxed/simple;
+	bh=9m2Iiv8K4ul9h87wyFeXp2bUvQVylPktNjub0SCuTc4=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=HdqyhbQ0c2tUZrcz54t5cuB0qoplMQwyKCLvUTR8mx0NIFfpEPGCjuM4yeGB8huRdXkJta5A0JkYSUE1FG9trw9VF0XPv1PD+fHzoKG5whzwtLVD6eiimFKX4LyI/qUTCrnCVkm7Ng6vU1D1ZcX0pEUkQpDJZP2k4RqNQBcFlwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=Z+8iIgMg; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="Z+8iIgMg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1716061802; x=1716666602;
+	i=johannes.schindelin@gmx.de;
+	bh=OUNVGq9Q5IdA/AuES2G/iJ0aDKghlUC15SoZhZiYd8w=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=Z+8iIgMgiFsqJ1KvkATMevPOUwhkOzdUywQxuyl+zoo8oYil8rfU48siH51y1umt
+	 wfnOxfhg1rBLkCxlENmNftGDnN2KjveSLzF1wDFo4oYPJ7wMmgIEzcu+8wA27UIBe
+	 waeChUQeTXZttO4Q9MZzGYJMoAPoIFNapb/gMt3h8IECM2kFiyBrMWiw8wNs6vNTS
+	 4YaZR7AogJD8auId9W6yYwRv0GeIUhsz28Ev4booPnwku88QRr2LG1qG0DVchM72r
+	 C8a42toKOGU4gP0TCGcgHVSOk8X9LiIxJBN8cAGbAUvlz4uaZobtlX2ePrc+h3jfc
+	 k34Vgzet46/A05+owA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.77]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M8ykg-1sEToS1VZe-0063Bw; Sat, 18
+ May 2024 21:50:02 +0200
+Date: Sat, 18 May 2024 21:50:00 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Konstantin Khomoutov <kostix@bswap.ru>
+cc: git@vger.kernel.org
+Subject: Re: Embedding Git Command Line
+In-Reply-To: <20240516181738.g7iw6rfqvjfucoiw@carbon>
+Message-ID: <224aff4c-facc-76cd-94c1-8b40f18c0d40@gmx.de>
+References: <36B52407-B52F-4394-8DF2-F2DF3D3F0504.ref@yahoo.co.uk> <36B52407-B52F-4394-8DF2-F2DF3D3F0504@yahoo.co.uk> <20240516181738.g7iw6rfqvjfucoiw@carbon>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <c201bbe3-b404-feed-fcef-8333f72068dc@gmx.de>
+Content-Type: multipart/mixed; boundary="8323328-117966010-1716061802=:462"
+X-Provags-ID: V03:K1:Haq9nnBIqCj26KrmdQGEun0qwQBk9VujqqABUxkZRZG7tg90Qhp
+ BBhNk3XOD4hMRBizilJopBGJgciB/BkMaPt54dXT6bOQ7/T3h7AEw4jn4RPDZ7f5c7TLtJl
+ CSvN9jDo5RS1k9extj2FBA0JErM41mkOipc/KTzAQtYW6/7rMpS2G8iQe+d9sgp/dGLpkh+
+ N09YzSLd59Prz/KFpK6Eg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:jsakhFizoSc=;fhnjWn6sIpyuzcZdTGWwej92l3t
+ X9+bopzd01W9PFIJ3wqegw9fPybDQz8QjsZCDacN7Yc5RB6bYUT2IoVcvb7Fr5RYvzEPDydA5
+ mR8KiIBmWBIrxSBsgc0Kbki8Wfbv70o5kcdaE45K2oQJWiPvXwWl6SP7DTNWugrv+2wTZ6f0O
+ DerI2vcjD36Kp4IHnzf8zZcdz/8EbyA30hsksihqIc1QBbOEIs5ld+6H0hj/vODYWToBsxaLu
+ PVwFl6kyxkG0R7xBUxQN5s5aWasmIOUPYXRO5VbXooMKav3SbmKznKarqhzUdk+2IzeTwxSG1
+ x/nOAGVZQv5YVuLzcuKenkxsyKP1XZSS6ftNEzGrfkbJCQecpwjurZmxGry1JGBZJaDMExwxF
+ SyO7ukOIKMvuFnsPlMnwLTa3GNQfDxHS3bCtOtkt73HLnv7uD+ssC74+Hat8nMBw9EnHdsITm
+ S84ft/BgEQI5uJ1kMTQyTwKbX465yCDifCvuaz7HR1R+EJppz0oJ1f13aIz/S0eXFQfa27VbV
+ x56rB8sl2dnviFsBbGCmwlN6F3oJ0jbsoxPrEnevCzxvgQ/lCgK2K5/1zAI1b62f2o+k/Cm0Y
+ Ojk473UlEmRy0vstF+MKsLaTUstZQUFnkcfgxbk75hTm42KMpJxf8/AfpPN29lEsVvazN/1TL
+ XA6p+jM90dYvjVrgM56SG6Tqi8U2++5H9KL3WWHGHySlnDM+eXMFv5Nf7Y8TyHrvUsw0WnL76
+ AgfteIM2iShFGZm9ZzAtHbhGTUXlUMg2/YadbL0l5Qi1tEpYkxrg90ILL1dMR7fEp69hey9di
+ u/k6QuAl16M+O/lGS58HrgbTdoUkbUx21VIEAFJ/3IPEQ=
 
-On Sat, May 18, 2024 at 09:32:07PM +0200, Johannes Schindelin wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> >   - compute the sha256 of the hook (for which we provide no tooling
-> >     support, though hopefully it is obvious how to use other tools)
+--8323328-117966010-1716061802=:462
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+On Thu, 16 May 2024, Konstantin Khomoutov wrote:
+
+> On Thu, May 16, 2024 at 01:04:35PM +0100, Kevin Gale wrote:
+>
+> > We are looking to embed version control features into our commercially
+> > licensed proprietary product.
+> >
+> > We haven=E2=80=99t made a decision on which technology yet but Git wou=
+ld be a
+> > popular choice.
 > [...]
-> 
-> Well, there is tooling support: With the proposed patches (patch 5, to be
-> precise), Git will complain about hooks that are installed _during_ a
-> clone, and then provide the following advice:
-> 
-> 	If this is intentional and the hook is safe to run,
-> 	please run the following command and try again:
-> 
-> 	  git config --global --add safe.hook.sha256 <hash>
-> 
-> While this won't help with the just-completed clone operation, it assists
-> preventing the same issue in future clones.
+>
+> While only tangentially related, I'd point out that if your product is g=
+oing
+> to actually _bundle_ Git, then be prepared that it has quite a hefty set
+> of dependencies, so unless you're going to rely on the target OS to prov=
+ide
+> them (which is, as I understand it, a no-go on Windows) you might be req=
+uired
+> to invest considerable effort into that endaevor.
+>
+> On the other hand, if it's not a shrink-wrap product but rather somethin=
+g
+> enterprise-y (kind of software usually installed by a dedicated technici=
+an -
+> as opposed to being downloaded and click-through installing by a laypers=
+on),
+> you might just use what Git for Windows ships, I suppose.
 
-What I meant by tooling support was: how do you find out the sha256 hash
-of the hook you're wanting to bless?
+Git for Windows offers MinGit (for full details, see
+https://github.com/git-for-windows/git/wiki/MinGit), which is a subset of
+Git for Windows intended to be bundled by 3rd-party applications. That's
+what Visual Studio and GitHub Desktop do.
 
-I'd imagine you'd reach for the stand-alone "sha256" tool. But there is
-no Git tool to compute the hash (you can't use any of the usual tools
-like "hash-object" because it is not a pure hash of the content). Should
-we provide one? Or at least tell the user which third-party command is
-likely to be used?
+Ciao,
+Johannes
 
-> > Implied here is that I also think config-based hooks have a lot of
-> > _other_ advantages, and so would be worth pursuing anyway, and this
-> > extra safety would come along for free. I won't enumerate those
-> > advantages here, but we that can be a separate discussion if need be.
-> 
-> One disadvantage of config-based hooks is that it is quite hard to verify
-> the provenance of the settings: Was it the user who added it, was it a
-> program the user called, or was it exploiting a vulnerability whereby the
-> config was written inadvertently?
-
-But isn't that true of the safe.hook.sha256 value, too? If I can attack
-.git/config, then I can set it to match the attack hook (not to mention
-the zillion other config options which execute arbitrary code).
-
-If we really want to harden .git against attacks which can overwrite
-files in it, then I think the long-term path may be something like:
-
-  - add support for specifying hooks via config. Leave .git/hooks for
-    compatibility.
-
-  - introduce a config option to disable .git/hooks support. Respect it
-    only outside of .git/config. Default to false to start for backwards
-    compatibility. Eventually flip it to true by default.
-
-And then perhaps something similar for in-repo config (add an option to
-disable in-repo config except for repos marked as safe).
-
-> > And of course that feature doesn't yet exist, and is a much larger one.
-> > But besides un-breaking current LFS, I'm not sure that we need to rush
-> > out a more generic version of the feature.
-> 
-> Exactly. We need to unbreak Git LFS-enabled clones and release v2.45.2
-> before I even have the head space to think more about config-based hooks.
-
-To be clear, I'm not proposing doing nothing. I'm proposing un-breaking
-LFS either by rolling back the defense-in-depth or adding hard-coded
-hashes, neither of which introduces a user-visible feature that must be
-supported. And then proceed with new features in the regular cycle.
-
-The hard-coded hashes are obviously a ticking time bomb until lfs
-updates again (and they don't help any as-yet-unknown program which does
-the same thing). So I'd suggest just rolling back the feature entirely
-in the meantime.
-
--Peff
+--8323328-117966010-1716061802=:462--
