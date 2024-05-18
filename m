@@ -1,115 +1,95 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01A83D96A
-	for <git@vger.kernel.org>; Sat, 18 May 2024 18:58:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1E879DE
+	for <git@vger.kernel.org>; Sat, 18 May 2024 19:10:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716058706; cv=none; b=gvLGwQuCvOD2l/e64hGlq9/MIafIQ+oBPol3+xRjSwW4oWws+WVXjVXOI60CdAakzLorCbY5bwGHk8wVHfpthSD+gG9BhlnvihAZOOcFad7oCNx6H3EWTJKsIaMvAaQtbg8USDBVQ7uwV/J/lGFfYd1tCA5/3BrdTVsn+CvGbso=
+	t=1716059405; cv=none; b=PwfRGSFjkAxQ+2h+u5j2xvvLLIQJa6Zb4bxU7GZo7ZioFOhmvoIPAXupusS28MGDvwTy3YZWFY9u6se8e1ejx699e3WHCRu0O3Z8YCnbaJDG7D618liIgd/37rqrCDT6svR/39TWmmNatFII+r7QzVSDy6tze68rBZAs1fJPXBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716058706; c=relaxed/simple;
-	bh=DppO9y6AI5fYCKPAlXTVD/t/wEyeIkBJQxPAam/PWt4=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=mdOcUCq2tXV9R/x2M0rDpH0DCbA/63WEhMHpphtxiFj/xMo678UGUDNe+Qa2H2aJftYDjAByT1pjK3LcXg2QeK+UDVJGqsxgKvUyXHqrzQlD4xlrfABwNmJguSqizBwSkZv/NBef8ReLarSLvB6RAck41nERwMklnqrg8IFfqQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=t7obamDV; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1716059405; c=relaxed/simple;
+	bh=T8Q9DUTcOQQHe2B7WHZECRJZ+xDl2Hd6W8D3FsJ2UwI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=dz1M0JFJbRmOgVjBWDlr8Xndg4qGhtiVwzYUoULpvjBsMsM7bxoRtiKXw+mbo7GDbFvZE0fvjBECudxBLZUzE2w+aLCVvyYsNtu1ER7bNPp9BSTFaQSJlJ+o9s7edlQWewW2m8z4i/CSWjfT73rV+6RNd6y2nMcjkJReZycZONs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UysxB6Gy; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="t7obamDV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1716058698; x=1716663498;
-	i=johannes.schindelin@gmx.de;
-	bh=bsULHiWMbNMLivJtF86P/iuL/c5EYbc0Q4zSGv0Wojk=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=t7obamDVqZQj3ICxHSu8dVIZd/0cDso2Iq0R39FvIMzb+g2n000nBXUgGfoL18eZ
-	 PY/YrwzOUegatD9d4sCUFPqXBOOFUEoinYejwzgqFs5fDlkv2Ola9jmZAfAI3P65a
-	 51xZwTGbLlHd1gg2u/bV47cccldIfS1BW2nOSgSckmrf/ZZNYoQG28ikvjiLPmzvz
-	 dOtbSPVBMfgunROGdAEsbpiHFlFXWZHBoRLs/rmzoesccVoLVml+QHu9CVDaEsRZ1
-	 jWfsIjZaFPjW6pwZyvCfODGdvpT2jkXut38ZfTfedsScxEvzeZv1woc86Qe3t8pNl
-	 NSQFNTck3vU78kRGMQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.77]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M2O6Y-1s7qlD45wE-003s1r; Sat, 18
- May 2024 20:58:18 +0200
-Date: Sat, 18 May 2024 20:58:16 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org
-Subject: Re: [PATCH 4/8] tests: verify that `clone -c core.hooksPath=/dev/null`
- works again
-In-Reply-To: <xmqq4jawdlpa.fsf@gitster.g>
-Message-ID: <89e16ab9-1ddc-d88f-41aa-c0c6eabe779c@gmx.de>
-References: <pull.1732.git.1715987756.gitgitgadget@gmail.com> <7d5ef6db2a9c3c7a1b0ba78873d4202403768769.1715987756.git.gitgitgadget@gmail.com> <xmqq4jawdlpa.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UysxB6Gy"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-62027fcf9b1so8947397b3.0
+        for <git@vger.kernel.org>; Sat, 18 May 2024 12:10:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716059402; x=1716664202; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=6wZEtAjWlZgsDAcUG6+c2PeaLOPra/WqeJZPfXh1m/E=;
+        b=UysxB6GyzceMmEV/F2gn2ET+arbACTtz+9W4lcGGFbsisM3pRHGzdtAwO/+af94H+l
+         CDsGPQ9OvTquPfVPYzUd04U2ycyJFywGb121ohJIDycbJ2LvyIgcvWHB3Pp0EaFCuyA3
+         hoLS3PjQ0HUB3xpTGrXdx5Ijg0Qxz54mmYlZdAUEh5QCYAz2HPC10fnPmKyRIjWKPB8G
+         jijTmBOAifRcmGjCHSPOMbDc6P9/t1f66oR0QeoWmeZfITvtqele1F21TJ/F3x7h7BVO
+         7iEP3vAVH3OWQK/t767yNZ43EQm45GoZQyfAKY0c5VVCHSD4FxbLh+O53peP82jgW2qA
+         Xcfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716059402; x=1716664202;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6wZEtAjWlZgsDAcUG6+c2PeaLOPra/WqeJZPfXh1m/E=;
+        b=UYZa3f2Bkd3dosthddjhEToDvjJ76cXRr6/dWAp0NaJBNacaaafgRPPdXSOlsBowAZ
+         TWQOrbbLTd+sRk31klyAd5N3kf7fPP/ox9abu+oP5zZBBE7avE/XGtpjNPfFXqqc+fJ7
+         sp33+sBl1GstYFIXED4KGVefuza6kYcuTcUX96BwnrNpQ5SoLBaP9VhJIh3eO7/WdIyv
+         zYcAfEXUwEq2m4nWK9D+NaYVw5T/DQPZoqbCgqUwMpZFDdK6Qpw+HjiN1XiqK7VIcaf3
+         e+59x0ZU0u3K5xaz1ZXJBH7IA/CyOAdg5SGiTtmAl1GY1fk2zAHwFQu88gZ3ilHEgUkq
+         rXDw==
+X-Forwarded-Encrypted: i=1; AJvYcCW/pnqN9Bk79m0lvY0ye5HPdZGVkHEp3t874/agEmQWEFtTBXDRy3DQPV8NQfB0dX17lCEnUOW/HYYsoea/ZnBfov7P
+X-Gm-Message-State: AOJu0YzLmudRyYxi7q91wv7rqf3Qcy8QxegGcVpLQIY0m4X6y652RNJi
+	MNYhk+V/Zn4VOfumY19XvVjXhEfiaaFBd/RUbP3d+PaXo8yqnmPX9JRVvTzwdac=
+X-Google-Smtp-Source: AGHT+IG+nUeAgr9acBiK/1DbNb+mh7kbe9AVtqVJP9OFpLEKPvscYc//nNj/56tQBfg5x3aMM3DbEA==
+X-Received: by 2002:a05:690c:6786:b0:618:498f:9dbe with SMTP id 00721157ae682-627971bcd9cmr13045587b3.10.1716059402639;
+        Sat, 18 May 2024 12:10:02 -0700 (PDT)
+Received: from ?IPV6:2603:6081:1e00:aaa2:6c3b:4f8f:100f:63d2? ([2603:6081:1e00:aaa2:6c3b:4f8f:100f:63d2])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6209e5b0b4asm44350097b3.137.2024.05.18.12.10.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 18 May 2024 12:10:02 -0700 (PDT)
+Message-ID: <4c4049e9-f5fa-41c3-8a6a-df4fca2f07f1@gmail.com>
+Date: Sat, 18 May 2024 15:10:01 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ePPv1odLsyiqmoyCZnP1v4SIlCwiNVgBZEYp8bKniRhUo12x7Fo
- jkk7NOYBOfPnkKoQEac2fGX5M5nTs6NkXnNss0NjJC3TEn/PKzBscI40pXyIWt/RxSyVX4g
- csnR9tHjfsPY0BOqLms9TEDmLguQQmJhxy3ssMDTjLFTd5W/rRW8jV4CtxRCvOeypkAU+fN
- 2TIJN0ozOiaxgnKaJJxSA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:4/5h3ICOYKI=;klHoFTyq6ggCDYtWRLXNb10k09W
- vofW06xF27cQWMq0p3kZr3hxHP55RcPp2k8yx00t+6spPHdd74W715FVE+NtYRWvZHwX3dy+O
- 6znMifXEKu7O0b3HGyQkZfPGxt53ABZ0E9RU2XyKBFuUAfaII6qhFmSQkD5O7U24TgfL+mbIQ
- kv8udYgfXtdlPNHwmvCNAT39SpQbrh/FQagfw5wZqgJpIVQse+v7hxHxM3idZsqn95HGvcKtZ
- SpF8RAkUcc6g5dwBe33fZNwyiwLXlfyVc37V2uT7Mh3XGOuMCy6E8HSxrVyqU1yzDNLbRGgMW
- dk8sE0rhGcj/HqD2RLxq3Cvm5KctwujPchGeHLsJKzwCAVpsyGh04G9ahDqPreaHVBsQUp9yg
- 0Ln8Jj+N5P8XBwOxa614Qje3cSNPvSiYjulTaGkSpDVc3bfDkuZsv9QALi03RbSbScqL13SWY
- Wf40OESN3xk0JzVYsmDmVmzDpjcgetySI3MWmijK0RfeQzkKPqa3dDB5u1FwBDfHYuf3RXwY0
- b745F0l6MCLs7uXHzgQyDqyApAV+MRZV6/Az8VknEJFHyS+a+RIod48m4iYGOhsOt/du3SlWt
- Iu2WYMaBQTjnoXhKFGn0QUYFuMbyMfTwvcqpj2q+uG73sxCb0MF6xQFajLZd2v1PFF45z9bmj
- OB+L53jag8zRelrindY1fu4Lc0GzKHz0CsxQUORGehyrLsLdBpv/KPsYvdSva3N2KbNt0Pq6p
- 6pobhHRuTHJhWMpuZ/HkLqwjkX+2ebxS9+80ygSQl5XCwZhVRDdEZithzQhV6jq0UEzTGH3dk
- jNYDjQ/On/BaZozH++h4BX/xA/HLSamhgTELlFcNJCO1c=
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] diff: document what --name-only shows
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqeda0jr7d.fsf@gitster.g>
+Content-Language: en-US
+From: Nathan Faulkner <natedogith1@gmail.com>
+In-Reply-To: <xmqqeda0jr7d.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Junio,
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index 7d73e976d9..0c456dfd0c 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -318,12 +318,13 @@ explained for the configuration variable `core.quotePath` (see
+>   linkgit:git-config[1]).
+>   
+>   --name-only::
+> -	Show only names of changed files. The file names are often encoded in UTF-8.
+> +	Show only the name of each changed file in the post-image tree.
+> +	The file names are often encoded in UTF-8.
+>   	For more information see the discussion about encoding in the linkgit:git-log[1]
+>   	manual page.
+>   
+>   --name-status::
+> -	Show only names and status of changed files. See the description
+> +	Show only the name(s) and status of each changed file. See the description
+>   	of the `--diff-filter` option on what the status letters mean.
+>   	Just like `--name-only` the file names are often encoded in UTF-8.
+>   
 
-On Fri, 17 May 2024, Junio C Hamano wrote:
-
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > What the added protection did not anticipate is that such a
-> > repository-local `core.hooksPath` can not only be used to point to
-> > maliciously-placed scripts in the current worktree, but also to
-> > _prevent_ hooks from being called altogether.
-> > ...
-> > diff --git a/t/t1350-config-hooks-path.sh b/t/t1350-config-hooks-path.=
-sh
-> > index f6dc83e2aab..1eae346a6e3 100755
-> > --- a/t/t1350-config-hooks-path.sh
-> > +++ b/t/t1350-config-hooks-path.sh
-> > @@ -41,4 +41,8 @@ test_expect_success 'git rev-parse --git-path hooks'=
- '
-> >  	test .git/custom-hooks/abc =3D "$(cat actual)"
-> >  '
-> >
-> > +test_expect_success 'core.hooksPath=3D/dev/null' '
-> > +	git clone -c core.hooksPath=3D/dev/null . no-templates
-> > +'
->
-> Is it sufficient that the command exits with 0?  I am wondering if
-> we want to verify that the resulting repository looks like it
-> should, e.g., with
->
->     v=3D$(git -C no-templates config --local --get core.hookspath) &&
->     test "$v" =3D /dev/null
->
-> or something silly like that.
-
-I've added that, but would like to stress that the regression was _not_
-that the `core.hooksPath` setting was missing from the local config. I've
-added it because the implied suggestion is valid that we'll want to ensure
-that the test case passes for the _correct_ reason ;-)
-
-Ciao,
-Johannes
+This new description sounds to me like it only shows files that exist in 
+the to-commit, not any files that were deleted.
