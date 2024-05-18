@@ -1,64 +1,64 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6018528376
-	for <git@vger.kernel.org>; Sat, 18 May 2024 10:32:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DB82E64C
+	for <git@vger.kernel.org>; Sat, 18 May 2024 10:32:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716028377; cv=none; b=QFmmHX2df0u0YQvtMUvwDqOXgnr9lZnGBuQt9FjE3A/jWoUqwcV5n91X/rYz2UIy6nzcLws1OFo+2No0GA0cZrJx6zpikr8aJXEQ1e0gVtcHA2KFfviITUgy5Yv9CvplfcfZXBVYWAh9UYidpf6nXuf7eymEB1JQNj571RHXEAE=
+	t=1716028378; cv=none; b=Up11HhLZ5wo1OZ5LE7s5MJMBTABjoipweQHHqV3Ts2ncac3i7f1RiyDymPJ7vDl39rmHsnu3zHkk8QZOqRty/XAGFMPCv1mXdmV0R5YIU8PpUqrSj0hWF20chbU/88JZg2RjrSOgkPRHCitJhgAyewZwhcpUw00h2wTuu8KcAJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716028377; c=relaxed/simple;
-	bh=NACUjCKOyFbBT9Jcvg+gdcvRvWOxx7KfWVnfiD/FlN4=;
+	s=arc-20240116; t=1716028378; c=relaxed/simple;
+	bh=9GRY60ElemT9DHs8npnd8hLlNR8z3x1QzrFwTtQ6KpE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ER8mSNlkC8rEGEsn1TMswQkzgVpMYiWxN+Dtx8yo/r59QdszVu+y2DNWTUyT4CONrSOPo9EcA5+WNrhakafn7Qw1F7fzlxmKmeXIl8J8PPO7PmHLHfXS2JmH0qRerbTfye1P49Nx3RAXjV0PBxecVljBVWLmMKw4PVAygD1W5xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hRakvG9M; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version:To:Cc; b=LufRgA7g7gQJ2NA6+i0W2yXPFwzXYHF3OlNvodTX1ykY9eUNEFu4Sa8pHw7/mcGd6nN1UlK+WJaZJBxc9rtP9Vsyrrm0CLnYIoGxwV6tuYX0tppaNCodAipuSXHNjp6eqdGrGZB7QwQgn1Lob/t7XvEl6OQUi3jUsxhgF1NN04s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NOR6+B85; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hRakvG9M"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-420180b59b7so7826915e9.0
-        for <git@vger.kernel.org>; Sat, 18 May 2024 03:32:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NOR6+B85"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-34d8d11a523so555500f8f.2
+        for <git@vger.kernel.org>; Sat, 18 May 2024 03:32:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716028373; x=1716633173; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1716028374; x=1716633174; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=i6d3NikhGkK867apaAyTM/p8Uvw8q8n1MJ0T9cVpYng=;
-        b=hRakvG9MPwS4oPvxBXP/mE6chfK48u6/ZukeW8ruQSB+/4ZYJLFSk/VphK2GCJOhZJ
-         9Rkz398bAXIXvwj1zDL1i6V8T8Z6HKYSb0UGyRzLaeG8U15ZI6U3XsY8vfKcMLfCFkrf
-         nsWrAiOvcoWmRfOS1KW0seCSVPpfBwpdc0KIQze+kXI3KFokhXGxV3olAoPk7hYDwOVz
-         NN9bEC7Cr8d9IX6IMAigPJ2SbOwBxD56lRmkv5vmHLVBf83PAYzQitZNMlAmOvWzAaAv
-         040BBaAMB5CSBONZnHMujlc83nvOfO+sYehoij1suBX1qKF53AumurjFAf8CatDRHgyJ
-         +D+Q==
+        bh=8Hh0zgo3PA9OZD3gGP/KbTGUs6ILXCU7En0Epx60GCc=;
+        b=NOR6+B85dwDX3GmPlIrg3IypK6PoJONNmrGQFXWn2IefNEKKq0JqDKM7AQDtnDpkHm
+         bnydIF9FHGM2Tp8VamD4jKIHhV8VbN17yeXIOUGMboNAyuM5UR+lHLIG3NodRCQoT9M9
+         dCluxmr8hit5582dpuDtx3fsUR+RHKMXf5g4AWY2YPG56NxmcgHrqdlDjLfAo1SsYM7Y
+         Mmo9i5IDXu0rnLIUsRJw9/vnIcDlbgpKLvb9GR63g3qjR7scNEmr+HXqMjWPBsAb7QIG
+         hCs3EGkklvKRa9+5sYovXkUVZRZm8WhIYrF0J9CaWiJVUK5FRBR5Uo5Bs+xNUxZvyDBA
+         yU+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716028373; x=1716633173;
+        d=1e100.net; s=20230601; t=1716028374; x=1716633174;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=i6d3NikhGkK867apaAyTM/p8Uvw8q8n1MJ0T9cVpYng=;
-        b=GgrBNl23oONOvHnLcy7Bf6pxuanL5PYcffEXzhA+3wSdsHWy5/weNsqGxYFxyPsgVk
-         OJU12GyFPQ85silZ0WYM/PoyHQ48JfqRh/RYdDTjHrWegMvph7urbKVkStnv2AMCyBqq
-         ORh30cnwUAKMNJggQOF7Beq4ucYblv8pMKpvVCr7fMJV+258lkj1sbJUAxn3Z09bMCOa
-         OQYDHJLWfBOtAWIPmHsRadSPnp3xcNqYn7sEg4aOoH5v/RWg8uSer1CVgu1lafSZBvvR
-         ECl3eNE6C/zoc4DT/t2j/0zEEYtxOlqROfYyzJry97KGMnEyyNXTFjqQbj6CeqQPx7NQ
-         z6PA==
-X-Gm-Message-State: AOJu0Yy3bk7ypciVBlY0mXdntqi+LcAkZLUlCCtCzQemC/IwEtYDJU1z
-	ctADW0atc5kLNTFcmV7zzrPJZ2gLcBzNMZxvGoI9wt6Dcw/2oWA+ALwhzA==
-X-Google-Smtp-Source: AGHT+IE50Dt3PT4RUHurVORMzJ4OHeMBaIaz+b06LYaRfkMf2DVTpHn/F/9/gQAemiNP7Ojfmonpog==
-X-Received: by 2002:a05:600c:1d83:b0:420:1157:95b4 with SMTP id 5b1f17b1804b1-4201157977dmr167852985e9.12.1716028373012;
-        Sat, 18 May 2024 03:32:53 -0700 (PDT)
+        bh=8Hh0zgo3PA9OZD3gGP/KbTGUs6ILXCU7En0Epx60GCc=;
+        b=vxnmEfSVYhfH9YFWZAeS7MaWlrwRFV+ZhGeGhIAIu1+7qIYY9LAcdgWZkEMkTTMsFq
+         UVuQ9k1daf5cWZN37ulyYSjZmcoYHNoDGm/Ur2mYOnPcKBhMvsI8s13abzGMN2PL3S5X
+         2Dt4qXIsP12fUXTfBaPwcAALYfrJOIZADyxqp3WKb9ZmwhQkA2+V3SHbVjipnc3zEODH
+         Q0ry0Q3S80+8uh4apEBlyE8n8BZc5rgmMJfBOVr9eOYfiy1+Jkp/YirC4h6Xw8ODZAnh
+         IYiMNJQstVXitWbZPBz05l5/B/0iuddUBw44wZugNOq1sHlXtrz/V7rwP8dzfxck7OKt
+         1KfQ==
+X-Gm-Message-State: AOJu0YxZf5OnB7ci57v8eNayIQAw/n8HC0haSVcYsB1Do4FdaBWexXPZ
+	xJENweCK8VE5e+m5X50FWB/FeZaW5BsSXiOzYcPjpNZlBBA4b/DAZioZyg==
+X-Google-Smtp-Source: AGHT+IGmdunucJdvg7kh3XAzFBbeH0YuPXCPMCcq63rzEt2DejhVZAu+4YeZcI01waUa5WiFhQftcw==
+X-Received: by 2002:a05:6000:551:b0:34d:ae55:8fb9 with SMTP id ffacd0b85a97d-3504aa6339bmr16909461f8f.66.1716028374389;
+        Sat, 18 May 2024 03:32:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4202de3a79bsm77189255e9.6.2024.05.18.03.32.52
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3502b79bdbcsm23732153f8f.23.2024.05.18.03.32.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 May 2024 03:32:52 -0700 (PDT)
-Message-Id: <57db89a14977bdff01f8f82cb4d6f85cc49d4b55.1716028366.git.gitgitgadget@gmail.com>
+        Sat, 18 May 2024 03:32:53 -0700 (PDT)
+Message-Id: <cd14042b065e57f132c27d09005242fc500439e4.1716028366.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
 References: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
 	<pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 18 May 2024 10:32:41 +0000
-Subject: [PATCH v2 3/8] Revert "core.hooksPath: add some protection while
- cloning"
+Date: Sat, 18 May 2024 10:32:42 +0000
+Subject: [PATCH v2 4/8] tests: verify that `clone -c core.hooksPath=/dev/null`
+ works again
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,78 +75,44 @@ Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This defense-in-depth was intended to protect the clone operation
-against future escalations where bugs in `git clone` would allow
-attackers to write arbitrary files in the `.git/` directory would allow
-for Remote Code Execution attacks via maliciously-placed hooks.
+As part of the protections added in Git v2.45.1 and friends,
+repository-local `core.hooksPath` settings are no longer allowed, as a
+defense-in-depth mechanism to prevent future Git vulnerabilities to
+raise to critical level if those vulnerabilities inadvertently allow the
+repository-local config to be written.
 
-However, it turns out that the `core.hooksPath` protection has
-unintentional side effects so severe that they do not justify the
-benefit of the protections. For example, it has been reported in
-https://lore.kernel.org/git/FAFA34CB-9732-4A0A-87FB-BDB272E6AEE8@alchemists.io/
-that the following invocation, which is intended to make `git clone`
-safer, is itself broken by that protective measure:
+What the added protection did not anticipate is that such a
+repository-local `core.hooksPath` can not only be used to point to
+maliciously-placed scripts in the current worktree, but also to
+_prevent_ hooks from being called altogether.
 
-	git clone --config core.hooksPath=/dev/null <url>
+We just reverted the `core.hooksPath` protections, based on the Git
+maintainer's recommendation in
+https://lore.kernel.org/git/xmqq4jaxvm8z.fsf@gitster.g/ to address this
+concern as well as related ones. Let's make sure that we won't regress
+while trying to protect the clone operation further.
 
-Since it turns out that the benefit does not justify the cost, let's revert
-20f3588efc6 (core.hooksPath: add some protection while cloning,
-2024-03-30).
-
+Reported-by: Brooke Kuhlmann <brooke@alchemists.io>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.c        | 13 +------------
- t/t1800-hook.sh | 15 ---------------
- 2 files changed, 1 insertion(+), 27 deletions(-)
+ t/t1350-config-hooks-path.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/config.c b/config.c
-index 85b37f2ee09..8c1c4071f0d 100644
---- a/config.c
-+++ b/config.c
-@@ -1525,19 +1525,8 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "core.attributesfile"))
- 		return git_config_pathname(&git_attributes_file, var, value);
- 
--	if (!strcmp(var, "core.hookspath")) {
--		if (current_config_scope() == CONFIG_SCOPE_LOCAL &&
--		    git_env_bool("GIT_CLONE_PROTECTION_ACTIVE", 0))
--			die(_("active `core.hooksPath` found in the local "
--			      "repository config:\n\t%s\nFor security "
--			      "reasons, this is disallowed by default.\nIf "
--			      "this is intentional and the hook should "
--			      "actually be run, please\nrun the command "
--			      "again with "
--			      "`GIT_CLONE_PROTECTION_ACTIVE=false`"),
--			    value);
-+	if (!strcmp(var, "core.hookspath"))
- 		return git_config_pathname(&git_hooks_path, var, value);
--	}
- 
- 	if (!strcmp(var, "core.bare")) {
- 		is_bare_repository_cfg = git_config_bool(var, value);
-diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 7ee12e6f48a..2ef3579fa7c 100755
---- a/t/t1800-hook.sh
-+++ b/t/t1800-hook.sh
-@@ -177,19 +177,4 @@ test_expect_success 'git hook run a hook with a bad shebang' '
- 	test_cmp expect actual
+diff --git a/t/t1350-config-hooks-path.sh b/t/t1350-config-hooks-path.sh
+index f6dc83e2aab..45a04929170 100755
+--- a/t/t1350-config-hooks-path.sh
++++ b/t/t1350-config-hooks-path.sh
+@@ -41,4 +41,11 @@ test_expect_success 'git rev-parse --git-path hooks' '
+ 	test .git/custom-hooks/abc = "$(cat actual)"
  '
  
--test_expect_success 'clone protections' '
--	test_config core.hooksPath "$(pwd)/my-hooks" &&
--	mkdir -p my-hooks &&
--	write_script my-hooks/test-hook <<-\EOF &&
--	echo Hook ran $1
--	EOF
--
--	git hook run test-hook 2>err &&
--	grep "Hook ran" err &&
--	test_must_fail env GIT_CLONE_PROTECTION_ACTIVE=true \
--		git hook run test-hook 2>err &&
--	grep "active .core.hooksPath" err &&
--	! grep "Hook ran" err
--'
--
++test_expect_success 'core.hooksPath=/dev/null' '
++	git clone -c core.hooksPath=/dev/null . no-templates &&
++	value="$(git -C no-templates config --local core.hooksPath)" &&
++	# The Bash used by Git for Windows rewrites `/dev/null` to `nul`
++	{ test /dev/null = "$value" || test nul = "$value"; }
++'
++
  test_done
 -- 
 gitgitgadget
