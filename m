@@ -1,49 +1,49 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4353B39852
-	for <git@vger.kernel.org>; Sat, 18 May 2024 20:06:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62632125BA
+	for <git@vger.kernel.org>; Sat, 18 May 2024 20:13:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716062814; cv=none; b=bqCGXC75D+Tvp/h/+ErQ+78htOMblbQJUj1U+QRoak6gq+1NNTFJKSoXvFWVMKr1UHXTAgtn07UknMKkeHZQOwhwDjr/gpXyB9hl09yAO1RV7WUqZHfTJNmdu2KZcnq9ML8v2glrw/iK09rf3Lhz+kW9delRnAIDTA0nbNasLHc=
+	t=1716063230; cv=none; b=PT7bMdVlPbSfQcyl0TYvulB+/KepOuoLK2krGAXnaRkdikQHEg4cUwwsAxPfF9Uwuw2aARmm2EGWfashshYme+FzibRfUf8nZ6LXxCyP0kSvb3KpQi2m3VK21ZEEj8OIgZdxixFW20f550N9jiwxgUb16nx6BKYLjwHM88mbMKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716062814; c=relaxed/simple;
-	bh=9B0FulhThwVl+Z8AsXI091YHNQa83BQ8rZY6xk/kTV4=;
+	s=arc-20240116; t=1716063230; c=relaxed/simple;
+	bh=6Q4yzqtSylpjwWgM/+wVmvyA5uQ03HZbcdJdm3uu4EQ=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=trBzjMMFYkOngMaq0Y3RJxort/jgbeYjxFGNTpnJ2sZ+iJ6dRskOjm9S3qF8Zj1nbkpYZNSL9ruyqYVHV1IgeHY0pX2EP9aMABm7YOwmNCf9Q/1OyOX/s+jvf/nxNnADSY38vScLtY8Dk9SO4r2eP42jmPC+D7HXt6KT6DoEBKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ZHxjrT/H; arc=none smtp.client-ip=212.227.15.19
+	 MIME-Version:Content-Type; b=KaWXtqFutCMK/jUtsMvIsJhLrV+FemktloAthrQpjPhlh430+Feqp5Jc7lO4byk0/JXMwBOFxdd+f4sf0XfRL0zy/W/AgfhflCvcKxEeTvLEZfh0ZQnHestTZnZECs/EobyDbLZo5Vdsorl183ZPuwJKhiMmjgF+g9+8JluZ1LA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ZnsSuNop; arc=none smtp.client-ip=212.227.17.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ZHxjrT/H"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ZnsSuNop"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1716062797; x=1716667597;
+	s=s31663417; t=1716063217; x=1716668017;
 	i=johannes.schindelin@gmx.de;
-	bh=y6Fqwx61h3oV3h1G1Fl7ckLtKj1tiui5dKVL35XYBx0=;
+	bh=68ioycJle6EhydxhNPtvxo/LAd3GWbyI3y5KNi/rYqo=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=ZHxjrT/HZFSsyRi8Cps+cP9IZ3ZC+/UNAhSKuDYCHQX01O8lq7bJGGBgPUposMHa
-	 gs1G3eE5Y42jrr4Q99sLoTydLduMbt1Kae2A3Y4+O3GB445LrxsdLUqze2gQOsrhK
-	 vbnHvD8+UyA5IXsnKT78L85KwucDa1mi2cD/pWTuFsr4lLBfaAn0qL/HTmm9yVOin
-	 p+PTOIWY3PPJoOa/dnTHXEPfWi2RijhFCc5lY0Mo4OewuAOYyk1xurCE/O1fCu1or
-	 aQCp4NpGNihKiuBOJLXA6FrY7xv40Ers6OEeec2YRYonatmXO5XuDtTVtkh6sHhKx
-	 BCfJ5KuTbPHWIcO5cQ==
+	b=ZnsSuNopkwOouzG2Y2TKvSrTv0w3Qvs+XndTBdTQc/UUBndT+NzVBSlH9uMdUtTK
+	 0eb5oIjjZkjJUH/btOKsC8EB4NlVq5mElNI24qUyQ9tj41QBgghmzeIiV276BCGG2
+	 ImR7UccWaQR1eTVjeqh2Q1oxsX6DNmyyMURe5tdK6Z2+dWIY3kDOsvS35bMwsMvTb
+	 rtYibfmSf9M27W63o+E4qabdRW1f54MTrmpYCycRm1hoX9e+aRpgmR0GisVPtiSTl
+	 30nPVuj4wiMScvgVMW+3gtdKsF2VcNOFWlWRGhu9zK984m+oy2Y71xKS6u3VJPTIO
+	 Iq1ZsjpnL+i8d3YX7A==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.77]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvsIv-1sRbha2wWl-00tyaW; Sat, 18
- May 2024 22:06:37 +0200
-Date: Sat, 18 May 2024 22:06:36 +0200 (CEST)
+Received: from [172.23.242.68] ([213.196.212.77]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MmlXK-1ssFIk37m2-00jqQm; Sat, 18
+ May 2024 22:13:36 +0200
+Date: Sat, 18 May 2024 22:13:34 +0200 (CEST)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jeff King <peff@peff.net>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 5/8] hook(clone protections): add escape hatch
-In-Reply-To: <20240518194724.GB1573807@coredump.intra.peff.net>
-Message-ID: <86d57213-e3b2-c985-6d69-71568c66fc9c@gmx.de>
-References: <pull.1732.git.1715987756.gitgitgadget@gmail.com> <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com> <b841db8392ebd924d1893829a7e5e22240f1e9cf.1716028366.git.gitgitgadget@gmail.com> <20240518181432.GA1570600@coredump.intra.peff.net>
- <c201bbe3-b404-feed-fcef-8333f72068dc@gmx.de> <20240518194724.GB1573807@coredump.intra.peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+cc: git@vger.kernel.org, 
+    Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 0/8] Various fixes for v2.45.1 and friends
+In-Reply-To: <c67780c5-ab50-37f0-a507-91e8b721b349@gmx.de>
+Message-ID: <c3c2e460-e992-d7f9-754c-3c8c0aaca488@gmx.de>
+References: <pull.1732.git.1715987756.gitgitgadget@gmail.com> <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com> <xmqqy187nj4u.fsf@gitster.g> <c67780c5-ab50-37f0-a507-91e8b721b349@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -51,126 +51,76 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:RBc5wUgOkvGd9WqoGT2HPWoGEVrE5pakk0384gyRN1XloC5otpz
- 6AJoF2dLMIMJO90kL8xEEkKQSSZMqYGD9Aw13/0CFiZaDd1I0BhCwf4uxqNizaSwItEaHEv
- 0n/ExGomJSvBoADs+aloaCEd4ov8SKAHSG4vjtWB8m/O0ORD45unK7G3qr50YKezPu1GKAq
- ihHKd8xQYmrJTSPLCU52w==
+X-Provags-ID: V03:K1:NpbJo0nrWtmdx3CrNPOMuhPLR8AHcSMLfD+L/xWmae1OxPL9FOS
+ BO9hgDwyLA1A6JUPb1ppkexPmhHpo172yhhKjMcKmjhQgq86CRUhtinBrBce/VYhTQiGhn1
+ GVaoI8dWnjNbWBsV0F4iPToJmoMUJ3S0JKlCIi89PTG4JN5I2RelfSHTi86kdVTmqHpuLOh
+ RqVNeYKUKbaBP5nVolMGQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:SSvI+WGBw5w=;E8BE+y/9EYPnligMnSlAXlS5WkR
- wwAR4aVeJnW0YxllEk5rnJNIouoYZ1hYbP70QDvq3KdV7T0Qjj3D86W4ypAMBtmxAAD1KjgFw
- 6z9Yg5CWu61WyC5++OC6/mgE7nxdLPZ9YErJ7JCawXF9gtGqXUX+tEbswbJme9W1Xp8fF9zJ7
- ZXrftEICH3k/evBcaXy+zcSQYz5EXW9zKtXvsSg6go2s77WyTGdczHsSHpStwdJiX3LiNmMQU
- zYOk4NxPEufogUkZGyLb7TijKmefzUScYwrmJP9GJy5gdb2T3JWgp7oSBxV75ZsteB7svv7nS
- aUt1Po4co97pyZeIJ3HBYIZllkbkpVvl7rEU36OzRR8X+dU4/nQmYJMP+WIBPVByHgRVY4qRo
- JGWUFpbAMnXqw8La0AaEcgR1QMQj1bGTuPM5SF65zhXzihDxmpG8YaqNbHQo9EXkvm2W1FA7s
- gnWzWYKWEnrccRUwos/wmf/xuPgoGFOLM5JtUYIERixbhMvK4SscFG5mprDophmTp7ig3vZUr
- o57V3gYTwP6BeG9aqa1aktSKFszpadRKkiHPuRvLfXbqSrbwlCysYDFUXxkV6L07JlAd57/Wx
- hsQR5rfFJXLEc6UAVOnHtXVfEEM1bGwD4DqaAp1Q7v/vh+rCxukoxYerLELSEo2TWHH37mvOp
- VDOUy/oLlRb6JocCi3hI1zt3Q6KRHOvnmZJPN/J08OMbltTG5V71XCY51RZCZJvsXWhMZWbNL
- e8jEkT4T4KFfEIRq3fdKbSvMfHZkQhzb9yhVpWM335tu3cXD2pwuFUhkT5qtNAm6Z+cZ/8gPF
- x2b2LC1vNj6dnQ0E2I/jtpwZuvV4rAtx7qEPbQZkqdrtc=
+UI-OutboundReport: notjunk:1;M01:P0:spHnk8TDjh4=;6w8B2zi+G+YaHdJO38s3XpO7Dnc
+ t+d7XgDIf5m3ibjojkW6HM//BcLwe+DSVrRO0ZuxtBOudNC801r7HeNhB8Oi1KApxumQRnJ9Q
+ gmjNPFs9ENRMaEKRL/EtcPi416bW9J5BeOA0vu2zgRpJTEvyZSgJFPwFOU6DxRKv2nhXd3YtY
+ DLLqPq+VnqSc+1DiwiHai63rDHpc1qkFwM+D2INqXD5nV4wxdtfT7ApL1BGyJ72kwF74kJHeN
+ PxbO441PpUzg5X0rHcli7BjYNdQDf74M/kjVoPYS8ow3o311QqXKXiDMlbV73rpQko6pz+LGr
+ 9ypmxQiSTaFdZfvlXLzwwdXs8CMkAgmockgLuZOJ6yS00BmD3b5IoJC1VMuG2yH45zQBfvv1Q
+ JjpcP5EVNfVPAMCsYP/UlId42YbpPhPAybqtyuvu2ji2aAP5074doi0D3BxXYbdaHk8Vdq/AV
+ ETbJLsBQWh1Gz7se1SwKuX8aeaYsVT3qRXkejr+DW/4NYVefQrQTVLJAvEk0ALFMIHQYiJAj4
+ +1VXa5sL6bV/5C7Wcrt8bW1ZNcxSjqrVZ0RmV1xMaaScsCubegTWoKHSoxhxyDALHKAvxtfO9
+ tO3qdbepy/UD+wAychkxtK8SNdRLmwX57xQqPE0k1B7vmEzA6GaRQtvLdwWg1+bX9YFDgu3Ky
+ ZCzBkOHrgX6+lDWh0cZdI5du7Kr1AWQJTsup1XEJPf27iJs29qdmKJp8xbTWvOWbu6BVickSk
+ 7+RwGPLW9Fgk3Av+VZAjOcR4Oar3KZ4d47d5ujYEMMtHKhXNbEGRyzM9Da0nHJ4xlXk4kMual
+ IYPFahj/tH3RChkiE7op4ygsi/vAN9mMVQEhlFKDvAr7A=
 Content-Transfer-Encoding: quoted-printable
 
-Hi Jeff,
+Hi Junio,
 
-On Sat, 18 May 2024, Jeff King wrote:
+On Sat, 18 May 2024, Johannes Schindelin wrote:
 
-> On Sat, May 18, 2024 at 09:32:07PM +0200, Johannes Schindelin wrote:
+> On Sat, 18 May 2024, Junio C Hamano wrote:
 >
-> > > Implied here is that I also think config-based hooks have a lot of
-> > > _other_ advantages, and so would be worth pursuing anyway, and this
-> > > extra safety would come along for free. I won't enumerate those
-> > > advantages here, but we that can be a separate discussion if need
-> > > be.
+> > I have applied this to maint-2.39 and then merged them up to the
+> > maintenance tracks.  The results will be pushed out to the "split
+> > out" repository at
 > >
-> > One disadvantage of config-based hooks is that it is quite hard to
-> > verify the provenance of the settings: Was it the user who added it,
-> > was it a program the user called, or was it exploiting a vulnerability
-> > whereby the config was written inadvertently?
->
-> But isn't that true of the safe.hook.sha256 value, too?
-
-No, because `safe.hook.sha256` (like `safe.directory` and
-`safe.bareRepository`) is only respected in "protected" configs, i.e.
-system-wide, user-wide and command-line config. Any such settings in the
-repository-local config are ignored.
-
-> If I can attack .git/config, then I can set it to match the attack hook
-> (not to mention the zillion other config options which execute arbitrary
-> code).
->
-> If we really want to harden .git against attacks which can overwrite
-> files in it, then I think the long-term path may be something like:
->
->   - add support for specifying hooks via config. Leave .git/hooks for
->     compatibility.
->
->   - introduce a config option to disable .git/hooks support. Respect it
->     only outside of .git/config. Default to false to start for backwards
->     compatibility. Eventually flip it to true by default.
->
-> And then perhaps something similar for in-repo config (add an option to
-> disable in-repo config except for repos marked as safe).
->
-> > > And of course that feature doesn't yet exist, and is a much larger o=
-ne.
-> > > But besides un-breaking current LFS, I'm not sure that we need to ru=
-sh
-> > > out a more generic version of the feature.
+> >     https://github.com/gitster/git/
 > >
-> > Exactly. We need to unbreak Git LFS-enabled clones and release v2.45.2
-> > before I even have the head space to think more about config-based hoo=
-ks.
+> > as these branches:
+> >
+> >     js/fix-clone-w-hooks-2.39
+> >     js/fix-clone-w-hooks-2.40
+> >     js/fix-clone-w-hooks-2.41
+> >     js/fix-clone-w-hooks-2.42
+> >     js/fix-clone-w-hooks-2.43
+> >     js/fix-clone-w-hooks-2.44
+> >     js/fix-clone-w-hooks-2.45
 >
-> To be clear, I'm not proposing doing nothing. I'm proposing un-breaking
-> LFS either by rolling back the defense-in-depth or adding hard-coded
-> hashes, neither of which introduces a user-visible feature that must be
-> supported. And then proceed with new features in the regular cycle.
+> Thank you!
 >
-> The hard-coded hashes are obviously a ticking time bomb until lfs
-> updates again (and they don't help any as-yet-unknown program which does
-> the same thing). So I'd suggest just rolling back the feature entirely
-> in the meantime.
+> As it happens, I had already worked on tentative/maint-* branches (that
+> you can see here: https://github.com/dscho/git/branches/active), but
+> had to take a break before finalizing them.
+>
+> The major difference I see is that js/fix-clone-w-hooks-2.41 still
+> declares `do_files_match()` in `setup.h` (even if it is no longer define=
+d
+> or called), and that `hook.c` includes `copy.h` (but that is no longer
+> needed), and that `setup.h` includes `hook.h` (but that's not needed
+> either).
+>
+> While comparing, I noticed that I had missed an extra empty line in my
+> merge conflict resolutions, a `grep` -> `test_grep` conversation and an
+> `UNUSED` attribute for the `ctx` parameter of the `safe_hook_cb()`
+> function. So I am really grateful that you did those integrations
+> independently.
+>
+> You will also note that I tentatively added commits to mark v2.39.5, ...=
+,
+> v2.45.2 ready for tagging, along with release notes, just so we can hit
+> the ground running as soon as reviews settle down.
 
-Rolling back the defense-in-depth would be a mistake: We do see (seemingly
-on a yearly cadence) reports of vulnerabilities in Git that often raise to
-critical severity by exploiting the hooks feature (typically in
-conjunction with submodules). There is no reason to believe that this
-steady trickle will stop any time soon. The defense-in-depth we introduced
-would stop at least that escalation path that turns those vulnerabilities
-into critical attack vectors putting users at risk.
-
-Even worse: If we removed these protections without any replacement, now
-we basically told hackers where to look for nice, exploitable bugs,
-publicly.
-
-For what it's worth, I was originally also in favor of the pretty surgical
-addition of the hard-coded hashes specifically to unbreak Git LFS-enabled
-clones. You must have seen my proposal that I sent to the Git security
-mailing list.
-
-However, brian suggested that Git LFS may not be the only 3rd-party
-application that is affected by the clone protections. I have my doubts
-that other applications use a similar route, it strikes me as quite hacky
-to install a hook while running a `smudge` filter, yet I do admit that
-there is a possibility. Which is why we introduced the `safe.hooks.sha256`
-settings.
-
-This strikes a good balance between unbreaking Git LFS and still
-benefitting from the defense-in-depth that helps fend off future critical
-vulnerabilities.
-
-If we did not have such a balanced way to address the Git LFS breakage, I
-would totally agree with you that we would need to consider rolling back
-the defense-in-depth. Happily, we don't have to.
+Oh, I forgot to mention that I also integrated backports of some CI fixes
+into the `tentative/maint-*` branches, to let the `osx-gcc` job pass
+again.
 
 Ciao,
 Johannes
-
-P.S.: For what it's worth, the pattern we see in Git LFS is relatively
-hard to replicate. `git clone` does not offer any easy and convenient way
-to install hooks during the operation other than via templates (which,
-unlike Git LFS-enabled clones, is _not_ broken in v2.45.1). Of course,
-users could start a clone and then manually copy a `post-checkout` hook
-into `.git/hooks/` _while the clone is still running_. I kind of doubt
-that that's common practice we need to support, though.
+>
