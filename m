@@ -1,294 +1,160 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651B2383
-	for <git@vger.kernel.org>; Sat, 18 May 2024 00:35:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B57A64D
+	for <git@vger.kernel.org>; Sat, 18 May 2024 01:45:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715992514; cv=none; b=rTNrHIgU0Cw3CbLYllbabaVqWcxBkT86+489Ckkz3A6Z3Zy7AwV/6UPTmgxdpsNKm0Wcl3NC54vu2OUDb1TURxVusOwIAsqzFPd085QTHjuWVThqFtq5ccHGCR7QHNXZ61X3FxxB7cTK9q7kna7bzFH0n2WW2aAvyN4+4LKQVok=
+	t=1715996746; cv=none; b=PWjUy6hRRycyBgWnuDpj8FZA9TCLMcK9T9sTkk9eOGQWjxdo+lbs8oJpwZCtUet2t15f0QIYskWEEusrZ7hC/xTAyu/Couk8C+f2oTIAkCqOmSBnBTVIYC1A5fEj0u7IkiFd3Gj3SGwNhKW1ZYCesz311YCitiBVbPo6iZA9AwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715992514; c=relaxed/simple;
-	bh=1n2UmALE04D2MLbfFz5Bcsi1IUB+ZHcfI0jv759MC0U=;
-	h=Date:From:To:cc:Subject:Message-ID:MIME-Version:Content-Type; b=nS0idrrq65E8vmeB+ZOT7x5MJhXyjxe/9+cktZHf/E1EdWmlME8yPHvyzrlmdHfLk4jT84XSE61MvT2XWV15klsb9qg4YfbXZSmW9wvi6P+OmvFPRTdoSHv+5u+LH18oNhPATDtRxDvfr93fxVHkr3NApPE2HROIV1C3qgmEQ7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=f0TifYna; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1715996746; c=relaxed/simple;
+	bh=P/wy+1ypMXUyP5hs1uZnY7jUTl8lIoY6GSIx4wBi+zY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qYUV0GRfMerK3aFmVTaFQ/+gTRI51PgMbmtfKety5ur9Nxr1L063uQUsga9fKnQqnCmqucPYiy1lKW4Od5ld/qOLAYh1oeC9dXXI52f3t2sIGdWBcVdDw195FCCWnC2uMieMHhJwQvoaJHyY25n8Xu140dm0Ay5Eth+x8rUGl2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZOBF6V1n; arc=none smtp.client-ip=209.85.166.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="f0TifYna"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1715992508; x=1716597308;
-	i=johannes.schindelin@gmx.de;
-	bh=LDJfPO0blqc5p3Hv6upukwdckJDI02Enw3nZRkavuyI=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:Message-ID:
-	 MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=f0TifYnaH9g8hbwLTCQans6F5hUHEJYiutgRs/uamawG4z+co8K+7bqECTzEpAd+
-	 XfmMWHqyh+lQt7brnK/Bl0U5NJG3WaO6tyVgyRn1cwFFzTCCV0hWFgVKBSeprLlUy
-	 Y7luFtQ00fh3GJW1nr+fA1eDr1qJ8yTy5/hJJ7FTE3a/s7tpiSEBXSVTWS4u6eY8n
-	 T6qDi7OebCRI4E3s+yBtjSF6CPn/3vI8Uhf+8elPMsAe8zlvvO5Mxm+9Dw/Y1fW1B
-	 SeJD5nyzHoiU4/BjYgFNm/HzO53BuPTaZnKGXCOwz8rPWeg/etlDJgk+/AAniI4dm
-	 OMU3lREmaxz930cTJA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.77]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MJE2D-1rrqEx34ot-00KiW9; Sat, 18
- May 2024 02:35:08 +0200
-Date: Sat, 18 May 2024 02:35:07 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Elijah Newren <newren@gmail.com>
-cc: git@vger.kernel.org
-Subject: Replaying merges
-Message-ID: <ee35f3b2-bf20-6fcc-2c71-38499aa592fe@gmx.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZOBF6V1n"
+Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-7e2025c3651so53470939f.3
+        for <git@vger.kernel.org>; Fri, 17 May 2024 18:45:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715996744; x=1716601544; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jakA7ox7TUh3cVhk+Zu6W5Ywz+CLOz2eTtCOBcJpaaA=;
+        b=ZOBF6V1n0/RuXFBJYUd6bWvC+YgcG+vXbezzRODgOv63WbMDa5q+nA6jq3F2pCWDCH
+         0+QvIRJ0IJw9ZbvNAbVr/pMlJGY+jNdxHkb9+IGTfT+I7wBofBkE/WfJePcuxlfGe0Sq
+         AhaIUzvq9xD0lBi/ha1sD+/rEduLEB9wBosH/zBPz4zWDIRgoUKdClyeRHojZETFqOVP
+         JBTKSQXvW9KOD3DGLo8MFGTZvu55v9wQER/QVImkU1IVMeOr4DuOcA620cUsM21wlJX8
+         dlCoQoYS0z1L8q1cQPU2r4cU+qhBRzVUrA03EM+f7Jcc/5J8BbY7iTcgHUkNP6NhiBWh
+         4RHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715996744; x=1716601544;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jakA7ox7TUh3cVhk+Zu6W5Ywz+CLOz2eTtCOBcJpaaA=;
+        b=vj9zH80WpVlBavfx5URbSBuTwtjoHuM9KMbM/TXEufY7JW0WnYM3CK2wMv6MznqEx4
+         KAfGThy+nhL43ksdvWLjxO4rKOiP0S9+w7Ku9tuT1DSS9mG6m1/obQUKaOBL2qjMHeAP
+         RfyIzbm+OTp3Xin7elUHEVpjVBwvLpI6i2CcG6Q0Ta3zKIC7GC8OiQsSJHwhmhFTsFvB
+         yLQpM7IgzjSecLPGyiYM9qAtrGyN1GCst1pkPXMB8ETgH8f8cJdAo8VSMWmpisFX16OM
+         NbF4fuOtY5bhY3w4LcMM7XlYNpw+xol80khvp9MIvLXN3Hisk7kWOBvnDEdgPrYnHuIj
+         41pA==
+X-Gm-Message-State: AOJu0YyUL4THnc7Mu1emF1YT06VrrVhdSpX80rIZK2uNNXeriakNjqIb
+	+hIOkxDiC6JESQiWU2QfUqQIcywvmTDkKafB0GDp0NN3ty0OGFkjxjHAPSiUEhBVNHWd20oWmG+
+	hfLYL7lHO84ZiYuY88e7bjblTwvaQO7G7
+X-Google-Smtp-Source: AGHT+IGIw33OD48a7mHCVkG586r1M9m7vr1OHaXhnnKzu9rdSxioRxnHOMmbdDLoOMqt9FwAMv1LYgIEenKwN7mMU7s=
+X-Received: by 2002:a5d:990c:0:b0:7e1:8282:d8a9 with SMTP id
+ ca18e2360f4ac-7e1b521b69bmr2765796039f.17.1715996744162; Fri, 17 May 2024
+ 18:45:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:kDj7P0m4fKOy3+1kAoiuYWy2wA1fUA6RwlS4invacAf72lIWzQ+
- hoVjadfWFkDn4bDlPfJGU7J0jzLPFnrjOUy0XUMW37S6xJZn4c7syAy+dJOdWTVeuuUFNGX
- dcm24dP8DZRFdftyK59/SrI9TwAFmMajuGK9P9T9Xaeksp5ZE/Q8VlSmo7inhuuIF6Lb64W
- zTbWsn4QzhcuL5QyXHPKw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:x91awhqXpJE=;leix50y3D5OQ1CWfaGu3Ap6RZRn
- 0bUU9Plf6ZNQSocuq/IxOgB2If29o+EsK4quMKQgPdm4gN+HI5iqiGviXdaxCZ3/NaZP76twX
- N+Fy/gPecvShiDLqyqwiBo8C/o09h6GXkQMGeaxqVV42Bc4gjj6YL0LLmPYwy8x74Sz51tXhs
- oRudwsmkMMiSvCNlRNttWZ7NqMbExR2FVaBbHN/FA5niBrOfY49AgmWU98ddWHVGMOtz3BTbi
- RER/lDarhkLpoarGDHznKusp2XLaV48IkpLffXWauXdLMyYQvjEQoHww4Qbf5eASJPc3cjDGI
- fuw1yPEOyfsy5jS7hvhxWhFgyUa+8ekw8ZFJ/aEAiZtQYK+RLIL0MVMfZ8wflw4v/GR6mac1V
- RoXoCjr0FhGfOgszmW/PB83pVZiY8d29XpsAvTjR4s7Op+9Joo8KeDxX4mlPtFDFmQtgGkXkb
- EC3Rq/07vvGohdUDMgeKSZJssc7bLEHLpE4KNKmlwQDVMB2KWl54smOGilTnpr9XC3cL1vJ4D
- 3IdmA7r2wzvLp+HNcUJVp6RCPNrEftL/q6sL+YOqvnCRl/V64/i8Cfrj2YiJMiXUHeO0CMkD7
- PHF/ZCii5siSuy50ZLtVSg1JtYl/BH/8nWOvB2elAE+ufqnTZnhkcjdZQLI8dncKQQuDA8Hbl
- cWhhnKceZO3oGamjJz8/N73D6wCIKALaJFyh/GEEEedVUaB64ERnuu3Eg8k8CSt+NWQk+tbno
- 9/g8ivHoCxLVpULbiB4xj387aGV3USXmXROo+fSg5kN18U+2cxaueE42dovrcX0WraDpszWzO
- d6cq5IWtQRzFftIpswa+/kGdgnpJQ2km++VII6oCZzXdg=
+References: <ee35f3b2-bf20-6fcc-2c71-38499aa592fe@gmx.de>
+In-Reply-To: <ee35f3b2-bf20-6fcc-2c71-38499aa592fe@gmx.de>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 17 May 2024 18:45:32 -0700
+Message-ID: <CABPp-BHv7K3gQ4+ZgOTFHUyhNm7dVa4wtzy_gtNHKNcyFYqr_g@mail.gmail.com>
+Subject: Re: Replaying merges
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Elijah,
+Hi Johannes!
 
-I took the suggestion to heart that you explained a couple of times to me:
-To replay merge commits (including their merge conflict resolutions) by
-using the _remerged_ commit as merge base, the original merge commit as
-merge head, and the newly-created merge (with conflicts and all) as HEAD.
+On Fri, May 17, 2024 at 5:35=E2=80=AFPM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Elijah,
+>
+> I took the suggestion to heart that you explained a couple of times to me=
+:
+> To replay merge commits (including their merge conflict resolutions) by
+> using the _remerged_ commit as merge base, the original merge commit as
+> merge head, and the newly-created merge (with conflicts and all) as HEAD.
+>
+> I noodled on this idea a bit until I got it into a usable shape that I
+> applied to great effect when working on the recent embargoed releases.
+>
+> Here it is, the script [*1*] that I used (basically replacing all the
+> `merge -C` instances in the rebase script with `replay-merge.sh`):
+>
+<snip>
+> For the most part, this worked beautifully.
 
-I noodled on this idea a bit until I got it into a usable shape that I
-applied to great effect when working on the recent embargoed releases.
+Cool to see someone try it out.
 
-Here it is, the script [*1*] that I used (basically replacing all the
-`merge -C` instances in the rebase script with `replay-merge.sh`):
+> However. The devil lies in the detail.
 
--- snip --
-#!/bin/sh
+Yup, but details rather than detail.  ;-)
 
-die () {
-	echo "$*" >&2
-	exit 1
-}
+<snip>
+> The biggest complication being the scenario... when a merge
+> conflict had been addressed in the original merge commit, but in the
+> replayed merge there is no conflict. In such a scenario, this script _wil=
+l
+> create not one, but two merge conflicts, nested ones_!
 
-test $# = 2 ||
-die "Usage: $0 <original-merge> <rewritten-merge-head>"
+Only if merge.conflictStyle=3D"diff3"; if merge.conflictStyle=3D"merge",
+then there will be no nested conflict (since the nested conflict comes
+from the fact that the base version had a conflict itself).
 
-original_merge="$(git rev-parse --verify "$1")" ||
-die "Not a revision? $1"
-test ' ' = "$(git show -s --format=%P "$original_merge" | tr -dc ' ')" ||
-die "Not a merge? $1"
-rewritten_merge_head="$(git rev-parse --verify "$2" 2>/dev/null)" ||
-rewritten_merge_head="$(git rev-parse --verify "refs/rewritten/$2")" ||
-die "Not a revision? $2"
+This is one of the issues I noted in my write up a couple years ago:
+https://github.com/newren/git/blob/replay/replay-design-notes.txt#L315-L316
 
-# Already merged?
-if test 0 -eq $(git rev-list --count HEAD..$rewritten_merge_head)
-then
-	echo "Already merged: $2" >&2
-	exit 0
-fi
+Further, it can get worse, since in the current code the inner
+conflict from the base merge could be an already arbitrarily nested
+merge conflict with N levels (due to recursive merging allowing
+arbitrary nested of merge conflicts), giving us an overall nesting of
+N+1 merge conflicts rather than just the 2 you assumed.  That's ugly
+enough, but we also need to worry about ensuring the conflict markers
+from different merges get different conflict marker lengths, which
+presents an extra challenge since the outer merge here is not part of
+the original recursive merge.
 
-# Can we fast-forward instead?
-if test "$(git rev-parse HEAD $rewritten_merge_head)" = "$(git rev-parse $original_merge^ $original_merge^2)"
-then
-	echo "Fast-forwarding to $1" >&2
-	exec git merge --no-stat --ff-only $original_merge
-	die "Could not fast-forward to $original_merge"
-fi
+In addition to these challenges, there's some other ones:
+  * What about when the remerged commit and the newly-created merge
+have the "same" conflict.  Does it actually look the "same" to the
+diff machinery so that it can resolve the conflict away to how the
+original merge resolved?  (Answer: not with a naive merge of these
+three commits; we need to do some extra tweaking.  I'm actually
+suprised you said this basic idea worked given this particular
+problem.)
+  * What about conflicts with binary files?  Or non-textual conflicts
+of other types like modify/delete or rename/rename?
 
-# Only Git v2.45 and newer can handle the `--merge-base=<tree>` invocation
-validate_git_version () {
-	empty_tree=4b825dc642cb6eb9a060e54bf8d69288fbee4904
-	git merge-tree --merge-base=$empty_tree $empty_tree $empty_tree >/dev/null 2>&1 ||
-	die "Need a Git version that understands --merge-base=<tree-ish>"
-}
-validate_git_version
+> I still do think that your idea has merit, but I fear that it won't ever
+> be as easy as performing multiple three-way merges in succession.
 
-do_merge () {
-	git update-ref refs/tmp/head $1 &&
-	git update-ref refs/tmp/merge_head $2 &&
-	{ result="$(git merge-tree refs/tmp/head refs/tmp/merge_head)"; res=$?; } &&
-	echo "$result" | head -n 1 &&
-	return $res
-}
+I totally agree we need to do more than the simple merge of those
+three "commits"; I have ideas for this that address some of the
+challenges over at
+https://github.com/newren/git/blob/replay/replay-design-notes.txt#L264-L341
 
-remerge_original=$(do_merge $original_merge^ $original_merge^2)
-test -n "$remerge_original" || die "Could not remerge $original_merge"
-merge_new=$(do_merge HEAD $rewritten_merge_head)
-test -n "$merge_new" || die "Could not merge $rewritten_merge_head"
-new_tree=$(git merge-tree --merge-base=$remerge_original $original_merge $merge_new | head -n 1)
-test -n "$new_tree" || die "Could not create new merge"
+> To address the observed problem, the code will always have to be aware of
+> unresolved conflicts in the provided merge base, so that it can handle
+> them appropriately, and not treat them as plain text, so that no nested
+> conflicts need to be created.
 
-# Even though there might be merge conflicts, the `merge-tree` command might
-# succeed with exit code 0! The reason is that the merge conflict may originate
-# from one of the previous two merges.
+I agree we need to handle conflicts specially -- not only in the
+provided merge base ('R' in my document) but also in the new merge of
+the two parents (what you labelled HEAD and I labelled 'N').
 
-files_with_conflicts="$(git diff $original_merge..$new_tree |
-	sed -ne '/^diff --git /{
-		# store the first file name in the hold area
-		s/^diff --git a\/\(.*\) b\/.*$/\1/
-		x
-	}' -e '/^+<<<<<<< refs\/tmp\/head$/{
-		# found a merge conflict
-                :1
-                # read all lines until the ==== line
-                n
-		/^+=======$/b2
-                b1
-                :2
-                # read all lines until the >>>> line
-                /+>>>>>>> refs\/tmp\/merge_head$/{
-			# print file name
-			x
-			p
-			# skip to next file
-			:3
-			n
-			/^diff --git/{
-				# store the first file name in the hold area
-				s/^diff --git a\/\(.*\) b\/.*$/\1/
-				x
-				b
-			}
-			b3
-		}
-		n
-		b2
-	}')"
+> Unfortunately, I did not document properly in what precise circumstances
+> those nested conflicts were generated (I was kind of busy trying to
+> coordinate everything around the security bug-fix releases), but I hope t=
+o
+> find some time soon to do so, and to turn them into a set of test cases
+> that we can play with.
 
-# Is it a "Sync with <version>" merge? Then regenerate the log
-sync_info="$(git cat-file commit $original_merge |
-	sed -n '/^$/{N;s/^\n//;/^Sync with 2\./{N;N;s/^\(.*\)\n\n\* \([^:]*\).*/\1,\2/p};q}')"
-merge_msg=
-if test -n "$sync_info"
-then
-	merge_msg="$(printf '%s\t\t%s\n' $rewritten_merge_head "${sync_info#*,}" |
-		git fmt-merge-msg --log -m "${sync_info%,*}" |
-		grep -v '^#')"
-fi
+Yeah, we'll also need to add testcases for some of the other issues I
+point out in that document.
 
-if test -z "$files_with_conflicts"
-then
-	# No conflicts
-	committer="$(git var GIT_COMMITTER_IDENT)" ||
-	die "Could not get committer ident"
-	new_commit="$(git cat-file commit "$original_merge")" ||
-	die "Could not get commit message of $original_merge"
-	new_commit="$(echo "$new_commit" |
-		sed '1,/^$/{
-			s/^tree .*/tree '"$new_tree"'/
-			s/^committer .*/committer '"$committer"'/
-			/^parent /{
-				:1
-				N
-				s/.*\n//
-				/^parent /b1
-				i\
-parent '"$(git rev-parse HEAD)"'\
-parent '"$(git rev-parse $rewritten_merge_head)"'
-			}
-		}')"
-	if test -n "$merge_msg"
-	then
-		new_commit="$(printf '%s\n\n%s\n' \
-			"$(echo "$new_commit" | sed '/^$/q')" \
-			"$merge_msg")"
-	fi
-	new_commit="$(echo "$new_commit" | git hash-object -t commit -w --stdin)" ||
-	die "Could not transmogrify commit object"
-	git merge --no-stat -q --ff-only "$new_commit"
-else
-	echo "no-ff" >"$(git rev-parse --git-path MERGE_MODE)"
-	git rev-parse "$rewritten_merge_head" >"$(git rev-parse --git-path MERGE_HEAD)"
-	if test -n "$merge_msg"
-	then
-		echo "$merge_msg"
-	else
-		git cat-file commit "$original_merge" |
-		sed '1,/^$/d'
-	fi >"$(git rev-parse --git-path MERGE_MSG)"
-
-	git read-tree -u --reset "$new_tree" ||
-	die "Could not update to $new_tree"
-
-	echo "$files_with_conflicts" |
-	while read file
-	do
-		echo "Needs merge: $file"
-		mode="$(git ls-tree $new_tree "$file" | sed 's/ .*//')" &&
-		a=$(git show "$new_tree:$file" |
-			sed -e '/^<<<<<<< refs\/tmp\/head$/d' \
-			    -e '/^=======$/,/>>>>>>> refs\/tmp\/merge_head$/d' |
-			git hash-object -w --stdin) &&
-		b=$(git show "$new_tree:$file" |
-			sed -e '/^<<<<<<< refs\/tmp\/head$/,/^=======$/d' \
-			    -e '/>>>>>>> refs\/tmp\/merge_head$/d' |
-			git hash-object -w --stdin) &&
-		printf "%s %s %s\t%s\n" \
-			0 $a 0 "$file" \
-			$mode $(git rev-parse HEAD:"$file") 1 "$file" \
-			$mode $a 2 "$file" \
-			$mode $b 3 "$file" |
-		git update-index --index-info ||
-		die "Could not update the index with '$file'"
-	done
-	die "There were merge conflicts"
-fi
--- snap --
-
-For the most part, this worked beautifully.
-
-However. The devil lies in the detail. You will see that the majority of
-the script is concerned with recreating the stages that need to be put
-into the index. The reason is that the merge conflicts are already part of
-the merge base and hence the `merge-tree` arguments do not reflect the
-stages.
-
-But it gets even worse. The biggest complication is not even addressed in
-this script, when I realized what was going on, I understood immediately
-that it was time to abandon the shell script and start implementing this
-logic in C (which I can currently only do on my own time, which is
-scarce). The biggest complication being the scenario... when a merge
-conflict had been addressed in the original merge commit, but in the
-replayed merge there is no conflict. In such a scenario, this script _will
-create not one, but two merge conflicts, nested ones_!
-
-I still do think that your idea has merit, but I fear that it won't ever
-be as easy as performing multiple three-way merges in succession. To
-address the observed problem, the code will always have to be aware of
-unresolved conflicts in the provided merge base, so that it can handle
-them appropriately, and not treat them as plain text, so that no nested
-conflicts need to be created.
-
-Unfortunately, I did not document properly in what precise circumstances
-those nested conflicts were generated (I was kind of busy trying to
-coordinate everything around the security bug-fix releases), but I hope to
-find some time soon to do so, and to turn them into a set of test cases
-that we can play with.
-
-Ciao,
-Johannes
-
-Footnote *1*: You'd think that I'd learn from past experiences _not_ to
-prototype in Bash when I want to eventually implement it in C. Honestly, I
-thought I could get away with it because I failed to anticipate the many
-complications, not the least of which being that there is currently no
-_actually_ correct way to generate the stages. So basically I thought that
-the script would consist of the part before the code comment starting with
-"Even though there might be merge conflicts"...
+I'm looking forward to my situation changing soon and hopefully
+getting more time to work on things like this...
