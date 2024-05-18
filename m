@@ -1,224 +1,185 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6CC52F24
-	for <git@vger.kernel.org>; Sat, 18 May 2024 04:52:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48EDB17582
+	for <git@vger.kernel.org>; Sat, 18 May 2024 10:32:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716007937; cv=none; b=aHiJYcePmDqTQsMSsiYE/a+Dcee3XNZoT0hd82Yb513MLpJXBMqyKgE+FgTdqniAVpwBewuaMuGFK9ia8ManjV8uAm1xv6p3AoLeeXaOjyHgBnt6WPCl+4yseVh76WZNyaf91ddGH3mWVQFNMafcDmKYTv3yRiVNP4FMDsvdPfE=
+	t=1716028374; cv=none; b=ZpNGrWYiZNcno3GwEP/wc2hzc//gZeqLHTvGdYvvyeLn5JRQkdVFyQYUsyKUqH0kocNwzmyGNjFTFCbYJS2ICCyiGAawHt5L/IM5Spv222YwBZmK8NO2YBw1nJUnpZWjcxYwTRAOvzEmjsxsigeP5QXO6d+71mffSXVvDxV8S8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716007937; c=relaxed/simple;
-	bh=FFyASQOd6DDOsL777oR+LikEVUxvY9o01y5Ny22zJ1M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X04bIR+ZfSJUcJpJzMeRovMz4DAoEYX+tcWkxD0iG+FK8YeXW/AD9k2WKlcekCVdzXhGM1Vyd2KwttdwW3V4D4xvAXCSKGOJU7W3MTlx+LkK2vGHPnjaAQQ1mS2butL9PgLQXL/dyra8eqIguPwl4osQeemvjfw3mXOQRCiwt2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cLxd7WaM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LdDCcAJu; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1716028374; c=relaxed/simple;
+	bh=krL/leV3Ovj02P3yP96CT1EddKaYG8XjxJTxhV7OKDg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=CfirYabOg3jWJx+L3lDj8oms+enIaooTOIcCGrNymqQgqVaZ7XfgHLa8DHJAlVTrsXGU01kF9I8mucs4+NyvJ7i+SY+dzpUe/ZG6S6vFobAL3RIHaIbgWxSYvmMPhd0enStKSVA13sYlTjKt7BAh80GQ6iNx/vBTsKsd2ReYaf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MbvjPAZA; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cLxd7WaM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LdDCcAJu"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id A4A2311400A6;
-	Sat, 18 May 2024 00:52:12 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Sat, 18 May 2024 00:52:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1716007932; x=1716094332; bh=VXv2WhFCCK
-	Dr2j2MOf1NDQhuP2jiLgTCrInbcR3m3wE=; b=cLxd7WaM4QJX29MSeRBuC2P8j+
-	NeKw3u+xq/dHV0Y5PZzygEq4rtPdHeLFf24Y3/+QSkJXzxmAmCU71MoaQvzXByU4
-	YfyiFaivrLyRcsp+Rgt9QkFB4uqz5geRr3hmGUfL0UyQWwYXV50VboRFWUM4C/ow
-	NYG1RiW9nJaOo7b8+kzHKmsM2b3NAfkxGf3f9zviwTBgSBzWk6/V22vX89DwXMGz
-	3XyKBqzdk3cHVi4ExK/PWIy/6kFFJJztJ/ueqS9ZmlzlayUI5Hy9spmQbbUX2CNu
-	6y354u26SQTHQN500kV5p05gojxUUWCKp2lpX5le90iuPkkmEdRvFSg5Wt2Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1716007932; x=1716094332; bh=VXv2WhFCCKDr2j2MOf1NDQhuP2ji
-	LgTCrInbcR3m3wE=; b=LdDCcAJujjRFjyM9JzcLrqBUzHm69hOst3+Rr7TcWwxt
-	tEREYLGdY8D3rkSxMGmk5JpL0eni8xdUX5sMPVkuxNonrhMqm7uQ4GYi2yE09DzX
-	drhUALjYco/zB+oQGNdoG1lqf3GhhM3JiL0RmdDIUdRyCez/5ECdIsELrdyrKTPo
-	7Y1OZyTMIDshQtGEuF8DQWajLpAKMTws/AqUVi84Yuzbq1/kq7VT9Thjuo0yp3kd
-	h6Cn2KBxef/K6rFKUHeR6hfeguEWPbQu3QqfPzNPpp04Whwbgk1GZf92/6d6v8pd
-	80+yj1zjV2zvbWrMrqMomMncsYPDVmLt1aIvVOxagw==
-X-ME-Sender: <xms:_DNIZj-AGU1KKDrFIueLh2TXDq0NJZq2MMaI-222fJcjPdzUHGII9g>
-    <xme:_DNIZvtQHuFrA35bSqEgRWiFsfz3Xojhs32M4no7WsWJ9sU040aYYO5E6F6BoMvOj
-    c7aQ7YbXB_5EjkmPQ>
-X-ME-Received: <xmr:_DNIZhBVbl9d8C27N9KyW-0yz3y6EjYefp6Pg07cLl82HZkC8xvq5mORTzC9n6ctxhY-BHPn6zVhNdad7shWir2gYe-IIS6KRpUhVd8pQrRiEg_p>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdehhedgkeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeevffffkefgffegheduteetffegjeekge
-    ektdduheefjeegleefgfeutefhkeekueenucffohhmrghinheprgguughrvghsshgvugdr
-    phhspdhpkhhsrdhimhdpshhoohhnihhshhdrphhspdhgohdrphhsnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:_DNIZvcDClIS5irHhgaEIjjVv3GHZiej9-I87vbn2F4zbVKexq_u1w>
-    <xmx:_DNIZoNeywP9NWBbQv0bf4KSl4KS1jFJ06HqTFP2TV2nHf4wl_BWDw>
-    <xmx:_DNIZhmMK5A9UgcpHlzD8Qzk8n3bpFKKEX737yhLTtmypaHSH_lMWQ>
-    <xmx:_DNIZiuuEsrToMGmldpc75n_b_w4q6-6lLkaCNqaDPeBsyQYbgnkUA>
-    <xmx:_DNIZhaZpI9ZBKgq9rw8kh9h4Eq3TmbpjoCAbOJqjXbOpjXWTBr7_a3i>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 18 May 2024 00:52:11 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 372229b6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sat, 18 May 2024 04:51:40 +0000 (UTC)
-Date: Sat, 18 May 2024 06:52:07 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2024, #07; Fri, 17)
-Message-ID: <Zkgz90p62iDqAhKJ@framework>
-References: <xmqqfrugdmnx.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MbvjPAZA"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4202ca70270so11596595e9.3
+        for <git@vger.kernel.org>; Sat, 18 May 2024 03:32:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716028370; x=1716633170; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DuRrxw830UYQtha8Je88sNiet+O/9A2IyWr6XYPPhuA=;
+        b=MbvjPAZAKdIoCqm4j82OwWy5fm85Flmly331DRRFuQonC+NIaAZaR5Pub5u/ZzBf6U
+         3Ql+SF8Glhofk45fa+N/vuunww571Q4ixIBuCSnkpNxnbQOS9kLSODy6s4VsGIP64Y6k
+         toSK987LX2Ahx8xTZNgSlPXYjmBj5Z8lz5i/BtB3B6I/aQLNllp80VTiNa1jEILQ6FYU
+         lyAv/rKdzSFu5s0PqicFIB4c9IdxrQbgeajiDbGjIoNdiX3WMkIe8lMCIiUxxr2sxbU4
+         HjM1sI79uA9VWufDvOTA0cyhHaJzF9HV3ye/4Rwq/qjDK8Ae8sIoVfeh3VUMrsAzUs2B
+         l9Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716028370; x=1716633170;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DuRrxw830UYQtha8Je88sNiet+O/9A2IyWr6XYPPhuA=;
+        b=hI16CGfuj15v2hoIaIWMvfp0VmqXimVZLFyLj+uFMXklwtdUvTsv0z46Gk6G1KDuD3
+         MD6UI+EugcMivVal1j3IyOXPXnVdtfCAKnftEjtEMZM9es0+juQQ3O/OXMh+/fy1duRB
+         KH6aB3zp2oWZMxLNEMiQrY5npe/Mxmr5avcDjB3HN534Yc75PML4tevAHslCocITTye7
+         b4sEukzZFY4nMGPg8Wrz+stE/ZFiAtWZvJgwETSRrX5boELHqnaXQAEs5T06raLFLE1/
+         ZgZ1UGnngpsF5mcMCxgqn7qeaYy0VqIY929V+OjAMzOwMZpcgILgdeVVM0TreiReR1dO
+         ccdA==
+X-Gm-Message-State: AOJu0Yzc5cID1xCIUssq2sGvkbUFJi2GgVM1Cf7R8pP3rVWfcP+VaIU3
+	8YBRjq5nvgJl5zQtClf21OFT1+4URaIFjdZ/kHJ/eDtdaqt9M8lGa5Cybg==
+X-Google-Smtp-Source: AGHT+IFuWiG+fv117tlZjGm/MY4A72D3M3B75/OfEbtWjzO5hv0VgCjwvC9pRJAr4jpS/jTTORM9MQ==
+X-Received: by 2002:a05:600c:4f04:b0:420:1508:f0ae with SMTP id 5b1f17b1804b1-4201508f2edmr178066725e9.10.1716028369627;
+        Sat, 18 May 2024 03:32:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-420149b1c24sm229771495e9.41.2024.05.18.03.32.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 May 2024 03:32:48 -0700 (PDT)
+Message-Id: <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
+References: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 18 May 2024 10:32:38 +0000
+Subject: [PATCH v2 0/8] Various fixes for v2.45.1 and friends
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/Y7TXeDBTNQ8Yasj"
-Content-Disposition: inline
-In-Reply-To: <xmqqfrugdmnx.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
+
+There have been a couple of issues that were reported about v2.45.1, and in
+addition I have noticed some myself:
+
+ * a memory leak in the clone protection logic
+ * a missed adjustment in the Makefile that leads to an incorrect templates
+   path in v2.39.4, v2.40.2 and v2.41.1 (but not in v2.42.2, ..., v2.45.1)
+ * an overzealous core.hooksPath check
+ * that Git LFS clone problem where it exits with an error (even if the
+   clone often succeeded...)
+
+This patch series is based on maint-2.39 to allow for (relatively) easy
+follow-up versions v2.39.5, ..., v2.45.2.
+
+Changes since v1:
+
+ * simplified adding the SHA-256s corresponding to Git LFS' hooks
+ * the core.hooksPath test case now verifies that the config setting was
+   configured correctly
+
+Johannes Schindelin (8):
+  hook: plug a new memory leak
+  init: use the correct path of the templates directory again
+  Revert "core.hooksPath: add some protection while cloning"
+  tests: verify that `clone -c core.hooksPath=/dev/null` works again
+  hook(clone protections): add escape hatch
+  hooks(clone protections): special-case current Git LFS hooks
+  hooks(clone protections): simplify templates hooks validation
+  Revert "Add a helper function to compare file contents"
+
+ Documentation/config/safe.txt |   6 ++
+ Makefile                      |   2 +-
+ builtin/init-db.c             |   7 +++
+ cache.h                       |  14 -----
+ config.c                      |  13 +----
+ copy.c                        |  58 --------------------
+ hook.c                        | 100 +++++++++++++++++++++++++++-------
+ hook.h                        |  10 ++++
+ setup.c                       |   1 +
+ t/helper/test-path-utils.c    |  10 ----
+ t/t0060-path-utils.sh         |  41 --------------
+ t/t1350-config-hooks-path.sh  |   7 +++
+ t/t1800-hook.sh               |  40 ++++++++++----
+ t/t5601-clone.sh              |  19 +++++++
+ 14 files changed, 161 insertions(+), 167 deletions(-)
 
 
---/Y7TXeDBTNQ8Yasj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+base-commit: 47b6d90e91835082010da926f6a844d4441c57a6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1732%2Fdscho%2Fvarious-fixes-for-v2.45.1-and-friends-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1732/dscho/various-fixes-for-v2.45.1-and-friends-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1732
 
-On Fri, May 17, 2024 at 04:49:22PM -0700, Junio C Hamano wrote:
-> [New Topics]
->=20
-> * tb/pack-bitmap-write-cleanups (2024-05-15) 6 commits
->  - pack-bitmap: introduce `bitmap_writer_free()`
->  - pack-bitmap-write.c: avoid uninitialized 'write_as' field
->  - pack-bitmap: drop unused `max_bitmaps` parameter
->  - pack-bitmap: avoid use of static `bitmap_writer`
->  - pack-bitmap-write.c: move commit_positions into commit_pos fields
->  - object.h: add flags allocated by pack-bitmap.h
->=20
->  The pack bitmap code saw some clean-up to prepare for a follow-up topic.
->=20
->  Will merge to 'next'?
->  source: <cover.1715716605.git.me@ttaylorr.com>
+Range-diff vs v1:
 
-This patch series looks good to me. I left a few comments, but none of
-them really need to be addressed.
+ 1:  d4a003bf2ce = 1:  d4a003bf2ce hook: plug a new memory leak
+ 2:  961dfc35f42 = 2:  961dfc35f42 init: use the correct path of the templates directory again
+ 3:  57db89a1497 = 3:  57db89a1497 Revert "core.hooksPath: add some protection while cloning"
+ 4:  7d5ef6db2a9 ! 4:  cd14042b065 tests: verify that `clone -c core.hooksPath=/dev/null` works again
+     @@ t/t1350-config-hooks-path.sh: test_expect_success 'git rev-parse --git-path hook
+       '
+       
+      +test_expect_success 'core.hooksPath=/dev/null' '
+     -+	git clone -c core.hooksPath=/dev/null . no-templates
+     ++	git clone -c core.hooksPath=/dev/null . no-templates &&
+     ++	value="$(git -C no-templates config --local core.hooksPath)" &&
+     ++	# The Bash used by Git for Windows rewrites `/dev/null` to `nul`
+     ++	{ test /dev/null = "$value" || test nul = "$value"; }
+      +'
+      +
+       test_done
+ 5:  a4f5eeef667 = 5:  b841db8392e hook(clone protections): add escape hatch
+ 6:  98465797e72 ! 6:  5e5128bc232 hooks(clone protections): special-case current Git LFS hooks
+     @@ Commit message
+      
+       ## hook.c ##
+      @@ hook.c: static int is_hook_safe_during_clone(const char *name, const char *path, char *s
+     - 	if (get_sha256_of_file_contents(path, sha256) < 0)
+     - 		return 0;
+       
+     -+	/* Hard-code known-safe values for Git LFS v3.4.0..v3.5.1 */
+     -+	if ((!strcmp("pre-push", name) &&
+     -+	     !strcmp(sha256, "df5417b2daa3aa144c19681d1e997df7ebfe144fb7e3e05138bd80ae998008e4")) ||
+     -+	    (!strcmp("post-checkout", name) &&
+     -+	     !strcmp(sha256, "791471b4ff472aab844a4fceaa48bbb0a12193616f971e8e940625498b4938a6")) ||
+     -+	    (!strcmp("post-commit", name) &&
+     -+	     !strcmp(sha256, "21e961572bb3f43a5f2fbafc1cc764d86046cc2e5f0bbecebfe9684a0b73b664")) ||
+     -+	    (!strcmp("post-merge", name) &&
+     -+	     !strcmp(sha256, "75da0da66a803b4b030ad50801ba57062c6196105eb1d2251590d100edb9390b")))
+     -+		return 1;
+     -+
+       	if (!safe_hook_sha256s_initialized) {
+       		safe_hook_sha256s_initialized = 1;
+     ++
+     ++		/* Hard-code known-safe values for Git LFS v3.4.0..v3.5.1 */
+     ++		/* pre-push */
+     ++		strset_add(&safe_hook_sha256s, "df5417b2daa3aa144c19681d1e997df7ebfe144fb7e3e05138bd80ae998008e4");
+     ++		/* post-checkout */
+     ++		strset_add(&safe_hook_sha256s, "791471b4ff472aab844a4fceaa48bbb0a12193616f971e8e940625498b4938a6");
+     ++		/* post-commit */
+     ++		strset_add(&safe_hook_sha256s, "21e961572bb3f43a5f2fbafc1cc764d86046cc2e5f0bbecebfe9684a0b73b664");
+     ++		/* post-merge */
+     ++		strset_add(&safe_hook_sha256s, "75da0da66a803b4b030ad50801ba57062c6196105eb1d2251590d100edb9390b");
+     ++
+       		git_protected_config(safe_hook_cb, &safe_hook_sha256s);
+     + 	}
+     + 
+      
+       ## t/t1800-hook.sh ##
+      @@ t/t1800-hook.sh: test_expect_success '`safe.hook.sha256` and clone protections' '
+ 7:  c487bd06be8 = 7:  bd6d72625f5 hooks(clone protections): simplify templates hooks validation
+ 8:  c45c33d8e3f = 8:  4b0a636d41a Revert "Add a helper function to compare file contents"
 
-> * ps/refs-without-the-repository-updates (2024-05-17) 17 commits
->  - refs/packed: remove references to `the_hash_algo`
->  - refs/files: remove references to `the_hash_algo`
->  - refs/files: use correct repository
->  - refs: remove `dwim_log()`
->  - refs: drop `git_default_branch_name()`
->  - refs: pass repo when peeling objects
->  - refs: move object peeling into "object.c"
->  - refs: pass ref store when detecting dangling symrefs
->  - refs: convert iteration over replace refs to accept ref store
->  - refs: retrieve worktree ref stores via associated repository
->  - refs: refactor `resolve_gitlink_ref()` to accept a repository
->  - refs: pass repo when retrieving submodule ref store
->  - refs: track ref stores via strmap
->  - refs: implement releasing ref storages
->  - refs: rename `init_db` callback to avoid confusion
->  - refs: adjust names for `init` and `init_db` callbacks
->  - Merge branch 'ps/refs-without-the-repository' into ps/refs-without-the=
--repository-updates
->=20
->  Further clean-up the refs subsystem to stop relying on
->  the_repository, and instead use the repository associated to the
->  ref_store object.
->=20
->  Will merge to 'next'?
->  source: <cover.1715929858.git.ps@pks.im>
-
-The second version hasn't seen any reviews yet, so I wouldn't mind
-waiting a few more days. But overall the changes are quite straight
-forward and shouldn't be all that controversial, so I wouldn't mind it
-much if it was landing soonish.
-
-> * ps/builtin-config-cleanup (2024-05-15) 22 commits
->  - builtin/config: pass data between callbacks via local variables
->  - builtin/config: convert flags to a local variable
->  - builtin/config: track "fixed value" option via flags only
->  - builtin/config: convert `key` to a local variable
->  - builtin/config: convert `key_regexp` to a local variable
->  - builtin/config: convert `regexp` to a local variable
->  - builtin/config: convert `value_pattern` to a local variable
->  - builtin/config: convert `do_not_match` to a local variable
->  - builtin/config: move `respect_includes_opt` into location options
->  - builtin/config: move default value into display options
->  - builtin/config: move type options into display options
->  - builtin/config: move display options into local variables
->  - builtin/config: move location options into local variables
->  - builtin/config: refactor functions to have common exit paths
->  - config: make the config source const
->  - builtin/config: check for writeability after source is set up
->  - builtin/config: move actions into `cmd_config_actions()`
->  - builtin/config: move legacy options into `cmd_config()`
->  - builtin/config: move subcommand options into `cmd_config()`
->  - builtin/config: move legacy mode into its own function
->  - builtin/config: stop printing full usage on misuse
->  - Merge branch 'ps/config-subcommands' into ps/builtin-config-cleanup
->=20
->  Code clean-up to reduce inter-function communication inside
->  builtin/config.c done via the use of global variables.
->=20
->  Will merge to 'next'?
->  source: <cover.1715755055.git.ps@pks.im>
-
-I think this should be ready to go.
-
-> * ps/pseudo-ref-terminology (2024-05-15) 10 commits
->  - refs: refuse to write pseudorefs
->  - ref-filter: properly distinuish pseudo and root refs
->  - refs: pseudorefs are no refs
->  - refs: classify HEAD as a root ref
->  - refs: do not check ref existence in `is_root_ref()`
->  - refs: rename `is_special_ref()` to `is_pseudo_ref()`
->  - refs: rename `is_pseudoref()` to `is_root_ref()`
->  - Documentation/glossary: define root refs as refs
->  - Documentation/glossary: clarify limitations of pseudorefs
->  - Documentation/glossary: redefine pseudorefs as special refs
->=20
->  Terminology to call various ref-like things are getting
->  straightened out.
->=20
->  Will merge to 'next'?
->  cf. <vgzwb5xnlvz2gfiqamzrfcjs2xya3zhhoootyzopfpdrjapayq@wfsomyal4cf6>
->  source: <cover.1715755591.git.ps@pks.im>
-
-This has seen quite some discussion, but to the best of my knowlegde I
-have addressed all the feedback. So I think this one should be ready to
-go, too.
-
-Thanks!
-
-Patrick
-
---/Y7TXeDBTNQ8Yasj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZIM/EACgkQVbJhu7ck
-PpQOsw//dZHAoe4ysuEJEb85GeBJrxl9XdV0Gu6lcsQV58dDvqKpUyiw3aqPGkTB
-8vjDrPUfph6eBrbnHJ5pjXgxS5fyMTUPel37W0D69E8iRNdFoDr9JgBX40YKVhmN
-qaqpfZok7bDVrVZb7skXOeYizITIbs4asFNzuorSXUjrYSoCB9nGaRkVUfnFyttw
-RQKX8bUagMLHMaWloJOfdgbmEpWVDLoYt2KlgFeFbu2JM4zP3Cu4ecAs07NlWwoT
-NfGg+hdCT+MhSg6Ad4nc8NUo4p5K9T5q2u11sEAtkyULJELQpT6ioluZcb9lOuap
-GKeYyES/k3CHj5kR04m6k1O3kkTFXI1WttMxizGy4DNLMzWCbg+MgYyEGp7hBpL6
-jCpoqhuBPIcC+LnCNo+jnxAiupfLfXCqH60sr46FfsYmbv6jp/J9GLy5TpC4/Gfz
-TEmALeDedJ4Jx6ktxF17zeUf5spETtoPPoYBTQChUhTlMhLCKeF7FrBXAG2GQ63c
-me8FapMPhY8E4/KX7lBLMil1cVYxX8mUr26VtuK5jjwXSoyKQGeouctoUKkl/ElL
-NTaxkfzCFXijT6AdRG1QF6cgDX2E+4wfZHAxcX3tCHw+EjqnmxH2qHa6ttZhi5e8
-YpeCA+t51gutcD1bGEq3d5VmNnlcGWn+t0RVbe3DKZ8JUTiHLKM=
-=BKA4
------END PGP SIGNATURE-----
-
---/Y7TXeDBTNQ8Yasj--
+-- 
+gitgitgadget
