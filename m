@@ -1,102 +1,115 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5783D56D
-	for <git@vger.kernel.org>; Sat, 18 May 2024 18:54:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01A83D96A
+	for <git@vger.kernel.org>; Sat, 18 May 2024 18:58:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716058492; cv=none; b=WiqT1RI8Wnl8080B2eNxNiPzWeMEHbWBtzdUfHJVWesRNohVVuXgPvyod9BjGM/hy1DDhNbfOdx2z3VejgDuWvXYTa2ipnz5gMR/9DA/mJ7RW8AFpwdSKwCGXnm2jdADZXfPDMwch+auHAoP8F6JLHRnWAiU0lrna7XFXq1M4TQ=
+	t=1716058706; cv=none; b=gvLGwQuCvOD2l/e64hGlq9/MIafIQ+oBPol3+xRjSwW4oWws+WVXjVXOI60CdAakzLorCbY5bwGHk8wVHfpthSD+gG9BhlnvihAZOOcFad7oCNx6H3EWTJKsIaMvAaQtbg8USDBVQ7uwV/J/lGFfYd1tCA5/3BrdTVsn+CvGbso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716058492; c=relaxed/simple;
-	bh=3ePHG3EShk0FbpbvQLrZoomsNi19rP5GUZ/hJ3G3rJc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iQYqCclEOdCBq0bbWj4sDLo4Q/WE9V0fet1/TFkzijugE7OaK9R9pScFD64MkwW2Qzm7vs4bXPPD+UkIXcP3qpgo8vGoMBzxSy7fLSg//cQ3j0Myr/e7tTPrvleXLDRnO8E369w3gfJDCs2H4rNid8CJpNHpi/hgPi/YXFCD1n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=W4QtbVwd; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716058706; c=relaxed/simple;
+	bh=DppO9y6AI5fYCKPAlXTVD/t/wEyeIkBJQxPAam/PWt4=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=mdOcUCq2tXV9R/x2M0rDpH0DCbA/63WEhMHpphtxiFj/xMo678UGUDNe+Qa2H2aJftYDjAByT1pjK3LcXg2QeK+UDVJGqsxgKvUyXHqrzQlD4xlrfABwNmJguSqizBwSkZv/NBef8ReLarSLvB6RAck41nERwMklnqrg8IFfqQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=t7obamDV; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W4QtbVwd"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 34F9518427;
-	Sat, 18 May 2024 14:54:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=3ePHG3EShk0FbpbvQLrZoomsNi19rP5GUZ/hJ3
-	G3rJc=; b=W4QtbVwd66Zp40remXZ4cbwBNupG+VEKHtGHekRQwnxWxxd9oxBEdk
-	DQyxCJPpiWEdf/zycjYe1Gh/qcsx/yvM2SfMWiXQzZ7Na2HI23jWx46qO1DR1EFN
-	7WUuu9YCyh1/bHlBktMPF5NO5GxkRa+7XBzlh84gXnkftS0dzLKbE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2BC8718426;
-	Sat, 18 May 2024 14:54:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 842CE18425;
-	Sat, 18 May 2024 14:54:44 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 5/8] hook(clone protections): add escape hatch
-In-Reply-To: <20240518181432.GA1570600@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 18 May 2024 14:14:32 -0400")
-References: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
-	<pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
-	<b841db8392ebd924d1893829a7e5e22240f1e9cf.1716028366.git.gitgitgadget@gmail.com>
-	<20240518181432.GA1570600@coredump.intra.peff.net>
-Date: Sat, 18 May 2024 11:54:41 -0700
-Message-ID: <xmqqmsonne6m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="t7obamDV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1716058698; x=1716663498;
+	i=johannes.schindelin@gmx.de;
+	bh=bsULHiWMbNMLivJtF86P/iuL/c5EYbc0Q4zSGv0Wojk=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=t7obamDVqZQj3ICxHSu8dVIZd/0cDso2Iq0R39FvIMzb+g2n000nBXUgGfoL18eZ
+	 PY/YrwzOUegatD9d4sCUFPqXBOOFUEoinYejwzgqFs5fDlkv2Ola9jmZAfAI3P65a
+	 51xZwTGbLlHd1gg2u/bV47cccldIfS1BW2nOSgSckmrf/ZZNYoQG28ikvjiLPmzvz
+	 dOtbSPVBMfgunROGdAEsbpiHFlFXWZHBoRLs/rmzoesccVoLVml+QHu9CVDaEsRZ1
+	 jWfsIjZaFPjW6pwZyvCfODGdvpT2jkXut38ZfTfedsScxEvzeZv1woc86Qe3t8pNl
+	 NSQFNTck3vU78kRGMQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.77]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M2O6Y-1s7qlD45wE-003s1r; Sat, 18
+ May 2024 20:58:18 +0200
+Date: Sat, 18 May 2024 20:58:16 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org
+Subject: Re: [PATCH 4/8] tests: verify that `clone -c core.hooksPath=/dev/null`
+ works again
+In-Reply-To: <xmqq4jawdlpa.fsf@gitster.g>
+Message-ID: <89e16ab9-1ddc-d88f-41aa-c0c6eabe779c@gmx.de>
+References: <pull.1732.git.1715987756.gitgitgadget@gmail.com> <7d5ef6db2a9c3c7a1b0ba78873d4202403768769.1715987756.git.gitgitgadget@gmail.com> <xmqq4jawdlpa.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 175D3BF2-1548-11EF-A3B8-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ePPv1odLsyiqmoyCZnP1v4SIlCwiNVgBZEYp8bKniRhUo12x7Fo
+ jkk7NOYBOfPnkKoQEac2fGX5M5nTs6NkXnNss0NjJC3TEn/PKzBscI40pXyIWt/RxSyVX4g
+ csnR9tHjfsPY0BOqLms9TEDmLguQQmJhxy3ssMDTjLFTd5W/rRW8jV4CtxRCvOeypkAU+fN
+ 2TIJN0ozOiaxgnKaJJxSA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:4/5h3ICOYKI=;klHoFTyq6ggCDYtWRLXNb10k09W
+ vofW06xF27cQWMq0p3kZr3hxHP55RcPp2k8yx00t+6spPHdd74W715FVE+NtYRWvZHwX3dy+O
+ 6znMifXEKu7O0b3HGyQkZfPGxt53ABZ0E9RU2XyKBFuUAfaII6qhFmSQkD5O7U24TgfL+mbIQ
+ kv8udYgfXtdlPNHwmvCNAT39SpQbrh/FQagfw5wZqgJpIVQse+v7hxHxM3idZsqn95HGvcKtZ
+ SpF8RAkUcc6g5dwBe33fZNwyiwLXlfyVc37V2uT7Mh3XGOuMCy6E8HSxrVyqU1yzDNLbRGgMW
+ dk8sE0rhGcj/HqD2RLxq3Cvm5KctwujPchGeHLsJKzwCAVpsyGh04G9ahDqPreaHVBsQUp9yg
+ 0Ln8Jj+N5P8XBwOxa614Qje3cSNPvSiYjulTaGkSpDVc3bfDkuZsv9QALi03RbSbScqL13SWY
+ Wf40OESN3xk0JzVYsmDmVmzDpjcgetySI3MWmijK0RfeQzkKPqa3dDB5u1FwBDfHYuf3RXwY0
+ b745F0l6MCLs7uXHzgQyDqyApAV+MRZV6/Az8VknEJFHyS+a+RIod48m4iYGOhsOt/du3SlWt
+ Iu2WYMaBQTjnoXhKFGn0QUYFuMbyMfTwvcqpj2q+uG73sxCb0MF6xQFajLZd2v1PFF45z9bmj
+ OB+L53jag8zRelrindY1fu4Lc0GzKHz0CsxQUORGehyrLsLdBpv/KPsYvdSva3N2KbNt0Pq6p
+ 6pobhHRuTHJhWMpuZ/HkLqwjkX+2ebxS9+80ygSQl5XCwZhVRDdEZithzQhV6jq0UEzTGH3dk
+ jNYDjQ/On/BaZozH++h4BX/xA/HLSamhgTELlFcNJCO1c=
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
+Hi Junio,
 
-> In either case, we're considering config to be a trusted source of
-> truth, so I think the security properties are the same. But for the
-> system here, a user updating a hook needs to do multiple steps:
+On Fri, 17 May 2024, Junio C Hamano wrote:
+
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
->   - compute the sha256 of the hook (for which we provide no tooling
->     support, though hopefully it is obvious how to use other tools)
+> > What the added protection did not anticipate is that such a
+> > repository-local `core.hooksPath` can not only be used to point to
+> > maliciously-placed scripts in the current worktree, but also to
+> > _prevent_ hooks from being called altogether.
+> > ...
+> > diff --git a/t/t1350-config-hooks-path.sh b/t/t1350-config-hooks-path.=
+sh
+> > index f6dc83e2aab..1eae346a6e3 100755
+> > --- a/t/t1350-config-hooks-path.sh
+> > +++ b/t/t1350-config-hooks-path.sh
+> > @@ -41,4 +41,8 @@ test_expect_success 'git rev-parse --git-path hooks'=
+ '
+> >  	test .git/custom-hooks/abc =3D "$(cat actual)"
+> >  '
+> >
+> > +test_expect_success 'core.hooksPath=3D/dev/null' '
+> > +	git clone -c core.hooksPath=3D/dev/null . no-templates
+> > +'
 >
->   - add the config for the sha256
+> Is it sufficient that the command exits with 0?  I am wondering if
+> we want to verify that the resulting repository looks like it
+> should, e.g., with
 >
->   - install the new hook into $GIT_DIR/hooks
+>     v=3D$(git -C no-templates config --local --get core.hookspath) &&
+>     test "$v" =3D /dev/null
+>
+> or something silly like that.
 
-I am not sure why any of the above is needed.  
+I've added that, but would like to stress that the regression was _not_
+that the `core.hooksPath` setting was missing from the local config. I've
+added it because the implied suggestion is valid that we'll want to ensure
+that the test case passes for the _correct_ reason ;-)
 
-Hmph.
-
-I was somehow (because that is how "git config --help" explains
-"safe.hook.*") led to believe that this "safety" was only about "git
-clone would prefer not to run ANY hook before it finishes operation
-and gives back the control to the end user, but historically it ran
-any enabled hooks in the resulting repository that was freshly
-created by it---so let's at least make sure the contents of the
-hooks are known-to-be-good ones when 'git clone' runs the hooks".
-Most importantly, once "git clone" gives control back to the end
-user and the end user had a chance to inspect the resulting
-repository, the files in $GIT_DIR/hooks can be updated and the hooks
-will run without incurring any cost of checking.
-
-Isn't that what happens?
-
-Looking at the control flow, hook.c:find_hook() is the one that
-calls the function is_hook_safe_during_clone() to reject "unsafe"
-ones (and allow the white-listed ones), but I do not know offhand
-how the code limits the rejection only during clone.  So perhaps
-this set of patches need further work to restrict the checks only to
-"while we are cloning" case?
-
-
+Ciao,
+Johannes
