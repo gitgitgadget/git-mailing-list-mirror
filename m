@@ -1,174 +1,94 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D152E3E5
-	for <git@vger.kernel.org>; Sat, 18 May 2024 17:50:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B407F1BC4B
+	for <git@vger.kernel.org>; Sat, 18 May 2024 18:14:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716054616; cv=none; b=T16fOVQ+8bRwo+J8hx1CZIUC+Yzb9oc4ULEelEJkiSTqxYLi3Um2mcOs0TYSkwzD25te7/Vl35hEcDGGLFb0cJDesHZzqRrYzZMy4wdP9x+6uwtKXDd7d7MKkeVVKshi3aRKhsj5qKVZaQHJNTA70fv7f5kDiEJEgt5Gq/APWiU=
+	t=1716056084; cv=none; b=ng2jl/nrXiqv9pQojDDkPYRXJlf9Io8IEgt/n3jnowcGYoYuVaN/gq9TY5yC6QnKpXyPTjKXQWrZJ6nmh7jtg7RuQ0caszkX/Ov4C3f7mnvhGbkwmHt4U00xtoWCnXT45BNrcdgBODDHhuI23J9QvPdoyFF7FB5J1SJp+GkvnQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716054616; c=relaxed/simple;
-	bh=INZSzUlmo6p+BVLLDScjKss/gxoUB5yKRaM+08B+gzk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DAyHB7XckGviziHPU/XmwXXc4Xr5cFH1PMe5jntnV+v6NH2FoILp7TyUZWZZcNTm1vvVoYtJA/aUj/6fY9G8UnihLMwPfA9AfMPGx9XjeYefUmuIcrhVezoEHdCfsHzzoxZlCHjL4KydTtRxRcUThqvVd+tOjs4INsH52aMGDdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WStOFsR4; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WStOFsR4"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1ec486198b6so35806585ad.1
-        for <git@vger.kernel.org>; Sat, 18 May 2024 10:50:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716054614; x=1716659414; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3inXiG+F8lKGAkqr57653WVSWR3Kv9j/2GRqLIXRtx4=;
-        b=WStOFsR4p0QnWgaqaUbdSCjX9iHg4IYDwgrXQlYDgufUU2SDgUV7G/5dZSwpuF4kqg
-         1vK6llC+fSnQFB0kFQjEc319zmZofgE5CNe+YdHMsM++IOsuaJd22/edKSNu8XO/Pa5N
-         ydfXpM8bW/JMqQ/5fjqJhihnguviztUibEQ6ScbQmXutYWRskTK/auKucxvLwBtQ/CuY
-         14W8QZksgjbev3g+7TKqC+JXm6EQ5wGeGWdIynfqbBg5ZAClXJnA6uOVGjc/AWF6yVDU
-         ynQuBG6Dc/u6SxvzUYYbQABZ5basSp3qru7eGibaMPxgQnW2EyQ9IKzSFRCO+k87H7py
-         fUWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716054614; x=1716659414;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3inXiG+F8lKGAkqr57653WVSWR3Kv9j/2GRqLIXRtx4=;
-        b=nWRZTk/rMCjG3b0QJRQGXsxxgjeyXw3B0ur9oQDbE5vchCnxDFL2h4WhFpzBvKOCJI
-         Pxn0oM8M4fWl7u8vJ3KAxdf+PfUrXq6nEBx+1+MGgKFSZwGoo2mOnvA0mLCzhCVVDwAB
-         8Z2nwbx2G6EvPn84kLmcOOuGZY6pmFoIMnP1STtDe03zWSn40SRuWxrqeLUuWQZNn7xe
-         7ZH5DCiPpLkzsKh6JsefDBg8Rdy4IXFl59myDsGUISfVRFy61+qv/p++h5wHRmT4+eFn
-         WlEOutoKuMaMj4i7zRyVDjsg05giRFNlc2cyhP/pNeltB5uk3ZytX4p1Yc87TQr02y+5
-         Asew==
-X-Forwarded-Encrypted: i=1; AJvYcCU1J0jRFPyT5m4J0f3+kXXnEykwHQadYbuAY4sDu3keYYuI2Dojw5wefO0fjje29jxteY9WGB7UAr/3bi1pIaCzx17/
-X-Gm-Message-State: AOJu0YwDc6MzwedZT83GA5dSOHFMfNH4KqUWpl6qT0uz5uJzHGlj4bq7
-	K+X2HHN+ojJrHJt/DiCvUKYmFDfAwv0/rx1lwf4XplXyCT/Z8MSzjPbvp8OLUXdsZabTtWuzwqA
-	YP6ILX0nwJHFItAlifMWjm9FUuCs=
-X-Google-Smtp-Source: AGHT+IEI93yt384nrNsKjZ+9UAZGPNpM0Yq7MofS0zVnmWJGmL+FxZfPBQLtsawavyWeR+OEFowJOsVKX1aaiGrnPsY=
-X-Received: by 2002:a05:6a21:2d84:b0:1b0:1a80:413c with SMTP id
- adf61e73a8af0-1b01a805de0mr14101706637.18.1716054614150; Sat, 18 May 2024
- 10:50:14 -0700 (PDT)
+	s=arc-20240116; t=1716056084; c=relaxed/simple;
+	bh=aBu7N3hq9bH27j6s297zGqVI5yO6yyigWjuX0rQKIzw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GhPIeycKre4mqpLq0OVQ4LDwx1fDkTXItrk44S1LcMtFLgJEh42EKSqK5yw2ZVmFsuKWSNmUA4RAxRjyMli5yFqOF2+kvNn/Q0pWqh0AtMy9fGWExygi0KXj/aA7Snt/vzkYSdLxLc27QqmXmKkB4F+ocXN4Y7uez7w5PUDw8ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 23979 invoked by uid 109); 18 May 2024 18:14:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 May 2024 18:14:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4525 invoked by uid 111); 18 May 2024 18:14:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 May 2024 14:14:34 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 18 May 2024 14:14:32 -0400
+From: Jeff King <peff@peff.net>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 5/8] hook(clone protections): add escape hatch
+Message-ID: <20240518181432.GA1570600@coredump.intra.peff.net>
+References: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
+ <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
+ <b841db8392ebd924d1893829a7e5e22240f1e9cf.1716028366.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ee35f3b2-bf20-6fcc-2c71-38499aa592fe@gmx.de> <CABPp-BHv7K3gQ4+ZgOTFHUyhNm7dVa4wtzy_gtNHKNcyFYqr_g@mail.gmail.com>
- <CANiSa6gyNpJ3cUNLD1hFnBYeDFm6aFYv8k41MGvX+C90G8oaaw@mail.gmail.com>
-In-Reply-To: <CANiSa6gyNpJ3cUNLD1hFnBYeDFm6aFYv8k41MGvX+C90G8oaaw@mail.gmail.com>
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Date: Sat, 18 May 2024 10:50:02 -0700
-Message-ID: <CANiSa6hU6r-7K_GAyNtO4-_VUHBDfByd6ws3VdZEj4KKrSmryg@mail.gmail.com>
-Subject: Re: Replaying merges
-To: Elijah Newren <newren@gmail.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b841db8392ebd924d1893829a7e5e22240f1e9cf.1716028366.git.gitgitgadget@gmail.com>
 
-Now HTML-free
+On Sat, May 18, 2024 at 10:32:43AM +0000, Johannes Schindelin via GitGitGadget wrote:
 
-On Sat, May 18, 2024 at 9:33=E2=80=AFAM Martin von Zweigbergk
-<martinvonz@gmail.com> wrote:
->
->
->
-> On Fri, May 17, 2024, 18:45 Elijah Newren <newren@gmail.com> wrote:
->>
->> Hi Johannes!
->>
->> On Fri, May 17, 2024 at 5:35=E2=80=AFPM Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
->> >
->> > Hi Elijah,
->> >
->> > I took the suggestion to heart that you explained a couple of times to=
- me:
->> > To replay merge commits (including their merge conflict resolutions) b=
-y
->> > using the _remerged_ commit as merge base, the original merge commit a=
-s
->> > merge head, and the newly-created merge (with conflicts and all) as HE=
-AD.
->> >
->> > I noodled on this idea a bit until I got it into a usable shape that I
->> > applied to great effect when working on the recent embargoed releases.
->> >
->> > Here it is, the script [*1*] that I used (basically replacing all the
->> > `merge -C` instances in the rebase script with `replay-merge.sh`):
->> >
->> <snip>
->> > For the most part, this worked beautifully.
->>
->> Cool to see someone try it out.
->>
->> > However. The devil lies in the detail.
->>
->> Yup, but details rather than detail.  ;-)
->>
->> <snip>
->> > The biggest complication being the scenario... when a merge
->> > conflict had been addressed in the original merge commit, but in the
->> > replayed merge there is no conflict. In such a scenario, this script _=
-will
->> > create not one, but two merge conflicts, nested ones_!
->>
->> Only if merge.conflictStyle=3D"diff3"; if merge.conflictStyle=3D"merge",
->> then there will be no nested conflict (since the nested conflict comes
->> from the fact that the base version had a conflict itself).
->>
->> This is one of the issues I noted in my write up a couple years ago:
->> https://github.com/newren/git/blob/replay/replay-design-notes.txt#L315-L=
-316
->>
->> Further, it can get worse, since in the current code the inner
->> conflict from the base merge could be an already arbitrarily nested
->> merge conflict with N levels (due to recursive merging allowing
->> arbitrary nested of merge conflicts), giving us an overall nesting of
->> N+1 merge conflicts rather than just the 2 you assumed.  That's ugly
->> enough, but we also need to worry about ensuring the conflict markers
->> from different merges get different conflict marker lengths, which
->> presents an extra challenge since the outer merge here is not part of
->> the original recursive merge.
->>
->> In addition to these challenges, there's some other ones:
->>   * What about when the remerged commit and the newly-created merge
->> have the "same" conflict.  Does it actually look the "same" to the
->> diff machinery so that it can resolve the conflict away to how the
->> original merge resolved?  (Answer: not with a naive merge of these
->> three commits; we need to do some extra tweaking.  I'm actually
->> suprised you said this basic idea worked given this particular
->> problem.)
->>   * What about conflicts with binary files?  Or non-textual conflicts
->> of other types like modify/delete or rename/rename?
->>
->> > I still do think that your idea has merit, but I fear that it won't ev=
-er
->> > be as easy as performing multiple three-way merges in succession.
->>
->> I totally agree we need to do more than the simple merge of those
->> three "commits"; I have ideas for this that address some of the
->> challenges over at
->> https://github.com/newren/git/blob/replay/replay-design-notes.txt#L264-L=
-341
->
->
-> Another approach is to not eagerly evaluate the auto-merged parent tree a=
-nd instead do some algebra on the trees. For example, if the parents of the=
- merge commit is calculated by merging tree B and tree C with tree A as bas=
-e, then you can consider the result as tree B+C-A. If the merge commit itse=
-lf has tree D and you're rebasing it onto tree E, then the result is E+(D-(=
-B+C-A)). You can then evaluate that by recursively merging the trees as usu=
-al. This is effectively what jj does and it works very well.
->
-> I don't think Git has support for merging more than 3 trees (or tree entr=
-ies, etc.) at once yet, but that's not very hard. Here's how jj does it: ht=
-tps://github.com/martinvonz/jj/blob/main/lib%2Fsrc%2Fmerge.rs. I think the =
-tests at the end there are quite easy to read and they explain well how it =
-works.
->
->
->
->
+> To help Git LFS, and other tools behaving similarly (if there are any),
+> let's add a new, multi-valued `safe.hook.sha256` config setting. Like
+> the already-existing `safe.*` settings, it is ignored in
+> repository-local configs, and it is interpreted as a list of SHA-256
+> checksums of hooks' contents that are safe to execute during a clone
+> operation. Future Git LFS versions will need to write those entries at
+> the same time they install the `smudge`/`clean` filters.
+
+This scheme seems more complicated for the user than the sometimes
+discussed ability to specify hook paths via config (not core.hooksPath,
+which covers _all_ hooks, but one which allows a per-hook path).
+
+In either case, we're considering config to be a trusted source of
+truth, so I think the security properties are the same. But for the
+system here, a user updating a hook needs to do multiple steps:
+
+  - compute the sha256 of the hook (for which we provide no tooling
+    support, though hopefully it is obvious how to use other tools)
+
+  - add the config for the sha256
+
+  - install the new hook into $GIT_DIR/hooks
+
+Whereas if the config can just point at the hook, then there is only one
+step: add the config for the hook (presumably pointing to a system
+version that would have been copied into $GIT_DIR/hooks previously).
+
+Likewise for updates of the hooks, where the sha256 scheme requires
+computing and adding a new hash. But when the config just points to the
+path, there is no additional step for updating.
+
+In either scheme, programs like git-lfs would have to adjust to the new
+world view. The main advantage of the sha256 scheme, it seems to me, is
+that the baked-in sha256 values let existing versions of git-lfs work.
+But we could also support that internally, without exposing
+safe.hook.sha256 to the world (and thus creating an ecosystem where we
+have to support it forever).
+
+Implied here is that I also think config-based hooks have a lot of
+_other_ advantages, and so would be worth pursuing anyway, and this
+extra safety would come along for free. I won't enumerate those
+advantages here, but we that can be a separate discussion if need be.
+
+And of course that feature doesn't yet exist, and is a much larger one.
+But besides un-breaking current LFS, I'm not sure that we need to rush
+out a more generic version of the feature.
+
+-Peff
