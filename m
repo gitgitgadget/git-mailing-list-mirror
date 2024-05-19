@@ -1,59 +1,59 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882D4EAC7
-	for <git@vger.kernel.org>; Sun, 19 May 2024 07:10:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090DE10A3E
+	for <git@vger.kernel.org>; Sun, 19 May 2024 07:12:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716102624; cv=none; b=EbBgicoehpje2W/Nd11Mfguw1avMgDlkFeugyqtRwBlx/XG1d13hEZ8bhfRqeWncOx6cL9RK3LDj/cPqztVu+vwGZv4AqRiUaaUl5VJ5D/lbjcbFXp55YY9Vfn0ZYVP++26E/GsI2vmF5OVD6MXg5kby7wetUG7vXhnE5xN8+jI=
+	t=1716102758; cv=none; b=Vx9TjuYuRNMFWpr+xQSk4aoVIWArf4Ai2go9YB4dtN7UsrJmB9UK2Ra7yqqCCHqpSuYW+IbO6daKTdEVtGFKdeMSZFH8TMbhmBo0k7tL5raIj1LLRhnZxls1YTg0w//v9zJcjzuhxHJxFqNipeqMTj+uyB6Lam5W6Uig69ROHto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716102624; c=relaxed/simple;
-	bh=LEuX1adZnCKgieBrx27KhCNr96hqkf7UITJBXOBALlI=;
+	s=arc-20240116; t=1716102758; c=relaxed/simple;
+	bh=MThN82jGPvVBcMbCdAeC0pnrXPLIq90/5d9qXG5ROak=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=MItJknC7uQtdu/I0G/IusxRiqxQ1ZV1sfePKjzVYi0+qpd1uIjzi4KLOljW1VCYHHaiekxyZcBMN/uTXtaiaEldTvcwCeP+5HRlfzGAN2oCK4jTvz40AqKusyaSIGX3ewQplk58O/RVXdMoDrSlvV7wxYsL/nwYeN+SA6hTunXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gx93k9kA; arc=none smtp.client-ip=209.85.128.50
+	 In-Reply-To:Content-Type; b=HRxAqH1nz3U7xTim8BXBif15W7DQuA4PAI2AxOzxc3+NuxThG77nSgz/Kbtc8gbJbjvAWBzErPehtz5Uy1CPgxQVHoyqM4fxgIv+pmt+85rIwVmbfJ8HdRhaAGOlh7Hq5kmHrDXFCuCUYs4lugZK6rnZO36wgT+N/SuPRiW4wMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XwiDc6hN; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gx93k9kA"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-41fd5dc0439so12116505e9.0
-        for <git@vger.kernel.org>; Sun, 19 May 2024 00:10:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XwiDc6hN"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2e6f2534e41so18221421fa.0
+        for <git@vger.kernel.org>; Sun, 19 May 2024 00:12:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716102621; x=1716707421; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1716102755; x=1716707555; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rGrLDrMzJZkxdvn4MPKimjHXx4wtUjAqflv7xuqgZPY=;
-        b=Gx93k9kAGkChpZJoAK3j8i+iR9pxUUKhCeqcl0jazkBE8bZcNBKCbycaaLL6AIqGRh
-         WQE2Lsad4XGNolzM7zLAzPQAdhAxdLZzmXZ6TV3JA9kOY026X0aWvCQt5jK64mhoLScx
-         UtvO0nJB7IlEiiJIr/wlNaSdytv2UaluruURNKhzIYg/j/UNc/Bixb8KJWpDNfm1mC2s
-         dJGHGozhr0l8hMvHoRwRv1vNRtMZCx4kRFXHMiLYG784q/H/Wn0DGO4LfjEWYyrRn8VQ
-         taUSqTHfBUPSwSugFiaC3n2AjazgGL00+lfttj5YHZ+1NkDcCNmJ2pMuNNl2vDJTC1b7
-         I7GA==
+        bh=jLh0Fn5AMsWBbc6wowRLpxqUz0egA0e0qnfAPxFQup8=;
+        b=XwiDc6hNRIPZWeFE7dgpxWiJcrUeDuTx1MpBxYHnBXece99bOrbY1Eo02PaA3Nvn8n
+         kQWMxik8SM2lozHs8xU98tE7THYWpmD5p/ewLED50abt9+xaRTFOVHh6fafF8j3Qb4Wj
+         XIL/ly86WG3535RIyAyz4/JceU7227Y6z0Kpbbb/+DyotFaaRpL3rh4ZDFyGRO357M8X
+         Pfi3qsHo7P8BTO0LVImqOdnCMRBEIWfEg6+MlozBoOer/rQFC4mMJWyyIO/B4OXnj70v
+         6YkUdoZNtrM6qDLuc10ytFb90hjAGBeEv/MBpMIVqUP4swfYw44kC0V90Lkbe9B0V0iA
+         I8fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716102621; x=1716707421;
+        d=1e100.net; s=20230601; t=1716102755; x=1716707555;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rGrLDrMzJZkxdvn4MPKimjHXx4wtUjAqflv7xuqgZPY=;
-        b=pA/IoWiKBSvhX9GPTnL3YvgQ/GtS0zjGN904fJ/br3iGSpAWn0Svp+tvCZAC4J+BUw
-         aQ58FGjr86BoRENaUJVXH57e9XLjU73H86qdTJBfeu6zo4kzyEZFGRzmQ8wGvJ15kGmu
-         HX5Nqgnu2uybT3xk9VIKcX9cRuyxOxjMGSiC5L2Tt/FoWBmItiAz3jdRtYeQBg/GV374
-         KPlqFSE/a1lTu/7EI1vogf+iDYDQ1cUNwOO88j38+L+6tgQEblNVz3+OVAZbAYSfQgXB
-         kaN84QIYaXsCnKvuVq8LUqJU0shYa8LlR+Au55lyoKr50AGoCiWNpkxmiGZf327sYqYB
-         q7HA==
-X-Gm-Message-State: AOJu0YxgAuGgV9zB/wcXDuLxZbQWHiqFqxsP5LgfGmdaOxkoXldh7iiQ
-	HnpAU2vU9QltZ4OldHsgQyA+UvgusM4wnxurLFaIBHoPHzlEi+cck/3ZCQ==
-X-Google-Smtp-Source: AGHT+IEauhbTKDuJbWGYjt8U9pP9qNoEkdo/BtijJyd1WKCNybeLpy60lNHDIXrnR/20DkrOE93YEQ==
-X-Received: by 2002:a05:600c:1913:b0:420:141d:994f with SMTP id 5b1f17b1804b1-420141d9a56mr160827525e9.18.1716102620703;
-        Sun, 19 May 2024 00:10:20 -0700 (PDT)
+        bh=jLh0Fn5AMsWBbc6wowRLpxqUz0egA0e0qnfAPxFQup8=;
+        b=u0jrR8LIsol7tqdxUfwOZqnbb0KbrvXB7TUgjXesTDzchF6VN/1VXrjfilM06qQsXP
+         +WEExDO6WQ1tNe0SOYnLiUfkodp/y9gwDkc2NZ+dFJpHATDGd2aLIUUVA0qav+bYloLl
+         WLVIa5k1MNunfeWJiDzRS590CNd1znyrLsWb8eEx9NOWNxd8AGoA2qF5tVQnkJHX7oQu
+         aHGOfzJcy5sWtSGVIHcMN+6hj7MbUTLoJ9Jj2vExz8uHM3d42mggdFyh/WyHN1ww7pmD
+         I+WncNZvc1UETpHbDQAkkIwmShd6uu3W9Wl7zt1/+krjLf94tThG0d8ZEqWiDCFgpZgX
+         Q0sg==
+X-Gm-Message-State: AOJu0YzLH/WwTo5vjA/KcUXzQZNC/f7jOw40vJsWVZu1Gmv7i8MTG/E4
+	XXHlXSy84MsH0GBfTllq0YPaTNh0galkuODx2UixDW8L9AgTQyug0ADzeA==
+X-Google-Smtp-Source: AGHT+IHFzqM9rmgsPX2A4HLeN8FbiXQZ8jFK/r4b7ng5R+Z6HSpR3jDyUkXTDWW3BJmhWQ5F7PAXpg==
+X-Received: by 2002:a2e:8255:0:b0:2db:4f3f:55a7 with SMTP id 38308e7fff4ca-2e5204cc8d2mr155694091fa.45.1716102754978;
+        Sun, 19 May 2024 00:12:34 -0700 (PDT)
 Received: from gmail.com (173.red-88-14-51.dynamicip.rima-tde.net. [88.14.51.173])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42010b1076dsm289258095e9.41.2024.05.19.00.10.18
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4201c3f8032sm223886475e9.28.2024.05.19.00.12.34
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 19 May 2024 00:10:19 -0700 (PDT)
-Message-ID: <fc307b09-29ae-4013-b5b9-580b6cff5445@gmail.com>
-Date: Sun, 19 May 2024 09:10:16 +0200
+        Sun, 19 May 2024 00:12:34 -0700 (PDT)
+Message-ID: <80f15223-246e-4cfb-a139-e47af829c938@gmail.com>
+Date: Sun, 19 May 2024 09:12:31 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,7 +61,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH 1/5] add-patch: test for 'p' command
+Subject: [PATCH 2/5] pager: do not close fd 2 unnecessarily
 From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
 To: Git List <git@vger.kernel.org>
 References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
@@ -70,40 +70,61 @@ In-Reply-To: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Add a test for the 'p' command, which was introduced in 66c14ab592
-(add-patch: introduce 'p' in interactive-patch, 2024-03-29).
+We send errors to the pager since 61b80509e3 (sending errors to stdout
+under $PAGER, 2008-02-16).
+
+In a8335024c2 (pager: do not dup2 stderr if it is already redirected,
+2008-12-15) an exception was introduced to avoid redirecting stderr if
+it is not connected to a terminal.
+
+In such exceptional cases, the close(STDERR_FILENO) we're doing in
+close_pager_fds, is unnecessary.
+
+Furthermore, in a subsequent commit we're going to introduce changes
+that might call close_pager_fds multiple times.  With this in mind,
+unconditionally closing stderr will become undesirable.
+
+Let's close(STDERR_FILENO) only when necessary, and pave the way for
+the coming changes.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- t/t3701-add-interactive.sh | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ pager.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 28a95a775d..52d7830de2 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -542,6 +542,22 @@ test_expect_success 'goto hunk' '
- 	test_cmp expect actual.trimmed
- '
+diff --git a/pager.c b/pager.c
+index b8822a9381..3ef6798f7e 100644
+--- a/pager.c
++++ b/pager.c
+@@ -14,6 +14,7 @@ int pager_use_color = 1;
  
-+test_expect_success 'print again the hunk' '
-+	test_when_finished "git reset" &&
-+	tr _ " " >expect <<-EOF &&
-+	+15
-+	 20
-+	(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? @@ -1,2 +1,3 @@
-+	 10
-+	+15
-+	 20
-+	(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]?_
-+	EOF
-+	test_write_lines s y g 1 p | git add -p >actual &&
-+	tail -n 7 <actual >actual.trimmed &&
-+	test_cmp expect actual.trimmed
-+'
-+
- test_expect_success 'navigate to hunk via regex' '
- 	test_when_finished "git reset" &&
- 	tr _ " " >expect <<-EOF &&
+ static struct child_process pager_process;
+ static const char *pager_program;
++static int old_fd2 = -1;
+ 
+ /* Is the value coming back from term_columns() just a guess? */
+ static int term_columns_guessed;
+@@ -23,7 +24,8 @@ static void close_pager_fds(void)
+ {
+ 	/* signal EOF to pager */
+ 	close(1);
+-	close(2);
++	if (old_fd2 != -1)
++		close(2);
+ }
+ 
+ static void wait_for_pager_atexit(void)
+@@ -141,8 +143,10 @@ void setup_pager(void)
+ 
+ 	/* original process continues, but writes to the pipe */
+ 	dup2(pager_process.in, 1);
+-	if (isatty(2))
++	if (isatty(2)) {
++		old_fd2 = 1;
+ 		dup2(pager_process.in, 2);
++	}
+ 	close(pager_process.in);
+ 
+ 	/* this makes sure that the parent terminates after the pager */
 -- 
 2.45.1.209.gd5886bf9cd
