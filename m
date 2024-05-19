@@ -1,59 +1,59 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B1817582
-	for <git@vger.kernel.org>; Sun, 19 May 2024 07:13:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CBD17579
+	for <git@vger.kernel.org>; Sun, 19 May 2024 07:14:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716102796; cv=none; b=Szg6n1W7trNTMV3xENAocFATSmLv6LMPbg9pl2yX1Zgm3XJQmnrLC+mN2GqIF7ERL2CMgPv9/I/hsImrPA0TxFTROSmaRGIW8AaRI9TXShSmT8FZQdHM/T8D4IhdFKbcic581FNgxK2HCYpo8mVZ7vHzTeEs7U2OjGWXQb5OtvA=
+	t=1716102879; cv=none; b=ZtQHhHfU/WzFRlRtv9UX2SqAaguawZ90EIUzh3eRLSd/LdhaCQTub/YBWz+Em4dT5t/0gywDL3myC1wZbvTOx5HyVLI+Qe/kWRBQuFZEfTwEF0Zm4mktGHxk+94gX2KvZdwAIKjhTmnHmyh3uLvAouRpQDRLGx4sPnkAX95gGtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716102796; c=relaxed/simple;
-	bh=Im3qcJ8j4sCLVn7NozYQF/NavaRE8dCDuMUz5NiiyP4=;
+	s=arc-20240116; t=1716102879; c=relaxed/simple;
+	bh=XjCvqbVFJJyoffLZK6Gwv09tDuhSyxir40gJPdNmTPw=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=fMTctFWzop0e8yN68xP65G7WsSzzHFCUN54/946P58gsWUtECz3iG3oQM6anwp9Q9sb1Ijo7LOGPwK0XSLeeSr9Bd9qfBqFUZoNsHIGR9iiFMILhTkajDW53O52dhPhazUHSDqqV6WTVmjJF2B0DYzPijfmkdNKzd2tm78pkgy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PtTb7GeX; arc=none smtp.client-ip=209.85.128.51
+	 In-Reply-To:Content-Type; b=j9u7keV7B42+N2/7JnB8QUUyuo75KcExDEWe1XwTYXuMayFsNUCCawbUSEIUUGrVrVhsB3eAaMkuAZDxpcuZnlp4RR+Kh4H9Ueit9E/OYpBzbsw8XHqA2gCY5T0XGXQ6End15TkDmqvGge3lZ4nbNCVb3hIuSqLLY4hLyHmUHmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OmN5KNlD; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PtTb7GeX"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4202cea9a2fso11932675e9.3
-        for <git@vger.kernel.org>; Sun, 19 May 2024 00:13:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OmN5KNlD"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-42017f8de7aso11994495e9.1
+        for <git@vger.kernel.org>; Sun, 19 May 2024 00:14:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716102793; x=1716707593; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1716102876; x=1716707676; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yrZRZaQhxGK/FyvET0HebJXkPi59LaWzmKAigbaNaKo=;
-        b=PtTb7GeXhKcpxP7yiS5Xnu6RBifCxmhmgtskn8i/yOVXRHww6KiXSO3NwndCmq9t9O
-         zq8fS0ahI66EWsgUcK0rxH1WZMRVijYmUliop4vjUbwAO7HBbh8un5aqGM7UotqSoM9f
-         FMUkehMUb5Ft7TODn7ROuf8i1XFqp5jGvO9iySsxfsxJmEEznCXEyOeOlC5y2oqAT3F1
-         fHKUBxQiesoTZ9samBpdJZhj0BlX/tgOxSDAZJOXV2Jq6NsPEV8JFSbv23UIUEutvmzJ
-         +Va+fmIP1YJf/FR70k91jvGL/VTJOoaCpv1/+WFvBYzHUNw/ll8Lts4dKdquGBl7qlDh
-         D/cQ==
+        bh=ixDigAgEZwnqusAuv6Ehz7QVQIr3XgQmz2zgyxO8XGg=;
+        b=OmN5KNlDruZWXZlnT0kkE/uohjfGfLOWxo0YnQaXkus3Yipk+V+y+SZrMSMCREhTNI
+         +0vlzsqC2yZIWUKDJTpLFRUf1y2S6rXj161SwoRNtNV4Vt8nZnkkLB/D29k2hwGuX32G
+         mSVIH990PhS4LeYe0rZQeeinjMmgZ+EqKkF7E432xoAXpFSte5T3jsGNag4VjkEEiuVE
+         pdRXWttbcQVSkBMw3sGQu+GTFfaOB8Qh4+a7elgmOP2AAkoa6SG7bL9YvLqt4eehA3uh
+         phZku6M6IAC5dQWQEjqnd++/s/Ksg9RTN05hoej4GfdPT2WhIZIZjh1HSQHOxdE9exTI
+         wMBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716102793; x=1716707593;
+        d=1e100.net; s=20230601; t=1716102876; x=1716707676;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yrZRZaQhxGK/FyvET0HebJXkPi59LaWzmKAigbaNaKo=;
-        b=H0ckKGyeSssSzL4H9dzOCQYdjkCdwXVGFp0sWJf/RSbZ8gNYme5IjM62q19/NuS+az
-         dnp02xQf9bFL5rJDWl620d24Extc/xsx8q1wznx5fyPyhudDrQbZugjRxXuuDO4EKgvR
-         P4qDDtRorc/NuYIS3BKRr3Iyk9+k9WLgRxovldbcW6dsk+AhEt6/pmnzaf25tlulPwev
-         m2pKNhwg10UgMmEYD1b8XWFgyWD4pysLRc+nHwQI4Yh/ThboC/sRXrnMVjSaLttZd2Qf
-         S4EuTc1L2LfOSI44N50kY8ugl1bWgEmsdphUVdineQRk8JqdX93udclS7VFiGtIEt+kR
-         ftlA==
-X-Gm-Message-State: AOJu0Yx4cG7E9Msz8t82GwpZKcdTeoCBffz3N1IOEgSx1SI8f8EIgYrN
-	3xPtfYVUnG9uVdR2bLoWrtfVNbTLCVYCDKIbqoBonGw24W7C58t0RWLpGA==
-X-Google-Smtp-Source: AGHT+IEppSnnGNuFMt4I3SixpxLnSPoUw4ApktetYBNGU2YxsVc46dB++MK9JkLQFSXYuKGxnNtb1A==
-X-Received: by 2002:a05:600c:a41:b0:41d:7d76:ffd4 with SMTP id 5b1f17b1804b1-41feaa2f3e4mr187144185e9.8.1716102793320;
-        Sun, 19 May 2024 00:13:13 -0700 (PDT)
+        bh=ixDigAgEZwnqusAuv6Ehz7QVQIr3XgQmz2zgyxO8XGg=;
+        b=XE+F+MQaEIV0CBFfsEdMJgHIys0Oj1SvYs1E6RpGbKdONe1vYtdguJRfBDF+C01z0n
+         UAcmRAf98qvQl0ZRbtZFMq9J/kMw5U3XQxnkkTy0MyigqTZDKLgvwmRXwHJ4sKAwbJkd
+         cK8+gPHv5ONCIdopESMEiUvuKUvP4XSdXH2R0EsTay/IqWbpbxQlIyZZqUBjl5qLckZI
+         9gRS4R/xs9Wh/pZ8RdC6ZlEMfRV4SiWd67YqH4NmZu3XwMLTAhL0e8Kdd9s3gecmUybm
+         SNQ1hzlZCpnE60V4n/VW63H7tnAgf0J/3tgWXWlb4G4IMFHoJ+NXjBa7QiGHtWUVlVyD
+         7fSg==
+X-Gm-Message-State: AOJu0Yzy0fSFKFzgE41KRvtwUJzB9GriY24Jp7RiRljb51Cl1pXAY92J
+	FL2hpPfiExzwEA80P17P7IRoV9J7KJrpqeQbGKd/U9Crr4DqGOkJ6Qfvkw==
+X-Google-Smtp-Source: AGHT+IG0ukz/pJjcvIEoO5qX+LxoYybex6YzEkxbDeVsBf0XzgRfcHvd3g0xBazmMlghh7B0HpHEIw==
+X-Received: by 2002:a05:600c:548b:b0:420:e405:579d with SMTP id 5b1f17b1804b1-420e405595dmr16495455e9.21.1716102876368;
+        Sun, 19 May 2024 00:14:36 -0700 (PDT)
 Received: from gmail.com (173.red-88-14-51.dynamicip.rima-tde.net. [88.14.51.173])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41fccce24c0sm373347105e9.17.2024.05.19.00.13.12
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41f87c235b4sm405227265e9.11.2024.05.19.00.14.35
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 19 May 2024 00:13:12 -0700 (PDT)
-Message-ID: <d090a84c-6bdc-454b-98d5-4310f8b73697@gmail.com>
-Date: Sun, 19 May 2024 09:13:09 +0200
+        Sun, 19 May 2024 00:14:35 -0700 (PDT)
+Message-ID: <d42a55b1-1ba9-4cfb-9c3d-98ea4d86da33@gmail.com>
+Date: Sun, 19 May 2024 09:14:31 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,7 +61,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH 3/5] pager: introduce wait_for_pager
+Subject: [PATCH 4/5] test-terminal: introduce --no-stdin-pty
 From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
 To: Git List <git@vger.kernel.org>
 References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
@@ -70,129 +70,112 @@ In-Reply-To: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Since f67b45f862 (Introduce trivial new pager.c helper infrastructure,
-2006-02-28) we have the machinery to send our output to a pager.
+In 18d8c26930 (test_terminal: redirect child process' stdin to a pty,
+2015-08-04), t/test-terminal.perl learned to connect the child process'
+stdin to a pty.  It works well for what was intended: satisfying an
+`isatty(STDIN_FILENO)` check.
 
-That machinery, once set up, does not allow us to regain the original
-stdio streams.
+However, the fork introduced, that copies the stdin to the child
+process, does not always manage to send all the information.
 
-In the interactive commands (i.e.: add -p) we want to use the pager for
-some output, while maintaining the interaction with the user.
+To illustrate this behavior, we can use a function like this:
 
-Modify the pager machinery so that we can use setup_pager and, once
-we've finished sending the desired output for the pager, wait for the
-pager termination using a new function wait_for_pager.  Make this
-function reset the pager machinery before returning.
+    f ()
+    {
+    	dd if=/dev/zero bs=1 count=10000 status=none |
+    	t/test-terminal.perl cat - 2>/dev/null |
+    	wc -c;
+    }
+
+We do not obtain the expected results when executing this function
+100 times:
+
+    $ for i in $(seq 100); do f; done | sort | uniq -c
+         36 0
+          4 1
+         53 4095
+          7 4159
+
+If we do the same with a version that does not redirect stdin, a version
+prior to 18d8c26930, the expected result is obtained:
+
+    $ git checkout 18d8c26930~1
+    $ for i in $(seq 100); do f; done | sort | uniq -c
+        100 10000
+
+In a subsequent commit, a new test is going to rely on test-terminate,
+and it does not require stdin to be connected to a terminal, but all
+piped data needs to be successfully transmitted to the child process.
+
+To make this possible, add a new parameter "--no-stdin-pty" to allow
+disabling the stdin redirection though a pty.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- pager.c | 37 +++++++++++++++++++++++++++++++------
- pager.h |  1 +
- 2 files changed, 32 insertions(+), 6 deletions(-)
+ t/test-terminal.perl | 32 ++++++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
 
-diff --git a/pager.c b/pager.c
-index 3ef6798f7e..2fa06c43c4 100644
---- a/pager.c
-+++ b/pager.c
-@@ -14,12 +14,11 @@ int pager_use_color = 1;
- 
- static struct child_process pager_process;
- static const char *pager_program;
--static int old_fd2 = -1;
-+static int old_fd1 = -1, old_fd2 = -1;
- 
- /* Is the value coming back from term_columns() just a guess? */
- static int term_columns_guessed;
- 
--
- static void close_pager_fds(void)
- {
- 	/* signal EOF to pager */
-@@ -30,14 +29,35 @@ static void close_pager_fds(void)
- 
- static void wait_for_pager_atexit(void)
- {
-+	if (old_fd1 == -1)
-+		return;
-+
- 	fflush(stdout);
- 	fflush(stderr);
- 	close_pager_fds();
- 	finish_command(&pager_process);
- }
- 
-+void wait_for_pager(void)
-+{
-+	if (old_fd1 == -1)
-+		return;
-+
-+	wait_for_pager_atexit();
-+	unsetenv("GIT_PAGER_IN_USE");
-+	dup2(old_fd1, 1);
-+	old_fd1 = -1;
-+	if (old_fd2 != -1) {
-+		dup2(old_fd2, 2);
-+		old_fd2 = -1;
-+	}
-+}
-+
- static void wait_for_pager_signal(int signo)
- {
-+	if (old_fd1 == -1)
-+		return;
-+
- 	close_pager_fds();
- 	finish_command_in_signal(&pager_process);
- 	sigchain_pop(signo);
-@@ -113,11 +133,14 @@ void prepare_pager_args(struct child_process *pager_process, const char *pager)
- 
- void setup_pager(void)
- {
-+	static int once = 0;
- 	const char *pager = git_pager(isatty(1));
- 
- 	if (!pager)
- 		return;
- 
-+	assert(old_fd1 == -1);
-+
- 	/*
- 	 * After we redirect standard output, we won't be able to use an ioctl
- 	 * to get the terminal size. Let's grab it now, and then set $COLUMNS
-@@ -142,16 +165,18 @@ void setup_pager(void)
- 		return;
- 
- 	/* original process continues, but writes to the pipe */
-+	old_fd1 = dup(1);
- 	dup2(pager_process.in, 1);
- 	if (isatty(2)) {
--		old_fd2 = 1;
-+		old_fd2 = dup(2);
- 		dup2(pager_process.in, 2);
+diff --git a/t/test-terminal.perl b/t/test-terminal.perl
+index 3810e9bb43..85edc9e8b9 100755
+--- a/t/test-terminal.perl
++++ b/t/test-terminal.perl
+@@ -12,10 +12,10 @@ sub start_child {
+ 	if (not defined $pid) {
+ 		die "fork failed: $!"
+ 	} elsif ($pid == 0) {
+-		open STDIN, "<&", $in;
++		open STDIN, "<&", $in if $in;
+ 		open STDOUT, ">&", $out;
+ 		open STDERR, ">&", $err;
+-		close $in;
++		close $in if $in;
+ 		close $out;
+ 		exec(@$argv) or die "cannot exec '$argv->[0]': $!"
  	}
- 	close(pager_process.in);
- 
--	/* this makes sure that the parent terminates after the pager */
--	sigchain_push_common(wait_for_pager_signal);
--	atexit(wait_for_pager_atexit);
-+	if (!once++) {
-+		sigchain_push_common(wait_for_pager_signal);
-+		atexit(wait_for_pager_atexit);
-+	}
+@@ -78,28 +78,32 @@ sub copy_stdio {
  }
  
- int pager_in_use(void)
-diff --git a/pager.h b/pager.h
-index b77433026d..103ecac476 100644
---- a/pager.h
-+++ b/pager.h
-@@ -5,6 +5,7 @@ struct child_process;
- 
- const char *git_pager(int stdout_is_tty);
- void setup_pager(void);
-+void wait_for_pager(void);
- int pager_in_use(void);
- int term_columns(void);
- void term_clear_line(void);
+ if ($#ARGV < 1) {
+-	die "usage: test-terminal program args";
++	die "usage: test-terminal [--no-stdin-pty] program args";
+ }
++my $no_stdin_pty = $ARGV[0] eq '--no-stdin-pty';
++shift @ARGV if $no_stdin_pty;
+ $ENV{TERM} = 'vt100';
+-my $parent_in = new IO::Pty;
++my $parent_in = $no_stdin_pty ? undef : IO::Pty->new;
+ my $parent_out = new IO::Pty;
+ my $parent_err = new IO::Pty;
+-$parent_in->set_raw();
++$parent_in->set_raw() if $parent_in;
+ $parent_out->set_raw();
+ $parent_err->set_raw();
+-$parent_in->slave->set_raw();
++$parent_in->slave->set_raw() if $parent_in;
+ $parent_out->slave->set_raw();
+ $parent_err->slave->set_raw();
+-my $pid = start_child(\@ARGV, $parent_in->slave, $parent_out->slave, $parent_err->slave);
+-close $parent_in->slave;
++my $pid = start_child(\@ARGV,$parent_in ? $parent_in->slave : undef, $parent_out->slave, $parent_err->slave);
++close $parent_in->slave if $parent_in;
+ close $parent_out->slave;
+ close $parent_err->slave;
+-my $in_pid = copy_stdin($parent_in);
++my $in_pid = $no_stdin_pty ? 0 : copy_stdin($parent_in);
+ copy_stdio($parent_out, $parent_err);
+ my $ret = finish_child($pid);
+-# If the child process terminates before our copy_stdin() process is able to
+-# write all of its data to $parent_in, the copy_stdin() process could stall.
+-# Send SIGTERM to it to ensure it terminates.
+-kill 'TERM', $in_pid;
+-finish_child($in_pid);
++if ($in_pid) {
++	# If the child process terminates before our copy_stdin() process is able to
++	# write all of its data to $parent_in, the copy_stdin() process could stall.
++	# Send SIGTERM to it to ensure it terminates.
++	kill 'TERM', $in_pid;
++	finish_child($in_pid);
++}
+ exit($ret);
 -- 
 2.45.1.209.gd5886bf9cd
