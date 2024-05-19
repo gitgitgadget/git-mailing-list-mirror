@@ -1,59 +1,41 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF71DB666
-	for <git@vger.kernel.org>; Sun, 19 May 2024 07:15:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464E945BF9
+	for <git@vger.kernel.org>; Sun, 19 May 2024 13:25:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716102905; cv=none; b=D/wLIWOWjcJY4na0fTRYTm71kUbxqju4rKZuJ4UjJvwP39cwqQ/K74yYpUprsbMAN/62qPpSpmQQ8NIpmzb8l6jxE2NR9gBrY4qmGkc2+Txz/bWU/LApDaWKvyFg95AV/rLyC1LpoiIqxR02TdMgOAiO9lRegzN9wAuNclKxwYE=
+	t=1716125146; cv=none; b=c7BwDEpZ59qQp3bAfu11QCbLN+togxJZJTIhFnYTEkQC2xseQYPTcPYMy8hNAdyq9qoKcRftpXV0HHmzPAo2uu3vNFdmtKyMXSnGyWGQSRRN1CAFV9YY31utvipaxMNQ5xLOPzHsnFfhrFrwI+Z5ZJ1/nZY08C/tyBgvl5fk0is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716102905; c=relaxed/simple;
-	bh=MH0WvfnA2g14fdgPiE/dAj9kL1iUR5axRNzg47LqmHM=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=CbDxAghMrongjfXwGVI3SOM0pGXQAQ6hsB7TGCxMZ2Jc3JPDLkIgFfiMmgUUvEfsfWsJOkH0uuBTELxu3y2a9b8Q8M8fRLtDdifCNHF8p869CtDadJ2f6SS/mn6DCh6/3NlIPJKdVfWJ6J4LcJxqtZMxQFtcCjHUcoi5sSUHOwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g2srdoRy; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716125146; c=relaxed/simple;
+	bh=3dCSoZdK2sm2WrUF9ABe+OUAmF+VIEsZZUSGJjze0LE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aLjx8dXd2uY/ZcgRgKL+rPo6EONUQTGDYc/waPPsGdOTl5LVul8WL5hBDKdSPZwBBhy9+0Lms0TMKcV4AaEn09mtu1lPlzNVufRUQlkLhyRuy4faWxDA/dkWDSt2oFxXG+/PRNU2wPg+Mw6f4em/MKsf6a+E4tPpWbl0F76iqX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=eC0/5SMo; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g2srdoRy"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4200ee78f33so11984975e9.3
-        for <git@vger.kernel.org>; Sun, 19 May 2024 00:15:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716102902; x=1716707702; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=H90gQHGmZuShwEUE2pmjiGODQ2MWPxUcZ64pIH74gUE=;
-        b=g2srdoRynzOHjOpsGXFR1mYVtliVyYTYLi0F+ThDscISt8GjW8cMMNnowYAB08UKDx
-         NKAW/0Kf4ad6sVIPDGosTCvVsuP4soaEbrEwrE+xO+z28TdFzOA7Velb1crDwYxNsIx9
-         32CpPgoF8YNqr5U7TWr7U0tFcaZHM66KZCnvDrPw7qad7y9VEDrjv8XPXllfEUtM3Dpe
-         N6eq2T1A73hX2xGBHeqVOUnWSWKEWjto/rBw6lsqfsaf95p8aaKZQBGAiaL8uHhV6mME
-         bRB9OUu0qPC6OXIYxss31Vn09FrzL6TBpkAjm3WMSQAUSmPF2cVSLhX5cGiKalO1vSd8
-         rs6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716102902; x=1716707702;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H90gQHGmZuShwEUE2pmjiGODQ2MWPxUcZ64pIH74gUE=;
-        b=Ad5+8pwHywNZ0cYujTMOYkk9FDp/BCq0p6Ix2z8ofYILFzSngwzAi19xtF6h3CcQDv
-         UjzqYcOEKS4Bn5zDo+HPsCnftKKq8bRfHzpxvWUsr++a3PPYxnaLlKVUdpZ/XcFnfQbX
-         4F0MfGrn0X/gj4j7UiYmv3Btbr3jCvNx1XCj7ut3yZTlfi7thx87Y8YOW7+S1SAmySK6
-         n4O6PEUnWU9inBX134VZpeCqQ5+avD2lrkJxUu4Yshr2do48TSLCKWh6vwPq3UkUK/ND
-         t5gpqNY1EmcD2EZrs++sTDJpYtLHgl9wIcDo7FuTGNq47VGK5tyQRvFUKb0EyvLAGYKF
-         LN9Q==
-X-Gm-Message-State: AOJu0YwP/9T8upiZf73uJuWWgfkQgXCBHIsTNY/K9+w8yPLhAeV5H3xb
-	ArLm29wa46YyYLX7g9jRfQqfwosfmMwVUumVR63bGUh8JQLmZrSxv3mjJA==
-X-Google-Smtp-Source: AGHT+IFYf3/wyNHCqM24XGPJOUspRvQYu9PFxOd03I6smn9CArlJvoM8a8AnxL+fUETQtaLJRStJcQ==
-X-Received: by 2002:a05:600c:198a:b0:41b:fc3a:f1ef with SMTP id 5b1f17b1804b1-41feac5a3damr185502885e9.33.1716102901970;
-        Sun, 19 May 2024 00:15:01 -0700 (PDT)
-Received: from gmail.com (173.red-88-14-51.dynamicip.rima-tde.net. [88.14.51.173])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41fccbe8f9bsm374570995e9.6.2024.05.19.00.15.01
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 19 May 2024 00:15:01 -0700 (PDT)
-Message-ID: <eb0438e8-d7b6-478f-b2be-336e83f5d9ab@gmail.com>
-Date: Sun, 19 May 2024 09:14:58 +0200
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="eC0/5SMo"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1716125128; x=1716729928; i=l.s.r@web.de;
+	bh=+A5JCmFZvv6Pm9tCZxTW3fjuas6vovn5oRRF27GNKa0=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=eC0/5SMoSN6fcxXJAR9eKOJQ6hc9edW49FLzOIHdbMY6tQE2IgclgHraiGSyQxJC
+	 D+v/EuKPMChrGzY+L9UgxgqzNcm6a5X8mEUEkLUSb/6KmHPDS9FnWYuA0E77OZhPq
+	 aULesRJDcvGFiIElYSIHYiJwPCEU3LEOVQG9eJkVfKfs1A6T2fue/bGno/NPPj+gq
+	 eVRZWP+k0Gqv3CIbUJH1Mc5ljzQUA5PWaG9NBV7EJtxNV0GKfJsCruNNw4yiZ3NGB
+	 pH1Zu4Ek9eWZ7/qKSHLvD6o8cHTWDFG4qbLU4sB0CKryM55lh+5ikIOLt8nnGS4ee
+	 e+e3kZ6bzryK3J32ew==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MPKB7-1ru0k11RjJ-00PnNA; Sun, 19
+ May 2024 15:25:28 +0200
+Message-ID: <bc3711a7-37d5-46bc-979e-83bd0b2cf900@web.de>
+Date: Sun, 19 May 2024 15:25:27 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,79 +43,75 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH 5/5] add-patch: render hunks through the pager
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+Subject: Re: [PATCH v2] archive: make --add-virtual-file honor --prefix
+To: Tom Scogland via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Tom Scogland <scogland1@llnl.gov>
+References: <pull.1719.git.git.1715721327429.gitgitgadget@gmail.com>
+ <pull.1719.v2.git.git.1715967267420.gitgitgadget@gmail.com>
 Content-Language: en-US
-In-Reply-To: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <pull.1719.v2.git.git.1715967267420.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:qsjGMG4DpxXkpLBYusEtQLuTMGLQbE03EN9JND+GzvxRD4No28m
+ jEq5phSPd3Y5ywz82Um6G5kjXXKQCgVXKjs3wp2FfIwagxUGZxRO/QHXaK0qFpRl7e2G1l1
+ /td2CM37f0cUlO6ROfIugn7vUpmG/G7nY2VZzJujr3H24mKPiXOkpF5fsrliRlM/i/Ld/50
+ ZQ2THry0HbCe+UYgGNOuA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:bx56OW9kZV8=;3PigMT7NQM5gNOZM1N0n9lsB1nG
+ g4dYu+IQCMGGcJpUIJn7ASeSlLfRzRVvfWk79y60BIhQSL8beXuiUHou+1F+GllsGV9Lf1Kai
+ BZXsZiHwLmbMdS3qyM8tkTtvnhqhm6dqsfBHO6NobZezpIiuB0fjqAq6orj0wlYyQwhC4t0J0
+ nomXd51Zevaxf6oz4UcNxB+PGaqmPgA8f/twStQroIgrFjfNjOBpj7BdPWJMvGI9/qUvknQw7
+ c5kNwEp88dMplmFhELtv/Iq2/9aWroO2jFqEc4fCRWTrQzA7n2bdLmcpZdO8FLddhZuSEirkU
+ z8YgthAcnYpAXeSh1yMWdn0ZAyGzqg1eXmYHWsfgJG55Vh3ktwPmVHXp3+RkNos6SQDK4xUCb
+ 33fDfb9pgkRwaqrCnlDefKC4e4efDGca4teaFFF/OXNJ5PPx1QBGaBOH2wcbBp/RYAmawiHbH
+ JDyt+e/cP1G+5HtyAFd9Z11eDmpRgsDmXZJvEzv4UDD0tIT8ZAJOK5wcUKYCyKnNdMzK9brmk
+ EnAtMPxtyvMy85+f9yREQ12KeHWp+HpsqZbMQQ4qrgQsD7I7CBTxXqUW/XELNHoMLUaw498Ep
+ zIiyrgOfnocR3DZ6vpKJrNfNSVmA8Vv5HiQbbL88kCAMcYrpVYTEbATbovhlJKyzY7p5nEjC6
+ vRWfY1piZTEoO61HtQHvSU0jpTHskpSFvEVmNW9ythDmk8uzh2IKdG70eIcG/PK7MDN2mlDja
+ espl7CZ2tJqNE3Fst2lvVzu8O5CLSkXmbBlaOnXdvTkeRorZsOuDclosy5VWeEqnSZ1Fwb/y7
+ ANfPtsEiw3YCgRCYw2J40Zr0BMMO4OsPje0alvQHOM93Q=
 
-Invoke the pager when displaying hunks during "add -p" sessions, to make
-it easier for the user to review hunks longer than one screen height.
+Am 17.05.24 um 19:34 schrieb Tom Scogland via GitGitGadget:
+> From: Tom Scogland <scogland1@llnl.gov>
+>
+> The documentation for archive describes the `--add-virtual-file` option
+> thusly:
+>
+>   The path of the file in the archive is built by concatenating the
+>   value of the last `--prefix` moption (if any) before this
+>   `--add-virtual-file` and <path>.
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
- add-patch.c                |  3 +++
- t/t3701-add-interactive.sh | 21 +++++++++++++++++++++
- 2 files changed, 24 insertions(+)
+The documentation does not actually misspell "option" as "moption".
 
-diff --git a/add-patch.c b/add-patch.c
-index 2252895c28..cefa3941a3 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -5,6 +5,7 @@
- #include "environment.h"
- #include "gettext.h"
- #include "object-name.h"
-+#include "pager.h"
- #include "read-cache-ll.h"
- #include "repository.h"
- #include "strbuf.h"
-@@ -1448,9 +1449,11 @@ static int patch_update_file(struct add_p_state *s,
- 		strbuf_reset(&s->buf);
- 		if (file_diff->hunk_nr) {
- 			if (rendered_hunk_index != hunk_index) {
-+				setup_pager();
- 				render_hunk(s, hunk, 0, colored, &s->buf);
- 				fputs(s->buf.buf, stdout);
- 				rendered_hunk_index = hunk_index;
-+				wait_for_pager();
- 			}
- 
- 			strbuf_reset(&s->buf);
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 52d7830de2..6c4af8904e 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -558,6 +558,27 @@ test_expect_success 'print again the hunk' '
- 	test_cmp expect actual.trimmed
- '
- 
-+test_expect_success TTY 'print again the hunk (PAGER)' '
-+	test_when_finished "git reset" &&
-+	cat >expect <<-EOF &&
-+	PAGER <GREEN>+<RESET><GREEN>15<RESET>
-+	PAGER  20<RESET>
-+	<BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? <RESET>PAGER <CYAN>@@ -1,2 +1,3 @@<RESET>
-+	PAGER  10<RESET>
-+	PAGER <GREEN>+<RESET><GREEN>15<RESET>
-+	PAGER  20<RESET>
-+	<BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? <RESET>
-+	EOF
-+	test_write_lines s y g 1 p |
-+	(
-+		GIT_PAGER="sed s/^/PAGER\ /" &&
-+		export GIT_PAGER &&
-+		test_terminal --no-stdin-pty git add -p >actual
-+	) &&
-+	tail -n 7 <actual | test_decode_color >actual.trimmed &&
-+	test_cmp expect actual.trimmed
-+'
-+
- test_expect_success 'navigate to hunk via regex' '
- 	test_when_finished "git reset" &&
- 	tr _ " " >expect <<-EOF &&
--- 
-2.45.1.209.gd5886bf9cd
+> The `--add-file` documentation is similar:
+>
+>   The path of the file in the archive is built by concatenating the
+>   value of the last --prefix option (if any) before this --add-file and
+>   the basename of <file>.
+>
+> Notably both explicitly state that they honor the last `--prefix` option
+> before the `--add` option in question.  The implementation of
+> `--add-file` seems to have always honored prefix, but the implementation
+> of `--add-virtual-file` does not.  Also note that `--add-virtual-file`
+> explicitly states it will use the full path given, while `--add-file`
+> uses the basename of the path it is given.
+>
+> Modify archive.c to include the prefix in the path used by
+> `--add-virtual-file`
+
+Aligning code and docs is a good idea.  Have you considered keeping the
+code as is and changing the documentation instead, though?
+
+The two options are related in that they both add untracked files, but
+they necessarily have different arguments:
+
+   --add-file=3D<file>
+   --add-virtual-file=3D<path>:<content>
+
+You can already specify any path you want with --add-virtual-file.
+What's the advantage of honoring --prefix as well?
+
+Ren=C3=A9
+
