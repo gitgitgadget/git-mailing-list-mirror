@@ -1,117 +1,151 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464E945BF9
-	for <git@vger.kernel.org>; Sun, 19 May 2024 13:25:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6DB1870
+	for <git@vger.kernel.org>; Sun, 19 May 2024 14:01:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716125146; cv=none; b=c7BwDEpZ59qQp3bAfu11QCbLN+togxJZJTIhFnYTEkQC2xseQYPTcPYMy8hNAdyq9qoKcRftpXV0HHmzPAo2uu3vNFdmtKyMXSnGyWGQSRRN1CAFV9YY31utvipaxMNQ5xLOPzHsnFfhrFrwI+Z5ZJ1/nZY08C/tyBgvl5fk0is=
+	t=1716127272; cv=none; b=dotBCVLzifyUDbp9Wgqv8pCS1ZQ3J6oz/yEgwkFoCVCv07GGwCHnux2lyOUv1E3pCgbQ0a0zZgexxMIaXvnWAHq6UutiG+t2EX2b+8jr7tp0ds3YtrB7awzMN/Zk0P6h1x30Nft20bdV51oBjjUfxafh8yBWi6f1jckf2ASiIkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716125146; c=relaxed/simple;
-	bh=3dCSoZdK2sm2WrUF9ABe+OUAmF+VIEsZZUSGJjze0LE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aLjx8dXd2uY/ZcgRgKL+rPo6EONUQTGDYc/waPPsGdOTl5LVul8WL5hBDKdSPZwBBhy9+0Lms0TMKcV4AaEn09mtu1lPlzNVufRUQlkLhyRuy4faWxDA/dkWDSt2oFxXG+/PRNU2wPg+Mw6f4em/MKsf6a+E4tPpWbl0F76iqX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=eC0/5SMo; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1716127272; c=relaxed/simple;
+	bh=DoiWibnZj/M4YSto2gMmXYSPkGpwx69mqTqmK4pzMZk=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=N5vj4TG6BzpNOBFAAPluJXx+MFxNMMdltiTZpD5b5ch0tkXg07chhCyHwX+m+kdqaq7eY352vOHIBj6CTxnoa7R/0B55PAcQJRDFRAp+V5EkVeSWgsw3yiowTkWlWecyjb0Uun/4j8madh3c5rhFEr2Hhgmy1h2CmvpZYfLrkg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nFO9/L/l; arc=none smtp.client-ip=209.85.160.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="eC0/5SMo"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1716125128; x=1716729928; i=l.s.r@web.de;
-	bh=+A5JCmFZvv6Pm9tCZxTW3fjuas6vovn5oRRF27GNKa0=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=eC0/5SMoSN6fcxXJAR9eKOJQ6hc9edW49FLzOIHdbMY6tQE2IgclgHraiGSyQxJC
-	 D+v/EuKPMChrGzY+L9UgxgqzNcm6a5X8mEUEkLUSb/6KmHPDS9FnWYuA0E77OZhPq
-	 aULesRJDcvGFiIElYSIHYiJwPCEU3LEOVQG9eJkVfKfs1A6T2fue/bGno/NPPj+gq
-	 eVRZWP+k0Gqv3CIbUJH1Mc5ljzQUA5PWaG9NBV7EJtxNV0GKfJsCruNNw4yiZ3NGB
-	 pH1Zu4Ek9eWZ7/qKSHLvD6o8cHTWDFG4qbLU4sB0CKryM55lh+5ikIOLt8nnGS4ee
-	 e+e3kZ6bzryK3J32ew==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MPKB7-1ru0k11RjJ-00PnNA; Sun, 19
- May 2024 15:25:28 +0200
-Message-ID: <bc3711a7-37d5-46bc-979e-83bd0b2cf900@web.de>
-Date: Sun, 19 May 2024 15:25:27 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nFO9/L/l"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-23d1c4c14ceso968564fac.0
+        for <git@vger.kernel.org>; Sun, 19 May 2024 07:01:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716127270; x=1716732070; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5GvRZwkDYdaINZSqdl+vR8CL3jA+kclyPwrv3vH9TD4=;
+        b=nFO9/L/leShRAaVdhTciStsS+oNrtS0AwVpVYc7JrssEJw10njiQOk75OSUjE7JHlw
+         fu7VtCLtzdq0yNgt61ewngwnpw5THzVeY9a89fzQQcvmc/6uN/w3ZtvWi+XIvZ1lOHf9
+         3YWuOylNMgcJOYqEhoRA9BynJcrrgWXVbGhrzLPHSOw3OlZxh0eR6N9Qkd6kaJaRpypq
+         BQ5tqBPIclbjWcZJSoLXdx7f/NLkmck7XKuF7rJpglbu1WOeb1vEapGz/Y9xgda1ZVxY
+         cMJM2ogFkNHFiHb8U6VBSUTdU79cc5Vblvt5L8mc+RotoKwtOF5+uoGe/2X6tPXvBEdV
+         z4Dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716127270; x=1716732070;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5GvRZwkDYdaINZSqdl+vR8CL3jA+kclyPwrv3vH9TD4=;
+        b=CydTLKlIO4uh2+6HPoYiUBpdsusCyR5k8x8OSgmQp0J5HQSXZdbo2vv+wClvbIp/6t
+         GHbjWp3Tkql+7dv04GMqbKP6r/GSzgbmF4xORN0ZyPwOecBfGKkY76QyQd2y7JAmgq5C
+         mrrf/ccLUFEhfNM41xnfxXrKvoPESLA+EGWMby9CxgrmQyra6yNwOVgVzLAMMdIjnCAY
+         iJ6lfeYWe3tZe4JeVNinF3f9uWRpAcZk+xxGDTmiU8Ux0/JeceGQI0oGur1Rjslb/fpZ
+         t32R3vWimRdvvzVKQfi8huW0JQ8NAYCoMy8fdvNQdkHIN7JRWzwYXVSuorE6hPvY74kg
+         5Z0A==
+X-Gm-Message-State: AOJu0Yzlc8ex4Fd2+DFjERnw0r+iYJY/Hu6X4aMeCtHG2PWsPyVMaNN2
+	hNkvy15NC77tYg8eUwg4TukzpNokV46MIdteypDM95zvI7VUYDbOHzw3hQGKpDde4ClIIMUsNNC
+	rBC6s00zbkZ5OfcOQahJ1twa6Lg4=
+X-Google-Smtp-Source: AGHT+IHklUzSN5GAGrfIXhL+7GHpLCqDKxrL42soTrN53W0dJ9GmXZdmciGciFJRKN8uKRshYY7b+CMCTSfunVN6OJQ=
+X-Received: by 2002:a05:6871:e491:b0:23b:dd9b:79cc with SMTP id
+ 586e51a60fabf-24172a43127mr30841717fac.2.1716127270119; Sun, 19 May 2024
+ 07:01:10 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sun, 19 May 2024 14:01:09 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ZkXpbLPGgdqy6YJk@tanuki>
+References: <20240514124411.1037019-1-knayak@gitlab.com> <20240514124411.1037019-5-knayak@gitlab.com>
+ <ZkXpbLPGgdqy6YJk@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] archive: make --add-virtual-file honor --prefix
-To: Tom Scogland via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Tom Scogland <scogland1@llnl.gov>
-References: <pull.1719.git.git.1715721327429.gitgitgadget@gmail.com>
- <pull.1719.v2.git.git.1715967267420.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <pull.1719.v2.git.git.1715967267420.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:qsjGMG4DpxXkpLBYusEtQLuTMGLQbE03EN9JND+GzvxRD4No28m
- jEq5phSPd3Y5ywz82Um6G5kjXXKQCgVXKjs3wp2FfIwagxUGZxRO/QHXaK0qFpRl7e2G1l1
- /td2CM37f0cUlO6ROfIugn7vUpmG/G7nY2VZzJujr3H24mKPiXOkpF5fsrliRlM/i/Ld/50
- ZQ2THry0HbCe+UYgGNOuA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:bx56OW9kZV8=;3PigMT7NQM5gNOZM1N0n9lsB1nG
- g4dYu+IQCMGGcJpUIJn7ASeSlLfRzRVvfWk79y60BIhQSL8beXuiUHou+1F+GllsGV9Lf1Kai
- BZXsZiHwLmbMdS3qyM8tkTtvnhqhm6dqsfBHO6NobZezpIiuB0fjqAq6orj0wlYyQwhC4t0J0
- nomXd51Zevaxf6oz4UcNxB+PGaqmPgA8f/twStQroIgrFjfNjOBpj7BdPWJMvGI9/qUvknQw7
- c5kNwEp88dMplmFhELtv/Iq2/9aWroO2jFqEc4fCRWTrQzA7n2bdLmcpZdO8FLddhZuSEirkU
- z8YgthAcnYpAXeSh1yMWdn0ZAyGzqg1eXmYHWsfgJG55Vh3ktwPmVHXp3+RkNos6SQDK4xUCb
- 33fDfb9pgkRwaqrCnlDefKC4e4efDGca4teaFFF/OXNJ5PPx1QBGaBOH2wcbBp/RYAmawiHbH
- JDyt+e/cP1G+5HtyAFd9Z11eDmpRgsDmXZJvEzv4UDD0tIT8ZAJOK5wcUKYCyKnNdMzK9brmk
- EnAtMPxtyvMy85+f9yREQ12KeHWp+HpsqZbMQQ4qrgQsD7I7CBTxXqUW/XELNHoMLUaw498Ep
- zIiyrgOfnocR3DZ6vpKJrNfNSVmA8Vv5HiQbbL88kCAMcYrpVYTEbATbovhlJKyzY7p5nEjC6
- vRWfY1piZTEoO61HtQHvSU0jpTHskpSFvEVmNW9ythDmk8uzh2IKdG70eIcG/PK7MDN2mlDja
- espl7CZ2tJqNE3Fst2lvVzu8O5CLSkXmbBlaOnXdvTkeRorZsOuDclosy5VWeEqnSZ1Fwb/y7
- ANfPtsEiw3YCgRCYw2J40Zr0BMMO4OsPje0alvQHOM93Q=
+Date: Sun, 19 May 2024 14:01:09 +0000
+Message-ID: <CAOLa=ZQzxax0GoCKMTNxdwy+0f+nU3HFC_ixp24RXgW0+jeXWQ@mail.gmail.com>
+Subject: Re: [PATCH 4/6] update-ref: add support for 'symref-create' command
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="0000000000005345120618cf0486"
 
-Am 17.05.24 um 19:34 schrieb Tom Scogland via GitGitGadget:
-> From: Tom Scogland <scogland1@llnl.gov>
+--0000000000005345120618cf0486
+Content-Type: text/plain; charset="UTF-8"
+
+Patrick Steinhardt <ps@pks.im> writes:
+
+> On Tue, May 14, 2024 at 02:44:09PM +0200, Karthik Nayak wrote:
+>> From: Karthik Nayak <karthik.188@gmail.com>
+>> diff --git a/refs.c b/refs.c
+>> index c2c9889466..6b724343fe 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -1302,15 +1302,16 @@ int ref_transaction_update(struct ref_transaction *transaction,
+>>  int ref_transaction_create(struct ref_transaction *transaction,
+>>  			   const char *refname,
+>>  			   const struct object_id *new_oid,
+>> +			   const char *new_target,
+>>  			   unsigned int flags, const char *msg,
+>>  			   struct strbuf *err)
+>>  {
+>> -	if (!new_oid || is_null_oid(new_oid)) {
+>> -		strbuf_addf(err, "'%s' has a null OID", refname);
+>> +	if ((!new_oid || is_null_oid(new_oid)) && !new_target) {
+>> +		strbuf_addf(err, "'%s' has a null OID or no new target", refname);
+>>  		return 1;
+>>  	}
 >
-> The documentation for archive describes the `--add-virtual-file` option
-> thusly:
+> Shouldn't this be "'%s' has neither an OID nor a target"?
 >
->   The path of the file in the archive is built by concatenating the
->   value of the last `--prefix` moption (if any) before this
->   `--add-virtual-file` and <path>.
 
-The documentation does not actually misspell "option" as "moption".
+Well it's actually all three. If new_oid is not set, or if new_oid is
+NULL or there is no new_target.
 
-> The `--add-file` documentation is similar:
+I think "'%s' has neither a valid OID nor a target" would be best.
+
+> Also, we again miss `new_oid && new_target`.
 >
->   The path of the file in the archive is built by concatenating the
->   value of the last --prefix option (if any) before this --add-file and
->   the basename of <file>.
+
+Will fix for all the commands!
+
+>> diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
+>> index a390cffc80..cc7e20431e 100755
+>> --- a/t/t0600-reffiles-backend.sh
+>> +++ b/t/t0600-reffiles-backend.sh
+>> @@ -468,4 +468,36 @@ test_expect_success POSIXPERM 'git reflog expire honors core.sharedRepository' '
+>>  	esac
+>>  '
+>>
+>> +test_expect_success SYMLINKS 'symref transaction supports symlinks' '
+>> +	test_when_finished "git symbolic-ref -d TESTSYMREFONE" &&
+>> +	git update-ref refs/heads/new @ &&
+>> +	test_config core.prefersymlinkrefs true &&
+>> +	cat >stdin <<-EOF &&
+>> +	start
+>> +	symref-create TESTSYMREFONE refs/heads/new
 >
-> Notably both explicitly state that they honor the last `--prefix` option
-> before the `--add` option in question.  The implementation of
-> `--add-file` seems to have always honored prefix, but the implementation
-> of `--add-virtual-file` does not.  Also note that `--add-virtual-file`
-> explicitly states it will use the full path given, while `--add-file`
-> uses the basename of the path it is given.
+> Let's future proof this and create the ref with a name that matches our
+> root ref restrictions, like "TEST_SYMREF_HEAD". We do plan to enforce
+> those soonish, so these tests would break.
 >
-> Modify archive.c to include the prefix in the path used by
-> `--add-virtual-file`
+> Patrick
 
-Aligning code and docs is a good idea.  Have you considered keeping the
-code as is and changing the documentation instead, though?
+Makes sense, will fix. Thanks.
 
-The two options are related in that they both add untracked files, but
-they necessarily have different arguments:
+--0000000000005345120618cf0486
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 25c2ab6bad9b83b7_0.1
 
-   --add-file=3D<file>
-   --add-virtual-file=3D<path>:<content>
-
-You can already specify any path you want with --add-virtual-file.
-What's the advantage of honoring --prefix as well?
-
-Ren=C3=A9
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aS0JpSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOWxlQy80bzdtUTE3eFZsOEMvd2h5UWlmUFBYeDh4bApmV1ZLcXlZN0RM
+U3NSS3FoRkxTQlQ5bnFWdmlob243OUtRV3F3b0psZmNBM1NPRVlJMjJuekNQa3FYalRyL0xTCjlD
+R0llVWdsRnpHT1hqOENIaFhlN1hXaVBmT1lnNWRmZnQ5Y2NrSmdVVFNFenJ0NWxvU084TlJMRERW
+MHFPMmUKZTcvc1lzMGRNUjdWZU9hcktpYnUxZ2VJdjFrU0V6UTY5NkMvTnU0L29qWnpUS2U0elR6
+UzVNNFJLTDdRQnc3VAp2d0hTNmRGanpYMElCU21VSDhmdnhxOVE4MlVLOWtqN29zWTArM1FWV2N3
+ZlAreFRHZU1QMWkveHRzbUNlVHByCi90aHoyWjBXb004S2Q0Z2Q3VmtobDIvbXhCZ3RBWkhJWHBh
+WlZPR0YvRTZXa0p5U0p4dFRCdDhCNUhHOE8rZG4KQ2JKWlBDWEdFU0d1Rkg2K25pK0UwVEdKQU91
+Rlhaa1lFTW9MOUFVOVA1K0dERkp6eHdpVlhhWWdvcmFmQ3dQNgo0clVXTGNJQk1CY29qM3NJR0xW
+NGpFdHlnQU52WnZqLzFqSDN1YjNMNkJYYXNGNGkzbG4wZ1doekNzdHk5T0pmCkN3WGdKR1Qrdk9x
+Q2xFYm1mM3NYNFYxVXVCZUlJbVhYTmJRTklJOD0KPUxMZGEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000005345120618cf0486--
