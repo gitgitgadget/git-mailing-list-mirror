@@ -1,90 +1,112 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184D81396
-	for <git@vger.kernel.org>; Sun, 19 May 2024 01:15:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D94B4C80
+	for <git@vger.kernel.org>; Sun, 19 May 2024 03:02:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716081323; cv=none; b=bvaJCinKSfir7y2O8c38dQiSRsDmLtgV4xEbNm+yCAFek9a6QlgUaljxyePikMDE98EU3PSw6+TUZrWkoAB3oHVm1DIRrPagB6CUb+YAFVVgUuaprsu6iYZz9SHHWMsMryc06CuD5aUKpbpRFX66QpYpV2CZaq5s5aT9Cq6MCVs=
+	t=1716087757; cv=none; b=QSZNwJ6A+tN+LDkLBKmBu3iwXmnEde38SzrtTy6+y0Gsh+3sm2QEq8rRa+4xZT9dmE+57RpWoe20R4u+aUKA9UYp6w+TWG/UPoM9tst2emfgNfcSz9EF5xCwu3WuiXfK9a6xa9QqufkWEPwamgRDZZeiVp+jQ/IKEVe/a1C1LKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716081323; c=relaxed/simple;
-	bh=B/xotyPCH75oXbo3kWvcBcdlCP/CAU12VWM2cLEDZl0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IbLM2IlGhxTi+pMYAbmym/nhpR47Q1UamsLroM+szEvQjmY3sxi3YFjZ3fEjCTwuIYwI/l4bVwB7cWc5Bww2TdZq9Bm89lnPDJigvk+IG6joz1RH7Z3EgscvJDD2xnDJ6QzfawNobo5s8cL0Yi+IcimAS04s/CRDoGOoHg1LOMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=IIDvGZSE; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716087757; c=relaxed/simple;
+	bh=M8hud7L4vnkXTi6UrUUSKo3IH8+eNYmT5H8cxES04l4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=A0cmD/5zU6/xqw6U/2rFRGwM6rPc3P8HVk5Jji8WyZQU4CugiA0UjLyI+zXiUkAN4MAtKfNvXboqQ/tBbjjMNHmclzZkaeVgOh12NBZMVzHYcI5k6FVijciih8MgJNA0D3iHR33ccICz+MLdeJg90DOTXUiYsVopm+I12fFFydY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RUYaDIro; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IIDvGZSE"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id BB69433C6B;
-	Sat, 18 May 2024 21:15:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=B/xotyPCH75oXbo3kWvcBcdlCP/CAU12VWM2cL
-	EDZl0=; b=IIDvGZSE27Hjts8daGjOA8Qm8DHafueJm0Brg3uaw+XVrR7WVWMGma
-	gge7TUK/J3gOONUNyAq1twsIxMln0lJbZETuA7H5rEgH1JMFEyk0ZfaqePZY6Yiv
-	TR8+KqoHZMnVpMM05COWvDx0zcjZjAR8Xkihw/l+HIngLmqVDpasA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A03BB33C69;
-	Sat, 18 May 2024 21:15:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ABA5933C68;
-	Sat, 18 May 2024 21:15:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Johannes Schindelin
- via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "brian
- m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 5/8] hook(clone protections): add escape hatch
-In-Reply-To: <20240518211224.GA1574761@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 18 May 2024 17:12:24 -0400")
-References: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
-	<pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
-	<b841db8392ebd924d1893829a7e5e22240f1e9cf.1716028366.git.gitgitgadget@gmail.com>
-	<20240518181432.GA1570600@coredump.intra.peff.net>
-	<c201bbe3-b404-feed-fcef-8333f72068dc@gmx.de>
-	<20240518194724.GB1573807@coredump.intra.peff.net>
-	<86d57213-e3b2-c985-6d69-71568c66fc9c@gmx.de>
-	<20240518211224.GA1574761@coredump.intra.peff.net>
-Date: Sat, 18 May 2024 18:15:12 -0700
-Message-ID: <xmqqed9yob4v.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RUYaDIro"
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2e2c70f0c97so22653961fa.0
+        for <git@vger.kernel.org>; Sat, 18 May 2024 20:02:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716087753; x=1716692553; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=M8hud7L4vnkXTi6UrUUSKo3IH8+eNYmT5H8cxES04l4=;
+        b=RUYaDIro5ZYey4aQET8bKSC1mIfry7xBRFj44+lVOu1AWwK45/NUusDDemWbMbaeNj
+         AtbR1kfmhacDnhaAITCpPLJpFBVYDm3ydK8Py4KlJJTogABPP8s+KppLk0R++QpAtjCD
+         q4ZdyW4Xhb3GQHjVs/LiWa6UJxWqjpQvy+0JtmXNxKLix79s6dCgk94XBNrsURJ9gbh+
+         rjYZKcrTkVHoMWXQaw2oE1k6xKdX++n5pcLtfyEmlfMyPQvI5RkQzwqgCFXaKCpVuNkf
+         XgyhiKvOdMY1MeQG911GF+Brd+3WniOikkLqJxdcRn6yjJ9Hb709p9u6rcCdDfDybWpJ
+         UFsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716087753; x=1716692553;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=M8hud7L4vnkXTi6UrUUSKo3IH8+eNYmT5H8cxES04l4=;
+        b=tQI1GdEMFGXsqJEGSrjjECkbooER7cdp/JSJ++XZjD1ZZMtuKbXL4GQNZbVmM++tgJ
+         rg9iKZmpBBpAB9DS3UdXTdp3oT4VxE4wZj+B5Edtdil93jGyeaA/vgLos4gr9kVgDr/s
+         8MJ45DocG5vlewO/81exQjkfzRBlatwwvi6YGeD05eWeXUoEhPYXePkujO1jip2JcEUv
+         0ES6prGGjn1xq1IPuCwHE3kmkLO3tr1KP2p3r5u3pqp3x5DRUmj3C1XIx6Krv2i5jRuh
+         ZJutCIaK8bFkeu7bOWp2LRDLyVyd0CHq30Vo7g86qV/QifviNJUdLOtTqLvz7q9IEIRp
+         srEQ==
+X-Gm-Message-State: AOJu0YzdgXpNugUwvMS+fbG42ovbthHmMbavXwDuHUXjZN2bKyiumsod
+	a4dzjSkWjEmVhjJQMN0zFYJ9PBS59SwjhNpukV2jQ2hYCHisdqZdWG4vepuoexxD1zBcuXifpaY
+	WhHEVVVKH88p4c24AyxsPjBtSz3E1mgjy
+X-Google-Smtp-Source: AGHT+IECjI9sLMIdcjBWq53W5EtJfkKmGX7TZkHNOlbGjSzMmQPpJeG4ikYe89ZVGKVVK/JpIQtuSkqrXXdmRRXZE1M=
+X-Received: by 2002:a2e:720d:0:b0:2e0:69b4:d655 with SMTP id
+ 38308e7fff4ca-2e51fe52731mr170744001fa.3.1716087753184; Sat, 18 May 2024
+ 20:02:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 3E9B35C2-157D-11EF-A689-25B3960A682E-77302942!pb-smtp2.pobox.com
+From: jake roggenbuck <roggenbuckjake@gmail.com>
+Date: Sat, 18 May 2024 20:02:19 -0700
+Message-ID: <CAEUC8gmgq_yViedLGHOeSyvR9rQK+O-8Fh9wzds=2+326ngUjw@mail.gmail.com>
+Subject: bug: Segfault with git diff
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
 
-> But it sounds like we're throwing away our usual release-engineering
-> practices (where the usual practice for a regression is "revert it, it
-> can happen in the next cycle") in favor of a security fix. Again, for a
-> vulnerability fix, that makes sense. But for layered defense, I find it
-> less compelling.
+I have found a segfault when running git diff.
 
-I find it a lot less compelling, too.
+> What did you do before the bug happened? (Steps to reproduce your issue)
 
-It unfortunately involves about the same amount of conflict
-management to do the (partial) revert for all these maintenance
-tracks as it would then later take a "fix in the next cycle" for all
-these tracks, which made me feel somewhat hesitant.
+1. After running `git diff`, git showed me that object files were empty.
+2. I deleted the empty object files, and ran `git diff` again.
+3. I continued deleting the empty files until `git diff` segfaulted.
 
-But considering that we are not talking about lifting vulnerability
-fix, it may make sense to do the (partial) revert all the way down
-to 2.39 track but do the "fix in the next cycle" only for 2.45 and
-later (or even in 2.46 only, without even aiming to touch 2.45
-track).
+> What did you expect to happen? (Expected behavior)
+An error message of some type or a graceful exit.
 
-Thanks for a dose of sanity.
+> What happened instead? (Actual behavior)
+A segmentation fault.
 
+`Segmentation fault (core dumped)`
+
+> What's different between what you expected and what actually happened?
+Instead of closing gracefully, there was a segmentation fault.
+
+> Anything else you want to add:
+git log displays:
+fatal: bad object HEAD
+
+git branch displays:
+fatal: missing object 7610511b1b4db888e8e6bb8d0ff158f932961345 for
+refs/heads/main
+
+Neither log nor branch causes the segfault.
+
+[System Info]
+git version:
+git version 2.45.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.7.3-arch1-1 #1 SMP PREEMPT_DYNAMIC Thu, 01 Feb 2024
+10:30:35 +0000 x86_64
+compiler info: gnuc: 14.1
+libc info: glibc: 2.39
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+
+Best,
+Jake Roggenbuck
