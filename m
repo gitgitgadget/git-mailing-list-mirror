@@ -1,134 +1,109 @@
-Received: from mta-sndfb-e05.biglobe.ne.jp (mta-sndfb-e05.biglobe.ne.jp [27.86.113.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E9617579
-	for <git@vger.kernel.org>; Sun, 19 May 2024 07:08:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=27.86.113.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882D4EAC7
+	for <git@vger.kernel.org>; Sun, 19 May 2024 07:10:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716102493; cv=none; b=kzj0gdGIlNa1j0hLNaVnKcRu563YIF8eVlSNWgqnVZJlKjvioxvVGwmExhCHituRxGfz0n7NjQ8iZJ7mX8eJMkeQcyLKKXBZF6tXITUbKdOJYu8uHocaOYlPHty+riptmWkkzO76wCo68XeIHDsMZn/mm9GlFjC7nfOHj/9COZU=
+	t=1716102624; cv=none; b=EbBgicoehpje2W/Nd11Mfguw1avMgDlkFeugyqtRwBlx/XG1d13hEZ8bhfRqeWncOx6cL9RK3LDj/cPqztVu+vwGZv4AqRiUaaUl5VJ5D/lbjcbFXp55YY9Vfn0ZYVP++26E/GsI2vmF5OVD6MXg5kby7wetUG7vXhnE5xN8+jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716102493; c=relaxed/simple;
-	bh=5rxeU+axIRPhaGUPJLlT2cMJPvsYAwjqNY3nFFZrIsY=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=eCQVeMi8mEZoYj0Asu0Ff1ivngJR6rqd/6/1WfwLJYttV/hEIdV0EQL65wjxW6l7yhEHlYlOSZevI4YTGc+qDSzxYGHDgnnMUXHZipf9+3aOCeq1A8rmf7+dbzovCy+Kw190WFw5LhTQzsW36Qdogpxy7dMYlbmZbf8bFuE46m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kba.biglobe.ne.jp; spf=pass smtp.mailfrom=kba.biglobe.ne.jp; dkim=pass (2048-bit key) header.d=kba.biglobe.ne.jp header.i=@kba.biglobe.ne.jp header.b=nkimztek; arc=none smtp.client-ip=27.86.113.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kba.biglobe.ne.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kba.biglobe.ne.jp
+	s=arc-20240116; t=1716102624; c=relaxed/simple;
+	bh=LEuX1adZnCKgieBrx27KhCNr96hqkf7UITJBXOBALlI=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=MItJknC7uQtdu/I0G/IusxRiqxQ1ZV1sfePKjzVYi0+qpd1uIjzi4KLOljW1VCYHHaiekxyZcBMN/uTXtaiaEldTvcwCeP+5HRlfzGAN2oCK4jTvz40AqKusyaSIGX3ewQplk58O/RVXdMoDrSlvV7wxYsL/nwYeN+SA6hTunXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gx93k9kA; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kba.biglobe.ne.jp header.i=@kba.biglobe.ne.jp header.b="nkimztek"
-Received: from mail.biglobe.ne.jp by mta-snd-e11.biglobe.ne.jp with ESMTP
-          id <20240519070305030.IAKE.51369.mail.biglobe.ne.jp@biglobe.ne.jp>;
-          Sun, 19 May 2024 16:03:05 +0900
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gx93k9kA"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-41fd5dc0439so12116505e9.0
+        for <git@vger.kernel.org>; Sun, 19 May 2024 00:10:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716102621; x=1716707421; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rGrLDrMzJZkxdvn4MPKimjHXx4wtUjAqflv7xuqgZPY=;
+        b=Gx93k9kAGkChpZJoAK3j8i+iR9pxUUKhCeqcl0jazkBE8bZcNBKCbycaaLL6AIqGRh
+         WQE2Lsad4XGNolzM7zLAzPQAdhAxdLZzmXZ6TV3JA9kOY026X0aWvCQt5jK64mhoLScx
+         UtvO0nJB7IlEiiJIr/wlNaSdytv2UaluruURNKhzIYg/j/UNc/Bixb8KJWpDNfm1mC2s
+         dJGHGozhr0l8hMvHoRwRv1vNRtMZCx4kRFXHMiLYG784q/H/Wn0DGO4LfjEWYyrRn8VQ
+         taUSqTHfBUPSwSugFiaC3n2AjazgGL00+lfttj5YHZ+1NkDcCNmJ2pMuNNl2vDJTC1b7
+         I7GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716102621; x=1716707421;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rGrLDrMzJZkxdvn4MPKimjHXx4wtUjAqflv7xuqgZPY=;
+        b=pA/IoWiKBSvhX9GPTnL3YvgQ/GtS0zjGN904fJ/br3iGSpAWn0Svp+tvCZAC4J+BUw
+         aQ58FGjr86BoRENaUJVXH57e9XLjU73H86qdTJBfeu6zo4kzyEZFGRzmQ8wGvJ15kGmu
+         HX5Nqgnu2uybT3xk9VIKcX9cRuyxOxjMGSiC5L2Tt/FoWBmItiAz3jdRtYeQBg/GV374
+         KPlqFSE/a1lTu/7EI1vogf+iDYDQ1cUNwOO88j38+L+6tgQEblNVz3+OVAZbAYSfQgXB
+         kaN84QIYaXsCnKvuVq8LUqJU0shYa8LlR+Au55lyoKr50AGoCiWNpkxmiGZf327sYqYB
+         q7HA==
+X-Gm-Message-State: AOJu0YxgAuGgV9zB/wcXDuLxZbQWHiqFqxsP5LgfGmdaOxkoXldh7iiQ
+	HnpAU2vU9QltZ4OldHsgQyA+UvgusM4wnxurLFaIBHoPHzlEi+cck/3ZCQ==
+X-Google-Smtp-Source: AGHT+IEauhbTKDuJbWGYjt8U9pP9qNoEkdo/BtijJyd1WKCNybeLpy60lNHDIXrnR/20DkrOE93YEQ==
+X-Received: by 2002:a05:600c:1913:b0:420:141d:994f with SMTP id 5b1f17b1804b1-420141d9a56mr160827525e9.18.1716102620703;
+        Sun, 19 May 2024 00:10:20 -0700 (PDT)
+Received: from gmail.com (173.red-88-14-51.dynamicip.rima-tde.net. [88.14.51.173])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42010b1076dsm289258095e9.41.2024.05.19.00.10.18
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 19 May 2024 00:10:19 -0700 (PDT)
+Message-ID: <fc307b09-29ae-4013-b5b9-580b6cff5445@gmail.com>
+Date: Sun, 19 May 2024 09:10:16 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.4\))
-Subject: Re: [PATCH v2 1/1] macOS: ls-files path fails if path of workdir is
- NFD
-From: "Jun. T" <takimoto-j@kba.biglobe.ne.jp>
-In-Reply-To: <20240509161110.12121-1-tboegi@web.de>
-Date: Sun, 19 May 2024 16:03:03 +0900
-Cc: git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <98AD4B35-ECE2-4349-AEA9-86F5CA52EA9B@kba.biglobe.ne.jp>
-References: <20240430032717281.IXLP.121462.mail.biglobe.ne.jp@biglobe.ne.jp>
- <20240509161110.12121-1-tboegi@web.de>
-To: tboegi@web.de
-X-Mailer: Apple Mail (2.3696.120.41.1.4)
-X-Biglobe-Sender: takimoto-j@kba.biglobe.ne.jp
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kba.biglobe.ne.jp; s=default-1th84yt82rvi; t=1716102185;
- bh=mmrXFvBTkh+wWmlSyk4UJGjt+XdnZwD6VHOg/vSIsXk=;
- h=Subject:From:In-Reply-To:Date:Cc:References:To;
- b=nkimztekfNmQ8RPCexVDrMTJedG8nQoGKhe7P8f+7y9wGCI8ZKIsWFo/w80J3/svMPSmHek6
- lAD97K9B3sNoEEkeKEd136Il7kX2lq5VzTdF7rqdIaNu9aZAon0OCpPzHqct42EiKu7up9mVVD
- gwn32NsDsRuLyCQExa9x5oNeOUWrOiu6ks7KmKpXcPi/4PmcqiR1SX8fQQ/S/8Mv8fI6zQoh8u
- 1cJJznZh60bM8siiWzVcE06wtpk2nqeOSC1KuhCPW+4UA9zwjeGSUGl+6tHLHodJlUWqPeZeXJ
- VN2SU/j5JyYN2ZtzBOjY0+0fUGlwVlDfawPcABKeE3LOVRTg==
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH 1/5] add-patch: test for 'p' command
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+To: Git List <git@vger.kernel.org>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+Content-Language: en-US
+In-Reply-To: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Sorry for not responding quickly.
+Add a test for the 'p' command, which was introduced in 66c14ab592
+(add-patch: introduce 'p' in interactive-patch, 2024-03-29).
 
-Thank you for the patch, but it seems the problem still remains.
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
+ t/t3701-add-interactive.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-Although
-% git ls-files NFD
-(apparently) works,
-% git ls-files NFC
-still gives the error
-(if core.precomposeunicode is not set in global config).
-
-The following is some info I got (hope it is correct and useful),
-but I have no idea how to fix the problem.
-
-precompose_string_if_needed() works only if:
-  precomposed_unicode is already set to 1, or
-  git_config_get_bool("core.precomposeunicode") sets it to 1.
-
-But git_config_get_bool() reads the file .git/config only if:
-  the_repository->commondir is already set to ".git".
-
-Back trace when the strbuf_getcwd() is called for the
-3rd time is (frame #4 is set_git_work_tree()):
-
-  * frame #0: git`strbuf_getcwd(sb=3D0x00007ff7bfeff0a8) at =
-strbuf.c:588:20
-    frame #1: git`strbuf_realpath_1(resolved=3D0x00007ff7bfeff0a8, =
-path=3D".", flags=3D2) at abspath.c:101:7
-    frame #2: git`strbuf_realpath(resolved=3D0x00007ff7bfeff0a8, =
-path=3D".", die_on_error=3D1) at abspath.c:219:9
-    frame #3: git`real_pathdup(path=3D".", die_on_error=3D1) at =
-abspath.c:240:6
-    frame #4: git`repo_set_worktree(repo=3D0x000000010044eb98, path=3D".")=
- at repository.c:145:19
-    frame #5: git`set_git_work_tree(new_work_tree=3D".") at =
-environment.c:278:2
-    frame #6: git`setup_discovered_git_dir(gitdir=3D".git", =
-cwd=3D0x0000000100435238, offset=3D16, repo_fmt=3D0x00007ff7bfeff1d8, =
-nongit_ok=3D0x0000000000000000) at setup.c:1119:2
-    frame #7: =
-git`setup_git_directory_gently(nongit_ok=3D0x0000000000000000) at =
-setup.c:1606:12
-    frame #8: git`setup_git_directory at setup.c:1815:9
-    frame #9: git`run_builtin(p=3D0x0000000100424d58, argc=3D2, =
-argv=3D0x00007ff7bfeff6d8) at git.c:448:12
-    frame #10: git`handle_builtin(argc=3D2, argv=3D0x00007ff7bfeff6d8) =
-at git.c:729:3       =20
-    frame #11: git`run_argv(argcp=3D0x00007ff7bfeff54c, =
-argv=3D0x00007ff7bfeff540) at git.c:793:4                                =
-           =20
-    frame #12: git`cmd_main(argc=3D2, argv=3D0x00007ff7bfeff6d8) at =
-git.c:928:19                                  =20
-    frame #13: git`main(argc=3D3, argv=3D0x00007ff7bfeff6d0) at =
-common-main.c:62:11
-
-At this point, precomposed_unicode is still -1 and
-the_repository->commondir is still NULL.
-This means strbuf_getcwd() retuns NFD, and                               =
-       the_repository->worktree is set to NFD.
-               =20
-Moreover, precompose_string_if_needed() calls   =20
-git_config_get_bool("core.precomposeunicode"), and
-this function indirecly sets =20
-the_repository->config->hash_initialized =3D 1
-
-Later setup_git_directory_gently() (frame #7) calls
-setup_git_env() --> repo_set_gitdir() --> repo_set_commondir()
-and the_repository->commondir is now set to ".git".
-
-Then run_builtin() (frame #10) calls precompose_argv_prefix()
- --> precompose_string_if_needed(). Here we have
-  precomposed_unicode =3D -1
-  the_repository->config->hash_initialized =3D 1
-This means git_config_check_init() does not read
-.git/config (does not call repo_read_config()) even if
-the_repository->commondir is set to ".git",
-and precomposed_unicode is not set to 1.
-So the NFD in argv is not converted to NFC,
-and
-% git ls-files NFD
-apparently works.
-
-
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 28a95a775d..52d7830de2 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -542,6 +542,22 @@ test_expect_success 'goto hunk' '
+ 	test_cmp expect actual.trimmed
+ '
+ 
++test_expect_success 'print again the hunk' '
++	test_when_finished "git reset" &&
++	tr _ " " >expect <<-EOF &&
++	+15
++	 20
++	(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? @@ -1,2 +1,3 @@
++	 10
++	+15
++	 20
++	(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]?_
++	EOF
++	test_write_lines s y g 1 p | git add -p >actual &&
++	tail -n 7 <actual >actual.trimmed &&
++	test_cmp expect actual.trimmed
++'
++
+ test_expect_success 'navigate to hunk via regex' '
+ 	test_when_finished "git reset" &&
+ 	tr _ " " >expect <<-EOF &&
+-- 
+2.45.1.209.gd5886bf9cd
