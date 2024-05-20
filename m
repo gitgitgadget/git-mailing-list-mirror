@@ -1,58 +1,58 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF824A929
-	for <git@vger.kernel.org>; Mon, 20 May 2024 22:33:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C3C13A3E9
+	for <git@vger.kernel.org>; Mon, 20 May 2024 22:35:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716244431; cv=none; b=AFNGsJHU21UWDw0Ol87xVGeCfxZAk5p1t3mXySm6igD7m6H12dJBbLtnkAUrSDHs3V3QX3Bj3QrBsnE9pPrdFh3PX2PKs3PUCDIjQ7oBDacdMvX1pHQAx6QwAZITdioyJ3d+nT1gXh6Yr6YtqAtxDKs0kmjF85qxqOopJdbt7lg=
+	t=1716244528; cv=none; b=hZV5SfCTEZtTpq1XsBvIiZLRETtj9AyFm8IS0Evb63J+fk0CJkI+ZEkZbVJ9lHXvEWhMawM1M5vf7bjXD0A5spQ+czmVCfhW4Gt0jU9zvGSvnyalB6thB7frEiARQFXKEVxKy9zEL+pzSC18oX/d6NTGW7y3iNrnrBF+Qq1BvzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716244431; c=relaxed/simple;
-	bh=YoC4ZC0h0WYejRdqCK05d1nkjh1LO8YSx7f6uPLzfJM=;
+	s=arc-20240116; t=1716244528; c=relaxed/simple;
+	bh=tBmBEEQ5M4FTO7lTWEAyPe98m84q+2LA0SDmArIELIg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ls+fF0I59x+BnB9gqwq5iisKD+ye0578GfXlFcwa/Ge9APtYqqZv3pdUhEFNFqYDeqBKp/ngMZNd5gXQZFcsM2ta1seuc1z8kjRmuRbN7zbrdfXafRp6VmRaS9s3jInT9OhBlWEnmyIBcwp9eBzpEp45Va7kIndaoIfKTiu0MM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SmMS8n4j; arc=none smtp.client-ip=209.85.221.53
+	 In-Reply-To:Content-Type; b=C+NoailIozyNKGM99ovhHEYVPDa+IgAv/l7T67c1xGvQKfZwCtZSyZ1Sw/G1Cx/wflhzSpWDgv1sJZS6PjzxSdwTWqxjy1FR4sa9oVvW/z5KlopA32UpVziLFdqH7ppcjONpJ7kz4JKKxfx7oVo7dUFGLEFwil2gXod7mLp171A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FPxe9EWM; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SmMS8n4j"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-34e7a35d5d4so2500112f8f.2
-        for <git@vger.kernel.org>; Mon, 20 May 2024 15:33:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FPxe9EWM"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-41fd5dc0480so25397805e9.1
+        for <git@vger.kernel.org>; Mon, 20 May 2024 15:35:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716244428; x=1716849228; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1716244526; x=1716849326; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=goDkkyABeIiPHMgA+X0/BA6pn86PKg/T2g5+tZ4PFCo=;
-        b=SmMS8n4j+BrwctrwRQesliD/v7TFcVaQ+OuQx1GrzVNXgQ27C1JZduoyA7j5B9nF0R
-         k+O2QL8gXsjkKrkWV9ELp1uCio/TisDQdmmMo3tQ461TC4IBhQCLulnLKj0UKr+bGgVb
-         w99YJncDq54clVVZC18WN9T+JOPECG7KqLln3DtJljXTFrolHriUz5WEI7EzDlsNA0hY
-         UgbKoYRfe7TFtt7JJtZnYRawqQABfxUNuKPwqt8UZFiXVV2R1G5ZH+rMRwbQrVQbXJAG
-         EA/WLTuKZb8MlugmsRIp795CWdNJYbsAFgS7ZkBeOX83yTdcO++ncB9YLdOqNVz8YvqG
-         bCGA==
+        bh=zVf4g28niQtP9/7bdG/Vpsp50WfeTMfg/+KakGTaaOY=;
+        b=FPxe9EWMCpQvud2OcTKd82/FYi2nvZfkrvISKzbhNIjyri496TVo0RPRxdDJwfFJds
+         ayeeI77sNC9ATLA6IQ2/GIamHpz4+NZNziH5+UtJE3z4rwNX8/VpUfJ/yy3aPQcQSJ8p
+         wpVuaNjV4Y0V0NTHSym1mmDtGVGazdJbkpMqIF8DkKNC8HlgUbPLue62Eu58eJc7i0Od
+         T9gkPAUJNp0oIADIWQW5/0u45SLPK4XcVJbrZuIbvIlUi/6+ST1uMR9Bq6LwVS7KRIPf
+         0yF+qOlSNgOE0nTz8J7WuTe19xr8RYv/CnoZh0VwOGtrMCDr/FshGqhZAHM4VftdJSWe
+         vnDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716244428; x=1716849228;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1716244526; x=1716849326;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=goDkkyABeIiPHMgA+X0/BA6pn86PKg/T2g5+tZ4PFCo=;
-        b=IrjjXg8YMPGm4ndV5t0cm+EgFd/58bdPABGbxhfAoBc5g5bju1jnGRc2or3c41wAlM
-         pOtNqXFZe2c+Uf4MECMgWg0GjJz0Gj+D+2YSYGWwp/DLlyEDpgDdl34jFK7rNVTs9UNQ
-         WNAJ6nQXfip0BWHSWRif0LcBQ98Hw9r2gxPXfga8rjkRonlA6RiRCJ1t5g2k0vsZss7L
-         nlO9tprPX6oaF+1IbRUfrGyaUtit3zULdVzl24J6HPyWXCbh2drGJffnbFrI3+AKuR31
-         JU0X80fWxK8B8M6iSXc+2xWgqVxK/bpY38HufhJipnVfMRDh8jpASFRSMck5gefGRlxl
-         Ds7A==
-X-Gm-Message-State: AOJu0Yx1kS7xNzYP3kCmVRUxN/uZRiPRVamPh9IEo7GST2a1xfQS0G2g
-	Jw+QakB03uUFJTirjdPJb4sDdOAr+usgp3LV9nAaMRLtyJjjZyZ6KIqLaw==
-X-Google-Smtp-Source: AGHT+IHK42+dsAddm6SSKfAOmPFdRh0N2Y/aVRce6/66h2Q6mgh9saxvfNKGVqvK31ODanFc9iAPlg==
-X-Received: by 2002:adf:ed8d:0:b0:34d:8bc0:3f5a with SMTP id ffacd0b85a97d-3504a206d19mr22133193f8f.0.1716244427882;
-        Mon, 20 May 2024 15:33:47 -0700 (PDT)
+        bh=zVf4g28niQtP9/7bdG/Vpsp50WfeTMfg/+KakGTaaOY=;
+        b=ezcq8wV1K8m4tzOgVW2kWRE/B7o0u14hvSlJP2TPB0z9+YFIBp0+FsUWJfhgJiefUw
+         qoDRdk+wIahl7y8WZExAiyvTY+nZ/PjwSTxuUoEBL5gKirfDXI1OdWPVPe7cFaXIIi77
+         ngxbR7Ncb8mhqZKLR2jrj5KFlI3AJ2alAm+7DYfN6b8aZzWR2eNKdyErVtnUqqFNxLza
+         HQ4V4kK7Ysoh5aDdqVMqRL6ZGKxZwqAPxMDbXPJdDhOIBf24WdTqBp50l66R3r+yCXUv
+         A8MjlH3Y9Zj4bvRakO4SKStOdctsQKstZ+EVNcJgdFSl4mulaIuwWSy5WD03rt+Hq0lD
+         arUg==
+X-Gm-Message-State: AOJu0Yx7xU+MZNdnXWCvJQ5RraMhB6mpBhyv/N3YsjI10RrSRJxarrXb
+	aqe5egwe9k/MW2upnHW5nOavlvsDwLsMCTA4z0jEgYXgcn4/piWb
+X-Google-Smtp-Source: AGHT+IEAj9bYC5SeVRB/xO3b5ttkuhKabzIjjXn2cDZCa6cg7g5z/3D0QzA1RaOIcbCpLO8xSYH9aQ==
+X-Received: by 2002:a05:600c:2042:b0:41c:8123:f8a5 with SMTP id 5b1f17b1804b1-41feab40c4bmr239222205e9.23.1716244525633;
+        Mon, 20 May 2024 15:35:25 -0700 (PDT)
 Received: from gmail.com (173.red-88-14-51.dynamicip.rima-tde.net. [88.14.51.173])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3502b79bdc7sm30111409f8f.22.2024.05.20.15.33.47
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41fccce1912sm441044625e9.11.2024.05.20.15.35.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 May 2024 15:33:47 -0700 (PDT)
-Message-ID: <a9f199d8-bb06-479f-88c2-63d80338a4e9@gmail.com>
-Date: Tue, 21 May 2024 00:33:46 +0200
+        Mon, 20 May 2024 15:35:25 -0700 (PDT)
+Message-ID: <83071f70-e8a1-41d6-9fb1-108a31602baa@gmail.com>
+Date: Tue, 21 May 2024 00:35:24 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,109 +60,30 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] pager: do not close fd 2 unnecessarily
-To: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] add-patch: render hunks through the pager
+Content-Language: en-US
+To: Dragan Simic <dsimic@manjaro.org>, Junio C Hamano <gitster@pobox.com>
 Cc: Git List <git@vger.kernel.org>
 References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
- <80f15223-246e-4cfb-a139-e47af829c938@gmail.com> <xmqqo790fg8z.fsf@gitster.g>
+ <eb0438e8-d7b6-478f-b2be-336e83f5d9ab@gmail.com> <xmqqh6esffh1.fsf@gitster.g>
+ <ec5d73e22a6e4587f3d87314a9c0e422@manjaro.org>
 From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqo790fg8z.fsf@gitster.g>
+In-Reply-To: <ec5d73e22a6e4587f3d87314a9c0e422@manjaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On Mon, May 20, 2024 at 12:14:04PM -0700, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
-> > We send errors to the pager since 61b80509e3 (sending errors to stdout
-> > under $PAGER, 2008-02-16).
-> >
-> > In a8335024c2 (pager: do not dup2 stderr if it is already redirected,
-> > 2008-12-15) an exception was introduced to avoid redirecting stderr if
-> > it is not connected to a terminal.
-> >
-> > In such exceptional cases, the close(STDERR_FILENO) we're doing in
-> > close_pager_fds, is unnecessary.
-> 
-> 
-> > Furthermore, in a subsequent commit we're going to introduce changes
-> > that might call close_pager_fds multiple times.  With this in mind,
-> > unconditionally closing stderr will become undesirable.
-> 
-> In a new world with such a change, what does it mean to call
-> close_pager_fds()?
+On Mon, May 20, 2024 at 09:45:51PM +0200, Dragan Simic wrote:
 
-There is no change in what calling close_pager_fds() means.
+> Thus, if someone wants to have a complete longer-than-one-screen hunk
+> displayed and use the terminal emulator scrollback to inspect the
+> hunk in its entirety, passing such (or all) hunks through the pager
+> would make such inspection impossible.  I'd assume that at least some
+> Git users already do that (I do, for example), and we surely don't want
+> to make that no longer possible.
 
-> It used to mean "we are really done with the
-> pager and we no longer need them, ever".
-> 
-> And we still call the helper for that purpose after this change,
-> from wait_for_pager_atexit() and wait_for_pager_signal().
+I'm not sure if I understand the problem... disabling the pager is
+still an option, no?
 
-Yes, no change here either.  In the next commit, a new client of the
-helper is introduced, the new API: wait_for_pager().
+    $ git -P add -p
 
-> 
-> So no matter what "a subsequent commit" does, it feels conceptually
-> wrong to call it more than once in the first place.
-> In other words,
-> what is wrong is that this function closes stderr, but "a subsequent
-> commit" calls this function multiple times, no?
-
-This series is trying to allow triggering the pager multiple times.
-Reaching to close_pager_fds() multiple times is a consequence of it.
-
-> 
-> >  static struct child_process pager_process;
-> >  static const char *pager_program;
-> > +static int old_fd2 = -1;
-> 
-> What does the magic number "-1" mean?
-
-Invalid fd.
-
-> We often use it to signal
-> "uninitialized", but then what are concrete "initialized" values
-> mean?  "We dup2()'ed something else to stderr/fd #2 but before doing
-> so we saved the original fd #2 away to this variable, so that we can
-> restore fd #2 by another dup2() of the value of this variable when
-> we declare that we are done with the standard error stream"?
-> 
-> But that does not look like what is happening here.
-> 
-> >  /* Is the value coming back from term_columns() just a guess? */
-> >  static int term_columns_guessed;
-> > @@ -23,7 +24,8 @@ static void close_pager_fds(void)
-> >  {
-> >  	/* signal EOF to pager */
-> >  	close(1);
-> > -	close(2);
-> > +	if (old_fd2 != -1)
-> > +		close(2);
-> >  }
-> >  
-> >  static void wait_for_pager_atexit(void)
-> > @@ -141,8 +143,10 @@ void setup_pager(void)
-> >  
-> >  	/* original process continues, but writes to the pipe */
-> >  	dup2(pager_process.in, 1);
-> > -	if (isatty(2))
-> > +	if (isatty(2)) {
-> > +		old_fd2 = 1;
-> 
-> Equally unclear magic number "1" is used here.
-> 
-> This value is different from pager_process.in, and my earlier "we
-> are saving away" does not apply, either.
-
-It applies, in 3/5.
-
-> 
-> >  		dup2(pager_process.in, 2);
-> > +	}
-> >  	close(pager_process.in);
-> 
-> Puzzled...
-
-Thanks for reading the series.
+    $ git -c pager.add=false add -p
