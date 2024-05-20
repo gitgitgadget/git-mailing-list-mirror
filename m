@@ -1,107 +1,119 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2C79475
-	for <git@vger.kernel.org>; Mon, 20 May 2024 22:45:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D59137C55
+	for <git@vger.kernel.org>; Mon, 20 May 2024 22:47:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716245126; cv=none; b=GDKDXRKAvluiqNrBC+XYSp6IS+t5j2f77vSaueCIYi+SDy3L9rF650u2GGuQNYi3kGpa8OcTMn0o7y7l6L4XVJ/2Nw5KCtFupadyeaZf8mLt+lFv2P/P1UYosj7IAwWgXLztwVA3Nis/TqJIRP+FyITiMChGYBEUtgBNZZ1jGYg=
+	t=1716245247; cv=none; b=Ks/TIyAhYXzn61RMvnoQd8uHkBFX2hOySjCHtJk5qTrsIXuxdR/+CBYpbv5xO9lfHlnyS33pt/Q09xx3GySYBesqelBPSsSh/wHBZ5V75dvVS7hOZsQgSQIEagqAsoKsA5t8dHo/3Mg0PekzkxLVleoIxbrtgnjOW+ITvD8jLpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716245126; c=relaxed/simple;
-	bh=bk/XtdHjJlNIhi+KhktaVj+efQcUQD9smsHj4qC8as0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=o6lAYn9PEfakgam0/z1QSEqVCCkN6Azx14GaZVdVimIkcGNJRwhF+DuUEhA0do23hnQ5RBw5TZiwA6YPomQL9tO3qUhrtLKa9exnXjc8aa7sv6+B8DEYXsgCY94L14TLZ9QKmMT33t7itJuReZaydIP3WrPKbpxrhZWtZwfKQMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XbxvDoG/; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716245247; c=relaxed/simple;
+	bh=TLPz4k+PEmZQTPMgRJxPrJD7+0v5WZ5gvD465bXoGcw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CNyPiqVUAY3vMUctMUDyBUZ9EOvLG7FUdZaAY7+dSLgB+70eEBWxtY3p/zZmDmgkICpF/XKwSV9jESLoRn3tVQDbKV42Tq96mFT9WhVQlQVGj9o3Yj6JyFaoQPNQqNzfI/mudRRjQo8gIRjrpvTmZiNBZNOmOG0ViQHGjZ5xzns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HGQ9XYKK; arc=none smtp.client-ip=209.85.221.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XbxvDoG/"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id EC5AD28729;
-	Mon, 20 May 2024 18:45:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=bk/XtdHjJlNIhi+KhktaVj+efQcUQD9smsHj4q
-	C8as0=; b=XbxvDoG/VFtaxksDs86jcoILunan1M5R6srf7vVhZKhZin1Q5sjn4g
-	09nWyj9zQYmzAU1FKrw5+y8cDpx5lTOvLewkYlQX2/Ivs3Os3NpqQuIkcglI454f
-	yURKU2Us7bqRzS0sVRpmyo1/k0OwHmWHtv0ZpBZuCQNr3uFOszu7Y=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id E4A7728728;
-	Mon, 20 May 2024 18:45:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EBDD828725;
-	Mon, 20 May 2024 18:45:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 4/5] builtin/hash-object: fix uninitialized hash
- function
-In-Reply-To: <xmqqed9wdvv5.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	20 May 2024 14:19:42 -0700")
-References: <cover.1715582857.git.ps@pks.im>
-	<20240514011437.3779151-1-gitster@pobox.com>
-	<20240514011437.3779151-5-gitster@pobox.com>
-	<xmqqmsoodmoe.fsf@gitster.g> <xmqqed9wdvv5.fsf@gitster.g>
-Date: Mon, 20 May 2024 15:45:13 -0700
-Message-ID: <xmqqa5kkdrwm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HGQ9XYKK"
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-4df439e1056so1221649e0c.2
+        for <git@vger.kernel.org>; Mon, 20 May 2024 15:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716245245; x=1716850045; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RisJWE8uGHfZPWrtcXg6VpckPXad12ok5zqQDcjVUMs=;
+        b=HGQ9XYKKmLYVyqIjupzs8Bg7u4EI0L99D+BLb+abFVcx5pEHMwayBm3w43mAzROzgz
+         9aGjKxSKS6JMUoyMfg2aYgisL+dcM2xE3C7hN9zlSJIEG74EfpszDiRjaXnFMWFmZDyG
+         mxvW6IQKY2yUCxD68LNuR2sXxFSu8OKFwzAQnC1UHpV6ERYqMXWZKz4YK84ou0OGOCmd
+         JO6t0MYP2OBvUwgTEowgYVNaUHRqP+N9aoRdUY1oUPMsHdwmNkSlzz44usBAfLuAZUDE
+         5/rVf42z+t6uW9/T5nFivlrFv1NP7xfyATD5y1Cpq8monVlJ4+EaulIkWpFZLTQhjYer
+         WBvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716245245; x=1716850045;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RisJWE8uGHfZPWrtcXg6VpckPXad12ok5zqQDcjVUMs=;
+        b=n6AIKPR+NHEahz0Yu5XQ7dWXCqwY29xIwEUj/pAKYvtg7vVSpsrhd5e61RF4YJeC54
+         cZhuztkpvVYBrD3riWbVQx7dZY4YwVdJ2a0DEmQw0XfWzc+UXItZsIaZfC12Y6J3+DlD
+         W507eimdBVWoFGDcALHy/VygQndglafJ0yWh4ejnuqE+DIFUAt9p7XQlAQ3sRA7aJ5lP
+         IQ4Z9uV5oqr4BwmamABhFXUrXnAEpPwaC6Jp/rVpxmQp6Rempuu0SL1oYOS40v9p2jeS
+         Vf9CFg8I4hq2HBx4d2lKMVIKj/IWJV/MaoiTZcKHBSjSMx2gDgGtV55wCrf8z9W6u7y+
+         2ODg==
+X-Gm-Message-State: AOJu0YwpnFnyVwLfzJtLEiVsJlniHQ86t2XtO45SKMjX/QbUmwJWuNgW
+	/RHlMLwnvraI99Cg0bXj6Nt6RTvXoRyLczf6Y+JTot6nTDpDBvT2
+X-Google-Smtp-Source: AGHT+IGWGrjVokK0Wf1b3INhLvF2zZTj7OiTyKCFm5NajT5B4Ll63wZG2qeuHHXUokuiUWLPHm2lCw==
+X-Received: by 2002:a05:6122:1786:b0:4d8:7222:b6da with SMTP id 71dfb90a1353d-4df882c2a3dmr28794515e0c.6.1716245243731;
+        Mon, 20 May 2024 15:47:23 -0700 (PDT)
+Received: from gmail.com (173.red-88-14-51.dynamicip.rima-tde.net. [88.14.51.173])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-4df994eef05sm2655610e0c.18.2024.05.20.15.47.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 May 2024 15:47:23 -0700 (PDT)
+Message-ID: <dcc9f9bf-3c0f-435f-ba10-35ff31122b7d@gmail.com>
+Date: Tue, 21 May 2024 00:47:21 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 9FC3DBE6-16FA-11EF-946B-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] add-patch: render hunks through the pager
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Dragan Simic <dsimic@manjaro.org>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+ <eb0438e8-d7b6-478f-b2be-336e83f5d9ab@gmail.com> <xmqqh6esffh1.fsf@gitster.g>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqh6esffh1.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, May 20, 2024 at 12:30:50PM -0700, Junio C Hamano wrote:
 
-> I haven't looked at the breakage in 1007 yet, though.
+> > Invoke the pager when displaying hunks during "add -p" sessions, to make
+> > it easier for the user to review hunks longer than one screen height.
+> 
+> If the hunk fits on one screen, it is annoying to see a pager
+> invoked and then torn down immediately,
 
-This turned out to be almost trivial.  A fix relative to an earlier
-version is that the call to test_oid helper needs to explicitly ask
-for SHA-1 variant, as the command invocation outside a repository
-uses SHA-1 (not due to falling back to a hardcoded default, but by
-an explicit fallback in the "git hash-object" itself.
+Good point.
 
-I'll send a v5 of the whole series sometime later (if I have time it
-may happen today but otherwise tomorrow).
+> even with "less -F"
+> (--quit-if-one-screen).  As we know how much output we are throwing
+> at the user, we'd want to make this conditional to the size of the
+> hunk being shown and the terminal height.
+
+Are you thinking of something like?:
+ 
+diff --git a/add-patch.c b/add-patch.c
+index cefa3941a3..495baad3ac 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1449,11 +1449,18 @@ static int patch_update_file(struct add_p_state *s,
+ 		strbuf_reset(&s->buf);
+ 		if (file_diff->hunk_nr) {
+ 			if (rendered_hunk_index != hunk_index) {
+-				setup_pager();
++				int lines = 0;
+ 				render_hunk(s, hunk, 0, colored, &s->buf);
++				for(int i = 0; i < s->buf.len; i++) {
++					if (s->buf.buf[i] == '\n')
++						lines++;
++				}
++				if (lines > term_columns())
++					setup_pager();
+ 				fputs(s->buf.buf, stdout);
+ 				rendered_hunk_index = hunk_index;
+-				wait_for_pager();
++				if (lines > term_columns())
++					wait_for_pager();
+ 			}
+ 
+ 			strbuf_reset(&s->buf);
+
+This would significantly reduce the blast radius.
 
 Thanks.
-
-diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index 64aea38486..d73a5cc237 100755
---- a/t/t1007-hash-object.sh
-+++ b/t/t1007-hash-object.sh
-@@ -260,4 +260,10 @@ test_expect_success '--literally with extra-long type' '
- 	echo example | git hash-object -t $t --literally --stdin
- '
- 
-+test_expect_success '--stdin outside of repository (uses SHA-1)' '
-+	nongit git hash-object --stdin <hello >actual &&
-+	echo "$(test_oid --hash=sha1 hello)" >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
-
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index 82ca6d2bfd..c767414a0c 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -123,6 +123,9 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- 	else
- 		prefix = setup_git_directory_gently(&nongit);
- 
-+	if (nongit && !the_hash_algo)
-+		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	if (vpath && prefix) {
- 		vpath_free = prefix_filename(prefix, vpath);
- 		vpath = vpath_free;
