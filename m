@@ -1,106 +1,76 @@
-Received: from outpost1.zedat.fu-berlin.de (outpost1.zedat.fu-berlin.de [130.133.4.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467E0134CC
-	for <git@vger.kernel.org>; Mon, 20 May 2024 19:17:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.133.4.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0835B1386CC
+	for <git@vger.kernel.org>; Mon, 20 May 2024 19:20:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716232667; cv=none; b=EAF+E8iN6b+iPt1wiOnThZSiQcuw+MmtpZ5nGunTpFvgXkLp6LN/E/LI1BArRaoMq5Zhjf73PEU0mwgelfZgtXR4a8VexkJXRT883yNZ/ykgvmN856stBrtNl4wod8JuGpPuc1N8IVqUtSZEYHxlUxahiBix3IqYjIisIiotbIE=
+	t=1716232805; cv=none; b=lVKlY4XBs8NSiNUewvIlS6s8Jrdhhq8aqEpvWOZ8MNqaBpLHFHwqcbEG56efd8+xAWU4AAhT0cq7qU3Dk99cDoSMR996R4qiigbhzo+s27mhjyyXO2VYrq5OeCowtoY6mZwOqXeAZRCA07r60lMKiWQpITexbeFFTuhw0yFNEok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716232667; c=relaxed/simple;
-	bh=qMcnfPZAZAFDKYosNuxHnAcK7xps3oH43lApugvn6gY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=aCHPHMPIWOHpIelw07YUoI1s3lMsms/iy14vb3h5yIPxNbvqziynznoMz4AvWBya1jI7+ql4SsUwW0v7izR//BB4qtaW37LcbfNQUJMgNo4Wz05Q3PPlpgE2jaDdFC1Qy+CIbGa2Aa9o1CjmrWAMhLpv56dh6bgniLPsFgCANv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de; spf=pass smtp.mailfrom=zedat.fu-berlin.de; dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b=IKIq5LjY; arc=none smtp.client-ip=130.133.4.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zedat.fu-berlin.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b="IKIq5LjY"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=fu-berlin.de; s=fub01; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Tblqc4J0DrEB/5XA/5Z+pljiQY2s1pLxd1MrCLFlQAM=; t=1716232665; x=1716837465; 
-	b=IKIq5LjYlZBTKC6t+DtOd0cBU2/M/e/14JqVODEnMK4Cj5yk5EBf3NXABMI/eQJ+OLrehH5TDfZ
-	eqWQ/4RCLdxCtFRIGIVelutSf+jExx53ZfZnWyHeSwFRrJNePYrt4QNRO9u4MOivZuP1v1NiVIt65
-	gSAT4joF++gFqtW0aS0aG/MwxM3Q4rFQp8xmIaQRizeLQ/EOMF8X3ifC3M3oe/KwGBg4IzZ8nMMVJ
-	DV0opym5fmqJugd+NpPFOsNHnmj7//ACh1HGqlI0ibU7vq0fnKwQD8fKxql8Fsq4gujlDAalKNQeD
-	S27Xj6Cz1QDLsXK3j5wp+pKgxfYNQls8MBSg==;
-Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
-          by outpost.zedat.fu-berlin.de (Exim 4.97)
-          with esmtps (TLS1.3)
-          tls TLS_AES_256_GCM_SHA384
-          (envelope-from <glaubitz@zedat.fu-berlin.de>)
-          id 1s98Vy-00000001lno-1pK5; Mon, 20 May 2024 21:17:42 +0200
-Received: from p57bd9a40.dip0.t-ipconnect.de ([87.189.154.64] helo=[192.168.178.20])
-          by inpost2.zedat.fu-berlin.de (Exim 4.97)
-          with esmtpsa (TLS1.3)
-          tls TLS_AES_256_GCM_SHA384
-          (envelope-from <glaubitz@physik.fu-berlin.de>)
-          id 1s98Vy-00000002ScJ-0xh2; Mon, 20 May 2024 21:17:42 +0200
-Message-ID: <277726443f533446be4391cf2aa3d487974a7a18.camel@physik.fu-berlin.de>
-Subject: Re: [PATCH 0/3] improve chainlint.pl CPU count computation
-From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-To: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Eric Sunshine
- <sunshine@sunshineco.com>
-Date: Mon, 20 May 2024 21:17:41 +0200
-In-Reply-To: <20240520190131.94904-1-ericsunshine@charter.net>
-References: <20240520111109.99882-1-glaubitz@physik.fu-berlin.de>
-	 <20240520190131.94904-1-ericsunshine@charter.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.1 
+	s=arc-20240116; t=1716232805; c=relaxed/simple;
+	bh=9J818fwrAZE0jP6qgWZVvvzmhV+lrF0ytwK13KoYkRI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EIJBoHOYZwyInj2cXwn5HutRIgTjzP53XYdDjoD8NazN6J3un9j0A4oIXHPy+ajwjfHUhURsZJGz/0nzWEHNiA6fmIXcNYGvcsA+MPYc0ouvghAqFuANxJ9gapEzQMDAGqEh81bhvFw4IecPK6ja71oJvGvUhBxH1dcxA3Q6zCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-792bf1a4f75so294808885a.2
+        for <git@vger.kernel.org>; Mon, 20 May 2024 12:20:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716232803; x=1716837603;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9J818fwrAZE0jP6qgWZVvvzmhV+lrF0ytwK13KoYkRI=;
+        b=qZtPBNnV+VRLiUV3GqZz4rFqxJoMIRJe3UVnvw6eogwd6rmIz+PHPlrnddWkN9Dtrz
+         97xGRv1GkziUZwtI0r0+NWkXpYg2Xm03nYOohpfsGuOvPJg7eMVGw1Ad1n/qSghzRCux
+         5+rxvPAug9jytinsM40xhzoW2oiJ12+FTSiiRc6Zx9UId3+/vsTfvkYuK/VvQ0VKG55o
+         Iy6TtOwKmKdifQP/kETG3robbjc2Z/rCUBQXb/UqTWMrTwDISARvkfY52hI2CFOUBPn+
+         993DtSRaqL7jQynq4Nte4HmFi+5/3ppqr1aCiSM8hq4r7KooKBDIALVFEoWYjfXKdVhZ
+         qdJA==
+X-Forwarded-Encrypted: i=1; AJvYcCUQevCZBlnD21T6C+Ao68v7U4CRaa4tbGLPSWrche111JHJ9001wqQOyx2KQGTwmon9mG/Nm9Hwyhc6Gmt5HVX46oUf
+X-Gm-Message-State: AOJu0YwDZBs9ADSZp0Ef7byqTBRekzOY1TN/ElaoMxoRdMMdl0WqAbYz
+	T+UznvTLB3S/wq3fPv7yV9EOzCwUnTNBHeWiVOuHss+PHtm4sZcFxAX3wuL8meJm05R7rbid9HA
+	HSp1IWuGuXV8h0uQY8hiO4QfSoUU=
+X-Google-Smtp-Source: AGHT+IEu1xZ1J8TP6X9fRcFbc2xWug8lNMeKP+5IPdOb9HiCAHqlkfouIbmpM1f1ExYzxULCZgcV9xHOta1zW0THW9I=
+X-Received: by 2002:a05:6214:460c:b0:6aa:9d50:f509 with SMTP id
+ 6a1803df08f44-6aa9d50f663mr37347236d6.43.1716232802987; Mon, 20 May 2024
+ 12:20:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Original-Sender: glaubitz@physik.fu-berlin.de
-X-ZEDAT-Hint: PO
+References: <20240520111109.99882-1-glaubitz@physik.fu-berlin.de>
+ <20240520190131.94904-1-ericsunshine@charter.net> <277726443f533446be4391cf2aa3d487974a7a18.camel@physik.fu-berlin.de>
+In-Reply-To: <277726443f533446be4391cf2aa3d487974a7a18.camel@physik.fu-berlin.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 20 May 2024 15:19:51 -0400
+Message-ID: <CAPig+cQYJL+6J9PJX-vrNRXJ4TUCJCQRDQstUnPf4OOwOVCUnw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] improve chainlint.pl CPU count computation
+To: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 2024-05-20 at 15:01 -0400, Eric Sunshine wrote:
-> From: Eric Sunshine <sunshine@sunshineco.com>
->=20
-> This series replaces a patch[1] sent by John Paul Adrian Glaubitz to fix
-> chainlint.pl CPU count computation on Linux SPARC.
->=20
-> Unlike its predecessor, this series also fixes an underlying problem in
-> which ncores() could return 0 which would result in chainlint.pl not
-> processing any of its input test scripts. Patch [3/3] also fixes CPU
-> count detection on Alpha[2].
->=20
-> Patch [2/3] of this series is more or less Adrian's original patch[1] so
-> it retains his authorship, though I simplified the regular-expression
-> and tweaked the commit message.
->=20
-> [1]: https://lore.kernel.org/git/20240520111109.99882-1-glaubitz@physik.f=
-u-berlin.de/
-> [2]: https://lore.kernel.org/git/503a99f3511559722a3eeef15d31027dfe617fa1=
-.camel@physik.fu-berlin.de/
->=20
-> Eric Sunshine (2):
->   chainlint.pl: make CPU count computation more robust
->   chainlint.pl: latch CPU count directly reported by /proc/cpuinfo
->=20
-> John Paul Adrian Glaubitz (1):
->   chainlint.pl: fix incorrect CPU count on Linux SPARC
->=20
->  t/chainlint.pl | 20 +++++++++++++++++---
->  1 file changed, 17 insertions(+), 3 deletions(-)
->=20
+On Mon, May 20, 2024 at 3:17=E2=80=AFPM John Paul Adrian Glaubitz
+<glaubitz@physik.fu-berlin.de> wrote:
+> On Mon, 2024-05-20 at 15:01 -0400, Eric Sunshine wrote:
+> > From: Eric Sunshine <sunshine@sunshineco.com>
+> > This series replaces a patch[1] sent by John Paul Adrian Glaubitz to fi=
+x
+> > chainlint.pl CPU count computation on Linux SPARC.
+> >
+> > Unlike its predecessor, this series also fixes an underlying problem in
+> > which ncores() could return 0 which would result in chainlint.pl not
+> > processing any of its input test scripts. Patch [3/3] also fixes CPU
+> > count detection on Alpha[2].
+>
+> Works as expected on my Linux SPARC machine running Debian unstable.
+>
+> Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 
-Works as expected on my Linux SPARC machine running Debian unstable.
-
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-
-Adrian
-
---=20
- .''`.  John Paul Adrian Glaubitz
-: :' :  Debian Developer
-`. `'   Physicist
-  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
+Thanks for testing. Were you able to check whether it fixes CPU count
+detection on Alpha, as well?
