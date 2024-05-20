@@ -1,226 +1,120 @@
-Received: from outpost1.zedat.fu-berlin.de (outpost1.zedat.fu-berlin.de [130.133.4.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DE7210E7
-	for <git@vger.kernel.org>; Mon, 20 May 2024 10:02:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.133.4.66
+Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9660150243
+	for <git@vger.kernel.org>; Mon, 20 May 2024 10:20:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716199360; cv=none; b=Bw7AYRuPn1SvKeFZUvt0odL72bC2XIVs34tIs2ZqjwnwDlQKFg2jEzdMjgUF5Dbiy9ChndH0pd1W8gZZY5auCPkXX1WQAsGE1/yhBc8Duom9jxF0gkrsfn/an9GndTjDXjYvYTfzAXy5gHqLBlXmtYs/190Se3F5pT1JUMxeX5U=
+	t=1716200409; cv=none; b=tdbw89Ub57uOqT/aT4wqShZzhVOiLOU68JyB6BGWaG4hqciRImziirJkVQHc0NNhgM9o1C//8FW0xJIUYBt14EVSlZjGoM+ho/RybIkE7vLPIh3BLUHsZ0jFEOWyn102CXIfF9wphjTXgpRXCHoo2p5+p12enfYmG0xqRZwUtMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716199360; c=relaxed/simple;
-	bh=JVbyjUy3/AMBv+8xTZ4caDegu06wgfpIGMQW817jpm0=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=bt7zsrIcrOmMDpa/IYYgdQwDTNcEWmAXT6uTbdJTd0eohyG0EcmnFSete6wtHXK32u53ZG5nvG6pvYsVFAnELlzoWz72SvAPA7P/CHghEWaoDQldGzcItuOF5HPyiTZXGg19VQTmB+qtrv5HV2sdnr870Lc4lH/N3ZqM7mEhxaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de; spf=pass smtp.mailfrom=zedat.fu-berlin.de; dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b=Fird2lDJ; arc=none smtp.client-ip=130.133.4.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zedat.fu-berlin.de
+	s=arc-20240116; t=1716200409; c=relaxed/simple;
+	bh=JU0+oBUAf8rxaW2OjyWDwXzP36o5LsvI7mQPFe9FhKQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=FcISqKt1r9lhB1ys3yAW44Y23foP0DgSwxB4Jfgg1hCkmx+B3nQL8cQhH9wBMOj9Zk4dcD9xJRA2EK6pLNqsAuMj23OV+fl7j3NnYyfFbvrrqcpG90JVgygArFCVAAHt/KPu57AgyKfBVj+0/OuKurYbGe7ewW/FQNYbSDW/1tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=gUzLbq7h reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b="Fird2lDJ"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=fu-berlin.de; s=fub01; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=qylZ5lJIknfs/izJTrv5pVL1qpHr80ZMzvo8qFnh/xo=; t=1716199357; x=1716804157; 
-	b=Fird2lDJMadl4n3Ye8mEBiSzZ47w0ZoK85kW54wOkuUQ3JXflxM6jt8nouHF78m54lkwyQjiTVp
-	R22IkDOQ9KqPFvBYbgp/UmAxFrPnIuLas+f4MEdsXA6OiOVZwNY/k5QaJvVsw9nR/6MFxv570ewSI
-	nHBZaf2SyutJSS4QUmnlncHj50kijwNo16VpayaYjXIvvoTYoBGaak90gfi5sfzOVHqsc4quaY+uG
-	O6D0ouG4wcee8fmN8r652IFC5XWIayFC4LwCcKIRNB+iMAjJjQ8C7/lwrSiCCqW5EpjThpUyZZBnf
-	NFq0Lt70ZM9N5nNqH3QajuQ18zIkZ+vd/K4A==;
-Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
-          by outpost.zedat.fu-berlin.de (Exim 4.97)
-          with esmtps (TLS1.3)
-          tls TLS_AES_256_GCM_SHA384
-          (envelope-from <glaubitz@zedat.fu-berlin.de>)
-          id 1s8zqk-00000004AIH-3niG; Mon, 20 May 2024 12:02:34 +0200
-Received: from dynamic-077-191-101-125.77.191.pool.telefonica.de ([77.191.101.125] helo=[192.168.178.20])
-          by inpost2.zedat.fu-berlin.de (Exim 4.97)
-          with esmtpsa (TLS1.3)
-          tls TLS_AES_256_GCM_SHA384
-          (envelope-from <glaubitz@physik.fu-berlin.de>)
-          id 1s8zqk-00000001MbI-2zCH; Mon, 20 May 2024 12:02:34 +0200
-Message-ID: <7acbd5c6c68bd7ba020e2d1cc457a8954fd6edf4.camel@physik.fu-berlin.de>
-Subject: Re: chainlint test failing on Linux sparc64
-From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Date: Mon, 20 May 2024 12:02:34 +0200
-In-Reply-To: <CAPig+cQLsUTpjiZ_TXh2GJAS=tJScUWYxiuR87rtwdTu8H9PXw@mail.gmail.com>
-References: 
-	<8baa12f8d044265f1ddeabd64209e7ac0d3700ae.camel@physik.fu-berlin.de>
-	 <CAPig+cS+BcQ2t564m8Q4GO+MAThgq8pV0fEFD4S0FBfwokO2Ng@mail.gmail.com>
-	 <054f58c2de4af289008f28b140d4a4c9ab56f084.camel@physik.fu-berlin.de>
-	 <bdbf99ae4d6e3669b3506a7d4a26730aa9cd0ed4.camel@physik.fu-berlin.de>
-	 <CAPig+cQL73gVDDSH_=8Y6D0Pro58W1O2Rb-hettVcfZudXjOZQ@mail.gmail.com>
-	 <CAPig+cQLsUTpjiZ_TXh2GJAS=tJScUWYxiuR87rtwdTu8H9PXw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.1 
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="gUzLbq7h"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=JAEfMCHykKA/RXwdpCyYhM7j9dgccyiFqRojl5qyhdg=; b=g
+	UzLbq7hAPS8NPR6EiWJqiwc5ex+ph91lt/up1IdxNd7NgRX/1ZNazcluAywizVSG
+	l2JdJx4R0qxdUnJUz2yTPP9lx10EhA/EK7SAlE1CQh7QupX1OYWiiNVzDgHW6bF/
+	rZa1oanC8nmddw7cY6FMAEc/DTbrYWuNyCP3vZ1Ul8=
+Received: from bupt_xingxin$163.com ( [124.160.72.194] ) by
+ ajax-webmail-wmsvr-40-133 (Coremail) ; Mon, 20 May 2024 18:19:53 +0800
+ (CST)
+Date: Mon, 20 May 2024 18:19:53 +0800 (CST)
+From: "Xing Xin" <bupt_xingxin@163.com>
+To: "Karthik Nayak" <karthik.188@gmail.com>
+Cc: "blanet via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"Xing Xin" <xingxin.xx@bytedance.com>
+Subject: Re:Re: [PATCH] bundle-uri: refresh packed_git if unbundle succeed
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+In-Reply-To: <CAOLa=ZT=x6bmnvJO2KtbJvVOvt=4LH1RgU1NMJYpTgW2XXfGVg@mail.gmail.com>
+References: <pull.1730.git.1715742069966.gitgitgadget@gmail.com>
+ <CAOLa=ZT=x6bmnvJO2KtbJvVOvt=4LH1RgU1NMJYpTgW2XXfGVg@mail.gmail.com>
+X-NTES-SC: AL_Qu2aBP6bv0si5SadbekXn0oVhe85UMW2ufsg3YReP500mSXzxzkkTU9qPmXZ9cGzIieTgCisYQll78lWbbBEZo6ZbM7UXJdOWdsKCZg64hfr
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Original-Sender: glaubitz@physik.fu-berlin.de
-X-ZEDAT-Hint: PO
+Message-ID: <59d5f488.ad90.18f9583cbc2.Coremail.bupt_xingxin@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:_____wD3_7PJI0tme0oNAA--.37534W
+X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiYgDkbWV4H62sxwALsk
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-Hi Eric,
-
-On Mon, 2024-05-20 at 05:58 -0400, Eric Sunshine wrote:
-> On Mon, May 20, 2024 at 5:36=E2=80=AFAM Eric Sunshine <sunshine@sunshinec=
-o.com> wrote:
-> > My suspicion is that "actual" will have size 0 for you. If that's the
-> > case, I'd suggest running the commands from the "check-chainlint"
-> > target in t/Makefile manually one at a time to see if you can figure
-> > out which is failing. For instance:
-> >=20
-> >     % ./chainlint.pl --emit-all chainlinttmp/tests
->=20
-> This reminded me of an earlier report in which chainlint.pl was
-> producing no output for "actual" on Linux for s390x processors. That
-> was due to /proc/cpuinfo producing results which the script wasn't
-> expecting. It was fixed by 1f51b77f4f (chainlint.pl: fix /proc/cpuinfo
-> regexp, 2022-11-22)[1]. At the time of that patch, I noted[2]:
-
-Yeah, the output for /proc/cpuinfo is not standardized across architectures=
-,
-unfortunately.
-
->     A separate problem is that chainlint.pl doesn't fall back to a
->     sensible non-zero value if ncores() returns 0 (or some other
->     nonsense value). That is, of course, outside the scope of the
->     well-focused problem fix which this standalone patch addresses. I
->     may end up submitting a fix separately to make it fall back
->     sensibly.
->=20
-> which probably explains the behavior you're experiencing. To fix it,
-> we'll need to see the output you get from:
->=20
->     cat /proc/cpuinfo
-
-Here you go:
-
-glaubitz@stadler:~$ cat /proc/cpuinfo=20
-cpu             : UltraSparc T4 (Niagara4)
-fpu             : UltraSparc T4 integrated FPU
-pmu             : niagara4
-prom            : OBP 4.38.16 2018/11/28 07:24
-type            : sun4v
-ncpus probed    : 48
-ncpus active    : 48
-D$ parity tl1   : 0
-I$ parity tl1   : 0
-cpucaps         :
-flush,stbar,swap,muldiv,v9,blkinit,n2,mul32,div32,v8plus,popc,vis,vis2,ASIB=
-lkInit,fmaf,vis3,hpc,ima,pause,cbcond,aes,des,kasumi,camellia,md5,sha1,sha2=
-56,sha512,mpmul,montmul,montsqr,crc32c
-Cpu0ClkTck      : 00000000a9beeee4
-Cpu1ClkTck      : 00000000a9beeee4
-Cpu2ClkTck      : 00000000a9beeee4
-Cpu3ClkTck      : 00000000a9beeee4
-Cpu4ClkTck      : 00000000a9beeee4
-Cpu5ClkTck      : 00000000a9beeee4
-Cpu6ClkTck      : 00000000a9beeee4
-Cpu7ClkTck      : 00000000a9beeee4
-Cpu8ClkTck      : 00000000a9beeee4
-Cpu9ClkTck      : 00000000a9beeee4
-Cpu10ClkTck     : 00000000a9beeee4
-Cpu11ClkTck     : 00000000a9beeee4
-Cpu12ClkTck     : 00000000a9beeee4
-Cpu13ClkTck     : 00000000a9beeee4
-Cpu14ClkTck     : 00000000a9beeee4
-Cpu15ClkTck     : 00000000a9beeee4
-Cpu16ClkTck     : 00000000a9beeee4
-Cpu17ClkTck     : 00000000a9beeee4
-Cpu18ClkTck     : 00000000a9beeee4
-Cpu19ClkTck     : 00000000a9beeee4
-Cpu20ClkTck     : 00000000a9beeee4
-Cpu21ClkTck     : 00000000a9beeee4
-Cpu22ClkTck     : 00000000a9beeee4
-Cpu23ClkTck     : 00000000a9beeee4
-Cpu24ClkTck     : 00000000a9beeee4
-Cpu25ClkTck     : 00000000a9beeee4
-Cpu26ClkTck     : 00000000a9beeee4
-Cpu27ClkTck     : 00000000a9beeee4
-Cpu28ClkTck     : 00000000a9beeee4
-Cpu29ClkTck     : 00000000a9beeee4
-Cpu30ClkTck     : 00000000a9beeee4
-Cpu31ClkTck     : 00000000a9beeee4
-Cpu32ClkTck     : 00000000a9beeee4
-Cpu33ClkTck     : 00000000a9beeee4
-Cpu34ClkTck     : 00000000a9beeee4
-Cpu35ClkTck     : 00000000a9beeee4
-Cpu36ClkTck     : 00000000a9beeee4
-Cpu37ClkTck     : 00000000a9beeee4
-Cpu38ClkTck     : 00000000a9beeee4
-Cpu39ClkTck     : 00000000a9beeee4
-Cpu40ClkTck     : 00000000a9beeee4
-Cpu41ClkTck     : 00000000a9beeee4
-Cpu42ClkTck     : 00000000a9beeee4
-Cpu43ClkTck     : 00000000a9beeee4
-Cpu44ClkTck     : 00000000a9beeee4
-Cpu45ClkTck     : 00000000a9beeee4
-Cpu46ClkTck     : 00000000a9beeee4
-Cpu47ClkTck     : 00000000a9beeee4
-MMU Type        : Hypervisor (sun4v)
-MMU PGSZs       : 8K,64K,4MB,256MB,2GB
-State:
-CPU0:           online
-CPU1:           online
-CPU2:           online
-CPU3:           online
-CPU4:           online
-CPU5:           online
-CPU6:           online
-CPU7:           online
-CPU8:           online
-CPU9:           online
-CPU10:          online
-CPU11:          online
-CPU12:          online
-CPU13:          online
-CPU14:          online
-CPU15:          online
-CPU16:          online
-CPU17:          online
-CPU18:          online
-CPU19:          online
-CPU20:          online
-CPU21:          online
-CPU22:          online
-CPU23:          online
-CPU24:          online
-CPU25:          online
-CPU26:          online
-CPU27:          online
-CPU28:          online
-CPU29:          online
-CPU30:          online
-CPU31:          online
-CPU32:          online
-CPU33:          online
-CPU34:          online
-CPU35:          online
-CPU36:          online
-CPU37:          online
-CPU38:          online
-CPU39:          online
-CPU40:          online
-CPU41:          online
-CPU42:          online
-CPU43:          online
-CPU44:          online
-CPU45:          online
-CPU46:          online
-CPU47:          online
-glaubitz@stadler:~$
-
-Adrian
-
---=20
- .''`.  John Paul Adrian Glaubitz
-: :' :  Debian Developer
-`. `'   Physicist
-  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
+QXQgMjAyNC0wNS0xNyAxNTozNjo1MywgIkthcnRoaWsgTmF5YWsiIDxrYXJ0aGlrLjE4OEBnbWFp
+bC5jb20+IHdyb3RlOgo+ImJsYW5ldCB2aWEgR2l0R2l0R2FkZ2V0IiA8Z2l0Z2l0Z2FkZ2V0QGdt
+YWlsLmNvbT4gd3JpdGVzOgo+Cj4+IEZyb206IFhpbmcgWGluIDx4aW5neGluLnh4QGJ5dGVkYW5j
+ZS5jb20+Pgo+PiBXaGVuIHVzaW5nIHRoZSBidW5kbGUtdXJpIG1lY2hhbmlzbSB3aXRoIGEgYnVu
+ZGxlIGxpc3QgY29udGFpbmluZwo+PiBtdWx0aXBsZSBpbnRlcnJlbGF0ZWQgYnVuZGxlcywgd2Ug
+ZW5jb3VudGVyZWQgYSBidWcgd2hlcmUgdGlwcyBmcm9tCj4+IGRvd25sb2FkZWQgYnVuZGxlcyB3
+ZXJlIG5vdCBiZWluZyBkaXNjb3ZlcmVkLCByZXN1bHRpbmcgaW4gcmF0aGVyIHNsb3cKPj4gY2xv
+bmVzLiBUaGlzIHdhcyBwYXJ0aWN1bGFybHkgcHJvYmxlbWF0aWMgd2hlbiBlbXBsb3lpbmcgdGhl
+IGhldXJpc3RpYwo+PiBgY3JlYXRpb25Ub2tlbnNgLgo+Pgo+PiBBbmQgdGhpcyBpcyBlYXN5IHRv
+IHJlcHJvZHVjZS4gU3VwcG9zZSB3ZSBoYXZlIGEgcmVwb3NpdG9yeSB3aXRoIGEKPj4gc2luZ2xl
+IGJyYW5jaCBgbWFpbmAgcG9pbnRpbmcgdG8gY29tbWl0IGBBYCwgZmlyc3RseSB3ZSBjcmVhdGUg
+YSBiYXNlCj4+IGJ1bmRsZSB3aXRoCj4+Cj4+ICAgZ2l0IGJ1bmRsZSBjcmVhdGUgYmFzZS5idW5k
+bGUgbWFpbgo+Pgo+PiBUaGVuIGxldCdzIGFkZCBhIG5ldyBjb21taXQgYEJgIG9uIHRvcCBvZiBg
+QWAsIHNvIHRoYXQgYW4gaW5jcmVtZW50YWwKPj4gYnVuZGxlIGZvciBgbWFpbmAgY2FuIGJlIGNy
+ZWF0ZWQgd2l0aAo+Pgo+PiAgIGdpdCBidW5kbGUgY3JlYXRlIGluY3IuYnVuZGxlIEEuLm1haW4K
+Pj4KPj4gTm93IHdlIGNhbiBnZW5lcmF0ZSBhIGJ1bmRsZSBsaXN0IHdpdGggdGhlIGZvbGxvd2lu
+ZyBjb250ZW50Ogo+Pgo+PiAgIFtidW5kbGVdCj4+ICAgICAgIHZlcnNpb24gPSAxCj4+ICAgICAg
+IG1vZGUgPSBhbGwKPj4gICAgICAgaGV1cmlzdGljID0gY3JlYXRpb25Ub2tlbgo+Pgo+PiAgIFti
+dW5kbGUgImJhc2UiXQo+PiAgICAgICB1cmkgPSBiYXNlLmJ1bmRsZQo+PiAgICAgICBjcmVhdGlv
+blRva2VuID0gMQo+Pgo+PiAgIFtidW5kbGUgImluY3IiXQo+PiAgICAgICB1cmkgPSBpbmNyLmJ1
+bmRsZQo+PiAgICAgICBjcmVhdGlvblRva2VuID0gMgo+Pgo+PiBBIGZyZXNoIGNsb25lIHdpdGgg
+dGhlIGJ1bmRsZSBsaXN0IGFib3ZlIHdvdWxkIGdpdmUgdGhlIGV4cGVjdGVkCj4+IGByZWZzL2J1
+bmRsZXMvbWFpbmAgcG9pbnRpbmcgYXQgYEJgIGluIG5ldyByZXBvc2l0b3J5LCBpbiBvdGhlciB3
+b3JkcyB3ZQo+PiBhbHJlYWR5IGhhZCBldmVyeXRoaW5nIGxvY2FsbHkgZnJvbSB0aGUgYnVuZGxl
+cywgYnV0IGdpdCB3b3VsZCBzdGlsbAo+PiBkb3dubG9hZCBldmVyeXRoaW5nIGZyb20gc2VydmVy
+IGFzIGlmIHdlIGdvdCBub3RoaW5nLgo+Pgo+PiBTbyB3aHkgdGhlIGByZWZzL2J1bmRsZXMvbWFp
+bmAgaXMgbm90IGRpc2NvdmVyZWQ/IEFmdGVyIHNvbWUgZGlnZ2luZyBJCj4+IGZvdW5kIHRoYXQ6
+Cj4+Cj4+IDEuIHdoZW4gdW5idW5kbGluZyBhIGRvd25sb2FkZWQgYnVuZGxlLCBhIGB2ZXJpZnlf
+YnVuZGxlYCBpcyBjYWxsZWQgdG8KPgo+cy9hLy8KClRoYW5rcyEKCj4KPj4gICAgY2hlY2sgaXRz
+IHByZXJlcXVpc2l0ZXMgaWYgYW55LiBUaGUgdmVyaWZ5IHByb2NlZHVyZSB3b3VsZCBmaW5kIG9p
+ZHMKPj4gICAgc28gYHBhY2tlZF9naXRgIGlzIGluaXRpYWxpemVkLgo+Pgo+Cj5TbyB0aGUgZmxv
+dyBpczoKPjEuIGBmZXRjaF9idW5kbGVfbGlzdGAgZmV0Y2hlcyBhbGwgdGhlIGJ1bmRsZXMgYWR2
+ZXJ0aXNlZCB2aWEKPmBkb3dubG9hZF9idW5kbGVfbGlzdGAgdG8gbG9jYWwgZmlsZXMuCj4yLiBJ
+dCB0aGVuIGNhbGxzIGB1bmJ1bmRsZV9hbGxfYnVuZGxlc2AgdG8gdW5idW5kbGUgYWxsIHRoZSBi
+dW5kbGVzLgo+My4gRWFjaCBidW5kbGUgaXMgdGhlbiB1bmJ1bmRsZWQgdXNpbmcgYHVuYnVuZGxl
+X2Zyb21fZmlsZWAuCj40LiBIZXJlLCB3ZSBmaXJzdCByZWFkIHRoZSBidW5kbGUgaGVhZGVyIHRv
+IGdldCBhbGwgdGhlIHByZXJlcXVpc2l0ZXMKPmZvciB0aGUgYnVuZGxlLCB0aGlzIGlzIGRvbmUg
+aW4gYHJlYWRfYnVuZGxlX2hlYWRlcmAuCj41LiBUaGVuIHdlIGNhbGwgYHVuYnVuZGxlYCwgd2hp
+Y2ggY2FsbHMgYHZlcmlmeV9idW5kbGVgIHRvIGVuc3VyZSB0aGF0Cj50aGUgcmVwb3NpdG9yeSBk
+b2VzIGluZGVlZCBjb250YWluIHRoZSBwcmVyZXF1aXNpdGVzIG1lbnRpb25lZCBpbiB0aGUKPmJ1
+bmRsZS4gVGhlbiBpdCBjcmVhdGVzIHRoZSBpbmRleCBmcm9tIHRoZSBidW5kbGUgZmlsZS4KPgo+
+U28gYmVjYXVzZSB0aGUgb2JqZWN0cyBhcmUgYmVpbmcgY2hlY2tlZCwgdGhlIGBwcmVwYXJlX3Bh
+Y2tlZF9naXRgCj5mdW5jdGlvbiBpcyBldmVudHVhbGx5IGNhbGxlZCwgd2hpY2ggbWVhbnMgdGhh
+dCB0aGUKPmByYXdfb2JqZWN0X3N0b3JlLT5wYWNrZWRfZ2l0YCBkYXRhIGdldHMgZmlsbGVkIGlu
+IGFuZAo+YHBhY2tlZF9naXRfaW5pdGlhbGl6ZWRgIGlzIHNldC4KPgo+VGhpcyBtZWFucyBjb25z
+ZWN1dGl2ZSBjYWxscyB0byBgcHJlcGFyZV9wYWNrZWRfZ2l0YCBkb2Vzbid0Cj5yZS1pbml0aWF0
+ZSBgcmF3X29iamVjdF9zdG9yZS0+cGFja2VkX2dpdGAgc2luY2UKPmBwYWNrZWRfZ2l0X2luaXRp
+YWxpemVkYCBhbHJlYWR5IGlzIHNldC4KPgo+U28geW91ciBleHBsYW5hdGlvbiBtYWtlcyBzZW5z
+ZSwgYXMgYSBfbml0XyBJIHdvdWxkIHBlcmhhcHMgYWRkIHRoZSBwYXJ0Cj5hYm91dCB3aHkgY29u
+c2VjdXRpdmUgY2FsbHMgdG8gYHByZXBhcmVfcGFja2VkX2dpdGAgYXJlIGluZWZmZWN0aXZlLgoK
+VGhhbmtzIG15IGZyaWVuZCwgeW91IGhhdmUgZXhwcmVzc2VkIHRoaXMgaXNzdWUgbW9yZSBjbGVh
+cmx5LiBJIHdpbGwKcG9zdCBhIG5ldyBkZXNjcmlwdGlvbiBiYXNlZCBvbiB5b3VyIGV4cGxhbmF0
+aW9uIHdpdGggdGhlIGNyZWF0aW9uVG9rZW4KY2FzZSBjb3ZlcmVkLgoKPgo+PiAyLiBhZnRlciB1
+bmJ1bmRsZWQgYWxsIGJ1bmRsZXMsIHdlIHdvdWxkIGVudGVyIGBkb19mZXRjaF9wYWNrX3YyYCwK
+Pgo+cy91bmJ1bmRsZWQvdW5idW5kbGluZwoKQ29weSB0aGF0LgoKPgo+PiArI2luY2x1ZGUgInBh
+Y2tmaWxlLmgiCj4+ICAjaW5jbHVkZSAicGt0LWxpbmUuaCIKPj4gICNpbmNsdWRlICJjb25maWcu
+aCIKPj4gICNpbmNsdWRlICJyZW1vdGUuaCIKPj4gQEAgLTM3Niw2ICszNzcsOCBAQCBzdGF0aWMg
+aW50IHVuYnVuZGxlX2Zyb21fZmlsZShzdHJ1Y3QgcmVwb3NpdG9yeSAqciwgY29uc3QgY2hhciAq
+ZmlsZSkKPj4gIAkJCSAgICAgICBWRVJJRllfQlVORExFX1FVSUVUKSkpCj4+ICAJCXJldHVybiAx
+Owo+Pgo+PiArCXJlcHJlcGFyZV9wYWNrZWRfZ2l0KHIpOwo+PiArCj4+Cj4KPldvdWxkIGl0IG1h
+a2Ugc2Vuc2UgdG8gbW92ZSB0aGlzIHRvIGBidW5kbGUuYzp1bmJ1bmRsZSgpYCwgc2luY2UgdGhh
+dCBpcwo+YWxzbyB3aGVyZSB0aGUgaWR4IGlzIGNyZWF0ZWQ/Cj4KCkkgd29uZGVyIGlmIHdlIG5l
+ZWQgYSBtZW50YWwgbW9kZWwgdGhhdCB3ZSBzaG91bGQgYHJlcHJlcGFyZV9wYWNrZWRfZ2l0YAp0
+aGF0IHdoZW4gYSBuZXcgcGFjayBhbmQgaXRzIGNvcnJlc3BvbmRpbmcgaWR4IGlzIGdlbmVyYXRl
+ZD8gQ3VycmVudGx5CndoZXRoZXIgdG8gY2FsbCBgcmVwcmVwYXJlX3BhY2tlZF9naXRgIGlzIGRl
+dGVybWluZWQgYnkgdGhlIGNhbGxlci4KCkJ1dCB3aXRoaW4gdGhlIHNjb3BlIG9mIHRoaXMgYnVn
+LCBJIHRlbmQgdG8gcmVtb3ZlIHRoZQpgUkVGX1NLSVBfT0lEX1ZFUklGSUNBVElPTmAgZmxhZyB3
+aGVuIHdyaXRpbmcgcmVmcyBhcyBQYXRyaWNrIHN1Z2dlc3RlZC4KClhpbmcgWGluCgo=
