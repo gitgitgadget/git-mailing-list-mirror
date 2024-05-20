@@ -1,110 +1,231 @@
-Received: from outpost1.zedat.fu-berlin.de (outpost1.zedat.fu-berlin.de [130.133.4.66])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF2328E7
-	for <git@vger.kernel.org>; Mon, 20 May 2024 16:07:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.133.4.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49AC928E7
+	for <git@vger.kernel.org>; Mon, 20 May 2024 16:07:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716221240; cv=none; b=EuXiP9EX8RleW+g03WhmhIOccX3E0sTnS4cXUBsTdK2pO6oaVD+vBm9tUTJM9DhD9ARVYR6YPV38PmYZLDPKfiX030dl/TWYfU3PO5Nfg2frdNaoFypS6ONdzOrM8Wj5hYRD8Qe9JURa9BEP7HBBNNosfIAKOsJ8UShW14bClUA=
+	t=1716221243; cv=none; b=XwhYZfiJv6wsZnXZjwWi1d40cEkRH1WOOJZUZpobcR8p/gJ/oWH9vH+O9K5o4n7w8hpXBmWQduFiLgS7S9rA+bOvwnok8qcwiU3QznCej14AU2a0Nsq5BVodr+5ugxyF3r5vZwYqlxHiHjZKZOkJ5k2NzMBML2mDy6jlYa8OgvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716221240; c=relaxed/simple;
-	bh=d1LoASRgw7w6DnuxbnrucE8/R293WRD22ULp3umZscg=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=D7NfbOGvlAZ+DmYopbABx9TvBvUWEUsxgX9P+B6sLfV4D5B1T3jrcKrDxnZWXNMJ+L/TFbxvSBFSw5YI6n/yk/bN56UkYkqwJdMYvQgbp/pfMc92thrnUAVCxHWmkvfKGU8Fw1FAh5qnASN8YS8TvYmnip7Uwq+bEiLDsjIZiN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de; spf=pass smtp.mailfrom=zedat.fu-berlin.de; dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b=Q60JTROH; arc=none smtp.client-ip=130.133.4.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zedat.fu-berlin.de
+	s=arc-20240116; t=1716221243; c=relaxed/simple;
+	bh=4wFmQFTCQ25jm8YcgoJk7llGNcLx9/aQN9fY9rtoTb0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hZfO3nlf0dwvbI77uy9c2Nqp4C2VK4EsFzJgiU7tA6fLCd/mCBmLObwN66hEadulhguJsLUT0wOQJJk/c7+JI0YhmXjV6AHXOw+Yt5WuqpiNOACUC8mwOOUBeXQTROw2aHoBq5MTZVsjN9HMG2LWBcgLFRghH3VecZsFjVnQPm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hdbLv8Uu; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b="Q60JTROH"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=fu-berlin.de; s=fub01; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=bF/XkNeB3KFWtWOP+HG9Jr4viOfwlVwJQldz3e3vH9c=; t=1716221236; x=1716826036; 
-	b=Q60JTROHEeOwA6WmQ9Lj2Eq+c4J692u/I4BbB2CMeQRu16vnzC2XzhrqnpfekZqTY1ERq7x73Z/
-	amLyk4/6nygU0YlE/XDarMugZqDrrH0Zjfsexao3hFeLcd+6H45JqyfsiDIAntfCGcaRxiUzrlqYm
-	2VS1aFN0eGNv0yxOEl4iBpmJ9LqWjiHRDSEVVibJCd/nhYd7f/ijoPVH4Oqjt1LOh+7lxaZ5ILPAl
-	PsM8uuqYtAHc1ViT+l6gp+D2LAZ9oTfBPAK7qF461pclIogt4dEvveodDGg92oQ5SjACvkGY2WgaD
-	6kSIrwaWhawB+Hs/3BP5jitpKjxq8i3mAisQ==;
-Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
-          by outpost.zedat.fu-berlin.de (Exim 4.97)
-          with esmtps (TLS1.3)
-          tls TLS_AES_256_GCM_SHA384
-          (envelope-from <glaubitz@zedat.fu-berlin.de>)
-          id 1s95Xd-00000001BYH-3W3r; Mon, 20 May 2024 18:07:13 +0200
-Received: from p57bd9a40.dip0.t-ipconnect.de ([87.189.154.64] helo=suse-laptop.fritz.box)
-          by inpost2.zedat.fu-berlin.de (Exim 4.97)
-          with esmtpsa (TLS1.3)
-          tls TLS_AES_256_GCM_SHA384
-          (envelope-from <glaubitz@physik.fu-berlin.de>)
-          id 1s95Xd-0000000252O-2W6z; Mon, 20 May 2024 18:07:13 +0200
-Message-ID: <001ecb0316534ea5e0fbfaecf0d020220b273210.camel@physik.fu-berlin.de>
-Subject: Re: chainlint test failing on Linux sparc64
-From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Date: Mon, 20 May 2024 18:07:13 +0200
-In-Reply-To: <xmqq4jasmpv5.fsf@gitster.g>
-References: 
-	<8baa12f8d044265f1ddeabd64209e7ac0d3700ae.camel@physik.fu-berlin.de>
-	 <CAPig+cS+BcQ2t564m8Q4GO+MAThgq8pV0fEFD4S0FBfwokO2Ng@mail.gmail.com>
-	 <054f58c2de4af289008f28b140d4a4c9ab56f084.camel@physik.fu-berlin.de>
-	 <bdbf99ae4d6e3669b3506a7d4a26730aa9cd0ed4.camel@physik.fu-berlin.de>
-	 <CAPig+cQL73gVDDSH_=8Y6D0Pro58W1O2Rb-hettVcfZudXjOZQ@mail.gmail.com>
-	 <CAPig+cQLsUTpjiZ_TXh2GJAS=tJScUWYxiuR87rtwdTu8H9PXw@mail.gmail.com>
-	 <7acbd5c6c68bd7ba020e2d1cc457a8954fd6edf4.camel@physik.fu-berlin.de>
-	 <46caaa2d204844cbe5625428ece5b2fe8656364b.camel@physik.fu-berlin.de>
-	 <xmqq4jasmpv5.fsf@gitster.g>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.1 
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hdbLv8Uu"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 09D6126EFD;
+	Mon, 20 May 2024 12:07:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=4wFmQFTCQ25jm8YcgoJk7llGNcLx9/aQN9fY9r
+	toTb0=; b=hdbLv8Uuqt6sOoYbNnJuda9yvkKAW95QUsbYBQSfLVqKdB9rCgqlcq
+	obK6+TOi/ymQf4l7nF0KjrJVqC0UIII0kKTL1LQPCN5lEcuoZFfzhTJbEJX0TDhP
+	bTrfF6seZJDb3jQXbzq/1z7UegUl99uz7+tW1uKbwBGJZcINxraPo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 015FC26EFC;
+	Mon, 20 May 2024 12:07:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3E85326EF4;
+	Mon, 20 May 2024 12:07:19 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,  Christian
+ Couder <chriscool@tuxfamily.org>,  Kaartic Sivaraam
+ <kaartic.sivaraam@gmail.com>,  Achu Luma <ach.lumap@gmail.com>
+Subject: Re: [GSoC][PATCH v2] t/: port helper/test-strcmp-offset.c to
+ unit-tests/t-strcmp-offset.c
+In-Reply-To: <20240519204530.12258-3-shyamthakkar001@gmail.com> (Ghanshyam
+	Thakkar's message of "Mon, 20 May 2024 02:14:42 +0530")
+References: <20240310144819.4379-1-ach.lumap@gmail.com>
+	<20240519204530.12258-3-shyamthakkar001@gmail.com>
+Date: Mon, 20 May 2024 09:07:18 -0700
+Message-ID: <xmqq1q5wmpqh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Original-Sender: glaubitz@physik.fu-berlin.de
-X-ZEDAT-Hint: PO
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 08BC0840-16C3-11EF-917C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Mon, 2024-05-20 at 09:04 -0700, Junio C Hamano wrote:
-> John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de> writes:
->=20
-> > Hi Eric,
-> > ...
-> > In order to verify this theory, I made the following temporary change:
-> >=20
-> > diff --git a/t/chainlint.pl b/t/chainlint.pl
-> > index 556ee91a15..63cac942ac 100755
-> > --- a/t/chainlint.pl
-> > +++ b/t/chainlint.pl
-> > @@ -718,7 +718,7 @@ sub ncores {
-> >         # Windows
-> >         return $ENV{NUMBER_OF_PROCESSORS} if exists($ENV{NUMBER_OF_PROC=
-ESSORS});
-> >         # Linux / MSYS2 / Cygwin / WSL
-> > -       do { local @ARGV=3D'/proc/cpuinfo'; return scalar(grep(/^proces=
-sor[\s\d]*:/, <>)); } if -r '/proc/cpuinfo';
-> > +       do { local @ARGV=3D'/proc/cpuinfo'; return scalar(grep(/^proces=
-sor[\s\d]*:||^CPU[\d]*:/, <>)); } if -r '/proc/cpuinfo';
-> >         # macOS & BSD
-> >         return qx/sysctl -n hw.ncpu/ if $^O =3D~ /(?:^darwin$|bsd)/;
-> >         return 1;
-> >=20
-> > and I confirm that this fixes the problem.
-> >=20
-> > Let me whip up a patch and post it here.
->=20
-> Thanks for working so well together.  Very much appreciated.
+Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
 
-Thanks for the praise! I very much enjoyed it.
+> The v2 only adjusts the formatting to be in line with the style
+> described in CodingGuidelines. And it is also rebased on 'next' to
+> avoid Makefile conflicts.
 
-Adrian
+Please do not base a new topic on 'next', as I will NOT be applying
+it on top of 'next'.
 
---=20
- .''`.  John Paul Adrian Glaubitz
-: :' :  Debian Developer
-`. `'   Physicist
-  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
+Imagine what it takes for a topic to graduate to 'master', if it
+started from the tip of 'next'?  You have to wait for ALL other
+topics that are in 'next' to graduate.
+
+Instead, new things are to be built on 'master' and fixes are to be
+built on the oldest maintenance track the fix is relevant.
+
+After building such a base, you can and should make a trial merge of
+your topic into 'next' and 'seen' to see if your work interferes
+with work by somebody else, which often gives you a good learning
+opportunity.
+
+Unless the conflicts are severe and is impractical, in which case
+see Documentation/SubmittingPatches and look for "Under truly
+exceptional circumstances".  But the conflict in Makefile about
+UNIT_TEST_PROGRAMS in this case hadly qualifies as one.
+
+Anyway, thanks for a patch.
+
+Now for the patch text itself.
+
+The original looked like this.
+
+> index d8473cf2fc..0000000000
+> --- a/t/helper/test-strcmp-offset.c
+> +++ /dev/null
+> @@ -1,23 +0,0 @@
+> -#include "test-tool.h"
+> -#include "read-cache-ll.h"
+> -
+> -int cmd__strcmp_offset(int argc UNUSED, const char **argv)
+> -{
+> -	int result;
+> -	size_t offset;
+> -
+> -	if (!argv[1] || !argv[2])
+> -		die("usage: %s <string1> <string2>", argv[0]);
+> -
+> -	result = strcmp_offset(argv[1], argv[2], &offset);
+> -
+> -	/*
+> -	 * Because different CRTs behave differently, only rely on signs
+> -	 * of the result values.
+> -	 */
+> -	result = (result < 0 ? -1 :
+> -			  result > 0 ? 1 :
+> -			  0);
+> -	printf("%d %"PRIuMAX"\n", result, (uintmax_t)offset);
+> -	return 0;
+> -}
+
+It used to print the result and the discovered offset to the
+standard output, which is used in the comparison of the calling test
+script.  Now we are doing the check ourselves here, that part needs
+to be different.  But other than that, there shouldn't be any change.
+
+> +static void check_strcmp_offset(const char *string1, const char *string2,
+> +				int expect_result, uintmax_t expect_offset)
+> +{
+> +	size_t offset;
+> +	int result = strcmp_offset(string1, string2, &offset);
+> +
+> +	/*
+> +	 * Because different CRTs behave differently, only rely on signs of the
+> +	 * result values.
+> +	 */
+> +	result = (result < 0 ? -1 :
+> +			result > 0 ? 1 :
+> +			0);
+> +
+> +	check_int(result, ==, expect_result);
+> +	check_uint((uintmax_t)offset, ==, expect_offset);
+> +}
+
+Subtle differences that do not seem to have any good reason to be
+there relative to the original, namely, the order of declarations of
+two local variables, how 'result' is initialized, how the exact same
+comment is line-wrapped differently.  If there weren't such changes,
+the output from "git show --color-moved" would have allowed readers'
+eyes coast over them, but because of them, they need to read most of
+the lines.  That's an inefficient use of their time.
+
+The test used to be
+
+> -while read s1 s2 expect
+> -do
+> -	test_expect_success "strcmp_offset($s1, $s2)" '
+> -		echo "$expect" >expect &&
+> -		test-tool strcmp-offset "$s1" "$s2" >actual &&
+> -		test_cmp expect actual
+> -	'
+> -done <<-EOF
+> -abc abc 0 3
+> -abc def -1 0
+> -abc abz -1 2
+> -abc abcdef -1 3
+> -EOF
+
+so a misbehaving "strcmp-offset abc abc" that gives different result
+can be seen by showing say
+
+    -abc abc 0 3
+    +abc abc -1 2
+
+if it incorrectly say that the first difference is at the offset 2
+and reported that the first "abc" sorts before the second "abc".
+
+With the new code, how would the failing test look like?
+
+> +#define TEST_STRCMP_OFFSET(string1, string2, expect_result, expect_offset) \
+> +	TEST(check_strcmp_offset(string1, string2, expect_result,          \
+> +				 expect_offset),                           \
+> +	     "strcmp_offset(%s, %s) works", #string1, #string2)
+
+That's a neat way to use the #stringification.  Without it the
+message will say
+
+	strcmp_offset(abc, abc) works
+
+but it is properly C-quoted, i.e.
+
+	strcmp_offset("abc", "abc") works
+
+If the second string were "abc\t", then the benefit of using
+#string2  would become even more prominent.
+
+Having said that, output from overly generic:
+
+> +	check_int(result, ==, expect_result);
+> +	check_uint((uintmax_t)offset, ==, expect_offset);
+
+used in the check_strcmp_offset() function is not all that readable,
+especially given that it comes _before_ the test title.  It shows
+something like
+
+    # check "result == expect_result" failed
+    #    left: -1
+    #   right: 0
+
+Hopefully it would automatically improve as the framework gets
+improved, perhaps to say
+
+    # check "result == expect_result" failed
+    # result = -1, expect_result = 0
+
+In any case, it is a general problem of the current unit test
+framework and outside the scope of this patch.
+
+> +int cmd_main(int argc, const char **argv)
+n> +{
+> +	TEST_STRCMP_OFFSET("abc", "abc", 0, 3);
+> +	TEST_STRCMP_OFFSET("abc", "def", -1, 0);
+> +	TEST_STRCMP_OFFSET("abc", "abz", -1, 2);
+> +	TEST_STRCMP_OFFSET("abc", "abcdef", -1, 3);
+> +
+> +	return test_done();
+> +}
+
+Looking good.
+
