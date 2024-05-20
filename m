@@ -1,105 +1,94 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A09C8C06
-	for <git@vger.kernel.org>; Mon, 20 May 2024 19:45:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3891F26AC1
+	for <git@vger.kernel.org>; Mon, 20 May 2024 20:07:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716234357; cv=none; b=AW94CSmUHIRJffPwRmUjvBb5ekRi4BhVu7fJFzrLhVahUjIvZuxrn6NZgL0+V2NwABPFaPHqkHtOP2Rmym08AtSjpi7wuI74sbOegwglGhijq49y1FaP0LITi+bUkTr5qLYVxJ5kvjJgXrRhdgkj5mbTnFEf98lwizl1w25tB7g=
+	t=1716235626; cv=none; b=Xc4N1X6wwlJ/zcc6i8y6YqeHCiZpZSRTbKY8CGNHgcpcjuRSWAyr2okom/c7rRswj3RXjmR/fjs0OESo6ucxST9H8usYhA7pp66GYkx5LVVeyFBSmhvtkiW5C6DdBrAdrPN2/ZJPmroPJBmi6aIfvtY2GFdcZ0dBAplMb7ZGJkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716234357; c=relaxed/simple;
-	bh=v7FQgmyGLkuhwsJFjKQDakyF+uah4q5dFOi+jDy4wWo=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=Htdf2IsPfHn/3YMI6L5DSFTLW1WxjzAG2EbpblSl31Utx1WtmQtIa7sbz9i+hTiBFqchHe6VLLH4OKPqhhy5e2EePePcWd2hSSXnoh+4rTC21kPGMYIr4R5TshrwMCvz6I3SaK0d+ZQjjHOw8IqNDLHsIwtE6Yi3IVAGIElCvFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=RJdFT02R; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1716235626; c=relaxed/simple;
+	bh=iIHqhHG/DOHGAZimkQZWhCMH78cDMP+NYs0YbmHYr7U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JICuJU7lrjqs2HB3JpNd46f5FARhXiE19R+Ys8Q1E5Jv/NE0mqJxlUmQ73Bvd92vqhgv22E7TRJ005q1/oUGP6H4rFg4l9V0JRPm6wlvaBURENV0aqUOlZsdK0i3wiLULAht7ODLFxujwTXJ002/EiWINVPcXjUoPXP5IZM5ocU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=eNg0AKh0; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="RJdFT02R"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eNg0AKh0"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DB2B028899;
+	Mon, 20 May 2024 16:07:03 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=iIHqhHG/DOHGAZimkQZWhCMH78cDMP+NYs0Ybm
+	HYr7U=; b=eNg0AKh0UQyq2d3BCl5ESUTR0lQjDyN46OTMN7fClbDyAtHMb3pAov
+	Rgk326y8g4Pj/4VVvyA0W9bV8NDLK84xG7gZGvoXqMDY+Vxrbei2O+oW0HX4LOXw
+	MCBBoAc/Bl7HM3+m/thw+kmJ4Jx92gsVpCaWdXt3B3Nt+5CCv5tcw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE64928898;
+	Mon, 20 May 2024 16:07:03 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B1C0F28897;
+	Mon, 20 May 2024 16:07:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Jeff King <peff@peff.net>,  Johannes Schindelin via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 5/8] hook(clone protections): add escape hatch
+In-Reply-To: <736b43a1-a371-4d6f-7739-b5b64e060585@gmx.de> (Johannes
+	Schindelin's message of "Mon, 20 May 2024 21:38:02 +0200 (CEST)")
+References: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
+	<pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
+	<b841db8392ebd924d1893829a7e5e22240f1e9cf.1716028366.git.gitgitgadget@gmail.com>
+	<20240518181432.GA1570600@coredump.intra.peff.net>
+	<c201bbe3-b404-feed-fcef-8333f72068dc@gmx.de>
+	<20240518194724.GB1573807@coredump.intra.peff.net>
+	<86d57213-e3b2-c985-6d69-71568c66fc9c@gmx.de>
+	<20240518211224.GA1574761@coredump.intra.peff.net>
+	<xmqqed9yob4v.fsf@gitster.g>
+	<5e0d660a-b1ee-2202-752c-d46d3b0c8a19@gmx.de>
+	<xmqqzfskfiu3.fsf@gitster.g>
+	<736b43a1-a371-4d6f-7739-b5b64e060585@gmx.de>
+Date: Mon, 20 May 2024 13:07:01 -0700
+Message-ID: <xmqq1q5wfdsq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1716234351;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/YG4IhvFULeen3QKgmOhF2ZnanQC8s2Yz00sj66fEQU=;
-	b=RJdFT02R+5xv0sGjUXgxAMfcK6l6p+Gwcub0kpo7HkXNkADyhqcGYE/NyY2o0bozNLICX1
-	EX1IUZsjgsDu0BRUc3mRlwwwSIYXFs3OWiR1iNjH81u4H2r1JOLz7YdxhIRFXRdlPE3LnP
-	dvza56eC0b7QH6EhvczH79MOUhF1CbVzjyPBXl2mIy/ZU5BG2b31MoCLZon3odrqIAIzAJ
-	qg4HsjtHGKN4zNJMSLMpgJ9/MM/TfcxRllwyoTXD/6e2w60wikCuu8/ml+lr8ah96JD/RQ
-	s3eibJqa9Q7HQswzu4KqL0QHYfd5WrYr+agz/hJwPHQWGDw1ssfT/71JRdW6/Q==
-Date: Mon, 20 May 2024 21:45:51 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>, Git List
- <git@vger.kernel.org>
-Subject: Re: [PATCH 5/5] add-patch: render hunks through the pager
-In-Reply-To: <xmqqh6esffh1.fsf@gitster.g>
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
- <eb0438e8-d7b6-478f-b2be-336e83f5d9ab@gmail.com>
- <xmqqh6esffh1.fsf@gitster.g>
-Message-ID: <ec5d73e22a6e4587f3d87314a9c0e422@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 85F3C94E-16E4-11EF-AECD-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Hello Junio and Ruben,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On 2024-05-20 21:30, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
->> Invoke the pager when displaying hunks during "add -p" sessions, to 
->> make
->> it easier for the user to review hunks longer than one screen height.
-> 
-> If the hunk fits on one screen, it is annoying to see a pager
-> invoked and then torn down immediately, even with "less -F"
-> (--quit-if-one-screen).  As we know how much output we are throwing
-> at the user, we'd want to make this conditional to the size of the
-> hunk being shown and the terminal height.
-> 
-> Or perhaps show them without such a trick, and add a new variant to
-> 'p' that allows the user to request the output be sent to a pager
-> (perhaps 'P')?  It would certainly be an alternative with much
-> smaller damage.  The existing end-user experience would not degrade,
-> but when the user wants to see a huge hunk, they can send it to the
-> pager.
-> 
-> Another, ulteriour, motive here behind this suggestion is to
-> encourage users to work with smaller hunks.  Being able to scroll
-> around and view lines on demand (i.e. use of pager) is one thing.
-> Being able to view all relevant lines at once (i.e. not wasting
-> vertical screen real estate and making things fit on one screen) is
-> very different and much nicer.
+>> As brian already said, you can reduce the score by making Git do
+>> nothing, which is _also_ an absurd position to take "security" (in air
+>> quotes) over everything else like usability and functionality.  And this
+>> time, the layered security went a bit too aggressive.
+>
+> Right. And I never said that we should do something as absurd, so I fail
+> to see your point.
 
-There's another thing to consider, which makes the introduction of
-"P" as the new option even more desirable.  Let me explain.
+It went a bit too aggressive, closer to an absurd version of Git
+that does nothing, for users of git-lfs and the hooksdir config.
+Luckily these two were reported/found soon enough but we do not know
+what other fallouts remain.
 
-With the upcoming changes to the way less(1) as the pager works,
-which was already discussed at length and even required new features
-to be implemented in less(1), [1] displaying anything through less(1)
-will not leave an accessible scrollback in the terminal emulator.
-Only one screen worth of text will be displayed, even after quitting
-less(1).  That's what we have to do, to fix age-old issues with the
-pager-generated scrollback that easily gets corrupted and actually
-becomes misleading.
+> Let me quickly iterate on this here patch series (as well as the
+> `tentative/maint-*` branches) so that we can accelerate toward a fixed
+> version again; Git LFS has been broken for long enough, I'd think.
 
-Thus, if someone wants to have a complete longer-than-one-screen hunk
-displayed and use the terminal emulator scrollback to inspect the
-hunk in its entirety, passing such (or all) hunks through the pager
-would make such inspection impossible.  I'd assume that at least some
-Git users already do that (I do, for example), and we surely don't want
-to make that no longer possible.  That's why introducing "P" as the
-new option would be the desired approach.
+It would be nice to go back to the pre-2.39.4 state so that we
+can redo it from the clean slate soon.
 
-[1] 
-https://lore.kernel.org/git/8289ef15266172cbfa10bb146afe9797@manjaro.org/
+Thanks.
