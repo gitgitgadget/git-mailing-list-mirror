@@ -1,67 +1,1057 @@
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+Received: from outpost1.zedat.fu-berlin.de (outpost1.zedat.fu-berlin.de [130.133.4.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B7471743
-	for <git@vger.kernel.org>; Sun, 19 May 2024 21:39:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.233.160.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36BC17BB7
+	for <git@vger.kernel.org>; Mon, 20 May 2024 07:56:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.133.4.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716154781; cv=none; b=RlakfDFZDAz7Gc4Va60qXlobIAObWgi56hhQi/5cT9rXKFMe3ygjfmovT3Jgw0m2YkoPCmoigl0k2rFB8Zqkc3eD5gbtw6n+oz81Zrb7XnzmflahjJlZ1TjeUqj8U8WcE/RXTKwi9aQ1TLYoaRurzeW/W6q7+jhTlDz5NSFbWOc=
+	t=1716191791; cv=none; b=SgM5geTKe7Tzb6bTLt/jTslxcnM+ESoupBtqSzDJ7NIWBxJQtETE7W/uTQLI0siC+km/WLYQkIAUYgkGp8bZLyQjPr+uw1nq6CVOMr9sW4FnVGF3wKOVWd7XUazrzexMdw6hFIyda5M9tZvB3Wchd881+L9mfzuFABBITze6szU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716154781; c=relaxed/simple;
-	bh=FE1d2EcLYxsFcXcZIQmx1E51hsLphXGK8xeJsgN6MXw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AvnpeiJk3SU6ytsrKqKyOSb586imvpK94LGFD/2/8BU+TH0kc7dhHz27f6fM1kcXQbEiciEyt/1+kINaZjP4vnGgo/ACIYX30nx4blF82hvytyFvr7Vy4AeQMuwkktcxVXQqj9ANU+qapaG1z4M6o+UrMpKPCk//Cs0NZiW1EGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iee.email; spf=pass smtp.mailfrom=iee.email; dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b=gMQU3Q6w; arc=none smtp.client-ip=85.233.160.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iee.email
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iee.email
+	s=arc-20240116; t=1716191791; c=relaxed/simple;
+	bh=HFCM/zgUau3tE/ciJJcIr+Pok/oeam4n8wX1G/ih6X8=;
+	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=FMTwrAjEHVt7Ct1P1yS3Tob9/ecpV4AXHXAbBLZ59a4WduyhvIk/53g4J0XiZeBuQf89vUhW5a92o6YNCDq45nqtSC28P0k9HMgW4SLPBALLK21WFBx3aPXEuhqXRVXcWn4kKPpNFYfPkBkhr20T5tvKWX3dtAFquvbzcskKN70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de; spf=pass smtp.mailfrom=zedat.fu-berlin.de; dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b=VpBARmCE; arc=none smtp.client-ip=130.133.4.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zedat.fu-berlin.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b="gMQU3Q6w"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iee.email;
-	s=2024022300; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:To:Subject:MIME-Version:Date:Message-ID:Reply-To:Content-ID:
+	dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b="VpBARmCE"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=fu-berlin.de; s=fub01; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:Date:To:From:Subject:Message-ID:Sender:Reply-To:Cc:Content-ID:
 	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID; bh=FpDT+OPkdZ7p/mEHoC1O3Psk/D7D/EQrYy5DrEcnBwY=; b=gMQU3Q
-	6wGT8RF3dLqLtZMY6uao4I5Sb576Vk3hRhnpTy/gUVK5sae76G9Ixq1RdWO6JBiInRSFww1+kJM63
-	JW2EEFBxOh7AnBFiw2LPSb9cO5PyF8ol6nBtjiIctoWN4magMcCChbsQ/fzhAQz/i8inQh0UtOJVG
-	aoJ8dwU1uGM=;
-Received: from host-78-146-11-207.as13285.net ([78.146.11.207] helo=[192.168.1.57])
-	by smtp.hosts.co.uk with esmtpa (Exim)
-	(envelope-from <philipoakley@iee.email>)
-	id 1s8oFj-000000000q8-2DIW;
-	Sun, 19 May 2024 22:39:35 +0100
-Message-ID: <6c0206de-054f-44db-9442-8940396f3e72@iee.email>
-Date: Sun, 19 May 2024 22:39:32 +0100
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=kCro3swAXVZ3JGjvNLtNP4tvkgZw+1hMpEzOg92krxw=; t=1716191786; x=1716796586; 
+	b=VpBARmCEOWEghxAK1XrmsmJCkQN3cFNLp1OznniQmI/OriGGjc7qr5zT0Wq3YJsMIJwvfr1khjg
+	ZzZ0yRxAd0FPITIM/VnHpfPMYhaebJ4lBt0wrNLrE24etP2H33v2CShDiMcudZIVUa3hhv1hRawpl
+	dE1+INZrscmmAUGg4rjHY8jNNFazwtgaxk99C0EnMjd73GJerNhimdaRg1JkFAmfm5hyxeI1MlhG5
+	KyGWUQjLuWKuQhRv/LfO6EgF4Mt3Nlk3mHwrnyl6bk8dB8m/vCOD9Kdazrj0V/1QWAEQOu0bVNBuZ
+	qr3PiWh3pYH/ESOgyMAp5LsCkmjqL/tPM+ig==;
+Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
+          by outpost.zedat.fu-berlin.de (Exim 4.97)
+          for git@vger.kernel.org with esmtps (TLS1.3)
+          tls TLS_AES_256_GCM_SHA384
+          (envelope-from <glaubitz@zedat.fu-berlin.de>)
+          id 1s8xsY-00000003inF-08Nn; Mon, 20 May 2024 09:56:18 +0200
+Received: from dynamic-077-191-101-125.77.191.pool.telefonica.de ([77.191.101.125] helo=[192.168.178.20])
+          by inpost2.zedat.fu-berlin.de (Exim 4.97)
+          for git@vger.kernel.org with esmtpsa (TLS1.3)
+          tls TLS_AES_256_GCM_SHA384
+          (envelope-from <glaubitz@physik.fu-berlin.de>)
+          id 1s8xsX-000000017aX-3OX9; Mon, 20 May 2024 09:56:17 +0200
+Message-ID: <8baa12f8d044265f1ddeabd64209e7ac0d3700ae.camel@physik.fu-berlin.de>
+Subject: chainlint test failing on Linux sparc64
+From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+To: git@vger.kernel.org
+Date: Mon, 20 May 2024 09:56:17 +0200
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.1 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: subscribe
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kevin Gale <s7g2vp2@yahoo.co.uk>, git@vger.kernel.org
-References: <AA7553D9-B385-4745-8AA8-31BBFEF6A818.ref@yahoo.co.uk>
- <AA7553D9-B385-4745-8AA8-31BBFEF6A818@yahoo.co.uk>
- <b4d653e9-11a9-46fe-bb5d-3a01756c4454@iee.email>
- <CAPc5daVJ-aj+xCdHesBr7VEeNmgvvaW8Tj=6PS419jYvSLfDTw@mail.gmail.com>
-Content-Language: en-GB
-From: Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <CAPc5daVJ-aj+xCdHesBr7VEeNmgvvaW8Tj=6PS419jYvSLfDTw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-Original-Sender: glaubitz@physik.fu-berlin.de
+X-ZEDAT-Hint: PO
 
-On 19/05/2024 16:32, Junio C Hamano wrote:
->> If you haven't already realised, the registration/subscription requests
->> go via 'majordomo' as detailed at:
-> 
-> Hasn't
-> https://subspace.kernel.org/vger.kernel.org.html
-> superseded that?
-> 
-> https://subspace.kernel.org/subscribing.html
+Hello,
 
-I wasn't aware of that change. Thanks for the update. I've been
-'off-line' for a while and had missed the few emails that mentioned it.
---
-Philip
+the chainlint test is failing on sparc64 (see below) and I'm wondering if a=
+nyone
+can tell me how to run tests manually. I suspect there might be an unaligne=
+d access
+which causes a crash on sparc64 only.
+
+Thanks,
+Adrian
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+
+    SUBDIR git-gui
+    SUBDIR gitk-git
+    SUBDIR templates
+make -C t/ all
+make[1]: Entering directory '/home/glaubitz/git/t'
+rm -f -r 'test-results'
+--- chainlinttmp/expect	2024-05-19 12:26:50.051507198 +0000
++++ chainlinttmp/actual	2024-05-19 12:26:50.051507198 +0000
+@@ -1,955 +0,0 @@
+-# chainlint: chainlinttmp/tests
+-# chainlint: arithmetic-expansion
+-(
+-	foo &&
+-	bar=3D$((42 + 1)) &&
+-	baz
+-) &&
+-(
+-	bar=3D$((42 + 1)) ?!AMP?!
+-	baz
+-)
+-# chainlint: bash-array
+-(
+-	foo &&
+-	bar=3D(gumbo stumbo wumbo) &&
+-	baz
+-) &&
+-(
+-	foo &&
+-	bar=3D${#bar[@]} &&
+-	baz
+-)
+-# chainlint: blank-line
+-(
+-
+-	nothing &&
+-
+-	something
+-
+-
+-)
+-# chainlint: blank-line-before-esac
+-test_done () {
+-	case "$test_failure" in
+-	0)
+-		test_at_end_hook_
+-
+-		exit 0 ;;
+-
+-	*)
+-		if test $test_external_has_tap -eq 0
+-		then
+-			say_color error "# failed $test_failure among $msg"
+-			say "1..$test_count"
+-		fi
+-
+-		exit 1 ;;
+-
+-	esac
+-}
+-# chainlint: block
+-(
+-	foo &&
+-	{
+-		echo a ?!AMP?!
+-		echo b
+-	} &&
+-	bar &&
+-	{
+-		echo c
+-	} ?!AMP?!
+-	baz
+-) &&
+-
+-{
+-	echo a; ?!AMP?! echo b
+-} &&
+-{ echo a; ?!AMP?! echo b; } &&
+-
+-{
+-	echo "${var}9" &&
+-	echo "done"
+-} &&
+-finis
+-# chainlint: block-comment
+-(
+-	{
+-		# show a
+-		echo a &&
+-		# show b
+-		echo b
+-	}
+-)
+-# chainlint: broken-chain
+-(
+-	foo &&
+-	bar ?!AMP?!
+-	baz &&
+-	wop
+-)
+-# chainlint: case
+-(
+-	case "$x" in
+-	x) foo ;;
+-	*) bar ;;
+-	esac &&
+-	foobar
+-) &&
+-(
+-	case "$x" in
+-	x) foo ;;
+-	*) bar ;;
+-	esac ?!AMP?!
+-	foobar
+-) &&
+-(
+-	case "$x" in 1) true;; esac &&
+-	case "$y" in 2) false;; esac ?!AMP?!
+-	foobar
+-)
+-# chainlint: case-comment
+-(
+-	case "$x" in
+-	# found foo
+-	x) foo ;;
+-	# found other
+-	*)
+-		# treat it as bar
+-		bar
+-		;;
+-	esac
+-)
+-# chainlint: chain-break-background
+-JGIT_DAEMON_PID=3D &&
+-git init --bare empty.git &&
+->empty.git/git-daemon-export-ok &&
+-mkfifo jgit_daemon_output &&
+-{
+-	jgit daemon --port=3D"$JGIT_DAEMON_PORT" . >jgit_daemon_output &
+-	JGIT_DAEMON_PID=3D$!
+-} &&
+-test_expect_code 2 git ls-remote --exit-code git://localhost:$JGIT_DAEMON_=
+PORT/empty.git
+-# chainlint: chain-break-continue
+-git ls-tree --name-only -r refs/notes/many_notes |
+-while read path
+-do
+-	test "$path" =3D "foobar/non-note.txt" && continue
+-	test "$path" =3D "deadbeef" && continue
+-	test "$path" =3D "de/adbeef" && continue
+-
+-	if test $(expr length "$path") -ne $hexsz
+-	then
+-		return 1
+-	fi
+-done
+-# chainlint: chain-break-false
+-if condition not satisified
+-then
+-	echo it did not work...
+-	echo failed!
+-	false
+-else
+-	echo it went okay ?!AMP?!
+-	congratulate user
+-fi
+-# chainlint: chain-break-return-exit
+-case "$(git ls-files)" in
+-one) echo pass one ;;
+-*) echo bad one; return 1 ;;
+-esac &&
+-(
+-	case "$(git ls-files)" in
+-	two) echo pass two ;;
+-	*) echo bad two; exit 1 ;;
+-	esac
+-) &&
+-case "$(git ls-files)" in
+-dir/two"$LF"one) echo pass both ;;
+-*) echo bad; return 1 ;;
+-esac &&
+-
+-for i in 1 2 3 4 ; do
+-	git checkout main -b $i || return $?
+-	test_commit $i $i $i tag$i || return $?
+-done
+-# chainlint: chain-break-status
+-OUT=3D$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
+-test_match_signal 13 "$OUT" &&
+-
+-{ test-tool sigchain >actual; ret=3D$?; } &&
+-{
+-	test_match_signal 15 "$ret" ||
+-	test "$ret" =3D 3
+-} &&
+-test_cmp expect actual
+-# chainlint: chained-block
+-echo nobody home && {
+-	test the doohicky ?!AMP?!
+-	right now
+-} &&
+-
+-GIT_EXTERNAL_DIFF=3Decho git diff | {
+-	read path oldfile oldhex oldmode newfile newhex newmode &&
+-	test "z$oh" =3D "z$oldhex"
+-}
+-# chainlint: chained-subshell
+-mkdir sub && (
+-	cd sub &&
+-	foo the bar ?!AMP?!
+-	nuff said
+-) &&
+-
+-cut "-d " -f actual | (read s1 s2 s3 &&
+-test -f $s1 ?!AMP?!
+-test $(cat $s2) =3D tree2path1 &&
+-test $(cat $s3) =3D tree3path1)
+-# chainlint: close-nested-and-parent-together
+-(cd foo &&
+-	(bar &&
+-		baz))
+-# chainlint: close-subshell
+-(
+-	foo
+-) &&
+-(
+-	bar
+-) >out &&
+-(
+-	baz
+-) 2>err &&
+-(
+-	boo
+-) <input &&
+-(
+-	bip
+-) | wuzzle &&
+-(
+-	bop
+-) | fazz \
+-	fozz &&
+-(
+-	bup
+-) |
+-fuzzle &&
+-(
+-	yop
+-)
+-# chainlint: command-substitution
+-(
+-	foo &&
+-	bar=3D$(gobble) &&
+-	baz
+-) &&
+-(
+-	bar=3D$(gobble blocks) ?!AMP?!
+-	baz
+-)
+-# chainlint: command-substitution-subsubshell
+-OUT=3D$( ((large_git 1>&3) | :) 3>&1 ) &&
+-test_match_signal 13 "$OUT"
+-# chainlint: comment
+-(
+-	# comment 1
+-	nothing &&
+-	# comment 2
+-	something
+-	# comment 3
+-	# comment 4
+-)
+-# chainlint: complex-if-in-cuddled-loop
+-(for i in a b c; do
+-   if test "$(echo $(waffle bat))" =3D "eleventeen" &&
+-     test "$x" =3D "$y"; then
+-     :
+-   else
+-     echo >file
+-   fi ?!LOOP?!
+- done) &&
+-test ! -f file
+-# chainlint: cuddled
+-(cd foo &&
+-	bar
+-) &&
+-
+-(cd foo ?!AMP?!
+-	bar
+-) &&
+-
+-(
+-	cd foo &&
+-	bar) &&
+-
+-(cd foo &&
+-	bar) &&
+-
+-(cd foo ?!AMP?!
+-	bar)
+-# chainlint: cuddled-if-then-else
+-(if test -z ""; then
+-    echo empty
+- else
+-    echo bizzy
+- fi) &&
+-echo foobar
+-# chainlint: cuddled-loop
+-( while read x
+-  do foobar bop || exit 1
+-  done <file ) &&
+-outside subshell
+-# chainlint: double-here-doc
+-run_sub_test_lib_test_err run-inv-range-start \
+-	"--run invalid range start" \
+-	--run=3D"a-5" <<-\EOF &&
+-test_expect_success "passing test #1" "true"
+-test_done
+-EOF
+-check_sub_test_lib_test_err run-inv-range-start \
+-	<<-\EOF_OUT 3<<-EOF_ERR
+-> FATAL: Unexpected exit with code 1
+-EOF_OUT
+-> error: --run: invalid non-numeric in range start: ${SQ}a-5${SQ}
+-EOF_ERR
+-# chainlint: dqstring-line-splice
+-
+-echo 'fatal: reword option of --fixup is mutually exclusive with'	'--patch=
+/--interactive/--all/--include/--only' >expect &&
+-test_must_fail git commit --fixup=3Dreword:HEAD~ $1 2>actual &&
+-test_cmp expect actual
+-
+-# chainlint: dqstring-no-interpolate
+-grep "^ ! [rejected][ ]*$BRANCH -> $BRANCH (non-fast-forward)$" out &&
+-
+-grep "^\.git$" output.txt &&
+-
+-
+-(
+-	cd client$version &&
+-	GIT_TEST_PROTOCOL_VERSION=3D$version git fetch-pack --no-progress .. $(ca=
+t ../input)
+-) >output &&
+-	cut -d ' ' -f 2 <output | sort >actual &&
+-	test_cmp expect actual
+-
+-# chainlint: empty-here-doc
+-git ls-tree $tree path >current &&
+-cat >expected <<\EOF &&
+-EOF
+-test_output
+-# chainlint: exclamation
+-if ! condition; then echo nope; else yep; fi &&
+-test_prerequisite !MINGW &&
+-mail uucp!address &&
+-echo !whatever!
+-# chainlint: exit-loop
+-(
+-	for i in a b c
+-	do
+-		foo || exit 1
+-		bar &&
+-		baz
+-	done
+-) &&
+-(
+-	while true
+-	do
+-		foo || exit 1
+-		bar &&
+-		baz
+-	done
+-) &&
+-(
+-	i=3D0 &&
+-	while test $i -lt 10
+-	do
+-		echo $i || exit
+-		i=3D$(($i + 1))
+-	done
+-)
+-# chainlint: exit-subshell
+-(
+-	foo || exit 1
+-	bar &&
+-	baz
+-)
+-# chainlint: for-loop
+-(
+-	for i in a b c
+-	do
+-		echo $i ?!AMP?!
+-		cat <<-\EOF ?!LOOP?!
+-		bar
+-		EOF
+-	done ?!AMP?!
+-
+-	for i in a b c; do
+-		echo $i &&
+-		cat $i ?!LOOP?!
+-	done
+-)
+-# chainlint: for-loop-abbreviated
+-for it
+-do
+-	path=3D$(expr "$it" : ([^:]*)) &&
+-	git update-index --add "$path" || exit
+-done
+-# chainlint: function
+-sha1_file() {
+-	echo "$*" | sed "s#..#.git/objects/&/#"
+-} &&
+-
+-remove_object() {
+-	file=3D$(sha1_file "$*") &&
+-	test -e "$file" ?!AMP?!
+-	rm -f "$file"
+-} ?!AMP?!
+-
+-sha1_file arg && remove_object arg
+-# chainlint: here-doc
+-boodle wobba \
+-       gorgo snoot \
+-       wafta snurb <<EOF &&
+-quoth the raven,
+-nevermore...
+-EOF
+-
+-cat <<-Arbitrary_Tag_42 >foo &&
+-snoz
+-boz
+-woz
+-Arbitrary_Tag_42
+-
+-cat <<"zump" >boo &&
+-snoz
+-boz
+-woz
+-zump
+-
+-horticulture <<\EOF
+-gomez
+-morticia
+-wednesday
+-pugsly
+-EOF
+-# chainlint: here-doc-close-subshell
+-(
+-	cat <<-\INPUT)
+-	fizz
+-	INPUT
+-# chainlint: here-doc-indent-operator
+-cat >expect <<- EOF &&
+-header: 43475048 1 $(test_oid oid_version) $NUM_CHUNKS 0
+-num_commits: $1
+-chunks: oid_fanout oid_lookup commit_metadata generation_data bloom_indexe=
+s bloom_data
+-EOF
+-
+-cat >expect << -EOF ?!AMP?!
+-this is not indented
+--EOF
+-
+-cleanup
+-# chainlint: here-doc-multi-line-command-subst
+-(
+-	x=3D$(bobble <<-\END &&
+-		fossil
+-		vegetable
+-		END
+-		wiffle) ?!AMP?!
+-	echo $x
+-)
+-# chainlint: here-doc-multi-line-string
+-(
+-	cat <<-\TXT && echo "multi-line
+-	string" ?!AMP?!
+-	fizzle
+-	TXT
+-	bap
+-)
+-# chainlint: if-condition-split
+-if bob &&
+-   marcia ||
+-   kevin
+-then
+-	echo "nomads" ?!AMP?!
+-	echo "for sure"
+-fi
+-# chainlint: if-in-loop
+-(
+-	for i in a b c
+-	do
+-		if false
+-		then
+-			echo "err"
+-			exit 1
+-		fi ?!AMP?!
+-		foo
+-	done ?!AMP?!
+-	bar
+-)
+-# chainlint: if-then-else
+-(
+-	if test -n ""
+-	then
+-		echo very ?!AMP?!
+-		echo empty
+-	elif test -z ""
+-	then
+-		echo foo
+-	else
+-		echo foo &&
+-		cat <<-\EOF
+-		bar
+-		EOF
+-	fi ?!AMP?!
+-	echo poodle
+-) &&
+-(
+-	if test -n ""; then
+-		echo very &&
+-		echo empty
+-	fi
+-)
+-# chainlint: incomplete-line
+-line 1 \
+-line 2 \
+-line 3 \
+-line 4 &&
+-(
+-	line 5 \
+-	line 6 \
+-	line 7 \
+-	line 8
+-)
+-# chainlint: inline-comment
+-(
+-	foobar && # comment 1
+-	barfoo ?!AMP?! # wrong position for &&
+-	flibble "not a # comment"
+-) &&
+-
+-(cd foo &&
+-	flibble "not a # comment")
+-# chainlint: loop-detect-failure
+-git init r1 &&
+-for n in 1 2 3 4 5
+-do
+-	echo "This is file: $n" > r1/file.$n &&
+-	git -C r1 add file.$n &&
+-	git -C r1 commit -m "$n" || return 1
+-done &&
+-
+-git init r2 &&
+-for n in 1000 10000
+-do
+-	printf "%"$n"s" X > r2/large.$n &&
+-	git -C r2 add large.$n &&
+-	git -C r2 commit -m "$n" ?!LOOP?!
+-done
+-# chainlint: loop-detect-status
+-(while test $i -le $blobcount
+- do
+-	printf "Generating blob $i/$blobcount\r" >&2 &&
+-	printf "blob\nmark :$i\ndata $blobsize\n" &&
+-	#test-tool genrandom $i $blobsize &&
+-	printf "%-${blobsize}s" $i &&
+-	echo "M 100644 :$i $i" >> commit &&
+-	i=3D$(($i+1)) ||
+-	echo $? > exit-status
+- done &&
+- echo "commit refs/heads/main" &&
+- echo "author A U Thor <author@email.com> 123456789 +0000" &&
+- echo "committer C O Mitter <committer@email.com> 123456789 +0000" &&
+- echo "data 5" &&
+- echo ">2gb" &&
+- cat commit) |
+-git fast-import --big-file-threshold=3D2 &&
+-test ! -f exit-status
+-# chainlint: loop-in-if
+-(
+-	if true
+-	then
+-		while true
+-		do
+-			echo "pop" ?!AMP?!
+-			echo "glup" ?!LOOP?!
+-		done ?!AMP?!
+-		foo
+-	fi ?!AMP?!
+-	bar
+-)
+-# chainlint: loop-upstream-pipe
+-(
+-	git rev-list --objects --no-object-names base..loose |
+-	while read oid
+-	do
+-		path=3D"$objdir/$(test_oid_to_path "$oid")" &&
+-		printf "%s %d\n" "$oid" "$(test-tool chmtime --get "$path")" ||
+-		echo "object list generation failed for $oid"
+-	done |
+-	sort -k1
+-) >expect &&
+-# chainlint: multi-line-nested-command-substitution
+-(
+-	foo &&
+-	x=3D$(
+-		echo bar |
+-		cat
+-	) &&
+-	echo ok
+-) |
+-sort &&
+-(
+-	bar &&
+-	x=3D$(echo bar |
+-		cat
+-	) &&
+-	y=3D$(echo baz |
+-		fip) &&
+-	echo fail
+-)
+-# chainlint: multi-line-string
+-(
+-	x=3D"line 1
+-		line 2
+-		line 3" &&
+-	y=3D"line 1
+-		line2" ?!AMP?!
+-	foobar
+-) &&
+-(
+-	echo "xyz" "abc
+-		def
+-		ghi" &&
+-	barfoo
+-)
+-# chainlint: negated-one-liner
+-! (foo && bar) &&
+-! (foo && bar) >baz &&
+-
+-! (foo; ?!AMP?! bar) &&
+-! (foo; ?!AMP?! bar) >baz
+-# chainlint: nested-cuddled-subshell
+-(
+-	(cd foo &&
+-		bar
+-	) &&
+-
+-	(cd foo &&
+-		bar
+-	) ?!AMP?!
+-
+-	(
+-		cd foo &&
+-		bar) &&
+-
+-	(
+-		cd foo &&
+-		bar) ?!AMP?!
+-
+-	(cd foo &&
+-		bar) &&
+-
+-	(cd foo &&
+-		bar) ?!AMP?!
+-
+-	foobar
+-)
+-# chainlint: nested-here-doc
+-cat <<ARBITRARY >foop &&
+-naddle
+-fub <<EOF
+-	nozzle
+-	noodle
+-EOF
+-formp
+-ARBITRARY
+-
+-(
+-	cat <<-\INPUT_END &&
+-	fish are mice
+-	but geese go slow
+-	data <<EOF
+-		perl is lerp
+-		and nothing else
+-	EOF
+-	toink
+-	INPUT_END
+-
+-	cat <<-\EOT ?!AMP?!
+-	text goes here
+-	data <<EOF
+-		data goes here
+-	EOF
+-	more test here
+-	EOT
+-
+-	foobar
+-)
+-# chainlint: nested-loop-detect-failure
+-for i in 0 1 2 3 4 5 6 7 8 9;
+-do
+-	for j in 0 1 2 3 4 5 6 7 8 9;
+-	do
+-		echo "$i$j" >"path$i$j" ?!LOOP?!
+-	done ?!LOOP?!
+-done &&
+-
+-for i in 0 1 2 3 4 5 6 7 8 9;
+-do
+-	for j in 0 1 2 3 4 5 6 7 8 9;
+-	do
+-		echo "$i$j" >"path$i$j" || return 1
+-	done
+-done &&
+-
+-for i in 0 1 2 3 4 5 6 7 8 9;
+-do
+-	for j in 0 1 2 3 4 5 6 7 8 9;
+-	do
+-		echo "$i$j" >"path$i$j" ?!LOOP?!
+-	done || return 1
+-done &&
+-
+-for i in 0 1 2 3 4 5 6 7 8 9;
+-do
+-	for j in 0 1 2 3 4 5 6 7 8 9;
+-	do
+-		echo "$i$j" >"path$i$j" || return 1
+-	done || return 1
+-done
+-# chainlint: nested-subshell
+-(
+-	cd foo &&
+-	(
+-		echo a &&
+-		echo b
+-	) >file &&
+-
+-	cd foo &&
+-	(
+-		echo a ?!AMP?!
+-		echo b
+-	) >file
+-)
+-# chainlint: nested-subshell-comment
+-(
+-	foo &&
+-	(
+-		bar &&
+-		# bottles wobble while fiddles gobble
+-		# minor numbers of cows (or do they?)
+-		baz &&
+-		snaff
+-	) ?!AMP?!
+-	fuzzy
+-)
+-# chainlint: not-heredoc
+-echo "<<<<<<< ours" &&
+-echo ourside &&
+-echo "=3D=3D=3D=3D=3D=3D=3D" &&
+-echo theirside &&
+-echo ">>>>>>> theirs" &&
+-
+-(
+-	echo "<<<<<<< ours" &&
+-	echo ourside &&
+-	echo "=3D=3D=3D=3D=3D=3D=3D" &&
+-	echo theirside &&
+-	echo ">>>>>>> theirs" ?!AMP?!
+-	poodle
+-) >merged
+-# chainlint: one-liner
+-(foo && bar) &&
+-(foo && bar) |
+-(foo && bar) >baz &&
+-
+-(foo; ?!AMP?! bar) &&
+-(foo; ?!AMP?! bar) |
+-(foo; ?!AMP?! bar) >baz &&
+-
+-(foo "bar; baz")
+-# chainlint: one-liner-for-loop
+-git init dir-rename-and-content &&
+-(
+-	cd dir-rename-and-content &&
+-	test_write_lines 1 2 3 4 5 >foo &&
+-	mkdir olddir &&
+-	for i in a b c; do echo $i >olddir/$i; ?!LOOP?! done ?!AMP?!
+-	git add foo olddir &&
+-	git commit -m "original" &&
+-)
+-# chainlint: p4-filespec
+-(
+-	p4 print -1 //depot/fiddle#42 >file &&
+-	foobar
+-)
+-# chainlint: pipe
+-(
+-	foo |
+-	bar |
+-	baz &&
+-
+-	fish |
+-	cow ?!AMP?!
+-
+-	sunder
+-)
+-# chainlint: return-loop
+-while test $i -lt $((num - 5))
+-do
+-	git notes add -m "notes for commit$i" HEAD~$i || return 1
+-	i=3D$((i + 1))
+-done
+-# chainlint: semicolon
+-(
+-	cat foo ; ?!AMP?! echo bar ?!AMP?!
+-	cat foo ; ?!AMP?! echo bar
+-) &&
+-(
+-	cat foo ; ?!AMP?! echo bar &&
+-	cat foo ; ?!AMP?! echo bar
+-) &&
+-(
+-	echo "foo; bar" &&
+-	cat foo; ?!AMP?! echo bar
+-) &&
+-(
+-	foo;
+-) &&
+-(cd foo &&
+-	for i in a b c; do
+-		echo; ?!LOOP?!
+-	done)
+-# chainlint: sqstring-in-sqstring
+-perl -e '
+-	defined($_ =3D -s $_) or die for @ARGV;
+-	exit 1 if $ARGV[0] <=3D $ARGV[1];
+-' test-2-$packname_2.pack test-3-$packname_3.pack
+-# chainlint: subshell-here-doc
+-(
+-	echo wobba \
+-	       gorgo snoot \
+-	       wafta snurb <<-EOF &&
+-	quoth the raven,
+-	nevermore...
+-	EOF
+-
+-	cat <<EOF >bip ?!AMP?!
+-	fish fly high
+-EOF
+-
+-	echo <<-\EOF >bop
+-	gomez
+-	morticia
+-	wednesday
+-	pugsly
+-	EOF
+-) &&
+-(
+-	cat <<-\ARBITRARY >bup &&
+-	glink
+-	FIZZ
+-	ARBITRARY
+-	cat <<-"ARBITRARY3" >bup3 &&
+-	glink
+-	FIZZ
+-	ARBITRARY3
+-	meep
+-)
+-# chainlint: subshell-one-liner
+-(
+-	(foo && bar) &&
+-	(foo && bar) |
+-	(foo && bar) >baz &&
+-
+-	(foo; ?!AMP?! bar) &&
+-	(foo; ?!AMP?! bar) |
+-	(foo; ?!AMP?! bar) >baz &&
+-
+-	(foo || exit 1) &&
+-	(foo || exit 1) |
+-	(foo || exit 1) >baz &&
+-
+-	(foo && bar) ?!AMP?!
+-
+-	(foo && bar; ?!AMP?! baz) ?!AMP?!
+-
+-	foobar
+-)
+-# chainlint: t7900-subtree
+-(
+-	chks=3D"sub1
+-sub2
+-sub3
+-sub4" &&
+-	chks_sub=3D$(cat <<TXT | sed "s,^,sub dir/,"
+-$chks
+-TXT
+-) &&
+-	chkms=3D"main-sub1
+-main-sub2
+-main-sub3
+-main-sub4" &&
+-	chkms_sub=3D$(cat <<TXT | sed "s,^,sub dir/,"
+-$chkms
+-TXT
+-) &&
+-
+-	subfiles=3D$(git ls-files) &&
+-	check_equal "$subfiles" "$chkms
+-$chks"
+-)
+-# chainlint: token-pasting
+-git config filter.rot13.smudge ./rot13.sh &&
+-git config filter.rot13.clean ./rot13.sh &&
+-
+-{
+-    echo "*.t filter=3Drot13" ?!AMP?!
+-    echo "*.i ident"
+-} >.gitattributes &&
+-
+-{
+-    echo a b c d e f g h i j k l m ?!AMP?!
+-    echo n o p q r s t u v w x y z ?!AMP?!
+-    echo '$Id$'
+-} >test &&
+-cat test >test.t &&
+-cat test >test.o &&
+-cat test >test.i &&
+-git add test test.t test.i &&
+-rm -f test test.t test.i &&
+-git checkout -- test test.t test.i &&
+-
+-echo "content-test2" >test2.o &&
+-echo "content-test3 - filename with special characters" >"test3 'sq',$x=3D=
+.o" ?!AMP?!
+-
+-downstream_url_for_sed=3D$(
+-	printf "%sn" "$downstream_url" |
+-	sed -e 's/\/\\/g' -e 's/[[/.*^$]/\&/g'
+-)
+-# chainlint: unclosed-here-doc
+-command_which_is_run &&
+-cat >expect <<\EOF ?!UNCLOSED-HEREDOC?! &&
+-	we try to end the here-doc below,
+-	but the indentation throws us off
+-	since the operator is not "<<-".
+-	EOF
+-command_which_is_gobbled
+-# chainlint: unclosed-here-doc-indent
+-command_which_is_run &&
+-cat >expect <<-\EOF ?!UNCLOSED-HEREDOC?! &&
+-we forget to end the here-doc
+-command_which_is_gobbled
+-# chainlint: while-loop
+-(
+-	while true
+-	do
+-		echo foo ?!AMP?!
+-		cat <<-\EOF ?!LOOP?!
+-		bar
+-		EOF
+-	done ?!AMP?!
+-
+-	while true; do
+-		echo foo &&
+-		cat bar ?!LOOP?!
+-	done
+-)
+make[1]: *** [Makefile:110: check-chainlint] Error 1
+make[1]: Leaving directory '/home/glaubitz/git/t'
+make: *** [Makefile:3229: test] Error 2
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+
+--=20
+ .''`.  John Paul Adrian Glaubitz
+: :' :  Debian Developer
+`. `'   Physicist
+  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
