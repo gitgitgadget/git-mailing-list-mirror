@@ -1,63 +1,64 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1ABB13959D
-	for <git@vger.kernel.org>; Mon, 20 May 2024 20:22:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A3D139CEB
+	for <git@vger.kernel.org>; Mon, 20 May 2024 20:22:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716236537; cv=none; b=dT0+tP/pg2YtF6hmDAkV5EufoJlMbZFTv//EaXcuVuLhRkRrGgaGKBmgIwsXPsg+yjZnkaDb4Vhmpfyt3YxJHduq3mKWIPSltg4Eg2gjjSOvSX0viTZvWanISEhFbA1WwRCYWU0k4b2BCLxcWtnVfET8FwW7yZy/4HyjBf+OOgo=
+	t=1716236538; cv=none; b=IhfH38umyoEqcsT8Asdmy+d9QJDdY96SxBYe9ENyXLV1IxLwsGle2VqjV3l+/QX0fHE8Mkt7mKq6Px5bnvBTUoTZdfg/pqVpMcgZG7J7V34Qxz3deT7PZsAs/YHEX9jSWQukq5sfGiA5fCQQM5FfPFKmXVVPgO2Tv7G8a5se810=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716236537; c=relaxed/simple;
-	bh=lVlVuRjx8gjlzFTetk5MCJ3bUQmhiKmjB3YGwzs6oaQ=;
+	s=arc-20240116; t=1716236538; c=relaxed/simple;
+	bh=ldVou3LjvRyszwlkSq0AhyfPkMxbgdNiKzyu2EBNRqU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HAnkFsb/G/M8cWIbIVyORG5nRam2cUX/nmPYPQ58CrwH6a5FmEwvqx3Yd0Y45XnPkr1Fl5lBxrKxlpYlGyNpyGHt7xEARsabKxt/IYfEuS6Z2M8npby+8UcqadSmPUEgm/EJEyA4M91J2Tg+N8MI+NX4kmutQeyBPIFNW0Fk3+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ExGR99EM; arc=none smtp.client-ip=209.85.128.42
+	 MIME-Version:To:Cc; b=FQrhCwBMS7nvBvxfbafuDB347dUr+wqa626C4enHT0qVqdpSw9lw6VuZOpBCtnZLzd7sl0S1PuUcQfQdg85tjxEfp/tvVsF0815+eFWWCkt0a3Qk443aVSjzIb5jx5SLtSwNXgAo6ycVJbLLMY4QRK006RgVClsm7F3LZcUql0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dDq0lp8S; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ExGR99EM"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-42016c8db2aso24591275e9.0
-        for <git@vger.kernel.org>; Mon, 20 May 2024 13:22:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dDq0lp8S"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-34dc8d3fbf1so2068215f8f.1
+        for <git@vger.kernel.org>; Mon, 20 May 2024 13:22:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716236533; x=1716841333; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1716236534; x=1716841334; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wxtT5xN3WXiWC4lzK+9yatqNRwvBZc6woP7q6d5Fgzk=;
-        b=ExGR99EMUOXnAj0ufThOa0rbmHkwAZydXyYkNA5qV7gJNo0goUVb2y/LNZ8It/12EK
-         BDjoJyWZekZ7Ihd4mRWJvlapVunDZZhk9iMCKd70nt+gQWlyPKEn9ikl6jAgF3i4NgYu
-         hg2pw1/zwAzjq7/pQuXMJqVifp0trfV/RGWVZWDDvwLELzkVDs2+5G76sVXo8zt7waFv
-         c4LaW9UzhY9R4ZgDR/o0836EG6CPs0tNJBOpe077M+fPxpj0OL7zHrY1Y4X9JipvVUeM
-         Q2sEpTJcVze62QLsiVlOXZtwZlf6S8wfB3RKJCVV2VRlO357MoOt7XlW5ArYnpFvpqjO
-         7kMw==
+        bh=Zrr1+lMEsbdxBYmZl3ymH80XsSKj7Aucdz/ecD0EJAM=;
+        b=dDq0lp8SOQEVKXlRMxWog0tTddaHE15USyg9SaFO3VT/me+3uGQx33St4t8j63HsTF
+         HIk/An7wjJzr1onm/JS21lcyG92BCNDtJq6f/RnUpRtfDi8AeCrVxJmWI0Y0+atVz2pu
+         43X6K/jTGO2Hs+xRWeyBYtKG8KB+C2xfKoM80kSU82QcIgC3L9zw6FBrlEpOgDzm+vQn
+         PgeHa9Crl/OaZm1lLqrtQuo8X5taA0gL0yg+10frRqi5CkxXSpcqBv5lAR9yefJoduY2
+         5wwe4JlNBsw1lNsEL+cAjswKLEKdA3A70QjvPAHk/dLzvZvlHu8s1rwQMLqYyG/+qxIg
+         KGuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716236533; x=1716841333;
+        d=1e100.net; s=20230601; t=1716236534; x=1716841334;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wxtT5xN3WXiWC4lzK+9yatqNRwvBZc6woP7q6d5Fgzk=;
-        b=AMLB5SEzaLP4ln5xUXqb10qxFM5ANOQ1yTbsFw0+ccjradKXTcExYUNf0YkdQuXd+3
-         0jxMurWDMEkGWthUyvP4R2QbsAmgM2OagqsRUlNdMB3fiXRwLRl37EYr+uLJo9BA6pyW
-         RFEUBS0JST9jlxuUkNeUezclGeDswsR/obA8i303FbLO3Z8momyReNaX4o2r2P1ANW5k
-         NDuvZEbB28EB4k+isBMuzBn4CFaXunynQxz4SWbroq+FiE30zr85aCzBrsGA8OH6BIBO
-         75qxT0ZPsTqsMdQ3Qw6vx1QsS1qxS0M4yFh8arinzgN9T0l+i4H0tuMQZHYmXyuAsXPV
-         gLMg==
-X-Gm-Message-State: AOJu0YwF5pnQ2jZcQowWASTkoXj77wjjYvclShZ4tvF0NaagdHrcMcTg
-	SlM+f3Yh3pn4uzCRsqy56K753IP+BbDVGMlOFC62tc6vIu6EZqcljiaMPw==
-X-Google-Smtp-Source: AGHT+IGy/7sstPQWijPOB1lpCgu7A0gIiaI4VCfh7W0vPMXR3QuXPYrAD6QkZjBT5O0nncu706uDIQ==
-X-Received: by 2002:a05:600c:1e15:b0:420:2986:cce1 with SMTP id 5b1f17b1804b1-4202986d034mr103296165e9.32.1716236533553;
-        Mon, 20 May 2024 13:22:13 -0700 (PDT)
+        bh=Zrr1+lMEsbdxBYmZl3ymH80XsSKj7Aucdz/ecD0EJAM=;
+        b=c5Jj9E4nvwkOtz8AD2u72/dTiN2ef49I1jJNybA71cEt55RvtknieMd7O7A7Rp9cdS
+         0gcucHqWrRx2Fh3Fb7PY5zmQLtIxyWHv3MhRi4d2c4ZH/AYK8oITAz07okW9ObMtS2gy
+         Qj+9ON5Q4QDrYuA77L90XIbWGt6PepiBUZ2uF6eq/u1InJNvlv+8NqdN+R0n6jiYKupw
+         NE3JyIKOCW8NRvW/X5/MW27Y9csALjp8YyghWlNNLFQN9eu6eRN+yiWLFSStY4BdpN7V
+         iOIi1SPbUTg99mxzoSME4++ahyvSOCuN/K7r2i/aC/Mmljjb0WgkssN5nEojM2juW2fa
+         iqMg==
+X-Gm-Message-State: AOJu0YzJOWkSWwsp6/8NaUyADVzw2/P3UCyLMqpSNrBJFFS7eJN+n/um
+	xF+Jw/EQwwDlQRs78AsGKGI7oLZvJETPOsw+W6Hwa02M59rYNrUYUJhc5A==
+X-Google-Smtp-Source: AGHT+IEEbXw4gHO6iGGo0lSfFCs06OMZoe0swFd5V4C2ctf9+IlryZL1uEF8ji0s4F6ef3VwGGIxSQ==
+X-Received: by 2002:adf:c047:0:b0:351:c731:ed0b with SMTP id ffacd0b85a97d-351c731eec5mr11646173f8f.70.1716236534624;
+        Mon, 20 May 2024 13:22:14 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41fccee9292sm435399695e9.37.2024.05.20.13.22.12
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3502b79bc83sm29950250f8f.16.2024.05.20.13.22.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 May 2024 13:22:12 -0700 (PDT)
-Message-Id: <0044a35567417a552cc518576670b43f7141a02e.1716236526.git.gitgitgadget@gmail.com>
+        Mon, 20 May 2024 13:22:14 -0700 (PDT)
+Message-Id: <5c576e889d85b34fc717b693ba526cc46836f66a.1716236527.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1732.v3.git.1716236526.gitgitgadget@gmail.com>
 References: <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
 	<pull.1732.v3.git.1716236526.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 20 May 2024 20:22:04 +0000
-Subject: [PATCH v3 5/6] clone: drop the protections where hooks aren't run
+Date: Mon, 20 May 2024 20:22:05 +0000
+Subject: [PATCH v3 6/6] Revert "Add a helper function to compare file
+ contents"
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,196 +76,183 @@ Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-As part of the security bug-fix releases v2.39.4, ..., v2.45.1, I
-introduced logic to safeguard `git clone` from running hooks that were
-installed _during_ the clone operation.
+Now that during a `git clone`, the hooks' contents are no longer
+compared to the templates' files', the caller for which the
+`do_files_match()` function was introduced is gone, and therefore this
+function can be retired, too.
 
-The rationale was that Git's CVE-2024-32002, CVE-2021-21300,
-CVE-2019-1354, CVE-2019-1353, CVE-2019-1352, and CVE-2019-1349 should
-have been low-severity vulnerabilities but were elevated to
-critical/high severity by the attack vector that allows a weakness where
-files inside `.git/` can be inadvertently written during a `git clone`
-to escalate to a Remote Code Execution attack by virtue of installing a
-malicious `post-checkout` hook that Git will then run at the end of the
-operation without giving the user a chance to see what code is executed.
-
-Unfortunately, Git LFS uses a similar strategy to install its own
-`post-checkout` hook during a `git clone`; In fact, Git LFS is
-installing four separate hooks while running the `smudge` filter.
-
-While this pattern is probably in want of being improved by introducing
-better support in Git for Git LFS and other tools wishing to register
-hooks to be run at various stages of Git's commands, let's undo the
-clone protections to unbreak Git LFS-enabled clones.
-
-This reverts commit 8db1e8743c0 (clone: prevent hooks from running
-during a clone, 2024-03-28).
+This reverts commit 584de0b4c23 (Add a helper function to compare file
+contents, 2024-03-30).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/clone.c  | 12 +-----------
- hook.c           | 34 --------------------------------
- t/t5601-clone.sh | 51 ------------------------------------------------
- 3 files changed, 1 insertion(+), 96 deletions(-)
+ cache.h                    | 14 ---------
+ copy.c                     | 58 --------------------------------------
+ t/helper/test-path-utils.c | 10 -------
+ t/t0060-path-utils.sh      | 41 ---------------------------
+ 4 files changed, 123 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index e7721f5c22c..9ec500d427e 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -937,8 +937,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	int err = 0, complete_refs_before_fetch = 1;
- 	int submodule_progress;
- 	int filter_submodules = 0;
--	const char *template_dir;
--	char *template_dir_dup = NULL;
+diff --git a/cache.h b/cache.h
+index 16b34799bfd..8c5fb1e1ba1 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1785,20 +1785,6 @@ int copy_fd(int ifd, int ofd);
+ int copy_file(const char *dst, const char *src, int mode);
+ int copy_file_with_time(const char *dst, const char *src, int mode);
  
- 	struct transport_ls_refs_options transport_ls_refs_options =
- 		TRANSPORT_LS_REFS_OPTIONS_INIT;
-@@ -958,13 +956,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		usage_msg_opt(_("You must specify a repository to clone."),
- 			builtin_clone_usage, builtin_clone_options);
- 
--	xsetenv("GIT_CLONE_PROTECTION_ACTIVE", "true", 0 /* allow user override */);
--	template_dir = get_template_dir(option_template);
--	if (*template_dir && !is_absolute_path(template_dir))
--		template_dir = template_dir_dup =
--			absolute_pathdup(template_dir);
--	xsetenv("GIT_CLONE_TEMPLATE_DIR", template_dir, 1);
+-/*
+- * Compare the file mode and contents of two given files.
+- *
+- * If both files are actually symbolic links, the function returns 1 if the link
+- * targets are identical or 0 if they are not.
+- *
+- * If any of the two files cannot be accessed or in case of read failures, this
+- * function returns 0.
+- *
+- * If the file modes and contents are identical, the function returns 1,
+- * otherwise it returns 0.
+- */
+-int do_files_match(const char *path1, const char *path2);
 -
- 	if (option_depth || option_since || option_not.nr)
- 		deepen = 1;
- 	if (option_single_branch == -1)
-@@ -1112,7 +1103,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	init_db(git_dir, real_git_dir, template_dir, GIT_HASH_UNKNOWN, NULL,
-+	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN, NULL,
- 		INIT_DB_QUIET);
- 
- 	if (real_git_dir) {
-@@ -1430,7 +1421,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	free(unborn_head);
- 	free(dir);
- 	free(path);
--	free(template_dir_dup);
- 	UNLEAK(repo);
- 	junk_mode = JUNK_LEAVE_ALL;
- 
-diff --git a/hook.c b/hook.c
-index fc974cee1d8..22b274b60b1 100644
---- a/hook.c
-+++ b/hook.c
-@@ -3,32 +3,6 @@
- #include "run-command.h"
- #include "config.h"
- 
--static int identical_to_template_hook(const char *name, const char *path)
+ void write_or_die(int fd, const void *buf, size_t count);
+ void fsync_or_die(int fd, const char *);
+ int fsync_component(enum fsync_component component, int fd);
+diff --git a/copy.c b/copy.c
+index 8492f6fc831..4de6a110f09 100644
+--- a/copy.c
++++ b/copy.c
+@@ -65,61 +65,3 @@ int copy_file_with_time(const char *dst, const char *src, int mode)
+ 		return copy_times(dst, src);
+ 	return status;
+ }
+-
+-static int do_symlinks_match(const char *path1, const char *path2)
 -{
--	const char *env = getenv("GIT_CLONE_TEMPLATE_DIR");
--	const char *template_dir = get_template_dir(env && *env ? env : NULL);
--	struct strbuf template_path = STRBUF_INIT;
--	int found_template_hook, ret;
+-	struct strbuf buf1 = STRBUF_INIT, buf2 = STRBUF_INIT;
+-	int ret = 0;
 -
--	strbuf_addf(&template_path, "%s/hooks/%s", template_dir, name);
--	found_template_hook = access(template_path.buf, X_OK) >= 0;
--#ifdef STRIP_EXTENSION
--	if (!found_template_hook) {
--		strbuf_addstr(&template_path, STRIP_EXTENSION);
--		found_template_hook = access(template_path.buf, X_OK) >= 0;
--	}
--#endif
--	if (!found_template_hook) {
--		strbuf_release(&template_path);
--		return 0;
--	}
+-	if (!strbuf_readlink(&buf1, path1, 0) &&
+-	    !strbuf_readlink(&buf2, path2, 0))
+-		ret = !strcmp(buf1.buf, buf2.buf);
 -
--	ret = do_files_match(template_path.buf, path);
--
--	strbuf_release(&template_path);
+-	strbuf_release(&buf1);
+-	strbuf_release(&buf2);
 -	return ret;
 -}
 -
- const char *find_hook(const char *name)
- {
- 	static struct strbuf path = STRBUF_INIT;
-@@ -64,14 +38,6 @@ const char *find_hook(const char *name)
- 		}
- 		return NULL;
+-int do_files_match(const char *path1, const char *path2)
+-{
+-	struct stat st1, st2;
+-	int fd1 = -1, fd2 = -1, ret = 1;
+-	char buf1[8192], buf2[8192];
+-
+-	if ((fd1 = open_nofollow(path1, O_RDONLY)) < 0 ||
+-	    fstat(fd1, &st1) || !S_ISREG(st1.st_mode)) {
+-		if (fd1 < 0 && errno == ELOOP)
+-			/* maybe this is a symbolic link? */
+-			return do_symlinks_match(path1, path2);
+-		ret = 0;
+-	} else if ((fd2 = open_nofollow(path2, O_RDONLY)) < 0 ||
+-		   fstat(fd2, &st2) || !S_ISREG(st2.st_mode)) {
+-		ret = 0;
+-	}
+-
+-	if (ret)
+-		/* to match, neither must be executable, or both */
+-		ret = !(st1.st_mode & 0111) == !(st2.st_mode & 0111);
+-
+-	if (ret)
+-		ret = st1.st_size == st2.st_size;
+-
+-	while (ret) {
+-		ssize_t len1 = read_in_full(fd1, buf1, sizeof(buf1));
+-		ssize_t len2 = read_in_full(fd2, buf2, sizeof(buf2));
+-
+-		if (len1 < 0 || len2 < 0 || len1 != len2)
+-			ret = 0; /* read error or different file size */
+-		else if (!len1) /* len2 is also 0; hit EOF on both */
+-			break; /* ret is still true */
+-		else
+-			ret = !memcmp(buf1, buf2, len1);
+-	}
+-
+-	if (fd1 >= 0)
+-		close(fd1);
+-	if (fd2 >= 0)
+-		close(fd2);
+-
+-	return ret;
+-}
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index 0e0de218076..f69709d674f 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
+@@ -495,16 +495,6 @@ int cmd__path_utils(int argc, const char **argv)
+ 		return !!res;
  	}
--	if (!git_hooks_path && git_env_bool("GIT_CLONE_PROTECTION_ACTIVE", 0) &&
--	    !identical_to_template_hook(name, path.buf))
--		die(_("active `%s` hook found during `git clone`:\n\t%s\n"
--		      "For security reasons, this is disallowed by default.\n"
--		      "If this is intentional and the hook should actually "
--		      "be run, please\nrun the command again with "
--		      "`GIT_CLONE_PROTECTION_ACTIVE=false`"),
--		    name, path.buf);
- 	return path.buf;
- }
  
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 20deca0231b..fd029843307 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -771,57 +771,6 @@ test_expect_success 'batch missing blob request does not inadvertently try to fe
- 	git clone --filter=blob:limit=0 "file://$(pwd)/server" client
+-	if (argc == 4 && !strcmp(argv[1], "do_files_match")) {
+-		int ret = do_files_match(argv[2], argv[3]);
+-
+-		if (ret)
+-			printf("equal\n");
+-		else
+-			printf("different\n");
+-		return !ret;
+-	}
+-
+ 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
+ 		argv[1] ? argv[1] : "(there was none)");
+ 	return 1;
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 73d0e1a7f10..68e29c904a6 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -560,45 +560,4 @@ test_expect_success !VALGRIND,RUNTIME_PREFIX,CAN_EXEC_IN_PWD '%(prefix)/ works'
+ 	test_cmp expect actual
  '
  
--test_expect_success 'clone with init.templatedir runs hooks' '
--	git init tmpl/hooks &&
--	write_script tmpl/hooks/post-checkout <<-EOF &&
--	echo HOOK-RUN >&2
--	echo I was here >hook.run
--	EOF
--	git -C tmpl/hooks add . &&
--	test_tick &&
--	git -C tmpl/hooks commit -m post-checkout &&
+-test_expect_success 'do_files_match()' '
+-	test_seq 0 10 >0-10.txt &&
+-	test_seq -1 10 >-1-10.txt &&
+-	test_seq 1 10 >1-10.txt &&
+-	test_seq 1 9 >1-9.txt &&
+-	test_seq 0 8 >0-8.txt &&
 -
--	test_when_finished "git config --global --unset init.templateDir || :" &&
--	test_when_finished "git config --unset init.templateDir || :" &&
--	(
--		sane_unset GIT_TEMPLATE_DIR &&
--		NO_SET_GIT_TEMPLATE_DIR=t &&
--		export NO_SET_GIT_TEMPLATE_DIR &&
+-	test-tool path-utils do_files_match 0-10.txt 0-10.txt >out &&
 -
--		git -c core.hooksPath="$(pwd)/tmpl/hooks" \
--			clone tmpl/hooks hook-run-hookspath 2>err &&
--		! grep "active .* hook found" err &&
--		test_path_is_file hook-run-hookspath/hook.run &&
+-	assert_fails() {
+-		test_must_fail \
+-		test-tool path-utils do_files_match "$1" "$2" >out &&
+-		grep different out
+-	} &&
 -
--		git -c init.templateDir="$(pwd)/tmpl" \
--			clone tmpl/hooks hook-run-config 2>err &&
--		! grep "active .* hook found" err &&
--		test_path_is_file hook-run-config/hook.run &&
+-	assert_fails 0-8.txt 1-9.txt &&
+-	assert_fails -1-10.txt 0-10.txt &&
+-	assert_fails 1-10.txt 1-9.txt &&
+-	assert_fails 1-10.txt .git &&
+-	assert_fails does-not-exist 1-10.txt &&
 -
--		git clone --template=tmpl tmpl/hooks hook-run-option 2>err &&
--		! grep "active .* hook found" err &&
--		test_path_is_file hook-run-option/hook.run &&
+-	if test_have_prereq FILEMODE
+-	then
+-		cp 0-10.txt 0-10.x &&
+-		chmod a+x 0-10.x &&
+-		assert_fails 0-10.txt 0-10.x
+-	fi &&
 -
--		git config --global init.templateDir "$(pwd)/tmpl" &&
--		git clone tmpl/hooks hook-run-global-config 2>err &&
--		git config --global --unset init.templateDir &&
--		! grep "active .* hook found" err &&
--		test_path_is_file hook-run-global-config/hook.run &&
--
--		# clone ignores local `init.templateDir`; need to create
--		# a new repository because we deleted `.git/` in the
--		# `setup` test case above
--		git init local-clone &&
--		cd local-clone &&
--
--		git config init.templateDir "$(pwd)/../tmpl" &&
--		git clone ../tmpl/hooks hook-run-local-config 2>err &&
--		git config --unset init.templateDir &&
--		! grep "active .* hook found" err &&
--		test_path_is_missing hook-run-local-config/hook.run
--	)
+-	if test_have_prereq SYMLINKS
+-	then
+-		ln -sf 0-10.txt symlink &&
+-		ln -s 0-10.txt another-symlink &&
+-		ln -s over-the-ocean yet-another-symlink &&
+-		ln -s "$PWD/0-10.txt" absolute-symlink &&
+-		assert_fails 0-10.txt symlink &&
+-		test-tool path-utils do_files_match symlink another-symlink &&
+-		assert_fails symlink yet-another-symlink &&
+-		assert_fails symlink absolute-symlink
+-	fi
 -'
 -
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
+ test_done
 -- 
 gitgitgadget
-
