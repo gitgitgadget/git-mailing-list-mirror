@@ -1,105 +1,95 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FC3168BD
-	for <git@vger.kernel.org>; Mon, 20 May 2024 20:55:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8873F1D531
+	for <git@vger.kernel.org>; Mon, 20 May 2024 21:04:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716238530; cv=none; b=e1ScqEK33b2In096lmJTCfpq4AcIXFglAYAL4b83T8ga2LJCJaMnocieUxBHX7pt/D9gH6P5sRruhkC7nnNKoVguv03EV6rfWIXlKdkfre4FV+65jEMoAioAbjVbaGdDtAXxCR6vSVOifDNq7AQI0iFNOQAi8Vgn8yJNc1+gL/U=
+	t=1716239060; cv=none; b=AS1uA1n6F48sxzH2ve+eVyRzjpuRxoQeKA79jOJ85dMySbV+QUZJJN+cPay+xMnQs0yww3+U/1kaJCjl2WIeoZnYeVUBwIYxKrffec1l8jm8tqC6pexKadsjipEg1O4boqVLQVA9WMCgClisLvs5jFtl21XLoVG91TXhCJrv3T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716238530; c=relaxed/simple;
-	bh=mkXZ8PLMD4cE4p15xY7SyWnjxFqE/mgGBcDq+f+ey0s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HiFBme9+kN/8CATMhlOUfPV2EullNpS1Uut8IImgD5Thhb7/Kkz6qWTopVGx+a63B7MNk65lS7ap6YMLTcUHN74IHDQRs3MJBrOn5KcoxdF4UnTdx47KyjQC1Pkan0XQcdJVlU2RtJBxl8aLKjfwerXEpaiyL3xPgfLG/IQiv1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H18XAsi8; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716239060; c=relaxed/simple;
+	bh=VyqCcf8+2UraMFY0ih3PNbm8lQawEKSR5Zt+sOZyoD8=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=dyewHFNl10ZDWVt/6o6R3IuP7AT/SFpp9llDg4/g6NrO3aJoH7SeSZqi7/00Kr2No6XvDUhyODkfegc1dxb3HBls/GZYbXcqnAICmhucaCVcv8roB5xgZiOWkV0hOYr8u+JjHYqA40im86S+g5n+Y+/SsNyoiYkotUcwzCdY210=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=fM4XlJKx; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H18XAsi8"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1f0937479f8so85418055ad.3
-        for <git@vger.kernel.org>; Mon, 20 May 2024 13:55:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716238529; x=1716843329; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jV0iNAd4pO4ne74fJrDCELC4j7bVs83uHBboc5rBcgU=;
-        b=H18XAsi826pOAUEPkrDACvQzQx8WlJ/GUbBJT0DBByET+fdRwBFrTuUfU/VopJapVG
-         Y7ebYQokGATtFG3BGjLevhUp9hGfuJvTZBpirzgGGpFaF5S/21wTrqy9c202CJ0P8S96
-         3on5Dj8YYEozKBQSgy0yWP3ksoBn+V1d0PLu7bD50qlcgKNW3jJNULHH9muIZNhP1A4N
-         lzKk6CyRXNgLSTtsbmEVWzIzT5v+3kSBliS3V0L0/FcO0k9iUQpnJpt5ouvh5mO9AhTQ
-         YCFwS+3ceOfldupY/Re8l3Kd42PiTxHPLQ0nWYkySN0KHzkXgsfmKmEKEi8nva+geNZi
-         eYig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716238529; x=1716843329;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jV0iNAd4pO4ne74fJrDCELC4j7bVs83uHBboc5rBcgU=;
-        b=BQoPkhQNsgU3B6LBuceW/NyGr+I9EbOdZevxzjYlGDro3Rjk4U8HJJSQS90W3+6oet
-         Fvoubdlt4bT/tARVT6FoKMuj0NQUBdUaFFYT7u4oyHrIA0JSj418cfUT3sIu0IssIj1c
-         NZRXX5isqFrAoiR1JFtgdYfe6jTPiAH6VzhP51Zx+YM/lkMV2G/hsgBDNGdy/7lVA9a4
-         YIHEDA/aK7w2HEAu8LfNvrNDWniV8yUbI06293sRtxbFy/aoeev70+0i1ikVSn9gUJk9
-         2GK7LXOPkH4gx1Xbgbohhg8d3DlY8GPI1x3ASyuk+w3MJeuoXaxPn20NIEbG6pzXdbqV
-         tVzg==
-X-Gm-Message-State: AOJu0YxlpySuli4pFmJhX6jw+DFIlcE6FKL4lyVrUJWuIzGhWwKIxBA2
-	S4s3EQJX+tP9z7Em1uie1lFfhU1p2itYn99C4DzDpr0KSw8eYbat
-X-Google-Smtp-Source: AGHT+IFcj/RxNs4b60Ak6/m6Twi1SH4xEOuWKDLN51AbxQF6T1rLWUfPcAU083Llc1/ct6znm9ZI5g==
-X-Received: by 2002:a17:902:e805:b0:1f3:78f:899d with SMTP id d9443c01a7336-1f3078f8b10mr21500025ad.55.1716238528626;
-        Mon, 20 May 2024 13:55:28 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f307733a7dsm15002885ad.128.2024.05.20.13.55.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 May 2024 13:55:28 -0700 (PDT)
-Date: Tue, 21 May 2024 02:25:26 +0530
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="fM4XlJKx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1716239041; x=1716843841;
+	i=johannes.schindelin@gmx.de;
+	bh=VyqCcf8+2UraMFY0ih3PNbm8lQawEKSR5Zt+sOZyoD8=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=fM4XlJKx/u7k4MKGLsK/wKtDrSFuLBC7sTm7EFSYj626+KppenWPDrI7RpFVhe3G
+	 XvaUzgC4WIppVvHBgAQlgyTVpsem0pXRR3P2/H8OrOZmbAFV63zUzsV+SY6ZgR90I
+	 81JraL53bT5yZItPUiSqCawfA7aaGOQmvf6yjotqDpviYn38s7qI/cd4NbZpfYeyP
+	 H1pwx5sGiMu6SpEMea8I994vRZzf2vmzc50R4+9csttqFS9/iN4vR/Cq009kkPTcL
+	 6CjISyLzyowRjTcgDJkZZNr9gv0zepaCWDl+GN1L3MGpvzpW/o9+FAxmkceZTXGDg
+	 +XUhv6UEebYQhRk9tQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.77]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKsnF-1rqFqe2Q3x-00HhwD; Mon, 20
+ May 2024 23:04:01 +0200
+Date: Mon, 20 May 2024 23:03:59 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im, 
-	Christian Couder <chriscool@tuxfamily.org>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	Achu Luma <ach.lumap@gmail.com>
-Subject: Re: [GSoC][PATCH v2] t/: port helper/test-strcmp-offset.c to
- unit-tests/t-strcmp-offset.c
-Message-ID: <7o3cyisx3suyqhe24xkfbraaxq4vzgy5er2tbshbtgfinkugjk@gmjtg7bhudwo>
-References: <20240310144819.4379-1-ach.lumap@gmail.com>
- <20240519204530.12258-3-shyamthakkar001@gmail.com>
- <xmqq1q5wmpqh.fsf@gitster.g>
- <xmqqseycdxe9.fsf@gitster.g>
+cc: Jeff King <peff@peff.net>, 
+    Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 5/8] hook(clone protections): add escape hatch
+In-Reply-To: <736b43a1-a371-4d6f-7739-b5b64e060585@gmx.de>
+Message-ID: <4f7cb327-2ccd-deee-8727-ae0302e36e45@gmx.de>
+References: <pull.1732.git.1715987756.gitgitgadget@gmail.com> <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com> <b841db8392ebd924d1893829a7e5e22240f1e9cf.1716028366.git.gitgitgadget@gmail.com> <20240518181432.GA1570600@coredump.intra.peff.net>
+ <c201bbe3-b404-feed-fcef-8333f72068dc@gmx.de> <20240518194724.GB1573807@coredump.intra.peff.net> <86d57213-e3b2-c985-6d69-71568c66fc9c@gmx.de> <20240518211224.GA1574761@coredump.intra.peff.net> <xmqqed9yob4v.fsf@gitster.g> <5e0d660a-b1ee-2202-752c-d46d3b0c8a19@gmx.de>
+ <xmqqzfskfiu3.fsf@gitster.g> <736b43a1-a371-4d6f-7739-b5b64e060585@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqseycdxe9.fsf@gitster.g>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:GeH+O46GzYsQYBGCGkZ2/gNW0NwwnD4HaqLwb0xHywsrsBxfhRB
+ spsowXnDqeHLVParWq4eaT3nm6vBxFWupZjCl+AWAKrHDow0jGPrjAk+QjBd6Lx5GT/qKV2
+ uKH1zpdjwzoLqO6IO2nmJYduiLelEiNlLS0FVXdt8N7orG/KMoJAhrQYEQCXU9zkNEcWrAx
+ PWgLBzHnqEAkgwVhdtLuQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:TQFCyckditA=;zmDi53M+9UN7Xpj7hG64eJysdgU
+ n4yPdctR7Bf+FK1C/ThUsO9ZovDQLg7jpDwc+34Ibd0IQr9vXikJeCRfkrIAtr9Z00GADmuQE
+ 9+xV6ww1+d/+vd1r92IsSeV1UaZRq5qht1V24fcHtaFg5GRARnaOpQUcgqMxzZHD9MCbe0BDe
+ puWKHqL2W2oYrZYOw96UNGUl0KAjoUDRSdqPJh8PUFUh404Win43K8tuqm6nSYwORgpN/ZvI8
+ FiBLLBHmFOshky2aG+RS+SOnkYiqmrO2YZS/58g642fAnK+6UUXZSDjnjd4tFxszonlIRQSiF
+ PpZfpNlrrk0aeBe6lZVveckEyBE/1E6AGHJQNA9d2+zOQdWs5aur8VVF06/m8x3xi7fdyw20S
+ t3Cy49CLyK0FKrWBt8WB6U5o9++UaUXaaRqkY9XhPev6fDmWb+6wnysz4u6XMw9RTlOqjBL9p
+ sP51yy83++ol/l5jmB17rdtO8rX4nql3jinn0IdG8LQoqqhuQt62NWz7JmoaR/S0r0NEReV4B
+ q5USAJMCIFNgLlxJTx44byCmuzFG92nVWFvyA/RyO/67yzFn7Hx/oPyFUxTADdUL7mv0yuF0+
+ V3vjVKwQNC0Zv0veFj1VEjUpmvXYjr2VzRDmGqQvbAraXtYgWGx7n/8rL2A3orHO1d5/VN72f
+ iadx6I2bSbAtXPTJdGTTigCfoZhCEW9Un6jSurNks19xaq9q5HtGHjiSVdsVm5JHhhIrfzIy2
+ I5knzFxgQuTTsOyuosgM00pC09OAGlblQuCAf70OVGSLvHmYjvRBgHtL7R0wdjB46rX2ACDB5
+ sUC1po8ON9UIW+zG3IBNuIwondIAhv+nOEO7AeoAo+o6Q=
 
-On Mon, 20 May 2024, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Please do not base a new topic on 'next', as I will NOT be applying
-> > it on top of 'next'.
-> > ...
-> > Unless the conflicts are severe and is impractical, in which case
-> > see Documentation/SubmittingPatches and look for "Under truly
-> > exceptional circumstances".  But the conflict in Makefile about
-> > UNIT_TEST_PROGRAMS in this case hadly qualifies as one.
+Hi,
 
-Will make sure for the next time.
+On Mon, 20 May 2024, Johannes Schindelin wrote:
 
-> > Anyway, thanks for a patch.
-> 
-> I've backported the patch to apply to "master" and queued it on its
-> own topic, so that it no longer has to wait for all other topic in
-> 'next'.  The Makefile looks like the attached, which is just with
-> trivial difference in the context.  We only need to remove
-> strcmp-offset from the TEST_BUILTIN_OBJS and instead add a
-> corresponding one to UNIT_TEST_PROGRAMS, and that does not change no
-> matter what other test-*.o are added to the former or t-* are added
-> to the latter.
-> 
-> We may want to sort the UNIT_TEST_PROGRAMS list alphabetically at
-> some point, by the way.
+> Let me quickly iterate on this here patch series (as well as the
+> `tentative/maint-*` branches) so that we can accelerate toward a fixed
+> version again
 
-That was aleady done in 'la/hide-trailer-info' (next).
+v3 is on the list. The `tentative/maint-*` branches have been pushed to
+https://github.com/dscho/git, with these commit OIDs:
 
-Thanks.
+b9a96c4e5dc4e04258214ab772972a0e1eefd3c5 refs/heads/tentative/maint-2.39
+4bf5d57da62f91db9b74d490d5dae69e65cbdc73 refs/heads/tentative/maint-2.40
+5215e4e36879d1ee0ad5da7790f4598c3314ed45 refs/heads/tentative/maint-2.41
+33efa2ad1a6c14fc5d8bc5cdf38ba13b25926b42 refs/heads/tentative/maint-2.42
+0aeca2f80b17fcfdd9186c585ce84004ed43f46a refs/heads/tentative/maint-2.43
+9953011fcdd895fd3ff4e2f2e5ff266eaf8b0b49 refs/heads/tentative/maint-2.44
+aeddcb02756259e4b221f37a60e4ee1ece3889f1 refs/heads/tentative/maint-2.45
+
+Ciao,
+Johannes
