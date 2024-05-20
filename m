@@ -1,111 +1,115 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A4450A63
-	for <git@vger.kernel.org>; Mon, 20 May 2024 23:14:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D3F18C1A
+	for <git@vger.kernel.org>; Mon, 20 May 2024 23:18:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716246891; cv=none; b=Q3JlMEDw+pCuvFrFHKaczVhg61kkXAloe1njFHCtC2K5kF3ktcwvEs3PD9E1GQ25iSfVx+feuziFMf4UXMioTUihSiJY2TrHYvzx/F3bilL+swfxRkH6BmM7mLqkWSer3n2ZbMEmlDinPptXSGsqM/G7V8+svUTZLUKN8RL9EZw=
+	t=1716247119; cv=none; b=ACX+EHD2dgq0ugO4HaoE9Q4/PPBJtfwABxW1Y9i3Vub9fLznKrcU4EpH+HoqSYCUolQT8OKbggKEsiiEkbSRIApfVmfs/vh4ujf3MEATyZyaLFsOGGgKPqNCUheWmdzeLLIe6rLViLihMu2jF3gUbvmYnBsRJsHlAvFEgUgtdlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716246891; c=relaxed/simple;
-	bh=6KkTum+UDwiKepSretVEQR5iUfDqngXnvfGBys3FVDQ=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMujN3qu1Uie6PwUx1wjzrrUsXRcD5QTP6MKaHHuG6aRwSlHRgL3rdVN853XIa2n3eQGLu13y2b0/hDuXGW9Rs6wCOKYNl+CltXehpGOerAO6Hzby7/P1Nnmp4oDhH2ipZltpcS2FsX/f/EUz2GmhGi6JF31cJYYZR280+Qfoow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=v8K2juB+; arc=none smtp.client-ip=64.147.108.70
+	s=arc-20240116; t=1716247119; c=relaxed/simple;
+	bh=O1RPcR/hLGEqParzg380wYOXZePVlG9r6/hEu4tK8H8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CzhM8cnzUc1wb3ghoggx2FnqPLodCbfbpjH1vEyv1FsJ19v8H21ltHKsK+DcTTJiW2oI0BuLo3EugiSdNyNSSM+WiCM1IIxlOCSZmIioICyVWpXcCOm/C4UJvVZX8Jh8vxaLb+PqOanLLuvlh2puXy6+rMEheIvB706zstghYU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DFQufZAL; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="v8K2juB+"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B26729B8C;
-	Mon, 20 May 2024 19:14:49 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=6KkTum+UDwiKepSretVEQR5iU
-	fDqngXnvfGBys3FVDQ=; b=v8K2juB+Df4EVzN2jqfAb1dR58ZtaM2DEcSmpLbVO
-	82w+0GZNGKYmM6so9+ysGFgPoIRsqLN83LejGtwGOMbtiyn9EjwQTPpEVcX+Qde7
-	cyxlK2N0yNNjgjL750EkEVSed3u/97Ty/kSlBEUGeTn+jkTKo/zKtuz01yKE5Omm
-	B0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 00BC429B8B;
-	Mon, 20 May 2024 19:14:49 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DFQufZAL"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5BEEB29F24;
+	Mon, 20 May 2024 19:18:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=O1RPcR/hLGEq
+	Parzg380wYOXZePVlG9r6/hEu4tK8H8=; b=DFQufZALuRUEiQprbjcK1JJciA3S
+	nEIctmWIsagqjnXeWoAxvWE6F28CNIQEQv5a981oeUaENxTtYDzIvfaPF3nPcZ6J
+	TL+6SNMFkLk4Gr/pO3Z34DRbqByppuFwTjV2bbFRg21MeC/60XoyEMc5XxRer1us
+	u7B4ofqOzbG9Vv0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 54B8429F23;
+	Mon, 20 May 2024 19:18:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5BB3329B8A;
-	Mon, 20 May 2024 19:14:48 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 64FFB29F20;
+	Mon, 20 May 2024 19:18:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v5 5/5] apply: fix uninitialized hash function
-Date: Mon, 20 May 2024 16:14:34 -0700
-Message-ID: <20240520231434.1816979-6-gitster@pobox.com>
-X-Mailer: git-send-email 2.45.1-216-g4365c6fcf9
-In-Reply-To: <20240520231434.1816979-1-gitster@pobox.com>
-References: <cover.1715582857.git.ps@pks.im>
- <20240520231434.1816979-1-gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>,  Dragan Simic <dsimic@manjaro.org>
+Subject: Re: [PATCH 5/5] add-patch: render hunks through the pager
+In-Reply-To: <dcc9f9bf-3c0f-435f-ba10-35ff31122b7d@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Tue, 21 May 2024 00:47:21 +0200")
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+	<eb0438e8-d7b6-478f-b2be-336e83f5d9ab@gmail.com>
+	<xmqqh6esffh1.fsf@gitster.g>
+	<dcc9f9bf-3c0f-435f-ba10-35ff31122b7d@gmail.com>
+Date: Mon, 20 May 2024 16:18:33 -0700
+Message-ID: <xmqq5xv8dqd2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- C0CC8604-16FE-11EF-989C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 47879850-16FF-11EF-A347-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-"git apply" can work outside a repository as a better "GNU patch",
-but when it does so, it still assumed that it can access
-the_hash_algo, which is no longer true in the new world order.
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-Make sure we explicitly fall back to SHA-1 algorithm for backward
-compatibility.
+>> even with "less -F"
+>> (--quit-if-one-screen).  As we know how much output we are throwing
+>> at the user, we'd want to make this conditional to the size of the
+>> hunk being shown and the terminal height.
+>
+> Are you thinking of something like?:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/apply.c         | 4 ++++
- t/t1517-outside-repo.sh | 2 +-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+I don't. =20
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 861a01910c..e9175f820f 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -1,6 +1,7 @@
- #include "builtin.h"
- #include "gettext.h"
- #include "repository.h"
-+#include "hash.h"
- #include "apply.h"
-=20
- static const char * const apply_usage[] =3D {
-@@ -18,6 +19,9 @@ int cmd_apply(int argc, const char **argv, const char *=
-prefix)
- 	if (init_apply_state(&state, the_repository, prefix))
- 		exit(128);
-=20
-+	if (!the_hash_algo)
-+		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	argc =3D apply_parse_options(argc, argv,
- 				   &state, &force_apply, &options,
- 				   apply_usage);
-diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-index 2d8982d61a..557808ffa7 100755
---- a/t/t1517-outside-repo.sh
-+++ b/t/t1517-outside-repo.sh
-@@ -37,7 +37,7 @@ test_expect_success 'hash-object outside repository (us=
-es SHA-1)' '
- 	test_cmp hash.expect hash.actual
- '
-=20
--test_expect_failure 'apply a patch outside repository' '
-+test_expect_success 'apply a patch outside repository' '
- 	(
- 		cd non-repo &&
- 		cp ../nums.old nums &&
---=20
-2.45.1-216-g4365c6fcf9
+Your hunk may have overly wide lines in which case counting the
+number of lines may be insuffucient to measure the necessary display
+height.   Besides, comparison with term_columns() is meaningless
+unless your window is square ;-)
 
+An explicit 'P' might be palatable, though.
+
+Thanks.
+
+> =20
+> diff --git a/add-patch.c b/add-patch.c
+> index cefa3941a3..495baad3ac 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -1449,11 +1449,18 @@ static int patch_update_file(struct add_p_state=
+ *s,
+>  		strbuf_reset(&s->buf);
+>  		if (file_diff->hunk_nr) {
+>  			if (rendered_hunk_index !=3D hunk_index) {
+> -				setup_pager();
+> +				int lines =3D 0;
+>  				render_hunk(s, hunk, 0, colored, &s->buf);
+> +				for(int i =3D 0; i < s->buf.len; i++) {
+> +					if (s->buf.buf[i] =3D=3D '\n')
+> +						lines++;
+> +				}
+> +				if (lines > term_columns())
+> +					setup_pager();
+>  				fputs(s->buf.buf, stdout);
+>  				rendered_hunk_index =3D hunk_index;
+> -				wait_for_pager();
+> +				if (lines > term_columns())
+> +					wait_for_pager();
+>  			}
+> =20
+>  			strbuf_reset(&s->buf);
+>
+> This would significantly reduce the blast radius.
+>
+> Thanks.
