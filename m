@@ -1,132 +1,137 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DD452D600
-	for <git@vger.kernel.org>; Mon, 20 May 2024 09:41:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
+Received: from outpost1.zedat.fu-berlin.de (outpost1.zedat.fu-berlin.de [130.133.4.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4836321350
+	for <git@vger.kernel.org>; Mon, 20 May 2024 09:56:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.133.4.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716198097; cv=none; b=KgDVdT/MtP+sMLCM16PP1s26zYynRcaDEedTd7kVNUC8qh8cLfY3BR1mU2TsKymbQH7ZbocTcuNtKz/pTPAYrf9GUNEs0AFcuZH8g/G/mj3qmBMXJCA7UjZ0VLW5KUhend2tbM37E8mOgWWqE2xdNkcE6vIomX1orBg8sVT2k58=
+	t=1716198991; cv=none; b=Jic3MrACYqAJYrFNSavNL9YVwinUrUCWIgA0z7JLeuRTLc3tYhdx1DKlqMFbuu+j/zov9W8AidlFhj0n7UVtTDkbnV0xdpEKFc1KVlfrGvxfJkALy8/CkA6zVbmoXqujT0/gyltLeMAQkXvMJExcFi4tGTKyrhnVc0XDDt7yul4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716198097; c=relaxed/simple;
-	bh=pqEI1zXp1an82To3JfWM7YoErV5eBAd1iJNyyf6HPkc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=kUc97FIWlLenbnxIpzEVaVQcxZoYS1pZsBEPErjiSU/Hb4eudzM9RMpzBYkbzXspiw/edqHMrQlJezkBbGkO5aoWS73tJo4VTzf+PnKcWVeN3jHY8VZsBKiBgeuPeT+Sj6uEUsgisw4i/SBKDOBfkTnxGTAyRBgVDZ8QFWjNEVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=RFkGUg1x reason="signature verification failed"; arc=none smtp.client-ip=220.197.31.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1716198991; c=relaxed/simple;
+	bh=fnjFDfkkzxrfk/oMx5M/Xv8WZoNlaOb6AdLiMrik0kA=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=PGNywBn1eMgofSp3RvB3oIlbLR4QQ066WcPkcePnLCNAJblfKORlg2KjRCZ5xnGTcWhaxY//1DFxWOpoUWjof8/U5xq7A5qukM9iyWtK+8SsnfJ5zvYHtCpzlIyu1qzgmgL2376BGzXR4R74jyHKAA0Io8cQJzB7cKMroFQNOKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de; spf=pass smtp.mailfrom=zedat.fu-berlin.de; dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b=a9JDU2zA; arc=none smtp.client-ip=130.133.4.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zedat.fu-berlin.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="RFkGUg1x"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=152Jy2hukjYWP2j5oYcDoD956cejMOi5jJJjoCSr6j4=; b=R
-	FkGUg1x39mscjPmrlOaZlzfkyzxbWJ0Z14vAQNpLpDyEX78kI7tL0qclNB5EWnr6
-	dsyBii9FQDvxc++wTdw1PwFic0wISpE1jl3w8yONpIHqTdNjHDzOQ8ZB+0CpMc8M
-	bkVVIqZ33N++OWU7Ub0+MyTMk6ZcMVTDXKjthSZXIc=
-Received: from bupt_xingxin$163.com ( [124.160.72.194] ) by
- ajax-webmail-wmsvr-40-133 (Coremail) ; Mon, 20 May 2024 17:41:12 +0800
- (CST)
-Date: Mon, 20 May 2024 17:41:12 +0800 (CST)
-From: "Xing Xin" <bupt_xingxin@163.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: "blanet via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"Xing Xin" <xingxin.xx@bytedance.com>
-Subject: Re:Re: [PATCH] bundle-uri: refresh packed_git if unbundle succeed
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <ZkbkgT46mdNEhcf0@tanuki>
-References: <pull.1730.git.1715742069966.gitgitgadget@gmail.com>
- <ZkbkgT46mdNEhcf0@tanuki>
-X-NTES-SC: AL_Qu2aBP2St0gs5CaQbOkXn0oVhe85UMW2ufsg3YReP500mSXzxzkkTU9qPmXZ9cGzIieTgCisYQll78lWbbBEZo5V01MCS4552BggIhxQ1IDM
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b="a9JDU2zA"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=fu-berlin.de; s=fub01; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=FpNp2hKCvk5T5I9wwww8N8XP16EgpLM1wKJUQcIw93A=; t=1716198988; x=1716803788; 
+	b=a9JDU2zAD7v4/T4knwOTrlY4eeCtUs/v3FOETGUR4do4b+r2TV29GXXolNSJcTyRqCJbj50nejy
+	Idu5eagYUNsYTvHfmlrhUf30NPmTyqO4aDqPBUlgSRyE6D8aFgCUFiYmBAY7m83XngKzMKj1guUCq
+	vRKGNkhpBwZZZ1IxsPqYQVUaZkjmLY/UadLVvkD7VEGjo2lWFRy6xCoGA3Ch9ODYn/xomd/xsATOC
+	LtKI6PA72xxnUZPr25ve7WpbAV1EePFjdZXKE36k4ESKuqQHb11Vk62rdDsXSH0X8pO5Uqh1GlBgl
+	OvIx2bAlSCKAKcDJ/YQ76azrvxYeSMd+e4rA==;
+Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
+          by outpost.zedat.fu-berlin.de (Exim 4.97)
+          with esmtps (TLS1.3)
+          tls TLS_AES_256_GCM_SHA384
+          (envelope-from <glaubitz@zedat.fu-berlin.de>)
+          id 1s8zkn-000000047rU-1mMT; Mon, 20 May 2024 11:56:25 +0200
+Received: from dynamic-077-191-101-125.77.191.pool.telefonica.de ([77.191.101.125] helo=[192.168.178.20])
+          by inpost2.zedat.fu-berlin.de (Exim 4.97)
+          with esmtpsa (TLS1.3)
+          tls TLS_AES_256_GCM_SHA384
+          (envelope-from <glaubitz@physik.fu-berlin.de>)
+          id 1s8zkn-00000001Lkl-0vji; Mon, 20 May 2024 11:56:25 +0200
+Message-ID: <506815cf70ea114a3c4177a779481fdc13bca39b.camel@physik.fu-berlin.de>
+Subject: Re: chainlint test failing on Linux sparc64
+From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org
+Date: Mon, 20 May 2024 11:56:24 +0200
+In-Reply-To: <CAPig+cQL73gVDDSH_=8Y6D0Pro58W1O2Rb-hettVcfZudXjOZQ@mail.gmail.com>
+References: 
+	<8baa12f8d044265f1ddeabd64209e7ac0d3700ae.camel@physik.fu-berlin.de>
+	 <CAPig+cS+BcQ2t564m8Q4GO+MAThgq8pV0fEFD4S0FBfwokO2Ng@mail.gmail.com>
+	 <054f58c2de4af289008f28b140d4a4c9ab56f084.camel@physik.fu-berlin.de>
+	 <bdbf99ae4d6e3669b3506a7d4a26730aa9cd0ed4.camel@physik.fu-berlin.de>
+	 <CAPig+cQL73gVDDSH_=8Y6D0Pro58W1O2Rb-hettVcfZudXjOZQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.1 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <6d2a424e.a65f.18f95606177.Coremail.bupt_xingxin@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3H+K4GktmKC40AA--.34404W
-X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiYgLkbWV4H62JIwABst
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+X-Original-Sender: glaubitz@physik.fu-berlin.de
+X-ZEDAT-Hint: PO
 
-QXQgMjAyNC0wNS0xNyAxMzowMDo0OSwgIlBhdHJpY2sgU3RlaW5oYXJkdCIgPHBzQHBrcy5pbT4g
-d3JvdGU6Cj5PbiBXZWQsIE1heSAxNSwgMjAyNCBhdCAwMzowMTowOUFNICswMDAwLCBibGFuZXQg
-dmlhIEdpdEdpdEdhZGdldCB3cm90ZToKPj4gRnJvbTogWGluZyBYaW4gPHhpbmd4aW4ueHhAYnl0
-ZWRhbmNlLmNvbT4KPgo+TG9uZyB0aW1lIG5vIHNlZSA6KQoKR2xhZCB0byBzZWUgeW91IGFnYWlu
-IGhlcmUgOikKCj4+IAo+PiBTbyB3aHkgdGhlIGByZWZzL2J1bmRsZXMvbWFpbmAgaXMgbm90IGRp
-c2NvdmVyZWQ/IEFmdGVyIHNvbWUgZGlnZ2luZyBJCj4+IGZvdW5kIHRoYXQ6Cj4+IAo+PiAxLiB3
-aGVuIHVuYnVuZGxpbmcgYSBkb3dubG9hZGVkIGJ1bmRsZSwgYSBgdmVyaWZ5X2J1bmRsZWAgaXMg
-Y2FsbGVkIHRvCj4+ICAgIGNoZWNrIGl0cyBwcmVyZXF1aXNpdGVzIGlmIGFueS4gVGhlIHZlcmlm
-eSBwcm9jZWR1cmUgd291bGQgZmluZCBvaWRzCj4+ICAgIHNvIGBwYWNrZWRfZ2l0YCBpcyBpbml0
-aWFsaXplZC4KPj4gCj4+IDIuIGFmdGVyIHVuYnVuZGxlZCBhbGwgYnVuZGxlcywgd2Ugd291bGQg
-ZW50ZXIgYGRvX2ZldGNoX3BhY2tfdjJgLAo+PiAgICBkdXJpbmcgd2hpY2ggYG1hcmtfY29tcGxl
-dGVfYW5kX2NvbW1vbl9yZWZgIGFuZCBgbWFya190aXBzYCB3b3VsZAo+PiAgICBmaW5kIG9pZHMg
-d2l0aCBgT0JKRUNUX0lORk9fUVVJQ0tgIGZsYWcgc2V0LCBzbyBubyBuZXcgcGFja3Mgd291bGQg
-YmUKPj4gICAgZW5saXN0ZWQgaWYgYHBhY2tlZF9naXRgIGhhcyBhbHJlYWR5IGluaXRpYWxpemVk
-IGluIDEuCj4KPkFuZCBJIGFzc3VtZSB3ZSBkbyBub3Qgd2FudCBpdCB0byBub3QgdXNlIGBPQkpF
-Q1RfSU5GT19RVUlDS2A/CgpJIHRoaW5rIHNvLiBGb3IgY2xvbmVzIG9yIGZldGNoZXMgd2l0aG91
-dCB1c2luZyBidW5kbGUtdXJpLCB3ZSBjYW4gaGFyZGx5CmVuY291bnRlciB0aGUgY2FzZSB0aGF0
-IG5ldyBwYWNrcyBhcmUgYWRkZWQgZHVyaW5nIHRoZSBuZWdvdGlhdGlvbiBwcm9jZXNzLgpTbyB1
-c2luZyBgT0JKRUNUX0lORk9fUVVJQ0tgIGNhbiBnZXQgc29tZSBwZXJmb3JtYW5jZSBnYWluLgoK
-Pgo+PiBCYWNrIHRvIHRoZSBleGFtcGxlIGFib3ZlLCB3aGVuIHVuYnVuZGluZyBgaW5jci5idW5k
-bGVgLCBgYmFzZS5wYWNrYCBpcwo+PiBlbmxpc3RlZCB0byBgcGFja2VkX2dpdGAgYmFjYXVzZSBv
-ZiB0aGUgcHJlcmVxdWlzaXRlcyB0byB2ZXJpZnkuIFRoZW4gd2UKPj4gY2FuIG5vdCBmaW5kIGBC
-YCBmb3IgbmVnb3RpYXRpb24gYXQgYSBsYXR0ZXIgdGltZSBiYWNhdXNlIGBCYCBleGlzdHMgaW4K
-Pj4gYGluY3IucGFja2Agd2hpY2ggaXMgbm90IGVubGlzdGVkIGluIGBwYWNrZWRfZ2l0YC4KPgo+
-T2theSwgdGhlIGV4cGxhbmF0aW9uIGZlZWxzIHNlbnNpYmxlLgo+Cj4+IFRoaXMgY29tbWl0IGZp
-eGVzIHRoaXMgYnkgYWRkaW5nIGEgYHJlcHJlcGFyZV9wYWNrZWRfZ2l0YCBjYWxsIGZvciBldmVy
-eQo+PiBzdWNjZXNzZnVsbHkgdW5idW5kbGVkIGJ1bmRsZSwgd2hpY2ggZW5zdXJlcyB0byBlbmxp
-c3QgYWxsIGdlbmVyYXRlZAo+PiBwYWNrcyBmcm9tIGJ1bmRsZSB1cmkuIEFuZCBhIHNldCBvZiBu
-ZWdvdGlhdGlvbiByZWxhdGVkIHRlc3RzIGFyZSBhZGRlZC4KPgo+VGhpcyBtYWtlcyBtZSB3b25k
-ZXIgdGhvdWdoLiBEbyB3ZSByZWFsbHkgbmVlZCB0byBjYWxsCj5gcmVwcmVwYXJlX3BhY2tlZF9n
-aXQoKWAgb25jZSBmb3IgZXZlcnkgYnVuZGxlLCBvciBjYW4ndCB3ZSBpbnN0ZWFkIGNhbGwKPml0
-IG9uY2UgYXQgdGhlIGVuZCBvbmNlIHdlIGhhdmUgZmV0Y2hlZCBhbGwgYnVuZGxlcz8gUmVhZGlu
-ZyBvbi4KPgo+PiBTaWduZWQtb2ZmLWJ5OiBYaW5nIFhpbiA8eGluZ3hpbi54eEBieXRlZGFuY2Uu
-Y29tPgo+PiAtLS0KPj4gICAgIGJ1bmRsZS11cmk6IHJlZnJlc2ggcGFja2VkX2dpdCBpZiB1bmJ1
-bmRsZSBzdWNjZWVkCj4+IAo+PiBQdWJsaXNoZWQtQXM6IGh0dHBzOi8vZ2l0aHViLmNvbS9naXRn
-aXRnYWRnZXQvZ2l0L3JlbGVhc2VzL3RhZy9wci0xNzMwJTJGYmxhbmV0JTJGeHglMkZidW5kbGUt
-dXJpLWJ1Zy11c2luZy1idW5kbGUtbGlzdC12MQo+PiBGZXRjaC1JdC1WaWE6IGdpdCBmZXRjaCBo
-dHRwczovL2dpdGh1Yi5jb20vZ2l0Z2l0Z2FkZ2V0L2dpdCBwci0xNzMwL2JsYW5ldC94eC9idW5k
-bGUtdXJpLWJ1Zy11c2luZy1idW5kbGUtbGlzdC12MQo+PiBQdWxsLVJlcXVlc3Q6IGh0dHBzOi8v
-Z2l0aHViLmNvbS9naXRnaXRnYWRnZXQvZ2l0L3B1bGwvMTczMAo+PiAKPj4gIGJ1bmRsZS11cmku
-YyAgICAgICAgICAgICAgICB8ICAgMyArCj4+ICB0L3Q1NTU4LWNsb25lLWJ1bmRsZS11cmkuc2gg
-fCAxMjkgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrCj4+ICAyIGZpbGVzIGNo
-YW5nZWQsIDEzMiBpbnNlcnRpb25zKCspCj4+IAo+PiBkaWZmIC0tZ2l0IGEvYnVuZGxlLXVyaS5j
-IGIvYnVuZGxlLXVyaS5jCj4+IGluZGV4IGNhMzIwNTBhNzhmLi4yYjlkMzZjZmQ4ZSAxMDA2NDQK
-Pj4gLS0tIGEvYnVuZGxlLXVyaS5jCj4+ICsrKyBiL2J1bmRsZS11cmkuYwo+PiBAQCAtNyw2ICs3
-LDcgQEAKPj4gICNpbmNsdWRlICJyZWZzLmgiCj4+ICAjaW5jbHVkZSAicnVuLWNvbW1hbmQuaCIK
-Pj4gICNpbmNsdWRlICJoYXNobWFwLmgiCj4+ICsjaW5jbHVkZSAicGFja2ZpbGUuaCIKPj4gICNp
-bmNsdWRlICJwa3QtbGluZS5oIgo+PiAgI2luY2x1ZGUgImNvbmZpZy5oIgo+PiAgI2luY2x1ZGUg
-InJlbW90ZS5oIgo+PiBAQCAtMzc2LDYgKzM3Nyw4IEBAIHN0YXRpYyBpbnQgdW5idW5kbGVfZnJv
-bV9maWxlKHN0cnVjdCByZXBvc2l0b3J5ICpyLCBjb25zdCBjaGFyICpmaWxlKQo+PiAgCQkJICAg
-ICAgIFZFUklGWV9CVU5ETEVfUVVJRVQpKSkKPj4gIAkJcmV0dXJuIDE7Cj4+ICAKPj4gKwlyZXBy
-ZXBhcmVfcGFja2VkX2dpdChyKTsKPj4gKwo+Cj5TbyB3aGF0J3MgaGlkZGVuIGhlcmUgaXMgdGhh
-dCBgdW5idW5kbGVfZnJvbV9maWxlKClgIHdpbGwgYWxzbyB0cnkgdG8KPmFjY2VzcyB0aGUgYnVu
-ZGxlJ3MgcmVmcyByaWdodCBhd2F5LiBTdXJwcmlzaW5nbHksIHdlIGRvIHNvIGJ5IGNhbGxpbmcK
-PmByZWZzX3VwZGF0ZV9yZWYoKWAgd2l0aCBgUkVGX1NLSVBfT0lEX1ZFUklGSUNBVElPTmAsIHdo
-aWNoIGhhcyB0aGUKPmVmZmVjdCB0aGF0IHdlIGJhc2ljYWxseSBhY2NlcHQgYXJiaXRyYXJ5IG9i
-amVjdCBJRHMgaGVyZSBldmVuIGlmIHdlIGRvCj5ub3Qga25vdyB0aG9zZS4gVGhhdCdzIHdoeSB3
-ZSBkaWRuJ3QgaGF2ZSB0byBgcmVwcmVwYXJlX3BhY2tlZF9naXQoKWAKPmJlZm9yZSB0aGlzIGNo
-YW5nZS4KCllvdSBhcmUgcmlnaHQhIEkgdHJpZWQgZHJvcHBpbmcgdGhpcyBgUkVGX1NLSVBfT0lE
-X1ZFUklGSUNBVElPTmAgZmxhZyBhbmQKdGhlIG5lZ290aWF0aW9uIHdvcmtzIGFzIGV4cGVjdGVk
-LgoKQWZ0ZXIgc29tZSBmdXJ0aGVyIGRpZ2dpbmcgSSBmaW5kIHRoYXQgd2l0aG91dCBgUkVGX1NL
-SVBfT0lEX1ZFUklGSUNBVElPTmAsCmJvdGggYHdyaXRlX3JlZl90b19sb2NrZmlsZWAgZm9yIGZp
-bGVzIGJhY2tlbmQgYW5kIGByZWZ0YWJsZV9iZV90cmFuc2FjdGlvbl9wcmVwYXJlYApmb3IgcmVm
-dGFibGUgYmFja2VuZCB3b3VsZCBjYWxsIGBwYXJzZV9vYmplY3RgIHRvIGNoZWNrIHRoZSBvaWQu
-IGBwYXJzZV9vYmplY3RgCmNhbiBoZWxwIHJlZnJlc2ggYHBhY2tlZF9naXRgIHZpYSBgcmVwcmVw
-YXJlX3BhY2tlZF9naXRgLgoKPgo+Tm93IHRoZXJlIGFyZSB0d28gY29uZmxpY3RpbmcgdGhvdWdo
-dHMgaGVyZToKPgo+ICAtIEVpdGhlciB3ZSBjYW4gbm93IGRyb3AgYFJFRl9TS0lQX09JRF9WRVJJ
-RklDQVRJT05gIGFzIHRoZSBvYmplY3QgSURzCj4gICAgc2hvdWxkIG5vdyBiZSBhY2Nlc3NpYmxl
-Lgo+Cj4gIC0gT3Igd2UgY2FuIGF2b2lkIGNhbGxpbmcgYHJlcHJlcGFyZV9wYWNrZWRfZ2l0KClg
-IGluc2lkZSB0aGUgbG9vcCBhbmQKPiAgICBpbnN0ZWFkIGNhbGwgaXQgb25jZSBhZnRlciB3ZSBo
-YXZlIGZldGNoZWQgYWxsIGJ1bmRsZXMuCj4KPlRoZSBzZWNvbmQgb25lIGZlZWxzIGEgYml0IGxp
-a2UgcHJlbWF0dXJlIG9wdGltaXphdGlvbiB0byBtZS4gQnV0IHRoZQo+Zmlyc3QgaXRlbSBkb2Vz
-IGZlZWwgbGlrZSBpdCBjb3VsZCBoZWxwIHVzIHRvIGNhdGNoIGJyb2tlbiBidW5kbGVzCj5iZWNh
-dXNlIHdlIHdvdWxkbid0IGVuZCB1cCBjcmVhdGluZyByZWZzIGZvciBvYmplY3RzIHRoYXQgbmVp
-dGhlciB3ZSBub3IKPnRoZSBidW5kbGUgaGF2ZS4KCkkgZmF2b3IgdGhlIGZpcnN0IGFwcHJvYWNo
-IGJlY2F1c2UgYSB2YWxpZGF0aW9uIG9uIHRoZSBvYmplY3QgSURzIHdlIGFyZQp3cml0aW5nIGlz
-IGEgc2FmZSBndWFyZCAuIEFuZCB0aGUgZmxhZyBpdHNlbGYgd2FzIGRlc2lnbmVkIHRvIGJlIHVz
-ZWQgaW4KdGVzdGluZyBzY2VuYXJpb3MuCgovKgogKiBCbGluZGx5IHdyaXRlIGFuIG9iamVjdF9p
-ZC4gVGhpcyBpcyB1c2VmdWwgZm9yIHRlc3RpbmcgZGF0YSBjb3JydXB0aW9uCiAqIHNjZW5hcmlv
-cy4KICovCiNkZWZpbmUgUkVGX1NLSVBfT0lEX1ZFUklGSUNBVElPTiAoMSA8PCAxMCkKCgo=
+Hi Eric,
+
+On Mon, 2024-05-20 at 05:36 -0400, Eric Sunshine wrote:
+> That's the point at which chainlint.sed was replaced with
+> chainlint.pl. It also leads to the same supposition expressed earlier
+> that the "actual" file seems to be empty for some reason, perhaps
+> because one of the commands which creates it is failing somehow. At
+> that point in time, the creation command for "actual" in t/Makefile
+> was:
+>=20
+>     $(CHAINLINT) --emit-all '$(CHAINLINTTMP_SQ)'/tests | \
+>         grep -v '^[ ]*$$' >'$(CHAINLINTTMP_SQ)'/actual && \
+>=20
+> which uses `grep` rather than the `sed` used in the present-day
+> t/Makefile. This may imply that Perl is somehow suspect or that
+> PERL_PATH or PERL_PATH_SQ in t/Makefile are incorrectly set, or that
+> t/chainlint.pl itself is not generating any output for some reason.
+>=20
+> After running:
+>=20
+>     cd t
+>     make check-chainlint
+>=20
+> what is the output of:
+>=20
+>     ls -l chainlinttmp
+
+(sid_sparc64-dchroot)glaubitz@stadler:~/git/t$ ls -l chainlinttmp
+total 32
+-rw-r--r-- 1 glaubitz glaubitz     0 May 20 09:54 actual
+-rw-r--r-- 1 glaubitz glaubitz 14797 May 20 09:54 expect
+-rw-r--r-- 1 glaubitz glaubitz 15086 May 20 09:54 tests
+(sid_sparc64-dchroot)glaubitz@stadler:~/git/t$
+
+> For me the output using the latest "master" branch is:
+>=20
+>     % ls -l chainlinttmp
+>     -rw-------  1 me  me  14797 May 20 05:26 actual
+>     -rw-------  1 me  me  14797 May 20 05:26 expect
+>     -rw-------  1 me  me  15086 May 20 05:26 tests
+>=20
+> My suspicion is that "actual" will have size 0 for you. If that's the
+> case, I'd suggest running the commands from the "check-chainlint"
+> target in t/Makefile manually one at a time to see if you can figure
+> out which is failing. For instance:
+>=20
+>     % ./chainlint.pl --emit-all chainlinttmp/tests
+
+It does not generate any output for me:
+
+(sid_sparc64-dchroot)glaubitz@stadler:~/git/t$ ./chainlint.pl --emit-all ch=
+ainlinttmp/tests
+(sid_sparc64-dchroot)glaubitz@stadler:~/git/t$
+
+> If that produces output, then that's a good sign. Try capturing that
+> output and feeding it to the `sed` command:
+>=20
+>     % ./chainlint.pl --emit-all chainlinttmp/tests >lint.out
+>     % sed -e 's/^[1-9][0-9]* //' lint.out
+>=20
+> If that produces output, then something else is going wrong (such as
+> PERL_PATH or PERL_PATH_SQ being incorrect).
+
+Adrian
+
+--=20
+ .''`.  John Paul Adrian Glaubitz
+: :' :  Debian Developer
+`. `'   Physicist
+  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
