@@ -1,47 +1,48 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553014AEF0
-	for <git@vger.kernel.org>; Mon, 20 May 2024 23:14:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D685138493
+	for <git@vger.kernel.org>; Mon, 20 May 2024 23:14:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716246885; cv=none; b=EmoXrTKjKrG8Zqv9iY9Ym2dyeXTkRf2tl0LT/PP9LSDWFxZULVfqKAJLvfQTlWbYGlcelNNKRZT5puQ4u+EOZq06hH8eQ9ei9uNFYIB9pKbS39uhBGfoCY+9pi0fhcYPeLTxSOPFwUUK6z54CVJv2DL2r3jfm5CAfx2VgkIPpJc=
+	t=1716246886; cv=none; b=hKWx7mApsXeLfL0tS58LbPflkmA34m4X6FkMbtwcQwWaraO+Xm1LBeAihHZejaiqKbG2XX/Hq5madDP57XJuMPK/44jrzoMXOX4AW129dHA+2QYirHXCQSWABV2mFCND/KypOvgopGp96AvWj2BehsS1brpZ0EzwJfLTLrZpmFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716246885; c=relaxed/simple;
-	bh=82+XFtDiQJR+h/JUUQeEhipq7cUqmKbY6TBqC+qdfAQ=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPm14wY4D5snme/BCMWh2orSATecGeUczTHfN6DmZftPOvlb10seaHmNTwnq0xQQXBr5CMhgeO0fyYXcWNRwxZvbUi27hv/NSizr/yy+oYNEIa9q7x9BSTDfCyxNWIxj223+Sh7wJp8/OJlWWksCN96dIWmTtfZY8a7V3s2ohuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KMBMCDQb; arc=none smtp.client-ip=173.228.157.53
+	s=arc-20240116; t=1716246886; c=relaxed/simple;
+	bh=ohdpPcz3aPQaDBKktB+1iDAZPtYRXQWuNcgyUbKb5H8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mDdTNsd8jNVuM736UttYhyyzg0FqH3FDbuxFY867LT6KlZj0njhTmesZ+RIqhVKTnZPgvgS91qzQybgcSikWH86zIlvcTRA2U020uaUk+XJ77567pMManIlhJ0xi3bgTAkQRfKvVLXQS2nYJbOqe6kpC26OBXhxyal/hg9JFAFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=A9JpOIUo; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KMBMCDQb"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A47B629EE7;
-	Mon, 20 May 2024 19:14:43 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="A9JpOIUo"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 221A91AF71;
+	Mon, 20 May 2024 19:14:44 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=82+XFtDiQJR+h/JUUQeEhipq7
-	cUqmKbY6TBqC+qdfAQ=; b=KMBMCDQbukqorBqUwuI6l+7FwnreAEEPWlnT1WJTG
-	kNXW5uGzmAWn3bGZd9P1gsG1Wi8BatX4JxUtfzTcw9cX2cvVTx2pGvP5djLVICxs
-	poRaMDohYxHvFaisudK1c1lsA9t6e4/E+qMRDVfCHCA36JVJKFqjAEWG97Uini7Z
-	ug=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4280229EE3;
-	Mon, 20 May 2024 19:14:43 -0400 (EDT)
+	:content-type:content-transfer-encoding; s=sasl; bh=ohdpPcz3aPQa
+	DBKktB+1iDAZPtYRXQWuNcgyUbKb5H8=; b=A9JpOIUolyGfMWxpjh3MrlsgDiD4
+	Qzc0hsDqVb/FHIJGpC2vMq9K5dnF41orkUKLZHYberdU0wOWd5xQV2e6WrTU3GlV
+	DrcAvVacFemuYH9OmkSSs7dCmipVmZJU/As0QnpfRXsA3itk0ZxIL9X+L542p6bF
+	WFJ03yPs0Gw8mC0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A6BE1AF70;
+	Mon, 20 May 2024 19:14:44 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 439EE29EE1;
-	Mon, 20 May 2024 19:14:40 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7434D1AF6F;
+	Mon, 20 May 2024 19:14:43 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v5 2/5] t1517: test commands that are designed to be run outside repository
-Date: Mon, 20 May 2024 16:14:31 -0700
-Message-ID: <20240520231434.1816979-3-gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v5 3/5] builtin/patch-id: fix uninitialized hash function
+Date: Mon, 20 May 2024 16:14:32 -0700
+Message-ID: <20240520231434.1816979-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.45.1-216-g4365c6fcf9
 In-Reply-To: <20240520231434.1816979-1-gitster@pobox.com>
 References: <cover.1715582857.git.ps@pks.im>
@@ -52,86 +53,147 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-Pobox-Relay-ID:
- BBF8C35E-16FE-11EF-9A9D-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ BDE15BD6-16FE-11EF-8587-25B3960A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-A few commands, like "git apply" and "git patch-id", have been
-broken with a recent change to stop setting the default hash
-algorithm to SHA-1.  Test them and fix them in later commits.
+From: Patrick Steinhardt <ps@pks.im>
 
+In c8aed5e8da (repository: stop setting SHA1 as the default object hash,
+2024-05-07), we have adapted `initialize_repository()` to no longer set
+up a default hash function. As this function is also used to set up
+`the_repository`, the consequence is that `the_hash_algo` will now by
+default be a `NULL` pointer unless the hash algorithm was configured
+properly. This is done as a mechanism to detect cases where we may be
+using the wrong hash function by accident.
+
+This change now causes git-patch-id(1) to segfault when it's run outside
+of a repository. As this command can read diffs from stdin, it does not
+necessarily need a repository, but then relies on `the_hash_algo` to
+compute the patch ID itself.
+
+It is somewhat dubious that git-patch-id(1) relies on `the_hash_algo` in
+the first place. Quoting its manpage:
+
+    A "patch ID" is nothing but a sum of SHA-1 of the file diffs
+    associated with a patch, with line numbers ignored. As such, it=E2=80=
+=99s
+    "reasonably stable", but at the same time also reasonably unique,
+    i.e., two patches that have the same "patch ID" are almost
+    guaranteed to be the same thing.
+
+We explicitly document patch IDs to be using SHA-1. Furthermore, patch
+IDs are supposed to be stable for most of the part. But even with the
+same input, the patch IDs will now be different depending on the repo's
+configured object hash.
+
+Work around the issue by setting up SHA-1 when there was no startup
+repository for now. This is arguably not the correct fix, but for now we
+rather want to focus on getting the segfault fixed.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t1517-outside-repo.sh | 59 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
- create mode 100755 t/t1517-outside-repo.sh
+ builtin/patch-id.c      | 13 +++++++++++++
+ t/t1517-outside-repo.sh |  2 +-
+ t/t4204-patch-id.sh     | 34 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 48 insertions(+), 1 deletion(-)
 
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index 3894d2b970..583099cacf 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -5,6 +5,7 @@
+ #include "hash.h"
+ #include "hex.h"
+ #include "parse-options.h"
++#include "setup.h"
+=20
+ static void flush_current_id(int patchlen, struct object_id *id, struct =
+object_id *result)
+ {
+@@ -237,6 +238,18 @@ int cmd_patch_id(int argc, const char **argv, const =
+char *prefix)
+ 	argc =3D parse_options(argc, argv, prefix, builtin_patch_id_options,
+ 			     patch_id_usage, 0);
+=20
++	/*
++	 * We rely on `the_hash_algo` to compute patch IDs. This is dubious as
++	 * it means that the hash algorithm now depends on the object hash of
++	 * the repository, even though git-patch-id(1) clearly defines that
++	 * patch IDs always use SHA1.
++	 *
++	 * NEEDSWORK: This hack should be removed in favor of converting
++	 * the code that computes patch IDs to always use SHA1.
++	 */
++	if (!the_hash_algo)
++		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
++
+ 	generate_id_list(opts ? opts > 1 : config.stable,
+ 			 opts ? opts =3D=3D 3 : config.verbatim);
+ 	return 0;
 diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-new file mode 100755
-index 0000000000..389974d9fb
---- /dev/null
+index 389974d9fb..278ef57b3a 100755
+--- a/t/t1517-outside-repo.sh
 +++ b/t/t1517-outside-repo.sh
-@@ -0,0 +1,59 @@
-+#!/bin/sh
-+
-+test_description=3D'check random commands outside repo'
-+
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
-+. ./test-lib.sh
-+
-+test_expect_success 'set up a non-repo directory and test file' '
-+	GIT_CEILING_DIRECTORIES=3D$(pwd) &&
-+	export GIT_CEILING_DIRECTORIES &&
-+	mkdir non-repo &&
-+	(
-+		cd non-repo &&
-+		# confirm that git does not find a repo
-+		test_must_fail git rev-parse --git-dir
-+	) &&
-+	test_write_lines one two three four >nums &&
-+	git add nums &&
-+	cp nums nums.old &&
-+	test_write_lines five >>nums &&
-+	git diff >sample.patch
-+'
-+
-+test_expect_failure 'compute a patch-id outside repository (uses SHA-1)'=
+@@ -21,7 +21,7 @@ test_expect_success 'set up a non-repo directory and te=
+st file' '
+ 	git diff >sample.patch
  '
-+	nongit env GIT_DEFAULT_HASH=3Dsha1 \
-+		git patch-id <sample.patch >patch-id.expect &&
-+	nongit \
-+		git patch-id <sample.patch >patch-id.actual &&
-+	test_cmp patch-id.expect patch-id.actual
+=20
+-test_expect_failure 'compute a patch-id outside repository (uses SHA-1)'=
+ '
++test_expect_success 'compute a patch-id outside repository (uses SHA-1)'=
+ '
+ 	nongit env GIT_DEFAULT_HASH=3Dsha1 \
+ 		git patch-id <sample.patch >patch-id.expect &&
+ 	nongit \
+diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
+index a7fa94ce0a..605faea0c7 100755
+--- a/t/t4204-patch-id.sh
++++ b/t/t4204-patch-id.sh
+@@ -310,4 +310,38 @@ test_expect_success 'patch-id handles diffs with one=
+ line of before/after' '
+ 	test_config patchid.stable true &&
+ 	calc_patch_id diffu1stable <diffu1
+ '
++
++test_expect_failure 'patch-id computes same ID with different object has=
+hes' '
++	test_when_finished "rm -rf repo-sha1 repo-sha256" &&
++
++	cat >diff <<-\EOF &&
++	diff --git a/bar b/bar
++	index bdaf90f..31051f6 100644
++	--- a/bar
++	+++ b/bar
++	@@ -2 +2,2 @@
++	 b
++	+c
++	EOF
++
++	git init --object-format=3Dsha1 repo-sha1 &&
++	git -C repo-sha1 patch-id <diff >patch-id-sha1 &&
++	git init --object-format=3Dsha256 repo-sha256 &&
++	git -C repo-sha256 patch-id <diff >patch-id-sha256 &&
++	test_cmp patch-id-sha1 patch-id-sha256
 +'
 +
-+test_expect_failure 'hash-object outside repository (uses SHA-1)' '
-+	nongit env GIT_DEFAULT_HASH=3Dsha1 \
-+		git hash-object --stdin <sample.patch >hash.expect &&
-+	nongit \
-+		git hash-object --stdin <sample.patch >hash.actual &&
-+	test_cmp hash.expect hash.actual
++test_expect_success 'patch-id without repository' '
++	cat >diff <<-\EOF &&
++	diff --git a/bar b/bar
++	index bdaf90f..31051f6 100644
++	--- a/bar
++	+++ b/bar
++	@@ -2 +2,2 @@
++	 b
++	+c
++	EOF
++	nongit git patch-id <diff
 +'
 +
-+test_expect_failure 'apply a patch outside repository' '
-+	(
-+		cd non-repo &&
-+		cp ../nums.old nums &&
-+		git apply ../sample.patch
-+	) &&
-+	test_cmp nums non-repo/nums
-+'
-+
-+test_expect_success 'grep outside repository' '
-+	git grep --cached two >expect &&
-+	(
-+		cd non-repo &&
-+		cp ../nums.old nums &&
-+		git grep --no-index two >../actual
-+	) &&
-+	test_cmp expect actual
-+'
-+
-+test_done
+ test_done
 --=20
 2.45.1-216-g4365c6fcf9
 
