@@ -1,134 +1,106 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from outpost1.zedat.fu-berlin.de (outpost1.zedat.fu-berlin.de [130.133.4.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F36DE552
-	for <git@vger.kernel.org>; Mon, 20 May 2024 19:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467E0134CC
+	for <git@vger.kernel.org>; Mon, 20 May 2024 19:17:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.133.4.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716232449; cv=none; b=NT63Wye3qg4LG9mD/fXfbRGHIaT5W4q/gWXQ0lP2WuJr/NrLjRERexdlI1bhw/4rGdT9O3v8HeoSn5R0TYGwojOszC+VepRl4T+HYjrAByZdVAwNnnWWwLlg36YspmfRNZ7qcScgRV+RdLOso4kNlgvUCliSDxzzi3Q4ljh0QVM=
+	t=1716232667; cv=none; b=EAF+E8iN6b+iPt1wiOnThZSiQcuw+MmtpZ5nGunTpFvgXkLp6LN/E/LI1BArRaoMq5Zhjf73PEU0mwgelfZgtXR4a8VexkJXRT883yNZ/ykgvmN856stBrtNl4wod8JuGpPuc1N8IVqUtSZEYHxlUxahiBix3IqYjIisIiotbIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716232449; c=relaxed/simple;
-	bh=NPtaeUbcg/FoWfkrkEVcayYMKYOnPuoDrRf3GVRaBkQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IoTVWeQ14ENI0qGOE1MwdWmf311JvvYdiv4WXUt6Um21HbE4c/zcwnvbjkyujPE/aqPtHN1QYk1D4ToomD/Xooar1WZ8yx9JFFxElsE1Eu4MVSyRm0c/GWQTSeZA9OA9PP9QDe8e5XhHfusZFlVpJmEmk62m2kjqzXLACKPY5+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=S6rxOU3n; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716232667; c=relaxed/simple;
+	bh=qMcnfPZAZAFDKYosNuxHnAcK7xps3oH43lApugvn6gY=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=aCHPHMPIWOHpIelw07YUoI1s3lMsms/iy14vb3h5yIPxNbvqziynznoMz4AvWBya1jI7+ql4SsUwW0v7izR//BB4qtaW37LcbfNQUJMgNo4Wz05Q3PPlpgE2jaDdFC1Qy+CIbGa2Aa9o1CjmrWAMhLpv56dh6bgniLPsFgCANv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de; spf=pass smtp.mailfrom=zedat.fu-berlin.de; dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b=IKIq5LjY; arc=none smtp.client-ip=130.133.4.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zedat.fu-berlin.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="S6rxOU3n"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E95A19682;
-	Mon, 20 May 2024 15:14:07 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=NPtaeUbcg/Fo
-	WfkrkEVcayYMKYOnPuoDrRf3GVRaBkQ=; b=S6rxOU3nHIExmdWVd2uNW3W+fALa
-	s0APIf2zkO92OYbO6+1C9KPliXM5tCwCeUjGs049njeuSDyd+P2nc2c3cIfbWPCI
-	s4yFLQhy4fqMB4yDyNKzDAQ8zXq1x47uLYUy9KTJGb1b9lvcgouIhmDZB0XvXVOI
-	W/m7N/pbobSiBcc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0527719681;
-	Mon, 20 May 2024 15:14:07 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3C82B19680;
-	Mon, 20 May 2024 15:14:06 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/5] pager: do not close fd 2 unnecessarily
-In-Reply-To: <80f15223-246e-4cfb-a139-e47af829c938@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Sun, 19 May 2024 09:12:31 +0200")
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
-	<80f15223-246e-4cfb-a139-e47af829c938@gmail.com>
-Date: Mon, 20 May 2024 12:14:04 -0700
-Message-ID: <xmqqo790fg8z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b="IKIq5LjY"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=fu-berlin.de; s=fub01; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Tblqc4J0DrEB/5XA/5Z+pljiQY2s1pLxd1MrCLFlQAM=; t=1716232665; x=1716837465; 
+	b=IKIq5LjYlZBTKC6t+DtOd0cBU2/M/e/14JqVODEnMK4Cj5yk5EBf3NXABMI/eQJ+OLrehH5TDfZ
+	eqWQ/4RCLdxCtFRIGIVelutSf+jExx53ZfZnWyHeSwFRrJNePYrt4QNRO9u4MOivZuP1v1NiVIt65
+	gSAT4joF++gFqtW0aS0aG/MwxM3Q4rFQp8xmIaQRizeLQ/EOMF8X3ifC3M3oe/KwGBg4IzZ8nMMVJ
+	DV0opym5fmqJugd+NpPFOsNHnmj7//ACh1HGqlI0ibU7vq0fnKwQD8fKxql8Fsq4gujlDAalKNQeD
+	S27Xj6Cz1QDLsXK3j5wp+pKgxfYNQls8MBSg==;
+Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
+          by outpost.zedat.fu-berlin.de (Exim 4.97)
+          with esmtps (TLS1.3)
+          tls TLS_AES_256_GCM_SHA384
+          (envelope-from <glaubitz@zedat.fu-berlin.de>)
+          id 1s98Vy-00000001lno-1pK5; Mon, 20 May 2024 21:17:42 +0200
+Received: from p57bd9a40.dip0.t-ipconnect.de ([87.189.154.64] helo=[192.168.178.20])
+          by inpost2.zedat.fu-berlin.de (Exim 4.97)
+          with esmtpsa (TLS1.3)
+          tls TLS_AES_256_GCM_SHA384
+          (envelope-from <glaubitz@physik.fu-berlin.de>)
+          id 1s98Vy-00000002ScJ-0xh2; Mon, 20 May 2024 21:17:42 +0200
+Message-ID: <277726443f533446be4391cf2aa3d487974a7a18.camel@physik.fu-berlin.de>
+Subject: Re: [PATCH 0/3] improve chainlint.pl CPU count computation
+From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+To: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Eric Sunshine
+ <sunshine@sunshineco.com>
+Date: Mon, 20 May 2024 21:17:41 +0200
+In-Reply-To: <20240520190131.94904-1-ericsunshine@charter.net>
+References: <20240520111109.99882-1-glaubitz@physik.fu-berlin.de>
+	 <20240520190131.94904-1-ericsunshine@charter.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.1 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 209F3E18-16DD-11EF-8F96-25B3960A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+X-Original-Sender: glaubitz@physik.fu-berlin.de
+X-ZEDAT-Hint: PO
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+On Mon, 2024-05-20 at 15:01 -0400, Eric Sunshine wrote:
+> From: Eric Sunshine <sunshine@sunshineco.com>
+>=20
+> This series replaces a patch[1] sent by John Paul Adrian Glaubitz to fix
+> chainlint.pl CPU count computation on Linux SPARC.
+>=20
+> Unlike its predecessor, this series also fixes an underlying problem in
+> which ncores() could return 0 which would result in chainlint.pl not
+> processing any of its input test scripts. Patch [3/3] also fixes CPU
+> count detection on Alpha[2].
+>=20
+> Patch [2/3] of this series is more or less Adrian's original patch[1] so
+> it retains his authorship, though I simplified the regular-expression
+> and tweaked the commit message.
+>=20
+> [1]: https://lore.kernel.org/git/20240520111109.99882-1-glaubitz@physik.f=
+u-berlin.de/
+> [2]: https://lore.kernel.org/git/503a99f3511559722a3eeef15d31027dfe617fa1=
+.camel@physik.fu-berlin.de/
+>=20
+> Eric Sunshine (2):
+>   chainlint.pl: make CPU count computation more robust
+>   chainlint.pl: latch CPU count directly reported by /proc/cpuinfo
+>=20
+> John Paul Adrian Glaubitz (1):
+>   chainlint.pl: fix incorrect CPU count on Linux SPARC
+>=20
+>  t/chainlint.pl | 20 +++++++++++++++++---
+>  1 file changed, 17 insertions(+), 3 deletions(-)
+>=20
 
-> We send errors to the pager since 61b80509e3 (sending errors to stdout
-> under $PAGER, 2008-02-16).
->
-> In a8335024c2 (pager: do not dup2 stderr if it is already redirected,
-> 2008-12-15) an exception was introduced to avoid redirecting stderr if
-> it is not connected to a terminal.
->
-> In such exceptional cases, the close(STDERR_FILENO) we're doing in
-> close_pager_fds, is unnecessary.
+Works as expected on my Linux SPARC machine running Debian unstable.
 
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 
-> Furthermore, in a subsequent commit we're going to introduce changes
-> that might call close_pager_fds multiple times.  With this in mind,
-> unconditionally closing stderr will become undesirable.
+Adrian
 
-In a new world with such a change, what does it mean to call
-close_pager_fds()?  It used to mean "we are really done with the
-pager and we no longer need them, ever".
-
-And we still call the helper for that purpose after this change,
-from wait_for_pager_atexit() and wait_for_pager_signal().
-
-So no matter what "a subsequent commit" does, it feels conceptually
-wrong to call it more than once in the first place.  In other words,
-what is wrong is that this function closes stderr, but "a subsequent
-commit" calls this function multiple times, no?
-
->  static struct child_process pager_process;
->  static const char *pager_program;
-> +static int old_fd2 =3D -1;
-
-What does the magic number "-1" mean?  We often use it to signal
-"uninitialized", but then what are concrete "initialized" values
-mean?  "We dup2()'ed something else to stderr/fd #2 but before doing
-so we saved the original fd #2 away to this variable, so that we can
-restore fd #2 by another dup2() of the value of this variable when
-we declare that we are done with the standard error stream"?
-
-But that does not look like what is happening here.
-
->  /* Is the value coming back from term_columns() just a guess? */
->  static int term_columns_guessed;
-> @@ -23,7 +24,8 @@ static void close_pager_fds(void)
->  {
->  	/* signal EOF to pager */
->  	close(1);
-> -	close(2);
-> +	if (old_fd2 !=3D -1)
-> +		close(2);
->  }
-> =20
->  static void wait_for_pager_atexit(void)
-> @@ -141,8 +143,10 @@ void setup_pager(void)
-> =20
->  	/* original process continues, but writes to the pipe */
->  	dup2(pager_process.in, 1);
-> -	if (isatty(2))
-> +	if (isatty(2)) {
-> +		old_fd2 =3D 1;
-
-Equally unclear magic number "1" is used here.
-
-This value is different from pager_process.in, and my earlier "we
-are saving away" does not apply, either.
-
->  		dup2(pager_process.in, 2);
-> +	}
->  	close(pager_process.in);
-
-Puzzled...
+--=20
+ .''`.  John Paul Adrian Glaubitz
+: :' :  Debian Developer
+`. `'   Physicist
+  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
