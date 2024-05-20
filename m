@@ -1,94 +1,105 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3891F26AC1
-	for <git@vger.kernel.org>; Mon, 20 May 2024 20:07:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8FF9137C48
+	for <git@vger.kernel.org>; Mon, 20 May 2024 20:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716235626; cv=none; b=Xc4N1X6wwlJ/zcc6i8y6YqeHCiZpZSRTbKY8CGNHgcpcjuRSWAyr2okom/c7rRswj3RXjmR/fjs0OESo6ucxST9H8usYhA7pp66GYkx5LVVeyFBSmhvtkiW5C6DdBrAdrPN2/ZJPmroPJBmi6aIfvtY2GFdcZ0dBAplMb7ZGJkk=
+	t=1716236533; cv=none; b=iHnCymj+sXk/xrBehpDKNhUmxZOiWbGG/wsbachW6vQaavHMWw0snG7Dp1ObddAm3fIoqeeEAZKqzOghWfPvttDTtfpzStvAvkNhCn8Hkx2DC9lSweh17gTP3iQBXKkEHHGjAeyuu7/BGWHQeNcey8jtCxdn8AlSkYke6Flx1ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716235626; c=relaxed/simple;
-	bh=iIHqhHG/DOHGAZimkQZWhCMH78cDMP+NYs0YbmHYr7U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JICuJU7lrjqs2HB3JpNd46f5FARhXiE19R+Ys8Q1E5Jv/NE0mqJxlUmQ73Bvd92vqhgv22E7TRJ005q1/oUGP6H4rFg4l9V0JRPm6wlvaBURENV0aqUOlZsdK0i3wiLULAht7ODLFxujwTXJ002/EiWINVPcXjUoPXP5IZM5ocU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=eNg0AKh0; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716236533; c=relaxed/simple;
+	bh=eomBttJUDugeAh4/E/RHJ5Kl046QR71tdtyo18mV/ck=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=P+1FX7LwQdDiSig28gEiv+/exIUZdUBWnC+CItIZ9APaPoB+qTo+536hcTI6YEFdI8TP4BFIUjF/V0Bu4Eurjir32TLOMuh0D+bjugh3wbnll+ZmgNiwi5yOt+ionN89pt3rZKh/SdrIgYVTu+WTqG63+iQacZn3Ui1R2KsHC4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hwV4MozY; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eNg0AKh0"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DB2B028899;
-	Mon, 20 May 2024 16:07:03 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=iIHqhHG/DOHGAZimkQZWhCMH78cDMP+NYs0Ybm
-	HYr7U=; b=eNg0AKh0UQyq2d3BCl5ESUTR0lQjDyN46OTMN7fClbDyAtHMb3pAov
-	Rgk326y8g4Pj/4VVvyA0W9bV8NDLK84xG7gZGvoXqMDY+Vxrbei2O+oW0HX4LOXw
-	MCBBoAc/Bl7HM3+m/thw+kmJ4Jx92gsVpCaWdXt3B3Nt+5CCv5tcw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE64928898;
-	Mon, 20 May 2024 16:07:03 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B1C0F28897;
-	Mon, 20 May 2024 16:07:02 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Jeff King <peff@peff.net>,  Johannes Schindelin via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "brian m. carlson"
- <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 5/8] hook(clone protections): add escape hatch
-In-Reply-To: <736b43a1-a371-4d6f-7739-b5b64e060585@gmx.de> (Johannes
-	Schindelin's message of "Mon, 20 May 2024 21:38:02 +0200 (CEST)")
-References: <pull.1732.git.1715987756.gitgitgadget@gmail.com>
-	<pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
-	<b841db8392ebd924d1893829a7e5e22240f1e9cf.1716028366.git.gitgitgadget@gmail.com>
-	<20240518181432.GA1570600@coredump.intra.peff.net>
-	<c201bbe3-b404-feed-fcef-8333f72068dc@gmx.de>
-	<20240518194724.GB1573807@coredump.intra.peff.net>
-	<86d57213-e3b2-c985-6d69-71568c66fc9c@gmx.de>
-	<20240518211224.GA1574761@coredump.intra.peff.net>
-	<xmqqed9yob4v.fsf@gitster.g>
-	<5e0d660a-b1ee-2202-752c-d46d3b0c8a19@gmx.de>
-	<xmqqzfskfiu3.fsf@gitster.g>
-	<736b43a1-a371-4d6f-7739-b5b64e060585@gmx.de>
-Date: Mon, 20 May 2024 13:07:01 -0700
-Message-ID: <xmqq1q5wfdsq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hwV4MozY"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-351da5838fcso2810023f8f.1
+        for <git@vger.kernel.org>; Mon, 20 May 2024 13:22:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716236530; x=1716841330; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Pa4ywTRMbTP0sOgRCz5rqk9gwHUD4hcDu9QhBPTQQ6M=;
+        b=hwV4MozYzj68WmswCojsUwVPqojixexgCx06HBsW8nYXpM+POy8q8istnCnN0uI2E7
+         P5Gbupg2GAuuJ6u8oUWdJGvHAaUXu9p1ouimgm3+4B+hofXr+RKjO979SCV9PLJSMIea
+         StQnaJWrE9iiJ6TGVnPmUJwIi7oLE45/vhGN91Z0Px0sme2B8+Uq5RInuO0awM/DgHCT
+         EltmSQhS+2Le7cb0aG23N8seMTvzomJBAoZlyosnBX3nJZWIG6b0Hnblab4jJMO1ZyYp
+         0tSHcA4O77DDocy7B9lRw5elG11KVe3DyQRtIvhHHr4Bnyl94MYoN0Q1VXPbn2CbdfXX
+         iXtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716236530; x=1716841330;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Pa4ywTRMbTP0sOgRCz5rqk9gwHUD4hcDu9QhBPTQQ6M=;
+        b=FBZk3nfyGl2rVJyVqcVZhIFppfBRogcvaIm9Po5wY48hpLs41hWCJcv5DmdRHFMYcD
+         W6EHkH88PAUBpswgEaThgKiDGPQMVsnNx8oeKnyg9HJNRAfq8pdoQ/U7Dvx08lx7reEY
+         PEDeVYdot01JrYF7s8xk9/hVvLpeOkQYfHZVvPnJdXqgkXo4VhdKNVal2aZOj9g40JZk
+         HVEr8G9fI3ptwqaNzraME+N/+dZuqJmLC4Bdmv70UjENj94I5XPvYzcLeQOzwS9psFRl
+         c3R2tfxAoAOZELSSlI1Z4clZyMKxuKO0oB+Vs2VLeWriJWZWeLuOKAZ5LMuAuFhLTB+q
+         XCUQ==
+X-Gm-Message-State: AOJu0YzDQLxFEr+rGcEFmzBcEE3qzQbKL31YJmvauGpGHb8iskR5gXWg
+	f/9cEoBixmJbbDOv4JjS/9n9h3mm6Ds8Is4I89h+f+br9HIpumZIo+k8pg==
+X-Google-Smtp-Source: AGHT+IGHlJd+NeSuUTXknGCPrloMiobEYLj8ygnpnWIOCj6195u+gfAC5+ebhjPgh/G0Fd6ffmcGfQ==
+X-Received: by 2002:a05:6000:114c:b0:34d:a9:6642 with SMTP id ffacd0b85a97d-3504a73821emr23497791f8f.28.1716236529604;
+        Mon, 20 May 2024 13:22:09 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3525f7f7d88sm10651425f8f.57.2024.05.20.13.22.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 May 2024 13:22:09 -0700 (PDT)
+Message-Id: <d4a003bf2ceafcc6d47d01d21b7faff48c9e85aa.1716236526.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1732.v3.git.1716236526.gitgitgadget@gmail.com>
+References: <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
+	<pull.1732.v3.git.1716236526.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 20 May 2024 20:22:00 +0000
+Subject: [PATCH v3 1/6] hook: plug a new memory leak
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 85F3C94E-16E4-11EF-AECD-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Jeff King <peff@peff.net>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
->> As brian already said, you can reduce the score by making Git do
->> nothing, which is _also_ an absurd position to take "security" (in air
->> quotes) over everything else like usability and functionality.  And this
->> time, the layered security went a bit too aggressive.
->
-> Right. And I never said that we should do something as absurd, so I fail
-> to see your point.
+In 8db1e8743c0 (clone: prevent hooks from running during a clone,
+2024-03-28), I introduced an inadvertent memory leak that was
+unfortunately not caught before v2.45.1 was released. Here is a fix.
 
-It went a bit too aggressive, closer to an absurd version of Git
-that does nothing, for users of git-lfs and the hooksdir config.
-Luckily these two were reported/found soon enough but we do not know
-what other fallouts remain.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ hook.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-> Let me quickly iterate on this here patch series (as well as the
-> `tentative/maint-*` branches) so that we can accelerate toward a fixed
-> version again; Git LFS has been broken for long enough, I'd think.
+diff --git a/hook.c b/hook.c
+index 632b537b993..fc974cee1d8 100644
+--- a/hook.c
++++ b/hook.c
+@@ -18,8 +18,10 @@ static int identical_to_template_hook(const char *name, const char *path)
+ 		found_template_hook = access(template_path.buf, X_OK) >= 0;
+ 	}
+ #endif
+-	if (!found_template_hook)
++	if (!found_template_hook) {
++		strbuf_release(&template_path);
+ 		return 0;
++	}
+ 
+ 	ret = do_files_match(template_path.buf, path);
+ 
+-- 
+gitgitgadget
 
-It would be nice to go back to the pre-2.39.4 state so that we
-can redo it from the clean slate soon.
-
-Thanks.
