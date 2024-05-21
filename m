@@ -1,79 +1,82 @@
 Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A7F17548
-	for <git@vger.kernel.org>; Tue, 21 May 2024 06:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66584F885
+	for <git@vger.kernel.org>; Tue, 21 May 2024 06:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716271567; cv=none; b=Isd/vE3ZaFgCnpVyqDqgLVDX20UEhqT5P835VtRZZnC+GGP1qRrJnKAE7kuprXhnq0RbeJgDW3GTWL+BEmqQv9eWy56D8w0uapw4/XYc/Ki7XXV8SbReBFNPzL2ij3JpnDuBlK0RSErHKaibeC1dMGb6UePXhX4ANj3iB9igEpI=
+	t=1716272261; cv=none; b=Ok6Eucmj2+mJpEYkk77JhYjY0vKwBMjRnYnUDCFovtfn3yK7gc/WwylvL30H7w45FVaXAgTgE22GqKS6/mXtiWScqIvnuQ3cxV15iwh1uLK9WUItPHvKJrFud+tWjVEn2FEj7eUbP4+zcsndAv7Xl/phbxP72uxVW6F504+lqH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716271567; c=relaxed/simple;
-	bh=BfK3I5nr6NUwOwYfojyte8ukNCAh42kmJV6bAQxMepE=;
+	s=arc-20240116; t=1716272261; c=relaxed/simple;
+	bh=dW4Nc7nudWry7RByRHJgxGfFBatDK4TQF3JrdAENfug=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sjzEB+aKQHsH3RRCxtP6N5dxPbECs6WoYiHWRjy/n2owr0VVcDr5lEVwEopd1zC0FxN8EEj5Z68FHDwfJz1YmqNqBIW9b6ACL8eSE9DR3qEYPlGGDqxsfRlfNUUEvDChGcRgdKFe3KJ59S4129X+pJ6wg05lU72CdkzL7GK6HHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=leC97fCM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qpvh10jp; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=qjVoMu8S5ugPQraxML/5QOHU1gtimSVZvUx4/ZvfFY7x68ziTlU+g9MdA/nHg6JaBytfW0jlJcKxQy2EjdJliZx/p479N22WgOR8HwrwjD2hYUK02oNEzgshQAD1nCsny+K4J6WxqxDG/IyHl02ybxoTV65KpErEq6vmBMxWxwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Nkazoppy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nZ969zur; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="leC97fCM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qpvh10jp"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Nkazoppy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nZ969zur"
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 70005114018E;
-	Tue, 21 May 2024 02:06:04 -0400 (EDT)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 034FD114010A;
+	Tue, 21 May 2024 02:17:39 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Tue, 21 May 2024 02:06:04 -0400
+  by compute6.internal (MEProxy); Tue, 21 May 2024 02:17:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716271564; x=1716357964; bh=ZSri9WYuRl
-	wBfqVG084p5xgpAlHgb7rS4zpPMvYZQ7Y=; b=leC97fCMZ7yovoTV31TGS5oJ8J
-	hKKO2OeqvgxwZSeyqUwO0aNGW1vBz9hktEguqeoQFFwsvwi9ub7n5Mme63pe1RAw
-	MJraVEitOB0DKRx9xemVjhFksqBP/gzemBZzmSm6cZPs3OjFQqeiuV2gaYg/EtjG
-	LxX1y/+ajSwZ8Vx+HsoEEplJ5cu4syPplx7KQ3W9OjSkuLwCZgQN2PlliCUP/ywf
-	+H9Yeq2NRuv8ZueUauUfUyYc1QQ8lrmJN5veHgUkB+bEePCa3RpmniBAr40rnCff
-	Kbnyi3IEv4RRG7b+LvkfdnRAQ9UonDv/PuEi8Zru6nNQ5kiK+78+pQtsvEtA==
+	:subject:to:to; s=fm1; t=1716272258; x=1716358658; bh=dW4Nc7nudW
+	ry7RByRHJgxGfFBatDK4TQF3JrdAENfug=; b=NkazoppyQNIhjaYAH24mr0lfzc
+	ZHumrvHLCc6JpLetGsqIAGf95V6pODCCGOh4nFpe0jg8QaFk2H1BEa2aAwLvqLJj
+	LY2hDNcMpUqgxfZ2dl3aHsRImM+//vlxOut5MjbfjQE9nu8CGoQuAj/qymDkRWTA
+	ZqeMnRDgBMvRv7306z9vOs5Xu4i8j2LEyQ7QbLC7jWdK1awWLIU4DqESegnYL58L
+	P2JpW7/EcO3ICXQBf6N0s7vkho38//9MecIlkDvAZiSy5w+Wfqq4jUjtFNTsCymr
+	8L3q7nNWn9VwCdHfJ+cn/lwValeN7+CkwCm6e3Ay42LU1M3FPsi095CU8rig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716271564; x=1716357964; bh=ZSri9WYuRlwBfqVG084p5xgpAlHg
-	b7rS4zpPMvYZQ7Y=; b=qpvh10jpk9eyCx+z4vgU/AmQZ0QqUpcq1cRZnVu8698j
-	77fnM2O9TMvxmASoYVNrkXa7BkeFHcRfLDv1yGUSQZKZzJUvf2pL/wUbCnxgkz9R
-	+HEFJ6fwE7PyOe0dO7pEJ9KPVLeVwDCMVBdhwOnlsaiCPIPnX9VRUYu4qpgmTSit
-	bZ+yfTGLNyRkgffAuAIWuA9m0mDe7jOqvSb68cpzy1td2AtELQqTbs3riM6bJxYp
-	AGllJdz+rFdocTaxifw+iXfjIqUqtQbTfHH5KJn1TS1jV3cpQExp5xMUg2yRQy4W
-	yDT+ULaR72fAkY4aJjGqzu7b+UVWj+6vAaFfwjzxiA==
-X-ME-Sender: <xms:zDlMZv5o2Og69bNGwgjRVvLytCcBTwf0LJEusDnRjT7pIVYE5GU7Kg>
-    <xme:zDlMZk4El-he8atCPftUKGvYp-rsiWz0oD1cJ3jHrdS_eC1vNqhnEQHK8iUEf6BQ5
-    IXcDJHnjYoLk0ps8g>
-X-ME-Received: <xmr:zDlMZmdBc0m-h6GOF9xv06KfpBASKbmcWxWKS2ck66S8KgK_EVm_IBNMQpT85W189HfHrRw8V9bPMKF3_9OOHOOyMmoUFeXpupAPHf8d-17u5mdE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeiuddguddtvdcutefuodetggdotefrod
+	fm1; t=1716272258; x=1716358658; bh=dW4Nc7nudWry7RByRHJgxGfFBatD
+	K4TQF3JrdAENfug=; b=nZ969zurAg++/y2Dbk4clkAuztzP7CyPCA5CJoOeM5Bo
+	H05lTm5WcnZIpzmtAToSl/34v6zkAPPIgzN6us6uVMuvu/TEuhr/ZpOmLV0UTkja
+	DAXVEoNS+q3RiJH3knDNtQK4qxv8mFMi7+VyzxQaZMY3g4W7pSHGKsIc51JLuOXR
+	YFqmWZ7b/BCboNn1UnzZbwxBnh6Yw9nqXQ4a3iUUTcaCjSzC8Akf4+LCwWcCmcwF
+	QNztvWcjsLVy3UWhBKhHivoQsZAmXc6aUmba6iXaUM0titfK7keNYP4ouXuVKZhd
+	5P3cGsMgQZjZTRfC9CLV7bAEVyhLamTp3kepMi5MjA==
+X-ME-Sender: <xms:gjxMZtSZ80AEi6wyJzZt-g51kRoCSC4R8VKyC-W0GlbOe2rdqcZEmQ>
+    <xme:gjxMZmwTU3NqMB37Ni3bGWJ_MauwrTHI6jAOmhQklIe-RUnVlve6hJSytDjrfs6m5
+    bJwENtk5oFjGwBeDQ>
+X-ME-Received: <xmr:gjxMZi2lwkRKLRoA20MzTfBcKtVD2DB4WUyAFxuRfPktipc6PbzbPUBfToaiiqkdHZyDvoGM7P_cPwSK-FoWUDXzJb2E-8TFJD8bwnt4fWLxEIuD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeiuddguddtgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnheptedthfdvfeeggedvvdevkeduvddvte
-    evtdeugfevfefffeegvddvteekfeevhfdtnecuffhomhgrihhnpehpkhhsrdhimhdpugho
-    fihnrdhpshenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:zDlMZgLPrLTQr-fRimy4MXdFPMSKEjOVyBdfOS7G_jffOkakJ-tCiA>
-    <xmx:zDlMZjK0q_0JSI58dGVFmeTrhyWRC9jvq9scPFHYGHryilHsY8l_mw>
-    <xmx:zDlMZpxB_0DRwXql7UWUetjq5IhZHJcvhmwLSGr0AruqjhAsDAdA4g>
-    <xmx:zDlMZvKoDjjkYSodYTniiqIXEK6ypW3cCTJE2RB_NjnKgJJOQyJfnA>
-    <xmx:zDlMZqVVEi7kPg1ngYuL_w9oWoIW-jbTdNqsxS_NSyqpBf2u3T-5ODWU>
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:gjxMZlAuprcrmXH_WSnTnM9W20h82BuqreqMUpCGiOMFgSzz-KyoTQ>
+    <xmx:gjxMZmhcYc3Ea2f0jfEo8pOIZ2BhMUkuY36ySRTJwALX2iYLlWX93Q>
+    <xmx:gjxMZppkQMwadLKBCDNtwQWLHbsbbzbUD0b5qtdROdbFHNxgZarKWQ>
+    <xmx:gjxMZhjDYo6X2lhnlkxCBOzgB64I2mTrmDHLm6mQn3J9ccIeWEBWWA>
+    <xmx:gjxMZnsDs2hnMp3J3SAualKF6pyoGLhHQgU7tIBkYXWJJ7NM3GcDLP1c>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 May 2024 02:06:03 -0400 (EDT)
+ 21 May 2024 02:17:37 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 577703ce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 21 May 2024 06:06:00 +0000 (UTC)
-Date: Tue, 21 May 2024 08:06:00 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id cf82534b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 21 May 2024 06:17:33 +0000 (UTC)
+Date: Tue, 21 May 2024 08:17:33 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2024, #08; Mon, 20)
-Message-ID: <Zkw5yDAVAnmy-cg8@tanuki>
-References: <xmqqwmnoca35.fsf@gitster.g>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] SubmittingPatches: add section for iterating patches
+Message-ID: <Zkw8fTO0wk13Lf7n@tanuki>
+References: <20240514123039.1029081-1-knayak@gitlab.com>
+ <Zkbn9_-cOiapWSSb@tanuki>
+ <CAOLa=ZS1bhHAtz59z71sMxOT63jwF0pHYO5YKtY7Lx_V8ubV4A@mail.gmail.com>
+ <xmqq8r08jqsj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,113 +84,60 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EPhBgecwMkId3Q04"
+	protocol="application/pgp-signature"; boundary="i3T+eyDaZaSudD3N"
 Content-Disposition: inline
-In-Reply-To: <xmqqwmnoca35.fsf@gitster.g>
+In-Reply-To: <xmqq8r08jqsj.fsf@gitster.g>
 
 
---EPhBgecwMkId3Q04
+--i3T+eyDaZaSudD3N
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 20, 2024 at 04:55:26PM -0700, Junio C Hamano wrote:
-> * ps/refs-without-the-repository-updates (2024-05-17) 17 commits
->  - refs/packed: remove references to `the_hash_algo`
->  - refs/files: remove references to `the_hash_algo`
->  - refs/files: use correct repository
->  - refs: remove `dwim_log()`
->  - refs: drop `git_default_branch_name()`
->  - refs: pass repo when peeling objects
->  - refs: move object peeling into "object.c"
->  - refs: pass ref store when detecting dangling symrefs
->  - refs: convert iteration over replace refs to accept ref store
->  - refs: retrieve worktree ref stores via associated repository
->  - refs: refactor `resolve_gitlink_ref()` to accept a repository
->  - refs: pass repo when retrieving submodule ref store
->  - refs: track ref stores via strmap
->  - refs: implement releasing ref storages
->  - refs: rename `init_db` callback to avoid confusion
->  - refs: adjust names for `init` and `init_db` callbacks
->  - Merge branch 'ps/refs-without-the-repository' into ps/refs-without-the=
--repository-updates
+On Fri, May 17, 2024 at 10:23:40AM -0700, Junio C Hamano wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >=20
->  Further clean-up the refs subsystem to stop relying on
->  the_repository, and instead use the repository associated to the
->  ref_store object.
+> >>> +. Build on a suitable base branch, see the <<choose-starting-point, =
+section above>>,
+> >>> +and format-patch the series. If you are doing "rebase -i" in-place to
+> >>> +update from the previous round, this will reuse the previous base so
+> >>> +(2) and (3) may become trivial.
+> >>> +
+> >>> +. Find the base of where the last round was queued
+> >>
+> >> It's somewhat unusual for bulleted lists to start with a dot, but this
+> >> is consistent with the remainder of this document.
+> >
+> > Yeah, that's mostly why I added dots instead of asterisks here.
 >=20
->  Will merge to 'next'?
->  source: <cover.1715929858.git.ps@pks.im>
+> Here we want a list of numbered items so that we can refer to other
+> items in the same list like "(2) and (3) may become trivial".
+> Wouldn't asterisks give us an unordered list that is typically
+> rendered as a list of unordered items instead?
 
-We've waited a couple more days now, and there was no additional
-feedback so far. I'm happy for this to be merged down.
-
-> * ps/reftable-reusable-iterator (2024-05-13) 13 commits
->  - reftable/merged: adapt interface to allow reuse of iterators
->  - reftable/stack: provide convenience functions to create iterators
->  - reftable/reader: adapt interface to allow reuse of iterators
->  - reftable/generic: adapt interface to allow reuse of iterators
->  - reftable/generic: move seeking of records into the iterator
->  - reftable/merged: simplify indices for subiterators
->  - reftable/merged: split up initialization and seeking of records
->  - reftable/reader: set up the reader when initializing table iterator
->  - reftable/reader: inline `reader_seek_internal()`
->  - reftable/reader: separate concerns of table iter and reftable reader
->  - reftable/reader: unify indexed and linear seeking
->  - reftable/reader: avoid copying index iterator
->  - reftable/block: use `size_t` to track restart point index
->=20
->  Code clean-up to make the reftable iterator closer to be reusable.
->=20
->  Comments?
->  source: <cover.1715589670.git.ps@pks.im>
-
-There was a round of reviews by Justin on this one, which I've addressed
-in v2 and which was acked by him. I'll try to rope in more reviewers
-internally to get this over the finish line, but I'd also highly
-appreciate any GitLab-external reviews here.
-
-> * ps/reftable-write-options (2024-05-13) 11 commits
->  - refs/reftable: allow configuring geometric factor
->  - reftable: make the compaction factor configurable
->  - refs/reftable: allow disabling writing the object index
->  - refs/reftable: allow configuring restart interval
->  - reftable: use `uint16_t` to track restart interval
->  - refs/reftable: allow configuring block size
->  - reftable/dump: support dumping a table's block structure
->  - reftable/writer: improve error when passed an invalid block size
->  - reftable/writer: drop static variable used to initialize strbuf
->  - reftable: pass opts as constant pointer
->  - reftable: consistently refer to `reftable_write_options` as `opts`
->=20
->  The knobs to tweak how reftable files are written have been made
->  available as configuration variables.
->=20
->  Comments?
->  source: <cover.1715587849.git.ps@pks.im>
-
-Same here, I'll try to rope in additional reviewers.
+I didn't even know that dots are rendered as numbered items. TIL, I
+guess?
 
 Patrick
 
---EPhBgecwMkId3Q04
+--i3T+eyDaZaSudD3N
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZMOccACgkQVbJhu7ck
-PpTlBA/+LOx/iZnA4QgAtvJXUHDwQJQsgEYm61syAh9TRN7rTC0D+0SB/vm84hKI
-a4/AtWwQsghNEijDxKzPhFSZI46yRCh2e2t6uSYQgaxzTP4CmHQWu2KbadhAoQdu
-W2rWqM7kelzv3AVvOCTeu+FoZR+khrTgHbU5HEuzfMIWCEua8vq2xfXSu6RreDj4
-vRsEYn8ZbADSesj/dFgsctFjzmOkgoNADUMkZCbzdMcyZXgIwzS0XnpcoRd3s1FT
-DdWKRGmnZ/y29G9CgbFjaaxgTYQpvQkuC++ggUzMTjfSp4SMtiiyBrhJjW7EJYE6
-g+yxrxhTTa4dt9+xMwUxgPT80jWWwpya6agf40c3aFtfNjb7F0MrkhLGAuAp0q0T
-jr/IUi79lcbC0sWe+cjFvl+7JnwDMQDiBRBMzowsuemZDMprwWQWJJ5FoISdy8CX
-LVnUGVaE+RSb7OjkcWGjuQq0Yg131tTBZMsB8wwum1X+RViAKKQZNPy7qO3WpuKR
-Mon9Idh48hQBSKsOqgu8ocnxf6ED+4eBWi1pHYo3JkSForMEGhgNk/U2QyQY/KVm
-G6KtDIeBJnSPt3G7Zcwmmc7ijtfiBFB8EGO8YA8EFY7Rnp9J4RZnj32bUX3mcRB7
-tx3sL79/5aXa2VF/TCJiIsj8dhTV7Xj0Zoy1I3RIPVQJHTBfhsc=
-=OEzh
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZMPHwACgkQVbJhu7ck
+PpRd6Q//QvM6rPkaRd9woMM2irCzpZJadR3RO9pTsBZYY2nM2k/em3q4UVOx7ZNf
+e4dZNrQV4nJ/ISCydXsgBwL5hjDq7K+DPlhOqSm3xnLMb/gZQYRXf8mTHhNtrkWD
+UHh79qtS9X/nxZbvsZmr4wZ/7UYaQQqc/w8PDrr554t8z4KUYUt1Jfw5OIhQVHzD
+aC7+JO2uwX2BygTJNXuzUaH7VnXX0bbX8m5q4/tlhPfPn7VeuLk4KE18ShU+HYgx
+QMfq1/oyBJ0G3Rx7xAI4ExDtO1JsTqYmqTyexu9M6ppoWDR+GbtLRlRcZOYOuVRX
+D7GjWpDZjCcW04z6Eag4t6gacGGgqq4aMWIs+uFJ9XzwJOQsXjptYn/KUF1l+IWE
+id+VAMrhDlj0A8WD0Hf9GF1/r+xR+o0QkNuYVdL5+AaEL6YYKC+tyIzowiNaGNxe
+qG+bVkF3vCfTtRvJafYZFHC3+u+ZiKlTxl1B/663zcG2kUlWqV/MIByaMYH3nRC1
+I0/gFgkg7ikVEaJqmW2nOpynsSX/n2VyfGYsnj3W0CkohRXu/G+M5zaLfTysPpqw
+KR7zEgKcWngvJwCZ0K8boiU4QY/Wd3sBC60JU3CTfj9AbQfEbXj60IvcVfbR//z1
+1w2qXazHwFLsGamgEjdxB7wADmbg3GPf1t84WdSmk6/jMKKTa8A=
+=EFQQ
 -----END PGP SIGNATURE-----
 
---EPhBgecwMkId3Q04--
+--i3T+eyDaZaSudD3N--
