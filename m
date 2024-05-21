@@ -1,90 +1,121 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E88E1482E7
-	for <git@vger.kernel.org>; Tue, 21 May 2024 19:56:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EC414900F
+	for <git@vger.kernel.org>; Tue, 21 May 2024 19:57:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716321406; cv=none; b=D1Bys6Ox0Y2jevpIzNITUxMvCFuIRrceDuctPo84qvw2Omm2LKN/uVTsinFhlSCM/Ry9kZZxBmMgO0P4kR4wQnwUEeJSQyP0EeJ7wzp4ERoXVQDCSd5c9GqrgPju+2YDPuk4uqxwkMSW/luXb2pNT3I8xlggqxGuiF/VHQs2O84=
+	t=1716321431; cv=none; b=gHIhR7TWX93C9qGgyKyqzB5eQtJqGOH4+vhUBSgSS/qoRHA4xnYeJ85+cwAm29trGmzXyiIvBlRMk9BVn5MV7l+I4qP1mWCSBj3cKC5rhrulkaUDWvcJgAQSn8paXUlQ4RMwJzJOVbtWzoDBrfUJjU1ahpGAkaNZFx+eCVdGP1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716321406; c=relaxed/simple;
-	bh=hcYTSG5/YAUif30BigQ8vhPxjiYpX//dNpe9H74LoKM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jIoMSKXiJL9FK7A9Rrt4bw+4N/1Zx3aEKLW08hrsz2Zo6pdodUvkDUC6CL0B4w0ZE7aTe4eRdLwfHeUCkaQ+ymq0BXZtfNzQyokEmm5QSMpoTsFd5keNgxZs987cmMdAkyovJ9fSwg6CUjHAKWhzA4J+GfOHKdERj0FYJBJ73E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bqxUlhTp; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716321431; c=relaxed/simple;
+	bh=xH6WGYE8er0GKW0qcUpqAHFVegR/pa/Fl9c9pZM0lmc=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=e7MsJonBiCfZF+iLYeWEjkUVWyimxzv5Ur2G9spSPWpKTp/5IkbfnT3fc49y8gq0nECH9wmHevlahyvKa872x0Gi1yLXPA5OaY2mHZcD5CX4oxZdqF58vkID1pdTZM1Os6oVackbwK9v3w52rcPgnCyhWM77b6qTFXtqfV48ItE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=P/f19g57; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bqxUlhTp"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-34db6a29998so52577f8f.0
-        for <git@vger.kernel.org>; Tue, 21 May 2024 12:56:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716321403; x=1716926203; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5Fjv5/TFkPqF2nvK0iz9yszIEMwuuaEOwZGEq7YdsA8=;
-        b=bqxUlhTp2y7s1CcsELgNO0dW1Yj1H5u6ZAWGd8TdKX9g+4SNeTMYnh656FBggz/owu
-         8qca0XNdnJu5xgLjAprIBds6EpfWUxoEpXru2nECzIdCdAam57V9GlPf+OqWWCDUgVUv
-         Hc+iVBZPwvOqkkjvr6JTZtyLjNTEPFbLkUojVh5XZJ89ScZnB8AiI4+bvpwAF1mCownA
-         dkjy5r6HU8JkMjODt81cvwYzhjSqkvhJXdhaqvVHAqA8iSG9EPLBnj92uPVC3DR2uOJj
-         MVfqWjvkH8TGvut6rAFdCzXTSaPMROmekn6fzzkIn1x2Js6+B+1d0gCmG4Ik9/qAe5d1
-         pWxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716321403; x=1716926203;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5Fjv5/TFkPqF2nvK0iz9yszIEMwuuaEOwZGEq7YdsA8=;
-        b=tB9xkaJFQQyAabt7+WYK7ZcAZf6vZ9PbpTTzK+S4pCEUfK+8bAYC8RvwBy3yecJVm3
-         FPdiqSvWAA7G1P+5V6gWWKtUkkAKvPnI9owLNaxSgdR+bhk75DkLEeYsf5ucY34tjYNt
-         hO8w56xJzzRWrhmtCYRU7ToqwDN3TQYFQlynStW3kNup8hfERFKXD6qmfW3WGThDfbsT
-         OFLMELSSyT0hJAcvM5Ke5m+W0wdotPd9u6FDAaERtqaQ0KnZfVXjPZ3SXIGQ5Zy5Kx+v
-         Ds/fjNiXaPcZacu20LSM8uawN7sATjn/WnxyiKBQvYepuEVmp3WDwnRgvZY1+rXxfbbL
-         RMyA==
-X-Forwarded-Encrypted: i=1; AJvYcCUkXBbIiDQpyszidyIZN0fFRElqVhBO+VNbxhE9glz6+Gz0SnAvM2j6/0K0wf0tcv6CIH5A3iudMaKke51vVpTcY4/I
-X-Gm-Message-State: AOJu0Yz7Qsk9QHcFDiUgKAI5e55j1CTQgWXDTWCppgVVs6HXn8xFgMb+
-	nGdz/Yb2R0jZGVOJn7r/V5imzsDZh+Tz07WOIKnOsWVTvqGzw5bE
-X-Google-Smtp-Source: AGHT+IFbqWaiEPfQrAVXjFu3oIFiZXNBISeLdl8TWjHUjaX/BSugHbA/SoD9W8HrF1BVKYrbfY8iag==
-X-Received: by 2002:a5d:43c2:0:b0:354:d437:1e67 with SMTP id ffacd0b85a97d-354d4371f48mr606228f8f.27.1716321403217;
-        Tue, 21 May 2024 12:56:43 -0700 (PDT)
-Received: from gmail.com (96.red-88-14-210.dynamicip.rima-tde.net. [88.14.210.96])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-354c575da9esm6695456f8f.85.2024.05.21.12.56.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 May 2024 12:56:42 -0700 (PDT)
-Message-ID: <87fa38a1-d40b-42d1-be31-aba7ce21881a@gmail.com>
-Date: Tue, 21 May 2024 21:56:41 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P/f19g57"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 756B931233;
+	Tue, 21 May 2024 15:57:04 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-transfer-encoding;
+	 s=sasl; bh=xH6WGYE8er0GKW0qcUpqAHFVegR/pa/Fl9c9pZM0lmc=; b=P/f1
+	9g57jEBBgP2jRk5NetKJmVwF4fNlvXCESI97v+djMHgugzKbv3FoYWZd5/blBdYy
+	WNP8f5vKadCjGG/Y6r2CONrwzY81lbWpdp7qQYvkUs2QM8so3Y7afBIfLK30mXZo
+	lieY4LcFBc3CralibUxVNj+k06uB1vgeOD43hUM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5680D31232;
+	Tue, 21 May 2024 15:57:04 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D74433122F;
+	Tue, 21 May 2024 15:57:00 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH 00/12] Fix various overly aggressive protections in 2.45.1 and friends
+Date: Tue, 21 May 2024 12:56:46 -0700
+Message-ID: <20240521195659.870714-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.45.1-216-g4365c6fcf9
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] add-patch: render hunks through the pager
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
- <eb0438e8-d7b6-478f-b2be-336e83f5d9ab@gmail.com> <xmqqh6esffh1.fsf@gitster.g>
- <ec5d73e22a6e4587f3d87314a9c0e422@manjaro.org>
- <83071f70-e8a1-41d6-9fb1-108a31602baa@gmail.com>
- <516ffe6bafb71f5645e93e6c01f721a7@manjaro.org>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <516ffe6bafb71f5645e93e6c01f721a7@manjaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID:
+ 49A20EB0-17AC-11EF-86B5-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 21, 2024 at 01:54:22AM +0200, Dragan Simic wrote:
+As people have seen, the latest "security fix" release turned out to
+be a mixed bag of good vulnerability fixes with a bit over-eager
+"layered defence" that broke real uses cases like git-lfs.  Let's
+quickly get them in working order back first, with the vision that
+we will then rebuild layered defence more carefully in the open on
+top as necessary.
 
-> Though, I think that we don't want to add "pager.add" as a new
-> configuration option
+What we have here are the first "revert" part.
 
-I have no plans to add a new git-add(1) option or a new configuration
-option.  Only a new interactive option 'P'.
+These patches are designed to apply to 2.39.4; the series may have
+to grow as we discover more things to revert, but for now here are
+the patches to
 
-I do not see the need for them, but maybe I'm missing some use case.
+ - revert the over-eager "refusal to work" went into 2.39.4
 
-I'm going send a new iteration, v2;  please, take a look at it.
+ - adjust 2.39.4 codebase to cleanly build and test (at CI and
+   locally) by backported fixes
 
-Thanks.
+It would have been better if we did not have to have the latter
+class, but such is life.
+
+I'll figure out a way to convey conflict resolutions as this topic
+gets merged up to newer maintenance tracks on the list so that
+people can assist with ensuring correctness of the result by
+reviewing, and follow up. ("git show --remerge-diff" might turn out
+to be such a way, but I do not know yet).
+
+
+Jeff King (5):
+  send-email: drop FakeTerm hack
+  send-email: avoid creating more than one Term::ReadLine object
+  ci: drop mention of BREW_INSTALL_PACKAGES variable
+  ci: avoid bare "gcc" for osx-gcc job
+  ci: stop installing "gcc-13" for osx-gcc
+
+Johannes Schindelin (6):
+  hook: plug a new memory leak
+  init: use the correct path of the templates directory again
+  Revert "core.hooksPath: add some protection while cloning"
+  tests: verify that `clone -c core.hooksPath=3D/dev/null` works again
+  clone: drop the protections where hooks aren't run
+  Revert "Add a helper function to compare file contents"
+
+Junio C Hamano (1):
+  Revert "fetch/clone: detect dubious ownership of local repositories"
+
+ .github/workflows/main.yml    |  3 +-
+ Makefile                      |  2 +-
+ builtin/clone.c               | 12 +-------
+ cache.h                       | 14 ---------
+ ci/install-dependencies.sh    |  2 --
+ config.c                      | 13 +-------
+ copy.c                        | 58 -----------------------------------
+ git-send-email.perl           | 32 +++++++------------
+ hook.c                        | 32 -------------------
+ path.c                        |  2 --
+ t/helper/test-path-utils.c    | 10 ------
+ t/t0060-path-utils.sh         | 41 -------------------------
+ t/t0411-clone-from-partial.sh |  6 ++--
+ t/t1350-config-hooks-path.sh  |  7 +++++
+ t/t1800-hook.sh               | 15 ---------
+ t/t5601-clone.sh              | 51 ------------------------------
+ t/t9001-send-email.sh         |  5 +--
+ 17 files changed, 28 insertions(+), 277 deletions(-)
+
+--=20
+2.45.1-216-g4365c6fcf9
+
