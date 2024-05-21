@@ -1,63 +1,63 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347301494A8
-	for <git@vger.kernel.org>; Tue, 21 May 2024 19:03:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E33B149C66
+	for <git@vger.kernel.org>; Tue, 21 May 2024 19:03:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716318192; cv=none; b=ew5KXVeUID3A9DZ8FSU8KvgqNYaV8tKSZtPZHQxAE2aNhUgYCmMHPcLSB/4rnO3woSnaPE0Tuz7eBYYcMWFt++vPUSOvO/gksrnOoZAalnCcihFHEKrES2SsnF8gXLoe7ax3uYq/fCQCSZao5VpFXuch+t3/oIWaLyJ1JFnU7ns=
+	t=1716318195; cv=none; b=VNy5m81QQKIZPS3oD6Kd/jVoqOhWq54S6AfMnqHELnfzYDOxR4DVbnfGugn6Vyj9lC4N3Vz6gm4gNAirBrP3aH2DGX1bunaL3l/F21MVtjiF5845kL6wP2vmhX+lzFa0Htq1ygqbeCf38Lrooa44v6C5R4Yw6H3MvDQGDHjCi5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716318192; c=relaxed/simple;
-	bh=mEi7eF8WlJT6PpcmCVxstk7i6MgWCA1cLd2rI7kGJ1M=;
+	s=arc-20240116; t=1716318195; c=relaxed/simple;
+	bh=8hPjU0ugIJf4TcmbrO4sEG67fSpJLtsuDgDFo0EY0mA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=beoG460mto2BdnwA4BnKme0IAELHlhpxhJhfoCNnius7VEYi1zpyg3QN3cTqBs6knrRCc59ePRUdUGiWoYNr+KJlJ6rKE5hAwmdz83Z/MSdrXYRQSZcSKrSNKXPS3GQ01sxyNSOW/2106ysTWHEwb22rnQStP1+tEOxl9lCtEjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=FhimWOAE; arc=none smtp.client-ip=209.85.222.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=feI6+/8jG2PX6U7P3i4XtS9Uvg9NVU8Yr5lT7bz5VtPthTteEUSDliR90A1kef5bg8LY72KqvSwRfUBOo26WShuDAmCEjvB9GpLlRkFPYc1dejgAjj9+R0H8vbdBoGYgSGM4Y/DLxhu7hnffIMDWbrmkceQMYJ1y09XlNh83j5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=vCOTUfW8; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="FhimWOAE"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-792b8d989e8so12481485a.0
-        for <git@vger.kernel.org>; Tue, 21 May 2024 12:03:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="vCOTUfW8"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-792b8ebc4eeso327827285a.1
+        for <git@vger.kernel.org>; Tue, 21 May 2024 12:03:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1716318189; x=1716922989; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1716318193; x=1716922993; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qtCxJ99lL4q5myAzy5XypnKvMZZzYm7fExC2YIFRo0Q=;
-        b=FhimWOAEP72bzpM9+HoTm0isuzw94nmpoLcSkmmmxVMikcYIvoUm6tync6F8H4PGMn
-         HbhdIeleTv5P42FJ3dz0p4lbElwP1bwhmiiNgY5s9IjvPKoTaMPUgPbmNATSjaJB+Dii
-         NkuvcuuyLAk8xQEjnuydI7MOlMRhwjmWvj/McpZDhSBD1TLqW4cITr1UVdLMyo+uIWxm
-         8dxIdYQGq7FtH5MuNN+ciO1LgtL9ujNasNZlBh0VN6p706gg9tnAHl+aAY5UajfBldcl
-         lKf16YItERnOhNuxJMR3qiaWsJzkzyY9Bn4migRcyCMLfatwTEqlGjZ8n7GZ7exQIjg2
-         k+Dg==
+        bh=H+TApMOej23rAq8J7X8zVnMzg2eM8MoZahdjZuHHWMo=;
+        b=vCOTUfW88Pl4RihCzXy1e3UKN6XK5BpdtRL+Rfao2kYROGiJTZ9SsiIbajZLniilrL
+         4c+HJSMOzuIa/SiAoFTvfdqzzGeVf2W5va5vZW7ZrKxCQY3wl4W3p48m2oxUjyWaVfc1
+         hm1ZoIZXgtHguObaKfFYye6fJwAJXyhzyrheR18wdvEpCuQ820hfG8b2lS0J3w172MQb
+         ssB9EtlMZ8zmCnpanP0kXU3xiS8eES7GJF9/60B4ZStm2nCWRtaHt+C6AlonApn1cD9F
+         qAdSFmm55hzoJPs4N0V8QmWrz10qpCRMLXEoZDupj4Nbgo8+RG/GlYw7bR7Bb3ygzJ9y
+         kdXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716318189; x=1716922989;
+        d=1e100.net; s=20230601; t=1716318193; x=1716922993;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qtCxJ99lL4q5myAzy5XypnKvMZZzYm7fExC2YIFRo0Q=;
-        b=XizJNtZLOfS/MF3vkiArsMSyhYFmlF2dS+tl+GMixURFRwqSl+qyO4tSLY2GjAXEsk
-         a1FNnRQMeoYqvl0KNLuR11QvHOOcV6e8DnUGEluSxCk8aYdqgBTHHFxdxMETEUJURRJk
-         WmzmRsixsLTRMC2NsD6YSbbM7nATot7Vo2NbvbrWKjtVom+BIH//c63v28SuGRF20A45
-         OJIE9uJcUYwTKVdg+TlDbQa8RAnazTNPEvBlntm+KbaXLlmYSUImAC+TeESKwXVYI9lY
-         hLBaAuu9YKeWEeQsFsn+s6BaXjyOKg3GbtB7lO6Pxa+eeqoLI46uTGU8IggsZZX+/BH5
-         TqCQ==
-X-Gm-Message-State: AOJu0YwqZu1aNbTKdw4OKT4SfHp6hDiNaJpA4yhZcsNYq4b01ndx3hrJ
-	Kvi+/cRTZvbQC0eJG/gGxIJTz/tJ5QSTott/C9kvOFDpjcz6QEvkIz9QVShwmtwdsj2SnXN2NeN
-	s
-X-Google-Smtp-Source: AGHT+IFWfSYW9RZ620LqztV/RcglViLT/rnr5qT2mnS/g3Eh9RI9AIPT5cOcRgeiDHk9xwBImwf0Mw==
-X-Received: by 2002:a05:620a:458c:b0:790:a960:28f4 with SMTP id af79cd13be357-79470f0c0e7mr1802004985a.25.1716318188938;
-        Tue, 21 May 2024 12:03:08 -0700 (PDT)
+        bh=H+TApMOej23rAq8J7X8zVnMzg2eM8MoZahdjZuHHWMo=;
+        b=lSgki6lYrdy4gPCBIdopJs/Hr4TErg7PUtN3brAVPRKUI54K1T4RfHrR50kyn0LHXA
+         PB6c7Kyqsr9Qf2vh9IlCCk9bIRRQGbVXwJCBk1qPvCcCi5mNsvDHlKyTJ1oLDgByjcRI
+         DjjzipOUGPQOfD0PXh5OLVtwKiicpXl83xHxQZ9bcZDVpNM7Y/wv3MgM5OIiSkWKPo6Y
+         MaA0hDrnOWNZUv6/qMuzugVsaEy6XgN6tvjwBb27m4rvJq7OmRVZS8MARQLU99sk4vN/
+         Dd69X1ciDO8rzUafV88+o6UKGy7qYRU/mSMwAu/LOnBXd8LwHqDpQIsF/8Gi4+7i86wl
+         T0jA==
+X-Gm-Message-State: AOJu0YwTUuVVl1yDyJ5Fxq8tpq3VxXsAFxDC7C9wj6qtgC7w3yaBknws
+	FhaIx+UmOKAU8/R0TCq+Se4xOiTEKv7G2ah13Vn9fDFDtLLoMJVifhXz40BSa5tV7ZK3sVdEHkz
+	y
+X-Google-Smtp-Source: AGHT+IF8xgtroXwyNLSCaNMok0dX3hXztlqkeTYjjc8XdY097T/ZRcJMLXz825iFSx1fq52YyIXUWg==
+X-Received: by 2002:a05:620a:a14:b0:792:c0af:dda1 with SMTP id af79cd13be357-792c75abf30mr3293911185a.32.1716318192574;
+        Tue, 21 May 2024 12:03:12 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43df54d922esm162191431cf.22.2024.05.21.12.03.07
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-792bf3106c2sm1312022185a.106.2024.05.21.12.03.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 May 2024 12:03:08 -0700 (PDT)
-Date: Tue, 21 May 2024 15:03:06 -0400
+        Tue, 21 May 2024 12:03:11 -0700 (PDT)
+Date: Tue, 21 May 2024 15:03:10 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 27/30] pack-bitmap: extra trace2 information
-Message-ID: <a34a60c3ef87cbe707ce165adb87a769e6e25296.1716318089.git.me@ttaylorr.com>
+Subject: [PATCH v3 28/30] ewah: `bitmap_equals_ewah()`
+Message-ID: <da2fb5b4b48816eb97d2190461f7b3dfa4da917d.1716318089.git.me@ttaylorr.com>
 References: <cover.1710972293.git.me@ttaylorr.com>
  <cover.1716318088.git.me@ttaylorr.com>
 Precedence: bulk
@@ -70,87 +70,61 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1716318088.git.me@ttaylorr.com>
 
-Add some extra trace2 lines to capture the number of bitmap lookups that
-are hits versus misses, as well as the number of reachability roots that
-have bitmap coverage (versus those that do not).
+Prepare to reuse existing pseudo-merge bitmaps by implementing a
+`bitmap_equals_ewah()` helper.
+
+This helper will be used to see if a raw bitmap (containing the set of
+parents for some pseudo-merge) is equal to any existing pseudo-merge's
+commits bitmap (which are stored as EWAH-compressed bitmaps on disk).
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ ewah/bitmap.c | 19 +++++++++++++++++++
+ ewah/ewok.h   |  1 +
+ 2 files changed, 20 insertions(+)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index e61058dada6..1966b3b95f1 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -116,6 +116,10 @@ struct bitmap_index {
+diff --git a/ewah/bitmap.c b/ewah/bitmap.c
+index dc2ca190f12..55928dada86 100644
+--- a/ewah/bitmap.c
++++ b/ewah/bitmap.c
+@@ -261,6 +261,25 @@ int bitmap_equals(struct bitmap *self, struct bitmap *other)
+ 	return 1;
+ }
  
- static int pseudo_merges_satisfied_nr;
- static int pseudo_merges_cascades_nr;
-+static int existing_bitmaps_hits_nr;
-+static int existing_bitmaps_misses_nr;
-+static int roots_with_bitmaps_nr;
-+static int roots_without_bitmaps_nr;
- 
- static struct ewah_bitmap *lookup_stored_bitmap(struct stored_bitmap *st)
++int bitmap_equals_ewah(struct bitmap *self, struct ewah_bitmap *other)
++{
++	struct ewah_iterator it;
++	eword_t word;
++	size_t i = 0;
++
++	ewah_iterator_init(&it, other);
++
++	while (ewah_iterator_next(&word, &it))
++		if (word != (i < self->word_alloc ? self->words[i++] : 0))
++			return 0;
++
++	for (; i < self->word_alloc; i++)
++		if (self->words[i])
++			return 0;
++
++	return 1;
++}
++
+ int bitmap_is_subset(struct bitmap *self, struct bitmap *other)
  {
-@@ -1040,10 +1044,14 @@ static int add_to_include_set(struct bitmap_index *bitmap_git,
+ 	size_t common_size, i;
+diff --git a/ewah/ewok.h b/ewah/ewok.h
+index 7074a6347b7..5e357e24933 100644
+--- a/ewah/ewok.h
++++ b/ewah/ewok.h
+@@ -179,6 +179,7 @@ void bitmap_unset(struct bitmap *self, size_t pos);
+ int bitmap_get(struct bitmap *self, size_t pos);
+ void bitmap_free(struct bitmap *self);
+ int bitmap_equals(struct bitmap *self, struct bitmap *other);
++int bitmap_equals_ewah(struct bitmap *self, struct ewah_bitmap *other);
  
- 	partial = bitmap_for_commit(bitmap_git, commit);
- 	if (partial) {
-+		existing_bitmaps_hits_nr++;
-+
- 		bitmap_or_ewah(data->base, partial);
- 		return 0;
- 	}
- 
-+	existing_bitmaps_misses_nr++;
-+
- 	bitmap_set(data->base, bitmap_pos);
- 	if (apply_pseudo_merges_for_commit_1(bitmap_git, data->base, commit,
- 					     bitmap_pos))
-@@ -1099,8 +1107,12 @@ static int add_commit_to_bitmap(struct bitmap_index *bitmap_git,
- {
- 	struct ewah_bitmap *or_with = bitmap_for_commit(bitmap_git, commit);
- 
--	if (!or_with)
-+	if (!or_with) {
-+		existing_bitmaps_misses_nr++;
- 		return 0;
-+	}
-+
-+	existing_bitmaps_hits_nr++;
- 
- 	if (!*base)
- 		*base = ewah_to_bitmap(or_with);
-@@ -1407,8 +1419,12 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
- 			object->flags &= ~UNINTERESTING;
- 			add_pending_object(revs, object, "");
- 			needs_walk = 1;
-+
-+			roots_without_bitmaps_nr++;
- 		} else {
- 			object->flags |= SEEN;
-+
-+			roots_with_bitmaps_nr++;
- 		}
- 	}
- 
-@@ -1975,6 +1991,14 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 			   pseudo_merges_satisfied_nr);
- 	trace2_data_intmax("bitmap", the_repository, "pseudo_merges_cascades",
- 			   pseudo_merges_cascades_nr);
-+	trace2_data_intmax("bitmap", the_repository, "bitmap/hits",
-+			   existing_bitmaps_hits_nr);
-+	trace2_data_intmax("bitmap", the_repository, "bitmap/misses",
-+			   existing_bitmaps_misses_nr);
-+	trace2_data_intmax("bitmap", the_repository, "bitmap/roots_with_bitmap",
-+			   roots_with_bitmaps_nr);
-+	trace2_data_intmax("bitmap", the_repository, "bitmap/roots_without_bitmap",
-+			   roots_without_bitmaps_nr);
- 
- 	return bitmap_git;
- 
+ /*
+  * Both `bitmap_is_subset()` and `ewah_bitmap_is_subset()` return 1 if the set
 -- 
 2.45.1.175.gbea44add9db
 
