@@ -1,93 +1,110 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55791149C55
-	for <git@vger.kernel.org>; Tue, 21 May 2024 22:27:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F8D2AE6C
+	for <git@vger.kernel.org>; Tue, 21 May 2024 22:33:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716330445; cv=none; b=n/r2Su5obMZWeUxMCAWA+44Wy3l5dvSUVc6coKdv3oLwBoRENW71cZjCQUM8CgD/2r55x0SpLA30ZA1JUkRweYExJovHArW7zVrIBQ/FDD0QGZnY40pvVTlabaXasHe4CgG4wF01MLk0goyLg6xTJsb269ef+djjpz1UPiClgNQ=
+	t=1716330803; cv=none; b=LseeKo1cd9pEzxyhsbUdf5C12RMq90tU/ZFPv4g6Cle5B6kgxdDckRlLxXNNk12roslGU5n4onMsuztJWGOkTvSq9erwEX3IQycn1YND8a0fjVZpXlQq094XEV7YunwH8KlMhqAK0B5aLt8GfRSBmqJu8eQ8AZeuz7VnXNiaio8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716330445; c=relaxed/simple;
-	bh=KzfiXD7gUqNWpN4vSaTTascedDnvADbev7+Yny1k9lE=;
+	s=arc-20240116; t=1716330803; c=relaxed/simple;
+	bh=W9sRjQaunJv6l7py5ZM3sv6a7q8KZo7sD88McYzP+Fs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t2IWdN8q55FD4eHUk9LLdSjGn67WxZW1ft2eBpfbVs5V5wwRDutQO5NRi8lynHnpaajw4jpxDkXrWV90zp+Yaj7/lwQltTGsFCflQzkYPRrDfJDOkX+IDKQ8p4sH5uG7bruy1bDVKCwzMdcdhaYRpc+LuMjBRMUQbKLGEkUmHLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=WKidkrR1; arc=none smtp.client-ip=209.85.167.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=qMGAg+OUEG7blTUNgyP7FT0HBKjEcKaKCb/y+xz4CjwbQ40Xgs/T9yCac9Ohaux0/kALl3hWDq3JOydt3on9DnqUJcLkA9bY4JQUoYivh9dvuJW1hfFX9FXBDOAanWdkmQ4+d03YgMuRLVmwl21qcr7unBq+OHhKTx9/K62ndYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=TL1c60j9; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="WKidkrR1"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3c9995562fcso2312909b6e.2
-        for <git@vger.kernel.org>; Tue, 21 May 2024 15:27:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1716330443; x=1716935243; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VvsjhP/wpBO0ygb/CoKy29gUQnbPNgLvJ7POeUqf5tc=;
-        b=WKidkrR1Q2NeHKaY5JAk6nmP7RwekwauH0lkkQRdFFOOfVMDPFZvttQZC+MqBEAgo1
-         /RLHWsniRiL4LfA5xe/BRtJ4UK12aRw350TVRHbF6DAQcHz7I3WfBxnK0qPEMvMLkwOX
-         YhhGRqK0CAsri1yGD2W4aPyPO0cwNNC1guTPPWn81cTUik29phzOUt/gOJcnfB2Xew/S
-         Pr9tyVQ9cFkODZXJrn2If1OojUFn9AMST5Gmii2ad8ztONhb5h4j0UYJqDDnJViPHHsz
-         CBHq46Tl2tBoIN1WVYVVk+bQSLQB+3s2jsOLJ6UT5rlnQFIJA3QeoRRdgAhUwzo+TaeX
-         gmBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716330443; x=1716935243;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VvsjhP/wpBO0ygb/CoKy29gUQnbPNgLvJ7POeUqf5tc=;
-        b=fOooVO0pg8t/MwoSnQvRAN1APWKb8YA9bJRSZUMSrNUxkSJp86hJ2SvedZSReJXVjE
-         0g58teClvZqRFZ8smEpUaCWaYVv3Ui+TuKWaIFPtY4poWOcylvGGw2PBwdzvLLKC6cW0
-         7kjKPyCR1pJg8Xb6T1vL8k6aquz8u995J1kYgcs9w2WwEPpsi/1+II5TbShJ+13986KI
-         VUedb25NUl4D8bNUQOLqLedphJG+FzQJKPi2/2Gmiyb8GBjnYIhcZ/TSvZamYgI+zBv1
-         lKJsZW8ym0dH4bmJZK+RlP/TPbnUf9AWGLoCimqU9Osaelxdyu5kaWcDpGBG/IbnsoTi
-         fORw==
-X-Forwarded-Encrypted: i=1; AJvYcCWE3gbnhZ/X4BCuXVuqOrz1cRsO4Gm/vNtEG2uNEsNELasC2suTHDe6Qw/aPjrO2itW97DNzOzPBPofyJ+4NgrsewDd
-X-Gm-Message-State: AOJu0YzF68g3h8j5bZiywLqQ/r+Nl/YPbZlhRtzUPPDoX9ObWmfrayjw
-	Jiq+uSNIBsRt+UhSAPGUPrd/0qFfO9+Q60OWNZpTl/MUUd9+fkY9R7BPGao0vno=
-X-Google-Smtp-Source: AGHT+IEzYEBuZTWrdwc7oVJPLgvOvtNGiFV3Hf+QDOm47PefX1W7QxK5NzzlxM/ulWbV/jw2eruftQ==
-X-Received: by 2002:a05:6808:1115:b0:3c9:6bc8:227e with SMTP id 5614622812f47-3cdb32e4477mr395131b6e.10.1716330443253;
-        Tue, 21 May 2024 15:27:23 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43e074719d1sm144938301cf.35.2024.05.21.15.27.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 May 2024 15:27:22 -0700 (PDT)
-Date: Tue, 21 May 2024 18:27:08 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>,
-	=?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>,
-	Git List <git@vger.kernel.org>
-Subject: Re: Re* [PATCH] add-patch: response to unknown command
-Message-ID: <Zk0fvOpOapsAkWSd@nand.local>
-References: <1dbe4c61-d75f-45d9-95d2-ac8acae22c56@gmail.com>
- <ZkxHLE_8OpYvmViY@tanuki>
- <xmqqr0dvb1sh.fsf_-_@gitster.g>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="TL1c60j9"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 762565DA99;
+	Tue, 21 May 2024 22:33:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1716330794;
+	bh=W9sRjQaunJv6l7py5ZM3sv6a7q8KZo7sD88McYzP+Fs=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=TL1c60j9CSKbts/zyEtxyCiMO3ofw3UOAk+lBNEn+UKhSKCU0zxh1R2MkQw38A4tQ
+	 NaTxI38EdQorTbIVuICWQdJOW29nUp9J2BC7/nEzY67Nl3+W3w9PCOw1iZMAlWoAK9
+	 OPXB4TlQ+1pQAL8dfafhL4mDQ7yOEg6YT7J1OO54eqViWWHvUkyl1Zb086dTBmlNFs
+	 ES2RwOaMWGdO8Ydbysj3Rn7LG08aKKy32WsEdppE72o8k0KnpA4KXNHIHIoEhuTFW5
+	 TDdOOgISqH2Ng+/yALG6SD4/d98DL51Q8bemA+jLLrX8aHYIO+Nphdzccnr/eLlfkq
+	 lmfIBKnz/X+mWEiFqEN19EBko0065jK+mGNOQJrww1Wn/XdE59f05wVKXiq12fQeck
+	 J0VmBU5HULwoOkG8NGPf2euHEtuabxuSmFNB/WLq6QRa7Ajyzyid15+bPCnwe3wMD0
+	 /3o5/QRNHhteoO9iPtLBSw9RqVvnQg23Si8GvcVCOZKJrIRiH11
+Date: Tue, 21 May 2024 22:33:12 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 0/6] Various fixes for v2.45.1 and friends
+Message-ID: <Zk0hKCsbjFGkguFQ@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
+ <pull.1732.v3.git.1716236526.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="8pcvsSUMDKsVVFeK"
+Content-Disposition: inline
+In-Reply-To: <pull.1732.v3.git.1716236526.gitgitgadget@gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--8pcvsSUMDKsVVFeK
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqr0dvb1sh.fsf_-_@gitster.g>
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 21, 2024 at 08:52:14AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> > I'm a bit on the edge here. Is it really less confusing if we confront
-> > the user with a command that they have never even provided in the first
-> > place? They implicitly specified the first letter, only, but the user
-> > first needs to be aware that we discard everything but the first letter
-> > in the first place.
->
-> I share your doubt.  If what the user said (e.g. "ues") when they
-> wanted to say "yes", I find "You said 'u', which I do not understand"
-> more confusiong than "You said 'ues', which I do not understand".
+On 2024-05-20 at 20:21:59, Johannes Schindelin via GitGitGadget wrote:
+> There have been a couple of issues that were reported about v2.45.1, and =
+in
+> addition I have noticed some myself:
+>=20
+>  * a memory leak in the clone protection logic
+>  * a missed adjustment in the Makefile that leads to an incorrect templat=
+es
+>    path in v2.39.4, v2.40.2 and v2.41.1 (but not in v2.42.2, ..., v2.45.1)
+>  * an overzealous core.hooksPath check
+>  * that Git LFS clone problem where it exits with an error (even if the
+>    clone often succeeded...)
+>=20
+> This patch series is based on maint-2.39 to allow for (relatively) easy
+> follow-up versions v2.39.5, ..., v2.45.2.
 
-Same here. The below patch provides compelling reasoning and has my:
+I looked at this series and seems fine.  I tested it with the latest
+HEAD of Git LFS and it seems to function as expected.  I appreciate the
+prompt fixes.
 
-  Acked-by: Taylor Blau <me@ttaylorr.com>
+(My apologies for not getting back to this sooner.  I took a long
+weekend for the Victoria Day holiday and was busy riding rollercoasters
+instead of reading the list.)
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-Thanks,
-Taylor
+--8pcvsSUMDKsVVFeK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZk0hKAAKCRB8DEliiIei
+gRAvAP9L6BPoxSzsSDAS/lOdpaqHZf/6VwinV1uNi2kELYiWswEA1wEFz9Wn8+ZJ
+o1FDE8+wtWcaYy0g5YHyXQNuvox3mww=
+=GQPZ
+-----END PGP SIGNATURE-----
+
+--8pcvsSUMDKsVVFeK--
