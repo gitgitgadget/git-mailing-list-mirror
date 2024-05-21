@@ -1,73 +1,108 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42BD17997
-	for <git@vger.kernel.org>; Tue, 21 May 2024 16:18:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7944C66
+	for <git@vger.kernel.org>; Tue, 21 May 2024 16:21:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716308332; cv=none; b=Aa4H4m8bUqCBqDHYe5bo9CI7XtV4NORZHSmb0s+PYp0hgQ05zvrLyMV6LxDQyWUEcHndWLvawSPlecJmcHQwUpPqc0VOPVk0FlxsBvU0X2KMVmMhvOUtCOk4XTLKtL1LC8sTyZ3M5+mJlsdVJswk3woj4qfmB8Za1oKo/ti33LU=
+	t=1716308468; cv=none; b=DddleeZx5BdmCRe5gL7MvViRt/fzxkgZIf0RG8ObfAfZpzTwdsDF02s9PhpQDlplPc8+RERW2G8VJ3WpJ8W65pTTkqOIS0op9xYu2ESr7U0Hs/SuX/nXtpMTXweVt89Sp0TWJu0tSjdrcfR73d8ZD1IYyR4ryiVcwjvC9yoPOUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716308332; c=relaxed/simple;
-	bh=ZWMUBB9AUMt9DJypjI3zMQdKNBcOWsW7jn+tzwazpy4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FBsnIE2ylToxPlku5wsTlUTXCiWOMgBeMrx+nw/KYDT+BLXnmu/Ov+61nMRuV0NqNRR4vu2rnSCc7UasNu/kCaPFRl/UqXtKhwXHry0XzH88NBsFJbwSVUyapyf6xdXuMR+78O6Nio6969T/1iT6ZTHL9PFTpd/BqUPgIWW3bHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-69b514d3cf4so2526136d6.0
-        for <git@vger.kernel.org>; Tue, 21 May 2024 09:18:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716308329; x=1716913129;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZWMUBB9AUMt9DJypjI3zMQdKNBcOWsW7jn+tzwazpy4=;
-        b=b9fElxQMTBwCWu08STwRyUgudSKRHa0mEU0ay3soEIuk5FNM3gASUBc82XVGjEfB2T
-         +k6W2gKQnxzFKiJVpWdksafg9CM5kTsKxOMxJdNrWPkVM9r5C/GI+vWeXt0QmuEp6wuV
-         FY8ajXT0pPxlYg4/c7KyGr6fpP6OZfkouUI6fAGKFGBSeKeNRqYjbuDqP6SBSl42aedL
-         ix7/+T7Ry5IPUwnsBJI/WIfzwF2Z8J0dgsiq0qTdcJJ12WWSxNGdtlmtrtdbPZ90Xew/
-         UrKO0FWsFeu58XDFgSNPtGbvOl5v7ZHuNJBwEANR83p+UrftcBH6tAnVctYxbnn0Kwwd
-         YpPg==
-X-Forwarded-Encrypted: i=1; AJvYcCX/swQbr8BQHtC0R133MfErD5tIBO6vc2EDmJrkEzgbv6hkmiWHRS+n1i1sZbeCbdhe2fxFXHpDXTm5LOa7eHSbNDIK
-X-Gm-Message-State: AOJu0YxaFRlS3xAuzmOhhRmmYexximJXrCXu5Seg8iORsV/RrgQswxSL
-	+c7TTRozZS1u6CmvMsN1JtJnlHQLcbaeBwS8plH4aCilNMReAo1zjZEkHqXVa51ZCeRvLLAEf4l
-	wsmesTZ1OdwDWkrpm8/eTom0PoiM=
-X-Google-Smtp-Source: AGHT+IG3V5NBmzFigQgQ7e2Y3y3f8U7oRcd955m9edFQ2vDAawKVHICATtjPn81gTWQoW03g+piAE+vWA+TN48lhF9o=
-X-Received: by 2002:a05:6214:4a86:b0:6a9:8f2:74d6 with SMTP id
- 6a1803df08f44-6a908f276a5mr96598656d6.28.1716308329573; Tue, 21 May 2024
- 09:18:49 -0700 (PDT)
+	s=arc-20240116; t=1716308468; c=relaxed/simple;
+	bh=kITmObpj25Hdd2XYYruqa+/dk36TIq9bZGebwQTrL6A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aRYdHknE1vpWsOowP+CuoAwzOlhPydGTGvBTkoNRTEJEsb9SgDGpJuRAhYC1ygDufzjld4FOReypso0ObkRE/uGLt9pguF4M1wPBtGamw4y1L9wz0pwYoObXvyO2WC+10k1V5hZoxav6/YUIGm/AmzQORexmKwMJ20CUQsEij8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=b8WWl346; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="b8WWl346"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E6DCB2FC67;
+	Tue, 21 May 2024 12:20:56 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=kITmObpj25Hdd2XYYruqa+/dk36TIq9bZGebwQ
+	TrL6A=; b=b8WWl346pjQS3iL+apIIqflg3tH+6YIH0AijhfZsVAEEj+q5Kibp2p
+	8um0/1990mafm+eF6rvP1nX8njGK3IBSDVyXFCKilqTeymTXiTpX4VWktrk/0Igk
+	tUPD/pxSLpHYfz/xWCrVrC6xz8mPqJC1T7IrGduZD06HLE09s1I9Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DEFB12FC66;
+	Tue, 21 May 2024 12:20:56 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 483212FC65;
+	Tue, 21 May 2024 12:20:56 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (May 2024, #08; Mon, 20)
+In-Reply-To: <Zkw5yDAVAnmy-cg8@tanuki> (Patrick Steinhardt's message of "Tue,
+	21 May 2024 08:06:00 +0200")
+References: <xmqqwmnoca35.fsf@gitster.g> <Zkw5yDAVAnmy-cg8@tanuki>
+Date: Tue, 21 May 2024 09:20:55 -0700
+Message-ID: <xmqqfrubb0go.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240520111109.99882-1-glaubitz@physik.fu-berlin.de>
- <20240520190131.94904-1-ericsunshine@charter.net> <277726443f533446be4391cf2aa3d487974a7a18.camel@physik.fu-berlin.de>
- <CAPig+cQYJL+6J9PJX-vrNRXJ4TUCJCQRDQstUnPf4OOwOVCUnw@mail.gmail.com>
- <b3bef1539c4f81780b5f705e55b12898cb084254.camel@physik.fu-berlin.de> <6861baa7663cc6cb78bb2e0be664c07530d179ab.camel@physik.fu-berlin.de>
-In-Reply-To: <6861baa7663cc6cb78bb2e0be664c07530d179ab.camel@physik.fu-berlin.de>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 21 May 2024 12:18:16 -0400
-Message-ID: <CAPig+cTfHktPySO3rHikhOUwH0WW00PN99HLpNJWs9i2_TN7vg@mail.gmail.com>
-Subject: Re: [PATCH 0/3] improve chainlint.pl CPU count computation
-To: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Michael Cree <mcree@orcon.net.nz>, Matt Turner <mattst88@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1A2366D4-178E-11EF-A230-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Tue, May 21, 2024 at 10:28=E2=80=AFAM John Paul Adrian Glaubitz
-<glaubitz@physik.fu-berlin.de> wrote:
-> On Mon, 2024-05-20 at 21:23 +0200, John Paul Adrian Glaubitz wrote:
-> > On Mon, 2024-05-20 at 15:19 -0400, Eric Sunshine wrote:
-> > > Thanks for testing. Were you able to check whether it fixes CPU count
-> > > detection on Alpha, as well?
-> >
-> > I can test on Alpha, but that will take a little longer as I don't have
-> > my setup ready. Will try to report back by tomorrow.
+Patrick Steinhardt <ps@pks.im> writes:
+
+> On Mon, May 20, 2024 at 04:55:26PM -0700, Junio C Hamano wrote:
+>> * ps/refs-without-the-repository-updates (2024-05-17) 17 commits
+>>  ...
+>>  Further clean-up the refs subsystem to stop relying on
+>>  the_repository, and instead use the repository associated to the
+>>  ref_store object.
+>> 
+>>  Will merge to 'next'?
+>>  source: <cover.1715929858.git.ps@pks.im>
 >
-> I have tested it now on single-core Alpha and it works as expected, so I
-> think it's safe to land the patches.
+> We've waited a couple more days now, and there was no additional
+> feedback so far. I'm happy for this to be merged down.
+>
+>> * ps/reftable-reusable-iterator (2024-05-13) 13 commits
+>> ...
+>> 
+>>  Code clean-up to make the reftable iterator closer to be reusable.
+>> 
+>>  Comments?
+>>  source: <cover.1715589670.git.ps@pks.im>
+>
+> There was a round of reviews by Justin on this one, which I've addressed
+> in v2 and which was acked by him. I'll try to rope in more reviewers
+> internally to get this over the finish line, but I'd also highly
+> appreciate any GitLab-external reviews here.
 
-Thank you for testing.
+Yeah, it was just me who didn't go back to the thread and update the
+topic state.  I think this one is in good enough shape to be merged
+down.
+
+>> * ps/reftable-write-options (2024-05-13) 11 commits
+>> ...
+>> 
+>>  The knobs to tweak how reftable files are written have been made
+>>  available as configuration variables.
+>> 
+>>  Comments?
+>>  source: <cover.1715587849.git.ps@pks.im>
+>
+> Same here, I'll try to rope in additional reviewers.
+
+Ditto. 
+
+FYI, the ones labeled as "Will merge to 'next'?" and "Comments?"
+were often already read by me and I found nothing that needs further
+comments by myself.  The latter tends to be topics I am less sure
+about (not about implementation, but assumptions and use cases the
+topic is based on) than the former.
