@@ -1,69 +1,147 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29383BB21
-	for <git@vger.kernel.org>; Tue, 21 May 2024 22:40:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CCF58AC1
+	for <git@vger.kernel.org>; Tue, 21 May 2024 22:57:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716331254; cv=none; b=A9WD3uAtJWI2f4pkAjhVLJ98isgo/0N9lwa5dGjLWK1c8ltMEHD8VfVyN08sM/3F1+SKZyP1iUGv2DR1hfR3sqNrU55W6dXEY9VC94es8uZ3fLCSyBU3+jzvmDTZqdxPO3NGQ0o/aYoFKqF1knlTsG3DPzQ8J217my4XFVoEvuI=
+	t=1716332241; cv=none; b=AFcGqLGJJ43oMQm3gSq2UzCGoNTnoM2kmYx2vi9WalKueAt6xh81zb1J0Z4CAcq3xF8rY/wSVDJqWcJMMBo9ZJaSi5gUR1wnKS8B/lNq4gOzwZfgJLpA0PnZNo75x5Vf10Z9zhmOkGXsuKnPN6jjg41nvgMN1Uw0623WoGsWDwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716331254; c=relaxed/simple;
-	bh=k9mYxOvuYWJic+0d0T7+daq9a+L/Iu5FKEpT2SIaz50=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rimL7b1aXnl8vOM4hG6ARIoTTHK44G9eJw8iKN9AubsDzGbyQlmygkXOwKttYX/QdD59qiLMltjJA2x8goeMM1FYdkGF3ZayaTbpVMQXl1sZGepLMcbghqhjh4POd/4cAS/gfe8GlU4xvpYDY7O1j2pD2W+lrON/TuTncHTP42c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NByuBYY3; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716332241; c=relaxed/simple;
+	bh=39jiz0CZ8mkmem2HRflY1ghYEFM5EdoCM3X2qhP1SHY=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=Y8BihfI6e0LUDJAy4ZYg+Gm7nx9leqinfkEjdtNM0+Z/biMQuSYEaoKapfBHEhPMp8CHWbZaQk+G+45OTI+ffGVDuW2fCvYN6g0vbyO/OeIdauUK2kjmeeLEYhV7Ct4Zpq4yvWd3WOH8AEFUyEa7T6ba/agUAGYy5/xfFJBJ25I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io; spf=pass smtp.mailfrom=alchemists.io; dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b=oHvABc5h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NBn6R5r4; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alchemists.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NByuBYY3"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 734D32344C;
-	Tue, 21 May 2024 18:40:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=k9mYxOvuYWJic+0d0T7+daq9a+L/Iu5FKEpT2S
-	Iaz50=; b=NByuBYY3EtgfcnoGEmizsKDbmdhk7/GNPdt1QC0odBE+2ajydGbBF9
-	/uvg4REsNlNs8Mo2HeVTCkEsvlNSz15DOVPi8gUtQ233dYI1tP/CqllZMajEMNKg
-	bDoKcQMas8LpGFDrmD2qOEKP3xdv32RULCRH/FhaeSnwylMeegZQg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6A61A2344B;
-	Tue, 21 May 2024 18:40:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D19022344A;
-	Tue, 21 May 2024 18:40:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Jeff King <peff@peff.net>,  Johannes Schindelin
- <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 0/6] Various fixes for v2.45.1 and friends
-In-Reply-To: <Zk0hKCsbjFGkguFQ@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Tue, 21 May 2024 22:33:12 +0000")
-References: <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
-	<pull.1732.v3.git.1716236526.gitgitgadget@gmail.com>
-	<Zk0hKCsbjFGkguFQ@tapette.crustytoothpaste.net>
-Date: Tue, 21 May 2024 15:40:50 -0700
-Message-ID: <xmqq4jaqkcul.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b="oHvABc5h";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NBn6R5r4"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 665771140149;
+	Tue, 21 May 2024 18:57:17 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Tue, 21 May 2024 18:57:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alchemists.io;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1716332237; x=1716418637; bh=gyHZQC9YA1FhDWpOka8Arn581N8XEQyt
+	uO1GYDd0V70=; b=oHvABc5hhlfQ/0eA4ckNboW2fcj1JCR0i9wFj0Ju+3p7MK/F
+	jbmRouuh9gRYRx0hL9cofbQ4Jp/shPnQvA5e6ENwF+eHlqoRadjhSvyME74qRqfp
+	9JVjBZHebF+o/YsE2DB9iPZYray1R0pY5wtypI1NnTC+xgAV0qvA7i+uRmlAx6dK
+	2atHfSJj1Hnc3BumZlyq14tqTehOqdkfVw+sMxg0IwxC41zROFcmgwC31ko7tB3Z
+	1D22ueaDK2QU2bpy+aESwPASKZUTB55SMuq9A5Wp8Ww1Pz6yCTMjgD6/1AKpv+MA
+	xxEiRweUbfBxALV75m14oq9k3GX7L/PlyZlmxQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1716332237; x=
+	1716418637; bh=gyHZQC9YA1FhDWpOka8Arn581N8XEQytuO1GYDd0V70=; b=N
+	Bn6R5r4NojIp+oPU60Vmg4t4sa/eP0ITnNBDma6xNQXfAZftRtAKhxUaoVehG8d6
+	kgjX5u2aofGy6HbdgIB3X0xtBJCQgpr5Xlc8ncof+AJYI7/Hc7IDBYBzfUyYwfBZ
+	bHLoSia7G+/9e7yf2Fq48aJ6jAO/Ery8b3MukUl+aSsPHirW2N3+g2u/f8MJ7HjM
+	d0Ec/oTSFu3LIwSqc4M42vwVdPBfUoZJcdLHwfDl1mXNJdXJs+rBy264vw0dfIYy
+	7CnKaqXl9tr8XZBf0o6FRU4y2u/BJbOy/T5HwxCAuSeIHt75wN4Pv9twXOZY6z1L
+	ClNxKJ37R7SpIfg5ne/Zw==
+X-ME-Sender: <xms:zSZNZksYGwmmTiE1UGvoMQDpM6IjaZ4vTIAzBScFP64UXOhwkvunEw>
+    <xme:zSZNZhfWdu9tkirLx_RYN_gTaKHDMdu2bUvEB9PccR1MJt16gsHpxR-w1HbMD_9Ww
+    bgiefjuNKx9csjo>
+X-ME-Received: <xmr:zSZNZvwphgBFcqsTj8hb5bCB_s8XI-wlQ7MG4sqg8jCi8V-5MMgaoyzQ8mKpj7Od9WDX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeifedgudeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurheptggguffhjgffvefgkfhfvffosehtqhhmtdhhtdejnecuhfhrohhmpeeurhho
+    ohhkvgcumfhuhhhlmhgrnhhnuceosghrohhokhgvsegrlhgthhgvmhhishhtshdrihhoqe
+    enucggtffrrghtthgvrhhnpeegheelffevjeehheekffekheevieffieeghffhgffhkeej
+    keekkeehtdduudevvdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghrohhokhgvsegrlhgt
+    hhgvmhhishhtshdrihho
+X-ME-Proxy: <xmx:zSZNZnO0C0TUigSp__l2BKA3E-ng1PZPi9QLum5o3MpSRbCQTdGWrA>
+    <xmx:zSZNZk_rYs3-gJ05BVjKU3-o8cBesM_sdXCY3VqrCv3w4dpNFcA_Ag>
+    <xmx:zSZNZvXGQULvBYm42pok9yJu1EDemK-SUKy8PxqQ6QCbIfnwJuvZNA>
+    <xmx:zSZNZtdlO6HESbhTNf1Fc6teXkvq_ux5NXJFYNE4HQZ7P3KeCqdOsg>
+    <xmx:zSZNZjY2HjcejvePb57EbAdHPyFbRx6Io2k3YDHV23wkINCOouR1Dh8K>
+Feedback-ID: i78e840cc:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 21 May 2024 18:57:16 -0400 (EDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 2D5A875C-17C3-11EF-ADAE-25B3960A682E-77302942!pb-smtp2.pobox.com
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
+Subject: Re: [PATCH 09/12] tests: verify that `clone -c
+ core.hooksPath=/dev/null` works again
+From: Brooke Kuhlmann <brooke@alchemists.io>
+In-Reply-To: <20240521195659.870714-10-gitster@pobox.com>
+Date: Tue, 21 May 2024 16:57:05 -0600
+Cc: git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9933EA45-85FE-4372-8177-E0D47A596C72@alchemists.io>
+References: <20240521195659.870714-1-gitster@pobox.com>
+ <20240521195659.870714-10-gitster@pobox.com>
+To: Junio C Hamano <gitster@pobox.com>,
+ Johannes Schindelin <johannes.schindelin@gmx.de>
+X-Mailer: Apple Mail (2.3774.600.62)
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Thanks, Junio and Johannes. Looking forward to making use of this again!
 
-> (My apologies for not getting back to this sooner.  I took a long
-> weekend for the Victoria Day holiday and was busy riding rollercoasters
-> instead of reading the list.)
+> On May 21, 2024, at 1:56=E2=80=AFPM, Junio C Hamano =
+<gitster@pobox.com> wrote:
+>=20
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>=20
+> As part of the protections added in Git v2.45.1 and friends,
+> repository-local `core.hooksPath` settings are no longer allowed, as a
+> defense-in-depth mechanism to prevent future Git vulnerabilities to
+> raise to critical level if those vulnerabilities inadvertently allow =
+the
+> repository-local config to be written.
+>=20
+> What the added protection did not anticipate is that such a
+> repository-local `core.hooksPath` can not only be used to point to
+> maliciously-placed scripts in the current worktree, but also to
+> _prevent_ hooks from being called altogether.
+>=20
+> We just reverted the `core.hooksPath` protections, based on the Git
+> maintainer's recommendation in
+> https://lore.kernel.org/git/xmqq4jaxvm8z.fsf@gitster.g/ to address =
+this
+> concern as well as related ones. Let's make sure that we won't regress
+> while trying to protect the clone operation further.
+>=20
+> Reported-by: Brooke Kuhlmann <brooke@alchemists.io>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> t/t1350-config-hooks-path.sh | 7 +++++++
+> 1 file changed, 7 insertions(+)
+>=20
+> diff --git a/t/t1350-config-hooks-path.sh =
+b/t/t1350-config-hooks-path.sh
+> index f6dc83e2aa..45a0492917 100755
+> --- a/t/t1350-config-hooks-path.sh
+> +++ b/t/t1350-config-hooks-path.sh
+> @@ -41,4 +41,11 @@ test_expect_success 'git rev-parse --git-path =
+hooks' '
+> 	test .git/custom-hooks/abc =3D "$(cat actual)"
+> '
+>=20
+> +test_expect_success 'core.hooksPath=3D/dev/null' '
+> +	git clone -c core.hooksPath=3D/dev/null . no-templates &&
+> +	value=3D"$(git -C no-templates config --local core.hooksPath)" =
+&&
+> +	# The Bash used by Git for Windows rewrites `/dev/null` to `nul`
+> +	{ test /dev/null =3D "$value" || test nul =3D "$value"; }
+> +'
+> +
+> test_done
+> --=20
+> 2.45.1-216-g4365c6fcf9
+>=20
 
-That's fine.  We all must have fun sometimes ;-)
