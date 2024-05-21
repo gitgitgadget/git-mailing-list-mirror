@@ -1,72 +1,94 @@
-Received: from mail.aixigo.de (mail.aixigo.de [5.145.142.10])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7051E87C
-	for <git@vger.kernel.org>; Tue, 21 May 2024 14:49:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.145.142.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59711FDD
+	for <git@vger.kernel.org>; Tue, 21 May 2024 15:20:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716302997; cv=none; b=ICaHghadgWx6M7vQwL4Yh2IFz0Qo1OQVPBEqIQvFHEtx29g/eugtcKqqTR/h/4MtTGpDmiZ3KEZIY+w5RtnMoP67aqysCNbW9FXtsGd0ACkC14Nn2G0sl030XoYYawqDkrnM4BYKnHxAS7WiFsDZN0MdQH33F7NZLFq4JD4Ykog=
+	t=1716304819; cv=none; b=nHLiU6pq57V/bIa4HkjVzzTPHERwsMJv5aFo2rduvkvPwmNzFpTUdrboePK5T5oMJ/4lOwS+8e4y8o8JJihxKW0X8wQABPcHMjUBP26OzRLZAh5BE/mFq54T3XIBaPrjzh9GKve/uNkSUjZYUEy1yaIbrRRZqSMvw3tP2cd8Qz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716302997; c=relaxed/simple;
-	bh=sMyTlnH1vXBgKjNOG4/iThaRGsvfYCh4XkI5e51GdRA=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=So4DIg93hyNg7TCDe9s0C/Z4taEEm4/RZyhS3OxoIluTpiuEfodhR3ytzX3iRc6xAmUYI+a9hOAFDle3feYSZIavq499U94Zs6XQszgHEo2vmasDzmzzXzyp7VLIApSAa55AzeOlpA/aOY6tz/4RoHryRPLElqE9iH5rfD3c1ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aixigo.com; spf=pass smtp.mailfrom=aixigo.com; dkim=pass (1024-bit key) header.d=aixigo.com header.i=@aixigo.com header.b=VFva2VWo; arc=none smtp.client-ip=5.145.142.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aixigo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aixigo.com
+	s=arc-20240116; t=1716304819; c=relaxed/simple;
+	bh=gIl/ETLTWfD+BxrYKFMUWZkPeMTo4lJgFOhZVCbYIoU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WevKcEPSDhGDb0Fnw/WT5qIKUEmHQgqcOw+AKYt82ahsNPHnhq8RoTKiklNY7PILznI+5MF9JcaOYFpE/AhXdEJ0vRcj/LlhkgbjRt3tesyEDNTFtux9DWQ1KJHXpXXl2iJaeBx61cE2Gz79yCDfYXnhhSdMfW+l+g7HDgebxxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZqjC6Rvg; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=aixigo.com header.i=@aixigo.com header.b="VFva2VWo"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=default; bh=sMyTlnH1vXBg
-	KjNOG4/iThaRGsvfYCh4XkI5e51GdRA=; h=in-reply-to:references:cc:to:from:
-	subject:date; d=aixigo.com; b=VFva2VWo8bswJi+85hofZoe0CtHsF3owx2fvLqHf
-	LtK66ooZMN8+PA1IPyT3IklMrC+Nr93yXXl8KweQkjuMp88pj9miQbRKelNIdJXBM+gk18
-	UHOQdor3fT1Wfoyj/S+keH2DCXdj4ExYRx3YGgD/BdivKBqI46Qg2cUrd2iEw=
-Received: from mailhost.ac.aixigo.de (mailhost.ac.aixigo.de [172.19.96.11])
-	by mail.aixigo.de (OpenSMTPD) with ESMTPS id 29f7eea7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 21 May 2024 16:49:50 +0200 (CEST)
-Received: from [172.19.97.128] (dpcl082.ac.aixigo.de [172.19.97.128])
-	by mailhost.ac.aixigo.de (8.17.1.9/8.17.1.9/Debian-2) with ESMTPS id 44LEnkdC843797
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT);
-	Tue, 21 May 2024 16:49:46 +0200
-Message-ID: <98381fb2-5110-4e7f-a504-c5ff75dcd050@aixigo.com>
-Date: Tue, 21 May 2024 16:49:46 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZqjC6Rvg"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id D4E6C2F660;
+	Tue, 21 May 2024 11:20:14 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=gIl/ETLTWfD+BxrYKFMUWZkPeMTo4lJgFOhZVC
+	bYIoU=; b=ZqjC6RvgthaUkaE1LoBqtGHiGSEsWB8F3cOgGs453KAgehz6jCjuX2
+	Bsfm/JpM/hNM9VdhI3vY2LS1TiMXkegxnSWbUDWGfTe+fJ1elT39aMqF+ePwmLKn
+	Ius4iI1eBxqUS/n4LR9Zq7pmUvgUyniRspow1zwhTbuPCHgXiX5c0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id CE29F2F65F;
+	Tue, 21 May 2024 11:20:14 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D1E972F65E;
+	Tue, 21 May 2024 11:20:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Ondrej Pohorelsky <opohorel@redhat.com>, 
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+    Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Subject: Re: git-daemon doesn't work as expected in v2.45.1 and friends
+In-Reply-To: <20240521-evasive-mindful-stoat-c58b31@meerkat> (Konstantin
+	Ryabitsev's message of "Tue, 21 May 2024 09:27:03 -0400")
+References: <CA+B51BGonS2DDTBQ2RsipW4Cyg5pRv0U71RAN9M1pcPjACtJ4A@mail.gmail.com>
+	<20240521-evasive-mindful-stoat-c58b31@meerkat>
+Date: Tue, 21 May 2024 08:20:10 -0700
+Message-ID: <xmqq5xv7chud.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Betterbird (Linux)
-Subject: Re: How to disable safe directories?
-From: Harald Dunkel <harald.dunkel@aixigo.com>
-To: noloader@gmail.com
-Cc: Git List <git@vger.kernel.org>
-References: <CAH8yC8mPP_2jv8HDBdMxWv6TbiLXeDnD=KmNRMbno2bHQtfH1A@mail.gmail.com>
- <3e4a7071-60b0-4f7a-b347-d584d5eb076e@aixigo.com>
- <CAH8yC8mNns_XiQHp3=q_tYr03Q+kR1r=2WOYha1XMp+cYs9WDQ@mail.gmail.com>
- <d71c7dff-46a7-4ac8-a8c7-ab4985458071@aixigo.com>
-Content-Language: en-US
-In-Reply-To: <d71c7dff-46a7-4ac8-a8c7-ab4985458071@aixigo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: clamav-milter 1.0.3 at srvvm01.ac.aixigo.de
-X-Virus-Status: Clean
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9DE31554-1785-11EF-ADC6-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On 2024-05-21 16:25:17, Harald Dunkel wrote:
-> 
-> It is possible to disable this feature globally using something
-> like
-> 
-> 	git config --system --add safe.directory /somepath/.git
-> 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 
-PS: Its obvious that each peer running git can verify only local
-directories for dubious access bits. Working with shared remote
-repositories you have to consider setting the safe.directory option
-on the remote server.
+> On Mon, May 20, 2024 at 10:21:23AM GMT, Ondrej Pohorelsky wrote:
+>> Is there a way to make git-daemon hosted repositories safe to clone,
+>> without specifying safe.directory in git config? AFAIK this is widely
+>> used feature of Git not only by the end users, but also quite a lot of
+>> tests rely on it.
+>
+> I would say more -- this is very broken and needs to be rolled back. Running
+> git-daemon as a different user is the recommended setup for read-only
+> deployments.
 
-Since CVE-2024-32004 assumes an attacker running its own repository,
-I just wonder why he should use the most recent, fixed git version?
+Is this from f4aa8c8b (fetch/clone: detect dubious ownership of
+local repositories, 2024-04-10) where the commit sprinkled a
+"protection" meant only for "local clone" to more generic code paths
+that are also used by "git daemon" serving a remote clients?  It may
+be that the commit was a bit too aggressive and had a blast radius
+that is much larger than intended?
 
-Regards
-Harri
+I think that 1204e1a8 (builtin/clone: refuse local clones of unsafe
+repositories, 2024-04-15), which is a very pointed fix to ensure we
+do not "hardlink copy" local repository owned by others for
+security, was a good use of die_upon_dubious_ownership() call,
+though.
+
+Reverting f4aa8c8b may not be easy to do mechanically, as it
+introduces the die_upon_dubious_ownership(), but 1204e1a8 uses an
+identical copy of the same function introduced by 8c9c051b (setup.c:
+introduce `die_upon_dubious_ownership()`, 2024-04-15), and reverting
+f4aa8c8b mechanically out of the merged result in v2.45.1 would
+likely to remove the function that is still in use, which would need
+to be retained.
+
