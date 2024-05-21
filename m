@@ -1,130 +1,99 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10799BA53
-	for <git@vger.kernel.org>; Tue, 21 May 2024 13:34:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21967CF39
+	for <git@vger.kernel.org>; Tue, 21 May 2024 13:36:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716298491; cv=none; b=XIh+IL7o8kqGI+aS9a8YA0mH6O5+plqm0HGtnb3KKAB0hkDKR4PXI9vLXhh4/iPvnRiAp7hX1GI3VGK1UKxItl70h0jihsq69Ie2M5Ea4cT9F/nZzYL4E/2Zo/PArPElpprd7MXLxNaoMNjnOw3C83xbYor4bfvHkBNgqPT8AGk=
+	t=1716298598; cv=none; b=FWqLPq0IbFX9VWpQvgVfJyRNWcEGB+zmZrCapbADkhtbgavKCw6Gge+KN9LPffdBtzBo0hsIQB+PkRzsF66CdwS9D9AoyPjyxfNlJDlnVMaDxj/PkMCUN2Ozl+sEsSkAHLfHRZekG4n+abOxMZy02uAKdqx6Z7Bfxy38LtpyXv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716298491; c=relaxed/simple;
-	bh=4RF63pHqcxAMuJbnebYNGux8pwIr7wIEZ4YpRUiQKHc=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KZ8Emdwnh6jinWJjIHEmaoW+rM/+cs7ffyqXBbZUm6bQP12dq2u563Prw44bH12vHRHIMboSvOTYpyO1tIRq4VJ9h6cyWRQnxcaNTeHgEr2FD0jw2PaRCDvmzEumK6K31P2TAhy8PXu/2E9CY6jIuOYvQw3Rhzfedo3wBEN07tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ot4MepB4; arc=none smtp.client-ip=209.85.210.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716298598; c=relaxed/simple;
+	bh=PQj1uT+Wt47asBqf50Ggp7DNv98wfQ9+SRopep+yTv8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=syJpw/QobV0kmh6dsZ+nafN4pfxw2lRFXGKytJsHTcF4gvYrtt9MBEt6V54J7g1SSZW/EW/tC4lB7Whm9zC3Zxgo2HT2V+sostyR+AEyjAL4Jzhr9hwhZa6KvFa58jnnh15D6gYs6D9BH2BaZWGg6sDo6T8DTGs2PK7RoDbn+aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=u/lGbry/; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ot4MepB4"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-6f1016f41e2so1760235a34.1
-        for <git@vger.kernel.org>; Tue, 21 May 2024 06:34:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716298489; x=1716903289; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=SBtzZAqWg+51xR5ghzCZtGKCuZrfWpVflQvB3HtrsNw=;
-        b=Ot4MepB4P2pGy5sU9H6bLK7uKwnyMWZKX2mpvn3PcFS6OhMN7ix/c5ijqrza33lUua
-         2KLv+OOWj9EQG48mTO8mTxgtNnS0h3zr9MgV1hgmKYQs7M19arCv2AVNn69P9HReA8bL
-         q1lsXyhWGM4J0NnN9sV7ts6FsrgECLzRqb5KUgc3WSDiIfgmoIkArMVg+cH1I22i5QCK
-         TzguDwleUj98XzFoZBHCPiBwGdcQXK2P8eriU91mgEUK1ZQfsZTNDvE0HmgXDMh+s1Ee
-         u6bYHqDz3P8Lrf0res/K5Q2Ym7FtNNtjyNFFlq7D7+h12OKHyC5P3T1Q/8UhMnAYwy2V
-         61Mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716298489; x=1716903289;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SBtzZAqWg+51xR5ghzCZtGKCuZrfWpVflQvB3HtrsNw=;
-        b=s8KJnZ3oB+8tJ+3cknikntiQtNmtvNkWs/RHUrNaadlPZVytQWbi0Fb6tK4bNmvo7U
-         s/3GRz5TUamWPMVnnlbgtTo45rzN0ZH8hOU369Xhp2g6LGnzDQ9mafeBgK5pNS0iBO5r
-         byiXrGUGHhusTVvEHGHUJvmnDKGSTUPcRtZBy9N+0taRRaeCq+sfGi+RDrsOTc7XSQSi
-         F3yj7AOSl6XAS4b0AiREIYUJl8DMNHAo5j/WyA2kO+aB9y3/3S7rXSbXr/Nbm1ZtgOV0
-         +wnQMCQxOsnCtSrTkEaGvPeRg8lWl7zj8XI2iSpv931lS7M+Q01drVLihhnMDUjU6cj+
-         qJ7Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWWk6z9uWTHRZhjj/LWtcw+S+Z/AGMXB3gbnHjGy6ddPOA1j4i7tObFQzWHW6PJX4uU1pFJvyDL79H7zo0SzHB2AOwz
-X-Gm-Message-State: AOJu0Ywx92ZVRbRbYjTIr96z76u9XROOrRuKxlhwoSjjGnJWmk+HF6ZI
-	Jpe0BqqBew+rpxYcpRDzuEGY2AE7F996nruyHmuqcZ3juC94Rs0J+W0/leUSA18HFc06nr60Gg6
-	ZoDV6qRFCs3QyiHmFwmoC9zloQjg=
-X-Google-Smtp-Source: AGHT+IH960uG2tZqizwT0BIGodJAC8CskTqEUVt6YHWB5FlJoge5C1R20Iose15lwALteVIrAtIS0njE2/B/GuG84qs=
-X-Received: by 2002:a05:6870:e307:b0:24c:5aff:c37a with SMTP id
- 586e51a60fabf-24c5affc5demr874384fac.36.1716298489106; Tue, 21 May 2024
- 06:34:49 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 21 May 2024 13:34:48 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ca86a8b58dd074287dd2dd352610ffe46e1605b9.1715589670.git.ps@pks.im>
-References: <cover.1715166175.git.ps@pks.im> <cover.1715589670.git.ps@pks.im> <ca86a8b58dd074287dd2dd352610ffe46e1605b9.1715589670.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="u/lGbry/"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id F05FB2B3DF;
+	Tue, 21 May 2024 09:36:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=PQj1uT+Wt47asBqf50Ggp7DNv98wfQ9+SRopep
+	+yTv8=; b=u/lGbry/Ev8HJy7e7rDrUg3Vakgmlbl+/JMK7vZoK4I4QpP6DB/9aX
+	YA9db1XfV+xDuT/ZoK6/iXXgsG4hGLTUAC9GcOvJAYUoqmeMUvgKp/5MWfSYn8yQ
+	otDBtF3HeXCyoltxTzy0U5/Pbv0xMLf46ahCxpi2R5l2qJJX9Ywv0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E8B9B2B3DD;
+	Tue, 21 May 2024 09:36:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B847C2B3DC;
+	Tue, 21 May 2024 09:36:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v5 5/5] apply: fix uninitialized hash function
+In-Reply-To: <ZkxUEP7HifEVlDZY@tanuki> (Patrick Steinhardt's message of "Tue,
+	21 May 2024 09:58:08 +0200")
+References: <cover.1715582857.git.ps@pks.im>
+	<20240520231434.1816979-1-gitster@pobox.com>
+	<20240520231434.1816979-6-gitster@pobox.com> <ZkxUEP7HifEVlDZY@tanuki>
+Date: Tue, 21 May 2024 06:36:31 -0700
+Message-ID: <xmqqcypfcmn4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 21 May 2024 13:34:48 +0000
-Message-ID: <CAOLa=ZQb3if7vcvRcOm8qHSMGo=dSv0nsjCk0R_hhRWU_d7wfw@mail.gmail.com>
-Subject: Re: [PATCH v2 01/13] reftable/block: use `size_t` to track restart
- point index
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000c5b54b0618f6e19c"
-
---000000000000c5b54b0618f6e19c
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2302E1E2-1777-11EF-9746-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The function `block_reader_restart_offset()` gets the offset of the
-> `i`th restart point. `i` is a signed integer though, which is certainly
-> not the correct type to track indices like this. Furthermore, both
-> callers end up passing a `size_t`.
+>> +	if (!the_hash_algo)
+>> +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+>> +
 >
-> Refactor the code to use a `size_t` instead.
+> Do we also want to add a comment here that mentions that we may want to
+> make this configureable via a command line option, like we have in the
+> preceding commits?
 
-More of a question for my understanding: Why use `size_t` vs `uint16_t`
-here? I'm asking since the restart count is defined as `uint16_t
-restart_count` in `struct block_reader`.
+We may want a comment here that says 
 
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  reftable/block.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/reftable/block.c b/reftable/block.c
-> index 5942cb4053..00030eee06 100644
-> --- a/reftable/block.c
-> +++ b/reftable/block.c
-> @@ -326,9 +326,9 @@ int block_reader_first_key(const struct block_reader *br, struct strbuf *key)
->  	return 0;
->  }
->
-> -static uint32_t block_reader_restart_offset(const struct block_reader *br, int i)
-> +static uint32_t block_reader_restart_offset(const struct block_reader *br, size_t idx)
->  {
-> -	return get_be24(br->restart_bytes + 3 * i);
-> +	return get_be24(br->restart_bytes + 3 * idx);
->  }
->
->  void block_iter_seek_start(struct block_iter *it, const struct block_reader *br)
-> --
-> 2.45.GIT
+    we could to redo the "apply.c" machinery to make this arbitrary
+    fallback unnecessary, but the benefit to do so is dubious and
+    the risk of breaking the code is probably not worth the effort.
 
---000000000000c5b54b0618f6e19c
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 60f48924f22030df_0.1
+When working as "better GNU patch" mode without a repository, we
+should not and do not use the_hash_algo for the purpose of hashing
+at all.  We do not do the binary diff (because we cannot grab the
+preimage object out of the object store (that does not exist) to
+apply the delta to form the postimage, we do not do the 3-way
+fallback using the preimage blob object names that appear on the
+"index" lines.  As far as I recall, the only thing we use
+the_hash_algo for is for the max length of the hash to ask "is this
+hexadecimal string a plausible looking object name?  We are parsing
+a line that started with 'index ' and trying to see if the line
+syntactically looks like a valid 'index' line" and the like.  If we
+assume SHA-1 and if somebody tries to injest a SHA-256 --full-index
+patch, that logic may say "nah, we didn't find a valid 'index'
+header", but I think we'll just leave the fields like old-object
+blank, which does not affect anything because we won't do "apply
+--3way" anyway.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aTW92WVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNTdmQy80bGpKYlBESDkyMkpxeXMwb3J1QUlPY1hjZwppdm1MeTJxRDBG
-OE1uYitJMjd2dExzVjdiQlNGN0o1VTU3VTEwK0Jwd3lLMyt6cTA4WlE0KzhWKzdYWTRRdXMyCmdU
-amdTZElQTHZsZUNZOHJ0RVlkelE4Y2c0QWZJZDI0ZFJrbE5HZFJBYmNYTVAyTG9hR2VRWjFUZ3hr
-Y2pyd1AKSU9wSDRNS3lYMHpDSmY3VW00NklGaVpHUnhzMmVNb0loQlpTcjF6UklFekNEMUNqc00w
-OWdlV3NNSnZvNXpvYQpkc3pNTjlXZUhjK2M5N1BnK040bTY0NUxGUExUbjl5VUNBSnV5NURsZ0gy
-OC9FcGNqTVB2V0FRZUpiek1kNkZICjhyZ2xtNWxUQVBkcGlmdjZtWjF4Tmh0cVNVa3pneUY0THM2
-Mm1abXhIeWNJTEZ2VW05TEtEaktZQWh3UVJEdWkKZXd6enptd2cxanYrQkFCMjEwRDNmVDhIbEhn
-SXo4YmVRZnNDZGNsNWdCaWd4MHhXaThvL2N6ZHBycm56V1JaYgphN0ZOQStSNG9DYUtZcm9uZXo5
-QWVmWE9LMHdpeHFtUlVpK0lRV3ViS1IxTHBWSGkxOG1mN0hnMm51aVBzWkNyCm04cVpaeng3TmRD
-ZHRlbCtkN3E1TE53ZGozYUxuWHB5bkgwTjlydz0KPVZMS1UKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000c5b54b0618f6e19c--
+So we _could_ identify such places and tell the code "when
+the_hash_algo is NULL, instead of the_hash_algo->hexsz, use 0 as
+hexsz" (this example is from apply.c:gitdiff_index()) and it indeed
+was the approach I tried in my unpublished draft before the first
+version I posted.  It quickly got ugly.
+
