@@ -1,39 +1,39 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5D37F
-	for <git@vger.kernel.org>; Tue, 21 May 2024 07:08:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3C31DA53
+	for <git@vger.kernel.org>; Tue, 21 May 2024 07:54:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716275284; cv=none; b=An4nglVoT/oTGGbXllfNIVD68ARr/8ogJvWgOL7b9GKVHHet4GEql8RanPlMulQtvRiCu3MImdlsNDWfyhgnMi1RVpI8rED5VacPod5z5hBVlLa0MCThOzCERLclDTV4g87iY8ueaRrpZsvBdHjR641Cjbd6cOL2DzmifgMRaMg=
+	t=1716278067; cv=none; b=IDi/AkSIFVpCPLTAabNNA2U+yp92WEvUiRH0cR9tpoOsVGOvoN8M8V5qeJzf9Rr0xjJQHvQ7IpnAgU9iOQZTfGcEiojJOigS/8VDmqXXCFqePwwoy3TfgKPUH9N+angFJ+dLr2wmrE0cdUGFetbZDx3sMfqK9gQZJxh+ESHIhlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716275284; c=relaxed/simple;
-	bh=W6FSvvJAnJgFMR/fLo1xTzh/Da66qSmfZYPIqduRqV4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PZj9xn6tlTz4aMzt9CBJFmq2etsZ2uqLRwsG7t/dsuBDR2KsfjrYR4e8fV8kxeZCKFAx9LgIF4XEKZebPsMHnjJgX3nnw/bB/6h0ARrD6kipfzFaj5vqZAAtaf+DsBPpE+YpB/DESReAfpOeozv3SyXXccyd5Rp9/VivurJP49Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 21310 invoked by uid 109); 21 May 2024 07:07:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 May 2024 07:07:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6403 invoked by uid 111); 21 May 2024 07:07:57 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 21 May 2024 03:07:57 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 21 May 2024 03:07:52 -0400
-From: Jeff King <peff@peff.net>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 5/5] add-patch: render hunks through the pager
-Message-ID: <20240521070752.GA616202@coredump.intra.peff.net>
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
- <eb0438e8-d7b6-478f-b2be-336e83f5d9ab@gmail.com>
- <xmqqh6esffh1.fsf@gitster.g>
- <ec5d73e22a6e4587f3d87314a9c0e422@manjaro.org>
+	s=arc-20240116; t=1716278067; c=relaxed/simple;
+	bh=6EqyvZwoV2J5F7o6M6M6IZioPOqsXHVBnRP8gmoxVgg=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=RZ4T5D7Pp5BU64BkA1vnSIwhEfmFkpNg2H/Clv8RiAl4SixIR0J3gk9kdIa/DuXetc6VACb3ysbBAZ0Lr/Ao0QiOOa0fwQ4fqhisUgcE5vjLvUhnAq7K4Smb4qlWG9O0QTe4eQhiD06HMyWezOYCnarYQYk8quJ917DE76amr0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=EKKwFaRY; arc=none smtp.client-ip=185.70.40.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="EKKwFaRY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1716278056; x=1716537256;
+	bh=epHGgD+8tAF4+BHLk0US9AXz7/vB5lx2iTmLdZ9OZgU=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=EKKwFaRYvGb3UmyMMCaCQ6uKnZcbBvL2VDccN09kKiVQyQBzRCEl/33oG29PcDseY
+	 1jGYs0+JH2Qd4ZPZn7Kll9tsdo7nHSzq59U+sKyQnU5au4/aAs7HVDUp1ab7S3xPUd
+	 +vAcYQa1+LjX3apZ0BJhX0qRVbDYnvkyW537VhGXsbDe7LKcSSSPYtVciv23vmI99p
+	 PvQ7COIpPvdFCFV9FmoHdCZyd0RgWY9DqtUsoxA/vuLRUsQfGSrWGwEOhSSPcPuIAc
+	 P5A22PSBpnSg7JBH3oReUuQ3JvHNavTkJ5fHcNiuhsAJcTaIHd2vWwsCGpWUVhAUHP
+	 Vvz6fzL330j0g==
+Date: Tue, 21 May 2024 07:54:11 +0000
+To: git@vger.kernel.org
+From: Heghedus Razvan <heghedus.razvan@protonmail.com>
+Cc: ps@pks.im
+Subject: git init BUG when gitconfig has includeIf
+Message-ID: <D1F5SJ52H4Z0.1NR7M8APRFTOB@protonmail.com>
+Feedback-ID: 1233518:user:proton
+X-Pm-Message-ID: 9805230f72fa7ecfdb9c54a394d17412b24fc39c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,44 +41,50 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ec5d73e22a6e4587f3d87314a9c0e422@manjaro.org>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 20, 2024 at 09:45:51PM +0200, Dragan Simic wrote:
+Hello everybody
 
-> > Another, ulteriour, motive here behind this suggestion is to
-> > encourage users to work with smaller hunks.  Being able to scroll
-> > around and view lines on demand (i.e. use of pager) is one thing.
-> > Being able to view all relevant lines at once (i.e. not wasting
-> > vertical screen real estate and making things fit on one screen) is
-> > very different and much nicer.
-> 
-> There's another thing to consider, which makes the introduction of
-> "P" as the new option even more desirable.  Let me explain.
-> 
-> With the upcoming changes to the way less(1) as the pager works,
-> which was already discussed at length and even required new features
-> to be implemented in less(1), [1] displaying anything through less(1)
-> will not leave an accessible scrollback in the terminal emulator.
-> Only one screen worth of text will be displayed, even after quitting
-> less(1).  That's what we have to do, to fix age-old issues with the
-> pager-generated scrollback that easily gets corrupted and actually
-> becomes misleading.
+Yesterday I stumble upon a bug when doing git init. I didn't
+find any references to it, so I don't know if is a known problem
+or not.
 
-This feature can be annoying even with current versions of less,
-depending on your $LESS variable. If you don't set "F" you'll get a
-pager for short inputs, and if you don't set "X" then even small hunks
-are cleared from the screen while we ask about them.
+Steps to reproduce:
+# git init .
+BUG: refs.c:2123: reference backend is unknown
 
-So this definitely needs to be configurable, and I'd be tempted to say
-it should be off by default, just because we don't know how the user's
-pager will behave when invoked for multiple short snippets like this (it
-might not even be "less", after all).
+I'm able to reproduce this on multiple systems where the git
+version is newer than v2.44.0. This happens only when I have
+an "includeIf" in the ~/.gitconfig . Bellow [1] I have a
+minimal configuration for reproducing the bug. With same
+gitconfig but versions lower than v2.43.4 the error is
+no longer happening.
 
-I don't think setting pager.add is enough here. You'd also need to set
-pager.checkout, pager.reset, and so on, since their interactive modes
-all invoke the same code. We'd presumably want a single config option
-(and possibly even one that could be set to a distinct pager command for
-this context, rather than the usual one).
+So I went and did a git bisection and the error appeared with
+173761e21b setup: start tracking ref storage format
+Previous commit ("0fcc285c5e") is working fine.
 
--Peff
+I cc'ed Patrick Steinhardt since the error appeared from his
+commit.
+
+Best regards,
+Razvan
+
+--
+
+1:
+content of ~/.gitconfig
+```
+[user]
+        email =3D some_email@test.net
+        name =3D test
+[includeIf "onbranch:upstream*"]
+        path=3D~/.gitconfig_upstream
+```
+
+content of ~/.gitconfig_upstream
+```
+[user]
+        name =3D test test
+```
+
