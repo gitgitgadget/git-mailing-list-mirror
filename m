@@ -1,92 +1,115 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BF528E7
-	for <git@vger.kernel.org>; Mon, 20 May 2024 23:56:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C7D610C
+	for <git@vger.kernel.org>; Tue, 21 May 2024 00:37:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716249408; cv=none; b=Xrr8bin63Fj3Xn1HhdbV48yn5OuC3bIc69OFjz3TMMsoILF5dy9KW3Ppi5XwqH7htCqRN2W5eUc2jtzoh9qgL3m1OSig5GN2Q2LPt9I0Xu6kQ/GoX7ds3mIfVcG0eTnEs0Ck7d+0BkcB6zeukGxblqpMcMv8RkXzqlEcB66ZVrs=
+	t=1716251879; cv=none; b=DRjmbn81WZEKl9XiENnxd7v6tngnUKVVZCsulFhojfRQAR8g8PRYSYftuK9GSAOCjwmW53f4H78Q4op9j2YSCz5JxH89HTZBe4nQcNWPNDGHYuhQWLZ6eUHZtujBa5v8m9X9J+abRkbx1Eqv5Z5zfr3n28cNYcQ15PRXQRrf6jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716249408; c=relaxed/simple;
-	bh=AZQ4xnAyAvSCLnd0Bv3DtempAU3CDw6Zvyn4Gfy6BWg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mht6DJqfEkQongDu3A1gn9nrdsq2pUSDm7hyc0pKyxsoVpnZLMJ6+MWgw5VmF1mkfPDrA6K78OGi2HligVZEff3rbggJkwr5QfAge2HU7MFkwJSMwf7gpni7Edq8Oy4l4k2nPgEMpKjlb6JLVWTv6wHCHUdBNHhcHCdocvVOz00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=L8AW65Ru; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716251879; c=relaxed/simple;
+	bh=CQBJcDOrAPut+KGlDbGrXZYMF9b+G3m35BoDgrHhGKU=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=oHUymaN+vVeEU40uxDMfaQgH4n9BjxvSJBp4otAUMZ3xaO1xXzBPDligvzxVLltokBJv4fTK9LxhlpgkMwV1fj2X0XpqOH5Jec+HOxfAhYt7/maX+iO0x+Phk0Lfl+7TU5m/d7wO/+p7DAsL/YPK40RETANjjwBabNkj2AKI8eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ajPaPWRt; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="L8AW65Ru"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C08AB1B2ED;
-	Mon, 20 May 2024 19:56:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=AZQ4xnAyAvSCLnd0Bv3DtempAU3CDw6Zvyn4Gf
-	y6BWg=; b=L8AW65Rul327np0ATOeb0mnPX0a6X8Pqi8t9j5tKO2X7kSenhKyCjM
-	ml/RPvfswAnaMLN/L2Vw4NVYLF7JFHHLiSdZD2VNT5/DtxokCskIn+RPa/kq6i7G
-	Hpw4fM2O+Ssjqx0NBlcyY6sKJHtAXqCOCMcZ7PRPapfD+jJgG+W+g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B816D1B2EC;
-	Mon, 20 May 2024 19:56:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 284D81B2EB;
-	Mon, 20 May 2024 19:56:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Jeff King <peff@peff.net>,  Johannes Schindelin
- <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 0/6] Various fixes for v2.45.1 and friends
-In-Reply-To: <pull.1732.v3.git.1716236526.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Mon, 20 May 2024 20:21:59
-	+0000")
-References: <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
-	<pull.1732.v3.git.1716236526.gitgitgadget@gmail.com>
-Date: Mon, 20 May 2024 16:56:44 -0700
-Message-ID: <xmqqseycca0z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ajPaPWRt"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-34de61b7ca4so1979114f8f.2
+        for <git@vger.kernel.org>; Mon, 20 May 2024 17:37:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716251876; x=1716856676; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:to:content-language:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9SqEVBLuRoaxcXdvtTEM5HJVqLaYkz7/ZfAuR5Y0NYA=;
+        b=ajPaPWRt+YyyXLYthCJm9GBkdXFRGmcQ2s7viduQnsLfT0mPW63AxAjTOWh1rjrdYz
+         YPfZLHBU8SLYGffVSG9tFy7S57Ps12lu70600FHRFM2YVNhZUzmDaPkk3dNKK7iDW76a
+         l0nG0JJ7SnCqYVxiq3X9Ezy1/xhB5bq1/7TrQxHtH5nOV7/vWz9XwdcdHuj30HSNkjyQ
+         B87XLYtcZfDsgZjxtS6Q8nqbjTIN5mjeZFMWULU3XYhj+2IVayW8/ltgr8BaRKKcAohZ
+         5DWgCnCq0+/aWzU/aLJRJyHSHllfZSVFZUNex83KCh0eKyveICLT3PS9GqDIxQCiQrxg
+         D/Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716251876; x=1716856676;
+        h=content-transfer-encoding:subject:to:content-language:from
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9SqEVBLuRoaxcXdvtTEM5HJVqLaYkz7/ZfAuR5Y0NYA=;
+        b=gElU0nQf/asOSUyAYOj6RvSxPzMReRvOYfnYYKh6SvPHxzpkEi/PZVmCvnjbZUpgix
+         hKtkQvZrNLv8WKOXnjQjaU2758miQ3FFQVTZb8mf5M9zLB11dwVrhL3+qC6flCzTDsMU
+         SqpZzDomksflhPnKcOCOuQEbYaO7GptG2DqffIDsqJIbWaTzmJX0BVxuBR7Ka7BvXxUh
+         G36CpJsSDBA7ymBLTaYvEDGlC6vk54q0TO4E51bcKFhzkyLtmQProAw3DFPiWRMRX7WS
+         pCFVr37gOZe49xZE+dI0a6lwmUDHqgmm08hn5mhZLW0fDJkiCdcX3TUAJkxyveFo+dKJ
+         oGcQ==
+X-Gm-Message-State: AOJu0YyJiq0AXGWaJD1AM4Cpa7V+R2LQcT8LnE6bLm6sOZp1mHr4Avx9
+	57CFAJcA5ykpzPo57X00rzgrdtJtlmPKaWyz7Bgy4Vfcu7YWW6z9X6TJxA==
+X-Google-Smtp-Source: AGHT+IHJgTSn+/fm7SV5CO+/eP6i34a+T49J+hnNWdn02q2ZUw7TxIMyuA4WghCi7SyniY47X2gOlQ==
+X-Received: by 2002:adf:e785:0:b0:34a:7a97:caa1 with SMTP id ffacd0b85a97d-3504a61c7bfmr33032872f8f.2.1716251875918;
+        Mon, 20 May 2024 17:37:55 -0700 (PDT)
+Received: from gmail.com (173.red-88-14-51.dynamicip.rima-tde.net. [88.14.51.173])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3502baacfb9sm30255294f8f.68.2024.05.20.17.37.55
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 May 2024 17:37:55 -0700 (PDT)
+Message-ID: <1dbe4c61-d75f-45d9-95d2-ac8acae22c56@gmail.com>
+Date: Tue, 21 May 2024 02:37:54 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 9CEC446C-1704-11EF-AB6F-25B3960A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+To: Git List <git@vger.kernel.org>
+Subject: [PATCH] add-patch: response to unknown command
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+In 26998ed2a2 (add-patch: response to unknown command, 2024-04-29) we
+introduced an error message that displays the invalid command entered by
+the user.
 
-> This patch series is based on maint-2.39 to allow for (relatively) easy
-> follow-up versions v2.39.5, ..., v2.45.2.
->
-> Changes since v2:
->
->  * instead of introducing an escape hatch for the clone protections and
->    special-casing Git LFS, drop the clone protections
+We process a line received from the user, but we only accept
+single-character commands.
 
-It is debatable if we are ripping out clone "protection" or a new
-restriction on executing hooks before the end of clone that has
-backfired. 
+To avoid confusion, include in the error message only the first
+character received.
 
-In any case, I just compared the result of applying these patches to
-v2.39.4 with the result of reverting the following out of v2.39.4:
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
+ add-patch.c                | 4 ++--
+ t/t3701-add-interactive.sh | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-    584de0b4 (Add a helper function to compare file contents, 2024-03-30)
-    8db1e874 (clone: prevent hooks from running during a clone, 2024-03-28)
-    20f3588e (core.hooksPath: add some protection while cloning, 2024-03-30)
-
-and the differences was exactly as I expected.  A Makefile fix and a
-new test added to t1350 are the extra in the series, but otherwise
-the patches are essentially reversion of these three steps.  Very
-nicely done.
-
-Thanks for a quick turnaround.  Will take further look.
-
-
+diff --git a/add-patch.c b/add-patch.c
+index 2252895c28..d408a85353 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1692,8 +1692,8 @@ static int patch_update_file(struct add_p_state *s,
+ 						 "%.*s", (int)(eol - p), p);
+ 			}
+ 		} else {
+-			err(s, _("Unknown command '%s' (use '?' for help)"),
+-			    s->answer.buf);
++			err(s, _("Unknown command '%c' (use '?' for help)"),
++			    s->answer.buf[0]);
+ 		}
+ 	}
+ 
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 28a95a775d..6f5d3085af 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -60,7 +60,7 @@ test_expect_success 'warn about add.interactive.useBuiltin' '
+ 
+ test_expect_success 'unknown command' '
+ 	test_when_finished "git reset --hard; rm -f command" &&
+-	echo W >command &&
++	echo WW >command &&
+ 	git add -N command &&
+ 	git diff command >expect &&
+ 	cat >>expect <<-EOF &&
+-- 
+2.45.1.217.gdb529f37a6
