@@ -1,68 +1,120 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D141315EA2
-	for <git@vger.kernel.org>; Tue, 21 May 2024 21:33:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D18148821
+	for <git@vger.kernel.org>; Tue, 21 May 2024 21:35:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716327227; cv=none; b=Viruf29qWsHmrVKGtvnKgmRXbdB6L/po+/PoLacMjpF6L8a00wpd/+I9MNNSjMeST9Hcw0LdzD1vC9W6OuCIf4ZcjVAcE+/r++V6n097izsyLSTokHOtKD78PVsYqNv/4MtnWMuOC2wpDHx7exyjgaT+VZs02y9GM7MC4KhWD7Y=
+	t=1716327322; cv=none; b=i+6f11Gf9vTYN8vWXh3aPt2CWhkeL2Mp7rRoEPOSW1NPbNqChjTu5shV2AtcqLLV8VkWKvjQbl4dMXx9yPynZK/MjbOekPQJJNKYpVsuX3iI0wWYF+fHAMG2Y8e3p+EDPHT74MveJwwyvcp/OtHaI+ahAeKLPrr92j2XwwB001U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716327227; c=relaxed/simple;
-	bh=B6m3E+NqPt0y6mgX/ssduZm7aK/dpfZDF8qgXRvMoP0=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pi2GWR83N6Vx1yRB8j3hfiBTiTy8+/gZJw874+hh9PY73c3Ic0e9F2ZHvvQoCk+ZCrQXtXSNbzLbUvUTF6+Ab7L3snDUiNaBn/+Aghq7XbM/DSjLZ9V14dkXjama7UOwZ1dSCOGCKpP4B0EpOj8pgwNoRdg3w8ljAIXxDYS+UWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jzPjVbw3; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716327322; c=relaxed/simple;
+	bh=0HWgmxMAcDKcAZm+UMmEhnzrnLCBKkXoGBabdh2cP10=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I1vmFCEka2gTFh5eyU9Xc8M5+2L5lp2oasnGn3XPSwwkELVqEFWJ2mWfDylP1/Rf0xJYpf16QmKj9q6sZlk+tjbuBTnV1iVOteQVRq9Wii6FtSQuVw0qk67xvRwn8+o+mXiVtoAYENKBPSByKlDc1MEIYBePyASBC5v7nHJZ6+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zg3NfY+u; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jzPjVbw3"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7CE1122DEF;
-	Tue, 21 May 2024 17:33:44 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=B6m3E+NqPt0y6mgX/ssduZm7aK/dpfZDF8qgXR
-	vMoP0=; b=jzPjVbw3DFrflYS7FG72BjlB05lRgP6Icp2mdvImqqS5wZVnorC6PW
-	P7vtmOl5C828yRmTyUQ8S8GErF0d7r+pS+vJdfGxkyz3TY5yf8dOgxBYQch+N4HG
-	96ptUdxfvLJFZLyyc936rMwhSG1awYBmfDe3ktnHVipgWliB5nMB8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 73D6622DEE;
-	Tue, 21 May 2024 17:33:44 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D468222DED;
-	Tue, 21 May 2024 17:33:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: Re: [rPATCH 14/12] Merge branch 'jc/fix-aggressive-protection-2.40'
-In-Reply-To: <20240521204507.1288528-2-gitster@pobox.com> (Junio C. Hamano's
-	message of "Tue, 21 May 2024 13:45:07 -0700")
-References: <20240521195659.870714-1-gitster@pobox.com>
-	<20240521204507.1288528-2-gitster@pobox.com>
-Date: Tue, 21 May 2024 14:33:42 -0700
-Message-ID: <xmqqseya97ex.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zg3NfY+u"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-354b7d76c52so135277f8f.3
+        for <git@vger.kernel.org>; Tue, 21 May 2024 14:35:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716327319; x=1716932119; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qBF38ihW5Ea+EDr8WyF/TyGlL+IQ2krLqckJk1Xy6ms=;
+        b=Zg3NfY+usdYmwjucHtKa5sk+HHkujPDSbbkfnB9EH+kwPc3D+AzyQl5hdX3W5MTifr
+         lBAyoEHxvA+oOkNdbiyWqDZWLXR1lYN22s7zwlUhqZBOEiby4I+F915k1DfGSxQOCnz9
+         YFtFspIJpWjEUfUVGKeQ57u6rrXIckzEKHswVzO/HJX8mNwQ+FYxY3AwxSjdt0M1h9cC
+         zkGEKTng5PhNf5BMeHzlVx6UIOU0ktsulrolWqW68k9oCIcOqQF3f12+klj89cyLAMOz
+         oW7xCr39R37M/QgkiwSCCWB8WZkfjYuRJbinVXMAU6FEEIabuBI+k6+SZrwOjznt9kc1
+         ymEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716327319; x=1716932119;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qBF38ihW5Ea+EDr8WyF/TyGlL+IQ2krLqckJk1Xy6ms=;
+        b=VBo3Or0I3+e796WeUuKYB+KNekDV4Q7XzKVZr2vAa/BFq46Nadba/C597pvH/KaQVN
+         K9aBmPQGJgrG8K0wAJDEVCWERxYsQBvGDVqsd2JA0s2OmgeRO453i8YiymF2Qxxo95Tr
+         7rG/uFMqwq1oukO2tlwxM/tdrR5wVdkm3H40kFG0nms/j/XIcETTKn4X3zpswjfA2QX5
+         zhJBLDft5TlzLtWji7DJf9BeORlSPegY330ZOuL3kwzAzfgR4S/bS0apLzBHKExL6pvl
+         TapoJ8Se+4U4RQiiquX2w64ThiCF9ijI8Wwm0wdN+UJRLBhT3ubNcMgO0aqoJooz8cRq
+         8v5A==
+X-Gm-Message-State: AOJu0YwS8P4FgegzNXQWMM3XKWL3zS8NyU5z9En8v+B3pxv8g3AmaCxw
+	kgoYLFHWOubmUnZ4FyDHyjtLCidwoL/MHnjotsQcN/gCnp9gE3rM
+X-Google-Smtp-Source: AGHT+IGMZgJ04J34kIJW7I1b3HAjX20rOWcvrosJ/h4aI92hyjM2UPynCuaT7AqZPKgJsFchRQWaxA==
+X-Received: by 2002:a05:600c:2318:b0:41b:82ba:7997 with SMTP id 5b1f17b1804b1-420fd2dd894mr1231115e9.3.1716327319181;
+        Tue, 21 May 2024 14:35:19 -0700 (PDT)
+Received: from gmail.com (254.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.254])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-420152a2a8asm377502355e9.45.2024.05.21.14.35.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 May 2024 14:35:18 -0700 (PDT)
+Message-ID: <0574914d-8088-434d-8db2-013c1abe27c3@gmail.com>
+Date: Tue, 21 May 2024 23:35:17 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- CC7C6922-17B9-11EF-9358-25B3960A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] pager: do not close fd 2 unnecessarily
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+ <80f15223-246e-4cfb-a139-e47af829c938@gmail.com> <xmqqo790fg8z.fsf@gitster.g>
+ <a9f199d8-bb06-479f-88c2-63d80338a4e9@gmail.com> <xmqqwmnm993k.fsf@gitster.g>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqwmnm993k.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, May 21, 2024 at 01:57:19PM -0700, Junio C Hamano wrote:
+> Rubén Justo <rjusto@gmail.com> writes:
+> 
+> >> >  static struct child_process pager_process;
+> >> >  static const char *pager_program;
+> >> > +static int old_fd2 = -1;
+> >> 
+> >> What does the magic number "-1" mean?
+> >
+> > Invalid fd.
+> >
+> >> We often use it to signal
+> >> "uninitialized", but then what are concrete "initialized" values
+> >> mean?  "We dup2()'ed something else to stderr/fd #2 but before doing
+> >> so we saved the original fd #2 away to this variable, so that we can
+> >> restore fd #2 by another dup2() of the value of this variable when
+> >> we declare that we are done with the standard error stream"?
+> >> 
+> >> But that does not look like what is happening here.
+> >>  ....
+> >> Equally unclear magic number "1" is used here.
+> >> 
+> >> This value is different from pager_process.in, and my earlier "we
+> >> are saving away" does not apply, either.
+> >
+> > It applies, in 3/5.
+> 
+> We need to be prepared to see a series chomped at an early stage and
+> it should still make sense.  If the series does not make sense when
+> you stop before applying patch 3, it is a strong sign that this step
+> and the next step can be separated and structured better.
+> 
+> Or perhaps if they are made into a single patch it makes more sense
+> and becomes easier to explain?
+> 
 
-> The only tricky part is an evil merge to copy.h that was made
-> necessarily due to recent header file shuffling.
+Adding logic to adjust when we close(stderr) in close_pager_fds() makes
+sense on its own, I think.
 
-Up to this step it seems there is no cascading impact if we dropped
-the [12/12] from the series.  I forgot that hook.c needs to lose
-"#include <copy.h>" during this merge, which also was made
-necessarily due to recent header file shuffling.
+And, the values for the flag "do-we-want-to-close-stderr-at-exit", too,
+to me.
 
+I am happy with the series;  the 'P' command introduced in v2 is a good
+improvement.  Combining 2/5 and 3/5, I think it is not a good idea.
+
+Therefore, I'm not sure how to alleviate the puzzling.
