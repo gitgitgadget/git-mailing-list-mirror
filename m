@@ -1,136 +1,141 @@
-Received: from mx0b-00256a01.pphosted.com (mx0b-00256a01.pphosted.com [67.231.153.242])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C68D18036
-	for <git@vger.kernel.org>; Tue, 21 May 2024 02:32:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.153.242
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4DD2BAF0
+	for <git@vger.kernel.org>; Tue, 21 May 2024 05:33:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716258732; cv=none; b=tLHk0GCaC6C3vN7IE8923n37v5WH8YoBUDuL+nY9JexbO8OQr1XXkRIaHyV0VUO/whV+60Kp8wj/S+UtA8l98mwoxOJy8UOrgf5Fw0S7uTlxUklcLA9LzFXmSTpsya1mx2V9ree5c1VC8tYgIsjuTbxZJ/avoYhrtoDZoMPT3PA=
+	t=1716269605; cv=none; b=ews7AbDneNfqtgImBWy0B/y6Ydc5Ao9hhsGO7wEhmQIYM1jKci18rb/2apnTCw/d10xhHQfDEy0EZTXnOjOxUxTfAldTxo90k1DRmQNGAXhk08/0hqe/iQrPA1McsqHPICauc7mGHw/W1gO4t4l49tkuNAmZlFTbe/w0X9s3LR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716258732; c=relaxed/simple;
-	bh=dWFu92O3OTzIJkoF0JyhBSJo9oph16yHeNkZz4UyfqM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gNXd9/ghTdhI51ToivpHedBUnPoCs2WHraS1WrWYvvN+07b5y5p4p9jOgzVdXqQ1v+CVSijn259uM7KvgqF3c9DFNqATMV0GU128FaMRoTovPaHN8REIvzhIhbfYQpnU1Ilr04h9F1xua7cBeU+8NwjWmn5DBYGBZX44oGe0OyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nyu.edu; spf=pass smtp.mailfrom=nyu.edu; dkim=pass (2048-bit key) header.d=nyu.edu header.i=@nyu.edu header.b=oYhxQRJE; arc=none smtp.client-ip=67.231.153.242
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nyu.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nyu.edu
+	s=arc-20240116; t=1716269605; c=relaxed/simple;
+	bh=lQDuj/XD+kFYEIO/caMB4eeYle0kCdtNPfpYKeSfYRk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nLdv/Kbrm9P95UyhORJyK8VYsvLYNoE5BerWtlG1BWwNK/6xzouQ1IRq/MOT6uyTy3B4DGOkt12e/NOtYf9lTba74MpilcQGSX1DMjYz3NE4tSjA0rDvjmfdU5QfFxmcjtx2TXciPUalNFeRB4vpVlBNjo9RTABtntYHSUrNBXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=coBRj7JH; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nyu.edu header.i=@nyu.edu header.b="oYhxQRJE"
-Received: from pps.filterd (m0355792.ppops.net [127.0.0.1])
-	by mx0b-00256a01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44KMfZfK021617
-	for <git@vger.kernel.org>; Mon, 20 May 2024 22:17:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=20180315;
-	 bh=GvHWGiUuo1X8ch24JJq2fgXYamofjsPjSfcJJrufGPA=; b=oYhxQRJEMnEh
-	velodiAB7I0gfUPhT+DXZezphenhyWBv9UxvNnjGNrLHnKH2Y7jdDpbj2S8ucYht
-	3r1v2xJLX7OJFtJ+ZVMTQwkWgoWeJxXu1wOlnNOWOwXRyUj4ykvAI/frVCBLs98+
-	NgOyvGjgmAbnjIBfMWXATTuBdqjtdUcRcJPKypWbUzjrKsTuEXP1QyaN97zCgrAB
-	aoNVMeFPLewRVP02PI0IlY0IzT4kqhSWwpwcqSoYpENYOofOfB/pQtgZj0F0DAVV
-	dLfJmG0XH/be0iNGpYR8eTfdKy2Sqd28vP/wVMHprewMxjlCb9iK+je9P7yBPfOH
-	L0r5FeHdyg==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0b-00256a01.pphosted.com (PPS) with ESMTPS id 3y7utwe4kq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 20 May 2024 22:17:41 -0400 (EDT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-6f4574f6bffso9560838b3a.1
-        for <git@vger.kernel.org>; Mon, 20 May 2024 19:17:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716257860; x=1716862660;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GvHWGiUuo1X8ch24JJq2fgXYamofjsPjSfcJJrufGPA=;
-        b=eXINHzgf9mhNsTKuDo6tKo1+9Qn3NAkvS1x5yB6WgE3FmO+Yc1rWt1bI/tmRYJgdS/
-         kC21TyANeivmkvvyCnTERHlQNMbPSK8vU+lw5BQLasOaMDKF1Oxp2iBwiL3SmIfSguKk
-         fr/7ft48LHEzeh/caLvqGTsqckKM3pSt33y4V2VTlWP+LzPzuPoM779WPmRYhr/bz38A
-         Du+qdDZw7V5lz0veJFGdBmNDzd8SI0tTkDAdAajSJGMkUUQ+415StMvhINmi9EN3HLOs
-         MYk025qQIZWELhGPJE1zGlONOnVq0plOBlvvdq2m40vi7Nqw4NjwmksANkGASlwNtgSm
-         Kozw==
-X-Forwarded-Encrypted: i=1; AJvYcCXEJTkaFQypQWJMfB8nVoJnhbxnN6rs9Whbo+a0t5xGA3aMTBAiLQCHibZ+Xhw+wAXhPRlSqN1esxpixWpzteGIXIld
-X-Gm-Message-State: AOJu0YzajRjSSCei/qgKkYFDbdk0eFJ2WqLMZ/FC4YL7s2Lgrs3Xe/aU
-	RQ8Mx6cXB0unP0jRP+tr6+SDrWbcBNU+sWAE4PC447uCjyy92+l7Bkm++1A/e6Mi47H6qHGXfML
-	CCI3agFSuQ74myo01CA0YgzhUflKZKoKnbv3+IwaZVWBqKHU=
-X-Received: by 2002:a05:6a21:3a85:b0:1b1:dff2:ed03 with SMTP id adf61e73a8af0-1b1dff358b2mr3307876637.16.1716257859903;
-        Mon, 20 May 2024 19:17:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEsOWgL2pLmCEBJSdZNnLfJ1VFhrJ6sdrsNjnkCV5nB/M7juzu9ggYpk9X4B5/a3PFk6eGJeQ==
-X-Received: by 2002:a05:6a21:3a85:b0:1b1:dff2:ed03 with SMTP id adf61e73a8af0-1b1dff358b2mr3307858637.16.1716257859412;
-        Mon, 20 May 2024 19:17:39 -0700 (PDT)
-Received: from [192.168.0.106] ([49.37.251.175])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f30dec58d7sm2840885ad.22.2024.05.20.19.17.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 May 2024 19:17:38 -0700 (PDT)
-Message-ID: <835eb66a-737b-40e5-99be-af299e231408@nyu.edu>
-Date: Tue, 21 May 2024 07:47:35 +0530
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="coBRj7JH"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8D3872C23A;
+	Tue, 21 May 2024 01:33:23 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=lQDuj/XD+kFYEIO/caMB4eeYle0kCdtNPfpYKe
+	SfYRk=; b=coBRj7JHCxaZQN2ptxkAO0XXryVhJkWHtHThEYMikVYTyypXtnkYE7
+	owy5WTllF0ZGgchSFn1pPrabQeFiVBvKMDrRU2noykyeT2u3L3Qn8kKlRdlpeCEV
+	S6Ow1M1EdwbG8wjlPkBJudmw0qvHj2C+IZsOP3Anp4vKCqIpLmSV0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 850A42C239;
+	Tue, 21 May 2024 01:33:23 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8E6B92C238;
+	Tue, 21 May 2024 01:33:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Jeff King <peff@peff.net>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 0/6] Various fixes for v2.45.1 and friends
+In-Reply-To: <xmqqseycca0z.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	20 May 2024 16:56:44 -0700")
+References: <pull.1732.v2.git.1716028366.gitgitgadget@gmail.com>
+	<pull.1732.v3.git.1716236526.gitgitgadget@gmail.com>
+	<xmqqseycca0z.fsf@gitster.g>
+Date: Mon, 20 May 2024 22:33:19 -0700
+Message-ID: <xmqqikz7d90g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [ANNOUNCE] Git Merge 2024, September 19-20, 2024, Berlin
-To: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc: Scott Chacon <schacon@gmail.com>
-References: <Zj0JyL1b+g1G3zWx@nand.local>
-Content-Language: en-US
-From: Aditya Sirish A Yelgundhalli <aditya.sirish@nyu.edu>
-In-Reply-To: <Zj0JyL1b+g1G3zWx@nand.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: T0Q_mArXWQBRPb6WrSe1ZBB1zkzN0r8M
-X-Proofpoint-ORIG-GUID: T0Q_mArXWQBRPb6WrSe1ZBB1zkzN0r8M
-X-Orig-IP: 209.85.210.198
-X-Proofpoint-Spam-Details: rule=outbound_bp_notspam policy=outbound_bp score=0 impostorscore=0
- mlxscore=0 suspectscore=0 priorityscore=1501 spamscore=0 clxscore=1011
- lowpriorityscore=0 mlxlogscore=999 adultscore=0 bulkscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405210017
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ A2545F96-1733-11EF-805D-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On 5/9/24 11:07 PM, Taylor Blau wrote:
-> Git Merge 2024 is happening in-person on September 19th and 20th in
-> Berlin!
-> 
-> GitButler and GitHub are co-hosting the event, which will take place
-> over two days in Berlin and allow developers and community members to
-> get together and talk about the future of Git.
-> 
-> Here are the details for the main conference:
-> 
->    When: September 19th and 20th
->    Where: Location TBD (in Berlin, Germany)
->    What: Talks on the 19th, birds of a feather discussions on the 20th.
-> 
-> This email is just to announce the date so people can start planning for
-> the main conference and BOF discussions.
-> 
-> Registration for the event is still being set up, but it should
-> hopefully be live in the next short while. I'll reply to this email when
-> I have some more details.
-> 
-> In the meantime, the CFP site is up and running. If you have any
-> interest in giving a talk, please consider submitting a proposal here:
-> 
->    https://bit.ly/git-merge-2024-cfp
-> 
-> If you'd like to come but need financial assistance with travel costs,
-> please reach out to the Git PLC at <git@sfconservancy.org>. We'll
-> collect requests and try to make decisions and notify people by
-> mid-August, which would hopefully still leave time for making travel
-> arrangements.
-> 
-> Other than that, please be thinking about (and feel free to discuss in
-> this thread) topics you'd like to discuss, or any general thoughts on
-> the format, venue setup, etc.
-> 
-> Thanks,
-> Scott Chacon (GitButler)
-> Taylor Blau (GitHub)
-> 
-Hello!
+Junio C Hamano <gitster@pobox.com> writes:
 
-This is very exciting! Could you share when the CFP is likely to close? 
-Also, is there at all the possibility of having a co-speaker?
+> In any case, I just compared the result of applying these patches to
+> v2.39.4 with the result of reverting the following out of v2.39.4:
+>
+>     584de0b4 (Add a helper function to compare file contents, 2024-03-30)
+>     8db1e874 (clone: prevent hooks from running during a clone, 2024-03-28)
+>     20f3588e (core.hooksPath: add some protection while cloning, 2024-03-30)
+>
+> and the differences was exactly as I expected.  A Makefile fix and a
+> new test added to t1350 are the extra in the series, but otherwise
+> the patches are essentially reversion of these three steps.  Very
+> nicely done.
+>
+> Thanks for a quick turnaround.  Will take further look.
 
-Thanks!
-Aditya
+I completed merge-up exercise and compared the result with your
+"tentative" cascade from maint-2.39 to maint-2.45 tracks.  
+
+The differences came from pointed cherry-picks (like 'ci: avoid bare
+"gcc" for osx-gcc job') looked minimal and sensible.  I wonder what
+the best way to do a public review of this kind of history, though.
+
+$ git log --oneline --graph maint-2.45..dscho/tentative/maint-2.45
+* aeddcb0275 Git 2.45.2
+* 65f0d62523 Sync with 2.44.2
+* 9953011fcd Git 2.44.2
+* f78818b645 Sync with 2.43.5
+* 0aeca2f80b Git 2.43.5
+* 0cc3782b1a Sync with 2.42.3
+* 33efa2ad1a Git 2.42.3
+* 30195eb2b6 Sync with 2.41.2
+* 5215e4e368 Git 2.41.2
+* 9d6788fd73 Sync with 2.40.3
+* 4bf5d57da6 Git 2.40.3
+* 9f7a956be5 Sync with 2.39.5
+* b9a96c4e5d Git 2.39.5
+
+All of the above (and the one below) are merging up, resolving
+conflicts, and updating release notes and GIT-VERSION-GEN.
+
+*   b674c6f66c Merge branch 'js/fix-v2.39.4-regressions' into maint-2.39
+|\  
+| * 5c576e889d Revert "Add a helper function to compare file contents"
+| * 0044a35567 clone: drop the protections where hooks aren't run
+| * cd14042b06 tests: verify that `clone -c core.hooksPath=/dev/null` works again
+| * 57db89a149 Revert "core.hooksPath: add some protection while cloning"
+| * 961dfc35f4 init: use the correct path of the templates directory again
+| * d4a003bf2c hook: plug a new memory leak
+
+The above 6 patches all appeared on the list in this "v3" thread.
+
+* 883ca51e0a Merge branch 'jk/ci-macos-gcc13-fix' into 'maint-2.39'
+
+This is a merge of the following three patches to maint-2.39
+
+* d4543be3f2 ci: stop installing "gcc-13" for osx-gcc
+* 2aef8020d2 ci: avoid bare "gcc" for osx-gcc job
+* f3e5bdfebc ci: drop mention of BREW_INSTALL_PACKAGES variable
+
+These three patches were taken from jk/ci-macos-gcc13-fix that was
+forked from v2.45.0 and rebased them on top of v2.39.4.  The bottom
+one seems to have been adjusted for the older contexts, which during
+subsequent merging-up has been adjusted back again for the more
+recent contexts (e.g., we used to use $HOME/bin but use $P4_PATH for
+Perforce these days, and such differences in the base version appear
+in the context for "BREW_INSTALL_PACKAGES" change).
+
+So, in short, I didn't see anything unexpected to see in these
+branches.  The "ci" fixes were already reviewed elsewhere (even
+though there are slight deviations), so if people are OK with the 6
+patches in this thread, I would say we are good to go.
+
+Thanks.
+
+
+
+
+
