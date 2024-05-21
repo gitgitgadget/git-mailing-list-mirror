@@ -1,95 +1,73 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51351FBB
-	for <git@vger.kernel.org>; Tue, 21 May 2024 15:59:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42BD17997
+	for <git@vger.kernel.org>; Tue, 21 May 2024 16:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716307189; cv=none; b=ADrOFTckGNWKFNH3Xhx18CjEXgo8oRfL4hJ+1Ej8zrzVQTBTpn26ww2DBP5I41cKM+lbsGYBl43vYzDa0xdAvv0zh8FPUZhov6sXnHS1H0wQ0NW9VKB+M4OWNbo1BJJ5F4sFYESWGRo4ZK0O7lN+XYaeef3p7qipCLFrv82JYJw=
+	t=1716308332; cv=none; b=Aa4H4m8bUqCBqDHYe5bo9CI7XtV4NORZHSmb0s+PYp0hgQ05zvrLyMV6LxDQyWUEcHndWLvawSPlecJmcHQwUpPqc0VOPVk0FlxsBvU0X2KMVmMhvOUtCOk4XTLKtL1LC8sTyZ3M5+mJlsdVJswk3woj4qfmB8Za1oKo/ti33LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716307189; c=relaxed/simple;
-	bh=3i9W1htGR9zutCQTIxHMq0JhuC20QGnftnAXNilxROU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VFrPv6F9lw1zbNn6M5l944oG63eckQxvxW2J9o/caFpE6NDU9/qjTASiWHF3rndiuNwAMjZkiD8J6gGiLIDRz8hCiMT1H0spn7yM+T4Hyr93e+WOndClIgJSow3p75hpm1jObPu/jlDv2OmmlejfeXVTslSY97DFrFJVCBxl1Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=diUnep0q; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="diUnep0q"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D43B12F990;
-	Tue, 21 May 2024 11:59:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=3i9W1htGR9zutCQTIxHMq0JhuC20QGnftnAXNi
-	lxROU=; b=diUnep0qaPA0/Q2Jci/q7uxwCT7TYCuZaVMihN2QXhwKY86DqMU5EU
-	8z+tlpDbmQldlzUf/AWsvjDBl4HV2CfOQY2sznOQ4bb1XyTHKhvJAccDin4Z8nTY
-	mAJkYA2DJy/kjdqf4qixdgXfadeEY/NJjGBRgOD+1FKlL3UqWRNPE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CBEA82F98F;
-	Tue, 21 May 2024 11:59:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 255B22F98E;
-	Tue, 21 May 2024 11:59:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v5 1/5] setup: add an escape hatch for "no more default
- hash algorithm" change
-In-Reply-To: <ZkxUBebjx8WvyJnm@tanuki> (Patrick Steinhardt's message of "Tue,
-	21 May 2024 09:57:57 +0200")
-References: <cover.1715582857.git.ps@pks.im>
-	<20240520231434.1816979-1-gitster@pobox.com>
-	<20240520231434.1816979-2-gitster@pobox.com> <ZkxUBebjx8WvyJnm@tanuki>
-Date: Tue, 21 May 2024 08:59:45 -0700
-Message-ID: <xmqqle43b1fy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1716308332; c=relaxed/simple;
+	bh=ZWMUBB9AUMt9DJypjI3zMQdKNBcOWsW7jn+tzwazpy4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FBsnIE2ylToxPlku5wsTlUTXCiWOMgBeMrx+nw/KYDT+BLXnmu/Ov+61nMRuV0NqNRR4vu2rnSCc7UasNu/kCaPFRl/UqXtKhwXHry0XzH88NBsFJbwSVUyapyf6xdXuMR+78O6Nio6969T/1iT6ZTHL9PFTpd/BqUPgIWW3bHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-69b514d3cf4so2526136d6.0
+        for <git@vger.kernel.org>; Tue, 21 May 2024 09:18:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716308329; x=1716913129;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZWMUBB9AUMt9DJypjI3zMQdKNBcOWsW7jn+tzwazpy4=;
+        b=b9fElxQMTBwCWu08STwRyUgudSKRHa0mEU0ay3soEIuk5FNM3gASUBc82XVGjEfB2T
+         +k6W2gKQnxzFKiJVpWdksafg9CM5kTsKxOMxJdNrWPkVM9r5C/GI+vWeXt0QmuEp6wuV
+         FY8ajXT0pPxlYg4/c7KyGr6fpP6OZfkouUI6fAGKFGBSeKeNRqYjbuDqP6SBSl42aedL
+         ix7/+T7Ry5IPUwnsBJI/WIfzwF2Z8J0dgsiq0qTdcJJ12WWSxNGdtlmtrtdbPZ90Xew/
+         UrKO0FWsFeu58XDFgSNPtGbvOl5v7ZHuNJBwEANR83p+UrftcBH6tAnVctYxbnn0Kwwd
+         YpPg==
+X-Forwarded-Encrypted: i=1; AJvYcCX/swQbr8BQHtC0R133MfErD5tIBO6vc2EDmJrkEzgbv6hkmiWHRS+n1i1sZbeCbdhe2fxFXHpDXTm5LOa7eHSbNDIK
+X-Gm-Message-State: AOJu0YxaFRlS3xAuzmOhhRmmYexximJXrCXu5Seg8iORsV/RrgQswxSL
+	+c7TTRozZS1u6CmvMsN1JtJnlHQLcbaeBwS8plH4aCilNMReAo1zjZEkHqXVa51ZCeRvLLAEf4l
+	wsmesTZ1OdwDWkrpm8/eTom0PoiM=
+X-Google-Smtp-Source: AGHT+IG3V5NBmzFigQgQ7e2Y3y3f8U7oRcd955m9edFQ2vDAawKVHICATtjPn81gTWQoW03g+piAE+vWA+TN48lhF9o=
+X-Received: by 2002:a05:6214:4a86:b0:6a9:8f2:74d6 with SMTP id
+ 6a1803df08f44-6a908f276a5mr96598656d6.28.1716308329573; Tue, 21 May 2024
+ 09:18:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 25135AA2-178B-11EF-BC99-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <20240520111109.99882-1-glaubitz@physik.fu-berlin.de>
+ <20240520190131.94904-1-ericsunshine@charter.net> <277726443f533446be4391cf2aa3d487974a7a18.camel@physik.fu-berlin.de>
+ <CAPig+cQYJL+6J9PJX-vrNRXJ4TUCJCQRDQstUnPf4OOwOVCUnw@mail.gmail.com>
+ <b3bef1539c4f81780b5f705e55b12898cb084254.camel@physik.fu-berlin.de> <6861baa7663cc6cb78bb2e0be664c07530d179ab.camel@physik.fu-berlin.de>
+In-Reply-To: <6861baa7663cc6cb78bb2e0be664c07530d179ab.camel@physik.fu-berlin.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 21 May 2024 12:18:16 -0400
+Message-ID: <CAPig+cTfHktPySO3rHikhOUwH0WW00PN99HLpNJWs9i2_TN7vg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] improve chainlint.pl CPU count computation
+To: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Michael Cree <mcree@orcon.net.nz>, Matt Turner <mattst88@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Mon, May 20, 2024 at 04:14:30PM -0700, Junio C Hamano wrote:
->> Partially revert c8aed5e8 (repository: stop setting SHA1 as the
->> default object hash, 2024-05-07), to keep end-user systems still
->> broken when we have gap in our test coverage but yet give them an
->> escape hatch to set the GIT_TEST_DEFAULT_HASH_ALGO environment
->> variable to "sha1" in order to revert to the previous behaviour.
->> 
->> Due to the way the end-user facing GIT_DEFAULT_HASH environment
->> variable is used in our test suite, we unfortunately cannot reuse it
->> for this purpose.
+On Tue, May 21, 2024 at 10:28=E2=80=AFAM John Paul Adrian Glaubitz
+<glaubitz@physik.fu-berlin.de> wrote:
+> On Mon, 2024-05-20 at 21:23 +0200, John Paul Adrian Glaubitz wrote:
+> > On Mon, 2024-05-20 at 15:19 -0400, Eric Sunshine wrote:
+> > > Thanks for testing. Were you able to check whether it fixes CPU count
+> > > detection on Alpha, as well?
+> >
+> > I can test on Alpha, but that will take a little longer as I don't have
+> > my setup ready. Will try to report back by tomorrow.
 >
-> Okay, so this now really only is an escape hatch for users as we do not
-> specify it in our tests anymore. It does make me wonder whether we want
-> to name the envvar accordingly, but don't mind it much either way. It is
-> only intended to be a stop gap solution anyway that we can eventually
-> drop once we are sufficiently sure that there is no further breakage.
+> I have tested it now on single-core Alpha and it works as expected, so I
+> think it's safe to land the patches.
 
-Yes, I think the name of that escape hatch variable should be
-irrelevant by the time we are reasonably confident that we could
-remove it ;-)
-
-But the proposed log message should make that intention more clear.
-How does this read?
-
-    ... give them an escape hatch ... in order to revert to the
-    previous behaviour, just in case we haven't done a thorough job
-    in fixing the fallout from c8aed5e8.  After we build confidence,
-    we should remove the escape hatch support, but we are not there
-    yet after only fixing three commands (hash-object, apply, and
-    patch-id) in this series.
-
-Thanks.
+Thank you for testing.
