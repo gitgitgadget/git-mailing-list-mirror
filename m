@@ -1,159 +1,151 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A83A1CA80
-	for <git@vger.kernel.org>; Tue, 21 May 2024 15:48:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E701FBB
+	for <git@vger.kernel.org>; Tue, 21 May 2024 15:52:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716306538; cv=none; b=J7Az7K819VDheQYyosS/YJxGHvFZNsPYNtEH9H6gmA+2aYydToPXoCJRC+2zMO8bcB8bna0nq/N+5P6Zoy6OM+FzCgsQF/QYTO70OOG4sHsHeA9r+u1z6yy9FSjvLIILLjtHOh7Fq0oq9gXE9Y/fEiEIOdDeBjxjUT/+LO/rBfM=
+	t=1716306739; cv=none; b=dSP67inACsuwcC15AfIUG+dqgKoLou9GHlFLg0yjSxUz6r7IbfaI04QrYSh4eLJq3RUhMM4wJd6WKskKNBW5j8jh68JXki97Wl74QQXtT/JhbNh5HyHgc0Int9SIq0uaD64IcOPz0bqHCcih5bqaKMLDfKzYQ3H2AkY79xLVJBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716306538; c=relaxed/simple;
-	bh=MIwgKMqi0jqZtWfWYfASawerrtwxDNjl+SNFjqzb6TM=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=KF696uRUzyLT7DcIWOJ+EOKz7PaIhN3gL668UVo5xDr9OUvAx64OkR+9PL3AFBjh6AtIajF0mh6BQHsXAyK8dcjAcatG6/VJQhIlsuHY74WCrkRw9XLczMipRZLN0lGZqES+svnQ3LvAbFYDusgamrWhZSy2D0+C/nPdvsjNPGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EIah98ze; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716306739; c=relaxed/simple;
+	bh=g2yMlhD1W1Kb6iXkCAfNiI0BuozSQ6IZMlRYaFyPpwA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bEDZYBTJuw74Sb/ideM6ICn6YySEqEjbz2icYhMam+IggatLNISabbi7Pypwbxe/1Du7Pct+5EqCUbcDzMffFtBvDCGE8/pjjxgpNBp5ox9jQRU/QiJZ86YtR/ujix/78pl4aNI4E8WJiFKQVrvU2BP7pgXsYpOOZ8ThhSvMP1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BJ5xUrK/; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EIah98ze"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-420180b5897so32097155e9.3
-        for <git@vger.kernel.org>; Tue, 21 May 2024 08:48:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716306535; x=1716911335; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=sXKGcoWRCyj3ViJNXOUpceMkdtyvf3DDoDg2aD1yYuQ=;
-        b=EIah98zeGA/j5b1ULShbksH2EDir7ckEc96rxh42pSXcWlhoz8cofFnJOVOLqyNMzU
-         1kMey1VVcHMEpZvrGUMZHUOAm9CZpTvLYmM8o8t+uCUaDHqO9myffT5+4l5XwUqsE+uf
-         q/pwtF2fI8xLZx/AbikZq4n299rhoowfLFmgIoZYnwS+fqqHEMuY2A27+0ei1UZ5UlW5
-         UZ4a3gqp1qGyhC/tlO0vTnC20Cz6hHHYvPJXDmOPZ1G308YIJydviSl0n7N8Jn+gVzhP
-         8XS0d3l69JPKftSaJRqmjRK2Nk3wmAHxwdcQRjHwpzOUOPKwcxqfgCQ9HxKID2UJ8uQa
-         QoYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716306535; x=1716911335;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sXKGcoWRCyj3ViJNXOUpceMkdtyvf3DDoDg2aD1yYuQ=;
-        b=sLSp5SUtPbTNrK3NtqsezWf8cBAKdGb7tIl76FGiKOOT7vsVIRhxufCuR51riEkZKF
-         Hv8fcExcX0df/DZg0mUjXQpLpShYwFXNQ5L2/+mhQR4CyR3P85eG7ZH1PesAjGKn4+/+
-         CUNzmxf32bUBljD/TZvLU69dvoBBbiQv4+VJDIAeBmaZiYWgHCreIINR0KM0FybVaVhf
-         mFJcfufRe+1FOfG8MyoM4DNEHrFhpYZdgYrh2GUMWGR29Cc7pJlk+GQW39wh+6Geo++j
-         iR7ixXSIvMiobHRONHbmznZmY6OE5Ei9gsBVA8Tdybj2tZmXbAExNSKRn14tcyoTwBmZ
-         u7Mg==
-X-Gm-Message-State: AOJu0YxQFgDBmFaSPauGhtpW8DNnQIva/+8tfbqrylsWEYCv98SmMkgs
-	TmMm1JUSiovqao81R4Rhvjp8CBbwwUG7V12wUVIzfMs+rZiNIrIWX1ID2Q==
-X-Google-Smtp-Source: AGHT+IFkT8lXjyL0Z2GQcc6WYc2HpW3YB6K0wN3meEMeBRGrDWPU/06jBdtdYNHGgldLs9ajBNYYaA==
-X-Received: by 2002:a05:600c:4f0e:b0:420:151e:b205 with SMTP id 5b1f17b1804b1-420151eb4f3mr194782605e9.39.1716306534389;
-        Tue, 21 May 2024 08:48:54 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41f87b2648fsm505357425e9.7.2024.05.21.08.48.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 May 2024 08:48:53 -0700 (PDT)
-Message-Id: <pull.1723.git.git.1716306532869.gitgitgadget@gmail.com>
-From: "Ivan Tse via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 21 May 2024 15:48:52 +0000
-Subject: [PATCH] dir: fix treat_leading_path() to return false on
- non-directories
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BJ5xUrK/"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8CFB32F931;
+	Tue, 21 May 2024 11:52:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=g2yMlhD1W1Kb6iXkCAfNiI0BuozSQ6IZMlRYaF
+	yPpwA=; b=BJ5xUrK/r9jLfDkyXFNzQYV9OZiX9kbYLVcPJjMH+lrUz6KypXP3p0
+	G6xFbL/lJb/uN2aSnAGKwamNMjlnxjDX9ptjAxn3YUXlPsLuOFG5cotg7tmfZZZf
+	yRajTPA9ZvRg1bR0ox5GCmZscsef+68pXsMHfQjrhVvX43nIqziMk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 84ED72F930;
+	Tue, 21 May 2024 11:52:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E26012F92F;
+	Tue, 21 May 2024 11:52:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>
+Subject: Re* [PATCH] add-patch: response to unknown command
+In-Reply-To: <ZkxHLE_8OpYvmViY@tanuki> (Patrick Steinhardt's message of "Tue,
+	21 May 2024 09:03:08 +0200")
+References: <1dbe4c61-d75f-45d9-95d2-ac8acae22c56@gmail.com>
+	<ZkxHLE_8OpYvmViY@tanuki>
+Date: Tue, 21 May 2024 08:52:14 -0700
+Message-ID: <xmqqr0dvb1sh.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Ivan Tse <ivan.tse1@gmail.com>,
-    Ivan Tse <ivan.tse1@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 18B8400C-178A-11EF-9917-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-From: Ivan Tse <ivan.tse1@gmail.com>
+Patrick Steinhardt <ps@pks.im> writes:
 
-If treat_leading_path() encounters a non-directory in its loop over each
-leading path component, it should return false. This bug was introduced
-in commit b9670c1f5e ("dir: fix checks on common prefix directory",
-2019-12-19) where the check for `is_directory(sb.buf)` still breaks out
-of the loop but doesn't return false anymore. Instead, the loop is
-broken out and the last state result in the loop is used in the return
-conditional: `state == path_recurse`.
+> I'm a bit on the edge here. Is it really less confusing if we confront
+> the user with a command that they have never even provided in the first
+> place? They implicitly specified the first letter, only, but the user
+> first needs to be aware that we discard everything but the first letter
+> in the first place.
 
-This prevents the warning "warning: could not open directory" errors
-from occurring in `git status` or `git ls-files -o` calls on
-non-directory pathspecs. The warning was introduced in commit b673155074
-("dir.c: stop ignoring opendir() error in open_cached_dir()",
-2018-02-02).
+I share your doubt.  If what the user said (e.g. "ues") when they
+wanted to say "yes", I find "You said 'u', which I do not understand" 
+more confusiong than "You said 'ues', which I do not understand".
 
-Signed-off-by: Ivan Tse <ivan.tse1@gmail.com>
+> Is it even sensible that we don't complain about trailing garbage in the
+> user's answer? Shouldn't we rather fix that and make the accepted
+> answers more strict, such that if the response is longer than a single
+> character we point that out?
+
+I personally guess that it is unlikely that folks are taking
+advantage of the fact that everything but the first is ignored, and
+I cannot think of a reason why folks prefer that behaviour offhand.
+
+If 'q' and 'a' are next to each other on the user's keyboard, there
+is a plausible chance that we see 'qa' when the user who wanted to
+say 'a' fat-fingered and we ended up doing the 'q' thing instead,
+and we may want to prevent such problems from happening.
+
+Instead of ignoring, we _could_ take 'yn' and apply 'y' to the
+current question, and then 'n' to the next question without
+prompting (or showing prompt and answer together without taking
+further answer), and claim that it is a typesaving feature, but
+it is dubious users can sensibly choose the answer to a prompt
+they haven't seen.
+
+So, I am inclined to be supportive on that "tighten multi-byte
+input" idea, but as I said the above is based on a mere "I cannot
+think of ... offhand", so we need to see if people have reasonable
+use cases to object first.
+
+------- >8 ------------- >8 ------------- >8 ------------- >8 -------
+Subject: add-patch: enforce only one-letter response to prompts
+
+In an "git add -p" session, especially when we are not using the
+single-char mode, we may see 'qa' as a response to a prompt
+
+  (1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]?
+
+and then just do the 'q' thing (i.e. quit the session), ignoring
+everything other than the first byte.
+
+If 'q' and 'a' are next to each other on the user's keyboard, there
+is a plausible chance that we see 'qa' when the user who wanted to
+say 'a' fat-fingered and we ended up doing the 'q' thing instead.
+
+As we didn't think of a good reason during the review discussion why
+we want to accept excess letters only to ignore them, it appears to
+be a safe change to simply reject input that is longer than just one
+byte.
+
+Keep the "use only the first byte, downcased" behaviour when we ask
+yes/no question, though.  Neither on Qwerty or on Dvorak, 'y' and
+'n' are not close to each other.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-    dir: fix treat_leading_path() to return false on non-directories
-    
-    Hi there!
-    
-    I wanted to provide some extra context on the behavior I'm trying to
-    fix. I noticed in one of my git hook scripts that it was showing a
-    warning error message when running git status on a deleted directory.
-    You can reproduce with the following on the git repo:
-    
-    $ git status --short t/non_existent_directory/
-    warning: could not open directory 't/non_existent_directory/': No such file or directory
-    
-    
-    However, this warning doesn't show if you give a non-directory from the
-    root of the repo:
-    
-    $ git status --short non_existent_directory/
-    
-    
-    Also doesn't show if you give it a directory in gitignore (/bin is in
-    t/unit-tests/.gitignore)
-    
-    $ git status --short t/unit-tests/bin/non_existent_directory
-    
-    
-    I found it strange that sometimes git is able to detect non-directories
-    without warnings. Even stranger, an older version of git didn't show
-    this warning in the first example.
-    
-    After running git bisect, I was able to track down the commit that
-    introduced this behavior: b9670c1 ("dir: fix checks on common prefix
-    directory", 2019-12-19).
-    
-    Before, that change, !is_directory(sb.buf) would break out of the loop
-    and return 0 since the branch of code that changes rc to 1 hasn't been
-    reached yet. The change introduces the conditional state == path_recurse
-    as the new return statement. This state variable could be from a
-    previous iteration of the loop which is causing this new behavior. The
-    fix is to ensure the is_directory conditional results in the overall
-    method returning false.
-    
-    I'm not sure if this is considered a bug or not since it's just a
-    warning message. If this isn't noteworthy, then feel free to ignore this
-    pull request!
+ add-patch.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1723%2Fivantsepp%2Fitse_untracked_warnings-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1723/ivantsepp/itse_untracked_warnings-v1
-Pull-Request: https://github.com/git/git/pull/1723
-
- dir.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/dir.c b/dir.c
-index 2d83f3311a7..5cb56f3a3e2 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2771,8 +2771,10 @@ static int treat_leading_path(struct dir_struct *dir,
- 			baselen = cp - path;
- 		strbuf_reset(&sb);
- 		strbuf_add(&sb, path, baselen);
--		if (!is_directory(sb.buf))
-+		if (!is_directory(sb.buf)) {
-+			state = path_none;
- 			break;
+diff --git c/add-patch.c w/add-patch.c
+index 2252895c28..7126bc5d70 100644
+--- c/add-patch.c
++++ w/add-patch.c
+@@ -1227,6 +1227,7 @@ static int prompt_yesno(struct add_p_state *s, const char *prompt)
+ 		fflush(stdout);
+ 		if (read_single_character(s) == EOF)
+ 			return -1;
++		/* do not limit to 1-byte input to allow 'no' etc. */
+ 		switch (tolower(s->answer.buf[0])) {
+ 		case 'n': return 0;
+ 		case 'y': return 1;
+@@ -1509,6 +1510,10 @@ static int patch_update_file(struct add_p_state *s,
+ 
+ 		if (!s->answer.len)
+ 			continue;
++		if (1 < s->answer.len) {
++			error(_("only one letter is expected, got '%s'"), s->answer.buf);
++			continue;
 +		}
- 		strbuf_reset(&sb);
- 		strbuf_add(&sb, path, prevlen);
- 		strbuf_reset(&subdir);
+ 		ch = tolower(s->answer.buf[0]);
+ 		if (ch == 'y') {
+ 			hunk->use = USE_HUNK;
 
-base-commit: 4365c6fcf96caac73dcc412aa25db34cf8df48d5
--- 
-gitgitgadget
