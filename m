@@ -1,104 +1,87 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gosford.compton.nu (gosford.compton.nu [217.169.17.27])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8000013DB83
-	for <git@vger.kernel.org>; Wed, 22 May 2024 13:44:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7C57D096
+	for <git@vger.kernel.org>; Wed, 22 May 2024 14:10:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.169.17.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716385492; cv=none; b=D/ccfSoQH9stX00xXodzVUaJhLtGWU1UG/80uTVbhgLFrjbjjgRM+tvSkMDFCOX3UbzRMgyJTRTpyi2rAli1z+1qIjYt2WdBsJOn7Pe75hhy8lkUYTQEV6gBCraCPfEnu6UFnZLQ/OnBNDYpPHyxWTquIi6iOgnByNRWSfMFjYU=
+	t=1716387050; cv=none; b=Dp/k/Ovr2fDy4YwgXCxTGfgqy6foY5ONfIr6oYSGu/82+fagNsjNXBTQ7LGGeZaI9+h4pcyotQlkS5pBdAj0/2mc5zOjRvui7njoBDK8ii5263Qp0jrAb8FKEzO4TSDZxVYTQdBdwMMeuQ3d3FMh6E8i15pPS+m742zgr8NzEOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716385492; c=relaxed/simple;
-	bh=I4P67EJkM34v8msodnyqzgf9lM6R8114rgpJWXN+JQI=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=QLkEFDItsZAVBj2GUdYihTL/xhS3zi/zAUMmnFAWNzL8hQEmlwE3+eHMuR7wGnFm8maXss+93enqddMaVtc+VVAkTjlutGHxvrpjhxzLEaizev7W1+w60fhf4D/puFOAR5b+usyLs7JuJpkbrcOqZIqOscXg7apS0WQXLt5U44E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=LtjDASVK; arc=none smtp.client-ip=209.85.219.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1716387050; c=relaxed/simple;
+	bh=LJMrqTpuF0Dn3xD2ZDK3sYoXVJjZ+rV0gx4oJAscB8c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KBR2QX2P3rDZViC/XDdgNvQMGLipZynozF8cG59aItZcpucWy23r5gKA2wetHKlWNJvm71BX/HR4qrdauFftj/trv8ovusrQ8SWg8i0JSNKPGEbHxrI9SqI5kSkhoCWB3nbxf9b4k01RlhFBC9J5Gwxqm2q5pNpSMPzFwH7jhGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu; spf=pass smtp.mailfrom=compton.nu; dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b=tgQ+E1Lm; arc=none smtp.client-ip=217.169.17.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=compton.nu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="LtjDASVK"
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-df481bf6680so742236276.3
-        for <git@vger.kernel.org>; Wed, 22 May 2024 06:44:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1716385489; x=1716990289; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PLxJ1p+fTZl5PWIWLgCavs/y02NkmGtq9n/cGPbWdRA=;
-        b=LtjDASVKHjIIJR1jMtPGwTByxmU0EPFgmRaK3PjFz12CfDuR1tQ8vNuCS0E9y6UVOD
-         kJxFlwfq5qgtJGFJMGY6gIAIkT7eB2Di3IuW0DNNqv7xLlwSVlE1twcVrmMIaZmzIK4p
-         IM8la7nQdBvGKroCwLDB1c92bRzEDYRy67phKJ+XHMU3DcukvfunsOdjTF0yBWGWPGlY
-         7s2pS3mqAT6eXMiPHFYYemcagTEEvRu7MrxM4gKkRc/9L1efVHdiMiIxss5kJp8MtgT8
-         IAi6KBhNXJTtKYfftd/Dolkf0BLayB/YNfBk3xdluPm1vE5yBoDLC2Ng5Y7D3lyI/zwm
-         WyIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716385489; x=1716990289;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PLxJ1p+fTZl5PWIWLgCavs/y02NkmGtq9n/cGPbWdRA=;
-        b=Pks2U7faMxgO1incoZQZzKbw71BDHpUsMpfGM4eZ+QdFvfVY/hqjLHEgjS1CTk5lzZ
-         yimPNRYIakKz6EEEr/rPHv35j6WOo+7KfKIkXRPuOnhtJZ9C18PhuB5ieQbRYXsyojHe
-         6IsnZjnp5Gl/onlgxHAE4dc5TzOKXTZfBm3h4FT7TyvyHB0WvkGXZjunyVjZN8qc6HHw
-         CjxPASpB7+xfNoVoQhhh+JQTgOOEFpg+lwoUWMHtIYpVW0xjwFoeyRCbY/8XUYCU5lHS
-         uQBIWkOhlbNng4VmxJqTmis4xNBbuYAE+1gp35yhYPwFofFqPHrndFSDhXYigQF+wTm8
-         ZaXA==
-X-Gm-Message-State: AOJu0YxagvA7oE0+N+DSkJEXh5yRb+k39lWZIJq4GAPJaKQERt7Q6NAk
-	XaN1Bv48QzjFVIephyg31PjRSfFv+b/HSJFrFzg73YipRbTKzdJdGSjc6C2Buz/AV/ew+jXJx1Z
-	E
-X-Google-Smtp-Source: AGHT+IHcJjj4Ais5y3pk6wHJR2eVYoEWXzOd4XtJ4ckq1Tr7UQxRv3daD9MRdoh9i+QYOw4iIlK1Yg==
-X-Received: by 2002:a25:d611:0:b0:df4:e882:2808 with SMTP id 3f1490d57ef6-df4e8822ef3mr956909276.56.1716385488822;
-        Wed, 22 May 2024 06:44:48 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7947a472d8dsm412854485a.80.2024.05.22.06.44.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 May 2024 06:44:48 -0700 (PDT)
-Date: Wed, 22 May 2024 09:44:46 -0400
-From: Taylor Blau <me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b="tgQ+E1Lm"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=compton.nu;
+	s=20200130; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=uoazPGlTGHWbrnvticq96kRUgFmjGPWf53ofeFoceC0=; i=tom@compton.nu;
+	t=1716387048; x=1717596648; b=tgQ+E1LmVRlmmuPg64U1MOOSPLJwO+9ngIGn8qgGuk1yE6q
+	w2vk68cgqX7lKbIElKgTf+ovkKOsdtO+dLnexyiBXNWNSm4nAPfnlMuN1HVbemOnHSqH5d1Qp1xIB
+	TI7EzuCkuIXWTbZ0m/qllABXC4QgAOLG4j4B7qd2Zqyve1rXI9n3wKX3WqDeVkR3+WXytO8i4VrwP
+	TFZ5DDZgnVsjK6BQXSfdldw30ZuuaWbu13V+2/QCh12pMZ1LeW6S54mw4ZMAEQ+G+M9KqjergtBeo
+	ns9d6748Cwscn9xAcM7iqXwxy4Wkk/UNwXTyB105JLui5KVgMrthWED2IDtvLtPg==;
+Authentication-Results: gosford.compton.nu;
+	iprev=pass (bericote.compton.nu) smtp.remote-ip=2001:8b0:bd:1:1881:14ff:fe46:3cc7
+Received: from bericote.compton.nu ([2001:8b0:bd:1:1881:14ff:fe46:3cc7]:52194)
+	by gosford.compton.nu with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.97.1)
+	(envelope-from <tom@compton.nu>)
+	id 1s9m92-00000007dOb-064H;
+	Wed, 22 May 2024 14:36:44 +0100
+Received: from tom by bericote.compton.nu with local (Exim 4.97.1)
+	(envelope-from <tom@compton.nu>)
+	id 1s9m91-00000005UPS-3n1Q;
+	Wed, 22 May 2024 14:36:39 +0100
+From: Tom Hughes <tom@compton.nu>
 To: git@vger.kernel.org
-Cc: John Cai <johncai86@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Documentation/fsck-msgids.txt: remove duplicate
- 'gitmodulesLarge'
-Message-ID: <ad1342d101112f52f45c2dfef4c369f7676aa9c6.1716385486.git.me@ttaylorr.com>
+Cc: Tom Hughes <tom@compton.nu>
+Subject: [PATCH] push: don't fetch commit object when checking existence
+Date: Wed, 22 May 2024 14:36:21 +0100
+Message-ID: <20240522133621.1308393-1-tom@compton.nu>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-Commit f6534dbda47 (fsck: document msg-id, 2022-10-25) introduced the
-various fsck errors/warnings/etc into documentation, but included a
-duplicate entry for `gitmodulesLarge`.
+If we're checking to see whether to tell the user to do a fetch
+before pushing there's no need for us to actually fetch the object
+from the remote if the clone is partial.
 
-Drop the latter one, ensuring that the `gitmodules`-related fsck msg-ids
-stay in alphabetical order.
+Because the promisor doesn't do negotiation actually trying to do
+the fetch of the new head can be very expensive as it will try and
+include history that we already have and it just results in rejecting
+the push with a different message, and in behavior that is different
+to a clone that is not partial.
 
-After applying this commit, the following shows that we have no more
-duplicate entries:
-
-    perl -ne '
-      if (/^`([a-zA-Z]+)/) { $ids{$1}++ }
-      END { print "$_\n" for grep { $ids{$_} > 1 } keys %ids }' \
-      Documentation/fsck-msgids.txt
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Tom Hughes <tom@compton.nu>
 ---
- Documentation/fsck-msgids.txt | 3 ---
- 1 file changed, 3 deletions(-)
+ remote.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-index 5edc06c658..68b8bb492b 100644
---- a/Documentation/fsck-msgids.txt
-+++ b/Documentation/fsck-msgids.txt
-@@ -79,9 +79,6 @@
- `gitmodulesParse`::
- 	(INFO) Could not parse `.gitmodules` blob.
- 
--`gitmodulesLarge`;
--	(ERROR) `.gitmodules` blob is too large to parse.
--
- `gitmodulesPath`::
- 	(ERROR) `.gitmodules` path is invalid.
- 
+diff --git a/remote.c b/remote.c
+index 2b650b813b..20395bbbd0 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1773,7 +1773,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 		if (!reject_reason && !ref->deletion && !is_null_oid(&ref->old_oid)) {
+ 			if (starts_with(ref->name, "refs/tags/"))
+ 				reject_reason = REF_STATUS_REJECT_ALREADY_EXISTS;
+-			else if (!repo_has_object_file(the_repository, &ref->old_oid))
++			else if (!repo_has_object_file_with_flags(the_repository, &ref->old_oid, OBJECT_INFO_SKIP_FETCH_OBJECT))
+ 				reject_reason = REF_STATUS_REJECT_FETCH_FIRST;
+ 			else if (!lookup_commit_reference_gently(the_repository, &ref->old_oid, 1) ||
+ 				 !lookup_commit_reference_gently(the_repository, &ref->new_oid, 1))
 -- 
-2.45.1.216.g4365c6fcf96
+2.45.1
+
