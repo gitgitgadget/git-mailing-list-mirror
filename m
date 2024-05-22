@@ -1,94 +1,78 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD8FD51E
-	for <git@vger.kernel.org>; Wed, 22 May 2024 19:16:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A651D51E
+	for <git@vger.kernel.org>; Wed, 22 May 2024 19:20:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716405404; cv=none; b=cEGAPpXkXOKo7LZldokKbDY2QBQ7Hd+ZTfb7HmWoXs1ldLSNyMSfdDQTT5wlB7YykCUZv2cYLH++FnFiYx9pQVVzCv0wyTtyZresIHrxVBB/DkNzOPTXcql0pBCJq5sopMMgWS5bEH6rWBm2REk7P5mR5vNncG4fujKtXX3d3qs=
+	t=1716405613; cv=none; b=ttUJiSQSvu5wA6zDqSKv+Af6eolrtDLhyr9bKAFOceiWHvidnRwg8PWkUP/dOSothmTd3IP+GQG4EqVTNf/Nl+h5Zq70qQZbUMeYJxnI8hmGkud4UZm9jGWxHqxI4URoCLJxupVjwAsvoJXmxNp9q+7j4ByyNEWd/Bsd3KtZLgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716405404; c=relaxed/simple;
-	bh=uoStTwUxoZcZvMNUqUXpfDv3aaEoFsJaXbHnd1GXweY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OqkVLfHNTRreImq4M6PnhJt9pmmWjUDY9GTOsqtZjn6WxtMGSgga+TDZAAJ3xp5D+ydELRauXod9UZ9hVj2TsasQ/fGMcr1XEPBnCJqhiAnsuVcw0UOqGQA5DTHyRLj5bVWckAcW3fyXgfd+xBRm2XsZIvoXM0broOParkkpR9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=n+N0rFTq; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="n+N0rFTq"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5B0433602A;
-	Wed, 22 May 2024 15:16:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=uoStTwUxoZcZvMNUqUXpfDv3aaEoFsJaXbHnd1
-	GXweY=; b=n+N0rFTq7hL28tpsgEvUAlhXQpbCoM3yGOjF1bXRBU0rgxnXFl+bCr
-	3yE4kukKFzJiWSONhaxb/Db+xsGwJFzo2S/daYZwUBFhvlG6gehLx1LmaRg6s34r
-	83oMbrD5IS4gpDRHZ/hlCSjZQRRG5c81B20nUtre4TA+YvFyPBW/4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5483E36029;
-	Wed, 22 May 2024 15:16:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 570CE36028;
-	Wed, 22 May 2024 15:16:34 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tom Hughes <tom@compton.nu>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] push: don't fetch commit object when checking existence
-In-Reply-To: <20240522133621.1308393-1-tom@compton.nu> (Tom Hughes's message
-	of "Wed, 22 May 2024 14:36:21 +0100")
-References: <20240522133621.1308393-1-tom@compton.nu>
-Date: Wed, 22 May 2024 12:16:32 -0700
-Message-ID: <xmqq8r014pyn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1716405613; c=relaxed/simple;
+	bh=TwLS2NHRKj78D6+nq28MCgo+JRBpMKVoZRzZu6JDYFs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dXaGxpfjKJnxSsZlIuMRgvvQ5ErUCHcbNflFzaIIaHCOXQwZZJeCLFQYk8QIODcl2BtiIY7pfXkVAsnJmwOeDdg6xsC9RmG+njEoQ3LiqTsu1tdjPftV43PERWzfYc+psSbNpYniOO0VAbCsuIJ1GZWC2ZS+motgKL9gvJiDInY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-4df439e1056so1905881e0c.2
+        for <git@vger.kernel.org>; Wed, 22 May 2024 12:20:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716405609; x=1717010409;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eRSPmJN579TNYGI36R6AdwYNq4q1/7+WeINmKKDPuRg=;
+        b=o2y5ks20LalqZ/r13IZEW3Ob0FK5+2NbqXnaIzfGZHmJsobl6CPQ94g/niRn8jw9Td
+         QJhtwyPWMf5wBw0XFgxdd3tpr7LfRyAtvbtjcQEqvY1GXp04IrG0jos1Vlt5WsPG/btm
+         mU1GbxMYw6RWkzz0GLs5oIMe+/xgfmqxRVEMR6Greg2xQosaq39oGwfY85nHGMqmXB6K
+         VuXmxcQvMdHefXmigZvapGiqj48OjQCJk0l5x0n6m4H7plhi+WVDP4MCnQ0jGzl2ZHTC
+         FDSKtnCfqokGhXCjSvybVWAUCcOhTMnGu7EvKzwBtqFVRaNpk2onqnDOb0c+PNtxAJx5
+         Ifdw==
+X-Forwarded-Encrypted: i=1; AJvYcCWwLvuAMp6RxBSZO8ZwECMaDxGCot6a2CXiDB5YKTuxcDUl+t7qkFRCSl473k+yAoK9xlgFrJqilPGECXMeOkKkGA9+
+X-Gm-Message-State: AOJu0YzZx6eUtYVHu/1y4S4weNhd2mMMs/aferGvlSpdDPP8HghnNuvy
+	a8YmgOuwQcrWlIJOLfB7xS7a0KI8Wx3MOxDCyYqx3jLFK6TiF8da2NgYjk60WTYZ6ZJkIf6o42i
+	xtNQoQFqNBbw6hQNSNzpWMFUITvs=
+X-Google-Smtp-Source: AGHT+IHmsEBf4mRNp8dxhr+ve/lKeFHNYUGRsqfwMjS1nh+RJZW3gKAggfM6DnyBJS2y0IgRn+k1C3i0xvoR9h184OY=
+X-Received: by 2002:a05:6122:990:b0:4d8:79c1:2a21 with SMTP id
+ 71dfb90a1353d-4e2185243bamr3272634e0c.7.1716405609153; Wed, 22 May 2024
+ 12:20:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- CDB9A3D4-186F-11EF-AB75-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <xmqqpltd4rfu.fsf@gitster.g> <51e30846c62a1605dee8fd5b9d096222@manjaro.org>
+In-Reply-To: <51e30846c62a1605dee8fd5b9d096222@manjaro.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 22 May 2024 15:19:58 -0400
+Message-ID: <CAPig+cQ7bq8LKxnmjY3FQ9MRpM0GMep1Nxyp7jasB8yJvTV-RQ@mail.gmail.com>
+Subject: Re: [PATCH] blame: do not mention obvious default configuration values
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Tom Hughes <tom@compton.nu> writes:
-
-> If we're checking to see whether to tell the user to do a fetch
-> before pushing there's no need for us to actually fetch the object
-> from the remote if the clone is partial.
+On Wed, May 22, 2024 at 3:13=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> w=
+rote:
+> On 2024-05-22 20:44, Junio C Hamano wrote:
+> > diff --git a/Documentation/config/blame.txt
+> > b/Documentation/config/blame.txt
+> > @@ -1,6 +1,6 @@
+> >  blame.blankBoundary::
+> >       Show blank commit object name for boundary commits in
+> > -     linkgit:git-blame[1]. This option defaults to false.
+> > +     linkgit:git-blame[1].
+> > @@ -14,11 +14,9 @@ blame.date::
 >
-> Because the promisor doesn't do negotiation actually trying to do
-> the fetch of the new head can be very expensive as it will try and
-> include history that we already have and it just results in rejecting
-> the push with a different message, and in behavior that is different
-> to a clone that is not partial.
+> Frankly, I'd much rather see the same "If true, ..." twist [1]
+> applied here, rather than just deleting the descriptions of the
+> defaults.  To me, such an approach eliminates any doubts, while
+> not stressing out the actual default value.
 
-Interesting.  Is this something that is easily testable, perhaps by
-preparing a partial clone and try to push from there and checking
-the non-existence of the object after seeing that push failed?
-
-Thanks.
-
-> Signed-off-by: Tom Hughes <tom@compton.nu>
-> ---
->  remote.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/remote.c b/remote.c
-> index 2b650b813b..20395bbbd0 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -1773,7 +1773,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
->  		if (!reject_reason && !ref->deletion && !is_null_oid(&ref->old_oid)) {
->  			if (starts_with(ref->name, "refs/tags/"))
->  				reject_reason = REF_STATUS_REJECT_ALREADY_EXISTS;
-> -			else if (!repo_has_object_file(the_repository, &ref->old_oid))
-> +			else if (!repo_has_object_file_with_flags(the_repository, &ref->old_oid, OBJECT_INFO_SKIP_FETCH_OBJECT))
->  				reject_reason = REF_STATUS_REJECT_FETCH_FIRST;
->  			else if (!lookup_commit_reference_gently(the_repository, &ref->old_oid, 1) ||
->  				 !lookup_commit_reference_gently(the_repository, &ref->new_oid, 1))
+For what it's worth, when reviewing patches on this list, I have
+multiple times asked submitters to mention the default value when
+adding new documentation since it saves users the trouble of having to
+discover the default either by experimentation or by reading the
+source code. So, I see removal of mention of default values as a step
+backward.
