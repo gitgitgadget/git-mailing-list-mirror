@@ -1,87 +1,115 @@
-Received: from gosford.compton.nu (gosford.compton.nu [217.169.17.27])
+Received: from smtp.biuro.ib.pl (biuro.ib.pl [185.38.250.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7C57D096
-	for <git@vger.kernel.org>; Wed, 22 May 2024 14:10:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.169.17.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983AB3D54B
+	for <git@vger.kernel.org>; Wed, 22 May 2024 15:02:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.38.250.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716387050; cv=none; b=Dp/k/Ovr2fDy4YwgXCxTGfgqy6foY5ONfIr6oYSGu/82+fagNsjNXBTQ7LGGeZaI9+h4pcyotQlkS5pBdAj0/2mc5zOjRvui7njoBDK8ii5263Qp0jrAb8FKEzO4TSDZxVYTQdBdwMMeuQ3d3FMh6E8i15pPS+m742zgr8NzEOE=
+	t=1716390178; cv=none; b=PDoy6i5+2S4e3+QpbTy5sF0Rue0zfUIy+PwKF5fKWt90nD9+ZQjMEhoNr63cJldKdcH8KCSHAl/hubwWUiCKmFtijhzkZpNpxeCwuiGEHRcnzMi+uOn2QJoHNQFA2u94qT9WK13E2xLefI5lvP6QAOxQJOXzTGyszZnl7VuKjCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716387050; c=relaxed/simple;
-	bh=LJMrqTpuF0Dn3xD2ZDK3sYoXVJjZ+rV0gx4oJAscB8c=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KBR2QX2P3rDZViC/XDdgNvQMGLipZynozF8cG59aItZcpucWy23r5gKA2wetHKlWNJvm71BX/HR4qrdauFftj/trv8ovusrQ8SWg8i0JSNKPGEbHxrI9SqI5kSkhoCWB3nbxf9b4k01RlhFBC9J5Gwxqm2q5pNpSMPzFwH7jhGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu; spf=pass smtp.mailfrom=compton.nu; dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b=tgQ+E1Lm; arc=none smtp.client-ip=217.169.17.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=compton.nu
+	s=arc-20240116; t=1716390178; c=relaxed/simple;
+	bh=mhtMi7BnHxy9Te7GU63xovUWyAFDR239ujRZFK0J69k=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=ZDkBTHHLrvApy841JKFCbViv4bBp4DSd0IPWw/0ADYBHGXD+QamtfBZkMmnyoWCUsw6h60CkvSUuDAiU5s4z2DgZI3VLFTnMDEQtqU+CL8L9Wh79/w2emqeYmySj03SVYa75L0gQcLs6XdorDcIa8Y5af2gfeyWCrWXyCzfyWig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ib.pl; spf=pass smtp.mailfrom=ib.pl; dkim=permerror (0-bit key) header.d=ib.pl header.i=@ib.pl header.b=IJYp7jRy; dkim=pass (2048-bit key) header.d=ib.pl header.i=@ib.pl header.b=dXm5RCYl; arc=none smtp.client-ip=185.38.250.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ib.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ib.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b="tgQ+E1Lm"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=compton.nu;
-	s=20200130; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
-	Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=uoazPGlTGHWbrnvticq96kRUgFmjGPWf53ofeFoceC0=; i=tom@compton.nu;
-	t=1716387048; x=1717596648; b=tgQ+E1LmVRlmmuPg64U1MOOSPLJwO+9ngIGn8qgGuk1yE6q
-	w2vk68cgqX7lKbIElKgTf+ovkKOsdtO+dLnexyiBXNWNSm4nAPfnlMuN1HVbemOnHSqH5d1Qp1xIB
-	TI7EzuCkuIXWTbZ0m/qllABXC4QgAOLG4j4B7qd2Zqyve1rXI9n3wKX3WqDeVkR3+WXytO8i4VrwP
-	TFZ5DDZgnVsjK6BQXSfdldw30ZuuaWbu13V+2/QCh12pMZ1LeW6S54mw4ZMAEQ+G+M9KqjergtBeo
-	ns9d6748Cwscn9xAcM7iqXwxy4Wkk/UNwXTyB105JLui5KVgMrthWED2IDtvLtPg==;
-Authentication-Results: gosford.compton.nu;
-	iprev=pass (bericote.compton.nu) smtp.remote-ip=2001:8b0:bd:1:1881:14ff:fe46:3cc7
-Received: from bericote.compton.nu ([2001:8b0:bd:1:1881:14ff:fe46:3cc7]:52194)
-	by gosford.compton.nu with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <tom@compton.nu>)
-	id 1s9m92-00000007dOb-064H;
-	Wed, 22 May 2024 14:36:44 +0100
-Received: from tom by bericote.compton.nu with local (Exim 4.97.1)
-	(envelope-from <tom@compton.nu>)
-	id 1s9m91-00000005UPS-3n1Q;
-	Wed, 22 May 2024 14:36:39 +0100
-From: Tom Hughes <tom@compton.nu>
-To: git@vger.kernel.org
-Cc: Tom Hughes <tom@compton.nu>
-Subject: [PATCH] push: don't fetch commit object when checking existence
-Date: Wed, 22 May 2024 14:36:21 +0100
-Message-ID: <20240522133621.1308393-1-tom@compton.nu>
-X-Mailer: git-send-email 2.45.1
+	dkim=permerror (0-bit key) header.d=ib.pl header.i=@ib.pl header.b="IJYp7jRy";
+	dkim=pass (2048-bit key) header.d=ib.pl header.i=@ib.pl header.b="dXm5RCYl"
+DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed; d=ib.pl;
+	s=20200714201541; h=Content-Transfer-Encoding:Content-Type:To:Subject:From:
+	MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=+8p6ovZnIw5riucMVO1xjbZrS0YR40evKh5f22yzpgM=; b=IJYp7jRylfLJ06feHbkbjs+QCq
+	di+xQDRBaIYkJoXo9H1PTI6S/ertelR22bqYOJpJkRkWexdWCBn8rDbau7Cw==;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ib.pl;
+	s=20200714201541bc; h=Content-Transfer-Encoding:Content-Type:To:Subject:From:
+	MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=+8p6ovZnIw5riucMVO1xjbZrS0YR40evKh5f22yzpgM=; b=dXm5RCYlwZcYWIMauy/O1Y962H
+	OXqjLopFDmtlOMHBSiGvgkoxyPbXRi/6z/YIQR2xlxJSUFtRLpGg6qIqiRUPQsb0RX8MzbFpve3eC
+	Kp3UI+tG+n0rin9G28eqfJZ8Nkj4tKL4DeB+GQutrzhfHNWm3l5tWTssBFEdusV7sDbhPRAow+3Gc
+	+sKpnS5a1QSTKFhRuosVJTO/PojcLuwNIH8WXRlPYVRJuRf3o3pNDUOmo1JVDv0KqrR/paQRAxxXR
+	/S9JZrU40Ixm/WgVyB2kjqU9N/FyucjLXguDtzEk+neLBAbyEfx/jH8aEGWaR6fFTVY5qcQFjDAT2
+	RNro9rnw==;
+Message-ID: <ed79092c-c37d-4e4c-aae9-af68cd8c20a0@ib.pl>
+Date: Wed, 22 May 2024 17:02:51 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: =?UTF-8?Q?Pawe=C5=82_Bogus=C5=82awski?= <pawel.boguslawski@ib.pl>
+Subject: Cloning does not work on available download bandwidth changes
+To: git@vger.kernel.org
+Content-Language: pl-PL
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-If we're checking to see whether to tell the user to do a fetch
-before pushing there's no need for us to actually fetch the object
-from the remote if the clone is partial.
+Started to clone big git repo on not-too-fast, _stable_ VDSL link (up to 
+20mbps down)...
 
-Because the promisor doesn't do negotiation actually trying to do
-the fetch of the new head can be very expensive as it will try and
-include history that we already have and it just results in rejecting
-the push with a different message, and in behavior that is different
-to a clone that is not partial.
+     $ git clone https://github.com/googleapis/google-api-go-client
+     Cloning into 'google-api-go-client'...
+     remote: Enumerating objects: 644446, done.
+     remote: Counting objects: 100% (6922/6922), done.
+     remote: Compressing objects: 100% (2904/2904), done.
+     Receiving objects:   0% (3859/644446), 20.82 MiB | 1.01 MiB/s
 
-Signed-off-by: Tom Hughes <tom@compton.nu>
----
- remote.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+...and then started to watch a VOD movie on same link; when VOD buffers 
+data, eats almost all available down bandwidth and leaves only about 100 
+kB/s for git...
 
-diff --git a/remote.c b/remote.c
-index 2b650b813b..20395bbbd0 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1773,7 +1773,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 		if (!reject_reason && !ref->deletion && !is_null_oid(&ref->old_oid)) {
- 			if (starts_with(ref->name, "refs/tags/"))
- 				reject_reason = REF_STATUS_REJECT_ALREADY_EXISTS;
--			else if (!repo_has_object_file(the_repository, &ref->old_oid))
-+			else if (!repo_has_object_file_with_flags(the_repository, &ref->old_oid, OBJECT_INFO_SKIP_FETCH_OBJECT))
- 				reject_reason = REF_STATUS_REJECT_FETCH_FIRST;
- 			else if (!lookup_commit_reference_gently(the_repository, &ref->old_oid, 1) ||
- 				 !lookup_commit_reference_gently(the_repository, &ref->new_oid, 1))
--- 
-2.45.1
+     Receiving objects:   1% (7111/644446), 44.49 MiB | 130.00 KiB/s
+
+...and when VOD stops buffering and whole bandwith is available for git 
+again, git transfer starts to grow...
+
+     Receiving objects:   1% (7660/644446), 50.56 MiB | 575.00 KiB/s
+
+...but finally git throws an error
+
+     error: 181 bytes of body are still expected5 MiB | 1015.00 KiB/s
+     fetch-pack: unexpected disconnect while reading sideband packet
+     fatal: early EOF
+     fatal: index-pack failed
+
+or sometimes:
+
+     error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly: 
+CANCEL (err 8)
+     error: 6109 bytes of body are still expected
+     fetch-pack: unexpected disconnect while reading sideband packet
+     fatal: early EOF
+     fatal: fetch-pack: invalid index-pack output
+
+No such problems when downloading bigger file (i.e. linux kernel source) 
+with wget or curl instead of git clone (wget/curl transfer drops to 
+about 100 kB/s when VOD buffers and increases to full speed when VOD is 
+not transferring and transfer finishes successfully).
+
+Sounds like a bug in git; should not throw an error on available 
+download bandwidth changes as wget and curl do and should not require 
+any params tuning (to stop users flooding bugtrackers).
+
+git versions tested:
+
+     // Debian 11, amd64
+     $ dpkg -s git | grep Version
+     Version: 1:2.30.2-1+deb11u2
+
+     // Debian 12, amd64
+     $ dpkg -s git | grep Version
+     Version: 1:2.39.2-1.1
+
+Similar reports:
+
+https://lore.kernel.org/git/71f2b28b-3e27-4773-8408-2f4c13757b73@gmail.com/
+https://lore.kernel.org/git/0d741b90-8307-40cf-b0b3-163203651a57@gmail.com/
+
 
