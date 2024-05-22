@@ -1,90 +1,74 @@
-Received: from gosford.compton.nu (gosford.compton.nu [217.169.17.27])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1C53D97F
-	for <git@vger.kernel.org>; Wed, 22 May 2024 20:18:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.169.17.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C6841A80
+	for <git@vger.kernel.org>; Wed, 22 May 2024 20:41:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716409089; cv=none; b=mHmcOdB4YLKI9G9bHiszLWNN9RqeJyk+6B7QMOW0dGuiOoC/E2Dik70FizQOyUKaehALg/Q/frDkKPNprMEpIeZ6tMAJfynIwXKkAJZ/+MJOdwFeyqUDEoHs3gek7jfFv1RY7zH7g0dVL3zZ1NH9F4ivxt8swe5Vs7yXW//n5eM=
+	t=1716410497; cv=none; b=loc7qFpUdOxarrrK65EOx7nDXYGXTRrCsFyne9A1DnP4BF8SkQZy3coBs2erl0iU1mHOtqAbtdG/M9JgvYONmtD0VBiAdj8NMiwJHl0ZB6R2tt9m+Ef80ilQx1TFyls/vWJ8t2/9ccTzQJLR5XTPmbxbRDgNXXkCGNPEdZy4rbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716409089; c=relaxed/simple;
-	bh=yKvm7hJDaaV8h3OfvCbk7HdGQmFjrCM3aWlkOUkY2/E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JMIrWrMh22BiwlW5Jp2WjJ1oSuOzhhtkpteGAeCABVG+g0E/DhKCsktRSn6YgqJ8dr/TWw1A+P/WvKy0pOTHzH8Z+3LFEwLNQWqY8O57v6JV+rJIonuY/QwIsKm/jH5mlNiD1cmTtUQd/rWzMYwdz8oQw3Byj/wFQe1/LW4f83U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu; spf=pass smtp.mailfrom=compton.nu; dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b=iKlpfMHd; arc=none smtp.client-ip=217.169.17.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=compton.nu
+	s=arc-20240116; t=1716410497; c=relaxed/simple;
+	bh=5efewYuOTuI3ExLEOtNEmJPs0ksnylcIbQ4aOe4x86w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OcBLU+4WZHDwjGlKuF2TC1O5K5murc+vojdZHX0IKSZZXbL5IxAa10Ae2WZs4MJGoN6B2OdX/sSkfdK/PvXH/NW7Cl1s/7AsJ7O/SMcsvD+sAuNd7Vfx6JUTQ72wyJu+TGTYGp85NikIfi/S9hIEL6qS8ZF5+HsGyjs4uIJHX0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=o5h9URcj; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b="iKlpfMHd"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=compton.nu;
-	s=20200130; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=KhBlwq7ZEEV7Uk+3aj7oN1/rKcBdne6TbXzDDm8Ozs4=; i=tom@compton.nu;
-	t=1716409088; x=1717618688; b=iKlpfMHdtbV007fVJm1iOGqLD33aLg9Ba7vMm2dJZ3L/tNY
-	UmAPVdsNz7wHG0eelsP0tKGfAExfG7q9nXjQ1W2s0Rg0Aorh7ftaW+8bmXahLFjHlhIMyqHU4kifD
-	fbPseQp/XFW3jsxG0x44D6UBKoMNgoMWMzIj7GJ9bbJgw5pOhJIeZPpHMzV6IeLBGjr09akezljR3
-	X0Di7N5CBnt97fRvaTkt2HHT4FA6TRxcJhuIqEWvJ0ERTzgKWCyjnUJWT4sQ7LXxo73d4ByYmWLYY
-	sxWETxRS2arm/zXkmLOXaJ+Oa5ko7q89HIpposMK1Zn5sgFnewIQaPVr0vTPO6mw==;
-Authentication-Results: gosford.compton.nu;
-	iprev=pass (bericote.compton.nu) smtp.remote-ip=2001:8b0:bd:1:1881:14ff:fe46:3cc7
-Received: from bericote.compton.nu ([2001:8b0:bd:1:1881:14ff:fe46:3cc7]:50354)
-	by gosford.compton.nu with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <tom@compton.nu>)
-	id 1s9sPQ-00000007xz3-3cKm;
-	Wed, 22 May 2024 21:18:05 +0100
-Received: from arden.compton.nu ([2001:8b0:bd:1:9eb6:d0ff:fedf:c161]:55576)
-	by bericote.compton.nu with esmtps  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.97.1)
-	(envelope-from <tom@compton.nu>)
-	id 1s9sPQ-000000072eY-3Et7;
-	Wed, 22 May 2024 21:18:00 +0100
-Message-ID: <a546ca21-22ab-4a0d-9afa-e5c91830a5c2@compton.nu>
-Date: Wed, 22 May 2024 21:18:00 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="o5h9URcj"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E9F062AF4F;
+	Wed, 22 May 2024 16:41:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=5efewYuOTuI3ExLEOtNEmJPs0ksnylcIbQ4aOe
+	4x86w=; b=o5h9URcjPVtosFeqXEW7DuFWZ6qe3w0vKxTd4H6lfJUaQWvxsP4TkB
+	m+5E/M/BBu3R/x9tiJCVtJ6FCI4brn+FHVsfZWr6N8UZHhGe0tOGawBoUH7IKL/k
+	Wv8BO/k+ruPzm1Eoc3dVwZrluGGjzynMV7QDttcAZptIYXwFMbtKY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D2FC62AF4E;
+	Wed, 22 May 2024 16:41:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3955B2AF4B;
+	Wed, 22 May 2024 16:41:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH v2] add-patch: enforce only one-letter response to prompts
+In-Reply-To: <11abab810253d654119fab69adf44fab@manjaro.org> (Dragan Simic's
+	message of "Wed, 22 May 2024 21:03:20 +0200")
+References: <xmqqr0dvb1sh.fsf_-_@gitster.g> <xmqqh6eqiwgf.fsf@gitster.g>
+	<fbb9c7d3e7c2129bc1526dfa5a8eca0c@manjaro.org>
+	<xmqqzfsh6cjf.fsf@gitster.g>
+	<11abab810253d654119fab69adf44fab@manjaro.org>
+Date: Wed, 22 May 2024 13:41:26 -0700
+Message-ID: <xmqqzfsh37gp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] push: don't fetch commit object when checking existence
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <20240522133621.1308393-1-tom@compton.nu>
- <xmqq8r014pyn.fsf@gitster.g>
-Content-Language: en-GB
-From: Tom Hughes <tom@compton.nu>
-In-Reply-To: <xmqq8r014pyn.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ A9EA0302-187B-11EF-B82A-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On 22/05/2024 20:16, Junio C Hamano wrote:
-> Tom Hughes <tom@compton.nu> writes:
-> 
->> If we're checking to see whether to tell the user to do a fetch
->> before pushing there's no need for us to actually fetch the object
->> from the remote if the clone is partial.
->>
->> Because the promisor doesn't do negotiation actually trying to do
->> the fetch of the new head can be very expensive as it will try and
->> include history that we already have and it just results in rejecting
->> the push with a different message, and in behavior that is different
->> to a clone that is not partial.
-> 
-> Interesting.  Is this something that is easily testable, perhaps by
-> preparing a partial clone and try to push from there and checking
-> the non-existence of the object after seeing that push failed?
+Dragan Simic <dsimic@manjaro.org> writes:
 
-Sure. I think I've managed to figure out a test and have sent
-a second version of the patch with it added.
+>> For more backstory,
+>>     https://lore.kernel.org/git/?q=%22textual+order%22+%22actual+order%22
+>
+> That's exactly what I assumed, but frankly, in this particular case
+> I really can't force myself, despite trying quite hard, into liking
+> it.  It's simply strange to me.
 
-Tom
+You asked me why, and the reason was given to you.  End of story.
 
--- 
-Tom Hughes (tom@compton.nu)
-http://compton.nu/
-
+I never asked you to like it and you do not have to like it ;-).
