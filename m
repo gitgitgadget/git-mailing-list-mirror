@@ -1,110 +1,83 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529812B9C3
-	for <git@vger.kernel.org>; Wed, 22 May 2024 17:19:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878652B9C3
+	for <git@vger.kernel.org>; Wed, 22 May 2024 17:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716398368; cv=none; b=WdtbVZI/FsICDt5QGmyqtbo8iByVpHjgZiEfHywhYIDGUR7nQ63QuDTCbrZASjguNfF/Ywrk8c5M5ojRuz6lvyrBKJ+kUssR/VW7bjIfJqb4z4BgMHkGrmF/M6ESEBjvrAiMCF07CSWjkViCMFRULQSW5L7vPuxSOy8psp3FcUA=
+	t=1716398410; cv=none; b=uHdgc8k9NJkeddfn+bxPrIjit87jYm+RIXgdvvUyhNsy0D5pRQpV0rxXD6MsNYvI3fJxFm6lToGM+oz6JvcrU7rqO12RaMmhSfs7KvfgKPbiN1SuRX4kCjtIfgUIXCuwrVV8vN0q8Osqqczrt6BBILHfoG+LLy936ZtpjA5ymwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716398368; c=relaxed/simple;
-	bh=ONgE0ABhImBhn5UU15Um8tbSNTG8KNWLZ0sLP05FQV0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GMHr+57EuEy7P6mFbV9jnt3UsGOQRQiJT7/0CdLN3LmWWdvAAWJIzRpJ3gUDdCtEdNHIo0UER08DMBEuQVc7e0fCEwsnDbBS7z0nAS2QLDRbIRtqXA/zXUuH4R5vUsx9zuls/lqhG+TnRYvsw6pJeRzpBtYgz6d2LScnPRyAtG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OLkWYjSf; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716398410; c=relaxed/simple;
+	bh=dxylFm+pZdC8kZniTHviB66kRnQ0gNqx8K5w9XV3byE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WR2ImOsRX1AEObRmnDyauysYbNbiJ68NUnGb+d01iaGDY5TDIfaDcRzJ393Nf96vSXqv29w8IrIAMcOEqjCI5BwyWcWiGpziHK5HdOztt3XDh3xAe5exBtk/zYi0p4cD/dBHULMUCEL3GizHP3tyCC581LxBElHN6ZiCoL3taic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VncfneQE; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OLkWYjSf"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42017f8de7aso45163385e9.1
-        for <git@vger.kernel.org>; Wed, 22 May 2024 10:19:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716398366; x=1717003166; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vzLKAxCrEY7uDbqJTk5KgxKEAjbjo56US0UzpStrN5I=;
-        b=OLkWYjSfcANoZjX9NEO41zUfudUdp4D/Au+V5WAELoD5vHVj1DZVVlfivsJba/536U
-         9q7yJRkHFMzahF/r47KfpkjDaV7By+uvNX4ksxk5d5EFPyjmewkgFjT7cW/DI5U0U/EA
-         2mvdi4wUoHg/UaMjipYH+TJ41BXd/kQep5wEnPEJMtDLn170b7AuKYmnfQS9s7+zFNkC
-         JNIwCVMY2GRXvwl/4VQYkulZzY9RNb5NadsNcGGWNKxQ6HCIfVPME9PYwdrTI6ExjeNS
-         KOVDtsiU/aKPztRWy7qGWKTmxBUnPsEjQGwh+E+pneHxFA7e8DyFpyMZlfXpRFdIA0Mt
-         aPHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716398366; x=1717003166;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vzLKAxCrEY7uDbqJTk5KgxKEAjbjo56US0UzpStrN5I=;
-        b=wnBBwqSpNpIkPY+dx5faoHn43kNb193SlkoGs8OdIIr9QrH2TJSF3xpLt0esFYiPEq
-         T/sXiUUeKnNs88YZrHX0MGxtDSNxHtVllRhY2xEN84J2g+PUknsJ3hdV1Jlv0gvwRb+Q
-         aT7q50biNomQdtIVlDi826f3EgP/moEncaRlYg94zwjwZdSpGHZ7f5YQP2MhbSx+6MB3
-         OUTeQiMvos1Ugs3u8J+tRf416814KsQm9Jy0oUgr0mLnPFq7435kQ38QFSw291Y362hA
-         /l5DlgC0GJ2jO3VS5bkxPTmf+pBvoV5sgccfeEFxAq+EVHGPz0lKCfuxYWBOOsggT2BB
-         6dZw==
-X-Gm-Message-State: AOJu0YwSshkAOhvT1V7r5eH1AyQiaum+FfAneD14f3u/tGKe9Kt50sbI
-	i/nIJijTr9xXNvuNJ1aJ935D3WJNMcZPEBgLf9wIsiJv20KDm4vV
-X-Google-Smtp-Source: AGHT+IFlnYrwrKPdvzZxkcmsBxHGNfOp7Xz73D7996DbYJkxd+/HSf7AkNqOtqlO/xuzdLl4NMq1Vg==
-X-Received: by 2002:a05:600c:5756:b0:420:16b2:67f4 with SMTP id 5b1f17b1804b1-420fd2fc8f0mr22561705e9.12.1716398365455;
-        Wed, 22 May 2024 10:19:25 -0700 (PDT)
-Received: from gmail.com (133.red-88-14-54.dynamicip.rima-tde.net. [88.14.54.133])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42100f5a576sm453225e9.22.2024.05.22.10.19.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 May 2024 10:19:25 -0700 (PDT)
-Message-ID: <501a610c-550f-45da-a311-d4c941ae4870@gmail.com>
-Date: Wed, 22 May 2024 19:19:08 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VncfneQE"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 173B0187F8;
+	Wed, 22 May 2024 13:20:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=dxylFm+pZdC8kZniTHviB66kRnQ0gNqx8K5w9X
+	V3byE=; b=VncfneQEXRD7UCGUAqXpDxzJPFw0UU5dujFbe5+Y0gESxOCbyWss0t
+	2fOA71jyUsavyeP+Kfm2Ih9rqShSN/hlxJStLJifLykjRrXBX8eWRy5oF7yDD03N
+	g1A5fmFAz47k7+trXEd+wSG+Y5Wd7zYRopE8Btja3Nb/jNU1bc/gE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BF762187F6;
+	Wed, 22 May 2024 13:20:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B0489187F5;
+	Wed, 22 May 2024 13:20:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 12/12] Revert "fetch/clone: detect dubious ownership of
+ local repositories"
+In-Reply-To: <6e493925-f3f6-43aa-4381-612067e87d01@gmx.de> (Johannes
+	Schindelin's message of "Wed, 22 May 2024 09:27:55 +0200 (CEST)")
+References: <20240521195659.870714-1-gitster@pobox.com>
+	<20240521195659.870714-13-gitster@pobox.com>
+	<xmqq34qaaobk.fsf@gitster.g>
+	<6e493925-f3f6-43aa-4381-612067e87d01@gmx.de>
+Date: Wed, 22 May 2024 10:20:05 -0700
+Message-ID: <xmqqed9t69x6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] pager: do not close fd 2 unnecessarily
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
- <80f15223-246e-4cfb-a139-e47af829c938@gmail.com> <xmqqo790fg8z.fsf@gitster.g>
- <a9f199d8-bb06-479f-88c2-63d80338a4e9@gmail.com> <xmqqwmnm993k.fsf@gitster.g>
- <0574914d-8088-434d-8db2-013c1abe27c3@gmail.com> <xmqqikz6966t.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqikz6966t.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 88C5B4BC-185F-11EF-895C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Tue, May 21, 2024 at 03:00:10PM -0700, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
-> > Adding logic to adjust when we close(stderr) in close_pager_fds() makes
-> > sense on its own, I think.
-> 
-> The feature may be.
-> 
-> > And, the values for the flag "do-we-want-to-close-stderr-at-exit", too,
-> > to me.
-> 
-> But the thing is, the flag is *NOT* named as such, and an
-> undocumented "value -1 means X, while value 1 means Y", do not make
-> any sense, either
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Perhaps this makes more sense?:
+> To https://github.com/dscho/git
+>  + c6da96aa5f0...f71d7009814 maint-2.39 -> tentative/maint-2.39 (forced update)
+>  + fff57b200d1...21dc6c4d521 maint-2.40 -> tentative/maint-2.40 (forced update)
+>  + 616450032a0...0d21b3451cd maint-2.41 -> tentative/maint-2.41 (forced update)
+>  + b1ea89bc2d6...e9bd0c8f8c4 maint-2.42 -> tentative/maint-2.42 (forced update)
+>  + 093c42a6c6b...9926037ce8c maint-2.43 -> tentative/maint-2.43 (forced update)
+>  + 3c7a7b923b3...aec5a9bf52c maint-2.44 -> tentative/maint-2.44 (forced update)
+>  + aeddcb02756...d3c56966d13 maint-2.45 -> tentative/maint-2.45 (forced update)
+>
+> This command-line comes up with no differences (meaning: you resolved the
+> merge conflicts, even the ones without conflict markers, in the same way
+> as I did, which is good):
 
-1:  8fe915a820 ! 1:  70cc34efc4 pager: do not close fd 2 unnecessarily
-    @@ pager.c: int pager_use_color = 1;
-      
-      static struct child_process pager_process;
-      static const char *pager_program;
-    -+static int old_fd2 = -1;
-    ++static int old_fd2;
-      
-      /* Is the value coming back from term_columns() just a guess? */
-      static int term_columns_guessed;
-    @@ pager.c: static void close_pager_fds(void)
-      	/* signal EOF to pager */
-      	close(1);
-     -	close(2);
-    -+	if (old_fd2 != -1)
-    ++	if (old_fd2)
-     +		close(2);
-      }
+Yeah, but I am afraid that it is a bit too premature to worry about
+the integration to merge them up.  What's your take on the symlink
+stuff Joey raised recently?
+
+Thanks.
+
