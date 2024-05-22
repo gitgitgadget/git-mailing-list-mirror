@@ -1,101 +1,125 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from smtp.biuro.ib.pl (biuro.ib.pl [185.38.250.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B0B146A84
-	for <git@vger.kernel.org>; Wed, 22 May 2024 21:58:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB59A7CF30
+	for <git@vger.kernel.org>; Wed, 22 May 2024 22:58:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.38.250.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716415103; cv=none; b=j253SH0XSfYLXIvqFaycWJbnU9TcG56ljUxIwjUgAhTp/eGMVvhq8kyD9X7hq+vfJIH40L20PrjxtfTF6UjaLeNQtu4LnSCbJrREHnACBCvVrQSlz1q+XHRpYy7uTHVtQ/UFcbC9EubJdO4SzTAFZAEJFgqy6TrKPD/zF5XrHEc=
+	t=1716418715; cv=none; b=iT2WtpIynkQFFf4n0N3daaDCiS4Xjxsa3YtDrgwkMy9drLL3iZEEBnuokfJsVLElf9IBGoaz3xEqkguIxBMgnBWURnUe0V4j+SiuioMBvii1n8PfVByNkfBAR1P+fJ8KhdU7m6TbttGH8IJberdnjCZBDioMedhVDd5VxUl9otg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716415103; c=relaxed/simple;
-	bh=OIyXNSxXNXgdWv6dG2HdMus0oB0wHMPw+MWWYrPXeiM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OmOU8uy2rB1PmdzYPsyTY/jwutxbNPgxKepIKVqFGzBzfQ5YDi1cHjxk5AW92aU6/HKz57ikiCzePBkxKopL/XYZA54LGwu52VUSgqxfsk2dgE/IfexOgVCMfAt6cxC+zNTSo1BS+Wb6sBymJ5f9NBWWWctr+mLAW70VcZsHzng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hKeuKfaV; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716418715; c=relaxed/simple;
+	bh=rSRJpyPzEI9Zx/E5j1fgLbJICgZmPyag4z1EOWBmoOM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=WpU+U2lu8rpKic8dhENdKYFreDQShadB7EX7KODOSriWkirK0xlNZWm4x4qubQ5NdjB8nKrkzpGyq8Cb1+D6SA1T0tuXo2CTgFBE5bf6o0RwrzXVXT1UoIhBdFkIZ/UvxSm0I/FMvPkIY27Pz75/l//XsQNmIfV++vbpktcyq3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ib.pl; spf=pass smtp.mailfrom=ib.pl; dkim=permerror (0-bit key) header.d=ib.pl header.i=@ib.pl header.b=TaZ2bE1C; dkim=pass (2048-bit key) header.d=ib.pl header.i=@ib.pl header.b=iF8FmhDL; arc=none smtp.client-ip=185.38.250.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ib.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ib.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hKeuKfaV"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6446E2B766;
-	Wed, 22 May 2024 17:58:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=OIyXNSxXNXgdWv6dG2HdMus0oB0wHMPw+MWWYr
-	PXeiM=; b=hKeuKfaVgZmfwg6M4dxY5y5PM+eXuGEmdkIcWQdawLBoLYgDC2HmSb
-	iwau3OIRnvO2mHJXcla4uzLEcwRmVzf8/byhexX4EG8KKre3nVNvgilD6/xyDSa9
-	QG0WAKHuRFeAlzA65DuWi8e7Stu9FD7G27anfZ7ZWirfraaP6KjOw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C23B2B765;
-	Wed, 22 May 2024 17:58:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AD3B62B763;
-	Wed, 22 May 2024 17:58:20 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tom Hughes <tom@compton.nu>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] push: don't fetch commit object when checking existence
-In-Reply-To: <8f2ebf1b-050f-476a-92d4-dfb06ad04f8d@compton.nu> (Tom Hughes's
-	message of "Wed, 22 May 2024 22:46:16 +0100")
-References: <xmqq8r014pyn.fsf@gitster.g>
-	<20240522201559.1677959-1-tom@compton.nu> <xmqqed9t36sn.fsf@gitster.g>
-	<8f2ebf1b-050f-476a-92d4-dfb06ad04f8d@compton.nu>
-Date: Wed, 22 May 2024 14:58:19 -0700
-Message-ID: <xmqqbk4x1pc4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=permerror (0-bit key) header.d=ib.pl header.i=@ib.pl header.b="TaZ2bE1C";
+	dkim=pass (2048-bit key) header.d=ib.pl header.i=@ib.pl header.b="iF8FmhDL"
+DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed; d=ib.pl;
+	s=20200714201541; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=rSRJpyPzEI9Zx/E5j1fgLbJICgZmPyag4z1EOWBmoOM=; b=TaZ2bE1CfkWVxMfNCQcmYWTHs8
+	6xpx9Kb9LxR/zz4PIxbXMTNgDzFhWN2s10Dz2Lt8yo0McuES5f7IUyuQxrAQ==;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ib.pl;
+	s=20200714201541bc; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From
+	:References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=rSRJpyPzEI9Zx/E5j1fgLbJICgZmPyag4z1EOWBmoOM=; b=iF8FmhDLXEhz5Rh672cu5yxUiS
+	fZyH3Uq+sjj6J37+tLzO0SDQx8IIs3bp37f705GiaBOasRTt9prpL46BvYV8w9rjndGpcftpQYVO7
+	jVz77g+JE6oKPC0xj4FgeT4I1kB5Loq8Yl5GOtleLIuVPHSKYG11yyRXeUUZtl7kQIQboaus+lLc4
+	ttbLeMS2e8Ro9qRmFy915hEQRQYg9JcsfT3lGLLMDLK8ssKVaFHWD9z+EA2IoT3a3AxzTukaUfwL/
+	/yVojF3CgUZBUCjlcKE2oGykgrgkno6WxMxCRM4/leN+h92q8o+W60WhQxoCSfCVnRmCct7lEfRP/
+	x9Xoz1zg==;
+Message-ID: <293afb32-99b1-4562-b339-7862698ef00f@ib.pl>
+Date: Thu, 23 May 2024 00:58:27 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 672A1D94-1886-11EF-BBB8-25B3960A682E-77302942!pb-smtp2.pobox.com
+Subject: Re: Cloning does not work on available download bandwidth changes
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+References: <ed79092c-c37d-4e4c-aae9-af68cd8c20a0@ib.pl>
+ <Zk5pDZ1gTcyrGfUk@tapette.crustytoothpaste.net>
+Content-Language: pl-PL
+From: =?UTF-8?Q?Pawe=C5=82_Bogus=C5=82awski?= <pawel.boguslawski@ib.pl>
+In-Reply-To: <Zk5pDZ1gTcyrGfUk@tapette.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Tom Hughes <tom@compton.nu> writes:
-
->>> +	test_must_fail git -C client push 2>err &&
->> We try to overwrite it.  We expect it to fail with "not a fast
->> forward".
->
-> Well that is what it would fail with at the moment, but it's not
-> what would happen with a non-partial clone - a non-partial clone
-> would fail with "fetch first" instead.
-
-Oh, don't get me wrong.  I wasn't trying to split hairs between the
-two error modes and their phrasing.  The "fetch-first" from
-set_ref_status_for_push() is done before we even initiate the
-transfer to stop the operation, with a cheap check, that will
-eventually lead to "not a fast forward" error.  IOW, in my mind,
-they are the same errors, just diagnosed at two different places in
-the code and their messages phrased differently.
-
-> So here we are testing that it's a "fetch first" and rather
-> than "not a fast forward".
-
-I think that is being overly specific, but that is fine.  As I said,
-to the end users, these two errors mean the same thing (they would
-need to fetch first and then integrate their changes before pushing
-it out again), so it is plausible that we may in the future decide
-that we want to use the same message.  When it happens, this test
-must change, which may even be a good thing (it makes it clear what
-the fallout from such a change looks like).
-
->>> +	git -C client rev-list --objects --missing=print "$COMMIT" >objects &&
->>> +	grep "^[?]$COMMIT" objects
->>> +'
->> OK.
->
-> and also that it hasn't fetched the new commit.
-
-Yes, and this is a good check that will stand the test of time, even
-across a change to rephrase the error message.
-
-Thanks.
-
+VyBkbml1IDIyLjA1LjIwMjQgb8KgMjM6NTIsIGJyaWFuIG0uIGNhcmxzb24gcGlzemU6DQoN
+Cj4gT24gMjAyNC0wNS0yMiBhdCAxNTowMjo1MSwgUGF3ZcWCIEJvZ3VzxYJhd3NraSB3cm90
+ZToNCj4+IFN0YXJ0ZWQgdG8gY2xvbmUgYmlnIGdpdCByZXBvIG9uIG5vdC10b28tZmFzdCwg
+X3N0YWJsZV8gVkRTTCBsaW5rICh1cCB0bw0KPj4gMjBtYnBzIGRvd24pLi4uDQo+Pg0KPj4g
+IMKgwqDCoCAkIGdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vZ29vZ2xlYXBpcy9nb29n
+bGUtYXBpLWdvLWNsaWVudA0KPj4gIMKgwqDCoCBDbG9uaW5nIGludG8gJ2dvb2dsZS1hcGkt
+Z28tY2xpZW50Jy4uLg0KPj4gIMKgwqDCoCByZW1vdGU6IEVudW1lcmF0aW5nIG9iamVjdHM6
+IDY0NDQ0NiwgZG9uZS4NCj4+ICDCoMKgwqAgcmVtb3RlOiBDb3VudGluZyBvYmplY3RzOiAx
+MDAlICg2OTIyLzY5MjIpLCBkb25lLg0KPj4gIMKgwqDCoCByZW1vdGU6IENvbXByZXNzaW5n
+IG9iamVjdHM6IDEwMCUgKDI5MDQvMjkwNCksIGRvbmUuDQo+PiAgwqDCoMKgIFJlY2Vpdmlu
+ZyBvYmplY3RzOsKgwqAgMCUgKDM4NTkvNjQ0NDQ2KSwgMjAuODIgTWlCIHwgMS4wMSBNaUIv
+cw0KPj4NCj4+IC4uLmFuZCB0aGVuIHN0YXJ0ZWQgdG8gd2F0Y2ggYSBWT0QgbW92aWUgb24g
+c2FtZSBsaW5rOyB3aGVuIFZPRCBidWZmZXJzDQo+PiBkYXRhLCBlYXRzIGFsbW9zdCBhbGwg
+YXZhaWxhYmxlIGRvd24gYmFuZHdpZHRoIGFuZCBsZWF2ZXMgb25seSBhYm91dCAxMDANCj4+
+IGtCL3MgZm9yIGdpdC4uLg0KPj4NCj4+ICDCoMKgwqAgUmVjZWl2aW5nIG9iamVjdHM6wqDC
+oCAxJSAoNzExMS82NDQ0NDYpLCA0NC40OSBNaUIgfCAxMzAuMDAgS2lCL3MNCj4+DQo+PiAu
+Li5hbmQgd2hlbiBWT0Qgc3RvcHMgYnVmZmVyaW5nIGFuZCB3aG9sZSBiYW5kd2l0aCBpcyBh
+dmFpbGFibGUgZm9yIGdpdA0KPj4gYWdhaW4sIGdpdCB0cmFuc2ZlciBzdGFydHMgdG8gZ3Jv
+dy4uLg0KPj4NCj4+ICDCoMKgwqAgUmVjZWl2aW5nIG9iamVjdHM6wqDCoCAxJSAoNzY2MC82
+NDQ0NDYpLCA1MC41NiBNaUIgfCA1NzUuMDAgS2lCL3MNCj4+DQo+PiAuLi5idXQgZmluYWxs
+eSBnaXQgdGhyb3dzIGFuIGVycm9yDQo+Pg0KPj4gIMKgwqDCoCBlcnJvcjogMTgxIGJ5dGVz
+IG9mIGJvZHkgYXJlIHN0aWxsIGV4cGVjdGVkNSBNaUIgfCAxMDE1LjAwIEtpQi9zDQo+PiAg
+wqDCoMKgIGZldGNoLXBhY2s6IHVuZXhwZWN0ZWQgZGlzY29ubmVjdCB3aGlsZSByZWFkaW5n
+IHNpZGViYW5kIHBhY2tldA0KPj4gIMKgwqDCoCBmYXRhbDogZWFybHkgRU9GDQo+PiAgwqDC
+oMKgIGZhdGFsOiBpbmRleC1wYWNrIGZhaWxlZA0KPj4NCj4+IG9yIHNvbWV0aW1lczoNCj4+
+DQo+PiAgwqDCoMKgIGVycm9yOiBSUEMgZmFpbGVkOyBjdXJsIDkyIEhUVFAvMiBzdHJlYW0g
+NSB3YXMgbm90IGNsb3NlZCBjbGVhbmx5Og0KPj4gQ0FOQ0VMIChlcnIgOCkNCj4+ICDCoMKg
+wqAgZXJyb3I6IDYxMDkgYnl0ZXMgb2YgYm9keSBhcmUgc3RpbGwgZXhwZWN0ZWQNCj4+ICDC
+oMKgwqAgZmV0Y2gtcGFjazogdW5leHBlY3RlZCBkaXNjb25uZWN0IHdoaWxlIHJlYWRpbmcg
+c2lkZWJhbmQgcGFja2V0DQo+PiAgwqDCoMKgIGZhdGFsOiBlYXJseSBFT0YNCj4+ICDCoMKg
+wqAgZmF0YWw6IGZldGNoLXBhY2s6IGludmFsaWQgaW5kZXgtcGFjayBvdXRwdXQNCj4+DQo+
+PiBObyBzdWNoIHByb2JsZW1zIHdoZW4gZG93bmxvYWRpbmcgYmlnZ2VyIGZpbGUgKGkuZS4g
+bGludXgga2VybmVsIHNvdXJjZSkNCj4+IHdpdGggd2dldCBvciBjdXJsIGluc3RlYWQgb2Yg
+Z2l0IGNsb25lICh3Z2V0L2N1cmwgdHJhbnNmZXIgZHJvcHMgdG8gYWJvdXQNCj4+IDEwMCBr
+Qi9zIHdoZW4gVk9EIGJ1ZmZlcnMgYW5kIGluY3JlYXNlcyB0byBmdWxsIHNwZWVkIHdoZW4g
+Vk9EIGlzIG5vdA0KPj4gdHJhbnNmZXJyaW5nIGFuZCB0cmFuc2ZlciBmaW5pc2hlcyBzdWNj
+ZXNzZnVsbHkpLg0KPj4NCj4+IFNvdW5kcyBsaWtlIGEgYnVnIGluIGdpdDsgc2hvdWxkIG5v
+dCB0aHJvdyBhbiBlcnJvciBvbiBhdmFpbGFibGUgZG93bmxvYWQNCj4+IGJhbmR3aWR0aCBj
+aGFuZ2VzIGFzIHdnZXQgYW5kIGN1cmwgZG8gYW5kIHNob3VsZCBub3QgcmVxdWlyZSBhbnkg
+cGFyYW1zDQo+PiB0dW5pbmcgKHRvIHN0b3AgdXNlcnMgZmxvb2RpbmcgYnVndHJhY2tlcnMp
+Lg0KPiBJIGRvbid0IGJlbGlldmUgdGhpcyBpcyBhIGJ1ZyBpbiBHaXQuICBUaGUgcHJvYmxl
+bSBoZXJlIGlzIGEgbmV0d29yaw0KPiBpc3N1ZSBvZiBzb21lIHNvcnQgdGhhdCdzIGNhdXNp
+bmcgdGhlIGNvbm5lY3Rpb24gdG8gYmUgaW50ZXJydXB0ZWQgb3INCj4gZHJvcHBlZC4gIFRo
+aXMgaXMgdmVyeSBjb21tb24sIGJ1dCB0aGUgcG9zc2libGUgY2F1c2VzIGFyZSBtYW55Lg0K
+Pg0KPiBBIGxvdCBvZiB0aW1lcyB3ZSBzZWUgdGhpcyBpdCdzIHNvbWUgc29ydCBvZiBwcm94
+eSwgYW5kIHRoYXQgY2FuIGJlIGENCj4gbm9uLWRlZmF1bHQgYW50aXZpcnVzIG9yIGZpcmV3
+YWxsIG9yIFRMUyBNSVRNIGRldmljZSwgYnV0IHRoYXQncyB1c3VhbGx5DQo+IG9uIFdpbmRv
+d3MsIGFuZCB5b3UncmUgdXNpbmcgRGViaWFuLiAgSXQgY2FuIGFsc28gYmUganVzdCBhIGJh
+ZA0KPiBjb25uZWN0aW9uLCBwb29yIHRyYWZmaWMgbWFuYWdlbWVudCBieSB5b3VyIElTUCwg
+b3IgYSBmbGFreSB3aXJlbGVzcyBvcg0KPiB3aXJlZCBuZXR3b3JrIGNhcmQuDQo+DQo+IE15
+IF9ndWVzc18gYWJvdXQgd2hhdCdzIGhhcHBlbmluZyBoZXJlIGlzIHBvb3IgdHJhZmZpYyBt
+YW5hZ2VtZW50Og0KPiBiZWNhdXNlIHZpZGVvIGlzIHR5cGljYWxseSBmbGFnZ2VkIGFzIGxv
+dy1sYXRlbmN5IGluIERTQ1AsIHNvbWUgZGV2aWNlDQo+IG9uIHRoZSBwYXRoIGlzIHByaW9y
+aXRpemluZyBpdCB0byB0aGUgZXhjbHVzaW9uIG9mIGFsbCBvdGhlciB0cmFmZmljLA0KPiB3
+aGljaCBpcyBjYXVzaW5nIHRoZSBHaXQgY29ubmVjdGlvbiB0byBiZSBkcm9wcGVkLiAgSSBo
+YXZlIG5vIHByb29mIG9mDQo+IHRoaXMsIHRob3VnaC4NCg0KVHJ5IHRvIHJ1bg0KDQpnaXQg
+Y2xvbmUgaHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZWFwaXMvZ29vZ2xlLWFwaS1nby1jbGll
+bnQNCg0KYW5kIGxpbWl0IGludGVyZmFjZSBzcGVlZCBzb21laG93IGkuZS4NCg0KdGMgcWRp
+c2MgYWRkIGRldiBldGgwIHJvb3QgaGFuZGxlIDE6IGh0YiBkZWZhdWx0IDEyDQp0YyBjbGFz
+cyBhZGQgZGV2IGV0aDAgcGFyZW50IDE6MSBjbGFzc2lkIDE6MTIgaHRiIHJhdGUgMjBrYnBz
+IGNlaWwgMjBrYnBzDQp0YyBxZGlzYyBhZGQgZGV2IGV0aDAgcGFyZW50IDE6MTIgbmV0ZW0g
+ZGVsYXkgMTAwMG1zDQoNCmFuZCBhZnRlciBhIHdoaWxlIHJlc3RvcmUgc3BlZWQgd2l0aCBp
+LmUuDQoNCnRjIHFkaXNjIGRlbCBkZXYgZXRoMCBwYXJlbnQgMToxMiBuZXRlbSBkZWxheSAx
+MDAwbXMNCg0KSSB0cmllZCB0aGlzIGluIERlYmlhbiAxMSBhbmQgIGdpdCAyLjMwLjIgZGll
+ZCB3aXRoOg0KDQplcnJvcjogNTcyMyBieXRlcyBvZiBib2R5IGFyZSBzdGlsbCBleHBlY3Rl
+ZCBNaUIgfCA5MjAuMDAgS2lCL3MNCmZldGNoLXBhY2s6IHVuZXhwZWN0ZWQgZGlzY29ubmVj
+dCB3aGlsZSByZWFkaW5nIHNpZGViYW5kIHBhY2tldA0KZmF0YWw6IGVhcmx5IEVPRg0KZmF0
+YWw6IGluZGV4LXBhY2sgZmFpbGVkDQoNCg0KDQoNCg==
