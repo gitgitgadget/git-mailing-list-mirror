@@ -1,103 +1,132 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C347BAF7
-	for <git@vger.kernel.org>; Wed, 22 May 2024 21:23:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7107F47F
+	for <git@vger.kernel.org>; Wed, 22 May 2024 21:24:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716413026; cv=none; b=Xwg1MnPmLipST5leZ5bGCsdnNNY4446f3cDNEfOe0V2ZuoQ92/g7oa7x8F0ZlpJ0BexIFsFp1R13df/Icj2FFW9UDwFCnY+0vUGxadIeeeGDdf94BwK9NJEJpwaWHI5SqIcLhI46L3Gl/UbckLySAz+UwvyDc6Z5gSZPjLghdNU=
+	t=1716413092; cv=none; b=oGJV/ygIwW31eQcvUTjP7UVBzDjaVWcwtwrB0yPVr/6a408KpQqf5ML6LJn0JdCyHIoNRjugqoGzCa71mz4haC3owPjGWc/r19PSpBGwp9Yf53Kgtsv9PHlgWoAmhaTahnZEqLL01OEHBc3b0JW3y8kfh1FSoBeOoSxinJBxRYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716413026; c=relaxed/simple;
-	bh=cWdRRkeo1NN0hcEfKLOr1o8y5s6P5UAVYrhWlwnjT+0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QVwEEfKSLgoRUZIZSn0PJajHX7DWZ10AjF9cYk1zpcrMOxdqOeHxwyXAhuZSwwYVCyUhEmMe6as2RQKfZmrJFqJVddZ5uZufTmRhfQW+/ZR12ltxGuAp8VmSe8D+GVlrdfEU0rRjgt2V0EO/CsJQhGkRbTNQebqp3NVTyqagkS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aFTbAqZC; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716413092; c=relaxed/simple;
+	bh=3uRSao06hA5YQyKscz82MMkj5xih/W4k0pHIELkilUE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=cT7Hix/ZQzv8nckz6GaEUHq04wz46T7B0Y55KsVsS4m9FFzGk0pHvYmH3u1RbQrQt8xK2ZlJdNuhbfj9xiKC5aaVAlW3roDD2T9XcMl2Nq8w9CHRM37ODWwUte9I1XnaP8xuozu9VP4T3UnkfVrRXwVaud27c1uDIz+cEkF0wI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=Ac56VzEf; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aFTbAqZC"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-420180b59b7so12439875e9.0
-        for <git@vger.kernel.org>; Wed, 22 May 2024 14:23:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716413023; x=1717017823; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FfxS7Y9ICqGgBaWVUnNv7/mqO39Y51gGMZD9dSFuBO0=;
-        b=aFTbAqZCAl7iWxjcaQEHVluHm6HsLufmfwnS+phVltZALSYRoJ5D9cZqmqKAtqpdMX
-         9SmFL535BA5cVLHY+q2N0kuXk9fUFTrLwMMTs3Sz0RhRq5rnor5dTXzKL6lE2h3N07ub
-         u1b1YnPpLnKsYfdsXEBQsTFLuBgCss2W0OkxabiXQK6MenLrcvfjDPOJykI2qlE8RN2z
-         F3SnoOaPuK08wFEFwyq5pDFE8mdQpienQTcae2d4zLNRlvHafUv2g1dT1tMH0taU6bTX
-         ptn/P5y/NW3joSAyT+V34YXA+S16RpnIb3vIHZ4iPRnMqnrvuEYYeGbmRvESuq2bQ+ea
-         qJNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716413023; x=1717017823;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FfxS7Y9ICqGgBaWVUnNv7/mqO39Y51gGMZD9dSFuBO0=;
-        b=vqT8Q1HEPC/Mkaggjmcr7SRnjFwxYd/gVAK2tVEbUrbwpwq0c4OpVz6Q5u2EMvDFRb
-         6agStA+504qroKAsrYDU6l566rcrZsepjeP+hASP+QgxJ829tnY6DhIEtuRNjeX2Os20
-         1ZSDJki/ueE/JDGd9JFQm3NnHIEUINJww7e1kkiGtRoxDzDiEi/WPuxyLrNFFpUCG6Lp
-         YcYfIyDwtTL8A5bCOyAggkSmRxEhFKTDSBNnbRJPo49N7yDUh8bH7yC5Ovr8IHkJbg8s
-         yk/Ba1fw54SoNagI3b0gks7IYxuHFdlhv53OOZ46k4lpidAjkfR1oKn7xWxtFjbWxhst
-         v6yQ==
-X-Gm-Message-State: AOJu0Yyw8wgxvhSOzbtUKTCmR7ndrfE+yEMmk6ADTf4ItZDjYUPL3wvJ
-	Bm2yk76RvQ3y4y0XMkwwbXQ0QhRtNsV4lnro5ELCzDpwYGxAC8Tt
-X-Google-Smtp-Source: AGHT+IHSJfueo7Nw3Om+5uAly1mD9zn+if5IpuWUnpmlPvzfjliJ813b12X7WgF2C5VWsxY89iv9xA==
-X-Received: by 2002:a7b:c019:0:b0:41e:1bc1:36de with SMTP id 5b1f17b1804b1-420fd36042fmr24555035e9.26.1716413022907;
-        Wed, 22 May 2024 14:23:42 -0700 (PDT)
-Received: from gmail.com (133.red-88-14-54.dynamicip.rima-tde.net. [88.14.54.133])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42100f99d7fsm5452025e9.31.2024.05.22.14.23.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 May 2024 14:23:42 -0700 (PDT)
-Message-ID: <ff8efadb-4c1a-43ce-9b12-7688d6062c18@gmail.com>
-Date: Wed, 22 May 2024 23:23:41 +0200
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="Ac56VzEf"
+From: Dragan Simic <dsimic@manjaro.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1716413087;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=JMHl3gNEvta38OeuNH5so5R6fZ57WgOegMfU0XgT7eI=;
+	b=Ac56VzEfinGcxiJpIIv8sgqiIVY5TeeM6rXTZFTu71S9wfCM27PsEYQ9RGEtsO+hUH5NdX
+	RfkJDF/tYmC8s5PC64bz34r/Drj9NZQYNa4rcxff9hRAaboO0eEBuYd0x4AzM/rhKTJ1Pu
+	3BidxeCB3s8Crd1k2RObMkXKe1IANfU6Yi95R4NzqyBolqFzS2LtTkQGUjHHcSM7CM42Ze
+	Qj3ENyj6ZB7WFLpMBJrNkC/Wg7jD7MmDfd79g5tgmUGjgLZoYeYjwMUnTAqQgItL6ZsVwY
+	Zo79oiGP0qav3cUTr8f6mn2xOZdLkAb3yzyMuY+LdFANMepIYiCAv0Lht2y0QA==
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	rjusto@gmail.com,
+	sunshine@sunshineco.com
+Subject: [PATCH v2] doc: imply that interactive.singleKey is disabled by default
+Date: Wed, 22 May 2024 23:24:43 +0200
+Message-Id: <7da73f15a018d858519eefa373001ccb3eaf32e2.1716412958.git.dsimic@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] add-patch: render hunks through the pager
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
- Jeff King <peff@peff.net>
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
- <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
- <310a2904-681a-4bee-96b9-90a2dc107975@gmail.com>
- <1accd0163c96811b7b7f146e477acf89@manjaro.org>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <1accd0163c96811b7b7f146e477acf89@manjaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Wed, May 22, 2024 at 10:09:25AM +0200, Dragan Simic wrote:
+Make it clear that the interactive.singleKey configuration option is disabled
+by default, using rather subtle wording that avoids an emphasis on the actual
+default value.  This should eliminate any associated doubts.
 
-> > @@ -1387,7 +1388,7 @@ N_("j - leave this hunk undecided, see next
-> > undecided hunk\n"
-> >     "/ - search for a hunk matching the given regex\n"
-> >     "s - split the current hunk into smaller hunks\n"
-> >     "e - manually edit the current hunk\n"
-> > -   "p - print the current hunk\n"
-> > +   "p - print the current hunk, 'P' to use the pager\n"
-> 
-> I think it would be better to move the description of "P" into
-> a separate line after the "p" line, perhaps like this:
-> 
->   "P - use the pager to print the current hunk\n"
-> 
-> I know, we'd sacrifice one line of the valuable vertical space
-> this way, but I find it more consistent and much harder to miss
-> the new "P" option.
+While there, touch up the remaining wording of the description a bit.
 
-Making 'P' a /version/ of 'p' allows us to skip adding 'P' to the list
-of available options:
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+---
 
-    (1/1) Stage this hunk [y,n,q,a,d,j,J,k,K,g,/,s,e,p,P,?]
+Notes:
+    Changes in v2:
+      - As agreed upon with Junio, [1] switched to more subtle wording that
+        does not explicitly mention the default value.
+    
+    [1] https://lore.kernel.org/git/xmqqttip379x.fsf@gitster.g/
+    
+    Link to v1: https://lore.kernel.org/git/3141fe9f7328a97bf3818748421f6ae929120626.1716363167.git.dsimic@manjaro.org/T/#u
 
-This is what I though and this long list is what worries me.
+Range-diff against v1:
+1:  3141fe9f7328 ! 1:  7da73f15a018 doc: note that interactive.singleKey is disabled by default
+    @@ Metadata
+     Author: Dragan Simic <dsimic@manjaro.org>
+     
+      ## Commit message ##
+    -    doc: note that interactive.singleKey is disabled by default
+    +    doc: imply that interactive.singleKey is disabled by default
+     
+         Make it clear that the interactive.singleKey configuration option is disabled
+    -    by default.  This should eliminate any associated doubts.
+    +    by default, using rather subtle wording that avoids an emphasis on the actual
+    +    default value.  This should eliminate any associated doubts.
+    +
+    +    While there, touch up the remaining wording of the description a bit.
+     
+         Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+     
+    +
+    + ## Notes ##
+    +    Changes in v2:
+    +      - As agreed upon with Junio, [1] switched to more subtle wording that
+    +        does not explicitly mention the default value.
+    +
+    +    [1] https://lore.kernel.org/git/xmqqttip379x.fsf@gitster.g/
+    +
+    +    Link to v1: https://lore.kernel.org/git/3141fe9f7328a97bf3818748421f6ae929120626.1716363167.git.dsimic@manjaro.org/T/#u
+    +
+      ## Documentation/config/interactive.txt ##
+    -@@ Documentation/config/interactive.txt: interactive.singleKey::
+    - 	linkgit:git-add[1], linkgit:git-checkout[1],
+    +@@
+    + interactive.singleKey::
+    +-	In interactive commands, allow the user to provide one-letter
+    +-	input with a single key (i.e., without hitting enter).
+    +-	Currently this is used by the `--patch` mode of
+    +-	linkgit:git-add[1], linkgit:git-checkout[1],
+    ++	When set to true, allow the user to provide one-letter input
+    ++	with a single key (i.e., without hitting the Enter key) in
+    ++	interactive commands.  This is currently used by the `--patch`
+    ++	mode of linkgit:git-add[1], linkgit:git-checkout[1],
+      	linkgit:git-restore[1], linkgit:git-commit[1],
+      	linkgit:git-reset[1], and linkgit:git-stash[1].
+    -+	This is disabled by default.
+      
+    - interactive.diffFilter::
+    - 	When an interactive command (such as `git add --patch`) shows
 
-But I see your point.  I am not opposed to adding a new line.
+ Documentation/config/interactive.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/config/interactive.txt b/Documentation/config/interactive.txt
+index 5cc26555f19a..8b876cb4eb8e 100644
+--- a/Documentation/config/interactive.txt
++++ b/Documentation/config/interactive.txt
+@@ -1,8 +1,8 @@
+ interactive.singleKey::
+-	In interactive commands, allow the user to provide one-letter
+-	input with a single key (i.e., without hitting enter).
+-	Currently this is used by the `--patch` mode of
+-	linkgit:git-add[1], linkgit:git-checkout[1],
++	When set to true, allow the user to provide one-letter input
++	with a single key (i.e., without hitting the Enter key) in
++	interactive commands.  This is currently used by the `--patch`
++	mode of linkgit:git-add[1], linkgit:git-checkout[1],
+ 	linkgit:git-restore[1], linkgit:git-commit[1],
+ 	linkgit:git-reset[1], and linkgit:git-stash[1].
+ 
