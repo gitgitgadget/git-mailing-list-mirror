@@ -1,122 +1,154 @@
-Received: from gosford.compton.nu (gosford.compton.nu [217.169.17.27])
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C237AE5D
-	for <git@vger.kernel.org>; Wed, 22 May 2024 21:46:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.169.17.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0831BF2A
+	for <git@vger.kernel.org>; Wed, 22 May 2024 21:52:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716414387; cv=none; b=AyGpiQuonGbxzKLeTEA/oySe3YpuTT52xzFS1A+oaze83O/DHL+rOgBxWOXE/U0xd8n4KsCIg/Ybylc7Q8Clsj3UiS26r9pbmgUycDLAjEyO0kK9pOTXr+XJpmAbizh3P2/zN8vVX0z6AJhAlI2KcBI+jMW5b8CbDZQI6Kr1Cxw=
+	t=1716414740; cv=none; b=C/3tP/1uK4WEeH7DXQU1RjfStKPYhzdUgn61MSwNBNYb49GlfMbS433ZZ6lbkTz+r3+BAI7iZh5/jsL0JbqFwpWL/XVdnbb1hPg3HwFkoDsu5wBD1RrxpxVv1C6ApPzQRioIJXeZ+6nNOrSs90KSVm0lRmb2oTVQDib/M+3wLtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716414387; c=relaxed/simple;
-	bh=6hglDkGxrVmgIXcU0VH2iAB1Bp2mWZb5pA6Qe4pkS9Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KEF+iciHgyoS57+y4PgQwKjrtLACBzRtOSe36GD44JBpdWzmuzgF6FitS9i9rIgDhS6dC0QZczqeBkAvwrGF8WxAMVwK9/BH76PVhU3Wfjp0nWBXYE/vf0jFDsyQqoDrvb9og/KjlLt9thw+ZlKeKQnVUt8QW4kV+yGZxDJSOLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu; spf=pass smtp.mailfrom=compton.nu; dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b=yehrQXzA; arc=none smtp.client-ip=217.169.17.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=compton.nu
+	s=arc-20240116; t=1716414740; c=relaxed/simple;
+	bh=yDIU9ini6Caa1D80lFbtBvrf2Rw9MTUYk4r3MHU6+oI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gdVVmg0Gkn9WkrrdCI9qWGG7LuOfbh3XTs+igKXKyBHzpU4YQg31BO/APDUZ63rlAHyyACLsw0HUxt5KWFacTY5bP/Egr9h4CY+QT0/Sem0iI8lFUQauECsZShfbetpGDAHq3hV/WMqdhlHjmIq8ib8jrx5LsaOm4YAST+XmZh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=S0feBL59; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b="yehrQXzA"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=compton.nu;
-	s=20200130; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=eEgDa8x5MGJz5cr/V85RjpEylHZAzvazvKt7irUcrig=; i=tom@compton.nu;
-	t=1716414385; x=1717623985; b=yehrQXzAkPkL4xJcIrnTt8YZnolmAZwx1Ic+CnKAY0kANM+
-	N4xVum5Qr1IRyTrcGckKXQYInitTgk04Z6bJ8QbE3voH+UG2xwkz6DqVJPECAYY0y4mERNOSC74xz
-	rn3pvBT+GTy7+zbPmGfD7tK3hIaBNm1ULK3X/c2f/D04mqZ1nOzOY+JVX24ceOWcuJOlYua6Ff/sI
-	TSv5jLI+Bsu+g9d3tx4b0Crt2G3jVqqjXxsWyrmcTTKd6Fox288GK7N3YwG3XSON1t6nKE9LazJJ7
-	gK2FyXbXlBxzzcuI+LbjS+TwRSCiiPbXJSMEJ7Cecn1nvIzXxIdi86Hxnd2F9brw==;
-Authentication-Results: gosford.compton.nu;
-	iprev=pass (bericote.compton.nu) smtp.remote-ip=2001:8b0:bd:1:1881:14ff:fe46:3cc7
-Received: from bericote.compton.nu ([2001:8b0:bd:1:1881:14ff:fe46:3cc7]:50684)
-	by gosford.compton.nu with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <tom@compton.nu>)
-	id 1s9tmq-000000080xT-2X2G;
-	Wed, 22 May 2024 22:46:21 +0100
-Received: from arden.compton.nu ([2001:8b0:bd:1:9eb6:d0ff:fedf:c161]:34318)
-	by bericote.compton.nu with esmtps  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.97.1)
-	(envelope-from <tom@compton.nu>)
-	id 1s9tmq-000000078ZF-1oJb;
-	Wed, 22 May 2024 22:46:16 +0100
-Message-ID: <8f2ebf1b-050f-476a-92d4-dfb06ad04f8d@compton.nu>
-Date: Wed, 22 May 2024 22:46:16 +0100
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="S0feBL59"
+Received: from tapette.crustytoothpaste.net (pool-99-237-34-130.cpe.net.cable.rogers.com [99.237.34.130])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id E8DA95DA9D;
+	Wed, 22 May 2024 21:52:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1716414736;
+	bh=yDIU9ini6Caa1D80lFbtBvrf2Rw9MTUYk4r3MHU6+oI=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=S0feBL59WZCinm0AhNHwc8W/JHYE5leJtGlubfQ+7T9lsx5VDqIJpZ0Lf42mjcj9O
+	 v6TlBX/0rLp2BMbpDX3Cz1BRV8p0B/su1Bm8K/+lCUBU16d2EKFXLBBRaxiN2jS1dk
+	 AV/eGXmRkWLOtLgaZyJ6KX0HnUiSBTSvuILR7QFbk1+fgFNliFZ2R72zxrGFCMRiWW
+	 cvqNUddF7Jb16Y5VX3G5Fv993Nc5Gegfp5qN1Ox2Bal/flICy/3M/1PG+IdkfmetvG
+	 lueXCSGF467GjHc4FNggGdsqORGa5lKs/25NGXECb6Ep5gndS2hJWmElLuGJ+pnfIL
+	 hUOXKJc+yA0jj2nMfW5P0s2I7LydC/P9SQiSB89FRvzySSOaTAPtFynj5JVIXM3COR
+	 8OceiX20ovvautuOmTg1hxbmXzaaWxzvbnLJF6pzLVGVJC+LqC3qlY81SnEZJgygZN
+	 3ab3z+or9MYMp7qwXZC1XcV1T/xr8tT9TAv0DAJpQLhSZGoRIrS
+Date: Wed, 22 May 2024 21:52:13 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: =?utf-8?Q?Pawe=C5=82_Bogus=C5=82awski?= <pawel.boguslawski@ib.pl>
+Cc: git@vger.kernel.org
+Subject: Re: Cloning does not work on available download bandwidth changes
+Message-ID: <Zk5pDZ1gTcyrGfUk@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	=?utf-8?Q?Pawe=C5=82_Bogus=C5=82awski?= <pawel.boguslawski@ib.pl>,
+	git@vger.kernel.org
+References: <ed79092c-c37d-4e4c-aae9-af68cd8c20a0@ib.pl>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] push: don't fetch commit object when checking
- existence
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <xmqq8r014pyn.fsf@gitster.g>
- <20240522201559.1677959-1-tom@compton.nu> <xmqqed9t36sn.fsf@gitster.g>
-Content-Language: en-GB
-From: Tom Hughes <tom@compton.nu>
-In-Reply-To: <xmqqed9t36sn.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="oqjptEbDYyCHTuOq"
+Content-Disposition: inline
+In-Reply-To: <ed79092c-c37d-4e4c-aae9-af68cd8c20a0@ib.pl>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-On 22/05/2024 21:55, Junio C Hamano wrote:
-> Tom Hughes <tom@compton.nu> writes:
->
->> +test_expect_success 'push should not fetch new commit objects' '
->> +	rm -rf server client &&
->> +	test_create_repo server &&
->> +	test_config -C server uploadpack.allowfilter 1 &&
->> +	test_config -C server uploadpack.allowanysha1inwant 1 &&
->> +	test_commit -C server server1 &&
-> 
-> OK, we create the source that allows a partial clone.
-> 
->> +	git clone --filter=blob:none "file://$(pwd)/server" client &&
->> +	test_commit -C client client1 &&
-> 
-> And make a clone out of it, without blobs.
-> 
->> +	test_commit -C server server2 &&
->> +	COMMIT=$(git -C server rev-parse server2) &&
-> 
-> Then we create a new commit that the client does not yet have.
-> 
->> +	test_must_fail git -C client push 2>err &&
-> 
-> We try to overwrite it.  We expect it to fail with "not a fast forward".
 
-Well that is what it would fail with at the moment, but it's not
-what would happen with a non-partial clone - a non-partial clone
-would fail with "fetch first" instead.
+--oqjptEbDYyCHTuOq
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This patch makes both cases consistent although that wasn't the
-main driver - the main driver was to stop it fetching 100Mb or
-more of history in the large repository I was working with when
-the upstream has one new commit.
+On 2024-05-22 at 15:02:51, Pawe=C5=82 Bogus=C5=82awski wrote:
+> Started to clone big git repo on not-too-fast, _stable_ VDSL link (up to
+> 20mbps down)...
+>=20
+> =C2=A0=C2=A0=C2=A0 $ git clone https://github.com/googleapis/google-api-g=
+o-client
+> =C2=A0=C2=A0=C2=A0 Cloning into 'google-api-go-client'...
+> =C2=A0=C2=A0=C2=A0 remote: Enumerating objects: 644446, done.
+> =C2=A0=C2=A0=C2=A0 remote: Counting objects: 100% (6922/6922), done.
+> =C2=A0=C2=A0=C2=A0 remote: Compressing objects: 100% (2904/2904), done.
+> =C2=A0=C2=A0=C2=A0 Receiving objects:=C2=A0=C2=A0 0% (3859/644446), 20.82=
+ MiB | 1.01 MiB/s
+>=20
+> ...and then started to watch a VOD movie on same link; when VOD buffers
+> data, eats almost all available down bandwidth and leaves only about 100
+> kB/s for git...
+>=20
+> =C2=A0=C2=A0=C2=A0 Receiving objects:=C2=A0=C2=A0 1% (7111/644446), 44.49=
+ MiB | 130.00 KiB/s
+>=20
+> ...and when VOD stops buffering and whole bandwith is available for git
+> again, git transfer starts to grow...
+>=20
+> =C2=A0=C2=A0=C2=A0 Receiving objects:=C2=A0=C2=A0 1% (7660/644446), 50.56=
+ MiB | 575.00 KiB/s
+>=20
+> ...but finally git throws an error
+>=20
+> =C2=A0=C2=A0=C2=A0 error: 181 bytes of body are still expected5 MiB | 101=
+5.00 KiB/s
+> =C2=A0=C2=A0=C2=A0 fetch-pack: unexpected disconnect while reading sideba=
+nd packet
+> =C2=A0=C2=A0=C2=A0 fatal: early EOF
+> =C2=A0=C2=A0=C2=A0 fatal: index-pack failed
+>=20
+> or sometimes:
+>=20
+> =C2=A0=C2=A0=C2=A0 error: RPC failed; curl 92 HTTP/2 stream 5 was not clo=
+sed cleanly:
+> CANCEL (err 8)
+> =C2=A0=C2=A0=C2=A0 error: 6109 bytes of body are still expected
+> =C2=A0=C2=A0=C2=A0 fetch-pack: unexpected disconnect while reading sideba=
+nd packet
+> =C2=A0=C2=A0=C2=A0 fatal: early EOF
+> =C2=A0=C2=A0=C2=A0 fatal: fetch-pack: invalid index-pack output
+>=20
+> No such problems when downloading bigger file (i.e. linux kernel source)
+> with wget or curl instead of git clone (wget/curl transfer drops to about
+> 100 kB/s when VOD buffers and increases to full speed when VOD is not
+> transferring and transfer finishes successfully).
+>=20
+> Sounds like a bug in git; should not throw an error on available download
+> bandwidth changes as wget and curl do and should not require any params
+> tuning (to stop users flooding bugtrackers).
 
->> +	grep "fetch first" err &&
-> 
-> May want to use "test_grep" but this script does not use it, so
-> being consistent with the surrounding tests is good.
+I don't believe this is a bug in Git.  The problem here is a network
+issue of some sort that's causing the connection to be interrupted or
+dropped.  This is very common, but the possible causes are many.
 
-So here we are testing that it's a "fetch first" and rather
-than "not a fast forward".
+A lot of times we see this it's some sort of proxy, and that can be a
+non-default antivirus or firewall or TLS MITM device, but that's usually
+on Windows, and you're using Debian.  It can also be just a bad
+connection, poor traffic management by your ISP, or a flaky wireless or
+wired network card.
 
->> +	git -C client rev-list --objects --missing=print "$COMMIT" >objects &&
->> +	grep "^[?]$COMMIT" objects
->> +'
-> 
-> OK.
+My _guess_ about what's happening here is poor traffic management:
+because video is typically flagged as low-latency in DSCP, some device
+on the path is prioritizing it to the exclusion of all other traffic,
+which is causing the Git connection to be dropped.  I have no proof of
+this, though.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-and also that it hasn't fetched the new commit.
+--oqjptEbDYyCHTuOq
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Tom
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
--- 
-Tom Hughes (tom@compton.nu)
-http://compton.nu/
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZk5pDQAKCRB8DEliiIei
+gZm/AQCQKHRzSAW93dVqaPxKLDnrGtOxr4rqG+AZ0sqZt/8yaAEA0kJS10jLCcJy
+KzsDixrYYaOyW3IOFqqdhRPoyD4/pgA=
+=r4Ba
+-----END PGP SIGNATURE-----
 
+--oqjptEbDYyCHTuOq--
