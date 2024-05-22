@@ -1,83 +1,84 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFEE615B3
-	for <git@vger.kernel.org>; Wed, 22 May 2024 01:35:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6C3322A
+	for <git@vger.kernel.org>; Wed, 22 May 2024 02:37:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716341743; cv=none; b=hDS1HkUzUO7zv2S/I6Xtp0eFgKAOBFe+wlxUTNlWJnTM0Dv/E/4+MDo1lhuT1WgNZcbJIkbOwcN7eJEw1777qbd5X257NiiiDkMewr/giH9ZIyir0P4rcUvT31BI4XrFpBCr6D5SiZFzoLqmWvytlhTiRW02PCk8GVDwK9uYcfE=
+	t=1716345473; cv=none; b=aVWDcMFkMUK9poJxsT6XUT92CfXy2WcA0UITOta/NElmj+2urfhsdDvPVqafKqtAQ9UiqP3La8bHgHenSZeb/a7y4eMrdTsZQt27+m4+tS5HG/ljDq99Qmpeivo/McAQ8uNstr4drAk0F9gM1Lk0Nvq+fg91d9cZT65slnt2WLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716341743; c=relaxed/simple;
-	bh=olI2RmThwQcsfZJMNbsgzImPSM+LdautHl081R81Htk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Seb3BdOE9DkI/8WDtydGsKzLUsiT3X2hP+wiSF0c3fSZm3b7lY6q5ybXIv+pRSA44tuFSH7zIyrCW4FO/6UGA1YeVm5gw53sx33ObrnV5ZkkbiqAlbXvzNLEJ3OEW0GsKVmFUXhvGMZkrM/Y3eq33pqbyzBJ4ywjyewx83eoDR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fyD7D3NC; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716345473; c=relaxed/simple;
+	bh=qqB7wkY/1vBxkVcDeGFeIcvWoiF1wXtvpHJtajnafBw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QIj172VVr47+Bh2yivKXtYFvh67qHxWebrV/k5Tqe4oecV0wo1Qhgoei5vJKFdnUC38DEDgkfP77+LealtHz8rBVjzKZSgDAFQGqUijOLfl8Soz1BhUVBE8KYRB24H8NeGx9WLxCi/+D2uABezWNoGwfgP/0/DFDChHSfH2gn64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IK81noUV; arc=none smtp.client-ip=209.85.161.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fyD7D3NC"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D0C9331DB;
-	Tue, 21 May 2024 21:35:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=olI2RmThwQcsfZJMNbsgzImPSM+LdautHl081R
-	81Htk=; b=fyD7D3NC8BASrSwyzGo4kANeS6OKr/6CuROfk/aYiALquxAv9iwP0R
-	8IJKxKz3ZHRIbGGbzJJKI5CWo41yIU+MR84QTU+ZH1sRdiaunIgc8UDOcPJSpTre
-	IdGHK6ZLc8oXTQJOx990ihaLn20u0K1v6BgX4ByugQbyiR+yzFP1E=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 75496331DA;
-	Tue, 21 May 2024 21:35:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DF902331D9;
-	Tue, 21 May 2024 21:35:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Nathan Faulkner <natedogith1@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] diff: document what --name-only shows
-In-Reply-To: <4c4049e9-f5fa-41c3-8a6a-df4fca2f07f1@gmail.com> (Nathan
-	Faulkner's message of "Sat, 18 May 2024 15:10:01 -0400")
-References: <xmqqeda0jr7d.fsf@gitster.g>
-	<4c4049e9-f5fa-41c3-8a6a-df4fca2f07f1@gmail.com>
-Date: Tue, 21 May 2024 18:35:38 -0700
-Message-ID: <xmqq7cfmiq6t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IK81noUV"
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-5b2d065559cso1958388eaf.3
+        for <git@vger.kernel.org>; Tue, 21 May 2024 19:37:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716345471; x=1716950271; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qqB7wkY/1vBxkVcDeGFeIcvWoiF1wXtvpHJtajnafBw=;
+        b=IK81noUV70unDlvg5ZK9hxNptNEiftZh1m7Z6xTUFHhQ3iyP2DaSvIjLV31vcrMwTO
+         EwTz+WIr+T02kCgpSMsGEIyP/Lu3iF+3KWw5EZXwom/aMcoRwlmTal7dv8LASwBG1kDj
+         DQl4IKueIKVQiR1IOv5O4396p5sE5AozVu0vgmIsnTH1GU0QQBbIarONNJ4wX/aQ1mwy
+         6mAPYXRJ+OU5XEpa/dptvqtwkHUuwZ8V1xUqz+P4kiBGHFZcWWpnae9IxQZvxDw0AztW
+         6L5XpKDGk2xWatUmJ4oYuVtgarihLMIocNN8f5ZincYyvkdX5K+OQDmLMXi0FrfUGflz
+         ETfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716345471; x=1716950271;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qqB7wkY/1vBxkVcDeGFeIcvWoiF1wXtvpHJtajnafBw=;
+        b=Oo2wGbGXwfobVCfK+9kzxYCEi8JaPuvYuQ1orOKq7fwxy8xPP/pN/Vk+ZJxgNsLJsa
+         hDRHh/psSgsCrgUKeRGQG/wg3oEyrTPlExXS9Mt8OltO3+lWwGgfiM41HVoK8x/QdgxE
+         LZiCRDDU4Tv4A70x5n2XlffdutQxxLTX8JlQpKPJfiT+otqz3Cre6r/5i318iKA6u7eQ
+         sg7IyMuILXPxrZznR6YnaGnHAzDv9wFS8rUtjnyu3oZjLGttjGg73zsZLqe4IsRK0Ltv
+         BDfyDt1RdINuVmlL3QUoG29rN4gXf2sxGeM/vjU1jcRIcfeqdHA+Zzw3wbVOZafiunST
+         hr+g==
+X-Forwarded-Encrypted: i=1; AJvYcCUzeKwEWQI+GfuQ5kMsjrk0UIjBdiMtzSOsN/UCPciGRdKAyzWa+oCqJe/JNECLsv2SRjoDZlKRPwfnO/ojenl+SBpw
+X-Gm-Message-State: AOJu0YzPbYC4CyGc0itOLjmBpydsK709Q3u1gQvMf7IW4JLgFTjhUHE4
+	rr/P5LYEgIT8X2A+1+nbJvns/mBsbIeqtZldCqfeCW9lxahVaC2O/O/6k1sDWyghGgIs1K9mWmk
+	nPsOCtMFg3q8Ctp1PRwe8VfwbZRo=
+X-Google-Smtp-Source: AGHT+IE9JvQAAidsRpcSV4O/n0cC0g1n0tC4UeImtaIEWc1/AoaCfCzR8gscwFCTGtI8MV0r7/DNnY4OgI383t2wth4=
+X-Received: by 2002:a05:6870:7249:b0:22a:9c40:3782 with SMTP id
+ 586e51a60fabf-24c68adf3e6mr987395fac.11.1716345470978; Tue, 21 May 2024
+ 19:37:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 98B8F688-17DB-11EF-8414-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <CAKkAvazeFvCfT7tZm3emwA=k-NnzPD7X0v4t2E9Ja4r-GpZfoQ@mail.gmail.com>
+ <20240510221323.GA1971112@coredump.intra.peff.net> <CAKkAvaxFbcLZNdz5cdAF8ZFNtVT1qQYKWcmkniQ3Uzu8mdEt5w@mail.gmail.com>
+ <CAOTNsDzLAW_2C2vk4y+=GRvsHKZ_C+rEtorFAuoZaDu+jhQhdg@mail.gmail.com>
+In-Reply-To: <CAOTNsDzLAW_2C2vk4y+=GRvsHKZ_C+rEtorFAuoZaDu+jhQhdg@mail.gmail.com>
+From: ryenus <ryenus@gmail.com>
+Date: Wed, 22 May 2024 10:37:40 +0800
+Message-ID: <CAKkAvayTe7yU27G3HKZaG0Ch0gGDC50+sxonFQ08cPdDdHsKoQ@mail.gmail.com>
+Subject: Re: Error: failed to store: -25299
+To: Koji Nakamaru <koji.nakamaru@gree.net>, Bo Anderson <mail@boanderson.me>
+Cc: Jeff King <peff@peff.net>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Nathan Faulkner <natedogith1@gmail.com> writes:
+On Mon, 13 May 2024 at 22:30, Koji Nakamaru <koji.nakamaru@gree.net> wrote:
+>
+> The patch fixed error handling. This is the direct reason for the error.
+>
+> cf. https://github.com/git/git/commit/9abe31f5f161be4d69118bdfae00103cd6efa510#diff-9dc7db77a1c795b4849ac77ac8d618a75c85ff3b2128501ffa647c43df200d60R308-R314
+>
+>
+> Koji Nakamaru
 
-> This new description sounds to me like it only shows files that exist
-> in the to-commit, not any files that were deleted.
+Just checked with git 2.44.0 and it has no such issue.
+Therefore this is confirmed to be a regression in git 2.45.0
 
-True.  
-
-The thing is "diff" works on pair of files from old side and new
-side, so a removed path still conceptually exists on both sides as a
-change from
-
-    <old path name, old state (has certain contents)>
-
-to
-
-    <new path name, new state (no longer exists)>
-
-It is the same story for a created path.
-
-Having learned that, a proposal to rephrase the updated
-documentation is very much welcomed.
-
-Thanks.
-
+I'd expect such error to be skipped and/or ignored, or even update the
+store asynchronously, maybe with a config to customize the behavior.
