@@ -1,52 +1,51 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F75E5234
-	for <git@vger.kernel.org>; Wed, 22 May 2024 00:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFEE615B3
+	for <git@vger.kernel.org>; Wed, 22 May 2024 01:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716338953; cv=none; b=NfxYa9P9GNivoCX7uTVRM7dF/hw0biXUhgRtV92nv+TgEM+LxudjujxXziH5PCy6E6jLJgjf9RmwwUxGNg1n8kupiK1KTkwf/t++Nkvm+CGLB21dMC8dD/mK4rUmJCeh6IGWl94PgSYp4tAemOL7TJ8Yat7reMOPiFy6Dshnj0c=
+	t=1716341743; cv=none; b=hDS1HkUzUO7zv2S/I6Xtp0eFgKAOBFe+wlxUTNlWJnTM0Dv/E/4+MDo1lhuT1WgNZcbJIkbOwcN7eJEw1777qbd5X257NiiiDkMewr/giH9ZIyir0P4rcUvT31BI4XrFpBCr6D5SiZFzoLqmWvytlhTiRW02PCk8GVDwK9uYcfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716338953; c=relaxed/simple;
-	bh=IVOzAdZw6JyAsZhiQMs74tRj893BxOznebnCfJ4EOvM=;
+	s=arc-20240116; t=1716341743; c=relaxed/simple;
+	bh=olI2RmThwQcsfZJMNbsgzImPSM+LdautHl081R81Htk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=l7HUv5BCDFAC/6etqfr4856DF3FbAuvHhyFe1cDMzL0q/j343K3bu08bKLfFC5Tk+jAET3mNQbdlGl+sbHp5KCL3mDEOBO3t+/byeN45VHVwP1GpDE9X/3VTYit2KP8EKp3H4zi7jxUIQPgdz7Yh1jgl236Lmg6JduEKo5JSp0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OIPP8PIo; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=Seb3BdOE9DkI/8WDtydGsKzLUsiT3X2hP+wiSF0c3fSZm3b7lY6q5ybXIv+pRSA44tuFSH7zIyrCW4FO/6UGA1YeVm5gw53sx33ObrnV5ZkkbiqAlbXvzNLEJ3OEW0GsKVmFUXhvGMZkrM/Y3eq33pqbyzBJ4ywjyewx83eoDR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fyD7D3NC; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OIPP8PIo"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fyD7D3NC"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2192832DA1;
-	Tue, 21 May 2024 20:49:11 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D0C9331DB;
+	Tue, 21 May 2024 21:35:40 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=IVOzAdZw6JyAsZhiQMs74tRj893BxOznebnCfJ
-	4EOvM=; b=OIPP8PIoBiieOuYqszoPCiUJPisXQLd1L2EqvkDtKXHl8tySaORfga
-	LmZzsYZVoV3rS4wUuAltTavuFhU3hxTajFyYz75yrQ6S+l1vXzBXCGt5fV6b7bd/
-	EzwZRvbeI5trvcdFzCp+Qb3WEq0EC2gBhKdh2FIiq4XLLBfpglNb8=
+	:content-type; s=sasl; bh=olI2RmThwQcsfZJMNbsgzImPSM+LdautHl081R
+	81Htk=; b=fyD7D3NC8BASrSwyzGo4kANeS6OKr/6CuROfk/aYiALquxAv9iwP0R
+	8IJKxKz3ZHRIbGGbzJJKI5CWo41yIU+MR84QTU+ZH1sRdiaunIgc8UDOcPJSpTre
+	IdGHK6ZLc8oXTQJOx990ihaLn20u0K1v6BgX4ByugQbyiR+yzFP1E=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 18F7F32DA0;
-	Tue, 21 May 2024 20:49:11 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 75496331DA;
+	Tue, 21 May 2024 21:35:40 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 80FF632D9F;
-	Tue, 21 May 2024 20:49:10 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DF902331D9;
+	Tue, 21 May 2024 21:35:39 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Patrick Steinhardt
- <ps@pks.im>
-Subject: Re: [PATCH v2] add-patch: enforce only one-letter response to prompts
-In-Reply-To: <CAPig+cTcmpm5kHLwOzcJ4RfmfJwfO1qB4VVcngcvh=_zL5mm9w@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 21 May 2024 19:36:23 -0400")
-References: <xmqqr0dvb1sh.fsf_-_@gitster.g> <xmqqh6eqiwgf.fsf@gitster.g>
-	<CAPig+cTcmpm5kHLwOzcJ4RfmfJwfO1qB4VVcngcvh=_zL5mm9w@mail.gmail.com>
-Date: Tue, 21 May 2024 17:49:09 -0700
-Message-ID: <xmqqcypeisca.fsf@gitster.g>
+To: Nathan Faulkner <natedogith1@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] diff: document what --name-only shows
+In-Reply-To: <4c4049e9-f5fa-41c3-8a6a-df4fca2f07f1@gmail.com> (Nathan
+	Faulkner's message of "Sat, 18 May 2024 15:10:01 -0400")
+References: <xmqqeda0jr7d.fsf@gitster.g>
+	<4c4049e9-f5fa-41c3-8a6a-df4fca2f07f1@gmail.com>
+Date: Tue, 21 May 2024 18:35:38 -0700
+Message-ID: <xmqq7cfmiq6t.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,23 +55,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 1A1EC52E-17D5-11EF-85DD-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 98B8F688-17DB-11EF-8414-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Nathan Faulkner <natedogith1@gmail.com> writes:
 
->> The two exceptions are the 'g' command that takes a hunk number, and
->> the '/' command that takes a regular expression.  They has to be
->
-> s/has/have/
+> This new description sounds to me like it only shows files that exist
+> in the to-commit, not any files that were deleted.
 
-Thanks for a typofix.
+True.  
 
-Input to possibly update this part ...
+The thing is "diff" works on pair of files from old side and new
+side, so a removed path still conceptually exists on both sides as a
+change from
 
->> As we didn't think of a good reason during the review discussion why
->> we want to accept excess letters only to ignore them,...
+    <old path name, old state (has certain contents)>
 
-...  of the proposed log message, or convince us that it is not such
-a great idea, is also welcome.
+to
 
-Thanks.  Will queue but keep out of 'next' for a few more days.
+    <new path name, new state (no longer exists)>
+
+It is the same story for a created path.
+
+Having learned that, a proposal to rephrase the updated
+documentation is very much welcomed.
+
+Thanks.
+
