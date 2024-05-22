@@ -1,45 +1,55 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AD2210EC
-	for <git@vger.kernel.org>; Wed, 22 May 2024 18:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685CE23CB
+	for <git@vger.kernel.org>; Wed, 22 May 2024 18:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716403483; cv=none; b=rhoqo9sspKU6a+gMkxfTW+c+kVAU3WNO0/eaKSklqC0F0ZZ6KjKGyh9CCa7ZIsYahECwzLr0n1OnFhc5TdSQGLdviWoo6cha1kIVPK1lRNC0VHnX5LU0Gq1VZ1farNVdx4dvUD2fsIZI4mnaBI5v2IAGlgz8re8wNtv8Btm1bT0=
+	t=1716403679; cv=none; b=EEq+U3zeLjTXQto/uTjyI1X5k4dzvFpJIgtfMLrGZvDpltdsA2MVj/ZktplAeuwlnj4SPkvAPx6ah4W0MBdDor/Rja3UrO/5s0sGbQuf7vOM7vm+Hq9g5gWDpZ5CCiO1doZGqasiDb99h1hth5sSBlDZr7jRZ0YIIlKe1xmgRWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716403483; c=relaxed/simple;
-	bh=1NgUqdTvnyXbFSBsi12OOD63VqsE72Gc1ePBR5foYB4=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=co8OP8AWtFPUxKaaTrG50vfCz5MiCb7J21PXhA32PWXbTi39K81A6eXlI09p/2z7CgTYvXQQwW3c80b9YLO2hbwBoPKntRXiFw5+G/x5RUZjhfcaB3/7RZcVhkeoJzkSG8XYC5d/z+YuuPMZ3ThAbuDchpY89uZsMk+aFce124s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gTYqo/F3; arc=none smtp.client-ip=173.228.157.53
+	s=arc-20240116; t=1716403679; c=relaxed/simple;
+	bh=zLTySfhBl9BA/NddfThl5t46QnnkYMFLfRvHsob50fk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DZMUDuSSuJ0GKv5H8tJphAknPTf/FJnms2LXbjqNn8E1xD1YZHZEoF1Q6umV+Kb9n94X0JomQfW3TuNM3cygokiaAp6g9i6fM59xsQHz+9em0uGj7VtPOU3nval5BOWqxVoNZf83CzHGOnv3MIrs/O+p0lVpjPgHTOsxt5VJh1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KRtCkOJZ; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gTYqo/F3"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KRtCkOJZ"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C695C1919E;
-	Wed, 22 May 2024 14:44:41 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id EF4C5191C7;
+	Wed, 22 May 2024 14:47:57 -0400 (EDT)
 	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=1
-	NgUqdTvnyXbFSBsi12OOD63VqsE72Gc1ePBR5foYB4=; b=gTYqo/F3RoFmfrolN
-	/qtCO/s7H44ik4EUOrNzAyuCmGjjjmgJzy84qDggjyODyRi6r2OACvB1da6Xq3H3
-	H4HaJQM433e4Hk/Qn+MKBNLMRktUGD8WKM/sgAQmybH2VH0H7Zj5MAdX5bAQeBTH
-	IBxhqaeSAYKvpJghILssVEELeE=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=zLTySfhBl9BA/NddfThl5t46QnnkYMFLfRvHso
+	b50fk=; b=KRtCkOJZQfS7irGNhOKudVzn9ZBz7xsvp5Mw1y04Fy8jdgZyynMwWP
+	ghbSuaMzNDim987PNaxsmsoRRSy0OzFeP6XQphU7M8MD8JoKvqN6JULzqAU1C9x4
+	8Wyl3ZnbX2C+Yi/vZ6vThcXa1IKyKn+QSz5Ep2gM1ksGia7MQLdrM=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id BED101919D;
-	Wed, 22 May 2024 14:44:41 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E7688191C6;
+	Wed, 22 May 2024 14:47:57 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CDF4019144;
-	Wed, 22 May 2024 14:44:38 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 07B7B191C5;
+	Wed, 22 May 2024 14:47:54 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] blame: do not mention obvious default configuration values
-Date: Wed, 22 May 2024 11:44:37 -0700
-Message-ID: <xmqqpltd4rfu.fsf@gitster.g>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>,  Jeff
+ King <peff@peff.net>
+Subject: Re: [PATCH v2 5/5] add-patch: render hunks through the pager
+In-Reply-To: <1accd0163c96811b7b7f146e477acf89@manjaro.org> (Dragan Simic's
+	message of "Wed, 22 May 2024 10:09:25 +0200")
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+	<199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+	<310a2904-681a-4bee-96b9-90a2dc107975@gmail.com>
+	<1accd0163c96811b7b7f146e477acf89@manjaro.org>
+Date: Wed, 22 May 2024 11:47:53 -0700
+Message-ID: <xmqqle414rae.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -49,61 +59,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 57FDAAD6-186B-11EF-845E-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ CCEDF51C-186B-11EF-A2ED-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-While it helps to mention what the default behaviour is when a
-variable is unconfigured, when there are more than true or false
-choices for the variable (e.g. "defaults to never, among possible
-choices never/local/remote/always"), or if the default behaviour is
-as if the unconfigured variable were set to true the knob is purely
-to opt out of it ("Porcelain 'git diff' refreshes the index, but
-diff.autoRefreshIndex can be set to false to opt out of it"), it
-feels like it adds unnecesary noise to say "defaults to off" for a
-configuration variable that is clearly a Boolean.
+Dragan Simic <dsimic@manjaro.org> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+>> @@ -1387,7 +1388,7 @@ N_("j - leave this hunk undecided, see next
+>> undecided hunk\n"
+>>     "/ - search for a hunk matching the given regex\n"
+>>     "s - split the current hunk into smaller hunks\n"
+>>     "e - manually edit the current hunk\n"
+>> -   "p - print the current hunk\n"
+>> +   "p - print the current hunk, 'P' to use the pager\n"
+>
+> I think it would be better to move the description of "P" into
+> a separate line after the "p" line, perhaps like this:
+>
+>   "P - use the pager to print the current hunk\n"
 
- * I am somewhat hesitant to use a phrase that implies that there is
-   some "default value" for any configuration variable.  Saying "The
-   default value for the configuration variable X is Y" misleads
-   readers to expect that "git config -l" would show X=Y when the
-   user hasn't configured X at all.
-
-   It is just the feature controlled by the configuration variable
-   works exactly as if the configuration variable is set to that
-   "default value", instead of left unconfigured.
-
-   But that is a separate issue, and is totally outside the scope of
-   this change.
-
- Documentation/config/blame.txt | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
-
-diff --git a/Documentation/config/blame.txt b/Documentation/config/blame.txt
-index 4d047c1790..36f965484c 100644
---- a/Documentation/config/blame.txt
-+++ b/Documentation/config/blame.txt
-@@ -1,6 +1,6 @@
- blame.blankBoundary::
- 	Show blank commit object name for boundary commits in
--	linkgit:git-blame[1]. This option defaults to false.
-+	linkgit:git-blame[1].
- 
- blame.coloring::
- 	This determines the coloring scheme to be applied to blame
-@@ -14,11 +14,9 @@ blame.date::
- 
- blame.showEmail::
- 	Show the author email instead of author name in linkgit:git-blame[1].
--	This option defaults to false.
- 
- blame.showRoot::
- 	Do not treat root commits as boundaries in linkgit:git-blame[1].
--	This option defaults to false.
- 
- blame.ignoreRevsFile::
- 	Ignore revisions listed in the file, one unabbreviated object name per
--- 
-2.45.1-216-g4365c6fcf9
-
+Sounds good to me, too.
