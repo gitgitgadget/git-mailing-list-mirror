@@ -1,95 +1,78 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFBA58AB9
-	for <git@vger.kernel.org>; Tue, 21 May 2024 23:54:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F75E5234
+	for <git@vger.kernel.org>; Wed, 22 May 2024 00:49:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716335677; cv=none; b=bUSCGEXJ42FKXgO5+C3wFpmEFG9sjHdRvuOpJknrZt7MO8gRdvIPVB6qRYUeZXKXI+4yieO+wceKYZ9oYAczUigf+SSVNQNVeDN9ncggpeHS1ykYlxh1ZJFdhJWhLeYFLMZ2PKGa3uESh0w7ROJZWNFI0kb54fu0kTMEEJj9tuU=
+	t=1716338953; cv=none; b=NfxYa9P9GNivoCX7uTVRM7dF/hw0biXUhgRtV92nv+TgEM+LxudjujxXziH5PCy6E6jLJgjf9RmwwUxGNg1n8kupiK1KTkwf/t++Nkvm+CGLB21dMC8dD/mK4rUmJCeh6IGWl94PgSYp4tAemOL7TJ8Yat7reMOPiFy6Dshnj0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716335677; c=relaxed/simple;
-	bh=JIYXEIcnpDyUYj7Txwrz/0aYFO1fgG7NDyf4jIIWxhE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GEEh89os7kJ1M9AsCq5KDYjD5fJFvQz/SvJnTxI+AgvtZqvnhkq6nDZV2rV1oHE1qlt4LPnyUnK6py2eNGLQkCwNToi9wv6bs5UnpSR0yi5SUUytjD0wMnKObhnm2jo1ZWvRt6xjd33UdQwf4JVvWxthPtv7WkgCuTILrIvflDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V9lYAlbc; arc=none smtp.client-ip=209.85.167.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716338953; c=relaxed/simple;
+	bh=IVOzAdZw6JyAsZhiQMs74tRj893BxOznebnCfJ4EOvM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=l7HUv5BCDFAC/6etqfr4856DF3FbAuvHhyFe1cDMzL0q/j343K3bu08bKLfFC5Tk+jAET3mNQbdlGl+sbHp5KCL3mDEOBO3t+/byeN45VHVwP1GpDE9X/3VTYit2KP8EKp3H4zi7jxUIQPgdz7Yh1jgl236Lmg6JduEKo5JSp0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OIPP8PIo; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V9lYAlbc"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3cabac56b38so663015b6e.3
-        for <git@vger.kernel.org>; Tue, 21 May 2024 16:54:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716335675; x=1716940475; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UThcF4OkS+R3+URvE/KJ7hU9XqZj6hfa2tsr8v9WXtk=;
-        b=V9lYAlbccL92mT+OZbP33MkqlhKvVUDyTanXGVpBMbVgHsWlHaXRvG7resRisSC4Do
-         9HtXMIkusBtNJ/wlnQZuojBwot/+8zTFa4H8XQsrBhkmQduIbJvXBZy0Y8Od3E/j+XEI
-         Kit4vpYotZLVtlEAjpulm94xeg9nHcfZuqNsnSJYxdixR8Qo4jJLpBcXXBGdtayiOQJm
-         003pZJ7N6gP3KdV0hl7fpeSymqp6olK7j/Juw+eDekNU6sqGZY9/DEZhrMvxINpbtZAb
-         ndWXcUR2uG80oUz3BsWLEms/cstuIfdXkT/ghq/T3lOQgtHjiDZIrYPQoUAA4hTm1fj/
-         7K8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716335675; x=1716940475;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UThcF4OkS+R3+URvE/KJ7hU9XqZj6hfa2tsr8v9WXtk=;
-        b=C3Mk/FVgf8u7OgThSnQpRNSxpLcXWGnM99Ip+jzzpEQMLo9UomOzw58ZvStDdp+5Gs
-         GbuCke2m9NTY6sCNqZ33FM5ggwduBGP3TPR/YV3HfgcT8mSray5l23nCp/r0rcVGXHDy
-         HfkSNUnkoykwsRdWb5CbxYO8i4TuOUYAgNzfipPDOenVirk4WywkBh+jGVnmFAxuVStb
-         KwCrl3qjwnNdwSB1n+KQ82riKvSZY13J+DgvrOOkga4ktXYJqSGTtqmeGiTsmAd6FsLH
-         EM4pl/1/xnrXRoIdeyo+lu1ra2py2vHQdIG3fcqnks4gfl4APiAFQ8WjR7SAhw5bjZdV
-         s2Yg==
-X-Gm-Message-State: AOJu0YxVP5TI6DIR6xezTGFoQwS/tRVgocQDaO7xRjyTiTmJXGOhObKE
-	SLaatVHP91nx2Mgh9G+hChtGChZGFYmAoqazkO52ckwboJ4iTe7k
-X-Google-Smtp-Source: AGHT+IFusnGg4jvIurx+KONtCUy4/0WCedYjckG3dMDujCQnGtnUuym2lWVHNZ6CSrg95oAelIuD8Q==
-X-Received: by 2002:aca:1e02:0:b0:3c9:95e5:724e with SMTP id 5614622812f47-3cdb7f8ff15mr546626b6e.49.1716335675022;
-        Tue, 21 May 2024 16:54:35 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3c9add62437sm3180223b6e.18.2024.05.21.16.54.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 May 2024 16:54:34 -0700 (PDT)
-Date: Tue, 21 May 2024 18:54:33 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 00/11] reftable: expose write options as config
-Message-ID: <akuvjnvz43fzcggytbkyjhq6htljucucmexecel3h4eooqrcca@j5umyot7clwe>
-References: <cover.1714630191.git.ps@pks.im>
- <cover.1715587849.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OIPP8PIo"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2192832DA1;
+	Tue, 21 May 2024 20:49:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=IVOzAdZw6JyAsZhiQMs74tRj893BxOznebnCfJ
+	4EOvM=; b=OIPP8PIoBiieOuYqszoPCiUJPisXQLd1L2EqvkDtKXHl8tySaORfga
+	LmZzsYZVoV3rS4wUuAltTavuFhU3hxTajFyYz75yrQ6S+l1vXzBXCGt5fV6b7bd/
+	EzwZRvbeI5trvcdFzCp+Qb3WEq0EC2gBhKdh2FIiq4XLLBfpglNb8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 18F7F32DA0;
+	Tue, 21 May 2024 20:49:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 80FF632D9F;
+	Tue, 21 May 2024 20:49:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH v2] add-patch: enforce only one-letter response to prompts
+In-Reply-To: <CAPig+cTcmpm5kHLwOzcJ4RfmfJwfO1qB4VVcngcvh=_zL5mm9w@mail.gmail.com>
+	(Eric Sunshine's message of "Tue, 21 May 2024 19:36:23 -0400")
+References: <xmqqr0dvb1sh.fsf_-_@gitster.g> <xmqqh6eqiwgf.fsf@gitster.g>
+	<CAPig+cTcmpm5kHLwOzcJ4RfmfJwfO1qB4VVcngcvh=_zL5mm9w@mail.gmail.com>
+Date: Tue, 21 May 2024 17:49:09 -0700
+Message-ID: <xmqqcypeisca.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1715587849.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1A1EC52E-17D5-11EF-85DD-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On 24/05/13 10:17AM, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this is the third version of my patch series that exposes several write
-> options of the reftable library via Git configs.
-> 
-> Changes compared to v2:
-> 
->   - Adapted patch 2 such that we now pass options as const pointers
->     instead of by value.
-> 
->   - Removed a confusing sentence in the documentation of the restart
->     points in patch 8.
-> 
-> Other than that I decided to rebase this on top of the current "master"
-> branch at 0f3415f1f8 (The second batch, 2024-05-08). This is because the
-> revamped patch 2 would cause new conflicts with 485c63cf5c (reftable:
-> remove name checks, 2024-04-08) that didn't exist in v2 of this patch
-> series yet. Rebasing thus seemed like the more reasonable option.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Thanks Patrick! I reviewed this version and left a couple
-comments/questions, but nothing that would neccessitate a reroll. :)
+>> The two exceptions are the 'g' command that takes a hunk number, and
+>> the '/' command that takes a regular expression.  They has to be
+>
+> s/has/have/
 
--Justin
+Thanks for a typofix.
+
+Input to possibly update this part ...
+
+>> As we didn't think of a good reason during the review discussion why
+>> we want to accept excess letters only to ignore them,...
+
+...  of the proposed log message, or convince us that it is not such
+a great idea, is also welcome.
+
+Thanks.  Will queue but keep out of 'next' for a few more days.
