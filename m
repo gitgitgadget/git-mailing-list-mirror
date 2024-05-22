@@ -1,92 +1,96 @@
 Received: from kitenet.net (kitenet.net [66.228.36.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302AB8174E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3026880035
 	for <git@vger.kernel.org>; Wed, 22 May 2024 10:32:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.228.36.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716373937; cv=none; b=k3oQUueRCWnxLRQrEC3YcHhNO2TdZAhJ5qoaz8kWfteGcmx8FPUv6bLn6S9RE+TGVzPkAJoUdwn+S1Hj+3zkJ8eFo+LaSoKXm1/+0VigqF18+NS+ujgDEyOUs4VI2JoVA1t9N1peHWgqnuMO28Pk7oIaj/WfRsVexjgHNNcleRU=
+	t=1716373937; cv=none; b=Y3A5j3g3NrnObEb9tOZl2CycvCbgSEqHbdmJEg+okCXeCG4ZkEyttdpiaBok4DO0HiPAKb/CB0eHFadb0kIVrFi0B12wQMQO3fQBgfrWTyGkqI/fO4kl0k6tD1olfdTNM3tR6uIixxZQ60hB1lwYbqEcxEdgN8sHk9wLZopCPEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1716373937; c=relaxed/simple;
-	bh=X6hhseWSM1rNQ6PPeiHtzRU8WaIUCmKn93grukTEc8Q=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=szKiv30MTgxTo5EtQQABJvhGq06N7rAKURx34Jm+SEtCeQh7YfhLhplnwUWvl70j8RTfFuojURW10qaUF0g1hKViCn2IW59RHyE7f9RpztdopVwD80GXZ2CxoHbjWgNOzZaaFsyfIrN82fcY/j6dy0ib1FJeWzCBV2U5RL4qehI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joeyh.name; spf=pass smtp.mailfrom=kitenet.net; dkim=pass (1024-bit key) header.d=joeyh.name header.i=@joeyh.name header.b=cjBTdL0E; arc=none smtp.client-ip=66.228.36.95
+	bh=zMhpcP5OMT/maeoayIHxP+gf6qo9get9ZyteNdpx0Uc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j7uJVYFbbypSBdLeq3bdWTko/cla7U37rSetF/uWV3LQQgcJrv+Us8qxQE4KhnaWniAXVGNguwftRwylcAdbzues7Agd7IIq42Uv1zi581pRWqTAtcOcANecIwhGZ1y6NqZQPrv5EWIA0Q/Qm9nMtcqfNNZAzKN8Lwkm+xyXhWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joeyh.name; spf=pass smtp.mailfrom=kitenet.net; dkim=pass (1024-bit key) header.d=joeyh.name header.i=@joeyh.name header.b=EbJVbaaG; arc=none smtp.client-ip=66.228.36.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joeyh.name
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kitenet.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=joeyh.name header.i=@joeyh.name header.b="cjBTdL0E"
+	dkim=pass (1024-bit key) header.d=joeyh.name header.i=@joeyh.name header.b="EbJVbaaG"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=joeyh.name; s=mail;
-	t=1716371352; bh=X6hhseWSM1rNQ6PPeiHtzRU8WaIUCmKn93grukTEc8Q=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=cjBTdL0ERuQtWQtQcUg2aTloUpp8MqjB2/k4+GwEfkl4ib12TPowDnM84Tc9Vnj3a
-	 tX7VpnLPcHzZpHa3KBfLDf0cEkBH5l/I0B/yEPR9NYrMPuzDdyCdtDg5RwwxTptI+T
-	 R4ojJYgcfFfqqu5WE3cUMWoLa0E9Cl/RSt/7VVr8=
+	t=1716372100; bh=zMhpcP5OMT/maeoayIHxP+gf6qo9get9ZyteNdpx0Uc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EbJVbaaG5s9GPDya/U+MRxkeKbJ+yyse1Ez+Y3uFwZHkc5lEqW4rvlEo8Q9iMzLsW
+	 lTsFxI6Olk4eRfJRAjpwyb/guQnzfY45j/f13nHTkfzFIi2NmR8+bKfJl3BBDlIQpK
+	 2N7NvClho0mG01rnaVdZlBblU4F3nwriOANI6omM=
 X-Question: 42
-Date: Wed, 22 May 2024 05:49:12 -0400
+Date: Wed, 22 May 2024 06:01:40 -0400
 From: Joey Hess <id@joeyh.name>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Revert defense-in-depth patches breaking Git LFS
-Message-ID: <Zk2_mJpE7tJgqxSp@kitenet.net>
-References: <20240514181641.150112-1-sandals@crustytoothpaste.net>
- <0f7597aa-6697-9a70-0405-3dcbb9649d68@gmx.de>
- <ZkO-b6Nswrn9H7Ed@tapette.crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/12] Fix various overly aggressive protections in
+ 2.45.1 and friends
+Message-ID: <Zk3ChIHr5amGh8Mt@kitenet.net>
+References: <20240521195659.870714-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5aN+OyWF3YpfpKSl"
+Content-Disposition: inline
+In-Reply-To: <20240521195659.870714-1-gitster@pobox.com>
+
+
+--5aN+OyWF3YpfpKSl
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <ZkO-b6Nswrn9H7Ed@tapette.crustytoothpaste.net>
 
-brian m. carlson wrote:
-> If these protections hadn't broken things, I'd agree that we should keep
-> them.  However, they have broken things and they've introduced a
-> serious regression breaking a major project, and we should revert them.
+Junio C Hamano wrote:
+> As people have seen, the latest "security fix" release turned out to
+> be a mixed bag of good vulnerability fixes with a bit over-eager
+> "layered defence" that broke real uses cases like git-lfs.
 
-More than one major project; they also broke git-annex in the case where
-a git-annex repository, which contains symlinks into
-=2Egit/annex/objects/, is pushed to a bare repository with
-receive.fsckObjects set. (Gitlab is currently affected[1].)
+"fsck: warn about symlink pointing inside a gitdir"
+(a33fea0886cfa016d313d2bd66bdd08615bffbc9) also broke pushing git-annex
+repositories to eg Gitlab and has several other problems including dodgy
+PATH_MAX checks that cause new OS interoperability problems. (I posted
+details to an earlier thread but have now found this current one, oops.)
 
+Please also revert it, or at least the portions for=20
+and symlinkPointsToGitDir and symlinkTargetLength. The
+checks for symlinkTargetBlob and symlinkTargetMissing seem worth
+keeping.
 
-BTW, do I understand correctly that the defence in depth patch set was
-developed under embargo and has never been publically reviewed?
+> Let's quickly get them in working order back first, with the vision that
+> we will then rebuild layered defence more carefully in the open on
+> top as necessary.
 
-Looking at commit a33fea0886cfa016d313d2bd66bdd08615bffbc9, I noticed
-that its PATH_MAX check is also dodgy due to that having values ranging
-=66rom 260 (Windows) to 1024 (Freebsd) to 4096 (Linux), which means git
-repositories containing legitimate, working symlinks can now fail to be
-pushed depending on what OS happens to host a reciving bare repository.
-
-+                               if (is_ntfs_dotgit(p))
-
-This means that symlinks to eg "git~1" are also warned about,
-which seems strange behavior on eg Linux.
-
-+                               backslash =3D memchr(p, '\\', slash - p);
-
-This and other backslash handling code for some reason is also run on
-linux, so a symlink to eg "ummmm\\git~1" is also warned about.
-
-+               if (!buf || size > PATH_MAX) {
-
-I suspect, but have not confirmed, that this is allows a symlink
-target 1 byte longer than the OS supports, because PATH_MAX includes
-a trailing NUL.
-
-
-All in all, this seems to need more review and a more careful
-consideration of breakage now that the security holes are not under
-embargo.
+Exellent plan.
 
 --=20
 see shy jo
 
-[1] https://forum.gitlab.com/t/recent-git-v2-45-1-breaks-git-annex-compatib=
-ility-because-of-apparent-fsck-symlinkpointstogitdir-error-on-gitlab/104909
+--5aN+OyWF3YpfpKSl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAmZNwoEACgkQ2xLbD/Bf
+jzjEjQ//TXYRP/HzxcIpCqkxIVP8qe0QAn5Wn8rcBYIa+MJ6gjdNXqQPSn1H3iC9
+1KPMtGgDKVnorC8nlEYh5uRwpLOh6G/FYq7evCaxOQegiZkfPxJJGlUbCCtCsL+l
+hqdP+v/HLVlsj1X+Tngjcge1wgVpf18n6CTb5+Qk+kH7xdggQnU4oz1QiUAMUxqx
+uBXr1TcUVq1DuKiYss8ibrNTLK0YN6LOTQBKcjtBo8/5iCn70Q2muxYhUf+TBeb9
+qKYXEXwrzS/u9kKvipnYRhC1ih1QBojIOdxRMkujAdOuWnK9ZhdQPssXbLT/OelY
+NAFZDIG9iZYl/BaH0LIrxxeUAaLmcL94DX9elE6uKcMnODKvtj945AW/R/iten5U
+PgUwjp+WG80/CQyXVG3K2d5q+cEIiCueiOxS4sFOYYd85i2gH/srhkXF068o26Vb
+gQgbJok7V0EtZlcpRgwJIWfSXa+gARQhALZWWOQ+n17FtSOQfWrr1o0whuZMoAch
+Vq954tx4+IzTmty2dbtsIwS9sMSb5Mo6whP1iKuiM8deF4Eu6+xOqy9gFMVQamBT
+BCmn55sUQNiTV9dJYWyGclv55AkpQXnFSWjFzH5/X42dSgZPniVmLXo1weG2jpn7
+tO2UhByroEtXeo6uJxzEGcv1FCgYq1S+7w4V+4tSpySZ3ofuamg=
+=wlNl
+-----END PGP SIGNATURE-----
+
+--5aN+OyWF3YpfpKSl--
