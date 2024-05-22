@@ -1,86 +1,71 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4134C9A
-	for <git@vger.kernel.org>; Wed, 22 May 2024 19:03:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E754C9A
+	for <git@vger.kernel.org>; Wed, 22 May 2024 19:06:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716404606; cv=none; b=lUNe+Oqj9kVw39ivaDpPLGxyIvvO0r+mXt0m6/2gjTEaIPtX7JE0ZgVP+smoon/3Pory3bntMeNa1LhPEOAs6FJ4qhCIL1hIwz32yPe5SkVIgqy4KcfwutIlnHXuM7ps09vlVCXhRtNmTjsexyh729zOAnxKEO53jBHfNioNTBk=
+	t=1716404782; cv=none; b=TwohgwTuPIkfU+VmRmPNYygcPmoKf7dAzIIOXrFoheexqzLUdvOrefV3i0stR9p5z4waRDzsncKVz+78oH9jXYQE45p7l7Cp/1pTB2gBXhROfFSxo008dpdHRAHxVkiyw/9Rs8u+Q+8ROif6il2hzQzSZlsk3gVHbsnND14X+to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716404606; c=relaxed/simple;
-	bh=FiD2y0tGpwELu6WD1pn3gbvvec4sbjmsnmJ+lJXk2NI=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=GShvIIY7cNhhciuwX9gmgK8hyJG/xIzJ10SFbiAfeTl2BWYPQc+MqOyAzf6JBBRse7MGLoAIY+QRGgFT5p4M4L9ba3ac63xVFZmDwHJwkHCjnkXgjBiFypzPmcprPbheXh80qSBtAWYEqii2Y1GQKTDQxrufm3RGZbFJGcNWQaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=ugImw5mf; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1716404782; c=relaxed/simple;
+	bh=c/pnl5gIB5RPbAO0cRph4b0KFje6FDMMAoaV4T4dXbM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=K2QbZTAxVzgMwjhsWaivkDg5ITiN5hczWWrCWEhq8C0HE5KSBYgH9cW536bulp0aAANsxGMiPlNLFlxbcW6EORqkrj7g5vlmHnls+pc/QdOi5v6SsjX0lIM6zvfbJPrzD5zwdxWrl0fThy+railsp5KPqNWX122kN2Wj2JGHL8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bSbFw89l; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="ugImw5mf"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bSbFw89l"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id BA5A119339;
+	Wed, 22 May 2024 15:06:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=c/pnl5gIB5RPbAO0cRph4b0KFje6FDMMAoaV4T
+	4dXbM=; b=bSbFw89l/qu7S3o2ws9Aw7t3e1PEoWmD3RbAaFdeh5P46hmlbqZGQB
+	lBvMMHMpJ1aMCxcXhptOV+Jg8vBBNEfNv4SWhcDFDWdDVCiX1GboBi/oOtaJzcQ4
+	nMstuIvAKJc0T3OHV8Xf8D4rFKIXK5nErPWhedXYoBerK2m3u88ts=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B32DF19338;
+	Wed, 22 May 2024 15:06:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C1C6919337;
+	Wed, 22 May 2024 15:06:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Heghedus Razvan <heghedus.razvan@protonmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH] setup: fix bug with "includeIf.onbranch" when
+ initializing dir
+In-Reply-To: <D1G4BWOMJD3E.2CNXHMRZQ12FW@protonmail.com> (Heghedus Razvan's
+	message of "Wed, 22 May 2024 10:58:08 +0000")
+References: <D1F5SJ52H4Z0.1NR7M8APRFTOB@protonmail.com>
+	<cf182bb9ee7d4a7eb46e5dbf4f3ef5deb198d823.1716374321.git.ps@pks.im>
+	<D1G4BWOMJD3E.2CNXHMRZQ12FW@protonmail.com>
+Date: Wed, 22 May 2024 12:06:16 -0700
+Message-ID: <xmqqcypd4qfr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1716404601;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hv3fQ5gljdxXT0sBGHi0SZt4kvxMHjLIP1oO3d14ZJY=;
-	b=ugImw5mff61riShNdJgqgypMAJRidbSrlHqCZla2G3peHYkXU5nt9y6o10aI0URBW46bqY
-	o1xXksTrPZ7Jl7vaz4E3q8t5egSY2LKiaYigSOmC8+34+7HF3D6V72nAfbRrHcpjE2nUYz
-	ed1oNYsv5LGfzuYoy+V+16sQsOoixTmsjd6b1HpNcHov2Jzls8PBwksSjm/x0/Nimd/YVY
-	gy/st/rxw2SAxpkp75+VybbB+Vlomqadt+A6ogvFR+mvv/PtvSFCYnJP77L4diy0DEsQ4n
-	+igNuKFrmfbx6vG/QymKsN02IdC6Pfss1u8urSFv5YlCfuMVs02fxK7nKl8JIQ==
-Date: Wed, 22 May 2024 21:03:20 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt
- <ps@pks.im>
-Subject: Re: [PATCH v2] add-patch: enforce only one-letter response to prompts
-In-Reply-To: <xmqqzfsh6cjf.fsf@gitster.g>
-References: <xmqqr0dvb1sh.fsf_-_@gitster.g> <xmqqh6eqiwgf.fsf@gitster.g>
- <fbb9c7d3e7c2129bc1526dfa5a8eca0c@manjaro.org> <xmqqzfsh6cjf.fsf@gitster.g>
-Message-ID: <11abab810253d654119fab69adf44fab@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 5E3A81B4-186E-11EF-BF5C-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On 2024-05-22 18:23, Junio C Hamano wrote:
-> Dragan Simic <dsimic@manjaro.org> writes:
->> On 2024-05-22 01:20, Junio C Hamano wrote:
->>> single-char mode, we may see 'qa' as a response to a prompt
->> 
->> Perhaps s/single-char/single-character/
-> 
-> I shouldn't have been loose in the language.  Rather, we should say
-> "single key mode", as the knob to control the feature is the
-> "interactive.singlekey" variable.
+Heghedus Razvan <heghedus.razvan@protonmail.com> writes:
 
-Yes, "single-key mode" is better; "when interactive.singlekey
-is not enabled" may be even a bit better.  Not worth a reroll,
-of course.
+>> Reported-by: Heghedus Razvan <heghedus.razvan@protonmail.com>
+>> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>
+> I can confirm it's fixing the issue. Feel free to add:
+>
+> Tested-by: Heghedus Razvan <heghedus.razvan@protonmail.com>
 
->>> +		/* 'g' takes a hunk number, '/' takes a regexp */
->>> +		if (1 < s->answer.len && (ch != 'g' && ch != '/')) {
->> 
->> To me, "s->answer.len > 1" would be much more readable, and
->> I was surprised a bit to see the flipped variant.  This made
->> me curious; would you, please, let me know why do you prefer
->> this form?
-> 
-> "textual order should reflect actual order" (read CodingGuidelines).
-> 
-> For more backstory,
-> 
->     
-> https://lore.kernel.org/git/?q=%22textual+order%22+%22actual+order%22
-
-That's exactly what I assumed, but frankly, in this particular case
-I really can't force myself, despite trying quite hard, into liking
-it.  It's simply strange to me.
+Thanks, both.
