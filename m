@@ -1,146 +1,136 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00AF7E575
-	for <git@vger.kernel.org>; Wed, 22 May 2024 08:19:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C9B7F7C7
+	for <git@vger.kernel.org>; Wed, 22 May 2024 08:22:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.134
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716365985; cv=none; b=bMGabFD9DxSHRIpmj9KhVLBXIN5a84kF9NEEaJE7az2df9zRqZoiCFyNpUxR989QjxyQIa9QYGdsu95UnMPg6D50lCDgloqwy+yCG8rHi8M+XXjLxnPvYTqMu9CxqgDCyG8xofJnXk1Znv3LqvFNNSSPwgVR1cwhnu9T/qE/X5Y=
+	t=1716366125; cv=none; b=qwflnKZDmKa7N0/frWofPFZftGL2RjCExk9ZjQJgRxdF5lvNx9mQBl7VAaeD0h22eE2rjYKwFvCVxwiCAEBfODGacyou2hEy8L30HHVsYgAMmg0r3iTw569hRt3S2+9ib7eULFVXAehQyWOPnMoP/rMIdFyIHiba8njjmcWx6jY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716365985; c=relaxed/simple;
-	bh=ZldYfDcB5+/tXtzymAeZ9595Xsa5Aisf3II6610+tkQ=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=LRppIJZDFT1Z1ZwKxCweh8ff3Me2t3Dh8uDrr0gZT/o5CpxnDsdq0/N2LYOkebYsmK5gxzosF5QZtuHGeDqc9437zgAQtLec5Z/F3U/BYEmSYa7I4pdIJU0WW5wpYrkKYZKQqEhOyGdRRsBG6ghqBX4gaHiSB2aD+rWP8gRx+dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=FbVFxpzz; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1716366125; c=relaxed/simple;
+	bh=JUf1Ka6o9VgkoMMahgfc7uKSItiMd7OAy+A+/i8+5k4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=bHZk4AcosWQ8MlBo+xSfdr2JAgK75dRAxgdLG5lOc9BJKqEJ6Fy59p/yXS9rM+BLKfeH00qc5rIidAq9cA72dILw5oQENAR7MlyM/glb0YrATOnQb+5PJVu4O5jOSGs9n/xMootNbtThzlD8oc9HXvcEf9s6u+63HJH/HaYKwMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=tMLk0MLn; arc=none smtp.client-ip=185.70.40.134
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="FbVFxpzz"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="tMLk0MLn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1716366115; x=1716625315;
+	bh=A2UjfNyZdeymMGpfW9f+YoFCClD3WOaIERN6B4pANt0=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=tMLk0MLnJnHSbMb4xzoTS/dg/p236eEO1k7WrI+1Vvl0ZVh+7wSIunTdbzYBpUbYZ
+	 XvBFI/PlETrCImpIGVns2/f+LYqK2acf6fee6kf7soJ3RMH5LK9dYlGx2imfua2U8x
+	 FrVfQhOUWsiDBxqSo5to21D9pIln39g/izkhutMyujY9uFPlyq1rML9iPVUtArZ0/k
+	 1S5nCiGwsmWKDdqUCPXlWJ4MjZHQtM2T8NF87bLjTeCcrnGSFiZPH6ItN88eY7+exZ
+	 NFnKqn7qO00dLIa9p2THheIZ4QI9FOQWrwdo0IOfgEPmXL/MvTGhztJfVngSSApVBp
+	 4t8smIQwbzkGg==
+Date: Wed, 22 May 2024 08:21:50 +0000
+To: Patrick Steinhardt <ps@pks.im>
+From: Heghedus Razvan <heghedus.razvan@protonmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: git init BUG when gitconfig has includeIf
+Message-ID: <D1G108TQBWK4.2XW34J29NCAHG@protonmail.com>
+In-Reply-To: <Zk2ndVx4gMTV8ZUf@tanuki>
+References: <D1F5SJ52H4Z0.1NR7M8APRFTOB@protonmail.com> <xmqqbk4zazqd.fsf@gitster.g> <D1FH40J6URHF.186U29CMRJ0N3@protonmail.com> <Zk2ndVx4gMTV8ZUf@tanuki>
+Feedback-ID: 1233518:user:proton
+X-Pm-Message-ID: 38dc1c00417507b0ecb6531e7cd216023e2a7112
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1716365980;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=az5cOQrYAhH+ODdL3eaLtT+BZEJYpNFchhnD/aMQLuY=;
-	b=FbVFxpzzT267QYnbMmMlEM1g8feBGi4+yRK0UX4/U7WE22i+iyDiWQSoHzDsNGW43e2dX7
-	coSJHYPqmaDfgHOJt9rdfTwXlLqnNGDXkUT6R9Ql77ZlJi8L6tPiP4FI8W/2+57CFjDHWk
-	lW4JpQ+wiysDrlMoWQ5X4UwZU2KiXtNnHTeuGmvVDgiosfIo4SZQ8PRaLVBsS0zG2YDVAK
-	FmBnsiPvL6dWxMCGoftkUdqZcRM0BwSNFSGDsuRVlWzdwaKyrCxVOLzAL/o+S8ICG3lUZc
-	fnafqy8o2z51G2+kdiTMZpSahVZgoMrs3p3et/HJU/JYgQbaeCCbFHms+XrsiQ==
-Date: Wed, 22 May 2024 10:19:40 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Taylor Blau
- <me@ttaylorr.com>
-Subject: Re: [PATCH 01/12] send-email: drop FakeTerm hack
-In-Reply-To: <20240521195659.870714-2-gitster@pobox.com>
-References: <20240521195659.870714-1-gitster@pobox.com>
- <20240521195659.870714-2-gitster@pobox.com>
-Message-ID: <3a3c73801ae04db4227ac87e1e302615@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 2024-05-21 21:56, Junio C Hamano wrote:
-> From: Jeff King <peff@peff.net>
-> 
-> Back in 280242d1cc (send-email: do not barf when Term::ReadLine does 
-> not
-> like your terminal, 2006-07-02), we added a fallback for when
-> Term::ReadLine's constructor failed: we'd have a FakeTerm object
-> instead, which would then die if anybody actually tried to call
-> readline() on it. Since we instantiated the $term variable at program
-> startup, we needed this workaround to let the program run in modes when
-> we did not prompt the user.
-> 
-> But later, in f4dc9432fd (send-email: lazily load modules for a big
-> speedup, 2021-05-28), we started loading Term::ReadLine lazily only 
-> when
-> ask() is called. So at that point we know we're trying to prompt the
-> user, and we can just die if ReadLine instantiation fails, rather than
-> making this fake object to lazily delay showing the error.
-> 
-> This should be OK even if there is no tty (e.g., we're in a cron job),
-> because Term::ReadLine will return a stub object in that case whose 
-> "IN"
-> and "OUT" functions return undef. And since 5906f54e47 (send-email:
-> don't attempt to prompt if tty is closed, 2009-03-31), we check for 
-> that
-> case and skip prompting.
-> 
-> And we can be sure that FakeTerm was not kicking in for such a
-> situation, because it has actually been broken since that commit! It
-> does not define "IN" or "OUT" methods, so perl would barf with an 
-> error.
-> If FakeTerm was in use, we were neither honoring what 5906f54e47 tried
-> to do, nor producing the readable message that 280242d1cc intended.
-> 
-> So we're better off just dropping FakeTerm entirely, and letting the
-> error reported by constructing Term::ReadLine through.
-> 
-> [jc: cherry-picked from v2.42.0-rc2~6^2~1]
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> Acked-by: Taylor Blau <me@ttaylorr.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+On Wed May 22, 2024 at 11:06 AM EEST, Patrick Steinhardt wrote:
+> On Tue, May 21, 2024 at 04:46:23PM +0000, Heghedus Razvan wrote:
+> > On Tue May 21, 2024 at 7:36 PM EEST, Junio C Hamano wrote:
+> > > Heghedus Razvan <heghedus.razvan@protonmail.com> writes:
+> > >
+> > > > Yesterday I stumble upon a bug when doing git init. I didn't
+> > > > find any references to it, so I don't know if is a known problem
+> > > > or not.
+> > > >
+> > > > Steps to reproduce:
+> > > > # git init .
+> > > > BUG: refs.c:2123: reference backend is unknown
+> > >
+> > > Patrick, this looks similar to an earlier one during "git clone"
+> > > that was discussed at
+> > >
+> > > https://lore.kernel.org/git/72771da0-a0ef-4fd9-8071-6467cd7b6a6b@kern=
+el-space.org/
+> > >
+> > > that was fixed with 199f44cb (builtin/clone: allow remote helpers to
+> > > detect repo, 2024-02-27)?  The fix was about "git clone", but the
+> > > crux of the fix went to setup.c:initialize_repository_version()
+> > > which is also called by setup.c:init_db() that is the workhorse of
+> > > "git init", so it may already have been fixed (I didn't try).
+> >=20
+> > I guess I forgot to mention, but I tested the current master 4365c6fcf9
+> > and the issue is still present.
+>
+> I cannot reproduce the issue as-is, neither on Git v2.44 nor on the
+> current master branch. So clearly, there must be something special to
+> your setup. The following testcase and variants of it do not reproduce:
+>
+>     test_expect_success 'init with includeIf.onbranch condition' '
+>         git config -f ./config foo.bar baz &&
+>         include=3D$(test-tool path-utils absolute_path config) &&
+>         test_when_finished "rm -rf repo" &&
+>         git -c includeIf.onbranch:main.path=3D"$(<include)" init repo
+>     '
+>
+> Now digging into the code, the condition gets evaluated in
+> `include_by_branch()`. The call to `refs_resolve_ref_unsafe()` is
+> guarded by `the_repository->gitdir`, which is `NULL` the first time it
+> is called by git-init(1). It does get called a second time, but at that
+> point we already initialized the refdb and configured the ref storage
+> format as expected.
+>
+> Aha! Seems like this only happens when re-initializing an already
+> existent repository, that's what's missing. In that case we do already
+> have `the_repository->gitdir` set even though we did not yet set up the
+> ref storage format. I'll investigate and send a patch.
+>
+> Can you confirm that this is what you see, or do you also see this when
+> creating an entirely new repository?
 
-Looking good to me.  Thanks for taking care of this issue.
+Hi Patrick,
 
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Thanks for looking into this. It seems that the issue happens only when
+the folder for the repo exists.
 
-> ---
->  git-send-email.perl | 22 ++--------------------
->  1 file changed, 2 insertions(+), 20 deletions(-)
-> 
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 5861e99a6e..72d876f0a0 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -26,18 +26,6 @@
-> 
->  Getopt::Long::Configure qw/ pass_through /;
-> 
-> -package FakeTerm;
-> -sub new {
-> -	my ($class, $reason) = @_;
-> -	return bless \$reason, shift;
-> -}
-> -sub readline {
-> -	my $self = shift;
-> -	die "Cannot use readline on FakeTerm: $$self";
-> -}
-> -package main;
-> -
-> -
->  sub usage {
->  	print <<EOT;
->  git send-email' [<options>] <file|directory>
-> @@ -930,16 +918,10 @@ sub get_patch_subject {
->  }
-> 
->  sub term {
-> -	my $term = eval {
-> -		require Term::ReadLine;
-> -		$ENV{"GIT_SEND_EMAIL_NOTTY"}
-> +	require Term::ReadLine;
-> +	return $ENV{"GIT_SEND_EMAIL_NOTTY"}
->  			? Term::ReadLine->new('git-send-email', \*STDIN, \*STDOUT)
->  			: Term::ReadLine->new('git-send-email');
-> -	};
-> -	if ($@) {
-> -		$term = FakeTerm->new("$@: going non-interactive");
-> -	}
-> -	return $term;
->  }
-> 
->  sub ask {
+Eg:
+$ mkdir new_folder
+$ cd new_folder
+$ git init .=20
+
+or
+$ mkdir new_folder
+$ git init new_folder
+
+But directly running `git init new_folder` when there is no `new_folder`
+works fine.
+
+FYI, I just did these tests on master (4365c6fcf9).
+
+Regards,
+Razvan
+
+>
+> > > Even if it is already fixed in the current version by the same
+> > > 199f44cb, we may want to follow up 0eab85b9 (t5601: exercise clones
+> > > with "includeIf.*.onbranch", 2024-03-12) with an additional test to
+> > > cover "git init".
+>
+> Agreed.
+>
+> Patrick
+
+
