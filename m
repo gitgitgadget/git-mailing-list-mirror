@@ -1,130 +1,155 @@
-Received: from wfhigh1-smtp.messagingengine.com (wfhigh1-smtp.messagingengine.com [64.147.123.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A8423CB
-	for <git@vger.kernel.org>; Wed, 22 May 2024 04:51:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0947E78C6E
+	for <git@vger.kernel.org>; Wed, 22 May 2024 06:27:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716353515; cv=none; b=dEsS5npgfCS8+yu/0i04DrvO5gUCcBb2V0t5/IMrz/075vNCkBTHl5y8KoJiCqS1nVjXCjljN0PJURbW9hpJVXyZyKZP4Q1ZiCG9/GOYx5xiLb2tw9yWbRx7nwBS4eGueLwV5p78iRGRAcPMSFf1d9SHSHTHT9k75ioa9BnC/vw=
+	t=1716359252; cv=none; b=Grb+Q6Hbulr1YVTkew2I9bcGLy79Y+BsXGXRLIP4ayQ8Qbjsv8ah4zBLyQYwMJGa0r85ZTmgPlhN5imAEXVQXjSYC8GGQNaLDXegEHTcA91C9gtbavXFREUK2L/IpUsa+eaiR3cFLChT0gU/qDdp/MMj7kQ509rud4t2RSGH+Rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716353515; c=relaxed/simple;
-	bh=jEt6KQBnPfzGI+/IXEmNKOKpC6c+SemXE89M1VSR7jM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eEUycvhfRKa3J+gDCOf6jIJMS9JyPz0DZozN9589iqRL/OE04dDYhpTLXQoitsbvyf/In8PRy/m4ivybxVkILxpR7GRBL6/YN9NEqn5mIS3T5Sjpigc2MOpbHLxiHZSoemlbWSZUHjsPzMm0H6Q/wWUGGwVs3jPpRQXrX10Af8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YGRWnodb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dRCadxsP; arc=none smtp.client-ip=64.147.123.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1716359252; c=relaxed/simple;
+	bh=dEQBgJ3wt7Cc8ffPNSiIwQ03v326rdZzmAq6t6zddVA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=XWrBw9ZeQpbXtux7RReJvgitQmTWdMggJz3D+VxzT6n7BeXXqsLecFOoBoufY1OFn/kzRW296YRO1IW6uEGQZbxp3GnrxUyf8TPDHV+N9+9WzMCyP2LLKiM5VWRpJCknZCDZSmulCoHdymxp3OYJyTUMW5j3SH+CCIeYo4MKNg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qd5O0WEO; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YGRWnodb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dRCadxsP"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 9C9B51800096;
-	Wed, 22 May 2024 00:51:51 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Wed, 22 May 2024 00:51:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716353511; x=1716439911; bh=jEt6KQBnPf
-	zGI+/IXEmNKOKpC6c+SemXE89M1VSR7jM=; b=YGRWnodbkMo9bN/1tzDIavcXgM
-	6L47C9/h9WRyUQ7kt5fWiSNxmyTVu9dIXTXCSo9YGaKYlI78X/u/WC8WRBk8nT3a
-	ELjdiIX7q24c7tCaADM2MsP0o5Qd4tNbxmeEOP0Gtmqb2D7RKE2te8BrUztQVlnQ
-	EioRv2y6+F4HcpyF6EDPMWDqrUzUa3R5yCYCdGMJ/uhht2V8rEvymb3e9pyU0lJK
-	b7kXTvzWm7wnQWbQ07+Dp4P4ZRbmn3FLIo5gS2JpEHkibxgr5ygIqZ5t9RN5PgyP
-	pl8sh76v0PFCaWhNgfuwp6OGKSywjeYV/Wz2XeyX0gpbGLAMSI7haujzSyKA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716353511; x=1716439911; bh=jEt6KQBnPfzGI+/IXEmNKOKpC6c+
-	SemXE89M1VSR7jM=; b=dRCadxsP9qBotTD2t8wVjmbihISFd6qgVBnOK1wWzVm3
-	IBuVKCniURGsRmmhablaTskVG1JqJea++SInQF/MET7Ml5g+SAguZVKkCIAexwmj
-	8N822b2/WCB0RfWW/giZT4QMsdjrVWM5NiyuwG/bM9mK6CUm8PK0QUfEY4hh1Zzi
-	kzWi6Xx54l5uQYMjvhS5LltjZdOBStoOZJgyCvqR1+bpdtRbwwnNCFCn9Hv98ESL
-	gKisq9J4VUSAYk6vNxfJ5oD4TbluDxl9yRppUvDelE/DcUnCXbsHuP+cM5D5gufA
-	N/wIll/v4vVvrkVwVPR0oYBuSeUPznt4+z3pbmIv8Q==
-X-ME-Sender: <xms:5nlNZkEvVtKVnxblLWuGd6LJfnC8IjJTHBAcsl6smBKYsZgZRk9ntg>
-    <xme:5nlNZtWgCDOInSRU66Bq3f2RvRGASguFNWkL_q1J9eWw0caxXhmAuhhTyUSFTWiEm
-    KvHcmN11qWU44peXQ>
-X-ME-Received: <xmr:5nlNZuIw6Gyp49wivZlqjZPuromfpLQcgaI3DALhYcxzB0-JJCJwQ9Bv-KzjC8tC9yQMDqIIm6qppygEAfKc0NtEREAc8d2-SURVzV6q97pVKjyy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeifedgkeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:5nlNZmFIA0xDMlpGRCioFlB7Czze_mVdp9_XtHCcw_6KcTMP_rGpAw>
-    <xmx:5nlNZqW7HGTDPQ0P7jFDX-Odr0lXwRPFr_D8KHmg_KOVNevEIfYx9g>
-    <xmx:5nlNZpO_1AOeVhK-92DVIElNO5JBGMqY1NVoqwwppxglL8CXC4OCwQ>
-    <xmx:5nlNZh011U2qDNeZ3o_QbynzJCfrUOQpvjy5vfbH6itplpXtBw95BA>
-    <xmx:53lNZni44xYzIre7oHFKM9qejhWmpwTgORKsDu4XYkCrXPar8VW8t-U6>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 May 2024 00:51:50 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 7751892e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 22 May 2024 04:51:44 +0000 (UTC)
-Date: Wed, 22 May 2024 06:51:45 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v5 0/5] Fix use of uninitialized hash algorithms
-Message-ID: <Zk154eQUf6LG8Qd-@tanuki>
-References: <cover.1715582857.git.ps@pks.im>
- <20240520231434.1816979-1-gitster@pobox.com>
- <ZkxUGzPn363PNWMF@tanuki>
- <xmqqpltf9gz3.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qd5O0WEO"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2ac9b225a91so1790560a91.2
+        for <git@vger.kernel.org>; Tue, 21 May 2024 23:27:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716359250; x=1716964050; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=zDBZZze7VB7OBzSyn66rUZTBObLJC0HQRJKwU5OWskk=;
+        b=Qd5O0WEOt1OPkgCf66wiS5x5z+lrAAvwCjeZI/0rX7EyECDcIDp26cQ4XzI5s8xNyt
+         kLeQaM69ik8sm4T16SUteQUSERMnHS96t2UK/ZWWwmX0lV5PcrUHkpgXe8iS9r6kfyZ4
+         mDX5zZ7vMM698eXPrwGIE8gp8BwK56QC2gi0p+nk0vvFGWVZSCaMMzZZEx4o9brwxA3m
+         gB4nD+W0Tw2KsaW/Bd5dbPikOoMjzL3gehlDa7SlitLAZZradW/gKDbta3882nVPfDFu
+         o/vVzsrZ7K4YMlDtughOGU5Khas/Pmmd+1CsT05Bl+MgOcu5w2NpiL4eYRL+WY64PDHi
+         vOIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716359250; x=1716964050;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zDBZZze7VB7OBzSyn66rUZTBObLJC0HQRJKwU5OWskk=;
+        b=d0iZk5aFnGyj/2r3X2UExn3TvNKdVTu7ATNnppKHkiAz0Tli3A1Qcs3M6uKKruSXxh
+         U0k5mGoUWJLcgSE57hmkfMIJ+XhYtHcP3aVmLPIHibYBJpQFWVKqogL1oCKekmKh/k6Z
+         DaFfXl8vKMWkEDuiuSqaMj6aNdV+zFbUwTga7K1tJYT2dNd502eQj1zXEmwAy+g81qjI
+         uDNwRqqtHkpXC+PNZaxKTuyzUV09UYIPhgCq9hYiqJySYSRxDqRETOrzvmBjN8FZqvuR
+         21sG86IHJNXVbX51pWtFB8U5H7O/AQXTRZsJsNyum/sgqLK+A4oThms4seUo8961hJ0K
+         wudQ==
+X-Gm-Message-State: AOJu0YzIDY+xZABXvSNncTCRPE7gPNnRo6xmETzB+sivWtpY6dxfThrf
+	gBiFt4sKo9Ldrtm2Xuv0FNiv4qSzvPLlWkEYOsPz3w7dCjpdy2SqwKOj8KwIYfwY8Fe+Zs7nKSz
+	Gn7fZ3ov3NnoubiT4KrIdBFGg4KNnk/wH
+X-Google-Smtp-Source: AGHT+IEzJL5xVFd1I9KbKLLh6Kd/i69KcpCEmnJE0QfXjliSIyyov3cIJrK0ElA1WSG69derwq/T3cnfbaUUdfuX/b8=
+X-Received: by 2002:a17:90b:494:b0:2bd:9032:5934 with SMTP id
+ 98e67ed59e1d1-2bd9f5d276bmr1120755a91.49.1716359250180; Tue, 21 May 2024
+ 23:27:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="E5CNAFv2IWyz14QC"
-Content-Disposition: inline
-In-Reply-To: <xmqqpltf9gz3.fsf@gitster.g>
+From: Zopolis4 <creatorsmithmdt@gmail.com>
+Date: Wed, 22 May 2024 16:27:19 +1000
+Message-ID: <CAEYL+X_R_0wfaP3UR2eDaBkaGXDAi_wSo=t9xK2DgiCm3+T6HQ@mail.gmail.com>
+Subject: Unable to shallow fetch repository when using a object database
+ populated by shallow fetches.
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+Create cache directory:
+cd /tmp
+mkdir cache
+cd cache
+git init --bare
+git config --local receive.shallowUpdate true
+export GIT_ALTERNATE_OBJECT_DIRECTORIES=/tmp/cache/objects
+
+Populate cache with shallow repository:
+cd /tmp
+mkdir repo1
+cd repo1
+git init
+git fetch --depth 1 https://github.com/crystal-lang/crystal
+git checkout FETCH_HEAD
+git push /tmp/cache HEAD:refs/heads/crystal
+
+Attempt to shallow fetch other unrelated repository:
+cd /tmp
+mkdir broken
+cd broken
+git init
+git fetch --depth 1 https://github.com/mint-lang/mint
+
+What did you expect to happen? (Expected behavior)
+The mint repository to successfully fetch.
+
+What happened instead? (Actual behavior)
+
+Initialized empty Git repository in /tmp/broken/.git/
+error: Could not read 2ac4b3fb4325328d347344ae738bb38d4675b82e
+remote: Enumerating objects: 1759, done.
+remote: Counting objects: 100% (1759/1759), done.
+remote: Compressing objects: 100% (1325/1325), done.
+remote: Total 1759 (delta 645), reused 833 (delta 416), pack-reused 0
+Receiving objects: 100% (1759/1759), 678.36 KiB | 6.22 MiB/s, done.
+Resolving deltas: 100% (645/645), done.
+error: Could not read 2ac4b3fb4325328d347344ae738bb38d4675b82e
+fatal: Failed to traverse parents of commit
+b563cbacb3ab1af88f4ba48c1877eb3823f3a69d
+error: remote did not send all necessary objects
+
+What's different between what you expected and what actually happened?
+
+Fetching the mint repository failed rather than succeeding.
+
+Anything else you want to add:
+
+If the final command is replaced with 'git fetch
+https://github.com/mint-lang/mint', errors are thrown but the fetch
+completes successfully.
+Initialized empty Git repository in /tmp/broken/.git/
+error: Could not read 2ac4b3fb4325328d347344ae738bb38d4675b82e
+remote: Enumerating objects: 19928, done.
+remote: Counting objects: 100% (5185/5185), done.
+remote: Compressing objects: 100% (1519/1519), done.
+remote: Total 19928 (delta 4223), reused 3674 (delta 3666), pack-reused 14743
+Receiving objects: 100% (19928/19928), 4.17 MiB | 4.54 MiB/s, done.
+Resolving deltas: 100% (14600/14600), done.
+From https://github.com/mint-lang/mint
+ * branch              HEAD       -> FETCH_HEAD
+
+Also, when the command to fetch the crystal repository is replaced
+with 'git fetch https://github.com/crystal-lang/crystal', everything
+works without issue.
+
+Presumably, this means the issue lies in shallow fetching when using a
+shallow object database, as making either of these non-shallow means
+the fetch completes successfully. (Admittedly, errors are still thrown
+if a non-shallow fetch is performed using a shallow object database)
+
+I was also able to reproduce the issue on git 2.45.1, but using the
+satmandu/crewbuild:amd64 docker container as I do not have access to
+git 2.45.1 on debian sid.
 
 
---E5CNAFv2IWyz14QC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[System Info]
+git version:
+git version 2.43.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.8.9-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.8.9-1
+(2024-05-15) x86_64
+compiler info: gnuc: 13.2
+libc info: glibc: 2.38
+$SHELL (typically, interactive shell): /usr/bin/fish
 
-On Tue, May 21, 2024 at 11:07:12AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > I have two smallish comments, but neither of them really have to be
-> > addressed. Overall I very much agree with this iteration and think that
-> > it's the right way to go.
->=20
-> I've locally done the following locally but it probably does not
-> need to be resent to the list before merging down to 'next'.
 
-Thanks, the diff looks good to me.
-
-Patrick
-
---E5CNAFv2IWyz14QC
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZNedwACgkQVbJhu7ck
-PpRIkw/9FnEpA8Rv4H8nI1oNOY20gC7c/JIAmbkmBmlE9Rrx8JSHynB2NZ5j/+Da
-fbK4XYi/D4BklLYxu3jcFeviokBGJSCJcglrEBeGXKku6QsmBXP22KgquZglzy2+
-KGa16Slxq4vz3FoTsJP/L9bhT3+laenkvhP9S6no+97HNlrPoGitEJ84PfU751zE
-dJS5dbUO+9R+b9Arp3J7hhGlq/B/d674N8OZ+aPUlPrmsg1ROP1AjsiYDusTBaub
-c1tbws0+WQ5jPwvlxZDw11UKX/9zVaIG2UdP+orLvlve/NXgjbEt4IVHP3LKHRl6
-CWxG6iPCBJ0xtC4nctLuqr3gxLbennbtrO5qPuUmCOvKx315aQXAE81P2ztKFl4j
-F5/6jEXCBwlXSJjsQ2LktzU5CIkaUFBPyB5VVJLREXc01LIq0384T8+/jZ3VkSok
-9x2mWex4qRrGCrF/p5B99kfAoixOHyC1bBkS5tLm6yHrmchKmv6Ay2HW0huUPeXT
-1zUK8YjnV0s64vrsMhVyn75dv9ueuZQR7VwIsS7US3DkDdfHDAu0r2VtyvjTYR6e
-mRrENEjHQkVMAzH2d57XRi1NzfQU3oxkVBUZyQTAZqUuTsMtmmkgct7En2T9uNk/
-nMy3vFwY+0leCcJth+Uhigik8Af13hVCSQaOaj28uvLFzwPVEpA=
-=sRhT
------END PGP SIGNATURE-----
-
---E5CNAFv2IWyz14QC--
+[Enabled Hooks]
