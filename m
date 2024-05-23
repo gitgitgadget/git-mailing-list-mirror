@@ -1,139 +1,104 @@
-Received: from kitenet.net (kitenet.net [66.228.36.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47045208C3
-	for <git@vger.kernel.org>; Thu, 23 May 2024 16:31:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.228.36.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E7017C8B
+	for <git@vger.kernel.org>; Thu, 23 May 2024 16:38:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716481912; cv=none; b=moiIkWeprGfFSBQbFYY8ofSvVg7llpEDobaYqK9PtsyCSNmcpumkBKzhdfWfAFXbmnNIbg8ZaVukiRmQwKz2AMIbCqSXNYfMob+n5fuP9u5TtVTR4ta5MJuA9ErnwzC7TUy0e6c3NfvRxfn3L0i48o7V43t3FfAYIiP7/R/5/jY=
+	t=1716482285; cv=none; b=ZohqjaUH4XmZ+8ZBLCLGrJjePDbVaySK8dhupbI46JvD5MtW+/OiACa6dBW2rPfOkGTDaVF+a5GUZALlYaxl1FivSjbBYDPwR8DF/luRXNQHOhMwTe9z1qi3vfDZYzjDQVIO7wTGzpQsiCZAjjNabSWdqNGP0gTfX1wg8CEzMmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716481912; c=relaxed/simple;
-	bh=s92G5HTAFuPIxBtFNdR6lqt69EglWpuEcfWhj4eRFIs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V0H6ro212ZweFIF/xIe1ZI+YBmkLcUi3Zix0y2RHXNSdco0PrErlHEgRPO9FVbz3XSavRQHqm2oL2LN3X4w28TCdlrzcP+GSJnbTTdgaB5sjH2GcGZY8lVcQxPiiMr7kk3lTMIBmi/1il1yZZtNkszehr2l6FCluv8Ehh5OCfcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joeyh.name; spf=pass smtp.mailfrom=kitenet.net; dkim=pass (1024-bit key) header.d=joeyh.name header.i=@joeyh.name header.b=cYv9LP0D; arc=none smtp.client-ip=66.228.36.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joeyh.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kitenet.net
+	s=arc-20240116; t=1716482285; c=relaxed/simple;
+	bh=vTYiIXnIGBa5fvafLyY8AjP2WgM/RC1LT9pReAQQxZk=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=TGslwfN6ZVwf+/Cqodle6DNTM10XXUM9q6MXZGR5rRroQXWdfvuyFf4GxJ0lRAJ9rwM71BjNsigdr8KOeJHbTzLa5TKwSWBuOSsuKYxthC8GwoYXs9NWv0FCcSx6P00MBjat2vqG+olgDKGJDflkHsfDF6VQ1E0R3kNEGjm6iRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=tHak9Tgz; arc=none smtp.client-ip=209.85.222.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=joeyh.name header.i=@joeyh.name header.b="cYv9LP0D"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=joeyh.name; s=mail;
-	t=1716481897; bh=s92G5HTAFuPIxBtFNdR6lqt69EglWpuEcfWhj4eRFIs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cYv9LP0Dy2qUgyqAHSUhi3oz7FWRk3XBJXQN2Qa3uiJ9h6bJN7edoMuYWC/JInbvc
-	 f8a+4g/IOmJp0dixsvIj1rv2gC7zK3F+ZKzj4eXjYkraIkS7enq5Oc44BBJoH1PGys
-	 ciu91y6wJzRMWEnId/KQ451muw5q8NWlR1GBmE7o=
-X-Question: 42
-Date: Thu, 23 May 2024 12:31:37 -0400
-From: Joey Hess <id@joeyh.name>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org
-Subject: Re: [PATCH 00/12] Fix various overly aggressive protections in
- 2.45.1 and friends
-Message-ID: <Zk9vafYPijqyWpXv@kitenet.net>
-References: <20240521195659.870714-1-gitster@pobox.com>
- <Zk3ChIHr5amGh8Mt@kitenet.net>
- <xmqqv835xekc.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="tHak9Tgz"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-792b8d989e4so452357985a.2
+        for <git@vger.kernel.org>; Thu, 23 May 2024 09:38:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1716482282; x=1717087082; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VG4iXv71Oyn4ilzTYRCoVsALwON/5OAeF2C68F3dJds=;
+        b=tHak9TgzHzDINnwgeY+31h/ZasJ7mWafAhViZJiiQS0VvAEbcf8jAsBlvrpuwZftfB
+         DrpHUQYfbs84aSEHvCcPl+dWcwRPJSLIB0MMFVtXDZCgaCm2LDcpXEL1Bj4ovHo9CMtR
+         tGkRGd4q5vQa49lHb3hf2AEY9B2ffI212GsEnHqkxC18djlTbb6Jb0jag7Df4oXXHGSE
+         m9gj4nClW1BwgQT7M9xD50MdWReqbuNuYHpUxZPKFAa8NjjILktylDqJPG99Wt10waNt
+         QNgPzhvI/gonosHpvXdGDvpVpbVUCYslQxiDBYZdlx/ev5PfYZzlvyLuHxhAuv15Gu2c
+         FbpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716482282; x=1717087082;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VG4iXv71Oyn4ilzTYRCoVsALwON/5OAeF2C68F3dJds=;
+        b=RlS6vH9F7rDDK/EjM5YM4LTUbtRWq5vry8mmkFkMrqxxNPs4k0y4H+Fm3X/TVX74dX
+         ZRd008w++DVV289jIku1PZjoxjElH+peJ6zFtqEUnuenQa5Ik+NBYtJ00mpTa0ieFFBp
+         LrnVCAWWWDWPVIBpE7ifr3J7mlc7BCqwtVmENSMFeRKd+QoFPhT6l5rorsajx0YanXfV
+         xfSa6O4LWlZFAfkV8At+gNKT8m+NHHbaKfqVZYb7ZgP4nn8xIkJ7DK2XE0Lx5/62UoRv
+         A6d2TsyhpUHP+aHYekDG4eA6ejhGch//ffL/muNmD4igkfCO4Zuhqr+rIVQVsjG8uHbW
+         ZciA==
+X-Gm-Message-State: AOJu0YwZ7ZEQC8eg6Bg/gWbN9KNMZVvlUTJs3hFzDAT4wQgRCpNBP6pj
+	Mv3CefAwBQWwI7FPZxZN68ChDK2kCjdbynx5EMCdhIndn0Sb53uJYruvCO3SgBz/SWun6OR1SFR
+	8
+X-Google-Smtp-Source: AGHT+IGs5UBDroCrSe3cWwy6oHmd4B4YtQBUt1YEIGkPPxS11sThLkw1/0ugnd0l0c6GEM7ZfghH0w==
+X-Received: by 2002:a05:620a:424a:b0:792:9741:ca86 with SMTP id af79cd13be357-794994196e6mr652115185a.11.1716482281575;
+        Thu, 23 May 2024 09:38:01 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-792dbc57811sm1192329885a.14.2024.05.23.09.38.01
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 May 2024 09:38:01 -0700 (PDT)
+Date: Thu, 23 May 2024 12:37:59 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Subject: [PATCH 0/8] midx-write: miscellaneous clean-ups for incremental MIDXs
+Message-ID: <cover.1716482279.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="u41pnQEbGvZFuKoW"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqv835xekc.fsf@gitster.g>
+
+This series has a grab-bag of midx-write related cleanups that I pulled
+out of a larger series to implement incremental MIDX chains.
+
+The main goal of this series is to support reading an existing MIDX when
+writing a new one with `--stdin-packs`, since we need this capability
+for incremental MIDXs. Along the way there are a few other
+quality-of-life improvements and refactorings. The first patch in this
+series fixes an existing segfault that can be triggered on released
+versions of Git (but has no interesting security implications).
+
+Admittedly, this series isn't all that interesting on its own, but it
+does chip away at the larger series, so it should be easier to review.
+Hopefully sending this one separately is OK, and in either event, thank
+you in advance for your review!
+
+Taylor Blau (8):
+  midx-write.c: tolerate `--preferred-pack` without bitmaps
+  midx-write.c: reduce argument count for `get_sorted_entries()`
+  midx-write.c: pass `start_pack` to `get_sorted_entries()`
+  midx-write.c: extract `should_include_pack()`
+  midx-write.c: extract `fill_packs_from_midx()`
+  midx-write.c: support reading an existing MIDX with `packs_to_include`
+  midx: replace `get_midx_rev_filename()` with a generic helper
+  pack-bitmap.c: reimplement `midx_bitmap_filename()` with helper
+
+ midx-write.c                | 157 ++++++++++++++++++------------------
+ midx.c                      |  14 ++--
+ midx.h                      |   6 +-
+ pack-bitmap.c               |   5 +-
+ pack-revindex.c             |   3 +-
+ t/t5319-multi-pack-index.sh |  23 ++++++
+ 6 files changed, 118 insertions(+), 90 deletions(-)
 
 
---u41pnQEbGvZFuKoW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Junio C Hamano wrote:
->  - The extra check seems to have meant to target the symbolic links
->    that point at objects, refs, config, and anything _we_ care
->    about, as opposed to random garbage (from _our_ point of view)
->    files third-parties throw into .git/ directory.  Would it have
->    made a better trade-off if we tried to make the check more
->    precise, only complaining about the things we care about (in
->    other words, what _we_ use)
-
-I wondered about that possibility too. But it's not at all clear to
-me how a symlink to .git/objects/foo risks any more security problem
-to git than one to .git/annex/whatever, or indeed to /home/linus/.bashrc.
-
-Git clearly has to get the security right of handling working tree files
-that are symlinks.
-
-The security hole that triggered this defense in depth, CVE-2024-32021,
-involved an attacker with write access to .git/objects/ making a symlink
-in there while another repo was cloning it. So it involved symlinks
-inside a remote .git/objects/, which is very different than symlinks
-into .git/objects/.
-
-While it's understandable that dealing with such a symlink related
-security hole may make one want to throw out the baby with the
-bathwater, this fsck check is more like you've kept the bathwater and
-only thrown out the baby. ;-)
-
->  - In any case, if it is merely warnings, not errors, these checks
->    can be configured out.  Wouldn't that be an escape-hatch enough?
-
-The issue with that is, as we've experienced with Gitlab, git hosts that
-choose to set receive.fsckObjects will prevent pushes of git-annex
-repositories, and there's probably no way for a user to configure it
-out. So every major git host that does it has to be approached to
-configure it out, and some fraction probably won't. Which will be a
-major impact and ongoing concern for git-annex users[1], all for
-something that certainly adds no security to a bare repository on such a
-host.
-
-> I am not sure which one is more practical between ripping
-> everything out and demoting these new fsck error types with
-> FSCK_WARN to FSCK_IGNORE.=20
-
-It could indeed be beneficial to have some kind of symlink check that is
-at FSCK_IGNORE by default. If someone is receiving a repository from an
-untrusted source, and doesn't want to deal with the security risks of
-symlinks in the working tree, they could configure it to be an error.
-Such a symlink check would probably need to catch more symlinks than
-only the ones into .git/ though. Having this available to git users
-seems like it could prevent a much larger class of security holes.
-
-As for the symlink length check, I do think it makes sense for fsck to
-notice symlinks that are too long to make sense for any OS and so picking
-some appropriate value, rather than the local PATH_MAX, could keep that one.
-
---=20
-see shy jo
-
-[1] I'm particularly concerned about the class of large institutional
-    users who are managing more data with git-annex than the total size of
-    all of Github[2]. They have a good reason to be risk averse,
-    and it could be a major disruption to cross-organizational workflows
-    and need updates to DOIs etc for them to switch hosting providers.
-[2] https://hachyderm.io/@joeyh/112486445240754919
-
-
---u41pnQEbGvZFuKoW
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAmZPb2cACgkQ2xLbD/Bf
-jzjpUg/+K+TmCEb9JQ7QmREgocCoiMqJYt4x42VduF+RlNP1eW4m1xlwKxCMBNfE
-/e/ysUBjpW3zT1vRrvzRBXkKDBo02tsG1g9iuTCI1HiCel/Zci22ITqvY3+cstHd
-Na7gJZQetnKEpdoEXK9Etk1+IVdNCeLBqJr91tYkAAYexdN1EFxD6sPQr3qDjfNd
-RTH0GnwrWljdt1fIWWcABOVWaraMPVoJRTxoVRY6coxSiILY2ifuCXthi1WA7vje
-MmB4b+3FD0fOdKYZvooKysowYczDQufd6/XXTJL/8Jt+dZBTHv1/hDRFoDr829D4
-627PrSLZyTBJV8j3TAPJBzU5x29hc8U8I9anh0UZauG4Cuttwz8tEioeXUeKVpHn
-zCCQaXEJLzfaJVvQY37LTtyJQCLq7KTkxxNOmOlPPkkHkp7Lxp67/fk6Ppdnj1lV
-ielNdpbm4hgUKIMhSnBMl75ZpAmCt3+4FV+h5eXPEuJRdBCwr1niACj6k/7hOMKB
-vW6l9VoP4t4jlSqbzJIOWFX3H8Ajwjh0p95ATBpT+izFcORkkfjh2E6fAbTsTJYu
-jn1Qc4MNJ282BT4wD2p9R6fDNQgO9qfFXbqzcsZ+qFmJ3HVCP0ojujfoWJFlKIfV
-0V5oEnwLUljJaZztKJkgc6B+TJeeCwQIZIyW/Fnh6h3Qon74QXU=
-=mS2E
------END PGP SIGNATURE-----
-
---u41pnQEbGvZFuKoW--
+base-commit: 4365c6fcf96caac73dcc412aa25db34cf8df48d5
+-- 
+2.45.1.217.g9bb58e2bf5a.dirty
