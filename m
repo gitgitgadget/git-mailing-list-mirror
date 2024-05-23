@@ -1,63 +1,64 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F43E129A8D
-	for <git@vger.kernel.org>; Thu, 23 May 2024 21:26:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EAE12838F
+	for <git@vger.kernel.org>; Thu, 23 May 2024 21:26:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716499603; cv=none; b=JBn1QqufGnnjKuoANuMYGV0CEu6luUEaEF+jR3Q/2UZsnQX0EDw5bUJlWWCm42sfSYuUytMBQz5mZ7m1gb7M0nBA66LEHjIfociPvoFPU9yVRjM7vZC9mosXmLq0usjuK1uSHruJiXmFLmr6n5SaIP4Ivm7vysqMssZH5YbcjxE=
+	t=1716499609; cv=none; b=AdzAjKGRgo1OH8AUtVZur8JLdmptBI3lZ4McP+bRic8zQi59KzLOrkLaXBIv+zEtbB3MVmLue7y1NFGb4VL09I4EEMuzgvRtQbAggT8qzYAQarBXxUAlSIRK5bCJBcbHASv0sd62H4tXqsujfewu8BvhyoGtn3PSbzUj9IfUxPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716499603; c=relaxed/simple;
-	bh=PDDKKLKXhPKgAyB8WLSvpQfWsh1rhVfb3RxpnUg1cU4=;
+	s=arc-20240116; t=1716499609; c=relaxed/simple;
+	bh=/grMWjdy98wNNd6mTfKtwFBdsS07iM2gRLEkiu4TKT4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FCDzkCg9GurhufyEpqv+3+HTLpW1jW8opfpsPKhRBtLEoHqn+B3kx0WT1kgNqEcVGjbdNWedYETLcIYN6qcxYx+arvd0zRCOYCYWDRZPFrkxFsB7k4nbaLs7JXhLx1xxNMXk1B7s/9n8M+xDcIia5PDnYZfNnhIaOkW1/MVE80c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Dx1LjLSv; arc=none smtp.client-ip=209.85.160.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=fp0QEJeBvMpyA4UvHbtzKPIwiQel6Sh+teB2gaiAI6qSPBs7g4/ASA6e77s4JSt1LgWVurQV8jSeGbh4v8NpNxQWX/iZ87FLzYeJFjdUgEe3b+YIRjjeg2/ZP62lasT5dvZ80ruOeYUu8DlTHqSIZN0A/eL719Ara/3PNoXL6Gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=oALfKI5i; arc=none smtp.client-ip=209.85.160.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Dx1LjLSv"
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-43f984101e4so13397851cf.0
-        for <git@vger.kernel.org>; Thu, 23 May 2024 14:26:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="oALfKI5i"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-43fb094da40so1160651cf.0
+        for <git@vger.kernel.org>; Thu, 23 May 2024 14:26:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1716499601; x=1717104401; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1716499605; x=1717104405; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tTcbwPcZypBcoxrLy2Og5e1jrS3bI5Iptd80FyJcJwg=;
-        b=Dx1LjLSvWYxEWpKubdXJlilHih4VlL/M8b+nDbE6efan0QeYyF9KCBmOHDC0S8lLzy
-         eUHKwLDXQ70SaNnYL4a5IwAJcfyoP8vIDgPGdJfVmGnMdv6GXy21EmJtCtQF5KScxLPv
-         UoTFK78Ngp1viKzNkWsF8AZADt95lyX14pVOWzCm2uAdF5MZTyifcUw3kvC3A80Ib2YY
-         w0AWg0QHDT3kBybqARLAgHjNgNstzlSHcW0yFCRW9lT65/BNHC4vRMoUPB3I4qrTPBl6
-         Fl0DYhp63ebKaIDa6bRnb5gL+2muA1VtRlR+X1XvAnx5eY0g7YFG6i9YdhjpihwTgbgd
-         LJUg==
+        bh=jFCW2sIq7m2+CUdI2DKl635aNklwrR+kbeTo0b6uF/M=;
+        b=oALfKI5ixwDyb3uAaO0odsthsNVDpS2DsyXGOBG4HGAvc1+n/yo4LN0ChbdTPCGB5P
+         E2lwVR7tI0ZQJe2Q5B5XV7X5MJ/I/JhWK34IqqkoR+r9xZIWM7aKlkyqMEwf1gsGieT6
+         S08CeonNXWdfdA+UxedVpdWaSSxBS1r1hBXRXXfxfVZ6imNmEh9nRlE5qUGLUr5Ehyj3
+         17/FqXFY7BUVUZLqe1teI3fPRqvEv0x+CrhkKvp4NWNyDP7ldE5yQyRyZVQPiAeP7620
+         B1wFPxY5PMXkTs5JUyvtBXMvoZlQb2IhJmy+sU4lNT3fMv43qf1lX9RV4xKLaRujm6dr
+         n39g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716499601; x=1717104401;
+        d=1e100.net; s=20230601; t=1716499605; x=1717104405;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tTcbwPcZypBcoxrLy2Og5e1jrS3bI5Iptd80FyJcJwg=;
-        b=q1ZAPNiCaOuIKHG+iZ/C6uxJwlNZQUtpK0JEPXBv7HTWw6lhd8zfTwS3QzjeiNR/Pi
-         nS0crfNyLdOonbZNfo2Lj/j6BLfRiIEflRlIrl7CgZqfwSGUxNXBmuKQY7cR2JcJPkGj
-         vbLldfqPvT8YJRea4QmWYtQWxBJ4QReOZqtfxwEHWqUNyXeqWgJn/SfYbfbSA8Z68kAY
-         SC9ySz7yMfWcS72Qqr+vxPw8FqGVa1n0RPNwC8fw2C9eCribav1pPm/pgetvtNUQbtlo
-         QM8Oa0X7FFlJJ6NZXeIFSzGNSV7/CnThB8Smuw5GpRiu5VIkJHX6zUmk7S55GbmwRMA4
-         gn0A==
-X-Gm-Message-State: AOJu0YzdhofJ6rFY0fmsIEDxTIMbhIHBtmgJbvH/Vuiv6i2zXHak6tO4
-	UQYvuYxpd2qSwxGcg4ahoW/hHGdX/ltfHgUrG0X/BuoOQ9bnsusH/r/trHvlfx7BHbn67kEGIBP
-	D
-X-Google-Smtp-Source: AGHT+IFq08hCrUpA63o2PYOyPXOQB+VSzsZyB3vzEf2hnGI1pGi5ongrN/2tLl3c/Tn+3t7bobyfnA==
-X-Received: by 2002:ac8:5952:0:b0:43a:88e1:43a2 with SMTP id d75a77b69052e-43fb0e49918mr3478701cf.3.1716499600942;
-        Thu, 23 May 2024 14:26:40 -0700 (PDT)
+        bh=jFCW2sIq7m2+CUdI2DKl635aNklwrR+kbeTo0b6uF/M=;
+        b=E7biDbA420Lgk/XL3hs9TaJkBeHQ0uiVWNMq3sVCSKspF1CnIGXpPjez3oqd0iHL6L
+         tZmtHx5wMaC/RycHhMaoaB2dQOgssYWBtT3ZcFeVRGibgQ7ELCjbyVOU2RdW9o+TbEmn
+         CXI9DXJAu0/tHLakIdYkEyZbpCrEMEDZCbdKV1dOPI3ckbg7Cr+jYqyWSIluPuqmamMt
+         jXi6CgnQfwP1ivBYbzKVerX3DaqFhjqbsCVFsjwg6BkPAgU5fAgITCwlDFG4mg5E4/wq
+         DKEARe1K9A74lkdlyz4htzJizujCZChvNo+HetQPDU+C+3DSmhfoOxRgArD/RjjEjh7E
+         P0yw==
+X-Gm-Message-State: AOJu0YyzMNxLTrc9pVSWdIN1QfLFZjKJ9KuU1QvWePCVAlCQw6kia3Tl
+	GsLnY3zzEA2C8WE1RLDWPAp8tur1RfNzmd6Q6hGCgmX2LDieoJYik9Muubh0i0LBSa+J4JUdd+7
+	b
+X-Google-Smtp-Source: AGHT+IGcGFRMiBwWhWR5W5HTeTanrl+Wf/8ycB19hGj4VAN7chC0E5gTHtJQi4Nq/ak88Wg+l4solQ==
+X-Received: by 2002:a05:6214:301b:b0:6a0:ebde:ae7d with SMTP id 6a1803df08f44-6ab8f3283a0mr57541396d6.4.1716499604645;
+        Thu, 23 May 2024 14:26:44 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43fb18c5b5csm519881cf.91.2024.05.23.14.26.40
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ac20a0fe7bsm520176d6.142.2024.05.23.14.26.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 May 2024 14:26:40 -0700 (PDT)
-Date: Thu, 23 May 2024 17:26:39 -0400
+        Thu, 23 May 2024 14:26:44 -0700 (PDT)
+Date: Thu, 23 May 2024 17:26:42 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 10/24] config: introduce `git_config_double()`
-Message-ID: <6c77671ae9ce063d5659ab0542d4bfa3e1303995.1716499565.git.me@ttaylorr.com>
+Subject: [PATCH v4 11/24] pseudo-merge: implement support for selecting
+ pseudo-merge commits
+Message-ID: <180072ce84868265acfda8c1adf375e39a3b7610.1716499565.git.me@ttaylorr.com>
 References: <cover.1710972293.git.me@ttaylorr.com>
  <cover.1716499565.git.me@ttaylorr.com>
 Precedence: bulk
@@ -70,123 +71,865 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1716499565.git.me@ttaylorr.com>
 
-Future commits will want to parse a double-precision floating point
-value from configuration, but we have no way to parse such a value prior
-to this patch.
+Teach the new pseudo-merge machinery how to select non-bitmapped commits
+for inclusion in different pseudo-merge group(s) based on a handful of
+criteria.
 
-The core of the routine is implemented in git_parse_double(). Unlike
-git_parse_unsigned() and git_parse_signed(), however, the function
-implemented here only works on type "double", and not related types like
-"float", or "long double".
-
-This is because "float" and "long double" use different functions to
-convert from ASCII strings to floating point values (strtof() and
-strtold(), respectively). Likewise, there is no pointer type that can
-assign to any of these values (except for "void *"), so the only way to
-define this trio of functions would be with a macro expansion that is
-parameterized over the floating point type and conversion function.
-
-That is all doable, but likely to be overkill given our current needs,
-which is only to parse double-precision floats.
+Note that the selected pseudo-merge commits aren't actually used or
+written anywhere yet. This will be done in the following commit.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- config.c |  9 +++++++++
- config.h |  7 +++++++
- parse.c  | 29 +++++++++++++++++++++++++++++
- parse.h  |  1 +
- 4 files changed, 46 insertions(+)
+ Documentation/config.txt                     |   2 +
+ Documentation/config/bitmap-pseudo-merge.txt |  91 ++++
+ Documentation/gitpacking.txt                 |  83 ++++
+ pack-bitmap-write.c                          |  21 +
+ pack-bitmap.h                                |   2 +
+ pseudo-merge.c                               | 454 +++++++++++++++++++
+ pseudo-merge.h                               |  94 ++++
+ 7 files changed, 747 insertions(+)
+ create mode 100644 Documentation/config/bitmap-pseudo-merge.txt
 
-diff --git a/config.c b/config.c
-index 77a0fd2d80e..7df89f17275 100644
---- a/config.c
-+++ b/config.c
-@@ -1243,6 +1243,15 @@ ssize_t git_config_ssize_t(const char *name, const char *value,
- 	return ret;
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 6f649c997c0..caa34311214 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -384,6 +384,8 @@ include::config/apply.txt[]
+ 
+ include::config/attr.txt[]
+ 
++include::config/bitmap-pseudo-merge.txt[]
++
+ include::config/blame.txt[]
+ 
+ include::config/branch.txt[]
+diff --git a/Documentation/config/bitmap-pseudo-merge.txt b/Documentation/config/bitmap-pseudo-merge.txt
+new file mode 100644
+index 00000000000..1f264eca99b
+--- /dev/null
++++ b/Documentation/config/bitmap-pseudo-merge.txt
+@@ -0,0 +1,91 @@
++NOTE: The configuration options in `bitmapPseudoMerge.*` are considered
++EXPERIMENTAL and may be subject to change or be removed entirely in the
++future. For more information about the pseudo-merge bitmap feature, see
++the "Pseudo-merge bitmaps" section of linkgit:gitpacking[7].
++
++bitmapPseudoMerge.<name>.pattern::
++	Regular expression used to match reference names. Commits
++	pointed to by references matching this pattern (and meeting
++	the below criteria, like `bitmapPseudoMerge.<name>.sampleRate`
++	and `bitmapPseudoMerge.<name>.threshold`) will be considered
++	for inclusion in a pseudo-merge bitmap.
+++
++Commits are grouped into pseudo-merge groups based on whether or not
++any reference(s) that point at a given commit match the pattern, which
++is an extended regular expression.
+++
++Within a pseudo-merge group, commits may be further grouped into
++sub-groups based on the capture groups in the pattern. These
++sub-groupings are formed from the regular expressions by concatenating
++any capture groups from the regular expression, with a '-' dash in
++between.
+++
++For example, if the pattern is `refs/tags/`, then all tags (provided
++they meet the below criteria) will be considered candidates for the
++same pseudo-merge group. However, if the pattern is instead
++`refs/remotes/([0-9])+/tags/`, then tags from different remotes will
++be grouped into separate pseudo-merge groups, based on the remote
++number.
++
++bitmapPseudoMerge.<name>.decay::
++	Determines the rate at which consecutive pseudo-merge bitmap
++	groups decrease in size. Must be non-negative. This parameter
++	can be thought of as `k` in the function `f(n) = C * n^-k`,
++	where `f(n)` is the size of the `n`th group.
+++
++Setting the decay rate equal to `0` will cause all groups to be the
++same size. Setting the decay rate equal to `1` will cause the `n`th
++group to be `1/n` the size of the initial group.  Higher values of the
++decay rate cause consecutive groups to shrink at an increasing rate.
++The default is `1`.
+++
++If all groups are the same size, it is possible that groups containing
++newer commits will be able to be used less often than earlier groups,
++since it is more likely that the references pointing at newer commits
++will be updated more often than a reference pointing at an old commit.
++
++bitmapPseudoMerge.<name>.sampleRate::
++	Determines the proportion of non-bitmapped commits (among
++	reference tips) which are selected for inclusion in an
++	unstable pseudo-merge bitmap. Must be between `0` and `1`
++	(inclusive). The default is `1`.
++
++bitmapPseudoMerge.<name>.threshold::
++	Determines the minimum age of non-bitmapped commits (among
++	reference tips, as above) which are candidates for inclusion
++	in an unstable pseudo-merge bitmap. The default is
++	`1.week.ago`.
++
++bitmapPseudoMerge.<name>.maxMerges::
++	Determines the maximum number of pseudo-merge commits among
++	which commits may be distributed.
+++
++For pseudo-merge groups whose pattern does not contain any capture
++groups, this setting is applied for all commits matching the regular
++expression. For patterns that have one or more capture groups, this
++setting is applied for each distinct capture group.
+++
++For example, if your capture group is `refs/tags/`, then this setting
++will distribute all tags into a maximum of `maxMerges` pseudo-merge
++commits. However, if your capture group is, say,
++`refs/remotes/([0-9]+)/tags/`, then this setting will be applied to
++each remote's set of tags individually.
+++
++Must be non-negative. The default value is 64.
++
++bitmapPseudoMerge.<name>.stableThreshold::
++	Determines the minimum age of commits (among reference tips,
++	as above, however stable commits are still considered
++	candidates even when they have been covered by a bitmap) which
++	are candidates for a stable a pseudo-merge bitmap. The default
++	is `1.month.ago`.
+++
++Setting this threshold to a smaller value (e.g., 1.week.ago) will cause
++more stable groups to be generated (which impose a one-time generation
++cost) but those groups will likely become stale over time. Using a
++larger value incurs the opposite penalty (fewer stable groups which are
++more useful).
++
++bitmapPseudoMerge.<name>.stableSize::
++	Determines the size (in number of commits) of a stable
++	psuedo-merge bitmap. The default is `512`.
+diff --git a/Documentation/gitpacking.txt b/Documentation/gitpacking.txt
+index f24396f0173..4a6fcba6f72 100644
+--- a/Documentation/gitpacking.txt
++++ b/Documentation/gitpacking.txt
+@@ -96,6 +96,89 @@ can take advantage of the fact that we only care about the union of
+ objects reachable from all of those tags, and answer the query much
+ faster.
+ 
++=== Configuration
++
++Reference tips are grouped into different pseudo-merge groups according
++to two criteria. A reference name matches one or more of the defined
++pseudo-merge patterns, and optionally one or more capture groups within
++that pattern which further partition the group.
++
++Within a group, commits may be considered "stable", or "unstable"
++depending on their age. These are adjusted by setting the
++`bitmapPseudoMerge.<name>.stableThreshold` and
++`bitmapPseudoMerge.<name>.threshold` configuration values, respectively.
++
++All stable commits are grouped into pseudo-merges of equal size
++(`bitmapPseudoMerge.<name>.stableSize`). If the `stableSize`
++configuration is set to, say, 100, then the first 100 commits (ordered
++by committer date) which are older than the `stableThreshold` value will
++form one group, the next 100 commits will form another group, and so on.
++
++Among unstable commits, the pseudo-merge machinery will attempt to
++combine older commits into large groups as opposed to newer commits
++which will appear in smaller groups. This is based on the heuristic that
++references whose tip commit is older are less likely to be modified to
++point at a different commit than a reference whose tip commit is newer.
++
++The size of groups is determined by a power-law decay function, and the
++decay parameter roughly corresponds to "k" in `f(n) = C*n^(-k/100)`,
++where `f(n)` describes the size of the `n`-th pseudo-merge group. The
++sample rate controls what percentage of eligible commits are considered
++as candidates. The threshold parameter indicates the minimum age (so as
++to avoid including too-recent commits in a pseudo-merge group, making it
++less likely to be valid). The "maxMerges" parameter sets an upper-bound
++on the number of pseudo-merge commits an individual group
++
++The "stable"-related parameters control "stable" pseudo-merge groups,
++comprised of a fixed number of commits which are older than the
++configured "stable threshold" value and may be grouped together in
++chunks of "stableSize" in order of age.
++
++The exact configuration for pseudo-merges is as follows:
++
++include::config/bitmap-pseudo-merge.txt[]
++
++=== Examples
++
++Suppose that you have a repository with a large number of references,
++and you want a bare-bones configuration of pseudo-merge bitmaps that
++will enhance bitmap coverage of the `refs/` namespace. You may start
++wiht a configuration like so:
++
++    [bitmapPseudoMerge "all"]
++	pattern = "refs/"
++	threshold = now
++	stableThreshold = never
++	sampleRate = 100
++	maxMerges = 64
++
++This will create pseudo-merge bitmaps for all references, regardless of
++their age, and group them into 64 pseudo-merge commits.
++
++If you wanted to separate tags from branches when generating
++pseudo-merge commits, you would instead define the pattern with a
++capture group, like so:
++
++    [bitmapPseudoMerge "all"]
++	pattern = "refs/(heads/tags)/"
++
++Suppose instead that you are working in a fork-network repository, with
++each fork specified by some numeric ID, and whose refs reside in
++`refs/virtual/NNN/` (where `NNN` is the numeric ID corresponding to some
++fork) in the network. In this instance, you may instead write something
++like:
++
++    [bitmapPseudoMerge "all"]
++	pattern = "refs/virtual/([0-9]+)/(heads|tags)/"
++	threshold = now
++	stableThreshold = never
++	sampleRate = 100
++	maxMerges = 64
++
++Which would generate pseudo-merge group identifiers like "1234-heads",
++and "5678-tags" (for branches in fork "1234", and tags in remote "5678",
++respectively).
++
+ SEE ALSO
+ --------
+ linkgit:git-pack-objects[1]
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index bc19b33ad16..d5884ea5e9c 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -17,6 +17,7 @@
+ #include "trace2.h"
+ #include "tree.h"
+ #include "tree-walk.h"
++#include "pseudo-merge.h"
+ 
+ struct bitmapped_commit {
+ 	struct commit *commit;
+@@ -39,11 +40,25 @@ void bitmap_writer_init(struct bitmap_writer *writer, struct repository *r)
+ 	if (writer->bitmaps)
+ 		BUG("bitmap writer already initialized");
+ 	writer->bitmaps = kh_init_oid_map();
++	writer->pseudo_merge_commits = kh_init_oid_map();
++
++	string_list_init_dup(&writer->pseudo_merge_groups);
++
++	load_pseudo_merges_from_config(&writer->pseudo_merge_groups);
++}
++
++static void free_pseudo_merge_commit_idx(struct pseudo_merge_commit_idx *idx)
++{
++	if (!idx)
++		return;
++	free(idx->pseudo_merge);
++	free(idx);
  }
  
-+double git_config_double(const char *name, const char *value,
-+			 const struct key_value_info *kvi)
+ void bitmap_writer_free(struct bitmap_writer *writer)
+ {
+ 	uint32_t i;
++	struct pseudo_merge_commit_idx *idx;
+ 
+ 	if (!writer)
+ 		return;
+@@ -55,6 +70,10 @@ void bitmap_writer_free(struct bitmap_writer *writer)
+ 
+ 	kh_destroy_oid_map(writer->bitmaps);
+ 
++	kh_foreach_value(writer->pseudo_merge_commits, idx,
++			 free_pseudo_merge_commit_idx(idx));
++	kh_destroy_oid_map(writer->pseudo_merge_commits);
++
+ 	for (i = 0; i < writer->selected_nr; i++) {
+ 		struct bitmapped_commit *bc = &writer->selected[i];
+ 		if (bc->write_as != bc->bitmap)
+@@ -703,6 +722,8 @@ void bitmap_writer_select_commits(struct bitmap_writer *writer,
+ 	}
+ 
+ 	stop_progress(&writer->progress);
++
++	select_pseudo_merges(writer, indexed_commits, indexed_commits_nr);
+ }
+ 
+ 
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index a7e2f56c971..1e730ea1e54 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -110,6 +110,8 @@ struct bitmap_writer {
+ 	struct bitmapped_commit *selected;
+ 	unsigned int selected_nr, selected_alloc;
+ 
++	struct string_list pseudo_merge_groups;
++	kh_oid_map_t *pseudo_merge_commits; /* oid -> pseudo merge(s) */
+ 	uint32_t pseudo_merges_nr;
+ 
+ 	struct progress *progress;
+diff --git a/pseudo-merge.c b/pseudo-merge.c
+index 37e037ba272..0f6854c753f 100644
+--- a/pseudo-merge.c
++++ b/pseudo-merge.c
+@@ -1,2 +1,456 @@
+ #include "git-compat-util.h"
+ #include "pseudo-merge.h"
++#include "date.h"
++#include "oid-array.h"
++#include "strbuf.h"
++#include "config.h"
++#include "string-list.h"
++#include "refs.h"
++#include "pack-bitmap.h"
++#include "commit.h"
++#include "alloc.h"
++#include "progress.h"
++
++#define DEFAULT_PSEUDO_MERGE_DECAY 1.0
++#define DEFAULT_PSEUDO_MERGE_MAX_MERGES 64
++#define DEFAULT_PSEUDO_MERGE_SAMPLE_RATE 1
++#define DEFAULT_PSEUDO_MERGE_THRESHOLD approxidate("1.week.ago")
++#define DEFAULT_PSEUDO_MERGE_STABLE_THRESHOLD approxidate("1.month.ago")
++#define DEFAULT_PSEUDO_MERGE_STABLE_SIZE 512
++
++static double gitexp(double base, int exp)
 +{
-+	double ret;
-+	if (!git_parse_double(value, &ret))
-+		die_bad_number(name, value, kvi);
++	double result = 1;
++	while (1) {
++		if (exp % 2)
++			result *= base;
++		exp >>= 1;
++		if (!exp)
++			break;
++		base *= base;
++	}
++	return result;
++}
++
++static uint32_t pseudo_merge_group_size(const struct pseudo_merge_group *group,
++					const struct pseudo_merge_matches *matches,
++					uint32_t i)
++{
++	double C = 0.0f;
++	uint32_t n;
++
++	/*
++	 * The size of pseudo-merge groups decays according to a power series,
++	 * which looks like:
++	 *
++	 *   f(n) = C * n^-k
++	 *
++	 * , where 'n' is the n-th pseudo-merge group, 'f(n)' is its size, 'k'
++	 * is the decay rate, and 'C' is a scaling value.
++	 *
++	 * The value of C depends on the number of groups, decay rate, and total
++	 * number of commits. It is computed such that if there are M and N
++	 * total groups and commits, respectively, that:
++	 *
++	 *   N = f(0) + f(1) + ... f(M-1)
++	 *
++	 * Rearranging to isolate C, we get:
++	 *
++	 *   N = \sum_{n=1}^M C / n^k
++	 *
++	 *   N / C = \sum_{n=1}^M n^-k
++	 *
++	 *   C = N / \sum_{n=1}^M n^-k
++	 *
++	 * For example, if we have a decay rate of 'k' being equal to 1.5, 'N'
++	 * total commits equal to 10,000, and 'M' being equal to 6 groups, then
++	 * the (rounded) group sizes are:
++	 *
++	 *   { 5469, 1934, 1053, 684, 489, 372 }
++	 *
++	 * increasing the number of total groups, say to 10, scales the group
++	 * sizes appropriately:
++	 *
++	 *   { 5012, 1772, 964, 626, 448, 341, 271, 221, 186, 158 }
++	 */
++	for (n = 0; n < group->max_merges; n++)
++		C += 1.0 / gitexp(n + 1, group->decay);
++	C = matches->unstable_nr / C;
++
++	return (uint32_t)((C / gitexp(i + 1, group->decay)) + 0.5);
++}
++
++static void pseudo_merge_group_init(struct pseudo_merge_group *group)
++{
++	memset(group, 0, sizeof(struct pseudo_merge_group));
++
++	strmap_init_with_options(&group->matches, NULL, 0);
++
++	group->decay = DEFAULT_PSEUDO_MERGE_DECAY;
++	group->max_merges = DEFAULT_PSEUDO_MERGE_MAX_MERGES;
++	group->sample_rate = DEFAULT_PSEUDO_MERGE_SAMPLE_RATE;
++	group->threshold = DEFAULT_PSEUDO_MERGE_THRESHOLD;
++	group->stable_threshold = DEFAULT_PSEUDO_MERGE_STABLE_THRESHOLD;
++	group->stable_size = DEFAULT_PSEUDO_MERGE_STABLE_SIZE;
++}
++
++static int pseudo_merge_config(const char *var, const char *value,
++			       const struct config_context *ctx,
++			       void *cb_data)
++{
++	struct string_list *list = cb_data;
++	struct string_list_item *item;
++	struct pseudo_merge_group *group;
++	struct strbuf buf = STRBUF_INIT;
++	const char *sub, *key;
++	size_t sub_len;
++	int ret = 0;
++
++	if (parse_config_key(var, "bitmappseudomerge", &sub, &sub_len, &key))
++		goto done;
++
++	if (!sub_len)
++		goto done;
++
++	strbuf_add(&buf, sub, sub_len);
++
++	item = string_list_lookup(list, buf.buf);
++	if (!item) {
++		item = string_list_insert(list, buf.buf);
++
++		item->util = xmalloc(sizeof(struct pseudo_merge_group));
++		pseudo_merge_group_init(item->util);
++	}
++
++	group = item->util;
++
++	if (!strcmp(key, "pattern")) {
++		struct strbuf re = STRBUF_INIT;
++
++		free(group->pattern);
++		if (*value != '^')
++			strbuf_addch(&re, '^');
++		strbuf_addstr(&re, value);
++
++		group->pattern = xcalloc(1, sizeof(regex_t));
++		if (regcomp(group->pattern, re.buf, REG_EXTENDED))
++			die(_("failed to load pseudo-merge regex for %s: '%s'"),
++			    sub, re.buf);
++
++		strbuf_release(&re);
++	} else if (!strcmp(key, "decay")) {
++		group->decay = git_config_double(var, value, ctx->kvi);
++		if (group->decay < 0) {
++			warning(_("%s must be non-negative, using default"), var);
++			group->decay = DEFAULT_PSEUDO_MERGE_DECAY;
++		}
++	} else if (!strcmp(key, "samplerate")) {
++		group->sample_rate = git_config_double(var, value, ctx->kvi);
++		if (!(0 <= group->sample_rate && group->sample_rate <= 1)) {
++			warning(_("%s must be between 0 and 1, using default"), var);
++			group->sample_rate = DEFAULT_PSEUDO_MERGE_SAMPLE_RATE;
++		}
++	} else if (!strcmp(key, "threshold")) {
++		if (git_config_expiry_date(&group->threshold, var, value)) {
++			ret = -1;
++			goto done;
++		}
++	} else if (!strcmp(key, "maxmerges")) {
++		group->max_merges = git_config_int(var, value, ctx->kvi);
++		if (group->max_merges < 0) {
++			warning(_("%s must be non-negative, using default"), var);
++			group->max_merges = DEFAULT_PSEUDO_MERGE_MAX_MERGES;
++		}
++	} else if (!strcmp(key, "stablethreshold")) {
++		if (git_config_expiry_date(&group->stable_threshold, var, value)) {
++			ret = -1;
++			goto done;
++		}
++	} else if (!strcmp(key, "stablesize")) {
++		group->stable_size = git_config_int(var, value, ctx->kvi);
++		if (group->stable_size <= 0) {
++			warning(_("%s must be positive, using default"), var);
++			group->stable_size = DEFAULT_PSEUDO_MERGE_STABLE_SIZE;
++		}
++	}
++
++done:
++	strbuf_release(&buf);
++
 +	return ret;
 +}
 +
- static const struct fsync_component_name {
- 	const char *name;
- 	enum fsync_component component_bits;
-diff --git a/config.h b/config.h
-index f4966e37494..f5f306f373d 100644
---- a/config.h
-+++ b/config.h
-@@ -261,6 +261,13 @@ unsigned long git_config_ulong(const char *, const char *,
- ssize_t git_config_ssize_t(const char *, const char *,
- 			   const struct key_value_info *);
- 
-+/**
-+ * Identically to `git_config_double`, but for double-precision floating point
-+ * values.
-+ */
-+double git_config_double(const char *, const char *,
-+			 const struct key_value_info *);
-+
- /**
-  * Same as `git_config_bool`, except that integers are returned as-is, and
-  * an `is_bool` flag is unset.
-diff --git a/parse.c b/parse.c
-index 42d691a0fbb..7a60a4f816c 100644
---- a/parse.c
-+++ b/parse.c
-@@ -125,6 +125,35 @@ int git_parse_ssize_t(const char *value, ssize_t *ret)
- 	return 1;
- }
- 
-+int git_parse_double(const char *value, double *ret)
++void load_pseudo_merges_from_config(struct string_list *list)
 +{
-+	char *end;
-+	double val;
-+	uintmax_t factor;
++	struct string_list_item *item;
 +
-+	if (!value || !*value) {
-+		errno = EINVAL;
-+		return 0;
-+	}
++	git_config(pseudo_merge_config, list);
 +
-+	errno = 0;
-+	val = strtod(value, &end);
-+	if (errno == ERANGE)
-+		return 0;
-+	if (end == value) {
-+		errno = EINVAL;
-+		return 0;
++	for_each_string_list_item(item, list) {
++		struct pseudo_merge_group *group = item->util;
++		if (!group->pattern)
++			die(_("pseudo-merge group '%s' missing required pattern"),
++			    item->string);
++		if (group->threshold < group->stable_threshold)
++			die(_("pseudo-merge group '%s' has unstable threshold "
++			      "before stable one"), item->string);
 +	}
-+	factor = get_unit_factor(end);
-+	if (!factor) {
-+		errno = EINVAL;
-+		return 0;
-+	}
-+	val *= factor;
-+	*ret = val;
-+	return 1;
 +}
 +
- int git_parse_maybe_bool_text(const char *value)
- {
- 	if (!value)
-diff --git a/parse.h b/parse.h
-index 07d2193d698..6bb9a54d9ac 100644
---- a/parse.h
-+++ b/parse.h
-@@ -6,6 +6,7 @@ int git_parse_ssize_t(const char *, ssize_t *);
- int git_parse_ulong(const char *, unsigned long *);
- int git_parse_int(const char *value, int *ret);
- int git_parse_int64(const char *value, int64_t *ret);
-+int git_parse_double(const char *value, double *ret);
++static int find_pseudo_merge_group_for_ref(const char *refname,
++					   const struct object_id *oid,
++					   int flags UNUSED,
++					   void *_data)
++{
++	struct bitmap_writer *writer = _data;
++	struct object_id peeled;
++	struct commit *c;
++	uint32_t i;
++	int has_bitmap;
++
++	if (!peel_iterated_oid(oid, &peeled))
++		oid = &peeled;
++
++	c = lookup_commit(the_repository, oid);
++	if (!c)
++		return 0;
++
++	has_bitmap = bitmap_writer_has_bitmapped_object_id(writer, oid);
++
++	for (i = 0; i < writer->pseudo_merge_groups.nr; i++) {
++		struct pseudo_merge_group *group;
++		struct pseudo_merge_matches *matches;
++		struct strbuf group_name = STRBUF_INIT;
++		regmatch_t captures[16];
++		size_t j;
++
++		group = writer->pseudo_merge_groups.items[i].util;
++		if (regexec(group->pattern, refname, ARRAY_SIZE(captures),
++			    captures, 0))
++			continue;
++
++		if (captures[ARRAY_SIZE(captures) - 1].rm_so != -1)
++			warning(_("pseudo-merge regex from config has too many capture "
++				  "groups (max=%"PRIuMAX")"),
++				(uintmax_t)ARRAY_SIZE(captures) - 2);
++
++		for (j = !!group->pattern->re_nsub; j < ARRAY_SIZE(captures); j++) {
++			regmatch_t *match = &captures[j];
++			if (match->rm_so == -1)
++				continue;
++
++			if (group_name.len)
++				strbuf_addch(&group_name, '-');
++
++			strbuf_add(&group_name, refname + match->rm_so,
++				   match->rm_eo - match->rm_so);
++		}
++
++		matches = strmap_get(&group->matches, group_name.buf);
++		if (!matches) {
++			matches = xcalloc(1, sizeof(*matches));
++			strmap_put(&group->matches, strbuf_detach(&group_name, NULL),
++				   matches);
++		}
++
++		if (c->date <= group->stable_threshold) {
++			ALLOC_GROW(matches->stable, matches->stable_nr + 1,
++				   matches->stable_alloc);
++			matches->stable[matches->stable_nr++] = c;
++		} else if (c->date <= group->threshold && !has_bitmap) {
++			ALLOC_GROW(matches->unstable, matches->unstable_nr + 1,
++				   matches->unstable_alloc);
++			matches->unstable[matches->unstable_nr++] = c;
++		}
++
++		strbuf_release(&group_name);
++	}
++
++	return 0;
++}
++
++static struct commit *push_pseudo_merge(struct pseudo_merge_group *group)
++{
++	struct commit *merge;
++
++	ALLOC_GROW(group->merges, group->merges_nr + 1, group->merges_alloc);
++
++	merge = alloc_commit_node(the_repository);
++	merge->object.parsed = 1;
++	merge->object.flags |= BITMAP_PSEUDO_MERGE;
++
++	group->merges[group->merges_nr++] = merge;
++
++	return merge;
++}
++
++static struct pseudo_merge_commit_idx *pseudo_merge_idx(kh_oid_map_t *pseudo_merge_commits,
++							const struct object_id *oid)
++
++{
++	struct pseudo_merge_commit_idx *pmc;
++	int hash_ret;
++	khiter_t hash_pos = kh_put_oid_map(pseudo_merge_commits, *oid,
++					   &hash_ret);
++
++	if (hash_ret) {
++		CALLOC_ARRAY(pmc, 1);
++		kh_value(pseudo_merge_commits, hash_pos) = pmc;
++	} else {
++		pmc = kh_value(pseudo_merge_commits, hash_pos);
++	}
++
++	return pmc;
++}
++
++#define MIN_PSEUDO_MERGE_SIZE 8
++
++static void select_pseudo_merges_1(struct bitmap_writer *writer,
++				   struct pseudo_merge_group *group,
++				   struct pseudo_merge_matches *matches)
++{
++	uint32_t i, j;
++	uint32_t stable_merges_nr;
++
++	if (!matches->stable_nr && !matches->unstable_nr)
++		return; /* all tips in this group already have bitmaps */
++
++	stable_merges_nr = matches->stable_nr / group->stable_size;
++	if (matches->stable_nr % group->stable_size)
++		stable_merges_nr++;
++
++	/* make stable_merges_nr pseudo merges for stable commits */
++	for (i = 0, j = 0; i < stable_merges_nr; i++) {
++		struct commit *merge;
++		struct commit_list **p;
++
++		merge = push_pseudo_merge(group);
++		p = &merge->parents;
++
++		/*
++		 * For each pseudo-merge created above, add parents to the
++		 * allocated commit node from the stable set of commits
++		 * (un-bitmapped, newer than the stable threshold).
++		 */
++		do {
++			struct commit *c;
++			struct pseudo_merge_commit_idx *pmc;
++
++			if (j >= matches->stable_nr)
++				break;
++
++			c = matches->stable[j++];
++			/*
++			 * Here and below, make sure that we keep our mapping of
++			 * commits -> pseudo-merge(s) which include the key'd
++			 * commit up-to-date.
++			 */
++			pmc = pseudo_merge_idx(writer->pseudo_merge_commits,
++					       &c->object.oid);
++
++			ALLOC_GROW(pmc->pseudo_merge, pmc->nr + 1, pmc->alloc);
++
++			pmc->pseudo_merge[pmc->nr++] = writer->pseudo_merges_nr;
++			p = commit_list_append(c, p);
++		} while (j % group->stable_size);
++
++		bitmap_writer_push_commit(writer, merge, 1);
++		writer->pseudo_merges_nr++;
++	}
++
++	/* make up to group->max_merges pseudo merges for unstable commits */
++	for (i = 0, j = 0; i < group->max_merges; i++) {
++		struct commit *merge;
++		struct commit_list **p;
++		uint32_t size, end;
++
++		merge = push_pseudo_merge(group);
++		p = &merge->parents;
++
++		size = pseudo_merge_group_size(group, matches, i);
++		end = size < MIN_PSEUDO_MERGE_SIZE ? matches->unstable_nr : j + size;
++
++		/*
++		 * For each pseudo-merge commit created above, add parents to
++		 * the allocated commit node from the unstable set of commits
++		 * (newer than the stable threshold).
++		 *
++		 * Account for the sample rate, since not every candidate from
++		 * the set of stable commits will be included as a pseudo-merge
++		 * parent.
++		 */
++		for (; j < end && j < matches->unstable_nr; j++) {
++			struct commit *c = matches->unstable[j];
++			struct pseudo_merge_commit_idx *pmc;
++
++			if (j % (uint32_t)(1.0 / group->sample_rate))
++				continue;
++
++			pmc = pseudo_merge_idx(writer->pseudo_merge_commits,
++					       &c->object.oid);
++
++			ALLOC_GROW(pmc->pseudo_merge, pmc->nr + 1, pmc->alloc);
++
++			pmc->pseudo_merge[pmc->nr++] = writer->pseudo_merges_nr;
++			p = commit_list_append(c, p);
++		}
++
++		bitmap_writer_push_commit(writer, merge, 1);
++		writer->pseudo_merges_nr++;
++		if (end >= matches->unstable_nr)
++			break;
++	}
++}
++
++static int commit_date_cmp(const void *va, const void *vb)
++{
++	timestamp_t a = (*(const struct commit **)va)->date;
++	timestamp_t b = (*(const struct commit **)vb)->date;
++
++	if (a < b)
++		return -1;
++	else if (a > b)
++		return 1;
++	return 0;
++}
++
++static void sort_pseudo_merge_matches(struct pseudo_merge_matches *matches)
++{
++	QSORT(matches->stable, matches->stable_nr, commit_date_cmp);
++	QSORT(matches->unstable, matches->unstable_nr, commit_date_cmp);
++}
++
++void select_pseudo_merges(struct bitmap_writer *writer,
++			  struct commit **commits, size_t commits_nr)
++{
++	struct progress *progress = NULL;
++	uint32_t i;
++
++	if (!writer->pseudo_merge_groups.nr)
++		return;
++
++	if (writer->show_progress)
++		progress = start_progress("Selecting pseudo-merge commits",
++					  writer->pseudo_merge_groups.nr);
++
++	for_each_ref(find_pseudo_merge_group_for_ref, writer);
++
++	for (i = 0; i < writer->pseudo_merge_groups.nr; i++) {
++		struct pseudo_merge_group *group;
++		struct hashmap_iter iter;
++		struct strmap_entry *e;
++
++		group = writer->pseudo_merge_groups.items[i].util;
++		strmap_for_each_entry(&group->matches, &iter, e) {
++			struct pseudo_merge_matches *matches = e->value;
++
++			sort_pseudo_merge_matches(matches);
++
++			select_pseudo_merges_1(writer, group, matches);
++		}
++
++		display_progress(progress, i + 1);
++	}
++
++	stop_progress(&progress);
++}
+diff --git a/pseudo-merge.h b/pseudo-merge.h
+index cab8ff6960a..f809cf42aeb 100644
+--- a/pseudo-merge.h
++++ b/pseudo-merge.h
+@@ -2,5 +2,99 @@
+ #define PSEUDO_MERGE_H
  
- /**
-  * Same as `git_config_bool`, except that it returns -1 on error rather
+ #include "git-compat-util.h"
++#include "strmap.h"
++#include "khash.h"
++#include "ewah/ewok.h"
++
++struct commit;
++struct string_list;
++struct bitmap_index;
++struct bitmap_writer;
++
++/*
++ * A pseudo-merge group tracks the set of non-bitmapped reference tips
++ * that match the given pattern.
++ *
++ * Within those matches, they are further segmented by separating
++ * consecutive capture groups with '-' dash character capture groups
++ * with '-' dash characters.
++ *
++ * Those groups are then ordered by committer date and partitioned
++ * into individual pseudo-merge(s) according to the decay, max_merges,
++ * sample_rate, and threshold parameters.
++ */
++struct pseudo_merge_group {
++	regex_t *pattern;
++
++	/* capture group(s) -> struct pseudo_merge_matches */
++	struct strmap matches;
++
++	/*
++	 * The individual pseudo-merge(s) that are generated from the
++	 * above array of matches, partitioned according to the below
++	 * parameters.
++	 */
++	struct commit **merges;
++	size_t merges_nr;
++	size_t merges_alloc;
++
++	/*
++	 * Pseudo-merge grouping parameters. See git-config(1) for
++	 * more information.
++	 */
++	double decay;
++	int max_merges;
++	double sample_rate;
++	int stable_size;
++	timestamp_t threshold;
++	timestamp_t stable_threshold;
++};
++
++struct pseudo_merge_matches {
++	struct commit **stable;
++	struct commit **unstable;
++	size_t stable_nr, stable_alloc;
++	size_t unstable_nr, unstable_alloc;
++};
++
++/*
++ * Read the repository's configuration:
++ *
++ *   - bitmapPseudoMerge.<name>.pattern
++ *   - bitmapPseudoMerge.<name>.decay
++ *   - bitmapPseudoMerge.<name>.sampleRate
++ *   - bitmapPseudoMerge.<name>.threshold
++ *   - bitmapPseudoMerge.<name>.maxMerges
++ *   - bitmapPseudoMerge.<name>.stableThreshold
++ *   - bitmapPseudoMerge.<name>.stableSize
++ *
++ * and populates the given `list` with pseudo-merge groups. String
++ * entry keys are the pseudo-merge group names, and the values are
++ * pointers to the pseudo_merge_group structure itself.
++ */
++void load_pseudo_merges_from_config(struct string_list *list);
++
++/*
++ * A pseudo-merge commit index (pseudo_merge_commit_idx) maps a
++ * particular (non-pseudo-merge) commit to the list of pseudo-merge(s)
++ * it appears in.
++ */
++struct pseudo_merge_commit_idx {
++	uint32_t *pseudo_merge;
++	size_t nr, alloc;
++};
++
++/*
++ * Selects pseudo-merges from a list of commits, populating the given
++ * string_list of pseudo-merge groups.
++ *
++ * Populates the pseudo_merge_commits map with a commit_idx
++ * corresponding to each commit in the list. Counts the total number
++ * of pseudo-merges generated.
++ *
++ * Optionally shows a progress meter.
++ */
++void select_pseudo_merges(struct bitmap_writer *writer,
++			  struct commit **commits, size_t commits_nr);
+ 
+ #endif
 -- 
 2.45.1.175.gcf0316ad0e9
 
