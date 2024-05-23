@@ -1,78 +1,77 @@
-Received: from wfhigh3-smtp.messagingengine.com (wfhigh3-smtp.messagingengine.com [64.147.123.154])
+Received: from wfout7-smtp.messagingengine.com (wfout7-smtp.messagingengine.com [64.147.123.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE9213CAA2
-	for <git@vger.kernel.org>; Thu, 23 May 2024 08:25:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9137851016
+	for <git@vger.kernel.org>; Thu, 23 May 2024 08:25:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716452733; cv=none; b=H+sv46iQgmZKetzGzD27uc4Ird2Mx7jd3jT+CcWJehOMcaog2HWSMXjD5AhtirGemtgup5nUvywoef7w19nHXy6UI4M0uTmfgOh6A35xcwVQzqqAdaazK7gyU3kHFCtl1lEg3y7WUIf0T7X8IN3Olk2qNWxlWfG/tzJlqqsycfg=
+	t=1716452737; cv=none; b=GZba6y58xKRKsN0hUKEtCxlGdKH1QwhGeTrkKqzW8G4x9hitwY5b+KFktL6Bsda2JGQYY/eKY4qQI5C9SsZvL0w+qEFgPhoWx4mRvMH7SMXYEnFtRC42slLBrAZ/RfDo1gapenTY3YwOLrhLcIOfeOOSQG+CCxMwbXJcMrJLRc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716452733; c=relaxed/simple;
-	bh=bMnvpC40oTAyIvoPb0Siln9sIgnVHtKfjd+K8/dOr2I=;
+	s=arc-20240116; t=1716452737; c=relaxed/simple;
+	bh=WUMcBdTptasiA453TUGGUssiVVD6W56UZGyX+GwlIxc=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZmR/TKR79CimEWa7CT+rcXd2fdkrRdlLgetXiU+yRRpCFcPvfDfWAifTS15GRT9NdCE14hSIMdjUdUnTzgs5wsQZUfcz98n9D3vR9zlGyzjxriMMflbCiGRFcPAw1L8fpjbHioAcUfp9C4Hq9FtwNknRwxjHlB1W6H1FMwL5lOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NRg82TMn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jnfxZrV6; arc=none smtp.client-ip=64.147.123.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=Aeir1HNUJcHdINjpLGlMC82L98UDeLzPZ9KxiPWFtzSIXM/qiDemP9q/WJsS+ST0shwssnW6+kJdfjqPVteQlGeDBz9er8KGwDjisUvFItsuKT/jYOkfh7vQZNAMHC3MbUSGWU/Mg3fTvh3XhoL49E7D48c/TMSsY4IodM6Vuug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XbyBaA8t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j6eUxJ0Y; arc=none smtp.client-ip=64.147.123.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NRg82TMn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jnfxZrV6"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XbyBaA8t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j6eUxJ0Y"
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 7065318000CF
-	for <git@vger.kernel.org>; Thu, 23 May 2024 04:25:30 -0400 (EDT)
+	by mailfout.west.internal (Postfix) with ESMTP id D50F81C000FC
+	for <git@vger.kernel.org>; Thu, 23 May 2024 04:25:34 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 23 May 2024 04:25:30 -0400
+  by compute1.internal (MEProxy); Thu, 23 May 2024 04:25:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716452730; x=1716539130; bh=btuqqD4A/M
-	VuVxr1BlsGSzKMwoA9cKWkZl3wQfnFz10=; b=NRg82TMnlihba9SVbT22PMAhGh
-	nhHsxWw2/7V4Gf87lsmXMEV2tC63Erwvo+bibJM3+TplfBUx9zS0rBKYymgc2sPa
-	LuGn0O3hsbo9zgRGyaU2doyBtQ3YXqhswAd7XJSFviAlh1cAVOP+NtgpVqEAjiQD
-	BGznm5i2891etccFxy0PZENxG/NQlXmjMf+8g7TGoyn8eSwOa1bwKWoTn0W21JBx
-	3xyBUzRrJIGnoGFUJbSGnzvGweY1kByB2npU4d/r/+Aw249h/WRkel4QbQY0rPXJ
-	VuNYma3py/b+Kfk7k9N+IBfg4j0VDpnQ5zANNWkFUJ49Qe8nJkyrTQIWuloA==
+	:subject:to:to; s=fm1; t=1716452734; x=1716539134; bh=KHlJsPleOg
+	z851XAB4dKFT0IPCvXhZJd5KiQsFbzuiQ=; b=XbyBaA8t0Z/qrhpZXaJ+5oLlx/
+	6vMX7LilfxJgzXQGNlGM+T82uVWbzFFRtD33q71Z876cIG+UWxs/3n44aMEVpcBx
+	zFqyChR/sTjYdnamlkDuFpIgOXFRDEXlfK2NzjKHq6/JLbmidzmSLyb4U8rzzurD
+	8du0McttuhINyWUjVlsTvJfyMwcZBMB/6xX678lY9aFhJ8QI/wCljOKlL1+nUdMf
+	AhD7WBFbp7EEZgbSpB3YsfA1lQK508+M29LkNdxofFsfZHiFp8PNE7Aj6F3eJ/lL
+	YYDvciI5a5ok1ms8Hv5C33kfi9cmiaMfQO/2TVGd/McvN85635bkKmFbYnUQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716452730; x=1716539130; bh=btuqqD4A/MVuVxr1BlsGSzKMwoA9
-	cKWkZl3wQfnFz10=; b=jnfxZrV6FCZoMrkA748wKJuOdz0R/aM1DBEndR9O939/
-	FMz8iEHennZDLNhZ1aSlUQn/puzYs7djaO8yzmzBwlPHi5ZsE06PQvY4JhCdf8zu
-	qRvQ0CGyHMQZWTlmnG+4QnEspsDBwEWiq7qV8ymupck9yKVCngbNIW3LV+AMDmNu
-	jWFvOGbRW/MGApgIit2Duk0BePFa1HNWwgp9S7y2/JBUDb3M/3PAnNKH+Ma1uOy+
-	LimmpmViIW+449WGGYGzFg8ms4Wp2DqSGB9U8FQCPYxtbURwxRAMFXWK0pOzsLJ1
-	AW3T7NadkupBX7M0DdDfaNQGzTx7zOaMPq/VSzfbjg==
-X-ME-Sender: <xms:ef1OZhcqJmvxYmM-e21oviryhrR3GDRWT2fcrQt49PjUoTg00IuDKQ>
-    <xme:ef1OZvOxOvC_1HCs6cE-A2WMvIf74-8PMcnMIyYuMJV_jL6bThhe-g5BRHZRRq63a
-    _g7ocbC_Fcu0f61ng>
-X-ME-Received: <xmr:ef1OZqhuQsKQH1MZyFfH-vnOX5pIftYzLt_Uzowfrtk_lOB2ksG22UtDz3eX-85JjnIJ8IIIbQ8T30PTDMSAod3OPcYSOXhpD4HYwALzqQYheaFAxg>
+	fm1; t=1716452734; x=1716539134; bh=KHlJsPleOgz851XAB4dKFT0IPCvX
+	hZJd5KiQsFbzuiQ=; b=j6eUxJ0YKWWi2SGsI/EN4GN2OhtndPEyq07A157v1nAL
+	cRQJEbud4CFdOycR7yf/1q9i/zH1y/42OjSbe0AQbemp1jYb0Wb7TiW7frm2/nST
+	J5n+fP887jEnkekB9q7k4LrMc5V7EEO1alyMJvWtFuRmLyiWSE+OKwkdxVg6F2gV
+	Y5Mm+VEynMXIUu8oLi3IEw3+yYGZuMeVvAaXEIqVvfjpFXKFZQVNGAkUxWr/PkPA
+	Q48HhnSpL0I1F1VvF/QzSSJNMmtdMlDPNg29jhaVuM6sLXN+Or8WO7HTHQtT8s4i
+	mJw3IHeLzXjnQqAAyTkVbCKnQvpQB8fZogcJohsehQ==
+X-ME-Sender: <xms:fv1OZhK72D1YNTfzXS_sIWN_3aJD-GDR9plByvrLUEOdhOxVNtOUkQ>
+    <xme:fv1OZtLu52XHhYAliIEtUixhYn-yj_d5JhmgART6je3i4YuwHesegsnlsmPz6mheS
+    IuSMp29RlTGQ2qarQ>
+X-ME-Received: <xmr:fv1OZpuzSQHa1w6tZ9-s1JNDQz79fNmPYAU_VTessQwYghqxY8MgONInHOM0kuu3S5SSecezfIuXMEHmDHB3JTr6I2phsjg2X_mDFN5AOcIbumMCFA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeiiedgtdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:ef1OZq95d13h_DY_DTYENVCDfyGgjTWcrkYxq1xRUCqbWWRb_YJ1yg>
-    <xmx:ef1OZtvNyU4o7D_nfAsgPSgqW_Ky1Acq1WEuyr83esCSG9fDyzP11A>
-    <xmx:ef1OZpEEqguI2QTffygfeLhwLeAfkVV5dElaLy3itteqlyUz4PAJ2w>
-    <xmx:ef1OZkPJxx1nF74JZLKjAZyM0gLYnEo8zUe0NwSyCU84jxK5GhO_gQ>
-    <xmx:ev1OZuVrnKMsI3CvsC1rWBKpSwhtAYO740mUVtZQqCHD3ZdNqsbF1jPi>
+X-ME-Proxy: <xmx:fv1OZiYnhgUsZPEBjxP2KBcfNb6oW8X3ccDe0XFfmcom3FcZnu3yOQ>
+    <xmx:fv1OZoaTlihiojz9-qLRzRSxCPvfepJOlCc-9M-TYHEfyQCYEHbgBg>
+    <xmx:fv1OZmDQFUUQcGpmrwT59sZGcufBOkLzoMtsNYbiw9jYfMn5YZKkzw>
+    <xmx:fv1OZmaKnc7RBVgKAWlfgjfNhtgdkIkakppliIRSqhmaZ6mPtFFWLA>
+    <xmx:fv1OZjyxcGZdH0ri5yQWgLooGm2JbkDaScD5YmQFdaM3FePe4EELaJzq>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 23 May 2024 04:25:29 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 23 May 2024 04:25:33 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 7326c9f3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id f7491a40 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 23 May 2024 08:25:23 +0000 (UTC)
-Date: Thu, 23 May 2024 10:25:27 +0200
+	Thu, 23 May 2024 08:25:27 +0000 (UTC)
+Date: Thu, 23 May 2024 10:25:31 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 3/9] refs: pass storage format to `ref_store_init()`
- explicitly
-Message-ID: <6e7b9764f6290fb8ffe5941e33b72081e1c9581f.1716451672.git.ps@pks.im>
+Subject: [PATCH 4/9] refs: allow to skip creation of reflog entries
+Message-ID: <03f4ac6ee7143f6b38e1eb95fb139c8e454136f5.1716451672.git.ps@pks.im>
 References: <cover.1716451672.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,112 +80,152 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5V0ij9YTA+JAiDWD"
+	protocol="application/pgp-signature"; boundary="GfpuGO8clzrJ7ayd"
 Content-Disposition: inline
 In-Reply-To: <cover.1716451672.git.ps@pks.im>
 
 
---5V0ij9YTA+JAiDWD
+--GfpuGO8clzrJ7ayd
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're about to introduce logic to migrate refs from one storage format
-to another one. This will require us to initialize a ref store with a
-different format than the one used by the passed-in repository.
+The ref backends do not have any way to disable the creation of reflog
+entries. This will be required for upcoming ref format migration logic
+so that we do not create any entries that didn't exist in the original
+ref database.
 
-Prepare for this by accepting the desired ref storage format as
-parameter.
+Provide a new `REF_SKIP_CREATE_REFLOG` flag that allows the caller to
+disable reflog entry creation.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ refs.c                    | 6 ++++++
+ refs.h                    | 8 +++++++-
+ refs/files-backend.c      | 4 ++++
+ refs/reftable-backend.c   | 3 ++-
+ t/helper/test-ref-store.c | 1 +
+ 5 files changed, 20 insertions(+), 2 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index e6db85a165..7c3f4df457 100644
+index 7c3f4df457..66e9585767 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1894,13 +1894,14 @@ static struct ref_store *lookup_ref_store_map(struc=
-t strmap *map,
-  * gitdir.
-  */
- static struct ref_store *ref_store_init(struct repository *repo,
-+					enum ref_storage_format format,
- 					const char *gitdir,
- 					unsigned int flags)
+@@ -1194,6 +1194,12 @@ int ref_transaction_update(struct ref_transaction *t=
+ransaction,
  {
- 	const struct ref_storage_be *be;
- 	struct ref_store *refs;
+ 	assert(err);
 =20
--	be =3D find_ref_storage_backend(repo->ref_storage_format);
-+	be =3D find_ref_storage_backend(format);
- 	if (!be)
- 		BUG("reference backend is unknown");
++	if ((flags & REF_FORCE_CREATE_REFLOG) &&
++	    (flags & REF_SKIP_CREATE_REFLOG)) {
++		strbuf_addstr(err, _("refusing to force and skip creation of reflog"));
++		return -1;
++	}
++
+ 	if (!(flags & REF_SKIP_REFNAME_VERIFICATION) &&
+ 	    ((new_oid && !is_null_oid(new_oid)) ?
+ 		     check_refname_format(refname, REFNAME_ALLOW_ONELEVEL) :
+diff --git a/refs.h b/refs.h
+index a7afa9bede..50a2b3ab09 100644
+--- a/refs.h
++++ b/refs.h
+@@ -659,13 +659,19 @@ struct ref_transaction *ref_store_transaction_begin(s=
+truct ref_store *refs,
+  */
+ #define REF_SKIP_REFNAME_VERIFICATION (1 << 11)
 =20
-@@ -1922,7 +1923,8 @@ struct ref_store *get_main_ref_store(struct repositor=
-y *r)
- 	if (!r->gitdir)
- 		BUG("attempting to get main_ref_store outside of repository");
++/*
++ * Skip creation of a reflog entry, even if it would have otherwise been
++ * created.
++ */
++#define REF_SKIP_CREATE_REFLOG (1 << 12)
++
+ /*
+  * Bitmask of all of the flags that are allowed to be passed in to
+  * ref_transaction_update() and friends:
+  */
+ #define REF_TRANSACTION_UPDATE_ALLOWED_FLAGS                              =
+    \
+ 	(REF_NO_DEREF | REF_FORCE_CREATE_REFLOG | REF_SKIP_OID_VERIFICATION | \
+-	 REF_SKIP_REFNAME_VERIFICATION)
++	 REF_SKIP_REFNAME_VERIFICATION | REF_SKIP_CREATE_REFLOG)
 =20
--	r->refs_private =3D ref_store_init(r, r->gitdir, REF_STORE_ALL_CAPS);
-+	r->refs_private =3D ref_store_init(r, r->ref_storage_format,
-+					 r->gitdir, REF_STORE_ALL_CAPS);
- 	r->refs_private =3D maybe_debug_wrap_ref_store(r->gitdir, r->refs_private=
-);
- 	return r->refs_private;
- }
-@@ -1982,7 +1984,8 @@ struct ref_store *repo_get_submodule_ref_store(struct=
- repository *repo,
- 		free(subrepo);
- 		goto done;
- 	}
--	refs =3D ref_store_init(subrepo, submodule_sb.buf,
-+	refs =3D ref_store_init(subrepo, the_repository->ref_storage_format,
-+			      submodule_sb.buf,
- 			      REF_STORE_READ | REF_STORE_ODB);
- 	register_ref_store_map(&repo->submodule_ref_stores, "submodule",
- 			       refs, submodule);
-@@ -2011,12 +2014,12 @@ struct ref_store *get_worktree_ref_store(const stru=
-ct worktree *wt)
- 		struct strbuf common_path =3D STRBUF_INIT;
- 		strbuf_git_common_path(&common_path, wt->repo,
- 				      "worktrees/%s", wt->id);
--		refs =3D ref_store_init(wt->repo, common_path.buf,
--				      REF_STORE_ALL_CAPS);
-+		refs =3D ref_store_init(wt->repo, wt->repo->ref_storage_format,
-+				      common_path.buf, REF_STORE_ALL_CAPS);
- 		strbuf_release(&common_path);
- 	} else {
--		refs =3D ref_store_init(wt->repo, wt->repo->commondir,
--				      REF_STORE_ALL_CAPS);
-+		refs =3D ref_store_init(wt->repo, the_repository->ref_storage_format,
-+				      wt->repo->commondir, REF_STORE_ALL_CAPS);
- 	}
+ /*
+  * Add a reference update to transaction. `new_oid` is the value that
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 73380d7e99..bd0d63bcba 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1750,6 +1750,9 @@ static int files_log_ref_write(struct files_ref_store=
+ *refs,
+ {
+ 	int logfd, result;
 =20
- 	if (refs)
++	if (flags & REF_SKIP_CREATE_REFLOG)
++		return 0;
++
+ 	if (log_all_ref_updates =3D=3D LOG_REFS_UNSET)
+ 		log_all_ref_updates =3D is_bare_repository() ? LOG_REFS_NONE : LOG_REFS_=
+NORMAL;
+=20
+@@ -2251,6 +2254,7 @@ static int split_head_update(struct ref_update *updat=
+e,
+ 	struct ref_update *new_update;
+=20
+ 	if ((update->flags & REF_LOG_ONLY) ||
++	    (update->flags & REF_SKIP_CREATE_REFLOG) ||
+ 	    (update->flags & REF_IS_PRUNING) ||
+ 	    (update->flags & REF_UPDATE_VIA_HEAD))
+ 		return 0;
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index f6edfdf5b3..bffed9257f 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1103,7 +1103,8 @@ static int write_transaction_table(struct reftable_wr=
+iter *writer, void *cb_data
+=20
+ 			if (ret)
+ 				goto done;
+-		} else if (u->flags & REF_HAVE_NEW &&
++		} else if (!(u->flags & REF_SKIP_CREATE_REFLOG) &&
++			   (u->flags & REF_HAVE_NEW) &&
+ 			   (u->flags & REF_FORCE_CREATE_REFLOG ||
+ 			    should_write_log(&arg->refs->base, u->refname))) {
+ 			struct reftable_log_record *log;
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index c9efd74c2b..ad24300170 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -126,6 +126,7 @@ static struct flag_definition transaction_flags[] =3D {
+ 	FLAG_DEF(REF_FORCE_CREATE_REFLOG),
+ 	FLAG_DEF(REF_SKIP_OID_VERIFICATION),
+ 	FLAG_DEF(REF_SKIP_REFNAME_VERIFICATION),
++	FLAG_DEF(REF_SKIP_CREATE_REFLOG),
+ 	{ NULL, 0 }
+ };
+=20
 --=20
 2.45.1.216.g4365c6fcf9.dirty
 
 
---5V0ij9YTA+JAiDWD
+--GfpuGO8clzrJ7ayd
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZO/XYACgkQVbJhu7ck
-PpS4zg//f4Eis+dko+/K8rQxx06MNm6p/IEOGdIJj8YwAr0plDWeFAr3m5zD4Fqi
-PdS13eKoI42knApK7rLKlee5yrSSh6qkagSUw8BSazhM2wjW+F+vk9GWW1CLZLHC
-8TSyKyBLb3pBkv9W2iBGDfSGrDaVnuGcaXOG0T36tfr8aBW5U8tPm426eLAGXGOw
-gVNr+U38fn06rFzAqykXrbabfLTp9OPJl8XSUIBdgAdSRw0r4iItbfhWG8xJTqdv
-lEDvTFhag30jPJte475LtrE0TW543M1Mx9LupevGcB7AjRJz3k2e9qH73KmFQj7p
-DCn6v4qK2+VsN9LfeBNtLhD21U7C1ebEm97zsXO4uFmSKzRCgAhEfJVGsSpExmvS
-bg91z+tqNiz9EXhwqs+27dMhRlC3CoNVYwhH4WszFdMdylCGZP+toQKvyjMXE8A2
-gvfPif51hP0+sNA14LHOLvu3gGiXzhow7Qhu2Uw3ntAyiizuNQ42cwqShFSTl4+q
-bmtWd0yUUnR5EQwiA+5EKD/7l7CQkBHvxVjKYo+SFOlBaSL1QQwO11+C8JIISpNY
-BVXH09leyi0WiHZxhaLM1Ez+ByLUeQ8KhrRYI16br1uwYGKmooePe+3TA9r/1jBv
-molKFQk9u3Z60NRZXhGD8jzqPhI3LMelk+vp7YD6SjbFmhaJ88Y=
-=ad5O
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZO/XoACgkQVbJhu7ck
+PpS/YA/9Em1Xxyi7p5GrcdJhqfdNWZFeRatPscshtbiTAT/MCGAZszILrATPJxNH
+EYMmDnzeCNtYMpyHe2VWOddhNFVeQjeLnjB3g72IRNLxf6iIFlkZiSEXGt1dGR1t
+9zXWDy3kCRoK9IEMkkiux7UjZTKs1+q/ThaJqei1hlDjWK94LoPkIpARiM8DppEE
+EDbfp6RkqZLCH9Curo4AnitP1YxUXbnstutBmIOaW17xKGXZbWr9H+EkqRkySQNv
+C9HMuW/6/XTLmbxynL5W5xOugxYmxwhlPdnu94Cy/xCjWG175QZzU5rIY1bFYjhG
+Z9NSCWTzFDiKgpOgroJ4Kre4ILZfTB4LtLQUCWmnUkthHqgkNJr2wCdfj2n+bNex
++MC59Fqji2PLCKFlhD+Eau1UcXygdL39/4AwxIyD6HTOLM74ObGBYno51pDw0M9J
+6Ts3Fh8AatdpRXFRIo6MyyGUpKH2HXYC/OG9ijUSDup9vH5Nfm4MrGp1xp50t8g1
+CKRjJuSw21rA/38h2jxPbNMWtl7/VXfuy9tBOLNd570sl6FpfydM6I0yJPij/jqp
+R9FRVO+rPd//FPqGUm6eIzHOuMWzGqzA6hYD5RhVeJagNzSGYfy5RGr1/XwXeLfz
+aZti+24+J+JrbWKg7lmAj4NKLYQM1ZG8leEuBa5ljyH+oHjZaFs=
+=9rLc
 -----END PGP SIGNATURE-----
 
---5V0ij9YTA+JAiDWD--
+--GfpuGO8clzrJ7ayd--
