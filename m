@@ -1,89 +1,76 @@
-Received: from tortuga.telka.sk (tortuga.telka.sk [185.14.234.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E113C128365
-	for <git@vger.kernel.org>; Thu, 23 May 2024 23:21:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.14.234.118
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E0C2628D
+	for <git@vger.kernel.org>; Thu, 23 May 2024 23:22:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716506508; cv=none; b=GkM4LOORDjjJIwcNpNqD6h3Uo0bLiDMKo0XowhA5qPUZvjJLwWifefz+Usv0FZbsbbuypcI6Z355IzViA3+Tkap2lMEa074PU794UPH6xSNNNxdfn2PmQwf0+U33PeuZN9mlmsNCLuu5aHU2gCWie+EF//k36QQYejJ+JVBQu0s=
+	t=1716506548; cv=none; b=kO2EwlCC/0WsH/daHsSk2uRkuw6ByXBKj3MSq45BOFOtOZmE+dHhMsqJ7Gg0YQsfpusPrLjewR0QGBNOTh91ghJIc4P5G58E4AKSG+UhuvKyL8phaKPZqTCeF0MYJGVgYgOtVODpJKhs2vGzHSDldqPgOaC++o4b003oq5vw6T0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716506508; c=relaxed/simple;
-	bh=g6rS5B9AZwXHkvGn3XPSJjkMGN/S0c5FHOQ9DYcZoog=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k27cqsAKAVTDIRZ8TPWwjM5WBPuQtFvCm3+5Z2ws8xVRezIv+aP7p2xFwZaMCE3ApTk1EzR5Fkxrip3YWs4w8zwD07Hz2WXwledCLJY/f+Hdgd2yFYV9YLL16fuG7fHWtG2x1V/M0L7EkWFBKlOVULiEwOBAk98gytdw7P0opYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=telka.sk; spf=pass smtp.mailfrom=telka.sk; arc=none smtp.client-ip=185.14.234.118
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=telka.sk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=telka.sk
-Received: (qmail 18894 invoked from network); 23 May 2024 23:21:42 -0000
-Received: from telcontar.in.telka.sk (HELO telcontar) (marcel@10.0.0.10)
-  by tortuga.telka.sk with ESMTPSA (DHE-RSA-AES256-GCM-SHA384 encrypted); 23 May 2024 23:21:42 -0000
-Date: Fri, 24 May 2024 01:21:41 +0200
-From: Marcel Telka <marcel@telka.sk>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Subject: Re: [PATCH] t/t9902-completion.sh: backslashes in echo
-Message-ID: <Zk_PhSQU2vefKkjq@telcontar>
-References: <Zkdk7R9GIfsyQjkc@telcontar>
- <xmqqsey8tnny.fsf@gitster.g>
- <Zk-nswiCF-SnyxLE@telcontar>
- <CAPig+cRddr=JTVvkh5xkptag_1C5-z1t9Pzr_OdcGFSVwRg3vg@mail.gmail.com>
- <Zk-5YCKSO32vPKDP@telcontar>
- <Zk_FiYd8uk-P5jIi@telcontar>
- <xmqqcypcqgf9.fsf@gitster.g>
+	s=arc-20240116; t=1716506548; c=relaxed/simple;
+	bh=8MtJNOucQJw3mE3BqpHqjHVQRg6l1X++LYP3d+2h2Pg=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=LAuznFNqvtKpShCLRA3WKoXRrKORtz9aRG4I2kLLoOVPZ1ispSD6rw5kkY4GCZpj/C+pxPDElvzgbasg1lVno+7Ds89Gy6KTTmw7mc+vDpgKzWyZwsYpMuLVMw5hX2rEuuRg4ioPz/Qp2pVnksaMdw88VVP/7h5woMe66Sa5tpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=CIlg6ulJ; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="CIlg6ulJ"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqcypcqgf9.fsf@gitster.g>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1716506543;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=kRr7/w2WTqbf57iBXfrWpZMNRLIJZ/dJPOGMiko2apA=;
+	b=CIlg6ulJ/ZECLpvYvQwW5AMzUxSxZ+1hdVIrGIM8BwHP0PJAAQlMalq8EtouCzFfTX0glE
+	YdcLG13HtTLx4SaybMA+v8I0TQ9uTH3CcwPzjGIl9zUWjGhymb6CWcp8R+5u43yi116uJj
+	L59dwGnvnVqU5rlFZf3WC/mIN9vroo+j+9pGPCwDeAHg2/AwFDUK7hzwPZDUU57fqPSEZf
+	ghgzkyJowU/f3ZXZIWYCYlx3WoVSD2ah6A5keZeqM6+JBAVdrqBLNxwNKFolt5uEoz1Nj4
+	FtQOM5Ni5up48lnf2eMp0HrWNQz94tklKn57YzZjrPgG5kSKVyu9IsDu6UGOfA==
+Date: Fri, 24 May 2024 01:22:23 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/2] give range-diff at the end of single patch output
+In-Reply-To: <20240523225007.2871766-1-gitster@pobox.com>
+References: <20240523225007.2871766-1-gitster@pobox.com>
+Message-ID: <83436db5996b129032c2869f331980d0@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Thu, May 23, 2024 at 04:03:54PM -0700, Junio C Hamano wrote:
-> Marcel Telka <marcel@telka.sk> writes:
+On 2024-05-24 00:50, Junio C Hamano wrote:
+> When running "format-patch" on a multiple patch series, the output
+> coming from "--interdiff" and "--range-diff" options is inserted
+> after the "shortlog" list of commits and the overall diffstat.
 > 
-> > Okay, I found the cause.  Bash on OpenIndiana is compiled with
-> > --enable-xpg-echo-default so escape sequencies are expanded by default.
-> >
-> >> OTOH, it seems that the fix is maybe not needed because it is solving a
-> >> non-problem.
-> >
-> > There is a problem, but definitely the justification in the commit
-> > message is not accurate because we do not care about POSIX here at all.
-> > Also maybe it would be better/simpler to use `echo -E` instead of
-> > `printf`, but I'm not sure here.
+> The idea is that shortlog/diffstat are shorter and with denser
+> information content, which gives a better overview before the
+> readers dive into more details of range/inter diff.
 > 
-> How "portable" is "echo -E"?  It apparently is not listd in [*], but
-> it should probably not matter as we are doing this in bash.
+> When working on a single patch, however, we stuff the inter/range
+> diff output before the actual patch, next to the diffstat.  This
+> pushes down the patch text way down with inter/range diff output,
+> distracting readers.
+> 
+> Move the inter/range diff output to the very end of the output,
+> after all the patch text is shown.
 
-Agreed.
+Hmm...  I think this should be made configurable, with the current
+behavior being the default.  Without that, we could easily disrupt
+many people's workflows, because the power of "muscle memory" is
+often really strong.
 
-> printf is a kosher way whose behaviour is pretty well standardized
-> especially with respect to "%s".  As I said that I was going to
-> merge it down to 'master' already, it is now part of 'master'.
-> Use of printf there may hopefully educate folks to think twice
-> before using 'echo' on unknown data.
-> 
-> By the way, it makes me feel funny that we are talking about "POSIX
-> portability" when reviewing a change like this:
-> 
->          print_comp ()
->          {
->                 local IFS=$'\n'
->         -	echo "${COMPREPLY[*]}" > out
->         +	printf '%s\n' "${COMPREPLY[*]}" > out
->          }
-> 
-> With "${ARRAY[*]}", POSIX portability is totally out of the water
-> anyway, regardless of the echo/printf issue ;-).
-
-The commit message does not say that this change is to make the code
-POSIX portable ;-).  It silently assumes the portability is related to
-bash only.
-
--- 
-+-------------------------------------------+
-| Marcel Telka   e-mail:   marcel@telka.sk  |
-|                homepage: http://telka.sk/ |
-+-------------------------------------------+
+If it were just about moving a few lines up or down, making it
+configurable wouldn't make much sense, but with moving this large
+chunks of text...  It's a different story.
