@@ -1,145 +1,170 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B122912BF29
-	for <git@vger.kernel.org>; Thu, 23 May 2024 21:27:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829B217577
+	for <git@vger.kernel.org>; Thu, 23 May 2024 21:46:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716499649; cv=none; b=J8JzKynBH6/9tTCopM4Qyb+cKv/qO6N4/6zQniC4nEj3avvFs1+v4p69xI6QEtVVDFpWX5Dx72T2GDV9eg8kuHHaPuLnaShaOw9H6fEkj7JlXmgwsG/kL6ur6e3NYY7veSz3WjBf7NMDbZD30v1bYJ58MV4EJoAYJM2aUWNMkxo=
+	t=1716500797; cv=none; b=NNnQuokhkxm6yD63iFHISfvYqlPwgdDG4dsD68gxidNmonXxyO+NBDJqqjoQVNAqd613UkEp67CsIokMFikc2Cs/6AFFG/iihlgJJ/VvGMp2yz1HKnUNA/hH+vJTL1h4sEz0lhI6sF/UeTCV2OsSvtNF9edbhMxiIhpRGVE20p8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716499649; c=relaxed/simple;
-	bh=1JlysWEi5+vieexP99dbIwxjrsXiZxm9+0moyQr3wh0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rcuEaOI2eFNW/F58SdQdSeresrqqW4gX+N9s3FtFBFK3tT0d02p6T/XMqlq+bIU9a1Z41x+IW2h0GXE15+lDy0CbNXt3vyUNsg+Gx1Uz7ZGWbyQEURZPfPQSHYRkQCgeQAoMbbtgHP+VzrlryW9RonZXg03Q3jPqXxERR/3Nsj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=silnn9Zd; arc=none smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1716500797; c=relaxed/simple;
+	bh=QBZfBhZ8TXEma+s4Fr36OBB7yVgISaEHncwQk1x7Flk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pHS6CCU3HPzDSN/D2ZvEateFDv6LVEl+yJN9WOYjP0EG1iuoi6WM98MkE3sxLknD8FZ4UCbfclmv2nO7dJUY/W/kDVjBnfjROZ2Fkm8JPUK7XA8pbhcAcsW5ChvoZgu7FZT/IaUetvRgOxzVW7vOGyzswCOpz4F1guJt6HQxAys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Z0nu+BCx; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="silnn9Zd"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-43fb05b1ef2so1180661cf.1
-        for <git@vger.kernel.org>; Thu, 23 May 2024 14:27:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1716499646; x=1717104446; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0yLArB5HF63q5EyTyW3jWNMwIvlmnQ1EZW92cuvMM2o=;
-        b=silnn9ZdyXiNquQMaL91JKc40wmrONHFuyryikDCBgSZqwHJ3qbhBplZrFzsfP3WHY
-         e6zRE/B+LLaSnjjraW54gk9W/QlD56VJcQ19ulRzNP1+gmDMjFiEjd/HUDhuNyCHMsu8
-         KK/YgrVU78yoAHy790b6Mu8NBNMPkNQsW3PY9uRiCaaQlgBxZsuFMCcwVM7K4p8Dezl2
-         fYT8AKZJhe313/zGAfcQfxMsyqN7lA95OvZ+/ZuEdYEGZ8a3skYLifM7dHqGljI/OBVs
-         FaIii+yBEqUlDlOXRTXZetW6BCEHyMZOvpU3pFoAAIGs8umqN+tPb//5ppAQh6Hcx1i/
-         X7OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716499646; x=1717104446;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0yLArB5HF63q5EyTyW3jWNMwIvlmnQ1EZW92cuvMM2o=;
-        b=UYXXFaTmBZyCs9ZI7ETjjmU9Y/XzhJ6gOuzUbvxw7B+70dLYs39zyq9aAx7OWZMjUe
-         MpVAKgkEK3r/OYzsEBbTtaWpa3bEyuu0GpSMN3vK997oW3T7UMxzOxGhK59xoo4hJwD7
-         P2QPQg9ZGT0dsBZ3otSE79QPBazZZHT8+huuLjDDcyRzt/ixB9F8huDTASWTGFnO4xeV
-         WFRZfTLu69h3VBObIQcwCmX9bSDzzcn3WRFaH/sDhOje9GScJqttEyrLYegzV0vPdRu6
-         dmf1FrqYWUyNhW1q2o6lY/394WzEdeAdHkiCSEMQdGXKuNlWzaLSeTKSO8wh4CVhLNxE
-         FWUQ==
-X-Gm-Message-State: AOJu0Yyh+aHfLlkfa3DnOEUm1uvL25Q4/YEzvsLkMk/LIl4Ki8cR/jXf
-	Bca8SQaIECMHSHs5rwao1ldDhYusppNNs3eENgEVMi3mf8WsQgStHizMgP19ZtD3j9gf/GfRGNi
-	L
-X-Google-Smtp-Source: AGHT+IEcNFZ6BV9ZoOk42Gue5MYmYCqhTLTOntbW67nH1NRPmRrKLy7SY0Zh7YHik24h4sZ/bjYKSg==
-X-Received: by 2002:a05:622a:491:b0:43a:bcd7:9898 with SMTP id d75a77b69052e-43fb0e74c23mr4264831cf.5.1716499646194;
-        Thu, 23 May 2024 14:27:26 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43fb17f3bfasm601911cf.37.2024.05.23.14.27.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 May 2024 14:27:25 -0700 (PDT)
-Date: Thu, 23 May 2024 17:27:24 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 24/24] t/perf: implement performance tests for
- pseudo-merge bitmaps
-Message-ID: <cf0316ad0e9fc1ab77f67df69d3dc0abff5b80ce.1716499565.git.me@ttaylorr.com>
-References: <cover.1710972293.git.me@ttaylorr.com>
- <cover.1716499565.git.me@ttaylorr.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z0nu+BCx"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2074123054;
+	Thu, 23 May 2024 17:46:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=QBZfBhZ8TXEma+s4Fr36OBB7yVgISaEHncwQk1
+	x7Flk=; b=Z0nu+BCxjpakLeCl6WTXVjEe392EAedo8+gDQQFu9a8FtWZiqAb9YW
+	+MSMhkp4xSFpTj2tuE9LAD7CInnaPA5ZuY5TB9sce92Ph5dUL1PZ7ABV1JEpJ0xR
+	hSEFageMoQbD0FIoRYaW12VsHzl8ct079BFY+7hkC/Hzhd2zBSU4U=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 187A323053;
+	Thu, 23 May 2024 17:46:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C29AB23051;
+	Thu, 23 May 2024 17:46:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v2 0/6] update-ref: add symref support for --stdin
+In-Reply-To: <CAPig+cT6_j80vh_HEjg6HWKXpkv-huggudShh_RgzLSKvV_bOA@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 23 May 2024 13:59:43 -0400")
+References: <20240514124411.1037019-1-knayak@gitlab.com>
+	<20240522090326.1268326-1-knayak@gitlab.com>
+	<xmqqbk4wy3ji.fsf@gitster.g>
+	<CAOLa=ZS31CuL8kDODNfM5L8gXN6RUOG5uEP5Q9JzEuaxtLEZ8g@mail.gmail.com>
+	<xmqqr0dsv6e8.fsf@gitster.g>
+	<CAPig+cT6_j80vh_HEjg6HWKXpkv-huggudShh_RgzLSKvV_bOA@mail.gmail.com>
+Date: Thu, 23 May 2024 14:46:24 -0700
+Message-ID: <xmqqbk4wrykv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1716499565.git.me@ttaylorr.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E774F89E-194D-11EF-B77B-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Implement a straightforward performance test demonstrating the benefit
-of pseudo-merge bitmaps by measuring how long it takes to count
-reachable objects in a few different scenarios:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-  - without bitmaps, to demonstrate a reasonable baseline
-  - with bitmaps, but without pseudo-merges
-  - with bitmaps and pseudo-merges
+>> (and at the end of the patch for a single patch topic).
+>
+> This could indeed lead to less visual clutter for the single-patch topic.
 
-Results from running this test on git.git are as follows:
+So here is how such a change looks like.  I actually have this as a
+two-patch series in my tree, but here is in squashed-into-one form.
 
-    Test                                                                this tree
-    -----------------------------------------------------------------------------------
-    5333.2: git rev-list --count --all --objects (no bitmaps)           3.54(3.45+0.08)
-    5333.3: git rev-list --count --all --objects (no pseudo-merges)     0.43(0.40+0.03)
-    5333.4: git rev-list --count --all --objects (with pseudo-merges)   0.12(0.11+0.01)
+The log-tree.c:show_log() function has a logic to create inter/range
+diff at its end.  This function is called early by log_tree_diff(),
+which is responsible for showing a single commit (log message,
+auxiliary info like diffstat, and the patch, right before the
+signature mark "-- " which is given by the format-patch itself).
 
-On a private repository which is much larger, and has many spikey parts
-of history that aren't merged into the 'master' branch, the results are
-as follows:
+We move that inter/range logic out into a helper function and call
+it at the original place (which is [1/2] step of the two patch
+series), which is a no-op refactoring.
 
-    Test                                                                this tree
-    ---------------------------------------------------------------------------------------
-    5333.1: git rev-list --count --all --objects (no bitmaps)           122.29(121.31+0.97)
-    5333.2: git rev-list --count --all --objects (no pseudo-merges)     21.88(21.30+0.58)
-    5333.3: git rev-list --count --all --objects (with pseudo-merges)   5.05(4.77+0.28)
+In the second step, we remove the call out of show_log(), and
+instead call it at the end of the log_tree_commit() after
+log_tree_diff() did its thing.  This removes the inter/range diff
+out of the "auxiliary info" section between "---" and the patch and
+moves it at the end of the patch text, still before the signature
+mark "-- ".  As this makes inter/range diff no longer part of the
+runs of "commentary block"s, calls to next_commentary_block() is
+removed from the show_diff_of_diff() helper.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- t/perf/p5333-pseudo-merge-bitmaps.sh | 32 ++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
- create mode 100755 t/perf/p5333-pseudo-merge-bitmaps.sh
+As expected, this requires adjustment to t/t4014-format-patch.sh but
+the fallout is surprisingly small.  It may be either an indication
+that our test coverage for the feature is sketchy, or the tests were
+written robustly, anticipating that somebody someday may want to
+move things around in the output this way.
 
-diff --git a/t/perf/p5333-pseudo-merge-bitmaps.sh b/t/perf/p5333-pseudo-merge-bitmaps.sh
-new file mode 100755
-index 00000000000..2e8b1d2635e
---- /dev/null
-+++ b/t/perf/p5333-pseudo-merge-bitmaps.sh
-@@ -0,0 +1,32 @@
-+#!/bin/sh
+
+ log-tree.c              |  7 +++----
+ t/t4014-format-patch.sh | 17 +++++++++++------
+ 2 files changed, 14 insertions(+), 10 deletions(-)
+
+diff --git c/log-tree.c w/log-tree.c
+index e7cd2c491f..f28c4d0bb0 100644
+--- c/log-tree.c
++++ w/log-tree.c
+@@ -684,7 +684,6 @@ static void show_diff_of_diff(struct rev_info *opt)
+ 		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
+ 		DIFF_QUEUE_CLEAR(&diff_queued_diff);
+ 
+-		next_commentary_block(opt, NULL);
+ 		fprintf_ln(opt->diffopt.file, "%s", opt->idiff_title);
+ 		show_interdiff(opt->idiff_oid1, opt->idiff_oid2, 2,
+ 			       &opt->diffopt);
+@@ -704,7 +703,6 @@ static void show_diff_of_diff(struct rev_info *opt)
+ 		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
+ 		DIFF_QUEUE_CLEAR(&diff_queued_diff);
+ 
+-		next_commentary_block(opt, NULL);
+ 		fprintf_ln(opt->diffopt.file, "%s", opt->rdiff_title);
+ 		/*
+ 		 * Pass minimum required diff-options to range-diff; others
+@@ -903,8 +901,6 @@ void show_log(struct rev_info *opt)
+ 	strbuf_release(&msgbuf);
+ 	free(ctx.notes_message);
+ 	free(ctx.after_subject);
+-
+-	show_diff_of_diff(opt);
+ }
+ 
+ int log_tree_diff_flush(struct rev_info *opt)
+@@ -1176,6 +1172,9 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
+ 	opt->loginfo = NULL;
+ 	maybe_flush_or_die(opt->diffopt.file, "stdout");
+ 	opt->diffopt.no_free = no_free;
++	if (shown)
++		show_diff_of_diff(opt);
 +
-+test_description='pseudo-merge bitmaps'
-+. ./perf-lib.sh
+ 	diff_free(&opt->diffopt);
+ 	return shown;
+ }
+diff --git c/t/t4014-format-patch.sh w/t/t4014-format-patch.sh
+index ba85b582c5..c0c5eccb7c 100755
+--- c/t/t4014-format-patch.sh
++++ w/t/t4014-format-patch.sh
+@@ -2482,13 +2482,18 @@ test_expect_success 'interdiff: reroll-count with a integer' '
+ '
+ 
+ test_expect_success 'interdiff: solo-patch' '
+-	cat >expect <<-\EOF &&
+-	  +fleep
+-
+-	EOF
+ 	git format-patch --interdiff=boop~2 -1 boop &&
+-	test_grep "^Interdiff:$" 0001-fleep.patch &&
+-	sed "1,/^  @@ /d; /^$/q" 0001-fleep.patch >actual &&
 +
-+test_perf_large_repo
++	# remove up to the last "patch" output line,
++	# and remove everything below the signature mark.
++	sed -e "1,/^+fleep\$/d" -e "/^-- /,\$d" 0001-fleep.patch >actual &&
 +
-+test_expect_success 'setup' '
-+	git \
-+		-c bitmapPseudoMerge.all.pattern="refs/" \
-+		-c bitmapPseudoMerge.all.threshold=now \
-+		-c bitmapPseudoMerge.all.stableThreshold=never \
-+		-c bitmapPseudoMerge.all.maxMerges=64 \
-+		-c pack.writeBitmapLookupTable=true \
-+		repack -adb
-+'
-+
-+test_perf 'git rev-list --count --all --objects (no bitmaps)' '
-+	git rev-list --objects --all
-+'
-+
-+test_perf 'git rev-list --count --all --objects (no pseudo-merges)' '
-+	GIT_TEST_USE_PSEUDO_MERGES=0 \
-+		git rev-list --objects --all --use-bitmap-index
-+'
-+
-+test_perf 'git rev-list --count --all --objects (with pseudo-merges)' '
-+	GIT_TEST_USE_PSEUDO_MERGES=1 \
-+		git rev-list --objects --all --use-bitmap-index
-+'
-+
-+test_done
--- 
-2.45.1.175.gcf0316ad0e9
++	# fabricate Interdiff output.
++	git diff boop~2 boop >inter &&
++	{
++		echo "Interdiff:" &&
++		sed -e "s/^/  /" inter
++	} >expect &&
+ 	test_cmp expect actual
+ '
+ 
