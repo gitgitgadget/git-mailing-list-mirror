@@ -1,199 +1,108 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BAB84D0D
-	for <git@vger.kernel.org>; Thu, 23 May 2024 22:23:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB38126F33
+	for <git@vger.kernel.org>; Thu, 23 May 2024 22:25:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716503031; cv=none; b=o/fGZyCVDiS5FsTAqh1imOciy3XmFumuXuTwEotXSF01JsngX7JknzfzpaGfD7wCfMkLx/5TEgsKp2WrbnutyTiJ1rop0p8CwXXiQImGPzLJ1aShrRWfjcqPSlMGTXKEP6mrwvJAeowI+UkED5e8P926nO5Fs1wSBmLQBdWy+FM=
+	t=1716503148; cv=none; b=g6/VQY5D163lb8h8HGLFCmzW8d1ZLqgeUW3HXpOi00b32LKdELFYPr+6p8AUSUEyzPRCYVxtvIsALrdBM75CWOvo2uy0guL5igAuPx2dCIxG7Vv2gqP419bCvvLvbmi49BOjUfqFMdU7bouPErWi2lEM4z6KnGE9tCNOuueyyFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716503031; c=relaxed/simple;
-	bh=8JbGnilI1cAYDoq/D4iob5xNJ9bZeSlW4kkBNGS0W9U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OsZJ/K68j5Tozr0b+YKRE0RndIwj5WlCjiCrRe1eDOLMS4Mc23jk6Q2m9aRNy+o9k9j7klqxjxf1Th6OrptpVGyrCaU4RozOPb4w/zxryrgmx1iHwwfjvKHOTnFWReZ+a9xk9CTjik5yVBLe88aEbvUeze8zNzn+ffupUPki0co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=MgOEvfjX; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716503148; c=relaxed/simple;
+	bh=72UpFycey+xxAbsOKe4GsguPm1IaN18uGmW9NGBks1Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dlBfG8wk4NipZ/HB15c4FdK8OAPxkMdVLF+8WHiqNj6p1uMHnGC/gH15uXzK1HQCKAKP68/au5bSQWtkElQZF0oSVo8FRseCX+0SwtUMnNVTmblehen4k+do4HbJg96ylTlpZ01N9k2tRBBQ//dTEMggz5DHdlRe3t1BpZCG9PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EWSFhtqb; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MgOEvfjX"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 001BB233E6;
-	Thu, 23 May 2024 18:23:48 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=8JbGnilI1cAYDoq/D4iob5xNJ9bZeSlW4kkBNG
-	S0W9U=; b=MgOEvfjX2FPRQ6tuYdDLYIxPDTqoNahgqdafeUepCwt1BhN2M53yYX
-	zmAd6gyxHXXcgBrIbMi7ASuw6nPLOFHjHpE3jZybD02xAjn8AQ558m+DdqdSQrhL
-	WZx6D4pw1y+RLIebQYytjbV8DDkXAaMc5JpiPllfKan265BUTy/UQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id EC072233E5;
-	Thu, 23 May 2024 18:23:48 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A6F6B233E4;
-	Thu, 23 May 2024 18:23:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tom Hughes <tom@compton.nu>
-Cc: git@vger.kernel.org,  chriscool@tuxfamily.org,  jonathantanmy@google.com
-Subject: Re: [PATCH] promisor-remote: add promisor.quiet configuration option
-In-Reply-To: <20240523131926.1959245-1-tom@compton.nu> (Tom Hughes's message
-	of "Thu, 23 May 2024 14:19:26 +0100")
-References: <20240523131926.1959245-1-tom@compton.nu>
-Date: Thu, 23 May 2024 15:23:44 -0700
-Message-ID: <xmqqsey8qia7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EWSFhtqb"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42108822e3cso909595e9.0
+        for <git@vger.kernel.org>; Thu, 23 May 2024 15:25:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716503145; x=1717107945; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OvwXLCitnLV7hPEbEORJ8FXU//3GpzlJteE+91hlgDw=;
+        b=EWSFhtqbeolLbtShSVlPHyfFDe5vYc/0jWlkbXnk76c448+Ng7ysQWPyQqB4o+VCLl
+         PyZhitDVo0CZaztkHy2BnByUkX/i0bDWM5+3UOkzoydg9bILG0tNq60vMsALPmOIpXID
+         aJ543GTBwcZf0HqIdKM/nruxuPewMnjtTN5s3DIEBVbE+Nbo2PfR6ncjJg7BwrdtXUJf
+         WhnmbnOJmFB8vd0wdNiZVMwXIaVu5TM4r7Xk+pfej88KNKvRTvB11tG2d+L5Vb6u+PnR
+         NPJF7s6kfUWPoBZmYfvWRZSFCj2vv2ueAghklFsg+S85WIKibdMaUd1s93z578TIaifa
+         m8Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716503145; x=1717107945;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OvwXLCitnLV7hPEbEORJ8FXU//3GpzlJteE+91hlgDw=;
+        b=wdbOI6GKO5qfOkDHzgqyd40OfI6OX3Xw+BTTBXA0FaT11Ik9EF3GEUBtCRPyoTd7zE
+         SB5fcKJV3cOOBM1icdrMpPfZni+t9cNqc4QHa9ziNO2ZP6XQKkiBMdoUheg/YNSd29e3
+         yBzPWMDPnxdk+/V4HYrIMl1tKvGpe/ADoP3CG7pwxHbAAg3uzkMCEsOHnKBBLuYc2J3L
+         CC97Z2nnuNDSB7Te3Fn4MzhzYMx2/sf1XsR0dzENXuhND0+zSEMxU+geyIOMZT50pg1/
+         3FiRjqnffKYQ6baah57AzxTC5LUtiwqxpJYHqCJ9XOWM5xHN/1S3bzu7HjsVR7vf/aZs
+         5oVg==
+X-Forwarded-Encrypted: i=1; AJvYcCVAstqoe19LbFhF9UU2WjR8CxRSL28M/UmHUyDmJjjhsA1SkFtBIKgd2GmJBAKlJhMqaoXi7aqCd/+uIHd69fu1TaQc
+X-Gm-Message-State: AOJu0YzErnTDbBAm6SjbAFImZcRwaxqDUL952u4l5oJdTB1ODYpxNorK
+	Wy2OamT6cD7WKqvtodTpD3flm1RdXGbTrnq8hnzbREA5J5JCvUwJ
+X-Google-Smtp-Source: AGHT+IFjIhWF0ILUPH7vwdPyA8aLYgiMhifzAQFjvyLnlDDsWSs1QUan629Nsd92fI4rLB1YGRssBA==
+X-Received: by 2002:adf:ce83:0:b0:351:ce05:7a33 with SMTP id ffacd0b85a97d-35506dc54ffmr535728f8f.24.1716503144368;
+        Thu, 23 May 2024 15:25:44 -0700 (PDT)
+Received: from gmail.com (227.red-88-14-54.dynamicip.rima-tde.net. [88.14.54.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3557a1c93b0sm133747f8f.89.2024.05.23.15.25.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 May 2024 15:25:43 -0700 (PDT)
+Message-ID: <9d25b8af-a865-4535-b8fb-d518768e00b4@gmail.com>
+Date: Fri, 24 May 2024 00:25:42 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 1E8834E0-1953-11EF-BB75-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] add-patch: render hunks through the pager
+To: Jeff King <peff@peff.net>
+Cc: Dragan Simic <dsimic@manjaro.org>, Junio C Hamano <gitster@pobox.com>,
+ Git List <git@vger.kernel.org>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+ <eb0438e8-d7b6-478f-b2be-336e83f5d9ab@gmail.com> <xmqqh6esffh1.fsf@gitster.g>
+ <ec5d73e22a6e4587f3d87314a9c0e422@manjaro.org>
+ <20240521070752.GA616202@coredump.intra.peff.net>
+ <5f6f3ce7-a590-4109-ab8a-1d6a31d50f3c@gmail.com>
+ <20240523090601.GC1306938@coredump.intra.peff.net>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20240523090601.GC1306938@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Tom Hughes <tom@compton.nu> writes:
+On Thu, May 23, 2024 at 05:06:01AM -0400, Jeff King wrote:
+> On Tue, May 21, 2024 at 09:59:55PM +0200, Rubén Justo wrote:
+> 
+> > > This feature can be annoying even with current versions of less,
+> > 
+> > Hopefully, reducing the blast radius to a new 'P' option, will make it
+> > palatable.
+> 
+> Yeah, that would be perfect. I might even use it, then, for the rare
+> cases when I want to look at a really big hunk.
 
-> Add a configuration optione to allow output from the promisor
-> fetching objects to be suppressed/
+In addition to that, I have two use-cases that make sense to me:
 
-"optione" -> "option", "suppressed/" -> "suppressed.".
+  - avoiding a huuge but split-able hunk to go all through my terminal
+    before I can say: split, 's'.  For this, perhaps the '-P' suggested
+    by Dragan is the way to go.
 
-> This allows us to stop commands like git blame being swamped
-> with progress messages and gc notifications from the promisor
-> when used in a partial clone.
+  - a lot of mid-sized hunks that I only need to see, to decide, the
+    result of "head -3".  Here, the pager would be acting as a 'filter'.
 
-"git blame" -> "'git blame'", perhaps.
+Perhaps I am stretching the meaning of 'pager' too far...
 
-It is an interesting observation.  I thought "git blame" was quite
-bad at streaming (i.e., until it learned the origin of each and
-every line, it never produced any output the user asked for), which
-actually would make it a non issue that the output the user wanted
-gets mixed with the progress messages and other garbage.  Unless the
-user understands that "git blame" is not spending time itself, but
-is waiting for necessary blobs to be fetched from the promisor, and
-is expected to wait unusally longer than the fully local case,
-having to stare at a blank/unchanging screen would make it uneasy
-for the end-user and that is why we have progress eye-candy.
+> I do still think it would be useful to be able to configure its pager
+> separately (in my case, I'd use "less -FX" rather than my default
+> setup, which doesn't use either of those options).
 
-I am OK for promisor.quiet being optional, but I am torn when I
-imagine what comes next.  On one hand, I myself probably would find
-it neat to make these lazy fetches happen completely silently as if
-nothing strange is happening from the point of view of end-users
-(except for some operations may be unusually slow compared to fully
-local repository).  On the other hand, I suspect people will be
-tempted to push it to be on by default at which time it may hurt
-unsuspecting (new) users who may have been helped by progress bars.
-
-> diff --git a/Documentation/config/promisor.txt b/Documentation/config/promisor.txt
-> new file mode 100644
-> index 0000000000..98c5cb2ec2
-> --- /dev/null
-> +++ b/Documentation/config/promisor.txt
-> @@ -0,0 +1,3 @@
-> +promisor.quiet::
-> +	If set to "true" assume `--quiet` when fetching additional
-> +	objects for a partial clone.
-
-OK.
-
-> diff --git a/promisor-remote.c b/promisor-remote.c
-
-The implementation is absolutely trivial and straight-forward.
-
-> +test_expect_success TTY 'promisor.quiet=false works' '
-
-Do not say "works"---recall the best practice of writing a good bug
-reports.  Stating your expectation more explicitly, e.g. "shows
-progress messages" or somesuch.
-
-> +	rm -rf server server2 repo &&
-> +	rm -rf server server3 repo &&
-
-Why remove the same thing twice?
-
-> +	test_create_repo server &&
-> +	test_commit -C server foo &&
-> +	git -C server repack -a -d --write-bitmap-index &&
-> +
-> +	git clone "file://$(pwd)/server" repo &&
-> +	git hash-object repo/foo.t >blobhash &&
-
-Do you need a temporary file, or would
-
-	blobhash=$(git hash-object repo/foo.t) &&
-
-work just fine?  Of course you'd later have to say
-
-	... git -C repo cat-file -p $blobhash
-
-instead of "$(cat blobhash)".  Even simpler, I wonder if you can
-remove this hash-object invocation, and then do
-
-	... git -C repo cat-file -p :foo.t
-
-
-> +	rm -rf repo/.git/objects/* &&
-
-This! IS! BAD! for the reason stated later ...
-
-
-> +	git -C server config uploadpack.allowanysha1inwant 1 &&
-> +	git -C server config uploadpack.allowfilter 1 &&
-
-... but these are OK and expected, ...
-
-> +	git -C repo config core.repositoryformatversion 1 &&
-> +	git -C repo config extensions.partialclone "origin" &&
-
-... and this is way too different from what would happen in the real
-life.
-
-I'd prefer not to see manual destruction of $GIT_DIR/objects/* or
-manual futzing of repository format version and extensions.  These
-configuration variables are *NOT* for end-users to futz with, and
-the tests should not be doing so either.
-
-Can't we prepare the "repo" only by creating a partial clone in an
-usual way?
-
-> +	git -C repo config promisor.quiet "false" &&
-
-This of course is good, as this is what the test wants to check.
-
-> +	test_terminal git -C repo cat-file -p $(cat blobhash) 2>err &&
-
-It seems that exactly the same set of comments apply to the next
-one, so I'll refrain from repeating myself.
-
-Thanks.
-
-> +test_expect_success TTY 'promisor.quiet=true works' '
-> +	rm -rf server server2 repo &&
-> +	rm -rf server server3 repo &&
-> +	test_create_repo server &&
-> +	test_commit -C server foo &&
-> +	git -C server repack -a -d --write-bitmap-index &&
-> +
-> +	git clone "file://$(pwd)/server" repo &&
-> +	git hash-object repo/foo.t >blobhash &&
-> +	rm -rf repo/.git/objects/* &&
-> +
-> +	git -C server config uploadpack.allowanysha1inwant 1 &&
-> +	git -C server config uploadpack.allowfilter 1 &&
-> +	git -C repo config core.repositoryformatversion 1 &&
-> +	git -C repo config extensions.partialclone "origin" &&
-> +	git -C repo config promisor.quiet "true" &&
-> +
-> +	test_terminal git -C repo cat-file -p $(cat blobhash) 2>err &&
-> +
-> +	# Ensure that no progress messages are written
-> +	! grep "Receiving objects" err
-> +'
-> +
->  . "$TEST_DIRECTORY"/lib-httpd.sh
->  start_httpd
+A new "interactive.pager" setting?  Perhaps with higher preference than
+"add.pager"?  Just questioning, do not take this as an intention of
+scratching that itch :-)
