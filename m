@@ -1,172 +1,111 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF3517C77
-	for <git@vger.kernel.org>; Thu, 23 May 2024 17:50:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 555AE17C77
+	for <git@vger.kernel.org>; Thu, 23 May 2024 17:51:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716486625; cv=none; b=a1FBSfBIikdGLRdl3l80zX+qXTAyl2w6V1mulRBrewjd3V3qbKLvWz+m+r6lmpQSnEfdp8IgFdDCKwMMHH/iy1FlR2DUNhPrNO6VxwuVPHNGKwLaKH1NbX3gN/sFSlW5X+lA5QT74rpNhiO7WcjYasaFLUGGvqDBX1iJ7navkV4=
+	t=1716486700; cv=none; b=ehxSykQMNs37ZnfTNQW90nqZb03cRf02uPLS3vHj9PxdcvfSELRKz3jKU/JOd90ySslLMZ9KeF0ZrW/zul48Ehnzh0nuVKp3wvvsGHFgk1stmV3zNyx1y86RmnmOjf7Uao8faNOqIpGwTftzKe4yhI2lDPFBbhXVP8niW6XIQD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716486625; c=relaxed/simple;
-	bh=gRC1KmQ+Sjp5Fu1F0XfUDD+OR7NrqwAG0sCMGzRDLwc=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a8zk3HB6qhBhfxOdJeAsPv2IFHdoj+cWGmZ7Te+KX50JVW1prOy/DaTtZGBD1/F6h4bPv72fDDLMP2Dx75kv36hkEGVgyrUfr1Xe/y8DorrqVfQkVGuY+vFzO7JecAK7rBVYMI0xFM9IZGM4K5zSo8g9ou3Lq4o3rC5ntJv1U68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z2qvnciq; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716486700; c=relaxed/simple;
+	bh=4DstZGA4Hw19VyA0wdWHmhukeHoJThiczFxsl4EM+Cg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j5FHwGR+C8nl4nqbAE4qEuBmWmENa9LDS5UHD2/Rh/ubxfyZtIc2o8KZHg7F+BD8lQSLsr1GYmqeXPM0PMapq1C+PkDTdFWbrZ26VZlolhkA6jUrelahuYQlzVvR99dswimoF0ss6rhFRMmYoMwAeFiUT6pjHCkFdOzdpnXiuKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Ww5TIRDe; arc=none smtp.client-ip=209.85.219.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z2qvnciq"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2e73359b8fbso50203101fa.2
-        for <git@vger.kernel.org>; Thu, 23 May 2024 10:50:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Ww5TIRDe"
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6ab9d9c34faso134026d6.3
+        for <git@vger.kernel.org>; Thu, 23 May 2024 10:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716486622; x=1717091422; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XEhA/xkLCbYvzP5O5Ec8Hla4G950QVKTBeIdukSHJBQ=;
-        b=Z2qvnciq/gvzCwXf8ZDut+SKeQeFK6ultAHtKhUjeulAKqgt5SoE/TG9c/bPsoXeME
-         pOlJV2X8xQjotUV97sY5+xecg1XEnHSJ/lYmkQ9hxEzqnxN7vD9ZBwmNBkNtFtTZTSsK
-         F6VJb45ZsKOr0gfuBFluZztO4OvD/E57IrJyzm+DObSsp6FgIV3WkJU3RX8DOHxguEMr
-         /gxbolDCq4M6vm2y9SD5d8a/HdBvCzsanDk4mZzh8q72ilV9BwMulyQaYPe2iT5+hH/T
-         cYN5IPzOYG2mYLknRA5gXPbuZvkHs+2QZhVCiF/r8qU7aDQk0aWCwGSbweqhUk9bsIuC
-         ewhQ==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1716486698; x=1717091498; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=4DstZGA4Hw19VyA0wdWHmhukeHoJThiczFxsl4EM+Cg=;
+        b=Ww5TIRDeYrRoxktQH36F+4Toy7wywbnvkRSE4BQbJcxlNWFZY8ypEKlRtNuFY8Hb08
+         oOzAcdumtdQds+fOuuxuZJhNAIuCfqdn1jIYUwWqtayGOsU/u6Kkbh6J0OXXDXBuUNcK
+         FxWgCIMMDe3B8HBAujYUVEWhK+p9Bg7qhR/pRVWUOcul/7dGiKRDMtpSj4Q/BQGUcjkb
+         k7ayu2a10WFJ0IdEj4aJHouBXQsJLEYjgPDxePbfLVwrru7ct+6f0UkHUV9e4TV8BNES
+         jHLS7HSdUq3DZLT/j/x96sef2R+bmDhfw29XnoL12c7oRrm2+KLQj9xatp7m+4mGrVnV
+         N0hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716486622; x=1717091422;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XEhA/xkLCbYvzP5O5Ec8Hla4G950QVKTBeIdukSHJBQ=;
-        b=lggnHSQuNK90xJOykmNsaaVugK9U33MOSmGx2s7+PVLGpslMVn+1+iAzMGFBD5/iYQ
-         2898cqiqKcnMp+qEykFQ6It11FJfo8/5QxpBlRzZTpp8mCVDN5o8PZFZt/l/KmUQ1nRH
-         gDBsTNhj1uhVJMpQIIn2Of35sgm7DCklNyFJlZaoFqWDRvBJ8g9YN8lgPI15IpisF75N
-         +lNWBO94/rcf5Ns3tcDczfoJMsnzjhcK0sYnh9ZVBxLktruMaWgIfTBu13UdtyQWltZC
-         lUBvZHkUs4ZJ73rOxnZKMLJxclijx8Lca+qyF4ZO4XKO33k5nA+ztJwuRpfvbTabyKPs
-         WfsA==
-X-Gm-Message-State: AOJu0Yx//xS4zD9cBK7xFymRo0t7eERxXN6DziBMR4+RoGs/MKnkrdVq
-	Y6nTVUJhqNWax9e6BTHiz74GBA5llmwBQFDt0iO+BJdxXm2uxcAZx4iq7C+bXBUFtBy+fOiuwUG
-	tCKj9Wi8lu0S/XFEuSqn0GCv06FVTTt1+0xRVBg==
-X-Google-Smtp-Source: AGHT+IHgwd+mx5tXD7Oor6TfrXY8gwZ8CKWcR/EQiyDORmGsa2GEeYvIshkBJ2BRKBE3B6zsIhfh/wnt7aAeG1wujr8=
-X-Received: by 2002:a2e:9bc7:0:b0:2da:a73:4f29 with SMTP id
- 38308e7fff4ca-2e9494fa890mr51221451fa.30.1716486621358; Thu, 23 May 2024
- 10:50:21 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 23 May 2024 13:50:18 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqr0dsv6e8.fsf@gitster.g>
-References: <20240514124411.1037019-1-knayak@gitlab.com> <20240522090326.1268326-1-knayak@gitlab.com>
- <xmqqbk4wy3ji.fsf@gitster.g> <CAOLa=ZS31CuL8kDODNfM5L8gXN6RUOG5uEP5Q9JzEuaxtLEZ8g@mail.gmail.com>
- <xmqqr0dsv6e8.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1716486698; x=1717091498;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4DstZGA4Hw19VyA0wdWHmhukeHoJThiczFxsl4EM+Cg=;
+        b=SBBhk1CTB1bUf1Lh02X7HJm1k3mpMfp2ebQTcyYy1qyH7zHFXiU3cncYX9U0UEFMU+
+         FtK04R4o31Gi2N0LZOIQHDZ6yjUhod0CjzMlpFP8FJilfIjQtWpxZW980Nh1rPUmNGtm
+         xpWHsyyPk6OlNzIlxxAgp8/kQ3J3+EzovFjy6qLxHtxKP5sC1XmNQd0kqF1Eqa2jEht7
+         mamlEsGE6FQ47vxwCBwWzxHxjeTCiRrr1NKvetbIBkzwFr3dythpPcvvYQL0rYdbK7qf
+         qaK98D6kirK0JgqtsMJTHfD4uHQw4RpEfLmOGLEe1qrq2Qh80KExIcxJyJ0feSSlsv1X
+         3J6Q==
+X-Gm-Message-State: AOJu0YyJQuao3LoeCSLl6ROHxd3YJ6UTUqJLhDv60xzTEduJzr92/Vy0
+	g/GTKAN59/2EgSKy34n/4laAw+vHkTlCnBGzQ/nLzrUQfxW/jntRRGLUmn0qpnU=
+X-Google-Smtp-Source: AGHT+IETH6hCQaG3Mv0Q+b5PvUyK8z3x6dAJXScbEfcAvf/3BrkfH8OLRuV/kBSuJ5hwURHp4JK8fg==
+X-Received: by 2002:a05:6214:5a02:b0:6ab:8c71:1fb1 with SMTP id 6a1803df08f44-6ab8c712244mr52120006d6.12.1716486698133;
+        Thu, 23 May 2024 10:51:38 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ab8a52bec8sm13957376d6.143.2024.05.23.10.51.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 May 2024 10:51:37 -0700 (PDT)
+Date: Thu, 23 May 2024 13:51:30 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 16/30] config: introduce git_config_float()
+Message-ID: <Zk+CIoMaF/fT3ejo@nand.local>
+References: <cover.1710972293.git.me@ttaylorr.com>
+ <cover.1716318088.git.me@ttaylorr.com>
+ <3070135eb4b9bd16117e82f1817c112c56a24b55.1716318089.git.me@ttaylorr.com>
+ <20240523100225.GA1308330@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 23 May 2024 13:50:18 -0400
-Message-ID: <CAOLa=ZQq_ce8thcjxMitDt8s0aiqVUWt8A43ziU0Zd5F2Joorg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] update-ref: add symref support for --stdin
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Content-Type: multipart/mixed; boundary="000000000000540624061922af6c"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240523100225.GA1308330@coredump.intra.peff.net>
 
---000000000000540624061922af6c
-Content-Type: text/plain; charset="UTF-8"
-
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Karthik Nayak <karthik.188@gmail.com> writes:
+On Thu, May 23, 2024 at 06:02:25AM -0400, Jeff King wrote:
+> On Tue, May 21, 2024 at 03:02:29PM -0400, Taylor Blau wrote:
 >
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Karthik Nayak <karthik.188@gmail.com> writes:
->>>
->>>> The patches 1, 5 fix small issues in the reference backends. The other
->>>> patches 2, 3, 4 & 6, each add one of the new sub-commands.
->>>>
->>>> The series is based off master, with 'kn/ref-transaction-symref' merged
->>>> in. There seem to be no conflicts with 'next' or 'seen'.
->>>
->>> Wait.  There is something fishy going on.
->>> ...
->>> Is this actually a single patch submission of 9/9 alone?  Patches
->>> 1-8/9 are all old ones that are in 'master' already.
->>>
->>> Puzzled...
->>
->> I think this is just a mess up in the range diff, I haven't changed
->> anything locally. So adding the correct range diff here:
+> > Future commits will want to parse a floating point value from
+> > configuration, but we have no way to parse such a value prior to this
+> > patch.
+> >
+> > The core of the routine is implemented in git_parse_float(). Unlike
+> > git_parse_unsigned() and git_parse_signed(), however, the function
+> > implemented here only works on type "float", and not related types like
+> > "double", or "long double".
+> >
+> > This is because "double" and "long double" use different functions to
+> > convert from ASCII strings to floating point values (strtod() and
+> > strtold(), respectively). Likewise, there is no pointer type that can
+> > assign to any of these values (except for "void *"), so the only way to
+> > define this trio of functions would be with a macro expansion that is
+> > parameterized over the floating point type and conversion function.
 >
-> Quite honestly, I care much less about the range-diff that is almost
-> unintelligible than the actual patches.  Your title line says 0/6,
-> your updated range-diff presumably have 1: to 6:?  As a sanity check
-> mechanism, the list of commits and the overall diffstat is a more
-> useful part in the cover letter message so that I (or any other
-> recipients) can use to compare against the list of messages that
-> appeared on the list.
->
-> We may want to teach "format-patch --range-diff" to place the output
-> of range-diff _below_ the list of commits and the overall diffstat
-> in the cover letter (and at the end of the patch for a single patch
-> topic).
->
+> I agree it doesn't make sense to support both. But if we have to choose
+> between the two, should we just use "double"?
 
-I usually manually add in the range-diff, which is probably where the
-error came from. I didn't even know about "format-patch --range-diff".
+Yeah, I share your feeling that there is no great need to support
+double-precision floats here, but there's also no reason to artificially
+limit ourselves to single-precision ones, either.
 
-> I'll ignore the range-diff in the original cover letter and see if
-> the rest makes sense.
->
-> Thanks.
+> Regarding using non-integers at all, I do wonder how much we need them.
+> We've usually stuck to integers in other spots, even if it means a sort
+> of pseudo-fixed-point (e.g., rename scores). Looking ahead, you're using
+> these for the power-series knobs. I guess it would be pretty confusing
+> to try to force integers there. I dunno. Not really an objection, but I
+> just wonder if it was something you considered.
 
-It does use the same base as the previous revision, I rebased in place
-using 'rebase -i' and amended for fixes from the first review.
+I had originally written the series that way, but Patrick suggested that
+I use floating point numbers instead ;-).
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Wait.  There is something fishy going on.
->>
->>> Range diff vs v1:
->>>  1:  1bc4cc3fc4 =  1:  1bc4cc3fc4 refs: accept symref values in `ref_transac...
->>>...
->>>  8:  4865707bda =  8:  4865707bda refs: remove `create_symref` and associated dead code
->>>  9:  4cb67dce7c !  9:  2bbdeff798 refs: create and use `ref_update_ref_must_exist()`
->> ...
->> I am confused why we are seeing a total reroll of such an old topic.
->>
->> Also you have one more patch at the end.  Neither the before or
->> after version of 9/9.
->>
->> Is this actually a single patch submission of 9/9 alone?  Patches
->> 1-8/9 are all old ones that are in 'master' already.
->
-> And then there is a mystery of this v2 being a 6-patch series.
-> Perhpas a wrong range-diff was pasted into it?  If this were truly a
-> total reroll of the previous 8-patch series with an extra step
-> appended to the end, it would have been a 9-patch series, not 6.
->
-> Even puzzled...
-
-The v1 of this series is also a 6-patch series, this is not a re-roll of
-the earlier series 'kn/ref-transaction-symref' (which is already in
-next). This is based on top of it.
-
-Sorry for the confusion though.
-
---000000000000540624061922af6c
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 9eff86022cc7e999_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aUGdkZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN2FDQy85VDQrNkNGL1huMkZIVks1Z1JTQ0RBeEtTQwpYdUkrZHdBdzBP
-elBKa0o5TzFzWFh0TGxoVm8zNVhJK2pjQnJrZnZhSWhzN1JXdkFlNVR6Y1Z3NW1FWXFleGZLCkpK
-R1dEMy9iRkJyWis2d3hCVUdFd0Q3VktoZWFVWjlQZDhVQzFNYUQrQ2J2bCtScWk2VlhDN3FiTEdJ
-ZHYrbTgKbFlnTitUN2JWQTRyU2F0NVNSMEROS25hNVFtSTV1b3lPTXFWN0l2eTlDOTFHSUNPU0Np
-ajJQVkM3RGxKTFdURwpKblZtdjk3Z0Fhek9yb2sramMxcnNoQnRmNTIraW50UjZnYVI1Vm15QUJa
-a1B0bndLOWpEa04xTlp2elhFVDF5CmxwTDVDWDZRU0x2NjNxZGNQQ1NHRWlDcWxDOEVDYm1LVG1Y
-UWQrL3JqUXlCZXN5UkZKalkveDFJRE5ubzRNNWEKaFJ4OW50WEVFdk9JVTJjdXZLR3V3b294NTBD
-Nkh0aEdTZm02NTBLaThnOWprZi9TWThadDFQNFRhdHVVU1NiYgpGWGtzdE0wdVE4TjUwcG1zRnR5
-Nng0eWpKcDRtM3hhRDRNR2dyVWovKzdXK21KaE9LcDRMUXprQnBCb1JBRUZSCnJpOXVIanhXWFZK
-YW5GcjJ1Q09kTEFYcjRHZno1VWJhZjJqS0xERT0KPTRVWFUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000540624061922af6c--
+Thanks,
+Taylor
