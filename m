@@ -1,53 +1,52 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F2A171A5
-	for <git@vger.kernel.org>; Thu, 23 May 2024 15:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56866D531
+	for <git@vger.kernel.org>; Thu, 23 May 2024 16:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716479912; cv=none; b=Y+padjfIT2njeky2/wSCKcYIFKSDry6sxErS6JgrULt94f2D+Z+2L3myJ6ZQdiUv6uIiRjMXH44VUHM9mvuzNftweJqDmiNUeumaoLjnbTnX0hiqC1Avb5m3a2Ws8nCDIwXBCkxKcQo9sSfEhM8jtyk9bNuxYILEG5qcQ8wt2u8=
+	t=1716480240; cv=none; b=I8C3OyafXh5uYnjAOhZQlzoJ6TFx8n8Mm5VIqkU45p/uY+eJ9t9Wi/1DoAzNJUuU7pCdJj3u/QumgJsbUfqGVspsCYk7SWzU72g090XSYklW3mP4m5O0e/fKLtz0bQBXfNfgAu0oGRS4XdttDONlSvieDvTxSE59ns3WCM1LruI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716479912; c=relaxed/simple;
-	bh=NsGVHNTJsRhelO+CuIkFbOULS/S4CdqllU0IFA4FpjY=;
+	s=arc-20240116; t=1716480240; c=relaxed/simple;
+	bh=jeP7s97BH6dGr6ZkIbJEUvB9b1zjCWmwATnGiv6c00I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Rf86GTge9jPX+NVl/rLQTQs6bvYXNxKwhtl3GwFHL6uoXxaqcOHLOqnZDMoOmFjAlKMk0Bf1tgmIy5XTNNRf1qGfQ+m0GsC+wMXnjdsPHn3cZ8csrRHoO2uaGFSBL4wsyjCtyEDodeVskjTH54tyDaKdY2LhXZ12RenLbHvquqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ab+g+YsF; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=PM2PI8elaUCCtaIJKVjRaF66WNDRVbSn3KrKgjVRfvZLQb9xOhpg8fge0aw7XGzDOUukAf/KVUy8p/M6por6ZjgLktF5j4O0E6qxebjNofyUkUMqTC/tN3Bf62Th9nqO6CrXGtRL2fz3VlCiRf4YuFUxEsKeJlRim4pW/S4OfXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SYDQnS9/; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ab+g+YsF"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SYDQnS9/"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id EDAB920C7E;
-	Thu, 23 May 2024 11:58:29 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C0D1E20CEB;
+	Thu, 23 May 2024 12:03:58 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=NsGVHNTJsRhelO+CuIkFbOULS/S4CdqllU0IFA
-	4FpjY=; b=Ab+g+YsFdngNGGnWWcBqHRWyfcU5xZGQOkLUtIiPpXwRUuiCCRDnBg
-	0obpVO5AYh+xRtj9r/5sazrjK4mpOwW+wct8tL9+nVg0eI+Bq1wdvTlmGrmlHO4m
-	1RKFXuuYMdaIwnfQxN4+SdJdWUlMz80a/IPfGosnK1i7bN1P31qHo=
+	:content-type; s=sasl; bh=jeP7s97BH6dGr6ZkIbJEUvB9b1zjCWmwATnGiv
+	6c00I=; b=SYDQnS9/+HapfxND2NMHYf7VM7N5heum7hyPBXLFMcVr8izrJHiVBD
+	ruZDClvJspeP5Ula3T33bJR1MRkLunJkGpaDhGzd7YbM6TfK54ajjKQHst5dhHNO
+	FRyH2rkTwVxnf1mX9Ol2qOKjkT7NZKzPOKNAT3++/aeAyGnnmqlBs=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id E595020C7D;
-	Thu, 23 May 2024 11:58:29 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B948420CEA;
+	Thu, 23 May 2024 12:03:58 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 91A7A20C7A;
-	Thu, 23 May 2024 11:58:26 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6192A20CE9;
+	Thu, 23 May 2024 12:03:55 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Dragan Simic <dsimic@manjaro.org>
-Subject: Re: [PATCH v4] add-patch: enforce only one-letter response to prompts
-In-Reply-To: <Zk7UsJjhY_FV2z8C@tanuki> (Patrick Steinhardt's message of "Thu,
-	23 May 2024 07:31:28 +0200")
-References: <xmqqr0dvb1sh.fsf_-_@gitster.g> <xmqqh6eqiwgf.fsf@gitster.g>
-	<xmqqikz56a6o.fsf_-_@gitster.g> <xmqqh6ep1pwz.fsf_-_@gitster.g>
-	<Zk7UsJjhY_FV2z8C@tanuki>
-Date: Thu, 23 May 2024 08:58:25 -0700
-Message-ID: <xmqq5xv4wme6.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v2 0/6] update-ref: add symref support for --stdin
+In-Reply-To: <xmqqbk4wy3ji.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	23 May 2024 08:02:41 -0700")
+References: <20240514124411.1037019-1-knayak@gitlab.com>
+	<20240522090326.1268326-1-knayak@gitlab.com>
+	<xmqqbk4wy3ji.fsf@gitster.g>
+Date: Thu, 23 May 2024 09:03:53 -0700
+Message-ID: <xmqq1q5swm52.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,23 +56,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 4A7AEBBE-191D-11EF-9A1F-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 0E76CEA2-191E-11EF-96DE-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->>    As an experiment, this message has the range-diff at the end, not
->>    before the primary part of the patch text.  I think this format
->>    should be easier to read for reviewers.
+> Wait.  There is something fishy going on.
 >
-> Huh, interesting. I do like that format better indeed. You did that
-> manually instead of using `--range-diff`, right?
+>> Range diff vs v1:
+>>  1:  1bc4cc3fc4 =  1:  1bc4cc3fc4 refs: accept symref values in `ref_transac...
+>>...
+>>  8:  4865707bda =  8:  4865707bda refs: remove `create_symref` and associated dead code
+>>  9:  4cb67dce7c !  9:  2bbdeff798 refs: create and use `ref_update_ref_must_exist()`
+> ...
+> I am confused why we are seeing a total reroll of such an old topic.
+>
+> Also you have one more patch at the end.  Neither the before or
+> after version of 9/9.
+>
+> Is this actually a single patch submission of 9/9 alone?  Patches
+> 1-8/9 are all old ones that are in 'master' already.
 
-Yes.
+And then there is a mystery of this v2 being a 6-patch series.
+Perhpas a wrong range-diff was pasted into it?  If this were truly a
+total reroll of the previous 8-patch series with an extra step
+appended to the end, it would have been a 9-patch series, not 6.
 
-To me, "format-patch --range-diff" is a lot more cumbersome to use
-than running "format-patch", open the result in Emacs, and then
-doing "\C-u \M-! git range-diff ..." to insert its output, as I'll
-be opening it in the editor for typofixes anyway.
-
-
-
+Even puzzled...
