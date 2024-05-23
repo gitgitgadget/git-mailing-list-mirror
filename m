@@ -1,79 +1,78 @@
 Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412E413B5B1
-	for <git@vger.kernel.org>; Thu, 23 May 2024 12:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7273313C3E7
+	for <git@vger.kernel.org>; Thu, 23 May 2024 12:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716467118; cv=none; b=q2OKb1Mo+2WNFaclxGebjNaAgRRbOCgln+mS4QyfBypYWWJHmEmHVl9Iqgkm7p7iyrRcE62qRa6vt3Ncyu7+vkfg7wBES7U/p8TW9WRQBTpe4SFLs27aCbjOI6EYREiohy27GZOQ5f+oHtYCgKlgkbDVCVeQQ3wgkctWcUoaaq8=
+	t=1716467121; cv=none; b=jNWBz3TKvVWGv07zoC1WhdlfW6aCFspTJxV+dtHi54EerMSs+PECGmVOIfl7fMQbkCFoXNZuCzvBqysJiGBwT6PjntVH6vSPtNRnbuVkiaMQ69WVaAsPDzrE4cwjrJvTzDM/DyzDob7lZbrKf9hFz9zniVoY+fDGHIknRvKXrH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716467118; c=relaxed/simple;
-	bh=JX6lUt55TW2aL171yh+ygAZoGZ/1opY67AansrFnyPY=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=pe1N3JNIBFbh5W3MNoG/nqSqr8DvcKur0FULLdYNVzibC/E4PbVMkpQoH/f24P6B1g8AYqG1krd7d+Y9JVhSKx9FKCSSGFziMo5x4iho0Dr64gzM1PDS64yt0h1ydgYw+i6kirMIFd3XTZgVjGE0RyK+iYmrWNAonlGJjzF5hPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e12hIydL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eavn04WX; arc=none smtp.client-ip=64.147.123.145
+	s=arc-20240116; t=1716467121; c=relaxed/simple;
+	bh=0D2pjz+7570U0QXNQeC/Y6N6MUtfZaJrAELJsOOpalo=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MPJu8jIJTLEal6xKI/kb37K3Qd+/Zm94MrnZ9s10yeO63ifx5yqGaaG+wmTHjAYSc4XcnfARSccWRMcQp1B3epweWdpkwjoJUYcJnWKsTQL1CITAlp0G+hpRGtva5xzRRHopAAuL2h2fZvWwtPqMdgXukgazBfnmfzzsc/l8ylU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hH94HE6f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SXbnqhoS; arc=none smtp.client-ip=64.147.123.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e12hIydL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eavn04WX"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.west.internal (Postfix) with ESMTP id 40DC81C0012D
-	for <git@vger.kernel.org>; Thu, 23 May 2024 08:25:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hH94HE6f";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SXbnqhoS"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.west.internal (Postfix) with ESMTP id A5F261C00127
+	for <git@vger.kernel.org>; Thu, 23 May 2024 08:25:18 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 23 May 2024 08:25:15 -0400
+  by compute5.internal (MEProxy); Thu, 23 May 2024 08:25:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1716467114; x=1716553514; bh=2/cm5APjPGhQ/Mo3urvgIWlSMZczll0d
-	WkhaLj6ezPM=; b=e12hIydLNWDR3vdVav3O93LFfO6IXynwWc0Ip7cOUtsdxqA/
-	HYSXh6VzSELuW/lq67wHQMX11IxeRSCyuk4YD1o03OqYxo9IUWrN7xBngn43J6xv
-	sjvZSI4zNGGWCg4qpstQoyCkfKMF/Y/oyHrYyOP2D55eVpjwZH4onV/NGwFFw9Jj
-	wSYRxpuaxDtfTHjsl43g01833an4qjOnfjMXlvIYEue3jsINbGfC5brUhQacPI+C
-	h5INmP7HxusYukz9ASSjSkLyRrfttb0j7HIuMdG8xsoUS2S5pxjaHegU0r94deuJ
-	lWWNLTAyhaZ1AcyVuVGIUqn6jeHJDvcxJlDd4Q==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1716467118; x=1716553518; bh=k6JDapRFcI
+	DgYbO9Etg3ck1/zf04+uup1pTcQiNNse0=; b=hH94HE6fDu6+nBQUZofmmFT9Pz
+	zSr1krvKXfRVJMJy9FyNnG944O7Uyc5yrkSSmmWAAA4yMQ+9utWpltkSJOkli2s2
+	XoCYxur0cbub21QIPWNLIYxVQthFepMtVnzDbHv32Hu0Sttuj3pE32Kx20tbLfr9
+	Ts4C5VsDj9s0WdFPUFDZrwW11tAKqF8YCuYCcerkE94huZZdmIVYv+rKCcNbmgTd
+	0q/UpZluUfcVU/rwOqvpFcTgX8iiuCF9YGkau9KYrASJeehXOcvm3MXhx0yxtZom
+	PCQeT+zO291ofhn+4R7sXe3ITcmb0DUQ2G/wgb542QEOFXLXAiOrtDCYGARg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1716467114; x=1716553514; bh=2/cm5APjPGhQ/Mo3urvgIWlSMZczll0dWkh
-	aLj6ezPM=; b=eavn04WXoOXXfrFP8GiQ0Pp6tF40NmW/p4m3kdRGtlX9CrtV0nC
-	POgLMUQuPpOUSpeRBIfj0SNj2BPRwbEwE54DrjPokCQBPlVg2yCPw9Ls8qtld8pd
-	lYYTxvhG6OVkDcGAfOig7fI6M7zh2PSsEWoSZ5tgGVJJFUSM2EBJjS/LrqKl43ZO
-	QEdj0Xms2F4P4ON4+OaOw+UhWdi15tRlawk6k/5eBMiTurxehB6rosiOZ+7HqTO1
-	H9TQmjxA1bkVhLZPZ5zg4duUk8UxKx0jnOF3Jz3fOq8bTohsetDHEEet9/mRIS+K
-	EPaU1tYFpivXMaHzLii/l8RbASBW7MwNw/A==
-X-ME-Sender: <xms:qjVPZqo1zHUgyClR0UrXgpXZCCqYBYgSIYu0fHta1GMkmgQLwcrDxA>
-    <xme:qjVPZoqx18w_MCvplM0S5BsXA4iL1vsFPuyXCikjo_oscPYtdEvLJI1rXauXh3N2G
-    WGYjAw7lbIc3nQH8g>
-X-ME-Received: <xmr:qjVPZvPr8E_aDD6GDD6UzIRYYVHQI6iydaD894lNGflbjp8aIwPtVzhtiCrjdsoLouME_upES5l9e-DrkVJJ6N5QGuhSTjTTbcvc3sbPrRpfW1NGfA>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1716467118; x=1716553518; bh=k6JDapRFcIDgYbO9Etg3ck1/zf04
+	+uup1pTcQiNNse0=; b=SXbnqhoSU+IXI4LS6mkOovf4oU+ysrqBi0qxwh65S0QB
+	r++nNbVMqan9irMCIFG2xzcZBPyoOeKd8p6DfdOO05y22Yc2vTnesnqFAQaV3qwy
+	oovvz06ey7pEWAttqj6CHGKQ0YBlItGwEE6WnEErGI3pkW8l0D6lHKkA/j/gC32g
+	W9YlwBmVXwkUQ7SrVu0rObuXkbAGk5byUKu/MZ/Oi33Ci3xNA6x5Xdw+IGXZydWn
+	RMQtZVsQDygmJfCW05qXo+DPb0gvUeILPBVKO8kI92FZB9IHH6I2+4EBF/XO2iyo
+	v/3mPFi3D4YuNRlnK4JdgZ77wfc0RBYeEJQx8QwPeQ==
+X-ME-Sender: <xms:rjVPZtJvLIxE63y8mUuKW0vc6Nf2K1FKlUJ70JpT2n9gJOL3BkfAMw>
+    <xme:rjVPZpJk8BQaUTJjsoshhXznulRRUj-hFkjUo20vEUBjISX-F8wIGh6GIJXRIptKX
+    rE90gwenqgDBjRrgw>
+X-ME-Received: <xmr:rjVPZltWri6QRTXnK7H5_GXyXzi_ch9nDpz6OOzS4tIhBt1i3cU8SsYK7G3-lknaAbqBSXu0SZoql5ewAspgui140pvujFi42-7KP-wwKgQ9NLc6wg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeiiedgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepjeefteefgedtheekgeejheeuheelieekledvve
-    dvgfetueeluddvledvleetgedtnecuffhomhgrihhnpehhthhtphgurdhshhdphhhtthhp
-    qdgruhhthhdrshhhpdhhthhtphdqphhrohighidrshhhpdhhthhtphdqtghurhhlqdhvvg
-    hrsghoshgvrdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
-    fhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:qjVPZp40eADes_qNH99gPZI7QhQe9yTFVmzBtbEZQPXpJOsjcUE3pw>
-    <xmx:qjVPZp4fYPRmFVebjt65bWV5szJAPsfYaFK4WuONWWmIpNrcA9FkEA>
-    <xmx:qjVPZpgG5BNToMKDDfMnzHGvrA_eujrdo7AnhMJq_lWBciKrsXIOLA>
-    <xmx:qjVPZj7wwKyCr0ciagm2pRw5dOXhAE6lYvlHoSgAFRiQmnD0GtdAqQ>
-    <xmx:qjVPZrT1WZDyu6Nil2CYtlOtk_dIaJ_qaL_8bbAilUuFRFjRdJkMC-7b>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhephefhteetteeufefgieeikeelgeffgfekhf
+    evffelvdeftdekffeltdffjeetvdeunecuffhomhgrihhnpeegtddrihhtnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:rjVPZubyl0zQ7KBab9PdtHXdHoDt9l-s89p6MMT4uxdyCs7NBxGAlQ>
+    <xmx:rjVPZkbUOL0X91wzRSI68xYgr7LU355nXkTxv7ISBMpK6uQOoaHn2w>
+    <xmx:rjVPZiDiV4XQodZ1jc0QPFdoRUiEgnU1KBJvY0SWt1mNVlqwkmu_aA>
+    <xmx:rjVPZiaZsWP3CwOP-1b7BKfKVl0v9GlgTdOd6ybezLcF3DriBmvkTg>
+    <xmx:rjVPZvw0CFC5g1oOFbIJnYhZBrxqulcj1nie6QH_3XMT1pPc3RRaIg-M>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 23 May 2024 08:25:13 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 23 May 2024 08:25:17 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 1dacf882 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 8ecb08ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 23 May 2024 12:25:05 +0000 (UTC)
-Date: Thu, 23 May 2024 14:25:09 +0200
+	Thu, 23 May 2024 12:25:11 +0000 (UTC)
+Date: Thu, 23 May 2024 14:25:15 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 00/20] Various memory leak fixes
-Message-ID: <cover.1716465556.git.ps@pks.im>
+Subject: [PATCH 01/20] t: mark a bunch of tests as leak-free
+Message-ID: <0e9fa9ca7386f527903887242008b5b0443ada69.1716465556.git.ps@pks.im>
+References: <cover.1716465556.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,210 +80,251 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BIzuCUL3Pfc2HCcM"
+	protocol="application/pgp-signature"; boundary="HtnG7sxEQr+9V+wU"
 Content-Disposition: inline
+In-Reply-To: <cover.1716465556.git.ps@pks.im>
 
 
---BIzuCUL3Pfc2HCcM
+--HtnG7sxEQr+9V+wU
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+There are a bunch of tests which do not have any leaks:
 
-my mind had a couple of minutes where it was roaming, and of course it
-immediately searched for and chased down the next rabbit hole. The
-result is this patch series which fixes a bunch of leaks all over the
-place. There isn't really any structure to the leaks that I did fix --
-it's mostly things that I stumbled over. In the end, this series makes
-another 56 test suites pass with leak checking enabled, 13 of which have
-already been passing without any changes.
+  - t0411: Introduced via 5c5a4a1c05 (t0411: add tests for cloning from
+    partial repo, 2024-01-28), passes since its inception.
 
-While most things are unstructured, there are two topics that stand out:
+  - t0610: Introduced via 57db2a094d (refs: introduce reftable backend,
+    2024-02-07), passes since its inception.
 
-  - Patches 5 to 12 address a shortcoming of our config API. Both
-    `git_config_string()` and `git_config_pathname()` have a `const char
-    **` out parameter, but they do in fact transfer memory ownership to
-    the caller. This resulted in a bunch of memory leaks all over the
-    place.
+  - t2405: Passes since 6741e917de (repository: avoid leaking
+    `fsmonitor` data, 2024-04-12).
 
-    These patches thus refactor a bunch of code and then ultimately
-    switch the out parameter to become a `char *`
+  - t4153: Passes since 71c7916053 (apply: plug a leak in apply_data,
+    2024-04-23).
 
-  - Patches 16 to 20 have the goal of making git-mv(1) memory leak free.
-    I had a very hard time understanding how it tracks memory. I think
-    this wasn't only me, or otherwise there wouldn't be calls to
-    `UNLEAK()` in there. In any case, I decided to rewrite the arrays to
-    use a `struct strvec`, which makes tracking and releasing of memory
-    a ton easier.
+  - t7006: Passes since at least Git v2.40. I did not care to go back
+    any further than that.
 
-    It does come at the cost of more allocations because we may now
-    duplicate strings that we didn't before. But I think the tradeoff is
-    worth it because the number of strings we may now duplicate is
-    bounded by the number of command line arguments anyway.
+  - t7423: Introduced via b20c10fd9b (t7423: add tests for symlinked
+    submodule directories, 2024-01-28), passes since e8d0608944
+    (submodule: require the submodule path to contain directories only,
+    2024-03-26). The fix is not ovbiously related, but probably works
+    because we now die early in many code paths.
 
-Thanks!
+  - t9xxx: All of these are exercising CVS-related tooling and pass
+    since at least Git v2.40. It's likely that these pass for a long
+    time already, but nobody ever noticed because noone has CVS on their
+    machine.
 
-Patrick
+Mark all of these tests as passing.
 
-Patrick Steinhardt (20):
-  t: mark a bunch of tests as leak-free
-  transport-helper: fix leaking helper name
-  strbuf: fix leak when `appendwholeline()` fails with EOF
-  checkout: clarify memory ownership in `unique_tracking_name()`
-  http: refactor code to clarify memory ownership
-  config: clarify memory ownership in `git_config_pathname()`
-  diff: refactor code to clarify memory ownership of prefixes
-  convert: refactor code to clarify ownership of
-    check_roundtrip_encoding
-  builtin/log: stop using globals for log config
-  builtin/log: stop using globals for format config
-  config: clarify memory ownership in `git_config_string()`
-  config: plug various memory leaks
-  builtin/credential: clear credential before exit
-  commit-reach: fix memory leak in `ahead_behind()`
-  submodule: fix leaking memory for submodule entries
-  strvec: add functions to replace and remove strings
-  builtin/mv: refactor `add_slash()` to always return allocated strings
-  builtin/mv duplicate string list memory
-  builtin/mv: refactor to use `struct strvec`
-  builtin/mv: fix leaks for submodule gitfile paths
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/t0411-clone-from-partial.sh      | 1 +
+ t/t0610-reftable-basics.sh         | 1 +
+ t/t2405-worktree-submodule.sh      | 1 +
+ t/t4153-am-resume-override-opts.sh | 1 +
+ t/t7006-pager.sh                   | 1 +
+ t/t7423-submodule-symlinks.sh      | 1 +
+ t/t9200-git-cvsexportcommit.sh     | 1 +
+ t/t9401-git-cvsserver-crlf.sh      | 1 +
+ t/t9600-cvsimport.sh               | 1 +
+ t/t9601-cvsimport-vendor-branch.sh | 1 +
+ t/t9602-cvsimport-branches-tags.sh | 1 +
+ t/t9603-cvsimport-patchsets.sh     | 2 ++
+ t/t9604-cvsimport-timestamps.sh    | 2 ++
+ 13 files changed, 15 insertions(+)
 
- Makefile                                      |   1 +
- alias.c                                       |   6 +-
- attr.c                                        |   2 +-
- attr.h                                        |   2 +-
- builtin/blame.c                               |   2 +-
- builtin/checkout.c                            |  14 +-
- builtin/commit.c                              |   4 +-
- builtin/config.c                              |   2 +-
- builtin/credential.c                          |   2 +
- builtin/log.c                                 | 708 ++++++++++--------
- builtin/merge.c                               |   4 +-
- builtin/mv.c                                  | 222 +++---
- builtin/rebase.c                              |   2 +-
- builtin/receive-pack.c                        |   6 +-
- builtin/repack.c                              |   8 +-
- builtin/worktree.c                            |  20 +-
- checkout.c                                    |   4 +-
- checkout.h                                    |   6 +-
- commit-reach.c                                |   4 +
- config.c                                      |  52 +-
- config.h                                      |  10 +-
- convert.c                                     |  30 +-
- convert.h                                     |   2 +-
- delta-islands.c                               |   2 +-
- diff.c                                        |  20 +-
- environment.c                                 |  16 +-
- environment.h                                 |  14 +-
- fetch-pack.c                                  |   4 +-
- fsck.c                                        |   4 +-
- fsmonitor-settings.c                          |   5 +-
- gpg-interface.c                               |   6 +-
- http.c                                        |  50 +-
- imap-send.c                                   |  12 +-
- mailmap.c                                     |   4 +-
- mailmap.h                                     |   4 +-
- merge-ll.c                                    |   6 +-
- pager.c                                       |   2 +-
- pretty.c                                      |  14 +-
- promisor-remote.h                             |   2 +-
- remote.c                                      |  20 +-
- remote.h                                      |   8 +-
- sequencer.c                                   |   2 +-
- setup.c                                       |   6 +-
- strbuf.c                                      |   4 +-
- strvec.c                                      |  20 +
- strvec.h                                      |  13 +
- submodule-config.c                            |   2 +
- t/t0300-credentials.sh                        |   2 +
- t/t0411-clone-from-partial.sh                 |   1 +
- t/t0610-reftable-basics.sh                    |   1 +
- t/t0611-reftable-httpd.sh                     |   1 +
- t/t1013-read-tree-submodule.sh                |   1 +
- t/t1306-xdg-files.sh                          |   1 +
- t/t1350-config-hooks-path.sh                  |   1 +
- t/t1400-update-ref.sh                         |   2 +
- t/t2013-checkout-submodule.sh                 |   1 +
- t/t2024-checkout-dwim.sh                      |   1 +
- t/t2060-switch.sh                             |   1 +
- t/t2405-worktree-submodule.sh                 |   1 +
- t/t3007-ls-files-recurse-submodules.sh        |   1 +
- t/t3203-branch-output.sh                      |   2 +
- t/t3415-rebase-autosquash.sh                  |   1 +
- t/t3426-rebase-submodule.sh                   |   1 +
- t/t3512-cherry-pick-submodule.sh              |   1 +
- t/t3513-revert-submodule.sh                   |   1 +
- t/t3600-rm.sh                                 |   1 +
- t/t3906-stash-submodule.sh                    |   1 +
- t/t4001-diff-rename.sh                        |   4 +-
- t/t4041-diff-submodule-option.sh              |   1 +
- t/t4043-diff-rename-binary.sh                 |   1 +
- t/t4059-diff-submodule-not-initialized.sh     |   1 +
- t/t4060-diff-submodule-option-diff-format.sh  |   1 +
- t/t4120-apply-popt.sh                         |   1 +
- t/t4137-apply-submodule.sh                    |   1 +
- t/t4153-am-resume-override-opts.sh            |   1 +
- t/t4210-log-i18n.sh                           |   2 +
- t/t5563-simple-http-auth.sh                   |   1 +
- t/t5564-http-proxy.sh                         |   1 +
- t/t5581-http-curl-verbose.sh                  |   1 +
- t/t6006-rev-list-format.sh                    |   1 +
- t/t6041-bisect-submodule.sh                   |   1 +
- t/t6400-merge-df.sh                           |   1 +
- t/t6412-merge-large-rename.sh                 |   1 +
- t/t6426-merge-skip-unneeded-updates.sh        |   1 +
- t/t6429-merge-sequence-rename-caching.sh      |   1 +
- t/t6438-submodule-directory-file-conflicts.sh |   1 +
- t/t7001-mv.sh                                 |   2 +
- t/t7005-editor.sh                             |   1 +
- t/t7006-pager.sh                              |   1 +
- t/t7102-reset.sh                              |   1 +
- t/t7112-reset-submodule.sh                    |   1 +
- t/t7417-submodule-path-url.sh                 |   1 +
- t/t7421-submodule-summary-add.sh              |   1 +
- t/t7423-submodule-symlinks.sh                 |   1 +
- t/t9129-git-svn-i18n-commitencoding.sh        |   1 -
- t/t9139-git-svn-non-utf8-commitencoding.sh    |   1 -
- t/t9200-git-cvsexportcommit.sh                |   1 +
- t/t9401-git-cvsserver-crlf.sh                 |   1 +
- t/t9600-cvsimport.sh                          |   1 +
- t/t9601-cvsimport-vendor-branch.sh            |   1 +
- t/t9602-cvsimport-branches-tags.sh            |   1 +
- t/t9603-cvsimport-patchsets.sh                |   2 +
- t/t9604-cvsimport-timestamps.sh               |   2 +
- t/unit-tests/t-strvec.c                       | 259 +++++++
- t/unit-tests/test-lib.c                       |  13 +
- t/unit-tests/test-lib.h                       |  13 +
- transport-helper.c                            |   6 +-
- transport.c                                   |   1 +
- upload-pack.c                                 |   2 +-
- userdiff.h                                    |  12 +-
- 110 files changed, 1141 insertions(+), 584 deletions(-)
- create mode 100644 t/unit-tests/t-strvec.c
-
+diff --git a/t/t0411-clone-from-partial.sh b/t/t0411-clone-from-partial.sh
+index c98d501869..932bf2067d 100755
+--- a/t/t0411-clone-from-partial.sh
++++ b/t/t0411-clone-from-partial.sh
+@@ -2,6 +2,7 @@
+=20
+ test_description=3D'check that local clone does not fetch from promisor re=
+motes'
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ test_expect_success 'create evil repo' '
+diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+index cc5bbfd732..b06c46999d 100755
+--- a/t/t0610-reftable-basics.sh
++++ b/t/t0610-reftable-basics.sh
+@@ -10,6 +10,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ GIT_TEST_DEFAULT_REF_FORMAT=3Dreftable
+ export GIT_TEST_DEFAULT_REF_FORMAT
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ INVALID_OID=3D$(test_oid 001)
+diff --git a/t/t2405-worktree-submodule.sh b/t/t2405-worktree-submodule.sh
+index 11018f37c7..1d7f605633 100755
+--- a/t/t2405-worktree-submodule.sh
++++ b/t/t2405-worktree-submodule.sh
+@@ -5,6 +5,7 @@ test_description=3D'Combination of submodules and multiple =
+worktrees'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ base_path=3D$(pwd -P)
+diff --git a/t/t4153-am-resume-override-opts.sh b/t/t4153-am-resume-overrid=
+e-opts.sh
+index 4add7c7757..6bc377b917 100755
+--- a/t/t4153-am-resume-override-opts.sh
++++ b/t/t4153-am-resume-override-opts.sh
+@@ -2,6 +2,7 @@
+=20
+ test_description=3D'git-am command-line options override saved options'
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
+=20
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index e56ca5b0fa..60e4c90de1 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -2,6 +2,7 @@
+=20
+ test_description=3D'Test automatic use of a pager.'
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-pager.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
+diff --git a/t/t7423-submodule-symlinks.sh b/t/t7423-submodule-symlinks.sh
+index 3d3c7af3ce..f45d806201 100755
+--- a/t/t7423-submodule-symlinks.sh
++++ b/t/t7423-submodule-symlinks.sh
+@@ -2,6 +2,7 @@
+=20
+ test_description=3D'check that submodule operations do not follow symlinks'
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ test_expect_success 'prepare' '
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
+index a44eabf0d8..3d4842164c 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -4,6 +4,7 @@
+ #
+ test_description=3D'Test export of commits to CVS'
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ if ! test_have_prereq PERL; then
+diff --git a/t/t9401-git-cvsserver-crlf.sh b/t/t9401-git-cvsserver-crlf.sh
+index a34805acdc..a67e6abd49 100755
+--- a/t/t9401-git-cvsserver-crlf.sh
++++ b/t/t9401-git-cvsserver-crlf.sh
+@@ -12,6 +12,7 @@ repository using cvs CLI client via git-cvsserver server'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ marked_as () {
+diff --git a/t/t9600-cvsimport.sh b/t/t9600-cvsimport.sh
+index 5680849218..41fcf3606b 100755
+--- a/t/t9600-cvsimport.sh
++++ b/t/t9600-cvsimport.sh
+@@ -4,6 +4,7 @@ test_description=3D'git cvsimport basic tests'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./lib-cvs.sh
+=20
+ if ! test_have_prereq NOT_ROOT; then
+diff --git a/t/t9601-cvsimport-vendor-branch.sh b/t/t9601-cvsimport-vendor-=
+branch.sh
+index 116cddba3a..e007669495 100755
+--- a/t/t9601-cvsimport-vendor-branch.sh
++++ b/t/t9601-cvsimport-vendor-branch.sh
+@@ -35,6 +35,7 @@ test_description=3D'git cvsimport handling of vendor bran=
+ches'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./lib-cvs.sh
+=20
+ setup_cvs_test_repository t9601
+diff --git a/t/t9602-cvsimport-branches-tags.sh b/t/t9602-cvsimport-branche=
+s-tags.sh
+index e5266c9a87..3768e3bd8c 100755
+--- a/t/t9602-cvsimport-branches-tags.sh
++++ b/t/t9602-cvsimport-branches-tags.sh
+@@ -7,6 +7,7 @@ test_description=3D'git cvsimport handling of branches and =
+tags'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./lib-cvs.sh
+=20
+ setup_cvs_test_repository t9602
+diff --git a/t/t9603-cvsimport-patchsets.sh b/t/t9603-cvsimport-patchsets.sh
+index 19f38f78f2..2a387fdbaa 100755
+--- a/t/t9603-cvsimport-patchsets.sh
++++ b/t/t9603-cvsimport-patchsets.sh
+@@ -12,6 +12,8 @@
+ # bug.
+=20
+ test_description=3D'git cvsimport testing for correct patchset estimation'
++
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./lib-cvs.sh
+=20
+ setup_cvs_test_repository t9603
+diff --git a/t/t9604-cvsimport-timestamps.sh b/t/t9604-cvsimport-timestamps=
+=2Esh
+index 2d03259729..9cf0685d56 100755
+--- a/t/t9604-cvsimport-timestamps.sh
++++ b/t/t9604-cvsimport-timestamps.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+=20
+ test_description=3D'git cvsimport timestamps'
++
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./lib-cvs.sh
+=20
+ test_lazy_prereq POSIX_TIMEZONE '
 --=20
 2.45.1.216.g4365c6fcf9.dirty
 
 
---BIzuCUL3Pfc2HCcM
+--HtnG7sxEQr+9V+wU
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZPNaAACgkQVbJhu7ck
-PpR83hAApuEzXrs+F2PlE1fAENDq30PIRjLkYy1CxOuRKhlZIsTCyFh35rESD4Zk
-RXRLshxw/FvDWv+uKvMdKDeulZshGLLTQPkO12pAiCSnHrOUjorqzP0p4erSO0DU
-tdPdWJZCv+UPWVP8A+Y7RX5qZ024w9NFbCLSFf+J2yy684N1TdciIYgPia9ZyN2D
-RDBGSC5RcIiBoCg8lA0lnGWvNaZ++KRKNjLhf8NtEYbipPznpQxaD21qdzS9LAcL
-IrsHgPucoSJTkISaW0xeY45D4Pbyl6uzGsxn6T5uEGUMLZNt0/nqCkzwANQvvfPS
-URLOk4wKPRv71kMxqx0IzPYWARMIGB5BVbe2/2GFe+ZQ2ckDP85ELjt/UZB4gvGo
-JwMIzWRoDVG3QIf3NIcBPSVyNSff2i/YQeh+lWwas6K8lcs30GSB3F/GVBR2ep9N
-ZnPgGyP/89Z5vPtelMGzjsOfpYXWeP3j4BstHxy06l8CRWIDTyIrgbvFN6knqhVb
-GjlglIvWmqYk7rwVJiWyl3lAHUwVBcVlLpsI1M8SLDvTJZWjv89NPDVIyKLM0UVA
-KVuCSZ2w14LaIdzqO8P+mArC0x+1U3WnnPgYEc0r1n/0KZ9lMqfBWHQEx1DYrJ/q
-rRHTRj6fLhvtonRaFrOt75qNkTKSlenMUFQeHlBp6T6gtfcXtVY=
-=+Dgn
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZPNaoACgkQVbJhu7ck
+PpQXvQ/+MSvqfnBBRaCV/lFWKJ1K/j92PuZ/awdaORtzIrM+V5nb3cXcPyUP6jEJ
+o2XsOZuIaCzSBW5JL1JzWGx+TA84tND8lpNZngTfkH4F8lYKlVEVyUEqWn+4ThHN
+HNCShFXAvOvuLq0khQh7JyHcxtd6J1s6qqfHGqJHnnDrac/MWGx6rCPuq1wD8zP6
+MAYnyKmyB0isuMZiZZMNhSKUPwtoN3qzFWeEwQ4TFA2azKdpc3v/RZbcbQRlZtua
+vajaxWljzsc+TcFaJIk79CkpuiNfDkekgEyedLkq8qy4Y6U+zy8/xtisDu6SOGNK
+6MHRm3PhBzZv0AsBt/iFPIfoEbaTsy17FKKL7dfm7fujebxITx6M9iatM6E8cHzc
+dnmpF/y+BhMieLAQletRDjxHwHkds8JXxPQsnE8fkcF5ZvABTcfLKOSfATKg9kZI
+86smI8dhtDjlNVW6BVNgK/79emeP0NvjccKRJ4TkWv9JvJLLuAXUKVSTRPRz412a
+dKfD5kyWb+uptlxEGqvRrrDiA0uu3pfFolkbxv77oDlK18dnhVzfT4MAU79PgTsg
+jrrEzNfw6cFpMARaHpF39IyIPhHq3gZ0O4WPIxPwyVf3yO+Fx2v7zXjo/AjmxC6g
+jm9ZaAdY9B9B4iJnXCh4EAqfIf7e9ZQTu+loqbjH8uJFvKojWfY=
+=2A22
 -----END PGP SIGNATURE-----
 
---BIzuCUL3Pfc2HCcM--
+--HtnG7sxEQr+9V+wU--
