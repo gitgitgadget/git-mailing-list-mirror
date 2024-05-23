@@ -1,53 +1,53 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
+Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D1713D61E
-	for <git@vger.kernel.org>; Thu, 23 May 2024 12:25:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DA613D61E
+	for <git@vger.kernel.org>; Thu, 23 May 2024 12:25:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716467136; cv=none; b=QRaOohNJZP7c4WhKvfHfytG8FoAHQ+RaK4BmrCs3TwR2h9Nfk6ramxNmtT0ozbziHhVxb9pQJy1SWY1f9m0bIyUM4Wp3lN2z1OcDajEGoE64hAG6Xv9QaN6OucJnlweQXXQw6a2ERljDkRtml8SGe1blDcBqEoe1THdzt2u8GVs=
+	t=1716467141; cv=none; b=iqMTQBuQo5cD1VgLCFGj+RZfvHRfhNOJiA3W/axz1LccLc/DSjSwhwfE/wu+/ixIitLt7+Hq2iNulBsl6zjf/w52vILlbH/67OMq8yxP2PzZQeN8bLsDREw+GOVBRHt1sU8fBksfGsNvM8ZzznjGg86FpllabHMXOh2tU3Q8LV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716467136; c=relaxed/simple;
-	bh=5D9B9qNf9p+S0hUEjR096JotEJkk3DhwwgiAA5PlqoE=;
+	s=arc-20240116; t=1716467141; c=relaxed/simple;
+	bh=zaKitAUMwJ9FIKrbL06C6dhAKfs8J0HdsZlBYOYXqBM=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iSTjCuCPbyG9CNdaxIugF9GQmPdFMYwDnTgkYxxkdcM8QNyTqX0rOacUvD1lyRx/uGHeMArzNiS0G0B1WTXS6JgDWpMCBVOHxu/3F0gS0/ZENimT9ZRxJYwZexdX52mThF+N+TPrGFKr1PikoVP01crxkuErAlrtdXIMPhQfb+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=onRjBPjc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Iy6S1gNT; arc=none smtp.client-ip=64.147.123.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=juX2yU1uKGkVJQMXvuC05bBU7x1ialp+r08iOLN/+2+fkHBLz/G801x0oeorbvEzDZ7bgEKBTNedTuD5IMZ5p7+0VTbbqsoL/Igt1d+x1dY4HHCj2SQc5k30CyM24Sx4IPsHGcL0+7w1+vrDnu+JgIFvI0hPez8BsNFHuwxLe7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hZGBKQsW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HtbOCZzH; arc=none smtp.client-ip=64.147.123.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="onRjBPjc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Iy6S1gNT"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 0D56A1800087
-	for <git@vger.kernel.org>; Thu, 23 May 2024 08:25:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hZGBKQsW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HtbOCZzH"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.west.internal (Postfix) with ESMTP id 737A61C0012D
+	for <git@vger.kernel.org>; Thu, 23 May 2024 08:25:39 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Thu, 23 May 2024 08:25:34 -0400
+  by compute3.internal (MEProxy); Thu, 23 May 2024 08:25:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716467133; x=1716553533; bh=ZJVevRt7U/
-	ErJQEpwz3TG6+Z8btTZOogCRbUCmOuTvY=; b=onRjBPjcdsSbOc/WrT5Rm3WDGF
-	KT4bhOJvMYE6heiFw9EEbJcjhk6KTW20TRra69QL+qfR3/kJFJEJcvO5ucQxxWXK
-	47LA0E0WdFntBIq7ftP1ncIeHKDqdzN+5nt2nyHpRPCVOrUrFwJvFguQrZ9PulsC
-	/3eEo9AiJu2qYGmPhdNdZBgyx6AloicMkwSxS7AziXNrMvsUj4P/I10pKaH9tKRS
-	WQSbR4XJpTlln7qa9KYJtHeGwiZ2TpSEz1zv7EcL7i1iuy4XDa4pg48p9i4fofLh
-	kvcvyd2j5PvB1KmAo1w1kr0yKbb12UcQb727cYHQ/sbm1aG1nZ5rCjRLbLqQ==
+	:subject:to:to; s=fm1; t=1716467139; x=1716553539; bh=royfV/Ww2b
+	Vb6Au65xiYXh7aoYo+Fw4XVvpQ9JcbOJQ=; b=hZGBKQsWzf7NNDao2mcTGJnNEn
+	c464xIAa5bh0/nineQtBCkCQ9/ufyFa2mQNyPqowplYXnE+9scWCHPrIYrT+Fu+M
+	Foas8ckDP3IXscuHXswoDCOXZkx2CfK02XGUTgypUPyv69qwSkxQKq4TGlmXfasV
+	UIibREdL45ogSFiZe+sThPMTrzhtkDs2Hi4Bnd4XP3SSF34woQubU4hi17hsKKj4
+	COq6vVlORnUKcwUeFyabmzhsqABkh7uu/xiGVgUzLrDGboJ4uW4FB1dWi7nvvRSl
+	N8iM401nxONxurhhhEmt6dvbtwcPhqioKW1SR+vuQSze3o5RW9P7tfeQS1sg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716467133; x=1716553533; bh=ZJVevRt7U/ErJQEpwz3TG6+Z8btT
-	ZOogCRbUCmOuTvY=; b=Iy6S1gNTh/j9FkMcvDVz8VW7B8qgMRXl5wKNCW7VoiDz
-	gWlvcx534aznaxlx6mHf6+EeSBql6l/nQYi10Bs+1yuCNSvTSBC9+sb+dcjpSo8n
-	3DrA1mF7imwkvYkTcMRzBlIfrLOc/NjYFJSyR1VOSkiF2yfrI3UxHcPEPogjzmfg
-	RuqsuHoQYIHMer+UAmXdjHg7fs/iB60daybFZI0/NDvG3oJq9BavtyP7XBktp/J5
-	PxRYy1jDn+tBj4mjy728MH96XPSSZ16aFWKmjOQkgV0Z193zzfJ4Ackv8VhijAAl
-	O88c9sVwlPziunNOIzC0UlOjhXQ5mVd8CybUwF3ngA==
-X-ME-Sender: <xms:vTVPZljBNIZJscu7XpUtVjjq7lTjMpQ9WpcwkOlwTNkf3OhriJOGJA>
-    <xme:vTVPZqB-QV_1OL8PFCaD5mIvIMwdtSeWCXiuQqBwhwuMbJs4BKwrN2VRuFGZHGK90
-    ipvqJn47ygtx066hw>
-X-ME-Received: <xmr:vTVPZlECh9mUrf9TJxK473tcQQeqRMDRCxD4Escm4y5AvrvikX9h0TxUue18TxXCmq_Q-98nWaq2Bq759POt7M6hLm7qRhA2mxskZ0P2RS8pSWcTrw>
+	fm1; t=1716467139; x=1716553539; bh=royfV/Ww2bVb6Au65xiYXh7aoYo+
+	Fw4XVvpQ9JcbOJQ=; b=HtbOCZzHEp1+ZbHh85seRQcp9jGcDjsWpCZhqq7z1cmH
+	N/3syAMfMsMN06sjfN+Kjep6C/v4+qyZQsu2foi55tXBhCaNf7aF5/Rb1ixrnCeE
+	iz3qn8gODzdPj8hqFylVcqtYTmwtQXU3KcyesQg93165/mDkz6LO6yy/PkktPBFp
+	ZyPyW5BZFGM3vEWzRLGTYkBsTQj4WsOs61pEhdsWTdWnn98hnuq7uRmzDUYdKUJu
+	VOR3WmlcGzXRBtSeo7wlLpm3CJJ6KbSe+fonzPE2Pj4zdt5Wf7ECKcXut5KNlBce
+	8VegOsw+1+buMXR2k65YXTdLzx1nsTSD3X87p8cNmg==
+X-ME-Sender: <xms:wjVPZh88X56_poB3QY2uwQKbt74cUfCH7mfsM5BTBYjJaCw-G8amzQ>
+    <xme:wjVPZluPGpWjRajZIr-7pX9MXUNSLqhNQYK2rYb_uKt5UFr6_olDM-yhhmLCgKRyT
+    aCfr1oq-m9HfRQhRA>
+X-ME-Received: <xmr:wjVPZvAjX2J8k7DvRgtn2AUuIkl0enjPv6IqXvW-OqFVvQipIKn1y73UlaBr6a7PFxId4qlPiRn1322gViuTxfPVsRul0Z_YunqlJUrW0hzUS6G4dw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeiiedgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
@@ -55,24 +55,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeiiedgheduucetufdoteggod
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:vTVPZqQuIJCN-NL37bFXUTCe9ylEGM380sZL1P4NJUHHOwOHw_8gBg>
-    <xmx:vTVPZiz4DrvRu20IR6tmeTuKrHvznVyo6LAMLoQocKAD4eDPNBJu4g>
-    <xmx:vTVPZg7PzYkW65K4pCpaBq4OVFj6Qa8-0UMKzbZoyfU4Ex8mpgNDhg>
-    <xmx:vTVPZnxOLQwh75NE9bVn-2vTs7NWZZwyr6O8prNEUNileRoonHF_-g>
-    <xmx:vTVPZnrqKEazuWjwN1gUajaXnI4oiHnAvfJAjgkJdnzsNQ6MGbXhJTK0>
+X-ME-Proxy: <xmx:wjVPZldZ7-KAofWVeFXWTqsiYGC-SKS9n_WtfGK1Y_HiwQS24iD5fw>
+    <xmx:wjVPZmP4pLQoMqoF02WEr9bnr5nskENiIb8lhFZ8qlqHC0BKI7jOkg>
+    <xmx:wjVPZnlQkXeuqwiN1s_uFcAxPo85V5mgErJ6v8QX1NCWbGkk_imACA>
+    <xmx:wjVPZguLVQeezaXLtwUhY0uwOaoI1p5xIddNvKkNFDOsGUG_gwcZIA>
+    <xmx:wzVPZo2YQfcj5svYWAH8r6twEj7y3EL0uS5cH5tMJxiIrWU3-Y2hdVll>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 23 May 2024 08:25:32 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 23 May 2024 08:25:38 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id d21d266e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id b77ea22a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 23 May 2024 12:25:26 +0000 (UTC)
-Date: Thu, 23 May 2024 14:25:31 +0200
+	Thu, 23 May 2024 12:25:31 +0000 (UTC)
+Date: Thu, 23 May 2024 14:25:35 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 04/20] checkout: clarify memory ownership in
- `unique_tracking_name()`
-Message-ID: <ffd9eb795f315b2c03da5bcec573938e89148a95.1716465556.git.ps@pks.im>
+Subject: [PATCH 05/20] http: refactor code to clarify memory ownership
+Message-ID: <d4bf3c1f9566f34751eb5669e66e9c100ece02b3.1716465556.git.ps@pks.im>
 References: <cover.1716465556.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,345 +80,204 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hWNcd1b3rNjnw6lm"
+	protocol="application/pgp-signature"; boundary="Dn0DFmx0/j/waHvB"
 Content-Disposition: inline
 In-Reply-To: <cover.1716465556.git.ps@pks.im>
 
 
---hWNcd1b3rNjnw6lm
+--Dn0DFmx0/j/waHvB
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The function `unique_tracking_name()` returns an allocated string, but
-does not clearly indicate this because its return type is `const char *`
-instead of `char *`. This has led to various callsites where we never
-free its returned memory at all, which causes memory leaks.
+There are various variables assigned via `git_config_string()` and
+`git_config_pathname()` which are never free'd. This bug is relatable
+because the out parameter of those functions are a `const char **`, even
+though memory ownership is transferred to the caller.
 
-Plug those leaks and mark now-passing tests as leak free.
+We're about to adapt the functions to instead use `char **`. Prepare the
+code accordingly. Note that the `(const char **)` casts will go away
+once we have adapted the functions.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/checkout.c                            | 14 +++++++------
- builtin/worktree.c                            | 20 ++++++++++---------
- checkout.c                                    |  4 ++--
- checkout.h                                    |  6 +++---
- t/t2024-checkout-dwim.sh                      |  1 +
- t/t2060-switch.sh                             |  1 +
- t/t3426-rebase-submodule.sh                   |  1 +
- t/t3512-cherry-pick-submodule.sh              |  1 +
- t/t3513-revert-submodule.sh                   |  1 +
- t/t3600-rm.sh                                 |  1 +
- t/t3906-stash-submodule.sh                    |  1 +
- t/t4137-apply-submodule.sh                    |  1 +
- t/t6041-bisect-submodule.sh                   |  1 +
- t/t6438-submodule-directory-file-conflicts.sh |  1 +
- 14 files changed, 34 insertions(+), 20 deletions(-)
+ http.c | 62 ++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 32 insertions(+), 30 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f90a4ca4b7..3cf44b4683 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1275,12 +1275,12 @@ static void setup_new_branch_info_and_source_tree(
+diff --git a/http.c b/http.c
+index 752c879c1f..db2e2f1d39 100644
+--- a/http.c
++++ b/http.c
+@@ -39,8 +39,8 @@ char curl_errorstr[CURL_ERROR_SIZE];
+ static int curl_ssl_verify =3D -1;
+ static int curl_ssl_try;
+ static const char *curl_http_version =3D NULL;
+-static const char *ssl_cert;
+-static const char *ssl_cert_type;
++static char *ssl_cert;
++static char *ssl_cert_type;
+ static const char *ssl_cipherlist;
+ static const char *ssl_version;
+ static struct {
+@@ -59,23 +59,23 @@ static struct {
+ 	{ "tlsv1.3", CURL_SSLVERSION_TLSv1_3 },
+ #endif
+ };
+-static const char *ssl_key;
+-static const char *ssl_key_type;
+-static const char *ssl_capath;
+-static const char *curl_no_proxy;
++static char *ssl_key;
++static char *ssl_key_type;
++static char *ssl_capath;
++static char *curl_no_proxy;
+ #ifdef GIT_CURL_HAVE_CURLOPT_PINNEDPUBLICKEY
+ static const char *ssl_pinnedkey;
+ #endif
+-static const char *ssl_cainfo;
++static char *ssl_cainfo;
+ static long curl_low_speed_limit =3D -1;
+ static long curl_low_speed_time =3D -1;
+ static int curl_ftp_no_epsv;
+-static const char *curl_http_proxy;
+-static const char *http_proxy_authmethod;
++static char *curl_http_proxy;
++static char *http_proxy_authmethod;
+=20
+-static const char *http_proxy_ssl_cert;
+-static const char *http_proxy_ssl_key;
+-static const char *http_proxy_ssl_ca_info;
++static char *http_proxy_ssl_cert;
++static char *http_proxy_ssl_key;
++static char *http_proxy_ssl_ca_info;
+ static struct credential proxy_cert_auth =3D CREDENTIAL_INIT;
+ static int proxy_ssl_cert_password_required;
+=20
+@@ -112,7 +112,7 @@ static const char *curl_cookie_file;
+ static int curl_save_cookies;
+ struct credential http_auth =3D CREDENTIAL_INIT;
+ static int http_proactive_auth;
+-static const char *user_agent;
++static char *user_agent;
+ static int curl_empty_auth =3D -1;
+=20
+ enum http_follow_config http_follow_config =3D HTTP_FOLLOW_INITIAL;
+@@ -381,17 +381,17 @@ static int http_options(const char *var, const char *=
+value,
+ 	if (!strcmp("http.sslversion", var))
+ 		return git_config_string(&ssl_version, var, value);
+ 	if (!strcmp("http.sslcert", var))
+-		return git_config_pathname(&ssl_cert, var, value);
++		return git_config_pathname((const char **)&ssl_cert, var, value);
+ 	if (!strcmp("http.sslcerttype", var))
+-		return git_config_string(&ssl_cert_type, var, value);
++		return git_config_string((const char **)&ssl_cert_type, var, value);
+ 	if (!strcmp("http.sslkey", var))
+-		return git_config_pathname(&ssl_key, var, value);
++		return git_config_pathname((const char **)&ssl_key, var, value);
+ 	if (!strcmp("http.sslkeytype", var))
+-		return git_config_string(&ssl_key_type, var, value);
++		return git_config_string((const char **)&ssl_key_type, var, value);
+ 	if (!strcmp("http.sslcapath", var))
+-		return git_config_pathname(&ssl_capath, var, value);
++		return git_config_pathname((const char **)&ssl_capath, var, value);
+ 	if (!strcmp("http.sslcainfo", var))
+-		return git_config_pathname(&ssl_cainfo, var, value);
++		return git_config_pathname((const char **)&ssl_cainfo, var, value);
+ 	if (!strcmp("http.sslcertpasswordprotected", var)) {
+ 		ssl_cert_password_required =3D git_config_bool(var, value);
+ 		return 0;
+@@ -440,19 +440,19 @@ static int http_options(const char *var, const char *=
+value,
+ 		return 0;
+ 	}
+ 	if (!strcmp("http.proxy", var))
+-		return git_config_string(&curl_http_proxy, var, value);
++		return git_config_string((const char **)&curl_http_proxy, var, value);
+=20
+ 	if (!strcmp("http.proxyauthmethod", var))
+-		return git_config_string(&http_proxy_authmethod, var, value);
++		return git_config_string((const char **)&http_proxy_authmethod, var, val=
+ue);
+=20
+ 	if (!strcmp("http.proxysslcert", var))
+-		return git_config_string(&http_proxy_ssl_cert, var, value);
++		return git_config_string((const char **)&http_proxy_ssl_cert, var, value=
+);
+=20
+ 	if (!strcmp("http.proxysslkey", var))
+-		return git_config_string(&http_proxy_ssl_key, var, value);
++		return git_config_string((const char **)&http_proxy_ssl_key, var, value);
+=20
+ 	if (!strcmp("http.proxysslcainfo", var))
+-		return git_config_string(&http_proxy_ssl_ca_info, var, value);
++		return git_config_string((const char **)&http_proxy_ssl_ca_info, var, va=
+lue);
+=20
+ 	if (!strcmp("http.proxysslcertpasswordprotected", var)) {
+ 		proxy_ssl_cert_password_required =3D git_config_bool(var, value);
+@@ -476,7 +476,7 @@ static int http_options(const char *var, const char *va=
+lue,
+ 	}
+=20
+ 	if (!strcmp("http.useragent", var))
+-		return git_config_string(&user_agent, var, value);
++		return git_config_string((const char **)&user_agent, var, value);
+=20
+ 	if (!strcmp("http.emptyauth", var)) {
+ 		if (value && !strcmp("auto", value))
+@@ -592,10 +592,10 @@ static void init_curl_http_auth(CURL *result)
+ }
+=20
+ /* *var must be free-able */
+-static void var_override(const char **var, char *value)
++static void var_override(char **var, char *value)
+ {
+ 	if (value) {
+-		free((void *)*var);
++		free(*var);
+ 		*var =3D xstrdup(value);
  	}
  }
+@@ -1233,11 +1233,13 @@ static CURL *get_curl_handle(void)
+ 	return result;
+ }
 =20
--static const char *parse_remote_branch(const char *arg,
--				       struct object_id *rev,
--				       int could_be_checkout_paths)
-+static char *parse_remote_branch(const char *arg,
-+				 struct object_id *rev,
-+				 int could_be_checkout_paths)
+-static void set_from_env(const char **var, const char *envname)
++static void set_from_env(char **var, const char *envname)
  {
- 	int num_matches =3D 0;
--	const char *remote =3D unique_tracking_name(arg, rev, &num_matches);
-+	char *remote =3D unique_tracking_name(arg, rev, &num_matches);
-=20
- 	if (remote && could_be_checkout_paths) {
- 		die(_("'%s' could be both a local file and a tracking branch.\n"
-@@ -1316,6 +1316,7 @@ static int parse_branchname_arg(int argc, const char =
-**argv,
- 	const char **new_branch =3D &opts->new_branch;
- 	int argcount =3D 0;
- 	const char *arg;
-+	char *remote =3D NULL;
- 	int dash_dash_pos;
- 	int has_dash_dash =3D 0;
- 	int i;
-@@ -1416,8 +1417,8 @@ static int parse_branchname_arg(int argc, const char =
-**argv,
- 			recover_with_dwim =3D 0;
-=20
- 		if (recover_with_dwim) {
--			const char *remote =3D parse_remote_branch(arg, rev,
--								 could_be_checkout_paths);
-+			remote =3D parse_remote_branch(arg, rev,
-+						     could_be_checkout_paths);
- 			if (remote) {
- 				*new_branch =3D arg;
- 				arg =3D remote;
-@@ -1459,6 +1460,7 @@ static int parse_branchname_arg(int argc, const char =
-**argv,
- 		argc--;
- 	}
-=20
-+	free(remote);
- 	return argcount;
+ 	const char *val =3D getenv(envname);
+-	if (val)
+-		*var =3D val;
++	if (val) {
++		FREE_AND_NULL(*var);
++		*var =3D xstrdup(val);
++	}
  }
 =20
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 7e0868df72..937da6c0ee 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -736,16 +736,14 @@ static int dwim_orphan(const struct add_opts *opts, i=
-nt opt_track, int remote)
- 	return 1;
- }
-=20
--static const char *dwim_branch(const char *path, const char **new_branch)
-+static char *dwim_branch(const char *path, char **new_branch)
- {
- 	int n;
- 	int branch_exists;
- 	const char *s =3D worktree_basename(path, &n);
--	const char *branchname =3D xstrndup(s, n);
-+	char *branchname =3D xstrndup(s, n);
- 	struct strbuf ref =3D STRBUF_INIT;
-=20
--	UNLEAK(branchname);
--
- 	branch_exists =3D !strbuf_check_branch_ref(&ref, branchname) &&
- 			refs_ref_exists(get_main_ref_store(the_repository),
- 					ref.buf);
-@@ -756,8 +754,7 @@ static const char *dwim_branch(const char *path, const =
-char **new_branch)
- 	*new_branch =3D branchname;
- 	if (guess_remote) {
- 		struct object_id oid;
--		const char *remote =3D
--			unique_tracking_name(*new_branch, &oid, NULL);
-+		char *remote =3D unique_tracking_name(*new_branch, &oid, NULL);
- 		return remote;
- 	}
- 	return NULL;
-@@ -769,6 +766,8 @@ static int add(int ac, const char **av, const char *pre=
-fix)
- 	const char *new_branch_force =3D NULL;
- 	char *path;
- 	const char *branch;
-+	char *branch_to_free =3D NULL;
-+	char *new_branch_to_free =3D NULL;
- 	const char *new_branch =3D NULL;
- 	const char *opt_track =3D NULL;
- 	const char *lock_reason =3D NULL;
-@@ -859,16 +858,17 @@ static int add(int ac, const char **av, const char *p=
-refix)
- 		opts.orphan =3D dwim_orphan(&opts, !!opt_track, 0);
- 	} else if (ac < 2) {
- 		/* DWIM: Guess branch name from path. */
--		const char *s =3D dwim_branch(path, &new_branch);
-+		char *s =3D dwim_branch(path, &new_branch_to_free);
- 		if (s)
--			branch =3D s;
-+			branch =3D branch_to_free =3D s;
-+		new_branch =3D new_branch_to_free;
-=20
- 		/* DWIM: Infer --orphan when repo has no refs. */
- 		opts.orphan =3D (!s) && dwim_orphan(&opts, !!opt_track, 1);
- 	} else if (ac =3D=3D 2) {
- 		struct object_id oid;
- 		struct commit *commit;
--		const char *remote;
-+		char *remote;
-=20
- 		commit =3D lookup_commit_reference_by_name(branch);
- 		if (!commit) {
-@@ -923,6 +923,8 @@ static int add(int ac, const char **av, const char *pre=
-fix)
-=20
- 	ret =3D add_worktree(path, branch, &opts);
- 	free(path);
-+	free(branch_to_free);
-+	free(new_branch_to_free);
- 	return ret;
- }
-=20
-diff --git a/checkout.c b/checkout.c
-index 4256e71a7c..cfaea4bd10 100644
---- a/checkout.c
-+++ b/checkout.c
-@@ -45,8 +45,8 @@ static int check_tracking_name(struct remote *remote, voi=
-d *cb_data)
- 	return 0;
- }
-=20
--const char *unique_tracking_name(const char *name, struct object_id *oid,
--				 int *dwim_remotes_matched)
-+char *unique_tracking_name(const char *name, struct object_id *oid,
-+			   int *dwim_remotes_matched)
- {
- 	struct tracking_name_data cb_data =3D TRACKING_NAME_DATA_INIT;
- 	const char *default_remote =3D NULL;
-diff --git a/checkout.h b/checkout.h
-index 3c514a5ab4..ba15a13fb3 100644
---- a/checkout.h
-+++ b/checkout.h
-@@ -8,8 +8,8 @@
-  * tracking branch.  Return the name of the remote if such a branch
-  * exists, NULL otherwise.
-  */
--const char *unique_tracking_name(const char *name,
--				 struct object_id *oid,
--				 int *dwim_remotes_matched);
-+char *unique_tracking_name(const char *name,
-+			   struct object_id *oid,
-+			   int *dwim_remotes_matched);
-=20
- #endif /* CHECKOUT_H */
-diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
-index a3b1449ef1..2caada3d83 100755
---- a/t/t2024-checkout-dwim.sh
-+++ b/t/t2024-checkout-dwim.sh
-@@ -4,6 +4,7 @@ test_description=3D'checkout <branch>
-=20
- Ensures that checkout on an unborn branch does what the user expects'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- # Is the current branch "refs/heads/$1"?
-diff --git a/t/t2060-switch.sh b/t/t2060-switch.sh
-index c91c4db936..77b2346291 100755
---- a/t/t2060-switch.sh
-+++ b/t/t2060-switch.sh
-@@ -5,6 +5,7 @@ test_description=3D'switch basic functionality'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- test_expect_success 'setup' '
-diff --git a/t/t3426-rebase-submodule.sh b/t/t3426-rebase-submodule.sh
-index ba069dccbd..94ea88e384 100755
---- a/t/t3426-rebase-submodule.sh
-+++ b/t/t3426-rebase-submodule.sh
-@@ -2,6 +2,7 @@
-=20
- test_description=3D'rebase can handle submodules'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
- . "$TEST_DIRECTORY"/lib-rebase.sh
-diff --git a/t/t3512-cherry-pick-submodule.sh b/t/t3512-cherry-pick-submodu=
-le.sh
-index f22d1ddead..9387a22a9e 100755
---- a/t/t3512-cherry-pick-submodule.sh
-+++ b/t/t3512-cherry-pick-submodule.sh
-@@ -5,6 +5,7 @@ test_description=3D'cherry-pick can handle submodules'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
-=20
-diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
-index 8bfe3ed246..e178968b40 100755
---- a/t/t3513-revert-submodule.sh
-+++ b/t/t3513-revert-submodule.sh
-@@ -2,6 +2,7 @@
-=20
- test_description=3D'revert can handle submodules'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
-=20
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 98259e2ada..31ac31d4bc 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -8,6 +8,7 @@ test_description=3D'Test of the various options to git rm.'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- # Setup some files to be removed, some with funny characters
-diff --git a/t/t3906-stash-submodule.sh b/t/t3906-stash-submodule.sh
-index 0f7348ec21..0f61f01ef4 100755
---- a/t/t3906-stash-submodule.sh
-+++ b/t/t3906-stash-submodule.sh
-@@ -2,6 +2,7 @@
-=20
- test_description=3D'stash can handle submodules'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
-=20
-diff --git a/t/t4137-apply-submodule.sh b/t/t4137-apply-submodule.sh
-index 07d5262537..ebd0d4ad17 100755
---- a/t/t4137-apply-submodule.sh
-+++ b/t/t4137-apply-submodule.sh
-@@ -2,6 +2,7 @@
-=20
- test_description=3D'git apply handling submodules'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
-=20
-diff --git a/t/t6041-bisect-submodule.sh b/t/t6041-bisect-submodule.sh
-index 82013fc903..3946e18089 100755
---- a/t/t6041-bisect-submodule.sh
-+++ b/t/t6041-bisect-submodule.sh
-@@ -2,6 +2,7 @@
-=20
- test_description=3D'bisect can handle submodules'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
-=20
-diff --git a/t/t6438-submodule-directory-file-conflicts.sh b/t/t6438-submod=
-ule-directory-file-conflicts.sh
-index 8df67a0ef9..3594190af8 100755
---- a/t/t6438-submodule-directory-file-conflicts.sh
-+++ b/t/t6438-submodule-directory-file-conflicts.sh
-@@ -2,6 +2,7 @@
-=20
- test_description=3D'merge can handle submodules'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
-=20
+ void http_init(struct remote *remote, const char *url, int proactive_auth)
 --=20
 2.45.1.216.g4365c6fcf9.dirty
 
 
---hWNcd1b3rNjnw6lm
+--Dn0DFmx0/j/waHvB
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZPNboACgkQVbJhu7ck
-PpSPoA//W7HpEBsWkBO2K2UycTgFSLpcILCm8rfOuCtrm5v2dJLrZ+edHnbdFtKR
-q0ekQE0HfRxbLOJwbhusvOjoZuKbKhpb6tWVKTbBkfbQHlUBp1WMwVLALMLgrgGL
-aoLa0NUidOrhaKwuPn44FbKVp3YxEKBeb7L9xAEASOarkg0baY4y/4ES+W5clsjv
-N39xhNZywiBaoOTvGuxTPwGUeneFD47FgUHkH65XhvFLQZ6ZfnDMCBt3l1HR0Ues
-Yc5uxyk5N29jQl74lG9KzE20Su/ysPW6G6ipN2GSlSMTacbGnAMxmrXewkJx7nop
-f4TWtCWIzrV3OqNAZpwOBt9e12Q47LSLUdDE7+8OaE+HXb07ueJBjIQ775T09bEB
-YomHupjqeEbQ5JWt4ehPB8m2YoeWgSDpdQLC7EVOqnCRM0Dy8bxdg8ktBewy+7iz
-SOaf0980QeUeVi0osZStCAHl6C6a5NwKXXeOkcHXlqtbGHOXDUBOW3uVYuX7npve
-vf+43XbUkmvA2RgAoknRDfs6T3SGMGjSG1AHo+KpQtYPhimqRRwfCVI23WDLZ9Yq
-P9yCeE2eeCQSbCi5Ygo1wSZuHjUXg/RWHdG3E5aPUku9/BWejMmfGy2o4ND6CVTB
-miM5Br9fWiRxxi6nPwLiV4o6i8Ou76tAn/Djfz1eHoiKoCzc8+M=
-=7/yH
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZPNb4ACgkQVbJhu7ck
+PpQnUw//aRKYQRy0oS4B2Qjhbkw/+VOrotsJ86zbpeQV+5zq8G9BQ5f3AtO+yMU4
+qRR7e77vD5XU7dgnCTPuZrDQ6QDXRry438NhHsfVaV3+CC1UAOprCiMVGTSInrur
+hYH3DYk9pbQW8b+8ksPDcVJXiivdkNOOm0kggZJ6cKSy4wc62MvodGXzd0TT1z+2
+sWagvhLIUGq+g7N1vBzGR0Yf+Z7QMe/b0oyYpo1ipnHqbOYWg8njMPW7Ob538v1M
+PXZVKe0KarNR1GrL8nwMG4HZHEe3YAinfmptnJQjbK1OqwehMXCVr33DJsjueeK4
+DPygTI7OWvZWaxBuEuNOzW+xhlFU599qOSsJhgQIa/PedYEx5lsnB9UWrg8FSUG6
+syyEWg8ABxrnZbkRx0uiB/x3jdmJRQWfpD2/0w4N6fn+RxQ1I+8UV+ozy/SPr5f4
+8w42Jsm3/kg1sWP3WaqCimvOaPuq+m/QD30ngsvSkTGlUnpDBisNlCd1WLHpwEu+
+UBYOoRJklRJpPy5/petWIolfhhJL5+r25ptl0ZCY8JKuFosxo18+zq/+bOx3X4R2
+vqZ8rRh5jiH5psnBLhXb/LGxyUcJZferlY7Hkkz6DpJAnW56Qv37K2ukoUsIm1JG
+S4UDbHUNfCWskfnHNWVnMDCOYmMtlJkwz30dtVCqjlCg9BBTu6c=
+=DQ2O
 -----END PGP SIGNATURE-----
 
---hWNcd1b3rNjnw6lm--
+--Dn0DFmx0/j/waHvB--
