@@ -1,36 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DEC5B5B8
-	for <git@vger.kernel.org>; Thu, 23 May 2024 09:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB2113CF93
+	for <git@vger.kernel.org>; Thu, 23 May 2024 09:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716455063; cv=none; b=FAeVO5+hjVm6gS7kmEts6mhdPwZ2Nn25LWgTzwxd/5cc6yPu3C8y99+0jEhgqNM//NRUvXJp6sNdk6DkPGDiCRbqzz7OD7TyzJ9N+7jQC4pLDGT8DE2ekAfOJKj4+W5pF7SDiaSxy9f7wOu0icOOi+bN3dQ7f3OBd5bUIqgbXaw=
+	t=1716455165; cv=none; b=VhUL34UdAcAp5U/FgiQbAJcj7gzNgbZ2eOZ5qdCAtzvnhsT0maIh3rCXzuE5gIXVz3DWIxtcNr+Oy08yRiGz0+mb3UraoC9dOCcGCZKbtppSYVDPL2giBt9Osu3Y43NXryQ2VqNMf4WsqBzjlCKZBFwOHbiG7oAppI91id22KPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716455063; c=relaxed/simple;
-	bh=58QXtCBDaugxCi1jMO78tmEmsPRauAT3eHCwOomgOUE=;
+	s=arc-20240116; t=1716455165; c=relaxed/simple;
+	bh=vzoWz7pJpkSxDFo2D/zHgHiDtDoO37K9i3aw/Ns3F80=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QUU0hBMW8T/O/BMt9D/r6hDGDmbMmxT59xSr978V28JzRzYChvx4DzhjStt4fjzQ3oSI6H4A8l7BcVCRmTNzGmvDut1ICzp64qyp1C2hcig7ahLRqQAGifyQoAy7n+ZQS2TnP143NuGFjEUh7rVT6ff4LoNbJbHfzjbyrb6bpHs=
+	 Content-Type:Content-Disposition:In-Reply-To; b=T8tfHj9VLYZOon1pHj1XpM3Eb7TmpD3cDIb/cFIPf5FzTpT0fo5aQ/11aeEaNOPBqHo7jj15RjO2oew49yAc1SEvm2LqkId4IRc1TOB0IiAoe07ioHz8q/H+Exu2wsNhw1IxoeEA1E2X8RRn1eWaUWGlkWkAK+B1W54BxSx+H80=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 31011 invoked by uid 109); 23 May 2024 09:04:20 -0000
+Received: (qmail 31038 invoked by uid 109); 23 May 2024 09:06:02 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 23 May 2024 09:04:20 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 23 May 2024 09:06:02 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28396 invoked by uid 111); 23 May 2024 09:04:24 -0000
+Received: (qmail 28448 invoked by uid 111); 23 May 2024 09:06:07 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 23 May 2024 05:04:24 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 23 May 2024 05:06:07 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 23 May 2024 05:04:19 -0400
+Date: Thu, 23 May 2024 05:06:01 -0400
 From: Jeff King <peff@peff.net>
-To: =?utf-8?Q?Pawe=C5=82_Bogus=C5=82awski?= <pawel.boguslawski@ib.pl>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-Subject: Re: Cloning does not work on available download bandwidth changes
-Message-ID: <20240523090419.GB1306938@coredump.intra.peff.net>
-References: <ed79092c-c37d-4e4c-aae9-af68cd8c20a0@ib.pl>
- <Zk5pDZ1gTcyrGfUk@tapette.crustytoothpaste.net>
- <293afb32-99b1-4562-b339-7862698ef00f@ib.pl>
+To: =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
+Cc: Dragan Simic <dsimic@manjaro.org>, Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 5/5] add-patch: render hunks through the pager
+Message-ID: <20240523090601.GC1306938@coredump.intra.peff.net>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+ <eb0438e8-d7b6-478f-b2be-336e83f5d9ab@gmail.com>
+ <xmqqh6esffh1.fsf@gitster.g>
+ <ec5d73e22a6e4587f3d87314a9c0e422@manjaro.org>
+ <20240521070752.GA616202@coredump.intra.peff.net>
+ <5f6f3ce7-a590-4109-ab8a-1d6a31d50f3c@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,49 +44,20 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <293afb32-99b1-4562-b339-7862698ef00f@ib.pl>
+In-Reply-To: <5f6f3ce7-a590-4109-ab8a-1d6a31d50f3c@gmail.com>
 
-On Thu, May 23, 2024 at 12:58:27AM +0200, Paweł Bogusławski wrote:
+On Tue, May 21, 2024 at 09:59:55PM +0200, Rubén Justo wrote:
 
-> Try to run
+> > This feature can be annoying even with current versions of less,
 > 
-> git clone https://github.com/googleapis/google-api-go-client
-> 
-> and limit interface speed somehow i.e.
-> 
-> tc qdisc add dev eth0 root handle 1: htb default 12
-> tc class add dev eth0 parent 1:1 classid 1:12 htb rate 20kbps ceil 20kbps
-> tc qdisc add dev eth0 parent 1:12 netem delay 1000ms
-> 
-> and after a while restore speed with i.e.
-> 
-> tc qdisc del dev eth0 parent 1:12 netem delay 1000ms
-> 
-> I tried this in Debian 11 and  git 2.30.2 died with:
-> 
-> error: 5723 bytes of body are still expected MiB | 920.00 KiB/s
-> fetch-pack: unexpected disconnect while reading sideband packet
-> fatal: early EOF
-> fatal: index-pack failed
+> Hopefully, reducing the blast radius to a new 'P' option, will make it
+> palatable.
 
-I did run it a few times. It usually succeeds, but sometimes fails. When
-it does fail, it does so in "slow" mode, without speeding back up. And
-I see one message from before your "error:" line, which is a report that
-curl reported that the connection dropped (curl is shuttling data back
-from the server in the form of "packet lines", each of which is prefixed
-with its expected size; the "N bytes of body are still expected" is just
-that parser seeing a truncated response from curl).
-
-But I don't think any of this is due to what Git is doing on the client
-side. From the client view, the server sends a TCP RST (which I observed
-with wireshark), and the connection drops. I'd suspect the drop is not
-even from the application level on the server side, but rather that
-something in the network path was mad about the delayed packets (or
-possibly the spam of duplicated TCP acks that I sometimes saw).
-
-So I really think this is a network issue, and not a Git issue in
-particular. It's possible that the networking stack that github.com uses
-is more picky about the things I mentioned above. But again, not a Git
-issue.
+Yeah, that would be perfect. I might even use it, then, for the rare
+cases when I want to look at a really big hunk. I do still think it
+would be useful to be able to configure its pager separately (in my
+case, I'd use "less -FX" rather than my default setup, which doesn't use
+either of those options). But I'm also OK to leave that for now and let
+it be somebody else's itch to scratch later.
 
 -Peff
