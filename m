@@ -1,85 +1,79 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E5751C42
-	for <git@vger.kernel.org>; Thu, 23 May 2024 23:04:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917D212839E
+	for <git@vger.kernel.org>; Thu, 23 May 2024 23:14:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716505457; cv=none; b=P0wzqi60OR2TqvpCW/PXk2jn9MB9Z2whGX5REVcJ2QzAAFTzVNSGFqinjuATcy3We+M1G96nI/lWlk6coL8kpQfibZn3UnJNa/5boW5V0OD5fYG57wzKRJ0ednD5xziPasqPbrnXrV0wErxyw/YGi1rTRwSJ2cpDICJ57YC0A8Q=
+	t=1716506088; cv=none; b=NLf+i9/7LTkoBS1TB2fksZ0D6A6mYJa0QB9v+DcVRbiilSSyyJn+rf5YsFBLspWZ2sx6e8HOW4JNr2UcaRNch25wtJZ/4RRjcAtWn+w/pQ5uESqUgfSWuCZg92zZJyVbckhkfJvaF64KXY2x24vkiXlSfWyP7ZvI9NJyk1ZLYic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716505457; c=relaxed/simple;
-	bh=vfOFDqF8v2pFg4kHV1mh6CC0N+YW+kfihBhQ6NKt9G4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B6WL0euKHnxem7wzg3rLcAIoMmt0HRPCELbqIVso7oAWMWZbDdUuhWkm96NpEJxs2+IRM2xfbXJNQ5K/I3aB5tnt/7z5k+D1RVeOg7/Awv4+5Ae5srbanU+7k+c5wBNHwpsBAv/cWcEX0wc2a5fr1WE+wouaLwyRhWz4i0Mw1is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WK+F+mJC; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WK+F+mJC"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E18F234C6;
-	Thu, 23 May 2024 19:04:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=vfOFDqF8v2pFg4kHV1mh6CC0N+YW+kfihBhQ6N
-	Kt9G4=; b=WK+F+mJCflcH2C7mvsbJMsqaVUoppvLLA0MO2Mq6Qytk6pRmnrsmOU
-	6v2XVklIrmo5enUslJ63xT1oQe7KwKWyEBfnRgHeNr0kZsygRYG+ANU4kiaeye6x
-	kFW1r9PrHV2qAT30RTkG+9BtSE1FFN4v/BS0FCwvwTzd0jegy0YJI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 64F3C234C5;
-	Thu, 23 May 2024 19:04:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE7D1234C4;
-	Thu, 23 May 2024 19:04:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: Jeff King <peff@peff.net>,  =?utf-8?Q?Rub=C3=A9n?= Justo
- <rjusto@gmail.com>,  Git List
- <git@vger.kernel.org>
-Subject: Re: [PATCH 5/5] add-patch: render hunks through the pager
-In-Reply-To: <261636d461e58ac8a16180c4cd6e0460@manjaro.org> (Dragan Simic's
-	message of "Thu, 23 May 2024 16:18:03 +0200")
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
-	<eb0438e8-d7b6-478f-b2be-336e83f5d9ab@gmail.com>
-	<xmqqh6esffh1.fsf@gitster.g>
-	<ec5d73e22a6e4587f3d87314a9c0e422@manjaro.org>
-	<20240521070752.GA616202@coredump.intra.peff.net>
-	<5f6f3ce7-a590-4109-ab8a-1d6a31d50f3c@gmail.com>
-	<20240523090601.GC1306938@coredump.intra.peff.net>
-	<xmqqjzjky6eo.fsf@gitster.g>
-	<261636d461e58ac8a16180c4cd6e0460@manjaro.org>
-Date: Thu, 23 May 2024 16:04:12 -0700
-Message-ID: <xmqq7cfkqger.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1716506088; c=relaxed/simple;
+	bh=/yLX/mxOQUQMnRygSnZZOQlbYZSgzDQudLxkvWT5lAI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WIzV4omTUV/JleHqJ4EetcRkmZ8R868XPSxbmTKbfi2kF5Sd6Wv+OnGCl9vNdEdgHLaXmdrQn1GpKklBeQDbJNOWHkn1nwlkbulkpiJ2miN9dEI8mVB2rZMF0LRWrigXVIzk3KQV7RPN/DACsQDwnMVSMIQrKvCY1gYQQ3wjKVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-43f84f53f66so15571711cf.3
+        for <git@vger.kernel.org>; Thu, 23 May 2024 16:14:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716506085; x=1717110885;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zpmPJv1xScvnKN4Q3ZNk7ITfprXfEgv3ehIaARn6adQ=;
+        b=TveoooiMEDzEhIxQdVgy5XuuQ3hjaSWcKASMx8uEhhxAWiq9OnvSNwHeCS4DAtyzqM
+         e2aG51CmAY+PjhTSH1NzkdMwbAB6CWG24g8YMcv80k9xZtJYKYdK626KNplAKWiPTkei
+         BcUL5jLmbUOYBIGJP6Jf+Xt8K9ZLkjnzf3+AHePWs1Y/i5mO3pVXIi4VFQMAgHLaAPnY
+         aNmra4/K9yh+/d7HkhmAm0pEzvI0Vtrmha+eeqClkwgAIFBDLhJTlVEmxFXzg7Hh/WbB
+         w+lGJeX5YJDTrrNbbeFCmSoKHK6pHpmMXbPcZL7/aKLb+38GfZlDtF5FfECERz5n5oeh
+         9JkA==
+X-Forwarded-Encrypted: i=1; AJvYcCVTkghkdtz4TttPQPqXeBV8DsLe4emRJtJf4ThHCrLmSI2vfrPiWdij8f0pGGtWW1kU84UGT2kh6FILqt3VgLh5amBA
+X-Gm-Message-State: AOJu0YyztseqsmT3vSgtYjBNpKKVedkFPWouVfOSLhnDlFhtZQIs64NN
+	16iZbx6d5gl+4l8QyiY0yd2wxpGtWP8FDuxlRdmRoME+NvLHIMKqm25nE/uGy73psVLEWsY3BvC
+	qCGFoaHQqqEv+Sl6MqlxJqjj6ibE=
+X-Google-Smtp-Source: AGHT+IGF4CbgwstiefZSYNlNIlzmPsanI1dkkPxK/Nz8+kEjax6jHm7q8NORp0CB/E3R2F+0lxO1Zq3R6ahWkpBvmno=
+X-Received: by 2002:a05:6214:2c03:b0:6a9:c9c5:75e2 with SMTP id
+ 6a1803df08f44-6abcd175d47mr4399146d6.50.1716506085488; Thu, 23 May 2024
+ 16:14:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C5D4E0D6-1958-11EF-BBE8-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <Zkdk7R9GIfsyQjkc@telcontar> <xmqqsey8tnny.fsf@gitster.g>
+ <Zk-nswiCF-SnyxLE@telcontar> <CAPig+cRddr=JTVvkh5xkptag_1C5-z1t9Pzr_OdcGFSVwRg3vg@mail.gmail.com>
+ <Zk-5YCKSO32vPKDP@telcontar> <Zk_FiYd8uk-P5jIi@telcontar> <xmqqcypcqgf9.fsf@gitster.g>
+In-Reply-To: <xmqqcypcqgf9.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 23 May 2024 19:14:34 -0400
+Message-ID: <CAPig+cRme82m-09_yhiMx_O3CgnoAtEZkdFiZTX46yTZ0M0QpQ@mail.gmail.com>
+Subject: Re: [PATCH] t/t9902-completion.sh: backslashes in echo
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Marcel Telka <marcel@telka.sk>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Dragan Simic <dsimic@manjaro.org> writes:
-
->> And for usability, perhaps giving a specific command would change
->> the default program a bare 'P' invokes for the rest of the session
->> until another specific command overrides.  Another usability hack
->> may be "[interactive] pipecommand = less -FX" configuration variable
->> gives the initial default for each session.
+On Thu, May 23, 2024 at 7:03=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Marcel Telka <marcel@telka.sk> writes:
+> > There is a problem, but definitely the justification in the commit
+> > message is not accurate because we do not care about POSIX here at all.
+> > Also maybe it would be better/simpler to use `echo -E` instead of
+> > `printf`, but I'm not sure here.
 >
-> I think that would be way too complicated.
+> How "portable" is "echo -E"?  It apparently is not listd in [*], but
+> it should probably not matter as we are doing this in bash.
+>
+> printf is a kosher way whose behaviour is pretty well standardized
+> especially with respect to "%s".  As I said that I was going to
+> merge it down to 'master' already, it is now part of 'master'.
+> Use of printf there may hopefully educate folks to think twice
+> before using 'echo' on unknown data.
 
-It is modelled after how "less" and "vi" remembers the last pattern
-fed to their "/" command.  You once give, say, "/test_<ENTER>" to
-find one instance of "test_", then "/<ENTER>" takes to the next
-instance.
-
-As I expect our target audiences are used to such a behaviour, I do
-not think I agree with your "way too complicated".
+Indeed. Seeing`echo $VAR` used always makes my reading hiccup since
+it's never immediately clear (without consulting additional context)
+whether the value of VAR starts with a hyphen or has embedded escapes.
+On the other hand, `printf "%s" $VAR` doesn't suffer from this
+problem, so this change is welcome regardless.
