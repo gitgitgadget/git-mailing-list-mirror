@@ -1,79 +1,78 @@
 Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEED313BAE5
-	for <git@vger.kernel.org>; Thu, 23 May 2024 12:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F6613B7A6
+	for <git@vger.kernel.org>; Thu, 23 May 2024 12:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716467126; cv=none; b=WcO163r7+vDMMy6bREhxMGo2NoInIePMEAvJ0NN0qYEavcBiGAQ5YZgThTsLGhh/v72zlbmTSR5+75ac0BvI4YCaOSdtAtj7SB+F0nyh9h2an+aX87iIQyJOg9c3M26UkLv2sgNYsYxCRgSlUNsO+a2Ll0aY9xNWfUyeg/RYeRI=
+	t=1716467130; cv=none; b=Qoetv/crQBVc4MknUL6Iq6a1q+ztUOZE57UuWD1+2pHeXsjSDYw/qCKplzAPxge44ZGYv4Cx0v2lG3ya0Ykycfi+MpFMzH04b6YTMtzW7akGPIsBh3Y+k5YtklUZyLSVLaZT4yG+4p2HKlyJFEZaavDamtMK9t3swAETZIIJAcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716467126; c=relaxed/simple;
-	bh=sAqPMSY//LZgoTsx1GHJR5vbmrBu7tSgWqO9Wla8lJg=;
+	s=arc-20240116; t=1716467130; c=relaxed/simple;
+	bh=fWiTtM1hiofnzvpyA8bd6k4WG1mSUR0r5CTRwLYqNz0=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O688f7Gx8EBK+8+HLG3UZCwS1hlyooDsHVMi/qoZKTFPSimiYakhQvKuXxWrCODv5UIsZmHtd6qd1+IfbxPmJUU34/MPNn6Ql+pBQKkku6xItzXB8iHnseXs6hJ4QLwsjAnRR0CdP6ediAO1weVBfL+uFs+ddbkWZg0HyPGY5kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f8lkMnfp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YTsrjtBm; arc=none smtp.client-ip=64.147.123.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=XVgtUSkDZgb7Lljd/FSm9ZD2jI0xc3784Sz0OQYNtox9ySc9WVeh8+NQHnXoSm0LNl3VaFehHWkYSfqcbnrv4zfCVAFRNHLawBxTrn8ApXunrGJFtN66LsEaNM2BP7wVjAr6hm/c5a+x0DO4Tud2scj7h8Upn27ziUQwQKOcmfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=htNAO6Bf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V4a2DiJY; arc=none smtp.client-ip=64.147.123.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f8lkMnfp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YTsrjtBm"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.west.internal (Postfix) with ESMTP id 2272D1C0012D
-	for <git@vger.kernel.org>; Thu, 23 May 2024 08:25:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="htNAO6Bf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V4a2DiJY"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.west.internal (Postfix) with ESMTP id 976101C00155
+	for <git@vger.kernel.org>; Thu, 23 May 2024 08:25:28 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 23 May 2024 08:25:24 -0400
+  by compute5.internal (MEProxy); Thu, 23 May 2024 08:25:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716467123; x=1716553523; bh=7UkbvsuBDV
-	rSzzP/YRLbZon0GR2MxDe2a8Sc9eEzH6A=; b=f8lkMnfpFM0IuYgIyDKwcgXw+0
-	8ppXdx8bYohbA7NzTPxiaYF0+GHTZO5QgnlYUVW61GBrGlEQd32x84aZqXcUfZfD
-	yt4qXvLREY7RHTBRgDIFAgZgQdjzKO9bYaAqqEYJtAKCb9CzP7oAIyu7ZnBgbHPM
-	K1RmxQQ1okQCSczfC8Ru9LS243vD10Kg+4WFsmB9jBYNmReHNL/HbBHnzp/WJ8q1
-	+XoOHiobuF0Z1oy+Tgha2F05Q0FZ3pRq67HneVPKZuwyuyqQlZ6PR/aHDt8CjTx9
-	iLWtyLcGoaNhD+gaJsxlSncDEw8EQuy+5KhjdhSad8c9y7FK3jphekfNibaA==
+	:subject:to:to; s=fm1; t=1716467128; x=1716553528; bh=Eg1w2PYM9d
+	k6Lgi5O1oet2oy1UgiajD+OzX+E+gmbM4=; b=htNAO6BfFBz4mN/5lxXDLvI55k
+	EfgKyf2vp9vhWjWpJFP7wg9zFtB/MJzYpqgSEqeeGLumR2X+4hWbrTqeul+N4Uyl
+	qNcxvh6nwuY/TDEqkS+7QBUXwyAEBaEfcPbtbu3tEmELxG5HIFl+Os/QU58CxzLr
+	WiO9+IjdKnqI2BBus5hJkJc4CD8/HCA6ZtaRFZPqDjiBjxdd6aPwdmqxtj8Fcj4r
+	ZnxEuDQ7+qFZr4l8D7NhDgVlYsVwjKw+kz1OoYWyUVAEKBSqhEjpuyd/en2KSZux
+	1ClXzvWKQb+cQ6Tas8KRu+WByFFBPZPMyVpMJeK59Omk+ORAOGMe+pKHgC4A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716467123; x=1716553523; bh=7UkbvsuBDVrSzzP/YRLbZon0GR2M
-	xDe2a8Sc9eEzH6A=; b=YTsrjtBmAaPrIUjULMZhSuPQAo94ZhWyQySpuyJK0XwH
-	QBZ0wUzMeb/mRnBLKfb2WwCJPWvisKIaWmnskJIaE6XBkBfoC/2vjpgjx5TQlbQj
-	PKedmSjH+BiBPcto697tmWC5QzIo1X6dAYNDXfrN/XOXIxwx+atgfpiAAXy3qXJD
-	bJPEdZqNpo8lcpJltEZpEoD7+wapP7gp4nsfygG6DGDMUruIeetHfbAxb8xhvWa9
-	7Gr6/txYeL3n5LnMgNdUVGMZe+wmNUgpAmN2Cnf9RqU+WKK5ArAzd54CXSuMQeTD
-	zb7GHAUCf0/95iXw8YMp2zP9Oa64xDjmtitkhvkrAw==
-X-ME-Sender: <xms:szVPZsTJrWr4kMeDcwRVEr5DTBpAdekeThZk3Eu6iGZBQN-u3cT71w>
-    <xme:szVPZpwc6898X5LwEVizT66FaEQ6DwtP8h1auBTxFQs7i66eWidMG7N8hY46OKRnt
-    wEJN8Sgl5duvDH1cA>
-X-ME-Received: <xmr:szVPZp2u_2HxhQDuCwR5ws-jfcBR47E4fPWzfKnicraxQW0asvZHbvNCqgX3kP5eFNHPoJRgUTtxut4apRBPs05LPvUQDq7TdqvdBXfDddTpJi9EGQ>
+	fm1; t=1716467128; x=1716553528; bh=Eg1w2PYM9dk6Lgi5O1oet2oy1Ugi
+	ajD+OzX+E+gmbM4=; b=V4a2DiJYJtBYRzbVrKsEltPjbm86YOqLVSfcC0haQSR9
+	fJpE3Nx7Ii0OWK8i7NBxnRyP3RyXbr7o0DHpk0/5o3z+eHXfI1VITN1xL41/ltPa
+	6oruUPCvBmVwFRp4+mCRi0TLEhhlVmRO1QwXj+tTMSTG83XG9ZJsmXeY3edIIMaO
+	6Pe9nFkl0RXXBThzpPCaDQ8vtoRrOXOueNfiOpz1hw22zeQ7/MNpJy4xbllVbMS6
+	egg6FIcH0ngpgXnAZ4vIZFnOfRwo+dx529LKWt4SRgf8Jq0Z+idD5hOzPsEiuJ/E
+	aNbArlQmQbrC6/TjqJv2JucP5ywGJudo0ctjBAHHmg==
+X-ME-Sender: <xms:uDVPZmj993qzkUrcb6LgD25v0w7z_hqq790QVW-ydV_G2uhiuEvNgw>
+    <xme:uDVPZnBxGD0LOPjcfTsP4aCmQgHOgDv-rym6Ice3gflUKwY9Y1JAMv3Uy5-gRO1FX
+    dxLUdzRyQPGBy09sg>
+X-ME-Received: <xmr:uDVPZuFE86PpJLOEU36neSnVeoH4lRrxcYSEWH4wEKiuqQhO41_2oo-5O4gv7gw90105esu4m1kVlQVrA0QoLoOGr5G9Y6dFIxp7kq8zJkZflZgT4Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeiiedgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhephedufedvudekveetudehveelteekgedutd
-    dujeelieeiheevtdeifeelieeitddtnecuffhomhgrihhnpehhthhtphgurdhshhdphhht
-    thhpqdgruhhthhdrshhhpdhhthhtphdqphhrohighidrshhhpdhhthhtphdqtghurhhlqd
-    hvvghrsghoshgvrdhshhdpthgvshhtqdhlihgsrdhshhenucevlhhushhtvghrufhiiigv
-    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:szVPZgDTXdQUzWzA8zGLWJSByfWgB4g00H8w0BoqAJ5A943LxzOB7A>
-    <xmx:szVPZlibyHdTsy5XgqIFODXndtGPuXmhjq8j8IawIPbbSPPL2971xQ>
-    <xmx:szVPZsrQAUKOkZsz03xZI_fPH408nYNwAOgeALeOke7oWGpBrZJ_xQ>
-    <xmx:szVPZojzMNWugZqk3AVFksIktBP2mMcNi4msKXjKDbxOcqY9ML5Urg>
-    <xmx:szVPZlY-fECsUZLcWZiCiDJDIq89OWcGeQeSaurbC7ZQpQ3e7zzW9MWV>
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:uDVPZvTlxUDiAJ6hsJgQ3gZli5QL6cseImVFkOMPdnoMN3zAL2Iixg>
+    <xmx:uDVPZjzlDzJW_sGAossBObNpsKq25SFqOmtGbyWk4Gkavh0fqSmyDg>
+    <xmx:uDVPZt4e73TZnClN6KQ_9Na_D9Cwyza3Y2jxn1gU1N4kA3FbsNr0UA>
+    <xmx:uDVPZgwq0Qqy1iO-GA_ykmU31cEVHWXAdxUfrTN925UJLj6taNwnNg>
+    <xmx:uDVPZso78CYuNfTlpo5hiOFs_AkM1mHigoBxvel6A_YONcK2BrPFTvC8>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 23 May 2024 08:25:23 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 23 May 2024 08:25:27 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ab52949b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 7a203ab3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 23 May 2024 12:25:16 +0000 (UTC)
-Date: Thu, 23 May 2024 14:25:20 +0200
+	Thu, 23 May 2024 12:25:21 +0000 (UTC)
+Date: Thu, 23 May 2024 14:25:25 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 02/20] transport-helper: fix leaking helper name
-Message-ID: <05fbadbae2184479c87c37675dde7bd79b3e32ab.1716465556.git.ps@pks.im>
+Subject: [PATCH 03/20] strbuf: fix leak when `appendwholeline()` fails with
+ EOF
+Message-ID: <d76079797f3a4ab55ee1dc6e6ee761dea021d70a.1716465556.git.ps@pks.im>
 References: <cover.1716465556.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,155 +81,79 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="W+z9vccuTVELJhqg"
+	protocol="application/pgp-signature"; boundary="+kbI2oJpHe1JON7Y"
 Content-Disposition: inline
 In-Reply-To: <cover.1716465556.git.ps@pks.im>
 
 
---W+z9vccuTVELJhqg
+--+kbI2oJpHe1JON7Y
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When initializing the transport helper in `transport_get()`, we
-allocate the name of the helper. We neither end up transferring
-ownership of the name, nor do we free it. The associated memory thus
-leaks.
-
-Fix this memory leak and mark now-passing tests as leak free.
+In `strbuf_appendwholeline()` we call `strbuf_getwholeline()` with a
+temporary buffer. In case the call returns an error we indicate this by
+returning EOF, but never release the temporary buffer. This can lead to
+a memory leak when the line has been partially filled. Fix this.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t0611-reftable-httpd.sh    | 1 +
- t/t5563-simple-http-auth.sh  | 1 +
- t/t5564-http-proxy.sh        | 1 +
- t/t5581-http-curl-verbose.sh | 1 +
- transport-helper.c           | 6 ++++--
- transport.c                  | 1 +
- 6 files changed, 9 insertions(+), 2 deletions(-)
+ strbuf.c              | 4 +++-
+ t/t1400-update-ref.sh | 2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/t/t0611-reftable-httpd.sh b/t/t0611-reftable-httpd.sh
-index 5e05b9c1f2..2805995cc8 100755
---- a/t/t0611-reftable-httpd.sh
-+++ b/t/t0611-reftable-httpd.sh
-@@ -2,6 +2,7 @@
-=20
- test_description=3D'reftable HTTPD tests'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-httpd.sh
-=20
-diff --git a/t/t5563-simple-http-auth.sh b/t/t5563-simple-http-auth.sh
-index 5d5caa3f58..4af796de67 100755
---- a/t/t5563-simple-http-auth.sh
-+++ b/t/t5563-simple-http-auth.sh
-@@ -2,6 +2,7 @@
-=20
- test_description=3D'test http auth header and credential helper interop'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-httpd.sh
-=20
-diff --git a/t/t5564-http-proxy.sh b/t/t5564-http-proxy.sh
-index 9da5134614..bb35b87071 100755
---- a/t/t5564-http-proxy.sh
-+++ b/t/t5564-http-proxy.sh
-@@ -2,6 +2,7 @@
-=20
- test_description=3D"test fetching through http proxy"
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-httpd.sh
-=20
-diff --git a/t/t5581-http-curl-verbose.sh b/t/t5581-http-curl-verbose.sh
-index cded79c16b..724f610054 100755
---- a/t/t5581-http-curl-verbose.sh
-+++ b/t/t5581-http-curl-verbose.sh
-@@ -4,6 +4,7 @@ test_description=3D'test GIT_CURL_VERBOSE'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
-diff --git a/transport-helper.c b/transport-helper.c
-index 780fcaf529..9820947ab2 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -22,7 +22,7 @@
- static int debug;
-=20
- struct helper_data {
--	const char *name;
-+	char *name;
- 	struct child_process *helper;
- 	FILE *out;
- 	unsigned fetch : 1,
-@@ -111,6 +111,7 @@ static void do_take_over(struct transport *transport)
- 	data =3D (struct helper_data *)transport->data;
- 	transport_take_over(transport, data->helper);
- 	fclose(data->out);
-+	free(data->name);
- 	free(data);
- }
-=20
-@@ -253,6 +254,7 @@ static int disconnect_helper(struct transport *transpor=
-t)
- 		close(data->helper->out);
- 		fclose(data->out);
- 		res =3D finish_command(data->helper);
-+		FREE_AND_NULL(data->name);
- 		FREE_AND_NULL(data->helper);
- 	}
- 	return res;
-@@ -1297,7 +1299,7 @@ static struct transport_vtable vtable =3D {
- int transport_helper_init(struct transport *transport, const char *name)
+diff --git a/strbuf.c b/strbuf.c
+index 0d929e4e19..e1076c9891 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -691,8 +691,10 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, i=
+nt term)
+ int strbuf_appendwholeline(struct strbuf *sb, FILE *fp, int term)
  {
- 	struct helper_data *data =3D xcalloc(1, sizeof(*data));
--	data->name =3D name;
-+	data->name =3D xstrdup(name);
+ 	struct strbuf line =3D STRBUF_INIT;
+-	if (strbuf_getwholeline(&line, fp, term))
++	if (strbuf_getwholeline(&line, fp, term)) {
++		strbuf_release(&line);
+ 		return EOF;
++	}
+ 	strbuf_addbuf(sb, &line);
+ 	strbuf_release(&line);
+ 	return 0;
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index ec3443cc87..bbee2783ab 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -4,6 +4,8 @@
+ #
 =20
- 	transport_check_allowed(name);
+ test_description=3D'Test git update-ref and basic ref logging'
++
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
 =20
-diff --git a/transport.c b/transport.c
-index 0ad04b77fd..83ddea8fbc 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1176,6 +1176,7 @@ struct transport *transport_get(struct remote *remote=
-, const char *url)
- 		int len =3D external_specification_len(url);
- 		char *handler =3D xmemdupz(url, len);
- 		transport_helper_init(ret, handler);
-+		free(handler);
- 	}
-=20
- 	if (ret->smart_options) {
+ Z=3D$ZERO_OID
 --=20
 2.45.1.216.g4365c6fcf9.dirty
 
 
---W+z9vccuTVELJhqg
+--+kbI2oJpHe1JON7Y
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZPNa8ACgkQVbJhu7ck
-PpTWVg/9GxfsyrZnNCdi9R9wwhBJ0aVfMVThO9r4QbrgpK41btbdQSJYQOCMnDxm
-RaDq9CkzOhE01vXasSVda9Xl7hKWjRSCL5R7JNtxwLwARrEQkolZ8B2xY0IsYah8
-KGhfeGfNF9gvU3s0W5aGG80awHkjbanzZq1uBJYCgpGBknyZTTkS4NHG2kpSAhKZ
-JibolhTArBW+8qPcYutSUwVcOsrwsA3UCYaaejss3H4n3JyG+l45admEcluNE3qD
-9CozDtRM+t/l5J5lgmRyd/PwM7oa37vjP4gS3L94EXBgAMX0KcabAGtssiq7XGjv
-Vv3Gz/e+T8YBq7b8oka7xAYmQYmrYmISQb5a7H67GrgGeVcRo51h5kVw7gYpvrqc
-W7Mu6svaSd48621o0KtVzq9VVTXntkuDYCZuw7zjWGNAoDHhFIBJJ8wgIEPsj5Vy
-DlDp8ixs2ben+JGp29khZvGvCWdInyn2gxnMKxD8QfAxdodVYzZBlaN5GIQtCnRV
-cGoeo6sYpwIStpwivquUpRTr4/bqIVZc75GQAhvNUs6Okiu/TDKfjoBM4MccVH7/
-lLrVg/OSRbP86Fz5tYOOVBN+az9SdP0i4F4c4Arw5uc6sgT46LG9Np/vopWNaifL
-DWcuzlNtsIQDkUaNOzSR5f9rkIRRda8Akq3u29V8dXuiFu4eLwA=
-=wGMN
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZPNbQACgkQVbJhu7ck
+PpRa0Q//VqshMhJus0AvU3sGBImIuabcO370LFxtLfRT9Mqb98+pP5CeJTAKIcFQ
+1wEP6Fgq1QatK//Ki4+ec+aDomVyjykN+sl3B6h9kKETKjk8b1wogZakELCU3/eq
+1nAYH0H4P2C+f0cwvcENISg8c4YR2sXUDxa2mBAbrSnLEWHoiKxUIr5eWjgxKwil
+EOjv8stVoaRdsyw1WG6LizNpNhfhQFUSNPEAUw7oeNheUmKS982hY5PPbKw3kn88
+VaLQY2gueLOSCQM3/z8BJc8O0flRLNYx+iRYhPKTPBg3y8Ztv/0Eger2Asb7zPd0
+em+tXbwOXXvc2FqdBd9SjdFbNgu1LjDK42OckCAKZygvpVfSjd3cNvQp9llkmqq9
+4YVf0LWWU/3IC1zy4SXfmUZKV12XEY1Wpv1Bo9wpOjaVLNCIYWnUV0kFbk+DEWHp
+BXK5TbsphBEMoqg9eLrzOm2hkZwCEe0e3sREMAtQZ8pvgauSjgiUDrWA0z8GXcm7
+EAXEwY7bNq0DpkNLWVUVi5uF2LtuPtYNlm38tcFyi5DnRzgzLyYVF1d42oM7RCL7
+8va0zFdqe6Xb5UTCdi1iyl51+Roa8Nl8htD0Z54iy+/7BV59fs3RdfDHwOhAbhGD
+62DUzw/VW/BPica+POueReG4KJIU+DpBvMxcCEtNqsLtYmLvcjs=
+=oyQS
 -----END PGP SIGNATURE-----
 
---W+z9vccuTVELJhqg--
+--+kbI2oJpHe1JON7Y--
