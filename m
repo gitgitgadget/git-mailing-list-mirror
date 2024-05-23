@@ -1,68 +1,84 @@
-Received: from tortuga.telka.sk (tortuga.telka.sk [185.14.234.118])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4AAAD2C
-	for <git@vger.kernel.org>; Thu, 23 May 2024 22:45:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.14.234.118
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1324A84DE9
+	for <git@vger.kernel.org>; Thu, 23 May 2024 22:50:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716504348; cv=none; b=ZBleG5IGcxgL2eCzXJ+GUi4AT/aY7cqSYFe2GY8MMXQL6iXXyJA3i1FTBvy3FzRqQqJMXZLnoINRa9UDWLZEUq3dhlBqqK/gXMzF4FSZpVGcLyVDjXqzmVzOOoRjUaZpFMJHxhMEpiBTjr06Smak8HDeD3BZmpbL0rHKicLb/Vg=
+	t=1716504614; cv=none; b=BxWL+V9Eq39+JaXYxNQqzkV00oKSQUhMdcp3RyHhPpH3iqQAcHdSZuxhDu2gupFRGgcxegtUsL0krhwSQBHCbpJT/2yLXaI4Xw8Lec0WSnmt3NNteXHDullTkqhARWGZ9iNmM+cb8/vO+Lm6o+9a38ZuO3lkPHvdJGPUSwBX+to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716504348; c=relaxed/simple;
-	bh=aw3ScFdMJ4CMmD1+IbG9j26OO70UijxCyHrHnakddRY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yh+9WKMWSFPs0wJU5OfwvHXRSwEXr1EgDVVylzSXHEskCtrHRGKGcfZrWYsnsy7Cjz/9Cs8nuDkDsf/WPFN3fxeEJpqH1udvmkhJRjSgZtbvIQqoQAZDr7WPH6+5iIkgskYc4mZVJFiVCTrvs0GVLxB3bIZpEGQ6l5vGa7No7Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=telka.sk; spf=pass smtp.mailfrom=telka.sk; arc=none smtp.client-ip=185.14.234.118
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=telka.sk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=telka.sk
-Received: (qmail 17132 invoked from network); 23 May 2024 22:45:43 -0000
-Received: from telcontar.in.telka.sk (HELO telcontar) (marcel@10.0.0.10)
-  by tortuga.telka.sk with ESMTPSA (DHE-RSA-AES256-GCM-SHA384 encrypted); 23 May 2024 22:45:43 -0000
-Date: Fri, 24 May 2024 00:45:42 +0200
-From: Marcel Telka <marcel@telka.sk>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] t/t9902-completion.sh: backslashes in echo
-Message-ID: <Zk_HFkm2aymJXGZU@telcontar>
-References: <Zkdk7R9GIfsyQjkc@telcontar>
- <xmqqsey8tnny.fsf@gitster.g>
- <Zk-nswiCF-SnyxLE@telcontar>
- <CAPig+cRddr=JTVvkh5xkptag_1C5-z1t9Pzr_OdcGFSVwRg3vg@mail.gmail.com>
- <Zk-5YCKSO32vPKDP@telcontar>
- <Zk_FiYd8uk-P5jIi@telcontar>
+	s=arc-20240116; t=1716504614; c=relaxed/simple;
+	bh=q59DK4ZaJLnqP5DxiScfmcsSb2xqpwHKXMXvxKKH1vM=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=EXIVvilz/ONV/Wwky1XVwMzM3MxmE/GaaZRlbNEBi2a5Uzo2xEduw6WUCPOBDQ4pyO7QyeLML32A6KJY/3Rcxv2m/ED8V2aEjGUYC0NrvxNVBbkeXbat7zO06DTUM/x/cMfIp5oMFOBmgQ4cJbLE7nIqB+K3Ex3x2RPH6+efD+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lJ0fN/Hx; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lJ0fN/Hx"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 52312236A8;
+	Thu, 23 May 2024 18:50:12 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-transfer-encoding;
+	 s=sasl; bh=q59DK4ZaJLnqP5DxiScfmcsSb2xqpwHKXMXvxKKH1vM=; b=lJ0f
+	N/HxrrYeYGkYAg7xzhj/Wo09m+N+wtyCgoMwfJq1+cSaTNhsjGG4BO4Z/VdAkjeD
+	1mGrtC0CZ2aA5slalBL6jGtxZCgNy5+8+YdJBLw3v9cxYDg3RBEGmQjoOtshZd0N
+	3Zv5k+b6BR2pS9qoYWoGt1O4WxerGUVZLlpLkbk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4C3A9236A7;
+	Thu, 23 May 2024 18:50:12 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0F47A236A6;
+	Thu, 23 May 2024 18:50:09 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH 0/2] give range-diff at the end of single patch output
+Date: Thu, 23 May 2024 15:50:05 -0700
+Message-ID: <20240523225007.2871766-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.45.1-246-gb9cfe4845c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zk_FiYd8uk-P5jIi@telcontar>
+X-Pobox-Relay-ID:
+ CE4C4EFE-1956-11EF-B849-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 24, 2024 at 12:39:06AM +0200, Marcel Telka wrote:
-> On Thu, May 23, 2024 at 11:47:13PM +0200, Marcel Telka wrote:
-> > Interesting.  I came to this issue because the test failed here due to
-> > the echo.  So apparently the re-run under bash didn't happen here for
-> > some reason or bash's echo behaved differently?  I need to dig into it
-> > again to find what's going on.
-> 
-> Okay, I found the cause.  Bash on OpenIndiana is compiled with
-> --enable-xpg-echo-default so escape sequencies are expanded by default.
-> 
-> > OTOH, it seems that the fix is maybe not needed because it is solving a
-> > non-problem.
-> 
-> There is a problem, but definitely the justification in the commit
-> message is not accurate because we do not care about POSIX here at all.
-> Also maybe it would be better/simpler to use `echo -E` instead of
-> `printf`, but I'm not sure here.
+When running "format-patch" on a multiple patch series, the output
+coming from "--interdiff" and "--range-diff" options is inserted
+after the "shortlog" list of commits and the overall diffstat.
 
-Reading again the commit message I proposed[1] I think it is okay.
+The idea is that shortlog/diffstat are shorter and with denser
+information content, which gives a better overview before the
+readers dive into more details of range/inter diff.
 
-[1] https://lore.kernel.org/git/Zkdk7R9GIfsyQjkc@telcontar/
+When working on a single patch, however, we stuff the inter/range
+diff output before the actual patch, next to the diffstat.  This
+pushes down the patch text way down with inter/range diff output,
+distracting readers.
 
--- 
-+-------------------------------------------+
-| Marcel Telka   e-mail:   marcel@telka.sk  |
-|                homepage: http://telka.sk/ |
-+-------------------------------------------+
+Move the inter/range diff output to the very end of the output,
+after all the patch text is shown.
+
+The first patch is a no-op refactoring, the second patch makes the
+actual behaviour change.
+
+Junio C Hamano (2):
+  show_log: factor out interdiff/range-diff generation
+  format-patch: move range/inter diff at the end of a single patch
+    output
+
+ log-tree.c              | 89 ++++++++++++++++++++++-------------------
+ t/t4014-format-patch.sh | 17 +++++---
+ 2 files changed, 59 insertions(+), 47 deletions(-)
+
+--=20
+2.45.1-246-gb9cfe4845c
+
