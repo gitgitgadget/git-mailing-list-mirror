@@ -1,130 +1,88 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C4A2628D
-	for <git@vger.kernel.org>; Thu, 23 May 2024 17:56:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918912628D
+	for <git@vger.kernel.org>; Thu, 23 May 2024 17:59:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716487008; cv=none; b=I/RFdrLZUmkK5AnRMld+Oimz94oPdZ6PAWoG9xqDjLAqkPav4peWb+QMITMu0VJfMbfKAosdH1bBn/UKeLXQTGgN+4JtQy3m3By5QVJKZv7Ek761Arb9ICvBEang2yKNOZsc5z+7gSF5lRzoXjOCIFyjnCqFYp+A2Q804Clzr8c=
+	t=1716487160; cv=none; b=CtpRn2EdLf4kgSIV8/qCjM4p6Nao6lcOmMwqNnfEtDAkk5zL/B1+6hUhFS/M8kV8pr/de+LV14MdpSPWuVLKumURXqxPSIztNkQR/WK/WxZE73Hb0taMIgOxNntHz33m4O758cWJ6R44s1SbMmpcZcmJ1Fbtwp7rFh3Z09sqkhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716487008; c=relaxed/simple;
-	bh=Y1GjVns2uWBXmIqAjGqqGdn8RXWVX6oScj5rPzy6vAQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a8y4/4A0cSoaYuw+J9WCkPFPQDsZNZrUN4kGUfTunqD7WRw9SVfSGDOXTR8I91OERHf4S7iGOol+Y2mI/VbuaXxnHrKpauDmK+A8LMJeJVGwEELXQqDEzJH/+fiIp6zsPErXC3UWUfAT6wfqr+tTOxqqSwL1U87d35Y5C3mEDBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=GkXwLjN4; arc=none smtp.client-ip=209.85.160.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1716487160; c=relaxed/simple;
+	bh=RWvNs+YqEkvic81sypdiVI1yON3UySmtXnUviXKfv1Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EBNbutWX5QUBAKtTxgu3/9DsY4+bpknabZQt2oP6cZLmCHCPhSet350RNedsWzHX4BPNVbdcDVMzxfrcH87lHDtAoW+hv8TxeuusQ1pvBUBt3QKufo6vc11gsYjBuCiHxp/ijFTA8FXZdBrWXhtw/UHKBWQTAOPBfcHCF3ICJHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ViIG2h7x; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="GkXwLjN4"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-43e385a7589so11247961cf.3
-        for <git@vger.kernel.org>; Thu, 23 May 2024 10:56:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1716487005; x=1717091805; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y1GjVns2uWBXmIqAjGqqGdn8RXWVX6oScj5rPzy6vAQ=;
-        b=GkXwLjN45SFAskMSJX1NzLGBq5g8gEK/YPvNezJm6kqAvZJXwjt1dUb+e0C2wIopep
-         rfBmpdTgLKNs41SsjN7TiYWpOXUpV0QBmflrYbhQOg1UwaEodV/hdSLLFdxkIZMUOtWe
-         yBSBpu2qDMEnUbAiPCCCoTcenc6pQnsmy/68F5uuXYU4Myfbkh1F0wckrTubCWrWUVZX
-         fkb/RSjQGL68RKQuN8KXgF8VOzcxON4j0ZhO46gp7QOe/BpFI6gft3RIAGI54busV4v/
-         YiOgy7uxLxnd/9C7wLhXk70L3pqcPg33pbHV4f2M9tnXMEt8pzG0KQiHioFvp3jTclSm
-         kHzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716487005; x=1717091805;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Y1GjVns2uWBXmIqAjGqqGdn8RXWVX6oScj5rPzy6vAQ=;
-        b=QC60TR2nado9LHb0DO6zZBTiv/p6OPtbgzJU9wvBANNGC2bS1uvTi8zR3iP7VxiH7j
-         9QKLQ1ao/5TtxVjdag/OQdQMRpnZI8pT8f55GzxJrt3eD5ICI4X6aawoBaGRQR68v3As
-         prpEW6HaC7Hrp8HVUeY10Lm++/1+1Sh/oN/wISSFsfnsS8X7Sgbbsa63d2eHyXgi/uS7
-         dZtAj2Tg1wzacR/ddaIwSwqJ7WX1ysY2oeCjuxL/DJiaWPphX+TPH4ZHupcZUJTJ9CEY
-         fW21fZ61pehsZiH9MkAH29cCJFNheFwS1erJLrZRUVJgKPo3EX8KSGL4u0Q00Mq6yQwq
-         ZnCQ==
-X-Gm-Message-State: AOJu0Yz6zn3vD7SMCVWXiu+76ez7ls22nZA/UAtgPkmsCLQMCfrNTqDK
-	adOpX00Gmvw7O8ZriihbdeQd3sEisdIjhVVgMJHs+ckpJaSUrUR6hSU7dwMIGok=
-X-Google-Smtp-Source: AGHT+IFEKFcIxW2SyLnM8+W5Z17R+KRgmB8Y0+SKXu78/dHFiJSExjGdWZoe/g8e2e2naXjO/8mgdg==
-X-Received: by 2002:ac8:5a04:0:b0:43e:40bb:a0db with SMTP id d75a77b69052e-43f9e0f084amr55888851cf.54.1716487005018;
-        Thu, 23 May 2024 10:56:45 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43dfd760ca8sm176559761cf.14.2024.05.23.10.56.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 May 2024 10:56:44 -0700 (PDT)
-Date: Thu, 23 May 2024 13:56:43 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 17/30] pseudo-merge: implement support for selecting
- pseudo-merge commits
-Message-ID: <Zk+DW4uBXDSd5xAf@nand.local>
-References: <cover.1710972293.git.me@ttaylorr.com>
- <cover.1716318088.git.me@ttaylorr.com>
- <3029473c094b3edf51828b7a1d1acfc8e959ece6.1716318089.git.me@ttaylorr.com>
- <20240523101248.GB1308330@coredump.intra.peff.net>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ViIG2h7x"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 09412219BE;
+	Thu, 23 May 2024 13:59:18 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=RWvNs+YqEkvic81sypdiVI1yON3UySmtXnUviX
+	Kfv1Y=; b=ViIG2h7xMaBajM3r88o145Qh1AICT+KRE8GO6bVwhn4JCIG/YEY6xH
+	Y8Heh63t5zo2/jGIB9wrNU/VfJKHaDY3n1gNKQfOGbJ5REYbQcV94VNbXa/jcTcY
+	ErbKfjXJym7Ae7/rfLV6UfnVfNzRgsLBHlgtkD8pDEnN8eQ8HuRbo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 01FA3219BD;
+	Thu, 23 May 2024 13:59:18 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A0A3C219BC;
+	Thu, 23 May 2024 13:59:14 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Marcel Telka <marcel@telka.sk>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] t/t9902-completion.sh: backslashes in echo
+In-Reply-To: <Zkdk7R9GIfsyQjkc@telcontar> (Marcel Telka's message of "Fri, 17
+	May 2024 16:08:45 +0200")
+References: <Zkdk7R9GIfsyQjkc@telcontar>
+Date: Thu, 23 May 2024 10:59:13 -0700
+Message-ID: <xmqqsey8tnny.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240523101248.GB1308330@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2AA9716E-192E-11EF-AD14-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Thu, May 23, 2024 at 06:12:48AM -0400, Jeff King wrote:
-> On Tue, May 21, 2024 at 03:02:32PM -0400, Taylor Blau wrote:
+Marcel Telka <marcel@telka.sk> writes:
+
+> The usage of backslashes in echo is not portable.  Since some tests
+> tries to output strings containing '\b' it is safer to use printf
+> here.  The usage of printf instead of echo is also preferred by POSIX.
 >
-> > diff --git a/Documentation/config/bitmap-pseudo-merge.txt b/Documentation/config/bitmap-pseudo-merge.txt
-> > new file mode 100644
-> > index 00000000000..d4a2023b84a
-> > --- /dev/null
-> > +++ b/Documentation/config/bitmap-pseudo-merge.txt
-> > @@ -0,0 +1,90 @@
-> > +NOTE: The configuration options in `bitmapPseudoMerge.*` are considered
-> > +EXPERIMENTAL and may be subject to change or be removed entirely in the
-> > +future.
+> Signed-off-by: Marcel Telka <marcel@telka.sk>
+> ---
+>  t/t9902-completion.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> I'm happy to see this all marked as experimental. We really don't know
-> what selection approach will be best yet, and it's good not to lock
-> ourselves in.
->
-> I wasn't sure how this would format via asciidoc, since we're in the
-> middle of a list of variables. It...kind of looks like the note goes
-> under the previous entry (for attr.tree) in the text manpage. Though
-> looking at the docbook, I _think_ it's actually outside of that, and
-> it's just how the roff ends up indenting it?
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index 963f865f27..ed3d03367e 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -73,7 +73,7 @@ _get_comp_words_by_ref ()
+>  print_comp ()
+>  {
+>  	local IFS=$'\n'
+> -	echo "${COMPREPLY[*]}" > out
+> +	printf '%s\n' "${COMPREPLY[*]}" > out
+>  }
 
-I think that you're right that this is a roff indentation thing. Looking
-at the html version rendered by asciidoc, it places the NOTE in an
-admonition block [1] that is separate from the previous attr.tree entry.
+This has cooked in 'next' for some time already, and I'll merge this
+down to 'master' anyway, but this being a script very much speicific
+to bash whose built-in echo we are using, the portability argument
+of "echo" made in the proposed log message does not quite apply to
+this patch.
 
-> I don't know if it's worth spending too much time on, but maybe there's
-> an easy way to do it differently (I couldn't think of one).
->
-> This paragraph might also be a good place to refer to gitpacking(7).
-
-Great idea, thanks.
-
-> > diff --git a/Documentation/gitpacking.txt b/Documentation/gitpacking.txt
-> > index ff18077129b..1ed645ff910 100644
-> > --- a/Documentation/gitpacking.txt
-> > +++ b/Documentation/gitpacking.txt
->
-> Thanks, I think this new file and the content you added address all of
-> my documentation complaints.
-
-Good :-).
-
-> I think it will also be a good place to discuss bitmaps in general, but
-> you were IMHO wise to not do that in this series, which is already quite
-> big. :)
-
-Thanks. Yeah, I would like to add more about bitmaps and other advanced
-packing concepts in general to gitpacking(7), but let's do so outside of
-this already-gigantic series ;-).
-
-Thanks,
-Taylor
-
-[1]: https://docs.asciidoctor.org/asciidoc/latest/blocks/admonitions/
+Thanks.
