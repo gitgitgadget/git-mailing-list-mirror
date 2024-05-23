@@ -1,91 +1,172 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5739B21362
-	for <git@vger.kernel.org>; Thu, 23 May 2024 17:44:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF3517C77
+	for <git@vger.kernel.org>; Thu, 23 May 2024 17:50:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716486267; cv=none; b=jT1EsmkpFa+F1tLkCrSQS8jbpPR7S/U++wEQvEiVTTXDriBPN7xdrXu/XaCv3txC/OWKfDLP2ObTi5a/IrUiO+HAcuSrVgm1KbWILhzrxY/oQfS2uHblyG6nC8k07k3sqfcAvFtZNp/cQKcYm7do9i3fR7RJmi2ANPLOYN5nXTI=
+	t=1716486625; cv=none; b=a1FBSfBIikdGLRdl3l80zX+qXTAyl2w6V1mulRBrewjd3V3qbKLvWz+m+r6lmpQSnEfdp8IgFdDCKwMMHH/iy1FlR2DUNhPrNO6VxwuVPHNGKwLaKH1NbX3gN/sFSlW5X+lA5QT74rpNhiO7WcjYasaFLUGGvqDBX1iJ7navkV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716486267; c=relaxed/simple;
-	bh=33Kg85GuAoGpzwU0w4mkv3NpqdIC628tBziG1vlvqfw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IOrXqSKy9QHnD48f/Tx9us0bywtafut6geIzRzCtS6UOMdnptwIxcnde0+QLC1/Prnnis5OE+altV2RKQhpIEcEAWEgq+x4BAG322WIVp8oDSH1dnMM9hwT+AtJjGthuDTev3yTmxMCE5COr05cKQ0cS+TI4Bme1yQj/DnORfHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=W53XosRG; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716486625; c=relaxed/simple;
+	bh=gRC1KmQ+Sjp5Fu1F0XfUDD+OR7NrqwAG0sCMGzRDLwc=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=a8zk3HB6qhBhfxOdJeAsPv2IFHdoj+cWGmZ7Te+KX50JVW1prOy/DaTtZGBD1/F6h4bPv72fDDLMP2Dx75kv36hkEGVgyrUfr1Xe/y8DorrqVfQkVGuY+vFzO7JecAK7rBVYMI0xFM9IZGM4K5zSo8g9ou3Lq4o3rC5ntJv1U68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z2qvnciq; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W53XosRG"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 214C5324DC;
-	Thu, 23 May 2024 13:44:24 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=33Kg85GuAoGpzwU0w4mkv3NpqdIC628tBziG1v
-	lvqfw=; b=W53XosRGNhWdemWxQ8TxV1CctaqPPhLtdK/DYaRXM4uKjtciwfOsei
-	+QC/m3GRQEEqKX8OAc7r82YNEBYXfzilYghb3oyQPNNfhiO7ShiI5ypXzhJa48Xp
-	MMg+TTnT5T3Zbhfb5gZOUIecUhbhCidMFlyC1VttndnT4HerworUU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 198FC324DB;
-	Thu, 23 May 2024 13:44:24 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 68CEB324DA;
-	Thu, 23 May 2024 13:44:23 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/20] t: mark a bunch of tests as leak-free
-In-Reply-To: <0e9fa9ca7386f527903887242008b5b0443ada69.1716465556.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Thu, 23 May 2024 14:25:15 +0200")
-References: <cover.1716465556.git.ps@pks.im>
-	<0e9fa9ca7386f527903887242008b5b0443ada69.1716465556.git.ps@pks.im>
-Date: Thu, 23 May 2024 10:44:22 -0700
-Message-ID: <xmqqwmnktocp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z2qvnciq"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2e73359b8fbso50203101fa.2
+        for <git@vger.kernel.org>; Thu, 23 May 2024 10:50:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716486622; x=1717091422; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=XEhA/xkLCbYvzP5O5Ec8Hla4G950QVKTBeIdukSHJBQ=;
+        b=Z2qvnciq/gvzCwXf8ZDut+SKeQeFK6ultAHtKhUjeulAKqgt5SoE/TG9c/bPsoXeME
+         pOlJV2X8xQjotUV97sY5+xecg1XEnHSJ/lYmkQ9hxEzqnxN7vD9ZBwmNBkNtFtTZTSsK
+         F6VJb45ZsKOr0gfuBFluZztO4OvD/E57IrJyzm+DObSsp6FgIV3WkJU3RX8DOHxguEMr
+         /gxbolDCq4M6vm2y9SD5d8a/HdBvCzsanDk4mZzh8q72ilV9BwMulyQaYPe2iT5+hH/T
+         cYN5IPzOYG2mYLknRA5gXPbuZvkHs+2QZhVCiF/r8qU7aDQk0aWCwGSbweqhUk9bsIuC
+         ewhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716486622; x=1717091422;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XEhA/xkLCbYvzP5O5Ec8Hla4G950QVKTBeIdukSHJBQ=;
+        b=lggnHSQuNK90xJOykmNsaaVugK9U33MOSmGx2s7+PVLGpslMVn+1+iAzMGFBD5/iYQ
+         2898cqiqKcnMp+qEykFQ6It11FJfo8/5QxpBlRzZTpp8mCVDN5o8PZFZt/l/KmUQ1nRH
+         gDBsTNhj1uhVJMpQIIn2Of35sgm7DCklNyFJlZaoFqWDRvBJ8g9YN8lgPI15IpisF75N
+         +lNWBO94/rcf5Ns3tcDczfoJMsnzjhcK0sYnh9ZVBxLktruMaWgIfTBu13UdtyQWltZC
+         lUBvZHkUs4ZJ73rOxnZKMLJxclijx8Lca+qyF4ZO4XKO33k5nA+ztJwuRpfvbTabyKPs
+         WfsA==
+X-Gm-Message-State: AOJu0Yx//xS4zD9cBK7xFymRo0t7eERxXN6DziBMR4+RoGs/MKnkrdVq
+	Y6nTVUJhqNWax9e6BTHiz74GBA5llmwBQFDt0iO+BJdxXm2uxcAZx4iq7C+bXBUFtBy+fOiuwUG
+	tCKj9Wi8lu0S/XFEuSqn0GCv06FVTTt1+0xRVBg==
+X-Google-Smtp-Source: AGHT+IHgwd+mx5tXD7Oor6TfrXY8gwZ8CKWcR/EQiyDORmGsa2GEeYvIshkBJ2BRKBE3B6zsIhfh/wnt7aAeG1wujr8=
+X-Received: by 2002:a2e:9bc7:0:b0:2da:a73:4f29 with SMTP id
+ 38308e7fff4ca-2e9494fa890mr51221451fa.30.1716486621358; Thu, 23 May 2024
+ 10:50:21 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 23 May 2024 13:50:18 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqr0dsv6e8.fsf@gitster.g>
+References: <20240514124411.1037019-1-knayak@gitlab.com> <20240522090326.1268326-1-knayak@gitlab.com>
+ <xmqqbk4wy3ji.fsf@gitster.g> <CAOLa=ZS31CuL8kDODNfM5L8gXN6RUOG5uEP5Q9JzEuaxtLEZ8g@mail.gmail.com>
+ <xmqqr0dsv6e8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 177359FE-192C-11EF-B0AF-25B3960A682E-77302942!pb-smtp2.pobox.com
+Date: Thu, 23 May 2024 13:50:18 -0400
+Message-ID: <CAOLa=ZQq_ce8thcjxMitDt8s0aiqVUWt8A43ziU0Zd5F2Joorg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] update-ref: add symref support for --stdin
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Content-Type: multipart/mixed; boundary="000000000000540624061922af6c"
 
-Patrick Steinhardt <ps@pks.im> writes:
+--000000000000540624061922af6c
+Content-Type: text/plain; charset="UTF-8"
 
->   - t4153: Passes since 71c7916053 (apply: plug a leak in apply_data,
->     2024-04-23).
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
->   - t7006: Passes since at least Git v2.40. I did not care to go back
->     any further than that.
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>>
+>>>> The patches 1, 5 fix small issues in the reference backends. The other
+>>>> patches 2, 3, 4 & 6, each add one of the new sub-commands.
+>>>>
+>>>> The series is based off master, with 'kn/ref-transaction-symref' merged
+>>>> in. There seem to be no conflicts with 'next' or 'seen'.
+>>>
+>>> Wait.  There is something fishy going on.
+>>> ...
+>>> Is this actually a single patch submission of 9/9 alone?  Patches
+>>> 1-8/9 are all old ones that are in 'master' already.
+>>>
+>>> Puzzled...
+>>
+>> I think this is just a mess up in the range diff, I haven't changed
+>> anything locally. So adding the correct range diff here:
+>
+> Quite honestly, I care much less about the range-diff that is almost
+> unintelligible than the actual patches.  Your title line says 0/6,
+> your updated range-diff presumably have 1: to 6:?  As a sanity check
+> mechanism, the list of commits and the overall diffstat is a more
+> useful part in the cover letter message so that I (or any other
+> recipients) can use to compare against the list of messages that
+> appeared on the list.
+>
+> We may want to teach "format-patch --range-diff" to place the output
+> of range-diff _below_ the list of commits and the overall diffstat
+> in the cover letter (and at the end of the patch for a single patch
+> topic).
+>
 
-Since the base commit you chose to apply this step to (which is
-unknown to me) and the tip of 'master' today 4365c6fc (The sixth
-batch, 2024-05-20), we must have reintroduced more leaks.
+I usually manually add in the range-diff, which is probably where the
+error came from. I didn't even know about "format-patch --range-diff".
 
-$ SANITIZE=leak GIT_TEST_PASSING_SANITIZE_LEAK=true \
-  Meta/Make -j16 --test=4153,7006 test
+> I'll ignore the range-diff in the original cover letter and see if
+> the rest makes sense.
+>
+> Thanks.
 
-dies with
+It does use the same base as the previous revision, I rebased in place
+using 'rebase -i' and amended for fixes from the first review.
 
-    Test Summary Report
-    -------------------
-    t4153-am-resume-override-opts.sh (Wstat: 256 (exited 1) Tests: 5 Failed: 1)
-      Failed test:  2
-      Non-zero exit status: 1
-    t7006-pager.sh                  (Wstat: 256 (exited 1) Tests: 109 Failed: 6)
-      Failed tests:  14, 70-74
-      Non-zero exit status: 1
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Wait.  There is something fishy going on.
+>>
+>>> Range diff vs v1:
+>>>  1:  1bc4cc3fc4 =  1:  1bc4cc3fc4 refs: accept symref values in `ref_transac...
+>>>...
+>>>  8:  4865707bda =  8:  4865707bda refs: remove `create_symref` and associated dead code
+>>>  9:  4cb67dce7c !  9:  2bbdeff798 refs: create and use `ref_update_ref_must_exist()`
+>> ...
+>> I am confused why we are seeing a total reroll of such an old topic.
+>>
+>> Also you have one more patch at the end.  Neither the before or
+>> after version of 9/9.
+>>
+>> Is this actually a single patch submission of 9/9 alone?  Patches
+>> 1-8/9 are all old ones that are in 'master' already.
+>
+> And then there is a mystery of this v2 being a 6-patch series.
+> Perhpas a wrong range-diff was pasted into it?  If this were truly a
+> total reroll of the previous 8-patch series with an extra step
+> appended to the end, it would have been a 9-patch series, not 6.
+>
+> Even puzzled...
 
-Here, Meta/Make is a thin wrapper around "make", I primarily use it
-for its --test=only,these,tests feature, which is an opposite of
-GIT_SKIP_TESTS. (Meta/ is a separate checkout of the 'todo' branch
-of this project, that keeps things like whats-cooking.txt and
-miscellaneous tools I use to manage the project).
+The v1 of this series is also a 6-patch series, this is not a re-roll of
+the earlier series 'kn/ref-transaction-symref' (which is already in
+next). This is based on top of it.
 
+Sorry for the confusion though.
+
+--000000000000540624061922af6c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 9eff86022cc7e999_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aUGdkZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN2FDQy85VDQrNkNGL1huMkZIVks1Z1JTQ0RBeEtTQwpYdUkrZHdBdzBP
+elBKa0o5TzFzWFh0TGxoVm8zNVhJK2pjQnJrZnZhSWhzN1JXdkFlNVR6Y1Z3NW1FWXFleGZLCkpK
+R1dEMy9iRkJyWis2d3hCVUdFd0Q3VktoZWFVWjlQZDhVQzFNYUQrQ2J2bCtScWk2VlhDN3FiTEdJ
+ZHYrbTgKbFlnTitUN2JWQTRyU2F0NVNSMEROS25hNVFtSTV1b3lPTXFWN0l2eTlDOTFHSUNPU0Np
+ajJQVkM3RGxKTFdURwpKblZtdjk3Z0Fhek9yb2sramMxcnNoQnRmNTIraW50UjZnYVI1Vm15QUJa
+a1B0bndLOWpEa04xTlp2elhFVDF5CmxwTDVDWDZRU0x2NjNxZGNQQ1NHRWlDcWxDOEVDYm1LVG1Y
+UWQrL3JqUXlCZXN5UkZKalkveDFJRE5ubzRNNWEKaFJ4OW50WEVFdk9JVTJjdXZLR3V3b294NTBD
+Nkh0aEdTZm02NTBLaThnOWprZi9TWThadDFQNFRhdHVVU1NiYgpGWGtzdE0wdVE4TjUwcG1zRnR5
+Nng0eWpKcDRtM3hhRDRNR2dyVWovKzdXK21KaE9LcDRMUXprQnBCb1JBRUZSCnJpOXVIanhXWFZK
+YW5GcjJ1Q09kTEFYcjRHZno1VWJhZjJqS0xERT0KPTRVWFUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000540624061922af6c--
