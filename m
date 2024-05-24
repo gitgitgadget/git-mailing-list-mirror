@@ -1,48 +1,47 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E1F42ABE
-	for <git@vger.kernel.org>; Fri, 24 May 2024 19:47:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF3E42ABE
+	for <git@vger.kernel.org>; Fri, 24 May 2024 19:47:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716580064; cv=none; b=aZ32TDEZpktvKcMb7grogXeiCHVsDRsgsgDHRLIyq21DItu/jsahn3n7FAb32m6KtiDoffxFb4Uoz41mWbQxh0rD/A20JwNzwf5kvsjcfONHuZOMN2cggnj65nC8KstT6fCWgv7exfChTE6NXyzZvGQDEbTwML5XWgFrRQJUnCc=
+	t=1716580068; cv=none; b=Y2oPipatppNiMaRwA6wHbtqYCqPX9AXpRrQXYBSUtGstX02Z2hsnopwdQ/VgqegcKEVU1nvVE75gbijAYA/omww6gID9qc2bkECgC5Xp0bPM1nmcYW6nH58wQ4OlqifVrKL5Axbn5BEMkbdOkW1xVg6LwMl+YxS1VlCdqRscduw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716580064; c=relaxed/simple;
-	bh=EDYBG0W1akKT89oERc/3TSS2QITf4+90in66otYU/UY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oY55iN7Tf5V6I/VDq+H2J3NapACOa4hQV0gQPl9coqKqlgprRiZ7GSIN43KuiaMXRkK5skAbel0V0o+QSG7UKqCIS0o2EglASf5cYzyjfMacN6q+sW5lHMl3JOW9tp1d4x2b2NYSXIm8/TCc6rZMycb0cC+FUra39kv36HueYew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DuyXBjN2; arc=none smtp.client-ip=64.147.108.70
+	s=arc-20240116; t=1716580068; c=relaxed/simple;
+	bh=W2Ekx/nKXOpu/DWRVJH8tiwaMOQQxwcHUrL++fHOwa8=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=rVDQWcfr7aIdsPPoL3HNjCAQOJAZORc03jd0wCx9idlG7uAoP3B8o/zqc9aGZDc2DbOsdm2cz+qCY3Z6LAFIeN7sOQ+57vGmdRjp/WKu9lx1M/G/R/rsPKhKFrxeDqGeZtxzrrXSw364UyYtGacFaFiMRjoUOCBqg+jV2N68eVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jZkFMXLA; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DuyXBjN2"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 646AA2B2B9;
-	Fri, 24 May 2024 15:47:42 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jZkFMXLA"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6B138276E9;
+	Fri, 24 May 2024 15:47:46 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=EDYBG0W1akKT89oERc/3TSS2Q
-	ITf4+90in66otYU/UY=; b=DuyXBjN2OUSZbOpQT0HqfGx9EMotJFsZY0IY5WG1x
-	OfFYCRd5Pz7sZ3LpwDRC4CSVTm78VBsPFQ8HNJNUTn1BFpxTs0J0U8To4naONszx
-	GYFF5//zqEfcXuY6Y9OxyNPDFwwjq6eVcR4kmPbfFDwR/9Ppi/u1BW86jSaJP+ca
-	Ic=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5AFD92B2B8;
-	Fri, 24 May 2024 15:47:42 -0400 (EDT)
+	:content-transfer-encoding; s=sasl; bh=W2Ekx/nKXOpu/DWRVJH8tiwaM
+	OQQxwcHUrL++fHOwa8=; b=jZkFMXLA5AlL1LpVsUTFAbUnRo9NFaw4T1uxlxEWn
+	1npEslZ8r0RvJL7iQeJcB7pOQ3YPcTPNM3JYERAB/KHOA0pwKtm+uRNE5iM2mbFc
+	Irj+VB0F/p1oIDaA+cS+lt9fIpb7RE/L+N32uti/H56nhWZdf23xGXFut2X+isFy
+	sg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 630FE276E8;
+	Fri, 24 May 2024 15:47:46 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BEC092B2B7;
-	Fri, 24 May 2024 15:47:41 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 83F1C276E5;
+	Fri, 24 May 2024 15:47:43 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 11/12] Revert "Add a helper function to compare file contents"
-Date: Fri, 24 May 2024 12:47:14 -0700
-Message-ID: <20240524194715.695916-12-gitster@pobox.com>
+Subject: [PATCH v2 12/12] Revert "fsck: warn about symlink pointing inside a gitdir"
+Date: Fri, 24 May 2024 12:47:15 -0700
+Message-ID: <20240524194715.695916-13-gitster@pobox.com>
 X-Mailer: git-send-email 2.45.1-246-gb9cfe4845c
 In-Reply-To: <20240524194715.695916-1-gitster@pobox.com>
 References: <20240524194715.695916-1-gitster@pobox.com>
@@ -53,191 +52,238 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-Pobox-Relay-ID:
- 7B9F84AE-1A06-11EF-B146-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 7CAB83CA-1A06-11EF-A4F3-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-
-Now that during a `git clone`, the hooks' contents are no longer
-compared to the templates' files', the caller for which the
-`do_files_match()` function was introduced is gone, and therefore this
-function can be retired, too.
-
-This reverts commit 584de0b4c23 (Add a helper function to compare file
-contents, 2024-03-30).
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+This reverts commit a33fea08 (fsck: warn about symlink pointing
+inside a gitdir, 2024-04-10), which warns against symbolic links
+commonly created by git-annex.
 ---
- cache.h                    | 14 ---------
- copy.c                     | 58 --------------------------------------
- t/helper/test-path-utils.c | 10 -------
- t/t0060-path-utils.sh      | 41 ---------------------------
- 4 files changed, 123 deletions(-)
+ Documentation/fsck-msgids.txt | 12 --------
+ fsck.c                        | 56 -----------------------------------
+ fsck.h                        | 12 --------
+ t/t1450-fsck.sh               | 37 -----------------------
+ 4 files changed, 117 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 16b34799bf..8c5fb1e1ba 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1785,20 +1785,6 @@ int copy_fd(int ifd, int ofd);
- int copy_file(const char *dst, const char *src, int mode);
- int copy_file_with_time(const char *dst, const char *src, int mode);
+diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.tx=
+t
+index b06ec385af..12eae8a222 100644
+--- a/Documentation/fsck-msgids.txt
++++ b/Documentation/fsck-msgids.txt
+@@ -157,18 +157,6 @@
+ `nullSha1`::
+ 	(WARN) Tree contains entries pointing to a null sha1.
 =20
--/*
-- * Compare the file mode and contents of two given files.
-- *
-- * If both files are actually symbolic links, the function returns 1 if =
-the link
-- * targets are identical or 0 if they are not.
-- *
-- * If any of the two files cannot be accessed or in case of read failure=
-s, this
-- * function returns 0.
-- *
-- * If the file modes and contents are identical, the function returns 1,
-- * otherwise it returns 0.
-- */
--int do_files_match(const char *path1, const char *path2);
+-`symlinkPointsToGitDir`::
+-	(WARN) Symbolic link points inside a gitdir.
 -
- void write_or_die(int fd, const void *buf, size_t count);
- void fsync_or_die(int fd, const char *);
- int fsync_component(enum fsync_component component, int fd);
-diff --git a/copy.c b/copy.c
-index 8492f6fc83..4de6a110f0 100644
---- a/copy.c
-+++ b/copy.c
-@@ -65,61 +65,3 @@ int copy_file_with_time(const char *dst, const char *s=
-rc, int mode)
- 		return copy_times(dst, src);
- 	return status;
- }
+-`symlinkTargetBlob`::
+-	(ERROR) A non-blob found instead of a symbolic link's target.
 -
--static int do_symlinks_match(const char *path1, const char *path2)
--{
--	struct strbuf buf1 =3D STRBUF_INIT, buf2 =3D STRBUF_INIT;
--	int ret =3D 0;
+-`symlinkTargetLength`::
+-	(WARN) Symbolic link target longer than maximum path length.
 -
--	if (!strbuf_readlink(&buf1, path1, 0) &&
--	    !strbuf_readlink(&buf2, path2, 0))
--		ret =3D !strcmp(buf1.buf, buf2.buf);
+-`symlinkTargetMissing`::
+-	(ERROR) Unable to read symbolic link target's blob.
 -
--	strbuf_release(&buf1);
--	strbuf_release(&buf2);
--	return ret;
--}
--
--int do_files_match(const char *path1, const char *path2)
--{
--	struct stat st1, st2;
--	int fd1 =3D -1, fd2 =3D -1, ret =3D 1;
--	char buf1[8192], buf2[8192];
--
--	if ((fd1 =3D open_nofollow(path1, O_RDONLY)) < 0 ||
--	    fstat(fd1, &st1) || !S_ISREG(st1.st_mode)) {
--		if (fd1 < 0 && errno =3D=3D ELOOP)
--			/* maybe this is a symbolic link? */
--			return do_symlinks_match(path1, path2);
--		ret =3D 0;
--	} else if ((fd2 =3D open_nofollow(path2, O_RDONLY)) < 0 ||
--		   fstat(fd2, &st2) || !S_ISREG(st2.st_mode)) {
--		ret =3D 0;
--	}
--
--	if (ret)
--		/* to match, neither must be executable, or both */
--		ret =3D !(st1.st_mode & 0111) =3D=3D !(st2.st_mode & 0111);
--
--	if (ret)
--		ret =3D st1.st_size =3D=3D st2.st_size;
--
--	while (ret) {
--		ssize_t len1 =3D read_in_full(fd1, buf1, sizeof(buf1));
--		ssize_t len2 =3D read_in_full(fd2, buf2, sizeof(buf2));
--
--		if (len1 < 0 || len2 < 0 || len1 !=3D len2)
--			ret =3D 0; /* read error or different file size */
--		else if (!len1) /* len2 is also 0; hit EOF on both */
--			break; /* ret is still true */
--		else
--			ret =3D !memcmp(buf1, buf2, len1);
--	}
--
--	if (fd1 >=3D 0)
--		close(fd1);
--	if (fd2 >=3D 0)
--		close(fd2);
--
--	return ret;
--}
-diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
-index 0e0de21807..f69709d674 100644
---- a/t/helper/test-path-utils.c
-+++ b/t/helper/test-path-utils.c
-@@ -495,16 +495,6 @@ int cmd__path_utils(int argc, const char **argv)
- 		return !!res;
+ `treeNotSorted`::
+ 	(ERROR) A tree is not properly sorted.
+=20
+diff --git a/fsck.c b/fsck.c
+index b85868e122..47eaeedd70 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -636,8 +636,6 @@ static int fsck_tree(const struct object_id *tree_oid=
+,
+ 				retval +=3D report(options, tree_oid, OBJ_TREE,
+ 						 FSCK_MSG_MAILMAP_SYMLINK,
+ 						 ".mailmap is a symlink");
+-			oidset_insert(&options->symlink_targets_found,
+-				      entry_oid);
+ 		}
+=20
+ 		if ((backslash =3D strchr(name, '\\'))) {
+@@ -1230,56 +1228,6 @@ static int fsck_blob(const struct object_id *oid, =
+const char *buf,
+ 		}
  	}
 =20
--	if (argc =3D=3D 4 && !strcmp(argv[1], "do_files_match")) {
--		int ret =3D do_files_match(argv[2], argv[3]);
+-	if (oidset_contains(&options->symlink_targets_found, oid)) {
+-		const char *ptr =3D buf;
+-		const struct object_id *reported =3D NULL;
 -
--		if (ret)
--			printf("equal\n");
--		else
--			printf("different\n");
--		return !ret;
+-		oidset_insert(&options->symlink_targets_done, oid);
+-
+-		if (!buf || size > PATH_MAX) {
+-			/*
+-			 * A missing buffer here is a sign that the caller found the
+-			 * blob too gigantic to load into memory. Let's just consider
+-			 * that an error.
+-			 */
+-			return report(options, oid, OBJ_BLOB,
+-					FSCK_MSG_SYMLINK_TARGET_LENGTH,
+-					"symlink target too long");
+-		}
+-
+-		while (!reported && ptr) {
+-			const char *p =3D ptr;
+-			char c, *slash =3D strchrnul(ptr, '/');
+-			char *backslash =3D memchr(ptr, '\\', slash - ptr);
+-
+-			c =3D *slash;
+-			*slash =3D '\0';
+-
+-			while (!reported && backslash) {
+-				*backslash =3D '\0';
+-				if (is_ntfs_dotgit(p))
+-					ret |=3D report(options, reported =3D oid, OBJ_BLOB,
+-						      FSCK_MSG_SYMLINK_POINTS_TO_GIT_DIR,
+-						      "symlink target points to git dir");
+-				*backslash =3D '\\';
+-				p =3D backslash + 1;
+-				backslash =3D memchr(p, '\\', slash - p);
+-			}
+-			if (!reported && is_ntfs_dotgit(p))
+-				ret |=3D report(options, reported =3D oid, OBJ_BLOB,
+-					      FSCK_MSG_SYMLINK_POINTS_TO_GIT_DIR,
+-					      "symlink target points to git dir");
+-
+-			if (!reported && is_hfs_dotgit(ptr))
+-				ret |=3D report(options, reported =3D oid, OBJ_BLOB,
+-					      FSCK_MSG_SYMLINK_POINTS_TO_GIT_DIR,
+-					      "symlink target points to git dir");
+-
+-			*slash =3D c;
+-			ptr =3D c ? slash + 1 : NULL;
+-		}
 -	}
 -
- 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
- 		argv[1] ? argv[1] : "(there was none)");
- 	return 1;
-diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index 73d0e1a7f1..68e29c904a 100755
---- a/t/t0060-path-utils.sh
-+++ b/t/t0060-path-utils.sh
-@@ -560,45 +560,4 @@ test_expect_success !VALGRIND,RUNTIME_PREFIX,CAN_EXE=
-C_IN_PWD '%(prefix)/ works'
- 	test_cmp expect actual
+ 	return ret;
+ }
+=20
+@@ -1371,10 +1319,6 @@ int fsck_finish(struct fsck_options *options)
+ 			  FSCK_MSG_GITATTRIBUTES_MISSING, FSCK_MSG_GITATTRIBUTES_BLOB,
+ 			  options, ".gitattributes");
+=20
+-	ret |=3D fsck_blobs(&options->symlink_targets_found, &options->symlink_=
+targets_done,
+-			  FSCK_MSG_SYMLINK_TARGET_MISSING, FSCK_MSG_SYMLINK_TARGET_BLOB,
+-			  options, "<symlink-target>");
+-
+ 	return ret;
+ }
+=20
+diff --git a/fsck.h b/fsck.h
+index 130fa8d8f9..fcecf4101c 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -63,8 +63,6 @@ enum fsck_msg_type {
+ 	FUNC(GITATTRIBUTES_LARGE, ERROR) \
+ 	FUNC(GITATTRIBUTES_LINE_LENGTH, ERROR) \
+ 	FUNC(GITATTRIBUTES_BLOB, ERROR) \
+-	FUNC(SYMLINK_TARGET_MISSING, ERROR) \
+-	FUNC(SYMLINK_TARGET_BLOB, ERROR) \
+ 	/* warnings */ \
+ 	FUNC(EMPTY_NAME, WARN) \
+ 	FUNC(FULL_PATHNAME, WARN) \
+@@ -74,8 +72,6 @@ enum fsck_msg_type {
+ 	FUNC(NULL_SHA1, WARN) \
+ 	FUNC(ZERO_PADDED_FILEMODE, WARN) \
+ 	FUNC(NUL_IN_COMMIT, WARN) \
+-	FUNC(SYMLINK_TARGET_LENGTH, WARN) \
+-	FUNC(SYMLINK_POINTS_TO_GIT_DIR, WARN) \
+ 	/* infos (reported as warnings, but ignored by default) */ \
+ 	FUNC(BAD_FILEMODE, INFO) \
+ 	FUNC(GITMODULES_PARSE, INFO) \
+@@ -143,8 +139,6 @@ struct fsck_options {
+ 	struct oidset gitmodules_done;
+ 	struct oidset gitattributes_found;
+ 	struct oidset gitattributes_done;
+-	struct oidset symlink_targets_found;
+-	struct oidset symlink_targets_done;
+ 	kh_oid_map_t *object_names;
+ };
+=20
+@@ -154,8 +148,6 @@ struct fsck_options {
+ 	.gitmodules_done =3D OIDSET_INIT, \
+ 	.gitattributes_found =3D OIDSET_INIT, \
+ 	.gitattributes_done =3D OIDSET_INIT, \
+-	.symlink_targets_found =3D OIDSET_INIT, \
+-	.symlink_targets_done =3D OIDSET_INIT, \
+ 	.error_func =3D fsck_error_function \
+ }
+ #define FSCK_OPTIONS_STRICT { \
+@@ -164,8 +156,6 @@ struct fsck_options {
+ 	.gitmodules_done =3D OIDSET_INIT, \
+ 	.gitattributes_found =3D OIDSET_INIT, \
+ 	.gitattributes_done =3D OIDSET_INIT, \
+-	.symlink_targets_found =3D OIDSET_INIT, \
+-	.symlink_targets_done =3D OIDSET_INIT, \
+ 	.error_func =3D fsck_error_function, \
+ }
+ #define FSCK_OPTIONS_MISSING_GITMODULES { \
+@@ -174,8 +164,6 @@ struct fsck_options {
+ 	.gitmodules_done =3D OIDSET_INIT, \
+ 	.gitattributes_found =3D OIDSET_INIT, \
+ 	.gitattributes_done =3D OIDSET_INIT, \
+-	.symlink_targets_found =3D OIDSET_INIT, \
+-	.symlink_targets_done =3D OIDSET_INIT, \
+ 	.error_func =3D fsck_error_cb_print_missing_gitmodules, \
+ }
+=20
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 5669872bc8..de0f6d5e7f 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -1023,41 +1023,4 @@ test_expect_success 'fsck error on gitattributes w=
+ith excessive size' '
+ 	test_cmp expected actual
  '
 =20
--test_expect_success 'do_files_match()' '
--	test_seq 0 10 >0-10.txt &&
--	test_seq -1 10 >-1-10.txt &&
--	test_seq 1 10 >1-10.txt &&
--	test_seq 1 9 >1-9.txt &&
--	test_seq 0 8 >0-8.txt &&
+-test_expect_success 'fsck warning on symlink target with excessive lengt=
+h' '
+-	symlink_target=3D$(printf "pattern %032769d" 1 | git hash-object -w --s=
+tdin) &&
+-	test_when_finished "remove_object $symlink_target" &&
+-	tree=3D$(printf "120000 blob %s\t%s\n" $symlink_target symlink | git mk=
+tree) &&
+-	test_when_finished "remove_object $tree" &&
+-	cat >expected <<-EOF &&
+-	warning in blob $symlink_target: symlinkTargetLength: symlink target to=
+o long
+-	EOF
+-	git fsck --no-dangling >actual 2>&1 &&
+-	test_cmp expected actual
+-'
 -
--	test-tool path-utils do_files_match 0-10.txt 0-10.txt >out &&
--
--	assert_fails() {
--		test_must_fail \
--		test-tool path-utils do_files_match "$1" "$2" >out &&
--		grep different out
--	} &&
--
--	assert_fails 0-8.txt 1-9.txt &&
--	assert_fails -1-10.txt 0-10.txt &&
--	assert_fails 1-10.txt 1-9.txt &&
--	assert_fails 1-10.txt .git &&
--	assert_fails does-not-exist 1-10.txt &&
--
--	if test_have_prereq FILEMODE
--	then
--		cp 0-10.txt 0-10.x &&
--		chmod a+x 0-10.x &&
--		assert_fails 0-10.txt 0-10.x
--	fi &&
--
--	if test_have_prereq SYMLINKS
--	then
--		ln -sf 0-10.txt symlink &&
--		ln -s 0-10.txt another-symlink &&
--		ln -s over-the-ocean yet-another-symlink &&
--		ln -s "$PWD/0-10.txt" absolute-symlink &&
--		assert_fails 0-10.txt symlink &&
--		test-tool path-utils do_files_match symlink another-symlink &&
--		assert_fails symlink yet-another-symlink &&
--		assert_fails symlink absolute-symlink
--	fi
+-test_expect_success 'fsck warning on symlink target pointing inside git =
+dir' '
+-	gitdir=3D$(printf ".git" | git hash-object -w --stdin) &&
+-	ntfs_gitdir=3D$(printf "GIT~1" | git hash-object -w --stdin) &&
+-	hfs_gitdir=3D$(printf ".${u200c}git" | git hash-object -w --stdin) &&
+-	inside_gitdir=3D$(printf "nested/.git/config" | git hash-object -w --st=
+din) &&
+-	benign_target=3D$(printf "legit/config" | git hash-object -w --stdin) &=
+&
+-	tree=3D$(printf "120000 blob %s\t%s\n" \
+-		$benign_target benign_target \
+-		$gitdir gitdir \
+-		$hfs_gitdir hfs_gitdir \
+-		$inside_gitdir inside_gitdir \
+-		$ntfs_gitdir ntfs_gitdir |
+-		git mktree) &&
+-	for o in $gitdir $ntfs_gitdir $hfs_gitdir $inside_gitdir $benign_target=
+ $tree
+-	do
+-		test_when_finished "remove_object $o" || return 1
+-	done &&
+-	printf "warning in blob %s: symlinkPointsToGitDir: symlink target point=
+s to git dir\n" \
+-		$gitdir $hfs_gitdir $inside_gitdir $ntfs_gitdir |
+-	sort >expected &&
+-	git fsck --no-dangling >actual 2>&1 &&
+-	sort actual >actual.sorted &&
+-	test_cmp expected actual.sorted
 -'
 -
  test_done
