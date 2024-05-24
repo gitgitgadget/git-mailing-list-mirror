@@ -1,115 +1,117 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE8D3BBED
-	for <git@vger.kernel.org>; Fri, 24 May 2024 18:25:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071991CFA9
+	for <git@vger.kernel.org>; Fri, 24 May 2024 18:27:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716575152; cv=none; b=hFVqhwmr5RVaBVjiqM4M9R1tZVnbzte66ccoAupTImelQv9y8bmiX8R9Dfxs95/+bPGejIJSSYSqNNo4j9m+MhpB9RVw+u0SE8GRGyq3IC+FOkC760q4ExBBQvN0cw6UrGYl+xGCcOwquVFQtI5bMm4PXh1V5TQ+OoXQgygPr/g=
+	t=1716575266; cv=none; b=JRH6OGY5z4ryhl4blZqb0ArQq5m4TsP4iamY+Hk0Cy/DrY7VRC/EkKgtAzju2Oi2GXoUe7Vd/rmI/bC2I65B4QsVuHMLC56EaqfgiGN/suE0Tox+wiuHA3aw4Ufl31qqjmLrg69MbPb/hXat4ZGqE8ZigDcXzdziIyGciwZyogc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716575152; c=relaxed/simple;
-	bh=sfAjTk1un0RMo1ZOfQw6gbvgXt71Maq1pu78+3bbLP8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tb1gniEVjIra3U6mL4x2zuXI3o4QgFjWLDK+Y6wY4t+q4gFgH408dJMH5ZVg82Lup9vlOtxYH/lq1j3yr/t8geCjEBmURoeQRbWCLQZJVXYw6NGKJO+pRZpqLNDz0gBJsMl8x0BttPT/l3PU2GPvhrvj3Y5kaZe+nurEtqUm7Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JA1l328L; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716575266; c=relaxed/simple;
+	bh=XOyKqFrHdW2EfblHgQFk1IldO1+SBWTce1VfPGxJ5HI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ifGowQmq9Ll08quzQNs+W+pl9Rk4co1bGJwSuHE1xihiTWfiAJsS/Z1DW4Zwq3cg84VEpG5mnwLWePam7DphTZXQiiCb50PwKUlnXONPQ4JImSk6EXzWi16vHLxq5kTXBqCvcBeLOz0al34YVovii9boJOdsVTUlL/mz1gDYHc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=oyemS+P4; arc=none smtp.client-ip=84.93.230.244
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JA1l328L"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5D05726DBA;
-	Fri, 24 May 2024 14:25:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=sfAjTk1un0RMo1ZOfQw6gbvgXt71Maq1pu78+3
-	bbLP8=; b=JA1l328LWN9pYqOeoK3nLPyvgfX4NYwKBnnW8x2VIzB1OHm28S+UjC
-	F9GFM5I4CfPl4TCRaspFA36YR2RH1aOLyJN4LYdvPOZQ6jWgzW+u9xLMrIQJEFJp
-	j4YBmRliB2vgRXF4QrmvFWI3uh8OA3DX2BalmvqG/NXD7ZbJyaioU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5560D26DB9;
-	Fri, 24 May 2024 14:25:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 73D9E26DB8;
-	Fri, 24 May 2024 14:25:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v3 0/3] upload-pack: support a missing-action
-In-Reply-To: <20240524163926.2019648-1-christian.couder@gmail.com> (Christian
-	Couder's message of "Fri, 24 May 2024 18:39:23 +0200")
-References: <20240418184043.2900955-1-christian.couder@gmail.com>
-	<20240524163926.2019648-1-christian.couder@gmail.com>
-Date: Fri, 24 May 2024 11:25:46 -0700
-Message-ID: <xmqq5xv3kqxh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="oyemS+P4"
+Received: from [10.0.2.15] ([51.6.185.229])
+	by smtp with ESMTPA
+	id AZaismNgDdfdlAZajsDHF1; Fri, 24 May 2024 19:24:33 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1716575073; bh=ZFVfuhN1ov/08YIZAHW9wgjsPG3I9joanFYiyBpxysA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=oyemS+P4bo79APJjKqbvoJdq5m6tDTgfkBMrZBQgcLEGK+mDf7TyVl6E/zYUbRKxE
+	 8KbW3hQVng6I0qx9EdnPSQ/FsyIJNaYqtZtxtrk5nvuCtBD0Co9qAJzVKUvo7WQ56M
+	 k24VcNPTCG1U8w4tJc8/IkBLmr/FF5av8GnnDUADk0ltFWXrjW7WbeMaE0rutvXkxA
+	 P1suY1KUP53z2/pzP2qxAH4VsP+/3dCU30+imTnbPM1k42JWcD7Cqep7WOnU+W8Fk1
+	 FLK8TiKaRO0DAgY7bZpbFceeeYW9aUIczX0+Fz4POQDhtJePgtI1MxQLoZd9MpNxcT
+	 NSEliiat+zUig==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=DtP1+3/+ c=1 sm=1 tr=0 ts=6650db61
+ a=7htyVA9VkOexEuxjfJyH6w==:117 a=7htyVA9VkOexEuxjfJyH6w==:17
+ a=IkcTkHD0fZMA:10 a=a4KH0tAem0wY0KOr5xcA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <54110fa9-02ba-4c9d-9ec2-c26e98a42730@ramsayjones.plus.com>
+Date: Fri, 24 May 2024 19:24:32 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 0A77FB4A-19FB-11EF-A271-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 9/9] builtin/refs: new command to migrate ref storage
+ formats
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+ Junio C Hamano <gitster@pobox.com>
+References: <cover.1716451672.git.ps@pks.im> <cover.1716545235.git.ps@pks.im>
+ <0df17a51b43e1e9d007328aad6457363876b2e1d.1716545235.git.ps@pks.im>
+Content-Language: en-GB
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <0df17a51b43e1e9d007328aad6457363876b2e1d.1716545235.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfPS5r0bodocMYT6GacwDkDcivpTPx7u5vGInj3ZzPL/0/MFTz5o0EibEmqBFb22uRn3ZdH0LPHRRtNRcc5V27a6CoI+ld+RTvGQ6H8vuXfvUH+aYkSey
+ HjjIiGubWqg0PKprNAVHur742AMjLLXXCjT0gp7jzPq7DyzxWNLcaiBWrOeTAeXwXArTwZuVTW5LcQ==
 
-Christian Couder <christian.couder@gmail.com> writes:
 
-> The changes since v2 are the following:
-> ...
->
-> Thanks to Junio for his reviews of v1 and v3, and for suggesting the
-> most of the above changes.
-> ...
 
->
-> Range diff between v2 and v3
-> ============================
->
-> (Might not be super useful as changes in patch 2/3 are not seen.)
->
-> 1:  0a961dd4f5 = 1:  67c761b08a rev-list: refactor --missing=<missing-action>
-> 2:  410acc6a39 < -:  ---------- pack-objects: use the missing action API
-> -:  ---------- > 2:  7bf04f3096 pack-objects: use the missing action API
-> 3:  0f5efb064b ! 3:  bac909a070 upload-pack: allow configuring a missing-action
->     @@ Metadata
->       ## Commit message ##
->          upload-pack: allow configuring a missing-action
->      
->     -    In case some objects are missing from a server, it might still be
->     +    In case some objects are missing from a server, it is sometimes
->          useful to be able to fetch or clone from it if the client already has
->          the missing objects or can get them in some way.
->      
->     -    For example, in case both the server and the client are using a
->     -    separate promisor remote that contain some objects, it can be better
->     -    if the server doesn't try to send such objects back to the client, but
->     -    instead let the client get those objects separately from the promisor
->     -    remote. (The client needs to have the separate promisor remote
->     -    configured, for that to work.)
->     +    Suppose repository S borrows from its "promisor" X, and repository C
->     +    which initially cloned from S borrows from its "promisor" S. If C
->     +    wants an object in order to fill in the gap in its object graph, and
->     +    S does not have it (as S itself has no need for that object), then it
->     +    makes sense to let C go directly to X bypassing S.
+On 24/05/2024 11:15, Patrick Steinhardt wrote:
+[snip]
+> diff --git a/Documentation/git-refs.txt b/Documentation/git-refs.txt
+> new file mode 100644
+> index 0000000000..3f73ad6aa6
+> --- /dev/null
+> +++ b/Documentation/git-refs.txt
+> @@ -0,0 +1,62 @@
+> +git-refs(1)
+> +===========
+> +
+> +NAME
+> +----
+> +
+> +git-refs - Low-level access to refs
+> +
+> +SYNOPSIS
+> +--------
+> +
+> +[verse]
+> +'git refs migrate' --ref-format=<format> [--dry-run]
+> +
+> +DESCRIPTION
+> +-----------
+> +
+> +This command provides low-level access to refs.
+> +
+> +COMMANDS
+> +--------
+> +
+> +migrate::
+> +	Migrate ref store between different formats.
+> +
+> +OPTIONS
+> +-------
+> +
+> +The following options are specific to 'git refs migrate':
+> +
+> +--ref-format=<format>::
+> +	The ref format to migrate the ref store to. Can be one of:
+> ++
+> +include::ref-storage-format.txt[]
+> +
+> +--dry-run::
+> +	Perform the migration, but do not modify the repository. The migrated
+> +	refs will be written into a separate directory that can be inspected
+> +	separately. The name of the directory will be reported on stdout. This
+> +	can be used to double check that the migration works as expected doing
+> +	performing the actual migration.
 
-Most notably, what is still missing in this iteration, even though I
-already pointed it out in the earlier reviews, is that the readers
-would not get a good sense of how much trust they need to place on
-the other side S, in order to save their repositories from getting
-corrupted by S sending an incomplete pack, and what mechanism there
-already is to make sure missing objects after fetching such an
-incomplete pack from S are all available at X.
+s/expected doing performing/expected before performing/ ?
 
-In short, I agree with the goal of having "S is borrowing from X, we
-cloned from S, we can fill our missing objects by lazily fetching
-directly from X" as a feature.  But I want to see it as a safe
-feature, but from these patches I do not see how the necessary
-safety is guaranteed.
+ATB,
+Ramsay Jones
 
-Thanks.
