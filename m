@@ -1,80 +1,80 @@
 Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8755D83CCC
-	for <git@vger.kernel.org>; Fri, 24 May 2024 10:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D414C83CCC
+	for <git@vger.kernel.org>; Fri, 24 May 2024 10:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716545049; cv=none; b=hILcptlSE1ERFN+vUibvr6s4cfNhgo81nc/J+fZv0/+92XQv68zqr7bNZKMbFBfyG+05cyPPoi2+d6etJfB8buUOyAe7owMhtNr7YrxGJDrv+HzYLF/TU8VZVAHZxzfU9SsICwhCZrdPWba35hdtKTjdI0Wp5PBrWExQVMwbhmw=
+	t=1716545054; cv=none; b=AFP2gcToMvq6XyiAqkoIXXCOakxunph4qEEE6o/MKXppQ+Q/reJqTYLeBpXBYIj+g1LrndCUGOI2TEBUP8VLqc5faT5/1pDEo5x+Q9eUqEEhgZpHbUv5tZbV5U1dKJTd+ko5t/dwQL0zps20UrtwTAsUF1H//xaD3DcMjcqZZNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716545049; c=relaxed/simple;
-	bh=LK9bKdjOYBxQMVT8MimXTIS1PxXjsLfb3sUgCSEW8JY=;
+	s=arc-20240116; t=1716545054; c=relaxed/simple;
+	bh=cBoAr6Bknly5se/ENoCM+N53OpT3ylxw/GytcI8anI4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dc/sveI6I3Z/yv0n3rhByIjpKXxaT1s3BjblfS96zuDp4KEPeNiT+2Y0omm1l7zOlJ396h5/2QXlWpvFaNd2xhNBbSZxU95uduaahrA8sTWNfIrDViHhvwIhcC5eAYKV8Se+c68zZrlVnYi1yIYV1O/3GjzW9B30eezj84Km2kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oLpnpdWj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dkDKSeJ9; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=oKGCUuotX5bQszMfsrgb4Cno6K65a/Pa/I5IwprvLvr3G344gAFbA/kyUbYIpj2Id6+iuFKjTnkN5a2qJqgv4eRly7apiFvtMiFlap7W2SzMolo3XqYv81GLVqy4cGTiK3EmONLcdmWpsTk4o+sR9ByW4S7yG1+drZDJd6FTQkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ShuXsWq3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tinxbcq9; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oLpnpdWj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dkDKSeJ9"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id D030D114019E;
-	Fri, 24 May 2024 06:04:05 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ShuXsWq3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tinxbcq9"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 00D2811401AE;
+	Fri, 24 May 2024 06:04:11 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 24 May 2024 06:04:05 -0400
+  by compute5.internal (MEProxy); Fri, 24 May 2024 06:04:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716545045; x=1716631445; bh=orIT9sTHOd
-	Q3gqPejZOwmAR0KPpI9St1kBBNjnXogvQ=; b=oLpnpdWjCGJ4Ce44XQ2YPpsRB9
-	ZlijyCpvCJP9L5CTHr/VPKQidlORNr1NrXdHIiB5ET/DoFfAWVzJcAuFQHncd+m8
-	J8cFgbq61ClN7jttv66rezEtvRlV+OR509siO/ubSJDpJbVggLqLRJCFG9PYWysm
-	upp4isyQA1Snv5Pgs11CZZE6y2k1kubOzi8S2MjMOYmOG2XJr+NwCVTTNSmTWPuK
-	jrke0CGSwGceTIVzS23uqeYE+d1T6M/VuVadfajzM50Q6uykwM2dw7SXPkzAAfwv
-	y/ogtuWq3MYh+Rbu234+EKlhMP1qu9vNoHo0NyHYSCuHq3gGSTfM4q8heikQ==
+	:subject:to:to; s=fm1; t=1716545050; x=1716631450; bh=KSpLZk76J2
+	bHvdGe5bq6PRST/lVVYcgjIpTe8TjsXY8=; b=ShuXsWq3FM+tDC3vgLqQd2ywOA
+	RM3MuxNdtAfxLuW/ETUvfQPR2TT7c/ydJ1ScQGDV6rbyWikVFKk1cr8asGbJbbDB
+	xQzNIXJidcX3fFKvTTOxzmhFubc/r9FnMhDucMjumspwVIfZlH/Dip/9bWlq+oXS
+	otYYe7kHx+rkOd+auis4Uc3DVaVQ2LFqsVFBX2rO0JxY0EgkTOSCHtxw7HMwhL4+
+	oSLNPjvaAtO2pfUzhPd7RFpX0onkSjE1PGoIjawV/2TOsNUr/utPxiouVPnEMvIq
+	OebDYWYeV8vHT5biWe+tM5ptyUGuAWMOwSCn3F1NywMpqMNfqHUKGa7HRfpw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716545045; x=1716631445; bh=orIT9sTHOdQ3gqPejZOwmAR0KPpI
-	9St1kBBNjnXogvQ=; b=dkDKSeJ9bQLcjHpW/uEESrnFejrdd54QBnW1v9Du96/J
-	HDWSjve/N0ze/ZsnJhOqkdeNJIKqgtwuVtWeSu4u1F5p1vdwIxyNmD9weioT1q2N
-	cMSZ3+8dAaBzRRbYId6eZgrTIGnViwpItk0TkI9YVkaHYDr4N45P53AnroCFb+KZ
-	AODGz6TC5YDqyHjiKECgx3lHfbeHYZjas3l/UfEEknyNbrBgPcIV2hwkG7IKHe5j
-	8v7lqCkdWVaBQhGeHjRzDV9It+scoJqMPK8vVs3amumWTFKoTxq+fcfGLUllzsrV
-	NgHNkrxqqJMkbZJ2WEw7ilsGpibja4jpVsgrLrF4rA==
-X-ME-Sender: <xms:FWZQZsdJ3eRTSG5D-5kMABiPtnfeHYiZuCTeBav3jkJ0EMiPzZR2_Q>
-    <xme:FWZQZuNP6x929k-UKD5PrbqgWhdXDsEigGC3uNteCePjN-0Jzo_3-RyROEdmMIGYT
-    MejYU8hTvx2yZjOdw>
-X-ME-Received: <xmr:FWZQZthNm3cJTewq6j41rAydjwYKdfshyp6ixYkvrKOA9W6P0njdIspB9x0FAAQ4aRhNc6InAwzgNJ8nHotLKAFBWWB95fnlVlcdLjcmID3ix4k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeikedgvdduucetufdoteggodetrfdotf
+	fm1; t=1716545050; x=1716631450; bh=KSpLZk76J2bHvdGe5bq6PRST/lVV
+	YcgjIpTe8TjsXY8=; b=Tinxbcq9BqH7KHftXDF046JL/8e6+exQwc7H5bGW7+1f
+	nwlqRNa9DDYTYPyktETiylXJKj3Wn6J/lOM5/SPkJOWjsdN2MCkYFSpSGhsaHWH5
+	MCT33xXcR1XrmE3tz2XvWz47j3ofUemeW7z1tnE6dElaqTtff1I6t14nYKe66s5R
+	jcGBjag1YzU7Pdzxm26o5U+fRg1CGZwwnmmtith69MVHoYXZ40jEs98i7D08Sqaa
+	R4y7QmjNxQh4o948ivY62Du1FVKa8kXLRgSxqKfSpc7TQmMODROdsJN0zLNhOmcd
+	YSuZgqwroG83Lt+P6JTCibv11SXNWx4a80VlqRkUMA==
+X-ME-Sender: <xms:GmZQZmdXH0Yo_czrQHyiqBhPnftZRrk-VxehboVMys01L7tGVwMGMw>
+    <xme:GmZQZgPdyDBAezKT7Zd_oixvggKfp8e-5plrRzsrH0tF-7khsDiJzhxmPm4lcG5vE
+    WC4wLLOV4gtkKj7pQ>
+X-ME-Received: <xmr:GmZQZngkO4wmoADlfiyrhsSlUWWfbdApDSmjEcjkGDkQw59busKQyEpqUuWXJqIfw3QASDrMoZfyvrFUq1u0xaOeEQqBtXysuvBrCPY5RhVGenE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeikedgvddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueegheeuheejuefgjeejfffgkeeugffgudfhudejkeevjefhkeefueeggfegueet
-    necuffhomhgrihhnpegvgihtrhgrpghhughrrdhnrhdpvgigthhrrggpthhordhnrhdpvg
-    igthhrrggptggtrdhnrhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:FWZQZh-hE81XqRyXgSBx7bYXQhxbYtOL6DZQZvb1DsI0LQeIscTAig>
-    <xmx:FWZQZos49ZrsF51qBmFHyHN__IaLOiXy9e55-MzkmFE13FrMkGm2kA>
-    <xmx:FWZQZoGRQHY136PFWqduahOA9OPFAIwrQ3Rx1br-adiANwbFUKXWqQ>
-    <xmx:FWZQZnNrwc9iE13y1qMq4iRf5aRDwlvDI3o7aTEl_1yYGKpMIpeX7w>
-    <xmx:FWZQZkJG_2RFjZ1kL-npBJXh9GhqTffX8jbbivTfg1k_ddnqtKJmsiR->
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:GmZQZj_DdcthfMh5o_rzos_mTmPKUjITNpcoH1m21XHm5NixqaKx5Q>
+    <xmx:GmZQZiuA5kqH22MgJZUuEwtV4ffFoaphfU8hZSV20ZhyHDiNk1dmEA>
+    <xmx:GmZQZqHQ1e0uZNKe4nMUcqXkO6L1Ut-ulLB3elahNazVjW7D-NrTJw>
+    <xmx:GmZQZhMMhMJyF9wWYl08kn0qQY-BfcpMMMU68J5RIWrc70onh-xfQw>
+    <xmx:GmZQZmJJEYE515fNmDmOlsAgblUNaclm-5fMCwoQrMBsiq4bGxEKLjlI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 May 2024 06:04:04 -0400 (EDT)
+ 24 May 2024 06:04:09 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 7430e25a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 24 May 2024 10:04:02 +0000 (UTC)
-Date: Fri, 24 May 2024 12:04:02 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 71aaa3a9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 24 May 2024 10:04:06 +0000 (UTC)
+Date: Fri, 24 May 2024 12:04:07 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 11/21] builtin/log: stop using globals for format config
-Message-ID: <3490ad3a02f1ad26fbb8860d9dae16b28c72c567.1716541556.git.ps@pks.im>
+Subject: [PATCH v2 12/21] config: clarify memory ownership in
+ `git_config_string()`
+Message-ID: <6cfc28c7e2d976ae6f0e786ff2ebbf93621b53a3.1716541556.git.ps@pks.im>
 References: <cover.1716465556.git.ps@pks.im>
  <cover.1716541556.git.ps@pks.im>
 Precedence: bulk
@@ -84,1065 +84,812 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BfTeDw9YvBeiS9P8"
+	protocol="application/pgp-signature"; boundary="5Rmot97Q76Fn+o7D"
 Content-Disposition: inline
 In-Reply-To: <cover.1716541556.git.ps@pks.im>
 
 
---BfTeDw9YvBeiS9P8
+--5Rmot97Q76Fn+o7D
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-This commit does the exact same as the preceding commit, only for the
-format configuration instead of the log configuration.
+The out parameter of `git_config_string()` is a `const char **` even
+though we transfer ownership of memory to the caller. This is quite
+misleading and has led to many memory leaks all over the place. Adapt
+the parameter to instead be `char **`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/log.c | 467 ++++++++++++++++++++++++++++----------------------
- 1 file changed, 265 insertions(+), 202 deletions(-)
+ alias.c                |  2 +-
+ attr.c                 |  2 +-
+ attr.h                 |  2 +-
+ builtin/commit.c       |  2 +-
+ builtin/log.c          | 12 ++++++------
+ builtin/merge.c        |  4 ++--
+ builtin/rebase.c       |  2 +-
+ builtin/receive-pack.c |  2 +-
+ builtin/repack.c       |  8 ++++----
+ config.c               |  4 ++--
+ config.h               |  2 +-
+ convert.c              |  6 +++---
+ delta-islands.c        |  2 +-
+ diff.c                 |  8 ++++----
+ environment.c          |  8 ++++----
+ environment.h          |  8 ++++----
+ gpg-interface.c        |  4 ++--
+ http.c                 | 24 ++++++++++++------------
+ imap-send.c            | 12 ++++++------
+ mailmap.c              |  2 +-
+ mailmap.h              |  2 +-
+ merge-ll.c             |  6 +++---
+ pager.c                |  2 +-
+ pretty.c               | 14 +++++++++-----
+ promisor-remote.h      |  2 +-
+ remote.c               | 20 ++++++++++----------
+ remote.h               |  8 ++++----
+ sequencer.c            |  2 +-
+ upload-pack.c          |  2 +-
+ userdiff.h             | 12 ++++++------
+ 30 files changed, 95 insertions(+), 91 deletions(-)
 
+diff --git a/alias.c b/alias.c
+index 5a238f2e30..269892c356 100644
+--- a/alias.c
++++ b/alias.c
+@@ -22,7 +22,7 @@ static int config_alias_cb(const char *key, const char *v=
+alue,
+=20
+ 	if (data->alias) {
+ 		if (!strcasecmp(p, data->alias))
+-			return git_config_string((const char **)&data->v,
++			return git_config_string(&data->v,
+ 						 key, value);
+ 	} else if (data->list) {
+ 		string_list_append(data->list, p);
+diff --git a/attr.c b/attr.c
+index 33473bdce0..5607db2bbe 100644
+--- a/attr.c
++++ b/attr.c
+@@ -25,7 +25,7 @@
+ #include "tree-walk.h"
+ #include "object-name.h"
+=20
+-const char *git_attr_tree;
++char *git_attr_tree;
+=20
+ const char git_attr__true[] =3D "(builtin)true";
+ const char git_attr__false[] =3D "\0(builtin)false";
+diff --git a/attr.h b/attr.h
+index 127998ae01..e7cc318b0c 100644
+--- a/attr.h
++++ b/attr.h
+@@ -236,6 +236,6 @@ const char *git_attr_global_file(void);
+ /* Return whether the system gitattributes file is enabled and should be u=
+sed. */
+ int git_attr_system_is_enabled(void);
+=20
+-extern const char *git_attr_tree;
++extern char *git_attr_tree;
+=20
+ #endif /* ATTR_H */
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 1cc88e92bf..f53e7e86ff 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -133,7 +133,7 @@ static struct strvec trailer_args =3D STRVEC_INIT;
+  * is specified explicitly.
+  */
+ static enum commit_msg_cleanup_mode cleanup_mode;
+-static const char *cleanup_arg;
++static char *cleanup_arg;
+=20
+ static enum commit_whence whence;
+ static int use_editor =3D 1, include_status =3D 1;
 diff --git a/builtin/log.c b/builtin/log.c
-index f5da29ee2a..890bf0c425 100644
+index 890bf0c425..517d7982f1 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -945,36 +945,6 @@ int cmd_log(int argc, const char **argv, const char *p=
-refix)
+@@ -582,11 +582,11 @@ static int git_log_config(const char *var, const char=
+ *value,
 =20
- /* format-patch */
-=20
--static const char *fmt_patch_suffix =3D ".patch";
--static int numbered =3D 0;
--static int auto_number =3D 1;
--
--static char *default_attach =3D NULL;
--
--static struct string_list extra_hdr =3D STRING_LIST_INIT_NODUP;
--static struct string_list extra_to =3D STRING_LIST_INIT_NODUP;
--static struct string_list extra_cc =3D STRING_LIST_INIT_NODUP;
--
--static void add_header(const char *value)
--{
--	struct string_list_item *item;
--	int len =3D strlen(value);
--	while (len && value[len - 1] =3D=3D '\n')
--		len--;
--
--	if (!strncasecmp(value, "to: ", 4)) {
--		item =3D string_list_append(&extra_to, value + 4);
--		len -=3D 4;
--	} else if (!strncasecmp(value, "cc: ", 4)) {
--		item =3D string_list_append(&extra_cc, value + 4);
--		len -=3D 4;
--	} else {
--		item =3D string_list_append(&extra_hdr, value);
--	}
--
--	item->string[len] =3D '\0';
--}
--
- enum cover_setting {
- 	COVER_UNSET,
- 	COVER_OFF,
-@@ -1001,17 +971,61 @@ enum auto_base_setting {
- 	AUTO_BASE_WHEN_ABLE
- };
-=20
--static enum thread_level thread;
--static int do_signoff;
--static enum auto_base_setting auto_base;
--static char *from;
--static const char *signature =3D git_version_string;
--static char *signature_file;
--static enum cover_setting config_cover_letter;
--static const char *config_output_directory;
--static enum cover_from_description cover_from_description_mode =3D COVER_F=
-ROM_MESSAGE;
--static int show_notes;
--static struct display_notes_opt notes_opt;
-+struct format_config {
-+	struct log_config log;
-+	enum thread_level thread;
-+	int do_signoff;
-+	enum auto_base_setting auto_base;
-+	char *base_commit;
-+	char *from;
-+	char *signature;
-+	char *signature_file;
-+	enum cover_setting config_cover_letter;
-+	char *config_output_directory;
-+	enum cover_from_description cover_from_description_mode;
-+	int show_notes;
-+	struct display_notes_opt notes_opt;
-+	int numbered_cmdline_opt;
-+	int numbered;
-+	int auto_number;
-+	char *default_attach;
-+	struct string_list extra_hdr;
-+	struct string_list extra_to;
-+	struct string_list extra_cc;
-+	int keep_subject;
-+	int subject_prefix;
-+	struct strbuf sprefix;
-+	char *fmt_patch_suffix;
-+};
-+
-+static void format_config_init(struct format_config *cfg)
-+{
-+	memset(cfg, 0, sizeof(*cfg));
-+	log_config_init(&cfg->log);
-+	cfg->cover_from_description_mode =3D COVER_FROM_MESSAGE;
-+	cfg->auto_number =3D 1;
-+	string_list_init_dup(&cfg->extra_hdr);
-+	string_list_init_dup(&cfg->extra_to);
-+	string_list_init_dup(&cfg->extra_cc);
-+	strbuf_init(&cfg->sprefix, 0);
-+	cfg->fmt_patch_suffix =3D xstrdup(".patch");
-+}
-+
-+static void format_config_release(struct format_config *cfg)
-+{
-+	log_config_release(&cfg->log);
-+	free(cfg->base_commit);
-+	free(cfg->from);
-+	free(cfg->signature);
-+	free(cfg->signature_file);
-+	free(cfg->config_output_directory);
-+	free(cfg->default_attach);
-+	string_list_clear(&cfg->extra_hdr, 0);
-+	string_list_clear(&cfg->extra_to, 0);
-+	string_list_clear(&cfg->extra_cc, 0);
-+	strbuf_release(&cfg->sprefix);
-+	free(cfg->fmt_patch_suffix);
-+}
-=20
- static enum cover_from_description parse_cover_from_description(const char=
- *arg)
- {
-@@ -1029,27 +1043,51 @@ static enum cover_from_description parse_cover_from=
-_description(const char *arg)
- 		die(_("%s: invalid cover from description mode"), arg);
- }
-=20
-+static void add_header(struct format_config *cfg, const char *value)
-+{
-+	struct string_list_item *item;
-+	int len =3D strlen(value);
-+	while (len && value[len - 1] =3D=3D '\n')
-+		len--;
-+
-+	if (!strncasecmp(value, "to: ", 4)) {
-+		item =3D string_list_append(&cfg->extra_to, value + 4);
-+		len -=3D 4;
-+	} else if (!strncasecmp(value, "cc: ", 4)) {
-+		item =3D string_list_append(&cfg->extra_cc, value + 4);
-+		len -=3D 4;
-+	} else {
-+		item =3D string_list_append(&cfg->extra_hdr, value);
-+	}
-+
-+	item->string[len] =3D '\0';
-+}
-+
- static int git_format_config(const char *var, const char *value,
- 			     const struct config_context *ctx, void *cb)
- {
-+	struct format_config *cfg =3D cb;
-+
- 	if (!strcmp(var, "format.headers")) {
- 		if (!value)
- 			die(_("format.headers without value"));
--		add_header(value);
-+		add_header(cfg, value);
- 		return 0;
+ 	if (!strcmp(var, "format.pretty")) {
+ 		FREE_AND_NULL(cfg->fmt_pretty);
+-		return git_config_string((const char **) &cfg->fmt_pretty, var, value);
++		return git_config_string(&cfg->fmt_pretty, var, value);
  	}
--	if (!strcmp(var, "format.suffix"))
--		return git_config_string(&fmt_patch_suffix, var, value);
-+	if (!strcmp(var, "format.suffix")) {
-+		FREE_AND_NULL(cfg->fmt_patch_suffix);
-+		return git_config_string((const char **) &cfg->fmt_patch_suffix, var, va=
+ 	if (!strcmp(var, "format.subjectprefix")) {
+ 		FREE_AND_NULL(cfg->fmt_patch_subject_prefix);
+-		return git_config_string((const char **) &cfg->fmt_patch_subject_prefix,=
+ var, value);
++		return git_config_string(&cfg->fmt_patch_subject_prefix, var, value);
+ 	}
+ 	if (!strcmp(var, "format.filenamemaxlength")) {
+ 		cfg->fmt_patch_name_max =3D git_config_int(var, value, ctx->kvi);
+@@ -602,7 +602,7 @@ static int git_log_config(const char *var, const char *=
+value,
+ 	}
+ 	if (!strcmp(var, "log.date")) {
+ 		FREE_AND_NULL(cfg->default_date_mode);
+-		return git_config_string((const char **) &cfg->default_date_mode, var, v=
+alue);
++		return git_config_string(&cfg->default_date_mode, var, value);
+ 	}
+ 	if (!strcmp(var, "log.decorate")) {
+ 		cfg->decoration_style =3D parse_decoration_style(value);
+@@ -1076,7 +1076,7 @@ static int git_format_config(const char *var, const c=
+har *value,
+ 	}
+ 	if (!strcmp(var, "format.suffix")) {
+ 		FREE_AND_NULL(cfg->fmt_patch_suffix);
+-		return git_config_string((const char **) &cfg->fmt_patch_suffix, var, va=
 lue);
-+	}
++		return git_config_string(&cfg->fmt_patch_suffix, var, value);
+ 	}
  	if (!strcmp(var, "format.to")) {
  		if (!value)
- 			return config_error_nonbool(var);
--		string_list_append(&extra_to, value);
-+		string_list_append(&cfg->extra_to, value);
- 		return 0;
+@@ -1133,7 +1133,7 @@ static int git_format_config(const char *var, const c=
+har *value,
  	}
- 	if (!strcmp(var, "format.cc")) {
- 		if (!value)
- 			return config_error_nonbool(var);
--		string_list_append(&extra_cc, value);
-+		string_list_append(&cfg->extra_cc, value);
- 		return 0;
+ 	if (!strcmp(var, "format.signature")) {
+ 		FREE_AND_NULL(cfg->signature);
+-		return git_config_string((const char **) &cfg->signature, var, value);
++		return git_config_string(&cfg->signature, var, value);
  	}
- 	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff") ||
-@@ -1058,69 +1096,76 @@ static int git_format_config(const char *var, const=
- char *value,
+ 	if (!strcmp(var, "format.signaturefile")) {
+ 		FREE_AND_NULL(cfg->signature_file);
+@@ -1149,7 +1149,7 @@ static int git_format_config(const char *var, const c=
+har *value,
  	}
- 	if (!strcmp(var, "format.numbered")) {
- 		if (value && !strcasecmp(value, "auto")) {
--			auto_number =3D 1;
-+			cfg->auto_number =3D 1;
- 			return 0;
- 		}
--		numbered =3D git_config_bool(var, value);
--		auto_number =3D auto_number && numbered;
-+		cfg->numbered =3D git_config_bool(var, value);
-+		cfg->auto_number =3D cfg->auto_number && cfg->numbered;
- 		return 0;
- 	}
- 	if (!strcmp(var, "format.attach")) {
--		if (value && *value)
--			default_attach =3D xstrdup(value);
--		else if (value && !*value)
--			FREE_AND_NULL(default_attach);
--		else
--			default_attach =3D xstrdup(git_version_string);
-+		if (value && *value) {
-+			FREE_AND_NULL(cfg->default_attach);
-+			cfg->default_attach =3D xstrdup(value);
-+		} else if (value && !*value) {
-+			FREE_AND_NULL(cfg->default_attach);
-+		} else {
-+			FREE_AND_NULL(cfg->default_attach);
-+			cfg->default_attach =3D xstrdup(git_version_string);
-+		}
- 		return 0;
- 	}
- 	if (!strcmp(var, "format.thread")) {
- 		if (value && !strcasecmp(value, "deep")) {
--			thread =3D THREAD_DEEP;
-+			cfg->thread =3D THREAD_DEEP;
- 			return 0;
- 		}
- 		if (value && !strcasecmp(value, "shallow")) {
--			thread =3D THREAD_SHALLOW;
-+			cfg->thread =3D THREAD_SHALLOW;
- 			return 0;
- 		}
--		thread =3D git_config_bool(var, value) ? THREAD_SHALLOW : THREAD_UNSET;
-+		cfg->thread =3D git_config_bool(var, value) ? THREAD_SHALLOW : THREAD_UN=
-SET;
- 		return 0;
- 	}
- 	if (!strcmp(var, "format.signoff")) {
--		do_signoff =3D git_config_bool(var, value);
-+		cfg->do_signoff =3D git_config_bool(var, value);
- 		return 0;
- 	}
--	if (!strcmp(var, "format.signature"))
--		return git_config_string(&signature, var, value);
--	if (!strcmp(var, "format.signaturefile"))
--		return git_config_pathname(&signature_file, var, value);
-+	if (!strcmp(var, "format.signature")) {
-+		FREE_AND_NULL(cfg->signature);
-+		return git_config_string((const char **) &cfg->signature, var, value);
-+	}
-+	if (!strcmp(var, "format.signaturefile")) {
-+		FREE_AND_NULL(cfg->signature_file);
-+		return git_config_pathname(&cfg->signature_file, var, value);
-+	}
- 	if (!strcmp(var, "format.coverletter")) {
- 		if (value && !strcasecmp(value, "auto")) {
--			config_cover_letter =3D COVER_AUTO;
-+			cfg->config_cover_letter =3D COVER_AUTO;
- 			return 0;
- 		}
--		config_cover_letter =3D git_config_bool(var, value) ? COVER_ON : COVER_O=
-FF;
-+		cfg->config_cover_letter =3D git_config_bool(var, value) ? COVER_ON : CO=
-VER_OFF;
- 		return 0;
- 	}
--	if (!strcmp(var, "format.outputdirectory"))
--		return git_config_string(&config_output_directory, var, value);
-+	if (!strcmp(var, "format.outputdirectory")) {
-+		FREE_AND_NULL(cfg->config_output_directory);
-+		return git_config_string((const char **) &cfg->config_output_directory, =
+ 	if (!strcmp(var, "format.outputdirectory")) {
+ 		FREE_AND_NULL(cfg->config_output_directory);
+-		return git_config_string((const char **) &cfg->config_output_directory, =
 var, value);
-+	}
++		return git_config_string(&cfg->config_output_directory, var, value);
+ 	}
  	if (!strcmp(var, "format.useautobase")) {
  		if (value && !strcasecmp(value, "whenAble")) {
--			auto_base =3D AUTO_BASE_WHEN_ABLE;
-+			cfg->auto_base =3D AUTO_BASE_WHEN_ABLE;
- 			return 0;
- 		}
--		auto_base =3D git_config_bool(var, value) ? AUTO_BASE_ALWAYS : AUTO_BASE=
-_NEVER;
-+		cfg->auto_base =3D git_config_bool(var, value) ? AUTO_BASE_ALWAYS : AUTO=
-_BASE_NEVER;
- 		return 0;
- 	}
- 	if (!strcmp(var, "format.from")) {
- 		int b =3D git_parse_maybe_bool(value);
--		free(from);
-+		FREE_AND_NULL(cfg->from);
- 		if (b < 0)
--			from =3D xstrdup(value);
-+			cfg->from =3D xstrdup(value);
- 		else if (b)
--			from =3D xstrdup(git_committer_info(IDENT_NO_DATE));
--		else
--			from =3D NULL;
-+			cfg->from =3D xstrdup(git_committer_info(IDENT_NO_DATE));
- 		return 0;
- 	}
- 	if (!strcmp(var, "format.forceinbodyfrom")) {
-@@ -1130,15 +1175,15 @@ static int git_format_config(const char *var, const=
- char *value,
- 	if (!strcmp(var, "format.notes")) {
- 		int b =3D git_parse_maybe_bool(value);
- 		if (b < 0)
--			enable_ref_display_notes(&notes_opt, &show_notes, value);
-+			enable_ref_display_notes(&cfg->notes_opt, &cfg->show_notes, value);
- 		else if (b)
--			enable_default_display_notes(&notes_opt, &show_notes);
-+			enable_default_display_notes(&cfg->notes_opt, &cfg->show_notes);
- 		else
--			disable_display_notes(&notes_opt, &show_notes);
-+			disable_display_notes(&cfg->notes_opt, &cfg->show_notes);
- 		return 0;
- 	}
- 	if (!strcmp(var, "format.coverfromdescription")) {
--		cover_from_description_mode =3D parse_cover_from_description(value);
-+		cfg->cover_from_description_mode =3D parse_cover_from_description(value);
- 		return 0;
- 	}
- 	if (!strcmp(var, "format.mboxrd")) {
-@@ -1159,7 +1204,7 @@ static int git_format_config(const char *var, const c=
-har *value,
- 	if (!strcmp(var, "diff.noprefix"))
- 		return 0;
+diff --git a/builtin/merge.c b/builtin/merge.c
+index e4bd65eeba..daed2d4e1e 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -100,7 +100,7 @@ static struct strategy all_strategy[] =3D {
+ 	{ "subtree",    NO_FAST_FORWARD | NO_TRIVIAL },
+ };
 =20
--	return git_log_config(var, value, ctx, cb);
-+	return git_log_config(var, value, ctx, &cfg->log);
+-static const char *pull_twohead, *pull_octopus;
++static char *pull_twohead, *pull_octopus;
+=20
+ enum ff_type {
+ 	FF_NO,
+@@ -110,7 +110,7 @@ enum ff_type {
+=20
+ static enum ff_type fast_forward =3D FF_ALLOW;
+=20
+-static const char *cleanup_arg;
++static char *cleanup_arg;
+ static enum commit_msg_cleanup_mode cleanup_mode;
+=20
+ static int option_parse_message(const struct option *opt,
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 0466d9414a..14d4f0a5e6 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -83,7 +83,7 @@ static const char *action_names[] =3D {
+ struct rebase_options {
+ 	enum rebase_type type;
+ 	enum empty_type empty;
+-	const char *default_backend;
++	char *default_backend;
+ 	const char *state_dir;
+ 	struct commit *upstream;
+ 	const char *upstream_name;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 56228ad314..01c1f04ece 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -88,7 +88,7 @@ static struct strbuf push_cert =3D STRBUF_INIT;
+ static struct object_id push_cert_oid;
+ static struct signature_check sigcheck;
+ static const char *push_cert_nonce;
+-static const char *cert_nonce_seed;
++static char *cert_nonce_seed;
+ static struct strvec hidden_refs =3D STRVEC_INIT;
+=20
+ static const char *NONCE_UNSOLICITED =3D "UNSOLICITED";
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 43491a4cbf..e40dceaada 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -48,10 +48,10 @@ static const char incremental_bitmap_conflict_error[] =
+=3D N_(
+ );
+=20
+ struct pack_objects_args {
+-	const char *window;
+-	const char *window_memory;
+-	const char *depth;
+-	const char *threads;
++	char *window;
++	char *window_memory;
++	char *depth;
++	char *threads;
+ 	unsigned long max_pack_size;
+ 	int no_reuse_delta;
+ 	int no_reuse_object;
+diff --git a/config.c b/config.c
+index f9101045ee..a025cfafe0 100644
+--- a/config.c
++++ b/config.c
+@@ -1338,7 +1338,7 @@ int git_config_bool(const char *name, const char *val=
+ue)
+ 	return v;
  }
 =20
- static const char *output_directory =3D NULL;
-@@ -1247,7 +1292,7 @@ static void gen_message_id(struct rev_info *info, cha=
-r *base)
- 	info->message_id =3D strbuf_detach(&buf, NULL);
- }
-=20
--static void print_signature(FILE *file)
-+static void print_signature(const char *signature, FILE *file)
+-int git_config_string(const char **dest, const char *var, const char *valu=
+e)
++int git_config_string(char **dest, const char *var, const char *value)
  {
- 	if (!signature || !*signature)
- 		return;
-@@ -1317,14 +1362,15 @@ static void prepare_cover_text(struct pretty_print_=
-context *pp,
- 			       const char *branch_name,
- 			       struct strbuf *sb,
- 			       const char *encoding,
--			       int need_8bit_cte)
-+			       int need_8bit_cte,
-+			       const struct format_config *cfg)
+ 	if (!value)
+ 		return config_error_nonbool(var);
+@@ -2418,7 +2418,7 @@ int git_configset_get_string(struct config_set *set, =
+const char *key, char **des
  {
- 	const char *subject =3D "*** SUBJECT HERE ***";
- 	const char *body =3D "*** BLURB HERE ***";
- 	struct strbuf description_sb =3D STRBUF_INIT;
- 	struct strbuf subject_sb =3D STRBUF_INIT;
-=20
--	if (cover_from_description_mode =3D=3D COVER_FROM_NONE)
-+	if (cfg->cover_from_description_mode =3D=3D COVER_FROM_NONE)
- 		goto do_pp;
-=20
- 	if (description_file && *description_file)
-@@ -1334,13 +1380,13 @@ static void prepare_cover_text(struct pretty_print_=
-context *pp,
- 	if (!description_sb.len)
- 		goto do_pp;
-=20
--	if (cover_from_description_mode =3D=3D COVER_FROM_SUBJECT ||
--			cover_from_description_mode =3D=3D COVER_FROM_AUTO)
-+	if (cfg->cover_from_description_mode =3D=3D COVER_FROM_SUBJECT ||
-+	    cfg->cover_from_description_mode =3D=3D COVER_FROM_AUTO)
- 		body =3D format_subject(&subject_sb, description_sb.buf, " ");
-=20
--	if (cover_from_description_mode =3D=3D COVER_FROM_MESSAGE ||
--			(cover_from_description_mode =3D=3D COVER_FROM_AUTO &&
--			 subject_sb.len > COVER_FROM_AUTO_MAX_SUBJECT_LEN))
-+	if (cfg->cover_from_description_mode =3D=3D COVER_FROM_MESSAGE ||
-+	    (cfg->cover_from_description_mode =3D=3D COVER_FROM_AUTO &&
-+	     subject_sb.len > COVER_FROM_AUTO_MAX_SUBJECT_LEN))
- 		body =3D description_sb.buf;
+ 	const char *value;
+ 	if (!git_configset_get_value(set, key, &value, NULL))
+-		return git_config_string((const char **)dest, key, value);
++		return git_config_string(dest, key, value);
  	else
- 		subject =3D subject_sb.buf;
-@@ -1377,7 +1423,8 @@ static void make_cover_letter(struct rev_info *rev, i=
-nt use_separate_file,
- 			      int nr, struct commit **list,
- 			      const char *description_file,
- 			      const char *branch_name,
--			      int quiet)
-+			      int quiet,
-+			      const struct format_config *cfg)
- {
- 	const char *committer;
- 	struct shortlog log;
-@@ -1416,7 +1463,7 @@ static void make_cover_letter(struct rev_info *rev, i=
-nt use_separate_file,
- 	pp.encode_email_headers =3D rev->encode_email_headers;
- 	pp_user_info(&pp, NULL, &sb, committer, encoding);
- 	prepare_cover_text(&pp, description_file, branch_name, &sb,
--			   encoding, need_8bit_cte);
-+			   encoding, need_8bit_cte, cfg);
- 	fprintf(rev->diffopt.file, "%s\n", sb.buf);
+ 		return 1;
+ }
+diff --git a/config.h b/config.h
+index b3103bba94..2d2e22ed64 100644
+--- a/config.h
++++ b/config.h
+@@ -280,7 +280,7 @@ int git_config_bool(const char *, const char *);
+  * Allocates and copies the value string into the `dest` parameter; if no
+  * string is given, prints an error message and returns -1.
+  */
+-int git_config_string(const char **, const char *, const char *);
++int git_config_string(char **, const char *, const char *);
 =20
- 	free(pp.after_subject);
-@@ -1517,29 +1564,30 @@ static const char * const builtin_format_patch_usag=
-e[] =3D {
- 	NULL
+ /**
+  * Similar to `git_config_string`, but expands `~` or `~user` into the
+diff --git a/convert.c b/convert.c
+index 03c3c528f9..f2b9f01354 100644
+--- a/convert.c
++++ b/convert.c
+@@ -981,9 +981,9 @@ int async_query_available_blobs(const char *cmd, struct=
+ string_list *available_p
+ static struct convert_driver {
+ 	const char *name;
+ 	struct convert_driver *next;
+-	const char *smudge;
+-	const char *clean;
+-	const char *process;
++	char *smudge;
++	char *clean;
++	char *process;
+ 	int required;
+ } *user_convert, **user_convert_tail;
+=20
+diff --git a/delta-islands.c b/delta-islands.c
+index 4ac3c10551..89d51b72e3 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -313,7 +313,7 @@ struct island_load_data {
+ 	size_t nr;
+ 	size_t alloc;
  };
+-static const char *core_island_name;
++static char *core_island_name;
 =20
--static int keep_subject =3D 0;
-+struct keep_callback_data {
-+	struct format_config *cfg;
-+	struct rev_info *revs;
-+};
-=20
- static int keep_callback(const struct option *opt, const char *arg, int un=
-set)
+ static void free_config_regexes(struct island_load_data *ild)
  {
-+	struct keep_callback_data *data =3D opt->value;
- 	BUG_ON_OPT_NEG(unset);
- 	BUG_ON_OPT_ARG(arg);
--	((struct rev_info *)opt->value)->total =3D -1;
--	keep_subject =3D 1;
-+	data->revs->total =3D -1;
-+	data->cfg->keep_subject =3D 1;
- 	return 0;
+diff --git a/diff.c b/diff.c
+index 679ef472f4..e70301df76 100644
+--- a/diff.c
++++ b/diff.c
+@@ -56,8 +56,8 @@ static int diff_color_moved_default;
+ static int diff_color_moved_ws_default;
+ static int diff_context_default =3D 3;
+ static int diff_interhunk_context_default;
+-static const char *diff_word_regex_cfg;
+-static const char *external_diff_cmd_cfg;
++static char *diff_word_regex_cfg;
++static char *external_diff_cmd_cfg;
+ static char *diff_order_file_cfg;
+ int diff_auto_refresh_index =3D 1;
+ static int diff_mnemonic_prefix;
+@@ -412,11 +412,11 @@ int git_diff_ui_config(const char *var, const char *v=
+alue,
+ 	}
+ 	if (!strcmp(var, "diff.srcprefix")) {
+ 		FREE_AND_NULL(diff_src_prefix);
+-		return git_config_string((const char **) &diff_src_prefix, var, value);
++		return git_config_string(&diff_src_prefix, var, value);
+ 	}
+ 	if (!strcmp(var, "diff.dstprefix")) {
+ 		FREE_AND_NULL(diff_dst_prefix);
+-		return git_config_string((const char **) &diff_dst_prefix, var, value);
++		return git_config_string(&diff_dst_prefix, var, value);
+ 	}
+ 	if (!strcmp(var, "diff.relative")) {
+ 		diff_relative =3D git_config_bool(var, value);
+diff --git a/environment.c b/environment.c
+index ab6956559e..701d515135 100644
+--- a/environment.c
++++ b/environment.c
+@@ -42,8 +42,8 @@ int is_bare_repository_cfg =3D -1; /* unspecified */
+ int warn_ambiguous_refs =3D 1;
+ int warn_on_object_refname_ambiguity =3D 1;
+ int repository_format_precious_objects;
+-const char *git_commit_encoding;
+-const char *git_log_output_encoding;
++char *git_commit_encoding;
++char *git_log_output_encoding;
+ char *apply_default_whitespace;
+ char *apply_default_ignorewhitespace;
+ char *git_attributes_file;
+@@ -58,8 +58,8 @@ size_t packed_git_window_size =3D DEFAULT_PACKED_GIT_WIND=
+OW_SIZE;
+ size_t packed_git_limit =3D DEFAULT_PACKED_GIT_LIMIT;
+ size_t delta_base_cache_limit =3D 96 * 1024 * 1024;
+ unsigned long big_file_threshold =3D 512 * 1024 * 1024;
+-const char *editor_program;
+-const char *askpass_program;
++char *editor_program;
++char *askpass_program;
+ char *excludes_file;
+ enum auto_crlf auto_crlf =3D AUTO_CRLF_FALSE;
+ enum eol core_eol =3D EOL_UNSET;
+diff --git a/environment.h b/environment.h
+index be1b88ad6f..e9f01d4d11 100644
+--- a/environment.h
++++ b/environment.h
+@@ -224,11 +224,11 @@ int odb_pack_keep(const char *name);
+ const char *get_log_output_encoding(void);
+ const char *get_commit_output_encoding(void);
+=20
+-extern const char *git_commit_encoding;
+-extern const char *git_log_output_encoding;
++extern char *git_commit_encoding;
++extern char *git_log_output_encoding;
+=20
+-extern const char *editor_program;
+-extern const char *askpass_program;
++extern char *editor_program;
++extern char *askpass_program;
+ extern char *excludes_file;
+=20
+ /*
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 2b50ed0fa0..5193223714 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -27,14 +27,14 @@ static void gpg_interface_lazy_init(void)
  }
 =20
--static int subject_prefix =3D 0;
--
- static int subject_prefix_callback(const struct option *opt, const char *a=
-rg,
- 			    int unset)
- {
--	struct strbuf *sprefix;
-+	struct format_config *cfg =3D opt->value;
+ static char *configured_signing_key;
+-static const char *ssh_default_key_command;
++static char *ssh_default_key_command;
+ static char *ssh_allowed_signers;
+ static char *ssh_revocation_file;
+ static enum signature_trust_level configured_min_trust_level =3D TRUST_UND=
+EFINED;
 =20
- 	BUG_ON_OPT_NEG(unset);
--	sprefix =3D opt->value;
--	subject_prefix =3D 1;
--	strbuf_reset(sprefix);
--	strbuf_addstr(sprefix, arg);
-+	cfg->subject_prefix =3D 1;
-+	strbuf_reset(&cfg->sprefix);
-+	strbuf_addstr(&cfg->sprefix, arg);
- 	return 0;
- }
+ struct gpg_format {
+ 	const char *name;
+-	const char *program;
++	char *program;
+ 	const char **verify_args;
+ 	const char **sigs;
+ 	int (*verify_signed_buffer)(struct signature_check *sigc,
+diff --git a/http.c b/http.c
+index fa3ea87451..67cc47d28f 100644
+--- a/http.c
++++ b/http.c
+@@ -38,11 +38,11 @@ char curl_errorstr[CURL_ERROR_SIZE];
 =20
-@@ -1556,15 +1604,14 @@ static int rfc_callback(const struct option *opt, c=
-onst char *arg,
- 	return 0;
- }
-=20
--static int numbered_cmdline_opt =3D 0;
--
- static int numbered_callback(const struct option *opt, const char *arg,
- 			     int unset)
- {
-+	struct format_config *cfg =3D opt->value;
- 	BUG_ON_OPT_ARG(arg);
--	*(int *)opt->value =3D numbered_cmdline_opt =3D unset ? 0 : 1;
-+	cfg->numbered =3D cfg->numbered_cmdline_opt =3D unset ? 0 : 1;
- 	if (unset)
--		auto_number =3D  0;
-+		cfg->auto_number =3D  0;
- 	return 0;
- }
-=20
-@@ -1588,13 +1635,14 @@ static int output_directory_callback(const struct o=
-ption *opt, const char *arg,
-=20
- static int thread_callback(const struct option *opt, const char *arg, int =
-unset)
- {
--	enum thread_level *thread =3D (enum thread_level *)opt->value;
-+	struct format_config *cfg =3D opt->value;
-+
- 	if (unset)
--		*thread =3D THREAD_UNSET;
-+		cfg->thread =3D THREAD_UNSET;
- 	else if (!arg || !strcmp(arg, "shallow"))
--		*thread =3D THREAD_SHALLOW;
-+		cfg->thread =3D THREAD_SHALLOW;
- 	else if (!strcmp(arg, "deep"))
--		*thread =3D THREAD_DEEP;
-+		cfg->thread =3D THREAD_DEEP;
- 	/*
- 	 * Please update _git_formatpatch() in git-completion.bash
- 	 * when you add new options.
-@@ -1630,15 +1678,17 @@ static int inline_callback(const struct option *opt=
-, const char *arg, int unset)
- 	return 0;
- }
-=20
--static int header_callback(const struct option *opt UNUSED, const char *ar=
-g,
-+static int header_callback(const struct option *opt, const char *arg,
- 			   int unset)
- {
-+	struct format_config *cfg =3D opt->value;
-+
- 	if (unset) {
--		string_list_clear(&extra_hdr, 0);
--		string_list_clear(&extra_to, 0);
--		string_list_clear(&extra_cc, 0);
-+		string_list_clear(&cfg->extra_hdr, 0);
-+		string_list_clear(&cfg->extra_to, 0);
-+		string_list_clear(&cfg->extra_cc, 0);
- 	} else {
--		add_header(arg);
-+		add_header(cfg, arg);
- 	}
- 	return 0;
- }
-@@ -1660,17 +1710,17 @@ static int from_callback(const struct option *opt, =
-const char *arg, int unset)
-=20
- static int base_callback(const struct option *opt, const char *arg, int un=
-set)
- {
--	const char **base_commit =3D opt->value;
-+	struct format_config *cfg =3D opt->value;
-=20
- 	if (unset) {
--		auto_base =3D AUTO_BASE_NEVER;
--		*base_commit =3D NULL;
-+		cfg->auto_base =3D AUTO_BASE_NEVER;
-+		FREE_AND_NULL(cfg->base_commit);
- 	} else if (!strcmp(arg, "auto")) {
--		auto_base =3D AUTO_BASE_ALWAYS;
--		*base_commit =3D NULL;
-+		cfg->auto_base =3D AUTO_BASE_ALWAYS;
-+		FREE_AND_NULL(cfg->base_commit);
- 	} else {
--		auto_base =3D AUTO_BASE_NEVER;
--		*base_commit =3D arg;
-+		cfg->auto_base =3D AUTO_BASE_NEVER;
-+		cfg->base_commit =3D xstrdup(arg);
- 	}
- 	return 0;
- }
-@@ -1681,7 +1731,7 @@ struct base_tree_info {
- 	struct object_id *patch_id;
- };
-=20
--static struct commit *get_base_commit(const char *base_commit,
-+static struct commit *get_base_commit(const struct format_config *cfg,
- 				      struct commit **list,
- 				      int total)
- {
-@@ -1689,9 +1739,9 @@ static struct commit *get_base_commit(const char *bas=
-e_commit,
- 	struct commit **rev;
- 	int i =3D 0, rev_nr =3D 0, auto_select, die_on_failure, ret;
-=20
--	switch (auto_base) {
-+	switch (cfg->auto_base) {
- 	case AUTO_BASE_NEVER:
--		if (base_commit) {
-+		if (cfg->base_commit) {
- 			auto_select =3D 0;
- 			die_on_failure =3D 1;
- 		} else {
-@@ -1701,11 +1751,11 @@ static struct commit *get_base_commit(const char *b=
-ase_commit,
- 		break;
- 	case AUTO_BASE_ALWAYS:
- 	case AUTO_BASE_WHEN_ABLE:
--		if (base_commit) {
-+		if (cfg->base_commit) {
- 			BUG("requested automatic base selection but a commit was provided");
- 		} else {
- 			auto_select =3D 1;
--			die_on_failure =3D auto_base =3D=3D AUTO_BASE_ALWAYS;
-+			die_on_failure =3D cfg->auto_base =3D=3D AUTO_BASE_ALWAYS;
- 		}
- 		break;
- 	default:
-@@ -1713,9 +1763,9 @@ static struct commit *get_base_commit(const char *bas=
-e_commit,
- 	}
-=20
- 	if (!auto_select) {
--		base =3D lookup_commit_reference_by_name(base_commit);
-+		base =3D lookup_commit_reference_by_name(cfg->base_commit);
- 		if (!base)
--			die(_("unknown commit %s"), base_commit);
-+			die(_("unknown commit %s"), cfg->base_commit);
- 	} else {
- 		struct branch *curr_branch =3D branch_get(NULL);
- 		const char *upstream =3D branch_get_upstream(curr_branch, NULL);
-@@ -1933,7 +1983,7 @@ static void infer_range_diff_ranges(struct strbuf *r1,
-=20
- int cmd_format_patch(int argc, const char **argv, const char *prefix)
- {
--	struct log_config cfg;
-+	struct format_config cfg;
- 	struct commit *commit;
- 	struct commit **list =3D NULL;
- 	struct rev_info rev;
-@@ -1958,7 +2008,6 @@ int cmd_format_patch(int argc, const char **argv, con=
-st char *prefix)
- 	char *cover_from_description_arg =3D NULL;
- 	char *description_file =3D NULL;
- 	char *branch_name =3D NULL;
--	char *base_commit =3D NULL;
- 	struct base_tree_info bases;
- 	struct commit *base;
- 	int show_progress =3D 0;
-@@ -1969,18 +2018,24 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 	struct strbuf rdiff1 =3D STRBUF_INIT;
- 	struct strbuf rdiff2 =3D STRBUF_INIT;
- 	struct strbuf rdiff_title =3D STRBUF_INIT;
--	struct strbuf sprefix =3D STRBUF_INIT;
- 	const char *rfc =3D NULL;
- 	int creation_factor =3D -1;
-+	const char *signature =3D git_version_string;
-+	const char *signature_file_arg =3D NULL;
-+	struct keep_callback_data keep_callback_data =3D {
-+		.cfg =3D &cfg,
-+		.revs =3D &rev,
-+	};
-+	const char *fmt_patch_suffix =3D NULL;
-=20
- 	const struct option builtin_format_patch_options[] =3D {
--		OPT_CALLBACK_F('n', "numbered", &numbered, NULL,
-+		OPT_CALLBACK_F('n', "numbered", &cfg, NULL,
- 			    N_("use [PATCH n/m] even with a single patch"),
- 			    PARSE_OPT_NOARG, numbered_callback),
--		OPT_CALLBACK_F('N', "no-numbered", &numbered, NULL,
-+		OPT_CALLBACK_F('N', "no-numbered", &cfg, NULL,
- 			    N_("use [PATCH] even with multiple patches"),
- 			    PARSE_OPT_NOARG | PARSE_OPT_NONEG, no_numbered_callback),
--		OPT_BOOL('s', "signoff", &do_signoff, N_("add a Signed-off-by trailer")),
-+		OPT_BOOL('s', "signoff", &cfg.do_signoff, N_("add a Signed-off-by traile=
-r")),
- 		OPT_BOOL(0, "stdout", &use_stdout,
- 			    N_("print patches to standard out")),
- 		OPT_BOOL(0, "cover-letter", &cover_letter,
-@@ -1993,7 +2048,7 @@ int cmd_format_patch(int argc, const char **argv, con=
-st char *prefix)
- 			    N_("start numbering patches at <n> instead of 1")),
- 		OPT_STRING('v', "reroll-count", &reroll_count, N_("reroll-count"),
- 			    N_("mark the series as Nth re-roll")),
--		OPT_INTEGER(0, "filename-max-length", &cfg.fmt_patch_name_max,
-+		OPT_INTEGER(0, "filename-max-length", &cfg.log.fmt_patch_name_max,
- 			    N_("max length of output filename")),
- 		OPT_CALLBACK_F(0, "rfc", &rfc, N_("rfc"),
- 			       N_("add <rfc> (default 'RFC') before 'PATCH'"),
-@@ -2003,13 +2058,13 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 			    N_("generate parts of a cover letter based on a branch's descriptio=
-n")),
- 		OPT_FILENAME(0, "description-file", &description_file,
- 			     N_("use branch description from file")),
--		OPT_CALLBACK_F(0, "subject-prefix", &sprefix, N_("prefix"),
-+		OPT_CALLBACK_F(0, "subject-prefix", &cfg, N_("prefix"),
- 			    N_("use [<prefix>] instead of [PATCH]"),
- 			    PARSE_OPT_NONEG, subject_prefix_callback),
- 		OPT_CALLBACK_F('o', "output-directory", &output_directory,
- 			    N_("dir"), N_("store resulting files in <dir>"),
- 			    PARSE_OPT_NONEG, output_directory_callback),
--		OPT_CALLBACK_F('k', "keep-subject", &rev, NULL,
-+		OPT_CALLBACK_F('k', "keep-subject", &keep_callback_data, NULL,
- 			    N_("don't strip/add [PATCH]"),
- 			    PARSE_OPT_NOARG | PARSE_OPT_NONEG, keep_callback),
- 		OPT_BOOL(0, "no-binary", &no_binary_diff,
-@@ -2022,11 +2077,11 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 			      N_("show patch format instead of default (patch + stat)"),
- 			      1, PARSE_OPT_NONEG),
- 		OPT_GROUP(N_("Messaging")),
--		OPT_CALLBACK(0, "add-header", NULL, N_("header"),
-+		OPT_CALLBACK(0, "add-header", &cfg, N_("header"),
- 			    N_("add email header"), header_callback),
--		OPT_STRING_LIST(0, "to", &extra_to, N_("email"), N_("add To: header")),
--		OPT_STRING_LIST(0, "cc", &extra_cc, N_("email"), N_("add Cc: header")),
--		OPT_CALLBACK_F(0, "from", &from, N_("ident"),
-+		OPT_STRING_LIST(0, "to", &cfg.extra_to, N_("email"), N_("add To: header"=
-)),
-+		OPT_STRING_LIST(0, "cc", &cfg.extra_cc, N_("email"), N_("add Cc: header"=
-)),
-+		OPT_CALLBACK_F(0, "from", &cfg.from, N_("ident"),
- 			    N_("set From address to <ident> (or committer ident if absent)"),
- 			    PARSE_OPT_OPTARG, from_callback),
- 		OPT_STRING(0, "in-reply-to", &in_reply_to, N_("message-id"),
-@@ -2038,15 +2093,15 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 			    N_("inline the patch"),
- 			    PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
- 			    inline_callback),
--		OPT_CALLBACK_F(0, "thread", &thread, N_("style"),
-+		OPT_CALLBACK_F(0, "thread", &cfg, N_("style"),
- 			    N_("enable message threading, styles: shallow, deep"),
- 			    PARSE_OPT_OPTARG, thread_callback),
- 		OPT_STRING(0, "signature", &signature, N_("signature"),
- 			    N_("add a signature")),
--		OPT_CALLBACK_F(0, "base", &base_commit, N_("base-commit"),
-+		OPT_CALLBACK_F(0, "base", &cfg, N_("base-commit"),
- 			       N_("add prerequisite tree info to the patch series"),
- 			       0, base_callback),
--		OPT_FILENAME(0, "signature-file", &signature_file,
-+		OPT_FILENAME(0, "signature-file", &signature_file_arg,
- 				N_("add a signature from a file")),
- 		OPT__QUIET(&quiet, N_("don't print the patch filenames")),
- 		OPT_BOOL(0, "progress", &show_progress,
-@@ -2063,21 +2118,17 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 		OPT_END()
- 	};
-=20
--	extra_hdr.strdup_strings =3D 1;
--	extra_to.strdup_strings =3D 1;
--	extra_cc.strdup_strings =3D 1;
--
--	log_config_init(&cfg);
-+	format_config_init(&cfg);
- 	init_diff_ui_defaults();
--	init_display_notes(&notes_opt);
-+	init_display_notes(&cfg.notes_opt);
- 	git_config(git_format_config, &cfg);
- 	repo_init_revisions(the_repository, &rev, prefix);
- 	git_config(grep_config, &rev.grep_filter);
-=20
--	rev.show_notes =3D show_notes;
--	memcpy(&rev.notes_opt, &notes_opt, sizeof(notes_opt));
-+	rev.show_notes =3D cfg.show_notes;
-+	memcpy(&rev.notes_opt, &cfg.notes_opt, sizeof(cfg.notes_opt));
- 	rev.commit_format =3D CMIT_FMT_EMAIL;
--	rev.encode_email_headers =3D cfg.default_encode_email_headers;
-+	rev.encode_email_headers =3D cfg.log.default_encode_email_headers;
- 	rev.expand_tabs_in_log_default =3D 0;
- 	rev.verbose_header =3D 1;
- 	rev.diff =3D 1;
-@@ -2088,12 +2139,12 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 	s_r_opt.def =3D "HEAD";
- 	s_r_opt.revarg_opt =3D REVARG_COMMITTISH;
-=20
--	strbuf_addstr(&sprefix, cfg.fmt_patch_subject_prefix);
-+	strbuf_addstr(&cfg.sprefix, cfg.log.fmt_patch_subject_prefix);
- 	if (format_no_prefix)
- 		diff_set_noprefix(&rev.diffopt);
-=20
--	if (default_attach) {
--		rev.mime_boundary =3D default_attach;
-+	if (cfg.default_attach) {
-+		rev.mime_boundary =3D cfg.default_attach;
- 		rev.no_inline =3D 1;
- 	}
-=20
-@@ -2109,60 +2160,63 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
-=20
- 	rev.force_in_body_from =3D force_in_body_from;
-=20
-+	if (!fmt_patch_suffix)
-+		fmt_patch_suffix =3D cfg.fmt_patch_suffix;
-+
- 	/* Make sure "0000-$sub.patch" gives non-negative length for $sub */
--	if (cfg.fmt_patch_name_max <=3D strlen("0000-") + strlen(fmt_patch_suffix=
-))
--		cfg.fmt_patch_name_max =3D strlen("0000-") + strlen(fmt_patch_suffix);
-+	if (cfg.log.fmt_patch_name_max <=3D strlen("0000-") + strlen(fmt_patch_su=
-ffix))
-+		cfg.log.fmt_patch_name_max =3D strlen("0000-") + strlen(fmt_patch_suffix=
-);
-=20
- 	if (cover_from_description_arg)
--		cover_from_description_mode =3D parse_cover_from_description(cover_from_=
-description_arg);
-+		cfg.cover_from_description_mode =3D parse_cover_from_description(cover_f=
-rom_description_arg);
-=20
- 	if (rfc && rfc[0]) {
--		subject_prefix =3D 1;
-+		cfg.subject_prefix =3D 1;
- 		if (rfc[0] =3D=3D '-')
--			strbuf_addf(&sprefix, " %s", rfc + 1);
-+			strbuf_addf(&cfg.sprefix, " %s", rfc + 1);
- 		else
--			strbuf_insertf(&sprefix, 0, "%s ", rfc);
-+			strbuf_insertf(&cfg.sprefix, 0, "%s ", rfc);
- 	}
-=20
- 	if (reroll_count) {
--		strbuf_addf(&sprefix, " v%s", reroll_count);
-+		strbuf_addf(&cfg.sprefix, " v%s", reroll_count);
- 		rev.reroll_count =3D reroll_count;
- 	}
-=20
--	rev.subject_prefix =3D sprefix.buf;
-+	rev.subject_prefix =3D cfg.sprefix.buf;
-=20
--	for (i =3D 0; i < extra_hdr.nr; i++) {
--		strbuf_addstr(&buf, extra_hdr.items[i].string);
-+	for (i =3D 0; i < cfg.extra_hdr.nr; i++) {
-+		strbuf_addstr(&buf, cfg.extra_hdr.items[i].string);
- 		strbuf_addch(&buf, '\n');
- 	}
-=20
--	if (extra_to.nr)
-+	if (cfg.extra_to.nr)
- 		strbuf_addstr(&buf, "To: ");
--	for (i =3D 0; i < extra_to.nr; i++) {
-+	for (i =3D 0; i < cfg.extra_to.nr; i++) {
- 		if (i)
- 			strbuf_addstr(&buf, "    ");
--		strbuf_addstr(&buf, extra_to.items[i].string);
--		if (i + 1 < extra_to.nr)
-+		strbuf_addstr(&buf, cfg.extra_to.items[i].string);
-+		if (i + 1 < cfg.extra_to.nr)
- 			strbuf_addch(&buf, ',');
- 		strbuf_addch(&buf, '\n');
- 	}
-=20
--	if (extra_cc.nr)
-+	if (cfg.extra_cc.nr)
- 		strbuf_addstr(&buf, "Cc: ");
--	for (i =3D 0; i < extra_cc.nr; i++) {
-+	for (i =3D 0; i < cfg.extra_cc.nr; i++) {
- 		if (i)
- 			strbuf_addstr(&buf, "    ");
--		strbuf_addstr(&buf, extra_cc.items[i].string);
--		if (i + 1 < extra_cc.nr)
-+		strbuf_addstr(&buf, cfg.extra_cc.items[i].string);
-+		if (i + 1 < cfg.extra_cc.nr)
- 			strbuf_addch(&buf, ',');
- 		strbuf_addch(&buf, '\n');
- 	}
-=20
- 	rev.extra_headers =3D to_free =3D strbuf_detach(&buf, NULL);
-=20
--	if (from) {
--		if (split_ident_line(&rev.from_ident, from, strlen(from)))
--			die(_("invalid ident line: %s"), from);
-+	if (cfg.from) {
-+		if (split_ident_line(&rev.from_ident, cfg.from, strlen(cfg.from)))
-+			die(_("invalid ident line: %s"), cfg.from);
- 	}
-=20
- 	if (start_number < 0)
-@@ -2173,14 +2227,14 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 	 * and it would conflict with --keep-subject (-k) from the
- 	 * command line, reset "numbered".
+ static int curl_ssl_verify =3D -1;
+ static int curl_ssl_try;
+-static const char *curl_http_version =3D NULL;
++static char *curl_http_version;
+ static char *ssl_cert;
+ static char *ssl_cert_type;
+-static const char *ssl_cipherlist;
+-static const char *ssl_version;
++static char *ssl_cipherlist;
++static char *ssl_version;
+ static struct {
+ 	const char *name;
+ 	long ssl_version;
+@@ -95,7 +95,7 @@ static struct {
  	 */
--	if (numbered && keep_subject && !numbered_cmdline_opt)
--		numbered =3D 0;
-+	if (cfg.numbered && cfg.keep_subject && !cfg.numbered_cmdline_opt)
-+		cfg.numbered =3D 0;
-=20
--	if (numbered && keep_subject)
-+	if (cfg.numbered && cfg.keep_subject)
- 		die(_("options '%s' and '%s' cannot be used together"), "-n", "-k");
--	if (keep_subject && subject_prefix)
-+	if (cfg.keep_subject && cfg.subject_prefix)
- 		die(_("options '%s' and '%s' cannot be used together"), "--subject-prefi=
-x/--rfc", "-k");
--	rev.preserve_subject =3D keep_subject;
-+	rev.preserve_subject =3D cfg.keep_subject;
-=20
- 	argc =3D setup_revisions(argc, argv, &rev, &s_r_opt);
- 	if (argc > 1)
-@@ -2207,7 +2261,7 @@ int cmd_format_patch(int argc, const char **argv, con=
-st char *prefix)
- 	rev.always_show_header =3D 1;
-=20
- 	rev.zero_commit =3D zero_commit;
--	rev.patch_name_max =3D cfg.fmt_patch_name_max;
-+	rev.patch_name_max =3D cfg.log.fmt_patch_name_max;
-=20
- 	if (!rev.diffopt.flags.text && !no_binary_diff)
- 		rev.diffopt.flags.binary =3D 1;
-@@ -2228,7 +2282,7 @@ int cmd_format_patch(int argc, const char **argv, con=
-st char *prefix)
- 		int saved;
-=20
- 		if (!output_directory)
--			output_directory =3D config_output_directory;
-+			output_directory =3D cfg.config_output_directory;
- 		output_directory =3D set_outdir(prefix, output_directory);
-=20
- 		if (rev.diffopt.use_color !=3D GIT_COLOR_ALWAYS)
-@@ -2326,14 +2380,14 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 		goto done;
- 	total =3D nr;
- 	if (cover_letter =3D=3D -1) {
--		if (config_cover_letter =3D=3D COVER_AUTO)
-+		if (cfg.config_cover_letter =3D=3D COVER_AUTO)
- 			cover_letter =3D (total > 1);
- 		else
--			cover_letter =3D (config_cover_letter =3D=3D COVER_ON);
-+			cover_letter =3D (cfg.config_cover_letter =3D=3D COVER_ON);
+ };
+ #ifdef CURLGSSAPI_DELEGATION_FLAG
+-static const char *curl_deleg;
++static char *curl_deleg;
+ static struct {
+ 	const char *name;
+ 	long curl_deleg_param;
+@@ -383,11 +383,11 @@ static int http_options(const char *var, const char *=
+value,
+ 	if (!strcmp("http.sslcert", var))
+ 		return git_config_pathname(&ssl_cert, var, value);
+ 	if (!strcmp("http.sslcerttype", var))
+-		return git_config_string((const char **)&ssl_cert_type, var, value);
++		return git_config_string(&ssl_cert_type, var, value);
+ 	if (!strcmp("http.sslkey", var))
+ 		return git_config_pathname(&ssl_key, var, value);
+ 	if (!strcmp("http.sslkeytype", var))
+-		return git_config_string((const char **)&ssl_key_type, var, value);
++		return git_config_string(&ssl_key_type, var, value);
+ 	if (!strcmp("http.sslcapath", var))
+ 		return git_config_pathname(&ssl_capath, var, value);
+ 	if (!strcmp("http.sslcainfo", var))
+@@ -440,19 +440,19 @@ static int http_options(const char *var, const char *=
+value,
+ 		return 0;
  	}
--	if (!keep_subject && auto_number && (total > 1 || cover_letter))
--		numbered =3D 1;
--	if (numbered)
-+	if (!cfg.keep_subject && cfg.auto_number && (total > 1 || cover_letter))
-+		cfg.numbered =3D 1;
-+	if (cfg.numbered)
- 		rev.total =3D total + start_number - 1;
+ 	if (!strcmp("http.proxy", var))
+-		return git_config_string((const char **)&curl_http_proxy, var, value);
++		return git_config_string(&curl_http_proxy, var, value);
 =20
- 	if (idiff_prev.nr) {
-@@ -2365,27 +2419,40 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 					     _("Range-diff against v%d:"));
+ 	if (!strcmp("http.proxyauthmethod", var))
+-		return git_config_string((const char **)&http_proxy_authmethod, var, val=
+ue);
++		return git_config_string(&http_proxy_authmethod, var, value);
+=20
+ 	if (!strcmp("http.proxysslcert", var))
+-		return git_config_string((const char **)&http_proxy_ssl_cert, var, value=
+);
++		return git_config_string(&http_proxy_ssl_cert, var, value);
+=20
+ 	if (!strcmp("http.proxysslkey", var))
+-		return git_config_string((const char **)&http_proxy_ssl_key, var, value);
++		return git_config_string(&http_proxy_ssl_key, var, value);
+=20
+ 	if (!strcmp("http.proxysslcainfo", var))
+-		return git_config_string((const char **)&http_proxy_ssl_ca_info, var, va=
+lue);
++		return git_config_string(&http_proxy_ssl_ca_info, var, value);
+=20
+ 	if (!strcmp("http.proxysslcertpasswordprotected", var)) {
+ 		proxy_ssl_cert_password_required =3D git_config_bool(var, value);
+@@ -476,7 +476,7 @@ static int http_options(const char *var, const char *va=
+lue,
  	}
 =20
-+	/*
-+	 * The order of precedence is:
-+	 *
-+	 *   1. The `--signature` and `--no-signature` options.
-+	 *   2. The `--signature-file` option.
-+	 *   3. The `format.signature` config.
-+	 *   4. The `format.signatureFile` config.
-+	 *   5. Default `git_version_string`.
-+	 */
- 	if (!signature) {
- 		; /* --no-signature inhibits all signatures */
- 	} else if (signature && signature !=3D git_version_string) {
- 		; /* non-default signature already set */
--	} else if (signature_file) {
-+	} else if (signature_file_arg || (cfg.signature_file && !cfg.signature)) {
- 		struct strbuf buf =3D STRBUF_INIT;
-+		const char *signature_file =3D signature_file_arg ?
-+			signature_file_arg : cfg.signature_file;
+ 	if (!strcmp("http.useragent", var))
+-		return git_config_string((const char **)&user_agent, var, value);
++		return git_config_string(&user_agent, var, value);
 =20
- 		if (strbuf_read_file(&buf, signature_file, 128) < 0)
- 			die_errno(_("unable to read signature file '%s'"), signature_file);
- 		signature =3D strbuf_detach(&buf, NULL);
-+	} else if (cfg.signature) {
-+		signature =3D cfg.signature;
- 	}
+ 	if (!strcmp("http.emptyauth", var)) {
+ 		if (value && !strcmp("auto", value))
+diff --git a/imap-send.c b/imap-send.c
+index c0130d0e02..a5d1510180 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -70,16 +70,16 @@ static char *next_arg(char **);
 =20
- 	memset(&bases, 0, sizeof(bases));
--	base =3D get_base_commit(base_commit, list, nr);
-+	base =3D get_base_commit(&cfg, list, nr);
- 	if (base) {
- 		reset_revision_walk();
- 		clear_object_flags(UNINTERESTING);
- 		prepare_bases(&bases, base, list, nr);
- 	}
+ struct imap_server_conf {
+ 	const char *name;
+-	const char *tunnel;
+-	const char *host;
++	char *tunnel;
++	char *host;
+ 	int port;
+-	const char *folder;
+-	const char *user;
+-	const char *pass;
++	char *folder;
++	char *user;
++	char *pass;
+ 	int use_ssl;
+ 	int ssl_verify;
+ 	int use_html;
+-	const char *auth_method;
++	char *auth_method;
+ };
 =20
--	if (in_reply_to || thread || cover_letter) {
-+	if (in_reply_to || cfg.thread || cover_letter) {
- 		rev.ref_message_ids =3D xmalloc(sizeof(*rev.ref_message_ids));
- 		string_list_init_dup(rev.ref_message_ids);
- 	}
-@@ -2396,19 +2463,19 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 	rev.numbered_files =3D just_numbers;
- 	rev.patch_suffix =3D fmt_patch_suffix;
- 	if (cover_letter) {
--		if (thread)
-+		if (cfg.thread)
- 			gen_message_id(&rev, "cover");
- 		make_cover_letter(&rev, !!output_directory,
--				  origin, nr, list, description_file, branch_name, quiet);
-+				  origin, nr, list, description_file, branch_name, quiet, &cfg);
- 		print_bases(&bases, rev.diffopt.file);
--		print_signature(rev.diffopt.file);
-+		print_signature(signature, rev.diffopt.file);
- 		total++;
- 		start_number--;
- 		/* interdiff/range-diff in cover-letter; omit from patches */
- 		rev.idiff_oid1 =3D NULL;
- 		rev.rdiff1 =3D NULL;
- 	}
--	rev.add_signoff =3D do_signoff;
-+	rev.add_signoff =3D cfg.do_signoff;
+ static struct imap_server_conf server =3D {
+diff --git a/mailmap.c b/mailmap.c
+index 044466b043..b2efe29b3d 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -7,7 +7,7 @@
+ #include "setup.h"
 =20
- 	if (show_progress)
- 		progress =3D start_delayed_progress(_("Generating patches"), total);
-@@ -2418,7 +2485,7 @@ int cmd_format_patch(int argc, const char **argv, con=
-st char *prefix)
- 		commit =3D list[nr];
- 		rev.nr =3D total - nr + (start_number - 1);
- 		/* Make the second and subsequent mails replies to the first */
--		if (thread) {
-+		if (cfg.thread) {
- 			/* Have we already had a message ID? */
- 			if (rev.message_id) {
- 				/*
-@@ -2442,7 +2509,7 @@ int cmd_format_patch(int argc, const char **argv, con=
-st char *prefix)
- 				 * letter is a reply to the
- 				 * --in-reply-to, if specified.
- 				 */
--				if (thread =3D=3D THREAD_SHALLOW
-+				if (cfg.thread =3D=3D THREAD_SHALLOW
- 				    && rev.ref_message_ids->nr > 0
- 				    && (!cover_letter || rev.nr > 1))
- 					free(rev.message_id);
-@@ -2475,7 +2542,7 @@ int cmd_format_patch(int argc, const char **argv, con=
-st char *prefix)
- 				       mime_boundary_leader,
- 				       rev.mime_boundary);
- 			else
--				print_signature(rev.diffopt.file);
-+				print_signature(signature, rev.diffopt.file);
- 		}
- 		if (output_directory)
- 			fclose(rev.diffopt.file);
-@@ -2483,9 +2550,6 @@ int cmd_format_patch(int argc, const char **argv, con=
-st char *prefix)
- 	stop_progress(&progress);
- 	free(list);
- 	free(branch_name);
--	string_list_clear(&extra_to, 0);
--	string_list_clear(&extra_cc, 0);
--	string_list_clear(&extra_hdr, 0);
- 	if (ignore_if_in_upstream)
- 		free_patch_ids(&ids);
+ char *git_mailmap_file;
+-const char *git_mailmap_blob;
++char *git_mailmap_blob;
 =20
-@@ -2495,14 +2559,13 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 	strbuf_release(&rdiff1);
- 	strbuf_release(&rdiff2);
- 	strbuf_release(&rdiff_title);
--	strbuf_release(&sprefix);
- 	free(to_free);
- 	free(rev.message_id);
- 	if (rev.ref_message_ids)
- 		string_list_clear(rev.ref_message_ids, 0);
- 	free(rev.ref_message_ids);
- 	release_revisions(&rev);
--	log_config_release(&cfg);
-+	format_config_release(&cfg);
+ struct mailmap_info {
+ 	char *name;
+diff --git a/mailmap.h b/mailmap.h
+index 429a760945..cbda9bc5e0 100644
+--- a/mailmap.h
++++ b/mailmap.h
+@@ -4,7 +4,7 @@
+ struct string_list;
+=20
+ extern char *git_mailmap_file;
+-extern const char *git_mailmap_blob;
++extern char *git_mailmap_blob;
+=20
+ int read_mailmap(struct string_list *map);
+ void clear_mailmap(struct string_list *map);
+diff --git a/merge-ll.c b/merge-ll.c
+index bf1077ae09..e29b15fa4a 100644
+--- a/merge-ll.c
++++ b/merge-ll.c
+@@ -27,9 +27,9 @@ typedef enum ll_merge_result (*ll_merge_fn)(const struct =
+ll_merge_driver *,
+=20
+ struct ll_merge_driver {
+ 	const char *name;
+-	const char *description;
++	char *description;
+ 	ll_merge_fn fn;
+-	const char *recursive;
++	char *recursive;
+ 	struct ll_merge_driver *next;
+ 	char *cmdline;
+ };
+@@ -268,7 +268,7 @@ static enum ll_merge_result ll_ext_merge(const struct l=
+l_merge_driver *fn,
+  * merge.default and merge.driver configuration items
+  */
+ static struct ll_merge_driver *ll_user_merge, **ll_user_merge_tail;
+-static const char *default_ll_merge;
++static char *default_ll_merge;
+=20
+ static int read_merge_config(const char *var, const char *value,
+ 			     const struct config_context *ctx UNUSED,
+diff --git a/pager.c b/pager.c
+index b8822a9381..e9e121db69 100644
+--- a/pager.c
++++ b/pager.c
+@@ -13,7 +13,7 @@ int pager_use_color =3D 1;
+ #endif
+=20
+ static struct child_process pager_process;
+-static const char *pager_program;
++static char *pager_program;
+=20
+ /* Is the value coming back from term_columns() just a guess? */
+ static int term_columns_guessed;
+diff --git a/pretty.c b/pretty.c
+index 7ead078998..22a81506b7 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -62,7 +62,7 @@ static int git_pretty_formats_config(const char *var, con=
+st char *value,
+ {
+ 	struct cmt_fmt_map *commit_format =3D NULL;
+ 	const char *name;
+-	const char *fmt;
++	char *fmt;
+ 	int i;
+=20
+ 	if (!skip_prefix(var, "pretty.", &name))
+@@ -93,13 +93,17 @@ static int git_pretty_formats_config(const char *var, c=
+onst char *value,
+ 	if (git_config_string(&fmt, var, value))
+ 		return -1;
+=20
+-	if (skip_prefix(fmt, "format:", &fmt))
++	if (skip_prefix(fmt, "format:", &commit_format->user_format)) {
+ 		commit_format->is_tformat =3D 0;
+-	else if (skip_prefix(fmt, "tformat:", &fmt) || strchr(fmt, '%'))
++	} else if (skip_prefix(fmt, "tformat:", &commit_format->user_format)) {
+ 		commit_format->is_tformat =3D 1;
+-	else
++	} else if (strchr(fmt, '%')) {
++		commit_format->is_tformat =3D 1;
++		commit_format->user_format =3D fmt;
++	} else {
+ 		commit_format->is_alias =3D 1;
+-	commit_format->user_format =3D fmt;
++		commit_format->user_format =3D fmt;
++	}
+=20
  	return 0;
  }
+diff --git a/promisor-remote.h b/promisor-remote.h
+index 2cb9eda9ea..88cb599c39 100644
+--- a/promisor-remote.h
++++ b/promisor-remote.h
+@@ -13,7 +13,7 @@ struct object_id;
+  */
+ struct promisor_remote {
+ 	struct promisor_remote *next;
+-	const char *partial_clone_filter;
++	char *partial_clone_filter;
+ 	const char name[FLEX_ARRAY];
+ };
 =20
+diff --git a/remote.c b/remote.c
+index ec8c158e60..d319f28757 100644
+--- a/remote.c
++++ b/remote.c
+@@ -428,29 +428,29 @@ static int handle_config(const char *key, const char =
+*value,
+ 	else if (!strcmp(subkey, "prunetags"))
+ 		remote->prune_tags =3D git_config_bool(key, value);
+ 	else if (!strcmp(subkey, "url")) {
+-		const char *v;
++		char *v;
+ 		if (git_config_string(&v, key, value))
+ 			return -1;
+ 		add_url(remote, v);
+ 	} else if (!strcmp(subkey, "pushurl")) {
+-		const char *v;
++		char *v;
+ 		if (git_config_string(&v, key, value))
+ 			return -1;
+ 		add_pushurl(remote, v);
+ 	} else if (!strcmp(subkey, "push")) {
+-		const char *v;
++		char *v;
+ 		if (git_config_string(&v, key, value))
+ 			return -1;
+ 		refspec_append(&remote->push, v);
+-		free((char *)v);
++		free(v);
+ 	} else if (!strcmp(subkey, "fetch")) {
+-		const char *v;
++		char *v;
+ 		if (git_config_string(&v, key, value))
+ 			return -1;
+ 		refspec_append(&remote->fetch, v);
+-		free((char *)v);
++		free(v);
+ 	} else if (!strcmp(subkey, "receivepack")) {
+-		const char *v;
++		char *v;
+ 		if (git_config_string(&v, key, value))
+ 			return -1;
+ 		if (!remote->receivepack)
+@@ -458,7 +458,7 @@ static int handle_config(const char *key, const char *v=
+alue,
+ 		else
+ 			error(_("more than one receivepack given, using the first"));
+ 	} else if (!strcmp(subkey, "uploadpack")) {
+-		const char *v;
++		char *v;
+ 		if (git_config_string(&v, key, value))
+ 			return -1;
+ 		if (!remote->uploadpack)
+@@ -471,10 +471,10 @@ static int handle_config(const char *key, const char =
+*value,
+ 		else if (!strcmp(value, "--tags"))
+ 			remote->fetch_tags =3D 2;
+ 	} else if (!strcmp(subkey, "proxy")) {
+-		return git_config_string((const char **)&remote->http_proxy,
++		return git_config_string(&remote->http_proxy,
+ 					 key, value);
+ 	} else if (!strcmp(subkey, "proxyauthmethod")) {
+-		return git_config_string((const char **)&remote->http_proxy_authmethod,
++		return git_config_string(&remote->http_proxy_authmethod,
+ 					 key, value);
+ 	} else if (!strcmp(subkey, "vcs")) {
+ 		return git_config_string(&remote->foreign_vcs, key, value);
+diff --git a/remote.h b/remote.h
+index dfd4837e60..e8c6655e42 100644
+--- a/remote.h
++++ b/remote.h
+@@ -46,7 +46,7 @@ struct remote_state {
+ 	struct hashmap branches_hash;
+=20
+ 	struct branch *current_branch;
+-	const char *pushremote_name;
++	char *pushremote_name;
+=20
+ 	struct rewrites rewrites;
+ 	struct rewrites rewrites_push;
+@@ -65,7 +65,7 @@ struct remote {
+=20
+ 	int origin, configured_in_repo;
+=20
+-	const char *foreign_vcs;
++	char *foreign_vcs;
+=20
+ 	/* An array of all of the url_nr URLs configured for the remote */
+ 	const char **url;
+@@ -309,9 +309,9 @@ struct branch {
+ 	const char *refname;
+=20
+ 	/* The name of the remote listed in the configuration. */
+-	const char *remote_name;
++	char *remote_name;
+=20
+-	const char *pushremote_name;
++	char *pushremote_name;
+=20
+ 	/* An array of the "merge" lines in the configuration. */
+ 	const char **merge_name;
+diff --git a/sequencer.c b/sequencer.c
+index dbd60d79b9..3c81ef9ca5 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -306,7 +306,7 @@ static int git_sequencer_config(const char *k, const ch=
+ar *v,
+ 	}
+=20
+ 	if (!opts->default_strategy && !strcmp(k, "pull.twohead")) {
+-		int ret =3D git_config_string((const char**)&opts->default_strategy, k, =
+v);
++		int ret =3D git_config_string(&opts->default_strategy, k, v);
+ 		if (ret =3D=3D 0) {
+ 			/*
+ 			 * pull.twohead is allowed to be multi-valued; we only
+diff --git a/upload-pack.c b/upload-pack.c
+index 8fbd138515..5801eb2639 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -94,7 +94,7 @@ struct upload_pack_data {
+=20
+ 	struct packet_writer writer;
+=20
+-	const char *pack_objects_hook;
++	char *pack_objects_hook;
+=20
+ 	unsigned stateless_rpc : 1;				/* v0 only */
+ 	unsigned no_done : 1;					/* v0 only */
+diff --git a/userdiff.h b/userdiff.h
+index d726804c3e..cc8e5abfef 100644
+--- a/userdiff.h
++++ b/userdiff.h
+@@ -7,19 +7,19 @@ struct index_state;
+ struct repository;
+=20
+ struct userdiff_funcname {
+-	const char *pattern;
++	char *pattern;
+ 	int cflags;
+ };
+=20
+ struct userdiff_driver {
+ 	const char *name;
+-	const char *external;
+-	const char *algorithm;
++	char *external;
++	char *algorithm;
+ 	int binary;
+ 	struct userdiff_funcname funcname;
+-	const char *word_regex;
+-	const char *word_regex_multi_byte;
+-	const char *textconv;
++	char *word_regex;
++	char *word_regex_multi_byte;
++	char *textconv;
+ 	struct notes_cache *textconv_cache;
+ 	int textconv_want_cache;
+ };
 --=20
 2.45.1.216.g4365c6fcf9.dirty
 
 
---BfTeDw9YvBeiS9P8
+--5Rmot97Q76Fn+o7D
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQZhEACgkQVbJhu7ck
-PpRuow//cY70B2EtSicFkqsNy+4rAd20iOEvYJPAdbVyZhfQn9yyJshG8q5fhA70
-e+InOMHVfNwBvxd471BsNtQF4qoj/c2evorzZoK9LvysmPj0XuMUuj1yGB78fSy1
-yJDjB7D2zyzRKt/et5hTXAZMMv1OZGe5f6NpaU+jeqC11QLXnYTZcW2Ntew5SCHI
-+cSK5DmuYxKh81xF+/dGq4pRYXq79TUWJx2lIfaqBgI4RVrLQxu4bKzKt9mckq1J
-ZF3EUAk5UJ+8obAgWNWDozcSE98fFfQNAMg5QRHyWkHCb9aUSt+HEINxg7vNESwh
-PuRE2m3/iWkx8T0+zgFwcoCw3jcQJ1gPCNcqOd5Jkjnxp0lpowKwFgjkkNyFD0sF
-c+0qYJoIV4ObR8vbM4ISuoR181QnI1XsYmPvnUbSKj97hNayzfl5ke6EbALqj/eU
-HkF8NXa6j/b/QYpKCqOixpoMS+hd02WHCT7R+B55dYYe4rOu50sEWgc1B8eDVv6p
-L1+mSljJ2EdkIqaOeeBfAdrkozP95QYY3rfvwLL+PxJ/A1eJSXXDnB+P/jgxYFZK
-ij5D4F9a1yBjfVFhLUsjpem3HOfZn4gK4Q7UyDP2sj0DOcF2igmt+uDbRwUQsZie
-YHfZDEUIJg+OSu5M0CM8H+lpUK6cANlwcOOr2ff+Pdx+kXOhxMk=
-=+RXZ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQZhYACgkQVbJhu7ck
+PpR4/A/+JcrqZD1KIK5R3IE1nDa8frgBeW3Mui2yevFjBvRtSz1E7YNXp8OXSsBx
+I7tEkH5jGFmGVWkjrwXKKWNetLXt6v1iKKnIM0pvINRLDb4cXA+zWKBQBYzmebWn
+M7aNDDriRqkYJTqdcvUQzQO7/Ggn4xNyChOOTCCcLMCP1F4wo6biQMvnqiGq6SKT
+JCUwegdDQtDbK4Qyf2EhGoO7jpYOpjAPiHEUuaOgfjjTsrYprbDtJ/ZXicsFDxhm
+ScOuowCxkA8hM4CqAimB4yWmY7qdqxjBE9Bgrwi3cHrcU++CsRjAAe1l1kpSVq7k
+p69++kBVQYpN8NBxr2XIOGEwZr1Yy0WSTT1hwPKnWlZUaKPoWNTBbzpH/TXTfQWa
+G+Il7mbuiEc7WCFRdxJ2HOtL3R6VYUg4pgGy7qcKY5y25/FTHT9lSd4mLTBURO2l
+aR7hKjzuA479wtYMhfhXfwixkfzwWpctI+LYPpcJ7SYJG/kO5gvGPJtI+mFZ+lj2
+Z22w7k2nfX7sb8WbjxpGNTswAe3REv9fDlKWGEgvaB/TjARSoK4HMw4ECZTFfuU/
+Y3DzILxijeREuJfEE3IAOkDcDJYYjudFGeN4XmxxFKcnTa1x0q9S0Vdu7r6t4NaX
+rQIowvPrjCcRaXnmYSoRaLsGVthfdRwpjlylxm8AWZpvbVDN9IE=
+=N+1r
 -----END PGP SIGNATURE-----
 
---BfTeDw9YvBeiS9P8--
+--5Rmot97Q76Fn+o7D--
