@@ -1,268 +1,145 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2045.outbound.protection.outlook.com [40.107.243.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E952CA5
-	for <git@vger.kernel.org>; Fri, 24 May 2024 23:03:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716591787; cv=none; b=KUpmlCw7aq23L3zA5i+lFkidnOTxN/zF9SphEXg7QKZKLbXFjVoIXyx3hIr9/lJA8Q3n12U3QsoS84yPozTXq2N0VmUAIRCWT05q4/4vOTiFAhXxADTKmu3VqcPTzhwrq37nb2RsjzbBL8R6x9bGl2sqwYNxCxz0ZUW5TwhYn0Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716591787; c=relaxed/simple;
-	bh=1zfgl1fdPnNvd9ss3ti4F29RiveYvYA8L/2QU8yHHFg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PIu0z48yViNFzYvcOhJc8xr6rixxvACEG2DSOvmCmo1d/KdSZHMDAOTLnUoVUlsmwA9s4YFMSZMx/+5Mbx/hWgcF7wl1I+wegEShOTKThBBWlGTbKF/7rXZDzgqRxBMoDHVqNEQWD8JXitP23a11cgyZLialYTiHaoy0nmmb2uA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=esMaVq8h; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="esMaVq8h"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id D44DE289D4;
-	Fri, 24 May 2024 19:02:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=1zfgl1fdPnNvd9ss3ti4F29RiveYvYA8L/2QU8
-	yHHFg=; b=esMaVq8hVQn2xpdHveUGhCXCNMUDEyx9VijOYBFkVlH3io039Nzvom
-	BoF72h9HCdZwcPjN/8w24zFPvBfkTGlvjsgj61uSJANWxcR5HOYOAeKgKmol+7Ga
-	vK2i0hqoPMI5NB99HUhx1w7E/TXUGZplJDWtG94WtxRn8g9yfdFc4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id CD052289D3;
-	Fri, 24 May 2024 19:02:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E8EF2289D2;
-	Fri, 24 May 2024 19:02:56 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 2/2] format-patch: move range/inter diff at the end of a
- single patch output
-In-Reply-To: <20240523225007.2871766-3-gitster@pobox.com> (Junio C. Hamano's
-	message of "Thu, 23 May 2024 15:50:07 -0700")
-References: <20240523225007.2871766-1-gitster@pobox.com>
-	<20240523225007.2871766-3-gitster@pobox.com>
-Date: Fri, 24 May 2024 16:02:55 -0700
-Message-ID: <xmqqed9qke3k.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CB0136E1A
+	for <git@vger.kernel.org>; Fri, 24 May 2024 23:22:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1716592959; cv=fail; b=nlpSaZlqyh62qkpUn+8yLNzEo/k3+UBDNvU4bCRfl0WDzMPEeqgKWmTlcePVFeJsEv4GIkqlH9NJdfajQlQZB40cygU/3Nbt/uux+jbPAzhwp42ailWKAYUiWjJEHCbMdCQ/FCHRJH6pWrNQj4yKzTCgLTrEyQSnHjiWB88X19E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1716592959; c=relaxed/simple;
+	bh=07LaaMMK57j/U57X+rL4X7gg/do6TjDhXCHqQpSgaU8=;
+	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=uc1+SuNd64M4+JvMw17iRCUWwpUNPtS+fZqREFGqOum8ru3gZzNtlQXwhplKzylVHK7kdopwvt5bguqjZt1GdLrScNY9B+Wa3BewfoykfH37Wax3204J562zeQx3n5TidfNTwcdE/H7fIEoadmdZQwwh+zGWnDjOBRXoGqS6lNQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nice.com; spf=pass smtp.mailfrom=nice.com; arc=fail smtp.client-ip=40.107.243.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nice.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nice.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NmSMGqyaFgHXUKPSg24p73xmag/MS7u/Vg2yJXE/lJF2Iuq09SocXCI5Fm786ZYQ8aijo8J+vkhDYdHlKpPM9d/qFJqwJgLk5seyUewpnnpGpe2yD3maYHBKb5IxZZoYzSLLgzuITPx/H/TtsqdpL+EJJmPx8ecqzkWCVp5YxVhogw4CuRL9FTG5YzpzrQdbFbG5wWUx8YqttzM2uwLNR2opYq09osIQbWLpwQNCV2AruUd695olXMIV36vIxCfIidmypS70tPRiR4gf83Ffsj39Ou6f0CLybqyh3pyUaKKecKXfvGs6ow1sCmW8ENGWQ/5iUfjL9t1H8i9/mWPEVw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=07LaaMMK57j/U57X+rL4X7gg/do6TjDhXCHqQpSgaU8=;
+ b=m4q7qM4KpzsrnzIcZ/ethX5b9jmk7h5xtMGm67/nZB6Xh/NNt6zHFLWrit+1RbPumTwr9ZShV0doa2LkR2OQ3lj6GBW00ZGqULn+CytpJzpe3o1SApB36IfSPbjaGNWXYbyijNgSVEWCOe7Ze9aPmfnEJwJAuqSEoIH87QloVJln0PwBBela5hSTMLw8pwZ5RmFilB7cFkL91kNBlyA3+fQKEaaY48SyMwJyMjB9bpP83Nptd2CK1TSdrTlZK+L+giIAuuj2cH4xzkwOdLXMB39OCXXKIT9yVuvnZR63wuQdMNwLuIsMVPxBrbVgnCo6TPPCdfzrtNpgboinh9IhUw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nice.com; dmarc=pass action=none header.from=nice.com;
+ dkim=pass header.d=nice.com; arc=none
+Received: from CH3PR12MB9121.namprd12.prod.outlook.com (2603:10b6:610:1a1::8)
+ by IA0PR12MB8086.namprd12.prod.outlook.com (2603:10b6:208:403::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7611.19; Fri, 24 May
+ 2024 23:22:35 +0000
+Received: from CH3PR12MB9121.namprd12.prod.outlook.com
+ ([fe80::c66c:3a4e:a090:a427]) by CH3PR12MB9121.namprd12.prod.outlook.com
+ ([fe80::c66c:3a4e:a090:a427%6]) with mapi id 15.20.7587.035; Fri, 24 May 2024
+ 23:22:35 +0000
+From: Kattia Soliz <Kattia.Soliz@nice.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: To get the exe, msi and dmg be properly clone to the Jenkins
+ workspace
+Thread-Topic: To get the exe, msi and dmg be properly clone to the Jenkins
+ workspace
+Thread-Index: AdquMQdi9drD/GmHQYyklMHL1tlxzwAAC3RQ
+Date: Fri, 24 May 2024 23:22:35 +0000
+Message-ID:
+ <CH3PR12MB9121B91B7D9ECFEF0C6C798AFBF52@CH3PR12MB9121.namprd12.prod.outlook.com>
+References:
+ <CH3PR12MB9121BAD73E23844BAD614B70FBF52@CH3PR12MB9121.namprd12.prod.outlook.com>
+In-Reply-To:
+ <CH3PR12MB9121BAD73E23844BAD614B70FBF52@CH3PR12MB9121.namprd12.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nice.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB9121:EE_|IA0PR12MB8086:EE_
+x-ms-office365-filtering-correlation-id: c9d16c3b-3254-4534-7a03-08dc7c486510
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230031|1800799015|366007|376005|38070700009;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?BFK+KQQ2xm8ln+iE1ZB+RM/WKsHmDBlfLmA00GrnuIgXwfAMneQlSThn9pjh?=
+ =?us-ascii?Q?WVowg3I5yzw+VQXLMunNVRWixLQ7oHdtKGP3HStGxoTxdokmJNSO2gKI1ySI?=
+ =?us-ascii?Q?MiGAGQk8X0mFefFekpLR3TwWEaDET2hpzjdB6dvHe1Z4nLkSoQq/HSAJKRz/?=
+ =?us-ascii?Q?/+lCqUUgY4S0I7e5fOw/UClHDnT7ohlJEwbyl3mA4rh7LvBRFWVI7j+aTdtR?=
+ =?us-ascii?Q?31OOsQiCO7/oXfwXlQjrbKz/fe/XkCm6XcC2vXQQqzzdPqAhoe27jEPc4Fkx?=
+ =?us-ascii?Q?Jjv4t7F+xQBf39G4Iqr4cYyk9G9WCEegpJUJmazWReiXMgVzvQxtM7L9UsSE?=
+ =?us-ascii?Q?aZPTbCtWfAGHPOz/AvDz+RRQktxSa04rFmuK3xw9jsK0xJwQee3yPpqPDU0o?=
+ =?us-ascii?Q?HL7zUXVDKHD+xiaTyRo+hdzCI52fg2ouU6F40m2izuwK8DUoVjkQ+kmFkFop?=
+ =?us-ascii?Q?2jGZagcH5rbZhv5o3U2Qy55UKJvgeipTiyS6KgP4+NYGvbCmDV89uzdoSxz7?=
+ =?us-ascii?Q?G9EitKHGnfNuyctGZuo2lTmprPkv6DAHZsHx8DRuZI5RZkNDuzy6IKV8tPMN?=
+ =?us-ascii?Q?CWv9m4804BXWLwo2r9BJ3SAVpvn45E7OhaFIDSu/E1cAklpW9+HOzWOTxxLt?=
+ =?us-ascii?Q?OcPwxdv0YssYr2tEYwgdl457HVCCTZzXomlGIMsmtPyZ9BfVLq479wR92jA1?=
+ =?us-ascii?Q?nrvabyCHI+iKh7ZL1G5fn1uvM++BLy+vcITob1rKFyFUbYPdl6JI0f2gmNHd?=
+ =?us-ascii?Q?R83lt4TU4Fd6KCLd+bme+aauF/aI8hsc3ZN1VUtrKEt9N0zhwCFvEyobpRre?=
+ =?us-ascii?Q?nHUjveg9vE8Jf2TnslbMZvI3IPPlHHZ1QBOQdEuK+bKMnAfAPNHUTts0yQEz?=
+ =?us-ascii?Q?hzegifywzL/ITHGZ2OY5lfA3I0Co1iLkAYr/ObnX89vrlKsGQ5J09eyLNLBG?=
+ =?us-ascii?Q?7W6hWR+92qSGNyNp9X2B5iYysyWJDxVs6sjRfNSO/5NuAxt/OYiH1TSWcOHF?=
+ =?us-ascii?Q?dbMl7aqHSW8W1chYDx/rYzckyYAaMpkC+5wRVHuDvSqHxNo08rBaRo3l/+mC?=
+ =?us-ascii?Q?ObA8O++LUINOD4Mn08hjifSOueOJwtmlkPloUlnPLTcfEEu0gImN0Gu0bGek?=
+ =?us-ascii?Q?W513mFwf+yJo506s4XvrlvxOXudUoiL+G87aE+DHFpnfNphABS+AXi5wtxk3?=
+ =?us-ascii?Q?IBrGiLyrS885RvBTjkTaInyiklQcXx4UAG7CE+A18k1jGVosFGUjuOW4hOho?=
+ =?us-ascii?Q?s5IlJN61624Nnfje9HmilJD2x9W35vbbD9Vy8vTEcN3CqVnH0CLa1pe1APso?=
+ =?us-ascii?Q?HBHJOzgb/M+4OGDCboNgWvwyOmCstapVDXuBgQ0msWD8lw=3D=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB9121.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(366007)(376005)(38070700009);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?WM5Er2nS4YIJO4AclQ6h7QkptvrqBv7rGqaJKAMQ1BB6hVQvNxVa9UMg2fP+?=
+ =?us-ascii?Q?/YkZ3XIZKG/BVd9A+rF8vajRpOidF1fMZjEL1lnWpXwheyuqDDuE4shawo83?=
+ =?us-ascii?Q?zmi5BCi5An6EPUqu4ktaN8mjwPaMw3CVIyZvnT4D+QoHpCwq23Nq1YJUVOSm?=
+ =?us-ascii?Q?frmbaRqX8fVuO1OstUs4AOcck4Ev8mWbfrJFMQHOtJRjSTCnMgD8iZuCnfXG?=
+ =?us-ascii?Q?eMEP/dy1qagzkHLEawKMD3thru0EtcgnRvA64DGAwBnmXCNN9pREZ9iA4JOi?=
+ =?us-ascii?Q?TMV8H5dHqEifLDqmwD7W7bv+5iBsguJ3c9IRQkZexsXp6UIhNh0PpOtdlAoQ?=
+ =?us-ascii?Q?0v53OQJplfWMk6j/cZlqN1yctZf5Xl81q+FK+RAZ5lzteFiZGpLwiEJQvYGh?=
+ =?us-ascii?Q?2L/hRl2HAQ82HACGn8Rq/7QTh6SYCmIkb0c4+xjsqIX26qQh8ndgX7kSJoXs?=
+ =?us-ascii?Q?6zsVrNbl3uirL1H68RhlRr/QNbX9FopHFwW81k5XsKMD3RG2fppsKkXRcfIc?=
+ =?us-ascii?Q?VDH3wv5KhfxrqfWTpp0ey6n9eQ+yrRWLdI39GJZDYH3vdq2HlTsdDZXayZPH?=
+ =?us-ascii?Q?eSSLy9PBpiPV1LS55XBEK7peMHf/FF4eeXFp1czdC06AJytTEqKav7/rD6IE?=
+ =?us-ascii?Q?Ly+6u1XplEhtnrUhevymaOjBu5cTb6uCRWHwIaBINrL39kV/eiQ7eeGeHrqT?=
+ =?us-ascii?Q?WaZPDzYWddCnS7Ne3uij+GWUe83EQ/sKgn58ftxHn8CsPvhEgNbkX8SzFKwH?=
+ =?us-ascii?Q?HAZ/eaMit55xTL2ldlpssJhBnITyPOMGdgEZRnK0BDFz7w9EFwTuSxp++FiC?=
+ =?us-ascii?Q?3ToHj1/uN4fSJWPOm6n7ejnigVdczZjR6DUCDDokyH3GDGLeWMangqJOp0dS?=
+ =?us-ascii?Q?2bRR5TqcQvbSzKqeulU3bS9sQtFcZZTZe75Mj5NHH/EoEaF22QRRSxh8Vobb?=
+ =?us-ascii?Q?EWGCNRWWSuAKJwbWfl1uoALaNa9iIEFPc6dnZApmeLllRdicUUvzsIlhuDRz?=
+ =?us-ascii?Q?BBP3s9ZoWUbSTEbZriD5UpENALtHC42dV1awUqyu5pkX9+2SVhXaI7+RMRp0?=
+ =?us-ascii?Q?dLntGHGJPD16oKHbJ5GWJhJtegwTsjAgXSjJZp7peHtT5DJLX7I+6SxaFeio?=
+ =?us-ascii?Q?sQWjSXWUHF+kxUrbsILfiOUgJPSLbIDl9BoCrCCUrjQseD6KO2dL7XP4X2ks?=
+ =?us-ascii?Q?JO8qzY6vQUnxmQpT3Z9JczKoJwF43jt/gWyDS9DvMm/1/LxXrt6txN7eLJWb?=
+ =?us-ascii?Q?A8lWncsLxEP+Lx7H3DEQo7ukGb6Ehpw1d3vpZ7Pser+3wIvHHtiHGSmsP4rR?=
+ =?us-ascii?Q?MkHJLk7Ly5f/oZAjc8diYWuehHzfxrarcpe/Fogob3ppjFNwXBrFxDGx2RWj?=
+ =?us-ascii?Q?C2kThWR2qjrXqqIL0SzV101j8Cq9sD3KFZ7hxXsiuqJdSQZWlfC2iUi+BiHP?=
+ =?us-ascii?Q?HY2l9YHlTi0I8kyI4+omAu6a3SNDGuqBB8cfxrrB0WAt/8rGlB6boXvPd+nv?=
+ =?us-ascii?Q?CMHRP89uJtinoAEemApGWawcD36OScCBoCvvrBTg3By9gyOoY8mGB1caX0iC?=
+ =?us-ascii?Q?YUg+9BDzGBbn4JL4IBFFvmWhIaKJOvlE5oapMvI4+DznEHhwcUPavvgutMZk?=
+ =?us-ascii?Q?hw=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C26933BA-1A21-11EF-B94A-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+X-OriginatorOrg: nice.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9121.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c9d16c3b-3254-4534-7a03-08dc7c486510
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 May 2024 23:22:35.4675
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7123dabd-0e87-4da9-9cb9-b7ec82011aad
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 6TVxmoL7Zfb1d6CWdDa6I9F2t+heIoj6zEEEDH4B/aDlvx+iXDKumaqIFy15YONt1NcEXGMTf/Rbf+c1PU99kDOoqylIdYxOjhx4jXFgaLQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8086
 
-When running "format-patch" on a multiple patch series, the output
-coming from "--interdiff" and "--range-diff" options is inserted
-after the "shortlog" list of commits and the overall diffstat.
+Hello!
 
-The idea is that shortlog/diffstat are shorter and with denser
-information content, which gives a better overview before the
-readers dive into more details of range/inter diff.
+Does anybody know how can I get the exe, msi and dmg be properly clone to t=
+he Jenkins workspace? Currently the files are copied but the file size is l=
+ess than the original size save in the repo.
 
-When working on a single patch, however, we stuff the inter/range
-diff output before the actual patch, next to the diffstat.  This
-pushes down the patch text way down with inter/range diff output,
-distracting readers.
-
-Move the inter/range diff output to the very end of the output,
-after all the patch text is shown.
-
-As the inter/range diff is no longer part of the commentary block
-(i.e., what comes after the log message and "---", but before the
-patch text), stop producing "---" in the function that generates
-them.  But to separate it out visually (note: this is not needed
-to help tools like "git apply" that pay attention to the hunk
-headers to figure out the length of the hunks), add an extra blank
-line between the end of the patch text and the inter/range diff.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * The [1/2] patch is not shown as it is unchanged, to pretend that
-   this [2/2] is a "single patch series".  This output (except for
-   this commentary) was created with
-
-   $ git format-patch --interdiff=@{24.hours} -1
-
- log-tree.c              | 11 +++++------
- t/t4014-format-patch.sh | 36 ++++++++++++++++++++++++++++++------
- 2 files changed, 35 insertions(+), 12 deletions(-)
-
-diff --git a/log-tree.c b/log-tree.c
-index e7cd2c491f..7de744911e 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -684,8 +684,7 @@ static void show_diff_of_diff(struct rev_info *opt)
- 		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
- 		DIFF_QUEUE_CLEAR(&diff_queued_diff);
- 
--		next_commentary_block(opt, NULL);
--		fprintf_ln(opt->diffopt.file, "%s", opt->idiff_title);
-+		fprintf_ln(opt->diffopt.file, "\n%s", opt->idiff_title);
- 		show_interdiff(opt->idiff_oid1, opt->idiff_oid2, 2,
- 			       &opt->diffopt);
- 
-@@ -704,8 +703,7 @@ static void show_diff_of_diff(struct rev_info *opt)
- 		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
- 		DIFF_QUEUE_CLEAR(&diff_queued_diff);
- 
--		next_commentary_block(opt, NULL);
--		fprintf_ln(opt->diffopt.file, "%s", opt->rdiff_title);
-+		fprintf_ln(opt->diffopt.file, "\n%s", opt->rdiff_title);
- 		/*
- 		 * Pass minimum required diff-options to range-diff; others
- 		 * can be added later if deemed desirable.
-@@ -903,8 +901,6 @@ void show_log(struct rev_info *opt)
- 	strbuf_release(&msgbuf);
- 	free(ctx.notes_message);
- 	free(ctx.after_subject);
--
--	show_diff_of_diff(opt);
- }
- 
- int log_tree_diff_flush(struct rev_info *opt)
-@@ -1173,9 +1169,12 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 	}
- 	if (opt->track_linear && !opt->linear && opt->reverse_output_stage)
- 		fprintf(opt->diffopt.file, "\n%s\n", opt->break_bar);
-+	if (shown)
-+		show_diff_of_diff(opt);
- 	opt->loginfo = NULL;
- 	maybe_flush_or_die(opt->diffopt.file, "stdout");
- 	opt->diffopt.no_free = no_free;
-+
- 	diff_free(&opt->diffopt);
- 	return shown;
- }
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index ba85b582c5..de039825a9 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -2482,13 +2482,37 @@ test_expect_success 'interdiff: reroll-count with a integer' '
- '
- 
- test_expect_success 'interdiff: solo-patch' '
--	cat >expect <<-\EOF &&
--	  +fleep
--
--	EOF
- 	git format-patch --interdiff=boop~2 -1 boop &&
--	test_grep "^Interdiff:$" 0001-fleep.patch &&
--	sed "1,/^  @@ /d; /^$/q" 0001-fleep.patch >actual &&
-+
-+	# remove up to the last "patch" output line,
-+	# and remove everything below the signature mark.
-+	sed -e "1,/^+fleep\$/d" -e "/^-- /,\$d" 0001-fleep.patch >actual &&
-+
-+	# fabricate Interdiff output.
-+	git diff boop~2 boop >inter &&
-+	{
-+		echo &&
-+		echo "Interdiff:" &&
-+		sed -e "s/^/  /" inter
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'range-diff: solo-patch' '
-+	git format-patch --creation-factor=999 \
-+		--range-diff=boop~2..boop~1 -1 boop &&
-+
-+	# remove up to the last "patch" output line,
-+	# and remove everything below the signature mark.
-+	sed -e "1,/^+fleep\$/d" -e "/^-- /,\$d" 0001-fleep.patch >actual &&
-+
-+	# fabricate range-diff output.
-+	{
-+		echo &&
-+		echo "Range-diff:" &&
-+		git range-diff --creation-factor=999 \
-+			boop~2..boop~1 boop~1..boop
-+	} >expect &&
- 	test_cmp expect actual
- '
- 
-
-Interdiff:
-  diff --git a/log-tree.c b/log-tree.c
-  index f28c4d0bb0..7de744911e 100644
-  --- a/log-tree.c
-  +++ b/log-tree.c
-  @@ -684,7 +684,7 @@ static void show_diff_of_diff(struct rev_info *opt)
-   		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
-   		DIFF_QUEUE_CLEAR(&diff_queued_diff);
-   
-  -		fprintf_ln(opt->diffopt.file, "%s", opt->idiff_title);
-  +		fprintf_ln(opt->diffopt.file, "\n%s", opt->idiff_title);
-   		show_interdiff(opt->idiff_oid1, opt->idiff_oid2, 2,
-   			       &opt->diffopt);
-   
-  @@ -703,7 +703,7 @@ static void show_diff_of_diff(struct rev_info *opt)
-   		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
-   		DIFF_QUEUE_CLEAR(&diff_queued_diff);
-   
-  -		fprintf_ln(opt->diffopt.file, "%s", opt->rdiff_title);
-  +		fprintf_ln(opt->diffopt.file, "\n%s", opt->rdiff_title);
-   		/*
-   		 * Pass minimum required diff-options to range-diff; others
-   		 * can be added later if deemed desirable.
-  @@ -1169,11 +1169,11 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
-   	}
-   	if (opt->track_linear && !opt->linear && opt->reverse_output_stage)
-   		fprintf(opt->diffopt.file, "\n%s\n", opt->break_bar);
-  +	if (shown)
-  +		show_diff_of_diff(opt);
-   	opt->loginfo = NULL;
-   	maybe_flush_or_die(opt->diffopt.file, "stdout");
-   	opt->diffopt.no_free = no_free;
-  -	if (shown)
-  -		show_diff_of_diff(opt);
-   
-   	diff_free(&opt->diffopt);
-   	return shown;
-  diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-  index c0c5eccb7c..de039825a9 100755
-  --- a/t/t4014-format-patch.sh
-  +++ b/t/t4014-format-patch.sh
-  @@ -2491,12 +2491,31 @@ test_expect_success 'interdiff: solo-patch' '
-   	# fabricate Interdiff output.
-   	git diff boop~2 boop >inter &&
-   	{
-  +		echo &&
-   		echo "Interdiff:" &&
-   		sed -e "s/^/  /" inter
-   	} >expect &&
-   	test_cmp expect actual
-   '
-   
-  +test_expect_success 'range-diff: solo-patch' '
-  +	git format-patch --creation-factor=999 \
-  +		--range-diff=boop~2..boop~1 -1 boop &&
-  +
-  +	# remove up to the last "patch" output line,
-  +	# and remove everything below the signature mark.
-  +	sed -e "1,/^+fleep\$/d" -e "/^-- /,\$d" 0001-fleep.patch >actual &&
-  +
-  +	# fabricate range-diff output.
-  +	{
-  +		echo &&
-  +		echo "Range-diff:" &&
-  +		git range-diff --creation-factor=999 \
-  +			boop~2..boop~1 boop~1..boop
-  +	} >expect &&
-  +	test_cmp expect actual
-  +'
-  +
-   test_expect_success 'format-patch does not respect diff.noprefix' '
-   	git -c diff.noprefix format-patch -1 --stdout >actual &&
-   	grep "^--- a/blorp" actual
--- 
-2.45.1-248-g15a88ae3cc
-
+Regards,
+Kattia.
