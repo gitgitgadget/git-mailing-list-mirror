@@ -1,79 +1,79 @@
 Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B62885274
-	for <git@vger.kernel.org>; Fri, 24 May 2024 10:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0E484E09
+	for <git@vger.kernel.org>; Fri, 24 May 2024 10:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716545072; cv=none; b=Bl/R5ek5FpNKUVc88oMpe541eSKnyJuG7IMozDcohYShGSfG6ZYAEX4n1c3D8sCy/IWS2n+ToQ0gdDDMHfLZZs3LSLcwyJuhczWxgkwRF9a5+FvW3PWX7vfP2BbJGM0l4WrvaVlX+HplrMZ/iILkYwdR6SzxdcJSnPtaZ4mAILY=
+	t=1716545077; cv=none; b=siot0c6l5o9qyaPNk/Q0sj7MczjsKgjpYyKu+TUktzTgz1V7BH5S566IYkewe2I9LUPKrn+2VRuHl0TSFLSOjg/SpBLyULmOMmbBUdHMHCkmLf2qJSeY2evfEAmQrIaI/iEtnQIoOZSCzQalo/r4dDAHx/WimMxxxsmz+zEzfnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716545072; c=relaxed/simple;
-	bh=MwRwNXdBa9TPSFCHLsrC+POgvGefqnDDRvJSHe+56EE=;
+	s=arc-20240116; t=1716545077; c=relaxed/simple;
+	bh=ViMNPMuWnpEM9zWqDlJR8sZLP2NRW4d2BnFYVy9ra+4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lqj/T72Z7ZrnXGPUx7spdhzOAE/NNE1870gOLymVkvrw3r3fcO3j8nSJAfOHJ1imsKiKBG5l2eObys6r80s6LG7NZmkHTVDjXBa5tGjWBuWFfe7HdpHYxiIvVGDkoBo/KHg6LILAZ16ty0jtdzKUz99dLN+2Pu1REGdCGh2vM6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gWuwJmVv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AhcMdlCR; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=iC8QVY0fMS+Jhg78xuG0EE8xuj7KFgnSGcx1QwZQMNTkJK6V4rdANYZq6/defWcqGAX4cj6kHt7LHAQ7iR89vWkTm7BLFL1C18ooieNBwh5UDVGLauU2brzRAnKaSoyG7E2bm+wycMlmgsucaRJ9NycVKq33SBoYv+f0N/LSYrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RgBdvN5d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m63Z/Zrb; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gWuwJmVv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AhcMdlCR"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 7415B11400C2;
-	Fri, 24 May 2024 06:04:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RgBdvN5d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m63Z/Zrb"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 90A00114009F;
+	Fri, 24 May 2024 06:04:34 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 24 May 2024 06:04:30 -0400
+  by compute4.internal (MEProxy); Fri, 24 May 2024 06:04:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716545070; x=1716631470; bh=RHtbWEJ3Iw
-	gg/wuAMNTVhYEuqwgM+J+yUAP3WYjp0Pg=; b=gWuwJmVvyfkkMXPTdTCnlS8+4i
-	Dmc1Ah6k8Wh6hpIBk8RX5UYsnEYJxZKGc8O7PXG3DwjLWa11jZxnpPNbFuj4t0Vv
-	tKMG5Kwr6lhAWvC/V/0TSD4E0aVdqg/HVEY+4T95hywQyf2PFViJgEec8YeP/wO3
-	o9KT99eBwY8z/NIEmQPFPdtjYrInGILoYqN4XlEhBmgeSb7lWWKct1e7jieFLvX6
-	YaGEaXGoC0Nkcx+yEZG+H6NHNFWSGAn5Wh0O0qtVQrz0yKf6X4CLPWsGYxNHGFe3
-	NpMjsnB2e82UAQcV4VBAZxuzGfBad+9IO+pHnpdOBlP7KMMXi4vCCjsaH+bA==
+	:subject:to:to; s=fm1; t=1716545074; x=1716631474; bh=5DmpTH/j4X
+	1+s7CLay2h0GmzMJACco8JgEl//BD9jtc=; b=RgBdvN5dZ3QsoGk2AxwpQhr5iz
+	0ZmTIEHtLefFuw28bMtZNH8UIx0O3GL0S0dqML+NrXF4nhzs1ghS2Wx3FET7HZpb
+	yc/b0GczerEkfXDscbIYdPszdqL0HoT5ToodrSq2HeB22aL6m2dYKWwLftGozLKc
+	3SbzJt3tLWBa6YirDIaDDyyhUYdB6QEId5HFgYsJaC2s14X2RM6ATw9ACzrn7GCE
+	Ep5K6jo3LGWNf94GO9nsQvxbUSI0j1C4Fc/oJ7uBasy+c/I7L7KwJ51B5W84VLax
+	p1y4i3muecopNcqqZ6d6NCCsfjanc35tejkbOesvgQ8cHwz16Fq0kSyfocDQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716545070; x=1716631470; bh=RHtbWEJ3Iwgg/wuAMNTVhYEuqwgM
-	+J+yUAP3WYjp0Pg=; b=AhcMdlCR4dJCb46MBa5q2UThBxPf4K0LOB0h6xobilEB
-	OFDQacgDMFoMFayue+wZHSQk9WsdiL8CDC3rEVqjQddW4453zCsgBw2smpolq6U4
-	NFyJey6w8EVR80oZNkY7wAK4uwDcvXfb/+WW1flRDI8q7Zikc5UkdJ6a8VznAecd
-	Z5v2l0UJhq3QIGd98bzezr5PRwz4dTwOtlpNd3TvQ8vvrO6EzEjRYcAzvvAlaIF/
-	+nE+lm45q2EHLlZ7Ax/oZ5lndopmZC987Wyb0gdbvInSz/W+EAReu1T1ySkQten2
-	vuq23VY23lEalxfwHyIc+8YydFoPzPGpF7UBMWGCCg==
-X-ME-Sender: <xms:LmZQZstlVTLittvZj_BwqCdoXu1UFRUq2Tp35CkIq1NBdpA9u_I6zw>
-    <xme:LmZQZpfV6lC3NiKgcIy4Yi1ik8B2sn1IV_VrSUCMAzs0ih7WF4EzUVbM1eNgwiYhR
-    m1--m1OUMDamh-oYA>
-X-ME-Received: <xmr:LmZQZnzzdkCNnXoaLLI1KvOg_xJ1PFrzKmkPsg4kD4spB62PI6w4LtzLxS7-KO5MnuK7LVSvySLm8N8a7tGi3K3-TlVnvdT7BumwOavW0Z11RgI>
+	fm1; t=1716545074; x=1716631474; bh=5DmpTH/j4X1+s7CLay2h0GmzMJAC
+	co8JgEl//BD9jtc=; b=m63Z/ZrbvQcuwBC8fEH0fJ8g1dkNfm2w8yYOMLqYT2YX
+	dU3AUW900c4l+n96fiJfwSfD4wSI0tAscY/Nrc62+TfjY0Q/VpZTHuYCL5lm4Nrd
+	j/hhXe7F/px0f+MxO5AlPIdZ0u4bqge1P0gpkKT0Rajj97VmaXZ5nSRiTdnk3/7C
+	LvbjO6YxoPqmGehUohL5qwe5A+QZ/PlgyHZaD/nwhxz1RHSybKZb+awjjQ9pUiPr
+	c5Z8s1zmZCaPoQEPYufL+XFfeJgmHppnL8jESspmFPJBnDFipAEszg/QsAUey/WI
+	nVQJBKrwiVZILEXBjPuPaWtCl3mftrM239EvWWXMJw==
+X-ME-Sender: <xms:MmZQZu51-Gdp2jfifr7IjtBQ8ORkyuDk8qdUPheMngaNxMUnci0gpA>
+    <xme:MmZQZn4mHOIWi97uT9pBhi_6pgxjmAlEgzbn2_fUvBo7N_yPdFcN3EKsA4Odx3IDo
+    O--pMsKum4BXV3q_Q>
+X-ME-Received: <xmr:MmZQZtfvGUghdmtFxZuZ5cUn6Z68icaVEomL7eBe_TAG3BEJIF8mcK6wRWl_43yQA4Q3FlMXcx6rEpf9FB-q8kXG7HKfmZZX2EDUwSRhC_Zw6lY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeikedgvdduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:LmZQZvN_mpTlkHAYiW4xT3U7NXx_37l-448q1c6am2ud6abSq63p1Q>
-    <xmx:LmZQZs-QBP9yXcBmm6TQLW8WrcHKW3hh1YZdZVrSo45jXXL06l1iOw>
-    <xmx:LmZQZnU-xjCoP-eF5l7qm-2YTD9A-0QPCAJOdjR_1EbA2ACD0F93Bw>
-    <xmx:LmZQZldH_1wyGKdtYgtUzVvdgE1lE5DDOQzRyHlVn_1ObkYHl5yDRw>
-    <xmx:LmZQZrYd6gGSj3ufZnT5jFCyTBURoHGS4y0EUmrvX6RD46B8IOoDG5xH>
+X-ME-Proxy: <xmx:MmZQZrK0ndEnYA4aaIigNCpVjPdU2peAT18kZ3aklER0M49cFUrJwQ>
+    <xmx:MmZQZiKg2RyUvx1rBemvwqGk3hwY6BK3dwpEm09c9twlcukleOEjxA>
+    <xmx:MmZQZsxWxmpPvrc7xoIhesUjgRh7MSWfchUxJ6nPSmile-wxZK3G9g>
+    <xmx:MmZQZmLOGwdnpwidSHCMIycK_Ro62zYVTDHcRgaYB7jz1phyhN0HKQ>
+    <xmx:MmZQZu1JnhhVvJl7Zy_h6e8aoIflui1ZyigHKdm_Es7dBhqKWxo1un-A>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 May 2024 06:04:29 -0400 (EDT)
+ 24 May 2024 06:04:33 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 15055dda (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 24 May 2024 10:04:26 +0000 (UTC)
-Date: Fri, 24 May 2024 12:04:26 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 42748966 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 24 May 2024 10:04:30 +0000 (UTC)
+Date: Fri, 24 May 2024 12:04:31 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 16/21] submodule: fix leaking memory for submodule entries
-Message-ID: <cd8a992f08a0bb63d93d2ab8562a0d74129b6ee3.1716541556.git.ps@pks.im>
+Subject: [PATCH v2 17/21] strvec: add functions to replace and remove strings
+Message-ID: <128e2eaf7a03fe0dc203c2e505d96b11c26ff60a.1716541556.git.ps@pks.im>
 References: <cover.1716465556.git.ps@pks.im>
  <cover.1716541556.git.ps@pks.im>
 Precedence: bulk
@@ -83,114 +83,461 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="E5DfUBFQpNEKbQr+"
+	protocol="application/pgp-signature"; boundary="MXjKd/W3gMjakcF/"
 Content-Disposition: inline
 In-Reply-To: <cover.1716541556.git.ps@pks.im>
 
 
---E5DfUBFQpNEKbQr+
+--MXjKd/W3gMjakcF/
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In `free_one_config()` we never end up freeing the `url` and `ignore`
-fields and thus leak memory. Fix those leaks and mark now-passing tests
-as leak free.
+Add two functions that allow to replace and remove strings contained in
+the strvec. This will be used by a subsequent commit that refactors
+git-mv(1).
+
+While at it, add a bunch of unit tests that cover both old and new
+functionality.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- submodule-config.c                     | 2 ++
- t/t1013-read-tree-submodule.sh         | 1 +
- t/t2013-checkout-submodule.sh          | 1 +
- t/t3007-ls-files-recurse-submodules.sh | 1 +
- t/t7112-reset-submodule.sh             | 1 +
- 5 files changed, 6 insertions(+)
+ Makefile                |   1 +
+ strvec.c                |  20 +++
+ strvec.h                |  13 ++
+ t/unit-tests/t-strvec.c | 269 ++++++++++++++++++++++++++++++++++++++++
+ t/unit-tests/test-lib.c |  13 ++
+ t/unit-tests/test-lib.h |  13 ++
+ 6 files changed, 329 insertions(+)
+ create mode 100644 t/unit-tests/t-strvec.c
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 11428b4ada..ec45ea67b9 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -91,6 +91,8 @@ static void free_one_config(struct submodule_entry *entry)
- 	free((void *) entry->config->path);
- 	free((void *) entry->config->name);
- 	free((void *) entry->config->branch);
-+	free((void *) entry->config->url);
-+	free((void *) entry->config->ignore);
- 	free((void *) entry->config->update_strategy.command);
- 	free(entry->config);
+diff --git a/Makefile b/Makefile
+index cf504963c2..d4000fb1d6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1336,6 +1336,7 @@ THIRD_PARTY_SOURCES +=3D sha1dc/%
+=20
+ UNIT_TEST_PROGRAMS +=3D t-mem-pool
+ UNIT_TEST_PROGRAMS +=3D t-strbuf
++UNIT_TEST_PROGRAMS +=3D t-strvec
+ UNIT_TEST_PROGRAMS +=3D t-ctype
+ UNIT_TEST_PROGRAMS +=3D t-prio-queue
+ UNIT_TEST_PROGS =3D $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS=
+))
+diff --git a/strvec.c b/strvec.c
+index 178f4f3748..d4073ec9fa 100644
+--- a/strvec.c
++++ b/strvec.c
+@@ -56,6 +56,26 @@ void strvec_pushv(struct strvec *array, const char **ite=
+ms)
+ 		strvec_push(array, *items);
  }
-diff --git a/t/t1013-read-tree-submodule.sh b/t/t1013-read-tree-submodule.sh
-index bfc90d4cf2..cf8b94ebed 100755
---- a/t/t1013-read-tree-submodule.sh
-+++ b/t/t1013-read-tree-submodule.sh
-@@ -2,6 +2,7 @@
 =20
- test_description=3D'read-tree can handle submodules'
++const char *strvec_replace(struct strvec *array, size_t idx, const char *r=
+eplacement)
++{
++	char *to_free;
++	if (idx >=3D array->nr)
++		BUG("index outside of array boundary");
++	to_free =3D (char *) array->v[idx];
++	array->v[idx] =3D xstrdup(replacement);
++	free(to_free);
++	return array->v[idx];
++}
++
++void strvec_remove(struct strvec *array, size_t idx)
++{
++	if (idx >=3D array->nr)
++		BUG("index outside of array boundary");
++	free((char *)array->v[idx]);
++	memmove(array->v + idx, array->v + idx + 1, (array->nr - idx) * sizeof(ch=
+ar *));
++	array->nr--;
++}
++
+ void strvec_pop(struct strvec *array)
+ {
+ 	if (!array->nr)
+diff --git a/strvec.h b/strvec.h
+index 4715d3e51f..6c7e8b7d50 100644
+--- a/strvec.h
++++ b/strvec.h
+@@ -64,6 +64,19 @@ void strvec_pushl(struct strvec *, ...);
+ /* Push a null-terminated array of strings onto the end of the array. */
+ void strvec_pushv(struct strvec *, const char **);
 =20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
++/**
++ * Replace the value at the given index with a new value. The index must be
++ * valid. Returns a pointer to the inserted value.
++ */
++const char *strvec_replace(struct strvec *array, size_t idx, const char *r=
+eplacement);
++
++/*
++ * Remove the value at the given index. The remainder of the array will be
++ * moved to fill the resulting gap. The provided index must point into the
++ * array.
++ */
++void strvec_remove(struct strvec *array, size_t idx);
++
+ /**
+  * Remove the final element from the array. If there are no
+  * elements in the array, do nothing.
+diff --git a/t/unit-tests/t-strvec.c b/t/unit-tests/t-strvec.c
+new file mode 100644
+index 0000000000..f17fb10d9e
+--- /dev/null
++++ b/t/unit-tests/t-strvec.c
+@@ -0,0 +1,269 @@
++#include "test-lib.h"
++#include "strbuf.h"
++#include "strvec.h"
++
++#define check_strvec(vec, ...) \
++	check_strvec_loc(TEST_LOCATION(), vec, __VA_ARGS__)
++static void check_strvec_loc(const char *loc, struct strvec *vec, ...)
++{
++	va_list ap;
++	size_t nr =3D 0;
++
++	va_start(ap, vec);
++	while (1) {
++		const char *str =3D va_arg(ap, const char *);
++		if (!str)
++			break;
++
++		if (!check_uint(vec->nr, >, nr) ||
++		    !check_uint(vec->alloc, >, nr) ||
++		    !check_str(vec->v[nr], str)) {
++			struct strbuf msg =3D STRBUF_INIT;
++			strbuf_addf(&msg, "strvec index %"PRIuMAX, (uintmax_t) nr);
++			test_assert(loc, msg.buf, 0);
++			strbuf_release(&msg);
++			return;
++		}
++
++		nr++;
++	}
++
++	check_uint(vec->nr, =3D=3D, nr);
++	check_uint(vec->alloc, >=3D, nr);
++	check_pointer_eq(vec->v[nr], NULL);
++}
++
++static void t_static_init(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	check_pointer_eq(vec.v, empty_strvec);
++	check_uint(vec.nr, =3D=3D, 0);
++	check_uint(vec.alloc, =3D=3D, 0);
++}
++
++static void t_dynamic_init(void)
++{
++	struct strvec vec;
++	strvec_init(&vec);
++	check_pointer_eq(vec.v, empty_strvec);
++	check_uint(vec.nr, =3D=3D, 0);
++	check_uint(vec.alloc, =3D=3D, 0);
++}
++
++static void t_clear(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_push(&vec, "foo");
++	strvec_clear(&vec);
++	check_pointer_eq(vec.v, empty_strvec);
++	check_uint(vec.nr, =3D=3D, 0);
++	check_uint(vec.alloc, =3D=3D, 0);
++}
++
++static void t_push(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++
++	strvec_push(&vec, "foo");
++	check_strvec(&vec, "foo", NULL);
++
++	strvec_push(&vec, "bar");
++	check_strvec(&vec, "foo", "bar", NULL);
++
++	strvec_clear(&vec);
++}
++
++static void t_pushf(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_pushf(&vec, "foo: %d", 1);
++	check_strvec(&vec, "foo: 1", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_pushl(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
++	check_strvec(&vec, "foo", "bar", "baz", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_pushv(void)
++{
++	const char *strings[] =3D {
++		"foo", "bar", "baz", NULL,
++	};
++	struct strvec vec =3D STRVEC_INIT;
++
++	strvec_pushv(&vec, strings);
++	check_strvec(&vec, "foo", "bar", "baz", NULL);
++
++	strvec_clear(&vec);
++}
++
++static void t_replace_at_head(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
++	strvec_replace(&vec, 0, "replaced");
++	check_strvec(&vec, "replaced", "bar", "baz", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_replace_at_tail(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
++	strvec_replace(&vec, 2, "replaced");
++	check_strvec(&vec, "foo", "bar", "replaced", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_replace_in_between(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
++	strvec_replace(&vec, 1, "replaced");
++	check_strvec(&vec, "foo", "replaced", "baz", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_replace_with_substring(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_pushl(&vec, "foo", NULL);
++	strvec_replace(&vec, 0, vec.v[0] + 1);
++	check_strvec(&vec, "oo", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_remove_at_head(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
++	strvec_remove(&vec, 0);
++	check_strvec(&vec, "bar", "baz", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_remove_at_tail(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
++	strvec_remove(&vec, 2);
++	check_strvec(&vec, "foo", "bar", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_remove_in_between(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
++	strvec_remove(&vec, 1);
++	check_strvec(&vec, "foo", "baz", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_pop_empty_array(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_pop(&vec);
++	check_strvec(&vec, NULL);
++	strvec_clear(&vec);
++}
++
++static void t_pop_non_empty_array(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
++	strvec_pop(&vec);
++	check_strvec(&vec, "foo", "bar", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_split_empty_string(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_split(&vec, "");
++	check_strvec(&vec, NULL);
++	strvec_clear(&vec);
++}
++
++static void t_split_single_item(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_split(&vec, "foo");
++	check_strvec(&vec, "foo", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_split_multiple_items(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_split(&vec, "foo bar baz");
++	check_strvec(&vec, "foo", "bar", "baz", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_split_whitespace_only(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_split(&vec, " \t\n");
++	check_strvec(&vec, NULL);
++	strvec_clear(&vec);
++}
++
++static void t_split_multiple_consecutive_whitespaces(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	strvec_split(&vec, "foo\n\t bar");
++	check_strvec(&vec, "foo", "bar", NULL);
++	strvec_clear(&vec);
++}
++
++static void t_detach(void)
++{
++	struct strvec vec =3D STRVEC_INIT;
++	const char **detached;
++
++	strvec_push(&vec, "foo");
++
++	detached =3D strvec_detach(&vec);
++	check_str(detached[0], "foo");
++	check_pointer_eq(detached[1], NULL);
++
++	check_pointer_eq(vec.v, empty_strvec);
++	check_uint(vec.nr, =3D=3D, 0);
++	check_uint(vec.alloc, =3D=3D, 0);
++
++	free((char *) detached[0]);
++	free(detached);
++}
++
++int cmd_main(int argc, const char **argv)
++{
++	TEST(t_static_init(), "static initialization");
++	TEST(t_dynamic_init(), "dynamic initialization");
++	TEST(t_clear(), "clear");
++	TEST(t_push(), "push");
++	TEST(t_pushf(), "pushf");
++	TEST(t_pushl(), "pushl");
++	TEST(t_pushv(), "pushv");
++	TEST(t_replace_at_head(), "replace at head");
++	TEST(t_replace_in_between(), "replace in between");
++	TEST(t_replace_at_tail(), "replace at tail");
++	TEST(t_replace_with_substring(), "replace with substring");
++	TEST(t_remove_at_head(), "remove at head");
++	TEST(t_remove_in_between(), "remove in between");
++	TEST(t_remove_at_tail(), "remove at tail");
++	TEST(t_pop_empty_array(), "pop with empty array");
++	TEST(t_pop_non_empty_array(), "pop with non-empty array");
++	TEST(t_split_empty_string(), "split empty string");
++	TEST(t_split_single_item(), "split single item");
++	TEST(t_split_multiple_items(), "split multiple items");
++	TEST(t_split_whitespace_only(), "split whitespace only");
++	TEST(t_split_multiple_consecutive_whitespaces(), "split multiple consecut=
+ive whitespaces");
++	TEST(t_detach(), "detach");
++	return test_done();
++}
+diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
+index 66d6980ffb..3c513ce59a 100644
+--- a/t/unit-tests/test-lib.c
++++ b/t/unit-tests/test-lib.c
+@@ -318,6 +318,19 @@ int check_bool_loc(const char *loc, const char *check,=
+ int ok)
 =20
-diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
-index b2bdd1fcb4..3c1d663d94 100755
---- a/t/t2013-checkout-submodule.sh
-+++ b/t/t2013-checkout-submodule.sh
-@@ -2,6 +2,7 @@
+ union test__tmp test__tmp[2];
 =20
- test_description=3D'checkout can handle submodules'
++int check_pointer_eq_loc(const char *loc, const char *check, int ok,
++			 const void *a, const void *b)
++{
++	int ret =3D test_assert(loc, check, ok);
++
++	if (!ret) {
++		test_msg("   left: %p", a);
++		test_msg("  right: %p", b);
++	}
++
++	return ret;
++}
++
+ int check_int_loc(const char *loc, const char *check, int ok,
+ 		  intmax_t a, intmax_t b)
+ {
+diff --git a/t/unit-tests/test-lib.h b/t/unit-tests/test-lib.h
+index a8f07ae0b7..2de6d715d5 100644
+--- a/t/unit-tests/test-lib.h
++++ b/t/unit-tests/test-lib.h
+@@ -75,6 +75,18 @@ int test_assert(const char *location, const char *check,=
+ int ok);
+ 	check_bool_loc(TEST_LOCATION(), #x, x)
+ int check_bool_loc(const char *loc, const char *check, int ok);
 =20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
++/*
++ * Compare two integers. Prints a message with the two values if the
++ * comparison fails. NB this is not thread safe.
++ */
++#define check_pointer_eq(a, b)						\
++	(test__tmp[0].p =3D (a), test__tmp[1].p =3D (b),			\
++	 check_pointer_eq_loc(TEST_LOCATION(), #a" =3D=3D "#b,		\
++			      test__tmp[0].p =3D=3D test__tmp[1].p,		\
++			      test__tmp[0].p, test__tmp[1].p))
++int check_pointer_eq_loc(const char *loc, const char *check, int ok,
++			 const void *a, const void *b);
++
+ /*
+  * Compare two integers. Prints a message with the two values if the
+  * comparison fails. NB this is not thread safe.
+@@ -136,6 +148,7 @@ union test__tmp {
+ 	intmax_t i;
+ 	uintmax_t u;
+ 	char c;
++	const void *p;
+ };
 =20
-diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recu=
-rse-submodules.sh
-index 61771eec83..f04bdc8c78 100755
---- a/t/t3007-ls-files-recurse-submodules.sh
-+++ b/t/t3007-ls-files-recurse-submodules.sh
-@@ -6,6 +6,7 @@ This test verifies the recurse-submodules feature correctly=
- lists files from
- submodules.
- '
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- test_expect_success 'setup directory structure and submodules' '
-diff --git a/t/t7112-reset-submodule.sh b/t/t7112-reset-submodule.sh
-index a3e2413bc3..b0d3d93b0b 100755
---- a/t/t7112-reset-submodule.sh
-+++ b/t/t7112-reset-submodule.sh
-@@ -2,6 +2,7 @@
-=20
- test_description=3D'reset can handle submodules'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
-=20
+ extern union test__tmp test__tmp[2];
 --=20
 2.45.1.216.g4365c6fcf9.dirty
 
 
---E5DfUBFQpNEKbQr+
+--MXjKd/W3gMjakcF/
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQZikACgkQVbJhu7ck
-PpT/Aw/8DrfUUefRUGYxcp4hIA+P+etjMc/RcpbAFY7APAe94MVNlJOouXZP7CyO
-Tv01w3FgdBP6TV9exeumLqwEBNzA+IR9IU0wWB5TlHf9tPvmb4T1hRU19HhDnkln
-G8pTIvhnAfYIW4SqOmleXCkvF/x8U5Kvd8MiXrfWYx6pFla77ZD24Flh8W4uFrma
-hjbdODMtTjOO3euJ2viG/ZzxrwQBtR3rSTg0z4w1sLOnCFEwrRxjTMoQndKFmTF7
-R1Zj4tn6J66uZeO5b5tvqtGaEdFT9tKQgEOV7m5i8NevzwTFPRZWZcijawQXQPgR
-YXuyPNdj1aMbgKlBC1jtLkUnfAPTLIJX0VB4OuZPjlGjIWsxAYv6SSpcy1SFDPUK
-UGbD6/w7KN3QsNcqe+Twj9tr6om0dvNG1gk/rzcu3BnqVpM5xL2mpEu8o3vyiBxv
-e+ENjk8ZSVIignPx5i5G6E2s4Ifw2MSn1bt1DS4sUED1U3jXh+UhVXz8L0Gi8BfC
-LrPTVjZSrviSmsz4/nFAuLgQPNlo0poqCp4A2542B46zjZM2v+zgFP6sGQ1cNY9m
-wI1RDCCl9O268A0SBf+9I0SxxGUJVK9zWhHZRFscfFN2wN6uyUhMGEXaizg6vJad
-GnEclwrx70R2MNY+EvOPN9NdJwT1Zqv7n1sHUD04Dwem1uNX0CM=
-=Vp6v
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQZi4ACgkQVbJhu7ck
+PpRznQ/9EraDsfrOqwjlkCsX1NMRaiXcuPgrW6Hq2e1hfTXyT8jJliKpAw59lt3E
+qapDjAsSneLXx5CDz4ycjbztMMVsizz0/VSk40roDHuh9AyNlkoiS1TNogyBBoz2
+g2BJgRNVbVsjLrC0mQygWS+Szn8NsyXncJyyF5iO69eBv5/64ZKSIFsFP3z3T5wz
+82yFDdPg3vPFr33P/htvbbZQsSPJuBt8p4B0OOEnv8X7TbIdufUYv2pmal74MyL3
+tP9wo55f6aZMuE1uuZV1I9HlS4YASZSwNuXadvNm8WUULZUNxV5kKofgJV783hQ5
+p2ciZ85oTRtzs0Upmm2NhlUdhGxDgS7Rm8gyjj6HIcfVZlyX3gjA+yhDlBD/Y2yj
+vrF/dbUHTHfnqjXvAnK1YMfOZL8XtiS6qu/z6qe1xZng7f7WYVs4zqQmDHcIA8qI
+xcDxwhVXMCGQZEL5YzsoDGQgVB3mbUBToPrMcjm0V61B4TwrhHrceabLIKQuO6s9
+VZootsQiImF1AdeW+RCRu3eUJAn8KSc9cBW2nkkJfFmm4NNuBGEzZH3TeX9dYr9j
+rjNgfOl3jHdua+fr73Si4QubawInoVrQRbLZqAIFny6x+MjguVHajgaa1oc0oEp9
+XfzWH+peycBzqQqRIcQO5bQK1MTfTYetGF1npgpm4asP3g7d2b4=
+=C5GE
 -----END PGP SIGNATURE-----
 
---E5DfUBFQpNEKbQr+--
+--MXjKd/W3gMjakcF/--
