@@ -1,57 +1,52 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D066E5ED
-	for <git@vger.kernel.org>; Fri, 24 May 2024 15:49:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1ED1AACC
+	for <git@vger.kernel.org>; Fri, 24 May 2024 16:05:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716565757; cv=none; b=Eez1tKjbM2fosv0fY9jd0fUo3Zin5HlTyzmLO2vRPV5I7CNu57nv6gbYPGhEewwWGkVmXEINPrAaKLMQcsMAdv02i81DaFr4HU2o5AeEsklflUXVeUhoRFdAEfeXfz88N9skUUIdN97icTxfhVf6pJNgdqnutyeHfTVzbQDx5wQ=
+	t=1716566709; cv=none; b=ULpxXjJ2R5+Pehe888mlxUn++MkiSJmCDsgtZHO1mOT4IDNpqhVR332ryp+oSCqrIudlEyPIUnws7VgoXPNLcqbsdxOoCvCpeVq4/VK3VdUlhjXiopfLdmVw5YVGXUNeEUVmaA5zVlSkVaSLhfRgguhJWm6JC48shDYGYK8CnSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716565757; c=relaxed/simple;
-	bh=/uSBT3Bsq08Q+Sy5crySKs77xZMHCvxiOLmQDmOzr8k=;
+	s=arc-20240116; t=1716566709; c=relaxed/simple;
+	bh=QIb6qLnEySQuI2RQq8pzCgjdXRwXS4FdAnvycMvDnng=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SkiSnuF4Z0gcmGGL+J1L4U7zsaj1R9Tsf7CsU6kcWREALzC+cWUGpmfKbTQGdnTv/wpwGKFK4aEhYA4svdLbU6UMoY8pYmM3DdNt7pu0SOp3vlb1prDdaqWMHraeLyFPE0py8WPsLdeAl46k5U5+SCKksgS98vzRwDJ89cOPhNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=P+Y5k7eb; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=ufB9AClJJ51XRPB6PJLsP2MQ8WrvdzhD8O+t6ubbUm4fG/VlNgPZShXw7Youwh9W1ZX6GYhzXrHZjPNnUh3/8avR+QAPVX9y/6jS8xvTXdFS6C+RbpSIrfUYc2SXkG8oph3QaiqjIpjWsFABRT9n5DTUi4uerKSDK/1JAFF0NGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=cf55FHOf; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P+Y5k7eb"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C5BB29816;
-	Fri, 24 May 2024 11:49:15 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cf55FHOf"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id AAB1F25E27;
+	Fri, 24 May 2024 12:05:07 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=/uSBT3Bsq08Q+Sy5crySKs77xZMHCvxiOLmQDm
-	Ozr8k=; b=P+Y5k7ebp5JxMmMA9MEW6rQE3YMDzDAvNIAqK4crK2ME82eZTVrg95
-	av5K/xF7DL8xwXzYzaaSP6jda/RLZd7Z1FEx6ptQ90m1p982ywGyhC8GJ97hALu8
-	0rd+gNMT1JR8+a/dvzjpAxgmAWQi3pBgjm90qV5W+1JVkfjQVk3Ww=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 116D429815;
-	Fri, 24 May 2024 11:49:15 -0400 (EDT)
+	:content-type; s=sasl; bh=QIb6qLnEySQuI2RQq8pzCgjdXRwXS4FdAnvycM
+	vDnng=; b=cf55FHOfelucDgCSyaL2Ggd0qeTk96H14bLAKRsUfatLf8mJtFTsBU
+	/esnTxUaVVUbS6vdnC4uI5uyg1giLrXnIPnsPqYTPS734WFwcWSCHvQQz/pyabEs
+	FfjDxigFziCpKCQKpo7fPCO+U6KiXa7CXyL0qY+FvcvSkUTzJrfko=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A2DBE25E26;
+	Fri, 24 May 2024 12:05:07 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 75FCD29814;
-	Fri, 24 May 2024 11:49:14 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B687925E23;
+	Fri, 24 May 2024 12:05:04 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Ghanshyam Thakkar
- <shyamthakkar001@gmail.com>,  ach.lumap@gmail.com,
-  chriscool@tuxfamily.org,  git@vger.kernel.org,
-  kaartic.sivaraam@gmail.com
-Subject: Re: [PATCH v3 2/3] t/: port helper/test-sha1.c to unit-tests/t-hash.c
-In-Reply-To: <CAP8UFD1=yjZEZWvMYKq1RyY8fMSHze4XcLbCZMSFhCLBheaM+w@mail.gmail.com>
-	(Christian Couder's message of "Fri, 24 May 2024 16:08:09 +0200")
-References: <20240229054004.3807-1-ach.lumap@gmail.com>
-	<20240523235945.26833-1-shyamthakkar001@gmail.com>
-	<20240523235945.26833-3-shyamthakkar001@gmail.com>
-	<ZlCWcpcUkgUMWJYz@tanuki>
-	<CAP8UFD1=yjZEZWvMYKq1RyY8fMSHze4XcLbCZMSFhCLBheaM+w@mail.gmail.com>
-Date: Fri, 24 May 2024 08:49:13 -0700
-Message-ID: <xmqqo78vnrba.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/20] t: mark a bunch of tests as leak-free
+In-Reply-To: <ZlA6KHZtn4lvyFcI@tanuki> (Patrick Steinhardt's message of "Fri,
+	24 May 2024 08:56:40 +0200")
+References: <cover.1716465556.git.ps@pks.im>
+	<0e9fa9ca7386f527903887242008b5b0443ada69.1716465556.git.ps@pks.im>
+	<xmqqwmnktocp.fsf@gitster.g> <ZlA6KHZtn4lvyFcI@tanuki>
+Date: Fri, 24 May 2024 09:05:03 -0700
+Message-ID: <xmqqh6ennqkw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -61,32 +56,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 2BCFE11A-19E5-11EF-B833-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 623648A0-19E7-11EF-9566-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Christian Couder <christian.couder@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> Can we refactor this test to stop doing that? E.g., would it work if we
->> used git-hash-object(1) to check that SHA1DC does its thing? Then we
->> could get rid of the helper altogether, as far as I understand.
+> Hum. Both of these skip a bunch of tests due to a missing TTY prereq on
+> my system. So I guess it's not a regression, just me missing test
+> coverage. And seemingly, the same applies to our CI systems because the
+> pipeline is green there.
 >
-> It could perhaps work if we used git-hash-object(1) instead of
-> `test-tool sha1` in t0013-sha1dc to check that SHA1DC does its thing,
-> but we could do that in a separate patch or patch series.
-
-Yeah, I think such a plan to make preliminary refactoring as a
-separate series, and then have another series to get rid of
-"test-tool sha1" (and "test-tool sha256" as well?) on top of it
-would work well.
-
->> > +     if (!check(!!data)) {
->>
->> Is this double negation needed? Can't we just `if (!check(data))`?
+> And indeed, the TTY prerequisite fails due a totally unrelated error:
 >
-> As far as I remember it is needed as check() is expecting an 'int'
-> while 'data' is a 'void *'.
+>     Can't locate IO/Pty.pm in @INC
+>
+> I'll fix this locally and in our CI setup.
 
-It might be easier to read by being more explicit, "data != NULL",
-if that is the case?  check() is like assert(), i.e., "we expect
-data is not NULL", and if (!check("expected condition")) { guards an
-error handling block for the case in which the expectation is not
-met, right?
+Do you mean that you'll make IO::Pty available locally and in the CI
+setup, which will start revealing the existing leaks in these tests?
+
+So do we expect this step to be adjusted, not to mark these two
+tests as leak-free (yet)?
+
+> Ideally, we'd also make this thing more robust going forward, but
+> I'll leave that for a future iteraiton.
+
+--- >8 ---
+Subject: ci: make IO::Pty available
+
+When t/test-terminal.perl, which requires IO::Pty (and File::Copy,
+but that comes standard with perl-modules?), does not work, the
+tests with TTY prerequisite are skipped.
+
+Make sure it is available in the CI environment.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ ci/install-dependencies.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git c/ci/install-dependencies.sh w/ci/install-dependencies.sh
+index 2e7688ae8b..b24c91a30f 100755
+--- c/ci/install-dependencies.sh
++++ w/ci/install-dependencies.sh
+@@ -42,7 +42,7 @@ ubuntu-*)
+ 		language-pack-is libsvn-perl apache2 cvs cvsps git gnupg subversion \
+ 		make libssl-dev libcurl4-openssl-dev libexpat-dev wget sudo default-jre \
+ 		tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl \
+-		libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl libdbd-sqlite3-perl libcgi-pm-perl \
++		libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl libdbd-sqlite3-perl libcgi-pm-perl libio-pty-perl \
+ 		${CC_PACKAGE:-${CC:-gcc}} $PYTHON_PACKAGE
+ 
+ 	mkdir --parents "$CUSTOM_PATH"
