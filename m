@@ -1,54 +1,54 @@
 Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD30E83CCC
-	for <git@vger.kernel.org>; Fri, 24 May 2024 10:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D5883CCC
+	for <git@vger.kernel.org>; Fri, 24 May 2024 10:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716545024; cv=none; b=tjMylzVch04WJgFI7vlE4FZaoTUnk2LTGaO4u3XaA56lKJ9hj2k5rIFtQhBTihFL0DaNI7D+y1VjcA8hX2NQttVcowAwIRgvnZmTPNr9g5LJ1pAFom8Ij4Jq7TFV0LuWSWzX+3DwYk5O/hcx7GKKk7Wnzo5Tl3KLjpiA4ohw0g4=
+	t=1716545030; cv=none; b=oo0ZCz1v+RZJ/TztMphcxLYLq7EzE9+ln0xakxIZc+NgqlXk8dGoplRXiCBOMdT/3m7MnPeStQCxlM0fRiRvt6Zgz0wq9L71oL1U4epOJGtlUZ3m2810oWLdtttjdmQyYNTkUWY0lvvpmUEI6V7fR7mbn5GCDbpBbr/gvQPWBZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716545024; c=relaxed/simple;
-	bh=yUPNCcBqNK3gE9iwZ5J1mkVdrTQlAQ+hGcYIU9E1ZaA=;
+	s=arc-20240116; t=1716545030; c=relaxed/simple;
+	bh=hIMpleiE3Lf4lkaE4tnJcKmxbpqJuCJoBAL3r4jDwhg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FJ+Vxu34OyUZ854GJfwywaUC6g7TRAtQJox6JHqWU6L7yMGyxJyFEWOuJI5D5fKoorg9W6ScMQj2q58jnqP8Gr6GMlSCtzosgS3fvyZJsboZbHTSjJWppxa+VGjZrHlmtUDkEs4XK1AEAtdkW4/JOOUS3hTtdAqw5RReYn1ZGnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DnI2jjrc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qy39Pz4f; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=dqJT1hjwOmQ7Q+RXdYbhxKhUIQf1CXG97/dx6ncj4RrtVaXpEKqu43bTffUY/3oBVQYNgtpoKAEPuFY+LBm3rtQzrQ1YCWe5Fh1DsUOj0/vGXLKNzc3ezytl2YdE6OWfNc5X4C+iFETpkT7SxVORJ+8JjzK454ahn19p2t9T7GI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d6QoS7TN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Et1O+M9u; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DnI2jjrc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qy39Pz4f"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 1BBBC11401A4;
-	Fri, 24 May 2024 06:03:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d6QoS7TN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Et1O+M9u"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 387F711401A9;
+	Fri, 24 May 2024 06:03:47 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 24 May 2024 06:03:42 -0400
+  by compute5.internal (MEProxy); Fri, 24 May 2024 06:03:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716545022; x=1716631422; bh=bf8yypvRoE
-	TVoXMGOxNJsIn1E7pGHD8k/gX08L0OSS8=; b=DnI2jjrcBnXH1Qo5KakpRh4iqP
-	bqAuEmE2KYb/sy5q+mM0GDNw8L1TYGLjohHuDhpeQrQgACQatOQieNnReIFjQpCI
-	Srd43FnNnUYjAvFipgqor3PN3Xdwg4j7qKcM2wdhi/n4lW6H6yzdtQx5oQ4Zmynf
-	SJqS/SM8CapkH1nZIadllS+lc9EEiucwS2irhoxLkTSi12MLwFTEy0jwwcmGJufs
-	ScV3hGg9h5krnbkh7L1XrsLI3TEkGsRhcuYE/roeyvfQ/5A9N7XQZViD9FcfUny2
-	z334bdljF9lCtzrlSzV2vFDG9bYEMNXqjeZdlp7diKwn6cbb435v6oks72Tw==
+	:subject:to:to; s=fm1; t=1716545027; x=1716631427; bh=sRjRz9ZVz4
+	K2S06WDDOrOOv9ac5OvkF8ce5cbHX1qh8=; b=d6QoS7TNhRqnRkcne8+alsNvh5
+	pR8zjA0y0Gybb+G1gDgqsw6wc1BVgdoPB9CP5/lJiURL934bqVaOgSm92O92fouf
+	7TpPJ/sLmXt5vfBXALhqXBghMO/0CqIMj7icQDw7lDk1yLV1FG0jnpPsCMRunbSA
+	VqTzX3++aMT4VWmt/T3dsBldt6lec0FOLApEa6G65be036jiUCPM3MJIN31GPuI2
+	Y22+zoCa/ttopgGmRRri/qgTmSR48WwarEicqaxraTyATlKx1mh2mhI4oeRYrry+
+	mdy0CO44SxW4MSa0dZdCsJP8n0FEGWMSWAIXEJ7m/kRnHd+mgLKb1zaMh9gQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716545022; x=1716631422; bh=bf8yypvRoETVoXMGOxNJsIn1E7pG
-	HD8k/gX08L0OSS8=; b=qy39Pz4fG8E9HwSjLH5Ok1GAlUp6lEzlHAJTyTAwJTrX
-	jxMLnIeJc1h4QQ/JTCQPaWMWGZzrBOlLqIJMcYb7keKO//oQUP+ibGUrN/g92lNY
-	fuuIzuKzYnZ6HpGLBCYxQhcb2bE2nylLetPxYp7V30HW7oaPuFCKLY9zxZ6qBwSN
-	PGmtazAnGGxdOVk25P7ba+lcxLlyQr1cdjz8VgKWzGVN7CLLyqfLfCx2ghZ6+Z1n
-	220QVHzA5dIb64C5SgP1hnkoYckm1n/SdRB44YV2UmsqnxuUNkzggYSu23FLKcLw
-	XxR6Z0YPVfVJC2b1MvQU+YfgqyMoHOhV5fJ8VkdVrg==
-X-ME-Sender: <xms:_WVQZnm9qTge-kBQrDaN1ziUGWDAK7YQp9EXcWRIK6-h_47TPU6VMg>
-    <xme:_WVQZq1-AoIZxL0iWgrPkdFPUWkwOmzqSIiB9T5aX4AF_p93LNDG8bCCXtBP3dvrd
-    Zc7x66mHhkj-j0XPg>
-X-ME-Received: <xmr:_WVQZtq1u10aW7YmBf5YPA2wsA4oOV7a4aNjQ8E_KUC78D5WAXXnS8gevtKDZ6NbCUf73ZyzMGVhFo0yPVWbCdTmewJplWFDbpRUlOVUOSXZVnU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeikedgvdduucetufdoteggodetrfdotf
+	fm1; t=1716545027; x=1716631427; bh=sRjRz9ZVz4K2S06WDDOrOOv9ac5O
+	vkF8ce5cbHX1qh8=; b=Et1O+M9uT3sbazItlUwrYKQlrJZnE48DVKVpTFBZ4NP1
+	D7x/NPIYsDYfh4gbTUM3S3UWno1Crsula5V1/pQUhad5f2OGs2F13UP1o9gwJDVr
+	ysoQ17RGvYqiVpv71zNdi5U8zRV7iwFuvRUeokSOiIAEl+ODgwHEQdk74bK/Jd6y
+	IKfJwJFNgDdzzNX3vWP7THYbAEQkbEHhuK4L5ee2VXfRkupyXlBNMj9hAHsGY2Em
+	Z9OEeMwURBUUqDzlBhEEI9/dGZOVVU9x6fnseMpSR2P6mTiH8Fy+ccyoERXwvSwx
+	z+tD0SxffUfi9mABm+/ub6MhEptcu8WMrM6iWtv7Kg==
+X-ME-Sender: <xms:A2ZQZq4OSvrjj_y_izFFU4ie1yB44B5KU7GGhzAx_BcxG48ounECmA>
+    <xme:A2ZQZj6wFs-ePimqwrIgL2PKdgjns8yydICPoqbvO_dJ3ocYQh5ElB3rmvhLd1lvb
+    FkBczL2QqyliCghrg>
+X-ME-Received: <xmr:A2ZQZpcWicMjxgH4mvD8IMPOl7Cn4NJSV-JbW3t5fXiKKCE6WwiFJkCQoct-vWAQC36pgcdXiqbEbESjvolXYk3-qZXez1tp3LU3FLACwhIwyb4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeikedgvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -56,24 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeikedgvdduucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:_mVQZvm1KYSPltr1FwcaP9EbOleafdLvg_0sQ4zyI1Kmo4gHulD5Hw>
-    <xmx:_mVQZl31D6vsRea9c1MRCgM1_qgJRyHXC6t8k0us-jrfkF8tbjC78w>
-    <xmx:_mVQZuui34QBWq4e4yEi8NPsgILEnt-zkUbEM3E-mxQqL_Bru5FYVQ>
-    <xmx:_mVQZpUR2eybCUUC-6lTiQfP5gdaUfuayeAHgqKyhu80ddLHs9uZjw>
-    <xmx:_mVQZuxao20hwY06OJPrF6bmOOrGoG2iuEXasKzsN8bSoTqLxDmVZ0oK>
+X-ME-Proxy: <xmx:A2ZQZnK0wXVW9i2XF4-mBzpdAHd0bp7Pj-lrh7qie7FO9fnp6MuFMA>
+    <xmx:A2ZQZuIE9JyRw8wcJlIPhdr9J4rzcK1pd4mcPtSV37REP41YRSJRMg>
+    <xmx:A2ZQZoy8hw3oRYaIzxUVYPEfv0lxo2OtKLK71_cXcCLxPdb89fWJzQ>
+    <xmx:A2ZQZiKh3mHZvtWk9xUmC7hpNTCe8hJ45JdBD2U24tpJ7s8GIDkqbw>
+    <xmx:A2ZQZq2nfiZtpaw9PP-EyjAeXqIuljHF1246OQKLJ-YosqKarBPFmU04>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 May 2024 06:03:41 -0400 (EDT)
+ 24 May 2024 06:03:46 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 2e4c0e6f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 24 May 2024 10:03:38 +0000 (UTC)
-Date: Fri, 24 May 2024 12:03:38 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 27c88222 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 24 May 2024 10:03:42 +0000 (UTC)
+Date: Fri, 24 May 2024 12:03:43 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 06/21] http: refactor code to clarify memory ownership
-Message-ID: <141cae2de1acb5a181d9c4f4c2a75dfab6b561af.1716541556.git.ps@pks.im>
+Subject: [PATCH v2 07/21] config: clarify memory ownership in
+ `git_config_pathname()`
+Message-ID: <ff5e761e5547805265b5f197213310822e7a945d.1716541556.git.ps@pks.im>
 References: <cover.1716465556.git.ps@pks.im>
  <cover.1716541556.git.ps@pks.im>
 Precedence: bulk
@@ -83,204 +84,501 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+j+cZXDgYSI1hQOk"
+	protocol="application/pgp-signature"; boundary="RgyTbF51lzzfDRHN"
 Content-Disposition: inline
 In-Reply-To: <cover.1716541556.git.ps@pks.im>
 
 
---+j+cZXDgYSI1hQOk
+--RgyTbF51lzzfDRHN
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-There are various variables assigned via `git_config_string()` and
-`git_config_pathname()` which are never free'd. This bug is relatable
-because the out parameter of those functions are a `const char **`, even
-though memory ownership is transferred to the caller.
-
-We're about to adapt the functions to instead use `char **`. Prepare the
-code accordingly. Note that the `(const char **)` casts will go away
-once we have adapted the functions.
+The out parameter of `git_config_pathname()` is a `const char **` even
+though we transfer ownership of memory to the caller. This is quite
+misleading and has led to many memory leaks all over the place. Adapt
+the parameter to instead be `char **`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- http.c | 62 ++++++++++++++++++++++++++++++----------------------------
- 1 file changed, 32 insertions(+), 30 deletions(-)
+ builtin/blame.c        |  2 +-
+ builtin/commit.c       |  2 +-
+ builtin/config.c       |  2 +-
+ builtin/log.c          |  2 +-
+ builtin/receive-pack.c |  4 ++--
+ config.c               | 10 +++++-----
+ config.h               |  8 ++++----
+ diff.c                 |  2 +-
+ environment.c          |  6 +++---
+ environment.h          |  6 +++---
+ fetch-pack.c           |  4 ++--
+ fsck.c                 |  4 ++--
+ fsmonitor-settings.c   |  5 ++++-
+ gpg-interface.c        |  4 +++-
+ http.c                 | 12 ++++++------
+ mailmap.c              |  2 +-
+ mailmap.h              |  2 +-
+ setup.c                |  6 +++---
+ 18 files changed, 44 insertions(+), 39 deletions(-)
 
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 6bc7aa6085..838cd476be 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -718,7 +718,7 @@ static int git_blame_config(const char *var, const char=
+ *value,
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "blame.ignorerevsfile")) {
+-		const char *str;
++		char *str;
+ 		int ret;
+=20
+ 		ret =3D git_config_pathname(&str, var, value);
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 78bfae2164..1cc88e92bf 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -107,7 +107,7 @@ static enum {
+ } commit_style;
+=20
+ static const char *logfile, *force_author;
+-static const char *template_file;
++static char *template_file;
+ /*
+  * The _message variables are commit names from which to take
+  * the commit message and/or authorship.
+diff --git a/builtin/config.c b/builtin/config.c
+index 80aa9d8a66..cc343f55ca 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -277,7 +277,7 @@ static int format_config(struct strbuf *buf, const char=
+ *key_,
+ 			else
+ 				strbuf_addstr(buf, v ? "true" : "false");
+ 		} else if (type =3D=3D TYPE_PATH) {
+-			const char *v;
++			char *v;
+ 			if (git_config_pathname(&v, key_, value_) < 0)
+ 				return -1;
+ 			strbuf_addstr(buf, v);
+diff --git a/builtin/log.c b/builtin/log.c
+index b17dd8b40a..a2f5845556 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -957,7 +957,7 @@ static int do_signoff;
+ static enum auto_base_setting auto_base;
+ static char *from;
+ static const char *signature =3D git_version_string;
+-static const char *signature_file;
++static char *signature_file;
+ static enum cover_setting config_cover_letter;
+ static const char *config_output_directory;
+ static enum cover_from_description cover_from_description_mode =3D COVER_F=
+ROM_MESSAGE;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index be8969a84a..56228ad314 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -168,13 +168,13 @@ static int receive_pack_config(const char *var, const=
+ char *value,
+ 	}
+=20
+ 	if (strcmp(var, "receive.fsck.skiplist") =3D=3D 0) {
+-		const char *path;
++		char *path;
+=20
+ 		if (git_config_pathname(&path, var, value))
+ 			return 1;
+ 		strbuf_addf(&fsck_msg_types, "%cskiplist=3D%s",
+ 			fsck_msg_types.len ? ',' : '=3D', path);
+-		free((char *)path);
++		free(path);
+ 		return 0;
+ 	}
+=20
+diff --git a/config.c b/config.c
+index d57996240b..fb56e11276 100644
+--- a/config.c
++++ b/config.c
+@@ -1346,7 +1346,7 @@ int git_config_string(const char **dest, const char *=
+var, const char *value)
+ 	return 0;
+ }
+=20
+-int git_config_pathname(const char **dest, const char *var, const char *va=
+lue)
++int git_config_pathname(char **dest, const char *var, const char *value)
+ {
+ 	if (!value)
+ 		return config_error_nonbool(var);
+@@ -1597,7 +1597,7 @@ static int git_default_core_config(const char *var, c=
+onst char *value,
+ 		return git_config_string(&askpass_program, var, value);
+=20
+ 	if (!strcmp(var, "core.excludesfile")) {
+-		free((char *)excludes_file);
++		free(excludes_file);
+ 		return git_config_pathname(&excludes_file, var, value);
+ 	}
+=20
+@@ -2494,7 +2494,7 @@ int git_configset_get_maybe_bool(struct config_set *s=
+et, const char *key, int *d
+ 		return 1;
+ }
+=20
+-int git_configset_get_pathname(struct config_set *set, const char *key, co=
+nst char **dest)
++int git_configset_get_pathname(struct config_set *set, const char *key, ch=
+ar **dest)
+ {
+ 	const char *value;
+ 	if (!git_configset_get_value(set, key, &value, NULL))
+@@ -2639,7 +2639,7 @@ int repo_config_get_maybe_bool(struct repository *rep=
+o,
+ }
+=20
+ int repo_config_get_pathname(struct repository *repo,
+-			     const char *key, const char **dest)
++			     const char *key, char **dest)
+ {
+ 	int ret;
+ 	git_config_check_init(repo);
+@@ -2738,7 +2738,7 @@ int git_config_get_maybe_bool(const char *key, int *d=
+est)
+ 	return repo_config_get_maybe_bool(the_repository, key, dest);
+ }
+=20
+-int git_config_get_pathname(const char *key, const char **dest)
++int git_config_get_pathname(const char *key, char **dest)
+ {
+ 	return repo_config_get_pathname(the_repository, key, dest);
+ }
+diff --git a/config.h b/config.h
+index db8b608064..b3103bba94 100644
+--- a/config.h
++++ b/config.h
+@@ -286,7 +286,7 @@ int git_config_string(const char **, const char *, cons=
+t char *);
+  * Similar to `git_config_string`, but expands `~` or `~user` into the
+  * user's home directory when found at the beginning of the path.
+  */
+-int git_config_pathname(const char **, const char *, const char *);
++int git_config_pathname(char **, const char *, const char *);
+=20
+ int git_config_expiry_date(timestamp_t *, const char *, const char *);
+ int git_config_color(char *, const char *, const char *);
+@@ -541,7 +541,7 @@ int git_configset_get_ulong(struct config_set *cs, cons=
+t char *key, unsigned lon
+ int git_configset_get_bool(struct config_set *cs, const char *key, int *de=
+st);
+ int git_configset_get_bool_or_int(struct config_set *cs, const char *key, =
+int *is_bool, int *dest);
+ int git_configset_get_maybe_bool(struct config_set *cs, const char *key, i=
+nt *dest);
+-int git_configset_get_pathname(struct config_set *cs, const char *key, con=
+st char **dest);
++int git_configset_get_pathname(struct config_set *cs, const char *key, cha=
+r **dest);
+=20
+ /* Functions for reading a repository's config */
+ struct repository;
+@@ -577,7 +577,7 @@ int repo_config_get_bool_or_int(struct repository *repo,
+ int repo_config_get_maybe_bool(struct repository *repo,
+ 			       const char *key, int *dest);
+ int repo_config_get_pathname(struct repository *repo,
+-			     const char *key, const char **dest);
++			     const char *key, char **dest);
+=20
+ /*
+  * Functions for reading protected config. By definition, protected
+@@ -687,7 +687,7 @@ int git_config_get_maybe_bool(const char *key, int *des=
+t);
+  * Similar to `git_config_get_string`, but expands `~` or `~user` into
+  * the user's home directory when found at the beginning of the path.
+  */
+-int git_config_get_pathname(const char *key, const char **dest);
++int git_config_get_pathname(const char *key, char **dest);
+=20
+ int git_config_get_index_threads(int *dest);
+ int git_config_get_split_index(void);
+diff --git a/diff.c b/diff.c
+index ded9ac70df..902df9286a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -58,7 +58,7 @@ static int diff_context_default =3D 3;
+ static int diff_interhunk_context_default;
+ static const char *diff_word_regex_cfg;
+ static const char *external_diff_cmd_cfg;
+-static const char *diff_order_file_cfg;
++static char *diff_order_file_cfg;
+ int diff_auto_refresh_index =3D 1;
+ static int diff_mnemonic_prefix;
+ static int diff_no_prefix;
+diff --git a/environment.c b/environment.c
+index a73ba9c12c..279ea3fd5e 100644
+--- a/environment.c
++++ b/environment.c
+@@ -46,8 +46,8 @@ const char *git_commit_encoding;
+ const char *git_log_output_encoding;
+ char *apply_default_whitespace;
+ char *apply_default_ignorewhitespace;
+-const char *git_attributes_file;
+-const char *git_hooks_path;
++char *git_attributes_file;
++char *git_hooks_path;
+ int zlib_compression_level =3D Z_BEST_SPEED;
+ int pack_compression_level =3D Z_DEFAULT_COMPRESSION;
+ int fsync_object_files =3D -1;
+@@ -60,7 +60,7 @@ size_t delta_base_cache_limit =3D 96 * 1024 * 1024;
+ unsigned long big_file_threshold =3D 512 * 1024 * 1024;
+ const char *editor_program;
+ const char *askpass_program;
+-const char *excludes_file;
++char *excludes_file;
+ enum auto_crlf auto_crlf =3D AUTO_CRLF_FALSE;
+ enum eol core_eol =3D EOL_UNSET;
+ int global_conv_flags_eol =3D CONV_EOL_RNDTRP_WARN;
+diff --git a/environment.h b/environment.h
+index 0b2d457f07..be1b88ad6f 100644
+--- a/environment.h
++++ b/environment.h
+@@ -131,8 +131,8 @@ extern int warn_ambiguous_refs;
+ extern int warn_on_object_refname_ambiguity;
+ extern char *apply_default_whitespace;
+ extern char *apply_default_ignorewhitespace;
+-extern const char *git_attributes_file;
+-extern const char *git_hooks_path;
++extern char *git_attributes_file;
++extern char *git_hooks_path;
+ extern int zlib_compression_level;
+ extern int pack_compression_level;
+ extern size_t packed_git_window_size;
+@@ -229,7 +229,7 @@ extern const char *git_log_output_encoding;
+=20
+ extern const char *editor_program;
+ extern const char *askpass_program;
+-extern const char *excludes_file;
++extern char *excludes_file;
+=20
+ /*
+  * Should we print an ellipsis after an abbreviated SHA-1 value
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 8e8f3bba32..d80e9c92dd 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1865,13 +1865,13 @@ static int fetch_pack_config_cb(const char *var, co=
+nst char *value,
+ 	const char *msg_id;
+=20
+ 	if (strcmp(var, "fetch.fsck.skiplist") =3D=3D 0) {
+-		const char *path;
++		char *path ;
+=20
+ 		if (git_config_pathname(&path, var, value))
+ 			return 1;
+ 		strbuf_addf(&fsck_msg_types, "%cskiplist=3D%s",
+ 			fsck_msg_types.len ? ',' : '=3D', path);
+-		free((char *)path);
++		free(path);
+ 		return 0;
+ 	}
+=20
+diff --git a/fsck.c b/fsck.c
+index 8ef962199f..7dff41413e 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -1330,13 +1330,13 @@ int git_fsck_config(const char *var, const char *va=
+lue,
+ 	const char *msg_id;
+=20
+ 	if (strcmp(var, "fsck.skiplist") =3D=3D 0) {
+-		const char *path;
++		char *path;
+ 		struct strbuf sb =3D STRBUF_INIT;
+=20
+ 		if (git_config_pathname(&path, var, value))
+ 			return 1;
+ 		strbuf_addf(&sb, "skiplist=3D%s", path);
+-		free((char *)path);
++		free(path);
+ 		fsck_set_msg_types(options, sb.buf);
+ 		strbuf_release(&sb);
+ 		return 0;
+diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
+index a6a9e6bc19..e818583420 100644
+--- a/fsmonitor-settings.c
++++ b/fsmonitor-settings.c
+@@ -103,6 +103,7 @@ static struct fsmonitor_settings *alloc_settings(void)
+ static void lookup_fsmonitor_settings(struct repository *r)
+ {
+ 	const char *const_str;
++	char *to_free =3D NULL;
+ 	int bool_value;
+=20
+ 	if (r->settings.fsmonitor)
+@@ -129,8 +130,9 @@ static void lookup_fsmonitor_settings(struct repository=
+ *r)
+ 		break;
+=20
+ 	case -1: /* config value set to an arbitrary string */
+-		if (repo_config_get_pathname(r, "core.fsmonitor", &const_str))
++		if (repo_config_get_pathname(r, "core.fsmonitor", &to_free))
+ 			return; /* should not happen */
++		const_str =3D to_free;
+ 		break;
+=20
+ 	default: /* should not happen */
+@@ -141,6 +143,7 @@ static void lookup_fsmonitor_settings(struct repository=
+ *r)
+ 		fsm_settings__set_hook(r, const_str);
+ 	else
+ 		fsm_settings__set_disabled(r);
++	free(to_free);
+ }
+=20
+ enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 1ff94266d2..2b50ed0fa0 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -27,7 +27,9 @@ static void gpg_interface_lazy_init(void)
+ }
+=20
+ static char *configured_signing_key;
+-static const char *ssh_default_key_command, *ssh_allowed_signers, *ssh_rev=
+ocation_file;
++static const char *ssh_default_key_command;
++static char *ssh_allowed_signers;
++static char *ssh_revocation_file;
+ static enum signature_trust_level configured_min_trust_level =3D TRUST_UND=
+EFINED;
+=20
+ struct gpg_format {
 diff --git a/http.c b/http.c
-index 752c879c1f..db2e2f1d39 100644
+index db2e2f1d39..fa3ea87451 100644
 --- a/http.c
 +++ b/http.c
-@@ -39,8 +39,8 @@ char curl_errorstr[CURL_ERROR_SIZE];
- static int curl_ssl_verify =3D -1;
- static int curl_ssl_try;
- static const char *curl_http_version =3D NULL;
--static const char *ssl_cert;
--static const char *ssl_cert_type;
-+static char *ssl_cert;
-+static char *ssl_cert_type;
- static const char *ssl_cipherlist;
- static const char *ssl_version;
- static struct {
-@@ -59,23 +59,23 @@ static struct {
- 	{ "tlsv1.3", CURL_SSLVERSION_TLSv1_3 },
- #endif
- };
--static const char *ssl_key;
--static const char *ssl_key_type;
--static const char *ssl_capath;
--static const char *curl_no_proxy;
-+static char *ssl_key;
-+static char *ssl_key_type;
-+static char *ssl_capath;
-+static char *curl_no_proxy;
+@@ -64,7 +64,7 @@ static char *ssl_key_type;
+ static char *ssl_capath;
+ static char *curl_no_proxy;
  #ifdef GIT_CURL_HAVE_CURLOPT_PINNEDPUBLICKEY
- static const char *ssl_pinnedkey;
+-static const char *ssl_pinnedkey;
++static char *ssl_pinnedkey;
  #endif
--static const char *ssl_cainfo;
-+static char *ssl_cainfo;
+ static char *ssl_cainfo;
  static long curl_low_speed_limit =3D -1;
- static long curl_low_speed_time =3D -1;
- static int curl_ftp_no_epsv;
--static const char *curl_http_proxy;
--static const char *http_proxy_authmethod;
-+static char *curl_http_proxy;
-+static char *http_proxy_authmethod;
+@@ -108,7 +108,7 @@ static struct {
 =20
--static const char *http_proxy_ssl_cert;
--static const char *http_proxy_ssl_key;
--static const char *http_proxy_ssl_ca_info;
-+static char *http_proxy_ssl_cert;
-+static char *http_proxy_ssl_key;
-+static char *http_proxy_ssl_ca_info;
- static struct credential proxy_cert_auth =3D CREDENTIAL_INIT;
- static int proxy_ssl_cert_password_required;
-=20
-@@ -112,7 +112,7 @@ static const char *curl_cookie_file;
+ static struct credential proxy_auth =3D CREDENTIAL_INIT;
+ static const char *curl_proxyuserpwd;
+-static const char *curl_cookie_file;
++static char *curl_cookie_file;
  static int curl_save_cookies;
  struct credential http_auth =3D CREDENTIAL_INIT;
  static int http_proactive_auth;
--static const char *user_agent;
-+static char *user_agent;
- static int curl_empty_auth =3D -1;
-=20
- enum http_follow_config http_follow_config =3D HTTP_FOLLOW_INITIAL;
 @@ -381,17 +381,17 @@ static int http_options(const char *var, const char *=
 value,
  	if (!strcmp("http.sslversion", var))
  		return git_config_string(&ssl_version, var, value);
  	if (!strcmp("http.sslcert", var))
--		return git_config_pathname(&ssl_cert, var, value);
-+		return git_config_pathname((const char **)&ssl_cert, var, value);
+-		return git_config_pathname((const char **)&ssl_cert, var, value);
++		return git_config_pathname(&ssl_cert, var, value);
  	if (!strcmp("http.sslcerttype", var))
--		return git_config_string(&ssl_cert_type, var, value);
-+		return git_config_string((const char **)&ssl_cert_type, var, value);
+ 		return git_config_string((const char **)&ssl_cert_type, var, value);
  	if (!strcmp("http.sslkey", var))
--		return git_config_pathname(&ssl_key, var, value);
-+		return git_config_pathname((const char **)&ssl_key, var, value);
+-		return git_config_pathname((const char **)&ssl_key, var, value);
++		return git_config_pathname(&ssl_key, var, value);
  	if (!strcmp("http.sslkeytype", var))
--		return git_config_string(&ssl_key_type, var, value);
-+		return git_config_string((const char **)&ssl_key_type, var, value);
+ 		return git_config_string((const char **)&ssl_key_type, var, value);
  	if (!strcmp("http.sslcapath", var))
--		return git_config_pathname(&ssl_capath, var, value);
-+		return git_config_pathname((const char **)&ssl_capath, var, value);
+-		return git_config_pathname((const char **)&ssl_capath, var, value);
++		return git_config_pathname(&ssl_capath, var, value);
  	if (!strcmp("http.sslcainfo", var))
--		return git_config_pathname(&ssl_cainfo, var, value);
-+		return git_config_pathname((const char **)&ssl_cainfo, var, value);
+-		return git_config_pathname((const char **)&ssl_cainfo, var, value);
++		return git_config_pathname(&ssl_cainfo, var, value);
  	if (!strcmp("http.sslcertpasswordprotected", var)) {
  		ssl_cert_password_required =3D git_config_bool(var, value);
  		return 0;
-@@ -440,19 +440,19 @@ static int http_options(const char *var, const char *=
-value,
- 		return 0;
+diff --git a/mailmap.c b/mailmap.c
+index 3d6a5e9400..044466b043 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -6,7 +6,7 @@
+ #include "object-store-ll.h"
+ #include "setup.h"
+=20
+-const char *git_mailmap_file;
++char *git_mailmap_file;
+ const char *git_mailmap_blob;
+=20
+ struct mailmap_info {
+diff --git a/mailmap.h b/mailmap.h
+index 0f8fd2c586..429a760945 100644
+--- a/mailmap.h
++++ b/mailmap.h
+@@ -3,7 +3,7 @@
+=20
+ struct string_list;
+=20
+-extern const char *git_mailmap_file;
++extern char *git_mailmap_file;
+ extern const char *git_mailmap_blob;
+=20
+ int read_mailmap(struct string_list *map);
+diff --git a/setup.c b/setup.c
+index 9247cded6a..59ff3a19eb 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1177,13 +1177,13 @@ static int safe_directory_cb(const char *key, const=
+ char *value,
+ 	} else if (!strcmp(value, "*")) {
+ 		data->is_safe =3D 1;
+ 	} else {
+-		const char *interpolated =3D NULL;
++		char *interpolated =3D NULL;
+=20
+ 		if (!git_config_pathname(&interpolated, key, value) &&
+ 		    !fspathcmp(data->path, interpolated ? interpolated : value))
+ 			data->is_safe =3D 1;
+=20
+-		free((char *)interpolated);
++		free(interpolated);
  	}
- 	if (!strcmp("http.proxy", var))
--		return git_config_string(&curl_http_proxy, var, value);
-+		return git_config_string((const char **)&curl_http_proxy, var, value);
 =20
- 	if (!strcmp("http.proxyauthmethod", var))
--		return git_config_string(&http_proxy_authmethod, var, value);
-+		return git_config_string((const char **)&http_proxy_authmethod, var, val=
-ue);
+ 	return 0;
+@@ -1822,7 +1822,7 @@ static int template_dir_cb(const char *key, const cha=
+r *value,
+ 		char *path =3D NULL;
 =20
- 	if (!strcmp("http.proxysslcert", var))
--		return git_config_string(&http_proxy_ssl_cert, var, value);
-+		return git_config_string((const char **)&http_proxy_ssl_cert, var, value=
-);
-=20
- 	if (!strcmp("http.proxysslkey", var))
--		return git_config_string(&http_proxy_ssl_key, var, value);
-+		return git_config_string((const char **)&http_proxy_ssl_key, var, value);
-=20
- 	if (!strcmp("http.proxysslcainfo", var))
--		return git_config_string(&http_proxy_ssl_ca_info, var, value);
-+		return git_config_string((const char **)&http_proxy_ssl_ca_info, var, va=
-lue);
-=20
- 	if (!strcmp("http.proxysslcertpasswordprotected", var)) {
- 		proxy_ssl_cert_password_required =3D git_config_bool(var, value);
-@@ -476,7 +476,7 @@ static int http_options(const char *var, const char *va=
-lue,
+ 		FREE_AND_NULL(data->path);
+-		if (!git_config_pathname((const char **)&path, key, value))
++		if (!git_config_pathname(&path, key, value))
+ 			data->path =3D path ? path : xstrdup(value);
  	}
 =20
- 	if (!strcmp("http.useragent", var))
--		return git_config_string(&user_agent, var, value);
-+		return git_config_string((const char **)&user_agent, var, value);
-=20
- 	if (!strcmp("http.emptyauth", var)) {
- 		if (value && !strcmp("auto", value))
-@@ -592,10 +592,10 @@ static void init_curl_http_auth(CURL *result)
- }
-=20
- /* *var must be free-able */
--static void var_override(const char **var, char *value)
-+static void var_override(char **var, char *value)
- {
- 	if (value) {
--		free((void *)*var);
-+		free(*var);
- 		*var =3D xstrdup(value);
- 	}
- }
-@@ -1233,11 +1233,13 @@ static CURL *get_curl_handle(void)
- 	return result;
- }
-=20
--static void set_from_env(const char **var, const char *envname)
-+static void set_from_env(char **var, const char *envname)
- {
- 	const char *val =3D getenv(envname);
--	if (val)
--		*var =3D val;
-+	if (val) {
-+		FREE_AND_NULL(*var);
-+		*var =3D xstrdup(val);
-+	}
- }
-=20
- void http_init(struct remote *remote, const char *url, int proactive_auth)
 --=20
 2.45.1.216.g4365c6fcf9.dirty
 
 
---+j+cZXDgYSI1hQOk
+--RgyTbF51lzzfDRHN
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQZfkACgkQVbJhu7ck
-PpRGNQ//fEox08NXJmFiKE+iSqQDe2R8rGWqvCgds5D32uTooIYsha5kK/bLLtmz
-LNg8orqo8oOvTtkvjKHc6n4oeQtkcTJOJG3ud7kJTLLyxEOpDaMOwfY4T9053UFF
-/WRuzk6lQUcnzLWBKkMt+ac0uJZ19fNDZtmvahVhlmAymXbg5bIbCMrPM82gtO/X
-ZZY00BrX6ADGNpHpZcT+944sfx1uxXa4IHWJzK2ZiAXeIdNPnbHt1Flx4CkXJcTN
-lcIr0H1wAlDTLK8gwmjbe8DQUAu4MtU0dIlvyWs3LJdzobruvZqhK8CzfchwM4Ug
-zjJHLspYsmHJuKwii648RBm41VpBmLIAaoFeUPNIxgV/1rdmo2dv7ldA9Ls/Cala
-yoFBHCRqs0UOhqRL2jSlIOO26TteO0UkzhA2T3uwgZP2gyOLYIWiUIIVW6yyctbL
-peqCD9x5UnvgGz2lRvIMRlsakbq1dINSspkk1slCxhbolvdBftz/5dRYkQ693XMp
-3MBlQi5fHwR2jNKEmlvVL/aRFcFKrFhhiZepfnlRBflmnSM1lYOgdJ6GuNf0tsry
-fvE6aALpKKK3QHBYobryTjHlNmWVR3D3HQjvTzMeLb4dR8cxi24Dmkx8I01xGeOh
-C3w7q6e9nwk86ADNwf2Mc/M1dreu3WswEFmbZBGn26ZHkLCHAFU=
-=/FBi
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQZf4ACgkQVbJhu7ck
+PpRLVg/8DA2V72y06dcOBVL4O6i2wXD76GvGlNg1ZcaV7cJ3IPjzIiPd4ptGEmoT
+bhCG37KwioszPF3q5zJFZkXWuxgmVoEgo0pj69zRA596XYApT7+a5PAsZ4Gjtygk
+9ZwZSckxv5GM2ESMP75/lTKkaEJSRLxyv3LPsM4+QZp926tSzpwAPvhNuIqBvl7l
+f6aS0AUOwgYyOLR8+cjT9WX+VaruQ3no2Wm54l29c/E357ZpNJ5Xs1Lkd4vA3pE0
+HgWRg6rQK0Omar83+t6b+FMXxdWT5uB46k5j9vcWHYxssPnWF83Wti2ZWIldeIng
+bRIhMDGXle1Phm/WM+szjX9YPHvUeTxzWgkX1uS+ukZtGBk/vo8tHRK/0i639Gc0
+rlLpA8+Nu1k3fttZZsTfX5BDyATztwxzU151yFOMwhCBoLogQTS+FXAYjT63HoUf
+C/9d0My5IEIZtqgA+xutqpQv/XrB88GDhkbIGxyJ6xkgcGGH5JCBgLfhp7TUHsg3
+0KyHJUixDeq6nqZYRn3JSyz5myMtrcDdEjt5SsFMh7ez1EWN2RQI4Wwx8iX0EOW7
+Rg0867l/P9nav8eV78VtN0woEJOmOy1burZu4nE82l/gfqaQavoohXVzlZjp6xUW
+8mSspiptHZsEH3TWRuBvLz4OS+Zn7VhnDsp97HEqCnNkhpZO/P8=
+=bQo2
 -----END PGP SIGNATURE-----
 
---+j+cZXDgYSI1hQOk--
+--RgyTbF51lzzfDRHN--
