@@ -1,96 +1,89 @@
-Received: from kitenet.net (kitenet.net [66.228.36.95])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A663A1A2
-	for <git@vger.kernel.org>; Fri, 24 May 2024 17:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.228.36.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773118493
+	for <git@vger.kernel.org>; Fri, 24 May 2024 17:50:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716572295; cv=none; b=E2i/ZK5QXex8sHOZ3fSdIxsW7E2sJDQm+nJf2/2o9viACFU01vb+7zw/GYNFeB4GDIiiBM6UnKZ+OEoefGsd2uG9D2Sb6jt1qckeyVFqFg8XRIRcBkpZgHkP/BUbyfA4g7cAt25lvqXlkLUZwE/CJmeRe7+DIzKLdD/2iTb3pDc=
+	t=1716573037; cv=none; b=a4y61Ejk8+tZJ/RpzAkDc6N0EeSnauMgvg4Iz2AIz9qjK/Xq2nDy/5ZGQ/8eWLrE2tK8CLMu0YP0NdqDoXp2XBUbNo7UWegDM5OgQC9PIEpgaRHX+tEK1VOnvbXp9sIKU93a1iE1IQCLWNdhSnSNtMEC/r6V0wCQJa+dag1K3fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716572295; c=relaxed/simple;
-	bh=6KEqWJD3tT+Fb+R9llMpHSrgm2nO7r7Hlordasy9mxM=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MrN7cKgyQqTMkdIXIHi94eTGrCsNRLuJWJUUN6WElrUzS8aV9BW29sKLAi9Xd5jqcYqyNr6YyF8dGZVRsrbeLGqy0pZ205jNyOeCB3eoDpIrM22YVaZ+evJIU6Q5XGJf15tBz8aekr0U3vqkwIEWP2m3iKusAY5DJqmgjECJdVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joeyh.name; spf=pass smtp.mailfrom=kitenet.net; dkim=pass (1024-bit key) header.d=joeyh.name header.i=@joeyh.name header.b=m4merUyS; arc=none smtp.client-ip=66.228.36.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joeyh.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kitenet.net
+	s=arc-20240116; t=1716573037; c=relaxed/simple;
+	bh=IDKxmUL6ntvEP5TxUTunCfsR5KPSeL0t+pvpPJnbWVg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Pkvu4bl9hp+II+ZDEipIt0Ewkt2kyLUv19XSbNlRE0e6Kd8HWYr9/9AYsf9qCu2kKIzIK/1PnL2+3vxnPr/zvzw+jx/zB8dDSa/ck5HOhZcMkEJtcfBBShA9OnD881wxeToJQSRzcbk1obMc6jSV5ZRtQgz1+alXumYOZA4yx/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=yhoILIO2; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=joeyh.name header.i=@joeyh.name header.b="m4merUyS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=joeyh.name; s=mail;
-	t=1716572277; bh=6KEqWJD3tT+Fb+R9llMpHSrgm2nO7r7Hlordasy9mxM=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=m4merUySqyJ90HUUY0c9Io3TxpuHfcJRjDZOyZG0PA9lrtmeXQI6jb0ZXtCwpLPeM
-	 MT2eJGa7aS5g9pYtTpDrG6gGGVM0ETflfFaWCaKLI3On7e9/gpV3ogacjsnBTQ0MXY
-	 njyiRGceO8cy12bFiG9GofVUwkHamDc5CnCZ+7UY=
-X-Question: 42
-Date: Fri, 24 May 2024 13:37:57 -0400
-From: Joey Hess <id@joeyh.name>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Revert defense-in-depth patches breaking Git LFS
-Message-ID: <ZlDQdXh5i3MCjTmr@kitenet.net>
-References: <20240514181641.150112-1-sandals@crustytoothpaste.net>
- <0f7597aa-6697-9a70-0405-3dcbb9649d68@gmx.de>
- <ZkO-b6Nswrn9H7Ed@tapette.crustytoothpaste.net>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yhoILIO2"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 518151B0C4;
+	Fri, 24 May 2024 13:50:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=IDKxmUL6ntvEP5TxUTunCfsR5KPSeL0t+pvpPJ
+	nbWVg=; b=yhoILIO2U8tBLsmwfW03j1327p63XdUnoEDFBSIvD88OmII06beqGZ
+	CF/czRDl6UN0zqNdvaptLCTw6+S9SL0kcPk3wMcCxQxVu3mF8XeLAsPypwX0+JOl
+	Sg/1c8dbjCroiiCQkxijnJ8PyuBUzUjrccCqZuS9bZWAnOWj7RrYU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 48DA41B0C3;
+	Fri, 24 May 2024 13:50:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A04AE1B0C2;
+	Fri, 24 May 2024 13:50:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ian Wienand <iwienand@redhat.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] run-command: show prepared command
+In-Reply-To: <Zk_ip35jHUj_5M94@fedora19.localdomain> (Ian Wienand's message of
+	"Fri, 24 May 2024 10:43:19 +1000")
+References: <20240523042143.1220862-1-iwienand@redhat.com>
+	<20240523043806.1223032-1-iwienand@redhat.com>
+	<20240523043806.1223032-3-iwienand@redhat.com>
+	<xmqqpltcwnqm.fsf@gitster.g> <Zk_ip35jHUj_5M94@fedora19.localdomain>
+Date: Fri, 24 May 2024 10:50:33 -0700
+Message-ID: <xmqqo78vksk6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dlQ3ZEund2+lXRsk"
-Content-Disposition: inline
-In-Reply-To: <ZkO-b6Nswrn9H7Ed@tapette.crustytoothpaste.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1F218124-19F6-11EF-A3E8-25B3960A682E-77302942!pb-smtp2.pobox.com
 
+Ian Wienand <iwienand@redhat.com> writes:
 
---dlQ3ZEund2+lXRsk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Thu, May 23, 2024 at 08:29:21AM -0700, Junio C Hamano wrote:
+>> ... if the reader truly understands "the alias gives the command and
+>> its leading arguments, to which the invocation can supply even more
+>> arguments", the reader wouldn't be writing such a command line to
+>> begin with, no?
+>> 
+>> So I find the example a bit suboptimal.  Hopefully additional
+>> explanation in patch 2/3 stressed on that point well enough with
+>> much more stress than it talks about the implementation detail of
+>> using "sh -c" and "$@", so that readers who read it would not even
+>> dream of writing such an alias in the first place.
+>
+> Right; I was seeing this in a more convoluted way via our tool but
+> essentially the same issue.  I was just looking for the simplest thing
+> that also gave the syntax error output, which I thought was something
+> people might search for (the "unexpected "$@" stuff).
+>
+> Should I just leave as is?
 
-brian m. carlson wrote:
-> > proposal was to introduce a way to cross-check the SHA-256 of hooks that
-> > _were_ written during a clone operation against a list of known-good on=
-es.
-> > Another alternative was to special-case Git LFS by matching the hooks'
-> > contents against a regular expression that matches Git LFS' current
-> > hooks'.
->=20
-> I have replied to those on the security list and to the general idea.  I
-> don't think we should special-case Git LFS here.  That's antithetical to
-> the long-standing ethos of the project.
+If I found as-is would be good enough, I wouldn't have been
+commenting on this.
 
-I was surprised today to find that git-annex also triggers the hook
-problem. In particular, a git clone that uses git-remote-annex can
-cause several hooks to get created.
-
-I think the hook check is already scheduled for reversion, but in case
-not, here's another data point against hard-coding known-good hooks as a
-solution.
-
---=20
-see shy jo
-
---dlQ3ZEund2+lXRsk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAmZQ0HUACgkQ2xLbD/Bf
-jzgJQRAAgqjN8rgR9gJ/3s5QAWO2PMsBBxgVKtm1IeZDaFk4PW5XpPBlhL+1sXcf
-v2UeflqbWWm6Sj+tcNqwZxKN+ZkmR22V3jp/g5A9/CgYd4U8ta2R5PQrVa2Va0j7
-tggX2bKRIaSxkfzsmGpOGwFjX60/m6yQTza+6aKi0WQpf5nfEhUT7pxNSu7uh58N
-qBhH1pbXBISRwpX8hVcIvyQ8swXwyVSS+3KRGneypDVGDFSEWWW46dOdF8MuFj2m
-7FAZTG5MZd57XaHNfN4NIAwLYFpEBHhM8c74E1fEFl7Mgp2su++2M2xhm2N0PTw+
-AwgxMpj3T9Ha29u+PFxAciVVmA8YJEqie4210sq8+LPZY7DDrTmtOp2J0f9Xbw9V
-Mzh7lODnohadjHgDb6VBOzi7uz5RIhsqvuQKNKz2Z/8eoR5PMy2dP+7RJW9Tpxzj
-+2XuHuVFzEKF57eNHp2z9CRkbhp5aoUE5DI556SosbId0XoG9V6160x8awslEf8s
-0QeiV3a+J0e8hp2UXDNuOJocams6gxuxhFmknFmO6fzhT9lon9mL/cXpUVVBQHVe
-A818zh7+jAy3EZvG5ETROcvQRyfxKl+QSG0giHopYntyT9/GNSxS10gJuSxRiol0
-6QNM7MIabfkQZMwOyN85f6DNBuhyoHJaihHtxOOKmEN9b+NHgGg=
-=pZy/
------END PGP SIGNATURE-----
-
---dlQ3ZEund2+lXRsk--
+Even in this third iteration, I still didn't see the added
+documentation talk about the principle behind the design, i.e. what
+you write after the "git your-alias" are appended to the command
+line to be used as additional arguments.
