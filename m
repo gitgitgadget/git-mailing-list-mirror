@@ -1,163 +1,106 @@
-Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
+Received: from gosford.compton.nu (gosford.compton.nu [217.169.17.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F97B12E5E
-	for <git@vger.kernel.org>; Fri, 24 May 2024 07:35:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B67128383
+	for <git@vger.kernel.org>; Fri, 24 May 2024 08:31:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.169.17.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716536159; cv=none; b=UCG+aSQwoF5TZOySDmYeAVikWtdsTcAmrFrs2u4nvdAGoex/7NAKi0MdP5EoWaVmEAqQiF8+QHm3/vUqiXk04ySbgdzx/78STtcMEJytcryw0ci4jPt5tMSwofn6Xr1/urYn/4y94lGNZmCyVF2LgUG9cNKGb0/vCHrAkAgsmn0=
+	t=1716539509; cv=none; b=XbmBFwRYzKcy4slwDxvbkEdtcCEL2QoNqvwNRDrVYFpX7O7FjcpEPzuGB03V2sfxQxxg7wVjU73oV5e+T4cj/l9vL1vNUz1EMVF1hhyGsgxRMSdKIdC2ZOlBHlWV6qp5MyBajZ8FQ5B38oVsnTfnSMGIIhChmoBwQQ9DIKrB3PE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716536159; c=relaxed/simple;
-	bh=GSBt33SeQAPVLMZKwubJTyVod8PAFEnebfrtHP/RljU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ExD4rRG667nbSHKFKekwPkY6KDTmlT17M3BWwfMht7Tv+unOngrE0vU3Hy/ZMzL2si8fyMEDo6n4Z4zmjlK2qRIO363a3SPmMRpi56WazchszP1qTKcXP+gdzkDAfjXTayyV9HVa6/3rIaxyjlxZvdvX1nguk/l62x9H3ESqrDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OSNZxS+d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JuPegF5B; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1716539509; c=relaxed/simple;
+	bh=JeoBUizKT1j6bXhvaLH8/eT60Zt8K9zgZvyZAPqYeMU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cwtkjxCMMPjkuKfxgQXgfDmZ43XSKunFhq+WYT2w62HxmYfRB1gyF2xJy5aznJtfFS2FnwO0dTdRDAg6hwqGheFtSP5ClsSUlEmxgglT5mHzAM9EQ/z9Uv5/rQd8dl4eeWWuffKC9+YRIQSw9caFTrw7qRCn5oGTJQeqZra5kh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu; spf=pass smtp.mailfrom=compton.nu; dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b=OmxOdEQW; arc=none smtp.client-ip=217.169.17.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=compton.nu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OSNZxS+d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JuPegF5B"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id D0558138011A;
-	Fri, 24 May 2024 03:35:56 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Fri, 24 May 2024 03:35:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716536156; x=1716622556; bh=t3nGTSSOjd
-	Tf8TfT3emyXR4Nxg/XEoVmMsT1Rv/Y9g4=; b=OSNZxS+dPvxI29M57czOGojpmY
-	1SGAMbiZdE2e1Q1Oz+vz16osUZ7COSSNJuaqCE+AunXGLg/XEmfjslisPDWY5kne
-	8Ml0q07SK0FJzqrPswD4P7ifD4C2qilmoxZ25puaAN3T7ulFkUzCttoNCt0uW9KP
-	4AznLaP30510hSQSmvSl7p/aqSxaXSdqlrveP5JT/ahZb+aQF0bKcf5SZc8o5oYB
-	nKcQNxfGxeASo8sS8SRqNeHIzt3wYqACOWqWmWpv7h77jI+kxjW1y5cmV61aE3I4
-	4bYPIisbNp7jXJWuNkVa2ncXDX8wKNR+o9dMhuqGqmr77YIkz3zsHpktAUOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716536156; x=1716622556; bh=t3nGTSSOjdTf8TfT3emyXR4Nxg/X
-	EoVmMsT1Rv/Y9g4=; b=JuPegF5BqI7Nnmzfy8N5Gw5aB+qZm3ykiXWgZufZODSm
-	MPSFTFeFCW3ft53iEIhuJrKPuOVPlYOQW/b2+tPfdkbPQvvMVd9jq18Mn14R1QH+
-	9nAvTkUm+f8rrfkWffEBAdwEwgEqV8kISLlteIK3fC/XiufNcaCu8Ts+ZaH7tjw+
-	BTvcAa0ETHM0mlkALZohm93sjyOPADEnSARqVdI/5MkrKIkFUtsV0yRAOEw46Lr5
-	XM5OBS716Dd2sf0eoP2F8wSqtWWo6k/ujjUt6lZOFrOyHm72qARzlPINO4aZPIZe
-	G+UQaHCdOwi+LlVZjx06O2874q3q7GrWnFclotFdxA==
-X-ME-Sender: <xms:XENQZowPhQePHAc3Qlgbl3D5i6I5OGbUUpKfQQx5sLkOchinXbjOxQ>
-    <xme:XENQZsSCpcSFpmlfb5IEBy4bQzDJU_cjzhp9y26w0xJypNyRxJslcsF8SgFMnSPbD
-    wix4PN_8L1VtxFlfA>
-X-ME-Received: <xmr:XENQZqUdBepSdp6WhDZbF-ByDaCGEa2ZDbO_2d3wEP0nvsR3V4U06YS0prXMQoX8sQsCTHpUgbWlabPanC3XIR7cnjnQ4S2qF2QLGX3oCzt3X-k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeijedguddvtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedt
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:XENQZmhJz-t4cNSsYK8jQc2f8tJ3iDYdudA98TrwhYbOQicjGpU6ug>
-    <xmx:XENQZqB1Wbsge1Qyje-eOtL1_8SDAhTGtvSziq5PPyncR1zn4FCX_Q>
-    <xmx:XENQZnJxK9U7-eRIPpVzO0cGBN3kwvupcCguHhizrTg19EZeigTlPg>
-    <xmx:XENQZhBLIa_sWb_HQrC3eYr5V1LCqgxu16lIRVV2MYECYt4gLxDSeA>
-    <xmx:XENQZtOWgdODxHrsP5yPufFqblqTnKKQfYcMlHH2mXgPlE82m0UMDdvP>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 May 2024 03:35:55 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 640edeb4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 24 May 2024 07:35:52 +0000 (UTC)
-Date: Fri, 24 May 2024 09:35:53 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 9/9] builtin/refs: new command to migrate ref storage
- formats
-Message-ID: <ZlBDWYwFBeVSuM4_@tanuki>
-References: <cover.1716451672.git.ps@pks.im>
- <2ebcc0db657905ed2a164b302da4d02da58ca2c7.1716451672.git.ps@pks.im>
- <CAPig+cScGc2p2=FiqscY3eHfW9LHRiyk8DtycQ8H_=Ko=oVoXA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b="OmxOdEQW"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=compton.nu;
+	s=20200130; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=XGsOPqXAkHTupF9AwGHtUXJ9MvsL4u2gkkWi4XmNLFk=; i=tom@compton.nu;
+	t=1716539505; x=1717749105; b=OmxOdEQWRoYCpIOu729OUhVMMxErNK6mcQMMIiuHnMB3yzz
+	jryRURAi9f/AZs2wNNB7oMW9Gs8q8GVsiRp2MHT6IkKzQc+iCQfQVSBZMX/ElYRNtWsq9LzfDOgDM
+	qpT/2IoKZBDCrMY3eY4UYFLj/Z0XFIQpzYR7kTvo5flPOS2BL3X9UmYGEKXbLXIShjxoLsQddgXHO
+	81hPWC7sXbMLsLR3AcOYmqnlHo9fordXtugs6w/mrKipPN8x6k++ivY4xcEp15YK3c2e4ngOx5oe9
+	NiyMANDmlN688tRPmMXkjegy2SntJjcZ5Y+K5s31xxbcPN76YUXyHFsssXJqL3MQ==;
+Authentication-Results: gosford.compton.nu;
+	iprev=pass (bericote.compton.nu) smtp.remote-ip=2001:8b0:bd:1:1881:14ff:fe46:3cc7
+Received: from bericote.compton.nu ([2001:8b0:bd:1:1881:14ff:fe46:3cc7]:47138)
+	by gosford.compton.nu with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.97.1)
+	(envelope-from <tom@compton.nu>)
+	id 1sAQKo-000000094Ox-2GaL;
+	Fri, 24 May 2024 09:31:34 +0100
+Received: from bericote.compton.nu ([2001:8b0:bd:1:1881:14ff:fe46:3cc7]:47496)
+	by bericote.compton.nu with esmtps  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.97.1)
+	(envelope-from <tom@compton.nu>)
+	id 1sAQKo-0000000A3pq-1kUo;
+	Fri, 24 May 2024 09:31:30 +0100
+Message-ID: <1d39d59e-0d8e-40a0-83d1-6ead6c428bec@compton.nu>
+Date: Fri, 24 May 2024 09:31:30 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pL8uoAiCYEZYglJc"
-Content-Disposition: inline
-In-Reply-To: <CAPig+cScGc2p2=FiqscY3eHfW9LHRiyk8DtycQ8H_=Ko=oVoXA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] promisor-remote: add promisor.quiet configuration option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, chriscool@tuxfamily.org, jonathantanmy@google.com
+References: <20240523131926.1959245-1-tom@compton.nu>
+ <xmqqsey8qia7.fsf@gitster.g>
+Content-Language: en-GB
+From: Tom Hughes <tom@compton.nu>
+In-Reply-To: <xmqqsey8qia7.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 23/05/2024 23:23, Junio C Hamano wrote:
 
---pL8uoAiCYEZYglJc
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> It is an interesting observation.  I thought "git blame" was quite
+> bad at streaming (i.e., until it learned the origin of each and
+> every line, it never produced any output the user asked for), which
+> actually would make it a non issue that the output the user wanted
+> gets mixed with the progress messages and other garbage.  Unless the
+> user understands that "git blame" is not spending time itself, but
+> is waiting for necessary blobs to be fetched from the promisor, and
+> is expected to wait unusally longer than the fully local case,
+> having to stare at a blank/unchanging screen would make it uneasy
+> for the end-user and that is why we have progress eye-candy.
 
-On Thu, May 23, 2024 at 01:40:50PM -0400, Eric Sunshine wrote:
-> On Thu, May 23, 2024 at 4:26=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wr=
-ote:
-> > Introduce a new command that allows the user to migrate a repository
-> > between ref storage formats. This new command is implemented as part of
-> > a new git-refs(1) executable. This is due to two reasons:
-> >
-> >   - There is no good place to put the migration logic in existing
-> >     commands. git-maintenance(1) felt unwieldy, and git-pack-refs(1) is
-> >     not the correct place to put it, either.
-> >
-> >   - I had it in my mind to create a new low-level command for accessing
-> >     refs for quite a while already. git-refs(1) is that command and can
-> >     over time grow more functionality relating to refs. This should help
-> >     discoverability by consolidating low-level access to refs into a
-> >     single executable.
-> >
-> > As mentioned in the preceding commit that introduces the ref storage
-> > format migration logic, the new `git refs migrate` command still has a
-> > bunch of restrictions. These restrictions are documented accordingly.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> > diff --git a/Documentation/git-refs.txt b/Documentation/git-refs.txt
-> > @@ -0,0 +1,59 @@
-> > +--dry-run::
-> > +       Perform the migration, but do not modify the repository. The mi=
-grated
-> > +       refs will be written into a separate directory that can be insp=
-ected
-> > +       separately. This can be used to double check that the migration=
- works
-> > +       as expected before doing performing the actual migration.
->=20
-> s/doing performing/performing/
->=20
-> The mysterious "into a separate directory" is never made concrete. Can
-> this provide more information so the reader can know where this
-> directory is and how to double-check that it worked "as expected"?
+Blame actually has it's own progress message that counts the
+number of lines analysed which gets interrupted by the progress
+messages from the promisor.
 
-Good point. I'll add a sentence that "The name of the directory will be
-reported on stdout". As we use a temporary directory name we cannot
-mention a static name here.
+Something like "git log -S" behaves a bit differently - it doesn't
+have progress and because it's using a pager by default that causes
+the promisor progress to be suppressed because stderr is no longer
+a terminal but you do still get lots of background gc notifications.
 
-Patrick
+> I am OK for promisor.quiet being optional, but I am torn when I
+> imagine what comes next.  On one hand, I myself probably would find
+> it neat to make these lazy fetches happen completely silently as if
+> nothing strange is happening from the point of view of end-users
+> (except for some operations may be unusually slow compared to fully
+> local repository).  On the other hand, I suspect people will be
+> tempted to push it to be on by default at which time it may hurt
+> unsuspecting (new) users who may have been helped by progress bars.
 
---pL8uoAiCYEZYglJc
-Content-Type: application/pgp-signature; name="signature.asc"
+I do agree that it's hard to know what the right thing to do is here
+or even to know the full scope of the effect.
 
------BEGIN PGP SIGNATURE-----
+I'll update the patch to address the specific review comments.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQQ1gACgkQVbJhu7ck
-PpR9VQ//ff1OXid4zcGW0lR4+iXmrpUqxmb+rhfaXtijBvrnrHjpAQovPx58Lc2X
-N+9iMr8+135nYZ5dQViZLnRcH7W/SP4Pny5i8gAUJDFOBjQek5HbOBQTfveTH8ag
-KHvrU/2ejWjfcOWm68mfrO+cKXDrm2eDv4lZPyYqWFfRlN27wQKnCJUqUkoEufXU
-UVJvASHWxxar/xed0Mt10s1v9jKdlaVd8FyxTxbSIE7bYmR6rO2nK6BrSjkH7v6N
-EiKEvmheRS7CaU3Vv2iaswShTxCsItGoJNLvFWMdP8Bi5aLv8b7AL0yq5QKx868y
-Bz/Mj2XhakUzKFpy0YiEu0i+swVe/0+NZ9UBxxNFmzYC0SHsM1i200cu3dM+BvKN
-+WZ2lunfhdbot/YHZKQrWcuU9OkhlhW4id5ccOOEtRpli42kXkQDfzcz94YFM4Dc
-zf4hY9JMFsrheGqsIKCiJR8oYWXw1T9GVIm8EY9INaCbosSZ0pWQXhMBlb1WC0yR
-fm+nTAc4j6y0GCe5DLs+2co9BqHcuXMGOx6RFTAXC0VjdtYQjlx5JwkI2DoQl7cY
-vhvj4pHLogAyiL0oEuP5OGkijZQKTXLGJhICv7Hj2EiOVCA/JGZeSqJNy4C+oKFq
-Kh0JAwwj5qMaS1b+VCR8u2FG32e61w0lYcnnWuN/XbbkhE/5npg=
-=90Td
------END PGP SIGNATURE-----
+Tom
 
---pL8uoAiCYEZYglJc--
+-- 
+Tom Hughes (tom@compton.nu)
+http://compton.nu/
+
