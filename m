@@ -1,48 +1,48 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672771BF3F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248A23BBE8
 	for <git@vger.kernel.org>; Fri, 24 May 2024 19:47:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716580049; cv=none; b=OMCkEd8thjYtS0el+xtxchQ7eGOcXlB6KxJagDca2qUfopXgv+CXaIdmzWdZbTYzCVI9nccO3xcfoUm/AQF/mCsLfh5wn40T+UPynYhwortr9mo9aYcCRrN+p2kG4xscEicesUPAe3J8FrDCGzGJg1cZMlrYtlC4F5+RDc0h4RU=
+	t=1716580050; cv=none; b=f8RQwC9xePutZs+3WI1BM3t9aYs78ZMeiNqpn8z2xva2kKIlsiYzmnugE3tDOCJfRMbJ25d4IDspCiS5s8U9ncC0/cB6fOgZuTQeKVNdbxzqFLrmXLXaLgw6AyEKHMbTgGJcI4h5YE3T5laBTVhUcaVBut7LgLrwELl7AcEVm3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716580049; c=relaxed/simple;
-	bh=4BVD17Iepmxey6bJP1WfgVoe0jtjb8FKifltmsONg/E=;
+	s=arc-20240116; t=1716580050; c=relaxed/simple;
+	bh=24m0vmy1mYJEaxM28E1Q/AuWGMrl8QVsaJ0xHn071us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3ICteLRbw6W1EecCp517gW7B1oU3lQQWXrAcyvYqmuzSNX0SeMNrYcPkdfn1F/vP9yAasDCN+8slGyvDyd0ehWxlDT07vS9KJY6sfXSQhgDORW6naPtUkP6Vgd2jHnNTAS2AcsKrUzoVbjA8d1qCaYPdk35+fP3HpxkR2Ywu2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fqp995pC; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version; b=un7aRGp9oav8VsnehGu/bCdW2J9yrDmKvtNc0TzBS98N/CkB7xbWihyTttrwYyiv+U5RqoU9HobujRgTsxnBa2Povx3/eGBXGVfTojqPCqILEjcvxDuJNknd1tsq4WkqJfFwegUnE1fGUMV7vxMKRdOq/V74Jf6bEAOnw4JfjxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BHErqaUD; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fqp995pC"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AF4EE276DE;
-	Fri, 24 May 2024 15:47:27 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BHErqaUD"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3730B1BD20;
+	Fri, 24 May 2024 15:47:28 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=4BVD17Iepmxey6bJP1WfgVoe0
-	jtjb8FKifltmsONg/E=; b=Fqp995pCqvBjqMZVL07rg6wNo2/EoewBQR5FutDli
-	UjZ7qR4lmJ1o39Y9aSQ6oBBxMlGIGTEcpmOktlt4KN66VxOXuSTP21/N1yhyNvV1
-	XD1kSF4G6Ng+b1j5pXuqSIYQah946nJJ1UDGL6R223TzK0qy4svE927qhVDwweJN
-	4A=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 85700276DD;
-	Fri, 24 May 2024 15:47:27 -0400 (EDT)
+	:content-transfer-encoding; s=sasl; bh=24m0vmy1mYJEaxM28E1Q/AuWG
+	Mrl8QVsaJ0xHn071us=; b=BHErqaUDf4q8Bgklg4yT/tXAFACsIvpulwpYEZJrw
+	F2D5GVy/8SpRSOIAqljVPoX8HftukNecFrBkxRTqGdtKG8VnajAw4CyZYdMrB5bp
+	pK7vNV3u6nfCIF/OtSqjMleFZVOy6LDckJMZJAIQHY5o5B+8ow2fYtVNyqjtyh30
+	EU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 306C51BD1F;
+	Fri, 24 May 2024 15:47:28 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A0F1B276DA;
-	Fri, 24 May 2024 15:47:24 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 880DB1BD1E;
+	Fri, 24 May 2024 15:47:27 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>
-Subject: [PATCH v2 04/12] ci: avoid bare "gcc" for osx-gcc job
-Date: Fri, 24 May 2024 12:47:07 -0700
-Message-ID: <20240524194715.695916-5-gitster@pobox.com>
+Subject: [PATCH v2 05/12] ci: stop installing "gcc-13" for osx-gcc
+Date: Fri, 24 May 2024 12:47:08 -0700
+Message-ID: <20240524194715.695916-6-gitster@pobox.com>
 X-Mailer: git-send-email 2.45.1-246-gb9cfe4845c
 In-Reply-To: <20240524194715.695916-1-gitster@pobox.com>
 References: <20240524194715.695916-1-gitster@pobox.com>
@@ -53,49 +53,54 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-Pobox-Relay-ID:
- 716A9B0E-1A06-11EF-B1E5-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 7325DD00-1A06-11EF-9410-25B3960A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
 From: Jeff King <peff@peff.net>
 
-On macOS, a bare "gcc" (without a version) will invoke a wrapper for
-clang, not actual gcc. Even when gcc is installed via homebrew, that
-only provides version-specific links in /usr/local/bin (like "gcc-13"),
-and never a version-agnostic "gcc" wrapper.
+Our osx-gcc job explicitly asks to install gcc-13. But since the GitHub
+runner image already comes with gcc-13 installed, this is mostly doing
+nothing (or in some cases it may install an incremental update over the
+runner image). But worse, it recently started causing errors like:
 
-As far as I can tell, this has been the case for a long time, and this
-osx-gcc job has largely been doing nothing. We can point it at "gcc-13",
-which will pick up the homebrew-installed version.
+    =3D=3D> Fetching gcc@13
+    =3D=3D> Downloading https://ghcr.io/v2/homebrew/core/gcc/13/blobs/sha=
+256:fb2403d97e2ce67eb441b54557cfb61980830f3ba26d4c5a1fe5ecd0c9730d1a
+    =3D=3D> Pouring gcc@13--13.2.0.ventura.bottle.tar.gz
+    Error: The `brew link` step did not complete successfully
+    The formula built, but is not symlinked into /usr/local
+    Could not symlink bin/c++-13
+    Target /usr/local/bin/c++-13
+    is a symlink belonging to gcc. You can unlink it:
+      brew unlink gcc
 
-The fix here is specific to the github workflow file, as the gitlab one
-does not have a matching job.
+which cause the whole CI job to bail.
 
-It's a little unfortunate that we cannot just ask for the latest version
-of gcc which homebrew provides, but as far as I can tell there is no
-easy alias (you'd have to find the highest number gcc-* in
-/usr/local/bin yourself).
+I didn't track down the root cause, but I suspect it may be related to
+homebrew recently switching the "gcc" default to gcc-14. And it may even
+be fixed when a new runner image is released. But if we don't need to
+run brew at all, it's one less thing for us to worry about.
 
-[jc: cherry-picked from v2.45.0-2-g11c7001e3d]
+[jc: cherry-picked from v2.45.0-3-g7df2405b38]
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- .github/workflows/main.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .github/workflows/main.yml | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 2dc0221f7f..583e7cd5f0 100644
+index 583e7cd5f0..76e3f1e768 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -264,7 +264,7 @@ jobs:
-             cc: clang
+@@ -265,7 +265,6 @@ jobs:
              pool: macos-13
            - jobname: osx-gcc
--            cc: gcc
-+            cc: gcc-13
-             cc_package: gcc-13
+             cc: gcc-13
+-            cc_package: gcc-13
              pool: macos-13
            - jobname: linux-gcc-default
+             cc: gcc
 --=20
 2.45.1-246-gb9cfe4845c
 
