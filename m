@@ -1,117 +1,122 @@
-Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071991CFA9
-	for <git@vger.kernel.org>; Fri, 24 May 2024 18:27:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA48A41755
+	for <git@vger.kernel.org>; Fri, 24 May 2024 19:16:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716575266; cv=none; b=JRH6OGY5z4ryhl4blZqb0ArQq5m4TsP4iamY+Hk0Cy/DrY7VRC/EkKgtAzju2Oi2GXoUe7Vd/rmI/bC2I65B4QsVuHMLC56EaqfgiGN/suE0Tox+wiuHA3aw4Ufl31qqjmLrg69MbPb/hXat4ZGqE8ZigDcXzdziIyGciwZyogc=
+	t=1716578199; cv=none; b=Soa817Q0p3RC+z+FNinEKBHzLnmeM1In96W0jTsutN/1c+DqTGQCjZ7LZluYx5/Qs801Y93rMl4e0SXtrRwDSzp7lClFFQ5QLsHSIr7nrR6HQubE92pmoYUB0QlgQnwniLzbnKWUJHFgWuetfbkppnwpLFMjw1rrUPPEUdBOkWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716575266; c=relaxed/simple;
-	bh=XOyKqFrHdW2EfblHgQFk1IldO1+SBWTce1VfPGxJ5HI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ifGowQmq9Ll08quzQNs+W+pl9Rk4co1bGJwSuHE1xihiTWfiAJsS/Z1DW4Zwq3cg84VEpG5mnwLWePam7DphTZXQiiCb50PwKUlnXONPQ4JImSk6EXzWi16vHLxq5kTXBqCvcBeLOz0al34YVovii9boJOdsVTUlL/mz1gDYHc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=oyemS+P4; arc=none smtp.client-ip=84.93.230.244
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1716578199; c=relaxed/simple;
+	bh=L0G023TTU/JTitLG1aSTXNljT2/AFDTQ/ROxyz3W6fY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=H6eSY1CW2gvTOJugLcadPsghEcYL6PXYZHLhvNwyJFZLY7ceKx4YHSRb5+Sp5TsWlr4WmTaeeXos7DSajyFTds7Ps8snLp4H+NzYTHsQz7Id/cAr021edG9aXdwoR+vfu+LJA80iyMDAtLE3KEmNGnfywda7B3kwzxd51OP+Vx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=g/ucf+xX; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="oyemS+P4"
-Received: from [10.0.2.15] ([51.6.185.229])
-	by smtp with ESMTPA
-	id AZaismNgDdfdlAZajsDHF1; Fri, 24 May 2024 19:24:33 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1716575073; bh=ZFVfuhN1ov/08YIZAHW9wgjsPG3I9joanFYiyBpxysA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=oyemS+P4bo79APJjKqbvoJdq5m6tDTgfkBMrZBQgcLEGK+mDf7TyVl6E/zYUbRKxE
-	 8KbW3hQVng6I0qx9EdnPSQ/FsyIJNaYqtZtxtrk5nvuCtBD0Co9qAJzVKUvo7WQ56M
-	 k24VcNPTCG1U8w4tJc8/IkBLmr/FF5av8GnnDUADk0ltFWXrjW7WbeMaE0rutvXkxA
-	 P1suY1KUP53z2/pzP2qxAH4VsP+/3dCU30+imTnbPM1k42JWcD7Cqep7WOnU+W8Fk1
-	 FLK8TiKaRO0DAgY7bZpbFceeeYW9aUIczX0+Fz4POQDhtJePgtI1MxQLoZd9MpNxcT
-	 NSEliiat+zUig==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=DtP1+3/+ c=1 sm=1 tr=0 ts=6650db61
- a=7htyVA9VkOexEuxjfJyH6w==:117 a=7htyVA9VkOexEuxjfJyH6w==:17
- a=IkcTkHD0fZMA:10 a=a4KH0tAem0wY0KOr5xcA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <54110fa9-02ba-4c9d-9ec2-c26e98a42730@ramsayjones.plus.com>
-Date: Fri, 24 May 2024 19:24:32 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g/ucf+xX"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9783F1BA47;
+	Fri, 24 May 2024 15:16:36 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=L0G023TTU/JTitLG1aSTXNljT2/AFDTQ/ROxyz
+	3W6fY=; b=g/ucf+xXqehZg3hqPDdTogjcNrCCwBtQkN46U+390thtDq/XTDjIpL
+	NrDUXVTgP7rtM4wmW4HtOXvLxDOpKpUAotJzNeqBlAiaf/yXjHFkzHAcDCOvWYDq
+	0Hkt7fo4Ua1TOL9A5Fh+ttb+HIZUwNp+h0Ls9YGXtvo12K/ufnTws=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 900961BA46;
+	Fri, 24 May 2024 15:16:36 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 062481BA45;
+	Fri, 24 May 2024 15:16:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ian Wienand <iwienand@redhat.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v4 3/3] run-command: show prepared command
+In-Reply-To: <20240524073411.1355958-3-iwienand@redhat.com> (Ian Wienand's
+	message of "Fri, 24 May 2024 17:32:44 +1000")
+References: <20240523043806.1223032-1-iwienand@redhat.com>
+	<20240524073411.1355958-1-iwienand@redhat.com>
+	<20240524073411.1355958-3-iwienand@redhat.com>
+Date: Fri, 24 May 2024 12:16:34 -0700
+Message-ID: <xmqqzfsfja0d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 9/9] builtin/refs: new command to migrate ref storage
- formats
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
- Junio C Hamano <gitster@pobox.com>
-References: <cover.1716451672.git.ps@pks.im> <cover.1716545235.git.ps@pks.im>
- <0df17a51b43e1e9d007328aad6457363876b2e1d.1716545235.git.ps@pks.im>
-Content-Language: en-GB
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <0df17a51b43e1e9d007328aad6457363876b2e1d.1716545235.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfPS5r0bodocMYT6GacwDkDcivpTPx7u5vGInj3ZzPL/0/MFTz5o0EibEmqBFb22uRn3ZdH0LPHRRtNRcc5V27a6CoI+ld+RTvGQ6H8vuXfvUH+aYkSey
- HjjIiGubWqg0PKprNAVHur742AMjLLXXCjT0gp7jzPq7DyzxWNLcaiBWrOeTAeXwXArTwZuVTW5LcQ==
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 238C8554-1A02-11EF-8269-25B3960A682E-77302942!pb-smtp2.pobox.com
+
+Ian Wienand <iwienand@redhat.com> writes:
+
+> +test_expect_success 'tracing a shell alias with arguments shows trace of prepared command' '
+> +	git config alias.echo "!echo \$*" &&
+> +	env GIT_TRACE=1 git echo argument 2>output &&
+> +	test_grep "^trace: prepare_cmd:.*" output
+> +'
+
+If you run
+
+    $ cd t && sh ./t0014-alias.sh -d && cat trash*.t0014-alias/output
+
+you'll see two "prepare_cmd" logged, because you added one to
+prepare_shell_cmd() and another to prepare_cmd().  If you were
+tracing something that uses prepare_git_cmd() on Windows, you would
+not see any trace output, on the other hand, I would suspect (I do
+not do Windows so this is from code inspection only).
+
+Perhaps squashing something like this is sufficient?
+
+ run-command.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git c/run-command.c w/run-command.c
+index 13e35fb76e..7eb68a541d 100644
+--- c/run-command.c
++++ w/run-command.c
+@@ -296,7 +296,6 @@ static const char **prepare_shell_cmd(struct strvec *out, const char **argv)
+ 	}
+ 
+ 	strvec_pushv(out, argv);
+-	trace_argv_printf(&out->v[1], "trace: prepare_cmd:");
+ 	return out->v;
+ }
+ 
+@@ -436,7 +435,6 @@ static int prepare_cmd(struct strvec *out, const struct child_process *cmd)
+ 		}
+ 	}
+ 
+-	trace_argv_printf(&out->v[1], "trace: prepare_cmd:");
+ 	return 0;
+ }
+ 
+@@ -747,6 +745,7 @@ int start_command(struct child_process *cmd)
+ 			error_errno("cannot run %s", cmd->args.v[0]);
+ 		goto end_of_spawn;
+ 	}
++	trace_argv_printf(&argv.v[1], "trace: prepare_cmd:");
+ 
+ 	if (pipe(notify_pipe))
+ 		notify_pipe[0] = notify_pipe[1] = -1;
+@@ -914,6 +913,7 @@ int start_command(struct child_process *cmd)
+ 		cmd->args.v = prepare_git_cmd(&nargv, sargv);
+ 	else if (cmd->use_shell)
+ 		cmd->args.v = prepare_shell_cmd(&nargv, sargv);
++	trace_argv_printf(&cmd->args.v[1], "trace: prepare_cmd:");
+ 
+ 	cmd->pid = mingw_spawnvpe(cmd->args.v[0], cmd->args.v,
+ 				  (char**) cmd->env.v,
 
 
-
-On 24/05/2024 11:15, Patrick Steinhardt wrote:
-[snip]
-> diff --git a/Documentation/git-refs.txt b/Documentation/git-refs.txt
-> new file mode 100644
-> index 0000000000..3f73ad6aa6
-> --- /dev/null
-> +++ b/Documentation/git-refs.txt
-> @@ -0,0 +1,62 @@
-> +git-refs(1)
-> +===========
-> +
-> +NAME
-> +----
-> +
-> +git-refs - Low-level access to refs
-> +
-> +SYNOPSIS
-> +--------
-> +
-> +[verse]
-> +'git refs migrate' --ref-format=<format> [--dry-run]
-> +
-> +DESCRIPTION
-> +-----------
-> +
-> +This command provides low-level access to refs.
-> +
-> +COMMANDS
-> +--------
-> +
-> +migrate::
-> +	Migrate ref store between different formats.
-> +
-> +OPTIONS
-> +-------
-> +
-> +The following options are specific to 'git refs migrate':
-> +
-> +--ref-format=<format>::
-> +	The ref format to migrate the ref store to. Can be one of:
-> ++
-> +include::ref-storage-format.txt[]
-> +
-> +--dry-run::
-> +	Perform the migration, but do not modify the repository. The migrated
-> +	refs will be written into a separate directory that can be inspected
-> +	separately. The name of the directory will be reported on stdout. This
-> +	can be used to double check that the migration works as expected doing
-> +	performing the actual migration.
-
-s/expected doing performing/expected before performing/ ?
-
-ATB,
-Ramsay Jones
 
