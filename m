@@ -1,78 +1,179 @@
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gosford.compton.nu (gosford.compton.nu [217.169.17.27])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3EB129A8D
-	for <git@vger.kernel.org>; Fri, 24 May 2024 09:02:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0DE12B14F
+	for <git@vger.kernel.org>; Fri, 24 May 2024 09:10:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.169.17.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716541326; cv=none; b=XTLqSEfOtGdwU+JoAz44GDEA3Rism8qlHbH66oj2EMJr6VhtxqoFw8XYyObxI38gFxV8gIcLwgU7UXtDKQFdiCyq6+bmrpZb/Yc8g+Di2+eUZmRIDO0ZnHRlMixSps8x9e578QtL6+Sm7rfdRxOadS1RsAkrlxLQvCnFeuEuIwA=
+	t=1716541806; cv=none; b=I+5TjLE9EOkPWcsqrJTaO+oYDT3Mcw5QR8YmFx1f7sUuC3RjXV3dutscZNCDx75OqWqVE0HBvFYdE5qgopb9oKnLPmc/LUoII5ifFE+Itsrvdb9DTt/3VR1/yjpwnk4uM0Q2pMORdF7K8emdjmsDJXTXNj2E2aRd9wy6l0aiiac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716541326; c=relaxed/simple;
-	bh=H89A0/UrbsZhwIFMTKM5VUS92W5wV6Z8wX0Z7VnHn7U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=T6WUofqTpx7rF85iDFl17RhxrKa5eRSphBehhBJRpNeiRkoVdLn4v/OH8U+nMyArDeRVHS9L2KavTiiFiMXnMxOTDBuvnGMDqy4S/MhFYqfj5xK8EuEcWmGdEQuMUCZM1eWHWIsrBC/C1kgUt6F5lg+hvoECGBue5TjjJdUYaBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3c9958a9485so1900140b6e.2
-        for <git@vger.kernel.org>; Fri, 24 May 2024 02:02:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716541323; x=1717146123;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=H89A0/UrbsZhwIFMTKM5VUS92W5wV6Z8wX0Z7VnHn7U=;
-        b=Ym+llE9ffgij5uWz7My5zOfgVWCxpU8WHBhcoMzEiBlOoujfUC/C4wQSRYhlKFepgM
-         0pnGYoScDJWZNVqUHKna1XMtf8cruGTAQA/ciXwkJZGKKM7cqhsz7et9XM0ZJYq+V7EX
-         WRWxnu2a3jQupmvjAGoVqPUZoISg5D0EHzjTcaGS8fb9sqeosWWCip/i12M39z4qfpvi
-         IpIhbl+F78v5Vwl41s/Q3nf1wnNZgmyZZajqHiNI2GkaAZtMtUmgqjwtv7aAgZDcoMZa
-         1cxRA0guiGeFGly9FKVHa2YKhl+KOdQvdPRzbN6zygeqhVCCk7fhYX/31EEHQm99onFT
-         VSPg==
-X-Gm-Message-State: AOJu0YzcV3vtjPbI/NcV0wy/2V5vWeHso/BvkYgxrFnnQt1I5pXXe4CZ
-	x7SRGAuY2wvSPorn8ra23lPsw00JNY0lvCtSiqAPsDf/xwDXZ1UEvj94YgVH0pfp1m2SBDeauMO
-	LAdXRKs4yb04OT9FJwCHce70/d00YtQ==
-X-Google-Smtp-Source: AGHT+IFVnb5oDP0lMwamvOGkv53HvI2VeQ6nEkVHoPXZB6T/eiPkKO8iLnvwfEYKqSNFHZJ0gYRpAV6Ny5RkKb3N53Q=
-X-Received: by 2002:a05:6808:1786:b0:3c9:7a59:3bbc with SMTP id
- 5614622812f47-3d1a7d2872fmr2134513b6e.54.1716541323247; Fri, 24 May 2024
- 02:02:03 -0700 (PDT)
+	s=arc-20240116; t=1716541806; c=relaxed/simple;
+	bh=YSie66ZoRRdZgjZFuDXXlizBWRsqgqZQeW9rId5byZc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kjAz2pgz5WtiEZB6HK4no6p/95Narha0xiYFbeKpWyYhs/zW47nh7VEzkf/M3/5iDcZ3eFfTS4dmw/rK3dPVHqdAPmzQFE2djWBO/w6wjxFWGMXxZN8PC8vntQUeD9ezlcfMLI5Scx/JXTaoYBSbPuu1/MMNW4VzCcEdCCYI8Ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu; spf=pass smtp.mailfrom=compton.nu; dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b=nqZhkGlO; arc=none smtp.client-ip=217.169.17.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=compton.nu
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b="nqZhkGlO"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=compton.nu;
+	s=20200130; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=ttp5Drw0KRY5NKOYULVV9liBRZsAJw8i7i1BbP4nwj0=; i=tom@compton.nu;
+	t=1716541804; x=1717751404; b=nqZhkGlOuA7Qb5gIzSmDEF9pJL0u5/hGvjtzSOI1g2Mi+no
+	sqpz4aTYIgHisyekQIov5Xl8XD0xj11GhboijyAlh8LktPLZ6RvzBKYzv+8F8SUTG4hSpTAs9Bl4Z
+	x9gbg+mwpDHChSMvFGfA4WQ5UgQCvdLRUlSGBm7vQ/ifLvbPs8PeWXQ0RMG8Lkhr/3mkwq5iUXN7T
+	3OISLBxmCFD7pTIH41wib6wtNLQAyOtiW15Q427tTem6YWbZOUljDROPZLWnvHCsx7bQEFmaZujgM
+	JPmitTl3HtSXHCc4nUie9hQmCNIYzDgvgWUF4e7/q4k2aRwgs4yXcUwsSd+ST+tA==;
+Authentication-Results: gosford.compton.nu;
+	iprev=pass (bericote.compton.nu) smtp.remote-ip=2001:8b0:bd:1:1881:14ff:fe46:3cc7
+Received: from bericote.compton.nu ([2001:8b0:bd:1:1881:14ff:fe46:3cc7]:51450)
+	by gosford.compton.nu with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.97.1)
+	(envelope-from <tom@compton.nu>)
+	id 1sAQw0-000000095Vz-2UYx;
+	Fri, 24 May 2024 10:10:00 +0100
+Received: from tom by bericote.compton.nu with local (Exim 4.97.1)
+	(envelope-from <tom@compton.nu>)
+	id 1sAQw0-0000000AGuI-20AA;
+	Fri, 24 May 2024 10:09:56 +0100
+From: Tom Hughes <tom@compton.nu>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	chriscool@tuxfamily.org,
+	jonathantanmy@google.com,
+	Tom Hughes <tom@compton.nu>
+Subject: [PATCH v2] promisor-remote: add promisor.quiet configuration option
+Date: Fri, 24 May 2024 10:09:37 +0100
+Message-ID: <20240524090937.2448229-1-tom@compton.nu>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240523131926.1959245-1-tom@compton.nu>
+References: <20240523131926.1959245-1-tom@compton.nu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1716451672.git.ps@pks.im> <4e0edda6d3ef48509206d849ceb1f347e51251d9.1716451672.git.ps@pks.im>
- <CAPig+cSM2mcEByQ=kJz2nFRR6OoatoNnii7Wy3wAiGBHO0LWrg@mail.gmail.com> <ZlBDUncKuWsfrfXF@tanuki>
-In-Reply-To: <ZlBDUncKuWsfrfXF@tanuki>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 24 May 2024 05:01:52 -0400
-Message-ID: <CAPig+cRCERqusxCHTmsPLuj6bgpQaRfM08L+D1Y=MSQooJikmQ@mail.gmail.com>
-Subject: Re: [PATCH 8/9] refs: implement logic to migrate between ref storage formats
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, May 24, 2024 at 3:35=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
-> On Thu, May 23, 2024 at 01:31:03PM -0400, Eric Sunshine wrote:
-> > On Thu, May 23, 2024 at 4:26=E2=80=AFAM Patrick Steinhardt <ps@pks.im> =
-wrote:
-> > > In other words, this version is a minimum viable product for migratin=
-g a
-> > > repository's ref storage format. It works alright for bare repos, whi=
-ch
-> > > typically have neither worktrees nor reflogs.
-> >
-> > Worktrees hanging off a bare repository is an explicitly supported
-> > use-case, and there are people who use and promote such an
-> > organization, so I'm not sure if "typically" is accurate these days.
-> > Anyhow, just a minor observation, probably not worth rewording, and
-> > certainly not worth a reroll.
->
-> True enough. I would claim that most bare repositories out in the wild
-> do not have worktrees, mostly because they are used on the server side.
-> But in the end, quantity is rather irrelevant. I'll s/typically/often/
-> to relax the statement a bit. Does that work for you?
+Add a configuration option to allow output from the promisor
+fetching objects to be suppressed.
 
-Yes, "often" works just fine.
+This allows us to stop commands like 'git blame' being swamped
+with progress messages and gc notifications from the promisor
+when used in a partial clone.
+
+Signed-off-by: Tom Hughes <tom@compton.nu>
+---
+ Documentation/config.txt          |  2 ++
+ Documentation/config/promisor.txt |  3 +++
+ promisor-remote.c                 |  3 +++
+ t/t0410-partial-clone.sh          | 37 +++++++++++++++++++++++++++++++
+ 4 files changed, 45 insertions(+)
+ create mode 100644 Documentation/config/promisor.txt
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 70b448b132..6cae835db9 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -487,6 +487,8 @@ include::config/pager.txt[]
+ 
+ include::config/pretty.txt[]
+ 
++include::config/promisor.txt[]
++
+ include::config/protocol.txt[]
+ 
+ include::config/pull.txt[]
+diff --git a/Documentation/config/promisor.txt b/Documentation/config/promisor.txt
+new file mode 100644
+index 0000000000..98c5cb2ec2
+--- /dev/null
++++ b/Documentation/config/promisor.txt
+@@ -0,0 +1,3 @@
++promisor.quiet::
++	If set to "true" assume `--quiet` when fetching additional
++	objects for a partial clone.
+diff --git a/promisor-remote.c b/promisor-remote.c
+index b414922c44..2ca7c2ae48 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -23,6 +23,7 @@ static int fetch_objects(struct repository *repo,
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 	int i;
+ 	FILE *child_in;
++	int quiet;
+ 
+ 	if (git_env_bool(NO_LAZY_FETCH_ENVIRONMENT, 0)) {
+ 		static int warning_shown;
+@@ -41,6 +42,8 @@ static int fetch_objects(struct repository *repo,
+ 		     "fetch", remote_name, "--no-tags",
+ 		     "--no-write-fetch-head", "--recurse-submodules=no",
+ 		     "--filter=blob:none", "--stdin", NULL);
++	if (!git_config_get_bool("promisor.quiet", &quiet) && quiet)
++		strvec_push(&child.args, "--quiet");
+ 	if (start_command(&child))
+ 		die(_("promisor-remote: unable to fork off fetch subprocess"));
+ 	child_in = xfdopen(child.in, "w");
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 88a66f0904..2957160efa 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -3,6 +3,7 @@
+ test_description='partial clone'
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-terminal.sh
+ 
+ # missing promisor objects cause repacks which write bitmaps to fail
+ GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
+@@ -689,6 +690,42 @@ test_expect_success 'lazy-fetch when accessing object not in the_repository' '
+ 	! grep "[?]$FILE_HASH" out
+ '
+ 
++test_expect_success TTY 'promisor.quiet=false shows progress messages' '
++	rm -rf server repo &&
++	test_create_repo server &&
++	test_commit -C server foo &&
++	git -C server rm foo.t &&
++	git -C server commit -m remove &&
++	git -C server config uploadpack.allowanysha1inwant 1 &&
++	git -C server config uploadpack.allowfilter 1 &&
++
++	git clone --filter=blob:none "file://$(pwd)/server" repo &&
++	git -C repo config promisor.quiet "false" &&
++
++	test_terminal git -C repo cat-file -p foo:foo.t 2>err &&
++
++	# Ensure that progress messages are written
++	grep "Receiving objects" err
++'
++
++test_expect_success TTY 'promisor.quiet=true does not show progress messages' '
++	rm -rf server repo &&
++	test_create_repo server &&
++	test_commit -C server foo &&
++	git -C server rm foo.t &&
++	git -C server commit -m remove &&
++	git -C server config uploadpack.allowanysha1inwant 1 &&
++	git -C server config uploadpack.allowfilter 1 &&
++
++	git clone --filter=blob:none "file://$(pwd)/server" repo &&
++	git -C repo config promisor.quiet "true" &&
++
++	test_terminal git -C repo cat-file -p foo:foo.t 2>err &&
++
++	# Ensure that no progress messages are written
++	! grep "Receiving objects" err
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+ 
+-- 
+2.45.1
+
