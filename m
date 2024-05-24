@@ -1,154 +1,163 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF4B3307B
-	for <git@vger.kernel.org>; Fri, 24 May 2024 07:34:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3B412E5E
+	for <git@vger.kernel.org>; Fri, 24 May 2024 07:35:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716536077; cv=none; b=X8cGNSDBtw0m7cYu/Txa8ZN3qTxp4z8rPLzPlY27qQU50cZrH2EgEQbrDbhqkwJrucuI90S2v1n2/qwqfNG8z4LMHlCWFQ94ZEcZlAObZ50cxQ61Mh71LvRKR+nf/KaT06olBK3p8xCkeTdGYIQRnMXG0wy/COOTofu5ygAQt9c=
+	t=1716536152; cv=none; b=oH0+BuuV6N9Y8bfmX8UrvfZaltL5boXDiNL0XCRnHsU2Q+4XTTIMXxJ/P8Rni9Olk6yvCCi5l88mOP1CsUr1W+XwUbZuFLHQEkq7ylIbhq1G0BX9IQvsb47P+HQ2KE05YUc5SF3l2HKN+8FnCqZfL09rJSpx9RNvUsQHdZVhr1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716536077; c=relaxed/simple;
-	bh=3C9xNd5+0llTR6pS8OEf8G55WpH1tCpvQcGg5SgpmK8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PbQxJqqTlQBJ4aTZ+5jgvn4DUxSWfbizXZj5GVnxB3J/QilY/+WdV6sL6y7l70PvCrKRJ11GcF8umLuiBQrv+aZVnN+sIwSpYyCDM1S2mAT3/i71r2y9rehiQdAqLjNw8yu5HYNvQqZB9nNG9N33oCrrGJ53QtCaBeTJNqesKZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=btndI4Qs; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1716536152; c=relaxed/simple;
+	bh=I/YZYjIA94Qquu8MEneJEpraKQH1zLblLpBSDobYwVk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dsMDEtFp2KzeXSI+hDpDNi3OWLRysq2znY+5CyxcH12JsiyxK9nVmg76JuqFzkgORGJgCIp+HN3gh4G/0vMdxW7RB4ePTr33BqUmKgGVVzB9QPT50gNRkm7dZaAs8C5keItdfguJS7Hlm9IIEf5So95rNV8YlxPmSAsIt6CAnZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e0JnQkkT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bxNIFh2M; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="btndI4Qs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1716536074;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=t6EbyvMAGZNSN0LdW8Vx3hyL/VkHnKPDXbGOTFtSgws=;
-	b=btndI4Qs5Ch8sMNIE9cMrqGi/Z4JNPlz3KfT1Rr4mQJx8IB/iKwx5RYN3LLdQTyrmEUFG0
-	qLUzJkn9nUBlG86bFFIgL8MJZ7gMsMOW0BxzriJTLQOnuKOPMYDs0oye+eg+f32BrI+C5r
-	wWI1V6NDqLe2pKnCdUlpve/tIJvrqGI=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-349-1Q-Li0gxNouOKnCq0T0rmQ-1; Fri, 24 May 2024 03:34:33 -0400
-X-MC-Unique: 1Q-Li0gxNouOKnCq0T0rmQ-1
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6ab9d01cbc3so7590326d6.1
-        for <git@vger.kernel.org>; Fri, 24 May 2024 00:34:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716536072; x=1717140872;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=t6EbyvMAGZNSN0LdW8Vx3hyL/VkHnKPDXbGOTFtSgws=;
-        b=PoqewGtagbAo/cJcR3vpVztFrrkA7huYTcc+4xmP4AUPJduBhjRY2b74Hg2+/1PLMb
-         ulYSOB/qBWPebWPft8rt1ShBF3pr+faGdF9YeuKHU66V0FvALi/+Dvy3D+jlV6DqQem5
-         uuHaCseAX6avKLk740Se4N1j+2qYzsTdo/NWSuozDLX6y3TOGY71lshsub70Imeml8Ek
-         rXpcIhazKAPDvdlE5JaV3YaGBVWssHw19uuDtbi5Bn0nylgV/CMTg8XVGztEx6mR3/tH
-         38FB5lpzIfhs3xltP47AvItDGPByNZArWZtPWWTc+g+LVk2T/YSb9pjUyKYtfFeoG052
-         8tRQ==
-X-Gm-Message-State: AOJu0YwA6UQJgNuZDe1y7f2zAKh6mNAXsdz1xyZbwTS/j90fmdNavXAf
-	a++Wmgtz8ilz85KOAgBDJ30MzqSKd9dF3/7or0Qh2DkV8tWc7pnAmRGFv7VOwAM+QYaCb3wexmU
-	kZWIOap86lPAY276rWhv+TnPY/Px1MMRFzZiDCOwFhz19dDFJoMKfSJCCvx4OMrR1g+sJaGX1fS
-	UTJBT7il2s1GrtUgm+ZkE+vz5DnMzwi9bGJw==
-X-Received: by 2002:a05:6214:4604:b0:6a0:c339:1ede with SMTP id 6a1803df08f44-6abcd0b54efmr17624386d6.40.1716536072249;
-        Fri, 24 May 2024 00:34:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEqoZP6bGdZtFKyNSi/LThSrSRtLiYTNynnl2xwdsj5uhGkjavtOr3aNt7o8KlUf1hU4INxwQ==
-X-Received: by 2002:a05:6214:4604:b0:6a0:c339:1ede with SMTP id 6a1803df08f44-6abcd0b54efmr17624236d6.40.1716536071835;
-        Fri, 24 May 2024 00:34:31 -0700 (PDT)
-Received: from fedora19.redhat.com (203-12-11-234.dyn.launtel.net.au. [203.12.11.234])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ac0710865fsm4893356d6.71.2024.05.24.00.34.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 May 2024 00:34:31 -0700 (PDT)
-From: Ian Wienand <iwienand@redhat.com>
-To: git@vger.kernel.org
-Cc: Ian Wienand <iwienand@redhat.com>
-Subject: [PATCH v4 3/3] run-command: show prepared command
-Date: Fri, 24 May 2024 17:32:44 +1000
-Message-ID: <20240524073411.1355958-3-iwienand@redhat.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240524073411.1355958-1-iwienand@redhat.com>
-References: <20240523043806.1223032-1-iwienand@redhat.com>
- <20240524073411.1355958-1-iwienand@redhat.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e0JnQkkT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bxNIFh2M"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id A2A01114012C;
+	Fri, 24 May 2024 03:35:49 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Fri, 24 May 2024 03:35:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1716536149; x=1716622549; bh=BsJM6tC/3K
+	o9OFi4bxzDKYgqqtjQeSFPrRaLy8NbDM0=; b=e0JnQkkTLgUH0J3hSz5k2jY9FC
+	RopqARk13nTv714pOsITa+omFsQOyzmy98N+M4YVVXSKP0yFTE3ZnRlKHDP0/tg6
+	jjPDn7lAl8UQLjvPQF/1wAA3lbSKuLPR+ykcskEgZ2+CmozQktTL4ahRl8tbDGEe
+	MGHi41/Ps0svZZUyJranlk1rLEfPgjhE4HqDhcBprMl5W6WqXCmHMqELM7PZZNmH
+	/rJmGNNMHChEgkufmYuRGgoHzfDwacTwt6M/xoM3vu/C5T1b1r/TmOltIvDmi5ZI
+	Z7MxPhHenElhiTwji/UsX4XUXTVy06IG/fTGluRUQe8fCeC22DWIUPSeTcbg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1716536149; x=1716622549; bh=BsJM6tC/3Ko9OFi4bxzDKYgqqtjQ
+	eSFPrRaLy8NbDM0=; b=bxNIFh2MVS5PMqfxoUp/Fm8pXEkS65lIo3dye8cA4tdc
+	BPZoN4dadIOo+OnTEub8CaJ8a/qXYQckiyaUlnfDVxXpuESzgqdYIGAa7Xn8OMe9
+	4dyPVBXrMYOa/4W2FunDXwxYd5b2X8ywQfwiP4ClFAZUbrexoOmgvuCc3eilgIHk
+	tHi6hWXbZVlUYYuMucDSWYp1IAgz6Uua9xneKw0+78/Six1BgLvUmR+8ogdrGWd4
+	jxNVM8baJMo8UAnVjDP9QnGDFz439q5oiVQmRvIXY5xjXpSrS5xbkDYoFO5l0JFt
+	P473kIsEZpjOYEHZXMq8ORKINC2rNsYTvluh+zfoKQ==
+X-ME-Sender: <xms:VUNQZv-RFSzHZPdCMYuZ7jF-CVu-Myd_7WsyWWFaJFyrdASp0XaAkQ>
+    <xme:VUNQZrtfZCfQMbYxO2pv6ES97JdduWS-RUhQgDQl6TTG8RCmTJkoIfb1E2JCGqQnf
+    tWTfuKXh1dXiBBN1w>
+X-ME-Received: <xmr:VUNQZtAcg1VVl8BnoFnpxzeGAeM7zuMgKZht0jF3NRtF345kgj_BlX1tqmm6jR7GvAfiIfF_jHbfafHxTG_au0FcGKDSyVnCbSZvrMTiXye4nBQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeijedguddvtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtdorredttdejnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeegtdeiuedtgfeuvdfghfdtkeelkeeltedtleeggfeufeelgfeitddvgedugfeh
+    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:VUNQZreQWWmVGePO9YHATeY_oxtYjtTGRHi8frBaM9GPviIB5jqdyA>
+    <xmx:VUNQZkPMHqq4rmH1_jr5-UPka_5lGcDZ9o_GdrEpyU-RPhJkStLsBw>
+    <xmx:VUNQZtnGSwNbKlv3CRmFRHyO_S37cyqh_M2Nh6g21onqfmbSOzd84w>
+    <xmx:VUNQZusxlGxzuJJn44IqAdLZMedAi64qlsR9pIuxbpPoFj9oX6V3hQ>
+    <xmx:VUNQZtb-T-6-EO8L-tHxfinKOjXrGvCIDrSKQUTsaZm5O12k2nuqCYwz>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 24 May 2024 03:35:48 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 8c715b48 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 24 May 2024 07:35:45 +0000 (UTC)
+Date: Fri, 24 May 2024 09:35:46 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 8/9] refs: implement logic to migrate between ref storage
+ formats
+Message-ID: <ZlBDUncKuWsfrfXF@tanuki>
+References: <cover.1716451672.git.ps@pks.im>
+ <4e0edda6d3ef48509206d849ceb1f347e51251d9.1716451672.git.ps@pks.im>
+ <CAPig+cSM2mcEByQ=kJz2nFRR6OoatoNnii7Wy3wAiGBHO0LWrg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="lweLN6eXE5Kj8sIi"
+Content-Disposition: inline
+In-Reply-To: <CAPig+cSM2mcEByQ=kJz2nFRR6OoatoNnii7Wy3wAiGBHO0LWrg@mail.gmail.com>
 
-This adds a trace point in prepare_cmd (for windows,
-prepare_shell_cmd), so we can see the actual command being run without
-having to resort to strace/code inspection.
 
-e.g. "test = !echo" when run under GIT_TRACE will show:
+--lweLN6eXE5Kj8sIi
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- $ GIT_TRACE=1 git test hello
- 10:58:56.877234 git.c:755               trace: exec: git-test hello
- 10:58:56.877382 run-command.c:657       trace: run_command: git-test hello
- 10:58:56.878655 run-command.c:657       trace: run_command: echo hello
- 10:58:56.878747 run-command.c:437       trace: prepare_cmd: /usr/bin/echo hello
- hello
+On Thu, May 23, 2024 at 01:31:03PM -0400, Eric Sunshine wrote:
+> On Thu, May 23, 2024 at 4:26=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wr=
+ote:
+> > With the introduction of the new "reftable" backend, users may want to
+> > migrate repositories between the backends without having to recreate the
+> > whole repository. Add the logic to do so.
+> >
+> > The implementation is generic and works with arbitrary ref storage
+> > formats because we only use.
+>=20
+> ECANNOTPARSE: This sentence seems to be broken grammatically.
 
-A "split" alias, e.g. test = "!echo $*" will show the shell wrapping
-and appending of "$@".
+Will fix.
 
- $ GIT_TRACE=1 git test hello
- 11:00:45.959420 git.c:755               trace: exec: git-test hello
- 11:00:45.959737 run-command.c:657       trace: run_command: git-test hello
- 11:00:45.961424 run-command.c:657       trace: run_command: 'echo $*' hello
- 11:00:45.961528 run-command.c:437       trace: prepare_cmd: /bin/sh -c 'echo $* "$@"' 'echo $*' hello
- hello hello
+> > It does have a few limitations though:
+> >
+> >   - We do not migrate repositories with worktrees, because worktrees
+> >     have separate ref storages. It makes the overall affair more complex
+> >     if we have to migrate multiple storages at once.
+> >
+> >   - We do not migrate reflogs, because we have no interfaces to write
+> >     many reflog entries.
+> >
+> >   - We do not lock the repository for concurrent access, and thus
+> >     concurrent writes may make use end up with weird in-between states.
+> >     There is no way to fully lock the "files" backend for writes due to
+> >     its format, and thus we punt on this topic altogether and defer to
+> >     the user to avoid those from happening.
+> >
+> > In other words, this version is a minimum viable product for migrating a
+> > repository's ref storage format. It works alright for bare repos, which
+> > typically have neither worktrees nor reflogs.
+>=20
+> Worktrees hanging off a bare repository is an explicitly supported
+> use-case, and there are people who use and promote such an
+> organization, so I'm not sure if "typically" is accurate these days.
+> Anyhow, just a minor observation, probably not worth rewording, and
+> certainly not worth a reroll.
 
-Prior changes have made the documentation around the internals of the
-alias command execution clearer, but I have still found this detailed
-view of the aliased command being run helpful for debugging purposes.
+True enough. I would claim that most bare repositories out in the wild
+do not have worktrees, mostly because they are used on the server side.
+But in the end, quantity is rather irrelevant. I'll s/typically/often/
+to relax the statement a bit. Does that work for you?
 
-A test case is added.  This simply looks for the trace point output;
-the details change depending on platform -- the important thing is
-that we have a verbose log point, not so much the details of what
-happens on each platform.
+Patrick
 
-Signed-off-by: Ian Wienand <iwienand@redhat.com>
----
- run-command.c    | 2 ++
- t/t0014-alias.sh | 6 ++++++
- 2 files changed, 8 insertions(+)
+--lweLN6eXE5Kj8sIi
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/run-command.c b/run-command.c
-index 1b821042b4..13e35fb76e 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -296,6 +296,7 @@ static const char **prepare_shell_cmd(struct strvec *out, const char **argv)
- 	}
- 
- 	strvec_pushv(out, argv);
-+	trace_argv_printf(&out->v[1], "trace: prepare_cmd:");
- 	return out->v;
- }
- 
-@@ -435,6 +436,7 @@ static int prepare_cmd(struct strvec *out, const struct child_process *cmd)
- 		}
- 	}
- 
-+	trace_argv_printf(&out->v[1], "trace: prepare_cmd:");
- 	return 0;
- }
- 
-diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-index 95568342be..b7affbe93a 100755
---- a/t/t0014-alias.sh
-+++ b/t/t0014-alias.sh
-@@ -44,4 +44,10 @@ test_expect_success 'run-command formats empty args properly' '
-     test_cmp expect actual
- '
- 
-+test_expect_success 'tracing a shell alias with arguments shows trace of prepared command' '
-+	git config alias.echo "!echo \$*" &&
-+	env GIT_TRACE=1 git echo argument 2>output &&
-+	test_grep "^trace: prepare_cmd:.*" output
-+'
-+
- test_done
--- 
-2.45.1
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQQ1EACgkQVbJhu7ck
+PpRy/g//ZIiJ48IrCFpkNlEfBYjcO7rzmm+TIlt46YgYWtNCEcO83U3mQhnmud+V
+2jxIMS2z7C47HETM5eoEB1JKmKszCDtX9ZD0rHYMKVmwebZlOOb+VLdWzaamAtUK
+F2QdEUbfUm/wckoz+YlCgzDjp496E1qUXFTadgdSJ22OpwBhIrIqyewXo4RqysGL
+8zNIgxozhQrdQ2BJsyLHeC0UQABp8gA/lThQnO0G7DGO+Kk8IQEPE/eUjhuU2qXo
+qVrpGuSfP+SAB9sKFYGaW8hVrTpj3qlPnSIZmZjI52q2qYgVkPCpWbx9lSaWxwVY
+kKQSm74SqGUoeCpll+4sX2rSsulZGnpaoTqulCKUxXQ7yT/TzH17J8NbTDkwXPBT
+m2Kdths/7D137eegZr4Y4cwEUEUJeb7ceA0pIEu71Sy7Q+BjlpPMeMarcXG/Rjmd
+h5Z/2eDHeRlzE1RgDU/jewO+ymXyoGy0OdjBai2oRXTPvl2pvkBTOrTjPPAnDLqe
+zo7HFCf93WpZdwrUhkIvR7AY02GXDcjf/2JjxUOFofITFojyXs/I1DSjYm1txWED
+Oep7HNRWpj+I77yvmOii4VAUHWIalGMJbSEWvCyOBClrbEoHFBy4P2MZkxgygk58
+1KI8Apn8ijPWELBDO9Vi8/pRadt4/Y37gZUw+HoRbUnRYocrlY8=
+=XgOI
+-----END PGP SIGNATURE-----
+
+--lweLN6eXE5Kj8sIi--
