@@ -1,80 +1,80 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD1C85930
-	for <git@vger.kernel.org>; Fri, 24 May 2024 10:15:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E13985930
+	for <git@vger.kernel.org>; Fri, 24 May 2024 10:15:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716545712; cv=none; b=fwgPybfMqpoYi3mMatUy6dOQKGsLehwXLEmA6LjHJPZB7LVFLVA+/iNdfQUJUGt5tK4WKlCR9icgl2VFQAV316qT8fpmaQ5nzhX6LTC3aULfeF1J2pKSb7ulekrQyQz6TRd+nKsoQjM6zQ2+u6MCnhJjIHvvhUG4rTdO8oJKeW0=
+	t=1716545717; cv=none; b=ZgVeQTlOysis08FnIad9ISpSmIV/HT1l5pZ5H+z//Ropfpuzyao9XJzvtL0WLX2knZEeMduk34y9jbAsMUU1uSqQiRMIwCc1yqlB/BZBZJEiHMrrfNAW2vVMw31uaBEjytoDZrOeJndOOxMLmUKG19kBmnuL9BOSwQU6AG/d/A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716545712; c=relaxed/simple;
-	bh=vRaESfYj5FscoNrnNCA88iukijwFXwBEwca0GhresWo=;
+	s=arc-20240116; t=1716545717; c=relaxed/simple;
+	bh=/R/2AbbXrVYuTFYzeLVJEMAhYpoLzwY1H151BDfM6gM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BZvroACXWsDaqFEEv1pqAZfAgI9gSqmZ/HFi3+Q/MMx8CW5LNUKasf0FDVO/GI+MCY8y3hcgZP/6LYxJjCKASUqNaFtAXHLpzfan5S6OYGNo0XJITsSWZ9AB6igRbykHCog00U/+VwYCl9xfn+rvwsIqpbcmDzDwgZa82oEzpuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eF/W2p/L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WszER8jn; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=k5odF7z6Dlg4FvxQK+soeJ9ezaVD3jSzY0XhhWQWLWK87uaVccIDgGkxvcNtHHYSpqps6CGPfL4nFLMq/UtC83VQXLkOSHyHKh7mjFypot+8rqVEoIFTYpcYqz37sU9kljDZu7u9jrLbWoPiuukqegHJJQz5Z4a62ubIss8Bptg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bAH/hLFG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HmNI0cXM; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eF/W2p/L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WszER8jn"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 0B12B114019E;
-	Fri, 24 May 2024 06:15:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bAH/hLFG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HmNI0cXM"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 44024138012D;
+	Fri, 24 May 2024 06:15:14 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 24 May 2024 06:15:10 -0400
+  by compute5.internal (MEProxy); Fri, 24 May 2024 06:15:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716545710; x=1716632110; bh=7OvBFtuha0
-	pupDO4wUMz+/Hn/NuWEnYPmqGPuN4HX88=; b=eF/W2p/L+Ei7dr6dh14FcJOMYS
-	iejHvVoH0rY7jp7hpa4FLwTAw409lFwy4U/Ud6/zh6s9Ocsh86XLZz9/M6jPlJor
-	SbxPqdEkdJLCe+y4BOJAZJujfi4L00uEIwfdPXtKD4p5O5FOvWKPkAccidQGj2NL
-	vgq1B3Yh2QrLwYOoeAmaq3+PFPZ9gzXz+BznYXlEFESIUlTl5F4OyTOXEG3XfxX3
-	4h//ZrKhSl5/QKCu0giEn1y4ePgtopc9jxHJlH2rgN2HDTs3uUZwpKYMm0aTOelL
-	+G0eWdIGLzNy/ctPFUHlMHlDi9Ac/+62Oy2yolxbVlkak5frDqqLp+WGzjOA==
+	:subject:to:to; s=fm1; t=1716545714; x=1716632114; bh=Jz1+1D2d1p
+	sK1wBSigZM7fWPYh1CFZ0MGLvCLfumx6g=; b=bAH/hLFGttblCKqiibCXj7MNIA
+	5D5hc7e9v3aVNV3hxphdjznXWxeGcsbS5uouOv7hIjUeon4W1Tu7S6OA6sgC3+Bx
+	kVUx5TWEeBwknVB6g+EqHy2++OOXW8UdKCaDHssan1bvi8sPuK18szqA79dr0vjh
+	EpztsZ0v8Ty/44nTraLJ/ElvYtPL9Va6CuBNWRJMhsc6QJP5yMtJ+psnMoMF7Tbh
+	wG13++jgOgXC9Nf/6jKer3wZ+qXbnHmzRfGu5lxaPnGunceYP8KCxIAL4j/DeK2e
+	9ryXbJu1A5pEM6hCEkRIFisluxYqEe4X5RgnMZ/PR5rrH2YUbuUVEHw2Ud6A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716545710; x=1716632110; bh=7OvBFtuha0pupDO4wUMz+/Hn/NuW
-	EnYPmqGPuN4HX88=; b=WszER8jn9+o+m342ZPQ3DWE3stgqJiqPTkEMsHtFf5EX
-	DQopIVJCZWOOOS5dmKF6LkV9wyoXtaDwMGzSv1fOsw/o7xZeyXaZrfoDnrmtPTfL
-	ZlOQ5gJxZO8IiOwNkicI7LZq2wgfCNn3rU1qQo7oGb4jzUnOFviZR4D7WRA/1s86
-	E+Gp/0MljZoH3/ihahhnE7t32Qz9wvsSZzM9/Yz4lykaksdHId4vtW8C+iAv2XqX
-	BdwC23xRfcvCSoa0bcpeTC4Nxv4z8bd5+CyTb8FPEXbaPqthSjVAM5sFYLD9nWSg
-	bU1MQ7JbvbMTvA9Pyk06t4OiuYL0tq5Rmy391B81Mw==
-X-ME-Sender: <xms:rWhQZmxOF3PjUwlL_VFuqddUAnmgz4j3PwpASM2KghERNvWwXZF0xQ>
-    <xme:rWhQZiSI5yzEBT6kqR6ehMWwmgdTml_ZhMMOvsl2W-FEUGgjbTgyVSgXyFJwhqRDP
-    B-xr98-ZvciGFHKTQ>
-X-ME-Received: <xmr:rWhQZoWnddPOL-AUyPEA85s1xY06nm3Kj328Bis2lEFnWJHRMW1e61s10GNW4hOsFUGXUW9MzIe60dKUWqmBjDhgfJDvGaVSOWw3hj6QXcX9bKw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeikedgvdefucetufdoteggodetrfdotf
+	fm1; t=1716545714; x=1716632114; bh=Jz1+1D2d1psK1wBSigZM7fWPYh1C
+	FZ0MGLvCLfumx6g=; b=HmNI0cXMZlPMCmkMktaZ+6NRmD9f98/S8Gp/PGxQgEKQ
+	2/FpNHqV6nS5U1IoIAvLcu0BAEOgdFjOn+gylix+m+NN70H9GnXx/+0t89hAA4ot
+	QYVK2z5Xfc9rvQAFCCXbDA0A4tpj8yBaUmDcvbERyaADFquwrw2wBC8pocOuc4gE
+	ToT0koO/o4quhUMio7uOqMxSFJt8XiLT2uHKj3IQ4QOqj+YI0bAgEgYc6Eokzdv/
+	wB5sU7QjFi36gk39uunL0mPQSW3tCRz+dPowCkOmXtAKhCVCuXZv5QRs2zzePVH4
+	lL937Srxbj/CEig72sxrEhoGOZdU8sKiqtsC89ZMwQ==
+X-ME-Sender: <xms:smhQZoHF1MCt3rgaBfOl46a27LDss5KMQpIHiwWPUhnlZmOn03aJpQ>
+    <xme:smhQZhUa7Hxvbv3YbzGi9y6c_eiKeNir67_KLV5ektDStkDAt_e2Z3_ydJfuMpfbZ
+    qAVoxDzntJjdpq-Nw>
+X-ME-Received: <xmr:smhQZiJRsogeyq-xhKBemGbQS1EUjgKPEp8VbFIQztmOSz8afATTxKWlCdMnXftXMA0jOv-0NHL0hqidEBNAukK8JZnHJl2mF2Fj9t2nhzJjG_s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeikedgvdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:rWhQZsg9Gcff9aHK6exA3uDqmEuU14w9SQxIkSybyKm7NOngZDQE6w>
-    <xmx:rWhQZoDC5BMBV5WqDZw99V7QDR7wip4pYX2xp7Q6X6GeEyd8Zl-84A>
-    <xmx:rWhQZtJsDM6bRn3hAthQ7-KJ_k8V7t1M5no0y1z7NtAJ3fXMD7oFvA>
-    <xmx:rWhQZvCSRMWXstikYiK760vxO9bbUD_raldh70Rba198QKNsrBaQnA>
-    <xmx:rmhQZrPaMlVumcbTVdogpMJtIxp16ORJh_PUr8xlU4VfazWyU1hsSsaR>
+X-ME-Proxy: <xmx:smhQZqGDDPUCPZY7BQy1l3suAazzuTWnMwxEtKZV54dD3Yy9DKfYZQ>
+    <xmx:smhQZuV1Rsfv5rmRVYjtEjTGtbVndq3lgcJwkOOiBGdRBokNdTo0yg>
+    <xmx:smhQZtOM7uyP8FIkKeNubTVPs1H8NwWGNETFOqlbCupwXULqigTJdg>
+    <xmx:smhQZl0ZOXO3xg2xQHuxO59u0uogmfKHDnVJ-6XcPyzLiaRlJUfRuw>
+    <xmx:smhQZtSZXgE5ciWH3uusD2ulBzhcKmXUX7w2SYcki8zjEoRnFJrREtf2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 May 2024 06:15:08 -0400 (EDT)
+ 24 May 2024 06:15:13 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 1440e735 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 24 May 2024 10:15:05 +0000 (UTC)
-Date: Fri, 24 May 2024 12:15:06 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id b05be614 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 24 May 2024 10:15:10 +0000 (UTC)
+Date: Fri, 24 May 2024 12:15:11 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 8/9] refs: implement logic to migrate between ref storage
+Subject: [PATCH v2 9/9] builtin/refs: new command to migrate ref storage
  formats
-Message-ID: <4d3eb5ea896bffffbf28ab4865b69901cc9edee7.1716545235.git.ps@pks.im>
+Message-ID: <0df17a51b43e1e9d007328aad6457363876b2e1d.1716545235.git.ps@pks.im>
 References: <cover.1716451672.git.ps@pks.im>
  <cover.1716545235.git.ps@pks.im>
 Precedence: bulk
@@ -84,405 +84,526 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yfsOdOdGk3xD2+PG"
+	protocol="application/pgp-signature"; boundary="da5qmlKBV8Tu0PFk"
 Content-Disposition: inline
 In-Reply-To: <cover.1716545235.git.ps@pks.im>
 
 
---yfsOdOdGk3xD2+PG
+--da5qmlKBV8Tu0PFk
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-With the introduction of the new "reftable" backend, users may want to
-migrate repositories between the backends without having to recreate the
-whole repository. Add the logic to do so.
+Introduce a new command that allows the user to migrate a repository
+between ref storage formats. This new command is implemented as part of
+a new git-refs(1) executable. This is due to two reasons:
 
-The implementation is generic and works with arbitrary ref storage
-formats so that a backend does not need to implement any migration
-logic. It does have a few limitations though:
+  - There is no good place to put the migration logic in existing
+    commands. git-maintenance(1) felt unwieldy, and git-pack-refs(1) is
+    not the correct place to put it, either.
 
-  - We do not migrate repositories with worktrees, because worktrees
-    have separate ref storages. It makes the overall affair more complex
-    if we have to migrate multiple storages at once.
+  - I had it in my mind to create a new low-level command for accessing
+    refs for quite a while already. git-refs(1) is that command and can
+    over time grow more functionality relating to refs. This should help
+    discoverability by consolidating low-level access to refs into a
+    single executable.
 
-  - We do not migrate reflogs, because we have no interfaces to write
-    many reflog entries.
-
-  - We do not lock the repository for concurrent access, and thus
-    concurrent writes may make use end up with weird in-between states.
-    There is no way to fully lock the "files" backend for writes due to
-    its format, and thus we punt on this topic altogether and defer to
-    the user to avoid those from happening.
-
-In other words, this version is a minimum viable product for migrating a
-repository's ref storage format. It works alright for bare repos, which
-often have neither worktrees nor reflogs. But it will not work for many
-other repositories without some preparations. These limitations are not
-set into stone though, and ideally we will eventually address them over
-time.
-
-The logic is not yet used by anything, and thus there are no tests for
-it. Those will be added in the next commit.
+As mentioned in the preceding commit that introduces the ref storage
+format migration logic, the new `git refs migrate` command still has a
+bunch of restrictions. These restrictions are documented accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c | 284 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- refs.h |  18 ++++
- 2 files changed, 302 insertions(+)
+ .gitignore                 |   1 +
+ Documentation/git-refs.txt |  62 ++++++++++
+ Makefile                   |   1 +
+ builtin.h                  |   1 +
+ builtin/refs.c             |  75 ++++++++++++
+ git.c                      |   1 +
+ t/t1460-refs-migrate.sh    | 243 +++++++++++++++++++++++++++++++++++++
+ 7 files changed, 384 insertions(+)
+ create mode 100644 Documentation/git-refs.txt
+ create mode 100644 builtin/refs.c
+ create mode 100755 t/t1460-refs-migrate.sh
 
-diff --git a/refs.c b/refs.c
-index 9b112b0527..4ef2dae5e1 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2570,3 +2570,287 @@ int ref_update_check_old_target(const char *referen=
-t, struct ref_update *update,
- 			    referent, update->old_target);
- 	return -1;
- }
+diff --git a/.gitignore b/.gitignore
+index 612c0f6a0f..8caf3700c2 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -126,6 +126,7 @@
+ /git-rebase
+ /git-receive-pack
+ /git-reflog
++/git-refs
+ /git-remote
+ /git-remote-http
+ /git-remote-https
+diff --git a/Documentation/git-refs.txt b/Documentation/git-refs.txt
+new file mode 100644
+index 0000000000..3f73ad6aa6
+--- /dev/null
++++ b/Documentation/git-refs.txt
+@@ -0,0 +1,62 @@
++git-refs(1)
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 +
-+struct migration_data {
-+	struct ref_store *old_refs;
-+	struct ref_store *new_refs;
-+	struct ref_transaction *transaction;
-+	struct strbuf *errbuf;
-+	const char *refname;
-+};
++NAME
++----
 +
-+static int migrate_one_ref(const char *refname, const struct object_id *oi=
-d,
-+			   int flags, void *cb_data)
++git-refs - Low-level access to refs
++
++SYNOPSIS
++--------
++
++[verse]
++'git refs migrate' --ref-format=3D<format> [--dry-run]
++
++DESCRIPTION
++-----------
++
++This command provides low-level access to refs.
++
++COMMANDS
++--------
++
++migrate::
++	Migrate ref store between different formats.
++
++OPTIONS
++-------
++
++The following options are specific to 'git refs migrate':
++
++--ref-format=3D<format>::
++	The ref format to migrate the ref store to. Can be one of:
+++
++include::ref-storage-format.txt[]
++
++--dry-run::
++	Perform the migration, but do not modify the repository. The migrated
++	refs will be written into a separate directory that can be inspected
++	separately. The name of the directory will be reported on stdout. This
++	can be used to double check that the migration works as expected doing
++	performing the actual migration.
++
++KNOWN LIMITATIONS
++-----------------
++
++The ref format migration has several known limitations in its current form:
++
++* It is not possible to migrate repositories that have reflogs.
++
++* It is not possible to migrate repositories that have worktrees.
++
++* There is no way to block concurrent writes to the repository during an
++  ongoing migration. Concurrent writes can lead to an inconsistent migrated
++  state. Users are expected to block writes on a higher level. If your
++  repository is registered for scheduled maintenance, it is recommended to
++  unregister it first with git-maintenance(1).
++
++These limitations may eventually be lifted.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index cf504963c2..2d702b552c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1283,6 +1283,7 @@ BUILTIN_OBJS +=3D builtin/read-tree.o
+ BUILTIN_OBJS +=3D builtin/rebase.o
+ BUILTIN_OBJS +=3D builtin/receive-pack.o
+ BUILTIN_OBJS +=3D builtin/reflog.o
++BUILTIN_OBJS +=3D builtin/refs.o
+ BUILTIN_OBJS +=3D builtin/remote-ext.o
+ BUILTIN_OBJS +=3D builtin/remote-fd.o
+ BUILTIN_OBJS +=3D builtin/remote.o
+diff --git a/builtin.h b/builtin.h
+index 28280636da..7eda9b2486 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -207,6 +207,7 @@ int cmd_rebase(int argc, const char **argv, const char =
+*prefix);
+ int cmd_rebase__interactive(int argc, const char **argv, const char *prefi=
+x);
+ int cmd_receive_pack(int argc, const char **argv, const char *prefix);
+ int cmd_reflog(int argc, const char **argv, const char *prefix);
++int cmd_refs(int argc, const char **argv, const char *prefix);
+ int cmd_remote(int argc, const char **argv, const char *prefix);
+ int cmd_remote_ext(int argc, const char **argv, const char *prefix);
+ int cmd_remote_fd(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/refs.c b/builtin/refs.c
+new file mode 100644
+index 0000000000..02401afa4e
+--- /dev/null
++++ b/builtin/refs.c
+@@ -0,0 +1,75 @@
++#include "builtin.h"
++#include "parse-options.h"
++#include "refs.h"
++#include "repository.h"
++#include "strbuf.h"
++
++#define REFS_MIGRATE_USAGE \
++	N_("git refs migrate --ref-format=3D<format> [--dry-run]")
++
++static int cmd_refs_migrate(int argc, const char **argv, const char *prefi=
+x)
 +{
-+	struct migration_data *data =3D cb_data;
-+	struct strbuf symref_target =3D STRBUF_INIT;
-+	int ret;
++	const char * const migrate_usage[] =3D {
++		REFS_MIGRATE_USAGE,
++		NULL
++	};
++	const char *format_str =3D NULL;
++	enum ref_storage_format format;
++	unsigned int flags =3D 0;
++	struct option options[] =3D {
++		OPT_STRING_F(0, "ref-format", &format_str, N_("format"),
++			N_("specify the reference format to convert to"),
++			PARSE_OPT_NONEG),
++		OPT_BIT(0, "dry-run", &flags,
++			N_("perform a non-destructive dry-run"),
++			REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN),
++		OPT_END(),
++	};
++	struct strbuf errbuf =3D STRBUF_INIT;
++	int err;
 +
-+	if (flags & REF_ISSYMREF) {
-+		ret =3D refs_read_symbolic_ref(data->old_refs, refname, &symref_target);
-+		if (ret < 0)
-+			goto done;
++	argc =3D parse_options(argc, argv, prefix, options, migrate_usage, 0);
++	if (argc)
++		usage(_("too many arguments"));
++	if (!format_str)
++		usage(_("missing --ref-format=3D<format>"));
 +
-+		ret =3D ref_transaction_update(data->transaction, refname, NULL, null_oi=
-d(),
-+					     symref_target.buf, NULL,
-+					     REF_SKIP_CREATE_REFLOG | REF_NO_DEREF, NULL, data->errbuf);
-+		if (ret < 0)
-+			goto done;
-+	} else {
-+		ret =3D ref_transaction_create(data->transaction, refname, oid,
-+					     REF_SKIP_CREATE_REFLOG | REF_SKIP_OID_VERIFICATION,
-+					     NULL, data->errbuf);
-+		if (ret < 0)
-+			goto done;
++	format =3D ref_storage_format_by_name(format_str);
++	if (format =3D=3D REF_STORAGE_FORMAT_UNKNOWN) {
++		err =3D error(_("unknown ref storage format '%s'"), format_str);
++		goto out;
 +	}
 +
-+done:
-+	strbuf_release(&symref_target);
-+	return ret;
++	if (the_repository->ref_storage_format =3D=3D format) {
++		err =3D error(_("repository already uses '%s' format"),
++			    ref_storage_format_to_name(format));
++		goto out;
++	}
++
++	if (repo_migrate_ref_storage_format(the_repository, format, flags, &errbu=
+f) < 0) {
++		err =3D error("%s", errbuf.buf);
++		goto out;
++	}
++
++	err =3D 0;
++
++out:
++	strbuf_release(&errbuf);
++	return err;
 +}
 +
-+static int move_files(const char *from_path, const char *to_path, struct s=
-trbuf *errbuf)
++int cmd_refs(int argc, const char **argv, const char *prefix)
 +{
-+	struct strbuf from_buf =3D STRBUF_INIT, to_buf =3D STRBUF_INIT;
-+	size_t from_len, to_len;
-+	DIR *from_dir;
-+	int ret;
++	const char * const refs_usage[] =3D {
++		REFS_MIGRATE_USAGE,
++		NULL,
++	};
++	parse_opt_subcommand_fn *fn =3D NULL;
++	struct option opts[] =3D {
++		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
++		OPT_END(),
++	};
 +
-+	from_dir =3D opendir(from_path);
-+	if (!from_dir) {
-+		strbuf_addf(errbuf, "could not open source directory: '%s'", from_path);
-+		ret =3D -1;
-+		goto done;
-+	}
++	argc =3D parse_options(argc, argv, prefix, opts, refs_usage, 0);
++	return fn(argc, argv, prefix);
++}
+diff --git a/git.c b/git.c
+index 637c61ca9c..683bb69194 100644
+--- a/git.c
++++ b/git.c
+@@ -594,6 +594,7 @@ static struct cmd_struct commands[] =3D {
+ 	{ "rebase", cmd_rebase, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "receive-pack", cmd_receive_pack },
+ 	{ "reflog", cmd_reflog, RUN_SETUP },
++	{ "refs", cmd_refs, RUN_SETUP },
+ 	{ "remote", cmd_remote, RUN_SETUP },
+ 	{ "remote-ext", cmd_remote_ext, NO_PARSEOPT },
+ 	{ "remote-fd", cmd_remote_fd, NO_PARSEOPT },
+diff --git a/t/t1460-refs-migrate.sh b/t/t1460-refs-migrate.sh
+new file mode 100755
+index 0000000000..f7c0783d30
+--- /dev/null
++++ b/t/t1460-refs-migrate.sh
+@@ -0,0 +1,243 @@
++#!/bin/sh
 +
-+	strbuf_addstr(&from_buf, from_path);
-+	strbuf_complete(&from_buf, '/');
-+	from_len =3D from_buf.len;
++test_description=3D'migration of ref storage backends'
 +
-+	strbuf_addstr(&to_buf, to_path);
-+	strbuf_complete(&to_buf, '/');
-+	to_len =3D to_buf.len;
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 +
-+	while (1) {
-+		struct dirent *ent;
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
++. ./test-lib.sh
 +
-+		errno =3D 0;
-+		ent =3D readdir(from_dir);
-+		if (!ent)
-+			break;
++test_migration () {
++	git -C "$1" for-each-ref --include-root-refs \
++		--format=3D'%(refname) %(objectname) %(symref)' >expect &&
++	git -C "$1" refs migrate --ref-format=3D"$2" &&
++	git -C "$1" for-each-ref --include-root-refs \
++		--format=3D'%(refname) %(objectname) %(symref)' >actual &&
++	test_cmp expect actual &&
 +
-+		if (!strcmp(ent->d_name, ".") ||
-+		    !strcmp(ent->d_name, ".."))
-+			continue;
-+
-+		strbuf_setlen(&from_buf, from_len);
-+		strbuf_addstr(&from_buf, ent->d_name);
-+
-+		strbuf_setlen(&to_buf, to_len);
-+		strbuf_addstr(&to_buf, ent->d_name);
-+
-+		ret =3D rename(from_buf.buf, to_buf.buf);
-+		if (ret < 0) {
-+			strbuf_addf(errbuf, "could not link file '%s' to '%s': %s",
-+				    from_buf.buf, to_buf.buf, strerror(errno));
-+			goto done;
-+		}
-+	}
-+
-+	if (errno) {
-+		strbuf_addf(errbuf, "could not read entry from directory '%s': %s",
-+			    from_path, strerror(errno));
-+		ret =3D -1;
-+		goto done;
-+	}
-+
-+	ret =3D 0;
-+
-+done:
-+	strbuf_release(&from_buf);
-+	strbuf_release(&to_buf);
-+	closedir(from_dir);
-+	return ret;
++	git -C "$1" rev-parse --show-ref-format >actual &&
++	echo "$2" >expect &&
++	test_cmp expect actual
 +}
 +
-+static int count_reflogs(const char *reflog, void *payload)
-+{
-+	size_t *reflog_count =3D payload;
-+	(*reflog_count)++;
-+	return 0;
-+}
++test_expect_success 'setup' '
++	rm -rf .git &&
++	# The migration does not yet support reflogs.
++	git config --global core.logAllRefUpdates false
++'
 +
-+static int has_worktrees(void)
-+{
-+	struct worktree **worktrees =3D get_worktrees();
-+	int ret =3D 0;
-+	size_t i;
++test_expect_success "superfluous arguments" '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	test_must_fail git -C repo refs migrate foo 2>err &&
++	cat >expect <<-EOF &&
++	usage: too many arguments
++	EOF
++	test_cmp expect err
++'
 +
-+	for (i =3D 0; worktrees[i]; i++) {
-+		if (is_main_worktree(worktrees[i]))
-+			continue;
-+		ret =3D 1;
-+	}
++test_expect_success "missing ref storage format" '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	test_must_fail git -C repo refs migrate 2>err &&
++	cat >expect <<-EOF &&
++	usage: missing --ref-format=3D<format>
++	EOF
++	test_cmp expect err
++'
 +
-+	free_worktrees(worktrees);
-+	return ret;
-+}
++test_expect_success "unknown ref storage format" '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	test_must_fail git -C repo refs migrate \
++		--ref-format=3Dunknown 2>err &&
++	cat >expect <<-EOF &&
++	error: unknown ref storage format ${SQ}unknown${SQ}
++	EOF
++	test_cmp expect err
++'
 +
-+int repo_migrate_ref_storage_format(struct repository *repo,
-+				    enum ref_storage_format format,
-+				    unsigned int flags,
-+				    struct strbuf *errbuf)
-+{
-+	struct ref_store *old_refs =3D NULL, *new_refs =3D NULL;
-+	struct ref_transaction *transaction =3D NULL;
-+	struct strbuf buf =3D STRBUF_INIT;
-+	struct migration_data data;
-+	size_t reflog_count =3D 0;
-+	char *new_gitdir;
-+	int ret;
++ref_formats=3D"files reftable"
++for from_format in $ref_formats
++do
++	for to_format in $ref_formats
++	do
++		if test "$from_format" =3D "$to_format"
++		then
++			continue
++		fi
 +
-+	old_refs =3D get_main_ref_store(repo);
++		test_expect_success "$from_format: migration to same format fails" '
++			test_when_finished "rm -rf repo" &&
++			git init --ref-format=3D$from_format repo &&
++			test_must_fail git -C repo refs migrate \
++				--ref-format=3D$from_format 2>err &&
++			cat >expect <<-EOF &&
++			error: repository already uses ${SQ}$from_format${SQ} format
++			EOF
++			test_cmp expect err
++		'
 +
-+	/*
-+	 * The overall logic looks like this:
-+	 *
-+	 *   1. Set up a new temporary directory and initialize it with the new
-+	 *      format. This is where all refs will be migrated into.
-+	 *
-+	 *   2. Enumerate all refs and write them into the new ref storage.
-+	 *      This operation is safe as we do not yet modify the main
-+	 *      repository.
-+	 *
-+	 *   3. If we're in dry-run mode then we are done and can hand over the
-+	 *      directory to the caller for inspection. If not, we now start
-+	 *      with the destructive part.
-+	 *
-+	 *   4. Delete the old ref storage from disk. As we have a copy of refs
-+	 *      in the new ref storage it's okay(ish) if we now get interrupted
-+	 *      as there is an equivalent copy of all refs available.
-+	 *
-+	 *   5. Move the new ref storage files into place.
-+	 *
-+	 *   6. Change the repository format to the new ref format.
-+	 */
-+	strbuf_addf(&buf, "%s/%s", old_refs->gitdir, "ref_migration.XXXXXX");
-+	new_gitdir =3D mkdtemp(buf.buf);
-+	if (!new_gitdir) {
-+		strbuf_addf(errbuf, "cannot create migration directory: %s",
-+			    strerror(errno));
-+		ret =3D -1;
-+		goto done;
-+	}
++		test_expect_success "$from_format -> $to_format: migration with reflog f=
+ails" '
++			test_when_finished "rm -rf repo" &&
++			git init --ref-format=3D$from_format repo &&
++			test_config -C repo core.logAllRefUpdates true &&
++			test_commit -C repo logged &&
++			test_must_fail git -C repo refs migrate \
++				--ref-format=3D$to_format 2>err &&
++			cat >expect <<-EOF &&
++			error: migrating reflogs is not supported yet
++			EOF
++			test_cmp expect err
++		'
 +
-+	if (refs_for_each_reflog(old_refs, count_reflogs, &reflog_count) < 0) {
-+		strbuf_addstr(errbuf, "cannot count reflogs");
-+		ret =3D -1;
-+		goto done;
-+	}
-+	if (reflog_count) {
-+		strbuf_addstr(errbuf, "migrating reflogs is not supported yet");
-+		ret =3D -1;
-+		goto done;
-+	}
++		test_expect_success "$from_format -> $to_format: migration with worktree=
+ fails" '
++			test_when_finished "rm -rf repo" &&
++			git init --ref-format=3D$from_format repo &&
++			git -C repo worktree add wt &&
++			test_must_fail git -C repo refs migrate \
++				--ref-format=3D$to_format 2>err &&
++			cat >expect <<-EOF &&
++			error: migrating repositories with worktrees is not supported yet
++			EOF
++			test_cmp expect err
++		'
 +
-+	/*
-+	 * TODO: we should really be passing the caller-provided repository to
-+	 * `has_worktrees()`, but our worktree subsystem doesn't yet support
-+	 * that.
-+	 */
-+	if (has_worktrees()) {
-+		strbuf_addstr(errbuf, "migrating repositories with worktrees is not supp=
-orted yet");
-+		ret =3D -1;
-+		goto done;
-+	}
++		test_expect_success "$from_format -> $to_format: unborn HEAD" '
++			test_when_finished "rm -rf repo" &&
++			git init --ref-format=3D$from_format repo &&
++			test_migration repo "$to_format"
++		'
 +
-+	new_refs =3D ref_store_init(repo, format, new_gitdir,
-+				  REF_STORE_ALL_CAPS);
-+	ret =3D ref_store_create_on_disk(new_refs, 0, errbuf);
-+	if (ret < 0)
-+		goto done;
++		test_expect_success "$from_format -> $to_format: single ref" '
++			test_when_finished "rm -rf repo" &&
++			git init --ref-format=3D$from_format repo &&
++			test_commit -C repo initial &&
++			test_migration repo "$to_format"
++		'
 +
-+	transaction =3D ref_store_transaction_begin(new_refs, errbuf);
-+	if (!transaction)
-+		goto done;
++		test_expect_success "$from_format -> $to_format: bare repository" '
++			test_when_finished "rm -rf repo repo.git" &&
++			git init --ref-format=3D$from_format repo &&
++			test_commit -C repo initial &&
++			git clone --ref-format=3D$from_format --mirror repo repo.git &&
++			test_migration repo.git "$to_format"
++		'
 +
-+	data.old_refs =3D old_refs;
-+	data.new_refs =3D new_refs;
-+	data.transaction =3D transaction;
-+	data.errbuf =3D errbuf;
++		test_expect_success "$from_format -> $to_format: dangling symref" '
++			test_when_finished "rm -rf repo" &&
++			git init --ref-format=3D$from_format repo &&
++			test_commit -C repo initial &&
++			git -C repo symbolic-ref BROKEN_HEAD refs/heads/nonexistent &&
++			test_migration repo "$to_format" &&
++			echo refs/heads/nonexistent >expect &&
++			git -C repo symbolic-ref BROKEN_HEAD >actual &&
++			test_cmp expect actual
++		'
 +
-+	/*
-+	 * We need to use the internal `do_for_each_ref()` here so that we can
-+	 * also include broken refs and symrefs. These would otherwise be
-+	 * skipped silently.
-+	 *
-+	 * Ideally, we would do this call while locking the old ref storage
-+	 * such that there cannot be any concurrent modifications. We do not
-+	 * have the infra for that though, and the "files" backend does not
-+	 * allow for a central lock due to its design. It's thus on the user to
-+	 * ensure that there are no concurrent writes.
-+	 */
-+	ret =3D do_for_each_ref(old_refs, "", NULL, migrate_one_ref, 0,
-+			      DO_FOR_EACH_INCLUDE_ROOT_REFS | DO_FOR_EACH_INCLUDE_BROKEN,
-+			      &data);
-+	if (ret < 0)
-+		goto done;
++		test_expect_success "$from_format -> $to_format: broken ref" '
++			test_when_finished "rm -rf repo" &&
++			git init --ref-format=3D$from_format repo &&
++			test_commit -C repo initial &&
++			test-tool -C repo ref-store main update-ref "" refs/heads/broken \
++				"$(test_oid 001)" "$ZERO_OID" REF_SKIP_CREATE_REFLOG,REF_SKIP_OID_VERI=
+FICATION &&
++			test_migration repo "$to_format" &&
++			test_oid 001 >expect &&
++			git -C repo rev-parse refs/heads/broken >actual &&
++			test_cmp expect actual
++		'
 +
-+	/*
-+	 * TODO: we might want to migrate to `initial_ref_transaction_commit()`
-+	 * here, which is more efficient for the files backend because it would
-+	 * write new refs into the packed-refs file directly. At this point,
-+	 * the files backend doesn't handle pseudo-refs and symrefs correctly
-+	 * though, so this requires some more work.
-+	 */
-+	ret =3D ref_transaction_commit(transaction, errbuf);
-+	if (ret < 0)
-+		goto done;
++		test_expect_success "$from_format -> $to_format: pseudo-refs" '
++			test_when_finished "rm -rf repo" &&
++			git init --ref-format=3D$from_format repo &&
++			test_commit -C repo initial &&
++			git -C repo update-ref FOO_HEAD HEAD &&
++			test_migration repo "$to_format"
++		'
 +
-+	if (flags & REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN) {
-+		printf(_("Finished dry-run migration of refs, "
-+			 "the result can be found at '%s'\n"), new_gitdir);
-+		ret =3D 0;
-+		goto done;
-+	}
++		test_expect_success "$from_format -> $to_format: special refs are left a=
+lone" '
++			test_when_finished "rm -rf repo" &&
++			git init --ref-format=3D$from_format repo &&
++			test_commit -C repo initial &&
++			git -C repo rev-parse HEAD >repo/.git/MERGE_HEAD &&
++			git -C repo rev-parse MERGE_HEAD &&
++			test_migration repo "$to_format" &&
++			test_path_is_file repo/.git/MERGE_HEAD
++		'
 +
-+	/*
-+	 * Until now we were in the non-destructive phase, where we only
-+	 * populated the new ref store. From hereon though we are about
-+	 * to get hands by deleting the old ref store and then moving
-+	 * the new one into place.
-+	 *
-+	 * Assuming that there were no concurrent writes, the new ref
-+	 * store should have all information. So if we fail from hereon
-+	 * we may be in an in-between state, but it would still be able
-+	 * to recover by manually moving remaining files from the
-+	 * temporary migration directory into place.
-+	 */
-+	ret =3D ref_store_remove_on_disk(old_refs, errbuf);
-+	if (ret < 0)
-+		goto done;
++		test_expect_success "$from_format -> $to_format: a bunch of refs" '
++			test_when_finished "rm -rf repo" &&
++			git init --ref-format=3D$from_format repo &&
 +
-+	ret =3D move_files(new_gitdir, old_refs->gitdir, errbuf);
-+	if (ret < 0)
-+		goto done;
-+	rmdir(new_gitdir);
++			test_commit -C repo initial &&
++			cat >input <<-EOF &&
++			create FOO_HEAD HEAD
++			create refs/heads/branch-1 HEAD
++			create refs/heads/branch-2 HEAD
++			create refs/heads/branch-3 HEAD
++			create refs/heads/branch-4 HEAD
++			create refs/tags/tag-1 HEAD
++			create refs/tags/tag-2 HEAD
++			EOF
++			git -C repo update-ref --stdin <input &&
++			test_migration repo "$to_format"
++		'
 +
-+	/*
-+	 * We have migrated the repository, so we now need to adjust the
-+	 * repository format so that clients will use the new ref store.
-+	 * We also need to swap out the repository's main ref store.
-+	 */
-+	initialize_repository_version(hash_algo_by_ptr(repo->hash_algo), format, =
-1);
++		test_expect_success "$from_format -> $to_format: dry-run migration does =
+not modify repository" '
++			test_when_finished "rm -rf repo" &&
++			git init --ref-format=3D$from_format repo &&
++			test_commit -C repo initial &&
++			git -C repo refs migrate --dry-run \
++				--ref-format=3D$to_format >output &&
++			grep "Finished dry-run migration of refs" output &&
++			test_path_is_dir repo/.git/ref_migration.* &&
++			echo $from_format >expect &&
++			git -C repo rev-parse --show-ref-format >actual &&
++			test_cmp expect actual
++		'
++	done
++done
 +
-+	repo->refs_private =3D new_refs;
-+	ref_store_release(old_refs);
++test_expect_success 'migrating from files format deletes backend files' '
++	test_when_finished "rm -rf repo" &&
++	git init --ref-format=3Dfiles repo &&
++	test_commit -C repo first &&
++	git -C repo pack-refs --all &&
++	test_commit -C repo second &&
++	git -C repo update-ref ORIG_HEAD HEAD &&
++	git -C repo rev-parse HEAD >repo/.git/FETCH_HEAD &&
 +
-+	ret =3D 0;
++	test_path_is_file repo/.git/HEAD &&
++	test_path_is_file repo/.git/ORIG_HEAD &&
++	test_path_is_file repo/.git/refs/heads/main &&
++	test_path_is_file repo/.git/packed-refs &&
 +
-+done:
-+	if (ret && new_refs)
-+		ref_store_release(new_refs);
-+	ref_transaction_free(transaction);
-+	strbuf_release(&buf);
-+	return ret;
-+}
-diff --git a/refs.h b/refs.h
-index 61ee7b7a15..76d25df4de 100644
---- a/refs.h
-+++ b/refs.h
-@@ -1070,6 +1070,24 @@ int is_root_ref(const char *refname);
-  */
- int is_pseudo_ref(const char *refname);
-=20
-+/*
-+ * The following flags can be passed to `repo_migrate_ref_storage_format()=
-`:
-+ *
-+ *   - REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN: perform a dry-run migration
-+ *     without touching the main repository. The result will be written in=
-to a
-+ *     temporary ref storage directory.
-+ */
-+#define REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN (1 << 0)
++	test_migration repo reftable &&
 +
-+/*
-+ * Migrate the ref storage format used by the repository to the
-+ * specified one.
-+ */
-+int repo_migrate_ref_storage_format(struct repository *repo,
-+				    enum ref_storage_format format,
-+				    unsigned int flags,
-+				    struct strbuf *err);
++	echo "ref: refs/heads/.invalid" >expect &&
++	test_cmp expect repo/.git/HEAD &&
++	echo "this repository uses the reftable format" >expect &&
++	test_cmp expect repo/.git/refs/heads &&
++	test_path_is_file repo/.git/FETCH_HEAD &&
++	test_path_is_missing repo/.git/ORIG_HEAD &&
++	test_path_is_missing repo/.git/refs/heads/main &&
++	test_path_is_missing repo/.git/logs &&
++	test_path_is_missing repo/.git/packed-refs
++'
 +
- /*
-  * The following functions have been removed in Git v2.45 in favor of func=
-tions
-  * that receive a `ref_store` as parameter. The intent of this section is
++test_expect_success 'migrating from reftable format deletes backend files'=
+ '
++	test_when_finished "rm -rf repo" &&
++	git init --ref-format=3Dreftable repo &&
++	test_commit -C repo first &&
++
++	test_path_is_dir repo/.git/reftable &&
++	test_migration repo files &&
++
++	test_path_is_missing repo/.git/reftable &&
++	echo "ref: refs/heads/main" >expect &&
++	test_cmp expect repo/.git/HEAD &&
++	test_path_is_file repo/.git/refs/heads/main
++'
++
++test_done
 --=20
 2.45.1.216.g4365c6fcf9.dirty
 
 
---yfsOdOdGk3xD2+PG
+--da5qmlKBV8Tu0PFk
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQaKkACgkQVbJhu7ck
-PpT1QRAAhlIeCNpy4p6RteHJGXWWr4om3z6Qe3W0CLkwm1A0vUflFK0iiGv73C21
-VdLjcXtRdqLnQuIPsm4EkHIwgiyHOYW1tpGltFgMJ4eq7dmd8fsllwGTI5lMJCZo
-BUaDzTnJRtTV6rOavA/XPe3Y3gxnLgrOv6yjKrc3CPe0XMUmp18jvYb2wVWEt7q4
-0aVkhv6DuMlc0nmaxWATKN5RC1YtVbnLebM/+bk6CfNMFm6LIad3ybwiva/oTrjy
-4usO5fpCB6xOw3y5GCuS80hyJMdd6e4xeobvs8e1nRycxXqgEpd6cDSsmjWlu+cN
-h0Yf+QLcu1Ufa+Febqz3s5+wO1vITPFSKQDI6rzhAhoBUt5No4s+6mSxbJAC2w1T
-n+puD5vzhwNO4lU+TiRiSGVjokqZ12m+Dtm6NEFngfRcl+NNSKSlBbkcACCe0vUU
-eVWKDIbozOG49TOVGsRwKUhpx8FcIBT1B/I3z0SWhb01rGb7+X81EuScsS9l1EpD
-G7Dk+IPiUjnfGI65iX7LwxPLtiFBdIdG2jrGRYp1tuEdTe+pH9/j3iPpvmrd4P0R
-vSOdxNkX645aqrBVGSc/h3GV7HgizhEnyQ7FgXcFR6+QOBirN/9GXeIJvA2n+aLV
-eNmDhkaNRJRKOlqncQvvDTGLh45KJ5eyMA5nm0Z1RMYCKezBeOQ=
-=92QX
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQaK4ACgkQVbJhu7ck
+PpQ5AQ//UfdwulQGplccDjehyOEJ9ZjaQ6BXO+xRb41Bkzf78ow18t2iJIZLwozx
+7/J6lLo07B1Ik1WS3xGGpLf++uPl1Scxe9kS3nj7OLjucTW2YvSc72Q6Ac3JKm+Q
+hIqqk3zIdb3Qlrelj58HmbmHCewlnF+mD3CXtNQjo/TheiQIgKRIjRa/AU8AviOW
+uky/fYgrOQDYeljPxUUZm/6ICJzf3NuqoZXRGfbm3P0B6ERc86ZxebzvDUTdy8hp
+Qw0/SJ0W5D/qehqCLLbC54pTNgw9+6+zca03Nxvu5qYYYadU+sNRTaOOspXxP268
+WHJfN1OiyCLa/rKVOC64xPhRontpV+37xuEzjxE8TyCzKwib/iqRG0X0O4KUWR7Q
+UZi+olcRAZPp9wGA7mcKNA/7Rsl8TY7BAFd4mvmGR4iepFbs524DdgWpd3Q97sQU
+HNgmsdS7HHqraTg633hMrKAafaR+WgkKMjWsB5VttmXwxfDLHjed9gHDziTsyrFi
+UKRWygQdbFUmwuXkbRPG0OzV5AhybgpN0v0HSEiHGiuYLYF7LjO6Q+r5szmZLft5
+/Td/JUZwzmONQu+d83Uq7fyO5b/xPSUjAHnCniqeRmnh6nZ6yo8gkiTRx7kPafuQ
+WSUtaYg2AuqWn9LRRsOco3ZuLiI261SBVmTsaGdBJCFJbLpQ+YE=
+=D7Z2
 -----END PGP SIGNATURE-----
 
---yfsOdOdGk3xD2+PG--
+--da5qmlKBV8Tu0PFk--
