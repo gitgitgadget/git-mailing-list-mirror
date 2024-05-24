@@ -1,191 +1,130 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88108493
-	for <git@vger.kernel.org>; Fri, 24 May 2024 00:00:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062C336D
+	for <git@vger.kernel.org>; Fri, 24 May 2024 00:43:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716508836; cv=none; b=XwVgAi8q1NAUNB80Wj3AGQDwptguOmhZP3tb4a3VAiF0tUL6Z3ym4aVL6/4pYdVEKUXx66zNFMCPK0OY3qbdDcgfp/sLjvIsbVEqZmbvx7VDLo9kX9aYpMRmMxn4khACauhJw1YSwxQ++VZDSCjotq95g0p3l1TWlWkHIFDjk7E=
+	t=1716511410; cv=none; b=lwNz9SLd9M5m8zc8Rhp4eq8bJL4LTYneqo3RoEEM7bVbqZAy7s5JOQSabZx5V0gEDuP/kaMVTmpqPhoHzmwsrQgy/kC5zxk4k+X4BQzCKsBlTF8H2BU5GTDSyHIumtJTLelV1u67Cbnq6r/q0mvRJcbLjFKaDRwrda2x2WOzIFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716508836; c=relaxed/simple;
-	bh=Ur5CYVL+OVTXt+dZqGwgtCn+VLtv73i1TbPphlDAQI4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BKJDgwens/sAJvDWSYbANF0B+EONZ+76vzqr82dmWTz8dk3/MtJI+pgkJ2ld1r0jh+kxJxtzOjd3J7f4+deveTLM0R9DodVbjnlP5GpUhfPH//9j9rm/53dHwx4NKiR0oT8PgwYQC5Tn/cFX8BNsFcOzCGHU6UNomVLQXM/iBrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gu4gx0K1; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716511410; c=relaxed/simple;
+	bh=eqIVticb8ZAidfawbPKrw128glPzjRZjXLLkpA91Nnk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k3uHXUy/4uB/+eEMasAmLS9ZydsnpczKmgSSwX0Sh2PJaOfAwJtRP7BAu7mECkISHFXt/uvNh666cIkVwIdFpxSl2xx/JjS8lXrMO0fAtYwlqORcKbZvMYQL1DCNP70dASFnGx6fJVyLizO4kOZH4iTB6jSsCz84ZM1y949IQvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=aT0a9ZO0; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gu4gx0K1"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-6f8e9878514so329039b3a.1
-        for <git@vger.kernel.org>; Thu, 23 May 2024 17:00:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716508834; x=1717113634; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OqF14g+xzfp6dpH+QnGhFvHPX0wcZ8IzypPesrV3JjU=;
-        b=gu4gx0K1xi/btqkM03uBMi99BlIXx0g/S8b3sEypEGPuscshlwJCXsyMnUGCCj256M
-         Y634wVedU9LJwlxGzJaM7MCdO8UxPYzas9q2pNSxPyPqJQ2JDeqp/gq8+co6lYZ2BKoU
-         Jk7ic4shYS9EO4upS3nfwP51FhDe9cPGUW7MfRxFs5iRXMqKsBLIQmXW+Yhia4Uksn7t
-         2cy1NaBA1vkMZc96YwJB6lP3I15BkRbOHDjpOJifXKzeTPSkM1TN4BSMtKm6fJAq2zKo
-         1DozQAQ5PX/TR2nGNjLi1CQDTxyX7ZvKAT8nJi9XILd4gqzB7DPWNLc7gpydYscjfPB7
-         gASQ==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="aT0a9ZO0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1716511407;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=aYlZsxS5iN67xzP1FPdX/+cfEIa5xyOtKxuCZAnoSgw=;
+	b=aT0a9ZO0BZhzjXhE9styUf+lsIPxB9QzXrEDPhDG/4fQFOAKlOm82kkLNB3JlMLrTYs1OP
+	Whqn33N3mRNB81UEMS7NIbUGe8SFZyqVI6rac+PADpQbrDnbvRImU7MGXrU+P6eLxAgEcM
+	AxUz4U6z84jeni/Z093brdUyE4TuJIc=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-75-48ndWspDOOq7WweaOeTn5g-1; Thu, 23 May 2024 20:43:26 -0400
+X-MC-Unique: 48ndWspDOOq7WweaOeTn5g-1
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-792c365cb16so78303885a.3
+        for <git@vger.kernel.org>; Thu, 23 May 2024 17:43:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716508834; x=1717113634;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OqF14g+xzfp6dpH+QnGhFvHPX0wcZ8IzypPesrV3JjU=;
-        b=SPItyiVPawt1xhwTjds2drkUETkNqQ85sndDny+cFPKzFxfdnj1AF0e/qAi2LjE7YM
-         ucuI0gMW+IrdbIcDPqyZ8orceUd8QzIeybyf/DnMi9MTYkLINWZUTkdpyy3BiWvb8Pys
-         UBl5C2xE1eGm6HVfHLq6x+lYRhJCtzMVvUfKoqT+szv+Ia8WjvudcJ2cqZe7tw3LHKdX
-         /F00swbyA1hUaThnINmd8idKiW513/JgUd1dDTJJjysyk/KJyoh5lj2ol7slGOa2U6Ih
-         mlmeIvZW3HFAYwQ+zMldf7gGk7iW6qLcJW8yKrBhk4ETvVElV8VYkEXC4yTn5QMEX4Pu
-         xvgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUfO4WuUNEq9eHF824hEZRwvYFbkgcun0nj4KoLWRLdWmqHz1g65TSmVeOJpRu4n4kyLr0FoUBfkaKKXA2qZxd40U26
-X-Gm-Message-State: AOJu0YyT7C8IjGaWIE2sLGw4QkDrQByqLG/kN8sJvucKFlTouUWrIKqj
-	K+Y6lRnRWPE84tcLkajOcMeARYdEiLhmodIjNwBhcoKpSWOkUN/iWAVZrzaR1Po=
-X-Google-Smtp-Source: AGHT+IF7AdXNW4O/xc9vM0QkBZvQDVpjqPYsBLspEBbgKK7Ia/ed9gl9WutAGsHDNAIeRZT1yjGgZg==
-X-Received: by 2002:a05:6a20:2446:b0:1af:6911:7ff4 with SMTP id adf61e73a8af0-1b212cc727amr1253181637.7.1716508833917;
-        Thu, 23 May 2024 17:00:33 -0700 (PDT)
-Received: from localhost.localdomain ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-6f8fc05ab4asm165454b3a.59.2024.05.23.17.00.30
+        d=1e100.net; s=20230601; t=1716511405; x=1717116205;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aYlZsxS5iN67xzP1FPdX/+cfEIa5xyOtKxuCZAnoSgw=;
+        b=EbVPC3aN77Bmw6ZqdlPf/bPQ95ztF8NNog4RBPiJMN8gIOwIu0bxqvjSGRCCQVtxnw
+         PvHmauDpNPeOM4KXiQ/bLJ8gZ2oXJ7vXu7ewA+jnJUCjoxmeqLK5LAnGkSjGq79Gn+xI
+         /fJSJSMAWEpjry5sUQCzrroLtq3fHmO8yF5fpnvw191TiaLzyNeO3Bn/P1h1ORq7vC5+
+         82yRhTi0oZ8OIvY9hbtgWyfnSblZviJphqCkFxmv0OkFpVQLBUMAor3Fj0UXOfAJ9+Y1
+         HRMvZyS1/ytBR6wy4l7JkOrVqOwJu7EURBwkzRIb5j19xt23aX0EI8+RqruOoP83Z8P9
+         glqQ==
+X-Gm-Message-State: AOJu0Yxy3jeInm2OnvgwwcI2YJ9yljmDXJ69j6MRDVE7YQx84cI8cOPg
+	L5nvZVd+lTsrMoeV8ZDt7oQtFA812QdxdvYsKHqNq3dsljnUoP56PYqk0HggsQ5uBK8VIAcFC2z
+	6aZgVnD7FWuOAkpLw9D4R2OcbrWt62EyPSvpV4OzpjbUn2WQ7/mb2bCeoHA==
+X-Received: by 2002:a05:620a:94a:b0:794:8de6:505f with SMTP id af79cd13be357-794ab1233e2mr74954285a.65.1716511405585;
+        Thu, 23 May 2024 17:43:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEJh1w/JKvotj1ISPWV2lTgF+UxVm/o0ckuMYv+vQZHTINT070S8MJm0tEpJkOPw5iqm/vk/Q==
+X-Received: by 2002:a05:620a:94a:b0:794:8de6:505f with SMTP id af79cd13be357-794ab1233e2mr74953185a.65.1716511405086;
+        Thu, 23 May 2024 17:43:25 -0700 (PDT)
+Received: from fedora19.localdomain (203-12-11-234.dyn.launtel.net.au. [203.12.11.234])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-794abd063adsm14899885a.78.2024.05.23.17.43.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 May 2024 17:00:33 -0700 (PDT)
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: ach.lumap@gmail.com
-Cc: chriscool@tuxfamily.org,
-	christian.couder@gmail.com,
-	git@vger.kernel.org,
-	gitster@pobox.com,
-	kaartic.sivaraam@gmail.com,
-	ps@pks.im
-Subject: [PATCH v3 3/3] t/: port helper/test-sha256.c to unit-tests/t-hash.c
-Date: Fri, 24 May 2024 05:29:45 +0530
-Message-ID: <20240523235945.26833-4-shyamthakkar001@gmail.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240523235945.26833-1-shyamthakkar001@gmail.com>
-References: <20240229054004.3807-1-ach.lumap@gmail.com>
- <20240523235945.26833-1-shyamthakkar001@gmail.com>
+        Thu, 23 May 2024 17:43:24 -0700 (PDT)
+Date: Fri, 24 May 2024 10:43:19 +1000
+From: Ian Wienand <iwienand@redhat.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] run-command: show prepared command
+Message-ID: <Zk_ip35jHUj_5M94@fedora19.localdomain>
+References: <20240523042143.1220862-1-iwienand@redhat.com>
+ <20240523043806.1223032-1-iwienand@redhat.com>
+ <20240523043806.1223032-3-iwienand@redhat.com>
+ <xmqqpltcwnqm.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqpltcwnqm.fsf@gitster.g>
 
-t/helper/test-sha256 and t/t0015-hash test the hash implementation of
-SHA-256 in Git with basic SHA-256 hash values. Port them to the new
-unit testing framework for better debugging, simplicity and faster
-runtime. The necessary building blocks are already implemented in
-t-hash in the previous commit which ported test-sha1.
+On Thu, May 23, 2024 at 08:29:21AM -0700, Junio C Hamano wrote:
+> > For example, this can be very helpful when an alias is giving you an
+> > unexpected syntax error that is very difficult figure out from only
+> > the run_command trace point, e.g.
+> >
+> > test = "!for i in 1 2 3; do echo $i; done"
+> >
+> > will fail if there is an argument given, we can see why from the
+> > output.
+> 
+> ... if the reader truly understands "the alias gives the command and
+> its leading arguments, to which the invocation can supply even more
+> arguments", the reader wouldn't be writing such a command line to
+> begin with, no?
+> 
+> So I find the example a bit suboptimal.  Hopefully additional
+> explanation in patch 2/3 stressed on that point well enough with
+> much more stress than it talks about the implementation detail of
+> using "sh -c" and "$@", so that readers who read it would not even
+> dream of writing such an alias in the first place.
 
-The 'sha256' subcommand of test-tool is still not removed, because it
-is used by pack_trailer() in lib-pack.sh, which is used in many tests
-of the t53** series.
+Right; I was seeing this in a more convoluted way via our tool but
+essentially the same issue.  I was just looking for the simplest thing
+that also gave the syntax error output, which I thought was something
+people might search for (the "unexpected "$@" stuff).
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Co-authored-by: Achu Luma <ach.lumap@gmail.com>
-Signed-off-by: Achu Luma <ach.lumap@gmail.com>
-Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
----
- t/t0015-hash.sh       | 34 ----------------------------------
- t/unit-tests/t-hash.c | 25 +++++++++++++++++++++++++
- 2 files changed, 25 insertions(+), 34 deletions(-)
- delete mode 100755 t/t0015-hash.sh
+Should I just leave as is?
 
-diff --git a/t/t0015-hash.sh b/t/t0015-hash.sh
-deleted file mode 100755
-index 2264e702d5..0000000000
---- a/t/t0015-hash.sh
-+++ /dev/null
-@@ -1,34 +0,0 @@
--#!/bin/sh
--
--test_description='test basic hash implementation'
--
--TEST_PASSES_SANITIZE_LEAK=true
--. ./test-lib.sh
--
--test_expect_success 'test basic SHA-256 hash values' '
--	test-tool sha256 </dev/null >actual &&
--	grep e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 actual &&
--	printf "a" | test-tool sha256 >actual &&
--	grep ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb actual &&
--	printf "abc" | test-tool sha256 >actual &&
--	grep ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad actual &&
--	printf "message digest" | test-tool sha256 >actual &&
--	grep f7846f55cf23e14eebeab5b4e1550cad5b509e3348fbc4efa3a1413d393cb650 actual &&
--	printf "abcdefghijklmnopqrstuvwxyz" | test-tool sha256 >actual &&
--	grep 71c480df93d6ae2f1efad1447c66c9525e316218cf51fc8d9ed832f2daf18b73 actual &&
--	# Try to exercise the chunking code by turning autoflush on.
--	perl -e "$| = 1; print q{aaaaaaaaaa} for 1..100000;" |
--		test-tool sha256 >actual &&
--	grep cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0 actual &&
--	perl -e "$| = 1; print q{abcdefghijklmnopqrstuvwxyz} for 1..100000;" |
--		test-tool sha256 >actual &&
--	grep e406ba321ca712ad35a698bf0af8d61fc4dc40eca6bdcea4697962724ccbde35 actual &&
--	printf "blob 0\0" | test-tool sha256 >actual &&
--	grep 473a0f4c3be8a93681a267e3b1e9a7dcda1185436fe141f7749120a303721813 actual &&
--	printf "blob 3\0abc" | test-tool sha256 >actual &&
--	grep c1cf6e465077930e88dc5136641d402f72a229ddd996f627d60e9639eaba35a6 actual &&
--	printf "tree 0\0" | test-tool sha256 >actual &&
--	grep 6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321 actual
--'
--
--test_done
-diff --git a/t/unit-tests/t-hash.c b/t/unit-tests/t-hash.c
-index 89dfea9cc1..0f86cd3730 100644
---- a/t/unit-tests/t-hash.c
-+++ b/t/unit-tests/t-hash.c
-@@ -32,11 +32,24 @@ static void check_hash_data(const void *data, size_t data_length,
- 	TEST(check_hash_data(literal, (sizeof(literal) - 1), expected, GIT_HASH_SHA1), \
- 	     "SHA1 (%s) works", #literal)
- 
-+
-+/* Works with a NUL terminated string. Doesn't work if it should contain a NUL  character. */
-+#define TEST_SHA256_STR(data, expected) \
-+	TEST(check_hash_data(data, strlen(data), expected, GIT_HASH_SHA256), \
-+	     "SHA256 (%s) works", #data)
-+
-+/* Only works with a literal string, useful when it contains a NUL character. */
-+#define TEST_SHA256_LITERAL(literal, expected) \
-+	TEST(check_hash_data(literal, (sizeof(literal) - 1), expected, GIT_HASH_SHA256), \
-+	     "SHA256 (%s) works", #literal)
-+
- int cmd_main(int argc, const char **argv)
- {
- 	struct strbuf aaaaaaaaaa_100000 = STRBUF_INIT;
-+	struct strbuf alphabet_100000 = STRBUF_INIT;
- 
- 	strbuf_addstrings(&aaaaaaaaaa_100000, "aaaaaaaaaa", 100000);
-+	strbuf_addstrings(&alphabet_100000, "abcdefghijklmnopqrstuvwxyz", 100000);
- 
- 	TEST_SHA1_STR("", "da39a3ee5e6b4b0d3255bfef95601890afd80709");
- 	TEST_SHA1_STR("a", "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8");
-@@ -48,7 +61,19 @@ int cmd_main(int argc, const char **argv)
- 	TEST_SHA1_LITERAL("blob 3\0abc", "f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f");
- 	TEST_SHA1_LITERAL("tree 0\0", "4b825dc642cb6eb9a060e54bf8d69288fbee4904");
- 
-+	TEST_SHA256_STR("", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
-+	TEST_SHA256_STR("a", "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb");
-+	TEST_SHA256_STR("abc", "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
-+	TEST_SHA256_STR("message digest", "f7846f55cf23e14eebeab5b4e1550cad5b509e3348fbc4efa3a1413d393cb650");
-+	TEST_SHA256_STR("abcdefghijklmnopqrstuvwxyz", "71c480df93d6ae2f1efad1447c66c9525e316218cf51fc8d9ed832f2daf18b73");
-+	TEST_SHA256_STR(aaaaaaaaaa_100000.buf, "cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0");
-+	TEST_SHA256_STR(alphabet_100000.buf, "e406ba321ca712ad35a698bf0af8d61fc4dc40eca6bdcea4697962724ccbde35");
-+	TEST_SHA256_LITERAL("blob 0\0", "473a0f4c3be8a93681a267e3b1e9a7dcda1185436fe141f7749120a303721813");
-+	TEST_SHA256_LITERAL("blob 3\0abc", "c1cf6e465077930e88dc5136641d402f72a229ddd996f627d60e9639eaba35a6");
-+	TEST_SHA256_LITERAL("tree 0\0", "6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321");
-+
- 	strbuf_release(&aaaaaaaaaa_100000);
-+	strbuf_release(&alphabet_100000);
- 
- 	return test_done();
- }
--- 
-2.45.1
+> > +test_expect_success 'tracing a shell alias with arguments shows full prepared command' '
+> > +	git config alias.echo "!echo \$*" &&
+> > +	env GIT_TRACE=1 git echo argument 2>output &&
+> > +	cp output /tmp/output &&
+> > +	test_grep "^trace: prepare_cmd: /bin/sh -c '\''echo \$\* \"\$@\"" output
+> > +'
+> 
+> This is probably too specific search string, I suspect, given that
+> runcommand.c:prepare_shell_cmd() uses SHELL_PATH or "sh" so if your
+> SHELL_PATH is anything but /bin/sh (or if you are unlucky enough to
+> be running this test on Windows), the pattern would not match.
+> You'd want to loosen it a bit, perhaps with "/bin/sh" -> ".*", as
+> the rest of the output are expected to stay constant.
+
+OK, should this perhaps just look for '^trace: prepare_cmd.*'?
+
+My initial thinking was to enforce seeing the "$@" appended, but
+perhaps that is implementation details that don't really need to be
+covered; the interesting thing is we show the person tracing the full
+command as constructed, so this is useful just to ensure the
+tracepoint remains in place?
+
+-i
 
