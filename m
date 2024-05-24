@@ -1,179 +1,188 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12E8749C
-	for <git@vger.kernel.org>; Fri, 24 May 2024 06:58:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CCA128374
+	for <git@vger.kernel.org>; Fri, 24 May 2024 07:07:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716533907; cv=none; b=mc0VdbAjTvl64FR51bDxtg2lW19/RB9GwsH9k4WItjQtCVHxyMC2LCEdbu4uF2qpeDH4+HOX8nixEaAT4x6d8lXvJUwaRQDtSFn4pewulY2kccPZEQIn8u0XASB+91diRFk4C9k8F3OVNd+upPfomfidDd/o7qjrjSsA2NQo4HQ=
+	t=1716534432; cv=none; b=eyerqzH7rq5rdNd5VfAqrH42opGFSh74O2sDIURUZu4k4lyVZPoJBHH/dRG10Hc/15iPKI4gpUMsBRHSoQ3Eqnk0YMl/Bv1I4fC0E/BDXq/TvApinsuaUryN2VWcNJDSkAWL/W+CyuoiBARa9PKUuT9nfqtTKQuEe9Na6dipiac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716533907; c=relaxed/simple;
-	bh=QQXfnFrG/IFCOwoB4JX9Ppl/T6k06/9e846nudGlI0Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kEjd5LPnnMPQU2DnRFoFNhY7JzH5XnRPSyvhB94r19xaHwKsxICrd7nx35dp2Wwub7hjftu05OpTosBd7G1MUrmoRsAaTrLUanJ6XBlKffJzVBNGr6e94E9p2bUWbFiYkbLuCBf6gxhDe33oMpJpPEzeub/oPhiK0tohte98tYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=De7a2kxd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cDKcNToD; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1716534432; c=relaxed/simple;
+	bh=hx36JXMUGIcqZ4YWn2lybP65theARDfhQXcoLekpPss=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=i8CDz1segclqAh2RPUQCO24x9HCUlQ9nTikAUPu1DePXG+5Prm51xDMlZLYGXRq9vtektfG7A8s+ErP78+EKtv4aIEXLoGUPAaywmJfrd1ykNpyP6k94yvpxLcy0n/zQ9M/6Zn4t0mSzi2E69+LEeiki7+DU/ge0jXYklZJI+08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=DaVMa6XS; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="De7a2kxd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cDKcNToD"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 13D9111401C4;
-	Fri, 24 May 2024 02:58:25 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 24 May 2024 02:58:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716533905; x=1716620305; bh=r0wY7mCZYL
-	KemOrOZd4iA9X7eVTc9Q4zEK9W+qPwAMQ=; b=De7a2kxd61y6GAMfLIzzLhnOTz
-	rQ7D5Hm9Z0/x+4bUitu14WYjPiawgJg/8/tfArkvPcckYnH9m3p3dpNfsPx89hKm
-	tu/n5qEuK1rfJhU6VVd4WECEBK231Zs7gWQ0bNl/uTFBo2LsCN8D5fivLcfjXJYZ
-	IP9FSY7unAoMdwRL/E+laTzs3Ocj3JGGmNZzDfTuj6QRiRu7dw6Z9zPOeqRULLe4
-	wvJ/fkgbH22ubbnIPugqcW7umbXAGOYUlvIxDB8gsYveUTAe6NR60lRSZGYEmVaJ
-	U6gOoMqfwZ0ZihhQnHS19vYda5wMY6xkUla17tZ1oP9eS6v4O8sfN/n/sLxw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716533905; x=1716620305; bh=r0wY7mCZYLKemOrOZd4iA9X7eVTc
-	9Q4zEK9W+qPwAMQ=; b=cDKcNToDP4SWVo2jUOH50reCIJQKo4x0oTqBnND9cpOf
-	gdabLrLAzZkaROcMsOjTdv5sH6ZqKARdC25F9bs67d3fJ/W9XCKN/C/VDZ5CKtxZ
-	Wih8t1gM+R/mQomFWvRvA+M6ytTqS9QOVPWfk2r8qTixikyURm6PCYh2Venm3o1m
-	IcADsz5hLmxSz2twhitC/OyyEDl1/HJ5VDoL9nTPAXoKcva5o/vo6jErXch9/V0b
-	FAEeYt4ut/eH5sk9Bpyy1rNJczLaa/qaK1kbPhrO2a87bHv3jPhaCRFU3WjbKMF6
-	B2XZYEhTWGx8V8pkAWp9BRUJGEW8iZMgVecDhtxfLw==
-X-ME-Sender: <xms:kDpQZhXpZVzfBleRweulchA0TP3k8wvmInCsGkE4wJgeZtc9UrUpgg>
-    <xme:kDpQZhk4H0QLSUJit-F2dCKD6zbedfz2xYLfBOmrjX-zJHPPzPSYvIoUZfjAWOrQg
-    D9sLqYWFKG6ujvXCA>
-X-ME-Received: <xmr:kDpQZtawHWqkBiLDD13oKnrR7mksUolckFy01XTbatAZgxrFtkmwqynl_f_6o-Q_tElbaNbWr1tG6AcNLWnigDR1U-S6dk4Z5tRMbBaHVGEly9g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeijedgudduvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtudenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepfedvleefueetgeeitdekheelffekke
-    fgffduhfduvdefffdtheekiefhkeejkeehnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:kDpQZkX7r7mcmr3WPGj9voQJZHzGPCHgHlJgTLwdzsecK2CObhrxoA>
-    <xmx:kDpQZrm-jeGuAOQK6qd9vAHZ2fc2wA-cKfL1eds_HmRM3Umzvs69YQ>
-    <xmx:kDpQZhcHJyR1j-QxbkogMSG7BtUEnjMzMt_mADfPbs7JNFZYwxOI1A>
-    <xmx:kDpQZlFAzmJAeFh2Y05YFPs91qlCEGMXyG1VjUYAJDcAijbNzdh9mQ>
-    <xmx:kTpQZgyKQlHnY3LeP2olc3dvtezvQN-hJ0lBA_3jgv8vBiLllLJOrJPF>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 May 2024 02:58:24 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id f6532b62 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 24 May 2024 06:58:21 +0000 (UTC)
-Date: Fri, 24 May 2024 08:58:21 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 12/20] config: plug various memory leaks
-Message-ID: <ZlA6jZmKomOu1p_S@tanuki>
-References: <cover.1716465556.git.ps@pks.im>
- <b2f8878b55564c4bf4848642e419c44c1a9d9005.1716465556.git.ps@pks.im>
- <xmqq7cfkv4cr.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="DaVMa6XS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1716534428;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=YSuHnSICHKzHAs9yzEhLvdvURpho0eCcYAvYMJfMAnw=;
+	b=DaVMa6XSWM5ipXVv3+NONe53inr8f3LfWELTnT4yPFhrmGaRRY5WBXibNW4VULjvfbrnJo
+	rSJUzc8RW8nzj0kxYroZMNNpbT90PK5dazM+Qt5R4qLCzH9hdqUoLk/7jNOEk4s/fbkBv+
+	agifJ6Pi3ApDSLIRBZHJG2b0SHpf4VI=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-345-yQZc1hZ6MjGVrNPaRbCEkA-1; Fri, 24 May 2024 03:07:06 -0400
+X-MC-Unique: yQZc1hZ6MjGVrNPaRbCEkA-1
+Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-3c9a56ffb64so1580894b6e.2
+        for <git@vger.kernel.org>; Fri, 24 May 2024 00:07:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716534425; x=1717139225;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YSuHnSICHKzHAs9yzEhLvdvURpho0eCcYAvYMJfMAnw=;
+        b=VHgEbJjhBY9Q1cBFpAGbUftCS05v+DI4gufI3cUMrQ4twrdSRQzg/ZtpBl9ZAqylyU
+         YpzNNNhlmS+VQ+huMDX30cpGFyAN+5OiXYwJC2PYBs9gKuSHTW+iiOnaXDIqHHlfTUEz
+         ohSnsPKhSzwmCqqbeugZ5GScbApuM/54pR1YZYsP9TPZGx7RJHXYMR5c7KceLzFjuQHM
+         VXYW9ib7UDdk+gC1qGz9EOb2kXES1HzRUNDVA+WAwXklAyelpvp0CXiEmW4PslwLlqlP
+         XSoYNLkZUTon6+ihJVt0Oszepjus6ufy0RT15AQWODk5I475UVA8+wloWwsCQKjo3295
+         beng==
+X-Gm-Message-State: AOJu0Yz62IJEKDtLvTGfxYlPg1re+iqM/kWlwFGR8glOsumrfRKzhitc
+	x6hZZd69EyDB3SHyxuq0StcXSUmOXd08I3I3DYpHqylnmelm5fE9ENchGaLgoD8shP4yameDdT6
+	Sz72s/i+spz+LuiWq6KLN4LGUsgNCFMPeaqK6WyXnTlHClbRn57FPVG1n6vlq44XFHdbpjm0CY/
+	FgggqDQZaPNaheOot6bWxsS1mTLbPDDdudPQ==
+X-Received: by 2002:a05:6808:285:b0:3c9:73a2:6862 with SMTP id 5614622812f47-3d1a6113869mr1609412b6e.31.1716534425510;
+        Fri, 24 May 2024 00:07:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFF0Y1VZSj95rTRzXgqmfaOA5tyDBvy0lg0hwocSIA3xfAOD78iKGwRvsFsivbShqg/dKgx4w==
+X-Received: by 2002:a05:6808:285:b0:3c9:73a2:6862 with SMTP id 5614622812f47-3d1a6113869mr1609383b6e.31.1716534424861;
+        Fri, 24 May 2024 00:07:04 -0700 (PDT)
+Received: from fedora19.redhat.com (203-12-11-234.dyn.launtel.net.au. [203.12.11.234])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-794abd0839esm40078685a.83.2024.05.24.00.07.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 May 2024 00:07:04 -0700 (PDT)
+From: Ian Wienand <iwienand@redhat.com>
+To: git@vger.kernel.org
+Cc: Ian Wienand <iwienand@redhat.com>
+Subject: [PATCH] alias: pass --help through to shell alias
+Date: Fri, 24 May 2024 17:04:14 +1000
+Message-ID: <20240524070623.1344636-2-iwienand@redhat.com>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="B5qbT9uZ5EyXiLb9"
-Content-Disposition: inline
-In-Reply-To: <xmqq7cfkv4cr.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
+In trying to make some aliases more consistent in an internal tool, I
+implemented both -h/--help in the underlying command for a shell
+alias, and was a bit surprised when "git <alias> -h" worked but "git
+<alias> --help" didn't.
 
---B5qbT9uZ5EyXiLb9
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In the "-h" case in git.c:handle_alias() we have a little check for
+"-h" which pre-prints the "<alias> is aliased to..." line and then
+continues to run the alias.
 
-On Thu, May 23, 2024 at 10:13:24AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/t/t4210-log-i18n.sh b/t/t4210-log-i18n.sh
-> > index 75216f19ce..7120030b5c 100755
-> > --- a/t/t4210-log-i18n.sh
-> > +++ b/t/t4210-log-i18n.sh
-> > @@ -1,6 +1,8 @@
-> >  #!/bin/sh
-> > =20
-> >  test_description=3D'test log with i18n features'
-> > +
-> > +TEST_PASSES_SANITIZE_LEAK=3Dtrue
-> >  . ./lib-gettext.sh
-> > =20
-> >  # two forms of =E9
->=20
-> You've been sending your patches as "multipart/signed" (which by the
-> way was cumbersome enough for me but that is primarily the problem
-> with Emacs/GNUS and we should handle multipart/signed well), whose
-> header reads like so:
->=20
-> Content-Type: multipart/signed; micalg=3Dpgp-sha512;
-> 	protocol=3D"application/pgp-signature"; boundary=3D"ovDSRLSkA00eIgbN"
+However in the "--help" case we fall into the logic that turns "git
+cmd --help" into "git help cmd"
 
-Well, signing is of dubious value anyway, but it does have the upside of
-stressing our toolchain a bit more and thus making it (hopefully) more
-robust :) If it bothers you, then I can probably stop doing so. But for
-now I will keep it as-is.
+help.c contains a check to just print the alias mapping if called as
+"git help <alias>", but if called as "git <alias> --help", will
+redirect to the help of the aliased-command.  Since a shell alias does
+not have a 1:1 mapping with an internal command, the current check
+prints the alias mapping and simply exits in that case (causing my
+alias script "--help" command to never trigger).
 
-> The "message" part in it says that it is encoded in iso-8859-1:
->=20
->     --ovDSRLSkA00eIgbN
->     Content-Type: text/plain; charset=3Diso-8859-1
->     Content-Disposition: inline
->     Content-Transfer-Encoding: quoted-printable
->=20
->     ...
->     diff --git a/t/t4210-log-i18n.sh b/t/t4210-log-i18n.sh
->     index 75216f19ce..7120030b5c 100755
->     --- a/t/t4210-log-i18n.sh
->     +++ b/t/t4210-log-i18n.sh
->     @@ -1,6 +1,8 @@
->      #!/bin/sh
->     =3D20
->      test_description=3D3D'test log with i18n features'
->     +
->     +TEST_PASSES_SANITIZE_LEAK=3D3Dtrue
->      . ./lib-gettext.sh
->     =3D20
->      # two forms of =3DE9
->=20
-> But the source in t/t4210-log-i18n.sh actually is written in UTF-8.
-> The thing is, the "-u" option (recode into utf-8" is supposed to be
-> the default for "git am", and it is passed down to the underlying
-> mailinfo machinery in builtin/am.c:parse_mail().
->=20
-> But apparently that is not working correctly.  I see in the patch an
-> unrecoded byte E9 in the resulting patch file that is fed to the
-> underlying "git apply" machinery, failing the application.
+I would propose that "--help" to a shell alias is passed through to
+the underlying command.  This way you can write aliases that act more
+like the other git commands.
 
-Hm. I'll double check mail headers before sending out the next iteration.
+To do this, we make "--help" work the same as "-h" for shell aliases.
+In git.c where we check for the "--help" argument, for shell aliases
+we print the aliased command as "-h" does, but then shortcut the
+rewriting to "git help", so the aliased command will run and not be
+sent to "git help".
 
-Patrick
+Since "git <alias> --help" will not be re-written for shell aliases,
+"git help" can now assume that it is being asked to help on a
+git-command alias.  Thus we can remove the "is this a rewritten shell
+alias" check.
 
---B5qbT9uZ5EyXiLb9
-Content-Type: application/pgp-signature; name="signature.asc"
+A test-case is added to ensure "--help" is passed through to the
+underlying command of a shell alias.
 
------BEGIN PGP SIGNATURE-----
+Signed-off-by: Ian Wienand <iwienand@redhat.com>
+---
+ builtin/help.c   |  7 +++----
+ git.c            | 15 +++++++++++++++
+ t/t0014-alias.sh |  8 ++++++++
+ 3 files changed, 26 insertions(+), 4 deletions(-)
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQOowACgkQVbJhu7ck
-PpQedw/6An5JPrAy5tROLDk//vYwHYqBeGMRPRh22LZNWtNABAjyMFJo7WKgIfQ/
-H2IUjknmMuwTtTv4/JZOsBy4/e/OwXO7bFCIC78WeKUqnEC08VBKv68jSKaMhC0Z
-7ze30lYShxqAKaz8Yk6znfcwr3jeVCLbSjlodP9LM9PTWX3s2TsY9sYQBIsPq8qM
-ISVMa0A0HWYquuwWVC3815C1O02Pvj4oIezP4/pg53MMp3XR/UfK0J0xLUI+H/5p
-pLsW0TBHyNfBgUOsDtl198/+TSmCKsxJIEiyV4rT5eCDyNcGt3WjIcA9e19HxGPD
-euy6E21o0qt3mCCz7l0zanGdC1RvuLj7x7VzpSkTpiZFQwHPBZnf7TGTPuZkQL53
-TWeISmVusxpgVjCJJWehebLDTAZvT9CEXqPbTzseZkIsLK7cSLJKSUVF4mBRD+Yn
-zVftMOnNT9HfhBIIwRBI92m8oy/y26q3fhtNheF3292X0P+75tm0RmIHhcipfvJm
-IQHHk820ySyisDdcTu9ME+sM8OCd69PlRTQq+YffW+oIjjhfX5okcty9bx2u2m3Z
-ALp04PnKMr1Ary7qV+cwrq9XX6Qm+Tk7uk5GbkG0zou8u+OoT/MkgsPs+swVaEDr
-P1vD3Zv8BvwpQKAdH2vRm9KCOJBdiJeT15TG/29cvj8C2vxTuqU=
-=Pgvi
------END PGP SIGNATURE-----
+diff --git a/builtin/help.c b/builtin/help.c
+index 222f994f86..5e9d5edbb2 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -547,11 +547,10 @@ static const char *check_git_cmd(const char* cmd)
+ 		 * handle_builtin() in git.c rewrites "git cmd --help"
+ 		 * to "git help --exclude-guides cmd", so we can use
+ 		 * exclude_guides to distinguish "git cmd --help" from
+-		 * "git help cmd". In the latter case, or if cmd is an
+-		 * alias for a shell command, just print the alias
+-		 * definition.
++		 * "git help cmd". In the latter case, just print the
++		 * alias definition.
+ 		 */
+-		if (!exclude_guides || alias[0] == '!') {
++		if (!exclude_guides) {
+ 			printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
+ 			free(alias);
+ 			exit(0);
+diff --git a/git.c b/git.c
+index 3d8e48cf55..4c93296550 100644
+--- a/git.c
++++ b/git.c
+@@ -691,12 +691,27 @@ static void strip_extension(const char **argv)
+ static void handle_builtin(int argc, const char **argv)
+ {
+ 	struct strvec args = STRVEC_INIT;
++	char *alias;
+ 	const char *cmd;
+ 	struct cmd_struct *builtin;
+ 
+ 	strip_extension(argv);
+ 	cmd = argv[0];
+ 
++	/*
++	 * If this is a shell alias with --help, print it's alias
++	 * mapping to be consistent with -h and pass it through
++	 */
++	alias = alias_lookup(cmd);
++	if (alias && alias[0] == '!') {
++		if (argc > 1 && !strcmp(argv[1], "--help")) {
++			fprintf_ln(stderr, _("'%s' is aliased to '%s'"), cmd, alias);
++			free(alias);
++			return;
++		}
++		free(alias);
++	}
++
+ 	/* Turn "git cmd --help" into "git help --exclude-guides cmd" */
+ 	if (argc > 1 && !strcmp(argv[1], "--help")) {
+ 		int i;
+diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
+index 8d3d9144c0..7b1d559420 100755
+--- a/t/t0014-alias.sh
++++ b/t/t0014-alias.sh
+@@ -44,4 +44,12 @@ test_expect_success 'run-command formats empty args properly' '
+     test_cmp expect actual
+ '
+ 
++test_expect_success '--help is passed to execed alias' '
++    echo "echo \"\$@\"" > exec-alias.sh &&
++    chmod +x exec-alias.sh &&
++    git config alias.exec-alias "!\"$(pwd)/exec-alias.sh\"" &&
++    GIT_TRACE=1 git exec-alias --help &> output &&
++    test_i18ngrep -- "--help" output
++'
++
+ test_done
+-- 
+2.45.1
 
---B5qbT9uZ5EyXiLb9--
