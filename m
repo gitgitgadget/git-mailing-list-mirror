@@ -1,141 +1,108 @@
-Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035C038FA3
-	for <git@vger.kernel.org>; Fri, 24 May 2024 07:34:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE5412E5E
+	for <git@vger.kernel.org>; Fri, 24 May 2024 07:34:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716536043; cv=none; b=gqaQgs/0cobrMICYZVGGx6tSLx79b/gjzLUwX3iXaHvYNhLLXUV33MGsd/SDtcBZUwVNQcbYoDISrlnAKFJp3hSY6wmBn7sdlYd8DDaf0jjkueZQ/2uKvLlKAMC1ypJnq0gBlbIM2GdOHBKJzkURkpVFQGgQasgR4G46FuXZzUM=
+	t=1716536071; cv=none; b=dXMlzLxOqF/Idz6tVlBI8bKaVUPcDIVJnORjHhkRqeD5bqFcQIvCpq/L472hpG/kyDWGbO0TL4ayJbZQf3qsNSo16ljlLSMoEn1hCmu8JkL49EsidhkuT76/S4RQJS4Mvd7X/N4dPaZzrAe0EDTMroEOsi6/182f1G85L2FFzKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716536043; c=relaxed/simple;
-	bh=dN10N+7GIHmUeywCb6LSRNrwS+X2Ko2NiOuroPGtQsM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eDQXpvVGUWVFVix886sgbPIZL3lYSk5TD+xW3BtQgOOaPADDqxeDcTjY14t407ZOUCwNKhoC6gNCQnbLyhbbS2GrpiIkP4FhHM5AK2kfrtgLOlvxABjnak7S3b2SYv6Pih5qmDo8yPilNT2cMcyNT8GtSVSCS7HlEaVgg/8U3yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZWnUm8Se; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yosy+jHM; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1716536071; c=relaxed/simple;
+	bh=pDXRgrua6JJbUBTIL6Wugzrh2VWQLKVAmv7dGOEQyno=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CUTxnZjkDjNkMUlNhkefMmVXdbFo+34lZqhLgaK5vyFROB2S/+OgQqSC1RGG1MMu/z3DV+R6BkOrjNoyq86VBXhEfiFKunwgGW0e6l1uoTEMpQs0mBALGMy3h+Kub3EJcS6XIEHbyS65jQcVA2tfaiNX6J4I+/0ELbRYAB5T4cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=JCS0gMBG; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZWnUm8Se";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yosy+jHM"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 00FDE13800CA;
-	Fri, 24 May 2024 03:34:01 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Fri, 24 May 2024 03:34:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716536040; x=1716622440; bh=YClxbGPRCr
-	+NnL+hswU8xdssUrfSroLcBUOjqnRHxDs=; b=ZWnUm8SemxOFkIyX0l56tXdiXx
-	oJqdRmJPb6Pd0M8yzc/yvYSXg/VKR8VF9tdI1YPaPnyLtzeKW271wA+NZmBKxqAS
-	UQ1dycxPcBd63mqjzincBn3HZBcEp6qc3n2R4/iaS6i+SFFggL+UcgdUBc6cZQSH
-	IvxcBDenV0x2E9uttbqpnkhz22bDuRPjtdorzf0oSUY4GVNUI++Njdu5RjLrdcym
-	FkGOjqGRmzJ8oOJbS8rTpIGQawcHCPHOQ29/JAbGlOzkL8TOBoS81RWj3juoRp8v
-	27unJLIG9Y71j1DUBORiUQ37aQY+w66RW7zaaw6X4XWRABNAwPdQ+3oAh0Ag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716536040; x=1716622440; bh=YClxbGPRCr+NnL+hswU8xdssUrfS
-	roLcBUOjqnRHxDs=; b=Yosy+jHMxHuVcwqejbRspQTWjhQbZ2qBQV52azmgfzCg
-	ru4nbwD9bIErEwhx9XtNK2ZO02W7DZ8b5gTeWzR97CKs9ybSDiCCvlmXaW1Hs+Xm
-	VSpGhjwc5+VoTRg5Qkgvu4U5qFV7LBh6RW+zs1PwXB8t2U++rRrDebzvOSF+eOYg
-	zzGuj9hVPcdHXBs+x00yoez+ZtvxuUm0jfezRQeD6uCu4ZR6MyMSn8plB2HVSR30
-	fLKfwPU14MYw1o4GaDgIQYNs/oID0B2Y2+4Ex2pd0SNVGjxEqTCq8MlstiOJ5bgr
-	v8nC1oINwF0yD1jVG4z5sKx5S0R+uE1UtYuJ9IdEwA==
-X-ME-Sender: <xms:6EJQZgb2eDYv_Qusrt5Oc2kYEUoDYaav4TWBejXGDnEzu-yrfXSRGA>
-    <xme:6EJQZrZACCgnu774TP7v6W2GW9zvVjTsScjB9LQ_d2i3P91hteWE5Lrf3HmO7Kzii
-    pVfX_n4kZoe-4SxcQ>
-X-ME-Received: <xmr:6EJQZq9pz-i5QFjz_Vtp3mRo1XMdqS3psDFffHK7YpRW4TtWGyecTbMtJywSdQfL_wtySqDZwEfnSERcCIwXgP35bGcK2gN4z2XcUOGWU7NlLnE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeijedguddvtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:6EJQZqqleu1nKZqX462hWzEtKR9aWrSSkHOjy732rzRDY4zYX2UJpw>
-    <xmx:6EJQZroJC68LpmsrC0AO9Cw5umdHOJ8Wu0MhqqPg6kuSLiQyFsMpag>
-    <xmx:6EJQZoTczjbNyC9jv-_0c_oildg0uOFpfxPWxh3aiL-SBgaqhHbU3g>
-    <xmx:6EJQZroNgGTV22qdlmYLLQ9K9wGPicrCOov3363sGpMc0YNgcGvwng>
-    <xmx:6EJQZi3UIxZMu4C-K-LutvPDG3DP0dZU2W_rAem5vUMAhtk79HBth_13>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 May 2024 03:34:00 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 321584dd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 24 May 2024 07:33:55 +0000 (UTC)
-Date: Fri, 24 May 2024 09:33:56 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/9] refs: ref storage format migrations
-Message-ID: <ZlBC5O4CHqrx1di7@tanuki>
-References: <cover.1716451672.git.ps@pks.im>
- <xmqqwmnkv7ay.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JCS0gMBG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1716536068;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Amod9xU8lgw8FTf/FjDgMFSU+p0WZkQYZn85tjYS7Nw=;
+	b=JCS0gMBGlkZLDopVOupHVRyt++BNyqj7/WXv9HmAjmqke38/lbHjbFED/4wU1rYgrL7mMM
+	xslN5HDthA+A1GSnIg6cfv7c+7nYtmTPQaVyWKx+GW4fVtoJVcUDqALvQp607v1ta9qlfq
+	CBVJH1JyPPfJwxpv02DW0dt6+cabyq8=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-543-CbRcIfunOQC6FNT-TvIzWw-1; Fri, 24 May 2024 03:34:26 -0400
+X-MC-Unique: CbRcIfunOQC6FNT-TvIzWw-1
+Received: by mail-yw1-f197.google.com with SMTP id 00721157ae682-62a084a0780so10807637b3.3
+        for <git@vger.kernel.org>; Fri, 24 May 2024 00:34:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716536065; x=1717140865;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Amod9xU8lgw8FTf/FjDgMFSU+p0WZkQYZn85tjYS7Nw=;
+        b=dZ5HjklfuFUfAoX7Q4byCLs9HLLuepmfWZhZFDzQrN2m13ycugc4wu6UMZ37qeujGX
+         naz8JbUe8bEhihsdh4DXbdxpQN6hhMPr41zLnlhpiBOcCsQpyXZN+WlctpQQIbHqQqQ+
+         k6nnE8osxjQUJUr0mhHR8N6YjO2XJaMhJ3D7xueHE06CZP/iz0rS3AY9VsiHd555THYs
+         rAJ6wBir8uK1jl3K13nLc8+J+B60UQFxP6sTQus1nuUow0Rsfinq5RGJe61PneLYrvBW
+         Qh0Wv3JlyBo35mNLsLk5dek+Rq5be2/HlezLGFL8ADRJPt8muPrGil8+jXt9U4g7MRXr
+         QZbg==
+X-Gm-Message-State: AOJu0YzuD0bvnX6bmHBv9PMf9QreF6g0K2s7Vvr+OnbyEkwuEShFUcd9
+	LzXIh+IA9JShxLXRbsNVaA45RysR2ZS4/GjuZqjo/u32LoRvbnVnq8+UeKY0Wv4EhA/2vITjtIj
+	K2yG0YZOOGxF0eHeNxP2gmiJrgTX2ITQXTuOefMVhKkxk2Q/TCTxArdUTLNiqzi43NIu7PQTlQ4
+	o+2RWurOHHoL731h5IAwEHyFhBjn4UL6GoMw==
+X-Received: by 2002:a0d:d8ca:0:b0:618:7a0d:d5ef with SMTP id 00721157ae682-62a08dc608emr14382077b3.28.1716536065489;
+        Fri, 24 May 2024 00:34:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHO4JbcNHEguqq4qtCH6sTQetlmuU7qoQrntQU2LF5X0pb2EUU2K6ybyfxbaGNmRp+Atxy1TA==
+X-Received: by 2002:a0d:d8ca:0:b0:618:7a0d:d5ef with SMTP id 00721157ae682-62a08dc608emr14381887b3.28.1716536064938;
+        Fri, 24 May 2024 00:34:24 -0700 (PDT)
+Received: from fedora19.redhat.com (203-12-11-234.dyn.launtel.net.au. [203.12.11.234])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ac0710865fsm4893356d6.71.2024.05.24.00.34.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 May 2024 00:34:24 -0700 (PDT)
+From: Ian Wienand <iwienand@redhat.com>
+To: git@vger.kernel.org
+Cc: Ian Wienand <iwienand@redhat.com>
+Subject: [PATCH v4 1/3] Documentation: alias: rework notes into points
+Date: Fri, 24 May 2024 17:32:42 +1000
+Message-ID: <20240524073411.1355958-1-iwienand@redhat.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240523043806.1223032-1-iwienand@redhat.com>
+References: <20240523043806.1223032-1-iwienand@redhat.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ooGHqNe95IAkrSUa"
-Content-Disposition: inline
-In-Reply-To: <xmqqwmnkv7ay.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
+There are a number of caveats when using aliases.  Rather than
+stuffing them all together in a paragraph, let's separate them out
+into individual points to make it clearer what's going on.
 
---ooGHqNe95IAkrSUa
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Ian Wienand <iwienand@redhat.com>
+---
+ Documentation/config/alias.txt | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-On Thu, May 23, 2024 at 09:09:41AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> >   - It is not safe with concurrent writers. This is the limitation that
-> > ...
-> >     none at all, as it may cause users to be less mindful. That's why I
-> >     decided to just have no solution at all and document the limitation
-> >     accordingly.
->=20
-> Documenting the limitation is a good place to start.  For normal
-> users, would it be sufficient to
->=20
->  (1) tell your colleagues that this repository is currently closed
->      and do not push into it;
->=20
->  (2) configure "git gc --auto" to never kick in;
->=20
->  (3) delist the repository from "git maintenance" schedule.
->=20
-> before they try this feature out?
+diff --git a/Documentation/config/alias.txt b/Documentation/config/alias.txt
+index 01df96fab3..40851ef429 100644
+--- a/Documentation/config/alias.txt
++++ b/Documentation/config/alias.txt
+@@ -21,8 +21,9 @@ If the alias expansion is prefixed with an exclamation point,
+ it will be treated as a shell command.  For example, defining
+ `alias.new = !gitk --all --not ORIG_HEAD`, the invocation
+ `git new` is equivalent to running the shell command
+-`gitk --all --not ORIG_HEAD`.  Note that shell commands will be
+-executed from the top-level directory of a repository, which may
+-not necessarily be the current directory.
+-`GIT_PREFIX` is set as returned by running `git rev-parse --show-prefix`
+-from the original current directory. See linkgit:git-rev-parse[1].
++`gitk --all --not ORIG_HEAD`.  Note:
+++
++* Shell commands will be executed from the top-level directory of a
++  repository, which may not necessarily be the current directory.
++* `GIT_PREFIX` is set as returned by running `git rev-parse --show-prefix`
++  from the original current directory. See linkgit:git-rev-parse[1].
+-- 
+2.45.1
 
-I think (2) wouldn't even be needed. Auto-GC only kicks in when there is
-a write in the repository, and if both (1) and (3) are true then there
-are none. But other than that yes, (1) and (3) should be sufficient.
-
-Patrick
-
---ooGHqNe95IAkrSUa
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQQuMACgkQVbJhu7ck
-PpQUERAAksHBL6fjhBOlmYYhUAxhPAlPv1TVbEq0AIoahg/QZ+Xvj424WV6BZ0y3
-7cs2FFBcoj/4K/MbvRODzHDg7LwYG0seCmGYGJc5rEx8T7PmYMZTSAMTPq9eOgRw
-idGqpxLnIbKWRmeCVoOvTlKs+Rf/04FEZoZGi/by0rcOp8sibMUOgGoFw3OA9J3C
-6WPTTtWGfRQbcR0M24y1lvjx0Q3RbGLRY1n2WKsprebNm8cplKn2mRITkBEHWSJu
-sMeDL0RwjAo1dOk2LV06TdcL4kNmWmfsshf4JlxsteT44bmeponKumNCxZeavQG+
-dNVMCW/sZZ+Z3rPqYLgI+VrdeFiBcdRJ85Qhkr74T1HphOxk3mqHw2iHtTd1n3m2
-90JzflF+maqYo7+MEuv1bDpOnKpN/syfYNqjL76bBer/zoIVaGN2OSxwB5d4Edec
-WJF2fa6T0J9nowXir0coA1gMIV4LAlRiUFHb28OXtnM+Yp0iPQaL8N4Mg43TmVmH
-qEjQvZgl2n3XYQy7Vlikd5l+7oH0ZyRt4Rsl8FOv+QKhk19FcCE1VSi6TenuZ36e
-gJ0EfcAIlUXQqca6ch4PWL3pqx0SaIe30XbmqD7DtY44qM10Q8YCiT4N9kQoZ2Dh
-DI1YUDswdt/j2EtsLrfN9HGVkX3IoT5ivD4pDNwCKlvIJA4zb3U=
-=qrYu
------END PGP SIGNATURE-----
-
---ooGHqNe95IAkrSUa--
