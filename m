@@ -1,83 +1,84 @@
 Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D365F1EEE9
-	for <git@vger.kernel.org>; Fri, 24 May 2024 13:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9724085933
+	for <git@vger.kernel.org>; Fri, 24 May 2024 13:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716557437; cv=none; b=XiD4UKcLCHdFaxYGd3zhJWHByhbGstLhucfliIB+AJHtQeg/Zb5zej2PXz6jtdPjkEjWDAloibmcozX1F9lB75p5CJB2L+OVhm3V1vKYr5z4Olj23aC2ktDFItztxG96lpld9Z0fwPunDUFfBNu9D4p1h3rKQlZL3fTGbqe4sfU=
+	t=1716557439; cv=none; b=lOW1FDHAVF6K8gOo/KfGP6HVgFv4BadLiT5kzj9CQQDEbHmX4yzjpBNOcANgr1df3NkAEFBsGixiW3HuiUtrtWlGvdm8OUhfCpFXgLdWOatIxbFdGuvLyddRssBu47N7/3afetLOl7krli3nidFrXJJBUQX9maquXPCOuE/h7jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716557437; c=relaxed/simple;
-	bh=dmhaq6YItF5afzSkrql140P4RFyrvL+NK/MlOdVdtBc=;
+	s=arc-20240116; t=1716557439; c=relaxed/simple;
+	bh=nj+xtS8yQwLfbe4eh6OihK0EkUsvQPhSudM7w2U4p2M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PT0KFv0vaNk097jpUwqDSCk0m2bKnVHPCrgHbrVxrMu1yVFwttIG8aFnuj8omG3mFoTgT/QUWMU/uATzdnCMsOQAlU7PsVuAGx+vxkSKib1aGpILb6oH/i2eMSjGhgdpcsKBL/vq2BQAvijSlC0eUjc0UIijDVFMeh34UrnDfZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mlKHcumu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SqVRx1Mv; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=aOCIN9iqIxZX5CjCCEPcqSNvt61FxmnswiDKcPNMco3pIa85gky1EZ/q5GmMHQhd8rqM/iVicQTOlqv0f+PSMIsGkula24xrLMKjYf4NHB9qjtabHtnb8UlvG8FkUWfwQ7c0ZEE7gNZRKhoBHesPAtaiKJgk5OuacawWowR+beU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bhIfMfyo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YVSgan+2; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mlKHcumu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SqVRx1Mv"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id C367C13800F5;
-	Fri, 24 May 2024 09:30:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bhIfMfyo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YVSgan+2"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfout.nyi.internal (Postfix) with ESMTP id A6AFE13800E5;
+	Fri, 24 May 2024 09:30:36 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Fri, 24 May 2024 09:30:33 -0400
+  by compute7.internal (MEProxy); Fri, 24 May 2024 09:30:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716557433; x=1716643833; bh=AibssA3a6/
-	QiLJGVO05BEsymy8y7VNSMCj+Flqg/g9I=; b=mlKHcumuQHOpxwndk0ygeUdVr/
-	k5CTTVtXUXg7QrxoVz0iTxmY8StHtOrfDrcsg4xZEbfNUfLPumOwzG3ZLLzC1wOK
-	bzmuVKt+X9x3ouaVfP/V5qhVemtcRDHHla9tYbm/uZOaTX8PmuIHe9fc+Jots7br
-	lxRy2/oT0zeZeusgdD78Vxz+4brtvJV7jv7VWdZRsaKpYWBzjFvH7u/9V7gadn5Q
-	r81EtDJUXae165it77gH+FwxfEKAZ+lGCFmiIPPArsY6shgLqLhMoiw++RzhCvwe
-	rF5/bpJYxQvXSlyLuqFMtWb2CteftlZcJOP+S9dmx9J+qgnCcuUNEB6kqdiw==
+	:subject:to:to; s=fm1; t=1716557436; x=1716643836; bh=8P6axujHyq
+	FbLmrg93klVlnb10FxRmmYl+Sbmez2p6w=; b=bhIfMfyoI3c9QYzZBEhcrXSpR6
+	Feet5A+79axfbIfNNTDLLKozgz97oC2ClflAVwMdBLpxhWD3dzSqTyVhF4Ft54al
+	w1dg3RyRi+ptvAGxz/2lmWem0/dG/PoQAgdnEFx9E+vrDEnj2izZENOaJ0ZAbMVh
+	YM7oWjguVkcDtxRwcPAuREJicoDPkh7UMJs3woJ5RVc/wfBsJ3lpu3hwWESdXTxh
+	2FXBL8HgCuIzjn/d1doGeanzUJxoG/DWg5vp/VYi9zVMQ+ZO5+juhCzv4xYOxBkk
+	EqPG4aiEg18dH5wc/QFvAxLROX26BGVJZ7M7QR3i/bIHyVOUSOcHqgs7A16w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716557433; x=1716643833; bh=AibssA3a6/QiLJGVO05BEsymy8y7
-	VNSMCj+Flqg/g9I=; b=SqVRx1MvoNu6xJVBDiBatWbxdP4RM68/WWfYsTlzGNa+
-	CR0dZNxrx2BrI+RFWGM86NDtkmyUepchKAvmBtGS2imcJ9dyAmFYF0lhhAt9VDti
-	pU9GdsmhmUW4tK4bURzxZOOf/XlY7BXw1MNrAHz/lKogwhgh/LjM+qZGJnf1k69e
-	pc+6G+IZkrtBdUA5FgxncpT8M2GMDb2h0n73LCwhbgjeS366KAxdyZM//PVy2zWH
-	ZG/kIzNQOR7IupmA4DThIjFcnel/nnZaOnGRntEm/qgmd75IGAkBX/eHtyY4N4Io
-	8hKssPcOZNAQQPjp2+7ELzIUY4iFUJRxRJJebecZ7Q==
-X-ME-Sender: <xms:eZZQZocptKghgW_3fNTZ1u22bRkqeZptnWr2uKDP2TYzGpQGW9HHUw>
-    <xme:eZZQZqMUb1TPoVJ1IsztTsxjnZ1dP2_v_Jdb6M3xk2L068W3V_SleGb-m5nLs8Yci
-    Ycb9HzgvnWro1AdiA>
-X-ME-Received: <xmr:eZZQZpiTehcvF-EKBQkMruUudVa8492RIrXOI7505jk0gJuRVdcDNu81XnXXCC0KgqtdHRBXUjhy0QkHskRlsYl45sIwdYXsmPKL-ycdHoy7tgE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeikedgiedvucetufdoteggodetrfdotf
+	fm1; t=1716557436; x=1716643836; bh=8P6axujHyqFbLmrg93klVlnb10Fx
+	RmmYl+Sbmez2p6w=; b=YVSgan+2cgmCpdiT0s8AvMwdplENXtMbzEyKVleQ4z4c
+	/E8LCOWs5thSJNZ+ERw6qSybTqFHBmIMu5wxBz0ESNhUSyxtg4NSLkGWjhPC24L4
+	kXM6LTydpvDhxDjVhuVMEcOgiXl07Jx8pCbalGdNug+YpHIJeSMy3QEboFUArG4Z
+	Q31/BCBuPr4WibYrNjQrtciECerZVtfAyyCFV24WoApsIVcTxnlzYPjH8QNbP/8j
+	l+Hx4aXfeidZDdUPWF5w5WxyejJNG5zrl4hWcPHJUtN4TXdaIFGwq0g/OtNw6Nyd
+	Q/RNLHH8Gj8Zp3UeERBSBOdA3dTfGoETMF9SPQFyRA==
+X-ME-Sender: <xms:fJZQZo_v6cquAE6mTacJp32L4oYzJ17v9puqGJLr4765pLFuEm9aHQ>
+    <xme:fJZQZguWn7SBmGm0vam096kjj4lqWR48faFqA4qzHAhtEPsLpz9-2IJrIG1CSduEd
+    97GMfc0NpI-Cehyog>
+X-ME-Received: <xmr:fJZQZuAcRRz2tI3c5hjFQrLIpjE1PIDJg9ZDHYGRsPDhfD--IGN0qR01LqEK0zC4RLgkeM_P9WAR745-KONXd3VIFfFauLM810BZvF-JG5RgOoE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeikedgieefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtvdenucfhrhhomheprfgrthhr
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepheefhfeutdevtdefieetueeggfefleegleevheffueekleefhfeikeetveduhfff
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:eZZQZt_TzkTP66cDX6y_7pACNKPjr-X26bw0wK2Ikix5M_V-DuPebA>
-    <xmx:eZZQZktUQg7oZ_jgbTRbZHtA3_QRX8FWdCTetdk0igQYhASUSHs0Xw>
-    <xmx:eZZQZkHiA-qZlWDq_yiI-Z9SihT8k-0fIUdU7lH1YNiQ2VkdWHyz0g>
-    <xmx:eZZQZjNNd4VIGs6oJxpCpOlh-8VyhGqogsFfKhky0cFO1Z1DyRHaCA>
-    <xmx:eZZQZp8No7q6M6McYiQM0vD_jaWldTfS4y5A9Y1x0xpN_IelYfQEGtcx>
+X-ME-Proxy: <xmx:fJZQZof3wURi1UAXTatHitNxkEuBM37UZ5gMcoJiMC7al-A9xF-R_g>
+    <xmx:fJZQZtNysQk3AanUQ4VvyH_J3MJroBWZRepyWx1stR78A8SuJlOmTg>
+    <xmx:fJZQZikSIuMUR2gURwQx3aMUC3xLGvDMAH_PvdqCQ_lpjQj8eynM9w>
+    <xmx:fJZQZvsiPBCsh6lOgLQHstGoIEMMR3bHnwalDkN7-m28dAqXken4kg>
+    <xmx:fJZQZge5FisGBMN_UiL5FqAPdk1Kpdi7JM3_-JkIU_MDchGxolkqFf_U>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 May 2024 09:30:31 -0400 (EDT)
+ 24 May 2024 09:30:34 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 19f79efe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 24 May 2024 13:30:26 +0000 (UTC)
-Date: Fri, 24 May 2024 15:30:26 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 782f2e9e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 24 May 2024 13:30:31 +0000 (UTC)
+Date: Fri, 24 May 2024 15:30:32 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 Cc: ach.lumap@gmail.com, chriscool@tuxfamily.org,
 	christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
 	kaartic.sivaraam@gmail.com
-Subject: Re: [PATCH v3 2/3] t/: port helper/test-sha1.c to unit-tests/t-hash.c
-Message-ID: <ZlCWcpcUkgUMWJYz@tanuki>
+Subject: Re: [PATCH v3 3/3] t/: port helper/test-sha256.c to
+ unit-tests/t-hash.c
+Message-ID: <ZlCWeCJq6qxWrJvI@tanuki>
 References: <20240229054004.3807-1-ach.lumap@gmail.com>
  <20240523235945.26833-1-shyamthakkar001@gmail.com>
- <20240523235945.26833-3-shyamthakkar001@gmail.com>
+ <20240523235945.26833-4-shyamthakkar001@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,105 +86,86 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eTB+TFQO/csSAVXw"
+	protocol="application/pgp-signature"; boundary="S/SJPAq+ggVzGTiZ"
 Content-Disposition: inline
-In-Reply-To: <20240523235945.26833-3-shyamthakkar001@gmail.com>
+In-Reply-To: <20240523235945.26833-4-shyamthakkar001@gmail.com>
 
 
---eTB+TFQO/csSAVXw
+--S/SJPAq+ggVzGTiZ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 24, 2024 at 05:29:44AM +0530, Ghanshyam Thakkar wrote:
-> t/helper/test-sha1 and t/t0015-hash.sh test the hash implementation of
-> SHA-1 in Git with basic SHA-1 hash values. Migrate them to the new unit
-> testing framework for better debugging and runtime performance.
+On Fri, May 24, 2024 at 05:29:45AM +0530, Ghanshyam Thakkar wrote:
+> t/helper/test-sha256 and t/t0015-hash test the hash implementation of
+> SHA-256 in Git with basic SHA-256 hash values. Port them to the new
+> unit testing framework for better debugging, simplicity and faster
+> runtime. The necessary building blocks are already implemented in
+> t-hash in the previous commit which ported test-sha1.
 >=20
-> The sha1 subcommand from test-tool is still not removed because it is
-> relied upon by t0013-sha1dc (which requires 'test-tool sha1' dying
-> when it is used on a file created to contain the known sha1 attack)
-> and pack_trailer():lib-pack.sh.
+> The 'sha256' subcommand of test-tool is still not removed, because it
+> is used by pack_trailer() in lib-pack.sh, which is used in many tests
+> of the t53** series.
 
-Can we refactor this test to stop doing that? E.g., would it work if we
-used git-hash-object(1) to check that SHA1DC does its thing? Then we
-could get rid of the helper altogether, as far as I understand.
+Similar question here, are there replacements we can use for it? I also
+couldn't see it being used in any test other than t0015 when searing for
+"test-tool sha256". Maybe I'm looking for the wrong thing?
 
+[snip]
+> -test_done
 > diff --git a/t/unit-tests/t-hash.c b/t/unit-tests/t-hash.c
-> new file mode 100644
-> index 0000000000..89dfea9cc1
-> --- /dev/null
+> index 89dfea9cc1..0f86cd3730 100644
+> --- a/t/unit-tests/t-hash.c
 > +++ b/t/unit-tests/t-hash.c
-> @@ -0,0 +1,54 @@
-> +#include "test-lib.h"
-> +#include "hash-ll.h"
-> +#include "hex.h"
-> +#include "strbuf.h"
-> +
-> +static void check_hash_data(const void *data, size_t data_length,
-> +			    const char *expected, int algo)
-> +{
-> +	git_hash_ctx ctx;
-> +	unsigned char hash[GIT_MAX_HEXSZ];
-> +	const struct git_hash_algo *algop =3D &hash_algos[algo];
-> +
-> +	if (!check(!!data)) {
-
-Is this double negation needed? Can't we just `if (!check(data))`?
-
-> +		test_msg("Error: No data provided when expecting: %s", expected);
-
-This error message is a bit atypical compared to the other callers of
-this function. We could say something like "BUG: test has no data",
-which would match something we have in "t/unit-tests/test-lib.c".
-
-> +		return;
-> +	}
-> +
-> +	algop->init_fn(&ctx);
-> +	algop->update_fn(&ctx, data, data_length);
-> +	algop->final_fn(hash, &ctx);
-> +
-> +	check_str(hash_to_hex_algop(hash, algop), expected);
-> +}
+> @@ -32,11 +32,24 @@ static void check_hash_data(const void *data, size_t =
+data_length,
+>  	TEST(check_hash_data(literal, (sizeof(literal) - 1), expected, GIT_HASH=
+_SHA1), \
+>  	     "SHA1 (%s) works", #literal)
+> =20
 > +
 > +/* Works with a NUL terminated string. Doesn't work if it should contain=
- a NUL character. */
-> +#define TEST_SHA1_STR(data, expected) \
-> +	TEST(check_hash_data(data, strlen(data), expected, GIT_HASH_SHA1), \
-> +	     "SHA1 (%s) works", #data)
+ a NUL  character. */
+> +#define TEST_SHA256_STR(data, expected) \
+> +	TEST(check_hash_data(data, strlen(data), expected, GIT_HASH_SHA256), \
+> +	     "SHA256 (%s) works", #data)
 > +
 > +/* Only works with a literal string, useful when it contains a NUL chara=
 cter. */
-> +#define TEST_SHA1_LITERAL(literal, expected) \
+> +#define TEST_SHA256_LITERAL(literal, expected) \
 > +	TEST(check_hash_data(literal, (sizeof(literal) - 1), expected, GIT_HASH=
-_SHA1), \
-> +	     "SHA1 (%s) works", #literal)
->=20
+_SHA256), \
+> +	     "SHA256 (%s) works", #literal)
+> +
 
-This macro also works for `TEST_SHA1_STR()`, right? Is there a
-partiuclar reason why we don't unify them?
+Same question here regarding the macros and whether we can merge them.
+
+Also, we do have the same test data for both hashes, and if we ever grow
+another hash it's likely that we'll also want to check for the same
+inputs there. Would it make sense to have a generic `TAST_HASHES()`
+macro where you give the input and then both the expected SHA1 and
+SHA256 to avoid some duplication?
 
 Patrick
 
---eTB+TFQO/csSAVXw
+--S/SJPAq+ggVzGTiZ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQlnEACgkQVbJhu7ck
-PpRQSxAAiGpP/8bHFiJoXpAS9P9fDoE48PNGhBuIV3TUQOrLUb1ABj6CT3bzwlsT
-5Wb962WDzgFRUsyXzuefsijrE12F/R7tg4V8FrE5evDDpcOXmNLyHcAzTIdvYn5R
-hnb+4ZFquoQNgLNFE6LO33mY79jli5NMR3pRoaBvfwj67OkarXoORkCcW7oZyHQo
-s/2ksPluFkiAtRcIEsnS0wJb+fMOha/6xDLmfJ8a8tdFSDLHsHeFQ2xjM9KLCez7
-ZrJfz+GtP9uNsKeMDYDzJFMtPLRXwsEF92dcoEBEEJHd6mf6vhD4216C/11EzDoK
-Vmuvdd6kj3i9j0VXvop7DZ9m7AXY3ZEx725E7I/w6QZlsCCSvctuXSyGrX7vxOfN
-Np8pCXsUvt7ghU6JZzgn9FSM9KQMLvDX6UatknRdpaPWY82Cg8ffSlhzsXn+i+W/
-bBk2a6ZBV1MM8uIyvDyWT68yhw29G4InQCTOuASBq7KYjCoBSZxQEBCdC0994NAr
-cwJpQQgOpZ9yjFE0XsiZgPEsRb3K+hPIViRHKM9I1vQyxvBclnJA4F4hPN5Oyid0
-pmwqw2EAidAOXMS/TdkSrHd5YpQOzSrMZpKBAkgwd3yTzR8pqYYqcJjUY0hj4kRA
-4rkw72yzptShGYRImC53nUlQgrshjfBbrxxkBcD/elyV/Fv0DTU=
-=xWVu
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZQlncACgkQVbJhu7ck
+PpQz2A//UmXpA4LiZfZ3hpE8A4TbZZtRRryBAWIEEd4gWOC0dOy/LtYybZYJAsMw
+Ldma4TtzY38Lp5/dbnSdr6i0iClmYHjEPfmp5FtoBCM/pfza2yV/lWhx38zitpjK
+NRVo9sKedOe0DRdb8Iv1uy6GAd0G41yuNoIAd3Eho0BGmduANiiCc/JgM7odIdIv
+rOLdELwcv3j/o9oZ5TfSukx+cKpGhL9r7odRlSR2+9K6y/PbTwSnU8erE1fob3mG
+j9c4ED7XqjlkSV6KYFpVPuuVIlIGQh0qL4wJFL1qjsZtQNxvbf6XQOVhDOH7wEld
+9+grvFPJbMR2BrVbfSGD2eyt/+9xMXU7zQtOBHHtDKU9g+Z3Lcyp4Abul0gyOsNR
+9ch9s0isnaGHT/4J/Ql+2M/aMdUZDPonWntHh/pJsrYNAKpmdOw7GlXB8HynxiU8
+0z9bbvlgWB3NThNAc4Yy++jopn400Vsqp34mSLuZHb/ElqqOGjcUC5WItyzdQtHB
+Ei4iLRMu84mlLrjG/EECloK8xuFOMUQDFbKbDqn5+nOT22+IONu09vIlfI4pNfKx
+6Fk3/T6XEmMQAIcjmClxHr6cFPlMFYmVsMMY1htoO+lmrl/L18lECVLLmaw1dJr8
+D1XiVdrpm0FK41N4mbxdncw4hbRc7fm31WsKwhxTMNPXniyUx+4=
+=b8EI
 -----END PGP SIGNATURE-----
 
---eTB+TFQO/csSAVXw--
+--S/SJPAq+ggVzGTiZ--
