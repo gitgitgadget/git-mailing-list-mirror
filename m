@@ -1,48 +1,48 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CCF3F9D2
-	for <git@vger.kernel.org>; Fri, 24 May 2024 19:47:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E1F42ABE
+	for <git@vger.kernel.org>; Fri, 24 May 2024 19:47:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716580063; cv=none; b=qHzFA1dXIxsCk3IWUaUTtEPaAJQMct/e2zm+GwqN84RQXEPfvqo0trQlhBfLDbHRakDiwnC+2ZXPV9pD5sR4Cd5cmk5Ytu4XLe/PDnr9DWDIQPt1pPWV8wF70W2IVfpRgtgJh9i+n1RpQQ4z05L7quXwr8UqqmYZe9e4krqng5k=
+	t=1716580064; cv=none; b=aZ32TDEZpktvKcMb7grogXeiCHVsDRsgsgDHRLIyq21DItu/jsahn3n7FAb32m6KtiDoffxFb4Uoz41mWbQxh0rD/A20JwNzwf5kvsjcfONHuZOMN2cggnj65nC8KstT6fCWgv7exfChTE6NXyzZvGQDEbTwML5XWgFrRQJUnCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716580063; c=relaxed/simple;
-	bh=V8DwcWj3hSpxROWdHaYBMlJm8rOkMHNFFEpa4c/8+5g=;
+	s=arc-20240116; t=1716580064; c=relaxed/simple;
+	bh=EDYBG0W1akKT89oERc/3TSS2QITf4+90in66otYU/UY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7ZqbgZ2Hk0J4zrsOnVWBSVPeDwFQbhSQnoeJr87FvgtpAD766JXsGAO7D7q7dIhJz9SwHhwV2o53WElwfqRjaUPDolZEKAyQbqAHD13QFtTn0h5ByCYwjcAdOb+b2SmrlT9wTzZM80hSLRHRCYwnhUscEr7LG0r513bpnc9xtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wPSCXcv9; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version; b=oY55iN7Tf5V6I/VDq+H2J3NapACOa4hQV0gQPl9coqKqlgprRiZ7GSIN43KuiaMXRkK5skAbel0V0o+QSG7UKqCIS0o2EglASf5cYzyjfMacN6q+sW5lHMl3JOW9tp1d4x2b2NYSXIm8/TCc6rZMycb0cC+FUra39kv36HueYew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DuyXBjN2; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wPSCXcv9"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id BD6DE2B22A;
-	Fri, 24 May 2024 15:47:41 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DuyXBjN2"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 646AA2B2B9;
+	Fri, 24 May 2024 15:47:42 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=V8DwcWj3hSpxROWdHaYBMlJm8
-	rOkMHNFFEpa4c/8+5g=; b=wPSCXcv9YG9qQIkju3mRlWRZ/ywjDlirGqDsIqlrn
-	54s372wBXaLj98+riJE6KyY8pGg2/nV15xGxIOlQLUwPu+NUutc6yImtzp6n/T/j
-	w3MPeqSvkA9JKcjJ23c+LOpfaSsZz3vWxz3bmsU4sLT0TduffwUQ4K5KerrIB1+J
-	j4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id B67662B229;
-	Fri, 24 May 2024 15:47:41 -0400 (EDT)
+	:content-transfer-encoding; s=sasl; bh=EDYBG0W1akKT89oERc/3TSS2Q
+	ITf4+90in66otYU/UY=; b=DuyXBjN2OUSZbOpQT0HqfGx9EMotJFsZY0IY5WG1x
+	OfFYCRd5Pz7sZ3LpwDRC4CSVTm78VBsPFQ8HNJNUTn1BFpxTs0J0U8To4naONszx
+	GYFF5//zqEfcXuY6Y9OxyNPDFwwjq6eVcR4kmPbfFDwR/9Ppi/u1BW86jSaJP+ca
+	Ic=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5AFD92B2B8;
+	Fri, 24 May 2024 15:47:42 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D55F02B227;
-	Fri, 24 May 2024 15:47:38 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BEC092B2B7;
+	Fri, 24 May 2024 15:47:41 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 10/12] clone: drop the protections where hooks aren't run
-Date: Fri, 24 May 2024 12:47:13 -0700
-Message-ID: <20240524194715.695916-11-gitster@pobox.com>
+Subject: [PATCH v2 11/12] Revert "Add a helper function to compare file contents"
+Date: Fri, 24 May 2024 12:47:14 -0700
+Message-ID: <20240524194715.695916-12-gitster@pobox.com>
 X-Mailer: git-send-email 2.45.1-246-gb9cfe4845c
 In-Reply-To: <20240524194715.695916-1-gitster@pobox.com>
 References: <20240524194715.695916-1-gitster@pobox.com>
@@ -53,212 +53,194 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-Pobox-Relay-ID:
- 79E4127E-1A06-11EF-B92A-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 7B9F84AE-1A06-11EF-B146-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-As part of the security bug-fix releases v2.39.4, ..., v2.45.1, I
-introduced logic to safeguard `git clone` from running hooks that were
-installed _during_ the clone operation.
+Now that during a `git clone`, the hooks' contents are no longer
+compared to the templates' files', the caller for which the
+`do_files_match()` function was introduced is gone, and therefore this
+function can be retired, too.
 
-The rationale was that Git's CVE-2024-32002, CVE-2021-21300,
-CVE-2019-1354, CVE-2019-1353, CVE-2019-1352, and CVE-2019-1349 should
-have been low-severity vulnerabilities but were elevated to
-critical/high severity by the attack vector that allows a weakness where
-files inside `.git/` can be inadvertently written during a `git clone`
-to escalate to a Remote Code Execution attack by virtue of installing a
-malicious `post-checkout` hook that Git will then run at the end of the
-operation without giving the user a chance to see what code is executed.
-
-Unfortunately, Git LFS uses a similar strategy to install its own
-`post-checkout` hook during a `git clone`; In fact, Git LFS is
-installing four separate hooks while running the `smudge` filter.
-
-While this pattern is probably in want of being improved by introducing
-better support in Git for Git LFS and other tools wishing to register
-hooks to be run at various stages of Git's commands, let's undo the
-clone protections to unbreak Git LFS-enabled clones.
-
-This reverts commit 8db1e8743c0 (clone: prevent hooks from running
-during a clone, 2024-03-28).
+This reverts commit 584de0b4c23 (Add a helper function to compare file
+contents, 2024-03-30).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/clone.c  | 12 +-----------
- hook.c           | 34 --------------------------------
- t/t5601-clone.sh | 51 ------------------------------------------------
- 3 files changed, 1 insertion(+), 96 deletions(-)
+ cache.h                    | 14 ---------
+ copy.c                     | 58 --------------------------------------
+ t/helper/test-path-utils.c | 10 -------
+ t/t0060-path-utils.sh      | 41 ---------------------------
+ 4 files changed, 123 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index e7721f5c22..9ec500d427 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -937,8 +937,6 @@ int cmd_clone(int argc, const char **argv, const char=
- *prefix)
- 	int err =3D 0, complete_refs_before_fetch =3D 1;
- 	int submodule_progress;
- 	int filter_submodules =3D 0;
--	const char *template_dir;
--	char *template_dir_dup =3D NULL;
+diff --git a/cache.h b/cache.h
+index 16b34799bf..8c5fb1e1ba 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1785,20 +1785,6 @@ int copy_fd(int ifd, int ofd);
+ int copy_file(const char *dst, const char *src, int mode);
+ int copy_file_with_time(const char *dst, const char *src, int mode);
 =20
- 	struct transport_ls_refs_options transport_ls_refs_options =3D
- 		TRANSPORT_LS_REFS_OPTIONS_INIT;
-@@ -958,13 +956,6 @@ int cmd_clone(int argc, const char **argv, const cha=
-r *prefix)
- 		usage_msg_opt(_("You must specify a repository to clone."),
- 			builtin_clone_usage, builtin_clone_options);
-=20
--	xsetenv("GIT_CLONE_PROTECTION_ACTIVE", "true", 0 /* allow user override=
- */);
--	template_dir =3D get_template_dir(option_template);
--	if (*template_dir && !is_absolute_path(template_dir))
--		template_dir =3D template_dir_dup =3D
--			absolute_pathdup(template_dir);
--	xsetenv("GIT_CLONE_TEMPLATE_DIR", template_dir, 1);
+-/*
+- * Compare the file mode and contents of two given files.
+- *
+- * If both files are actually symbolic links, the function returns 1 if =
+the link
+- * targets are identical or 0 if they are not.
+- *
+- * If any of the two files cannot be accessed or in case of read failure=
+s, this
+- * function returns 0.
+- *
+- * If the file modes and contents are identical, the function returns 1,
+- * otherwise it returns 0.
+- */
+-int do_files_match(const char *path1, const char *path2);
 -
- 	if (option_depth || option_since || option_not.nr)
- 		deepen =3D 1;
- 	if (option_single_branch =3D=3D -1)
-@@ -1112,7 +1103,7 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 		}
- 	}
-=20
--	init_db(git_dir, real_git_dir, template_dir, GIT_HASH_UNKNOWN, NULL,
-+	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN, NULL,
- 		INIT_DB_QUIET);
-=20
- 	if (real_git_dir) {
-@@ -1430,7 +1421,6 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 	free(unborn_head);
- 	free(dir);
- 	free(path);
--	free(template_dir_dup);
- 	UNLEAK(repo);
- 	junk_mode =3D JUNK_LEAVE_ALL;
-=20
-diff --git a/hook.c b/hook.c
-index fc974cee1d..22b274b60b 100644
---- a/hook.c
-+++ b/hook.c
-@@ -3,32 +3,6 @@
- #include "run-command.h"
- #include "config.h"
-=20
--static int identical_to_template_hook(const char *name, const char *path=
-)
+ void write_or_die(int fd, const void *buf, size_t count);
+ void fsync_or_die(int fd, const char *);
+ int fsync_component(enum fsync_component component, int fd);
+diff --git a/copy.c b/copy.c
+index 8492f6fc83..4de6a110f0 100644
+--- a/copy.c
++++ b/copy.c
+@@ -65,61 +65,3 @@ int copy_file_with_time(const char *dst, const char *s=
+rc, int mode)
+ 		return copy_times(dst, src);
+ 	return status;
+ }
+-
+-static int do_symlinks_match(const char *path1, const char *path2)
 -{
--	const char *env =3D getenv("GIT_CLONE_TEMPLATE_DIR");
--	const char *template_dir =3D get_template_dir(env && *env ? env : NULL)=
-;
--	struct strbuf template_path =3D STRBUF_INIT;
--	int found_template_hook, ret;
+-	struct strbuf buf1 =3D STRBUF_INIT, buf2 =3D STRBUF_INIT;
+-	int ret =3D 0;
 -
--	strbuf_addf(&template_path, "%s/hooks/%s", template_dir, name);
--	found_template_hook =3D access(template_path.buf, X_OK) >=3D 0;
--#ifdef STRIP_EXTENSION
--	if (!found_template_hook) {
--		strbuf_addstr(&template_path, STRIP_EXTENSION);
--		found_template_hook =3D access(template_path.buf, X_OK) >=3D 0;
--	}
--#endif
--	if (!found_template_hook) {
--		strbuf_release(&template_path);
--		return 0;
--	}
+-	if (!strbuf_readlink(&buf1, path1, 0) &&
+-	    !strbuf_readlink(&buf2, path2, 0))
+-		ret =3D !strcmp(buf1.buf, buf2.buf);
 -
--	ret =3D do_files_match(template_path.buf, path);
--
--	strbuf_release(&template_path);
+-	strbuf_release(&buf1);
+-	strbuf_release(&buf2);
 -	return ret;
 -}
 -
- const char *find_hook(const char *name)
- {
- 	static struct strbuf path =3D STRBUF_INIT;
-@@ -64,14 +38,6 @@ const char *find_hook(const char *name)
- 		}
- 		return NULL;
+-int do_files_match(const char *path1, const char *path2)
+-{
+-	struct stat st1, st2;
+-	int fd1 =3D -1, fd2 =3D -1, ret =3D 1;
+-	char buf1[8192], buf2[8192];
+-
+-	if ((fd1 =3D open_nofollow(path1, O_RDONLY)) < 0 ||
+-	    fstat(fd1, &st1) || !S_ISREG(st1.st_mode)) {
+-		if (fd1 < 0 && errno =3D=3D ELOOP)
+-			/* maybe this is a symbolic link? */
+-			return do_symlinks_match(path1, path2);
+-		ret =3D 0;
+-	} else if ((fd2 =3D open_nofollow(path2, O_RDONLY)) < 0 ||
+-		   fstat(fd2, &st2) || !S_ISREG(st2.st_mode)) {
+-		ret =3D 0;
+-	}
+-
+-	if (ret)
+-		/* to match, neither must be executable, or both */
+-		ret =3D !(st1.st_mode & 0111) =3D=3D !(st2.st_mode & 0111);
+-
+-	if (ret)
+-		ret =3D st1.st_size =3D=3D st2.st_size;
+-
+-	while (ret) {
+-		ssize_t len1 =3D read_in_full(fd1, buf1, sizeof(buf1));
+-		ssize_t len2 =3D read_in_full(fd2, buf2, sizeof(buf2));
+-
+-		if (len1 < 0 || len2 < 0 || len1 !=3D len2)
+-			ret =3D 0; /* read error or different file size */
+-		else if (!len1) /* len2 is also 0; hit EOF on both */
+-			break; /* ret is still true */
+-		else
+-			ret =3D !memcmp(buf1, buf2, len1);
+-	}
+-
+-	if (fd1 >=3D 0)
+-		close(fd1);
+-	if (fd2 >=3D 0)
+-		close(fd2);
+-
+-	return ret;
+-}
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index 0e0de21807..f69709d674 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
+@@ -495,16 +495,6 @@ int cmd__path_utils(int argc, const char **argv)
+ 		return !!res;
  	}
--	if (!git_hooks_path && git_env_bool("GIT_CLONE_PROTECTION_ACTIVE", 0) &=
-&
--	    !identical_to_template_hook(name, path.buf))
--		die(_("active `%s` hook found during `git clone`:\n\t%s\n"
--		      "For security reasons, this is disallowed by default.\n"
--		      "If this is intentional and the hook should actually "
--		      "be run, please\nrun the command again with "
--		      "`GIT_CLONE_PROTECTION_ACTIVE=3Dfalse`"),
--		    name, path.buf);
- 	return path.buf;
- }
 =20
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 20deca0231..fd02984330 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -771,57 +771,6 @@ test_expect_success 'batch missing blob request does=
- not inadvertently try to fe
- 	git clone --filter=3Dblob:limit=3D0 "file://$(pwd)/server" client
+-	if (argc =3D=3D 4 && !strcmp(argv[1], "do_files_match")) {
+-		int ret =3D do_files_match(argv[2], argv[3]);
+-
+-		if (ret)
+-			printf("equal\n");
+-		else
+-			printf("different\n");
+-		return !ret;
+-	}
+-
+ 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
+ 		argv[1] ? argv[1] : "(there was none)");
+ 	return 1;
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 73d0e1a7f1..68e29c904a 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -560,45 +560,4 @@ test_expect_success !VALGRIND,RUNTIME_PREFIX,CAN_EXE=
+C_IN_PWD '%(prefix)/ works'
+ 	test_cmp expect actual
  '
 =20
--test_expect_success 'clone with init.templatedir runs hooks' '
--	git init tmpl/hooks &&
--	write_script tmpl/hooks/post-checkout <<-EOF &&
--	echo HOOK-RUN >&2
--	echo I was here >hook.run
--	EOF
--	git -C tmpl/hooks add . &&
--	test_tick &&
--	git -C tmpl/hooks commit -m post-checkout &&
+-test_expect_success 'do_files_match()' '
+-	test_seq 0 10 >0-10.txt &&
+-	test_seq -1 10 >-1-10.txt &&
+-	test_seq 1 10 >1-10.txt &&
+-	test_seq 1 9 >1-9.txt &&
+-	test_seq 0 8 >0-8.txt &&
 -
--	test_when_finished "git config --global --unset init.templateDir || :" =
-&&
--	test_when_finished "git config --unset init.templateDir || :" &&
--	(
--		sane_unset GIT_TEMPLATE_DIR &&
--		NO_SET_GIT_TEMPLATE_DIR=3Dt &&
--		export NO_SET_GIT_TEMPLATE_DIR &&
+-	test-tool path-utils do_files_match 0-10.txt 0-10.txt >out &&
 -
--		git -c core.hooksPath=3D"$(pwd)/tmpl/hooks" \
--			clone tmpl/hooks hook-run-hookspath 2>err &&
--		! grep "active .* hook found" err &&
--		test_path_is_file hook-run-hookspath/hook.run &&
+-	assert_fails() {
+-		test_must_fail \
+-		test-tool path-utils do_files_match "$1" "$2" >out &&
+-		grep different out
+-	} &&
 -
--		git -c init.templateDir=3D"$(pwd)/tmpl" \
--			clone tmpl/hooks hook-run-config 2>err &&
--		! grep "active .* hook found" err &&
--		test_path_is_file hook-run-config/hook.run &&
+-	assert_fails 0-8.txt 1-9.txt &&
+-	assert_fails -1-10.txt 0-10.txt &&
+-	assert_fails 1-10.txt 1-9.txt &&
+-	assert_fails 1-10.txt .git &&
+-	assert_fails does-not-exist 1-10.txt &&
 -
--		git clone --template=3Dtmpl tmpl/hooks hook-run-option 2>err &&
--		! grep "active .* hook found" err &&
--		test_path_is_file hook-run-option/hook.run &&
+-	if test_have_prereq FILEMODE
+-	then
+-		cp 0-10.txt 0-10.x &&
+-		chmod a+x 0-10.x &&
+-		assert_fails 0-10.txt 0-10.x
+-	fi &&
 -
--		git config --global init.templateDir "$(pwd)/tmpl" &&
--		git clone tmpl/hooks hook-run-global-config 2>err &&
--		git config --global --unset init.templateDir &&
--		! grep "active .* hook found" err &&
--		test_path_is_file hook-run-global-config/hook.run &&
--
--		# clone ignores local `init.templateDir`; need to create
--		# a new repository because we deleted `.git/` in the
--		# `setup` test case above
--		git init local-clone &&
--		cd local-clone &&
--
--		git config init.templateDir "$(pwd)/../tmpl" &&
--		git clone ../tmpl/hooks hook-run-local-config 2>err &&
--		git config --unset init.templateDir &&
--		! grep "active .* hook found" err &&
--		test_path_is_missing hook-run-local-config/hook.run
--	)
+-	if test_have_prereq SYMLINKS
+-	then
+-		ln -sf 0-10.txt symlink &&
+-		ln -s 0-10.txt another-symlink &&
+-		ln -s over-the-ocean yet-another-symlink &&
+-		ln -s "$PWD/0-10.txt" absolute-symlink &&
+-		assert_fails 0-10.txt symlink &&
+-		test-tool path-utils do_files_match symlink another-symlink &&
+-		assert_fails symlink yet-another-symlink &&
+-		assert_fails symlink absolute-symlink
+-	fi
 -'
 -
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
-=20
+ test_done
 --=20
 2.45.1-246-gb9cfe4845c
 
