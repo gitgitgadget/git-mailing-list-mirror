@@ -1,78 +1,134 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1099050263
-	for <git@vger.kernel.org>; Fri, 24 May 2024 19:29:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FE71BF3F
+	for <git@vger.kernel.org>; Fri, 24 May 2024 19:47:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716578961; cv=none; b=Y1K7S99rN5P0vzJf2ukhvV1rKDO1nw3z1iPMZoouf5pzFuIA/LNn/8YEic4AEoIPhBEvsBZE+/TPPtpsDnq2Bm/1/usgXsb4HdjTvzKl46w4271EhFJ+a6fmcOdHxN2KI8bEfRnOhGBszvx8bX7Hj8BrtoMHRlE/5WsmyAVJPro=
+	t=1716580039; cv=none; b=rwsV92WNVPOaNQHpbxGDCaQFtf/+yaK7LCHPxVdS0cK97X9CNd9Z8PqAatNJnmJ0zmluiC/XP5rMwUQQlxrcQYPAiEs0RagDRLjH2aHpZ/cVtxEhcrnQTfD6WGGWSm4XzSHdYCDqNGbPLXki91Dg1F3mLy0fJMfS2G2b1YzkRkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716578961; c=relaxed/simple;
-	bh=epTqUa4T2CU5u8l4/g8VhsuQL6UXdaVK+JKXMGwrnFI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nxQWmM0KeAJPjYkvkwEx9or0EOsRUg+Z5Sl2zwXA+J20ZNfHBeFAUyFZcGYxW4vqrIv8wJ+TKmC8IMgpcShOYJFNqGECoYVgTivXm0wA1xt1pS3z2QUFmf9X6FtI90ej+48Vo1Z1NR3xeZ48g/joTIrTprkeIgkxE6WySqoUPNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-794b0080137so37847585a.0
-        for <git@vger.kernel.org>; Fri, 24 May 2024 12:29:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716578958; x=1717183758;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xccHkEgPriv2lGkg7Nvohbipk4NokWdTO1wjviLM0Eg=;
-        b=Ia7BYOovtnX6o2MV4ph4kj89tZsiYnpC35waPpIscPqx0uyg/w/kn6hABNDbopp+gx
-         Zo3gYPaGgAHi293Vpd8BqbU/dPD/Zc5y4yDvOJJ3lVAG0wVWyBNJKvd/LNFZC9jeqshF
-         iT0TAes6gpdARHwkw/u0TUj0MxTHj5evc1kHqYq0NyLBlCXGphnoA52Y/2ET5CCPALia
-         Ze7VecVPwqLCzxjv4mps9NS89Liv3ovnKoy0rkBg0uu4BF67YU5l9Ro74G5fJUYSYaGv
-         iZ4f4zZ+ATMa5mT4UypvZFYAHbjlm5LeYcpJh5uKu1YiOKwK5tHTFl0rJQN32e13neqd
-         5Z1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXjj27+Y9kpQFSwfR+BH+e4UFMcUwJKONEoKjBzdDkhxDKyp4KWx1UmxDYYghv+P8JzaqH7VJzVZ/Vb+Z8BmrpTWaRj
-X-Gm-Message-State: AOJu0YxI2d6w3KJZWdSrRq25Dvo9AhqOkfet6BofOCYU9/x1msrUvewA
-	JNYst5gtozglhHwKPpT+5LFGmheI1vWAqsDhi4KU3tFJTJ21PQOF75cisaSHc8r+kjRqiv7Mebo
-	be4t9e3PxvXB52kWkbDzwIiPv024=
-X-Google-Smtp-Source: AGHT+IF9WlXE5pmdMs/XgNoCsdct9dtY2q5LXwyPTPfGY81ln5cECkNQOtasuACHbEbXP5I65QXl+MFAMcq1lZ3LvK4=
-X-Received: by 2002:a05:6214:5987:b0:6ab:7270:fcbb with SMTP id
- 6a1803df08f44-6abcdaa7fdemr41416506d6.54.1716578957749; Fri, 24 May 2024
- 12:29:17 -0700 (PDT)
+	s=arc-20240116; t=1716580039; c=relaxed/simple;
+	bh=JPjmsfJ9smd/MJqxtFJwUYSSomYIH5RVhwl2KcaRXnQ=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=iZUg985DtFIIDAuAthXbNXzKIZgH2ZJx0sW9xVXKgHx6zgV1uFRi/IBlaasx8qPCZEo1fOsxEbhEoX2nHf+fXKvKtOJltDjze0O+LSmdJKmeQDd42hoavFbm4d7BmCBX3WVQTwh13d5Jxewy/FNPtLdNZtX/yybQmgZ0kXxdH9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JLW1xB0/; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JLW1xB0/"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 388E01BD1A;
+	Fri, 24 May 2024 15:47:17 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-transfer-encoding;
+	 s=sasl; bh=JPjmsfJ9smd/MJqxtFJwUYSSomYIH5RVhwl2KcaRXnQ=; b=JLW1
+	xB0/NtnOolhi/VqiJhkl7g5v3/0TOy9CVAlgMvqGiTeZ1limdyYO1dwpjFmm1XB/
+	Yfsa0MY2HFZzJpJwTl5Ye/zXS3kNtOr/s723U0HCvkRuPw/fpke7EKYeE4e+rBRk
+	sE2kLd9RfjURLqbGr624wRqw9LY8rfszzEKN9PY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 30ADB1BD19;
+	Fri, 24 May 2024 15:47:17 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8C8251BD18;
+	Fri, 24 May 2024 15:47:16 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH v2 00/12] Fix various overly aggressive protections in 2.45.1 and friends
+Date: Fri, 24 May 2024 12:47:03 -0700
+Message-ID: <20240524194715.695916-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.45.1-246-gb9cfe4845c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1716451672.git.ps@pks.im> <cover.1716545235.git.ps@pks.im>
- <0df17a51b43e1e9d007328aad6457363876b2e1d.1716545235.git.ps@pks.im> <54110fa9-02ba-4c9d-9ec2-c26e98a42730@ramsayjones.plus.com>
-In-Reply-To: <54110fa9-02ba-4c9d-9ec2-c26e98a42730@ramsayjones.plus.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 24 May 2024 15:29:06 -0400
-Message-ID: <CAPig+cTV8eXHyFjG3gS+veQb_zUrdfz1zvNNE-aKMsaHoyG6hg@mail.gmail.com>
-Subject: Re: [PATCH v2 9/9] builtin/refs: new command to migrate ref storage formats
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Pobox-Relay-ID:
+ 6C99C4D8-1A06-11EF-B83E-25B3960A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 24, 2024 at 2:24=E2=80=AFPM Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
-> On 24/05/2024 11:15, Patrick Steinhardt wrote:
-> > +--dry-run::
-> > +     Perform the migration, but do not modify the repository. The migr=
-ated
-> > +     refs will be written into a separate directory that can be inspec=
-ted
-> > +     separately. The name of the directory will be reported on stdout.=
- This
-> > +     can be used to double check that the migration works as expected =
-doing
-> > +     performing the actual migration.
->
-> s/expected doing performing/expected before performing/ ?
+As people have seen, the latest "security fix" release turned out to
+be a mixed bag of good vulnerability fixes with a bit over-eager
+"layered defence" that broke real uses cases like git-lfs.  Let's
+quickly get them in working order back first, with the vision that
+we will then rebuild layered defence more carefully in the open on
+top as necessary.
 
-The "doing performing" bit was noticed earlier[1]. I suppose in trying
-to fix it, Patrick accidentally removed "before" rather than removing
-either "doing" or "performing".
+What we have here are the first "revert" part.
 
-[1] https://lore.kernel.org/git/xmqqv833maxu.fsf@gitster.g/T/#m2c3eced90c6c=
-d61bf3acda1acc354b4ab76011d3
+These patches are designed to apply to 2.39.4; the series may have
+to grow as we discover more things to revert, but for now here are
+the patches to
+
+ - revert the over-eager "refusal to work" went into 2.39.4
+
+ - adjust 2.39.4 codebase to cleanly build and test (at CI and
+   locally) by backported fixes
+
+It would have been better if we did not have to have the latter
+class, but such is life.
+
+Relative to the previous iteration, there are two differences, which
+are:
+
+ * Old [12/12] that reverted the repository ownership check for
+   local case is gone.  A well known escape hatch is available that
+   is easy to use when the repositories are trusted (most notably,
+   in a hosting set-up, the repositories are trusted not to attack
+   the 'nobody' user that is running 'git').
+
+ * New [12/12] reverts a dubious checks for targets of symbolic
+   links done in "git fsck" (and transfer).
+
+Today's integration cycle is pretty much committed to have these in
+'next' for the weekend, merge them down to 'master' by the end of
+month, hoping that we can do 2.45.2 and friends sometime early next
+month.
+
+
+Jeff King (5):
+  send-email: drop FakeTerm hack
+  send-email: avoid creating more than one Term::ReadLine object
+  ci: drop mention of BREW_INSTALL_PACKAGES variable
+  ci: avoid bare "gcc" for osx-gcc job
+  ci: stop installing "gcc-13" for osx-gcc
+
+Johannes Schindelin (6):
+  hook: plug a new memory leak
+  init: use the correct path of the templates directory again
+  Revert "core.hooksPath: add some protection while cloning"
+  tests: verify that `clone -c core.hooksPath=3D/dev/null` works again
+  clone: drop the protections where hooks aren't run
+  Revert "Add a helper function to compare file contents"
+
+Junio C Hamano (1):
+  Revert "fsck: warn about symlink pointing inside a gitdir"
+
+ .github/workflows/main.yml    |  3 +-
+ Documentation/fsck-msgids.txt | 12 --------
+ Makefile                      |  2 +-
+ builtin/clone.c               | 12 +-------
+ cache.h                       | 14 ---------
+ ci/install-dependencies.sh    |  2 --
+ config.c                      | 13 +-------
+ copy.c                        | 58 -----------------------------------
+ fsck.c                        | 56 ---------------------------------
+ fsck.h                        | 12 --------
+ git-send-email.perl           | 32 +++++++------------
+ hook.c                        | 32 -------------------
+ t/helper/test-path-utils.c    | 10 ------
+ t/t0060-path-utils.sh         | 41 -------------------------
+ t/t1350-config-hooks-path.sh  |  7 +++++
+ t/t1450-fsck.sh               | 37 ----------------------
+ t/t1800-hook.sh               | 15 ---------
+ t/t5601-clone.sh              | 51 ------------------------------
+ t/t9001-send-email.sh         |  5 +--
+ 19 files changed, 25 insertions(+), 389 deletions(-)
+
+--=20
+2.45.1-246-gb9cfe4845c
+
