@@ -1,37 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F652F3B
-	for <git@vger.kernel.org>; Sat, 25 May 2024 04:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456DB138E
+	for <git@vger.kernel.org>; Sat, 25 May 2024 04:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716611631; cv=none; b=cR4tooC0u1cmy7yJ6Ji+3BQI65d2LcGhdqTWIayadfXX9POmyhfygPgC+jrh4JMD+qjB1+IWXoepofcwU9uGhxhMMemNwDqccl2/mb5VzQJ/SfCgNMbHaLEMs8CwS1r9ps1PfrKMATbSFjoD3MD3Ly2uuQsAnQNUGB4CsxdCRUI=
+	t=1716612399; cv=none; b=VvWKRWCzBRjHZTlTbGj0NE6dEgGoVccBFetLxu6pQy5r7blKFNQdB54d3dhC7esPWn6Q7WMGkjO47KS9sUGpURkcCa8vEtgK0QzeZGp5unQGLbobMqWW05FwlkuMGHhte5Zi44OaXUf8YqoaEOKecs+N3aWMbZoymDhfGfUnfi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716611631; c=relaxed/simple;
-	bh=gJ+acl6op6tMLN36XoRz97Jy1Qn6T+mPfJGFwtr3bnQ=;
+	s=arc-20240116; t=1716612399; c=relaxed/simple;
+	bh=/dVKCTf73KZRyE4F7cRzaIqflzBGsVtvMS82ujonF0Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lnLsxbCSOTz7KVpdcFcl8J8CgxD4d6LQ3mn330+jPsO/oj2h9eHmBOKqIeV8qEGF0ZtupIoR0gZnGjI+Id+FvgrEieARkkd5EfxgH+HhRuoLrocMhLM005TrtptPKVdJbqu+cPC8EFBLowEQT4ovSywFImMo70YVsb8RV/pwTsg=
+	 Content-Type:Content-Disposition:In-Reply-To; b=SkVCH34ck0OGvjf0ye/gJkrp0/3W37BD58rkb8X6HPRcjkk8uQMuF/ZSo3KkC7WaM8nNUGxp/wp+cOBXJEuSGNbRlC7WWX5AGVmK/3+DAra/IT8INxf2sifcol1b8X0w79Md4riNIxDpiQ4g1gH0xrWuCEiJ1Y8Y60hB/TiD98A=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 3991 invoked by uid 109); 25 May 2024 04:33:48 -0000
+Received: (qmail 4014 invoked by uid 109); 25 May 2024 04:46:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 25 May 2024 04:33:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 25 May 2024 04:46:36 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15875 invoked by uid 111); 25 May 2024 04:33:51 -0000
+Received: (qmail 15952 invoked by uid 111); 25 May 2024 04:46:39 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 May 2024 00:33:51 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 May 2024 00:46:39 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 25 May 2024 00:33:47 -0400
+Date: Sat, 25 May 2024 00:46:35 -0400
 From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 13/21] config: plug various memory leaks
-Message-ID: <20240525043347.GA1895047@coredump.intra.peff.net>
+Subject: Re: [PATCH v2 04/21] strbuf: fix leak when `appendwholeline()` fails
+ with EOF
+Message-ID: <20240525044635.GB1895047@coredump.intra.peff.net>
 References: <cover.1716465556.git.ps@pks.im>
  <cover.1716541556.git.ps@pks.im>
- <70e8e2651306e9d221e5e472720a7610947580a7.1716541556.git.ps@pks.im>
+ <9dd8709d1b3b350008218133986befdb2ae74bae.1716541556.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,81 +41,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <70e8e2651306e9d221e5e472720a7610947580a7.1716541556.git.ps@pks.im>
+In-Reply-To: <9dd8709d1b3b350008218133986befdb2ae74bae.1716541556.git.ps@pks.im>
 
-On Fri, May 24, 2024 at 12:04:12PM +0200, Patrick Steinhardt wrote:
+On Fri, May 24, 2024 at 12:03:29PM +0200, Patrick Steinhardt wrote:
 
-> diff --git a/alias.c b/alias.c
-> index 269892c356..4daafd9bda 100644
-> --- a/alias.c
-> +++ b/alias.c
-> @@ -21,9 +21,11 @@ static int config_alias_cb(const char *key, const char *value,
->  		return 0;
->  
->  	if (data->alias) {
-> -		if (!strcasecmp(p, data->alias))
-> +		if (!strcasecmp(p, data->alias)) {
-> +			FREE_AND_NULL(data->v);
->  			return git_config_string(&data->v,
->  						 key, value);
-> +		}
->  	} else if (data->list) {
->  		string_list_append(data->list, p);
->  	}
+> In `strbuf_appendwholeline()` we call `strbuf_getwholeline()` with a
+> temporary buffer. In case the call returns an error we indicate this by
+> returning EOF, but never release the temporary buffer. This can lead to
+> a memory leak when the line has been partially filled. Fix this.
 
-IMHO this should be done automatically by git_config_string(). The
-current design is an accident waiting to happen, and in the long run
-every call is going to need this FREE_AND_NULL(). By doing it in the
-function the calling code is shorter, and there's no way we'll forget.
+Hmm, doesn't this indicate a bug in getwholeline()? Most strbuf
+functions on error try to leave the allocation as-is.
 
-I posted a series along those lines a month or so ago:
+At the end of the getdelim() version (which is probably what you're
+running), when we see an error we do:
 
-  https://lore.kernel.org/git/20240407005656.GA436890@coredump.intra.peff.net/
+        if (!sb->buf)
+                strbuf_init(sb, 0);
+        else
+                strbuf_reset(sb);
+        return EOF;
 
-The catch is that you can't do this:
+So if getdelim() returned error and left us with a buffer (but still
+returned -1 for error!), I think this code is assuming that the buffer
+it left us with was the same one that existed beforehand.
 
-  const char *foo = "bar";
-  git_config_string(&foo, ...);
+But your commit message implies that it might allocate, hit an error,
+and then return that error along with an allocated buffer? Looks like
+that matches the getdelim() manpage, which says:
 
-So I introduced a new function that took a non-const pointer with the
-new behavior, with the idea that we'd eventually migrate everything
-over. It looks like you may have already done that migration earlier in
-your series, since the move to "char *" in the previous patch was OK.
+  If *lineptr was set to NULL before the call, then the buffer should be
+  freed by the user program even on failure.
 
-  Though as a side note, sadly:
+So should we do something like:
 
-    char *foo = "bar";
+diff --git a/strbuf.c b/strbuf.c
+index e1076c9891..e37165812b 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -659,7 +659,7 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
+ 	if (!sb->buf)
+ 		strbuf_init(sb, 0);
+ 	else
+-		strbuf_reset(sb);
++		strbuf_release(sb);
+ 	return EOF;
+ }
+ #else
 
-  does not produce an error or even a warning without -Wwrite-strings. I
-  think in the long run we should enable that, but there's a little
-  cleanup required to do so.
+That assumes sb->alloc is valid after a failed call, since
+strbuf_release() checks it. But that seems reasonable. If not, we'd need
+to free() and re-initialize it ourselves, and the code is more like:
 
-The main reason I didn't follow up on that earlier series is that there
-was some discussion about maybe moving this stuff over to strbufs (after
-teaching it to handle literal initializers). But if you've managed to
-remove all of the cases that needed that, I think just sticking with
-"char *" is fine.
+diff --git a/strbuf.c b/strbuf.c
+index e1076c9891..aed699c6bf 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -656,10 +656,8 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
+ 	 * we can just re-init, but otherwise we should make sure that our
+ 	 * length is empty, and that the result is NUL-terminated.
+ 	 */
+-	if (!sb->buf)
+-		strbuf_init(sb, 0);
+-	else
+-		strbuf_reset(sb);
++	FREE_AND_NULL(sb->buf);
++	strbuf_init(sb, 0);
+ 	return EOF;
+ }
+ #else
 
-The other issue raised in that thread is that many of these config
-variables are also passed to parse-options, which treats them as const
-strings (and we get no compiler support because it goes through a void
-pointer). So they may leak if we overwrite them, or in the unusual case
-that we load config after parsing options, we may try to free a non-heap
-string. The one we discussed was log's signature_file, and it looks like
-you split that to use two variables, which works. Junio suggested an
-OPT_FILENAME_DUP() option, which I'm also OK with. The main challenge to
-me is being sure we found all such spots (and not accidentally
-introducing new ones). But I don't have a good solution there.
-
-> @@ -1566,7 +1569,7 @@ static int git_default_core_config(const char *var, const char *value,
->  
->  	if (!strcmp(var, "core.checkroundtripencoding")) {
->  		FREE_AND_NULL(check_roundtrip_encoding);
-> -		return git_config_string((const char **) &check_roundtrip_encoding, var, value);
-> +		return git_config_string(&check_roundtrip_encoding, var, value);
->  	}
-
-This should have lost its cast in the previous commit, no? Applying up
-to patch 12 and building with DEVELOPER=1 gets a warning.
+But I think either of those would solve your leak, _and_ would help with
+similar leaks of strbuf_getwholeline() and friends.
 
 -Peff
