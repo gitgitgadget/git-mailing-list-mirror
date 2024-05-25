@@ -1,88 +1,113 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44A9B644
-	for <git@vger.kernel.org>; Sat, 25 May 2024 05:29:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794B0B644
+	for <git@vger.kernel.org>; Sat, 25 May 2024 05:45:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716614989; cv=none; b=sIQ2yD1kDLropD5uXsxMB1VclWSkYMexIGTtQI11Cjgrc3zskEqrQwl1VC1hRC4/bXfeB7xrtc5mhMHqWK/IyP82vXXNg58VyI39CPo4nPR30t1asGgE5QB5m5gFbTUVFwyf6FDVypBIssVSvAScU0c/VIns00QmNF91Ch142Bo=
+	t=1716615904; cv=none; b=MnWSRZ6F3SQp7rZqzr5O1JqpfftszhfcA7Myxax8fgYqGT/PVZbw9oiWbYpPmIIkKxJH/WU7w8XCQcaV9oZ0Uf0kFwNKu3y1cGS7iFvJVSp04wumT+7Lo4hMwjcmMTN/VC4KY63BjAMwcNi9g9SMD5oXHicVfLhpzRrgDIk67kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716614989; c=relaxed/simple;
-	bh=YysMKLSnsG+3q4Vq7Zqi3OAGQWYLE9Od/kw87fXmhSo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sJnOem7VMnI1P/ZfYgMWDiogXC3NBnei37kR/obaebKaKURNbXPgCe5iD6Hd8962rr3if8b/VPSE9ae8rkA7bd2G4RLtc6j5oFX+cihaacVW7l6/W9LHMk10/70C6JERMiCjXbOualSpgofRAY8z9H/gsz9hL5GIibXXcaqoLsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 4075 invoked by uid 109); 25 May 2024 05:29:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 25 May 2024 05:29:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16183 invoked by uid 111); 25 May 2024 05:29:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 May 2024 01:29:50 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 25 May 2024 01:29:46 -0400
-From: Jeff King <peff@peff.net>
-To: Tom Hughes <tom@compton.nu>
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, jonathantanmy@google.com
-Subject: Re: [PATCH] promisor-remote: add promisor.quiet configuration option
-Message-ID: <20240525052946.GD1895047@coredump.intra.peff.net>
-References: <20240523131926.1959245-1-tom@compton.nu>
+	s=arc-20240116; t=1716615904; c=relaxed/simple;
+	bh=FE6v4NkUoicTxqBpit7S38Zhrt41FY5Heh7Bjd5xpWc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nyPJkbqWbY1+N1/yHhgPbQNeKV/rrCT83waThx9/KMAUREMW+yJRoAYfK7oqw+l3s62cW7D9uvT+pxfNOdMcYRnXnFlLbFEx/4aDWmjP0LC3Os5wcPp1mp+9rbMULTVIWtOQWiJSO52kWz7ZPFInbnkF1Ea2XfnzHlD9E4c9AN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QtQuSiDC; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QtQuSiDC"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 444C92EB14;
+	Sat, 25 May 2024 01:44:57 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=FE6v4NkUoicTxqBpit7S38Zhrt41FY5Heh7Bjd
+	5xpWc=; b=QtQuSiDC8QfnxTluJEc6U+/9G3GfntsOvgxFModJIvhYxY/TBzanWX
+	KyTtK1LvfmEzb3WxQUKX4QIyshKAZvpEkv2GO4Ti674D3X87wWMoHIItlhhfd6Px
+	cZniztLw1ZaLWjDBGYaPvIccbKgOTfp6nlxiCubCkKEDK3DPFOnlM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3CB412EB13;
+	Sat, 25 May 2024 01:44:57 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5E2CC2EB12;
+	Sat, 25 May 2024 01:44:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ian Wienand <iwienand@redhat.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v5 3/3] run-command: show prepared command
+In-Reply-To: <20240525012207.1415196-3-iwienand@redhat.com> (Ian Wienand's
+	message of "Sat, 25 May 2024 11:20:52 +1000")
+References: <20240524073411.1355958-1-iwienand@redhat.com>
+	<20240525012207.1415196-1-iwienand@redhat.com>
+	<20240525012207.1415196-3-iwienand@redhat.com>
+Date: Fri, 24 May 2024 22:44:52 -0700
+Message-ID: <xmqqr0dqigx7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240523131926.1959245-1-tom@compton.nu>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E984D6B0-1A59-11EF-9125-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Thu, May 23, 2024 at 02:19:26PM +0100, Tom Hughes wrote:
+Ian Wienand <iwienand@redhat.com> writes:
 
-> Add a configuration optione to allow output from the promisor
-> fetching objects to be suppressed/
-> 
-> This allows us to stop commands like git blame being swamped
-> with progress messages and gc notifications from the promisor
-> when used in a partial clone.
+> diff --git a/run-command.c b/run-command.c
+> index 1b821042b4..9892c4421c 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -746,6 +746,8 @@ int start_command(struct child_process *cmd)
+>  		goto end_of_spawn;
+>  	}
+>  
+> +	trace_argv_printf(&argv.v[1], "trace: start_command:");
+> +
+>  	if (pipe(notify_pipe))
+>  		notify_pipe[0] = notify_pipe[1] = -1;
 
-I'm not at all opposed to providing a way to suppress this, but I feel
-like in the long run, the more fundamental issue is that git-blame kicks
-off a zillion fetches as it traverses. That's not only ugly but it's
-also horribly inefficient.
+This side is OK ...
 
-In an ideal world we'd queue all of the blobs we need, do a single
-fetch, and then compute the blame on the result. That's probably easier
-said than done, though we have done it in other spots (e.g., for
-checkout).
+> @@ -913,6 +915,7 @@ int start_command(struct child_process *cmd)
+>  	else if (cmd->use_shell)
+>  		cmd->args.v = prepare_shell_cmd(&nargv, sargv);
+>  
+> +	trace_argv_printf(&cmd->args.v[1], "trace: start_command:");
+>  	cmd->pid = mingw_spawnvpe(cmd->args.v[0], cmd->args.v,
+>  				  (char**) cmd->env.v,
+>  				  cmd->dir, fhin, fhout, fherr);
 
-In terms of user experience, you can simulate it with something like:
+... but this side should pass "cmd->args.v" (i.e., the entire array,
+without omitting the zeroth element) to be consistent with the other
+side.  I made the same mistake in my "how about doing it this way"
+draft, by the way.
 
-  # fault in all of the necessary blobs in one batch
-  git rev-list HEAD -- $file |
-  git diff-tree --stdin --format= -r --diff-filter=d -m --raw -- $file |
-  awk '{print $4}' |
-  git -c fetch.negotiationAlgorithm=noop \
-      fetch --no-tags --no-write-fetch-head --recurse-submodules=no \
-      --filter=blob:none --stdin
+It is because prepare_cmd() does this:
 
-  git blame $file
+        static int prepare_cmd(struct strvec *out, const struct child_process *cmd)
+        {
+                ...
+                /*
+                 * Add SHELL_PATH so in the event exec fails with ENOEXEC we can
+                 * attempt to interpret the command with 'sh'.
+                 */
+                strvec_push(out, SHELL_PATH);
 
-Obviously that command is horrid and not something users should have to
-care about. But if we had some way for blame to say "hey, I am
-traversing from X..Y, looking at these pathspecs", then our first
-lazy-fetch could try to grab all of them. And I think the same would be
-the case for "git log -p", and so on.
+                if (cmd->git_cmd) {
+                        prepare_git_cmd(out, cmd->args.v);
+                } else if (cmd->use_shell) {
+                        prepare_shell_cmd(out, cmd->args.v);
+                ...
 
-Doing a separate traversal isn't maximally efficient, but it might not
-be too bad in practice (and we could even do partial traversals to
-balance chunking versus responsiveness, though in the case of
-non-incremental blame we need everything before we generate an
-answer anyway).
-
-But anyway, I bring it up here because I think once we reach that end
-state, it won't be as interesting to turn off the fetch progress.
-
--Peff
+So, the other side (i.e. non Windows, that used the result from
+prepare_cmd()) skips the argv.v[0] element (which is the SHELL_PATH
+pushed by prepare_cmd()), but because a bare use of
+prepare_shell_cmd() done on the Windows side does not have that
+excess element at the beginning.
