@@ -1,105 +1,97 @@
-Received: from gosford.compton.nu (gosford.compton.nu [217.169.17.27])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E1FF9E6
-	for <git@vger.kernel.org>; Sat, 25 May 2024 10:29:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.169.17.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D8425601
+	for <git@vger.kernel.org>; Sat, 25 May 2024 12:25:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716632961; cv=none; b=FNl3Ik6XZrvKEeXpO1tCwfY1uYp8hvhmxpaqCirLOfmQ/exu1FUQrbTLP2w8Z8OX5SqFuS4WJAAC/FjOFyABGTtqh5GfNcC9/nNWgLdNRe/70rIfIo6giP18cWKLT7rqlf45RDaLEiSQsSnp6SgehGv9S68NjNeIuyqDYkj9MQk=
+	t=1716639931; cv=none; b=du8zSYJDtoGnmAcySz8y4itoOQpO5eFExo+7Xp6kXu2YmMf4TIDu9NYK0AaPK5wWGZrtl6jeU/RgBDPGeDSc6UzNEZhOsdxby2HAhh7heZhHGwGAZNlZrRUj+e2TSXETRinQ4OsbBk9U0ju5b2VwU4IJ/CQCpQZBxu6VQuAaojo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716632961; c=relaxed/simple;
-	bh=RvmX9hX/IRdOSxLoGbrG2d12ANa0T/YrORGSk75xuoc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dG2iYIcCf6A69d+eFbW0Kh3zBSQsUm0no4hlGkz/TSzcEPlVz1erWAzzzh4Ew7ZrZdQXfIJ5EatX2w4JHLsropmdHflE99cdATsLa5l6eyt++oRQoyQHNbmdFjITZR2BwHyREszyzu7UGDRo+J+T2CKdg2srjjJw4fmiuMU4u3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu; spf=pass smtp.mailfrom=compton.nu; dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b=PLltpTzv; arc=none smtp.client-ip=217.169.17.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=compton.nu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=compton.nu
+	s=arc-20240116; t=1716639931; c=relaxed/simple;
+	bh=i+yKBTGW8RrJ+lmQWwFO9rbZAmWxOp1F3TWm5Gq8MDM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=I40X/DFfvFgLsOlWBKntjWFldP9b+3Zya+0CpACZKLuxdKabMnd8aDVLA+Rs9msJWrofciGTeixVpZ50M2OtfoEVWEVpyBlP4engzbQeLyBApr2B7vJ3zstpKxw1zwszLpg5Zpyfo7QHBvVbsx4d3TFk19i90cziIvBXWqzWN9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org; spf=none smtp.mailfrom=kambanaria.org; dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b=cIcLJeY4; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=kambanaria.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=compton.nu header.i=tom@compton.nu header.b="PLltpTzv"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=compton.nu;
-	s=20200130; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=HBno1X1e6+IzuvDqJvRt+H6titU1oYDUFrA4CtCZd+I=; i=tom@compton.nu;
-	t=1716632960; x=1717842560; b=PLltpTzvQMzwTUk5g8tBDghMx4H6ParCCDLyJs3N3uQKEWx
-	h3ad/zXxudEjLEZMnbHV74/CBdJIhG3/XCbORYl/jJXSrK/9rtahSh5T3/ytDl0tlfAvZqbuM4Wzp
-	aqAZU9Z8eNr8LQl1uQKgxpQroq0nhxk57SVQCmEnsqkcBjOhcQC+okgv/chjbmtkVBHrvLpoSDkou
-	9zjvT0xTOSKVfofxYUDr4rSKNwuLlIE41cUrpLXhg4ZzwFTtpnF/VWmbUcYJwNyYw65CHXv3GfGW3
-	18wYmo2JGbwv+VipZXdOUci8+w4sKJh5jsTUNf1dLFxEeGpcTgq+dyzkfjCtvhNQ==;
-Authentication-Results: gosford.compton.nu;
-	iprev=pass (bericote.compton.nu) smtp.remote-ip=2001:8b0:bd:1:1881:14ff:fe46:3cc7
-Received: from bericote.compton.nu ([2001:8b0:bd:1:1881:14ff:fe46:3cc7]:44904)
-	by gosford.compton.nu with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <tom@compton.nu>)
-	id 1sAoeH-00000009rYp-2rNE;
-	Sat, 25 May 2024 11:29:17 +0100
-Received: from bericote.compton.nu ([2001:8b0:bd:1:1881:14ff:fe46:3cc7]:49158)
-	by bericote.compton.nu with esmtps  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.97.1)
-	(envelope-from <tom@compton.nu>)
-	id 1sAoeH-0000000CP3Q-2VlH;
-	Sat, 25 May 2024 11:29:13 +0100
-Message-ID: <1b10454e-c5ad-4ce3-a724-27306ee8824c@compton.nu>
-Date: Sat, 25 May 2024 11:29:13 +0100
+	dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b="cIcLJeY4"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-578626375ffso1284248a12.3
+        for <git@vger.kernel.org>; Sat, 25 May 2024 05:25:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kambanaria-org.20230601.gappssmtp.com; s=20230601; t=1716639926; x=1717244726; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=osBT+iEVthEi1Jt/FNZjePR9W4Yrrc9Nf/x6byktEiw=;
+        b=cIcLJeY4P/cLjmzh+/oa37m38PNrg763RKGr9yB3m6SgDMwfglaFffnWJffHR3V9x8
+         VenO/vkuxmiq9llD3c72+xPMRLXlyMkA8ii8W6uQ/phMoIi6kCquFoGszrcOaRi99tvt
+         UPlt6lmAqB7NMTh2ObSKkXJdUcnktypneAtLSel/Cyz6AhFo/mElWaKo2H40B5rwS7MV
+         ce/LecwEn5UrJNEBA7d44j9zbBsr3DT/G0wqkvbew1dL3dGp6mERdrNBvrkVLD/FgRlj
+         LXN7sD6t7+Sh2tLFG04qKdDis4NNY70+IvqZfJ1w81T9EQvDek7V7i21c7TSEpOB96tb
+         YA7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716639926; x=1717244726;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=osBT+iEVthEi1Jt/FNZjePR9W4Yrrc9Nf/x6byktEiw=;
+        b=jFw4030h+UZwITFxbN5a3FQk7lqpzfGSnDzgKp3ht60CQXb+2D+2uEg/FNQOIo6Zu6
+         3deAxWppmhQ+o8gK2vG0wf5JWreP8bZwbHZvh/c6fiMkMh/WjGXmXCGlOK+i5b7fHMd7
+         1GBhJhQyX4UmsWqJNZeJOGHE5sk51vdJXU1ff5ZrzWdwwKfcYXiJZYQMvjgilBFqe0fW
+         Hk4mkdLm3ft0VBseBtF3A25qu9xEgx04Dq+jZbeYL+QZwq1u5ZXJbttopBZv9UIGqoNQ
+         sPFjwrpGzmQb5zzz3i0OPnzQql1g2c4OBXP2iqeMeUtR6uIBdUN6TFk0OcsQlRmgbwc8
+         2Dfg==
+X-Gm-Message-State: AOJu0YxhYgsxmQgV5XNQLoZOmDhFWmpamXvfd3HtPQp2AhOn9qnQnLMf
+	PvUyudIYzeZpr/pp9tZiSTHMwbJtV/aePiEFtypfAt+YOqMfUdqwutpg9/o4hShuZuBas/zev7z
+	7xXg=
+X-Google-Smtp-Source: AGHT+IHl/ODa2ZKWq3Ue1nw1f7kFxFWuK164KXtciHMhoapZ3sosqCnHaRzHOPZVUPI0fnGUJPnLTw==
+X-Received: by 2002:a50:9f4b:0:b0:578:6378:bc4 with SMTP id 4fb4d7f45d1cf-57863780cb5mr1713053a12.10.1716639926360;
+        Sat, 25 May 2024 05:25:26 -0700 (PDT)
+Received: from localhost.localdomain ([147.161.172.192])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57852339fc4sm3054485a12.15.2024.05.25.05.25.25
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 25 May 2024 05:25:25 -0700 (PDT)
+From: Alexander Shopov <ash@kambanaria.org>
+To: git@vger.kernel.org,
+	gitster@pobox.com,
+	worldhello.net@gmail.com
+Cc: Alexander Shopov <ash@kambanaria.org>
+Subject: [PATCH 2 0/1] Allowing localized substitution hints in parse-options
+Date: Sat, 25 May 2024 14:24:37 +0200
+Message-ID: <20240525122514.2608-1-ash@kambanaria.org>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <xmqq5xwa1pfl.fsf@gitster.g>
+References: <xmqq5xwa1pfl.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] promisor-remote: add promisor.quiet configuration option
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, jonathantanmy@google.com
-References: <20240523131926.1959245-1-tom@compton.nu>
- <20240525052946.GD1895047@coredump.intra.peff.net>
-Content-Language: en-GB
-From: Tom Hughes <tom@compton.nu>
-In-Reply-To: <20240525052946.GD1895047@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 25/05/2024 06:29, Jeff King wrote:
-> On Thu, May 23, 2024 at 02:19:26PM +0100, Tom Hughes wrote:
-> 
->> Add a configuration optione to allow output from the promisor
->> fetching objects to be suppressed/
->>
->> This allows us to stop commands like git blame being swamped
->> with progress messages and gc notifications from the promisor
->> when used in a partial clone.
-> 
-> I'm not at all opposed to providing a way to suppress this, but I feel
-> like in the long run, the more fundamental issue is that git-blame kicks
-> off a zillion fetches as it traverses. That's not only ugly but it's
-> also horribly inefficient.
+I hope this time patch submit is better.
+Requests for changes from previous review should be handled.
 
-This is true. One thing I found that makes things a lot more
-efficient if you're using ssh as the transport is to enable
-persistent multiplexing in .ssh/config with something like:
+parse-options.c contains functions and macros to print messages with
+terms optionally enclosed in chars promting substitution to users such as:
 
-Host git.example.com
-   ControlMaster auto
-   ControlPath /run/user/%i/ssh/control.%C
-   ControlPersist 1m
-   SendEnv GIT_PROTOCOL
+  blah-blah-blah <TERM>
 
-which avoids each fetch having to setup and authenticate a
-new ssh session.
+Since languages using different alphabets or writing systems can translate
+the term in an obvious manner to prompt the user to substitute them, I expose
+these character to the translators so the messages can use the same style as
+elsewhere in git.
 
-> In an ideal world we'd queue all of the blobs we need, do a single
-> fetch, and then compute the blame on the result. That's probably easier
-> said than done, though we have done it in other spots (e.g., for
-> checkout).
+Comments to the translators are shorter than before but hopefully they are
+not cryptic.
 
-That would certainly be an excellent improvement, yes.
+Alexander Shopov (1):
+  parse-options: allow localized substitution hints in macros
 
-Tom
+ parse-options.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
--- 
-Tom Hughes (tom@compton.nu)
-http://compton.nu/
-
+--
+2.45.1
