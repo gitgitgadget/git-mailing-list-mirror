@@ -1,143 +1,120 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024AF2119
-	for <git@vger.kernel.org>; Sat, 25 May 2024 20:22:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289CC86621
+	for <git@vger.kernel.org>; Sat, 25 May 2024 21:47:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716668571; cv=none; b=k2O1a50qYwAbYUOfBlGRll8zgLvFCzLWxHQK2UIdZZ4ft1pde43ohfwIeRvTeiEBC2psKZXHbhhRuw+ybwp7S4SQhp+CBaxnWKAeJrf9XogL1TDsNJuoV2Z4sKVZw9LGNf3MKH46lV63Vg+tIEG8rt86ds9lipbM4CrTqXAKYBA=
+	t=1716673631; cv=none; b=UCMVgGBQJTdouQMXpmoTImn74FM9IZeJfPNXEykpVzPQB/Z4rvNot/eBL4aY0ZKrnF+YxjcVCFjPOJrLZq+dPDweMmn6/C4L9IsxhL9kXy8C7QPXxplLu6e/hv0rKOHs6Sv8BEsapTzh5hBGpvlUuMd+UQyokOnQSupPfZuMndY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716668571; c=relaxed/simple;
-	bh=o2aXG53qyy9iPUM9NpwjyMEwnhn6huVq7e//bgJqc9w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=ghYNZ2AFe3QVIPLuI6RkG/XwWdm9vqDKvq+7YjjxHKlPGIu9gEu05E2SIkEwxihQUloQEX9AWM4PynVk8aeYmcQcNgLOp2AOhP70yE3ujmRURnXflj4kr8lMz0C+5k619+lhwPqBylQOX6rTr2zuhRREaQYO+i/vWrxMG3+ZUys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZI8mUp8+; arc=none smtp.client-ip=209.85.210.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716673631; c=relaxed/simple;
+	bh=l+ZVr6xc9qSFe0K5v4aj+SpRmyM5CZ8oq3Sz5+ud6Es=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fZHvhJvvylNpNL5TUMvZZRSs+1WXQ9py6uWhFEsrTEmmUadKLhT9IEJwM5E5fTgqHM8YuBArj99y97iE7NMScK/b9Bw/WwkspXRmKoMqOR0axTjDVJhRGhuRsPBiM6rrlV9hnCBM+KmZIghKZu3hdapgpywoY63l8hNTUkiHacI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=QbZIff1l; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZI8mUp8+"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-6f144141608so3452781a34.0
-        for <git@vger.kernel.org>; Sat, 25 May 2024 13:22:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716668569; x=1717273369; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uGGnitFse688+ymWqlDgC6wLCED9TQ3SBaBYQIRWxmE=;
-        b=ZI8mUp8+/U0Ywipm0aAzQhqMJhTPq+uvmdq7vOCM8WXG7JzXw9iTBURntavb8C5zql
-         obINmWYg8rw+d11jGInS/3EVLOsiTOKciMR3UPPggaDIlkL3oAh5MR9ca/1ltGKt5+4A
-         Og050J5iIQQ2sdmhM2llBfkvqhusM8heBBIu2TkKuKZ8dsTpBVHirw9R41nsJX1dIo4t
-         +h2jlpDU0BT2Dy5YB1LTrZghRfyNPy9RfMDOTIGFMTFYpgMhpriZpqNiXEVt00sT6MeR
-         zwJHl1Ocu1wW5yYxjP18APVPkentfj16JuQRk+93SKQCzmN97tT+lv0cTH47LHFpeq4P
-         o+7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716668569; x=1717273369;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uGGnitFse688+ymWqlDgC6wLCED9TQ3SBaBYQIRWxmE=;
-        b=DcgF+CJpnNuP54br91KK9YcmKxEcNNpFbATD1VOio2Rh5Yq1p+4AeR3kvUYt4ZgXgK
-         9BIxIku818b7+UX1deWS7tAEZn04DWJvDVJPmpVkQHhm1RvpvXSmbnoEeuA6ESk5xleK
-         M+Df35CQU1EzdqVUl3CT06CmmLycLPpz4lC3YXpHYKAGSraHf/LP314Rn0SdAk4W1S6g
-         3ipKgekCC8XXr0J0kpr8R+VJ+wuhMt7SkR+vnZ8d2u7OWFnLevJNV9Ld8Qye7kbNIuex
-         zceNS9wbh/MCyLkgn6a4lGOCCBOmC2cWNi8X+XtWDiDUi/TI09GL7EZxSW83ZyyAjdpF
-         Y/Kg==
-X-Gm-Message-State: AOJu0Yztb5S3YR4aOoDVpOupBOpe52tPvzAJDeOPsipqn52stud/lAdx
-	xuu3+ho4TsY7a2nmQFE+W78AOxur7xHNamA1C0C3kzJnh1sLa3x60IBPDst8921apOm9h9wdoaq
-	hJU5chLSgmGDpPTCNSklmwrX68VMNzzta
-X-Google-Smtp-Source: AGHT+IFiZ7LFz+E5/VsofzsnmKcaMPDWBkKv4e0TsGeIAyx6cy9HaIEWYqlLaNa4b+ZrwwYOuV73iDEz1bpK64xPIi0=
-X-Received: by 2002:a05:6870:a10c:b0:24c:a527:3e44 with SMTP id
- 586e51a60fabf-24ca527fdadmr6067208fac.32.1716668568729; Sat, 25 May 2024
- 13:22:48 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="QbZIff1l"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 7E4BE5DAA1;
+	Sat, 25 May 2024 21:38:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1716673119;
+	bh=l+ZVr6xc9qSFe0K5v4aj+SpRmyM5CZ8oq3Sz5+ud6Es=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=QbZIff1l/URrvfpaK9dqGXGSwjYRmb/MW7cur7b17H7Cq/n9Llc4i+FwhlGrcu2LP
+	 QD57ve+GNO9IcY6yRfdSGCoQ9MrrHynwxkm79YNtUS8f8N2ce2c6E05qp2/fsx4LmW
+	 e4coB/XYLIIykUdHHwRsaaRdmiOryPmLCOGAcH3WzB+AE09YANgs5KQIZvIBJ/XzTc
+	 RJynfoHzVyR5UwIDo/w0wtBa3BBWqusqs2ZDjJhBG+fNwPiUdty0WF4rtzi3ib6QCU
+	 HInaKPBpx7R6WBODM3CPLBJCGO09kwvyBqYZEA1vm4oYv6xEfxWDUld2jTGX6A4a3C
+	 3Ovzi7v1BV2MuYjQ4y8cBmMq+2kNltJd7WIcrlREf47Y+riuM9ACLg2mSpU6KCLDQa
+	 7/ButLqYCQAvJsDjP8eTBrjAlSH35U1JVzaE+Tlm6xmE4+a5ar6xrQ4Z0QtUMb0lha
+	 643f1puZH5QPTq9nvOOeLvgwqVZ9ZJ5LhpE+/c9iLTNsLqvUN3J
+Date: Sat, 25 May 2024 21:38:37 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: William Ruppel <wcruppel@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Git "safe directory" not working correctly
+Message-ID: <ZlJaXfLc5fvBl4UK@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	William Ruppel <wcruppel@gmail.com>, git@vger.kernel.org
+References: <CAHa7PX8THmTAYFVwAtjimgcenUPC4A5BF2OHExC82Cnrdtbn=g@mail.gmail.com>
+ <CAHa7PX_JwsvADE0Xv9AW--5ZgAChwQTWrqNSGhwWbuabk5_PKQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAHa7PX8THmTAYFVwAtjimgcenUPC4A5BF2OHExC82Cnrdtbn=g@mail.gmail.com>
-In-Reply-To: <CAHa7PX8THmTAYFVwAtjimgcenUPC4A5BF2OHExC82Cnrdtbn=g@mail.gmail.com>
-From: William Ruppel <wcruppel@gmail.com>
-Date: Sat, 25 May 2024 16:22:38 -0400
-Message-ID: <CAHa7PX_JwsvADE0Xv9AW--5ZgAChwQTWrqNSGhwWbuabk5_PKQ@mail.gmail.com>
-Subject: Re: Git "safe directory" not working correctly
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="WXULyAy5VCNU7owC"
+Content-Disposition: inline
+In-Reply-To: <CAHa7PX_JwsvADE0Xv9AW--5ZgAChwQTWrqNSGhwWbuabk5_PKQ@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--WXULyAy5VCNU7owC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-FYI, I discovered that the issue appears to be related to the single
-quotes. If I do this instead, then all repos are considered safe:
+On 2024-05-25 at 20:22:38, William Ruppel wrote:
+> FYI, I discovered that the issue appears to be related to the single
+> quotes. If I do this instead, then all repos are considered safe:
+>=20
+> git config --global --add safe.directory *
+>=20
+> And in a similar vein, to whitelist just the single repo I was having
+> an issue with, git itself  says the command should be:
+>=20
+> "
+> To add an exception for this directory, call:
+>         git config --global --add safe.directory '\\bill\gitmaster\Src'
+> "
+>=20
+> But, again, the single quotes don't allow this to work.
+>=20
+> All the examples I've seen use single quotes. Has something regressed
+> w.r.t. to how single quotes are handled?
 
-git config --global --add safe.directory *
+The examples are given for a POSIX shell, where single quotes prevent
+any interpolation or escaping, and double quotes permit interpolation.
+You're running on Windows, probably with CMD or PowerShell, where single
+quotes don't work and would probably be interpreted as part of the
+argument, leading to the `safe.directory` value being `'*'`, not `*`.
 
-And in a similar vein, to whitelist just the single repo I was having
-an issue with, git itself  says the command should be:
+Note that at a POSIX shell, not quoting the asterisk will result in it
+being expanded to all files in the current directory, which is why
+quoting is necessary.
 
-"
-To add an exception for this directory, call:
-        git config --global --add safe.directory '\\bill\gitmaster\Src'
-"
+If you use Git Bash, then using single quotes is correct.  Otherwise,
+you may need to use double quotes or read the documentation for your
+shell to determine how to properly quote things.  (I don't use Windows,
+so I can't say what the proper syntax is.)  Git itself doesn't
+necessarily know what the shell used to invoke it is (very especially on
+Windows, where SHELL will not be set), so it provides the default POSIX
+command.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-But, again, the single quotes don't allow this to work.
+--WXULyAy5VCNU7owC
+Content-Type: application/pgp-signature; name="signature.asc"
 
-All the examples I've seen use single quotes. Has something regressed
-w.r.t. to how single quotes are handled?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
-Thanks.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZlJaXAAKCRB8DEliiIei
+gWznAQCIz4AVNohaX4/HXcVLYaGldfsMQsjG/FQvu+CmvtaqjQEAz0sTXb95FZMm
+pWZMxfM3JHITz8S5RbWaORUjBtwSqA8=
+=FKf4
+-----END PGP SIGNATURE-----
 
-On Sat, May 25, 2024 at 2:49=E2=80=AFPM William Ruppel <wcruppel@gmail.com>=
- wrote:
->
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> Upgraded to git 2.25.1.windows.1
-> Now when I pull from my remote I get: fatal: detected dubious
-> ownership in repository at '\\bill\gitmaster\Src'
-> So, I ran this to whitelist everything: git config --global --add
-> safe.directory '*'
-> However, this does NOT solve the issue! I am still getting the same
-> 'dubious ownership' error!
-> So... what, is this some sort of bug where UNC paths are not being
-> recognized as safe?? Or...?
->
->
-> What did you expect to happen? (Expected behavior)
-> Pull should succeed without security errors, since I whilelisted *
->
->
-> What happened instead? (Actual behavior)
-> git craps out with a 'detected dubious ownership' error.
->
->
-> What's different between what you expected and what actually happened?
-> I cannot pull changes from my remote!
->
->
-> Anything else you want to add:
-> Please provide a workaround.
->
->
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
->
->
-> [System Info]
-> git version:
-> git version 2.45.1.windows.1
-> cpu: x86_64
-> built from commit: 965b16798dab6962ada5b0d8cf0dca68f385c448
-> sizeof-long: 4
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> feature: fsmonitor--daemon
-> uname: Windows 10.0 19045
-> compiler info: gnuc: 13.2
-> libc info: no libc information available
-> $SHELL (typically, interactive shell): <unset>
->
->
-> [Enabled Hooks]
-> not run from a git repository - no hooks to show
+--WXULyAy5VCNU7owC--
