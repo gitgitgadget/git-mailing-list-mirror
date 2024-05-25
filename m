@@ -1,72 +1,73 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E05611B
-	for <git@vger.kernel.org>; Sat, 25 May 2024 23:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C54127B5F
+	for <git@vger.kernel.org>; Sat, 25 May 2024 23:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716680711; cv=none; b=fVhGo9OjOIJIgnh93IEaf/qJMYeVu7XW58o9W5cPS9AhwTmKO0q+DVYVbdZgH4wDuoI3BdT1Ywyd26WgAzuwTfWypEXeVpk/B4B0kiBHTL1zlic6OKC+J6osOFClElGkzsYaZOJCSv5s0xEX65OFWC55pCxdPJnrTGcBpc4+8+E=
+	t=1716680713; cv=none; b=XaVn3xKD08GT6zzlrbzyC85Rvp9Zz8Z8k/NHhNgkBciaiBZMouVn7As3LavNjb8/tYYfEpE7kxvA6aaFXccmAQBfrYJ7/mkzSP0DfGh9JXMuORzEXVq3ZC7yucXJ1nrooXPIHf8Bmy0cD+Sw6WbGXBasMjaHFJ4oH2peX3UEPJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716680711; c=relaxed/simple;
-	bh=pDXRgrua6JJbUBTIL6Wugzrh2VWQLKVAmv7dGOEQyno=;
+	s=arc-20240116; t=1716680713; c=relaxed/simple;
+	bh=lmqbNgGMmABTQP5nSU3AMvzls+Vfe0MU4r19Mys/S7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0whGrlFSbVU1IsfVmnkVfxvRUney79L9w836Yh9OpZbw4bAMhiIyV7rkcZolr51X4ZO5MTO6hWV2TiZA7a1z4gekiKCGYU5kQD0SIfmtqYf+8Klhvu8GznHHZFSsvY6NZkniz+zBDOob94MIs09+stDM5NQJO90pukzQJQSZyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=BEyxS6rT; arc=none smtp.client-ip=170.10.133.124
+	 MIME-Version; b=C+xipyPc42K+RALRhU53yfZfxX9Nu/GvhXPTmQwDWCt892+KeZDU0mfr3d0wFFsojZlQX+fRfl52rj5kQYAvaw6wxnUKL3BpgEpgGjuuR5OSHZlOn9i8ak+0F4aNVFL6suvjdwRZq/S4g2c/6wPr69u1SQIfVIaF+PLPt5/dNms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=BiRxOnsE; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="BEyxS6rT"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="BiRxOnsE"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1716680707;
+	s=mimecast20190719; t=1716680710;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Amod9xU8lgw8FTf/FjDgMFSU+p0WZkQYZn85tjYS7Nw=;
-	b=BEyxS6rTVkMT208o/oZ8zwuQlcJ9EY2nPd4kmv/wHnOnOfRQBKDO0GGs4B9eTc0M/Gk5IV
-	C3nl4qBEwlAlkasOeQpR2z6Gk5w2jcQ0yWXcGP83PnZ5reQxK9mdn//+FRFaXEHeFgzhe5
-	356qk2OdSq4CktbSwE9HUWWQyCYeHgo=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=HA6j17gQrsO2y+zRbGT2fkxHEsbsSXgNNVrSzERTX+0=;
+	b=BiRxOnsEw7Q/hJ6EF1b9IShO2RqD5UEXSIMhKkhsWqcYJj3LeATLHSDHeM2ioQvFjR9xNY
+	86mLQILlqDuFScJzr7Bt2DCARX7PzEw8/8ftWQlf5/GeQiBHpPJ+qKSIhkli8hmOpBo1jI
+	bcjyfYvDvn4sOZ1OHuvKxlM+RVXDxpU=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-590-WLIwPibRN9iwzDko4kIrfQ-1; Sat, 25 May 2024 19:45:06 -0400
-X-MC-Unique: WLIwPibRN9iwzDko4kIrfQ-1
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-43fb05b2932so21033781cf.1
-        for <git@vger.kernel.org>; Sat, 25 May 2024 16:45:06 -0700 (PDT)
+ us-mta-606-AMvkHxl7M_yl1amHu2sJnw-1; Sat, 25 May 2024 19:45:09 -0400
+X-MC-Unique: AMvkHxl7M_yl1amHu2sJnw-1
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-43fb0949d28so33746911cf.0
+        for <git@vger.kernel.org>; Sat, 25 May 2024 16:45:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716680706; x=1717285506;
+        d=1e100.net; s=20230601; t=1716680709; x=1717285509;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Amod9xU8lgw8FTf/FjDgMFSU+p0WZkQYZn85tjYS7Nw=;
-        b=lgFrUnkKlgI8Bv6eRiKqNeUKGCcr/EB4Kf/3TX3kPxDcd8OyYpabcRs9/ZViMJq8eE
-         yi4BIDvEhQK3IVgehz1Onw5qB3GVqDbs9xnRVwRA511ZqXegtnkjpHdoxPP2ZEWow+nc
-         vCA+bBL9IMKCyPQfTKCM87cNLrOQzhDtTBv/EuiZYVZG5nZBMQ+rGjZyUoyD5S8Vco5O
-         EG9X91NgSvilaDOAnkG/Ab0iUwHEItgSLClncgArmQUTpf9tet3yGBUW5y8XHnk9vVs3
-         clyXHtv/Z0SZKxnLgSjhNYJdo7Hv29BFMnDgJuHxtfonqpJkD0IW182C18M5U7Fb+sVF
-         bzEw==
-X-Gm-Message-State: AOJu0YzrJflq+0Uemq64eSof9ow9hlEQAeLrjV3nsT0aTBHDyoL2wU6n
-	50xf0Ntp0+B7DVmqdwmQrQC3fDvRWO3zueJRM1FRNLTaM35fJVWB7mMF2AZkju2HO+9W401BDss
-	IT+cxSJmrOK0Hmr/92OALqmSshQZIE9RAQVMvzgsIB5F8RmOR3H8tTvfD07BgRL//U1ZNsxTTbk
-	GlEP7cGswuIDijSWMSB4kd4zIxJNSA360ndw==
-X-Received: by 2002:ac8:5a49:0:b0:435:f8f0:2940 with SMTP id d75a77b69052e-43fb0de0f58mr65070321cf.22.1716680705499;
-        Sat, 25 May 2024 16:45:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG6kfw3Z2OPRSYGItajVECNSRJBD7Z8W3T/v453LcSBNeZYcY5eQ4EXimUm3/ACmlKnDaPA5Q==
-X-Received: by 2002:ac8:5a49:0:b0:435:f8f0:2940 with SMTP id d75a77b69052e-43fb0de0f58mr65070141cf.22.1716680704984;
-        Sat, 25 May 2024 16:45:04 -0700 (PDT)
+        bh=HA6j17gQrsO2y+zRbGT2fkxHEsbsSXgNNVrSzERTX+0=;
+        b=SA3jSIc+o/r3D/8TpQK6q9A+UafNr2s+fvE1NhX/8tiFOW0wZDqOtIY/pM4BaGUFKC
+         D5w9Z8NUNyOKcRJvO+MPgixc5WRf0N0XbMSDkwTINLU0rfyt3n8VwnodV9awaGiQuMrB
+         bXdyboj3GgimWMky/DPwIei4KlX+D4tcMylce8NEoI3g0imOH3W9TDiTRF/MNO4Lk0KZ
+         0oGsNayx8argjBaGrhAzf0QSenzJ1+Per4Sa+M4EY//NjxbhKG9qcHJ01UlGZjhaS3Mm
+         MrlXwqvRUMtY8S7HgngviaPTJxfVpWFTTBVryZSXCHmYMI8k/Cx+OrQMgB672wVR8v4d
+         P3OQ==
+X-Gm-Message-State: AOJu0Yxe5kdS+URdJPmBmPkIGrZYrLW15tYzrot9EqbykX79wpSNlMU3
+	eq9PaiHBtE83bxbDKw5NMoFusdOCwj6JAWLpvwGLbcXFLVZloxYI6A+C7fbZvR6LmrSu7Tz2Qcv
+	CP/yXHxQfCpTI3b5KHapSP/iX0/G5o+Hh2XiB4jD4RXg37/8xTJxCq4CmjiZLf4LennFN7yjR3D
+	InC3YxPOrOG/z5m5OClqm+Yx4TM0sII/DgpQ==
+X-Received: by 2002:ac8:5781:0:b0:43d:fd98:78b4 with SMTP id d75a77b69052e-43fa746b344mr168227281cf.17.1716680708525;
+        Sat, 25 May 2024 16:45:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGCOAzLpsQl5T0EfwJ6ySBBlSqNpEur7qkFHuCPQZsTIqirZQj8ynHv2qN0JMYETj1fJDT1mg==
+X-Received: by 2002:ac8:5781:0:b0:43d:fd98:78b4 with SMTP id d75a77b69052e-43fa746b344mr168226971cf.17.1716680707909;
+        Sat, 25 May 2024 16:45:07 -0700 (PDT)
 Received: from fedora19.redhat.com (203-12-11-234.dyn.launtel.net.au. [203.12.11.234])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43fb182c636sm20553761cf.52.2024.05.25.16.45.03
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43fb182c636sm20553761cf.52.2024.05.25.16.45.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 May 2024 16:45:04 -0700 (PDT)
+        Sat, 25 May 2024 16:45:07 -0700 (PDT)
 From: Ian Wienand <iwienand@redhat.com>
 To: git@vger.kernel.org
 Cc: Ian Wienand <iwienand@redhat.com>
-Subject: [PATCH v6 1/3] Documentation: alias: rework notes into points
-Date: Sun, 26 May 2024 09:44:33 +1000
-Message-ID: <20240525234454.1489598-1-iwienand@redhat.com>
+Subject: [PATCH v6 2/3] Documentation: alias: add notes on shell expansion
+Date: Sun, 26 May 2024 09:44:34 +1000
+Message-ID: <20240525234454.1489598-2-iwienand@redhat.com>
 X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240525012207.1415196-1-iwienand@redhat.com>
+In-Reply-To: <20240525234454.1489598-1-iwienand@redhat.com>
 References: <20240525012207.1415196-1-iwienand@redhat.com>
+ <20240525234454.1489598-1-iwienand@redhat.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,34 +76,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There are a number of caveats when using aliases.  Rather than
-stuffing them all together in a paragraph, let's separate them out
-into individual points to make it clearer what's going on.
+When writing inline shell for shell-expansion aliases (i.e. prefixed
+with "!"), there are some caveats around argument parsing to be aware
+of.  This series of notes attempts to explain what is happening more
+clearly.
 
 Signed-off-by: Ian Wienand <iwienand@redhat.com>
 ---
- Documentation/config/alias.txt | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ Documentation/config/alias.txt | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
 diff --git a/Documentation/config/alias.txt b/Documentation/config/alias.txt
-index 01df96fab3..40851ef429 100644
+index 40851ef429..f32b86cde3 100644
 --- a/Documentation/config/alias.txt
 +++ b/Documentation/config/alias.txt
-@@ -21,8 +21,9 @@ If the alias expansion is prefixed with an exclamation point,
- it will be treated as a shell command.  For example, defining
- `alias.new = !gitk --all --not ORIG_HEAD`, the invocation
- `git new` is equivalent to running the shell command
--`gitk --all --not ORIG_HEAD`.  Note that shell commands will be
--executed from the top-level directory of a repository, which may
--not necessarily be the current directory.
--`GIT_PREFIX` is set as returned by running `git rev-parse --show-prefix`
--from the original current directory. See linkgit:git-rev-parse[1].
-+`gitk --all --not ORIG_HEAD`.  Note:
-++
-+* Shell commands will be executed from the top-level directory of a
-+  repository, which may not necessarily be the current directory.
-+* `GIT_PREFIX` is set as returned by running `git rev-parse --show-prefix`
-+  from the original current directory. See linkgit:git-rev-parse[1].
+@@ -27,3 +27,31 @@ it will be treated as a shell command.  For example, defining
+   repository, which may not necessarily be the current directory.
+ * `GIT_PREFIX` is set as returned by running `git rev-parse --show-prefix`
+   from the original current directory. See linkgit:git-rev-parse[1].
++* If the shell alias is the full path to a binary, it will be executed
++  directly with any arguments as positional arguments.
++* If the alias contains any white-space or reserved characters, it
++  will be considered an inline script and run as an argument to `sh
++  -c`.
++* When running as a script, if arguments are provided to the alias
++  call, Git makes them available to the process by appending "$@" to
++  the alias shell command.  This is not appended if arguments are not
++  provided.
++** For "simple" commands, such as calling a single binary
++  (e.g. `alias.myapp = !myapp --myflag1`) this will result in any
++  arguments becoming additional regular positional arguments to the
++  called binary, appended after any arguments specified in the aliased
++  command.
++** Care should be taken if your alias script has multiple commands
++   (e.g. in a pipeline), references argument variables, or is
++   otherwise not expecting the presence of the appended `"$@"`.  For
++   example: `alias.echo = "!echo $1"` when run as `git echo arg` will
++   actually execute `sh -c "echo $1 $@" "echo $1" "arg"` resulting in
++   output `arg arg`.  When writing such aliases, you should ensure
++   that the appended "$@" when arguments are present does not cause
++   syntax errors or unintended side-effects.
++** A convenient way to deal with this is to write your script
++   operations in an inline function that is then called with any
++   arguments from the command-line.  For example `alias.cmd = "!c() {
++   cmd $1 | cmd $2 ; }; c" will allow you to work with separate
++   arguments.
++** Setting `GIT_TRACE=1` can help debug the command being run.
 -- 
 2.45.1
 
