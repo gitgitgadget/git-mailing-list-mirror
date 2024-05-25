@@ -1,114 +1,107 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA171487A5
-	for <git@vger.kernel.org>; Sat, 25 May 2024 18:49:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5396733D0
+	for <git@vger.kernel.org>; Sat, 25 May 2024 20:01:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716662991; cv=none; b=Vy0pEsnzh0nsXS13XWD5u140ZpMuKw0C/ZgptTAPtHYj8aR9FFLkMrlIV+r0so7cvGsGPFRRWE9LOILXDV8wdetiTw5/cREudjjCqdCaVQQiYuBIP018ss4A1OOAInOQ+mWLJZowuQt1oWhe6jngz7PDG67tnSVxd+X06OMhykw=
+	t=1716667297; cv=none; b=ryttHRGbzlsvMEn4ko2HorFSXSd/mU9sozLyQWmElpGsvlQNlaOXIIAD2DblIfPRohB9bB2siwTcitoNzzHTATDd+2QLviS9aaK/+LIVrKCMsz7Jy66v4wj62Vl0z5dCpGRcfwSlS3kXZy4V8lv4rI10y18q5MFu2sSCHFsiUzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716662991; c=relaxed/simple;
-	bh=8rf1udCXZhEWDLWDBPFUW36VQQnjGWirimlo5+RlMgM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=qzfkuMBqBj+7kdto1XfqK+DWuRApUF/ri1AJvUHn1a31OMEgQkC19ispJ33KwicjAlfmek3Uro0JD0MNU0gYk4/5eQLJe5WxSqRunFQ23sXbQT0R43lU33/vcb3pUILyYO48hMKUIQI0W/wjjif0iTCsiQJmys0E2QBr0c2M1tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VVo9tF6G; arc=none smtp.client-ip=209.85.160.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716667297; c=relaxed/simple;
+	bh=bCeUF4IWw4hDl7dyu7Ir6erkG0fSpSwOghrU8/u6O5U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Tq3FyiS5GNgWUfSvmJuxrZskl/RgSf9bQ+WvZqfKLEnqWuAfZZRssCFflMsgIx3lw+csccglAftjrO8q1KmFG57EXCI6obdf5O/UpcRcp732Y9OyKHm283hnc4iXFrzQBb3X4qHXaQR9SR7fiExJ4IlrBuPb7ndXzy0a/MMU4II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=OY/lSAeQ; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VVo9tF6G"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-24fd96c5490so189389fac.3
-        for <git@vger.kernel.org>; Sat, 25 May 2024 11:49:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716662989; x=1717267789; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8rf1udCXZhEWDLWDBPFUW36VQQnjGWirimlo5+RlMgM=;
-        b=VVo9tF6Gkn2pSSnkZBe2+wb/J0UA9ZmaSd6SiN7N/l1eyymV4H11PSUuJzWhnGmMd8
-         FoYmmv/Ks1SiCtRWalDfo9eSJHuAWCerE2Hre4jw0ZtQvkxuARaJaKIl6OGXK/8hCmzk
-         c93RhU5XU3JZyItFDY7J0EjJlV9ipYTTzshFyV59Wi1uJhGunUd6aHvVqabn6VqNw3uo
-         YQtfz76JF5RQEKxjGftlQ1HO0JLgks4M+i7hneWIwF4Wu3e8iNIC4Pp58xNNkNKiWWp5
-         NMcQJlPuHZlp/nwlbyLQZvIlEzMdDIFKh4G7sd9OHA44TBlffaNQ4yUQcBBWRtJdjhmX
-         gmvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716662989; x=1717267789;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8rf1udCXZhEWDLWDBPFUW36VQQnjGWirimlo5+RlMgM=;
-        b=dBiQ4GxMaog/7o4d3Ld143MnMaRfXfkmO2R219CjaEjXh+tEEWIyLO5/aFNanUjRFj
-         s8s9Q0nFTCEFcSOD3MDiX3NVmxZ4nqsnc0Qblb677nH3nCeFMaC1QzAM+FoKaWhjFTcH
-         jjyk0q+YRG6jxgggA/i/vzoQ4fY3KgdBV+t4Z0EQqBtLcJGc1pXazT/yfqIaGEO3O7PV
-         IgQxtzzyojy9g+MnGP7kMxnt9baEmf5T3NGw7yERy3m2AEdrMV2YxjhUAqwwwiWM8zIM
-         CwU39q83SatA57f/ENoP3ElOqGMfPPy4MBT10goN4ayd4/6lvKKQTaYWPD7SvFMZs1yZ
-         8KEg==
-X-Gm-Message-State: AOJu0Yx3L4qpzhQAHnZQFDJ39f69CHu2yyh+0InOkvAbnNoGyteLIUjh
-	bTZ3KLw1VgbTSmQ4WNS21dTN/cfROr9r860lGe66uC6CIDHGlAo8svwv4HyeAxOhyD0+PufnGAL
-	sj5QvcBx2B1c1rXf9DJSE1/o57ZwdcwGQ
-X-Google-Smtp-Source: AGHT+IFT0E1HtOkWIBJi2sfCeqNaFKGkWBIhXHMF+8M0hbbvitnHJfORIRhGUCCRXfdMhDBBYfhIsJ+Yfn6R5piJiUQ=
-X-Received: by 2002:a05:6871:331f:b0:24f:d6c1:692 with SMTP id
- 586e51a60fabf-24fd6c10b6amr1769892fac.29.1716662988491; Sat, 25 May 2024
- 11:49:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="OY/lSAeQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1716667275; x=1717272075; i=tboegi@web.de;
+	bh=bCeUF4IWw4hDl7dyu7Ir6erkG0fSpSwOghrU8/u6O5U=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=OY/lSAeQZQXTsUnSY0ogkjiBwDSY+q3BW6AXqmGAC+BQqDjl41x8HG8+B+X6DLDu
+	 QmzWDT6sW9EwoRi70R6bDlFwZWCOJ4f72OEClNv3S60q02FoArrMgKh9RxE7/fTyn
+	 wdK4awwpbL9VCDlHuNCFfqJAZrL6P7XY80moV21qfux/HMW2dVZyP9fCoCM/SZmk/
+	 eeL6OzoLnkvJGyGYupxXNnLEG+Rv4Ybh61VcGm6gGN6yEbWUrkPBbi09AgtEN/yyH
+	 QD1Lpho4xDoRBCuBImV/tYYWCqx4cGHTsVolyXeYdh+abmIg4l4gSC/760szzMQAY
+	 Fej5oRTaZCIEiMKeNw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mtgub-1sVf5Y1MhL-00v9iP; Sat, 25
+ May 2024 22:01:15 +0200
+Date: Sat, 25 May 2024 22:01:13 +0200
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: "Jun. T" <takimoto-j@kba.biglobe.ne.jp>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 1/1] macOS: ls-files path fails if path of workdir is
+ NFD
+Message-ID: <20240525200113.GA14951@tb-raspi4>
+References: <20240430032717281.IXLP.121462.mail.biglobe.ne.jp@biglobe.ne.jp>
+ <20240521141452.26210-1-tboegi@web.de>
+ <xmqqttir9hr2.fsf@gitster.g>
+ <20240521205749.GA8165@tb-raspi4>
+ <xmqqa5ki95i1.fsf@gitster.g>
+ <C5E35F2C-2423-4571-B737-411F4D4B13B5@kba.biglobe.ne.jp>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: William Ruppel <wcruppel@gmail.com>
-Date: Sat, 25 May 2024 14:49:38 -0400
-Message-ID: <CAHa7PX8THmTAYFVwAtjimgcenUPC4A5BF2OHExC82Cnrdtbn=g@mail.gmail.com>
-Subject: Git "safe directory" not working correctly
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <C5E35F2C-2423-4571-B737-411F4D4B13B5@kba.biglobe.ne.jp>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:ijtX/EdDNqWEaPhWVNVPVOuZNHjj9Aa6eBu9RuGBa2nDQU6nNzU
+ 6TY2xoiyFIUuz6eEzerF0Evqy8TYEAlMzAsEtw7UjYcfj3VElnkMKrYwxv2NCPYpF6P/3nu
+ 4Rl8M23Chm373LfClyzxB8b3CcS3E5l/jd2J1+zGNTLbB/h+3XBtNvAbJE21IA7m3ZLu8yj
+ Ruu2K1zeWxyNaW4/ifhFQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:v4NGjktgtmY=;kVVMAVi1c73vrLH7cu5LYyIumgc
+ PFHPciLF4IBxn3/Kpt+iYwyu5x6NoqeRRr8MBIuGeqJ+E5ViXr4IMKzK2jCA6DeGSnI8bpA0j
+ E5Uv4/W0ShAj9lNuXHgMJRcm5QC52QIdum3H9aMBO83ne1emIOxcQauTibC7jrQ42bKbmSTw5
+ V1dE/4irZKsyxkcKCFfaxqvwfbXXX5TTLlR8fU4TqYEbuvO2LxRLdkGVx80nNW/hRDJnWTcCn
+ XwvTasonPrhtoLS6eUoC2x0ohJs2PYtmxSJcePETklDthcDVBDL9r1+u62LEijVUOuJQXrW2M
+ eNhgYaxNhVGqb8xLmv6+jD2xXt3JfDizksywARszy0WkT+aGJ6p8zb5ainBmBD1tshR6axMo6
+ DFcNN4CCAeUq3D6MOJkFu5au5xsOCNrmmX0gHPbM0xm1SrRCkNRDLvd/Bj1UzpDwAReoFEdbo
+ o+PD0LuViVCoeLQ992E6D4tm4JdizESkxh8PbBTbc19fZVOPdxZAC75YdmQXke7pnG4JAgTrr
+ qV3J5omwi2tBm+Yc1GEPEjRuzeBVZtFr9+HexBGPkbTL8JhsrnUavmcgRqhQDgfiuPx4OkZHY
+ wmRMupqaTWXRVff1C28cNCBhmNIZkQ3scqDUi/Fa/h6MaEl7zu/Z3ql++wP596WnK7WBMWBzL
+ KzLxB8RJ5qHdM5OpVHC/K2roA74btEa7YGSuWhPPMTZOxWGbK1ERVKx/yDZuxuwG3Bl1gDFKA
+ T3RVs3BF5RsV7f5jGTlc3ypzwnEOCSciFbV/VTcvzPWtu5P+WbMu4uWUx83KC/2mrCEvMKVGe
+ 8N7bpm44D/2zTwSD1mGqk+dD5WW+AQtO9U+PejNz+Oo7A=
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Fri, May 24, 2024 at 12:33:08AM +0900, Jun. T wrote:
+>
+> Unfortunately v3 still doesn't work.
+> 'git ls-files NFD' works but 'git ls-files NFC' does not.
+>
+> I think it better to test both "ls-config NFD" and "ls-config NFC".
+>
+> The reason of the failure seems to be the same as v2, but
+> I describe it here in more detail (or too detailed).
 
+Thanks for testing - I was fully convinced that the new test case
+did cover all problems - but proved to be wrong.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-Upgraded to git 2.25.1.windows.1
-Now when I pull from my remote I get: fatal: detected dubious
-ownership in repository at '\\bill\gitmaster\Src'
-So, I ran this to whitelist everything: git config --global --add
-safe.directory '*'
-However, this does NOT solve the issue! I am still getting the same
-'dubious ownership' error!
-So... what, is this some sort of bug where UNC paths are not being
-recognized as safe?? Or...?
+[snip the nice analyses]
 
+> I don't know how to fix the problem, but I think it better to avoid
+> calling precompose_{strbuf,string}_if_needed() before commondir
+> is set to ".git" and .git/config is successfully read.
+>
+> Or reset the_repository->config->hash_initialized at some point?
+>
 
-What did you expect to happen? (Expected behavior)
-Pull should succeed without security errors, since I whilelisted *
-
-
-What happened instead? (Actual behavior)
-git craps out with a 'detected dubious ownership' error.
-
-
-What's different between what you expected and what actually happened?
-I cannot pull changes from my remote!
-
-
-Anything else you want to add:
-Please provide a workaround.
-
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.45.1.windows.1
-cpu: x86_64
-built from commit: 965b16798dab6962ada5b0d8cf0dca68f385c448
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 19045
-compiler info: gnuc: 13.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): <unset>
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+I think that I may be able to offer a v4 patch, which has better test case=
+s.
+=46rom my understanding, the reading of the local/repo .git/config does
+not work as we need it, since the .git/ directroy is determined after
+the config has been read. And so it is never read.
+Having said that, a patch relying on the global .gitconfig may still
+be an improvement on it's own.
