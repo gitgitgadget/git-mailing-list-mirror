@@ -1,109 +1,88 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3991A2C2E
-	for <git@vger.kernel.org>; Sun, 26 May 2024 20:16:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D550E2F46
+	for <git@vger.kernel.org>; Sun, 26 May 2024 21:27:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716754621; cv=none; b=lv3jH7mUTCBBx8NLHx5GhUivKGfrZZ2SiSI0VHOHBvb6US419xoKZ5DdTmdx3ihwG+AtZ9jN2t04uX4hOWv7n3lfLsbGNFM86LGLxPG6c29Qy0/xaK+kkpEOWCE2Ruqx0lSo6QQhd0FsDNnU0fkA5rtMJkR2TYcicoLv2gRPgDo=
+	t=1716758822; cv=none; b=iiL2DWoqovtIwpcN76WkLAt5LUTrriuzcUJFTV/YkSaHg7qCbHSK2SsNhyxv5bBkZxqZai1QnQwOudd6BlxeJM71IIxXB9+7fbnoNjZ8RvASA7Zl2Bhyp3z6DROPGV04ebXOewSbd6CMmfZohJe5tebbFeuNGlQtn8jwdU7UtDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716754621; c=relaxed/simple;
-	bh=X4hSe/LNdW397FDoQvUQFIiWdvawh17PKTkO/BW2YD0=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Us97VRjlBfEv3WslWhYXz4/YJjOlC+XTwL/qAlog6800efMjsvQ/fae+s3EGBO5CrX9yAgF0AX/wvUDMcVtQgC1aLUqd0dkBV8WWmS8NJCdulKrg2n2Qr77tvUXDJofo0Ufuy23nFFep9h5RcX1SKk3HriLueBwc6415n0Epoi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=OVgw17Ph; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1716758822; c=relaxed/simple;
+	bh=9qCdxfO0dY6g6lPpo2BkuH/hWmtc5PQjYtErWuqt3KM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bu/b9U2IKV4UKBkK2lcB/g3xqBhkMZsAAt65vKRgH36/a/Pfmy4UYA0wRRB80DHhzPJY0/25Xvz4El7io/eAa0JyxRvzf943yApirLgCtLMSSjwTC/FTcPD0gX3f7EY1LdaW6jHTQ3+Bjpx8u5g1np+NSFkgIWkgk50U/nCaIUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nCeVcc4k; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="OVgw17Ph"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1716754610; x=1717359410; i=l.s.r@web.de;
-	bh=pOpJiYAkGD+xzrpxbfydWDLj+hLlsIJgmd/+9Kpgq2M=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
-	 Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=OVgw17Phoxa8OsMMToEuvNeJKxFe+rcDTcLRYA1VQaQY0JocYn7qQnIdDAPtMTYh
-	 OcIqotzgGigHd2Uuo8pQc52GYvRA9R7zFwHn+Wv9w9g8CKKLQ+S6MgeQebU5hM0Nv
-	 zIkBxIUcLjZmf/DcmH5c4vF/sAwdpyLOUjlypmYMxFLTOLGDgDz64QvuZTY6Sm3YT
-	 1rKq5uZv3y8ir/O6dXdgRfhL9gCoJ5AQFuEDLvRWAlXbwc6EX68u2zN4zBYS86brr
-	 p2pIimnJTKjzg2az0UqMWEQVQIFMED7X8eUrMHTPOfJT5hxWTF4JluTo24kjLJ8sL
-	 /WOn2aaDy0DYCMRCow==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N7xaT-1sWS2L3Hql-0154Ib for
- <git@vger.kernel.org>; Sun, 26 May 2024 22:16:50 +0200
-Message-ID: <c7c843b9-0ccf-4bcb-a036-d794729a99d6@web.de>
-Date: Sun, 26 May 2024 22:16:50 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nCeVcc4k"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D910C2C4AD;
+	Sun, 26 May 2024 17:26:52 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=9qCdxfO0dY6g
+	6lPpo2BkuH/hWmtc5PQjYtErWuqt3KM=; b=nCeVcc4kxuw6CTUyk39O654+ympR
+	g6SIg1i77hsQsEcXEsbvMci3Sl2B9t8H2hGoFumRR/NqK1jig8bVXtW9FVUJNn5P
+	bq4cLm/terLsNL27CAK5MGWHtEK0cj1j8CKWq/wXb21x4b49GsIrBtmCnV+o6ebZ
+	24aKm34pLdS4+Ds=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D09F82C4AC;
+	Sun, 26 May 2024 17:26:52 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 41C212C4AB;
+	Sun, 26 May 2024 17:26:52 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/5] pager: do not close fd 2 unnecessarily
+In-Reply-To: <e6c4dc8f-ffbf-4749-8086-22c29da768a7@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Sun, 26 May 2024 08:48:55 +0200")
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+	<80f15223-246e-4cfb-a139-e47af829c938@gmail.com>
+	<xmqqo790fg8z.fsf@gitster.g>
+	<a9f199d8-bb06-479f-88c2-63d80338a4e9@gmail.com>
+	<xmqqwmnm993k.fsf@gitster.g>
+	<0574914d-8088-434d-8db2-013c1abe27c3@gmail.com>
+	<xmqqikz6966t.fsf@gitster.g>
+	<501a610c-550f-45da-a311-d4c941ae4870@gmail.com>
+	<xmqqa5kh68zh.fsf@gitster.g>
+	<e6c4dc8f-ffbf-4749-8086-22c29da768a7@gmail.com>
+Date: Sun, 26 May 2024 14:26:51 -0700
+Message-ID: <xmqqfru4e02s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] difftool: add env vars directly in run_file_diff()
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ AB383778-1BA6-11EF-A715-25B3960A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:tiH9Skeu6CPKyASCZpaq+/EYzXDoOWgE9eZEAQIeTYwZHCS2HL/
- TInR86LZRMfJB9G1Akj6IV8W0dRWe2VgyokMuyNo0H/+HrwD7EbUDzvE64OSAmTIAj6Slq4
- TkdDlBf2wx4h9vOxCDAMtigj1QUX9eQUO+2AkdHlS2cCOizXfZVsONW10yB3q0ijo0AvCaS
- Gr/gw115YnQl/v5CzFInQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ACPwCetuVWY=;n3Is7ZtoA16VyjxOaHo/iB4DS//
- 5Ai3jn4t0IO7nEE7zaGC9EEwxYZF7ZkhATKna8KxYeq3qEbUv93swA4FR5cCyUCgv3xCGqL0E
- 7mPAM0dtktqZgzObfKqNlW3pz1rP1k8dqf8kbgahX61NrRByqafR3SeaMfWxFBGqE9We4FKbz
- bhpc7ACqwKcqnScKDfVfo8cwUJmGAKTkoEZ0zOZx1U/cBIYrndtUUFnvLZlzL5OSx8KMw5RIc
- pi5lgMp+Xymqpt1sHIOv97sT+uxA9YY2bym4mN3aCfJGQDugCCB31Q/nOfVsnRGCi8+LScLZm
- k5mevPpzGoWaT1vnLlvIrb+ANpbAKrKxMfdVbLlduygyxZKYA3GtxOQKhL0A67BKrL4910T9b
- YGXPEp11/Jl/pYy9ptA3wd6kvVTodO4K7nX9XTRByx44vhXZ9PslPxrEutTWrkeCoBgv4GLMU
- 476gQN3bmpzyT2bdl5djwPeMoX6ctKhyaeskA+8FG27LjTnvel7lzRA5IU4Co8oWNn9upq+v7
- 1R/emwBpshNbZjUIY1Dfsi1cJ4D+2GCh7WELuNP65vedODJtbVfHMQOudYHUFmfciQqWQFwa9
- IsXmsCgMvZl2oDK98Jn3kfbhQGr0dtW5wRiMzJ/eyxYFGFB+UExHI1F3qjuwPFfXjIYciNvsq
- ohQYbZF/HradUiZyIgn/JYjCH/5ZN6QV1qHlp7biRmALxdDOYUxlzMttj23KSyTMe00nO+HLP
- +w3S2bx+Tz9SbqeDVi1wB6ki2y/gv0iUmDCrbUZzv75+ylvQSK96UWzEJJjgvtKYGKfbkjRaf
- iYuklmJOUMqctcc7aNxwZ3bY8Ybm1SJnKbJ0aUy5U9r4o=
 
-Add the environment variables of the child process directly using
-strvec_push() instead of building an array out of them and then adding
-that using strvec_pushv().  The new code is shorter and avoids magic
-array index values and fragile array padding.
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- builtin/difftool.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+> On Wed, May 22, 2024 at 10:40:18AM -0700, Junio C Hamano wrote:
+>
+>> Not really.  The name "old_fd2" strongly implies "where did fd#2
+>> come from?" and it did not come from fd#0, did it?
+>
+> Perhaps "close_fd2" is a better name?:
+> @@ pager.c: static void close_pager_fds(void)
+>   	/* signal EOF to pager */
+>   	close(1);
+>  -	close(2);
+> -+	if (old_fd2 !=3D -1)
+> ++	if (close_fd2)
+>  +		close(2);
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index a130faae4f..a1794b7eed 100644
-=2D-- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -674,19 +674,15 @@ static int run_dir_diff(const char *extcmd, int syml=
-inks, const char *prefix,
- static int run_file_diff(int prompt, const char *prefix,
- 			 struct child_process *child)
- {
--	const char *env[] =3D {
--		"GIT_PAGER=3D", "GIT_EXTERNAL_DIFF=3Dgit-difftool--helper", NULL,
--		NULL
--	};
--
-+	strvec_push(&child->env, "GIT_PAGER=3D");
-+	strvec_push(&child->env, "GIT_EXTERNAL_DIFF=3Dgit-difftool--helper");
- 	if (prompt > 0)
--		env[2] =3D "GIT_DIFFTOOL_PROMPT=3Dtrue";
-+		strvec_push(&child->env, "GIT_DIFFTOOL_PROMPT=3Dtrue");
- 	else if (!prompt)
--		env[2] =3D "GIT_DIFFTOOL_NO_PROMPT=3Dtrue";
-+		strvec_push(&child->env, "GIT_DIFFTOOL_NO_PROMPT=3Dtrue");
-
- 	child->git_cmd =3D 1;
- 	child->dir =3D prefix;
--	strvec_pushv(&child->env, env);
-
- 	return run_command(child);
- }
-=2D-
-2.45.1
+That's a very straight-forward name that says what effect anybody
+who assigns to the variable wants to see.
