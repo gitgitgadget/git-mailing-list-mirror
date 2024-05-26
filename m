@@ -1,52 +1,59 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB73617C96
-	for <git@vger.kernel.org>; Sun, 26 May 2024 16:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229D328F4
+	for <git@vger.kernel.org>; Sun, 26 May 2024 19:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716740458; cv=none; b=iS6PIIY6c/iIYdzrdfiw1h068RYjM5IMgYq122fBwQSkKCpzF7Wrs9D4uDd9jbd9HoD3ISJ8SlTfkbXN69O4PTtZgY/Oc6Qdici62GQXWPbIP8mjr5ROGu1jO912tqlvSgjDnS9K61pPulSoLUG14m5aTSUp8p1QjxPnC14mWVg=
+	t=1716751404; cv=none; b=Jr6rTUmA+w/9S8OD5mFqY1h3eXnfphsYnEFRSsDkdw3p/XRNxhcqNSrlXeuDEatAS8ihD20Pxe1W+D/utujE/SyRFlk09lMbE0Syx6fdYm1xEPrd/9TQrPtyHBxRSMEfzoGkH5jUNz+Wzh4uLXvJN5WwiDBZWN0gjuDbF0+WI78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716740458; c=relaxed/simple;
-	bh=JeTlQTZP9NLPCxShy/7rH9yBNUOjWMdhkB45TmIFTFk=;
+	s=arc-20240116; t=1716751404; c=relaxed/simple;
+	bh=/i0xLu3/6hj5aVRiXyrKKxVpoKlRddTJyq6RZ098cbg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZdVa7ukHLH96TrK4Jbbp1GPP93qlUJoit6EC7A0q49W5S9OFQNNL31s7hRII/YnFwH8kSr8f6HRR19O0JoNKxCuR04U3sTrVHM9kq50V/cBicdMU+8JsQwuQkc3M7DtvPWaILi7Fj1w3aQKGhBq/JIpD2w/F032huKYfBBJ78TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hTxVqnTE; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=A/mH91zZ1lsCBQ2UejWSQNMvuj79/7AfA3ztDFueoes1aWJCcfAsMXsdGB/QSC+Y3buDCnBSVlq4/+wxBgQlcXJ1EQ0ILxsQXd2Go6ofqit7LCNlf8SCDHNwqq3wFaDOGsdo3TzAWFbVdSvoi5QPV1e++hliJ6UoLnArCR3L360=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qSq6u9Zv; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hTxVqnTE"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qSq6u9Zv"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7DD7136025;
-	Sun, 26 May 2024 12:20:50 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5C4FF3709B;
+	Sun, 26 May 2024 15:23:22 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=JeTlQTZP9NLPCxShy/7rH9yBNUOjWMdhkB45Tm
-	IFTFk=; b=hTxVqnTEjRXZ94xcOkyFJrwhwBOqJ7VFVWPSbOnlvFrlkvGbcVlt1R
-	oI6JtBho5IFEL578xd3qAH0ZG+88GwL5u5C7PgVebcW5PxVGtVn/hg5/a7AwToIi
-	535UzDMkT3kbf96onOUK8ICUzcjl0Ir7s1n89raTbBhGaidYxVbss=
+	:content-type; s=sasl; bh=/i0xLu3/6hj5aVRiXyrKKxVpoKlRddTJyq6RZ0
+	98cbg=; b=qSq6u9Zv/Gu69i9BVyfx2/KxZUnwYdAxeo4VoXRySjCLENXfpBhv3m
+	7rjy/+O9OQ6YadPa9C6/tENPdNPtTDrCmdZnJMUDR1BMxRGYmUZr05l/7YTBkdIB
+	nMlNEj69B4ZclXfmv+B/1Iw4hdQG9vX9Br7WEO0P69ala084kaU7s=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 75E2C36024;
-	Sun, 26 May 2024 12:20:50 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 54EA83709A;
+	Sun, 26 May 2024 15:23:22 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9172336023;
-	Sun, 26 May 2024 12:20:47 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 74E6737099;
+	Sun, 26 May 2024 15:23:19 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ian Wienand <iwienand@redhat.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v6 3/3] run-command: show prepared command
-In-Reply-To: <20240525234454.1489598-3-iwienand@redhat.com> (Ian Wienand's
-	message of "Sun, 26 May 2024 09:44:35 +1000")
-References: <20240525012207.1415196-1-iwienand@redhat.com>
-	<20240525234454.1489598-1-iwienand@redhat.com>
-	<20240525234454.1489598-3-iwienand@redhat.com>
-Date: Sun, 26 May 2024 09:20:46 -0700
-Message-ID: <xmqqh6ekh7dt.fsf@gitster.g>
+To: Philip <philip.c.peterson@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Jeff King <peff@peff.net>,
+  git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Jeff Hostetler
+ <jeffhostetler@github.com>
+Subject: Re: [PATCH 3/3] ci: stop installing "gcc-13" for osx-gcc
+In-Reply-To: <CAJ6X7_VSswj6pw2gyfEp=Hmx237MJEJA4bW+QkKNs88iRf=Hwg@mail.gmail.com>
+	(Philip's message of "Sun, 26 May 2024 02:34:05 -0400")
+References: <20240509162219.GA1707955@coredump.intra.peff.net>
+	<20240509162544.GC1708042@coredump.intra.peff.net>
+	<Zj3F9EVpSmQtyy0R@tanuki>
+	<20240510201348.GE1954863@coredump.intra.peff.net>
+	<Zj8blb0QqC2zdOAC@framework> <ZkX9w6etjDVAh-ln@tanuki>
+	<20240517081132.GA1517321@coredump.intra.peff.net>
+	<ZkcUcPhrTrbSbZO8@tanuki> <Zkc_zJGjwg0fZkRG@tanuki>
+	<CAJ6X7_VSswj6pw2gyfEp=Hmx237MJEJA4bW+QkKNs88iRf=Hwg@mail.gmail.com>
+Date: Sun, 26 May 2024 12:23:18 -0700
+Message-ID: <xmqqr0doe5sp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,80 +63,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- E904C42A-1B7B-11EF-808C-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 68D9AB8E-1B95-11EF-AA25-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Ian Wienand <iwienand@redhat.com> writes:
+Philip <philip.c.peterson@gmail.com> writes:
 
-> This adds a trace point in start_command so we can see the full
-> command invocation without having to resort to strace/code inspection.
-> For example:
+> Part of the problem seems to be that the Github actions runner has a bug
+> on OSX: https://github.com/actions/runner/issues/884
 >
->  $ GIT_TRACE=1 git test foo
->  git.c:755               trace: exec: git-test foo
->  run-command.c:657       trace: run_command: git-test foo
->  run-command.c:657       trace: run_command: 'echo $*' foo
->  run-command.c:749       trace: start_command: /bin/sh -c 'echo $* "$@"' 'echo $*' foo
->
-> Prior changes have made the documentation around the internals of the
-> alias command execution clearer, but I have still found this detailed
-> view of the aliased command being run helpful for debugging purposes.
->
-> A test case is added.  This simply looks for the trace point output;
-> the details change depending on platform -- the important thing is
-> that we have a verbose log point, not so much the details of what
-> happens on each platform.
->
-> Signed-off-by: Ian Wienand <iwienand@redhat.com>
-> ---
->  run-command.c    |  3 +++
->  t/t0014-alias.sh | 12 ++++++++++++
->  2 files changed, 15 insertions(+)
->
-> diff --git a/run-command.c b/run-command.c
-> index 1b821042b4..31b20123d8 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -746,6 +746,8 @@ int start_command(struct child_process *cmd)
->  		goto end_of_spawn;
->  	}
->  
-> +	trace_argv_printf(&argv.v[1], "trace: start_command:");
-> +
->  	if (pipe(notify_pipe))
->  		notify_pipe[0] = notify_pipe[1] = -1;
->  
-> @@ -913,6 +915,7 @@ int start_command(struct child_process *cmd)
->  	else if (cmd->use_shell)
->  		cmd->args.v = prepare_shell_cmd(&nargv, sargv);
->  
-> +	trace_argv_printf(cmd->args.v, "trace: start_command:");
->  	cmd->pid = mingw_spawnvpe(cmd->args.v[0], cmd->args.v,
->  				  (char**) cmd->env.v,
->  				  cmd->dir, fhin, fhout, fherr);
-> diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-> index 95568342be..634f6d78ef 100755
-> --- a/t/t0014-alias.sh
-> +++ b/t/t0014-alias.sh
-> @@ -44,4 +44,16 @@ test_expect_success 'run-command formats empty args properly' '
->      test_cmp expect actual
->  '
->  
-> +test_expect_success 'tracing a shell alias with arguments shows trace of prepared command' '
-> +	cat >expect <<-EOF &&
-> +	trace: start_command: SHELL -c ${SQ}echo \$* "\$@"${SQ} ${SQ}echo \$*${SQ} arg
-> +	EOF
-> +	git config alias.echo "!echo \$*" &&
-> +	env GIT_TRACE=1 git echo arg 2>output &&
-> +	# redact platform differences
-> +	cat output &&
+> Based on investigating this for a while by setting up a self-hosted actions
+> runner, it seems to have to do with a broken pipe triggering incomplete
+> output capture / termination detection by either Github Action Runner (
+> see issue thread) or maybe even Dotnet Core's
+> System.Diagnostics.Process functionality.
 
-That "cat" is not about "redact"ing platform differences.  Leftover
-debugging?  I'll remove it while queuing.
+Thanks for digging into this.
 
-> +	sed -n -e "s/^\(trace: start_command:\) .* -c /\1 SHELL -c /p" output >actual &&
-> +	test_cmp expect actual
-> +'
+> As for the actual failing test, t9211, what I got on my machine was a
+> failure during clone: `unknown repository extension found: refstorage`.
+> In the trash directory, the .git/config did specify that extension.
+> Perhaps some interference coming from
+> t9500-gitweb-standalone-no-errors.sh, since it invokes:
+>
+>> git config extensions.refstorage "$refstorage"
 
-Other than that, this step looks good to me.
+Puzzled.  We run t9211 in "t/trash directory.t9211-whatever/"
+directory with its own repository, so that what t9500 does in its
+own playpen, "t/trash directory.t9500-gitweb-standalone-no-errors/"
+directory would not interfere with it to begin with.  How would that
+setting seep through to an unrelated test run next door?  It's not
+like they share TCP port number or anything like that?
 
-Thanks.
+
+
