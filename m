@@ -1,82 +1,84 @@
 Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7A61754B
-	for <git@vger.kernel.org>; Mon, 27 May 2024 06:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1965217BBE
+	for <git@vger.kernel.org>; Mon, 27 May 2024 06:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716792289; cv=none; b=GJONjzO21JkYQRWye08/xSMvmlMwajdHT2ACa4Xfxmv/7/xZ3PMZK36CWrT0So9DibCLyE25+2C64TvxM82naqagT2U+YeLNb8xqAsRtVWGxGrRlzJZ+k3WfYHp/CXJZ8HGmBfVlNRDMcLRg+KR5zUAEKHIbj+C523uvj+i7NxU=
+	t=1716792293; cv=none; b=tNnB1Ivx7tn0ygLOdQzUaicmObWlcWcNMTflpkr1DcPI+tXZ9WT2mRmFKl/zEHE/8QSheaC8sz300ClO8KjxBRW+NYykVm+O+DhxBnf3DrAno1YvCL2AWpBhkKURpalNdVw771eh4OhbOMAJhON1z7ILdIB2q5iRTV17AGlgB6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716792289; c=relaxed/simple;
-	bh=ecUevlAHrmmZkgsIOeHNdQBuBKBx3pFPUNxWMOl9eaE=;
+	s=arc-20240116; t=1716792293; c=relaxed/simple;
+	bh=vkPocuYFElEJyZPHe8AVF/hpNqn572N6CtkdqzgLIWk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FS6qZqZw2NH/SgU38F9LukZ+VGfrtuI7FHXUGBrfI+Lf1+byz8vdRLTAqiphIuhqGMaSfZXXoGpEqIIxBlZttB+9N2/uikZSPAk77ggnj7iiZ6L0U80CmufeF+VeT8VqICIWht9k1NSrX6LUoR/S8su+2/IH4HItt4Wn0tE8m24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NGHhxZQZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WhnR1xas; arc=none smtp.client-ip=64.147.123.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=CK2BUzM7GXpQvjgai4gcR7hyCwfbMR7rmnGP9ee1eKCq3mh37VdIrSbDy4RmORB7TE8pEQCg2U8aHKZDQ2bKTYjUBCNn5AC6U2FmfBMj95pLvdOp9q1RmfiJu4iAVFp0Ghhp8scsnVq0KVctgHZo63gj5TuL22fDHPC2s8Gn1TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AKaKLbe2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AUvK2IP6; arc=none smtp.client-ip=64.147.123.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NGHhxZQZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WhnR1xas"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.west.internal (Postfix) with ESMTP id CC2F71C000C1;
-	Mon, 27 May 2024 02:44:45 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AKaKLbe2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AUvK2IP6"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.west.internal (Postfix) with ESMTP id 206241C000D0;
+	Mon, 27 May 2024 02:44:51 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 27 May 2024 02:44:46 -0400
+  by compute5.internal (MEProxy); Mon, 27 May 2024 02:44:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716792285; x=1716878685; bh=ANlhhsf5BK
-	FDc4kb1Imlrqq3kl5OreUSPTABXOdVvqw=; b=NGHhxZQZ5UxfaeAITuF1YizluJ
-	8qaszWli6WRH+RvrMRh5n0lssUg6XI57rUKvNLSKHRIFVntjz/pSzUQJkRmrVhSN
-	6+QwercYjhJ5rVO5e69M3LMvDkl3LICiVGGUUVj/D7Qh+QSQNoxDchocW4PMHJZV
-	H2l55LQOgV8QsZSR+oL6Sy+a7LAKFW3TLzCPCMQr3WzPY0cmOMYIc8E+cOKXZ87X
-	UqSYqi8AGGCpRqlhXgCwS6jIANpOCCmIea42oR+tsfFET8kPnZfcWu1HG+L2Q1YP
-	At7XxrS2/EiHel9wNq1UM2PTuogKpUFA7uwDtCUWP1ItKR/t1HjGKpP8R0Aw==
+	:subject:to:to; s=fm1; t=1716792290; x=1716878690; bh=M6jMwH6KB/
+	RujGI2uK0Ki4n7H45AKnnPMcE/dnFkWz4=; b=AKaKLbe2n+q6s2ndGcyuNvrtk7
+	EiQQzPMUJ5e5PaRYi8O/A/ZoAtOLFrPTpm3ocEevQ9H8kqew7B0cWfS4WDpx+5PR
+	8LaG+/lI6iabsX6ksc7BkgHYviz7UuTUuk2p7tMq6jZ4+Rbhty0ha61vRG3+9r5d
+	JU/kEMEF5vsvFIng2I4poEOjWyRT/YQsIR2IauwNDZ3WffR9Y1lqDyWs8fRYaib4
+	Vhs8/K4FHVV4N62X/O7OfUWGh5Ot6G9Htcs6Caj146xcLJDqwwRSddSDPbLdaTiz
+	oz6Y8nnmDRxfV/zR9bLoAgdd/TthF03leR0HgF4/gYIraOfdNawRIRxD8F9Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716792285; x=1716878685; bh=ANlhhsf5BKFDc4kb1Imlrqq3kl5O
-	reUSPTABXOdVvqw=; b=WhnR1xasz7BxtiTHn37CMQNfjkQOWNFb6Ho/tzUVn9dU
-	kQr5T+a3ks+m/dllfGH+9hga6RqPHAL+pzNZ8RGTurUl7Tbh7BSUn+RT2omAw8zQ
-	oFw9SHekN2WC4eRWISaIxxC0UlYSnDiy8HT9c1rR0mZrYXJBXdZ6U0VSwZczVQlj
-	UDb1iuuLATOmxhzWczdaGoPv5q899RARWX2TW8cSx5cdckPDdG9slylQl+nU8daO
-	LpAJPYMWn5uDuxYr9fSrcsrWj1SvHTVK4z0VeQAnPVvXrXtVbJ5uB8RfRwSDHTkg
-	ykraLrOYMlq+/1Sw5edvpHGv1EcHvzbaW1hSGuNndA==
-X-ME-Sender: <xms:3StUZrTJNhsKKBSdkywsFMF112DztKPjaSixCJl9u0__sYyBfgDj8Q>
-    <xme:3StUZsy1cSGy5RsljpwZ2gbblo5mawD_g9zMJdtT15x0ifjg-9Q2YMcb7EZ1YN-B8
-    y6Kyfhk4aoHFiBxbQ>
-X-ME-Received: <xmr:3StUZg0IMN5dRliqM3zyHn7_itbUCFyR7irHklYXfJEyByopY-VkgYDXdx0iURZO5cEg0WknqNj1unsUYt2KkKcYgJEVZZPoxonvHnA55uqZ_angXOE>
+	fm1; t=1716792290; x=1716878690; bh=M6jMwH6KB/RujGI2uK0Ki4n7H45A
+	KnnPMcE/dnFkWz4=; b=AUvK2IP6x9uuUkIV/bCoXQ7Oi/dz70J9ucekmDB+zVWg
+	5PotdYaJ+LhVL0+r02REKj+swD2MYq7m+XGBNJ8KcJ7WX4E5zBEPAujqy3YArgkM
+	q2rCZ45CO7KjP8czEZtZw0DkJesWfTU5wSz8v8EyCBX2Gax3HWSijEFL7V0uM8tF
+	hm4n7uFtcK16ihr7Mr6+r6I4Fk01UsPq+G/xEo+L+IeWF20yCmkHL5cT7RIfuiaC
+	zhzdrPhGeR0M3cOdg/lEtEH3rE2kdz0RDk05EchnI3RieUeKIgWxvswJFD6ejqcx
+	tuW5v7Lvjus8s2kFtsHxEGta7BwQCrpRxsCgIwp+5Q==
+X-ME-Sender: <xms:4itUZvFQvbTRT-O9diAbGoLsVwLAVwjLqGs_062csRlvWCOBjr_STA>
+    <xme:4itUZsUYdu9zrIefGy1c7Pqh4AVmM1wR9sLr-icyVIR3jB1h2zvGooF22lai2ZW6Y
+    ZYW9v5bMCIzCrvfhw>
+X-ME-Received: <xmr:4itUZhLihbJKWewU8BaGn58kUzNUFQlFgHxZr9Szzwzq85hex_wwVJnsKtKjLkHF21XGcBl_iNRRaSXCGpE3DF50eD1Yn27xwQywgp0dEzAxgmCUcxk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejfedguddutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeljeetffevheeggeetkeetieduieeiieegieegtdffheegkefhjeehfeekhfev
-    leenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:3StUZrCHjrhbMoL-rTKPMd9Y3c-7u75e0SCppN0WPbfOKTzy9ul78A>
-    <xmx:3StUZkiqG5U6Xf07DF1NnLakkbpGkdVuKGn4PNQPCgovwvmZK04jzQ>
-    <xmx:3StUZvrMCkOM02-Ywja4DYEsKdOEKVUUqBJea5x9itqWTxdgTI43ZQ>
-    <xmx:3StUZvhz13SKs9JwQT70mdFFzghF5yoLjsFJtMbZINOucg3Mtje2Ng>
-    <xmx:3StUZseJlgAQY4P_5vqGK2ZOm5JptrqpWVABmyH7pScuBwWoGb0NGuIe>
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:4itUZtHZmJWRY-rTx-TERuM7gd1nJ1WsURljmKE8rrprHwVU1QbUpg>
+    <xmx:4itUZlVItkxCCiMP3bjR_WpZtvcaSlM4fT7ymgubd8QCmcizvSHEyw>
+    <xmx:4itUZoPG21PPQLC5s9KSNNwO2QNkbyV9dsencPTUsZJ-MRNEIVCUWQ>
+    <xmx:4itUZk3JTjaUugjZPqFI2ZpC3ekEOYfLnzKbY9sg4nTX3MNAr-uNCg>
+    <xmx:4itUZrxUQS8cbtooKmn_stCh2vy61gjzUEcA9L4eD77Q5_axOoB3wljG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 May 2024 02:44:44 -0400 (EDT)
+ 27 May 2024 02:44:49 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 28cc342c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 27 May 2024 06:44:32 +0000 (UTC)
-Date: Mon, 27 May 2024 08:44:39 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 2852464d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 27 May 2024 06:44:39 +0000 (UTC)
+Date: Mon, 27 May 2024 08:44:46 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 00/21] Various memory leak fixes
-Message-ID: <ZlQr11P_C-KyO2DF@tanuki>
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 04/21] strbuf: fix leak when `appendwholeline()` fails
+ with EOF
+Message-ID: <ZlQr3tsDTSOGvFUQ@tanuki>
 References: <cover.1716465556.git.ps@pks.im>
  <cover.1716541556.git.ps@pks.im>
- <xmqqwmniiqv2.fsf@gitster.g>
+ <9dd8709d1b3b350008218133986befdb2ae74bae.1716541556.git.ps@pks.im>
+ <20240525044635.GB1895047@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,99 +86,123 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wYXCsIDV4OWK3V6Q"
+	protocol="application/pgp-signature"; boundary="KqlJbt9svDjhVH5H"
 Content-Disposition: inline
-In-Reply-To: <xmqqwmniiqv2.fsf@gitster.g>
+In-Reply-To: <20240525044635.GB1895047@coredump.intra.peff.net>
 
 
---wYXCsIDV4OWK3V6Q
+--KqlJbt9svDjhVH5H
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 24, 2024 at 07:10:09PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Sat, May 25, 2024 at 12:46:35AM -0400, Jeff King wrote:
+> On Fri, May 24, 2024 at 12:03:29PM +0200, Patrick Steinhardt wrote:
 >=20
-> > this is the second version of my patch series that fixes various memory
-> > leaks in Git. Changes compared to v1:
-> >
-> >   - t4153 and t7006 aren't marked as passing anymore. I thought they
-> >     pass because most of these tests were skipped because of a missing
-> >     TTY prerequisite both on my local machine, but also in our CI.
-> >
-> >   - Add another patch to install the Perl IO:Pty module on Alpine and
-> >     Ubuntu. This fulfills the TTY prerequisite and thus surfaces the
-> >     memory leaks in both of the above tests.
-> >
-> >   - Add another unit test for strvec that exercise replacing a string in
-> >     the strvec with a copy of itself.
-> >
-> >   - A bunch of commit message improvements.
+> > In `strbuf_appendwholeline()` we call `strbuf_getwholeline()` with a
+> > temporary buffer. In case the call returns an error we indicate this by
+> > returning EOF, but never release the temporary buffer. This can lead to
+> > a memory leak when the line has been partially filled. Fix this.
 >=20
-> Looking very good.  This seems to reveal existing leaks when merged
-> to 'seen'; other topics that are not in 'master' may be introducing
-> these leaks.  I'll see if a trial merge to 'next' is leak-free (in
-> which case I'll merge it down to 'next') or there are other topics
-> in 'next' that are leaking (in which case we'll play by ear---either
-> mark the tests again as non-leak-free, or plug the leak if it seems
-> trivial).
+> Hmm, doesn't this indicate a bug in getwholeline()? Most strbuf
+> functions on error try to leave the allocation as-is.
 >=20
->  https://github.com/git/git/actions/runs/9231313414/job/25400998823
+> At the end of the getdelim() version (which is probably what you're
+> running), when we see an error we do:
 >=20
-> says t1400-update-ref has many "stdin symref-update" things are
-> failing.
-
-Indeed. The following diff fixes the leak:
-
-    diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-    index 7d2a419230..e54be9c429 100644
-    --- a/builtin/update-ref.c
-    +++ b/builtin/update-ref.c
-    @@ -130,6 +130,8 @@ static char *parse_next_arg(const char **next)
-    =20
-        if (arg.len)
-            return strbuf_detach(&arg, NULL);
-    +
-    +	strbuf_release(&arg);
-        return NULL;
-     }
-    =20
-
-Karthik is out of office this week, so you may want to add this as a
-"SQUASH???" commit on top of his topic branch to make "seen" pass.
-
-> Also
+>         if (!sb->buf)
+>                 strbuf_init(sb, 0);
+>         else
+>                 strbuf_reset(sb);
+>         return EOF;
 >=20
->  https://github.com/git/git/actions/runs/9231313414/job/25401102951
+> So if getdelim() returned error and left us with a buffer (but still
+> returned -1 for error!), I think this code is assuming that the buffer
+> it left us with was the same one that existed beforehand.
 >=20
-> shows that t1460-refs-migrate fails on Windows.
+> But your commit message implies that it might allocate, hit an error,
+> and then return that error along with an allocated buffer? Looks like
+> that matches the getdelim() manpage, which says:
+>=20
+>   If *lineptr was set to NULL before the call, then the buffer should be
+>   freed by the user program even on failure.
+>=20
+> So should we do something like:
+>=20
+> diff --git a/strbuf.c b/strbuf.c
+> index e1076c9891..e37165812b 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -659,7 +659,7 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, =
+int term)
+>  	if (!sb->buf)
+>  		strbuf_init(sb, 0);
+>  	else
+> -		strbuf_reset(sb);
+> +		strbuf_release(sb);
+>  	return EOF;
+>  }
+>  #else
+>=20
+> That assumes sb->alloc is valid after a failed call, since
+> strbuf_release() checks it. But that seems reasonable. If not, we'd need
+> to free() and re-initialize it ourselves, and the code is more like:
+>=20
+> diff --git a/strbuf.c b/strbuf.c
+> index e1076c9891..aed699c6bf 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -656,10 +656,8 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp,=
+ int term)
+>  	 * we can just re-init, but otherwise we should make sure that our
+>  	 * length is empty, and that the result is NUL-terminated.
+>  	 */
+> -	if (!sb->buf)
+> -		strbuf_init(sb, 0);
+> -	else
+> -		strbuf_reset(sb);
+> +	FREE_AND_NULL(sb->buf);
+> +	strbuf_init(sb, 0);
+>  	return EOF;
+>  }
+>  #else
+>=20
+> But I think either of those would solve your leak, _and_ would help with
+> similar leaks of strbuf_getwholeline() and friends.
 
-Hm, this one is curious. There are no leak logs at all, and the exit
-code is 139. Might be SIGSEGV, indicating that something else is going
-on here than a memory leak.
+I'm not quite convinced that `strbuf_getwholeline()` should deallocate
+the buffer for the caller, I think that makes for quite a confusing
+calling convention. The caller may want to reuse the buffer for other
+operations, and it feels hostile to release the buffer under their feet.
 
-I'll investigate.
+The only edge case where I think it would make sense to free allocated
+data is when being passed a not-yet-allocated strbuf. But I wonder
+whether the added complexity would be worth it.
+
+I've been going through all callsites and couldn't spot any that doesn't
+free the buffer on EOF. So I'd propose to leave this as-is and revisit
+if we eventually see that this is causing more memory leaks.
 
 Patrick
 
---wYXCsIDV4OWK3V6Q
+--KqlJbt9svDjhVH5H
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZUK9YACgkQVbJhu7ck
-PpQTxg//QqXsRhcihL9n+JHvUw/Asf3dWBPy7a8xUnlOCB8smerWeVXIQySvkcxR
-FTzAoMZlgLxUGACGQtxbe6V1v35eZbRWxKIptu5YHF8eyPUc/9R64tuaxkDywYmp
-dn0cG3rlLMAZFWfPGZZNKedyB7Sz/FK+bzBIA7udfeGe7JzebnOheT9CyF9LSBCf
-qrVW3q6tyREz5UOyF5ofEzOwPE7qRfefOmZpHQuwjxpTjYkMK0qxCYdf4vnQo4H2
-HPGA9CniMgQNWdrJjcgfz4iQ4NudHT7Y9laX4MsuaB/BJnwC1jyQrgXJTx6RQ35Y
-t32v9R/9l1lB/TcWPZCx0k6uIPT/0ENdF0bn+TRxxOcadwfzAkILMgl2Xm53t2Ki
-EM+8AQDXb9H0IZB92UM/8O3KA+kNMu9ve/WjylaIJjMBZ+NMF8uIugijtXDJmytW
-LnSTMJ3Du1pUfolMXNKXrqi8iags9I7YRdA/z33qWByfSaDF57omjMp61HeuM58p
-Za4Btj+yaOTCDohtQ4I7lu/+b7qbGVhNEAlSho9OiU1hB+img2zZ7hNgG6sZiPCM
-Z2egRMGqv9FVtnE+INnQFqdhqzSnA1gRQRq5jBXJeYHRHfEQi0amPmOBqSbMU61P
-Ag2ua6BVjTrvgMvYgTYmvcGyeQR91f+xdEch7Ge+tKHeeRvN9cw=
-=omgM
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZUK94ACgkQVbJhu7ck
+PpTb5RAAlU3RPmj2M7JIB0zz3Huya83PBXjs7KeGVANgBw+IRUET39cnujJWZHQH
+feyuahAolXOkisp72gX4R7v2l8gO4q5VURco5z9+kCjozWkk3du1JdpnzeCyGOf7
+0yCRBYGX9y/p0wUWWFwHY0rrDqkG0h/06vDrYOaEzBKpdHBjcHkvoiD0wytD65me
+G1IRL7kPxoimFwW2Tv3WSKaXGBDlidIRcNt2gtOfUft84KI/P8e3oHfZXv3nw0hi
+7xBB5/bNdFfWTWyR3A6rISocnakjuZjq4jEAfMDz0tOTgF9oHGHdEZPX9PZm/o/9
+DTZ8leIEtAo8qUgVtGPKMx5x0dy59SoHY5fvD2oRfbv5cIypluqe0LwF5dU9BZRJ
+Tp5xjYvRBc9cANrlIdmZxda1BLlvWL//szGLupxXpHFyD6yVgjP8sKrQyXahjH6s
+Ynn13uKH5jVbcO6KgNXrq3mdMIOpjp06VA7W/WULgO4Hbr/VlpKoxFp1S0DrtCDa
+brxKFXM4nwtR5HCf/9xj7YOA5QSYM1h4dUr38BzczzC48QC0/ZbA7T6U6daTkWfy
+gC0ruMk3vdvZ/ijxor0Z6f3u/2Na3ESMRXHji6gWgHCxOSQu/e5n62EPgFVJ3kHF
+SwWpoCICVOwGfHeTOcIOrnpr8JymSGSVgHoz4PYX/RSTEe3m/sg=
+=YeS7
 -----END PGP SIGNATURE-----
 
---wYXCsIDV4OWK3V6Q--
+--KqlJbt9svDjhVH5H--
