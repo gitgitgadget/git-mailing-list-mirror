@@ -1,116 +1,95 @@
-Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8D3E1667F4
-	for <git@vger.kernel.org>; Mon, 27 May 2024 16:05:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E3913A3EE
+	for <git@vger.kernel.org>; Mon, 27 May 2024 17:39:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716825904; cv=none; b=UJnc683WXYemv9mTBG3NuZBnA3kq3ohVqkT03tMAD6nRZE/p2CcbQcU+8Fi7V5iCCqKdlRgJr7mREpyS+cAjo7D2ySEuNQ+8KpaZ613VxwMSafMQI2GvRIYOZA1GybApmFbZTZUDnnBJLIwNrCEJOJf//45naWuY0Z6G/wqYn+0=
+	t=1716831550; cv=none; b=bYA3xIHwFSCwF4JxIooxrcSnRfdUwEYXw6IiHoAuOw3dcn5F0hptbRkyBxbraWt2IUq0CHq6Fw40k4HqHlv4TpdmnJkb0l9mMC7zNJeYbIiPsQTxKP7wTGJ+/0vKB2YwDaQJ1aGwX487JTSArrl3ulrnC3jBGStPxHaIygqvTik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716825904; c=relaxed/simple;
-	bh=LZ7zp8qlyu/R6IfgxqB5nTSmY3XR+2Gc9fGfz2kAnuw=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=F1VvEm7/s30wEdhNNfuQVOZMsD53NVnVeGIoIvTrjzfVRvsZZyqH4/6Cslf5V46SkJS8ebaNB/Zq5RtPuzTYa9AQ+mpdSNjk0dDAv3lmuXlBVxrwZ7kb1iH6dH808V7hlFIS3YTvUv5KLV3bWjtzB+Rww55drgYeladqW1PfmlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=LsVokbO7 reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1716831550; c=relaxed/simple;
+	bh=UT4xlBJZEK4uVStgk1bo3yJ/Hg6ocL+MFi3FTSNC2IE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t7pTmosjRrV8A/fnDMAnvLyinGKL/8l7fzIFsSwH8cDNJMaGwhfmuhS3+bPM7iYsmrvdNoChp2Re6XmrlCL4fK5xiKkH+kWHIwxcZGsi2o52MImuHdeYmuUBX8h4nnvgSAKkkE3szKGKw/KWMJ8JsRtLGDNrF+jjO07V9yClk7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xuPVi6SN; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="LsVokbO7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=Ct+aJMQVnYhoeWRk+4lwg1LU0B2bvBMfErKTpsD2Vu4=; b=L
-	sVokbO75nst7HLItQbULpZVYnqT6ucFdCrnHxBKRkTnDkDZgzEEaLHL2kAcl2xZh
-	rk+L8hciPsezfrtZhbw/OpHdy+owPTOZ64Gimppdj9MNdvBN6qZHZcB2Gd7lJDu8
-	isQEvoHr5FAyXRNAXnWswqE0VxpH2b5FNqeffzdWls=
-Received: from bupt_xingxin$163.com ( [117.147.107.113] ) by
- ajax-webmail-wmsvr-40-122 (Coremail) ; Tue, 28 May 2024 00:04:35 +0800
- (CST)
-Date: Tue, 28 May 2024 00:04:35 +0800 (CST)
-From: "Xing Xin" <bupt_xingxin@163.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Patrick Steinhardt" <ps@pks.im>, 
-	"blanet via GitGitGadget" <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org, "Xing Xin" <xingxin.xx@bytedance.com>
-Subject: Re:Re: [PATCH] bundle-uri: refresh packed_git if unbundle succeed
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <xmqqh6esjta1.fsf@gitster.g>
-References: <pull.1730.git.1715742069966.gitgitgadget@gmail.com>
- <ZkbkgT46mdNEhcf0@tanuki> <xmqqikzcl8js.fsf@gitster.g>
- <5e61daf6.ba64.18f95d49895.Coremail.bupt_xingxin@163.com>
- <xmqqh6esjta1.fsf@gitster.g>
-X-NTES-SC: AL_Qu2aBPSZukAs4yWfZukXn0oVhe85UMW2ufsg3YReP500qSTLyB8rQ2JfE0bI392KLzu3rQWWehhLx+9IX4NKfby0uAKptqJRvI5MvO6J3vce
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xuPVi6SN"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EFD1E22398;
+	Mon, 27 May 2024 13:39:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=UT4xlBJZEK4uVStgk1bo3yJ/Hg6ocL+MFi3FTS
+	NC2IE=; b=xuPVi6SN+sXSd50TyjniDSOBFu0z2gA6WjUVhXOE3HrK4OQAFBkoH5
+	COVAD59uWYInEq6gpmKsXg/l4hl6iqUHlqMK0xBFJgyNooUZ/fPpmDAvsVOKvl8X
+	hlTJ19xl/BH+nOSBoGbAiPDkWoLAw0EOgX/9+jeAWp2KLyDx5FF10=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E749222397;
+	Mon, 27 May 2024 13:39:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4A7CD22396;
+	Mon, 27 May 2024 13:39:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Karthik
+ Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 00/21] Various memory leak fixes
+In-Reply-To: <ZlQr11P_C-KyO2DF@tanuki> (Patrick Steinhardt's message of "Mon,
+	27 May 2024 08:44:39 +0200")
+References: <cover.1716465556.git.ps@pks.im> <cover.1716541556.git.ps@pks.im>
+	<xmqqwmniiqv2.fsf@gitster.g> <ZlQr11P_C-KyO2DF@tanuki>
+Date: Mon, 27 May 2024 10:38:59 -0700
+Message-ID: <xmqqwmnf9mto.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <ff380ec.c5ee.18fbacbe47b.Coremail.bupt_xingxin@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3PwwTr1RmlVcVAA--.6867W
-X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiRRHrbWXAme1CFwAGsQ
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 011AE236-1C50-11EF-A611-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-QXQgMjAyNC0wNS0yMSAwMToxOTowMiwgIkp1bmlvIEMgSGFtYW5vIiA8Z2l0c3RlckBwb2JveC5j
-b20+IHdyb3RlOgo+IlhpbmcgWGluIiA8YnVwdF94aW5neGluQDE2My5jb20+IHdyaXRlczoKPgo+
-PiBQZXJzb25hbGx5IEkgdGhpbmsgZGF0YSBmcm9tIGJ1bmRsZXMgYW5kIGRhdGEgcmVjZWl2ZWQg
-dmlhIG5ldHdvcmsKPj4gc2hvdWxkIGJlIHRyZWF0ZWQgZXF1YWxseS4KPgo+WXVwLCB0aGF0IGlz
-IG5vdCBwZXJzb25hbCA7LSkgYnV0IGlzIHVuaXZlcnNhbGx5IGFjY2VwdGVkIGFzIGEgZ29vZAo+
-ZGlzY2lwbGluZS4gIEluIHRoZSBjYXNlIG9mIGJ1bmRsZS11cmksIHRoZSBidW5kbGUgY2FtZSBv
-dmVyIHRoZQo+bmV0d29yayBzbyBpdCBpcyBldmVuIG1vcmUgdHJ1ZSB0aGF0IHRoZXkgc2hvdWxk
-IGJlIHRyZWF0ZWQgdGhlCj5zYW1lLgo+Cj4+IEZvciAiZmV0Y2gtcGFjayIgd2Ugbm93IGhhdmUg
-c29tZSBjb25maWdzCj4+IHN1Y2ggYXMgICJmZXRjaC5mc2Nrb2JqZWN0cyIgYW5kICJ0cmFuc2Zl
-ci5mc2Nrb2JqZWN0cyIgdG8gZGVjaWRlIHRoZQo+PiBiZWhhdmlvciwgdGhlc2UgY29uZmlncyBh
-cmUgaW52aXNpYmxlIHdoZW4gd2UgYXJlIGZldGNoaW5nIGJ1bmRsZXMuCj4KPldoZW4gZmV0Y2hp
-bmcgb3ZlciBuZXR3b3JrLCB0cmFuc3BvcnQuYzpmZXRjaF9yZWZzX3ZpYV9wYWNrKCkgY2FsbHMK
-PmZldGNoX3BhY2suYzpmZXRjaF9wYWNrKCksIHdoaWNoIGV2ZW50dWFsbHkgY2FsbHMgZ2V0X3Bh
-Y2soKSBhbmQgdGhlCj5jb25maWd1cmF0aW9uIHZhcmlhYmxlcyBhcmUgaG9ub3JlZCB0aGVyZS4g
-IEl0IGFwcGVhcnMgdGhhdCB0aGUKPnRyYW5zcG9ydCBsYXllciBpcyB1bmF3YXJlIG9mIHRoZSAu
-ZnNja29iamVjdHMgY29uZmlndXJhdGlvbiBrbm9icy4KPgo+V2hlbiBmZXRjaGluZyBmcm9tIGEg
-YnVuZGxlLCB0cmFuc3BvcnQuYzpmZXRjaF9yZWZzX2Zyb21fYnVuZGxlKCkKPmNhbGxzIGJ1bmRs
-ZS5jOnVuYnVuZGxlKCkuICBUaGlzIGZ1bmN0aW9uIGhhcyB0aHJlZSBjYWxsZXJzLCBpLmUuCj4i
-Z2l0IGJ1bmRsZSB1bmJ1bmRsZSIsIG5vcm1hbCBmZXRjaGluZyBmcm9tIGEgYnVuZGxlLCBhbmQg
-bW9yZQo+cmVjZW50bHkgYWRkZWQgYnVuZGxlLXVyaSBjb2RlcGF0aHMuICAKPgo+SSB0aGluayBv
-bmUgcmVhc29uYWJsZSBhcHByb2FjaCB0byB0YWtlIGlzIHRvIGFkZCBhbiBleHRyYSBwYXJhbWV0
-ZXIKPnRoYXQgdGFrZXMgb25lIG9mIHRocmVlIHZhbHVlczogKG5ldmVyLCB1c2UtY29uZmlnLCBh
-bHdheXMpLCBhbmQKPmNvbmRpdGlvbmFsbHkgYWRkICItLWZzY2stb2JqZWN0cyIgdG8gdGhlIGNv
-bW1hbmQgbGluZSBvZiB0aGUKPmluZGV4LXBhY2suICBUZWFjaCAiZ2l0IGJ1bmRsZSB1bmJ1bmRs
-ZSIgdGhlICItLWZzY2stb2JqZWN0cyIgb3B0aW9uCj5zbyB0aGF0IGl0IGNhbiBwYXNzICduZXZl
-cicgb3IgJ2Fsd2F5cycgZnJvbSB0aGUgY29tbWFuZCBsaW5lLCBhbmQKPnBhc3MgJ3VzZS1jb25m
-aWcnIGZyb20gdGhlIGNvZGUgcGF0aHMgZm9yIG5vcm1hbCBmZXRjaGluZyBmcm9tIGEKPmJ1ZG5s
-ZSBhbmQgYnVuZGxlLXVyaS4KPgo+VG8gaW1wbGVtZW50IHVzZS1jb25maWcsIHlvdSdkIHByb2Jh
-Ymx5IG5lZWQgdG8gcmVmYWN0b3IgYSBzbWFsbAo+cGFydCBvZiBmZXRjaC1wYWNrLmM6Z2V0X3Bh
-Y2soKQo+Cj4JaWYgKGZldGNoX2ZzY2tfb2JqZWN0cyA+PSAwCj4JICAgID8gZmV0Y2hfZnNja19v
-YmplY3RzCj4JICAgIDogdHJhbnNmZXJfZnNja19vYmplY3RzID49IDAKPgkgICAgPyB0cmFuc2Zl
-cl9mc2NrX29iamVjdHMKPgkgICAgOiAwKQo+CQlmc2NrX29iamVjdHMgPSAxOwo+Cj5pbnRvIGEg
-cHVibGljIGZ1bmN0aW9uICh0byBzdXBwb3J0IGEgY2FsbGVyIGxpa2UgdW5idW5kbGUoKSB0aGF0
-Cj5jb21lcyBmcm9tIHNpZGV3YXlzLCB0aGUgbmV3IGZ1bmN0aW9uIG1heSBhbHNvIG5lZWQgdG8g
-Y2FsbAo+ZmV0Y2hfcGFja19zZXR1cCgpIHRvIHByaW1lIHRoZW0pLgo+Cj5BIHBhdGNoIHNlcmll
-cyBtYXkgdGFrZSBhIHN0cnVjdHVyZSBsaWtlIHNvOgo+Cj4gKiBkZWZpbmUgZW51bSB7IFVOQlVO
-RExFX0ZTQ0tfTkVWRVIsIFVOQlVORExFX0ZTQ0tfQUxXQVlTIH0gaW4KPiAgIGJ1bmRsZS5oLCBo
-YXZlIGJ1bmRsZS5jOnVuYnVuZGxlKCkgYWNjZXB0IGEgbmV3IHBhcmFtZXRlciBvZiB0aGF0Cj4g
-ICB0eXBlLCBhbmQgY29uZGl0aW9uYWxseSBhZGQgIi0tZnNjay1vYmplY3RzIiB0byBpdHMgY2Fs
-bCB0bwo+ICAgImluZGV4LXBhY2siLiAgImdpdCBidW5kbGUgdW5idW5kbGUiIGNhbiBwYXNzICdu
-ZXZlcicgdG8gaXRzCj4gICBpbnZvY2F0aW9uIHRvIHVuYnVuZGxlKCkgYXMgYW4gZWFzeSB3YXkg
-dG8gdGVzdCBpdC4gIEZvciB0aGUKPiAgIG90aGVyIHR3byBjYWxsZXJzLCB3ZSBjYW4gc3RhcnQg
-YnkgcGFzc2luZyAnYWx3YXlzJy4KPgo+ICogKG9wdGlvbmFsKSB0ZWFjaCAiZ2l0IGJ1bmRsZSB1
-bmJ1bmRsZSIgYSBuZXcgIi0tZnNjay1vYmplY3RzIgo+ICAgb3B0aW9uIHRvIGFsbG93IHBhc3Np
-bmcgJ2Fsd2F5cycgdG8gaXRzIGNhbGwgdG8gdW5idW5kbGUoKS4gIFdpdGgKPiAgIHRoYXQsIGFk
-ZCB0ZXN0cyB0byBmZWVkIGl0IGEgYnVuZGxlIHdpdGggcXVlc3Rpb25hYmxlIG9iamVjdHMgaW4K
-PiAgIGl0IGFuZCBtYWtlIHN1cmUgdGhhdCB1bmJ1bmRsaW5nIG5vdGljZXMuCgpJIGp1c3Qgc3Vi
-bWl0dGVkIGEgbmV3IHNlcmllcyBtYWlubHkgZm9jdXNpbmcgb24gdGhlIHVuYnVuZGxlIGhhbmRs
-aW5nIGR1cmluZwpmZXRjaGVzLiBJIHdvdWxkIGxpa2UgdG8gc3VibWl0IGEgbmV3IG9uZSBmb3Ig
-dGVhY2hpbmcgImdpdCBidW5kbGUgdW5idW5kbGUiIGEKIi0tZnNjay1vYmplY3RzIiBvcHRpb24g
-YWZ0ZXIgdGhpcyB0byBtYWtlIGNoYW5nZXMgbW9yZSB0YXJnZXRlZC4KCj4gKiByZWZhY3RvciBm
-ZXRjaC1wYWNrLmM6Z2V0X3BhY2soKSB0byBtYWtlIHRoZSBmZXRjaC10aGVuLXRyYW5zZmVyCj4g
-ICBjb25maWd1cmF0aW9uIGxvZ2ljIGF2YWlsYWJsZSB0byBleHRlcm5hbCBjYWxsZXJzLgo+Cj4g
-KiBBZGQgVU5CVU5ETEVfRlNDS19VU0VfQ09ORklHIHRvIHRoZSBlbnVtLCBlbmhhbmNlIHVuYnVu
-ZGxlKCkgdG8KCkkgdGVuZCB0byB1c2UgYFVOQlVORExFX0ZTQ0tfRk9MTE9XX0ZFVENIYCBiZWNh
-dXNlIHRoaXMgb3B0aW9uIGlzIG9ubHkKdXNlZCBpbiBmZXRjaGVzLCB0aG91Z2ggdGhlIGN1cnJl
-bnQgaW1wbGVtZW50YXRpb24gaXMgaW5kZWVkIHJlYWRpbmcgY29uZmlncy4KCj4gICByZWFjdCB0
-byB0aGUgdmFsdWUgYnkgY2FsbGluZyB0aGUgaGVscGVyIGZ1bmN0aW9uIHlvdSBpbnRyb2R1Y2Vk
-Cj4gICBpbiB0aGUgcHJldmlvdXMgc3RlcC4KClRoZSBuZXcgcGF0Y2ggc2VyaWVzIGlzIGNvbnN0
-cnVjdGVkIHJpZ2h0IGFzIHlvdSBzdWdnZXN0ZWQsIHRoYW5rcyBhIGxvdCBmb3IKeW91ciBoZWxw
-LiAKClhpbmcgWGluCgo=
+Patrick Steinhardt <ps@pks.im> writes:
+
+> Indeed. The following diff fixes the leak:
+>
+>     diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+>     index 7d2a419230..e54be9c429 100644
+>     --- a/builtin/update-ref.c
+>     +++ b/builtin/update-ref.c
+>     @@ -130,6 +130,8 @@ static char *parse_next_arg(const char **next)
+>      
+>         if (arg.len)
+>             return strbuf_detach(&arg, NULL);
+>     +
+>     +	strbuf_release(&arg);
+>         return NULL;
+>      }
+>      
+>
+> Karthik is out of office this week, so you may want to add this as a
+> "SQUASH???" commit on top of his topic branch to make "seen" pass.
+
+Alright.  Thanks.
+
+>> Also
+>> 
+>>  https://github.com/git/git/actions/runs/9231313414/job/25401102951
+>> 
+>> shows that t1460-refs-migrate fails on Windows.
+>
+> Hm, this one is curious. There are no leak logs at all, and the exit
+> code is 139. Might be SIGSEGV, indicating that something else is going
+> on here than a memory leak.
+
+Sorry, I wasn't clear enough.  I do not suspect this is about leaks
+(and the failing job on Windows is not about leaks).
