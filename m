@@ -1,135 +1,121 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from outpost1.zedat.fu-berlin.de (outpost1.zedat.fu-berlin.de [130.133.4.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF10C13AD05
-	for <git@vger.kernel.org>; Mon, 27 May 2024 19:35:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2FA17E8ED
+	for <git@vger.kernel.org>; Mon, 27 May 2024 19:49:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.133.4.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838522; cv=none; b=j5rI7Yh9MenpDzHuxZwmQZPQjmZmWwriaE49Dx5yxHhcuDSr7zJJMdXHG5kvRkQg3mnuwCNXX0F8Q8E0aEdE/kKDexAxEuuftmMcDJPLLLnuSnoPn2/ySfoRah+ma3giPs02XQ7APmdPL7PQqhEdrY8cgPQK5PtXYotdYgFT6Qg=
+	t=1716839395; cv=none; b=V5uBPqqV5xL+B90JjDGSNZ7dRMhibgbQdXgtdaQvb8MtTORc7VnV92Vh1DbHDE2J/sIc6ZnkuDZgnd6WvxsecBMweJUTW+lrVtTmSLejil9ArFCY51I11uYv8FUNIka5tMTxzZlc3ETv+DY3qtD4UcNHU+LwW2AItcF/AyQWybY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838522; c=relaxed/simple;
-	bh=vqgxUVoyWkCtXiN9FwTFpjEaNUk2gYUSZaPsE2yCyA4=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=m7LKZMyyPxGm3uxMx7/fz/0YMLggqmDqLmlCB0QCf/q/cHYdE5sJ+Q1l/C+TH5DvkSNzyEiGlRQOQzcxMiCxB9L+0hJUBkpXjNtKgaCrXmVo9rDLaY5vGJN30XZnERjFAmBf5OZ1VF/BmquK1tPIMdVtPoOW9rtZjIb3d7OgAM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=hRH8bkC/; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1716839395; c=relaxed/simple;
+	bh=2bQ8ncL5isPVxly6yXXI9HpabFIzKWiQo3QNUoULP4o=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=J8NM+DcvOw2qzCEPNf+OYSoIde5o7bblY4NCVl8vKgvvGdADp46n9znuPoD7zLhwnASGPNBXILIzFm2PSFtTSxSkyq32NA1djJc9V170rmdSZwXI8prGZdcEhW/pbuLSMihQQKAe0atJ+Tda2yhMVdr7TDkbyMY1QMtvB0J/EIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de; spf=pass smtp.mailfrom=zedat.fu-berlin.de; dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b=pku/Hcre; arc=none smtp.client-ip=130.133.4.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zedat.fu-berlin.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="hRH8bkC/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1716838506; x=1717443306;
-	i=johannes.schindelin@gmx.de;
-	bh=GL6L/kbDgJx1QPTU6G1IeVRtR7FoVyY+tKjCZ8TYVoI=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=hRH8bkC/yo3ecROrS96DCj80AhAZeyf8A4JKIQ+68BzQ65X+Owj9OCQv3KEFpstO
-	 y2zTm4SMkqIuoU3oOPyBsWiM5ezI6xWjof+Aunlh0REUt9OgAtpf8s7PA2bLLLFq6
-	 Nd0c/S/LFtIa4wbDIe9Naj2U3xAq7OwpOVOMEsKjP8XUmUN353zGQtYSYs8x3fPG5
-	 CfObE/cObCUHyUQto7ultt9KF1KuTtH7Bsx8bJmVxkt67WvYEuWuJBwpYnMvbL35N
-	 Rtxmg8bdcGPqmvgFTBJmEpbBWcVv2T9xPCtEKPAExu3JwPCVntjlZF/GXHPD5wIYz
-	 /Shp7mCtFAuGqfAQug==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.216.58]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mdeb5-1sl10V0LTd-00Zdnf; Mon, 27
- May 2024 21:35:06 +0200
-Date: Mon, 27 May 2024 21:35:03 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Joey Hess <id@joeyh.name>
-cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-    Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Revert defense-in-depth patches breaking Git LFS
-In-Reply-To: <Zk2_mJpE7tJgqxSp@kitenet.net>
-Message-ID: <fbb89826-0d83-d4f9-bab4-9fba69e0e22d@gmx.de>
-References: <20240514181641.150112-1-sandals@crustytoothpaste.net> <0f7597aa-6697-9a70-0405-3dcbb9649d68@gmx.de> <ZkO-b6Nswrn9H7Ed@tapette.crustytoothpaste.net> <Zk2_mJpE7tJgqxSp@kitenet.net>
+	dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b="pku/Hcre"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=fu-berlin.de; s=fub01; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=G1YkJPHTViy0CJkqY1a1bJbDVB3yj/E7dUQYJ2gK2fA=; t=1716839392; x=1717444192; 
+	b=pku/Hcre71Cn/bOyamX1vGUb4xc/NulDi5ZG8YB1WcvCtdw8t8rGSIHD0sseQNYeDGrrbqSDdu9
+	XRMxRbP1MXVb8Spdr+IP0z9A25kFDGNMfX8ZigFsKr8QUmoHMg7cm5gX2y+MnTg93Iwx02tqpxuy/
+	z1os167xrnBT4j81b8TvwY3y3UL8tcknQvRW7O9iYLgf/4OlAQIXTixuJM2lFg7DXx2fIzaSLqlwL
+	pP26zDLk2e3mtfEZqIQ8XaHD8h2bq9iw8eXi0HUd4VRdv28RhJZ+4BBIvuFERh2h+FVnRVlZS08T9
+	di2W87nA2BElxZL98XMO9Rt9FevchVdk0U4w==;
+Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
+          by outpost.zedat.fu-berlin.de (Exim 4.97)
+          with esmtps (TLS1.3)
+          tls TLS_AES_256_GCM_SHA384
+          (envelope-from <glaubitz@zedat.fu-berlin.de>)
+          id 1sBgLm-00000002bAf-045s; Mon, 27 May 2024 21:49:42 +0200
+Received: from p57bd9a40.dip0.t-ipconnect.de ([87.189.154.64] helo=[192.168.178.20])
+          by inpost2.zedat.fu-berlin.de (Exim 4.97)
+          with esmtpsa (TLS1.3)
+          tls TLS_AES_256_GCM_SHA384
+          (envelope-from <glaubitz@physik.fu-berlin.de>)
+          id 1sBgLl-00000001tNw-3KCj; Mon, 27 May 2024 21:49:41 +0200
+Message-ID: <518a5c2f34180ee2e6b674d8dc5a66b8a2d345f7.camel@physik.fu-berlin.de>
+Subject: Re: [PATCH 2/3] chainlint.pl: fix incorrect CPU count on Linux SPARC
+From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+To: Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano
+ <gitster@pobox.com>
+Cc: Carlo Marcelo Arenas =?ISO-8859-1?Q?Bel=F3n?= <carenas@gmail.com>, 
+ Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org
+Date: Mon, 27 May 2024 21:48:59 +0200
+In-Reply-To: <CAPig+cTxMTAf85Gyi5eEYAM4pOTq2UTD1=oCVBy1q8aSF3cn6Q@mail.gmail.com>
+References: <20240520111109.99882-1-glaubitz@physik.fu-berlin.de>
+	 <20240520190131.94904-1-ericsunshine@charter.net>
+	 <20240520190131.94904-3-ericsunshine@charter.net>
+	 <m4xqop5u2a4okzr2svg7j57ey5x5fyfqrqitwwzhh4uansuu7v@uy4tznnci6dy>
+	 <d655399efccfa6219cd982035c0408f9f084e344.camel@physik.fu-berlin.de>
+	 <CAPig+cTfqk+tbTAVyPj8YP1uHx1D1swL84h-4p6OKBV=dDRX_Q@mail.gmail.com>
+	 <xmqqh6ep4qoy.fsf@gitster.g>
+	 <CAPig+cTxMTAf85Gyi5eEYAM4pOTq2UTD1=oCVBy1q8aSF3cn6Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.1 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wW3yz1Lz5d1matliUPTT1WQhtvN2P4cCSLJKMOLZ6bO0yzVl6ET
- dwfoahPpe/v3Y7JvWD2dF1+Yx/HLBnpz7Jvt1+o85TG+P12er6brGazHrZLb/ig/rHiMf6E
- 1PPacY1NW/bEqxa+CKDHplMgAF1WR/ib8lg6V+qPHIhZ/LAor+F5AGRfiah8ZuTdh8wrCBG
- oyqbDw3s2lZPMm9HUpgaw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:e2EOr0Y2zbA=;AlTSQzi2is+vt+V/mWCG44wewQ5
- 9/fJ6hrvA1pUkmkTqsRSWTl4mytifUPbe/kUiysGr+FLHEjsKcLMpIJLXh+oAbITDPNVvHYQV
- /HLy3CwqoA1ryL+XJ1NUjz41FP2MQybfoLgW+qLDq52PIo8rmd6Ly/xsWqiOWsLlVfoDMQoRu
- yX4Rdm9cWQoQLC1kpWt42E/hgxmGSLKJo/8CpvbEDsL6MvaVXfdUzDGASHs0AzlA6fVNdGPDy
- p7Y5Loxp9W31GbJagYoLloa2l3sSfhMgxCGftRCN3fv2OU3pcBxuiMq5g8rD94OBOnK5zZact
- opd0psd0adm0koUj0mTo5dbr4bz9uJbXuN3e50UK+NC7uly1wniVoDy4xQBbp6kyqubAU9d48
- lW5YHU3V4O5j6ti1YvFG5T0qfRLsJWvPNew0OdCWSHrMkicOXbsXph8xRGfh7n/FXRFpFgeIx
- ZCDBYrUc086anycrnUEYlnWjKPFNkuEJUq6DWOxeZbmWEDr0y/I8VvD7Z+LTpF0mQWtm5LPo6
- tyKzZc4DJGKYM+kZ7Y3YnGToZAoUXOyOnYaelVy/POWtpbHjYUYCL33YIF7wGidsnMJWJlVmO
- vzDlKqQFBjHr2O2k8uZjKaf6xGM6MrXqopYxa7VlIuHYV+Kj0dCazX2oPW6Uy8u8ZYGkSbYjB
- wiFyjzDMOuDIskI27C0K2ST7J+YPTMH2Ns9BOlvpH5xn9qycn7y+zWzb9869adHBFhSEnykZL
- KRsj23PUggqlbYdrUHuP921wNIBndXht1vgmBmo3mDassw0O0OhwTX7sqneOu/OqbmYtgeoE1
- RW5Go2K8enZTrL8GNZnWFPGPS/HDSQ/jM6Cnn3wCdB1Rc=
-Content-Transfer-Encoding: quoted-printable
+X-Original-Sender: glaubitz@physik.fu-berlin.de
+X-ZEDAT-Hint: PO
 
-Hi Joey,
+Hi,
 
-On Wed, 22 May 2024, Joey Hess wrote:
+On Wed, 2024-05-22 at 15:11 -0400, Eric Sunshine wrote:
+> On Wed, May 22, 2024 at 3:00=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
+> wrote:
+> > Eric Sunshine <sunshine@sunshineco.com> writes:
+> > > > > > "CPUnn:" in /proc/cpuinfo instead of the usual "processor NN:".
+> > > > >=20
+> > > > > not sure if worth a reroll, but the "usual" syntax is "processor =
+ : NN"
+> > > ...
+> > > Inclusion of the word "usual" is such a minor flaw in the commit
+> > > message that I doubt it warrants a reroll and the associated cost on
+> > > reviewers and on the maintainer (Junio), especially since it does not
+> > > negatively impact the intent conveyed by the commit messages nor the
+> > > correctness of the actual patch.
+> > >=20
+> > > As such, I'm not worried about it. Whether Junio reads this and wants
+> > > to correct it in his tree is up to him, of course.
+> >=20
+> > I think "usual" is not what was pointed out. The order between the
+> > colon and NN is.
+>=20
+> Yes, I understood that, but it is the word "usual" which makes the
+> text "processor NN:" questionable since "processor NN:" is not
+> typical. Without the word "usual", stating "processor NN:" is not
+> especially problematic since the existing regex (which is being
+> changed by this patch) _does_ match "processor NN:" (among others such
+> as "processor:").
+>=20
+> If we want to be more accurate, better wording might be:
+>=20
+>     On SPARC systems running Linux, individual processors are denoted
+>     with "CPUnn:" in /proc/cpuinfo, however, the regexp in ncores()
+>     matches only "processor:" or "processor NN:". As a result, no
+>     processors are found on SPARC. Address this shortcoming by
+>     extending the regexp to also match lines with "CPUnn:".
+>=20
+> but I doubt it is worth a reroll.
 
-> brian m. carlson wrote:
-> > If these protections hadn't broken things, I'd agree that we should ke=
-ep
-> > them.  However, they have broken things and they've introduced a
-> > serious regression breaking a major project, and we should revert them=
-.
->
-> More than one major project; they also broke git-annex in the case where
-> a git-annex repository, which contains symlinks into
-> .git/annex/objects/, is pushed to a bare repository with
-> receive.fsckObjects set. (Gitlab is currently affected[1].)
+So, could we get this series merged now or is there anything missing?
 
-This added fsck functionality was specifically marked as `WARN` instead of
-`ERROR`, though. So it should not have failed.
+Thanks,
+Adrian
 
-> BTW, do I understand correctly that the defence in depth patch set was
-> developed under embargo and has never been publically reviewed?
->
-> Looking at commit a33fea0886cfa016d313d2bd66bdd08615bffbc9, I noticed
-> that its PATH_MAX check is also dodgy due to that having values ranging
-> from 260 (Windows) to 1024 (Freebsd) to 4096 (Linux), which means git
-> repositories containing legitimate, working symlinks can now fail to be
-> pushed depending on what OS happens to host a reciving bare repository.
-
-Likewise, this fsck functionality was specifically marked as `WARN`
-instead of `ERROR`, to prevent exactly the issue you are seeing.
-
-Are you saying that Gitlab is upgrading fsck warnings to errors? If so, I
-fear we need to ask Gitlab to stop doing that.
-
-> +                               if (is_ntfs_dotgit(p))
->
-> This means that symlinks to eg "git~1" are also warned about,
-> which seems strange behavior on eg Linux.
-
-Only until you realize that there are many cross-platform projects, and
-that Windows Subsystem for Linux is a thing.
-
-> +                               backslash =3D memchr(p, '\\', slash - p)=
-;
->
-> This and other backslash handling code for some reason is also run on
-> linux, so a symlink to eg "ummmm\\git~1" is also warned about.
-
-Right. As far as I can tell, there are very few Linux-only projects left,
-so this is in line with many (most?) projects being cross-platform.
-
-> +               if (!buf || size > PATH_MAX) {
->
-> I suspect, but have not confirmed, that this is allows a symlink
-> target 1 byte longer than the OS supports, because PATH_MAX includes
-> a trailing NUL.
-
-True. That condition is basically imitating the `size >
-ATTR_MAX_FILE_SIZE` one a couple of lines earlier, but it should be `>=3D`
-here because `PATH_MAX` is supposed to accommodate the trailing NUL.
-
-Ciao,
-Johannes
+--=20
+ .''`.  John Paul Adrian Glaubitz
+: :' :  Debian Developer
+`. `'   Physicist
+  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
