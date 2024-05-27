@@ -1,332 +1,104 @@
-Received: from wfhigh8-smtp.messagingengine.com (wfhigh8-smtp.messagingengine.com [64.147.123.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F67A15DBBA
-	for <git@vger.kernel.org>; Mon, 27 May 2024 11:47:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432B715E5CF
+	for <git@vger.kernel.org>; Mon, 27 May 2024 12:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716810449; cv=none; b=TMC7q5f3PRM5Av94o2LL0nhKCsI5NiGVr1jxKIH8hqkpD9TcUf1bbPcpDvMtYHPCWw7+fQni5lttoZAD7E9lmPr1iqrQnawRGE9t0B2MDINIw/Ur3KgWbjpkRiOYaUjy7EA7I/rEM3Ti8lUgV47f1ROqfK4scNRfAA721nan3/g=
+	t=1716814768; cv=none; b=WAlxr5tH3my3o1mA1wnKE/jhlze088n4v/YwCx+tGcbXAkPIFgxM8YIOOllnN7t3WMwjuQHn/HBIR4IzPG012rhW7Ebg192gbJ2e7xzredQkn84ULrPBC3Tr3r/jv08BogxOXKmPUg8wzcR8AB2dA2ylB+7q1HcJNNd6hC8UL/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716810449; c=relaxed/simple;
-	bh=XmXgW/7lu7WZGZ6htfDjawGBrh6IiEkLGYak7K4Lfb4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P7oeqnaDb7pKfCf6erptbmcr4P4gxIWOyVtedundO6bLsIfPddk+raV6To8UUPcUq6sS5fY4yXR3XI5p3+FRdox+7TIch8kXeFagnrCENXHK7uSAS63p40TCeIKqDHJemNgtMOulNvBqgb3oVIFC0AYPV5OSKicINwj5aaNEwRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gfhbSLq+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V73BlRuq; arc=none smtp.client-ip=64.147.123.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1716814768; c=relaxed/simple;
+	bh=tpy851VHlhNaPsunTRm09cZ9jeM8MYVcL8mUTlWM7sI=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=JLmIbJoo+bd875VByjQ4O5CzMOfiN+6CiRGgd+PecFgnJUyebI/GJS1pUSidYFJW7cQmSB+Pqn2Z9ia9P3OoLfzQI7uO+avhMu1BgJhCmkW2qbG5d1vBXDl0XUQ9HVcFfZI++0CIOWkRo/s7qcL5LjnRu1Ccgv3AYVub3qNAVTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=W4z0mtc2; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gfhbSLq+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V73BlRuq"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 9BB7D180009D;
-	Mon, 27 May 2024 07:47:27 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 27 May 2024 07:47:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716810447; x=1716896847; bh=+MkkcJTIFU
-	hHaGabDj71Ke+65SyieN1SBmpiPwcIl9U=; b=gfhbSLq+YDEVtSRpPbWxCNbIum
-	5rfTMovdXT9XzJnRCYDToFwyW4agw0QkzN8E38B3yu3GB6YhgkILr4BNCJElAm3g
-	8uFODHzqdHVWjzAgyx7q3PJ/Nh5wvsl+GAomHgkpXo7wLSyahB7ctNPY67V7dhii
-	PHf2VvkbIkrg+598G4zyTtIXZ59trIe0WK5LskixyoqvStYbfz/XBXWzLXIfYdwB
-	fhZRT9RzKJWQXLQ8A/ahWrUxUI1aGrK1GIqEb3qsl0erRKXfTuStqmRCDvK74ihv
-	D/W77ocissWIuEhdjGTvPUMlsjw7ynGyeNR0PvTZ/RrixeHwSMNfewXf4/Qg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716810447; x=1716896847; bh=+MkkcJTIFUhHaGabDj71Ke+65Syi
-	eN1SBmpiPwcIl9U=; b=V73BlRuqPbYLImJLvTjzf9VuljvuQ+6VUVp1m1VPbQyV
-	bFNpmlwZ4wqaVKVvgEmz1WT86jn/i6b1fHprCN8HCiJ3jgm9lqeekzU6UsI4so+a
-	6S8kwynhOrDRsd27ihlqR60RlBhvfO+W+/UtgRDZsRyQ2W2stiE5VNoEJ7751CS4
-	5rROAbB+6wNPXLoRLuJq6lom9JOybHbgvIhNT80UqePYj2xyUCzDyGMWBGOIN4DA
-	OfeBUfN9oP8ZmE8aB6qGfBJ37rZ7NNOA1Ur/YD9/UkEIW22izAJokazeZG0l6+S5
-	lk3GqhaEYFUDEphTlVEprVUqj5oxqDcrOCEaCWgLFQ==
-X-ME-Sender: <xms:z3JUZidGe-j5_F69Zs1FsuFDFWn6-U0hT3jeQc3Ahy8Vnt53Sg7Vdg>
-    <xme:z3JUZsMEboPZCu9fqFNSBi0--BmSxLjE2NvaMqI2b6pjVjHqSEuQETAJm0hGmhs7u
-    gJnfyFRT8U97VW7EA>
-X-ME-Received: <xmr:z3JUZjiRQ0MpC-iuxhNxohID_7atvkoSlc80xrZtfAsP6dCkrbvm3j-dl305yMy1xKG_pPqgi_nOFmO1cKVSxEOS78mTGB1nWq1eXvJiMSr9vSgPgO0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejgedggeefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepgeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:z3JUZv-QwAweD-H0Toq3KWIQNjadE-Xy0Y_0e8N9YXjalnXFnNxfyw>
-    <xmx:z3JUZuuamnm2ntS5PiYA1xa4K4010QMmyBPW8DzlhRB6BimzvTPjQg>
-    <xmx:z3JUZmG0jckkzca-SYnui08MwsUZ47-INdLJNSgUtothUdcsjPhn4g>
-    <xmx:z3JUZtOEbvsTj5Uge-5XauDreAFt44O_S9w0by2hit3Zc4DH-Hfosw>
-    <xmx:z3JUZgViCmBiNLBU9nmKMk3N_Xx47Bnowc5Bd6YP1CHiJGGGTonzoSwj>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 May 2024 07:47:25 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ade32d89 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 27 May 2024 11:47:15 +0000 (UTC)
-Date: Mon, 27 May 2024 13:47:23 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 21/21] builtin/mv: fix leaks for submodule gitfile paths
-Message-ID: <add7946446daab57b28454dda625c4c77ab6c745.1716810168.git.ps@pks.im>
-References: <cover.1716465556.git.ps@pks.im>
- <cover.1716810168.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="W4z0mtc2"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9Kz0MXhKCNa29lo5"
-Content-Disposition: inline
-In-Reply-To: <cover.1716810168.git.ps@pks.im>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1716814762;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Y5xKwwJEUr3GRthX1CkDNTBRAnix6vbM8GDaHoMGAHY=;
+	b=W4z0mtc22QpsgB1yvkpsaiTw+mptTuVp4skm5HaEZ0/Z9PZh6fNLA0kEF7F27lTO2dxymX
+	XDEPujbrdiw5gpSvMu7+2bw+M4pV6jCJMLWTQ+TQe6LNeteWQIJySvWAoPskJ1b95DeRlZ
+	36Ut1yGwj4wqQJBxwU/l/5+cHpQrdbGQBulY1HFhvpJ3JOswJ+QyrznnvFcft5krJJqm7y
+	iGq73uve0gqbqfcX1kWPy807usiARbtnyZFM6W989kFaoKNp8gMkajk2EHhw+Y7gITiHhs
+	O9m4Bf3uPDkXCxC2bIWzBzfvdtAxMqUqJqZTdxvN3TRQ60kvQYsa6Zss4tGP6Q==
+Date: Mon, 27 May 2024 14:59:21 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] format-patch: move range/inter diff at the end of a
+ single patch output
+In-Reply-To: <ZlQX0FmIsz2eFgsC@tanuki>
+References: <20240523225007.2871766-1-gitster@pobox.com>
+ <20240523225007.2871766-3-gitster@pobox.com> <ZlB2g5bTuBFz5m5_@tanuki>
+ <xmqqo78ukhmk.fsf@gitster.g> <ZlQX0FmIsz2eFgsC@tanuki>
+Message-ID: <a4f6cf69b5fb189a80f69dcf6d5a8731@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
+On 2024-05-27 07:19, Patrick Steinhardt wrote:
+> On Fri, May 24, 2024 at 02:46:43PM -0700, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> > On Thu, May 23, 2024 at 03:50:07PM -0700, Junio C Hamano wrote:
+>> > I also think that there's a bug here. The output from the above command
+>> > is:
+>> > ...
+>> >     --- a/blorp
+>> >     +++ b/blorp
+>> >     @@ -1 +1 @@
+>> >     -fnorp
+>> >     +fleep
+>> >     Interdiff against v1:
+>> >       diff --git a/blorp b/blorp
+>> > ...
+>> >
+>> > The diff is before the separator for the signature, and there is no
+>> > clear delimiter between the actual diff and the interdiff.
+>> 
+>> Earlier Eric expressed concern about writing this out _after_ the
+>> mail signature mark "-- ", so the output deliberately goes before
+>> it.  There is no need for any marker after the last line of the
+>> patch.  "Interdiff against ..." is a clear enough delimiter.
+>> 
+>> FWIW, the parsing of patches has always paid attention to the
+>> lengths recorded in @@ ... @@ hunk headers, and the parser notices
+>> where the run of ("diff --git a/... b/..." followed by a patch) ends
+>> and stops without problems.  On the other hand, if you remove the
+>> line "+fleep" in the above example and try to feed it to "git
+>> apply", it would correctly notice that it failed to see the expected
+>> one line of postimage and complains (because it sees "Interdiff
+>> against..."  when it expects to see a line that begins with a plus).
+>> 
+>> So, I do not see any problem with the output from this cocde at all.
+>> 
+>> Thanks for careful reading.
+> 
+> The machine can cope alright. But I think that it's way harder to parse
+> for a human if there is no clear visual delimiter between the diff and
+> the interdiff. And "Interdiff" isn't quite ideal in my opinion because
+> it is text, only, and may be quite easy to miss if it follows a long
+> diff.
+> 
+> The signature mark may not be ideal here as an indicator. Mail readers
+> may hide signatures, color them differently or other stuff. But I think
+> there should be some indicator here that visually highlights the fact
+> that one section is ending and another section is starting. This could
+> either be a newline, or the triple-dashes as we use in other places.
 
---9Kz0MXhKCNa29lo5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Similar to the preceding commit, we have effectively given tracking
-memory ownership of submodule gitfile paths. Refactor the code to start
-tracking allocated strings in a separate `struct strvec` such that we
-can easily plug those leaks. Mark now-passing tests as leak free.
-
-Note that ideally, we wouldn't require two separate data structures to
-track those paths. But we do need to store `NULL` pointers for the
-gitfile paths such that we can indicate that its corresponding entries
-in the other arrays do not have such a path at all. And given that
-`struct strvec`s cannot store `NULL` pointers we cannot use them to
-store this information.
-
-There is another small gotcha that is easy to miss: you may be wondering
-why we don't want to store `SUBMODULE_WITH_GITDIR` in the strvec. This
-is because this is a mere sentinel value and not actually a string at
-all.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/mv.c                              | 44 +++++++++++++----------
- t/t4059-diff-submodule-not-initialized.sh |  1 +
- t/t7001-mv.sh                             |  2 ++
- t/t7417-submodule-path-url.sh             |  1 +
- t/t7421-submodule-summary-add.sh          |  1 +
- 5 files changed, 30 insertions(+), 19 deletions(-)
-
-diff --git a/builtin/mv.c b/builtin/mv.c
-index e461d29ca1..81ca910de6 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -82,21 +82,23 @@ static char *add_slash(const char *path)
-=20
- #define SUBMODULE_WITH_GITDIR ((const char *)1)
-=20
--static void prepare_move_submodule(const char *src, int first,
--				   const char **submodule_gitfile)
-+static const char *submodule_gitfile_path(const char *src, int first)
- {
- 	struct strbuf submodule_dotgit =3D STRBUF_INIT;
-+	const char *path;
-+
- 	if (!S_ISGITLINK(the_repository->index->cache[first]->ce_mode))
- 		die(_("Directory %s is in index and no submodule?"), src);
- 	if (!is_staging_gitmodules_ok(the_repository->index))
- 		die(_("Please stage your changes to .gitmodules or stash them to proceed=
-"));
-+
- 	strbuf_addf(&submodule_dotgit, "%s/.git", src);
--	*submodule_gitfile =3D read_gitfile(submodule_dotgit.buf);
--	if (*submodule_gitfile)
--		*submodule_gitfile =3D xstrdup(*submodule_gitfile);
--	else
--		*submodule_gitfile =3D SUBMODULE_WITH_GITDIR;
-+
-+	path =3D read_gitfile(submodule_dotgit.buf);
- 	strbuf_release(&submodule_dotgit);
-+	if (path)
-+		return path;
-+	return SUBMODULE_WITH_GITDIR;
- }
-=20
- static int index_range_of_same_dir(const char *src, int length,
-@@ -170,7 +172,8 @@ int cmd_mv(int argc, const char **argv, const char *pre=
-fix)
- 	struct strvec sources =3D STRVEC_INIT;
- 	struct strvec dest_paths =3D STRVEC_INIT;
- 	struct strvec destinations =3D STRVEC_INIT;
--	const char **submodule_gitfile;
-+	struct strvec submodule_gitfiles_to_free =3D STRVEC_INIT;
-+	const char **submodule_gitfiles;
- 	char *dst_w_slash =3D NULL;
- 	const char **src_dir =3D NULL;
- 	int src_dir_nr =3D 0, src_dir_alloc =3D 0;
-@@ -208,7 +211,7 @@ int cmd_mv(int argc, const char **argv, const char *pre=
-fix)
- 		flags =3D 0;
- 	internal_prefix_pathspec(&dest_paths, prefix, argv + argc, 1, flags);
- 	dst_w_slash =3D add_slash(dest_paths.v[0]);
--	submodule_gitfile =3D xcalloc(argc, sizeof(char *));
-+	submodule_gitfiles =3D xcalloc(argc, sizeof(char *));
-=20
- 	if (dest_paths.v[0][0] =3D=3D '\0')
- 		/* special case: "." was normalized to "" */
-@@ -306,8 +309,10 @@ int cmd_mv(int argc, const char **argv, const char *pr=
-efix)
- 			int first =3D index_name_pos(the_repository->index, src, length), last;
-=20
- 			if (first >=3D 0) {
--				prepare_move_submodule(src, first,
--						       submodule_gitfile + i);
-+				const char *path =3D submodule_gitfile_path(src, first);
-+				if (path !=3D SUBMODULE_WITH_GITDIR)
-+					path =3D strvec_push(&submodule_gitfiles_to_free, path);
-+				submodule_gitfiles[i] =3D path;
- 				goto act_on_entry;
- 			} else if (index_range_of_same_dir(src, length,
- 							   &first, &last) < 1) {
-@@ -323,7 +328,7 @@ int cmd_mv(int argc, const char **argv, const char *pre=
-fix)
-=20
- 			n =3D argc + last - first;
- 			REALLOC_ARRAY(modes, n);
--			REALLOC_ARRAY(submodule_gitfile, n);
-+			REALLOC_ARRAY(submodule_gitfiles, n);
-=20
- 			dst_with_slash =3D add_slash(dst);
- 			dst_with_slash_len =3D strlen(dst_with_slash);
-@@ -338,7 +343,7 @@ int cmd_mv(int argc, const char **argv, const char *pre=
-fix)
-=20
- 				memset(modes + argc + j, 0, sizeof(enum update_mode));
- 				modes[argc + j] |=3D ce_skip_worktree(ce) ? SPARSE : INDEX;
--				submodule_gitfile[argc + j] =3D NULL;
-+				submodule_gitfiles[argc + j] =3D NULL;
-=20
- 				free(prefixed_path);
- 			}
-@@ -427,8 +432,8 @@ int cmd_mv(int argc, const char **argv, const char *pre=
-fix)
- 			strvec_remove(&sources, i);
- 			strvec_remove(&destinations, i);
- 			MOVE_ARRAY(modes + i, modes + i + 1, n);
--			MOVE_ARRAY(submodule_gitfile + i,
--				   submodule_gitfile + i + 1, n);
-+			MOVE_ARRAY(submodule_gitfiles + i,
-+				   submodule_gitfiles + i + 1, n);
- 			i--;
- 		}
- 	}
-@@ -462,12 +467,12 @@ int cmd_mv(int argc, const char **argv, const char *p=
-refix)
- 				continue;
- 			die_errno(_("renaming '%s' failed"), src);
- 		}
--		if (submodule_gitfile[i]) {
-+		if (submodule_gitfiles[i]) {
- 			if (!update_path_in_gitmodules(src, dst))
- 				gitmodules_modified =3D 1;
--			if (submodule_gitfile[i] !=3D SUBMODULE_WITH_GITDIR)
-+			if (submodule_gitfiles[i] !=3D SUBMODULE_WITH_GITDIR)
- 				connect_work_tree_and_git_dir(dst,
--							      submodule_gitfile[i],
-+							      submodule_gitfiles[i],
- 							      1);
- 		}
-=20
-@@ -573,7 +578,8 @@ int cmd_mv(int argc, const char **argv, const char *pre=
-fix)
- 	strvec_clear(&sources);
- 	strvec_clear(&dest_paths);
- 	strvec_clear(&destinations);
--	free(submodule_gitfile);
-+	strvec_clear(&submodule_gitfiles_to_free);
-+	free(submodule_gitfiles);
- 	free(modes);
- 	return ret;
- }
-diff --git a/t/t4059-diff-submodule-not-initialized.sh b/t/t4059-diff-submo=
-dule-not-initialized.sh
-index d489230df8..668f526303 100755
---- a/t/t4059-diff-submodule-not-initialized.sh
-+++ b/t/t4059-diff-submodule-not-initialized.sh
-@@ -9,6 +9,7 @@ This test tries to verify that add_submodule_odb works when=
- the submodule was
- initialized previously but the checkout has since been removed.
- '
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- # Tested non-UTF-8 encoding
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 879a6dce60..86258f9f43 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
-=20
- test_description=3D'git mv in subdirs'
-+
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-diff-data.sh
-=20
-diff --git a/t/t7417-submodule-path-url.sh b/t/t7417-submodule-path-url.sh
-index 5e3051da8b..dbbb3853dc 100755
---- a/t/t7417-submodule-path-url.sh
-+++ b/t/t7417-submodule-path-url.sh
-@@ -4,6 +4,7 @@ test_description=3D'check handling of .gitmodule path with =
-dash'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- test_expect_success 'setup' '
-diff --git a/t/t7421-submodule-summary-add.sh b/t/t7421-submodule-summary-a=
-dd.sh
-index ce64d8b137..479c8fdde1 100755
---- a/t/t7421-submodule-summary-add.sh
-+++ b/t/t7421-submodule-summary-add.sh
-@@ -10,6 +10,7 @@ while making sure to add submodules using `git submodule =
-add` instead of
- `git add` as done in t7401.
- '
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- test_expect_success 'setup' '
---=20
-2.45.1.246.gb9cfe4845c.dirty
-
-
---9Kz0MXhKCNa29lo5
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZUcsoACgkQVbJhu7ck
-PpTvIA//Rtj/lUmbVOIQFF64Qy1kayhPdMgw68lWaXMW4pAB+9xoK6QsFuFljBZE
-ARgz5aV+M8XeWFjsRGb6YdExR8WyAuoGsVudWxFlGywMTZjmzoZZug5nklt2Ir+Z
-3YTzeNqgzHiMRjsODJMxZUsTIXp4tTaHV9QbJNRv5Tn8IILOye7Pn+brHQMvhdWY
-vN7ORfG+uNdRVmV2ZJ71YEQzICbH2Ezre9lmaebp3g0nVVXBdCtDzaZudYxdBc4w
-jtNDYfT8pLWL1QqkzjDemf3wl9y8KM8nay6IG+Ik8VoR29VRmBcoScXI6Z42ar5J
-AwoOGQMHdHCNDLDN9Yuu9kfobKJlLFdz1h8xR/7V76M8mZxzVDLHk4ZHz577wO+W
-3k0sJ0qw3Nh1b9SAyQX5wFMO7Ofs8hWhYIO/BT5Hd65jG7NREflH2k3srT8TwoH9
-zNpaR91wSxwp3uEkat1oUE3Kp0XZgRpE8B3N8oUUGljICuLCI09/sEQyHoy3Hb0h
-dGJFIhiXWLSikR7jJoVwZOb5Gdu+LJ8UaV1+v9vDZaGkWVXZm/JSm4OXTwq2vqL+
-agl0d7M4owkeNNG000/k6OKPjEkOUqpqJQLZWI+1l/GIfz23o0KxJEN3yd0/+Z/G
-vuTdK/Q6147uTr0LcnnmpAvuzvcKocgseEeqOSQI+qKwKnaLGoE=
-=8ckz
------END PGP SIGNATURE-----
-
---9Kz0MXhKCNa29lo5--
+I agree about the need for having a distinctive separator.
