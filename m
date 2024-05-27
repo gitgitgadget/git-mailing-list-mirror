@@ -1,90 +1,82 @@
-Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
+Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE70FBEF
-	for <git@vger.kernel.org>; Mon, 27 May 2024 05:12:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA4A10A01
+	for <git@vger.kernel.org>; Mon, 27 May 2024 05:19:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716786744; cv=none; b=XThZItURE+/fFHDgkQQDYAEmqsiJ4RaHkxXcMmeSv+Hwhfktcwm3n0Dsrf1twuDuOjdVUn7T4bCKbAKJnX6VhmPD7ehRNi0DiTiP/XZORlgvs4e3JMrSTtY0nOYIycBT0lLKAP5plisU5avp0hkoPo7oWbwTiouRXDbWRr4+UTE=
+	t=1716787160; cv=none; b=K+yjRaw7vqlRDOFkTePLoLWTksGhmggvFXAhN3jWAZWWzDBaj9Hb3Y6C3fgCEvY1udeRfyEkAkTd2PGb5addJ8mA0iHkGMlMWaokZZOB5F5acietc+AH3QsyPoJHxTYA7fCHB1kohPjmxFliPnnpoVj8B5HIjSvxRddIuxlrmSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716786744; c=relaxed/simple;
-	bh=1bzmwyEeke6YfxypFFKx/nT6HtT+pms3QY3BM+GPvdc=;
+	s=arc-20240116; t=1716787160; c=relaxed/simple;
+	bh=6mbWaLHpuQAAE4wa2/1Spx2snmMybwswoxl0bCWZ5wE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OyMfahb5uUu6XdVA0Ap9ceoq00HfiiGgvSRx0NxU4JKdg3Vh9gV20d6uMtVn+w9UHwQcQ2J79m06yhcngdBvYrod5GADzu9eFDMYd+QMI62SmIbfjHyZSe/ov87lm+Fmiqu3o4h0dzfBf1c8S0+mJxFXc7XlbIPnD30BFYJ1Wsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RYh14lwK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UUoeWtt2; arc=none smtp.client-ip=64.147.123.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mre+xvJCDbNvW9xg0ydhPrSo6LTigFUbl0utRfrJC6BN1CPKdYdKPYAY9gDhZsgyq4Jlcx8SPpS220KN6Weno+jebMVDx6kHeDCBAoEzfAcQlj5LPRpYqyhFXYyMwzLOewuYIU4eGMGUxvv8Ra7IFPn6QDCCZaozDLx7alV9isI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TIMayizG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R2ACzWvl; arc=none smtp.client-ip=64.147.123.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RYh14lwK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UUoeWtt2"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TIMayizG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R2ACzWvl"
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 6B3251800090;
-	Mon, 27 May 2024 01:12:20 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Mon, 27 May 2024 01:12:20 -0400
+	by mailfout.west.internal (Postfix) with ESMTP id 1D8411C000A9;
+	Mon, 27 May 2024 01:19:18 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Mon, 27 May 2024 01:19:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716786740; x=1716873140; bh=XTMcJbtf7/
-	gfjO2MFkBWP8G6daHXH9uw/me2z3ZnM7k=; b=RYh14lwKr3K+R1C6a0tSFSja4M
-	dl46KKCxkjz58x8tUasq8W4KoD4/Z2ZbFgYoD+CC4N/pOD0Dl7vtKWW3KiR2vCQE
-	82JuooFoBN3PjfuhmJOU/frHNvHvnPb21kRR0d4RlUEG2SmJdpXcqy3EGaXgt6SF
-	T32AhQGgWJPr5xH+W9KNhlz3vpVW74hLRexVxOOa+drUIidatN4VXXk0+dHTbNTP
-	L6XdfWneI6IdqjFDIjBE+aGhx1tHiRCcm7kkgH95i+noi3G8PxqC2/KWPeUN8wXW
-	7rPAjpyjKetOaakfb0voFmWooSc58WrYE+u/NaxSkutT1I64WlRRaDrz7IKQ==
+	:subject:to:to; s=fm1; t=1716787157; x=1716873557; bh=Iz7jblrtkx
+	uBJdsDBqvq2Q3O6Q8hKpR8K5BeSjab0CE=; b=TIMayizGiZz8WWgPttVXSQeBzi
+	BMK1+h8X1lpj8eVN5df6d+LZ0Pi5f7LFo74WPpdZFdTFxsDuhTCTPFxD71HytHlH
+	BCqhA7Vpm6er6V82AnTSZUjVYH8wovZAD+13RhsenfHxMNnlWIWZLRK0nc4OcWkM
+	bgJRkj2Tux9FuxH1O9f5DQy2hUkX15G9QHwX060lgELGd0h5NgGFOJEKqpJznYPB
+	BYtYY4dA6GEfjlTY7GvmtGDo4O7OAjRCCzYaBk7MN37Pqbm5izbrg/N4lF5bHZIo
+	+e0f7SgaFjKxwYm9hqL7MooCLJMeLlkMoPKhUlaOOq0SMiJzKW6rvRGaMTbQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716786740; x=1716873140; bh=XTMcJbtf7/gfjO2MFkBWP8G6daHX
-	H9uw/me2z3ZnM7k=; b=UUoeWtt2uYUyVAi0/p8h7EJOtBkj9GsD3Xl722QxHi7Q
-	mR6/9WVo6+7fPOwFIfqT7zgssO7waN/7G3Hdcwrgx8t9D9vH6rXn17fdsPGx7Vut
-	s7K6Y8iYSRhuYRTNnfOrVLg++Yp5sDPsCdHt5xcVNP6f5l7DPvwHX1qB22Nekdbd
-	H461nJ6eMYVmyR6h1IIrMzjTNjbO+KvErUbn5wlH2STHMTbdns/Ijug0qdWopf+c
-	FejoZR1qT/8Ze7plQrSiRXp2U0BH96AtrGKtYucazhGXO5UK/rhebe+AIN6+/SUC
-	/PftPFCt0+DNJOMNkjQx9TCSj85CQwikL50DJ9nIxQ==
-X-ME-Sender: <xms:MxZUZkKxotQkswi6Fw1cNwgMXdfZEOsdGeJuGKPjuYHn_qTeedMN5w>
-    <xme:MxZUZkLhVKFcTRxxNGxtGoGQyLq_h5c8LUkuGHBBF-eGPAx6HHKYhN0Zyf9Dn4jr7
-    m6sMv37g34KeP1eGg>
-X-ME-Received: <xmr:MxZUZkuNvc-c-f1gJEhE3XPbomOqpAaQoAq5SYUKstyGHJbb3B24Htwxc022kKANr5RI7o9SPwWBcWwxSYiCZUYRzO79diOEwz-ZTvDscbtZ3-hFwTc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejfedgleduucetufdoteggodetrfdotf
+	fm1; t=1716787157; x=1716873557; bh=Iz7jblrtkxuBJdsDBqvq2Q3O6Q8h
+	KpR8K5BeSjab0CE=; b=R2ACzWvlO4iDPiYR6TRw0mayAHXbDuV7W9ZFujGodiRr
+	XVaj8uZZjmFy7ZH3FtSUD9IQx9JeWA1nvfDbpex1gEkvOwIVCdBiNJakWy2N65N8
+	UieWuSXnTdyzplrOC1WOFzL9yG8SX+vtAycWA15wzDrFsoPII6vhlS+Hnmft06AP
+	uye0Zqg874r1wN6yKjYLrjApZ++q8zHClafYoywLV16Ddd2RdNKP97NLrYryLqml
+	ujn9pHhGsZJQycJLAgJ9Cyh0MRcz2MjkixVzPhBKI9IJoozGkiO5HPj0h4MhWKxF
+	UkViW7AjXe8jfR/i6RoN1jHxZSBoh/pcmwZQcQLZUg==
+X-ME-Sender: <xms:1RdUZtItknOBOUBJuUiyo3Qwj1xUhX0GQw1WixTWFlEA3cFqVXtsUA>
+    <xme:1RdUZpJK9isGvqtdYhgTD2KplrIl5MLpgOdZWE-j6ZuGJ63hxBZUwhA3tJVc5ctHc
+    YzKuzHDwpLrksi0pA>
+X-ME-Received: <xmr:1RdUZltE1VBHlz0xr4f1K7oJeikiJYUPxIMuklvDuz8QdGFyHVCqHWegKbCUn8CsYXoh_syWB3Pc9HK-8cGFssB2U0F-MdornuraU9PFBT2-kmAFu1o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejfedgledvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepjeefueeuteeihfffieegieeuhfetgfeugfejleffleehvdefjeejheeufeffieet
-    necuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:MxZUZhb3rVDE9dw9iSGYGYxJEsvNm8LIlsYckBQsflVXH-LuyNNPEA>
-    <xmx:MxZUZra8m74mlrXDA8rFYzqmwHE17aayBs4UeNa33E0Uvj-4Ar11ag>
-    <xmx:MxZUZtB5iWCUxKFQ0mmxtJPDXbSe_nqwoR3x7O50qqsMBC6UmbLWMg>
-    <xmx:MxZUZhZPV7zLC8-exJC6kJspg2I8Bnz6UUYDwuGQg_IL4egBW1Ig-w>
-    <xmx:NBZUZgPrBgBtaeghHXqamTXyRftwI320lEOdqCXvhH1eFSGOik7dbory>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:1RdUZuZI_zhVhgJtnsGuNIvOxy8yoCqLZe-4cLvJgNwIkT4BxHL4VA>
+    <xmx:1RdUZkZyfIQAv__srkWuFBA8eIsNIvDogYlaCU55LL96OJ8vBBUt9A>
+    <xmx:1RdUZiAoFsWDrXa3e88-lBNv0LGxUIu5ra_7edQNyFvkgPjZKU_bJg>
+    <xmx:1RdUZiZnmQK6KrQvIBcObiF1UzSzohX48xMnH2X4HEECWtGZDB3DwQ>
+    <xmx:1RdUZjlC7RlOVUAyhpFEvIFI1J8nslkR_Gw7Jovd5Ax8YquX9b0jc3QF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 May 2024 01:12:18 -0400 (EDT)
+ 27 May 2024 01:19:16 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 6cc64143 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 27 May 2024 05:12:06 +0000 (UTC)
-Date: Mon, 27 May 2024 07:12:13 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 6fa523bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 27 May 2024 05:19:05 +0000 (UTC)
+Date: Mon, 27 May 2024 07:19:12 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Philip <philip.c.peterson@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH 3/3] ci: stop installing "gcc-13" for osx-gcc
-Message-ID: <ZlQWLeLFrkZszciM@tanuki>
-References: <20240509162544.GC1708042@coredump.intra.peff.net>
- <Zj3F9EVpSmQtyy0R@tanuki>
- <20240510201348.GE1954863@coredump.intra.peff.net>
- <Zj8blb0QqC2zdOAC@framework>
- <ZkX9w6etjDVAh-ln@tanuki>
- <20240517081132.GA1517321@coredump.intra.peff.net>
- <ZkcUcPhrTrbSbZO8@tanuki>
- <Zkc_zJGjwg0fZkRG@tanuki>
- <CAJ6X7_VSswj6pw2gyfEp=Hmx237MJEJA4bW+QkKNs88iRf=Hwg@mail.gmail.com>
- <xmqqr0doe5sp.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] format-patch: move range/inter diff at the end of a
+ single patch output
+Message-ID: <ZlQX0FmIsz2eFgsC@tanuki>
+References: <20240523225007.2871766-1-gitster@pobox.com>
+ <20240523225007.2871766-3-gitster@pobox.com>
+ <ZlB2g5bTuBFz5m5_@tanuki>
+ <xmqqo78ukhmk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,82 +84,84 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0CllFS4BcqAUsZba"
+	protocol="application/pgp-signature"; boundary="dSNKthM8FjZGVz5X"
 Content-Disposition: inline
-In-Reply-To: <xmqqr0doe5sp.fsf@gitster.g>
+In-Reply-To: <xmqqo78ukhmk.fsf@gitster.g>
 
 
---0CllFS4BcqAUsZba
+--dSNKthM8FjZGVz5X
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 26, 2024 at 12:23:18PM -0700, Junio C Hamano wrote:
-> Philip <philip.c.peterson@gmail.com> writes:
->=20
-> > Part of the problem seems to be that the Github actions runner has a bug
-> > on OSX: https://github.com/actions/runner/issues/884
+On Fri, May 24, 2024 at 02:46:43PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > On Thu, May 23, 2024 at 03:50:07PM -0700, Junio C Hamano wrote:
+> > I also think that there's a bug here. The output from the above command
+> > is:
+> > ...
+> >     --- a/blorp
+> >     +++ b/blorp
+> >     @@ -1 +1 @@
+> >     -fnorp
+> >     +fleep
+> >     Interdiff against v1:
+> >       diff --git a/blorp b/blorp
+> > ...
 > >
-> > Based on investigating this for a while by setting up a self-hosted act=
-ions
-> > runner, it seems to have to do with a broken pipe triggering incomplete
-> > output capture / termination detection by either Github Action Runner (
-> > see issue thread) or maybe even Dotnet Core's
-> > System.Diagnostics.Process functionality.
+> > The diff is before the separator for the signature, and there is no
+> > clear delimiter between the actual diff and the interdiff.
 >=20
-> Thanks for digging into this.
-
-Indeed, thanks for digging.
-
-In any case, whatever it is, it cannot be exclusively due to a bug with
-GitHub given that we see the same issue happening with GitLab CI.
-
-> > As for the actual failing test, t9211, what I got on my machine was a
-> > failure during clone: `unknown repository extension found: refstorage`.
-> > In the trash directory, the .git/config did specify that extension.
-> > Perhaps some interference coming from
-> > t9500-gitweb-standalone-no-errors.sh, since it invokes:
-> >
-> >> git config extensions.refstorage "$refstorage"
+> Earlier Eric expressed concern about writing this out _after_ the
+> mail signature mark "-- ", so the output deliberately goes before
+> it.  There is no need for any marker after the last line of the
+> patch.  "Interdiff against ..." is a clear enough delimiter.
 >=20
-> Puzzled.  We run t9211 in "t/trash directory.t9211-whatever/"
-> directory with its own repository, so that what t9500 does in its
-> own playpen, "t/trash directory.t9500-gitweb-standalone-no-errors/"
-> directory would not interfere with it to begin with.  How would that
-> setting seep through to an unrelated test run next door?  It's not
-> like they share TCP port number or anything like that?
+> FWIW, the parsing of patches has always paid attention to the
+> lengths recorded in @@ ... @@ hunk headers, and the parser notices
+> where the run of ("diff --git a/... b/..." followed by a patch) ends
+> and stops without problems.  On the other hand, if you remove the
+> line "+fleep" in the above example and try to feed it to "git
+> apply", it would correctly notice that it failed to see the expected
+> one line of postimage and complains (because it sees "Interdiff
+> against..."  when it expects to see a line that begins with a plus).
+>=20
+> So, I do not see any problem with the output from this cocde at all.
+>=20
+> Thanks for careful reading.
 
-This error looks somewhat weird to me. Why should anything part of Git
-not recognize the refstorage extension? It almost feels as if there were
-different versions of Git being used.
+The machine can cope alright. But I think that it's way harder to parse
+for a human if there is no clear visual delimiter between the diff and
+the interdiff. And "Interdiff" isn't quite ideal in my opinion because
+it is text, only, and may be quite easy to miss if it follows a long
+diff.
 
-I'm quite positive by now that the error is somewhere in the fsmonitor.
-I was double checking whether there is an issue with reuse of some of
-its sockets across test suites. But given that the tests have different
-HOMEs and that they have different repository paths, I couldn't really
-find anything that might be reused across invocations of scalar(1) or
-the git-fsmonitor--daemon(1).
+The signature mark may not be ideal here as an indicator. Mail readers
+may hide signatures, color them differently or other stuff. But I think
+there should be some indicator here that visually highlights the fact
+that one section is ending and another section is starting. This could
+either be a newline, or the triple-dashes as we use in other places.
 
-Patrtick
+Patrick
 
---0CllFS4BcqAUsZba
+--dSNKthM8FjZGVz5X
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZUFigACgkQVbJhu7ck
-PpTNMA/9EZkDGWmJmyeJUihooAr+Q09TpjriM9UudY1VBimsBN1Ndb4KoLj8UNMb
-KlX8MCpjyx7cdt9CZjETg34U+MsWlZCmubK5L0T1pUBu2y7c5QdsKIr9HB/X+Gvp
-7DeDOEUy1LuCfV0ihzYZD/y8GFUk+ojyuCAj29sncvAGaNIeZ3JBB0J44aPrn6mW
-ipqHC3gawmid8yKspIXXTotJvqmQHhjcqrPK4Z/QTjBkxZpQlefV4VxfR8FUo9Ce
-3WqIs8CmX8gRZEbipoDpzGSW7A+yqzgTwpj0UPCI8rm+xZ7BtE8L7QtbKLseaHyf
-b2K27REuucNYFNK0lsZah2YwL/tRTRVxZjGF20LYX3rhzj9R1XSuz0iyeEqR8f5h
-46wyAEouWuqCSc2SGkCCffBGdAZF64HxkHEI1ZKhxuTwzasnZAISPJ4ADAyGZflD
-cwmqlQyUSVAfYmOi0G9Sc64+bGh+5Cg+NqBf2LKb6+4U6x4cK6IuaBb3DHzRngR4
-xS0ECh3cc9Kv/ntax7tsBWyEvhuU6g4v4lIEX4752ilklF0hEn6hIoAu1YHrwaM5
-5vEI+UCc0cdKcPskF55cecGhzxK+VHw9rSY8WyQVLds5RXokaxaLk44w951apVmS
-QTE4HW7NJ+GI3XNayJYngSSMQsXSNEZJJnpcWQx5jKXpHPsd0nE=
-=4NN3
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZUF88ACgkQVbJhu7ck
+PpSfIg/9GISHtYaBsnjuACYZFSw+hWsAbJYzpshaPqGxgfaf7WRxnWTbVf2JvWCS
+FugtwNK3TXRLUy6htaDIrwmGKes/oDaDaPnUOIq6RcWdT/4IfcXTl92mfrjjLhTR
+JPIrXAFdMmULwYxe6y1EfnHT7GkeLhcptobGwp00xSebSLrGRKOxF3sycTj/s6T3
+wKel+NW3a8VBmT3kbtFBlwn5OykQgKJr4q99Z7ZGpmj4vN65fpdWWt8Fe7LCXe97
+pNzvsuqPNveRt0F+TKOQPe86qntrSdF8tdHXWsiM98H7cRzgAc9qIhB+4Zadtif7
+XNOkOatZHFNUNIgGu7FKt2NMVAJ5xLVystmPZz7dI0GVkqCWIt0BCcn9dDIYdtdO
+CTwep967uGSNWlnTH0xJARuSLERB0ifMXrPVafDljwdJN2DkYXhMVHWaMSXHGH7K
+T6oKszDSbKVnyRSsDYIE0N9MQko4BIQ/fB+2pwvJG/+kig/arMU5E8AiCEMfJ+aC
+mfhWWnmRiA7quArJIQZ/7JFhLZsZgtGFWvXkzjUKOzJM4sjb8WcQAVAMegIpFm5B
+poQNSqNL9FLuj1VHeWr/beH3ZUzVccVI0HTKS6TWWLJI9Byj2NS78AfYyYZcGemt
+fDqse09byEEsR3vgMHJHy8Lfc0ykz9e73lAi78iVeTYAi7uRfyc=
+=28wq
 -----END PGP SIGNATURE-----
 
---0CllFS4BcqAUsZba--
+--dSNKthM8FjZGVz5X--
