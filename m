@@ -1,145 +1,173 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE024A22
-	for <git@vger.kernel.org>; Mon, 27 May 2024 00:32:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE70FBEF
+	for <git@vger.kernel.org>; Mon, 27 May 2024 05:12:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716769948; cv=none; b=Ml3NBcCVjZ5MP21pyzmr1bjbvMgkxyH8qrqNgTEzD5nYvziheRYeCJZI513yYFRLz4+gstxXOLSok2GyIZ0WDYoYFIWEKmC+osTr0gxnH+1ausQe0qBsBEY1+wJHIvPO6Hqls2cSM5blctO5VBc9jBYpKx1N1jG5yZ+Emz2HV7s=
+	t=1716786744; cv=none; b=XThZItURE+/fFHDgkQQDYAEmqsiJ4RaHkxXcMmeSv+Hwhfktcwm3n0Dsrf1twuDuOjdVUn7T4bCKbAKJnX6VhmPD7ehRNi0DiTiP/XZORlgvs4e3JMrSTtY0nOYIycBT0lLKAP5plisU5avp0hkoPo7oWbwTiouRXDbWRr4+UTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716769948; c=relaxed/simple;
-	bh=yez0/WswF0A/selG5A1noMsTpFdgrU8U3xWiB8oScX4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FrMj7yP37oPKsozbTTjl3u2y0vcYpg4EsUrAsJXp6bUmddIinBb20KpcgOch0GXqUpZwa3p9MRKn5X6vL38yzGtF6zx1N+0XXWAZYJ2Or+uWVQtfoAw+zt00Y86axF1KG/CCi6Fi9noosdpiygJil9Xf5JxiZOvod4l5qaS3NOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=MEZEDWO3; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1716786744; c=relaxed/simple;
+	bh=1bzmwyEeke6YfxypFFKx/nT6HtT+pms3QY3BM+GPvdc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OyMfahb5uUu6XdVA0Ap9ceoq00HfiiGgvSRx0NxU4JKdg3Vh9gV20d6uMtVn+w9UHwQcQ2J79m06yhcngdBvYrod5GADzu9eFDMYd+QMI62SmIbfjHyZSe/ov87lm+Fmiqu3o4h0dzfBf1c8S0+mJxFXc7XlbIPnD30BFYJ1Wsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RYh14lwK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UUoeWtt2; arc=none smtp.client-ip=64.147.123.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MEZEDWO3"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1716769945;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=SUCCHwN+r6suSAIUcyoOMqSGuU2xLdZvgZ67T8AdgjA=;
-	b=MEZEDWO3Hb/cPkopbNP/Cc/kcOESraTBKvSGkvLPJRYnUtkfwbSXPvU6XZRGt24l7Wrk7g
-	YgQgRYAOGTFamwb/GOyZ+RPIVjAbwETOppDiSWq9sZZZt/xdA75PWW4keeccf7tiQnLfyU
-	7ruMyBD8OTV+QtCVhdCnQSmkkqpbqSs=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-207-tjzyBd8WOj2N8HUCTUxjww-1; Sun, 26 May 2024 20:32:22 -0400
-X-MC-Unique: tjzyBd8WOj2N8HUCTUxjww-1
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-794ab09eff3so360088185a.2
-        for <git@vger.kernel.org>; Sun, 26 May 2024 17:32:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716769942; x=1717374742;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SUCCHwN+r6suSAIUcyoOMqSGuU2xLdZvgZ67T8AdgjA=;
-        b=CVbd7nwdrsub0DQrVUD7MAoLKaVEC/fp/SgZCKEOSTbo8LqSEp0HhkAFQxJH7djbnU
-         wyCLb2TY2ee/8CZeGbZ/6PTqDTyqmuJGViO3g/X50NzDyaL+Rfum6w7WPAqhNcT3eQtl
-         ktL1BfN6Sa7gx2O65bXdIEuWbxunB/T4BWrLZ/z3gSTMQT/ITPkVQvI3ZdRJ9xGaVZ7f
-         BThZEHePBvBTWeRvi7taqe3wacGpKmH+9W11yVIhsZ1Yeyn+jUi3DLeUgxY0AxDmAcDU
-         bFFvHzgptcu5f++nG19I+2eL81b/NFhAUAQ3jr5rlDe9GRhLQX58WW7an5W3lfn29Sd7
-         MAzQ==
-X-Gm-Message-State: AOJu0YyXkdr1gbWCX3AlzoMPcvgu97c3C+R5tDZzTGf5P/9gDnQyCzTK
-	T83IjVy6HteBXcOSXG32F/pmQ0P6bCo7TUpTtLL9fDgYQ/U6RohBXYWoyMOHLWMv1QEQczHX97H
-	a3kMUUKYQC2e6dJrTtLd116CdKa2OZuQjE7PAeVRZrozNyeUILONWO9HyeWuAAJQx8qOymbxRno
-	wDDz3qlqy1UJDsDXctwB/YBvb4e4OvuX9Wdw==
-X-Received: by 2002:a05:620a:558f:b0:790:c7f9:4639 with SMTP id af79cd13be357-794ab05a965mr899813285a.3.1716769941775;
-        Sun, 26 May 2024 17:32:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE5SKVJDdZ14cAt3sOwyjsXRlZsnYp+uFrNseqrjaWVxFc535UWfoj/5V1Ak1HbSeElnTzqJg==
-X-Received: by 2002:a05:620a:558f:b0:790:c7f9:4639 with SMTP id af79cd13be357-794ab05a965mr899811785a.3.1716769941253;
-        Sun, 26 May 2024 17:32:21 -0700 (PDT)
-Received: from fedora19.redhat.com (203-12-11-234.dyn.launtel.net.au. [203.12.11.234])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-794abcdca88sm257509685a.66.2024.05.26.17.32.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 May 2024 17:32:20 -0700 (PDT)
-From: Ian Wienand <iwienand@redhat.com>
-To: git@vger.kernel.org
-Cc: Ian Wienand <iwienand@redhat.com>
-Subject: [PATCH v7 3/3] run-command: show prepared command
-Date: Mon, 27 May 2024 10:30:49 +1000
-Message-ID: <20240527003208.1565249-3-iwienand@redhat.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240527003208.1565249-1-iwienand@redhat.com>
-References: <20240525234454.1489598-1-iwienand@redhat.com>
- <20240527003208.1565249-1-iwienand@redhat.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RYh14lwK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UUoeWtt2"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 6B3251800090;
+	Mon, 27 May 2024 01:12:20 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Mon, 27 May 2024 01:12:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1716786740; x=1716873140; bh=XTMcJbtf7/
+	gfjO2MFkBWP8G6daHXH9uw/me2z3ZnM7k=; b=RYh14lwKr3K+R1C6a0tSFSja4M
+	dl46KKCxkjz58x8tUasq8W4KoD4/Z2ZbFgYoD+CC4N/pOD0Dl7vtKWW3KiR2vCQE
+	82JuooFoBN3PjfuhmJOU/frHNvHvnPb21kRR0d4RlUEG2SmJdpXcqy3EGaXgt6SF
+	T32AhQGgWJPr5xH+W9KNhlz3vpVW74hLRexVxOOa+drUIidatN4VXXk0+dHTbNTP
+	L6XdfWneI6IdqjFDIjBE+aGhx1tHiRCcm7kkgH95i+noi3G8PxqC2/KWPeUN8wXW
+	7rPAjpyjKetOaakfb0voFmWooSc58WrYE+u/NaxSkutT1I64WlRRaDrz7IKQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1716786740; x=1716873140; bh=XTMcJbtf7/gfjO2MFkBWP8G6daHX
+	H9uw/me2z3ZnM7k=; b=UUoeWtt2uYUyVAi0/p8h7EJOtBkj9GsD3Xl722QxHi7Q
+	mR6/9WVo6+7fPOwFIfqT7zgssO7waN/7G3Hdcwrgx8t9D9vH6rXn17fdsPGx7Vut
+	s7K6Y8iYSRhuYRTNnfOrVLg++Yp5sDPsCdHt5xcVNP6f5l7DPvwHX1qB22Nekdbd
+	H461nJ6eMYVmyR6h1IIrMzjTNjbO+KvErUbn5wlH2STHMTbdns/Ijug0qdWopf+c
+	FejoZR1qT/8Ze7plQrSiRXp2U0BH96AtrGKtYucazhGXO5UK/rhebe+AIN6+/SUC
+	/PftPFCt0+DNJOMNkjQx9TCSj85CQwikL50DJ9nIxQ==
+X-ME-Sender: <xms:MxZUZkKxotQkswi6Fw1cNwgMXdfZEOsdGeJuGKPjuYHn_qTeedMN5w>
+    <xme:MxZUZkLhVKFcTRxxNGxtGoGQyLq_h5c8LUkuGHBBF-eGPAx6HHKYhN0Zyf9Dn4jr7
+    m6sMv37g34KeP1eGg>
+X-ME-Received: <xmr:MxZUZkuNvc-c-f1gJEhE3XPbomOqpAaQoAq5SYUKstyGHJbb3B24Htwxc022kKANr5RI7o9SPwWBcWwxSYiCZUYRzO79diOEwz-ZTvDscbtZ3-hFwTc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejfedgleduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepjeefueeuteeihfffieegieeuhfetgfeugfejleffleehvdefjeejheeufeffieet
+    necuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:MxZUZhb3rVDE9dw9iSGYGYxJEsvNm8LIlsYckBQsflVXH-LuyNNPEA>
+    <xmx:MxZUZra8m74mlrXDA8rFYzqmwHE17aayBs4UeNa33E0Uvj-4Ar11ag>
+    <xmx:MxZUZtB5iWCUxKFQ0mmxtJPDXbSe_nqwoR3x7O50qqsMBC6UmbLWMg>
+    <xmx:MxZUZhZPV7zLC8-exJC6kJspg2I8Bnz6UUYDwuGQg_IL4egBW1Ig-w>
+    <xmx:NBZUZgPrBgBtaeghHXqamTXyRftwI320lEOdqCXvhH1eFSGOik7dbory>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 May 2024 01:12:18 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 6cc64143 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 27 May 2024 05:12:06 +0000 (UTC)
+Date: Mon, 27 May 2024 07:12:13 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Philip <philip.c.peterson@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+	Jeff Hostetler <jeffhostetler@github.com>
+Subject: Re: [PATCH 3/3] ci: stop installing "gcc-13" for osx-gcc
+Message-ID: <ZlQWLeLFrkZszciM@tanuki>
+References: <20240509162544.GC1708042@coredump.intra.peff.net>
+ <Zj3F9EVpSmQtyy0R@tanuki>
+ <20240510201348.GE1954863@coredump.intra.peff.net>
+ <Zj8blb0QqC2zdOAC@framework>
+ <ZkX9w6etjDVAh-ln@tanuki>
+ <20240517081132.GA1517321@coredump.intra.peff.net>
+ <ZkcUcPhrTrbSbZO8@tanuki>
+ <Zkc_zJGjwg0fZkRG@tanuki>
+ <CAJ6X7_VSswj6pw2gyfEp=Hmx237MJEJA4bW+QkKNs88iRf=Hwg@mail.gmail.com>
+ <xmqqr0doe5sp.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="0CllFS4BcqAUsZba"
+Content-Disposition: inline
+In-Reply-To: <xmqqr0doe5sp.fsf@gitster.g>
 
-This adds a trace point in start_command so we can see the full
-command invocation without having to resort to strace/code inspection.
-For example:
 
- $ GIT_TRACE=1 git test foo
- git.c:755               trace: exec: git-test foo
- run-command.c:657       trace: run_command: git-test foo
- run-command.c:657       trace: run_command: 'echo $*' foo
- run-command.c:749       trace: start_command: /bin/sh -c 'echo $* "$@"' 'echo $*' foo
+--0CllFS4BcqAUsZba
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Prior changes have made the documentation around the internals of the
-alias command execution clearer, but I have still found this detailed
-view of the aliased command being run helpful for debugging purposes.
+On Sun, May 26, 2024 at 12:23:18PM -0700, Junio C Hamano wrote:
+> Philip <philip.c.peterson@gmail.com> writes:
+>=20
+> > Part of the problem seems to be that the Github actions runner has a bug
+> > on OSX: https://github.com/actions/runner/issues/884
+> >
+> > Based on investigating this for a while by setting up a self-hosted act=
+ions
+> > runner, it seems to have to do with a broken pipe triggering incomplete
+> > output capture / termination detection by either Github Action Runner (
+> > see issue thread) or maybe even Dotnet Core's
+> > System.Diagnostics.Process functionality.
+>=20
+> Thanks for digging into this.
 
-A test case is added to ensure the full command output is present in
-the execution flow.
+Indeed, thanks for digging.
 
-Signed-off-by: Ian Wienand <iwienand@redhat.com>
----
- run-command.c    |  3 +++
- t/t0014-alias.sh | 11 +++++++++++
- 2 files changed, 14 insertions(+)
+In any case, whatever it is, it cannot be exclusively due to a bug with
+GitHub given that we see the same issue happening with GitLab CI.
 
-diff --git a/run-command.c b/run-command.c
-index 1b821042b4..31b20123d8 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -746,6 +746,8 @@ int start_command(struct child_process *cmd)
- 		goto end_of_spawn;
- 	}
- 
-+	trace_argv_printf(&argv.v[1], "trace: start_command:");
-+
- 	if (pipe(notify_pipe))
- 		notify_pipe[0] = notify_pipe[1] = -1;
- 
-@@ -913,6 +915,7 @@ int start_command(struct child_process *cmd)
- 	else if (cmd->use_shell)
- 		cmd->args.v = prepare_shell_cmd(&nargv, sargv);
- 
-+	trace_argv_printf(cmd->args.v, "trace: start_command:");
- 	cmd->pid = mingw_spawnvpe(cmd->args.v[0], cmd->args.v,
- 				  (char**) cmd->env.v,
- 				  cmd->dir, fhin, fhout, fherr);
-diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-index 95568342be..854d59ec58 100755
---- a/t/t0014-alias.sh
-+++ b/t/t0014-alias.sh
-@@ -44,4 +44,15 @@ test_expect_success 'run-command formats empty args properly' '
-     test_cmp expect actual
- '
- 
-+test_expect_success 'tracing a shell alias with arguments shows trace of prepared command' '
-+	cat >expect <<-EOF &&
-+	trace: start_command: SHELL -c ${SQ}echo \$* "\$@"${SQ} ${SQ}echo \$*${SQ} arg
-+	EOF
-+	git config alias.echo "!echo \$*" &&
-+	env GIT_TRACE=1 git echo arg 2>output &&
-+	# redact platform differences
-+	sed -n -e "s/^\(trace: start_command:\) .* -c /\1 SHELL -c /p" output >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.45.1
+> > As for the actual failing test, t9211, what I got on my machine was a
+> > failure during clone: `unknown repository extension found: refstorage`.
+> > In the trash directory, the .git/config did specify that extension.
+> > Perhaps some interference coming from
+> > t9500-gitweb-standalone-no-errors.sh, since it invokes:
+> >
+> >> git config extensions.refstorage "$refstorage"
+>=20
+> Puzzled.  We run t9211 in "t/trash directory.t9211-whatever/"
+> directory with its own repository, so that what t9500 does in its
+> own playpen, "t/trash directory.t9500-gitweb-standalone-no-errors/"
+> directory would not interfere with it to begin with.  How would that
+> setting seep through to an unrelated test run next door?  It's not
+> like they share TCP port number or anything like that?
 
+This error looks somewhat weird to me. Why should anything part of Git
+not recognize the refstorage extension? It almost feels as if there were
+different versions of Git being used.
+
+I'm quite positive by now that the error is somewhere in the fsmonitor.
+I was double checking whether there is an issue with reuse of some of
+its sockets across test suites. But given that the tests have different
+HOMEs and that they have different repository paths, I couldn't really
+find anything that might be reused across invocations of scalar(1) or
+the git-fsmonitor--daemon(1).
+
+Patrtick
+
+--0CllFS4BcqAUsZba
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZUFigACgkQVbJhu7ck
+PpTNMA/9EZkDGWmJmyeJUihooAr+Q09TpjriM9UudY1VBimsBN1Ndb4KoLj8UNMb
+KlX8MCpjyx7cdt9CZjETg34U+MsWlZCmubK5L0T1pUBu2y7c5QdsKIr9HB/X+Gvp
+7DeDOEUy1LuCfV0ihzYZD/y8GFUk+ojyuCAj29sncvAGaNIeZ3JBB0J44aPrn6mW
+ipqHC3gawmid8yKspIXXTotJvqmQHhjcqrPK4Z/QTjBkxZpQlefV4VxfR8FUo9Ce
+3WqIs8CmX8gRZEbipoDpzGSW7A+yqzgTwpj0UPCI8rm+xZ7BtE8L7QtbKLseaHyf
+b2K27REuucNYFNK0lsZah2YwL/tRTRVxZjGF20LYX3rhzj9R1XSuz0iyeEqR8f5h
+46wyAEouWuqCSc2SGkCCffBGdAZF64HxkHEI1ZKhxuTwzasnZAISPJ4ADAyGZflD
+cwmqlQyUSVAfYmOi0G9Sc64+bGh+5Cg+NqBf2LKb6+4U6x4cK6IuaBb3DHzRngR4
+xS0ECh3cc9Kv/ntax7tsBWyEvhuU6g4v4lIEX4752ilklF0hEn6hIoAu1YHrwaM5
+5vEI+UCc0cdKcPskF55cecGhzxK+VHw9rSY8WyQVLds5RXokaxaLk44w951apVmS
+QTE4HW7NJ+GI3XNayJYngSSMQsXSNEZJJnpcWQx5jKXpHPsd0nE=
+=4NN3
+-----END PGP SIGNATURE-----
+
+--0CllFS4BcqAUsZba--
