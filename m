@@ -1,84 +1,83 @@
-Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
+Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1965217BBE
-	for <git@vger.kernel.org>; Mon, 27 May 2024 06:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545394C8B
+	for <git@vger.kernel.org>; Mon, 27 May 2024 06:46:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716792293; cv=none; b=tNnB1Ivx7tn0ygLOdQzUaicmObWlcWcNMTflpkr1DcPI+tXZ9WT2mRmFKl/zEHE/8QSheaC8sz300ClO8KjxBRW+NYykVm+O+DhxBnf3DrAno1YvCL2AWpBhkKURpalNdVw771eh4OhbOMAJhON1z7ILdIB2q5iRTV17AGlgB6Y=
+	t=1716792371; cv=none; b=pZwFcnsjKhARnoDrLOHpJnikzi5jt3bP34lGUj8PYiKT/jBq9N0tH9LoxDuYNJCSelH/+Cl8KmDFmvhoOS/KercDJl1lLstBDeck5a4LcWWi4yjC1qw09h314TbDBORKYOUb/OaOSmGovsejw8HYeBxk/urCIlFbjWm4FdxPJ0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716792293; c=relaxed/simple;
-	bh=vkPocuYFElEJyZPHe8AVF/hpNqn572N6CtkdqzgLIWk=;
+	s=arc-20240116; t=1716792371; c=relaxed/simple;
+	bh=KUilpDtu99tqLWHbvJLiZrxsIFFEKfji1YCRDOPcJqQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CK2BUzM7GXpQvjgai4gcR7hyCwfbMR7rmnGP9ee1eKCq3mh37VdIrSbDy4RmORB7TE8pEQCg2U8aHKZDQ2bKTYjUBCNn5AC6U2FmfBMj95pLvdOp9q1RmfiJu4iAVFp0Ghhp8scsnVq0KVctgHZo63gj5TuL22fDHPC2s8Gn1TM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AKaKLbe2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AUvK2IP6; arc=none smtp.client-ip=64.147.123.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=WPvMXe4k00uX2salvt/VDmyKYbwvZoEtRcPjSJS52wsPUTZgKxCIdPnpppPs5VjqrqMVeBC4hFia/bQ9YIpez+FH5fHTuP7KwpQAnYeHQhFQZUsArnTnid+qQfcXdE00qy64brEefTq6g3oJiBkeqluul6oSckNJ8vOnV/XdAQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b2P12IwH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AcCeeWdO; arc=none smtp.client-ip=64.147.123.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AKaKLbe2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AUvK2IP6"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.west.internal (Postfix) with ESMTP id 206241C000D0;
-	Mon, 27 May 2024 02:44:51 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Mon, 27 May 2024 02:44:51 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b2P12IwH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AcCeeWdO"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 611C318000A7;
+	Mon, 27 May 2024 02:46:07 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Mon, 27 May 2024 02:46:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716792290; x=1716878690; bh=M6jMwH6KB/
-	RujGI2uK0Ki4n7H45AKnnPMcE/dnFkWz4=; b=AKaKLbe2n+q6s2ndGcyuNvrtk7
-	EiQQzPMUJ5e5PaRYi8O/A/ZoAtOLFrPTpm3ocEevQ9H8kqew7B0cWfS4WDpx+5PR
-	8LaG+/lI6iabsX6ksc7BkgHYviz7UuTUuk2p7tMq6jZ4+Rbhty0ha61vRG3+9r5d
-	JU/kEMEF5vsvFIng2I4poEOjWyRT/YQsIR2IauwNDZ3WffR9Y1lqDyWs8fRYaib4
-	Vhs8/K4FHVV4N62X/O7OfUWGh5Ot6G9Htcs6Caj146xcLJDqwwRSddSDPbLdaTiz
-	oz6Y8nnmDRxfV/zR9bLoAgdd/TthF03leR0HgF4/gYIraOfdNawRIRxD8F9Q==
+	:subject:to:to; s=fm1; t=1716792367; x=1716878767; bh=YqtOVWodU1
+	x0KkRSMor65j0RED9gYttS0+vBkkROgfI=; b=b2P12IwHsjIxS6EOCSz+pAWqIf
+	DzvBADgnYb7GKeNj6cxLAd/IG1EN5h3lKcuTmKrkdMy1y8fkfiDNcz4oz7lzLR66
+	CkXPzqNn8aCFkq2Nrb8JWWk8cwNvyZKt2IuSAwRFhWi/R/gF3vOzDlf8GbZKLO+Y
+	5GC+6l6OUdfTYPEhGopEn+LR52fnYxfTPGUtxM4F0wcp2bpaQyxTnDH3YpuIA/OC
+	+lVl1c99BDgvp38Q+m9vFs5tQdegQoPPKLXFmTBih/gZ5120KCZFXIY4QpkyLcH/
+	c8WYS99sV11PRZqBhOEEhwQMfARn68tOoPKsqWf6cbfdu5ZzXO+3hz6MtgbA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716792290; x=1716878690; bh=M6jMwH6KB/RujGI2uK0Ki4n7H45A
-	KnnPMcE/dnFkWz4=; b=AUvK2IP6x9uuUkIV/bCoXQ7Oi/dz70J9ucekmDB+zVWg
-	5PotdYaJ+LhVL0+r02REKj+swD2MYq7m+XGBNJ8KcJ7WX4E5zBEPAujqy3YArgkM
-	q2rCZ45CO7KjP8czEZtZw0DkJesWfTU5wSz8v8EyCBX2Gax3HWSijEFL7V0uM8tF
-	hm4n7uFtcK16ihr7Mr6+r6I4Fk01UsPq+G/xEo+L+IeWF20yCmkHL5cT7RIfuiaC
-	zhzdrPhGeR0M3cOdg/lEtEH3rE2kdz0RDk05EchnI3RieUeKIgWxvswJFD6ejqcx
-	tuW5v7Lvjus8s2kFtsHxEGta7BwQCrpRxsCgIwp+5Q==
-X-ME-Sender: <xms:4itUZvFQvbTRT-O9diAbGoLsVwLAVwjLqGs_062csRlvWCOBjr_STA>
-    <xme:4itUZsUYdu9zrIefGy1c7Pqh4AVmM1wR9sLr-icyVIR3jB1h2zvGooF22lai2ZW6Y
-    ZYW9v5bMCIzCrvfhw>
-X-ME-Received: <xmr:4itUZhLihbJKWewU8BaGn58kUzNUFQlFgHxZr9Szzwzq85hex_wwVJnsKtKjLkHF21XGcBl_iNRRaSXCGpE3DF50eD1Yn27xwQywgp0dEzAxgmCUcxk>
+	fm1; t=1716792367; x=1716878767; bh=YqtOVWodU1x0KkRSMor65j0RED9g
+	YttS0+vBkkROgfI=; b=AcCeeWdOFP1sWrBDJJAyY2px0hY35w37Y/BK2yMIe4c+
+	LyUG+dRDZkNpQyNM6tww6oX9eV6cqkD7B2Y7FmPxd9pJFz4A824tTnKF4QAYnc7d
+	hWY8tjsL/QxLeDTeCGCRhKHNLt6YgSUThWKGuN++Tzk2zWqAj4NimCS9fS+vPcI6
+	dHHvfgcFjV3KgjEpQ3qoiPQ7T4JKaR2d0/H9G2WhXznwPO5Pq5Si+IvNK5fZOGux
+	L2MDIDhG0O0pFvoAogpnqbmnzkDnzDPNq3/ES0HA16Nz8biwU6jg52iBiJbDxWu8
+	3ggwSyG7MUImA5vzNv6xhvKqI2XxqknaIoRpmUcbWg==
+X-ME-Sender: <xms:LixUZkfTvFcsB3aJBNH79_IgihKt45xybVx5iIKxD5yXI6tGke9kPQ>
+    <xme:LixUZmPboaAMPiD1o1vOQVkQLvlZAFbCLAZMcvOfVlIAGlvgrjTo5nCzg_3maIrWj
+    XFaFjLzYLAk9t6RuA>
+X-ME-Received: <xmr:LixUZlizqeACO5NSbrixbKIL6KHfQf0WKc0TnVR_mJB1YoHclrF5rbbG2oIU9ISBb0lz5k4R39az0f2oAUcS-w0hs-nMkPVySbN97Z1caxfRNmkn3OY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejfedguddutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:4itUZtHZmJWRY-rTx-TERuM7gd1nJ1WsURljmKE8rrprHwVU1QbUpg>
-    <xmx:4itUZlVItkxCCiMP3bjR_WpZtvcaSlM4fT7ymgubd8QCmcizvSHEyw>
-    <xmx:4itUZoPG21PPQLC5s9KSNNwO2QNkbyV9dsencPTUsZJ-MRNEIVCUWQ>
-    <xmx:4itUZk3JTjaUugjZPqFI2ZpC3ekEOYfLnzKbY9sg4nTX3MNAr-uNCg>
-    <xmx:4itUZrxUQS8cbtooKmn_stCh2vy61gjzUEcA9L4eD77Q5_axOoB3wljG>
+    gvrhhnpeeiveektdfggfeluefgvdelvdeftdfhgeeugeefveejleeufeekgeefffehgfel
+    gfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:LixUZp_YZQlQGA-bDOiPE9pcEMMGWw2Am-E-sRJVye5yj53scxbgBQ>
+    <xmx:LixUZgva01Gl50ryfnQAd6kECOtuTcd4vS6n1glweV3FLnDFL184tA>
+    <xmx:LixUZgFVJDozYHmep6WcgCuW_k73eoD1wJ3NEQAmN2ZNo0e0nmZtmA>
+    <xmx:LixUZvOoYBP-7JJ0BGxMfXLR0XoTAZ02upsceGMwmqazadQbLhGFxA>
+    <xmx:LyxUZiJDdTWwEF7_bWdFfRmTw38Duy0NisSCR7EUKdpdKO1GX-ugtW9U>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 May 2024 02:44:49 -0400 (EDT)
+ 27 May 2024 02:46:05 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 2852464d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 27 May 2024 06:44:39 +0000 (UTC)
-Date: Mon, 27 May 2024 08:44:46 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 9e388ccd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 27 May 2024 06:45:55 +0000 (UTC)
+Date: Mon, 27 May 2024 08:46:02 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 04/21] strbuf: fix leak when `appendwholeline()` fails
- with EOF
-Message-ID: <ZlQr3tsDTSOGvFUQ@tanuki>
+Subject: Re: [PATCH v2 13/21] config: plug various memory leaks
+Message-ID: <ZlQsKp2IHt2wankn@tanuki>
 References: <cover.1716465556.git.ps@pks.im>
  <cover.1716541556.git.ps@pks.im>
- <9dd8709d1b3b350008218133986befdb2ae74bae.1716541556.git.ps@pks.im>
- <20240525044635.GB1895047@coredump.intra.peff.net>
+ <70e8e2651306e9d221e5e472720a7610947580a7.1716541556.git.ps@pks.im>
+ <20240525043347.GA1895047@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,123 +85,141 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KqlJbt9svDjhVH5H"
+	protocol="application/pgp-signature"; boundary="tWULT4tVM3DxiZZH"
 Content-Disposition: inline
-In-Reply-To: <20240525044635.GB1895047@coredump.intra.peff.net>
+In-Reply-To: <20240525043347.GA1895047@coredump.intra.peff.net>
 
 
---KqlJbt9svDjhVH5H
+--tWULT4tVM3DxiZZH
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, May 25, 2024 at 12:46:35AM -0400, Jeff King wrote:
-> On Fri, May 24, 2024 at 12:03:29PM +0200, Patrick Steinhardt wrote:
+On Sat, May 25, 2024 at 12:33:47AM -0400, Jeff King wrote:
+> On Fri, May 24, 2024 at 12:04:12PM +0200, Patrick Steinhardt wrote:
 >=20
-> > In `strbuf_appendwholeline()` we call `strbuf_getwholeline()` with a
-> > temporary buffer. In case the call returns an error we indicate this by
-> > returning EOF, but never release the temporary buffer. This can lead to
-> > a memory leak when the line has been partially filled. Fix this.
+> > diff --git a/alias.c b/alias.c
+> > index 269892c356..4daafd9bda 100644
+> > --- a/alias.c
+> > +++ b/alias.c
+> > @@ -21,9 +21,11 @@ static int config_alias_cb(const char *key, const ch=
+ar *value,
+> >  		return 0;
+> > =20
+> >  	if (data->alias) {
+> > -		if (!strcasecmp(p, data->alias))
+> > +		if (!strcasecmp(p, data->alias)) {
+> > +			FREE_AND_NULL(data->v);
+> >  			return git_config_string(&data->v,
+> >  						 key, value);
+> > +		}
+> >  	} else if (data->list) {
+> >  		string_list_append(data->list, p);
+> >  	}
 >=20
-> Hmm, doesn't this indicate a bug in getwholeline()? Most strbuf
-> functions on error try to leave the allocation as-is.
->=20
-> At the end of the getdelim() version (which is probably what you're
-> running), when we see an error we do:
->=20
->         if (!sb->buf)
->                 strbuf_init(sb, 0);
->         else
->                 strbuf_reset(sb);
->         return EOF;
->=20
-> So if getdelim() returned error and left us with a buffer (but still
-> returned -1 for error!), I think this code is assuming that the buffer
-> it left us with was the same one that existed beforehand.
->=20
-> But your commit message implies that it might allocate, hit an error,
-> and then return that error along with an allocated buffer? Looks like
-> that matches the getdelim() manpage, which says:
->=20
->   If *lineptr was set to NULL before the call, then the buffer should be
->   freed by the user program even on failure.
->=20
-> So should we do something like:
->=20
-> diff --git a/strbuf.c b/strbuf.c
-> index e1076c9891..e37165812b 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -659,7 +659,7 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, =
-int term)
->  	if (!sb->buf)
->  		strbuf_init(sb, 0);
->  	else
-> -		strbuf_reset(sb);
-> +		strbuf_release(sb);
->  	return EOF;
->  }
->  #else
->=20
-> That assumes sb->alloc is valid after a failed call, since
-> strbuf_release() checks it. But that seems reasonable. If not, we'd need
-> to free() and re-initialize it ourselves, and the code is more like:
->=20
-> diff --git a/strbuf.c b/strbuf.c
-> index e1076c9891..aed699c6bf 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -656,10 +656,8 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp,=
- int term)
->  	 * we can just re-init, but otherwise we should make sure that our
->  	 * length is empty, and that the result is NUL-terminated.
->  	 */
-> -	if (!sb->buf)
-> -		strbuf_init(sb, 0);
-> -	else
-> -		strbuf_reset(sb);
-> +	FREE_AND_NULL(sb->buf);
-> +	strbuf_init(sb, 0);
->  	return EOF;
->  }
->  #else
->=20
-> But I think either of those would solve your leak, _and_ would help with
-> similar leaks of strbuf_getwholeline() and friends.
+> IMHO this should be done automatically by git_config_string(). The
+> current design is an accident waiting to happen, and in the long run
+> every call is going to need this FREE_AND_NULL(). By doing it in the
+> function the calling code is shorter, and there's no way we'll forget.
 
-I'm not quite convinced that `strbuf_getwholeline()` should deallocate
-the buffer for the caller, I think that makes for quite a confusing
-calling convention. The caller may want to reuse the buffer for other
-operations, and it feels hostile to release the buffer under their feet.
+In fact, I had this in my first iteration. But I didn't feel comfortable
+with it exactly due to the reasons you mention below, where often times
+we assign string constants as default values. This requires us to be
+extremely careful, also because we do not yet have `-Wwrite-strings`
+enabled as you mention.
 
-The only edge case where I think it would make sense to free allocated
-data is when being passed a not-yet-allocated strbuf. But I wonder
-whether the added complexity would be worth it.
+> I posted a series along those lines a month or so ago:
+>=20
+>   https://lore.kernel.org/git/20240407005656.GA436890@coredump.intra.peff=
+=2Enet/
+>=20
+> The catch is that you can't do this:
+>=20
+>   const char *foo =3D "bar";
+>   git_config_string(&foo, ...);
+>=20
+> So I introduced a new function that took a non-const pointer with the
+> new behavior, with the idea that we'd eventually migrate everything
+> over. It looks like you may have already done that migration earlier in
+> your series, since the move to "char *" in the previous patch was OK.
+>=20
+>   Though as a side note, sadly:
+>=20
+>     char *foo =3D "bar";
+>=20
+>   does not produce an error or even a warning without -Wwrite-strings. I
+>   think in the long run we should enable that, but there's a little
+>   cleanup required to do so.
 
-I've been going through all callsites and couldn't spot any that doesn't
-free the buffer on EOF. So I'd propose to leave this as-is and revisit
-if we eventually see that this is causing more memory leaks.
+Indeed, I had the exact same observation. I've already got a patch
+series that enables `-Wwrite-strings` and that adapts our codebase to
+compile cleanly with it. I'll send that series once this one here has
+landed.
+
+So my proposal would be to leave this patch as-is for the time being,
+but revisit it once both patch series have landed. Does that work for
+you?
+
+> The main reason I didn't follow up on that earlier series is that
+> there was some discussion about maybe moving this stuff over to
+> strbufs (after teaching it to handle literal initializers). But if
+> you've managed to remove all of the cases that needed that, I think
+> just sticking with "char *" is fine.
+
+I don't think I managed to hit every callsite yet that leaks memory. But
+I think it shouldn't be too bad, and especiall if we follow up this
+patch series with `FREE_AND_NULL()` on the out-parameter then this
+should be fine.
+
+> The other issue raised in that thread is that many of these config
+> variables are also passed to parse-options, which treats them as const
+> strings (and we get no compiler support because it goes through a void
+> pointer). So they may leak if we overwrite them, or in the unusual
+> case that we load config after parsing options, we may try to free a
+> non-heap string. The one we discussed was log's signature_file, and it
+> looks like you split that to use two variables, which works. Junio
+> suggested an OPT_FILENAME_DUP() option, which I'm also OK with. The
+> main challenge to me is being sure we found all such spots (and not
+> accidentally introducing new ones). But I don't have a good solution
+> there.
+
+Yup, I remember having some issues with `OPT_FILENAME()`, but to the
+best of my knowledge I've fixed all of them.
+
+> > @@ -1566,7 +1569,7 @@ static int git_default_core_config(const char
+> > *var, const char *value,
+> > =20
+> >  	if (!strcmp(var, "core.checkroundtripencoding")) {
+> >  	FREE_AND_NULL(check_roundtrip_encoding); -		return
+> >  	git_config_string((const char **) &check_roundtrip_encoding,
+> >  	var, value); +		return
+> >  	git_config_string(&check_roundtrip_encoding, var, value); }
+>=20
+> This should have lost its cast in the previous commit, no? Applying up
+> to patch 12 and building with DEVELOPER=3D1 gets a warning.
+
+Ah, good catch. Will fix.
 
 Patrick
 
---KqlJbt9svDjhVH5H
+--tWULT4tVM3DxiZZH
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZUK94ACgkQVbJhu7ck
-PpTb5RAAlU3RPmj2M7JIB0zz3Huya83PBXjs7KeGVANgBw+IRUET39cnujJWZHQH
-feyuahAolXOkisp72gX4R7v2l8gO4q5VURco5z9+kCjozWkk3du1JdpnzeCyGOf7
-0yCRBYGX9y/p0wUWWFwHY0rrDqkG0h/06vDrYOaEzBKpdHBjcHkvoiD0wytD65me
-G1IRL7kPxoimFwW2Tv3WSKaXGBDlidIRcNt2gtOfUft84KI/P8e3oHfZXv3nw0hi
-7xBB5/bNdFfWTWyR3A6rISocnakjuZjq4jEAfMDz0tOTgF9oHGHdEZPX9PZm/o/9
-DTZ8leIEtAo8qUgVtGPKMx5x0dy59SoHY5fvD2oRfbv5cIypluqe0LwF5dU9BZRJ
-Tp5xjYvRBc9cANrlIdmZxda1BLlvWL//szGLupxXpHFyD6yVgjP8sKrQyXahjH6s
-Ynn13uKH5jVbcO6KgNXrq3mdMIOpjp06VA7W/WULgO4Hbr/VlpKoxFp1S0DrtCDa
-brxKFXM4nwtR5HCf/9xj7YOA5QSYM1h4dUr38BzczzC48QC0/ZbA7T6U6daTkWfy
-gC0ruMk3vdvZ/ijxor0Z6f3u/2Na3ESMRXHji6gWgHCxOSQu/e5n62EPgFVJ3kHF
-SwWpoCICVOwGfHeTOcIOrnpr8JymSGSVgHoz4PYX/RSTEe3m/sg=
-=YeS7
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZULCkACgkQVbJhu7ck
+PpR25Q//QvibfGGDUXuWdpn8prEq735ktPGttQb/meUBaI6QvPrWM6HTfjnoCduu
+lMvEIGK7MlOx1vq8576NwkGIuM+ASRaJl7PlpA0485neLtZGuVqMvikue8Qtmgwa
+5JbkTiZ/yipRE/tzlcvTIAkI18MGSvkUAPW2IC/8ZCNjzT0WzhLZl6VfydmQdAzY
+gB1EZbKrISfC40d0ONcpuBPjyCEWouoe3WT4IXXomRjPL8oGPCVp29BOQqw2VZkP
+751sdxp4qWD4ZftPianiUHAcInaJ/DyovGQdh+iwRrrnMWJgcme6rRQ6wMxioGfB
+yKHy+Lvv7RUmtvTOxSNpZUMs+t1cRJCgkinI1fs/HYxWmLuPfU+YdO9q5K7C1J8G
+BRai+rsv3OYiudQzjHt6+InWK8LR+Ezwi7VsggfPIQcHe/Roy9ONlbx9Ula2wLzj
+Acvfgvd9R8m+JZWcI55j/DwJLMEuJLtN377hp9mqbl/yTf7RgfMrFotQ+AT5hJRT
+rJFcXa51FwnMCzN+d+0ZRZ3myr8DdGXBdGiO0mY6E5/BqOXh8PskPsHRgT/i3Ap0
+cjFVhL+wTJZA2RcdTZVi5QQYUsjZmtOG5wje8ggvRU34Xtt9O2VZy9wnJuAXbLmo
+/5k4wyYTbyAj7hpjv+u0W4wEUmn/VI9bkOOCIqv1f5IunQCUM6c=
+=K30W
 -----END PGP SIGNATURE-----
 
---KqlJbt9svDjhVH5H--
+--tWULT4tVM3DxiZZH--
