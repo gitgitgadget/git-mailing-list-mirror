@@ -1,189 +1,118 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65821854
-	for <git@vger.kernel.org>; Sun, 26 May 2024 23:26:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD427383
+	for <git@vger.kernel.org>; Mon, 27 May 2024 00:22:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716766019; cv=none; b=TxTzvcm4VKCFWZJBhtajXngCbAp9vZaJ14fVEjgYEiJ1E8+MNwsq9NFqq9Ct5ejsGOg/edw++cOOgQDe1bAW4aCGhF2ZYW0CZSnEV8P4qJI6VMcQW41bJsRg7pZ/cO7lAPnhmL8nLUhvUf+jjimSKYfaIBPr5YidikfukjSMvxM=
+	t=1716769331; cv=none; b=Kzkt5ahNz1wM1rBOdpJusvvZbqvQpD7H6SBeliqH5v0hjLLhxovX3K2DJ+nEb5M/HUS0R3BsPChwEoSYu+TAGyx0pU4iks2+GTYD+KQAziMc82V0iy+ukA01aih0ZJoFQpYO3A6SVU6RPUnsXMIaiVs1+c1Nu6zLp0LuiDJ7sBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716766019; c=relaxed/simple;
-	bh=oMkm2TbBx6WJspBbcfCHHT//u3I//Jj8sMRt94jkY08=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OgZiyQpC2Ex7SA9O+P20GQUzht5ERk+KizpBpeyRKT1E9XUKAupy4YTvvXC+ywYEYHNFh5GnXeQz2NRrW4Yuonk/nHJlog6UtrYmRFNnPjPhVaBfaPMlXCeCL3YgtLf7xTbbpiMibwVMnPRuhh1VkeILA0ZJxJuNoOIL+tF5l3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=EZWr7wli; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716769331; c=relaxed/simple;
+	bh=Jl5lZc9EC1za0+g94FYfl5wRKPdNtJUkmiY+fRScylc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pog32GpAbnnVpBIrN/dbMJO9A25aCiCgEXA29SHBa0cDPHOwU7qNuTF2F4zAzlUhFfk3Lq3tqZJVVFGmIFL18mWVoaXO/nXYZ7HjSMV68CnaiySmQl1kDJcPF2IL7Jnsn0FrBh2R0lM9tRI2n5KB/vG8RCCoggRlNhgRUyxbVVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Q0Y8akJt; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EZWr7wli"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D8C112CF0A;
-	Sun, 26 May 2024 19:26:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=oMkm2TbBx6WJspBbcfCHHT//u3I//Jj8sMRt94
-	jkY08=; b=EZWr7wliknxHqObtrsmmii9/3/B0r9VJnTEG1gbsjo+l+bMQxllZ4Y
-	nMPHGgWfitQgzyTeMT/S1Abg4dfqrdA2Khg3va3l/28mwQqDaSwxV6NC1bxPMVW/
-	iw95D802CdFumyrbivecYfj5D8MAq+O1BFwOqF/5f3rRorK0TRMlU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D0C2E2CF09;
-	Sun, 26 May 2024 19:26:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 429D12CF08;
-	Sun, 26 May 2024 19:26:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ian Wienand <iwienand@redhat.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Q0Y8akJt"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1716769328;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=e2r2rqlH4QZrnMSjw2zHevyzYzliUtEBbfyC1UOh2xU=;
+	b=Q0Y8akJtCnVHDC6s/t4ls1sxua9XdyJvBh305PUvjeovML8MohVMpqw6XP73SkZNl/oDYl
+	ioFv3RdPt9Y9lYGY9R4MWJ37/6XE7/PiYwBztMD8RIftCgcRv+2mO9baOuSuMNlSi/Wm9V
+	fi418ebPPJ2DDTk9Lk9rluxej3VXQAc=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-274-4UmH_e36NFaFIGeFfpZXbg-1; Sun, 26 May 2024 20:22:07 -0400
+X-MC-Unique: 4UmH_e36NFaFIGeFfpZXbg-1
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6ab95e5eedcso32675676d6.3
+        for <git@vger.kernel.org>; Sun, 26 May 2024 17:22:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716769326; x=1717374126;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e2r2rqlH4QZrnMSjw2zHevyzYzliUtEBbfyC1UOh2xU=;
+        b=By/0L/RFmKjdIKZKfq+j1rPZhrzT8tWQJ5WlLLTr9nYiB8QYVyNRWnfGB2bnkkrr9F
+         szFSEJSQIPboHM7d1gaCVoQtKBtyC46AoUsAtEkhYo4TOxwn0zyru98HL/XZt6cIr1H7
+         vXoQaHgsbosOfmdEHIf8uqgxA59+sU4Fb+1xnG4vmw0/oAd5kcapLnW7UIHtyw9+E9bp
+         VZYfjgf7GT9qW5pFOlDYzCy1eJxE8c+44i5YN9uyWK/ykp5Id+Qq85TivH876bu6PsAu
+         ZeIcGsLMs5I3y47NX5ZSw9kGP9RnjA8ps0qixS02NQZKkWqPzRT6Oa8SaD5nUKz8WT1m
+         4Vmw==
+X-Gm-Message-State: AOJu0YzEPX8Vw1WrmPz5TVhWB6ipN+6fQTicgQpDD4kLg+cBE8FJLhag
+	/Jivxg7roYiK9kC8RMO85wg9cIHkvcMXe6ttlVPL+ONKZ20y65qf2J1rET0a4+mbsW5rYJriRP1
+	+Xt2kThjsBfS+4t0uSK8eS1IaP8I17njuNkdphavaPVqR/LpzaGFG4/JwzQ==
+X-Received: by 2002:a05:6214:469f:b0:6ab:8fea:9bc1 with SMTP id 6a1803df08f44-6abcd0fbf17mr120684616d6.53.1716769326168;
+        Sun, 26 May 2024 17:22:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHbCokWDrL4K/3Cmoa/ibg6H7KpLiytpTaChuSNQdSDcEGdH2bE0Kcr1Fu1jHuNdv+Ji2voLw==
+X-Received: by 2002:a05:6214:469f:b0:6ab:8fea:9bc1 with SMTP id 6a1803df08f44-6abcd0fbf17mr120684376d6.53.1716769325669;
+        Sun, 26 May 2024 17:22:05 -0700 (PDT)
+Received: from fedora19.localdomain (203-12-11-234.dyn.launtel.net.au. [203.12.11.234])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43fb17fa2b5sm29017581cf.48.2024.05.26.17.22.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 May 2024 17:22:05 -0700 (PDT)
+Date: Mon, 27 May 2024 10:22:01 +1000
+From: Ian Wienand <iwienand@redhat.com>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Subject: Re: [PATCH v6 2/3] Documentation: alias: add notes on shell expansion
-In-Reply-To: <20240525234454.1489598-2-iwienand@redhat.com> (Ian Wienand's
-	message of "Sun, 26 May 2024 09:44:34 +1000")
+Message-ID: <ZlPSKfzHejm-Z5Pn@fedora19.localdomain>
 References: <20240525012207.1415196-1-iwienand@redhat.com>
-	<20240525234454.1489598-1-iwienand@redhat.com>
-	<20240525234454.1489598-2-iwienand@redhat.com>
-Date: Sun, 26 May 2024 16:26:51 -0700
-Message-ID: <xmqqa5kcduis.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20240525234454.1489598-1-iwienand@redhat.com>
+ <20240525234454.1489598-2-iwienand@redhat.com>
+ <xmqqa5kcduis.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6EC0F774-1BB7-11EF-BDDE-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqa5kcduis.fsf@gitster.g>
 
-Ian Wienand <iwienand@redhat.com> writes:
+On Sun, May 26, 2024 at 04:26:51PM -0700, Junio C Hamano wrote:
+> As I keep saying over multiple iterations, the above three bullet
+> points stress too much on the minute implementation detail while
+> failing to tell readers that the end-user alias receives the rest of
+> the command line as arguments.
 
-> +* If the shell alias is the full path to a binary, it will be executed
-> +  directly with any arguments as positional arguments.
-> +* If the alias contains any white-space or reserved characters, it
-> +  will be considered an inline script and run as an argument to `sh
-> +  -c`.
-> +* When running as a script, if arguments are provided to the alias
-> +  call, Git makes them available to the process by appending "$@" to
-> +  the alias shell command.  This is not appended if arguments are not
-> +  provided.
+OK, I can agree that perhaps I've been a bit to fixated on the
+addition of "$@" and the mechanics of this.  I will propose again with
+this trimmed.  What I didn't have to help me at the time was the full
+command in GIT_TRACE, which I think is probably a more appropriate way
+to communicate these details of what's actually hitting the exec
+calls.
 
-These are not technically wrong per-se.
+> Of course the simplest one-liner, if you had the "one" script
+> already stored in the file, is to say
 
-> +** For "simple" commands, such as calling a single binary
-> +  (e.g. `alias.myapp = !myapp --myflag1`) this will result in any
-> +  arguments becoming additional regular positional arguments to the
-> +  called binary, appended after any arguments specified in the aliased
-> +  command.
+So the reason I fell into this, and I wonder how much this plays out
+for others too, is that shipping these workflow bits as stand-alone
+scripts would mean no !shell tricks required, it's all very logical
+and I would never have looked at any of this :) However, when all you
+have is a hammer ... since a git config .inc file was needed for other
+things, it has been overloaded into essentially being mini
+package-manger that avoids having to install additional dependencies;
+one-liner shell script at a time :)
 
-But the single-command script still receives the arguments in
-argv[], so what the alias command has to do is the same.  The
-earlier ones that are "not technically wrong" are merely
-implemenation detail.
+> You can do one of two easy things.
+> 
+>     $ sh -c 'echo "$1" | grep "$2"' -      1 2
 
-In a single command case, e.g., "[alias] single = !one", you may
-write
+Ok, I think "sh -c" in ! aliases is a bit confusing, personally.  You
+end up two shells nested deep, and you really have to explain what's
+going on with $0; it's very easy to miss.
 
-    #!/bin/sh
-    echo "$1" | grep "$2"
+>     $ e(){ echo "$1" | grep "$2"; };e      1 2
 
-in 'one' script, and "git single 1 2" will be turned into
+This method, which is used elsewhere in the docs as well, I think
+makes the most sense.  So I've left that in as the example.
 
-    start_command: one 1 2
+-i
 
-i.e. one receives two arguments in argv[].  It is an implementation
-detail that we can bypass "sh" or "-c" or "$@"
-
-If you write exactly the same thing like
-
-    $ git -c 'alias=single=!one ' single 1 2
-
-you'll instead see
-
-    start_command: /bin/sh -c 'one' "$@" "one " 1 2
-
-because the trailing SP in the alias disables the optimization to
-bypass a more generic 'sh -c ... "$@"' construction.  What gets run
-is an equivalent of the reader saying
-
-    $ /bin/sh -c 'one "$@"' "one " 1 2
-
-bypassing git from the command line.
-
-What the script (one) has to write does not change at all either
-case.
-
-As I keep saying over multiple iterations, the above three bullet
-points stress too much on the minute implementation detail while
-failing to tell readers that the end-user alias receives the rest of
-the command line as arguments.
-
-> +** Care should be taken if your alias script has multiple commands
-> +   (e.g. in a pipeline), references argument variables, or is
-
-"argument variables" -> "arguments".
-
-> +   otherwise not expecting the presence of the appended `"$@"`.  
-
-"otherwise not expecting" is SIMPLY BUGGY but the readers may not
-understand it unless you tell them that the arguments are fed to
-their aliased command by appending them.
-
-When you look at the implementation detail of "sh -c '... $@' -
-$ARGS" as something to fight against, readers would lose sight to
-see the crux of the problem they are trying to solve.  I think it is
-a wrong way to frame the issue.  The problem readers are solving when
-coming up with their own alias is this:
-
-    How would one write a single-liner that can take arguments
-    appended at the end?
-
-I think giving that to the readers upfront, i.e. "when you write an
-alias, you are forming a single-liner that takes arguments appended
-at the end", would go a long way without having them lose sight in
-the implementation details of "sometimes args directly come in
-argv[], sometimes your alias is wrapped in "sh -c" and "$@" is used.
-They do the same thing to feed the arguments to your script.
-
-Going back that 'one' example, if 'echo "$1" | grep "$2"' was what
-you wanted to run,  how would you write a single-liner that does
-
-    echo "$1" | grep "$2"
-
-and can take its arguments at the end?  You do *not* want to see
-your invocation of the alias
-
-    $ git single 1 2
-
-turn into 
-
-    $ echo "$1" | grep "$2" 1 2
-
-of course, and remember, "$@" is merely an implementation detail
-that the end-users do not need to see.
-
-Of course the simplest one-liner, if you had the "one" script
-already stored in the file, is to say
-
-    $ one                                  1 2
-
-i.e. "[alias] single = !one".  But calling that a "single-liner" is
-cheating.
-
-You can do one of two easy things.
-
-    $ sh -c 'echo "$1" | grep "$2"' -      1 2
-    $ e(){ echo "$1" | grep "$2"; };e      1 2
-
-The earlier string (before "1 2" is appended) of either of these
-gives you "a single-liner that takes arguments at the end" that does
-the "echo the first one, pipe it to grep that looks for the second
-one", which you would make the body of the alias.  If the reader
-understands the earlier example that stores it in a file, the former
-is more mechanical and straight-forward rewrite of it.  The latter
-may be a bit more convoluted, but says the same thing in the same
-number of letters.
-
-HTH.
