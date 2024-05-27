@@ -1,104 +1,123 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432B715E5CF
-	for <git@vger.kernel.org>; Mon, 27 May 2024 12:59:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AC417E91C
+	for <git@vger.kernel.org>; Mon, 27 May 2024 15:42:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716814768; cv=none; b=WAlxr5tH3my3o1mA1wnKE/jhlze088n4v/YwCx+tGcbXAkPIFgxM8YIOOllnN7t3WMwjuQHn/HBIR4IzPG012rhW7Ebg192gbJ2e7xzredQkn84ULrPBC3Tr3r/jv08BogxOXKmPUg8wzcR8AB2dA2ylB+7q1HcJNNd6hC8UL/U=
+	t=1716824523; cv=none; b=CDQ7w5v7Dhn7z2a6Csxoz3ACWEXd8Hhy3qSRqFFmt4LHBVekihHQAY8hGxwITwDfBijLNYkrRm+O3C7GIyJG0L2pIgVUl3WCMXzXNKO93uj41lNb4Dq525XOU2BjJZ58/82VSEbwpDHOB+l6irp1/+KeurG+U0xEhBbRfD56pXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716814768; c=relaxed/simple;
-	bh=tpy851VHlhNaPsunTRm09cZ9jeM8MYVcL8mUTlWM7sI=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=JLmIbJoo+bd875VByjQ4O5CzMOfiN+6CiRGgd+PecFgnJUyebI/GJS1pUSidYFJW7cQmSB+Pqn2Z9ia9P3OoLfzQI7uO+avhMu1BgJhCmkW2qbG5d1vBXDl0XUQ9HVcFfZI++0CIOWkRo/s7qcL5LjnRu1Ccgv3AYVub3qNAVTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=W4z0mtc2; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1716824523; c=relaxed/simple;
+	bh=7+/JqU1HsahNM8RTTC//LjGBDWCCXLZn9Arqc+5sUZg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=tGaFTLE8ae2ecJrOkMMH19Z3JzGc2Hm35kusHf/u0z/DkIxop8iICeW8UZj6YS5bVpyG/QEBEyZPt8cbLosgDqJpjknbTdW/RSp8w8e6kymuE8t5gogsu1bfzYNIJdMFh+gLhGs3MD9LwDsxVS8HoyVrY999lw6/1ZxLig9/h2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aQLhK5GQ; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="W4z0mtc2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aQLhK5GQ"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-421087b6f3fso27630055e9.1
+        for <git@vger.kernel.org>; Mon, 27 May 2024 08:42:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716824519; x=1717429319; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=798AGT+qMeOBl61WbUbVjhezK7Lzt4LlKtYIkXkZxhI=;
+        b=aQLhK5GQMewlan+TE3zVIGnoxwFfHWwWXrytzz9zP8q9z2ZqR3U5x+8fSay2aaKXpP
+         HGqq3xh1jCwGFYVA0U9F6Dq3xEgYdxsbXMdLYmXT+8LSC1rqFEtFsIpSj4Vjxrro+4eb
+         prWsWrByWoUpKOQbNLKMnvLBujkPDCyEcDDGpA2cFS783Qi9v4RauXeoIAifWh6dyaGM
+         RntIEDk7uH1Y2KRUdVx6fTHJAMTTvd1AARVwtFtDQxVvef0WpIbIh0C2Fu+Su3TZedxg
+         kVzIFtyu1jyu/yIF7hq1HcsbeV7BSTVrJebtRnmWY38P6eBkVlDm82cjFB5s2bk+8Hyb
+         5vmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716824519; x=1717429319;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=798AGT+qMeOBl61WbUbVjhezK7Lzt4LlKtYIkXkZxhI=;
+        b=Nb9hR16/F6JeMW/ugjbfy0D6g/VBUtSBEqD75YpHeY1lbpnKUBeVz9569ngWRZWKWv
+         WFrku/qwh0K5x4+UW2o2lwaUafIgQ/wXIoEZrhqoLyuaX4ALXgMcPPtg300Qehz0DbNM
+         mBFnYHcnT/30S3PfWiRdWZ3KhXRaFP1e/CXGddXpVEUH3UKRu/o2IoAHZ1G3Q956LQ3K
+         gumiK3xyKzMItKyNDOyQquP3brXA60mECLr/uyxUkPjtsb33Ji7H64+79wrgA+78x+G8
+         ARZPg/oIMxc1aj+hoGVDUaXrUAIqxYEb6q319OPRWzaGk0QgSxo+OmmL1kH3dt4ekvd5
+         +8tA==
+X-Gm-Message-State: AOJu0YzWOh69rGfDeUXXAX1ZeEmlI0crdeWowMfaM+3WCoYJdRLd+Rwv
+	gAzUPGsI5Mr2Ou4uh0Z3UhD9nGQLJb8O7f35OfmMswBpLc1FddN2PPaEag==
+X-Google-Smtp-Source: AGHT+IGfCqVZDakyyo4IPSr1GcEmoct5cLKa85y6pOHaBrQ/8RmIGUJRuxsNnHlzByTcY9KES5Atew==
+X-Received: by 2002:a05:600c:6a93:b0:41b:f359:2b53 with SMTP id 5b1f17b1804b1-42108a14eaemr74792825e9.37.1716824519358;
+        Mon, 27 May 2024 08:41:59 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3557a1c9363sm9363147f8f.72.2024.05.27.08.41.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 May 2024 08:41:59 -0700 (PDT)
+Message-Id: <pull.1730.v3.git.1716824518.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1730.v2.git.1716208605926.gitgitgadget@gmail.com>
+References: <pull.1730.v2.git.1716208605926.gitgitgadget@gmail.com>
+From: "blanet via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 27 May 2024 15:41:53 +0000
+Subject: [PATCH v3 0/4] object checking related additions and fixes for bundles in fetches
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1716814762;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Y5xKwwJEUr3GRthX1CkDNTBRAnix6vbM8GDaHoMGAHY=;
-	b=W4z0mtc22QpsgB1yvkpsaiTw+mptTuVp4skm5HaEZ0/Z9PZh6fNLA0kEF7F27lTO2dxymX
-	XDEPujbrdiw5gpSvMu7+2bw+M4pV6jCJMLWTQ+TQe6LNeteWQIJySvWAoPskJ1b95DeRlZ
-	36Ut1yGwj4wqQJBxwU/l/5+cHpQrdbGQBulY1HFhvpJ3JOswJ+QyrznnvFcft5krJJqm7y
-	iGq73uve0gqbqfcX1kWPy807usiARbtnyZFM6W989kFaoKNp8gMkajk2EHhw+Y7gITiHhs
-	O9m4Bf3uPDkXCxC2bIWzBzfvdtAxMqUqJqZTdxvN3TRQ60kvQYsa6Zss4tGP6Q==
-Date: Mon, 27 May 2024 14:59:21 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] format-patch: move range/inter diff at the end of a
- single patch output
-In-Reply-To: <ZlQX0FmIsz2eFgsC@tanuki>
-References: <20240523225007.2871766-1-gitster@pobox.com>
- <20240523225007.2871766-3-gitster@pobox.com> <ZlB2g5bTuBFz5m5_@tanuki>
- <xmqqo78ukhmk.fsf@gitster.g> <ZlQX0FmIsz2eFgsC@tanuki>
-Message-ID: <a4f6cf69b5fb189a80f69dcf6d5a8731@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Karthik Nayak <karthik.188@gmail.com>,
+    blanet <bupt_xingxin@163.com>
 
-On 2024-05-27 07:19, Patrick Steinhardt wrote:
-> On Fri, May 24, 2024 at 02:46:43PM -0700, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> > On Thu, May 23, 2024 at 03:50:07PM -0700, Junio C Hamano wrote:
->> > I also think that there's a bug here. The output from the above command
->> > is:
->> > ...
->> >     --- a/blorp
->> >     +++ b/blorp
->> >     @@ -1 +1 @@
->> >     -fnorp
->> >     +fleep
->> >     Interdiff against v1:
->> >       diff --git a/blorp b/blorp
->> > ...
->> >
->> > The diff is before the separator for the signature, and there is no
->> > clear delimiter between the actual diff and the interdiff.
->> 
->> Earlier Eric expressed concern about writing this out _after_ the
->> mail signature mark "-- ", so the output deliberately goes before
->> it.  There is no need for any marker after the last line of the
->> patch.  "Interdiff against ..." is a clear enough delimiter.
->> 
->> FWIW, the parsing of patches has always paid attention to the
->> lengths recorded in @@ ... @@ hunk headers, and the parser notices
->> where the run of ("diff --git a/... b/..." followed by a patch) ends
->> and stops without problems.  On the other hand, if you remove the
->> line "+fleep" in the above example and try to feed it to "git
->> apply", it would correctly notice that it failed to see the expected
->> one line of postimage and complains (because it sees "Interdiff
->> against..."  when it expects to see a line that begins with a plus).
->> 
->> So, I do not see any problem with the output from this cocde at all.
->> 
->> Thanks for careful reading.
-> 
-> The machine can cope alright. But I think that it's way harder to parse
-> for a human if there is no clear visual delimiter between the diff and
-> the interdiff. And "Interdiff" isn't quite ideal in my opinion because
-> it is text, only, and may be quite easy to miss if it follows a long
-> diff.
-> 
-> The signature mark may not be ideal here as an indicator. Mail readers
-> may hide signatures, color them differently or other stuff. But I think
-> there should be some indicator here that visually highlights the fact
-> that one section is ending and another section is starting. This could
-> either be a newline, or the triple-dashes as we use in other places.
+While attempting to fix a reference negotiation bug in bundle-uri, we
+discovered that the fetch process are missing some helpful object validation
+logic when processing bundles. The main issues are:
 
-I agree about the need for having a distinctive separator.
+ * In the bundle-uri scenario, we did not validate object IDs before writing
+   bundle references. This is the root cause of the original negotiation bug
+   in bundle-uri, and can cause potential repository corruption.
+ * The existing fetch.fsckObjects and transfer.fsckObjects are not detected
+   when directly fetching bundles. In fact there is no object validation
+   support for unbundle.
+
+The first patch fixes the bundle-uri negotiation issue by dropping the
+REF_SKIP_OID_VERIFICATION flag when writing bundle references.
+
+Patch 2~4 extend bundle.c:unbundle with a unbundle_fsck_flags to control
+object fscking in different scenarios, the implementation mainly follows
+what Junio suggested on the mailing list.
+
+Xing Xin (4):
+  bundle-uri: verify oid before writing refs
+  unbundle: introduce unbundle_fsck_flags for fsckobjects handling
+  fetch-pack: expose fsckObjects configuration logic
+  unbundle: introduce new option UNBUNDLE_FSCK_FOLLOW_FETCH
+
+ builtin/bundle.c            |   2 +-
+ bundle-uri.c                |   5 +-
+ bundle.c                    |  20 ++++-
+ bundle.h                    |   9 +-
+ fetch-pack.c                |  18 ++--
+ fetch-pack.h                |   2 +
+ t/t5558-clone-bundle-uri.sh | 163 +++++++++++++++++++++++++++++++++++-
+ t/t5607-clone-bundle.sh     |  23 +++++
+ transport.c                 |   2 +-
+ 9 files changed, 227 insertions(+), 17 deletions(-)
+
+
+base-commit: b9cfe4845cb2562584837bc0101c0ab76490a239
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1730%2Fblanet%2Fxx%2Fbundle-uri-bug-using-bundle-list-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1730/blanet/xx/bundle-uri-bug-using-bundle-list-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1730
+
+Range-diff vs v2:
+
+ 1:  8bdeacf1360 = 1:  8f488a5eeaa bundle-uri: verify oid before writing refs
+ -:  ----------- > 2:  057c697970f unbundle: introduce unbundle_fsck_flags for fsckobjects handling
+ -:  ----------- > 3:  67401d4fbcb fetch-pack: expose fsckObjects configuration logic
+ -:  ----------- > 4:  c19b8f633cb unbundle: introduce new option UNBUNDLE_FSCK_FOLLOW_FETCH
+
+-- 
+gitgitgadget
