@@ -1,75 +1,123 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07813481C4
-	for <git@vger.kernel.org>; Mon, 27 May 2024 07:58:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2BB8BF0
+	for <git@vger.kernel.org>; Mon, 27 May 2024 09:17:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716796687; cv=none; b=BlJjsIxmDVPYnGmDU9I0CoNqy9lV2U6eyJGDlLBTkjZYE+15FqmKhERW/+XZqii4NI4hYs0afc6YJs+focHB4bzd7TwozZK8Fk+IVUEFiTHZEQGuZPu20VjEZUGQTJ+uvmE9ZR6Ir2EF1KTp+syncHO9feKe6CHlTX1WO0pi7JA=
+	t=1716801432; cv=none; b=B3SJnPrd5HcQzRQCNVGN/MaVh5KlKxlKMvmmxsf8SlXXKhP/DSAwF5VkZInBYkZMZsPKm8WOhQ2dGnXX4PDugHLa5oS7hUf5Gfoz5YkPEiM9jXDGOO8NEVsK29zbUEn4vVtawDIJi2qMq6i8qgnBqEQ3GRcs5N2E5YoFOT9/76I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716796687; c=relaxed/simple;
-	bh=PVo/WQp+7hqoV68o7dm+IOL5ohRltXT1Myc4xWYZrec=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b9PVZ3kN7EcAEwxP8O7UzamlYYSz4abE4if1fyx1rpWHBEknhA3aBKnAaK0f/6BulZPiK7Q/T3RO0MLY/Ibkq5V274Beq3ohlZOXay/zaKHG4u4d4HxhBmnW6ZeN/ZK1MQTdYseroM4GO6HQHs2a/P1bUgte4jjMK7lSIKZD6qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xr3mj8fO; arc=none smtp.client-ip=209.85.214.169
+	s=arc-20240116; t=1716801432; c=relaxed/simple;
+	bh=EcO0fra+GRfxhqvM1fQAscc6ZAxBpkCtVVu8VsCeeqc=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=QNB5H1vqLiWd/xj2FUnRSAi3lX1cgMxM+RcE37jewk5bbAmAvjmpiJtS5VsDP5k1Du7Rwz9WDEiJ8PJ7r+EuLadpRZT7YnhuU1mMhqsuTBsxwukteCnm0BzVy6tRgopC2Q/cEzj6x0gTs0rGY8mhJWz3e67jMBYIlOk5boCNTI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BlZs1M/0; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xr3mj8fO"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1f4a52d2688so3888195ad.3
-        for <git@vger.kernel.org>; Mon, 27 May 2024 00:58:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BlZs1M/0"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-354e22bc14bso4337772f8f.1
+        for <git@vger.kernel.org>; Mon, 27 May 2024 02:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716796685; x=1717401485; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5n0rroD7Z/qfJWR9K4ns38tAXZLj8W6TUEDXAXQGIPY=;
-        b=Xr3mj8fOw3kno58KxIGIufZtdgAhp9DiFadM9kbWRS5z+S4ZvZrqw3TnDdyx6hOF3S
-         bSYIA2vk2sjinj4PAMrF0UHf99swAapqhDE8z2WGApyYK+FWDFkF+1JHrI4F4hBOy45Y
-         MheDzlzLRXIPDaIdRfUVbyJ3vn2JAp1zYAfNkABi2AuxIonYLrBYndIUta4R6uWgY+BG
-         P9SmmaZWYFwdpudWUWNfeYRPeUPM5fbAQwGK4pkfg1OalVH/ZZ/ZWTO7zeOd1RpXztMq
-         TrudxL2NOQzW2e9rr7QW4Pvz0xKab6f8BW0+Wuwp38ip2g2lM5EwLXjCU/zSJNh+0IkR
-         aJQw==
+        d=gmail.com; s=20230601; t=1716801428; x=1717406228; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=zs5bjPY2bKZoe/SbBjMQx0T+BOQidEJMmmHjO6OT1+o=;
+        b=BlZs1M/0HvsC4IOS7YDJwhdfcYejwfg3w0kRLOewE5eHGycyDXAqe5t7PaQRNoWlPI
+         QQ2JeixwAzdaDs4Mxk6Tv0jXR7Av3Q6dCHo8crCeJ4STz7TKUc2hdwdzucUyesj4a4Fb
+         W45slh6pHyzj/ZsDKfr0TLYsDwSYrFGo5VFTKeOL6HGcJfLN6id9JnQG5R5z1t3sn05e
+         W0iuytDEQJSa36Z/9wEHShVNkYSeZrxkiK15nW47uB/iyTOzLDbgiHEW0vpnhOztWZug
+         F37sgJ1Iajv6iWjG5akhu4rFtWessaCd2+BRUNAJU6j+TMqK+VomCVBr7xzgEbqMJN4G
+         9Ipw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716796685; x=1717401485;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5n0rroD7Z/qfJWR9K4ns38tAXZLj8W6TUEDXAXQGIPY=;
-        b=MkOnI2Fn5B78iVbUT3T1SKbSrBYlPLcAhZYdBTbeOVKdKOV7kkK2J81w/fPqi3tSI9
-         3ZFxK18eu42xTD/5FnTXqrA2sUJFfLVm3hUFGUlJzU0Prk+id5kIa1O94REN4flFLMC4
-         J5k5dn7bBwNAE2VZuP6VYD0QmAW3qmmYDibMER12MOC3dU4jsuHTrPkBL8VNwjyVW/iw
-         KjSwCGs2clCDo/EszS/+2NWZFmlNlkn9679Cnz5rCY9yD8k9OS3GhzmeFTB6rVcOKwLf
-         4er6Qu4l7ycoW+yMh4b+TzZ4VIQcK5/lVKI3aS6SmNT4WXS8XHmBrFkginYt7PAZGELd
-         q65w==
-X-Gm-Message-State: AOJu0YyvhD2ZAQrPlBEycyi3vjYOlD0zqewHibrt2tcM0pKKCyk9sYBJ
-	9K+tcwoZ1prFbnj39hwNa+kfNTZZrqes1nipNbUI8ghqJPdlu77C+FSASpXx
-X-Google-Smtp-Source: AGHT+IFBYDpQZMddZBhw1nFrMpgj51+lIA4NiCrjMcIsBJYYQ0rTzIhloZRfgbPLPyLRAlT6XTX7cA==
-X-Received: by 2002:a17:902:c94d:b0:1f4:867e:14a0 with SMTP id d9443c01a7336-1f4867e1695mr47426005ad.24.1716796684729;
-        Mon, 27 May 2024 00:58:04 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f44c7d0e15sm54538185ad.118.2024.05.27.00.58.03
+        d=1e100.net; s=20230601; t=1716801428; x=1717406228;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zs5bjPY2bKZoe/SbBjMQx0T+BOQidEJMmmHjO6OT1+o=;
+        b=dj7DtnK8KFSrGOsHkJGlq0hkDDvdOQbzUsDjjjWgTW+SHWJGo7WThfqd9A52B1wB6y
+         0frj+jpSqvM6oT0tu6b1VuenR8MC3hkCTkrcm2gPybbHdSIstE0a9fGzhS8FDDwiUSXV
+         40mE/1GbuLKQ+rq430wn4yUdnxhUH6VkBTkQR+UHO4np74CggZKlQKHa++fRY/utG2Ln
+         FJl728GlLzUjuDfKtV6QM0QnNaLJWAJ8DP+rdovFN8BjEUhX0lXN9lIIQ9So1oiG8bTp
+         EpoEImgIrCNPH+EhVMC1BRll2NprTcLVbOphCRH7fV66u7sz7r4clK9cRnCWge5mimOK
+         TU6A==
+X-Gm-Message-State: AOJu0YzB05GqsPmgMvC4UrYbIDdc8udBI/GbnbRQVmn6Fncyb/zweeng
+	71zgeAvlXry32M7d+3I14ODBc+kulOrp26zVQSQolfXBRw2CZERS5vddDw==
+X-Google-Smtp-Source: AGHT+IFawOlDUG+oNFIt8YNXZkBeyj8ga4c4AJ3G+LwTnTtK8A25H+1DwOSlpgW47duLkxuc8oi5Iw==
+X-Received: by 2002:a05:6000:2a5:b0:359:b737:68c9 with SMTP id ffacd0b85a97d-359b7376aa9mr892046f8f.45.1716801428283;
+        Mon, 27 May 2024 02:17:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35579d7dbadsm8506135f8f.1.2024.05.27.02.17.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 May 2024 00:58:04 -0700 (PDT)
-Date: Mon, 27 May 2024 15:57:45 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [GSoC]: Implement consistency check for refs blog
-Message-ID: <ZlQ8-fv7I_dEp_9_@ArchLinux>
-References: <ZlQ7j9HYVOpP2Xga@ArchLinux>
+        Mon, 27 May 2024 02:17:07 -0700 (PDT)
+Message-Id: <pull.1726.git.git.1716801427015.gitgitgadget@gmail.com>
+From: "darcy via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 27 May 2024 09:17:06 +0000
+Subject: [PATCH] fix: prevent date underflow when using positive timezone
+ offset
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZlQ7j9HYVOpP2Xga@ArchLinux>
+To: git@vger.kernel.org
+Cc: darcy <acednes@gmail.com>,
+    darcy <acednes@gmail.com>
 
-Today, I have updated the blog before the official coding period starts
-which records what I have done in the community bonding period. Please
-follow below link for details.
+From: darcy <acednes@gmail.com>
 
-  https://luolibrary.com/2024/05/27/GSoC-Community-Bonding-Period/
+Overriding the date of a commit to be `1970-01-01` with a large enough
+timezone for the equivalent GMT time to before 1970 is no longer
+accepted.
 
+Example: `GIT_COMMITTER_DATE='1970-01-01T00:00:00+10' git commit` would
+previously be accepted, only to unexpectedly fail in other parts of the
+code, such as `git push`. The timestamp is now checked against postitive
+timezone values.
+
+Signed-off-by: darcy <acednes@gmail.com>
+---
+    fix: prevent date underflow when using positive timezone offset
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1726%2Fdxrcy%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1726/dxrcy/master-v1
+Pull-Request: https://github.com/git/git/pull/1726
+
+ date.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/date.c b/date.c
+index 7365a4ad24f..8388629f267 100644
+--- a/date.c
++++ b/date.c
+@@ -908,7 +908,7 @@ int parse_date_basic(const char *date, timestamp_t *timestamp, int *offset)
+ 			match = match_alpha(date, &tm, offset);
+ 		else if (isdigit(c))
+ 			match = match_digit(date, &tm, offset, &tm_gmt);
+-		else if ((c == '-' || c == '+') && isdigit(date[1]))
++		else if ((c == '-' || c == '+') && isdigit(date[1]) && tm.tm_hour != -1)
+ 			match = match_tz(date, offset);
+ 
+ 		if (!match) {
+@@ -937,8 +937,13 @@ int parse_date_basic(const char *date, timestamp_t *timestamp, int *offset)
+ 		}
+ 	}
+ 
+-	if (!tm_gmt)
++	if (!tm_gmt) {
++		if (*offset > 0 && *offset * 60 > *timestamp) {
++			return -1;
++		}
+ 		*timestamp -= *offset * 60;
++	}
++
+ 	return 0; /* success */
+ }
+ 
+
+base-commit: b9cfe4845cb2562584837bc0101c0ab76490a239
+-- 
+gitgitgadget
