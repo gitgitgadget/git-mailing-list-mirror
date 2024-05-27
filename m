@@ -1,62 +1,63 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AC417E91C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087B079E1
 	for <git@vger.kernel.org>; Mon, 27 May 2024 15:42:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716824523; cv=none; b=CDQ7w5v7Dhn7z2a6Csxoz3ACWEXd8Hhy3qSRqFFmt4LHBVekihHQAY8hGxwITwDfBijLNYkrRm+O3C7GIyJG0L2pIgVUl3WCMXzXNKO93uj41lNb4Dq525XOU2BjJZ58/82VSEbwpDHOB+l6irp1/+KeurG+U0xEhBbRfD56pXE=
+	t=1716824523; cv=none; b=NQeBZO8IIAWRiP6kQHKfo0lj4/MFvHhBt7X/gUhgG1z55vwHA1SZbjB9Eq48mq1GXwsFtpnB2AEPIaoub0KgiSPcKnH6fQYXFL7bYQ8eRK1O6q8MS0g+7KxTf6Q9MTcffBbDxcg0iXC2cW2npL3hzOBPbPM2iqnCY6fLzgUq1js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1716824523; c=relaxed/simple;
-	bh=7+/JqU1HsahNM8RTTC//LjGBDWCCXLZn9Arqc+5sUZg=;
+	bh=To0bV7hH2ZM8APigD9Mf+Y96ivUCOI7+udMBmc0EVzg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=tGaFTLE8ae2ecJrOkMMH19Z3JzGc2Hm35kusHf/u0z/DkIxop8iICeW8UZj6YS5bVpyG/QEBEyZPt8cbLosgDqJpjknbTdW/RSp8w8e6kymuE8t5gogsu1bfzYNIJdMFh+gLhGs3MD9LwDsxVS8HoyVrY999lw6/1ZxLig9/h2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aQLhK5GQ; arc=none smtp.client-ip=209.85.128.47
+	 MIME-Version:To:Cc; b=BUMG+YR+f9PcpelFhzIozIKToXcvlNnIbq/nSMIkhdP26J4cLhfOSR2CL5AUsouHtreWnSqWvpry+Xt+OZ+hQRbP4B+yvW1oxh8ldtk6XqHK/EuzTmewxg/DzDK0apeOTrwRaBkzDr13UxIrRRoYVboi9j/hE09mdQzmx9qR6IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U8HlH5oe; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aQLhK5GQ"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-421087b6f3fso27630055e9.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U8HlH5oe"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-354fb2d8f51so3346868f8f.3
         for <git@vger.kernel.org>; Mon, 27 May 2024 08:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716824519; x=1717429319; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1716824520; x=1717429320; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=798AGT+qMeOBl61WbUbVjhezK7Lzt4LlKtYIkXkZxhI=;
-        b=aQLhK5GQMewlan+TE3zVIGnoxwFfHWwWXrytzz9zP8q9z2ZqR3U5x+8fSay2aaKXpP
-         HGqq3xh1jCwGFYVA0U9F6Dq3xEgYdxsbXMdLYmXT+8LSC1rqFEtFsIpSj4Vjxrro+4eb
-         prWsWrByWoUpKOQbNLKMnvLBujkPDCyEcDDGpA2cFS783Qi9v4RauXeoIAifWh6dyaGM
-         RntIEDk7uH1Y2KRUdVx6fTHJAMTTvd1AARVwtFtDQxVvef0WpIbIh0C2Fu+Su3TZedxg
-         kVzIFtyu1jyu/yIF7hq1HcsbeV7BSTVrJebtRnmWY38P6eBkVlDm82cjFB5s2bk+8Hyb
-         5vmg==
+        bh=vfdR6e1SK83bbm9MuMwWl7lb+t5dZ8GuqMVndYfpxmk=;
+        b=U8HlH5oe31X0l6PAY5uKiMQNMLAdE468/ec7qe5Yj5RDo55dnvekt7B1FpGt2PdkFu
+         JSrbnvUXap0NIj6TbBUOKoMBUNE8rMC0I2DLhaP2e4ikoffLDh9C0nTXwCLfOIUwzXSH
+         MW1P/AsUbGHQBAg1Ub8U+U0V2WIm/oeIjYS8qW8+gVaWoQtCF1mY3Q9+FW025rcWjrFr
+         gp7WzV2f/vUPz0Dxgl56DJfXfOXgX3tTR4TDCVTP39asW7LWi1jkoSF+RqrTWux3nROy
+         61XT1Cr8AXgtxijfCPNq1aHYtRAz1EldvYg/9jsv8bJW6qN3+3xs2WM7Cq/YCkGSCW4i
+         XyHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716824519; x=1717429319;
+        d=1e100.net; s=20230601; t=1716824520; x=1717429320;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=798AGT+qMeOBl61WbUbVjhezK7Lzt4LlKtYIkXkZxhI=;
-        b=Nb9hR16/F6JeMW/ugjbfy0D6g/VBUtSBEqD75YpHeY1lbpnKUBeVz9569ngWRZWKWv
-         WFrku/qwh0K5x4+UW2o2lwaUafIgQ/wXIoEZrhqoLyuaX4ALXgMcPPtg300Qehz0DbNM
-         mBFnYHcnT/30S3PfWiRdWZ3KhXRaFP1e/CXGddXpVEUH3UKRu/o2IoAHZ1G3Q956LQ3K
-         gumiK3xyKzMItKyNDOyQquP3brXA60mECLr/uyxUkPjtsb33Ji7H64+79wrgA+78x+G8
-         ARZPg/oIMxc1aj+hoGVDUaXrUAIqxYEb6q319OPRWzaGk0QgSxo+OmmL1kH3dt4ekvd5
-         +8tA==
-X-Gm-Message-State: AOJu0YzWOh69rGfDeUXXAX1ZeEmlI0crdeWowMfaM+3WCoYJdRLd+Rwv
-	gAzUPGsI5Mr2Ou4uh0Z3UhD9nGQLJb8O7f35OfmMswBpLc1FddN2PPaEag==
-X-Google-Smtp-Source: AGHT+IGfCqVZDakyyo4IPSr1GcEmoct5cLKa85y6pOHaBrQ/8RmIGUJRuxsNnHlzByTcY9KES5Atew==
-X-Received: by 2002:a05:600c:6a93:b0:41b:f359:2b53 with SMTP id 5b1f17b1804b1-42108a14eaemr74792825e9.37.1716824519358;
-        Mon, 27 May 2024 08:41:59 -0700 (PDT)
+        bh=vfdR6e1SK83bbm9MuMwWl7lb+t5dZ8GuqMVndYfpxmk=;
+        b=QUWCImsqBwqGbvGxMYO8unqFylTSgOy7weu1b6UzgwrW8iYBySR69KNgzP//pmTkMl
+         xNlPRSajkc+7Wtz/d6nFVIrGIizv9laiVaHzbNehVQT6kSRcQq94RxsIowaI+nr3bgu8
+         Wfkcl+KHpSPS13sbdSF9cC55v9h3J72dG7miRwiOiwNiUaOIfz6jDBI02ZM25RoihMoz
+         mrGZhro5kJc1LC0wFrR09fljuqG1/9FeA2CXphPTlqsFnd5Qq9NA/5HZB0VNr8AuIkLr
+         ZfEilpL8490hJCW360nHme8gnRwMrUR63/qdt1MKIH2OKruL81PNwaAaKS7GsxzjFpXK
+         z+7Q==
+X-Gm-Message-State: AOJu0YwdZLOl2M1OS6kYbCujCiN/uu+YDrqTxaf+gGrw+GvwGDeGXHJC
+	/XdfBnIwoarpscuB14qmBWnyppV3yIjy+JXw4dwYmhRl88jOG+j9kvEipg==
+X-Google-Smtp-Source: AGHT+IHPjjQ9T6WSxxboYzFmEn3W6gcWKTpKDsXOlry6G+rLezotV2AJdA4+RHet0MvWJMSzdOt78g==
+X-Received: by 2002:a05:6000:ac5:b0:354:f6bf:b272 with SMTP id ffacd0b85a97d-3552fe19424mr6457736f8f.48.1716824520045;
+        Mon, 27 May 2024 08:42:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3557a1c9363sm9363147f8f.72.2024.05.27.08.41.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3557a0931c9sm9285959f8f.65.2024.05.27.08.41.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 27 May 2024 08:41:59 -0700 (PDT)
-Message-Id: <pull.1730.v3.git.1716824518.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1730.v2.git.1716208605926.gitgitgadget@gmail.com>
+Message-Id: <8f488a5eeaaa0cdb525c34c2c165e6ee74ee7691.1716824518.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1730.v3.git.1716824518.gitgitgadget@gmail.com>
 References: <pull.1730.v2.git.1716208605926.gitgitgadget@gmail.com>
-From: "blanet via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 27 May 2024 15:41:53 +0000
-Subject: [PATCH v3 0/4] object checking related additions and fixes for bundles in fetches
+	<pull.1730.v3.git.1716824518.gitgitgadget@gmail.com>
+From: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 27 May 2024 15:41:54 +0000
+Subject: [PATCH v3 1/4] bundle-uri: verify oid before writing refs
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,55 +70,259 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
     Karthik Nayak <karthik.188@gmail.com>,
-    blanet <bupt_xingxin@163.com>
+    blanet <bupt_xingxin@163.com>,
+    Xing Xin <xingxin.xx@bytedance.com>
 
-While attempting to fix a reference negotiation bug in bundle-uri, we
-discovered that the fetch process are missing some helpful object validation
-logic when processing bundles. The main issues are:
+From: Xing Xin <xingxin.xx@bytedance.com>
 
- * In the bundle-uri scenario, we did not validate object IDs before writing
-   bundle references. This is the root cause of the original negotiation bug
-   in bundle-uri, and can cause potential repository corruption.
- * The existing fetch.fsckObjects and transfer.fsckObjects are not detected
-   when directly fetching bundles. In fact there is no object validation
-   support for unbundle.
+When using the bundle-uri mechanism with a bundle list containing
+multiple interrelated bundles, we encountered a bug where tips from
+downloaded bundles were not discovered, thus resulting in rather slow
+clones. This was particularly problematic when employing the heuristic
+`creationTokens`.
 
-The first patch fixes the bundle-uri negotiation issue by dropping the
-REF_SKIP_OID_VERIFICATION flag when writing bundle references.
+And this is easy to reproduce. Suppose we have a repository with a
+single branch `main` pointing to commit `A`, firstly we create a base
+bundle with
 
-Patch 2~4 extend bundle.c:unbundle with a unbundle_fsck_flags to control
-object fscking in different scenarios, the implementation mainly follows
-what Junio suggested on the mailing list.
+  git bundle create base.bundle main
 
-Xing Xin (4):
-  bundle-uri: verify oid before writing refs
-  unbundle: introduce unbundle_fsck_flags for fsckobjects handling
-  fetch-pack: expose fsckObjects configuration logic
-  unbundle: introduce new option UNBUNDLE_FSCK_FOLLOW_FETCH
+Then let's add a new commit `B` on top of `A`, so that an incremental
+bundle for `main` can be created with
 
- builtin/bundle.c            |   2 +-
- bundle-uri.c                |   5 +-
- bundle.c                    |  20 ++++-
- bundle.h                    |   9 +-
- fetch-pack.c                |  18 ++--
- fetch-pack.h                |   2 +
- t/t5558-clone-bundle-uri.sh | 163 +++++++++++++++++++++++++++++++++++-
- t/t5607-clone-bundle.sh     |  23 +++++
- transport.c                 |   2 +-
- 9 files changed, 227 insertions(+), 17 deletions(-)
+  git bundle create incr.bundle A..main
 
+Now we can generate a bundle list with the following content:
 
-base-commit: b9cfe4845cb2562584837bc0101c0ab76490a239
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1730%2Fblanet%2Fxx%2Fbundle-uri-bug-using-bundle-list-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1730/blanet/xx/bundle-uri-bug-using-bundle-list-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1730
+  [bundle]
+      version = 1
+      mode = all
+      heuristic = creationToken
 
-Range-diff vs v2:
+  [bundle "base"]
+      uri = base.bundle
+      creationToken = 1
 
- 1:  8bdeacf1360 = 1:  8f488a5eeaa bundle-uri: verify oid before writing refs
- -:  ----------- > 2:  057c697970f unbundle: introduce unbundle_fsck_flags for fsckobjects handling
- -:  ----------- > 3:  67401d4fbcb fetch-pack: expose fsckObjects configuration logic
- -:  ----------- > 4:  c19b8f633cb unbundle: introduce new option UNBUNDLE_FSCK_FOLLOW_FETCH
+  [bundle "incr"]
+      uri = incr.bundle
+      creationToken = 2
 
+A fresh clone with the bundle list above would give the expected
+`refs/bundles/main` pointing at `B` in new repository, in other words we
+already had everything locally from the bundles, but git would still
+download everything from server as if we got nothing.
+
+So why the `refs/bundles/main` is not discovered? After some digging I
+found that:
+
+1. Bundles in bundle list are downloaded to local files via
+   `download_bundle_list` or via `fetch_bundles_by_token` for the
+   creationToken heuristic case.
+2. Then it tries to unbundle each bundle via `unbundle_from_file`, which
+   is called by `unbundle_all_bundles` or called within
+   `fetch_bundles_by_token` for the creationToken heuristic case.
+3. Here, we first read the bundle header to get all the prerequisites
+   for the bundle, this is done in `read_bundle_header`.
+4. Then we call `unbundle`, which calls `verify_bundle` to ensure that
+   the repository does indeed contain the prerequisites mentioned in the
+   bundle.
+5. The `verify_bundle` will call `parse_object`, within which the
+   `prepare_packed_git` or `reprepare_packed_git` is eventually called,
+   which means that the `raw_object_store->packed_git` data gets filled
+   in and ``packed_git_initialized` is set. This also means consecutive
+   calls to `prepare_packed_git` doesn't re-initiate
+   `raw_object_store->packed_git` since `packed_git_initialized` already
+   is set.
+6. If `unbundle` succeeds, it writes some refs via `refs_update_ref`
+   with `REF_SKIP_OID_VERIFICATION` set. So the bundle refs which can
+   target arbitrary objects are written to the repository.
+7. Finally in `do_fetch_pack_v2`, `mark_complete_and_common_ref` and
+   `mark_tips` are called with `OBJECT_INFO_QUICK` set to find local
+   tips. Here it won't call `reprepare_packed_git` anymore so it would
+   fail to parse oids that only reside in the last bundle.
+
+Back to the example above, when unbunding `incr.bundle`, `base.pack` is
+enlisted to `packed_git` bacause of the prerequisites to verify. While
+we can not find `B` for negotiation at a latter time because `B` exists
+in `incr.pack` which is not enlisted in `packed_git`.
+
+This commit fixes this bug by dropping the `REF_SKIP_OID_VERIFICATION`
+flag when writing bundle refs, so we can:
+
+1. Ensure that the bundle refs we are writing are pointing to valid
+   objects.
+2. Ensure all the tips from bundle refs can be correctly parsed.
+
+And a set of negotiation related tests for bundle-uri are added.
+
+Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
+---
+ bundle-uri.c                |   3 +-
+ t/t5558-clone-bundle-uri.sh | 129 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 130 insertions(+), 2 deletions(-)
+
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 91b3319a5c1..65666a11d9c 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -400,8 +400,7 @@ static int unbundle_from_file(struct repository *r, const char *file)
+ 		refs_update_ref(get_main_ref_store(the_repository),
+ 				"fetched bundle", bundle_ref.buf, oid,
+ 				has_old ? &old_oid : NULL,
+-				REF_SKIP_OID_VERIFICATION,
+-				UPDATE_REFS_MSG_ON_ERR);
++				0, UPDATE_REFS_MSG_ON_ERR);
+ 	}
+ 
+ 	bundle_header_release(&header);
+diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
+index 1ca5f745e73..a5b04d6f187 100755
+--- a/t/t5558-clone-bundle-uri.sh
++++ b/t/t5558-clone-bundle-uri.sh
+@@ -20,7 +20,10 @@ test_expect_success 'fail to clone from non-bundle file' '
+ test_expect_success 'create bundle' '
+ 	git init clone-from &&
+ 	git -C clone-from checkout -b topic &&
++
+ 	test_commit -C clone-from A &&
++	git -C clone-from bundle create A.bundle topic &&
++
+ 	test_commit -C clone-from B &&
+ 	git -C clone-from bundle create B.bundle topic
+ '
+@@ -259,6 +262,132 @@ test_expect_success 'clone bundle list (file, any mode, all failures)' '
+ 	! grep "refs/bundles/" refs
+ '
+ 
++#########################################################################
++# Clone negotiation related tests begin here
++
++test_expect_success 'negotiation: bundle with part of wanted commits' '
++	test_when_finished rm -rf trace*.txt &&
++	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
++	git clone --no-local --bundle-uri="clone-from/A.bundle" \
++		clone-from nego-bundle-part &&
++	git -C nego-bundle-part for-each-ref --format="%(refname)" >refs &&
++	grep "refs/bundles/" refs >actual &&
++	cat >expect <<-\EOF &&
++	refs/bundles/topic
++	EOF
++	test_cmp expect actual &&
++	# Ensure that refs/bundles/topic are sent as "have".
++	grep "clone> have $(git -C clone-from rev-parse A)" trace-packet.txt
++'
++
++test_expect_success 'negotiation: bundle with all wanted commits' '
++	test_when_finished rm -rf trace*.txt &&
++	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
++	git clone --no-local --single-branch --branch=topic --no-tags \
++		--bundle-uri="clone-from/B.bundle" \
++		clone-from nego-bundle-all &&
++	git -C nego-bundle-all for-each-ref --format="%(refname)" >refs &&
++	grep "refs/bundles/" refs >actual &&
++	cat >expect <<-\EOF &&
++	refs/bundles/topic
++	EOF
++	test_cmp expect actual &&
++	# We already have all needed commits so no "want" needed.
++	! grep "clone> want " trace-packet.txt
++'
++
++test_expect_success 'negotiation: bundle list (no heuristic)' '
++	test_when_finished rm -f trace*.txt &&
++	cat >bundle-list <<-EOF &&
++	[bundle]
++		version = 1
++		mode = all
++
++	[bundle "bundle-1"]
++		uri = file://$(pwd)/clone-from/bundle-1.bundle
++
++	[bundle "bundle-2"]
++		uri = file://$(pwd)/clone-from/bundle-2.bundle
++	EOF
++
++	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
++	git clone --no-local --bundle-uri="file://$(pwd)/bundle-list" \
++		clone-from nego-bundle-list-no-heuristic &&
++
++	git -C nego-bundle-list-no-heuristic for-each-ref --format="%(refname)" >refs &&
++	grep "refs/bundles/" refs >actual &&
++	cat >expect <<-\EOF &&
++	refs/bundles/base
++	refs/bundles/left
++	EOF
++	test_cmp expect actual &&
++	grep "clone> have $(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/left)" trace-packet.txt
++'
++
++test_expect_success 'negotiation: bundle list (creationToken)' '
++	test_when_finished rm -f trace*.txt &&
++	cat >bundle-list <<-EOF &&
++	[bundle]
++		version = 1
++		mode = all
++		heuristic = creationToken
++
++	[bundle "bundle-1"]
++		uri = file://$(pwd)/clone-from/bundle-1.bundle
++		creationToken = 1
++
++	[bundle "bundle-2"]
++		uri = file://$(pwd)/clone-from/bundle-2.bundle
++		creationToken = 2
++	EOF
++
++	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
++	git clone --no-local --bundle-uri="file://$(pwd)/bundle-list" \
++		clone-from nego-bundle-list-heuristic &&
++
++	git -C nego-bundle-list-heuristic for-each-ref --format="%(refname)" >refs &&
++	grep "refs/bundles/" refs >actual &&
++	cat >expect <<-\EOF &&
++	refs/bundles/base
++	refs/bundles/left
++	EOF
++	test_cmp expect actual &&
++	grep "clone> have $(git -C nego-bundle-list-heuristic rev-parse refs/bundles/left)" trace-packet.txt
++'
++
++test_expect_success 'negotiation: bundle list with all wanted commits' '
++	test_when_finished rm -f trace*.txt &&
++	cat >bundle-list <<-EOF &&
++	[bundle]
++		version = 1
++		mode = all
++		heuristic = creationToken
++
++	[bundle "bundle-1"]
++		uri = file://$(pwd)/clone-from/bundle-1.bundle
++		creationToken = 1
++
++	[bundle "bundle-2"]
++		uri = file://$(pwd)/clone-from/bundle-2.bundle
++		creationToken = 2
++	EOF
++
++	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
++	git clone --no-local --single-branch --branch=left --no-tags \
++		--bundle-uri="file://$(pwd)/bundle-list" \
++		clone-from nego-bundle-list-all &&
++
++	git -C nego-bundle-list-all for-each-ref --format="%(refname)" >refs &&
++	grep "refs/bundles/" refs >actual &&
++	cat >expect <<-\EOF &&
++	refs/bundles/base
++	refs/bundles/left
++	EOF
++	test_cmp expect actual &&
++	# We already have all needed commits so no "want" needed.
++	! grep "clone> want " trace-packet.txt
++'
++
+ #########################################################################
+ # HTTP tests begin here
+ 
 -- 
 gitgitgadget
+
