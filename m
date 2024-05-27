@@ -1,53 +1,52 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12A126AE7
-	for <git@vger.kernel.org>; Mon, 27 May 2024 17:43:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1155515EFBD
+	for <git@vger.kernel.org>; Mon, 27 May 2024 17:48:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716831792; cv=none; b=q6oo7b1+cEBfOlwuPHIfMR+fdNdciEjVqdCKuBoO2pIOo3wrWsk2GpAVPP2tkFor9bShZ0qR1dxGxtEpt/JuK2IUmXYC1Q1bD4rm9YxTJ7FPUod3lUk5yInX64z7rYXZPVKBW3jov15EHITOcif8vUyUAh03pef5tqWyRnxLHq4=
+	t=1716832121; cv=none; b=apPQrtKWLWm6Ac6K1m+wDIVEFjR+0ITCNRIcDWlRk8UGEe2tXSbfV0NZ4YP1FJoUGUxeuSnfTRiFDeGKIaJxq+hoev4enDyGeBUIEukvps2Sfyq9oa28Zgf9Q1hD8qmGMlX3Vtfiv5lAKk3vyyqSroaRZ4EvVaj9/6FMEd5yUds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716831792; c=relaxed/simple;
-	bh=/4OZTgGYQxO3EDtkji9vCH/FtINkL9DowDvdJOdHmCQ=;
+	s=arc-20240116; t=1716832121; c=relaxed/simple;
+	bh=glze3qNohK1rHneTmaFeiq8QjKNgsXn+tK5TdtUb0Hk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SUq1bu29CvJ0HXBC9RnzDUdAOFpOWhres5Yw0+5iMAXixddMMGqp6qzM2YBlmxiCwjjcDgC53otl/q0diAVoa3Vf+cnTd4O3g/yJhAMcbyfE1Mv24Y2cgtxJkji74HGlT7rLPEQFNaJ1erR0JoB2dFyx8gHH+UbHGNYPy0x9MCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=APD3Wjqm; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=JSXS873IM7Ck+Jkhcv3Lndtf6GPONtLrW2rpKlAZocxQHjXQIwNiCWXDER9PUhrH3efqpj+bd1ChH5mqVv0enptZIat061R2TDydKPCsZ9GuVW6uMr88VpZZa/MqYmvll8SE7G8NQ+B7LyZNYNh93epshAyaR5Zl4SKOrqgdBLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rN0IFvta; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="APD3Wjqm"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8DB8D223AD;
-	Mon, 27 May 2024 13:43:08 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rN0IFvta"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D3CFA32E44;
+	Mon, 27 May 2024 13:48:38 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=/4OZTgGYQxO3EDtkji9vCH/FtINkL9DowDvdJO
-	dHmCQ=; b=APD3Wjqm8w4E1x6qFJOvl/1NlOyMb6E8JdWSt5jzAykjqVBQhrFuye
-	nyslaC9f/f3KGhrSblgmRM7/BOD1Yw0OKJ/jasyAbjW0MKN6vp2gSXh+jhNxvYMI
-	FryJ+OZpiyrwcvfygZDNcLFRA+s+zBfa5rmrmZ2Wbs05r9PJzl/vU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 848EC223AC;
-	Mon, 27 May 2024 13:43:08 -0400 (EDT)
+	:content-type; s=sasl; bh=glze3qNohK1rHneTmaFeiq8QjKNgsXn+tK5Tdt
+	Ub0Hk=; b=rN0IFvta9FWI2SKp0q6F5nrYKRzedS7BXLA3gPQm9Dzm2HpvUcpwq+
+	gkz/d1l1iO85TXXMlsuUypJxa1KqO7e4U1HjRKdIvFLVFDwgg4kiqNYPvBwHRDpa
+	mp48sJ+rrrwakoHVvVLxlYoeRCHcBluCJJAlx6hwXgkteOqM4PM1M=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BB9E532E43;
+	Mon, 27 May 2024 13:48:38 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D7720223AB;
-	Mon, 27 May 2024 13:43:07 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 177D032E42;
+	Mon, 27 May 2024 13:48:37 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
+To: Ian Wienand <iwienand@redhat.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] format-patch: move range/inter diff at the end of a
- single patch output
-In-Reply-To: <ZlQX0FmIsz2eFgsC@tanuki> (Patrick Steinhardt's message of "Mon,
-	27 May 2024 07:19:12 +0200")
-References: <20240523225007.2871766-1-gitster@pobox.com>
-	<20240523225007.2871766-3-gitster@pobox.com> <ZlB2g5bTuBFz5m5_@tanuki>
-	<xmqqo78ukhmk.fsf@gitster.g> <ZlQX0FmIsz2eFgsC@tanuki>
-Date: Mon, 27 May 2024 10:43:06 -0700
-Message-ID: <xmqqsey39mmt.fsf@gitster.g>
+Subject: Re: [PATCH v7 2/3] Documentation: alias: add notes on shell expansion
+In-Reply-To: <20240527003208.1565249-2-iwienand@redhat.com> (Ian Wienand's
+	message of "Mon, 27 May 2024 10:30:48 +1000")
+References: <20240525234454.1489598-1-iwienand@redhat.com>
+	<20240527003208.1565249-1-iwienand@redhat.com>
+	<20240527003208.1565249-2-iwienand@redhat.com>
+Date: Mon, 27 May 2024 10:48:37 -0700
+Message-ID: <xmqqmsob9mdm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,19 +56,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 9412C1E4-1C50-11EF-8DD7-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 58E61566-1C51-11EF-B1F6-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Ian Wienand <iwienand@redhat.com> writes:
 
-> The machine can cope alright. But I think that it's way harder to parse
-> for a human if there is no clear visual delimiter between the diff and
-> the interdiff. And "Interdiff" isn't quite ideal in my opinion because
-> it is text, only, and may be quite easy to miss if it follows a long
-> diff.
+> When writing inline shell for shell-expansion aliases (i.e. prefixed
+> with "!"), there are some caveats around argument parsing to be aware
+> of.  This series of notes attempts to explain what is happening more
+> clearly.
+>
+> Signed-off-by: Ian Wienand <iwienand@redhat.com>
+> ---
+>  Documentation/config/alias.txt | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
 
-Apparently our messages crossed.   See <xmqqed9qke3k.fsf_-_@gitster.g>
-that takes advantage of the fact that "the machine can cope alright"
-with an extra blank line ;-).  The message is its own demonstration.
+This one has become much shorter but very much to the point.  
 
-Thanks.
+Let's further do "appended via `"$@"`" -> "added at the end".  The
+example given in that bullet point would be easier to understand
+that way.
 
+Will queue.
+
+> diff --git a/Documentation/config/alias.txt b/Documentation/config/alias.txt
+> index 40851ef429..75f9f5e26f 100644
+> --- a/Documentation/config/alias.txt
+> +++ b/Documentation/config/alias.txt
+> @@ -27,3 +27,17 @@ it will be treated as a shell command.  For example, defining
+>    repository, which may not necessarily be the current directory.
+>  * `GIT_PREFIX` is set as returned by running `git rev-parse --show-prefix`
+>    from the original current directory. See linkgit:git-rev-parse[1].
+> +* Shell command aliases always receive any extra arguments provided to
+> +  the Git command-line as positional arguments.
+> +** Care should be taken if your shell alias is a "one-liner" script
+> +   with multiple commands (e.g. in a pipeline), references multiple
+> +   arguments, or is otherwise not able to handle positional arguments
+> +   appended via `"$@"`.  For example: `alias.cmd = "!echo $1 | grep
+> +   $2"` called as `git cmd 1 2` will be executed as 'echo $1 | grep $2
+> +   1 2', which is not what you want.
+> +** A convenient way to deal with this is to write your script
+> +   operations in an inline function that is then called with any
+> +   arguments from the command-line.  For example `alias.cmd = "!c() {
+> +   echo $1 | grep $2 ; }; c" will correctly execute the prior example.
+> +** Setting `GIT_TRACE=1` can help you debug the command being run for
+> +   your alias.
