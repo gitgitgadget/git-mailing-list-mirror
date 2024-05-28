@@ -1,157 +1,134 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from kitenet.net (kitenet.net [66.228.36.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BB079D0
-	for <git@vger.kernel.org>; Tue, 28 May 2024 00:47:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC16EADA
+	for <git@vger.kernel.org>; Tue, 28 May 2024 02:14:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.228.36.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716857258; cv=none; b=Nqv9gkktGRnJoVx2nJurue18y0Vr3ftJFZ4X5xh8WVd4LHYqjjbYP/H1+GquKd6TAXYKgTCV0cLmjO5qwM5PB0AVGdAXh+RucB2/EcMF0MFGG6cpaxe1WpmvdyOoQKSyDtF0YpAX7q4rRRFZa5Jh7xIjc+soRl6xnXmy/OmkQ0k=
+	t=1716862449; cv=none; b=VBXjgXfYR9AkQcaeksSMUR7XGsZpk6X6FRZ3htJty5zONfXoEiNvsZlpt6qq9Qgfp/o+SbI2Ho+3jzFLXFAjUpGYrEvQZnyeaPjKSMn66vaLFuGVFuwIn4ZHGjocalV55HTtwU2T2Ifm+L2/gg34GVJbcgvZU+BCsFJzweDwF/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716857258; c=relaxed/simple;
-	bh=bnuSIz1bl8Xvxx2ULJ5UATLGw3XHY2i5ntGQhA2iGSc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YV9qs+o29Xygo6zZuPy7zkX7ZbltwaFuaQojmBYtG3bAEuNSGqH1R0ud0pnyhpMduXk5abmUSXXfVaq/A96C3RjyDPT/suJLdmdTpd1/8yWD+3CNU8jmek2U4jSxg4GVZeuAd4ZAtxt48C9AbR7ARAdewY1pw/leQ9GfND+bSYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=innwSVSV; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716862449; c=relaxed/simple;
+	bh=ykv+scU8uUpleCRou1fYFLBgDLqxqGsqf3cg2MI51o0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=G5EefXuBtPRmE4GfJu77QB0bDKMinRtbPcGhm5GgwQyobOz6jrciMTs3KavnMvfn9MON88Z9UNGRPXgKAkg0zAIKqg8lgOzxqth+Evp0EG0VSJfT1LbyN900SJehdFRrCmXQiVfIl+qC0T5Ygj5k4bz+v2m/dr9SHetNVZk1s+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joeyh.name; spf=pass smtp.mailfrom=kitenet.net; dkim=pass (1024-bit key) header.d=joeyh.name header.i=@joeyh.name header.b=i5+YfEEU; arc=none smtp.client-ip=66.228.36.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joeyh.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kitenet.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="innwSVSV"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-62a08099115so2894097b3.0
-        for <git@vger.kernel.org>; Mon, 27 May 2024 17:47:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716857255; x=1717462055; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xFX2twxAQ/CjJ2KTSVTAJSatjtX98VVmFyCQM5a/Io4=;
-        b=innwSVSVO7LyTzClAsrFCKLSev2F4WaDCixfKvXuXO1h4zw4rY2qgqd6tKeQ2M1dr8
-         NX5boTlB5gWJY71UpXtOkXt0mhzpPE5BX732Djk8GuUYIgwvrBToXrkxrD0uSTQs1GJT
-         j8aRlzhajIZSIwtTUhtC2YzCsB2urZKQ4QC9mG6TfsDwklAoA+F5t8JD9h31LttkQZam
-         6kgn3Jerd6sk9ySFXsJKXWcHW1L16FoejJTf09/nf2rcLsaTfgxTuejWo4gv6+5DuLGi
-         OUPYtUcx2iFnd6bXvsOg9Dz1ay1zNuyn2NRV2Tvh+EDzeiwM8QbeDhkuVGxcMW1THrBS
-         wFmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716857255; x=1717462055;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xFX2twxAQ/CjJ2KTSVTAJSatjtX98VVmFyCQM5a/Io4=;
-        b=U9zXZfHKz9Bsjn4BqSOtRQyDzis82bMqZ0JIfb4McnkHRyDzwK71C4tNn3F5F5q8OP
-         UmilDDiI7PMD7xf6TD/fUkXVxeiJbbrDv9NArUmng0SV5rUm6GkmLHESyZgOEg4VAyDh
-         C+jLPR5El09jcKzBdaZjRJXig5ZZ1taIkwGKp3YXFBevmhus2Fi9FN4bYxqECzJUMR62
-         iMUDYRY1sZkR6HRZ/4upQvam4VkalNPTPSAlqSu9dXVtmbG38ZLuFzve94Z83ZK2smsY
-         9OD8Yvq6b+6I/OZ7BA5v+Brg0Lhvpt58H3AA/tN8RxxdqljgMRrAKg0UNI0Pb8oFABz4
-         /Tpg==
-X-Forwarded-Encrypted: i=1; AJvYcCWZIEI6OK9T7Y1mGvsOYHFEGvg2fjIx5wupx6J4HaIHRPkaZ2s2AEdz4TOQVOLyjMaknYWRuFRkNDrCAC9ozty1eCvo
-X-Gm-Message-State: AOJu0YzKjqwq8kfCg0IleubMXTlG+aRalkIU8xvH2mfOPeJdGsWZhx8q
-	b06jWO0S771dLtWPHOX9qziuHoA54Q6C+WMYhK8GtrT8mQW38MCTcr0jehesbHOShIlIsH0zjZG
-	Ixe5L9U5DTHfvi7gOgNAkIrb7+9w=
-X-Google-Smtp-Source: AGHT+IG0WiUhj58h8ui5Kjh3Hn/uVDcahcKpww3pSp3mribZiF/kY1IKod39CLNB7r18/hOGX0NGp25OPn0V6VjKUE0=
-X-Received: by 2002:a0d:d894:0:b0:614:2687:5e18 with SMTP id
- 00721157ae682-62a08f3c4b2mr96061187b3.48.1716857254938; Mon, 27 May 2024
- 17:47:34 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=joeyh.name header.i=@joeyh.name header.b="i5+YfEEU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=joeyh.name; s=mail;
+	t=1716862435; bh=ykv+scU8uUpleCRou1fYFLBgDLqxqGsqf3cg2MI51o0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=i5+YfEEUpnxmj8ry4XZlKrNCFBg6a6ZkDcix7yuMDTzxDs+nK/w0NvXtAT/fbcePU
+	 Uk9uY4JCFeZfPETDlTbNACbNR5eTmFx/ld7PfFH5XJoxcBTO4PpuLJNQJJImHBEmGj
+	 7eE6gW00BKQh59aTrhcJCOpUBzaxhMAT8a/WfHvk=
+X-Question: 42
+Date: Mon, 27 May 2024 22:13:55 -0400
+From: Joey Hess <id@joeyh.name>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Revert defense-in-depth patches breaking Git LFS
+Message-ID: <ZlU94wcstaAHv_HZ@kitenet.net>
+References: <20240514181641.150112-1-sandals@crustytoothpaste.net>
+ <0f7597aa-6697-9a70-0405-3dcbb9649d68@gmx.de>
+ <ZkO-b6Nswrn9H7Ed@tapette.crustytoothpaste.net>
+ <Zk2_mJpE7tJgqxSp@kitenet.net>
+ <fbb89826-0d83-d4f9-bab4-9fba69e0e22d@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqq5xwa1pfl.fsf@gitster.g> <20240525122514.2608-1-ash@kambanaria.org>
- <xmqqzfsb86le.fsf@gitster.g>
-In-Reply-To: <xmqqzfsb86le.fsf@gitster.g>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Tue, 28 May 2024 08:47:23 +0800
-Message-ID: <CANYiYbHigLbVumfqOF6zMWkRKnthUr-NsOPzPBiv_Q-iaOYZBg@mail.gmail.com>
-Subject: Re: [PATCH 2 0/1] Allowing localized substitution hints in parse-options
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Alexander Shopov <ash@kambanaria.org>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="HK9WlZtkSaT6Ey5w"
+Content-Disposition: inline
+In-Reply-To: <fbb89826-0d83-d4f9-bab4-9fba69e0e22d@gmx.de>
+
+
+--HK9WlZtkSaT6Ey5w
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 28, 2024 at 2:14=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Alexander Shopov <ash@kambanaria.org> writes:
->
-> > I hope this time patch submit is better.
-> > Requests for changes from previous review should be handled.
+Johannes Schindelin wrote:
+> > More than one major project; they also broke git-annex in the case where
+> > a git-annex repository, which contains symlinks into
+> > .git/annex/objects/, is pushed to a bare repository with
+> > receive.fsckObjects set. (Gitlab is currently affected[1].)
+>=20
+> This added fsck functionality was specifically marked as `WARN` instead of
+> `ERROR`, though. So it should not have failed.
+
+A git push into a bare repository with receive.fsckobjects =3D true fails:
+
+joey@darkstar:~/tmp/bench/bar.git>git config --list |grep fsck
+receive.fsckobjects=3Dtrue
+joey@darkstar:~/tmp/bench/bar.git>cd ..
+joey@darkstar:~/tmp/bench>cd foo
+joey@darkstar:~/tmp/bench/foo>git push ../bar.git master
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 324 bytes | 324.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: error: object ea461949b973a70f2163bb501b9d74652bde9e30: symlinkPoin=
+tsToGitDir: symlink target points to git dir
+remote: fatal: fsck error in pack objects
+error: remote unpack failed: unpack-objects abnormal exit
+To ../bar.git
+ ! [remote rejected] master -> master (unpacker error)
+error: failed to push some refs to '../bar.git'
+
+So I guess that the WARN doesn't work like you expected it to in this case =
+of
+receive.fsckobjects checking.
+
+> > This means that symlinks to eg "git~1" are also warned about,
+> > which seems strange behavior on eg Linux.
+>=20
+> Only until you realize that there are many cross-platform projects, and
+> that Windows Subsystem for Linux is a thing.
+
+I realize that of course, but I also reserve the right to make git repos th=
+at
+contain files named eg "CON" if I want to. Git should not demand
+filename interoperability with arbitrary OSes.
+
+> > +                               backslash =3D memchr(p, '\\', slash - p=
+);
 > >
-> > parse-options.c contains functions and macros to print messages with
-> > terms optionally enclosed in chars promting substitution to users such =
-as:
-> >
-> >   blah-blah-blah <TERM>
-> >
-> > Since languages using different alphabets or writing systems can transl=
-ate
-> > the term in an obvious manner to prompt the user to substitute them, I =
-expose
-> > these character to the translators so the messages can use the same sty=
-le as
-> > elsewhere in git.
->
-> Most of the above explanation, starting from "parse-options.c
-> contains... " should replace the proposed log message of the main
-> patch [1/1], I would think.  Very clearly written.
+> > This and other backslash handling code for some reason is also run on
+> > linux, so a symlink to eg "ummmm\\git~1" is also warned about.
+>=20
+> Right. As far as I can tell, there are very few Linux-only projects left,
+> so this is in line with many (most?) projects being cross-platform.
 
-Typically for a topic with only one commit, it's not necessary to
-provide a cover letter but provide details in the commit log instead.
+We may have very different lived experiences then.
 
->
-> The explanation after "such as:" needs improvement, though.  Are you
-> trying to highlight that an explanation is spelled with dashes
-> between words format?  Are you trying to highlight that the used
-> term is capitalized?  Are you trying to highlight that the term
-> comes after explanation?  The answer is none of the above, but it is
-> not easy for readers to guess.
->
-> One way to make it easier to follow would be to use a more realistic
-> example.  The whole proposed log message may become like so:
->
->     parse-options.c API can show help text for an option that takes
->     an argument.  For the "--author" option that takes a name, for
->     example, the program may define the option like so:
->
->         OPT_STRING(0, "author", &au, N_("author"), N_("override author"))=
-,
->
->     When the command is run with "-h" (short help) option, the above
->     definition is shown as:
->
->         --[no-]author <author>    override author
->
->     As the program does not accept translated option names, the
->     first part of the above, "--[no-]author", is given as-is, but
->     the string "author" in a pair of "<>", and the explanation
->     "override author" may be translated into user's language.
->
->     The user's language may use a convention to mark a replaceable
->     part of the command line (called a "placeholder string")
->     differently from enclosing it inside a pair of "<>", but the
->     implementation in parse-options.c hardcodes "<%s>".
+--=20
+see shy jo
 
-I guess the reason some people don't like the markers of placeholders
-(such as "<" and ">" characters) is that such characters have special
-meanings (used as IO redirection) in shell programming and they can be
-replaced with safer characters for languages other than English.
+--HK9WlZtkSaT6Ey5w
+Content-Type: application/pgp-signature; name="signature.asc"
 
->
->     Allow translators to specify the presentation of a placeholder
->     string for their languages by overriding the "<%s>".
->
-> > Comments to the translators are shorter than before but hopefully they =
-are
-> > not cryptic.
->
-> What is cryptic here is what "than before" refers to---compared
-> what?
->
->   ... goes and looks ...
->
-> Ah, this is an updated patch for an earlier attempt
->
->   https://lore.kernel.org/git/20240421191458.5411-1-ash@kambanaria.org/
->
-> Thanks for sticking with this topic.  Very much appreciated.
->
->
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAmZVPeMACgkQ2xLbD/Bf
+jzjorxAAnV6TFaEKYgpJKF2McqMD2/6fiTdpZa7809ukudBRk8KbQ5Z5FIHcoJWB
+tWmW91m1UObvNesnx5gRybDzU5J5gzSUDrXSMHQWN9lN6cqlmuIHhMUMec2r1W/G
+ZKVyKNBlWRT6UCGiYsdkg+jAhvGEdQGxDWntcHxZWJVs1ctzrejNFNDn30sELq8G
+ltTkIA2EjuH5QIGIjuQrumF8ySYQuaJcCqrGMeQLjEWo1+HKJP5s469Gj6rRzty6
+ugiQkSlIIHm+xDneOyPKTBDe8o7mziJIiwZi5un1pGEGvTexjJx62+FspSr2ji+V
+bZ9x13lI8eNDHpr7Szz7UZuxVsmWSQBKrJP2qCmdbD4am04Uf85ErOzwC6b/9Yks
+r3+LCjns+Fi7Zk6a1oKCghy1hIbousXvdQXzPUUOP/fWotMKNi4qag0HFfKhDf+j
+Qxum38W4Bv5r89ZZ8T3UvnRAc4EuPyjb2X2yDJXImLyoaAz7bkY6NGCgMl4mJFFc
+2yuCkkLFg9XhifFIbhtNMbG36bfyxKZ5QZoSRo8ImFjENqo2WN7T8N1hN9ySZPYn
+CNp7nF4XUFx23xyAh2lwnPApct00jfN4xDEfb/izpkG2Mu2JRVCTS/dJthAubMMv
+64ltl3ysMFkbIYCfKyW+2+LZAGea/Z+zztSeZIlwXWnrPdPvPKg=
+=YqDH
+-----END PGP SIGNATURE-----
+
+--HK9WlZtkSaT6Ey5w--
