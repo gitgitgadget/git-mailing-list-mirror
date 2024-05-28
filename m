@@ -1,310 +1,167 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F6716C6A9
-	for <git@vger.kernel.org>; Tue, 28 May 2024 11:39:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB9F16C841
+	for <git@vger.kernel.org>; Tue, 28 May 2024 11:55:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716896385; cv=none; b=smnmCfCsHO/PFfK/aPAPTwrNZlJWQdlgsbG/P++G12+B2bRwrxZHZyFo60cqZPDD2knLg62s+Dk06Z/HwLHQALX45gBvx7BYiGmwxnSNMYGvbSs07l2KwNgMH2LIWsgMX29Al9Znqq7mpNTj+ySjUWrwJE6WNa4ggQGzfKn3baA=
+	t=1716897325; cv=none; b=RLZoS5md/R0vX5wMbEsL1XPqNT694m6W53124ibV1ygcK8zJy+az9yuBUfG53DJOC+1CTKlWI1/8a41glsSI6AEYjUuUGyQ7ZKQCm17eNx7enV9PHHgsisk5sPnnh47JhdEGsT1cBQ43aCcPQYFkWRz+FAyvwgqlZoaqjA9YsVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716896385; c=relaxed/simple;
-	bh=pMNUeOzn7M1rh+F5d04DQx+KV7WycS8NhBr4YkBuH/Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZLOV95CGlgmKTOpaQvErHQ2Rgu08P76KM+yEyicQFHfycV6eUchlIlIYNyhwQ86gFp/+wG8JMSKboL2bj9HA4+9fzpeOonYRAc8JG3M/pGkaTlEiWhWZQl68HrPNhGWHhNODYMxkNCyi1zb5kSlsdpbu117slnEHOODY2oUC/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OysKzo+P; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716897325; c=relaxed/simple;
+	bh=aU4jXHl3neDc5HyRxjBjqtv/p2xs1W4iowrvOtgmaV4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qfz5SUWD16SZacyhK/GRq6T+5CO+gZ+JAUjAl3BGXaGv67xmS1/LezL7309BxAoKFElScWL1EH+FdLuDYN91ehe3aP9/silwTAZsWv/y5mEVwufoQiL8h/ERFSOeYKPYNwA/yB4cruZrEQf85scwjC6OfzBxwJuFHGWm1xfjN8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ansAfYGt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LUB0Ozn4; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OysKzo+P"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-68197edc2d3so551215a12.2
-        for <git@vger.kernel.org>; Tue, 28 May 2024 04:39:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716896383; x=1717501183; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZxD8BEJQJKG4AvOXMD02ezCH/SF0ooOMvhJ0z02cKUM=;
-        b=OysKzo+PIGOqq+hSvBofqAceXtJfCIgesW9oaosx16DVCbEJt1ktncnmo292n61AEr
-         4SycDXJetxKuLaHBKTie7hsVgiQJVhIMA0JzKqzXJSde4zXMcWpN1TVzX7XrqKu+/xE5
-         Z/e9A2ZCVVtziNiHAfykkBVFxAyIQ3P4KlVlj0qG6irBh7lhHtyRXBKDsI2hsqu5lxsg
-         dg0blZHbREony1zCiF7nUQ9ab2DQtfSQsc8oGYknRYLE72LTy1lOdI/NgwPPyyWJ8k4j
-         /InfW77fUPZ4MRGMAR9vjBJCjJwx7Glwc+kwJI4NShjRrDZrbp4h6/ETVxgB4O3sgdNH
-         zPfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716896383; x=1717501183;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZxD8BEJQJKG4AvOXMD02ezCH/SF0ooOMvhJ0z02cKUM=;
-        b=MiEPjFD6AJC0YJmHsq74KmMxcEFCtnuTvqtKSALMIpbh86MNADXRl0WzgPpDgK0/Qh
-         ehGx5VujVz5HBRlKt2CfBh8SOJcm9ilTN2tDUYN6/L+qis2cIdc46Hwnkffqbasa7JG4
-         bPDrIVh4afg/Yqh5MVpw071stiX2WhoTkRwlS/dL5Ko1l79U4LuLx8BBTtrmRsr0rkbO
-         pcvICtDMWFtnvU2HAvYjEuyrFca/uKZdlFDnLbAWOqp7IUPaqW7pZGJGaw1RFKxCGwn9
-         reEJ6l95iyf3KqeNrqi4rM01G9mW5MFNRlEOsdovWtTrsPSYfR70AgZ+V/ZiwTxfcxE/
-         j6kQ==
-X-Gm-Message-State: AOJu0YxNduKTFH/ZPmJ3v/+ExtTfUTkRuF/udGKeTW6zvmNZtLzRdZMQ
-	FAmMepI0OU5mfbKdzRQD2M6TIXdUXibpFstIa1KTFOG0fksNAC5cZow7xy/l
-X-Google-Smtp-Source: AGHT+IHdrH9+maKCp+nOqOM3QVCWU46lvECyPcKf5MK05yKFMF4c1Iy3dhgKTBnLveotwdlSBSZjSw==
-X-Received: by 2002:a05:6a21:1f03:b0:1af:9ee6:25c4 with SMTP id adf61e73a8af0-1b212f34931mr9951534637.42.1716896381585;
-        Tue, 28 May 2024 04:39:41 -0700 (PDT)
-Received: from Ubuntu.. ([171.51.165.3])
-        by smtp.googlemail.com with ESMTPSA id 41be03b00d2f7-682229ddfe5sm7375738a12.53.2024.05.28.04.39.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 May 2024 04:39:41 -0700 (PDT)
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-To: git@vger.kernel.org
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/2] t: improve upon reftable/basics_test.c in the unit testing framework
-Date: Tue, 28 May 2024 17:00:03 +0530
-Message-ID: <20240528113856.8348-3-chandrapratap3519@gmail.com>
-X-Mailer: git-send-email 2.45.GIT
-In-Reply-To: <20240528113856.8348-1-chandrapratap3519@gmail.com>
-References: <20240528113856.8348-1-chandrapratap3519@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ansAfYGt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LUB0Ozn4"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 382031380106;
+	Tue, 28 May 2024 07:55:22 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Tue, 28 May 2024 07:55:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1716897322; x=1716983722; bh=vwEfN4qPT/
+	IX1zflqYE5wanczpHW6uDf/wjkfLKl9y0=; b=ansAfYGt4XlO9wI4j/20vmxP4B
+	tzLW75P2zO3/ARsRxoyHa+q+1H1Rykwx2fnnMy1dM3kXO4HLa8ukMDDFK9GWT0ta
+	jYO+zp3lssPw7EdJwa3GnyGSHhm77mWE+u0OAahVh5p8yRpJGPjrOvzYMWr9Le7v
+	4h22psPa/el7fNuQeD8OeP1c6NNVFc2B7KtxsdLoJb++dlRH7nmz1THHzIocR5Sj
+	CCspme1+tz0vbHXtC/Vka2RnXjFsydxP8PFMmFO6ErdT8FRX4IOJABAfaYRd7FHi
+	B/ZspqF5FSUBCiihQ82klW+UBSJ7ydw8g0xvPguPzfoI2EyD79U0V25ZWjCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1716897322; x=1716983722; bh=vwEfN4qPT/IX1zflqYE5wanczpHW
+	6uDf/wjkfLKl9y0=; b=LUB0Ozn41m2X9QWEJvAGy9lsN+m+TmcEwnXC1qgZDIT2
+	DQSVtOXDdB7Ar3ymy6L8g8lJ5Zhm+eugd4CkeiAVoZeRPGA4aO96UQVxdgpcAnX1
+	N1/1h/M1+4PkP+CXeTbKhTPp+S1vKKFJQINeoc6+P5HxI88bTbhthJUXiT+1zw2H
+	iSEf2AbD5c85S42g70tEuI01KVDAuBtxhxJCkrGhwXrM0uSHJIE2C0ODWRUUjdNW
+	7nAWDN0OEUHTFO2snWLPvzo0WXW2SxdTtGaShaWUPS2rIHMo7WszeLr2e1+UpCWX
+	dfS3uGq/ZIelJiGnZKwfp/fuCkhdLt9V7LHS/MZEEA==
+X-ME-Sender: <xms:KcZVZgvV26ncqRje5g2bKgvgEU9Kzd8gWGqoqnzGuDNReDAXNE1qvA>
+    <xme:KcZVZtezGwx4HJqqFpj5g2vmc4PY5AII_WN7Rug6GeM5bG1_TH0jFFykoIkF0tP0v
+    Ca-w6cKfcz-qfyLUg>
+X-ME-Received: <xmr:KcZVZrwU8z5x6_ye5YVwijznSf8TUf2s7FMpHP2OM0HaCHNln-WpZytRCOB_Cx83w_mF8hRJnbw0D_qCyxaYKBxGBB-P50gkC7_F0ANuHXMPnkeP>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejkedgudelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:KcZVZjMoVJwlZgDc7Rl1s9qFjeugG63MwEyOCdEfb0MuqdJZoLRQMw>
+    <xmx:KcZVZg-0OrHZOcTrtjjmZt8O39MVWpWfI9SeclmKCSKWXaXqu0-UOw>
+    <xmx:KcZVZrXAfrRbDlmrnj8XjihSsuSM02Plx10hAV88bOFtx99A0srkWg>
+    <xmx:KcZVZpc8lMp2VcDzYxDpx5AAyPk2m3coiL2XqAWXQ56kPORSQqjCCw>
+    <xmx:KsZVZvmShDkq4cT-qeNwUxkIlmwvNR0vzl92ZZzo6n_OHC8FeDZYuMix>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 May 2024 07:55:20 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 91874855 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 28 May 2024 11:55:05 +0000 (UTC)
+Date: Tue, 28 May 2024 13:55:15 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Xing Xin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	blanet <bupt_xingxin@163.com>, Xing Xin <xingxin.xx@bytedance.com>
+Subject: Re: [PATCH v3 1/4] bundle-uri: verify oid before writing refs
+Message-ID: <ZlXGI4lkaXcD7_8C@tanuki>
+References: <pull.1730.v2.git.1716208605926.gitgitgadget@gmail.com>
+ <pull.1730.v3.git.1716824518.gitgitgadget@gmail.com>
+ <8f488a5eeaaa0cdb525c34c2c165e6ee74ee7691.1716824518.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="r4z5W1YqIR4f+VCb"
+Content-Disposition: inline
+In-Reply-To: <8f488a5eeaaa0cdb525c34c2c165e6ee74ee7691.1716824518.git.gitgitgadget@gmail.com>
 
-Enhance the new test for reftable/basics.{c, h} in the unit testing
-framework. The enhancements include:
-- Move tests for functions in reftable/basics.{c, h} from
-reftable/record_test.c and reftable/stack_test.c to the new unit test.
-- Add tests for functions that are not currently tested, like put_be16.
-- Improve the test-cases for the already existing tests.
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
----
- reftable/record_test.c           | 37 ---------------
- reftable/stack_test.c            | 25 -----------
- t/unit-tests/t-reftable-basics.c | 77 +++++++++++++++++++++++++++-----
- 3 files changed, 65 insertions(+), 74 deletions(-)
+--r4z5W1YqIR4f+VCb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/reftable/record_test.c b/reftable/record_test.c
-index c158ee79ff..58290bdba3 100644
---- a/reftable/record_test.c
-+++ b/reftable/record_test.c
-@@ -64,31 +64,6 @@ static void test_varint_roundtrip(void)
- 	}
- }
- 
--static void test_common_prefix(void)
--{
--	struct {
--		const char *a, *b;
--		int want;
--	} cases[] = {
--		{ "abc", "ab", 2 },
--		{ "", "abc", 0 },
--		{ "abc", "abd", 2 },
--		{ "abc", "pqr", 0 },
--	};
--
--	int i = 0;
--	for (i = 0; i < ARRAY_SIZE(cases); i++) {
--		struct strbuf a = STRBUF_INIT;
--		struct strbuf b = STRBUF_INIT;
--		strbuf_addstr(&a, cases[i].a);
--		strbuf_addstr(&b, cases[i].b);
--		EXPECT(common_prefix_size(&a, &b) == cases[i].want);
--
--		strbuf_release(&a);
--		strbuf_release(&b);
--	}
--}
--
- static void set_hash(uint8_t *h, int j)
- {
- 	int i = 0;
-@@ -258,16 +233,6 @@ static void test_reftable_log_record_roundtrip(void)
- 	strbuf_release(&scratch);
- }
- 
--static void test_u24_roundtrip(void)
--{
--	uint32_t in = 0x112233;
--	uint8_t dest[3];
--	uint32_t out;
--	put_be24(dest, in);
--	out = get_be24(dest);
--	EXPECT(in == out);
--}
--
- static void test_key_roundtrip(void)
- {
- 	uint8_t buffer[1024] = { 0 };
-@@ -411,9 +376,7 @@ int record_test_main(int argc, const char *argv[])
- 	RUN_TEST(test_reftable_ref_record_roundtrip);
- 	RUN_TEST(test_varint_roundtrip);
- 	RUN_TEST(test_key_roundtrip);
--	RUN_TEST(test_common_prefix);
- 	RUN_TEST(test_reftable_obj_record_roundtrip);
- 	RUN_TEST(test_reftable_index_record_roundtrip);
--	RUN_TEST(test_u24_roundtrip);
- 	return 0;
- }
-diff --git a/reftable/stack_test.c b/reftable/stack_test.c
-index 7889f818d1..6f6af11e53 100644
---- a/reftable/stack_test.c
-+++ b/reftable/stack_test.c
-@@ -102,29 +102,6 @@ static void test_read_file(void)
- 	(void) remove(fn);
- }
- 
--static void test_parse_names(void)
--{
--	char buf[] = "line\n";
--	char **names = NULL;
--	parse_names(buf, strlen(buf), &names);
--
--	EXPECT(NULL != names[0]);
--	EXPECT(0 == strcmp(names[0], "line"));
--	EXPECT(NULL == names[1]);
--	free_names(names);
--}
--
--static void test_names_equal(void)
--{
--	char *a[] = { "a", "b", "c", NULL };
--	char *b[] = { "a", "b", "d", NULL };
--	char *c[] = { "a", "b", NULL };
--
--	EXPECT(names_equal(a, a));
--	EXPECT(!names_equal(a, b));
--	EXPECT(!names_equal(a, c));
--}
--
- static int write_test_ref(struct reftable_writer *wr, void *arg)
- {
- 	struct reftable_ref_record *ref = arg;
-@@ -1048,8 +1025,6 @@ static void test_reftable_stack_compaction_concurrent_clean(void)
- int stack_test_main(int argc, const char *argv[])
- {
- 	RUN_TEST(test_empty_add);
--	RUN_TEST(test_names_equal);
--	RUN_TEST(test_parse_names);
- 	RUN_TEST(test_read_file);
- 	RUN_TEST(test_reflog_expire);
- 	RUN_TEST(test_reftable_stack_add);
-diff --git a/t/unit-tests/t-reftable-basics.c b/t/unit-tests/t-reftable-basics.c
-index b6088e1ddd..53fce33d53 100644
---- a/t/unit-tests/t-reftable-basics.c
-+++ b/t/unit-tests/t-reftable-basics.c
-@@ -51,36 +51,87 @@ static void test_names_length(void)
- 	check_int(names_length(a), ==, 2);
- }
- 
-+static void test_names_equal(void)
-+{
-+	char *a[] = { "a", "b", "c", NULL };
-+	char *b[] = { "a", "b", "d", NULL };
-+	char *c[] = { "a", "b", NULL };
-+
-+	check(names_equal(a, a));
-+	check(!names_equal(a, b));
-+	check(!names_equal(a, c));
-+}
-+
- static void test_parse_names_normal(void)
- {
--	char in[] = "a\nb\n";
-+	char in1[] = "line\n";
-+	char in2[] = "a\nb\nc";
- 	char **out = NULL;
--	parse_names(in, strlen(in), &out);
-+	parse_names(in1, strlen(in1), &out);
-+	check_str(out[0], "line");
-+	check(!out[1]);
-+	free_names(out);
-+
-+	parse_names(in2, strlen(in2), &out);
- 	check_str(out[0], "a");
- 	check_str(out[1], "b");
--	check(!out[2]);
-+	check_str(out[2], "c");
-+	check(!out[3]);
- 	free_names(out);
- }
- 
- static void test_parse_names_drop_empty(void)
- {
--	char in[] = "a\n\n";
-+	char in[] = "a\n\nb\n";
- 	char **out = NULL;
- 	parse_names(in, strlen(in), &out);
- 	check_str(out[0], "a");
--	check(!out[1]);
-+	/* simply '\n' should be dropped as empty string */
-+	check_str(out[1], "b");
-+	check(!out[2]);
- 	free_names(out);
- }
- 
- static void test_common_prefix(void)
- {
--	struct strbuf s1 = STRBUF_INIT;
--	struct strbuf s2 = STRBUF_INIT;
--	strbuf_addstr(&s1, "abcdef");
--	strbuf_addstr(&s2, "abc");
--	check_int(common_prefix_size(&s1, &s2), ==, 3);
--	strbuf_release(&s1);
--	strbuf_release(&s2);
-+	struct strbuf a = STRBUF_INIT;
-+	struct strbuf b = STRBUF_INIT;
-+	struct {
-+		const char *a, *b;
-+		int want;
-+	} cases[] = {
-+		{"abcdef", "abc", 3},
-+		{ "abc", "ab", 2 },
-+		{ "", "abc", 0 },
-+		{ "abc", "abd", 2 },
-+		{ "abc", "pqr", 0 },
-+	};
-+
-+	for (size_t i = 0; i < ARRAY_SIZE(cases); i++) {
-+		strbuf_addstr(&a, cases[i].a);
-+		strbuf_addstr(&b, cases[i].b);
-+		check_int(common_prefix_size(&a, &b), ==, cases[i].want);
-+		strbuf_reset(&a);
-+		strbuf_reset(&b);
-+	}
-+	strbuf_release(&a);
-+	strbuf_release(&b);
-+}
-+
-+static void test_be_roundtrip(void)
-+{
-+	uint32_t in = 0x112233;
-+	uint8_t dest[3];
-+	uint32_t out;
-+	/* test put_be24 and get_be24 roundtrip */
-+	put_be24(dest, in);
-+	out = get_be24(dest);
-+	check_int(in, ==, out);
-+	/* test put_be16 and get_be16 roundtrip */
-+	in = 0xfef1;
-+	put_be16(dest, in);
-+	out = get_be16(dest);
-+	check_int(in, ==, out);
- }
- 
- int cmd_main(int argc, const char *argv[])
-@@ -90,6 +141,8 @@ int cmd_main(int argc, const char *argv[])
- 	TEST(test_parse_names_drop_empty(), "parse_names drops empty string");
- 	TEST(test_binsearch(), "binary search with binsearch works");
- 	TEST(test_names_length(), "names_length retuns size of a NULL-terminated string array");
-+	TEST(test_names_equal(), "names_equal compares NULL-terminated string arrays");
-+	TEST(test_be_roundtrip(), "put_be24, get_be24 and put_be16 work");
- 
- 	return test_done();
- }
--- 
-2.45.GIT
+On Mon, May 27, 2024 at 03:41:54PM +0000, Xing Xin via GitGitGadget wrote:
+> From: Xing Xin <xingxin.xx@bytedance.com>
+[snip]
+> 5. The `verify_bundle` will call `parse_object`, within which the
+>    `prepare_packed_git` or `reprepare_packed_git` is eventually called,
+>    which means that the `raw_object_store->packed_git` data gets filled
+>    in and ``packed_git_initialized` is set. This also means consecutive
 
+s/``/`/
+
+[snip]
+> This commit fixes this bug by dropping the `REF_SKIP_OID_VERIFICATION`
+> flag when writing bundle refs, so we can:
+>=20
+> 1. Ensure that the bundle refs we are writing are pointing to valid
+>    objects.
+> 2. Ensure all the tips from bundle refs can be correctly parsed.
+
+I think one angle that your explanation doesn't cover is why exactly
+dropping the flag fixes the observed issue.
+
+> And a set of negotiation related tests for bundle-uri are added.
+
+s/And/Add/
+
+[snip]
+> +#########################################################################
+> +# Clone negotiation related tests begin here
+> +
+> +test_expect_success 'negotiation: bundle with part of wanted commits' '
+> +	test_when_finished rm -rf trace*.txt &&
+> +	GIT_TRACE_PACKET=3D"$(pwd)/trace-packet.txt" \
+> +	git clone --no-local --bundle-uri=3D"clone-from/A.bundle" \
+> +		clone-from nego-bundle-part &&
+> +	git -C nego-bundle-part for-each-ref --format=3D"%(refname)" >refs &&
+> +	grep "refs/bundles/" refs >actual &&
+> +	cat >expect <<-\EOF &&
+> +	refs/bundles/topic
+> +	EOF
+> +	test_cmp expect actual &&
+> +	# Ensure that refs/bundles/topic are sent as "have".
+> +	grep "clone> have $(git -C clone-from rev-parse A)" trace-packet.txt
+> +'
+
+As far as I can see there is no test that verifies the case where the
+bundle contains refs, but misses the objects to satisfy the refs. Can we
+craft such a bundle and exercise this new failure mode?
+
+Patrick
+
+--r4z5W1YqIR4f+VCb
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZVxiIACgkQVbJhu7ck
+PpRGJw/+KfDf/Fkcks9wr1VWgNyACEEEXi3iTfUv/u9vw+zfn0yuLilooF6xwl76
+223rqv0lcYJ83tgm9XSce2PdHSHfSLymR1bHDKqjVhE6cuPHt9+o5OjQP0OyR18Y
+PvwNZSPmT2Vp6GJ/GfIN1UFi2w1zlDcloagFS0BjCcDOpknTLwAXuSgINFGsddsc
+i1HHj+jXxBImYBuL/riKVwLZPzU+cSG9LfCUHhFUfjn7GuWr9O2NcFPX0fdbQKTd
+3JbAm3A3yxJh5a98rmaJQwIY23H6LaPoStiDrJtEDICihQ0PUXRgtb7JX4XFymTH
+LAn32Z1VIq460PwZbeJBH+007TT/7LN7fxFp/SQQgzv4qjfxk2sOEpFmA6PSer+b
+s+9ftZgT7ewp1y7MbPV99nI6KtJWjwH8N1DlWYlANscpXeQYiydYl60enLx1HOyf
+QKWADpMotnx08kO1mxH1ozFImn1gRvE+HbHDGHLye3542A9xrrAX71kH/2Lqt+AJ
+LdM9l5UGDk/G2peq4vJXcZKwHiWaVWDA2NCGg02xoz6khmI/qVyS/iBuOedTLMHm
+CVSk3vpLTgD82Hux5j9ckcV07dnaD4hj7jTW5NOcj3v9wJxRGWoqdfUSWcCSplHA
+4IfpWcxBsMTyZsNN2Neow0XdXCVjzp7/rSI8V9TqWlXeeqni4B0=
+=pBld
+-----END PGP SIGNATURE-----
+
+--r4z5W1YqIR4f+VCb--
