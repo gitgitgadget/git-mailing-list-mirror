@@ -1,115 +1,176 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4AF71722
-	for <git@vger.kernel.org>; Tue, 28 May 2024 09:01:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0D517E8F4
+	for <git@vger.kernel.org>; Tue, 28 May 2024 10:10:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716886889; cv=none; b=rpmOSae4gvT/hh/H1xj/3Qdd+H9pvbUGwZTz+7PFJb8sxFkePAeCYwhea/gDwz6C1r3Fb9rEUl2xJKlsc8wPIBRN1tE4ouU7CY7Qa3aIK3qG5U5V6eIilrisbvneGoR2ADRX295fJNCWonEwIEGE8D9ziwjmCAUPRo9/yY/uTEg=
+	t=1716891048; cv=none; b=bUhvSwqWI8ePHxK1bEukeYVY89sX5OBkOK6LbMOnlWMyPAwzXh926t91uVojYohhDfQn5uxdCfS5GFFNAmadZTx8At85WbKFGSXLznK3lCEGuIuCL5ATC1/TyX2WVlmgEYTraa5Trpn48UdFcPMqbVlJupjLDXse3is6fLBGo74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716886889; c=relaxed/simple;
-	bh=5RDuqhIi52BNZKU+0QhPRB13XXGBAZLWMCkjRYa6154=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=KnAdUjVQs924oW0gZFJZpo0x/gd61jZTaQ0J/UR/v1NR0A0b4KnhK8kg0nsLIMs/+hm3UPNSkRl9fA6jItxaUFIcFv6JCl9ZogG1jBnxfUKoJ+7QRMNHAmGa09OsXKS/iilcU6py8nBcEFaGNIvbccRAMtMP7iGKHvXWwuSZ1uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U0uYlaNE; arc=none smtp.client-ip=209.85.208.43
+	s=arc-20240116; t=1716891048; c=relaxed/simple;
+	bh=gLs27k9h8AThngnJ6SO2OioXBoyQCUm454zSptxtBEw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cHTz5Iu6WFmgjlEG2tKrylgqf0QjAIzDtV4SEMZgy61eaJ4RBslzVjes3eScQwTtBiQukF3/lyYxVwCC8/SDMdrS+Elc6k1AmqO758KDvecS8wUhQ+QmoQ2o/RWR9/vMQypONydwZfTPICxW7/wfu5whr9OZqSTVT8CGR0+Ftwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OLts2/w3; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U0uYlaNE"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5785fc9c543so650035a12.1
-        for <git@vger.kernel.org>; Tue, 28 May 2024 02:01:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OLts2/w3"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5785199f7d1so272748a12.2
+        for <git@vger.kernel.org>; Tue, 28 May 2024 03:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716886886; x=1717491686; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=wSrU/3XSS7Ghkt7cQedBOwQUL+Xb/DFJXtq6xTOjkmw=;
-        b=U0uYlaNEYrFXOUHC9fs3y1gH90ZSJIGcW2np+qqe5QGG0yjxN0h6M8zx6nybNLLYUM
-         TLlQJzHzLROtR0PrXu0B1zMWt2BGNvoudXAnMCucNnLC6dErnSS7ZGb5c93FVSL/j2NS
-         PQPnRUbghnV61QhqixlA2sEb9K+fs7HenVBnLt25Zwbu1ZEJr4AIt0iBMBuH8ZrfWHB2
-         AOc0Cv/9fWBFoFe5mzehiHU97AHBZKIrt92X1yopbbCnTkLmn69Uz7CckpvmXGc1CJzP
-         k3wPj4wOSaMxRTU/p6NBoYMFDBb42/xl4epqTwnGRdl7iT2S+YQcQ+kLSn2pyqFsz8wx
-         6Fbg==
+        d=gmail.com; s=20230601; t=1716891045; x=1717495845; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AXr1khy/KJE3UsV4rsx9HbFToqDudfzS8zHmZ4ac9PI=;
+        b=OLts2/w3DkeMbb4wJsqK+WosoUNte6g1sszrd6EenfnsDZuRCSHo4omt4SjmqjAw7k
+         HdETBedufRP0TGtqN/jODxhqXAXVlwWv3P6vPILi4+k8uvENNjGkw+ixX8hJhlsk1pBT
+         D6mEc2/VrK3GAR5rKX2HXvuBNK5In5MJ4FLuAiJ0R6ePZXHPILH4wNlFpnMNnwiLq1Yb
+         LtIdlmurMOfq4XxM+I+Q1nkKbQAz/KCoB+wAI2Td7bEDxnrn3qobpbWirTU2a9R00N4q
+         EVYKcZqZSCe50W9cJQT4IsQTZ0h96nDxAzxqfXay1A8z00TL4XumYmDZAt75KQrqsUiF
+         wAhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716886886; x=1717491686;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wSrU/3XSS7Ghkt7cQedBOwQUL+Xb/DFJXtq6xTOjkmw=;
-        b=qIVTcTrk/0As0+tgMGxPdc+8fTlataNEinQMGyTZZXVKbASidEvRAEdgr4xAqHr4hq
-         +M2W1nNxYIfCmR6XdByG6TmsO+e52TPU9pxrRPRho+/9sfKtZUDrOOKSonGvLbC5M8oC
-         2J9Rss2eV1nb+OCbYRbYiBJuglCiZJVJjCMfvBiN4wq13kkK7CJ9aXP7VhRfIvCUy4Tx
-         inIm4LVHMx+TxqTgRtM25MenNgUlmnTwYfrd69itJjKkuB2m03UHqQFUMvQiibG0Ofio
-         xilMELQSsy/tWWC6WJzWEEz6GnyxoO75asN/FfWbuQNHuNjVCVRK3WGqZUyb5hnZt8Ah
-         OAnw==
-X-Gm-Message-State: AOJu0YxEpLxAwygHmNpvJLrqQJmWblrokYyugSpWpl8dliaG5V/fLtk/
-	QtBA3ghH7WZnIesuzbRr3NIlQrObfj58AS5EU0B2qpeCVs0YqJsz+e44y1tCCx7YzceB1UsVj2H
-	Do68Yrxh35DTopUfLSa9YukXsashlJPIG14k=
-X-Google-Smtp-Source: AGHT+IGjX2u+334V1XJRXAkD/p9hgQRHBs4jicSQ/yli9ReDVkqC3CQkj5YIxKhd+/B3HcNvsTkBW/pskauPuago41U=
-X-Received: by 2002:a17:907:868c:b0:a62:de58:b350 with SMTP id
- a640c23a62f3a-a62de58d301mr891508766b.59.1716886885518; Tue, 28 May 2024
- 02:01:25 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1716891045; x=1717495845;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AXr1khy/KJE3UsV4rsx9HbFToqDudfzS8zHmZ4ac9PI=;
+        b=aWxuGsxP5RYA5MxrSQSJKsO3rgVWM5AJZKO/FkqHWYv5cmdHRg65dNbmjBMLvbXMeW
+         HjFSwBBXKuOyVImafDYr8A6yHgzByuokHvKjYjwRTwyXT+zwOUP0DIJgF/azRvhPu6Md
+         yz6xAA1eKmTSFVSuTnRKfwY4ft2amAqGtsGUW6q7UDKp3FqpUrHh3TzM4zBiSFBs5Ign
+         E7wgkGPH2U7GODz6OFVCMzRczj9ZwIxYW/pf9wQOANZO9FzEly/bYxypjrr2CuDIDHrG
+         DAtTtPnBstGy9erwsSDEgEAMF5ogZyiRUOz+xpqCnpRG/JJAQZqOil+3Eww8zsCIzaxW
+         32SA==
+X-Gm-Message-State: AOJu0YwtjejKIHjZ3NkHoQL1hHVax1mh0bzx9eZ3pn7SozgM2zqGsWJ4
+	yZkf1TvBspSZkVGpvYzgvoOPH56bheCrKf+qZuB3yizjXxPfS9SehYqedTXWvxJN3xNP7gZo2wZ
+	spGwH7ohT6CwXaqAwAzEOMYwRGUQvEuPh
+X-Google-Smtp-Source: AGHT+IHE6aduOGs3TNZLTFZgnsBF0oInOmor6N9hgE/h+I4HHBMVS5N4cT9mGpjQ9YA8UQMe9njGxnp2+IZJ3cFhsXM=
+X-Received: by 2002:a50:ab4e:0:b0:570:5bcc:f749 with SMTP id
+ 4fb4d7f45d1cf-578519b3380mr10810485a12.29.1716891044424; Tue, 28 May 2024
+ 03:10:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Workshop BLE <workshop.ble@gmail.com>
-Date: Tue, 28 May 2024 11:01:14 +0200
-Message-ID: <CANXjuPnUr81bKGMqZMvDjVZ+1suddoR5-8-SZn8W4EehW5-siw@mail.gmail.com>
-Subject: git hangs forever after updating to V.2.45.1
-To: git@vger.kernel.org
+References: <20221012135114.294680-1-christian.couder@gmail.com>
+ <20240515132543.851987-1-christian.couder@gmail.com> <20240515132543.851987-4-christian.couder@gmail.com>
+ <xmqqv83fvw7p.fsf@gitster.g> <CAP8UFD1JZ7eJzrTk1YPrfy1XLAnnLvukABOJE69-JbqVWtL1AQ@mail.gmail.com>
+ <xmqqjzjikhdz.fsf@gitster.g>
+In-Reply-To: <xmqqjzjikhdz.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 28 May 2024 12:10:31 +0200
+Message-ID: <CAP8UFD1_aHwbhF12v-miCTWEbbgjtpjTCmkRmFHu4Vusezq6dA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] upload-pack: allow configuring a missing-action
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-Upgraded git-bash (windows) to latest version 2.45.1
+On Fri, May 24, 2024 at 11:51=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> >> Repository S borrows from its "promisor" X, and repository C which
+> >> initially cloned from S borrows from its "promisor" S.  Even if C
+> >> wants an object in order to fill in the gap in its object graph, S
+> >> may not have it (and S itself may have no need for that object), and
+> >> in such a case, bypassing S and let C go directly to X would make
+> >> sense.
+> > ...
+> >>
+> >> It feels utterly irresponsible to give an option to set up a server
+> >> that essentially declares: I'll serve objects you ask me as best
+> >> efforts basis, the pack stream I'll give you may not have all
+> >> objects you asked for and missing some objects, and when I do so, I
+> >> am not telling you which objects I omitted.
+> >
+> > I don't think it's irresponsible. The client anyways checks that it
+> > got something usable in the same way as it does when it performs a
+> > partial fetch or clone. The fetch or clone fails if that's not the
+> > case. For example if the checkout part of a clone needs some objects
+> > but cannot get them, the whole clone fails.
+>
+> But then what can the repository C do after seeing such a failure?
 
-What did you expect to happen? (Expected behavior)
-git works as usual
+It's basically the same as when a regular clone or a partial clone or
+a clone using bundle-uri fails or when using a regular bundle fails.
+If it failed because the remote was not properly configured, then that
+config can be fixed. If it fails because the remote doesn't have some
+objects, then maybe the missing objects can be transferred to the
+remote. And so on.
 
-What happened instead? (Actual behavior)
-git pull and git clone just hangs forever when remote is dev.azure.com
-(did not try any other remote)
+The feature doesn't create any new kind of failure. In particular,
+when you use a partial clone, even a very simple one with a single
+remote, there is always the risk of not being able to get some missing
+objects as there is the risk of the remote being unreachable for some
+reason (like if you take a plane and don't have an internet
+connection, or if there is an outage on the server side). There are
+some added risks because the feature requires added configuration and
+it can be wrong like any configuration, and because there are 2
+remotes instead of just one. But these are not new kinds of risks.
+These risks already exist if one uses multiple promisor remotes.
 
-What's different between what you expected and what actually happened?
-see above
+> With the design, S does not even consult C to see if C knows about
+> X.
 
-Anything else you want to add:
-When executing with GIT_TRACE=1 GIT_TRACE_PACKET=1 GIT_CURL_VERBOSE=1
-it can be seen, that git connects successfully to remote, but hangs
-after a cuple of this lines:
-10:51:38.026547 git.c:465               trace: built-in: git config
---null --type=path http.dev.azure.com.cookieFile
-10:51:38.065783 exec-cmd.c:243          trace: resolved executable
-dir: C:/Program Files/Git/mingw64/libexec/git-core
-10:51:38.071783 git.c:465               trace: built-in: git config
---null --type=path http.https://azure.com.cookieFile
-10:51:38.110297 exec-cmd.c:243          trace: resolved executable
-dir: C:/Program Files/Git/mingw64/libexec/git-core
-10:51:38.116296 git.c:465               trace: built-in: git config
---null --type=path http.azure.com.cookieFile
-10:51:38.155881 exec-cmd.c:243          trace: resolved executable
-dir: C:/Program Files/Git/mingw64/libexec/git-core
-10:51:38.161881 git.c:465               trace: built-in: git config
---null --type=path http.cookieFile
+If S is managed by a company like GitLab or GitHub, then S will
+certainly advertise, for example by showing a command that can easily
+be copy-pasted from the web page of the project onto the user's
+command line, some way for C to use X.
 
+In the cover letter I give the example of the following command that
+can be used (and advertised by S):
 
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
+  GIT_NO_LAZY_FETCH=3D0 git clone
+      -c remote.my_promisor.promisor=3Dtrue \
+      -c remote.my_promisor.fetch=3D"+refs/heads/*:refs/remotes/my_promisor=
+/*" \
+      -c remote.my_promisor.url=3D<MY_PROMISOR_URL> \
+      --filter=3D"blob:limit=3D5k" server
 
+I also agree in the cover letter that this is not the most user
+friendly clone command and I suggest that I could work on improving on
+that by saying:
 
-[System Info]
-git version:
-git version 2.45.1.windows.1
-cpu: x86_64
-built from commit: 965b16798dab6962ada5b0d8cf0dca68f385c448
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 22631
-compiler info: gnuc: 13.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.exe
+"it would be nice if there was a capability for the client to say
+that it would like the server to give it information about the
+promisor that it could use, so that the user doesn't have to pass all
+the "remote.my_promisor.XXX" config options on the command like."
 
+and by saying that this could be added later.
 
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+If you think that such a capability should definitely be part of this
+work, for example because it wouldn't be sane to require users to use
+such a long and complex command and it could avoid difficult to debug
+failures, then I would be willing to work on this and add it to this
+series.
+
+> Without knowing that, it cannot safely decide that it does not
+> have to send objects that can be obtained from X to C.
+
+In the above command C is asking for a partial clone, as it uses a
+--filter option. This means that C knows very well that it might not
+get from S all the objects needed for a complete object graph. So why
+can't S safely decide not to send some objects to C? Why would it be
+Ok if C wanted a partial clone but didn't want to get some objects
+from X at the same time, but would not be Ok if C wants the same
+partial clone but also with the possibility to get some of the objects
+from X right away? To me it seems less risky to ask for some objects
+from X right away.
+
+>  Instead, S
+> simply say "if C requests an object that I do not have, just ignore
+> it and let C grab it from somewhere else".  How would it not be an
+> irresponsible design?
+
+Again when using a regular partial clone omitting the same set of
+objects, C also requests some objects that S doesn't have. And this is
+not considered an issue or something irresponsible. It already works
+like this. And then C still has the possibility to configure X as a
+promisor remote and get missing objects from there. So why is it Ok
+when it's done in several steps but not in one?
