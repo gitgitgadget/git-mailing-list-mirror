@@ -1,56 +1,51 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C6B24B2F
-	for <git@vger.kernel.org>; Tue, 28 May 2024 17:47:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2855F175AB
+	for <git@vger.kernel.org>; Tue, 28 May 2024 18:16:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716918430; cv=none; b=My4hJGkD9ptUFS/XPXoeUo5cTrpBUWz2BY7DghpOrQM2NN8AMIOP27ezco2/tUX1PP2mmuMK5MLa4y2/jnjaQikLLE+xM3lNZsHift2LiukRxBUUCcagyFffiDjmllDOzcUs18/vaNKqFmspIxw9vX2S+cAjc/eKkxikbKDtt28=
+	t=1716920187; cv=none; b=C25Rhs4co6i/ZGrQcxH5GzoOB2MiXLbGD8mT5oQRRytcgnPHKHsICSPn5QW/lgE9wz0NmXQX/SMtBF4D+1Q3l358e7BJrzerkFIaPWyuXfaW9JEftZoQLo77RyFBw+oNSdqzgBkYxJzqb3xdlFdOTBPn6lZ56vQAlMdmIoqMS5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716918430; c=relaxed/simple;
-	bh=24tnT8tSv25E5DOoZgKQPvHRXDidc2IK0mAVd6+PFEA=;
+	s=arc-20240116; t=1716920187; c=relaxed/simple;
+	bh=euzKW4aKgFlzeYDqElFB33TnMKr2cHpAtJnhJ+PV21w=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jKjE0jsLHXu1jEyS+va4PNtsMeEARde1Fq5ldQYl5GaA7k3oKQ4ATFZAgr/am1MqmZluZEGW6M6dwf2a/VwfF/U1c+mEpwyqlFw5K+Zsk1CI57jNMtiHrXIzrOIc/X27aA30YdupmOU3AtKpb3BK1bexo1YvD8800cntqKrah74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RzTKmx9G; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=f/HH9hOH6mNnYET3pN3M1R/XQaaltM6Ts0J6GXi1bdOt0GvXGOY4xTZnAsa8QoeK0U67tRIlrMLu8GC3zU3yDDjF0mzqpvBbsz13pgAXFec4BuavzTqAT7JE1My83uEw/Vk7I5jonb3wQcXH7hC5zSToxHBPGEEB6LL8I4rAEzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mboJa1/K; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RzTKmx9G"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id E6B4E225D3;
-	Tue, 28 May 2024 13:47:08 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mboJa1/K"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E04C2AD3A;
+	Tue, 28 May 2024 14:16:19 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=24tnT8tSv25E5DOoZgKQPvHRXDidc2IK0mAVd6
-	+PFEA=; b=RzTKmx9GC9nsftgPBRTUKi5su/GRuKERPlMh/zCflJomvuhMaroxp2
-	dJOaKPDnQ6EDsWZZK1o87403/d9cOWdrK9IUNJv4BsOseY30oykyKRyxb6M2ILAV
-	ySvNY+R7a+Jy6mOZ6SNUMtvvZtpLgefTa1UEiaBAVvDYobik9syO0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id DF14E225D2;
-	Tue, 28 May 2024 13:47:08 -0400 (EDT)
+	:content-type; s=sasl; bh=euzKW4aKgFlzeYDqElFB33TnMKr2cHpAtJnhJ+
+	PV21w=; b=mboJa1/KiAOhmmCk2jiGMoXaX4bf8RZKPyqU2TyM31gpra5ysA17T5
+	qNtM1LqUsP0RLe/pSmVnQ0gbXDJZ23NpVgWAljsRaRYZbZM5u19Uvg0mH6egyume
+	uYIf+gAfFDsAQ/XcOAL7mZNyl1gSdhwnjFkpYnlKXbP5a5r5ApZss=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 76F902AD39;
+	Tue, 28 May 2024 14:16:19 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0AD23225D1;
-	Tue, 28 May 2024 13:47:06 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E14072AD38;
+	Tue, 28 May 2024 14:16:18 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Joey Hess
- <id@joeyh.name>,  git@vger.kernel.org
-Subject: Re: [PATCH 00/12] Fix various overly aggressive protections in
- 2.45.1 and friends
-In-Reply-To: <8353645a-a684-417a-8b0e-d8cbd7da6b5a@gmail.com> (Phillip Wood's
-	message of "Tue, 28 May 2024 16:02:37 +0100")
-References: <20240521195659.870714-1-gitster@pobox.com>
-	<Zk3ChIHr5amGh8Mt@kitenet.net> <xmqqv835xekc.fsf@gitster.g>
-	<Zk9vafYPijqyWpXv@kitenet.net>
-	<99225123-70f0-3546-a6fa-b6d1f981b41d@gmx.de>
-	<8353645a-a684-417a-8b0e-d8cbd7da6b5a@gmail.com>
-Date: Tue, 28 May 2024 10:47:04 -0700
-Message-ID: <xmqqzfs94ynb.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Ramsay
+ Jones <ramsay@ramsayjones.plus.com>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 00/12] refs: ref storage format migrations
+In-Reply-To: <cover.1716877224.git.ps@pks.im> (Patrick Steinhardt's message of
+	"Tue, 28 May 2024 08:31:10 +0200")
+References: <cover.1716451672.git.ps@pks.im> <cover.1716877224.git.ps@pks.im>
+Date: Tue, 28 May 2024 11:16:17 -0700
+Message-ID: <xmqqo78p4xam.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -60,37 +55,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 4C70FEEE-1D1A-11EF-9841-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 613CF8C4-1D1E-11EF-8D88-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> And there is a good reason _not_ to write stuff inside the `.git/`
->> directory unless you happen to be, well, Git itself: Git makes no
->> guarantees whatsoever that you can write into that directory whatever you
->> want. A future Git version might even write a file `.git/annex`, breaking
->> `git-annex`' assumptions, and that'd be totally within the guarantees Git
->> makes.
+>   - Swapped out calls to `remove_path()` to `unlink()`. We do not want
+>     to walk up and remove empty parent directories, even though this is
+>     harmless in practice.
+
+Hmph.
+
+It is customary to remove a directory when the last file in it gets
+removed in the working tree, because Git tracks contents and does
+not track directories, and it seems that the files backend does the
+equivalent in the files_transaction_finish() method with
+unlink_or_warn() followed by try_remove_empty_parents().  If we are
+transitioning from the files backend to the reftable backend, don't
+we want to end with no loose ref files under $GIT_DIR/refs/ and no
+empty directories to house those loose ref files that would be
+created in the future?
+
+Let's find out why this is needed in [10/12].  It may just be a
+simple matter of "let's not bother removing directories as we remove
+loose ref files one by one---we know the whole hierarchy can be
+removed after we are done", in which case I do think it is nicer.
+
+>   - Release the reftable refdb before removing it. This closes the
+>     cached "tables.list" file descriptor, which would otherwise break
+>     removal of this file on Windows.
 >
-> This seems a bit harsh - many tools store their state under .git/ and
-> I think it makes sense for them to do so as it avoids creating
-> untracked files in the working copy. I would hope that we'd be
-> considerate of widely used tools such as 'git annex' when adding new
-> paths under .git/
+>   - Fix a bug with worktrees where we store the current worktree refdb
+>     twice. This caused us to keep file descriptors open, which breaks
+>     removal of the refdb on Windows.
 
-Yes, a .git/annex file _can_ happen, but between civilized developer
-groups, such a thing would not happen without a good reason.  If we
-have no good reason (apparently you and I did not think of any) to
-create such a file, "it can happen" is a poor straw-man, as we would
-be aiming to work well together.
+Wow.  Windows' limitation sometimes helps us catch real bugs ;-).
 
-Yes, when we have a symbolic link as a tracked content, updating the
-target of the link when we need to update it is simply a bug, and it
-does not matter if it points at a file inside our own repository, or
-a file inside a different and unrelated repository that is owned by
-the same user, or a file in the user's home directory.  Our own
-repository is not all that special from that perspective, and a
-change to penalize symbolic links that point into our repository
-specifically probably did make a bad choice.
-
-Thanks.
-
+Thanks, will replace to take a look.
