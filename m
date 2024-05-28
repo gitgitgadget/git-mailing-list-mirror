@@ -1,81 +1,84 @@
-Received: from wfhigh3-smtp.messagingengine.com (wfhigh3-smtp.messagingengine.com [64.147.123.154])
+Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07503F9CC
-	for <git@vger.kernel.org>; Tue, 28 May 2024 05:13:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A413E487
+	for <git@vger.kernel.org>; Tue, 28 May 2024 05:13:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716873233; cv=none; b=MYNx1vWsrM6h63c8QdZDypHBvrq4ltYkv61YtbH22iJ80JSGj9KauHbhslPyd1m0cSAwHfUufh9BKs+EcYhXQ1v9Dn1ceCdI4SDwFzD+Hlr545gya1SzNORtywDj/D3wFatzEftj2fB4vw28LpHOfprWGvoBRtUreWjAZ3pjfwQ=
+	t=1716873240; cv=none; b=gDl0RZd9wR92vnna++8wRtxcF7sTvejkQ82iCfV8uOCjY0ApZnCdR+CR9QpVw2n8HLqFHF2Z2sJCol/VFOa/So5hjjX0L5KmSOkNEUYMuhEhl90QHyTuZqluUCW3LsQPY6zztkZs3mKNr8FX6lTZELBVA2N0ZoeFjlcfe7pVUjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716873233; c=relaxed/simple;
-	bh=XGT83xaOU+mZtgn+4v7bXM89wY+OwMzwpM+m4cxwJkU=;
+	s=arc-20240116; t=1716873240; c=relaxed/simple;
+	bh=JzvWd++5wQEFad4s6Xx+PBRZqDxa0DSTqYwBz2cDjh0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OzOJGZix+BqMDRL1CG9EgY+zU+JG0YDxs7BEGz3cbCFd+BdoT5BhK7xh7bcJQrdVNJHwLPHxm/z98o0iIYXGWynPdc5L81kof38tal/4R7jST8Xv1GfWY54hTTR0msBWfuvGzpsInLjxHXx+iz+jV+9Z4GMmhdOQaa0wChmVt9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RUM0Nag4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qKqE+wDQ; arc=none smtp.client-ip=64.147.123.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=TWluz5Cz4xstpM2U0ZRuAzDi9mb88sCWIfqHQJRUmDCFsEx1s/4x7LyGm3e5jAvgUPimxU8WFVicmwV5EqnOzgahoVpm13COmxuTro2+V781Lh7TK+oCE086md+ugDhAF/Blb8+1A70odT7HBR/qm1LEJg1357XbY6TyBDOaUZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=g05bE3aA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YE9Suxc0; arc=none smtp.client-ip=64.147.123.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RUM0Nag4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qKqE+wDQ"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.west.internal (Postfix) with ESMTP id CFC111800158;
-	Tue, 28 May 2024 01:13:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="g05bE3aA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YE9Suxc0"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.west.internal (Postfix) with ESMTP id C95CD1C0012D;
+	Tue, 28 May 2024 01:13:57 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 28 May 2024 01:13:51 -0400
+  by compute1.internal (MEProxy); Tue, 28 May 2024 01:13:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716873230; x=1716959630; bh=PFC9+brJil
-	6m9cU5TDGtFJqYC+WT3dYlppRn/rf+O8o=; b=RUM0Nag4DfdxYte9Hkbxo4VEwx
-	pE6iuz2DuCCjWUFU5XMHdLMSZ3pfFNPs7oo9pZxCEMJJsDG33bDTIPed+lF7c3dU
-	9UG0GFcCWXuUzXWoSHeGh0oYFgMBcEY/9gc3RYXdtz9R0IrQGlUSvIUjN7JkSlFy
-	Ugi+LDZVxII6KucmteBlZd8Mv2n4AkzemBRoZ+H1+OImol7/5xFohr7I/nnGr2g1
-	XF9/4dVyLSsE9yixWJHLf62TtM1mhC9+bkCMvEkLCeCCwgJydyuZc5FkU6ySEJip
-	210SwS+V9vGmoWowFhCzON6DNWlNoKbVnKlualEk/W3T+cPRcje07C5opR7Q==
+	:subject:to:to; s=fm1; t=1716873237; x=1716959637; bh=JzvWd++5wQ
+	EFad4s6Xx+PBRZqDxa0DSTqYwBz2cDjh0=; b=g05bE3aAjKpLLMei9uq8N15tIO
+	M4K/dbrw5wbjILa4S5sMk75JaqV1p2nnNWJjnoQ4yI9waMYr+wFOLwEs07aLLffz
+	S0mhD+c50a1AHxKHg4LkuQHWBJ+4BbmgUEBPB6Em/U8Pb9Sp8MpvNvGi96GEHwSP
+	dfRw8KuvmeXgfobBvtOI2B7hzGyQjwGGggM2zlRnhNkRHkVqsi/32PIeL2qVSl6y
+	y8ixAbJev3N+1cXVuxuZ7uAGU2cj6ZievZXMxQR4v+xqhy1J91w7TKQGHuk2dRGV
+	sYbQsg1MpiMx2Ct0ToxzyCVA0YIJCJw2a/LDdTFjMhbstq/TpHJnwzgBWDaQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716873230; x=1716959630; bh=PFC9+brJil6m9cU5TDGtFJqYC+WT
-	3dYlppRn/rf+O8o=; b=qKqE+wDQ/DOuJE5OAAfehgNVnHXxSbOyiRSaDVxtqZs9
-	Cg34lxxhRh+HMbqec2n8DH2PhC+xivjZcBmqHtq1HVAhfsX3SCd3QnUviO1Vj2/3
-	jgfRdyEwRoCq3rvYKhVnMjsUpkYppBZoKHlr2sVAxMY5aOH5ODaLOXEH1d2AdJt5
-	PcvLfM916g7u1dtNuYWm3r3bzgkn5aifJ0StpRjtrKpVoCk+5C8nAtpxinSwKqF7
-	SZeW0vFg93N+HssVvksL/5tPOSkR9XySqNkVoKVUVQkyF7/pOpNuuqUDEfFukiuy
-	CaHXkMW9M8jT+vii+tMMswMEh83CU8UqRDacx8By5Q==
-X-ME-Sender: <xms:DmhVZkF9glM6SjF82hmgQdnCynQ_dqXGrEfpBAfmavWOLMKz7HgaQw>
-    <xme:DmhVZtXW-ei4YnENEsJZRj0bcSrCeKJ61HYKRV4oEc310GcMVpHo93Y2jiZdQrTmm
-    2gwpRpmpB50fAY5yQ>
-X-ME-Received: <xmr:DmhVZuIuIGO74N1KqdW-iAQHfdKcg-i5istSbHAhyN5CvynIwIV6lx731Sdn4kb26Ao-jWf6GgPKfEW_tJqnRtL44bovKXWdO3nncT5XqFpSXHJP>
+	fm1; t=1716873237; x=1716959637; bh=JzvWd++5wQEFad4s6Xx+PBRZqDxa
+	0DSTqYwBz2cDjh0=; b=YE9Suxc0/n94tkP6PysMrgEyQn+1PlYypasQpBZGQHZl
+	kYVPcNqZ1edToeXpgm/6Hpl6xhIbKk/b0hrh8QoZD6mghbM1DYzFJVhkRsyhrnpQ
+	WzNtgOMcIQd/f+Zt9Sk1mJw9SP6hszwxknZY2J+MHx+Ax0Q8xgiwk+NZdzOIi/bN
+	eK2e6g6OQps/WC3+0Ap0bjySd4MlVwVIOf/ZreDMME9gQDp9HMHM4OnCe7aNAD3c
+	eHdqLYLc1LrnP3H6cQ3w0hd0bYb1rDxO83ijw1Rx97h3oMqnPOXH7WQp2x8l/Dbb
+	PXs76M6ljpsF2vg+1EANylrRALCYoQztmPrFGEZF/Q==
+X-ME-Sender: <xms:FWhVZlChqU_FmlyP2T1pExZWFvIYp4fLTEsbTwpjvkJ78av8bJjeeg>
+    <xme:FWhVZjir3a8YVO3UqGVGMYzGkiLyufDvvN3_43PXIqIFBWo0Xzpjb_9KNIBluOJBu
+    tGqwZ3ZKSHWaRXNTQ>
+X-ME-Received: <xmr:FWhVZgmPNmiF_nlBWyHNoKjAWS1_GJpVFBlhaVY9Y4gUAe50VA8H7vCTlt1dafF3_wXvyJuVt3XbAKzeSxYDXrK1sVjdf23rQvCyZas-kbPslzkN>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejhedgleduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    orredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehfefhuedtvedtfeeiteeugefgfeelge
-    elveehffeukeelfefhieekteevudfhffenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:DmhVZmFuDpiKowmUQXAW56uBabpTYRexU6MAuUMcDJPCDnE0wvOAVw>
-    <xmx:DmhVZqXp_9AwYdvzc3nEQa5FvxnbCAwVMt7p0Ri1j7E4eznacdGKFw>
-    <xmx:DmhVZpNV4-NeVB-8bCEqM5K19PCkFBQPhFTeLwi3wzrZhd5Ad5Twhw>
-    <xmx:DmhVZh0TzxZ3tlYIkdAvfENJmdWfozgX13Sx9nVVByphfmj5cSFe6A>
-    <xmx:DmhVZnimvt8yXFuaC6t8Ji0a7vQjUo3z4xy32716_u5lJ4iRkkhHwKmm>
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:FWhVZvxo7FJ0RU7v7Y-ZUeIDK24Yjm2_8QZkGx57pcEsBOvk1Wn7sQ>
+    <xmx:FWhVZqTfjkFX0C3_W1CFKWPsH_IKSzlt8IVsRMk6xsN3msYhLcapGg>
+    <xmx:FWhVZiYt2Soj0L1qwi5XkQYXAtyfFP86i1zhPvuLu6kbyQRd0hNO3Q>
+    <xmx:FWhVZrTurWI5I60x6Zv8tG5Ia7hT0RSWDcTpVwp8rWPC3raNk4uI1A>
+    <xmx:FWhVZgMgo2ARO0Vzu0rIC30oh34CHsFcFYXnKmcZAX1s5lW60Kybd_X9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 May 2024 01:13:49 -0400 (EDT)
+ 28 May 2024 01:13:56 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id d0f5a40c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 28 May 2024 05:13:37 +0000 (UTC)
-Date: Tue, 28 May 2024 07:13:46 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id ac7e3693 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 28 May 2024 05:13:44 +0000 (UTC)
+Date: Tue, 28 May 2024 07:13:54 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/9] refs: ref storage format migrations
-Message-ID: <ZlVoCnojAiShmtRg@tanuki>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/9] setup: unset ref storage when reinitializing
+ repository version
+Message-ID: <ZlVoEi2gi9JQSzSO@tanuki>
 References: <cover.1716451672.git.ps@pks.im>
- <xmqqwmnkv7ay.fsf@gitster.g>
- <ZlBC5O4CHqrx1di7@tanuki>
- <xmqqv833maxu.fsf@gitster.g>
+ <cover.1716545235.git.ps@pks.im>
+ <8b11127daf4c1d06eed4a0c83dd3dc981ffdc728.1716545235.git.ps@pks.im>
+ <yl4wqgtcfapjxuknb57sevnoi4jbcjnp3l6vqa7criqv2upq5p@x4hm33ymxukk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,70 +86,60 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lFXGYKl16Jm5E6cx"
+	protocol="application/pgp-signature"; boundary="+etIq/TZ7nwITumb"
 Content-Disposition: inline
-In-Reply-To: <xmqqv833maxu.fsf@gitster.g>
+In-Reply-To: <yl4wqgtcfapjxuknb57sevnoi4jbcjnp3l6vqa7criqv2upq5p@x4hm33ymxukk>
 
 
---lFXGYKl16Jm5E6cx
+--+etIq/TZ7nwITumb
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 24, 2024 at 09:28:13AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Fri, May 24, 2024 at 04:33:51PM -0500, Justin Tobler wrote:
+> On 24/05/24 12:14PM, Patrick Steinhardt wrote:
+> > When reinitializing a repository's version we may end up unsetting the
+> > hash algorithm when it matches the default hash algorithm. If we didn't
+> > do that then the previously configured value might remain intact.
+> >=20
+> > While the same issue exists for the ref storage extension, we don't do
+> > this here. This has been fine for most of the part because it is not
+> > supported to re-initialize a repository with a different ref storage
+> > format anyway. We're about to introduce a new command to migrate ref
+> > storages though, so this is about to become an issue there.
 >=20
-> >> Documenting the limitation is a good place to start.  For normal
-> >> users, would it be sufficient to
-> >>=20
-> >>  (1) tell your colleagues that this repository is currently closed
-> >>      and do not push into it;
-> >>=20
-> >>  (2) configure "git gc --auto" to never kick in;
-> >>=20
-> >>  (3) delist the repository from "git maintenance" schedule.
-> >>=20
-> >> before they try this feature out?
-> >
-> > I think (2) wouldn't even be needed. Auto-GC only kicks in when there is
-> > a write in the repository, and if both (1) and (3) are true then there
-> > are none. But other than that yes, (1) and (3) should be sufficient.
+> Ah, so this would be important in the context of migrating a repository
+> from "reftable" to "files".
+
+Exactly.
+
+> > Prepare for this and unset the ref storage format when reinitializing a
+> > repoistory with the "files" format.
 >=20
-> So it may make sense to document something like that at least?
+> s/repoistory/repository/
 
-It is documented as part of the new git-refs(1) man page, in the "Known
-limitations" section:
-
-    * There is no way to block concurrent writes to the repository during an
-      ongoing migration. Concurrent writes can lead to an inconsistent migr=
-ated
-      state. Users are expected to block writes on a higher level. If your
-      repository is registered for scheduled maintenance, it is recommended=
- to
-      unregister it first with git-maintenance(1).
-
-Is that sufficient, or do you think we need to expand on this?
+Thanks, fixed.
 
 Patrick
 
---lFXGYKl16Jm5E6cx
+--+etIq/TZ7nwITumb
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZVaAkACgkQVbJhu7ck
-PpRMDg//RuUuYvxA2tiDwX28szX5Qyo/zUGh0oFSeR+xsUkXouG6VGr2QlPRFlyy
-NizhS0DiN8Vf+YfDBILzrbz+AVn/G+SCVSlwH7EteDRL8xuu/jQInGq807kZzGH6
-PQBOEa/312bXXKg/0Xg6qcZQ9nvkEIOT/7Wlh3HeE3F7sY4BGAifPvVtXGCG0EcW
-j7qURbEH3alKmS2j8UQjiE+lSsQrG+oQVdvrAGh+UUVoGs0CbHO/1App8T+oU0MT
-EC5Y6Mf0iNarMBPDtjIy7sDJUEd9gJts1xK7ODcBcOEi/HazCnfuCIBypXrpw5DJ
-5XTI/MSz3FbfWtB4+RRdUZPD7X1c+lE34D3+6cy5+fpkCtosQSoUC4Kgn78UY+9c
-loMY481taHIvyc3lNvReDl9YClKCoJaZiOo2eAjmsSL92T0X59tgJhSfLvs03TKF
-CoHwocbEimIn7ZZd2pmEDLF8YedI9ZhTlC+QvU2BjysZs7SChd0T8P77c1zS8Itj
-nXlsoZlYPItKeqGCctYqWquBQOu7ywG15hAV1WiatZT+k4YfbrLwJs+aviN1h0FZ
-R39Bxbjt8/GbtKD8AdNPvJ+cR/XIFHtcbXBozpN+oIkkXm2ELBfh84tykQUeApSc
-yrZvd8ruYltDiTM7KLiaX4O5YzCbfjap+ZBef6xjM4Us2H91zxM=
-=NAI3
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZVaBEACgkQVbJhu7ck
+PpTtgA/+LgBCudlvpynljxXC6rxZgrTHOf0LAiLfebCb/UDgN4eivSz3d71qikZK
+JE5Mv7iZv+i/9tNwWE5VCbYmBILLMBuh+JT35pYT7BEdRT0ywcO8J/TMRu7PWBLv
+OjoQ9zPiP4etI1kSmtbWeqgPWz3xALdvoYahXGXcFh6jo+0MFWcLYIt6yQR2Hlnj
+T+j4KIzbm1qXOfopzGOXFUWIFUY/mPHXHpC8ZVT11zrdchj3KSuELW4BbZGSckRZ
+TYR/DSp5WUCkNo6V3umx+YmwAaYIyOydrK1R/8rfyjIN+GP65UBAEOHoytLSsUYo
+XDBkrnzrYVg+rrq/4ARrCXkueB11aw88dnIg6X3g7MZr11gyGmfvv1QISUY5ueF9
+xLeRc+UPiV4i2fuQPuWHBSdsDA8kSmM4vVyrRuplf+lPnOWq2ix6xqudDqyxpaVI
+CkCEGEguGiz54uwm7cCGKxlufpqZd1i8oo3ZJBY+eHpXQZF3zJ3aCXQYIejtYNzM
+J0GzaRnlkKe64RbOanXY/i4jgesRU0q8m0JcSPzq/1onObsv5MMr8XJLVwx0pepD
+wChs48RzNi12hBTD4brsqacBaL9EjFsRY7wzP9Ai3048T7gfuNJwc0Bw/Ercyfam
+LBfyrv2IGO3uIMoTJxITngMNmSDBZEXQoh+uy+wEKS/ufKl2/Mo=
+=6eU6
 -----END PGP SIGNATURE-----
 
---lFXGYKl16Jm5E6cx--
+--+etIq/TZ7nwITumb--
