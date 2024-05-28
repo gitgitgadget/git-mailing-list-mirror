@@ -1,196 +1,222 @@
-Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
+Received: from ZRZP278CU001.outbound.protection.outlook.com (mail-switzerlandnorthazon11021010.outbound.protection.outlook.com [52.101.186.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B7C16F287
-	for <git@vger.kernel.org>; Tue, 28 May 2024 14:05:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716905156; cv=none; b=JBUPSKZG0nPx5ebdYvoZnLFga4OnKV9cH1GcECagosdv3ds0sb3MltVPwR0Zs0v6U0d+0hexlTXADyXJaasteTsPqzvQVgq7/0+Sw4Y8PNyLi/jEVQ911wn/k/BFUiox/83V49pvTuQlB6WgOr9m9Nx8jAZ6cGw+vFXb2+38qJo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716905156; c=relaxed/simple;
-	bh=PZElwQ8JkdLQGNRIRht9IuBUAP1iOOlSrRQqZwltBjI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oZ+/jmqVNHjkCwzXDNO5obohmn2AUkhIjkQUdnsnHS7I5QBn8zL3LKK3hqIgw358dugg30A2eJO6m1vYNJEQiCV4oIJfNEYVqNfgVcDinjoAWi66aveb/vVnPEFiPeSFs4sHSWplIkeyZB8G9Jxj+qGSxsNPyXZKucCRy5FR1DQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=azzk8cus; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kk46JRLu; arc=none smtp.client-ip=64.147.123.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF0440BF2
+	for <git@vger.kernel.org>; Tue, 28 May 2024 14:16:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.186.10
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1716905817; cv=fail; b=qgQwTR1DXq8ygU3TJ0lzk/e/O97JiVPZH9CjE7Je+th/epSSDLju6r5AFkR49DB14jUBCMrukAFDN5ri2jnG4t93AJeM7ljM5lSE98zayZ7+DHdtdjSKJZOOLf2u0BX1+zhqiE1wr5tjN++ocB3GwO5AQRd8Aoqmyi8ZIcHWK6k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1716905817; c=relaxed/simple;
+	bh=dgrdiJH+XqGv4nrccba+embcnmNue65NNmxYeb2ombw=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=El4GqaFYmQSMXf8CJxRvquyKbGLIZImIKYdfd0GYVHsCmJGB7KM2l8AycDtX8qIkQiSClifD490vZ1C7FIztVoTPJVCP085G/8RlLL2vHgWJ0nXzp4tMHMUdDw3ayNlLPaQcCF2gDmnuuplfZ3zrn3s5Tqx87Bqt7vhyulj9CcE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cern.ch; spf=pass smtp.mailfrom=cern.ch; dkim=pass (1024-bit key) header.d=cern.ch header.i=@cern.ch header.b=pSCmE+TZ; dkim=pass (1024-bit key) header.d=cern.ch header.i=@cern.ch header.b=pSCmE+TZ; arc=fail smtp.client-ip=52.101.186.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cern.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cern.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="azzk8cus";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kk46JRLu"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.west.internal (Postfix) with ESMTP id B01C01C00187;
-	Tue, 28 May 2024 10:05:53 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 28 May 2024 10:05:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716905153; x=1716991553; bh=4HfiHF6WE6
-	dPFmw2/5d2VakvLlcFO9LO4vcPgy4sieM=; b=azzk8cusUgpmvN1kCA7dA1Hs2x
-	0a5huNNjJEKz0do6i8mfyzbVSi+n8zpcAwc0dxuMu6xSE4AKi3R/UCV8GDLqKH58
-	7C6Tk3nJHXxqBWt+IocN6butpRYVZfwpJyNnwOTOtiBJjLusJrGclPMG4G30ODLf
-	LEBNqbVN6OkOwVzT4bs5M76888htiImrFGjrbIsVba4MTEVJ2i9jLWup9V13hCrE
-	0M5mpu/Ukdd5alOhv3A8+VWgst/hRxuZfJ3jaac2xBaoETArS4DqAUnuui5CYquO
-	X+YlSvKib2eauEcn4UJ4YaLV6C9hceAQZ8PP4eryVtSP7lKoe/M8WB5K6RpA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716905153; x=1716991553; bh=4HfiHF6WE6dPFmw2/5d2VakvLlcF
-	O9LO4vcPgy4sieM=; b=Kk46JRLupHrxWMn67PgLuN7XPIkdMQ4+SWvVuxVwrjdn
-	EiKvYbFIY0Fi7nGjGkiFY3UEd2CF5OyH5KJxK2piyrRwSFQyi9b4u6yoNS9N53/n
-	P5gRX4uUMdkbbFk6O8GVfFz4ok2k9Xdj2fjMY6VxZbp0QOHtG9LKh/gXDrNqJetj
-	h7/F6qoEIB/+w0tPuKxODlSSi3bhUmMs+QhNiiVy1qzIhtPiSbSwEtOt0YRkKn0n
-	g/HvczOA8kp+fQYM05ipLMdlpX6oAXwKrjloCIDLaRCqSDEFCyoAFwbOaqXgPmgq
-	7ApvtgCYatBhE3cIt94m5sV55iCc0/qNrV+WgnX1HA==
-X-ME-Sender: <xms:weRVZjScA4ASSzv9wi8yYEM_kFle-pQeEWORbRtKyiK4u3P9Oq7Bzw>
-    <xme:weRVZkxWxh8EUIIp-oP8WLcNvZeTkmuM2E3-2HgMn-zDSxkrRqKvn02bQrFOD9tJV
-    uz8ok-EY1hK72vpFw>
-X-ME-Received: <xmr:weRVZo1eayaTC4q69o80Za96_bewd__YuiVgD_8maV7uQ23oWUjS8NpBGJI4yKLjIPXfPLmtZ2I0ojsXt25FwpZL85JNXOjs9Sl40FPs-eKpoWgH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejkedggeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepleejteffveehgeegteekteeiudeiieeigeeigedtffehgeekhfejheefkefhveel
-    necuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:weRVZjBciYcftZC0BY76m9UDIY8nc4tsadCom86xEsEpvMwu9yF4hQ>
-    <xmx:weRVZsgk0_YTtEHzgUcJapbTrcoI_qCy3Y6qZp041KJ0XRn6W8wxIQ>
-    <xmx:weRVZnr1OKTFuc2vGlHHByNtMh1oeqPurglz_uNq7uAG4Yyyq19odQ>
-    <xmx:weRVZniy4aOMqaHDJ6VYaWPnNjHCR1vJs_nT8oXVEnxivz-b9-7mBQ>
-    <xmx:weRVZlvQGLJp6LTsoWfcMfRxGuwm3t7nsUzRHtX35TP1IN07xqxmPsJm>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 May 2024 10:05:52 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 00e50df6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 28 May 2024 14:05:38 +0000 (UTC)
-Date: Tue, 28 May 2024 16:05:48 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: darcy via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, darcy <acednes@gmail.com>
-Subject: Re: [PATCH] fix: prevent date underflow when using positive timezone
- offset
-Message-ID: <ZlXkvEeR-PgZMitx@tanuki>
-References: <pull.1726.git.git.1716801427015.gitgitgadget@gmail.com>
+	dkim=pass (1024-bit key) header.d=cern.ch header.i=@cern.ch header.b="pSCmE+TZ";
+	dkim=pass (1024-bit key) header.d=cern.ch header.i=@cern.ch header.b="pSCmE+TZ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=AI4g2Ppr/Z+q6E7gXhfeyJSzWa8wR2kmScCBzJ1L4NjuGOTycfIQTSglQpHtbIsQG0DMj8byZepJPZzRGYAJJaATwbtS7tWb19RrrC5+aVa/89Bc2VO397DQbW8V23R9OU8f71NWBfqARgSKhRy3G6ZyaqpdL0bZ+v8WJToFmWkVM45BQ0hY+eKMxaKsU6z2Lxx7b8qsir9m3g6Z0Pj8L6PV/mqYiZi7/PDNuCBXhteRnljr+VtGHgqo+rDK4ta/QPcPjXpYQrNnQesmd9i6uaLvg/ukC+OE/okFt6ruGp0xNyGS9081zQ8gUIi/V5pxwCqd0M+jF1mBB9ic50uHCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=22gSdjrIh2ObvTJ1Ln9wJfLZqY3KD/iutxxDJMqXd5s=;
+ b=G2ayo0JNF5xiD07JGzlsE7Ylv4Kev8CB6gml2XZ/X4vUHN27Sj+0767iACtEZQ6152DWZRg0zDrCauks6rtwvvQMc66yZ85IDkGf0XFpIwt7gyww+raEnfTt8rYK3SgSvdf+1bYFvq7HNMN11d5OxruIqwMc8jwzdUKtbBQn2AA7cVjFRPDPdomjlbbS0n0Y27qKzZuU5WKdjE5RVOLwlMIffUFrPIZcukeW11ZoeQ4n/QufTjZGBg8hvEOOZRRq3ou2sWf4m8bRtBLCL7KSyxxuEqgH9XYlGi0BUnW/tq2OAZ25PTfFFjW32PbGF0Iujc3wjQvzBaRkU7ahZEikCw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 51.107.16.99) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=cern.ch;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=cern.ch;
+ dkim=pass (signature was verified) header.d=cern.ch; arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cern.ch; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=22gSdjrIh2ObvTJ1Ln9wJfLZqY3KD/iutxxDJMqXd5s=;
+ b=pSCmE+TZlR3/oE/uwGmNCN9O6JeP3GIRdB12mkeS+VDS5HDjay63wBUSR5b167qvVnYwTREh+f7Gwi9/n6XIZc4z2hkMENnzJpVWgeR88w8E5djM5vFxNl1HMmc51Dp7mGeZIY3B7+TNuw7gIGRGZDqNkaOd/vO4klPd+IIF8SI=
+Received: from DU7P194CA0026.EURP194.PROD.OUTLOOK.COM (2603:10a6:10:553::23)
+ by GV0P278MB0902.CHEP278.PROD.OUTLOOK.COM (2603:10a6:710:51::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.35; Tue, 28 May
+ 2024 14:16:50 +0000
+Received: from DB1PEPF00050A00.eurprd03.prod.outlook.com
+ (2603:10a6:10:553:cafe::e5) by DU7P194CA0026.outlook.office365.com
+ (2603:10a6:10:553::23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7611.30 via Frontend
+ Transport; Tue, 28 May 2024 14:16:50 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 51.107.16.99)
+ smtp.mailfrom=cern.ch; dkim=pass (signature was verified)
+ header.d=cern.ch;dmarc=pass action=none header.from=cern.ch;
+Received-SPF: Pass (protection.outlook.com: domain of cern.ch designates
+ 51.107.16.99 as permitted sender) receiver=protection.outlook.com;
+ client-ip=51.107.16.99; helo=mx4.crn.activeguard.cloud; pr=C
+Received: from mx4.crn.activeguard.cloud (51.107.16.99) by
+ DB1PEPF00050A00.mail.protection.outlook.com (10.167.242.42) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.7611.14
+ via Frontend Transport; Tue, 28 May 2024 14:16:50 +0000
+Received: from xguard (ag_core.activeguard.xor [172.18.0.5])
+	by mx4.crn.activeguard.cloud (Postfix) with ESMTP id D74A67FCF9
+	for <git@vger.kernel.org>; Tue, 28 May 2024 16:16:49 +0200 (CEST)
+Received: from ZRZP278CU001.outbound.protection.outlook.com (mail-switzerlandnorthazlp17011007.outbound.protection.outlook.com [40.93.85.7])
+	by mx4.crn.activeguard.cloud (Postfix) with ESMTPS id 03FC17FCFB
+	for <git@vger.kernel.org>; Tue, 28 May 2024 16:16:49 +0200 (CEST)
+Authentication-Results-Original: auth.opendkim.xorlab.com;	dkim=pass (1024-bit
+ key; unprotected) header.d=cern.ch header.i=@cern.ch header.a=rsa-sha256
+ header.s=selector1 header.b=pSCmE+TZ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cern.ch; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=22gSdjrIh2ObvTJ1Ln9wJfLZqY3KD/iutxxDJMqXd5s=;
+ b=pSCmE+TZlR3/oE/uwGmNCN9O6JeP3GIRdB12mkeS+VDS5HDjay63wBUSR5b167qvVnYwTREh+f7Gwi9/n6XIZc4z2hkMENnzJpVWgeR88w8E5djM5vFxNl1HMmc51Dp7mGeZIY3B7+TNuw7gIGRGZDqNkaOd/vO4klPd+IIF8SI=
+Received: from GVAP278MB0151.CHEP278.PROD.OUTLOOK.COM (2603:10a6:710:3f::8) by
+ ZR1P278MB0980.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:58::5) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7611.30; Tue, 28 May 2024 14:16:48 +0000
+Received: from GVAP278MB0151.CHEP278.PROD.OUTLOOK.COM
+ ([fe80::f0bd:eb74:d905:7267]) by GVAP278MB0151.CHEP278.PROD.OUTLOOK.COM
+ ([fe80::f0bd:eb74:d905:7267%6]) with mapi id 15.20.7611.030; Tue, 28 May 2024
+ 14:16:48 +0000
+From: Chris Burr <christopher.burr@cern.ch>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: [BUG] Cannot set safe.directory with command-scoped configuration
+ when cloning
+Thread-Topic: [BUG] Cannot set safe.directory with command-scoped
+ configuration when cloning
+Thread-Index: AQHasQc+YZFGHJeYLUKigciZWXL5Qg==
+Date: Tue, 28 May 2024 14:16:48 +0000
+Message-ID:
+ <GVAP278MB01511C708AE804393BA3B7A48BF12@GVAP278MB0151.CHEP278.PROD.OUTLOOK.COM>
+Accept-Language: en-GB, en-US
+Content-Language: en-GB
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=cern.ch;
+x-ms-traffictypediagnostic:
+	GVAP278MB0151:EE_|ZR1P278MB0980:EE_|DB1PEPF00050A00:EE_|GV0P278MB0902:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7d64b0b1-3ab8-48eb-76a1-08dc7f20d12e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Message-Info-Original:
+ =?iso-8859-1?Q?pcGyp2vqoNQarRtE+NDeefnH2kWDxmiHt3fcix6USEXiayXTBtrMijpzo3?=
+ =?iso-8859-1?Q?bbQ5R0VvZ7JHQQOTP6rpgyvvDn6kljQfQxRhsM5AFXb3gHMletCN0Zq29h?=
+ =?iso-8859-1?Q?XACas1B0Vb75SM7PaOFEk4r1jNb+fKdUXcpDqgSVY3eaorg8OMQ7IMsRxZ?=
+ =?iso-8859-1?Q?mES9PGd4kJjYLCPgsbi42tztO+RTozHE8yFwzTq3wEQ/EV72dXPoyzto0g?=
+ =?iso-8859-1?Q?7Q1OshSMd7VwwgTSq7DDCV0Vb4e2lRVM3d1J7bnjCSBdS7tFJ75+QOjbr9?=
+ =?iso-8859-1?Q?IPdccvjRXx93WVeogWbwX9DABm9rQiwkbElpBiBC0ZW3u/XG+kzsXWLsXk?=
+ =?iso-8859-1?Q?2ogkXYD6sUGRRQs53L0odmDkRTA0BpZiCEQU9RK12rY1Q0rVHikedncGOc?=
+ =?iso-8859-1?Q?+PVdSDgO1juTQ+0WrbAsDdLLbBGNAVzQppr42ZKq/ZdPCM31u1kV6V4H7Q?=
+ =?iso-8859-1?Q?h/UOPFM/hdbpyi0/+JubXFhThXFavVYgL3wOm8Wx1++7D8ijgzjkE9anS5?=
+ =?iso-8859-1?Q?VgcBNypeGWGqBmgNdKpQc+/iRd8FER+N4+jfdrnfJglx7Yc7hsjq/dFCdv?=
+ =?iso-8859-1?Q?z0UyN9Nr0fEacsOo2NBtGZkEaa+vzY1K4AqF9o/rHlPfzRw2mU1hJhnmmh?=
+ =?iso-8859-1?Q?zyEFjxXrO2J4IjHjoxoXAZ0ScpskXpNvPk5FJepQ8cH1bleWza6eKOqCna?=
+ =?iso-8859-1?Q?bbwk2JTF8kvcdg1HFD8e/D/Vv8zhuHcAbBDG4Boi0Z2rnQRQFUHXrvF0Ft?=
+ =?iso-8859-1?Q?nbP21ayECoKWYHA/SfT5zx1K8AJaRTaFrfpW6Up7/ruUgRDwoxzTSZErVk?=
+ =?iso-8859-1?Q?brwaMLY4b1kWQntCWyNfAs7Aek7re6eMAhro4tP704YPoBnyMVlTJU4f/2?=
+ =?iso-8859-1?Q?iA4HDCigmttXtpAjhjhHCKiwkrdbgj02HLqaaUM0+GqlrGQAP2jCvZb/AJ?=
+ =?iso-8859-1?Q?PgbI/BxYL+mroEfgvY0kj+Jp4B9+5GNUCuzYsoC+TFMvR6C1Qj6OsBJSRY?=
+ =?iso-8859-1?Q?4YIObc9EcikL/uoNzWly7wO0eueaws1t+CJboSxd+shgCm317GVJUnYzHF?=
+ =?iso-8859-1?Q?SpH9mD/Puws+eBACZxvKSB6FKALEV6Vp2BI/QD8GYl3pPTpIqURfwCc1If?=
+ =?iso-8859-1?Q?u0m7MISbFKy8cOJlfmk8I+LW7EUo3XdvkQebQpcb78pE5cNdcPUpC3u8yv?=
+ =?iso-8859-1?Q?kpCobWSLsmSnh3h+fJqyMAgQzjn9rbak4BXKZ1Kj6Q7JXsNlFA/5Htxh7W?=
+ =?iso-8859-1?Q?HzNRJWu0kny1Isj3Tc4vxnElAaenLbv28KRJV4zm0lch5hHfAMZ1+2Sko3?=
+ =?iso-8859-1?Q?hl5Wji+uKxKgseAGW1NIACGnH988g//+3C56oQl9nxgaBaEtw8qlxUYFfy?=
+ =?iso-8859-1?Q?5OK9pdszm3eVjAnXYPak3MJIUW6WMWTw=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dg5U9jvBGiWd/elz"
-Content-Disposition: inline
-In-Reply-To: <pull.1726.git.git.1716801427015.gitgitgadget@gmail.com>
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR1P278MB0980
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ DB1PEPF00050A00.eurprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+	9a21c5bc-6415-4934-4cd3-08dc7f20cfd8
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230031|36860700004|82310400017|1800799015|376005|35042699013;
+X-Microsoft-Antispam-Message-Info:
+	=?iso-8859-1?Q?xikkuSWXF9oQ/ZmLek/RhJGnu+gIFSpyou1UYeZDUEoKeJeqkDcKsNPzuo?=
+ =?iso-8859-1?Q?MnoIW793B+7R4YvfZUCPhRfmR676ljStjqN1FCeasqMACaRbL46nTRL5uj?=
+ =?iso-8859-1?Q?UG5kNbtusIiDOCvbRpWuQJnEKbfg7iFkNtGIL81fCc1/yh85u8hfuv4Ogj?=
+ =?iso-8859-1?Q?i2ujnmhYEdDPUc54QpePxZclFh+5FDLixpghXtoUZalnB2G2r/c+a3H0IA?=
+ =?iso-8859-1?Q?YhmXQb/c2uOQOHKXvNvUb5IZDQMnfSHf3yTXDp7jqglQZD7siRxAqFREAR?=
+ =?iso-8859-1?Q?xme0qK+z/glKS88dll9JIN+lAejH7x9LzFyI/jvW+QjHXolzdkaLRxNP5b?=
+ =?iso-8859-1?Q?cszt7zrsb2/r2tUMMIOrhqCQ5Gg4YJeBpCFY5WSKFt87jaxcb7+eEKTI2v?=
+ =?iso-8859-1?Q?JRJWOHIgcoOWeVYzHxNiLrrnvNPCEAIyRBy0X8i5NgchSbOvprpJ4OySVY?=
+ =?iso-8859-1?Q?ZIm9Bebo90+kPYHZg1x1ux3roZWcsFCQ/chn0oUVcVnYhZC7bzmrJ2ebET?=
+ =?iso-8859-1?Q?TN8hiYpCDeFa3By+PRyjYkmlBZ1mbrfVJEyHNwaKwKyPIj9Ca61SfZPHEh?=
+ =?iso-8859-1?Q?aLMog3RsS/jckVFeWQQMDsfYUkXKOSW4FGobQXPF3XwSAIy57DrbMS6p0G?=
+ =?iso-8859-1?Q?wYsQ0bdb7KvL9ANZBPXLdKQ79qu6WauSQPGH3C5ub/P5fHC7hs1j30zx7t?=
+ =?iso-8859-1?Q?MKLkOu5NQPx1hZfyiRqAoUmyxBj8yARicuv+S8+09s0N+QdiOYvKWtQOv0?=
+ =?iso-8859-1?Q?55LMME4YuAoKH4soNbIr3SMOOGvEQU3DIWMQIB6UlPzDJWqcSUzdqwedZh?=
+ =?iso-8859-1?Q?dirCjNll2X/FvfuVB1SfvS/bPelpeDBHuX/+74LGfF9sHc9sGIhcWue4Qj?=
+ =?iso-8859-1?Q?rVoHPQ3sKUCRWfsuIESleu8+CBZ7rltu+/Cf1oW2UKGnrp+lzW+Xey+sq7?=
+ =?iso-8859-1?Q?XUk0uyL/p/URFK7m0Q72C4ykh3GLLHjgjj53szSi0DzozEo0iV9BxlNwzh?=
+ =?iso-8859-1?Q?wStAq5Hn/zMYq4tLpGtbNsMrRhZNsIEHrI7oVbqjisYXu5NmdVfO5Nkjlt?=
+ =?iso-8859-1?Q?uoASv29SGkWryVP5yB4QJFpV81nvJzG0FwSPaXWHdpadCZgk01EiL/1ap6?=
+ =?iso-8859-1?Q?dG4Tw20tSFyrc6rD91T8dNNyvxI91ls2y2CgOemQp3ZYBvN22h7zeWzHqy?=
+ =?iso-8859-1?Q?nu+1Q06eNJbFDMNa1CQHp0Oyi9p+XCOHq4axUpr1XJ57GdZ68lKSqi3Xig?=
+ =?iso-8859-1?Q?BYaZv2LSjKSQPY286tlRwDPNXlTPcPLMaxANAtTVhj+NCpHLOx2IvuDP3r?=
+ =?iso-8859-1?Q?5C3NbXwTsexlM/etzFKaYA3IRM3/PZut1S3AxcGTx1zap+8sxw7Sw4Se29?=
+ =?iso-8859-1?Q?Eg47UwxsjMMe7xaMV1ouOfLc+Kb4uRl0clWSZO6xcNmtbKtCqSDK/E+HkK?=
+ =?iso-8859-1?Q?+9CTYqZZ4X13rned?=
+X-Forefront-Antispam-Report:
+	CIP:51.107.16.99;CTRY:CH;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:mx4.crn.activeguard.cloud;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230031)(36860700004)(82310400017)(1800799015)(376005)(35042699013);DIR:OUT;SFP:1102;
+X-OriginatorOrg: cern.ch
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2024 14:16:50.3682
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7d64b0b1-3ab8-48eb-76a1-08dc7f20d12e
+X-MS-Exchange-CrossTenant-Id: c80d3499-4a40-4a8c-986e-abce017d6b19
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=c80d3499-4a40-4a8c-986e-abce017d6b19;Ip=[51.107.16.99];Helo=[mx4.crn.activeguard.cloud]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DB1PEPF00050A00.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV0P278MB0902
 
-
---dg5U9jvBGiWd/elz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, May 27, 2024 at 09:17:06AM +0000, darcy via GitGitGadget wrote:
-> From: darcy <acednes@gmail.com>
-
-The commit message should start with the subsystem that you're touching,
-which in this case would be "date", e.g.:
-
-    date: detect underflow when parsing dates with positive timezone offset
-
-> Overriding the date of a commit to be `1970-01-01` with a large enough
-> timezone for the equivalent GMT time to before 1970 is no longer
-> accepted.
-
-Okay.
-
-> Example: `GIT_COMMITTER_DATE=3D'1970-01-01T00:00:00+10' git commit` would
-> previously be accepted, only to unexpectedly fail in other parts of the
-> code, such as `git push`. The timestamp is now checked against postitive
-> timezone values.
-
-How exactly does the failure look like before and after?
-
-> Signed-off-by: darcy <acednes@gmail.com>
-> ---
->     fix: prevent date underflow when using positive timezone offset
->=20
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-172=
-6%2Fdxrcy%2Fmaster-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1726/d=
-xrcy/master-v1
-> Pull-Request: https://github.com/git/git/pull/1726
->=20
->  date.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
->=20
-> diff --git a/date.c b/date.c
-> index 7365a4ad24f..8388629f267 100644
-> --- a/date.c
-> +++ b/date.c
-> @@ -908,7 +908,7 @@ int parse_date_basic(const char *date, timestamp_t *t=
-imestamp, int *offset)
->  			match =3D match_alpha(date, &tm, offset);
->  		else if (isdigit(c))
->  			match =3D match_digit(date, &tm, offset, &tm_gmt);
-> -		else if ((c =3D=3D '-' || c =3D=3D '+') && isdigit(date[1]))
-> +		else if ((c =3D=3D '-' || c =3D=3D '+') && isdigit(date[1]) && tm.tm_h=
-our !=3D -1)
->  			match =3D match_tz(date, offset);
-
-Without having a deep understanding of the code I don't quite see the
-connection between this change and the problem description. Is it
-necessary? If so, it might help to explain why it's needed in the commit
-message or in the code.
-
->  		if (!match) {
-> @@ -937,8 +937,13 @@ int parse_date_basic(const char *date, timestamp_t *=
-timestamp, int *offset)
->  		}
->  	}
-> =20
-> -	if (!tm_gmt)
-> +	if (!tm_gmt) {
-> +		if (*offset > 0 && *offset * 60 > *timestamp) {
-> +			return -1;
-> +		}
-
-Nit: we don't add curly braces around one-line conditional bodies.
-
-This change here is the meat of it and looks like I'd expect.
-
->  		*timestamp -=3D *offset * 60;
-> +	}
-> +
->  	return 0; /* success */
->  }
-
-You should also add at least one test.
-
-Thanks for your contribution!
-
-Patrick
-
---dg5U9jvBGiWd/elz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZV5LsACgkQVbJhu7ck
-PpSh2Q/7Br3CTB7sr4LuV0K2u9PVJ5zTK01g+t7PGivV91hiwPaKL5CLVQhnvlXY
-TDv/kTPLFa2S4eYqIG0Z0NJ5b7Tu60QIHKXZthEnGaKbf5lSR0YyLuukOJoxfbyA
-/Z2Li+YvrPcvaE3FjEqRWmsC2Z8Ovvkzx+tfRuMzpuAydVfkz8FuIWzrdo32qqRX
-PgzyUm560NXX5nOTaGRSgB1ShAWe6LaPdM4MRjWUWbIDU/szxbLA8bVYvKzWtbQQ
-gfLSico5bEMnnqwgrssTRHkzBRkQeV4YOd0roajTLTmkLmA+wYnwV5vf5GGVyIQf
-1llpI34JDyQbX+9Tg4YKPrISf1coIg7+pwDOxKzAWmFECPth9cekoBtbrkQD+nl7
-2rYmN1v8vRhsqrpcHChq8oZkSIBtdn7E/fj+HdZ6PKyJz1qtUrNBo+yRqloMTDBh
-kkAH70w2Cg1CXr/fIjgZr9FiameGL6PxiTMvTt1GHnCkuDgGVd4OTfUaifE1AhNy
-9JnRM2fVq3xzspkSI60L55OYj/gWZnd5Euv9Lvbyprvt3NfQL81YY98W86LQbPZ4
-vhvaqY194iRQZzoUPYecv7qnVpVn8Y1rsllD+7GbR24Pg9PLswA4DG8GhR/MGUDZ
-EH3j+oXtuHQ7kXBD8mMw5ffMR1MEvknYU2W6V3yxzfjV2vZuWPU=
-=5q9Q
------END PGP SIGNATURE-----
-
---dg5U9jvBGiWd/elz--
+With git version 2.45.1 calling "git clone dir1 dir2" fails if dir1 is owne=
+d by another user due to the protections for CVE-2024-32004.=0A=
+=0A=
+According to the documentation I expected to be able to set the safe.direct=
+ory option with either "-c" or "GIT_CONFIG_" environment variables. From th=
+e "safe.directory" documentation:=0A=
+=0A=
+> This config setting is only respected in protected configuration=0A=
+> Protected configuration refers to the system, global, and command scopes.=
+ =0A=
+> Command scope includes both the GIT_CONFIG_ variables and the "-c" flag.=
+=0A=
+=0A=
+This works for operations like "git status" but not "git clone".=0A=
+=0A=
+To reproduce, first make a repository with your current user:=0A=
+=0A=
+$ mkdir repo-1 && cd repo-1 && git init && cd ..=0A=
+Initialized empty Git repository in /private/tmp/repo-1/.git/=0A=
+=0A=
+Now clone from "repo-1" using sudo (or any other user account, if using sud=
+o SUDO_UID needs to be unset):=0A=
+=0A=
+$ sudo env SUDO_UID=3D git clone -c 'safe.directory=3D*' repo-1/ cloned-rep=
+o/=0A=
+=0A=
+Similarly setting the corrosponding environment variables also doesn't work=
+:=0A=
+=0A=
+$ sudo env SUDO_UID=3D GIT_CONFIG_COUNT=3D1 GIT_CONFIG_KEY_0=3Dsafe.directo=
+ry 'GIT_CONFIG_VALUE_0=3D*' git clone repo-1 cloned-repo=0A=
+=0A=
+In both cases, the command fails with:=0A=
+=0A=
+Cloning into 'cloned-repo'...=0A=
+fatal: detected dubious ownership in repository at '/private/tmp/repo-1//.g=
+it'=0A=
+To add an exception for this directory, call:=0A=
+=0A=
+	git config --global --add safe.directory /private/tmp/repo-1//.git=0A=
+fatal: Could not read from remote repository.=0A=
+=0A=
+Please make sure you have the correct access rights=0A=
+and the repository exists.=0A=
