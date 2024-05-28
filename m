@@ -1,53 +1,53 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BD054FAF
-	for <git@vger.kernel.org>; Tue, 28 May 2024 06:31:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E202061FE8
+	for <git@vger.kernel.org>; Tue, 28 May 2024 06:31:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716877909; cv=none; b=QgJMhXX31Ctf+Kr5uzw5ijTrV+AWIJsjJaTDH915bhBSxUxJEPByDnvOMmB8PEoYHxumfr1M9z3bt+2DTqFFMVONXu/X2o5pfynCLvq+0AerRq+7y2ND8z6Jcwim6TffTPcFyqR0/MLQYwSb2IpIhVCW0O5bWv88UOjEMyRM/C0=
+	t=1716877914; cv=none; b=ide4qkDmGe/4o/sjRLD2Ith/CEeymftYYi8gZFQQ4P0BhgorWp6kuyULvUcyUIo0i/3ODPqYFOsbk3xrjUuq/FxDfh6nEJQ2ezo5WJrNWbRU/T0+7X2i3fsDDw7TSZEUT6FVmllf5ldq8fiYUiWu4L4A7tMgXI2If2qzKBWnr9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716877909; c=relaxed/simple;
-	bh=f72jjkM0VSaAUISQoj6EIPh0ksiR7hCg81keBWnYfPU=;
+	s=arc-20240116; t=1716877914; c=relaxed/simple;
+	bh=LRI1dHBLKmgxfkkpF5Mo/Q7pnJZmfIq4Ew3kPsExY/I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IgSUR4rHKIYqMQFbAYr5nv1uBXdqeRkiPMmAzJOjSHoX5i5w5zo5hrbf/dEI9zNkwZsYkTUxkMDKZi4On12pvs5ZH41N/OX7OiXoMCBkNkoPUeVAjWjuQ+ZBptIpjcKOvSf0wJXr1aKNtacKuwUZukpJgAfmElGYe9N1NFTMAx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nh8iuQ/h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=olxgs/nh; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=nO3v66shMceBrokx1StoFeRtTSb+AMmdBzewyCdWsmFmGjOYHnJoEQdrreMN83qhZVYIylKgdIr9ti+FLR+DeJTnYQ8LMgjzxucl6l70rK0ldkcqm+LwW3JAhItUAAZ2peuPLJo0SN2iHaoE3oLRRHrcfWH1HGx2OAoI6yRudG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aR5WhfzW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=isMhRNrv; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nh8iuQ/h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="olxgs/nh"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aR5WhfzW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="isMhRNrv"
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 6DCBB11400F8;
-	Tue, 28 May 2024 02:31:47 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id 04B5413800A5;
+	Tue, 28 May 2024 02:31:52 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 28 May 2024 02:31:47 -0400
+  by compute1.internal (MEProxy); Tue, 28 May 2024 02:31:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716877907; x=1716964307; bh=j7b/v601X6
-	B9xpJrXaRk2E9HOyqch+xRrmvacmR+SgE=; b=nh8iuQ/hPYn+F5iuAFixNoLWGg
-	dVoK93ifDDo+wy0+lsfne7GzO/s9t3Augrp0fA2Mhz9EEh35R5ENcQSHknPuu1kI
-	tW5jeIE/IrY5rNYoRV/rUm4OZbLVeLPObM6Gtym/l6QbncZlqEzg/xxCNoSrY87G
-	Foyp29y/gBpzB7lTtxadOIzMH/HS6saR/qd8o0UCBdjni1w3RzfjNX226SOHEi7C
-	yM7jXnxbj94Q6yXjC3IZ92DTL/EmbfaFzBkPIKMOudHKssoNzT4irNjXM34dGrDl
-	qC5OLAYakJCRBIxP14qoSKIZqios304B+BLkYxtZGhRgLQOkh889hgN/U44A==
+	:subject:to:to; s=fm1; t=1716877912; x=1716964312; bh=167YRLpudP
+	Fy8Wnmw43oFng2aVUg+Qzo1OsDMCm+no8=; b=aR5WhfzWk131ubAvrBK/i7PxG7
+	oGRvJaC+FnHN9az59wAioOJXIsJMpe9p8AdQGIJeR0gJPgGYX85g2O3HisCgwLF1
+	/j5S5LzCL2wmRSCm4YYK/W3whlDV0v/W4rtE2sTQGsI8vUiO+3cd7bPgvZHPJDsd
+	D08pzKb0f3kgYc5IEKFMazkN0VTfpFmuRAOfC9s7NW4oJCD2PdwkqfqJoyUHAGX1
+	2X2tQgAEuAgqQWxx0Jmmhd6ADsuWyBJ0YJU4ShbpCm5PdMZ5idweeH+sjwdWWvYm
+	4LBAt/424VRklP+rMG4dt7O+7o+Q2CXJeierqquDV591yHP8rKgR5sQlYfPQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716877907; x=1716964307; bh=j7b/v601X6B9xpJrXaRk2E9HOyqc
-	h+xRrmvacmR+SgE=; b=olxgs/nhd+xbRwUD5cClTOaMyHpKPFRbfRu2zp6KYs9f
-	NXsS3yDC/gTqqFep7dgkc9E2JGgrBEQhmE8p5+RAmwYops6BQU4Vg+fqdm5ospKg
-	r88ptW6qkbWJpckIxycnnQErjhoU3Fq9eF/cLdu18grZu0wgREvpq7E98GAoaJlD
-	fMzgHnoesyOaYYlZp46TPag+hUVq1E+b5YQApJ9Cs6DPiQpFYZOOfpgDADXYmEBc
-	6xOgFEg0r30Rx+BIea5N3KeXiUNxERwpI+jvJI014oQyw409OQ7tptw7GwM2dxYw
-	2+NaRfGiVLhUEQdWL/j2cl/dmbhgKfTD5k2OzrHD+A==
-X-ME-Sender: <xms:U3pVZkyitFVpS-5c20-jss04mzO1xqSIspwr_1fM8Ksaa-Bf-6Pj4g>
-    <xme:U3pVZoR-v5Wsp6U-MaL5vxELjB0jjAtwXiKNYl4EbyQrTjhl1lKLMtz9X3neOC2Fo
-    TSMU4WaKat2AAXPkw>
-X-ME-Received: <xmr:U3pVZmXOQ992w7ULsatSSY-SMsIubktlgS2ucNAuMKmAu06MkLVy6Z6c6_1OL3Qj1S9Q0EMyoBdRIqn6AhLMdJvuOM8ThFxOuOiakfe7ABuqn1FI>
+	fm1; t=1716877912; x=1716964312; bh=167YRLpudPFy8Wnmw43oFng2aVUg
+	+Qzo1OsDMCm+no8=; b=isMhRNrvkCW1HYOR6gW2Li+IK8YtKdnGnn8o8VAx3q7O
+	oJ4ccm01ogsh19lJqExUNNZ1u4OUT1S1XHzSj89wA3s7OW41VPlcAqAfDUAuN1f/
+	e/a5O/0HGsLOZqBSIe8i7VUmOGfKrB7fpI+93e9uUvEloXYn2TglAEHBm/xZPCG/
+	8g7fIITrhZF51AgcMvuE24Xtr/DeqTQkiN7owXCjf6b6rIoTeHoFAeVDs3OMYkFf
+	FnVMNjFe9/3vwbSOLpLe3CKoiERa2LWnV9GHUaP3OLljS1c6kU9TGhrS77qQBtmB
+	t96E0TCjDNceDMZSnPqZ3rmyClIZcMl70k0R9oP71Q==
+X-ME-Sender: <xms:V3pVZtjzy4C154vF9zKIkt69nNV1IBZh684YyMQRKthh7JFWzYtpHw>
+    <xme:V3pVZiD_AHc_aosubmdc7-xoddTZYwcWR2a70oh8f99og2FmaJDSiEtTH5xqdHAU-
+    g92BEk52OjfF0xoxg>
+X-ME-Received: <xmr:V3pVZtG4g3ndav0Mx-ag9rTRUhhBKIUw1irYxd41UZn7bQwQxw6vHN_nDFuQoIiicdxoixIaW7kCtC0CAZkVslrUK7-Y066GzerOKfdE14ffML-O>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejhedguddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
@@ -56,27 +56,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejhedguddtiecutefuodetgg
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
     teenucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:U3pVZigLTRthm9QuQ2akWhpAoswWUmaWa81Vl9QaOy7eRO8IlkiPVg>
-    <xmx:U3pVZmB09wxeLz27fCedupZBVFVXCiwYHKJSENxrPmVM3bqCvHQwBg>
-    <xmx:U3pVZjJpUeGW0CjQ4eWDdyeGCHG_JxmyR9w1-FSJ-9V7q95tJS2syw>
-    <xmx:U3pVZtBH4twnmKv6r1xinhKBka-Au-5eyMcC8UBwm-W65IuiTCP9UA>
-    <xmx:U3pVZt4TJ_0ZUnTTfyTszCGbd2-vjSV7OUtLxkUxJkRmPshPbo4GA3YU>
+X-ME-Proxy: <xmx:V3pVZiTjsPjBmOQBkFCQzAyL_14BEFG3IdtO-FKzdAzom83nth2NpQ>
+    <xmx:V3pVZqzS1qgTjahsmSwzgG7B8ZP1yBb4y70cVJ4GP8gb9c2_Dp5hQw>
+    <xmx:V3pVZo7XNMTF2eOZuzFISWCgk_uADdv2xOLurhNzPnBWs-mvrTC0lw>
+    <xmx:V3pVZvzsrlGERl9WjIGLtdWOwaXNfiP4v-Fnd1q7P-rSgOPX0xf_4A>
+    <xmx:V3pVZhor4Nu3tktwnnh6D4mB868Qhb_l0nrkNF1HpxcWqmHWRsweLNjG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 May 2024 02:31:46 -0400 (EDT)
+ 28 May 2024 02:31:50 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 8920d10d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 28 May 2024 06:31:34 +0000 (UTC)
-Date: Tue, 28 May 2024 08:31:43 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 4add8acb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 28 May 2024 06:31:39 +0000 (UTC)
+Date: Tue, 28 May 2024 08:31:48 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 07/12] refs/files: fix NULL pointer deref when releasing
- ref store
-Message-ID: <56baa798fbb2838227fbc08ed54f200e38545d28.1716877224.git.ps@pks.im>
+Subject: [PATCH v3 08/12] reftable: inline `merged_table_release()`
+Message-ID: <c7e8ab40b5191d9721cacadb7257aded3dd90db7.1716877224.git.ps@pks.im>
 References: <cover.1716451672.git.ps@pks.im>
  <cover.1716877224.git.ps@pks.im>
 Precedence: bulk
@@ -86,60 +85,122 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1VjaBMG+zi5/Ajdl"
+	protocol="application/pgp-signature"; boundary="Rw9jTTDSOOvXkQNE"
 Content-Disposition: inline
 In-Reply-To: <cover.1716877224.git.ps@pks.im>
 
 
---1VjaBMG+zi5/Ajdl
+--Rw9jTTDSOOvXkQNE
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `free_ref_cache()` function is not `NULL` safe and will thus
-segfault when being passed such a pointer. This can easily happen when
-trying to release a partially initialized "files" ref store. Fix this.
+The function `merged_table_release()` releases a merged table, whereas
+`reftable_merged_table_free()` releases a merged table and then also
+free's its pointer. But all callsites of `merged_table_release()` are in
+fact followed by `reftable_merged_table_free()`, which is redundant.
+
+Inline `merged_table_release()` into `reftable_merged_table_free()` to
+get rid of this redundance.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/ref-cache.c | 2 ++
- 1 file changed, 2 insertions(+)
+ reftable/merged.c | 12 ++----------
+ reftable/merged.h |  2 --
+ reftable/stack.c  |  8 ++------
+ 3 files changed, 4 insertions(+), 18 deletions(-)
 
-diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-index b6c53fc8ed..4ce519bbc8 100644
---- a/refs/ref-cache.c
-+++ b/refs/ref-cache.c
-@@ -71,6 +71,8 @@ static void free_ref_entry(struct ref_entry *entry)
-=20
- void free_ref_cache(struct ref_cache *cache)
- {
-+	if (!cache)
-+		return;
- 	free_ref_entry(cache->root);
- 	free(cache);
+diff --git a/reftable/merged.c b/reftable/merged.c
+index f85a24c678..804fdc0de0 100644
+--- a/reftable/merged.c
++++ b/reftable/merged.c
+@@ -207,19 +207,11 @@ int reftable_new_merged_table(struct reftable_merged_=
+table **dest,
+ 	return 0;
  }
+=20
+-/* clears the list of subtable, without affecting the readers themselves. =
+*/
+-void merged_table_release(struct reftable_merged_table *mt)
+-{
+-	FREE_AND_NULL(mt->stack);
+-	mt->stack_len =3D 0;
+-}
+-
+ void reftable_merged_table_free(struct reftable_merged_table *mt)
+ {
+-	if (!mt) {
++	if (!mt)
+ 		return;
+-	}
+-	merged_table_release(mt);
++	FREE_AND_NULL(mt->stack);
+ 	reftable_free(mt);
+ }
+=20
+diff --git a/reftable/merged.h b/reftable/merged.h
+index a2571dbc99..9db45c3196 100644
+--- a/reftable/merged.h
++++ b/reftable/merged.h
+@@ -24,6 +24,4 @@ struct reftable_merged_table {
+ 	uint64_t max;
+ };
+=20
+-void merged_table_release(struct reftable_merged_table *mt);
+-
+ #endif
+diff --git a/reftable/stack.c b/reftable/stack.c
+index a59ebe038d..984fd866d0 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -261,10 +261,8 @@ static int reftable_stack_reload_once(struct reftable_=
+stack *st, char **names,
+=20
+ 	new_tables =3D NULL;
+ 	st->readers_len =3D new_readers_len;
+-	if (st->merged) {
+-		merged_table_release(st->merged);
++	if (st->merged)
+ 		reftable_merged_table_free(st->merged);
+-	}
+ 	if (st->readers) {
+ 		reftable_free(st->readers);
+ 	}
+@@ -968,10 +966,8 @@ static int stack_write_compact(struct reftable_stack *=
+st,
+=20
+ done:
+ 	reftable_iterator_destroy(&it);
+-	if (mt) {
+-		merged_table_release(mt);
++	if (mt)
+ 		reftable_merged_table_free(mt);
+-	}
+ 	reftable_ref_record_release(&ref);
+ 	reftable_log_record_release(&log);
+ 	st->stats.entries_written +=3D entries;
 --=20
 2.45.1.246.gb9cfe4845c.dirty
 
 
---1VjaBMG+zi5/Ajdl
+--Rw9jTTDSOOvXkQNE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZVek4ACgkQVbJhu7ck
-PpTP5w//S46on6H3cDHmn7iBlYkBM93nUvEnfgbfmY9L7GzLevY1Uyop/tcDNlch
-hcG9VTZjZPnRUmlBbwuVdq6thQriPkiWnHQt0DqMLuXMQQF+cjdXw/gcPT3WO7BX
-TRFjWR1yqunEied0xD4OHq16cPq57Dn4LSo5JLx2oZ3Qlx7GMvSZUDWbQfj5m/SE
-18lSEg0/M4IbuO4kAoyhJT9LSkVHuui6qB+K9Fq5dUBnnTufusl1uI1SBOgX+a5L
-bXtr0xfWgnifAAE98HEwN8UMxCjDHHvDTEO4VG4xiNm16qoDAB4b7IHCr1dW+nx/
-e46rbcbjLHam5wXuiKVYyNcnEQgaQp9iCfwjpuMzqLbfhlHlkM6EnN8XAnnuPINw
-p1JgNHgoXyuduBH6rT+LBtfEtfvMLUPG3qS10gqugDDCH2dyjctQ0qJkq3xQA/ii
-L2xk1NjS5eocQQPuqGwnBsx6VOm+o6NW2/etk+OdqjEoF2ZB1JGdCk0mkfLyLSDk
-F2h5C/L7qQiaNPjVzMO6dL9AXxDKLnsjfOqTojcP3DWJLwzcjXUfUMTGcmhqELco
-4VMdYDMy3vT9jHvcQfYXYjKSiWoE8q0+yfqdALzrPMAPLm7Qp6t924shBePYzZUV
-ffDhOmXZD4+zMUfQRhuLJsLXS2R3AJ9/x8i5ggYLXjuo0xEmwuU=
-=FDFm
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZVelMACgkQVbJhu7ck
+PpQBVw//Xa8tuICcv8Pj71ANmEDLomjpvw/a93vNoH1mVKUGhT2b3Jb0RGWML/ra
+UBsGUD0L/7hH97fajdf8EvlVo2+BSvCVRCxjP3fFRT0K+DVDvF5uarPDemkXa+xq
+71pMQVRJ//RY+qn0gHWuC9qc0SnSZGZk3aZCvtXaNKW2mmB6yERWxvc3eb0BYs66
+9COyh0kd/c87NuQs57av706PSxozeP7nsXDA8Ke/1YsaI2RinQHpBrkt/1v+g2oz
+IVY2oR0AWhoiDQ7jsK0dufFx0wp3mOrvC+nd51se3TMxdqqZ83NbO/aUFKqH/VYv
+Z2o7A+ItRzjum0jo0+UZkYYnwTRsTXdHkED+WW5J66RPJYoBv+6rGYRUXxt8IVg1
+h3jQRJDlVv8WnF3j2MZcF/BHzg9RY3BWnE+b+kYmQVOejFirvGnWfGRqLTOYHP7o
+TG3WDWyURDoKV1ZN38NqKeGV+WOVD/8lxGtriH5nl6Rwkg4O59dit9sLTvMu3Hda
+85lHYEgAHb12yTr9ARZflEuZgGSNGJJHq0AclxYmtAUnTLqhLn8nSO6C0RRofwZW
+yQdkLYjWfa8DGzInclHpToS+CKYDjWQ69H9nXOqficnevM1snEFQIviGoVVF2ioh
+n3vvKx4yr3NBG6ty2Gm3tWw7MQftCQXknFVB2TY83kRuyk7cLwQ=
+=+BUC
 -----END PGP SIGNATURE-----
 
---1VjaBMG+zi5/Ajdl--
+--Rw9jTTDSOOvXkQNE--
