@@ -1,84 +1,85 @@
 Received: from wfhigh3-smtp.messagingengine.com (wfhigh3-smtp.messagingengine.com [64.147.123.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9ED83E487
-	for <git@vger.kernel.org>; Tue, 28 May 2024 05:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CF244C76
+	for <git@vger.kernel.org>; Tue, 28 May 2024 05:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716873247; cv=none; b=AGz0haG5l8ifWzc26blGaz8//63Zj0hdjz7oua5WnqbZAVtS0ynZIjywhxrqgals4n3+DUcybswzUorVnzP3BgZgwF/fGtVpRju3wGN9DCm35gMwS4oXB443ztjNMIBam46JdMMtucOxgy9M9830LrQfC/CnC30bqtnCJCEnwZU=
+	t=1716873254; cv=none; b=R9pKUCO7Gk2eLK4nfBq44CilBzz+ssVbYt2vFidRwe/TE7VN3QRgmQJ9PHcxj2xg1TeENAQPHK/r43HVqWhErPXs6lol/VbTEpxs3Lhewxy/aXoj9zRC+7hlsYEQRRuKqXViR8BEUKFD2DGanWPjTaMOsgcHau4+fO/MVaT6ApM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716873247; c=relaxed/simple;
-	bh=MFviuKs5cWDAnRiDOExm3WSN9o4GL+FTZuOQgqj7Kxs=;
+	s=arc-20240116; t=1716873254; c=relaxed/simple;
+	bh=0Gaw1FfiypYqdajmZZ8SS8pJh0W16Ss+mEjFmKTIQ4c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=liwMXaydCOVLG1rzyr3vreUHkIb0aXuS7v2dT77N54RkKMgzkvvNo0DeS6U0BPPSTPPgEqcAn9lZSiYyjS1vkfWJNaVTlzoM+OEdNFzCBiOcYM4aJJTvGNxpOaGg4zWHRlAORlEHXiIMKejnDtR02SpVbvVvrHNKqrKd8hgQTtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ctFwUvjp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hn+ZTMte; arc=none smtp.client-ip=64.147.123.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=htYyqaE2ACBh9lvHnxuHv8d1ft4Dt6iDhRxlNu+vPBlLpSyPo+nqru5dC/K/7wWdeIQWWY2AM/BDkG9DuheuIhHQhrUlCoiV8OSImmjmBETu3H4xmT/+lR+qHm95VBbCJxU3gP8y9VUZ/aDXOKdZBTi6jfESyLLw7diUmDU/JZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fwXs8Ho7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fisV9XXT; arc=none smtp.client-ip=64.147.123.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ctFwUvjp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hn+ZTMte"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.west.internal (Postfix) with ESMTP id CDD7B1800121;
-	Tue, 28 May 2024 01:14:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fwXs8Ho7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fisV9XXT"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 2141B1800159;
+	Tue, 28 May 2024 01:14:12 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 28 May 2024 01:14:05 -0400
+  by compute5.internal (MEProxy); Tue, 28 May 2024 01:14:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716873244; x=1716959644; bh=xHyePdefSQ
-	LKgQW0MdIibpC83p+0dn7toBNtJB1GBLE=; b=ctFwUvjpBnyzlUAAKlkSF268FX
-	OCWnYfNxvU62qMUoiI/OISLLxjSpeIRNEqrFVNgRNZjwBelXOwenbV+zdbWUCIew
-	QaziZJ1m0R0RBj+bV0KPEy8aShK8DPaR67YIU2n9IVUbe9G1j3fTbticCn5CF35p
-	clwWimWHQoh44FMkCNnSpV6rmBJat47fcHAdRBDrdZHvTsWwlrwcAa1Ovif080A2
-	cKdazEAHxie33p/SKUgq8ULLsyNm+oea48XHHoE82Z1jTXuZfa+f083DgIyHnDzo
-	Z+quVQWiryjTvm8GLVxP9qNfpiNa1NtEY4e9h1Lyh3sZl3FLS0UovcNDWEDg==
+	:subject:to:to; s=fm1; t=1716873251; x=1716959651; bh=rVY+eoAdYu
+	KKQZno1FrujpR+cZq9F9fLq5w7Ccg7J0o=; b=fwXs8Ho74j53M5LoR7wXrvHocL
+	G1v4yw4uYJBH6qR86CPlvZIV85n+zna+E+JFvg108SFaMXv/W05ytcBmp0FpUiv2
+	PCZ/dfyGjyV5Aj4k78n0NGAQzDsOD+ZikW9U+BJ41baEMA5TNe/1jhbFG48rcaVi
+	oKU0srhxyXYRfQ3pROpytW8PS34vg899z+n76z3XN7/2S9Fcdj1UttEHfGdrj2EY
+	gbfgeM0lgJW5jePPUWNjOgmBXTVeMXbHFVClgbNfEpzyzx+JL48GmPq7lL31pzk+
+	WhYzXJ05fVR028Uds+6diUOv6HBCKimzRQr0P2+T4cr6nI8PuDjY7R1vgbRg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716873244; x=1716959644; bh=xHyePdefSQLKgQW0MdIibpC83p+0
-	dn7toBNtJB1GBLE=; b=hn+ZTMteopox8e/VxaZayC3WyHM5rpVnicgH20q05QLA
-	T1nx/9J++OnI7WWzitJxZsU97MPG6Hy3LoofMkVnjaDonzJTGClPmPLc4dlRT+lA
-	2uKgNTPMUXqS5nG2lxvyDbA28epg7mkNAkK6j9URKDg5N/HZVjhEL7evHNyimH0E
-	msv64rj43+p9W+vPKBqi8LpaShFqI6KFqt7T5ywzsBbwfKkW5/Xzonk/PaIWS8OQ
-	eVx/X1HvVjvWLXNGOd+7hlRYjQYgNgrCMEhIlODh3cnczYgvRLGqdUdwVBub/P2S
-	F1nTGPm46TOwCdFmET/Rww5Eb5gXTEiF2Kn1p5U7sg==
-X-ME-Sender: <xms:HGhVZp2UcC1o4yKqxYeGdwCXgXKLRk4R_k76PzEirEZYVDXRx0SW1g>
-    <xme:HGhVZgFxJu2iI6snE75AZ97gSuo0bocRYzHBxX6AIWAyJt_QD4sAVPil92fwp4VXc
-    lYh7Lj-lEdZSzVr8Q>
-X-ME-Received: <xmr:HGhVZp5bMYW3EwsPVeh92DcBJBH0d3Sc4_0IMfISrPNmOy4uSzhU9YIXvklYiO3lrcsLjzfOFUnGmtd-do1Jp-BkagU4uCjjaAktfdcHm_bRPdh3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejhedgleduucetufdoteggodetrfdotf
+	fm1; t=1716873251; x=1716959651; bh=rVY+eoAdYuKKQZno1FrujpR+cZq9
+	F9fLq5w7Ccg7J0o=; b=fisV9XXTErFk+4+n9L4opApdLhz5V5UvRTtVHmetLO34
+	/7kEswK/CwSRaCxjGHoRSBmY2aWy+XpM6DoGIM2ZJJ06Z/FGXmzOH8OD/NaAwU3J
+	Hi61Qvfx6LCQz8OnFHcULW3C32p7uiHwRrSuAwCqqkpbpAT3CvxNIp5d7pPp/svV
+	Kfg1QIog01jIT2G8kJaPARxYPOwwje3HHMBZcQDhhK9V/5yHauBaz0JbZof/Qnf7
+	wQvdR1piQQ7DgpAcnT7+Xda3m8ezKWbtdnJ56f+5LvKitoJQ2ZBzK+D0J0BnghJo
+	14J/DMd0x8hA9Z9K0CjGbkEENLNkDdvbJTbA0dx6Pg==
+X-ME-Sender: <xms:I2hVZjZFuY1pmH3H8fcWJCypjilzarYFfeppLp6ZZFL5VtmoYT9ILw>
+    <xme:I2hVZiYYz7XaG4j3VzLmNiEM6ewZ_Rt0bnskuUpnwiOmqyQ9WlsDXy2_cuk5b9D2f
+    9aoCSWPwr-9PDDXRA>
+X-ME-Received: <xmr:I2hVZl_ER6fi9Sf0pJq5hWP5MP5uIrv1-XPCVaAdRtrY8aUtuTc4PVGIBriQQ6tlP0hICoIhXjfeudQAemeyh8mt4wj7ri16m-DW9eJUuYCIekJn>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejhedgledvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:HGhVZm1i38xWKyVbz8VR8ugyej70uNTKGW7BTvVZLXRngmQ0viCUlw>
-    <xmx:HGhVZsGaSmwybJQ86lBYzAcqKOdKMGj2Q9yvi0OaIhpxJPKmD6kA9A>
-    <xmx:HGhVZn_mn6uE-KYe3CLiAb9s_Gh5MJ-JqZgzxz5X6rsz3va9-aEZLw>
-    <xmx:HGhVZpnP3M382iDttdWYs1EA3XckFMAOsyEA4ZZLRxG5GEBxJha4_A>
-    <xmx:HGhVZohYdQvhDFAYwPCPVhIGd8qY4h_17IQdEROWdDVisLpBhqBxovas>
+    hrnheptdeiffelledvfffgtdejgfevvefhleetjeduhfeuhfeiledvleetiefgkeejueff
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:I2hVZppic2Lv7jh6PiG3SUt-FPQQNjN6vzQ_tXx1noyt3RA9VR8JOg>
+    <xmx:I2hVZuob80MFbT7c6TMTsgFj2FXNA16kPvzTyLkzaQqzJQ7SQ2dc3A>
+    <xmx:I2hVZvS6NYJjFis4dAUzIv8c68BNYnlJ-n6h4qW6hMkAEpPJeQqzSw>
+    <xmx:I2hVZmpjZRrTjBVSBo0aAZz7tFtGCPoIDO54fwfLmfLFNOmYuZRwuA>
+    <xmx:I2hVZnk1FOld0vWDrWMnjEr-GZI2-_5L3WK12kdgcQhCYFklGnlbLKL9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 May 2024 01:14:03 -0400 (EDT)
+ 28 May 2024 01:14:10 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 12567cb6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 28 May 2024 05:13:51 +0000 (UTC)
-Date: Tue, 28 May 2024 07:14:01 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id a30d8427 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 28 May 2024 05:13:58 +0000 (UTC)
+Date: Tue, 28 May 2024 07:14:08 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 8/9] refs: implement logic to migrate between ref
- storage formats
-Message-ID: <ZlVoGVzTVb2-1NK0@tanuki>
+Subject: Re: [PATCH v2 9/9] builtin/refs: new command to migrate ref storage
+ formats
+Message-ID: <ZlVoIBKdFI3F-l1W@tanuki>
 References: <cover.1716451672.git.ps@pks.im>
  <cover.1716545235.git.ps@pks.im>
- <4d3eb5ea896bffffbf28ab4865b69901cc9edee7.1716545235.git.ps@pks.im>
- <wt5hbn62kq6wvbbkkqxj2ev23cvybtcfxwygdcg5fjuhbmdwdx@azuetlk3jwgo>
+ <0df17a51b43e1e9d007328aad6457363876b2e1d.1716545235.git.ps@pks.im>
+ <54110fa9-02ba-4c9d-9ec2-c26e98a42730@ramsayjones.plus.com>
+ <CAPig+cTV8eXHyFjG3gS+veQb_zUrdfz1zvNNE-aKMsaHoyG6hg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,125 +87,62 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="t4kekgoQ5sYnNQ/d"
+	protocol="application/pgp-signature"; boundary="TpQrcd19bsD/txLN"
 Content-Disposition: inline
-In-Reply-To: <wt5hbn62kq6wvbbkkqxj2ev23cvybtcfxwygdcg5fjuhbmdwdx@azuetlk3jwgo>
+In-Reply-To: <CAPig+cTV8eXHyFjG3gS+veQb_zUrdfz1zvNNE-aKMsaHoyG6hg@mail.gmail.com>
 
 
---t4kekgoQ5sYnNQ/d
-Content-Type: text/plain; charset=us-ascii
+--TpQrcd19bsD/txLN
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 24, 2024 at 05:32:20PM -0500, Justin Tobler wrote:
-> On 24/05/24 12:15PM, Patrick Steinhardt wrote:
-[snip]
-> > +	/*
-> > +	 * The overall logic looks like this:
-> > +	 *
-> > +	 *   1. Set up a new temporary directory and initialize it with the n=
-ew
-> > +	 *      format. This is where all refs will be migrated into.
-> > +	 *
-> > +	 *   2. Enumerate all refs and write them into the new ref storage.
-> > +	 *      This operation is safe as we do not yet modify the main
-> > +	 *      repository.
-> > +	 *
-> > +	 *   3. If we're in dry-run mode then we are done and can hand over t=
-he
-> > +	 *      directory to the caller for inspection. If not, we now start
-> > +	 *      with the destructive part.
-> > +	 *
-> > +	 *   4. Delete the old ref storage from disk. As we have a copy of re=
-fs
-> > +	 *      in the new ref storage it's okay(ish) if we now get interrupt=
-ed
-> > +	 *      as there is an equivalent copy of all refs available.
-> > +	 *
-> > +	 *   5. Move the new ref storage files into place.
-> > +	 *
-> > +	 *   6. Change the repository format to the new ref format.
-> > +	 */
-> > +	strbuf_addf(&buf, "%s/%s", old_refs->gitdir, "ref_migration.XXXXXX");
-> > +	new_gitdir =3D mkdtemp(buf.buf);
-> > +	if (!new_gitdir) {
-> > +		strbuf_addf(errbuf, "cannot create migration directory: %s",
-> > +			    strerror(errno));
-> > +		ret =3D -1;
-> > +		goto done;
-> > +	}
+On Fri, May 24, 2024 at 03:29:06PM -0400, Eric Sunshine wrote:
+> On Fri, May 24, 2024 at 2:24=E2=80=AFPM Ramsay Jones
+> <ramsay@ramsayjones.plus.com> wrote:
+> > On 24/05/2024 11:15, Patrick Steinhardt wrote:
+> > > +--dry-run::
+> > > +     Perform the migration, but do not modify the repository. The mi=
+grated
+> > > +     refs will be written into a separate directory that can be insp=
+ected
+> > > +     separately. The name of the directory will be reported on stdou=
+t. This
+> > > +     can be used to double check that the migration works as expecte=
+d doing
+> > > +     performing the actual migration.
+> >
+> > s/expected doing performing/expected before performing/ ?
 >=20
-> If the repository contains reflogs or has worktrees the migration does
-> not proceed. This means that the created tempdir gets left behind with
-> no indication and would be left to the user clean it up.
+> The "doing performing" bit was noticed earlier[1]. I suppose in trying
+> to fix it, Patrick accidentally removed "before" rather than removing
+> either "doing" or "performing".
 >=20
-> Instead, we could move tempdir creation to after these checks so it is
-> not needlessly created.
+> [1] https://lore.kernel.org/git/xmqqv833maxu.fsf@gitster.g/T/#m2c3eced90c=
+6cd61bf3acda1acc354b4ab76011d3
 
-True, done.
-
-> > +	if (refs_for_each_reflog(old_refs, count_reflogs, &reflog_count) < 0)=
- {
-> > +		strbuf_addstr(errbuf, "cannot count reflogs");
-> > +		ret =3D -1;
-> > +		goto done;
-> > +	}
-> > +	if (reflog_count) {
-> > +		strbuf_addstr(errbuf, "migrating reflogs is not supported yet");
-> > +		ret =3D -1;
-> > +		goto done;
-> > +	}
-> > +
-> > +	/*
-> > +	 * TODO: we should really be passing the caller-provided repository to
-> > +	 * `has_worktrees()`, but our worktree subsystem doesn't yet support
-> > +	 * that.
-> > +	 */
-> > +	if (has_worktrees()) {
-> > +		strbuf_addstr(errbuf, "migrating repositories with worktrees is not =
-supported yet");
-> > +		ret =3D -1;
-> > +		goto done;
-> > +	}
-> [snip]
-> > +	/*
-> > +	 * Until now we were in the non-destructive phase, where we only
-> > +	 * populated the new ref store. From hereon though we are about
-> > +	 * to get hands by deleting the old ref store and then moving
-> > +	 * the new one into place.
-> > +	 *
-> > +	 * Assuming that there were no concurrent writes, the new ref
-> > +	 * store should have all information. So if we fail from hereon
-> > +	 * we may be in an in-between state, but it would still be able
-> > +	 * to recover by manually moving remaining files from the
-> > +	 * temporary migration directory into place.
-> > +	 */
->=20
-> If there a failure after this point, should we provide a hint to user
-> that the refernces exist in the tempdir?
-
-Good idea.
+Ugh, yeah, that's probably what happened. Thanks!
 
 Patrick
 
---t4kekgoQ5sYnNQ/d
+--TpQrcd19bsD/txLN
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZVaBgACgkQVbJhu7ck
-PpQecA/9EcaWPTBhbCcKntPU47daSsGlSwP/PgBKBd2iSNiGNlggWgrjQICVCnig
-nZIeRz4hE6FxHTANXww0eCD3bwXRllDOidOUulpS2gSBKuXJ5TdF3UuOSh0tc1k5
-2DyZKN7mQr92pDmv9SB+LjlRITz57dBpt57OnW4rJDYrZiOJChq2OU2f50qQKaeO
-gfuNLZ1KSvz4jIMPwM65M/GEykB/djNYzvz6lbje1O/+GWhOcruW9ZvOOlijTRNg
-1xIBcoapsyzWQSxy88PGLs9RYxk3tW19H7Gxsndh4FF7u6DPv8x1UNB3kVSW5KZq
-3ejgNHgu+gjr31+NahjK8IeQvRLCtsIDTFrhHSwVvhhl3XOg4HUYrwhqfO8FinOR
-pT3hNYd7EbIH8oRtMg7r5Fiuv4Vt2Kc1/UX72jhNjyYZsCOPTcBviaUS3BkMZmnN
-j3CLX2Gs/B1I7ZjuaF25/jCYFyyKV9y3nPSy4rNC79nQUXNJlw/yWUwdvLQN9vUE
-ycy4GuoczEZaI1haabK4XQruL/1W63tOju2cVC7+kEnn8MRiAwjP0kZZAddrgZbn
-hQI4ixaMlzlvP78r8w1TmGBXy1m4V284u0XT8v8cLkrahnq3s91nnOOORO/oQ+Lg
-tgmIz34SNU9GEBFyHhd0eancspLcmCWmzQLxMjNyeVIdxOlps40=
-=K/nM
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZVaB8ACgkQVbJhu7ck
+PpQhbhAAoVGoAICYMU+q/QGZmlPRV2RA8qmRc7zTCdfwLiVCzB1uJswGgiQsELk/
+lkcKMFo9NUkRxgCzF/VjuG03XdKFA14jUIjMWU6pMijae0WmMuRzf5s7kPUly3cf
+K8qgT19fOX5kJI4FoaaM7uj+4+rxmkvjGqJgUDH9VM8VHB3MOlAMkVkqqb7/21+8
+Ejya6ZbE4eBimjvkxrkDxLCrHEbTODK6d6h+Bie6nzfEb7noBQsdwhN1MPWFaWrc
+DXtBEaMlsXHJi1JPtW3SIU1etKZX49Juem/a/dGJ2u/QC5cnnTlh+VNf92RuCk51
+yZugnmcr1JBbuhPVk0j5jFJ9W6mYr19nfmC9SaNHP+UjblSaHPov282Kl9vB8fdZ
+4B05opWjWvhYHp2u9gHvJ4I0Oth9NLPq2oDgTz1UaDrcZPXT415UnbhuxOD9cpgw
+OzMCjAlVl/u/mdsCQCHDVJkQQjhqnUEx+P6vSwpUfFkOqw2c9X29WMgbPSCMlJk+
+bjl8RC3/5P0qD0fOi9i8XddEi6wJpNLfSQg1W4PmuEnstIxk5fe+N4YBQYIhtMKi
+Rdhbe9eJWXH85fckd9k4frkqiko6fnA38bbHw/RTdAHhgFZGlGD/bcH6btzogUxO
+gVPy16W9x6V1ETWo5BS63+GrNR5qKOqKlEh/l8CSfAWTNep0IrA=
+=Oz0r
 -----END PGP SIGNATURE-----
 
---t4kekgoQ5sYnNQ/d--
+--TpQrcd19bsD/txLN--
