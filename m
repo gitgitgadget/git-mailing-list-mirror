@@ -1,53 +1,53 @@
-Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
+Received: from wfhigh3-smtp.messagingengine.com (wfhigh3-smtp.messagingengine.com [64.147.123.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A413E487
-	for <git@vger.kernel.org>; Tue, 28 May 2024 05:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9ED83E487
+	for <git@vger.kernel.org>; Tue, 28 May 2024 05:14:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716873240; cv=none; b=gDl0RZd9wR92vnna++8wRtxcF7sTvejkQ82iCfV8uOCjY0ApZnCdR+CR9QpVw2n8HLqFHF2Z2sJCol/VFOa/So5hjjX0L5KmSOkNEUYMuhEhl90QHyTuZqluUCW3LsQPY6zztkZs3mKNr8FX6lTZELBVA2N0ZoeFjlcfe7pVUjM=
+	t=1716873247; cv=none; b=AGz0haG5l8ifWzc26blGaz8//63Zj0hdjz7oua5WnqbZAVtS0ynZIjywhxrqgals4n3+DUcybswzUorVnzP3BgZgwF/fGtVpRju3wGN9DCm35gMwS4oXB443ztjNMIBam46JdMMtucOxgy9M9830LrQfC/CnC30bqtnCJCEnwZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716873240; c=relaxed/simple;
-	bh=JzvWd++5wQEFad4s6Xx+PBRZqDxa0DSTqYwBz2cDjh0=;
+	s=arc-20240116; t=1716873247; c=relaxed/simple;
+	bh=MFviuKs5cWDAnRiDOExm3WSN9o4GL+FTZuOQgqj7Kxs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TWluz5Cz4xstpM2U0ZRuAzDi9mb88sCWIfqHQJRUmDCFsEx1s/4x7LyGm3e5jAvgUPimxU8WFVicmwV5EqnOzgahoVpm13COmxuTro2+V781Lh7TK+oCE086md+ugDhAF/Blb8+1A70odT7HBR/qm1LEJg1357XbY6TyBDOaUZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=g05bE3aA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YE9Suxc0; arc=none smtp.client-ip=64.147.123.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=liwMXaydCOVLG1rzyr3vreUHkIb0aXuS7v2dT77N54RkKMgzkvvNo0DeS6U0BPPSTPPgEqcAn9lZSiYyjS1vkfWJNaVTlzoM+OEdNFzCBiOcYM4aJJTvGNxpOaGg4zWHRlAORlEHXiIMKejnDtR02SpVbvVvrHNKqrKd8hgQTtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ctFwUvjp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hn+ZTMte; arc=none smtp.client-ip=64.147.123.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="g05bE3aA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YE9Suxc0"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.west.internal (Postfix) with ESMTP id C95CD1C0012D;
-	Tue, 28 May 2024 01:13:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ctFwUvjp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hn+ZTMte"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.west.internal (Postfix) with ESMTP id CDD7B1800121;
+	Tue, 28 May 2024 01:14:04 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Tue, 28 May 2024 01:13:58 -0400
+  by compute2.internal (MEProxy); Tue, 28 May 2024 01:14:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716873237; x=1716959637; bh=JzvWd++5wQ
-	EFad4s6Xx+PBRZqDxa0DSTqYwBz2cDjh0=; b=g05bE3aAjKpLLMei9uq8N15tIO
-	M4K/dbrw5wbjILa4S5sMk75JaqV1p2nnNWJjnoQ4yI9waMYr+wFOLwEs07aLLffz
-	S0mhD+c50a1AHxKHg4LkuQHWBJ+4BbmgUEBPB6Em/U8Pb9Sp8MpvNvGi96GEHwSP
-	dfRw8KuvmeXgfobBvtOI2B7hzGyQjwGGggM2zlRnhNkRHkVqsi/32PIeL2qVSl6y
-	y8ixAbJev3N+1cXVuxuZ7uAGU2cj6ZievZXMxQR4v+xqhy1J91w7TKQGHuk2dRGV
-	sYbQsg1MpiMx2Ct0ToxzyCVA0YIJCJw2a/LDdTFjMhbstq/TpHJnwzgBWDaQ==
+	:subject:to:to; s=fm1; t=1716873244; x=1716959644; bh=xHyePdefSQ
+	LKgQW0MdIibpC83p+0dn7toBNtJB1GBLE=; b=ctFwUvjpBnyzlUAAKlkSF268FX
+	OCWnYfNxvU62qMUoiI/OISLLxjSpeIRNEqrFVNgRNZjwBelXOwenbV+zdbWUCIew
+	QaziZJ1m0R0RBj+bV0KPEy8aShK8DPaR67YIU2n9IVUbe9G1j3fTbticCn5CF35p
+	clwWimWHQoh44FMkCNnSpV6rmBJat47fcHAdRBDrdZHvTsWwlrwcAa1Ovif080A2
+	cKdazEAHxie33p/SKUgq8ULLsyNm+oea48XHHoE82Z1jTXuZfa+f083DgIyHnDzo
+	Z+quVQWiryjTvm8GLVxP9qNfpiNa1NtEY4e9h1Lyh3sZl3FLS0UovcNDWEDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716873237; x=1716959637; bh=JzvWd++5wQEFad4s6Xx+PBRZqDxa
-	0DSTqYwBz2cDjh0=; b=YE9Suxc0/n94tkP6PysMrgEyQn+1PlYypasQpBZGQHZl
-	kYVPcNqZ1edToeXpgm/6Hpl6xhIbKk/b0hrh8QoZD6mghbM1DYzFJVhkRsyhrnpQ
-	WzNtgOMcIQd/f+Zt9Sk1mJw9SP6hszwxknZY2J+MHx+Ax0Q8xgiwk+NZdzOIi/bN
-	eK2e6g6OQps/WC3+0Ap0bjySd4MlVwVIOf/ZreDMME9gQDp9HMHM4OnCe7aNAD3c
-	eHdqLYLc1LrnP3H6cQ3w0hd0bYb1rDxO83ijw1Rx97h3oMqnPOXH7WQp2x8l/Dbb
-	PXs76M6ljpsF2vg+1EANylrRALCYoQztmPrFGEZF/Q==
-X-ME-Sender: <xms:FWhVZlChqU_FmlyP2T1pExZWFvIYp4fLTEsbTwpjvkJ78av8bJjeeg>
-    <xme:FWhVZjir3a8YVO3UqGVGMYzGkiLyufDvvN3_43PXIqIFBWo0Xzpjb_9KNIBluOJBu
-    tGqwZ3ZKSHWaRXNTQ>
-X-ME-Received: <xmr:FWhVZgmPNmiF_nlBWyHNoKjAWS1_GJpVFBlhaVY9Y4gUAe50VA8H7vCTlt1dafF3_wXvyJuVt3XbAKzeSxYDXrK1sVjdf23rQvCyZas-kbPslzkN>
+	fm1; t=1716873244; x=1716959644; bh=xHyePdefSQLKgQW0MdIibpC83p+0
+	dn7toBNtJB1GBLE=; b=hn+ZTMteopox8e/VxaZayC3WyHM5rpVnicgH20q05QLA
+	T1nx/9J++OnI7WWzitJxZsU97MPG6Hy3LoofMkVnjaDonzJTGClPmPLc4dlRT+lA
+	2uKgNTPMUXqS5nG2lxvyDbA28epg7mkNAkK6j9URKDg5N/HZVjhEL7evHNyimH0E
+	msv64rj43+p9W+vPKBqi8LpaShFqI6KFqt7T5ywzsBbwfKkW5/Xzonk/PaIWS8OQ
+	eVx/X1HvVjvWLXNGOd+7hlRYjQYgNgrCMEhIlODh3cnczYgvRLGqdUdwVBub/P2S
+	F1nTGPm46TOwCdFmET/Rww5Eb5gXTEiF2Kn1p5U7sg==
+X-ME-Sender: <xms:HGhVZp2UcC1o4yKqxYeGdwCXgXKLRk4R_k76PzEirEZYVDXRx0SW1g>
+    <xme:HGhVZgFxJu2iI6snE75AZ97gSuo0bocRYzHBxX6AIWAyJt_QD4sAVPil92fwp4VXc
+    lYh7Lj-lEdZSzVr8Q>
+X-ME-Received: <xmr:HGhVZp5bMYW3EwsPVeh92DcBJBH0d3Sc4_0IMfISrPNmOy4uSzhU9YIXvklYiO3lrcsLjzfOFUnGmtd-do1Jp-BkagU4uCjjaAktfdcHm_bRPdh3>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejhedgleduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -56,29 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejhedgleduucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:FWhVZvxo7FJ0RU7v7Y-ZUeIDK24Yjm2_8QZkGx57pcEsBOvk1Wn7sQ>
-    <xmx:FWhVZqTfjkFX0C3_W1CFKWPsH_IKSzlt8IVsRMk6xsN3msYhLcapGg>
-    <xmx:FWhVZiYt2Soj0L1qwi5XkQYXAtyfFP86i1zhPvuLu6kbyQRd0hNO3Q>
-    <xmx:FWhVZrTurWI5I60x6Zv8tG5Ia7hT0RSWDcTpVwp8rWPC3raNk4uI1A>
-    <xmx:FWhVZgMgo2ARO0Vzu0rIC30oh34CHsFcFYXnKmcZAX1s5lW60Kybd_X9>
+X-ME-Proxy: <xmx:HGhVZm1i38xWKyVbz8VR8ugyej70uNTKGW7BTvVZLXRngmQ0viCUlw>
+    <xmx:HGhVZsGaSmwybJQ86lBYzAcqKOdKMGj2Q9yvi0OaIhpxJPKmD6kA9A>
+    <xmx:HGhVZn_mn6uE-KYe3CLiAb9s_Gh5MJ-JqZgzxz5X6rsz3va9-aEZLw>
+    <xmx:HGhVZpnP3M382iDttdWYs1EA3XckFMAOsyEA4ZZLRxG5GEBxJha4_A>
+    <xmx:HGhVZohYdQvhDFAYwPCPVhIGd8qY4h_17IQdEROWdDVisLpBhqBxovas>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 May 2024 01:13:56 -0400 (EDT)
+ 28 May 2024 01:14:03 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ac7e3693 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 28 May 2024 05:13:44 +0000 (UTC)
-Date: Tue, 28 May 2024 07:13:54 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 12567cb6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 28 May 2024 05:13:51 +0000 (UTC)
+Date: Tue, 28 May 2024 07:14:01 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/9] setup: unset ref storage when reinitializing
- repository version
-Message-ID: <ZlVoEi2gi9JQSzSO@tanuki>
+Subject: Re: [PATCH v2 8/9] refs: implement logic to migrate between ref
+ storage formats
+Message-ID: <ZlVoGVzTVb2-1NK0@tanuki>
 References: <cover.1716451672.git.ps@pks.im>
  <cover.1716545235.git.ps@pks.im>
- <8b11127daf4c1d06eed4a0c83dd3dc981ffdc728.1716545235.git.ps@pks.im>
- <yl4wqgtcfapjxuknb57sevnoi4jbcjnp3l6vqa7criqv2upq5p@x4hm33ymxukk>
+ <4d3eb5ea896bffffbf28ab4865b69901cc9edee7.1716545235.git.ps@pks.im>
+ <wt5hbn62kq6wvbbkkqxj2ev23cvybtcfxwygdcg5fjuhbmdwdx@azuetlk3jwgo>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,60 +86,125 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+etIq/TZ7nwITumb"
+	protocol="application/pgp-signature"; boundary="t4kekgoQ5sYnNQ/d"
 Content-Disposition: inline
-In-Reply-To: <yl4wqgtcfapjxuknb57sevnoi4jbcjnp3l6vqa7criqv2upq5p@x4hm33ymxukk>
+In-Reply-To: <wt5hbn62kq6wvbbkkqxj2ev23cvybtcfxwygdcg5fjuhbmdwdx@azuetlk3jwgo>
 
 
---+etIq/TZ7nwITumb
+--t4kekgoQ5sYnNQ/d
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 24, 2024 at 04:33:51PM -0500, Justin Tobler wrote:
-> On 24/05/24 12:14PM, Patrick Steinhardt wrote:
-> > When reinitializing a repository's version we may end up unsetting the
-> > hash algorithm when it matches the default hash algorithm. If we didn't
-> > do that then the previously configured value might remain intact.
-> >=20
-> > While the same issue exists for the ref storage extension, we don't do
-> > this here. This has been fine for most of the part because it is not
-> > supported to re-initialize a repository with a different ref storage
-> > format anyway. We're about to introduce a new command to migrate ref
-> > storages though, so this is about to become an issue there.
+On Fri, May 24, 2024 at 05:32:20PM -0500, Justin Tobler wrote:
+> On 24/05/24 12:15PM, Patrick Steinhardt wrote:
+[snip]
+> > +	/*
+> > +	 * The overall logic looks like this:
+> > +	 *
+> > +	 *   1. Set up a new temporary directory and initialize it with the n=
+ew
+> > +	 *      format. This is where all refs will be migrated into.
+> > +	 *
+> > +	 *   2. Enumerate all refs and write them into the new ref storage.
+> > +	 *      This operation is safe as we do not yet modify the main
+> > +	 *      repository.
+> > +	 *
+> > +	 *   3. If we're in dry-run mode then we are done and can hand over t=
+he
+> > +	 *      directory to the caller for inspection. If not, we now start
+> > +	 *      with the destructive part.
+> > +	 *
+> > +	 *   4. Delete the old ref storage from disk. As we have a copy of re=
+fs
+> > +	 *      in the new ref storage it's okay(ish) if we now get interrupt=
+ed
+> > +	 *      as there is an equivalent copy of all refs available.
+> > +	 *
+> > +	 *   5. Move the new ref storage files into place.
+> > +	 *
+> > +	 *   6. Change the repository format to the new ref format.
+> > +	 */
+> > +	strbuf_addf(&buf, "%s/%s", old_refs->gitdir, "ref_migration.XXXXXX");
+> > +	new_gitdir =3D mkdtemp(buf.buf);
+> > +	if (!new_gitdir) {
+> > +		strbuf_addf(errbuf, "cannot create migration directory: %s",
+> > +			    strerror(errno));
+> > +		ret =3D -1;
+> > +		goto done;
+> > +	}
 >=20
-> Ah, so this would be important in the context of migrating a repository
-> from "reftable" to "files".
-
-Exactly.
-
-> > Prepare for this and unset the ref storage format when reinitializing a
-> > repoistory with the "files" format.
+> If the repository contains reflogs or has worktrees the migration does
+> not proceed. This means that the created tempdir gets left behind with
+> no indication and would be left to the user clean it up.
 >=20
-> s/repoistory/repository/
+> Instead, we could move tempdir creation to after these checks so it is
+> not needlessly created.
 
-Thanks, fixed.
+True, done.
+
+> > +	if (refs_for_each_reflog(old_refs, count_reflogs, &reflog_count) < 0)=
+ {
+> > +		strbuf_addstr(errbuf, "cannot count reflogs");
+> > +		ret =3D -1;
+> > +		goto done;
+> > +	}
+> > +	if (reflog_count) {
+> > +		strbuf_addstr(errbuf, "migrating reflogs is not supported yet");
+> > +		ret =3D -1;
+> > +		goto done;
+> > +	}
+> > +
+> > +	/*
+> > +	 * TODO: we should really be passing the caller-provided repository to
+> > +	 * `has_worktrees()`, but our worktree subsystem doesn't yet support
+> > +	 * that.
+> > +	 */
+> > +	if (has_worktrees()) {
+> > +		strbuf_addstr(errbuf, "migrating repositories with worktrees is not =
+supported yet");
+> > +		ret =3D -1;
+> > +		goto done;
+> > +	}
+> [snip]
+> > +	/*
+> > +	 * Until now we were in the non-destructive phase, where we only
+> > +	 * populated the new ref store. From hereon though we are about
+> > +	 * to get hands by deleting the old ref store and then moving
+> > +	 * the new one into place.
+> > +	 *
+> > +	 * Assuming that there were no concurrent writes, the new ref
+> > +	 * store should have all information. So if we fail from hereon
+> > +	 * we may be in an in-between state, but it would still be able
+> > +	 * to recover by manually moving remaining files from the
+> > +	 * temporary migration directory into place.
+> > +	 */
+>=20
+> If there a failure after this point, should we provide a hint to user
+> that the refernces exist in the tempdir?
+
+Good idea.
 
 Patrick
 
---+etIq/TZ7nwITumb
+--t4kekgoQ5sYnNQ/d
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZVaBEACgkQVbJhu7ck
-PpTtgA/+LgBCudlvpynljxXC6rxZgrTHOf0LAiLfebCb/UDgN4eivSz3d71qikZK
-JE5Mv7iZv+i/9tNwWE5VCbYmBILLMBuh+JT35pYT7BEdRT0ywcO8J/TMRu7PWBLv
-OjoQ9zPiP4etI1kSmtbWeqgPWz3xALdvoYahXGXcFh6jo+0MFWcLYIt6yQR2Hlnj
-T+j4KIzbm1qXOfopzGOXFUWIFUY/mPHXHpC8ZVT11zrdchj3KSuELW4BbZGSckRZ
-TYR/DSp5WUCkNo6V3umx+YmwAaYIyOydrK1R/8rfyjIN+GP65UBAEOHoytLSsUYo
-XDBkrnzrYVg+rrq/4ARrCXkueB11aw88dnIg6X3g7MZr11gyGmfvv1QISUY5ueF9
-xLeRc+UPiV4i2fuQPuWHBSdsDA8kSmM4vVyrRuplf+lPnOWq2ix6xqudDqyxpaVI
-CkCEGEguGiz54uwm7cCGKxlufpqZd1i8oo3ZJBY+eHpXQZF3zJ3aCXQYIejtYNzM
-J0GzaRnlkKe64RbOanXY/i4jgesRU0q8m0JcSPzq/1onObsv5MMr8XJLVwx0pepD
-wChs48RzNi12hBTD4brsqacBaL9EjFsRY7wzP9Ai3048T7gfuNJwc0Bw/Ercyfam
-LBfyrv2IGO3uIMoTJxITngMNmSDBZEXQoh+uy+wEKS/ufKl2/Mo=
-=6eU6
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZVaBgACgkQVbJhu7ck
+PpQecA/9EcaWPTBhbCcKntPU47daSsGlSwP/PgBKBd2iSNiGNlggWgrjQICVCnig
+nZIeRz4hE6FxHTANXww0eCD3bwXRllDOidOUulpS2gSBKuXJ5TdF3UuOSh0tc1k5
+2DyZKN7mQr92pDmv9SB+LjlRITz57dBpt57OnW4rJDYrZiOJChq2OU2f50qQKaeO
+gfuNLZ1KSvz4jIMPwM65M/GEykB/djNYzvz6lbje1O/+GWhOcruW9ZvOOlijTRNg
+1xIBcoapsyzWQSxy88PGLs9RYxk3tW19H7Gxsndh4FF7u6DPv8x1UNB3kVSW5KZq
+3ejgNHgu+gjr31+NahjK8IeQvRLCtsIDTFrhHSwVvhhl3XOg4HUYrwhqfO8FinOR
+pT3hNYd7EbIH8oRtMg7r5Fiuv4Vt2Kc1/UX72jhNjyYZsCOPTcBviaUS3BkMZmnN
+j3CLX2Gs/B1I7ZjuaF25/jCYFyyKV9y3nPSy4rNC79nQUXNJlw/yWUwdvLQN9vUE
+ycy4GuoczEZaI1haabK4XQruL/1W63tOju2cVC7+kEnn8MRiAwjP0kZZAddrgZbn
+hQI4ixaMlzlvP78r8w1TmGBXy1m4V284u0XT8v8cLkrahnq3s91nnOOORO/oQ+Lg
+tgmIz34SNU9GEBFyHhd0eancspLcmCWmzQLxMjNyeVIdxOlps40=
+=K/nM
 -----END PGP SIGNATURE-----
 
---+etIq/TZ7nwITumb--
+--t4kekgoQ5sYnNQ/d--
