@@ -1,52 +1,52 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9FC175AB
-	for <git@vger.kernel.org>; Tue, 28 May 2024 18:26:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9BC6F06E
+	for <git@vger.kernel.org>; Tue, 28 May 2024 21:41:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716920792; cv=none; b=pMlHRepXETFCFYG11NpDSn+Bh6h9FXJ3rOXsFXS61gLmOOf5/S6vKAXydtfAQggU6c+mdCuO8u1/ajxmOBPehM/pIkC9doqAJoMm+8imFenRCvzZLxWLU20DD0LIzN9iz22XtOjFC0RteKmqnvqFe8JOcIzmVK3i/NftARClvKs=
+	t=1716932511; cv=none; b=cKXXOuOMfRkTdAbcO4/fmKOREr/Mv+cb1yy8OxNx/kwxjNFevOs8URdk8J3DmKZFhJZlA5yfkHGHg0a7mZ3BrJmQjO9VKIYP92X4tQuL/y+aSyiCwAsMxN3uiOLsUgtFlUzwhtL3tK7FoFuGkg79JiUbXPXSiNsgO3PWaWPaqfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716920792; c=relaxed/simple;
-	bh=qnqlbWL93lrzYFIjOD+k9XQD23Oh8JayPoNhWR2yyyU=;
+	s=arc-20240116; t=1716932511; c=relaxed/simple;
+	bh=0kXp+ZeT2miFCemxVOChvhqFKxJ4OfXZ3NugejYFZyE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Zz0+MxqfYV3FKkY08t0V5MXFognFv4dEE6SZUPrM3lqE7rMpDXFAYcmVxLPjloi8Jm7+8PkuMzAMVlkXnkF1kBhjSBxn9eAOjxAN39xEf0Ug1XOVeEN4wzY8qnQwwLVlM1JsU488AFyUpAbzO2RecDDfOHENTgGAgWzA8olEyAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QVvWh6qo; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=HS6pSwVZ7dQGH/SkCNNiyD//UN1MaGOCzMJ3Nn45JNfdQzxSxxtCKrI0PMeipfBQ8q/riZFmFC4qHbMtUihoaSHo3n4tdbRc4Nc93i/xAMxBCB9Bum5yH4qYke7r7imMr5IlipHrC4Cll25v0IkkY1umezyh/Q8JqN+0Tbly80M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=IZQjc4u3; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QVvWh6qo"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8E90229C54;
-	Tue, 28 May 2024 14:26:30 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IZQjc4u3"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 048F11CAE4;
+	Tue, 28 May 2024 17:41:49 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=qnqlbWL93lrzYFIjOD+k9XQD23Oh8JayPoNhWR
-	2yyyU=; b=QVvWh6qobqyXrnDicSHOqygyonQ4Ak0pdfbEUsgDZH4wpF8Ejmi7vc
-	RIBsBPTc8ItmGEAUkVGoD5AUphR0gtqvWRDlcXYs4SRSslp0F/KvtoNrXtArzJ96
-	C+fBgOo56NfiHQdQ8NDPXHe+pJiNtT40Nh3mBI8eR0LjIKg6fS0GQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 87E5B29C53;
-	Tue, 28 May 2024 14:26:30 -0400 (EDT)
+	:content-type; s=sasl; bh=0kXp+ZeT2miFCemxVOChvhqFKxJ4OfXZ3Nugej
+	YFZyE=; b=IZQjc4u3aFC71w5sNVLLORWJFCt8RkKATtK6U6TTPH3KL18cH0Zh7d
+	7vqNTWbiFij/qJMSzszs0gcTmoimmGL9Grb1SNeAM62E/Hl/uIMmf5cLMpeNl0VY
+	TVCE+baHSlFOcgVgC8aT0tk925c3zwItkrMwFWHt3wTNDPKy2sKIA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id F05361CAE3;
+	Tue, 28 May 2024 17:41:48 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A548529C52;
-	Tue, 28 May 2024 14:26:27 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 621401CAE2;
+	Tue, 28 May 2024 17:41:48 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Ramsay
- Jones <ramsay@ramsayjones.plus.com>,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v3 00/12] refs: ref storage format migrations
-In-Reply-To: <xmqqo78p4xam.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	28 May 2024 11:16:17 -0700")
-References: <cover.1716451672.git.ps@pks.im> <cover.1716877224.git.ps@pks.im>
-	<xmqqo78p4xam.fsf@gitster.g>
-Date: Tue, 28 May 2024 11:26:26 -0700
-Message-ID: <xmqqfru14wtp.fsf@gitster.g>
+To: "Philip Peterson via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Philip Peterson <philip.c.peterson@gmail.com>
+Subject: Re: [PATCH 1/2] add-patch: do not use the_repository
+In-Reply-To: <c0bb37db12ea8724431fe4294d591cd8cef73e66.1716877921.git.gitgitgadget@gmail.com>
+	(Philip Peterson via GitGitGadget's message of "Tue, 28 May 2024
+	06:32:00 +0000")
+References: <pull.1728.git.git.1716877921.gitgitgadget@gmail.com>
+	<c0bb37db12ea8724431fe4294d591cd8cef73e66.1716877921.git.gitgitgadget@gmail.com>
+Date: Tue, 28 May 2024 14:41:47 -0700
+Message-ID: <xmqqwmnd397o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,39 +56,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- CC157EAE-1D1F-11EF-94CF-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 162E5EF0-1D3B-11EF-875F-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Philip Peterson via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Patrick Steinhardt <ps@pks.im> writes:
->
->>   - Swapped out calls to `remove_path()` to `unlink()`. We do not want
->>     to walk up and remove empty parent directories, even though this is
->>     harmless in practice.
-> ...
-> Let's find out why this is needed in [10/12].  It may just be a
-> simple matter of "let's not bother removing directories as we remove
-> loose ref files one by one---we know the whole hierarchy can be
-> removed after we are done", in which case I do think it is nicer.
+> -static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+> +static int parse_diff(struct repository *r, struct add_p_state *s, const struct pathspec *ps)
 
-Ah, it is not something as sophisticated like that.  It simply is
-wrong to use remove_path() to remove files used by files_backend, as
-the helper is designed to work on working tree files.
+Given that add_p_state has add_i_state in it, which in turn as a
+pointer to the repository, which is initialized like so:
 
-The reason it is wrong is because "now I removed this path, if the
-containing directory has become empty, I need to remove that
-directory, and I need to go up recursively doing that" has to stop
-somewhere, and for remove_path() that is on the working tree side
-the natural place to stop is at the root of the working tree,
-i.e. above ".git/" directory.  Of course, when removing extra
-directories above a loose ref file, the recursion must stop much
-earlier than going up to ".git/", and try_remove_empty_parents()
-in files-backend.c is the helper that was designed for the task.
 
-Looking at the difference between the result of applying v2 and v3,
-I think this "unlink" thing is only about removing root refs?  So I
-agree that a simple unlink() is not just adequate but is absolutely
-the right thing to do.  There is no reason for us to go up and remove
-empty directories when we remove ORIG_HEAD or other stuff.
 
-Thanks.
+        int run_add_p(struct repository *r, enum add_p_mode mode,
+                      const char *revision, const struct pathspec *ps)
+        {
+                struct add_p_state s = {
+                        { r }, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
+                };
+                size_t i, binary_count = 0;
+
+                init_add_i_state(&s.s, r);
+
+this patch looks wrong.  Adding a separate repository pointer to the
+function means you are saying that this function should be able to
+operate one repository in 'r' that may be DIFFERENT from the
+repository add_p_state was initialized for.  I do not think you are
+achieving that with this patch (and I do not think such a feature
+makes much sense, either).
+
+Instead just leave everything the same as before, and rewrite things
+that depend on the_repository (either by explicitly referring to it,
+or by implicitly using it, like empty_tree_oid_hex() which hardcodes
+the use of the_hash_algo which is the_repository->hash_algo) to refer
+to the repository the add_p_state was initialized for.
