@@ -1,122 +1,133 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B7B17167A
-	for <git@vger.kernel.org>; Tue, 28 May 2024 15:02:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A854E17083D
+	for <git@vger.kernel.org>; Tue, 28 May 2024 15:54:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716908561; cv=none; b=Ha5sIF4mI3p5Lm/ILPNNy6eUDPMNG0A3hPMA0SivajvcMDHiZ81ysOfS27yh+TTZvR98T2iSKYOhyJcqR9APmqXLiUR37C+4yJmFUxSotLxCpxOnb24G5JhhQ3K5GgsCC8wwYkQLlKWr5pn5k07jR8T+oQBxFZ1YvvNxNWKRIc0=
+	t=1716911690; cv=none; b=NVOJ2Fk4vCW2uxJzT8vXv8gAm0mXfi3IQaqVOKeKylfGh60UtsgjsLDEz4Ner+ZbcGD5vO76rGe5sz0hY8cKIwDcq9AV510k14FvlnVN3jlqQHFDPxfeSdOIg6zkDvCUbYwVgqAZKU9LhKYyK+rUnsTNAQAykMaWz9me5oNZi3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716908561; c=relaxed/simple;
-	bh=ILMgiIO/CF93phHU4A0gK4jN0mKA0I/S9UTAECLwAWo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=erPOmABDmk2xSEq0yvhpEFGmY9ZalcOK36XLFqcYRabNXQlocN8BkesVLMYQ0XFXoLUGNPV6GTldBxhby1/X3Epwn+wHjIX7CaIMCJIGRb2czQULuXJ7HgIEey8VjPbCzWi5LRM5qrbosQaKBd6s5mhkCxPtInsewN6gOeOHaZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NE68gHS7; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716911690; c=relaxed/simple;
+	bh=Ee/p4rD2QsropN5U2DUNgnHAgnZEvkVeqokPI8KZFdo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uov7VoZLTgVwV4IvVk8uTtQ4F90UbMwAw2NdwJABP8T5RvS35NW+LoQTBFxVICm5sFF1gohrW2+vCF5UAD0nvX6hmtcHJau/frZayXV4e6u0XF02zLj2DKYHBCB2FyNz1gpfn1hhkEIl0Nt0vJXWuYrlu7/vp/iiLcm4MhSiW/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BSL1F3/h; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NE68gHS7"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-35507e3a5deso2519015f8f.1
-        for <git@vger.kernel.org>; Tue, 28 May 2024 08:02:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716908558; x=1717513358; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hzmiodl9yfD/I8WKO33M3U+7yn5aTqtMnh94Ew0s1gM=;
-        b=NE68gHS7SAjLwVeiDjzXrbLtvBNYqVmx6FOEAMOPJnWvau3ewAKVXBOTgha222Syhl
-         tp2RQdjMmndhRBHf/8RBCXKzub4RgWvw46otJaOjWYt8IMpt4mchg4Bx9jnaZO4WSo6M
-         GcOZ7yLmvfnc9S2baL3SDBeKN+tZMq+7hJ+MNFzcBQrPl0Pa90jY5lAQhTJj9pBVBJQW
-         JfVuS1o281/ohytDDENoW+9ZJe+0+1T+vfbp8qKmrVFUuUrl53KfGjZXUBQGfPoiMwAf
-         LgOKldHcem+29Ic0aM+P24HbpRm1vaOHbb9rJpI2JV+KnftrUi7zr3GDn4F7i1VbREgw
-         usHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716908558; x=1717513358;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Hzmiodl9yfD/I8WKO33M3U+7yn5aTqtMnh94Ew0s1gM=;
-        b=L9lh8lRFgW53QUYyL6GUuhS64o6fQdvsSgV4mTZoobBfusscmjT5gOd5KydLBYQ52u
-         M7xba6oGJ+dfXhEE1uniy0nqtv2/EgW0o2fbbgQabctkdM0KeXih2Px8m4HxveB8+c4y
-         boh6vrEQ9DjRKuoKBOEQRoFA3MymoiAFkTZuuPliU4VmGsqnfVv4dDJ3uoJ2zKJtX5Ra
-         3dZpu999EydRa4qiAI42JS2hfyCTMvcdiEHwLIGg5iVG9mIjD/h9IA/CkV5RhZDbR23D
-         0201jvvHPj2xsQ0hmnebaLtwpckMNl9GT98zYeweOlbcaSbpwjYOpD1EMQELTZelWvgt
-         KbgA==
-X-Forwarded-Encrypted: i=1; AJvYcCUfCC0zrNJH+Ns2ETdIOe0lvqjPJ8I97XmPhGez81gWrmjRRAsd+8+3UkBDiZ+ioSZaevcHirLUO4RfWnZKbyH9yn9s
-X-Gm-Message-State: AOJu0YwWmQKR5ggV4PjFcZt0LUWy4QjmU/EFtr0HKn6vZMqqhrl8dfvf
-	YQa/OtkYnSZQhZ8ENoFx+ZsmA3ElP0Ojm98Yz7epiv5mcGlCBRrr
-X-Google-Smtp-Source: AGHT+IFrdWHGuvAF7M4KWxwMX5e1VRXRdIA7RHtE8cjndRnqBBoW18v1lMHWKaEcs5KDMQ0TxmxCpw==
-X-Received: by 2002:a5d:54cb:0:b0:34d:8d11:f8c0 with SMTP id ffacd0b85a97d-35506d5db22mr9405059f8f.18.1716908558425;
-        Tue, 28 May 2024 08:02:38 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1? ([2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3557dcf06dcsm12131656f8f.106.2024.05.28.08.02.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 May 2024 08:02:38 -0700 (PDT)
-Message-ID: <8353645a-a684-417a-8b0e-d8cbd7da6b5a@gmail.com>
-Date: Tue, 28 May 2024 16:02:37 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BSL1F3/h"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E038821973;
+	Tue, 28 May 2024 11:54:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Ee/p4rD2QsropN5U2DUNgnHAgnZEvkVeqokPI8
+	KZFdo=; b=BSL1F3/h5LaJ6NS5sw8Xhho6A/qX0SyYYX2mEjqGxLf00l6kWmfwx6
+	NHSU82VswmOKPjJW1bBVyKYFCASj4XWS1KESeU4+S2+FDSABwqPkaWhNzXRXqjBZ
+	C65vOlyqnpmmsirG+0DOJTBGAyzIzdwXWxct/bb6V39hSNiq79ktQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id D91EC21972;
+	Tue, 28 May 2024 11:54:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EF4AC21971;
+	Tue, 28 May 2024 11:54:44 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 3/3] upload-pack: allow configuring a missing-action
+In-Reply-To: <CAP8UFD1_aHwbhF12v-miCTWEbbgjtpjTCmkRmFHu4Vusezq6dA@mail.gmail.com>
+	(Christian Couder's message of "Tue, 28 May 2024 12:10:31 +0200")
+References: <20221012135114.294680-1-christian.couder@gmail.com>
+	<20240515132543.851987-1-christian.couder@gmail.com>
+	<20240515132543.851987-4-christian.couder@gmail.com>
+	<xmqqv83fvw7p.fsf@gitster.g>
+	<CAP8UFD1JZ7eJzrTk1YPrfy1XLAnnLvukABOJE69-JbqVWtL1AQ@mail.gmail.com>
+	<xmqqjzjikhdz.fsf@gitster.g>
+	<CAP8UFD1_aHwbhF12v-miCTWEbbgjtpjTCmkRmFHu4Vusezq6dA@mail.gmail.com>
+Date: Tue, 28 May 2024 08:54:43 -0700
+Message-ID: <xmqq34q27wzg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 00/12] Fix various overly aggressive protections in 2.45.1
- and friends
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Joey Hess <id@joeyh.name>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20240521195659.870714-1-gitster@pobox.com>
- <Zk3ChIHr5amGh8Mt@kitenet.net> <xmqqv835xekc.fsf@gitster.g>
- <Zk9vafYPijqyWpXv@kitenet.net> <99225123-70f0-3546-a6fa-b6d1f981b41d@gmx.de>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <99225123-70f0-3546-a6fa-b6d1f981b41d@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9A744CFA-1D0A-11EF-975D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hi Johannes
+Christian Couder <christian.couder@gmail.com> writes:
 
-On 27/05/2024 20:51, Johannes Schindelin wrote:
-> Hi Joey,
-> 
-> On Thu, 23 May 2024, Joey Hess wrote:
-> 
->> Junio C Hamano wrote:
->>>   - The extra check seems to have meant to target the symbolic links
->>>     that point at objects, refs, config, and anything _we_ care
->>>     about, as opposed to random garbage (from _our_ point of view)
->>>     files third-parties throw into .git/ directory.  Would it have
->>>     made a better trade-off if we tried to make the check more
->>>     precise, only complaining about the things we care about (in
->>>     other words, what _we_ use)
->>
->> I wondered about that possibility too. But it's not at all clear to
->> me how a symlink to .git/objects/foo risks any more security problem
->> to git than one to .git/annex/whatever, or indeed to /home/linus/.bashrc.
-> 
-> It risks more security problems because `.git/objects/??/*` is not
-> re-hashed when it is being used by Git. That's a very easy way to slip in
-> unwanted file contents.
+> It's basically the same as when a regular clone or a partial clone or
+> a clone using bundle-uri fails or when using a regular bundle fails.
+> If it failed because the remote was not properly configured, then that
+> config can be fixed. If it fails because the remote doesn't have some
+> objects, then maybe the missing objects can be transferred to the
+> remote. And so on.
 
-What checks do we have in place to prevent git checking out blobs and 
-gitlinks to paths under .git/? I'd have thought we should be applying 
-the same restrictions to the target of symbolic links as we do to those.
+> The feature doesn't create any new kind of failure.
 
-> And there is a good reason _not_ to write stuff inside the `.git/`
-> directory unless you happen to be, well, Git itself: Git makes no
-> guarantees whatsoever that you can write into that directory whatever you
-> want. A future Git version might even write a file `.git/annex`, breaking
-> `git-annex`' assumptions, and that'd be totally within the guarantees Git
-> makes.
+> "it would be nice if there was a capability for the client to say
+> that it would like the server to give it information about the
+> promisor that it could use, so that the user doesn't have to pass all
+> the "remote.my_promisor.XXX" config options on the command like."
+>
+> and by saying that this could be added later.
 
-This seems a bit harsh - many tools store their state under .git/ and I 
-think it makes sense for them to do so as it avoids creating untracked 
-files in the working copy. I would hope that we'd be considerate of 
-widely used tools such as 'git annex' when adding new paths under .git/
+Can such an update happen transparently, or does it need changes to
+end-user experience?  It is of dubious value to leave the initial
+series be incomplete if the latter is the case.
 
-Best Wishes
+>> Without knowing that, it cannot safely decide that it does not
+>> have to send objects that can be obtained from X to C.
+>
+> In the above command C is asking for a partial clone, as it uses a
+> --filter option. This means that C knows very well that it might not
+> get from S all the objects needed for a complete object graph.
 
-Phillip
+Hmph.  If C asks a partial clone and S is willing to be the promisor
+for C, S is essentially saying that it will serve C any objects on
+demand that are reachable from any object it served C in the past,
+forever, no?  It might not get from S initially all the objects, but
+if it wants later, S promises to let C have them.
+
+
+> Again when using a regular partial clone omitting the same set of
+> objects, C also requests some objects that S doesn't have.  And
+> this is not considered an issue or something irresponsible. It
+> already works like this.
+
+"S doesn't have" is because S has pruned objects that it shouldn't
+have in order to keep the promise it made earlier to C, right?  If
+that is the case, I would very much say S is being irresponsible in
+that case.
+
+> And then C still has the possibility to configure X as a
+> promisor remote and get missing objects from there. So why is it Ok
+> when it's done in several steps but not in one?
+
+You are right that S can decide to unilaterally break the promise it
+made C, so this update is not making it any worse than giving users
+a broken implementation of promisor remotes.  I wouldn't call it OK,
+though.
+
+If somebody identifies that even without this series, S can lead to
+repository corruption at C by pruning objects it does need to keep
+its promise to C, the next action I expect from healthy project is
+to try coming up with a mechanism to make it less likely that such a
+pruning happens by accident (e.g., by noticing allowAnySHA1InWant as
+a sign that the repository has promised others to serve anything
+that used to be reachable from anything it historically served,
+disabling repack "-d" and instead send the currently unreachable
+objects to an archived pack, and something equally silly like that).
+It certainly is not to add a new mechanism to make it even easier to
+configure S to break promised it made to C.
+
+So, I dunno.
