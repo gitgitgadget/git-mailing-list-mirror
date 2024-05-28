@@ -1,306 +1,157 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C789217BA7
-	for <git@vger.kernel.org>; Mon, 27 May 2024 21:35:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BB079D0
+	for <git@vger.kernel.org>; Tue, 28 May 2024 00:47:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716845758; cv=none; b=ORKvNhoixXc0Ia3xxnBR4WdhxcLCDGCz5KrXFy5/LJYzVOqQGF10amEf23LWeT2khNsG257XNxLasy5kg4JQdqBHWgrpXF2ABREgDPxbblfri3Uvqto/KW1B2nMGI3hppJfKyti6neU7HSoKBbH3xOf6OYAi4g7Lm4/70238f/Y=
+	t=1716857258; cv=none; b=Nqv9gkktGRnJoVx2nJurue18y0Vr3ftJFZ4X5xh8WVd4LHYqjjbYP/H1+GquKd6TAXYKgTCV0cLmjO5qwM5PB0AVGdAXh+RucB2/EcMF0MFGG6cpaxe1WpmvdyOoQKSyDtF0YpAX7q4rRRFZa5Jh7xIjc+soRl6xnXmy/OmkQ0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716845758; c=relaxed/simple;
-	bh=T8DQ9Kptpeg7XMJfhdxM/zrD1AVQCavsE1yQBXVDi9w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=t7vtk2pFNOSlqd+XrmzU6vREgqirJ8jyjRP7wCXKrtRLGs/BJBCIJJzZIa0ViNNDs0ajq6sH5yjQmCT1q1jvSc0qSusDOpbZtwlcHwWRmSCsG8FtyTe6W1fFA1TiLaKS4y12AxyF//0ZDwlyJCE1IqwmIorGeCNngtBT8qzZaL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=hamlin.carlisle@gmx.com header.b=PRh0y1pO; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
+	s=arc-20240116; t=1716857258; c=relaxed/simple;
+	bh=bnuSIz1bl8Xvxx2ULJ5UATLGw3XHY2i5ntGQhA2iGSc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YV9qs+o29Xygo6zZuPy7zkX7ZbltwaFuaQojmBYtG3bAEuNSGqH1R0ud0pnyhpMduXk5abmUSXXfVaq/A96C3RjyDPT/suJLdmdTpd1/8yWD+3CNU8jmek2U4jSxg4GVZeuAd4ZAtxt48C9AbR7ARAdewY1pw/leQ9GfND+bSYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=innwSVSV; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.com header.i=hamlin.carlisle@gmx.com header.b="PRh0y1pO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
-	s=s31663417; t=1716845753; x=1717450553; i=hamlin.carlisle@gmx.com;
-	bh=T8DQ9Kptpeg7XMJfhdxM/zrD1AVQCavsE1yQBXVDi9w=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:From:In-Reply-To:Content-Type:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=PRh0y1pO4hA31vw/APBrdU4mKSnVM4MmtUPYean8On7IB7IDcCwjoaWEY7MmQNaS
-	 6fkhvhUkdhOWfUaRQad8SMZaabloHM6/BXU8aaVTcmxjo9B6bz4WMM9knrJkehrZR
-	 q7dnmti+Wn/S4wXkQL91AVFTE4ViInDQXY+v3WJCj2l47cuQeg0BhfmAVD+7Ubzvi
-	 gJo65Cx9TR7x8cTNjL1D+uf2MoPj5KQKpVmNHcTMYYimI/eYDZOcLhFIQEV5GpHkD
-	 nLJQmCEY4eE7Mdkutvm9Lj4zuuAlzntPtKVB4Z4b+6yUl3MxGV3kdX1r8/bGZoCqj
-	 /K2kNSje6hwmndtfEw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [10.0.0.134] ([67.182.44.22]) by mail.gmx.net (mrgmx104
- [212.227.17.174]) with ESMTPSA (Nemesis) id 1McH5Q-1slr6a3GYe-00ZfiD; Mon, 27
- May 2024 23:35:53 +0200
-Message-ID: <d3983115-bcf5-4ed2-b47a-56af297b6a9c@gmx.com>
-Date: Mon, 27 May 2024 14:35:50 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="innwSVSV"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-62a08099115so2894097b3.0
+        for <git@vger.kernel.org>; Mon, 27 May 2024 17:47:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716857255; x=1717462055; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xFX2twxAQ/CjJ2KTSVTAJSatjtX98VVmFyCQM5a/Io4=;
+        b=innwSVSVO7LyTzClAsrFCKLSev2F4WaDCixfKvXuXO1h4zw4rY2qgqd6tKeQ2M1dr8
+         NX5boTlB5gWJY71UpXtOkXt0mhzpPE5BX732Djk8GuUYIgwvrBToXrkxrD0uSTQs1GJT
+         j8aRlzhajIZSIwtTUhtC2YzCsB2urZKQ4QC9mG6TfsDwklAoA+F5t8JD9h31LttkQZam
+         6kgn3Jerd6sk9ySFXsJKXWcHW1L16FoejJTf09/nf2rcLsaTfgxTuejWo4gv6+5DuLGi
+         OUPYtUcx2iFnd6bXvsOg9Dz1ay1zNuyn2NRV2Tvh+EDzeiwM8QbeDhkuVGxcMW1THrBS
+         wFmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716857255; x=1717462055;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xFX2twxAQ/CjJ2KTSVTAJSatjtX98VVmFyCQM5a/Io4=;
+        b=U9zXZfHKz9Bsjn4BqSOtRQyDzis82bMqZ0JIfb4McnkHRyDzwK71C4tNn3F5F5q8OP
+         UmilDDiI7PMD7xf6TD/fUkXVxeiJbbrDv9NArUmng0SV5rUm6GkmLHESyZgOEg4VAyDh
+         C+jLPR5El09jcKzBdaZjRJXig5ZZ1taIkwGKp3YXFBevmhus2Fi9FN4bYxqECzJUMR62
+         iMUDYRY1sZkR6HRZ/4upQvam4VkalNPTPSAlqSu9dXVtmbG38ZLuFzve94Z83ZK2smsY
+         9OD8Yvq6b+6I/OZ7BA5v+Brg0Lhvpt58H3AA/tN8RxxdqljgMRrAKg0UNI0Pb8oFABz4
+         /Tpg==
+X-Forwarded-Encrypted: i=1; AJvYcCWZIEI6OK9T7Y1mGvsOYHFEGvg2fjIx5wupx6J4HaIHRPkaZ2s2AEdz4TOQVOLyjMaknYWRuFRkNDrCAC9ozty1eCvo
+X-Gm-Message-State: AOJu0YzKjqwq8kfCg0IleubMXTlG+aRalkIU8xvH2mfOPeJdGsWZhx8q
+	b06jWO0S771dLtWPHOX9qziuHoA54Q6C+WMYhK8GtrT8mQW38MCTcr0jehesbHOShIlIsH0zjZG
+	Ixe5L9U5DTHfvi7gOgNAkIrb7+9w=
+X-Google-Smtp-Source: AGHT+IG0WiUhj58h8ui5Kjh3Hn/uVDcahcKpww3pSp3mribZiF/kY1IKod39CLNB7r18/hOGX0NGp25OPn0V6VjKUE0=
+X-Received: by 2002:a0d:d894:0:b0:614:2687:5e18 with SMTP id
+ 00721157ae682-62a08f3c4b2mr96061187b3.48.1716857254938; Mon, 27 May 2024
+ 17:47:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: git-shell vs "detected dubious ownership in repository"
-To: Harald Dunkel <harald.dunkel@aixigo.com>, git@vger.kernel.org
-References: <14ed85d8-dccb-4928-a4b8-a099d151fe5b@aixigo.com>
-Content-Language: en-US
-From: "Carlisle T. Hamlin" <hamlin.carlisle@gmx.com>
-Autocrypt: addr=hamlin.carlisle@gmx.com; keydata=
- xsAiBEfLBpcRAgD8qfOOlcAEezHtcm6xrrZbwjKLXlIfKXUf/YiTeuaLk7TkfnvTVU5fwUam
- iewb7AN+t3mzKxcgwxViDnFQ8spDAKDtjKSLxKSCTYDVT8WR5w0NwOI3dwH9GetPPjCjJvnk
- JOr7yJOcyF0+T0bwR/cEUJ6nuQfbh2eVSNyWSiixsr14dQWphJf7CwGsTfIfv7vsZ+fIwP39
- rgIA+g8d2waPxl76gDjIygL6TrF6hhTt7KUb2yNgSng9IldkMfcdBYlg3dWOpZNNcZrTGOyd
- 6xvhvmMuojRRx8r54c0oQ2FybCBULiBIYW1saW4gPGhhbWxpbi5jYXJsaXNsZUBnbXguY29t
- PsJjBBMRAgAjBQJYh9SnAhsDBwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQyLm4ydrA
- Bve9TgCdGob4qLVTBIOjrTrY+/PmPPGby4AAn21LQfE5TXjJP298WdZNVCmAzXarzsFNBEfL
- B4oBEADbRPe1kVPw4r1YTMTRjRGKz1zF1juy+w7rgYmbwGE7g59jyb2jQYkiuUykupPom63I
- UAiHsTm7rt+GrHqJ2WjgBfDC7rUM0tWst5pKkt9Ma27l/O9J0T4YDr0kRDGhEUJPHI27V2D2
- NX52bDFgKiPl5WyRxtgAtTZC9KOdCPJ4t9c8waUIWlFn/YeWYerC2b15Sf3AB6bKVhP+2v91
- j/vOsTEFIlfg57fbQpEknGsLRIbO1V5Gx5FhFgycNh50zk86LiTz7pzZ19E6UnYuUEgaozru
- UjTQubdqPYOdgCnReTgcwo4ylon12sXjWHBScODgIYooPEUjAyn8H/m5i7jaSV5l2eZOUPvF
- 8NPuuGUUWgMmQ+pCah3DnO3ccdaOOjW2z02Skx1XGep7Zyyn4hzV3cZpIhnOP5udwE1D3Pxr
- ljwVKs4uroPo28Eeh1KiYf95kP5KfzYafOpVx3QyykkiqQ4MEd1k61Y1ZoQ4pz+XskOym1DD
- 9w6JdoAimsb7YGAqMQbSrtNSVpDMcYIDpXboDDussRmRD+Xoko/mhhQ2ZpUUyeqnlPHHmzSJ
- va0+hvBhw3QEv0QV7or3V1tN9r72o0KGp1un1n9IZv7JA4CKvs2oWPlR593d+pmHzZswK01Y
- ozFV+96kRXULHziVesdtlJCa+/341vc/p9teqKEJSQARAQABwkkEGBECAAkFAkfLB4oCGwwA
- CgkQyLm4ydrABvf1ogCeN98H/EE39WaSoZ34uxgYcHfRL9sAn3LooRvS2o7l73Qdhbte45qc sK+N
-In-Reply-To: <14ed85d8-dccb-4928-a4b8-a099d151fe5b@aixigo.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------hD0V0uGGyi7wjX5BtKbQf89F"
-X-Provags-ID: V03:K1:GHYxRsSbxk0RI7slt9MEVv221MGVHkKr8dY8OkB+aUGmhodHr/L
- oM8Y02+UHzFXZ5Cd69RVln+3t/OxFnO9EWFRvk9Ryp6u7YRzwr/1dTyEkt6FTRg43FnYwW7
- //AmxAZxv4mohbSh13dcKysXmQF7gAodz5EL8d1FImr/QZXYOpAqLBwDRLHOG7c6wwOEzC9
- 94KRkSo9A77AvjSRfBpTA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Gw5DZB4S/sw=;RWTNPo6xENAU0TLp01xh6IRrqqV
- IPjwVsL73m3NFCs250MVCnJxwpKztfsKwD6FU/q3zy6g4vUvk9zru/pQ4be2Z50q090v2+QtT
- daN+v/9tOZL4CWQq7M14R3MoX6yxofQyz3dt1HUc6eDbeNSS438N2HeTEEREIRixF3ZK28bwc
- rsUIDOc707xifmvOiNIXtLtDEBZwyJwEnVdGj4OlFszR7wbCxRnl2ixTxVMXUi6mxDFpEA2+X
- AcAUBFIX+1tOY8gMWOjmaA3VzgWnF5OnntMQXAE6yPy84bdy90l3ap4MCEj/LoeNiOxZOz5rs
- f3Oczh2FkthAoMatGfarURJ2A34AsPO1JdRwLAz1/1+gkEIDEHOGr2lOx4DXigsHKyL5iJ6uD
- k758vAPoCivR0pRWyC43o1IIxSdDfm8tY3GjCqep78wAf1C0RLpyukhQQnoCIXEmynALNlhCB
- 71C+Gq9U2RVaKwo1DJbNfNCu1Q2zQ2c50A6jvD8sjJH4KqgmuZPjy9MZ21Sy+bAWOuJEoQOA6
- 60nnjD+BsgOwEsYgn/m5Qb3zKYy7fvLQcIJWHa9PPw6zKcqGcUE8OEZmrrF14oaHPgqS9whg2
- gWItUhpLWX4es8HBMEd9bNEQ9QqGmjdeUoAc8iU9YelStfXhKjmkR4JMQGl5yz1lu4RYR4Uz7
- d462UpF15r93fsbCTRwUtlkBl0kkYYXIf+gWCe4qDu2NTGxvV/WAOqe9xnonix1876U/suH20
- 7NccOz4Gb2KAgJrjnBvB/tFzMIA2HKT18w8DATCxxagp7GpyJ8gprILcfjzFgfKqvTG2Wu4eG
- Z8zU9zWDf26CLH8IMvkAd/kzsLmoL4HOWADmZ7n7+tSa8=
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------hD0V0uGGyi7wjX5BtKbQf89F
-Content-Type: multipart/mixed; boundary="------------kU86RZdVhRJxjxNXe9X4CykH";
- protected-headers="v1"
-From: "Carlisle T. Hamlin" <hamlin.carlisle@gmx.com>
-To: Harald Dunkel <harald.dunkel@aixigo.com>, git@vger.kernel.org
-Message-ID: <d3983115-bcf5-4ed2-b47a-56af297b6a9c@gmx.com>
-Subject: Re: git-shell vs "detected dubious ownership in repository"
-References: <14ed85d8-dccb-4928-a4b8-a099d151fe5b@aixigo.com>
-In-Reply-To: <14ed85d8-dccb-4928-a4b8-a099d151fe5b@aixigo.com>
-
---------------kU86RZdVhRJxjxNXe9X4CykH
-Content-Type: multipart/mixed; boundary="------------vdf5Eyebg9YC9eDQXczkI4S0"
-
---------------vdf5Eyebg9YC9eDQXczkI4S0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-
-SGl5YSwgSGFyYWxkLg0KDQpJJ20gbm90IHN1cmUgaWYgdGhpcyBpcyBpbnRlbmRlZCBiZWhh
-dmlvdXIsIGJ1dCBJJ3ZlIGFsd2F5cyBldmVyIGhhZCANCnRoYXQgcHJvYmxlbSBydW5uaW5n
-IG15IG93biBzZXJ2ZXJzIHdoZW4gdGhlIGdyb3VwIGRvZXMgbm90IGhhdmUgd3JpdGUgDQph
-Y2Nlc3MgdG8gdGhlIGRpcmVjdG9yeSBjb250YWluaW5nIHRoZSByZXBvc2l0b3J5Lg0KDQpZ
-b3UgbWlnaHQsIGFzIGEgdHJvdWJsZXNob290aW5nIHN0ZXAsIHRyeSBnaXZpbmcgdGhlIGdy
-b3VwIHdyaXRlIGFjY2VzcyANCmFuZCBzZWUgaWYgdGhhdCBtYWtlcyB0aGUgcHJvYmxlbSBn
-byBhd2F5Lg0KDQpBbHRlcm5hdGl2ZWx5LCB5b3UgY291bGQgYWxzbyBqdXN0IGFkZCB0aGUg
-ZGlyZWN0b3J5IGFzIGFuIGV4Y2VwdGlvbiANCnVzaW5nIHRoZSBjb21tYW5kIHByb3ZpZGVk
-Lg0KDQpPbiA1LzIxLzI0IDAxOjQwLCBIYXJhbGQgRHVua2VsIHdyb3RlOg0KPiBIaSBmb2xr
-cywNCj4gDQo+IHNpbmNlIDIuNDUuMSAodXBncmFkZWQgZnJvbSAyLjQwLnNvbWV0aGluZykg
-SSBjYW5ub3QgcHVsbCBteQ0KPiBldGNrZWVwZXIgcmVwb3NpdG9yaWVzIGFueW1vcmU6DQo+
-IA0KPiAgwqDCoMKgwqAjIHN1IC0gZXRja2VlcGVyDQo+ICDCoMKgwqDCoCUgY2QgL2FyY2hp
-dmUvaG9zdC5leGFtcGxlLmNvbQ0KPiAgwqDCoMKgwqAlIGdpdCByZW1vdGUgLXYNCj4gIMKg
-wqDCoMKgb3JpZ2luwqAgaG9zdC5leGFtcGxlLmNvbTovZXRjIChmZXRjaCkNCj4gIMKgwqDC
-oMKgb3JpZ2luwqAgaG9zdC5leGFtcGxlLmNvbTovZXRjIChwdXNoKQ0KPiAgwqDCoMKgwqAl
-IGdpdCBwdWxsDQo+ICDCoMKgwqDCoGZhdGFsOiBkZXRlY3RlZCBkdWJpb3VzIG93bmVyc2hp
-cCBpbiByZXBvc2l0b3J5IGF0ICcvZXRjLy5naXQnDQo+ICDCoMKgwqDCoFRvIGFkZCBhbiBl
-eGNlcHRpb24gZm9yIHRoaXMgZGlyZWN0b3J5LCBjYWxsOg0KPiANCj4gIMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgZ2l0IGNvbmZpZyAtLWdsb2JhbCAtLWFkZCBzYWZlLmRpcmVjdG9yeSAv
-ZXRjLy5naXQNCj4gIMKgwqDCoMKgZmF0YWw6IENvdWxkIG5vdCByZWFkIGZyb20gcmVtb3Rl
-IHJlcG9zaXRvcnkuDQo+IA0KPiAgwqDCoMKgwqBQbGVhc2UgbWFrZSBzdXJlIHlvdSBoYXZl
-IHRoZSBjb3JyZWN0IGFjY2VzcyByaWdodHMNCj4gIMKgwqDCoMKgYW5kIHRoZSByZXBvc2l0
-b3J5IGV4aXN0cy4NCj4gDQo+IFBsZWFzZSBub3RlIHRoZXJlIGlzIGdpdC1zaGVsbCBvbiB0
-aGUgcmVtb3RlIHNpZGUuIFF1ZXN0aW9uIGlzLA0KPiB3aGF0IGlzIGR1YmlvdXMgYWJvdXQg
-dGhlIGV4aXN0aW5nIGFjY2VzcyBiaXRzIG9mIHRoZSByZW1vdGUgcmVwbz8NCj4gQ3VycmVu
-dGx5IEkgaGF2ZQ0KPiANCj4gIMKgwqDCoMKgcm9vdEBob3N0LmV4YW1wbGUuY29tOi9ldGMv
-LmdpdCMgbHMgLWFsDQo+ICDCoMKgwqDCoHRvdGFsIDUzMg0KPiAgwqDCoMKgwqBkcnd4ci1z
-LS0twqDCoCA4IHJvb3QgZXRja2VlcGVywqDCoCA0MDk2IE1heSAyMSAxMDoxNCAuDQo+ICDC
-oMKgwqDCoGRyd3hyLXhyLXggMjQyIHJvb3Qgcm9vdMKgwqDCoMKgwqDCoCAyMDQ4MCBNYXkg
-MTggMDY6MjggLi4NCj4gIMKgwqDCoMKgLXJ3LXItcy0tLcKgwqAgMSByb290IGV0Y2tlZXBl
-csKgwqAgMjcxNiBNYXkgMTcgMTQ6MDQgQ09NTUlUX0VESVRNU0cNCj4gIMKgwqDCoMKgLXJ3
-LXItcy0tLcKgwqAgMSByb290IGV0Y2tlZXBlcsKgwqDCoMKgIDIzIEp1bsKgIDXCoCAyMDEz
-IEhFQUQNCj4gIMKgwqDCoMKgZHJ3eHItcy0tLcKgwqAgMiByb290IGV0Y2tlZXBlcsKgwqAg
-NDA5NiBKdW7CoCA1wqAgMjAxMyBicmFuY2hlcw0KPiAgwqDCoMKgwqAtcnctci1zLS0twqDC
-oCAxIHJvb3QgZXRja2VlcGVywqDCoMKgwqAgOTIgSnVuwqAgNcKgIDIwMTMgY29uZmlnDQo+
-ICDCoMKgwqDCoC1ydy1yLXMtLS3CoMKgIDEgcm9vdCBldGNrZWVwZXLCoMKgwqDCoCAzNyBK
-dW7CoCA1wqAgMjAxMyBkZXNjcmlwdGlvbg0KPiAgwqDCoMKgwqAtcnctci1zLS0twqDCoCAx
-IHJvb3QgZXRja2VlcGVywqAgNzA5NzkgSnVuIDI4wqAgMjAyMSBnaXRrLmNhY2hlDQo+ICDC
-oMKgwqDCoGRyd3hyLXMtLS3CoMKgIDIgcm9vdCBldGNrZWVwZXLCoMKgIDQwOTYgSnVuwqAg
-NcKgIDIwMTMgaG9va3MNCj4gIMKgwqDCoMKgLXJ3LXItLS0tLcKgwqAgMSByb290IGV0Y2tl
-ZXBlciAzOTc0MDggTWF5IDIxIDEwOjE0IGluZGV4DQo+ICDCoMKgwqDCoGRyd3hyLXMtLS3C
-oMKgIDIgcm9vdCBldGNrZWVwZXLCoMKgIDQwOTYgSnVsIDExwqAgMjAyMyBpbmZvDQo+ICDC
-oMKgwqDCoGRyd3hyLXMtLS3CoMKgIDMgcm9vdCBldGNrZWVwZXLCoMKgIDQwOTYgSnVsIDEx
-wqAgMjAyMyBsb2dzDQo+ICDCoMKgwqDCoGRyd3hyLXMtLS0gMjYwIHJvb3QgZXRja2VlcGVy
-wqDCoCA0MDk2IE1heSAxNyAxNDowNCBvYmplY3RzDQo+ICDCoMKgwqDCoC1ydy1yLXMtLS3C
-oMKgIDEgcm9vdCBldGNrZWVwZXLCoMKgwqAgMTA1IEp1bCAxMcKgIDIwMjMgcGFja2VkLXJl
-ZnMNCj4gIMKgwqDCoMKgZHJ3eHItcy0tLcKgwqAgNCByb290IGV0Y2tlZXBlcsKgwqAgNDA5
-NiBKdW7CoCA1wqAgMjAxMyByZWZzDQo+IA0KPiBEb2Vzbid0IGxvb2sgZHViaW91cyBhdCBh
-bGwuIFVubGVzcyB5b3UgYXJlIHJvb3QgeW91IGhhdmUgdG8gYmUgaW4NCj4gdGhlIGV0Y2tl
-ZXBlciBncm91cCB0byBnZXQgcmVhZCBhY2Nlc3MsIHJlc3RyaWN0ZWQgYnkgdGhlIHRvcCBs
-ZXZlbA0KPiBkaXJlY3RvcnkgYW5kIGFsbCB1bmRlcm5lYXRoIGZpbGVzIGFuZCBkaXJlY3Rv
-cmllcyAuIE5vdGUgdGhlIHN0aWNreQ0KPiBiaXQgZm9yIHRoZSBldGNrZWVwZXIgZ3JvdXAu
-IFdoYXQgaXMgd3Jvbmcgd2l0aCB0aGF0Pw0KPiANCj4gRXZlcnkgaW5zaWdodGZ1bCBjb21t
-ZW50IGlzIGhpZ2hseSBhcHByZWNpYXRlZC4NCj4gDQo+IA0KPiBSZWdhcmRzDQo+IEhhcnJp
-DQo+IA0KDQo=
---------------vdf5Eyebg9YC9eDQXczkI4S0
-Content-Type: application/pgp-keys; name="OpenPGP_0xC8B9B8C9DAC006F7.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xC8B9B8C9DAC006F7.asc"
-Content-Description: OpenPGP public key
+References: <xmqq5xwa1pfl.fsf@gitster.g> <20240525122514.2608-1-ash@kambanaria.org>
+ <xmqqzfsb86le.fsf@gitster.g>
+In-Reply-To: <xmqqzfsb86le.fsf@gitster.g>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Tue, 28 May 2024 08:47:23 +0800
+Message-ID: <CANYiYbHigLbVumfqOF6zMWkRKnthUr-NsOPzPBiv_Q-iaOYZBg@mail.gmail.com>
+Subject: Re: [PATCH 2 0/1] Allowing localized substitution hints in parse-options
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Alexander Shopov <ash@kambanaria.org>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+On Tue, May 28, 2024 at 2:14=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Alexander Shopov <ash@kambanaria.org> writes:
+>
+> > I hope this time patch submit is better.
+> > Requests for changes from previous review should be handled.
+> >
+> > parse-options.c contains functions and macros to print messages with
+> > terms optionally enclosed in chars promting substitution to users such =
+as:
+> >
+> >   blah-blah-blah <TERM>
+> >
+> > Since languages using different alphabets or writing systems can transl=
+ate
+> > the term in an obvious manner to prompt the user to substitute them, I =
+expose
+> > these character to the translators so the messages can use the same sty=
+le as
+> > elsewhere in git.
+>
+> Most of the above explanation, starting from "parse-options.c
+> contains... " should replace the proposed log message of the main
+> patch [1/1], I would think.  Very clearly written.
 
-xsAiBEfLBpcRAgD8qfOOlcAEezHtcm6xrrZbwjKLXlIfKXUf/YiTeuaLk7TkfnvT
-VU5fwUamiewb7AN+t3mzKxcgwxViDnFQ8spDAKDtjKSLxKSCTYDVT8WR5w0NwOI3
-dwH9GetPPjCjJvnkJOr7yJOcyF0+T0bwR/cEUJ6nuQfbh2eVSNyWSiixsr14dQWp
-hJf7CwGsTfIfv7vsZ+fIwP39rgIA+g8d2waPxl76gDjIygL6TrF6hhTt7KUb2yNg
-Sng9IldkMfcdBYlg3dWOpZNNcZrTGOyd6xvhvmMuojRRx8r54c0oQ2FybCBULiBI
-YW1saW4gPGhhbWxpbi5jYXJsaXNsZUBnbXguY29tPsJjBBMRAgAjBQJYh9SnAhsD
-BwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQyLm4ydrABve9TgCdGob4qLVT
-BIOjrTrY+/PmPPGby4AAn21LQfE5TXjJP298WdZNVCmAzXarzQ5DYXJsIFQuIEhh
-bWxpbsKOBDARCABOFiEEtNz5W458f1i2/ed9yLm4ydrABvcFAmXqScIwHSBUcmlt
-bWluZyBrZXkgZG93biAtIGxvdHMgb2YgY3J1ZnQgb24gdGhpcyBvbmUuAAoJEMi5
-uMnawAb3jygAoN4O7gnTc3P5ylwzirGAMUvYshmGAJ9AP8XRmDOBKjxBDYIPu1Xg
-MKvfntHOmc6XARAAAQEAAAAAAAAAAAAAAAD/2P/gABBKRklGAAEBAQBIAEgAAP/h
-ABZFeGlmAABNTQAqAAAACAAAAAAAAP/bAEMAKBweIx4ZKCMhIy0rKDA8ZEE8Nzc8
-e1hdSWSRgJmWj4CMiqC05sOgqtqtiozI/8va7vX///+bwf////r/5v3/+P/bAEMB
-Ky0tPDU8dkFBdviljKX4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4
-+Pj4+Pj4+Pj4+Pj4+Pj4+P/AABEIAUoAywMBIgACEQEDEQH/xAAZAAACAwEAAAAA
-AAAAAAAAAAAAAQIDBAX/xAA0EAACAgEDAgQDBwQDAQEAAAAAAQIRAxIhMQRBIlFh
-cRMygQUjM0JykbE0UqHBFCTRgvD/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAQID/8QA
-GREBAQEBAQEAAAAAAAAAAAAAAAERMRIC/9oADAMBAAIRAxEAPwDpDADTAAAAaY9R
-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
-L9sAn3LooRvS2o7l73Qdhbte45qcsK+N
-=3DHsVJ
------END PGP PUBLIC KEY BLOCK-----
+Typically for a topic with only one commit, it's not necessary to
+provide a cover letter but provide details in the commit log instead.
 
---------------vdf5Eyebg9YC9eDQXczkI4S0--
+>
+> The explanation after "such as:" needs improvement, though.  Are you
+> trying to highlight that an explanation is spelled with dashes
+> between words format?  Are you trying to highlight that the used
+> term is capitalized?  Are you trying to highlight that the term
+> comes after explanation?  The answer is none of the above, but it is
+> not easy for readers to guess.
+>
+> One way to make it easier to follow would be to use a more realistic
+> example.  The whole proposed log message may become like so:
+>
+>     parse-options.c API can show help text for an option that takes
+>     an argument.  For the "--author" option that takes a name, for
+>     example, the program may define the option like so:
+>
+>         OPT_STRING(0, "author", &au, N_("author"), N_("override author"))=
+,
+>
+>     When the command is run with "-h" (short help) option, the above
+>     definition is shown as:
+>
+>         --[no-]author <author>    override author
+>
+>     As the program does not accept translated option names, the
+>     first part of the above, "--[no-]author", is given as-is, but
+>     the string "author" in a pair of "<>", and the explanation
+>     "override author" may be translated into user's language.
+>
+>     The user's language may use a convention to mark a replaceable
+>     part of the command line (called a "placeholder string")
+>     differently from enclosing it inside a pair of "<>", but the
+>     implementation in parse-options.c hardcodes "<%s>".
 
---------------kU86RZdVhRJxjxNXe9X4CykH--
+I guess the reason some people don't like the markers of placeholders
+(such as "<" and ">" characters) is that such characters have special
+meanings (used as IO redirection) in shell programming and they can be
+replaced with safer characters for languages other than English.
 
---------------hD0V0uGGyi7wjX5BtKbQf89F
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wmMEABEIACMWIQS03Plbjnx/WLb9533IubjJ2sAG9wUCZlT8tgUDAAAAAAAKCRDIubjJ2sAG98Lb
-AKDqdLmKHH+AgDCSYyUan9RaTzRgSwCdHC/SqQ3Pnp7rBvSxle+YnKmlqIc=
-=qKU+
------END PGP SIGNATURE-----
-
---------------hD0V0uGGyi7wjX5BtKbQf89F--
+>
+>     Allow translators to specify the presentation of a placeholder
+>     string for their languages by overriding the "<%s>".
+>
+> > Comments to the translators are shorter than before but hopefully they =
+are
+> > not cryptic.
+>
+> What is cryptic here is what "than before" refers to---compared
+> what?
+>
+>   ... goes and looks ...
+>
+> Ah, this is an updated patch for an earlier attempt
+>
+>   https://lore.kernel.org/git/20240421191458.5411-1-ash@kambanaria.org/
+>
+> Thanks for sticking with this topic.  Very much appreciated.
+>
+>
