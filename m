@@ -1,159 +1,139 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A692D27E
-	for <git@vger.kernel.org>; Wed, 29 May 2024 21:41:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B158BFF
+	for <git@vger.kernel.org>; Wed, 29 May 2024 22:03:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717018910; cv=none; b=aUvVi+ENJBHVKz9dhCXe4GufspSph0JQzIVSOjIKAmD/vKofdEV36MmRUyjNkcCE1o2Uogdq6r3kRKoD2FDkTye4bjRJsbDzJgj1eGzyoln2yFHuEWUEHeQ1Ady20EbnihICljmPlRjd4dc5Si9Q38+tZWigFq8kRqIvp6W9HTo=
+	t=1717020190; cv=none; b=ebyr0Db37Qc+4HJnF0ahyLH3ngIAAJFn6C2RTE/XRHYH5TWv7veax7d8wYhg/EVqamvokyPHTpSgzMfMWp/S7T3tw4pDalLOxM8+HY3ipPuVkkuI70WiG+j5Xg4oGrl2EWojnfHJlqXkzPLwzThDJfsKRig4bBEwJ1JpgTnrxmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717018910; c=relaxed/simple;
-	bh=mVZ5hW8jt66CyicNPYkanD5EK5wu9kJMPuHF1X68Qxk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K56dWsapmHP9pryOpIQGxiIYDpGk53fOZTE2AHqTqBs7hZnbHTTJlIoszyFWEU/l6PM6knR6Ewrue63cEekZ92FwIdbXbRx3XvrJAj033Zc1Ysa7SlkTIlYx99M5hWI/CGrFYqQzK+nUfhkeEcl9XhvH/KVIjch8CrSs4r1w8Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TDrk0ot9; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1717020190; c=relaxed/simple;
+	bh=LFsMmui6WALxKd47B7aYAfbVsYiMezp27c09mNoKORg=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=EhnjhUbUFs6Rs4wUphLrxpc9clAzEj5p9CNKBOegLGph1QHQZhGJk5G11m4roZM1Ws/wlxHTj3/sz6bOIIhmi0n59KupowzUonZQrYLNVDwKAloMyCQCnuKerV6CMt7lt/COcGY5VeKA7QZx1lg3R1bplXPNc7Pzs7yZoODPLLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dragondata.com; spf=pass smtp.mailfrom=dragondata.com; dkim=pass (2048-bit key) header.d=dragondata.com header.i=@dragondata.com header.b=fkiHxzN5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NE0BuW5/; arc=none smtp.client-ip=64.147.123.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dragondata.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dragondata.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TDrk0ot9"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D4818253AA;
-	Wed, 29 May 2024 17:41:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=mVZ5hW8jt66CyicNPYkanD5EK5wu9kJMPuHF1X
-	68Qxk=; b=TDrk0ot90siVdeSUeDfONzhTjEj2uW8xfLVWJOZul5KZTzWud8XvzD
-	Ri6tCe0zU5oK0YqRqb9MichW2G6HCVylVUBW2Q1d4pGfXgHd3jgfnWcqn0ipmUT5
-	7WfhCd6WZ2qGk/5Sx4Naqh+qd9zFB4Qe/jfUT6tzrEaTBWM/GJ2T0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CC2E4253A9;
-	Wed, 29 May 2024 17:41:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 40DD4253A8;
-	Wed, 29 May 2024 17:41:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,
-  Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][PATCH] t/: migrate helper/test-example-decorate to the
- unit testing framework
-In-Reply-To: <20240528125837.31090-1-shyamthakkar001@gmail.com> (Ghanshyam
-	Thakkar's message of "Tue, 28 May 2024 18:28:25 +0530")
-References: <20240528125837.31090-1-shyamthakkar001@gmail.com>
-Date: Wed, 29 May 2024 14:41:46 -0700
-Message-ID: <xmqq8qzsuwh1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=dragondata.com header.i=@dragondata.com header.b="fkiHxzN5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NE0BuW5/"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id C4E951800188
+	for <git@vger.kernel.org>; Wed, 29 May 2024 18:03:06 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Wed, 29 May 2024 18:03:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dragondata.com;
+	 h=cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm2; t=1717020186; x=1717106586; bh=XT
+	2TwOvF0WEnh1L6rgB0H4VXAnCkvjhXaQwjgGn7p4M=; b=fkiHxzN58SyX5kVV/w
+	C+s+cZiMINlzggEisS/dgle46WvMNW2l0jLcAocGDGRi54RQFM0Yg7+j942FNpKo
+	EyhDZ4hFXBZdDS1xRRcpseMoKB9ftgDvxYZ1+fFOhoo3UDXvCdmVM0Og5aM5Kldf
+	lH2o4EI/RlgLFF9XOZGtuc24VeitrgyHAxnRfjwzP7a//o10jyI+Uw2Lh9Olgdtk
+	IgV8hXKvUToD5z1Jjnvt3hzNcgcPbM2lszRCS2RP6LYXRVuCpY3Pa9ix9sjvYB6G
+	anMx/NzRCY0nEVKHwWj4nVNr6zd2209+L/dt5kfwGrckiUgqZu58xseG6fdqoLTN
+	ve5w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1717020186; x=1717106586; bh=XT2TwOvF0WEnh1L6rgB0H4VXAnCk
+	vjhXaQwjgGn7p4M=; b=NE0BuW5/cgxcsLygg7tUo+k8iiov7D8kWa3POHadu89N
+	0kG2Hk4mb3mghmNmW4+6wrVBkZHfIVzjCkXro2Es3nqqoWvIvw51nxhnjAOBN0i6
+	HyzQ/X5t9GghfOSoqKrjKcqnklqdS7wHRZyOAt4sQp+gHAvgqdO7vvVCzvWOk04Y
+	SAtBSLNLEubdAcswy+DkxFVSKqME45kyPiowsowhm7fPU6+M5FrB5OM2cng/WVVV
+	JQAq7mMjIsFPghmRwH0wwnBrKsCjfubd4cERiSlMupPedPIvDcz0gMG9ZDi5WPth
+	P7/YzOk823RCGG4HH8kuaMAJujpPI3OlWtBk0VpEwg==
+X-ME-Sender: <xms:GaZXZgjoJ8BeEPnUAx8wkKXcFtF49vuH9A8eEzBYrM4otx5WgZZbiQ>
+    <xme:GaZXZpAXy8quJArqcUcTiM7f2BRJ1CdLTqXxGExHX3qF34OiPK4DMn75vJm__abjP
+    hwTKU0H9-XMAPFoObk>
+X-ME-Received: <xmr:GaZXZoHAxF-iW1AyXDAFoQb0yoKp4z2ADyJQHXkuf8JcSsoAbc1axV5j8I_u5-BdWXcKydaMcu1fUY-W73LUcX9zc2PJWUK5JaQI9cH-aEmU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekvddgtdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhtgfgggfukfffvffosehtqhhmtd
+    hhtddvnecuhfhrohhmpefmvghvihhnucffrgihuceothhorghsthihsegurhgrghhonhgu
+    rghtrgdrtghomheqnecuggftrfgrthhtvghrnhepvddvvddujeegkeefledtieehfefhie
+    ejffetvdehgeegheehffefteegleevjeehnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepthhorghsthihsegurhgrghhonhgurghtrgdrtghomh
+X-ME-Proxy: <xmx:GaZXZhRJiSVaBTCp8ZDV4TFT7x87haMa70OaEONfUUCUka0KgYIWyA>
+    <xmx:GaZXZtzZz0V2xlEq3UoxVmpNrnCIRpzYpda0OITEYj31CQHfy2Tqng>
+    <xmx:GaZXZv4G8pb55mTf7ZbHqT6VMzAQ5mcRzmZlcCxBhgnPDuT4kc4DCg>
+    <xmx:GaZXZqy_GuBT7UYpf39Mb6JHAqUu0fGSZaO6Nabnj5EKLak2AroR8Q>
+    <xmx:GqZXZuriUDJLk1Z_nPjFN3sJG8kxexVqs2aYXengoRmuzFQrOM1yBbJn>
+Feedback-ID: i862946f8:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 29 May 2024 18:03:05 -0400 (EDT)
+From: Kevin Day <toasty@dragondata.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 3FEB3302-1E04-11EF-866D-6488940A682E-77302942!pb-smtp2.pobox.com
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
+Subject: Commands using -h as an option don't work consistently
+Message-Id: <52819526-4C6F-418C-8B8B-A4D5C7E371EA@dragondata.com>
+Date: Wed, 29 May 2024 17:03:04 -0500
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3774.600.62)
 
-Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
+Because of a bug in parse-options.c, any command that has a '-h' option =
+will sometimes display the usage page instead of executing. For example, =
+ls-remote has two options:
 
-> +struct test_vars {
-> +	struct object *one, *two, *three;
-> +	struct decoration n;
-> +	int decoration_a, decoration_b;
-> +};
-> +
-> +static void t_add(struct test_vars *vars)
-> +{
-> +	void *ret = add_decoration(&vars->n, vars->one, &vars->decoration_a);
-> +
-> +	if (!check(ret == NULL))
-> +		test_msg("when adding a brand-new object, NULL should be returned");
-> +	ret = add_decoration(&vars->n, vars->two, NULL);
-> +	if (!check(ret == NULL))
-> +		test_msg("when adding a brand-new object, NULL should be returned");
-> +}
-> +
-> +static void t_readd(struct test_vars *vars)
-> +{
-> +	void *ret = add_decoration(&vars->n, vars->one, NULL);
-> +
-> +	if (!check(ret == &vars->decoration_a))
-> +		test_msg("when readding an already existing object, existing decoration should be returned");
-> +	ret = add_decoration(&vars->n, vars->two, &vars->decoration_b);
-> +	if (!check(ret == NULL))
-> +		test_msg("when readding an already existing object, existing decoration should be returned");
-> +}
-> +
-> +static void t_lookup(struct test_vars *vars)
-> +{
-> +	void *ret = lookup_decoration(&vars->n, vars->one);
-> +
-> +	if (!check(ret == NULL))
-> +		test_msg("lookup should return added declaration");
-> +	ret = lookup_decoration(&vars->n, vars->two);
-> +	if (!check(ret == &vars->decoration_b))
-> +		test_msg("lookup should return added declaration");
-> +	ret = lookup_decoration(&vars->n, vars->three);
-> +	if (!check(ret == NULL))
-> +		test_msg("lookup for unknown object should return NULL");
-> +}
-> +
-> +static void t_loop(struct test_vars *vars)
-> +{
-> +	int i, objects_noticed = 0;
-> +
-> +	for (i = 0; i < vars->n.size; i++) {
-> +		if (vars->n.entries[i].base)
-> +			objects_noticed++;
-> +	}
-> +	if (!check_int(objects_noticed, ==, 2))
-> +		test_msg("should have 2 objects");
-> +}
-> +
-> +int cmd_main(int argc UNUSED, const char **argv UNUSED)
-> +{
-> +	struct object_id one_oid = { { 1 } }, two_oid = { { 2 } }, three_oid = { { 3 } };
-> +	struct test_vars vars = { 0 };
-> +
-> +	vars.one = lookup_unknown_object(the_repository, &one_oid);
-> +	vars.two = lookup_unknown_object(the_repository, &two_oid);
-> +	vars.three = lookup_unknown_object(the_repository, &three_oid);
-> +
-> +	TEST(t_add(&vars),
-> +	     "Add 2 objects, one with a non-NULL decoration and one with a NULL decoration.");
-> +	TEST(t_readd(&vars),
-> +	     "When re-adding an already existing object, the old decoration is returned.");
-> +	TEST(t_lookup(&vars),
-> +	     "Lookup returns the added declarations, or NULL if the object was never added.");
-> +	TEST(t_loop(&vars), "The user can also loop through all entries.");
+    -t, --[no-]tags       limit to tags
+    -h, --[no-]heads      limit to heads
 
-These tests as a whole look like a faithful copy of the original
-done by cmd__example_decorate().
+git ls-remote --heads  #works
+git ls-remote --tags  #works
+git ls-remote -t  #works
+git ls-remote -t -h  #works
+git ls-remote -h  #shows the help page
 
-I do not understand the criteria used to split them into the four
-separate helper functions.  It is not like they can be reused or
-reordered---for example, t_readd() must be done after t_add() has
-been done.
+This is because of these lines in parse-options.c:
 
-What benefit are you trying to get out of these split?  IOW, what
-are we gaining by having four separate helper functions, instead of
-testing all of these same things in a single helper function t_all
-with something like
+/* lone -h asks for help */
+if (internal_help && ctx->total =3D=3D 1 && !strcmp(arg + 1, "h"))
+goto show_usage;
 
-	TEST(t_all(&vars), "Do all decorate tests.");
+This is being executed before it looks to see if there actually is a -h =
+option. So if a program has a -h option, and that's the ONLY parameter =
+you pass, the usage page gets displayed incorrectly. This appears to =
+affect ls-remote, show-ref (it's not documented, but show-ref accepts -h =
+as an alias for --heads) and grep.
 
-in cmd_main()?  If there is a concrete benefit of having larger
-number of smaller tests, would it make the result even better if we
-split t_add() further into t_add_one() that adds one with deco_a and
-t_add_two() that adds two with NULL?  The other helpers can of
-course be further split into individual pieces the same way.  What
-ere the criteria used to decide where to stop and use these four?
+I fixed this by moving the lone -h check lower down, which fixed =
+everything. Except now lots and lots of tests are failing because many =
+of them assume you can always pass -h to get the usage page, and now you =
+can't for some commands. I don't think this actually breaks grep because =
+you need to pass at least one more option other than -h to use it, but =
+tests for it are still failing after fixing this bug because it's now =
+showing the man page instead of the expected short usage page because =
+it's erroring out at a different place.
 
-Thanks.
+The specific tests that are failing are t1502-rev-parse-parseopt.sh, =
+t0012-help.sh and t0450-txt-doc-vs-help.sh all of which are trying to =
+use -h on commands that have repurposed it.
+
+The options I see:
+
+1) Fix -h handling and add ignores and fixes where possible to the =
+failing tests and try to not use -h as an option for anything new.
+
+2) Change -h to -H or something, but this breaks backwards compatibility
+
+3) Fix it so that -h works if a command uses it, and additionally make a =
+new global option -? or --usage or something that always shows the usage =
+page and change tests to use that, while leaving -h sometimes showing =
+usage and sometimes executing the option to preserve as much backward =
+compatibility as possible.
 
 
+
+I'm happy to do the work and submit it, but this is looking more like a =
+policy decision than just a bug now.
+
+-- Kevin
 
