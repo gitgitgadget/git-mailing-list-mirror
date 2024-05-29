@@ -1,52 +1,51 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741FB1A38C9
-	for <git@vger.kernel.org>; Wed, 29 May 2024 20:23:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC821B960
+	for <git@vger.kernel.org>; Wed, 29 May 2024 20:55:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717014190; cv=none; b=IxAq1LVqAFoYRH0bKatj02Kgxkl/kBO+mjOtG3jjBqlhxasho+veEeAPH/i9G8vkDWSB4QmxT0/a6ZA5FeqUVdp0QHj1lEQi62dqJUlbIFUkdK2YCiDGpbm4HJVCDfw236Ujx1n3hQJqqqFz1gpPgEUWv9AgJngiI3Cw4XL7nmA=
+	t=1717016118; cv=none; b=djaBCMQDzu4GJ93VLT0l2/7aufWgIpaPu0otBK0E2Ph/lbnFeErBsv8qrGEWnGIadNupTXeOPSaht22gLc5LEPXbzulU6LqNthMtnT8ws67QAVu6cR+IAF/ImcWpxu8qG4dqAsWIrTpfhllWyIIWKEL3GVugzdCR1MHAwQ92WgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717014190; c=relaxed/simple;
-	bh=yXUKksbaPBkT2QBeyDwcibdWSN/rrS3+idL8RuFMD0w=;
+	s=arc-20240116; t=1717016118; c=relaxed/simple;
+	bh=o7pmi2jVSY0dSx5ENxkbZq7HdG/zcVq8RnxBmc4Jqaw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mdWKZsTVvECsugShpcK9j4nBUxd5IkATTBFjiqMiMPhvMkUITnGkJP+nRkIuGCOfmUBNAZVZT9q8IsTg9bWZ9qPpIpir1qCr34qsD1jruAaEhogsvCsl45bf5kRwjdJ8m/5viyrvfmahegdNpGsfsV15/iPsS14NZTsVDY0YkzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=MT5xuDo+; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=ZAzuic+LYWySl8llKjSS5M+HL2NJCDYlGEMivjMKW8FOl/os2aomBAVgg3ihLiGYR6sL54PbdXBmSfcuy4ZzG2Z+KEgypd7KuenxfAstwz+W0AaNT0KKGovCb4Zv647Fg9C7agzCVfvqvEMaQHo+sJo57q0gVdmSX4AV1ZAuerM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=HaMO3CKx; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MT5xuDo+"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id F26CE33340;
-	Wed, 29 May 2024 16:23:08 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HaMO3CKx"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E7B5B34829;
+	Wed, 29 May 2024 16:55:14 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=yXUKksbaPBkT2QBeyDwcibdWSN/rrS3+idL8Ru
-	FMD0w=; b=MT5xuDo+NqzLl7IfHZXJQF/Vffg3H9+amYM+gCqjtDrqmlrzEkEOZ/
-	8ddl8JN5Wgh8bkPF1q1nAnHF0C1dpSyxLY0kkw4sYRw3Z1Yv5kGQvZJW0GvYEqcO
-	isUMhtzNOHAo0Dj0mcQqUggGf0LyTCmRpzKjHKALPq54lHal6Cgt0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id EAF2B3333F;
-	Wed, 29 May 2024 16:23:08 -0400 (EDT)
+	:content-type; s=sasl; bh=o7pmi2jVSY0dSx5ENxkbZq7HdG/zcVq8RnxBmc
+	4Jqaw=; b=HaMO3CKxu5yG1nhFEBQzGMnsmQgEkl2hXNJxTd6LqR4lR17CB+BrlN
+	BJ0EnXCPHt17kbGcPtV4UBD8CMz2ZZIWiifTTv89/YO3Cyo4x3fUK9oS6qcY7Yl+
+	j48Z6MkAa+b+gb5lWJoXrP0VzIZXi3FGBHYXLd8Xhv/9JgkCysWx8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DFB6F34828;
+	Wed, 29 May 2024 16:55:14 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CB3793333E;
-	Wed, 29 May 2024 16:23:05 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5371434827;
+	Wed, 29 May 2024 16:55:14 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH 13/19] revision: always store allocated strings in
- output encoding
-In-Reply-To: <68a7d24e4a715eaf60414373636860215d27e643.1716983704.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Wed, 29 May 2024 14:45:04 +0200")
+Subject: Re: [PATCH 16/19] imap-send: fix leaking memory in `imap_server_conf`
+In-Reply-To: <357d69fa8b538baba23cd110b8d16174234a58dc.1716983704.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Wed, 29 May 2024 14:45:18 +0200")
 References: <cover.1716983704.git.ps@pks.im>
-	<68a7d24e4a715eaf60414373636860215d27e643.1716983704.git.ps@pks.im>
-Date: Wed, 29 May 2024 13:23:04 -0700
-Message-ID: <xmqqzfs8v047.fsf@gitster.g>
+	<357d69fa8b538baba23cd110b8d16174234a58dc.1716983704.git.ps@pks.im>
+Date: Wed, 29 May 2024 13:55:13 -0700
+Message-ID: <xmqqle3suymm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,26 +55,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 41B86872-1DF9-11EF-B4B0-8F8B087618E4-77302942!pb-smtp21.pobox.com
+ BF342CE2-1DFD-11EF-BA0B-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The `git_log_output_encoding` variable can be set via the `--encoding=`
-> option. When doing so, we conditionally either assign it to the passed
-> value, or if the value is "none" we assign it the empty string.
-> Depending on which of the both code paths we pick though, the variable
-> may end up being assigned either an allocated string or a string
-> constant.
->
-> This is somewhat risky and may easily lead to bugs when a different code
-> path may want to reassign a new value to it, freeing the previous value.
-> We already to this when parsing the "i18n.logoutputencoding" config in
-> `git_default_i18n_config()`. But because the config is typically parsed
-> before we parse command line options this has been fine so far.
->
-> Regardless of that, safeguard the code such that the variable always
-> contains an allocated string. While at it, also free the old value in
-> case there was any to plug a potential memory leak.
+> We never free any of the config strings that we populate into the
+> `struct imap_server_conf`. Fix this by creating a common exit path where
+> we can free resources.
 
-Nice.  Now the thing always has to be freed once we are done.
-Consistency is good.
+This is more like the previous step got rid of the anchor that made
+these strings reachable, so we need to turn around to free them,
+which is sort-of Meh, especially given that the leaked pieces of
+memory are small and very much bounded.
+
+The main benefit of this change is to allow us prepare on the
+constness change in the other (read: API this thing uses from
+elsewhere) parts of the system, which is a very worthy goal.
+
+> While at it, drop the unused variables `imap_server_conf::name` and
+> `nongit_ok`.
+
+The removal of the .name member may be correct, but I suspect the
+change to nongit_ok is a change in behaviour, and it could even be a
+regression.
+
+> -	setup_git_directory_gently(&nongit_ok);
+> +	setup_git_directory_gently(NULL);
+
+The general idea behind &nongit_ok is that
+
+ - Usually setup_git_directory_gently() dies if NULL is passed
+   instead of a pointer to &nongit_ok.  Most of the Git command
+   wants to make sure they have a repository to operate on, so this
+   is a reasonable default behaviour.
+
+ - Some commands would want to work also without having any
+   repository, possibly with limited capability (e.g., "git apply"
+   may want to work as a better "GNU patch", but obviously it cannot
+   do "git apply --binary --3way" without having the object
+   database).  They tell setup_git_directory_gently() not to die
+   when outside a repository by passing a pointer to &nongit_ok, and
+   instead tell if we are in a repository by storing 0/1 in it.
+
+The idea is that a command that is willing to work outside a
+repository can disable selected features based on what it sees in
+nongit_ok.  In the case of "imap-send", there is no such features
+that it needs to special case, perhaps because everything it does is
+supposed to work outside a repository?
+
+So the short version of what worries me in this change is that we
+used to be able to operate without having a repository at all, but
+now we would barf if run outside a repository, no?
+
+Thanks.
