@@ -1,99 +1,151 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19DB22089
-	for <git@vger.kernel.org>; Tue, 28 May 2024 23:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9908515B567
+	for <git@vger.kernel.org>; Wed, 29 May 2024 05:22:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716940018; cv=none; b=PGv6c5RX/x9kBbT7RuTj+kZaqvlBB62SGi8qJgQtrrHw5aOVqxbfRbMiBm+sMZ4R8BQXIUBjNPMquVoJHUoyiqBO6XQf6I8lMjtjyO6PVattEHOzZ5UcuFFgZ1xZIfDwxuUCf3UEmAOh0Udz+Nep+8h4ayvJaJp6QT+tFKWKeFY=
+	t=1716960170; cv=none; b=eAh7BWKJKkGoQt22aB8GA7DJ+nLElPC/opc1wF3CGZ7ylg9XiCgGY9Hi8ceYYtqMhqkjl+9k4zOjQolrgrKXLIkQV1yaYj9lHR0YIHAFmDLpB9bDcc3Znwe8zkHExTVw7tFVRWvqFB7+OXSzMdYtr2S2Sh0n3C8kHG6/N8FWVwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716940018; c=relaxed/simple;
-	bh=Ehge4mZhOFB0zXns1or+Fq8lvwPcDd4ZHN2yGzep4Cs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VAfX7d30dfwQR6I0Z4WozhJ/WioJB9dBsAVQ2PSB1yFOx9KLNsqP67FTfxLVIJdTSWfgX8bgoVJsQaqycZ8zT3bUlv7LbQiNfc9yLKF8SUGJgYuu23VtJ1Mpw38IziDfeFEaLJPJqnSOC9pzPSeEFVnlnJ4EQebf5TD4eAl/Ssw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=f3A4AKxd; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1716960170; c=relaxed/simple;
+	bh=u2g7PWDIzDfE7AuIue2lbZfcBwfYk6/JIjejUwyZtmQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XegLB9cCfEGjugB1fW6Xe4dGDYalC3/peJEOfYTnl4EOwCZhfMEwTIIehs+6h2CUjce+0cHJIHmBPNOGXdGEJ9fNX+X/2Y7Wp6URXmB51zQMMjLdg3c6giLerkvooj5Cf0FDOYZIhQup+6w682nEtMT6PJlEMv9NvEpI6fIt4a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L6eElnmH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U+0Vl6/i; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="f3A4AKxd"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2CF981D717;
-	Tue, 28 May 2024 19:46:55 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Ehge4mZhOFB0zXns1or+Fq8lvwPcDd4ZHN2yGz
-	ep4Cs=; b=f3A4AKxdMfgPQ6jBqWttVU87HcAodpODXSue5SAVdXVJVX5PFdsvsJ
-	oDpGwiIzCey6BMKfe74/WAdg89R5BjeNsdk05QD1/ivSUxU+ob5yAXguPV8Olbd2
-	Xi8lz4pjMQS9JjpTgwuVGiRWUnV1SBWTDIG+vcCkixTMt9f88IrZk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2504A1D716;
-	Tue, 28 May 2024 19:46:55 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 860A51D715;
-	Tue, 28 May 2024 19:46:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Joey Hess <id@joeyh.name>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Revert defense-in-depth patches breaking Git LFS
-In-Reply-To: <ZlZSZ1-0F2DEp9yV@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Tue, 28 May 2024 21:53:43 +0000")
-References: <20240514181641.150112-1-sandals@crustytoothpaste.net>
-	<0f7597aa-6697-9a70-0405-3dcbb9649d68@gmx.de>
-	<ZkO-b6Nswrn9H7Ed@tapette.crustytoothpaste.net>
-	<Zk2_mJpE7tJgqxSp@kitenet.net>
-	<fbb89826-0d83-d4f9-bab4-9fba69e0e22d@gmx.de>
-	<ZlU94wcstaAHv_HZ@kitenet.net>
-	<ZlZSZ1-0F2DEp9yV@tapette.crustytoothpaste.net>
-Date: Tue, 28 May 2024 16:46:53 -0700
-Message-ID: <xmqq7cfd33f6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L6eElnmH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U+0Vl6/i"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 6B82D13800ED;
+	Wed, 29 May 2024 01:22:46 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Wed, 29 May 2024 01:22:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1716960166; x=1717046566; bh=CXzXGs1LUm
+	5JL2uR6vbwbKWCqcD46sOoZSow9VFnOZg=; b=L6eElnmH2zMBK+n0os5VLekeIE
+	u9KsW71F8kd5mgDHcF/LnRybs5himg76l+mXI+TXNa4CdhBVxHhG1H/4rpXufwfm
+	kWAtLFcnA0nDieRES3w4+cwLvlSiBRnp4repCPWlnBMTdPwJRrGDTnw8uZae6jT0
+	Wb7zmm7gHTShiaYWKOzCW1cpjo8reXbr7LFy4cNz3+eAezltruSFb+10kdOLvLxy
+	bFLaEv5AMNC8glbOqHWplsroVXOYyy3LT0F6uMdsFuQk6Anw7vooHZe5qC9ljme+
+	5hrmXphsfOIPaBfhqkYsVJVHFJ7it8TS9bNfK9joDkudKVwGxDk3T+6Df9dQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1716960166; x=1717046566; bh=CXzXGs1LUm5JL2uR6vbwbKWCqcD4
+	6sOoZSow9VFnOZg=; b=U+0Vl6/ioJ0aRnvBrgOdTwSN+9S6yckgy7xlKhGNLb5m
+	RYs9t4UPtYFL94AYQOHdwAV+ZPngESSndEtgiqK1/4oJWp6PcR3Bpa1lsrP0vc+1
+	avaNn7dPI2QAVI/GWEEebS5H8zi5BAzUS3PcF/TpQoy3FSOqEWe5UlmFMO3V2QRD
+	wCMLiL/hOjqD455pYFJk9OoKQ/DQHpIEjeZsHivioqCKWiY2K9EfQ6Mxy/Z3PTCh
+	5Kl7Y9UODqeVBUEn6GuUnabstKb0HH+g1V7+8JShn1MUFIfqXNQePNJG2bfaQyQg
+	8y2QG61O0IoAOdTlD33EIIW9dCZ9DmTI/B6DM2xLKQ==
+X-ME-Sender: <xms:prtWZpj4T_bnmjeQuII0xB1HFX8RaRnQEd0wdLPEMZ1INoU3DU3wrA>
+    <xme:prtWZuCEe_0B_54DoyAkKb3_umqjpLMyN9CK89l8KMdmk-Y9Oop9HDQy2FEpoRZ87
+    rUlOQdNPCDoo07jhQ>
+X-ME-Received: <xmr:prtWZpEr2Zwa7ekeYQGwFUz20AzCzaTKDJxCjyekBa8K85dRYlio2zgbJypYmIa2BfbPhtWfvlOhoXlFMFv2_51DkuizHqlzljmSM5emtU4M70jX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejledgleefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpedtieetveevudekkeehieeuvedtiefggf
+    ethfekleegvedtjeeuleelffetueeiueenucffohhmrghinhepphhkshdrihhmnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himh
+X-ME-Proxy: <xmx:prtWZuQ-KxI1-BYmNgGXittLS1tYCDx2QnV0Sqj9lvEHLaz7aq7hxQ>
+    <xmx:prtWZmxjXoUB5332f5iINnxXTW3qRt4AQK4xkKZOCc8KJNcv3cNarA>
+    <xmx:prtWZk75-WYdlMwX7CF7l3BYm9EbMTsgRWnbFl-fXHj9s2Py5-HDqg>
+    <xmx:prtWZrzL8FjuXY0CY7k3gGHFNzc63tPOZ5kgXSpbVhYbc9F7SMeMgg>
+    <xmx:prtWZh_yUQDzSl7SrPFjyoHiEos2dj2epXtoW7icM5EXL9M-jsIj-G9z>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 29 May 2024 01:22:45 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id d779c8cc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 29 May 2024 05:22:29 +0000 (UTC)
+Date: Wed, 29 May 2024 07:22:40 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (May 2024, #12; Tue, 28)
+Message-ID: <Zla7oBd7UZbPX7d8@tanuki>
+References: <xmqqle3t36a6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 9031BFC4-1D4C-11EF-918A-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5j/T9E/sIm9LHHh6"
+Content-Disposition: inline
+In-Reply-To: <xmqqle3t36a6.fsf@gitster.g>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On 2024-05-28 at 02:13:55, Joey Hess wrote:
->> Johannes Schindelin wrote:
->> Writing objects: 100% (3/3), 324 bytes | 324.00 KiB/s, done.
->> Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
->> remote: error: object ea461949b973a70f2163bb501b9d74652bde9e30: symlinkPointsToGitDir: symlink target points to git dir
->> remote: fatal: fsck error in pack objects
->> error: remote unpack failed: unpack-objects abnormal exit
->> To ../bar.git
->>  ! [remote rejected] master -> master (unpacker error)
->> error: failed to push some refs to '../bar.git'
->> 
->> So I guess that the WARN doesn't work like you expected it to in this case of
->> receive.fsckobjects checking.
->
-> Then my guess is that this will affect most forges.
+--5j/T9E/sIm9LHHh6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-FWIW, it is detected as "error" according to the above.
+On Tue, May 28, 2024 at 03:45:05PM -0700, Junio C Hamano wrote:
+> * ps/undecided-is-not-necessarily-sha1 (2024-05-06) 15 commits
+>   (merged to 'next' on 2024-05-08 at 9f8e894685)
+>  + repository: stop setting SHA1 as the default object hash
+>  + oss-fuzz/commit-graph: set up hash algorithm
+>  + builtin/shortlog: don't set up revisions without repo
+>  + builtin/diff: explicitly set hash algo when there is no repo
+>  + builtin/bundle: abort "verify" early when there is no repository
+>  + builtin/blame: don't access potentially unitialized `the_hash_algo`
+>  + builtin/rev-parse: allow shortening to more than 40 hex characters
+>  + remote-curl: fix parsing of detached SHA256 heads
+>  + attr: fix BUG() when parsing attrs outside of repo
+>  + attr: don't recompute default attribute source
+>  + parse-options-cb: only abbreviate hashes when hash algo is known
+>  + path: move `validate_headref()` to its only user
+>  + path: harden validation of HEAD with non-standard hashes
+>  + Merge branch 'ps/the-index-is-no-more' into ps/undecided-is-not-necess=
+arily-sha1
+>  + Merge branch 'jc/no-default-attr-tree-in-bare' into ps/undecided-is-no=
+t-necessarily-sha1
+>  (this branch is used by jc/undecided-is-not-necessarily-sha1-fix.)
+>=20
+>  Before discovering the repository details, We used to assume SHA-1
+>  as the "default" hash function, which has been corrected. Hopefully
+>  this will smoke out codepaths that rely on such an unwarranted
+>  assumptions.
+>=20
+>  Will cook in 'next', as it has known breakage.
+>  source: <cover.1715057362.git.ps@pks.im>
 
-In any case, a33fea08 (fsck: warn about symlink pointing inside a
-gitdir, 2024-04-10) adds two ERRORs, in addition to two WARNs:
+The follow-up patches in jc/undecided-is-not-necessarily-sha1-fix have
+landed by now, so there are no more known breakages at the current
+point, right? Do we want to merge this down now, or is there something
+you'd like me to do in this context?
 
-+	FUNC(SYMLINK_TARGET_MISSING, ERROR) \
-+	FUNC(SYMLINK_TARGET_BLOB, ERROR) \
-+	FUNC(SYMLINK_TARGET_LENGTH, WARN) \
-+	FUNC(SYMLINK_POINTS_TO_GIT_DIR, WARN) \
+Patrick
 
-so "they are only warnings and won't break" is not quite what I see
-in the change, but what is causing the above error does look like
-the one that is marked as WARN in the patch.
+--5j/T9E/sIm9LHHh6
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks.
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZWu5oACgkQVbJhu7ck
+PpRNfQ/8DS5qQaUTim4aHP8JuMh4ekwsR7zOEI0spctE7G7S+14bii855+tGH9ab
+/68wb9IyrtVjWKDZPd5moiCss/3vli+9KsBo9Rp7do7WUwrBXY9MG95kqhJtB6FX
+UY/40a7DDKkoTWPSdtU4mTGGerkey9s2o5AlFpnKzC8FvCnmqWlsB6FQ47rEato8
+ELF0QGPGtszB6u8B/BsRoSRh8Mw00AwpoHTakRpjLJJQ2kmYBzNrNuJt5CtevbyG
++VSUcvzoMhtZGrwxF4kbsrGHLItP/F9cS9kxCN2+PCT5KifyYfDIBZw07UIyiiFX
+2eJ7cLR8UE0bd0QZpcTgo9j8Pkb5l9Jyb3uaTJzcizACKfGxmPzGYBZIJc7IPqa1
+gmeP1v80rxQlPX00raxs1/Kbf90QB9b45KyqIkRgJzZMVkYvfRpNIIaYWaN12jy2
+eWgcbLqpaFRjeyDQUw2BxClk9P63NG6HKHYETnxd+2Zyd1Zs3PicyK/8LgHOv9S5
+yQPK3ZgC7mlWAoamNf+BMoQbld4Iz9iu0vitNedVDMzFBll/L/U+hv9lJKUcMI8B
+UQ7Szs0Uzw6PWe33ioVoB+uxFTEWlhvFihx2DnxNxSdpU5WIDKWhDXK6/aBGQcHb
+XxK23gEVwb7uQj/3E5pRwdzIJ5SSwW3nKp0PfyL+tfC1hUaO7bg=
+=ziRs
+-----END PGP SIGNATURE-----
+
+--5j/T9E/sIm9LHHh6--
