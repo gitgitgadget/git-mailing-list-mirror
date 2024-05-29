@@ -1,36 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11B033CFC
-	for <git@vger.kernel.org>; Wed, 29 May 2024 09:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CE5178387
+	for <git@vger.kernel.org>; Wed, 29 May 2024 10:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716975406; cv=none; b=l+a9oYHIFsqrqkHu4LkaTLjVg/3HcRL6V5lWhPfUGl4U7EOWg/Q1Vr5D6Gu7nmi0Iz9SHbgdk3QOn6U/q1ayCcsjI88Bwq59tDNwIL+bP0Cr8oqy0POSB5dSCgj7BXLGDjNVZWyALNIxxzBL2rDpUA8GcRX1rF8Q5yEYBw2OeSA=
+	t=1716978190; cv=none; b=gDgOKihUFv7F0tPRBKs2COnmE0iFKGDjh6U1QB9oL9H5tsshPCMXTqBpxZ5KbODpgEtqI7Gv4XRJWi+14t44+yUOgwbAZJpXOq7HKLsnB9wQvNCGTQWx4Yv3RHYokQ3qNScFNutV5BV1q/RwVUC6Zf7c3Ki+frm7eOPGwudwq6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716975406; c=relaxed/simple;
-	bh=SWlPbwA/3OL3J+Ukm7eyhFYn8aPf5lzZCzHFGQO+Q8c=;
+	s=arc-20240116; t=1716978190; c=relaxed/simple;
+	bh=KzLYJE5nS8ykTFUwRr/m0hJUiroTVklhfBQIf8fUCEQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=THDSFfywaBbUDl12PbuaWHTWH+OjYhQqECts2Y9iNoZStzxes5hUEIS8rm6xw376wDIAf5dnLfh0iuPRrLFsLOmamMs9ExBLo1qfu/S1qdaFw6G0dU+n42IYQVpSDRSCByY80/w8FAR/8RlAIP1NdIZ4pieWAE0UqWr/LFbGZoU=
+	 Content-Type:Content-Disposition:In-Reply-To; b=BiiARz6KmAd+DlcHhjdmBM771w7uYyul+5tKdd2GRhDQ3mG2qLgB7e2Xo8rE0l4Adacp96CK/j1pof5DiN6ff+gNc/jqACmg8BpHRVPvViVp6r3kyDk2vmT3O1MqGlt6cbFHy93JCKonzXGC/Lz4+vKLbxHSkzWAX8zdx2Ujb9M=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 11508 invoked by uid 109); 29 May 2024 09:36:44 -0000
+Received: (qmail 11581 invoked by uid 109); 29 May 2024 10:23:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 29 May 2024 09:36:44 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 29 May 2024 10:23:07 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18426 invoked by uid 111); 29 May 2024 09:36:41 -0000
+Received: (qmail 18688 invoked by uid 111); 29 May 2024 10:23:05 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 29 May 2024 05:36:41 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 29 May 2024 06:23:05 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 29 May 2024 05:36:43 -0400
+Date: Wed, 29 May 2024 06:23:07 -0400
 From: Jeff King <peff@peff.net>
-To: Tom Hughes <tom@compton.nu>
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, jonathantanmy@google.com
-Subject: Re: [PATCH] promisor-remote: add promisor.quiet configuration option
-Message-ID: <20240529093643.GE1098944@coredump.intra.peff.net>
-References: <20240523131926.1959245-1-tom@compton.nu>
- <20240525052946.GD1895047@coredump.intra.peff.net>
- <1b10454e-c5ad-4ce3-a724-27306ee8824c@compton.nu>
+To: Chris Burr <christopher.burr@cern.ch>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [BUG] Cannot set safe.directory with command-scoped
+ configuration when cloning
+Message-ID: <20240529102307.GF1098944@coredump.intra.peff.net>
+References: <GVAP278MB01511C708AE804393BA3B7A48BF12@GVAP278MB0151.CHEP278.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,59 +38,80 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1b10454e-c5ad-4ce3-a724-27306ee8824c@compton.nu>
+In-Reply-To: <GVAP278MB01511C708AE804393BA3B7A48BF12@GVAP278MB0151.CHEP278.PROD.OUTLOOK.COM>
 
-On Sat, May 25, 2024 at 11:29:13AM +0100, Tom Hughes wrote:
+On Tue, May 28, 2024 at 02:16:48PM +0000, Chris Burr wrote:
 
-> > I'm not at all opposed to providing a way to suppress this, but I feel
-> > like in the long run, the more fundamental issue is that git-blame kicks
-> > off a zillion fetches as it traverses. That's not only ugly but it's
-> > also horribly inefficient.
+> According to the documentation I expected to be able to set the
+> safe.directory option with either "-c" or "GIT_CONFIG_" environment
+> variables. From the "safe.directory" documentation:
 > 
-> This is true. One thing I found that makes things a lot more
-> efficient if you're using ssh as the transport is to enable
-> persistent multiplexing in .ssh/config with something like:
+> > This config setting is only respected in protected configuration
+> > Protected configuration refers to the system, global, and command scopes. 
+> > Command scope includes both the GIT_CONFIG_ variables and the "-c" flag.
 > 
-> Host git.example.com
->   ControlMaster auto
->   ControlPath /run/user/%i/ssh/control.%C
->   ControlPersist 1m
->   SendEnv GIT_PROTOCOL
-> 
-> which avoids each fetch having to setup and authenticate a
-> new ssh session.
+> This works for operations like "git status" but not "git clone".
 
-Good point. That is sort of the opposite approach of my suggestion. That
-is, I was suggesting that git-blame batch everything to make a single
-efficient request. But if we could reduce the cost of making individual
-requests, then we wouldn't need to batch (which is quite a lot simpler).
+Yeah, the problem is that Git clears many repo-related environment
+variables when it "switches" from one repo to another. And in the case
+of clone, there are two "sides": the clone process in the local repo,
+and the upload-pack process which runs in the remote repo. And so when
+we spawn upload-pack, we clear the environment, including the config
+variables.
 
-The ssh session is going to be one source of latency and overhead. But
-just spawning the fetch and remote upload-pack are another (especially
-if you have to authenticate, and especially with the v2 protocol, which
-has an extra round-trip for capabilities upgrade).
+And the recent changes in v2.45.1, etc, are for upload-pack to be more
+careful about the repository in which it runs (unless safe.directory
+says it's OK). So that's where the config is checked, but your values
+don't make it there. And that's true of other variables, too. Running
+"git -c receive.denyDeletes=false push" won't do what you want.
 
-If there was a long-running mode to git-fetch where it kept open a v2
-session to the server and just said "hey, send me object X" and then
-"OK, now send me object Y" that would eliminate all of that overhead
-(and even for http, under the hood curl is good at keeping the session
-open between requests).
+Now at first glance I think you could argue that the config variables
+should be retained in this case. After all, they are attached to the
+command you ran, not a specific repository. But the main reason we clear
+them is that for most transports, they wouldn't be retained anyway! If
+your remote is over http, git://, or even most configurations of ssh
+(which will not pass arbitrary config variables), the other side
+likewise would not see them. So this is keeping the local-repo case
+consistent with other transports.
 
-You'd still have some extra latency (while you're talking to the server,
-the local blame process is paused), but I suspect it would be a lot more
-tolerable.
+The workaround is generally to attach the config directly to the
+upload-pack process, like:
 
-And now your progress question is re-opened again. You might want a
-more succinct progress for something like blame that still does all of
-its fetching before generating output. E.g., you might want a single
-progress line with the current state (fetching or not), the count of
-fetched objects, the speed, and so on. And for something like "git log
--p", where the progress would be interspersed with actual output, you
-might want to suppress it entirely.
+  git clone -u 'git -c safe.directory="*" upload-pack' ...
 
-So yeah, I have no real objection to what your patch is doing. Depending
-on how future work unfolds it might be more or less useful than it is
-now, but even in the worst case it probably won't be a bad thing to have
-in our toolbox.
+But:
+
+  1. Obviously that is horrible and not something users should have to
+     know about.
+
+  2. It doesn't always work! If you specify --no-local, then it does,
+     because we kick off a single upload-pack process and read
+     everything from it. But without that, the local clone process tries
+     to optimize things by hard-linking the original files. And that
+     code does its own ownership check. So you need:
+
+       git -c safe.directory="*" \
+         clone -u 'git -c safe.directory="*" upload-pack' \
+	 ...
+
+     to cover both processes.
+
+I'm not sure how to make it more friendly, though. Passing config across
+the local-remote barrier is a can of worms, since many servers would not
+want to trust client-provided config.
+
+The simplest solution I can think of is that the ownership check should
+not go into upload-pack at all. It should be totally in git-clone, which
+should check the directory itself (obviously only when it knows the
+transport is the local filesystem). That would largely protect the
+original case we cared about (accidentally interacting with an untrusted
+repo on the local filesystem) and leave other more complex ones
+untouched (like git-daemon serving user-owned processes as the "nobody"
+user).
+
+But I did just think of this approach, so there might be corner cases
+that aren't well covered. And certainly the git-daemon thing _could_ be
+a security risk, but I think for the most part if you configured
+git-daemon to serve other people's repos, you know what you're doing.
 
 -Peff
