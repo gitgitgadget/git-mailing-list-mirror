@@ -1,131 +1,192 @@
-Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E8C1C286
-	for <git@vger.kernel.org>; Wed, 29 May 2024 07:57:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86962F37
+	for <git@vger.kernel.org>; Wed, 29 May 2024 08:00:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716969435; cv=none; b=ewIoY3PE96ayWkLPyPfh+FEETcQeACxDUGx0YuQowLWk+QFq1YW3Zgolw87rC8AL4mFgMDByMrVcuQUok7dfRu3xOOmH/iJW4cHgQ83WHVypPDxxZzf2f2n3pPX9baOuaxGUnaEXAen9IB3OLGfypsmDSM53l7Kx9xoWZfKtJT4=
+	t=1716969653; cv=none; b=qdIUw5g+UZ35rAUKD9XJmmpT7CpBtOLiwMkw8kwcSLFFXDvcF7Fal9PW/A0QWu92J2bGAOr6Q4cHTq2+nreuEDXEGUK0+tGHG7TUyFfkhLFvNynZI80JWyT2EwSvWk5yUmiqTtir9eyEH+6cqo0doSLBvT3yw800MUWfWbUT8w8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716969435; c=relaxed/simple;
-	bh=XrIy1DFFb+mXO/pcKR0/kEerJTVF4uIYoZA5bbo75O4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=azTEdt0QfFKGf6yP6epcwKyZKaj5TlK26Y/gi9UXv9/QJiW81hOcyWS0Dck9mLuIgYW9auoJMN+5t2YpAZMkKZknK1ePzi1RT1Lhfx7ECHGJor9SJtQ5iyuiaRxI63ShoLNsqgQYCStxz16bFwqlU1gGTPy6sY9+hMWTCkP6Q4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kJul0vDW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cz4W4PiG; arc=none smtp.client-ip=64.147.123.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1716969653; c=relaxed/simple;
+	bh=41qOgnAUikFUYpaM1JjiMT4UnzH2JxIOBoKWxADfhvQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sWiuUBer8TKK0+t2dTkl/Xt2XEMiaxGB+DxWu2JPcCpPQo/NydUfAPq/YkBFI42Zx51Ryhg3pHnfFGhqrRijTHP7Ys1ixmurAeo3fYP63z12w6BoWe1/WnCay0ug8+zRhP8+v4f90/vJptb//sNbt4ypIWCGW6V8ptqmf/nL+jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q5BO9ior; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kJul0vDW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cz4W4PiG"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.west.internal (Postfix) with ESMTP id 08C6B1C0019B;
-	Wed, 29 May 2024 03:57:12 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 29 May 2024 03:57:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716969432; x=1717055832; bh=SnIG3bVBZs
-	JP7rYLwGf8LcI+9oD5AwgvG0B95RW7jeg=; b=kJul0vDWajEwyQP4juqrtd+R8c
-	E8oAqcSwzVA89NFglNVN+8vVlofcPxfOwzTyxLY+nr0LD7V2F3EUJWTt4LgTgthZ
-	hySnuXQw2napHQ9HUttSV/3JpHlGScBaENsHUefa0OVvhwkqTN7MfSNYI0CMx64j
-	2EYCFLDmjfHZi87iKld+KrMIZCyoUyj7HLa/b11mlx673lm87oK/73Um+We6wd3i
-	7BgXyFaNiq2eKRsSD3Q5gGF3tyDNK0Oy7MtsI7FgiZb3O+6GQ9pg3OWA6CT8f7xI
-	i/62SIkgOc1Cius4M+QnEaazM8pYTOLEfuF9Sg8ghflK77ZLVj7Dfohh791A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716969432; x=1717055832; bh=SnIG3bVBZsJP7rYLwGf8LcI+9oD5
-	AwgvG0B95RW7jeg=; b=Cz4W4PiGIWFiulO8KY1Vwk9nKT0sBISqX79vyAZ1Hiuh
-	Z8zFbn2R6+l7RiVFFbTxW/N7v5y1gzLwuYdXQ3Kd0MdqulrcWf3hMmvHfW5W5xHB
-	6RvFQNvvgrq9WUeoXv8rnM/TAuOe4k8iKXeckjkSyTYeFoKI0HPRiCj8JiRDDfiH
-	yi0uqy+h5iErN0JvHSnS93DOWM+TZkMPCq6fVKZ6kht06SI1k5AZ8QgS0jz7l1Wj
-	FJFA41GPRPdXav9rRItCblYQ6ciXhETsilcBW71L1T5JWWIQN5RHbZ2WugeENqiX
-	QSYb7tThVyoeWFJAOL9B9J8P7sClGwLrdbu73vjgow==
-X-ME-Sender: <xms:2N9WZp4PwbCYfp1Zn4l0jE8x8jGjVA_Lp0LEMIH8mV1zwkK3LsA-IA>
-    <xme:2N9WZm622WfVJpsDL46SRI2Z0aj5tELhly7XhPxtD3ryW0ezbYJLRPpo612GbNoz8
-    rI-Z76RGZpx27xGww>
-X-ME-Received: <xmr:2N9WZgfZYVqRdzHMYuXza3b-UGA28mhRDNqKIpQvLUX91cXGFeQN60BwQ14nJMaNZGuz9KG6f-3OenPTBdusLQ8Vt9VeFjQDYSZdaYd0w0OVVnJf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdektddgvddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeetueevhffhudefvdegieeuieelgedthf
-    egfedtueevjeejtdfgjeehudejuedtudenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:2N9WZiIe_c0_oVsqqClnYFwZG2s4-GwoWHHWWyR50VX3hMD9oi4oTQ>
-    <xmx:2N9WZtIkdJ02uyk1QNU8K3LrFdX2OhvQAGZPfNUg5FnvVEElOEd21g>
-    <xmx:2N9WZrz1BvKk2cebMb1MzFC73_lYWxXGoU2sdXLKbh0iVPXyaG3WWA>
-    <xmx:2N9WZpIaq1EqkwDx2adpyI6jn25SNLDPJMiCQ5GiopST8-XYhuQ4tA>
-    <xmx:2N9WZkU6_OujexIDcQEA1-M501BA2hEu-0Zm13iuH216rXy3Y1FF2BoS>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 May 2024 03:57:11 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 75782b8d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 29 May 2024 07:56:56 +0000 (UTC)
-Date: Wed, 29 May 2024 09:57:08 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] difftool: add env vars directly in run_file_diff()
-Message-ID: <Zlbf1IY4jFlUPD7e@tanuki>
-References: <c7c843b9-0ccf-4bcb-a036-d794729a99d6@web.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q5BO9ior"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1f48b825d8cso12813425ad.2
+        for <git@vger.kernel.org>; Wed, 29 May 2024 01:00:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716969651; x=1717574451; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FflWN+BtRY1niIAq3UL0dUpHXHPAkYpP9CiSAXIHib0=;
+        b=Q5BO9ior3/JCUa5i3+eINR4kdpzhJknbq12y64xmRiBqf1DMIqsCoGXubKM05/DNvh
+         2R0L1szjzwcvpAgICtL7MOKUxkpYuYSGR6nCw/5Lek+Sgw1WDXdrhRzrZ08d9gD7053+
+         H08jOU/vq74Y3bYCyiU/etiiTx3a0gm2PDOYGh0tT54yDBq11MGagil7YkX0ZKnhe3RU
+         8XOkvWe2W+mbW4QeXSAQc6m9v5pDOUdmqNItOVd1tM4cZfhjaLXGmzqe3l3WsgOCfMwf
+         3PxLvjYV+P7goWXlh8S+iOUhV+H2g49SQVxvKoMSgGQbd5HuZSk1oGcoXA2vfv6N9dix
+         O4HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716969651; x=1717574451;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FflWN+BtRY1niIAq3UL0dUpHXHPAkYpP9CiSAXIHib0=;
+        b=i1TI7RNDd+Vi1gw0oVdOFY8C1SWcjumhWEKejbgL7AyT7PnE2K9u2bjhDuqKW0CKkG
+         IDkMXJURI+orsh62PYHww7F9VDIieYVrd+qiSmUAwk3URysUUVApbblfBQ5Qtjd9wVGI
+         orvUVYjuhjIIQgku82IQEwF/m+LKqX9+gfQdBqlBe5mQfismUx41yeyVvnCkfdJ8qA+c
+         H+ilKdcoB7RQJnR+Q7FpRZcgw52rYVMZe58HQ91vwiznEhGwELSy9gQ972s5JqHgMJoQ
+         EFUHrk3SDg24yvIs3fX5ggc69XfPdh9EtbetOOJtQvKaatYvkwTRZY8W9M+QNX3PVwLH
+         P2HQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW/yXuKrqt3kSuIR+n2rZBAWmN/4vJtX2yRTA8a2JlEbfMOWFe+SC2rTk2ZmSCwnF2WE/EjZA2NzBDH/ujzHI1a4NGI
+X-Gm-Message-State: AOJu0Yy1te2MBf8Ol6YBsPD/uUozx2MrjfP0kS0tPbfZTqg/ShhopHs0
+	6WF1FAw3oRied9yqV14VqwzMDIf6qA7owEqNtsoht4h6SjLsbgoK
+X-Google-Smtp-Source: AGHT+IE7Nw7kph9S3Kn85/SZjHLtKI4nhfoAJI2I8LYGpU6oMonY5ynx+F7kewaTEVfe86t602Z78g==
+X-Received: by 2002:a17:903:2451:b0:1f3:4f23:455d with SMTP id d9443c01a7336-1f449026aaemr150115275ad.49.1716969650949;
+        Wed, 29 May 2024 01:00:50 -0700 (PDT)
+Received: from localhost.localdomain ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f478a651f6sm68290875ad.101.2024.05.29.01.00.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 May 2024 01:00:50 -0700 (PDT)
+From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+To: shyamthakkar001@gmail.com
+Cc: ach.lumap@gmail.com,
+	chriscool@tuxfamily.org,
+	christian.couder@gmail.com,
+	git@vger.kernel.org,
+	gitster@pobox.com,
+	kaartic.sivaraam@gmail.com,
+	ps@pks.im
+Subject: [GSoC][PATCH v5 0/2] t/: migrate helper/test-{sha1, sha256} to unit-tests/t-hash
+Date: Wed, 29 May 2024 13:30:28 +0530
+Message-ID: <20240529080030.64410-1-shyamthakkar001@gmail.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240526084345.24138-1-shyamthakkar001@gmail.com>
+References: <20240526084345.24138-1-shyamthakkar001@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gDDEH14BGtODtFu7"
-Content-Disposition: inline
-In-Reply-To: <c7c843b9-0ccf-4bcb-a036-d794729a99d6@web.de>
+Content-Transfer-Encoding: 8bit
 
+Changes in v5:
+- addressd Patrick's feedback about formatting
+- changed macros to be in do while loop instead of simple block,
+  according to Patrick's feedback
 
---gDDEH14BGtODtFu7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ghanshyam Thakkar (2):
+  strbuf: introduce strbuf_addstrings() to repeatedly add a string
+  t/: migrate helper/test-{sha1, sha256} to unit-tests/t-hash
 
-On Sun, May 26, 2024 at 10:16:50PM +0200, Ren=C3=A9 Scharfe wrote:
-> Add the environment variables of the child process directly using
-> strvec_push() instead of building an array out of them and then adding
-> that using strvec_pushv().  The new code is shorter and avoids magic
-> array index values and fragile array padding.
->=20
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+ Makefile                    |  1 +
+ builtin/submodule--helper.c |  4 +-
+ json-writer.c               |  5 +--
+ strbuf.c                    |  9 ++++
+ strbuf.h                    |  5 +++
+ t/t0015-hash.sh             | 56 ------------------------
+ t/unit-tests/t-hash.c       | 86 +++++++++++++++++++++++++++++++++++++
+ 7 files changed, 103 insertions(+), 63 deletions(-)
+ delete mode 100755 t/t0015-hash.sh
+ create mode 100644 t/unit-tests/t-hash.c
 
-I don't know whether this may cause more allocations. But even if it
-did, it would very much feel like a micro-optimization that is not worth
-it in the end given that we're about to spawn a new process anyway,
-which is way more expensive.
+Range-diff against v4:
+1:  cd831fabf5 = 1:  cd831fabf5 strbuf: introduce strbuf_addstrings() to repeatedly add a string
+2:  6ce8f57af1 ! 2:  c82ead8e48 t/: migrate helper/test-{sha1, sha256} to unit-tests/t-hash
+    @@ t/unit-tests/t-hash.c (new)
+     +		return;
+     +	}
+     +
+    -+	for (int i = 1; i < ARRAY_SIZE(hash_algos); i++) {
+    ++	for (size_t i = 1; i < ARRAY_SIZE(hash_algos); i++) {
+     +		git_hash_ctx ctx;
+     +		unsigned char hash[GIT_MAX_HEXSZ];
+     +		const struct git_hash_algo *algop = &hash_algos[i];
+    @@ t/unit-tests/t-hash.c (new)
+     +
+     +/* Works with a NUL terminated string. Doesn't work if it should contain a NUL character. */
+     +#define TEST_HASH_STR(data, expected_sha1, expected_sha256) \
+    -+	{ \
+    ++	do { \
+     +		const char *expected_hashes[] = { expected_sha1, expected_sha256 }; \
+     +		TEST(check_hash_data(data, strlen(data), expected_hashes), \
+     +		     "SHA1 and SHA256 (%s) works", #data); \
+    -+	}
+    ++	} while (0)
+     +
+     +/* Only works with a literal string, useful when it contains a NUL character. */
+     +#define TEST_HASH_LITERAL(literal, expected_sha1, expected_sha256) \
+    -+	{ \
+    ++	do { \
+     +		const char *expected_hashes[] = { expected_sha1, expected_sha256 }; \
+     +		TEST(check_hash_data(literal, (sizeof(literal) - 1), expected_hashes), \
+     +		     "SHA1 and SHA256 (%s) works", #literal); \
+    -+	}
+    ++	} while (0)
+     +
+     +int cmd_main(int argc, const char **argv)
+     +{
+    @@ t/unit-tests/t-hash.c (new)
+     +	strbuf_addstrings(&aaaaaaaaaa_100000, "aaaaaaaaaa", 100000);
+     +	strbuf_addstrings(&alphabet_100000, "abcdefghijklmnopqrstuvwxyz", 100000);
+     +
+    -+	TEST_HASH_STR(
+    -+		"", "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    ++	TEST_HASH_STR("",
+    ++		"da39a3ee5e6b4b0d3255bfef95601890afd80709",
+     +		"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
+    -+	TEST_HASH_STR(
+    -+		"a", "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",
+    ++	TEST_HASH_STR("a",
+    ++		"86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",
+     +		"ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb");
+    -+	TEST_HASH_STR(
+    -+		"abc", "a9993e364706816aba3e25717850c26c9cd0d89d",
+    ++	TEST_HASH_STR("abc",
+    ++		"a9993e364706816aba3e25717850c26c9cd0d89d",
+     +		"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
+    -+	TEST_HASH_STR(
+    -+		"message digest", "c12252ceda8be8994d5fa0290a47231c1d16aae3",
+    ++	TEST_HASH_STR("message digest",
+    ++		"c12252ceda8be8994d5fa0290a47231c1d16aae3",
+     +		"f7846f55cf23e14eebeab5b4e1550cad5b509e3348fbc4efa3a1413d393cb650");
+    -+	TEST_HASH_STR(
+    -+		"abcdefghijklmnopqrstuvwxyz", "32d10c7b8cf96570ca04ce37f2a19d84240d3a89",
+    ++	TEST_HASH_STR("abcdefghijklmnopqrstuvwxyz",
+    ++		"32d10c7b8cf96570ca04ce37f2a19d84240d3a89",
+     +		"71c480df93d6ae2f1efad1447c66c9525e316218cf51fc8d9ed832f2daf18b73");
+    -+	TEST_HASH_STR(
+    -+		aaaaaaaaaa_100000.buf, "34aa973cd4c4daa4f61eeb2bdbad27316534016f",
+    ++	TEST_HASH_STR(aaaaaaaaaa_100000.buf,
+    ++		"34aa973cd4c4daa4f61eeb2bdbad27316534016f",
+     +		"cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0");
+    -+	TEST_HASH_STR(
+    -+		alphabet_100000.buf, "e7da7c55b3484fdf52aebec9cbe7b85a98f02fd4",
+    ++	TEST_HASH_STR(alphabet_100000.buf,
+    ++		"e7da7c55b3484fdf52aebec9cbe7b85a98f02fd4",
+     +		"e406ba321ca712ad35a698bf0af8d61fc4dc40eca6bdcea4697962724ccbde35");
+    -+	TEST_HASH_LITERAL(
+    -+		"blob 0\0", "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    ++	TEST_HASH_LITERAL("blob 0\0",
+    ++		"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+     +		"473a0f4c3be8a93681a267e3b1e9a7dcda1185436fe141f7749120a303721813");
+    -+	TEST_HASH_LITERAL(
+    -+		"blob 3\0abc", "f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f",
+    ++	TEST_HASH_LITERAL("blob 3\0abc",
+    ++		"f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f",
+     +		"c1cf6e465077930e88dc5136641d402f72a229ddd996f627d60e9639eaba35a6");
+    -+	TEST_HASH_LITERAL(
+    -+		"tree 0\0", "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+    ++	TEST_HASH_LITERAL("tree 0\0",
+    ++		"4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+     +		"6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321");
+     +
+     +	strbuf_release(&aaaaaaaaaa_100000);
+-- 
+2.45.1
 
-So favoring readability/maintainability very much feels like the right
-thing to do here, and the result looks good to me. Thanks!
-
-Patrick
-
---gDDEH14BGtODtFu7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZW39MACgkQVbJhu7ck
-PpR4yxAApv+ItucMk0W7Be4ydQHvjzCTMvADJnr5wH9otvnHzARBs4qTg8CkyL1h
-D3KhtcDncX8YE2TtEn3uslaAVWJ77uTv6kKLyaPZGUtP8ifHmmDoUaUnBE8SIyIl
-j57eDto44XpAe047t8Yjm3rEpU3jD8xo7XJGzRZYVb/u83oveQ8RR2dX0OFvnRsS
-O9XrW6ULskshOYrh4U0gtVGxwbKC+s2v9KsGQxMnVM+S9KCfMbusQY1I0ciJqa2B
-mzjqnJpBAluZSnLGdoPdL08/GrCgQEa4BuXuyXAUgB6AqVrwDMlJKnAE/hBZg/3u
-fCjVztOCLxSM6t6pM/hEHu5ARlqLcnAWSrmB6TrD3ooz+3TQvGK9YIeWPAvYBvVG
-JK80EweRvXfga3djTRYipSL/UJNLECOxdkGScHvRxd0lajFGxolIvu3+i2e31og9
-8trePdAnDU0UFxTn8h3kmMHRFx63jQv+5RJeA+zXW7fE0yEXT3lS5BQMFWaLaXo5
-pd/0L+an3PQFnIDoivGaYKOIibqoUOgFtzdI10G3T5aSaJsW64+DVACmWoxQWDxd
-uw12+znxcGyzt9Hh1a0Om/GMeW4Ipa2TlP6+5DoPH/saH68IkvMevaBODY5TfZx7
-MQWQnkVhEGQ+qQFpBcGEPyNr2Rj9MuHBoyJ0HTmnmd4hCodYdfM=
-=T1l+
------END PGP SIGNATURE-----
-
---gDDEH14BGtODtFu7--
