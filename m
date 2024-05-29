@@ -1,51 +1,52 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EEEB522A
-	for <git@vger.kernel.org>; Wed, 29 May 2024 19:51:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA964DDA1
+	for <git@vger.kernel.org>; Wed, 29 May 2024 20:02:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717012319; cv=none; b=SM6iUbtk14vzFXGiE30s/Az0NutgqlXJIFBPhfqZFZexQNGMsJX1IQncFLHK9ZR1fGuaralzLWJ4nUoV3PpE94KuUHOUpyNidXskgsgOitobwPXsg/6Agd8Jjb2KyHd0FvNrOgqD1ykji9UmOy1K/i0rapW/A0taK52X0JIMiHU=
+	t=1717012925; cv=none; b=mGG97mD71YF2cTsKqLIr7lCpqPY5CtWdCtYLpMcbKutLXKQWpyOtDZdBgjYV3xLwfeqcxLyibYmiJDM0w2rSJ6f2lI0PFn4kkY02mJQF+bi8r+0OhTagfzvJmHWMxVg4oKrIbgXoBiD8jrOiBNcmT+0bTXXGg+VQ9/gaMy4UZfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717012319; c=relaxed/simple;
-	bh=O406XPMzGHXc5VLIYvQ0ENz1katr3o2lArJTVuB28kQ=;
+	s=arc-20240116; t=1717012925; c=relaxed/simple;
+	bh=+DY8XsI/cB8HQZ2QexT3pA3IMoNY105eg0dnRI4uStA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kH3t5ssXm8Myg7pOyO56F2Nzyu3AUzj1MMFqbZmM0ze1qyZz6lOUmh3YBxlPNt4IJru+roC+3fZs7ttOX27VPiduFeYQH8Fy+qoIatkpQq/0mnQ21POd1WB/CF7duvfPAyXreTOLPeH8h+NEQA+/Yr1PAd4YEN1QGDEmtuaOGok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hTAKVkhn; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=dxUl1Y4ejgEV9kkPbVfw7XEZlxppHw6UMWhGMauT1kPyR6iMziLSA8KHL58lc+h2+qTKwlli6wJbHFCcXuMDQsnVIKB83m4o2I1KbRBfJfGqLPmvustuRYtRoqmrmBlgKkfCS02e25JLQw5kAvKxhAPStjdGCFrY/vVxaxU7V/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=aWgLnynG; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hTAKVkhn"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A91D3419F;
-	Wed, 29 May 2024 15:51:57 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aWgLnynG"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 595542BC4E;
+	Wed, 29 May 2024 16:02:02 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=O406XPMzGHXc5VLIYvQ0ENz1katr3o2lArJTVu
-	B28kQ=; b=hTAKVkhndoue2haqu0vABQZwCIbvMz6WCbdip/OhF/bWxyWjdF/x+r
-	oG+FF+/gzRLPlNCYedL5B/zqLPjSTy66Oym+KVwW38TOLgPsLsnq7stxyFJo2+aT
-	noeTY7DE5JvFD1Mh1lR3ToLG0pO4CWj43YOQ5DF0abLhStGkuVoiA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 21DB53419D;
-	Wed, 29 May 2024 15:51:57 -0400 (EDT)
+	:content-type; s=sasl; bh=+DY8XsI/cB8HQZ2QexT3pA3IMoNY105eg0dnRI
+	4uStA=; b=aWgLnynGnhGp3Pr1DBoqYnRq3PwNxjEtmSJaZc2Aj/5cawx7NFcKz+
+	tK3RfSQraYnh0b/sUmARl7R9JtDKxIzFpWx8fnUXz/vayvQsW3JnkiV4TXU47wKY
+	8+aLHRulIIrSUdwplJB6r2UHiPcOcHBUd46gJ+Wf1BvEJLxizaHyU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 50E352BC4D;
+	Wed, 29 May 2024 16:02:02 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 895B43419C;
-	Wed, 29 May 2024 15:51:56 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5296D2BC4B;
+	Wed, 29 May 2024 16:01:59 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH 08/19] line-log: always allocate the output prefix
-In-Reply-To: <699eeae92c0f58032fc76af68521d8cc60f12031.1716983704.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Wed, 29 May 2024 14:44:39 +0200")
+Subject: Re: [PATCH 09/19] object-file: make `buf` parameter of
+ `index_mem()` a constant
+In-Reply-To: <6cbb8444a6dabb883ac3b0e450c0bfbd17b58bea.1716983704.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Wed, 29 May 2024 14:44:44 +0200")
 References: <cover.1716983704.git.ps@pks.im>
-	<699eeae92c0f58032fc76af68521d8cc60f12031.1716983704.git.ps@pks.im>
-Date: Wed, 29 May 2024 12:51:55 -0700
-Message-ID: <xmqqr0dkwg4k.fsf@gitster.g>
+	<6cbb8444a6dabb883ac3b0e450c0bfbd17b58bea.1716983704.git.ps@pks.im>
+Date: Wed, 29 May 2024 13:01:57 -0700
+Message-ID: <xmqqmso8wfnu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,19 +56,16 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- E78D1F2C-1DF4-11EF-90FD-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
+ 4ED5469A-1DF6-11EF-9EE4-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The returned string by `output_prefix()` is sometimes a string constant
-> and sometimes an allocated string. This has been fine until now because
-> we always leak the allocated strings, and thus we never tried to free
-> the string constant.
+> The `buf` parameter of `index_mem()` is a non-constant string. This will
+> break once we enable `-Wwrite-strings` because we also pass constants
+> from at least one callsite.
 >
-> Fix the code to always return an allocated string and free the returned
-> value at all callsites.
+> Adapt the parameter to be a constant. As we cannot free the buffer
+> without casting now, this also requires us to move the lifetime of the
+> nested buffer around.
 
-Yay!
-
-This leak always has bothered me, as it is not just once per process
-invocation, but once per each commit that is shown.
+Makes sense.
