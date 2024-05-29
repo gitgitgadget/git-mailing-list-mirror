@@ -1,159 +1,95 @@
-Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB1F177991
-	for <git@vger.kernel.org>; Wed, 29 May 2024 22:40:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69BD169ADC
+	for <git@vger.kernel.org>; Wed, 29 May 2024 22:40:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717022436; cv=none; b=M794QnNk51i2RVyuJxWif0lky4ftaxqW3CAB5XMSeEDZJ95mqtPWJ8N62HDIEJkT8uksh5KFEgGPTp/m0nNGF2qkldcx2jJKveDyN87Hocrdu5cCcYql7Vkvep155WOuEkv9W6tNMBalYptTeRJSarkZhrDPPi/AWDM+TUWxD6Q=
+	t=1717022459; cv=none; b=X7YPJbQmVP5ziXeBv+avZEGYL3GeymbYNnoXD0p4c2CdZoExwoCUwuEPR/LFL4mv5XUGf35INtZmfdKeLbQWcJLUlqy3soxvaRiuP3T5y16XC/o38eJXW18DSnFkZy/nowO24RNWRPhlCc+8GFKxO+OkNWO2vptSCQWnCEQxVPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717022436; c=relaxed/simple;
-	bh=oi36tbMXnV9BAfxS64gncg0gJ9MNqdACBA8DiCYBcnU=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=ZgwLxwgoTJ0f4I8c9t6eoQIcAslT/uNha8eKexpQM0CgrE/HZP5PUpBIMgdorlp3rZy4Xt0fkk28CE50cnBQ3mMY3KFmzwTUdjKpkP8VuIoksYpiOpDi+9x6paJKzKCiMmOavE9RXcWnXeLcWL8G3GYTYGU7uvRZGZv3dQo/I3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dragondata.com; spf=pass smtp.mailfrom=dragondata.com; dkim=pass (2048-bit key) header.d=dragondata.com header.i=@dragondata.com header.b=Fwf++KQv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e4ro95yO; arc=none smtp.client-ip=64.147.123.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dragondata.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dragondata.com
+	s=arc-20240116; t=1717022459; c=relaxed/simple;
+	bh=lxWiQ9XXUJP4TgN6hy9r9CXKCasabvkP7yKaCjr2EvU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qWP/ReTH307d6VjTVzrgHDqQB8ZIj9cub23gDPZY1xNP7JBV9k+j4wCOXPe3ln7imSQ4G4KWX8D3R7rmqRKwQNawQ1mqAp1YIIPVeb7hEWd5GWAPt4J/7bVno6DYBl6q3reGpSaqIqRt22lSDDgM+5ZlsqK/9sRaezvC6x/gPuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=MkJPCzmW; arc=none smtp.client-ip=209.85.222.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dragondata.com header.i=@dragondata.com header.b="Fwf++KQv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e4ro95yO"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 58F061800152;
-	Wed, 29 May 2024 18:40:33 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 29 May 2024 18:40:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dragondata.com;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1717022432; x=1717108832; bh=DO3zzDIg+1fTz2ntRFntHZX2Fbe21KHZ
-	9lrPUHEA2RU=; b=Fwf++KQvk8rMvS8BJpC+19ZVD6EHnocvWyqt15WCynAWZDGI
-	/JE0dUA++vMI5sjDGGuDNtmr6L7EfwFjtPtEJm0KvdYtQ6e+e26NJS7BhDlyhL1z
-	vpXpgjuFOmekuel5FLCiijagvpFdzwEyGzZ0yZfaNozqcbpuQT+rXrUF6AGXKNo2
-	sHhDlSjdgMH17FZ43xMdbFiUi8d9D6HSCYQLoWy/I/a8H9vBEikCWbT/eSaWfbBU
-	zMd4rDU/2qfRX4ypgThut641N1KiT0wt+dL8xKjX1be5VlKT7TsoIFCqIosl5Gih
-	XV/pdKZZvXMUnfqUPEQAndvaFR3izCXmjJaRgQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1717022432; x=
-	1717108832; bh=DO3zzDIg+1fTz2ntRFntHZX2Fbe21KHZ9lrPUHEA2RU=; b=e
-	4ro95yOIjED3qnm6Oz954SCc7x+daVATjLiJVkBt7Af+DgYayrtO2DYYwsMjiiEu
-	TFiige7K0vkc2uyxUQ3RXoEwLepvQSC+sgs6EFF/AD2Oc+nj9JkYDkKi50ifzBhu
-	/acKe0uFNXpCpMxG4poT4nplr1TUTa1edQ02T/ggWI+IsyqVovu4ciO5XSrRsp8n
-	rzqCgofzAZWqlMCO4aJPfl4oQIF6A96+oEK3Ih/7jEA/pvsSQH1XK5BMj7UfW8L8
-	MkgBQTNqqtd7c5tr/RaMVRtapHAc0wHc2mrui02zm52Q8xa77eG3y5LccH1jCou4
-	vJvaEXW0Libeb5yURiHVQ==
-X-ME-Sender: <xms:4K5XZuW0DK4iO0Mqcqhv8uxqsHCeSGJKGxd_f6fl4tHFKy9FsECPRA>
-    <xme:4K5XZqnfACe51uWairw_jd3KAMws7zoFdwRmHkb80zzBAxcQtLBBuNp2YEJL2x31I
-    PzVxXa-uyaBv_jeq2s>
-X-ME-Received: <xmr:4K5XZiZpfRknYaXh1RojCBjMiH1ruWrCcPoj8H_rYY9ruojx5PF2Ehf9KC3ikFclOQiKXT0aF_m3Nm80hFXUPEvowxpRf2-SG0F04ajHNh-G>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekvddguddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpegtggfuhfgjffevgffkfhfvofesth
-    hqmhdthhdtjeenucfhrhhomhepmfgvvhhinhcuffgrhicuoehtohgrshhthiesughrrghg
-    ohhnuggrthgrrdgtohhmqeenucggtffrrghtthgvrhhnpeduteegueejfeejudetgfeife
-    ehfedtgeejkedugffhheevgfellefgteettdegffenucevlhhushhtvghrufhiiigvpedt
-    necurfgrrhgrmhepmhgrihhlfhhrohhmpehtohgrshhthiesughrrghgohhnuggrthgrrd
-    gtohhm
-X-ME-Proxy: <xmx:4K5XZlVVya5Tc_Wpn_g6hJ99mzKOAZAApwyOvqlC9T7CB2A34-43XA>
-    <xmx:4K5XZol3A-sbqBlTkq0lccEUlZnKo92eStxk98N4cl1UfA2b7cKE2Q>
-    <xmx:4K5XZqeXEa9Aolw2YY1093tjKnZAKx3jRw_YPJS3akR2ZB4vQNiHXw>
-    <xmx:4K5XZqEtT2vHLjJyXaZRrWDPCpK_hr3Lm4kkomP5Hv2rDNBRFNpAqQ>
-    <xmx:4K5XZtyMSI0x72hMpFP5rP_RM9hS8JZgTywJXlUmOHN20aVssUxLSFy->
-Feedback-ID: i862946f8:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 May 2024 18:40:32 -0400 (EDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="MkJPCzmW"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-794ab0ae817so21417485a.2
+        for <git@vger.kernel.org>; Wed, 29 May 2024 15:40:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717022456; x=1717627256; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=LkPMKt//487Zl6nESXqcMKjJyfJt+E+jon9Gjugb6dU=;
+        b=MkJPCzmWm2fUxoveoz5qrrBZoPP7yCxzG3ZMXbeOixY8vAivhm6+LvJZuI+cNMjCZh
+         pCiju7/Pwf0AiacEQbe53KcHZqg1etJw4tCrPw7oJpPGlU3kUu2acjjmb/xuqP9HklCW
+         XDE7HA3/lKY9KzKP/3RR3SUJZg1qkKcChIZm6+AKAP6If25S2FAgCpw7fZkcCRmxQH05
+         NLv/c6tDRxzptozCj5xxodFk2ZIHP5cFLeEs8B3DinoQIlPGtFKbVOkMMp7drbbCanfI
+         w9KqqaRwtuusPSOBH3IjGM/A61jvrImiV7as7qN6cCJqrhP0fOSDzZrFzXOhN7qJ5XDk
+         mYGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717022456; x=1717627256;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LkPMKt//487Zl6nESXqcMKjJyfJt+E+jon9Gjugb6dU=;
+        b=tyIXzxBg5k447IROY3FXgAKhbDJaW618NU2CFoKPEePEyN3VIShXV20qpre1EmsjZ6
+         RZZXWgQsdluu6197wF2OAbiei74P1sNPGRW9C4L2qi2baKEIm6adejKAdzponHipr2kD
+         f2Akrw6Z5xf6T6eZO36dl8zlfRC7TJ4wOwg/Q+FnCa7Rq5Q/mxJyZ/YGf9Jgh8FgnV5t
+         OFURMpkqpm3otXhb2XkPWqm7RdZ5xmUkKKoV3kp9fC+uYGt12tN0UtXo8HXbY9YrhKbB
+         J1NWG6bZYmOBy8BLb/PVsdbPrNunL6aJbhzrpFH5Zy/79SjWNGPwePXfzhTMfvaSPEfV
+         OO/w==
+X-Gm-Message-State: AOJu0YzAhvvH1jUkDaFZAj0eIbeIsPjRGAYY1QiVooIg8QAqxFsBBpP6
+	55Die13SQyJZM91HL1jbT5Bl79T23D6rOBX4zLWTliGeoQZvW0WFoP0jGOSAYMptNc0q9HmFMMN
+	IBcs=
+X-Google-Smtp-Source: AGHT+IHnf5m+VSZWyXrXuW0VZ5FF3MD0Dof9n05KAlFA480zbQMEe9vbda1SS8SmbZUpJKGLv4PXww==
+X-Received: by 2002:a05:620a:4c5:b0:790:b658:b924 with SMTP id af79cd13be357-794e9e1eb1dmr58588985a.51.1717022456587;
+        Wed, 29 May 2024 15:40:56 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-794abd368cesm509255885a.119.2024.05.29.15.40.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 May 2024 15:40:56 -0700 (PDT)
+Date: Wed, 29 May 2024 18:40:55 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 4/8] midx-write.c: extract `should_include_pack()`
+Message-ID: <Zleu90gpuXt/qipa@nand.local>
+References: <cover.1716482279.git.me@ttaylorr.com>
+ <3908546ea85eb36a27ce6bd681a3c2152ff005f5.1716482279.git.me@ttaylorr.com>
+ <ZlbduH9UZZIm8pNh@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
-Subject: Re: Commands using -h as an option don't work consistently
-From: Kevin Day <toasty@dragondata.com>
-In-Reply-To: <xmqqfru0tg1a.fsf@gitster.g>
-Date: Wed, 29 May 2024 17:40:31 -0500
-Cc: git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0F971F6E-6462-4E0D-880B-8FD67F42A782@dragondata.com>
-References: <52819526-4C6F-418C-8B8B-A4D5C7E371EA@dragondata.com>
- <xmqqfru0tg1a.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3774.600.62)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZlbduH9UZZIm8pNh@tanuki>
 
+On Wed, May 29, 2024 at 09:48:08AM +0200, Patrick Steinhardt wrote:
+> On Thu, May 23, 2024 at 12:38:13PM -0400, Taylor Blau wrote:
+> > The add_pack_to_midx() callback used via for_each_file_in_pack_dir() is
+> > used to add packs with .idx files to the MIDX being written.
+> >
+> > Within this function, we have a pair of checks that discards packs
+> > which:
+> >
+> >   - appear in an existing MIDX, if we successfully read an existing MIDX
+> >     from disk
+> >
+> >   - or, appear in the "to_include" list, if invoking the MIDX write
+> >     machinery with the `--stdin-packs` command-line argument.
+> >
+> > In a future commit will want to call a slight variant of these checks
+>
+> Either s/In a/A/ or s/commit/&, we/.
 
+Thanks for your careful review, it is much appreciated! I meant to write
+the first one, and will correct it in the subsequent round :-).
 
-> On May 29, 2024, at 5:22=E2=80=AFPM, Junio C Hamano =
-<gitster@pobox.com> wrote:
->=20
-> This is very much deliberate design.  I think in these cases we make
-> an unambiguous longhand (e.g. "--heads" we see above) available, or
-> you can explicitly say the remote, i.e. "git ls-remote -h origin",
-> and that has been the officially accepted "solution".
-
-Yeah, and that totally makes sense. This bit me because I was =
-programmatically generating git commands that would sometimes call =
-ls-remote with no options, sometimes asking only for heads, sometimes =
-only for tags.... and was baffled for longer than I want to admit why it =
-wasn't working consistently. I thought the usage was being shown because =
-I was doing something wrong. My first thought was it was showing me the =
-help message because if you ask for heads you must also use some other =
-option along with it. It didn't occur to me that -h and --heads would =
-behave differently.
-
-> Let's see what improvements you bring to the table.
->=20
->> The options I see:
->>=20
->> 1) Fix -h handling and add ignores and fixes where possible to the
->> failing tests and try to not use -h as an option for anything new.
->=20
-> I do not quite understand the former half, but "try not to use -h
-> for new things" is a very good idea and it is pretty much what we
-> have been doing.
-
-Sorry, let me rephrase that.  1) Apply the fix I was proposing to make =
-it so that the command's -h usage has precedence over showing the usage. =
-Any tests that break because of that which don't have a plausible fix =
-mark as "# TODO known breakage" like several other commands have because =
-they aren't generating usage output correctly for one reason or another.
-
-
-> We can certainly add support for "-?", but the behaviour when "-?"
-> is not used (and when "-h" is used) would not have to change from
-> the current behaviour, and that would still be serviceable, I
-> presume?
->=20
-
-That was proposing making -? unconditionally show usage, if a command =
-uses -h give that priority over showing usage even if it's the only =
-option, but leaving -h to still show usage everywhere else, and changing =
-all the tests to use -? Instead of -h so the tests can unambiguously =
-request the usage.
-
-I think that covers every case then. If a command advertises -h it =
-always works, it falls back to showing usage if there is no -h, and =
-tests can use -? which will always show usage and we can even make =
-parse-options reject anyone's attempt to use -? as an option in the =
-future so this doesn't come up again in 10 years.
-
-> We actually do not have to *add* support for "-?", as it comes with
-> parse-options for free ;-)
->=20
->    $ git ls-remote -\?
->    error: unknown switch '?'
->    usage: git ls-remote ...
-> ... the same "ls-remote -h" output given here ...
-
-That *almost* works, except some tests would have to be modified because =
-they don't like that error line in there, but that is super clever! It =
-would be pretty trivial to make parse-options deliberately spit the =
-usage out without an error though in the -? case.
-
-
-
+Thanks,
+Taylor
