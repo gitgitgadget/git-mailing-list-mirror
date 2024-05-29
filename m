@@ -1,86 +1,83 @@
-Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
+Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F2C15CD43
-	for <git@vger.kernel.org>; Wed, 29 May 2024 05:52:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9849E1D531
+	for <git@vger.kernel.org>; Wed, 29 May 2024 06:00:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716961980; cv=none; b=CKmuhydrJ5h72Xt/BixH4Z62jbS5Pj4GwGDwAkpxWNRf0Q0UFupc83Cby5KBsrHHypCnnmXuKSUebUR4W6Sr07hc8+Ff6n2sszONL1i3S8kJDI/9Jt+2IW6mH3faub5i45bwcyWvPUoFxn7cdot/TGrrVR1OJV6YF6kcP8JiEbM=
+	t=1716962418; cv=none; b=uHJhbFvfkl9o4ZC4NIN1gUGHO0eJbSqVWS+5Q++CWLVeVIrCfraXGvr3CLyWjPe4j8uCSYhYB3ll/+IwS0bWsrj1bc8hbDdDKLpEPULBAU4oXN86OXXaC3kTO/0yVjRAt2b5SWAa9HCvzqgWo9lRYRU+xw9HamInvwcTHJqvuNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716961980; c=relaxed/simple;
-	bh=pM2hxXBKkoEaiihx17P+dcazMsPK8gIuViwd2byWS1U=;
+	s=arc-20240116; t=1716962418; c=relaxed/simple;
+	bh=5yRIZLECbRYuq4hGP92FxlnxnWVL8CfqRZn579HHIsM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fQcenjuH2s8J0CJaUxyKlNFhOx6wb1DHH8MgzxfwLDT1GhXgH+23ByemnMvlTMIjb3Z8c5dPWhZHtMHfdtGjI9t/HFRCV/SdIpv7lMH96HDvGuzJi8eCM2yAcdi5Tq2lAnV7jdGwxsD+gsbghm+4NygdZL0xK9gzZoHl1583P68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BEe1YY8P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=chf7LUfi; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=TktlrgFj/vpjfAMHuL5GC298DFKRfoCvOvt+zWp0qw9gqt8nTCR3n0RLJGBzSYgKFTkS4Q8m/0eVmf/7rJp7JWbX3LzXu8O1pyTBV0vui91jn5L7V1QteupU0ewkPdi5lmG/meHjGMS1GvGkkZho6Yd9NyOqtHRPb5ME7s4AFhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dXzAATQx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mAESIxCf; arc=none smtp.client-ip=64.147.123.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BEe1YY8P";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="chf7LUfi"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 10B7213800EE;
-	Wed, 29 May 2024 01:52:58 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Wed, 29 May 2024 01:52:58 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dXzAATQx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mAESIxCf"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.west.internal (Postfix) with ESMTP id A017E1800134;
+	Wed, 29 May 2024 02:00:15 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Wed, 29 May 2024 02:00:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716961978; x=1717048378; bh=npxWZfEe5X
-	wcw10qspS+cqEiYlLcQ8sXnfJVStI/V1Y=; b=BEe1YY8Pui7SEaJwvg1jjqc/cI
-	a0srcqwYDJ/PS75Gtl1lDd7zdlK1afTrJjYs8qtLmN/ZT5C7kIMEB65U2foe6UrP
-	blbdEKEGp2OtRsVZPcTKx38bXFH330bhM01WOrupZgVDGQmdlrEeoj2LR6p99QOE
-	wWHZWKBIv8avxqm3o+ydR5W664O9uQ4M7JdPnWsrOhHB5LYBQgzwarpC9e7dV0BA
-	giqwjvvRcCcmSvqQALOxvopL2tdjXoHcoyODWdG7z8SCsXLO5QzZBDKcEOUNWfly
-	8+RWfYdeEz9hRxR4ykKZmQWJZMIwRUAS5UP4F0/TZ90bcPYp8Glmm7xaZR4g==
+	:subject:to:to; s=fm1; t=1716962415; x=1717048815; bh=5yRIZLECbR
+	Yuq4hGP92FxlnxnWVL8CfqRZn579HHIsM=; b=dXzAATQxRKK+zDGc6RLi5YapOb
+	SZ9VbButXBBWgUguXcuU/eYxuOcuntk02TvFwBSfBBXRB8aKo98+G/pVdM8oOR2i
+	hmNuW/ui16K2ZNmMS2j4GnnxC8I/P6/470I2W4Zyesfh4Fan1AERGvT6jAxvC6Xq
+	+XEN41UzxojWj4XBrZ+OMdaXtPP+rp1gGHjZKcWgOBALzeuRQzZzi2pDWtVuW9Vp
+	uyUKlg46JUhvdl6f+yU8Vpxt66U/BGS6GHJ/R3rdtkmSDTIw1iStWX5ivWaAjBDo
+	LzCdL0Sg5qxZrlSFFtqKFpZ/Xg4HTsXOJwrQ7wzk8I5uKgkC+nF0rCWxYLMg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716961978; x=1717048378; bh=npxWZfEe5Xwcw10qspS+cqEiYlLc
-	Q8sXnfJVStI/V1Y=; b=chf7LUfioybYxf/Ee7dO81TG7/HjuQ6bFwmEFQTxXsVD
-	6Osmf04seXWr/DtR9R8tYsM40x7gCmU/FP07iPUv5YqWhjuFozJcYKOueHpTRbXg
-	X85zLfCZBNwYA5VRhYTerKY/iHKvM2vlQlA8bPRKkFGpWVKzOAcSo2NItgDE+BMG
-	jUGf5IhUu3JGgFqezZ0f/4IdvOI4sYrwpOmr+JxCnVIdBKc6j3ySt6SXdJrZpZiL
-	7Yvb2VYWFIv9jvpU572j2V3C8DN3G2tydtnSKApHglECAnKzc9zlsrRa1wxaZHpN
-	GGihkfRPxgmZ/ql5En/68CDNEUgZ/+x/Y8Key0E7Ng==
-X-ME-Sender: <xms:ucJWZuYUpwYxLDDLq1StLJNpXxT41Wmqqfvvpo0Ub0As0TxItgd2YQ>
-    <xme:ucJWZham6PEfSzUaigq-_lVV10FaMgDrkVSUVlHudDwwE8kPqR_s2LeLfeGA0NC1j
-    L3k4MygghJl9XYUug>
-X-ME-Received: <xmr:ucJWZo_T7izx3OpqmqPGguff7hE3hXYXD4MA3eM21fmNkVTl9BvcKRKVvbdkCqySBrVmKJJoC-UTnKJCArrcVMXOd1BkfGOqA0s_t4R-QCBMIYSj>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejledgleelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:ucJWZgr6eQKnoHchgMwyx5XttlrtUrnN0A4M1OyWitc6vFVR6voO_w>
-    <xmx:ucJWZpo2EA5ShNarMmlnjXOmeDqevKhFlcS6kuNTZmunvfcE-yIVrg>
-    <xmx:ucJWZuQ31PDJp3n-KCTP-CHFmzi-vyQ0A5nj0KrE_k4f_WBbk7CjRw>
-    <xmx:ucJWZpo1YOV1y9j1jSmQ08JDr9FFBd-z2nqWDOJR87toWbjIkVuP6Q>
-    <xmx:usJWZqd_O2IR4A4Y8axJcduap399AhiHk-YalEAtfT5jMUg-6UlD8RAX>
+	fm1; t=1716962415; x=1717048815; bh=5yRIZLECbRYuq4hGP92FxlnxnWVL
+	8CfqRZn579HHIsM=; b=mAESIxCfOVslxHufgS/WJwBmS+fQmpc2sTgIskQM+7va
+	F+vLXtV1D3O5+AmoQumJyVuTegEkkF9lwXR/v+j+bULiLonRM5Uaevi1+221jX8c
+	+KB1D8FY0VwHG6mIhOwYAE/P6YPs5PkO7t7ltNgl9GjfnVmMxORvyLNUp0/aW6OL
+	fiuocXJemgfWEFx78vl4IB5DP0rIB46CEB1bBl/UCq6O0WPlgI6iKyLKOz+DdDxw
+	x/Q7F2LAkNqavSJcUpsLJsL1QfyHETRk+8rVgPVgE6VqU/Go2vplbQ4ovwYZFKKZ
+	x7UOeqZo1GyInodS/SgHRenX3hNukmolj3MvXGOjsw==
+X-ME-Sender: <xms:b8RWZrC_Bu4px_yOXZUcB3COQlJ5w2WIG9Mn4CUIuRurF4HIxq4AlA>
+    <xme:b8RWZhjaTQeLY3z9rAlGWM10YX_lDYydq6ehwJlknaUpF9fMQ0zEXsfyU7RctvkiY
+    Gqp0z1GR_wDrD5lYw>
+X-ME-Received: <xmr:b8RWZmnEl-MsusLaNDTOiO-5VWFVhhbYDI6iuM0S95XoZdSxzF5SpXHEuQIAs_x_MNAhg6cJM07nHqijYQS3QvfgaFTWDo__3H-kdfhCv6dRasSd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejledguddtudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtdorredttdejnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeegtdeiuedtgfeuvdfghfdtkeelkeeltedtleeggfeufeelgfeitddvgedugfeh
+    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:b8RWZtxixKW0Pmpjs1H0Jo-HaujTwvze1JY4zgQdmZ3rK1FaLyjicQ>
+    <xmx:b8RWZgSEgyxO3H1JLGXvFczPcRF74xLbQhVHnD89aIiqfh7L-sAQAg>
+    <xmx:b8RWZgZqMcnw8ugfsW8DkPOStyWf-xsFjyegSmw6cAk9Fd3DJR_F0g>
+    <xmx:b8RWZhQacXNq6uoEVI7Nj9Asmm8evDFW2WrJ1W0V2Sz1hfywBgavbg>
+    <xmx:b8RWZmNXnKZHpObyLgmNnFOv4nyOK2X9o6dY7s5oYs899XMicqYgHDEr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 May 2024 01:52:56 -0400 (EDT)
+ 29 May 2024 02:00:14 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ce245af7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 29 May 2024 05:52:42 +0000 (UTC)
-Date: Wed, 29 May 2024 07:52:53 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 2fab44af (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 29 May 2024 05:59:58 +0000 (UTC)
+Date: Wed, 29 May 2024 08:00:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Xing Xin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>,
-	blanet <bupt_xingxin@163.com>, Xing Xin <xingxin.xx@bytedance.com>
-Subject: Re: [PATCH v3 3/4] fetch-pack: expose fsckObjects configuration logic
-Message-ID: <ZlbCtUr9906gq300@tanuki>
-References: <pull.1730.v2.git.1716208605926.gitgitgadget@gmail.com>
- <pull.1730.v3.git.1716824518.gitgitgadget@gmail.com>
- <67401d4fbcb3f07d31589bb8ec10060dcb77545e.1716824518.git.gitgitgadget@gmail.com>
- <ZlXIBrs5Q91r_-qU@tanuki>
- <xmqqikyx6ew9.fsf@gitster.g>
- <xmqqbk4p6e98.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 2/2] t: improve upon reftable/basics_test.c in the unit
+ testing framework
+Message-ID: <ZlbEanuHHlwyaRfT@tanuki>
+References: <20240528113856.8348-1-chandrapratap3519@gmail.com>
+ <20240528113856.8348-3-chandrapratap3519@gmail.com>
+ <CAP8UFD02Ck0M2AOmTtJO3gHr3w+3Of7BAAa0Rbc=CtMms60nyA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,91 +85,63 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xidPWb7ecbRaXFBG"
+	protocol="application/pgp-signature"; boundary="2qE4ioaC6AiITolE"
 Content-Disposition: inline
-In-Reply-To: <xmqqbk4p6e98.fsf@gitster.g>
+In-Reply-To: <CAP8UFD02Ck0M2AOmTtJO3gHr3w+3Of7BAAa0Rbc=CtMms60nyA@mail.gmail.com>
 
 
---xidPWb7ecbRaXFBG
-Content-Type: text/plain; charset=us-ascii
+--2qE4ioaC6AiITolE
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 28, 2024 at 10:24:35AM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
-> > Patrick Steinhardt <ps@pks.im> writes:
+On Tue, May 28, 2024 at 02:46:17PM +0200, Christian Couder wrote:
+> On Tue, May 28, 2024 at 1:40=E2=80=AFPM Chandra Pratap
+> <chandrapratap3519@gmail.com> wrote:
 > >
-> >>> +int fetch_pack_fsck_objects(void)
-> >>> +{
-> >>> +	fetch_pack_setup();
-> >>> +
-> >>> +	return fetch_fsck_objects >=3D 0
-> >>> +	       ? fetch_fsck_objects
-> >>> +	       : transfer_fsck_objects >=3D 0
-> >>> +	       ? transfer_fsck_objects
-> >>> +	       : 0;
-> >>> +}
-> >>
-> >> ... can we maybe rewrite it to something more customary here? The
-> >> following is way easier to read, at least for me.
-> >>
-> >> 	int fetch_pack_fsck_objects(void)
-> >> 	{
-> >> 		fetch_pack_setup();
-> >> 		if (fetch_fsck_objects >=3D 0 ||
-> >> 		    transfer_fsck_objects >=3D 0)
-> >> 			return 1;
-> >> 		return 0;
-> >> 	}
-> >
-> > But do they mean the same thing?  In a repository where
-> >
-> >     [fetch] fsckobjects =3D no
-> >
-> > is set, no matter what transfer.fsckobjects says (or left unspecified),
-> > we want to return "no, we are not doing fsck".
+> > Enhance the new test for reftable/basics.{c, h} in the unit testing
+> > framework. The enhancements include:
+> > - Move tests for functions in reftable/basics.{c, h} from
+> > reftable/record_test.c and reftable/stack_test.c to the new unit test.
 >=20
-> The original before it was made into a helper function was written
-> as a cascade of ?: operators, because it had to be a single
-> expression.  As the body of a helper function, we now can sprinkle
-> multiple return statements in it.  I think the way that is easiest
-> to understand is
+> It might be easier for readers if one patch moved tests from
+> reftable/record_test.c and a separate patch moved tests from
+> reftable/stack_test.c.
 >=20
-> 	/* the most specific, if specified */
-> 	if (fetch_fsck_objects >=3D 0)
-> 		return fetch_fsck_objects;
-> 	/* the less specific, catch-all for both directions */
-> 	if (transfer_fsck_objects >=3D 0)
->         	return transfer_fsck_objects;
-> 	/* the fallback hardcoded default */
-> 	return 0;
+> > - Add tests for functions that are not currently tested, like put_be16.
 >=20
-> without the /* comments */.
+> This could perhaps be done in a separate patch.
+>=20
+> > - Improve the test-cases for the already existing tests.
+>=20
+> Are these improvements to tests that were moved in patch 1/2 of this
+> series? If that's the case, these improvements could be in a separate
+> patch too.
 
-Ah, right, didn't see this mail. My revised version looks the same as
-yours, except for the added comments.
+Some of the test cases are extended to also cover additional edge cases.
+But I agree that this is easy to miss, and also think that this patch
+should be split up further.
 
 Patrick
 
---xidPWb7ecbRaXFBG
+--2qE4ioaC6AiITolE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZWwrQACgkQVbJhu7ck
-PpQjORAAj0Px1S9l4O4WltmVuYKec7CNmNk+hSxFGPyWxnxCklxT2SHitWytDFMm
-MfYcJ3ea5Hg1kzW29yF7D5QUaqjiUB4jzRoQl797PPp3vL3jp7R86Laji9GtdEK8
-dpqhzZ4g/EpqM9+fd0cOKtPwLs0+fl8bGllJbyGD4+qUlpBgMxsTUUeHjmks1iV+
-ZMLuqyHqy/PmS+yPhNDHG81h02HaRzGwzr6AX5EeLZ/diXcqRvtWr6w0VrwPVNQ8
-U2XnMiWgt3WkGEvlkOqdQz/b06En5I4lTQs7mVhC9HLOdPLbSgnWKOVwyVIBOItq
-JgQaZww6EO/XP+YQE+Kfeh8GUZQcP2z7FthokxWXWfyLoKVhscN6NQ7RyEBlLiho
-rWvu30ZO0iGe8crQ5cAXQ6XKgb2MR/a7eD4Zf2tV1FsY+uc8wGwQGHUIz5zEZENA
-aPb6mdRFCAwQbDU56RtslKRzGmWM7B7zZEEh33QZEeoVo9/BRAqptYKKi8iX9Q28
-4Fya6sJ8X9nqfID06AxopcpIVa+uaumMy8F4tVU7iVk/QgF0UDbX017t6wPhdBXm
-sxCNWS9k9Ilbktaym6Td/StWGl+KFzdWBPFV6BY/btW3zJXL/SCyNyYu7vB6Cxqz
-J/S4ADBFWn6SfLHGS2MYE6vinfdspiOJZjEwRld9eXX7a3fJi5w=
-=zL6D
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZWxGkACgkQVbJhu7ck
+PpTFqg/9G7s3tTc1VMl00AyVWsFGKPLlmvWIgQYAE34p4siMqueyGKKDmP1XlB6T
+CLRBfWJEaSzgebKe8O3LbD3ZF1iAOtQcnrTgpY5XgyZPmfgkSoHGnIdyKjQcB4Vd
+xs0jZ9bOE8XScOOtEQqve3/HsxH5GVWc48dCjfzNZOrwJuJdyUZnzOy6Mq+myXh8
+v33GtZ3xoXE51J8IoYg3PaS5gQhbtTUSDWijfQt+0utxbKmSJheawtXBjx05tZ3n
+m5FKHA1FeZI6ulQ0Fy1coBmqHrPuMZPvcN8w48bH0LxuRsEUfeDynjy1tzGe+mIE
+PqWwvnk/BiR6O43nv4569HC9CmxhRDR2S1+0mjg/tMhFJNFGptdgZsDKOnccpJI1
+ybxwm8IS8Rjb8O30We4gNVKLnF/dSb2Xldal1KAXYne1bgrJax5MEyxFKA3/xsdi
+Lho0IxodTYv4TspBZhuGR9g6QWVxxbyb3N6VgAZqzaVRbvZk3K9qsLNWUT+IlMn/
+wm7VW3Os/YbfIOVVVm+TJUH2QlRniuuOdVnE7fFaynpkB/ne6a9b6d/4IDZCp5pS
+mwryh90uc5hPYcl8hdSO1Vjj7v9S8w1oYJ2Ar1Zmq3ZWjd7UW4itKQ6+USYV5pWk
+0+QOvT3jejTviA7dZWG0YSOhYJgZbJXwk3M5gU/hCF88mlocVxg=
+=PdLJ
 -----END PGP SIGNATURE-----
 
---xidPWb7ecbRaXFBG--
+--2qE4ioaC6AiITolE--
