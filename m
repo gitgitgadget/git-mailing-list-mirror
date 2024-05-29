@@ -1,85 +1,85 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0311C15B562
-	for <git@vger.kernel.org>; Wed, 29 May 2024 18:13:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
+Received: from hr2.samba.org (hr2.samba.org [144.76.82.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3031315B98B
+	for <git@vger.kernel.org>; Wed, 29 May 2024 18:15:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.82.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717006392; cv=none; b=k1J7+23q0JWejHcBXbiefctZVzNGapETsqKz/05lbURa3vym+8Yatk7ID09Inq4KDcIRzUxkoIl8sTT5xVLltpGVhv0fxF4Sw8r6ChzaeIu0EhkHaXNZakWH6VIytyBbrnynRSR+GqJSxbOMBiaAD0f53/odtpKknQAIOosMDzY=
+	t=1717006533; cv=none; b=m1dSqn+vNFJQTp8UHFHg+IHm/6QC0AHo38fDzXClg9k0x3onqLng/oMGlay/cwIQ8rY0QYiBlKNqJbXriZEKfduUWfK3MrNOSDQAFCxywgHL6ADOCAPRKOUt59kfzGVJN7u7DpWmRKVwsZG07WOuQ3mu+Ziz/dLrj72C4rKr7ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717006392; c=relaxed/simple;
-	bh=b2T12/WP82CnVg07Abmmln8zdCkbihcFKNmSQPALSGk=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=HrrwF3bDMDymY1Ias/GElYhQ9BzunOA1dImBaGh03Rcp+yDxH2sxx5yrd/TEeGKW2XAMTM2Xz0m7yZd3mJBXyG7iy4EW1weyLq4gJt0YxtDFvGG1XIq+S/RfsDXRa9hMR5Dx156TBg1vW+7ucp+Q2jvDo+d/5sSkLcvJKdZPACM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=b5RtJ3MP reason="signature verification failed"; arc=none smtp.client-ip=220.197.31.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1717006533; c=relaxed/simple;
+	bh=YwLqI/YX5ddRHpq+W/04Tgjl4ElCx7TZ7JnDchS5oW0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ILllOTAfRZauZhzAPxD6yQddJ2Rok3hijS//rZpeZq5FmLDHqQIRvYR8+FVqSkOJMh4zs5i9+CZnbAT8uvSx36S8pNRn254cO/8tPeG8ASj5opeUebd1//1j0Wkega8eZ7cuqK7D3qvXrKG/6WmFu+AIpGVdPXVbFgM6KP6h960=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=samba.org; spf=pass smtp.mailfrom=samba.org; dkim=pass (3072-bit key) header.d=samba.org header.i=@samba.org header.b=X63eqMOx; arc=none smtp.client-ip=144.76.82.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=samba.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samba.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="b5RtJ3MP"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=flX982wzTuqO9LLl80mWQmhO8yly8RBTGo2xK/bD89M=; b=b
-	5RtJ3MPj+x7j7GFSp1rVPlRq2QZTrYmLp3tMBvnt0zVWjxoLl1mDhsDToqT4C3e8
-	xGC+s23nheBB/QpnnljyxVYdZuvW5xu/2+ougA2a+tz1K6cmNGI+aVk0t9QAGpIU
-	ZkQTCR6UJqxk4GrWiQClUXRHK+oUM8Hg+YY6rRRvDw=
-Received: from bupt_xingxin$163.com ( [117.147.107.113] ) by
- ajax-webmail-wmsvr-40-134 (Coremail) ; Thu, 30 May 2024 02:12:47 +0800
- (CST)
-Date: Thu, 30 May 2024 02:12:47 +0800 (CST)
-From: "Xing Xin" <bupt_xingxin@163.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"Karthik Nayak" <karthik.188@gmail.com>, 
-	"Xing Xin" <xingxin.xx@bytedance.com>
-Subject: Re:Re: [PATCH v3 2/4] unbundle: introduce unbundle_fsck_flags for
- fsckobjects handling
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <ZlXIDXfc_1lGb51J@tanuki>
-References: <pull.1730.v2.git.1716208605926.gitgitgadget@gmail.com>
- <pull.1730.v3.git.1716824518.gitgitgadget@gmail.com>
- <057c697970ff49301cd9dc6adef099f53d440c3c.1716824518.git.gitgitgadget@gmail.com>
- <ZlXIDXfc_1lGb51J@tanuki>
-X-NTES-SC: AL_Qu2aBfybuUst4SWRZ+kXn0oVhe85UMW2ufsg3YReP500miXL9ScDRkRsOmPqweeIGRq1iyOrfzhv8uZ4VIlnT7oY8YV/taBh872ZGfXEmaV/
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (3072-bit key) header.d=samba.org header.i=@samba.org header.b="X63eqMOx"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=samba.org;
+	s=42; h=From:Cc:To:Date:Message-ID;
+	bh=A+e69WipNoiw0yO/nknCeh5Te0b18M1T8l5DCtyCIwg=; b=X63eqMOxYrWrkjSCueR7VlNnm4
+	umAybBu2RfpEbL+vq1nHeQspqUguElok02SlLnvRSJlubGipupZlzdVK7VR7KKPPrsKXRxKkDdyC0
+	hQqcTj3l1c5NSkikQOnnSKDcfdxp9IAK/IpXJwO9chcdc1gdMhxmRDw2Hb4j7N/HUjmWQEgnBnq3t
+	F7gn8cTJagBo52u6UlU96AUPhqdxhL/SdwOKHC8nPuiuPSJegSpsZL8bcN30eqD/8tEzSbARgsQ9I
+	7WcIAxS4JM34bAbzycVY6vAKN/GRQSUMlRAsQ47DIchxZLUmzGV0NApGflzR3g9cHKPaQ6j0BQOb9
+	P4FZQw2NzWr5SE/Zs3hT2em0xu7ms01w5k+gTtmOK4CGqSfmrIUCdOsfLRmGdxS56QbCLIQQ9ROw6
+	Fw1b8E1FyyBxwzixobe8w6IUpvlNvrbqROckcgcJ2e7nsW3WIE1jDt7ICIgel/wfrkid8JeMzFvEX
+	PV+XIDayJ32eJqKYe5n42cy8;
+Received: from [127.0.0.2] (localhost [127.0.0.1])
+	by hr2.samba.org with esmtpsa (TLS1.3:ECDHE_SECP256R1__ECDSA_SECP256R1_SHA256__CHACHA20_POLY1305:256)
+	(Exim)
+	id 1sCNpf-00DtE5-17;
+	Wed, 29 May 2024 18:15:27 +0000
+Message-ID: <22b487e8-b845-43f9-8abe-5f96a756b376@samba.org>
+Date: Wed, 29 May 2024 20:15:21 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <1d097be.b642.18fc58dfb70.Coremail.bupt_xingxin@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3f+EfcFdmcUlJAA--.12561W
-X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiRQXtbWXAmhsI-wAGsV
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+User-Agent: Mozilla Thunderbird
+Subject: Re: safe.directory wildcards
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+References: <715163c3-8d59-46ef-81bf-1dda10e6570c@samba.org>
+ <xmqqplt4zjw7.fsf@gitster.g>
+Content-Language: en-US, de-DE
+From: Stefan Metzmacher <metze@samba.org>
+In-Reply-To: <xmqqplt4zjw7.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-QXQgMjAyNC0wNS0yOCAyMDowMzoyNSwgIlBhdHJpY2sgU3RlaW5oYXJkdCIgPHBzQHBrcy5pbT4g
-d3JvdGU6Cj5PbiBNb24sIE1heSAyNywgMjAyNCBhdCAwMzo0MTo1NVBNICswMDAwLCBYaW5nIFhp
-biB2aWEgR2l0R2l0R2FkZ2V0IHdyb3RlOgo+W3NuaXBdCj4+IGRpZmYgLS1naXQgYS9idW5kbGUu
-aCBiL2J1bmRsZS5oCj4+IGluZGV4IDAyMWFkYmRjYmIzLi5jZmE5ZGFkZGRhNiAxMDA2NDQKPj4g
-LS0tIGEvYnVuZGxlLmgKPj4gKysrIGIvYnVuZGxlLmgKPj4gQEAgLTMwLDYgKzMwLDExIEBAIGlu
-dCBjcmVhdGVfYnVuZGxlKHN0cnVjdCByZXBvc2l0b3J5ICpyLCBjb25zdCBjaGFyICpwYXRoLAo+
-PiAgCQkgIGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgc3RydWN0IHN0cnZlYyAqcGFja19v
-cHRpb25zLAo+PiAgCQkgIGludCB2ZXJzaW9uKTsKPj4gIAo+PiArZW51bSB1bmJ1bmRsZV9mc2Nr
-X2ZsYWdzIHsKPj4gKwlVTkJVTkRMRV9GU0NLX05FVkVSID0gMCwKPj4gKwlVTkJVTkRMRV9GU0NL
-X0FMV0FZUywKPj4gK307Cj4+ICsKPj4gIGVudW0gdmVyaWZ5X2J1bmRsZV9mbGFncyB7Cj4+ICAJ
-VkVSSUZZX0JVTkRMRV9WRVJCT1NFID0gKDEgPDwgMCksCj4+ICAJVkVSSUZZX0JVTkRMRV9RVUlF
-VCA9ICgxIDw8IDEpLAo+Cj5Xb3VsZG4ndCB0aGlzIGhhdmUgYmVlbiBhIG5hdHVyYWwgZml0IGZv
-ciB0aGUgbmV3IGZsYWcsIGUuZy4gdmlhCj5zb21ldGhpbmcgbGlrZSBgVkVSSUZZX0JVTkRMRV9G
-U0NLYD8KCkl0IG1ha2VzIHNlbnNlIHRvIG1lLiBDdXJyZW50bHksIHZlcmlmeV9idW5kbGVfZmxh
-Z3MgY29udHJvbHMgdGhlIGFtb3VudApvZiBpbmZvcm1hdGlvbiBkaXNwbGF5ZWQgd2hlbiBjaGVj
-a2luZyBhIGJ1bmRsZSdzIHByZXJlcXVpc2l0ZXMuIFRoZQpuZXdseSBhZGRlZCB1bmJ1bmRsZV9m
-c2NrX2ZsYWdzIGlzIGRlc2lnbmVkIHRvIGNoZWNrIGZvciBicm9rZW4gb2JqZWN0cwpkdXJpbmcg
-dGhlIHVuYnVuZGxlIHByb2Nlc3MsIHdoaWNoIGlzIGVzc2VudGlhbGx5IGEgZm9ybSBvZiBidW5k
-bGUKdmVyaWZpY2F0aW9uLiBJIGJlbGlldmUgd2Ugc2hvdWxkIGV4dGVuZCBzb21lIG9iamVjdCB2
-ZXJpZmljYXRpb24KY2FwYWJpbGl0aWVzIHRvIHRoZSBnaXQgYnVuZGxlIHZlcmlmeSBjb21tYW5k
-IGFzIHdlbGwsIHBlcmhhcHMgYnkgYWRkaW5nCmEgLS1mc2NrLW9iamVjdHMgb3B0aW9uLgoKV2l0
-aCB0aGlzIGluIG1pbmQsIEkgc3VwcG9ydCBhZGRpbmcgbmV3IG9wdGlvbnMgdG8gdmVyaWZ5X2J1
-bmRsZV9mbGFncy4KU2luY2UgYnVuZGxlLmM6dW5idW5kbGUgbmVlZHMgdG8gY29tYmluZSBtdWx0
-aXBsZSBvcHRpb25zLCB3ZSBtdXN0CmRlZmluZSBuZXcgb3B0aW9ucyB1c2luZyBiaXR3aXNlIHNo
-aWZ0aW5nOgoKCWVudW0gdmVyaWZ5X2J1bmRsZV9mbGFncyB7CgkJVkVSSUZZX0JVTkRMRV9WRVJC
-T1NFID0gKDEgPDwgMCksCgkJVkVSSUZZX0JVTkRMRV9RVUlFVCA9ICgxIDw8IDEpLAoJCVZFUklG
-WV9CVU5ETEVfRlNDS19PQkpFQ1RTX0FMV0FZUyA9ICgxIDw8IDIpLAoJCVZFUklGWV9CVU5ETEVf
-RlNDS19PQkpFQ1RTX0ZPTExPV19GRVRDSCA9ICgxIDw8IDMpLAoJfTsKCkhvdyBhYm91dCB0aGUg
-bmFtaW5nPyBJJ20gbm90IHZlcnkgZ29vZCBhdCBuYW1pbmcgOikKClhpbmcgWGluCg==
+Am 29.05.24 um 18:02 schrieb Junio C Hamano:
+> Stefan Metzmacher <metze@samba.org> writes:
+> 
+>> given the recent importance of safe.directory, it would be great to
+>> have something like '/data/git/*' to be supported, not just a single '*'
+>> for a server that serves a lot of public git repositories owned by different owners.
+> 
+> Interesting.
+> 
+> The original commit that introduced the '*' opt-out, 0f85c4a3
+> (setup: opt-out of check with safe.directory=*, 2022-04-13), was
+> done to specifically help those who have a large list of shared
+> repositories.  We could have moved all the way to allow globs back
+> then, and the possibility certainly was brought up.
+> 
+>    https://lore.kernel.org/git/xmqqk0bt9bsb.fsf@gitster.g/
+> 
+> But the loosening was done in a context of "brown paper bag fix"
+> so it is very much understandable that we did the simplest and most
+> obvious thing to avoid making silly mistakes in a haste.
+
+> I am reluctant to use wildmatch() but I would expect that in
+> practice "leading path matches" (in other words, "everything under
+> this directory is OK") is sufficient, perhaps?
+
+That's exactly what I tried first and then looked
+at the sources to check why it doesn't help :-)
+
+I guess it will be useful to have.
+
+Thanks!
+metze
