@@ -1,165 +1,183 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C1B29406
-	for <git@vger.kernel.org>; Wed, 29 May 2024 08:25:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71F516A369
+	for <git@vger.kernel.org>; Wed, 29 May 2024 08:29:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716971119; cv=none; b=C1o6Yd9fc+/WN5sOM6pdZtQ1t9WTVZPyiZN64zwPxXEmy2NVb7U+R9gyR1louLxn7q3ttcm5BjB24+i5Nz7NC+ex2Ey3oJqD7gGEfXoqQLxWGRgvnnx4/HFFk5H5YFUBgzUdL+xP+0CV30p2qVzkDJt9Tx/5IY96KkPOsvViZMM=
+	t=1716971369; cv=none; b=O3JiGJtKjTNwJegsdVKTMaAl7Chr4Qp9bte3i1kQIfshJkQrSWGbNw+2PlxiiWRg8puy4ndfvWKMB9kShenzZPxwIwf5fnerunx5fhJgTvGehE2Rs6bHdyimCJsY5iyG10y0uOtAqJt3t/TwWEWbXtZeoPVVgLGLTvA3MaHGQlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716971119; c=relaxed/simple;
-	bh=7U64XbvWHyLExQDJdsaU9FWUCosx5rS7i4dm0I0pUGA=;
+	s=arc-20240116; t=1716971369; c=relaxed/simple;
+	bh=+52k/EZZOyZxAxbmR8QmknTexDodDlXBbVda62ujTCQ=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=m420gQhE9KNWNRbdm3ZGcSkMVHng1DQyfUmyIP9gag9Hss7Rd7zP/1AKgq/85sDaiSKlcBbqCC8KlZJuQSDsQ6q94ZnEDhI3IcGGLrDw4LMwPWjzjo+vUCKObtBd35cnxpLv+HT0ZepyGEX7VqXt7nJvWQv0DpQln6LX7Og/lis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WpVxch1i; arc=none smtp.client-ip=209.85.208.172
+	 To:Cc:Content-Type; b=Ez3aZ93YYjsLqJdmW1EdrJgAEMGelZ/Ljmz2OKVcmuFj2G90zusb12sGj+R6IFuhbiK4rTvBp+u6uU3VMFM4xrs6ZWxuxfTi2yD1sDgLDBQE78cvj4S0/EJYMCOa9d1LLFikI1w51udEaJvU5WTXq7k6EKA82E7/PMw5B7Z74fU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c5SJqQQX; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WpVxch1i"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2e95afec7e6so5202991fa.0
-        for <git@vger.kernel.org>; Wed, 29 May 2024 01:25:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c5SJqQQX"
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2e96f29884dso17806741fa.0
+        for <git@vger.kernel.org>; Wed, 29 May 2024 01:29:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716971116; x=1717575916; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1716971366; x=1717576166; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xYZs9dj8CJjPzKAsBwLGX1fm4WQO3KwC3BvQrsHmxds=;
-        b=WpVxch1iQ8BlKGEuv3fInaUXRUGlFyitUXI7CylBcf3N933zA+a94i8vpzhTGhNlCU
-         jJKY5+9XHV3mfgK706TjX874+kvkvmO4/usN33/ETAEVTop4rs+wSLzZWM6wa36cQBk0
-         /C9LKjJpSmhzCFhLlybfvmKs2770E3PVSpHGwWbJZgkEjHRjTHzWm8/4XgonnEhdvt7q
-         G/frYyLQF2yOjD3CEZufkbfn52CaE5jWEVEeyz4FFcoXCG3Sfa8AoVKTpnx8ng04IfqH
-         JcRTe8+dSq5gBYJ9paar+nLanvQtwDLyQi25A1qIxMtdSILwI8idAjceq0o8XJM5kkrz
-         6OVQ==
+        bh=WWFfNb+whm6QZkO+nbY8+Xj4XDOmy0ohye6CoiS6SEI=;
+        b=c5SJqQQX7dLN0dPbLn6l9vTUGtEX8pPHfYOBmPHy033I0cNPisNkHx/2rsXFRpdTWw
+         WJmz26g7JQcUj/RP6qDwoT+Uh3eTlWEFoaVUNcS6exXFV3eJea7ZhlrQIlGpUN6dD48k
+         fZOqPQ5HnP56gWemyAi2ogbtN2+o+eTrJKkkQT4yKaKbfdsGDykMyNhpm1R8g/F1GWW6
+         3OyDA9Meev44Qz0Jfvro7RGf17TvJHrKFBsfgvgO0AkUyMfV5ly3Tq+Qn6FKreKnnrLh
+         Nd7ja8eJHnHEToIB7m7teNzPxhfa/0qUONwSDnjciflbOgXa9eTDH7SssV8OtX9kr+fJ
+         5ZGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716971116; x=1717575916;
+        d=1e100.net; s=20230601; t=1716971366; x=1717576166;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xYZs9dj8CJjPzKAsBwLGX1fm4WQO3KwC3BvQrsHmxds=;
-        b=o6UDR69F1a0vURGpI4khH9jxIDRsdE6zBQNaRNg4vqsOQl+Gqd9FVuLwLBUViqaV5y
-         k636bVp03wT3y4BhMkDOnUg5o+D1zlAvyIOXWHrUHwa8XpqOafA8TG/NicrzdZh0aBRc
-         616re2yy/t47WIPheGucohRtreHrgqSS9D8euZ4pWInDNjfgVClBvVGk8mLs/CgAyrcU
-         sH8ylaVrbWTtYfO6u/woEPPIXmWVVA2tJ+4FeGBkcJ7teqMXnnkdTEgpZz7qSopwrfLO
-         KLIIVgm6HTFgTPqq3SGvZyq6XMmcr64j61uvej6hkjipxIyeST0gyE/87xHqkKsDTOUA
-         FT4g==
-X-Gm-Message-State: AOJu0YwfQhKsm/5N3WJhETwCkEPUrQ6iyvshhVjzTf7HFF6QiKbYeV1F
-	+V9h+9FnjVXtwk2PX8KvOecSvCTHYSTrWcLFQppQzgO2MLw7oNbXhWSK+Alpw/s4Plaq10INTOd
-	bP0nG3DZL7j9I964C6pCDVMKl5MI=
-X-Google-Smtp-Source: AGHT+IGjhk2qXDXQCch6Ai4BmFZT7udPTfYMSRrkvUI2SLQ9K7JneWB5299JCu/3bDTP2N0gkMQA1g45jsYarK5c2Hs=
-X-Received: by 2002:a2e:780c:0:b0:2e6:a1c4:4328 with SMTP id
- 38308e7fff4ca-2ea4c8960bdmr4153021fa.22.1716971115458; Wed, 29 May 2024
- 01:25:15 -0700 (PDT)
+        bh=WWFfNb+whm6QZkO+nbY8+Xj4XDOmy0ohye6CoiS6SEI=;
+        b=TjMf2Ok8xPSUFuCtcFG75O6y3AVEIQ6DaE4YBzdIxUpXjRKqmWDB+Ygu3fqo3U+Ezh
+         8Z7IKXAwS/VWrchEjKRVQT+rkGIlljTLkh4XhRSfqRiQHzk4VJcxmqoidMuWM9EpoeWQ
+         Hc4m8oqeAtA5Yy0ArFmU2R3zwRSiaIzqOzM7u8NAhT15Mf7236szslLvmMQSIjXmUIrs
+         tJs36kW3mzN0MgqH5LhM//6JPkCGygXzD/UnVjuWZ6CVyhCNOk19BfCe3UittdweK7kv
+         V7s5Ej94OfDzDq6IVKWTcdfglaKDI04A96S34r2e30xefXppU/vXDCr33hE4gp5z14vt
+         YLoA==
+X-Gm-Message-State: AOJu0YySY9UQEwFHr7VbvwFZUpAi28mPFKR8g3GVCH/k/g7oQruYVYFF
+	sgMLAFaKldjYkP+r9ooD2EP6NsmUvJ+wATNbQjictMLj1XXKgvnXUy55gfCpjCiD9PkMopRp9Zw
+	jsvO+b5AEvlmSooOfoTHWj/HqueRI8vkzh7fN8Q==
+X-Google-Smtp-Source: AGHT+IF91geVDRHnuhsaA0QCdjh7G+9Yp1UoxaQviBNCN2nl45dmFmlO2LJBPafnm0Sx0rIGaigtUEhAxqiXEE3R2ao=
+X-Received: by 2002:a2e:88d0:0:b0:2e6:ccfd:fae1 with SMTP id
+ 38308e7fff4ca-2e95b096c66mr85782391fa.17.1716971365604; Wed, 29 May 2024
+ 01:29:25 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 29 May 2024 04:25:12 -0400
+ HTTPREST; Wed, 29 May 2024 04:29:21 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZlQr11P_C-KyO2DF@tanuki>
-References: <cover.1716465556.git.ps@pks.im> <cover.1716541556.git.ps@pks.im>
- <xmqqwmniiqv2.fsf@gitster.g> <ZlQr11P_C-KyO2DF@tanuki>
+In-Reply-To: <xmqqplt9h4yq.fsf@gitster.g>
+References: <20240514124411.1037019-1-knayak@gitlab.com> <20240522090326.1268326-1-knayak@gitlab.com>
+ <20240522090326.1268326-7-knayak@gitlab.com> <xmqqplt9h4yq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 29 May 2024 04:25:12 -0400
-Message-ID: <CAOLa=ZQZ2ap9rgS-u0K9LsoZVfZ5hDPLY1ALZDSnfNmQXx35Bg@mail.gmail.com>
-Subject: Re: [PATCH v2 00/21] Various memory leak fixes
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: multipart/mixed; boundary="0000000000006d4adf0619937dbf"
+Date: Wed, 29 May 2024 04:29:21 -0400
+Message-ID: <CAOLa=ZSMox99eZ=QmkucN+M+SxzFkQ3ivEzOfa-SZ=kKtEtcMw@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] update-ref: add support for 'symref-update' command
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Content-Type: multipart/mixed; boundary="0000000000005638090619938cc5"
 
---0000000000006d4adf0619937dbf
+--0000000000005638090619938cc5
 Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Fri, May 24, 2024 at 07:10:09PM -0700, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->> > this is the second version of my patch series that fixes various memory
->> > leaks in Git. Changes compared to v1:
->> >
->> >   - t4153 and t7006 aren't marked as passing anymore. I thought they
->> >     pass because most of these tests were skipped because of a missing
->> >     TTY prerequisite both on my local machine, but also in our CI.
->> >
->> >   - Add another patch to install the Perl IO:Pty module on Alpine and
->> >     Ubuntu. This fulfills the TTY prerequisite and thus surfaces the
->> >     memory leaks in both of the above tests.
->> >
->> >   - Add another unit test for strvec that exercise replacing a string in
->> >     the strvec with a copy of itself.
->> >
->> >   - A bunch of commit message improvements.
->>
->> Looking very good.  This seems to reveal existing leaks when merged
->> to 'seen'; other topics that are not in 'master' may be introducing
->> these leaks.  I'll see if a trial merge to 'next' is leak-free (in
->> which case I'll merge it down to 'next') or there are other topics
->> in 'next' that are leaking (in which case we'll play by ear---either
->> mark the tests again as non-leak-free, or plug the leak if it seems
->> trivial).
->>
->>  https://github.com/git/git/actions/runs/9231313414/job/25400998823
->>
->> says t1400-update-ref has many "stdin symref-update" things are
->> failing.
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> Indeed. The following diff fixes the leak:
+>> +static void parse_cmd_symref_update(struct ref_transaction *transaction,
+>> +				    const char *next, const char *end)
+>> +{
+>> +	char *refname, *new_target, *old_arg;
+>> +	char *old_target = NULL;
+>> + ...
+>> +	old_arg = parse_next_arg(&next);
 >
->     diff --git a/builtin/update-ref.c b/builtin/update-ref.c
->     index 7d2a419230..e54be9c429 100644
->     --- a/builtin/update-ref.c
->     +++ b/builtin/update-ref.c
->     @@ -130,6 +130,8 @@ static char *parse_next_arg(const char **next)
+>> +	if (old_arg) {
+>> +		old_target = parse_next_arg(&next);
 >
->         if (arg.len)
->             return strbuf_detach(&arg, NULL);
->     +
->     +	strbuf_release(&arg);
->         return NULL;
->      }
+> Now we have an allocated memory we are responsible for freeing in
+> old_target, obtained from parse_next_arg() ...
 >
+>> +		if (!old_target)
+>> +			die("symref-update %s: expected old value", refname);
 >
-> Karthik is out of office this week, so you may want to add this as a
-> "SQUASH???" commit on top of his topic branch to make "seen" pass.
+> ... and here we know it is not NULL.  We use it to grab the object
+> name ...
+>
+>> +		if (!strcmp(old_arg, "oid")) {
+>> +			if (repo_get_oid(the_repository, old_target, &old_oid))
+>> +				die("symref-update %s: invalid oid: %s", refname, old_target);
+>> +
+>> +			old_target = NULL;
+>
+> ... and then we overwritten the variable, losing the last reference
+> to the piece of memory without freeing.
+>
+> Perhaps squashing this in is sufficient to plug this leak, but there
+> probably are other new leaks around this code.  I ran out of time so
+> I'll let you take care of the rest ;-)
 >
 
-Thanks Patrick. Indeed I'm a bit slow on my responses, since I'm on
-vacation, but yeah, I too came about adding this as a fix.
+Yeah this indeed was missed, I think having the
+`TEST_PASSES_SANITIZE_LEAK` flag set, helped catch this leak and another
+around strbuf.
 
-I'll mostly check for all tests and send a new version based on this
-series soon.
+> Thanks.
+>
+>  builtin/update-ref.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git c/builtin/update-ref.c w/builtin/update-ref.c
+> index 76d20ca0f1..7d2a419230 100644
+> --- c/builtin/update-ref.c
+> +++ w/builtin/update-ref.c
+> @@ -297,7 +297,7 @@ static void parse_cmd_symref_update(struct ref_transaction *transaction,
+>
+>  		if (!strcmp(old_arg, "oid") &&
+>  		    !repo_get_oid(the_repository, old_target, &old_oid)) {
+> -			old_target = NULL;
+> +			FREE_AND_NULL(old_target);
+>  			have_old = 1;
+>  		} else if (strcmp(old_arg, "ref"))
+>  			die("symref-update %s: invalid arg '%s' for old value", refname, old_arg);
 
->> Also
->>
->>  https://github.com/git/git/actions/runs/9231313414/job/25401102951
->>
->> shows that t1460-refs-migrate fails on Windows.
->
-> Hm, this one is curious. There are no leak logs at all, and the exit
-> code is 139. Might be SIGSEGV, indicating that something else is going
-> on here than a memory leak.
->
-> I'll investigate.
->
-> Patrick
+This definitely works, but keeping it consistent with the rest of the
+code in this file, I think we can do:
 
---0000000000006d4adf0619937dbf
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index bda37c161d..82f461d6f8 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -298,7 +300,6 @@ static void parse_cmd_symref_update(struct
+ref_transaction *transaction,
+ 			if (repo_get_oid(the_repository, old_target, &old_oid))
+ 				die("symref-update %s: invalid oid: %s", refname, old_target);
+
+-			old_target = NULL;
+ 			have_old_oid = 1;
+ 		} else if (!strcmp(old_arg, "ref")) {
+ 			if (check_refname_format(old_target, REFNAME_ALLOW_ONELEVEL))
+@@ -313,7 +314,8 @@ static void parse_cmd_symref_update(struct
+ref_transaction *transaction,
+
+ 	if (ref_transaction_update(transaction, refname, NULL,
+ 				   have_old_oid ? &old_oid : NULL,
+-				   new_target, old_target,
++				   new_target,
++				   have_old_oid ? NULL : old_target,
+ 				   update_flags | create_reflog_flag,
+ 				   msg, &err))
+ 		die("%s", err.buf);
+
+This works, since we anyways do a `free(old_target)` at the end of this
+function.
+
+--0000000000005638090619938cc5
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 9d1fd05b1d3cf31f_0.1
+X-Attachment-Id: 8be300c82ad1799f_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aVzVtWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md0tEREFDUFo4OVVSQjc3elZpVGtmL3VqQnJ6YzI4egpRVmkzYUwxc2R2
-cHdrWU1VMmlVVGlEd0tIL1laRjREa00zdG1DRXBXZEVaQ3A2K05yZng4cnBnZ25ieHhIRXF0ClpK
-V3VZVlhtTHlTUUdWUDQ3cmlMUlRRM2psek5kM3gxMDZUTXVBOSt6Wm15YW5obmVOeDFGb2RXZ2kw
-bmZJNlYKM1NncTlGTlRBc21NWUtmNlA5djh4cFMyRTk2dDJsc3NDNXc2b3Y0amthczRoU1ZUS0lB
-UUtnWmp0VjB1eHJMQwphL3dybVJPWFFHdGcvV0ZPek51RytJQ2gydmNGQk5ndGpJY3NpS0JXZnJ2
-anhyOXkyZkhyM1FteVFYWjVnRG1yCnd1ZkpDbXg4Mldqc2ZNMTNRV2RxaXVyN3VpUzZlTjVGclBk
-WlVsRWUvamlsdlJROXFiQUR5Qy9rWlhLd0FUd3AKR0pCVFpaVk1LeDh3akhSVWpTODgvYVlubTlu
-WUprbFp6WEU2dmtMMnF1a0Erbjc1akVxbURZMjVoSWxONVVKeAp0TGkwalF5N3I5c3htY1llc292
-bDNsSjArTXo1OVB3NVhyeXprV2czQVV5eXVIcGlFbjgwcE9kYUxOV0ZQWkQyCmhkdWMvRUpkN1Nt
-d0VsaUd5dUhzem5hMWVVMmgrQytseERZUzFvRT0KPUU3Q2sKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aVzUxOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1melRvQy80enJVMDRtdEtid3RFM0xzK2E0ZGFJSVFUQwpzbDdpQmM5VnJT
+dDVURVFjVmpwSURTcHhYN0dkSUtIdUtlMGJPUGxmUzJWbW5xVUNBUkNVd3NSNHZtSXZQNkxOCmRX
+TlN0VDVpSmpPSHZlNEF2N2R1THVLRDdzQkFMbGcyaU1pZ2pvSld3TFpwSFVLMjc4WDBibVZBa0N4
+RmQ4cjAKWXNYcGY2c093djV3d3JUajdyejRwYzVHaVh3aTcwa0w5UWVZNlZ1ck5aMmtPNW5pei8w
+dS9KbVNuMjFucERpTAp5eU50ZWxzSEtNSVQxS2paaUxFUEVob0w5eStkVmhldkt6QjhsMk9vMjh0
+OVZQLzZSSHovQUJ6QWxLYVBpeG1iCnZtZjhBR2lxMkJyM3BvbVB5dWQzTnBvVnA2NW5YM2t6NWlE
+RGEva3I2dVNxY2wwNXpERXFaRTN6VkcxMFRoZncKdnBxTFNWc0tOc1RjNWlLV0lKUFJEaTVWeDly
+ZHppQW00WWYrV0NNM053ZytPeUxqcGVIUmF3S09BMVcxMDlDYQorbklwclFDVkJuMW9uSnpvbVlP
+VEhUWDBvaFFmaUdickR5UXdZeW9qaGNjNTlRZkVyMXZCcWtNb1hHZFg3em9DCkpLa0xXUnZKUGxR
+YUpoUlFmd3N0azZaN3NUWnIwWU5wdFRRcXU2Zz0KPXJ4Rm0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000006d4adf0619937dbf--
+--0000000000005638090619938cc5--
