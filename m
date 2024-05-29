@@ -1,209 +1,186 @@
-Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8791A17F365
-	for <git@vger.kernel.org>; Wed, 29 May 2024 11:25:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D740313699A
+	for <git@vger.kernel.org>; Wed, 29 May 2024 12:18:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716981911; cv=none; b=NBKK4Akmd5RfMv9B6ym1T9OiVTZaR/w5p01zzdAOwl+wbIbnWOFq4KokrLjk+vKEpSd+cahT/5b3cA/eHkmmG8/jj/7M8gSOv8q5U0OLD+1ps9XiRZKvby4QqJsCPiCFGSYSihhbu+S+adu7kk1GjnFOFthdDktO0r/+Uea0TG4=
+	t=1716985089; cv=none; b=XAn+YFkw3ODcHcckqRNPVuBngGJr9Dg1SqR+uETLFMx3aCFFqJf0lwkGxgWxFwNY0bNbKdsoDSfhZ5PO2ZMeOYAUz4lU2Opv2TIEVZxeI+g6j1k/PYeJhk0P4/LxUZqayjRFaAnflQGfgwHve8CKjJ09eLa86zd2+epm8gHKedQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716981911; c=relaxed/simple;
-	bh=ZhE+BAVJiHSGwPAkmsTykMklNqzVbtkk5AwULRr80hc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eLWYtR0OmYNhNEfe8cFPeFkCjmDZUsxr0NjDUr5P+CYLdttYE9Kn8Tf2AW+W4GoDBBuMXvOmSYzkm17UIyAMO5yaJZ02ELbDL6tiJfbUB6PZepmUrOezg/3Q2XORZqE9GN/hRu0ceAEspAu6342XpgA0ijZ9h88IXmVZFUlBt9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N1Qd36ov; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g3bDYrXu; arc=none smtp.client-ip=64.147.123.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1716985089; c=relaxed/simple;
+	bh=Jw3IZXnsLeaISNOglbUvTVshfDqWZGZlKXXbypOcHN0=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=emh/WMhJtmt6kUvTFkkIEKjutsI9QVXn+H5rkdUy2JMRAfOFp8DWuRMz/fNtWupiyRntG5ByeinE9ilBxaN0NF7Ttg6EXerVHTMxKx3BKFKqRiqEFSYUUVCzL1Yxg+f6bXRWySxnbRK/Haz6WEDTL15EpuGDUon4PynvDn41Bww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=kI3eX9f5; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N1Qd36ov";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g3bDYrXu"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 8B4E0180011B;
-	Wed, 29 May 2024 07:25:08 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Wed, 29 May 2024 07:25:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716981908; x=1717068308; bh=u4/bk9OO4R
-	QJOEsStUBvDmektt3e3zOK6+3upsK32ss=; b=N1Qd36ovHWDSOBAXx26uxwbdwm
-	YAR/x+/bDNrp8znXfPtLFCPE2a2lcQ1hIwivf2fsztKzXTnmupVatvcqE2UZsz1I
-	6jIs1moIF7ZwsTGM4jVb8Z/XrNqe2G6enKnTN38riAll5EEhYbE/syJUTU0TYZ1a
-	gxQG4x7/r+MBmVaNqCRhnPKyddrul6XVFlRX1OPFlKbTB40z71VgSbOMOUCeI4W3
-	I4sWB0IXV5nKbkpyNXfhmgyf5Mxv8a+2PdQ4AWkiNeFMoDmhzmMFRQqE08iF2JCz
-	I00XvmEZEoLYP24yEAZkVBpEzzU9iHqRrDpAwNCJEzJM+Z/NU337JSErA3aA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716981908; x=1717068308; bh=u4/bk9OO4RQJOEsStUBvDmektt3e
-	3zOK6+3upsK32ss=; b=g3bDYrXuaDQ4YUOREie8ERBZ7tQgT/l8DrQGGQqooJnV
-	Qp6vieRCq//5b/FvgpUxh8nsoxJJXt+flBI5yNFTp+iKI/xHNuEeaPMOrs1XAIHZ
-	ncIOTKlgnh6s53A39xq2SkzeJ2wUfIKgqB2nhJcrZBnZzSxXdwvMkOnQkLn/WvfS
-	OGSPL8VYzKdlDq/OLudtg/WeMqyrZdfbvGQlhyqU3JM4i6TwY7tW9Eig0p/jZK8f
-	N69ZDwNSmfTFgMWgZZMichn7fSVht6eYD758xF8KN6N2oJAJuloeizv8WiaPbyjR
-	JgUuKKMxYayafkCcSOpW9pJEZrOpvnGuyY0WuLAPpQ==
-X-ME-Sender: <xms:kxBXZrmQpIx15F0GKsfKwFHqMpStcHmABitgGNXaef2xUNZExr3xUA>
-    <xme:kxBXZu3wmdx3m_rl2YJDI8_RqJvurMm4gOctTIIMEcWgURrO5DMdSiySf2CuaKxkM
-    g6ptuc4d5fLkwTU9w>
-X-ME-Received: <xmr:kxBXZhrb3NM_YyxjTWghyweTClM9YeqFSP7AKt0WDyFy9irYHbaDuV-U6xL0pWZg8FESKEhWyS7S2ERLULKfzjEAuKeaa3aEdA2alsx9jdq-eu8V>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekuddgfeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:kxBXZjkSvm4tpz9UJxlYAGZPov6taYZXnebGTSrnv16JJvmRrGTt4Q>
-    <xmx:kxBXZp28HGIgeu5v9tRexxSrs-Afsjjsz-97ofmuT6Ap2fyaStQagQ>
-    <xmx:kxBXZiv5Ux8ufRBA5vq2CT8Sow58Jh2wRmMzwycnwRMpyMdx5q0yPg>
-    <xmx:kxBXZtVK3zjyY49UBH0cP6w1sxwwbPfnsSGEAlx2GtXC1MQuADVXWg>
-    <xmx:lBBXZkR__XQqzC-mzNJilUF-BEo5-G0pzoQDad1UjBraNaXGYP3GlRAG>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 May 2024 07:25:06 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 0bf95dfc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 29 May 2024 11:24:50 +0000 (UTC)
-Date: Wed, 29 May 2024 13:25:02 +0200
-From: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="kI3eX9f5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1716985064; x=1717589864;
+	i=johannes.schindelin@gmx.de;
+	bh=JJQGTOQa9nWw1ADJ7WREga9bn3jf1K7YtO/ToatVAis=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=kI3eX9f5F+e/dcfP87BEkkKTVEr6qRuN0i0RLF9UmdvdzKnetH+M9V6Ku8yO90Tq
+	 9YXQszJKrH1dLASwEaBmSgFZzU0PXxP89qw5eGYqTV7EDgFMkELDKgdT4VwZ/v+ZJ
+	 Dfn3pGHWbsDwNKwUMn/lZrbqgRWhfJl/UgzBzkeu2kVBTEO2UTe4UQfkPio60KbdT
+	 LxPO845flgkzt+DGlELx2TStkPoJgV99/KCN0Q7LyQ4A2xRNPfvxLtdQoebosE/yl
+	 wHUSb83sgGXD9B+quQUdhQY0kFXZJxjxsqoOG6zfPGE3+s+oDJTplSrb16vYqDh6y
+	 orsF1XZSQUMLhyP89A==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.216.58]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQvD5-1roQ750txn-00OrBO; Wed, 29
+ May 2024 14:17:44 +0200
+Date: Wed, 29 May 2024 14:17:41 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 04/21] strbuf: fix leak when `appendwholeline()` fails
- with EOF
-Message-ID: <ZlcQjvAS-27S-mjw@tanuki>
-References: <cover.1716465556.git.ps@pks.im>
- <cover.1716541556.git.ps@pks.im>
- <9dd8709d1b3b350008218133986befdb2ae74bae.1716541556.git.ps@pks.im>
- <20240525044635.GB1895047@coredump.intra.peff.net>
- <ZlQr3tsDTSOGvFUQ@tanuki>
- <20240529091633.GB1098944@coredump.intra.peff.net>
+cc: Joey Hess <id@joeyh.name>, 
+    "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+    Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Revert defense-in-depth patches breaking Git LFS
+In-Reply-To: <20240529085401.GA1098944@coredump.intra.peff.net>
+Message-ID: <1cbdeb41-2ad3-05e4-ab27-1f84086b7f43@gmx.de>
+References: <20240514181641.150112-1-sandals@crustytoothpaste.net> <0f7597aa-6697-9a70-0405-3dcbb9649d68@gmx.de> <ZkO-b6Nswrn9H7Ed@tapette.crustytoothpaste.net> <Zk2_mJpE7tJgqxSp@kitenet.net> <fbb89826-0d83-d4f9-bab4-9fba69e0e22d@gmx.de> <ZlU94wcstaAHv_HZ@kitenet.net>
+ <20240529085401.GA1098944@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="byUSjI6SdTXlwINd"
-Content-Disposition: inline
-In-Reply-To: <20240529091633.GB1098944@coredump.intra.peff.net>
-
-
---byUSjI6SdTXlwINd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:3ptmUyJdORxlH3zaKMZxeMaopGZQpOm6KxZDJ6MURxIeImHpZwi
+ YAd35A2D5ISq4cs7qC3EAXfJ3A80EbpN0ZcAoXks1yrG+q0EXL5PRpqG19fNHNlq+Rk4krb
+ AQdBIYafDEDjlPcZqUxvdES9JQaR9QV4fJGL04/ijnrznYeFLruXCTbkp3LUjg7FJzG3bla
+ fYvA9cyBpOjVp2Pmjh2GQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:T2ZfgUz7XcY=;ioCUf0DFxTwFJX26RPpWk7ISY2n
+ PM2R0OX6M0d2knjG+AAcEO0vRGWeiCKZTk0p42Ce3FFPhLk4d3qRfaVAqOC9jd/eK4EcpLRFF
+ bMIFJB8MrqbvMuaImNE2bMM4SV4Q/nb6ihZLQeMTzmEHzb02JK19Rb+VUdro4pIp5eGuyHWR5
+ lAlroxSmeVS1ZQg470/0scFUADnt+ec9EkBcnJgoWGnFkvR/lZa7BZ3iWos36eGujnbrdRVaJ
+ VXmztgmh9SZUo34hblWJjp2QaRUcdwV/v0EltAqDEJVruhb/0F38U9B5RdBw03mR/iXpN2lhf
+ 73830kdZJnimMKJZUaE4RSerjscnEY0B/8oM7h+UEitmRZUEgybPQihFIGuyc4/JIML6CNfNR
+ myxBvW+X5Nym336/g8u9W+VySw6ZNaN4ClNxDt5cSJTwXPwJs1YwqUHcmmixj1OKpQ/pRVv2q
+ xY+PxVKnaXrV5+jJgq1Vtpo45fj96/Msl5/pzQNkCPacI8yU+AJmNI7FDKHXAEFixMEXoXpnA
+ RgD+7GTA7iFWrhx4e14MQM6GB1DYw2zco9+mMh2vVVXLFmuq0kghWutYYZ3rWZ6pb7DY1i0xa
+ YVser3SGtrHmsFW0v0SC2J33ki8goBl6NZFEyjrdejPUilR4+/kVfv/Vej/pNM6RRFIz3WvMN
+ jPScAfSgebPA3KN3qe1uiNxHFnDcVzhNU3vbhMQlLL6ZLMJmCjgydkR8O59ARqyR/0iD3EJGl
+ ERRgTGfqBoxtsuNE2D4WPo2hY5IFW8eGVMScebGYR57b4AIUTiKtVuXwE0tdbMroACGyU/5M3
+ N4TQp/elUu9g3SDz4zDGYHlxNvBUfl4qT9lZGYdke08Bk=
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 29, 2024 at 05:16:33AM -0400, Jeff King wrote:
-> On Mon, May 27, 2024 at 08:44:46AM +0200, Patrick Steinhardt wrote:
-> > > diff --git a/strbuf.c b/strbuf.c
-> > > diff --git a/strbuf.c b/strbuf.c
-> > > index e1076c9891..aed699c6bf 100644
-> > > --- a/strbuf.c
-> > > +++ b/strbuf.c
-> > > @@ -656,10 +656,8 @@ int strbuf_getwholeline(struct strbuf *sb, FILE =
-*fp, int term)
-> > >  	 * we can just re-init, but otherwise we should make sure that our
-> > >  	 * length is empty, and that the result is NUL-terminated.
-> > >  	 */
-> > > -	if (!sb->buf)
-> > > -		strbuf_init(sb, 0);
-> > > -	else
-> > > -		strbuf_reset(sb);
-> > > +	FREE_AND_NULL(sb->buf);
-> > > +	strbuf_init(sb, 0);
-> > >  	return EOF;
-> > >  }
-> > >  #else
-> > >=20
-> > > But I think either of those would solve your leak, _and_ would help w=
-ith
-> > > similar leaks of strbuf_getwholeline() and friends.
-> >=20
-> > I'm not quite convinced that `strbuf_getwholeline()` should deallocate
-> > the buffer for the caller, I think that makes for quite a confusing
-> > calling convention. The caller may want to reuse the buffer for other
-> > operations, and it feels hostile to release the buffer under their feet.
-> >=20
-> > The only edge case where I think it would make sense to free allocated
-> > data is when being passed a not-yet-allocated strbuf. But I wonder
-> > whether the added complexity would be worth it.
->=20
-> I'm not sure what they'd reuse it for. We necessarily have to reset it
-> before reading, so the contents are now garbage. The allocated buffer
-> could be reused, but since everybody has to call strbuf_grow() before
-> assuming they can write, it's not a correctness issue, but only an
-> optimization. But that optimization is pretty unlikely to matter. Since
-> we hit this code only on EOF or error, it's generally going to happen
-> once in a program, and not in a tight loop.
->=20
-> If we really cared, though, I think you could check sb->alloc before the
-> call to getdelim(), and then we'd know whether the original held an
-> allocation or not (and we could restore its state). That's what other
-> syscall-ish strbuf functions like strbuf_readlink() and strbuf_getcwd()
-> do.
+Hi Jeff,
 
-Ah, I didn't know that we did similar things in other strbuf functions.
-With that precedence I think it's less ugly to do this dance.
+On Wed, 29 May 2024, Jeff King wrote:
 
-> That said, I agree that leaks here are not going to be common. Most
-> callers are going to call it in a loop and unconditionally release at
-> the end, whether they get multiple lines or not. The "append" function
-> is the odd man out by reading a single line into a new buffer[1].
->=20
-> Looking through the results of:
->=20
->   git grep -P '(?<!while) \(!?strbuf_get(whole)?line'
->=20
-> I saw only one questionable case. builtin/difftool.c does:
->=20
->   if (strbuf_getline_nul(&lpath, fp))
-> 	break;
->=20
-> without freeing lpath. But then...it does not free it in the case that
-> we got a value, either! So I think it is leaking either way, and the
-> solution, to strbuf_release(&lpath) outside of the loop, would fix both
-> cases.
+> [...] But of course most sites just use the defaults, so all warnings
+> are effectively errors.
 
-Indeed. We also didn't free `rpath` and `info`. I do have a follow up to
-this series already, so let me add those leak fixes to it.
+I wish that had been pointed out on the git-security mailing list when I
+offered this patch up for review.
 
-> > I've been going through all callsites and couldn't spot any that doesn't
-> > free the buffer on EOF. So I'd propose to leave this as-is and revisit
-> > if we eventually see that this is causing more memory leaks.
->=20
-> OK. I don't feel too strongly about it, but mostly thought it seemed
-> inconsistent with the philosophy of those other strbuf functions.
+> In the meantime, we also have an "INFO" severity which gets reported but
+> not upgraded via strict. It sounds like that's what was intended here.
 
-I get where you're coming from now with the additional info that other
-syscall-ish functions do a similar dance. I'll refrain from rerolling
-this series just to fix this in a different way, also because neither of
-us did spot any additional leaks caused by this.
+Precisely.
 
-Patrick
+So this is what the fix-up patch would look like to make the code match my
+intention:
 
---byUSjI6SdTXlwINd
-Content-Type: application/pgp-signature; name="signature.asc"
+=2D- snipsnap --
+Subject: [PATCH] fsck: demote the newly-introduced symlink issues from WAR=
+N -> IGNORE
 
------BEGIN PGP SIGNATURE-----
+The idea of the symlink check to prevent overly-long symlink targets and
+targets inside the `.git/` directory was to _warn_, but not to prevent
+any operation.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZXEI0ACgkQVbJhu7ck
-PpR3TA/+LZ6qF0m2dht5qptuHdcxvaL91upECbH75JkC4VIWICROn1McisNYmLkV
-aNPWaIccnhXe7zZJAjU1Ex1j4M+vWK2Au+nAf3j+X0vMhKZiiaogyItC64X/Fqqn
-Yk0PblYsHTbd946em/YdEwNj3S3xNabx8jEmm3ZIT/Bn36wISQoMzkIfWSJSIfez
-r3+XctrMiG0cejYSmbkuq+tqBCSsLhgssbXaHoRwTGFCBm+7yvhI/IsCwjI4MrDm
-lorJTosoFx7wmiAQNOsgQpcuppeCP+j4NXoxRzVJPpjVfd1O/HNN8O8SvKCBUCTq
-Cb07kaD/p6l6rtnh3BWnvj5TTmFho8enDhQbw13Ul2Bq4gACiCKoBMXv9ofS0FJ6
-xyj3ru9hODSPZJpJT1lPnlM9nidH5O/dV7lIx0VS7Di85fBUbCZHkzYlKxXD8al2
-8ymip3KUZfy2ZVxPpLbKIc/kSCJY+xUfcUXdKz61nQYGdnj8qXdOOu8V5Xe9X+ks
-Y1gOddIqGoAR9z6mX8AjnQ1VSjWFoU61qLmPDM23kzT9KPlpVkO2KoFrC+8iC36G
-g2ALR9DsOql/M1VKb+KOZn0e2zsi3jvxnjJqqh4voNeKoolCrRofal+UvuiGqg6g
-pntla2y/shqIGcSVi8VbNabXkpzIu5ARHlvo9LEMRF8fm7UFK6k=
-=Z9ru
------END PGP SIGNATURE-----
+However, that's not how Git works, I was confused by the label `WARN`.
+What we need instead is the `IGNORE` label, which still warns
+(confusingly so ;-)), but does not prevent any operations from
+continuing.
 
---byUSjI6SdTXlwINd--
+Adjust t1450 accordingly, documenting that `git fsck` unfortunately no
+longer warns about these issues by default.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+=2D--
+ Documentation/fsck-msgids.txt |  4 ++--
+ fsck.h                        |  4 ++--
+ t/t1450-fsck.sh               | 13 ++++++++++++-
+ 3 files changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
+index b06ec385aff..f5016ecda6a 100644
+=2D-- a/Documentation/fsck-msgids.txt
++++ b/Documentation/fsck-msgids.txt
+@@ -158,13 +158,13 @@
+ 	(WARN) Tree contains entries pointing to a null sha1.
+
+ `symlinkPointsToGitDir`::
+-	(WARN) Symbolic link points inside a gitdir.
++	(INFO) Symbolic link points inside a gitdir.
+
+ `symlinkTargetBlob`::
+ 	(ERROR) A non-blob found instead of a symbolic link's target.
+
+ `symlinkTargetLength`::
+-	(WARN) Symbolic link target longer than maximum path length.
++	(INFO) Symbolic link target longer than maximum path length.
+
+ `symlinkTargetMissing`::
+ 	(ERROR) Unable to read symbolic link target's blob.
+diff --git a/fsck.h b/fsck.h
+index 130fa8d8f91..d41ec98064b 100644
+=2D-- a/fsck.h
++++ b/fsck.h
+@@ -74,8 +74,6 @@ enum fsck_msg_type {
+ 	FUNC(NULL_SHA1, WARN) \
+ 	FUNC(ZERO_PADDED_FILEMODE, WARN) \
+ 	FUNC(NUL_IN_COMMIT, WARN) \
+-	FUNC(SYMLINK_TARGET_LENGTH, WARN) \
+-	FUNC(SYMLINK_POINTS_TO_GIT_DIR, WARN) \
+ 	/* infos (reported as warnings, but ignored by default) */ \
+ 	FUNC(BAD_FILEMODE, INFO) \
+ 	FUNC(GITMODULES_PARSE, INFO) \
+@@ -84,6 +82,8 @@ enum fsck_msg_type {
+ 	FUNC(MAILMAP_SYMLINK, INFO) \
+ 	FUNC(BAD_TAG_NAME, INFO) \
+ 	FUNC(MISSING_TAGGER_ENTRY, INFO) \
++	FUNC(SYMLINK_TARGET_LENGTH, INFO) \
++	FUNC(SYMLINK_POINTS_TO_GIT_DIR, INFO) \
+ 	/* ignored (elevated when requested) */ \
+ 	FUNC(EXTRA_HEADER_ENTRY, IGNORE)
+
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 5669872bc80..8339e60efb2 100755
+=2D-- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -1032,7 +1032,18 @@ test_expect_success 'fsck warning on symlink target=
+ with excessive length' '
+ 	warning in blob $symlink_target: symlinkTargetLength: symlink target too=
+ long
+ 	EOF
+ 	git fsck --no-dangling >actual 2>&1 &&
+-	test_cmp expected actual
++	test_cmp expected actual &&
++
++	test_when_finished "git tag -d symlink-target-length" &&
++	git tag symlink-target-length $tree &&
++	test_when_finished "rm -rf throwaway.git" &&
++	git init --bare throwaway.git &&
++	git --git-dir=3Dthrowaway.git config receive.fsckObjects true &&
++	git --git-dir=3Dthrowaway.git config receive.fsck.symlinkTargetLength er=
+ror &&
++	test_must_fail git push throwaway.git symlink-target-length &&
++	git --git-dir=3Dthrowaway.git config --unset receive.fsck.symlinkTargetL=
+ength &&
++	git push throwaway.git symlink-target-length 2>err &&
++	grep "warning.*symlinkTargetLength" err
+ '
+
+ test_expect_success 'fsck warning on symlink target pointing inside git d=
+ir' '
