@@ -1,53 +1,53 @@
-Received: from wfhigh3-smtp.messagingengine.com (wfhigh3-smtp.messagingengine.com [64.147.123.154])
+Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646CE169377
-	for <git@vger.kernel.org>; Wed, 29 May 2024 07:48:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE22168C3D
+	for <git@vger.kernel.org>; Wed, 29 May 2024 07:48:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716968884; cv=none; b=jTQxC8lrfGIB93+VMCeUR+LMw4G9BtiGSn2y2LnxK46w+4LqZOUujBsc6LFXTQlUAIc1sQVRge8lU+ZrlFlCUfW1vkiEltkFopXLIr6Lf1mWSxo9NOc0WpjiF4DES50994JWPCcpJjDaXBKHLJyo7e02gIofP1gjEBNp30kBZ/g=
+	t=1716968890; cv=none; b=KPcUJcHTypB++oAw5UC98s+XePGbmnmwe9NXRpKbc4CRThh8S1eF5Ncv7zLSYsJn0iJxQIzYVbkuj0m2nUVKWbUsZMl6hMoXGH6oW4Xk9ngM1NnnnE9VIzT8tDgaWsiuNlCpvRJ1Q6S5svWG7MZ9h2Cnuc8qmWAfd3Xf//LdJso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716968884; c=relaxed/simple;
-	bh=5BpekW5D74lEVVDdA9NF8wr5lFRync0o1CvQHI1c2pA=;
+	s=arc-20240116; t=1716968890; c=relaxed/simple;
+	bh=bIwTe49GfSUIA/wBkvxcN7KwGEZ1eNEAvUbY5jD9Ick=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IkndFmsQkuZVbdBfBOo8AMsjpF3p0JUm/8PM/AMnlT7rlJkSH2cbMHM3d6KJQoFMj7+UgzcLZdeePgZisaj7uUkJ3GrCNKvAbXBUVm7qt/0ueHzN/h88vcrbmNici059EUGjllR5hB2X2esq+VPYeic24l8CCM0aOEOP0EZ6QHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eA3MlFnE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RRLI7FP+; arc=none smtp.client-ip=64.147.123.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=Eagvg6EZ24jpVLIEXBjJS8qH7Y4TBixoqwsd9a3IZmdhWGxGxEKHXC2MvWNkRj/4O6mZmGnYtV4HvBKZngjVFcGSqF9T0bELTcgdvbjhPUJKmNkY8VuRsPQuUI6IxNsk0KuSzxDSRpXb6o5jfXrSQ5Xfs8OWVW0Tkw/ZiJk1nAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FcxnCWwe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jw+2s26o; arc=none smtp.client-ip=64.147.123.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eA3MlFnE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RRLI7FP+"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 9D32F1800165;
-	Wed, 29 May 2024 03:48:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FcxnCWwe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jw+2s26o"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.west.internal (Postfix) with ESMTP id 864CF1C001A5;
+	Wed, 29 May 2024 03:48:07 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Wed, 29 May 2024 03:48:01 -0400
+  by compute1.internal (MEProxy); Wed, 29 May 2024 03:48:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716968881; x=1717055281; bh=OiN9R/EpTU
-	A66AzvTehAPpn3Sg962OltO0Ldw1yEss4=; b=eA3MlFnEV6WVyT8NZtVG0rwO6H
-	u+STE5SpIyuVtWMU7bk/0PiLG3JBn9teNFz82zDd1e7I77lfkjf2hEtaoplJ2whr
-	QzfBZ68hTrqfm2t+e2SEGa0fMnDmwtACIW4iYyeJHr9SIV4SjYUWNHPp7swJngkn
-	jLCzVBTklGju3ew/LSGT6VwEvphPQwA3psG+n9dMp69vMXOdAxoqkVSFjvQxWOw2
-	vPZyBHrUGDjqMCmYVVnfAEsbo8NfrlSmTubJV64eQH5IjDKnd7LqE7d5/YcY4rPG
-	3tuXg2PwKTUO5Si/TTyWkt3KAlMr/x85cwmPG5B7DVhek20jzVREEzXO5F1A==
+	:subject:to:to; s=fm1; t=1716968886; x=1717055286; bh=bIwTe49GfS
+	UIA/wBkvxcN7KwGEZ1eNEAvUbY5jD9Ick=; b=FcxnCWwep9np/J8ylt3JQwIc6C
+	yMF3UtVwzuF6kgyF30gLdxIRd37+L5kskwppWE2cK2+SWq4YnJZ9FaKOBlDvxU7O
+	Yv7roZf71BEWXCtiyAuOxMQxrjuQX0d4cW+1lnmAjv0zeJ6F2Cqm+JbLVNaKxbAk
+	VpjDeX1bkSSZtWlfEUe/gy5emsQtXSHP92T8UZ5JdMqA0wY24IwTHR0L4eW/IE6f
+	t8HekXWhdv0ba3Cj66q5BDvdUFMZ4LlhNu0jtpWI+cl16JfKGqLXKG3GAlMN2dcI
+	ivJpdN7Zb0r8oRxGhXOTe5JCZ1GQnMYBdvUQ05pqxXz+rw4QVkUMrEZrlUTA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716968881; x=1717055281; bh=OiN9R/EpTUA66AzvTehAPpn3Sg96
-	2OltO0Ldw1yEss4=; b=RRLI7FP+uJH7jB2rMzLorlS9o1yzCb1ViEa+KjgSHk40
-	IFThf8XuxGh/ybLcp2tDxflWeZaSaz26l0/nOmlc8ZOK3xe6ozxiBFoAZe4Ken9I
-	BsgpsOMexfy8xFZf9Dvxvvr8Nsb4FR4s4mrRqgOEqTfYKaKNZLFWnQ5Q8m0CTU3v
-	IkY8v8w9Nv5bz7o/Y7jJu3Qn663IDpqiVwlStN6q77fdch/lLYrObmGyV9JeUMhK
-	nmybEaiYWoQzqGjQt0qXtWqx/rV8c6hfEvj4vyF4M+/JrMFiGjho9nZfqpVnWnsd
-	3lrWogUVm3r52SpKYblfzv8adp98QmPvoZRPif+eig==
-X-ME-Sender: <xms:sd1WZrRuuiSYap2UKsH6miPFpgdc3WxCY8MLCzx1aB7eHmjQ3T9bew>
-    <xme:sd1WZsz2vJD4ShKxkUykE_-STmzSpi33v7kg_woF64fcSjhz546aq9undzI24vSRW
-    o1oXnwG2suoc4vxgw>
-X-ME-Received: <xmr:sd1WZg21oMkT_WDKlMSn6RLVI12aUBxrIyeEP_ZoEMV9ThFXolnfNA-osRv9OfvMpGYvYO2XKDlqF2fDkmqf5eSUUEOlSbvBgeikKiotFT00oNAu>
+	fm1; t=1716968886; x=1717055286; bh=bIwTe49GfSUIA/wBkvxcN7KwGEZ1
+	eNEAvUbY5jD9Ick=; b=Jw+2s26o7k9z1tU0Za17EwPIDEqn7f0nQurR0NtkKF+M
+	oAbrHymUWNB/LJf14k4pQhTtHo7wAyGCRV08fHvMnq3c65Pb1sypFJyseWA9Nz7I
+	O8khBfkCPQqFrW+J3frE58w89s35cDqGufv/GDMuFwmJCUluvmfPHdoqT2n1ZfnI
+	44GzifhXHtX/hS7D1d22W3+ojsgQ4we7R2K77xZVO2sD9BY8FiYsVz9XFDuTj0RC
+	mCGACcURUzKFykfeO2Z8xaZLMR+YW19krezcFvcS+OFeIOvLy4jBKJs92HNfYgSs
+	YfUcctQlY77QvEu1AAxKZgH4w0YCZ3eS4supzEAMYw==
+X-ME-Sender: <xms:tt1WZkvxYrTapAbEKJoY8SCaZLWRoutoPjbhLrxmypsue2HPEFF-mA>
+    <xme:tt1WZhc7BHbzR9qbL0o-ISjQtA7mE3S18RKf9f7BRx_n5GVnSKXIY2RXomRDwvtTq
+    8qEk_Dss7gCxdaAfw>
+X-ME-Received: <xmr:tt1WZvwqeG9XUsNN4X2sdBuDCLXs_HZx-PWZtMWAmcIcSyFUnw_fdqfmbgTkbndSIm--lVVnE3sYVdM2azUSWvdfKOp608mQjHWRgQQeLCtnLPAm>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdektddgudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
@@ -55,26 +55,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdektddgudekucetufdoteggod
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
     eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:sd1WZrAw9q53unzGIq_rQywG0H2rmGj0GXJMgaKMecqrJ7-2OC0baQ>
-    <xmx:sd1WZkifFG2z3Jdkw79CqsK7bn5OKOZxzRiJHqLObWKP9zHdrANf2w>
-    <xmx:sd1WZvodKcBDGnocK5TZF8cIyDt06Mp81L8AknlZOQRyn_FdOSLTGw>
-    <xmx:sd1WZvjwhaMazZhChEoBEi9Fx32L5wJXC02fWWns11sXwtLW0KDCNg>
-    <xmx:sd1WZntNyVjhqN7GOtXJ1Iuc4VECDm0oexmSuN3xjVFLiU7lp5mHTuEC>
+X-ME-Proxy: <xmx:tt1WZnMh_NnjfAGTkdqi8NzduSqhpzNJt9ueb-aTmUy1MYt4AzRHsw>
+    <xmx:tt1WZk9UryJe9SNVZxoiL5iLJYRo_HVZliGfuKv_KPmiuxr9j-Mg7g>
+    <xmx:tt1WZvV7IAZcAT973mXzVynNxEIpFpMJoOs8-NkHLdRBbwA2QVDB9Q>
+    <xmx:tt1WZtd2rPkbdzlnXVoJI_avKVGxZsN-HpKqrA2tGu9IlMa1Bt6ycA>
+    <xmx:tt1WZmL8LFsq1z5tpmmLNbJhzyrEt08fNJ2ZvlfoZa8utce1Ue_jw_4y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 May 2024 03:48:00 -0400 (EDT)
+ 29 May 2024 03:48:06 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id f86e02ca (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 29 May 2024 07:47:46 +0000 (UTC)
-Date: Wed, 29 May 2024 09:47:57 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id a924caea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 29 May 2024 07:47:51 +0000 (UTC)
+Date: Wed, 29 May 2024 09:48:03 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/8] midx-write.c: reduce argument count for
+Subject: Re: [PATCH 3/8] midx-write.c: pass `start_pack` to
  `get_sorted_entries()`
-Message-ID: <ZlbdrczSqKgueK0g@tanuki>
+Message-ID: <Zlbdsz5VSlX89HfH@tanuki>
 References: <cover.1716482279.git.me@ttaylorr.com>
- <07dad5a5812794be6e355b1e0eb3722d452f292b.1716482279.git.me@ttaylorr.com>
+ <7acf4557dcb2240cb43eadebfd21b5c37515ba7f.1716482279.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,86 +82,59 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="HKd8jXHLAaP8H4G1"
+	protocol="application/pgp-signature"; boundary="B2jXDqSxkONN0yF1"
 Content-Disposition: inline
-In-Reply-To: <07dad5a5812794be6e355b1e0eb3722d452f292b.1716482279.git.me@ttaylorr.com>
+In-Reply-To: <7acf4557dcb2240cb43eadebfd21b5c37515ba7f.1716482279.git.me@ttaylorr.com>
 
 
---HKd8jXHLAaP8H4G1
+--B2jXDqSxkONN0yF1
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 23, 2024 at 12:38:06PM -0400, Taylor Blau wrote:
-> diff --git a/midx-write.c b/midx-write.c
-> index 03e95ae821..ad32e8953d 100644
-> --- a/midx-write.c
-> +++ b/midx-write.c
-> @@ -299,21 +299,17 @@ static void midx_fanout_add_pack_fanout(struct midx=
-_fanout *fanout,
->   * Copy only the de-duplicated entries (selected by most-recent modified=
- time
->   * of a packfile containing the object).
->   */
-> -static struct pack_midx_entry *get_sorted_entries(struct multi_pack_inde=
-x *m,
-> -						  struct pack_info *info,
-> -						  uint32_t nr_packs,
-> -						  size_t *nr_objects,
-> -						  int preferred_pack)
-> +static struct pack_midx_entry *get_sorted_entries(struct write_midx_cont=
-ext *ctx)
->  {
->  	uint32_t cur_fanout, cur_pack, cur_object;
->  	size_t alloc_objects, total_objects =3D 0;
->  	struct midx_fanout fanout =3D { 0 };
->  	struct pack_midx_entry *deduplicated_entries =3D NULL;
-> -	uint32_t start_pack =3D m ? m->num_packs : 0;
-> +	uint32_t start_pack =3D ctx->m ? ctx->m->num_packs : 0;
-> =20
-> -	for (cur_pack =3D start_pack; cur_pack < nr_packs; cur_pack++)
-> +	for (cur_pack =3D start_pack; cur_pack < ctx->nr; cur_pack++)
->  		total_objects =3D st_add(total_objects,
-> -				       info[cur_pack].p->num_objects);
-> +				       ctx->info[cur_pack].p->num_objects);
-> =20
->  	/*
->  	 * As we de-duplicate by fanout value, we expect the fanout
-> @@ -324,25 +320,25 @@ static struct pack_midx_entry *get_sorted_entries(s=
-truct multi_pack_index *m,
-> =20
->  	ALLOC_ARRAY(fanout.entries, fanout.alloc);
->  	ALLOC_ARRAY(deduplicated_entries, alloc_objects);
-> -	*nr_objects =3D 0;
-> +	ctx->entries_nr =3D 0;
+On Thu, May 23, 2024 at 12:38:09PM -0400, Taylor Blau wrote:
+> The function `get_sorted_entries()` is broadly responsible for
+> building an array of the objects to be written into a MIDX based on the
+> provided list of packs.
+>=20
+> If we have loaded an existing MIDX, however, we may not use all of its
+> packs, despite loading them into the ctx->info array.
+>=20
+> The existing implementation simply skips past the first
+> ctx->m->num_packs (if ctx->m is non-NULL, indicating that we loaded an
+> existing MIDX). Future changes (outside the scope of this patch series)
+> to the MIDX code will require us to skip *at most* that number[^1].
+>=20
+> We could tag each pack with a bit that indicates the pack's contents
+> should be included in the MIDX. But we can just as easily determine the
+> number of packs to skip by passing in the number of packs we learned
+> about after processing an existing MIDX.
 
-Nit: I think it's a bit surprising that a getter function would modify
-the passed in structure. It's also a bit puzzling that we assign
-`entries_nr` in here, but rely on the caller to set the corresponding
-`entries` field. I think we should either have the caller assign both
-fields, or we should rename the function and assign both of these fields
-in the function.
+Will we always want to skip packs from the start of the array? Or may it
+happen that we want to skip packs in the middle of it? It's a bit hard
+to judge because there isn't a ton of context when exactly we'll want to
+skip, and why.
 
 Patrick
 
---HKd8jXHLAaP8H4G1
+--B2jXDqSxkONN0yF1
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZW3awACgkQVbJhu7ck
-PpQMdA//WF349ghpZePeDLfiA5ed7JDxjVLzO3Mz+y50lRaqBqaT2u29+AgpJs6a
-7XT4fMem+rF7wLeCVy2v1w+q8nmoav5NpSiOmM5cVHk2qLXS+ZwKqzuP6KmIZxg9
-2cxkwkmDG+Jkzy6H66Ilh6Sxh8R66uwrdP4jhn1REXc3WtVOVl2wbtmNgg1lGz7t
-yVh7r+nmrorVSwVuOdT5Wr1wArDW6NUl5v+dE0Q2P60kkdD0dFQs55jYNbH8D7om
-LPSmsDqlsO8f4CVtYh3h4jZW8J5EonkQbBkHfKh2aBnW5naeZR1xhNbrdfxE+9JQ
-pQA2AuPgCuaarg/4J+JmpbZzUI63NgevNjXqd4I/7vjS2XDRjR6dwGAVXBGI4OgH
-5nyT+CT1Gl7M9IOT5A9CXFEZXA88bbIfSBRcfDUG5d0oyai05+RBXYV44IUM0xBD
-qKNdexDC/sFPdhkv2tXf2zf1U4yBgU+xqBJZnqjUZW2hy8K90Hsbpxvj8aeuAme1
-yAchRFzOQApf+OgZxrzanfaqTRQMGaonuS8jVFz8oiK3FbsaZ+In3kMDOPza6uEI
-50jMXRMZhiYDuzuDzdG8kW4PowfTTnDINo9SJTQ0WjOza2aVcY82tyI9dqPnDQPy
-Q2tohTHkXArPK6nIyPAUV96x6i+szXPLUhMVlJ1K/3UOvEAVns4=
-=cTSt
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZW3bIACgkQVbJhu7ck
+PpQBbRAAiK2CfRMX1IEUtCcvoBHpzDHhXFaWFChdsBMOh8IsRpia/lPGoWXFRn9K
+1b5idpVpP1XW6JPu6oI++HZnIgHVjEZUn3IwsQYdDOLNIsZSVQXeVzi2+fL9/aCJ
+HO25NR+BOVF32rjBvGQkLbR4uUlQh3oiRszOwaZEPBnjm1epzANIC7Jed8C2Oi4r
+W7Z4Vv69MhrZSAvqgN/Bx4k5WWyKHn3iso6P6mDNYeiP+SXBlexPHzf/EAvP4GOM
+1IySrfch+QPxAkjOF671GDDmXEnqLoV9JPUQ/S2EwFbdxMTyAZy7sEZRg01iDqL0
+6psU+CPxhnnEVwyLDWYt8c2yts8Vat0I/5LVs9ukdenRX6pjBBZn4cARUU2ndROR
+QbNsjv5tMzkQoFgpZUE+liIfrXFNzGYul6g1v4dTKhzYSeMWoe8kkj25xLiGbCb8
+o8GlAEUtcZhci1Oy3mwFhpdyR3vg7CLc0yPijtBoO+3NPaAaGPM8ABPGVKcgi6q7
+nALFOZxk2P4KHZ8AccWBfCYFIlwAArJath3kmYTJPmQiwfGfXcHH2lWPX/fNcRP1
+XkV00H+ApkiOVfhNwkFw7b8+zHGiBRbWSk+NIQc5pyZfHzxlvpcl3s3hoZlZahql
+do73fvAjWx49HPakFbpubY6BvRfwOXkgPiWx4nLSgbzg+z7ADWk=
+=sjoh
 -----END PGP SIGNATURE-----
 
---HKd8jXHLAaP8H4G1--
+--B2jXDqSxkONN0yF1--
