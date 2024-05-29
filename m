@@ -1,86 +1,154 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7513E161933
-	for <git@vger.kernel.org>; Wed, 29 May 2024 08:51:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B9F167264
+	for <git@vger.kernel.org>; Wed, 29 May 2024 08:54:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716972680; cv=none; b=JlhSsjqxHnTalMckqlTYcB8Q7TawPWeDzoYcEor6CLbwaVNw/nG7b8oUk2fd5n3wQUf5UsFHQdS+g21aXTE38Aqxdefm4vLcVUt0fUyiXa9a2wCka557yrFinmvbtxJKd4K6fR/zOOjZD+FGNje977M9GqIrsm9miV9mqIWTnIM=
+	t=1716972853; cv=none; b=JxzYARDERytfCX4Bkz3Aktq/We+g6IFTWTEzy25mIG9plwU3T8x2e3RiQj/SRCB4cUVNzvRnXGXik5DG2ZkwjBx8Lxx8dKIbWa6qVwr5s+2e16AQGt4lCQCfSJSKSHQmc7Oe9sLD/guJfUnEaBBI0b9AA74iCk0gDpHIU76vJjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716972680; c=relaxed/simple;
-	bh=Cj06/OJQ6hFsrG6rJwOqU0vId5v3FHkXy10xtNQxDk4=;
+	s=arc-20240116; t=1716972853; c=relaxed/simple;
+	bh=GYhU+8SmUYRMzPLY5THx8IsHUDYAfb+vv+kfQuBpxS8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s2VKcaZJQ6flpBigVTRgMvoi0uNSWU8JByF3qVjSnpxfJSuGVEGINVb2h0Hxzw14y/dpspuAvWbidFhrejOXOwhz5Mp40loDHdemZyWTBUsZIpqcw4MvghuZtaIGk1XlCj7y1Jvj5xH9JMOIcgXtpHpMEaksGxRWrrV8q8izU7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qx2J4W+D; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qx2J4W+D"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1f4a52b9413so12151335ad.2
-        for <git@vger.kernel.org>; Wed, 29 May 2024 01:51:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716972679; x=1717577479; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4uFflzuwCSb0eTumy+qpYjRSWP4IVqRnq3NM1tUf6lM=;
-        b=Qx2J4W+DlFP0SRSuD9eP6fiHkiU2tWUmvQBeiYBTQg0N9P98V/jEgCABx0vmnl9dlf
-         cjVFxqDjDE7qTxVqliRAAfo2B7nXUe7uSOJz0yMEGnkLvkZCTCX+KuJMt+hx/DRRO+a2
-         bwKPgF6d4/QK7wQNotXzSvxYVD4nTx1DifrZ1iea1bpl2Zr7Mw1lUPcEHm2KHpz5enh2
-         zn8d6Iky/Mbjhhfh41iFOHPXa2OgMgbUCntsDSODWXXP9u/vAoxTfBTTlbBGKV/JGcfp
-         k8l9+X8RmSLJ8rGvRc7zX8Iy7eg3UQPDe5uj4AJOvtM8V+PSQ4FpU2IbhhwAQmn8g2wS
-         7iDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716972679; x=1717577479;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4uFflzuwCSb0eTumy+qpYjRSWP4IVqRnq3NM1tUf6lM=;
-        b=c8ngp3G90HSSVsCYeg9zPqBGF2fSCzSh5pjWt+nz7yubkyZiZngzbqddUTyPbtiv9a
-         6Sg8YUWFuORWRm6NE+dfPWbkcl1sLgSJV0cHlQBjH64HyTTZyqjCxRWK5C3yhxe3AU5g
-         yWc6LxfzjlZt55AVn9ifpcPLlu0yPFqc95+LD6WbJOch7WY6npG3XKIrDozbiH3tEc/l
-         WrkpzKa1bv0WsYiBxtdn1Bgc/PZQlIeb/Q6U/8foXhUvBsh66SkUyP4O4gUfmWDNqppl
-         SfqOZD1nQr0ZDyKSHrS7JLQPIjemnyFCJiI4e9hnZA95WeK8mVYnWVUEYtGxCOhezUXJ
-         jhag==
-X-Gm-Message-State: AOJu0YzFTzqGn6b55V2sk1e2SQuJKYuewBnXCcxSTxDFTXXKBI5FO/F8
-	/dQD9SIbNhmtNOHalmwtuoJMXHec7L2fxyuPLCyn1XnXE9xXf1Al/srYw68b
-X-Google-Smtp-Source: AGHT+IE8m3/O98/mr5GCeLCcJOJ7uViaK/6akcr1dpKZvDZVgBqEA65pxj0M5mlbxiG3gXzFld3oUg==
-X-Received: by 2002:a17:903:32ce:b0:1f3:488a:bc54 with SMTP id d9443c01a7336-1f448d3510bmr177008615ad.36.1716972678517;
-        Wed, 29 May 2024 01:51:18 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f44c7592c1sm93467815ad.57.2024.05.29.01.51.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 May 2024 01:51:18 -0700 (PDT)
-Date: Wed, 29 May 2024 14:21:14 +0530
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2024, #12; Tue, 28)
-Message-ID: <twbev5csmtfuwzqqj5otzjs7jgkzewoq2o2cyncqvj522fkoji@5znglrfbw7yw>
-References: <xmqqle3t36a6.fsf@gitster.g>
+	 Content-Type:Content-Disposition:In-Reply-To; b=DkfTi1hRRdH/YqBuw5ldlUDtEUGEY2nmPRAdNrxfVvy5gw3r2Z9joad3cG5dc7jCnxYqAyCfrZg/l1nFG/Y/0w3aZa8kl7o5QZXNoXX0reyhfNHlsHTAe31qQBwTtZFM02crcFJh/SVqykUA4ogfhwlMG2fcD8hsMy2bcvp1P1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 11369 invoked by uid 109); 29 May 2024 08:54:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 29 May 2024 08:54:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18091 invoked by uid 111); 29 May 2024 08:53:59 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 29 May 2024 04:53:59 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 29 May 2024 04:54:01 -0400
+From: Jeff King <peff@peff.net>
+To: Joey Hess <id@joeyh.name>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Revert defense-in-depth patches breaking Git LFS
+Message-ID: <20240529085401.GA1098944@coredump.intra.peff.net>
+References: <20240514181641.150112-1-sandals@crustytoothpaste.net>
+ <0f7597aa-6697-9a70-0405-3dcbb9649d68@gmx.de>
+ <ZkO-b6Nswrn9H7Ed@tapette.crustytoothpaste.net>
+ <Zk2_mJpE7tJgqxSp@kitenet.net>
+ <fbb89826-0d83-d4f9-bab4-9fba69e0e22d@gmx.de>
+ <ZlU94wcstaAHv_HZ@kitenet.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqle3t36a6.fsf@gitster.g>
+In-Reply-To: <ZlU94wcstaAHv_HZ@kitenet.net>
 
-On Tue, 28 May 2024, Junio C Hamano <gitster@pobox.com> wrote:
-> [Cooking]
-> 
-> * gt/t-hash-unit-test (2024-05-27) 2 commits
->  - t/: migrate helper/test-{sha1, sha256} to unit-tests/t-hash
->  - strbuf: introduce strbuf_addstrings() to repeatedly add a string
-> 
->  A pair of test helpers that essentially are unit tests on hash
->  algorithms have been rewritten using the unit-tests framework.
-> 
->  Will merge to 'next'?
->  source: <20240526084345.24138-1-shyamthakkar001@gmail.com>
+On Mon, May 27, 2024 at 10:13:55PM -0400, Joey Hess wrote:
 
-I've posted a new version to address Patrick's review.
-Link:https://lore.kernel.org/git/20240529080030.64410-1-shyamthakkar001@gmail.com/
+> Johannes Schindelin wrote:
+> > > More than one major project; they also broke git-annex in the case where
+> > > a git-annex repository, which contains symlinks into
+> > > .git/annex/objects/, is pushed to a bare repository with
+> > > receive.fsckObjects set. (Gitlab is currently affected[1].)
+> > 
+> > This added fsck functionality was specifically marked as `WARN` instead of
+> > `ERROR`, though. So it should not have failed.
+> 
+> A git push into a bare repository with receive.fsckobjects = true fails:
+> 
+> joey@darkstar:~/tmp/bench/bar.git>git config --list |grep fsck
+> receive.fsckobjects=true
+> joey@darkstar:~/tmp/bench/bar.git>cd ..
+> joey@darkstar:~/tmp/bench>cd foo
+> joey@darkstar:~/tmp/bench/foo>git push ../bar.git master
+> Enumerating objects: 4, done.
+> Counting objects: 100% (4/4), done.
+> Delta compression using up to 12 threads
+> Compressing objects: 100% (2/2), done.
+> Writing objects: 100% (3/3), 324 bytes | 324.00 KiB/s, done.
+> Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+> remote: error: object ea461949b973a70f2163bb501b9d74652bde9e30: symlinkPointsToGitDir: symlink target points to git dir
+> remote: fatal: fsck error in pack objects
+> error: remote unpack failed: unpack-objects abnormal exit
+> To ../bar.git
+>  ! [remote rejected] master -> master (unpacker error)
+> error: failed to push some refs to '../bar.git'
+> 
+> So I guess that the WARN doesn't work like you expected it to in this case of
+> receive.fsckobjects checking.
 
-Thanks.
+This is a long-standing weirdness with the fsck severities. The
+fsck_options struct used for fetches/pushes has the "strict" flag set,
+which upgrades warnings to errors. But if you manually configure a
+severity to "warn", then we respect that.
+
+For example, try:
+
+  git init
+  git commit --allow-empty -m 'message with NUL'
+  commit=$(git cat-file commit HEAD |
+         perl -pe 's/NUL/\0/' |
+	 git hash-object -w --stdin -t commit --literally)
+  git update-ref HEAD $commit
+
+which is defined as WARN in fsck.h. And hence:
+
+  $ git fsck; echo $?
+  warning in commit 09b2d5bda87ffda7a0f36ea80c4b542edf9b9374: nulInCommit: NUL byte in the commit object body
+  Checking object directories: 100% (256/256), done.
+  0
+
+But that's upgraded to ERROR for transfers:
+
+  $ git init --bare dst.git
+  $ git -C dst.git config transfer.fsckObjects true
+  $ git push dst.git
+  ...
+  remote: error: object e6db180f21250e03b633a3684f593ceb7b9cd844: nulInCommit: NUL byte in the commit object body
+  remote: fatal: fsck error in packed object
+  error: remote unpack failed: unpack-objects abnormal exit
+  To dst.git
+   ! [remote rejected] main -> main (unpacker error)
+  error: failed to push some refs to 'dst.git'
+
+Unless we override it:
+
+  $ git -C dst.git config receive.fsck.nulInCommit warn
+  $ git push dst.git
+  remote: warning: object 09b2d5bda87ffda7a0f36ea80c4b542edf9b9374: nulInCommit: NUL byte in the commit object body
+  To dst.git
+   * [new branch]      main -> main
+
+But of course most sites just use the defaults, so all warnings are
+effectively errors.
+
+I think it's been this way at least since c99ba492f1 (fsck: introduce
+identifiers for fsck messages, 2015-06-22). We've discussed it once or
+twice on the list. It mostly seemed like a cosmetic issue to me, but in
+this case it looks like it caused functional confusion.
+
+I don't think just turning off the "strict" flag is a good idea, though.
+The current severities are all over the place. A missing space in an
+ident line is an error, but a tree with a ".git" directory is just a
+warning!
+
+So I think we'd first want to straighten out the severities, and then
+think about letting warnings bypass transfer fscks. Though it's not
+clear to me what hosters would want; pushing to a public site is a great
+time to let people know their objects are broken _before_ everyone else
+sees them, even if it's "just" a warning. But when you do have old
+history with broken objects, the control and incentives are in the wrong
+place; every person who wants to interact with the repo has to loosen
+their fsck config. So it's not clear to me how aggressive transfer-level
+fsck-ing should be.
+
+In the meantime, we also have an "INFO" severity which gets reported but
+not upgraded via strict. It sounds like that's what was intended here.
+It should be available in all backport versions if we want it; it was
+introduced in f27d05b170 (fsck: allow upgrading fsck warnings to errors,
+2015-06-22).
+
+-Peff
