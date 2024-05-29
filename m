@@ -1,80 +1,80 @@
 Received: from wfhigh3-smtp.messagingengine.com (wfhigh3-smtp.messagingengine.com [64.147.123.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB221168C17
-	for <git@vger.kernel.org>; Wed, 29 May 2024 07:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646CE169377
+	for <git@vger.kernel.org>; Wed, 29 May 2024 07:48:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716968881; cv=none; b=DldPvEGOqYfM3R6eQowQjf/czecbzHcxG1GqYrMxJgX1ecP1GEhmeIaTtWiUhlzAZHDqLzWewCq3ZHZZQFNfkGRNCueDmAfZTp5ghjX1LOlzRBlBgkDGDRsGtiJuprEQNak7WE4btYHrgu4GNsZRbqZtBBtUKBpmJ/bio6lqYA0=
+	t=1716968884; cv=none; b=jTQxC8lrfGIB93+VMCeUR+LMw4G9BtiGSn2y2LnxK46w+4LqZOUujBsc6LFXTQlUAIc1sQVRge8lU+ZrlFlCUfW1vkiEltkFopXLIr6Lf1mWSxo9NOc0WpjiF4DES50994JWPCcpJjDaXBKHLJyo7e02gIofP1gjEBNp30kBZ/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716968881; c=relaxed/simple;
-	bh=LqXSTRKf91bWIIpXgQyWJQ5ANH5xCnteU3zU/bcc10g=;
+	s=arc-20240116; t=1716968884; c=relaxed/simple;
+	bh=5BpekW5D74lEVVDdA9NF8wr5lFRync0o1CvQHI1c2pA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LBl4mnK/AiQLCj2c9hII5qO+NtAhksS4/ZY8Dd/Dfudv9fQQ7UbRy20O5/rt1KuvK5O5KnH6aoP4kr5Aazn+txChZtZDjM2Qch9BL6Jyg+JNLNQMa9jbwllNJIv1axf7CxwBc78oPaGCOnpbeExfu0zaX6zp9ljsq+aRk0XyVGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m+ZQkH30; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PEBdxQ8o; arc=none smtp.client-ip=64.147.123.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=IkndFmsQkuZVbdBfBOo8AMsjpF3p0JUm/8PM/AMnlT7rlJkSH2cbMHM3d6KJQoFMj7+UgzcLZdeePgZisaj7uUkJ3GrCNKvAbXBUVm7qt/0ueHzN/h88vcrbmNici059EUGjllR5hB2X2esq+VPYeic24l8CCM0aOEOP0EZ6QHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eA3MlFnE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RRLI7FP+; arc=none smtp.client-ip=64.147.123.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m+ZQkH30";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PEBdxQ8o"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 0C1DE1800131;
-	Wed, 29 May 2024 03:47:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eA3MlFnE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RRLI7FP+"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 9D32F1800165;
+	Wed, 29 May 2024 03:48:01 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Wed, 29 May 2024 03:47:59 -0400
+  by compute2.internal (MEProxy); Wed, 29 May 2024 03:48:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1716968878; x=1717055278; bh=j6cPVQYeX2
-	+I6Zkk629g2ecgPT4Arg4Fe1+e99tPmfU=; b=m+ZQkH30odvMmh466D1E74Klue
-	0xBSUxe3uEGn8FzjzSps2jjyKHcjs26tNzvlZoVvht45UaE9iAo7wBWRMHwUBYxY
-	uhcFWUpGj+jJULJWj5Ltj/Vic6Nk2cCmK9aEhzlWST6Nh8f6UjX9VIQhS4Sl8Y3w
-	6TOOoIyb4HEmJo2OsrtuXsFYhDOn1HzQsWNehamK/S0t4LDigrUgYar3YgX11V2w
-	gc3tDfTWFHVA7NFfm6nlOg5QBP7B9gaQVCFLYKQAG/l1RcoVHho0XHFu0pQgN5oL
-	8yykPR/xgJF71kIYeYO19Gbt0fcBdyoDNBhUHonjCt2E42FJflgNQrAIITXg==
+	:subject:to:to; s=fm1; t=1716968881; x=1717055281; bh=OiN9R/EpTU
+	A66AzvTehAPpn3Sg962OltO0Ldw1yEss4=; b=eA3MlFnEV6WVyT8NZtVG0rwO6H
+	u+STE5SpIyuVtWMU7bk/0PiLG3JBn9teNFz82zDd1e7I77lfkjf2hEtaoplJ2whr
+	QzfBZ68hTrqfm2t+e2SEGa0fMnDmwtACIW4iYyeJHr9SIV4SjYUWNHPp7swJngkn
+	jLCzVBTklGju3ew/LSGT6VwEvphPQwA3psG+n9dMp69vMXOdAxoqkVSFjvQxWOw2
+	vPZyBHrUGDjqMCmYVVnfAEsbo8NfrlSmTubJV64eQH5IjDKnd7LqE7d5/YcY4rPG
+	3tuXg2PwKTUO5Si/TTyWkt3KAlMr/x85cwmPG5B7DVhek20jzVREEzXO5F1A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1716968878; x=1717055278; bh=j6cPVQYeX2+I6Zkk629g2ecgPT4A
-	rg4Fe1+e99tPmfU=; b=PEBdxQ8oOLyTsgvlwEXBbOQItIu0GI8VL5PaMM/dYvGW
-	uLZW5U2e+uJZXDvSJKrmfJLXn63RKZNpEwNLfUDwy86sfxLT9Kz7eAPFOz13kTAd
-	jCtzHnWOTohrNFLEqvoqcaXCwVfIADqsth++FG6vum+hdXezwWZJvIOV+0SWxkHP
-	1sgImOgqvw6CeMTFQEaDhzMbxM4rKXt7LY5pNx8Bep/eToFaASoqoHKnW8OlKA5D
-	cpvTLQdTFrHJwjMoEJnXionqUY4VDVKuxG8aBjoK1w+v9C6xj+mLDIFMySoOx8WI
-	wdyldlm7TuBMnyCJMBubVqCILCztlclL5C/3HYtsjw==
-X-ME-Sender: <xms:rt1WZobUEB2uVskCw_PYn-5-NfpbS7JYNxOt9-TKtQrWN9lARhdqWg>
-    <xme:rt1WZjb9mOa5NjyWODJaKre310LFXljCcRaIq3Ccmiq1C79RkEDYSA2_JGLDNmy--
-    GFMYd4gWhluwnONBg>
-X-ME-Received: <xmr:rt1WZi-sytvmKzTC2G_ONw_Xpu2yvQx4T9NoQRK9Twob0opnp1JA9gwN77BZJ4NSpRUV2oZinbPc8KXJHKu8nTEiLzS7C7NHDURQk0DNDgJkidDv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdektddgudejucetufdoteggodetrfdotf
+	fm1; t=1716968881; x=1717055281; bh=OiN9R/EpTUA66AzvTehAPpn3Sg96
+	2OltO0Ldw1yEss4=; b=RRLI7FP+uJH7jB2rMzLorlS9o1yzCb1ViEa+KjgSHk40
+	IFThf8XuxGh/ybLcp2tDxflWeZaSaz26l0/nOmlc8ZOK3xe6ozxiBFoAZe4Ken9I
+	BsgpsOMexfy8xFZf9Dvxvvr8Nsb4FR4s4mrRqgOEqTfYKaKNZLFWnQ5Q8m0CTU3v
+	IkY8v8w9Nv5bz7o/Y7jJu3Qn663IDpqiVwlStN6q77fdch/lLYrObmGyV9JeUMhK
+	nmybEaiYWoQzqGjQt0qXtWqx/rV8c6hfEvj4vyF4M+/JrMFiGjho9nZfqpVnWnsd
+	3lrWogUVm3r52SpKYblfzv8adp98QmPvoZRPif+eig==
+X-ME-Sender: <xms:sd1WZrRuuiSYap2UKsH6miPFpgdc3WxCY8MLCzx1aB7eHmjQ3T9bew>
+    <xme:sd1WZsz2vJD4ShKxkUykE_-STmzSpi33v7kg_woF64fcSjhz546aq9undzI24vSRW
+    o1oXnwG2suoc4vxgw>
+X-ME-Received: <xmr:sd1WZg21oMkT_WDKlMSn6RLVI12aUBxrIyeEP_ZoEMV9ThFXolnfNA-osRv9OfvMpGYvYO2XKDlqF2fDkmqf5eSUUEOlSbvBgeikKiotFT00oNAu>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdektddgudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
     eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:rt1WZir2NG6RuS_lC4hxjqX-mfGKCeuCRGwY60FAU-r0rxOx-yBnhQ>
-    <xmx:rt1WZjpQshilZ2lpCs5wd0XQ2ZsqNlogdEk8_OCkhOQk1S2lJWpC0Q>
-    <xmx:rt1WZgThXnqTeXcFnf2OL_z26rakp5Xk4mC86VIfY2EQmirqOS_K7g>
-    <xmx:rt1WZjr43LJDXn18ES-5UiXbwRktj8MIJGMTdIOR0nBa3x06lPWwZA>
-    <xmx:rt1WZq1q_Unr7u8qXlDCoQWMBcIGmrKs3Tqdvo6UHS56TUf99rWrojZt>
+X-ME-Proxy: <xmx:sd1WZrAw9q53unzGIq_rQywG0H2rmGj0GXJMgaKMecqrJ7-2OC0baQ>
+    <xmx:sd1WZkifFG2z3Jdkw79CqsK7bn5OKOZxzRiJHqLObWKP9zHdrANf2w>
+    <xmx:sd1WZvodKcBDGnocK5TZF8cIyDt06Mp81L8AknlZOQRyn_FdOSLTGw>
+    <xmx:sd1WZvjwhaMazZhChEoBEi9Fx32L5wJXC02fWWns11sXwtLW0KDCNg>
+    <xmx:sd1WZntNyVjhqN7GOtXJ1Iuc4VECDm0oexmSuN3xjVFLiU7lp5mHTuEC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 May 2024 03:47:57 -0400 (EDT)
+ 29 May 2024 03:48:00 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 56f84b96 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 29 May 2024 07:47:40 +0000 (UTC)
-Date: Wed, 29 May 2024 09:47:52 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id f86e02ca (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 29 May 2024 07:47:46 +0000 (UTC)
+Date: Wed, 29 May 2024 09:47:57 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/8] midx-write.c: tolerate `--preferred-pack` without
- bitmaps
-Message-ID: <ZlbdnkFIg1H_KQxS@tanuki>
+Subject: Re: [PATCH 2/8] midx-write.c: reduce argument count for
+ `get_sorted_entries()`
+Message-ID: <ZlbdrczSqKgueK0g@tanuki>
 References: <cover.1716482279.git.me@ttaylorr.com>
- <c753bc379b005ecaf131f8f1ae9c5b80b2712759.1716482279.git.me@ttaylorr.com>
+ <07dad5a5812794be6e355b1e0eb3722d452f292b.1716482279.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,131 +82,86 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="aUg7pR21KhekfPsH"
+	protocol="application/pgp-signature"; boundary="HKd8jXHLAaP8H4G1"
 Content-Disposition: inline
-In-Reply-To: <c753bc379b005ecaf131f8f1ae9c5b80b2712759.1716482279.git.me@ttaylorr.com>
+In-Reply-To: <07dad5a5812794be6e355b1e0eb3722d452f292b.1716482279.git.me@ttaylorr.com>
 
 
---aUg7pR21KhekfPsH
+--HKd8jXHLAaP8H4G1
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 23, 2024 at 12:38:03PM -0400, Taylor Blau wrote:
-> When passing a preferred pack to the MIDX write machinery, we ensure
-> that the given preferred pack is non-empty since 5d3cd09a808 (midx:
-> reject empty `--preferred-pack`'s, 2021-08-31).
->=20
-> However packs are only loaded (via `write_midx_internal()`, though a
-> subsequent patch will refactor this code out to its own function) when
-> the `MIDX_WRITE_REV_INDEX` flag is set.
->=20
-> So if a caller runs:
->=20
->     $ git multi-pack-index write --preferred-pack=3D...
->=20
-> with both (a) an existing MIDX, and (b) specifies a pack from that MIDX
-> as the preferred one, without passing `--bitmap`, then the check added
-> in 5d3cd09a808 will result in a segfault.
-
-The check you're talking about is the following one, right?
-
-    if (ctx.preferred_pack_idx > -1) {
-            struct packed_git *preferred =3D ctx.info[ctx.preferred_pack_id=
-x].p;
-            if (!preferred->num_objects) {
-                    error(_("cannot select preferred pack %s with no object=
-s"),
-                          preferred->pack_name);
-                    result =3D 1;
-                    goto cleanup;
-            }
-    }
-
-And the segfault is because the index wasn't populated, and thus
-`ctx.info[ctx.preferred_pack_idx].p =3D=3D NULL`?
-
-> Note that packs loaded from disk which don't appear in an existing MIDX
-> do not trigger this issue, as those packs are loaded unconditionally. We
-> conditionally load packs from a MIDX since we tolerate MIDXs whose
-> packs do not resolve (i.e., via the MIDX write after removing
-> unreferenced packs via 'git multi-pack-index expire').
->=20
-> In practice, this isn't possible to trigger when running `git
-> multi-pack-index write` from via `git repack`, as the latter always
-
-s/from via/via/
-
-> passes `--stdin-packs`, which prevents us from loading an existing MIDX,
-> as it forces all packs to be read from disk.
->=20
-> But a future commit in this series will change that behavior to
-> unconditionally load an existing MIDX, even with `--stdin-packs`, making
-> this behavior trigger-able from 'repack' much more easily.
->=20
-> Prevent this from being an issue by removing the segfault altogether by
-
-Removing segfaults is always good :)
-
-> calling `prepare_midx_pack()` on packs loaded from an existing MIDX when
-> either the `MIDX_WRITE_REV_INDEX` flag is set *or* we specified a
-> `--preferred-pack`.
->=20
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  midx-write.c                |  8 +++++++-
->  t/t5319-multi-pack-index.sh | 23 +++++++++++++++++++++++
->  2 files changed, 30 insertions(+), 1 deletion(-)
->=20
+On Thu, May 23, 2024 at 12:38:06PM -0400, Taylor Blau wrote:
 > diff --git a/midx-write.c b/midx-write.c
-> index 9d096d5a28..03e95ae821 100644
+> index 03e95ae821..ad32e8953d 100644
 > --- a/midx-write.c
 > +++ b/midx-write.c
-> @@ -930,11 +930,17 @@ static int write_midx_internal(const char *object_d=
-ir,
->  		for (i =3D 0; i < ctx.m->num_packs; i++) {
->  			ALLOC_GROW(ctx.info, ctx.nr + 1, ctx.alloc);
+> @@ -299,21 +299,17 @@ static void midx_fanout_add_pack_fanout(struct midx=
+_fanout *fanout,
+>   * Copy only the de-duplicated entries (selected by most-recent modified=
+ time
+>   * of a packfile containing the object).
+>   */
+> -static struct pack_midx_entry *get_sorted_entries(struct multi_pack_inde=
+x *m,
+> -						  struct pack_info *info,
+> -						  uint32_t nr_packs,
+> -						  size_t *nr_objects,
+> -						  int preferred_pack)
+> +static struct pack_midx_entry *get_sorted_entries(struct write_midx_cont=
+ext *ctx)
+>  {
+>  	uint32_t cur_fanout, cur_pack, cur_object;
+>  	size_t alloc_objects, total_objects =3D 0;
+>  	struct midx_fanout fanout =3D { 0 };
+>  	struct pack_midx_entry *deduplicated_entries =3D NULL;
+> -	uint32_t start_pack =3D m ? m->num_packs : 0;
+> +	uint32_t start_pack =3D ctx->m ? ctx->m->num_packs : 0;
 > =20
-> -			if (flags & MIDX_WRITE_REV_INDEX) {
-> +			if (flags & MIDX_WRITE_REV_INDEX ||
-> +			    preferred_pack_name) {
->  				/*
->  				 * If generating a reverse index, need to have
->  				 * packed_git's loaded to compare their
->  				 * mtimes and object count.
-> +				 *
-> +				 * If a preferred pack is specified,
-> +				 * need to have packed_git's loaded to
-> +				 * ensure the chosen preferred pack has
-> +				 * a non-zero object count.
->  				 */
->  				if (prepare_midx_pack(the_repository, ctx.m, i)) {
->  					error(_("could not load pack"));
+> -	for (cur_pack =3D start_pack; cur_pack < nr_packs; cur_pack++)
+> +	for (cur_pack =3D start_pack; cur_pack < ctx->nr; cur_pack++)
+>  		total_objects =3D st_add(total_objects,
+> -				       info[cur_pack].p->num_objects);
+> +				       ctx->info[cur_pack].p->num_objects);
+> =20
+>  	/*
+>  	 * As we de-duplicate by fanout value, we expect the fanout
+> @@ -324,25 +320,25 @@ static struct pack_midx_entry *get_sorted_entries(s=
+truct multi_pack_index *m,
+> =20
+>  	ALLOC_ARRAY(fanout.entries, fanout.alloc);
+>  	ALLOC_ARRAY(deduplicated_entries, alloc_objects);
+> -	*nr_objects =3D 0;
+> +	ctx->entries_nr =3D 0;
 
-We now end up loading all packs, but in practice it should be sufficient
-to only load the preferred pack, right? Is there a particular reason why
-we now load all packs?
+Nit: I think it's a bit surprising that a getter function would modify
+the passed in structure. It's also a bit puzzling that we assign
+`entries_nr` in here, but rely on the caller to set the corresponding
+`entries` field. I think we should either have the caller assign both
+fields, or we should rename the function and assign both of these fields
+in the function.
 
 Patrick
 
---aUg7pR21KhekfPsH
+--HKd8jXHLAaP8H4G1
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZW3acACgkQVbJhu7ck
-PpR/3w//bJgSsu+ZevGyikPaAVGdiEVVCP69MzpkY7xpR3/+xOQ/QUJk6D35wJOo
-vLoROaRHcbbAhDKqSetWzUlpwEOcSIjgcUeg/ScrQlIpQAz6XO8IWF0huqfxOlw1
-zt8U2FwjzMgaplwzKD0P6xnJyIhIkMWPZ/MAJN5WsBOtME3w0bjAGZj21q0b2EMA
-Hp/3LOMTjU0olEQg+tyuBwEzdV5SnEvFub3feH958HG1xAfZDT13fXEOReQRxu56
-EThYyxyUeSyTtyFPsUB98UfmjvGCi6V+Hx8J6z77vkr738oMt5nDtcwgx+WWGRYt
-25w/WcEl1+YCazAtav8EQG4417zR62pVAFNSGzHasMii1zJRWVFz3BBV2F6rGte9
-l1dlbohq6Pqptl4rSWkVl3Mr3ZinnV8NlgbTuHm50kCpFlyofzijiSwXFhUsbjV0
-HgjeOoP/ijuQB0GmXDOIKJo74kZ7B1VByRaYtm2zSHpLT9X4z2bHjxxWjud9iOam
-RMyyJZ86Gnybp1PKPF2BBkatZfGmMPwzyd/ciOvxygI2SS1TYLKRZyrqBMvQTEFk
-/SjUNVeQ7stRl3rpu3VPa+IZe9TUqitYThMeSSttKqf3PxbVtASqkGkhagWFKaSA
-EwoSYa9+k2oMhNmJ1BLwtWTD+NOxAlOCz7/20x+plPfJL/px/Wk=
-=sGus
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZW3awACgkQVbJhu7ck
+PpQMdA//WF349ghpZePeDLfiA5ed7JDxjVLzO3Mz+y50lRaqBqaT2u29+AgpJs6a
+7XT4fMem+rF7wLeCVy2v1w+q8nmoav5NpSiOmM5cVHk2qLXS+ZwKqzuP6KmIZxg9
+2cxkwkmDG+Jkzy6H66Ilh6Sxh8R66uwrdP4jhn1REXc3WtVOVl2wbtmNgg1lGz7t
+yVh7r+nmrorVSwVuOdT5Wr1wArDW6NUl5v+dE0Q2P60kkdD0dFQs55jYNbH8D7om
+LPSmsDqlsO8f4CVtYh3h4jZW8J5EonkQbBkHfKh2aBnW5naeZR1xhNbrdfxE+9JQ
+pQA2AuPgCuaarg/4J+JmpbZzUI63NgevNjXqd4I/7vjS2XDRjR6dwGAVXBGI4OgH
+5nyT+CT1Gl7M9IOT5A9CXFEZXA88bbIfSBRcfDUG5d0oyai05+RBXYV44IUM0xBD
+qKNdexDC/sFPdhkv2tXf2zf1U4yBgU+xqBJZnqjUZW2hy8K90Hsbpxvj8aeuAme1
+yAchRFzOQApf+OgZxrzanfaqTRQMGaonuS8jVFz8oiK3FbsaZ+In3kMDOPza6uEI
+50jMXRMZhiYDuzuDzdG8kW4PowfTTnDINo9SJTQ0WjOza2aVcY82tyI9dqPnDQPy
+Q2tohTHkXArPK6nIyPAUV96x6i+szXPLUhMVlJ1K/3UOvEAVns4=
+=cTSt
 -----END PGP SIGNATURE-----
 
---aUg7pR21KhekfPsH--
+--HKd8jXHLAaP8H4G1--
