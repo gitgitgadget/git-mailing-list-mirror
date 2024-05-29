@@ -1,83 +1,77 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553C9169ADC
-	for <git@vger.kernel.org>; Wed, 29 May 2024 22:36:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75DB169ADC
+	for <git@vger.kernel.org>; Wed, 29 May 2024 22:38:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717022178; cv=none; b=nbkVpdr85whyKSygljV0ej3Du0TVsdimd8T3yAZytfPb3d+HGutV6c4zFlO9ahThKvidgtY3AAvOPcagEjc6z0crNlerwi1x3E7Gj9kOrgAE8XKFU7kPG0I7ahJUCKiyJ+elkS+sbb2LCPBsMYTtaAixNcfxPvHibIpI3c6SINI=
+	t=1717022301; cv=none; b=A1soIHgxYM8Y+icnDgp5npLnoDz51nYWMz11Y3kAQ95WCXubT35gmN9dDPaYiyABtWk8fVsk6DZySSWVXOqk5fAVcSepNl5+p5RiID7e2ZLYedTGul5QyNuT5NG0gihbibEu0TT4+1A4gEF2gtb+B+xITwpjg/NpriBeTL3SdDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717022178; c=relaxed/simple;
-	bh=5OIQ78XnmiV24wcZz0InKQxKUqzNZ8e3hv52CiQGSWY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o4mKbYCJD0XGj1jEn55UGSRRPBvGLbBedgdusF0Q5GYNm38RnpFbCank/YR9ZiyT+49MYMKB06Ed0wW2TBJ2TyOCGx5M6+hdnHL/1rx3wA9DH0+ioKJ0Ar0Fqqhw119J7ImszSMyeuPeoAvkVVyWm+/mpQqc4alLXFipOWoWcxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=iQFNfxoy; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1717022301; c=relaxed/simple;
+	bh=WTasOMy/XG+AMz5t38yCqgzImr/daKOGXbtCqrcmIk0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=N4SwE8ETBI8D3fQIYshCQeI4K5e0NZ46JbWoXg/zXJoaDzgPWVlMgQu8E03rP/cf/k/jEo2PhDc0J+PNg4bRVO5OP3DkT4lUi9GPKdhwJgNRgsyIOUQJTsuqIm+BdWCj1pJqC0eSc4uGcNxUnPONpnnkC+9CXKW6DmZLP1Ltci4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JMTMqYSY; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="iQFNfxoy"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-794ac6b5409so21469385a.2
-        for <git@vger.kernel.org>; Wed, 29 May 2024 15:36:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717022176; x=1717626976; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5OIQ78XnmiV24wcZz0InKQxKUqzNZ8e3hv52CiQGSWY=;
-        b=iQFNfxoypt8g6EoEydkKPZvZeflinTjeXHFg6FfUZQgYVLQ0wa7N7r3wJVXmVorwmi
-         lCePrmxv0t2bQBaSxtJxG8Rnccm98itVhsYrjPAB0YHNy4TdpRf7sM68VRvEqBM4Wo29
-         aqE5ZQd7yFGShGuq/mK3GDfXxeV+YdOdVG611FuWQm+fj5SeQx6e8VQq+SiQhO9PJMzQ
-         XLCD9tUiLwXdaH4PQZku9AO9LS+DTiOJKGTj0end2l7s0MeUrAdqlDJNKmBDa0evciW0
-         s6HaF2Iq6g23fnRzvQmsBkeocAVeg1WV/TvtAAZC9nbuUCSdjNaCkjS26WSqE3EL/8z9
-         s9jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717022176; x=1717626976;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5OIQ78XnmiV24wcZz0InKQxKUqzNZ8e3hv52CiQGSWY=;
-        b=X5XJAOW7kMJ600j5YMGIsw4CVirDM9nM/yJdUBZNWhEeyn6jfjBNBC9Z8yoAcAd42d
-         tlTW+QzoLEOv8H2CyOyVPu544fjEgoenaeZ/bD8O+LNaWh4ud//yjUTpdllZjy/ZuLO9
-         bYoeM0ViPPm+w/WXIkupghSretzsPjqLnSnhw93RYvM+HVuo68lxit4fVbCD2TvgmM3A
-         8SmI9Zl/BFT7pj0g3MvPBwiu+GjAbPs/U+PBRmm0KNp7fkFoxQD4wHz1HyqKBPksd+y9
-         KhB3DzcCdqfoKUxk0hrtJPEVV1b6bUTclx2szqBdeLy8jxcyoTzLeRGmU5i5Z8v5QpQz
-         Cifg==
-X-Gm-Message-State: AOJu0Yz8b0xFXrfRZr7+Y2CTNYsHXoZHcrWvnyY00ZVo7sMKc15lzWmw
-	aBydRprbFNGvKTE7wUgPCnkZpwlxiWhcESsaxEaA50qrYO1SEDaPDLYWFHyVR8k=
-X-Google-Smtp-Source: AGHT+IHgGJ3VjGeaE1vpQhInN+WmV8D3Ao03PqJ3aZ7nuRwoSl1u6Ips+kpZmgmMu/fb+Zyi4VjgaQ==
-X-Received: by 2002:a05:620a:5e0e:b0:792:d1d2:e07c with SMTP id af79cd13be357-794e9e3879dmr53145485a.68.1717022176063;
-        Wed, 29 May 2024 15:36:16 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43fc319f88dsm42390271cf.54.2024.05.29.15.36.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 May 2024 15:36:15 -0700 (PDT)
-Date: Wed, 29 May 2024 18:36:14 -0400
-From: Taylor Blau <me@ttaylorr.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JMTMqYSY"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A6009259FA;
+	Wed, 29 May 2024 18:38:18 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=WTasOMy/XG+AMz5t38yCqgzImr/daKOGXbtCqr
+	cmIk0=; b=JMTMqYSY4X1Ea5d9+HX1DnngvAROY6JgjheVfZVgceqa0zchykzoNn
+	9b2YAGmPkOjZNIPMukKq9C5lL4mdPnzD0oDxxITiB1YWFtGzorlajHZpDEU1U3cJ
+	/G7Qz05q2zJ+/Qci+1whedzedvW8IHUw4HSvx4WtZ+VBOKWkZ9Ba8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E556259F9;
+	Wed, 29 May 2024 18:38:18 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 12F89259F8;
+	Wed, 29 May 2024 18:38:18 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/8] midx-write.c: pass `start_pack` to
- `get_sorted_entries()`
-Message-ID: <Zlet3mhO+tLT4yj8@nand.local>
-References: <cover.1716482279.git.me@ttaylorr.com>
- <7acf4557dcb2240cb43eadebfd21b5c37515ba7f.1716482279.git.me@ttaylorr.com>
- <Zlbdsz5VSlX89HfH@tanuki>
+Cc: Chandra Pratap <chandrapratap3519@gmail.com>,  git@vger.kernel.org,
+  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [GSoC][PATCH v2 3/4] t: move tests from reftable/record_test.c
+ to the new unit test
+In-Reply-To: <Zlb1m5cwhW_R5EzP@tanuki> (Patrick Steinhardt's message of "Wed,
+	29 May 2024 11:30:03 +0200")
+References: <--in-reply-to=20240528113856.8348-1-chandrapratap3519@gmail.com>
+	<20240529070341.4248-1-chandrapratap3519@gmail.com>
+	<20240529070341.4248-4-chandrapratap3519@gmail.com>
+	<Zlb1m5cwhW_R5EzP@tanuki>
+Date: Wed, 29 May 2024 15:38:17 -0700
+Message-ID: <xmqqbk4otfae.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Zlbdsz5VSlX89HfH@tanuki>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 24FF6506-1E0C-11EF-AAE7-6488940A682E-77302942!pb-smtp2.pobox.com
 
-On Wed, May 29, 2024 at 09:48:03AM +0200, Patrick Steinhardt wrote:
-> Will we always want to skip packs from the start of the array? Or may it
-> happen that we want to skip packs in the middle of it? It's a bit hard
-> to judge because there isn't a ton of context when exactly we'll want to
-> skip, and why.
+Patrick Steinhardt <ps@pks.im> writes:
 
-It's always from the start of the array, but I'll add some more context
-into the patch message as to why this is.
+>> +	strbuf_release(&a);
+>> +	strbuf_release(&b);
+>> +}
+>
+> Oh, so this test was even duplicated. It may make sense to point out
+> details like this in the commit message to prepare the reader. But
+> that's probably not worth a reroll.
 
-Thanks,
-Taylor
+Probably.  But if you are sending out another round anyway, then it
+is a good opportunity to update the proposed log message.
+
+;-)
