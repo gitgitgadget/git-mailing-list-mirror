@@ -1,63 +1,63 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B731CB31B
-	for <git@vger.kernel.org>; Wed, 29 May 2024 22:55:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F101CB31B
+	for <git@vger.kernel.org>; Wed, 29 May 2024 22:55:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717023337; cv=none; b=BPHAAwGt3so1zT/EWkjbaG1P5BP3mGABoPnk4dwh+qvGF2T/YMtlIqBq3/J+BY+lZ2uTVvJ3zpDDQTSwfwfdKgxbOvfW71awG058K0+GJy4oSZ2wdMxvPYVxTlS3wM6sqjFz8ts+8SnRVGzrXaj6N2eBLzepVF0D6H3Ipt4DiZU=
+	t=1717023340; cv=none; b=MJNdrQK0Ap0tceGeV44OuEpOAa1B84F1ZPD7TsS9qaFvltZkdYal+yKl+ucDARV9KMUNUHvVdOeLw5kHb8ZIiojyLcUI02aI6FwpRehcn8r2MOADY0fra7Y+vbpOAjuZLji4V1zCP36y/zOZJgqnNal740wEVoo31HapwmGxcEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717023337; c=relaxed/simple;
-	bh=9fVKigdbb/OOVXYdUeZZ7nJyoZoHb+i+tRG8ZCbLnLg=;
+	s=arc-20240116; t=1717023340; c=relaxed/simple;
+	bh=OH+ZXOWuaWbHXLfzLFS4LJf/1r9XV3xOjR+8f4pdeGk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BpRpDEOUMtn97+8FhrYVxro3pyikV0I9gRIGrc9qF3SGsls5UAyLIwR3NQ89YQ6oa/5mFbvIz6n5jJ84b64QPPRLYIA/kMoIZ4n+LI/j3kDGSrR1FO1jprv8vkzw62ipXit9+bCveDQEOjDWzoXwHOE3OF1nawqgEE/mwJkMsQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=2IALDrdw; arc=none smtp.client-ip=209.85.222.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=puU2LABM3DBcNCIm+lQXQHySpWdyiC8dzwd/sZ90AdT1N15YSjgCYWUuGaWWLupTt20o3CR8qvzNbvQajXID5NMXl+aXHo/zJo1bNj9nJncCZV8RxWC+nvsFNS/vA9QNPnK7y+aadZxmq/oSoY9OnDdJ+KsjqiPKUnzbhbfGoFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=OuJOhNN5; arc=none smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="2IALDrdw"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-794b1052194so21205185a.1
-        for <git@vger.kernel.org>; Wed, 29 May 2024 15:55:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="OuJOhNN5"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6ab9e011f62so5036996d6.0
+        for <git@vger.kernel.org>; Wed, 29 May 2024 15:55:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717023334; x=1717628134; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717023338; x=1717628138; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=I1ByDU/0X+OFSmFqI3+rjM1YjOApGJwluw7Oy18PYU8=;
-        b=2IALDrdwZQkkF6nB75ZdCNVM/1ZWzoZoP6lRIWKjVRpxQuP3Gqom6EqHrbFumxJ5z+
-         brFzCwb938dEFWQsBYLwpLvVRL0g3jSpkAPVAktH4YAtfseeR/g0gStLaI7zCT8lDj+q
-         SldZft0JR3//j4X4J/j/7jAN8OwyR1FbipLqOcZ6uQMYlygQbqlJFIEPk9uyTzs3Y/KH
-         9RNTfItQbLdYz+Kfr8UJE5ayKwIibz9v7ZnqpsxMUN/XEopaiw84yKHViwGyGKCxS81f
-         AxeYCYHW2FGUH/ahcC8U08xP84UhoIJBHiOxyOD4mP1JzORC50yJFK1wrz6ETK/Opouw
-         7eWg==
+        bh=Kjazu+Ufq2AIDDiAtTjbXZ571NaUKcrxOM7b/1ju0f4=;
+        b=OuJOhNN5Tm+Y3Gy8YIVuLMTJJ4LFu0Sa505x5guyRchDB8pHrmA+51SzCRpY1/Kr/f
+         qmwUkM+VHwu4nPmSOtwr7ssWk0U06bBg+mZARx3JPiBFEmfn2lVw7HAmET8YG+KUgkSF
+         zFkmsdowFlq7IJQIZmxMQL3NGnxXEeiRmrXUDrogperzl/55hV265Bm/m3vw7l/rWtmP
+         LUqwJMTPGzH2d6KNxAiUVnzs6lSw7+pBTKRiaE66Jjg0jGBlsVXQCIKILY+x++fbxmRx
+         eHLLDMo1GxsNq48XR9Mt8CIEUFeJxBA0wnDdriG3T3oax8XVtIRYe8JksUl7YCaeDxHF
+         s4MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717023334; x=1717628134;
+        d=1e100.net; s=20230601; t=1717023338; x=1717628138;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=I1ByDU/0X+OFSmFqI3+rjM1YjOApGJwluw7Oy18PYU8=;
-        b=OooxpsqSl4hJBg3Pa+9pq6Zw4JRfiUBRnPcGwrIWqhUvanYbWIR7Y7vrmJnFEWpQBf
-         V1ztdeQVNVP8tGYrMhWDhtPlIuurZ6gGd0Ga0mluLjsnl1XSZC6osY130PxGiDXYIORp
-         7L2wuN+6b9snLuIPEDcOXsghyUJFMoeJzKnhdhaaud44P2pMtFerIt9lX3bjrWPjNacW
-         d2sgMYeTviOp3agtybczVWYhCCh5YsVO+iORxOtkwzyLsYEb2388ND6t8laKSsNGP0cV
-         Kwz0EU6t1vnEVHl+OiM12qSClLeP1dUZo8PxXl3MaM34pcsLgcBvtuGGptE8DWMHSTW3
-         UlFg==
-X-Gm-Message-State: AOJu0YzJIZpyHQF5TupFbz9f84yV0+KSaws8M14theC5AIg25WWVpts1
-	r5AOv4BtEZbEs1x5I4bdWfyaHhD04+HpkHLEIVY/9UUc7hKAUVpLySW/e654aA7238EPbq/rCEO
-	DP1Y=
-X-Google-Smtp-Source: AGHT+IFWgORROs0zvCVuF7wnrV9aIx5hpix0M6ECxR02xk1zYcY08pY7YK9LrB5+/GuqIQXgDmMtxg==
-X-Received: by 2002:a05:620a:9:b0:794:b4e0:a29a with SMTP id af79cd13be357-794e9e33bdbmr59453485a.63.1717023334362;
-        Wed, 29 May 2024 15:55:34 -0700 (PDT)
+        bh=Kjazu+Ufq2AIDDiAtTjbXZ571NaUKcrxOM7b/1ju0f4=;
+        b=mZFyOWtBnbDlroVFz8GsNmdl+GXlFA6Gy9oISCkZ15rNMPnKV96P/bh/ywDtocr+wn
+         MqaTCfNaQd+cKhjuLvvnKxXaVDAKmhwu+dmiVbj1xg6vVmzR5ddjRPD+641P0cSUpqhU
+         8kfNi/6YDTJBXr+zh6vzfmdYZvUfYr+b9K1fysQbPBcHI2s0ho7zz+fuZ2i/5oL1eqGw
+         xo6Q8JxIpKI1pfd+DEyjtIf11rElAg1V2G93+cFFIalJgi8U/y8v01rb8OaSKUl8jox7
+         2QsOxho65+95ZKWHiTSmx6ovx25mZAagiPwaHVDfbNcvwUQ37x6gLeAyDXVyo5fZMIyE
+         /XUQ==
+X-Gm-Message-State: AOJu0Yy324ti6E2dF7AD3g1qDz9v1tHSXXhWr0Y537+qVKcC6pCTZw9P
+	2zN1qWwr7wcPKsUW81dgpfLW39aTRD9PB/snuzBTcJqWvbuRv8arv0b4J60xWcx2sEfiPwFWlIc
+	41Ms=
+X-Google-Smtp-Source: AGHT+IF5sCULN1LiyDGnjfjQlY7uxfjm8qZzGbOTKRXnGbTzeJ/efDymRmmJAzYWAt46tM25PygNxQ==
+X-Received: by 2002:a0c:c308:0:b0:6ae:ff6:4d17 with SMTP id 6a1803df08f44-6ae0ff64f70mr2145656d6.32.1717023337651;
+        Wed, 29 May 2024 15:55:37 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-794abd06397sm508864185a.96.2024.05.29.15.55.33
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ae09b63a84sm3400826d6.73.2024.05.29.15.55.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 May 2024 15:55:33 -0700 (PDT)
-Date: Wed, 29 May 2024 18:55:32 -0400
+        Wed, 29 May 2024 15:55:37 -0700 (PDT)
+Date: Wed, 29 May 2024 18:55:36 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 4/8] midx-write.c: extract `should_include_pack()`
-Message-ID: <9cd92574659d49b5365b97cc2352b4cc8c09959d.1717023301.git.me@ttaylorr.com>
+Subject: [PATCH v2 5/8] midx-write.c: extract `fill_packs_from_midx()`
+Message-ID: <1bb890e87cf6db9e464d7753e781a9e5d70e0b12.1717023301.git.me@ttaylorr.com>
 References: <cover.1716482279.git.me@ttaylorr.com>
  <cover.1717023301.git.me@ttaylorr.com>
 Precedence: bulk
@@ -70,101 +70,102 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1717023301.git.me@ttaylorr.com>
 
-The add_pack_to_midx() callback used via for_each_file_in_pack_dir() is
-used to add packs with .idx files to the MIDX being written.
-
-Within this function, we have a pair of checks that discards packs
-which:
-
-  - appear in an existing MIDX, if we successfully read an existing MIDX
-    from disk
-
-  - or, appear in the "to_include" list, if invoking the MIDX write
-    machinery with the `--stdin-packs` command-line argument.
-
-A future commit will want to call a slight variant of these checks from
-the code that reuses all packs from an existing MIDX, as well as the
-current location via add_pack_to_midx(). The latter will be modified in
-subsequent commits to only reuse packs which appear in the to_include
-list, if one was given.
-
-Prepare for that step by extracting these checks as a subroutine that
-may be called from both places.
+When write_midx_internal() loads an existing MIDX, all packs are copied
+forward into the new MIDX. Improve the readability of
+write_midx_internal() by extracting this functionality out into a
+separate function.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx-write.c | 48 ++++++++++++++++++++++++++++--------------------
- 1 file changed, 28 insertions(+), 20 deletions(-)
+ midx-write.c | 68 +++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 38 insertions(+), 30 deletions(-)
 
 diff --git a/midx-write.c b/midx-write.c
-index 949a66e973..a80709726a 100644
+index a80709726a..c93e1ae305 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -100,6 +100,32 @@ struct write_midx_context {
- 	struct string_list *to_include;
- };
+@@ -888,6 +888,40 @@ static struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
+ 	return result;
+ }
  
-+static int should_include_pack(const struct write_midx_context *ctx,
-+			       const char *file_name)
++static int fill_packs_from_midx(struct write_midx_context *ctx,
++				const char *preferred_pack_name, uint32_t flags)
 +{
-+	/*
-+	 * Note that at most one of ctx->m and ctx->to_include are set,
-+	 * so we are testing midx_contains_pack() and
-+	 * string_list_has_string() independently (guarded by the
-+	 * appropriate NULL checks).
-+	 *
-+	 * We could support passing to_include while reusing an existing
-+	 * MIDX, but don't currently since the reuse process drags
-+	 * forward all packs from an existing MIDX (without checking
-+	 * whether or not they appear in the to_include list).
-+	 *
-+	 * If we added support for that, these next two conditional
-+	 * should be performed independently (likely checking
-+	 * to_include before the existing MIDX).
-+	 */
-+	if (ctx->m && midx_contains_pack(ctx->m, file_name))
-+		return 0;
-+	else if (ctx->to_include &&
-+		 !string_list_has_string(ctx->to_include, file_name))
-+		return 0;
-+	return 1;
++	uint32_t i;
++
++	for (i = 0; i < ctx->m->num_packs; i++) {
++		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
++
++		if (flags & MIDX_WRITE_REV_INDEX || preferred_pack_name) {
++			/*
++			 * If generating a reverse index, need to have
++			 * packed_git's loaded to compare their
++			 * mtimes and object count.
++			 *
++			 *
++			 * If a preferred pack is specified, need to
++			 * have packed_git's loaded to ensure the chosen
++			 * preferred pack has a non-zero object count.
++			 */
++			if (prepare_midx_pack(the_repository, ctx->m, i))
++				return error(_("could not load pack"));
++
++			if (open_pack_index(ctx->m->packs[i]))
++				die(_("could not open index for %s"),
++				    ctx->m->packs[i]->pack_name);
++		}
++
++		fill_pack_info(&ctx->info[ctx->nr++], ctx->m->packs[i],
++			       ctx->m->pack_names[i], i);
++	}
++
++	return 0;
 +}
 +
- static void add_pack_to_midx(const char *full_path, size_t full_path_len,
- 			     const char *file_name, void *data)
- {
-@@ -108,29 +134,11 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
+ static int write_midx_internal(const char *object_dir,
+ 			       struct string_list *packs_to_include,
+ 			       struct string_list *packs_to_drop,
+@@ -933,36 +967,10 @@ static int write_midx_internal(const char *object_dir,
+ 	ctx.info = NULL;
+ 	ALLOC_ARRAY(ctx.info, ctx.alloc);
  
- 	if (ends_with(file_name, ".idx")) {
- 		display_progress(ctx->progress, ++ctx->pack_paths_checked);
--		/*
--		 * Note that at most one of ctx->m and ctx->to_include are set,
--		 * so we are testing midx_contains_pack() and
--		 * string_list_has_string() independently (guarded by the
--		 * appropriate NULL checks).
--		 *
--		 * We could support passing to_include while reusing an existing
--		 * MIDX, but don't currently since the reuse process drags
--		 * forward all packs from an existing MIDX (without checking
--		 * whether or not they appear in the to_include list).
--		 *
--		 * If we added support for that, these next two conditional
--		 * should be performed independently (likely checking
--		 * to_include before the existing MIDX).
--		 */
--		if (ctx->m && midx_contains_pack(ctx->m, file_name))
--			return;
--		else if (ctx->to_include &&
--			 !string_list_has_string(ctx->to_include, file_name))
-+
-+		if (!should_include_pack(ctx, file_name))
- 			return;
- 
- 		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
+-	if (ctx.m) {
+-		for (i = 0; i < ctx.m->num_packs; i++) {
+-			ALLOC_GROW(ctx.info, ctx.nr + 1, ctx.alloc);
 -
- 		p = add_packed_git(full_path, full_path_len, 0);
- 		if (!p) {
- 			warning(_("failed to add packfile '%s'"),
+-			if (flags & MIDX_WRITE_REV_INDEX ||
+-			    preferred_pack_name) {
+-				/*
+-				 * If generating a reverse index, need to have
+-				 * packed_git's loaded to compare their
+-				 * mtimes and object count.
+-				 *
+-				 * If a preferred pack is specified,
+-				 * need to have packed_git's loaded to
+-				 * ensure the chosen preferred pack has
+-				 * a non-zero object count.
+-				 */
+-				if (prepare_midx_pack(the_repository, ctx.m, i)) {
+-					error(_("could not load pack"));
+-					result = 1;
+-					goto cleanup;
+-				}
+-
+-				if (open_pack_index(ctx.m->packs[i]))
+-					die(_("could not open index for %s"),
+-					    ctx.m->packs[i]->pack_name);
+-			}
+-
+-			fill_pack_info(&ctx.info[ctx.nr++], ctx.m->packs[i],
+-				       ctx.m->pack_names[i], i);
+-		}
++	if (ctx.m && fill_packs_from_midx(&ctx, preferred_pack_name,
++					  flags) < 0) {
++		result = 1;
++		goto cleanup;
+ 	}
+ 
+ 	start_pack = ctx.nr;
 -- 
 2.45.1.321.gbcadaf92783
 
