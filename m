@@ -1,64 +1,64 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616EA18735A
-	for <git@vger.kernel.org>; Wed, 29 May 2024 17:15:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F0219066F
+	for <git@vger.kernel.org>; Wed, 29 May 2024 17:15:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717002958; cv=none; b=OCqOjmuyp7SO7Ou8Q+g3n6/MgtycB8PhIn2/3tM3ubm5Xg/d+xovKe72vrKpKqg0jvjFfZaPJ0ONY7Ac1zhC0PCYXIR5SHSIqr9PSePvS2cq70aFPPUjQsmmJoSsRg9YWFpAg/MTtUJqvhQPNx2ek1025aJHtZRmJ8vyT973iHU=
+	t=1717002961; cv=none; b=lgkadi5/65cYv8pHjGPsFI0plemHe2lV/SumMHlNNWd0odeu1CO2CMREIhej8UfGfb8hUCpa97s4Itsd1aQwnXvlAQU8GXFn6YeRmnsX5HB1joAnbsUlEEcDkRpeTARdIlcmMUlQS9cTNtNeXMINnHpvmsmPHFwGwFAnVtBeEds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717002958; c=relaxed/simple;
-	bh=csLaUWzI2K/ecCG+2Ut3u9xalpjSiGE48Rooc7Ra9GQ=;
+	s=arc-20240116; t=1717002961; c=relaxed/simple;
+	bh=fijzJDkuq8RIpqIOnXZkBl1yU6jFP9QouKhKuHe9jNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kehJXyidiUIuBv6OaYZH9svHI59zyDjMFTTHgLau+vMu1gi3y7zGZEoz3dsJbuwasJE2xa4DdmT1KoY/9jahM3wIdzYI1d05bjIZ7/E/w/xF/0km4gY+J6T6rQZUeXEOfG9M+2AYrQpBbydP+r0sIMGhBGq2ikL3yWfGUOvv8HM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IgNgz1nM; arc=none smtp.client-ip=209.85.214.174
+	 MIME-Version; b=d5RV9+gn35FVWHnczh+aNA3mV/IQOa6u5GZCu3GPOejlUJE30HHPH0BfIGhqYsXV5u8VK4MncgNrt83n0ahVWGOgtgjXCUX1W5XAtfL7PCCBf9aEsOlSKg20BHVNb4nIq93ouIA7FBXYwJ3M2as5CiZl+CDVsuIVrUgm+KgiBO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nkV0Zppd; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IgNgz1nM"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1f082d92864so17438605ad.1
-        for <git@vger.kernel.org>; Wed, 29 May 2024 10:15:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nkV0Zppd"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1f32b1b5429so16635375ad.2
+        for <git@vger.kernel.org>; Wed, 29 May 2024 10:15:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717002956; x=1717607756; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1717002959; x=1717607759; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1esfsk1a9qwBh9D8DxGv1vLbnu5VRmdjNnTBMedCCUE=;
-        b=IgNgz1nM2hZDnPSGzpE/6Msu65R+dFqUtllfI2HhNuLJs/MJOgPoQO7OINluSIQ+se
-         08K99i79O1+tmUbpjySLEqpdOHf+J3Dm/gLxADh815grEjsGs6o+1r5qgg6n5MY4FPNw
-         OlGxPydX+3Cg923FdhhNnRDINPi7vxhRTif7Ps6PpidNbhwnhu7wbmLmpVaNs+MGFdOE
-         Zz9mdzD8+nURgkYIK8ZNxAad9A4WQXAKkd7VDgmOrhPIBw33XLLUGo0aNO4w39pE8f/3
-         VZJg1NnAU88OsSMWdyFzIogwraSmzgwUKVcz0nKHXTWhynRmnbepBbkfVH6tWG5L9sJC
-         XpHg==
+        bh=8WEdWttlzRRyVg20QgIAGZdIILyC7g5qVxk5PmFt3Bg=;
+        b=nkV0Zppd6h9b2TmlOEOApeXKaCmx0qTPQ+DcQhWhbf2r6Lc4lD8jjNRg6ZxO5IBeez
+         WNz2SFYOm5eiGNMgBaG1CPNK/E2m87WzU1PCL5N9iD9CnzwIQYCWtZ+l0FpZhum64Ox2
+         VyX4FDV9b50At5x246HY84+n1GsJ2+OXjUEuBVGJoYxNNgYXrmmQ5DXbLftl4s69b3YM
+         NougR8eFDrkfs/MYpcVT9jU6IuX9knD07lnae7extABGiZvhwOLC60RWnFDDTH1mv3PX
+         1lS1/UsWT2Hsx4MsYFrFw5oIULlDoO9OqAOI9HoTxOOFH3RO6PIdOsWg0uZ/08tDpV4l
+         MNrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717002956; x=1717607756;
+        d=1e100.net; s=20230601; t=1717002959; x=1717607759;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1esfsk1a9qwBh9D8DxGv1vLbnu5VRmdjNnTBMedCCUE=;
-        b=UKlvKGwyDJn/HA0wBzieqJt088GtJVqzMMwD8ExP3nfHKKxtF858xZyCb1klwY4iW4
-         zXDknfVIYHCOTSTS7uTgPYWWoNb2RTYJ/fAzEzA3XSIhlzHRakCrHTjpNJoc/scnWiWC
-         gOkTO7twzaiEMN05xQXHSMsQc0Cw2gojoFbwl+Hcc3J2CySXVi79uv4ZeVmCHMp2PB7y
-         V5VCS8epZbVLYepK/SshaVsVdchNiklNwLRbLGktBKPDDN6kXaWsqN7J5mV8xYtgFeMe
-         ZGTdRBf5oJ7lapBYEF34gfTnxxeYXrpmmOsJrWQ8quTeGKNTj/tHiPDFWscIKzTBqjGe
-         fyPQ==
-X-Gm-Message-State: AOJu0YyGiItpHjTT0W8tzAn/BT2GcxyIQB/BVeQ3SL2lzPq9tEUZ4v/o
-	iXiyPAdlXUfT5t8IltpYAIJsXpucsFyKVcZP9M6D4mQDkSZaL0ROSdFSdYDsWvE=
-X-Google-Smtp-Source: AGHT+IHlAVvyc3EQOrRlZUMu5ENx4SvewKFYlgS4hfTQMOtqxqf5ykQB/IxdIlHTksJNhHsuTP8Upw==
-X-Received: by 2002:a17:902:684f:b0:1e3:e246:2cd1 with SMTP id d9443c01a7336-1f4497e0a2amr146469285ad.62.1717002956157;
-        Wed, 29 May 2024 10:15:56 -0700 (PDT)
+        bh=8WEdWttlzRRyVg20QgIAGZdIILyC7g5qVxk5PmFt3Bg=;
+        b=B1DtkyMOeX/Ga9FSR2yMaeVKGLA2ToMdlg5nujGH5JAMNQ8s2HaMsRJ0G216RxmS94
+         Qv/kH61XFbLNte+Fb8wQE2X8RViMRJ2rGQYkps2rlfO9SxnoVmRrgf8c5akTeFhO+i5q
+         5exxfdlWAnrq6cN2S2iqpmxFVgiyy96oYbuKJ1biy/ot9quBOg8uiRAfHhOvWGd5kulO
+         /qh/MiustngJ8iJELBWi379quJ08XE3IhsXd2J7X2LZXyhVuLcYLZYdDcP+Zv3UTh+ah
+         EAMYt8+uPI5vWIfIEEwJMWTwAfkxcEvxiIniFf+/puJOsnymcRp/r6qd04aq+qOtL5gW
+         e+tQ==
+X-Gm-Message-State: AOJu0Yzrf4g7fUkl+mGM3NcMcPg14yl7ImT4SZIZxI20QoECyQ42JQrL
+	UIGSB+F/1FbpikwuD0ToUFSbek0dPf+pNH/zsdr0/PIF2HQAEYL++s1h3GqSx1U=
+X-Google-Smtp-Source: AGHT+IHP9uYEyyBKm4gF3K5D1uX5qyW+8mQBDpY1isgb3I1R8hOozmCwE7H5R+s86PrPBvwIJK0ulg==
+X-Received: by 2002:a17:902:ecc6:b0:1f5:e6a0:c176 with SMTP id d9443c01a7336-1f5e6a0c42cmr19568765ad.26.1717002958670;
+        Wed, 29 May 2024 10:15:58 -0700 (PDT)
 Received: from Ubuntu.. ([171.51.169.75])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1f4757734b6sm79720225ad.234.2024.05.29.10.15.54
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1f4757734b6sm79720225ad.234.2024.05.29.10.15.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 May 2024 10:15:55 -0700 (PDT)
+        Wed, 29 May 2024 10:15:58 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [GSoC][PATCH v3 4/5] t: add test for put_be16()
-Date: Wed, 29 May 2024 22:29:30 +0530
-Message-ID: <20240529171439.18271-5-chandrapratap3519@gmail.com>
+Subject: [GSoC][PATCH v3 5/5] t: improve the test-case for parse_names()
+Date: Wed, 29 May 2024 22:29:31 +0530
+Message-ID: <20240529171439.18271-6-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.GIT
 In-Reply-To: <20240529171439.18271-1-chandrapratap3519@gmail.com>
 References: <20240529070341.4248-1-chandrapratap3519@gmail.com>
@@ -71,45 +71,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-put_be16() is a function defined in reftable/basics.{c, h} for which
-there are no tests in the current setup. Add a test for the same.
+In the existing test-case for parse_names(), the fact that empty
+lines should be ignored is not obvious because the empty line is
+immediately followed by end-of-string. This can be mistaken as the
+empty line getting replaced by NULL. Improve this by adding a
+non-empty line after the empty one to demonstrate the intended behavior.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- t/unit-tests/t-reftable-basics.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ t/unit-tests/t-reftable-basics.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/t/unit-tests/t-reftable-basics.c b/t/unit-tests/t-reftable-basics.c
-index b02ca02040..3c08218257 100644
+index 3c08218257..529049af12 100644
 --- a/t/unit-tests/t-reftable-basics.c
 +++ b/t/unit-tests/t-reftable-basics.c
-@@ -133,6 +133,16 @@ static void test_u24_roundtrip(void)
- 	check_int(in, ==, out);
- }
+@@ -89,11 +89,13 @@ static void test_parse_names_normal(void)
  
-+static void test_u16_roundtrip(void)
-+{
-+	uint32_t in = 0xfef1;
-+	uint8_t dest[3];
-+	uint32_t out;
-+	put_be16(dest, in);
-+	out = get_be16(dest);
-+	check_int(in, ==, out);
-+}
-+
- int cmd_main(int argc, const char *argv[])
+ static void test_parse_names_drop_empty(void)
  {
- 	TEST(test_common_prefix(), "common_prefix_size works");
-@@ -142,6 +152,7 @@ int cmd_main(int argc, const char *argv[])
- 	TEST(test_names_length(), "names_length retuns size of a NULL-terminated string array");
- 	TEST(test_names_equal(), "names_equal compares NULL-terminated string arrays");
- 	TEST(test_u24_roundtrip(), "put_be24 and get_be24 work");
-+	TEST(test_u16_roundtrip(), "put_be16 and get_be16 work");
- 
- 	return test_done();
+-	char in[] = "a\n\n";
++	char in[] = "a\n\nb\n";
+ 	char **out = NULL;
+ 	parse_names(in, strlen(in), &out);
+ 	check_str(out[0], "a");
+-	check(!out[1]);
++	/* simply '\n' should be dropped as empty string */
++	check_str(out[1], "b");
++	check(!out[2]);
+ 	free_names(out);
  }
+ 
 -- 
 2.45.GIT
 
