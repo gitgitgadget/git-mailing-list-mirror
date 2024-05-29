@@ -1,186 +1,264 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D740313699A
-	for <git@vger.kernel.org>; Wed, 29 May 2024 12:18:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60EDA181338
+	for <git@vger.kernel.org>; Wed, 29 May 2024 12:44:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716985089; cv=none; b=XAn+YFkw3ODcHcckqRNPVuBngGJr9Dg1SqR+uETLFMx3aCFFqJf0lwkGxgWxFwNY0bNbKdsoDSfhZ5PO2ZMeOYAUz4lU2Opv2TIEVZxeI+g6j1k/PYeJhk0P4/LxUZqayjRFaAnflQGfgwHve8CKjJ09eLa86zd2+epm8gHKedQ=
+	t=1716986651; cv=none; b=NRO6uxh5RtP2hkA5T7JUEJwMxQrTlQ/v3mmuMPE83EvLXrxTcPkHMLVwsGeUbcS5W3KUEC21HIYYO0KSa6bzXcwiZT/bA4xy/06T5QMpjgRIytY5mnE3ZYGrkPsRDa9WLN+TIXr0qWLefXWNB5/xkemeCbQhFwAN48WdWsnncuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716985089; c=relaxed/simple;
-	bh=Jw3IZXnsLeaISNOglbUvTVshfDqWZGZlKXXbypOcHN0=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=emh/WMhJtmt6kUvTFkkIEKjutsI9QVXn+H5rkdUy2JMRAfOFp8DWuRMz/fNtWupiyRntG5ByeinE9ilBxaN0NF7Ttg6EXerVHTMxKx3BKFKqRiqEFSYUUVCzL1Yxg+f6bXRWySxnbRK/Haz6WEDTL15EpuGDUon4PynvDn41Bww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=kI3eX9f5; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1716986651; c=relaxed/simple;
+	bh=Gz4sllBosLvnqCrBcIVbeJrFLwVx6ZhNqRMr0tAHuSs=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=HTfXOa363ymvXfkin4QKDBQOYWzC2WBj0tHjdGqPB/2ANY0qhnbJUaNa53P/c1DNgCSEek6e/CzWIvghP38ZfDw2TF/N8+55+X574IWJ7U1jYkFFuoDyub6vfeHERT63HkHdjYG/fy5Urrrck8qyddqGAX7X/NpMtevVzP/DQHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V3CU1phE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MzlQr1H4; arc=none smtp.client-ip=64.147.123.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="kI3eX9f5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1716985064; x=1717589864;
-	i=johannes.schindelin@gmx.de;
-	bh=JJQGTOQa9nWw1ADJ7WREga9bn3jf1K7YtO/ToatVAis=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=kI3eX9f5F+e/dcfP87BEkkKTVEr6qRuN0i0RLF9UmdvdzKnetH+M9V6Ku8yO90Tq
-	 9YXQszJKrH1dLASwEaBmSgFZzU0PXxP89qw5eGYqTV7EDgFMkELDKgdT4VwZ/v+ZJ
-	 Dfn3pGHWbsDwNKwUMn/lZrbqgRWhfJl/UgzBzkeu2kVBTEO2UTe4UQfkPio60KbdT
-	 LxPO845flgkzt+DGlELx2TStkPoJgV99/KCN0Q7LyQ4A2xRNPfvxLtdQoebosE/yl
-	 wHUSb83sgGXD9B+quQUdhQY0kFXZJxjxsqoOG6zfPGE3+s+oDJTplSrb16vYqDh6y
-	 orsF1XZSQUMLhyP89A==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.216.58]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQvD5-1roQ750txn-00OrBO; Wed, 29
- May 2024 14:17:44 +0200
-Date: Wed, 29 May 2024 14:17:41 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jeff King <peff@peff.net>
-cc: Joey Hess <id@joeyh.name>, 
-    "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-    Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Revert defense-in-depth patches breaking Git LFS
-In-Reply-To: <20240529085401.GA1098944@coredump.intra.peff.net>
-Message-ID: <1cbdeb41-2ad3-05e4-ab27-1f84086b7f43@gmx.de>
-References: <20240514181641.150112-1-sandals@crustytoothpaste.net> <0f7597aa-6697-9a70-0405-3dcbb9649d68@gmx.de> <ZkO-b6Nswrn9H7Ed@tapette.crustytoothpaste.net> <Zk2_mJpE7tJgqxSp@kitenet.net> <fbb89826-0d83-d4f9-bab4-9fba69e0e22d@gmx.de> <ZlU94wcstaAHv_HZ@kitenet.net>
- <20240529085401.GA1098944@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V3CU1phE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MzlQr1H4"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.west.internal (Postfix) with ESMTP id 815F71C00111;
+	Wed, 29 May 2024 08:44:08 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Wed, 29 May 2024 08:44:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1716986647; x=1717073047; bh=kw6rICi2fAxfRbsCMtk8a3Gb8l0oAjbf
+	Mv/KH9MKcpE=; b=V3CU1phERnbGmf+p6YIQR56pvCd3dE6U966E/DQfqKgNGyUB
+	utZslC8U7X7FEC8x2sVQQEz8rnxllXAkDF4I8O9PR7C+4lXw+4hpcWW9TI2Lo6NM
+	Y2/8dLGx7FLVEBMQmh8tmy6Tk5zceGIqVdJYDb3ODmS2WWyyEZb6rq1bSVzqkn6y
+	5uiw4aAJ2rlLRQh4cOnD/JU6MXgD8HcPEOIEqRFQQoNwgd9CGBRVL6CWsE8IxgY4
+	CkEFs7tVlJosyNpHMfswTPGaZTOX42+jAMvoEwZwCiK8457kH+mZSTVl519NV0IV
+	rgZnqDsPWNEUEV1w8i+mRS4HecUPFoUIyQiBDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1716986647; x=1717073047; bh=kw6rICi2fAxfRbsCMtk8a3Gb8l0oAjbfMv/
+	KH9MKcpE=; b=MzlQr1H4Gzhi5Qiw3uZOzpz0i6x/skdCupnVg5PRSgKIrdP8FYc
+	4qKmRiI1AMSO0Dbx88W9V11uoo/K3z4RHhGf0c+9yRWuIibzWj1vRSmFf8OKjJoQ
+	ix0sNcw4588GSTzDJFnUOFyumZpiq/GKipAXrnhQi5RnkCJiuIhZ6JvsRydo+qPb
+	XrAnM5ykUzDSYz2srpB9n0f0fnq16x3xEfPkhout+9h0pQynBJUKyns98kYNIo1T
+	wtizDp9xcH21wTy+3Ef2Q08D7K7JKeMABNKWe2L3n/fq58w75nHNOeuxyY9t+7UK
+	3WishCXaiW1hk2CJb7KRBwwviNRmKy4R6lw==
+X-ME-Sender: <xms:FiNXZh75szqZitgpblzal9XPMeMVbtht2O41bmFyWsNKxSu2DYSqgQ>
+    <xme:FiNXZu4hEKROwBldNBhT2iHD0DEflYn01OTKl886G8XJVetAR4xcHELmKZ6davM4u
+    _Hour7CJ1Q_musK7A>
+X-ME-Received: <xmr:FiNXZoeeIvxvpav_PtKDywCB122KCY_zMreRWjvP-C3w_L_60DKxBeKiovDGp0nsW7g5sK5BqKbrnvbfm9EXfOMs4zzFvbnlVhUHzzRFTqBtjkY4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekuddgheegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfggtggusehgtderre
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeeiuefhveettdehkeffiefhjedvheehffekue
+    ejtdeuuefhtddvteffffejhfetteenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhg
+    ihhtlhgrsgdrtghomhdpmhgrkhdruggvvhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:FiNXZqI1gvDf5dCiqOcZeFrxCKG6RWrYy0DqMQKZwIBJNyihSUXQ8Q>
+    <xmx:FiNXZlImPI3jLZY3vqB0cWKJlRgjDWj3PYNHbv9z7IGTIH6Wh4l2UQ>
+    <xmx:FiNXZjyZiB34UAi2FXzJ3b2i5hTN-BdtoI3_Fd4hwqPDewSFqv0fIw>
+    <xmx:FiNXZhK4wgps9Bo-asGTeFkihJ4NGOFx1dfFM-_r8JbNXkD9XNcSrw>
+    <xmx:FyNXZsXrMsXU7srj9ejFfWwdmnKA5MXx-_mqrDLn9JEJds_h8Fdz8lfY>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 29 May 2024 08:44:06 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 22c96ab1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 29 May 2024 12:43:49 +0000 (UTC)
+Date: Wed, 29 May 2024 14:44:01 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>
+Subject: [PATCH 00/19] Compile with `-Wwrite-strings`
+Message-ID: <cover.1716983704.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:3ptmUyJdORxlH3zaKMZxeMaopGZQpOm6KxZDJ6MURxIeImHpZwi
- YAd35A2D5ISq4cs7qC3EAXfJ3A80EbpN0ZcAoXks1yrG+q0EXL5PRpqG19fNHNlq+Rk4krb
- AQdBIYafDEDjlPcZqUxvdES9JQaR9QV4fJGL04/ijnrznYeFLruXCTbkp3LUjg7FJzG3bla
- fYvA9cyBpOjVp2Pmjh2GQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:T2ZfgUz7XcY=;ioCUf0DFxTwFJX26RPpWk7ISY2n
- PM2R0OX6M0d2knjG+AAcEO0vRGWeiCKZTk0p42Ce3FFPhLk4d3qRfaVAqOC9jd/eK4EcpLRFF
- bMIFJB8MrqbvMuaImNE2bMM4SV4Q/nb6ihZLQeMTzmEHzb02JK19Rb+VUdro4pIp5eGuyHWR5
- lAlroxSmeVS1ZQg470/0scFUADnt+ec9EkBcnJgoWGnFkvR/lZa7BZ3iWos36eGujnbrdRVaJ
- VXmztgmh9SZUo34hblWJjp2QaRUcdwV/v0EltAqDEJVruhb/0F38U9B5RdBw03mR/iXpN2lhf
- 73830kdZJnimMKJZUaE4RSerjscnEY0B/8oM7h+UEitmRZUEgybPQihFIGuyc4/JIML6CNfNR
- myxBvW+X5Nym336/g8u9W+VySw6ZNaN4ClNxDt5cSJTwXPwJs1YwqUHcmmixj1OKpQ/pRVv2q
- xY+PxVKnaXrV5+jJgq1Vtpo45fj96/Msl5/pzQNkCPacI8yU+AJmNI7FDKHXAEFixMEXoXpnA
- RgD+7GTA7iFWrhx4e14MQM6GB1DYw2zco9+mMh2vVVXLFmuq0kghWutYYZ3rWZ6pb7DY1i0xa
- YVser3SGtrHmsFW0v0SC2J33ki8goBl6NZFEyjrdejPUilR4+/kVfv/Vej/pNM6RRFIz3WvMN
- jPScAfSgebPA3KN3qe1uiNxHFnDcVzhNU3vbhMQlLL6ZLMJmCjgydkR8O59ARqyR/0iD3EJGl
- ERRgTGfqBoxtsuNE2D4WPo2hY5IFW8eGVMScebGYR57b4AIUTiKtVuXwE0tdbMroACGyU/5M3
- N4TQp/elUu9g3SDz4zDGYHlxNvBUfl4qT9lZGYdke08Bk=
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="uxLoxtNJPLkr2LKH"
+Content-Disposition: inline
+
+
+--uxLoxtNJPLkr2LKH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Jeff,
+Hi,
 
-On Wed, 29 May 2024, Jeff King wrote:
+there were some recent discussions about compiler warnings and how to
+stay on top of breaking changes in compilers in general [1] and about
+string constants in particular [2]. This made me look into what kind of
+warnings we should reasonably enable, which led me to the following
+list of warnings that may be sensible:
 
-> [...] But of course most sites just use the defaults, so all warnings
-> are effectively errors.
+  - `-Wformat-nonliteral` to warn about non-constant strings being
+    passed as format string.
 
-I wish that had been pointed out on the git-security mailing list when I
-offered this patch up for review.
+  - `-Wwrite-strings` to warn about string constants being assigned to a
+    non-constant variable.
 
-> In the meantime, we also have an "INFO" severity which gets reported but
-> not upgraded via strict. It sounds like that's what was intended here.
+  - `-Wredundant-decls` to warn about redundant declarations.
 
-Precisely.
+  - `-Wconversion` to warn about implicit integer casts when they may
+    alter the value.
 
-So this is what the fix-up patch would look like to make the code match my
-intention:
+This patch series adapts our code to compile with `-Wwrite-strings`.
+This option will change the type of string constants from `char []` to
+`const char []` such that it is now invalid to assign it to non-const
+variables without a cast. The intent is to avoid undefined behaviour
+when accedintally writing to such strings and to avoid free'ing such a
+variable.
 
-=2D- snipsnap --
-Subject: [PATCH] fsck: demote the newly-introduced symlink issues from WAR=
-N -> IGNORE
+There are quite some cases where we mishandle this. Oftentimes we just
+didn't bother to free any memory at all, which made it a non-issue in
+the first place. Other times we had some special logic that prevents
+writing or freeing such strings. But in most cases it was an accident
+waiting to happen.
 
-The idea of the symlink check to prevent overly-long symlink targets and
-targets inside the `.git/` directory was to _warn_, but not to prevent
-any operation.
+Even though the changes are quite invasive, I think that this is a step
+into the right direction. Many of the constructs feel quite fragile, and
+most of those get fixed in this series. Some others I just paper over,
+for example when assigning to structures with global lifetime where we
+know that they are never released at all.
 
-However, that's not how Git works, I was confused by the label `WARN`.
-What we need instead is the `IGNORE` label, which still warns
-(confusingly so ;-)), but does not prevent any operations from
-continuing.
+I also have a patch series cooking for `-Wredundant-decls`. But while
+that warning detects some redundant declarations indeed, it creates a
+problem with `extern char **environ`. There is no header for it and
+programs are asked to declare it by themselves. But of course, some libc
+implementations disagree and declare it. I haven't found a nice way to
+work around this issue, but may send the patches that drop the redundant
+declarations nonetheless.
 
-Adjust t1450 accordingly, documenting that `git fsck` unfortunately no
-longer warns about these issues by default.
+The other two warnings I haven't yet looked into.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- Documentation/fsck-msgids.txt |  4 ++--
- fsck.h                        |  4 ++--
- t/t1450-fsck.sh               | 13 ++++++++++++-
- 3 files changed, 16 insertions(+), 5 deletions(-)
+I ran some test jobs on both GitHub [3] and GitLab [4] to verify that
+the result is sane.
 
-diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-index b06ec385aff..f5016ecda6a 100644
-=2D-- a/Documentation/fsck-msgids.txt
-+++ b/Documentation/fsck-msgids.txt
-@@ -158,13 +158,13 @@
- 	(WARN) Tree contains entries pointing to a null sha1.
+Thanks!
 
- `symlinkPointsToGitDir`::
--	(WARN) Symbolic link points inside a gitdir.
-+	(INFO) Symbolic link points inside a gitdir.
+Patrick
 
- `symlinkTargetBlob`::
- 	(ERROR) A non-blob found instead of a symbolic link's target.
+[1]: <xmqqbk5bim2n.fsf@gitster.g>
+[2]: <20240525043347.GA1895047@coredump.intra.peff.net>
+[3]: https://github.com/git/git/pull/1730
+[4]: https://gitlab.com/gitlab-org/git/-/pipelines/1310156791
 
- `symlinkTargetLength`::
--	(WARN) Symbolic link target longer than maximum path length.
-+	(INFO) Symbolic link target longer than maximum path length.
+Patrick Steinhardt (19):
+  global: improve const correctness when assigning string constants
+  global: assign non-const strings as required
+  global: convert intentionally-leaking config strings to consts
+  compat/win32: fix const-correctness with string constants
+  reftable: improve const correctness when assigning string constants
+  refspec: remove global tag refspec structure
+  http: do not assign string constant to non-const field
+  line-log: always allocate the output prefix
+  object-file: make `buf` parameter of `index_mem()` a constant
+  parse-options: cast long name for OPTION_ALIAS
+  send-pack: always allocate receive status
+  remote-curl: avoid assigning string constant to non-const variable
+  revision: always store allocated strings in output encoding
+  mailmap: always store allocated strings in mailmap blob
+  imap-send: drop global `imap_server_conf` variable
+  imap-send: fix leaking memory in `imap_server_conf`
+  builtin/rebase: adapt code to not assign string constants to non-const
+  builtin/merge: always store allocated strings in `pull_twohead`
+  config.mak.dev: enable `-Wwrite-strings` warning
 
- `symlinkTargetMissing`::
- 	(ERROR) Unable to read symbolic link target's blob.
-diff --git a/fsck.h b/fsck.h
-index 130fa8d8f91..d41ec98064b 100644
-=2D-- a/fsck.h
-+++ b/fsck.h
-@@ -74,8 +74,6 @@ enum fsck_msg_type {
- 	FUNC(NULL_SHA1, WARN) \
- 	FUNC(ZERO_PADDED_FILEMODE, WARN) \
- 	FUNC(NUL_IN_COMMIT, WARN) \
--	FUNC(SYMLINK_TARGET_LENGTH, WARN) \
--	FUNC(SYMLINK_POINTS_TO_GIT_DIR, WARN) \
- 	/* infos (reported as warnings, but ignored by default) */ \
- 	FUNC(BAD_FILEMODE, INFO) \
- 	FUNC(GITMODULES_PARSE, INFO) \
-@@ -84,6 +82,8 @@ enum fsck_msg_type {
- 	FUNC(MAILMAP_SYMLINK, INFO) \
- 	FUNC(BAD_TAG_NAME, INFO) \
- 	FUNC(MISSING_TAGGER_ENTRY, INFO) \
-+	FUNC(SYMLINK_TARGET_LENGTH, INFO) \
-+	FUNC(SYMLINK_POINTS_TO_GIT_DIR, INFO) \
- 	/* ignored (elevated when requested) */ \
- 	FUNC(EXTRA_HEADER_ENTRY, IGNORE)
+ builtin/bisect.c             |   3 +-
+ builtin/blame.c              |   2 +-
+ builtin/bugreport.c          |   2 +-
+ builtin/check-ignore.c       |   4 +-
+ builtin/clone.c              |  14 ++--
+ builtin/commit.c             |   6 +-
+ builtin/diagnose.c           |   2 +-
+ builtin/fetch.c              |  11 ++-
+ builtin/log.c                |   2 +-
+ builtin/mailsplit.c          |   4 +-
+ builtin/merge.c              |  18 +++--
+ builtin/pull.c               |  52 +++++++-------
+ builtin/rebase.c             |  16 +++--
+ builtin/receive-pack.c       |   4 +-
+ builtin/remote.c             |   3 +-
+ builtin/revert.c             |   2 +-
+ builtin/send-pack.c          |   2 +
+ compat/basename.c            |  15 +++-
+ compat/mingw.c               |  25 +++----
+ compat/regex/regcomp.c       |   2 +-
+ compat/winansi.c             |   2 +-
+ config.mak.dev               |   1 +
+ diff.c                       |   7 +-
+ diffcore-rename.c            |   6 +-
+ entry.c                      |   7 +-
+ fmt-merge-msg.c              |   2 +-
+ fsck.c                       |   2 +-
+ fsck.h                       |   2 +-
+ gpg-interface.c              |   6 +-
+ http-backend.c               |   2 +-
+ http.c                       |   5 +-
+ ident.c                      |   9 ++-
+ imap-send.c                  | 133 ++++++++++++++++++++---------------
+ line-log.c                   |  21 +++---
+ mailmap.c                    |   2 +-
+ merge-ll.c                   |  11 ++-
+ object-file.c                |  17 ++---
+ parse-options.h              |   2 +-
+ pretty.c                     |   7 +-
+ refs.c                       |   2 +-
+ refs.h                       |   2 +-
+ refs/reftable-backend.c      |   5 +-
+ refspec.c                    |  13 ----
+ refspec.h                    |   1 -
+ reftable/basics_test.c       |   4 +-
+ reftable/block_test.c        |   2 +-
+ reftable/merged_test.c       |  45 ++++++------
+ reftable/readwrite_test.c    |  47 +++++++------
+ reftable/record.c            |   6 +-
+ reftable/stack_test.c        |  65 ++++++++---------
+ remote-curl.c                |  58 ++++++++-------
+ revision.c                   |   3 +-
+ run-command.c                |   2 +-
+ send-pack.c                  |   2 +-
+ t/helper/test-hashmap.c      |   3 +-
+ t/helper/test-json-writer.c  |  10 +--
+ t/helper/test-regex.c        |   4 +-
+ t/helper/test-rot13-filter.c |   5 +-
+ t/t3900-i18n-commit.sh       |   1 +
+ t/t3901-i18n-patch.sh        |   1 +
+ t/unit-tests/t-strbuf.c      |  10 +--
+ trailer.c                    |   2 +-
+ userdiff.c                   |  10 +--
+ userdiff.h                   |  12 ++--
+ wt-status.c                  |   2 +-
+ 65 files changed, 410 insertions(+), 340 deletions(-)
 
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 5669872bc80..8339e60efb2 100755
-=2D-- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -1032,7 +1032,18 @@ test_expect_success 'fsck warning on symlink target=
- with excessive length' '
- 	warning in blob $symlink_target: symlinkTargetLength: symlink target too=
- long
- 	EOF
- 	git fsck --no-dangling >actual 2>&1 &&
--	test_cmp expected actual
-+	test_cmp expected actual &&
-+
-+	test_when_finished "git tag -d symlink-target-length" &&
-+	git tag symlink-target-length $tree &&
-+	test_when_finished "rm -rf throwaway.git" &&
-+	git init --bare throwaway.git &&
-+	git --git-dir=3Dthrowaway.git config receive.fsckObjects true &&
-+	git --git-dir=3Dthrowaway.git config receive.fsck.symlinkTargetLength er=
-ror &&
-+	test_must_fail git push throwaway.git symlink-target-length &&
-+	git --git-dir=3Dthrowaway.git config --unset receive.fsck.symlinkTargetL=
-ength &&
-+	git push throwaway.git symlink-target-length 2>err &&
-+	grep "warning.*symlinkTargetLength" err
- '
+--=20
+2.45.1.313.g3a57aa566a.dirty
 
- test_expect_success 'fsck warning on symlink target pointing inside git d=
-ir' '
+
+--uxLoxtNJPLkr2LKH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZXIwsACgkQVbJhu7ck
+PpRh3w/8CBMVu1iw/AcaUxJ6Kwq/LuWijeJDYXqrP17WO8HnVV1nAiwArvqubnQH
+NXSS+xdtCAGg027VEj8CC33nqWE756h2TecvyPpRe3QKk/a7zGrD4ObAhaieFmHT
+SVX3EaFn9/eMiCLMdpcaTMZFHXo7L1SkHcNYcmYoEL9A9ANvETcntzgIsN/gSL1E
+jZwyUbFV4b/JD6NwxnrlHYK0mvNRGCgkpgVGQVz3tG/qttgdDr7yXlukr67B2axk
+AHaEiyxFsMa86TjzXCnOQPR/gyQTYFhFXB938kBBeJWq//5p9rlmqHIHSNNJieHe
+MWlSFracCyI9kxZ0qmd+Tu1MzwpjV2IclmRiqQXBmOrOUFEIryzVV4MEMIA+yOtO
+NsF8zhyKqfFBAtDR0EFJb+Ob47kPkFmXvbo023wtxodYPjvDYzn2pz9W2yGK8v8p
+7etXu3i6qfW6neajK1QC3jsPz5xqeo/z86Su/5myIDnUYm9a4C2QFf4cIgVDaUFC
+hjq/KoGzmADTxyh7hFwQPLMRW+8Yk9yCPXbsWldtFLkbtYIF0sxRwIT/Hbz9h/37
+RL9mFDoxjGBL+M29xluC1+SVX6HG1pbSWkYQT5B2y3Ve0vBETG10JMLVwDSN0tah
+T6yo4OtFjCw3gmdeL6+4vpl5qbRQ3rVzZeGOmiiDSfCs0Ehik2c=
+=aoNb
+-----END PGP SIGNATURE-----
+
+--uxLoxtNJPLkr2LKH--
