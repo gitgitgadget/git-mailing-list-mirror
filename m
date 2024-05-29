@@ -1,63 +1,96 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A030D190675
-	for <git@vger.kernel.org>; Wed, 29 May 2024 16:35:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738831C6B2
+	for <git@vger.kernel.org>; Wed, 29 May 2024 16:58:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717000547; cv=none; b=juAq90P0yy8QPIhWx6XhHgSk+vm+PzkopmkwPKly/l28AbUEo6UgicndXC9XpFQ5rtNTxb08WbWNo2l1kR9ic0oPjxuNFIeOSIGENWiPx7yngMznA3WIwBeCb5SOj/WiB0+Zx39QSZPZ60OyX8FSkfry4vsyk234PEk5nZ9eUQk=
+	t=1717001941; cv=none; b=BWkquYKgJXFsbJQVYUJSEQGxmHXEgYwbK4sz+/JVdleWGwK/lpCpQnjhXm4PEfvZ/rdbrNpnBwiO6A1i4QVK2uDEuQoUgOIX6uXF8/LNo0secGPrvdKVIi0dyZBKdBKhMhy80y4mRSi0mJ9EsTUCmO3ler5FWDEZh1SYR9FBHJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717000547; c=relaxed/simple;
-	bh=waXCyw9tru6EsHEnY9PCUQ5AT8A6+n7dtukSiAzv3UU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tkT0QwhdPrXWcQwGCtTScNTvsJPsuMjflWp8cXn5xmhY9G04ZuTSBM4/FN4Q5ulnB5STsLT0jL6dmyGCC8yGV4K52orf4Fz9v2s0MGgou3gCzeSp3DMXLltWVFRqP7UY5mAbKWIqjYq7FLtqdvNSgrmbMiEqOoWBqCPWYUXeDoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrDtl5+a; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717001941; c=relaxed/simple;
+	bh=P2rE/q32DhIOo+JVbZHiid8ysxqLgsYPRTbajv+//Ys=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=g/PH+Hhh63XZcDsRgG4+qXr9UNLz0yQh/anLHfmO0wBwROb//zT7P6oJ8dmmoecFXiVyuT+BvE9iV5KKtr2FGwjaUYcxMOorTLenfUG4fhP6ksrPAlK8NbkpndPvaRdmL/KXBVZrK8VNP9zkpFtSVfVqoL4HHXk4XeMqltGU/TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DWTrepJb; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrDtl5+a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BB0C113CC;
-	Wed, 29 May 2024 16:35:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717000547;
-	bh=waXCyw9tru6EsHEnY9PCUQ5AT8A6+n7dtukSiAzv3UU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nrDtl5+aOpf+Cq6wOrxIF6bQn99MmCD/7pvHtQfFDMoYGZq3kZ+AU7d0V6oLzkEj+
-	 NYZFJnOp4gdVUurlj/E9+3fM9MYBpuZ36Pofh+TdimljDfQXMQQQId9UJtAy9/SKqE
-	 q6lj59VhKw9IG7adCBM4BuPwQ1++W1YgS0CaYXf0=
-Date: Wed, 29 May 2024 12:35:44 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Stefan Metzmacher <metze@samba.org>, git@vger.kernel.org, 
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: safe.directory wildcards
-Message-ID: <20240529-rough-skunk-of-glamour-edcc8b@meerkat>
-References: <715163c3-8d59-46ef-81bf-1dda10e6570c@samba.org>
- <xmqqplt4zjw7.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DWTrepJb"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2186F3301B;
+	Wed, 29 May 2024 12:58:58 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=P2rE/q32DhIOo+JVbZHiid8ysxqLgsYPRTbajv
+	+//Ys=; b=DWTrepJbcMfGU2ON0ysx9IEjLlVCK/c+Rv7TKKHSBKaG9wQn/zHxQl
+	yzY7l+wfC2tC3piCfKK7liCA9gxWWUfJvbjuIOOI4MdgZn02g4yTqwddHMUVuL2t
+	w3Wg6LHfhg1gKb3k0UNhft3WEGuyPJ2sJAnUNWYvIR/DkK6AfxRd8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 198813301A;
+	Wed, 29 May 2024 12:58:58 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 800CE33019;
+	Wed, 29 May 2024 12:58:57 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH 01/19] global: improve const correctness when assigning
+ string constants
+In-Reply-To: <25c31e550fcecdda7510b259b271cd45d036f5d7.1716983704.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Wed, 29 May 2024 14:44:07 +0200")
+References: <cover.1716983704.git.ps@pks.im>
+	<25c31e550fcecdda7510b259b271cd45d036f5d7.1716983704.git.ps@pks.im>
+Date: Wed, 29 May 2024 09:58:56 -0700
+Message-ID: <xmqqzfs8y2pb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqplt4zjw7.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BD2955E2-1DDC-11EF-891E-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Wed, May 29, 2024 at 09:02:16AM GMT, Junio C Hamano wrote:
-> When safe.directory was introduced in v2.30.3 timeframe, 8959555c
-> (setup_git_directory(): add an owner check for the top-level
-> directory, 2022-03-02), it only allowed specific opt-out
-> directories.  Immediately after an embargoed release that included
-> the change, 0f85c4a3 (setup: opt-out of check with safe.directory=*,
-> 2022-04-13) was done as a response to loosen the check so that a
-> single '*' can be used to say "I trust all repositories" for folks
-> who host too many repositories to list individually.
-> 
-> Let's further allow people to say "everything under this hierarchy
-> is deemed safe" by specifying such a leading directory with "/*"
-> appended to it.
+Patrick Steinhardt <ps@pks.im> writes:
 
-I welcome this change, too!
+> We're about to enable `-Wwrite-strings`, which changes the type of
+> string constants to `const char[]`. Fix various sites where we assign
+> such constants to non-const variables.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
 
-Acked-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+This is a noisy change, and it is kind of surprising that ...
 
--K
+> diff --git a/builtin/bisect.c b/builtin/bisect.c
+> index a58432b9d9..dabce9b542 100644
+> --- a/builtin/bisect.c
+> +++ b/builtin/bisect.c
+> @@ -262,7 +262,8 @@ static int bisect_reset(const char *commit)
+>  	return bisect_clean_state();
+>  }
+>  
+> -static void log_commit(FILE *fp, char *fmt, const char *state,
+> +static void log_commit(FILE *fp,
+> +		       const char *fmt, const char *state,
+>  		       struct commit *commit)
+>  {
+>  	struct pretty_print_context pp = {0};
+
+... a change like this does not require any other change to the
+code inside the function (e.g., by making further cascading changes
+to what the function calls).
+
+But applying this step alone and building would not give us any
+constness warning/error from the compiler, so the result looks good
+to the compiler, I guess?
+
+Thanks.
+
