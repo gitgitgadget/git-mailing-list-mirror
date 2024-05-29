@@ -1,272 +1,165 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063F25024E
-	for <git@vger.kernel.org>; Wed, 29 May 2024 08:00:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C1B29406
+	for <git@vger.kernel.org>; Wed, 29 May 2024 08:25:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716969661; cv=none; b=Ck9BBFqMNOHncbrsxBFiPNgFQlHoel2jSDl6Y4NmEhmLAp7XgDrt5LBPFECNCld83r1MGHeT+R/fDrmqNqsB8M1x+pySs3hJfqevXJhTFWGzqj5FZbR43yPq2jl9vbp58ieShs5Tz3R0+lxZvm7/l42Jq3xSoI1YpPCUkqHauAo=
+	t=1716971119; cv=none; b=C1o6Yd9fc+/WN5sOM6pdZtQ1t9WTVZPyiZN64zwPxXEmy2NVb7U+R9gyR1louLxn7q3ttcm5BjB24+i5Nz7NC+ex2Ey3oJqD7gGEfXoqQLxWGRgvnnx4/HFFk5H5YFUBgzUdL+xP+0CV30p2qVzkDJt9Tx/5IY96KkPOsvViZMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716969661; c=relaxed/simple;
-	bh=iwKOrFNR6cDNtc1aMaW/wseYf6q9aAOumafKe70F9b4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d2YQvWdGDXqXUEwML383Yi93CfWNNeL7GxxH1DEIvAEeJ79wGH27WjmZ/xiDxmIgrTgV/NMAfLYXnCdb4UoTyjdQt8oI5Pmp5SKY42StIx9vW1wRP7Ljohmh7YufmHQBgBE1ouOKDatLBZBaEvrUIzJwfiVTot6Y/T9berxLUw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fMpfsjdp; arc=none smtp.client-ip=209.85.210.176
+	s=arc-20240116; t=1716971119; c=relaxed/simple;
+	bh=7U64XbvWHyLExQDJdsaU9FWUCosx5rS7i4dm0I0pUGA=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=m420gQhE9KNWNRbdm3ZGcSkMVHng1DQyfUmyIP9gag9Hss7Rd7zP/1AKgq/85sDaiSKlcBbqCC8KlZJuQSDsQ6q94ZnEDhI3IcGGLrDw4LMwPWjzjo+vUCKObtBd35cnxpLv+HT0ZepyGEX7VqXt7nJvWQv0DpQln6LX7Og/lis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WpVxch1i; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fMpfsjdp"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-6f8ea3e9543so1315523b3a.2
-        for <git@vger.kernel.org>; Wed, 29 May 2024 01:00:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WpVxch1i"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2e95afec7e6so5202991fa.0
+        for <git@vger.kernel.org>; Wed, 29 May 2024 01:25:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716969659; x=1717574459; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5UYDD4mDlxvpZSgX0uVLlxDuO+NulM+cS1hwgwD4olA=;
-        b=fMpfsjdpheWXK4YoXCuxhxus3hieBtF6+O9uLr6puAE/fX1XoxToz1WxCXNp26GfjA
-         bsHsPacXYJ9+z7OtaKamFwZomhr8FZ4BM/LmI4P6kRaduipUIgkgN1pE3wEKf4WUZMpl
-         OTxjvy1yu0hzv0K1aplDtYZs6W2knXbs5/Y75rMxqbKAsUBQs1jT5ARQncMKfVnRhUwT
-         zaSpEXPilNnVe1LqD7P7E2+f1VOwQKUqh31brfYNfbrPaXfaxiziunll6kpbMhLtpPsR
-         5CbRuuqWhXvVLng2EXHBB1Hq7V1XoqTCVCRRf1f1H4IA7yd+BsprMrI8Nb0Yxn9CytxP
-         CbtA==
+        d=gmail.com; s=20230601; t=1716971116; x=1717575916; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xYZs9dj8CJjPzKAsBwLGX1fm4WQO3KwC3BvQrsHmxds=;
+        b=WpVxch1iQ8BlKGEuv3fInaUXRUGlFyitUXI7CylBcf3N933zA+a94i8vpzhTGhNlCU
+         jJKY5+9XHV3mfgK706TjX874+kvkvmO4/usN33/ETAEVTop4rs+wSLzZWM6wa36cQBk0
+         /C9LKjJpSmhzCFhLlybfvmKs2770E3PVSpHGwWbJZgkEjHRjTHzWm8/4XgonnEhdvt7q
+         G/frYyLQF2yOjD3CEZufkbfn52CaE5jWEVEeyz4FFcoXCG3Sfa8AoVKTpnx8ng04IfqH
+         JcRTe8+dSq5gBYJ9paar+nLanvQtwDLyQi25A1qIxMtdSILwI8idAjceq0o8XJM5kkrz
+         6OVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716969659; x=1717574459;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5UYDD4mDlxvpZSgX0uVLlxDuO+NulM+cS1hwgwD4olA=;
-        b=lVE1BQZ0mn5mUTvC5bb9YuLLZ0gDnYLouW+VjKhibc/NkaVKrjxoEYGyMlREmZ1TCv
-         Z4QRdIw2HynkvmOweqvnm9i3AoBkgFiUOScLKlanaIU68ZCt1O5YtBSSkfz4O5PW2j0b
-         rNph9S3iqzHu07R45zBysRZIG68+wl68FeODPPPkOJhtaIwNpKhZIVH1xlZWQiaMfgjY
-         8MvidtTkx9pJMAHMTL3Z8IEWxbEoq8CCkrGcVZ45SlBarq7VxMhuwulNJ0x6Ga8TupGo
-         Nn8m4m/UNm1ARrkW6RGdqybXsiRhGN4M1lvicnptpLSigc+6i45Ntas1eeST5T+NpNkG
-         jIDA==
-X-Forwarded-Encrypted: i=1; AJvYcCVYsfkdtPZdtguEfKKTTUG8ezDi0RN/iu2ul43pZDiMttz7EHbQ0ZpuCz7QLApu4sRPLM6j1gniTeT4M+KEo3BbWCj5
-X-Gm-Message-State: AOJu0YzutzPUpXiCIz8ADo6RjA/ssUTI8V7Bh72mJvviMgtC3oT8oVJI
-	3Orua2zTQ+xPzHFPlox5jIaaYkTF5ULdQdduwyCKpVqUO5WyQHse
-X-Google-Smtp-Source: AGHT+IFsy9g7zCMVbLcW0oDXprJl7c+pgeSe96ObtJEuPeU5DvfxbgheToXgAC4DLPbF2hDeLRMeZQ==
-X-Received: by 2002:a05:6a20:9744:b0:1af:fca1:b692 with SMTP id adf61e73a8af0-1b212d4a38cmr15601126637.35.1716969659017;
-        Wed, 29 May 2024 01:00:59 -0700 (PDT)
-Received: from localhost.localdomain ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f478a651f6sm68290875ad.101.2024.05.29.01.00.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 May 2024 01:00:58 -0700 (PDT)
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: shyamthakkar001@gmail.com
-Cc: ach.lumap@gmail.com,
-	chriscool@tuxfamily.org,
-	christian.couder@gmail.com,
-	git@vger.kernel.org,
-	gitster@pobox.com,
-	kaartic.sivaraam@gmail.com,
-	ps@pks.im
-Subject: [PATCH v5 2/2] t/: migrate helper/test-{sha1, sha256} to unit-tests/t-hash
-Date: Wed, 29 May 2024 13:30:30 +0530
-Message-ID: <20240529080030.64410-3-shyamthakkar001@gmail.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240529080030.64410-1-shyamthakkar001@gmail.com>
-References: <20240526084345.24138-1-shyamthakkar001@gmail.com>
- <20240529080030.64410-1-shyamthakkar001@gmail.com>
+        d=1e100.net; s=20230601; t=1716971116; x=1717575916;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xYZs9dj8CJjPzKAsBwLGX1fm4WQO3KwC3BvQrsHmxds=;
+        b=o6UDR69F1a0vURGpI4khH9jxIDRsdE6zBQNaRNg4vqsOQl+Gqd9FVuLwLBUViqaV5y
+         k636bVp03wT3y4BhMkDOnUg5o+D1zlAvyIOXWHrUHwa8XpqOafA8TG/NicrzdZh0aBRc
+         616re2yy/t47WIPheGucohRtreHrgqSS9D8euZ4pWInDNjfgVClBvVGk8mLs/CgAyrcU
+         sH8ylaVrbWTtYfO6u/woEPPIXmWVVA2tJ+4FeGBkcJ7teqMXnnkdTEgpZz7qSopwrfLO
+         KLIIVgm6HTFgTPqq3SGvZyq6XMmcr64j61uvej6hkjipxIyeST0gyE/87xHqkKsDTOUA
+         FT4g==
+X-Gm-Message-State: AOJu0YwfQhKsm/5N3WJhETwCkEPUrQ6iyvshhVjzTf7HFF6QiKbYeV1F
+	+V9h+9FnjVXtwk2PX8KvOecSvCTHYSTrWcLFQppQzgO2MLw7oNbXhWSK+Alpw/s4Plaq10INTOd
+	bP0nG3DZL7j9I964C6pCDVMKl5MI=
+X-Google-Smtp-Source: AGHT+IGjhk2qXDXQCch6Ai4BmFZT7udPTfYMSRrkvUI2SLQ9K7JneWB5299JCu/3bDTP2N0gkMQA1g45jsYarK5c2Hs=
+X-Received: by 2002:a2e:780c:0:b0:2e6:a1c4:4328 with SMTP id
+ 38308e7fff4ca-2ea4c8960bdmr4153021fa.22.1716971115458; Wed, 29 May 2024
+ 01:25:15 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 29 May 2024 04:25:12 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ZlQr11P_C-KyO2DF@tanuki>
+References: <cover.1716465556.git.ps@pks.im> <cover.1716541556.git.ps@pks.im>
+ <xmqqwmniiqv2.fsf@gitster.g> <ZlQr11P_C-KyO2DF@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date: Wed, 29 May 2024 04:25:12 -0400
+Message-ID: <CAOLa=ZQZ2ap9rgS-u0K9LsoZVfZ5hDPLY1ALZDSnfNmQXx35Bg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/21] Various memory leak fixes
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: multipart/mixed; boundary="0000000000006d4adf0619937dbf"
 
-t/helper/test-{sha1, sha256} and t/t0015-hash.sh test the hash
-implementation of SHA-1 and SHA-256 in Git with basic hash values.
-Migrate them to the new unit testing framework for better debugging
-and runtime performance.
+--0000000000006d4adf0619937dbf
+Content-Type: text/plain; charset="UTF-8"
 
-The 'sha1' and 'sha256' subcommands are still not removed due to
-pack_trailer():lib-pack.sh's reliance on them. The 'sha1' subcommand
-is also relied upon by t0013-sha1dc (which requires 'test-tool
-sha1' dying when it is used on a file created to contain the
-known sha1 attack).
+Patrick Steinhardt <ps@pks.im> writes:
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Co-authored-by: Achu Luma <ach.lumap@gmail.com>
-Signed-off-by: Achu Luma <ach.lumap@gmail.com>
-Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
----
- Makefile              |  1 +
- t/t0015-hash.sh       | 56 ----------------------------
- t/unit-tests/t-hash.c | 86 +++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 87 insertions(+), 56 deletions(-)
- delete mode 100755 t/t0015-hash.sh
- create mode 100644 t/unit-tests/t-hash.c
+> On Fri, May 24, 2024 at 07:10:09PM -0700, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>>
+>> > this is the second version of my patch series that fixes various memory
+>> > leaks in Git. Changes compared to v1:
+>> >
+>> >   - t4153 and t7006 aren't marked as passing anymore. I thought they
+>> >     pass because most of these tests were skipped because of a missing
+>> >     TTY prerequisite both on my local machine, but also in our CI.
+>> >
+>> >   - Add another patch to install the Perl IO:Pty module on Alpine and
+>> >     Ubuntu. This fulfills the TTY prerequisite and thus surfaces the
+>> >     memory leaks in both of the above tests.
+>> >
+>> >   - Add another unit test for strvec that exercise replacing a string in
+>> >     the strvec with a copy of itself.
+>> >
+>> >   - A bunch of commit message improvements.
+>>
+>> Looking very good.  This seems to reveal existing leaks when merged
+>> to 'seen'; other topics that are not in 'master' may be introducing
+>> these leaks.  I'll see if a trial merge to 'next' is leak-free (in
+>> which case I'll merge it down to 'next') or there are other topics
+>> in 'next' that are leaking (in which case we'll play by ear---either
+>> mark the tests again as non-leak-free, or plug the leak if it seems
+>> trivial).
+>>
+>>  https://github.com/git/git/actions/runs/9231313414/job/25400998823
+>>
+>> says t1400-update-ref has many "stdin symref-update" things are
+>> failing.
+>
+> Indeed. The following diff fixes the leak:
+>
+>     diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+>     index 7d2a419230..e54be9c429 100644
+>     --- a/builtin/update-ref.c
+>     +++ b/builtin/update-ref.c
+>     @@ -130,6 +130,8 @@ static char *parse_next_arg(const char **next)
+>
+>         if (arg.len)
+>             return strbuf_detach(&arg, NULL);
+>     +
+>     +	strbuf_release(&arg);
+>         return NULL;
+>      }
+>
+>
+> Karthik is out of office this week, so you may want to add this as a
+> "SQUASH???" commit on top of his topic branch to make "seen" pass.
+>
 
-diff --git a/Makefile b/Makefile
-index 8f4432ae57..2b19fdf6ae 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1335,6 +1335,7 @@ THIRD_PARTY_SOURCES += sha1collisiondetection/%
- THIRD_PARTY_SOURCES += sha1dc/%
- 
- UNIT_TEST_PROGRAMS += t-ctype
-+UNIT_TEST_PROGRAMS += t-hash
- UNIT_TEST_PROGRAMS += t-mem-pool
- UNIT_TEST_PROGRAMS += t-prio-queue
- UNIT_TEST_PROGRAMS += t-strbuf
-diff --git a/t/t0015-hash.sh b/t/t0015-hash.sh
-deleted file mode 100755
-index 0a087a1983..0000000000
---- a/t/t0015-hash.sh
-+++ /dev/null
-@@ -1,56 +0,0 @@
--#!/bin/sh
--
--test_description='test basic hash implementation'
--
--TEST_PASSES_SANITIZE_LEAK=true
--. ./test-lib.sh
--
--test_expect_success 'test basic SHA-1 hash values' '
--	test-tool sha1 </dev/null >actual &&
--	grep da39a3ee5e6b4b0d3255bfef95601890afd80709 actual &&
--	printf "a" | test-tool sha1 >actual &&
--	grep 86f7e437faa5a7fce15d1ddcb9eaeaea377667b8 actual &&
--	printf "abc" | test-tool sha1 >actual &&
--	grep a9993e364706816aba3e25717850c26c9cd0d89d actual &&
--	printf "message digest" | test-tool sha1 >actual &&
--	grep c12252ceda8be8994d5fa0290a47231c1d16aae3 actual &&
--	printf "abcdefghijklmnopqrstuvwxyz" | test-tool sha1 >actual &&
--	grep 32d10c7b8cf96570ca04ce37f2a19d84240d3a89 actual &&
--	perl -e "$| = 1; print q{aaaaaaaaaa} for 1..100000;" |
--		test-tool sha1 >actual &&
--	grep 34aa973cd4c4daa4f61eeb2bdbad27316534016f actual &&
--	printf "blob 0\0" | test-tool sha1 >actual &&
--	grep e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 actual &&
--	printf "blob 3\0abc" | test-tool sha1 >actual &&
--	grep f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f actual &&
--	printf "tree 0\0" | test-tool sha1 >actual &&
--	grep 4b825dc642cb6eb9a060e54bf8d69288fbee4904 actual
--'
--
--test_expect_success 'test basic SHA-256 hash values' '
--	test-tool sha256 </dev/null >actual &&
--	grep e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 actual &&
--	printf "a" | test-tool sha256 >actual &&
--	grep ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb actual &&
--	printf "abc" | test-tool sha256 >actual &&
--	grep ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad actual &&
--	printf "message digest" | test-tool sha256 >actual &&
--	grep f7846f55cf23e14eebeab5b4e1550cad5b509e3348fbc4efa3a1413d393cb650 actual &&
--	printf "abcdefghijklmnopqrstuvwxyz" | test-tool sha256 >actual &&
--	grep 71c480df93d6ae2f1efad1447c66c9525e316218cf51fc8d9ed832f2daf18b73 actual &&
--	# Try to exercise the chunking code by turning autoflush on.
--	perl -e "$| = 1; print q{aaaaaaaaaa} for 1..100000;" |
--		test-tool sha256 >actual &&
--	grep cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0 actual &&
--	perl -e "$| = 1; print q{abcdefghijklmnopqrstuvwxyz} for 1..100000;" |
--		test-tool sha256 >actual &&
--	grep e406ba321ca712ad35a698bf0af8d61fc4dc40eca6bdcea4697962724ccbde35 actual &&
--	printf "blob 0\0" | test-tool sha256 >actual &&
--	grep 473a0f4c3be8a93681a267e3b1e9a7dcda1185436fe141f7749120a303721813 actual &&
--	printf "blob 3\0abc" | test-tool sha256 >actual &&
--	grep c1cf6e465077930e88dc5136641d402f72a229ddd996f627d60e9639eaba35a6 actual &&
--	printf "tree 0\0" | test-tool sha256 >actual &&
--	grep 6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321 actual
--'
--
--test_done
-diff --git a/t/unit-tests/t-hash.c b/t/unit-tests/t-hash.c
-new file mode 100644
-index 0000000000..ba785e2d94
---- /dev/null
-+++ b/t/unit-tests/t-hash.c
-@@ -0,0 +1,86 @@
-+#include "test-lib.h"
-+#include "hex.h"
-+#include "strbuf.h"
-+
-+static void check_hash_data(const void *data, size_t data_length,
-+			    const char *expected_hashes[])
-+{
-+	if (!check(data != NULL)) {
-+		test_msg("BUG: NULL data pointer provided");
-+		return;
-+	}
-+
-+	for (size_t i = 1; i < ARRAY_SIZE(hash_algos); i++) {
-+		git_hash_ctx ctx;
-+		unsigned char hash[GIT_MAX_HEXSZ];
-+		const struct git_hash_algo *algop = &hash_algos[i];
-+
-+		algop->init_fn(&ctx);
-+		algop->update_fn(&ctx, data, data_length);
-+		algop->final_fn(hash, &ctx);
-+
-+		if (!check_str(hash_to_hex_algop(hash, algop), expected_hashes[i - 1]))
-+			test_msg("result does not match with the expected for %s\n", hash_algos[i].name);
-+	}
-+}
-+
-+/* Works with a NUL terminated string. Doesn't work if it should contain a NUL character. */
-+#define TEST_HASH_STR(data, expected_sha1, expected_sha256) \
-+	do { \
-+		const char *expected_hashes[] = { expected_sha1, expected_sha256 }; \
-+		TEST(check_hash_data(data, strlen(data), expected_hashes), \
-+		     "SHA1 and SHA256 (%s) works", #data); \
-+	} while (0)
-+
-+/* Only works with a literal string, useful when it contains a NUL character. */
-+#define TEST_HASH_LITERAL(literal, expected_sha1, expected_sha256) \
-+	do { \
-+		const char *expected_hashes[] = { expected_sha1, expected_sha256 }; \
-+		TEST(check_hash_data(literal, (sizeof(literal) - 1), expected_hashes), \
-+		     "SHA1 and SHA256 (%s) works", #literal); \
-+	} while (0)
-+
-+int cmd_main(int argc, const char **argv)
-+{
-+	struct strbuf aaaaaaaaaa_100000 = STRBUF_INIT;
-+	struct strbuf alphabet_100000 = STRBUF_INIT;
-+
-+	strbuf_addstrings(&aaaaaaaaaa_100000, "aaaaaaaaaa", 100000);
-+	strbuf_addstrings(&alphabet_100000, "abcdefghijklmnopqrstuvwxyz", 100000);
-+
-+	TEST_HASH_STR("",
-+		"da39a3ee5e6b4b0d3255bfef95601890afd80709",
-+		"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
-+	TEST_HASH_STR("a",
-+		"86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",
-+		"ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb");
-+	TEST_HASH_STR("abc",
-+		"a9993e364706816aba3e25717850c26c9cd0d89d",
-+		"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
-+	TEST_HASH_STR("message digest",
-+		"c12252ceda8be8994d5fa0290a47231c1d16aae3",
-+		"f7846f55cf23e14eebeab5b4e1550cad5b509e3348fbc4efa3a1413d393cb650");
-+	TEST_HASH_STR("abcdefghijklmnopqrstuvwxyz",
-+		"32d10c7b8cf96570ca04ce37f2a19d84240d3a89",
-+		"71c480df93d6ae2f1efad1447c66c9525e316218cf51fc8d9ed832f2daf18b73");
-+	TEST_HASH_STR(aaaaaaaaaa_100000.buf,
-+		"34aa973cd4c4daa4f61eeb2bdbad27316534016f",
-+		"cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0");
-+	TEST_HASH_STR(alphabet_100000.buf,
-+		"e7da7c55b3484fdf52aebec9cbe7b85a98f02fd4",
-+		"e406ba321ca712ad35a698bf0af8d61fc4dc40eca6bdcea4697962724ccbde35");
-+	TEST_HASH_LITERAL("blob 0\0",
-+		"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
-+		"473a0f4c3be8a93681a267e3b1e9a7dcda1185436fe141f7749120a303721813");
-+	TEST_HASH_LITERAL("blob 3\0abc",
-+		"f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f",
-+		"c1cf6e465077930e88dc5136641d402f72a229ddd996f627d60e9639eaba35a6");
-+	TEST_HASH_LITERAL("tree 0\0",
-+		"4b825dc642cb6eb9a060e54bf8d69288fbee4904",
-+		"6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321");
-+
-+	strbuf_release(&aaaaaaaaaa_100000);
-+	strbuf_release(&alphabet_100000);
-+
-+	return test_done();
-+}
--- 
-2.45.1
+Thanks Patrick. Indeed I'm a bit slow on my responses, since I'm on
+vacation, but yeah, I too came about adding this as a fix.
 
+I'll mostly check for all tests and send a new version based on this
+series soon.
+
+>> Also
+>>
+>>  https://github.com/git/git/actions/runs/9231313414/job/25401102951
+>>
+>> shows that t1460-refs-migrate fails on Windows.
+>
+> Hm, this one is curious. There are no leak logs at all, and the exit
+> code is 139. Might be SIGSEGV, indicating that something else is going
+> on here than a memory leak.
+>
+> I'll investigate.
+>
+> Patrick
+
+--0000000000006d4adf0619937dbf
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 9d1fd05b1d3cf31f_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aVzVtWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md0tEREFDUFo4OVVSQjc3elZpVGtmL3VqQnJ6YzI4egpRVmkzYUwxc2R2
+cHdrWU1VMmlVVGlEd0tIL1laRjREa00zdG1DRXBXZEVaQ3A2K05yZng4cnBnZ25ieHhIRXF0ClpK
+V3VZVlhtTHlTUUdWUDQ3cmlMUlRRM2psek5kM3gxMDZUTXVBOSt6Wm15YW5obmVOeDFGb2RXZ2kw
+bmZJNlYKM1NncTlGTlRBc21NWUtmNlA5djh4cFMyRTk2dDJsc3NDNXc2b3Y0amthczRoU1ZUS0lB
+UUtnWmp0VjB1eHJMQwphL3dybVJPWFFHdGcvV0ZPek51RytJQ2gydmNGQk5ndGpJY3NpS0JXZnJ2
+anhyOXkyZkhyM1FteVFYWjVnRG1yCnd1ZkpDbXg4Mldqc2ZNMTNRV2RxaXVyN3VpUzZlTjVGclBk
+WlVsRWUvamlsdlJROXFiQUR5Qy9rWlhLd0FUd3AKR0pCVFpaVk1LeDh3akhSVWpTODgvYVlubTlu
+WUprbFp6WEU2dmtMMnF1a0Erbjc1akVxbURZMjVoSWxONVVKeAp0TGkwalF5N3I5c3htY1llc292
+bDNsSjArTXo1OVB3NVhyeXprV2czQVV5eXVIcGlFbjgwcE9kYUxOV0ZQWkQyCmhkdWMvRUpkN1Nt
+d0VsaUd5dUhzem5hMWVVMmgrQytseERZUzFvRT0KPUU3Q2sKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000006d4adf0619937dbf--
