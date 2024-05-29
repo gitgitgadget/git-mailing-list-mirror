@@ -1,138 +1,212 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfhigh3-smtp.messagingengine.com (wfhigh3-smtp.messagingengine.com [64.147.123.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D9A16132F
-	for <git@vger.kernel.org>; Wed, 29 May 2024 07:04:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB221168C17
+	for <git@vger.kernel.org>; Wed, 29 May 2024 07:47:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716966283; cv=none; b=NZI03Ew4E56P8/Viji9a0lzgeGaQSe035+VEebtD7wnYZXQzBmrU2I1GAVaL2agVyE2fAJI3eBjL1wpESdbLeKUBJBoTZUL7WRrxWTwhK52/tt0PF6zOeckqnC3bceFaxk6yIt3e1I6oJc2RbAj1hk51g15JRul8Am87w7aWTI4=
+	t=1716968881; cv=none; b=DldPvEGOqYfM3R6eQowQjf/czecbzHcxG1GqYrMxJgX1ecP1GEhmeIaTtWiUhlzAZHDqLzWewCq3ZHZZQFNfkGRNCueDmAfZTp5ghjX1LOlzRBlBgkDGDRsGtiJuprEQNak7WE4btYHrgu4GNsZRbqZtBBtUKBpmJ/bio6lqYA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716966283; c=relaxed/simple;
-	bh=kSNssLn5S6lGUu4EoqYl362AzN0Z9SLkClAQ2miicgU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W/qrk1+02BPFbSwGMSgoTfQcKLVLFAf/QqxcozY8pmtKMN8ld3rp9okJRjw2Jeu6AnORYyDHm4zT+K774kn6/3sBiJQbqxExrF2bR1kiECkVT8oZEOZ2w/YceUM9X+VabV8ryLc07KNhQ6/mk9piPevoStQMOSmGqFG11imS3yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KBEgo1xS; arc=none smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1716968881; c=relaxed/simple;
+	bh=LqXSTRKf91bWIIpXgQyWJQ5ANH5xCnteU3zU/bcc10g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LBl4mnK/AiQLCj2c9hII5qO+NtAhksS4/ZY8Dd/Dfudv9fQQ7UbRy20O5/rt1KuvK5O5KnH6aoP4kr5Aazn+txChZtZDjM2Qch9BL6Jyg+JNLNQMa9jbwllNJIv1axf7CxwBc78oPaGCOnpbeExfu0zaX6zp9ljsq+aRk0XyVGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m+ZQkH30; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PEBdxQ8o; arc=none smtp.client-ip=64.147.123.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KBEgo1xS"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3d1bdefedc0so880609b6e.1
-        for <git@vger.kernel.org>; Wed, 29 May 2024 00:04:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716966281; x=1717571081; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=++G2t6HsCRl/XSEBFC/36t17LGbY11tjVUCaSDLrOKM=;
-        b=KBEgo1xS4XOxGUV04HKtFScJ3mLFM5TAAeTaWcELIvSQBM4dYy9P/2LebOWglYJ5mz
-         SZaYQ0PlNUkdlOFEY6EmWJAZhR/9F/A6O2xTjl5xZ6u/DKsAhaV7sD7nbu4TEtQD9LqN
-         9DCAA4tOoWAx2h5agzPsW2OMuksILETg7LnS6zcAJt1cPjlsCPdRw2CTnrX20kfXNstN
-         K3JkbtJSPUfSctsoXiw5tQq7MOVpdot1rLLeuzbNB/31WO8GyvQBdZhS3HUNW0fcNcdM
-         4xIjFGvTkMinmqB1INPUoH8El6aQknYCX1Viur8NmRbr8vVXL8QkdCxPS838PZS3Xw4G
-         gAKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716966281; x=1717571081;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=++G2t6HsCRl/XSEBFC/36t17LGbY11tjVUCaSDLrOKM=;
-        b=sKA5c5vM8m8FFU7hlC2nl4dlscMEO5uPVdYWjpDi3z8lAbo19nQCDDKYPGHEQt4pju
-         NMvZNrn9P6oOdqfg3i7Lm+r877D9pwp6hhaTlyPjFJJhMt2GSVrddBgtrNGK0ZoQ+gy8
-         XTMFy42Ry6JH5gMMrWEeJTVs7PU7vNnI0FskBBo4//FQLqZ5M92m/kN3X7ikR2U8p7X+
-         kY4YhF651olG89g8h/24eH4icse0Z/bEI4zBVSV6Jz/h491DloLG6k7pjVaCkZ5LNKGg
-         n+NWEpAnTHg682SgKdR5LT4lLfJCUS22Tk2dK1rg3wRScGsKaYoYIVlqn6py2xuoXxok
-         rs6w==
-X-Gm-Message-State: AOJu0YxV61ys1a5wMhOxBaDgmIYHYVtyVKJT2xrpbErrrsGifbOlpwVP
-	ATneP85BUQ0f+mFU+eih27fopZ3rtEw4wluf0uiStN9FBG4ZXxSQ3pRd8kI7NC8=
-X-Google-Smtp-Source: AGHT+IHsvyN+udsgbj6J6OE0jvVIEjFsKW+qGmcl8cLbg2r+l3qdPr8Ovq7JlwPWV8K1hRmNsU6iMg==
-X-Received: by 2002:a05:6808:1510:b0:3c3:de8e:5411 with SMTP id 5614622812f47-3d1a7646fb3mr18636353b6e.38.1716966280846;
-        Wed, 29 May 2024 00:04:40 -0700 (PDT)
-Received: from Ubuntu.. ([171.51.188.185])
-        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-6f8fbd3ea03sm7473376b3a.39.2024.05.29.00.04.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 May 2024 00:04:40 -0700 (PDT)
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-To: git@vger.kernel.org
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [GSoC][PATCH v2 4/4] t: add test for put_be16() and improve test-case for parse_names()
-Date: Wed, 29 May 2024 12:25:12 +0530
-Message-ID: <20240529070341.4248-5-chandrapratap3519@gmail.com>
-X-Mailer: git-send-email 2.45.GIT
-In-Reply-To: <20240529070341.4248-1-chandrapratap3519@gmail.com>
-References: <--in-reply-to=20240528113856.8348-1-chandrapratap3519@gmail.com>
- <20240529070341.4248-1-chandrapratap3519@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m+ZQkH30";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PEBdxQ8o"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 0C1DE1800131;
+	Wed, 29 May 2024 03:47:58 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Wed, 29 May 2024 03:47:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1716968878; x=1717055278; bh=j6cPVQYeX2
+	+I6Zkk629g2ecgPT4Arg4Fe1+e99tPmfU=; b=m+ZQkH30odvMmh466D1E74Klue
+	0xBSUxe3uEGn8FzjzSps2jjyKHcjs26tNzvlZoVvht45UaE9iAo7wBWRMHwUBYxY
+	uhcFWUpGj+jJULJWj5Ltj/Vic6Nk2cCmK9aEhzlWST6Nh8f6UjX9VIQhS4Sl8Y3w
+	6TOOoIyb4HEmJo2OsrtuXsFYhDOn1HzQsWNehamK/S0t4LDigrUgYar3YgX11V2w
+	gc3tDfTWFHVA7NFfm6nlOg5QBP7B9gaQVCFLYKQAG/l1RcoVHho0XHFu0pQgN5oL
+	8yykPR/xgJF71kIYeYO19Gbt0fcBdyoDNBhUHonjCt2E42FJflgNQrAIITXg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1716968878; x=1717055278; bh=j6cPVQYeX2+I6Zkk629g2ecgPT4A
+	rg4Fe1+e99tPmfU=; b=PEBdxQ8oOLyTsgvlwEXBbOQItIu0GI8VL5PaMM/dYvGW
+	uLZW5U2e+uJZXDvSJKrmfJLXn63RKZNpEwNLfUDwy86sfxLT9Kz7eAPFOz13kTAd
+	jCtzHnWOTohrNFLEqvoqcaXCwVfIADqsth++FG6vum+hdXezwWZJvIOV+0SWxkHP
+	1sgImOgqvw6CeMTFQEaDhzMbxM4rKXt7LY5pNx8Bep/eToFaASoqoHKnW8OlKA5D
+	cpvTLQdTFrHJwjMoEJnXionqUY4VDVKuxG8aBjoK1w+v9C6xj+mLDIFMySoOx8WI
+	wdyldlm7TuBMnyCJMBubVqCILCztlclL5C/3HYtsjw==
+X-ME-Sender: <xms:rt1WZobUEB2uVskCw_PYn-5-NfpbS7JYNxOt9-TKtQrWN9lARhdqWg>
+    <xme:rt1WZjb9mOa5NjyWODJaKre310LFXljCcRaIq3Ccmiq1C79RkEDYSA2_JGLDNmy--
+    GFMYd4gWhluwnONBg>
+X-ME-Received: <xmr:rt1WZi-sytvmKzTC2G_ONw_Xpu2yvQx4T9NoQRK9Twob0opnp1JA9gwN77BZJ4NSpRUV2oZinbPc8KXJHKu8nTEiLzS7C7NHDURQk0DNDgJkidDv>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdektddgudejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:rt1WZir2NG6RuS_lC4hxjqX-mfGKCeuCRGwY60FAU-r0rxOx-yBnhQ>
+    <xmx:rt1WZjpQshilZ2lpCs5wd0XQ2ZsqNlogdEk8_OCkhOQk1S2lJWpC0Q>
+    <xmx:rt1WZgThXnqTeXcFnf2OL_z26rakp5Xk4mC86VIfY2EQmirqOS_K7g>
+    <xmx:rt1WZjr43LJDXn18ES-5UiXbwRktj8MIJGMTdIOR0nBa3x06lPWwZA>
+    <xmx:rt1WZq1q_Unr7u8qXlDCoQWMBcIGmrKs3Tqdvo6UHS56TUf99rWrojZt>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 29 May 2024 03:47:57 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 56f84b96 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 29 May 2024 07:47:40 +0000 (UTC)
+Date: Wed, 29 May 2024 09:47:52 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/8] midx-write.c: tolerate `--preferred-pack` without
+ bitmaps
+Message-ID: <ZlbdnkFIg1H_KQxS@tanuki>
+References: <cover.1716482279.git.me@ttaylorr.com>
+ <c753bc379b005ecaf131f8f1ae9c5b80b2712759.1716482279.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="aUg7pR21KhekfPsH"
+Content-Disposition: inline
+In-Reply-To: <c753bc379b005ecaf131f8f1ae9c5b80b2712759.1716482279.git.me@ttaylorr.com>
 
-put_be16() is a function defined in reftable/basics.{c, h} for which
-there are no tests in the current setup. Add a test for the same and
-improve the existing test-case for parse_names().
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
----
- t/unit-tests/t-reftable-basics.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+--aUg7pR21KhekfPsH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/t/unit-tests/t-reftable-basics.c b/t/unit-tests/t-reftable-basics.c
-index b02ca02040..8372faec8c 100644
---- a/t/unit-tests/t-reftable-basics.c
-+++ b/t/unit-tests/t-reftable-basics.c
-@@ -89,11 +89,13 @@ static void test_parse_names_normal(void)
- 
- static void test_parse_names_drop_empty(void)
- {
--	char in[] = "a\n\n";
-+	char in[] = "a\n\nb\n";
- 	char **out = NULL;
- 	parse_names(in, strlen(in), &out);
- 	check_str(out[0], "a");
--	check(!out[1]);
-+	/* simply '\n' should be dropped as empty string */
-+	check_str(out[1], "b");
-+	check(!out[2]);
- 	free_names(out);
- }
- 
-@@ -123,14 +125,20 @@ static void test_common_prefix(void)
- 	strbuf_release(&b);
- }
- 
--static void test_u24_roundtrip(void)
-+static void test_be_roundtrip(void)
- {
- 	uint32_t in = 0x112233;
- 	uint8_t dest[3];
- 	uint32_t out;
-+	/* test put_be24 and get_be24 roundtrip */
- 	put_be24(dest, in);
- 	out = get_be24(dest);
- 	check_int(in, ==, out);
-+	/* test put_be16 and get_be16 roundtrip */
-+	in = 0xfef1;
-+	put_be16(dest, in);
-+	out = get_be16(dest);
-+	check_int(in, ==, out);
- }
- 
- int cmd_main(int argc, const char *argv[])
-@@ -141,7 +149,7 @@ int cmd_main(int argc, const char *argv[])
- 	TEST(test_binsearch(), "binary search with binsearch works");
- 	TEST(test_names_length(), "names_length retuns size of a NULL-terminated string array");
- 	TEST(test_names_equal(), "names_equal compares NULL-terminated string arrays");
--	TEST(test_u24_roundtrip(), "put_be24 and get_be24 work");
-+	TEST(test_be_roundtrip(), "put_be24, get_be24 and put_be16 work");
- 
- 	return test_done();
- }
--- 
-2.45.GIT
+On Thu, May 23, 2024 at 12:38:03PM -0400, Taylor Blau wrote:
+> When passing a preferred pack to the MIDX write machinery, we ensure
+> that the given preferred pack is non-empty since 5d3cd09a808 (midx:
+> reject empty `--preferred-pack`'s, 2021-08-31).
+>=20
+> However packs are only loaded (via `write_midx_internal()`, though a
+> subsequent patch will refactor this code out to its own function) when
+> the `MIDX_WRITE_REV_INDEX` flag is set.
+>=20
+> So if a caller runs:
+>=20
+>     $ git multi-pack-index write --preferred-pack=3D...
+>=20
+> with both (a) an existing MIDX, and (b) specifies a pack from that MIDX
+> as the preferred one, without passing `--bitmap`, then the check added
+> in 5d3cd09a808 will result in a segfault.
 
+The check you're talking about is the following one, right?
+
+    if (ctx.preferred_pack_idx > -1) {
+            struct packed_git *preferred =3D ctx.info[ctx.preferred_pack_id=
+x].p;
+            if (!preferred->num_objects) {
+                    error(_("cannot select preferred pack %s with no object=
+s"),
+                          preferred->pack_name);
+                    result =3D 1;
+                    goto cleanup;
+            }
+    }
+
+And the segfault is because the index wasn't populated, and thus
+`ctx.info[ctx.preferred_pack_idx].p =3D=3D NULL`?
+
+> Note that packs loaded from disk which don't appear in an existing MIDX
+> do not trigger this issue, as those packs are loaded unconditionally. We
+> conditionally load packs from a MIDX since we tolerate MIDXs whose
+> packs do not resolve (i.e., via the MIDX write after removing
+> unreferenced packs via 'git multi-pack-index expire').
+>=20
+> In practice, this isn't possible to trigger when running `git
+> multi-pack-index write` from via `git repack`, as the latter always
+
+s/from via/via/
+
+> passes `--stdin-packs`, which prevents us from loading an existing MIDX,
+> as it forces all packs to be read from disk.
+>=20
+> But a future commit in this series will change that behavior to
+> unconditionally load an existing MIDX, even with `--stdin-packs`, making
+> this behavior trigger-able from 'repack' much more easily.
+>=20
+> Prevent this from being an issue by removing the segfault altogether by
+
+Removing segfaults is always good :)
+
+> calling `prepare_midx_pack()` on packs loaded from an existing MIDX when
+> either the `MIDX_WRITE_REV_INDEX` flag is set *or* we specified a
+> `--preferred-pack`.
+>=20
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  midx-write.c                |  8 +++++++-
+>  t/t5319-multi-pack-index.sh | 23 +++++++++++++++++++++++
+>  2 files changed, 30 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/midx-write.c b/midx-write.c
+> index 9d096d5a28..03e95ae821 100644
+> --- a/midx-write.c
+> +++ b/midx-write.c
+> @@ -930,11 +930,17 @@ static int write_midx_internal(const char *object_d=
+ir,
+>  		for (i =3D 0; i < ctx.m->num_packs; i++) {
+>  			ALLOC_GROW(ctx.info, ctx.nr + 1, ctx.alloc);
+> =20
+> -			if (flags & MIDX_WRITE_REV_INDEX) {
+> +			if (flags & MIDX_WRITE_REV_INDEX ||
+> +			    preferred_pack_name) {
+>  				/*
+>  				 * If generating a reverse index, need to have
+>  				 * packed_git's loaded to compare their
+>  				 * mtimes and object count.
+> +				 *
+> +				 * If a preferred pack is specified,
+> +				 * need to have packed_git's loaded to
+> +				 * ensure the chosen preferred pack has
+> +				 * a non-zero object count.
+>  				 */
+>  				if (prepare_midx_pack(the_repository, ctx.m, i)) {
+>  					error(_("could not load pack"));
+
+We now end up loading all packs, but in practice it should be sufficient
+to only load the preferred pack, right? Is there a particular reason why
+we now load all packs?
+
+Patrick
+
+--aUg7pR21KhekfPsH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZW3acACgkQVbJhu7ck
+PpR/3w//bJgSsu+ZevGyikPaAVGdiEVVCP69MzpkY7xpR3/+xOQ/QUJk6D35wJOo
+vLoROaRHcbbAhDKqSetWzUlpwEOcSIjgcUeg/ScrQlIpQAz6XO8IWF0huqfxOlw1
+zt8U2FwjzMgaplwzKD0P6xnJyIhIkMWPZ/MAJN5WsBOtME3w0bjAGZj21q0b2EMA
+Hp/3LOMTjU0olEQg+tyuBwEzdV5SnEvFub3feH958HG1xAfZDT13fXEOReQRxu56
+EThYyxyUeSyTtyFPsUB98UfmjvGCi6V+Hx8J6z77vkr738oMt5nDtcwgx+WWGRYt
+25w/WcEl1+YCazAtav8EQG4417zR62pVAFNSGzHasMii1zJRWVFz3BBV2F6rGte9
+l1dlbohq6Pqptl4rSWkVl3Mr3ZinnV8NlgbTuHm50kCpFlyofzijiSwXFhUsbjV0
+HgjeOoP/ijuQB0GmXDOIKJo74kZ7B1VByRaYtm2zSHpLT9X4z2bHjxxWjud9iOam
+RMyyJZ86Gnybp1PKPF2BBkatZfGmMPwzyd/ciOvxygI2SS1TYLKRZyrqBMvQTEFk
+/SjUNVeQ7stRl3rpu3VPa+IZe9TUqitYThMeSSttKqf3PxbVtASqkGkhagWFKaSA
+EwoSYa9+k2oMhNmJ1BLwtWTD+NOxAlOCz7/20x+plPfJL/px/Wk=
+=sGus
+-----END PGP SIGNATURE-----
+
+--aUg7pR21KhekfPsH--
