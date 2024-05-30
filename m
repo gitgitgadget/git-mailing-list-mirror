@@ -1,65 +1,65 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C4A176183
-	for <git@vger.kernel.org>; Thu, 30 May 2024 12:09:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0E217966D
+	for <git@vger.kernel.org>; Thu, 30 May 2024 12:09:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717070990; cv=none; b=HRhb7/hnPcwhdbcn/SvO+XSLgW2fKj1pchWvoVM+58L+0aGXkQqVmW+6eeAx8w2LBLC+m6kR4s9rb2ebIIzCrUpyy6vGC9pBV1n2NRbt0YLjWz9q3Yo9GCHV6o5WM5wt8giyW7ibx3F2OGF9avGDrCQpU3dV+T7nHxauHN1eHJg=
+	t=1717070991; cv=none; b=PGFXBOwrYiQttuyz4SQWuqdo7TW/N1j59KTT4kvibAikVXD59Bq5bYlmhfOj/t87YfttOgblMfuT5NtKI/3HhRaaXmx2P0a3xRokGOPlodATCRPauiUPtmbCil1NIQtI951b/ehkGSh+SBH8EyA5WBSxTzYmC2+sZ8N4H7YEF0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717070990; c=relaxed/simple;
-	bh=yjZbmMBacGCl7HlSJ3TVxxLsjwAuvn2J3pa2ROMCX9g=;
+	s=arc-20240116; t=1717070991; c=relaxed/simple;
+	bh=t2Sh2uOYymZ8PY1NxFZ+tdvRzLosECEg/jwYIX9U8wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jva8MWI3l3A2z+4l9KYcTk+sTQ8qsRRHng+fQ+gcecTBlrCeWGfYdJ1OxIgpXOBaJuTRJmVs0eWneDMbxFO6NM+DYafi3txfPF9jl/bACupUfrNZsHvAXmJDoZj1V9jKOJxOt3b+AJbIYfsNJUiIXLWc2m4DORaGpp/zb9fDlRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m6UYr93P; arc=none smtp.client-ip=209.85.208.43
+	 MIME-Version; b=bDUeeEfrvFFefegvk3ByBLrSZIhbQFaVpABMZN8gCjczgsShQXh21ApN5oBRtuKcPpQJpuD8GtMF3AaRJU62ZX0L5X+J1xHtxzdiHVGETrh4UBvKFWgTtrhATlTM0ZHrwHnmWpBOkxRzg7ayVMgsNNKhaLVFL2Aa/c7QnOpEHz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PjB0jbe/; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m6UYr93P"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5788eaf5320so975568a12.0
-        for <git@vger.kernel.org>; Thu, 30 May 2024 05:09:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PjB0jbe/"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a62db0c8c9cso74389966b.2
+        for <git@vger.kernel.org>; Thu, 30 May 2024 05:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717070987; x=1717675787; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1717070988; x=1717675788; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KWyozSctvfVyMFLFl2u1SkLJqL1OvxT0Wg9H1V1d+bI=;
-        b=m6UYr93P1uMYtyZvKne3eJsPzMCviNSvCwYROPRQ1I84+pAYNGD5BaAwRBhGPJ/EdK
-         I00K9Dpz8yhCsE5jkL58W8qiYMk58Oh52jYHgZbD+580nzCoPXGmeU/EhVtZfqBwoYp0
-         xEcezx7Yq/wcFSBdSeOnMKiJXFsqh12T8bomqoKguG1onZPkdnmkMkMLaHjzALt4DdzP
-         0kc/LGqpZRAo9uracd8HdQqR075JGvsp8fWIKvy/9QMt050cGVp1zGsE8d0z655s8/BX
-         jK0bO787yh81+Yh092K00AjbBILZ0A28/yspoGqquwWJiZBxTr/bZAyNYzn37/ovf0B5
-         KUzw==
+        bh=o/VAe/ORVbUECRLIQtAb+P3zV3BjjcPefMr5fQ54+9M=;
+        b=PjB0jbe/5pTSr9vTNuSinhUacJe3C58R+6/SPQLFhIiF/+tpHX1ohuq8IAIIFtd431
+         dzq/01s+7uGVJYnCto6YL3YO+yRMuhqyWa9DEucDCVkRIE0Fv9Is5BxO3SZkVtbViAKP
+         prfBA3NOFuGwYuqfmKvNIb5qb5ADIReqP8ZYp8PErWDcu6h6gm3JZNi+1muTjXkv8Mkv
+         mgIbjHMsNPoiboYbgaWrJQikbWKuqJCUgqx6iquvUsRyF89xCq5DrjZfbWFkywjycBKS
+         wDFI+9CHvnNTgvuzt3Tn5jinBp9JWEQMA3p7szQu6Fad2d2iHWvthlyPBCp3KC5eSKvU
+         bAXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717070987; x=1717675787;
+        d=1e100.net; s=20230601; t=1717070988; x=1717675788;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KWyozSctvfVyMFLFl2u1SkLJqL1OvxT0Wg9H1V1d+bI=;
-        b=XfSYKFZ4HjdZHBsVam15xBZ+C5IS4idafH7UsmijGzTFwICzTHI5c0JUuTO/dXzJJq
-         pEa2g/RsSVSM2rxPImeKuZnyCkTxNcL1OnIXuHDOFnbqHIRmLGJqb/iafn6bjou/ksx+
-         z8VaA0o2Q0RLAa8lh1HUKHX0vwhxwttYjUjFcP0GX3woeOY23+ejl7AriYeSXIr7fZ0J
-         TlMCD9kVByUqkZxHDPIPJbaqkbE2a+DMFtn3AnopIMnng8f0uivonKYBboBIIaNZXGkI
-         SP4F7ky5ok21KCmKqfd6E30RD+EXfpHeXuojz1g98GIlDLAo92ymSq5Kda8e74vs1jG5
-         mKhw==
-X-Gm-Message-State: AOJu0Yyr2H2OOBFaEWm6RPqddsWpwBftlOqgFzPP1bdjf2uth8XkgLgc
-	3o6LHIMd3u/beekSG+f5cPfYQjOg7Are95IfHPmu6/nhmeZ4VqfYu91sbej6/cCaKg==
-X-Google-Smtp-Source: AGHT+IEmnUD+CYAOaanNnal39fF8fAPqgnzJQ/vSajnYT7VHludweKqFhpg06MqgH6W7sGBwSIO8+w==
-X-Received: by 2002:a17:907:592:b0:a66:7f1a:61e0 with SMTP id a640c23a62f3a-a667f1a62b2mr50552366b.62.1717070986749;
-        Thu, 30 May 2024 05:09:46 -0700 (PDT)
+        bh=o/VAe/ORVbUECRLIQtAb+P3zV3BjjcPefMr5fQ54+9M=;
+        b=s5UXhVsppbu8QH2e+Am8Eqm9CsP1W2durMDxaOxqIc7LG8mUqZY/W6kQXcIZU9jV9n
+         fhndcOstMuBh0utJcIGovAcKlo9PykUih3RgYmsgZ5j7KiDuGf138Zip0aLajKpYyBub
+         Ghng3sk4dmP6uVcvIYtSO96DedbL1ydBYKPMXaK32kFkwqWJEaIaLAgAGOCnVxMyf+it
+         PEPMZlHBetuBsfc0jb0/w9aZAWD2WVE+WR2/bOntehlnU6NVKqMgm8nGFVhCj04+Bodo
+         bRcEO3ExQhSJF/i6pCpKUl126Js0bTRqm9wL+AZKIlEF0BzZ0ia/pxZsKfNcrcbMZ/MJ
+         r5wQ==
+X-Gm-Message-State: AOJu0YysRUF79PyVBnlUYkzCMoLKDU8mEtLEgT07Tnr15nT6KiKWpFSg
+	8B2U18H9jZ5lg5OrILvksdZhGqwJeo2AHaGsdeFTKkUJWgg0SO3ENhvGa7TPfQmfpA==
+X-Google-Smtp-Source: AGHT+IGNVpEMZvCFUP6LJGk4yFnQWQI4ixvwZ6pokZNBQO04aL0NpCz7gqTxcuwlCgALvufpmO3Mqg==
+X-Received: by 2002:a17:906:d1c4:b0:a66:7b79:3573 with SMTP id a640c23a62f3a-a667b7936cbmr82780366b.25.1717070988283;
+        Thu, 30 May 2024 05:09:48 -0700 (PDT)
 Received: from laptop.modem.local ([85.100.180.205])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a626cc8e105sm831393866b.172.2024.05.30.05.09.43
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a626cc8e105sm831393866b.172.2024.05.30.05.09.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 May 2024 05:09:46 -0700 (PDT)
+        Thu, 30 May 2024 05:09:47 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org,
 	gitster@pobox.com,
 	ps@pks.im
-Subject: [PATCH v3 0/6] update-ref: add symref support for --stdin
-Date: Thu, 30 May 2024 15:09:34 +0300
-Message-ID: <20240530120940.456817-1-knayak@gitlab.com>
+Subject: [PATCH v3 1/6] refs: create and use `ref_update_expects_existing_old_ref()`
+Date: Thu, 30 May 2024 15:09:35 +0300
+Message-ID: <20240530120940.456817-2-knayak@gitlab.com>
 X-Mailer: git-send-email 2.44.1
 In-Reply-To: <20240514124411.1037019-1-knayak@gitlab.com>
 References: <20240514124411.1037019-1-knayak@gitlab.com>
@@ -73,151 +73,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-The 'update-ref' command is used to update refs using transactions. The
-command allows users to also utilize a '--stdin' mode to provide a
-batch of sub-commands which can be processed in a transaction.
+The files and reftable backend, need to check if a ref must exist, so
+that the required validation can be done. A ref must exist only when the
+`old_oid` value of the update has been explicitly set and it is not the
+`null_oid` value.
 
-Currently, the sub-commands involve {verify, delete, create, update}
-and they allow users to work with regular refs in the repository. To
-work with symrefs, users only have the option of using
-'git-symbolic-ref', which doesn't provide transaction support to the
-users eventhough it uses the same behind the hood.
+Since we also support symrefs now, we need to ensure that even when
+`old_target` is set a ref must exist. While this was missed when we
+added symref support in transactions, there are no active users of this
+path. As we introduce the 'symref-verify' command in the upcoming
+commits, it is important to fix this.
 
-Recently, we modified the reference backend to add symref support,
-following which, 'git-symbolic-ref' also uses the transaction backend.
-But, it doesn't expose this to the user. To allow users to work with
-symrefs via transaction, this series adds support for new sub-commands
-{symrer-verify, symref-delete, symref-create, symref-update} to the
-'--stdin' mode of update-ref. These complement the existing
-sub-commands.
+So let's export this to a function called
+`ref_update_expects_existing_old_ref()` and expose it internally via
+'refs-internal.h'.
 
-The patches 1, 5 fix small issues in the reference backends. The other
-patches 2, 3, 4 & 6, each add one of the new sub-commands.
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ refs.c                  | 6 ++++++
+ refs/files-backend.c    | 3 +--
+ refs/refs-internal.h    | 6 ++++++
+ refs/reftable-backend.c | 2 +-
+ 4 files changed, 14 insertions(+), 3 deletions(-)
 
-The series is based off master, with 'kn/ref-transaction-symref' merged
-in. There seem to be no conflicts with 'next' or 'seen'.
-
-There was some discussion [1] also about adding `old_target` support to
-the existing `update` command. I think its worthwhile to do this with
-some tests cleanup, will follow that up as a separate series.
-
-Changes since v2:
-* Based off 'ps/fixleaks' (commit: ebdbefa4fe9f618347124b37d44e517e0c6a3e4c)
-which brought to light two leaks, which have been fixed.
-* Adding credit where it's due.
-
-[1]: https://lore.kernel.org/r/CAOLa=ZQW-cCV5BP_fCvuZimfkjwAzjEiqXYRPft1Wf9kAX=_bw@mail.gmail.com
-
-I used the '--range-diff' flag for 'git-format-patch(1)' this time.
-Also I'm on vacation at the moment, so my responses are a bit slower than usual.
-
-Karthik Nayak (6):
-  refs: create and use `ref_update_expects_existing_old_ref()`
-  update-ref: add support for 'symref-verify' command
-  update-ref: add support for 'symref-delete' command
-  update-ref: add support for 'symref-create' command
-  reftable: pick either 'oid' or 'target' for new updates
-  update-ref: add support for 'symref-update' command
-
- Documentation/git-update-ref.txt |  25 ++
- builtin/clone.c                  |   2 +-
- builtin/fetch.c                  |   2 +-
- builtin/receive-pack.c           |   3 +-
- builtin/update-ref.c             | 237 +++++++++++++++++-
- refs.c                           |  40 ++-
- refs.h                           |   6 +-
- refs/files-backend.c             |   3 +-
- refs/refs-internal.h             |   6 +
- refs/reftable-backend.c          |   7 +-
- t/t0600-reffiles-backend.sh      |  32 +++
- t/t1400-update-ref.sh            | 416 ++++++++++++++++++++++++++++++-
- t/t1416-ref-transaction-hooks.sh |  54 ++++
- t/t5605-clone-local.sh           |   2 +-
- 14 files changed, 801 insertions(+), 34 deletions(-)
-
-Range-diff against v2:
-1:  2bbdeff798 ! 1:  cab5265c3c refs: create and use `ref_update_expects_existing_old_ref()`
-    @@ Commit message
-         `ref_update_expects_existing_old_ref()` and expose it internally via
-         'refs-internal.h'.
-     
-    +    Helped-by: Patrick Steinhardt <ps@pks.im>
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-     
-      ## refs.c ##
-2:  f509066cab ! 2:  ed54b0dfb9 update-ref: add support for 'symref-verify' command
-    @@ Commit message
-         divergence from behavior, but we never tested to ensure that reflog
-         wasn't affected by the 'verify' command.
-     
-    +    Helped-by: Patrick Steinhardt <ps@pks.im>
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-     
-      ## Documentation/git-update-ref.txt ##
-3:  a11f4c1e48 ! 3:  b82b86ff40 update-ref: add support for 'symref-delete' command
-    @@ Commit message
-         within a transaction, which promises atomicity of the operation and can
-         be batched with other commands.
-     
-    +    Helped-by: Patrick Steinhardt <ps@pks.im>
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-     
-      ## Documentation/git-update-ref.txt ##
-4:  9b71c9e07b ! 4:  ae127f7d52 update-ref: add support for 'symref-create' command
-    @@ Commit message
-         as a symlink. We fallback to creating a regular symref if creating the
-         symlink is unsuccessful.
-     
-    +    Helped-by: Patrick Steinhardt <ps@pks.im>
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-     
-      ## Documentation/git-update-ref.txt ##
-5:  a9b1a31756 ! 5:  8889dcbf40 reftable: pick either 'oid' or 'target' for new updates
-    @@ Commit message
-         want to introduce the 'symref-update' command in the upcoming commit,
-         which would use this flow, correct it.
-     
-    +    Helped-by: Patrick Steinhardt <ps@pks.im>
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-     
-      ## refs/reftable-backend.c ##
-6:  1bbbe86743 ! 6:  19d85d56c4 update-ref: add support for 'symref-update' command
-    @@ Commit message
-         This command supports deref mode, to ensure that we can update
-         dereferenced regular refs to symrefs.
-     
-    +    Helped-by: Patrick Steinhardt <ps@pks.im>
-    +    Helped-by: Junio C Hamano <gitster@pobox.com>
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-     
-      ## Documentation/git-update-ref.txt ##
-    @@ builtin/update-ref.c: static char *parse_next_refname(const char **next)
-     +
-     +	if (arg.len)
-     +		return strbuf_detach(&arg, NULL);
-    ++
-    ++	strbuf_release(&arg);
-     +	return NULL;
-     +}
-      
-    @@ builtin/update-ref.c: static void parse_cmd_update(struct ref_transaction *trans
-     +			if (repo_get_oid(the_repository, old_target, &old_oid))
-     +				die("symref-update %s: invalid oid: %s", refname, old_target);
-     +
-    -+			old_target = NULL;
-     +			have_old_oid = 1;
-     +		} else if (!strcmp(old_arg, "ref")) {
-     +			if (check_refname_format(old_target, REFNAME_ALLOW_ONELEVEL))
-    @@ builtin/update-ref.c: static void parse_cmd_update(struct ref_transaction *trans
-     +
-     +	if (ref_transaction_update(transaction, refname, NULL,
-     +				   have_old_oid ? &old_oid : NULL,
-    -+				   new_target, old_target,
-    ++				   new_target,
-    ++				   have_old_oid ? NULL : old_target,
-     +				   update_flags | create_reflog_flag,
-     +				   msg, &err))
-     +		die("%s", err.buf);
+diff --git a/refs.c b/refs.c
+index 8260c27cde..50d8d7d777 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2679,3 +2679,9 @@ int ref_update_check_old_target(const char *referent, struct ref_update *update,
+ 			    referent, update->old_target);
+ 	return -1;
+ }
++
++int ref_update_expects_existing_old_ref(struct ref_update *update)
++{
++	return (update->flags & REF_HAVE_OLD) &&
++		(!is_null_oid(&update->old_oid) || update->old_target);
++}
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 5f3089d947..194e74eb4d 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2412,8 +2412,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 			       struct strbuf *err)
+ {
+ 	struct strbuf referent = STRBUF_INIT;
+-	int mustexist = (update->flags & REF_HAVE_OLD) &&
+-		!is_null_oid(&update->old_oid);
++	int mustexist = ref_update_expects_existing_old_ref(update);
+ 	int ret = 0;
+ 	struct ref_lock *lock;
+ 
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 53a6c5d842..ee298ec0d5 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -765,4 +765,10 @@ int ref_update_has_null_new_value(struct ref_update *update);
+ int ref_update_check_old_target(const char *referent, struct ref_update *update,
+ 				struct strbuf *err);
+ 
++/*
++ * Check if the ref must exist, this means that the old_oid or
++ * old_target is non NULL.
++ */
++int ref_update_expects_existing_old_ref(struct ref_update *update);
++
+ #endif /* REFS_REFS_INTERNAL_H */
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 1af86bbdec..b838cf8f00 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -824,7 +824,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 					      &current_oid, &referent, &u->type);
+ 		if (ret < 0)
+ 			goto done;
+-		if (ret > 0 && (!(u->flags & REF_HAVE_OLD) || is_null_oid(&u->old_oid))) {
++		if (ret > 0 && !ref_update_expects_existing_old_ref(u)) {
+ 			/*
+ 			 * The reference does not exist, and we either have no
+ 			 * old object ID or expect the reference to not exist.
 -- 
 2.43.GIT
 
