@@ -1,36 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2EA7F
-	for <git@vger.kernel.org>; Thu, 30 May 2024 06:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E147C7F
+	for <git@vger.kernel.org>; Thu, 30 May 2024 06:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717051200; cv=none; b=ee3O+OcI2PNEGeLKBg3yvQXgEKq2eJWEvZ6YibV8jNh1qwFha4xRHsVe3ekKOgCj+6VIatuITmA7J2q2r+2aaLX8E3EkKb8xu+6dy9RViol9pXQrRDwmN7dQodkOuLxbf9ftvEDU9aZZnjTdixRYq9eVuiglSymFFQy2abnyxSI=
+	t=1717051466; cv=none; b=Mgn36V5IPwh2wqgmO/xA/ugh+CVswR6+gVbMz5JK/rroTlVC9zAkD+NCC5Tp8tas0CsgXfXrnj9YuWEvqj8EMjdOU32NBgxidY1Kg84JdkWXdbk7FMTHo57QSqSk70KocmaCaLlmyYvXH5cWZ0JEdijtDwkZYtpxm8fL4jMtQgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717051200; c=relaxed/simple;
-	bh=Gyk/6CBhQupVP+6ELjqE0d1HCDgE2ZaL6kp6+dVB9cE=;
+	s=arc-20240116; t=1717051466; c=relaxed/simple;
+	bh=2kNsVg63SAbl9Zy9Pxypxy3NQ+zHqWhmY2So6KXLIQ0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Laptz9SFBSJpKi3HBP0wWKTg2xtQr0YbFNb5Upi/FYiSbf41js895S54O4orcUO7tBnFGt59TacwJjSft08M1YygjA4GhpI7TlPqgdHWfr52YsTXLItowm9xY3jLE0bTyCUpZLQUOfMdFARNzf1BrZ4g+AnBIoT/eTcKcG59faY=
+	 Content-Type:Content-Disposition:In-Reply-To; b=bPxHIMOmluid758hGT5P5iAnRZJfSbeuoE6/V1kwV/KdhN3Oid25MHcuUkqCh4TjVtTNl5RxsqaNpNaqMB+6MiHgKKlw4aKqD4WP6Igxnot061gqCY2dJHkF5qbOreH5+mTixEq7pPBtQlsZkSL6r/dy+m2xNwSaRw/rhdC7E8Y=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 16775 invoked by uid 109); 30 May 2024 06:39:57 -0000
+Received: (qmail 16796 invoked by uid 109); 30 May 2024 06:44:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 30 May 2024 06:39:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 30 May 2024 06:44:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27606 invoked by uid 111); 30 May 2024 06:39:54 -0000
+Received: (qmail 27639 invoked by uid 111); 30 May 2024 06:44:21 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 30 May 2024 02:39:54 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 30 May 2024 02:44:21 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 30 May 2024 02:39:56 -0400
+Date: Thu, 30 May 2024 02:44:22 -0400
 From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 2/5] t-strvec: mark variable-arg helper with
- LAST_ARG_MUST_BE_NULL
-Message-ID: <20240530063956.GB1949704@coredump.intra.peff.net>
+Subject: [PATCH 3/5] mv: move src_dir cleanup to end of cmd_mv()
+Message-ID: <20240530064422.GC1949704@coredump.intra.peff.net>
 References: <20240530063857.GA1942535@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -42,30 +41,53 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240530063857.GA1942535@coredump.intra.peff.net>
 
-This will let the compiler catch a problem like:
+Commit b6f51e3db9 (mv: cleanup empty WORKING_DIRECTORY, 2022-08-09)
+added an auxiliary array where we store directory arguments that we see
+while processing the incoming arguments. After actually moving things,
+we then use that array to remove now-empty directories, and then
+immediately free the array.
 
-  /* oops, we forgot the NULL */
-  check_strvec(&vec, "foo");
+But if the actual move queues any errors in only_match_skip_worktree,
+that can cause us to jump straight to the "out" label to clean up,
+skipping the free() and leaking the array.
 
-rather than triggering undefined behavior at runtime.
+Let's push the free() down past the "out" label so that we always clean
+up (the array is initialized to NULL, so this is always safe). We'll
+hold on to the memory a little longer than necessary, but clarity is
+more important than micro-optimizing here.
+
+Note that the adjacent "a_src_dir" strbuf does not suffer the same
+problem; it is only allocated during the removal step.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/unit-tests/t-strvec.c | 1 +
- 1 file changed, 1 insertion(+)
+Reported as "new" by Coverity, but I think that is only because of the
+"goto out". Before your recent patches it was a straight "return", which
+was even worse. ;)
 
-diff --git a/t/unit-tests/t-strvec.c b/t/unit-tests/t-strvec.c
-index 6c1465ee61..d4615ab06d 100644
---- a/t/unit-tests/t-strvec.c
-+++ b/t/unit-tests/t-strvec.c
-@@ -4,6 +4,7 @@
+ builtin/mv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/mv.c b/builtin/mv.c
+index 81ca910de6..852b4e92c1 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -556,7 +556,6 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 	}
  
- #define check_strvec(vec, ...) \
- 	check_strvec_loc(TEST_LOCATION(), vec, __VA_ARGS__)
-+LAST_ARG_MUST_BE_NULL
- static void check_strvec_loc(const char *loc, struct strvec *vec, ...)
- {
- 	va_list ap;
+ 	strbuf_release(&a_src_dir);
+-	free(src_dir);
+ 
+ 	if (dirty_paths.nr)
+ 		advise_on_moving_dirty_path(&dirty_paths);
+@@ -571,6 +570,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 	ret = 0;
+ 
+ out:
++	free(src_dir);
+ 	free(dst_w_slash);
+ 	string_list_clear(&src_for_dst, 0);
+ 	string_list_clear(&dirty_paths, 0);
 -- 
 2.45.1.692.gbe047d9c60
 
