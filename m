@@ -1,78 +1,77 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF0216D4FC
-	for <git@vger.kernel.org>; Thu, 30 May 2024 12:51:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C4D183987
+	for <git@vger.kernel.org>; Thu, 30 May 2024 12:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717073474; cv=none; b=J5HNLKR9+94nlhH4369wOH0ZBGylyMoaBuvMGDCFj9MVko4nBJ5FWkig/MMBxcLS+7TqUzvlVL4/3FI2X66IW7wXep3u98nfcEEhg7bRnchUpRxkAJSe9bIOqelFik/cf5Si8B2tHrd9RRzE9nw8hkgyzZ+lv1ZGs/NmHIYVMFQ=
+	t=1717073479; cv=none; b=Zko+79u++7nzZifCMd1V5RaUM+nGcgQFpvIGz3I0A07xw2EXS/LGAhZBaAjc17xf9wBAWYc1Au3NoODx5R51wvtZaY0Q5mObZ/PAbcdP3cDcuMHJTlSL1p0np5oDxWKQ713bfUf/bPdSuu5+QX3QYS4E2xsy/qTuslXxA0QWx/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717073474; c=relaxed/simple;
-	bh=TqVp/5qSq/BhPOUg2+WBnLpb52RMdQmQNtiL9Ehh0c8=;
+	s=arc-20240116; t=1717073479; c=relaxed/simple;
+	bh=7t5oD+MSVT8n9niTDZ1kPJvkw3qfChNWW7h8/6u9kM0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=poLdIAMMH6Iw8joLcr90sFiXYR+6uuRw63ynGE8NtqhR+cn9TkpUVHnOVBQL9/mO7lREGXI+XynHBodEG50iFp6NYWwiZ2ZQAQHTcchTrbv7ob3dmBtfcA8ojMDtf1JqCwv2vaPJeXJKhXobKPBCYiKEimAU+H4qSBzwm/fkGUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SpA76QWX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZNUPZh5w; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=QLxnhLfmqhhyNpRifozYMoF8/FUxZQ/iDwSIfufkLfXs1oV8GhAi2FtyQYkaVvNTEbUBeWqgdCf3W369WkrVaX9GkSFa9HBB4Wy2Fyi6k4uqIjkpTJm++KPctV8liT41lar5ECE0WcbjWnpVZxPAVj0z0FkIHxhUWw1qDxWaJAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oGSuYdLw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qTo1MF3J; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SpA76QWX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZNUPZh5w"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oGSuYdLw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qTo1MF3J"
 Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id C11B41140157;
-	Thu, 30 May 2024 08:51:11 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id 1BABD13800E2;
+	Thu, 30 May 2024 08:51:17 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Thu, 30 May 2024 08:51:11 -0400
+  by compute5.internal (MEProxy); Thu, 30 May 2024 08:51:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717073471; x=1717159871; bh=qMB34Ngz4c
-	RGU52Ks21UAzbkVcq6eGyDGIWJVDYpSJc=; b=SpA76QWXR+gS5EPM2NEOpDcW3H
-	zWmvmuA2s22HmX2Jo5QE9qY9A/ghwYLs8LDZbQvd2zW9+19x2dFbrWA0orRkBjoy
-	jrbBPjYNsT5e0eBY7jYGq9MSSNoznNAia+Cmd1l11wG3T2m062wBmXRmXJn6WfML
-	FD7G9blPhpX1QXV8LgPuar6gPhT7LL4u8yIVXpU9ZKotuNMsgzb9l7LYUZ8NkTQ9
-	g5u+vB7KOTB7r+AFikEQ74O06McGoQFLa1Md7U2XM5zUDXDZeOcoClE7+EoRqtaI
-	avHQnCaHs4MAXpRqprdWCvs9ACTLni9di1vr/JYNTDNwxgzex1za/aX5MFZQ==
+	:subject:to:to; s=fm1; t=1717073477; x=1717159877; bh=TgPvfxbiR/
+	D4j4JUKVB89o3b29VaMuoR9B97KvbuOrY=; b=oGSuYdLwVAXP6d7clP1zT8PNVa
+	5Ev4OlxIgQVsyTeb8lo6dU8GmjQKDkTXi3XS7Km72qjoq5QHIuLO7txJlzOm5o1q
+	N9moLkve9lSIq9a8AidLX5Ukm5jNq+GPl5BnlWurvqcKoe7JW4/zq7EBNoxCgdX1
+	qbugfOu5cZ6o7L3L/M5QJpCljL5kL3sVwrnMo91k+vsClRD+MqqdRgo/eHj+pOvs
+	F4frZVQYgOEv4QeAa8muM49ixExKtB/xxF06cJb4oHf+DkZ2NZRGBQkVFiuCRifd
+	c/a5A/DMjBhRSpNZidO79tZqaRFeKi1TNiE3puUYlhYsebzMMlm14Sm0mZ0A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717073471; x=1717159871; bh=qMB34Ngz4cRGU52Ks21UAzbkVcq6
-	eGyDGIWJVDYpSJc=; b=ZNUPZh5w81/1wYbrUUE7C8o6Fphi8RanPN951Q4JWKcF
-	W5dQ0aoIPXZskvtc/z1FYUchapFOhvO0XY8HMWQ9bCbBLqqIts3iNz/TwB7IWT46
-	Z64iif0j+E55yKAaoIDldQAgneVR217moRtoJXqyuthn/Lc29wzO/PRI+6Rh1eMB
-	IHhSEqUeCPdXnPlRHoDhNnHxYaGyXyB1ZYWqBcUzJLA73SSAjnEZi0AgzmgHx9vj
-	OdjSjffyyql2QOXfR5ya2FMXRWp0xIw6l8WMWVPLVhNMcvZ5XiR5I/PubMzEMtuK
-	0qzh9StxlyujpTbMznWeuD0X9X1SAo+WHoUyKhLpmw==
-X-ME-Sender: <xms:P3ZYZmkyZdGmo2rpPxcCdzsD5jU_zViV_G9k4rhVZFiNHkTnK8Ej4A>
-    <xme:P3ZYZt3oIuLV_06zY60joojlAHgSKWXlFZfU4vQu7Q0ZoUzZF91Yd9B9OYVWIlrWk
-    FLhNXwXYhZYSPQ8AA>
-X-ME-Received: <xmr:P3ZYZkoMMO_npwwd1dd84RDE3NT3sdne1OB8jdrGMjv0Hp3dXQWtb8qVgY6gHV6EVH_wLKjIu-Ob_k_E4P0bouG_uxAcOSAVJgtskGdxBopfQ6R_Kw>
+	fm1; t=1717073477; x=1717159877; bh=TgPvfxbiR/D4j4JUKVB89o3b29Va
+	MuoR9B97KvbuOrY=; b=qTo1MF3J2bs9ojdlD1yrIGTPLm0mefEBd7T/DCEq9HP9
+	bOydhUQPtsTHPlROQWLOS/z1GH9GUMqLdtmDR4U0PgnrvduFGqpy3bSAUdjeOQqr
+	hTlk0y0QlAwaZlNsQsM935UHAUy8X17fH145enREE/8mf4CH4nbf0bJsFYbHtsUx
+	MZDpxBk+rr2Pmgum89xfPLc9dajYiO8UtR4y2ZZMCMbWNp2J6HWqK2qdj3mFn9ce
+	igTrAHRSN+g3qwhnOk/xIMLv//dRg7MMuMzm+am0xXEobDKMXkAAbhUV63SJxc/5
+	ov8YiFR1dhE/XWnZ3LzcpiOeVkDTB0j9X30zCAII2A==
+X-ME-Sender: <xms:RHZYZurL08AOE-KjK9GGHDCzkUaZA0N0xlHc4pWQgGtuxubHQ4RGZQ>
+    <xme:RHZYZsoqEJMt7znizuyrK-EPi5yWF8IgTePiE4eQ2WUDCOzsDGJv6ERRceTmDBMZq
+    tQg87EATS_J26T2gw>
+X-ME-Received: <xmr:RHZYZjMM7Llm2sPMOOOhBwwgLOPCNQtC46qp8zXxMdh5OehiunZKa9876031-59KhSxzLdlYQd4uj3PuPfVlOCAa-Ihp0vy2StgqGAhl7CBa5Q327Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekgedgheehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgr
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedvnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:P3ZYZqkjm8eJ-QVIv6o7Pzt1sSrFx2dKSSr83kBMHK6V4lN6wWWKPw>
-    <xmx:P3ZYZk3JJwlbWFakqco8sRgdl-w_Bw9C8UCTw6Ah0g71DusXoFjdvg>
-    <xmx:P3ZYZhuArn42laqDtzyR5EnVXLmT4QRtX8NPRBjcdAcdEYFwHVWG-w>
-    <xmx:P3ZYZgVf5qx_6iEwpHJI99IuOK9WA2ZH54U-1VvtjY_V2KWQf1sLVA>
-    <xmx:P3ZYZhyunuSD2lW7Kr5PW5WSVS7s6UxJQh_x5iOh23lX60DY9c6Xhdsw>
+X-ME-Proxy: <xmx:RHZYZt5vXvqYk8tX__En16CE8iQGiR_fUVFV1GhO4PyUd9Q8PUUuVQ>
+    <xmx:RHZYZt7ZolPkwNtfCnOV55D2Dr9Z2UkSGbc5oBQyj8MLKRM2IA73sw>
+    <xmx:RHZYZtjToskmcoGujl3jjFPSBENnM60MZtXXnLJUbQOfpMdoeWGr8A>
+    <xmx:RHZYZn7UZTLW4ImqyAiYOy84XHvxitB57dO-kh67RU9GBBb5KgCfbg>
+    <xmx:RXZYZnnccMtiBVcW-yGL0FwVcs5IxyDNlUj9l1OUFfMjduBfb9y4IWAM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 May 2024 08:51:10 -0400 (EDT)
+ 30 May 2024 08:51:16 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 04315bdf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 30 May 2024 12:50:54 +0000 (UTC)
-Date: Thu, 30 May 2024 14:51:08 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id a1cb30e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 30 May 2024 12:50:59 +0000 (UTC)
+Date: Thu, 30 May 2024 14:51:13 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 08/19] object-file: make `buf` parameter of `index_mem()`
- a constant
-Message-ID: <e5d14a51738cd4972f35aa30f7b00ab4e6060d31.1717073346.git.ps@pks.im>
+Subject: [PATCH v2 09/19] parse-options: cast long name for OPTION_ALIAS
+Message-ID: <dd40c7464d642d16e0d7f84936be1076b99e8a6c.1717073346.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717073346.git.ps@pks.im>
 Precedence: bulk
@@ -82,97 +81,62 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="HhhfpbCYKzmbkbY2"
+	protocol="application/pgp-signature"; boundary="evz0kMlf8wY8TiD4"
 Content-Disposition: inline
 In-Reply-To: <cover.1717073346.git.ps@pks.im>
 
 
---HhhfpbCYKzmbkbY2
+--evz0kMlf8wY8TiD4
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `buf` parameter of `index_mem()` is a non-constant string. This will
-break once we enable `-Wwrite-strings` because we also pass constants
-=66rom at least one callsite.
+We assign the long name for OPTION_ALIAS options to a non-constant value
+field. We know that the variable will never be written to, but this will
+cause warnings once we enable `-Wwrite-strings`.
 
-Adapt the parameter to be a constant. As we cannot free the buffer
-without casting now, this also requires us to move the lifetime of the
-nested buffer around.
+Cast away the constness to be prepared for this change.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- object-file.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ parse-options.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/object-file.c b/object-file.c
-index c9e374e57e..46ea00ac46 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2483,12 +2483,13 @@ static int hash_format_check_report(struct fsck_opt=
-ions *opts UNUSED,
+diff --git a/parse-options.h b/parse-options.h
+index bd62e20268..ae15342390 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -355,7 +355,7 @@ struct option {
+ 	.type =3D OPTION_ALIAS, \
+ 	.short_name =3D (s), \
+ 	.long_name =3D (l), \
+-	.value =3D (source_long_name), \
++	.value =3D (char *)(source_long_name), \
  }
 =20
- static int index_mem(struct index_state *istate,
--		     struct object_id *oid, void *buf, size_t size,
-+		     struct object_id *oid,
-+		     const void *buf, size_t size,
- 		     enum object_type type,
- 		     const char *path, unsigned flags)
- {
-+	struct strbuf nbuf =3D STRBUF_INIT;
- 	int ret =3D 0;
--	int re_allocated =3D 0;
- 	int write_object =3D flags & HASH_WRITE_OBJECT;
-=20
- 	if (!type)
-@@ -2498,11 +2499,10 @@ static int index_mem(struct index_state *istate,
- 	 * Convert blobs to git internal format
- 	 */
- 	if ((type =3D=3D OBJ_BLOB) && path) {
--		struct strbuf nbuf =3D STRBUF_INIT;
- 		if (convert_to_git(istate, path, buf, size, &nbuf,
- 				   get_conv_flags(flags))) {
--			buf =3D strbuf_detach(&nbuf, &size);
--			re_allocated =3D 1;
-+			buf =3D nbuf.buf;
-+			size =3D nbuf.len;
- 		}
- 	}
- 	if (flags & HASH_FORMAT_CHECK) {
-@@ -2519,8 +2519,8 @@ static int index_mem(struct index_state *istate,
- 		ret =3D write_object_file(buf, size, type, oid);
- 	else
- 		hash_object_file(the_hash_algo, buf, size, type, oid);
--	if (re_allocated)
--		free(buf);
-+
-+	strbuf_release(&nbuf);
- 	return ret;
- }
-=20
+ #define OPT_SUBCOMMAND_F(l, v, fn, f) { \
 --=20
 2.45.1.313.g3a57aa566a.dirty
 
 
---HhhfpbCYKzmbkbY2
+--evz0kMlf8wY8TiD4
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZYdjsACgkQVbJhu7ck
-PpS+axAAo01chKvM2MZLI34ZBocddv9potn6YIXrTayJgdeMcuzeovF02ownwPBU
-bOhNuluEqU30v1uAbOdLPmq/mkOCm+dLAi8HzfH3d1z8jJ3JaSzZfCFLp/rl3A5r
-3fSJH4VSde8TW3LGbeHPKkCcRmEHl8z5tpS7uGhlsCeGsKZzhUCYqnmARqkw+1ON
-Beg3ZXea7aFXBjLFQvKcpSeUn9ijjOou6w6j1sGKAmVHry/vU7IV/qCw/iLhYrMM
-hwf18Du9OKM+f9cJS9TiPBv8/XrFKv6ZgDgG9ksIrIypyn7CV4nRPkl0j99J//wP
-9WZDZz9ZzdcXn4YKkQhYSb4ZDyDpeubUlCzaQ0/g7weqfj3OWuRrgP4bP355E9CI
-e984jaId1t43Hm51JUOwhSBjZhXWDB3Hlh8qnj5ycGpLIfPUh6TgfIVmOsvZFsyV
-vRCGYFAAjP1xVWmyI1lCCUhBdVW2nbtohX06vpV4pNFdHZ8TZB3bRpamSnitWfa5
-otGkPG3y0DWPmusLxLb3UnEyE3q3zBeZnp/r9zldWb9pF1UWw/Xh6ST5iytmZjBn
-od+DQkm6hu3EdkpD9ouiz7qyBsLOTwdNSGHBOF5JdcwLwKQOEaO1XEzlIgp1r/A1
-ejzXq8kRizkyFeYjn9ALiVZV3LTCmjC8TxivBhnVz3wEqR4luiE=
-=mhP0
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZYdkAACgkQVbJhu7ck
+PpQ9Ug/+IBbIIpnZ93EGFUX/0qOi7iCQCqpzzppcuh+qlCSa9aGvEYhoZDrizasY
+VaN0tKzknAkJkn/iVJo1+YxJT1yc+saAJ97PRveCvp23qbawgwkbqPQwgd+MiQaX
+5Ejjlk7YV3xqiZVtCrZCgRN1h7Z302areQpZ0OPzadaQeah3psAZoDhQIhom+qrH
+a7sCei/mqQCvSorFDM5d9z5rEGknNBmfinb8PFcslbEdupRkkiHVPG44T1UkO2SS
+WDYPzG6H3wW7jw0jqg2lsKIif5Np7v9ur6z58cit7+PRD4E5adsSjGRWkQcjixXe
++myWVTMW/oDJkaG+G+jrFwH7k9b5b/LYYQqOEp06OuVz3ZEJNQaO8mubhLhCYapv
+Ia7OoxxSkiPquE3l5B4DQAliaT3A31vN9F/CLlgmtIrzqMp6LqiuSvi29M8qLjYY
+4mJUU4v9FlC3c88IDC179zla1YE0lQnOiFLVZeobbFJ8+bQ15anTshu1qSgCRoQU
+5dry6zFBRwxikfrXK2LmIk8hOB5+75Oshpb3V1LytK+Y7O9ClPb6Bf7eUAPx+Vhr
+vH+xzfkDDvt4R+ca2nUV1FmEJUAoUBawxOcdebQUZXpLPIcvMe/J9J1ig6tcDYjW
+z5aBhqGNoLUL2x2C8qo1S2VxWmgSaN+SHvdi7hhXKsIg8YiJh9o=
+=jkNc
 -----END PGP SIGNATURE-----
 
---HhhfpbCYKzmbkbY2--
+--evz0kMlf8wY8TiD4--
