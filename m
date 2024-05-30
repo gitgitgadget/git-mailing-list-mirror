@@ -1,79 +1,78 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B9F17F50E
-	for <git@vger.kernel.org>; Thu, 30 May 2024 12:51:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E76717F513
+	for <git@vger.kernel.org>; Thu, 30 May 2024 12:52:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717073519; cv=none; b=MFDwS0DC8tVUySfRf6/ylpR/c4GJhmFnukeKonx7S3eYFQmavgDUDxpuw3p7Ku6ckUw5gC5I1d+0HWI6NTiBTDSQMkPXBbpo7j3KDlgvMVbBZZQb0xiEu5djahn4GCeSl608/odyfoCSZ8lo0ZbVsBs/Hhw/WL9Sn6nhuQcuXA0=
+	t=1717073524; cv=none; b=Yh9kl2tDO0G++iqKSzW1l9dzVcxxbJuxBhmtA3Q/Kd68IzInX/490SBYCE6AuUoYCFwYfVs4irQfZLamiFe5s6EvlDeVbigflB3gCsyAZCAoV4PMR0xRnYswIimotHtZsEWgyYgqwlM7eCGV4oAXKNh0KbqmqntolG5zPlhIIBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717073519; c=relaxed/simple;
-	bh=oiMOjytGEh41qkvgLPqJoIpCqmNRG6x013gGAQjD/Fs=;
+	s=arc-20240116; t=1717073524; c=relaxed/simple;
+	bh=owzrmRtI4FAEbUWWuxRVTqbTMD82tVGPulTqWZofnqU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=scWRHCWijTTZ+C42PggOIiVMjExWQ/Y2EXDKWEvcdt+EZC67cTpeDX/x3po3nFN7Cvnh27SswtfU4DvzMxwgQVuDR7ZrHF6TJDZaQyySqIrt564Z5RiTV/gfCxxnt89zTYpJtNe5M7ThuKnwpuECLQV0QizNzouY9tmDjy1juTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lKpCrnh6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PwOaHfHr; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=VTCgivW4YcqmGNRsdXFd349c8Knd/lB0tB/0EuE3hjBm/gr7e961plkGzdWCtPGra9QW8UQZg6+ytW942HiIaVYfCxIMkc6s6KSNZ70ompqKYWUnT/PgFvY+rsfK4//AMeGxN4S7u/cchcgi/DwW8EOYB/+leCw+E13u4/B8LsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DODim40J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mZRvk1BE; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lKpCrnh6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PwOaHfHr"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 2321A13800DE;
-	Thu, 30 May 2024 08:51:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DODim40J";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mZRvk1BE"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 5DEA11140149;
+	Thu, 30 May 2024 08:52:02 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Thu, 30 May 2024 08:51:57 -0400
+  by compute5.internal (MEProxy); Thu, 30 May 2024 08:52:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717073517; x=1717159917; bh=Z2qOPKSvKD
-	xSv4gumtVnqn45hmzZZcRqSsb9bLcc8NQ=; b=lKpCrnh6cWqLnD3FSgmT7xQ43G
-	4rVnBg0B1nuxhvaJvMJ9sstqK+ksA5vTEbpTM+YUrWVZE2CrZnzWLoF3kgaJNsmq
-	tJg4/GFUOCjemSFwEGdSwwjf0sYnm5LL21oJZ/LUNcnGjAM2iqm1193Dl8Rew9so
-	Blvg+31U87AcUAU3pyay3+sqaXom7WhcMDZ96TzrUF0Idp7Bofod6ip0Y+PaUnjd
-	r3l6MGvyl2brez7xvJUkzW8S91HXd8NeHlvj39aWsC/mYkWP+Vb2RG89PKGZEBEs
-	OnHqE/DkiQDFjnyzdoqlAnKupiZXs2ZJuAheeVVlmfKLlVl8ZA0wzbHhHnUA==
+	:subject:to:to; s=fm1; t=1717073522; x=1717159922; bh=fBU2+fZTfm
+	IChu/dJedluYz1AQJhkVnk1Qff7bD/dWM=; b=DODim40JduEOmW2hVXXMs2wTXu
+	KTZLDcTyjzuUXw2JX+ild1W+GBngIyrWhBHQ6jdZZs2nujQUdHalzs3eFgjQcImj
+	TohzqxDM2FWmjl3M5x3heY7Tnp0K0yXaQc2n77nApKRJ733ERw7Vk7HZ3zdrAPXJ
+	0FUsupwjzmq9ktz7dDIJRd50TIeFiw3reH2r62bI3TQgcYP5ps+b0BAWRclTNBJ7
+	9uTPq8E6i3ovzzTY96STznBbrhCZ1RceJvzMTSxYfyDKWy2QNAw4E9ESxyvvltAY
+	BZZUXTye05KPQV+1JU3dXxs91+yvWYWk4lQwfSYZXlXvXVykuMvqaEhS+maQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717073517; x=1717159917; bh=Z2qOPKSvKDxSv4gumtVnqn45hmzZ
-	ZcRqSsb9bLcc8NQ=; b=PwOaHfHr0KH9B8f3YrqTmMftpOXnWEHaMQew07+iXUY0
-	o7hxchZXQRuPb5WkeCuXh7r2ObtgE7D2bO9kdYcrTSig+KImQ9fK7Jzme8JvGOSn
-	UpXVwlPQ83+DU6egDgPx1oBq5lr//ZiMTNwV3r3wqmQddFSQTSWQ+nm6kKoY98g5
-	lZFp1AiNUwj66Pgdb3OGtPU/g7eVlr2xatLwiqceBB6jXiNBbbA7mKKT6co5VawO
-	UDH6bBF+OqUDryFMxTxkQ4dM/QwlCcq7G45X/oATbT1uDkyYn4q7ip8QWhKbO27N
-	RsKPW58WE+mMVjTJ3Q+2ItiOgXhWpmH2sX3r2zaPqQ==
-X-ME-Sender: <xms:bHZYZjuy4QcDt-nCPPGP_af_flND2ybwz73kH2TEzR5zy_xAI8PHNQ>
-    <xme:bHZYZkcBlOH7zS-8-rgl5SnwoicKudfOkgU0lXLXTKnNiOND8HElMmyUzdICdw2EB
-    9945xqkXlBITOEcYw>
-X-ME-Received: <xmr:bHZYZmyt_ruqskxyIBahwug3LnZmoa1IhTPVMC3tBWyTZH7IcSDePMxbWGxjfOvQXZjM7EUeYVscPts1BiWQvDYxGf3vE840zmZZ0diyTZl6C69_xQ>
+	fm1; t=1717073522; x=1717159922; bh=fBU2+fZTfmIChu/dJedluYz1AQJh
+	kVnk1Qff7bD/dWM=; b=mZRvk1BEHAL9hN/HAQTfBIcHGky4D0GDvkWBwWEhwmK1
+	hoF5nOeKf+efxU8GFS9+Uo1iOC1PPXfdnfdk+81PjAuUt+ruY2BJO26cdJ+W+5/l
+	UP9QBV/wNxDuVJH4u6NyN8ufK3ngL0LtR9OU6ir7eW7wWwWnJZqIe5TAM+0tGLBH
+	nxOuP7HRT7Y5+hkFgGAwI886Yi0sj8AwZX7ESLa/+yIQRkxe/564QrV04Rp4iMye
+	gBT3yEzYwNkqvwwyrjLltk21f7k65eH8L4W5CcKeh6tV745hdMqIKGiEjiouzbtR
+	xpUtfPCh9m0gdug5yN+cX5yDSU2Z3YsFnydye1kepg==
+X-ME-Sender: <xms:cnZYZuBJKU1PvB5Q9XmDiDroUU72ByzX769C3jL-o-R-AhudvneWXA>
+    <xme:cnZYZojQaZW3iJkedJe9hesNxE1kA0DwRVna33GqK9RMssQropg3qXrPctGP1se-B
+    7FNreDNF8jkKRirdQ>
+X-ME-Received: <xmr:cnZYZhlSKNR2meC9sadLQvnUYPBALRqLPL9KA0uhll1_gW_H6_PcCjXAT-tOd7kdGSCAacAlNZZY7uqha0zfNbBJhOIqLfv6F1nInkCwr6K3TN-ggQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekgedgheehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpefgfedvfefffedvffefudeiuddtteeggf
-    duieeuvdefiedtjeeufeeuieelueekfeenucffohhmrghinhepshhtrhgrthgvghihpgho
-    phhtshdrnhhrnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:bHZYZiNLsqeVIIyEZsfVMkq-7o-Xb-uxVDVSvwrHXZQRpZdTGjtu8w>
-    <xmx:bHZYZj8083BFAcfCnS5bWiyeNTT85_DQYhe-g__X7AYTdsnV216PJA>
-    <xmx:bHZYZiV1eOW28pJ6gs9KZF4HhZjryBDGVz4RCQl_AX07E1ErUmUNIg>
-    <xmx:bHZYZkewQnQyVADNhECbfDWu2wFpdTqJr038ihAEhv98d7Bf1HSrug>
-    <xmx:bXZYZmZ6SjSm8TMbyO1UMneC2h6JFXeV7nAQhSLvpmpjDeyhLHORfQxG>
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpeeinecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:cnZYZszW3DB10N31whptV8Z6SHvDGRVAXUbFZe7xiX2CSZ0PGzWitA>
+    <xmx:cnZYZjSBVl-AU4JvThzJ0FnbdSKT_o8mkxCcGLaR7czVr_gBzBBd2w>
+    <xmx:cnZYZnZXwARqNHt9m-QymjudJ7NmP_OMJd2uMp02fhiocE0yrFFWFQ>
+    <xmx:cnZYZsTS3jvNJn_4UFyM9njah85KMxHOkugMXS9c9rjja1toiNY1uw>
+    <xmx:cnZYZtf10-ZKo6Z1bK9gxbWdElrrAJYaOf-jUDTIeN_tBVnPlbxncJB_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 May 2024 08:51:56 -0400 (EDT)
+ 30 May 2024 08:52:01 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 69bb8213 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 30 May 2024 12:51:39 +0000 (UTC)
-Date: Thu, 30 May 2024 14:51:53 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 9101ec93 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 30 May 2024 12:51:44 +0000 (UTC)
+Date: Thu, 30 May 2024 14:51:58 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 17/19] builtin/rebase: always store allocated string in
- `options.strategy`
-Message-ID: <3552ab9748bec8efd62145f590e888aeed7c9b43.1717073347.git.ps@pks.im>
+Subject: [PATCH v2 18/19] builtin/merge: always store allocated strings in
+ `pull_twohead`
+Message-ID: <bf854b39794a9aa9f63471cc09c6f31685d1f0cf.1717073347.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717073346.git.ps@pks.im>
 Precedence: bulk
@@ -83,103 +82,103 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rbK4V/a1PZnuPQcG"
+	protocol="application/pgp-signature"; boundary="O0sDfod/8ce52FOW"
 Content-Disposition: inline
 In-Reply-To: <cover.1717073346.git.ps@pks.im>
 
 
---rbK4V/a1PZnuPQcG
+--O0sDfod/8ce52FOW
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `struct rebase_options::strategy` field is a `char *`, but we do end
-up assigning string constants to it in two cases:
+The `pull_twohead` configuration may sometimes contain an allocated
+string, and sometimes it may contain a string constant. Refactor this to
+instead always store an allocated string such that we can release its
+resources without risk.
 
-  - When being passed a `--strategy=3D` option via the command line.
-
-  - When being passed a strategy option via `--strategy-option=3D`, but
-    not a strategy.
-
-This will cause warnings once we enable `-Wwrite-strings`.
-
-Ideally, we'd just convert the field to be a `const char *`. But we also
-assign to this field via the GIT_TEST_MERGE_ALGORITHM envvar, which we
-have to strdup(3P) into it.
-
-Instead, refactor the code to make sure that we only ever assign
-allocated strings to this field.
+While at it, manage the lifetime of other config strings, as well. Note
+that we explicitly don't free `cleanup_arg` here. This is because the
+variable may be assigned a string constant via command line options.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/rebase.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ builtin/merge.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 11f276012c..26068cf542 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1063,6 +1063,7 @@ int cmd_rebase(int argc, const char **argv, const cha=
-r *prefix)
- {
- 	struct rebase_options options;
- 	const char *branch_name;
-+	const char *strategy_opt =3D NULL;
- 	int ret, flags, total_argc, in_progress =3D 0;
- 	int keep_base =3D 0;
- 	int ok_to_skip_pre_rebase =3D 0;
-@@ -1177,7 +1178,7 @@ int cmd_rebase(int argc, const char **argv, const cha=
-r *prefix)
- 			PARSE_OPT_OPTARG, parse_opt_rebase_merges),
- 		OPT_BOOL(0, "fork-point", &options.fork_point,
- 			 N_("use 'merge-base --fork-point' to refine upstream")),
--		OPT_STRING('s', "strategy", &options.strategy,
-+		OPT_STRING('s', "strategy", &strategy_opt,
- 			   N_("strategy"), N_("use the given merge strategy")),
- 		OPT_STRING_LIST('X', "strategy-option", &options.strategy_opts,
- 				N_("option"),
-@@ -1488,13 +1489,12 @@ int cmd_rebase(int argc, const char **argv, const c=
-har *prefix)
- 		}
+diff --git a/builtin/merge.c b/builtin/merge.c
+index daed2d4e1e..fb3eb15b89 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -611,17 +611,19 @@ static int git_merge_config(const char *k, const char=
+ *v,
+ 		return 0;
  	}
 =20
--	if (options.strategy_opts.nr && !options.strategy)
--		options.strategy =3D "ort";
--
--	if (options.strategy) {
--		options.strategy =3D xstrdup(options.strategy);
-+	if (strategy_opt)
-+		options.strategy =3D xstrdup(strategy_opt);
-+	else if (options.strategy_opts.nr && !options.strategy)
-+		options.strategy =3D xstrdup("ort");
-+	if (options.strategy)
- 		imply_merge(&options, "--strategy");
--	}
+-	if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat"))
++	if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat")) {
+ 		show_diffstat =3D git_config_bool(k, v);
+-	else if (!strcmp(k, "merge.verifysignatures"))
++	} else if (!strcmp(k, "merge.verifysignatures")) {
+ 		verify_signatures =3D git_config_bool(k, v);
+-	else if (!strcmp(k, "pull.twohead"))
++	} else if (!strcmp(k, "pull.twohead")) {
++		FREE_AND_NULL(pull_twohead);
+ 		return git_config_string(&pull_twohead, k, v);
+-	else if (!strcmp(k, "pull.octopus"))
++	} else if (!strcmp(k, "pull.octopus")) {
++		FREE_AND_NULL(pull_octopus);
+ 		return git_config_string(&pull_octopus, k, v);
+-	else if (!strcmp(k, "commit.cleanup"))
++	} else if (!strcmp(k, "commit.cleanup")) {
+ 		return git_config_string(&cleanup_arg, k, v);
+-	else if (!strcmp(k, "merge.ff")) {
++	} else if (!strcmp(k, "merge.ff")) {
+ 		int boolval =3D git_parse_maybe_bool(v);
+ 		if (0 <=3D boolval) {
+ 			fast_forward =3D boolval ? FF_ALLOW : FF_NO;
+@@ -1294,7 +1296,7 @@ int cmd_merge(int argc, const char **argv, const char=
+ *prefix)
+ 	if (!pull_twohead) {
+ 		char *default_strategy =3D getenv("GIT_TEST_MERGE_ALGORITHM");
+ 		if (default_strategy && !strcmp(default_strategy, "ort"))
+-			pull_twohead =3D "ort";
++			pull_twohead =3D xstrdup("ort");
+ 	}
 =20
- 	if (options.root && !options.onto_name)
- 		imply_merge(&options, "--root without --onto");
+ 	init_diff_ui_defaults();
+@@ -1793,6 +1795,8 @@ int cmd_merge(int argc, const char **argv, const char=
+ *prefix)
+ 	}
+ 	strbuf_release(&buf);
+ 	free(branch_to_free);
++	free(pull_twohead);
++	free(pull_octopus);
+ 	discard_index(the_repository->index);
+ 	return ret;
+ }
 --=20
 2.45.1.313.g3a57aa566a.dirty
 
 
---rbK4V/a1PZnuPQcG
+--O0sDfod/8ce52FOW
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZYdmgACgkQVbJhu7ck
-PpS/8g/5Af+r7CXRH5XvIlhpdauH/AfKCt5yAwbKbBHUkyFvdyT5OZAxUu2o3q9G
-5C2SCfZsEi0ho5fsJBFkBkUdASoAm2+SLhbRbQq46jROBhyRt7rommdo/Lpoi7WE
-GrUpsC7wowE9P26g05QE2XbkJZmPwHRA/ofaFCUCcV27koXxa/29XywH31Ehch75
-7tJbWnc4WPjLhkVERCvtP3qqDeEA0HtJyXD5X34XseQPYnG7GG+dwNeMsjFWi0XF
-oajjomkq3ddhpLYzNLaJGnxXkw7jtafuyU+V8B2nUU5AX1K/U73zbnHzQRJi0Wy1
-EMGznP5cK22DHgBBROmZUEbZsFrkLZosXrIMN2xhttO7vk3o2f5pR47EpS4+FUsO
-IkoUzHk47jnHfPJc3qyOuffuO9KjcOWUanJ6JLDzHUSwIS3QAfmamkhJE10VVr05
-Hqy9sFdZWOnMT1hPdevRRE8kE9U9jjpxBscokApa6p7z2levUH8GdpR4HaEiA0eG
-CaRfdSCncPRE6OSHua166pAQi/XEHWM/r0FF/XQ/kakCQNXpnuR6MNTJtLYqO0Ap
-A8X/nRMgiFe6ewiVC7K+Dsda36b/8Cj7VMo66fqS+5yUvw9MPdtgidrXeRzhrYr7
-XG7b7DnBMCWcf7EXFAzS+irtculHzdMpL3EP316ESmH5Zj3qN2A=
-=a3gY
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZYdm0ACgkQVbJhu7ck
+PpSWaw//e/aVUutNpGAGFPlo64KsGnynSACYMhYxZcxjGHgyxX+cgF0ZUIPUB1up
+NxQ2uUbub4BQ+kyft/mS+YDhcS5nYyqhbqz/PlUHxZ50c30WjANocJKBBN8bbqET
+Neu58bC8N+JHmqmTEAkmCoQ0liNX21czbS+E7AAf9HOSlzzghECZ+s3JeKxtAeq7
+5NPLz9k8faLItnFIY/nfNhNBDKndRRBzwC/GTFkTNkvKZHkA4ATS4SLm96n+PF/u
+HaqFppUixzNitejTTy2DB58HXgLeSbNBrYSvD/uRq6Mp0wYoDmEpHCCGGTH2xyg9
+y6ZJeMQE4dy7FpggNvcb0z8XaHA0Tq01QGgpOA54hH7icB4orEIhlEL/GWQdP4yd
+GcXye8m6AqOA1dd5f+9zhGLt6VKf8DxF5TMQDEwYC/uj+4PGSBT9WvY3qq/5IQzc
+LC9MPjYmPYm18f0dfM4EGEdMqhfakR9sZV8odoHFIt6gwUcCZb5nQ+49Et7+S79l
+jlaBDaWETYNCYpGSAtHI9sJNcOtlTxygWam9rEk70vscPGKo0w2HHkx6YoZcE487
+mHh9C9Xn9lYgAtiHRpfnfwYmzzWMon0T7Plx9B0X3DZyUjkiuSmnvEEaPkKBrVPj
+OPFoUTx21mtu0+43NfVGxDcdzA4QKU8ZppIQxI5xWhXJqnoM7f4=
+=4aVU
 -----END PGP SIGNATURE-----
 
---rbK4V/a1PZnuPQcG--
+--O0sDfod/8ce52FOW--
