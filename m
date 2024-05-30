@@ -1,81 +1,81 @@
 Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79513183989
-	for <git@vger.kernel.org>; Thu, 30 May 2024 11:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DCE183989
+	for <git@vger.kernel.org>; Thu, 30 May 2024 11:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717068622; cv=none; b=BglwGIBOnimyWNnvHqGvopqSEJfF04vFsrN6rBTiRoD5LTLTQz3wi2r4Xn0a/d0plwwr4tTr/c7xu38U3S94MCT2aTak+LgRQ+tEgM4mF9tSm5N8zYGe33vvn4Uh75+R3ScWfLxhGUBZ/9VAB5SHAiEwWvuN7TY3goBdfi9yfAY=
+	t=1717068635; cv=none; b=igqpaJPcSIO7X88bxoXiG+e378SY/gd1hU6GuHooHDjLbxw66QukDm9LDQTRxPVg2m23R4FXtvHMiKPaXMn+UVxuyvXgQiIGlp1rPkKGVWsaICwIZJ+GbhRKmbReWrPFx/cpQ2/3JtQpL5C3ctZHeKzyEETUBDh8s96oQdtBMVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717068622; c=relaxed/simple;
-	bh=Xw8PUoSTuW3Ee+kJgdjnRii7yYiOSm0m/bnFvpDPHiw=;
+	s=arc-20240116; t=1717068635; c=relaxed/simple;
+	bh=iLcISUfWOcU1dyih1ui9WWFI4btxWeWwTlb4gNyefc0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nxrli3ehtrU71ArqMcngYhtx7zEpAQ3c8VjAb9wNvTkWUOq+nG8HZr/kbX8HcsJEpBFybL2R8l7DL0PQXoS6GcXRmSeWZwYDVH0DUSz8Hdy+dyZHrTm/KNmOTAkW96+sCtgQYUwbAvBcxUQN6J4G/l0n32x6Bxnb7w3CgL0egKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JzDUYlQh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X6BCDJvx; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=J+8cwdQisXfb941LJ2eYHmXzdtMR/ukr2R5Xv7IsFkBhk+lG6S4nBbe6v8kzazYELPAFr1hhN2GFQv6wb+yvt/qTuYg3uWrTaoiShqDuxIB4ujBMJtvvIlOedzePGvIKsgczrUR4nG9SoMziQQzeEWshf6uj7WcqKEh+2yH/K1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B7JpSmHR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FE6TG15/; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JzDUYlQh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X6BCDJvx"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 9367E1380176;
-	Thu, 30 May 2024 07:30:19 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Thu, 30 May 2024 07:30:19 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B7JpSmHR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FE6TG15/"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id D3D4413801C0;
+	Thu, 30 May 2024 07:30:32 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Thu, 30 May 2024 07:30:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717068619; x=1717155019; bh=GK9fPtSa1c
-	KUA5OlNQ7ZO6tEquNtSoGyCv7KpJzH2DM=; b=JzDUYlQhYiJ6zNqg+zIusRkK65
-	3bNVbmRxqaONBrJgQHGu9xQZb5vwsSFH6Np+5o7zM7sbG3hCznoUCx0oPQLcI+/L
-	kxgw5pyO8+Uta3QUXHUlmRiB2T6+WRqNdn4VViD3KU10R/EOFGAa+c109hZUnFng
-	1bJryNEOIAy1bS5RfGhJg4rbwBwgPFdX4eHb3WgyYI+SToaDHlPoqjoNVNPn9LA6
-	q+2DU+axiKh8sn+/khQZqkw7Xb3G1XD/9zy3kDRG7cZ3dt1WRGXbM6G3yrXLfCMv
-	a0589pwCjJ3FX1k9FZxV/l113nnPi07bzrTEJo2xyTSR6aEHAmD80AOYcMFg==
+	:subject:to:to; s=fm1; t=1717068632; x=1717155032; bh=luFURJYv6t
+	mOqJtZTSBGNQAgLCigYdRxcR9R6kNWXlQ=; b=B7JpSmHRCKUJz9OmnFHHOzh4+S
+	RpJo1FWeWlATaJWxldcNlzTigX/tt+KqlHK8DNGoA29u40LzNYY6JdePolNxvCNb
+	GpKYlDeAzP2/PtAJ+7UgtX7xZgVGdmJJddzq35hdibq3T/W5VCuUZS6GWSYqox+l
+	2cs4ys5Clrfv7pXqgCYBVWNxg/hCQWtoL9VdQVDQ21z2FCHC4YCWsDUGoBVJ4ma+
+	pSW12O6EE7Y/bmrc6os0WtCq6A5GfmVNWwxOjy4GgLXPuqsuUXZM3hdakot8iAHO
+	OMZb1EF2XqmTu6lg+atJssPNLRBZTcU0Njk+bKKchGiGWw5a4S2wIXryb0WA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717068619; x=1717155019; bh=GK9fPtSa1cKUA5OlNQ7ZO6tEquNt
-	SoGyCv7KpJzH2DM=; b=X6BCDJvx5HFFBfC1OGTGRD34Wx8qvDb9ZwNA34iPIzDW
-	B074Qa/HqpokSspY5Ub4aRJfQY3OtPQ52NfLvaxuJXTvN7cE979Q5rp1F9+YRO6r
-	kL8GwCKayug5sYclNpsit1JTfxiaE0JTH1Nj7UWTctRLxleZb3e/3JoZEbEF5Tx1
-	0iIWGFpJ74ImknXB6PEH2QxpKke1KZ8Ib4JKQRdijdYFyXGfaJTUIrgxKxvgYzDE
-	c1utcqinypMWnyp3GXeqy4ZIVsSVsoPOso7ngxLg9kW+NRRTLy+Wd7mBfGAQKzdw
-	nLK/ADBBWRx/X3QKsCkL38w8lLnBkU3EaK+liTpbOw==
-X-ME-Sender: <xms:S2NYZhfZys6fT6TswJMrlQwpai270y3sX-hR85QlgoSnssXBh-p2og>
-    <xme:S2NYZvM0k6ZzRpCoNHY82iVNm0TFsLlMxa93-1I0mg7qVBaYAdjVGjFB750Z7biK6
-    8uoEnhtckCBjDzq0Q>
-X-ME-Received: <xmr:S2NYZqg1pK_oIiHyjrCXRHfXM2m6cNQe4YBNSCaYVJZDxv8PTJY5DBOTz-7hK8cLcKxd2kBwjJEOgdUDp6AEdPViSm5Ry_xVrYFYQXCv64orA-6LLw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekgedgfeelucetufdoteggodetrfdotf
+	fm1; t=1717068632; x=1717155032; bh=luFURJYv6tmOqJtZTSBGNQAgLCig
+	YdRxcR9R6kNWXlQ=; b=FE6TG15/Ufu2ojj6Gw+TfNkDx9pN2OKLewpx2UB+0Gfa
+	it9hoMI3XKmeTSh+77zitmE06ib4TaUB7Yr7GVxY0J04vxsio2itgvTM+MCN5UvD
+	3orzOkAftYrVG4Nl19SbO+pi3F47SHnkCqYjyCRDzuzueC6GbIPCRQF9VIZpsQNs
+	XVTF2oMbU+whpyZ1oj/wsuwIPnwPHerB3qMIZ+bUMbDqbxu0OUIF6zrhk9cxwaCb
+	4gqWtOLKSFwH0EixHKncQFAYcbs+FIf3RN3681VKGUeI5rwrPVKXljloXSli7Vaq
+	mK7eaC+7ZvlRa6j3wI22/Y3CT7MnkYKJXtoDOwe8Dw==
+X-ME-Sender: <xms:WGNYZqn8Dzj7dOSdrRW_r9d9z_qYtMCL1ltc4lGOtoecEMhA9Sd6Tw>
+    <xme:WGNYZh2GkP2Iv05FKYDN1gfsdBijkRjUIUmi8lE2FHWKdk0mGQz8Ca9VYD1IpqKcf
+    5stnXh_NWKgokUbuw>
+X-ME-Received: <xmr:WGNYZoqAI48u9WtE8yzMjLCIQq4uylN6fOilxgyZGTUqPT7yrD3rNqbC2aIwOY3Gu4CNcwYdV7bOQitgo7ckfmSrJ5oGjBgej-xfQ05jeUlaDDpKwQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekgedgfeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    orredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehfefhuedtvedtfeeiteeugefgfeelge
-    elveehffeukeelfefhieekteevudfhffenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:S2NYZq8047y1PTkxIjJL10VC415zo7xb5O2vhjp0FFLhNNf-d-r0Yw>
-    <xmx:S2NYZttsqh3bv1zGktqg1QmFRaKIKKaJF2uUYYMWRiA_ubdrothQAw>
-    <xmx:S2NYZpG3J4SkUCMx8vd40bxThq5Xp3U2JMJoYxGZuYlalALH_FGofw>
-    <xmx:S2NYZkMAH16RrIuExJYsE98J-TasF7J_t-g_f_BY9dlOcREFdUL-5w>
-    <xmx:S2NYZlIevzBHL8URG1gr2KPEhJ7BJwjjWPvyr3_cezOpkR0KpRnGDHRd>
+X-ME-Proxy: <xmx:WGNYZukitUchv0JbJJhQfAEjCG_FAPGygnatBH-1UnRywdSCzeOWaw>
+    <xmx:WGNYZo33jL4sHpY_lqxeQqjlIa6Xxs0NmKSjLHXI4FHTxqEe9u341A>
+    <xmx:WGNYZluxUMWyoIQ7mX2UMPe73EMeWEWT0x4olF1IVgy9Jhk2eoWQpg>
+    <xmx:WGNYZkXXNF9iDk4OxHA4fkb7VMAbd671hedkpBDv6geC-N12LgP0VQ>
+    <xmx:WGNYZlzHXZrQ6P5WYcHXrF-2zYVJEIO2kH1HFFBCcWRGJNwjtgGo00Dg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 May 2024 07:30:18 -0400 (EDT)
+ 30 May 2024 07:30:31 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 2c4aadae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 30 May 2024 11:30:01 +0000 (UTC)
-Date: Thu, 30 May 2024 13:30:14 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 083d9e52 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 30 May 2024 11:30:14 +0000 (UTC)
+Date: Thu, 30 May 2024 13:30:28 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 03/19] global: convert intentionally-leaking config
- strings to consts
-Message-ID: <ZlhjRtRwxlnchOaV@tanuki>
+Subject: Re: [PATCH 05/19] reftable: improve const correctness when assigning
+ string constants
+Message-ID: <ZlhjVIEld7_T0q-M@tanuki>
 References: <cover.1716983704.git.ps@pks.im>
- <8f3decbb762916a536ec7a8d319c5903bd8f30c1.1716983704.git.ps@pks.im>
- <xmqqle3sy1cq.fsf@gitster.g>
+ <dc5d85257eef747f2331638ed718b0f7a5bb1da2.1716983704.git.ps@pks.im>
+ <xmqqed9ky0mk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,67 +83,70 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="55Xqtn3yesDqtT5b"
+	protocol="application/pgp-signature"; boundary="SW4ma6pX22Vge8Dp"
 Content-Disposition: inline
-In-Reply-To: <xmqqle3sy1cq.fsf@gitster.g>
+In-Reply-To: <xmqqed9ky0mk.fsf@gitster.g>
 
 
---55Xqtn3yesDqtT5b
+--SW4ma6pX22Vge8Dp
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 29, 2024 at 10:28:05AM -0700, Junio C Hamano wrote:
+On Wed, May 29, 2024 at 10:43:47AM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > There are multiple cases where we intentionally leak config strings:
-> >
-> >   - `struct gpg_format` is used to track programs that can be used for
-> >     signing commits, either via gpg(1), gpgsm(1) or ssh-keygen(1). The
-> >     user can override the commands via several config variables. As the
-> >     array is populated once, only, and will never be free'd, it is fine
-> >     to treat the program as a quasi-constant.
-> >
-> >   - `struct ll_merge_driver` is used to track merge drivers. Same as
-> >     with the GPG format, these drivers are populated once and then
-> >     reused. Its data is never free'd, either.
-> >
-> >   - `struct userdiff_funcname` and `struct userdiff_driver` can be
-> >     configured via `diff.<driver>.*` to add additional drivers. Again,
-> >     these have a global lifetime and are never free'd.
-> >
-> > All of these are intentionally kept alive and never free'd. Let's mark
-> > the respective fields as `const char *` and cast away the constness when
-> > assigning those values.
+> > diff --git a/reftable/basics_test.c b/reftable/basics_test.c
+> > index 997c4d9e01..af9209d535 100644
+> > --- a/reftable/basics_test.c
+> > +++ b/reftable/basics_test.c
+> > @@ -58,8 +58,8 @@ static void test_binsearch(void)
+> > =20
+> >  static void test_names_length(void)
+> >  {
+> > -	char *a[] =3D { "a", "b", NULL };
+> > -	EXPECT(names_length(a) =3D=3D 2);
+> > +	char *names[] =3D { (char *)"a", (char *)"b", NULL };
+> > +	EXPECT(names_length(names) =3D=3D 2);
+> >  }
 >=20
-> It is not unclear where the linkage between "not freed" and "must be
-> const" comes from.  What am I missing?
+> I would have preferred to see this kind of rewrite more than
+> separate and clearly writable variables that are initialied with the
+> constant contents e.g. branches[] =3D "refs/heads/*", we saw in
+> earlier steps.  Wouldn't that approach, combined with making the
+> literal constants stored in read-only segment to trigger runtime
+> failure when a bug causes the "unfortunately non-const" variables
+> to be written, give us a better result?
 
-It comes from `-Wwrite-strings`, which will mark string constants as
-`const char *`. This will cause warnings in all of the above cases
-because the fields are being assigned constants, but those fields are
-currently `char *`. Will clarify.
+Depends on what we mean by "better", I guess. But yeah, I was torn
+myself when writing this commit because there are so many string
+constants in the reftable tests that we assign to non-constant fields. I
+didn't find the result particularly easy to read when putting each of
+the constants into a separate variable.
+
+Revisiting this again though I don't think it's all that bad. I'll adapt
+accordingly.
 
 Patrick
 
---55Xqtn3yesDqtT5b
+--SW4ma6pX22Vge8Dp
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZYY0UACgkQVbJhu7ck
-PpQ8UxAAhIuHk3QCpOZIaH71kqM+63mY0gFaU5FUwqvbVUuHZJDeUj06wfYp5o0+
-awXYVL8MaNpVMFVRq7oNfOdKBvejnp0lXsjaUt9LAYkPS2FrQCtuVbSP20Dmo4ax
-p56qIRI4WgqDx29gMoqMQFu+csqB86tQ5vhyJQVMbaYLGrRbQbnLKSmA7ulAK6ME
-t7xk/Pjf0PVY/UjN5n8orXufcCH4UGE7rkhXHgH0WeGURlNDYV75R8uUFaePFvkO
-Lb/KBMiTIHRn7xBk60fR9SfoJLRmZ6PJH8fwzv3oKhFdsTnEC8H0knBtxetroBGL
-eTXxDOxgefjI4vRktF9BU9U3XjtHmEq1LqZYH/HGQ/dt1+NXW2NZ4I3Pcay7isgi
-dLVwfPkdRaozeueO70xnJWcBgr72FvMJLph0fakTKK/kbvHI+K7YmXue9L9cOgiq
-TARgwmmzod/gFbc9Mv9zdATu9QSW6b6C2gnY8jCP3lU+1elqlgk1wepOK3i3ep0O
-JwB7a7Y1nK9iZahqngteYagmZfSOq0rxldTw21DeIZrBfKehlSXN5MZbtSl2gKn7
-M4ZnYfCQEYLswGPPD81M295JY+r4Vnfy+NUOqLRbeOy4R3kkCtyGj3XJAXDjjx1N
-UNGDBt5IaMBqsfD2DEO6zYrqhmEIE1+UXLnPvCc6htMSsbLUFOs=
-=aDK1
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZYY1MACgkQVbJhu7ck
+PpSOSw/8DGlWaSHddmb/hs9im9osVHhanq8evvB/L122t0+xhFAJeCSCZh+AKMJY
+NXsho8lBByDvjEUrFlwIyG1UR5GXQrrsWLah8hlo3kZs/+J8j6enz8sF2WgkZg+T
+EX6UZyswZ1FGPQm9bOO+SJWC2F6TJ1N9nNIZnPMOC/fi+5u3UFKkkoact3P9gbn4
+9xbwpxv5z2Jb/zegBLV0lyJaY95v2gsGm94b3KBOGuPGgOFtIxBoGvRPq/js5zuU
+v8DTrM9qOTXzg5MnvXHGvNmYsGz/3A6D2S42m30SPH0e1cJBEM9tfs6f5fgdW4e0
+OT0szudnb4S/Zym8hYpjG14hy/rQMBTnzVxPd4FEy1GLnwfOT/mDnfcvrIgFHWbg
+qkn3Gt2oLLR8Zyj1JjWTQvexi9FKGiI6S2pEWxtnXU6qFogGpoyfOsSWUf2MFPE3
+2mGasTgSTn1fpHHj3/Y/Pvjf7u8L6+iFqfN/xNGvNE7B1jIw11lnLhJcs/XHejFJ
+flemoUF42ezcrI9yiTCixDwy/nxxA+msxLYDFkDprHAMGd7fC3TbY8f58EjW4uap
+hLs966TLIBKH6sZCLb9PGBjzkQWvrP6yP9NGr3p4dNl/1XX+1UrK0y/fQkl9ET4u
+CXsKjfB4q4g3kt518MvWxNfY+SX8yc9v+/QRrZIwXSzbmjAuRbU=
+=3kq9
 -----END PGP SIGNATURE-----
 
---55Xqtn3yesDqtT5b--
+--SW4ma6pX22Vge8Dp--
