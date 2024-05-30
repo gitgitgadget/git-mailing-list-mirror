@@ -1,170 +1,91 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97A3176185
-	for <git@vger.kernel.org>; Thu, 30 May 2024 08:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.219])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FBFE14AAD
+	for <git@vger.kernel.org>; Thu, 30 May 2024 08:47:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.219
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717058354; cv=none; b=NaOhHoLDWR6+19GO7kLxOOAIJfJ0sMI6EEFUI/idlRATBIxeVXytEqAYj1t7mO0AAPKcTXyep2k+rzne9ajyA+BBHEUcrwCTlKwgK8ItglLQNgFJJpazEnqmRob/cHSIRDTeY+i+F+JWde4T4SUgeSOZVOKW7s1J/2GZ/F8c4jk=
+	t=1717058830; cv=none; b=kn4GkBG9x+XSpIlLQx6Q6rI5sOownbztJqV2qoqm7CfTClcD/wdsVHX8gkk36UHlaHvZJk2X20ByXywJF5ERbCd183P4CuexIps+C/UhsYS7rEiaR0L9mjPH/d3JnFT21sdI7ucCGcKH/O6Vgq5isODBhDywnHObp4jrqCjPAHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717058354; c=relaxed/simple;
-	bh=lcVT1Y8nyELF3//e38QY0N2fkP+N6eAUkC5OJUtfTzs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NiBGhDrzxb1wBX/pio9pmIl+CX/CRwwNQB1rU06CwLnQYIQV406GGEuuVNcuAR45fWyjnPsgYXkXFNNPn7+UqtKa34CUCPX9p3u+m5uqyV741ALwjax1nMeSVq15fWRH6JWWfEwAibxpnXdFB/UMxHegn3W1BWG+k6UaKB9wqpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E4Hh2HR9; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1717058830; c=relaxed/simple;
+	bh=quWxHcHaYfCCjTB9P9IVtt2jtqKm7CIBcnF/S3T81vk=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=HbYUxfeQi96IUf8+6pc49sPx0VJiuT8buwgiVSAH+XGpLwn0H6qitKYdTPmVLc7cRxRQVl41leCVN8QFYd37d1Hbh4UWqH038uUXFDOg3X8pfmiMNJWASkyV7qqB6OMRwpSEq67M5Lg0Hq+5Dn7+XWwrAiK15bLmswX0DKziO0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=oy0IfRDl reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.219
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E4Hh2HR9"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-70224f928edso639054b3a.0
-        for <git@vger.kernel.org>; Thu, 30 May 2024 01:39:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717058352; x=1717663152; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=w3KxxTzNrd/W92YibB6YYyJySfow1XRQPo2u2hF59JI=;
-        b=E4Hh2HR9bz6Xt0BHIUlbtAA1LIOg9tg0DYVk8qMzcAlf4XAsxjb9CyMBTQRM3HCJQl
-         LRB28jgI+M5n7Vp3xDkSefrofWnsrIDGtyfqbJ+YGDiDCbIr6grPsUrfefH4CQ0ifhMN
-         Ig9/3xY4lBOaV5vTs10E6Yd0DRr2SPmXMAM0n74QZZJ87vbrv05pUWWDwcC+/7hhpEN6
-         hGaZbOt6CCqX/+ZvVVKnuBhHb/7cQ9eQHJ62s01F2gGCyjJUJK91N+wbTkUe8lzihy3i
-         ajIMXVcJ948/PrvcHNMItK8qYM/mUyWNsX3jYTFaFJCgxOgpczRVIetUEVk/jd48UmcZ
-         KztA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717058352; x=1717663152;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w3KxxTzNrd/W92YibB6YYyJySfow1XRQPo2u2hF59JI=;
-        b=OHxcJYkgTQw8gpqHdsZzoCw6LH81DWxLB8qr7rjs5oMm/Rzgr0CNp/OO6RPTYFOV2L
-         YyrmHkLkt0R8iKdprM004mWgf7CD42Ml+cGGv0ctOsHKGssZMn4elB48hzPOMpblgpzY
-         wHIqKRnBpAPjN1NZtnOKiXiLCSrRN7DVG3JkPmmpHlC0JgYBQTnO8P1Sp/wPKK31+maF
-         I3KOSobEdOjNueaIeTxXSKeyoCJ3lyYPgmlDzNONI1LgbU308yWLCDctW6nk3mwgqhw9
-         1lP7BgxtSOOdNyVJxyBbgy0gpQmPxG5q7nsJf0exveJrb8DltkjTmb3MoO3A1NQ/DuvH
-         0SSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUPB+hA7Y+K5Yx79inyzH7XsUCHzZIYoJFLO60mMjK5XtzJhKUHkw0CUH6xT4x6aYmtwiWX+DS7/Adbq3FRd4QexoNN
-X-Gm-Message-State: AOJu0YyQfcCdi8cVifhZXXVLHjxyxopRRkJGPikcfGhx6yEPVF49NLa6
-	Kq6lYHuTaqZUnGJTrAeaeTl7JiKlKWHpDdlKgIBl40lw0K6vxXv5I9L820ozzJ8yMA==
-X-Google-Smtp-Source: AGHT+IF37WQKc6JRQFPBoS055n4MpkM2sSERThri98AQcMLQAnCB3rf8SMfoCayZAkDg2hIxqnFgag==
-X-Received: by 2002:a05:6a20:3d8d:b0:1af:e649:6f4 with SMTP id adf61e73a8af0-1b264633301mr1487329637.57.1717058351799;
-        Thu, 30 May 2024 01:39:11 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f476f665b0sm88339345ad.250.2024.05.30.01.39.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 May 2024 01:39:11 -0700 (PDT)
-Date: Thu, 30 May 2024 14:09:09 +0530
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	Christian Couder <chriscool@tuxfamily.org>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][PATCH] t/: migrate helper/test-example-decorate to the
- unit testing framework
-Message-ID: <tubjmjeczh6iigem32ulffvt2ucpygbm4frsr3jsps5tv2i7v5@ly3wge23zn6f>
-References: <20240528125837.31090-1-shyamthakkar001@gmail.com>
- <xmqq8qzsuwh1.fsf@gitster.g>
- <CAP8UFD1YVyZj-uGfGXp6UxMfj3kZC5XXNed-5s-jj=ROx4URnA@mail.gmail.com>
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="oy0IfRDl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=bxUMsCcctgnXHC5xZiZeDcyVKiHVraSAi9GYbGYV0dU=; b=o
+	y0IfRDlEy1VsTaU3wh8QjONaKAQeGIshsIIzEjlM3TtHcrbNl4eAkPI7jh6X+hLJ
+	1zaQPWYz0NXRRgE/6LibV0dgc1UwMfZIow9UfDU3pgKgjbjmSNs9LFjWw59xjIjq
+	qnXKY5mj21iCJtOt9UqiZhcETUuPv0ZGRRHW5MG428=
+Received: from bupt_xingxin$163.com ( [122.224.123.146] ) by
+ ajax-webmail-wmsvr-40-129 (Coremail) ; Thu, 30 May 2024 16:46:50 +0800
+ (CST)
+Date: Thu, 30 May 2024 16:46:50 +0800 (CST)
+From: "Xing Xin" <bupt_xingxin@163.com>
+To: "Patrick Steinhardt" <ps@pks.im>
+Cc: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"Karthik Nayak" <karthik.188@gmail.com>, 
+	"Xing Xin" <xingxin.xx@bytedance.com>
+Subject: Re:Re: Re: [PATCH v3 2/4] unbundle: introduce unbundle_fsck_flags
+ for fsckobjects handling
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+In-Reply-To: <ZlgC2TaXGjcNv2C0@tanuki>
+References: <pull.1730.v2.git.1716208605926.gitgitgadget@gmail.com>
+ <pull.1730.v3.git.1716824518.gitgitgadget@gmail.com>
+ <057c697970ff49301cd9dc6adef099f53d440c3c.1716824518.git.gitgitgadget@gmail.com>
+ <ZlXIDXfc_1lGb51J@tanuki>
+ <1d097be.b642.18fc58dfb70.Coremail.bupt_xingxin@163.com>
+ <ZlgC2TaXGjcNv2C0@tanuki>
+X-NTES-SC: AL_Qu2aBfyet0Aq5iWaYekXn0oVhe85UMW2ufsg3YReP500mCTM4QcEQltABUHxzMyBNyqhlDytThRXwdhIdIxYfI6x72082WdsU71eO612ohii
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD1YVyZj-uGfGXp6UxMfj3kZC5XXNed-5s-jj=ROx4URnA@mail.gmail.com>
+Message-ID: <4d855732.8dfe.18fc8ae32a0.Coremail.bupt_xingxin@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:_____wD3_zD6PFhmR7hSAA--.50562W
+X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiLwnubWVOD9PEDAAEse
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-On Thu, 30 May 2024, Christian Couder <christian.couder@gmail.com> wrote:
-> On Wed, May 29, 2024 at 11:41 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
-> 
-> > > +     TEST(t_add(&vars),
-> > > +          "Add 2 objects, one with a non-NULL decoration and one with a NULL decoration.");
-> > > +     TEST(t_readd(&vars),
-> > > +          "When re-adding an already existing object, the old decoration is returned.");
-> > > +     TEST(t_lookup(&vars),
-> > > +          "Lookup returns the added declarations, or NULL if the object was never added.");
-> > > +     TEST(t_loop(&vars), "The user can also loop through all entries.");
-> >
-> > These tests as a whole look like a faithful copy of the original
-> > done by cmd__example_decorate().
-> >
-> > I do not understand the criteria used to split them into the four
-> > separate helper functions.  It is not like they can be reused or
-> > reordered---for example, t_readd() must be done after t_add() has
-> > been done.
-> >
-> > What benefit are you trying to get out of these split?  IOW, what
-> > are we gaining by having four separate helper functions, instead of
-> > testing all of these same things in a single helper function t_all
-> > with something like
-> >
-> >         TEST(t_all(&vars), "Do all decorate tests.");
-> >
-
-In addition to what Christian said, doing it all in one function would
-provide no context as is. i.e. when we do it in a single function,
-
-*** unit-tests/bin/t-example-decorate ***
-# check "objects_noticed == 1" failed at t/unit-tests/t-example-decorate.c:46
-#    left: 2
-#   right: 1
-# should have 2 objects
-not ok 1 - All decorate tests
-1..1
-make[1]: *** [Makefile:78: unit-tests/bin/t-example-decorate] Error 1
-
-vs separated
-
-*** unit-tests/bin/t-example-decorate ***
-ok 1 - Add 2 objects, one with a non-NULL decoration and one with a NULL decoration.
-ok 2 - When re-adding an already existing object, the old decoration is returned.
-ok 3 - Lookup returns the added declarations, or NULL if the object was never added.
-# check "objects_noticed == 1" failed at t/unit-tests/t-example-decorate.c:56
-#    left: 2
-#   right: 1
-# should have 2 objects
-not ok 4 - The user can also loop through all entries.
-1..4
-make[1]: *** [Makefile:78: unit-tests/bin/t-example-decorate] Error 1
-
-The latter provides much more context (we almost don't have to open
-t-example-decorate.c file itself in some cases to know what failed)
-than the former. Now, of course we can add more test_msg()s to the
-former to improve, but I feel that this approach of splitting them
-provides and improves the information provided on stdout _without_
-adding any of my own test_msg()s. And I think that this is a good
-middleground between cluttering the stdout vs providing very little
-context while also remaining a faithful copy of the original.
-
-> > in cmd_main()?  If there is a concrete benefit of having larger
-> > number of smaller tests, would it make the result even better if we
-> > split t_add() further into t_add_one() that adds one with deco_a and
-> > t_add_two() that adds two with NULL?  The other helpers can of
-> > course be further split into individual pieces the same way.  What
-> > ere the criteria used to decide where to stop and use these four?
-> 
-> The original code has some kind of "sections" (or paragraphs)
-> separated using comments like:
-> 
->       /*
->        * Add 2 objects, one with a non-NULL decoration and one with a NULL
->        * decoration.
->        */
-> 
-> or:
-> 
->       /*
->        * When re-adding an already existing object, the old decoration is
->        * returned.
->        */
-> 
-> I think it makes sense to separate the code using functions matching
-> these "sections" and to reuse each comment in the TEST() macro that
-> calls the corresponding function. If this patch is rerolled for some
-> reason, I think it would be a good idea to mention this in the commit
-> message though.
-
-I agree about the commit message.
-
-Thanks.
+QXQgMjAyNC0wNS0zMCAxMjozODo0OSwgIlBhdHJpY2sgU3RlaW5oYXJkdCIgPHBzQHBrcy5pbT4g
+d3JvdGU6CltzbmlwXQo+PiA+Cj4+ID5Xb3VsZG4ndCB0aGlzIGhhdmUgYmVlbiBhIG5hdHVyYWwg
+Zml0IGZvciB0aGUgbmV3IGZsYWcsIGUuZy4gdmlhCj4+ID5zb21ldGhpbmcgbGlrZSBgVkVSSUZZ
+X0JVTkRMRV9GU0NLYD8KPj4gCj4+IEl0IG1ha2VzIHNlbnNlIHRvIG1lLiBDdXJyZW50bHksIHZl
+cmlmeV9idW5kbGVfZmxhZ3MgY29udHJvbHMgdGhlIGFtb3VudAo+PiBvZiBpbmZvcm1hdGlvbiBk
+aXNwbGF5ZWQgd2hlbiBjaGVja2luZyBhIGJ1bmRsZSdzIHByZXJlcXVpc2l0ZXMuIFRoZQo+PiBu
+ZXdseSBhZGRlZCB1bmJ1bmRsZV9mc2NrX2ZsYWdzIGlzIGRlc2lnbmVkIHRvIGNoZWNrIGZvciBi
+cm9rZW4gb2JqZWN0cwo+PiBkdXJpbmcgdGhlIHVuYnVuZGxlIHByb2Nlc3MsIHdoaWNoIGlzIGVz
+c2VudGlhbGx5IGEgZm9ybSBvZiBidW5kbGUKPj4gdmVyaWZpY2F0aW9uLiBJIGJlbGlldmUgd2Ug
+c2hvdWxkIGV4dGVuZCBzb21lIG9iamVjdCB2ZXJpZmljYXRpb24KPj4gY2FwYWJpbGl0aWVzIHRv
+IHRoZSBnaXQgYnVuZGxlIHZlcmlmeSBjb21tYW5kIGFzIHdlbGwsIHBlcmhhcHMgYnkgYWRkaW5n
+Cj4+IGEgLS1mc2NrLW9iamVjdHMgb3B0aW9uLgo+PiAKPj4gV2l0aCB0aGlzIGluIG1pbmQsIEkg
+c3VwcG9ydCBhZGRpbmcgbmV3IG9wdGlvbnMgdG8gdmVyaWZ5X2J1bmRsZV9mbGFncy4KPj4gU2lu
+Y2UgYnVuZGxlLmM6dW5idW5kbGUgbmVlZHMgdG8gY29tYmluZSBtdWx0aXBsZSBvcHRpb25zLCB3
+ZSBtdXN0Cj4+IGRlZmluZSBuZXcgb3B0aW9ucyB1c2luZyBiaXR3aXNlIHNoaWZ0aW5nOgo+PiAK
+Pj4gCWVudW0gdmVyaWZ5X2J1bmRsZV9mbGFncyB7Cj4+IAkJVkVSSUZZX0JVTkRMRV9WRVJCT1NF
+ID0gKDEgPDwgMCksCj4+IAkJVkVSSUZZX0JVTkRMRV9RVUlFVCA9ICgxIDw8IDEpLAo+PiAJCVZF
+UklGWV9CVU5ETEVfRlNDS19PQkpFQ1RTX0FMV0FZUyA9ICgxIDw8IDIpLAo+PiAJCVZFUklGWV9C
+VU5ETEVfRlNDS19PQkpFQ1RTX0ZPTExPV19GRVRDSCA9ICgxIDw8IDMpLAo+PiAJfTsKPj4gCj4+
+IEhvdyBhYm91dCB0aGUgbmFtaW5nPyBJJ20gbm90IHZlcnkgZ29vZCBhdCBuYW1pbmcgOikKPgo+
+SSBsYXRlciBub3RpY2VkIHRoYXQgeW91IGV4dGVuZCB0aGUgYHVuYnVuZGxlX2ZzY2tfZmxhZ3Ng
+IGluIGEgbGF0ZXIKPnBhdGNoLiBXaXRoIHRoYXQgaW4gbWluZCBJIGRvbid0IHRoaW5rIGl0J3Mg
+YWxsIHRoYXQgaW1wb3J0YW50IGFueW1vcmUKPnRvIG1lcmdlIHRob3NlIGludG8gdGhlIGB2ZXJp
+ZnlfYnVuZGxlX2ZsYWdzYCBhcyB5b3Ugd291bGQgb3RoZXJ3aXNlCj5hbGxvdyBmb3Igd2VpcmRu
+ZXNzLiBXaGF0IGhhcHBlbnMgZm9yIGV4YW1wbGUgd2hlbiBib3RoIGBBTFdBWVNgIGFuZAo+YEZP
+TExPV19GRVRDSGAgYXJlIHNldD8KPgo+U28gZmVlbCBmcmVlIHRvIGlnbm9yZSB0aGlzIGFkdmlj
+ZS4gSWYgeW91IHN0aWxsIHRoaW5rIGl0J3MgYSBnb29kIGlkZWEKPnRoZW4gdGhlIGFib3ZlIG5h
+bWluZyBsb29rcyBva2F5IHRvIG1lLgoKV2l0aCB0aGUgaWRlYSBvZiBleHRlbmRpbmcgIi0tZnNj
+ay1vYmplY3RzIiBzdXBwb3J0IGZvciAiZ2l0IGJ1bmRsZSB2ZXJpZnkiIGFuZAoiZ2l0IGJ1bmRs
+ZSB1bmJ1bmRsZSIsIEkgcHJlZmVyIHRvIGdyb3VwaW5nIHRoZXNlIG9wdGlvbnMgdG9nZXRoZXIu
+IEVzcGVjaWFsbHkKaW4gdGhlICJnaXQgYnVuZGxlIHZlcmlmeSIgc2NlbmFyaW8sIGFkZGluZyBh
+IG5ldyBwYXJhbWV0ZXIgbGlrZQpgdW5idW5kbGVfZnNja19mbGFnc2AgZm9yIGBidW5kbGUuYzp2
+ZXJpZnlfYnVuZGxlYCBpcyBjb25mdXNpbmcuCgpYaW5nIFhpbg==
