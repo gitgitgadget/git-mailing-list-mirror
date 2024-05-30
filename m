@@ -1,53 +1,53 @@
 Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A5E1474C3
-	for <git@vger.kernel.org>; Thu, 30 May 2024 12:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2301132121
+	for <git@vger.kernel.org>; Thu, 30 May 2024 12:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717073455; cv=none; b=bv9jmI+kG8RivL+4jj+gco9AemcRoXb7kJrqlV8GefZSEXT6ixdlEBdzsm1TIuYPHRGoBwi71JZnpSaA3Y+fUANtLv2rEXW5HluD9Qn4iuBdXAPK3NT6bZa8/ReCF/qdsYtbOQ3xhHdy1Ved+SgP1I/WAXdoOK20FfjQ1LKye64=
+	t=1717073460; cv=none; b=TvIlVAHOu4x55I4ciY6OmQX4qFNd4/p2RhJvQHIOoHfN9Yp9xlaTqs+XeZ+pLtmpfpPj9xwhgOEl3uYqKdaMzJYSguwAmgKAZvJysNv53zu5h7spumbViddvRF7P8B2fwzfSk3VgbaLb2gf7w8OiYUOUOB4NyDyluow5njisFxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717073455; c=relaxed/simple;
-	bh=axUNjoo5gPunrXbQrwsVzAOZ8Ef0ee+uBaJz/7QmobA=;
+	s=arc-20240116; t=1717073460; c=relaxed/simple;
+	bh=eoFozxUJxm9iWK4neLfVnLSRSDwko06rzNTlvBKWHtc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eMhhILw4qybeKg0l/Mjj0Pu9Iokdga1MgOSpDZDIImNFE2OSE+YiaiBW2hbR9pa7UdIsHWYPmPE78SX8KHanV2Ti0qlwTlx27ftlxvV+AdL+96buLLnLkQaPxqSyOlUM+AwXZOnwiZntBJtBwSE6S+Z3otcCFtcwkOWj3EiYQlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F37YBxJ9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KMS4Aujk; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=iiWQoE5KBfePxRRgxwbpYK7/hznJq1pcPiLiDIXv3+XQteAvj/hTnoiixFxjb1DaKzVVISjGtuFtfX5ODyGQzCLMak2XNDzqCvKy40O+WFXEmS8PYBvEfPQ+NeGQlNiw0ZgeGiobIARTZyM2FM9cCNgCz7Y7f4CyIBBcP52zJTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nwOlBTAP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VjvbytQA; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F37YBxJ9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KMS4Aujk"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id CDA5F1140150;
-	Thu, 30 May 2024 08:50:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nwOlBTAP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VjvbytQA"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 142431140150;
+	Thu, 30 May 2024 08:50:58 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Thu, 30 May 2024 08:50:52 -0400
+  by compute2.internal (MEProxy); Thu, 30 May 2024 08:50:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717073452; x=1717159852; bh=iKNvqJ6y10
-	siDBXcSXo0C4hKFXzFEmSeb/UMLZyHeCc=; b=F37YBxJ9rVYf2+yZzlxA6+MQF7
-	yAI819OmlxnC5H/0nay3IH/EAgiLFahGM78IRPwp4gUXxK3RcpZUz1zzDxNNi7+L
-	1PBg+nAAklbgxslTCLPVg+pHBT6qmXCe6ARjSKotHf1ajXr50Bb7OTh52wXIvPBD
-	6rzeQAsXDGro+JLFKX83YIKp2p+zNd3YRs7zkSRqmT7tEsPazwUk4k3lxc6alaww
-	QhzB15x5KG+HtQu42Pz7v0AcNBoJUvOp8VSnsq1dScRkbTyY0wVKS//b/cC6Q0VR
-	nSTPVOuihJSWNdE7e3jO19fU7T7+VF7ls1LLb43tmiIehsJGo3D1onH9GsIQ==
+	:subject:to:to; s=fm1; t=1717073458; x=1717159858; bh=xezap3fEGR
+	wg+779ydhRA2QIl2b+83PMCgILA9RlKaY=; b=nwOlBTAP70K6uG4w/rgZnC24Vc
+	dJa9c29PGaBs6CujIYV9mrLF3FXlCGvCF68DzDCe42EXMXETMkGmGZVya4cIywff
+	mmBOiNIGx8/WCsftoJQ8rVTT+9LxOYXNfmcIaTJCmW7uzkG+FTILMDmuizZboiJw
+	Lj2MgTFSM1SUm82bwz6Tu5qyaqNaR9wT6ry6so2HdAFpC+ksg11mu6i0zNAlgG4C
+	vPuKX8X0uNnFloe/QsOkncF+QcIvgPFQfJ1SjF+B2+ax5Qm5kaSFhyONIExiCJxY
+	lzxt4rmRsCA3ARlQAQT8ohkBmY9zg41/fJcyypqFe5M84ax0JYZDB5n8TERA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717073452; x=1717159852; bh=iKNvqJ6y10siDBXcSXo0C4hKFXzF
-	EmSeb/UMLZyHeCc=; b=KMS4AujkURozXc3nxIzRlct/EaEynhEcEiAaYo2Udp2V
-	3x30u1Sgh/Ktq0K4J51koYvp4i0xnNwrsyTw5RNj4P7FK/cJH1ilNiATLclMp2QI
-	qWTEthr+Nzr6b9oc6EXk3ebbGlyNMR9tqPkoZ7shVV7NkNUFALS7LNQWazbbj1SD
-	/nhxryJx2/30OTK8OK6ivcdaFevRBj6/Fn3dw5c+aAVQoY7sZKRPfT5nyiTx+LJs
-	3bhUAb92srn0mLw5ZYIY/x7XHvqpidaizkRwENgE4TMtyU8KYAYWh6iaWaToiVgZ
-	3hunUaY4RPmA+udICUJbi8dFYQ72kZUg9Bc8aVMldA==
-X-ME-Sender: <xms:LHZYZhZ43g62jKgmmyzNnvBEMuh_X7lnQMWrup9AV5J543UvsvNhLg>
-    <xme:LHZYZoYB20Q3WVcUg-V3DDU3KKrk41Vxryf6hdagJZ4Ze-jwjImOsxlC5oQ57mXSi
-    7w9V1U2jpX6V0LMpQ>
-X-ME-Received: <xmr:LHZYZj9ihqf4t71O40oKTfuhazG9nhhKHEuj_LHE9Ds6LfMas8PsIjeUfafTXhscjmQMq21FhdXMrPx0NS62PKUWVGM_a1Cn2QShe7jdtXVihfFZxg>
+	fm1; t=1717073458; x=1717159858; bh=xezap3fEGRwg+779ydhRA2QIl2b+
+	83PMCgILA9RlKaY=; b=VjvbytQAk/9drQhiwyekGEWpib9TFgHk524yswZhiyps
+	dWlY6A1HYnpRZcvJ87G6ARLdAAa7kAwRhNRG2nAowi5uHW39Iiy5aIcwciCqNQOE
+	nGgIN/8bm9YDQHpX7SMaQhZmLmXzpbEN+WVDbgtl3kSdHgiVR+ntBiomyUZXFieu
+	UA7Z5vyHpz/7WR4DdgKC82d7Tvt4JwPoZhZ+EKeNWk6Z1VTalKnbssU7/kBJ9VB4
+	Swg934Q14gpYNqqU6fAHoonBKml9Al+R+vOEcODb+Bl10BCgTB7mHqeXKNCe3q2O
+	YGXTwE4WI4MdGZ2+s5PYuBcWx3OtuDfHZdz5wrWDRg==
+X-ME-Sender: <xms:MXZYZnCSsWej1OiAkOc2LCWpt1LHRDxAxQVj4A3PF-WHB7VJYmW1hA>
+    <xme:MXZYZtgVYhc9jsx1cEN9GNP-jYjE1z8vEYsJ_uZYua5-UkrEULYfrmojlpm1NFL9S
+    3mYzyrX8umkcTpgWw>
+X-ME-Received: <xmr:MXZYZim14342T14CmQb2pQMRutU8DHH6hIl65byUr4h1BQeGOQ-UvFl4mtz1UHs7EIP45BLAfFNWjSvJMs2K4PPbzuO4jAUGQViokgmpehXmlPeV9g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekgedgheehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
@@ -55,24 +55,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekgedgheehucetufdoteggod
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
     eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:LHZYZvrac4ltGhkdTru7kMHRJhFt38dNUeW63rfGwYHt3Qnn-ThOlg>
-    <xmx:LHZYZsqczIOhauQRx9rrQuNluDTeOFWkPCyKv7tNbEcLj-_L_7JzjA>
-    <xmx:LHZYZlTaGiqS0t_M1puLVxVVdGazmUogURsjdFfeTyTTT4HLfkRHyg>
-    <xmx:LHZYZkr_o518w7OSJFd30fbfKVWW1cjGZZEMJ7JiOfbbQAur6PNyiQ>
-    <xmx:LHZYZnW23LrG8cvW2vQbANmG55lRyy25duwXLnE3fZ5lRwDjWj554zUq>
+X-ME-Proxy: <xmx:MXZYZpxkZnBgZwWjbVD7X2yBzd7CLy2THyCTqkJ-AKbdzYovc3qFUw>
+    <xmx:MXZYZsTCEB6BmbHArppa1BFJB30J66UDgSkf0GDy25HFjg4OVAyulQ>
+    <xmx:MXZYZsahteENBZc_8oUzGvgvoqeanGZrs5aN8alhjSgZGbnxwo8bug>
+    <xmx:MXZYZtRW05JCCCpS-6xFMU4JwlPveUcaVfVe1_BH290T2Uz-xs4qLw>
+    <xmx:MnZYZic6KimpV3WWPWLfD5tBaRpvsd8GGrHsg6O_lYKsCVv69h-H3yV5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 May 2024 08:50:51 -0400 (EDT)
+ 30 May 2024 08:50:56 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id d36737b2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 30 May 2024 12:50:35 +0000 (UTC)
-Date: Thu, 30 May 2024 14:50:49 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 2ba817d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 30 May 2024 12:50:40 +0000 (UTC)
+Date: Thu, 30 May 2024 14:50:54 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 04/19] compat/win32: fix const-correctness with string
- constants
-Message-ID: <961b3357d57296cb236c3832e1823ed44320a44c.1717073346.git.ps@pks.im>
+Subject: [PATCH v2 05/19] refspec: remove global tag refspec structure
+Message-ID: <b73a45133b3984a810c6c5e46924e3eb517d0fb4.1717073346.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717073346.git.ps@pks.im>
 Precedence: bulk
@@ -82,169 +81,154 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="y4C9Ub2GqtdH+iA6"
+	protocol="application/pgp-signature"; boundary="pY1i1c5QVYT7//b2"
 Content-Disposition: inline
 In-Reply-To: <cover.1717073346.git.ps@pks.im>
 
 
---y4C9Ub2GqtdH+iA6
+--pY1i1c5QVYT7//b2
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Adjust various places in our Win32 compatibility layer where we are not
-assigning string constants to `const char *` variables.
+We have a global tag refspec structure that is used by both git-clone(1)
+and git-fetch(1). Initialization fo the structure will break once we
+enable `-Wwrite-strings`, even though the breakage is harmless. While we
+could just add casts, the structure isn't really required in the first
+place as we can simply initialize the structures at the respective
+callsites.
+
+Refactor the code accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- compat/basename.c | 15 +++++++++++++--
- compat/mingw.c    | 25 +++++++++++++------------
- compat/winansi.c  |  2 +-
- 3 files changed, 27 insertions(+), 15 deletions(-)
+ builtin/clone.c |  8 ++++++--
+ builtin/fetch.c | 11 ++++++++---
+ refspec.c       | 13 -------------
+ refspec.h       |  1 -
+ 4 files changed, 14 insertions(+), 19 deletions(-)
 
-diff --git a/compat/basename.c b/compat/basename.c
-index 96bd9533b4..c3c9d65fac 100644
---- a/compat/basename.c
-+++ b/compat/basename.c
-@@ -1,6 +1,13 @@
- #include "../git-compat-util.h"
- #include "../strbuf.h"
-=20
-+/*
-+ * Both basename(3P) and dirname(3P) are mis-specified because they return=
- a
-+ * non-constant pointer even though it is specified that they may return a
-+ * pointer to internal memory. This variable here is a result of that.
-+ */
-+static char current_directory[] =3D ".";
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 92ab7d7165..bde1d284a2 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -523,6 +523,9 @@ static struct ref *wanted_peer_refs(const struct ref *r=
+efs,
+ 	struct ref *head =3D copy_ref(find_ref_by_name(refs, "HEAD"));
+ 	struct ref *local_refs =3D head;
+ 	struct ref **tail =3D head ? &head->next : &local_refs;
++	struct refspec_item tag_refspec;
 +
- /* Adapted from libiberty's basename.c.  */
- char *gitbasename (char *path)
- {
-@@ -10,7 +17,7 @@ char *gitbasename (char *path)
- 		skip_dos_drive_prefix(&path);
++	refspec_item_init(&tag_refspec, TAG_REFSPEC, 0);
 =20
- 	if (!path || !*path)
--		return ".";
-+		return current_directory;
+ 	if (option_single_branch) {
+ 		struct ref *remote_head =3D NULL;
+@@ -545,7 +548,7 @@ static struct ref *wanted_peer_refs(const struct ref *r=
+efs,
+ 					      &tail, 0);
 =20
- 	for (base =3D path; *path; path++) {
- 		if (!is_dir_sep(*path))
-@@ -33,8 +40,12 @@ char *gitdirname(char *path)
- 	char *p =3D path, *slash =3D NULL, c;
- 	int dos_drive_prefix;
-=20
-+	/*
-+	 * Same here, dirname(3P) is broken because it returns a non-constant
-+	 * pointer that may point to internal memory.
-+	 */
- 	if (!p)
--		return ".";
-+		return current_directory;
-=20
- 	if ((dos_drive_prefix =3D skip_dos_drive_prefix(&p)) && !*p)
- 		goto dot;
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 6b06ea540f..60f0986f76 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2257,6 +2257,7 @@ struct passwd *getpwuid(int uid)
- {
- 	static unsigned initialized;
- 	static char user_name[100];
-+	static char unknown[] =3D "unknown";
- 	static struct passwd *p;
- 	wchar_t buf[100];
- 	DWORD len;
-@@ -2279,7 +2280,7 @@ struct passwd *getpwuid(int uid)
- 	p->pw_name =3D user_name;
- 	p->pw_gecos =3D get_extended_user_info(NameDisplay);
- 	if (!p->pw_gecos)
--		p->pw_gecos =3D "unknown";
-+		p->pw_gecos =3D unknown;
- 	p->pw_dir =3D NULL;
-=20
- 	initialized =3D 1;
-@@ -2800,16 +2801,16 @@ int is_path_owned_by_current_sid(const char *path, =
-struct strbuf *report)
- 			strbuf_addf(report, "'%s' is on a file system that does "
- 				    "not record ownership\n", path);
- 		} else if (report) {
--			LPSTR str1, str2, str3, str4, to_free1 =3D NULL,
--			    to_free3 =3D NULL, to_local_free2 =3D NULL,
--			    to_local_free4 =3D NULL;
-+			PCSTR str1, str2, str3, str4;
-+			LPSTR to_free1 =3D NULL, to_free3 =3D NULL,
-+			    to_local_free2 =3D NULL, to_local_free4 =3D NULL;
-=20
--			if (user_sid_to_user_name(sid, &str1))
--				to_free1 =3D str1;
-+			if (user_sid_to_user_name(sid, &to_free1))
-+				str1 =3D to_free1;
- 			else
- 				str1 =3D "(inconvertible)";
--			if (ConvertSidToStringSidA(sid, &str2))
--				to_local_free2 =3D str2;
-+			if (ConvertSidToStringSidA(sid, &to_local_free2))
-+				str2 =3D to_local_free2;
- 			else
- 				str2 =3D "(inconvertible)";
-=20
-@@ -2822,13 +2823,13 @@ int is_path_owned_by_current_sid(const char *path, =
-struct strbuf *report)
- 				str4 =3D "(invalid)";
- 			} else {
- 				if (user_sid_to_user_name(current_user_sid,
--							  &str3))
--					to_free3 =3D str3;
-+							  &to_free3))
-+					str3 =3D to_free3;
- 				else
- 					str3 =3D "(inconvertible)";
- 				if (ConvertSidToStringSidA(current_user_sid,
--							   &str4))
--					to_local_free4 =3D str4;
-+							   &to_local_free4))
-+					str4 =3D to_local_free4;
- 				else
- 					str4 =3D "(inconvertible)";
- 			}
-diff --git a/compat/winansi.c b/compat/winansi.c
-index f83610f684..575813bde8 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -139,7 +139,7 @@ static void write_console(unsigned char *str, size_t le=
-n)
- 	/* convert utf-8 to utf-16 */
- 	int wlen =3D xutftowcsn(wbuf, (char*) str, ARRAY_SIZE(wbuf), len);
- 	if (wlen < 0) {
--		wchar_t *err =3D L"[invalid]";
-+		const wchar_t *err =3D L"[invalid]";
- 		WriteConsoleW(console, err, wcslen(err), &dummy, NULL);
- 		return;
+ 			/* if --branch=3Dtag, pull the requested tag explicitly */
+-			get_fetch_map(remote_head, tag_refspec, &tail, 0);
++			get_fetch_map(remote_head, &tag_refspec, &tail, 0);
+ 		}
+ 		free_refs(remote_head);
+ 	} else {
+@@ -555,8 +558,9 @@ static struct ref *wanted_peer_refs(const struct ref *r=
+efs,
  	}
+=20
+ 	if (!option_mirror && !option_single_branch && !option_no_tags)
+-		get_fetch_map(refs, tag_refspec, &tail, 0);
++		get_fetch_map(refs, &tag_refspec, &tail, 0);
+=20
++	refspec_item_clear(&tag_refspec);
+ 	return local_refs;
+ }
+=20
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 75255dc600..06b60867f5 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -582,11 +582,16 @@ static struct ref *get_ref_map(struct remote *remote,
+ 		}
+ 	}
+=20
+-	if (tags =3D=3D TAGS_SET)
++	if (tags =3D=3D TAGS_SET) {
++		struct refspec_item tag_refspec;
++
+ 		/* also fetch all tags */
+-		get_fetch_map(remote_refs, tag_refspec, &tail, 0);
+-	else if (tags =3D=3D TAGS_DEFAULT && *autotags)
++		refspec_item_init(&tag_refspec, TAG_REFSPEC, 0);
++		get_fetch_map(remote_refs, &tag_refspec, &tail, 0);
++		refspec_item_clear(&tag_refspec);
++	} else if (tags =3D=3D TAGS_DEFAULT && *autotags) {
+ 		find_non_local_tags(remote_refs, NULL, &ref_map, &tail);
++	}
+=20
+ 	/* Now append any refs to be updated opportunistically: */
+ 	*tail =3D orefs;
+diff --git a/refspec.c b/refspec.c
+index d60932f4de..1df5de6c2f 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -7,19 +7,6 @@
+ #include "refspec.h"
+ #include "strbuf.h"
+=20
+-static struct refspec_item s_tag_refspec =3D {
+-	.force =3D 0,
+-	.pattern =3D 1,
+-	.matching =3D 0,
+-	.exact_sha1 =3D 0,
+-	.negative =3D 0,
+-	.src =3D "refs/tags/*",
+-	.dst =3D "refs/tags/*",
+-};
+-
+-/* See TAG_REFSPEC for the string version */
+-const struct refspec_item *tag_refspec =3D &s_tag_refspec;
+-
+ /*
+  * Parses the provided refspec 'refspec' and populates the refspec_item 'i=
+tem'.
+  * Returns 1 if successful and 0 if the refspec is invalid.
+diff --git a/refspec.h b/refspec.h
+index 8c0c446993..754be45cee 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -2,7 +2,6 @@
+ #define REFSPEC_H
+=20
+ #define TAG_REFSPEC "refs/tags/*:refs/tags/*"
+-extern const struct refspec_item *tag_refspec;
+=20
+ /**
+  * A struct refspec_item holds the parsed interpretation of a refspec.  If=
+ it
 --=20
 2.45.1.313.g3a57aa566a.dirty
 
 
---y4C9Ub2GqtdH+iA6
+--pY1i1c5QVYT7//b2
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZYdigACgkQVbJhu7ck
-PpRPNA//fTL/17Lo77PkDzJTwDfA2dj7RzCOl/SaUb+sPsolGojVOAL9P1NcE6qM
-UJ3LTYIKeUjpX4cIik2Ag3f56shbjv0kaBsGqjm83k2yekZthdyBtMR2CVDZUwIm
-L00KVYONh1Hjy8I6g301OZE+OcxkskAezcWcSBolwWLWGGpwNFUf65Xu3MIwJYV+
-2hBJMRdNeuJhMNO/5p4ksBl1gBI0+j7EaUWX67ussiof/E9M0kUGlNQ/lG+ke0d+
-dU3yxiCahKdUDZNJytMLfqsBgb8tRvsfu+9lmRL7E/7Wba7/XrDJTvzGKVZhhn3Q
-Eed8bVy8oFbZFZwbo5esf/tetgfzXEVlbrSO5XVZhtAy2V1TB24xcEaYcLfvQDY3
-ACLfoXB9dLvasoyMwZNJmKaFa+W2bBA0nhgkrxB+/uX6hLtBfpi6SoVYsVdy8b79
-zCPWcFcq/tdlRVQr/cICNGx3AQ8Ld8Hds3WOygpi93WUURpgNh4lMoGdAeRttFoA
-GIOEY8Dkc3NFMeycWaUZKpO1eLfq4mo2JWbMlE7czkUb1oP0VvgbqZKotD9i1Xh/
-3NxncgH4svpyT09tGAuNZe76V5irjRvy6UF39VLVaQ933z/jK5FouFAngmCgVdKf
-2w22k+qIhDFACcgLKFHHifgnDRSBFwGnbQpSSriBSzn5vktngZ8=
-=CtCN
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZYdi0ACgkQVbJhu7ck
+PpRRHg/8D6TDo0mNt3/NvT6dkwo6teEXkRt9yF9475xF9Fy/2kp7I5C4IajdGipH
+6+JhlSBDZowT+wnSpj3JvFdB5aKGTaAKr3TCGqnZ1N/5iSI/WciK9IpvvsXSX4EH
+Wygu8+Ws0UiHCrjXyVpHkW4xQiUvAUeU2ioWWWpanwvH/ACTf1YXBI062GFLzxLY
+zkEIK2y5Do4eS8LtOklBORDXGFiqbw6wT/hTvuAMhjjxU9WpAq6bX0KqFpDr6RmB
+IrnFd1ev94slDMC6roCT/vr/lAPWPI/gf+dkFdSoUy0mv6/kqmruKc3myeVvV2w0
+FDpVDToYzSOZoX5aEY7NTfkXBTftxtCdrG3vB7Rbt0x3mU4n4k970JeJlyI4p3rf
+cSbZf4JRh239f2v1Z3pUjli2BNAqdUel6eSprupkdub1cf1wGJ8Ad5q+se9eEHOb
+90aVRriDgIW4IqOl6MbUhAlzMU0CDQ3Bsm+SAFaotEs9fzF3uuv9irxYINljmxo1
+p+2sYaH/R6QCr02YUfqBtLAg6aYaHwzFf0gn/Xst+lhUqwANBYU2mzp0UyKaH8VE
+wTRgKaGiWz09X4HNoF3lctIfYZNf08WCANzfVsKFMjqUZNRLdNHBO4WFlYQMNwL5
+ATKqhUkp6aQjbuG9f4B7PEnST2B0f7zTraU8XwndGAKNUPAPCWM=
+=kgeM
 -----END PGP SIGNATURE-----
 
---y4C9Ub2GqtdH+iA6--
+--pY1i1c5QVYT7//b2--
