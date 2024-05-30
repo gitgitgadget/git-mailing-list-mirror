@@ -1,77 +1,78 @@
 Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2301132121
-	for <git@vger.kernel.org>; Thu, 30 May 2024 12:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABB316FF26
+	for <git@vger.kernel.org>; Thu, 30 May 2024 12:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717073460; cv=none; b=TvIlVAHOu4x55I4ciY6OmQX4qFNd4/p2RhJvQHIOoHfN9Yp9xlaTqs+XeZ+pLtmpfpPj9xwhgOEl3uYqKdaMzJYSguwAmgKAZvJysNv53zu5h7spumbViddvRF7P8B2fwzfSk3VgbaLb2gf7w8OiYUOUOB4NyDyluow5njisFxY=
+	t=1717073464; cv=none; b=D3d8gYw6NB2DrBK6/7dkRUF8Yp1TFpn+Y5iYrTb2e5pLFWRO69+lKCP3CDnJLlGbNRTnMSSnjExe5+px6z/JJFbqlh9QzziA2pHICQzNUp5YfzK/2alLwhZyQHTT4Qub023kj/ZMi7rTnti0m3ussz/bqEl9Pd8RFi+NxdTxpCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717073460; c=relaxed/simple;
-	bh=eoFozxUJxm9iWK4neLfVnLSRSDwko06rzNTlvBKWHtc=;
+	s=arc-20240116; t=1717073464; c=relaxed/simple;
+	bh=YjnPR//gUwTDMcLUh9J5uvmKK6a5Vvb4uk+f2sk+0MU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iiWQoE5KBfePxRRgxwbpYK7/hznJq1pcPiLiDIXv3+XQteAvj/hTnoiixFxjb1DaKzVVISjGtuFtfX5ODyGQzCLMak2XNDzqCvKy40O+WFXEmS8PYBvEfPQ+NeGQlNiw0ZgeGiobIARTZyM2FM9cCNgCz7Y7f4CyIBBcP52zJTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nwOlBTAP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VjvbytQA; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=SyQS0k5WrATGXF8sAy4+P4B5wa99b1IQczMFN6osRyH25ZBk//9SeLLaGVWzo6dlgeBwfg/0/B3e2ULHGKmEAdyfmZHg9Rws3J7dUKMIM+tcxCzVa4MktGXW5F8u32R7kOPPl5buYNUR6mRlRuBrYaZiytPZ2Sc7iUPM+yVD/QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T+vKL4cf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ykn2m/QN; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nwOlBTAP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VjvbytQA"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 142431140150;
-	Thu, 30 May 2024 08:50:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T+vKL4cf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ykn2m/QN"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 57B2B1140153;
+	Thu, 30 May 2024 08:51:02 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 30 May 2024 08:50:58 -0400
+  by compute7.internal (MEProxy); Thu, 30 May 2024 08:51:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717073458; x=1717159858; bh=xezap3fEGR
-	wg+779ydhRA2QIl2b+83PMCgILA9RlKaY=; b=nwOlBTAP70K6uG4w/rgZnC24Vc
-	dJa9c29PGaBs6CujIYV9mrLF3FXlCGvCF68DzDCe42EXMXETMkGmGZVya4cIywff
-	mmBOiNIGx8/WCsftoJQ8rVTT+9LxOYXNfmcIaTJCmW7uzkG+FTILMDmuizZboiJw
-	Lj2MgTFSM1SUm82bwz6Tu5qyaqNaR9wT6ry6so2HdAFpC+ksg11mu6i0zNAlgG4C
-	vPuKX8X0uNnFloe/QsOkncF+QcIvgPFQfJ1SjF+B2+ax5Qm5kaSFhyONIExiCJxY
-	lzxt4rmRsCA3ARlQAQT8ohkBmY9zg41/fJcyypqFe5M84ax0JYZDB5n8TERA==
+	:subject:to:to; s=fm1; t=1717073462; x=1717159862; bh=d00xM7BYnB
+	23WsryHd7RCDVIRPj6lQO3D3j/Nzjv6uE=; b=T+vKL4cfSp6mD0A61tjOt9BmNh
+	0D4+tGV/i+nbwOcw3MqkUjru0VbTiiHDsFFy5Fra4kZrd+y+v9cKqKi2vBpByyxG
+	gPTlEn9vcED9hmZpqxEGT+0ajUg80qRPNTM9i4Wb0qb8CCPsYaC0RLsRzX2gEOq+
+	7ZXB/ElDnU4eOYnH5LnZM9tCgnQrVJB24eYMWRsiDvRJpOhtujnOU23BW19h9eyw
+	+WFqDHG98Slnk77GroTISMxe7AH0NXGbpAdOdgJqyh3DkVrNw/5RSRamapc7Y2iw
+	Iw/kvT+OfZRifAjraUb3LrPGZeV+3uS1PrGf5WQayzu5BIJGzrsnDEdmLGIw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717073458; x=1717159858; bh=xezap3fEGRwg+779ydhRA2QIl2b+
-	83PMCgILA9RlKaY=; b=VjvbytQAk/9drQhiwyekGEWpib9TFgHk524yswZhiyps
-	dWlY6A1HYnpRZcvJ87G6ARLdAAa7kAwRhNRG2nAowi5uHW39Iiy5aIcwciCqNQOE
-	nGgIN/8bm9YDQHpX7SMaQhZmLmXzpbEN+WVDbgtl3kSdHgiVR+ntBiomyUZXFieu
-	UA7Z5vyHpz/7WR4DdgKC82d7Tvt4JwPoZhZ+EKeNWk6Z1VTalKnbssU7/kBJ9VB4
-	Swg934Q14gpYNqqU6fAHoonBKml9Al+R+vOEcODb+Bl10BCgTB7mHqeXKNCe3q2O
-	YGXTwE4WI4MdGZ2+s5PYuBcWx3OtuDfHZdz5wrWDRg==
-X-ME-Sender: <xms:MXZYZnCSsWej1OiAkOc2LCWpt1LHRDxAxQVj4A3PF-WHB7VJYmW1hA>
-    <xme:MXZYZtgVYhc9jsx1cEN9GNP-jYjE1z8vEYsJ_uZYua5-UkrEULYfrmojlpm1NFL9S
-    3mYzyrX8umkcTpgWw>
-X-ME-Received: <xmr:MXZYZim14342T14CmQb2pQMRutU8DHH6hIl65byUr4h1BQeGOQ-UvFl4mtz1UHs7EIP45BLAfFNWjSvJMs2K4PPbzuO4jAUGQViokgmpehXmlPeV9g>
+	fm1; t=1717073462; x=1717159862; bh=d00xM7BYnB23WsryHd7RCDVIRPj6
+	lQO3D3j/Nzjv6uE=; b=Ykn2m/QNYRlEPx7Fnxuw0O15Cm8SBp2nf1fj5k+/XYqu
+	2ns/l6UHwTB7+xpMNfuzwFrl+PBDUMpj4yTePnQ+GlzRHjiSoYTryPWwQ1t24bC0
+	+RAT2hKVXOfJUm2VPXVlVbSCDmfmmKaAmTBZT2DcLbdEzxwYGoxu2Ux+m+5p+pdf
+	MbitM7QCBG8lK8eCn0TC3lvgXRnEI739FAy/HtNh6OOfX24JEyjpMTTyxXPpCJNe
+	7hX1/eqvkvkV6RLmhBSsVuMOU6fg6Uyv3u//vzAxXslYsxSfl6agPWWJYw53aOpR
+	taHgCFlvN+Snx9Q3P1u4HCEYoHnU7+OnISwlz/2YDA==
+X-ME-Sender: <xms:NnZYZphVCn5KK8O9U81RgHbDKAGWUsGIUJWsclD4_vOMSExpf0oKgQ>
+    <xme:NnZYZuAdY_Nx9UQoXxpxlRyXHfecyMtBA-5nvZXyLb7jjCyLClge5l4DJfu-vXpa0
+    zcYY0DRoDX_BEcekw>
+X-ME-Received: <xmr:NnZYZpFQ62_3W955VyqZUbo9CZGPrBTo74j9FUV5R1_jEzcxT4zbjjfj6zTsJsoLJ8WMDhG43eqVUZrr9uQB3EiJOHAZFKyCBLp27ywX5SbNK0jUow>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekgedgheehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:MXZYZpxkZnBgZwWjbVD7X2yBzd7CLy2THyCTqkJ-AKbdzYovc3qFUw>
-    <xmx:MXZYZsTCEB6BmbHArppa1BFJB30J66UDgSkf0GDy25HFjg4OVAyulQ>
-    <xmx:MXZYZsahteENBZc_8oUzGvgvoqeanGZrs5aN8alhjSgZGbnxwo8bug>
-    <xmx:MXZYZtRW05JCCCpS-6xFMU4JwlPveUcaVfVe1_BH290T2Uz-xs4qLw>
-    <xmx:MnZYZic6KimpV3WWPWLfD5tBaRpvsd8GGrHsg6O_lYKsCVv69h-H3yV5>
+X-ME-Proxy: <xmx:NnZYZuT_Ilpi_UKqI9slh5PtNQeRwaEaqsY4HvYkVW-BQQMgFWS8dA>
+    <xmx:NnZYZmyQQa3fDBnhWMAG6N61nsTYc0wsaG0wJPAJgplnHvdM4QdlpA>
+    <xmx:NnZYZk4iIvnrq2XYj-pvMLtV8Dl-8BtViWchtl5v0PeIxoDGaJRlLg>
+    <xmx:NnZYZrxA4HQDbSTjtSBUuxFXOKen8dR5JM-66WH-LcaYz95DL2N-YQ>
+    <xmx:NnZYZq9Do539aWPgmkZZEs0EAx9vbum_Uma7hVM9HSW7maMLNzVyowit>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 May 2024 08:50:56 -0400 (EDT)
+ 30 May 2024 08:51:01 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 2ba817d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 30 May 2024 12:50:40 +0000 (UTC)
-Date: Thu, 30 May 2024 14:50:54 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id b7723961 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 30 May 2024 12:50:45 +0000 (UTC)
+Date: Thu, 30 May 2024 14:50:59 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 05/19] refspec: remove global tag refspec structure
-Message-ID: <b73a45133b3984a810c6c5e46924e3eb517d0fb4.1717073346.git.ps@pks.im>
+Subject: [PATCH v2 06/19] http: do not assign string constant to non-const
+ field
+Message-ID: <6da87a09056f9394387c61882586010976d07bf5.1717073346.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717073346.git.ps@pks.im>
 Precedence: bulk
@@ -81,154 +82,74 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pY1i1c5QVYT7//b2"
+	protocol="application/pgp-signature"; boundary="WaJxQu4K+As1w7LC"
 Content-Disposition: inline
 In-Reply-To: <cover.1717073346.git.ps@pks.im>
 
 
---pY1i1c5QVYT7//b2
+--WaJxQu4K+As1w7LC
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We have a global tag refspec structure that is used by both git-clone(1)
-and git-fetch(1). Initialization fo the structure will break once we
-enable `-Wwrite-strings`, even though the breakage is harmless. While we
-could just add casts, the structure isn't really required in the first
-place as we can simply initialize the structures at the respective
-callsites.
+In `write_accept_language()`, we put all acceptable languages into an
+array. While all entries in that array are allocated strings, the final
+entry in that array is a string constant. This is fine because we
+explicitly skip over the last entry when freeing the array, but will
+cause warnings once we enable `-Wwrite-strings`.
 
-Refactor the code accordingly.
+Adapt the code to also allocate the final entry.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/clone.c |  8 ++++++--
- builtin/fetch.c | 11 ++++++++---
- refspec.c       | 13 -------------
- refspec.h       |  1 -
- 4 files changed, 14 insertions(+), 19 deletions(-)
+ http.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 92ab7d7165..bde1d284a2 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -523,6 +523,9 @@ static struct ref *wanted_peer_refs(const struct ref *r=
-efs,
- 	struct ref *head =3D copy_ref(find_ref_by_name(refs, "HEAD"));
- 	struct ref *local_refs =3D head;
- 	struct ref **tail =3D head ? &head->next : &local_refs;
-+	struct refspec_item tag_refspec;
-+
-+	refspec_item_init(&tag_refspec, TAG_REFSPEC, 0);
+diff --git a/http.c b/http.c
+index 67cc47d28f..2dea2d03da 100644
+--- a/http.c
++++ b/http.c
+@@ -1974,7 +1974,7 @@ static void write_accept_language(struct strbuf *buf)
 =20
- 	if (option_single_branch) {
- 		struct ref *remote_head =3D NULL;
-@@ -545,7 +548,7 @@ static struct ref *wanted_peer_refs(const struct ref *r=
-efs,
- 					      &tail, 0);
+ 		/* add '*' */
+ 		REALLOC_ARRAY(language_tags, num_langs + 1);
+-		language_tags[num_langs++] =3D "*"; /* it's OK; this won't be freed */
++		language_tags[num_langs++] =3D xstrdup("*");
 =20
- 			/* if --branch=3Dtag, pull the requested tag explicitly */
--			get_fetch_map(remote_head, tag_refspec, &tail, 0);
-+			get_fetch_map(remote_head, &tag_refspec, &tail, 0);
+ 		/* compute decimal_places */
+ 		for (max_q =3D 1, decimal_places =3D 0;
+@@ -2004,8 +2004,7 @@ static void write_accept_language(struct strbuf *buf)
  		}
- 		free_refs(remote_head);
- 	} else {
-@@ -555,8 +558,9 @@ static struct ref *wanted_peer_refs(const struct ref *r=
-efs,
  	}
 =20
- 	if (!option_mirror && !option_single_branch && !option_no_tags)
--		get_fetch_map(refs, tag_refspec, &tail, 0);
-+		get_fetch_map(refs, &tag_refspec, &tail, 0);
-=20
-+	refspec_item_clear(&tag_refspec);
- 	return local_refs;
+-	/* free language tags -- last one is a static '*' */
+-	for (i =3D 0; i < num_langs - 1; i++)
++	for (i =3D 0; i < num_langs; i++)
+ 		free(language_tags[i]);
+ 	free(language_tags);
  }
-=20
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 75255dc600..06b60867f5 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -582,11 +582,16 @@ static struct ref *get_ref_map(struct remote *remote,
- 		}
- 	}
-=20
--	if (tags =3D=3D TAGS_SET)
-+	if (tags =3D=3D TAGS_SET) {
-+		struct refspec_item tag_refspec;
-+
- 		/* also fetch all tags */
--		get_fetch_map(remote_refs, tag_refspec, &tail, 0);
--	else if (tags =3D=3D TAGS_DEFAULT && *autotags)
-+		refspec_item_init(&tag_refspec, TAG_REFSPEC, 0);
-+		get_fetch_map(remote_refs, &tag_refspec, &tail, 0);
-+		refspec_item_clear(&tag_refspec);
-+	} else if (tags =3D=3D TAGS_DEFAULT && *autotags) {
- 		find_non_local_tags(remote_refs, NULL, &ref_map, &tail);
-+	}
-=20
- 	/* Now append any refs to be updated opportunistically: */
- 	*tail =3D orefs;
-diff --git a/refspec.c b/refspec.c
-index d60932f4de..1df5de6c2f 100644
---- a/refspec.c
-+++ b/refspec.c
-@@ -7,19 +7,6 @@
- #include "refspec.h"
- #include "strbuf.h"
-=20
--static struct refspec_item s_tag_refspec =3D {
--	.force =3D 0,
--	.pattern =3D 1,
--	.matching =3D 0,
--	.exact_sha1 =3D 0,
--	.negative =3D 0,
--	.src =3D "refs/tags/*",
--	.dst =3D "refs/tags/*",
--};
--
--/* See TAG_REFSPEC for the string version */
--const struct refspec_item *tag_refspec =3D &s_tag_refspec;
--
- /*
-  * Parses the provided refspec 'refspec' and populates the refspec_item 'i=
-tem'.
-  * Returns 1 if successful and 0 if the refspec is invalid.
-diff --git a/refspec.h b/refspec.h
-index 8c0c446993..754be45cee 100644
---- a/refspec.h
-+++ b/refspec.h
-@@ -2,7 +2,6 @@
- #define REFSPEC_H
-=20
- #define TAG_REFSPEC "refs/tags/*:refs/tags/*"
--extern const struct refspec_item *tag_refspec;
-=20
- /**
-  * A struct refspec_item holds the parsed interpretation of a refspec.  If=
- it
 --=20
 2.45.1.313.g3a57aa566a.dirty
 
 
---pY1i1c5QVYT7//b2
+--WaJxQu4K+As1w7LC
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZYdi0ACgkQVbJhu7ck
-PpRRHg/8D6TDo0mNt3/NvT6dkwo6teEXkRt9yF9475xF9Fy/2kp7I5C4IajdGipH
-6+JhlSBDZowT+wnSpj3JvFdB5aKGTaAKr3TCGqnZ1N/5iSI/WciK9IpvvsXSX4EH
-Wygu8+Ws0UiHCrjXyVpHkW4xQiUvAUeU2ioWWWpanwvH/ACTf1YXBI062GFLzxLY
-zkEIK2y5Do4eS8LtOklBORDXGFiqbw6wT/hTvuAMhjjxU9WpAq6bX0KqFpDr6RmB
-IrnFd1ev94slDMC6roCT/vr/lAPWPI/gf+dkFdSoUy0mv6/kqmruKc3myeVvV2w0
-FDpVDToYzSOZoX5aEY7NTfkXBTftxtCdrG3vB7Rbt0x3mU4n4k970JeJlyI4p3rf
-cSbZf4JRh239f2v1Z3pUjli2BNAqdUel6eSprupkdub1cf1wGJ8Ad5q+se9eEHOb
-90aVRriDgIW4IqOl6MbUhAlzMU0CDQ3Bsm+SAFaotEs9fzF3uuv9irxYINljmxo1
-p+2sYaH/R6QCr02YUfqBtLAg6aYaHwzFf0gn/Xst+lhUqwANBYU2mzp0UyKaH8VE
-wTRgKaGiWz09X4HNoF3lctIfYZNf08WCANzfVsKFMjqUZNRLdNHBO4WFlYQMNwL5
-ATKqhUkp6aQjbuG9f4B7PEnST2B0f7zTraU8XwndGAKNUPAPCWM=
-=kgeM
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZYdjIACgkQVbJhu7ck
+PpRmixAAqrHJsLKV9xSOxeM+mvWuJM7clNoEb2bbL+q+q8/85lGmclyAfMbjMQa0
+TyxtVFDkH2/YXeZ0EMoJUsFQR0K3Qvpmty6ZlXoXhRsEuWD+dZhSROjqXYm+eV5G
+c+P7BJ8R1At2fdF2ic1JjZ2jeo3y8wYUZsCiiYJwFpjZbaaGO8W3AFMjHzEly9wQ
+K6mqgAeh52lTJ9J41V9kPFeI91ELyyLjrj0fGEK0XgGxF+604Wcft4eBZwdOVidq
+HnkrGQIXPKrHptEvez/f0uGPr5y7M49QP5rK/mQHntX+PsikAt3tmht2jBhZGKHa
+PTlLrkKh9mVEEHFuA4OZlXxnhKaC68mem4g0/nPGa/gTPqKabZ1XLpVp5nyoL/9z
+9DB7Y0yB4UgvDsF33nmuwVAlcKb7wMmVtABQEMMdEMXDRfxkU7O/KzCRQQ8yIJOQ
+sIu0c/nJIwbsHhQS0MNoFcsnP4iuRHlRmmVjqAdes1LuZIPrOUAHZDseiJaUbwPb
+Z4Pt+WTB+PGoR8a/yr1AnB0InD+WuNuWTVXrLphcg8M5bRapobHUnBOIrMhet6Hl
+540zVeQEQqBPTQ5nPypbwGLygLvItaF1q+3WOJvNn0x/HLJIFc3xmzx7MNLS8lrd
+wUNx3hGtYwUsODOdKf6rDAzdtSYTrHJqocFB2B+OU00Cbl3clQY=
+=MT3c
 -----END PGP SIGNATURE-----
 
---pY1i1c5QVYT7//b2--
+--WaJxQu4K+As1w7LC--
