@@ -1,47 +1,47 @@
-Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.219])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FBFE14AAD
-	for <git@vger.kernel.org>; Thu, 30 May 2024 08:47:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.219
+Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F1B71761BF
+	for <git@vger.kernel.org>; Thu, 30 May 2024 08:49:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717058830; cv=none; b=kn4GkBG9x+XSpIlLQx6Q6rI5sOownbztJqV2qoqm7CfTClcD/wdsVHX8gkk36UHlaHvZJk2X20ByXywJF5ERbCd183P4CuexIps+C/UhsYS7rEiaR0L9mjPH/d3JnFT21sdI7ucCGcKH/O6Vgq5isODBhDywnHObp4jrqCjPAHE=
+	t=1717058964; cv=none; b=W8AcCySAhp6H96/Zn525SGcDMDlsQpiyPqWNfl0qpfvWzpPGpaP4usz7Pod/GTSDiMsc4Nfq8GOdpHRZr7vvEMLB0TM6eHM+qhYZ9sXxJyMQuPtsT1C24P7tE5yiiXF0LjVxMb4VjJg79Qx5MjLm03tcXJgB8Lm/dIqlCyG9PbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717058830; c=relaxed/simple;
-	bh=quWxHcHaYfCCjTB9P9IVtt2jtqKm7CIBcnF/S3T81vk=;
+	s=arc-20240116; t=1717058964; c=relaxed/simple;
+	bh=g8Sa2WrCLNuBdypAt0fDE4loPl8SSkLHCbiTUTJHsuQ=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=HbYUxfeQi96IUf8+6pc49sPx0VJiuT8buwgiVSAH+XGpLwn0H6qitKYdTPmVLc7cRxRQVl41leCVN8QFYd37d1Hbh4UWqH038uUXFDOg3X8pfmiMNJWASkyV7qqB6OMRwpSEq67M5Lg0Hq+5Dn7+XWwrAiK15bLmswX0DKziO0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=oy0IfRDl reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.219
+	 MIME-Version:Message-ID; b=KA/wpXkoTBIPVibTaJ8wzNsw+F33Fl1N7Q8cEpjM9Cg6oj7M6vklXq8DvQeXwf58x//YFY9rtttEglXESK9YXA4v3M5Wz1/DBhymeT64kfUmy+E3u45yz6MB1GyHILueJKTLEulCPV4xTa2DVt05qd109n8xa27PIARKwHzDRuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=R8+ahdyg reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.220
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="oy0IfRDl"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="R8+ahdyg"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
 	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=bxUMsCcctgnXHC5xZiZeDcyVKiHVraSAi9GYbGYV0dU=; b=o
-	y0IfRDlEy1VsTaU3wh8QjONaKAQeGIshsIIzEjlM3TtHcrbNl4eAkPI7jh6X+hLJ
-	1zaQPWYz0NXRRgE/6LibV0dgc1UwMfZIow9UfDU3pgKgjbjmSNs9LFjWw59xjIjq
-	qnXKY5mj21iCJtOt9UqiZhcETUuPv0ZGRRHW5MG428=
-Received: from bupt_xingxin$163.com ( [122.224.123.146] ) by
- ajax-webmail-wmsvr-40-129 (Coremail) ; Thu, 30 May 2024 16:46:50 +0800
+	Message-ID; bh=qPLN0SnRMOevWxxpfCB5Jq+tAxU6leYTnJziZCCSqNo=; b=R
+	8+ahdygZRaD3WsySqAD7qpP/k1hLxQeb/QBtYQCGdHPQbjIDUU+W2mMfDgKY6BdM
+	VxLvGb+3q5XZKCwZajomUSx51kmFndmzt/g7wwKeMqC5zQQSTbey1E70zsrB6dwG
+	lHi85qf8n2zT8ST+zOp1pU7X5lGL+Ehzd/jaj/WHYY=
+Received: from bupt_xingxin$163.com ( [124.160.72.194] ) by
+ ajax-webmail-wmsvr-40-129 (Coremail) ; Thu, 30 May 2024 16:48:54 +0800
  (CST)
-Date: Thu, 30 May 2024 16:46:50 +0800 (CST)
+Date: Thu, 30 May 2024 16:48:54 +0800 (CST)
 From: "Xing Xin" <bupt_xingxin@163.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"Karthik Nayak" <karthik.188@gmail.com>, 
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Patrick Steinhardt" <ps@pks.im>, 
+	"Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>, 
+	git@vger.kernel.org, "Karthik Nayak" <karthik.188@gmail.com>, 
 	"Xing Xin" <xingxin.xx@bytedance.com>
-Subject: Re:Re: Re: [PATCH v3 2/4] unbundle: introduce unbundle_fsck_flags
- for fsckobjects handling
+Subject: Re:Re: [PATCH v3 3/4] fetch-pack: expose fsckObjects configuration
+ logic
 X-Priority: 3
 X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
  Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <ZlgC2TaXGjcNv2C0@tanuki>
+In-Reply-To: <xmqqbk4p6e98.fsf@gitster.g>
 References: <pull.1730.v2.git.1716208605926.gitgitgadget@gmail.com>
  <pull.1730.v3.git.1716824518.gitgitgadget@gmail.com>
- <057c697970ff49301cd9dc6adef099f53d440c3c.1716824518.git.gitgitgadget@gmail.com>
- <ZlXIDXfc_1lGb51J@tanuki>
- <1d097be.b642.18fc58dfb70.Coremail.bupt_xingxin@163.com>
- <ZlgC2TaXGjcNv2C0@tanuki>
-X-NTES-SC: AL_Qu2aBfyet0Aq5iWaYekXn0oVhe85UMW2ufsg3YReP500mCTM4QcEQltABUHxzMyBNyqhlDytThRXwdhIdIxYfI6x72082WdsU71eO612ohii
+ <67401d4fbcb3f07d31589bb8ec10060dcb77545e.1716824518.git.gitgitgadget@gmail.com>
+ <ZlXIBrs5Q91r_-qU@tanuki> <xmqqikyx6ew9.fsf@gitster.g>
+ <xmqqbk4p6e98.fsf@gitster.g>
+X-NTES-SC: AL_Qu2aBfyet0Eo4iWRY+kXn0oVhe85UMW2ufsg3YReP500mCTM4QcEQltABUHxzMyBNyqhlDytThRXwdhIdIxYfI6t6wU+1iauQFWuihbdJcDC
 Content-Transfer-Encoding: base64
 Content-Type: text/plain; charset=GBK
 Precedence: bulk
@@ -50,42 +50,22 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <4d855732.8dfe.18fc8ae32a0.Coremail.bupt_xingxin@163.com>
+Message-ID: <5cb91961.8ebd.18fc8b01748.Coremail.bupt_xingxin@163.com>
 X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3_zD6PFhmR7hSAA--.50562W
-X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiLwnubWVOD9PEDAAEse
+X-CM-TRANSID:_____wD3Pzl2PVhma7lSAA--.17527W
+X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiRQnubWXAmilFVAABsJ
 X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-QXQgMjAyNC0wNS0zMCAxMjozODo0OSwgIlBhdHJpY2sgU3RlaW5oYXJkdCIgPHBzQHBrcy5pbT4g
-d3JvdGU6CltzbmlwXQo+PiA+Cj4+ID5Xb3VsZG4ndCB0aGlzIGhhdmUgYmVlbiBhIG5hdHVyYWwg
-Zml0IGZvciB0aGUgbmV3IGZsYWcsIGUuZy4gdmlhCj4+ID5zb21ldGhpbmcgbGlrZSBgVkVSSUZZ
-X0JVTkRMRV9GU0NLYD8KPj4gCj4+IEl0IG1ha2VzIHNlbnNlIHRvIG1lLiBDdXJyZW50bHksIHZl
-cmlmeV9idW5kbGVfZmxhZ3MgY29udHJvbHMgdGhlIGFtb3VudAo+PiBvZiBpbmZvcm1hdGlvbiBk
-aXNwbGF5ZWQgd2hlbiBjaGVja2luZyBhIGJ1bmRsZSdzIHByZXJlcXVpc2l0ZXMuIFRoZQo+PiBu
-ZXdseSBhZGRlZCB1bmJ1bmRsZV9mc2NrX2ZsYWdzIGlzIGRlc2lnbmVkIHRvIGNoZWNrIGZvciBi
-cm9rZW4gb2JqZWN0cwo+PiBkdXJpbmcgdGhlIHVuYnVuZGxlIHByb2Nlc3MsIHdoaWNoIGlzIGVz
-c2VudGlhbGx5IGEgZm9ybSBvZiBidW5kbGUKPj4gdmVyaWZpY2F0aW9uLiBJIGJlbGlldmUgd2Ug
-c2hvdWxkIGV4dGVuZCBzb21lIG9iamVjdCB2ZXJpZmljYXRpb24KPj4gY2FwYWJpbGl0aWVzIHRv
-IHRoZSBnaXQgYnVuZGxlIHZlcmlmeSBjb21tYW5kIGFzIHdlbGwsIHBlcmhhcHMgYnkgYWRkaW5n
-Cj4+IGEgLS1mc2NrLW9iamVjdHMgb3B0aW9uLgo+PiAKPj4gV2l0aCB0aGlzIGluIG1pbmQsIEkg
-c3VwcG9ydCBhZGRpbmcgbmV3IG9wdGlvbnMgdG8gdmVyaWZ5X2J1bmRsZV9mbGFncy4KPj4gU2lu
-Y2UgYnVuZGxlLmM6dW5idW5kbGUgbmVlZHMgdG8gY29tYmluZSBtdWx0aXBsZSBvcHRpb25zLCB3
-ZSBtdXN0Cj4+IGRlZmluZSBuZXcgb3B0aW9ucyB1c2luZyBiaXR3aXNlIHNoaWZ0aW5nOgo+PiAK
-Pj4gCWVudW0gdmVyaWZ5X2J1bmRsZV9mbGFncyB7Cj4+IAkJVkVSSUZZX0JVTkRMRV9WRVJCT1NF
-ID0gKDEgPDwgMCksCj4+IAkJVkVSSUZZX0JVTkRMRV9RVUlFVCA9ICgxIDw8IDEpLAo+PiAJCVZF
-UklGWV9CVU5ETEVfRlNDS19PQkpFQ1RTX0FMV0FZUyA9ICgxIDw8IDIpLAo+PiAJCVZFUklGWV9C
-VU5ETEVfRlNDS19PQkpFQ1RTX0ZPTExPV19GRVRDSCA9ICgxIDw8IDMpLAo+PiAJfTsKPj4gCj4+
-IEhvdyBhYm91dCB0aGUgbmFtaW5nPyBJJ20gbm90IHZlcnkgZ29vZCBhdCBuYW1pbmcgOikKPgo+
-SSBsYXRlciBub3RpY2VkIHRoYXQgeW91IGV4dGVuZCB0aGUgYHVuYnVuZGxlX2ZzY2tfZmxhZ3Ng
-IGluIGEgbGF0ZXIKPnBhdGNoLiBXaXRoIHRoYXQgaW4gbWluZCBJIGRvbid0IHRoaW5rIGl0J3Mg
-YWxsIHRoYXQgaW1wb3J0YW50IGFueW1vcmUKPnRvIG1lcmdlIHRob3NlIGludG8gdGhlIGB2ZXJp
-ZnlfYnVuZGxlX2ZsYWdzYCBhcyB5b3Ugd291bGQgb3RoZXJ3aXNlCj5hbGxvdyBmb3Igd2VpcmRu
-ZXNzLiBXaGF0IGhhcHBlbnMgZm9yIGV4YW1wbGUgd2hlbiBib3RoIGBBTFdBWVNgIGFuZAo+YEZP
-TExPV19GRVRDSGAgYXJlIHNldD8KPgo+U28gZmVlbCBmcmVlIHRvIGlnbm9yZSB0aGlzIGFkdmlj
-ZS4gSWYgeW91IHN0aWxsIHRoaW5rIGl0J3MgYSBnb29kIGlkZWEKPnRoZW4gdGhlIGFib3ZlIG5h
-bWluZyBsb29rcyBva2F5IHRvIG1lLgoKV2l0aCB0aGUgaWRlYSBvZiBleHRlbmRpbmcgIi0tZnNj
-ay1vYmplY3RzIiBzdXBwb3J0IGZvciAiZ2l0IGJ1bmRsZSB2ZXJpZnkiIGFuZAoiZ2l0IGJ1bmRs
-ZSB1bmJ1bmRsZSIsIEkgcHJlZmVyIHRvIGdyb3VwaW5nIHRoZXNlIG9wdGlvbnMgdG9nZXRoZXIu
-IEVzcGVjaWFsbHkKaW4gdGhlICJnaXQgYnVuZGxlIHZlcmlmeSIgc2NlbmFyaW8sIGFkZGluZyBh
-IG5ldyBwYXJhbWV0ZXIgbGlrZQpgdW5idW5kbGVfZnNja19mbGFnc2AgZm9yIGBidW5kbGUuYzp2
-ZXJpZnlfYnVuZGxlYCBpcyBjb25mdXNpbmcuCgpYaW5nIFhpbg==
+QXQgMjAyNC0wNS0yOSAwMToyNDozNSwgIkp1bmlvIEMgSGFtYW5vIiA8Z2l0c3RlckBwb2JveC5j
+b20+IHdyb3RlOgpbc25pcF0KPlRoZSBvcmlnaW5hbCBiZWZvcmUgaXQgd2FzIG1hZGUgaW50byBh
+IGhlbHBlciBmdW5jdGlvbiB3YXMgd3JpdHRlbgo+YXMgYSBjYXNjYWRlIG9mID86IG9wZXJhdG9y
+cywgYmVjYXVzZSBpdCBoYWQgdG8gYmUgYSBzaW5nbGUKPmV4cHJlc3Npb24uICBBcyB0aGUgYm9k
+eSBvZiBhIGhlbHBlciBmdW5jdGlvbiwgd2Ugbm93IGNhbiBzcHJpbmtsZQo+bXVsdGlwbGUgcmV0
+dXJuIHN0YXRlbWVudHMgaW4gaXQuICBJIHRoaW5rIHRoZSB3YXkgdGhhdCBpcyBlYXNpZXN0Cj50
+byB1bmRlcnN0YW5kIGlzCj4KPgkvKiB0aGUgbW9zdCBzcGVjaWZpYywgaWYgc3BlY2lmaWVkICov
+Cj4JaWYgKGZldGNoX2ZzY2tfb2JqZWN0cyA+PSAwKQo+CQlyZXR1cm4gZmV0Y2hfZnNja19vYmpl
+Y3RzOwo+CS8qIHRoZSBsZXNzIHNwZWNpZmljLCBjYXRjaC1hbGwgZm9yIGJvdGggZGlyZWN0aW9u
+cyAqLwo+CWlmICh0cmFuc2Zlcl9mc2NrX29iamVjdHMgPj0gMCkKPiAgICAgICAgCXJldHVybiB0
+cmFuc2Zlcl9mc2NrX29iamVjdHM7Cj4JLyogdGhlIGZhbGxiYWNrIGhhcmRjb2RlZCBkZWZhdWx0
+ICovCj4JcmV0dXJuIDA7Cj4KPndpdGhvdXQgdGhlIC8qIGNvbW1lbnRzICovLgoKQXBwbGllZCwg
+dGhhbmtzIQoKWGluZyBYaW4K
