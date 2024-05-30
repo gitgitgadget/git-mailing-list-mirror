@@ -1,133 +1,130 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F7741A94
-	for <git@vger.kernel.org>; Thu, 30 May 2024 17:09:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21DC46521
+	for <git@vger.kernel.org>; Thu, 30 May 2024 17:38:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717088986; cv=none; b=SQ71ZXupoPHeLcFDp+hqD//AvjNFPV8f3SKc8KWGTK+gcGErDv7AcvUSdL4phgENE/OFEI7fvtPj32mOnFcBQCsnI27OPggpzm1appqaAqSS0P9k7poXknp683byCaWiOOW3cKgIJO3o/TenasZ4VGaC46b4PEZHdLM57AQlomU=
+	t=1717090689; cv=none; b=TVpfpHBnbmXgLg1ul3sSRwfpvxejgW7o9ATeU9nbi4YmzttpI0KO5gDmANMaQ1E2hw40r2Nvg/IIPdWHrtmOsgX8UC7ka2Oa3Bva/kp4dDucekNZGnOAxbl7HWg5VTI9WSYoQDghR8a8pQt/eqIwvczJ3RgRvldR6GeDmYuffkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717088986; c=relaxed/simple;
-	bh=eF+DrZQgmu9gt9ASWEmlD0kMhWpntA0lAQjKhXezIhg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=P0TLF1ODdC/sm+TtxcIcMO5KlG9dR/zmCJbexR7mxzaXMry059Ia0RsgK6sc300geJYXuI5aN2dGv0VF1F+9cvtGMxh2ua7HfGlS0kF+xY4cCT8qgCyzMSx5QjD1yP1ZvqfeiDL5UIxm60IIHmE+3v1KNtJ3nI1plLkqdIaFC7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GxWoX/gH; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1717090689; c=relaxed/simple;
+	bh=48TDzSmOs48/FFOTyQx6cABJJHvNKQiOkgE801YoUH8=;
+	h=Message-ID:Subject:From:To:Content-Type:MIME-Version:Date; b=p+FhoR+JprWiVAJIfyykRAANRDoQr6BP3bU2v7hnMDp0k0Y8jg+kgqvTdJjiG7KBHX2+WYkoj6iaFdWffKYQTJr0QPADglQiRLrIavpL0GcqtKdsgaJxTN2nKUh4cceRV5I4uvFMa6CUUeQQcBkG010PPZZ6uDz+FphZFrB9x94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MNdTuedv; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GxWoX/gH"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 30AC02C405;
-	Thu, 30 May 2024 13:09:38 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=eF+DrZQgmu9gt9ASWEmlD0kMhWpntA0lAQjKhX
-	ezIhg=; b=GxWoX/gHGNvIuzM3pJoy+/yT4kso0v6ECx7X8Htkm/2sryK64v9tMn
-	jkn9k17HFSA4Wz/w1da1umIa1scDJLylnSQ7cZCnDp2ejYs5dhFuqME2RIKv75wk
-	/GZFKxrqccOQ5yjuf52fbhgtt3CFi7GHvqN4gLv5bCn7uC82PfAYU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 288CA2C404;
-	Thu, 30 May 2024 13:09:38 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8F9F22C403;
-	Thu, 30 May 2024 13:09:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Stefan Haller <lists@haller-berlin.de>,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,
-  =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v3 0/2] rebase -i: improve error message when picking merge
-In-Reply-To: <pull.1672.v3.git.1717076630.gitgitgadget@gmail.com> (Phillip
-	Wood via GitGitGadget's message of "Thu, 30 May 2024 13:43:48 +0000")
-References: <pull.1672.v2.git.1712585787.gitgitgadget@gmail.com>
-	<pull.1672.v3.git.1717076630.gitgitgadget@gmail.com>
-Date: Thu, 30 May 2024 10:09:36 -0700
-Message-ID: <xmqq7cfbp6pb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MNdTuedv"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-354dfe54738so729273f8f.3
+        for <git@vger.kernel.org>; Thu, 30 May 2024 10:38:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717090686; x=1717695486; darn=vger.kernel.org;
+        h=user-agent:date:mime-version:content-transfer-encoding:to:from
+         :subject:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=48TDzSmOs48/FFOTyQx6cABJJHvNKQiOkgE801YoUH8=;
+        b=MNdTuedvLiZoUbgP1Fow0CxyLwQ6DfvKpSCgK0eZiN1hIvsJrq2RaVX49OqFsEjKMX
+         f0eI7e5IeEwNzqk/dqbaT7YdMF4bTCweBNeNPW29/vbwY9K4bNFmTq7mQhQyWZTScIxg
+         HNONHvW36XDsEycwN/fa8tHB8jZ+q3tLMwfTYBblQvGjPNyU78WRkptm+DFeCCaWZBnm
+         IiakNd3hzCeczZpLrjutdDErr2vVDQytYf0StXyPKxnV8Uk2Q1aRcPmSqDRyqddwLZ/c
+         7qlbvaWZEIdt1XEPa0acFRSGd2eL37cK/tA6m3KPIT+07SNHaAOfm3Va6BXyFb/42U9N
+         Fjvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717090686; x=1717695486;
+        h=user-agent:date:mime-version:content-transfer-encoding:to:from
+         :subject:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=48TDzSmOs48/FFOTyQx6cABJJHvNKQiOkgE801YoUH8=;
+        b=b8dX7zXA6ZpUdRWeWOli9Qz6Bftn0OV6C4gOBZq+hOArqquFUpcKosIj0nFT4SwN3Q
+         +uIp2AH0XI+ypp7myUBMyUhDANCQNX64Iu7IOdu86ykkmPuxhh3nk7+9U4VT6+kZZyio
+         3vngaTjPgl9PiUbW745uNSFCGOReGOq/Mn605Kajn0Wx1t/KZtowwfbYHA6z7426TcR8
+         35WKlMAFFwnu3j1bzFBRAO5W+ml7o3AIZXqfLg4sz5Za0X9rPLNX0KkK/6dyeGSDE+4y
+         qt7iw5SxkQ8kNB4qbIPWeuoDfosiXFK8s7ce2LsFOQ16MWXmxWgYQSoSnWFKshUPqq3p
+         l+zg==
+X-Gm-Message-State: AOJu0YwQS0tAKKXUpYJkd9ZV3gEvTWFjWIHsYSC6TI0k3Y5asZU1b9KD
+	aATKMw9DCxmpKPxKLTZ1Lhzc92skIr+ytTgp16lvPMzstw5X7w4g0a5Q0g==
+X-Google-Smtp-Source: AGHT+IFGo9AIUXHkohOvLpVFAPNbIfFNdLWENuXHLhli5WvTahqqI8+J1Y7GOHeEzi2YNS1l6UEo+w==
+X-Received: by 2002:adf:f145:0:b0:359:6f2a:3912 with SMTP id ffacd0b85a97d-35dc0090d06mr1759216f8f.18.1717090686036;
+        Thu, 30 May 2024 10:38:06 -0700 (PDT)
+Received: from [192.168.0.203] (046074010202.atmpu0001.highway.a1.net. [46.74.10.202])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd04c1113sm45811f8f.16.2024.05.30.10.38.05
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 May 2024 10:38:05 -0700 (PDT)
+Message-ID: <51363037334634e27580664f104886d5eaa9b4fb.camel@gmail.com>
+Subject: git fetch from additional remote fails with a treeless clone
+From: Christoph Reiter <reiter.christoph@gmail.com>
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6516954C-1EA7-11EF-A44D-6488940A682E-77302942!pb-smtp2.pobox.com
+Date: Thu, 30 May 2024 19:37:44 +0200
+User-Agent: Evolution 3.52.0-1build2 
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-> If the user tries to pick a merge commit error out when parsing the todo
-> list rather than complaining when trying to pick the commit.
->
-> Sorry for the delay in re-rolling, thanks to Junio and Patrick for their
-> comments on V2. I've rebased on to master to avoid a conflict with
-> 'ps/the-index-is-no-more' and updated patch 2 to
->
->  * Add advice on how rebase a merge commit as suggested by Junio. To avoid
->    duplication between the error messages and the advice I've shortened the
->    error messages.
->
->  * Rework the control flow to make it easier to extend checks on merge
->    commits if new commands are added in the future as suggested by Junio
->
-> Phillip Wood (2):
->   rebase -i: pass struct replay_opts to parse_insn_line()
->   rebase -i: improve error message when picking merge
->
->  Documentation/config/advice.txt |  2 +
->  advice.c                        |  1 +
->  advice.h                        |  1 +
->  builtin/rebase.c                | 17 ++++---
->  rebase-interactive.c            | 21 +++++----
->  rebase-interactive.h            |  9 ++--
->  sequencer.c                     | 83 ++++++++++++++++++++++++++++-----
->  sequencer.h                     |  4 +-
->  t/t3404-rebase-interactive.sh   | 45 ++++++++++++++++++
->  9 files changed, 153 insertions(+), 30 deletions(-)
->
->
-> base-commit: 3a57aa566a21e7a510c64881bc6bdff7eb397988
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1672%2Fphillipwood%2Frebase-reject-merges-v3
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1672/phillipwood/rebase-reject-merges-v3
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1672
->
-> Range-diff vs v2:
->
->  1:  1bcf92c6105 ! 1:  91c6f2f1b45 rebase -i: pass struct replay_opts to parse_insn_line()
->      @@ builtin/rebase.c: static int edit_todo_file(unsigned flags)
->       @@ builtin/rebase.c: static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
->        		error(_("could not generate todo list"));
->        	else {
->      - 		discard_index(&the_index);
->      + 		discard_index(the_repository->index);
->       -		if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
->       -						&todo_list))
->       +		if (todo_list_parse_insn_buffer(the_repository, &replay,
+What did you do before the bug happened? (Steps to reproduce your
+issue)
 
-OK.  It would probably have been unnecessary to rebase only for this
-update.
+(I tried to come up with dummy repos with a similar relationship but
+failed to reproduce the issue there, and --filter doesn't work for
+local repos, so I gave up and I'm just using the repos where the issue
+occured instead)
 
->      + ## Documentation/config/advice.txt ##
->      +@@ Documentation/config/advice.txt: advice.*::
->      + 		`pushNonFFCurrent`, `pushNonFFMatching`, `pushAlreadyExists`,
->      + 		`pushFetchFirst`, `pushNeedsForce`, and `pushRefNeedsUpdate`
->      + 		simultaneously.
->      ++	rebaseTodoError::
->      ++		Shown when there is an error after editing the rebase todo list.
+This does a treeless clone of an outdated fork, then adds the upstream
+and fetches from it.
 
-This thing is new.  It is unclear to me if this description is clear
-enough to readers that we are checking the edited todo list for
-errors.  It is clear enough from the actual code change, and the
-readers come to this list after advise_if_enabled() triggers and
-reports that the rebaseTodoError knob allows them to squelch it, so
-it probably is OK.
+rm -Rf MINGW-packages
+git clone --filter=3Dtree:0 https://github.com/lazka/MINGW-packages
+cd MINGW-packages
+git remote add upstream https://github.com/msys2/MINGW-packages
+git fetch upstream
 
-Thanks, will replace.  Let's see if we see comments from others and
-then mark it for 'next' soonish.
+What did you expect to happen? (Expected behavior)
+
+fetching in the treeless clone works as with a non-treeless clone
+
+What happened instead? (Actual behavior)
+
+fatal: bad revision 'e346057a67cffe54493cf87e24498229b8a370cc'
+error: https://github.com/lazka/MINGW-packages did not send all
+necessary objects
+
+fatal: could not fetch e346057a67cffe54493cf87e24498229b8a370cc from
+promisor remote
+fatal: fetch-pack: invalid index-pack output
+
+What's different between what you expected and what actually happened?
+
+The treeless clone does not work as the non-treeless clone when
+fetching.
+
+Anything else you want to add:
+
+Also reproduced on cygwin git 2.45.1
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+[System Info]
+git version:
+git version 2.43.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.8.0-31-generic #31-Ubuntu SMP PREEMPT_DYNAMIC Sat Apr 20
+00:40:06 UTC 2024 x86_64
+compiler info: gnuc: 13.2
+libc info: glibc: 2.39
+$SHELL (typically, interactive shell): /bin/zsh
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
 
