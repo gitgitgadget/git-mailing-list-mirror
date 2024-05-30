@@ -1,95 +1,88 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F99E14BF8D
-	for <git@vger.kernel.org>; Thu, 30 May 2024 19:38:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D484D8BF
+	for <git@vger.kernel.org>; Thu, 30 May 2024 20:05:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717097931; cv=none; b=VbE2kdfhApr9JVmCwddM2im7Vbgwpuo0p/jFcwVL4ND++Yss03BLwCJnwZOZJydCk6ZqpcVtzB7iTeCEF3P2jbuz4yNezQnRRnqVlWTkgSGX4Uhhw2UhmLPlmhK1AN6BlPJ3vyoAPvqifXx/85VLc+THQXjaU+17GtFGEE02xHI=
+	t=1717099551; cv=none; b=hlVKTr890eAXYIuESMTCqzKP9MJPd4o65G3ebaDJyrI9+BEG+2GiF3wrXLT7ykKncJpniTkdB5gOyckbEkxaB/M5cfumo706LP9eSoAf9/y2/yNRuEVGD6GrDrHujxuKU3fSc8MhWVV2ZVFk8hZ9P3epzSsd1IfjFXPVIAKZ5n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717097931; c=relaxed/simple;
-	bh=E5yY5nU/VYc3voKxijP05og9U4lWHvTi9ZdCpxqxJO0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=vCAcpmYPrHDvd7O3tQoVBd0GYl8HCpcclTrTu98TVEi2JT5veWpS8gKoRVOaYVB0zShlZhQ8edlVmm7Jf1CJ5btaGBAdMKuRmd4cJMc2bmX3G8LPtMd4z0ho0tmdN2ZOXeaufLNIxQ9eYE4Q7oGZIprlyqFYZO3GENmW7wPnW24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nyLg+lqG; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1717099551; c=relaxed/simple;
+	bh=nC+PviCeQ5aK1VCr1qe0o1L64qg+gRDzmpG4FUz0X70=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=f9jmy0+M+Q3OGDlifsnHLNhpRi7/0iqQAazZz9JNAKP1oGay+2LnaqfdY4YekOhsaSBXyhZS5OIhishKe2W6WD2+l1pP2vh38e5fM9PKn2ptUwa6OLgFPmdTZRWsCjs22hbkDufG12xXYhk4ElmsuDxxjFt+B4ne+vDpOOkU8AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=iKxjV4uX; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nyLg+lqG"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 885663476A;
-	Thu, 30 May 2024 15:38:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=E5yY5nU/VYc3voKxijP05og9U4lWHvTi9ZdCpx
-	qxJO0=; b=nyLg+lqGi6c/Gu7SqI3pDytrTcWBQTUGRri2Uv7lOpZB5pWLaAqiWr
-	DkC8poFhrIrxGmnO9mDklP/cuOSQDbz4f7bOQpgCjj+Z4YmApwOmXwdoCHLagqz5
-	stQTc4Fr7w58iNz1qx72xR9PC/f5MaLFG85cRIul7ZGn8dqyuoDGI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8056634769;
-	Thu, 30 May 2024 15:38:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9CF2934768;
-	Thu, 30 May 2024 15:38:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH 02/19] global: assign non-const strings as required
-In-Reply-To: <ZlhjN7K8JKYz6Opd@tanuki> (Patrick Steinhardt's message of "Thu,
-	30 May 2024 13:29:59 +0200")
-References: <cover.1716983704.git.ps@pks.im>
-	<51ee5660a1452797ac0a45819210141c57f3dcb9.1716983704.git.ps@pks.im>
-	<xmqqplt4y1gk.fsf@gitster.g> <ZlhjN7K8JKYz6Opd@tanuki>
-Date: Thu, 30 May 2024 12:38:45 -0700
-Message-ID: <xmqq34pzozsq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="iKxjV4uX"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 3B22813C-1EBC-11EF-AC95-ACC938F0AE34-77302942!pb-smtp20.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1717099547;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=eQ8McxJHMF3ngemf+rX3TV/PwM7TS5MlDl7vHKCW7Jg=;
+	b=iKxjV4uXkSFNCLr6NsYyKXBuh8dy95v5Xw35okSv0hU1e0FrMD/WUH6mshtdt2RrlXhXA4
+	xfMTu79AkJg2iwgLjmr16A8qDVhLLXIqe0mx5dqjUsQt7+maBemW/44I2etr08TS6cd69m
+	5op3d6t2yGkucsVIcRF5aUHiFAM1i7doZ2lXPw9Q5BDexD8dNa8/JO0QT0FbTIonZiJip4
+	LqcDBBZG33DzemgzGZSp0CUWjCEUGdEu85YJc1JJ7W8BFU7woyYHNJ4oSMGiVKo7TYpdWl
+	EWrEPLPCnI4TcZ/NJQXtx61ZeNJ8h6/Grv1HsvTFtD676RhY4iER5R3U7gELeQ==
+Date: Thu, 30 May 2024 22:05:47 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] format-patch: move range/inter diff at the end of a
+ single patch output
+In-Reply-To: <xmqqplt41yk4.fsf@gitster.g>
+References: <20240523225007.2871766-1-gitster@pobox.com>
+ <20240523225007.2871766-3-gitster@pobox.com> <ZlB2g5bTuBFz5m5_@tanuki>
+ <xmqqo78ukhmk.fsf@gitster.g> <ZlQX0FmIsz2eFgsC@tanuki>
+ <xmqqsey39mmt.fsf@gitster.g> <ZlXbxzFOJ8gVv7r5@tanuki>
+ <xmqqv82x6fto.fsf@gitster.g> <Zla-GJ6NpSNNVDXq@tanuki>
+ <xmqqplt41yk4.fsf@gitster.g>
+Message-ID: <e01506f4c8129318dbcba553d7c90b13@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 2024-05-29 16:29, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+>> On Tue, May 28, 2024 at 09:50:43AM -0700, Junio C Hamano wrote:
+>>> Patrick Steinhardt <ps@pks.im> writes:
+>>> 
+>>> > Yeah, that's definitely better. Whether it's preferable over having it
+>>> > after the signature separator I don't know. I personally liked that
+>>> > version better, but can totally see why others may not like it.
+>>> 
+>>> I do not think anybody posted a version that writes inter/range diff
+>>> ater the signature mark.
+>> 
+>> No, I'm talking about the version that you hand crafted initially and
+>> that kicked off this topic.
+> 
+> Ah, https://lore.kernel.org/git/xmqqh6ep1pwz.fsf_-_@gitster.g/ I
+> forgot all about it already ;-).
+> 
+>> ... I just don't have a strong preference between the old and
+>> new formats by now. If you or others feel strongly I don't mind at all
+>> if this patch lands.
+> 
+> Let's scrap it then.  I do not think a single-patch topic happens
+> all that often anyway.
 
-> Well, we do. Not in `get_fetch_map()`, but in `query_refspecs()`. It
-> does weird stuff where it writes the result into either `src` or `dst`
-> depending on which of these fields is provided by the caller. Which
-> means that one of the fields would typically be a constant, whereas the
-> other one will be allocated.
-
-Yes, <src, dst> is used as a pair of <key, value> to query one with
-the other (i.e. "where does this one go?" "where does this one come
-from?").
-
-But we are not talking about const-ness of the member (iow, once you
-point a string with the member, you cannot repoint the pointer to
-another string), but we are talking about const-ness of the string
-that is pointed by the member (iow, not "char const *src" but "const
-char *src"), no?  If I ask "I have this src, where does it go?" with
-a refspec element filled with src, the dst member may need to be
-updated to point at the string that is the answer of the query, but
-that still can be done with "const char *src, *dst", can't it?  That
-was what I was wondering.
-
-And again you are conflating "allocated" with "read-write" here.  It
-is often convenient if a variable that points at an allocated string
-is of type "char *" and not "const char *", because you do not cast
-it when calling free().  But if you want to make a structure member
-or a variable that holds an allocated string responsible for
-_owning_ the piece of memory, then you need to consistently have the
-member point at an allocated piece of memory (or NULL), no?  What
-this patch does, i.e. prepare an on-stack refspec_str[] array that
-is initialized from a constant string, and have .src member point at
-it, would not make .src freeable.  In other words, .src pointing at
-an allocated piece of string "some of the time" alone is not a good
-justification to make it a non-const pointer, I would think.
-
+Hmm.  Actually, I find it logical and I don't think it should be 
+scrapped.
+As I wrote already, I find range diffs as really long footnotes, and
+placing them at the end of "documents" seems like a logical choice to 
+me.
