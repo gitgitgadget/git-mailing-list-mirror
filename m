@@ -1,89 +1,90 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB5512F5A3
-	for <git@vger.kernel.org>; Fri, 31 May 2024 23:40:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC27B78C6B
+	for <git@vger.kernel.org>; Fri, 31 May 2024 23:46:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717198825; cv=none; b=aPED3NvKtF+5O6ijvF69jZ6iSQAUdV8sSurzpO5ZWpMnwOrNKXrCsd7dE1acWdaOMr38dhcUckhTixlCUY8kzJN+LesE7coIjbNX4pC2NdyWSM99b1GNzvS26ObUJAUWxRKebaN0mz1W2LYFlFTjs/HdNxV1QoUgQdSaBWeiC+E=
+	t=1717199197; cv=none; b=mOK6JSuuWAT1rjGHEV74IgWYJXmgKom03Pp6i3Egh2alYMz6vl+1Hj7Ph8r3MqgzyW5driBe70bKP/E9viHNhXjSannOvKVuebij76AmcHKdinAmYNnssHk5xigQD8Yc5r+wlzdg/k40QgeE+gV/b++136UDhxk8Q7z4w0WIgmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717198825; c=relaxed/simple;
-	bh=kvY2uuG821PsXLGVq1ehs2UdqPXwQf1bzv3wumf2yBY=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YrRd3YMjxXs9fa3P5h3P5D8Cy4r4QOh6X0gyBLIJ4ojQxug5S4WIcf3YnZT7SEzRNJ71rZfVRV0T8Zz0U0xQR6G+uo7t3DLi9H+p73D4iWhdood07mhMhhBnEOog4+Cn3+YFXMbLFwVXczBtPw3D7MAmIFQZi907uKsfKgD7ZsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 44VNaABQ3931149
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 23:36:11 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Curley Joe'" <m48cv7wg9w@liamekaens.com>
-Cc: <git@vger.kernel.org>
-References: <16919-1717194882-875013@sneakemail.com> <xmqqplt1d0k0.fsf@gitster.g>
-In-Reply-To: <xmqqplt1d0k0.fsf@gitster.g>
-Subject: RE: git fetch --prune fails with "fatal: bad object"
-Date: Fri, 31 May 2024 19:36:04 -0400
-Organization: Nexbridge Inc.
-Message-ID: <000501dab3b3$51779400$f466bc00$@nexbridge.com>
+	s=arc-20240116; t=1717199197; c=relaxed/simple;
+	bh=Cl8MDAVaN+uMVvp4N5CV4yaWgI27QG0ZPL9QWu8R/3U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=g4L6hmBhnxq+Jxd0zumrkLdmD8BL6O2h4rtbGzdrDKhmWJCylXL14V+bbf5WSrkbZNSNh5TLu33FYOlm/PeFQgwK+nQXwNNZOos51tRllPJA7vbXNSNSo4lvrBOi00FpadMdA/tDyGH9pVZ3bAXSvL7y5SMDC2C9EUtcpjzUy9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FPTfRbFt; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FPTfRbFt"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 144FB3E5C4;
+	Fri, 31 May 2024 19:46:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Cl8MDAVaN+uMVvp4N5CV4yaWgI27QG0ZPL9QWu
+	8R/3U=; b=FPTfRbFtpMahry5bUZhPRv48z4tyj875yjstSqN1bV2S2NB7mWNpse
+	YpLCh/y5PVGFxKDCS8tSuGAv7MXkPtWM5phbqAABu20ay/T44KUqUlu0vFiqnOow
+	mh8TyH8bdxK0twapXhvjIbQvBE7B+kbaal0wyOlirDV3kJDskW3S4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0B8723E5C3;
+	Fri, 31 May 2024 19:46:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 24FDF3E5C2;
+	Fri, 31 May 2024 19:46:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Ramsay
+ Jones <ramsay@ramsayjones.plus.com>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 12/12] builtin/refs: new command to migrate ref
+ storage formats
+In-Reply-To: <d832414d1f8a7c8d9ec3ade13e11dd509c0ab641.1716877224.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Tue, 28 May 2024 08:32:07 +0200")
+References: <cover.1716451672.git.ps@pks.im> <cover.1716877224.git.ps@pks.im>
+	<d832414d1f8a7c8d9ec3ade13e11dd509c0ab641.1716877224.git.ps@pks.im>
+Date: Fri, 31 May 2024 16:46:30 -0700
+Message-ID: <xmqqjzj9czop.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQI043XPFU/F/QSjVTElGNn+CpOJywIXTw4bsOzkd0A=
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0214ED70-1FA8-11EF-A305-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
-On Friday, May 31, 2024 7:28 PM, Junio C Hamano wrote:
->"Curley Joe" <m48cv7wg9w@liamekaens.com> writes:
->
->> git fetch --prune fails with "fatal: bad object" for refs that have =
-an
->> invalid sha1 pointer. It would be nice if "git fetch --prune" could
->> prune these refs, because it is a hassle to do it manually. ("git
->> fetch --prune" only shows the first invalid ref, and you have to run
->> "git fsck" and parse it to find the rest.) If it seems like adding
->> this functionality to --prune is a bad idea, then how about adding an
->> option like "--prune-invalid" ?
->
->A question and a comment.
->
-> - Why did the repository got into this state in the first place?
->   It seems that it would be much better solution to prevent refs
->   from having garbage values in them or to prevent objects that are
->   necessary from going away than any "prune invalid refs" feature.
+Patrick Steinhardt <ps@pks.im> writes:
 
-I agree. However, there are some configurations where disk write caches =
-are enabled and require a sync or some other flush operation to force a =
-complete write to disk. In such situations, corruptions are always =
-possible despite the best efforts by the application.
+> diff --git a/git.c b/git.c
+> index 637c61ca9c..683bb69194 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -594,6 +594,7 @@ static struct cmd_struct commands[] = {
+>  	{ "rebase", cmd_rebase, RUN_SETUP | NEED_WORK_TREE },
+>  	{ "receive-pack", cmd_receive_pack },
+>  	{ "reflog", cmd_reflog, RUN_SETUP },
+> +	{ "refs", cmd_refs, RUN_SETUP },
+>  	{ "remote", cmd_remote, RUN_SETUP },
+>  	{ "remote-ext", cmd_remote_ext, NO_PARSEOPT },
+>  	{ "remote-fd", cmd_remote_fd, NO_PARSEOPT },
 
-> - "fetch" still feels a wrong place to have the feature, if it is
->   about fixing a local repository corruption.  You should be able
->   to recover from such a broken ref even if you are only working
->   locally without fetching from anybody.
+One thing missing is an entry in command-list.
 
-I think fsck would be a better place for this.
+If you ran "make check-docs", you would have seen
 
->If you can somehow _enumerate_ such broken refs, you could drive =
-update-ref to
->remove them.  Na=C3=AFvely, an obvious place to add such a feature =
-might be the "for-
->each-ref" command that is used to list refs with various criteria, so =
-it might look like:
->
->   $ git for-each-ref --format=3D'%(refname)' --broken |
->     xargs git update-ref -d
->
->or something?
+    $ make check-docs
+    no link: git-refs
+
+The Documentation/MyFirstContribution.txt file does mention
+command-list, but it is rather messy and unorganized.  I think the
+checklist at the top of <builtin.h> would be the best source of
+information at this moment.
+
+Thanks.
 
