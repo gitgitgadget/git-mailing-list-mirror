@@ -1,107 +1,135 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778C029A0
-	for <git@vger.kernel.org>; Fri, 31 May 2024 12:00:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E5429A0
+	for <git@vger.kernel.org>; Fri, 31 May 2024 12:10:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717156838; cv=none; b=Pg8CnolvwHBy/CjVO5N3X58Cknw+KrQLeP6HqsetElbg3mBy7ZpctuSfKAvNPr6xreP/VyBfoL3mgHaswm2TRUyU8I9bNu9D9oqi5pvdQ8V0kg+8geKNBIATm/PtpuMjf+G4jeVyhD1e1yRuGC21WsIKk9jtHUJj2T3hL660wRU=
+	t=1717157416; cv=none; b=S1oV7zPWlEY34HpHCkYGX7AxDE/rPlEaSnhzvDZQWd6G1oUBwcWK1xE5ZD/CTQkzl9i6AjDEnw3EpNL88Y0c3PnrvOBHYR1K2dlts7vUuGtvFmkIjZoHTUGFnJCsdYcPZSmsL1VO1gOiybYO8KH9kJWhly+DcKQO5e090I6tlGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717156838; c=relaxed/simple;
-	bh=e5aTqWkuw+PN1v9OAlvvy6QlH/CLsT10Fl1i6HbcW6U=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=qK1NGuRcdR/MulTfuuDogCf091uJzPIR7og80BTg+6kx5rW41Dtt1LnBlXmUpi4WgYe9wnrjmYkhYswL9k+KZxQtHVuOAji+5HAERZ0UHhjf20Rv8iF8WjKlUcY71bUWUBBo70hBzyOZN0506Z7W33Pg8MtVyH8T29X1kUb1MLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 22824 invoked by uid 109); 31 May 2024 12:00:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 31 May 2024 12:00:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9557 invoked by uid 111); 31 May 2024 12:00:35 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 31 May 2024 08:00:35 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 31 May 2024 08:00:34 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Subject: [PATCH] dir.c: skip .gitignore, etc larger than INT_MAX
-Message-ID: <20240531120034.GA442032@coredump.intra.peff.net>
+	s=arc-20240116; t=1717157416; c=relaxed/simple;
+	bh=jWC0t4ylhW77QVI+wYRr0DU8nHPifO9ZTUjqDrzZLcI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d2mYOb9N57eEm5SdDd/oadcQY52xp7tAnPyYgy6zAVPIwoXent7WoMLhFzdo/TMc/M2lV2gZHc7mMeIv1D82+s2aX7RCvpEE/4Szj3ZOe8nvtyKni5opi1wjLjuVj3amfLgldwzaRcjtOIBuYMhreykao1N1YzDarl9x1m+i/2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m59omAgS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Br+rRt1Q; arc=none smtp.client-ip=64.147.123.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m59omAgS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Br+rRt1Q"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 67D051C001D5;
+	Fri, 31 May 2024 08:10:13 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Fri, 31 May 2024 08:10:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1717157413; x=1717243813; bh=sdZTgFfwnM
+	gaaDoh4gctkxgcTpf4h5VNO3x3jo/btH4=; b=m59omAgS2oCcV+X7m3gbZa0Gl+
+	y5Rt/DIP6w4u9B5RJZFG1tj13oqnJ7FaGV3qiUw/IXNPhpgc8MsF/PQG2431a+IA
+	98n69IVI9vb3yc694SWruGe21NQK6qZNnVfAyW9lWfBhbIWFTLAE5dimFQfWOE2m
+	isvJQccR/sfZYanrrQC2Q4L5qLqq1oWYRo6JdDwTiLBedAt2LDgCGchOxAU6FOXe
+	kURc5FvUqSOol0D5La4NeUTsqoyQTAWdvZ4HNSQQQCNwE6UjnlRar2ymZGNFfzrd
+	ZXEeho8GYUpZcTHcAwjHALaJTo4C9z0O897I9rrvYDiDuwJyV2tj1t27PPjQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1717157413; x=1717243813; bh=sdZTgFfwnMgaaDoh4gctkxgcTpf4
+	h5VNO3x3jo/btH4=; b=Br+rRt1QkHeqSw+UOP5ZzSuxtg1+SwmuP9BgIzFbD5Dh
+	+SBRER5xv/ttD+XvUhmhWzsZtAgAeiwDgNNGFdFl8HT0UVNx+iXDKjQkM43R/rgq
+	zYSI7Cexpc4WacUtlr15z0FxKSCRtwrzaBVQYott2AwTd1Q/B/DCTHpzax9SwnxU
+	16GgN/RcnOmjheVKct9CceggtIuMtlnX+jR0m1NmV2U0JlwEOt3sfm4BP0g5rIBE
+	xFZNvhV4wbRxpd5Z4iusVGe5oYEeh+iAb0innXs1Km5z8/K9zPfTESTCGTSE2fTh
+	N4rfWUxbVDGv+zckCGIJ9t8acPLXVFYs/Ckp64S9pA==
+X-ME-Sender: <xms:JL5ZZnNyDIzCyiu9TDoIrDz1hVmbWHrHaBJC48wPd4ulpeQ8rej_9Q>
+    <xme:JL5ZZh8pGlRpF6-nzg1ziLFFk5WIi68eCEYON_yT4ZIAw9c1gtdVN7C929tJCAVno
+    r1KGbiJLQCY5mipIA>
+X-ME-Received: <xmr:JL5ZZmS0CRJetjeWwdVSBEmHR1sGYUFkKgujfcH2BUDoxqZlr_vfDBLB9yDRJX4d_CPJTeJIMsAyngn0gZY56KmY8Gj1Hqoirj517n-ncCQf98k>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekiedggeejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:JL5ZZrsSR68-4cJuI8KUbJPYKl4hSsjcPbXC6bD8onOt-mrjAx0kmA>
+    <xmx:JL5ZZve_viaXnA6Gf5Q1omI7KLWFWhN3CjLDCzdtD5Y51ZJVxwmMTg>
+    <xmx:JL5ZZn1CSopvKU9LujZQkMN2Ep36Q07ZdNFLRaUSoRADHn0bgz_sAA>
+    <xmx:JL5ZZr8uNL1nJBlxctgMtcqvxhMtClTcUdGxoZiNI9nYSHIGm3eVxQ>
+    <xmx:Jb5ZZr6alxcM9sbYozLbIRyPiOna6hKtkUj_d_EzzlAyFNAlUk-qWHQk>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 31 May 2024 08:10:11 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id f07ac354 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 31 May 2024 12:09:52 +0000 (UTC)
+Date: Fri, 31 May 2024 14:10:07 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 00/19] Compile with `-Wwrite-strings`
+Message-ID: <Zlm-HzEqQ4yUO2QF@tanuki>
+References: <cover.1716983704.git.ps@pks.im>
+ <cover.1717073346.git.ps@pks.im>
+ <xmqqle3qjqdk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="CmhYxdknV8Lc/NAn"
 Content-Disposition: inline
+In-Reply-To: <xmqqle3qjqdk.fsf@gitster.g>
 
-We use add_patterns() to read .gitignore, .git/info/exclude, etc, as
-well as other pattern-like files like sparse-checkout. The parser for
-these uses an "int" as an index, meaning that files over 2GB will
-generally cause signed integer overflow and out-of-bounds access.
 
-This is unlikely to happen in any real files, but we do read .gitignore
-files from the tree. A malicious tree could cause an out-of-bounds read
-and segfault (we also write NULs over newlines, so in theory it could be
-an out-of-bounds write, too, but as we go char-by-char, the first thing
-that happens is trying to read a negative 2GB offset).
+--CmhYxdknV8Lc/NAn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We could fix the most obvious issue by replacing one "int" with a
-"size_t". But there are tons of "int" sprinkled throughout this code for
-things like pattern lengths, number of patterns, and so on. Since nobody
-would actually want a 2GB .gitignore file, an easy defensive measure is
-to just refuse to parse them.
+On Fri, May 31, 2024 at 02:13:27AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> >      @@ reftable/readwrite_test.c: static void test_write_key_order(voi=
+d)
+> >     + 	struct strbuf buf =3D STRBUF_INIT;
+> >     + 	struct reftable_writer *w =3D
+> >       		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
+> >     ++	char a[] =3D "a", b[] =3D "b", target[] =3D "target";
+>=20
+> So you decided to go in the complete opposite direction, hmph...
+>=20
+> I was hoping that we do not add more "writable" pieces of memory
+> like target[] only to please the constness-strict compilers.
 
-The "int" in question is in add_patterns_from_buffer(), so we could
-catch it there. But by putting the checks in its two callers, we can
-produce more useful error messages.
+I guess I misunderstood what you were saying. I'll revise this to go
+into the other direction.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Just something I noticed while working on leaks nearby.
+Patrick
 
- dir.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+--CmhYxdknV8Lc/NAn
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/dir.c b/dir.c
-index f6066cc01d..914060edfd 100644
---- a/dir.c
-+++ b/dir.c
-@@ -30,6 +30,7 @@
- #include "symlinks.h"
- #include "trace2.h"
- #include "tree.h"
-+#include "hex.h"
- 
- /*
-  * Tells read_directory_recursive how a file or directory should be treated.
-@@ -1148,6 +1149,12 @@ static int add_patterns(const char *fname, const char *base, int baselen,
- 		}
- 	}
- 
-+	if (size > INT_MAX) {
-+		warning("ignoring excessively large pattern file: %s", fname);
-+		free(buf);
-+		return -1;
-+	}
-+
- 	add_patterns_from_buffer(buf, size, base, baselen, pl);
- 	return 0;
- }
-@@ -1204,6 +1211,13 @@ int add_patterns_from_blob_to_list(
- 	if (r != 1)
- 		return r;
- 
-+	if (size > INT_MAX) {
-+		warning("ignoring excessively large pattern blob: %s",
-+			oid_to_hex(oid));
-+		free(buf);
-+		return -1;
-+	}
-+
- 	add_patterns_from_buffer(buf, size, base, baselen, pl);
- 	return 0;
- }
--- 
-2.45.1.727.ge984192922
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZZvh8ACgkQVbJhu7ck
+PpT+wg/+J+w0kQ3Uk6lqSgLJTHb35oMdHfDbsukKe9LGlK3FWXGhm/Fnpu0POoYN
+/MCR2kJGX3tkZRDBdL5w2Ahf2oBZCViJZGdDUc4eU3n72cV186EvPk3rKApmdUvy
+LL1Ho7AdMKOE6R4dl251zl/GGj6gUIL8zv8Q/YzFx+p9TrtjEv2Yw8QozeLOJP9h
+Wr/ZVXaIRhUbK3jS0UhQJozNlXT7AOqnnpOL65OUtUDJGO2OQ9/xk+rRdB96Lqv+
+5LEyjcLAsVaL49MK6p2Og5p/wm3NA4Mru8gcaQSFXLzMIuQt1JskEvwb7vbGYElu
+LUEQii7gb7lnNflJAqa6txKGJ3qWO3315lAcZY0N1GfOvwKetlLXwo5sr7OfkVGy
+UIJAZ+qrHEB0gSK2k7D4ca/l8nhVlRjtm8yumXcjNKvqFY4lK7bGo9m/y+NAYEKA
+Du00b+OQEiluHUaRWY7t0q6g5s23mwj60v9yg78MK53ZHixjiM9xnxd87LemQEru
+HTxfL/fmYLWF+HwDqi+ehus+dGqnjC+gsacdtYQdyRAwvyt1wfRg7+0kPJl78oy0
+4mbKSe9RO87t+bR+lH2vchhgzaH/B9V+3FwBsm4OoOJXAhuEhAkbkq30hxGPy5c5
+z4qlVltG02udkTXgFdKZV0hR+j6bcOuuA+RE97ZnBH56S8X/cjU=
+=l7b0
+-----END PGP SIGNATURE-----
+
+--CmhYxdknV8Lc/NAn--
