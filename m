@@ -1,151 +1,175 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6290EEEAD
-	for <git@vger.kernel.org>; Fri, 31 May 2024 08:28:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA64C153BDE
+	for <git@vger.kernel.org>; Fri, 31 May 2024 08:43:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717144105; cv=none; b=Tr6S4+N37kXJEieBDs8G2j4pFY+lWduaoctTnXyiD08tlvyiM5ewjk1adww/7HxX6B8WAisAOqS4qQFvrB0Rx85/071QccTcwhEaE4NxIsRZhe3ba+k6Nfe0+2cfKFTUPk2fofE71HciPKGaVXHbrigGUkf2aAWDYlkLwqyGfeE=
+	t=1717145014; cv=none; b=VRQXSJmHkKunNRgVwfS9t3bvKE/t4T6iiLO7akFR5bWtaTxFvKZHrHndM+h9N53tBgkTM5fkiq9lX47uIVkqeXYeDMzeZEBKEYMnLMNjFZ/yGyyHQc1toNlY1oA3T6BcrOB0wDe9yc2M6Aom6b8yFHWzJiOUSg5mw22mI9se708=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717144105; c=relaxed/simple;
-	bh=LQIMLudf9zmyVl7TeRnPgIX81+x0Im1FHMto+6Rmd84=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rdnG0lafqrT7+wYLIgCdKAcIBjIwhmtLO2CAStye48EgkecgIw3oU/uxrADLJ7yCH4YTr8iF5XwD+5uepSDhNDYE6W3MKm3e7byA7J8py+vraN4O2G3JzBa8hmc4c8oqr4e+gVKU0rgObx4grBKIPI9t8tAc7JB93TZ0IfmKaU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OtTzdpTM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KSiSIBtJ; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1717145014; c=relaxed/simple;
+	bh=JIaxLxunFlTEuhM67Y6oU8bxDg0QPsRwpbaFTLEZu3w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=h5QDRqBzoTFZlnTcP4nCDs5nxi4uAVuu2CsyWbIavC4jNIeQqFDaJZudNeSF7FdphSHdyhtFR2in9qXEon7YkRRUtNPhK/j5mjh50ioU2piMmoiRb/w2f4tilUsfekXqHhLyFQdkwlvjaCNk1itFAmN3BE0qY1itP9F+5Ks9/Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=o5iY1vPT; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OtTzdpTM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KSiSIBtJ"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 7E3CD114010D;
-	Fri, 31 May 2024 04:28:23 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 31 May 2024 04:28:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717144103; x=1717230503; bh=LQIMLudf9z
-	myVl7TeRnPgIX81+x0Im1FHMto+6Rmd84=; b=OtTzdpTMlTn5G7FrHonADvREMC
-	KM0+j6Qvc1BWp5NfnZLlHULuA1e9htyquweMzcYcjDaIBuAN9Y4MQRivtjwBBwil
-	J+/I7lQTVs8kkkPIi1ir/tCtQ+uJ8bqx0UP+XHBUMOtyio6zPnrHucFnkTOeQLna
-	c/h9snAQq3Fl+vdihFX2sD2CUDCL0lrb2/J5Hg37H+sqRbaTMeDnhTSqgiYst7im
-	9wZkcwu4T8dxZDJjIVwYx+RqzOs1I6ldWDAf6/ye5kxOdOqP0VHHyaI+HlRTuitF
-	y2XtB9nDx2iXXc6iS1eEzC6pF7JqUnev05SrrQZAteHu6MkupWzCRG17Gx7A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717144103; x=1717230503; bh=LQIMLudf9zmyVl7TeRnPgIX81+x0
-	Im1FHMto+6Rmd84=; b=KSiSIBtJb0nCuHeu58fmsAjB/zL/9eCoRWXGwJcwp1TI
-	yYa7VoyDXtcF4yGSTnAaShG4TntB0snYkOQ9j9QcVYsWP8/PF3JmSC+ntqiV825J
-	BbU8F5/mIt9SNzXN3V65jaq1PaFGNg/S/zTzDHyuHHZW7zF65SmnnGM3EdSEFHYv
-	edZpVqc/9Mr5K0c4DpW12ax0urgQzZ8oLEAOtntswXtjZzycnbhUpox6jOYMLGB3
-	YY2J1K3VUvyDMYBgMDcpeooMz0ECrMBkAkApJ4On0GFb9hX45fnWebBXwhhOFDC/
-	ofneX/y5kHE8lNdMOPwdpSoFQgoq2lrxiN105nBKsA==
-X-ME-Sender: <xms:J4pZZhY9wXV5RKjw7uSUtfQOQwhaCpF7TjzzRKGe1RVzB2mbYqk0fg>
-    <xme:J4pZZobiZmwVntTs6-2xZpWvfySnzdVI6ENOFniL_xWfSsQCMkbRUiuX6WywzB_BK
-    pTvool9ZT7StJlCHQ>
-X-ME-Received: <xmr:J4pZZj8vO5ZOvo3QdVKXE2tTYLuvEXkXmJFRAnlVUVwNxzFP6kdhusqh00NeGerJCMgcZXcA_GkM0mpHI4hST2zGFRQw2S664TU-2ZhtbNJGDug>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekiedgtdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:J4pZZvojnZhRvyDrhdEYhtswvslw2yeq-Qed78PnYh95C77LmFzopA>
-    <xmx:J4pZZsqx9lsI8vB3Qd1tUHgfijYupJOhZmCit_Rt3VoSF87Fv0axcg>
-    <xmx:J4pZZlTL4148H-FxCcWceU1UwkIi2fd7vj2CpBRO8ZqwpZCZWiUNFQ>
-    <xmx:J4pZZkqcuMv_AqTCJYIGkhWd1UuC16x6I7jDsak5yFgvgv0HDb2KbA>
-    <xmx:J4pZZhB0lmtcehDonWYb-F5ln7LeTgOT2j7Bh4O5xmB-FfYDzEjLWrOb>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 May 2024 04:28:22 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 16db6332 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 31 May 2024 08:28:02 +0000 (UTC)
-Date: Fri, 31 May 2024 10:28:18 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/8] midx-write: miscellaneous clean-ups for
- incremental MIDXs
-Message-ID: <ZlmKIqmoLydp6cKT@tanuki>
-References: <cover.1716482279.git.me@ttaylorr.com>
- <cover.1717023301.git.me@ttaylorr.com>
- <20240530071432.GD1949834@coredump.intra.peff.net>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="o5iY1vPT"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id D968839036;
+	Fri, 31 May 2024 04:43:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=JIaxLxunFlTEuhM67Y6oU8bxDg0QPsRwpbaFTL
+	EZu3w=; b=o5iY1vPTIGhQK4kWZiw/S02Os2Ws0e6fwpkXX7d5dRtQf9xDihj7zn
+	dfnK2osfVu8ToiqlsAkl38KpaalCnivQzHm1v7CIfhicupXLuhzWYpF+cZ+/5s7F
+	b9+094G1IIQ0dNqysePl+Y4tcZDVS9VQbz4d8jwxfw/OEbWViOxz8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id C44E139035;
+	Fri, 31 May 2024 04:43:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CE9D739034;
+	Fri, 31 May 2024 04:43:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2] t1517: more coverage for commands that work without
+ repository
+In-Reply-To: <xmqqbk4np77d.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	30 May 2024 09:58:46 -0700")
+References: <xmqqbk4np77d.fsf@gitster.g>
+Date: Fri, 31 May 2024 01:43:27 -0700
+Message-ID: <xmqqwmnajrrk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xADg6DNoVcfdpb7u"
-Content-Disposition: inline
-In-Reply-To: <20240530071432.GD1949834@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DA50F104-1F29-11EF-88E4-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
+While most of the commands in Git suite are designed to do useful
+things in Git repositories, some commands are also usable outside
+any repository.  Building on top of an earlier work abece6e9 (t1517:
+test commands that are designed to be run outside repository,
+2024-05-20) that adds tests for such commands, let's give coverage
+to some more commands.
 
---xADg6DNoVcfdpb7u
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This patch covers commands whose code has hits for
 
-On Thu, May 30, 2024 at 03:14:32AM -0400, Jeff King wrote:
-> On Wed, May 29, 2024 at 06:55:15PM -0400, Taylor Blau wrote:
->=20
-> > This is a small reroll of my series which has a grab-bag of midx-write
-> > related cleanups that I pulled out of a larger series to implement
-> > incremental MIDX chains.
->=20
-> These all look pretty reasonable to me. Thanks for breaking them off of
-> the larger series. I think it's generally nice to get things in smaller
-> chunks.
->=20
-> Sometimes it is a little tough to evaluate refactorings without seeing
-> the larger context in which they'd be used. But all of these were either
-> immediate improvements, or didn't take much imagination to see where
-> they'd make later things easier.
+    $ git grep setup_git_directory_gently
 
-I've read through the range-diff and didn't spot anything unexpected
-there. So this version looks good from my point of view, thanks.
+and passes a pointer to nongit_ok variable it uses to allow it to
+run outside a Git repository, but mostly they are tested only to see
+that they start up (as opposed to dying with "not in a git
+repository" complaint).  We may want to update them to actually do
+something useful later, but this would at least help us catch
+regressions by mistake.
 
-And I very much agree that it's nice to split out smaller topics like
-this. I think it's okay to send patch series that have dozens of commits
-when most of the commits are trivial. But the changes in the MIDX aren't
-that and require the reviewer to dive deep. For me this has the result
-that I need an hour or more on such large patch series to review them.
-And because I often do not find the time for that I push them onto my
-pile of shame of stuff that I do want to review.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * The previous iteration was buggy when the repository was using
+   sha256, as the nongit invocation of "git diff" will use sha1.
 
-I get though that this isn't always easy, and in any case it's a
-tradeoff.
+ t/t1517-outside-repo.sh | 52 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-Patrick
+diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+index 557808ffa7..990a036582 100755
+--- a/t/t1517-outside-repo.sh
++++ b/t/t1517-outside-repo.sh
+@@ -56,4 +56,56 @@ test_expect_success 'grep outside repository' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'imap-send outside repository' '
++	test_config_global imap.host imaps://localhost &&
++	test_config_global imap.folder Drafts &&
++
++	echo nothing to send >expect &&
++	test_must_fail git imap-send -v </dev/null 2>actual &&
++	test_cmp expect actual &&
++
++	(
++		cd non-repo &&
++		test_must_fail git imap-send -v </dev/null 2>../actual
++	) &&
++	test_cmp expect actual
++'
++
++test_expect_success 'check-ref-format outside repository' '
++	git check-ref-format --branch refs/heads/xyzzy >expect &&
++	nongit git check-ref-format --branch refs/heads/xyzzy >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'diff outside repository' '
++	echo one >one &&
++	echo two >two &&
++	test_must_fail git diff --no-index one two >expect.raw &&
++	(
++		cd non-repo &&
++		cp ../one . &&
++		cp ../two . &&
++		test_must_fail git diff one two >../actual.raw
++	) &&
++	# outside repository diff falls back to SHA-1 but
++	# GIT_DEFAULT_HASH may be set to sha256 on the in-repo side.
++	sed -e "/^index /d" expect.raw >expect &&
++	sed -e "/^index /d" actual.raw >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stripspace outside repository' '
++	nongit git stripspace -s </dev/null
++'
++
++test_expect_success 'remote-http outside repository' '
++	test_must_fail git remote-http 2>actual &&
++	test_grep "^error: remote-curl" actual &&
++	(
++		cd non-repo &&
++		test_must_fail git remote-http 2>../actual
++	) &&
++	test_grep "^error: remote-curl" actual
++'
++
+ test_done
 
---xADg6DNoVcfdpb7u
-Content-Type: application/pgp-signature; name="signature.asc"
+Interdiff against v1:
+  diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+  index b77017ac5f..990a036582 100755
+  --- a/t/t1517-outside-repo.sh
+  +++ b/t/t1517-outside-repo.sh
+  @@ -80,13 +80,17 @@ test_expect_success 'check-ref-format outside repository' '
+   test_expect_success 'diff outside repository' '
+   	echo one >one &&
+   	echo two >two &&
+  -	test_must_fail git diff --no-index one two >expect &&
+  +	test_must_fail git diff --no-index one two >expect.raw &&
+   	(
+   		cd non-repo &&
+   		cp ../one . &&
+   		cp ../two . &&
+  -		test_must_fail git diff one two >../actual
+  +		test_must_fail git diff one two >../actual.raw
+   	) &&
+  +	# outside repository diff falls back to SHA-1 but
+  +	# GIT_DEFAULT_HASH may be set to sha256 on the in-repo side.
+  +	sed -e "/^index /d" expect.raw >expect &&
+  +	sed -e "/^index /d" actual.raw >actual &&
+   	test_cmp expect actual
+   '
+   
+-- 
+2.45.2-584-g20241e85ff
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZZiiEACgkQVbJhu7ck
-PpQdMw//WF3bFuEm1nkuMBm/Ug7aXorcfUYJKgVntiLKCWwCoxTujwBrAobkv642
-hdcQInC6Oz87vzqmtfWcgXVnhaa4QgMOgCWk+cYqosEwQqIJc7Ed4VW1yegdPfv3
-jiFZYli8dlyuKhtFx8iW0eWEHAQNix1SieEUd8lM2dRr6EyAtskmrkTDqFDI7zQh
-YGtWAHfSSOMyEv8yNlHZFxMn/RpIiVEXQUZEX2xwcPK3qiGPFLWJzSe+SN5UjsXV
-O4/s3F4UYNHOgk2JYzXdME/xkxXjzrLlyhlR4G+60NSly9UJngB0y8KW6FGgV1Kt
-8/D5rHSqpIo21WUuPIKwMfwvJ/A8mcXKavhkx3uYOPB1UC3UmqqZVtJVaFjxgYXC
-GUdeFlSlUIrN3geJNCcD2L9pXiqRfAL2fn9d3WNbh+fjU7i+425saqerZAZQb9TE
-w4LoA1HyKMN7fRavKv+KDyMxUTtEUYbK8erhWgS+PJhfX3qQh83EYxStczhhmuNW
-GDtklKrh0jBoSOYulVPEGvEZUYPGUghGec6UncsOEBBYPVYK9jVFvYVkoo+jT8Ss
-Y9iW2zkKowC1pKPwuhKUtNDjKJqVNNW+wrDbquiwxGaAr7/vagpO82gQ9a7le0w2
-u1kC8nYVl3t70XAZGazdiCUp8A4LQEPpxnopaJkb9M7ilGiVzaA=
-=Zde6
------END PGP SIGNATURE-----
-
---xADg6DNoVcfdpb7u--
