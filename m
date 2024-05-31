@@ -1,54 +1,51 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2701CF9B
-	for <git@vger.kernel.org>; Fri, 31 May 2024 14:56:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A4A57C8E
+	for <git@vger.kernel.org>; Fri, 31 May 2024 14:57:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717167395; cv=none; b=LgSMT8Zc/iy5Aw14QKfMbd9tn6f516MsY9oDDLhjVyAtioegBqy7Js3p84nSCvQK3CYVzYc1tqhFAfRWg8TK5EdxADY0oMY+OYxVSSRkiv5OhW3AA1V+QdB6MAZoJj5H8GYqX3slk7sWMJTlH5xIkKkep9stjldO4lRqeNBnh/c=
+	t=1717167472; cv=none; b=oPWWYS8ctERyYQbIkwjYB8xPcp6HW0X8M9IFKLMoVonRr71Qh6H8fNtmKyXxSjgmEeoUkxoVLo9OG1GLp0xadOH55Ou/3mht/jSY0mdYgy6mf487t2/AgxWxUUaNmx2/HiARDr0oudfcYl51V2OnT2kfiAT5cCVIKMEo+e50cyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717167395; c=relaxed/simple;
-	bh=J1l8TFv/nPypcTaHlhr2yO1GIY1so+EvfZ7DlrvhQqo=;
+	s=arc-20240116; t=1717167472; c=relaxed/simple;
+	bh=q9AgETnCgsPpuYLcmHXB58QfR0wLMEgKgMjviSbQwYA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f+FC9mNC8bolMsjspbNS7HSBQonTw15qvob4ELa+00HuaVpwrjcf1EzfxDwmYGu67b7CE2q+raudC5WOirX/LFjhKyJj++1HtBRAt7ry2eru+/LHY69L3PrfRQBMtRY2R81DkaOgr+wwsYIw1W8n2AFJFMzmZQg8djSKZ5YSQyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TFEFf6Gm; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=Cfs8oJPnEt18lF7irJcFKhvMK3lvqrfUYfptUNrieHNp04J11izvcYcnJHrFK4qgE1RRGeguY7vey2fvevRH03UG57IoM6yfm1pXAKL5lqUtWth9T/dWDOthJyWAGL80KO216ci2W+CTrI9ascuxcTK5zSZUu0Kai7dz8mRxObk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Qnpm6qnn; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TFEFf6Gm"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 229081A6D7;
-	Fri, 31 May 2024 10:56:34 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Qnpm6qnn"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C1D651AFD4;
+	Fri, 31 May 2024 10:57:49 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=J1l8TFv/nPypcTaHlhr2yO1GIY1so+EvfZ7Dlr
-	vhQqo=; b=TFEFf6GmtTrT/7se0zlztCyAqmebXRo3EDtlyce5dV/Lbd0ASYitRJ
-	+QUZizuj1SIyDjIaEGeSB04GvFUEYoSZuftsDjmD5WRteT/O23SEkq1gOe1P9PQ1
-	vt26lFXdvGCKUJm+0J/8nkQ7z7gA4B/15G7TefCkr5/iqRcrDU8T8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1BAAD1A6D6;
-	Fri, 31 May 2024 10:56:34 -0400 (EDT)
+	:content-type; s=sasl; bh=q9AgETnCgsPpuYLcmHXB58QfR0wLMEgKgMjviS
+	bQwYA=; b=Qnpm6qnnTxp9yZ6ZBS4Inw9m4oPaIzCbQoEHbmzrtboXJcfN3wu5in
+	yGuzWYSQ44xQy3HUTtdqkxijn8cb/c8HHpYlQh+/scEUazXxdaBCS3lw/tTKbY64
+	FACDtoyUfhhMEdM9fcZmakij6dk7clpoEEas0qP9BXdQeghq0vljM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A9F201AFD2;
+	Fri, 31 May 2024 10:57:49 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 39FE21A6D5;
-	Fri, 31 May 2024 10:56:31 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0B8EE1AFD0;
+	Fri, 31 May 2024 10:57:48 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Eric Sunshine
- <sunshine@sunshineco.com>,  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 5/5] mv: replace src_dir with a strvec
-In-Reply-To: <20240531111205.GA3608259@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 31 May 2024 07:12:05 -0400")
-References: <20240530063857.GA1942535@coredump.intra.peff.net>
-	<20240530064638.GE1949704@coredump.intra.peff.net>
-	<xmqqo78nqpl2.fsf@gitster.g>
-	<20240531111205.GA3608259@coredump.intra.peff.net>
-Date: Fri, 31 May 2024 07:56:29 -0700
-Message-ID: <xmqqttiehvxe.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] t1517: more coverage for commands that work without
+ repository
+In-Reply-To: <Zlmz9Edyv_gehMVr@tanuki> (Patrick Steinhardt's message of "Fri,
+	31 May 2024 13:26:44 +0200")
+References: <xmqqbk4np77d.fsf@gitster.g> <Zlmz9Edyv_gehMVr@tanuki>
+Date: Fri, 31 May 2024 07:57:47 -0700
+Message-ID: <xmqqplt2hvv8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,25 +55,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- F742CB3C-1F5D-11EF-9C3D-8F8B087618E4-77302942!pb-smtp21.pobox.com
+ 25A39D9E-1F5E-11EF-B3F1-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Jeff King <peff@peff.net> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> Anyway, that is about somebody else's patch, not this one ;-).
+> On Thu, May 30, 2024 at 09:58:46AM -0700, Junio C Hamano wrote:
+> [snip]
+>> +test_expect_success 'stripspace outside repository' '
+>> +	nongit git stripspace -s </dev/null
+>> +'
 >
-> Heh, good digging. I actually wondered if I was making the same mistake
-> while writing mine, but double-checked that src_dir is not expanded in
-> that way. But I didn't think to check Patrick's original. ;)
->
-> IMHO it is probably still OK. We are bounded by the number of entries in
-> the index (and we already use proportional memory for other parts of the
-> operation).
+> I was wondering whether we also want to verify that it does the correct
+> thing here as it's comparatively easy:
+> ...
+> For the other tests it's a bit more involved. And given that these are
+> all designed as smoke tests, I think it's fine overall.
 
-Yes, I agree it is OK.  We have two arrays whose strings have to be
-allocated, source[] and destination[], and used to have another
-whose elements borrows from one of these, but with the change
-instead of borrowing we now duplicate, but as long as the other
-behefit outweigh the cost of additional memory usage, it is an
-acceptable trade-off.
+Yup, as I said in the proposed log message, we may want to update
+them to actually do something useful later, but this would at least
+help us catch regressions by mistake.
 
-Thanks.
