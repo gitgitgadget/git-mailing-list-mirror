@@ -1,73 +1,73 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA612249F5
-	for <git@vger.kernel.org>; Fri, 31 May 2024 07:56:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9F0249F5
+	for <git@vger.kernel.org>; Fri, 31 May 2024 07:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717142203; cv=none; b=MEqKawzlT6QWPyQ6f4vHSpwo/VDhTxiH3cQs0jcIms2Z1tTs2vqypWzHHkFypH1s4s1Y+HgYkaMWVxFb6Wb3p9TgvUVjMwkYoYpj3+XKYSxh9wkwPwR3TKimehqxtQ6iurfsGzPxvWCpUeVKFqSLPA1baqiF6BF8MeY8M/Sx7x8=
+	t=1717142208; cv=none; b=i8sCgrAbqPw3PT2t5MNmPk2ubV3n9NUmH6x8ippfKowFN5iczoWRGri8FixIjiMFcIY1RSBKkH5l7bWi/n+XQmK+0ra+GiqnMU5nMS6B/9aVHd1FnEM++GuMP2gLF/jRsauN3os1pzbcGteGJBX+yHB5ND9JuEmDIExj3wyYN/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717142203; c=relaxed/simple;
-	bh=G+0rjS9J64NY8ImBa78mOHr1P1gvNUgmo7ok+onKmIA=;
+	s=arc-20240116; t=1717142208; c=relaxed/simple;
+	bh=Sn9SWXpQaJ2xQK0FoCUN/mp0TKZvbmqti34i9WMPvxQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ncHKcW9/Uxu84kUe2nr85NGW9mb36JDK2IPqm2iCQOS43r+CI3fsoiFlg10gh3SWmZiT6jZUu8AhHiOJWE6MuTVGTkS2YfrQilxSH4Pnxgbb2+HFwitVeTmqUil+lR5ZZUXn88h0CrbuSvzQxBOlFNU4dNP6+wXjDzBgD9w8RCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TGyjn4ix; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qXh+JnDZ; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=UiyGvpKRcvGijt7pt7apbfnMwxrzvgXrWQqqT2upXsiBnQlB4j7y+hd6coTs1QpNoOQgByrG3GAMK5RjwdZ8GKTulPMU6FoZ0wUAdPgwTIYgC09IIYmOO4u0YxiMfUPM6vA2nhQg8C0yhCOmFn/ngxnyfTe0M1oLOBJ7t4lJxx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MVxkHbkW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BBG7DmcL; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TGyjn4ix";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qXh+JnDZ"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MVxkHbkW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BBG7DmcL"
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id EDA871140107;
-	Fri, 31 May 2024 03:56:40 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id 955291380117;
+	Fri, 31 May 2024 03:56:45 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Fri, 31 May 2024 03:56:40 -0400
+  by compute6.internal (MEProxy); Fri, 31 May 2024 03:56:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717142200; x=1717228600; bh=kVFO6k+WaQ
-	gSvcpL4raf4AgDkh1KxOo8+ffwxixsh64=; b=TGyjn4ixoXgv5U+FDFRpm2pM3k
-	jcSpcVpK8eIFvDB9SdVovGc/bMgA4VN9xL16fUS4/klSDq9d8851vX9zf8jmUihv
-	xduBg3tXz7wPduHSGVCrbxacdBf+qNMJxKkE9eu7zYIZ1LDx/DcdveTgh+b3QFZv
-	+Twbe50BcoqangQxDn2EgzyPQb62SSapT0XOygEecx8xu5wkp9qqmnkW0XZgXQeQ
-	twbA+QAJ4b9E2EMRIIE741IVE3R1xWXrVLb3RmKoXb05/AFJlsKc6zY3H/07j33S
-	gOZhXy7lgI6LZwjTd2/GuaL/0Li9zky5Uj3E6MQpo641hFG1c0Usza5GTM0g==
+	:subject:to:to; s=fm1; t=1717142205; x=1717228605; bh=QmznWf3Rwu
+	PveYjck0NoQC/qccvQ9116Fy4VNy9c2aE=; b=MVxkHbkWLue4L6NqsYi5NnaQy2
+	WVazP0VTP/3oUfYfr/Y4pLZiQWpCr1MHH8bytvfiHbQ8xyJiMnWBvwLbV/AWmHCt
+	g29hl5C6BT79GZ/+gWRoYD0tyJVhucz116lIHSQhX//wzXl/VCwD+cI1/o/xG7oj
+	6oyCuqCkJhWfvyKeUyJJZh+LOQ4XqsCyKNhI0DUpqGrV3kBNR8Hg2E1sDHG4xgVb
+	SMDrCBYCr8SdrnY+KUQrMVTcJtkdjgh0FA8mp4lFVfhbQWy70to71bS8h4wdhbh2
+	iln3TYKK1iR55z4c+oatcgjq6szXKMHhsDBPAqLGTl8U6zARu2uhT7k2gChA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717142200; x=1717228600; bh=kVFO6k+WaQgSvcpL4raf4AgDkh1K
-	xOo8+ffwxixsh64=; b=qXh+JnDZWRpw6U6R6WIQ9Y2Mx2zD/uXZlQOQ/3mJnW9f
-	6mKY3n+oq6Gm2Qkjye7QZdSQ7zUKHCWfdciVuKwU4eDeVd/C+ZsWRRpwNDSdopGM
-	gOOkMS5bNXlqo+WvThYu1dqlXwdmB2h2hTYxKcqbCPkrhd6A/EqSxD2w1EkwgH/q
-	ha/p3YC5LqccgFr5ZgrXAb4WqPUgkU8iv2Jau2weV4PF7dDb59ol//+Xr7e1OnjL
-	DqvYH2bgjDXMZy2ySwrCfEAEww+ifvHhzmsmtgvpqGLQ+rUxtUP1Rp1DQD9mMw6P
-	uddot+nMF4anhRH0zc6vCxtrb8cYWmBe9cL1x+fobQ==
-X-ME-Sender: <xms:uIJZZrH5t41Tt63m3_Brc31xCuwS9x97q9RDJMKh5fDkgW_4Ixm-Rw>
-    <xme:uIJZZoVyzJaPtaFK8u3qad1visvQ-B97_0xE_mJCJyyAqKqIcYf6ClwLnb8mpW79U
-    Q4_54BpgO4z_ZPzrw>
-X-ME-Received: <xmr:uIJZZtKY7MOvS8aDcML5EqMliDvFQhT24DLNAgKFadnH-5ytsiGoO_7tApWmQzOYlwSWu6BQLwTkKH8e3h1C-K9Ic4XsiC17xH4xe24Ya9udf04>
+	fm1; t=1717142205; x=1717228605; bh=QmznWf3RwuPveYjck0NoQC/qccvQ
+	9116Fy4VNy9c2aE=; b=BBG7DmcLORa4AjXlp/goDFuT2Wm+a/cD0mOjGxXnB2rY
+	N2e4xRdmVqLwefCJqEEUI+evAMzD02f6+O5L4Pn8ZXOtmo5aNrOm0CkLuuL5gx3Z
+	HGge7fGv5/8JCheDKHrE+dHoh3AXGOizAP89U2hmsuGn6NUVfojCBnaQ3t3JzLWw
+	2VJo1xsJRkNvUyMqbsjDOWUyS0rZF2hdts6K526J9PU7UkzuAQMufl0wmuGlmruJ
+	ZXz9kcOBjNkx8JoHla6SsLdfiY2LQ2zwr1kXjfPiRqThOxX8yBXHwo+trLw6RQuE
+	5/Z42ku/cuStKMQy2quGtkTDfXioj55WGKNnuqazBA==
+X-ME-Sender: <xms:vYJZZqeJd8rlwGuzh1vHdakKubvP_147x1h6J2xo4bN-a3DfzlLrOQ>
+    <xme:vYJZZkPCe5oy6y1Z8WCkwUWA3f2CtS1A-LYCZjEeGghO7-sJj9MNSFa5-RXDZcUpM
+    v6YSCWPgMwY_rmyEQ>
+X-ME-Received: <xmr:vYJZZrhAXh6BXLrT8KSLZUsr83eXICiq2zZLkCs6apOeg_cS9XVsm7uuc5lYJWrRwfovP0W_dPW4V3oXWKXCskfTx45u4oHbc_Vm9P2A6E_ZN9w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekhedguddvfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:uIJZZpEphT-Gn1rO-O_xGCkx1mhMzrzTTxvW6LSKhNjVxsruXi3LfA>
-    <xmx:uIJZZhW9-vo6sjUo_pnE6xWQwsX1zURMBDVbvqNztn3maU75RjNqqA>
-    <xmx:uIJZZkP85SgjhJILD9tpAtiH-j9x1UHKhkQZBEVKXd2N8e8yfbbZPw>
-    <xmx:uIJZZg0s8iTWDqCyK5ppUXevoFsW_K1EQXXL5lopmNrtpc9RmhY7NQ>
-    <xmx:uIJZZgGoe5lVyvXciaCCjH9UON18PlghD8fTQUVFeoYdNg1mfWOsCYJg>
+X-ME-Proxy: <xmx:vYJZZn9Kyhojkq1JVIXNDAPfMQq0S9gHOU_z4006O_8rDzDpVkDJoQ>
+    <xmx:vYJZZmuWZzK7vbL1w6Pjod0LeZNxp7-WmTPhIb1OdH5dK2QO7G6sBg>
+    <xmx:vYJZZuHJyXxP7lQzwHeeUFpU14lev7xCCTtX7qmR8kahZYO1dDr5Ng>
+    <xmx:vYJZZlOsVBkOqir65koZgtcKU51AxjhHmD5lxgVdYmpArU63E0ESZg>
+    <xmx:vYJZZj9jtknIoBPAs5cAZz3ZfB0AvymxGXEAAzgJvDzEsMk5SEvrGRjg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 May 2024 03:56:39 -0400 (EDT)
+ 31 May 2024 03:56:44 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id fb9a91ab (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 31 May 2024 07:56:21 +0000 (UTC)
-Date: Fri, 31 May 2024 09:56:37 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id a674f896 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 31 May 2024 07:56:26 +0000 (UTC)
+Date: Fri, 31 May 2024 09:56:41 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -76,9 +76,8 @@ Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v4 2/4] BreakingChanges: document upcoming change from "sha1"
- to "sha256"
-Message-ID: <7c84b2f957595a3d8bc6d28970a009339c5fbf5c.1717141598.git.ps@pks.im>
+Subject: [PATCH v4 3/4] BreakingChanges: document removal of grafting
+Message-ID: <91d78490c2358b417e32694d8dc125b93a4e389d.1717141598.git.ps@pks.im>
 References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
  <cover.1717141598.git.ps@pks.im>
 Precedence: bulk
@@ -88,116 +87,75 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mrsHv2BEb6v1VJi0"
+	protocol="application/pgp-signature"; boundary="6CrT2cTIkCCsF6Mh"
 Content-Disposition: inline
 In-Reply-To: <cover.1717141598.git.ps@pks.im>
 
 
---mrsHv2BEb6v1VJi0
+--6CrT2cTIkCCsF6Mh
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Starting with 8e42eb0e9a (doc: sha256 is no longer experimental,
-2023-07-31), the "sha256" object format is no longer considered to be
-experimental. Furthermore, the SHA-1 hash function is actively
-recommended against by for example NIST and FIPS 140-2, and attacks
-against it are becoming more practical both due to new weaknesses
-(SHAppening, SHAttered, Shambles) and due to the ever-increasing
-computing power. It is only a matter of time before it can be considered
-to be broken completely.
+The grafting mechanism for objects has been deprecated in e650d0643b
+(docs: mark info/grafts as outdated, 2014-03-05), which is more than a
+decade ago. The mechanism can lead to hard-to-debug issues and has a
+superior replacement with replace refs.
 
-Let's plan for this event by being active instead of waiting for it to
-happend and announce that the default object format is going to change
-=66rom "sha1" to "sha256" with Git 3.0.
-
-All major Git implementations (libgit2, JGit, go-git) support the
-"sha256" object format and are thus prepared for this change. The most
-important missing piece in the puzzle is support in forges. But while
-GitLab recently gained experimental support for the "sha256" object
-format though, to the best of my knowledge GitHub doesn't support it
-yet. Ideally, announcing this upcoming change will encourage forges to
-start building that support.
+Follow through with the deprecation and mark grafts for removal in Git
+3.0.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/BreakingChanges.md | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ Documentation/BreakingChanges.md | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/Documentation/BreakingChanges.md b/Documentation/BreakingChang=
 es.md
-index d8a26c9bf9..1b0a357e65 100644
+index 1b0a357e65..14c0972b08 100644
 --- a/Documentation/BreakingChanges.md
 +++ b/Documentation/BreakingChanges.md
-@@ -56,6 +56,33 @@ be changed to or replaced in case the alternative was im=
+@@ -85,6 +85,14 @@ be changed to or replaced in case the alternative was im=
 plemented already.
 =20
- ### Changes
-=20
-+  - The default hash function for new repositories will be changed from "s=
-ha1"
-+    to "sha256". SHA-1 has been deprecated by NIST in 2011 and is nowadays
-+    recommended against in FIPS 140-2 and similar certifications. Furtherm=
-ore,
-+    there are practical attacks on SHA-1 that weaken its cryptographic pro=
-perties:
-+
-+      - The SHAppening (2015). The first demonstration of a practical atta=
-ck
-+        against SHA-1 with 2^57 operations.
-+
-+      - SHAttered (2017). Generation of two valid PDF files with 2^63 oper=
-ations.
-+
-+      - Birthday-Near-Collision (2019). This attack allows for chosen pref=
-ix
-+        attacks with 2^68 operations.
-+
-+      - Shambles (2020). This attack allows for chosen prefix attacks with=
- 2^63
-+        operations.
-+
-+    While we have protections in place against known attacks, it is expect=
-ed
-+    that more attacks against SHA-1 will be found by future research. Pair=
-ed
-+    with the ever-growing capability of hardware, it is only a matter of t=
-ime
-+    before SHA-1 will be considered broken completely. We want to be prepa=
-red
-+    and will thus change the default hash algorithm to "sha256" for newly
-+    initialized repositories.
-+
-+    Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>,
-+        <20170223155046.e7nxivfwqqoprsqj@LykOS.localdomain>,
-+        <CA+EOSBncr=3D4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.=
-com>.
-+
  ### Removals
 =20
++ - Support for grafting commits has long been superseded by git-replace(1).
++   Grafts are inferior to replacement refs as the mechanism can lead to
++   hard-to-diagnose problems when transferring objects between repositorie=
+s.
++   They have been outdated since e650d0643b (docs: mark info/grafts as out=
+dated,
++   2014-03-05) and will be removed.
++
++   Cf. <20140304174806.GA11561@sigill.intra.peff.net>.
++
  ## Superseded features that will not be deprecated
+=20
+ Some features have gained newer replacements that aim to improve the desig=
+n in
 --=20
 2.45.1.410.g58bac47f8e.dirty
 
 
---mrsHv2BEb6v1VJi0
+--6CrT2cTIkCCsF6Mh
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZZgrQACgkQVbJhu7ck
-PpRQxw/+JU4uwgwuahGTuiNJ7qankQF2HeEV9Biijkgj++hrnVyWxzVbpaQRXvtJ
-3zF6Q8tyWrU99VVRYaFptimr9Vmd2FqeDyfrHU8xaMYef5TC6JjZyuztWnRN4yxj
-8iKWOW8/8qAR9dAq5+4hLP7Iu7+Kqn1Kfdb/wN12aloZbHxU5K78JNxagzq4jB7A
-yoeB5x7oj7Npixl29KjdTOoGngszp2Q1QON9+Eb4CqQQfBMd9La/vnLIZQ3yCG4s
-XY8AU+i7KXIFzjfp527qkAotL5NnNpcXiYlsHhPj1LADI+2EEKke5WaRux89oLGC
-EVzYB65qGgl1l0ttPg2qGRuYEqHak/7iTa+t32B94Le9W/h3pXrP17/IS2WTmd93
-VDKkOhV9iiDDsdTcL4FFqSdfZYx8Y8b54MBadgUi9+CH+stHTTJy7JeUWnMLcGxy
-rD/pVLiwx0RcxvRPYKWkYkT2iipcbuRQjVbOUaE5BbWJuPra4plzU/QP/Wv4VzuN
-LaKXKK/Hc7fN5wPujdNF18Hv6JxVjEkWRxuFGv6L7yYyQYAeLxuDeNCp4szEWQM4
-jIryZayVPv8rQMOFxb0w9NASfmX/1m7X34M1hq7Z2gFIuKp1qO0gb6IQvY00IYnc
-FAQ3pfjhyzMo5upm3rLDrtzSsYrXNrJbhH46+d5ynaav2ycAdaA=
-=NyN9
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZZgrkACgkQVbJhu7ck
+PpRkNhAAmPKiuwLR+plaP8dj5CsbCtHvygFdyOqwYja37Z6tHbYLRwD40BVUm5vs
+WXsUGKBFQ+hvgEmYmlEtMZoW03bGWIYax1TXge1E1zyD2AkJNcjBd5Kwfn98VYUP
+pASyNErKPnjNlNQRzdXinBHbLqMh5dudoCMLk9x7roESVUHuOAJceHheZIqXe6Lq
+qaacOt4i7y2vgtj/jCHYPQh3mZZ/BPcEREwqKVeQdiKlaoncU2wgJpEW66P5dKUV
+pGVjFrmCJ2S0pvNf1yRmzUFP3nGe8/SISGvX73E/tF71i+HmbZ7YI9P5+Tzv4KPO
+tmy+dfPyMCzHd5rb7ZHRgWr7i3rHDKamfg1AYSYiByG15pyilpk7fJZ/hsuAuKVB
+PA0bAnRC08P5e0wZZhHqfwy3jyWMEE5B/kHlEcgpaJR67MZ23w9QJYI5Upha53uO
+H7A4/dhENeLzGKO5QrmVnYpKz0Rbu4dHFyY0CKoI9PIX4EtdtMvylHT7I7TE4pZ4
+MuUdL92MyxTKDrlFYXwKPMf9Gmt1aFHVJZcLt1AvgztvP5DvfgwC6H5vGahWbYsR
+80e8odOcVI67Nq+r4ot3oJ189olECRtxlQbt0WqMEtdokAHsWkUlnfql5NnVG6jO
+m7QbMKXvY+8U2pPYHY9Bj4bposaXEOUneLd12zdd5zaw9ye0VnQ=
+=Zhq6
 -----END PGP SIGNATURE-----
 
---mrsHv2BEb6v1VJi0--
+--6CrT2cTIkCCsF6Mh--
