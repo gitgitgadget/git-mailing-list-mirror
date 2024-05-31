@@ -1,120 +1,81 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426738173C
-	for <git@vger.kernel.org>; Fri, 31 May 2024 11:38:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558091422DC
+	for <git@vger.kernel.org>; Fri, 31 May 2024 11:49:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717155533; cv=none; b=eaMTxCuKCFcREAJiePmwFHzzCO1sgI7bE9xTzwivlQLmua2ONeG4+4nOQVGhQK/lrky0+dHTqeLq0vWhEclHEDjluA3c9AJ3OCgZq5d+s5sPfCRG1Qv0mfIum5RX4Zwx541Grf1d7XH8TMfl7M1/m1Xh1Q3vfylpyUCjhA+SMEc=
+	t=1717156184; cv=none; b=IWK0xOqyhy2Wg+Mx36i0V+B86jo/c6H2c+02W9aD47MtivK0ZVuKr4eyjM4ErlyFdwVXjkXd1GfJu4vf25xO5Os58M0K0IrJYSf6Y2aYFl5Sm24Bm/sz6HcdWGUElHmDzMhRZpg7vQ9dVGy627o2spwOIUJm51bxHZa/O5z532c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717155533; c=relaxed/simple;
-	bh=fCMrSSoMF5YOaKsTKEF052C9y2nscUn+TiLv3P2LRRE=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=oDRh0k30FdPKziZycf8sFmgiGFFqesGGnh55B3JBkVQoYX/06mdBFikJzP+iQ6H2Dr1YsqOXWcIAjQN+Fgt3MVmaxd9da0li9WuDXicO4XcEMX0EWjJIGAHCu0nzEmP4xEk7rQRwtLVtsnjAPvUwRqMpSqBeNWASu56MFKhXNHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bAuJBUKu; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bAuJBUKu"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dfa59c35e44so2001818276.3
-        for <git@vger.kernel.org>; Fri, 31 May 2024 04:38:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717155531; x=1717760331; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=fCMrSSoMF5YOaKsTKEF052C9y2nscUn+TiLv3P2LRRE=;
-        b=bAuJBUKuMoZY5uy/zgyOd2OdL7K8yDKGB8o+6zgTXGuqfv2xKYj/NDb+Ic6I2M9GMK
-         CigCIkuOYr6r5bwzhMTWFazfjCOjfIak0qIQKMsP/G0NWwBMqsR9C86tBbqmbDP+j2cC
-         Aqm9YrLPSpEHy9ri0O3FCEqU7PCsBH3/eYYhmE9BIfbAolJXJHUgD0ZwvUyzDZlf7Gje
-         BiFGHwd+IS1qiO1pYLT16GM1lr/WA301KUr2pswpgO8lPe1a1NJ1yHwxIvWZ4/wXAjVU
-         j+F8wJYIfJJtMYiUd+RrBIRSDSYr0s/Ter2le28xZetJF7C1Iy0jqhm/0UkifOI86Ss5
-         AbCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717155531; x=1717760331;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fCMrSSoMF5YOaKsTKEF052C9y2nscUn+TiLv3P2LRRE=;
-        b=Gz4vf0mA13QLT//2ybs9wBPFSsgwlYS/XULEMb4bhwKrdPlL3IxxnywBSFRQn/zwEX
-         1sFuBHO+K1YMduP+jac2LAb5jUOQOfmhjYJpW2NmksZlYwrGCstDPa8WEGPipD6hGx6T
-         ZiKVpthaAk9VrqznnAlUJXr5FLyhvF9kEWP4NArz+6sJyrAuj5V5jeATj1KshSbBDILU
-         sEEHIfUwRStshrsHms4inCC79ho3RpXgfP7sbGtfucf5bVeM0TMnx+wAxfmRqcYuf8Gr
-         dzXZddmK2Kmdq7Xb8iKYHGFEpv1QSSXsIRtvy2fNpRJIRMpWTV49dJMQ7t5Mt4dN68TA
-         oHQA==
-X-Gm-Message-State: AOJu0YzrF+MwvkPsmMYNfy22HKwRh0O5VZFMbwt8W0XLoKeGXJWt/dZ1
-	BwSw62NmzJCa/6+E1iwDeDOU+D+FBnEoS2y+u53FgcbF8oyyy3oLjuenomEWdRDRj427yake45R
-	/uxvJrxxuAtoZz3kcxw314GRVSYFA7Vo=
-X-Google-Smtp-Source: AGHT+IEcUrWNIAMgTgZI7V0KqaEAJm1Meu6BolnFdToXFBrHSc2f1oS1huNu8Dn4gFzd1aqH+irwf2+b4XyTg1vpofA=
-X-Received: by 2002:a25:ab45:0:b0:de8:a770:4812 with SMTP id
- 3f1490d57ef6-dfa73db2ab8mr1496486276.40.1717155531018; Fri, 31 May 2024
- 04:38:51 -0700 (PDT)
+	s=arc-20240116; t=1717156184; c=relaxed/simple;
+	bh=9sUnU1FngitUaJkxCzWCyAQSmdRKhyZkY6lbznt76No=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T0rKqgTuaQLXzj9fNpxHq0/OCnewj1uWDO/cc2pcfYD/yWYGjJq66g6z086276c2EhtXOnChdqC9KMLKlZpeZTLFKekDrBEv2t+sGLxHXZ+nA0p7Va+T9PR7vMV5XGMrZA5FmC/I1hVv8KGrHca5RJBCgQhI9Wl/htOpFiEmDFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 22804 invoked by uid 109); 31 May 2024 11:49:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 31 May 2024 11:49:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9483 invoked by uid 111); 31 May 2024 11:49:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 31 May 2024 07:49:41 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 31 May 2024 07:49:41 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 0/13] leak fixes for sparse-checkout code
+Message-ID: <20240531114941.GA429026@coredump.intra.peff.net>
+References: <20240531112433.GA428583@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Antoine Bolvy <antoine.bolvy@gmail.com>
-Date: Fri, 31 May 2024 13:38:40 +0200
-Message-ID: <CADg0FA_9shzJKN=dBfnavu5eTDNhbz=g0WP2sehAjSqHP4WFkA@mail.gmail.com>
-Subject: [bug report] git diff --relative not doing well with worktree in hooks
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240531112433.GA428583@coredump.intra.peff.net>
 
-Hello,
+On Fri, May 31, 2024 at 07:24:33AM -0400, Jeff King wrote:
 
-I noticed a weird behavior when using git diff --relative with worktrees and
-hooks. When called from a pre-commit hook from a worktree, the relative option
-has no effect.
+> But as you might guess, that didn't make t1091 leak-free. And I couldn't
+> bear leaving it on a cliffhanger like that, so patches 8-13 fix the rest
+> of the issues triggered by that script.
+> 
+> And along the way we managed to make t1090 and t3602 leak-free, too
+> (actually in patch 2, but I didn't notice until the whole thing was
+> done).
 
-Here is how to reproduce the issue:
+Oh, btw, there's one interesting workflow I found. It's nice to see if
+your incremental work is making things better (and to make sure that the
+fixes are being exercised somewhere in the test suite).  But the
+granularity of "is this script leak-free" is too coarse to see the
+incremental steps.  Likewise even for individual test failures, as you
+can have many leaks in a single program.
 
-```bash
-mkdir hook-repro && cd hook-repro
-git init test && cd test
-mkdir folder && touch folder/.gitkeep && git add folder
-git commit -m 'init'
-cat <<EOF > .git/hooks/pre-commit
-#!/bin/bash
+So I ended up doing this a lot:
 
-cd folder || exit
+  script=t1091-sparse-checkout-builtin.sh
+  make SANITIZE=leak &&
+  (
+	cd t &&
+	rm -rf test-results &&
+	LSAN_OPTIONS=abort_on_error=0:exitcode=0 \
+	GIT_TEST_SANITIZE_LEAK_LOG=true \
+	./$script
+  )
+  for i in Indirect Direct; do
+	echo "$i: $(grep "^$i leak" t/test-results/${script%.sh}.leak/* | wc -l)"
+  done
 
-pwd # display the current working directory
+It keeps running instead of aborting on leaks (otherwise your counts
+may go up as "failing" programs are fixed and we run more code). And
+instead just logs it all and counts up the log entries.
 
-git diff --cached --relative --name-only
-EOF
-chmod +x .git/hooks/pre-commit
-```
+I wonder if it would be useful to have something like that baked into
+test-lib.
 
-```bash
-echo "foo" > folder/bar
-git add folder
-git commit -m "test"
-```
-
-Displays
-```
-/home/arch/git/awfus/hook-repro/test/folder
-bar
-```
-
-Now creating a worktree:
-
-```bash
-git worktree add ../worktree && cd ../worktree
-echo "bar" > folder/foo
-git add folder
-git commit -m "worktree"
-```
-
-Displays
-```
-/home/arch/git/awfus/hook-repro/worktree/folder
-folder/foo
-```
-
-The path is no longer show relative. This causes issues with more complex
-scripts.
-
-Git version: 2.45.0 (x86_64) on Arch Linux, shell is zsh (bash for the hook
-script)
-
-Let me know if you need any more information :)
+-Peff
