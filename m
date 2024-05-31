@@ -1,33 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8275915575A
-	for <git@vger.kernel.org>; Fri, 31 May 2024 11:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C90C15575A
+	for <git@vger.kernel.org>; Fri, 31 May 2024 11:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717154677; cv=none; b=usaJAUny6spFLp20j934KSWrCXJ2W4GyngqVirSbbokyqkYijEx6Nu/VdBn86p73Z5qJCB1m+fo9zqdNCwTKVVQHQJPzS4VdhXrl4XtuBWJUZ7o+ol8Jd2V+rHRlBjIfpHF+ogrdZ0RA2U/0vJeH+ZY2yqYMOVP7f8LxeKXc75g=
+	t=1717154706; cv=none; b=SQ6ZTLT57AcMcJC7fik+LuM8L/JRrbnwXF/IdA/Vgq80snJMMXry3Vl9cKcV2rQ3fsNPSJwmBfq6vqlfElPrfYPWLKE8qEPOWuAN49Y6m2X9UXX61zus7cV3RGZnkp8ikDgAwBnikwr+lLlv5xjWHtU8CzyPI0izy0ALtwp6jCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717154677; c=relaxed/simple;
-	bh=nN1qVeCInz9+43xPUYDcIUh+SYKhLx/NAusoX+/vWmU=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=b4mGYMLaPDVsoSzeS/o8JqXfdFW1RgLqY0KovZhohqE5csQsEf+USFrB5n7wL/ZGc8oqx5oXspL2niY+wMCIWTJRbZl9WQPc1UIjc1xKyzERA+arSHIGksk8RlwM7Tu9JA8U8GdzEeuWI/mSeAs8vLlcKXojnwH9LyFCPFYboS0=
+	s=arc-20240116; t=1717154706; c=relaxed/simple;
+	bh=yZvCiVdG8k6SirU6jFW/UwNY6LCAqUD249pbBstQH9w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iyBAkyjm/zjssUrE4h6bgbn6iY1oL/+HvxAWD2zOv6yaAPKek5SpuA20dxjqvd8CUs8vAzaAVmZZ/DjGcuVGjX3hHbXjElXUockMS7rHBJjF8r6fZ2VYjKttWUzLJnIN/h6o1Pz7R9iSDazWfH5EAu7hSzjqiBgONtCkH5W8tnE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 22700 invoked by uid 109); 31 May 2024 11:24:34 -0000
+Received: (qmail 22706 invoked by uid 109); 31 May 2024 11:25:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 31 May 2024 11:24:34 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 31 May 2024 11:25:03 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9211 invoked by uid 111); 31 May 2024 11:24:33 -0000
+Received: (qmail 9237 invoked by uid 111); 31 May 2024 11:25:03 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 31 May 2024 07:24:33 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 31 May 2024 07:25:03 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 31 May 2024 07:24:33 -0400
+Date: Fri, 31 May 2024 07:25:02 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/13] leak fixes for sparse-checkout code
-Message-ID: <20240531112433.GA428583@coredump.intra.peff.net>
+Subject: [PATCH 01/13] sparse-checkout: free string list in
+ write_cone_to_file()
+Message-ID: <20240531112502.GA428814@coredump.intra.peff.net>
+References: <20240531112433.GA428583@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -36,50 +38,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20240531112433.GA428583@coredump.intra.peff.net>
 
-So Patrick nerd-sniped me by asking if my earlier leakfix for git-mv was
-triggered by the test suite. It was, in t7002, but that wasn't enough to
-make the script leak-free. So I figured, how hard could it be to go all
-the way?
+We use a string list to hold sorted and de-duped patterns, but don't
+free it before leaving the function, causing a leak.
 
-Well. It only took a few patches (1-5), but in the process I stumbled on
-a rather tricky interface oddity of add_pattern(), which caused some
-other leaks. The interface is fixed in patch 6, and the matching leak
-goes away in patch 7. Of course, I wanted to make sure it was tested, so
-after poking around I found that t1091 triggered it.
+This drops the number of leaks found in t7002 from 27 to 25.
 
-But as you might guess, that didn't make t1091 leak-free. And I couldn't
-bear leaving it on a cliffhanger like that, so patches 8-13 fix the rest
-of the issues triggered by that script.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/sparse-checkout.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-And along the way we managed to make t1090 and t3602 leak-free, too
-(actually in patch 2, but I didn't notice until the whole thing was
-done).
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 0f52e25249..8747191484 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -311,6 +311,8 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
+ 		fprintf(fp, "%s/\n", pattern);
+ 		free(pattern);
+ 	}
++
++	string_list_clear(&sl, 0);
+ }
+ 
+ static int write_patterns_and_update(struct pattern_list *pl)
+-- 
+2.45.1.727.ge984192922
 
-These should apply on top of jk/leakfixes, since the leak-freeness of
-t7002 depends on the fix there.
-
-  [01/13]: sparse-checkout: free string list in write_cone_to_file()
-  [02/13]: sparse-checkout: pass string literals directly to add_pattern()
-  [03/13]: dir.c: free strings in sparse cone pattern hashmaps
-  [04/13]: sparse-checkout: clear patterns when init() sees existing sparse file
-  [05/13]: dir.c: free removed sparse-pattern hashmap entries
-  [06/13]: dir.c: always copy input to add_pattern()
-  [07/13]: sparse-checkout: reuse --stdin buffer when reading patterns
-  [08/13]: sparse-checkout: always free "line" strbuf after reading input
-  [09/13]: sparse-checkout: refactor temporary sparse_checkout_patterns
-  [10/13]: sparse-checkout: free sparse_filename after use
-  [11/13]: sparse-checkout: free pattern list in sparse_checkout_list()
-  [12/13]: sparse-checkout: free string list after displaying
-  [13/13]: sparse-checkout: free duplicate hashmap entries
-
- builtin/sparse-checkout.c          | 49 +++++++++++++++++++-----------
- dir.c                              | 42 ++++++++++++++++---------
- dir.h                              |  3 +-
- t/t1090-sparse-checkout-scope.sh   |  1 +
- t/t1091-sparse-checkout-builtin.sh |  1 +
- t/t3602-rm-sparse-checkout.sh      |  1 +
- t/t7002-mv-sparse-checkout.sh      |  1 +
- 7 files changed, 65 insertions(+), 33 deletions(-)
-
--Peff
