@@ -1,52 +1,47 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15F34D8CF
-	for <git@vger.kernel.org>; Thu, 30 May 2024 21:17:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C2418C22
+	for <git@vger.kernel.org>; Fri, 31 May 2024 00:43:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717103868; cv=none; b=FIqcxk9TW9LPkE8eMYnkzTNDdv1pefT40/PJ6nlcQmPVyLAeMFFUywlebBRhxnlyShEue/iu2m0TiQHi8+8WmIJgjwaV26sy2v0IO2xpef1x7QzBSlTFguHLtF+xKCdUAZDvpiNmoajYvv7irHbQidGyI53L5tBXA5owSRA3IyE=
+	t=1717116214; cv=none; b=PH9Qhc4xGh6b/ZZGwj3jS1MPgSCXh3H6elLp4E/LUwfoVzE35CfMJUSoG8w6NhGPP5xN+MW8Heo+DU8rFbBaZY1bBo1uSFwLpJHpuARk4mSVO3VrOm3zf4/jMg4jqksKD4x4tFg1IRJdoFUOb0MEpvajGppMnhZy/ujAadO8d/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717103868; c=relaxed/simple;
-	bh=owfBfAdbhWgFSked55J3g5SeEcHae9WUFjedVMggavo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iLfyDPyKWERjQnm0TvP0Z/YbY/DfazGxIgQIWjjSBYaZ2gyM7eY5NboC6htoai9t8Xd4GkusojAdw9y3IR7ANBFloZaGApH9ANnijBRqtV8WlW/DPBzXSrE0TKtrKk2sTC6fh7zmvyBSZqKEAWheHsGZZuLyHiuvqpkr/9O2mX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fz9xo2KQ; arc=none smtp.client-ip=64.147.108.70
+	s=arc-20240116; t=1717116214; c=relaxed/simple;
+	bh=obEICgreUX5eBGTzZF3NMomhCFX7YUzZgVdHd2y5E7U=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LCFEEvWocxJfboDdDQT3dk8QUNMf1G7Q3ALh4JPiOA8M7L1YM6GZRa4I8h1R/qZtDRKwpMVeTe6AXTFVuwTSCVaagOAUWI3fLwNJJZr8YvrbEq6QP7r2ndksJE8CQmtyQIVbG5e6evnJpzj7ooRWItO1r85Bk4vrQvXEm2t267c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nP6h20SF; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fz9xo2KQ"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 558583D115;
-	Thu, 30 May 2024 17:17:39 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nP6h20SF"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 738802F180;
+	Thu, 30 May 2024 20:43:29 -0400 (EDT)
 	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=owfBfAdbhWgFSked55J3g5SeEcHae9WUFjedVM
-	ggavo=; b=fz9xo2KQxkHjayazMMw9aLvty1i5Td0BSf9b0U/6CItgmPiNl1+rez
-	dDATVgxR2cSl56ZEiUq1CvrXn2uH31POS7/dy9yExfOUtY48Iyo2MBNvkQ5+rfE9
-	rotjONazKGYgijxNyp+bG3kRsxEMGyz3HlvgVJGvDg8llQSHHrGF4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D7023D114;
-	Thu, 30 May 2024 17:17:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=o
+	bEICgreUX5eBGTzZF3NMomhCFX7YUzZgVdHd2y5E7U=; b=nP6h20SF2RL4SlZIF
+	mG0t56s+hL5DddJBi1JloNNipWpUTeShfQ0DrmJMJxy0ZOmXjxNhvUF77L8ScJ/Z
+	/D87ImUSQ4onYTVhgKt/bbnDCXZDhGTrtZnjJjYcBs1H1bmhtBIW6e28uJ90v2Ll
+	GxqDODPaCdmorEpmfWQyxIUXeE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B32E2F17F;
+	Thu, 30 May 2024 20:43:29 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B0DDB3D113;
-	Thu, 30 May 2024 17:17:38 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B25102F17E;
+	Thu, 30 May 2024 20:43:28 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: Marcel Telka <marcel@telka.sk>,  git@vger.kernel.org
-Subject: Re: [PATCH] scalar: make enlistment delete to work on all POSIX
- platforms
-In-Reply-To: <v6q5pahyzcoa7c6tp2x63awvtc6xvjjpi4kl5okgk5qi4god7f@yg55zwwmcuzt>
-	(Josh Steadmon's message of "Thu, 30 May 2024 13:57:13 -0700")
-References: <Zkds81OB7C5bTCl_@telcontar>
-	<v6q5pahyzcoa7c6tp2x63awvtc6xvjjpi4kl5okgk5qi4god7f@yg55zwwmcuzt>
-Date: Thu, 30 May 2024 14:17:37 -0700
-Message-ID: <xmqqwmnbngni.fsf@gitster.g>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (May 2024, #13; Thu, 30)
+X-master-at: 58bac47f8eb2c5e92e354f33ee079a244e5b5003
+X-next-at: 366b0e951c73ed6cf46e8bec53d1f3c71c34a718
+Date: Thu, 30 May 2024 17:43:27 -0700
+Message-ID: <xmqqh6eeolow.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,20 +51,711 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 0AEE2BAC-1ECA-11EF-9F0B-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
+ CC1BCA48-1EE6-11EF-8D90-6488940A682E-77302942!pb-smtp2.pobox.com
 
-Josh Steadmon <steadmon@google.com> writes:
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
-> This looks like a straightforward change; none of the formerly protected
-> logic uses anything specific to Windows, and tests still pass on Linux,
-> so this looks good to me.
->
-> Reviewed-by: Josh Steadmon <steadmon@google.com>
+We unfortunately had serious regressions in 2.45.1 (and below, down
+to 2.39 maintenance track are affected), and we are trying to assess
+the extent of damage and which changes that went into the release to
+revert.  We know about "git lfs" and "git annex" getting affected.
+We have bunch of reverts planned to fix these regressions that are
+already in 'master'.  Please test it if you think you're affected, so
+that we can have 2.45.2 and friends to fix these regressions early
+next month.
 
-Thanks.
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-With Dscho's Ack we saw earlier, I should have marked the topic for
-'next' already, but I was placing a lot of things on back burner.  A
-gentle nudge like this is greatly appreciated.
+With maint, master, next, seen, todo:
 
-Will merge to 'next'.  Thanks.
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
+
+With all the integration branches and topics broken out:
+
+	https://github.com/gitster/git/
+
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
+
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
+
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[Graduated to 'master']
+
+* es/chainlint-ncores-fix (2024-05-22) 3 commits
+  (merged to 'next' on 2024-05-22 at 1e4ab85522)
+ + chainlint.pl: latch CPU count directly reported by /proc/cpuinfo
+ + chainlint.pl: fix incorrect CPU count on Linux SPARC
+ + chainlint.pl: make CPU count computation more robust
+
+ The chainlint script (invoked during "make test") did nothing when
+ it failed to detect the number of available CPUs.  It now falls
+ back to 1 CPU to avoid the problem.
+ source: <20240520190131.94904-1-ericsunshine@charter.net>
+
+
+* gt/unit-test-strcmp-offset (2024-05-20) 1 commit
+  (merged to 'next' on 2024-05-23 at f672ec425f)
+ + t/: port helper/test-strcmp-offset.c to unit-tests/t-strcmp-offset.c
+
+ The strcmp-offset tests have been rewritten using the unit test
+ framework.
+ source: <20240519204530.12258-3-shyamthakkar001@gmail.com>
+
+
+* jc/add-patch-enforce-single-letter-input (2024-05-22) 1 commit
+  (merged to 'next' on 2024-05-23 at 12fef48392)
+ + add-patch: enforce only one-letter response to prompts
+
+ "git add -p" learned to complain when an answer with more than one
+ letter is given to a prompt that expects a single letter answer.
+ source: <xmqqh6ep1pwz.fsf_-_@gitster.g>
+
+
+* jc/fix-2.45.1-and-friends-for-2.39 (2024-05-22) 12 commits
+ + Revert "fsck: warn about symlink pointing inside a gitdir"
+ + Revert "Add a helper function to compare file contents"
+ + clone: drop the protections where hooks aren't run
+ + tests: verify that `clone -c core.hooksPath=/dev/null` works again
+ + Revert "core.hooksPath: add some protection while cloning"
+ + init: use the correct path of the templates directory again
+ + hook: plug a new memory leak
+ + ci: stop installing "gcc-13" for osx-gcc
+ + ci: avoid bare "gcc" for osx-gcc job
+ + ci: drop mention of BREW_INSTALL_PACKAGES variable
+ + send-email: avoid creating more than one Term::ReadLine object
+ + send-email: drop FakeTerm hack
+ (this branch is used by jc/fix-2.45.1-and-friends-for-maint.)
+
+ Revert overly aggressive "layered defence" that went into 2.45.1
+ and friends, which broke "git-lfs", "git-annex", and other use
+ cases, so that we can rebuild necessary counterparts in the open.
+ source: <20240521195659.870714-1-gitster@pobox.com>
+
+
+* jc/fix-2.45.1-and-friends-for-maint (2024-05-24) 6 commits
+  (merged to 'next' on 2024-05-25 at a090491028)
+ + Merge branch 'fixes/2.45.1/2.44' into jc/fix-2.45.1-and-friends-for-maint
+ + Merge branch 'fixes/2.45.1/2.43' into fixes/2.45.1/2.44
+ + Merge branch 'fixes/2.45.1/2.42' into fixes/2.45.1/2.43
+ + Merge branch 'fixes/2.45.1/2.41' into fixes/2.45.1/2.42
+ + Merge branch 'fixes/2.45.1/2.40' into fixes/2.45.1/2.41
+ + Merge branch 'jc/fix-2.45.1-and-friends-for-2.39' into fixes/2.45.1/2.40
+ (this branch uses jc/fix-2.45.1-and-friends-for-2.39.)
+
+ Adjust jc/fix-2.45.1-and-friends-for-2.39 for more recent
+ maintenance track.
+
+
+* jc/undecided-is-not-necessarily-sha1-fix (2024-05-21) 6 commits
+  (merged to 'next' on 2024-05-22 at 4bd7982ebe)
+ + apply: fix uninitialized hash function
+ + builtin/hash-object: fix uninitialized hash function
+ + builtin/patch-id: fix uninitialized hash function
+ + t1517: test commands that are designed to be run outside repository
+ + setup: add an escape hatch for "no more default hash algorithm" change
+ + Merge branch 'ps/undecided-is-not-necessarily-sha1' into jc/undecided-is-not-necessarily-sha1-fix
+ (this branch uses ps/undecided-is-not-necessarily-sha1.)
+
+ The base topic started to make it an error for a command to leave
+ the hash algorithm unspecified, which revealed a few commands that
+ were not ready for the change.  Give users a knob to revert back to
+ the "default is sha-1" behaviour as an escape hatch, and start
+ fixing these breakages.
+ source: <20240520231434.1816979-1-gitster@pobox.com>
+
+
+* js/doc-decisions (2024-05-17) 1 commit
+  (merged to 'next' on 2024-05-22 at 891a062720)
+ + doc: describe the project's decision-making process
+
+ The project decision making policy has been documented.
+ source: <10f217915600eda3ebec886e4f020f87c22e318a.1715978031.git.steadmon@google.com>
+
+
+* ps/refs-without-the-repository-updates (2024-05-17) 17 commits
+  (merged to 'next' on 2024-05-22 at 744f37ab2b)
+ + refs/packed: remove references to `the_hash_algo`
+ + refs/files: remove references to `the_hash_algo`
+ + refs/files: use correct repository
+ + refs: remove `dwim_log()`
+ + refs: drop `git_default_branch_name()`
+ + refs: pass repo when peeling objects
+ + refs: move object peeling into "object.c"
+ + refs: pass ref store when detecting dangling symrefs
+ + refs: convert iteration over replace refs to accept ref store
+ + refs: retrieve worktree ref stores via associated repository
+ + refs: refactor `resolve_gitlink_ref()` to accept a repository
+ + refs: pass repo when retrieving submodule ref store
+ + refs: track ref stores via strmap
+ + refs: implement releasing ref storages
+ + refs: rename `init_db` callback to avoid confusion
+ + refs: adjust names for `init` and `init_db` callbacks
+ + Merge branch 'ps/refs-without-the-repository' into ps/refs-without-the-repository-updates
+ (this branch is used by ps/ref-storage-migration.)
+
+ Further clean-up the refs subsystem to stop relying on
+ the_repository, and instead use the repository associated to the
+ ref_store object.
+ source: <cover.1715929858.git.ps@pks.im>
+
+
+* ps/reftable-reusable-iterator (2024-05-13) 13 commits
+  (merged to 'next' on 2024-05-22 at b92eb9939f)
+ + reftable/merged: adapt interface to allow reuse of iterators
+ + reftable/stack: provide convenience functions to create iterators
+ + reftable/reader: adapt interface to allow reuse of iterators
+ + reftable/generic: adapt interface to allow reuse of iterators
+ + reftable/generic: move seeking of records into the iterator
+ + reftable/merged: simplify indices for subiterators
+ + reftable/merged: split up initialization and seeking of records
+ + reftable/reader: set up the reader when initializing table iterator
+ + reftable/reader: inline `reader_seek_internal()`
+ + reftable/reader: separate concerns of table iter and reftable reader
+ + reftable/reader: unify indexed and linear seeking
+ + reftable/reader: avoid copying index iterator
+ + reftable/block: use `size_t` to track restart point index
+
+ Code clean-up to make the reftable iterator closer to be reusable.
+ source: <cover.1715589670.git.ps@pks.im>
+
+
+* ps/reftable-write-options (2024-05-13) 11 commits
+  (merged to 'next' on 2024-05-22 at ae8e378430)
+ + refs/reftable: allow configuring geometric factor
+ + reftable: make the compaction factor configurable
+ + refs/reftable: allow disabling writing the object index
+ + refs/reftable: allow configuring restart interval
+ + reftable: use `uint16_t` to track restart interval
+ + refs/reftable: allow configuring block size
+ + reftable/dump: support dumping a table's block structure
+ + reftable/writer: improve error when passed an invalid block size
+ + reftable/writer: drop static variable used to initialize strbuf
+ + reftable: pass opts as constant pointer
+ + reftable: consistently refer to `reftable_write_options` as `opts`
+
+ The knobs to tweak how reftable files are written have been made
+ available as configuration variables.
+ source: <cover.1715587849.git.ps@pks.im>
+
+
+* ps/undecided-is-not-necessarily-sha1 (2024-05-06) 15 commits
+  (merged to 'next' on 2024-05-08 at 9f8e894685)
+ + repository: stop setting SHA1 as the default object hash
+ + oss-fuzz/commit-graph: set up hash algorithm
+ + builtin/shortlog: don't set up revisions without repo
+ + builtin/diff: explicitly set hash algo when there is no repo
+ + builtin/bundle: abort "verify" early when there is no repository
+ + builtin/blame: don't access potentially unitialized `the_hash_algo`
+ + builtin/rev-parse: allow shortening to more than 40 hex characters
+ + remote-curl: fix parsing of detached SHA256 heads
+ + attr: fix BUG() when parsing attrs outside of repo
+ + attr: don't recompute default attribute source
+ + parse-options-cb: only abbreviate hashes when hash algo is known
+ + path: move `validate_headref()` to its only user
+ + path: harden validation of HEAD with non-standard hashes
+ + Merge branch 'ps/the-index-is-no-more' into ps/undecided-is-not-necessarily-sha1
+ + Merge branch 'jc/no-default-attr-tree-in-bare' into ps/undecided-is-not-necessarily-sha1
+ (this branch is used by jc/undecided-is-not-necessarily-sha1-fix.)
+
+ Before discovering the repository details, We used to assume SHA-1
+ as the "default" hash function, which has been corrected. Hopefully
+ this will smoke out codepaths that rely on such an unwarranted
+ assumptions.
+ source: <cover.1715057362.git.ps@pks.im>
+
+--------------------------------------------------
+[New Topics]
+
+* gt/decorate-unit-test (2024-05-28) 1 commit
+ - t/: migrate helper/test-example-decorate to the unit testing framework
+
+ A test helper that essentially is unit tests on the "decorate"
+ logic has been rewritten using the unit-tests framework.
+
+ Needs review?
+ source: <20240528125837.31090-1-shyamthakkar001@gmail.com>
+
+
+* jc/safe-directory-leading-path (2024-05-29) 1 commit
+ - safe.directory: allow "lead/ing/path/*" match
+
+ source: <xmqqplt4zjw7.fsf@gitster.g>
+
+
+* ps/no-writable-strings (2024-05-30) 21 commits
+ - SQUASH???
+ - config.mak.dev: enable `-Wwrite-strings` warning
+ - builtin/merge: always store allocated strings in `pull_twohead`
+ - builtin/rebase: adapt code to not assign string constants to non-const
+ - imap-send: fix leaking memory in `imap_server_conf`
+ - imap-send: drop global `imap_server_conf` variable
+ - mailmap: always store allocated strings in mailmap blob
+ - revision: always store allocated strings in output encoding
+ - remote-curl: avoid assigning string constant to non-const variable
+ - send-pack: always allocate receive status
+ - parse-options: cast long name for OPTION_ALIAS
+ - object-file: make `buf` parameter of `index_mem()` a constant
+ - line-log: always allocate the output prefix
+ - http: do not assign string constant to non-const field
+ - refspec: remove global tag refspec structure
+ - reftable: improve const correctness when assigning string constants
+ - compat/win32: fix const-correctness with string constants
+ - global: convert intentionally-leaking config strings to consts
+ - global: assign non-const strings as required
+ - global: improve const correctness when assigning string constants
+ - Merge branch 'ps/leakfixes' into ps/no-writable-strings
+ (this branch uses ps/leakfixes.)
+
+ source: <cover.1716983704.git.ps@pks.im>
+
+
+* cp/reftable-unit-test (2024-05-30) 5 commits
+ - t: improve the test-case for parse_names()
+ - t: add test for put_be16()
+ - t: move tests from reftable/record_test.c to the new unit test
+ - t: move tests from reftable/stack_test.c to the new unit test
+ - t: move reftable/basics_test.c to the unit testing framework
+
+ source: <20240529171439.18271-1-chandrapratap3519@gmail.com>
+
+
+* jc/t1517-more (2024-05-30) 1 commit
+ - t1517: more coverage for commands that work without repository
+
+ source: <xmqqbk4np77d.fsf@gitster.g>
+
+
+* jk/leakfixes (2024-05-30) 6 commits
+ - mv: replace src_dir with a strvec
+ - mv: factor out empty src_dir removal
+ - mv: move src_dir cleanup to end of cmd_mv()
+ - t-strvec: mark variable-arg helper with LAST_ARG_MUST_BE_NULL
+ - t-strvec: use va_end() to match va_start()
+ - Merge branch 'ps/leakfixes' into jk/leakfixes
+ (this branch uses ps/leakfixes.)
+
+ source: <20240530063857.GA1942535@coredump.intra.peff.net>
+
+--------------------------------------------------
+[Cooking]
+
+* gt/t-hash-unit-test (2024-05-29) 2 commits
+ - t/: migrate helper/test-{sha1, sha256} to unit-tests/t-hash
+ - strbuf: introduce strbuf_addstrings() to repeatedly add a string
+
+ A pair of test helpers that essentially are unit tests on hash
+ algorithms have been rewritten using the unit-tests framework.
+
+ Will merge to 'next'?
+ source: <20240529080030.64410-1-shyamthakkar001@gmail.com>
+
+
+* pp/add-parse-range-unit-test (2024-05-27) 1 commit
+ - apply: add unit tests for parse_range
+
+ A unit test for code that parses the hunk offset and length from a
+ patch fragment header as been added.
+
+ Will merge to 'next'?
+ source: <pull.1677.v2.git.git.1716710073910.gitgitgadget@gmail.com>
+
+
+* rs/difftool-env-simplify (2024-05-27) 1 commit
+  (merged to 'next' on 2024-05-29 at 4d3776a989)
+ + difftool: add env vars directly in run_file_diff()
+
+ Code simplification.
+
+ Will merge to 'master'.
+ source: <c7c843b9-0ccf-4bcb-a036-d794729a99d6@web.de>
+
+
+* jc/format-patch-with-range-diff (2024-05-24) 2 commits
+ - format-patch: move range/inter diff at the end of a single patch output
+ - show_log: factor out interdiff/range-diff generation
+
+ Move inter/range-diff output to the end of the patch when
+ format-patch adds it to a single patch, instead of writing it
+ before the patch text, to be consistent with what is done for a
+ cover letter for a multi-patch series.
+
+ Will merge to 'next'?
+ source: <20240523225007.2871766-1-gitster@pobox.com>
+
+
+* cc/upload-pack-missing-action (2024-05-24) 3 commits
+ - upload-pack: allow configuring a missing-action
+ - pack-objects: use the missing action API
+ - rev-list: refactor --missing=<missing-action>
+
+ Allow a server S that is a lazy clone of another repository X to
+ respond to a request by C that is a lazy clone of S in a way that
+ it omits objects it itself does not have (and has to be lazily
+ fetched from X).
+
+ I would say this is a terribly irresponsive design, especially
+ there is no negociation for S to learn if the objects it is going
+ to omit is obtainable by C from elsewhere.
+
+ Will discard.
+ source: <20240524163926.2019648-1-christian.couder@gmail.com>
+
+
+* iw/trace-argv-on-alias (2024-05-27) 4 commits
+ - SQUASH???
+ - run-command: show prepared command
+ - Documentation: alias: add notes on shell expansion
+ - Documentation: alias: rework notes into points
+
+ Log the alias-expanded command lines to the trace output.
+
+ Will merge to 'next' after squashing the fix in?
+ source: <20240525234454.1489598-1-iwienand@redhat.com>
+
+
+* ps/document-breaking-changes (2024-05-24) 1 commit
+ - docs: document upcoming breaking changes
+
+ The structure of the document that records longer-term project
+ decisions to deprecate/remove/update various behaviour has been
+ outlined.
+
+ Under discussion.
+ source: <84c01f1b0a2d24d7de912606f548623601c0d715.1716555034.git.ps@pks.im>
+
+
+* ps/leakfixes (2024-05-27) 19 commits
+  (merged to 'next' on 2024-05-29 at e75dcb3beb)
+ + builtin/mv: fix leaks for submodule gitfile paths
+ + builtin/mv: refactor to use `struct strvec`
+ + builtin/mv duplicate string list memory
+ + builtin/mv: refactor `add_slash()` to always return allocated strings
+ + strvec: add functions to replace and remove strings
+ + submodule: fix leaking memory for submodule entries
+ + commit-reach: fix memory leak in `ahead_behind()`
+ + builtin/credential: clear credential before exit
+ + config: plug various memory leaks
+ + config: clarify memory ownership in `git_config_string()`
+ + builtin/log: stop using globals for format config
+ + builtin/log: stop using globals for log config
+ + convert: refactor code to clarify ownership of check_roundtrip_encoding
+ + diff: refactor code to clarify memory ownership of prefixes
+ + config: clarify memory ownership in `git_config_pathname()`
+ + http: refactor code to clarify memory ownership
+ + checkout: clarify memory ownership in `unique_tracking_name()`
+ + strbuf: fix leak when `appendwholeline()` fails with EOF
+ + transport-helper: fix leaking helper name
+ (this branch is used by jk/leakfixes and ps/no-writable-strings.)
+
+ Leakfixes.
+
+ Will merge to 'master'.
+ source: <cover.1716810168.git.ps@pks.im>
+
+
+* ps/ref-storage-migration (2024-05-28) 14 commits
+ - builtin/refs: new command to migrate ref storage formats
+ - refs: implement logic to migrate between ref storage formats
+ - refs: implement removal of ref storages
+ - worktree: don't store main worktree twice
+ - reftable: inline `merged_table_release()`
+ - refs/files: fix NULL pointer deref when releasing ref store
+ - refs/files: extract function to iterate through root refs
+ - refs/files: refactor `add_pseudoref_and_head_entries()`
+ - refs: allow to skip creation of reflog entries
+ - refs: pass storage format to `ref_store_init()` explicitly
+ - refs: convert ref storage format to an enum
+ - setup: unset ref storage when reinitializing repository version
+ - Merge branch 'ps/pseudo-ref-terminology' into ps/ref-storage-migration
+ - Merge branch 'ps/refs-without-the-repository-updates' into ps/ref-storage-migration
+
+ Allow migrating a repository that uses the files backend for its
+ ref storage to use the reftable backend, with limitations.
+
+ Will merge to 'next'.
+ source: <cover.1716877224.git.ps@pks.im>
+
+
+* tb/midx-write-cleanup (2024-05-30) 8 commits
+ - pack-bitmap.c: reimplement `midx_bitmap_filename()` with helper
+ - midx: replace `get_midx_rev_filename()` with a generic helper
+ - midx-write.c: support reading an existing MIDX with `packs_to_include`
+ - midx-write.c: extract `fill_packs_from_midx()`
+ - midx-write.c: extract `should_include_pack()`
+ - midx-write.c: pass `start_pack` to `compute_sorted_entries()`
+ - midx-write.c: reduce argument count for `get_sorted_entries()`
+ - midx-write.c: tolerate `--preferred-pack` without bitmaps
+
+ Code clean-up around writing the .midx files.
+
+ Will merge to 'next'.
+ source: <cover.1717023301.git.me@ttaylorr.com>
+
+
+* tb/pseudo-merge-reachability-bitmap (2024-05-24) 25 commits
+ - t/perf: implement performance tests for pseudo-merge bitmaps
+ - pseudo-merge: implement support for finding existing merges
+ - ewah: `bitmap_equals_ewah()`
+ - pack-bitmap: extra trace2 information
+ - pack-bitmap.c: use pseudo-merges during traversal
+ - t/test-lib-functions.sh: support `--notick` in `test_commit_bulk()`
+ - pack-bitmap: implement test helpers for pseudo-merge
+ - ewah: implement `ewah_bitmap_popcount()`
+ - pseudo-merge: implement support for reading pseudo-merge commits
+ - pack-bitmap.c: read pseudo-merge extension
+ - pseudo-merge: scaffolding for reads
+ - pack-bitmap: extract `read_bitmap()` function
+ - pack-bitmap-write.c: write pseudo-merge table
+ - pseudo-merge: implement support for selecting pseudo-merge commits
+ - config: introduce `git_config_double()`
+ - pack-bitmap: make `bitmap_writer_push_bitmapped_commit()` public
+ - pack-bitmap: implement `bitmap_writer_has_bitmapped_object_id()`
+ - pack-bitmap-write: support storing pseudo-merge commits
+ - pseudo-merge.ch: initial commit
+ - pack-bitmap: move some initialization to `bitmap_writer_init()`
+ - ewah: implement `ewah_bitmap_is_subset()`
+ - Documentation/technical: describe pseudo-merge bitmaps format
+ - Documentation/gitpacking.txt: describe pseudo-merge bitmaps
+ - Documentation/gitpacking.txt: initial commit
+ - Merge branch 'tb/pack-bitmap-write-cleanups' into tb/pseudo-merge-reachability-bitmap
+
+ The pseudo-merge reachability bitmap to help more efficient storage
+ of the reachability bitmap in a repository with too many refs.
+
+ Will merge to 'next'?
+ source: <cover.1716499565.git.me@ttaylorr.com>
+
+
+* th/push-local-ff-check-without-lazy-fetch (2024-05-22) 1 commit
+  (merged to 'next' on 2024-05-25 at 520b6b2897)
+ + push: don't fetch commit object when checking existence
+
+ When "git push" notices that the commit at the tip of the ref on
+ the other side it is about to overwrite does not exist locally, it
+ used to first try fetching it if the local repository is a partial
+ clone. The command has been taught not to do so and immediately
+ fail instead.
+
+ Will merge to 'master'.
+ source: <20240522201559.1677959-1-tom@compton.nu>
+
+
+* th/quiet-lazy-fetch-from-promisor (2024-05-26) 1 commit
+  (merged to 'next' on 2024-05-29 at bb12492199)
+ + promisor-remote: add promisor.quiet configuration option
+
+ The promisor.quiet configuration knob can be set to true to make
+ lazy fetching from promisor remotes silent.
+
+ Will merge to 'master'.
+ source: <20240525100927.2949808-1-tom@compton.nu>
+
+
+* ps/fix-reinit-includeif-onbranch (2024-05-22) 1 commit
+  (merged to 'next' on 2024-05-25 at 89c035186d)
+ + setup: fix bug with "includeIf.onbranch" when initializing dir
+
+ "git init" in an already created directory, when the user
+ configuration has includeif.onbranch, started to fail recently,
+ which has been corrected.
+
+ Will merge to 'master'.
+ source: <cf182bb9ee7d4a7eb46e5dbf4f3ef5deb198d823.1716374321.git.ps@pks.im>
+
+
+* kn/update-ref-symref (2024-05-30) 7 commits
+ - update-ref: add support for 'symref-update' command
+ - reftable: pick either 'oid' or 'target' for new updates
+ - update-ref: add support for 'symref-create' command
+ - update-ref: add support for 'symref-delete' command
+ - update-ref: add support for 'symref-verify' command
+ - refs: create and use `ref_update_expects_existing_old_ref()`
+ - Merge branch 'kn/ref-transaction-symref' into kn/update-ref-symref
+
+ "git update-ref --stdin" learned to handle transactional updates of
+ symbolic-refs.
+
+ Expecting a (hopefully minor and final) reroll.
+ source: <20240514124411.1037019-1-knayak@gitlab.com>
+
+
+* mt/openindiana-scalar (2024-05-17) 1 commit
+  (merged to 'next' on 2024-05-30 at 190d4465cf)
+ + scalar: make enlistment delete to work on all POSIX platforms
+
+ Avoid removing the $(cwd) for portability.
+
+ Will merge to 'master'.
+ source: <Zkds81OB7C5bTCl_@telcontar>
+
+
+* ts/archive-prefix-with-add-virtual-file (2024-05-17) 1 commit
+ - archive: make --add-virtual-file honor --prefix
+
+ The "--add-virtual-file" option of "git archive", added primarily
+ to help "git diagnose", has always ignored the "--prefix", but
+ been documented to honor it.
+
+ Iffy if updating the implementation is the best approach.
+ cf. <bc3711a7-37d5-46bc-979e-83bd0b2cf900@web.de>
+ source: <pull.1719.v2.git.git.1715967267420.gitgitgadget@gmail.com>
+
+
+* tb/precompose-getcwd (2024-05-21) 1 commit
+ - macOS: ls-files path fails if path of workdir is NFD
+
+ We forgot to normalize the result of getcwd() to NFC on macOS where
+ all other paths are normalized, which has been corrected.
+
+ Reverted out of 'next' to be replaced with an updated version (this one).
+ Expectign a reroll to clarify the proposed log message.
+ cf. <20240520160601.GA29154@tb-raspi4>
+ cf. <20240521205749.GA8165@tb-raspi4>
+ source: <20240521141452.26210-1-tboegi@web.de>
+
+
+* pw/rebase-i-error-message (2024-05-30) 2 commits
+ - rebase -i: improve error message when picking merge
+ - rebase -i: pass struct replay_opts to parse_insn_line()
+
+ When the user adds to "git rebase -i" instruction to "pick" a merge
+ commit, the error experience is not pleasant.  Such an error is now
+ caught earlier in the process that parses the todo list.
+
+ Expecting a reroll.
+ cf. <88bc0787-e7ae-49e5-99e8-97f6c55ea8c6@gmail.com>
+ source: <pull.1672.v3.git.1717076630.gitgitgadget@gmail.com>
+
+
+* ew/khash-to-khashl (2024-03-28) 3 commits
+ - khashl: fix ensemble lookups on empty table
+ - treewide: switch to khashl for memory savings
+ - list-objects-filter: use kh_size API
+
+ The hashtable library "khash.h" has been replaced with "khashl.h"
+ that has better memory usage characteristics.
+
+ Needs review.
+ cf. <xmqqy1a4ao3t.fsf@gitster.g>
+ source: <20240328101356.300374-1-e@80x24.org>
+
+
+* ds/doc-config-reflow (2024-03-14) 1 commit
+ - config.txt: perform some minor reformatting
+
+ Reflow a paragraph in the documentation source without any effect
+ to the formatted text.
+
+ Will discard.
+ source: <97bdaf075bf5a68554cca1731eca78aff2662907.1710444774.git.dsimic@manjaro.org>
+
+
+* ie/config-includeif-hostname (2024-03-19) 2 commits
+ - config: learn the "hostname:" includeIf condition
+ - t: add a test helper for getting hostname
+
+ The conditional inclusion mechanism for configuration files learned
+ to switch on the hostname.
+
+ Expecting a reroll.
+ cf. <20240319210428.GC1159535@coredump.intra.peff.net>
+ cf. <20240320001934.GA903718@coredump.intra.peff.net>
+ source: <20240319183722.211300-1-ignacio@iencinas.com>
+
+
+* cw/git-std-lib (2024-02-28) 4 commits
+ . SQUASH??? get rid of apparent debugging crufts
+ . test-stdlib: show that git-std-lib is independent
+ . git-std-lib: introduce Git Standard Library
+ . pager: include stdint.h because uintmax_t is used
+
+ Split libgit.a out to a separate git-std-lib tor easier reuse.
+
+ Expecting a reroll.
+ source: <cover.1696021277.git.jonathantanmy@google.com>
+
+
+* bk/complete-dirname-for-am-and-format-patch (2024-01-12) 1 commit
+ - completion: dir-type optargs for am, format-patch
+
+ Command line completion support (in contrib/) has been
+ updated for a few commands to complete directory names where a
+ directory name is expected.
+
+ Expecting a reroll.
+ cf. <40c3a824-a961-490b-94d4-4eb23c8f713d@gmail.com>
+ cf. <6683f24e-7e56-489d-be2d-8afe1fc38d2b@gmail.com>
+ source: <d37781c3-6af2-409b-95a8-660a9b92d20b@smtp-relay.sendinblue.com>
+
+
+* bk/complete-send-email (2024-01-12) 1 commit
+ - completion: don't complete revs when --no-format-patch
+
+ Command line completion support (in contrib/) has been taught to
+ avoid offering revision names as candidates to "git send-email" when
+ the command is used to send pre-generated files.
+
+ Expecting a reroll.
+ cf. <CAC4O8c88Z3ZqxH2VVaNPpEGB3moL5dJcg3cOWuLWwQ_hLrJMtA@mail.gmail.com>
+ source: <a718b5ee-afb0-44bd-a299-3208fac43506@smtp-relay.sendinblue.com>
+
+
+* tb/path-filter-fix (2024-01-31) 16 commits
+ - bloom: introduce `deinit_bloom_filters()`
+ - commit-graph: reuse existing Bloom filters where possible
+ - object.h: fix mis-aligned flag bits table
+ - commit-graph: new Bloom filter version that fixes murmur3
+ - commit-graph: unconditionally load Bloom filters
+ - bloom: prepare to discard incompatible Bloom filters
+ - bloom: annotate filters with hash version
+ - repo-settings: introduce commitgraph.changedPathsVersion
+ - t4216: test changed path filters with high bit paths
+ - t/helper/test-read-graph: implement `bloom-filters` mode
+ - bloom.h: make `load_bloom_filter_from_graph()` public
+ - t/helper/test-read-graph.c: extract `dump_graph_info()`
+ - gitformat-commit-graph: describe version 2 of BDAT
+ - commit-graph: ensure Bloom filters are read with consistent settings
+ - revision.c: consult Bloom filters for root commits
+ - t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
+
+ The Bloom filter used for path limited history traversal was broken
+ on systems whose "char" is unsigned; update the implementation and
+ bump the format version to 2.
+
+ Waiting for a final ack?
+ cf. <ZcFjkfbsBfk7JQIH@nand.local>
+ source: <cover.1706741516.git.me@ttaylorr.com>
+
+
+* jc/rerere-cleanup (2023-08-25) 4 commits
+ - rerere: modernize use of empty strbuf
+ - rerere: try_merge() should use LL_MERGE_ERROR when it means an error
+ - rerere: fix comment on handle_file() helper
+ - rerere: simplify check_one_conflict() helper function
+
+ Code clean-up.
+
+ Not ready to be reviewed yet.
+ source: <20230824205456.1231371-1-gitster@pobox.com>
