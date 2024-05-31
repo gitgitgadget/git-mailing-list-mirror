@@ -1,257 +1,92 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A301CD23
-	for <git@vger.kernel.org>; Fri, 31 May 2024 14:23:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DCA1B812
+	for <git@vger.kernel.org>; Fri, 31 May 2024 14:36:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717165423; cv=none; b=XBDsyuBqcm4c8Nwsz8qQqz+ruMqEmF1zXG16k3AV8li/Hfa1vm5Jpjg4IjZhVb4xbFxoB33q3HkHYXrylllprt8EmRe9hPKSL37YjNftnSt1mQr++NlxZHxeGjT852yl2icPk1m7aljV33jeQc+3c3KHxDNwJekxz1N5ze32qfI=
+	t=1717166173; cv=none; b=HltMsX+l+7NPFje7Eb61m+AJn/5WYx6KJLEUY2185+41uc0XIVAXkpBI36TIrBpqNhGKGeb6QL8V0I7uFmzNd4ys4UHKfw/bP7++1nNKEmvLGRbxWNBZf1DVmVGCOpHqjLFZ6/RCTXTWgMEaet0bizkUHY0tUDmcKJ9ZEuhkERI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717165423; c=relaxed/simple;
-	bh=Yb+geB+BAP3JPHpHrGzI2AhCY1tVeUPmdmNwqlSdCG0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YaKsV4zF2KsSIrTfquaGAceN+wOjVhVhkQ+sgp0rfDnuTLSzB+KK8eazHfC9/RZHrXEDZrd1Id9qYg3evevVvbmjUIRPsaR/6Psut39KYNE5pjxSaMfC1tSGOLWLZ/pykcE4xYcKOlFzV5OES6il6QHEx7raxDrM78Xk9KQYj+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=unCDcZj7; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1717166173; c=relaxed/simple;
+	bh=jnDwA+szjIejcSpPCEdOPwrt8TZp6NHXyUBptcNZ2X4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=p08hR1vXWuwF+TWDtIElY6uYJub8LLV5pN9xnyl2HXfhYdT2rA0xeZInhY1CN8Eu/LqfLQzGj1SHTkkIA/5xtuM+vwCIx27EUB7p4H8JVsz7+MsM1OyThjgXmlFQ+9GZRhOySvyZ/B0TDC+mnygu+XntnIUAdv1yQ5StOzKuvM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AlJQmQ4x; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="unCDcZj7"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2E5721A1F5;
-	Fri, 31 May 2024 10:23:35 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Yb+geB+BAP3JPHpHrGzI2AhCY1tVeUPmdmNwql
-	SdCG0=; b=unCDcZj7O6gs0qZrvAt/Rb703YqYuXYZZTWOI03fNqvmKl2UIFLY8M
-	GkkGjfr8i88Kb2zTVX96ibTS1wRQuqmbpK/6McPuTk7vVcVQ/YNc1zzmj+Pap3Tb
-	o4yrlxjG2DMIQV9OV2WLSc+SNHO5+GOc6/iim8A6WEccrsUTRlxgA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 26E7D1A1F4;
-	Fri, 31 May 2024 10:23:35 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 51A5A1A1F3;
-	Fri, 31 May 2024 10:23:32 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
- <karthik.188@gmail.com>
-Subject: Re: [GSoC][PATCH 2/2] refs: add name and content check for file
- backend
-In-Reply-To: <20240530122753.1114818-3-shejialuo@gmail.com>
-	(shejialuo@gmail.com's message of "Thu, 30 May 2024 20:27:53 +0800")
-References: <20240530122753.1114818-1-shejialuo@gmail.com>
-	<20240530122753.1114818-3-shejialuo@gmail.com>
-Date: Fri, 31 May 2024 07:23:31 -0700
-Message-ID: <xmqqa5k6jc0s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AlJQmQ4x"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a683868f463so100185966b.0
+        for <git@vger.kernel.org>; Fri, 31 May 2024 07:36:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717166170; x=1717770970; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jnDwA+szjIejcSpPCEdOPwrt8TZp6NHXyUBptcNZ2X4=;
+        b=AlJQmQ4xFH00vKC/crQp21mQvUK8Zuq0GAGpJlkJVQMzkHkIVYEtzyCAo1CwO0rQnb
+         MKKoDQNepX84GQFlG3zg4hlIuzObcAvN+ucCLdI7NsJPL6VPpZGYrGKIOeoQWYslhv34
+         r4hrpwjpsLawQ0viqVG4g++Mi2uUYlLmO4/Lt3yZKIvWtVcPY87Pw2+jm55cJ9RxbTvm
+         M15q6WN///AYKWIVs4lGt0ZWlNC0ctFrSkhYcVSK2XSRRma/76hnUYnyH5b20z4njPbG
+         Vrdu44+o44f+xEs9Fn2JR+M3Jpoxy0GY1iiv5C6cHHOYtSwh1RjSIRf+VcUMeB9zSZHW
+         Q8Lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717166170; x=1717770970;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jnDwA+szjIejcSpPCEdOPwrt8TZp6NHXyUBptcNZ2X4=;
+        b=ar+vcseqVzPRL43w/Qpg88yMQW1+pAbtbYpb3t4V+sm+oqQtu6AIu2T0VDgUYlv2+C
+         EAUImW5ItZ5ZK2UbqvBTCJv/FtatoapUxTr3c28kbF8urfaa29Gn/QcQ+pv/axx0NZI8
+         Fm7zDbAdYe3+iTlqDcxcZDteKCeBE6a8ydw9uUkfHVOIP7Q/6gMm9VxL+T6hoD1XImqZ
+         6Q/YQdknabMbeL0AbyCvMNtsdy9oL9AfzahdUryyH94uvkUWLt/2NthoyEUjn5yk7Zx5
+         6PwnhCaKfKgWe2m+9ona+LlHcL9W3Sqlyh96AyybRv5HmHHfDX+MQkT8ezV5FnITCUlB
+         38og==
+X-Forwarded-Encrypted: i=1; AJvYcCXoUJox7bbMHzKFExLMDa0ffbltkCh6pAKy3x78jzv8NrggEpqk1OtWQEtEOE0fnk/DCW1uPx2dGU2eaDEAcIOIMLBk
+X-Gm-Message-State: AOJu0YxnvmVXUxXbif9ET579FaI8mAiksJcfFWebjSzm6cOUh/3b+Mht
+	LSJN+0yArPTs62wc9cTwuaWzbQTWYYhGPJXXTvbk9NZcQsfy4T8cesan0/QB0d9pP39Szkewaqv
+	E1vr8AmkZCJppNOxUizgOCpwX/pA=
+X-Google-Smtp-Source: AGHT+IFSq7IBfrJorefYYEU6BTVQCdux3kTqp4YEHSUrG+Z1VsVYbspL6MHkep1j/hWy1SN4J0YJXq/Q1tHzFaLFT6A=
+X-Received: by 2002:a17:906:d109:b0:a63:535b:b316 with SMTP id
+ a640c23a62f3a-a68208f0f9cmr166809966b.44.1717166170132; Fri, 31 May 2024
+ 07:36:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 5BBD6004-1F59-11EF-B61F-8F8B087618E4-77302942!pb-smtp21.pobox.com
+References: <715163c3-8d59-46ef-81bf-1dda10e6570c@samba.org>
+ <xmqqplt4zjw7.fsf@gitster.g> <ZlmH1CFZWHokAqso@tanuki>
+In-Reply-To: <ZlmH1CFZWHokAqso@tanuki>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Fri, 31 May 2024 07:35:58 -0700
+Message-ID: <CAPx1GvcNF1_te7v3K0bN1s1OaR8JwHTgfQnoKV_tapz6qzbX7Q@mail.gmail.com>
+Subject: Re: safe.directory wildcards
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, Stefan Metzmacher <metze@samba.org>, git@vger.kernel.org, 
+	Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-shejialuo <shejialuo@gmail.com> writes:
+On Fri, May 31, 2024 at 1:18=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> On Wed, May 29, 2024 at 09:02:16AM -0700, Junio C Hamano wrote:
+> > I am reluctant to use wildmatch() but I would expect that in
+> > practice "leading path matches" (in other words, "everything under
+> > this directory is OK") is sufficient, perhaps?
+>
+> Is there any particular reason why you don't want to use wildmatch?
+> I'd think it to be a natural fit here, and it would provide a superset
+> of functionality provided by leading paths, only.
 
-> +static int files_fsck_refs_content(const char *refs_check_dir,
-> +				struct dir_iterator *iter)
-> +{
-> +	struct strbuf ref_content = STRBUF_INIT;
+I have to agree with Patrick here that wildmatch would not be
+surprising. If the concern is that it might be accidentally dangerous,
+perhaps requiring one to set two knobs might suffice?
 
-The caller makes sure that this gets called only on a regular file,
-so ...
+Of course I've also thought at many times that Mercurial's
+"syntax: glob" and "syntax: whatever" rules were a good idea,
+although not necessarily that particular notation. Perhaps
+"safe.literal.directory" (aka safe.directory) and "safe.glob.directory"?
 
-> +	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0) {
-
-... the use of strbuf_read_file() is fine (i.e. we do not have to
-worry about the iter->path to be pointing at a symbolic link) here.
-
-> +		error(_("%s/%s: unable to read the ref"), refs_check_dir, iter->basename);
-> +		goto clean;
-> +	}
-> +
-> +	/*
-> +	 * Case 1: check if the ref content length is valid and the last
-> +	 * character is a newline.
-> +	 */
-> +	if (ref_content.len != the_hash_algo->hexsz + 1 ||
-> +			ref_content.buf[ref_content.len - 1] != '\n') {
-
-Funny indentation.
-
-	if (ref_content.len != the_hash_algo->hexsz + 1 ||
-	    ref_content.buf[ref_content.len - 1] != '\n') {
-
-Also, we do not want {braces} around a single statement block.
-
-In any case, the two checks are good ONLY for regular refs and not
-for symbolic refs.  The users are free to create symbolic refs next
-to their branches, e.g. here is a way to say, "among the maintenance
-tracks maint-2.30, maint-2.31, ... maint-2.44, maint-2.45, what I
-consider the primary maintenance track is currently maint-2.45":
-
-    $ git symbolic-ref refs/heads/maint
-    refs/heads/maint-2.45
-
-and if your directory walk encounters such a symbolic ref, your
-strbuf_read_file() will read something like:
-
-    $ cat .git/refs/heads/maint
-    ref: refs/heads/maint-2.45
-
-Also, the caller also needs to be prepared to find a real symbolic
-link that is used as a symbolic ref, but for them you'd need to do a
-readlink() and the expected contents would not have "ref: " prefix,
-so the code to implement actual check would have to be different.
-The way how refs/files-backend.c:read_ref_internal() handles S_ISLNK
-would be illuminating.
-
-> +		goto failure;
-> +	}
-> +	/*
-> +	 * Case 2: the content should be range of [0-9a-f].
-> +	 */
-> +	for (size_t i = 0; i < the_hash_algo->hexsz; i++) {
-> +		if (!isdigit(ref_content.buf[i]) &&
-> +				(ref_content.buf[i] < 'a' || ref_content.buf[i] > 'f')) {
-> +			goto failure;
-
-I do not think it is a good idea to suddenly redefine what a valid
-way to write object names in a loose ref file after ~20 years.
-Given the popularity of Git, I would not be surprised at all if a
-third-party tool or two have been writing their own refs with
-uppercase hexadecimal and we have been happily using them as
-everybody expects.  It is a good idea to be strict when you are a
-producer, and we do write object names always in lowercase hex, but
-we are lenient when consuming what is possibly written by others.
-As long as the hexadecimal string names an existing object
-(otherwise we have a dangling ref which would be another kind of
-error, I presume), it should be at most FSCK_WARN when it does not
-look like what _we_ wrote (e.g., if it uses uppercase hex, or if it
-has extra bytes after the 40-hex (or 64-hex) other than the final
-LF).  If it is shorter, of course that is an outright FSCK_ERROR.
-
-How well does this interact with the fsck error levels (aka
-fsck_msg_type), by the way?  It should be made to work well if the
-current design does not.
-
-> +		}
-> +	}
-> +
-> +	strbuf_release(&ref_content);
-> +	return 0;
-> +
-> +failure:
-> +	error(_("%s/%s: invalid ref content"), refs_check_dir, iter->basename);
-
-In addition, when we honor fsck error levels, such an unconditional
-call to "error" may become an issue.  If the user says a certain
-kind of anomaly is tolerated by setting a specific finding to
-FSCK_IGNORE, we should be silent about our finding.
-
-> +clean:
-> +	strbuf_release(&ref_content);
-> +	return -1;
-> +}
-> +
-> +static int files_fsck_refs(struct ref_store *ref_store,
-> +				const char* refs_check_dir,
-> +				files_fsck_refs_fn *fsck_refs_fns)
-> +{
-> +	struct dir_iterator *iter;
-> +	struct strbuf sb = STRBUF_INIT;
-> +	int ret = 0;
-> +	int iter_status;
-> +
-> +	strbuf_addf(&sb, "%s/%s", ref_store->gitdir, refs_check_dir);
-> +
-> +	iter = dir_iterator_begin(sb.buf, 0);
-> +
-> +	/*
-> +	 * The current implementation does not care about the worktree, the worktree
-> +	 * may have no refs/heads or refs/tags directory. Simply return 0 now.
-> +	*/
-> +	if (!iter) {
-> +		return 0;
-> +	}
-> +
-> +	while ((iter_status = dir_iterator_advance(iter)) == ITER_OK) {
-> +		if (S_ISDIR(iter->st.st_mode)) {
-> +			continue;
-> +		} else if (S_ISREG(iter->st.st_mode)) {
-> +			for (files_fsck_refs_fn *fsck_refs_fn = fsck_refs_fns;
-> +					*fsck_refs_fn; fsck_refs_fn++) {
-
-Funny indentation (again---the patch 2/2 has funny "two extra HT"
-indentation style all over the place).  Write it like so:
-
-			for (files_fsck_refs_fn *fn = fsck_refs_fns;
-			     fn;
-                             fn++)
-
-> +				ret |= (*fsck_refs_fn)(refs_check_dir, iter);
-
-A pointer to a function does not need to be dereferenced explicitly
-like so.  Also, writing
-
-				if (fn(refs_check_dir, iter))
-					ret = -1;
-
-would be more consistent with the rest of the code around here,
-which does not OR int ret but explicitly set it to -1 when any
-helper function detects an error.
-
-> +			}
-> +		} else {
-> +			error(_("unexpected file type for '%s'"), iter->basename);
-> +			ret = -1;
-
-This is wrong.  A symbolic link is a valid symbolic ref, even though
-we no longer create such a symbolic ref by default.
-
-> +		}
-> +	}
-> +
-> +	if (iter_status != ITER_DONE) {
-> +		ret = -1;
-> +		error(_("failed to iterate over '%s'"), sb.buf);
-> +	}
-> +
-> +	strbuf_release(&sb);
-> +
-> +	return ret;
-> +}
-> +
-> +static int files_fsck(struct ref_store *ref_store)
-> +{
-> +	int ret = 0;
-> +
-> +	files_fsck_refs_fn fsck_refs_fns[] = {
-> +		files_fsck_refs_name,
-> +		files_fsck_refs_content,
-> +		NULL
-> +	};
-> +
-> +	ret = files_fsck_refs(ref_store, "refs/heads",fsck_refs_fns)
-
-Missing SP after a comma.
-
-> +	    | files_fsck_refs(ref_store, "refs/tags", fsck_refs_fns);
-
-Why only these two hierarchies?  Shouldn't it also be checking the
-remote tracking branches and notes?
-
-> +	return ret;
-> +}
-> +
->  struct ref_storage_be refs_be_files = {
->  	.name = "files",
->  	.init = files_ref_store_create,
+Chris
