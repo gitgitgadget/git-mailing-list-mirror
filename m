@@ -1,51 +1,50 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A22770F5
-	for <git@vger.kernel.org>; Fri, 31 May 2024 15:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BA16F2EF
+	for <git@vger.kernel.org>; Fri, 31 May 2024 15:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717167670; cv=none; b=rmvs/IZ6MzqCAyFvPwk/V4sqtJwpVl7lf1jZwaYjWAbwZmLTJEV4sJAv5zBfYV6goTFc5CqYfMzHykjvReIP1e6h8KPya2McARkpClPcBVNxMAiajnGrvLTtUf1qA+0qjjotCXD2T4h7wZ10m7eUmQFVksVFbwl5gYrNAmgAnwA=
+	t=1717167909; cv=none; b=oqn3WlLluEQ75/77wSt1lYeMPVXlBHZuQcFInc6iNJkxULRc2PJTnUJe2YmbouUaLk+Cj2HlPFNKcSTEQ601UChBtjldZ1I7YsO3KQjBN2QC94KbElXvTajTUmjgpzm62yQ0N48YhwqbVgFMCZB6u1qFFWfXQ1Nv9S55vQlJoMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717167670; c=relaxed/simple;
-	bh=cWMozvMK7s4dv8qgXYu9Qy7nekBW6JOdh4h/rHVyiZk=;
+	s=arc-20240116; t=1717167909; c=relaxed/simple;
+	bh=RXjvElIceM33y4V9fSkaj+WP7i3z7NSfFGO6MV3nvp0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Q+w8okLr42aimy/B6Zs2kYAjEZ9boqHp4FDGhrhDq24zpx+ogc9ga8S2OGRzbFaVtt9RntPArVXypR4Bq4wbAQZMzx0HAt9Hr+m8iF6wugOmfbIKEO3HNY5UlzEVVws4T09P/rkhZ2tO6jV9fOTqbzbYtzmNlXlgzXbZhKQxkbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qHrcbGKp; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=kWBK7+BpPyArv0aq36P5fb8ByQUWJeXs29nXRuPUyk7PknIUVqvKqj+yu9p+xcDKqX3IFHOjJ56mE/wTH7n2a0oyMskrngl+5vb+92FWAI6HQ1TH6nusaIRbG4pLbiSHXK16Dbbzo96qhJdBNQHqqtFYNJl6rECHd9SGabhP12w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=C/to6+UB; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qHrcbGKp"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="C/to6+UB"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7AA8833EE1;
-	Fri, 31 May 2024 11:01:06 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B248F33F26;
+	Fri, 31 May 2024 11:05:06 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=cWMozvMK7s4dv8qgXYu9Qy7nekBW6JOdh4h/rH
-	VyiZk=; b=qHrcbGKpJHmBz316kQuM9HRo2ER5wuytxDggs3hQ9v04R9oD4mFCDF
-	nhPY8MzLnt0VBuLlboSeCroGBZC7OCIfBm2py9R9qHRLS1Y8MUqVK8AaWCb6kjke
-	a96vSxOmiYBcAXhy8EugoAK9kfjB0R6Acmfm7mg44wFhvWEgtCS1I=
+	:content-type; s=sasl; bh=RXjvElIceM33y4V9fSkaj+WP7i3z7NSfFGO6MV
+	3nvp0=; b=C/to6+UBY+b6qDTg+6svMOG8lL4i9WiwJlOvFeT2CswL2nB9onu7uZ
+	xrby53BHgrnaUgilbN/YyDsIvTL3RAPmQRXoaq6TdFleuBkXG0cQGvtd/mJgyAfb
+	1M+YQh4KWLsY8o4FG+ZJbWmkYxqsEAFRrRA7PrsogUWy+aeZVUr+I=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E9E7D33EDF;
-	Fri, 31 May 2024 11:01:05 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7F5D233F24;
+	Fri, 31 May 2024 11:05:06 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 68F8D33EDE;
-	Fri, 31 May 2024 11:01:04 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 92AD333F23;
+	Fri, 31 May 2024 11:05:05 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/13] leak fixes for sparse-checkout code
-In-Reply-To: <20240531114941.GA429026@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 31 May 2024 07:49:41 -0400")
-References: <20240531112433.GA428583@coredump.intra.peff.net>
-	<20240531114941.GA429026@coredump.intra.peff.net>
-Date: Fri, 31 May 2024 08:01:01 -0700
-Message-ID: <xmqqle3qhvpu.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] dir.c: skip .gitignore, etc larger than INT_MAX
+In-Reply-To: <20240531120034.GA442032@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 31 May 2024 08:00:34 -0400")
+References: <20240531120034.GA442032@coredump.intra.peff.net>
+Date: Fri, 31 May 2024 08:05:03 -0700
+Message-ID: <xmqqh6eehvj4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,27 +54,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 9A30D6A4-1F5E-11EF-A8CF-6488940A682E-77302942!pb-smtp2.pobox.com
+ 29D9042A-1F5F-11EF-ACCA-6488940A682E-77302942!pb-smtp2.pobox.com
 
 Jeff King <peff@peff.net> writes:
 
-> 	LSAN_OPTIONS=abort_on_error=0:exitcode=0 \
-> 	GIT_TEST_SANITIZE_LEAK_LOG=true \
-> 	./$script
->   )
->   for i in Indirect Direct; do
-> 	echo "$i: $(grep "^$i leak" t/test-results/${script%.sh}.leak/* | wc -l)"
->   done
+> The "int" in question is in add_patterns_from_buffer(), so we could
+> catch it there. But by putting the checks in its two callers, we can
+> produce more useful error messages.
 
-Neat trick.
-
-> It keeps running instead of aborting on leaks (otherwise your counts
-> may go up as "failing" programs are fixed and we run more code). And
-> instead just logs it all and counts up the log entries.
-
-Indeed.  It is a very nice idea.
-
-> I wonder if it would be useful to have something like that baked into
-> test-lib.
->
-> -Peff
+Nice trick.  I wondered if we want INT_MAX/2 or something even
+lower, but because once these things are read, we only parse the
+contents so allowing up to INT_MAX is fine.  It is not like we read
+this and that and concatenate them into a larger buffer.
