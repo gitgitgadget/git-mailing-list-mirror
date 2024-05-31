@@ -1,107 +1,113 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76126380
-	for <git@vger.kernel.org>; Fri, 31 May 2024 22:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BE781204
+	for <git@vger.kernel.org>; Fri, 31 May 2024 22:28:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717194082; cv=none; b=t43XPtb+gCfJq+IQWplZtgygwYSDAoI81oaBuRrpYWiTtqbOXIUNEYF6zBbXEdTfYX/9KR0GTNjI2PBezsqb0m8EC0bpvsywe9O6WR1qWodce9GaQspxQQTXsqUduaNntc1+gv2s1svBt3fawZtjeJ6Xfhg8J2BA+DfCGzYyVr4=
+	t=1717194491; cv=none; b=gJxJx9pDBNaNLArRwau/MxodtYBgrgcVWC5J2uNK+QdzCCtiFXdIUYpjIifZd3DtKIvb64c6NmHCCIG3aRv4kqz10I05Ld9B7/biONst8ubuHBGr2Nalgohx9Reh4lkMY/UswQQnkfajxjCPtmBb58R2XZEn5lA6OqP6WYnV2Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717194082; c=relaxed/simple;
-	bh=fVoN2jTkhYDRdKkZNagBM1x+j0918PPjCwvFmyve1nc=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=qH4f7TyhiUmCpqLDLMkH3finpDhIIH2g2PvxNKTLQgJO0Tp5leGTBzDFW2sGHeg07jXSTjaQNnXk3WFILV0hPepWKZHNs0kTlG4Up/5MxlFmZ3M0uh9vVfsjLfSxyiT0ZcWK6uiYZvBeMvd8Z5RXjSmZH3ueeXv6CChJy2iXV6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=n6A6ZDFh; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1717194491; c=relaxed/simple;
+	bh=8XBcc08iH8Isr1HNa5mcn3A1CMj7hF29j7TlRcbbxpo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rRtpbSIsJMYN0X6O4N8k/gTMo3sPS79AaNoDc3Mx97GEmzi23jvlyMD/E6d3LAP5sBIg78EnajfZ4BM1gdkvXcjaot19sJ8kjoSyOknTbpNSZrnD0qfkVwWcJ5YMwKXY0wgnNgF3k2QktUBHmuNlOoKLy1aeQm7a8FNisiF/S98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=k5NIaCdP; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="n6A6ZDFh"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="k5NIaCdP"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2097C3DEA7;
+	Fri, 31 May 2024 18:28:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=8XBcc08iH8Isr1HNa5mcn3A1CMj7hF29j7TlRc
+	bbxpo=; b=k5NIaCdPmPHExPbKPEYQfQsrx+6ZXj0yEo+P24FeYAMoFRtEDWqt2F
+	TqQaMU9Oxp0JPK+5MafysByE60gNBKxWhe14Lam7l45Gqem6dzR0FZIdgCZyk2MU
+	NUe+gqyipiehyn97X0vVJRSX+CSpjza94OF6umP1GNeZMi3KwNaho=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 180433DEA6;
+	Fri, 31 May 2024 18:28:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2EFD83DEA5;
+	Fri, 31 May 2024 18:28:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 06/13] dir.c: always copy input to add_pattern()
+In-Reply-To: <20240531113127.GF428814@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 31 May 2024 07:31:27 -0400")
+References: <20240531112433.GA428583@coredump.intra.peff.net>
+	<20240531113127.GF428814@coredump.intra.peff.net>
+Date: Fri, 31 May 2024 15:28:04 -0700
+Message-ID: <xmqq1q5hehvv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1717194078;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6RNpPR47OlqkUH2vdFuUfYb08ypemyIvn2iUlNAjQZo=;
-	b=n6A6ZDFh38cKsU2d7UMc9zfubtiaVo1U+eW63sw2+cNNP7rFh3+t4nG1qCFX9y5OP0dl75
-	q72eT+kIM9FqRzekQMyiGEW9MrELodRfHDNYJV/30QvU300apfuoeYddBqwl003zl7VXFZ
-	pT3WUrkVPkL9dFmfUtVEONTc9lcUWtqs9XstnXVnv1kQh5Pvf8xbLMEQayXlyaP60KeL0i
-	H0RHi03mvjAPztnu6VIg2Se0MMVqGu+Be9Yc+vKfCWvK9hkhotR6sY76JGw3t220b2Y3oc
-	gUbX9jSEKVAGX/UFOVrLePRmt1DrDF2EfBsuz2z9SdhwIrNdmh17ZKPwGqEOqg==
-Date: Sat, 01 Jun 2024 00:21:18 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, rjusto@gmail.com, sunshine@sunshineco.com
-Subject: Re: [PATCH v2] doc: imply that interactive.singleKey is disabled by
- default
-In-Reply-To: <xmqq5xutgajw.fsf@gitster.g>
-References: <7da73f15a018d858519eefa373001ccb3eaf32e2.1716412958.git.dsimic@manjaro.org>
- <xmqqy1811qkx.fsf@gitster.g> <673887a14c4f74deb4ef7771a331689b@manjaro.org>
- <35f5633ebf263ec743d673770eb86487@manjaro.org> <xmqq5xutgajw.fsf@gitster.g>
-Message-ID: <e5eb72eeb2f8e2de9400ed9373b72236@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0D1C57C2-1F9D-11EF-8ECE-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
-Hello Junio,
+Jeff King <peff@peff.net> writes:
 
-On 2024-05-31 19:23, Junio C Hamano wrote:
-> Dragan Simic <dsimic@manjaro.org> writes:
-> 
->> On 2024-05-22 23:34, Dragan Simic wrote:
->>> On 2024-05-22 23:31, Junio C Hamano wrote:
->>>> Dragan Simic <dsimic@manjaro.org> writes:
->>>> 
->>>>> 1:  3141fe9f7328 ! 1:  7da73f15a018 doc: note that
->>>>> interactive.singleKey is disabled by default
->>>>>     @@ Metadata
->>>>>      Author: Dragan Simic <dsimic@manjaro.org>
->>>>>       ## Commit message ##
->>>>>     -    doc: note that interactive.singleKey is disabled by 
->>>>> default
->>>>>     +    doc: imply that interactive.singleKey is disabled by 
->>>>> default
->>>>>          Make it clear that the interactive.singleKey
->>>>> configuration option is disabled
->>>> Heh, "note that" would probably be better, as we are going to say
->>>> "Make it clear" anyway, no?  That is stronger than just to imply.
->>>> Keeping the original version of the log message probably was
->>>> sufficient.
->>> Yeah, but I felt like it needed some adjustments, because the patch
->>> itself was actually changed.  I hope I won't have to send the v3
->>> because of that? :)
->>> 
->>>>> +	When set to true, allow the user to provide one-letter input
->>>>> +	with a single key (i.e., without hitting the Enter key) in
->>>>> +	interactive commands.  This is currently used by the `--patch`
->>>>> +	mode of linkgit:git-add[1], linkgit:git-checkout[1],
->>>>>  	linkgit:git-restore[1], linkgit:git-commit[1],
->>>>>  	linkgit:git-reset[1], and linkgit:git-stash[1].
->>>>> 
->>>> The resulting text reads well.
->>>> Nicely done.
->>> Thanks.
->> 
->> Just checking, is there something left to be addressed for this patch,
->> before it can be considered to be pulled into the next branch?
-> 
-> Thanks for pinging, as these small things were on the back burner
-> while preparing for updates to maintenance tracks.
-> 
-> Apparently v2 cannot be pulled into the next branch, and I forgot if
-> I saw v3 already.  In general, unless I explicitly say there is no
-> need to resend (sometimes with conditions), I'd expect an updated
-> iteration sent to the list.
+>   b. Now that we don't need the original string to hang around, we can
+>      get rid of the "filebuf" mechanism entirely, and just free the file
+>      contents after parsing. Since files are the sources we'd expect to
+>      have the largest pattern sets, we should mostly break even on
+>      stuffing the same data into the individual structs.
 
-I see, but I'm not really sure is there need for the v3?  Maybe the
-patch description could be tweaked a bit further, but I wasn't under
-impression that you asked for that to be done?  Am I wrong there?
+;-).
+
+> diff --git a/dir.c b/dir.c
+> index d812d521b0..8308d167c8 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -925,12 +925,7 @@ void add_pattern(const char *string, const char *base,
+>  	int nowildcardlen;
+>  
+>  	parse_path_pattern(&string, &patternlen, &flags, &nowildcardlen);
+> -	if (flags & PATTERN_FLAG_MUSTBEDIR) {
+> -		FLEXPTR_ALLOC_MEM(pattern, pattern, string, patternlen);
+> -	} else {
+> -		pattern = xmalloc(sizeof(*pattern));
+> -		pattern->pattern = string;
+> -	}
+> +	FLEX_ALLOC_MEM(pattern, pattern, string, patternlen);
+>  	pattern->patternlen = patternlen;
+>  	pattern->nowildcardlen = nowildcardlen;
+>  	pattern->base = base;
+
+Nice simplification.
+
+> diff --git a/dir.h b/dir.h
+> index b9e8e96128..c8ff308fae 100644
+> --- a/dir.h
+> +++ b/dir.h
+> @@ -62,7 +62,6 @@ struct path_pattern {
+>  	 */
+>  	struct pattern_list *pl;
+>  
+> -	const char *pattern;
+>  	int patternlen;
+>  	int nowildcardlen;
+>  	const char *base;
+> @@ -74,6 +73,8 @@ struct path_pattern {
+>  	 * and from -1 decrementing for patterns from CLI args.
+>  	 */
+>  	int srcpos;
+> +
+> +	char pattern[FLEX_ARRAY];
+>  };
+
+OK.  Looking good.
+
+Thanks.
