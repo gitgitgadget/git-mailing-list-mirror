@@ -1,113 +1,137 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B00D4F60D
-	for <git@vger.kernel.org>; Sun,  2 Jun 2024 17:33:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823A62A1B0
+	for <git@vger.kernel.org>; Sun,  2 Jun 2024 17:36:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717349597; cv=none; b=HqlerVsIsTLOIkVytZ8mbkkiNS+5c0iYHkBAHhGKjg/gQfkiKsbQXc9MVOFd2G75FMgQo+ALyhSeEUT/AaoobVJDZTw1wcWf5L+IxmLR0j1eWK781ohk+bt4Bq64sJmCD1vw2gf/+BvY0oiDF+HEtUoUHPQ84czbXjqTEjC+Tfo=
+	t=1717349804; cv=none; b=S/e8sdm7jXt4GMHLcRzLvzjg8AHJC4nPiwEMDgowewlBo+tTIJB2Qa3c7SQE7edZpw7egPYCSa9nwIPhyRFqx90yWknkDTQ6GtnvnDup95nrkqfa4L99zpfWqQFfdZ4EQN2Hhv2mZnhii4tGnJ1hnbyCEIIuln27jDxgIWYOmSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717349597; c=relaxed/simple;
-	bh=uYYllsu/UiEWmubvI6bwX8wGIXfPS+tj/nSjfP+yVeA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RG84keOYYOnPFHgzcln0Vh8jFzEG7J+29sEbpKIKmwyE/8srODhW+AOuA3+MBJh/O4XxGqsJtNMJWNgbwvvsOsAbSdwkk5/6EAuM1EDb/shy+Ht5MNRazBmFOUTuYxsGT2eacwdwj6San2VcZmoTAI/WIa+xeJsHXDmBmURWcFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EybRn5MT; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1717349804; c=relaxed/simple;
+	bh=DyYXzsn1I51evdhxzloN31uFLnc8Sp7TmOhcxXdbY7c=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=CCMWFImg/RUIEMy7wh/NsjKWc1Fe6EuJ+nXxPDw3SNIVjfy9/R+rjauskB5c7L+Zsq81lfcDyXY/MUUvFbYV/q5rQrsTg9+8LGb7w4CF7A6jXiM9jZ+4Q2b7wF8bu5AyvHKoopkTrFXHX4uwC1Vzyuu8oBt9mzUCv0ibaM7YrHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=AN/UqSmt; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EybRn5MT"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-35dce610207so1262430f8f.2
-        for <git@vger.kernel.org>; Sun, 02 Jun 2024 10:33:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717349594; x=1717954394; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=I3ILuyZNw1p6UrrboGwNSxuV/RDuOdS4AdNaSlSxp7U=;
-        b=EybRn5MTb+P6PKnzs55XA9iYh17dMoNmVQ1NdUg6G1466lu/YRPnfuJj0cE1NCLzVB
-         xn0Af9GZ+GBKUOiByVkU5LX6jmuEWTNvvjomJ7sxHv+0fGAzZjWwu2Abhor/0qUa+NMT
-         tG15IFoklEEq4OJU0sF/XOfJodPjYXqhUdohJgT2T4zRu2Ivah6a202VWswHpDklXnP8
-         oso7sbPIpPGmQ3BxqIDjCqvqX4A4gbbrsHUIpUZB3VH9Q8LPYheBOMx/Yanznkm0DLo4
-         qdgf/6GPkFtKxPjaDINk++DSla/sgNJmnbGfQpLGlKVp6ekeX/a4CPolVyUurPloOD6g
-         aZ/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717349594; x=1717954394;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I3ILuyZNw1p6UrrboGwNSxuV/RDuOdS4AdNaSlSxp7U=;
-        b=Twl8uO0Qafeed1ioj4dRTN5mofY4k/GieUaVvhkKY0d3RW++R6ADWhuDdbSajUZ0AI
-         eYFst+ATp0ifUZ8L2quP2xhuIPdPaTobkr5siJINAI4MMWvaEZ7jDn/mc7fTO1HZcyxU
-         wcVaEn/RO0w8Mo6/IkdVz5H7K9giDqHj0GFXC9gdJ3Q0uz0M8I/H8TbErrWDjLaU6zcf
-         PJhYktmwMTzw6KrckAmfgbxO3Z2vS/jPc2TGYIi65qbEF0Q4HRpSLmpWEyYhkZf2wlbi
-         15LvKus5/D3vLTD8BPdyVbcIpGUBCAteT7zW6JZibYVlYI9p8LoAodF/SYh2mvSTsFqt
-         vA8w==
-X-Gm-Message-State: AOJu0Yy9OeIRituiEN+6DBGXCFU+2Ervueokjea6CoB8xqNxnv8Uytd4
-	E7bcliR5N1s6RMSUhPZ2BOXe9v4JMxECVotr2hsRATMUbna3efFt
-X-Google-Smtp-Source: AGHT+IG/RkKvqyl6ahOM8h2Dlq7VbQxk/lx32OXVLwmQOWY0d4N7GD34cR+19/LNYtXI0WMIB+7VYQ==
-X-Received: by 2002:adf:eed0:0:b0:354:f57f:7bdd with SMTP id ffacd0b85a97d-35e0f325ab8mr5714551f8f.45.1717349593530;
-        Sun, 02 Jun 2024 10:33:13 -0700 (PDT)
-Received: from gmail.com (35.red-88-14-62.dynamicip.rima-tde.net. [88.14.62.35])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd062eda6sm6659601f8f.86.2024.06.02.10.33.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Jun 2024 10:33:13 -0700 (PDT)
-Message-ID: <7ab01cce-ee08-4ee2-8fcc-65324c340aaa@gmail.com>
-Date: Sun, 2 Jun 2024 19:33:12 +0200
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="AN/UqSmt"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1717349798;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3PCStMGrd74Tsr8P6vfaOhmR3VJ1XPHTQOCMcsCvryc=;
+	b=AN/UqSmtEu/hdEZQYqhn20++et2D8uE2Hpl83uAayAp6Nu2Z2iblop6QuyNkBNFgxFGRY+
+	HNCjIX5bG6m+Tzq595IE96l3zGMBNbLXp87ZKwUiLCiLln6zPgRCaSc+2fZcalnm3o4GBa
+	M1S2v8emqEYNzHZ4vQj4G3yqY+hl8eHWuIowhxZuJFNy6No1iacShiSil9CFCJj6Pskpx3
+	4kZAbeu1OkLOg2OdPF2w4Nh8kptscU+phMehjg3qF7yGYsoUVkfLvwFk+Wkn71d0/3SiB1
+	LWiy9hGiQ0ufRvW88SBTSnLfOR4haxy8iYcyU+CIZNLXu4wHaZx+jI1uvq6W/A==
+Date: Sun, 02 Jun 2024 19:36:37 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, Jeff
+ King <peff@peff.net>
 Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>, Dragan Simic <dsimic@manjaro.org>,
- Jeff King <peff@peff.net>
+In-Reply-To: <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
 References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
  <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
- <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com> <xmqqwmn79u98.fsf@gitster.g>
- <xmqqttib8e22.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqttib8e22.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
+Message-ID: <81d52b31ce4c287765a43d87d94f526b@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Sun, Jun 02, 2024 at 10:11:49AM -0700, Junio C Hamano wrote:
+Hello Ruben,
 
-> By the way, although I personally do not have much sympathy to those
-> who set it, in the presence of interactive.singleKey configuration
-> variable, a command that takes optional argument may turn out to be
-> a mistake, as the user cannot give the argument even if they wanted
-> to, when the configuration variable is set to true.
+On 2024-06-02 17:38, Rubén Justo wrote:
+> This iteration, v3, introduces a new command: '|', suggested by Junio,
+> instead of the 'P' command proposed in the previous iteration.
+> 
+> This allows us to use the pager:
+> 
+>   (1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,s,e,p,|,?]? |
+> 
+> But also to use other programs, like:
+> 
+>   (1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,s,e,p,|,?]? | head
+> 
+> Or:
+> 
+>   (1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,s,e,p,|,?]? | grep term
+> 
+> Hopefully, we'll find a way to avoid sending ANSI codes, on demand,
+> without disabling it entirely with color.ui=never or any other global
+> option.  To make this usable:
+> 
+>   (1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,s,e,p,|,?]? | vim -
+> 
+> However, the current functionality meets my current needs, so I'm happy
+> with it.
 
-Well spotted.
+The way I see it, using "| <program>" should follow the de facto rules
+already established by the "--color=auto" command-line option in 
+multiple
+utilities.  Thus, when piping to a custom program, the escape codes that
+perform the coloring should be stripped.
 
-Perhaps we can do something like:
+> This, a new 'interactive.pipeCommand' setting, or a new switch: 'add 
+> -P',
+> are left for discussing in, hopefully, a future series.
+> 
+> One final note;  I preferred to model the help text this way:
+> 
+>     y - stage this hunk
+>     n - do not stage this hunk
+>     q - quit; do not stage this hunk or any of the remaining ones
+>     a - stage this hunk and all later hunks in the file
+>     d - do not stage this hunk or any of the later hunks in the file
+>     j - leave this hunk undecided, see next undecided hunk
+>     J - leave this hunk undecided, see next hunk
+>     g - select a hunk to go to
+>     / - search for a hunk matching the given regex
+>     s - split the current hunk into smaller hunks
+>     e - manually edit the current hunk
+>     p - print the current hunk
+>     | - pipe the current hunk to the pager, or |<program> to use a 
+> program'
+>     ? - print help
 
-diff --git a/add-patch.c b/add-patch.c
-index 5a586d1b9b..01525214f9 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -1685,8 +1685,17 @@ static int patch_update_file(struct add_p_state *s,
- 		} else if (s->answer.buf[0] == 'p') {
- 			rendered_hunk_index = -1;
- 		} else if (ch == '|') {
-+			strbuf_remove(&s->answer, 0, 1);
-+			if (s->s.use_single_key && !s->answer.len) {
-+				printf("%s", _("program? "));
-+				fflush(stdout);
-+				strbuf_getline(&s->answer, stdin);
-+				strbuf_trim_trailing_newline(&s->answer);
-+			}
- 			rendered_hunk_index = -1;
--			pager = s->answer.buf + 1;
-+			pager = s->answer.buf;
- 		} else if (s->answer.buf[0] == '?') {
- 			const char *p = _(help_patch_remainder), *eol = p;
- 
-I agree this needs to be addressed in this series.
+I also like this form better, but I think wording could be improved.
+I'll think a bit more about it, maybe something like this:
 
-I'd prefer to leave the feature of reusing the command, to another
-series.
+       | - use pager to show the current hunk, or use |<program> to 
+customize
+
+Also, what's the single quote doing after "use a program"?
+
+> Instead of:
+> 
+>     y - stage this hunk
+>     n - do not stage this hunk
+>     q - quit; do not stage this hunk or any of the remaining ones
+>     a - stage this hunk and all later hunks in the file
+>     d - do not stage this hunk or any of the later hunks in the file
+>     j - leave this hunk undecided, see next undecided hunk
+>     J - leave this hunk undecided, see next hunk
+>     g - select a hunk to go to
+>     / - search for a hunk matching the given regex
+>     s - split the current hunk into smaller hunks
+>     e - manually edit the current hunk
+>     p - print the current hunk
+>     |[program] - pipe the current hunk to a program, the pager if 
+> none...
+>     ? - print help
+> 
+> Because I believe it reads better by maintaining a single character
+> before the dash.  But I am not opposed to the latter.
