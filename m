@@ -1,121 +1,141 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407831DFF8
-	for <git@vger.kernel.org>; Sun,  2 Jun 2024 17:11:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32CF1DFF8
+	for <git@vger.kernel.org>; Sun,  2 Jun 2024 17:13:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717348313; cv=none; b=Sjly759I/HlYZF93tneOGdflStzRx7tIhtRDqYJLR8sigq3Z4/nKQCpYnIRnyHWuBi+tRp55JcbBSPhvG37taJfMnxZLRMzVhcnwnhwgOMzkkaXmPNvxOQs2CY8uUN+GvXfGtKcx9n3qchCp8oqPWFMySLLAh7oUrCXdvlh5Inc=
+	t=1717348421; cv=none; b=R3CNWVs8IvOSbcq7GJKPhGVMnjmbBzG8aSO9CioPVc7ftvtLhnePW7uHn+XHGcKnNeUSlVxTFw71+u+MCbMFB8TRDYx6XAorOIy4eYn0qWDRz77eP9Hf9czUmeouRAVJ9zbvrrE/jcRJTb2cTUKchfccg9q5TtWc8+E3MNu15Ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717348313; c=relaxed/simple;
-	bh=WWYA8FJNPIPwGYGbXMTFKfbyGlnF4ehGf8jvBKUwIG4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gW3H8R7UoCKxvc0f6VtlvlHlxb4y1IUd5g31G4COnpvp2iZiAg8FutN2w5pfkp1Xh8QtFgamT9wQzuZ1Vy96yq5+RGSjDOZ8kzCpDOxUSQ4aa36gb8Ww7BD8oSprIBFnPnIWDNFb05eZtlHZNUzveJazr7MTPSr+iKiKSmprj0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VdOuCP9g; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1717348421; c=relaxed/simple;
+	bh=750IgPXqLT2Gw7nUhr6Sfzf5am7Xkuk4fv0VQCxLbr4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SVqSGIoa9DO8SEo8p70ZQ7anD1ScmWzAzBOEiEaj7VJve/DAvCRxMn0lXh0tvXWM1QTY9BRWJGt1cUqTZRu5pB+EwidyapkRVVJ95lXnVd1PkxN3CTRCT2uR6KeXxBGbhYxNUr01WVvF7WUSSR/3qdBV5J4MbWzCA5w0UUxfDMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PE82AuQ1; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VdOuCP9g"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C2CF2BA75;
-	Sun,  2 Jun 2024 13:11:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=WWYA8FJNPIPwGYGbXMTFKfbyGlnF4ehGf8jvBK
-	UwIG4=; b=VdOuCP9gfAQGQL9ukPQJ548qDD/tkvw7uuA2iHdkj7sccWMPzul7Uw
-	I9OTWIifFIvkPRPaMea+tSMBSYy5cJtFx4u4KD7Y8l0ozx6OTIQzOVoMXWvZbeMg
-	J6juwt8pb3l5cyJzb+EM1TbR56EvoTHfFBNl0rcSy6UB95tJrhHT8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 13C9A2BA74;
-	Sun,  2 Jun 2024 13:11:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7FF122BA73;
-	Sun,  2 Jun 2024 13:11:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  Dragan Simic <dsimic@manjaro.org>,
-  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
-In-Reply-To: <xmqqwmn79u98.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
-	02 Jun 2024 09:36:35 -0700")
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
-	<199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
-	<b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
-	<xmqqwmn79u98.fsf@gitster.g>
-Date: Sun, 02 Jun 2024 10:11:49 -0700
-Message-ID: <xmqqttib8e22.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PE82AuQ1"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-35dceef4227so2443542f8f.0
+        for <git@vger.kernel.org>; Sun, 02 Jun 2024 10:13:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717348418; x=1717953218; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FlefKdoshJJhgRL2RoGsiaOgsjIqjYCu3MnOeHxXpbk=;
+        b=PE82AuQ1jo+gHv7vf3sXHcDOZIRHj44tewg4QoIL2TmU5Bu0GCVQZiSPHCo+L2bHw/
+         AY9ZaXVxkYj8yub4MM23IsWrJj/W+Xn3oPLp02pvaCnMa14342eVQcxz4WtfPS8Jbzop
+         zmCl/Jf+4RmUg2ZcQa0XeAEM1+raZLKkqAEoQaCEY2B5Xd6R7j2guxQBRk8JEu/YkGmV
+         C6g0ZfuCQMrtXoh7cJmiZ5LBzvX6ZrYxRvfVuWAQ1RBBt9YhXS3SeoQXOJ3N8mE/A9i7
+         y2xaFUtrSbFZyPJHAOCPqD1kgTGVGr2fxiUBTILnsNJA/qCDIy/U7tpfLlS1aWE0XQkw
+         JaMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717348418; x=1717953218;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FlefKdoshJJhgRL2RoGsiaOgsjIqjYCu3MnOeHxXpbk=;
+        b=YhXDHEtl8dAMA3FcYwxXtHDeU/pgImwTckVOCwRkKDLK7S8PU0oeMq0kIVqo5I0Js2
+         3kfYMI6n9ZnlfFFKZujtzBM3IaOXTlp6eW4rhOfd2fOtIYz6UbQyYTzLKr+5rWgHiv81
+         0R/cw8WmWoyeMu4srqhx780BKbxR5x7Rzd+htmR7v4OcS8HF7shOjTdom04UdvDAqp81
+         TR7sifWVjxvFGl0Hc0J5Ls4TY+t3xY6yoG5fsuZx11/1iEJUkCGqKeu6HoGOIQF8x4hF
+         /1eulNVJdreL3Vx1KG+xRXFUBaaeZz7keUYASJA0Umf/oJ3KmUyBegvGA0PmKW5U39RN
+         L4qw==
+X-Gm-Message-State: AOJu0YwKQOLGHm5ITDoweY6OOUxQjwUV9cr+OaKUU3pnobFM9Q/D51Eb
+	PluhlDoQhBkjgfAvYEgRm8Wp+uZm+6RAZcaw1q/4TWADmKeGaK2uZMF6ZQ==
+X-Google-Smtp-Source: AGHT+IGPa2d3qVy/0iylBVxkD0hU425pzZKlVxbUI0HKj3QghfhYkpMM1qdbtDjkG/Mc9Cj6gC130Q==
+X-Received: by 2002:adf:ec48:0:b0:34d:7a12:454b with SMTP id ffacd0b85a97d-35e0f28b1f7mr4283366f8f.39.1717348417997;
+        Sun, 02 Jun 2024 10:13:37 -0700 (PDT)
+Received: from gmail.com (35.red-88-14-62.dynamicip.rima-tde.net. [88.14.62.35])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35e5047f75esm3454390f8f.35.2024.06.02.10.13.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 02 Jun 2024 10:13:37 -0700 (PDT)
+Message-ID: <1ccc6c1a-0a1e-46ff-8311-abdbbdb4a60d@gmail.com>
+Date: Sun, 2 Jun 2024 19:13:36 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 338EDEF4-2103-11EF-9ECD-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Dragan Simic <dsimic@manjaro.org>,
+ Jeff King <peff@peff.net>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+ <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+ <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com> <xmqqwmn79u98.fsf@gitster.g>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqwmn79u98.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sun, Jun 02, 2024 at 09:36:35AM -0700, Junio C Hamano wrote:
+> Rubén Justo <rjusto@gmail.com> writes:
+> 
+> > Hopefully, we'll find a way to avoid sending ANSI codes, on demand,
+> > without disabling it entirely with color.ui=never or any other global
+> > option.  To make this usable:
+> >
+> >   (1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,s,e,p,|,?]? | vim -
+> >
+> > However, the current functionality meets my current needs, so I'm happy
+> > with it.
+> 
+> Yup, if it really is needed we could do || or anything "unusual" to
+> signal the unusual nature of the command.
+> 
+> Or ">" command can send the output to specified file without
+> coloring, and the user can do whatever they want to it.  
 
+Interesting;  perhaps intuitive and in line with other 'isatty()'
+conditions we have.
+
+> 
+> In any case, unlike "Let's not just do pager, but have a facility to
+> pipe to anything and make the pager a default destination" that was
+> a natural match to the originally proposed behaviour, these two are
+> quite different and can be left totally outside the scope of the
+> topic.
+> 
+> > One final note;  I preferred to model the help text this way:
+> >
+> >     y - stage this hunk
+> >     n - do not stage this hunk
+> > ...
+> >     g - select a hunk to go to 
+> >     / - search for a hunk matching the given regex
+> > ...
+> >     | - pipe the current hunk to the pager, or |<program> to use a program'
+> >     ? - print help
+> 
+> That's fine.
+> 
 > The 'g' and '/' commands take _mandatory_ arguments, but we do not
 > even mention it in the help text.  But we need to say something for
 > this new thing, because it is _optional_ and if you do not give a
 > program, it does not ask.
+> 
+> A possibility is to phrase it like so:
+> 
+>     | - pipe the current hunk to the program (or "%s" by default)
+> 
+> and fill %s with the program you'd use if not given, i.e. initially
+> the value of the GIT_PAGER but updated to the last used program
+> after the user uses "|<program>" form to specify one.
 
-By the way, although I personally do not have much sympathy to those
-who set it, in the presence of interactive.singleKey configuration
-variable, a command that takes optional argument may turn out to be
-a mistake, as the user cannot give the argument even if they wanted
-to, when the configuration variable is set to true.  To help them,
-we'd probably need something like the following to allow them to
-optionally set their own program, like the following:
+And this one too;  a nice way to allow reusing the previous value.
+Perhaps we'd better find a way to introduce some form of CTRL+P, or
+arrow-up...  I dunno.
 
- 1. read the command, notice that it begins with '|'.
+Interesting ideas.  But my preference is to queue this series as it is,
+if no major issue is pointed out.  And leave for future series this
+topics or the others mentioned in the thread: the 'interactive.'
+setting suggested by Peff, or the '-P' switch, by Dragan.
 
- 2. if it has <program> after it, call it <program> and jump to 5.
+Let's see what others say.
 
- 3. if it does not have <program> after it, but if single key
-    operation is in effect, give the user a chance to give <program>
-    by prompting.  Call the answer to the prompt <program>.  If it
-    is not an empty string, jump to 5.
-
- 4. at this point, we have <program> that is empty as given by the
-    user.  Replace the <program> with the value we remembered from
-    step 6. during the last use of the '|' command.
-
- 5. if <program> is all whitespace, replace it with an empty string.
-
- 6. remember the value of <program> (so that you can reuse it next
-    time the user says '|' and without <program>), and call the
-    "set-custom-pager" thing with <program> (this design assumes
-    that "set-custom-pager" thing uses the GIT_PAGER when fed an
-    empty string).
-
- 7. spawn the program set by "set-custom-pager", and feed our output
-    to it.
-
-So the end-user observable behaviour would become
-
- * There is the "default" program, initially their pager, but after
-   they use the '|' command, we remember the last program they used
-   during the session and reuse it when they tell us to do so.
-
- * For singlekey folks, typing '|' will give them a prompt.  They
-   can give an empty string and spawn the "default" thing.  They can
-   give " " plus <RET> to reset the "default" to GIT_PAGER and use
-   it.  Or they can give <program> plus <RET> to use it and update
-   the "default".
-
- * For the rest of us, typing "|" plus <RET> will spawn the
-   "default" thing.  Typing "|<program>" plus <RET> will use the
-   <program> and update the "default".  Typing "| " plus <RET> will
-   reset the "default" to GIT_PAGER and use it.
-
-which is quite straight-forward and consistent between the two
-camps.
-
+Thanks.
