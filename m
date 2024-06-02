@@ -1,87 +1,121 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464D2154BEE
-	for <git@vger.kernel.org>; Sat,  1 Jun 2024 20:45:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1BA1C02
+	for <git@vger.kernel.org>; Sun,  2 Jun 2024 01:03:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717274706; cv=none; b=diXUEXHOUHxts+kvxY8ENCRdWYZhVXVuc7MpnVGUXW+KaAic1xXuX3+pzwXGHYCrcVppIwIugZMFnDgZmOtI7ALC4iX1rzCoAZzP7wpFEDirzmZ2mFyi1ivVyCJZL0yV0ny2z7vfHjRNtinHN5tuFXH4OGlVato5eR9+q5kROEQ=
+	t=1717290218; cv=none; b=K1nunCMGM+E306q7Uc74+IYzLH23NWzU/teSVHK8X6UyBxcq7LaaNv9p4SsZf1FubP2aR1GSCk9+tnH7ohfg645MSawtBKWLD7jUOg1rqH9Nz2fTYj80ncm4xPgrPpGdtumakZYc4RVVUKcYa1OWC9fqV9+MaZvBMaM6I+tzFlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717274706; c=relaxed/simple;
-	bh=mXSYYnLmgVJ6zKdkvIwT4skubHheKHh3po98A4pL1eM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=rnGM5dfcwvnxjsaOEUJe1OoGrY0gguKSdBEYCdK9u1LOdMKgS2yj+QTwnjHZ46vUZoy+ZI208nf57OrYfKQKYnZoyVXocE2JZPULNGw1QkTNuCEEkXVbe75agRQV2dlRrt8KcMmQgGl2MO8mAS7HnrBA6oMnYBDksR4rL355ssk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jh4NzNXd; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1717290218; c=relaxed/simple;
+	bh=sGjkWD15+ulEtiEuS5o9giJNs4kbMZpaXfg797OAcUk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JB6nZkPo7qIv8fAet/7gPNKN+j3fRgyBbVLs9MOD4+aX4arlHA+wSzoHzkdXo9g116J23v8kPNLAzyRmKpUnOvRIaK7p1UsCcVjNN1dyXrLZprcw5qUs4B+qY+49zyq8WkRWkDro0/AQ6szy8ToWxRG9f89ie3s07dF/zD9gLpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QWLKvnaJ; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jh4NzNXd"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-57a196134d1so3558190a12.2
-        for <git@vger.kernel.org>; Sat, 01 Jun 2024 13:45:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717274703; x=1717879503; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=XE758RoRHdOAMnFrviup6lW3DHVpvc6+RNn7wUSasbo=;
-        b=jh4NzNXd9U+QUSoZNYUlGg9/YDUlZOuqEw5ZVNeNcSma5EGUukiyiUvRdGgZmbqe9t
-         EZivSJwX6hfHsd4wvLQuX+bXWIu9+zZB4wsXJG3U+rS5eSnm4gscrIpRJAb1VOnPzHV6
-         NPOcQytaF7x4y8r3tAN3XRdTQRO3QAOOXLZjhFfjRcsRGhiyUxskLi1ohtV3gDwzQNLk
-         2NXaNPsUr5JThLJS691w5VxArbVpIvM2v0zj9NIlRCX7CcOzmN3DtzPILOpleFpxJMFx
-         SVuV3/xJc1/dzaVeRx/ztTJlVG74RxhfOsVM4iKv6+pswBtn9J1Oz0RTM8g+OzEVUkeq
-         yN8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717274703; x=1717879503;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XE758RoRHdOAMnFrviup6lW3DHVpvc6+RNn7wUSasbo=;
-        b=xG9Vt7tv5XY4uIY5sAxBnOLEpWWU+Ux8C0YmpI8g6oxhYkENZufDSiOw+9kBSHFXfl
-         L9YoAVrM1HOYZH67YNxsILHH0Ue/IwwKLJ3i74Yy0V/wzjevTl99e4yuMv1fgJn3W+Gj
-         /PpoJE7YJZfPQGskJycAO1GkANay4Y4BnkVQpJAH0bmqUt5XlBwb8rZnnwq/ek3qUz5/
-         u+eiVuQWmJPw6ZN+xApXKChRK/xbRQ6reRwq3GKbp3H9pZFvtEiTC788SA190fQSsPdE
-         xgIVbsq8Ve8SGy7oObpF9slddBqNzI/6R8mwzAXn3Bidgc0ZmRqdOLAnCazlLKzarg5s
-         mg6A==
-X-Gm-Message-State: AOJu0YwTAjLooWTen4luLFGEpsh0BTr7xESl7fNDegneHtdi79qBWpkd
-	tbskXnxiqlRuYAJOp0VF/jw9c2Gj6CPuqFebbYN8wkSu/nvz/9PDjM+LPjFinbYOx7AhPYyaoyS
-	BbCoipmjMUVJuevN0WDTmzKAjSn4ZBPi+
-X-Google-Smtp-Source: AGHT+IFPPNEooGQuZi/ybv5pVG/BuPOmTuqN9qKSeI/pzVg0wjZyTWIRlJZuDZRyDizhRx8xPK9BFsONEAuWE7/L0go=
-X-Received: by 2002:a50:8756:0:b0:57a:143b:72f6 with SMTP id
- 4fb4d7f45d1cf-57a363a63acmr2996441a12.19.1717274703008; Sat, 01 Jun 2024
- 13:45:03 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QWLKvnaJ"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 850D81ED1E;
+	Sat,  1 Jun 2024 21:03:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=sGjkWD15+ulEtiEuS5o9giJNs4kbMZpaXfg797
+	OAcUk=; b=QWLKvnaJo+Ct4LmiYlyDc0duo/Z/NFVdcrYc3pGf1ZIIe8gNCsgjOz
+	xKquBKzHHXLxFggWi8Jw1VHj5S6eZ6t5bputTqUFAPoC1pxoJO3qsT9SlY9OP76H
+	6serhQvgkWeikFGO6nBA/cqrZCrVlIez06//y1tWC8jWrSJ8GE3RM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7E78C1ED1D;
+	Sat,  1 Jun 2024 21:03:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 994F61ED1A;
+	Sat,  1 Jun 2024 21:03:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Ramsay
+ Jones <ramsay@ramsayjones.plus.com>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 12/12] builtin/refs: new command to migrate ref
+ storage formats
+In-Reply-To: <xmqqjzj9czop.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	31 May 2024 16:46:30 -0700")
+References: <cover.1716451672.git.ps@pks.im> <cover.1716877224.git.ps@pks.im>
+	<d832414d1f8a7c8d9ec3ade13e11dd509c0ab641.1716877224.git.ps@pks.im>
+	<xmqqjzj9czop.fsf@gitster.g>
+Date: Sat, 01 Jun 2024 18:03:27 -0700
+Message-ID: <xmqq7cf8b1gg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sat, 1 Jun 2024 22:44:50 +0200
-Message-ID: <CAP8UFD2Xq+3JXagjxfbdpzCi2eZtx77Mt-L62dSqtfNuhfEuKw@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 111
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Beat Bolli <dev+git@drbeat.li>, Jeff King <peff@peff.net>, 
-	Chandra Pratap <chandrapratap3519@gmail.com>, Ghanshyam Thakkar <shyamthakkar001@gmail.com>, 
-	Jialuo She <shejialuo@gmail.com>, Patrick Steinhardt <ps@pks.im>, karthik nayak <karthik.188@gmail.com>, lwn@lwn.net
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EC2144BC-207B-11EF-8F9F-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
-Hi everyone,
+Junio C Hamano <gitster@pobox.com> writes:
 
-The 111th edition of Git Rev News is now published:
+> One thing missing is an entry in command-list.
+>
+> If you ran "make check-docs", you would have seen
+>
+>     $ make check-docs
+>     no link: git-refs
+>
+> The Documentation/MyFirstContribution.txt file does mention
+> command-list, but it is rather messy and unorganized.  I think the
+> checklist at the top of <builtin.h> would be the best source of
+> information at this moment.
+>
+> Thanks.
 
-  https://git.github.io/rev_news/2024/05/31/edition-111/
+You'd need something like this.  
 
-Thanks a lot to Beat Bolli, Sven Strickroth, David Aguilar,
-Bruno Brito and =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec who helped this month!
+With the command missing from command-list.txt, git.1 (which has the
+list of commands) will fail to mention the command, of course.
 
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
+The fix to the documentation file itself is also crucial, as the
+name section is where we grab the list of command descriptions used
+in "git help -a", and with the extra blank line, git.1 will fail to
+build.
 
-PS: An issue for the next edition is already opened and contributions
-are welcome:
+--- >8 ---
+Subject: SQUASH???
 
-  https://github.com/git/git.github.io/issues/714
+diff --git a/Documentation/git-refs.txt b/Documentation/git-refs.txt
+index 3e9c05185a..5b99e04385 100644
+--- a/Documentation/git-refs.txt
++++ b/Documentation/git-refs.txt
+@@ -3,12 +3,11 @@ git-refs(1)
+ 
+ NAME
+ ----
+-
+ git-refs - Low-level access to refs
+ 
++
+ SYNOPSIS
+ --------
+-
+ [verse]
+ 'git refs migrate' --ref-format=<format> [--dry-run]
+ 
+diff --git a/command-list.txt b/command-list.txt
+index c4cd0f352b..e0bb87b3b5 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -157,6 +157,7 @@ git-read-tree                           plumbingmanipulators
+ git-rebase                              mainporcelain           history
+ git-receive-pack                        synchelpers
+ git-reflog                              ancillarymanipulators           complete
++git-refs                                ancillarymanipulators           complete
+ git-remote                              ancillarymanipulators           complete
+ git-repack                              ancillarymanipulators           complete
+ git-replace                             ancillarymanipulators           complete
