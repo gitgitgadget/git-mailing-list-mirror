@@ -1,55 +1,57 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1D625601
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 16:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EBE107A8
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 16:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717430482; cv=none; b=bBzo37yeUWXfkobw7c+USs7YPlEsxNU0RPsF7llgJezWrckd6Txmm9nMOlJgvQlj892fuLCrXf8+RTgAuwSNsNHTNwnJzft472dsEHvlqbMt1gnB54+p5m6wUAEeV4H25+abiQClJRGwwPU+YWSoyTUjtG4JCPILoD7Vk39dn8Y=
+	t=1717431455; cv=none; b=hHfP+C6JCM7Dx1FF0FKrXj73n7PvY3kiUIMgQVGFRW0XFwxdGh0a1n65x+THeAY6vr7gqEu6MwZfsJwlt23q6tPG4LyEvDkzl0WlAIt07ftYqBvZBuMYY1vecjcZmUzTe53/ChxwSGOp5w2KNRW4Cptgi2iHagPEuJVADOWwns4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717430482; c=relaxed/simple;
-	bh=7BxciWb74Glgk1n/iH1VKoxzE1sSq7UGWra2wLXoUwA=;
+	s=arc-20240116; t=1717431455; c=relaxed/simple;
+	bh=BHnCd27UgaDBY0tujQBzuE9n2SRzwkHquwL2Qn8cxyU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Kf1H95LYWlJkvTOsa8ejbO8A9wUYZNwPiQHBf7xIdCO/4e8hrB/mrlq5Erb0BuFZO5sirr5iSlOLGLheBRMebkDYABYd47mm26RLB7jNaNKcJMFuKg2YDW3LJnsZ8a1ohm8ibk30SN44Q1xHjUa5Dl5+PbER2zOQwHNwanKFhl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=MiqzFEn3; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=iQ9JWOM89TQHAUtRu63RFIs+bxT7EYXpNStSalTxjFjFTge4b1kKIvKLHfmjSU90OTr3V/PmbAp2ngRHme08BYucDhmL5PrwrEdafOvUwMJUrwtUqoTzBF4mQynS++t21YaXfBNewJYyv9DyNxv5pc7xFpiOKrnMpWRBvr2lB8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TN0ktKar; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MiqzFEn3"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TN0ktKar"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 57B7633890;
-	Mon,  3 Jun 2024 12:01:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F3B8339D8;
+	Mon,  3 Jun 2024 12:17:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=7BxciWb74Glgk1n/iH1VKoxzE1sSq7UGWra2wL
-	XoUwA=; b=MiqzFEn3bL4VdOOCnD0lIbI9UtjE6zDjSrxXsQ6xVdltaZmofQtJbM
-	GYgfj5dHf2bU+UMO+PvM7lJTCUJ1sNPhSnqOdQ/f1L8bXzp0rpiIPVxPzNYBmKNl
-	cPJrzSvu/ILYlPLjOKYHnIr++6F6tNv10l7ctQypgtvJkkV6LWhdI=
+	:content-type; s=sasl; bh=BHnCd27UgaDBY0tujQBzuE9n2SRzwkHquwL2Qn
+	8cxyU=; b=TN0ktKarRL7Crwy7dnNHHOTrZLy9L/iJ3beipZv4ylJ8NsZbOPxtcJ
+	8fjByFutmOvBb+5LKenYQgxKDeUtgahmZW7TI1avyrMD+oMb84txkPsMyrluPcVd
+	ZpzXNdxdjvI7+S15k37uAkfDuTOIA5qkKIF53+dbP6zjaGBMxWkLg=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F9A03388F;
-	Mon,  3 Jun 2024 12:01:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 55F62339D7;
+	Mon,  3 Jun 2024 12:17:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A46F83388E;
-	Mon,  3 Jun 2024 12:01:19 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BA128339D5;
+	Mon,  3 Jun 2024 12:17:30 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
- <git@vger.kernel.org>,  Jeff
- King <peff@peff.net>
-Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
-In-Reply-To: <81d52b31ce4c287765a43d87d94f526b@manjaro.org> (Dragan Simic's
-	message of "Sun, 02 Jun 2024 19:36:37 +0200")
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
-	<199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
-	<b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
-	<81d52b31ce4c287765a43d87d94f526b@manjaro.org>
-Date: Mon, 03 Jun 2024 09:01:18 -0700
-Message-ID: <xmqqcyoy6mnl.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Justin Tobler
+ <jltobler@gmail.com>,  Dragan Simic <dsimic@manjaro.org>,  Karthik Nayak
+ <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 1/4] docs: introduce document to announce breaking
+ changes
+In-Reply-To: <Zl2Np9qNcA6Z1q5U@framework> (Patrick Steinhardt's message of
+	"Mon, 3 Jun 2024 11:32:23 +0200")
+References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
+	<cover.1717141598.git.ps@pks.im>
+	<993b9363484627cd828362e39f15c4905ecaf3e2.1717141598.git.ps@pks.im>
+	<xmqqr0dhgc1e.fsf@gitster.g> <Zl2Np9qNcA6Z1q5U@framework>
+Date: Mon, 03 Jun 2024 09:17:29 -0700
+Message-ID: <xmqq34pu6lwm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,26 +61,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 842FFAEA-21C2-11EF-A4B1-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
+ C700A2F0-21C4-11EF-88AB-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Dragan Simic <dsimic@manjaro.org> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Thus, when piping to a custom program, the escape codes that
-> perform the coloring should be stripped.
+> I would definitely call Git 2.0 a breaking release as the changes to
+> git-push(1)'s defaults were quite significant.
 
-I tend to agree that if we do not give a way to toggle between
-"with" and "without" color when piping to a program, it is safer to
-make the default uncolored.
+Git 1.6.0 was certainly a lot more controversial than the change in
+Git 2.0, as the end-users never expected Git will change even with
+ample pre-warning.  We originally had all the "git-foo" in $PATH
+since 2005 when Git started, and we announced that we'll stop doing
+so in the release notes to Git 1.5.4 with instructions on how to
+adjust the scripts that use "git-foo" form.  Even then end-users
+(back then they were a lot smaller population---we are talking about
+Aug 2008) complained quite loudly.
 
-The user's configured pager is expected to deal with colors just
-fine (or the user has globally configured colors to be off).  As we
-are capable of telling if the user is asking to spawn the default
-pager (by not giving a custom command or by clearing the previous
-custom command given in the same session) or a custom one, it should
-be easily doable to give colored version to the configured pager and
-uncolored version to a custom/one-shot command.  Unlike the existing
-support for (e)dit command, we do not read back from what the
-command does using the hunk and present it again to the user, it
-should be a relatively easy and safe thing to do.
+[Readings]
 
-
+* https://git.github.io/htmldocs/RelNotes/1.5.4.txt
+* https://git.github.io/htmldocs/RelNotes/1.6.0.txt
+* https://lore.kernel.org/git/7vprnzt7d5.fsf@gitster.siamese.dyndns.org/
