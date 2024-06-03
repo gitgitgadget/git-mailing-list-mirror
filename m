@@ -1,77 +1,77 @@
-Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
+Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0344A84A54
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:48:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585ED84D1D
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:48:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717408121; cv=none; b=KOh11geQqyOFwrUB7oIOkB14oMaJHrVFpFqYCCyir+jr/Lo2v9uVfz1EPEHDAlDpBYJuiheH9V1ZSxoVcF6uiXnxsIPTSPBCai9EpWnfp4fErjC0UpUH9ai1oIYMhpFzH6QfWAHmY6QveZaGJ6gm/AVQ2c73UJnf6qTFhjOfgJ8=
+	t=1717408125; cv=none; b=bxDA66QmxMyFg7KovlrX/U54MdQfACSW7z53T1q2mS7KH0Aj/nK3++0XMKK0HQDB5N0/tF5f9huKBCd02aa+i5Z9++lpuTorRCctThkKwmKGP/+vCf+sXVi/IT0OKG/Y4+VGzPYsl82BSWV35URYrK1NPMCCnAkVIdif7cVLEwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717408121; c=relaxed/simple;
-	bh=gkZWYEEuOhsdV7wiLEwYkJu1tZ1t5p3mwPcG8GXAWIo=;
+	s=arc-20240116; t=1717408125; c=relaxed/simple;
+	bh=PKNHYe4P4bvi1i4sIyiwUxzkKuQJZQnaK58CQ4vpzgs=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kc8kc5GZTXD+LXnAq9qPFhH9fHIi0V6H+NjjJ12rZU8HtiaIeqtG+gtns2iU0VdTj0zZ9OFy5WY+egslrbZK1CacBrCtZVy+cLlsf8vmnvnjGrsycqD+6DKAfpZVQWj4nGhJCW6jhhn1kDcejDhKLpPJJ2Y7bgTo+arhfZ6qftg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mH+C68jF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bJmY5GQQ; arc=none smtp.client-ip=64.147.123.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=saol8Tt2aXx0L5xGjfvGfZdVEkHHIQcPaqVc1VjMwq+gqo/N1fSXH1XMgIzrUXSXwaSiqS54HPO379+UcegJkWHvHtdU+KZ3qaS2INSRdEHWmd4aQivdB/0NnqVjRFV6u+CqBJ0s9MQPHZZ9aj07YC7BgPRh2H2Yuh9TPJPE6tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b1f68Qhd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NvzEmnw8; arc=none smtp.client-ip=64.147.123.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mH+C68jF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bJmY5GQQ"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.west.internal (Postfix) with ESMTP id 3960C1C000EF
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 05:48:39 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b1f68Qhd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NvzEmnw8"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.west.internal (Postfix) with ESMTP id B0F0A1800083
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 05:48:43 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 03 Jun 2024 05:48:39 -0400
+  by compute4.internal (MEProxy); Mon, 03 Jun 2024 05:48:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717408118; x=1717494518; bh=Av6sjyD0Wl
-	l8OEnSDLNMLG+L8j+mwZtNZTwlnpcHl1A=; b=mH+C68jF6oAfEvJ33m5aF7qPMe
-	6dfh/dmg+y84HDCkUQu/bwGNWka9XCS2qq6OteuBRrDoW80XOYgDFi4Kt7H5xGgu
-	iyQLqfQ+m/AXJbZMF0fbCGpRvjVGBXRv6jpypf8UEyVHV9R6xUi6d7RHMoCZPVRW
-	ikiy2cVBFgOT7S7SXkRwsmDfY/QLHq3/568DIlOaVVtxF41J2hDfWglqZUjxHyPq
-	F4n9cX8KCYfznNGiAkaJz9YluL8F4tEMRZ/0uB4UrEdmWEFf+PXyF0lbkQRKCQAX
-	qdreYiZPpHux1E2zCoRLiRHP8ZpYpDQeQJFd1l37fEGD3OhlWqw/TCst1rqg==
+	:subject:to:to; s=fm1; t=1717408123; x=1717494523; bh=Fay5aAalt4
+	9nJ9/2ztK8egGN3C+3a0lPblwOCLoyMX4=; b=b1f68QhdZawVPHgfHrGuO40Ihq
+	Jvo12hc8BrQHRRby9t7LNx73fhQgubp5NeWLBOEPHbaJSsQkJCG9rjkUS9j7auPa
+	fcPwXFqgvSs6BDg6e+sxzYvu2qzvaUmAYpeMMcDIVEzh0SjGYRgmdNTthBIAeL1i
+	5g0ZKCbQ0ta+PpRMpLGKxVEZb5rP69hpJsyJNezlSMkx7wwiQeidM8+9EDPeWiCz
+	6twDzE/CG2saKJMotQR+P3aZcrAq0GZrL7JnAoGqTNAr6x1HXQ8Idyd96py3q0o9
+	uKHQPW3Ci9L0IpFMEYcCDa0/g7q/hBCrCEbrSxZhijlvNTGBBuF3SDlBcC9w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717408118; x=1717494518; bh=Av6sjyD0Wll8OEnSDLNMLG+L8j+m
-	wZtNZTwlnpcHl1A=; b=bJmY5GQQEf9hjGfe03t2eaU++GhqZxEKhTAd09fteCKu
-	DuGpWSNvu3kaA0J3BXepEairwsvFRptdonKNtSAGBFjqCIBfi+iQ7jgNBfTJadO/
-	fTEf9VqZcUb7js/BGC6FSo0v7w95KSPBp9DqbDCkCvapSuHJ1P5blVR08p5x0YgH
-	Gvy0FtpLWsj5VbI4a6P6yUoQBdnwnyu63caLo8norvTEGHGLbHDAfQMxNk69oy/Y
-	Fhuyy6vD1xl+WEl0wBUphhX9sP2BoeBHtJN8DOSOGdN0eeQCpw4cY5c88D9TzO/j
-	vRrr9BOb7zVduFXB53/UlfFCxUcvoLiK89793RVaFQ==
-X-ME-Sender: <xms:dpFdZmw91KCpMpcjV3_EByPwndwN7DRLCc2VZEwbIgvqnK7li-oUbg>
-    <xme:dpFdZiRLE7mZ9HeA2TNL0s4LxXsr6lIs8NLzpDO754SOdx1LDfx_Oy9lo61PH1KeT
-    GmlQJSHaB8RF5nJhw>
-X-ME-Received: <xmr:dpFdZoWuSZfqlfsZSuJJS4Rmf-x3JlkPaPlXUHe1dr_WWXFG-NXwTYRirHPeGRYSjVXtc4Q24fPRqXtmAikt85rvGlqRkELzvyYAGBQnrjkLpEOC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelvddgvddtucetufdoteggodetrfdotf
+	fm1; t=1717408123; x=1717494523; bh=Fay5aAalt49nJ9/2ztK8egGN3C+3
+	a0lPblwOCLoyMX4=; b=NvzEmnw80JF1IDq7/Ktontdh0Lfd6cRzWloggxnWLj/q
+	EYKTSpbwko4bFpvaLnssS358TRUMLysoS0KZVzf5KpZWKTdt+LmdT+BHQh6vfERG
+	Ulz5u3zcAJpaiIaWtm7KWtr2T9eW7mY5+S/5YqhYdo63gSNpeOGw63ELaiQ1307N
+	WAb4DhSY2rkqi7w4okKuoX93XGyWZaGPUbNfSECsXfdXr7VW1cob/9eL3wATyRqP
+	GPvtAK4MGeVCko0ii4Wjdxse5jK/tETkLpw/O0MxDu0+uE3bTDs5JvmfcxKWXuU6
+	Q3w3Z9/Q9eJP32ID0Idx4mWKZcC7Z9dQRd/O5FNz+A==
+X-ME-Sender: <xms:e5FdZr0QW3TTVS_Sr_wx6dIpbxZjLTXaC90bVT6rgYBqhQiFpV4C1g>
+    <xme:e5FdZqEKAviJ_BA4NciQjbbjhAWs4Qg10gpJmdfy8pn4dABWye2Ho2RkXNCkc4kO8
+    c1-SR50rOh9_0w_nw>
+X-ME-Received: <xmr:e5FdZr6EN9Cu4OalwMKXNNzMamURg29uEwKZCGQo159vnQFJFB5Fxi2bftkCsAsfWJW9VvsAWa984r4Mdnq1tMxKHPksF2mZDs1V1c52055J-3s2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelvddgvdduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepheenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:dpFdZsg4qhqrf9dlNamto6zbEpfAk4xqsSYwyr9E1B2CT6orEdgLcQ>
-    <xmx:dpFdZoChIU7OJ8MALg20rGgDVjeQVPdG-bUYomEUh4GI0cStthcmlw>
-    <xmx:dpFdZtJfUd5voOJSG_n4jwUETIPRU7018emfm5e42pTzizfHW_oi1Q>
-    <xmx:dpFdZvAJ8qh1yYjOmRD89BGbOenVuy3ZSES1OM0ojkHPxbLT4ifkeA>
-    <xmx:dpFdZh6VdLEfpF2JiMPDV60xmK6KWnflWiUAk58ftgZ_GU1AI0ZZo_MH>
+X-ME-Proxy: <xmx:e5FdZg2l8fBFUZYtI90IzwN4q245kH7kB4k04cBnb9OlU2vKKJZJdg>
+    <xmx:e5FdZuG4bFuh0f6b_ELVSDZHjyiGKS50po6q2qdVutE7h7azZM5jSw>
+    <xmx:e5FdZh96t6mfybYCyj617hTQ9uGHKvnXrntu-qMNmNBNkeQKB5Ag3Q>
+    <xmx:e5FdZrlqCAQaxreuUn2MDf3P6vyzXbJjDO-2_xyVrQW8o1XGbWNScA>
+    <xmx:e5FdZgNl4S32XYiLpj2X2ljomylTpLc65ai6jkaz-6zW1LLEZClwgh8K>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 3 Jun 2024 05:48:38 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 3 Jun 2024 05:48:42 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id d1bf7408 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id d96881c5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 3 Jun 2024 09:48:13 +0000 (UTC)
-Date: Mon, 3 Jun 2024 11:48:35 +0200
+	Mon, 3 Jun 2024 09:48:17 +0000 (UTC)
+Date: Mon, 3 Jun 2024 11:48:39 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 27/29] blame: fix leaking data for blame scoreboards
-Message-ID: <5f2b0adc5621f741442ff41a916caf9e1424afbf.1717402439.git.ps@pks.im>
+Subject: [PATCH 28/29] builtin/blame: fix leaking prefixed paths
+Message-ID: <7ee87344377cecb8744698d9690191b156fe9b2d.1717402439.git.ps@pks.im>
 References: <cover.1717402439.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,174 +80,137 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sTShn8pSrY/QinbL"
+	protocol="application/pgp-signature"; boundary="VcNC90LoT63Wz1Eg"
 Content-Disposition: inline
 In-Reply-To: <cover.1717402439.git.ps@pks.im>
 
 
---sTShn8pSrY/QinbL
+--VcNC90LoT63Wz1Eg
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-There are some memory leaks when cleaning up blame scoreboards. Fix
-those.
+In `cmd_blame()` we compute prefixed paths by calling `add_prefix()`,
+which itself calls `prefix_path()`. While `prefix_path()` returns an
+allocated string, `add_prefix()` pretends to return a constant string.
+Consequently, this path never gets freed.
+
+Fix the return type to be `char *` and free the path to plug the memory
+leak.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- blame.c                           | 4 ++++
- t/t4061-diff-indent.sh            | 1 +
- t/t8002-blame.sh                  | 1 +
- t/t8004-blame-with-conflicts.sh   | 1 +
- t/t8006-blame-textconv.sh         | 2 ++
- t/t8009-blame-vs-topicbranches.sh | 2 ++
- t/t8011-blame-split-file.sh       | 2 ++
- t/t8012-blame-colors.sh           | 1 +
- t/t8014-blame-ignore-fuzzy.sh     | 2 ++
- 9 files changed, 16 insertions(+)
+ builtin/blame.c               | 5 +++--
+ t/t6130-pathspec-noglob.sh    | 2 ++
+ t/t7010-setup.sh              | 1 +
+ t/t8003-blame-corner-cases.sh | 1 +
+ t/t8008-blame-formats.sh      | 2 ++
+ 5 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/blame.c b/blame.c
-index 33586b9777..f97d0e9e1a 100644
---- a/blame.c
-+++ b/blame.c
-@@ -2928,6 +2928,10 @@ void setup_blame_bloom_data(struct blame_scoreboard =
-*sb)
+diff --git a/builtin/blame.c b/builtin/blame.c
+index e09ff0155a..17694410ed 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -687,7 +687,7 @@ static unsigned parse_score(const char *arg)
+ 	return score;
+ }
 =20
- void cleanup_scoreboard(struct blame_scoreboard *sb)
+-static const char *add_prefix(const char *prefix, const char *path)
++static char *add_prefix(const char *prefix, const char *path)
  {
-+	free(sb->lineno);
-+	clear_prio_queue(&sb->commits);
-+	oidset_clear(&sb->ignore_list);
+ 	return prefix_path(prefix, prefix ? strlen(prefix) : 0, path);
+ }
+@@ -865,7 +865,7 @@ static void build_ignorelist(struct blame_scoreboard *s=
+b,
+ int cmd_blame(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info revs;
+-	const char *path;
++	char *path =3D NULL;
+ 	struct blame_scoreboard sb;
+ 	struct blame_origin *o;
+ 	struct blame_entry *ent =3D NULL;
+@@ -1226,6 +1226,7 @@ int cmd_blame(int argc, const char **argv, const char=
+ *prefix)
+ 	}
+=20
+ cleanup:
++	free(path);
+ 	cleanup_scoreboard(&sb);
+ 	release_revisions(&revs);
+ 	return 0;
+diff --git a/t/t6130-pathspec-noglob.sh b/t/t6130-pathspec-noglob.sh
+index ba7902c9cd..82de25d549 100755
+--- a/t/t6130-pathspec-noglob.sh
++++ b/t/t6130-pathspec-noglob.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+=20
+ test_description=3D'test globbing (and noglob) of pathspec limiting'
 +
- 	if (sb->bloom_data) {
- 		int i;
- 		for (i =3D 0; i < sb->bloom_data->nr; i++) {
-diff --git a/t/t4061-diff-indent.sh b/t/t4061-diff-indent.sh
-index 7750b87ca1..2942e5d9b9 100755
---- a/t/t4061-diff-indent.sh
-+++ b/t/t4061-diff-indent.sh
-@@ -6,6 +6,7 @@ test_description=3D'Test diff indent heuristic.
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ test_expect_success 'create commits with glob characters' '
+diff --git a/t/t7010-setup.sh b/t/t7010-setup.sh
+index 520f96d09f..d9add2162e 100755
+--- a/t/t7010-setup.sh
++++ b/t/t7010-setup.sh
+@@ -2,6 +2,7 @@
+=20
+ test_description=3D'setup taking and sanitizing funny paths'
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ test_expect_success setup '
+diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
+index 731265541a..6288352f57 100755
+--- a/t/t8003-blame-corner-cases.sh
++++ b/t/t8003-blame-corner-cases.sh
+@@ -4,6 +4,7 @@ test_description=3D'git blame corner cases'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 =20
 +TEST_PASSES_SANITIZE_LEAK=3Dtrue
  . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-diff.sh
 =20
-diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
-index 0147de304b..3596634039 100755
---- a/t/t8002-blame.sh
-+++ b/t/t8002-blame.sh
-@@ -5,6 +5,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-=20
- TEST_CREATE_REPO_NO_TEMPLATE=3D1
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- PROG=3D'git blame -c'
-diff --git a/t/t8004-blame-with-conflicts.sh b/t/t8004-blame-with-conflicts=
-=2Esh
-index 35414a5336..2c2a0b33f9 100755
---- a/t/t8004-blame-with-conflicts.sh
-+++ b/t/t8004-blame-with-conflicts.sh
-@@ -6,6 +6,7 @@ test_description=3D'git blame on conflicted files'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- test_expect_success 'setup first case' '
-diff --git a/t/t8006-blame-textconv.sh b/t/t8006-blame-textconv.sh
-index 7683515155..42f8be25a3 100755
---- a/t/t8006-blame-textconv.sh
-+++ b/t/t8006-blame-textconv.sh
+ pick_fc=3D's/^[0-9a-f^]* *\([^ ]*\) *(\([^ ]*\) .*/\1-\2/'
+diff --git a/t/t8008-blame-formats.sh b/t/t8008-blame-formats.sh
+index ae4b579d24..fb5d225a67 100755
+--- a/t/t8008-blame-formats.sh
++++ b/t/t8008-blame-formats.sh
 @@ -1,6 +1,8 @@
  #!/bin/sh
 =20
- test_description=3D'git blame textconv support'
+ test_description=3D'blame output in various formats on a simple case'
 +
 +TEST_PASSES_SANITIZE_LEAK=3Dtrue
  . ./test-lib.sh
 =20
- find_blame() {
-diff --git a/t/t8009-blame-vs-topicbranches.sh b/t/t8009-blame-vs-topicbran=
-ches.sh
-index 72596e38b2..30331713b9 100755
---- a/t/t8009-blame-vs-topicbranches.sh
-+++ b/t/t8009-blame-vs-topicbranches.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
-=20
- test_description=3D'blaming trough history with topic branches'
-+
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- # Creates the history shown below. '*'s mark the first parent in the merge=
-s.
-diff --git a/t/t8011-blame-split-file.sh b/t/t8011-blame-split-file.sh
-index bdda0c03fe..da1801f4d2 100755
---- a/t/t8011-blame-split-file.sh
-+++ b/t/t8011-blame-split-file.sh
-@@ -10,6 +10,8 @@ Note that we need to use "blame -C" to find the commit fo=
-r all lines. We will
- not bother testing that the non-C case fails to find it. That is how blame
- behaves now, but it is not a property we want to make sure is retained.
- '
-+
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- # help avoid typing and reading long strings of similar lines
-diff --git a/t/t8012-blame-colors.sh b/t/t8012-blame-colors.sh
-index c3a5f6d01f..9a79c109f2 100755
---- a/t/t8012-blame-colors.sh
-+++ b/t/t8012-blame-colors.sh
-@@ -5,6 +5,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-=20
- TEST_CREATE_REPO_NO_TEMPLATE=3D1
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- PROG=3D'git blame -c'
-diff --git a/t/t8014-blame-ignore-fuzzy.sh b/t/t8014-blame-ignore-fuzzy.sh
-index 0bd0341301..933222cea1 100755
---- a/t/t8014-blame-ignore-fuzzy.sh
-+++ b/t/t8014-blame-ignore-fuzzy.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
-=20
- test_description=3D'git blame ignore fuzzy heuristic'
-+
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- pick_author=3D's/^[0-9a-f^]* *(\([^ ]*\) .*/\1/'
+ test_expect_success 'setup' '
 --=20
 2.45.1.410.g58bac47f8e.dirty
 
 
---sTShn8pSrY/QinbL
+--VcNC90LoT63Wz1Eg
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZdkXIACgkQVbJhu7ck
-PpSUZQ//YSW2RseGwOTymfyhOesFf1LNedAjqHMujEf50KwN1+zlToT5JhrNyWUC
-7NHtRExPoT7PurHLsTRddihjXLSFjKgOhqMHWqPALokObo+UewSY5BKHbpIjVVEx
-CyTnoHHj8e7/b23d8i5+ATXbpj1vY5tEx0wmMTpYkOHVZtmZKU1EYxNQD3xiBZ/A
-h2DBpuza1t7Zey0rxv/ihsTl+e970VDJuSxKZnX0NGVeYilrE3h5A0kv7vfWsl4w
-EWATSErXBf5DwPDXgptWrbyATE0YlB0bh/A4vPKnb7b/IrnD3Du3xd9Fhryp1Gh8
-daxZE3Gms9aprkAIVzCrJCiqNHSBDC/R96wklYIu+arUOn00wZEO6LkJ4vlDMl48
-tijr8KciZM7VrX2tLbprjzowvpvVUlYHVJ8Iw2cPJq6pCOkkxREjW/u5xuVvbrzw
-kw/za4nWuXrbsXodGM0g+s3/G8pOtqOygOBZ/qJdctw6BDRS1ZaSRwQuZx9MM4e4
-Lp7JNuIje6RUj2KVXCmf3DxHZfqPDuA/55dTTMJq/6j1HgGO//+dYPBUGyXJ6hme
-/nK0TEFK+Xis6GhIjiMRd/iK8CtTFGy7wVaDwchp5Eylx77aJyWGP/3lTYbscNLS
-6b37uJE939FcATshV71MbzZvQr5XUFLfJ8G6JrCoY+XT/UUHcko=
-=ITFf
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZdkXcACgkQVbJhu7ck
+PpSeWw//W2YNasRWXb6uT8j9xr/kRv+BLpbFvme9C09YF+BCFYA+5ilK88xqlFRT
+HBZb60r/4eDv2x3mjf4vEYFyWRWYwJubYbN89THbiYXgqeMz2ym5/YedosmVannm
+l0UwLeMkI8A/LtNI1Qa5V0B75vmWLRSZMhYH0nwWOO5GrYYCkrLADuK8igAebNez
+A0xpKggnH1wewMr9lfAmGwo0ubnJWjd9gRfEa371R0/h5f8btv7kIPmkXrlKtitB
+mfQd+Xztx2cxzn3TE6HNFDUtrO8pZm47LIUfIAJVPoSXdUJI98a3rvUh2fOfo3Ij
++T/advGaVKWr3s11KdfRBCwMBjbDZWh+685BLgO/xBkjCRnqJXVHzwl5WEo74qa0
+IqUsKFwH9/2zBSx8SWTVNtZ+gtgSPl11AWPHeFmZZSSyupEKrwZYh9+ONsqQdX1y
+wsJLyzQuPSOvNyeyfudfTrRs7MXyBtU2SSDpTvcnKbrXYTzVcUx9TFRdcAnpMB2K
+tyqEH7g7D60GH2k/AQ2JPcN+A9ZNZgD4oUA6Gi4xJK/caEssjmENNUF2dbMqofIC
+zHRxNtpMhcZT49nxM8xsgDGlyGtuyjY3LSbvtAwSfmFtPhiUqsO8uZDoTmfQR19F
+bZwP1IlWF8wrr4oG8rwxQxQa8GeZphMM9/5kFdM5K71cLCGfmJ0=
+=F0DA
 -----END PGP SIGNATURE-----
 
---sTShn8pSrY/QinbL--
+--VcNC90LoT63Wz1Eg--
