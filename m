@@ -1,159 +1,216 @@
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3149C6A032
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 08:39:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61EA74069
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 08:56:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717403944; cv=none; b=BEJYMTTCEcuy+nn3ymlVFmghW7Pq1laEnCjYEIwlj+GCb19JI6h5xu/6xCMn3N/mwqi7ox3mimUnhAy9gjnwOIiglcJznURPmHFPTUwWqI96lBbNSSGUOAzBGwLkBpFteNTYYfk4yL/3SXtFZisFvwPUu/P646z3nb/iXazRgdw=
+	t=1717404974; cv=none; b=fOR6P68sF1xN2etjC+sVOyelmkp1IxUdS4jydC7LQrajioD4EZjzaH1ijxmZbCMB9gpRaM2Fi8ffLX000ubwqVfdOAM3ZN9AsmtJRWObV3b7GxCfYtjwDLhttTxnTPLsqPrnlju+lnZkQ+XnLxU6AuaDNmYWeANCI/OWCXTSkx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717403944; c=relaxed/simple;
-	bh=7IbAtDUreRqOpIXdPTWTWWwxzPDAw6zFlmUD07qcfIg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=A8yeJI+AEd9NGGQF0bZfWlAHQkCjH7eFDY9JMiz7zqjW0HV9+dB5j51pA/zhJT9k/Q8GMKvEh1AT6DLYHN3GYQ8dyd3qggHW8q7Zlvcjqz++F73MWMpyrOU5xuWXhUm9h/waO6jFvEXqqNyqY8czWe9piGoXhHSJJYJdqkxd1bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gk1D4peF; arc=none smtp.client-ip=209.85.219.173
+	s=arc-20240116; t=1717404974; c=relaxed/simple;
+	bh=PvvUWlhDjEmavHPSlbAUXef9RtRMPvb1VWGt7/O0fX0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LNAREJV6GCvqLY8gK6absCtk+3ZeBkxFWbE7zmT5JkwrMbmUkBPINBBRy9kl93jqlDLEX3swwQ7xIEBONCYxzbJn8pmm0vdlhTzE0CpGYUGCBO76GnOK05guuawKXrVHmsDYhTGj8vSCSm+tArINS2xeDph4cVdpNtRBIjC4KJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cVKxFoDC; arc=none smtp.client-ip=209.85.161.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gk1D4peF"
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dfa48f505a3so4141969276.1
-        for <git@vger.kernel.org>; Mon, 03 Jun 2024 01:39:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cVKxFoDC"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-5b96ae827d2so1932655eaf.0
+        for <git@vger.kernel.org>; Mon, 03 Jun 2024 01:56:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717403942; x=1718008742; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=txt1Fct0Q/qTABobBoEApBo6Vdn9J4NAj20pj1iOH0I=;
-        b=Gk1D4peFDXjiKay1oX9WTYiCtods3AFp1yjdgdD4PKvsf2PJZfEM0LTjzOraBpqkZp
-         o02uB9FAcBoeSnZhAgHHQ9XEh+wBLYjoOcAn3f58doNTqRWEQ7hKfAXm0vtMV2sguLHb
-         VS6I2uxkEGjEhRoxbMRkJyIa3SSUsQ1rr0hKhJt8M7/hst8bF+u3MusbbCVbBij3IIMZ
-         +fha8S3QxamMzKVSZtlfzBOkJBa+0MOkLqGyHscPdRFY0hgDXqnVOUUPtpIoHPsLf5kz
-         d6g1BWD8DRAQj1sy5FLHP/eUz5cUcloulQJdLS7ZRl9KAqAVW6vUiJ3n8GcLKNL5zDV3
-         uMAQ==
+        d=gmail.com; s=20230601; t=1717404972; x=1718009772; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=heb0U0wOojUbcaNuB8RFl+8fANJ/bwY6oR09d9oQ+Sc=;
+        b=cVKxFoDCWs/0VbI9RvwClzKMtMHLSBegZbIzVjTVFaDsh0Z1x3LsQluLy8Y/rXV3F+
+         SgKQXWkx0BU86cwIQUsLbfBMbP4F4xTsFCUzA4KXGzPT8tDy/OMc0kBpTviM6Vi/8SFH
+         48ISy7I+tZ7MIC/s5az+auAZjlAajgnBRsgdXMgJgpgC8ct/G3u3g3TmZfmsWpM/mS71
+         zezYTY7qMtjKJmEcnI21TXLlU/npBC195alVvxQAVedX/n/xcPmhog/o3ZOLbLTq5m/r
+         jwvpQeC+EOfR5TGm6pZU7lmRvoFw/UQ0XTfrFwXMxcUxIsU5UvHLjIHPH/tuVgyGYT9t
+         C/dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717403942; x=1718008742;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=txt1Fct0Q/qTABobBoEApBo6Vdn9J4NAj20pj1iOH0I=;
-        b=ZQ4bLwUuil7wXKSOJVCeb9S7j8Ic3uaZ2FYZQkfnik7rg/PZyx6YrlgdiC6x+9rhqA
-         vElJ8h75umGEYOhwy5UFpoYJlDg060QqOWt0O+heVsu84wwftrGpCoc/nW/+FJMaNpto
-         ALMKXFHuceLjW7HCHzkloEQUu2ZvNllbR6rS/KO5VOxeRMUQVf1gp9VMzU6X7THpP/nx
-         0VstrAj31HyoCHDAiIoKwSh5ORoH7pQOiTKM/6ge9KnOX+gPmdYtZGThQ0qB1FD19z7t
-         HWuCNr9UPJMGtXsgPj4CMtTtK9YsJEEGugGkZ0x5qbG9fvQEuKzFFzK8yKmiq9Ah+wBU
-         YtRw==
-X-Gm-Message-State: AOJu0YzMz9pTXe1m9x8y5Fsn1587f0i+69Ixm1Z8C3vENdyGl9TomgXz
-	AkjT5twgyNOiEIWhiQLI5z11/CgI/2AIPFBDc4NoOmiKTLfvyZtLFYiowbuMmbKaegse/daHHjT
-	RKUOusUjLKKzRBazCO5wbiHzA5vxnH00=
-X-Google-Smtp-Source: AGHT+IGorY2aSKI4WyGzetzBao4y1PVdTGTr//m4yJccMm6KR53dvsdLva5KSySPlHDLHmPsQKBYJVQpYeSurVa0cvc=
-X-Received: by 2002:a05:6902:2841:b0:dee:5dc4:59cf with SMTP id
- 3f1490d57ef6-dfa73c2209amr9026724276.26.1717403942041; Mon, 03 Jun 2024
- 01:39:02 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1717404972; x=1718009772;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=heb0U0wOojUbcaNuB8RFl+8fANJ/bwY6oR09d9oQ+Sc=;
+        b=gEkbwjNorr/qraBW9XNZeTj/15yxbGs72DPz+dNREh51wgHjYrV5uGt0pFzHUkRQSU
+         SwYvMpQisQ/aZZVldRvphhgX9Fe9tQo2BbnpjKdTSxEg/p13sDyAA6JdTLmysnTCzAAw
+         uGnP2+0SAHUhMnTOZRogORB7gqJCSAbpSjQru15L4WF1CIZt8aEnvWkCKPwSsE8N2l1q
+         qOOXOVAtttA5xMnIVpuUkoPTcqEqHAAw90kX+23g5aMN0vT9GO34/FOl/SmFsy9wofO6
+         0vW9uiuWgBG2Xj5xnTFUkgnpYcGSv8Pf3QR2F69ESBuizchVQsORLuGz9ZS7Jb4rdbHA
+         +bIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWhF7n+BS5TGK9lDQJ1jNjGOai9dup0iue6HuWTHFknia6XQloVP2ZNXnIv1OU97vboD+o6YfxKQME8wv3A0KCuTLAw
+X-Gm-Message-State: AOJu0YyeHYyNlimOX6pINxomnN5bEHukM3N/9Kwl1RPohkJ4sqLf247J
+	x/L3jvCanadUTvVQu39VL4nyZaRbvWrMDcNlMisda9QN41PpDefm0/GSwFocrdCLmu0yTCKl6iG
+	0Er2PRUEEAkqeSrZBAKT6Hii8Oag=
+X-Google-Smtp-Source: AGHT+IEm6Sn5V8Ch0Kh/lwu5b8CP4uvAjwJAQjIalIPxzME+B2SCd/3bGJewaIpjCm4AaukkXFzZDsoF1N0/LSxZlII=
+X-Received: by 2002:a05:6871:408b:b0:24f:d9e5:b208 with SMTP id
+ 586e51a60fabf-2508ad96dfcmr3822279fac.6.1717404971706; Mon, 03 Jun 2024
+ 01:56:11 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 3 Jun 2024 08:56:10 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20240530122753.1114818-2-shejialuo@gmail.com>
+References: <20240530122753.1114818-1-shejialuo@gmail.com> <20240530122753.1114818-2-shejialuo@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADg0FA_9shzJKN=dBfnavu5eTDNhbz=g0WP2sehAjSqHP4WFkA@mail.gmail.com>
- <CAPig+cT1pTkKd1A0o_qjP+Oyx+zyCevV8EAg5Ub9guAyd3UjgA@mail.gmail.com>
-In-Reply-To: <CAPig+cT1pTkKd1A0o_qjP+Oyx+zyCevV8EAg5Ub9guAyd3UjgA@mail.gmail.com>
-From: Antoine Bolvy <antoine.bolvy@gmail.com>
-Date: Mon, 3 Jun 2024 10:38:50 +0200
-Message-ID: <CADg0FA_2Z-Hz-ahaHWM-w7qhjf0+06XuhZv1MR3dOtfnAvD09w@mail.gmail.com>
-Subject: Re: [bug report] git diff --relative not doing well with worktree in hooks
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
+Date: Mon, 3 Jun 2024 08:56:10 +0000
+Message-ID: <CAOLa=ZT895c-ag-8_r7SfJ+n92-S16JfCYgYhQf0caxg63cisg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 1/2] refs: setup ref consistency check infrastructure
+To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Content-Type: multipart/mixed; boundary="000000000000464d100619f881cd"
+
+--000000000000464d100619f881cd
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-> If you change your hook from:
->
->    #!/bin/bash
->    cd folder || exit
->    pwd # display the current working directory
->    git diff --cached --relative --name-only
->
->to:
->
->    #!/bin/bash
->    cd folder || exit
->    pwd # display the current working directory
->    unset $(git rev-parse --local-env-vars)
->    git diff --cached --relative --name-only
->
->then it works as expected.
+Hello,
 
-It seems that unsetting GIT_DIR only is enough to make it work:
+shejialuo <shejialuo@gmail.com> writes:
 
-    #!/bin/bash
-    cd folder || exit
-    pwd # display the current working directory
-    unset GIT_DIR
-    git diff --cached --relative --name-only
+[snip]
 
-Thanks for the help and pointing me to the right documentation!
+> diff --git a/refs.h b/refs.h
+> index 34568ee1fb..2799820c40 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -544,6 +544,11 @@ int refs_for_each_reflog(struct ref_store *refs, each_reflog_fn fn, void *cb_dat
+>   */
+>  int check_refname_format(const char *refname, int flags);
+>
+> +/*
+> +  * Return 0 iff all refs in filesystem are consistent.
+> +*/
 
-Antoine BOLVY
-+33(0)675455349 =E2=80=A2 https://saveman71.com
+s/iff/if
 
+The indentation seems to be wrong here. Also since we want to check refs
+and reflogs, it might be better to mention that the function checks the
+reference database for consistency.
 
-On Fri, May 31, 2024 at 11:42=E2=80=AFPM Eric Sunshine <sunshine@sunshineco=
-.com> wrote:
+> +int refs_fsck(struct ref_store *refs);
+> +
+>  /*
+>   * Apply the rules from check_refname_format, but mutate the result until it
+>   * is acceptable, and place the result in "out".
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 5f3089d947..b6147c588b 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -3299,6 +3299,11 @@ static int files_init_db(struct ref_store *ref_store,
+>  	return 0;
+>  }
 >
-> On Fri, May 31, 2024 at 7:38=E2=80=AFAM Antoine Bolvy <antoine.bolvy@gmai=
-l.com> wrote:
-> > I noticed a weird behavior when using git diff --relative with worktree=
-s and
-> > hooks. When called from a pre-commit hook from a worktree, the relative=
- option
-> > has no effect.
-> >
-> > [main tree] Displays
-> > ```
-> > /home/arch/git/awfus/hook-repro/test/folder
-> > bar
-> > ```
-> > [in worktree] Displays
-> > ```
-> > /home/arch/git/awfus/hook-repro/worktree/folder
-> > folder/foo
-> > ```
-> > The path is no longer show relative. This causes issues with more compl=
-ex
-> > scripts.
+> +static int files_fsck(struct ref_store *ref_store)
+> +{
+> +	return 0;
+> +}
+> +
+>  struct ref_storage_be refs_be_files = {
+>  	.name = "files",
+>  	.init = files_ref_store_create,
+> @@ -3322,5 +3327,7 @@ struct ref_storage_be refs_be_files = {
+>  	.reflog_exists = files_reflog_exists,
+>  	.create_reflog = files_create_reflog,
+>  	.delete_reflog = files_delete_reflog,
+> -	.reflog_expire = files_reflog_expire
+> +	.reflog_expire = files_reflog_expire,
+> +
+> +	.fsck = files_fsck,
+>  };
+> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+> index a937e7dbfc..0617321634 100644
+> --- a/refs/packed-backend.c
+> +++ b/refs/packed-backend.c
+> @@ -1704,6 +1704,11 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
+>  	return empty_ref_iterator_begin();
+>  }
 >
-> I'm not sure there's a satisfactory resolution here. Your hook is
-> running afoul of the environment variables Git sets up when the hook
-> is run outside of the "main" worktree.
+> +static int packed_fsck(struct ref_store *ref_store)
+> +{
+> +	return 0;
+> +}
+> +
+>  struct ref_storage_be refs_be_packed = {
+>  	.name = "packed",
+>  	.init = packed_ref_store_create,
+> @@ -1728,4 +1733,6 @@ struct ref_storage_be refs_be_packed = {
+>  	.create_reflog = NULL,
+>  	.delete_reflog = NULL,
+>  	.reflog_expire = NULL,
+> +
+> +	.fsck = packed_fsck,
+>  };
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index 53a6c5d842..ef697bf3bf 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -675,6 +675,8 @@ typedef int read_raw_ref_fn(struct ref_store *ref_store, const char *refname,
+>  typedef int read_symbolic_ref_fn(struct ref_store *ref_store, const char *refname,
+>  				 struct strbuf *referent);
 >
-> If you change your hook from:
+> +typedef int fsck_fn(struct ref_store *ref_store);
+> +
+>  struct ref_storage_be {
+>  	const char *name;
+>  	ref_store_init_fn *init;
+> @@ -700,6 +702,8 @@ struct ref_storage_be {
+>  	create_reflog_fn *create_reflog;
+>  	delete_reflog_fn *delete_reflog;
+>  	reflog_expire_fn *reflog_expire;
+> +
+> +	fsck_fn *fsck;
+>  };
 >
->     #!/bin/bash
->     cd folder || exit
->     pwd # display the current working directory
->     git diff --cached --relative --name-only
+>  extern struct ref_storage_be refs_be_files;
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index 1af86bbdec..f3f85cd2f0 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -2167,6 +2167,11 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+>  	return ret;
+>  }
 >
-> to:
->
->     #!/bin/bash
->     cd folder || exit
->     pwd # display the current working directory
->     unset $(git rev-parse --local-env-vars)
->     git diff --cached --relative --name-only
->
-> then it works as expected.
->
-> The relevant portion from the "githooks" manual page is:
->
->     Environment variables, such as GIT_DIR, GIT_WORK_TREE, etc., are
->     exported so that Git commands run by the hook can correctly locate
->     the repository. If your hook needs to invoke Git commands in a
->     foreign repository or in a different working tree of the same
->     repository, then it should clear these environment variables so
->     they do not interfere with Git operations at the foreign
->     location. For example:
->
->         local_desc=3D$(git describe)
->         foreign_desc=3D$(unset $(git rev-parse --local-env-vars); git -C
-> ../foreign-repo describe)
+> +static int reftable_be_fsck(struct ref_store *ref_store)
+> +{
+> +	return 0;
+> +}
+> +
+>  struct ref_storage_be refs_be_reftable = {
+>  	.name = "reftable",
+>  	.init = reftable_be_init,
+> @@ -2191,4 +2196,6 @@ struct ref_storage_be refs_be_reftable = {
+>  	.create_reflog = reftable_be_create_reflog,
+>  	.delete_reflog = reftable_be_delete_reflog,
+>  	.reflog_expire = reftable_be_reflog_expire,
+> +
+> +	.fsck = reftable_be_fsck,
+>  };
+> --
+> 2.45.1
+
+--000000000000464d100619f881cd
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e3cd4d377ae37f5b_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aZGhTZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNDY3Qy85bURmbkhrTk9MT284SkFYWFRnZ09uSjc2WAplV2JXNmp0THF3
+UWNvcG9Ed084aGZyaGRuZGFmYU9wK3V6RVB6ZVFieFV4MklmY2ptazZTaW5lVS9wVTIxd0dOCmpV
+RXN6NGh0VG91eUN1cjFtRXV5QWM0bklZZjBUVktiQWExVWdMVVlmb05WVTZwc0VKY2N0MmxXeXNt
+RE1FVk4KelI2SWhEc25YdU5FOEV6QjZvbW15ZmR5U0pSNzJ3L1R4bDFYMGc4Rk5hZ096b09tMGJT
+UnVjS1JOeVhpWFMwRgpnR3V1TEZ3ZXpmRmgvb0dhM1ZuL1VwN3BhQytoRWE2eHRCMkhSQXMwc21J
+NFFrRlArcmllYUQ2SWVhOVBNVDVGCldCWThyOThLc2s0ZlIvU1p4UWxHQUROT3VETXBROW9NcnZD
+RXZTNTh4bFM4a1NGL2pPRDNycldrUnhnM1lKWisKU3MwMG4yazRpQ21PT3VOY25xRUtOeDlyTUpw
+S3lHd1prbkRxWXc3dnZ6WFVmOEJyZjVXRUJMNU5QMjE2TEhTaQphZGhxTG1LZGhMU1ZCam8xb3hU
+S2lLTHptZ1JveExsbDNhQXp3d3I4cmJBdldFK3BrTk1YNEl0VjAwektnWnMwClplNWtEd3dzTC9j
+b1Q3WkkzcFN5SFF4ZDU3Z3dkTytJN3FRMXRBaz0KPWxpWDgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000464d100619f881cd--
