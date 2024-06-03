@@ -1,97 +1,77 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688E5847C
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 15:01:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BD11877
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 15:28:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717426886; cv=none; b=N5rP+EwEgXaJmIdQNqe9g0RL0TUZUPuzddqNeGj+wouAHwaR/J/0MQE1b87Dglk2QWUku/aN0wKEM1OvaAtsVQToaX+Gjob2Ohkxr4mhnMCVBKcAG+WeM5pI9d08jRGdTQTvrmrY1W6xa4tGGjNQKeHYehi/R6mZnUV8DQsDyLw=
+	t=1717428524; cv=none; b=NNmFH2CVke6qY5AOPjIDHXcCd/frY8qrhP8sex61uS+mBonyaNIpHVtwmNWdCZsNcwDzvimubxfua+pTBsCC0V+CNHSHkU7RQCI4G34EQS9Wd0xwZ5MvDDMwtarNYbTcjfzRTaFyK+9Vjf15EQ/dVXifUvR2GGmTORDLIT3k9rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717426886; c=relaxed/simple;
-	bh=rO4Q1DXDHhXOUTohhRZx7Ji74LQOplraceN3WP8K3YA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f4H1KLU5K8uemMLC+21Z+Y1ic95L68UvTlzvmEqDDw68UDjQjx+wUMf+pOSsGQR/MVjCg5l6nYDLHruhTJxA43kJH6w89ZfeQjDpZwSRmnpTR/A6j9vVuH6ITZ0dzXla1qZA+ntxDaxjd5LqiDHg07T0FbcliqFs8ZYEGIyMVEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IwlRaZG1; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1717428524; c=relaxed/simple;
+	bh=cf3nDgucfSx+RuyiKA5JipvARQAqLexZEQjZOGppMlw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jElDYOPxKl76ys88XN1frgvXbPuXA4oRM5KtvJS8HFNYHjXdGVVzMjziqM79oyjEHhGThHTSeHq0WpEGwe11vmzqJdVg9Giatpu7MLbj392wPwAv/14UVhfNYQtxL8R1SJfDQ1fC2ZkllWUDrmah9dYl+s/JwJyaFophX2mjOv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ctt2HvbY; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IwlRaZG1"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-57a30dbdb7fso4739391a12.3
-        for <git@vger.kernel.org>; Mon, 03 Jun 2024 08:01:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717426884; x=1718031684; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/nbFqA49BsiHJYae42YPI55tnF+OjQdwPSCTzsWtszs=;
-        b=IwlRaZG1ZiCwC+RZCxxj+3w35mmQdVjMEuzseMarf8XPSU98x8yRoqdYC0/t6ihngP
-         cat2ov7+Sh+OEZqhBuNZVcmLlIUguTQQZDdgb9DW2xilg6aHfoCw4Lw2SH18+NR04m0o
-         cgu1eizAEFJnSgAZTRef9LKTWDM7qJsFY4VnDPWM+0F76iD2weyLPlvJSwbbx2dNNp4O
-         dShMPj6iwW87euQDoT1E8NnofSabYRZ+L/sHmjklxLxSE943NKJRXnlFKHKzamBXFMAc
-         3kgEzjLUnYdV9o6vTlYPOV/lPGLMI5L536m6XnjBgbNX67R8rdzFyJZJLFd0WRWg0tbu
-         xOuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717426884; x=1718031684;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/nbFqA49BsiHJYae42YPI55tnF+OjQdwPSCTzsWtszs=;
-        b=whgPKmCQT9rEa8exUT/mpohYqeerB7oXz0vZ9E0k4HptaDnz32e3+oNVOkQmgTDhV1
-         8cktn3IhO6K+OlTMes3DcHPqwV+p5PRGBlS61PK8u1I+mu+pAS3OSe+LY/XdsYUzeC5e
-         UbUj3uHWax5MCty7jzWgDW5T8xjKbrgApfX/glBeOce2OjkuQKjKDykR8DGbDq6bbVNv
-         kveRpThGwUmsOx5xhZBTo4NbPRRvt7Ja1x0+2HVDFjBn2racpfx2vJFwNgsEVhrNBnOa
-         JiH8Se5u9qSsf2Ts3loXopG7zXZFmcALLHMLpq/AtzFcB6cgTSaseYNSo1yToBeJEiB3
-         465g==
-X-Gm-Message-State: AOJu0YzpGxriundlahJH5Htlb81sQ5k3Ey0h/zzEw65+6Ont5uqfCJvJ
-	Cm55wc5KCybX9njm+Jj4sijM1GMScerdzSQ1VxwtDLmqHakfWMz0q02DIP9fye+oVvcJZ1OT0Ip
-	u6dVMsw7kYDKbv6V4nIBIB4fk/ubG+fG5
-X-Google-Smtp-Source: AGHT+IE3bDKIAJQl42VXNYllp7RBBSd0JyAZ4/bAmrPQ2W6eaZIqJ1czLUWaRQZ6wwIgRUg7PpPT6AAQ3lj9qgXSIq8=
-X-Received: by 2002:a50:8e11:0:b0:579:c08b:afa9 with SMTP id
- 4fb4d7f45d1cf-57a3636f725mr6761904a12.11.1717426883610; Mon, 03 Jun 2024
- 08:01:23 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ctt2HvbY"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A1983354A;
+	Mon,  3 Jun 2024 11:28:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=cf3nDgucfSx+RuyiKA5JipvARQAqLexZEQjZOG
+	ppMlw=; b=ctt2HvbYqg9/eD+xoCHZK6TSNKiPgIHMO//YVrU7Sd2giBFqvTrAch
+	KpDAI7IdjKa40sGeGgSxEm8AfLXcSMaHWDCzmT7gZcp2xe8u/xiQzwSAdQZK+DUH
+	Cspd/P6hDISATUqwOxAL7Ix72VkhuYKuOl788bb4AjodFSztU9NGo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9185833549;
+	Mon,  3 Jun 2024 11:28:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0309833548;
+	Mon,  3 Jun 2024 11:28:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>,  Jeff
+ King <peff@peff.net>
+Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
+In-Reply-To: <fb2a9e98f0b2c3a009b0ad800c05522c@manjaro.org> (Dragan Simic's
+	message of "Mon, 03 Jun 2024 12:21:05 +0200")
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+	<199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+	<b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
+	<xmqqwmn79u98.fsf@gitster.g>
+	<ec2ca25486b84615e30dbeb83ec47310@manjaro.org>
+	<xmqq34pu8kkg.fsf@gitster.g>
+	<fb2a9e98f0b2c3a009b0ad800c05522c@manjaro.org>
+Date: Mon, 03 Jun 2024 08:28:39 -0700
+Message-ID: <xmqqsexu6o60.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20221012135114.294680-1-christian.couder@gmail.com>
- <20240515132543.851987-1-christian.couder@gmail.com> <20240515132543.851987-4-christian.couder@gmail.com>
- <xmqqv83fvw7p.fsf@gitster.g> <CAP8UFD1JZ7eJzrTk1YPrfy1XLAnnLvukABOJE69-JbqVWtL1AQ@mail.gmail.com>
- <xmqqjzjikhdz.fsf@gitster.g> <CAP8UFD1_aHwbhF12v-miCTWEbbgjtpjTCmkRmFHu4Vusezq6dA@mail.gmail.com>
- <xmqq34q27wzg.fsf@gitster.g> <CAP8UFD18Y=NhnnzcHoBOiO7bu_VrxnHOeLgUeqiADQPcgtMW=A@mail.gmail.com>
- <xmqqwmn9athc.fsf@gitster.g>
-In-Reply-To: <xmqqwmn9athc.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 3 Jun 2024 17:01:10 +0200
-Message-ID: <CAP8UFD0aiBY27_8HqjyMtze1ZcME2gZVTMyB=botNErmu_CJDg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] upload-pack: allow configuring a missing-action
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F4BD486C-21BD-11EF-B140-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Sat, Jun 1, 2024 at 11:43=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+Dragan Simic <dsimic@manjaro.org> writes:
+
+>> I'd probably just say $GIT_PAGER instead of its expansion if we were
+>> go that route.
 >
-> Christian Couder <christian.couder@gmail.com> writes:
+> Makes sense to me.  More precisely, the environment should be checked
+> to see is it "$GIT_PAGER" or "$PAGER" that needs to be printed literally
+> as part of the help message.
 
-> > I don't understand why you compare this to a "broken" implementation
-> > of promisor remotes. What could then be a non-broken one that would
-> > store large blobs on a separate server in your opinion? I am really
-> > interested in answers to this question. It's not a rhetorical one.
->
-> You as S would tell C "I want you to go to X because I am not
-> serving objects X and Y".  Or at least make sure that C knows about
-> X before deciding to omit what X ought to have.
-
-Ok, so if there was a way for S to suggest config options and perhaps
-also command line options to C (like I mentioned in a previous email),
-and if S would suggest C to configure X as a promisor remote and C
-would accept to do that, then it would be fine for the feature to
-work, right?
-
-Alternatively, if C would pass a new option called for example
---known-promisor=3DX on top of all other options, then that could be Ok
-too?
+I was sure somebody will split a hair like that.  At that point we
+are better off mentioning 'git var' X-<.  Or just 'Your Pager'.
