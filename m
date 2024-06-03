@@ -1,136 +1,246 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647CF12DD9B
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 21:09:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82DF74297
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 21:30:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717448947; cv=none; b=QJBk/LW3snuMADdrHGlAkzCgVqKw1T8GSu5DLKZ69h8X5vgdN1qsK1MFisPwvoGq1+/3vAM7bYxum0pGx8d25xsXih8xfgW+tRIrtyqn3gx8MaZWGaiF1tXCFE3o8zBHG02HCGB6a16Yt0iYZFEenwQWWMKpZydXGBQRLrMz9Ao=
+	t=1717450252; cv=none; b=DPzroF/hkcIb9il8kyYRUQ7F7rBVcSyFsblzg8ZbJ+ajN11UbkGd85hl3KNHdMSQtYA70YpQhpc+1QrkDZnJqy1OVV1DGlQ44Na6hE+Jln5isYwNK38mgQ9qzz/cz/aGh02em94aQk+8UuFlU5JNa/L7L7f78xuLhDVDU0ZU7nY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717448947; c=relaxed/simple;
-	bh=PVdWyYnlpGyEWG4jx9xRe7WVkMm8KFDlG/bcrwXfBE8=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tqbNxroIigkGv3QQ0LirzNczkH/gkhzUiv8j5G/hqJPY8ocfjnyV07c5BYZwP7XlfewTNCJ0r5Kjphpo+LSrmdzbX06s2nsbAvMssVe3OoPWkB97V7z8qx5wGCOJpUoF5BUlUyWA12C0Sy/ryhc5GxDEZdwzU8pKsnSWwzgTWyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HelIFy7N; arc=none smtp.client-ip=209.85.214.169
+	s=arc-20240116; t=1717450252; c=relaxed/simple;
+	bh=DlzK4Z3oc26+OplownM4UvS75GU3Huax2cAgiYIFBds=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=lf1vZxeHgI1aUuosk7WPrPib16EiBs+DISTNI3bRpC8vC5j3oQGQhFen3SCh30WwAQEcamLeu+G2Uh2/N55YGx2+04InZCVfPbX/KDG7BFxDcH09v3HAcxMcQlHetxPoNXO3wdb8ZHdN1KK0TJ2oNRmUPcV9Ir3iRAao1ixWgpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OIFtYjHd; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HelIFy7N"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1f60a502bb2so3103275ad.3
-        for <git@vger.kernel.org>; Mon, 03 Jun 2024 14:09:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OIFtYjHd"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-421140314d5so43724955e9.0
+        for <git@vger.kernel.org>; Mon, 03 Jun 2024 14:30:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717448946; x=1718053746; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Q1khbvJ8OR7e1pml/huqwTvgMAXsDONjzDMr259G24=;
-        b=HelIFy7Nxus+lGY/UM9Fnu03IOdSwGfmIxxyTTE4Hk8SjaMcOI+Ic1KyVkGzW1xZmD
-         KvDWRL/qwiOG/HfCTM8cYGSNzHF46OU0lio2qH5+WITbr88k/ps/WfPxwS8SlWrEjemV
-         sYXt4WHUFige7qu38fUZ34320Z7jYeRss0nQ4e4U2NjymVHpLHHi6kxAqI0NrGkSD7Lp
-         jsW6cj9N94go9vOA7PWcdT4hOE6o+Wa5/Ey3YjR57lmgi//H9EsLXlSZ3WZywgtEkx5x
-         hwRplocIzVpRNPcS4P4qiHuV9AOHMdfZc7f3RTGzGM56o32HA76xy6eOU/ePean61E8M
-         Aagw==
+        d=gmail.com; s=20230601; t=1717450249; x=1718055049; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KvdM3wpE6VABf8mPa5CofOb8O4dx8kwXYKS5FNdC02E=;
+        b=OIFtYjHdp83a2JlnP7HA+Np9T9TXTIniiJS3h/+AuZklAiyrNz7recDO3kYzfoELpv
+         7YaN7yruQqLEU3jrou3yyNHo4r6LAJikdqcjrylsl2EHgQoz/loYpwgceYoKUHtryp9c
+         BnZUpufV0MJVzTZH+zAyKS1kJkhlY3ihhzEjHgma5tNPT7rb953oc720xhFIDZM1zfp3
+         1oiVvwJouvA3setZu+oVeMzGxWzVH6sjJ3DpwBv8Cm72UbYI4Uyo/oDhZXLZyPiqxRGX
+         cq2szcKOobUjxo2zjuERZ8Ncngq4ZkinequoHbIg8ZDR4cQjN0aHKdIfS27/45U3TJqL
+         nIGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717448946; x=1718053746;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1Q1khbvJ8OR7e1pml/huqwTvgMAXsDONjzDMr259G24=;
-        b=A9M/mLOMfOclKI69MjnqdRZCtHL9zVvkM5m28duSXnPcsMqqit8qxSpVdyWHfYFy1k
-         Omnztgo6IRWFrjSV8RCgdH4stROhYjFx7aIsISIAbHTwY4PsZJfEjKEM//vjH5r8kist
-         mcfGp/lKgx5wOyZC4swJwpZ8ahp8FhRJe0hIllR3jVMVTBWvmrsKe3HLhzoITLNXtnRS
-         JItvJSh/+njDpxcV+TFHV1RjQITe4k9oUpG6dS/55/r2TrILH0wwV4RpG9PXD7QMo1XW
-         kLrWUsSCkJnQchfA03PLe7w0EfRYBlW3zU5u3nndE4lznIRZH5vbGj3IZO2i6smgpdCW
-         /MQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVlaRlQ0aqWnhTWsetyAv4IoFoSJLZqu5HsQPnL8NdHhs++tXaDtRNGAT7gggoOaiFbGBQ7JjV7iLgyx+hAkgYPQDth
-X-Gm-Message-State: AOJu0YxHxHaiG8tlJ1kwhkR1hZy3VbKGYycw+E1bNvuQ2gM+69s6ifti
-	Wdb6J+C2aIKCUAXVNTPiMwADwAks82yc74QVQNSHnN4bhSnmh4tBmz6/YBCob2c=
-X-Google-Smtp-Source: AGHT+IGtB48+bp7C59+U74M6SshLRH450SYXd0Hz+n7b0NEvvYagX7Tcgdfj2HC+t6e106s75zEoUA==
-X-Received: by 2002:a17:902:d2d2:b0:1f6:3b03:6fa1 with SMTP id d9443c01a7336-1f685743c6fmr26395265ad.56.1717448945464;
-        Mon, 03 Jun 2024 14:09:05 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f63237d9c3sm70103755ad.116.2024.06.03.14.09.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Jun 2024 14:09:05 -0700 (PDT)
-Date: Tue, 4 Jun 2024 02:39:01 +0530
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: Josh Steadmon <steadmon@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, Christian Couder <christian.couder@gmail.com>, 
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][PATCH] t/: migrate helper/test-example-decorate to the
- unit testing framework
-Message-ID: <dsdg4jeoog2awxtry64joaxt4dawwq3ajmm4pksy733vwbsvp7@fgkp7d76pp46>
-References: <20240528125837.31090-1-shyamthakkar001@gmail.com>
- <xmqq8qzsuwh1.fsf@gitster.g>
- <CAP8UFD1YVyZj-uGfGXp6UxMfj3kZC5XXNed-5s-jj=ROx4URnA@mail.gmail.com>
- <tubjmjeczh6iigem32ulffvt2ucpygbm4frsr3jsps5tv2i7v5@ly3wge23zn6f>
- <xmqqjzjbqoqc.fsf@gitster.g>
- <zeenwui37wk5ascgqw7kl6si7oyebn6kojidpevxuy2q4e45r4@sdxjxwn4657s>
+        d=1e100.net; s=20230601; t=1717450249; x=1718055049;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KvdM3wpE6VABf8mPa5CofOb8O4dx8kwXYKS5FNdC02E=;
+        b=YNqBmfMq3P+DNlvSqS2UvJLM3Vg7rx4YVDcizew9B3vZV933mqZfMEv7WDzyPxvngS
+         X9Rchf8ZSyH3tYeJ814esInJpmaAMteaVgxcZ8Eo+obc1mMU0YDwkLvAfR7UVj7oLjX3
+         G5S5jYBoCHuOvAbDV4JsfQ2mvI6CPoFb3UgKcA1AqqBFo2A4IMTL8XUQUkHHrQbEvgz4
+         tHpt4AfdtpTs0M1jHbBTm9M2n5VLYCnBPpaIhTnfRorNrV1FpC6ravPaSVcR6w0HOHCG
+         rm+Vm1qGvjRr0QTwzZU7LdunR8as6WpTIfpStRtqABHWmBwKXE4wn8ljoPJp01PUeLIM
+         M0kg==
+X-Forwarded-Encrypted: i=1; AJvYcCVM+Qu39ClqWt9GuYATtP28yrn1AdoWGgqiZQlEbTDcjzIzpDiDN8d7EkBH3y1JijNYwMsdc8/MHskNIbhV4x524ZyM
+X-Gm-Message-State: AOJu0Yx4PTS6Y2lKG+1QlCnMHNE11nnFIohcL2PVUdjWhGJXyhqqz8YJ
+	iVc+sVbdJpjSKbGe/wWSB1jOisshME3n9LGCOp0MYvsAhAPYQMhc
+X-Google-Smtp-Source: AGHT+IHrt0U7m0PH2cp/i/+hRtEtRc4RZaSO8Aavh11wBD1zhDn2nUTuMaZ6UFRkH0tAEewH9K3p4g==
+X-Received: by 2002:a7b:c011:0:b0:421:1d5:c0a3 with SMTP id 5b1f17b1804b1-4212e0a52cemr91972095e9.28.1717450249168;
+        Mon, 03 Jun 2024 14:30:49 -0700 (PDT)
+Received: from gmail.com (32.red-88-14-52.dynamicip.rima-tde.net. [88.14.52.32])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4212f0f9660sm122097615e9.39.2024.06.03.14.30.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Jun 2024 14:30:48 -0700 (PDT)
+Message-ID: <aa9ff9a4-d504-45c7-8b4e-9744bf0b93aa@gmail.com>
+Date: Mon, 3 Jun 2024 23:30:47 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <zeenwui37wk5ascgqw7kl6si7oyebn6kojidpevxuy2q4e45r4@sdxjxwn4657s>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] ls-remote: introduce --branches and deprecate --heads
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq8qzl3mhg.fsf@gitster.g>
+ <20240603200539.1473345-1-gitster@pobox.com>
+ <20240603200539.1473345-3-gitster@pobox.com>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <20240603200539.1473345-3-gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, 03 Jun 2024, Josh Steadmon <steadmon@google.com> wrote:
-> On 2024.05.30 08:54, Junio C Hamano wrote:
-> > Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
-> > 
-> > > The latter provides much more context (we almost don't have to open
-> > > t-example-decorate.c file itself in some cases to know what failed)
-> > > than the former. Now, of course we can add more test_msg()s to the
-> > > former to improve, but I feel that this approach of splitting them
-> > > provides and improves the information provided on stdout _without_
-> > > adding any of my own test_msg()s. And I think that this is a good
-> > > middleground between cluttering the stdout vs providing very little
-> > > context while also remaining a faithful copy of the original.
-> > 
-> > If so, why stop at having four, each of which has more than one step
-> > that could further be split?  What's the downside?
-> > 
-> >     Note: Here in this review, I am not necessarily suggesting the
-> >     tests in this patch to be further split into greater number of
-> >     smaller helper functions.  I am primarily interested in finding
-> >     out what the unit test framework can further do to help unit
-> >     tests written using it (i.e., like this patch).  If using
-> >     finer-grained tests gives you better diagnosis, but if it is too
-> >     cumbersome to separate the tests out further, is it because the
-> >     framework is inadequate in some way?  How can we improve it?
+On Mon, Jun 03, 2024 at 01:05:38PM -0700, Junio C Hamano wrote:
+> We call the tips of branches "heads", but this command calls the
+> option to show only branches "--heads", which confuses the branches
+> themselves and the tips of branches.
 > 
-> I'll try not to speak for anyone else here, but I think the test
-> framework isn't causing much friction here in the decision of how to
-> split the tests. [However, neither is it providing much guidance. At
-> some point we should review the unit tests and see if we can extract a
-> helpful style guide or best practices doc.] The setup for the cases is
-> minimal and done through the main function.
-
-Agreed about style guide/best practices doc.
-
-> I think the current split is reasonable as a first patch, as it mirrors
-> the organization of the original test and makes it easier for reviewers
-> to verify that it tests the same behaviors. If further simplification or
-> reorganization is needed, I would like to see that as a separate patch
-> on top of the more straightforward conversion.
+> Straighten the terminology by introducing "--branches" option that
+> limits the output to branches, and deprecate "--heads" option used
+> that way.
 > 
-> The only part that bothers me a bit (and this is really more of a
-> complaint about the framework than the patch itself) is the carryover of
-> state between the different TEST() cases. We can't skip t_add and expect
-> the other test cases to still pass, unfortunately. However, I don't
-> think this patch needs to worry about that, since the framework doesn't
-> restrict persistent state. [And we certainly don't restrict persistent
-> state in the shell tests either.]
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/git-ls-remote.txt | 12 +++++++-----
+>  builtin/ls-remote.c             | 21 ++++++++++++++++++++-
+>  t/t5512-ls-remote.sh            | 30 +++++++++++++++++++++++++-----
+>  3 files changed, 52 insertions(+), 11 deletions(-)
+> 
+> diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
+> index 1c4f696ab5..76c86c3ce4 100644
+> --- a/Documentation/git-ls-remote.txt
+> +++ b/Documentation/git-ls-remote.txt
+> @@ -9,7 +9,7 @@ git-ls-remote - List references in a remote repository
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=<exec>]
+> +'git ls-remote' [--branches] [--tags] [--refs] [--upload-pack=<exec>]
+>  	      [-q | --quiet] [--exit-code] [--get-url] [--sort=<key>]
+>  	      [--symref] [<repository> [<patterns>...]]
+>  
+> @@ -21,14 +21,16 @@ commit IDs.
+>  
+>  OPTIONS
+>  -------
+> --h::
+> ---heads::
+> +-b::
 
-I talked about this in private with Christian, and we came to the
-same conclusion that having independent state would better. But seeing the
-original test-example-decorate, it would be a bit more boiler plate to
-produce the exact same checks, without relying on previous state. And
-seeing the lack of convention (written guideline) about independent
-state vs dependent, I decided to stick to having the tests rely on
-previous state, similar to the original, and see the mailing list
-response about what should be done.
+Perhaps we can avoid this 'single-letter' option, due to we're no giving
+the same abbreviation for '--branches' in other places.
 
-Thanks.
+> +--branches::
+>  -t::
+>  --tags::
+> -	Limit to only refs/heads and refs/tags, respectively.
+> +	Limit to only local branches and local tags, respectively.
+>  	These options are _not_ mutually exclusive; when given
+>  	both, references stored in refs/heads and refs/tags are
+> -	displayed.  Note that `git ls-remote -h` used without
+> +	displayed.  Note that `--heads` and `-h` are deprecated
+> +	synonyms for `--branches` and `-b` and may be removed in
+> +	the future.  Also note that `git ls-remote -h` used without
+>  	anything else on the command line gives help, consistent
+>  	with other git subcommands.
+>  
+> diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+> index 9838de69c0..95fbb8b7b5 100644
+> --- a/builtin/ls-remote.c
+> +++ b/builtin/ls-remote.c
+> @@ -38,6 +38,20 @@ static int tail_match(const char **pattern, const char *path)
+>  	return 0;
+>  }
+>  
+> +static int heads_callback(const struct option *opt, const char *arg, int unset)
+> +{
+> +	unsigned *flags = opt->value;
+> +
+> +	if (unset) {
+> +		warning(_("'--no-heads' is deprecated; use '--no-branches' instead"));
+
+I wonder if this would be better: 
+
+	warning(_("'%s' is deprecated; use '%s' instead"), '--no-heads', '--no-branches');
+
+> +		*flags &= ~REF_BRANCHES;
+> +	} else {
+> +		warning(_("'--heads' is deprecated; use '--branches' instead"));
+> +		*flags |= REF_BRANCHES;
+> +	}
+> +	return 0;
+> +}
+> +
+>  int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+>  {
+>  	const char *dest = NULL;
+> @@ -68,7 +82,12 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+>  			   N_("path of git-upload-pack on the remote host"),
+>  			   PARSE_OPT_HIDDEN },
+>  		OPT_BIT('t', "tags", &flags, N_("limit to tags"), REF_TAGS),
+> -		OPT_BIT('h', "heads", &flags, N_("limit to heads"), REF_BRANCHES),
+> +		OPT_BIT('b', "branches", &flags, N_("limit to branches"), REF_BRANCHES),
+> +		OPT_CALLBACK_F('h', "heads", &flags,
+> +			       NULL,
+> +			       N_("deprecated synonym for --branches"),
+> +			       PARSE_OPT_NOARG|PARSE_OPT_HIDDEN,
+> +			       &heads_callback),
+>  		OPT_BIT(0, "refs", &flags, N_("do not show peeled tags"), REF_NORMAL),
+>  		OPT_BOOL(0, "get-url", &get_url,
+>  			 N_("take url.<base>.insteadOf into account")),
+> diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+> index 5dbe107ce8..b9950ca361 100755
+> --- a/t/t5512-ls-remote.sh
+> +++ b/t/t5512-ls-remote.sh
+> @@ -47,6 +47,7 @@ test_expect_success setup '
+>  	git show-ref -d	>refs &&
+>  	sed -e "s/ /	/" refs >>expected.all &&
+>  
+> +	grep refs/heads/ expected.all >expected.branches &&
+>  	git remote add self "$(pwd)/.git" &&
+>  	git remote add self2 "."
+>  '
+> @@ -71,6 +72,25 @@ test_expect_success 'ls-remote self' '
+>  	test_cmp expected.all actual
+>  '
+>  
+> +test_expect_success 'ls-remote --branches self' '
+> +	git ls-remote --branches self >actual &&
+> +	test_cmp expected.branches actual &&
+> +	git ls-remote -b self >actual &&
+> +	test_cmp expected.branches actual
+> +'
+> +
+> +test_expect_success 'ls-remote -h is deprecated' '
+> +	git ls-remote -h self >actual 2>warning &&
+> +	test_cmp expected.branches actual &&
+> +	test_grep deprecated warning
+> +'
+> +
+> +test_expect_success 'ls-remote --heads is deprecated' '
+> +	git ls-remote --heads self >actual 2>warning &&
+> +	test_cmp expected.branches actual &&
+> +	test_grep deprecated warning
+> +'
+> +
+>  test_expect_success 'ls-remote --sort="version:refname" --tags self' '
+>  	generate_references \
+>  		refs/tags/mark \
+> @@ -275,7 +295,7 @@ test_expect_success 'ls-remote with filtered symref (refname)' '
+>  	test_cmp expect actual
+>  '
+>  
+> -test_expect_success 'ls-remote with filtered symref (--heads)' '
+> +test_expect_success 'ls-remote with filtered symref (--branches)' '
+>  	git symbolic-ref refs/heads/foo refs/tags/mark &&
+>  	cat >expect.v2 <<-EOF &&
+>  	ref: refs/tags/mark	refs/heads/foo
+> @@ -283,9 +303,9 @@ test_expect_success 'ls-remote with filtered symref (--heads)' '
+>  	$rev	refs/heads/main
+>  	EOF
+>  	grep -v "^ref: refs/tags/" <expect.v2 >expect.v0 &&
+> -	git -c protocol.version=0 ls-remote --symref --heads . >actual.v0 &&
+> +	git -c protocol.version=0 ls-remote --symref --branches . >actual.v0 &&
+>  	test_cmp expect.v0 actual.v0 &&
+> -	git -c protocol.version=2 ls-remote --symref --heads . >actual.v2 &&
+> +	git -c protocol.version=2 ls-remote --symref --branches . >actual.v2 &&
+>  	test_cmp expect.v2 actual.v2
+>  '
+>  
+> @@ -335,9 +355,9 @@ test_expect_success 'ls-remote patterns work with all protocol versions' '
+>  test_expect_success 'ls-remote prefixes work with all protocol versions' '
+>  	git for-each-ref --format="%(objectname)	%(refname)" \
+>  		refs/heads/ refs/tags/ >expect &&
+> -	git -c protocol.version=0 ls-remote --heads --tags . >actual.v0 &&
+> +	git -c protocol.version=0 ls-remote --branches --tags . >actual.v0 &&
+>  	test_cmp expect actual.v0 &&
+> -	git -c protocol.version=2 ls-remote --heads --tags . >actual.v2 &&
+> +	git -c protocol.version=2 ls-remote --branches --tags . >actual.v2 &&
+>  	test_cmp expect actual.v2
+>  '
+>  
+> -- 
+> 2.45.2-404-g9eaef5822c
+> 
