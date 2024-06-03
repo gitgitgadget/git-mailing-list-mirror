@@ -1,50 +1,57 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FECE12D205
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 15:31:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA955882B
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 15:42:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717428669; cv=none; b=U7gRigEwGVOvutK7vHKtqefW8z3rTi7SxD+ntp9IVWl+Hr8wFlVNGL+uPvKZRhTeKjUZJDWgcYkFX7TgZvlqlEJOoa/Mn/5ZOUGPWW2izv8gQ9w7b3Iu8HmdsQ3CEV8JjX2VrIvgiVpbVPFpFaUomMU49gewg1piB+1pWl7+MYw=
+	t=1717429349; cv=none; b=lLcbxPjPMpnin4ZbYKBYvlhjiS/qBHKFcG+N5ehDGWlLBImzj+tmhJV9NX72aZSEeu4jq9KPHZDYnIu+J3HD0CUXHHkQ28uhZNLrv2uqK8Hk7U+KQlujSb1v3q9s2huR4zSvOwEm7xmo1MpyUGCBWTyR4jK9YhZONIYst75Xmao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717428669; c=relaxed/simple;
-	bh=KHXjjv1bkXAb8dPF/tWA1fzM9kZfG+AUN6wKzAdJOLw=;
+	s=arc-20240116; t=1717429349; c=relaxed/simple;
+	bh=P6g2ErfAyP4Ri3NmDrljiSYuOVRzq8XOWkOeYi4qOHg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Zy9WvxSSP/ILCpntRFvsiwNNU/JqESrIDo5lbBAgbaj9IbHlJ77aGiUiXCAPmLBMKj0cpEM4f6alr3KnjbowXkzMgAfQXkAqqEvin0MmuhRsVLpvE6B7XBx0kr5keA3bMMLxRo5MNcNjy0PodMdgfi9hCUYDKeN8ylQjuCVzzLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=UYbSkbh0; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=CjmQGskFeHOQRXhUjI3Y+CgZKX0Ax3YQWf4tOe7AeDmL+Q+2hrH0ZsFXlhpDChNJTNoqGIP1eFCQD0B3zdHZN0mwN2jk5eHFwXmT+f7tbWoGEaFWIveuV78/CgYis+wBsw9Zba9X2JK+a4qbq7gMMvnNwK0UCUINoRw5Todljpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FVZ6tjh6; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UYbSkbh0"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 99B1F3357E;
-	Mon,  3 Jun 2024 11:31:06 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FVZ6tjh6"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2FAEA28DA9;
+	Mon,  3 Jun 2024 11:42:27 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=KHXjjv1bkXAb8dPF/tWA1fzM9kZfG+AUN6wKzA
-	dJOLw=; b=UYbSkbh0kuPBPyecJCtPNC1JqMePt3OmhgwfYTXO10szy3uA71FE+Y
-	znJ1ek4A4M+tZc5+ykq80wGsA8wBmuaqVzO+KHN70s/XpWW+KWDM81rwxEDb9MJd
-	47HMA0LN9Sh+P1qNlEQy5cDRCES7w589pxz92Q+BP64TOq+LduC2A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 32FBE3357D;
-	Mon,  3 Jun 2024 11:31:06 -0400 (EDT)
+	:content-type; s=sasl; bh=P6g2ErfAyP4Ri3NmDrljiSYuOVRzq8XOWkOeYi
+	4qOHg=; b=FVZ6tjh6DL8V9NksqmFDJU912XYAD+G5zU6RNJZYxjgn5JieNL5p4f
+	jfAqk/moIiEaBeEBTtTI5q+yOfy4I9CJIhoz/o2hb+vNw4E7c8k/BFKrRyU8ed35
+	OfE/n/P5hV64Jp8pwdLg2f0qZArpWDuFs/Cwc6978dwD1YpXd7dro=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 296AA28DA8;
+	Mon,  3 Jun 2024 11:42:27 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7B21C33579;
-	Mon,  3 Jun 2024 11:31:04 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4984128DA7;
+	Mon,  3 Jun 2024 11:42:24 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Arundas T C <arundas.tc@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: git pull --ff-only errors when git merge --ff-only passes
-In-Reply-To: <CAKRNJbAnUBmR5MHY=uSF1A3docO-uxWG4agWuFZEyPUnduyWHw@mail.gmail.com>
-	(Arundas T. C.'s message of "Mon, 3 Jun 2024 14:28:41 +0800")
-References: <CAKRNJbAnUBmR5MHY=uSF1A3docO-uxWG4agWuFZEyPUnduyWHw@mail.gmail.com>
-Date: Mon, 03 Jun 2024 08:31:02 -0700
-Message-ID: <xmqqo78i6o21.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Stefan Haller <lists@haller-berlin.de>,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,
+  =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3 0/2] rebase -i: improve error message when picking merge
+In-Reply-To: <28796edf-65eb-4f28-8651-af97e00cabc9@gmail.com> (Phillip Wood's
+	message of "Mon, 3 Jun 2024 10:22:32 +0100")
+References: <pull.1672.v2.git.1712585787.gitgitgadget@gmail.com>
+	<pull.1672.v3.git.1717076630.gitgitgadget@gmail.com>
+	<xmqq7cfbp6pb.fsf@gitster.g>
+	<28796edf-65eb-4f28-8651-af97e00cabc9@gmail.com>
+Date: Mon, 03 Jun 2024 08:42:22 -0700
+Message-ID: <xmqqh6ea6nj5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -54,23 +61,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 4A54BC10-21BE-11EF-B404-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
+ DF7435EA-21BF-11EF-A2A0-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
-Arundas T C <arundas.tc@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> What happened instead? (Actual behavior)
+>> OK.  It would probably have been unnecessary to rebase only for this
+>> update.
 >
-> error: cannot pull with rebase: You have unstaged changes.
-> error: Please commit or stash them.
->
-> What's different between what you expected and what actually happened?
->
-> It errored out because of unstaged changes, even though doing `git
-> merge --ff-only` will correctly do what's expected. See below.
+> I agree the conflict is easy to solve but GitGitGadget gets upset and
+> refuses to run the ci if it cannot merge the branch into master
 
-But you are not doing "merge" but "rebase", according to the error
-message.  "pull" was told to do "rebase" instead of "merge" and it
-stopped because it did not want to clobber the local changes.  So
-it appears that what "merge --ff-only" would have do has very little
-to do with what "pull --ff-only" you configured would do, no?
-
+Heh.  TIL.  That's a tad unfortunate that we have to let the tail
+wag the dog, but OK.
