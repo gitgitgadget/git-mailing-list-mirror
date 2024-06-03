@@ -1,71 +1,91 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD89713C8EC
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 21:48:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C82A12E1FF
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 21:59:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717451334; cv=none; b=Xhtl0ihHDTM7JFKcctUcAs+1bZaJTFOtIChdyX6Gm1KxyKIZ8KkxrvIC5G76rl3oJeG6Np8KRepl/wEDTI8J2Zay8AN6W4e66yN+KeTR1evBtRdtcN97W8TaS6mGDueLbV8vgIET5S6bduBJGPM+A4G2+3ocysSj8fbSqDEpCKY=
+	t=1717451988; cv=none; b=koZm8dWv0CzJVwIeph2x8+ge/CtltRYx/2jsrD8aQK2AL/ILVVpYIHNO0xtGAXAyOFa3HDlLy84wBJ1sZJjcOEZTQh3Xt0id4Nmoq7SUZoWwkV0gGgKQnfAOvkVL6tevlNYqk22AeP66nt0G5FA0lsxuUjUuOOaKuRvvbQH1CaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717451334; c=relaxed/simple;
-	bh=/lNUK2zgkveahsJISM69jJC37EFLZgG5PofU3Hy0WtU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gmQCDDNDecfZFkCH8ztEhuOKvy/WO58L9jZJS+bEx8pExlRLKD+MJnrOp3rvzS9tmLTyHS1M3ViaLXrN+1srtZoPUfjHrDMFIaByuZzIQVfe82kjDWloqDqbLPAZr/95Gn1WhYeccAb4X/zCk5F+c8D6r93MLwE2tatSUYcHCSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZRkm1rx6; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZRkm1rx6"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2769C35895;
-	Mon,  3 Jun 2024 17:48:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=/lNUK2zgkveahsJISM69jJC37EFLZgG5PofU3H
-	y0WtU=; b=ZRkm1rx62BZQCi2QiraEUVMjX5FfvkkgwS9NoSzIkwzBvTsniEByNg
-	p7TnM/Nv0C5qEKKeY5nDYgKoSOu5VPA5cP6jG/eqOitYT3l9u0L+aIhCf4gAttM7
-	XjwNiFh2ZqUafHCg0BjguyZ7W3ILLHGm8/Aqqz6aQUxssf9Tl6cMo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 201F835894;
-	Mon,  3 Jun 2024 17:48:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 397A135893;
-	Mon,  3 Jun 2024 17:48:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/3] ls-remote: introduce --branches and deprecate --heads
-In-Reply-To: <CAPig+cQGtgaz3czkg+Faj+CL_-TD0BdbEc1hg6eJuq_yZmvg9w@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 3 Jun 2024 17:42:25 -0400")
-References: <xmqq8qzl3mhg.fsf@gitster.g>
-	<20240603200539.1473345-1-gitster@pobox.com>
-	<20240603200539.1473345-3-gitster@pobox.com>
-	<aa9ff9a4-d504-45c7-8b4e-9744bf0b93aa@gmail.com>
-	<CAPig+cQGtgaz3czkg+Faj+CL_-TD0BdbEc1hg6eJuq_yZmvg9w@mail.gmail.com>
-Date: Mon, 03 Jun 2024 14:48:47 -0700
-Message-ID: <xmqqzfs11yv4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1717451988; c=relaxed/simple;
+	bh=fo6NTlVhtUZ1IQ0G1v0ypDu1t4hCpOPYFdM26RON+Co=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EHBn2G7YKr4C1hloPY7qsbaTaAu6QAElBn1wBU5EG3gOgEy5jQvQJCIbZsq3vmhBvvFzBmcO9rjMvTWjkkSF4rHtr94BNQRZ0C5DPcX/ol/sUgEmNRu39yr/i7xsRB6hJli8C1lrSJ1M1e7HTafIBb9HfNj5EOcbaj1WABKj2pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6ae60725ea1so2589466d6.2
+        for <git@vger.kernel.org>; Mon, 03 Jun 2024 14:59:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717451985; x=1718056785;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oWyjelETxjsME5ladIACsIu0q2DCntUUHBvHQSJR9JI=;
+        b=MT/0XRQyja1iHWyYc9FyLulEXCR6xYrqOK8Fvqk4n4xkxDYzr8k0wxt6ztYETyuGl4
+         HSzEdkBNzMDh0j5Zd+6TEgORfASRqeRtdhjPlqlKq5qrsq4kLVeoQ8tSswpbTDDvnIri
+         oYAo9lyP0Zb8b4PxQGAEUDjjx2FpmAbqR20TbNlRO5RynO2nhUURiraS5JzfOaV5A6po
+         /XomXFJRQoR313BpK6SI0cf9pobj7VWYx2tFKYaLO8NVFL8uA6zqPoWcLQEGkA5enNnv
+         RqoEQnXV1TfJv+I2Lk+/HErCNJvk9VSgiebZGJ6o2FpDAK22Zup81WubwcdX2d/H0IRH
+         5YUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW3bOO8DR2xJJXb72pCi+KBGbxl+RtyKIcU/VUf1q09BKgqX++Z3peKXEUiGXXDdPLmpw8O4Waq5b99Tn7JUxmXU0v7
+X-Gm-Message-State: AOJu0Yw8DBCBvTiF7iwvPAvD+i39ZoRgBaj8ch4amEtyvmFPPmOpGN21
+	Aio0Oig7VqthbAodRFLWnQvFI83nr3RYt33oN2Mwgrzkoed2DghTEIHbfU1+fpI3YZiDouJX+7x
+	nNzjo9rr5bH1pQ80RJYyJsVsCzwc=
+X-Google-Smtp-Source: AGHT+IEy5gG6MYqDUNlOou68X/sZyNYaoWI9Cp4KCPnvek6sWCY3Kg9rihDwNM1CnjkqgF4+LBQDCkaCElIwVpo58Dk=
+X-Received: by 2002:a05:6214:2e08:b0:6ae:d327:bd8b with SMTP id
+ 6a1803df08f44-6aed327bdbamr97691366d6.26.1717451985087; Mon, 03 Jun 2024
+ 14:59:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 0F7E9900-21F3-11EF-967A-8F8B087618E4-77302942!pb-smtp21.pobox.com
+References: <CADg0FA_9shzJKN=dBfnavu5eTDNhbz=g0WP2sehAjSqHP4WFkA@mail.gmail.com>
+ <CAPig+cT1pTkKd1A0o_qjP+Oyx+zyCevV8EAg5Ub9guAyd3UjgA@mail.gmail.com> <e0ea930f-3d43-49de-b2e7-c057d95fd7cc@gmail.com>
+In-Reply-To: <e0ea930f-3d43-49de-b2e7-c057d95fd7cc@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 3 Jun 2024 17:59:34 -0400
+Message-ID: <CAPig+cSzY1YO6KByb3fG0P1jWHbEu_a3s_7QBieDoD6un-MJXQ@mail.gmail.com>
+Subject: Re: [bug report] git diff --relative not doing well with worktree in hooks
+To: phillip.wood@dunelm.org.uk
+Cc: Antoine Bolvy <antoine.bolvy@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Mon, Jun 3, 2024 at 5:30=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.=
+com> wrote:
+> On 31/05/2024 22:42, Eric Sunshine wrote:
+> > I'm not sure there's a satisfactory resolution here. Your hook is
+> > running afoul of the environment variables Git sets up when the hook
+> > is run outside of the "main" worktree.
+> > [...]
+> > The relevant portion from the "githooks" manual page is:
+> >
+> >      Environment variables, such as GIT_DIR, GIT_WORK_TREE, etc., are
+> >      exported so that Git commands run by the hook can correctly locate
+> >      the repository. If your hook needs to invoke Git commands in a
+> >      foreign repository or in a different working tree of the same
+> >      repository, then it should clear these environment variables so
+> >      they do not interfere with Git operations at the foreign
+> >      location. For example:
+>
+> Maybe I'm missing something but in Antonine's example the hook is being
+> run in the same worktree as the "git commit" - we're changing into a
+> subdirectory of the worktree, not changing to a different worktree so
+> why doesn't it work?
 
-> Unless there is a concrete plan to free up --heads to mean something
-> else in the future, I wonder why we need to warn about this at all,
+It's been a while since I looked at the code, but my recollection is
+that the hook-running machinery unconditionally sets the environment
+variables whenever the directory in which the hook is being run is not
+the "main" worktree. This is the case whether his hook runs at the
+root of the worktree or in a subdirectory.
 
-There is no plan to repurpose "--heads", but this is primarily to
-make sure "-h" cannot mean anything but "please give me a short
-help".
-
+It's quite possible that this behavior is entirely accidental since
+the hook-running machinery existed long before multiple-worktree
+support was added, and it may be that the hook-running machinery
+simply wasn't revisited when worktree support was implemented. So,
+perhaps a "satisfactory resolution" is to "fix" the hook-running
+machinery itself to avoid setting those environment variables
+unnecessarily.
