@@ -1,280 +1,147 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB04046A4
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 20:05:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADFD429408
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 20:19:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717445155; cv=none; b=pJu06Ep3YMagbx0AqnY+A226qY7hj540npHhxzL43p6jCBsgB0IYrPOLaBKDwOZ+oBAAu3tl3mXS2XQMBwUWnqsxLLMca4iCqJ4yxMFe9sA6AQl/2Ch7fytkWyqj+pBuZ9aZHsxFhKALAE4KX9GOa5Ijbe4jzKNI/BRyEi0yGVc=
+	t=1717445979; cv=none; b=tpS2p6Us7e9Is41wmU5sZhRAga3IUgcHen97CoJr3cQQNluEFXmjWpC1mIKx/CRu9zeJCGR+//eCIgZyC2RHjNgFxByXic81hdec4WBlPJTeZ+9pafvtPpxpAn0YdDvWGtBOb1E2l7eV3eDTNvjFHWYedFSWq6ABUQ2BolSh6Zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717445155; c=relaxed/simple;
-	bh=2xevrHjH0j22k/oNehdSoCNXHI5b4rfl9dDnukFJcDc=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmqxe+gkcdQTLFOXjvliCiWLgtCGvFYPjh9K2cP9/ny3id/yWCOSmzAEUWXKaB6CcmE6BKdeQwv8R57dUds/wBbZUHsRkKBTJaLyqV3klhl3w5jQh31vQMRD88G0eYnXHIQ/k+vt3LWkdFyUa1rJK5MOALve+MkpUoGbkCeynk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dMtLg2+2; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1717445979; c=relaxed/simple;
+	bh=xlXhi9xPHW/qs65wwvjo6Rv3s034B5OfB6qN57McknY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pbDktJyvs3EQjkmfYpLSGke7zWUe4dbk33CbRswL2nSw67HYpdK7mAsxmq4sWKmKenC0q2uGuWH3+7Qprit2vw6wmpsbZb/dxt6B+m08mGbfYAIN1vJsz+/QeQDWyT5yJLMzgIIEQIihtgqI660/Ak5ZoQp3nSRZ0s9OxvB6kcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l4zY1TAF; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dMtLg2+2"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2EC142AA00;
-	Mon,  3 Jun 2024 16:05:53 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=2xevrHjH0j22k/oNehdSoCNXH
-	I5b4rfl9dDnukFJcDc=; b=dMtLg2+2zjyYrj+B0D7urAnoKrEe4cNhgteWYHCcJ
-	JOajQPj0DKvXBXp5DufC6yCjubA5nsFvn3PRMiNwh5K8Y56XVyw88fa31GdsgwYH
-	c38aCFbA9ljEhRjRmwBtQ23PgizpLZ5Md7alWV1wHXvENnO/2Xv4mQLkVln8lQhC
-	/0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 264A52A9FF;
-	Mon,  3 Jun 2024 16:05:53 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C041D2A9FE;
-	Mon,  3 Jun 2024 16:05:48 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH 3/3] show-ref: introduce --branches and deprecate --heads
-Date: Mon,  3 Jun 2024 13:05:39 -0700
-Message-ID: <20240603200539.1473345-4-gitster@pobox.com>
-X-Mailer: git-send-email 2.45.2-404-g9eaef5822c
-In-Reply-To: <20240603200539.1473345-1-gitster@pobox.com>
-References: <xmqq8qzl3mhg.fsf@gitster.g>
- <20240603200539.1473345-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l4zY1TAF"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4213373568dso27416335e9.0
+        for <git@vger.kernel.org>; Mon, 03 Jun 2024 13:19:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717445976; x=1718050776; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DU5s5Hjae7xbbotLB0J8Pg85RroZYYC97XHnf5jtl48=;
+        b=l4zY1TAFjX0OHGrQ4imYJEvjYJiPD2I11nGdZUnJScYx6mLb9D0kVVKCb3e1qwG80a
+         HIn8HDULqlIkTp3j4gBnpaRgTpipuen4n/HTF69cE3fC1nv7j4OFqMC0HLp7VS3wqZYd
+         mcBaDz9qk9WslaL4WcJnJJ7Q9UvDzt69byXRVG0bssrVeJIbqGd5BYdeQZQZSfQvuMQP
+         pq7PSkDV4giDXptgevm4hcxmePhEi0Xp2fNSdUUNIqj6/77rw4zNalL3ep0RDNEANcpC
+         ewcb4a3gNsH08FXFOMggG9uEh7OO5DDVPOFzJ+S4geNvUM2kSoZEIqRjoWk2qR/eMWFJ
+         LjPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717445976; x=1718050776;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DU5s5Hjae7xbbotLB0J8Pg85RroZYYC97XHnf5jtl48=;
+        b=pWuPjJK27VHt3B5fUIsAjEjoVppRn2vQWKokERfk7kzOIAlSelN4y4Gpt/txONxnCf
+         myDstcmsoG0Z9srItxEMa8co6aCOug57bx7lFdMKsLGbx9ttRUnO5RAyK3uswGkepWhr
+         LRft0yRShC6YF2NAGCNYsWhzP8pvg/+vWUhMZPeNq1QIjQ5BAlX9pC3buNYOxxIvfmKH
+         PvewW+XOdFP9puXC8kiaUxWzvlmCX61acxflnKjz6Vah0m9/6rB8nzkA92oW7SRFalsx
+         KOuCXhdeGxdFCIi/v4/bg3hIf1SdZbjhun8celD4iv5yRw6HU6YUKwVnpBCNb12TN8VU
+         s5Wg==
+X-Gm-Message-State: AOJu0Yy5KNbnGMZZ7SVqBLLsjnyQmr10YqaCJfsfcKZKKZccoX6+iKyb
+	RZUW1N4k2pLF9GffLz3DDRCR+brbKiJjnrKCouOYH48Mxm96C8I2
+X-Google-Smtp-Source: AGHT+IHhz25nBNQ5jiX2O7+bb7qo5fC7rmTsjXLy7C+rZvwTuoGWJbNWDWiSvsQB+1gikVqRgQh7eg==
+X-Received: by 2002:a05:600c:3595:b0:41f:fca0:8c09 with SMTP id 5b1f17b1804b1-4212e0bddf6mr73236565e9.40.1717445975766;
+        Mon, 03 Jun 2024 13:19:35 -0700 (PDT)
+Received: from gmail.com (20.red-88-14-43.dynamicip.rima-tde.net. [88.14.43.20])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4214a4abdd5sm1330195e9.0.2024.06.03.13.19.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Jun 2024 13:19:35 -0700 (PDT)
+Message-ID: <9d05b41f-c120-4db0-9ee5-e24d20389129@gmail.com>
+Date: Mon, 3 Jun 2024 22:19:34 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Pobox-Relay-ID:
- ABA96382-21E4-11EF-B4DA-ACC938F0AE34-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+ Jeff King <peff@peff.net>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+ <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+ <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
+ <81d52b31ce4c287765a43d87d94f526b@manjaro.org>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <81d52b31ce4c287765a43d87d94f526b@manjaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-We call the tips of branches "heads", but this command calls the
-option to show only branches "--heads", which confuses the branches
-themselves and the tips of branches.
+On Sun, Jun 02, 2024 at 07:36:37PM +0200, Dragan Simic wrote:
 
-Straighten the terminology by introducing "--branches" option that
-limits the output to branches, and deprecate "--heads" option used
-that way.
+> The way I see it, using "| <program>" should follow the de facto rules
+> already established by the "--color=auto" command-line option in multiple
+> utilities.  Thus, when piping to a custom program, the escape codes that
+> perform the coloring should be stripped.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-show-ref.txt | 18 ++++++++++--------
- builtin/show-ref.c             | 33 ++++++++++++++++++++++++++-------
- t/t1403-show-ref.sh            | 22 ++++++++++++++--------
- 3 files changed, 50 insertions(+), 23 deletions(-)
+Interesting.  However, I'd like to find a way to keep the escape codes
+when using programs like: '|head';  perhaps with the '>' command,
+suggested by Junio.
 
-diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.=
-txt
-index ba75747005..616d919655 100644
---- a/Documentation/git-show-ref.txt
-+++ b/Documentation/git-show-ref.txt
-@@ -9,8 +9,8 @@ SYNOPSIS
- --------
- [verse]
- 'git show-ref' [--head] [-d | --dereference]
--	     [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]] [--tags]
--	     [--heads] [--] [<pattern>...]
-+	     [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]] [--branches] [--tags]
-+	     [--] [<pattern>...]
- 'git show-ref' --verify [-q | --quiet] [-d | --dereference]
- 	     [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]]
- 	     [--] [<ref>...]
-@@ -45,12 +45,14 @@ OPTIONS
-=20
- 	Show the HEAD reference, even if it would normally be filtered out.
-=20
----heads::
-+--branches::
- --tags::
-=20
--	Limit to "refs/heads" and "refs/tags", respectively.  These options
-+	Limit to local branches and local tags, respectively.  These options
- 	are not mutually exclusive; when given both, references stored in
--	"refs/heads" and "refs/tags" are displayed.
-+	"refs/heads" and "refs/tags" are displayed.  Note that `--heads`
-+	is a deprecated synonym for `--branches` and may be removed
-+	in the future.
-=20
- -d::
- --dereference::
-@@ -139,7 +141,7 @@ When using `--hash` (and not `--dereference`), the ou=
-tput is in the format:
- For example,
-=20
- ------------------------------------------------------------------------=
------
--$ git show-ref --heads --hash
-+$ git show-ref --branches --hash
- 2e3ba0114a1f52b47df29743d6915d056be13278
- 185008ae97960c8d551adcd9e23565194651b5d1
- 03adf42c988195b50e1a1935ba5fcbc39b2b029b
-@@ -183,8 +185,8 @@ to check whether a particular branch exists or not (n=
-otice how we don't
- actually want to show any results, and we want to use the full refname f=
-or it
- in order to not trigger the problem with ambiguous partial matches).
-=20
--To show only tags, or only proper branch heads, use `--tags` and/or `--h=
-eads`
--respectively (using both means that it shows tags and heads, but not oth=
-er
-+To show only tags, or only proper branch heads, use `--tags` and/or `--b=
-ranches`
-+respectively (using both means that it shows tags and branches, but not =
-other
- random references under the refs/ subdirectory).
-=20
- To do automatic tag object dereferencing, use the `-d` or `--dereference=
-`
-diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 1c15421e60..6b69daeb66 100644
---- a/builtin/show-ref.c
-+++ b/builtin/show-ref.c
-@@ -11,8 +11,8 @@
-=20
- static const char * const show_ref_usage[] =3D {
- 	N_("git show-ref [--head] [-d | --dereference]\n"
--	   "             [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]] [--tags]\n"
--	   "             [--heads] [--] [<pattern>...]"),
-+	   "             [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]] [--branches] =
-[--tags]\n"
-+	   "             [--] [<pattern>...]"),
- 	N_("git show-ref --verify [-q | --quiet] [-d | --dereference]\n"
- 	   "             [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]]\n"
- 	   "             [--] [<ref>...]"),
-@@ -188,7 +188,7 @@ static int cmd_show_ref__verify(const struct show_one=
-_options *show_one_opts,
-=20
- struct patterns_options {
- 	int show_head;
--	int heads_only;
-+	int branches_only;
- 	int tags_only;
- };
-=20
-@@ -206,8 +206,8 @@ static int cmd_show_ref__patterns(const struct patter=
-ns_options *opts,
-=20
- 	if (opts->show_head)
- 		head_ref(show_ref, &show_ref_data);
--	if (opts->heads_only || opts->tags_only) {
--		if (opts->heads_only)
-+	if (opts->branches_only || opts->tags_only) {
-+		if (opts->branches_only)
- 			for_each_fullref_in("refs/heads/", show_ref, &show_ref_data);
- 		if (opts->tags_only)
- 			for_each_fullref_in("refs/tags/", show_ref, &show_ref_data);
-@@ -279,6 +279,20 @@ static int exclude_existing_callback(const struct op=
-tion *opt, const char *arg,
- 	return 0;
- }
-=20
-+static int heads_callback(const struct option *opt, const char *arg, int=
- unset)
-+{
-+	int *branches_only =3D opt->value;
-+
-+	if (unset) {
-+		warning(_("'--no-heads' is deprecated; use '--no-branches' instead"));
-+		*branches_only =3D 0;
-+	} else {
-+		warning(_("'--heads' is deprecated; use '--branches' instead"));
-+		*branches_only =3D 1;
-+	}
-+	return 0;
-+}
-+
- int cmd_show_ref(int argc, const char **argv, const char *prefix)
- {
- 	struct exclude_existing_options exclude_existing_opts =3D {0};
-@@ -286,8 +300,13 @@ int cmd_show_ref(int argc, const char **argv, const =
-char *prefix)
- 	struct show_one_options show_one_opts =3D {0};
- 	int verify =3D 0, exists =3D 0;
- 	const struct option show_ref_options[] =3D {
--		OPT_BOOL(0, "tags", &patterns_opts.tags_only, N_("only show tags (can =
-be combined with heads)")),
--		OPT_BOOL(0, "heads", &patterns_opts.heads_only, N_("only show heads (c=
-an be combined with tags)")),
-+		OPT_BOOL(0, "tags", &patterns_opts.tags_only, N_("only show tags (can =
-be combined with branches)")),
-+		OPT_BOOL(0, "branches", &patterns_opts.branches_only, N_("only show br=
-anches (can be combined with tags)")),
-+		OPT_CALLBACK_F(0, "heads", &patterns_opts.branches_only,
-+			       NULL,
-+			       N_("deprecated synonym for --branches)"),
-+			       PARSE_OPT_NOARG|PARSE_OPT_HIDDEN,
-+			       &heads_callback),
- 		OPT_BOOL(0, "exists", &exists, N_("check for reference existence witho=
-ut resolving")),
- 		OPT_BOOL(0, "verify", &verify, N_("stricter reference checking, "
- 			    "requires exact ref path")),
-diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
-index 33fb7a38ff..b72ed70435 100755
---- a/t/t1403-show-ref.sh
-+++ b/t/t1403-show-ref.sh
-@@ -121,13 +121,13 @@ test_expect_success 'show-ref -d' '
-=20
- '
-=20
--test_expect_success 'show-ref --heads, --tags, --head, pattern' '
-+test_expect_success 'show-ref --branches, --tags, --head, pattern' '
- 	for branch in B main side
- 	do
- 		echo $(git rev-parse refs/heads/$branch) refs/heads/$branch || return =
-1
--	done >expect.heads &&
--	git show-ref --heads >actual &&
--	test_cmp expect.heads actual &&
-+	done >expect.branches &&
-+	git show-ref --branches >actual &&
-+	test_cmp expect.branches actual &&
-=20
- 	for tag in A B C
- 	do
-@@ -136,15 +136,15 @@ test_expect_success 'show-ref --heads, --tags, --he=
-ad, pattern' '
- 	git show-ref --tags >actual &&
- 	test_cmp expect.tags actual &&
-=20
--	cat expect.heads expect.tags >expect &&
--	git show-ref --heads --tags >actual &&
-+	cat expect.branches expect.tags >expect &&
-+	git show-ref --branches --tags >actual &&
- 	test_cmp expect actual &&
-=20
- 	{
- 		echo $(git rev-parse HEAD) HEAD &&
--		cat expect.heads expect.tags
-+		cat expect.branches expect.tags
- 	} >expect &&
--	git show-ref --heads --tags --head >actual &&
-+	git show-ref --branches --tags --head >actual &&
- 	test_cmp expect actual &&
-=20
- 	{
-@@ -165,6 +165,12 @@ test_expect_success 'show-ref --heads, --tags, --hea=
-d, pattern' '
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'show-ref --heads is deprecated' '
-+	git show-ref --heads >actual 2>warning &&
-+	test_grep deprecated warning &&
-+	test_cmp expect.branches actual
-+'
-+
- test_expect_success 'show-ref --verify HEAD' '
- 	echo $(git rev-parse HEAD) HEAD >expect &&
- 	git show-ref --verify HEAD >actual &&
---=20
-2.45.2-404-g9eaef5822c
+At any rate, I feel we can leave that, perhaps corner-case scenario, for
+a future series.  As this series is mainly about the 'pager' machinery.
 
+> 
+> > This, a new 'interactive.pipeCommand' setting, or a new switch: 'add
+> > -P',
+> > are left for discussing in, hopefully, a future series.
+> > 
+> > One final note;  I preferred to model the help text this way:
+> > 
+> >     y - stage this hunk
+> >     n - do not stage this hunk
+> >     q - quit; do not stage this hunk or any of the remaining ones
+> >     a - stage this hunk and all later hunks in the file
+> >     d - do not stage this hunk or any of the later hunks in the file
+> >     j - leave this hunk undecided, see next undecided hunk
+> >     J - leave this hunk undecided, see next hunk
+> >     g - select a hunk to go to
+> >     / - search for a hunk matching the given regex
+> >     s - split the current hunk into smaller hunks
+> >     e - manually edit the current hunk
+> >     p - print the current hunk
+> >     | - pipe the current hunk to the pager, or |<program> to use a
+> > program'
+> >     ? - print help
+> 
+> I also like this form better, but I think wording could be improved.
+> I'll think a bit more about it, maybe something like this:
+> 
+>       | - use pager to show the current hunk, or use |<program> to customize
+
+Certainly!  It is indeed a sensible idea to improve the wording, avoiding
+the word "pipe" :-).  Thank you.
+
+> 
+> Also, what's the single quote doing after "use a program"?
+
+Just a typo.  Sorry.
+
+> 
+> > Instead of:
+> > 
+> >     y - stage this hunk
+> >     n - do not stage this hunk
+> >     q - quit; do not stage this hunk or any of the remaining ones
+> >     a - stage this hunk and all later hunks in the file
+> >     d - do not stage this hunk or any of the later hunks in the file
+> >     j - leave this hunk undecided, see next undecided hunk
+> >     J - leave this hunk undecided, see next hunk
+> >     g - select a hunk to go to
+> >     / - search for a hunk matching the given regex
+> >     s - split the current hunk into smaller hunks
+> >     e - manually edit the current hunk
+> >     p - print the current hunk
+> >     |[program] - pipe the current hunk to a program, the pager if
+> > none...
+> >     ? - print help
+> > 
+> > Because I believe it reads better by maintaining a single character
+> > before the dash.  But I am not opposed to the latter.
