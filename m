@@ -1,77 +1,77 @@
 Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACC883CDF
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECF585627
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717408022; cv=none; b=efqpZ/biIw6VmYKRa3hjtJ7gL3U66YoWOLb0+0d7H2PEpZohvZQLXnHX0vPi6QR2NDVrTDua3FZ8Yy9UzrXzFeS/Y71WO7o1Dq90B8lS+Tk6GcTidntW6Z1NMVPJ7Al+YWhiwpgh8TgCEng7Engb/1vR3J/OVO5ZUZUE44KgiDQ=
+	t=1717408027; cv=none; b=Mq/CMKm77xGpjAJ8PQ87T1wVnaIiJWqqSjc1o+SdRZT1LdaveRxf/iyTqU6OaXiai7+gpW4OtZvVnhnLM6VasyKR/x4FgW2eG4F5i6qxYFJZO9oHycL5nKEzZ86jVb9DHo5YLzp+ipJrXgPTqPJAkw9CUdtUHpXFJwgHWTcjdGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717408022; c=relaxed/simple;
-	bh=Q8NoaU7heMKLgZTykLqPxf1odm/eY90bKs9iquFdG6Q=;
+	s=arc-20240116; t=1717408027; c=relaxed/simple;
+	bh=OD0FPgdsDZ7iZimdSELKs/7Jj8YDEwxIhuiIWIPE/D0=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tUHAGgc905dXimgqGq2wZo3U7N6gvjR1f+ouyqByMqIWf9eFzwQfrLFa9T6ptKzatrw/rM7Ya0Q5ArxyPHpJ3b6oinFJagVu61F4vzX04ggqFQQYKUrRL2yXJ9xvdNPPtnNxPdbIEfiHiwyGpLPaJERDahMRgc8UMSXAdSo9cuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hsFB2VhL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mBATQTuo; arc=none smtp.client-ip=64.147.123.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=DBtMYNMr1IEKQrQFtD9+1yyNpuf+Yg/aoHKf9fX+VJ42+SLjriYlH2cykn7cegTLa9Hk9ifkKUyfjHkypji6SV/Pjf+khfrMXXONNDW3SL2kDQ0MlAwTjCYIFwSgTyE8NAoxuLggibsNorRZM8y8Ftp1Bt9gy41BrF7GH/qGykY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F62s2mVi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bt29kAtN; arc=none smtp.client-ip=64.147.123.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hsFB2VhL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mBATQTuo"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 9FCF81800076
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 05:47:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F62s2mVi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bt29kAtN"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 2D9771800099
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 05:47:05 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 03 Jun 2024 05:47:00 -0400
+  by compute6.internal (MEProxy); Mon, 03 Jun 2024 05:47:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717408020; x=1717494420; bh=hV4zXY7OrV
-	EgJVIYIo+q8Ge5bkJL56hmM5o+uRCL2H4=; b=hsFB2VhLMlpE6kC7Ec/FhTWKyO
-	QsWDnkkQQoElmIv4xEu/uNUIER13/eIZYhddhqWk0ajs5lJ3aTlJCdT4yRqjRZeb
-	kFZNFXFl/m+z7tYBNnkW7iYbLIOyfwV57M1din3lEF43gEG78uWA4LN4FZCTrxHa
-	KxbztBRQXDnt2tDNpMir8Z/tgXAXtOC7HXY2yAHdGFfxEyH0fpk0439PneOgamlK
-	9yjLuY21jx2R415V8/6tc1fhpGramTvUFnHL9pRFtxIdAtMuxxo2w0hqMwifvgXc
-	CIb8h7b0lFY3i26OPBQReTl5iCNxALbnVxOeNNq3T+RirATWK37mbRQEcG5w==
+	:subject:to:to; s=fm1; t=1717408024; x=1717494424; bh=iE7d7C5POo
+	pTDGuejXmACHRwwhrZikZpyNP9exvYWCk=; b=F62s2mViIxutdNhJD4ZzRXEwQQ
+	wqCcsXWXJLs053OLEUHfr7uQMSOHhFwkMJ3MmhKfV+fcBnVv3exExxUY5Fdm1Vmv
+	W8awHy1CoPPuBC8h8LTb6ruZjt3xOx6+AcDtzIQ3sZuFn4QGinNaH2n8AvMNfnme
+	sMwgDkYJ1XeJlw+rriRdOWXtjqHHQaFaEocjy+SRo6spM2luZeRLBN4zLMxg27W4
+	I49AEGIiad2aJJ2ZwoC0mL5SU6Oq6WXPDjCEsHH4EITyaADMqvlAnvQxddw4PFBb
+	gXl15Id1kBDCV5/5OCX8Cpr8V3yyHHDGdNbi3pp8eell36IZmZ9qiNPZ5qFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717408020; x=1717494420; bh=hV4zXY7OrVEgJVIYIo+q8Ge5bkJL
-	56hmM5o+uRCL2H4=; b=mBATQTuo5g9udUaXLp9l482WPO87Q3ktEl38Bk65hk2p
-	/ZWW516Y6K7VyBLDEHCUa50cBb6/EJaTvqMOhR18SdSJG9oeCHOMLLgiREg1+ojJ
-	jr1di5JJ4m3+4FLQqC72q7oFl+Apanz9RlGiQP0xuuiXSr8D2A1wEG7cUX7IKCA0
-	3718SU1BYue3yTaddNddeo9RIq42LduySwIcESquI46Bl5ZTjdNaE4wsit6DgmEQ
-	2k1C9gRyymwrC+qx2cbCaSpSCIxjLKcnwBu/kGIFlnnBuB+BhlN6aQRkuUOqQLQn
-	ab6d/VQc+EpRnAxr8Xu1/ZfklsjT0lmIavICONqBig==
-X-ME-Sender: <xms:FJFdZquJLA0qQMxfOzi2TCDoH-l84u-LQZ6BSMgOAivbcabEIQIGWQ>
-    <xme:FJFdZvdbQBuNd_bbw8hQMsw_plm2yGhET598ioLnqjQFwbEsW83UZhFokvFLVBcTB
-    HhQ8LeOdvk8lCujGw>
-X-ME-Received: <xmr:FJFdZlxqG17Jyh3iERhkoIAJJ6OR9T1m0j-4teKXlMvqrNH-sYz5LJMlmf3BP7pD4LXYub4U1Cho2MtDiVLkOimrEIkh8QaAmiosQsFKKEoJrkvA>
+	fm1; t=1717408024; x=1717494424; bh=iE7d7C5POopTDGuejXmACHRwwhrZ
+	ikZpyNP9exvYWCk=; b=bt29kAtNXoxsasyPOkYRZQ8K3+Z6kGHBhbcSivi5BgLA
+	zeXh/UQXy/91IuiAcy5J43J5zQFMKteR/i1QpJsg/5DR8V8KkR+SyqqtD2f/TI1K
+	69rqd9YR+yN6jxmrslTcLmVWsCLaY5YbAu7fhc4UWNeyrRlS4FMCsO4oYBqzd4yH
+	NeKlFRoz0ebmNugZZkI6AASgM3RhAsQLwhddr7obPQJLGKVPKZEQWHWU90+ytXUq
+	Qj2CqZbjbi/8qrUHZIMELEMX2V5MGiS7Q+EsksQKRYuB8vbJfFjQkQyWzunqThN7
+	GaQb2C99Bo9tRoxD+wvSZQAOJoj75cxeM3xGHxHLVw==
+X-ME-Sender: <xms:GJFdZifIn_Z2IszAyz1-UdzzYLhZWw00CwJ4QzRJcdGt-sDfDeQhOw>
+    <xme:GJFdZsNexS3vLqbvxJ8Vu8qC8TSZUhIklVwCkmkcLpHwtLx5KUDvTUhQEzERUlcqg
+    juIpEakV-9C6PLOxg>
+X-ME-Received: <xmr:GJFdZjjjUD0MHCkcNXgGJHHNc6-jeMKyx_vlZCjIUZ7w4V3YloPak27FoflZFz9cB61FCz6LpmFUYijh5gqDdUNVa6jAJbnTcH6MXoCkz24kMQfj>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelvddgvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:FJFdZlNd7sw0QdeP7Z-NmcQgRnylAeDlnnR3DE0IALpYIMYNJlZ-UA>
-    <xmx:FJFdZq8SHqhbYmPvV1NHcEzabWpWYj4gLf2Sit4qIBK4tCI2AKX0Zg>
-    <xmx:FJFdZtXK0RXhTmRgZIL-6HXeEI-Hol7WwBX-2oZIEeaCgz4y7Qt7cw>
-    <xmx:FJFdZjdMiOu48ZIM96qZNP652HYgVDqKBY1UCqcub0akN4Mf7TWk3A>
-    <xmx:FJFdZgmgBpxC6DwHwY_AAmfmi6YlB6OLgh3JnVABQnISBbm4OHsxraFL>
+X-ME-Proxy: <xmx:GJFdZv96GBQJt-QWewq2iJM5R64dQ-CS8JY2LJJe759LwwvL38_h9g>
+    <xmx:GJFdZus8RU69MRIADeC9dEvd52Q401UIJn3Lj3XubMS9JcLYmYyhaA>
+    <xmx:GJFdZmGuwPsVOKeNX2NNamaCeBYSbzEG11PEWrX6xhgH9Nb6z0bXbg>
+    <xmx:GJFdZtP2vp9kREYSW2mrvycitekixQooprq4idGuBWtveqx7yQridQ>
+    <xmx:GJFdZjVHvg5r46x7S9rbQoB02stppoMVKtqq69QZp_FLwTHfZIUZxcVE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 3 Jun 2024 05:46:59 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 3 Jun 2024 05:47:04 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 6fc46beb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 31c8a8a9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 3 Jun 2024 09:46:35 +0000 (UTC)
-Date: Mon, 3 Jun 2024 11:46:57 +0200
+	Mon, 3 Jun 2024 09:46:40 +0000 (UTC)
+Date: Mon, 3 Jun 2024 11:47:02 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 07/29] revision: fix leaking display notes
-Message-ID: <8c55370b8efe0d83946af5ad007c60c902974c72.1717402439.git.ps@pks.im>
+Subject: [PATCH 08/29] notes: fix memory leak when pruning notes
+Message-ID: <17671dc9cfbf51e091575241565fb1460a498a7b.1717402439.git.ps@pks.im>
 References: <cover.1717402439.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,143 +80,83 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AO1lidYNUmQiEJpD"
+	protocol="application/pgp-signature"; boundary="lPEdPRWw6GjseDa3"
 Content-Disposition: inline
 In-Reply-To: <cover.1717402439.git.ps@pks.im>
 
 
---AO1lidYNUmQiEJpD
+--lPEdPRWw6GjseDa3
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We never free the display notes options embedded into `struct revision`.
-Implement a new function `release_display_notes()` that we can call in
-`release_revisions()` to fix this.
-
-There is another gotcha here though: we play some games with the string
-list used to track extra notes refs, where we sometimes set the bit that
-indicates that strings should be strdup'd and sometimes unset it. This
-dance is done to avoid a copy of an already-allocated string when we
-call `enable_ref_display_notes()`. But this dance is rather pointless as
-we can instead call `string_list_append_nodup()` to transfer ownership
-of the allocated string to the list.
-
-Refactor the code to do so and drop the `strdup_strings` dance.
+In `prune_notes()` we first store the notes that are to be deleted in a
+local list, and then iterate through that list to delete those notes one
+by one. We never free the list though and thus leak its memory. Fix
+this.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- notes.c          | 14 ++++++++------
- notes.h          |  5 +++++
- revision.c       |  1 +
- t/t3301-notes.sh |  1 +
- 4 files changed, 15 insertions(+), 6 deletions(-)
+ notes.c                | 7 ++++++-
+ t/t3306-notes-prune.sh | 1 +
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/notes.c b/notes.c
-index 53ca25c814..6a157e34ce 100644
+index 6a157e34ce..244b5c4b1c 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -1060,6 +1060,12 @@ void init_display_notes(struct display_notes_opt *op=
-t)
- {
- 	memset(opt, 0, sizeof(*opt));
- 	opt->use_default_notes =3D -1;
-+	string_list_init_dup(&opt->extra_notes_refs);
-+}
+@@ -1219,11 +1219,16 @@ void prune_notes(struct notes_tree *t, int flags)
+ 	for_each_note(t, 0, prune_notes_helper, &l);
+=20
+ 	while (l) {
++		struct note_delete_list *next;
 +
-+void release_display_notes(struct display_notes_opt *opt)
-+{
-+	string_list_clear(&opt->extra_notes_refs, 0);
- }
-=20
- void enable_default_display_notes(struct display_notes_opt *opt, int *show=
-_notes)
-@@ -1073,19 +1079,15 @@ void enable_ref_display_notes(struct display_notes_=
-opt *opt, int *show_notes,
- 	struct strbuf buf =3D STRBUF_INIT;
- 	strbuf_addstr(&buf, ref);
- 	expand_notes_ref(&buf);
--	string_list_append(&opt->extra_notes_refs,
--			strbuf_detach(&buf, NULL));
-+	string_list_append_nodup(&opt->extra_notes_refs,
-+				 strbuf_detach(&buf, NULL));
- 	*show_notes =3D 1;
- }
-=20
- void disable_display_notes(struct display_notes_opt *opt, int *show_notes)
- {
- 	opt->use_default_notes =3D -1;
--	/* we have been strdup'ing ourselves, so trick
--	 * string_list into free()ing strings */
--	opt->extra_notes_refs.strdup_strings =3D 1;
- 	string_list_clear(&opt->extra_notes_refs, 0);
--	opt->extra_notes_refs.strdup_strings =3D 0;
- 	*show_notes =3D 0;
- }
-=20
-diff --git a/notes.h b/notes.h
-index 064fd7143a..235216944b 100644
---- a/notes.h
-+++ b/notes.h
-@@ -275,6 +275,11 @@ struct display_notes_opt {
-  */
- void init_display_notes(struct display_notes_opt *opt);
-=20
-+/*
-+ * Release resources acquired by the display_notes_opt.
-+ */
-+void release_display_notes(struct display_notes_opt *opt);
+ 		if (flags & NOTES_PRUNE_VERBOSE)
+ 			printf("%s\n", hash_to_hex(l->sha1));
+ 		if (!(flags & NOTES_PRUNE_DRYRUN))
+ 			remove_note(t, l->sha1);
+-		l =3D l->next;
 +
- /*
-  * This family of functions enables or disables the display of notes. In
-  * particular, 'enable_default_display_notes' will display the default not=
-es,
-diff --git a/revision.c b/revision.c
-index af95502d92..75e71bcaea 100644
---- a/revision.c
-+++ b/revision.c
-@@ -3168,6 +3168,7 @@ void release_revisions(struct rev_info *revs)
- {
- 	free_commit_list(revs->commits);
- 	free_commit_list(revs->ancestry_path_bottoms);
-+	release_display_notes(&revs->notes_opt);
- 	object_array_clear(&revs->pending);
- 	object_array_clear(&revs->boundary_commits);
- 	release_revisions_cmdline(&revs->cmdline);
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index cf23c06c09..536bd11ff4 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -5,6 +5,7 @@
++		next =3D l->next;
++		free(l);
++		l =3D next;
+ 	}
+ }
 =20
- test_description=3D'Test commit notes'
+diff --git a/t/t3306-notes-prune.sh b/t/t3306-notes-prune.sh
+index 8f4102ff9e..b6e9f643e3 100755
+--- a/t/t3306-notes-prune.sh
++++ b/t/t3306-notes-prune.sh
+@@ -2,6 +2,7 @@
+=20
+ test_description=3D'Test git notes prune'
 =20
 +TEST_PASSES_SANITIZE_LEAK=3Dtrue
  . ./test-lib.sh
 =20
- write_script fake_editor <<\EOF
+ test_expect_success 'setup: create a few commits with notes' '
 --=20
 2.45.1.410.g58bac47f8e.dirty
 
 
---AO1lidYNUmQiEJpD
+--lPEdPRWw6GjseDa3
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZdkRAACgkQVbJhu7ck
-PpTs6g//UUdzo8IaORHVCFTqIClJAU/G1WbZl1udyXkD2CGl31KR45fVr8vD1Z9Z
-Y0jU4s8+/4j6TJVi1LO1/6EMAtOp+2Wv0/Qw7rBHQFQzhKNdfc+xseSVI+mGFyj6
-V1uxzH6ZtvSf3UJiZ2OpXQwJAxdDxT3hZ/6nTFhv0GvVQACm+BBOf5y9jfc6nahN
-27KBLuvUwkRPu4v1IaK/EIljiqYvbV3zcpH0pi2l3MxIwovYY9i12DyZhT4NSIB6
-6bhH4IVjLdbNK+n+E/z5Cv53e+cX2JMQ1xLDePgL5k7YNx/ZAr1NG01zuGD81MSx
-LBEgQdPI0XxS+QZQuC7PcAlzxWWFBoB7tE8XHz4/WCSvcp02rDiVRjkz/R3/SFAi
-1oE5AnalpqvHuYkGLj6EvFeWbUzHfnRYLf19vR+r+kv0q/U54khiJhJ7cS8Ajflt
-dOajmZkxH6IjcaGJIQ1h4so5OOs7e3gAx1sF4Gm3PrWycNyXaK98Jo3YmmqHNHoG
-gafKxBY3lkhN46enOvZgM+LsW5VlJNxSIGyidxYWeRx2s4+ik2bkSyiAPyRFtZOi
-/o/A0881a4PMd+2lj0eRjHKP+5oOIkOm7GfPQMkQzQ/OC3Z6nnOfbf3EaZc/+0h5
-42M1jThb1jJ9cJKGSROLW8Im2Ud7sm/IMSzh4dNxXmpE2bjh+lk=
-=wipi
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZdkRUACgkQVbJhu7ck
+PpSWbQ//Q6nIiaToJrPXM6Omf+BcOi/o6liAQbJPbqejuZozhNmyzCvNJ4Uy0kXr
+c8evg14LplTT7K3zYcup41IlAQ9z8eCnYIPtJsPFpIn8Ee5e6yp7ZIVSAZQlECXd
+/ld8xV5KRRcNPJZijWFFALVh+Vwaxon8w8AxnrJrvfCEUvTRRxSMDUkK4FsrsFCV
+gbWDMBBi5zx7DdNsBV+Y/adzrOiQAwc8f5CFE0D0YmczW0EZA3BGXLm0RBNVlpa/
+qOmHYTXRi5gqa+mtDn4+Daei6hNW7UTl1adCgzcHX9bLNoRwyHoeASzfVQCmjr6L
+IsezoOu1Fl75k2/HH9LKUHpfSEh7dxQn8KXGLlxmN/gwvF7wqr7mJmaRINMf8oqO
+7x+EtJd1Tr8AaXo2tVahwToEa3Ymz8jKbkLfilzrcniCTpV9ZO0hwnp0ldYGWuDe
+4gwQlxTEZK3MEUswdinjENEkKhEnyY2/gg3tzohfkf6Np1H6mRkSSs5KgzIrfxhl
+XYqEgXm+W8EbArO9lq+47WgCdFKyh/tBXpbdGljPzdZ7ZAJpxbAQ4gxj2qK5ji0K
+PSIlWczYGnTGWu6pwFlgWL4UCbCzNdm748bVY62hn1WTre0DG2SXoCMqoKi76LWs
+HYTqx0f7c3GaGb/2v2Rfj0zmW8lnuBVuzIKOemyllV3fEgA09O4=
+=2768
 -----END PGP SIGNATURE-----
 
---AO1lidYNUmQiEJpD--
+--lPEdPRWw6GjseDa3--
