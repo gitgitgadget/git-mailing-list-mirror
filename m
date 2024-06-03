@@ -1,78 +1,79 @@
-Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
+Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB30184E16
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:39:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC9E80C14
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:39:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717407552; cv=none; b=e3hE0ifi3E70eTPrBAdwgXf3OKHbom9W675M0tn9ELLppfMrXpf4hEc7d5YD9kZBkwobbrwzMchsWGlO8kBlPkUNAf0uAtLufyrKfLdd/h6SOQTv/wX3PhH2u7zY3QcfpOEKJXg5Pqxs1Y7M1IavW1Prae/acdVeZhoL7h3dNW0=
+	t=1717407557; cv=none; b=eWWiMPwHXX3+aCvTPtbtRNtm6EL3fqse3jQIk1T+65EYTd2uQzAhjOTRRR7i0uGuBgdGxxis0qxayNe4oKOSHD573o460G1jBNhjJGC7LGsN13EHxNopYobpyf0/2XNECZypQd5bK93nU05X437F/3yQ/wLsRzctUTyqMU3MBeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717407552; c=relaxed/simple;
-	bh=TeWgB3oJmmgsYOZjXMuiwSEjeYawK2k9S0iFHWUINW0=;
+	s=arc-20240116; t=1717407557; c=relaxed/simple;
+	bh=94iHo71nf+9jkMm9ixTbbeLZI1M1CJKDQrYchixcwHE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fj5C4NQrGqwpO91iJDCYvms7GomvTqpJDSsO/USwciqyXzlIFy5SzFAgoi81e2+QkMLmFjreBYXKAhomaww//lTuYv/vHy61P9Te5+LiOw0Yag6yGeLVMWu1bxPPvb6Vnl+Az/TipDtl5vykJvj++1pS166aJDST5Nfp1r4Jr2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ip7hP+XS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mT5dDmnq; arc=none smtp.client-ip=64.147.123.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=FnYFQNCV8C2QsaSrxm5yTFSeFjx9iWcRQK81N7Qy9QFpw1NIPblTbl8F6BTp+0uaTcYwmmijebrZ67LdqShGIqFVrTE6PXdrUZg5TxbA4LuYyWtJ8mEZCfrLvRZM7bOx1gVsgboxSinXzxPxvj0RDMensr+O+uBp0hxs0hM3SiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NplOTfDI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C8bjADF9; arc=none smtp.client-ip=64.147.123.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ip7hP+XS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mT5dDmnq"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.west.internal (Postfix) with ESMTP id E2C271C000D9;
-	Mon,  3 Jun 2024 05:39:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NplOTfDI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C8bjADF9"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id BFE4418000E5;
+	Mon,  3 Jun 2024 05:39:14 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 03 Jun 2024 05:39:10 -0400
+  by compute6.internal (MEProxy); Mon, 03 Jun 2024 05:39:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717407549; x=1717493949; bh=ubVImeHNhC
-	dQRBuphCwodeU0JA7Ee249sBzdNysKjHo=; b=Ip7hP+XSyg2Kh3OiRMeUnccp+f
-	u8QWdjpMZ5oOtryKjxikp2ok4HGtOtW71MICAaRg8pq7CMKrhbDP+PKyBX6p0ofj
-	TdLgaYeJ1Oijuz+AxEHUpdJcOSPyfauWmWXhbVPY9YwaGL2KY8Co2zvLN/CDycH4
-	Fj2mjdTNv1e+d1GVNi0TY0mzmiYEb+009lDnC1779gutGCDMep3ztVAmMDM7e4By
-	uPZERr9F7Pv8LeY2q926nB3j9iAte8j8ulnj6K1v/Efpx6qOfGsh/sfRI/aptJzr
-	9eQH1QapShvNTu+Ldi4f6R4chH97JDhaSIdDQrH7TxPmRRryhJ38ItDqn8Nw==
+	:subject:to:to; s=fm1; t=1717407554; x=1717493954; bh=uk6w5uTKYL
+	w26VPirmIjnAh5gVF/vjNXsU928ozxrEQ=; b=NplOTfDIfLUcTnpCTItAu2AtAK
+	ZkR3+OLZJR732uXSCI1516zcWpqu/6CAqVTDhIfHQIrSPw98j+dFOOuP6PsQaD5r
+	xAz5wbcLnyIWYLyHcEfwj6r1rlsS5MPH/8PpoiYvJ6EZtW7zBB4mtuu88femczje
+	EnGoUeXQIvuC1AgjBr8iwDjrHovN65NQwudhYqkD8XvulD0i9T25AC2w+txnHu0r
+	56sb6ox/L+G4jjY5C0KYazYoM3OLK7in8WjAL1cVQdTUUz7JQv06/DndqwkoFwQQ
+	vTfOAWPTZDnXOatXqJMZQj3eS8QLAtHH6xRmtTXNVp5nubLSVAwQUGsrdL7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717407549; x=1717493949; bh=ubVImeHNhCdQRBuphCwodeU0JA7E
-	e249sBzdNysKjHo=; b=mT5dDmnqmw+4F4j5goM+7301NsqKSxgkqCvGl0reba19
-	Gl7lcd6O4/+VTpolmvTqudvc/5C7sfBqDnu4z3uxKj6st/imNOHhXiTUSMS1c4kQ
-	4X+jSYEdVJz3CTBdLLT2JiCBWeMMa4N4BQA6O9ab4qAdMueYJ0yzD/HnqVT45bOb
-	6ZOJQdawpeTtgTzN/8Qbs4UF7vs1DMJZ9XuKC9YtwBRp8Pg/f4eL1cxBghj6mevj
-	9abvYCbLNAEycXknzLMWwXYJFof0hoDINlSiSUP3hABnHG9/9prWGWSvnVGXDuiq
-	QzmrMDUcLStpSW/AATNHpcptBYbAG3cRLZZmWxfmpQ==
-X-ME-Sender: <xms:PY9dZgtemm9M7DXWmYttEvqhlqjm1QqH-0MqsqKD63vWAx5gJ_Co9g>
-    <xme:PY9dZtcIUrkq8PgZWIl-vL74omf7DMqUKlfbyFEhpSWc3t4E3HSpsdheLebXeXzkv
-    pCJAOhzEz5LFn8Gzw>
-X-ME-Received: <xmr:PY9dZrxFcyumcBX--7oIkHPDHF82GrjoHVm_N6U_gB1kr203YwE3puCsCTl1O5zW1VuPTGwwM3BT2j-aJsAdpugHEjLkGzUzDnMFyEI1WfJx6nxm>
+	fm1; t=1717407554; x=1717493954; bh=uk6w5uTKYLw26VPirmIjnAh5gVF/
+	vjNXsU928ozxrEQ=; b=C8bjADF996r7smzUp5wI2/GiTWf8jNdWLNjeBr4xD6/3
+	8LRP9NLm1MFypcJt6uLLSdGKRyv0ObHl5Fe+Oq3wgXEqzb923I696QtY9UEwjFDY
+	03Yv7OWmAhFEGWnvLojcg3jhQyvYrSPy1r/6O0wRaMJUPwRHzIdkJYQHXIYW8imJ
+	4Dm+z03DzAzRqNI5uAKuUUkFLCNC26jRLSedYVzaehXLEUc9E9JqTt+INmFkJLqW
+	IDZl5pch58V6NMa51CjmZAmCF3vRzOuGYGA5BfRC8lFfLlmEZ4ZJWXaJAg2CBceM
+	/F4hQvuMm8krWlFDwprGYdvSL+MEymL8NCHK3tDntg==
+X-ME-Sender: <xms:Qo9dZuNYhFiq1hA6VN4jtb89TRxQ_LtIhcmqX-qBFMH7F6uSJBLNhw>
+    <xme:Qo9dZs_mb6t2wSoWI4TjXpBeF4X73h9YQsLJ1COYaTh9g3Ai1LvdrKK0OSwYw-M8d
+    IGToFthCtFhivEYsg>
+X-ME-Received: <xmr:Qo9dZlSYN8jlOp77qoctPNaSN-EXVI9D1XstZ3fWiuvqFbkNByhae0kqMO5wSBvmj3RefQxVYC89oW7mAp2_X5XXIVSdtJocNxGl0JokqUg4GV_M>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelvddgudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:PY9dZjMF76anWAJYj56LZfSzleNB_94ytZjLOViVi3INnlEbHO9ifA>
-    <xmx:PY9dZg_NuBMS0GXk4C_MdqVpnH_i_TzSTvRNgQIxi1RMnRJN_iqpBg>
-    <xmx:PY9dZrVlpfqOsku6_X7ZoyQOvJyjXdWNpRFD5wKV8kpRncJ2gbyVww>
-    <xmx:PY9dZpd9Rn0pKuGPcdKtoQlQw2Rqh4Qc_EJUQlWmnSERuOal_qZucQ>
-    <xmx:PY9dZvbsTg3j-R5qrAXxRBjEbDWj9H5ixojqspkpfX_A-yNJeBf7-FnD>
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpefgffetfeeguddvkeeftdehffegfeetue
+    egjeeihfekueektddtfefguddvtdehueenucffohhmrghinhepuhhpuggrthgvrdhnrghm
+    vgdpuhhpuggrthgvrdgvmhgrihhlnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:Qo9dZuu_2rz15FvRdnu9v96BIHbZU-wE4LIHYwnCyDFLXPjA2rdKHw>
+    <xmx:Qo9dZmedeORt64nimusWMywDBKXgL6CTfbrOycDSTrHOdm4cgL2UiQ>
+    <xmx:Qo9dZi0roJIB_GEDV1e1ysOJP7QNycbIuCmiY7TShWVeBcZzelqLjg>
+    <xmx:Qo9dZq9hFpuPfXIMIQ5rYWOYpWCxq9GIf31nPXZuoIbchSMGAY5CPw>
+    <xmx:Qo9dZm7pn3edXBPKCdfCUWE_PfHOtO26mB5firgHvX35pDooZ1Kn7t3m>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Jun 2024 05:39:08 -0400 (EDT)
+ 3 Jun 2024 05:39:13 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 6181cab0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 3 Jun 2024 09:38:44 +0000 (UTC)
-Date: Mon, 3 Jun 2024 11:39:06 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id ad4e072c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Jun 2024 09:38:48 +0000 (UTC)
+Date: Mon, 3 Jun 2024 11:39:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 02/27] global: convert intentionally-leaking config
- strings to consts
-Message-ID: <92cb0b28c65bed0f3cd10e6c4c57b98f199536a9.1717402403.git.ps@pks.im>
+Subject: [PATCH v3 03/27] refs/reftable: stop micro-optimizing refname
+ allocations on copy
+Message-ID: <085d90c8b63e937e3d76637ce2422320b5801ebb.1717402403.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717402403.git.ps@pks.im>
 Precedence: bulk
@@ -82,188 +83,154 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jFv3IWlvs+cIDI5F"
+	protocol="application/pgp-signature"; boundary="XGgG50NgiMAkIDwB"
 Content-Disposition: inline
 In-Reply-To: <cover.1717402403.git.ps@pks.im>
 
 
---jFv3IWlvs+cIDI5F
+--XGgG50NgiMAkIDwB
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-There are multiple cases where we intentionally leak config strings:
+When copying refs, we execute `write_copy_table()` to write the new
+table. As the names arge given to use via `arg->newname` and
+`arg->oldname`, respectively, we optimize away some allocations by
+assigning those fields to the reftable records we are about to write.
+This requires us to cast the input to `char *` pointers as they are in
+fact constant strings. Later on, we then unset the refname for all of
+the records before calling `reftable_log_record_release()` on them.
 
-  - `struct gpg_format` is used to track programs that can be used for
-    signing commits, either via gpg(1), gpgsm(1) or ssh-keygen(1). The
-    user can override the commands via several config variables. As the
-    array is populated once, only, and the struct memers are never
-    written to or free'd.
+We also do this when assigning the "HEAD" constant, but here we do not
+cast because its type is `char[]` by default. It's about to be turned
+into `const char *` though once we enable `-Wwrite-strings` and will
+thus cause another warning.
 
-  - `struct ll_merge_driver` is used to track merge drivers. Same as
-    with the GPG format, these drivers are populated once and then
-    reused. Its data is never written to or free'd, either.
-
-  - `struct userdiff_funcname` and `struct userdiff_driver` can be
-    configured via `diff.<driver>.*` to add additional drivers. Again,
-    these have a global lifetime and are never written to or free'd.
-
-All of these are intentionally kept alive and are never written to.
-Furthermore, all of these are being assigned both string constants in
-some places, and allocated strings in other places. This will cause
-warnings once we enable `-Wwrite-strings`, so let's mark the respective
-fields as `const char *` and cast away the constness when assigning
-those values.
+It's quite dubious whether this micro-optimization really helps. We're
+about to write to disk anyway, which is going to be way slower than a
+small handful of allocations. Let's drop the optimization altogther and
+instead copy arguments to simplify the code and avoid the future warning
+with `-Wwrite-strings`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- gpg-interface.c |  4 ++--
- merge-ll.c      | 11 ++++++++---
- userdiff.c      | 10 +++++-----
- userdiff.h      | 12 ++++++------
- 4 files changed, 21 insertions(+), 16 deletions(-)
+ refs/reftable-backend.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 71a9382a61..5c824aeb25 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -34,7 +34,7 @@ static enum signature_trust_level configured_min_trust_le=
-vel =3D TRUST_UNDEFINED;
-=20
- struct gpg_format {
- 	const char *name;
--	char *program;
-+	const char *program;
- 	const char **verify_args;
- 	const char **sigs;
- 	int (*verify_signed_buffer)(struct signature_check *sigc,
-@@ -783,7 +783,7 @@ static int git_gpg_config(const char *var, const char *=
-value,
-=20
- 	if (fmtname) {
- 		fmt =3D get_format_by_name(fmtname);
--		return git_config_string(&fmt->program, var, value);
-+		return git_config_string((char **) &fmt->program, var, value);
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 1af86bbdec..e77faa2b9d 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1340,10 +1340,10 @@ static int write_copy_table(struct reftable_writer =
+*writer, void *cb_data)
+ 	 * old reference.
+ 	 */
+ 	refs[0] =3D old_ref;
+-	refs[0].refname =3D (char *)arg->newname;
++	refs[0].refname =3D xstrdup(arg->newname);
+ 	refs[0].update_index =3D creation_ts;
+ 	if (arg->delete_old) {
+-		refs[1].refname =3D (char *)arg->oldname;
++		refs[1].refname =3D xstrdup(arg->oldname);
+ 		refs[1].value_type =3D REFTABLE_REF_DELETION;
+ 		refs[1].update_index =3D deletion_ts;
  	}
-=20
- 	return 0;
-diff --git a/merge-ll.c b/merge-ll.c
-index e29b15fa4a..180c19df67 100644
---- a/merge-ll.c
-+++ b/merge-ll.c
-@@ -27,7 +27,7 @@ typedef enum ll_merge_result (*ll_merge_fn)(const struct =
-ll_merge_driver *,
-=20
- struct ll_merge_driver {
- 	const char *name;
--	char *description;
-+	const char *description;
- 	ll_merge_fn fn;
- 	char *recursive;
- 	struct ll_merge_driver *next;
-@@ -304,8 +304,13 @@ static int read_merge_config(const char *var, const ch=
-ar *value,
- 		ll_user_merge_tail =3D &(fn->next);
+@@ -1366,7 +1366,7 @@ static int write_copy_table(struct reftable_writer *w=
+riter, void *cb_data)
+ 		ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+ 		memset(&logs[logs_nr], 0, sizeof(logs[logs_nr]));
+ 		fill_reftable_log_record(&logs[logs_nr], &committer_ident);
+-		logs[logs_nr].refname =3D (char *)arg->newname;
++		logs[logs_nr].refname =3D xstrdup(arg->newname);
+ 		logs[logs_nr].update_index =3D deletion_ts;
+ 		logs[logs_nr].value.update.message =3D
+ 			xstrndup(arg->logmsg, arg->refs->write_options.block_size / 2);
+@@ -1387,7 +1387,13 @@ static int write_copy_table(struct reftable_writer *=
+writer, void *cb_data)
+ 		if (append_head_reflog) {
+ 			ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+ 			logs[logs_nr] =3D logs[logs_nr - 1];
+-			logs[logs_nr].refname =3D "HEAD";
++			logs[logs_nr].refname =3D xstrdup("HEAD");
++			logs[logs_nr].value.update.name =3D
++				xstrdup(logs[logs_nr].value.update.name);
++			logs[logs_nr].value.update.email =3D
++				xstrdup(logs[logs_nr].value.update.email);
++			logs[logs_nr].value.update.message =3D
++				xstrdup(logs[logs_nr].value.update.message);
+ 			logs_nr++;
+ 		}
  	}
+@@ -1398,7 +1404,7 @@ static int write_copy_table(struct reftable_writer *w=
+riter, void *cb_data)
+ 	ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+ 	memset(&logs[logs_nr], 0, sizeof(logs[logs_nr]));
+ 	fill_reftable_log_record(&logs[logs_nr], &committer_ident);
+-	logs[logs_nr].refname =3D (char *)arg->newname;
++	logs[logs_nr].refname =3D xstrdup(arg->newname);
+ 	logs[logs_nr].update_index =3D creation_ts;
+ 	logs[logs_nr].value.update.message =3D
+ 		xstrndup(arg->logmsg, arg->refs->write_options.block_size / 2);
+@@ -1430,7 +1436,7 @@ static int write_copy_table(struct reftable_writer *w=
+riter, void *cb_data)
+ 		 */
+ 		ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+ 		logs[logs_nr] =3D old_log;
+-		logs[logs_nr].refname =3D (char *)arg->newname;
++		logs[logs_nr].refname =3D xstrdup(arg->newname);
+ 		logs_nr++;
 =20
--	if (!strcmp("name", key))
--		return git_config_string(&fn->description, var, value);
-+	if (!strcmp("name", key)) {
-+		/*
-+		 * The description is leaking, but that's okay as we want to
-+		 * keep around the merge drivers anyway.
-+		 */
-+		return git_config_string((char **) &fn->description, var, value);
-+	}
-=20
- 	if (!strcmp("driver", key)) {
- 		if (!value)
-diff --git a/userdiff.c b/userdiff.c
-index 82bc76b910..371032a413 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -399,7 +399,7 @@ static struct userdiff_driver *userdiff_find_by_namelen=
-(const char *name, size_t
- static int parse_funcname(struct userdiff_funcname *f, const char *k,
- 		const char *v, int cflags)
- {
--	if (git_config_string(&f->pattern, k, v) < 0)
-+	if (git_config_string((char **) &f->pattern, k, v) < 0)
- 		return -1;
- 	f->cflags =3D cflags;
- 	return 0;
-@@ -445,15 +445,15 @@ int userdiff_config(const char *k, const char *v)
- 	if (!strcmp(type, "binary"))
- 		return parse_tristate(&drv->binary, k, v);
- 	if (!strcmp(type, "command"))
--		return git_config_string(&drv->external, k, v);
-+		return git_config_string((char **) &drv->external, k, v);
- 	if (!strcmp(type, "textconv"))
--		return git_config_string(&drv->textconv, k, v);
-+		return git_config_string((char **) &drv->textconv, k, v);
- 	if (!strcmp(type, "cachetextconv"))
- 		return parse_bool(&drv->textconv_want_cache, k, v);
- 	if (!strcmp(type, "wordregex"))
--		return git_config_string(&drv->word_regex, k, v);
-+		return git_config_string((char **) &drv->word_regex, k, v);
- 	if (!strcmp(type, "algorithm"))
--		return git_config_string(&drv->algorithm, k, v);
-+		return git_config_string((char **) &drv->algorithm, k, v);
-=20
- 	return 0;
- }
-diff --git a/userdiff.h b/userdiff.h
-index cc8e5abfef..d726804c3e 100644
---- a/userdiff.h
-+++ b/userdiff.h
-@@ -7,19 +7,19 @@ struct index_state;
- struct repository;
-=20
- struct userdiff_funcname {
--	char *pattern;
-+	const char *pattern;
- 	int cflags;
- };
-=20
- struct userdiff_driver {
- 	const char *name;
--	char *external;
--	char *algorithm;
-+	const char *external;
-+	const char *algorithm;
- 	int binary;
- 	struct userdiff_funcname funcname;
--	char *word_regex;
--	char *word_regex_multi_byte;
--	char *textconv;
-+	const char *word_regex;
-+	const char *word_regex_multi_byte;
-+	const char *textconv;
- 	struct notes_cache *textconv_cache;
- 	int textconv_want_cache;
- };
+ 		/*
+@@ -1439,7 +1445,7 @@ static int write_copy_table(struct reftable_writer *w=
+riter, void *cb_data)
+ 		if (arg->delete_old) {
+ 			ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+ 			memset(&logs[logs_nr], 0, sizeof(logs[logs_nr]));
+-			logs[logs_nr].refname =3D (char *)arg->oldname;
++			logs[logs_nr].refname =3D xstrdup(arg->oldname);
+ 			logs[logs_nr].value_type =3D REFTABLE_LOG_DELETION;
+ 			logs[logs_nr].update_index =3D old_log.update_index;
+ 			logs_nr++;
+@@ -1462,13 +1468,11 @@ static int write_copy_table(struct reftable_writer =
+*writer, void *cb_data)
+ 	reftable_iterator_destroy(&it);
+ 	string_list_clear(&skip, 0);
+ 	strbuf_release(&errbuf);
+-	for (i =3D 0; i < logs_nr; i++) {
+-		if (!strcmp(logs[i].refname, "HEAD"))
+-			continue;
+-		logs[i].refname =3D NULL;
++	for (i =3D 0; i < logs_nr; i++)
+ 		reftable_log_record_release(&logs[i]);
+-	}
+ 	free(logs);
++	for (i =3D 0; i < ARRAY_SIZE(refs); i++)
++		reftable_ref_record_release(&refs[i]);
+ 	reftable_ref_record_release(&old_ref);
+ 	reftable_log_record_release(&old_log);
+ 	return ret;
 --=20
 2.45.1.410.g58bac47f8e.dirty
 
 
---jFv3IWlvs+cIDI5F
+--XGgG50NgiMAkIDwB
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZdjzkACgkQVbJhu7ck
-PpSXZRAAmekqd3GFM5Jd4s2cX4e2+xwSU7gcbeH4ufINjYffl3pRBuKGoPUppCMm
-2Im+LWavDyQ/o1Ecf2CP4bM/HvfDAjIqsJ5kYlC97P6RHpZxjBrTbFqCE9wztAVI
-1ng3FvNEnmS6x0Qflp5VBgUmEyFygfJNZWizmNzlzXMfv0gOF092j+bX6pm6VNwJ
-CEn6a7GBOaE8vIZKN/LYq2rlY9xMK4vAqL4sO+CCjXJWmK0CaaVOd9UncR3REQSa
-TYDlHXaRslNtuZXLwZaCYJkjx/M+UOVZVgX8I65fj7kH20rbUWT/6ulGaxim00g0
-IZ6c6aG62iAaymdKCUiqONILL/Ex4b7Us5mPfGoH8GZ6wpGQlUvrmh3O9+1H+mP1
-BCFwQsASArFkCnnvuG78c4d8NmX//VqRrHzRuJ2Tx1GgGyKsn0HD6vHc7voNg7uc
-lxsMEWbl8c5CbXqYnjLZAblTKBuePpuyDX6vux2ggUzGNV1NlBaIFPxCwkMRkZTb
-6P/kHN39jfqcVqD60Ixw8l+PjLWIAV+D+l+nz5NDW5cfTfX7i99BeqFgnUjRvDeW
-FcLgcgLFpiZQFuk8uWKfXQp5d9c1NoWSSIY+aYOg49Zm9CVVQGO3fVCrmAi8P//v
-Zb5icd6tCkjhqVON+5puk0uEHeo4i7rV1j7nNwc3r3fDTcKP99I=
-=DzTF
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZdjz4ACgkQVbJhu7ck
+PpQZAQ//Z6W7AUyOY/kmaR73gT2LYMOLioUaCbK4tb0XfjtCfT+qxQJAfYiQbcK4
+XefxwUxI5Uio0PuUpWRxGkPNZQTD1pBXpWkZYvRvfLR0uBWaqN9Q6OsmOmntpn25
+LJVNQF1ctPSHUObLHcMq4BhYtGKemi624UWUBddy4KJ1Wg+WnZooTAj1USFJI/kV
+H0VREE4kIo2bhZIcxoNitVLBvZ+uXB618KpdD7Ra9MWcQKH4P3xGv9Bdy69B/GLh
+j+nbrfCLB7+xGEankpyd0Pvr4U58AvfXwzDfPjevGputzdsOCxNRknXCGnfYMfH5
+EM/XuKZIhH4XL0AZ3Wm02SFu3ypx32ouXI5l6hvh/d6jkY08nohI69iMx012VClt
+7zIBdIg24gLmy5u5izP1/GHRvn3LdIGPbRhIbdR3EewyZ6t0vbIzvTK9K4TWsRKx
+kZg5KNc1915qVLCPp8o9lhIOaUC2quge4t6pondi2ZdPUcQ0yoMVr1lf3E5fNcYk
+kEt3OC7dMhRnx7TA+CrcLHvO/rZCNwZt6q34LQYEvHGCOD5dZNC/HCsuOi1EHK4a
+o0oVR98ypW/PRgSEhLBX9pkfAx+BgZ+Wd+NQT6Q9PHzo3NyI1aTbfFBih/6lABRh
++bbcpgFyvrB9e0+e3TOOFbVeY88tIoJGK1jWS+gLj0DSrrhgAtg=
+=+1vI
 -----END PGP SIGNATURE-----
 
---jFv3IWlvs+cIDI5F--
+--XGgG50NgiMAkIDwB--
