@@ -1,216 +1,82 @@
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61EA74069
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 08:56:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C891E49F
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:03:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717404974; cv=none; b=fOR6P68sF1xN2etjC+sVOyelmkp1IxUdS4jydC7LQrajioD4EZjzaH1ijxmZbCMB9gpRaM2Fi8ffLX000ubwqVfdOAM3ZN9AsmtJRWObV3b7GxCfYtjwDLhttTxnTPLsqPrnlju+lnZkQ+XnLxU6AuaDNmYWeANCI/OWCXTSkx0=
+	t=1717405419; cv=none; b=SkG41ntEtMDGPD14gv+rkEcmyu4/OuQSy7B2ruq4g/bSayprV3FsyceIEySYWpMAPnSnhMjP+dlC7SS8KbKOJmBZ+LsWBxf3K7RMS97MsWXSMVd4wxPJP60Mxvm0DCmo91EQaeFC/Sfce8gdVaDVSCgrWHlSFxdGdXSLcUrf7+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717404974; c=relaxed/simple;
-	bh=PvvUWlhDjEmavHPSlbAUXef9RtRMPvb1VWGt7/O0fX0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LNAREJV6GCvqLY8gK6absCtk+3ZeBkxFWbE7zmT5JkwrMbmUkBPINBBRy9kl93jqlDLEX3swwQ7xIEBONCYxzbJn8pmm0vdlhTzE0CpGYUGCBO76GnOK05guuawKXrVHmsDYhTGj8vSCSm+tArINS2xeDph4cVdpNtRBIjC4KJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cVKxFoDC; arc=none smtp.client-ip=209.85.161.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1717405419; c=relaxed/simple;
+	bh=aW+d6I4LhyjJG7/h2tEvNYp/rxbB9veq4TPNOng+nHc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aCp4Fp+QChrDV9hPfvhWsncM9790pQapfpj3XCRy76GTGZZxO1/GZvAIbDZV1OSE17Af7fX9RUwKn5umKIz4ZMza8gN+oWhPvDVTJD+7t5rhypvECGk4bK+0iwSg4NlIzazCN1jVID/grhf3Z6Bx7oPv3AwLZ7FNPU6Pys0/W6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xMKKqL25; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cVKxFoDC"
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-5b96ae827d2so1932655eaf.0
-        for <git@vger.kernel.org>; Mon, 03 Jun 2024 01:56:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717404972; x=1718009772; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=heb0U0wOojUbcaNuB8RFl+8fANJ/bwY6oR09d9oQ+Sc=;
-        b=cVKxFoDCWs/0VbI9RvwClzKMtMHLSBegZbIzVjTVFaDsh0Z1x3LsQluLy8Y/rXV3F+
-         SgKQXWkx0BU86cwIQUsLbfBMbP4F4xTsFCUzA4KXGzPT8tDy/OMc0kBpTviM6Vi/8SFH
-         48ISy7I+tZ7MIC/s5az+auAZjlAajgnBRsgdXMgJgpgC8ct/G3u3g3TmZfmsWpM/mS71
-         zezYTY7qMtjKJmEcnI21TXLlU/npBC195alVvxQAVedX/n/xcPmhog/o3ZOLbLTq5m/r
-         jwvpQeC+EOfR5TGm6pZU7lmRvoFw/UQ0XTfrFwXMxcUxIsU5UvHLjIHPH/tuVgyGYT9t
-         C/dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717404972; x=1718009772;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=heb0U0wOojUbcaNuB8RFl+8fANJ/bwY6oR09d9oQ+Sc=;
-        b=gEkbwjNorr/qraBW9XNZeTj/15yxbGs72DPz+dNREh51wgHjYrV5uGt0pFzHUkRQSU
-         SwYvMpQisQ/aZZVldRvphhgX9Fe9tQo2BbnpjKdTSxEg/p13sDyAA6JdTLmysnTCzAAw
-         uGnP2+0SAHUhMnTOZRogORB7gqJCSAbpSjQru15L4WF1CIZt8aEnvWkCKPwSsE8N2l1q
-         qOOXOVAtttA5xMnIVpuUkoPTcqEqHAAw90kX+23g5aMN0vT9GO34/FOl/SmFsy9wofO6
-         0vW9uiuWgBG2Xj5xnTFUkgnpYcGSv8Pf3QR2F69ESBuizchVQsORLuGz9ZS7Jb4rdbHA
-         +bIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWhF7n+BS5TGK9lDQJ1jNjGOai9dup0iue6HuWTHFknia6XQloVP2ZNXnIv1OU97vboD+o6YfxKQME8wv3A0KCuTLAw
-X-Gm-Message-State: AOJu0YyeHYyNlimOX6pINxomnN5bEHukM3N/9Kwl1RPohkJ4sqLf247J
-	x/L3jvCanadUTvVQu39VL4nyZaRbvWrMDcNlMisda9QN41PpDefm0/GSwFocrdCLmu0yTCKl6iG
-	0Er2PRUEEAkqeSrZBAKT6Hii8Oag=
-X-Google-Smtp-Source: AGHT+IEm6Sn5V8Ch0Kh/lwu5b8CP4uvAjwJAQjIalIPxzME+B2SCd/3bGJewaIpjCm4AaukkXFzZDsoF1N0/LSxZlII=
-X-Received: by 2002:a05:6871:408b:b0:24f:d9e5:b208 with SMTP id
- 586e51a60fabf-2508ad96dfcmr3822279fac.6.1717404971706; Mon, 03 Jun 2024
- 01:56:11 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 3 Jun 2024 08:56:10 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240530122753.1114818-2-shejialuo@gmail.com>
-References: <20240530122753.1114818-1-shejialuo@gmail.com> <20240530122753.1114818-2-shejialuo@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xMKKqL25"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id EDBF226809;
+	Mon,  3 Jun 2024 05:03:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=aW+d6I4LhyjJG7/h2tEvNYp/rxbB9veq4TPNOn
+	g+nHc=; b=xMKKqL25PzZF/Msi+BhbSyHh9HIUHV0xacmWQhKcayJ06KcArjhAUM
+	+qtdaDJRNoO4x7TQT0F653w7qgk6TefM8oLUUyaTwLHF0OgsWRCQbrAvWlDIhFTX
+	d229An+Dzo/vmRFjEDHCcygKegQd99OSj6esR08d32RG6ApAGeQCI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E575E26808;
+	Mon,  3 Jun 2024 05:03:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0787E26805;
+	Mon,  3 Jun 2024 05:03:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>,  Jeff
+ King <peff@peff.net>
+Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
+In-Reply-To: <ec2ca25486b84615e30dbeb83ec47310@manjaro.org> (Dragan Simic's
+	message of "Sun, 02 Jun 2024 19:46:53 +0200")
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+	<199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+	<b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
+	<xmqqwmn79u98.fsf@gitster.g>
+	<ec2ca25486b84615e30dbeb83ec47310@manjaro.org>
+Date: Mon, 03 Jun 2024 02:03:27 -0700
+Message-ID: <xmqq34pu8kkg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 3 Jun 2024 08:56:10 +0000
-Message-ID: <CAOLa=ZT895c-ag-8_r7SfJ+n92-S16JfCYgYhQf0caxg63cisg@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 1/2] refs: setup ref consistency check infrastructure
-To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="000000000000464d100619f881cd"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 24EBE7C2-2188-11EF-AE7A-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
---000000000000464d100619f881cd
-Content-Type: text/plain; charset="UTF-8"
+Dragan Simic <dsimic@manjaro.org> writes:
 
-Hello,
-
-shejialuo <shejialuo@gmail.com> writes:
-
-[snip]
-
-> diff --git a/refs.h b/refs.h
-> index 34568ee1fb..2799820c40 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -544,6 +544,11 @@ int refs_for_each_reflog(struct ref_store *refs, each_reflog_fn fn, void *cb_dat
->   */
->  int check_refname_format(const char *refname, int flags);
+> Hello Junio,
 >
-> +/*
-> +  * Return 0 iff all refs in filesystem are consistent.
-> +*/
-
-s/iff/if
-
-The indentation seems to be wrong here. Also since we want to check refs
-and reflogs, it might be better to mention that the function checks the
-reference database for consistency.
-
-> +int refs_fsck(struct ref_store *refs);
-> +
->  /*
->   * Apply the rules from check_refname_format, but mutate the result until it
->   * is acceptable, and place the result in "out".
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 5f3089d947..b6147c588b 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -3299,6 +3299,11 @@ static int files_init_db(struct ref_store *ref_store,
->  	return 0;
->  }
+> On 2024-06-02 18:36, Junio C Hamano wrote:
+>> A possibility is to phrase it like so:
+>>     | - pipe the current hunk to the program (or "%s" by default)
+>> and fill %s with the program you'd use if not given, i.e. initially
+>> the value of the GIT_PAGER but updated to the last used program
+>> after the user uses "|<program>" form to specify one.
 >
-> +static int files_fsck(struct ref_store *ref_store)
-> +{
-> +	return 0;
-> +}
-> +
->  struct ref_storage_be refs_be_files = {
->  	.name = "files",
->  	.init = files_ref_store_create,
-> @@ -3322,5 +3327,7 @@ struct ref_storage_be refs_be_files = {
->  	.reflog_exists = files_reflog_exists,
->  	.create_reflog = files_create_reflog,
->  	.delete_reflog = files_delete_reflog,
-> -	.reflog_expire = files_reflog_expire
-> +	.reflog_expire = files_reflog_expire,
-> +
-> +	.fsck = files_fsck,
->  };
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index a937e7dbfc..0617321634 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -1704,6 +1704,11 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
->  	return empty_ref_iterator_begin();
->  }
->
-> +static int packed_fsck(struct ref_store *ref_store)
-> +{
-> +	return 0;
-> +}
-> +
->  struct ref_storage_be refs_be_packed = {
->  	.name = "packed",
->  	.init = packed_ref_store_create,
-> @@ -1728,4 +1733,6 @@ struct ref_storage_be refs_be_packed = {
->  	.create_reflog = NULL,
->  	.delete_reflog = NULL,
->  	.reflog_expire = NULL,
-> +
-> +	.fsck = packed_fsck,
->  };
-> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> index 53a6c5d842..ef697bf3bf 100644
-> --- a/refs/refs-internal.h
-> +++ b/refs/refs-internal.h
-> @@ -675,6 +675,8 @@ typedef int read_raw_ref_fn(struct ref_store *ref_store, const char *refname,
->  typedef int read_symbolic_ref_fn(struct ref_store *ref_store, const char *refname,
->  				 struct strbuf *referent);
->
-> +typedef int fsck_fn(struct ref_store *ref_store);
-> +
->  struct ref_storage_be {
->  	const char *name;
->  	ref_store_init_fn *init;
-> @@ -700,6 +702,8 @@ struct ref_storage_be {
->  	create_reflog_fn *create_reflog;
->  	delete_reflog_fn *delete_reflog;
->  	reflog_expire_fn *reflog_expire;
-> +
-> +	fsck_fn *fsck;
->  };
->
->  extern struct ref_storage_be refs_be_files;
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index 1af86bbdec..f3f85cd2f0 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -2167,6 +2167,11 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
->  	return ret;
->  }
->
-> +static int reftable_be_fsck(struct ref_store *ref_store)
-> +{
-> +	return 0;
-> +}
-> +
->  struct ref_storage_be refs_be_reftable = {
->  	.name = "reftable",
->  	.init = reftable_be_init,
-> @@ -2191,4 +2196,6 @@ struct ref_storage_be refs_be_reftable = {
->  	.create_reflog = reftable_be_create_reflog,
->  	.delete_reflog = reftable_be_delete_reflog,
->  	.reflog_expire = reftable_be_reflog_expire,
-> +
-> +	.fsck = reftable_be_fsck,
->  };
-> --
-> 2.45.1
+> The value of GIT_PAGER (or the <program>) can be a rather long string,
+> so it would have to be stripped down to the base command, but it would
+> be rather error-prone and the printed information would become much less
+> informative that way.
 
---000000000000464d100619f881cd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: e3cd4d377ae37f5b_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aZGhTZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNDY3Qy85bURmbkhrTk9MT284SkFYWFRnZ09uSjc2WAplV2JXNmp0THF3
-UWNvcG9Ed084aGZyaGRuZGFmYU9wK3V6RVB6ZVFieFV4MklmY2ptazZTaW5lVS9wVTIxd0dOCmpV
-RXN6NGh0VG91eUN1cjFtRXV5QWM0bklZZjBUVktiQWExVWdMVVlmb05WVTZwc0VKY2N0MmxXeXNt
-RE1FVk4KelI2SWhEc25YdU5FOEV6QjZvbW15ZmR5U0pSNzJ3L1R4bDFYMGc4Rk5hZ096b09tMGJT
-UnVjS1JOeVhpWFMwRgpnR3V1TEZ3ZXpmRmgvb0dhM1ZuL1VwN3BhQytoRWE2eHRCMkhSQXMwc21J
-NFFrRlArcmllYUQ2SWVhOVBNVDVGCldCWThyOThLc2s0ZlIvU1p4UWxHQUROT3VETXBROW9NcnZD
-RXZTNTh4bFM4a1NGL2pPRDNycldrUnhnM1lKWisKU3MwMG4yazRpQ21PT3VOY25xRUtOeDlyTUpw
-S3lHd1prbkRxWXc3dnZ6WFVmOEJyZjVXRUJMNU5QMjE2TEhTaQphZGhxTG1LZGhMU1ZCam8xb3hU
-S2lLTHptZ1JveExsbDNhQXp3d3I4cmJBdldFK3BrTk1YNEl0VjAwektnWnMwClplNWtEd3dzTC9j
-b1Q3WkkzcFN5SFF4ZDU3Z3dkTytJN3FRMXRBaz0KPWxpWDgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000464d100619f881cd--
+I'd probably just say $GIT_PAGER instead of its expansion if we were
+go that route.
