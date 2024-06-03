@@ -1,47 +1,47 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80F546A4
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 20:05:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB04046A4
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 20:05:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717445150; cv=none; b=cienPg1/adBWaDKJ9ppyZFRtP4JtZjp+MyegEobcFORf31jL09TazNdo5/TDTVXaODCwkikqOvg/WWQkBE388dJRXEZTh+evaqoBmgtfrSg87CCzbd3XAQ/SVgU0VIttAmbwEUSDoVC8X9J4l1+pYAFrtFwCwstMwRsntSoj3fA=
+	t=1717445155; cv=none; b=pJu06Ep3YMagbx0AqnY+A226qY7hj540npHhxzL43p6jCBsgB0IYrPOLaBKDwOZ+oBAAu3tl3mXS2XQMBwUWnqsxLLMca4iCqJ4yxMFe9sA6AQl/2Ch7fytkWyqj+pBuZ9aZHsxFhKALAE4KX9GOa5Ijbe4jzKNI/BRyEi0yGVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717445150; c=relaxed/simple;
-	bh=wjZpdyV1ZpWCt3x54nMmFYsc7s7E7L7Bu7GiMoHP1o0=;
+	s=arc-20240116; t=1717445155; c=relaxed/simple;
+	bh=2xevrHjH0j22k/oNehdSoCNXHI5b4rfl9dDnukFJcDc=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OT3rOzMxGGLW8lTit43quoFLZat4OX476fySXHJT31VEfTbo84uXXcKlrlIM1UaLuNvreK48skmy7Ouc8np01PdIKYXwWfU3t9LBv1IGBS0e2FUHpq1bsMOcdQCA5m743JcVecwwgnn0X4/l750xJOtACrZFgPQBVeRbKJaYoWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=sMzQn/yJ; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version; b=lmqxe+gkcdQTLFOXjvliCiWLgtCGvFYPjh9K2cP9/ny3id/yWCOSmzAEUWXKaB6CcmE6BKdeQwv8R57dUds/wBbZUHsRkKBTJaLyqV3klhl3w5jQh31vQMRD88G0eYnXHIQ/k+vt3LWkdFyUa1rJK5MOALve+MkpUoGbkCeynk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dMtLg2+2; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sMzQn/yJ"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 874A12DE2D;
-	Mon,  3 Jun 2024 16:05:47 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dMtLg2+2"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2EC142AA00;
+	Mon,  3 Jun 2024 16:05:53 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=wjZpdyV1ZpWCt3x54nMmFYsc7
-	s7E7L7Bu7GiMoHP1o0=; b=sMzQn/yJPXYo7xy1om4k0tcmDJq1PlDP5atcka2CV
-	YON1gMf6l7zlUZLvq+cSHRyhAv6YZ/JVqJDMloMUuI2DgLvjQ4e18aieoUj64yzE
-	cjVj4+2+4+2Zqfxc5+9avuS9VhKkeaMQE3kEt6nhozDQ0nCyuXAY0CYOd0GJaKJ/
-	JU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 775022DE2C;
-	Mon,  3 Jun 2024 16:05:47 -0400 (EDT)
+	:content-transfer-encoding; s=sasl; bh=2xevrHjH0j22k/oNehdSoCNXH
+	I5b4rfl9dDnukFJcDc=; b=dMtLg2+2zjyYrj+B0D7urAnoKrEe4cNhgteWYHCcJ
+	JOajQPj0DKvXBXp5DufC6yCjubA5nsFvn3PRMiNwh5K8Y56XVyw88fa31GdsgwYH
+	c38aCFbA9ljEhRjRmwBtQ23PgizpLZ5Md7alWV1wHXvENnO/2Xv4mQLkVln8lQhC
+	/0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 264A52A9FF;
+	Mon,  3 Jun 2024 16:05:53 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D73CF2DE2B;
-	Mon,  3 Jun 2024 16:05:46 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C041D2A9FE;
+	Mon,  3 Jun 2024 16:05:48 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH 2/3] ls-remote: introduce --branches and deprecate --heads
-Date: Mon,  3 Jun 2024 13:05:38 -0700
-Message-ID: <20240603200539.1473345-3-gitster@pobox.com>
+Subject: [PATCH 3/3] show-ref: introduce --branches and deprecate --heads
+Date: Mon,  3 Jun 2024 13:05:39 -0700
+Message-ID: <20240603200539.1473345-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.45.2-404-g9eaef5822c
 In-Reply-To: <20240603200539.1473345-1-gitster@pobox.com>
 References: <xmqq8qzl3mhg.fsf@gitster.g>
@@ -53,7 +53,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-Pobox-Relay-ID:
- AA86670C-21E4-11EF-9169-6488940A682E-77302942!pb-smtp2.pobox.com
+ ABA96382-21E4-11EF-B4DA-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
 We call the tips of branches "heads", but this command calls the
@@ -66,166 +66,215 @@ that way.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-ls-remote.txt | 12 +++++++-----
- builtin/ls-remote.c             | 21 ++++++++++++++++++++-
- t/t5512-ls-remote.sh            | 30 +++++++++++++++++++++++++-----
- 3 files changed, 52 insertions(+), 11 deletions(-)
+ Documentation/git-show-ref.txt | 18 ++++++++++--------
+ builtin/show-ref.c             | 33 ++++++++++++++++++++++++++-------
+ t/t1403-show-ref.sh            | 22 ++++++++++++++--------
+ 3 files changed, 50 insertions(+), 23 deletions(-)
 
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remot=
-e.txt
-index 1c4f696ab5..76c86c3ce4 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -9,7 +9,7 @@ git-ls-remote - List references in a remote repository
- SYNOPSIS
+diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.=
+txt
+index ba75747005..616d919655 100644
+--- a/Documentation/git-show-ref.txt
++++ b/Documentation/git-show-ref.txt
+@@ -9,8 +9,8 @@ SYNOPSIS
  --------
  [verse]
--'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=3D<exec>]
-+'git ls-remote' [--branches] [--tags] [--refs] [--upload-pack=3D<exec>]
- 	      [-q | --quiet] [--exit-code] [--get-url] [--sort=3D<key>]
- 	      [--symref] [<repository> [<patterns>...]]
+ 'git show-ref' [--head] [-d | --dereference]
+-	     [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]] [--tags]
+-	     [--heads] [--] [<pattern>...]
++	     [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]] [--branches] [--tags]
++	     [--] [<pattern>...]
+ 'git show-ref' --verify [-q | --quiet] [-d | --dereference]
+ 	     [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]]
+ 	     [--] [<ref>...]
+@@ -45,12 +45,14 @@ OPTIONS
 =20
-@@ -21,14 +21,16 @@ commit IDs.
+ 	Show the HEAD reference, even if it would normally be filtered out.
 =20
- OPTIONS
- -------
---h::
 ---heads::
-+-b::
 +--branches::
- -t::
  --tags::
--	Limit to only refs/heads and refs/tags, respectively.
-+	Limit to only local branches and local tags, respectively.
- 	These options are _not_ mutually exclusive; when given
- 	both, references stored in refs/heads and refs/tags are
--	displayed.  Note that `git ls-remote -h` used without
-+	displayed.  Note that `--heads` and `-h` are deprecated
-+	synonyms for `--branches` and `-b` and may be removed in
-+	the future.  Also note that `git ls-remote -h` used without
- 	anything else on the command line gives help, consistent
- 	with other git subcommands.
 =20
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 9838de69c0..95fbb8b7b5 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -38,6 +38,20 @@ static int tail_match(const char **pattern, const char=
- *path)
+-	Limit to "refs/heads" and "refs/tags", respectively.  These options
++	Limit to local branches and local tags, respectively.  These options
+ 	are not mutually exclusive; when given both, references stored in
+-	"refs/heads" and "refs/tags" are displayed.
++	"refs/heads" and "refs/tags" are displayed.  Note that `--heads`
++	is a deprecated synonym for `--branches` and may be removed
++	in the future.
+=20
+ -d::
+ --dereference::
+@@ -139,7 +141,7 @@ When using `--hash` (and not `--dereference`), the ou=
+tput is in the format:
+ For example,
+=20
+ ------------------------------------------------------------------------=
+-----
+-$ git show-ref --heads --hash
++$ git show-ref --branches --hash
+ 2e3ba0114a1f52b47df29743d6915d056be13278
+ 185008ae97960c8d551adcd9e23565194651b5d1
+ 03adf42c988195b50e1a1935ba5fcbc39b2b029b
+@@ -183,8 +185,8 @@ to check whether a particular branch exists or not (n=
+otice how we don't
+ actually want to show any results, and we want to use the full refname f=
+or it
+ in order to not trigger the problem with ambiguous partial matches).
+=20
+-To show only tags, or only proper branch heads, use `--tags` and/or `--h=
+eads`
+-respectively (using both means that it shows tags and heads, but not oth=
+er
++To show only tags, or only proper branch heads, use `--tags` and/or `--b=
+ranches`
++respectively (using both means that it shows tags and branches, but not =
+other
+ random references under the refs/ subdirectory).
+=20
+ To do automatic tag object dereferencing, use the `-d` or `--dereference=
+`
+diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+index 1c15421e60..6b69daeb66 100644
+--- a/builtin/show-ref.c
++++ b/builtin/show-ref.c
+@@ -11,8 +11,8 @@
+=20
+ static const char * const show_ref_usage[] =3D {
+ 	N_("git show-ref [--head] [-d | --dereference]\n"
+-	   "             [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]] [--tags]\n"
+-	   "             [--heads] [--] [<pattern>...]"),
++	   "             [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]] [--branches] =
+[--tags]\n"
++	   "             [--] [<pattern>...]"),
+ 	N_("git show-ref --verify [-q | --quiet] [-d | --dereference]\n"
+ 	   "             [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]]\n"
+ 	   "             [--] [<ref>...]"),
+@@ -188,7 +188,7 @@ static int cmd_show_ref__verify(const struct show_one=
+_options *show_one_opts,
+=20
+ struct patterns_options {
+ 	int show_head;
+-	int heads_only;
++	int branches_only;
+ 	int tags_only;
+ };
+=20
+@@ -206,8 +206,8 @@ static int cmd_show_ref__patterns(const struct patter=
+ns_options *opts,
+=20
+ 	if (opts->show_head)
+ 		head_ref(show_ref, &show_ref_data);
+-	if (opts->heads_only || opts->tags_only) {
+-		if (opts->heads_only)
++	if (opts->branches_only || opts->tags_only) {
++		if (opts->branches_only)
+ 			for_each_fullref_in("refs/heads/", show_ref, &show_ref_data);
+ 		if (opts->tags_only)
+ 			for_each_fullref_in("refs/tags/", show_ref, &show_ref_data);
+@@ -279,6 +279,20 @@ static int exclude_existing_callback(const struct op=
+tion *opt, const char *arg,
  	return 0;
  }
 =20
 +static int heads_callback(const struct option *opt, const char *arg, int=
  unset)
 +{
-+	unsigned *flags =3D opt->value;
++	int *branches_only =3D opt->value;
 +
 +	if (unset) {
 +		warning(_("'--no-heads' is deprecated; use '--no-branches' instead"));
-+		*flags &=3D ~REF_BRANCHES;
++		*branches_only =3D 0;
 +	} else {
 +		warning(_("'--heads' is deprecated; use '--branches' instead"));
-+		*flags |=3D REF_BRANCHES;
++		*branches_only =3D 1;
 +	}
 +	return 0;
 +}
 +
- int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ int cmd_show_ref(int argc, const char **argv, const char *prefix)
  {
- 	const char *dest =3D NULL;
-@@ -68,7 +82,12 @@ int cmd_ls_remote(int argc, const char **argv, const c=
-har *prefix)
- 			   N_("path of git-upload-pack on the remote host"),
- 			   PARSE_OPT_HIDDEN },
- 		OPT_BIT('t', "tags", &flags, N_("limit to tags"), REF_TAGS),
--		OPT_BIT('h', "heads", &flags, N_("limit to heads"), REF_BRANCHES),
-+		OPT_BIT('b', "branches", &flags, N_("limit to branches"), REF_BRANCHES=
-),
-+		OPT_CALLBACK_F('h', "heads", &flags,
+ 	struct exclude_existing_options exclude_existing_opts =3D {0};
+@@ -286,8 +300,13 @@ int cmd_show_ref(int argc, const char **argv, const =
+char *prefix)
+ 	struct show_one_options show_one_opts =3D {0};
+ 	int verify =3D 0, exists =3D 0;
+ 	const struct option show_ref_options[] =3D {
+-		OPT_BOOL(0, "tags", &patterns_opts.tags_only, N_("only show tags (can =
+be combined with heads)")),
+-		OPT_BOOL(0, "heads", &patterns_opts.heads_only, N_("only show heads (c=
+an be combined with tags)")),
++		OPT_BOOL(0, "tags", &patterns_opts.tags_only, N_("only show tags (can =
+be combined with branches)")),
++		OPT_BOOL(0, "branches", &patterns_opts.branches_only, N_("only show br=
+anches (can be combined with tags)")),
++		OPT_CALLBACK_F(0, "heads", &patterns_opts.branches_only,
 +			       NULL,
-+			       N_("deprecated synonym for --branches"),
++			       N_("deprecated synonym for --branches)"),
 +			       PARSE_OPT_NOARG|PARSE_OPT_HIDDEN,
 +			       &heads_callback),
- 		OPT_BIT(0, "refs", &flags, N_("do not show peeled tags"), REF_NORMAL),
- 		OPT_BOOL(0, "get-url", &get_url,
- 			 N_("take url.<base>.insteadOf into account")),
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 5dbe107ce8..b9950ca361 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -47,6 +47,7 @@ test_expect_success setup '
- 	git show-ref -d	>refs &&
- 	sed -e "s/ /	/" refs >>expected.all &&
+ 		OPT_BOOL(0, "exists", &exists, N_("check for reference existence witho=
+ut resolving")),
+ 		OPT_BOOL(0, "verify", &verify, N_("stricter reference checking, "
+ 			    "requires exact ref path")),
+diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
+index 33fb7a38ff..b72ed70435 100755
+--- a/t/t1403-show-ref.sh
++++ b/t/t1403-show-ref.sh
+@@ -121,13 +121,13 @@ test_expect_success 'show-ref -d' '
 =20
-+	grep refs/heads/ expected.all >expected.branches &&
- 	git remote add self "$(pwd)/.git" &&
- 	git remote add self2 "."
- '
-@@ -71,6 +72,25 @@ test_expect_success 'ls-remote self' '
- 	test_cmp expected.all actual
  '
 =20
-+test_expect_success 'ls-remote --branches self' '
-+	git ls-remote --branches self >actual &&
-+	test_cmp expected.branches actual &&
-+	git ls-remote -b self >actual &&
-+	test_cmp expected.branches actual
-+'
-+
-+test_expect_success 'ls-remote -h is deprecated' '
-+	git ls-remote -h self >actual 2>warning &&
-+	test_cmp expected.branches actual &&
-+	test_grep deprecated warning
-+'
-+
-+test_expect_success 'ls-remote --heads is deprecated' '
-+	git ls-remote --heads self >actual 2>warning &&
-+	test_cmp expected.branches actual &&
-+	test_grep deprecated warning
-+'
-+
- test_expect_success 'ls-remote --sort=3D"version:refname" --tags self' '
- 	generate_references \
- 		refs/tags/mark \
-@@ -275,7 +295,7 @@ test_expect_success 'ls-remote with filtered symref (=
-refname)' '
+-test_expect_success 'show-ref --heads, --tags, --head, pattern' '
++test_expect_success 'show-ref --branches, --tags, --head, pattern' '
+ 	for branch in B main side
+ 	do
+ 		echo $(git rev-parse refs/heads/$branch) refs/heads/$branch || return =
+1
+-	done >expect.heads &&
+-	git show-ref --heads >actual &&
+-	test_cmp expect.heads actual &&
++	done >expect.branches &&
++	git show-ref --branches >actual &&
++	test_cmp expect.branches actual &&
+=20
+ 	for tag in A B C
+ 	do
+@@ -136,15 +136,15 @@ test_expect_success 'show-ref --heads, --tags, --he=
+ad, pattern' '
+ 	git show-ref --tags >actual &&
+ 	test_cmp expect.tags actual &&
+=20
+-	cat expect.heads expect.tags >expect &&
+-	git show-ref --heads --tags >actual &&
++	cat expect.branches expect.tags >expect &&
++	git show-ref --branches --tags >actual &&
+ 	test_cmp expect actual &&
+=20
+ 	{
+ 		echo $(git rev-parse HEAD) HEAD &&
+-		cat expect.heads expect.tags
++		cat expect.branches expect.tags
+ 	} >expect &&
+-	git show-ref --heads --tags --head >actual &&
++	git show-ref --branches --tags --head >actual &&
+ 	test_cmp expect actual &&
+=20
+ 	{
+@@ -165,6 +165,12 @@ test_expect_success 'show-ref --heads, --tags, --hea=
+d, pattern' '
  	test_cmp expect actual
  '
 =20
--test_expect_success 'ls-remote with filtered symref (--heads)' '
-+test_expect_success 'ls-remote with filtered symref (--branches)' '
- 	git symbolic-ref refs/heads/foo refs/tags/mark &&
- 	cat >expect.v2 <<-EOF &&
- 	ref: refs/tags/mark	refs/heads/foo
-@@ -283,9 +303,9 @@ test_expect_success 'ls-remote with filtered symref (=
---heads)' '
- 	$rev	refs/heads/main
- 	EOF
- 	grep -v "^ref: refs/tags/" <expect.v2 >expect.v0 &&
--	git -c protocol.version=3D0 ls-remote --symref --heads . >actual.v0 &&
-+	git -c protocol.version=3D0 ls-remote --symref --branches . >actual.v0 =
-&&
- 	test_cmp expect.v0 actual.v0 &&
--	git -c protocol.version=3D2 ls-remote --symref --heads . >actual.v2 &&
-+	git -c protocol.version=3D2 ls-remote --symref --branches . >actual.v2 =
-&&
- 	test_cmp expect.v2 actual.v2
- '
-=20
-@@ -335,9 +355,9 @@ test_expect_success 'ls-remote patterns work with all=
- protocol versions' '
- test_expect_success 'ls-remote prefixes work with all protocol versions'=
- '
- 	git for-each-ref --format=3D"%(objectname)	%(refname)" \
- 		refs/heads/ refs/tags/ >expect &&
--	git -c protocol.version=3D0 ls-remote --heads --tags . >actual.v0 &&
-+	git -c protocol.version=3D0 ls-remote --branches --tags . >actual.v0 &&
- 	test_cmp expect actual.v0 &&
--	git -c protocol.version=3D2 ls-remote --heads --tags . >actual.v2 &&
-+	git -c protocol.version=3D2 ls-remote --branches --tags . >actual.v2 &&
- 	test_cmp expect actual.v2
- '
-=20
++test_expect_success 'show-ref --heads is deprecated' '
++	git show-ref --heads >actual 2>warning &&
++	test_grep deprecated warning &&
++	test_cmp expect.branches actual
++'
++
+ test_expect_success 'show-ref --verify HEAD' '
+ 	echo $(git rev-parse HEAD) HEAD >expect &&
+ 	git show-ref --verify HEAD >actual &&
 --=20
 2.45.2-404-g9eaef5822c
 
