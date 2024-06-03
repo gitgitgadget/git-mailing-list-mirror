@@ -1,94 +1,95 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD114A0A
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 16:52:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238691311B5
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 16:57:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717433565; cv=none; b=h4jQLdYOxUWTXcneLmEiVLfblLjPFUNKKCceuS0pOQWZlTS5FxOjUePX/02/Hxh8VdHwF8WIgzMnx1fwaBhYHL+G+dB1HrNhkhd6YSeEdAfxa1+dMA92mGQ8zcin41sTWap53ckBukKOjsQ0V2yRXVCgqxu7TGQTO+56RlfmJtc=
+	t=1717433880; cv=none; b=q7AKBwms/G+QeHTG9/gvz0mSANDu5NBWCtT5VWJUQa4NycXhPiwD1qFbEeo3DXmFF1Avz5FIyjGjd1a8FPyh9oyzynH73URn49EP70Rndyl20g/1TEfPbBnv5zcbN1pTE7Muy0RJXHAyuy1keGgxrfOUIUKAshVM+vY5AfdFb7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717433565; c=relaxed/simple;
-	bh=75oc59cogKhSVrE9ne1SnwVZvrI9gK28Bro+E08LJo4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=g5K/JXuAAbCtKTH+bCtBpkGqJ6HKL+/DVCT+tl0bZksWGPoiZ/AvhvTEZosmnAtq25xfpzCq17sZ56Ym7xc3YSpCSDadO2T5imr8Q1JmG84zgkVH+5XmVbCuowD6kRGVT+DkrT+U2H4dP/lp1BNuknN8Tx1xcZ9u0er7ypRlCXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=W7VTylSl; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W7VTylSl"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id B6119338B0;
-	Mon,  3 Jun 2024 12:52:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=75oc59cogKhSVrE9ne1SnwVZvrI9gK28Bro+E0
-	8LJo4=; b=W7VTylSlXEzC+AneXctB9JJcNg8eX7njMM4U+OsaM0L3tbpJIc03Tt
-	id9NRY/LySLQC0xmsrcKPDw5pifDqV/sArb+NK4idGNHJypYkSe949CdMiL6trKd
-	27Jxlou7dcerAYmNInNxVGSvkQLHD9/r6F/Vb9KV76wrhMhSneyl8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id AF545338AF;
-	Mon,  3 Jun 2024 12:52:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CA574338AE;
-	Mon,  3 Jun 2024 12:52:34 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Justin Tobler
- <jltobler@gmail.com>,  Dragan Simic <dsimic@manjaro.org>,  Karthik Nayak
- <karthik.188@gmail.com>,  Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH v5 4/4] BreakingChanges: document that we do not plan to
- deprecate git-checkout
-In-Reply-To: <9ff94b6f320d76e6b7c767e855038f33b69f4155.1717402497.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Mon, 3 Jun 2024 11:28:37 +0200")
-References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
-	<cover.1717402497.git.ps@pks.im>
-	<9ff94b6f320d76e6b7c767e855038f33b69f4155.1717402497.git.ps@pks.im>
-Date: Mon, 03 Jun 2024 09:52:33 -0700
-Message-ID: <xmqqo78i3r5a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1717433880; c=relaxed/simple;
+	bh=NuWZzNrnTo75mJuTmbflkE7a6Kh3VKnrK0Z2uC1RQPI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=N/eRRqhVd5dvZQ2fbPKR0bSKdOSgc+sdvvptiR77012wThDWN2OAte+X29cnKhTXxRG5wQmpE3Hj9dGlTsEGI/7k96izj7u7IqBm8uJJ8OUFnkawgpx2tdXtofYRaxEuEnfTnjNzPLsnsipv0kgwhCgNX3a/UDYen7EJxOCU5UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6ae1059a62fso1211876d6.1
+        for <git@vger.kernel.org>; Mon, 03 Jun 2024 09:57:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717433877; x=1718038677;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aV1EGvNE/AuacyySe3eyFsFWH05wO0PCWOWenF6b79E=;
+        b=r4c50xPGuoBmVw0tm7sd/8ZS3xj3yBoVcAp4GpMfwfHfa6gMuayiPtj+qriC+Ww05n
+         RIfKOpJqCKdC5UuYzd+JXd5gd1zgfzByhYjCm60qknZIMYETCtcE+nFzg3hvvyiNt2ZN
+         Nop5KppeVXD391zdUQ1SF1POAAeJBk6OOAe6/7scaxTpI9sJRpJZWQWW6IbXm5HvpBxM
+         srmxK+xGEVdjx1IBKAVW5MxIfv8jlyxUB3kTHzZuGJIMWnqKdzvlFFVrw0ywSKRiwOwW
+         /T66gXyraz6rDs8lUhtJrNMJfeZ28YdclpdtX5aEcsCjNLAbIwSk8wrET75Qgnlz+c/1
+         mTog==
+X-Gm-Message-State: AOJu0Yzi80uT265VsNt0BcVqzcNntRvE8sVcQjWp+rJJBFo8WNFojfmD
+	AUx4IKTE86OSj0CChKUnXV4qVt+X5mAY5NWNYqdRmCcLD6TRDrPLNCSJleJMQs/djqmclxyy3L7
+	5Pcjt8jog2VTonYo+r3r7BhgGuD8=
+X-Google-Smtp-Source: AGHT+IEjltsqGTaPrZH1VO7xKrQi/epbDqHsuiJTCg5lw1YqvTNFzJVpCTsH6CgIrVSjtqwUVK/1VJwrKr5E3r0V/W0=
+X-Received: by 2002:a05:6214:43ca:b0:6ad:79d7:a1a4 with SMTP id
+ 6a1803df08f44-6aecd6fc463mr109489566d6.65.1717433876974; Mon, 03 Jun 2024
+ 09:57:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- AD1F8270-21C9-11EF-92EC-8F8B087618E4-77302942!pb-smtp21.pobox.com
+References: <cover.1716983704.git.ps@pks.im> <cover.1717402403.git.ps@pks.im> <3d92528125ee419aefdac790dc1a4106be632c60.1717402403.git.ps@pks.im>
+In-Reply-To: <3d92528125ee419aefdac790dc1a4106be632c60.1717402403.git.ps@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 3 Jun 2024 12:57:45 -0400
+Message-ID: <CAPig+cTC83ZE2kGy=epeRFJ7a3jjRQXsvUYzB6jdOYfmy0yVOg@mail.gmail.com>
+Subject: Re: [PATCH v3 15/27] compat/win32: fix const-correctness with string constants
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Jun 3, 2024 at 5:46=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+:
+> Adjust various places in our Win32 compatibility layer where we are not
+> assigning string constants to `const char *` variables.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> diff --git a/compat/basename.c b/compat/basename.c
+> @@ -1,6 +1,8 @@
+> +static char current_directory[] =3D ".";
+> @@ -10,7 +12,13 @@ char *gitbasename (char *path)
+>         if (!path || !*path)
+> -               return ".";
+> +               /*
+> +                * basename(3P) is mis-specified because it returns a
+> +                * non-constant pointer even though it is specified to re=
+turn a
+> +                * pointer to internal memory at times. The cast is a res=
+ult of
+> +                * that.
+> +                */
+> +               return (char *) "";
 
-> +
-> +* git-restore(1) and git-switch(1) have been introduced as a replacement for
-> +  git-checkout(1). As git-checkout(1) is quite established, and as the benefit
-> +  of switching to git-restore(1) and git-switch(1) is contended, all three
-> +  commands will stay.
+The change from returning "." to returning "" is unexplained by the
+commit message. Did you mean to return the newly-introduced
+`current_directory` instead?
 
-"As a replacement" is probably a bit different from the truth [*],
-but I suspect that the reason why they were introduced no longer has
-much relevance.  How about
+> @@ -34,7 +42,13 @@ char *gitdirname(char *path)
+>         if (!p)
+> -               return ".";
+> +               /*
+> +                * dirname(3P) is mis-specified because it returns a
+> +                * non-constant pointer even though it is specified to re=
+turn a
+> +                * pointer to internal memory at times. The cast is a res=
+ult of
+> +                * that.
+> +                */
+> +               return (char *) "";
 
-    The features git-checkout(1) offers are covered by the pair of
-    commands git-restore(1) and git-switch(1).  Because the use of
-    git-checkout(1) is still widespread, and it is not expected that
-    this will change anytime soon.
-
-or something (borrowing from your proposed log message)?
-
-[Footnote]
-
- * If we were to mention the history behind the introduction, we'd
-   end up saying: as an experiment, we introduced the pair of
-   commands that do different half of the original command to see if
-   they can replace the original.
-
-   The decision to keep the original would lead to implication that
-   this was a failed experiment, which makes people (unnecessarily)
-   wonder if the failed experiment should be removed.  I am trying
-   to avoid such unnecessary implication here.
+Ditto.
