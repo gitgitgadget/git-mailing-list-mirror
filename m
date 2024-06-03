@@ -1,81 +1,82 @@
 Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50DF012880F
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698601292D3
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717407031; cv=none; b=HoHi7wruAZQOSBE/NfezuCiAfXFDQEy5EPiKczMXPHVDs9H9+iKVdLMjIMRy5/TaczVayFZ/iVcVZsT5FZHEipZnDKMJZzDK1i/4H1vBZ07LfiSnnuRSZoLfxnbN+D/Bi9cjRY7ScLe6m7xmu5TQgEmYCyv++jcsqd4Cj8MhBqo=
+	t=1717407037; cv=none; b=LGwiW+BrqjjXouUUp79PxQCoKZbO5Y48DFIDNLcnR6gtYOm2LW0uEz0ukL64DzPkcl3NuBtvGf/rOefkO6rcshBrreKN+ADx5Pkc6Pqrzeuy2tCuLBL7t/nR6kcpuxUdzWoB/QaYJJsbW1+ykg20NisMpt1nRQZHvo/UyCzTIs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717407031; c=relaxed/simple;
-	bh=ptV8BtLN8uul3sA3TQuN0lWEhIYL3CRh58d0Qgnts34=;
+	s=arc-20240116; t=1717407037; c=relaxed/simple;
+	bh=xPdg47XABQd9W8LiQCuzjVJCOQmaYUntOXOU4YvYGNg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IklK2knnP7J0fWFwsyyhSzZD148Rr6Hr4mY+BKGPg+V3IQnAlMU4R5DDtfuHelinpuIFDSqGUg0adfYVX6s+yAIJGt/2nBOq2XeVRFELhM4/ofvKexOkEnSydEirvoVRvovTTajIthvcRAwh4qqMqgFOJ4AqVwEERcuhhaRiMfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FxUC+FCn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OXsLZdDE; arc=none smtp.client-ip=64.147.123.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=uOuv8B7GjxloSPE1oQiEa8bnDcBt7v4FXRV7qpOP8UNrR6XkE5jL3mJp8bqA8syGsczvpeoJOiKjKsioxlMkXvGArtEPxk+rRaJ0ND3xMRACgz4b6Vj0F9LcgvqHlest95a+EFsN9oDMUoI+zM+U9au8aSQ2sADJRhsjefYlahk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ro+ALmGP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hMXvtw0h; arc=none smtp.client-ip=64.147.123.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FxUC+FCn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OXsLZdDE"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 4C1F3180009D;
-	Mon,  3 Jun 2024 05:30:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ro+ALmGP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hMXvtw0h"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 798031800107;
+	Mon,  3 Jun 2024 05:30:34 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 03 Jun 2024 05:30:29 -0400
+  by compute6.internal (MEProxy); Mon, 03 Jun 2024 05:30:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717407028; x=1717493428; bh=l1JDHoXns2
-	j1X6DzZcunAsodmtAGeYosJhOZuC+Oecc=; b=FxUC+FCnUHu3+z8xLZ/+oQPH+b
-	GNEZIXpjMtDC9XOowPXu2O14SqDex2Xas9zuRTdh6pSgH3UUfGA+cWxjH/EmPnrY
-	qjjPzHo+DUDPgY3ctNnAgNqIelyuGFc9sZBtMqBdyI5E8/dXpg9SJ9Q8StP/kQly
-	FKts1feGkseuavqdgDNxgpZBo/OgI7lqiXAuPaz9OqsgkkJMgTe/YvkIq7uwv+3c
-	zs7JpJ3n1+h27PDT9Una/+25LM1tvk/yAl932cc/tLRR+wi+rUeUS6jo9+6DQmKD
-	BbstT5QpIgEt9XCzYgiHbNgYTqukORP5QmzNdnmYL+kXuhAdLzI0CP3zsCiQ==
+	:subject:to:to; s=fm1; t=1717407034; x=1717493434; bh=hj+LpBOrQP
+	dhbdOzakeTiy0VVSU33NIpJ1Yc/TmS8sQ=; b=Ro+ALmGPUiqIvo+J15LuWCqIax
+	08TY72SluCr5HlhsJ31840vavjJ9wC6dlKocbAv6F0b5BCxQF6qB6uJjxcgzLXEE
+	/Hrfc+OWVRF9N+Wn2+u6li/PgsxPtlTqMe2Tj8R+m9b+vWLMA6w0pZao3lCM5vKU
+	EYeCxDJgXBOVo+BFFrJy1xeiSMyq0gJchCwhClZld5Han11WuHWlhkUGrI9w29s4
+	HRioDFT/AHHVo+I7H4oGp6AWDeRu9iCfaJp800LEa73/vafOqhpo5wfudAX8jvhC
+	I726TQlMdT1yj3HIwNyBJmOqQS2/ebhxEFaDcTiL0NQq+qL1KZdzw/ogwPKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717407028; x=1717493428; bh=l1JDHoXns2j1X6DzZcunAsodmtAG
-	eYosJhOZuC+Oecc=; b=OXsLZdDEexi8zr/p7+AXbqFUT1SYq7U5tfX98QFcmHL0
-	79FswOHq/9nujY8Kzr4hKK+i0i9GWS3lhkfAiB96rCFUMxECqRBEiTlYs7TGsJv5
-	qpyLsTOTIsuQB74yCjsnSy41Gl+HIaOvZgL3b0iukoeZ6gDcH5UwmMWuoF62KpsO
-	Ty4F9uuPoKcK6ZgXBhCso4Ny5ExRnkCjrCfziXlV+xCr53Sie/QPBQOMu7Xfq4pI
-	9F5Q3yvC614NAopogA1/hnjT0FzDoNjsrXQpETDluHXfUzTLSM53wodgja08pzMN
-	08kJd4E47aDIbtInBv/wfOlMLZ7GZ9Ap4z/EAy3zQQ==
-X-ME-Sender: <xms:NI1dZhFAZ6Z6NYDsy1q0C5C6mZIK3lKkspvWRKgSQY25NV6m_mW-cg>
-    <xme:NI1dZmWpJ7P1931XfFM23iPJao_hVHsUi3AmFVjOBnvaZXCacycyLkghPThDvD-Q7
-    KCfnz8FsrygQjJ_mg>
-X-ME-Received: <xmr:NI1dZjI2kKCVsrE81zw71DG1WPh2parnwqwyetfnSr-yL5-oSujGIDARINU8KvdZ5O5X-EgFEy56MJIA5v-CmPmuN7V5jYNJkjJP5sTnvc1i4ij6>
+	fm1; t=1717407034; x=1717493434; bh=hj+LpBOrQPdhbdOzakeTiy0VVSU3
+	3NIpJ1Yc/TmS8sQ=; b=hMXvtw0hxRDk69G3SnUzJXc04tiwt2Mwgh0TkNy3+Uqp
+	5M67k3HZ87wLZumE349oion99K3e+UAr8KN8HoGk3DiyXf7G/I16Wwnpqu/3CHjB
+	B3IOAxE/apQzE+kR8PCEOPEolVZTSN2FEn4Am22NXIpWtJGzViRKOp+lFY/wUQlK
+	WR0G6az1s6vH5fR0fjZRN0zP73naFEkhL0yDfIrKqdQ7ffYzgUMv0xgoeM9lIz7U
+	pTcDmEFHYgmb0J65DkKYKNNYXOcWsVJyfdwN+XIADmUbdmrJdlI/JB6538rrNH9P
+	21D6gQTTPMYl10E0E85iMWteN8TdxGSAQVTVxDfw/Q==
+X-ME-Sender: <xms:OY1dZhEweek1M5hRC9uLRJpvfQM3DMhPZ3zlbRIqmng3ufUI_ZlncQ>
+    <xme:OY1dZmXZap_KGPZNlZmS6wYebl0GFY6lvFA1JXK5gIWaz6-sfYwp6Q0Pf3i5ZyVph
+    RO2iBWCsdA4tshWlg>
+X-ME-Received: <xmr:OY1dZjKmS9ahklmgI22koabIUOA75K5NSD02nEDJbIhkTLz6BMSC4p0TjXbLHM6ueB4oAEOtHrKtBrKyIv9D_DNB4IpLP06qlMiD5XWD7ohFtu3c>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelvddgudejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:NI1dZnFrE4Wp6R6SZ9r5w5cDd67PnI47LkUWNfp7YDJJoAWYN7Mfbg>
-    <xmx:NI1dZnUJPGLT2_5x7dSd-A7Nuzy1SCKsTbCCj8iSb5M3kGlVrYf88w>
-    <xmx:NI1dZiPB0XJGW-8wvuOJ57vzKRny27Tdgl0Fhdli_xGHqCI24mtJJQ>
-    <xmx:NI1dZm0_ti9GsM4HAhkV_FzHJYjNGlwpcAw_aAfIkZZMQkTBnij7-w>
-    <xmx:NI1dZtfRUnK4jMQNm3-yLwbTCCW0_bFaEuG1-Dt3M-xGs3nQmAcbU6lh>
+X-ME-Proxy: <xmx:OY1dZnEbggxK8RbhY4lyem_5lSaDnAwz6fmMzNJhRLJMw8g5NypdNw>
+    <xmx:Oo1dZnX5fL4vWNdKp_yOULzJAiJ6Dogc3JXYOlYp1a3yQ2bj6fWhsA>
+    <xmx:Oo1dZiPxF1IYpibl26QYIey_2nuKxxX5KogIYhDigp5gNJ84gE2UnQ>
+    <xmx:Oo1dZm2vuI8knxJvwACB3WykqI9ltBLChjSYuyZLDvMKoM8yGbL4Yg>
+    <xmx:Oo1dZteBgs02eTfdCwb9zvdTR4Vlh_JuWAi0gnDOGXIRhahxc3N1567Z>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Jun 2024 05:30:27 -0400 (EDT)
+ 3 Jun 2024 05:30:32 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 40fafb0f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 3 Jun 2024 09:30:03 +0000 (UTC)
-Date: Mon, 3 Jun 2024 11:30:25 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id fe2d3231 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Jun 2024 09:30:08 +0000 (UTC)
+Date: Mon, 3 Jun 2024 11:30:30 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 04/12] refs: allow to skip creation of reflog entries
-Message-ID: <d0539b7456e29fad5c2d1af76657207a199a5d9a.1717402363.git.ps@pks.im>
+Subject: [PATCH v4 05/12] refs/files: refactor
+ `add_pseudoref_and_head_entries()`
+Message-ID: <7f9ce5af2eb316477160224aa087ba6290cad672.1717402363.git.ps@pks.im>
 References: <cover.1716451672.git.ps@pks.im>
  <cover.1717402363.git.ps@pks.im>
 Precedence: bulk
@@ -85,152 +86,91 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zRs+S4nFzginFjQB"
+	protocol="application/pgp-signature"; boundary="WayycnOwHDXg1Ihl"
 Content-Disposition: inline
 In-Reply-To: <cover.1717402363.git.ps@pks.im>
 
 
---zRs+S4nFzginFjQB
+--WayycnOwHDXg1Ihl
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The ref backends do not have any way to disable the creation of reflog
-entries. This will be required for upcoming ref format migration logic
-so that we do not create any entries that didn't exist in the original
-ref database.
+The `add_pseudoref_and_head_entries()` function accepts both the ref
+store as well as a directory name as input. This is unnecessary though
+as the ref store already uniquely identifies the root directory of the
+ref store anyway.
 
-Provide a new `REF_SKIP_CREATE_REFLOG` flag that allows the caller to
-disable reflog entry creation.
+Furthermore, the function is misnamed now that we have clarified the
+meaning of pseudorefs as it doesn't add pseudorefs, but root refs.
+Rename it accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c                    | 6 ++++++
- refs.h                    | 8 +++++++-
- refs/files-backend.c      | 4 ++++
- refs/reftable-backend.c   | 3 ++-
- t/helper/test-ref-store.c | 1 +
- 5 files changed, 20 insertions(+), 2 deletions(-)
+ refs/files-backend.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 7c3f4df457..66e9585767 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1194,6 +1194,12 @@ int ref_transaction_update(struct ref_transaction *t=
-ransaction,
- {
- 	assert(err);
-=20
-+	if ((flags & REF_FORCE_CREATE_REFLOG) &&
-+	    (flags & REF_SKIP_CREATE_REFLOG)) {
-+		strbuf_addstr(err, _("refusing to force and skip creation of reflog"));
-+		return -1;
-+	}
-+
- 	if (!(flags & REF_SKIP_REFNAME_VERIFICATION) &&
- 	    ((new_oid && !is_null_oid(new_oid)) ?
- 		     check_refname_format(refname, REFNAME_ALLOW_ONELEVEL) :
-diff --git a/refs.h b/refs.h
-index a7afa9bede..50a2b3ab09 100644
---- a/refs.h
-+++ b/refs.h
-@@ -659,13 +659,19 @@ struct ref_transaction *ref_store_transaction_begin(s=
-truct ref_store *refs,
-  */
- #define REF_SKIP_REFNAME_VERIFICATION (1 << 11)
-=20
-+/*
-+ * Skip creation of a reflog entry, even if it would have otherwise been
-+ * created.
-+ */
-+#define REF_SKIP_CREATE_REFLOG (1 << 12)
-+
- /*
-  * Bitmask of all of the flags that are allowed to be passed in to
-  * ref_transaction_update() and friends:
-  */
- #define REF_TRANSACTION_UPDATE_ALLOWED_FLAGS                              =
-    \
- 	(REF_NO_DEREF | REF_FORCE_CREATE_REFLOG | REF_SKIP_OID_VERIFICATION | \
--	 REF_SKIP_REFNAME_VERIFICATION)
-+	 REF_SKIP_REFNAME_VERIFICATION | REF_SKIP_CREATE_REFLOG)
-=20
- /*
-  * Add a reference update to transaction. `new_oid` is the value that
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 73380d7e99..bd0d63bcba 100644
+index bd0d63bcba..b4e5437ffe 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1750,6 +1750,9 @@ static int files_log_ref_write(struct files_ref_store=
- *refs,
+@@ -324,16 +324,14 @@ static void loose_fill_ref_dir(struct ref_store *ref_=
+store,
+ }
+=20
+ /*
+- * Add pseudorefs to the ref dir by parsing the directory for any files
+- * which follow the pseudoref syntax.
++ * Add root refs to the ref dir by parsing the directory for any files whi=
+ch
++ * follow the root ref syntax.
+  */
+-static void add_pseudoref_and_head_entries(struct ref_store *ref_store,
+-					 struct ref_dir *dir,
+-					 const char *dirname)
++static void add_root_refs(struct files_ref_store *refs,
++			  struct ref_dir *dir)
  {
- 	int logfd, result;
+-	struct files_ref_store *refs =3D
+-		files_downcast(ref_store, REF_STORE_READ, "fill_ref_dir");
+ 	struct strbuf path =3D STRBUF_INIT, refname =3D STRBUF_INIT;
++	const char *dirname =3D refs->loose->root->name;
+ 	struct dirent *de;
+ 	size_t dirnamelen;
+ 	DIR *d;
+@@ -388,8 +386,7 @@ static struct ref_cache *get_loose_ref_cache(struct fil=
+es_ref_store *refs,
+ 		dir =3D get_ref_dir(refs->loose->root);
 =20
-+	if (flags & REF_SKIP_CREATE_REFLOG)
-+		return 0;
-+
- 	if (log_all_ref_updates =3D=3D LOG_REFS_UNSET)
- 		log_all_ref_updates =3D is_bare_repository() ? LOG_REFS_NONE : LOG_REFS_=
-NORMAL;
+ 		if (flags & DO_FOR_EACH_INCLUDE_ROOT_REFS)
+-			add_pseudoref_and_head_entries(dir->cache->ref_store, dir,
+-						       refs->loose->root->name);
++			add_root_refs(refs, dir);
 =20
-@@ -2251,6 +2254,7 @@ static int split_head_update(struct ref_update *updat=
-e,
- 	struct ref_update *new_update;
-=20
- 	if ((update->flags & REF_LOG_ONLY) ||
-+	    (update->flags & REF_SKIP_CREATE_REFLOG) ||
- 	    (update->flags & REF_IS_PRUNING) ||
- 	    (update->flags & REF_UPDATE_VIA_HEAD))
- 		return 0;
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index f6edfdf5b3..bffed9257f 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1103,7 +1103,8 @@ static int write_transaction_table(struct reftable_wr=
-iter *writer, void *cb_data
-=20
- 			if (ret)
- 				goto done;
--		} else if (u->flags & REF_HAVE_NEW &&
-+		} else if (!(u->flags & REF_SKIP_CREATE_REFLOG) &&
-+			   (u->flags & REF_HAVE_NEW) &&
- 			   (u->flags & REF_FORCE_CREATE_REFLOG ||
- 			    should_write_log(&arg->refs->base, u->refname))) {
- 			struct reftable_log_record *log;
-diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-index c9efd74c2b..ad24300170 100644
---- a/t/helper/test-ref-store.c
-+++ b/t/helper/test-ref-store.c
-@@ -126,6 +126,7 @@ static struct flag_definition transaction_flags[] =3D {
- 	FLAG_DEF(REF_FORCE_CREATE_REFLOG),
- 	FLAG_DEF(REF_SKIP_OID_VERIFICATION),
- 	FLAG_DEF(REF_SKIP_REFNAME_VERIFICATION),
-+	FLAG_DEF(REF_SKIP_CREATE_REFLOG),
- 	{ NULL, 0 }
- };
-=20
+ 		/*
+ 		 * Add an incomplete entry for "refs/" (to be filled
 --=20
 2.45.1.410.g58bac47f8e.dirty
 
 
---zRs+S4nFzginFjQB
+--WayycnOwHDXg1Ihl
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZdjTAACgkQVbJhu7ck
-PpQ/CRAAqHLA6M/vWVFLWs5S79nIS+jbK2PfwVDhgXJBoACpNm42AjvKYA0ju4qx
-//aUOC80TGYbkpVyy9IB5FqYPI27cstsb9/KUboONRFqsWKqLVknLXCCw043FuC8
-jUwIPNqt6tQ6hGdi3iZ1Jh8Mas4ob7hPQ6bALw+GQlqmhvHRPLuVEyw6k3gvsKF1
-CddTgabXuQ3sifYNDD0JeYBdBnBJNKJvrBsU1yq7C4tGgXd2h7b40UUZZBDKanX7
-1fSHoWrpjs4376+b1odnsmU3LQJRjVe0RPGSUwITibWqkj+88SysQUxFfuFIDtzK
-ul2slkObAb9kU8tS+rGx7h2EbqqHvfJF4mH2riyC9xlRtDn8PcCoM8WuDHjKJShk
-+UyIVF6WdlJse0MfjJIjTBA35LPPM5dn0iOlOed4o5xtfxp1cs1Axu/Pku7AYG34
-rEIluX7n5ANcphJUUoxD5HbUpwQFRr66+ArSebZGiKS0S1tIxuVR1d1BBuFMhZIu
-AYH8JbW9GX155+A15BiXNyksbKi2jdubyAvN3at+rDMclVrEMnVVFwZzvj5G3QiQ
-EoAXuZ9PpXPnHcto91VnnV7jtPQC28cdYmTMPk5puqX5/MQsp6jxfWgaSpFht5ZH
-jKVJ9a2ITmCfOW5sMOEIlQDD9n0A9AO2e3FKLmiK+2RfH70bVnQ=
-=SpVq
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZdjTUACgkQVbJhu7ck
+PpTslg//ZgIQevvaC3yS8SZBkLJJ4Ujb2Z1EsuhpVPnHiH8bGuq8SqzG5dWhkNb7
+V5xnR9LMJlNwMlW/cL+JI4OOylFx8OrWf1UgXiBcVTUi6c16Jgm4/04Plg5Yt9az
+7D67KhuP1bw4f+YzT+ahkyLBe/02uvimQKcYVOhrAmomSztrH679U1i1L2OeJrbj
+pMkZQpiFznfW8uBOEvWb7ooS8YVUs5yrW2cgKmO0kOcWytX6gavzjVjueu7tpEG7
++7hcppmf6F18jSIfI6Gt7cwP/rez44Pi38ffV6PQJXBd9h0v48BcNGDtKu/8q7Hw
+vXfBQXHjI3wHqAfDbDWH95jDBjKiZjjf1zTSbcvCPqPeZHag7/MGf1ZMPbua7Tu4
+dp3w++xAKZ+9uHA8dmfxjWFig/kgQSTk4M4zskrTviABEy/MPiE/sLV1eUBaQsOX
+UcX+3FKH7MXe8MiMAX6VqixGHhw1y1+Ul9WBolArXQxdfhH41iA7Fy6yFW+bYPQa
+EvvF0tMm4rte3ppJ7z5gmEERQr7A7jPntbFO9UOTokmPXxYLlFzuC7jGu0qMAhEB
+LWux5K+awc7BgnL4WuwZnrmSAEf1pDrmkFcsc1EXBy6Hwf+nzZcIKBB0hWVGKWGu
+kpcEqVfL3oIW2JhT9oXEiWPcmAdwETvNIDrH6Q1g4unuZ1V+A+U=
+=Lb5L
 -----END PGP SIGNATURE-----
 
---zRs+S4nFzginFjQB--
+--WayycnOwHDXg1Ihl--
