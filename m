@@ -1,234 +1,119 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8418A2232B
-	for <git@vger.kernel.org>; Sun,  2 Jun 2024 23:06:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3738E433AE
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 06:29:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717369615; cv=none; b=a5lPrzTFHLqreGrP1TPqB+ADK8OXlknUQ2Ek0mDwA39dHBl7Bj3A6vtTD/vO6FSUpYYB+YDYGVvZbRnJ3dLVh8FtFdWCTrIREq3adFEQ+VHoxYDWHpkR9qVFN2DUX27GJDvERqHdosS0D8gY2AwCqQYpQZuAXETL7scbhybCApM=
+	t=1717396161; cv=none; b=dkm7FYhwkAYyLAIwV7/CcK/FK5GI0ZKI94aqlHZYwUqBlmsrRz+hJlA81hLMU3jOloECdr8UUur661GIMDzu9q1v0tLtlESkTFJmwIoBM5jRa/swMEDN13oKRBjd20/OGrQwg6rlT+hDcStSUyKnGL44MGHb9/MGjw6tR+XfaKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717369615; c=relaxed/simple;
-	bh=oncwimCwLCIwO2gI5+4GwYhDqFOhgPCjq3VeQRZbaMc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=DDJKNkzBxpYsPXGkPgAox+v7Pd3JYo0exJRqx6ljnxFCDoLNUMowSfZ0JkymD5GutP7WIsmGmimM3u9qeRA0TD4Uo5y6fKv5pXSqf12lhPAjzFE9NgPTwdDm/U0LNvdlrwymWJIpgsfHImYQD2OXh8/IUFZ+KAfZ3pB2NQYlvgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PtqkCRfa; arc=none smtp.client-ip=209.85.167.51
+	s=arc-20240116; t=1717396161; c=relaxed/simple;
+	bh=8EuQEMO1Tn8rmUTpL+IKQO+DZDo/s5p9QTmhcxb2r5o=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=XmwqmQVa0FjEWc1C0XhCtbnUaB0D8dAPAlrQm0GbTIZXXvhjoVwdfZBUFe7UNnhz0FOtVFiXVXSyWmd0YmLsTU8ms+OmC8Ncn3wgEaUB3fR4Z0bh2K9oVXhoNUqT1r5g8PEdJv4h9ugi9qOu8lk4lIbVsEYpxEAsCbtroFc+q/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IoSHZ55S; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PtqkCRfa"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52b962c4bb6so1197799e87.3
-        for <git@vger.kernel.org>; Sun, 02 Jun 2024 16:06:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IoSHZ55S"
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52b912198f1so2319299e87.0
+        for <git@vger.kernel.org>; Sun, 02 Jun 2024 23:29:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717369611; x=1717974411; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oMWhVK7b3xr0hvXDEYvpnTX8Y4Dja0oEL2UcN6NDgZg=;
-        b=PtqkCRfaq9xqniexAcM0+ivXswW9ZiYCvbxWiuMg4Xbb3ViFGgoKj7pKY9BY2dh7wo
-         2G4NBZtXLARKCKNCrIFXzobpkLu8AhOk7iFykfUDzKcAFfp/UZTmCXHACVJbxN6X+YvZ
-         j3q4PCxqEgGr3OgSDOyxmCN6jbdFNhcUUzhOIrdolzKDRWM5Z7SK+4PbYG9pt4rw3wH3
-         FZ4Ez+nNi1Hwuox6abCulP/qnLzR4RuH9B1zGAGcmOpOX9gVHREBrCkqc+Lxa95C06X8
-         xccodc6cYUKDMVu5R12uP7YAqjySDIOCnclkwzYk248c8Nema3qx5/tIfCv5rwi8blfb
-         tY/w==
+        d=gmail.com; s=20230601; t=1717396158; x=1718000958; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=TMObR42NhpkfraN1s5qiconR9qh0lUWBAEU4k4+P5XI=;
+        b=IoSHZ55StcRdM/7fllEx98YK2jAU7W8SxuH/u2WwfAajpFolT8xUvpdv9rkQFrBxxd
+         tZ3LA55uEcB4UUeuBBvE2iowA+47Pj91mFx+0WLLoLrL5oiX8aj6uMbuQzppBW0e6GZ2
+         8O5KSZuSjJ+T/fKqv1xzjn1lwjNqlbFEoLu80+NFAzonhqWN4hzYR47JL2/oBVuxQ2nf
+         GNxzfmhtIThIbb67eDAY8WzM9aB8xDs4lydxhh6Xa2EEBC/dKIvg7eh2WxuEHAndW0Pc
+         bPnpf+HbmnRGsy5tui2oK3rX4AQZR86oKI3re+TwOSMMs3YwzdRR29zZMARA9BZPo0vx
+         myTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717369611; x=1717974411;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oMWhVK7b3xr0hvXDEYvpnTX8Y4Dja0oEL2UcN6NDgZg=;
-        b=kMu6J5XfRacjo2wMjFB0v9EW+2XQQ0y+2jhy8E0glzX7Q/+nakkUQlSO5Si1DVMjTb
-         1Y5FIlPyFSi8Nenbh0NUQRFY1KvdLy/t7PQhSrAS+w2JDkUcc4+B/igGztmt2oCzLoXg
-         /hmJPzoFSQdGId50TlWZmCoWAIRmM2TRBZ0kDwFPbTWZCmyCbb50teopsrar7eXGdV/L
-         KdVkj43Y8k3yEbYyEqShWK9Gf0GiGuo+cU/E5Iy5VK6gGcj8eiJpmnF5t+YsiEKfaJuW
-         jZJbve/3+K3v6/Dw3vMEds6q94BAwS63je6tWfKdODYajvBS4VNltZspRijorpMdJYnE
-         t7Fg==
-X-Gm-Message-State: AOJu0YwzOK4fj+DjsnR1GSAT/vBD6zlnZrVuzROy5zTVoV3LM2CEOrL9
-	wvd+WJ3YbL4UNlWHHgIhkbrohIWG/NpZhdyc7h1UAGnDjLQKoAPm6H6uuw==
-X-Google-Smtp-Source: AGHT+IEJqoSqLhxCyNj0qESWA6bQt61vKbiY3N4FrWfq6pnKh2sd9AJJnc1zyG0tCVV6mizetcU9+g==
-X-Received: by 2002:a05:6512:3e24:b0:52b:798f:cd7e with SMTP id 2adb3069b0e04-52b89521852mr8138053e87.12.1717369610707;
-        Sun, 02 Jun 2024 16:06:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a682ea1e5c4sm378414066b.115.2024.06.02.16.06.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Jun 2024 16:06:50 -0700 (PDT)
-Message-Id: <pull.1726.v2.git.git.1717369608923.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1726.git.git.1716801427015.gitgitgadget@gmail.com>
-References: <pull.1726.git.git.1716801427015.gitgitgadget@gmail.com>
-From: "darcy via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 02 Jun 2024 23:06:48 +0000
-Subject: [PATCH v2] date: detect underflow when parsing dates with positive
- timezone offset
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1717396158; x=1718000958;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TMObR42NhpkfraN1s5qiconR9qh0lUWBAEU4k4+P5XI=;
+        b=h3LYJkeZ3AOo8VehKxrsqj0255yYcJx0PomXGKP3rcrsHUAwriKIfbhfsDznsZVPe6
+         Mw/FrqZ919TRHKC47SC0GLhdXqmq0QFyNxsTuNggNbGbz2dzkoSpPJ6/nxMpXDfX1vTW
+         SE0wa7XgUVWhh/ehhSrQTr5vnjGxE9l3VXQSnnWqCOLJkcdSDYdd8GrZ+Maji2XW9Nt5
+         uSHGQo+uR1DCRddRJYURWnnHor5n3d5fCdkBYrVdcJHIrGid18TvgIk7RT1z4tKMoBL1
+         RXA95lu3xVkjXEikvt7hORSTMOnADct6/b32qy3CZiI5C0zYAiFuOA26so85d/Z2qMIx
+         RR/Q==
+X-Gm-Message-State: AOJu0YzWuuDVbhoBZYE8HctcVkMBvKPQJlzeSOw+ok26Z5s8+s6WvFL7
+	MWCYVw3dMpRq144vY81Ck1keRWZCcWEx6lRCKlXpogOrWYhrzER2S5QB/c80xT7NEXWvQlG9/gL
+	Iry46Wg+zfljAsDf7z3ZcvpdF4OWbqFWLJv0=
+X-Google-Smtp-Source: AGHT+IHoVnqCsdPefof+3EDMBPXOEeH0MP8Ur5/fHm6EZVkakXOPMEBHS2soE4hB92IyAM7zEDIhAdOxtLxWRd21TIU=
+X-Received: by 2002:a19:9107:0:b0:51e:2282:63cf with SMTP id
+ 2adb3069b0e04-52b896c494dmr4594396e87.45.1717396157735; Sun, 02 Jun 2024
+ 23:29:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: Arundas T C <arundas.tc@gmail.com>
+Date: Mon, 3 Jun 2024 14:28:41 +0800
+Message-ID: <CAKRNJbAnUBmR5MHY=uSF1A3docO-uxWG4agWuFZEyPUnduyWHw@mail.gmail.com>
+Subject: git pull --ff-only errors when git merge --ff-only passes
 To: git@vger.kernel.org
-Cc: darcy <acednes@gmail.com>,
-    darcy <acednes@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-From: darcy <acednes@gmail.com>
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Overriding the date of a commit to be close to "1970-01-01 00:00:00"
-with a large enough timezone for the equivelant GMT time to be before
-the epoch is considered valid by `parse_date_basic`.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-This leads to an integer underflow in the commit timestamp, which is not
-caught by `git-commit`, but will cause other services to fail, such as
-`git-fsck`, which reports "badDateOverflow: invalid author/committer
-line - date causes integer overflow".
+1. In a remote repository, have a commit that's only in remote at the
+tip of the current branch in local.
+2. In the local clone of this repository, edit some files and have
+unstaged changes.
+3. In local, run `git pull --ff-only`.
 
-Instead check the timezone offset and fail if the resulting time comes
-before the epoch, "1970-01-01T00:00:00Z", when parsing.
+What did you expect to happen? (Expected behavior)
 
-Signed-off-by: Darcy Burke <acednes@gmail.com>
----
-    fix: prevent date underflow when using positive timezone offset
-    
-    cc: Patrick Steinhardt ps@pks.im cc: Phillip Wood
-    phillip.wood123@gmail.com
+Fast-forward the local branch to match the remote branch, similar to
+`git merge --ff-only`. Handle any merge conflicts the same way that
+`git merge --ff-only` does.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1726%2Fdxrcy%2Fmaster-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1726/dxrcy/master-v2
-Pull-Request: https://github.com/git/git/pull/1726
+What happened instead? (Actual behavior)
 
-Range-diff vs v1:
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
 
- 1:  4542d984aab ! 1:  db508b2f533 fix: prevent date underflow when using positive timezone offset
-     @@ Metadata
-      Author: darcy <acednes@gmail.com>
-      
-       ## Commit message ##
-     -    fix: prevent date underflow when using positive timezone offset
-     +    date: detect underflow when parsing dates with positive timezone offset
-      
-     -    Overriding the date of a commit to be `1970-01-01` with a large enough
-     -    timezone for the equivalent GMT time to before 1970 is no longer
-     -    accepted.
-     +    Overriding the date of a commit to be close to "1970-01-01 00:00:00"
-     +    with a large enough timezone for the equivelant GMT time to be before
-     +    the epoch is considered valid by `parse_date_basic`.
-      
-     -    Example: `GIT_COMMITTER_DATE='1970-01-01T00:00:00+10' git commit` would
-     -    previously be accepted, only to unexpectedly fail in other parts of the
-     -    code, such as `git push`. The timestamp is now checked against postitive
-     -    timezone values.
-     +    This leads to an integer underflow in the commit timestamp, which is not
-     +    caught by `git-commit`, but will cause other services to fail, such as
-     +    `git-fsck`, which reports "badDateOverflow: invalid author/committer
-     +    line - date causes integer overflow".
-      
-     -    Signed-off-by: darcy <acednes@gmail.com>
-     +    Instead check the timezone offset and fail if the resulting time comes
-     +    before the epoch, "1970-01-01T00:00:00Z", when parsing.
-     +
-     +    Signed-off-by: Darcy Burke <acednes@gmail.com>
-      
-       ## date.c ##
-     -@@ date.c: int parse_date_basic(const char *date, timestamp_t *timestamp, int *offset)
-     - 			match = match_alpha(date, &tm, offset);
-     - 		else if (isdigit(c))
-     - 			match = match_digit(date, &tm, offset, &tm_gmt);
-     --		else if ((c == '-' || c == '+') && isdigit(date[1]))
-     -+		else if ((c == '-' || c == '+') && isdigit(date[1]) && tm.tm_hour != -1)
-     - 			match = match_tz(date, offset);
-     - 
-     - 		if (!match) {
-      @@ date.c: int parse_date_basic(const char *date, timestamp_t *timestamp, int *offset)
-       		}
-       	}
-       
-      -	if (!tm_gmt)
-      +	if (!tm_gmt) {
-     -+		if (*offset > 0 && *offset * 60 > *timestamp) {
-     ++		if (*offset > 0 && *offset * 60 > *timestamp)
-      +			return -1;
-     -+		}
-       		*timestamp -= *offset * 60;
-      +	}
-      +
-       	return 0; /* success */
-       }
-       
-     +
-     + ## t/t0006-date.sh ##
-     +@@ t/t0006-date.sh: check_parse '2008-02-14 20:30:45 -:30' '2008-02-14 20:30:45 +0000'
-     + check_parse '2008-02-14 20:30:45 -05:00' '2008-02-14 20:30:45 -0500'
-     + check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 -0500' EST5
-     + check_parse 'Thu, 7 Apr 2005 15:14:13 -0700' '2005-04-07 15:14:13 -0700'
-     ++check_parse '1970-01-01 00:00:00' '1970-01-01 00:00:00 +0000'
-     ++check_parse '1970-01-01 00:00:00 +00' '1970-01-01 00:00:00 +0000'
-     ++check_parse '1970-01-01 00:00:00 Z' '1970-01-01 00:00:00 +0000'
-     ++check_parse '1970-01-01 00:00:00 -01' '1970-01-01 00:00:00 -0100'
-     ++check_parse '1970-01-01 00:00:00 +01' bad
-     ++check_parse '1970-01-01 00:00:00 +11' bad
-     ++check_parse '1970-01-01 00:59:59 +01' bad
-     ++check_parse '1970-01-01 01:00:00 +01' '1970-01-01 01:00:00 +0100'
-     ++check_parse '1970-01-01 01:00:00 +11' bad
-     ++check_parse '1970-01-02 00:00:00 +11' '1970-01-02 00:00:00 +1100'
-     ++check_parse '1969-12-31 23:59:59' bad
-     ++check_parse '1969-12-31 23:59:59 +00' bad
-     ++check_parse '1969-12-31 23:59:59 Z' bad
-     ++check_parse '1969-12-31 23:59:59 +11' bad
-     ++check_parse '1969-12-31 23:59:59 -11' bad
-     + 
-     + check_approxidate() {
-     + 	echo "$1 -> $2 +0000" >expect
+What's different between what you expected and what actually happened?
+
+It errored out because of unstaged changes, even though doing `git
+merge --ff-only` will correctly do what's expected. See below.
+
+Anything else you want to add:
+
+After doing `git fetch`, I can do `git merge --ff-only` and this
+fast-forwards the branch as expected. Isn't `git pull --ff-only`
+basically the same as doing these two (fetch and merge)?
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
 
- date.c          |  6 +++++-
- t/t0006-date.sh | 15 +++++++++++++++
- 2 files changed, 20 insertions(+), 1 deletion(-)
+[System Info]
+git version:
+git version 2.45.1
+cpu: arm64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Darwin 23.5.0 Darwin Kernel Version 23.5.0: Wed May  1 20:12:58
+PDT 2024; root:xnu-10063.121.3~5/RELEASE_ARM64_T6000 arm64
+compiler info: clang: 15.0.0 (clang-1500.3.9.4)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
 
-diff --git a/date.c b/date.c
-index 7365a4ad24f..8e3ec1bcb00 100644
---- a/date.c
-+++ b/date.c
-@@ -937,8 +937,12 @@ int parse_date_basic(const char *date, timestamp_t *timestamp, int *offset)
- 		}
- 	}
- 
--	if (!tm_gmt)
-+	if (!tm_gmt) {
-+		if (*offset > 0 && *offset * 60 > *timestamp)
-+			return -1;
- 		*timestamp -= *offset * 60;
-+	}
-+
- 	return 0; /* success */
- }
- 
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 3031256d143..cdbb40bec01 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -116,6 +116,21 @@ check_parse '2008-02-14 20:30:45 -:30' '2008-02-14 20:30:45 +0000'
- check_parse '2008-02-14 20:30:45 -05:00' '2008-02-14 20:30:45 -0500'
- check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 -0500' EST5
- check_parse 'Thu, 7 Apr 2005 15:14:13 -0700' '2005-04-07 15:14:13 -0700'
-+check_parse '1970-01-01 00:00:00' '1970-01-01 00:00:00 +0000'
-+check_parse '1970-01-01 00:00:00 +00' '1970-01-01 00:00:00 +0000'
-+check_parse '1970-01-01 00:00:00 Z' '1970-01-01 00:00:00 +0000'
-+check_parse '1970-01-01 00:00:00 -01' '1970-01-01 00:00:00 -0100'
-+check_parse '1970-01-01 00:00:00 +01' bad
-+check_parse '1970-01-01 00:00:00 +11' bad
-+check_parse '1970-01-01 00:59:59 +01' bad
-+check_parse '1970-01-01 01:00:00 +01' '1970-01-01 01:00:00 +0100'
-+check_parse '1970-01-01 01:00:00 +11' bad
-+check_parse '1970-01-02 00:00:00 +11' '1970-01-02 00:00:00 +1100'
-+check_parse '1969-12-31 23:59:59' bad
-+check_parse '1969-12-31 23:59:59 +00' bad
-+check_parse '1969-12-31 23:59:59 Z' bad
-+check_parse '1969-12-31 23:59:59 +11' bad
-+check_parse '1969-12-31 23:59:59 -11' bad
- 
- check_approxidate() {
- 	echo "$1 -> $2 +0000" >expect
 
-base-commit: 9eaef5822cd76bbeb53b6479ce0ddaad34ee2b14
--- 
-gitgitgadget
+[Enabled Hooks]
+post-checkout
+post-commit
+post-merge
+pre-push
