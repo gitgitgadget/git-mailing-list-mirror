@@ -1,115 +1,127 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B6D58AA5
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:14:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B5C7A140
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:22:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717406065; cv=none; b=PQyatWaTZ/DwcnT7t480G4EIoXO83x13DG/gdfPuB/COs8Hs9ZStPAq/Q2P3cL0YyIQIVce679fxbWk4giPssCYrMszb8wrZsXb5CLk2IJgj6/Sen+r3Qy69e9Jq+qFv8xkaSyKcEJdzoC0/UklLqBi6XYk5WmdwrLZN6cZdZgM=
+	t=1717406557; cv=none; b=FLb2vYgKH2GVrgLpimCAL1FseGmzCQSNnh0kKLaKbwgwLZMz0ww8YHOBVHlQa3GlwrPqGpGJ40QQ9iNo/ZMJteuSFqd2qEUiCXutsaLld+QbgB0MOfBCn4Qu1H3QjmIP7aoZzUXgU0B0glSnH97x6T3lcFwUivVA+/wpLNnu7H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717406065; c=relaxed/simple;
-	bh=HIbk7xyeplvPkYbCZna/4gug6HHxbFIP4IY6bhyVOG8=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=cc6YkSvt6fY72LQE5tjo5OFQ3YNKzPpMrueaoBv9bjUCvnVOmLmlRhgJ0pjf+rQYyscFNu6tqDAg9+iLYXIk1jhAX5aWnpUpTDdfmuB6cbCSCdgF6O0YG8FsqBSm8pYna6g1QHKSilvYviFL5h8lQG6EUCW56kRrrp5eirFb5nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=S4aGJMUg; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1717406557; c=relaxed/simple;
+	bh=BW0Nbv8VKm3A8x8x/xcQZjykYZOVihzinRE2VWfa+x0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=dLJcxdjimWNOP/0AV0r3PRUeTBNWFLdLS34Fifx4ekVD1DzHU6fvx3/HzokwXuMgCuetwJDa9/gadbZNUvJSAxwlJvKZQ+/++1jb6dSSdCFDIAgmyG1auS/8cDB5mULliQxf3nTACkREGUzKLZsAFuJqCFRN5rHbY/UEPfzOzKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cSHcwipa; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="S4aGJMUg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1717406060; x=1718010860;
-	i=johannes.schindelin@gmx.de;
-	bh=ZkSuQFYEEtGN+fYH4iILkW1S7yYAyXFk1afynOMy2rQ=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
-	 Content-Type:MIME-Version:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=S4aGJMUggRCRq8E0ys9tXiWY7QIeTDTe1iXj3iuVDLgFESmOere796Ln+u6L/kMz
-	 tSUm5hNE+4uZbsu29Oros/ZpN47AAfuGoZ+zHjtXW+1qCTxcn9YMxE3jtQwxxNBlP
-	 ah8bFeSBIZCH5aEKZ0NWgr69gvNqFwOhvJsPVoJIQQsNLSUvh6jdEWETe17eExwSA
-	 dh3tYINtSTkiZXVmy+VwCkmnMVZ6YGn0061v/PhWJM10GhTddxM26YmcZqWymKaMY
-	 +ka/SwDX0XVRxreTJjLwz606835uplqs3939Vmd5hIyEM+X3/7lpH21r+tmeAKRWr
-	 NHLUpoWHfTmpMWbpvQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az1024-733.iwjnporn0ryezofxapuyptwyra.bx.internal.cloudapp.net
- ([13.90.174.194]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1MLzFr-1rwFll0Ya1-00LCSW; Mon, 03 Jun 2024 11:14:20 +0200
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com,
-	git@vger.kernel.org,
-	git-packagers@googlegroups.com
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.45.2
-Date: Mon,  3 Jun 2024 09:14:18 +0000
-Message-ID: <20240603091418.3402-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.45.2
-Content-Type: text/plain; charset=UTF-8
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cSHcwipa"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-42108856c33so23664505e9.1
+        for <git@vger.kernel.org>; Mon, 03 Jun 2024 02:22:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717406554; x=1718011354; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7+sxoHuimPIWinZAMR74i2RUCF6Ch4506SE8avHFW/M=;
+        b=cSHcwipaYVG5P2wpcNO3vNHLQOGn1hQBM3hw2yJAOo3Gq+b8GpU96ZMCxIquUpmJnZ
+         W0KKYH/kOn924YYjJbl/W9PFJxO1NLtRswSZA8vu/0LtwCAHgj/ji2JYm45DAtnM1Jua
+         /+T+e+CYTTWDy6calVDnlsmpPh3DZflBlXB41UW+ISuHoEgQV3YVtm1bHwVZa5HeHSnI
+         mQumMvIHqOZUJcW6ytK1lYhko6ZBHV5sOD/ckS7s1yAaQGSN/MLRMAGoQUYaPKWWbtH5
+         Kn4rLDBUuaE1gwIuEn+z/j6CDig3WtXaF8ngMfs7WHwPI/t1oLdF9pCSultkUPcgvLkI
+         9VvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717406554; x=1718011354;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7+sxoHuimPIWinZAMR74i2RUCF6Ch4506SE8avHFW/M=;
+        b=g4NaKl/kBDozBkO43jAZMa0CcghIbQ8/f5xGgYVcObP9vE4I9QgDKGmwGU9HDK69NA
+         iKmQGjaymhtWz8zRtI9OCBhHTsecLcjeY0whIfdH714gzrCanrEvlLLk+zxlIN5qxqkw
+         1CYYP6pb60pKzk5aX93ZWY6WQ+zeDvFPOafkkMuLPJ+85KWvA3NaZPwY7nuMinK5JC3o
+         +i0sUpYAUDQIqZujQeyGozF3dj+D90TXbmxI477YGxxaDWmqJMOipSIuouDQWTnQkZlC
+         ZHyB6mo3lW7afwg5E2mKXJpy5ALHcmdssiM7av48jXb0VHy9WhA8wiDGdLPCJg8crKZL
+         q+lw==
+X-Gm-Message-State: AOJu0Yy1CqaM3SJwBvOnKFJ4qKctqVByc77RR2XAM1ISlCHxn7PmAd0M
+	LG9oEoUoxwTxS93OjBIyIdVBT/qx0nSTRlizzxLSJYzYrNXOcfLtqo6vzg==
+X-Google-Smtp-Source: AGHT+IEmAWOw6XP/BY57eUIZyyh2ie/0ZMZ8a1jEPLi6H1wEWr77PgtKRDeCoHD0KAtWLo5xIEqt3g==
+X-Received: by 2002:a05:600c:1c9f:b0:421:2c02:977c with SMTP id 5b1f17b1804b1-4212dca1eb4mr71694305e9.0.1717406553776;
+        Mon, 03 Jun 2024 02:22:33 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1? ([2a0a:ef40:62f:f401:71a5:ff50:4738:e3b1])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42123458a5bsm77364415e9.1.2024.06.03.02.22.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Jun 2024 02:22:33 -0700 (PDT)
+Message-ID: <28796edf-65eb-4f28-8651-af97e00cabc9@gmail.com>
+Date: Mon, 3 Jun 2024 10:22:32 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Fcc: Sent
-X-Provags-ID: V03:K1:/EcrgEPfgPfipUqJQJ7gmCKyMyQreuQjuUXW7Ryy9jN8ckdaPVD
- r+zNYNdMaEZxCYxWi0O/n6O1FbS/yYM+io90B2jXhEOmHya65qPe7q0U6rlZEeydEZYUjnc
- LUOCcmyY128gmj0JiLuClecmzyiILIk51x7fVnjC4dm62ofpEj8mWL1zWHx7xqK4/GftGN2
- xurO1+1uRHha3veV1Ktjg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ChcSPDokB4A=;DvvWv5KRGnxhruBid4Y5xn+19N2
- DpxhD4qiCfChQoK25Hi4bI4k+zgibMEpAGkrrbWgfdsb2hQSdEJ4uUOdDA1JioU3UcqI6Forv
- PoTqiy8kqu9aVNFz9O0Kr3fAGOMh5iJlwEChjSBetCw6M46+sS7NtHeCn0qMGD6HrcJI4xtSn
- YLiw7vwrE/UgyMicK0rEg/mj8y4Fvw0dByfG0/SQZkJYlGjibJKkEi9MyZ1SkFjPXEX2/+YiX
- P58BmamUURG+35dkNRCjlySJDLBcdzbBpHzVjUrIyVs1kDH7W4VsWfkCwHMdz9I7InnqvpXQe
- MkZwTIhHPeoxd7Mb+tgbSMUEtPLzE2GITrhffW4bd3Wb7WEsDB72FA76PofSVgwijFvhoSHZ4
- rpaH8fflTufcqcxuP7G3FTmhHKBxMuBLXzCJNFR7iAbaFrxcei4Win6NgMJ04Aes474aK1o7c
- ltVRlkjcsVUgW00K1KBJdPsS6gLfPQf0+kVDLWFtBku7dJWcM0Ss3cag05BALzPM+h/pV15BF
- K+cfIK1qG26paVId05P7FQBBUGfY10lcG6JqE27BSAOP+v5PRp0Yb3SwuyBmJsVtbJ99frQYf
- 59PtqK5uzFAJp900QTTpO8xxm5vLdxWgmDHFOR0zrvWjAHlF6d+a9mcwWWxSPFjMce5P09ahX
- OcfvRGJogXTLbqScDoVWhAqdPyLOznMFxoyg7FEaLcW+SM0oIUPfej48sTSCRvVqcMSJMf9RU
- 18Pfy230G1y2TrpMGEW/TvCmCaoH0lMnhNLBO+lndWbS3dKfIdBAottMbxsny9hQwSWwa4YKW
- xR5uLi4AFi4menRpvi9ttQJyXZsOYLTnGQGeyiznGwUKA=
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 0/2] rebase -i: improve error message when picking
+ merge
+To: Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Stefan Haller <lists@haller-berlin.de>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Patrick Steinhardt <ps@pks.im>, =?UTF-8?Q?Rub=C3=A9n_Justo?=
+ <rjusto@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1672.v2.git.1712585787.gitgitgadget@gmail.com>
+ <pull.1672.v3.git.1717076630.gitgitgadget@gmail.com>
+ <xmqq7cfbp6pb.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqq7cfbp6pb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Dear Git users,
+Hi Junio
 
-I hereby announce that Git for Windows 2.45.2 is available from:
+On 30/05/2024 18:09, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>   1:  1bcf92c6105 ! 1:  91c6f2f1b45 rebase -i: pass struct replay_opts to parse_insn_line()
+>>       @@ builtin/rebase.c: static int edit_todo_file(unsigned flags)
+>>        @@ builtin/rebase.c: static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+>>         		error(_("could not generate todo list"));
+>>         	else {
+>>       - 		discard_index(&the_index);
+>>       + 		discard_index(the_repository->index);
+>>        -		if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
+>>        -						&todo_list))
+>>        +		if (todo_list_parse_insn_buffer(the_repository, &replay,
+> 
+> OK.  It would probably have been unnecessary to rebase only for this
+> update.
 
-    https://gitforwindows.org/
+I agree the conflict is easy to solve but GitGitGadget gets upset and 
+refuses to run the ci if it cannot merge the branch into master
 
-Changes since Git for Windows v2.45.1 (May 14th 2024)
+>>       + ## Documentation/config/advice.txt ##
+>>       +@@ Documentation/config/advice.txt: advice.*::
+>>       + 		`pushNonFFCurrent`, `pushNonFFMatching`, `pushAlreadyExists`,
+>>       + 		`pushFetchFirst`, `pushNeedsForce`, and `pushRefNeedsUpdate`
+>>       + 		simultaneously.
+>>       ++	rebaseTodoError::
+>>       ++		Shown when there is an error after editing the rebase todo list.
+> 
+> This thing is new.  It is unclear to me if this description is clear
+> enough to readers that we are checking the edited todo list for
+> errors.
 
-Git for Windows for Windows v2.45 is the last version to support for
-Windows 7 and for Windows 8, see MSYS2's corresponding deprecation
-announcement (Git for Windows relies on MSYS2 for components such as
-Bash and Perl).
+I'm happy to improve it if you have any suggestions - I had hoped "after 
+editing" would be clear enough.
 
-Please also note that the 32-bit variant of Git for Windows is
-deprecated; Its last official release is planned for 2025.
+>  It is clear enough from the actual code change, and the
+> readers come to this list after advise_if_enabled() triggers and
+> reports that the rebaseTodoError knob allows them to squelch it, so
+> it probably is OK.
+> 
+> Thanks, will replace.  Let's see if we see comments from others and
+> then mark it for 'next' soonish.
 
-New Features
+Thanks
 
-  * Comes with Git v2.45.2.
-  * Comes with Tig v2.5.10.
-  * Comes with cURL v8.8.0.
-
-Bug Fixes
-
-  * When Git for Windows v2.44.0 introduced the ability to use native
-    Win32 Console ANSI sequence processing, an inadvertent fallout was
-    that in this instance, non-ASCII characters were no longer printed
-    correctly unless the current code page was set to 65001. This bug
-    has been fixed.
-
-Git-2.45.2-64-bit.exe | ce022a6a19e58bbbd4823f51cf798b006b4a683b93b0616a7bb5beeee901da98
-Git-2.45.2-32-bit.exe | b8e6db9004c602d9dc375196244484399eb3e33ad71ba3c71455dde4487b4ce6
-PortableGit-2.45.2-64-bit.7z.exe | 851a15074dea6b272785b2a2a4697a72970256de2afe7b8e4a9c5e168c27ccdd
-PortableGit-2.45.2-32-bit.7z.exe | cfea9e414567d0c59c75ccc5a0e58feeef4dcfc0ea8bfd76efb5e4e22813f5d0
-MinGit-2.45.2-64-bit.zip | 7ed2a3ce5bbbf8eea976488de5416894ca3e6a0347cee195a7d768ac146d5290
-MinGit-2.45.2-32-bit.zip | 0c0251d02c322d208fb59ba81e7d72db621cd53a3f93b105677dab4dc565199e
-MinGit-2.45.2-busybox-64-bit.zip | e841b7aefa8d166fb9dd91afcfb42f163ae6f8d9bd9061da9856084af214a011
-MinGit-2.45.2-busybox-32-bit.zip | 9e8ede5629d928f943909f0f3225b27716bdaa95018a3c6cf6276fbc99ee19da
-Git-2.45.2-64-bit.tar.bz2 | ef73e007a44a15e8c21fed165faea8707a28703c21c326ac609d706225ba1662
-Git-2.45.2-32-bit.tar.bz2 | 451e476b925842546fe47429efcfa91185727da2c2477413556e7827daeab847
-
-Ciao,
-Johannes
+Phillip
