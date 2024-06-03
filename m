@@ -1,159 +1,159 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D6843ADC
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 07:37:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3149C6A032
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 08:39:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717400230; cv=none; b=OsOmsPSGVpRNdFIA3oYBVNrGjER8dKyzpmKs/56HnCWCef+o+7OzU/8yuD0Ph1Ez+uNKI2CoqYDE5su5Q2yYgEUfUSmonomYZrg2NNy19RSLOJXOXJbY3PRvsniS2biI3E/czBDnd2WrrEjdrXAVrUsqHqLSKi5b6d7Oj9/oSS4=
+	t=1717403944; cv=none; b=BEJYMTTCEcuy+nn3ymlVFmghW7Pq1laEnCjYEIwlj+GCb19JI6h5xu/6xCMn3N/mwqi7ox3mimUnhAy9gjnwOIiglcJznURPmHFPTUwWqI96lBbNSSGUOAzBGwLkBpFteNTYYfk4yL/3SXtFZisFvwPUu/P646z3nb/iXazRgdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717400230; c=relaxed/simple;
-	bh=+OiKrxzJ1GdHQ2DcOyZwZWbg3pIu0KGsTzS19bWpqP8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B58Qcv6Vt2nEZGoWzbAS/32a9XcaUUdsTXMjOqhJTvUIbU75glPnwEouiTlFstcFAXvVanM1PxMfNBs+nlB19G6BojpgLVufgxCCZFvV3M2K+F0aJae4QmawYSltaj/49lNXjlJ0Q3a9Z0ZHkQ61GlABmpRsstLthbmxC/ZEivg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Cti3COVw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dL0+YidF; arc=none smtp.client-ip=64.147.123.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1717403944; c=relaxed/simple;
+	bh=7IbAtDUreRqOpIXdPTWTWWwxzPDAw6zFlmUD07qcfIg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=A8yeJI+AEd9NGGQF0bZfWlAHQkCjH7eFDY9JMiz7zqjW0HV9+dB5j51pA/zhJT9k/Q8GMKvEh1AT6DLYHN3GYQ8dyd3qggHW8q7Zlvcjqz++F73MWMpyrOU5xuWXhUm9h/waO6jFvEXqqNyqY8czWe9piGoXhHSJJYJdqkxd1bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gk1D4peF; arc=none smtp.client-ip=209.85.219.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Cti3COVw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dL0+YidF"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id E12BB18000AA;
-	Mon,  3 Jun 2024 03:37:07 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 03 Jun 2024 03:37:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717400227; x=1717486627; bh=Ff2jJmtOCO
-	6sLyrhclqtjQVOxlvIGypYNPRE3S+5fXo=; b=Cti3COVwt2nQssih4CcS9BR9Ri
-	ydZUN1N4Mb8h3nXnoGiQfWfStFPDGVADrOJ51AWfPM8SuDUCEOI46rFTkypDbWz0
-	lhhWaLidAMCdSo2nxJll8hnS3+TvK7m3J186cdFn/5ob+ZHpQa+CIxLue1PQDHSW
-	/2encO6iiAnXP9q9Wl22uSn6RT4yE1axM5MDWgncuO/SmxQtN+YO/7ghoY/K2O4t
-	TE3IqLj+Qj9SacElkGF40ec0tIdyIHwQP4SoPZP7lOMwq8jUCVWa6zZqU5820ziu
-	fRBVbJxir/tgKRrFqrcyFGspoHTI60a0EXJwHKrstDp5NhAlZmQiIpoaEdsg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717400227; x=1717486627; bh=Ff2jJmtOCO6sLyrhclqtjQVOxlvI
-	GypYNPRE3S+5fXo=; b=dL0+YidFMQWW5uF1tpDINyDaLnR+I6pEGS9YT52VL20x
-	Qj7Z7d2E4SeHfrS3+QOQjzb8NN7MUYfIC9HA8iakMoL5x1ZJoqUJjwAfArvEaVtw
-	3BFgx0G1U9lcUsLDU6M/+Utrvy4XyeTgQqZWA7QUP3X60xfsbq+mTXNSVKc+lCbe
-	LUrTEzdCXB/BzS1pWA5gLJ6WeVLVe+K3hOiRy9Aie9M5otdxX20GGxBrFrY1ELdH
-	xJIj5ga4zfrhE4/mti8sZxgnr3v2fQwfpAaiIsCPAFWSdkMuRFUTl4nHWm02IobT
-	lQsGkCqtry0dZ/3qnslJxsan9QGWIobpYJtCU0xhwg==
-X-ME-Sender: <xms:o3JdZl6PwOSzm80n5PsZZm3Zez_Cl2OrFfnORKBIsvwZ6NrO83Rygw>
-    <xme:o3JdZi6baV0Os5YwsJ5PUaRNK6RUWOl_FoteEED5QFCnye2d6xnkW4QMbyJtYMj11
-    P2pjbBQvC13RkWnxg>
-X-ME-Received: <xmr:o3JdZse-KpHGOmqPXNVbOW35r7ZsQpzp3F4_Il3wYtgdmyt-0i6D8c878kaxmjHmClvfD3gZeGfTZZ3RC6ypqliV0lu5LxeV6ZFMk_soHMTsIA0B>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeluddguddvtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:o3JdZuJw8eyEfafYDkovLVDVcJfDKGN99h8rqJr6IMCBKlqYI-DIGQ>
-    <xmx:o3JdZpLg0xbx0xSAHk8ADIoCI0hVpJX4nHHaPqdcRkkwNLdUC4f_cw>
-    <xmx:o3JdZnxmeDdpoNHrlMZbC1vyMoaUfr6zmKTd3w_ib8zS4aDdk508Xg>
-    <xmx:o3JdZlKcRD_ew9EbEVHMCV8ZFKQLAJJCMAMU1Sf82gdBUBgvrwOsxA>
-    <xmx:o3JdZh-ICHgOJKvRsYNB2QVqy-nsZjZ_69c_wRuix8lW1JIYADOlKp8F>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Jun 2024 03:37:05 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 4169f923 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 3 Jun 2024 07:36:40 +0000 (UTC)
-Date: Mon, 3 Jun 2024 09:37:02 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Justin Tobler <jltobler@gmail.com>, psteinhardt@gitlab.com
-Subject: Re: [PATCH v3 12/12] builtin/refs: new command to migrate ref
- storage formats
-Message-ID: <Zl1ynntoW-_VzvY-@framework>
-References: <cover.1716451672.git.ps@pks.im>
- <cover.1716877224.git.ps@pks.im>
- <d832414d1f8a7c8d9ec3ade13e11dd509c0ab641.1716877224.git.ps@pks.im>
- <xmqqjzj9czop.fsf@gitster.g>
- <xmqq7cf8b1gg.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gk1D4peF"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dfa48f505a3so4141969276.1
+        for <git@vger.kernel.org>; Mon, 03 Jun 2024 01:39:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717403942; x=1718008742; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=txt1Fct0Q/qTABobBoEApBo6Vdn9J4NAj20pj1iOH0I=;
+        b=Gk1D4peFDXjiKay1oX9WTYiCtods3AFp1yjdgdD4PKvsf2PJZfEM0LTjzOraBpqkZp
+         o02uB9FAcBoeSnZhAgHHQ9XEh+wBLYjoOcAn3f58doNTqRWEQ7hKfAXm0vtMV2sguLHb
+         VS6I2uxkEGjEhRoxbMRkJyIa3SSUsQ1rr0hKhJt8M7/hst8bF+u3MusbbCVbBij3IIMZ
+         +fha8S3QxamMzKVSZtlfzBOkJBa+0MOkLqGyHscPdRFY0hgDXqnVOUUPtpIoHPsLf5kz
+         d6g1BWD8DRAQj1sy5FLHP/eUz5cUcloulQJdLS7ZRl9KAqAVW6vUiJ3n8GcLKNL5zDV3
+         uMAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717403942; x=1718008742;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=txt1Fct0Q/qTABobBoEApBo6Vdn9J4NAj20pj1iOH0I=;
+        b=ZQ4bLwUuil7wXKSOJVCeb9S7j8Ic3uaZ2FYZQkfnik7rg/PZyx6YrlgdiC6x+9rhqA
+         vElJ8h75umGEYOhwy5UFpoYJlDg060QqOWt0O+heVsu84wwftrGpCoc/nW/+FJMaNpto
+         ALMKXFHuceLjW7HCHzkloEQUu2ZvNllbR6rS/KO5VOxeRMUQVf1gp9VMzU6X7THpP/nx
+         0VstrAj31HyoCHDAiIoKwSh5ORoH7pQOiTKM/6ge9KnOX+gPmdYtZGThQ0qB1FD19z7t
+         HWuCNr9UPJMGtXsgPj4CMtTtK9YsJEEGugGkZ0x5qbG9fvQEuKzFFzK8yKmiq9Ah+wBU
+         YtRw==
+X-Gm-Message-State: AOJu0YzMz9pTXe1m9x8y5Fsn1587f0i+69Ixm1Z8C3vENdyGl9TomgXz
+	AkjT5twgyNOiEIWhiQLI5z11/CgI/2AIPFBDc4NoOmiKTLfvyZtLFYiowbuMmbKaegse/daHHjT
+	RKUOusUjLKKzRBazCO5wbiHzA5vxnH00=
+X-Google-Smtp-Source: AGHT+IGorY2aSKI4WyGzetzBao4y1PVdTGTr//m4yJccMm6KR53dvsdLva5KSySPlHDLHmPsQKBYJVQpYeSurVa0cvc=
+X-Received: by 2002:a05:6902:2841:b0:dee:5dc4:59cf with SMTP id
+ 3f1490d57ef6-dfa73c2209amr9026724276.26.1717403942041; Mon, 03 Jun 2024
+ 01:39:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="i6j881SCaRxyISF7"
-Content-Disposition: inline
-In-Reply-To: <xmqq7cf8b1gg.fsf@gitster.g>
-
-
---i6j881SCaRxyISF7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <CADg0FA_9shzJKN=dBfnavu5eTDNhbz=g0WP2sehAjSqHP4WFkA@mail.gmail.com>
+ <CAPig+cT1pTkKd1A0o_qjP+Oyx+zyCevV8EAg5Ub9guAyd3UjgA@mail.gmail.com>
+In-Reply-To: <CAPig+cT1pTkKd1A0o_qjP+Oyx+zyCevV8EAg5Ub9guAyd3UjgA@mail.gmail.com>
+From: Antoine Bolvy <antoine.bolvy@gmail.com>
+Date: Mon, 3 Jun 2024 10:38:50 +0200
+Message-ID: <CADg0FA_2Z-Hz-ahaHWM-w7qhjf0+06XuhZv1MR3dOtfnAvD09w@mail.gmail.com>
+Subject: Re: [bug report] git diff --relative not doing well with worktree in hooks
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jun 01, 2024 at 06:03:27PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
-> > One thing missing is an entry in command-list.
+> If you change your hook from:
+>
+>    #!/bin/bash
+>    cd folder || exit
+>    pwd # display the current working directory
+>    git diff --cached --relative --name-only
+>
+>to:
+>
+>    #!/bin/bash
+>    cd folder || exit
+>    pwd # display the current working directory
+>    unset $(git rev-parse --local-env-vars)
+>    git diff --cached --relative --name-only
+>
+>then it works as expected.
+
+It seems that unsetting GIT_DIR only is enough to make it work:
+
+    #!/bin/bash
+    cd folder || exit
+    pwd # display the current working directory
+    unset GIT_DIR
+    git diff --cached --relative --name-only
+
+Thanks for the help and pointing me to the right documentation!
+
+Antoine BOLVY
++33(0)675455349 =E2=80=A2 https://saveman71.com
+
+
+On Fri, May 31, 2024 at 11:42=E2=80=AFPM Eric Sunshine <sunshine@sunshineco=
+.com> wrote:
+>
+> On Fri, May 31, 2024 at 7:38=E2=80=AFAM Antoine Bolvy <antoine.bolvy@gmai=
+l.com> wrote:
+> > I noticed a weird behavior when using git diff --relative with worktree=
+s and
+> > hooks. When called from a pre-commit hook from a worktree, the relative=
+ option
+> > has no effect.
 > >
-> > If you ran "make check-docs", you would have seen
-> >
-> >     $ make check-docs
-> >     no link: git-refs
-> >
-> > The Documentation/MyFirstContribution.txt file does mention
-> > command-list, but it is rather messy and unorganized.  I think the
-> > checklist at the top of <builtin.h> would be the best source of
-> > information at this moment.
-> >
-> > Thanks.
->=20
-> You'd need something like this. =20
->=20
-> With the command missing from command-list.txt, git.1 (which has the
-> list of commands) will fail to mention the command, of course.
->=20
-> The fix to the documentation file itself is also crucial, as the
-> name section is where we grab the list of command descriptions used
-> in "git help -a", and with the extra blank line, git.1 will fail to
-> build.
-
-Thanks, I'll squash this in and send a new version.
-
-It would of course be great if CI had noticed this. And we do execute
-`make check-docs` via "ci/test-documentation.sh" indeed. But the problem
-is that `make check-docs` does not return an error when there is a
-missing link.
-
-I'll send a follow-up for this test gap later this week.
-
-Patrick
-
---i6j881SCaRxyISF7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZdcp0ACgkQVbJhu7ck
-PpTaOg//f5qRrnY0flHPwd4qZ9nqrNnaEwLqOgm5VrMXz7TFGjlsiDUBWFX/w6C3
-6hEW8BZS8tLwz43TsiYvA0TwS4h6TRwaSBaM3Zyo+6nkrI25L6+I4CmMAPiKl36v
-tsBG+KY4zsQnZT7/duShtjZ17yEnOVD+6V1/dzXfh+bqQU+DMRdHOfTxRdSa8tV0
-tv37DRkaqHRgwOHmM/mghr1Dq7sTQQlj3TFpedzRRP459uHwRyFEJRf44Zm4fh+P
-NpHY/zT0IHyC4US+v3iXyiJe1lhLJYhRMzNSj4ii4QwYDVE1pMe9Hl5duDXdOm6e
-YmpSc+TsIzj4IozQgUA7L3UrZc3DjQ/i23rytU3pPwDkVtsU8IDRSPACABsy0+Eb
-yAnMUQyb9V65AkZsbponxC3eMh1x+iyIvGr9x3e6HPqbTQE4ZllvzGGDjqUwHIzq
-AYqpVCbIgqRYVZHazYXd4AzsjC/9UQWgxxc3yRDu1FmXO+LboGfpjv0AXMPQsK5f
-VsZCxlqquKGso7iKuaf1ooA134PIUVa0/d0KdORpOnR0d6XIr2Vd4dsUkHPZx+un
-5/h8Vq5KKL7aGsJj8jdvftJRoBwDuxjgORpf+8JmJPCp9NGblMX8vh/u3C6jP2u6
-IputQYOYYUdDC59h6dzaGYcKx08ecKBX4p1JqX9OruGHDrsq/5c=
-=TbBA
------END PGP SIGNATURE-----
-
---i6j881SCaRxyISF7--
+> > [main tree] Displays
+> > ```
+> > /home/arch/git/awfus/hook-repro/test/folder
+> > bar
+> > ```
+> > [in worktree] Displays
+> > ```
+> > /home/arch/git/awfus/hook-repro/worktree/folder
+> > folder/foo
+> > ```
+> > The path is no longer show relative. This causes issues with more compl=
+ex
+> > scripts.
+>
+> I'm not sure there's a satisfactory resolution here. Your hook is
+> running afoul of the environment variables Git sets up when the hook
+> is run outside of the "main" worktree.
+>
+> If you change your hook from:
+>
+>     #!/bin/bash
+>     cd folder || exit
+>     pwd # display the current working directory
+>     git diff --cached --relative --name-only
+>
+> to:
+>
+>     #!/bin/bash
+>     cd folder || exit
+>     pwd # display the current working directory
+>     unset $(git rev-parse --local-env-vars)
+>     git diff --cached --relative --name-only
+>
+> then it works as expected.
+>
+> The relevant portion from the "githooks" manual page is:
+>
+>     Environment variables, such as GIT_DIR, GIT_WORK_TREE, etc., are
+>     exported so that Git commands run by the hook can correctly locate
+>     the repository. If your hook needs to invoke Git commands in a
+>     foreign repository or in a different working tree of the same
+>     repository, then it should clear these environment variables so
+>     they do not interfere with Git operations at the foreign
+>     location. For example:
+>
+>         local_desc=3D$(git describe)
+>         foreign_desc=3D$(unset $(git rev-parse --local-env-vars); git -C
+> ../foreign-repo describe)
