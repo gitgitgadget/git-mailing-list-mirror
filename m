@@ -1,81 +1,81 @@
-Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
+Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B234884DED
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:30:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C620884DFA
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 09:30:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717407056; cv=none; b=bro27Mb7fdVRYHgFt8UF/iIUxrTrBGdVDvisYBnBCimW4V59ATXnHYZJrg1CDBdrYF+NPtMpZUwKrCvTJjszb81OpMjTMDXHC9Jmnkja52dN1IhpWlLwQHg8zXNgYgNygjAvAT1W6chKK5l+ZbThnixjOarSrcHMPAY7UxFT/JM=
+	t=1717407061; cv=none; b=YP7heKGIcsvx8ZVaI67JZYCu9T+AOX9XxPJpaj0xawI26dk9stDEqU2R2l/EFC2S2baOWzcpF0k05zkosxkgqNYxH6+3DxS4UvnFjt29peJlaIpFFqfwdVQY5j6Yg4M/YRCqUcq3VGUhwzs1oD6PiZXSSIqGzv2AVv8BIJT4bZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717407056; c=relaxed/simple;
-	bh=HkSxfCdoU0+D8rl7AdPRT6mgbvvL3+PefBnLqhhF2xg=;
+	s=arc-20240116; t=1717407061; c=relaxed/simple;
+	bh=u6kpesYwfcKBBJtODqEcTjoMr4p40odt7aqVqrqx07E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o1WqFTNy0GusG1+hZN8cdo4POhspwUjO69E/RxgdHs7NN8tYPTajxMr97ENNLzHfOheD5NxSLhiuNZKCoeNkVQkXkIry0RW1iQH8+JxQhkYkK8llut8PhnD45oF4N+nE5wmx9MC7vOerPW5kpIWyGYfa/uStNm++0zoIPU7mDdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fKMtfjXR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FiIHv/P3; arc=none smtp.client-ip=64.147.123.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=B2WTDskPZMaVUHDb4cFl+6V8myh5sgIYdb+gTUsw79550Ymh8MtUReLHDy2cEMoKDCqnkkmpNvJ/QtUyp61ZANYYiBpfA+c5rGaxDjygu2Mb7PYRTBdj1uiWbKuyITliI4fV/wB3I4XGgeecwu8vioGV9xANai6DpIzYurcEPKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KxFxVmmx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NVyA7UBq; arc=none smtp.client-ip=64.147.123.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fKMtfjXR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FiIHv/P3"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.west.internal (Postfix) with ESMTP id A46161C000F9;
-	Mon,  3 Jun 2024 05:30:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KxFxVmmx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NVyA7UBq"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.west.internal (Postfix) with ESMTP id CFC52180009D;
+	Mon,  3 Jun 2024 05:30:58 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 03 Jun 2024 05:30:54 -0400
+  by compute7.internal (MEProxy); Mon, 03 Jun 2024 05:30:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717407053; x=1717493453; bh=3m6b3UGykD
-	5g60tNqaZouN6O85Rhwr2sK5OvzEpMBbE=; b=fKMtfjXRJ8NYFIT8vY8qEkjN+M
-	Ayr0d88JSqV4bbpzP49lrSoIz9rjfoUPFoZxNl4flpqsH3emvqFeBurx9QEas+dZ
-	j4gdTMxtOSZXPTAlIRDobUtOczrTFQC/z1jIUILjdLKFUiU8QIZz70OLmA8owkWJ
-	w7ZPm75e1uQz57X+eeXPU6C7lAmvJ7lmsJG6EsENU0A3bED0TUzwlxFpkpp62dz5
-	rv0lQPRWZBQWC4FTej3aZ1b8vSzEcJJjGLhR+C6qp5pjiw5pzHiBEibjGb16+3NC
-	nFuwYcoDLqlsNy5CyPt8C5tlUkPpjdoA6upoH95EUzUHWtYaJror4GSANC4w==
+	:subject:to:to; s=fm1; t=1717407058; x=1717493458; bh=TzdOGx7UUz
+	aLRqVKpdYP04UmUMXse/MvEyjvrD/6mV0=; b=KxFxVmmxqTWs6iPlFqDhlvjYYp
+	33PtkfcjbpzVcBBu6BXpQSXLLD7snCE5HeVgX5RXMaNV22vrZppW6Wblq39eQ0jP
+	L8kbBzkDIjMzZ9U1ccLTXEoEm2lHvc3I3ToSkStK+CSYlhpfSoit9JrXSFRmQtOv
+	L5iZixn4N2bfIbJjmBZtVPxeyHSygn0nrUpunROLWSLxDzaMTdLa6oGhnZS3/J62
+	nDQMScdoZj6491GSBQ2DnQSb7EYuYxF0VdXBQ3ghcx68hNVehVfniTULDQnV9kg5
+	CTQYTc2TC6kuNgZ8gbdxzeD6B7EHtRjlKRWWhuEMlnjL8LhB/pZ/x/Egimeg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717407053; x=1717493453; bh=3m6b3UGykD5g60tNqaZouN6O85Rh
-	wr2sK5OvzEpMBbE=; b=FiIHv/P34/9JwoU+rGrf9eKX22u+I9WL1z9CUhk3GU29
-	wO/rHKCgvL5wMI30zqeN76vZFTj37nIUKeaPHBS8+9NC6WtWjDwjbLjorc/JtR6y
-	s4yFIpuTUmgr9edmeVoEi+eZkbYw5rY6Voi6cnwAoQ7ukDi1zd7PH1MsiZ6pSFs1
-	0j1390ToyMSLbTY/CZB75WZJToJepkOidDoaTLCB5f3n0pmQnLqCh6i/SYZXIndf
-	nnMto8h4A8UwTM6fGrg1Zxz/2MpIGjeszWOuHkyMwROewq3Mk9sGgxfnxaRqAYqH
-	DiHz7IFD1S4h+BXI06eq1lATrsiAv4ot4D/HYxIBwA==
-X-ME-Sender: <xms:TI1dZrQfogQJ_V5QQGNu4--z6AezHWCRry8eA6BUyxajVilaZMSX_w>
-    <xme:TI1dZsxTaTvg-Fahxrrc28ZRGiOWrb1H6n0T7sdxzcZyO2tNog20wvwSb7aEXIVBr
-    lYw8WmYBvTrg6Yj9A>
-X-ME-Received: <xmr:TI1dZg1OkgxsmUxkmLZTX2kMljkVjLYMxJYvTeV_ry5yq8EfUdqfD3ixO7HR4m3yQXhQ9oZ30oBI2QY3phuxO5Dzv5yCIPytpzDKJsCYvixQPQVH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelvddgudeiucetufdoteggodetrfdotf
+	fm1; t=1717407058; x=1717493458; bh=TzdOGx7UUzaLRqVKpdYP04UmUMXs
+	e/MvEyjvrD/6mV0=; b=NVyA7UBqXq0kKz669ijnR4fJFXaD9iytMIk7l+wfSlTu
+	VO7mJWORZ+C0YOw+Sh2Gdlyr1eKoNeE1Ql8bqQHlAtrYIojWezrWUclC7PNjeq59
+	mPr5cGLF0iuCmF4eeei0asJkMK3TZGREyzW2CvsBoFyhnEX+XVuMBX/VniyEM/Cp
+	2dl3egsSacLQZrMEiPApcO3IpcumjzBzYofCAckQHBv0LfpblVl8BCQeS5kpM8Gq
+	AIIZPybe1nwqxnDd6LGOkSeUZUKbvDUDlv7HZ3aFf1VE94t/dKkxT4uQdX6O3LuU
+	UZEy3RuIxwrdt/QhhSWn+iWcsWSYBXRV77iJNlKS0w==
+X-ME-Sender: <xms:Uo1dZmpAt5Uv4Lr56bXPFn6HEcaNejXYxL94sgsqNN5HDp6ggkrEbA>
+    <xme:Uo1dZkrFk_g5bdVhbMnya_qn3pdCjcyNZLwajJZIFpzWw6lsgAfvC9DVA2RdaVqqK
+    6QmYMj3ITShyk0Z5g>
+X-ME-Received: <xmr:Uo1dZrPUw53Y7iVhlS_9-Taz5CmZEC-WEz31uVsNtSBaI6VOig8Zvyw3b_18HCi5q2InEZtTREDyesmuiQas3llCnWNHff4DQCdTaIf8hgmh3cq2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelvddgudejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepgeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:TI1dZrBVSksn02l659ktrx7dmnP3h-At0iuYvEEzn_Epuu7ZJ9Ek3w>
-    <xmx:TI1dZkhgJrKON-jldAgvgYuv69JLbZaYNAkmM_qNsCmKO8DsJHQqxQ>
-    <xmx:TI1dZvpKHghe2qOV5Xy_SXKwd_VkAYFu4LtcOjIhzqC-7ClZthCnaQ>
-    <xmx:TI1dZvgZWAl7BmCIOUJw8J8KdYRM0tK-ZhYxFJpEzDDs0kPeri8eCQ>
-    <xmx:TY1dZubX8AZxQXJCHtJyokpSxP08dmyU5VWDbBeER7wPbRy8lVXVZavF>
+X-ME-Proxy: <xmx:Uo1dZl7OYbEjMWNQ6ssPS0OhyFpkF-lAKMux95JVJml_FDjidCXxmQ>
+    <xmx:Uo1dZl4W-WTqRPmz0Xr8J3cjPJtWiP3H2O8D-9ofADTjxJtCx48cMg>
+    <xmx:Uo1dZliWtWslnRbu0F5lEk9va22GUMP0RLgGsKURPAwsnPHZBFjPaw>
+    <xmx:Uo1dZv6kIV1c8dpP7ptzxRSH5PTp9fHY3SeEmvZo62gbW-DvycUjWA>
+    <xmx:Uo1dZjRRjBnl9Sa2ErQRVcroIDv-xlRs03QJKdxVCCB2YQL1uaowt5hJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Jun 2024 05:30:51 -0400 (EDT)
+ 3 Jun 2024 05:30:57 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 92298797 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 3 Jun 2024 09:30:27 +0000 (UTC)
-Date: Mon, 3 Jun 2024 11:30:49 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 523562ec (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Jun 2024 09:30:33 +0000 (UTC)
+Date: Mon, 3 Jun 2024 11:30:55 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 09/12] worktree: don't store main worktree twice
-Message-ID: <7a89aae51526faefc0ccce0a73cbd54aec8e8879.1717402363.git.ps@pks.im>
+Subject: [PATCH v4 10/12] refs: implement removal of ref storages
+Message-ID: <f9d9420cf93025595e00aa4287bc0cc1a1c067ab.1717402363.git.ps@pks.im>
 References: <cover.1716451672.git.ps@pks.im>
  <cover.1717402363.git.ps@pks.im>
 Precedence: bulk
@@ -85,130 +85,314 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="B5orHugSMKdGz35G"
+	protocol="application/pgp-signature"; boundary="CwgpDESBaNHPRiYP"
 Content-Disposition: inline
 In-Reply-To: <cover.1717402363.git.ps@pks.im>
 
 
---B5orHugSMKdGz35G
+--CwgpDESBaNHPRiYP
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In `get_worktree_ref_store()` we either return the repository's main ref
-store, or we look up the ref store via the map of worktree ref stores.
-Which of these worktrees gets picked depends on the `is_current` bit of
-the worktree, which indicates whether the worktree is the one that
-corresponds to `the_repository`.
+We're about to introduce logic to migrate ref storages. One part of the
+migration will be to delete the files that are part of the old ref
+storage format. We don't yet have a way to delete such data generically
+across ref backends though.
 
-The bit is getting set in `get_worktrees()`, but only after we have
-computed the list of all worktrees. This is too late though, because at
-that time we have already called `get_worktree_ref_store()` on each of
-the worktrees via `add_head_info()`. The consequence is that the current
-worktree will not have been marked accordingly, which means that we did
-not use the main ref store, but instead created a new ref store. We thus
-have two separate ref stores now that map to the same ref database.
-
-Fix this by setting `is_current` before we call `add_head_info()`.
+Implement a new `delete` callback and expose it via a new
+`ref_storage_delete()` function.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- worktree.c | 29 +++++++++++------------------
- 1 file changed, 11 insertions(+), 18 deletions(-)
+ refs.c                  |  5 ++++
+ refs.h                  |  5 ++++
+ refs/files-backend.c    | 63 +++++++++++++++++++++++++++++++++++++++++
+ refs/packed-backend.c   | 15 ++++++++++
+ refs/refs-internal.h    |  7 +++++
+ refs/reftable-backend.c | 52 ++++++++++++++++++++++++++++++++++
+ 6 files changed, 147 insertions(+)
 
-diff --git a/worktree.c b/worktree.c
-index 12eadacc61..70844d023a 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -53,6 +53,15 @@ static void add_head_info(struct worktree *wt)
- 		wt->is_detached =3D 1;
+diff --git a/refs.c b/refs.c
+index 66e9585767..9b112b0527 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1861,6 +1861,11 @@ int ref_store_create_on_disk(struct ref_store *refs,=
+ int flags, struct strbuf *e
+ 	return refs->be->create_on_disk(refs, flags, err);
  }
 =20
-+static int is_current_worktree(struct worktree *wt)
++int ref_store_remove_on_disk(struct ref_store *refs, struct strbuf *err)
 +{
-+	char *git_dir =3D absolute_pathdup(get_git_dir());
-+	const char *wt_git_dir =3D get_worktree_git_dir(wt);
-+	int is_current =3D !fspathcmp(git_dir, absolute_path(wt_git_dir));
-+	free(git_dir);
-+	return is_current;
++	return refs->be->remove_on_disk(refs, err);
 +}
 +
- /**
-  * get the main worktree
+ int repo_resolve_gitlink_ref(struct repository *r,
+ 			     const char *submodule, const char *refname,
+ 			     struct object_id *oid)
+diff --git a/refs.h b/refs.h
+index 50a2b3ab09..61ee7b7a15 100644
+--- a/refs.h
++++ b/refs.h
+@@ -129,6 +129,11 @@ int ref_store_create_on_disk(struct ref_store *refs, i=
+nt flags, struct strbuf *e
   */
-@@ -76,6 +85,7 @@ static struct worktree *get_main_worktree(int skip_readin=
-g_head)
- 	 */
- 	worktree->is_bare =3D (is_bare_repository_cfg =3D=3D 1) ||
- 		is_bare_repository();
-+	worktree->is_current =3D is_current_worktree(worktree);
- 	if (!skip_reading_head)
- 		add_head_info(worktree);
- 	return worktree;
-@@ -102,6 +112,7 @@ struct worktree *get_linked_worktree(const char *id,
- 	worktree->repo =3D the_repository;
- 	worktree->path =3D strbuf_detach(&worktree_path, NULL);
- 	worktree->id =3D xstrdup(id);
-+	worktree->is_current =3D is_current_worktree(worktree);
- 	if (!skip_reading_head)
- 		add_head_info(worktree);
+ void ref_store_release(struct ref_store *ref_store);
 =20
-@@ -111,23 +122,6 @@ struct worktree *get_linked_worktree(const char *id,
- 	return worktree;
- }
-=20
--static void mark_current_worktree(struct worktree **worktrees)
--{
--	char *git_dir =3D absolute_pathdup(get_git_dir());
--	int i;
--
--	for (i =3D 0; worktrees[i]; i++) {
--		struct worktree *wt =3D worktrees[i];
--		const char *wt_git_dir =3D get_worktree_git_dir(wt);
--
--		if (!fspathcmp(git_dir, absolute_path(wt_git_dir))) {
--			wt->is_current =3D 1;
--			break;
--		}
--	}
--	free(git_dir);
--}
--
++/*
++ * Remove the ref store from disk. This deletes all associated data.
++ */
++int ref_store_remove_on_disk(struct ref_store *refs, struct strbuf *err);
++
  /*
-  * NEEDSWORK: This function exists so that we can look up metadata of a
-  * worktree without trying to access any of its internals like the refdb. =
-It
-@@ -164,7 +158,6 @@ static struct worktree **get_worktrees_internal(int ski=
-p_reading_head)
- 	ALLOC_GROW(list, counter + 1, alloc);
- 	list[counter] =3D NULL;
-=20
--	mark_current_worktree(list);
- 	return list;
+  * Return the peeled value of the oid currently being iterated via
+  * for_each_ref(), etc. This is equivalent to calling:
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index b7268b26c8..cb752d32b6 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3340,11 +3340,74 @@ static int files_ref_store_create_on_disk(struct re=
+f_store *ref_store,
+ 	return 0;
  }
 =20
++struct remove_one_root_ref_data {
++	const char *gitdir;
++	struct strbuf *err;
++};
++
++static int remove_one_root_ref(const char *refname,
++			       void *cb_data)
++{
++	struct remove_one_root_ref_data *data =3D cb_data;
++	struct strbuf buf =3D STRBUF_INIT;
++	int ret =3D 0;
++
++	strbuf_addf(&buf, "%s/%s", data->gitdir, refname);
++
++	ret =3D unlink(buf.buf);
++	if (ret < 0)
++		strbuf_addf(data->err, "could not delete %s: %s\n",
++			    refname, strerror(errno));
++
++	strbuf_release(&buf);
++	return ret;
++}
++
++static int files_ref_store_remove_on_disk(struct ref_store *ref_store,
++					  struct strbuf *err)
++{
++	struct files_ref_store *refs =3D
++		files_downcast(ref_store, REF_STORE_WRITE, "remove");
++	struct remove_one_root_ref_data data =3D {
++		.gitdir =3D refs->base.gitdir,
++		.err =3D err,
++	};
++	struct strbuf sb =3D STRBUF_INIT;
++	int ret =3D 0;
++
++	strbuf_addf(&sb, "%s/refs", refs->base.gitdir);
++	if (remove_dir_recursively(&sb, 0) < 0) {
++		strbuf_addf(err, "could not delete refs: %s",
++			    strerror(errno));
++		ret =3D -1;
++	}
++	strbuf_reset(&sb);
++
++	strbuf_addf(&sb, "%s/logs", refs->base.gitdir);
++	if (remove_dir_recursively(&sb, 0) < 0) {
++		strbuf_addf(err, "could not delete logs: %s",
++			    strerror(errno));
++		ret =3D -1;
++	}
++	strbuf_reset(&sb);
++
++	ret =3D for_each_root_ref(refs, remove_one_root_ref, &data);
++	if (ret < 0)
++		ret =3D -1;
++
++	if (ref_store_remove_on_disk(refs->packed_ref_store, err) < 0)
++		ret =3D -1;
++
++	strbuf_release(&sb);
++	return ret;
++}
++
+ struct ref_storage_be refs_be_files =3D {
+ 	.name =3D "files",
+ 	.init =3D files_ref_store_init,
+ 	.release =3D files_ref_store_release,
+ 	.create_on_disk =3D files_ref_store_create_on_disk,
++	.remove_on_disk =3D files_ref_store_remove_on_disk,
+=20
+ 	.transaction_prepare =3D files_transaction_prepare,
+ 	.transaction_finish =3D files_transaction_finish,
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 2789fd92f5..c4c1e36aa2 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1,5 +1,6 @@
+ #include "../git-compat-util.h"
+ #include "../config.h"
++#include "../dir.h"
+ #include "../gettext.h"
+ #include "../hash.h"
+ #include "../hex.h"
+@@ -1266,6 +1267,19 @@ static int packed_ref_store_create_on_disk(struct re=
+f_store *ref_store UNUSED,
+ 	return 0;
+ }
+=20
++static int packed_ref_store_remove_on_disk(struct ref_store *ref_store,
++					   struct strbuf *err)
++{
++	struct packed_ref_store *refs =3D packed_downcast(ref_store, 0, "remove");
++
++	if (remove_path(refs->path) < 0) {
++		strbuf_addstr(err, "could not delete packed-refs");
++		return -1;
++	}
++
++	return 0;
++}
++
+ /*
+  * Write the packed refs from the current snapshot to the packed-refs
+  * tempfile, incorporating any changes from `updates`. `updates` must
+@@ -1724,6 +1738,7 @@ struct ref_storage_be refs_be_packed =3D {
+ 	.init =3D packed_ref_store_init,
+ 	.release =3D packed_ref_store_release,
+ 	.create_on_disk =3D packed_ref_store_create_on_disk,
++	.remove_on_disk =3D packed_ref_store_remove_on_disk,
+=20
+ 	.transaction_prepare =3D packed_transaction_prepare,
+ 	.transaction_finish =3D packed_transaction_finish,
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 33749fbd83..cbcb6f9c36 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -517,6 +517,12 @@ typedef int ref_store_create_on_disk_fn(struct ref_sto=
+re *refs,
+ 					int flags,
+ 					struct strbuf *err);
+=20
++/*
++ * Remove the reference store from disk.
++ */
++typedef int ref_store_remove_on_disk_fn(struct ref_store *refs,
++					struct strbuf *err);
++
+ typedef int ref_transaction_prepare_fn(struct ref_store *refs,
+ 				       struct ref_transaction *transaction,
+ 				       struct strbuf *err);
+@@ -649,6 +655,7 @@ struct ref_storage_be {
+ 	ref_store_init_fn *init;
+ 	ref_store_release_fn *release;
+ 	ref_store_create_on_disk_fn *create_on_disk;
++	ref_store_remove_on_disk_fn *remove_on_disk;
+=20
+ 	ref_transaction_prepare_fn *transaction_prepare;
+ 	ref_transaction_finish_fn *transaction_finish;
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index bffed9257f..e555be4671 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1,6 +1,7 @@
+ #include "../git-compat-util.h"
+ #include "../abspath.h"
+ #include "../chdir-notify.h"
++#include "../dir.h"
+ #include "../environment.h"
+ #include "../gettext.h"
+ #include "../hash.h"
+@@ -343,6 +344,56 @@ static int reftable_be_create_on_disk(struct ref_store=
+ *ref_store,
+ 	return 0;
+ }
+=20
++static int reftable_be_remove_on_disk(struct ref_store *ref_store,
++				      struct strbuf *err)
++{
++	struct reftable_ref_store *refs =3D
++		reftable_be_downcast(ref_store, REF_STORE_WRITE, "remove");
++	struct strbuf sb =3D STRBUF_INIT;
++	int ret =3D 0;
++
++	/*
++	 * Release the ref store such that all stacks are closed. This is
++	 * required so that the "tables.list" file is not open anymore, which
++	 * would otherwise make it impossible to remove the file on Windows.
++	 */
++	reftable_be_release(ref_store);
++
++	strbuf_addf(&sb, "%s/reftable", refs->base.gitdir);
++	if (remove_dir_recursively(&sb, 0) < 0) {
++		strbuf_addf(err, "could not delete reftables: %s",
++			    strerror(errno));
++		ret =3D -1;
++	}
++	strbuf_reset(&sb);
++
++	strbuf_addf(&sb, "%s/HEAD", refs->base.gitdir);
++	if (unlink(sb.buf) < 0) {
++		strbuf_addf(err, "could not delete stub HEAD: %s",
++			    strerror(errno));
++		ret =3D -1;
++	}
++	strbuf_reset(&sb);
++
++	strbuf_addf(&sb, "%s/refs/heads", refs->base.gitdir);
++	if (unlink(sb.buf) < 0) {
++		strbuf_addf(err, "could not delete stub heads: %s",
++			    strerror(errno));
++		ret =3D -1;
++	}
++	strbuf_reset(&sb);
++
++	strbuf_addf(&sb, "%s/refs", refs->base.gitdir);
++	if (rmdir(sb.buf) < 0) {
++		strbuf_addf(err, "could not delete stub heads: %s",
++			    strerror(errno));
++		ret =3D -1;
++	}
++
++	strbuf_release(&sb);
++	return ret;
++}
++
+ struct reftable_ref_iterator {
+ 	struct ref_iterator base;
+ 	struct reftable_ref_store *refs;
+@@ -2196,6 +2247,7 @@ struct ref_storage_be refs_be_reftable =3D {
+ 	.init =3D reftable_be_init,
+ 	.release =3D reftable_be_release,
+ 	.create_on_disk =3D reftable_be_create_on_disk,
++	.remove_on_disk =3D reftable_be_remove_on_disk,
+=20
+ 	.transaction_prepare =3D reftable_be_transaction_prepare,
+ 	.transaction_finish =3D reftable_be_transaction_finish,
 --=20
 2.45.1.410.g58bac47f8e.dirty
 
 
---B5orHugSMKdGz35G
+--CwgpDESBaNHPRiYP
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZdjUkACgkQVbJhu7ck
-PpTRSA/9E1NEOI/fpR4ExalDZ15rCcIkAVZV7qBTFCzOUEYMtw3FRyZFAu6ZJuZc
-uC74IUhH0/EEnGIwL8KEQ78LMmBAJvA3d242wRJya6MlPYkoe86BkuU/KtgHHAAE
-qETAL1SCPg8SqWQz8EDMY4VCJ5Of8mPhzphm2nJJJevXuNwmqW6BUJkaz8cpapoW
-18carzzP0u2fuALJkAkXyNWgvEZOQet3/Pk39HlVWaGbMVJkBanN2Te5EobByu9I
-cKu394+RiY8MD1bgh9NgMENiF6JZrXH6cgE6kE+9w8AyTVF+GkGrh0U5xw/lOP1Z
-V3oYDom4Wl75NONND7QPtrlSUH3vps69tJXT+XiZ231wz6MLC+5j8LFDBaWnkQ1r
-Fdt+mKcDqwN/sSdQ9y/lj3q5acoHMhVuZdhA0I/3j+LBhe/0GDOadEPdAfaUxycY
-2x4ofcz0ULkfXsA39DnwtVvdWXTWD04Mpzre95h3VO8LnUXe7uJ8n/J36gS7F+Z8
-EaH/P+Hm0QpJV+Fq5wzCl3+8hs42tjETR40A6x68A2pDBw+XWjvkEiJnCxcqP/X7
-l487G4j5FTins+zrQPXeLy5XUArgiA2xBxYkLJp4MBqaoP5Gm72m+lzDZxq1kA+p
-omdiC03bFflwe1+jiyj+V4EBzPknrbNC/OJP8RhyJWbd4lo8Txk=
-=wp57
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZdjU4ACgkQVbJhu7ck
+PpRAUA/+MwroV6YpDaHF500Ys2GKqDY/W8+d+xPuSTiazzwW3jgQsHvoDiFIdjKU
+sIt0O3ZNnGGC9LhjGS6du0Oo9VzLJbUFabJD6wFVgu6gQTEm4V+i8zD0cKxbyup7
+CwAA+JpDlAjLHPjLsFmBM/C0QuG3M+xXobC4Ia9VBXuuKOio3djQ6tXBsTlXCOxj
+D3UjBy+gFjYw5cxxIv6MMWW6PWAHuem9TBlDcF3ph2sL89QZ28apcHy9+2JKuJ8A
+WjLOpxdZLYjWRNjzebTlBkmGL2ESQS35KbrKk2tYrFXy7SpWUQZSZooIWhsx/+kP
+oyTResFLjbnTl0uNLMfqAX2Z3VO4pvfb4K2ABwHYrcamiDSINFycuKM1WfzURfs9
+7iFHwuf3YMtrtJjEbZjHm88McmKMYxO6rUOAddcPHu4MQwJPexPVx5rxGOndaVSx
+TKR2JXEFzyv1GB18YvK6Q9SNfeAssLgXG+YP477D7NAoAjs8BHSzCUBkdVfWN6ko
+gV6MJN1X+4eONMcfDFrP12QNjTrhOkGiErTv2b71mpMNwjUbAIZqio1rU5AcIF6m
+3rqfQN0qGUaQ9yFXUF13cRSbPipTg7Y3C6EA8zlddvm6E4E0etu8Awiy4lATWCor
+p/HD74yvB8+OJ59ijrFqc5IT8fxMsB5VJjlhfHwl6+eyFC7x7Lo=
+=EYGF
 -----END PGP SIGNATURE-----
 
---B5orHugSMKdGz35G--
+--CwgpDESBaNHPRiYP--
