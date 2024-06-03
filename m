@@ -1,51 +1,54 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE269137C33
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 18:11:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC4F13A878
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 18:33:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717438308; cv=none; b=KTnEaWXZ4Qp3bfZGIhZ2xlrEbOzymR36TuxyWsGCBdCWIlG/IAIuFxGnspc4f+HC1QlCsR/loCvNM3joRfaBy/FTgsx+kq/TnK57Tnu9PM92+DRFofzthBdmS4T8qDgqOU4eaY3yEu42S5LIXs0OQVv6XCSBRiP4T4YXp/FwedQ=
+	t=1717439599; cv=none; b=fonBYjOjJgQS7+m74jOgSTjCi6uOKwPokBWMFm1Hu7j4q1BVWmMcJgUPNgmaxP7wj8skij8ucFwMKS9pqlrEUUke9JjKCEmFdsdBwYcD7Wbr8sqPfIFBEtuu0Fb1jh+fnnQU2wiawQS70oawM1Lf/Jdl0JX5WknSXsRIj5rXqxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717438308; c=relaxed/simple;
-	bh=vzymfkRjdNQw0bfk0dvsHJL8zUFT264QwTvKttUrkVw=;
+	s=arc-20240116; t=1717439599; c=relaxed/simple;
+	bh=QL+L/lSOMrkDYujreQOPcfPQpiRtJk7CEoddk5CBdJo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=W+shlOA7kgwOVc4AuLs61m0kjBOvjX0564BJE4lAM2t92/ntIBPKRQu/ycVBCT2cVrvZgHxUzx0Sf9ZC+qXGiOXI9IxdZY1da7bbKLS7sT1QJckvA4c6TU04hwV2z1dcIx7JYXKbxHJubzOAm16In99mc5nI9ZdZGVW7TxhpY3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Boq6duat; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=nDUrh7BzIASDCngv16nDsZlA2woCJVGPhoXfdlH6Ahmvz21iP7RqlI7doNJiqsxTKALntGP86ViLIGCdGVxfYfakyFQ+ANzdm/6ti9DP1GR4U6i1mxk2CIFlnwMePgor4m3hgNSPae5I57Ztsdj7euI2pgEr+FDhwRLcFDIzwzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=De1Nthoy; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Boq6duat"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C5A2734647;
-	Mon,  3 Jun 2024 14:11:45 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="De1Nthoy"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 071AA2D472;
+	Mon,  3 Jun 2024 14:33:17 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=vzymfkRjdNQw0bfk0dvsHJL8zUFT264QwTvKtt
-	UrkVw=; b=Boq6duatqyTYbYVxybTP15ciNYbJzNRFV2mSz+N3PK3XINPtuJi5s4
-	VgA+nbyVNxO+nHBgxAM9na3P2MCpaJWnM2+z+QUtFoSQ7ajSC4yOAcQcbxZqCQBB
-	uq0iGfBuN3qY6PFuaS0oVMEQpQZC3TNQ3zHeGi8ZvpzfQP1wtUF4g=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BD5A734646;
-	Mon,  3 Jun 2024 14:11:45 -0400 (EDT)
+	:content-type; s=sasl; bh=QL+L/lSOMrkDYujreQOPcfPQpiRtJk7CEoddk5
+	CBdJo=; b=De1NthoyE9PHb8HM2EQ9F+BmTeky4wJ/P+2+Ixa7dXfKBX0H8mHRcq
+	lttWq+iGVgowfJWSp6OridAbYhs4jX8uCZPtSHbaIIB4M+QLVrzM+mS6ytsN/zpr
+	oxsmCSvA5wfVVWZzDejHZrD6tcG9Ij4CJNUVKzEr5IMOIoveQYvVI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id F31DA2D471;
+	Mon,  3 Jun 2024 14:33:16 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D7A834645;
-	Mon,  3 Jun 2024 14:11:45 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6745C2D470;
+	Mon,  3 Jun 2024 14:33:16 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 05/27] refspec: remove global tag refspec structure
-In-Reply-To: <db4d0620146fdf7acd59c649d93c0da68289a3d7.1717402403.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Mon, 3 Jun 2024 11:39:20 +0200")
-References: <cover.1716983704.git.ps@pks.im> <cover.1717402403.git.ps@pks.im>
-	<db4d0620146fdf7acd59c649d93c0da68289a3d7.1717402403.git.ps@pks.im>
-Date: Mon, 03 Jun 2024 11:11:44 -0700
-Message-ID: <xmqqikyp3nhb.fsf@gitster.g>
+To: Kevin Day <toasty@dragondata.com>
+Cc: git@vger.kernel.org
+Subject: Re: Commands using -h as an option don't work consistently
+In-Reply-To: <xmqq34q0rnio.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	29 May 2024 20:23:27 -0700")
+References: <52819526-4C6F-418C-8B8B-A4D5C7E371EA@dragondata.com>
+	<xmqqfru0tg1a.fsf@gitster.g>
+	<0F971F6E-6462-4E0D-880B-8FD67F42A782@dragondata.com>
+	<84c01f1b0a2d24d7de912606f548623601c0d715.1716555034.git.ps@pks.im>
+	<xmqq34q0rnio.fsf@gitster.g>
+Date: Mon, 03 Jun 2024 11:33:15 -0700
+Message-ID: <xmqq8qzl3mhg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,121 +58,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- BC8F2C96-21D4-11EF-A74B-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
+ BE317362-21D7-11EF-A513-6488940A682E-77302942!pb-smtp2.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> We have a global tag refspec structure that is used by both git-clone(1)
-> and git-fetch(1). Initialization fo the structure will break once we
-
-"fo" -> "of".
-
-> enable `-Wwrite-strings`, even though the breakage is harmless. While we
-> could just add casts, the structure isn't really required in the first
-> place as we can simply initialize the structures at the respective
-> callsites.
+> Ah, then no.
 >
-> Refactor the code accordingly.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/clone.c |  8 ++++++--
->  builtin/fetch.c | 11 ++++++++---
->  refspec.c       | 13 -------------
->  refspec.h       |  1 -
->  4 files changed, 14 insertions(+), 19 deletions(-)
->
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 92ab7d7165..bde1d284a2 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -523,6 +523,9 @@ static struct ref *wanted_peer_refs(const struct ref *refs,
->  	struct ref *head = copy_ref(find_ref_by_name(refs, "HEAD"));
->  	struct ref *local_refs = head;
->  	struct ref **tail = head ? &head->next : &local_refs;
-> +	struct refspec_item tag_refspec;
-> +
-> +	refspec_item_init(&tag_refspec, TAG_REFSPEC, 0);
->  
->  	if (option_single_branch) {
->  		struct ref *remote_head = NULL;
-> @@ -545,7 +548,7 @@ static struct ref *wanted_peer_refs(const struct ref *refs,
->  					      &tail, 0);
->  
->  			/* if --branch=tag, pull the requested tag explicitly */
-> -			get_fetch_map(remote_head, tag_refspec, &tail, 0);
-> +			get_fetch_map(remote_head, &tag_refspec, &tail, 0);
->  		}
->  		free_refs(remote_head);
->  	} else {
-> @@ -555,8 +558,9 @@ static struct ref *wanted_peer_refs(const struct ref *refs,
->  	}
->  
->  	if (!option_mirror && !option_single_branch && !option_no_tags)
-> -		get_fetch_map(refs, tag_refspec, &tail, 0);
-> +		get_fetch_map(refs, &tag_refspec, &tail, 0);
->  
-> +	refspec_item_clear(&tag_refspec);
->  	return local_refs;
->  }
->  
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 75255dc600..06b60867f5 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -582,11 +582,16 @@ static struct ref *get_ref_map(struct remote *remote,
->  		}
->  	}
->  
-> -	if (tags == TAGS_SET)
-> +	if (tags == TAGS_SET) {
-> +		struct refspec_item tag_refspec;
-> +
->  		/* also fetch all tags */
-> -		get_fetch_map(remote_refs, tag_refspec, &tail, 0);
-> -	else if (tags == TAGS_DEFAULT && *autotags)
-> +		refspec_item_init(&tag_refspec, TAG_REFSPEC, 0);
-> +		get_fetch_map(remote_refs, &tag_refspec, &tail, 0);
-> +		refspec_item_clear(&tag_refspec);
-> +	} else if (tags == TAGS_DEFAULT && *autotags) {
->  		find_non_local_tags(remote_refs, NULL, &ref_map, &tail);
-> +	}
->  
->  	/* Now append any refs to be updated opportunistically: */
->  	*tail = orefs;
-> diff --git a/refspec.c b/refspec.c
-> index d60932f4de..1df5de6c2f 100644
-> --- a/refspec.c
-> +++ b/refspec.c
-> @@ -7,19 +7,6 @@
->  #include "refspec.h"
->  #include "strbuf.h"
->  
-> -static struct refspec_item s_tag_refspec = {
-> -	.force = 0,
-> -	.pattern = 1,
-> -	.matching = 0,
-> -	.exact_sha1 = 0,
-> -	.negative = 0,
-> -	.src = "refs/tags/*",
-> -	.dst = "refs/tags/*",
-> -};
-> -
-> -/* See TAG_REFSPEC for the string version */
-> -const struct refspec_item *tag_refspec = &s_tag_refspec;
-> -
->  /*
->   * Parses the provided refspec 'refspec' and populates the refspec_item 'item'.
->   * Returns 1 if successful and 0 if the refspec is invalid.
-> diff --git a/refspec.h b/refspec.h
-> index 8c0c446993..754be45cee 100644
-> --- a/refspec.h
-> +++ b/refspec.h
-> @@ -2,7 +2,6 @@
->  #define REFSPEC_H
->  
->  #define TAG_REFSPEC "refs/tags/*:refs/tags/*"
-> -extern const struct refspec_item *tag_refspec;
->  
->  /**
->   * A struct refspec_item holds the parsed interpretation of a refspec.  If it
+> I am afraid that it is a non starter.  "git ls-remote -h" would then
+> start breaking existing users' long established expectation, i.e.,
+> "for any git subcommand 'cmd', you can say 'git cmd -h' to get the
+> short help".  We need to design a good transition plan to wean
+> existing users off of that expectation.
+
+Another thing I forgot to mention.  For "ls-remote" and "show-ref",
+there is a much nicer transition path we can take.  Back in Linus's
+days, we called branches "heads" (and we used $GIT_DIR/refs/heads/
+to store them as individual files), but if we were starting Git from
+scratch today, there is no reason to.  Call branches branches, not
+heads, which means we do not need to use "-h" to mean "I want to see
+only the branches and no other refs" at all.  You say "--branches"
+instead.
+
+Which leads to an obvious transition path, which is
+
+ * Introduce "--branches" that sits next to "--tags" to "ls-remote"
+   and "show-ref".  If the command has "-t" as a short-hand for
+   "--tags", then add "-b" as a short-hand for "--branches".
+   Announce that "--heads" (and "-h" if supported) is deprecated for
+   these commands, and when "--heads" (and "-h" if supported) is
+   used, give a warning to train finger/muscle memory early.
+
+ * We will keep things that way for a while, and then remove the
+   "--heads" (and "-h" if supported) from these two commands.
+
+The approach cannot be used to transition "git grep -h" for obvious
+reasons, but then it makes no sense to give "-h" alone to tell the
+command "I do not want to see filenames", so that is not a problem.
+
+I checked output from 
+
+    $ git grep -A2 '^-h' Documentation/
+
+and it seems that ls-remote is the only one that matters, so we do
+not even have to do the "-?" transition at all.
+
+Thanks.
+
