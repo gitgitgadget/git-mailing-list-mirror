@@ -1,58 +1,58 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADFD429408
-	for <git@vger.kernel.org>; Mon,  3 Jun 2024 20:19:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A805B20ED
+	for <git@vger.kernel.org>; Mon,  3 Jun 2024 20:35:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717445979; cv=none; b=tpS2p6Us7e9Is41wmU5sZhRAga3IUgcHen97CoJr3cQQNluEFXmjWpC1mIKx/CRu9zeJCGR+//eCIgZyC2RHjNgFxByXic81hdec4WBlPJTeZ+9pafvtPpxpAn0YdDvWGtBOb1E2l7eV3eDTNvjFHWYedFSWq6ABUQ2BolSh6Zs=
+	t=1717446941; cv=none; b=ODE1iHsXkQWkz6aoPpS1w2jnfAQbkptx8gImbUDsMbRNMCdYKUbIdxp0W4+KJ/gaXZq7HU5ykg2ET4scOZ9OXE9RDwsFmC05Io0rOx4VMSJIJczoCxRssOb8ldl0Gf0UGnocE2iVehIlVnTzjSXRNOYVKW+Dk7bON8JnexkDM5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717445979; c=relaxed/simple;
-	bh=xlXhi9xPHW/qs65wwvjo6Rv3s034B5OfB6qN57McknY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pbDktJyvs3EQjkmfYpLSGke7zWUe4dbk33CbRswL2nSw67HYpdK7mAsxmq4sWKmKenC0q2uGuWH3+7Qprit2vw6wmpsbZb/dxt6B+m08mGbfYAIN1vJsz+/QeQDWyT5yJLMzgIIEQIihtgqI660/Ak5ZoQp3nSRZ0s9OxvB6kcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l4zY1TAF; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1717446941; c=relaxed/simple;
+	bh=sWzdwxlKkg1GYDEyGXc16JUffso992WFFkFX09jDw3E=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=FAgsDun3ELz5Pnn4BuxyoMbuMDGoYLVX63MaVI4eOMC6TaJ0Au4CB11wqlinsZLiu5sm+xvHjSoXre42kWDPg1eh/3goDWXRmBvelf7DnBmIt2jm5AnC8awnA9mU7OX7ICitGEg+hcMo1ewcdZkZXeHVirqsQH58pg6CmOYfaVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nELs6EYo; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l4zY1TAF"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4213373568dso27416335e9.0
-        for <git@vger.kernel.org>; Mon, 03 Jun 2024 13:19:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nELs6EYo"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42121d28664so41842355e9.2
+        for <git@vger.kernel.org>; Mon, 03 Jun 2024 13:35:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717445976; x=1718050776; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DU5s5Hjae7xbbotLB0J8Pg85RroZYYC97XHnf5jtl48=;
-        b=l4zY1TAFjX0OHGrQ4imYJEvjYJiPD2I11nGdZUnJScYx6mLb9D0kVVKCb3e1qwG80a
-         HIn8HDULqlIkTp3j4gBnpaRgTpipuen4n/HTF69cE3fC1nv7j4OFqMC0HLp7VS3wqZYd
-         mcBaDz9qk9WslaL4WcJnJJ7Q9UvDzt69byXRVG0bssrVeJIbqGd5BYdeQZQZSfQvuMQP
-         pq7PSkDV4giDXptgevm4hcxmePhEi0Xp2fNSdUUNIqj6/77rw4zNalL3ep0RDNEANcpC
-         ewcb4a3gNsH08FXFOMggG9uEh7OO5DDVPOFzJ+S4geNvUM2kSoZEIqRjoWk2qR/eMWFJ
-         LjPQ==
+        d=gmail.com; s=20230601; t=1717446938; x=1718051738; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=xlde0YGWDzkGiONJ73we8qyEzTxn1IEt/OtqP1kgz5c=;
+        b=nELs6EYoFtmBQevSHS3BjyOyiAWrLEa1CwDTb5c0HMtabTxMjnWqWMvoWhHmycGSeJ
+         gVpYry8nQbfHA1HMAYrUyIvsen0MHg6aXt4XB1S6oOwSD7ugilUMYmAydsZmQA0u6myw
+         bfbhyFWZ3ydhX0Ql0jVSJW/UaVITVOhiOSruPU3qHC3OqEEzWbIbGPkOSH01BI+UPKN/
+         sI1neZtRcUM7R7QhA5PkHeLPPjayB8HH5tjSvjVrx0tzFNQ1QzpSkHG98jEQp/shmPZ2
+         Qcs2GPIkKsLxHgz0iKEMfQGCK2Q5L7C4slhxQqQ7p5CaM4L6uvABvToZEouXp/6Kuqk9
+         6fMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717445976; x=1718050776;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1717446938; x=1718051738;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DU5s5Hjae7xbbotLB0J8Pg85RroZYYC97XHnf5jtl48=;
-        b=pWuPjJK27VHt3B5fUIsAjEjoVppRn2vQWKokERfk7kzOIAlSelN4y4Gpt/txONxnCf
-         myDstcmsoG0Z9srItxEMa8co6aCOug57bx7lFdMKsLGbx9ttRUnO5RAyK3uswGkepWhr
-         LRft0yRShC6YF2NAGCNYsWhzP8pvg/+vWUhMZPeNq1QIjQ5BAlX9pC3buNYOxxIvfmKH
-         PvewW+XOdFP9puXC8kiaUxWzvlmCX61acxflnKjz6Vah0m9/6rB8nzkA92oW7SRFalsx
-         KOuCXhdeGxdFCIi/v4/bg3hIf1SdZbjhun8celD4iv5yRw6HU6YUKwVnpBCNb12TN8VU
-         s5Wg==
-X-Gm-Message-State: AOJu0Yy5KNbnGMZZ7SVqBLLsjnyQmr10YqaCJfsfcKZKKZccoX6+iKyb
-	RZUW1N4k2pLF9GffLz3DDRCR+brbKiJjnrKCouOYH48Mxm96C8I2
-X-Google-Smtp-Source: AGHT+IHhz25nBNQ5jiX2O7+bb7qo5fC7rmTsjXLy7C+rZvwTuoGWJbNWDWiSvsQB+1gikVqRgQh7eg==
-X-Received: by 2002:a05:600c:3595:b0:41f:fca0:8c09 with SMTP id 5b1f17b1804b1-4212e0bddf6mr73236565e9.40.1717445975766;
-        Mon, 03 Jun 2024 13:19:35 -0700 (PDT)
+        bh=xlde0YGWDzkGiONJ73we8qyEzTxn1IEt/OtqP1kgz5c=;
+        b=WYkWEFpEXm9seQetDrG0OOocxtdTtKFXLaUAM93Rtn8d/U7vJWcvwX3/IRuvBXF8OQ
+         AEezd2e/j3jHQUWWFgsrumKeXvIN0Xtr39btbHI2zEcvF8nAQz3Ekzz/9/LhnbRobCqN
+         YKd/kAVKENTe7YGF7ucGTxN8vyUgT8D6VzbMmbQwWbsoLkHzNKz4/CpbofglVsJn8ijS
+         PEQ/Lcm5yyifB1kVCcq2xm8Yhpd7BQs0nL5rTabflV0TtJ9SHZYvq7qEiW4x9DMtnz9H
+         wAQXUty/JTglg7KAthlI8hIWS6vAvuuwqNrz/k9HmIVgg2TxEUnAMOCDyzXZRiGLmxKr
+         peOQ==
+X-Gm-Message-State: AOJu0Yw2JIIDGjq49uAhmGI2qc4S5p3ESjw3eIILOCgkRrxGA6v5BOSA
+	64VWP2IkG9Cucf+9aQxciJAdRVqzka13PU/btfYM4uaf1cXpGk6pxyJblg==
+X-Google-Smtp-Source: AGHT+IGP9fSnwSksjn4Y9exf39/7R+POE/qBTl5fZ+wlRfGPkxQP+e4txjHMpS42xgfXvu9N/w/jUQ==
+X-Received: by 2002:a05:600c:45c3:b0:420:171c:3d70 with SMTP id 5b1f17b1804b1-4212e05daa7mr90323115e9.16.1717446937727;
+        Mon, 03 Jun 2024 13:35:37 -0700 (PDT)
 Received: from gmail.com (20.red-88-14-43.dynamicip.rima-tde.net. [88.14.43.20])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4214a4abdd5sm1330195e9.0.2024.06.03.13.19.34
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4213860126fsm82395235e9.40.2024.06.03.13.35.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Jun 2024 13:19:35 -0700 (PDT)
-Message-ID: <9d05b41f-c120-4db0-9ee5-e24d20389129@gmail.com>
-Date: Mon, 3 Jun 2024 22:19:34 +0200
+        Mon, 03 Jun 2024 13:35:37 -0700 (PDT)
+Message-ID: <1ef0ac3a-3be5-4fc2-93f8-46610f3d1880@gmail.com>
+Date: Mon, 3 Jun 2024 22:35:36 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,88 +60,64 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+Subject: [PATCH v4 0/6] use the pager in 'add -p'
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+To: Git List <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
  Jeff King <peff@peff.net>
 References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
  <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
  <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
- <81d52b31ce4c287765a43d87d94f526b@manjaro.org>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
 Content-Language: en-US
-In-Reply-To: <81d52b31ce4c287765a43d87d94f526b@manjaro.org>
+In-Reply-To: <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On Sun, Jun 02, 2024 at 07:36:37PM +0200, Dragan Simic wrote:
+This iteration is a quick reroll to address the interactive.singleKey
+option in the new '|' interactive command.
 
-> The way I see it, using "| <program>" should follow the de facto rules
-> already established by the "--color=auto" command-line option in multiple
-> utilities.  Thus, when piping to a custom program, the escape codes that
-> perform the coloring should be stripped.
+I've also used the improved wording for the help text, suggested by
+Dragan.
 
-Interesting.  However, I'd like to find a way to keep the escape codes
-when using programs like: '|head';  perhaps with the '>' command,
-suggested by Junio.
+The rest of the series remains the same.  Here is the range-diff from
+v3:
 
-At any rate, I feel we can leave that, perhaps corner-case scenario, for
-a future series.  As this series is mainly about the 'pager' machinery.
+Range-diff against v3:
+-:  ---------- > 1:  49481da8a7 add-patch: test for 'p' command
+-:  ---------- > 2:  865bb68508 pager: do not close fd 2 unnecessarily
+-:  ---------- > 3:  9fcf244dac pager: introduce wait_for_pager
+-:  ---------- > 4:  1e817a9ec0 pager: introduce setup_custom_pager
+-:  ---------- > 5:  87dd368346 test-terminal: introduce --no-stdin-pty
+1:  9fa538478d ! 6:  b691764a17 add-patch: introduce the command '|'
+    @@ add-patch.c: N_("j - leave this hunk undecided, see next undecided hunk\n"
+         "s - split the current hunk into smaller hunks\n"
+         "e - manually edit the current hunk\n"
+         "p - print the current hunk\n"
+    -+   "| - pipe the current hunk to the pager, or |<program> to use a program'\n"
+    ++   "| - use pager to show the current hunk, or use |<program> to customize\n"
+         "? - print help\n");
+      
+      static int patch_update_file(struct add_p_state *s,
+    @@ add-patch.c: static int patch_update_file(struct add_p_state *s,
+      		} else if (s->answer.buf[0] == 'p') {
+      			rendered_hunk_index = -1;
+     +		} else if (ch == '|') {
+    ++			strbuf_remove(&s->answer, 0, 1);
+    ++			if (s->s.use_single_key && s->answer.len == 0) {
+    ++				printf("%s", _("program? "));
+    ++				fflush(stdout);
+    ++				strbuf_getline(&s->answer, stdin);
+    ++				strbuf_trim_trailing_newline(&s->answer);
+    ++			}
+    ++			strbuf_trim(&s->answer);
+    ++			pager = s->answer.buf;
+     +			rendered_hunk_index = -1;
+    -+			pager = s->answer.buf + 1;
+      		} else if (s->answer.buf[0] == '?') {
+      			const char *p = _(help_patch_remainder), *eol = p;
+      
 
-> 
-> > This, a new 'interactive.pipeCommand' setting, or a new switch: 'add
-> > -P',
-> > are left for discussing in, hopefully, a future series.
-> > 
-> > One final note;  I preferred to model the help text this way:
-> > 
-> >     y - stage this hunk
-> >     n - do not stage this hunk
-> >     q - quit; do not stage this hunk or any of the remaining ones
-> >     a - stage this hunk and all later hunks in the file
-> >     d - do not stage this hunk or any of the later hunks in the file
-> >     j - leave this hunk undecided, see next undecided hunk
-> >     J - leave this hunk undecided, see next hunk
-> >     g - select a hunk to go to
-> >     / - search for a hunk matching the given regex
-> >     s - split the current hunk into smaller hunks
-> >     e - manually edit the current hunk
-> >     p - print the current hunk
-> >     | - pipe the current hunk to the pager, or |<program> to use a
-> > program'
-> >     ? - print help
-> 
-> I also like this form better, but I think wording could be improved.
-> I'll think a bit more about it, maybe something like this:
-> 
->       | - use pager to show the current hunk, or use |<program> to customize
+base-commit: d3f616a4e56f359d84a9d439aa03dca1fe9ac280
+-- 
+2.45.0.97.gb691764a17
 
-Certainly!  It is indeed a sensible idea to improve the wording, avoiding
-the word "pipe" :-).  Thank you.
-
-> 
-> Also, what's the single quote doing after "use a program"?
-
-Just a typo.  Sorry.
-
-> 
-> > Instead of:
-> > 
-> >     y - stage this hunk
-> >     n - do not stage this hunk
-> >     q - quit; do not stage this hunk or any of the remaining ones
-> >     a - stage this hunk and all later hunks in the file
-> >     d - do not stage this hunk or any of the later hunks in the file
-> >     j - leave this hunk undecided, see next undecided hunk
-> >     J - leave this hunk undecided, see next hunk
-> >     g - select a hunk to go to
-> >     / - search for a hunk matching the given regex
-> >     s - split the current hunk into smaller hunks
-> >     e - manually edit the current hunk
-> >     p - print the current hunk
-> >     |[program] - pipe the current hunk to a program, the pager if
-> > none...
-> >     ? - print help
-> > 
-> > Because I believe it reads better by maintaining a single character
-> > before the dash.  But I am not opposed to the latter.
