@@ -1,33 +1,34 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AEC1448EE
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 10:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7C214532F
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 10:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717496006; cv=none; b=AofAcu992miMxPK2NdzxmEzYJktOZFdxDCAZQF3y+pqlFWtbDNZbDZWH4qdmotIw9JvOGSwFrEAY0H71SVPKY7YG245jL1qM52prXtwrVkopOu3okivv7KBQNYZ4m75uas5Ad19zixSZ23D5xyEFIB9ylSO0DxICzxMZGmt0w/k=
+	t=1717496008; cv=none; b=T9OEbbgvuEOiZeWtgD/v4kcicFRC4iDJEGOSAUFyRf5u8lPaLVhaO5ZKQWdafXt5Uv4UU/vSse5yenpGvQZC/ZeQs5OH+/r+Uxt5wgxK4uUH9PD4jxVtArbOiQo0VdvJVhqaVm8fs80RJQ3Eq2yG7ovJHZgFEQiEHm6Hpkf4llw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717496006; c=relaxed/simple;
-	bh=XzsvB7+nBcewK4znrLrew30Ul11NbmGOQBFYrvI/d9c=;
+	s=arc-20240116; t=1717496008; c=relaxed/simple;
+	bh=S1m6CMFs1uu28irQFctu2UeHjXha6ebGGRgGnE0bgMQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pg95YeA/BsUopNJRiB/6xDn7Kwo8SCz/iwFcxBv6632AlrDZahdNAOnZdE0qznbySFH6m9nzoCi74b1DKkcKK9M8GllkcxZTq1r36tk8F8TRjboyR6YyV073lsNjPQcKaCMTwMgZCOP8nxPxWd6Un0icdrNXPF8dL7eVsXlUOsQ=
+	 Content-Type:Content-Disposition:In-Reply-To; b=MXHN/tcQ4uGmIe9AlCG6vLtpAT77qpnMtsvrlAA+2CFDAQKeVtji3cKyefYsd5iG/auxWR6bnE8cIr2bW2YFKvJxu96jTyrq2JfVeY4l6mVCp/EiSLGvBxXb+m5Sj8Ob9IH8xhgZvHxu4zZjzxLtybdXIWF/aIyG4x0+EaUfLJI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 21502 invoked by uid 109); 4 Jun 2024 10:13:24 -0000
+Received: (qmail 21512 invoked by uid 109); 4 Jun 2024 10:13:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Jun 2024 10:13:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Jun 2024 10:13:26 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18372 invoked by uid 111); 4 Jun 2024 10:13:21 -0000
+Received: (qmail 18377 invoked by uid 111); 4 Jun 2024 10:13:23 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Jun 2024 06:13:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Jun 2024 06:13:23 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 4 Jun 2024 06:13:22 -0400
+Date: Tue, 4 Jun 2024 06:13:25 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 06/13] dir.c: always copy input to add_pattern()
-Message-ID: <20240604101322.GF1304593@coredump.intra.peff.net>
+Subject: [PATCH v2 07/13] sparse-checkout: reuse --stdin buffer when reading
+ patterns
+Message-ID: <20240604101325.GG1304593@coredump.intra.peff.net>
 References: <20240604100814.GA1304520@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,141 +40,41 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240604100814.GA1304520@coredump.intra.peff.net>
 
-The add_pattern() function has a subtle and undocumented gotcha: the
-pattern string you pass in must remain valid as long as the pattern_list
-is in use (and nor do we take ownership of it). This is easy to get
-wrong, causing either subtle bugs (because you free or reuse the string
-buffer) or leaks (because you copy the string, but don't track ownership
-separately).
+When we read patterns from --stdin, we loop on strbuf_getline(), and
+detach each line we read to pass into add_pattern(). This used to be
+necessary because add_pattern() required that the pattern strings remain
+valid while the pattern_list was in use. But it also created a leak,
+since we didn't record the detached buffers anywhere else.
 
-All of this "pattern" code was originally the "exclude" mechanism. So
-this _usually_ works OK because you add entries in one of two ways:
-
-  1. From the command-line (e.g., "--exclude"), in which case we're
-     pointing to an argv entry which remains valid for the lifetime of
-     the program.
-
-  2. From a file (e.g., ".gitignore"), in which case we read the whole
-     file into a buffer, attach it to the pattern_list's "filebuf"
-     entry, then parse the buffer in-place (adding NULs). The strings
-     point into the filebuf, which is cleaned up when the whole
-     pattern_list goes away.
-
-But other code, like sparse-checkout, reads individual lines from stdin
-and passes them one by one to add_pattern(), leaking each. We could fix
-this by refactoring it to take in the whole buffer at once, like (2)
-above, and stuff it in "filebuf". But given how subtle the interface is,
-let's just fix it to always copy the string.
-
-That seems at first like we'd be wasting extra memory, but we can
-mitigate that:
-
-  a. The path_pattern struct already uses a FLEXPTR, since we sometimes
-     make a copy (when we see "foo/", we strip off the trailing slash,
-     requiring a modifiable copy of the string).
-
-     Since we'll now always embed the string inside the struct, we can
-     switch to the regular FLEX_ARRAY pattern, saving us 8 bytes of
-     pointer. So patterns with a trailing slash and ones under 8 bytes
-     actually get smaller.
-
-  b. Now that we don't need the original string to hang around, we can
-     get rid of the "filebuf" mechanism entirely, and just free the file
-     contents after parsing. Since files are the sources we'd expect to
-     have the largest pattern sets, we should mostly break even on
-     stuffing the same data into the individual structs.
-
-This patch just adjusts the add_pattern() interface; it doesn't fix any
-leaky callers yet.
+Now that add_pattern() has been modified to make its own copy of the
+strings, we can stop detaching and fix the leak. This fixes 4 leaks
+detected in t1091.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- dir.c | 15 +++++----------
- dir.h |  3 ++-
- 2 files changed, 7 insertions(+), 11 deletions(-)
+ builtin/sparse-checkout.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index d812d521b0..8308d167c8 100644
---- a/dir.c
-+++ b/dir.c
-@@ -925,12 +925,7 @@ void add_pattern(const char *string, const char *base,
- 	int nowildcardlen;
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 923e6ecc0a..75c07d5bb4 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -585,11 +585,10 @@ static void add_patterns_from_input(struct pattern_list *pl,
+ 		if (file) {
+ 			struct strbuf line = STRBUF_INIT;
  
- 	parse_path_pattern(&string, &patternlen, &flags, &nowildcardlen);
--	if (flags & PATTERN_FLAG_MUSTBEDIR) {
--		FLEXPTR_ALLOC_MEM(pattern, pattern, string, patternlen);
--	} else {
--		pattern = xmalloc(sizeof(*pattern));
--		pattern->pattern = string;
--	}
-+	FLEX_ALLOC_MEM(pattern, pattern, string, patternlen);
- 	pattern->patternlen = patternlen;
- 	pattern->nowildcardlen = nowildcardlen;
- 	pattern->base = base;
-@@ -972,7 +967,6 @@ void clear_pattern_list(struct pattern_list *pl)
- 	for (i = 0; i < pl->nr; i++)
- 		free(pl->patterns[i]);
- 	free(pl->patterns);
--	free(pl->filebuf);
- 	clear_pattern_entry_hashmap(&pl->recursive_hashmap);
- 	clear_pattern_entry_hashmap(&pl->parent_hashmap);
- 
-@@ -1166,23 +1160,23 @@ static int add_patterns(const char *fname, const char *base, int baselen,
- 	}
- 
- 	add_patterns_from_buffer(buf, size, base, baselen, pl);
-+	free(buf);
- 	return 0;
- }
- 
- static int add_patterns_from_buffer(char *buf, size_t size,
- 				    const char *base, int baselen,
- 				    struct pattern_list *pl)
- {
-+	char *orig = buf;
- 	int i, lineno = 1;
- 	char *entry;
- 
- 	hashmap_init(&pl->recursive_hashmap, pl_hashmap_cmp, NULL, 0);
- 	hashmap_init(&pl->parent_hashmap, pl_hashmap_cmp, NULL, 0);
- 
--	pl->filebuf = buf;
--
- 	if (skip_utf8_bom(&buf, size))
--		size -= buf - pl->filebuf;
-+		size -= buf - orig;
- 
- 	entry = buf;
- 
-@@ -1222,6 +1216,7 @@ int add_patterns_from_blob_to_list(
- 		return r;
- 
- 	add_patterns_from_buffer(buf, size, base, baselen, pl);
-+	free(buf);
- 	return 0;
- }
- 
-diff --git a/dir.h b/dir.h
-index b9e8e96128..c8ff308fae 100644
---- a/dir.h
-+++ b/dir.h
-@@ -62,7 +62,6 @@ struct path_pattern {
- 	 */
- 	struct pattern_list *pl;
- 
--	const char *pattern;
- 	int patternlen;
- 	int nowildcardlen;
- 	const char *base;
-@@ -74,6 +73,8 @@ struct path_pattern {
- 	 * and from -1 decrementing for patterns from CLI args.
- 	 */
- 	int srcpos;
+-			while (!strbuf_getline(&line, file)) {
+-				size_t len;
+-				char *buf = strbuf_detach(&line, &len);
+-				add_pattern(buf, empty_base, 0, pl, 0);
+-			}
++			while (!strbuf_getline(&line, file))
++				add_pattern(line.buf, empty_base, 0, pl, 0);
 +
-+	char pattern[FLEX_ARRAY];
- };
- 
- /* used for hashmaps for cone patterns */
++			strbuf_release(&line);
+ 		} else {
+ 			for (i = 0; i < argc; i++)
+ 				add_pattern(argv[i], empty_base, 0, pl, 0);
 -- 
 2.45.2.807.g3b5fadc4da
 
