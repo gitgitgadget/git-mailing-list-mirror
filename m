@@ -1,35 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FF06FC3
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 10:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92063145B32
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 10:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717497590; cv=none; b=Zam2WoMoer3MRSq3Ft3KFTEkGqmfutGlRvHKkuhRILt8O+Mc2IRjyAif7yRhETzdwGd0jQDe9a0vfVUY4xFwfvNZPpSV1QUZd3XiiFVouHW/KmMWuGPOBk+fQfro1edIQ1l7Jx76OCheBfRmzy73/fYiOocAevsCkH7BN1DsLac=
+	t=1717497881; cv=none; b=Uz7qRPsr8wCyoJ4lfINdnkQxwDBvma2BJQjpsgE4iRG0U6dmK3BuRBRf0aGOkEjS7dEh2KLKLeg9qzKCb+eXvFnFLY2ZpIQhIh4ZTMkDLF77uwaQmoVk6l5F0XgQiTbEs+/SKjCSDcoN1fLuHk9XrNHm8RRuPB7f9idieIbxI4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717497590; c=relaxed/simple;
-	bh=gcTTCM79ln2TpFkqoRABCtrhE7wLB8WJVUH76qUctAc=;
+	s=arc-20240116; t=1717497881; c=relaxed/simple;
+	bh=EDMh2x5lwiKtM4TIlpBEvYTBmR/BaXiTZtwj+rVudk4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BAGbpjbjLcahDPlZGJZc1mO2xlB7EcmOoNNzYCtLZl86lU7qVUMDmzJZBUT4PHTv0tftHKobKGUY9OGBdCpAzSc8fGHelR3WAYqL3Ww1UCDUaWQIwPwWDFFGowWrhW79pp/LfAB6woM68DwfZTRONuYbzfZKbuG3VetgAce0kBU=
+	 Content-Type:Content-Disposition:In-Reply-To; b=tPddvCB68GnScqc0IjvZrt5lwPp9IDYog2nASIZAOVF+803p8iKmuc4OfPZzOgD6s/wYeidk9oiH64Qpz36LqoE2zdkEWEuWYI6/76ZULvS7vpMpbfeOdB9vg07pm2PV146voosE20ATo2KX9leUDzOEKHBcFUYOMUBz7jYc6RM=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 22003 invoked by uid 109); 4 Jun 2024 10:39:48 -0000
+Received: (qmail 22052 invoked by uid 109); 4 Jun 2024 10:44:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Jun 2024 10:39:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Jun 2024 10:44:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18785 invoked by uid 111); 4 Jun 2024 10:39:45 -0000
+Received: (qmail 18808 invoked by uid 111); 4 Jun 2024 10:44:35 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Jun 2024 06:39:45 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Jun 2024 06:44:35 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 4 Jun 2024 06:39:47 -0400
+Date: Tue, 4 Jun 2024 06:44:37 -0400
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] dir.c: skip .gitignore, etc larger than INT_MAX
-Message-ID: <20240604103947.GC1781455@coredump.intra.peff.net>
-References: <20240531120034.GA442032@coredump.intra.peff.net>
- <xmqqh6eehvj4.fsf@gitster.g>
+Cc: rsbecker@nexbridge.com, 'Curley Joe' <m48cv7wg9w@liamekaens.com>,
+	git@vger.kernel.org
+Subject: Re: git fetch --prune fails with "fatal: bad object"
+Message-ID: <20240604104437.GD1781455@coredump.intra.peff.net>
+References: <16919-1717194882-875013@sneakemail.com>
+ <xmqqplt1d0k0.fsf@gitster.g>
+ <000501dab3b3$51779400$f466bc00$@nexbridge.com>
+ <xmqqo78kbqwo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,37 +41,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqh6eehvj4.fsf@gitster.g>
+In-Reply-To: <xmqqo78kbqwo.fsf@gitster.g>
 
-On Fri, May 31, 2024 at 08:05:03AM -0700, Junio C Hamano wrote:
+On Sat, Jun 01, 2024 at 08:53:43AM -0700, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+> Interesting.  "git fsck" certainly can be used to help you find out
+> about them.  In a throw-away repository, after manually crafting
+> some "broken refs" (because update-ref will refuse to create a ref
+> pointing at a missing object):
 > 
-> > The "int" in question is in add_patterns_from_buffer(), so we could
-> > catch it there. But by putting the checks in its two callers, we can
-> > produce more useful error messages.
+>     $ git for-each-ref
+>     9e830ad6c4f43159cef50cb1c2205f513c79bc8b commit refs/heads/master
+>     $ echo 9e830ad6c4f43159cef50cb1c2205f513c79bc8a >.git/refs/heads/broken-missing
+>     $ git rev-parse master: >.git/refs/heads/broken-tree
+>     $ git rev-parse "master:foo /baz" >.git/refs/heads/broken-blob
 > 
-> Nice trick.  I wondered if we want INT_MAX/2 or something even
-> lower, but because once these things are read, we only parse the
-> contents so allowing up to INT_MAX is fine.  It is not like we read
-> this and that and concatenate them into a larger buffer.
+> running "git fsck" does tell you about them, ...
+> 
+>     $ git fsck
+>     Checking object directories: 100% (256/256), done.
+>     error: refs/heads/broken-blob: not a commit
+>     error: refs/heads/broken-missing: invalid sha1 pointer 9e830ad6c4f43159cef50cb1c2205f513c79bc8a
+>     error: refs/heads/broken-tree: not a commit
+> 
+> ... and using the information, you can
+> 
+>     $ for r in refs/heads/broken-{blob,missing,tree}
+>       do git update-ref -d "$r"
+>       done
+> 
+> to unbreak the repository.
 
-Yeah, I think all of the individual string lengths would be fine. It
-_might_ be possible to overflow an array of pointers or similar, though.
-E.g., if you have "a\n" repeated INT_MAX times, then you have INT_MAX/2
-entries. An array of pointers-to-structs, assuming 8-byte pointers,
-would then need INT_MAX*4 bytes. And indeed, I think we stuff these into
-a pattern_list which uses ints.
+These are good examples. I was going to suggest fsck, as well, just
+because I knew it would keep going after seeing bogus results. But more
+interesting is that it is finding things in your example that other
+programs would _not_ find, because it's being more thorough than just
+reading the refs.
 
-In practice I think the call to ALLOC_GROW() would catch that as the
-overflowed value turns into a large size_t. But it probably would be
-safer to use a much smaller limit.
+Having to manually convert the human-readable fsck output to a cleanup
+command is a minor pain. We could provide "git fsck --prune-broken-refs"
+or something, but I'm hesitant. Deleting refs in a corrupted repository
+is a good way to make recovery even harder, as it opens the door to
+removing whatever objects we do still have.
 
-I was hoping to avoid making up an arbitrary number. But your question
-about gitattributes reminded me that we already did something similar in
-3c50032ff5 (attr: ignore overly large gitattributes files, 2022-12-01).
-There it's a hard-coded 100MB limit (without even a config option).
-
-Maybe we should just do the same here?
+In the case of a refs/remotes entry where you happen to know that you
+could re-clone from the other side, it is relatively low stakes. But I
+think keeping a human brain in the loop between corruption and deletion
+is a good thing. Corruption should not be happening so often that it's a
+major pain point.
 
 -Peff
