@@ -1,150 +1,117 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BA714658E
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 20:51:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200FD5B683
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 21:21:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717534292; cv=none; b=E3STPFL6glwO6DaQIIfexzuV9QohZ2xaFYgLeQ6GRheJXVuhsDJN5HTk4qGgxI2Q/Id2FsNM+UI0GRSwlbqLc5FnrwNm8ODc4LVTNC6/n2hl0i9tzzVuWb9vA0U/jhqkhGGaZrJU+wZmvPMJhp3phyw1nOpEUsSb1YI3BWwe5rM=
+	t=1717536073; cv=none; b=P1a+Az5JC8FiKYnWaysCY/gDAHIyl3S9F2OsEhcmP7ijMus2heaemp+NrkAbBR2W5mssH9BxZzIIP65tfQNn2Hrf7kwUKiJObP15lqbtAClFGeNkpX0qL2/Mr2f6gjtk6Ur1kxzSqGU9LujejHt7hWqrfjGpKWzGgMCooBm/jeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717534292; c=relaxed/simple;
-	bh=JDbVSlVL9ZUWobqOgRLqAPWY/RLoM6bBhoOTwfNZ6B0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VHc+WW/opv08eRZ0Qdo0euvU/rHxiYwCf80QtbYnJTaxivJqyETrr+GIpRfcUNVVCSnJrCqyJU+5TMjPbiAGR3rFYZXOhY+rWeIRWglMmLlxs/0558+el447/zdLP4ZMH6929dC4gc5qkZFi4veAPmc4/skbjynlRcYcF5Eb7Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RNe2xrCw; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1717536073; c=relaxed/simple;
+	bh=Zm/16QsnqEEcxCYEmf4dhW2ZMzs7psZ9+OF2UhlThKA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CNfq59uY4BsXRFL5xFoes29FsvCzmNgRCFv5WKb7bZZpPDTXww9vCWBcmJhvjCvrLgEDeOYyTDXE6ej3fcrvMEeluC/QQQr4u/UzXDDnzKq2n/1TACQmAZ24RwdwS7GmfGgphZjiIEQFPV4DPBpyVA1U+nFAInk7G1rgwCQw4O0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=UCAbkVPf; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RNe2xrCw"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A23F51E115;
-	Tue,  4 Jun 2024 16:51:30 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=JDbVSlVL9ZUWobqOgRLqAPWY/RLoM6bBhoOTwf
-	NZ6B0=; b=RNe2xrCwaQy6131TssDhM1CrBN5MzCIFBvWbYI5BpfTztMZm1CVOQ8
-	dgrKAV6VGgwIEmqaQXbkFOFe0wWMS9lkuHzHFN3NlSAzyvvPqfWFXUKHy3q9ECVZ
-	tPBgDZjm14VfKUSgCbhhLzrDFKjOQLToGGwzFuhSTBka6QDAdQtlQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9AC5C1E114;
-	Tue,  4 Jun 2024 16:51:30 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.173.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="UCAbkVPf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1717536069;
+	bh=Zm/16QsnqEEcxCYEmf4dhW2ZMzs7psZ9+OF2UhlThKA=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=UCAbkVPfF9au+RZ+opJ5OT1EOOdbuZPRH9ykNj6mQV42op+TEvt5YbuKc+ohecppQ
+	 MmM+HGVKCeQtaBzHrUaL6iw9d47L/yLvmjgURMrxg0GzFcJFb6PBfcz22XNIJ1AgF9
+	 pj9BOgeeOYW9n/6EsSyMmjHP9pBJ2cCbItlvfK5Utn2pj/RUVLgd0eAvG25VAG9/kn
+	 fGmeIfr8uisj2LzBk6rHMoJ3M8UPOPq6a7R8Z+YOG4hql0E2oP7MX8FcKUya4TyP2z
+	 5reUleqUrE3gA3i9ga2GV4B0f7Iu19KQkOO2m4l7zVsNl6LQNEpv+J8R9sbmX4CRu1
+	 D5wPZBt74axyvAXqTclzSOggrnyqbLdZx/BL59I8TnPPG7eiLt4K9WhLzLNPuJa9ST
+	 pKM+6H62c6zjdM9MPqLXbQg6OlchP9qSaCEUODkWtiUREn+6gDd2b8lkw02ua9VHP2
+	 AtaWXUQGs87cCTDltci0ixLGmQkGf6jmdwRbO1YmOX0eqDsnh5Z
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9DCEB1E113;
-	Tue,  4 Jun 2024 16:51:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Rahul Rameshbabu <rrameshbabu@nvidia.com>, Aaron
- Plattner <aplattner@nvidia.com>
-Subject: Re: [PATCH v2] credential: clear expired c->credential, unify
- secret clearing
-In-Reply-To: <20240604192929.3252626-1-aplattner@nvidia.com> (Aaron Plattner's
-	message of "Tue, 4 Jun 2024 12:29:28 -0700")
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B7CFD2638E;
+	Tue,  4 Jun 2024 21:21:09 +0000 (UTC)
+Date: Tue, 4 Jun 2024 21:21:07 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Aaron Plattner <aplattner@nvidia.com>
+Cc: git@vger.kernel.org, Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] credential: clear expired c->credential, unify secret
+ clearing
+Message-ID: <Zl-FQ3SwNKM_4x6Q@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Aaron Plattner <aplattner@nvidia.com>, git@vger.kernel.org,
+	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Junio C Hamano <gitster@pobox.com>
 References: <20240604192929.3252626-1-aplattner@nvidia.com>
-Date: Tue, 04 Jun 2024 13:51:25 -0700
-Message-ID: <xmqqtti8tos2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 35F71276-22B4-11EF-9FAB-8F8B087618E4-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="JMqPCGXjpJM34gCh"
+Content-Disposition: inline
+In-Reply-To: <20240604192929.3252626-1-aplattner@nvidia.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-Brian, on top of your topic that was merged last month c5c9acf7
-(Merge branch 'bc/credential-scheme-enhancement', 2024-05-08), do
-these changes make sense to you as a fix/clean-up?
 
-Thanks.
+--JMqPCGXjpJM34gCh
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Aaron Plattner <aplattner@nvidia.com> writes:
-
+On 2024-06-04 at 19:29:28, Aaron Plattner wrote:
 > When a struct credential expires, credential_fill() clears c->password
 > so that clients don't try to use it later. However, a struct cred that
 > uses an alternate authtype won't have a password, but might have a
 > credential stored in c->credential.
->
+>=20
 > This is a problem, for example, when an OAuth2 bearer token is used. In
 > the system I'm using, the OAuth2 configuration generates and caches a
 > bearer token that is valid for an hour. After the token expires, git
 > needs to call back into the credential helper to use a stored refresh
 > token to get a new bearer token. But if c->credential is still non-NULL,
 > git will instead try to use the expired token and fail with an error:
->
->  fatal: Authentication failed for 'https://<oauth2-enabled-server>/repository'
->
+>=20
+>  fatal: Authentication failed for 'https://<oauth2-enabled-server>/reposi=
+tory'
+>=20
 > And on the server:
->
->  [auth_openidc:error] [client <ip>:34012] oidc_proto_validate_exp: "exp" validation failure (1717522989): JWT expired 224 seconds ago
->
+>=20
+>  [auth_openidc:error] [client <ip>:34012] oidc_proto_validate_exp: "exp" =
+validation failure (1717522989): JWT expired 224 seconds ago
+>=20
 > Fix this by clearing both c->password and c->credential for an expired
 > struct credential. While we're at it, use credential_clear_secrets()
 > wherever both c->password and c->credential are being cleared, and use
 > the full credential_clear() in credential_reject() after the credential
 > has been erased from all of the helpers.
->
-> v2: Unify secret clearing into credential_clear_secrets(), use
-> credential_clear() in credential_reject(), add a comment about why we
-> can't use credential_clear() in credential_fill().
->
-> Signed-off-by: Aaron Plattner <aplattner@nvidia.com>
-> ---
->  credential.c | 19 +++++++++----------
->  1 file changed, 9 insertions(+), 10 deletions(-)
->
-> diff --git a/credential.c b/credential.c
-> index 758528b291..72c6f46b02 100644
-> --- a/credential.c
-> +++ b/credential.c
-> @@ -20,12 +20,11 @@ void credential_init(struct credential *c)
->  
->  void credential_clear(struct credential *c)
->  {
-> +	credential_clear_secrets(c);
->  	free(c->protocol);
->  	free(c->host);
->  	free(c->path);
->  	free(c->username);
-> -	free(c->password);
-> -	free(c->credential);
->  	free(c->oauth_refresh_token);
->  	free(c->authtype);
->  	string_list_clear(&c->helpers, 0);
-> @@ -479,9 +478,14 @@ void credential_fill(struct credential *c, int all_capabilities)
->  
->  	for (i = 0; i < c->helpers.nr; i++) {
->  		credential_do(c, c->helpers.items[i].string, "get");
-> +
->  		if (c->password_expiry_utc < time(NULL)) {
-> -			/* Discard expired password */
-> -			FREE_AND_NULL(c->password);
-> +			/*
-> +			 * Don't use credential_clear() here: callers such as
-> +			 * cmd_credential() expect to still be able to call
-> +			 * credential_write() on a struct credential whose secrets have expired.
-> +			 */
-> +			credential_clear_secrets(c);
->  			/* Reset expiry to maintain consistency */
->  			c->password_expiry_utc = TIME_MAX;
->  		}
-> @@ -528,12 +532,7 @@ void credential_reject(struct credential *c)
->  	for (i = 0; i < c->helpers.nr; i++)
->  		credential_do(c, c->helpers.items[i].string, "erase");
->  
-> -	FREE_AND_NULL(c->username);
-> -	FREE_AND_NULL(c->password);
-> -	FREE_AND_NULL(c->credential);
-> -	FREE_AND_NULL(c->oauth_refresh_token);
-> -	c->password_expiry_utc = TIME_MAX;
-> -	c->approved = 0;
-> +	credential_clear(c);
->  }
->  
->  static int check_url_component(const char *url, int quiet,
+
+I think this is fine.  I'm assuming that the credential (and other
+appurtenant information, such as the state[] values) are still passed to
+the erase call, and if so, I don't see a problem.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--JMqPCGXjpJM34gCh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZl+FQgAKCRB8DEliiIei
+gebOAP4sPk/T5v8LcKKLP7/qrM1nfvMuhmwpFTSqHXL1JrYSxAEAjYcF9F6HQWgp
+5db8+j8lmnGj1Zbyvrb6pePhw7eqEw0=
+=y2Tg
+-----END PGP SIGNATURE-----
+
+--JMqPCGXjpJM34gCh--
