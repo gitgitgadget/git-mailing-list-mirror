@@ -1,90 +1,157 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B7B146591
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 13:12:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0520F8F45
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 13:58:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717506743; cv=none; b=i9dF1iRL9IlmNO/pOeSHwpvwWjgtuHqzNb6UUHFYd6jc+gayIIlXcYOh8xnd7ZYZVQ1MG40tYWYgOlgwl/SX/t2COKLb4Tszyo+/JHy10PjwJJEWdsaRpPRem52rdvXaS/QeqIU8QSkFa6Nq35+3Ucs+Cb3KlOCn1XUb4VRBX78=
+	t=1717509501; cv=none; b=myLgq0YL/RO+P7SRpVgyxtyyGN9FW30knxUUUUwrlYVnaXiBdUnqY8HxVQJqXNT1gabHGjr5hukvjMXS/SV4RK/mrPOd9VYPuY/zDmaBHGyJV0RNs5I+4L7swxNZCZ5ehqiQNVfv8aoLXsJcjvmT8eZhVONjknrQ8JttkO5riGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717506743; c=relaxed/simple;
-	bh=MZW0blWjYo38gTuLv6nPE/jet6OcEc5B99iirXaLC9k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DH3XTMSYXJZX++trVhM7ckSPGlL0jqUT1caMUYSRGDBhmk+IsgwgkgSAEV5lfviW1RbVGhoK2mA59FqDNN6Pp4F2QHsfNC6Lff9YJ78Kxs1vTtm/TILZ2OkazNutFobe4AQnnaaafdQ2DbaAlrKtUk4O0N29l/NBLp7pxXl3sZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXASxjSB; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717509501; c=relaxed/simple;
+	bh=85JtnAeEVmp12uxCFPf3Ojsg8yHGBOguqKN80o3hVtM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qzd5mFJdTQ/yVHp97cynZEvmWZuuMc/av8+VlYA/4IcAdUZODqakNw7WDZfEAtS3FGzJEr6c6g6eu6FhuaQFY9D9ziJfwhn9PwAh2RY2wjnqwWI5lKemPLrQBhBYgEtsfqcHSwPRC/6E5KYeFBFxarVe/RscgqzTwuc5Ksxov8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JOvxceJp; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXASxjSB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C0AC2BBFC;
-	Tue,  4 Jun 2024 13:12:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717506743;
-	bh=MZW0blWjYo38gTuLv6nPE/jet6OcEc5B99iirXaLC9k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RXASxjSBJBzk5dMzaasmYXBeGPfVTQrgcxAAWhKPlVcGTHrkciUXhM41QlLoBUH6z
-	 zzlWRy4dP8Mur0mWvGyJFVMNpFiulNMBtTnMEYOOifHe1XCg+BQT/xdH3B6LxIAG/N
-	 pOPONP5s22/6wq4VapsoSSiTy6hDf95MxK3XFUwY=
-Date: Tue, 4 Jun 2024 09:12:19 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Dimitri Sabadie <hadronized@strongly-typed-thoughts.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-Subject: Re: Author signature
-Message-ID: <20240604-omniscient-skinny-dormouse-bfae0a@lemur>
-References: <D19KZ1CBA7JF.27PYPL5X68543@strongly-typed-thoughts.net>
- <ZkPA2Pmz2EB6SOzL@tapette.crustytoothpaste.net>
- <20240514-lively-potoo-of-sorcery-0028de@lemur>
- <20240514-demonic-quartz-hog-be2bd2@lemur>
- <D1R8VB91BRR6.3M3651RXOQM5Q@strongly-typed-thoughts.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JOvxceJp"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4214f52b810so8801515e9.1
+        for <git@vger.kernel.org>; Tue, 04 Jun 2024 06:58:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717509498; x=1718114298; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=H0pAhEVrywAP3fslZjeEqZ9zBTe6qXUsFq/23mz3ZoU=;
+        b=JOvxceJpQOv4P5LjUKkjMghInc3L+S8SjkO6TIGimmhD+VC1go12LV/q3Gua5gWKQb
+         NRO4C4Q9XRr6i21tlzhPS1AFOHKffdSfvj9afGOMj+MXC+jLgKqNXOqCfONZaQ9mtMh4
+         557/pgzt5tGArSDETq0+rjLW5s69vN+5f+V+SwM2vW5nscxXVtEUYBw+0HoX3IVhv1Lh
+         W7l5DFvt0eDR5fa0da1tqjMSX89vjwqpuuITrUG6N1stFv1FXtWgqGvjgSaD5pUshO0U
+         Z6ZH6j79hEBmWOz5oCAYXtS7YQaI73xN7QqRvHSgNVX0GqoQiXcHmTXFoCC6pUkk7HHl
+         W+mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717509498; x=1718114298;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=H0pAhEVrywAP3fslZjeEqZ9zBTe6qXUsFq/23mz3ZoU=;
+        b=NjKerspWrv8g7CEUx3YVgunEP640uATmIg5HpMYfDLApJR4LjDvM67E537evItgS2R
+         e8a476s8crzBH40GvlSFKkLp+zfs2xz8TTrRqTzy2f4BHpqccJVqpfD8K3oRlOaUCIXp
+         1MKyaW18WtM5zKsJ+5UiQibtMFKzvcGTMQTSJQTFsRTVJ70nPsGNMui0LnlpVK2qAnU8
+         2jjPhPk0SFj34ORns7pNCjB8LWDHkkSakYKPpAGUYmJa3n1AUwdKr1jgCyHt39zyFgTy
+         YYbquXF/9ZxzfIJxyFniotMneYidIR85wFab3dKVOawbrehaGzDqPpAcG7iJeJ/wHWLp
+         5cbw==
+X-Gm-Message-State: AOJu0Yy1ikn9VCebRYREKusSVo/WQjWLOlshMOawIiS9kMmAlVsenQZc
+	JNBFNVWVSx0V1ayJeKpvOGISctMT9srMfxysYX1sGCZsMswkwDTdPgnz9w==
+X-Google-Smtp-Source: AGHT+IFayRlaelkINsXov1BtBcRpMxndJ34HD5VeEANy3IPc1qFasyuyclN0jtddyXSUxAA51MNzqw==
+X-Received: by 2002:adf:fc50:0:b0:354:f612:5f7e with SMTP id ffacd0b85a97d-35e0f325acfmr10086817f8f.56.1717509497965;
+        Tue, 04 Jun 2024 06:58:17 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:641:9001:124f:b55:b414:cf29? ([2a0a:ef40:641:9001:124f:b55:b414:cf29])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd064bbb1sm11603854f8f.101.2024.06.04.06.58.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Jun 2024 06:58:17 -0700 (PDT)
+Message-ID: <396e6893-80d4-48f5-b43f-a30684a64bac@gmail.com>
+Date: Tue, 4 Jun 2024 14:58:17 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <D1R8VB91BRR6.3M3651RXOQM5Q@strongly-typed-thoughts.net>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 20/29] sequencer: fix leaking string buffer in
+ `commit_staged_changes()`
+To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org
+References: <cover.1717402439.git.ps@pks.im>
+ <48bcd0ac80ee0b60eeda2bcedf55003a5049f289.1717402439.git.ps@pks.im>
+ <758f2321-dc63-4209-8b54-99b74b6bb897@gmail.com> <Zl6390B6kUu5TlBM@framework>
+ <Zl6_6Z6Bu-zgOmPs@framework>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <Zl6_6Z6Bu-zgOmPs@framework>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jun 04, 2024 at 02:50:49PM GMT, Dimitri Sabadie wrote:
-> On the other side, I just had another idea. What would be best to me
-> is to actually provide a _proof_ that at least the author acknowledges
-> the patch — whether he wrote it or not is another story and I don’t
-> think we can enforce that completely. The goal I want to achieve is that
-> if I send a patch via email, if the patch ends up committed by someone
-> else, I still want to be able to have a proof that “I wrote the patch.”
+Hi Patrick
 
-On the kernel side of things, we're using patatt for this purpose:
-https://github.com/mricon/patatt
+On 04/06/2024 08:19, Patrick Steinhardt wrote:
+> On Tue, Jun 04, 2024 at 08:45:11AM +0200, Patrick Steinhardt wrote:
+>> On Mon, Jun 03, 2024 at 02:14:20PM +0100, Phillip Wood wrote:
+>>> Hi Patrick
+>>>
+>>> On 03/06/2024 10:48, Patrick Steinhardt wrote:
+>>>> @@ -5259,12 +5277,13 @@ static int commit_staged_changes(struct repository *r,
+>>>>    				}
+>>>>    			unuse_commit_buffer:
+>>>>    				repo_unuse_commit_buffer(r, commit, p);
+>>>> -				if (res)
+>>>> -					return res;
+>>>> +				if (res) {
+>>>> +					ret = res;
+>>>> +					goto out;
+>>>> +				}
+>>>
+>>> Having 'ret' and 'res' in this block is a bit confusing - we could delete
+>>> the declaration for 'res' and  either replace its use with 'ret', or rename
+>>> 'ret' to 'res' in this patch.
+>>
+>> Yeah, let's just drop the local `res` variable here and use `ret`
+>> instead.
+> 
+> For the record, below is the diff to address this. I'll refrain from
+> sending out this whole patch series again for now to only address this
+> one issue, but will include it if there are more things that need to be
+> handled.
+> 
+> Patrick
 
-> So assuming the committer is not of bad faith and doesn’t truncate my
-> git commit message… why not simply adding a “sign-off” like line at the
-> end of the commit, but instead of just putting a clear text that anyone
-> could tamper with, we would sign the date at which the commit was made?
-> 
-> For instance, I could have a git message like:
-> 
->     Fix typo. 
-> 
->   	-----BEGIN PGP SIGNED MESSAGE-----
->     Hash: SHA512
-> 
->     Tue Jun  4 02:49:26 PM CEST 2024
->     -----BEGIN PGP SIGNATURE-----
-> 
->     iHUEARYKAB0WIQRsmRqgbXp8KFc3mc6pQ4aopiUuywUCZl8NVgAKCRCpQ4aopiUu
->     yyhWAQCScfP28Py0QbHuqzzOFyjAMwdK0LfwiGfYrfzfv0evlAD9Hd+x8NgvPq2p
->     nnnG5tQaHeIS/v8PMP0suy3QiWV8WQc=
->     =Ru+m
->     -----END PGP SIGNATURE-----
-> 
-> If a create another commit later with "Fix typo." as content, then the
-> date will be different and the signature won’t be the same.
-> 
-> What do you think?
+This and all the other sequencer changes in this series look good to me
 
-No, this is not a good solution, if only because the date of the commit can be
-freely edited to match whatever is in the signature, and then it can be reused
-for any commit at all.
+Thanks
 
--K
+Phillip
 
+> diff --git a/sequencer.c b/sequencer.c
+> index 9e90084692..cc57a30883 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -5253,7 +5253,6 @@ static int commit_staged_changes(struct repository *r,
+>   				 * We need to update the squash message to skip
+>   				 * the latest commit message.
+>   				 */
+> -				int res = 0;
+>   				struct commit *commit;
+>   				const char *msg;
+>   				const char *path = rebase_path_squash_msg();
+> @@ -5266,22 +5265,22 @@ static int commit_staged_changes(struct repository *r,
+>   
+>   				p = repo_logmsg_reencode(r, commit, NULL, encoding);
+>   				if (!p)  {
+> -					res = error(_("could not parse commit %s"),
+> +					ret = error(_("could not parse commit %s"),
+>   						    oid_to_hex(&commit->object.oid));
+>   					goto unuse_commit_buffer;
+>   				}
+>   				find_commit_subject(p, &msg);
+>   				if (write_message(msg, strlen(msg), path, 0)) {
+> -					res = error(_("could not write file: "
+> +					ret = error(_("could not write file: "
+>   						       "'%s'"), path);
+>   					goto unuse_commit_buffer;
+>   				}
+> +
+> +				ret = 0;
+>   			unuse_commit_buffer:
+>   				repo_unuse_commit_buffer(r, commit, p);
+> -				if (res) {
+> -					ret = res;
+> +				if (ret)
+>   					goto out;
+> -				}
+>   			}
+>   		}
+>   
