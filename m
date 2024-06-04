@@ -1,55 +1,55 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5AE179BC
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 18:00:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A5D5F860
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 18:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717524015; cv=none; b=vFNtL/6cpbC/KaAWdahErLWeoJtVxlx1zvGmv/zs9eaVqobSq+QO8cnOWZ27x/s4x2Gd5Vzdo8v+IePB0+Y6ANNGhBOL5Mu5NIvcwnJsjxzDSu1WcegqQ5hhWs34luBBHn1tD5vVj4paZNnLaS0RgLoq1lqkTdDRGf0RZRBIfLA=
+	t=1717524093; cv=none; b=o9XdptQ0dqjAnyBtay331HTPTsUEA4TwVKSzL9ZR8QnbZWQpDhZhKjZ6vALAs5orrIt2vQNeeBhJMUJoIYp1aRqG9faEUCxcBEwtm0n6OsULiDxr5FcGD/uIsn3DExrL8s7EqLLab4JWY3ddKqlyb4Iqlq6p6VM59pITdp0rn5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717524015; c=relaxed/simple;
-	bh=YQeTdfyOBaCUxKp833mhUDdLnnrr0KvyuJ+yMSgO5Fo=;
+	s=arc-20240116; t=1717524093; c=relaxed/simple;
+	bh=biLT3W6izCwYKK5oDj1zxoys6KVl0ToA7wFMrjYPT2s=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JZV67AE4Hscvy/DUAdjV9XMmXOljAx+9CXHBDA1RUfEJdkZm7AxI1mvyvN3IxuEJP+cq1W0EZVvVrR7s75XkORaGdllkBrs3LpFqGyDowkyvVwO01LgX9TDghVDNJqHvkGmY9Kd+C69L6rJ3q+ik3CV9oLaGNpCiBg+qVD4nPYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kYOtEBU3; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=fK5YbBprX0BG2ofkylUlOABTsObzH7fSbuWjBYlnUfLcWkwu8hJvmfifsmrRJzhdGuiRjEyK6Iq5bCXk4dNjomZ0d7B8z8+8xVv2DS+pxXStS5Fn4eLWeWb3R2EWPFM41EISXzUD/5EPm6ZX3s7DR0JP/EyqIH+mRsf/I0Xtcfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=x/Te8Bh1; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kYOtEBU3"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7BF7B1D1C5;
-	Tue,  4 Jun 2024 14:00:13 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="x/Te8Bh1"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A65991CCD7;
+	Tue,  4 Jun 2024 14:01:25 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=YQeTdfyOBaCUxKp833mhUDdLnnrr0KvyuJ+yMS
-	gO5Fo=; b=kYOtEBU3Zk+qxeiLAHKOtshYXfTWBk6O0nXIQ4lZEVuzfKrfqgmK6Z
-	cfBGoMqSK8XeNCOjYimjdEMLvgnXmTGRmBxaaOMYqf4J1SQZTf6IxMetv7XwuO7v
-	kO9uFLtgIAMzmJwm/E7dAewJSHGyNfOLz8le9VvvJw9L0DJk6CloY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 718341D1C4;
-	Tue,  4 Jun 2024 14:00:13 -0400 (EDT)
+	:content-type; s=sasl; bh=biLT3W6izCwYKK5oDj1zxoys6KVl0ToA7wFMrj
+	YPT2s=; b=x/Te8Bh1Tp+1zZCnr00McbphJPe68klI9s8xWAPvyHYdnehUfRR6nX
+	qrYxp35BhhCpqa7dHGtSmcODz0shnK8MtrOwyWbWXAOdckP/ZVvXZgzNfrQpYlOT
+	ergFD56grAHndLy9bqdbjCeeSykDPYYKFEa9fYzFVRhxvjZ5yw4m8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9E3D11CCD4;
+	Tue,  4 Jun 2024 14:01:25 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.173.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AE7AD1D1C3;
-	Tue,  4 Jun 2024 14:00:12 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AB8751CCD2;
+	Tue,  4 Jun 2024 14:01:22 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Justin Tobler
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>,  Justin Tobler
  <jltobler@gmail.com>,  Dragan Simic <dsimic@manjaro.org>,  Karthik Nayak
  <karthik.188@gmail.com>,  Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH v6 3/4] BreakingChanges: document removal of grafting
-In-Reply-To: <b25b91a5e707f671785012c1b4a68c36241e537e.1717504292.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Tue, 4 Jun 2024 14:32:46 +0200")
+Subject: Re: [PATCH v6 0/4] docs: document upcoming breaking changes
+In-Reply-To: <f231d5ff-08e5-47b3-aadc-0f88566c2588@gmail.com> (Phillip Wood's
+	message of "Tue, 4 Jun 2024 15:23:09 +0100")
 References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
 	<cover.1717504292.git.ps@pks.im>
-	<b25b91a5e707f671785012c1b4a68c36241e537e.1717504292.git.ps@pks.im>
-Date: Tue, 04 Jun 2024 11:00:11 -0700
-Message-ID: <xmqqo78gvb9w.fsf@gitster.g>
+	<f231d5ff-08e5-47b3-aadc-0f88566c2588@gmail.com>
+Date: Tue, 04 Jun 2024 11:01:21 -0700
+Message-ID: <xmqqjzj4vb7y.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,46 +59,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 4A3A07A6-229C-11EF-AB0B-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
+ 73F13B32-229C-11EF-B014-8F8B087618E4-77302942!pb-smtp21.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> The grafting mechanism for objects has been deprecated in e650d0643b
-> (docs: mark info/grafts as outdated, 2014-03-05), which is more than a
-> decade ago. The mechanism can lead to hard-to-debug issues and has a
-> superior replacement with replace refs.
+> Hi Patrick
 >
-> Follow through with the deprecation and mark grafts for removal in Git
-> 3.0.
+> On 04/06/2024 13:32, Patrick Steinhardt wrote:
+>> Hi,
+>> another day, another version of this patch series that aims to give
+>> a
+>> framework for documenting upcoming breaking changes in Git.
+>> Changes compared to v5:
+>>    - Note that Git 1.6 was a breaking release, despite the fact that
+>> its
+>>      major version wasn't bumped.
+>>    - Several smallish rewordings.
+>>    - Note that items on the lists should only be discussed anew when
+>>      circumstances have changed.
+>>    - Add some conditions to the move to "sha256". Also, note that we
+>> do
+>>      not plan to deprecate "sha1".
+>>    - Note that replacement refs are also superior over grafts
+>> because
+>>      they can be carried across repos.
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  Documentation/BreakingChanges.txt | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+> This version looks good to me
 >
-> diff --git a/Documentation/BreakingChanges.txt b/Documentation/BreakingChanges.txt
-> index 5d7e80aebb..9fb6d8c78a 100644
-> --- a/Documentation/BreakingChanges.txt
-> +++ b/Documentation/BreakingChanges.txt
-> @@ -96,6 +96,18 @@ Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>,
->  
->  === Removals
->  
-> +* Support for grafting commits has long been superseded by git-replace(1).
-> +  Grafts are inferior to replacement refs:
-> ++
-> +  ** Grafts are a local-only mechanism and cannot be shared across reositories.
+> Thanks for writing this document
 
-"reositories" -> "repositories".
+Yup, aside from two typos and a misstatement I did not spot anything
+that need correction.  Will queue.
 
-> +  ** Grafts can lead to hard-to-diagnose problems when transferring objects
-> +     between repositories.
-> ++
-> +The grafting mechanism has been marked as outdated since e650d0643b (docs: mark
-> +info/grafts as outdated, 2014-03-05) and will be removed.
-> ++
-> +Cf. <20140304174806.GA11561@sigill.intra.peff.net>.
-> +
->  == Superseded features that will not be deprecated
->  
->  Some features have gained newer replacements that aim to improve the design in
+Thanks.
