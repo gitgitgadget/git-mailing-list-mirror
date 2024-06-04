@@ -1,79 +1,79 @@
-Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FC2146A87
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 12:38:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD83E1474D4
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 12:38:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717504725; cv=none; b=SVW7FuMIY1r16JIPHO1R3s6Y7USWdLDbnNsTDmWqcjq47gFJ5ptYXNv8++t0stR5OQh76NwbA+iUxIYPB/ZXe28q7RR9hK5P+yoqe+LYu0XLYz+tr9E0lpKHJMSxMJffyreZv3XK2sYdmjeyEfyoWfznrBPCLhJxUAnuixSDHqM=
+	t=1717504731; cv=none; b=XU+IEbyJhtNSwlR8fKfUoZRqfretpdwIoQhFZuGSzIymXD2RiZXTmSBejK2IRxikC04tNcTPNXgw0gfsPOdqJye7uGeaEFtoCLaK3/OHRHLt51hdaycMBKSaUpFZmiIMFBn82YWf7w/jVBDUiULSYGoxUJ60eDj4J9p2Z7Zk1+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717504725; c=relaxed/simple;
-	bh=gpL/3vUMsWS2xG6BkRYJq0lx+M1+pFPeuTwVmSC5/YA=;
+	s=arc-20240116; t=1717504731; c=relaxed/simple;
+	bh=/QEg8vv6a8dtLA5RxuFUT9OI6D2DWPIowYG0N3EYTyo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lEMqyNH4J2fTkRzFkXPrwUQ9zODInaAuDBVvYRU7zGZn5d3zSTnOQAjrHpi3S06BbshB4TGCEZNpbEh4wryqQH/7GipNgne71Ijs+JYLqzoyTOkUu6mC441ymkDTR60LkpNVR7aD3VzY64aqAaaE7NB7joSf6iz8m3CTCvPdI5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=maPRtBCH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EjAkHW8t; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=lsQ6W343dICn84DMMypoWApNz7/4k4yjFiGI7VYA/DWVv0BaMbibXoY5lxym/PqoAC/N9n4jlQikmKgdBH2XhSze7LT6nvKqRrNffzZ1oR9DHMxb39GHcbG7wXYyPS22cVKzlXtm6MNzA79vRDCkXPGHC4qYbov0fJq0QbI0YSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HQvkikkl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pXiuNczt; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="maPRtBCH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EjAkHW8t"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id A405C114014B;
-	Tue,  4 Jun 2024 08:38:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HQvkikkl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pXiuNczt"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 089191380157;
+	Tue,  4 Jun 2024 08:38:49 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Tue, 04 Jun 2024 08:38:43 -0400
+  by compute6.internal (MEProxy); Tue, 04 Jun 2024 08:38:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717504723; x=1717591123; bh=kSdABcTlIj
-	mZqrbYaRFciluPU4SDFNCK9phJPC/3v1E=; b=maPRtBCHiDzJ4YTadKEpRurSuy
-	yKTh6y52B3Fgi/52DNwNgvDeWLZEsWWvMJQCvzByUPZ8wjWCrN5X0VpfugdTo+zh
-	x8y39msJnLeXWAjFrPdGHnhW2MD8RE+omn8zOQA/NQZD8d/nu9ACw/X4YZ05iPgb
-	DjzLV09xI8oKhdoA7oRJ00OJh/7ZJLgyIXeygAwxAjQS0RAEro+7SL4FQBWVvGFF
-	LeUoD66Mkm3+QsvVXr1wYksP/lpqv825BhzRJEvPlMqt4lWf2syFg8isnm7NicHP
-	aaXI8pgDuWZomJndViYOcUoJNGZ2AdoYkM/MuL0zk4d+r5qJW7Jea3dIMvPw==
+	:subject:to:to; s=fm1; t=1717504729; x=1717591129; bh=h+jZ+lJ2yu
+	COZce18nC2xoeqtiULWyw6soRz8b053yU=; b=HQvkikklpSOuo3C6+XRqxlVmtx
+	5XflIpkdHIYQJXsiSWjDmTXcCjVr9c+SuKmKRcPzCjuYXTTt4k6ml4KhuHlV2h+d
+	n1aliv45zqa1a5MOV1TnY7MRTQqkrtexWvHQ3bUpT4x08JL3UmXJOEzRAYcoCfQz
+	AEAYl90ZoU7cufkbu6FVuFTAHOH2GH9/ldl8zBpmSoBUMO3PkTaB5McZISgyzjio
+	Oxzad4HLOgOjdbyn4K29o2Mdl+mPvSb7ti/zHvGGpEPqegFrh+H+t2YL8Y/Mo6Gl
+	/YRW0kLQItm+0EFN1bw/C6qE6v30I6chhi66QF1WJV3/gxiPkus3P5F0XTlQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717504723; x=1717591123; bh=kSdABcTlIjmZqrbYaRFciluPU4SD
-	FNCK9phJPC/3v1E=; b=EjAkHW8t93WJAAV10udW1FH7uce05JfK0nkmkIDObyoT
-	mFhDZ9zbH298gUvxCVQunIafDAkqTE9yhxUQ286Ti9MjAOyCEftEC6Ep59FA1Pml
-	koNF3XPfq5kVWsa28RNT4c9V5SAs3L6XtZE+vXEH9K7xnC05bxjPbqLgXBUPMe/h
-	ncvIiFC3scFyt8coqhws6xOBKMfUfJDkgBCE6FIZi+S9cDktmICUNZtoPVCnxVXZ
-	/2AuSQOy6PZl1CFS/f6nSWcc/sNFcru4rsPfrBVlLsYneWt+YmHxACtI6HAq/SRo
-	Vd04Z+JAbHAAvc8tT+pQhM7iGpOeWKyDmVSZBVlMLQ==
-X-ME-Sender: <xms:0wpfZqR6HB-YmkMzMbIsWPv8tBWcC3-cUT5XV5PUR437Ns2pLFkZiw>
-    <xme:0wpfZvyrdWQpmr-lUD7pi42yMx1xPItiVTmV4YFpclxcG1X9egn5UelnuXX9HcAN3
-    EZYQH8NsujDInpEGQ>
-X-ME-Received: <xmr:0wpfZn36ToqwICrC75AA_fmd5Vq3F2A8eE6z4mLG6YNBlfVFYiEBAQNRbu_K9bwotW3MyUfNp0QE25K5nulElqdyb9PFZMwdXRQtZU9N6QCPzmB7>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelgedgheduucetufdoteggodetrfdotf
+	fm1; t=1717504729; x=1717591129; bh=h+jZ+lJ2yuCOZce18nC2xoeqtiUL
+	Wyw6soRz8b053yU=; b=pXiuNczt4Pp+Pw/3Hiz2A7J3zgAuJzlvMJcDlej2JFme
+	jsP4fLDH9u9KVcQEkTCKGe19PTYO+NIcY5LAKRDEog8YcC56VCHi+iN5CphE7fHz
+	B+bjl+Z63XTl7uzPXEzoQZCoCAEBcsi5SWhICLb4Py6Dhm14gP0uiXefXEJFeCRY
+	TeOqlcQ+yswd+kPUXmjjoS2XZ88xFzWu2YT3STIUAwAlOG5li6Q0/oFSp/3F3SLQ
+	AvNCb4xd3gEzi3IpA/bfFLaHV38cR6U95GmamMHzns/Ev1Q0B5WmLKAzOoNudFIO
+	2KJV28cYws3kspdH4HugjT70hxKaGZsN215CXWRR9g==
+X-ME-Sender: <xms:2ApfZiT4eq2_hDx2D2KLTb_TZFDJDUfsIpzgQns3Awfdj7O8BAP_KA>
+    <xme:2ApfZnwbcplzLgQuOQMVbNcoXK0xLSA4ItTVBriiIeWckNt6ZRTXGPI58B-Rqhywk
+    T7vd5n_I5GApEhXtw>
+X-ME-Received: <xmr:2ApfZv1z9698YjMm8ui640ERBmfaU0QC6W_0Qm-DtOf7-ic6OKaP1QmOAryc1--MszX_wDNz39DsKknW0RZeSZDPfhAGgpdwy-KDUZL6EE0DHSL1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelgedghedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepheenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:0wpfZmBhzG5rJ_20hRrCiPYdAvTgxl8_MhIhaySGtrBcraLSJRdvew>
-    <xmx:0wpfZjh6RQ2moqKEBNnMUeLIBIKZRLxfhcRzLB0aj6bvPCpL5zpfPw>
-    <xmx:0wpfZir26c7t7PVmgvvNtfctsziSuMg7AOkr1rgxB-WOFfH8nw_Jaw>
-    <xmx:0wpfZmgdHRowPbeYENwJayvbMXfa99NpUwQPaBadD219aMyES_ClDg>
-    <xmx:0wpfZjfx_Z9daEa2cdZc4abPFhRIGWVoix7jMUxVQMQYASmkFmXAHiVe>
+X-ME-Proxy: <xmx:2ApfZuAcsdah5v51qoiG_E-8KPLXVgJNNJTRw_P55sPTgMYVHZYogQ>
+    <xmx:2ApfZrhPHqQIVE2clKFnxRfxzRcY-oJKh2tsSAP9DpJ5GO1UkIzhgg>
+    <xmx:2ApfZqrdDavffwrFvdl1yYp2RVBY526JausNNOavrEiiLBa2yUzMHw>
+    <xmx:2ApfZuiuY4GXVmwWPnd413DDfnOMslEfQe-G8AnjflFxswexrqRrkQ>
+    <xmx:2QpfZrcy9Uu7TpPNzhjW2pt78muiwM9i0gFNqRLfTxC9hnQxu1JSRvc6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Jun 2024 08:38:42 -0400 (EDT)
+ 4 Jun 2024 08:38:47 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id c596fa7e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Jun 2024 12:38:15 +0000 (UTC)
-Date: Tue, 4 Jun 2024 14:38:40 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 23e3498e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Jun 2024 12:38:20 +0000 (UTC)
+Date: Tue, 4 Jun 2024 14:38:44 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v4 22/27] imap-send: drop global `imap_server_conf` variable
-Message-ID: <0a69ce4b444b2924abd9275ae75f00ac2d545aca.1717504517.git.ps@pks.im>
+Subject: [PATCH v4 23/27] imap-send: fix leaking memory in `imap_server_conf`
+Message-ID: <9ccafd286b3d15ccf6da83b9d2c0cba26672f35f.1717504517.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717504517.git.ps@pks.im>
 Precedence: bulk
@@ -83,246 +83,188 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7t6GwHB6hxaHQcDs"
+	protocol="application/pgp-signature"; boundary="yCmW0t7gtC+XHcof"
 Content-Disposition: inline
 In-Reply-To: <cover.1717504517.git.ps@pks.im>
 
 
---7t6GwHB6hxaHQcDs
+--yCmW0t7gtC+XHcof
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In "imap-send.c", we have a global `sturct imap_server_conf` variable
-that keeps track of the configuration of the IMAP server. This variable
-is being populated mostly via the Git configuration.
+We never free any of the config strings that we populate into the
+`struct imap_server_conf`. Fix this by creating a common exit path where
+we can free resources.
 
-Refactor the code to allocate the structure on the stack instead of
-having it globally. This change allows us to track its lifetime more
-closely.
+While at it, drop the unused member `imap_server_conf::name`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- imap-send.c | 57 ++++++++++++++++++++++++++++-------------------------
- 1 file changed, 30 insertions(+), 27 deletions(-)
+ imap-send.c | 65 ++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 42 insertions(+), 23 deletions(-)
 
 diff --git a/imap-send.c b/imap-send.c
-index 8b723b34a5..67a7a6c456 100644
+index 67a7a6c456..da3e7ec17e 100644
 --- a/imap-send.c
 +++ b/imap-send.c
-@@ -82,10 +82,6 @@ struct imap_server_conf {
- 	char *auth_method;
- };
+@@ -69,7 +69,6 @@ static void imap_warn(const char *, ...);
+ static char *next_arg(char **);
 =20
--static struct imap_server_conf server =3D {
--	.ssl_verify =3D 1,
--};
--
- struct imap_socket {
- 	int fd[2];
- 	SSL *ssl;
-@@ -110,6 +106,7 @@ struct imap {
- };
-=20
- struct imap_store {
-+	const struct imap_server_conf *cfg;
- 	/* currently open mailbox */
- 	const char *name; /* foreign! maybe preset? */
- 	int uidvalidity;
-@@ -194,8 +191,8 @@ static void socket_perror(const char *func, struct imap=
-_socket *sock, int ret)
-=20
- #ifdef NO_OPENSSL
- static int ssl_socket_connect(struct imap_socket *sock UNUSED,
--			      int use_tls_only UNUSED,
--			      int verify UNUSED)
-+			      const struct imap_server_conf *cfg,
-+			      int use_tls_only UNUSED)
+ struct imap_server_conf {
+-	const char *name;
+ 	char *tunnel;
+ 	char *host;
+ 	int port;
+@@ -1300,23 +1299,28 @@ static int git_imap_config(const char *var, const c=
+har *val,
  {
- 	fprintf(stderr, "SSL requested but SSL support not compiled in\n");
- 	return -1;
-@@ -250,7 +247,9 @@ static int verify_hostname(X509 *cert, const char *host=
-name)
- 		     cname, hostname);
- }
+ 	struct imap_server_conf *cfg =3D cb;
 =20
--static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, =
-int verify)
-+static int ssl_socket_connect(struct imap_socket *sock,
-+			      const struct imap_server_conf *cfg,
-+			      int use_tls_only)
- {
- #if (OPENSSL_VERSION_NUMBER >=3D 0x10000000L)
- 	const SSL_METHOD *meth;
-@@ -279,7 +278,7 @@ static int ssl_socket_connect(struct imap_socket *sock,=
- int use_tls_only, int ve
- 	if (use_tls_only)
- 		SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3);
-=20
--	if (verify)
-+	if (cfg->ssl_verify)
- 		SSL_CTX_set_verify(ctx, SSL_VERIFY_PEER, NULL);
-=20
- 	if (!SSL_CTX_set_default_verify_paths(ctx)) {
-@@ -306,9 +305,9 @@ static int ssl_socket_connect(struct imap_socket *sock,=
- int use_tls_only, int ve
- 	 * OpenSSL does not document this function, but the implementation
- 	 * returns 1 on success, 0 on failure after calling SSLerr().
- 	 */
--	ret =3D SSL_set_tlsext_host_name(sock->ssl, server.host);
-+	ret =3D SSL_set_tlsext_host_name(sock->ssl, cfg->host);
- 	if (ret !=3D 1)
--		warning("SSL_set_tlsext_host_name(%s) failed.", server.host);
-+		warning("SSL_set_tlsext_host_name(%s) failed.", cfg->host);
- #endif
-=20
- 	ret =3D SSL_connect(sock->ssl);
-@@ -317,12 +316,12 @@ static int ssl_socket_connect(struct imap_socket *soc=
-k, int use_tls_only, int ve
- 		return -1;
- 	}
-=20
--	if (verify) {
-+	if (cfg->ssl_verify) {
- 		/* make sure the hostname matches that of the certificate */
- 		cert =3D SSL_get_peer_certificate(sock->ssl);
- 		if (!cert)
- 			return error("unable to get peer certificate.");
--		if (verify_hostname(cert, server.host) < 0)
-+		if (verify_hostname(cert, cfg->host) < 0)
- 			return -1;
- 	}
-=20
-@@ -895,7 +894,7 @@ static int auth_cram_md5(struct imap_store *ctx, const =
-char *prompt)
- 	int ret;
- 	char *response;
-=20
--	response =3D cram(prompt, server.user, server.pass);
-+	response =3D cram(prompt, ctx->cfg->user, ctx->cfg->pass);
-=20
- 	ret =3D socket_write(&ctx->imap->buf.sock, response, strlen(response));
- 	if (ret !=3D strlen(response))
-@@ -935,6 +934,7 @@ static struct imap_store *imap_open_store(struct imap_s=
-erver_conf *srvc, const c
-=20
- 	CALLOC_ARRAY(ctx, 1);
-=20
-+	ctx->cfg =3D srvc;
- 	ctx->imap =3D CALLOC_ARRAY(imap, 1);
- 	imap->buf.sock.fd[0] =3D imap->buf.sock.fd[1] =3D -1;
- 	imap->in_progress_append =3D &imap->in_progress;
-@@ -1035,7 +1035,7 @@ static struct imap_store *imap_open_store(struct imap=
-_server_conf *srvc, const c
- 		imap->buf.sock.fd[1] =3D dup(s);
-=20
- 		if (srvc->use_ssl &&
--		    ssl_socket_connect(&imap->buf.sock, 0, srvc->ssl_verify)) {
-+		    ssl_socket_connect(&imap->buf.sock, srvc, 0)) {
- 			close(s);
- 			goto bail;
- 		}
-@@ -1068,8 +1068,7 @@ static struct imap_store *imap_open_store(struct imap=
-_server_conf *srvc, const c
- 		if (!srvc->use_ssl && CAP(STARTTLS)) {
- 			if (imap_exec(ctx, NULL, "STARTTLS") !=3D RESP_OK)
- 				goto bail;
--			if (ssl_socket_connect(&imap->buf.sock, 1,
--					       srvc->ssl_verify))
-+			if (ssl_socket_connect(&imap->buf.sock, srvc, 1))
- 				goto bail;
- 			/* capabilities may have changed, so get the new capabilities */
- 			if (imap_exec(ctx, NULL, "CAPABILITY") !=3D RESP_OK)
-@@ -1299,23 +1298,24 @@ static int split_msg(struct strbuf *all_msgs, struc=
-t strbuf *msg, int *ofs)
- static int git_imap_config(const char *var, const char *val,
- 			   const struct config_context *ctx, void *cb)
- {
-+	struct imap_server_conf *cfg =3D cb;
-=20
- 	if (!strcmp("imap.sslverify", var))
--		server.ssl_verify =3D git_config_bool(var, val);
-+		cfg->ssl_verify =3D git_config_bool(var, val);
- 	else if (!strcmp("imap.preformattedhtml", var))
--		server.use_html =3D git_config_bool(var, val);
-+		cfg->use_html =3D git_config_bool(var, val);
- 	else if (!strcmp("imap.folder", var))
--		return git_config_string(&server.folder, var, val);
-+		return git_config_string(&cfg->folder, var, val);
- 	else if (!strcmp("imap.user", var))
--		return git_config_string(&server.user, var, val);
-+		return git_config_string(&cfg->user, var, val);
- 	else if (!strcmp("imap.pass", var))
--		return git_config_string(&server.pass, var, val);
-+		return git_config_string(&cfg->pass, var, val);
- 	else if (!strcmp("imap.tunnel", var))
--		return git_config_string(&server.tunnel, var, val);
-+		return git_config_string(&cfg->tunnel, var, val);
- 	else if (!strcmp("imap.authmethod", var))
--		return git_config_string(&server.auth_method, var, val);
-+		return git_config_string(&cfg->auth_method, var, val);
- 	else if (!strcmp("imap.port", var))
--		server.port =3D git_config_int(var, val, ctx->kvi);
-+		cfg->port =3D git_config_int(var, val, ctx->kvi);
- 	else if (!strcmp("imap.host", var)) {
+-	if (!strcmp("imap.sslverify", var))
++	if (!strcmp("imap.sslverify", var)) {
+ 		cfg->ssl_verify =3D git_config_bool(var, val);
+-	else if (!strcmp("imap.preformattedhtml", var))
++	} else if (!strcmp("imap.preformattedhtml", var)) {
+ 		cfg->use_html =3D git_config_bool(var, val);
+-	else if (!strcmp("imap.folder", var))
++	} else if (!strcmp("imap.folder", var)) {
++		FREE_AND_NULL(cfg->folder);
+ 		return git_config_string(&cfg->folder, var, val);
+-	else if (!strcmp("imap.user", var))
++	} else if (!strcmp("imap.user", var)) {
++		FREE_AND_NULL(cfg->folder);
+ 		return git_config_string(&cfg->user, var, val);
+-	else if (!strcmp("imap.pass", var))
++	} else if (!strcmp("imap.pass", var)) {
++		FREE_AND_NULL(cfg->folder);
+ 		return git_config_string(&cfg->pass, var, val);
+-	else if (!strcmp("imap.tunnel", var))
++	} else if (!strcmp("imap.tunnel", var)) {
++		FREE_AND_NULL(cfg->folder);
+ 		return git_config_string(&cfg->tunnel, var, val);
+-	else if (!strcmp("imap.authmethod", var))
++	} else if (!strcmp("imap.authmethod", var)) {
++		FREE_AND_NULL(cfg->folder);
+ 		return git_config_string(&cfg->auth_method, var, val);
+-	else if (!strcmp("imap.port", var))
++	} else if (!strcmp("imap.port", var)) {
+ 		cfg->port =3D git_config_int(var, val, ctx->kvi);
+-	else if (!strcmp("imap.host", var)) {
++	} else if (!strcmp("imap.host", var)) {
  		if (!val) {
  			return config_error_nonbool(var);
-@@ -1324,11 +1324,11 @@ static int git_imap_config(const char *var, const c=
-har *val,
- 				val +=3D 5;
- 			else if (starts_with(val, "imaps:")) {
- 				val +=3D 6;
--				server.use_ssl =3D 1;
-+				cfg->use_ssl =3D 1;
- 			}
- 			if (starts_with(val, "//"))
+ 		} else {
+@@ -1330,8 +1334,9 @@ static int git_imap_config(const char *var, const cha=
+r *val,
  				val +=3D 2;
--			server.host =3D xstrdup(val);
-+			cfg->host =3D xstrdup(val);
+ 			cfg->host =3D xstrdup(val);
  		}
- 	} else
+-	} else
++	} else {
  		return git_default_config(var, val, ctx, cb);
-@@ -1497,12 +1497,15 @@ static int curl_append_msgs_to_imap(struct imap_ser=
-ver_conf *server,
++	}
 =20
- int cmd_main(int argc, const char **argv)
- {
-+	struct imap_server_conf server =3D {
-+		.ssl_verify =3D 1,
-+	};
+ 	return 0;
+ }
+@@ -1503,6 +1508,7 @@ int cmd_main(int argc, const char **argv)
  	struct strbuf all_msgs =3D STRBUF_INIT;
  	int total;
  	int nongit_ok;
++	int ret;
 =20
  	setup_git_directory_gently(&nongit_ok);
--	git_config(git_imap_config, NULL);
-+	git_config(git_imap_config, &server);
+ 	git_config(git_imap_config, &server);
+@@ -1529,42 +1535,55 @@ int cmd_main(int argc, const char **argv)
 =20
- 	argc =3D parse_options(argc, (const char **)argv, "", imap_send_options, =
-imap_send_usage, 0);
+ 	if (!server.folder) {
+ 		fprintf(stderr, "no imap store specified\n");
+-		return 1;
++		ret =3D 1;
++		goto out;
+ 	}
+ 	if (!server.host) {
+ 		if (!server.tunnel) {
+ 			fprintf(stderr, "no imap host specified\n");
+-			return 1;
++			ret =3D 1;
++			goto out;
+ 		}
+-		server.host =3D "tunnel";
++		server.host =3D xstrdup("tunnel");
+ 	}
 =20
+ 	/* read the messages */
+ 	if (strbuf_read(&all_msgs, 0, 0) < 0) {
+ 		error_errno(_("could not read from stdin"));
+-		return 1;
++		ret =3D 1;
++		goto out;
+ 	}
+=20
+ 	if (all_msgs.len =3D=3D 0) {
+ 		fprintf(stderr, "nothing to send\n");
+-		return 1;
++		ret =3D 1;
++		goto out;
+ 	}
+=20
+ 	total =3D count_messages(&all_msgs);
+ 	if (!total) {
+ 		fprintf(stderr, "no messages to send\n");
+-		return 1;
++		ret =3D 1;
++		goto out;
+ 	}
+=20
+ 	/* write it to the imap server */
+=20
+ 	if (server.tunnel)
+-		return append_msgs_to_imap(&server, &all_msgs, total);
+-
++		ret =3D append_msgs_to_imap(&server, &all_msgs, total);
+ #ifdef USE_CURL_FOR_IMAP_SEND
+-	if (use_curl)
+-		return curl_append_msgs_to_imap(&server, &all_msgs, total);
++	else if (use_curl)
++		ret =3D curl_append_msgs_to_imap(&server, &all_msgs, total);
+ #endif
+-
+-	return append_msgs_to_imap(&server, &all_msgs, total);
++	else
++		ret =3D append_msgs_to_imap(&server, &all_msgs, total);
++
++out:
++	free(server.tunnel);
++	free(server.host);
++	free(server.folder);
++	free(server.user);
++	free(server.pass);
++	free(server.auth_method);
++	return ret;
+ }
 --=20
 2.45.1.410.g58bac47f8e.dirty
 
 
---7t6GwHB6hxaHQcDs
+--yCmW0t7gtC+XHcof
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZfCs8ACgkQVbJhu7ck
-PpSOMxAAj8WrZOfQ8LllEKUttjKyH3KBQgzrEjxbh/e82JFzpF7pH8ElTOvpKVww
-7FB3raGd+cxOhaHTv8GqZExE3AG8eG4CsZGXkx+rD2eUhE8lf6UOlxpnWqidnqM8
-qVUB5RjpgRxuMW8SYtQ4/P2w5ABsEPSLLcjgDSicYhTFR3b521NeV0wLhabR9x6+
-z3Ar4Zp4b/pkVGPletJDH57OcaGeEf7ED8lNd2nMfDYWmmR3x395khHn3TPLsNF7
-Grqvdt+mURYcMVkuOTTQd0O3hJZfefLxo8/LRaDKgvA3DfzVQMW1h9M9s9vapkE1
-GxyRt2wtU1p5LNw8gdtWa3Fio8yNl21q6+cJvGpWsYjWXBm7/UqAlfzhdp59G3+M
-sNfVrc0K4J+vnJC/xgznKR5vpfUe2NMRVGOcK4P9VcQBx/EkLmBSaD1kq2IVFX5c
-kfD1UyNkCwniDwRqzCYpbmcZif3avlFj68fvT7g4YPxVv76GKGDPGujLk80rPxAX
-672qPDacSdCDjLnzmQzOGm5+z7i4wmvZEE1wsbHjxd8dV/Vj9OSlvNKId8E7+WX4
-2G04vWcxiVUK7Y2+EB33eWryNLsXppi2oUM19krJG6jcU9/CMhBC1A9zSuDCRPDG
-LIKVqbuuxjoDE3ftDgLxkeTbkP8ydvKSskq0++qfz7LdpMBO61s=
-=HjmY
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZfCtMACgkQVbJhu7ck
+PpTzAA/+K2TZHh4mbVjwdx6eIXZlmfIfjWJiRRaHbFGt9FZTc6I5kJ5Mmsxzzusr
+ph4GgqjGdsdog309z6Eu5ma/6X5+uhyxjCs4lUG5jZ7BTBf2nsGUIvw1DdBwMuWi
+xSharMmEG6x96udNVC0j48yYfh7bbJdtixxUngO4FfLwuwZI9M7ikOZgZxRQseQG
+r3OhRAmYDm1ihU7Q15TYewqcSZ3RqXl2y1z1vslcmj8x7btFvE72pukmetAYDoV2
++8Ttl0+AVicr9wgNxEzmDz8THLdnDC+4CVrKohoABsrCv6XoqHKilk2KXkeGXE2l
+BFHN6CObk/o8ra/PRVgHtl14DeTbDM6rAwS5DpoRMIvGNxHXQXKh63FqskROXTFY
+0/6w43CV57quJ1r10aoyLFgpzhewOMjap4nzkKwj30QWSWhVHKO+KRvhtkEJpXS0
+xxyif7gqORZHvj2AauYO3mx9tXnFklgnuyvrRgetXFEvLPIPgyvwoHPyslrQp3yl
+3ogezu+vlipbeHPm0FfJaUIEq5L7nU2+NOJQw0ZqglpsrIPcllaCu10gRVil4yVe
+UnwKpKazJzeV/sTvDl2OJOJ3sNleozfak/9ipVkfSVfTi54IEIsJ+KuuEzbgpHPa
+ixrK7yKdO7fjF6QF5qFzEE6gRECcvJ1wqmFIve+Eu2WzKaoMjJs=
+=fyoi
 -----END PGP SIGNATURE-----
 
---7t6GwHB6hxaHQcDs--
+--yCmW0t7gtC+XHcof--
