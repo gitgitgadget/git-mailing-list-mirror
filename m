@@ -1,75 +1,150 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4A81E892
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 20:11:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BA714658E
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 20:51:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717531895; cv=none; b=uXWK1X52qvH9IIRmFoVZRSzewr6jl9f/Z4YkR4BHWBG5HlvLGSGtgWMgmjnhYog5XIwy8ln+psP4rqJKxQRegZ3k3qQu+R6zRRg5ZZNFk2YkntJ6+daNZh0oS8Sawobuni02eJ2gh3JBpBxePI9wAEeV2NdNOI7XEoEJ7RlKIKM=
+	t=1717534292; cv=none; b=E3STPFL6glwO6DaQIIfexzuV9QohZ2xaFYgLeQ6GRheJXVuhsDJN5HTk4qGgxI2Q/Id2FsNM+UI0GRSwlbqLc5FnrwNm8ODc4LVTNC6/n2hl0i9tzzVuWb9vA0U/jhqkhGGaZrJU+wZmvPMJhp3phyw1nOpEUsSb1YI3BWwe5rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717531895; c=relaxed/simple;
-	bh=8nziASe6NnJG+upLKxrUoDZRy1Djb3iw/M1hl24vWBQ=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=T5v7knT9vycpnl+nRIafUpxe0kU0/YQqI5dmywTm1VSs3U8qqh5C+P3sMoJgK0RCLqsQiZypyCHtYzNPL6rKDOjxvWrUw2BrQolJd87vkAt5Zx+M3zySLL0yxHbZBdydaNBjnu5+SwTAcOcr1ZqOCHQVNXr41+SMsNkglvJi+OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=fMi9vZKz; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1717534292; c=relaxed/simple;
+	bh=JDbVSlVL9ZUWobqOgRLqAPWY/RLoM6bBhoOTwfNZ6B0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VHc+WW/opv08eRZ0Qdo0euvU/rHxiYwCf80QtbYnJTaxivJqyETrr+GIpRfcUNVVCSnJrCqyJU+5TMjPbiAGR3rFYZXOhY+rWeIRWglMmLlxs/0558+el447/zdLP4ZMH6929dC4gc5qkZFi4veAPmc4/skbjynlRcYcF5Eb7Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RNe2xrCw; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="fMi9vZKz"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RNe2xrCw"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A23F51E115;
+	Tue,  4 Jun 2024 16:51:30 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=JDbVSlVL9ZUWobqOgRLqAPWY/RLoM6bBhoOTwf
+	NZ6B0=; b=RNe2xrCwaQy6131TssDhM1CrBN5MzCIFBvWbYI5BpfTztMZm1CVOQ8
+	dgrKAV6VGgwIEmqaQXbkFOFe0wWMS9lkuHzHFN3NlSAzyvvPqfWFXUKHy3q9ECVZ
+	tPBgDZjm14VfKUSgCbhhLzrDFKjOQLToGGwzFuhSTBka6QDAdQtlQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9AC5C1E114;
+	Tue,  4 Jun 2024 16:51:30 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.173.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9DCEB1E113;
+	Tue,  4 Jun 2024 16:51:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>,  Rahul Rameshbabu <rrameshbabu@nvidia.com>, Aaron
+ Plattner <aplattner@nvidia.com>
+Subject: Re: [PATCH v2] credential: clear expired c->credential, unify
+ secret clearing
+In-Reply-To: <20240604192929.3252626-1-aplattner@nvidia.com> (Aaron Plattner's
+	message of "Tue, 4 Jun 2024 12:29:28 -0700")
+References: <20240604192929.3252626-1-aplattner@nvidia.com>
+Date: Tue, 04 Jun 2024 13:51:25 -0700
+Message-ID: <xmqqtti8tos2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1717531890;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=JG1Uw7UQNHGc17gH5jttGIFhGocOK+lF3C/bYlL17zQ=;
-	b=fMi9vZKzdFfIUbGReL9dTZgDRNNJCnvmAAb9ln1thXozID6ThDfCkhg3p4nBe4/ZxVf3/x
-	8LJPrz513sjzeMOFhElUXYzC8Qyyjvh/nV5nVEJ72lSvAogOOiFHxFiVYl+inKInh6s8Uv
-	HK9LWgqt+Z8qIm01NRp1OuZFIWqbUCRF0qUv+iVJX2z86cYr90cJ/8LIlE6nIT9gx3YWDY
-	rU27nypQ7g0qfsn87MOGiauGs5YyMXLPCAEzsMGVSmoyQERasVL2iXMgmOn/DiTZYUpuHn
-	8hNkqctmo6BhfjbZcQ1LllZYYhD2pyDVboKJA8OwzYNf4aDzlig8jDz34CxTHQ==
-Date: Tue, 04 Jun 2024 22:11:30 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, rjusto@gmail.com, sunshine@sunshineco.com
-Subject: Re: [PATCH v2] doc: imply that interactive.singleKey is disabled by
- default
-In-Reply-To: <e5eb72eeb2f8e2de9400ed9373b72236@manjaro.org>
-References: <7da73f15a018d858519eefa373001ccb3eaf32e2.1716412958.git.dsimic@manjaro.org>
- <xmqqy1811qkx.fsf@gitster.g> <673887a14c4f74deb4ef7771a331689b@manjaro.org>
- <35f5633ebf263ec743d673770eb86487@manjaro.org> <xmqq5xutgajw.fsf@gitster.g>
- <e5eb72eeb2f8e2de9400ed9373b72236@manjaro.org>
-Message-ID: <61f46d925e89b6a574d84970089f3c50@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 35F71276-22B4-11EF-9FAB-8F8B087618E4-77302942!pb-smtp21.pobox.com
 
-On 2024-06-01 00:21, Dragan Simic wrote:
-> On 2024-05-31 19:23, Junio C Hamano wrote:
->> Dragan Simic <dsimic@manjaro.org> writes:
->>> Just checking, is there something left to be addressed for this 
->>> patch,
->>> before it can be considered to be pulled into the next branch?
->> 
->> Thanks for pinging, as these small things were on the back burner
->> while preparing for updates to maintenance tracks.
->> 
->> Apparently v2 cannot be pulled into the next branch, and I forgot if
->> I saw v3 already.  In general, unless I explicitly say there is no
->> need to resend (sometimes with conditions), I'd expect an updated
->> iteration sent to the list.
-> 
-> I see, but I'm not really sure is there need for the v3?  Maybe the
-> patch description could be tweaked a bit further, but I wasn't under
-> impression that you asked for that to be done?  Am I wrong there?
+Brian, on top of your topic that was merged last month c5c9acf7
+(Merge branch 'bc/credential-scheme-enhancement', 2024-05-08), do
+these changes make sense to you as a fix/clean-up?
 
-Any chances, please, to have a look at this?
+Thanks.
+
+Aaron Plattner <aplattner@nvidia.com> writes:
+
+> When a struct credential expires, credential_fill() clears c->password
+> so that clients don't try to use it later. However, a struct cred that
+> uses an alternate authtype won't have a password, but might have a
+> credential stored in c->credential.
+>
+> This is a problem, for example, when an OAuth2 bearer token is used. In
+> the system I'm using, the OAuth2 configuration generates and caches a
+> bearer token that is valid for an hour. After the token expires, git
+> needs to call back into the credential helper to use a stored refresh
+> token to get a new bearer token. But if c->credential is still non-NULL,
+> git will instead try to use the expired token and fail with an error:
+>
+>  fatal: Authentication failed for 'https://<oauth2-enabled-server>/repository'
+>
+> And on the server:
+>
+>  [auth_openidc:error] [client <ip>:34012] oidc_proto_validate_exp: "exp" validation failure (1717522989): JWT expired 224 seconds ago
+>
+> Fix this by clearing both c->password and c->credential for an expired
+> struct credential. While we're at it, use credential_clear_secrets()
+> wherever both c->password and c->credential are being cleared, and use
+> the full credential_clear() in credential_reject() after the credential
+> has been erased from all of the helpers.
+>
+> v2: Unify secret clearing into credential_clear_secrets(), use
+> credential_clear() in credential_reject(), add a comment about why we
+> can't use credential_clear() in credential_fill().
+>
+> Signed-off-by: Aaron Plattner <aplattner@nvidia.com>
+> ---
+>  credential.c | 19 +++++++++----------
+>  1 file changed, 9 insertions(+), 10 deletions(-)
+>
+> diff --git a/credential.c b/credential.c
+> index 758528b291..72c6f46b02 100644
+> --- a/credential.c
+> +++ b/credential.c
+> @@ -20,12 +20,11 @@ void credential_init(struct credential *c)
+>  
+>  void credential_clear(struct credential *c)
+>  {
+> +	credential_clear_secrets(c);
+>  	free(c->protocol);
+>  	free(c->host);
+>  	free(c->path);
+>  	free(c->username);
+> -	free(c->password);
+> -	free(c->credential);
+>  	free(c->oauth_refresh_token);
+>  	free(c->authtype);
+>  	string_list_clear(&c->helpers, 0);
+> @@ -479,9 +478,14 @@ void credential_fill(struct credential *c, int all_capabilities)
+>  
+>  	for (i = 0; i < c->helpers.nr; i++) {
+>  		credential_do(c, c->helpers.items[i].string, "get");
+> +
+>  		if (c->password_expiry_utc < time(NULL)) {
+> -			/* Discard expired password */
+> -			FREE_AND_NULL(c->password);
+> +			/*
+> +			 * Don't use credential_clear() here: callers such as
+> +			 * cmd_credential() expect to still be able to call
+> +			 * credential_write() on a struct credential whose secrets have expired.
+> +			 */
+> +			credential_clear_secrets(c);
+>  			/* Reset expiry to maintain consistency */
+>  			c->password_expiry_utc = TIME_MAX;
+>  		}
+> @@ -528,12 +532,7 @@ void credential_reject(struct credential *c)
+>  	for (i = 0; i < c->helpers.nr; i++)
+>  		credential_do(c, c->helpers.items[i].string, "erase");
+>  
+> -	FREE_AND_NULL(c->username);
+> -	FREE_AND_NULL(c->password);
+> -	FREE_AND_NULL(c->credential);
+> -	FREE_AND_NULL(c->oauth_refresh_token);
+> -	c->password_expiry_utc = TIME_MAX;
+> -	c->approved = 0;
+> +	credential_clear(c);
+>  }
+>  
+>  static int check_url_component(const char *url, int quiet,
