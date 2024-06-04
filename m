@@ -1,60 +1,59 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04246FD5
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 14:10:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC5412B145
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 14:23:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717510206; cv=none; b=HcNx+vMg8FE9yODpuTYe8B2f0bAcW/0j6GHWkTuCXQVhahgO0UcnfAWHvNpKoEjWo+RpWr+ejklA+pa5kPDiaco6v2w2IoqamehzLDlSbouiEYA3EWFGzRlBm78E+LeXd80615q0HFthbnYhFBsZlvDgWhszamNi6hp17RiP6WU=
+	t=1717510994; cv=none; b=BwE/7DvIUFwA5YDmTyBHK0PQzI13KwfViODlJOuf2JfpEPx9eNIlJ7ganIkWPc2FmgIOgy6+1DXpOJFjvlB1q7GF9r7CZWyFPpKO0hxUitCA6gyil3dB6ZHiJQfNsTaOWqhjdPaBPi1K53jrPLZUyyMwpeyu7q1YNZ15TP/VJyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717510206; c=relaxed/simple;
-	bh=iJba3+givpUKRmgFT+qRapKT2ruuYeAEnq3B8OI77Ao=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NK1zMszRJptqXGNKNxBb8SO3pKYpanxWkoZGMhmQhTlioH5abf+/ZJ7lcsZB1qDkqFLs43nQ7PHlzn50/WRjfIFfe8fNOBAfcfLkSBR18HXjHlkEgyE0DDNdVnfKI3o5b/rMGMzk8MXhcIEbENt2mv7JY+Jye3YE59f8YyZOvhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AGPBHUDz; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1717510994; c=relaxed/simple;
+	bh=79iRtJrLMLajbzfIZicIfkuisf4fSPVNH3som985E54=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=D6fODFxRRLIvqHZiafarm8DotpF05djfIc7p2L9jH8s+ncLJC+KwR+qX/HpOHHJgmmuN+aBt26I5wSjuaLSJq87VaPZcqatCm3c9YhtYiLxKy0xML+JBYtDU9JL8XZByil6Qkqvklwciij7qUHy7b5K5d3o5OTh/9GqVC6/rImE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j5UtSte7; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AGPBHUDz"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-35e5c6600f0so1985257f8f.3
-        for <git@vger.kernel.org>; Tue, 04 Jun 2024 07:10:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j5UtSte7"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-35dc7d0387cso5765648f8f.1
+        for <git@vger.kernel.org>; Tue, 04 Jun 2024 07:23:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717510203; x=1718115003; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rBkvpeU4Hj9IErIMmBFJlAagzjJLF8DSQkO2QOexnxk=;
-        b=AGPBHUDzfM3pjuvJ8rzJluNuScVA5vTp5wZOFirk61OGEO/1vI3KTYhyH0y1ymXwSz
-         GVVIk0AQMqkixVvw81nkIHTksa4qNWvAjZjgeAFA4Ez7+qajsLr0MeRfe65n37YfTzBY
-         dNSeSFuz66Tq/aUAcr94lDjqzLfPuKSRuM37/xRFBgKbx7T389sUCyMv0fEqQtA/Co1N
-         edCMnNR9IHHVTsaZXQCPpPbFi5SAdlp7yVc1xgq6m2YhKlW3tf7j8mfp6eBuvmAqYov2
-         VIPoMKOSdGZCbyqEqMtbLDYuQUHDrDnUshlNq2ee1UR+Wl57Z7wfrhvp5bExX8S2+uBU
-         6/ww==
+        d=gmail.com; s=20230601; t=1717510991; x=1718115791; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=l2OZ7d/OF8Jc4hyn4ZFj0g+Q73CtsoFYV8wGWIdZ2q4=;
+        b=j5UtSte7DomAF3SBseLhGFY7WXbod8HLwbeURc6GCIrm/Bm1tCnbl/G0CckvpJ4RT7
+         D/UoWdizuB9hhtosQFT2lxv1UfhI+8afO5dKGvtW88Vd5TUruiXVQHGcoj1m63dFiHQj
+         ZQRwxB/lAMDlOkpE8UlJdKr45rVTvwo0d+HLROjyxWAcATZ4juqimJSfNJpgM4eyorKU
+         jU4HytT/E8+N1khW8+P4bViY2vo/QFdr7iTJDFQkAgB/pWs63bjIbcvObf0oyQNZ34hP
+         OY7OW/kHHSf1c3b1bt3rxoK04IWNq1w0v+dyg/eo6V+NdNegk+fjY77wqUaS2MwJNvYz
+         fL8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717510203; x=1718115003;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rBkvpeU4Hj9IErIMmBFJlAagzjJLF8DSQkO2QOexnxk=;
-        b=TUXIK3cws4qFK4xN80kflhsuYmrZhA4QL+FBijzq6meX1zri2hi60s/3hlmIC3ptAC
-         m0VkODk59UHX36DRkfjqZug6octJuv7/caSfiOnqM+Zpk8koAF3rKtFF+RNwV2b+8DrY
-         ezH3RRQLPcOTLXkfQStj7xUNKxnahu/tcnVB3wHnxZgXnO8Eq7GH/Xa1V5YiAhV9tKpO
-         bqbrnSkPDSL/ZJWFd4nXVfeDcsgkmlw5ljVxqxuUf/olCBm3Oy6SV5liYOHFY5JnAJwT
-         vCC1VXtniL+9lBAZ2y5+APbqkPAFti7nJ/FIku6KTcjI+Bh37aCvOkCU2Ih3TtdupMhg
-         85yQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUvNrpnx9rmzzt3V1y7n1PT1aU4oTzRyN8+4dzZBJaMY58e6kLjg6AwzU4FIHieNKZ6LwetmUIC3y8lrKAxwqmxvh68
-X-Gm-Message-State: AOJu0YxTLDRhvYu9PUFm3/ere4GThu0EyLG5GsWtJPxSjd2jfr3I+NmN
-	1IdbJJkH+qZditjKB/+eqYtHDtVt+MTjrwLQjohyYVuxRZS9KqqY
-X-Google-Smtp-Source: AGHT+IE4nETX05tqdNLm3b8frpndvzOPoSwuIUW51hnNmzWISqGfDePgCBqB/qooOqRyEqVxkufgOg==
-X-Received: by 2002:adf:e9d1:0:b0:355:3dc:1f26 with SMTP id ffacd0b85a97d-35e0f289290mr9319891f8f.37.1717510202658;
-        Tue, 04 Jun 2024 07:10:02 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1717510991; x=1718115791;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=l2OZ7d/OF8Jc4hyn4ZFj0g+Q73CtsoFYV8wGWIdZ2q4=;
+        b=crufCGJBKOZSTqplyl6WB5G+DxBQCXNbneq4ws/IAqy6cVsyM2/s3BsowMWgbcy3Kg
+         TE+7mBY2kcTNO0xIyWRte9g0mPiHpMKb/FRWaW9F7uCake1lM7Cqr0QIHsyJ+fbf4Jj6
+         qr5B+wQY02QVsWcKUFjP9R7RFXmoU2tVVs7U9vE6+fgxk4Zjse41fWjyhL2Dqg5If9yQ
+         xU5hdVqHI+hbr4GmXsMXulvYIu8PwJBCU/NvTI8w2vL/tQXmwkRkUZAuGt30tsSobBnK
+         facLDQlnMbqOyfrKN4SAN7N9iJeINWEYlEtr4CwZMTQsKESDTg9rKsqq2/MCDujwzDnp
+         j+BQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWnBek4x1ATZv4cDNjuT5pnSnMQDuQXj6Q0cQmc4jwjvWOK+Q52miYiKJ5HtIPCmZusWAMfGY9AnRzEFeDPCiKy8Lv0
+X-Gm-Message-State: AOJu0YxX2jhWMZ/ccifab4yLRHqH6kirVauFDJYtui5XEqE07NfQpxxd
+	muK7jIhN9IWhyv2+Y2Mo8AmSTe5Fj/udSpO6focFOH9G4X6cHWfi
+X-Google-Smtp-Source: AGHT+IGehQladhDg4Zpw2pA1Yfu6VRmyJelSap0cQWslCawXJ9nR5/XLGEaiE51pYZDpIFpqLghsiw==
+X-Received: by 2002:adf:e38a:0:b0:354:f286:4f0c with SMTP id ffacd0b85a97d-35e0f325d08mr11571110f8f.51.1717510990846;
+        Tue, 04 Jun 2024 07:23:10 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:641:9001:124f:b55:b414:cf29? ([2a0a:ef40:641:9001:124f:b55:b414:cf29])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd062ecd3sm11900296f8f.74.2024.06.04.07.10.02
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4212b838b4asm158619405e9.6.2024.06.04.07.23.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jun 2024 07:10:02 -0700 (PDT)
-Message-ID: <30718fa9-6197-424c-a58c-8bf3c909cb25@gmail.com>
-Date: Tue, 4 Jun 2024 15:10:01 +0100
+        Tue, 04 Jun 2024 07:23:10 -0700 (PDT)
+Message-ID: <f231d5ff-08e5-47b3-aadc-0f88566c2588@gmail.com>
+Date: Tue, 4 Jun 2024 15:23:09 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,88 +61,152 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 25/27] builtin/rebase: always store allocated string in
- `options.strategy`
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
- Eric Sunshine <sunshine@sunshineco.com>
-References: <cover.1716983704.git.ps@pks.im> <cover.1717504517.git.ps@pks.im>
- <f548241960d1f41e010516d68df9107528567514.1717504517.git.ps@pks.im>
 From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v6 0/4] docs: document upcoming breaking changes
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+ Dragan Simic <dsimic@manjaro.org>, Karthik Nayak <karthik.188@gmail.com>,
+ Todd Zullinger <tmz@pobox.com>
+References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
+ <cover.1717504292.git.ps@pks.im>
 Content-Language: en-US
-In-Reply-To: <f548241960d1f41e010516d68df9107528567514.1717504517.git.ps@pks.im>
+In-Reply-To: <cover.1717504292.git.ps@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Patrick
 
-On 04/06/2024 13:38, Patrick Steinhardt wrote:
-> The `struct rebase_options::strategy` field is a `char *`, but we do end
-> up assigning string constants to it in two cases:
+On 04/06/2024 13:32, Patrick Steinhardt wrote:
+> Hi,
 > 
->    - When being passed a `--strategy=` option via the command line.
+> another day, another version of this patch series that aims to give a
+> framework for documenting upcoming breaking changes in Git.
 > 
->    - When being passed a strategy option via `--strategy-option=`, but
->      not a strategy.
+> Changes compared to v5:
 > 
-> This will cause warnings once we enable `-Wwrite-strings`.
+>    - Note that Git 1.6 was a breaking release, despite the fact that its
+>      major version wasn't bumped.
 > 
-> Ideally, we'd just convert the field to be a `const char *`. But we also
-> assign to this field via the GIT_TEST_MERGE_ALGORITHM envvar, which we
-> have to strdup(3P) into it.
+>    - Several smallish rewordings.
 > 
-> Instead, refactor the code to make sure that we only ever assign
-> allocated strings to this field.
+>    - Note that items on the lists should only be discussed anew when
+>      circumstances have changed.
+> 
+>    - Add some conditions to the move to "sha256". Also, note that we do
+>      not plan to deprecate "sha1".
+> 
+>    - Note that replacement refs are also superior over grafts because
+>      they can be carried across repos.
 
-This looks sensible
+This version looks good to me
 
-Thanks
+Thanks for writing this document
 
 Phillip
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->   builtin/rebase.c | 14 +++++++-------
->   1 file changed, 7 insertions(+), 7 deletions(-)
+> Thanks!
 > 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 11f276012c..26068cf542 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1063,6 +1063,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   {
->   	struct rebase_options options;
->   	const char *branch_name;
-> +	const char *strategy_opt = NULL;
->   	int ret, flags, total_argc, in_progress = 0;
->   	int keep_base = 0;
->   	int ok_to_skip_pre_rebase = 0;
-> @@ -1177,7 +1178,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   			PARSE_OPT_OPTARG, parse_opt_rebase_merges),
->   		OPT_BOOL(0, "fork-point", &options.fork_point,
->   			 N_("use 'merge-base --fork-point' to refine upstream")),
-> -		OPT_STRING('s', "strategy", &options.strategy,
-> +		OPT_STRING('s', "strategy", &strategy_opt,
->   			   N_("strategy"), N_("use the given merge strategy")),
->   		OPT_STRING_LIST('X', "strategy-option", &options.strategy_opts,
->   				N_("option"),
-> @@ -1488,13 +1489,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   		}
->   	}
->   
-> -	if (options.strategy_opts.nr && !options.strategy)
-> -		options.strategy = "ort";
-> -
-> -	if (options.strategy) {
-> -		options.strategy = xstrdup(options.strategy);
-> +	if (strategy_opt)
-> +		options.strategy = xstrdup(strategy_opt);
-> +	else if (options.strategy_opts.nr && !options.strategy)
-> +		options.strategy = xstrdup("ort");
-> +	if (options.strategy)
->   		imply_merge(&options, "--strategy");
-> -	}
->   
->   	if (options.root && !options.onto_name)
->   		imply_merge(&options, "--root without --onto");
+> Patrick
+> 
+> Patrick Steinhardt (4):
+>    docs: introduce document to announce breaking changes
+>    BreakingChanges: document upcoming change from "sha1" to "sha256"
+>    BreakingChanges: document removal of grafting
+>    BreakingChanges: document that we do not plan to deprecate
+>      git-checkout
+> 
+>   Documentation/BreakingChanges.txt | 128 ++++++++++++++++++++++++++++++
+>   1 file changed, 128 insertions(+)
+>   create mode 100644 Documentation/BreakingChanges.txt
+> 
+> Range-diff against v5:
+> 1:  67cb4de5cb ! 1:  a260bbf281 docs: introduce document to announce breaking changes
+>      @@ Documentation/BreakingChanges.txt (new)
+>       +breaking versions is typically measured in multiple years. The last breaking
+>       +releases were:
+>       +
+>      ++* Git 1.6, released in August 2008. In retrospect, this release should likely
+>      ++  have bumped the major version.
+>       +* Git 2.0, released in May 2014.
+>       +
+>      -+The intent of this document is to track upcoming deprecations for the next
+>      -+major Git release. Furthermore, this document also tracks what will _not_ be
+>      -+deprecated. This is done such that the outcome of discussions documente both
+>      ++The intent of this document is to track upcoming deprecations for future
+>      ++breaking releases. Furthermore, this document also tracks what will _not_ be
+>      ++deprecated. This is done such that the outcome of discussions document both
+>       +when the discussion favors deprecation, but also when it rejects a deprecation.
+>       +
+>      -+Items should have a self-sufficient explanation why we want or do not want to
+>      -+make the described change. If there are alternatives to the changed feature,
+>      ++Items should have a clear summary of the reasons why we do or do not want to
+>      ++make the described change that can be easily understood without having to read
+>      ++the mailing list discussions. If there are alternatives to the changed feature,
+>       +those alternatives should be pointed out to our users.
+>       +
+>       +All items should be accompanied by references to relevant mailing list threads
+>      @@ Documentation/BreakingChanges.txt (new)
+>       +described item back then.
+>       +
+>       +This is a living document as the environment surrounding the project changes
+>      -+over time. An earlier decision to deprecate or change something may need to be
+>      -+revisited from time to time. So do not take items on this list to mean "it is
+>      -+settled, do not waste our time bringing it up again".
+>      ++over time. If circumstances change, an earlier decision to deprecate or change
+>      ++something may need to be revisited from time to time. So do not take items on
+>      ++this list to mean "it is settled, do not waste our time bringing it up again".
+>       +
+>       +== Git 3.0
+>       +
+> 2:  b36ffcbaa6 ! 2:  f7c6a66f71 BreakingChanges: document upcoming change from "sha1" to "sha256"
+>      @@ Documentation/BreakingChanges.txt: be changed to or replaced in case the alterna
+>       +and will thus change the default hash algorithm to "sha256" for newly
+>       +initialized repositories.
+>       ++
+>      ++An important requirement for this change is that the ecosystem is ready to
+>      ++support the "sha256" object format. This includes popular Git libraries,
+>      ++applications and forges.
+>      +++
+>      ++There is no plan to deprecate the "sha1" object format at this point in time.
+>      +++
+>       +Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>,
+>       +<20170223155046.e7nxivfwqqoprsqj@LykOS.localdomain>,
+>       +<CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>.
+> 3:  4142e472ac ! 3:  b25b91a5e7 BreakingChanges: document removal of grafting
+>      @@ Documentation/BreakingChanges.txt: Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zom
+>        === Removals
+>        
+>       +* Support for grafting commits has long been superseded by git-replace(1).
+>      -+  Grafts are inferior to replacement refs as the mechanism can lead to
+>      -+  hard-to-diagnose problems when transferring objects between repositories.
+>      -+  They have been outdated since e650d0643b (docs: mark info/grafts as outdated,
+>      -+  2014-03-05) and will be removed.
+>      ++  Grafts are inferior to replacement refs:
+>      +++
+>      ++  ** Grafts are a local-only mechanism and cannot be shared across reositories.
+>      ++  ** Grafts can lead to hard-to-diagnose problems when transferring objects
+>      ++     between repositories.
+>      +++
+>      ++The grafting mechanism has been marked as outdated since e650d0643b (docs: mark
+>      ++info/grafts as outdated, 2014-03-05) and will be removed.
+>       ++
+>       +Cf. <20140304174806.GA11561@sigill.intra.peff.net>.
+>       +
+> 4:  9ff94b6f32 ! 4:  4fafccc3b9 BreakingChanges: document that we do not plan to deprecate git-checkout
+>      @@ Documentation/BreakingChanges.txt: Some features have gained newer replacements
+>        that the old way of doing things will eventually be removed. This section tracks
+>        those features with newer alternatives.
+>       +
+>      -+* git-restore(1) and git-switch(1) have been introduced as a replacement for
+>      -+  git-checkout(1). As git-checkout(1) is quite established, and as the benefit
+>      -+  of switching to git-restore(1) and git-switch(1) is contended, all three
+>      -+  commands will stay.
+>      ++* The features git-checkout(1) offers are covered by the pair of commands
+>      ++  git-restore(1) and git-switch(1). Because the use of git-checkout(1) is still
+>      ++  widespread, and it is not expected that this will change anytime soon, all
+>      ++  three commands will stay.
+>       ++
+>       +This decision may get revisited in case we ever figure out that there are
+>       +almost no users of any of the commands anymore.
