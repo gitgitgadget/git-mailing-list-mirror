@@ -1,78 +1,57 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03143446CF
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 08:06:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6EFE446CF
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 08:07:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717488407; cv=none; b=NDM6bhJzzxCOnGJ7y2p7prFlFOV7MUKd7yFz6fGOvwx18AsCFfaKNVM/4WcC+DkBzb+WjdBzJ718Yv55YNt2RRL/tND2kkHG2PsLYhBBVkXl05qEYuE5KbFFLddnr2YhlJnuHZMCoJH8l3Lq7ZOhnN5ZXXwiji6qTmtpATE90H0=
+	t=1717488425; cv=none; b=uwi7wmb0ZcJf3sEW3ELBXuZrYixW85RTLoxZ3k/JBDFk6r75mdY84s35VGFhir+GniI0JIQm2Kwvp4Buv1zu8QGpjyxmWIQENaRM2QWOkTrIrmYhTlQj/pqSze8isEQeF/UC0Qf9xVtRx+FhF5PWZCJRwZFdpWIpj2Yg7/H+nZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717488407; c=relaxed/simple;
-	bh=O7mCRJot+U78yT7h6lmxtQqmX/UKjmnAdv/oVylXUvo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s5S+k5VYqMwOkjOOT2i+JDJEhPefjPSl7uIkdj+29AaifIRi14v4CMHamd8rMorWeERJ6UyBekLhMtX6BsGv8O+mTubXD+R4yCzDGf5XaSDC5KZ4Sc6N221kmRWkHBysyoaXkzNWgs9O+z8DE5TI7/gnAP2Ml7Bt1DvEkokXoNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aFekJwTI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lHBzoa7W; arc=none smtp.client-ip=64.147.123.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1717488425; c=relaxed/simple;
+	bh=bRUIbR9W/fsXpG66c506hfC9YhOt7lXHKxKlhFoqiEo=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=NaLxk0s7M5AjvsmgQzF8U7fFX9ZtLgyBgOOneT4GxcCQTMTxiabvQqQ6hsM53miydte4lqH6is1s7OWFCTmy3+IfB4QQiLUQwTjPWLyHPyl+VyPCOxTJvOfwDhpmGZ3BShUitTnUv6oWdtdJdq4nR+NYmaK/kQD64LVPsFbCOiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iiRvg+3P; arc=none smtp.client-ip=209.85.210.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aFekJwTI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lHBzoa7W"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 275D4180016C;
-	Tue,  4 Jun 2024 04:06:45 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Tue, 04 Jun 2024 04:06:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717488404; x=1717574804; bh=Nx2AF/lczh
-	2J1pMTFzECYIXELNo8Suij4wem1rKfnB4=; b=aFekJwTIXxEML9mlvHwTqGEMQV
-	pTKeh03eXZvhfui2Yi6oRWWoUfAuiNFSYvTLn4qKvvcyJDdmdnuZEtyNGG5bKgrs
-	HvHtEpBeMfmWOjBZmZkeIWn0iNpHK59mRt5BWIC9h3I2krmtf4VwGEzSSKSJO6RZ
-	ylyw44v+qayzEGHiOdK3YarXQZJ6FBgL03uiJ84h9AO3QEiOQBPLhfotgQhIwIhy
-	GRqd6MaQmGBtBRWgPIPxLcE7/hdnKv611Ys7AW/eHxI1GwoI5mtqUBtagdbp/Wmk
-	B5pZ4b8NXWmYqogsTitM19zybuFchncvtgxwZMxvawEoqeDNmfrzy678GGOw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717488404; x=1717574804; bh=Nx2AF/lczh2J1pMTFzECYIXELNo8
-	Suij4wem1rKfnB4=; b=lHBzoa7WiCBrLNENac34JbnOBnx6HO1lf+SsBDOgwxnp
-	b5JjXZVDvoFh7sWP91IHttAthEryEWrM5IZ5JSXXri/7Wf1tDfUhZ+Bl31dbI/0N
-	TSAROTirtJiIYsuiFzKmI10rlmINS0/xpouO+iWrtWUh4eNAFAOhUQPbjdF89x/L
-	UHRacnv+AtJsYvSv93COJ6ZXQRmVarz1Xm0+6BJtnQy2UV7HlU2YpmIznCq0aNQX
-	yZR5NxiwVqNHbxhYPfINxAeSuatzn+QUwQEMnQSWUZ0f+iul7FV9uH+7YfjA32Gf
-	S+xh2T3QNqJm5kgcBdc3pe2uUIW0YBF7l3gptJAl2g==
-X-ME-Sender: <xms:FMteZg-wa3VRCqgwICeh3-OCcizw878sEShhUFv1xHk4U__bUkYXFQ>
-    <xme:FMteZouM0VaYsrtJjgLx8A5S9-EwoSCWhLLw7I-rNY1UC-kpS1M5b3wwCHZMUl3hU
-    Mj67PTwpn_wndCsEA>
-X-ME-Received: <xmr:FMteZmARAk2vcp9YteVeaxlad5FaWK5Q1y8pwIDO6i1QDC1RVwq3lDDPIy6pc_wdZAMKV3aHu5h84ojbQeoZcOmxcqm0XEB7UeaO-iGZ4vWylg1Z>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelfedguddviecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepudevtedtjeevffehfeduvdfftddutd
-    ejheduieehfeelfedtueeigeekgfdvfeevnecuffhomhgrihhnpehmohhrnhhinhhgrdhp
-    shdpphhkshdrihhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
-    hfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:FMteZgcS4S5bEQfvuh_QS2rRN1p8xPt4ZX9VZTwQN6OMBr4DJvn0Gw>
-    <xmx:FMteZlO7vhihssWgMxJh50p0HFwRinB9v2fuQC0rGlYzP24MrnZgKA>
-    <xmx:FMteZqnw7BCRT6HhexiebrS4gKnYQMGSApaB9B1_15LU6VNNDHwm4g>
-    <xmx:FMteZnvfg_EIvOGsKLkw6VKObdyg0ycAMcAVmOgkvSwsxAFwx0Bofw>
-    <xmx:FMteZua_uANILh_Io6rVd-CKqb7OFn4MiqofKtmtktI_LHwdEW-A3LB1>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Jun 2024 04:06:43 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 477deccd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Jun 2024 08:06:16 +0000 (UTC)
-Date: Tue, 4 Jun 2024 10:06:40 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jun 2024, #01; Mon, 3)
-Message-ID: <Zl7LEHFq4FcXMvGd@framework>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iiRvg+3P"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-6f8ef63714cso3469129a34.1
+        for <git@vger.kernel.org>; Tue, 04 Jun 2024 01:07:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717488423; x=1718093223; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=l7zBVY0JtYnJ7EY0ovaBj/bO4yTUfmxNYom4Tc7LoZc=;
+        b=iiRvg+3PW7XKwctJvM8tc8B1NWvD6y4u0ePZXhtzFF/JG4GzsZyzmK5pg6311r6Mdq
+         JPY6Hx9Yr1y7m0JR2p0I5XXUhG+cllX90cQiKDyHSaWatfmoEBMAuq6ALhRXMOngfeuM
+         0su7sE6eO6ATMHZSGnU784VTgVva9ntJaydiPpBAPz0j3HR49BCCH5t5loyvkH4jITPB
+         nPUybWtm6uA+0ivj1h4WL/RV+S3RWr8yF2JyMn2tu6cvACvtIyAahPS/x1BlGL6EBKdM
+         oofI1Jlfd1KpnPAfMehtpzbXIzv26ZfsXbk+9pVjBOYojqu8YOTLB60HjidXHQOC+WiD
+         e7wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717488423; x=1718093223;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=l7zBVY0JtYnJ7EY0ovaBj/bO4yTUfmxNYom4Tc7LoZc=;
+        b=l+iq1uMlrs3MlbZKDR6MTuveHnVHMaBx6UiQH4+S1Yvc47YgkPfemxFiyYDhHYih4o
+         GUSCQUbkuAIo0rCJoYdm0fK/ns4Llqb3I4N76ZqG30IaffWW9UYjgg/0pq4wHUVcO/Sz
+         1XZepi7sIbRhy+N3INlO9pN2CMitpw90+KZmHypF555fiasiyg4qFsprxsXaYyAv7IFD
+         oz98HTrc9nGLOxGUBIYgTbxeAWecpmLWn5EFsHsnbzFyGNBe+0tDhs/FE7F/Seu5LNjO
+         a8q6fRPV+wbrftl3u2Te+9pcpjWlO7kIKhOhFsUegck3PdXTmRKAJRvTPmhKHr3jdBNT
+         /Tqg==
+X-Forwarded-Encrypted: i=1; AJvYcCVzPKHizfAs/G0tNdeKrvSPYjn9OxeVxcV5/zneyMpPzdCP7fXyW6xrtfZePoQCESJobHOvoeu6cddDoUB765TWfk3i
+X-Gm-Message-State: AOJu0YyF/L3KEncWghMtlY0IR7ulAeQm4yUPSgU/YVZ60Kxy44RbZ82F
+	8wHcOuqnTwAvgTH6vo92GQESujyq511V0olFT3H6PrTBPDlvRUBzUDJXF7Cd1bBn4b2AQDps12b
+	7tnpYYnY6XLETgKzz94aQcTOuKlHLawr3
+X-Google-Smtp-Source: AGHT+IEmrreRW+CkC2w4hUU5r+40VBAX9qmDgKRlLlh38VHnTb5Ihc8CnHdOzuCLwVkztNL6Pa8iW43atFKZZdb6iT0=
+X-Received: by 2002:a05:6870:c112:b0:24f:c2cf:444b with SMTP id
+ 586e51a60fabf-2508b99d600mr14400845fac.27.1717488422431; Tue, 04 Jun 2024
+ 01:07:02 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 4 Jun 2024 08:07:01 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqo78h1bdg.fsf@gitster.g>
 References: <xmqqo78h1bdg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,88 +59,61 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Q7L38taTBp+eFsej"
-Content-Disposition: inline
-In-Reply-To: <xmqqo78h1bdg.fsf@gitster.g>
+Date: Tue, 4 Jun 2024 08:07:01 +0000
+Message-ID: <CAOLa=ZRzR1Nfqa1KA04W2EzAq0nM5Fr1p7PEfsukidL0-RsWGQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2024, #01; Mon, 3)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000534717061a0bef8e"
 
+--000000000000534717061a0bef8e
+Content-Type: text/plain; charset="UTF-8"
 
---Q7L38taTBp+eFsej
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hello Junio,
 
-On Mon, Jun 03, 2024 at 11:16:11PM -0700, Junio C Hamano wrote:
-> * jk/sparse-leakfix (2024-05-31) 14 commits
->  - sparse-checkout: free duplicate hashmap entries
->  - sparse-checkout: free string list after displaying
->  - sparse-checkout: free pattern list in sparse_checkout_list()
->  - sparse-checkout: free sparse_filename after use
->  - sparse-checkout: refactor temporary sparse_checkout_patterns
->  - sparse-checkout: always free "line" strbuf after reading input
->  - sparse-checkout: reuse --stdin buffer when reading patterns
->  - dir.c: always copy input to add_pattern()
->  - dir.c: free removed sparse-pattern hashmap entries
->  - sparse-checkout: clear patterns when init() sees existing sparse file
->  - dir.c: free strings in sparse cone pattern hashmaps
->  - sparse-checkout: pass string literals directly to add_pattern()
->  - sparse-checkout: free string list in write_cone_to_file()
->  - Merge branch 'jk/leakfixes' into jk/sparse-leakfix
->  (this branch uses jk/leakfixes and ps/leakfixes.)
->=20
->  Many memory leaks in the sparse-checkout code paths have been
->  plugged.
->=20
->  Will merge to 'next'?
->  source: <20240531112433.GA428583@coredump.intra.peff.net>
+Junio C Hamano <gitster@pobox.com> writes:
 
-I've left a couple of comments on that patch series this morning.
+[snip]
 
-> * ps/ref-storage-migration (2024-06-03) 14 commits
->  - builtin/refs: new command to migrate ref storage formats
->  - refs: implement logic to migrate between ref storage formats
->  - refs: implement removal of ref storages
->  - worktree: don't store main worktree twice
->  - reftable: inline `merged_table_release()`
->  - refs/files: fix NULL pointer deref when releasing ref store
->  - refs/files: extract function to iterate through root refs
->  - refs/files: refactor `add_pseudoref_and_head_entries()`
->  - refs: allow to skip creation of reflog entries
->  - refs: pass storage format to `ref_store_init()` explicitly
->  - refs: convert ref storage format to an enum
->  - setup: unset ref storage when reinitializing repository version
->  - Merge branch 'ps/pseudo-ref-terminology' into ps/ref-storage-migration
->  - Merge branch 'ps/refs-without-the-repository-updates' into ps/ref-stor=
-age-migration
->=20
->  Allow migrating a repository that uses the files backend for its
->  ref storage to use the reftable backend, with limitations.
->=20
->  Will merge to 'next'?
->  source: <cover.1717402363.git.ps@pks.im>
+> * kn/update-ref-symref (2024-05-30) 7 commits
+>  - update-ref: add support for 'symref-update' command
+>  - reftable: pick either 'oid' or 'target' for new updates
+>  - update-ref: add support for 'symref-create' command
+>  - update-ref: add support for 'symref-delete' command
+>  - update-ref: add support for 'symref-verify' command
+>  - refs: create and use `ref_update_expects_existing_old_ref()`
+>  - Merge branch 'kn/ref-transaction-symref' into kn/update-ref-symref
+>
+>  "git update-ref --stdin" learned to handle transactional updates of
+>  symbolic-refs.
+>
+>  Expecting a (hopefully minor and final) reroll.
+>  source: <20240514124411.1037019-1-knayak@gitlab.com>
 
-This one is ready to go from my point of view.
+I did send in a v3 recently:
 
-Patrick
+https://lore.kernel.org/r/20240530120940.456817-1-knayak@gitlab.com
 
---Q7L38taTBp+eFsej
+Let me know if there is something else I could do here.
+
+[snip]
+
+--000000000000534717061a0bef8e
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d53d48ef6dc6aad9_0.1
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZeyw8ACgkQVbJhu7ck
-PpTQlA//VuYU9jaCmu9ZSyBGjbYSKbceCMuKBNJG4LvleQMLpasMXyz3ChqrNk2q
-VJDOVUkodcKv4zBYhHEksGuuXWrhs39r7xo44/mxNv/mualp6JuKBMjyXQaZZ+NV
-+gXBckd5S79qgMN/s3FWNcKd30Unj25WxWrbYvhbRxxhoRjeCMMb/PTZA4nlhgjw
-P7NXrqSzq11lgkZK37EpTi274F6a0gLX9QsdMTENMPQggQiDCw+c5soaGMeYIYbY
-pllptwuvBOG03I8rKGUkhVhRK9arPeiVOSBYHAFqK0HeDgKfrwXF9zDYG/4E3H5M
-xGV42p9tgzJQVKVrwl5DMV2Gn3jHjb8+B62wgG7iISP9L+ekM/jp6zJBwip84rG6
-wk7qci2mv/W2aBrPFexyuCgcdWdSiLABedTjSRBiHu79k2Ov9oCIh0S0mtGm7mza
-qynXFkI9f6bBvRAwPKPdFYxVF0VFyM8tAXS03m5APT90mCiUDKp3Nv1lWlhDZbgK
-oI6bJDxdGGE0Nr2rBFBWWZc2ui5/OYDQA0WE4UkfzZ4scLetKvTdnMF6aeb54kYe
-uw9Q3XGlePTre9kotFTOxEvttPsXzUOgCXv9+kQczTyMb8kSx4pGBfyC+tztnwmz
-2a366Zqnt57zUgfmEiWTCisxZAEjvs3eoZJ9cqTmgMIPIhkEdc0=
-=jrK9
------END PGP SIGNATURE-----
-
---Q7L38taTBp+eFsej--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aZXl5TVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN0JBQy85WDRMVndRekxaMk10RTF5cVMvM3MxekVCQgo0WXRJc3l4Vk1z
+bjJObVBKb2lxSzFBdSs1VlM5VjdERGQzNG92Y0dzazZVRHBsYnVDeVN6YUhpL1hnNS9JR0hmClEy
+L1VmRmhjZHpqeEwxcGtYSFpLS3hsekl4L1BzRnVaY0JiWTMyTlNYYnFrZFFtRTVTdzJ5ZjdEZFFj
+cHlKa20KaXN5WDZiLzFENWd6U09URG9mWnpVZWxzaXZlUEROZmNQdVl2T1dxbkpwS3NBR3ROMVRO
+elErbURhMFhBcUZrVQoxYWhqVGJmL0RENXgwN1pzK1ZydDAxQXdGN3lLL051ZGFnWWtvVCtoKzNw
+YjhWdEJDdTJXcWFaS0djK1lVMW1SCmpSTTh5Z1JESkl6RjhFS2g5NUlrcDJoSzFrRUlIQll5Qm4v
+MW52WjhWbjB0Q0JDd1lOMTY5dk16bXlsVGFHUkEKTlRWbzc1NVprMHJWMVpORTJhN2Q5M0ZldFhN
+WlJLQmJYaGxaZFlKMHl2Zi95eE16S2tLeEV2TDNudVVpK1Fncwo0K2dYVFhPc2pGUVBpdDNuYmVB
+U0hNNGhVZFJ2bTFGdzJVZGliN2lKcGVkRTUyRXVtOENXM1VPdHdaMFIyang3CnoreHdWb0VYQ2Fp
+dHdLR1AxNG1FcjNyOGtUOXd2czJKQlFOTnNxdz0KPTdsQkcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000534717061a0bef8e--
