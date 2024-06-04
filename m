@@ -1,34 +1,34 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116CC143C72
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 10:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CDA143C72
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 10:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717495988; cv=none; b=RxaHzFuW+z/9rtF42cviT0rspP0dYkSNiF4MG1I/DXK+Lk6wVIb+/pgDCiCpHYkxBKF2OMCmY1aVFK3B2Ux4e1S0GsHQ8/R3E/uPbVrAsdY+p64fYye3Rc6b/x3E1JDACm4jZAx/gwXRVABcPiTV2+zXJWPb1rFMNN9KK4lGAVs=
+	t=1717495994; cv=none; b=TqMpKucXo5OGQeB79a+Lc/af8VCpAv+zjrHEEf4lNEY8RLcFc9SwRQ/B+xqwimFTj2wqEzEHZlTKxbQZWoKcSBrySx5UYxo9SXcR7YeHUB41/cSY8d/xFwJGQyzpPIx+S5XeWyy+smM7fxHJrbgKqWZ2FPax7A5/U0FwKFM3tic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717495988; c=relaxed/simple;
-	bh=Su3xFihH12BGsb+BCs1A3A2YWR85Ia/rvF8RsiNk8y4=;
+	s=arc-20240116; t=1717495994; c=relaxed/simple;
+	bh=RlSNqG5WYDP0W558P5TgjQ/VJZKuSuJaWrX19lH8QIw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r9192OGvxRzt8RIw1NIeuIXh484wObWy+m4WaAogJaX85M6LN0p+asH+Bk0ydeeGdK6wHktE25DDJkrJn3JvVMYg3Hb0e0DicT3W5r2xWACU8aIaauIeQQ+Nm8FZ5uf+XsPe0iVCvq6itOxnIbQmMTqZMXLn6DGpH8kwuXBNS04=
+	 Content-Type:Content-Disposition:In-Reply-To; b=BMBYk6AvEJN5TxWDe5mP/BwYXA1CrgI+VvGoLCE0QSD35DovBPKMzGuZv+ueZhmHZyoP/KrSliwoaOQ7dV+aerndOtG3dHovN3qNuVQhUIDmCCvX7g6hmOKzxEErk4LUv5j7KY5UrfgJfKtM2F14ujw8P4jZdWDvLpS6uriwJ2E=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 21453 invoked by uid 109); 4 Jun 2024 10:13:06 -0000
+Received: (qmail 21463 invoked by uid 109); 4 Jun 2024 10:13:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Jun 2024 10:13:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Jun 2024 10:13:12 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18342 invoked by uid 111); 4 Jun 2024 10:13:03 -0000
+Received: (qmail 18350 invoked by uid 111); 4 Jun 2024 10:13:08 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Jun 2024 06:13:03 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Jun 2024 06:13:08 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 4 Jun 2024 06:13:05 -0400
+Date: Tue, 4 Jun 2024 06:13:10 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 01/13] sparse-checkout: free string list in
- write_cone_to_file()
-Message-ID: <20240604101305.GA1304593@coredump.intra.peff.net>
+Subject: [PATCH v2 02/13] sparse-checkout: pass string literals directly to
+ add_pattern()
+Message-ID: <20240604101310.GB1304593@coredump.intra.peff.net>
 References: <20240604100814.GA1304520@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -40,29 +40,112 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240604100814.GA1304520@coredump.intra.peff.net>
 
-We use a string list to hold sorted and de-duped patterns, but don't
-free it before leaving the function, causing a leak.
+The add_pattern() function takes a pattern string, but neither makes a
+copy of it nor takes ownership of the memory. So it is the caller's
+responsibility to make sure the string hangs around as long as the
+pattern_list which references it.
 
-This drops the number of leaks found in t7002 from 27 to 25.
+There are a few cases in sparse-checkout where we use string literal
+patterns by stuffing them into a strbuf, detaching the buffer, and then
+passing the result into add_pattern(). This creates a leak when the
+pattern_list is eventually cleared, since we don't retain a copy of the
+detached buffer to free.
+
+But we can observe that the whole strbuf dance is unnecessary. The point
+was presumably[1] to satisfy the lifetime requirement of the string. But
+string literals have static duration; we can count on them lasting for
+the whole program.
+
+So we can fix the leak by just passing them directly. And as a bonus,
+that simplifies the code. The leaks can be seen in t7002, which drops
+from 25 leaks to 22 with this patch. It also makes t3602 and t1090
+leak-free.
+
+In the long run, we will also want to clean up this (undocumented!)
+memory lifetime requirement of add_pattern(). But that can come in a
+later patch; passing the string literals directly will be the right
+thing either way.
+
+[1] The code in question comes from 416adc8711 (sparse-checkout: update
+    working directory in-process for 'init', 2019-11-21) and 99dfa6f970
+    (sparse-checkout: use in-process update for disable subcommand,
+    2019-11-21), but I didn't see anything in their commit messages or
+    on the list explaining the strbufs.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/sparse-checkout.c | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/sparse-checkout.c        | 11 +++--------
+ t/t1090-sparse-checkout-scope.sh |  1 +
+ t/t3602-rm-sparse-checkout.sh    |  1 +
+ 3 files changed, 5 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 0f52e25249..8747191484 100644
+index 8747191484..7c17ed238c 100644
 --- a/builtin/sparse-checkout.c
 +++ b/builtin/sparse-checkout.c
-@@ -311,6 +311,8 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
- 		fprintf(fp, "%s/\n", pattern);
- 		free(pattern);
- 	}
-+
-+	string_list_clear(&sl, 0);
- }
+@@ -442,7 +442,6 @@ static int sparse_checkout_init(int argc, const char **argv, const char *prefix)
+ 	char *sparse_filename;
+ 	int res;
+ 	struct object_id oid;
+-	struct strbuf pattern = STRBUF_INIT;
  
- static int write_patterns_and_update(struct pattern_list *pl)
+ 	static struct option builtin_sparse_checkout_init_options[] = {
+ 		OPT_BOOL(0, "cone", &init_opts.cone_mode,
+@@ -493,10 +492,8 @@ static int sparse_checkout_init(int argc, const char **argv, const char *prefix)
+ 		return 0;
+ 	}
+ 
+-	strbuf_addstr(&pattern, "/*");
+-	add_pattern(strbuf_detach(&pattern, NULL), empty_base, 0, &pl, 0);
+-	strbuf_addstr(&pattern, "!/*/");
+-	add_pattern(strbuf_detach(&pattern, NULL), empty_base, 0, &pl, 0);
++	add_pattern("/*", empty_base, 0, &pl, 0);
++	add_pattern("!/*/", empty_base, 0, &pl, 0);
+ 	pl.use_cone_patterns = init_opts.cone_mode;
+ 
+ 	return write_patterns_and_update(&pl);
+@@ -893,7 +890,6 @@ static int sparse_checkout_disable(int argc, const char **argv,
+ 		OPT_END(),
+ 	};
+ 	struct pattern_list pl;
+-	struct strbuf match_all = STRBUF_INIT;
+ 
+ 	/*
+ 	 * We do not exit early if !core_apply_sparse_checkout; due to the
+@@ -919,8 +915,7 @@ static int sparse_checkout_disable(int argc, const char **argv,
+ 	pl.use_cone_patterns = 0;
+ 	core_apply_sparse_checkout = 1;
+ 
+-	strbuf_addstr(&match_all, "/*");
+-	add_pattern(strbuf_detach(&match_all, NULL), empty_base, 0, &pl, 0);
++	add_pattern("/*", empty_base, 0, &pl, 0);
+ 
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.sparse_index = 0;
+diff --git a/t/t1090-sparse-checkout-scope.sh b/t/t1090-sparse-checkout-scope.sh
+index 3a14218b24..da0e7714d5 100755
+--- a/t/t1090-sparse-checkout-scope.sh
++++ b/t/t1090-sparse-checkout-scope.sh
+@@ -6,6 +6,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ TEST_CREATE_REPO_NO_TEMPLATE=1
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t3602-rm-sparse-checkout.sh b/t/t3602-rm-sparse-checkout.sh
+index 08580fd3dc..fcdefba48c 100755
+--- a/t/t3602-rm-sparse-checkout.sh
++++ b/t/t3602-rm-sparse-checkout.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='git rm in sparse checked out working trees'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' "
 -- 
 2.45.2.807.g3b5fadc4da
 
