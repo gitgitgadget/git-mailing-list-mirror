@@ -1,60 +1,60 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F566FD5
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 14:06:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04246FD5
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 14:10:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717510003; cv=none; b=U+IV388Nt9HTdMmLu/Rb7ZuRxxr2grDxh2da+J+AZwQZmRoRaen8n33ibREA/G/ZoQKt4vHhNMXlqO+flRVi/xqu8VQt5pBx0jLOa3h+/zTRI7omVRoH56NAkmkTx8m9cEDhkEX47Kzs9oywrJU2VzAOHgYP8bX5aX3C3UKrIEA=
+	t=1717510206; cv=none; b=HcNx+vMg8FE9yODpuTYe8B2f0bAcW/0j6GHWkTuCXQVhahgO0UcnfAWHvNpKoEjWo+RpWr+ejklA+pa5kPDiaco6v2w2IoqamehzLDlSbouiEYA3EWFGzRlBm78E+LeXd80615q0HFthbnYhFBsZlvDgWhszamNi6hp17RiP6WU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717510003; c=relaxed/simple;
-	bh=SelDd1kOgwji4ghM6J+OQFu+ZPUQ//0FCFkVamp05V0=;
+	s=arc-20240116; t=1717510206; c=relaxed/simple;
+	bh=iJba3+givpUKRmgFT+qRapKT2ruuYeAEnq3B8OI77Ao=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cTr8plwLZaOI8WA2nLdX3wxBlsp1bBiaiJS/v0HCseelL8tUQ5suHzpItXmdG90uSGqu2SWzLZwvw4fxOnt7k7PnUeSp84TCG5uq5RKMpkAKFfACOwXTz+Ubo6T0TF5eOBQQxsbBIDBZ6Taf4/tPjExhRi/23v9D9YpsuFH5WxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QmaJJH7Q; arc=none smtp.client-ip=209.85.128.51
+	 In-Reply-To:Content-Type; b=NK1zMszRJptqXGNKNxBb8SO3pKYpanxWkoZGMhmQhTlioH5abf+/ZJ7lcsZB1qDkqFLs43nQ7PHlzn50/WRjfIFfe8fNOBAfcfLkSBR18HXjHlkEgyE0DDNdVnfKI3o5b/rMGMzk8MXhcIEbENt2mv7JY+Jye3YE59f8YyZOvhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AGPBHUDz; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QmaJJH7Q"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-42155143cb0so2650355e9.2
-        for <git@vger.kernel.org>; Tue, 04 Jun 2024 07:06:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AGPBHUDz"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-35e5c6600f0so1985257f8f.3
+        for <git@vger.kernel.org>; Tue, 04 Jun 2024 07:10:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717509999; x=1718114799; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1717510203; x=1718115003; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hsMwbMF4h3txX1T3n1KO/7YiNfiBE0NThhD4Y+4GjMw=;
-        b=QmaJJH7QLSnxNva3ONvF5Xd59P7K8RJ07S5J2aON/ukf4Z0gGE3TfIRW8X/Bv2hfhd
-         BXgt6mVvk4Z7T8894MZMBOYPNlIOV9adtxrRcKrvyKtokOPbgV2Gh9bEfg8+VW4eWbz1
-         KnpjBuWfFtgr5FWzSy3oFgsbszlcDNPP8eYDpKX1fcn98pDMVtds/k2+VW7YQwsTTC6r
-         qNDOY3RyhcrDSKWonGnTZR/mmy+KfTTvh1VwO85XgAMxQBebBu3vsbWbNCK2nC8mXds3
-         5U8kDyPNanSxYQJ/BHiAuxhCR7gFqYylyw6CeQ6Fy4oW1xpIVQ5H/f3EnFgfBDO6+hkh
-         D/hQ==
+        bh=rBkvpeU4Hj9IErIMmBFJlAagzjJLF8DSQkO2QOexnxk=;
+        b=AGPBHUDzfM3pjuvJ8rzJluNuScVA5vTp5wZOFirk61OGEO/1vI3KTYhyH0y1ymXwSz
+         GVVIk0AQMqkixVvw81nkIHTksa4qNWvAjZjgeAFA4Ez7+qajsLr0MeRfe65n37YfTzBY
+         dNSeSFuz66Tq/aUAcr94lDjqzLfPuKSRuM37/xRFBgKbx7T389sUCyMv0fEqQtA/Co1N
+         edCMnNR9IHHVTsaZXQCPpPbFi5SAdlp7yVc1xgq6m2YhKlW3tf7j8mfp6eBuvmAqYov2
+         VIPoMKOSdGZCbyqEqMtbLDYuQUHDrDnUshlNq2ee1UR+Wl57Z7wfrhvp5bExX8S2+uBU
+         6/ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717509999; x=1718114799;
+        d=1e100.net; s=20230601; t=1717510203; x=1718115003;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hsMwbMF4h3txX1T3n1KO/7YiNfiBE0NThhD4Y+4GjMw=;
-        b=qGNsVauPbtt8tWXDq/SezMzFNEhOhjvTefPlVPA3qxH8T+8eipKIzn1NsE5nA+S7nG
-         +t0jMNTTqK3F2nLEQVZ0AdCvns6xhQC8mpcuALdEqgih7tlOEfeN6v5QiIubYUh3DJG9
-         j+08IPOcbuBi06+aaCheb6L08FdXmu8fpjyPVys7N9T0nMU83Xl4CJHBkXQx19R1y4br
-         nzPsFVwyfTtBX03M2doGZd8AeWsheaX6N72CJv8cANZY4Cn7pEAnC1XGtDBETMC3LEzi
-         EmwHZNIPkX3uxCrxvzWgEDBMqMqFyEhw/YgL+eKjwHo6w45fpL/bZ+313X4VhMEPfUys
-         A3Iw==
-X-Forwarded-Encrypted: i=1; AJvYcCUOTsk1zttvd6VDowr/ZDlC4y67aX312eDt1X1JzB5YZzRV/Over1xZLtCsWZELJg3sqdCoCWVl51Sc00tvFhWIWOxi
-X-Gm-Message-State: AOJu0YxovSHn9qn71nOzRPVqWqxvxIiy1hmCan6eaEq+sIno6SA9Mg5s
-	EO5OtOrLY4zR8G9MS7CZlUsiuTrHGVvVuxfT/4fVd3QOGuTNWu1l
-X-Google-Smtp-Source: AGHT+IEaaDOQD+E9M9vF5VDKIwmkA3VzsEgs7IIeR1kmfgGRaxWhpd39Mhn2/60uhP26jV55rMkylg==
-X-Received: by 2002:a05:600c:4744:b0:421:2990:7f9b with SMTP id 5b1f17b1804b1-4212e050597mr134454585e9.14.1717509999284;
-        Tue, 04 Jun 2024 07:06:39 -0700 (PDT)
+        bh=rBkvpeU4Hj9IErIMmBFJlAagzjJLF8DSQkO2QOexnxk=;
+        b=TUXIK3cws4qFK4xN80kflhsuYmrZhA4QL+FBijzq6meX1zri2hi60s/3hlmIC3ptAC
+         m0VkODk59UHX36DRkfjqZug6octJuv7/caSfiOnqM+Zpk8koAF3rKtFF+RNwV2b+8DrY
+         ezH3RRQLPcOTLXkfQStj7xUNKxnahu/tcnVB3wHnxZgXnO8Eq7GH/Xa1V5YiAhV9tKpO
+         bqbrnSkPDSL/ZJWFd4nXVfeDcsgkmlw5ljVxqxuUf/olCBm3Oy6SV5liYOHFY5JnAJwT
+         vCC1VXtniL+9lBAZ2y5+APbqkPAFti7nJ/FIku6KTcjI+Bh37aCvOkCU2Ih3TtdupMhg
+         85yQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUvNrpnx9rmzzt3V1y7n1PT1aU4oTzRyN8+4dzZBJaMY58e6kLjg6AwzU4FIHieNKZ6LwetmUIC3y8lrKAxwqmxvh68
+X-Gm-Message-State: AOJu0YxTLDRhvYu9PUFm3/ere4GThu0EyLG5GsWtJPxSjd2jfr3I+NmN
+	1IdbJJkH+qZditjKB/+eqYtHDtVt+MTjrwLQjohyYVuxRZS9KqqY
+X-Google-Smtp-Source: AGHT+IE4nETX05tqdNLm3b8frpndvzOPoSwuIUW51hnNmzWISqGfDePgCBqB/qooOqRyEqVxkufgOg==
+X-Received: by 2002:adf:e9d1:0:b0:355:3dc:1f26 with SMTP id ffacd0b85a97d-35e0f289290mr9319891f8f.37.1717510202658;
+        Tue, 04 Jun 2024 07:10:02 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:641:9001:124f:b55:b414:cf29? ([2a0a:ef40:641:9001:124f:b55:b414:cf29])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42148bc4cafsm33064985e9.40.2024.06.04.07.06.38
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd062ecd3sm11900296f8f.74.2024.06.04.07.10.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jun 2024 07:06:39 -0700 (PDT)
-Message-ID: <be8a315a-3fa7-40d3-80e1-6a5c01afee70@gmail.com>
-Date: Tue, 4 Jun 2024 15:06:38 +0100
+        Tue, 04 Jun 2024 07:10:02 -0700 (PDT)
+Message-ID: <30718fa9-6197-424c-a58c-8bf3c909cb25@gmail.com>
+Date: Tue, 4 Jun 2024 15:10:01 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,37 +63,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 24/27] builtin/rebase: do not assign default backend to
- non-constant field
+Subject: Re: [PATCH v4 25/27] builtin/rebase: always store allocated string in
+ `options.strategy`
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
  Eric Sunshine <sunshine@sunshineco.com>
 References: <cover.1716983704.git.ps@pks.im> <cover.1717504517.git.ps@pks.im>
- <e19457d20c80f9ce332f2d890a5089972e28f0cf.1717504517.git.ps@pks.im>
+ <f548241960d1f41e010516d68df9107528567514.1717504517.git.ps@pks.im>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <e19457d20c80f9ce332f2d890a5089972e28f0cf.1717504517.git.ps@pks.im>
+In-Reply-To: <f548241960d1f41e010516d68df9107528567514.1717504517.git.ps@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Patrick
 
 On 04/06/2024 13:38, Patrick Steinhardt wrote:
-> The `struct rebase_options::default_backend` field is a non-constant
-> string, but is being assigned a constant via `REBASE_OPTIONS_INIT`.
-> Refactor the code to initialize and release options via two functions
-> `rebase_options_init()` and `rebase_options_release()`. Like this, we
-> can easily adapt the former funnction to use `xstrdup()` on the default
-> value without hiding it away in a macro.
+> The `struct rebase_options::strategy` field is a `char *`, but we do end
+> up assigning string constants to it in two cases:
+> 
+>    - When being passed a `--strategy=` option via the command line.
+> 
+>    - When being passed a strategy option via `--strategy-option=`, but
+>      not a strategy.
+> 
+> This will cause warnings once we enable `-Wwrite-strings`.
+> 
+> Ideally, we'd just convert the field to be a `const char *`. But we also
+> assign to this field via the GIT_TEST_MERGE_ALGORITHM envvar, which we
+> have to strdup(3P) into it.
+> 
+> Instead, refactor the code to make sure that we only ever assign
+> allocated strings to this field.
 
-Personally I'd be happy with
-
--		.default_backend = "merge",		\
-+		.default_backend = xstrdup("merge"),	\
-
-rather than adding an init function. I do agree that adding 
-rebase_options_release() is a good idea and the rest of the changes look 
-good to me
+This looks sensible
 
 Thanks
 
@@ -101,112 +104,46 @@ Phillip
 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->   builtin/rebase.c | 67 ++++++++++++++++++++++++++++--------------------
->   1 file changed, 39 insertions(+), 28 deletions(-)
+>   builtin/rebase.c | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
 > 
 > diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 14d4f0a5e6..11f276012c 100644
+> index 11f276012c..26068cf542 100644
 > --- a/builtin/rebase.c
 > +++ b/builtin/rebase.c
-> @@ -131,25 +131,40 @@ struct rebase_options {
->   	int config_update_refs;
->   };
->   
-> -#define REBASE_OPTIONS_INIT {			  	\
-> -		.type = REBASE_UNSPECIFIED,	  	\
-> -		.empty = EMPTY_UNSPECIFIED,	  	\
-> -		.keep_empty = 1,			\
-> -		.default_backend = "merge",	  	\
-> -		.flags = REBASE_NO_QUIET, 		\
-> -		.git_am_opts = STRVEC_INIT,		\
-> -		.exec = STRING_LIST_INIT_NODUP,		\
-> -		.git_format_patch_opt = STRBUF_INIT,	\
-> -		.fork_point = -1,			\
-> -		.reapply_cherry_picks = -1,             \
-> -		.allow_empty_message = 1,               \
-> -		.autosquash = -1,                       \
-> -		.rebase_merges = -1,                    \
-> -		.config_rebase_merges = -1,             \
-> -		.update_refs = -1,                      \
-> -		.config_update_refs = -1,               \
-> -		.strategy_opts = STRING_LIST_INIT_NODUP,\
-> -	}
-> +static void rebase_options_init(struct rebase_options *opts)
-> +{
-> +	memset(opts, 0, sizeof(*opts));
-> +	opts->type = REBASE_UNSPECIFIED;
-> +	opts->empty = EMPTY_UNSPECIFIED;
-> +	opts->default_backend = xstrdup("merge");
-> +	opts->keep_empty = 1;
-> +	opts->flags = REBASE_NO_QUIET;
-> +	strvec_init(&opts->git_am_opts);
-> +	string_list_init_nodup(&opts->exec);
-> +	strbuf_init(&opts->git_format_patch_opt, 0);
-> +	opts->fork_point = -1;
-> +	opts->reapply_cherry_picks = -1;
-> +	opts->allow_empty_message = 1;
-> +	opts->autosquash = -1;
-> +	opts->rebase_merges = -1;
-> +	opts->config_rebase_merges = -1;
-> +	opts->update_refs = -1;
-> +	opts->config_update_refs = -1;
-> +	string_list_init_nodup(&opts->strategy_opts);
-> +}
-> +
-> +static void rebase_options_release(struct rebase_options *opts)
-> +{
-> +	free(opts->default_backend);
-> +	free(opts->reflog_action);
-> +	free(opts->head_name);
-> +	strvec_clear(&opts->git_am_opts);
-> +	free(opts->gpg_sign_opt);
-> +	string_list_clear(&opts->exec, 0);
-> +	free(opts->strategy);
-> +	string_list_clear(&opts->strategy_opts, 0);
-> +	strbuf_release(&opts->git_format_patch_opt);
-> +}
->   
->   static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+> @@ -1063,6 +1063,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
 >   {
-> @@ -796,6 +811,7 @@ static int rebase_config(const char *var, const char *value,
->   	}
->   
->   	if (!strcmp(var, "rebase.backend")) {
-> +		FREE_AND_NULL(opts->default_backend);
->   		return git_config_string(&opts->default_backend, var, value);
->   	}
->   
-> @@ -1045,7 +1061,7 @@ static int check_exec_cmd(const char *cmd)
->   
->   int cmd_rebase(int argc, const char **argv, const char *prefix)
->   {
-> -	struct rebase_options options = REBASE_OPTIONS_INIT;
-> +	struct rebase_options options;
+>   	struct rebase_options options;
 >   	const char *branch_name;
+> +	const char *strategy_opt = NULL;
 >   	int ret, flags, total_argc, in_progress = 0;
 >   	int keep_base = 0;
-> @@ -1178,6 +1194,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   	};
->   	int i;
+>   	int ok_to_skip_pre_rebase = 0;
+> @@ -1177,7 +1178,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   			PARSE_OPT_OPTARG, parse_opt_rebase_merges),
+>   		OPT_BOOL(0, "fork-point", &options.fork_point,
+>   			 N_("use 'merge-base --fork-point' to refine upstream")),
+> -		OPT_STRING('s', "strategy", &options.strategy,
+> +		OPT_STRING('s', "strategy", &strategy_opt,
+>   			   N_("strategy"), N_("use the given merge strategy")),
+>   		OPT_STRING_LIST('X', "strategy-option", &options.strategy_opts,
+>   				N_("option"),
+> @@ -1488,13 +1489,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   		}
+>   	}
 >   
-> +	rebase_options_init(&options);
-> +
->   	if (argc == 2 && !strcmp(argv[1], "-h"))
->   		usage_with_options(builtin_rebase_usage,
->   				   builtin_rebase_options);
-> @@ -1833,14 +1851,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   cleanup:
->   	strbuf_release(&buf);
->   	strbuf_release(&revisions);
-> -	free(options.reflog_action);
-> -	free(options.head_name);
-> -	strvec_clear(&options.git_am_opts);
-> -	free(options.gpg_sign_opt);
-> -	string_list_clear(&options.exec, 0);
-> -	free(options.strategy);
-> -	string_list_clear(&options.strategy_opts, 0);
-> -	strbuf_release(&options.git_format_patch_opt);
-> +	rebase_options_release(&options);
->   	free(squash_onto_name);
->   	free(keep_base_onto_name);
->   	return !!ret;
+> -	if (options.strategy_opts.nr && !options.strategy)
+> -		options.strategy = "ort";
+> -
+> -	if (options.strategy) {
+> -		options.strategy = xstrdup(options.strategy);
+> +	if (strategy_opt)
+> +		options.strategy = xstrdup(strategy_opt);
+> +	else if (options.strategy_opts.nr && !options.strategy)
+> +		options.strategy = xstrdup("ort");
+> +	if (options.strategy)
+>   		imply_merge(&options, "--strategy");
+> -	}
+>   
+>   	if (options.root && !options.onto_name)
+>   		imply_merge(&options, "--root without --onto");
