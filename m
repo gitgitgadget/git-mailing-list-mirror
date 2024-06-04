@@ -1,80 +1,79 @@
-Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CDB145358
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 12:37:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83459145358
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 12:37:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717504636; cv=none; b=TJzf5zytAL6zYb5NyrUhlIBpGlegN3EijTyNaunIXKFVxG+FiU1jKlDmkadyLUlWvDfuEGBlCd4HYufusuw+6rRAB4tGZbxZZXoqK2qBiTfizq9YDZFqMrkhWMgK5V5PX9giwqAE0unT3BS+OjMYR0ibvhhOPxyRBCw5dzXE/dM=
+	t=1717504641; cv=none; b=bFYnBMf88NzFp0Yy1qPMlmcZFjorQYSKOxpYOJAoKp5Yh7wadpD9rbqEAgm5sJX3D0cW3euFxKcP5lYIPwwg8BSJMIFvCfwm7ZQjkhGxNvhfQ2fMLS5accZGh7y2d9mKAtx2qN+EfhxF5fRVehRdjYhnZdzeMNCLvl3uoGxllF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717504636; c=relaxed/simple;
-	bh=irzp2Se09X1AhWukE8h5bNt75e6KsV7OxP/xPv+De00=;
+	s=arc-20240116; t=1717504641; c=relaxed/simple;
+	bh=BCmgcxe/imepad8Ht4e2R75FBbduwGGaweZeMaQ5Kgo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JZq2rxPJLfQXFLA+Sz/1aX7aSlpGk1UUPBb945TwRK3USD3cpi/dye8IPcW+BBapfL0G3Ot8qIIz5dgC5q9sof8lvqhWL6kQrUhKkoU8B1XbUpVKgBt89ao1OiFnrsDMpBOUuvU4yC4KXf8FQ4DlLUKqhp4kkm57ncXXN5LxOrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CueVoGyZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dNN3t0X8; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=FcUgODkweBIXW/GPXSp9u3bs/by8mJaxpVwpLXSWds1Vef3OytmeRhVXyo00NXBCL/r3WhdTx64D1sL0KMNOzxiIb3+2kI7QhNwZAPnNjuUgJuq1yfsEzF87Gfmfkqotkz4q0XtH/ctPuvqfmjIcCHfnPG36kSOgRFX0JnzJBao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jBv7+wPP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ESFFSpgl; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CueVoGyZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dNN3t0X8"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 49D3F11400FB;
-	Tue,  4 Jun 2024 08:37:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jBv7+wPP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ESFFSpgl"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id A72FD1380152;
+	Tue,  4 Jun 2024 08:37:18 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Tue, 04 Jun 2024 08:37:13 -0400
+  by compute1.internal (MEProxy); Tue, 04 Jun 2024 08:37:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717504633; x=1717591033; bh=7N6o2PEc/R
-	6/rezipXeuj/SuDczsHXwPQUyTt4aUK00=; b=CueVoGyZBvDa/7E+Gdgk3VC9DZ
-	8tmrFbYyc4Cxvx8BERHalObSaB/MPQWqOhOzyhoC2CF+pgTV9cQVKwAmom//G7CK
-	tcbZwIXYfxT6DvsZXth80Q2bYV4504zMkf2cKCwSVqGenttDww1GkT1JvbXIvw3u
-	KTA6ChAa13B+7Fcm0zgnyt/jvDn74VS872xNpuji34g7h6rAzP2b+W8OD6b2oBvn
-	85WQztTMvNVXVSKoIPcYBb0UqIfFVGRBjl/izF3YvYqLZNY8DodnXhx0P8bJgpwx
-	QtSZyjITXgom/gWwRXC3pbfxx1+7XmQ8IpjtzSGcTf21vLTHAUrIe65zU9kQ==
+	:subject:to:to; s=fm1; t=1717504638; x=1717591038; bh=oyCn8t1nGj
+	kgROPxOnXtKwme2ttdm7ivG+IpjVrjchY=; b=jBv7+wPPxhqRTL5xGGX8/rlonQ
+	BHlGvKJbUZqKdQ6NxlOpBFPIVJxf+tDACa5cxRvH9gz3lqCqCK0dbN2AvbsOyLuT
+	47edPP2Vr4BzPh2FQZaGa+7o2c8zx2W1vwxj4d7K9TDJEOtBKwSgqjjZDw0/Vm9g
+	2fjMVAm2w5KyDhWf7Fy+zNPWTw4iBGhO8MbxxKtNNZZaOMrGhHzEuTpdOCl8tVUQ
+	bPSnyun7rrvdfn5caY9aHmoU62HGKSCU1uwQevP7fu9QCt+ggYHLCSY+JA74fUcB
+	PZ+oXTcj1ePb2WMYuXpZJ/RRMYOzjWwNnrs8EHHXdTel+8qpt2BmJc1UnGyg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717504633; x=1717591033; bh=7N6o2PEc/R6/rezipXeuj/SuDczs
-	HXwPQUyTt4aUK00=; b=dNN3t0X8dlfAdVH8KvTzveQwP6LpEbYQcM6sugrsa9FJ
-	f+iYff/+X/dw6mAzG1QrnIDDRy2Je8XxNqIBIdbKbwynVM88vJ+40nRoNHQjvPSt
-	OUUdTFol+aQ1I3580m2ztVk3CuLw9kYB53srEUL/eb0q2giJ6/14Hb4VUJBWdI2+
-	C+uC/YqjJjqyIw1GMlUw4TjsNrZdTqPR7xbcrPx8eu/57HS+MmF2qYbHCiN48wHH
-	4vxjBqoFsC+588O9sZDuYHuPbwseWUCfV2OAzmMLz6acx5+Gljn/fpFHVVHa5IO1
-	dGDznUUkvxUhC3kMwZEt0up9lhiJ2G73CsRMKCLsfg==
-X-ME-Sender: <xms:eQpfZnrL-JJUHwBtbPu59asbdMChbRYj9LKK9AM8K5W2yt_ne5eBNg>
-    <xme:eQpfZhpbLMO_A98O6G6ln00NZ3VYiq_oPAAFfRN3Q9FRvfaHWrVXYYfU_dLsRov02
-    J6oHhatua3kcTQM5g>
-X-ME-Received: <xmr:eQpfZkN-FHPjVrLIAMksMOEnizwFwTzMM9NzOtK6Ta09XglZORT633GjGa4nmfTx-AaF0JDVTZtliQ58arxfoZCEsGreOhn9FFIjf-ypHUMsjClq>
+	fm1; t=1717504638; x=1717591038; bh=oyCn8t1nGjkgROPxOnXtKwme2ttd
+	m7ivG+IpjVrjchY=; b=ESFFSpgldTfno559UZK/i5Ortq01knwJNo0kb/TCD/Ts
+	u9FUJE7g0D1rvzccduuRDDSqACzhZoZsCMimGrq5Ti4jMlase0/AEc5tvsx9Lc1G
+	/c6gyMKtCFL0ognFxED1/5pBgdF7IAXGeoPqlBCep9SF4r38f8DTw4KKtEF/Ew4K
+	yHpiCZ2lztFld9Vu0sDYGFw0rIUbsESNfP8Sdk/ZTO+v1JMRLWBbF9ZjupCm4Gg3
+	ucv/66Q/y+YboFUk9bTP1Kon3faxRPxFOWzjNByMRK3LK+XiUnmMkzE/bt0UcbLH
+	REkMQHUhiiXrVLSOGc/oq05rE2Amh/q2CjMlcfxrgQ==
+X-ME-Sender: <xms:fgpfZqshtUuq43xKM0eEDq-wZEZRaFFS-WrKhw1qpNbjmBgMohzSOQ>
+    <xme:fgpfZvcT-ZMFAvnLqKdsSdWt2Leqwb5SIqoyDT4VHlXyGND776DIY9vSqNRoAYiX-
+    -ts1kwUyQVVp5yLlA>
+X-ME-Received: <xmr:fgpfZlzCEVqGpo8DZRR7jP3Zk1EaFgGaIc9fmsev2SfRWSVii7VofPIOyHQvsM26zjxODwAiShECbwcVVn4Hvpur-TVFVnDjrtDJACA-Rcs_IU1Y>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelgedghedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepgeevtdffhedvheehgeeuuefffeetiedtfeehjeehteevieehkeekieefhfdvveeh
-    necuffhomhgrihhnpehuphgurghtvgdrnhgvfienucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:eQpfZq5g0S1T5hdAbVl4S3QzB0XN4YmCQ0lGrqeYVVwar4JEFjn6yA>
-    <xmx:eQpfZm5Crt90ukjKZNblO2buJIUW9YLMok2hh9pR6m53WMXp1RQv0w>
-    <xmx:eQpfZii5L-_wHFBQuxSDAaE35-KHGzMOCfT0wj5FjT3jgcTp1XYMXw>
-    <xmx:eQpfZo5XKYs3haGvGIFSl_kaCQ4Uobeh0Az13RUwnYbcqaEnvT_RCQ>
-    <xmx:eQpfZh0KLcxGGUrTNtLuGCFgL4rkqqNsxkWLIJ8Uf7Acpijt0BTYumtW>
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:fgpfZlPV4Yemz3h8bP7RSNtcAeCp1DeHOpc7NOmiKshwF9tjul8GZQ>
+    <xmx:fgpfZq8qmJ8dXdp0dIuTH4s1LZ7Y00rDT-AjRZXE3NFoH-vGA9CXvg>
+    <xmx:fgpfZtUCXkZST2kGFcSwA5ystC6eBUMYoXeY6PmxSc0rBMY9ecZ-sQ>
+    <xmx:fgpfZjckjDFhjc2A-8QxLXer3owb4RRyaYsUM_ctZTscxynEYZjykw>
+    <xmx:fgpfZuZicyeE-aSww_QzLnHex3eHybGSy_1693dtyYJBmZ81i0cn_VEq>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Jun 2024 08:37:12 -0400 (EDT)
+ 4 Jun 2024 08:37:17 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id e6eb1d89 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Jun 2024 12:36:45 +0000 (UTC)
-Date: Tue, 4 Jun 2024 14:37:10 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id f334442c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Jun 2024 12:36:50 +0000 (UTC)
+Date: Tue, 4 Jun 2024 14:37:14 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v4 04/27] reftable: cast away constness when assigning
- constants to records
-Message-ID: <d0a2a2f6c55af6da9703a1d64f45f77f4c00cd80.1717504517.git.ps@pks.im>
+Subject: [PATCH v4 05/27] refspec: remove global tag refspec structure
+Message-ID: <ead27d3d978701966cdc2884dab2db77fae5d031.1717504517.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717504517.git.ps@pks.im>
 Precedence: bulk
@@ -84,489 +83,154 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="u67BTvcuDeG3mLPX"
+	protocol="application/pgp-signature"; boundary="2MCqc/RQ33AOp5be"
 Content-Disposition: inline
 In-Reply-To: <cover.1717504517.git.ps@pks.im>
 
 
---u67BTvcuDeG3mLPX
+--2MCqc/RQ33AOp5be
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The reftable records are used in multiple ways throughout the reftable
-library. In many of those cases they merely act as input to a function
-without getting modified by it at all. Most importantly, this happens
-when writing records and when querying for records.
+We have a global tag refspec structure that is used by both git-clone(1)
+and git-fetch(1). Initialization of the structure will break once we
+enable `-Wwrite-strings`, even though the breakage is harmless. While we
+could just add casts, the structure isn't really required in the first
+place as we can simply initialize the structures at the respective
+callsites.
 
-We rely on this in our tests and thus assign string constants to those
-fields, which is about to generate warnings as those fields are of type
-`char *`. While we could go through the process and instead allocate
-those strings in all of our tests, this feels quite unnecessary.
-
-Instead, add casts to `char *` for all of those strings. As this is part
-of our tests, this also nicely serves as a demonstration that nothing
-writes or frees those string constants, which would otherwise lead to
-segfaults.
+Refactor the code accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/block_test.c     |  2 +-
- reftable/merged_test.c    | 44 +++++++++++++++++------------------
- reftable/readwrite_test.c | 32 +++++++++++++-------------
- reftable/stack_test.c     | 48 +++++++++++++++++++--------------------
- 4 files changed, 63 insertions(+), 63 deletions(-)
+ builtin/clone.c |  8 ++++++--
+ builtin/fetch.c | 11 ++++++++---
+ refspec.c       | 13 -------------
+ refspec.h       |  1 -
+ 4 files changed, 14 insertions(+), 19 deletions(-)
 
-diff --git a/reftable/block_test.c b/reftable/block_test.c
-index 26a9cfbc83..90aecd5a7c 100644
---- a/reftable/block_test.c
-+++ b/reftable/block_test.c
-@@ -42,7 +42,7 @@ static void test_block_read_write(void)
- 	block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
- 			  header_off, hash_size(GIT_SHA1_FORMAT_ID));
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 92ab7d7165..bde1d284a2 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -523,6 +523,9 @@ static struct ref *wanted_peer_refs(const struct ref *r=
+efs,
+ 	struct ref *head =3D copy_ref(find_ref_by_name(refs, "HEAD"));
+ 	struct ref *local_refs =3D head;
+ 	struct ref **tail =3D head ? &head->next : &local_refs;
++	struct refspec_item tag_refspec;
++
++	refspec_item_init(&tag_refspec, TAG_REFSPEC, 0);
 =20
--	rec.u.ref.refname =3D "";
-+	rec.u.ref.refname =3D (char *) "";
- 	rec.u.ref.value_type =3D REFTABLE_REF_DELETION;
- 	n =3D block_writer_add(&bw, &rec);
- 	EXPECT(n =3D=3D REFTABLE_API_ERROR);
-diff --git a/reftable/merged_test.c b/reftable/merged_test.c
-index 530fc82d1c..6d1159d12d 100644
---- a/reftable/merged_test.c
-+++ b/reftable/merged_test.c
-@@ -124,13 +124,13 @@ static void readers_destroy(struct reftable_reader **=
-readers, size_t n)
- static void test_merged_between(void)
- {
- 	struct reftable_ref_record r1[] =3D { {
--		.refname =3D "b",
-+		.refname =3D (char *) "b",
- 		.update_index =3D 1,
- 		.value_type =3D REFTABLE_REF_VAL1,
- 		.value.val1 =3D { 1, 2, 3, 0 },
- 	} };
- 	struct reftable_ref_record r2[] =3D { {
--		.refname =3D "a",
-+		.refname =3D (char *) "a",
- 		.update_index =3D 2,
- 		.value_type =3D REFTABLE_REF_DELETION,
- 	} };
-@@ -165,38 +165,38 @@ static void test_merged(void)
- {
- 	struct reftable_ref_record r1[] =3D {
- 		{
--			.refname =3D "a",
-+			.refname =3D (char *) "a",
- 			.update_index =3D 1,
- 			.value_type =3D REFTABLE_REF_VAL1,
- 			.value.val1 =3D { 1 },
- 		},
- 		{
--			.refname =3D "b",
-+			.refname =3D (char *) "b",
- 			.update_index =3D 1,
- 			.value_type =3D REFTABLE_REF_VAL1,
- 			.value.val1 =3D { 1 },
- 		},
- 		{
--			.refname =3D "c",
-+			.refname =3D (char *) "c",
- 			.update_index =3D 1,
- 			.value_type =3D REFTABLE_REF_VAL1,
- 			.value.val1 =3D { 1 },
+ 	if (option_single_branch) {
+ 		struct ref *remote_head =3D NULL;
+@@ -545,7 +548,7 @@ static struct ref *wanted_peer_refs(const struct ref *r=
+efs,
+ 					      &tail, 0);
+=20
+ 			/* if --branch=3Dtag, pull the requested tag explicitly */
+-			get_fetch_map(remote_head, tag_refspec, &tail, 0);
++			get_fetch_map(remote_head, &tag_refspec, &tail, 0);
  		}
- 	};
- 	struct reftable_ref_record r2[] =3D { {
--		.refname =3D "a",
-+		.refname =3D (char *) "a",
- 		.update_index =3D 2,
- 		.value_type =3D REFTABLE_REF_DELETION,
- 	} };
- 	struct reftable_ref_record r3[] =3D {
- 		{
--			.refname =3D "c",
-+			.refname =3D (char *) "c",
- 			.update_index =3D 3,
- 			.value_type =3D REFTABLE_REF_VAL1,
- 			.value.val1 =3D { 2 },
- 		},
- 		{
--			.refname =3D "d",
-+			.refname =3D (char *) "d",
- 			.update_index =3D 3,
- 			.value_type =3D REFTABLE_REF_VAL1,
- 			.value.val1 =3D { 1 },
-@@ -291,46 +291,46 @@ static void test_merged_logs(void)
- {
- 	struct reftable_log_record r1[] =3D {
- 		{
--			.refname =3D "a",
-+			.refname =3D (char *) "a",
- 			.update_index =3D 2,
- 			.value_type =3D REFTABLE_LOG_UPDATE,
- 			.value.update =3D {
- 				.old_hash =3D { 2 },
- 				/* deletion */
--				.name =3D "jane doe",
--				.email =3D "jane@invalid",
--				.message =3D "message2",
-+				.name =3D (char *) "jane doe",
-+				.email =3D (char *) "jane@invalid",
-+				.message =3D (char *) "message2",
- 			}
- 		},
- 		{
--			.refname =3D "a",
-+			.refname =3D (char *) "a",
- 			.update_index =3D 1,
- 			.value_type =3D REFTABLE_LOG_UPDATE,
- 			.value.update =3D {
- 				.old_hash =3D { 1 },
- 				.new_hash =3D { 2 },
--				.name =3D "jane doe",
--				.email =3D "jane@invalid",
--				.message =3D "message1",
-+				.name =3D (char *) "jane doe",
-+				.email =3D (char *) "jane@invalid",
-+				.message =3D (char *) "message1",
- 			}
- 		},
- 	};
- 	struct reftable_log_record r2[] =3D {
- 		{
--			.refname =3D "a",
-+			.refname =3D (char *) "a",
- 			.update_index =3D 3,
- 			.value_type =3D REFTABLE_LOG_UPDATE,
- 			.value.update =3D {
- 				.new_hash =3D { 3 },
--				.name =3D "jane doe",
--				.email =3D "jane@invalid",
--				.message =3D "message3",
-+				.name =3D (char *) "jane doe",
-+				.email =3D (char *) "jane@invalid",
-+				.message =3D (char *) "message3",
- 			}
- 		},
- 	};
- 	struct reftable_log_record r3[] =3D {
- 		{
--			.refname =3D "a",
-+			.refname =3D (char *) "a",
- 			.update_index =3D 2,
- 			.value_type =3D REFTABLE_LOG_DELETION,
- 		},
-@@ -406,7 +406,7 @@ static void test_default_write_opts(void)
- 		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
+ 		free_refs(remote_head);
+ 	} else {
+@@ -555,8 +558,9 @@ static struct ref *wanted_peer_refs(const struct ref *r=
+efs,
+ 	}
 =20
- 	struct reftable_ref_record rec =3D {
--		.refname =3D "master",
-+		.refname =3D (char *) "master",
- 		.update_index =3D 1,
- 	};
- 	int err;
-diff --git a/reftable/readwrite_test.c b/reftable/readwrite_test.c
-index a6dbd214c5..c55019232b 100644
---- a/reftable/readwrite_test.c
-+++ b/reftable/readwrite_test.c
-@@ -86,7 +86,7 @@ static void write_table(char ***names, struct strbuf *buf=
-, int N,
- 		log.update_index =3D update_index;
- 		log.value_type =3D REFTABLE_LOG_UPDATE;
- 		set_test_hash(log.value.update.new_hash, i);
--		log.value.update.message =3D "message";
-+		log.value.update.message =3D (char *) "message";
+ 	if (!option_mirror && !option_single_branch && !option_no_tags)
+-		get_fetch_map(refs, tag_refspec, &tail, 0);
++		get_fetch_map(refs, &tag_refspec, &tail, 0);
 =20
- 		n =3D reftable_writer_add_log(w, &log);
- 		EXPECT(n =3D=3D 0);
-@@ -118,15 +118,15 @@ static void test_log_buffer_size(void)
- 	int err;
- 	int i;
- 	struct reftable_log_record
--		log =3D { .refname =3D "refs/heads/master",
-+		log =3D { .refname =3D (char *) "refs/heads/master",
- 			.update_index =3D 0xa,
- 			.value_type =3D REFTABLE_LOG_UPDATE,
- 			.value =3D { .update =3D {
--					   .name =3D "Han-Wen Nienhuys",
--					   .email =3D "hanwen@google.com",
-+					   .name =3D (char *) "Han-Wen Nienhuys",
-+					   .email =3D (char *) "hanwen@google.com",
- 					   .tz_offset =3D 100,
- 					   .time =3D 0x5e430672,
--					   .message =3D "commit: 9\n",
-+					   .message =3D (char *) "commit: 9\n",
- 				   } } };
- 	struct reftable_writer *w =3D
- 		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
-@@ -156,15 +156,15 @@ static void test_log_overflow(void)
- 	};
- 	int err;
- 	struct reftable_log_record log =3D {
--		.refname =3D "refs/heads/master",
-+		.refname =3D (char *) "refs/heads/master",
- 		.update_index =3D 0xa,
- 		.value_type =3D REFTABLE_LOG_UPDATE,
- 		.value =3D {
- 			.update =3D {
- 				.old_hash =3D { 1 },
- 				.new_hash =3D { 2 },
--				.name =3D "Han-Wen Nienhuys",
--				.email =3D "hanwen@google.com",
-+				.name =3D (char *) "Han-Wen Nienhuys",
-+				.email =3D (char *) "hanwen@google.com",
- 				.tz_offset =3D 100,
- 				.time =3D 0x5e430672,
- 				.message =3D msg,
-@@ -293,14 +293,14 @@ static void test_log_zlib_corruption(void)
- 	char message[100] =3D { 0 };
- 	int err, i, n;
- 	struct reftable_log_record log =3D {
--		.refname =3D "refname",
-+		.refname =3D (char *) "refname",
- 		.value_type =3D REFTABLE_LOG_UPDATE,
- 		.value =3D {
- 			.update =3D {
- 				.new_hash =3D { 1 },
- 				.old_hash =3D { 2 },
--				.name =3D "My Name",
--				.email =3D "myname@invalid",
-+				.name =3D (char *) "My Name",
-+				.email =3D (char *) "myname@invalid",
- 				.message =3D message,
- 			},
- 		},
-@@ -728,7 +728,7 @@ static void test_write_empty_key(void)
- 	struct reftable_writer *w =3D
- 		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
- 	struct reftable_ref_record ref =3D {
--		.refname =3D "",
-+		.refname =3D (char *) "",
- 		.update_index =3D 1,
- 		.value_type =3D REFTABLE_REF_DELETION,
- 	};
-@@ -752,18 +752,18 @@ static void test_write_key_order(void)
- 		reftable_new_writer(&strbuf_add_void, &noop_flush, &buf, &opts);
- 	struct reftable_ref_record refs[2] =3D {
- 		{
--			.refname =3D "b",
-+			.refname =3D (char *) "b",
- 			.update_index =3D 1,
- 			.value_type =3D REFTABLE_REF_SYMREF,
- 			.value =3D {
--				.symref =3D "target",
-+				.symref =3D (char *) "target",
- 			},
- 		}, {
--			.refname =3D "a",
-+			.refname =3D (char *) "a",
- 			.update_index =3D 1,
- 			.value_type =3D REFTABLE_REF_SYMREF,
- 			.value =3D {
--				.symref =3D "target",
-+				.symref =3D (char *) "target",
- 			},
++	refspec_item_clear(&tag_refspec);
+ 	return local_refs;
+ }
+=20
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 75255dc600..06b60867f5 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -582,11 +582,16 @@ static struct ref *get_ref_map(struct remote *remote,
  		}
- 	};
-diff --git a/reftable/stack_test.c b/reftable/stack_test.c
-index 07d89b45da..4abf92636d 100644
---- a/reftable/stack_test.c
-+++ b/reftable/stack_test.c
-@@ -156,10 +156,10 @@ static void test_reftable_stack_add_one(void)
- 	struct reftable_stack *st =3D NULL;
- 	int err;
- 	struct reftable_ref_record ref =3D {
--		.refname =3D "HEAD",
-+		.refname =3D (char *) "HEAD",
- 		.update_index =3D 1,
- 		.value_type =3D REFTABLE_REF_SYMREF,
--		.value.symref =3D "master",
-+		.value.symref =3D (char *) "master",
- 	};
- 	struct reftable_ref_record dest =3D { NULL };
- 	struct stat stat_result =3D { 0 };
-@@ -216,16 +216,16 @@ static void test_reftable_stack_uptodate(void)
+ 	}
 =20
- 	int err;
- 	struct reftable_ref_record ref1 =3D {
--		.refname =3D "HEAD",
-+		.refname =3D (char *) "HEAD",
- 		.update_index =3D 1,
- 		.value_type =3D REFTABLE_REF_SYMREF,
--		.value.symref =3D "master",
-+		.value.symref =3D (char *) "master",
- 	};
- 	struct reftable_ref_record ref2 =3D {
--		.refname =3D "branch2",
-+		.refname =3D (char *) "branch2",
- 		.update_index =3D 2,
- 		.value_type =3D REFTABLE_REF_SYMREF,
--		.value.symref =3D "master",
-+		.value.symref =3D (char *) "master",
- 	};
+-	if (tags =3D=3D TAGS_SET)
++	if (tags =3D=3D TAGS_SET) {
++		struct refspec_item tag_refspec;
++
+ 		/* also fetch all tags */
+-		get_fetch_map(remote_refs, tag_refspec, &tail, 0);
+-	else if (tags =3D=3D TAGS_DEFAULT && *autotags)
++		refspec_item_init(&tag_refspec, TAG_REFSPEC, 0);
++		get_fetch_map(remote_refs, &tag_refspec, &tail, 0);
++		refspec_item_clear(&tag_refspec);
++	} else if (tags =3D=3D TAGS_DEFAULT && *autotags) {
+ 		find_non_local_tags(remote_refs, NULL, &ref_map, &tail);
++	}
 =20
+ 	/* Now append any refs to be updated opportunistically: */
+ 	*tail =3D orefs;
+diff --git a/refspec.c b/refspec.c
+index d60932f4de..1df5de6c2f 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -7,19 +7,6 @@
+ #include "refspec.h"
+ #include "strbuf.h"
 =20
-@@ -264,10 +264,10 @@ static void test_reftable_stack_transaction_api(void)
- 	struct reftable_addition *add =3D NULL;
+-static struct refspec_item s_tag_refspec =3D {
+-	.force =3D 0,
+-	.pattern =3D 1,
+-	.matching =3D 0,
+-	.exact_sha1 =3D 0,
+-	.negative =3D 0,
+-	.src =3D "refs/tags/*",
+-	.dst =3D "refs/tags/*",
+-};
+-
+-/* See TAG_REFSPEC for the string version */
+-const struct refspec_item *tag_refspec =3D &s_tag_refspec;
+-
+ /*
+  * Parses the provided refspec 'refspec' and populates the refspec_item 'i=
+tem'.
+  * Returns 1 if successful and 0 if the refspec is invalid.
+diff --git a/refspec.h b/refspec.h
+index 8c0c446993..754be45cee 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -2,7 +2,6 @@
+ #define REFSPEC_H
 =20
- 	struct reftable_ref_record ref =3D {
--		.refname =3D "HEAD",
-+		.refname =3D (char *) "HEAD",
- 		.update_index =3D 1,
- 		.value_type =3D REFTABLE_REF_SYMREF,
--		.value.symref =3D "master",
-+		.value.symref =3D (char *) "master",
- 	};
- 	struct reftable_ref_record dest =3D { NULL };
+ #define TAG_REFSPEC "refs/tags/*:refs/tags/*"
+-extern const struct refspec_item *tag_refspec;
 =20
-@@ -313,7 +313,7 @@ static void test_reftable_stack_transaction_api_perform=
-s_auto_compaction(void)
- 		struct reftable_ref_record ref =3D {
- 			.update_index =3D reftable_stack_next_update_index(st),
- 			.value_type =3D REFTABLE_REF_SYMREF,
--			.value.symref =3D "master",
-+			.value.symref =3D (char *) "master",
- 		};
- 		char name[100];
-=20
-@@ -356,7 +356,7 @@ static void test_reftable_stack_transaction_api_perform=
-s_auto_compaction(void)
- static void test_reftable_stack_auto_compaction_fails_gracefully(void)
- {
- 	struct reftable_ref_record ref =3D {
--		.refname =3D "refs/heads/master",
-+		.refname =3D (char *) "refs/heads/master",
- 		.update_index =3D 1,
- 		.value_type =3D REFTABLE_REF_VAL1,
- 		.value.val1 =3D {0x01},
-@@ -409,16 +409,16 @@ static void test_reftable_stack_update_index_check(vo=
-id)
- 	struct reftable_stack *st =3D NULL;
- 	int err;
- 	struct reftable_ref_record ref1 =3D {
--		.refname =3D "name1",
-+		.refname =3D (char *) "name1",
- 		.update_index =3D 1,
- 		.value_type =3D REFTABLE_REF_SYMREF,
--		.value.symref =3D "master",
-+		.value.symref =3D (char *) "master",
- 	};
- 	struct reftable_ref_record ref2 =3D {
--		.refname =3D "name2",
-+		.refname =3D (char *) "name2",
- 		.update_index =3D 1,
- 		.value_type =3D REFTABLE_REF_SYMREF,
--		.value.symref =3D "master",
-+		.value.symref =3D (char *) "master",
- 	};
-=20
- 	err =3D reftable_new_stack(&st, dir, cfg);
-@@ -561,7 +561,7 @@ static void test_reftable_stack_log_normalize(void)
- 	struct reftable_stack *st =3D NULL;
- 	char *dir =3D get_tmp_dir(__LINE__);
- 	struct reftable_log_record input =3D {
--		.refname =3D "branch",
-+		.refname =3D (char *) "branch",
- 		.update_index =3D 1,
- 		.value_type =3D REFTABLE_LOG_UPDATE,
- 		.value =3D {
-@@ -582,11 +582,11 @@ static void test_reftable_stack_log_normalize(void)
- 	err =3D reftable_new_stack(&st, dir, cfg);
- 	EXPECT_ERR(err);
-=20
--	input.value.update.message =3D "one\ntwo";
-+	input.value.update.message =3D (char *) "one\ntwo";
- 	err =3D reftable_stack_add(st, &write_test_log, &arg);
- 	EXPECT(err =3D=3D REFTABLE_API_ERROR);
-=20
--	input.value.update.message =3D "one";
-+	input.value.update.message =3D (char *) "one";
- 	err =3D reftable_stack_add(st, &write_test_log, &arg);
- 	EXPECT_ERR(err);
-=20
-@@ -594,7 +594,7 @@ static void test_reftable_stack_log_normalize(void)
- 	EXPECT_ERR(err);
- 	EXPECT(0 =3D=3D strcmp(dest.value.update.message, "one\n"));
-=20
--	input.value.update.message =3D "two\n";
-+	input.value.update.message =3D (char *) "two\n";
- 	arg.update_index =3D 2;
- 	err =3D reftable_stack_add(st, &write_test_log, &arg);
- 	EXPECT_ERR(err);
-@@ -697,9 +697,9 @@ static void test_reftable_stack_hash_id(void)
- 	int err;
-=20
- 	struct reftable_ref_record ref =3D {
--		.refname =3D "master",
-+		.refname =3D (char *) "master",
- 		.value_type =3D REFTABLE_REF_SYMREF,
--		.value.symref =3D "target",
-+		.value.symref =3D (char *) "target",
- 		.update_index =3D 1,
- 	};
- 	struct reftable_write_options cfg32 =3D { .hash_id =3D GIT_SHA256_FORMAT_=
-ID };
-@@ -879,7 +879,7 @@ static void test_reftable_stack_auto_compaction(void)
- 			.refname =3D name,
- 			.update_index =3D reftable_stack_next_update_index(st),
- 			.value_type =3D REFTABLE_REF_SYMREF,
--			.value.symref =3D "master",
-+			.value.symref =3D (char *) "master",
- 		};
- 		snprintf(name, sizeof(name), "branch%04d", i);
-=20
-@@ -913,7 +913,7 @@ static void test_reftable_stack_add_performs_auto_compa=
-ction(void)
- 		struct reftable_ref_record ref =3D {
- 			.update_index =3D reftable_stack_next_update_index(st),
- 			.value_type =3D REFTABLE_REF_SYMREF,
--			.value.symref =3D "master",
-+			.value.symref =3D (char *) "master",
- 		};
-=20
- 		/*
-@@ -964,7 +964,7 @@ static void test_reftable_stack_compaction_concurrent(v=
-oid)
- 			.refname =3D name,
- 			.update_index =3D reftable_stack_next_update_index(st1),
- 			.value_type =3D REFTABLE_REF_SYMREF,
--			.value.symref =3D "master",
-+			.value.symref =3D (char *) "master",
- 		};
- 		snprintf(name, sizeof(name), "branch%04d", i);
-=20
-@@ -1014,7 +1014,7 @@ static void test_reftable_stack_compaction_concurrent=
-_clean(void)
- 			.refname =3D name,
- 			.update_index =3D reftable_stack_next_update_index(st1),
- 			.value_type =3D REFTABLE_REF_SYMREF,
--			.value.symref =3D "master",
-+			.value.symref =3D (char *) "master",
- 		};
- 		snprintf(name, sizeof(name), "branch%04d", i);
-=20
+ /**
+  * A struct refspec_item holds the parsed interpretation of a refspec.  If=
+ it
 --=20
 2.45.1.410.g58bac47f8e.dirty
 
 
---u67BTvcuDeG3mLPX
+--2MCqc/RQ33AOp5be
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZfCnUACgkQVbJhu7ck
-PpT0fA//Q1kKkjqxBcrr9laixxrGSY4IZcWJzrc5fC9h5dqzlDHYq2W11L5zlPjD
-Qe66QU/KN4LsIjkA9YsEnqy1I20gIc/oiMK79AoFO9VxRhQu8ckdMd5bNZzBOfZ/
-E5tw/4C2YOOgFaK4e7JAfwywCad5iAnI2pjrLFhu29vpWMoNE6XVlqI7aKBEZxAn
-aLptyhgkdUTpRlLfUeIrRcdz9CmY70jfzLqfGZW0vRrKjXHDY6HpFTX1zBrbC76H
-lKpyY+wjL+Sb9v8adu8C8SmqZaFK5DdH105Uqtm0tQjOSShCNbiALu3DjZj1A7cb
-udhO5+TqZwkO11Hfm71PEX9dmF02JHIB5+90l4vOz5ZaFlwZZCBCuGkPE3GHMFa7
-Z6tqkZS3IuA2G2y2j7ojuPIe95PGKX/lzZmWcpaolCMAtSBl6z+L96EAbuyw3FzX
-+uQMxL91Y/ipN6AQm3q/xZJ+pWE3K1hLgqmHfQSppagTTrEV64gOSaY61N67CWwj
-O7QBBwzF3lvaGSkaJOGLnDntE2yQFQFbiSxoy4omaO1K2V3ab6a4oIx0rmZ4Ndh+
-WkXXzQkk3b0sXaWwNph9oMEGcWQr8lESngLhChWc/Vy9r2aVRvs/A9fRRYyRGnVT
-3V4rYYKwTMGzL9b1mv3UexQAQeQbRTu//gsjt388FJSX8+gfmu0=
-=8LP4
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZfCnkACgkQVbJhu7ck
+PpTUVg//T3R3VXEtHqURtWmUyeuQCYPhKU+Rz9vnylZ/Dg4R1ogrdVqaxY/kyxO3
+xJVOdan59kiOzrC+dNq8Nr50syVpSmsl2dnrIW6okEhvn7INUO1Ut4h47P6FMvjZ
+tGKL0TiEbFhjKqXfNHcECUPnB0C68OWysGLXu9J1grx7DAs6EfkdSz55ZhcOtSLl
+V350GrDBg1jF5Dvuacns6+oMAv1gxMxw1iX89n64FjnHz5bTyjGg3EMYzROIBnb3
+yA9J0nITgMt48wg4UgyNVxZiTLFrK3W87vupwsiESNaCgJMvJWbO+gVOgs5J5NOP
+cImXWAL+HQVEDunH/1A9r/U+smSWHQ5XtqG1dBXCjcZC7NGSZxyAwpx7sEa85q/r
+pSrXug4VMdhSO7lls86LxTIsSLTAFP43pFCrW8Wh7oeOYKXdJfgSTLyZND86YZjv
+uLM7h7Jm3RjV2CfRPpZo87CtzfMbXdRlXbim5LzrNJq+jpWfM+PVyWzoZib+IxXF
+ZtX4jXJDdZK2wIuhg0KOLe/fyl5jP587cCJm4q0+ltQrbeI/lF2qF1fdBvFEyyx4
+r+12ROUqUPTue4FGpNteWjb3Ah0x9T8HrbsG3t3uHsKmPT8laXQTX/C7Mhszgx8x
+fYjQLaH4PjFgwxTytuVdKbKQcEed7/bZ170hVYNuEnq8dobhgec=
+=aChB
 -----END PGP SIGNATURE-----
 
---u67BTvcuDeG3mLPX--
+--2MCqc/RQ33AOp5be--
