@@ -1,80 +1,82 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B260145358
-	for <git@vger.kernel.org>; Tue,  4 Jun 2024 12:36:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05474145358
+	for <git@vger.kernel.org>; Tue,  4 Jun 2024 12:36:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717504617; cv=none; b=EB4rfJxtowH4I+HMnNm6JMdP5qCsAdarRVfEXHObUV/8ClmisO9DlkE9Q3qK/eRQq0XsOG9H1keOWLTz27IYl2YYCXRczbfKj9UedILaYXU3mj9sbWM/BxrWzwDLpyUE0z+xmCwVfy9fX0yaOO6hz1B1zIZvQfi2UV/ACT8bMS8=
+	t=1717504622; cv=none; b=B4S+BpxWPGMxZR32A8EUVUY8jEdvqTfGF2BN9BrlfNpVAE6jIZwyQfrTXSCo3iNX+SNz4/VkIytZkUQGN2ZqZymhSi5owCmyZT5JRY3HhditEc0riC24BXrn9LuHrxm0JOHRK6Nev9Mw0GZLIT0HR8NpYLg4gT2Ww0ZLdTLy/i0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717504617; c=relaxed/simple;
-	bh=xMj7O7GIhxTKmUgSduztaApochuuJntz3ndkquso5vk=;
+	s=arc-20240116; t=1717504622; c=relaxed/simple;
+	bh=z0GglyE/cOv2odQUupE6yGHWLJwPV6oumS3mSZU1L1A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nK0ObfHAL5EshHwKe//ztrFxsU+8gjXguAz8pp9jDm9oluC6uBgzu4TtblpEvPPoN/RbLpFpZuHhs33MgT3VVD6YHaPbSTXrjHSM1Ff8BL6vy3GmrfMv+DgOLlhZlUPvn4690a4VJnBxkL9ye5NhzJepRhllFYldP6KQo4b+Y/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jOPhm2Fy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XFoxvvlE; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=SZwikAhMH9Rohr+ciYhVbXQgko+0R/gpaNoKlj08RRvCCxyNPVBTKxKnGS+j90v1Y5G6aP8V6ckrMGN+WG8iDvbZMzvK6kslwHMO2v05Zqz74VyJQ4HB6sjKvPAlhIEXcvpa4Xh4P3sbyd+go6Mxc9ZhkX8YKr3ec8o5wEQEVkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DBMl8nri; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UxgSXhVQ; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jOPhm2Fy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XFoxvvlE"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id A69391380157;
-	Tue,  4 Jun 2024 08:36:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DBMl8nri";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UxgSXhVQ"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 1855711400BC;
+	Tue,  4 Jun 2024 08:36:59 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Tue, 04 Jun 2024 08:36:54 -0400
+  by compute1.internal (MEProxy); Tue, 04 Jun 2024 08:36:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717504614; x=1717591014; bh=26PFkAs14H
-	R8FbRuUbUpOftc51YwWNodHWqn1E8rTnY=; b=jOPhm2FynU9xv7jBfeTQiobaEY
-	Y4KnNF4mhmrIQY7iZBZq6nELT1PkYFpSPW56EqkZbCSny/lUsURH1A5agNzNRdjQ
-	uKJuBb/Z0iMD2xCtzR2G9BmJlfnPT6ogcgP9qzxkSAraGWSMmoQsWk7nf6YERh8A
-	jX4argAHFl0UAoU0zhDgKTcQI8I7urSW2mHvuiN+nv+phyT7yzNuilA8qqubXKHE
-	ABknT4dWlKMQlOcbXUOxmBX2ekqFLAGl6tf6qtltvzXyX2O3R7yspD8Ay1TOkRxS
-	17Z3hK1p86VnfWa81xzw6hiBF24ilSRVKVPVyWAXHQ/02CGWnsdIDjthh1hA==
+	:subject:to:to; s=fm1; t=1717504619; x=1717591019; bh=gUbVyMPkYO
+	K4kN7yywi++0Irrbu3R0A5zB7Smz+l2ZU=; b=DBMl8nriyPVWXWtWyScL24ZhA7
+	EUNSrYolLgiVY/pDvXe5SE314BCSw2BNxyidWYg6HiRUDlWzvfj2uwoKPLAbQ6jd
+	+qlBncFICWjSnCrvVGnhVrnS0jbnj3TJlx0UzOxPAwIE6uDAdgIlj5namioa1tTZ
+	uLHJziPB4KsXNGxyneRzVmPTO3OPIPlfdL/YMXSxBl+0Hwqs5C6MuZtDC+AHXAHD
+	+rhKzTVWFeg8m6jSONnwK6B20bXG4S1KFvKr8wwEWsDv+AWUr605GxVOJD9Sh7BY
+	U0xf4tPODsOy0SwjO8aMixMiU/XCknnGvlnyMP6d+szDRzwHN85eLodMvV7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717504614; x=1717591014; bh=26PFkAs14HR8FbRuUbUpOftc51Yw
-	WNodHWqn1E8rTnY=; b=XFoxvvlEZYFkvSBb9qbIBNZ9pTfZ1fJym6HhbRgwUqkl
-	awIMHykTW8uAsPFHY4AR5YdKKlBSdHptVuzl9oV3IEHbY12DxMZ9V6fryZi4Wf2R
-	Rdi9BdIkZAI6gy7Ndjr3bHmQZEU7WF4YP8Fs4DLfa5b8mvQCD3THcSzjNiXnYku+
-	akUvwejaZSF0XsxRriO7p4UeLE6ZAofjjGkHSWd7vf9CphDgAL1UDb8wXavw1HsS
-	vYYiyuETWxMreAzRxNPRDoeZXJx6l5fvw0qJsil1ZNCassJRJy4YNF9/5cXdKaqJ
-	7iWB758wJm+5iskmnt5rWThV+8pnsDUJjHB28FS9vw==
-X-ME-Sender: <xms:ZgpfZjzxIpZJDiOmiLCcp78K_Coed_qCHHBQP5XdAI9aGNDvVwvSfg>
-    <xme:ZgpfZrS64gRwUIas8aDPQv8hZnyU5EOMQJ3bJC8v-QOMHFrkrOFr_ADg7ZcyM5g0p
-    3G4rXIoNBa7_IJrZw>
-X-ME-Received: <xmr:ZgpfZtWOl_URRv4p6gmniIbfKXgHGU1Pjs4x7xBsCL0jo7RIsSSPWOaHSEWwKKNS-ty0vI6-PWj0b5vfP2RBzQ-GUcOI--5uRoZibjhs0ceNTk7X>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelgedghedtucetufdoteggodetrfdotf
+	fm1; t=1717504619; x=1717591019; bh=gUbVyMPkYOK4kN7yywi++0Irrbu3
+	R0A5zB7Smz+l2ZU=; b=UxgSXhVQ00DnLycgZ5SQBFd47e2kVFoDTeQp10bBWgPV
+	ZDZeeFD49GAJDEjcsag7wMn2V6gkwXR/T3CnQLKc+Y+mcxZY7uFUXsISyacv0ibv
+	K6Gy2PXfbJaGJCS9Adp7TR0tBnExLlwqd1sk6dulAp8rJKvG6FN2Z1FO5J4fyhhr
+	pt/6okP7cs8oGjJuzp3PDDgmB2ybDdmVnPtAwx1j4wRoWMawNr4KUs69jRGDqp6U
+	cbUOEmKOPwozzbqMmL5wC0Btx294QXX7Dshvl0677IhjWXgrlPZElTzmGLmUglcC
+	A5dHIYtAsolzy767oZlY2oVzHYahgdiptnX/cKz8Kg==
+X-ME-Sender: <xms:agpfZmc9Ts6Kh-9uO_ECJ2Srq_Vx9FJRG08nVr_5bjdSMZDvck765w>
+    <xme:agpfZgPLZFe1xdtXiJvO9Ju4Dv5Vd7OdUvaRkpbv-QSHoFoPjsa-XJ91lbZUc3UGa
+    Y-eBwvEUO5SiT65_A>
+X-ME-Received: <xmr:agpfZnh6c3z-uJSMUUdAqJwVzAV1PcH2i9sZfdJXNztwzF4f1Zkw5WMow74ynblKOCgzytNmV3JaGRIlugOngdLtHjo-chtwbim9W16iKRT4smXx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelgedggeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnheptdekfeegieeiudfgvdegfeffgfdtheegfeeiteffkeelteegffdvhfevjedujedt
-    necuffhomhgrihhnpehmrghkrdguvghvnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:ZgpfZtiaGmPAsS8IWHw0acCGnwDPk54rUIgfwtUdxEhrwjWQYe8kQg>
-    <xmx:ZgpfZlDC1WSBlQAOgNwDg8FhoDqAWBGXVN9paAMTsISy7Q4JZlbQFw>
-    <xmx:ZgpfZmI4Pv4qfGnHQWTvFdnn7ptLJdPs2arskP8UhHEVjxkUDrOsSQ>
-    <xmx:ZgpfZkCfG5CS2SF0TyiUplVPfPk3aYkGu0hdYijLM-84CK2RZVxs8g>
-    <xmx:ZgpfZg_WqdTKbRVlgBwDtbel2PZWy0RIkET8A0stxBiliLfqQL22rqWe>
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:agpfZj9htvikrcCBoYEu-6wdOci0tnMTh6dn1GbkE21nxtelxjazhA>
+    <xmx:agpfZivGXUUonIIWho3eEi5lgY8H1ag3Gb59HySUnCNWDs1fMhO11Q>
+    <xmx:agpfZqGegkM-oWEXCBkZ5WcTbti_iXd9iZT0I-OsouHQii5Qorm78w>
+    <xmx:agpfZhPCK2Ye9d4fDjYGPXNkfKX6RsX6ZCdw50KuxA8pr1EMWpTcHA>
+    <xmx:awpfZkJg3oeq4PNyrrKgSxsXPbDTXiTUxoAebNslYOZpL0mn43e0WrBb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Jun 2024 08:36:53 -0400 (EDT)
+ 4 Jun 2024 08:36:57 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 1ad3025f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Jun 2024 12:36:26 +0000 (UTC)
-Date: Tue, 4 Jun 2024 14:36:50 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id f7a1f91a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Jun 2024 12:36:31 +0000 (UTC)
+Date: Tue, 4 Jun 2024 14:36:55 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v4 00/27] Compile with `-Wwrite-strings`
-Message-ID: <cover.1717504517.git.ps@pks.im>
+Subject: [PATCH v4 01/27] global: improve const correctness when assigning
+ string constants
+Message-ID: <e01fde88fe35d6da358af5689320db50750c29dc.1717504517.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
+ <cover.1717504517.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,283 +84,898 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Ij068NsybJfffPyB"
+	protocol="application/pgp-signature"; boundary="AVAOLgEisDNxmyIu"
 Content-Disposition: inline
-In-Reply-To: <cover.1716983704.git.ps@pks.im>
+In-Reply-To: <cover.1717504517.git.ps@pks.im>
 
 
---Ij068NsybJfffPyB
+--AVAOLgEisDNxmyIu
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+We're about to enable `-Wwrite-strings`, which changes the type of
+string constants to `const char[]`. Fix various sites where we assign
+such constants to non-const variables.
 
-this is another minor reroll of my patch series that prepares the code
-base to compile with `-Wwrite-strings`.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ builtin/bisect.c             |  3 ++-
+ builtin/blame.c              |  2 +-
+ builtin/bugreport.c          |  2 +-
+ builtin/check-ignore.c       |  4 +--
+ builtin/clone.c              |  6 ++---
+ builtin/commit.c             |  6 ++---
+ builtin/diagnose.c           |  2 +-
+ builtin/log.c                |  2 +-
+ builtin/mailsplit.c          |  4 +--
+ builtin/pull.c               | 52 ++++++++++++++++++------------------
+ builtin/receive-pack.c       |  4 +--
+ builtin/revert.c             |  2 +-
+ compat/regex/regcomp.c       |  2 +-
+ diff.c                       |  4 +--
+ diffcore-rename.c            |  6 ++---
+ fmt-merge-msg.c              |  2 +-
+ fsck.c                       |  2 +-
+ fsck.h                       |  2 +-
+ gpg-interface.c              |  2 +-
+ http-backend.c               |  2 +-
+ imap-send.c                  |  6 ++---
+ pretty.c                     |  2 +-
+ refs.c                       |  2 +-
+ refs.h                       |  2 +-
+ reftable/basics.c            | 15 +++++------
+ reftable/basics.h            |  4 +--
+ reftable/basics_test.c       |  4 +--
+ reftable/record.c            |  6 ++---
+ reftable/stack.c             | 10 ++++---
+ reftable/stack_test.c        |  8 +++---
+ run-command.c                |  2 +-
+ t/helper/test-hashmap.c      |  3 ++-
+ t/helper/test-json-writer.c  | 10 +++----
+ t/helper/test-regex.c        |  4 +--
+ t/helper/test-rot13-filter.c |  5 ++--
+ t/unit-tests/t-strbuf.c      | 10 ++++---
+ trailer.c                    |  2 +-
+ wt-status.c                  |  2 +-
+ 38 files changed, 106 insertions(+), 102 deletions(-)
 
-There are only some small changes compared to v3:
-
-  - Fix typos in some commit messages.
-
-  - Fix accidental conversion of "." to "" in basename/dirname
-    compatibility code. Also, remove the unused variable.
-
-Thanks for your reviews!
-
-Patrick
-
-Patrick Steinhardt (27):
-  global: improve const correctness when assigning string constants
-  global: convert intentionally-leaking config strings to consts
-  refs/reftable: stop micro-optimizing refname allocations on copy
-  reftable: cast away constness when assigning constants to records
-  refspec: remove global tag refspec structure
-  builtin/remote: cast away constness in `get_head_names()`
-  diff: cast string constant in `fill_textconv()`
-  line-log: stop assigning string constant to file parent buffer
-  line-log: always allocate the output prefix
-  entry: refactor how we remove items for delayed checkouts
-  ident: add casts for fallback name and GECOS
-  object-file: mark cached object buffers as const
-  object-file: make `buf` parameter of `index_mem()` a constant
-  pretty: add casts for decoration option pointers
-  compat/win32: fix const-correctness with string constants
-  http: do not assign string constant to non-const field
-  parse-options: cast long name for OPTION_ALIAS
-  send-pack: always allocate receive status
-  remote-curl: avoid assigning string constant to non-const variable
-  revision: always store allocated strings in output encoding
-  mailmap: always store allocated strings in mailmap blob
-  imap-send: drop global `imap_server_conf` variable
-  imap-send: fix leaking memory in `imap_server_conf`
-  builtin/rebase: do not assign default backend to non-constant field
-  builtin/rebase: always store allocated string in `options.strategy`
-  builtin/merge: always store allocated strings in `pull_twohead`
-  config.mak.dev: enable `-Wwrite-strings` warning
-
- builtin/bisect.c             |   3 +-
- builtin/blame.c              |   2 +-
- builtin/bugreport.c          |   2 +-
- builtin/check-ignore.c       |   4 +-
- builtin/clone.c              |  14 ++--
- builtin/commit.c             |   6 +-
- builtin/diagnose.c           |   2 +-
- builtin/fetch.c              |  11 ++-
- builtin/log.c                |   2 +-
- builtin/mailsplit.c          |   4 +-
- builtin/merge.c              |  18 +++--
- builtin/pull.c               |  52 +++++++-------
- builtin/rebase.c             |  81 ++++++++++++----------
- builtin/receive-pack.c       |   4 +-
- builtin/remote.c             |  12 ++--
- builtin/revert.c             |   2 +-
- builtin/send-pack.c          |   2 +
- compat/basename.c            |  16 ++++-
- compat/mingw.c               |  28 ++++----
- compat/regex/regcomp.c       |   2 +-
- compat/winansi.c             |   2 +-
- config.mak.dev               |   1 +
- diff.c                       |   6 +-
- diffcore-rename.c            |   6 +-
- entry.c                      |  14 ++--
- fmt-merge-msg.c              |   2 +-
- fsck.c                       |   2 +-
- fsck.h                       |   2 +-
- gpg-interface.c              |   6 +-
- http-backend.c               |   2 +-
- http.c                       |   5 +-
- ident.c                      |   4 +-
- imap-send.c                  | 130 ++++++++++++++++++++---------------
- line-log.c                   |  22 +++---
- mailmap.c                    |   2 +-
- merge-ll.c                   |  11 ++-
- object-file.c                |  23 ++++---
- parse-options.h              |   2 +-
- pretty.c                     |   6 +-
- refs.c                       |   2 +-
- refs.h                       |   2 +-
- refs/reftable-backend.c      |  28 ++++----
- refspec.c                    |  13 ----
- refspec.h                    |   1 -
- reftable/basics.c            |  15 ++--
- reftable/basics.h            |   4 +-
- reftable/basics_test.c       |   4 +-
- reftable/block_test.c        |   2 +-
- reftable/merged_test.c       |  44 ++++++------
- reftable/readwrite_test.c    |  32 ++++-----
- reftable/record.c            |   6 +-
- reftable/stack.c             |  10 +--
- reftable/stack_test.c        |  56 +++++++--------
- remote-curl.c                |  53 +++++++-------
- revision.c                   |   3 +-
- run-command.c                |   2 +-
- send-pack.c                  |   2 +-
- t/helper/test-hashmap.c      |   3 +-
- t/helper/test-json-writer.c  |  10 +--
- t/helper/test-regex.c        |   4 +-
- t/helper/test-rot13-filter.c |   5 +-
- t/t3900-i18n-commit.sh       |   1 +
- t/t3901-i18n-patch.sh        |   1 +
- t/unit-tests/t-strbuf.c      |  10 +--
- trailer.c                    |   2 +-
- userdiff.c                   |  10 +--
- userdiff.h                   |  12 ++--
- wt-status.c                  |   2 +-
- 68 files changed, 468 insertions(+), 386 deletions(-)
-
-Range-diff against v3:
- 1:  e01fde88fe =3D  1:  e01fde88fe global: improve const correctness when =
-assigning string constants
- 2:  92cb0b28c6 =3D  2:  92cb0b28c6 global: convert intentionally-leaking c=
-onfig strings to consts
- 3:  085d90c8b6 !  3:  379145478c refs/reftable: stop micro-optimizing refn=
-ame allocations on copy
-    @@ Commit message
-         refs/reftable: stop micro-optimizing refname allocations on copy
-    =20
-         When copying refs, we execute `write_copy_table()` to write the new
-    -    table. As the names arge given to use via `arg->newname` and
-    +    table. As the names are given to us via `arg->newname` and
-         `arg->oldname`, respectively, we optimize away some allocations by
-    -    assigning those fields to the reftable records we are about to wri=
-te.
-    -    This requires us to cast the input to `char *` pointers as they ar=
-e in
-    -    fact constant strings. Later on, we then unset the refname for all=
- of
-    -    the records before calling `reftable_log_record_release()` on them.
-    +    assigning those fields to the reftable records we are about to wri=
-te
-    +    directly, without duplicating them. This requires us to cast the i=
-nput
-    +    to `char *` pointers as they are in fact constant strings. Later o=
-n, we
-    +    then unset the refname for all of the records before calling
-    +    `reftable_log_record_release()` on them.
-    =20
-         We also do this when assigning the "HEAD" constant, but here we do=
- not
-         cast because its type is `char[]` by default. It's about to be tur=
-ned
- 4:  8692d9d9af =3D  4:  d0a2a2f6c5 reftable: cast away constness when assi=
-gning constants to records
- 5:  db4d062014 !  5:  ead27d3d97 refspec: remove global tag refspec struct=
-ure
-    @@ Commit message
-         refspec: remove global tag refspec structure
-    =20
-         We have a global tag refspec structure that is used by both git-cl=
-one(1)
-    -    and git-fetch(1). Initialization fo the structure will break once =
-we
-    +    and git-fetch(1). Initialization of the structure will break once =
-we
-         enable `-Wwrite-strings`, even though the breakage is harmless. Wh=
-ile we
-         could just add casts, the structure isn't really required in the f=
-irst
-         place as we can simply initialize the structures at the respective
- 6:  6a3c8d351e =3D  6:  7cb5df9182 builtin/remote: cast away constness in =
-`get_head_names()`
- 7:  750429472a =3D  7:  6e631a9ea4 diff: cast string constant in `fill_tex=
-tconv()`
- 8:  cc8fa1896d =3D  8:  ac164651a3 line-log: stop assigning string constan=
-t to file parent buffer
- 9:  03dbdd235b =3D  9:  b717af02f0 line-log: always allocate the output pr=
-efix
-10:  6fcb7d6685 =3D 10:  b46dd3210d entry: refactor how we remove items for=
- delayed checkouts
-11:  81e20a7bb8 =3D 11:  030dbd0288 ident: add casts for fallback name and =
-GECOS
-12:  384b4c8967 =3D 12:  ecca8e973d object-file: mark cached object buffers=
- as const
-13:  a1e8e77641 =3D 13:  62f0e47f94 object-file: make `buf` parameter of `i=
-ndex_mem()` a constant
-14:  4d95abe9cc =3D 14:  e057ead2b4 pretty: add casts for decoration option=
- pointers
-15:  3d92528125 ! 15:  06b6120d26 compat/win32: fix const-correctness with =
-string constants
-    @@ Commit message
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    =20
-      ## compat/basename.c ##
-    -@@
-    - #include "../git-compat-util.h"
-    - #include "../strbuf.h"
-    -=20
-    -+static char current_directory[] =3D ".";
-    -+
-    - /* Adapted from libiberty's basename.c.  */
-    - char *gitbasename (char *path)
-    - {
-     @@ compat/basename.c: char *gitbasename (char *path)
-      		skip_dos_drive_prefix(&path);
-     =20
-    @@ compat/basename.c: char *gitbasename (char *path)
-     +		 * pointer to internal memory at times. The cast is a result of
-     +		 * that.
-     +		 */
-    -+		return (char *) "";
-    ++		return (char *) ".";
-     =20
-      	for (base =3D path; *path; path++) {
-      		if (!is_dir_sep(*path))
-    @@ compat/basename.c: char *gitdirname(char *path)
-     +		 * pointer to internal memory at times. The cast is a result of
-     +		 * that.
-     +		 */
-    -+		return (char *) "";
-    ++		return (char *) ".";
-     =20
-      	if ((dos_drive_prefix =3D skip_dos_drive_prefix(&p)) && !*p)
-      		goto dot;
-16:  8a98078439 =3D 16:  a8ef39d73d http: do not assign string constant to =
-non-const field
-17:  26c4c76c86 =3D 17:  9d596a07c5 parse-options: cast long name for OPTIO=
-N_ALIAS
-18:  e3227bd3f3 =3D 18:  4019b532f9 send-pack: always allocate receive stat=
-us
-19:  af82e49682 =3D 19:  f2f1ada143 remote-curl: avoid assigning string con=
-stant to non-const variable
-20:  077f10d0dc =3D 20:  27660b908c revision: always store allocated string=
-s in output encoding
-21:  fb240598b4 =3D 21:  ef43c1b18f mailmap: always store allocated strings=
- in mailmap blob
-22:  291030faa7 =3D 22:  0a69ce4b44 imap-send: drop global `imap_server_con=
-f` variable
-23:  9b376a313f =3D 23:  9ccafd286b imap-send: fix leaking memory in `imap_=
-server_conf`
-24:  0a84d66e68 =3D 24:  e19457d20c builtin/rebase: do not assign default b=
-ackend to non-constant field
-25:  5c8bee3695 =3D 25:  f548241960 builtin/rebase: always store allocated =
-string in `options.strategy`
-26:  84c0149c8f =3D 26:  78ac075644 builtin/merge: always store allocated s=
-trings in `pull_twohead`
-27:  3427547134 =3D 27:  0cd4ce07d8 config.mak.dev: enable `-Wwrite-strings=
-` warning
+diff --git a/builtin/bisect.c b/builtin/bisect.c
+index a58432b9d9..dabce9b542 100644
+--- a/builtin/bisect.c
++++ b/builtin/bisect.c
+@@ -262,7 +262,8 @@ static int bisect_reset(const char *commit)
+ 	return bisect_clean_state();
+ }
+=20
+-static void log_commit(FILE *fp, char *fmt, const char *state,
++static void log_commit(FILE *fp,
++		       const char *fmt, const char *state,
+ 		       struct commit *commit)
+ {
+ 	struct pretty_print_context pp =3D {0};
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 838cd476be..98c7629b6a 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -134,7 +134,7 @@ static void get_ac_line(const char *inbuf, const char *=
+what,
+ {
+ 	struct ident_split ident;
+ 	size_t len, maillen, namelen;
+-	char *tmp, *endp;
++	const char *tmp, *endp;
+ 	const char *namebuf, *mailbuf;
+=20
+ 	tmp =3D strstr(inbuf, what);
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index 25f860a0d9..b3cc77af53 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -107,7 +107,7 @@ int cmd_bugreport(int argc, const char **argv, const ch=
+ar *prefix)
+ 	struct tm tm;
+ 	enum diagnose_mode diagnose =3D DIAGNOSE_NONE;
+ 	char *option_output =3D NULL;
+-	char *option_suffix =3D "%Y-%m-%d-%H%M";
++	const char *option_suffix =3D "%Y-%m-%d-%H%M";
+ 	const char *user_relative_path =3D NULL;
+ 	char *prefixed_filename;
+ 	size_t output_path_len;
+diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
+index 6c43430ec4..2bda6a1d46 100644
+--- a/builtin/check-ignore.c
++++ b/builtin/check-ignore.c
+@@ -35,8 +35,8 @@ static const struct option check_ignore_options[] =3D {
+=20
+ static void output_pattern(const char *path, struct path_pattern *pattern)
+ {
+-	char *bang  =3D (pattern && pattern->flags & PATTERN_FLAG_NEGATIVE)  ? "!=
+" : "";
+-	char *slash =3D (pattern && pattern->flags & PATTERN_FLAG_MUSTBEDIR) ? "/=
+" : "";
++	const char *bang  =3D (pattern && pattern->flags & PATTERN_FLAG_NEGATIVE)=
+  ? "!" : "";
++	const char *slash =3D (pattern && pattern->flags & PATTERN_FLAG_MUSTBEDIR=
+) ? "/" : "";
+ 	if (!nul_term_line) {
+ 		if (!verbose) {
+ 			write_name_quoted(path, stdout, '\n');
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 23993b905b..92ab7d7165 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -71,7 +71,7 @@ static char *option_branch =3D NULL;
+ static struct string_list option_not =3D STRING_LIST_INIT_NODUP;
+ static const char *real_git_dir;
+ static const char *ref_format;
+-static char *option_upload_pack =3D "git-upload-pack";
++static const char *option_upload_pack =3D "git-upload-pack";
+ static int option_verbosity;
+ static int option_progress =3D -1;
+ static int option_sparse_checkout;
+@@ -177,8 +177,8 @@ static struct option builtin_clone_options[] =3D {
+=20
+ static const char *get_repo_path_1(struct strbuf *path, int *is_bundle)
+ {
+-	static char *suffix[] =3D { "/.git", "", ".git/.git", ".git" };
+-	static char *bundle_suffix[] =3D { ".bundle", "" };
++	static const char *suffix[] =3D { "/.git", "", ".git/.git", ".git" };
++	static const char *bundle_suffix[] =3D { ".bundle", "" };
+ 	size_t baselen =3D path->len;
+ 	struct stat st;
+ 	int i;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index f53e7e86ff..75c741173e 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -113,7 +113,7 @@ static char *template_file;
+  * the commit message and/or authorship.
+  */
+ static const char *author_message, *author_message_buffer;
+-static char *edit_message, *use_message;
++static const char *edit_message, *use_message;
+ static char *fixup_message, *fixup_commit, *squash_message;
+ static const char *fixup_prefix;
+ static int all, also, interactive, patch_interactive, only, amend, signoff;
+@@ -121,8 +121,8 @@ static int edit_flag =3D -1; /* unspecified */
+ static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorsh=
+ip;
+ static int config_commit_verbose =3D -1; /* unspecified */
+ static int no_post_rewrite, allow_empty_message, pathspec_file_nul;
+-static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ign=
+ored_arg;
+-static char *sign_commit, *pathspec_from_file;
++static const char *untracked_files_arg, *force_date, *ignore_submodule_arg=
+, *ignored_arg;
++static const char *sign_commit, *pathspec_from_file;
+ static struct strvec trailer_args =3D STRVEC_INIT;
+=20
+ /*
+diff --git a/builtin/diagnose.c b/builtin/diagnose.c
+index 4f22eb2b55..4857a4395b 100644
+--- a/builtin/diagnose.c
++++ b/builtin/diagnose.c
+@@ -18,7 +18,7 @@ int cmd_diagnose(int argc, const char **argv, const char =
+*prefix)
+ 	struct tm tm;
+ 	enum diagnose_mode mode =3D DIAGNOSE_STATS;
+ 	char *option_output =3D NULL;
+-	char *option_suffix =3D "%Y-%m-%d-%H%M";
++	const char *option_suffix =3D "%Y-%m-%d-%H%M";
+ 	char *prefixed_filename;
+=20
+ 	const struct option diagnose_options[] =3D {
+diff --git a/builtin/log.c b/builtin/log.c
+index 78a247d8a9..b8846a9458 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1283,7 +1283,7 @@ static void get_patch_ids(struct rev_info *rev, struc=
+t patch_ids *ids)
+ 	o2->flags =3D flags2;
+ }
+=20
+-static void gen_message_id(struct rev_info *info, char *base)
++static void gen_message_id(struct rev_info *info, const char *base)
+ {
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	strbuf_addf(&buf, "%s.%"PRItime".git.%s", base,
+diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
+index 3af9ddb8ae..fe6dbc5d05 100644
+--- a/builtin/mailsplit.c
++++ b/builtin/mailsplit.c
+@@ -113,8 +113,8 @@ static int populate_maildir_list(struct string_list *li=
+st, const char *path)
+ 	DIR *dir;
+ 	struct dirent *dent;
+ 	char *name =3D NULL;
+-	char *subs[] =3D { "cur", "new", NULL };
+-	char **sub;
++	const char *subs[] =3D { "cur", "new", NULL };
++	const char **sub;
+ 	int ret =3D -1;
+=20
+ 	for (sub =3D subs; *sub; ++sub) {
+diff --git a/builtin/pull.c b/builtin/pull.c
+index d622202bce..2d0429f14f 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -71,48 +71,48 @@ static const char * const pull_usage[] =3D {
+=20
+ /* Shared options */
+ static int opt_verbosity;
+-static char *opt_progress;
++static const char *opt_progress;
+ static int recurse_submodules =3D RECURSE_SUBMODULES_DEFAULT;
+ static int recurse_submodules_cli =3D RECURSE_SUBMODULES_DEFAULT;
+=20
+ /* Options passed to git-merge or git-rebase */
+ static enum rebase_type opt_rebase =3D -1;
+-static char *opt_diffstat;
+-static char *opt_log;
+-static char *opt_signoff;
+-static char *opt_squash;
+-static char *opt_commit;
+-static char *opt_edit;
+-static char *cleanup_arg;
+-static char *opt_ff;
+-static char *opt_verify_signatures;
+-static char *opt_verify;
++static const char *opt_diffstat;
++static const char *opt_log;
++static const char *opt_signoff;
++static const char *opt_squash;
++static const char *opt_commit;
++static const char *opt_edit;
++static const char *cleanup_arg;
++static const char *opt_ff;
++static const char *opt_verify_signatures;
++static const char *opt_verify;
+ static int opt_autostash =3D -1;
+ static int config_autostash;
+ static int check_trust_level =3D 1;
+ static struct strvec opt_strategies =3D STRVEC_INIT;
+ static struct strvec opt_strategy_opts =3D STRVEC_INIT;
+-static char *opt_gpg_sign;
++static const char *opt_gpg_sign;
+ static int opt_allow_unrelated_histories;
+=20
+ /* Options passed to git-fetch */
+-static char *opt_all;
+-static char *opt_append;
+-static char *opt_upload_pack;
++static const char *opt_all;
++static const char *opt_append;
++static const char *opt_upload_pack;
+ static int opt_force;
+-static char *opt_tags;
+-static char *opt_prune;
+-static char *max_children;
++static const char *opt_tags;
++static const char *opt_prune;
++static const char *max_children;
+ static int opt_dry_run;
+-static char *opt_keep;
+-static char *opt_depth;
+-static char *opt_unshallow;
+-static char *opt_update_shallow;
+-static char *opt_refmap;
+-static char *opt_ipv4;
+-static char *opt_ipv6;
++static const char *opt_keep;
++static const char *opt_depth;
++static const char *opt_unshallow;
++static const char *opt_update_shallow;
++static const char *opt_refmap;
++static const char *opt_ipv4;
++static const char *opt_ipv6;
+ static int opt_show_forced_updates =3D -1;
+-static char *set_upstream;
++static const char *set_upstream;
+ static struct strvec opt_fetch =3D STRVEC_INIT;
+=20
+ static struct option pull_options[] =3D {
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 01c1f04ece..c8d12ee0a7 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1249,7 +1249,7 @@ static int run_proc_receive_hook(struct command *comm=
+ands,
+ 	return code;
+ }
+=20
+-static char *refuse_unconfigured_deny_msg =3D
++static const char *refuse_unconfigured_deny_msg =3D
+ 	N_("By default, updating the current branch in a non-bare repository\n"
+ 	   "is denied, because it will make the index and work tree inconsistent\=
+n"
+ 	   "with what you pushed, and will require 'git reset --hard' to match\n"
+@@ -1269,7 +1269,7 @@ static void refuse_unconfigured_deny(void)
+ 	rp_error("%s", _(refuse_unconfigured_deny_msg));
+ }
+=20
+-static char *refuse_unconfigured_deny_delete_current_msg =3D
++static const char *refuse_unconfigured_deny_delete_current_msg =3D
+ 	N_("By default, deleting the current branch is denied, because the next\n"
+ 	   "'git clone' won't result in any file checked out, causing confusion.\=
+n"
+ 	   "\n"
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 53935d2c68..7bf2b4e11d 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -179,7 +179,7 @@ static int run_sequencer(int argc, const char **argv, c=
+onst char *prefix,
+=20
+ 	/* Check for incompatible command line arguments */
+ 	if (cmd) {
+-		char *this_operation;
++		const char *this_operation;
+ 		if (cmd =3D=3D 'q')
+ 			this_operation =3D "--quit";
+ 		else if (cmd =3D=3D 'c')
+diff --git a/compat/regex/regcomp.c b/compat/regex/regcomp.c
+index 2bc0f1187a..6c5d455e92 100644
+--- a/compat/regex/regcomp.c
++++ b/compat/regex/regcomp.c
+@@ -848,7 +848,7 @@ init_dfa (re_dfa_t *dfa, size_t pat_len)
+ {
+   unsigned int table_size;
+ #ifndef _LIBC
+-  char *codeset_name;
++  const char *codeset_name;
+ #endif
+=20
+   memset (dfa, '\0', sizeof (re_dfa_t));
+diff --git a/diff.c b/diff.c
+index e70301df76..ffd867ef6c 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3764,7 +3764,7 @@ static void builtin_diff(const char *name_a,
+ 	return;
+ }
+=20
+-static char *get_compact_summary(const struct diff_filepair *p, int is_ren=
+amed)
++static const char *get_compact_summary(const struct diff_filepair *p, int =
+is_renamed)
+ {
+ 	if (!is_renamed) {
+ 		if (p->status =3D=3D DIFF_STATUS_ADDED) {
+@@ -4076,7 +4076,7 @@ static int reuse_worktree_file(struct index_state *is=
+tate,
+ static int diff_populate_gitlink(struct diff_filespec *s, int size_only)
+ {
+ 	struct strbuf buf =3D STRBUF_INIT;
+-	char *dirty =3D "";
++	const char *dirty =3D "";
+=20
+ 	/* Are we looking at the work tree? */
+ 	if (s->dirty_submodule)
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 5a6e2bcac7..0e1adb87df 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -406,7 +406,7 @@ static const char *get_highest_rename_path(struct strin=
+tmap *counts)
+ 	return highest_destination_dir;
+ }
+=20
+-static char *UNKNOWN_DIR =3D "/";  /* placeholder -- short, illegal direct=
+ory */
++static const char *UNKNOWN_DIR =3D "/";  /* placeholder -- short, illegal =
+directory */
+=20
+ static int dir_rename_already_determinable(struct strintmap *counts)
+ {
+@@ -429,8 +429,8 @@ static int dir_rename_already_determinable(struct strin=
+tmap *counts)
+ }
+=20
+ static void increment_count(struct dir_rename_info *info,
+-			    char *old_dir,
+-			    char *new_dir)
++			    const char *old_dir,
++			    const char *new_dir)
+ {
+ 	struct strintmap *counts;
+ 	struct strmap_entry *e;
+diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+index 7d144b803a..5af63ab5ab 100644
+--- a/fmt-merge-msg.c
++++ b/fmt-merge-msg.c
+@@ -447,7 +447,7 @@ static void fmt_merge_msg_title(struct strbuf *out,
+ 				const char *current_branch)
+ {
+ 	int i =3D 0;
+-	char *sep =3D "";
++	const char *sep =3D "";
+=20
+ 	strbuf_addstr(out, "Merge ");
+ 	for (i =3D 0; i < srcs.nr; i++) {
+diff --git a/fsck.c b/fsck.c
+index 7dff41413e..61cd48aa25 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -1231,7 +1231,7 @@ int fsck_object(struct object *obj, void *data, unsig=
+ned long size,
+ }
+=20
+ int fsck_buffer(const struct object_id *oid, enum object_type type,
+-		void *data, unsigned long size,
++		const void *data, unsigned long size,
+ 		struct fsck_options *options)
+ {
+ 	if (type =3D=3D OBJ_BLOB)
+diff --git a/fsck.h b/fsck.h
+index 17fa2dda5d..4f0c4e6479 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -202,7 +202,7 @@ int fsck_object(struct object *obj, void *data, unsigne=
+d long size,
+  * struct.
+  */
+ int fsck_buffer(const struct object_id *oid, enum object_type,
+-		void *data, unsigned long size,
++		const void *data, unsigned long size,
+ 		struct fsck_options *options);
+=20
+ /*
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 5193223714..71a9382a61 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -727,7 +727,7 @@ static int git_gpg_config(const char *var, const char *=
+value,
+ 			  void *cb UNUSED)
+ {
+ 	struct gpg_format *fmt =3D NULL;
+-	char *fmtname =3D NULL;
++	const char *fmtname =3D NULL;
+ 	char *trust;
+ 	int ret;
+=20
+diff --git a/http-backend.c b/http-backend.c
+index 5b65287ac9..5b4dca65ed 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -753,7 +753,7 @@ static int bad_request(struct strbuf *hdr, const struct=
+ service_cmd *c)
+=20
+ int cmd_main(int argc UNUSED, const char **argv UNUSED)
+ {
+-	char *method =3D getenv("REQUEST_METHOD");
++	const char *method =3D getenv("REQUEST_METHOD");
+ 	const char *proto_header;
+ 	char *dir;
+ 	struct service_cmd *cmd =3D NULL;
+diff --git a/imap-send.c b/imap-send.c
+index a5d1510180..8b723b34a5 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1215,9 +1215,9 @@ static int imap_store_msg(struct imap_store *ctx, str=
+uct strbuf *msg)
+ static void wrap_in_html(struct strbuf *msg)
+ {
+ 	struct strbuf buf =3D STRBUF_INIT;
+-	static char *content_type =3D "Content-Type: text/html;\n";
+-	static char *pre_open =3D "<pre>\n";
+-	static char *pre_close =3D "</pre>\n";
++	static const char *content_type =3D "Content-Type: text/html;\n";
++	static const char *pre_open =3D "<pre>\n";
++	static const char *pre_close =3D "</pre>\n";
+ 	const char *body =3D strstr(msg->buf, "\n\n");
+=20
+ 	if (!body)
+diff --git a/pretty.c b/pretty.c
+index 22a81506b7..ec05db5655 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1325,7 +1325,7 @@ int format_set_trailers_options(struct process_traile=
+r_options *opts,
+ static size_t parse_describe_args(const char *start, struct strvec *args)
+ {
+ 	struct {
+-		char *name;
++		const char *name;
+ 		enum {
+ 			DESCRIBE_ARG_BOOL,
+ 			DESCRIBE_ARG_INTEGER,
+diff --git a/refs.c b/refs.c
+index 8260c27cde..292e8d947e 100644
+--- a/refs.c
++++ b/refs.c
+@@ -159,7 +159,7 @@ void update_ref_namespace(enum ref_namespace namespace,=
+ char *ref)
+ {
+ 	struct ref_namespace_info *info =3D &ref_namespace[namespace];
+ 	if (info->ref_updated)
+-		free(info->ref);
++		free((char *)info->ref);
+ 	info->ref =3D ref;
+ 	info->ref_updated =3D 1;
+ }
+diff --git a/refs.h b/refs.h
+index 34568ee1fb..923f751d18 100644
+--- a/refs.h
++++ b/refs.h
+@@ -975,7 +975,7 @@ struct ref_store *get_worktree_ref_store(const struct w=
+orktree *wt);
+  */
+=20
+ struct ref_namespace_info {
+-	char *ref;
++	const char *ref;
+ 	enum decoration_type decoration;
+=20
+ 	/*
+diff --git a/reftable/basics.c b/reftable/basics.c
+index fea711db7e..0058619ca6 100644
+--- a/reftable/basics.c
++++ b/reftable/basics.c
+@@ -67,9 +67,9 @@ void free_names(char **a)
+ 	reftable_free(a);
+ }
+=20
+-size_t names_length(char **names)
++size_t names_length(const char **names)
+ {
+-	char **p =3D names;
++	const char **p =3D names;
+ 	while (*p)
+ 		p++;
+ 	return p - names;
+@@ -102,15 +102,12 @@ void parse_names(char *buf, int size, char ***namesp)
+ 	*namesp =3D names;
+ }
+=20
+-int names_equal(char **a, char **b)
++int names_equal(const char **a, const char **b)
+ {
+-	int i =3D 0;
+-	for (; a[i] && b[i]; i++) {
+-		if (strcmp(a[i], b[i])) {
++	size_t i =3D 0;
++	for (; a[i] && b[i]; i++)
++		if (strcmp(a[i], b[i]))
+ 			return 0;
+-		}
+-	}
+-
+ 	return a[i] =3D=3D b[i];
+ }
+=20
+diff --git a/reftable/basics.h b/reftable/basics.h
+index 523ecd5307..c8fec68d4e 100644
+--- a/reftable/basics.h
++++ b/reftable/basics.h
+@@ -42,10 +42,10 @@ void free_names(char **a);
+ void parse_names(char *buf, int size, char ***namesp);
+=20
+ /* compares two NULL-terminated arrays of strings. */
+-int names_equal(char **a, char **b);
++int names_equal(const char **a, const char **b);
+=20
+ /* returns the array size of a NULL-terminated array of strings. */
+-size_t names_length(char **names);
++size_t names_length(const char **names);
+=20
+ /* Allocation routines; they invoke the functions set through
+  * reftable_set_alloc() */
+diff --git a/reftable/basics_test.c b/reftable/basics_test.c
+index 997c4d9e01..13bc761817 100644
+--- a/reftable/basics_test.c
++++ b/reftable/basics_test.c
+@@ -58,8 +58,8 @@ static void test_binsearch(void)
+=20
+ static void test_names_length(void)
+ {
+-	char *a[] =3D { "a", "b", NULL };
+-	EXPECT(names_length(a) =3D=3D 2);
++	const char *names[] =3D { "a", "b", NULL };
++	EXPECT(names_length(names) =3D=3D 2);
+ }
+=20
+ static void test_parse_names_normal(void)
+diff --git a/reftable/record.c b/reftable/record.c
+index 5506f3e913..a2cba5ef74 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -116,7 +116,7 @@ static int decode_string(struct strbuf *dest, struct st=
+ring_view in)
+ 	return start_len - in.len;
+ }
+=20
+-static int encode_string(char *str, struct string_view s)
++static int encode_string(const char *str, struct string_view s)
+ {
+ 	struct string_view start =3D s;
+ 	int l =3D strlen(str);
+@@ -969,9 +969,9 @@ static int reftable_log_record_decode(void *rec, struct=
+ strbuf key,
+ 	return REFTABLE_FORMAT_ERROR;
+ }
+=20
+-static int null_streq(char *a, char *b)
++static int null_streq(const char *a, const char *b)
+ {
+-	char *empty =3D "";
++	const char *empty =3D "";
+ 	if (!a)
+ 		a =3D empty;
+=20
+diff --git a/reftable/stack.c b/reftable/stack.c
+index a59ebe038d..09549c51c9 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -204,7 +204,8 @@ static struct reftable_reader **stack_copy_readers(stru=
+ct reftable_stack *st,
+ 	return cur;
+ }
+=20
+-static int reftable_stack_reload_once(struct reftable_stack *st, char **na=
+mes,
++static int reftable_stack_reload_once(struct reftable_stack *st,
++				      const char **names,
+ 				      int reuse_open)
+ {
+ 	size_t cur_len =3D !st->merged ? 0 : st->merged->stack_len;
+@@ -222,7 +223,7 @@ static int reftable_stack_reload_once(struct reftable_s=
+tack *st, char **names,
+=20
+ 	while (*names) {
+ 		struct reftable_reader *rd =3D NULL;
+-		char *name =3D *names++;
++		const char *name =3D *names++;
+=20
+ 		/* this is linear; we assume compaction keeps the number of
+ 		   tables under control so this is not quadratic. */
+@@ -354,7 +355,7 @@ static int reftable_stack_reload_maybe_reuse(struct ref=
+table_stack *st,
+ 				goto out;
+ 		}
+=20
+-		err =3D reftable_stack_reload_once(st, names, reuse_open);
++		err =3D reftable_stack_reload_once(st, (const char **) names, reuse_open=
+);
+ 		if (!err)
+ 			break;
+ 		if (err !=3D REFTABLE_NOT_EXIST_ERROR)
+@@ -368,7 +369,8 @@ static int reftable_stack_reload_maybe_reuse(struct ref=
+table_stack *st,
+ 		err =3D read_lines(st->list_file, &names_after);
+ 		if (err < 0)
+ 			goto out;
+-		if (names_equal(names_after, names)) {
++		if (names_equal((const char **) names_after,
++				(const char **) names)) {
+ 			err =3D REFTABLE_NOT_EXIST_ERROR;
+ 			goto out;
+ 		}
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index 7889f818d1..07d89b45da 100644
+--- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -83,7 +83,7 @@ static void test_read_file(void)
+ 	char out[1024] =3D "line1\n\nline2\nline3";
+ 	int n, err;
+ 	char **names =3D NULL;
+-	char *want[] =3D { "line1", "line2", "line3" };
++	const char *want[] =3D { "line1", "line2", "line3" };
+ 	int i =3D 0;
+=20
+ 	EXPECT(fd > 0);
+@@ -116,9 +116,9 @@ static void test_parse_names(void)
+=20
+ static void test_names_equal(void)
+ {
+-	char *a[] =3D { "a", "b", "c", NULL };
+-	char *b[] =3D { "a", "b", "d", NULL };
+-	char *c[] =3D { "a", "b", NULL };
++	const char *a[] =3D { "a", "b", "c", NULL };
++	const char *b[] =3D { "a", "b", "d", NULL };
++	const char *c[] =3D { "a", "b", NULL };
+=20
+ 	EXPECT(names_equal(a, a));
+ 	EXPECT(!names_equal(a, b));
+diff --git a/run-command.c b/run-command.c
+index 1b821042b4..7600531fb6 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -663,7 +663,7 @@ int start_command(struct child_process *cmd)
+ 	int need_in, need_out, need_err;
+ 	int fdin[2], fdout[2], fderr[2];
+ 	int failed_errno;
+-	char *str;
++	const char *str;
+=20
+ 	/*
+ 	 * In case of errors we must keep the promise to close FDs
+diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
+index 0eb0b3d49c..2912899558 100644
+--- a/t/helper/test-hashmap.c
++++ b/t/helper/test-hashmap.c
+@@ -36,7 +36,8 @@ static int test_entry_cmp(const void *cmp_data,
+ }
+=20
+ static struct test_entry *alloc_test_entry(unsigned int hash,
+-					   char *key, char *value)
++					   const char *key,
++					   const char *value)
+ {
+ 	size_t klen =3D strlen(key);
+ 	size_t vlen =3D strlen(value);
+diff --git a/t/helper/test-json-writer.c b/t/helper/test-json-writer.c
+index afe393f597..ed52eb76bf 100644
+--- a/t/helper/test-json-writer.c
++++ b/t/helper/test-json-writer.c
+@@ -174,7 +174,7 @@ static void make_arr4(int pretty)
+ 	jw_end(&arr4);
+ }
+=20
+-static char *expect_nest1 =3D
++static const char *expect_nest1 =3D
+ 	"{\"obj1\":{\"a\":\"abc\",\"b\":42,\"c\":true},\"arr1\":[\"abc\",42,true]=
+}";
+=20
+ static struct json_writer nest1 =3D JSON_WRITER_INIT;
+@@ -195,10 +195,10 @@ static void make_nest1(int pretty)
+ 	jw_release(&arr1);
+ }
+=20
+-static char *expect_inline1 =3D
++static const char *expect_inline1 =3D
+ 	"{\"obj1\":{\"a\":\"abc\",\"b\":42,\"c\":true},\"arr1\":[\"abc\",42,true]=
+}";
+=20
+-static char *pretty_inline1 =3D
++static const char *pretty_inline1 =3D
+ 	("{\n"
+ 	 "  \"obj1\": {\n"
+ 	 "    \"a\": \"abc\",\n"
+@@ -236,10 +236,10 @@ static void make_inline1(int pretty)
+ 	jw_end(&inline1);
+ }
+=20
+-static char *expect_inline2 =3D
++static const char *expect_inline2 =3D
+ 	"[[1,2],[3,4],{\"a\":\"abc\"}]";
+=20
+-static char *pretty_inline2 =3D
++static const char *pretty_inline2 =3D
+ 	("[\n"
+ 	 "  [\n"
+ 	 "    1,\n"
+diff --git a/t/helper/test-regex.c b/t/helper/test-regex.c
+index 80042eafc2..366bd70976 100644
+--- a/t/helper/test-regex.c
++++ b/t/helper/test-regex.c
+@@ -20,8 +20,8 @@ static struct reg_flag reg_flags[] =3D {
+=20
+ static int test_regex_bug(void)
+ {
+-	char *pat =3D "[^=3D{} \t]+";
+-	char *str =3D "=3D{}\nfred";
++	const char *pat =3D "[^=3D{} \t]+";
++	const char *str =3D "=3D{}\nfred";
+ 	regex_t r;
+ 	regmatch_t m[1];
+=20
+diff --git a/t/helper/test-rot13-filter.c b/t/helper/test-rot13-filter.c
+index f8d564c622..7e1d9e0ee4 100644
+--- a/t/helper/test-rot13-filter.c
++++ b/t/helper/test-rot13-filter.c
+@@ -136,7 +136,7 @@ static void free_delay_entries(void)
+ 	strmap_clear(&delay, 0);
+ }
+=20
+-static void add_delay_entry(char *pathname, int count, int requested)
++static void add_delay_entry(const char *pathname, int count, int requested)
+ {
+ 	struct delay_entry *entry =3D xcalloc(1, sizeof(*entry));
+ 	entry->count =3D count;
+@@ -189,7 +189,8 @@ static void reply_list_available_blobs_cmd(void)
+ static void command_loop(void)
+ {
+ 	for (;;) {
+-		char *buf, *output;
++		char *buf;
++		const char *output;
+ 		char *pathname;
+ 		struct delay_entry *entry;
+ 		struct strbuf input =3D STRBUF_INIT;
+diff --git a/t/unit-tests/t-strbuf.c b/t/unit-tests/t-strbuf.c
+index de434a4441..6027dafef7 100644
+--- a/t/unit-tests/t-strbuf.c
++++ b/t/unit-tests/t-strbuf.c
+@@ -2,7 +2,8 @@
+ #include "strbuf.h"
+=20
+ /* wrapper that supplies tests with an empty, initialized strbuf */
+-static void setup(void (*f)(struct strbuf*, void*), void *data)
++static void setup(void (*f)(struct strbuf*, const void*),
++		  const void *data)
+ {
+ 	struct strbuf buf =3D STRBUF_INIT;
+=20
+@@ -13,7 +14,8 @@ static void setup(void (*f)(struct strbuf*, void*), void =
+*data)
+ }
+=20
+ /* wrapper that supplies tests with a populated, initialized strbuf */
+-static void setup_populated(void (*f)(struct strbuf*, void*), char *init_s=
+tr, void *data)
++static void setup_populated(void (*f)(struct strbuf*, const void*),
++			    const char *init_str, const void *data)
+ {
+ 	struct strbuf buf =3D STRBUF_INIT;
+=20
+@@ -64,7 +66,7 @@ static void t_dynamic_init(void)
+ 	strbuf_release(&buf);
+ }
+=20
+-static void t_addch(struct strbuf *buf, void *data)
++static void t_addch(struct strbuf *buf, const void *data)
+ {
+ 	const char *p_ch =3D data;
+ 	const char ch =3D *p_ch;
+@@ -83,7 +85,7 @@ static void t_addch(struct strbuf *buf, void *data)
+ 	check_char(buf->buf[buf->len], =3D=3D, '\0');
+ }
+=20
+-static void t_addstr(struct strbuf *buf, void *data)
++static void t_addstr(struct strbuf *buf, const void *data)
+ {
+ 	const char *text =3D data;
+ 	size_t len =3D strlen(text);
+diff --git a/trailer.c b/trailer.c
+index 2bcb9ba8f7..72e5136c73 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -63,7 +63,7 @@ struct arg_item {
+=20
+ static LIST_HEAD(conf_head);
+=20
+-static char *separators =3D ":";
++static const char *separators =3D ":";
+=20
+ static int configured;
+=20
+diff --git a/wt-status.c b/wt-status.c
+index ff4be071ca..7912545e4e 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -2408,7 +2408,7 @@ static void wt_porcelain_v2_print_unmerged_entry(
+ 		int mode;
+ 		struct object_id oid;
+ 	} stages[3];
+-	char *key;
++	const char *key;
+ 	char submodule_token[5];
+ 	char unmerged_prefix =3D 'u';
+ 	char eol_char =3D s->null_termination ? '\0' : '\n';
 --=20
 2.45.1.410.g58bac47f8e.dirty
 
 
---Ij068NsybJfffPyB
+--AVAOLgEisDNxmyIu
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZfCmEACgkQVbJhu7ck
-PpRVhQ//ZeJ6A3pDZtASzfDDqc2nL2BEVmZOvbENkVGicYQsKdI8syh+YPqaVFlS
-Wm5TuZ5ewBahOdMXZ2axtIG4QELiIji9+8+O8TJPImL2k1edKhNCHY01p8f+t3uf
-l2JPdzIImY7wTzQRdI3exIleHVck0NZ9IwS8ZprNe9PrUaRCEkADB84VDmkzEklJ
-xGAEqWOa8YA8k/r8wl99b3Bj+jfmL+4n5/bv5lgGwigcxFDeRtUdugvgdMxnt7D1
-Oh0wEA7UiIih3kjjk/VJ/NKYCDBWTciErhzx2ERGOd/MOCuOhubv5QcZkVKfmpdV
-lYCXW0c7dtoClEEQDk2vhqt6vv6oHkNUooFgPsRPQgVmZi+bH/HPBlVoN2TsFPox
-VZi6Vfy9JnL9I18u3/foji/cc99A/E5mIqpbu7L95aVEJpMtuzzhnf7/4XDXm/xI
-Aq+vqy4bzNVybfQ/jjIIzR/a9/yXy9s/QHv5s+PT9cWvrvO4xwawCq88skc91sOm
-AAK1nlR50NmmkdjRElk4bPF7u0gkLTlFK11tA/wli436kKsKR3Gzu2W/SJU2tlSZ
-ZXg7vRIdC4ydX9V5I7ulbgDC126furstaMC/5jTy09Fqo0FPCbJkoqBvAd+NskjB
-oUoZPjzP/mfd3lGpPdEsedSJOYzunjsEFVKu1aHUYKu+thgKd6I=
-=BuyV
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZfCmYACgkQVbJhu7ck
+PpQeNQ/9G7rNOwMyt/SIhGhEQQ3gkMQBavPBdHmi51PeC7eCGu702/p+7j3WQhpO
+dxZbeDiNJeMJw6+ZrGvOmoq9SXfL9rJH3twVNYLZ9jvTZdIIxI+XNqTSQaDRY7tC
+iK+lMWJl+tWhden23irgoV63bXFiPN9MXnkIRyxiz5JoDSmkQac1+ms74gVsm5YB
+whRwWuH3Kqy4Np9jGWuW20b2NbbrUqP6XsxBI8Bx4i5Dr9EgBCZhtsxpHk8XNFZF
+FKaqjDggzeUG3/0ddFTx2RqJXiQAcF/ovEZ249AbqX8NPvcWppHdL6lyvNMfGfuV
+5fv0sO8HkRiaOm2lWouwHsmnpHl1S3bkwT5LPRMRQ2IC606CcFIRK+yy5F10j6gK
+D6Gj+nqMS8nP5z+wCMI5T/dbvFEQF+r8UwhtG0cFxbAbXJ7Pwt2zdBBeFp7LMzjN
+40X+C9iXrX9ZiE+TplQ1mkpEWHeeHpVKALIpB6igT+T7suXK/rxq5pJxLIvRWl+c
+dy+0z4+fNy0DiMXWfFewPkG8CRnwWRjCx8hLMBWqq0GOKT20xVhPS+1aYQpK/Swy
+QYQzK+Ra1SkCnLQhUmMSw/WMF1a0LebLAxg/58DQqQRch1uKG4Qe9Ygj+ufiYvm2
+L9Nhuw4QoZCSHroVTgaAE9s/4IkOVHB/dDUCGuZcUZc4uCp0SC8=
+=c7bp
 -----END PGP SIGNATURE-----
 
---Ij068NsybJfffPyB--
+--AVAOLgEisDNxmyIu--
