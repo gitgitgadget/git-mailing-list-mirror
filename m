@@ -1,59 +1,51 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8300A13A268
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 17:27:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A9F107B6
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 17:33:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717608453; cv=none; b=Mh9pBvr1xK7kR/zJU4obrp/Wd5r7NyxvX0L71ZCB82hCH7ABTTYHH20BPUGTxTD/JpVt19YwmiHzM7fssaEWGoeWaYZTtSZ8z7Y1upbNzxv7yO3ac+8SqvY3OFR4Xc7KJ1o2LhMNqxOpXjCOtc6sTjqHaviegfgvqI2JkW2hfko=
+	t=1717608786; cv=none; b=fTJAq5pLgrh36eUT35TPPQMpFKA549P2zTS+egnFEcUgFPwcvsheAfivxqNnhIMtKO/oEHCPprbmc9fL1viDuGvpVhPmEVjOys49pbHVpz+1vMypklFQAj3NV6wOSg5hp5LNC7um5YEDgBeWJOjsZ5OfSHiuRxxRnChvenPUnVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717608453; c=relaxed/simple;
-	bh=pjnLtOgu63UgZp7itubM1b6xfOjp6MMALDKswkRzaVI=;
+	s=arc-20240116; t=1717608786; c=relaxed/simple;
+	bh=ZIFLuGtJw8H1RSdimIUiFjmgnlkef5HsCkSpBEpeCwI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZxBjm0WAppBWa5NQyjkiDxdko/tdv5gzVe3XlSn8weEtolGJTbPWtP1OZ8CnmdRTInH4DDho+bY12TR3xQEV5WsUMTqqRFCNXEQkdnIge+wfox58qmd30pMSsr4nUGeYnEIvfUFB2OjwSfhCJkYckOIPyGbEwk0BEWQ8Dcm8d8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y8Hl5aoo; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=WMP2J5MiVDzR8bIegesixLxniubwM9VkesmerQY2oQEEy6gbh17pkfTpOvb0oYJiMR0vxGx/VpQ7a04FbTJSiyxehf7a0J8L3gWtlHajUn7Y6S51QcjhZcnWqyTA6MLHerAV/MhGrOlqRJLkrmYVex39ZKfTJQmniUqgUPI3ma0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AOd5H0xo; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y8Hl5aoo"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 037551B61A;
-	Wed,  5 Jun 2024 13:27:32 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AOd5H0xo"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0C1731E891;
+	Wed,  5 Jun 2024 13:33:01 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=pjnLtOgu63UgZp7itubM1b6xfOjp6MMALDKswk
-	RzaVI=; b=Y8Hl5aooh8JQrXses1mDWd+7mLWVgKq3loVA2tpr4jCfFz03Fc4QoZ
-	ZHQLLHvvaJrQU+HfGdNXi/GsfkTODSd9oVIwhvG48xuctvS4rK2tShxR+vUo7fsE
-	3OeG8n1AxBtZyI3P3M6HBfPsdebdLwqOLQEn7/eFlXAji9jHlhQSQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id EF1211B619;
-	Wed,  5 Jun 2024 13:27:31 -0400 (EDT)
+	:content-type; s=sasl; bh=ZIFLuGtJw8H1RSdimIUiFjmgnlkef5HsCkSpBE
+	peCwI=; b=AOd5H0xoylspZ3auayM4DUl5KWrNYJDNmkVVa7G4iXgu4GRriPHJ2L
+	O7IxQuq/RNPgvikxx/XYmBOFzqbQydne9865ZqMikACjXXtmSdJCUCaXRuq/LOhd
+	EIrAxzYh02QJ51suKCTCIsS9Ss3CrPxZzMMQvA9pxh55NRzfGlYg8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D12381E890;
+	Wed,  5 Jun 2024 13:33:00 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 183E81B616;
-	Wed,  5 Jun 2024 13:27:29 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E0BB61E88F;
+	Wed,  5 Jun 2024 13:32:59 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: darcy <acednes@gmail.com>,  phillip.wood@dunelm.org.uk,  darcy via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Patrick
- Steinhardt <ps@pks.im>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] date: detect underflow when parsing dates with
- positive timezone offset
-In-Reply-To: <7ae05b6a-fb63-4ec7-8006-e968862cc5c7@gmail.com> (Phillip Wood's
-	message of "Wed, 5 Jun 2024 14:10:23 +0100")
-References: <pull.1726.git.git.1716801427015.gitgitgadget@gmail.com>
-	<pull.1726.v2.git.git.1717369608923.gitgitgadget@gmail.com>
-	<xmqqwmn66zzc.fsf@gitster.g>
-	<2d771a72-3021-46db-ac32-e008a7ace34c@gmail.com>
-	<67c23773-21a4-4ad5-9b98-5e44578166dd@gmail.com>
-	<4574e410-ca1a-495f-9835-14ee3fa454a1@gmail.com>
-	<7ae05b6a-fb63-4ec7-8006-e968862cc5c7@gmail.com>
-Date: Wed, 05 Jun 2024 10:27:27 -0700
-Message-ID: <xmqq1q5bti4g.fsf@gitster.g>
+To: Danoloan <danolo@danoloan.es>
+Cc: git@vger.kernel.org
+Subject: Re: Git submodule recursive update not syncing submodule URLs makes
+ the operation fail for commits updating the URLs
+In-Reply-To: <7869f213fe59fa80b9e8331dde89e795bd8cd5d4.camel@danoloan.es>
+	(Danoloan's message of "Wed, 05 Jun 2024 16:02:10 +0200")
+References: <7869f213fe59fa80b9e8331dde89e795bd8cd5d4.camel@danoloan.es>
+Date: Wed, 05 Jun 2024 10:32:58 -0700
+Message-ID: <xmqqtti7s3at.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -63,18 +55,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- E23BA91E-2360-11EF-A53C-ACC938F0AE34-77302942!pb-smtp20.pobox.com
+ A76B6C56-2361-11EF-BBBF-6488940A682E-77302942!pb-smtp2.pobox.com
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Danoloan <danolo@danoloan.es> writes:
 
-> Thanks for taking a closer look, I wasn't aware of that. Reading
-> Peff's reply it seems like timestamp is actually unsigned and as we
-> limit the maximum year to 2099 it seems unlikely we'll overflow from
-> too larger date after all.
+> the old one. This is typical when the new URL may be a fork or a mirror
+> in another server.
 
-Thanks all.
+Isn't the flip side of the same coin that you can sneak in a change
+to .gitmodules in the superproject ("hey I have this neat fork of
+the superproject at this other URL, please pull from me"), so that
+it points at a malicious URL?  If the end-user is not given a chance
+to inspect where the URL moved to and agree (or disagree) to switch
+to that other URL, your "recursive" update will end up fetching from
+an unverified URL into the submodule without anybody watching, no?
 
-I haven't seen one question I posed answered, though.  Has
-https://git.github.io/htmldocs/SubmittingPatches.html#real-name
-been followed in this patch when signing off the patch?
+So, I suspect that it is working as a security measure that it does
+not blindly sync.
 
+Yes "git clone --recursive" may be looser, but I would actually
+consider use of "--recursive" there as a security lapse.
