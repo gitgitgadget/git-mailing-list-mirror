@@ -1,77 +1,79 @@
 Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E870A38FB9
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 05:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E4F10E5
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 05:17:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717564622; cv=none; b=goZWsA3c6vvdjebHgR+jnQ0CsKt7VsGAzbK8Bly1tc3Hb5OPj/ALt3//EppwShxq8piI+OwtgWwUH+jpDVVQBWjYZi2YcvJ2s+R+lEgah30s1ggs9//1Hkncs8eXL5IbEsGYf/g/00ifw51drJOseq3i5igOvXyhy8TjvsI+0hE=
+	t=1717564627; cv=none; b=THK5G2lC/NLRo5ysdQEXriXjfh4yhXD0xH1w8Om99EAH1yaF3JX32vmYT0mCR4qaofPSHR9duKpLDuWAy7jxF/Bfte+VuomxNS/pMzbf4MwzuHrX2OhzAJnAT4Nb6qVehwqbWesXOs8SFQ0T/jxi/c3go9SEgMcUsEV2SdKrH5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717564622; c=relaxed/simple;
-	bh=BcQ7n7Pzdtjy+QYm0zHhDUEDxUgmMBXGevCfs7EQ7Qk=;
+	s=arc-20240116; t=1717564627; c=relaxed/simple;
+	bh=8MiUU1COJE7M2Fvw/aMpxPChx+aRB/+11iWxHrfmT08=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nVGZSeGh0A0qORnljGL+UDOuUU/NOrE5jbEWfK9HslZwgjx8iTbBm3p1aHM9m54mkh6B7bMcAEs0/Hi5pzbTzvV3BJf9d/1JAVqopbzJtU6Nw8GquRir8qoCnwOFwku5+8Fcf7Ro0R3AgXc3T81RXKrSveN1f7KYJSZ1DBzzuN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b746AjML; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y9dUS12l; arc=none smtp.client-ip=64.147.123.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=DgBK2IwjdRmGjh2sgbiQabut+cl9JM3MAyTi4WJKUSzf5FbsTv+HmkzJJGYbAkibDDM+/zC1fzLDw34m/zaouBEONmcQcImWTvRrTOMiRnwJLQ23SfYmZPRsfk2pjBwyausmLRed11bMe5OFdo+MzfsW249nrLMnOoz3kHEJLiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DrTXfx3q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LtoxyJMd; arc=none smtp.client-ip=64.147.123.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b746AjML";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y9dUS12l"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DrTXfx3q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LtoxyJMd"
 Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 116DB1800144
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 01:17:00 -0400 (EDT)
+	by mailfhigh.west.internal (Postfix) with ESMTP id 74C811800092
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 01:17:04 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Wed, 05 Jun 2024 01:17:00 -0400
+  by compute5.internal (MEProxy); Wed, 05 Jun 2024 01:17:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717564619; x=1717651019; bh=qThwoCcfSB
-	BESCRhBYwfYjpmcra+ZGjIYFsspLpQWhA=; b=b746AjMLAJzjdvYEkaH/S9hqrN
-	k/nt47XlqDk5qJ0vfqORxYV5BQrR1Bhoh1l5G6rsIlMStL7kbjl5+SS21PX0lnfe
-	WoJRgrFn0jOqK9i3u15QvSTwcypDZU1mGbuBsqax9i+iNvB9/VLY+7U0WNtzp4qd
-	vs4jxi/jHFECkqf+MltM2gxsCdigSy6FQ/LLSBNs8TtDUqfNolS2d02DcIpiv2Yk
-	rCVtye6aeQ2TVdAZ0fI4MaxgI3v53nuC5USH/M+m1Hs8sC1Ro7Na5qdzcVlG70G5
-	dweRWnu2TduF+ra4mdkA0Uh4vE3SFX6CI3YfQI2LCUv0X3Mu9TZ0tf0paIqQ==
+	:subject:to:to; s=fm1; t=1717564624; x=1717651024; bh=vyf1K9R1M/
+	tf/CxWEQ/FtENYi7h/77Kw6HGRez1rs7o=; b=DrTXfx3qvK0VsjkTchnyayt5Va
+	bQ5A/hq/OegI4ovVDs8+RuOZO45p5hneVjt1IVXKPCzLQ97ND20lBS0ddt/TgU+L
+	aUtqT0Fxvl/NtEMP+t5s19Ur3VtCvqCjl9hKO2qgdJs5pJ7HYMGetRSn7/IKPRya
+	GBwR3VNCE+y64zla1Dg0nj1bkT2/ZTVgSalz2JcC15yCGj3E/BXnXqEtj9NWwKEG
+	fGc1plCO2Z64QKIXqOHg+dOssPG+Oxm12n95NWoamVC7KTu6vpcgApLV9MIqNbI1
+	rKfNKdiLh37pi6xLhhL7fic5QgzXRJ1+5S+KabVX1ajrGkBHKpPYGmXSozVw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717564619; x=1717651019; bh=qThwoCcfSBBESCRhBYwfYjpmcra+
-	ZGjIYFsspLpQWhA=; b=Y9dUS12lCRI2Ttw20GU8477XRUcBwEy95DqAtbQzy6MB
-	fn3hircpt+QODCxohQ4dH1gCOUVuP3W0Mz5J2xFhHR9CCN/y5kfROEqv4igE7XZP
-	Oq+52TFipnM0qzUKj730C/TcW8Tj9GkYq3pU6Vnhc/WWRqdz0MWrNHO1OdhtLYhe
-	4ISMNOTJsWPZxw0vdmtkGalgOubh1ThS/saeU3MOSyQdRhqlDrOt0dcVfbujubxZ
-	8BCEWUFPIpZs4hu3EbXkOKgTQTasU9WD8QKR+6EZ3NEDZUYurdQ+/D3403FooYUz
-	xIA+FW+o4epcxQU8m6p/UDCYdurj9IQWPLBUmieEog==
-X-ME-Sender: <xms:y_RfZqzInsf5V-OPXhi0xg9nyVwDC7V5yDXE5wZ4U7mKQeZ7PHnT3w>
-    <xme:y_RfZmQVbBXUKbcbp4sYSVMyb4ZciCcET72JWAGfgz4QHbG4IncDXkHaPGBFBa5Ix
-    cNqmUeHt0NbmtAuxg>
-X-ME-Received: <xmr:y_RfZsVLzaFo5TlsXOmHDbrChfUZ8q4eIeYlS_CgCudOSoYS6HJWZ9JuS4ny36l4kotxID8ne5buZhxeM2CPem1qWZmkBMtsNUPu8rXBG91VE5fHGqo>
+	fm1; t=1717564624; x=1717651024; bh=vyf1K9R1M/tf/CxWEQ/FtENYi7h/
+	77Kw6HGRez1rs7o=; b=LtoxyJMdI+tT5WkZbxHbYr4cync2xDWojWO7cwHIEOX7
+	mVeEGo847fp+pfowZhql3/er//NP7nWi0+6rPh1CBJJrbtoUEFXU036TDB/C/can
+	u8Q1CnxLzsEKuYj5o8gMHaJOZYL19P00xR9wqmQWb5n1i+PZ0HO+KzTeBPsrBxTh
+	03WqX1jelgV3LqcC5D1UFIXWM2MZ+7e7y4+iJYXI6EgKbC/ik3RQa5iYERcvKjXL
+	M4Xp9UDAWc2wL8ElXqWdoFWM+GAW8yWg5s9RCy2ljoUGvsBqYuIOFeyoSFBVrD4J
+	K+LIinG/+AlIWMZeSci/7dJ1hdU3TXVcqo1wd6V8YA==
+X-ME-Sender: <xms:z_RfZp__eQSJ3XmYp2I9pHsHWR_AB8GzYyRfTEQP95Qd6EcKAT_q5w>
+    <xme:z_RfZtvMJFSK2_S6IuKpbNlwdjukLRylvAwS5iMwZoRhUsY41kQP5LtBSkXySAjKA
+    AjSYi5zU34W3VmTcw>
+X-ME-Received: <xmr:z_RfZnBT_J76uSXG4-whUGfGHroLZGfa6X42KUxZlTnrv7N3UFEaogn22QvYHwyXN83NwVxeU6OTdVev2NS_teTElVLCJX4dl73Vlk6zjJ1YGuiVpc0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelhedgleefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:y_RfZgit-0olHyi--7V4U6nfcIiHdfZaoHBurN14GMN-6mUK1RK-fA>
-    <xmx:y_RfZsCgQbpD4eGA_aL8ucg4b2UoFGNegBBWDwIItbS35pDhil_-mQ>
-    <xmx:y_RfZhKORHYxa_SDUvj1mz1GrfdUkmvBm_jsLTqsK8XTsb0s3mej5g>
-    <xmx:y_RfZjA7Cvq4bsZvhD1cmu25Tt9RNqiYvhQc-zDrP1on7TwJDMrzYw>
-    <xmx:y_RfZl5RaBDB7d8O_y21Wtf7SfFArc_nYKqqMldJIwzYH2mO8g42Mvi0>
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepfffftddvhedutddviedthefhvdfgkefgje
+    eukeelueeuhfduleffveevveffvefhnecuffhomhgrihhnpehphihthhhonhdrohhrghdp
+    ghhithhhuhgsrdgtohhmpdhrvggrughmvgdrmhgunecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:z_RfZteSibRZD4yjxYQ8UVa7dVUmji7pisq7wW2eklF5NzouL4TViA>
+    <xmx:z_RfZuNz-ISFdTp1U2fHK1c6Fnu1Ig1pIA-cupBLcLfsHjOk1Xhbhg>
+    <xmx:z_RfZvnlEQZNgu4w1k7Mysp-5qwNKNX7Xgulj-GS5F8suVfpwSWuqg>
+    <xmx:z_RfZosyZgyKap4QMSRSImwOLgW66VgbAAOket4xibEQewgevoqTvA>
+    <xmx:0PRfZg2CWZV7c1a20BxTeqc4jqqiqMGA2k67x6pE-e6S27BcyMypwo9F>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 5 Jun 2024 01:16:59 -0400 (EDT)
+ <git@vger.kernel.org>; Wed, 5 Jun 2024 01:17:03 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id f32aa4c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id d38578b6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 5 Jun 2024 05:16:30 +0000 (UTC)
-Date: Wed, 5 Jun 2024 07:16:56 +0200
+	Wed, 5 Jun 2024 05:16:35 +0000 (UTC)
+Date: Wed, 5 Jun 2024 07:17:01 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 3/4] gitlab-ci: add job to run `make check-docs`
-Message-ID: <a44d57a7328e5964111ae9b3abc87cba93d9a1d7.1717564310.git.ps@pks.im>
+Subject: [PATCH 4/4] ci/test-documentation: work around SyntaxWarning in
+ Python 3.12
+Message-ID: <c758b45282f8eb5fec401da6021d7ded6cebb243.1717564310.git.ps@pks.im>
 References: <cover.1717564310.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,64 +82,86 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+dYUejXRFJJKZgLF"
+	protocol="application/pgp-signature"; boundary="aEvHRae36KZr5/+z"
 Content-Disposition: inline
 In-Reply-To: <cover.1717564310.git.ps@pks.im>
 
 
---+dYUejXRFJJKZgLF
+--aEvHRae36KZr5/+z
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Add another job to execute `make check-docs`, which lints our
-documentation and makes sure that expected manpages exist. This job
-mirrors the same job that we already have for GitHub Actions.
+In Python 3.6, unrecognized escape sequences in regular expressions
+started to produce a DeprecationWarning [1]. In Python 3.12, this was
+upgraded to a SyntaxWarning and will eventually be raised even further
+to a SyntaxError. We indirectly hit such unrecognized escape sequences
+via Asciidoc, which results in a bunch of warnings:
+
+    $ asciidoc -o /dev/null git-cat-file.txt
+    <unknown>:1: SyntaxWarning: invalid escape sequence '\S'
+    <unknown>:1: SyntaxWarning: invalid escape sequence '\S'
+
+This in turn causes our "ci/test-documentation.sh" script to fail, as it
+checks that stderr of `make doc` is empty.
+
+These escape sequences seem to be part of Asciidoc itself. In the long
+term, we should probably consider dropping support for Asciidoc in favor
+of Asciidoctor. Upstream also considers itself to be legacy software and
+recommends to move away from it [2]:
+
+    It is suggested that unless you specifically require the AsciiDoc.py
+    toolchain, you should find a processor that handles the modern
+    AsciiDoc syntax.
+
+For now though, let's expand its lifetime a little bit more by filtering
+out these new warnings. We should probably reconsider once the warnings
+are upgraded to errors by Python.
+
+[1]: https://docs.python.org/3/reference/lexical_analysis.html#string-and-b=
+ytes-literals
+[2]: https://github.com/asciidoc-py/asciidoc-py/blob/6d9f76cff0dc3b7ca21bdd=
+570200f8518464d99b/README.md#asciidocpy
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .gitlab-ci.yml | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ ci/test-documentation.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index f676959ca0..37b991e080 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -122,3 +122,12 @@ check-whitespace:
-     - ./ci/check-whitespace.sh "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
-   rules:
-     - if: $CI_PIPELINE_SOURCE =3D=3D 'merge_request_event'
-+
-+documentation:
-+  image: ubuntu:latest
-+  variables:
-+    jobname: Documentation
-+  before_script:
-+    - ./ci/install-dependencies.sh
-+  script:
-+    - ./ci/test-documentation.sh
+diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
+index de41888430..02b3af3941 100755
+--- a/ci/test-documentation.sh
++++ b/ci/test-documentation.sh
+@@ -11,6 +11,7 @@ filter_log () {
+ 	    -e '/^    \* new asciidoc flags$/d' \
+ 	    -e '/stripped namespace before processing/d' \
+ 	    -e '/Attributed.*IDs for element/d' \
++	    -e '/SyntaxWarning: invalid escape sequence/d' \
+ 	    "$1"
+ }
+=20
 --=20
 2.45.2.409.g7b0defb391.dirty
 
 
---+dYUejXRFJJKZgLF
+--aEvHRae36KZr5/+z
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZf9McACgkQVbJhu7ck
-PpRTcxAAkY9gJ5wMlFMbxzTmyzCJS8p6zFSAZaec7gFaJbfVC/9weIwt+V0s8Fjz
-kJkhoxBDRS+UPkNybEpbAjk1p4GMXqGxSHeGoGzIffRYjtkidHrJ9JFH7KKejy7a
-qpC975HALIlS2xjU8PNqQ+F80Qf4yHnPVRR5U1p3aX2wBCldO6M+qmGiTggb3Lig
-1ziV8A63uz6AkAPa+Q4KrG+7ofKS/+JjxKoQm2IuN73XdU5hc6dLW8XajGuPgJB2
-L54XP7E94wZWRyfu+EyN5Uv6YgCLL5/QrXnU9auHAog4H5IW53VDBYacsbudjS5s
-SRMgYa3UMb+J1yzKl3JlHglQiCtd2rLmr+gv6B2gwdgfbNdETUmWneV0ukXzICOR
-zRBRsCjCE96WvXtmU7gRKiuwiUnWax27jGYT3h5WRjbgAnEvcddERBTRXUZVbPT4
-Kd8MGMhufUcWa2OcJM66Mr7Gayz4if+Y97QJY6hLi/m4kXF11deO+iHHNx+T6Igu
-1tAIGjYBw94vt9N31MORcpLmvOwynuNj7TiFD1qKlrf+xG+LafdqkyIFLFdfZMbW
-R4FntS89R9H3IdDT9FTTmOP+apKCzKJ5fdkhfJHB3Vs8ppWLJNTIf6pJUIi1uFQA
-If834SGgkgA2Q8muTDCdTNU5gVL1XAeubZ6kGmfJhYTTU+3BgFw=
-=xF2d
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZf9MwACgkQVbJhu7ck
+PpR7EA/9F2NrE4/q6ZKl2crBE9cMhXTfOrWesuIxxDrVYC+KUVwrrZvGrnaSkQeL
+yb5WY2OLplP1lm2jFdhKo0mJMA/U2fbpePAKGrUMuFizubH2s8VX5nowTMWraGUH
+QsKzN84VKKh8jCcW30ezkJBd6Tvw6maP1nQp/g+p33YTUDsz2Jno3mm5Y+Z1dJ+b
+S2ccM5dDxCJsUYUvTl+s7yeIV8+fhdZOZhI6rqi4YecY08HJqe51zqU79TefNF45
+Ss6LjnzLwnMhGHyJgpeiqOw3PwnK5qHFtfbKtaG4wRxesovZrng+S8tsAQYY/N34
+wW/5alwnsnANai561uIlWNSxCkmtEXa0EeTMyzUEZccB501QS00CMYwxXvctCMgV
+0NOYz+JIGnK2l4FsNsdobWu0SXbetZlhY822oaKBJMQ4FEjXa+Xn0m+kF4OEjqca
+Rs+oXtvpdwJFlW/mEb3e1E8owSKVpa62/YvcuEH9hM11AuUL1mwHpNDnbU9u1xQ1
+cHG+qzqoGIUSVac9g9bbApLgOiDTscSQkwa6+KbGHqtwUQb9jo/uo2qOSUFlvwxT
+fE5aHKM0lHs+a23ixx/f2gbhkHF9MwZcGWoYR4IYTD75l+GkTBnhvpB3XJtMadH3
+OTqKNFPMgcFFZSjGd+rLaEO11wP1sAY4GGv3DvdIX0ymqvkAE3Y=
+=QE9j
 -----END PGP SIGNATURE-----
 
---+dYUejXRFJJKZgLF--
+--aEvHRae36KZr5/+z--
