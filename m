@@ -1,51 +1,54 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6E210A0C
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 16:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AAC1527B5
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 16:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717604530; cv=none; b=Sg+ppaob4i/qINODztCFgUAbF88j0SDGq60zTqrQ5LIR3qovrTm2eMkX12IeDq4NUDovS1MFiNMXo2vD6vWs4XGdg5NwaV1B4euh+dBmf/1ts3f772pszhOwyXNQI4f0wE4mCXM1HPeJBrlqezMaZKi6ey55DI7qwKFnY3EuzlI=
+	t=1717604606; cv=none; b=lgYpW3Tzl30ZB6qBqZS1EuunskQC2nLaucVrLiRnIsGIBKSkNvRZcgK8dSvazi7k28aGfM1Tp2efaSFcGvoCvYv54zMXnZ/vE/yh6keQ5SeKV08LubIe47nXHqyi655T4vOj3h9PL2+JsPhi7D2hcEcfW7FBemMnIwFKdNHXA2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717604530; c=relaxed/simple;
-	bh=EtiAZwcf6jmTRxYL653CA+DiOHvFKcN3uYNO5yAH6Yw=;
+	s=arc-20240116; t=1717604606; c=relaxed/simple;
+	bh=OucLmG/AhfyM3oFvqzEiDRAE/eW8U+aE6/SRfOScfAc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=buUZsM+RduWdhQeJNy8zYFieO991pGCduiu4Wck2sGoqLvbEWC+UjXZss7US7DEOrnqG58A+COEGv5Xx+1QqosQQRSpb48Cx0kQUbrvhg+64q0u5uSe5+QIwkrxd6KoQzrYmmnXA9uwtpdcXJBsUbjiZ45vx+iEYtL7FZHsFRXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Qc1Ggy8T; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=VDw9esntCejSHMwC/R4T2FqzcvpQ5gijJf9dIc88A7I4W0EpgmKlCbC+hhW71oQ43Yyxni4IBAWmW7Zyd/vIB/g+1ICAG69QVnFEVzpG3nLhUgsCS5DXYFMIAEXeyg2DyztUJMqHayg22l7pfmrxrEZMQSlXaOoxNp5GKmCxwH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dSlyQEii; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Qc1Ggy8T"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dSlyQEii"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B03431E0DF;
-	Wed,  5 Jun 2024 12:22:06 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8E1161E0EA;
+	Wed,  5 Jun 2024 12:23:23 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=EtiAZwcf6jmTRxYL653CA+DiOHvFKcN3uYNO5y
-	AH6Yw=; b=Qc1Ggy8TqZbiijoRV6Wgb1HuHMwczpzzR8vTMJNexZ+B/jnoGBpSwK
-	qDEjp/WB+GJ8vPQb5BnIrtRRV3TPkcPDVlpQxJumqzE/EenQlXU3yN2i0Fh3rbR4
-	L4QWBCnS/K0qfUJID1ohx+snq+XG7r3uTfbsoDZV+0FV0w/xu4Wo8=
+	:content-type; s=sasl; bh=OucLmG/AhfyM3oFvqzEiDRAE/eW8U+aE6/SRfO
+	ScfAc=; b=dSlyQEiiVhiC5C+I3EZfLa4LpAuW7dqOfHSTd2X5UuRYKHoxHIIrsp
+	qvTzABi+mLy1DrsQC5faXTeSotycZRGsYMziKV0cJ3Dat97rW1Wj4aUdwRcT1/xD
+	Z1UoP6fkWp+MghyUEeiHYK2+E10K2Eqoz1NM+EVTDwz98lGTHDOgQ=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A68201E0DE;
-	Wed,  5 Jun 2024 12:22:06 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8655D1E0E9;
+	Wed,  5 Jun 2024 12:23:23 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F311B1E0DD;
-	Wed,  5 Jun 2024 12:22:05 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E18B71E0E8;
+	Wed,  5 Jun 2024 12:23:22 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v3 3/6] update-ref: add support for 'symref-delete' command
-In-Reply-To: <ZmAbgGfNpZzU76pd@tanuki> (Patrick Steinhardt's message of "Wed,
-	5 Jun 2024 10:02:08 +0200")
-References: <20240514124411.1037019-1-knayak@gitlab.com>
-	<20240530120940.456817-4-knayak@gitlab.com> <ZmAbgGfNpZzU76pd@tanuki>
-Date: Wed, 05 Jun 2024 09:22:04 -0700
-Message-ID: <xmqqv82nuzpv.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] dir.c: skip .gitignore, etc larger than INT_MAX
+In-Reply-To: <20240605080308.GA2345232@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 5 Jun 2024 04:03:08 -0400")
+References: <20240531120034.GA442032@coredump.intra.peff.net>
+	<xmqqh6eehvj4.fsf@gitster.g>
+	<20240604103947.GC1781455@coredump.intra.peff.net>
+	<xmqqikyowqjj.fsf@gitster.g>
+	<20240605080308.GA2345232@coredump.intra.peff.net>
+Date: Wed, 05 Jun 2024 09:23:21 -0700
+Message-ID: <xmqqplsvuznq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,51 +58,128 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- BFE21C76-2357-11EF-AF17-6488940A682E-77302942!pb-smtp2.pobox.com
+ EDBBC71E-2357-11EF-BF75-6488940A682E-77302942!pb-smtp2.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Jeff King <peff@peff.net> writes:
 
->> +	test_expect_success "stdin $type symref-delete fails with wrong old value" '
->> +		format_command $type "symref-delete refs/heads/symref" "$m" >stdin &&
->> +		test_must_fail git update-ref --stdin $type --no-deref <stdin 2>err &&
->> +		grep "fatal: verifying symref target: ${SQ}refs/heads/symref${SQ}: is at $a but expected refs/heads/main" err &&
->> +		git symbolic-ref refs/heads/symref >expect &&
->> +		echo $a >actual &&
->> +		test_cmp expect actual
->> +	'
->> +
->> +	test_expect_success "stdin $type symref-delete works with right old value" '
->> +		format_command $type "symref-delete refs/heads/symref" "$a" >stdin &&
->> +		git update-ref --stdin $type --no-deref <stdin &&
->> +		test_must_fail git rev-parse --verify -q refs/heads/symref
->> +	'
->> +
->> +	test_expect_success "stdin $type symref-delete works with empty old value" '
->> +		git symbolic-ref refs/heads/symref $a >stdin &&
->> +		format_command $type "symref-delete refs/heads/symref" "" >stdin &&
->> +		git update-ref --stdin $type --no-deref <stdin &&
->> +		test_must_fail git rev-parse --verify -q $b
->> +	'
->> +
->> +	test_expect_success "stdin $type symref-delete succeeds for dangling reference" '
->> +		test_must_fail git symbolic-ref refs/heads/nonexistent &&
->> +		git symbolic-ref refs/heads/symref2 refs/heads/nonexistent &&
->> +		format_command $type "symref-delete refs/heads/symref2" "refs/heads/nonexistent" >stdin &&
->> +		git update-ref --stdin $type --no-deref <stdin &&
->> +		test_must_fail git symbolic-ref -d refs/heads/symref2
->> +	'
->> +
+> I do not mind if consolidation waits for later, but I guess the
+> immediate question is whether we'd prefer to reduce the limit set by my
+> patch to a more security-conservative value. It would be easy to swap
+> out INT_MAX for a 100MB #define on top.
 >
-> Not sure whether I overlooked it, but one test I missed was when trying
-> to delete a non-symbolic-ref.
+> Maybe this?
 
-Hmph, so we want to see an attempt to run symref-delete of
-refs/heads/main when refs/heads/main is *not* a symref to fail?
-That is a reasonable test to have.
+Sounds sensible.  Thanks.
 
-When you invent a shiny new toy, it is hard to make sure you covered
-cases where it should not kick in or positively diagnose a failure.
-A review with a sharp eye to spot missing tests is very much
-appreciated.
-
-THanks.
+> -- >8 --
+> Subject: [PATCH] dir.c: reduce max pattern file size to 100MB
+>
+> In a2bc523e1e (dir.c: skip .gitignore, etc larger than INT_MAX,
+> 2024-05-31) we put capped the size of some files whose parsing code and
+> data structures used ints. Setting the limit to INT_MAX was a natural
+> spot, since we know the parsing code would misbehave above that.
+>
+> But it also leaves the possibility of overflow errors when we multiply
+> that limit to allocate memory. For instance, a file consisting only of
+> "a\na\n..." could have INT_MAX/2 entries. Allocating an array of
+> pointers for each would need INT_MAX*4 bytes on a 64-bit system, enough
+> to overflow a 32-bit int.
+>
+> So let's give ourselves a bit more safety margin by giving a much
+> smaller limit. The size 100MB is somewhat arbitrary, but is based on the
+> similar value for attribute files added by 3c50032ff5 (attr: ignore
+> overly large gitattributes files, 2022-12-01).
+>
+> There's no particular reason these have to be the same, but the idea is
+> that they are in the ballpark of "so huge that nobody would care, but
+> small enough to avoid malicious overflow". So lacking a better guess, it
+> makes sense to use the same value. The implementation here doesn't share
+> the same constant, but we could change that later (or even give it a
+> runtime config knob, though nobody has complained yet about the
+> attribute limit).
+>
+> And likewise, let's add a few tests that exercise the limits, based on
+> the attr ones. In this case, though, we never read .gitignore from the
+> index; the blob code is exercised only for sparse filters. So we'll
+> trigger it that way.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  dir.c                               | 10 ++++++++--
+>  t/t0008-ignores.sh                  |  8 ++++++++
+>  t/t6112-rev-list-filters-objects.sh | 12 ++++++++++++
+>  3 files changed, 28 insertions(+), 2 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index 914060edfd..ad2b7ebe2d 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -32,6 +32,12 @@
+>  #include "tree.h"
+>  #include "hex.h"
+>  
+> + /*
+> +  * The maximum size of a pattern/exclude file. If the file exceeds this size
+> +  * we will ignore it.
+> +  */
+> +#define PATTERN_MAX_FILE_SIZE (100 * 1024 * 1024)
+> +
+>  /*
+>   * Tells read_directory_recursive how a file or directory should be treated.
+>   * Values are ordered by significance, e.g. if a directory contains both
+> @@ -1149,7 +1155,7 @@ static int add_patterns(const char *fname, const char *base, int baselen,
+>  		}
+>  	}
+>  
+> -	if (size > INT_MAX) {
+> +	if (size > PATTERN_MAX_FILE_SIZE) {
+>  		warning("ignoring excessively large pattern file: %s", fname);
+>  		free(buf);
+>  		return -1;
+> @@ -1211,7 +1217,7 @@ int add_patterns_from_blob_to_list(
+>  	if (r != 1)
+>  		return r;
+>  
+> -	if (size > INT_MAX) {
+> +	if (size > PATTERN_MAX_FILE_SIZE) {
+>  		warning("ignoring excessively large pattern blob: %s",
+>  			oid_to_hex(oid));
+>  		free(buf);
+> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+> index 361446b2f4..02a18d4fdb 100755
+> --- a/t/t0008-ignores.sh
+> +++ b/t/t0008-ignores.sh
+> @@ -945,4 +945,12 @@ test_expect_success SYMLINKS 'symlinks not respected in-tree' '
+>  	test_grep "unable to access.*gitignore" err
+>  '
+>  
+> +test_expect_success EXPENSIVE 'large exclude file ignored in tree' '
+> +	test_when_finished "rm .gitignore" &&
+> +	dd if=/dev/zero of=.gitignore bs=101M count=1 &&
+> +	git ls-files -o --exclude-standard 2>err &&
+> +	echo "warning: ignoring excessively large pattern file: .gitignore" >expect &&
+> +	test_cmp expect err
+> +'
+> +
+>  test_done
+> diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
+> index 43e1afd44c..0387f35a32 100755
+> --- a/t/t6112-rev-list-filters-objects.sh
+> +++ b/t/t6112-rev-list-filters-objects.sh
+> @@ -701,4 +701,16 @@ test_expect_success 'expand blob limit in protocol' '
+>  	grep "blob:limit=1024" trace
+>  '
+>  
+> +test_expect_success EXPENSIVE 'large sparse filter file ignored' '
+> +	blob=$(dd if=/dev/zero bs=101M count=1 |
+> +	       git hash-object -w --stdin) &&
+> +	test_must_fail \
+> +		git rev-list --all --objects --filter=sparse:oid=$blob 2>err &&
+> +	cat >expect <<-EOF &&
+> +	warning: ignoring excessively large pattern blob: $blob
+> +	fatal: unable to parse sparse filter data in $blob
+> +	EOF
+> +	test_cmp expect err
+> +'
+> +
+>  test_done
