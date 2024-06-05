@@ -1,51 +1,58 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A9F107B6
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 17:33:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57E9194A50
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 17:52:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717608786; cv=none; b=fTJAq5pLgrh36eUT35TPPQMpFKA549P2zTS+egnFEcUgFPwcvsheAfivxqNnhIMtKO/oEHCPprbmc9fL1viDuGvpVhPmEVjOys49pbHVpz+1vMypklFQAj3NV6wOSg5hp5LNC7um5YEDgBeWJOjsZ5OfSHiuRxxRnChvenPUnVQ=
+	t=1717609943; cv=none; b=S/BR4b3E+qcDQz5V/aXuFMg5P/3eHwpzXJPkDTtsjYM6Bt6bfho3xli9Mu6l8fNN28Bv1DbjFM+BX5xZAHdabCmmJA/XY3wmZSWmQ177GC4S1xBJzDE5gYpgrnojPGKN1iKdhei+ZqdFhYyQm1WLezaQoE/r8/OSaL9B/5upH3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717608786; c=relaxed/simple;
-	bh=ZIFLuGtJw8H1RSdimIUiFjmgnlkef5HsCkSpBEpeCwI=;
+	s=arc-20240116; t=1717609943; c=relaxed/simple;
+	bh=bIzW4k9YRBn9tNYSHcWO3sLhcKRUzpXrI4yXDkOMPZQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WMP2J5MiVDzR8bIegesixLxniubwM9VkesmerQY2oQEEy6gbh17pkfTpOvb0oYJiMR0vxGx/VpQ7a04FbTJSiyxehf7a0J8L3gWtlHajUn7Y6S51QcjhZcnWqyTA6MLHerAV/MhGrOlqRJLkrmYVex39ZKfTJQmniUqgUPI3ma0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AOd5H0xo; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=qBO2nyHJlgghV0+mHvVzggwppr8fs3il+ufc2g6mCiPDns2qGSrfxJnP7W4fj+/ohdZvnYid7nZwmI6SyEa5AqxqZztTC2KiV8IsA37yUPVKOz3mbPAR9v2UXJdQVR9BHJpelPDK75ouNqZ/cDYwZi5kkLmlw0g95rQI4EFnN+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=tXbHpf1h; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AOd5H0xo"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0C1731E891;
-	Wed,  5 Jun 2024 13:33:01 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tXbHpf1h"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4CD631B8EA;
+	Wed,  5 Jun 2024 13:52:15 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ZIFLuGtJw8H1RSdimIUiFjmgnlkef5HsCkSpBE
-	peCwI=; b=AOd5H0xoylspZ3auayM4DUl5KWrNYJDNmkVVa7G4iXgu4GRriPHJ2L
-	O7IxQuq/RNPgvikxx/XYmBOFzqbQydne9865ZqMikACjXXtmSdJCUCaXRuq/LOhd
-	EIrAxzYh02QJ51suKCTCIsS9Ss3CrPxZzMMQvA9pxh55NRzfGlYg8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D12381E890;
-	Wed,  5 Jun 2024 13:33:00 -0400 (EDT)
+	:content-type; s=sasl; bh=bIzW4k9YRBn9tNYSHcWO3sLhcKRUzpXrI4yXDk
+	OMPZQ=; b=tXbHpf1hfLFswifdTO97YqOzaASVdtae+RG9MbOAHANy9CKtRc+BAy
+	DVkjJ6nrMq0jbYnGCZeDdzY+058R8d8oNfijq/4YcQ2+Ua/joNt1QQ3WDT8wTT0x
+	TF8sYs6AvP+7rH5xTEB80VKZnUZGPT1+70UTPm6xmf+oiYrD6mfWE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 449C71B8E9;
+	Wed,  5 Jun 2024 13:52:15 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E0BB61E88F;
-	Wed,  5 Jun 2024 13:32:59 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 60F9F1B8E8;
+	Wed,  5 Jun 2024 13:52:12 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Danoloan <danolo@danoloan.es>
-Cc: git@vger.kernel.org
-Subject: Re: Git submodule recursive update not syncing submodule URLs makes
- the operation fail for commits updating the URLs
-In-Reply-To: <7869f213fe59fa80b9e8331dde89e795bd8cd5d4.camel@danoloan.es>
-	(Danoloan's message of "Wed, 05 Jun 2024 16:02:10 +0200")
-References: <7869f213fe59fa80b9e8331dde89e795bd8cd5d4.camel@danoloan.es>
-Date: Wed, 05 Jun 2024 10:32:58 -0700
-Message-ID: <xmqqtti7s3at.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Justin Tobler
+ <jltobler@gmail.com>,  Dragan Simic <dsimic@manjaro.org>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Todd Zullinger <tmz@pobox.com>
+Subject: Re: [PATCH v6 1/4] docs: introduce document to announce breaking
+ changes
+In-Reply-To: <xmqqjzj3wf4m.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	05 Jun 2024 09:03:53 -0700")
+References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
+	<cover.1717504292.git.ps@pks.im>
+	<a260bbf281d2975562a042a71ca0dd7f88f03da4.1717504292.git.ps@pks.im>
+	<xmqqsexsvbaf.fsf@gitster.g> <Zl_4IIqFmoPhx1Gc@tanuki>
+	<xmqqjzj3wf4m.fsf@gitster.g>
+Date: Wed, 05 Jun 2024 10:52:10 -0700
+Message-ID: <xmqqplsvs2et.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,23 +62,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- A76B6C56-2361-11EF-BBBF-6488940A682E-77302942!pb-smtp2.pobox.com
+ 56593BA6-2364-11EF-9A1F-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
-Danoloan <danolo@danoloan.es> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> the old one. This is typical when the new URL may be a fork or a mirror
-> in another server.
+> But "in retrospect we should have called it 2.0" is patently false;
+> switching from 3-tuple version numbers to 2-tuple version numbers
+> has nothing to do with introducing breaking changes.
 
-Isn't the flip side of the same coin that you can sneak in a change
-to .gitmodules in the superproject ("hey I have this neat fork of
-the superproject at this other URL, please pull from me"), so that
-it points at a malicious URL?  If the end-user is not given a chance
-to inspect where the URL moved to and agree (or disagree) to switch
-to that other URL, your "recursive" update will end up fetching from
-an unverified URL into the submodule without anybody watching, no?
+I tried to make it concise, and came up with the following on top of
+tweaked [v6 1/4] on 'seen'.
 
-So, I suspect that it is working as a security measure that it does
-not blindly sync.
+ Documentation/BreakingChanges.txt | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-Yes "git clone --recursive" may be looser, but I would actually
-consider use of "--recursive" there as a security lapse.
+diff --git c/Documentation/BreakingChanges.txt w/Documentation/BreakingChanges.txt
+index d977915e52..9c2c5f2328 100644
+--- c/Documentation/BreakingChanges.txt
++++ w/Documentation/BreakingChanges.txt
+@@ -21,12 +21,19 @@ change in user-visible behavior.
+ The Git project irregularly releases breaking versions that deliberately break
+ backwards compatibility with older versions. This is done to ensure that Git
+ remains relevant, safe and maintainable going forward. The release cadence of
+-breaking versions is typically measured in multiple years. The last breaking
+-releases were:
++breaking versions is typically measured in multiple years. We had major
++breaking releases like these in the past:
+ 
+-* Git 1.6, released in August 2008.
++* Git 1.6.0, released in August 2008.
+ * Git 2.0, released in May 2014.
+ 
++We use <major>.<minor> release numbers these days, starting from Git
++2.0, for feature releases, our plan is to increment <major> in the
++release number when we make the next breaking release (before Git 2.0,
++the release numbers were 1.<major>.<minor> with the intention to increment
++<major> for "usual" breaking releases, reserving the jump to Git 2.0 for
++really large backward-compatibility breaking changes).
++
+ The intent of this document is to track upcoming deprecations for future
+ breaking releases. Furthermore, this document also tracks what will _not_ be
+ deprecated. This is done such that the outcome of discussions document both
