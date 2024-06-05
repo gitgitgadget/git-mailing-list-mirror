@@ -1,129 +1,89 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D7A15F3FF
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 21:27:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9415F3C28
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 21:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717622849; cv=none; b=Ti3e6QEfmae5N7IU2znFkHVWSQi06BuHJeNUHFLJAO9I8ErUuADj9DVeatY6/WSafJU7IiiPSqtSJNWE2BIJLywV+IwXmA8HjIxjZA78U03tx8fz/aAquTHJ85Tdg3ehW729Ve7IhTeSbSY8739RKzkRJGOTZi/IMCymC4IR+zo=
+	t=1717623573; cv=none; b=mDslxaxtkPoElUZCnDf9e1ysEDYD7iDDZDOxgugtn/d+cG8vfUPGlG/zErIdBoM2wRLTDmFGTP/ksjvP5M3+Fqbaqdg1G1oIIdvPfyNwyZYH+wbwEZRnqUoNbvT/GvUmCp2fJu0j/fCQ5RhMgQ+7SedgGWM+25GdEMMI0ne/QOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717622849; c=relaxed/simple;
-	bh=qYTfd1e09XiS4WxvWsg+y6thRij959FL47JWmgXypb8=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GN13L2d5AMN+3vMoNbxZ16WW2vA08tNGS62F0yZKQiYCo5RZDJVa4GLT70bdFdksZCzFoOYb9as7bNB/07N4rfOtiO9IqBQ0q5z9IY2ZgFy6xcyMqrD90dcdVN+682sau4kqdX0WSjNL+Gx1jLW87Jj2JF+WntiaPl5qWZMvv8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q01M0a/7; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1717623573; c=relaxed/simple;
+	bh=uy+stx5A1GHxEw8euTc+B9gRCgy9H3E8GNRpeqwfjT0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=G+EuKhh0MXk1YHZFYLl9iiAfp2Wu8EDKD8/Kb2I3HwgwJov+0qsZgwIY+V2MH/mYuhpfnsb7uH+icn/ee8zWiyK4BHVEBKAggAaRr3YtsyqKLkQ2ZfdtEu4Ogr9jTvyYeo+0DzOOu5JnrWov6WMcPl5jb4HNcIyZTfaJFv53QPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bp8JAvvJ; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q01M0a/7"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 79BAF1CE46;
-	Wed,  5 Jun 2024 17:27:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=q
-	YTfd1e09XiS4WxvWsg+y6thRij959FL47JWmgXypb8=; b=Q01M0a/7lS2LC4Qp6
-	sYz1glYCrPBlmaZevevIP0EKCIRv1t2NB3r2HdBQ/gdkgckaVgGYDRy4pTaK/sGy
-	xkeg8BuYxr+CzigrERwFYCY05l+2cPC2aw20qnbfD520+W8Aq6hItp0f+FijEY7u
-	DgbdJre0gsrqXv7ngu4LQFpUI4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7390E1CE45;
-	Wed,  5 Jun 2024 17:27:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0999F1CE44;
-	Wed,  5 Jun 2024 17:27:22 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] add-i: finally retire add.interactive.useBuiltin
-Date: Wed, 05 Jun 2024 14:27:21 -0700
-Message-ID: <xmqqikynqdvq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bp8JAvvJ"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-35dc1d8867eso300442f8f.0
+        for <git@vger.kernel.org>; Wed, 05 Jun 2024 14:39:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717623570; x=1718228370; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2cYvBmFOIhpg2Dod0Qs0tmSimi56H38oY7ILJ+zJjXU=;
+        b=Bp8JAvvJYn0sgBPUbkCmaq1JF0K0m6pbAHqFXtRkKG+BU7dBsFkFsNpSxt4LCQJ8hq
+         Hr7iGaILIkTIV7DlLu4IlvyyMBlzND7G/F+X+AfhTmIj6YbxiLsfGYu82TmM+t8bKAUo
+         FPmPIQM1UgPrhv3Bdf5dc3P9jwvlBnaIXFJFHanjlUJZcR2xyAElyJ7q2snV7heHYm5E
+         /gpjLlU2Efkw6KHIdn2a3cRlbLnGdx7PHeGkVZ43zCAf6+ZhxqistknkWlqa+/26sP6s
+         OjM7GVXZBwvAF7zXDPw+hFkeUoJpISlsDiRuay+eoYt3MJQ3X9/k+p2cFEnhkORfy+V3
+         OlXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717623570; x=1718228370;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2cYvBmFOIhpg2Dod0Qs0tmSimi56H38oY7ILJ+zJjXU=;
+        b=eVkhJXrTk5y2lE73eLWYM2ihHKUWKzSW3jsk3H6LRDRqu//fH/DJDctOdaxy7OKbUA
+         KRxBs5vn0vFm42Qwmhjo/HEx5Ud9+wPP4Vzpnwwui0aXzBRNfOQ1/1c9ocu//KKeGGBE
+         Gw5D8rNj3l/FLMV9kjOOJKypWb2aUtwMyycP20kmQ0AsAkUo3jcE7ZHFProxA3m/5qN5
+         oqYWRURk5b5GobTswb7nt6RX9ZQVpiR4RW9Xp6X/xAgCaNc3tOH7fowhHIScZn1MZhKl
+         bfSrJn57XmYy3nnFzCDaWKKusquTNtcu+G9/aWGHhNn1ilHhKPcd66Ty8/Bni8Gi/iFT
+         9KAg==
+X-Gm-Message-State: AOJu0YwVbcjyQpxvu+wX/phxogr/0e1RK5LjeNi8tEKCK+LGIwKMliry
+	WN0mR4815Y7ck6NqRTZ1IBXYjsj/kT8QYN63zjF4Ip2ELd4O0Fz4zse0Ig==
+X-Google-Smtp-Source: AGHT+IESBxpjJIDbEHsP041nRXWB0m9GgjclFm67AQzqfrQiQGXMhO6qr1oUuBlXpIaLQV/YqKIQiQ==
+X-Received: by 2002:adf:e68f:0:b0:354:e0e8:33ea with SMTP id ffacd0b85a97d-35e8ef94698mr2713794f8f.66.1717623569546;
+        Wed, 05 Jun 2024 14:39:29 -0700 (PDT)
+Received: from gmail.com (52.red-88-14-62.dynamicip.rima-tde.net. [88.14.62.52])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd04c0f57sm15804064f8f.12.2024.06.05.14.39.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jun 2024 14:39:29 -0700 (PDT)
+Message-ID: <054e2032-8d09-491a-bc33-309fb20fa9bc@gmail.com>
+Date: Wed, 5 Jun 2024 23:39:28 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 65B054C2-2382-11EF-9862-ACC938F0AE34-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] format-patch: assume --cover-letter for diff in
+ multi-patch series
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>
+References: <6269eed5-f1ff-43f3-9249-d6a0f1852a6c@gmail.com>
+ <14365d68-ed04-44fe-823b-a3959626684e@gmail.com>
+ <cb6b6d54-959f-477d-83e5-027c81ae85de@gmail.com> <xmqqr0dbqfv8.fsf@gitster.g>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqr0dbqfv8.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-The configuration variable stopped doing anything (other than
-announcing itself as a variable that does not do anything useful,
-when it is used) in Git 2.40.  
+On Wed, Jun 05, 2024 at 01:44:27PM -0700, Junio C Hamano wrote:
 
-At this point, it is not even worth giving the warning, which was
-meant to be a way to help users notice they are carrying unused
-cruft in their configuration files and give them a chance to
-clean-up.
+> > +	git format-patch -v2 --range-diff=topic main..unmodified &&
+> > +	test_when_finished "rm v2-000?-*" &&
 
-Let's remove the warning and documentation for it, and truly stop
-paying attention to it.
+At any rate, I agree with you this is confusing.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-               ---
- Documentation/config/add.txt |  6 ------
- builtin/add.c                |  6 +-----
- t/t3701-add-interactive.sh   | 15 ---------------
- 3 files changed, 1 insertion(+), 26 deletions(-)
+I'll address this and the other similar ones in t3206, in a
+preparation patch within this series.
 
-diff --git c/Documentation/config/add.txt w/Documentation/config/add.txt
-index e0354ceaed..4d753f006e 100644
---- c/Documentation/config/add.txt
-+++ w/Documentation/config/add.txt
-@@ -5,9 +5,3 @@ add.ignore-errors (deprecated)::
- 	option of linkgit:git-add[1].  `add.ignore-errors` is deprecated,
- 	as it does not follow the usual naming convention for configuration
- 	variables.
--
--add.interactive.useBuiltin::
--	Unused configuration variable. Used in Git versions v2.25.0 to
--	v2.36.0 to enable the built-in version of linkgit:git-add[1]'s
--	interactive mode, which then became the default in Git
--	versions v2.37.0 to v2.39.0.
-diff --git c/builtin/add.c w/builtin/add.c
-index 3dfcfc5fba..40b61ef90d 100644
---- c/builtin/add.c
-+++ w/builtin/add.c
-@@ -150,11 +150,7 @@ static int refresh(int verbose, const struct pathspec *pathspec)
- int interactive_add(const char **argv, const char *prefix, int patch)
- {
- 	struct pathspec pathspec;
--	int unused, ret;
--
--	if (!git_config_get_bool("add.interactive.usebuiltin", &unused))
--		warning(_("the add.interactive.useBuiltin setting has been removed!\n"
--			  "See its entry in 'git help config' for details."));
-+	int ret;
- 
- 	parse_pathspec(&pathspec, 0,
- 		       PATHSPEC_PREFER_FULL |
-diff --git c/t/t3701-add-interactive.sh w/t/t3701-add-interactive.sh
-index 6624a4f7c0..5d78868ac1 100755
---- c/t/t3701-add-interactive.sh
-+++ w/t/t3701-add-interactive.sh
-@@ -43,21 +43,6 @@ force_color () {
- 	)
- }
- 
--test_expect_success 'warn about add.interactive.useBuiltin' '
--	cat >expect <<-\EOF &&
--	warning: the add.interactive.useBuiltin setting has been removed!
--	See its entry in '\''git help config'\'' for details.
--	EOF
--	echo "No changes." >expect.out &&
--
--	for v in = =true =false
--	do
--		git -c "add.interactive.useBuiltin$v" add -p >out 2>actual &&
--		test_cmp expect.out out &&
--		test_cmp expect actual || return 1
--	done
--'
--
- test_expect_success 'unknown command' '
- 	test_when_finished "git reset --hard; rm -f command" &&
- 	echo W >command &&
+However, I'll refrain for two or three days before sending a new
+iteration.
+
+Thanks.
