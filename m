@@ -1,54 +1,54 @@
 Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A02D2F24
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 05:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B962941B
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 05:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717565563; cv=none; b=Ilt3WgShiIZMDFdxxqE5ZLDddOvOjBQ5INVMmuO/HxV0eRifTl94dSj2//Brq63hmis/4Smc2VeqLoj7BAVEEq7JimBbYH8ySSXw47le6vXv4ipyUP4fwvaf9h6pmTVsoFRT40+jzo3iQEfLxkhbtHcmZ7u1GNPbInQSMB/rc7A=
+	t=1717566068; cv=none; b=EqDGCmAJhQwlePDpwoQjdOUyzIrWo0//fJVh/wS/jJfh/WGfDmBT0S6N2hA5U9IL/Qo+8SPqKVjZhhK/uyt/ehHUM3BTYvDurBLYKVpio3omsUCfvYwzM676+aGfMtJ7isUwZedDLxwyM9AADIqbGAAIJu3uhFL91HCoC1bJ9yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717565563; c=relaxed/simple;
-	bh=FbTN9IprpRWsoeQsBpF4i+laDy0I5/CvlgmeSDnvHWw=;
+	s=arc-20240116; t=1717566068; c=relaxed/simple;
+	bh=hyqZtiTND+OYKd/ml9JNC0SQBpxiYfjxqqGdQv8gaKQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hpqq2VEEieR8F2zlfL/ORXQohU+cAF/unoEddL1xX9eLrozvstNA3mgVCK0ukeBy4+1BlfjU9OVpKonQuqs/bYbqS9XO01jDQJYuj9cHzD1dlDSZMPKzpzkqunpYgrWxQSczZwBUAsAl1gMV4nq11KgHSoTbt4Y6tOlClYSK9v4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F8p3o45s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ep3wjNyn; arc=none smtp.client-ip=64.147.123.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=mIg5YZMNASRZ1ulsOhJZfyd3DTmvFqZ/+A972HKAjE6wMWbWwWFzWgclamddunK59EqPSSzwEjUDnbIz67Q3qhPwWI8NEt9G5sp3wmlMN4/WaUl31lQUfbbUo0ngnZh5/1eecXZv6ah4+6+vAsJIB/h8I+b9RGnEFsVSP0WENNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ad1FCHYd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kkK3GG2p; arc=none smtp.client-ip=64.147.123.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F8p3o45s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ep3wjNyn"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 3980C180011A;
-	Wed,  5 Jun 2024 01:32:41 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 05 Jun 2024 01:32:41 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ad1FCHYd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kkK3GG2p"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.west.internal (Postfix) with ESMTP id EB7E918000E8;
+	Wed,  5 Jun 2024 01:41:04 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Wed, 05 Jun 2024 01:41:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717565560; x=1717651960; bh=8gNZWLW/og
-	6ZFdkpUrqXodmm6T+pcDTn0oTRQAp3Ao0=; b=F8p3o45sKVBhLgowmO4eGW3a9B
-	aPSwcVFELTbBUbE8w1+JjxA8yE/RvsghoI2HyeVnFFDZ15SIao7W2pQkPUx3wZr5
-	h+jKshdaRkCQQMbD7mYGvWp95vH0orh4XhGsuHGhdKVvALARY4Ahc169vYMutcb/
-	1SdMcSpL3nZi0rq2nKsGFUxysPq0IsRn6c26kwLUZLYhfFOidXpVw7JcZTu18Xwr
-	b2dsbFqhPP/bLKx72lQBWLoW2Wr/oS5ugtyz37Ik9NCW8jUgVAgid5tn79+Qx98P
-	OOm4QUQ5MPg6Ve0G22diiq1QIHuQQS8rASvdlcepERLpc8zq4sdsvFAIi2Wg==
+	:subject:to:to; s=fm1; t=1717566064; x=1717652464; bh=XEGapUxRfw
+	Bs+QuCT48qvql+9Lk5FULEsM4lth310ac=; b=Ad1FCHYdZ+6BlIO5SVvliHgFoA
+	xYoNe1ykYzZxO9AcXsi4Mh/+S3WVBC3CkREzDHSbRlJu39L0SVdEeQ++hDhRtJv6
+	UKqLMQHHxSFNAay0QymnFFNX8knFxdwyeSjHKMAJUy+PrNx4Iz52kHykUyT2MBCL
+	9q/x9mH4e/qofHX5a70Kn3dJRKQodJD/sfIQP0fYJyY4ky8hn3vu6AJ7iczZ62zW
+	S7D5Gw6iMbj0nl+iFGFUrJchgSuBQohjPhtH7nFHcjhTLdLRDQ/ATHwO9n2gy5Ke
+	G3TN1p137Lg/smp6CjL8sHYVmC2QRFuWzY5WECE3WyxoDbWYBHThvQV2znxQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717565560; x=1717651960; bh=8gNZWLW/og6ZFdkpUrqXodmm6T+p
-	cDTn0oTRQAp3Ao0=; b=Ep3wjNynSRqczmzQlClocQsIpAtBpyuMghXT9KdTjMl0
-	7p3DR+jrSNTt5SyNaQhrYjX7NoUAlYt8tCPIm4YJifu/D148NJQ7vMmuls8AdyPm
-	TE0rpu7OsaLVa23XUYTg0deE+kLIfyY/gpRUZ2agmtkWze9ISjhWQiHqg1yTqAFo
-	BgeB/LAptrPOnnPEP7EkOQi9JWuM/MXyPeQYallfSIgDAf8VJ8pa2fmY+VK/57LK
-	muXpBgodFLRmfMoQy2b7ixsagke18YSfJiGjmOELieKgpzPn2gzBPAk2EnhAnkHz
-	L+9A9mqh0mLjPlo9hnv3Ts80oAn/VgTBGlpSEke1bg==
-X-ME-Sender: <xms:ePhfZrxd9BTtQSEhARi_1ui3GyPTDwUJx64Tr0hLO54AA8B-rWr40g>
-    <xme:ePhfZjTtiDGdhDpsS3MUZZcTciIYCS3HzDvWphVnCdA2tsinYWo8vspFy1lddv9mL
-    bnRhDrt8BQGHp2hnQ>
-X-ME-Received: <xmr:ePhfZlUPute_Wzv3qi0tXfCKXlv5ixeGCa31toFtkGiVdShKdHHv5RUSobtKz9d387d6P8sPe7-wuq-NzJDczNCtpmbkkG6SBmX15-QOIkoHqEJAb1o>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelhedgleeiucetufdoteggodetrfdotf
+	fm1; t=1717566064; x=1717652464; bh=XEGapUxRfwBs+QuCT48qvql+9Lk5
+	FULEsM4lth310ac=; b=kkK3GG2p7/uDX+Vm+EeDwPHGqiQwlNVrlB1y7CCW4E9N
+	AaAVq7zrkHWZhazncUmLsZ1FZyCTn22Zu7s2bFZ/hbek2OG3IdgoIwI4wM41kqdc
+	gJcOuaS8g3cbJAIdZo9oF1zGLUQJLCHVE9ZsUn93idOdqRc2UIXLi8UV3wkEadO7
+	ImE4XeLXhV/ZfJsIu5aD0zlAypaeTx7GzPQb2omvfYAEix2sckQQK3fMWuJNwVt8
+	dd+YHOCshoMOspiqr6AKTeOWCC0H3r6OfNAYbwR8mLT2Ov7SDLlYxjtzY5k6jxyR
+	J9uevDnKE764pbD1nFvJJNpTsGfSLW4ngwvHmb1nIQ==
+X-ME-Sender: <xms:b_pfZpKFk7szmGzhgP31nY1DGKmlaI6IB-zHOYouOHp9k0aPrxQPoA>
+    <xme:b_pfZlInX27TDzEPWwQFKtiui0-5HeKS6HpMzdLI1DnW0iSuhfxw3Arh2y3Nt4Rbz
+    LchuK-lo03Tw8gFuw>
+X-ME-Received: <xmr:b_pfZhvCz87NVPV5fb0nZ6_xsIqo-Odkqn_Uykd6iBPTJXihf_NdlRRAhcnciU2DZ8_yBHuZutZxmxyuDH6MmQB6jnbv-2P0c6b2a2T_ziuj6uz1-04>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelhedgleekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -56,32 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelhedgleeiucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:ePhfZlhRPiFKHTylIZRUtSnQefrMmm_1RVdUqCeUi_8K-IGffEwXTQ>
-    <xmx:ePhfZtB2Aa6lPKhJtcIO_QXlUh-TK1cOp-bEkz_7ZZTJ5oagO_9NRA>
-    <xmx:ePhfZuISBdA2485ZLQAzRwLpkspKngI3K02wUwxwclFkPKr38jYkIw>
-    <xmx:ePhfZsCnFfhDJrEruh82H_l-qmAvUn_e2hcYEJcfodotjciOnYWeQg>
-    <xmx:ePhfZh13j0SNzdJ5VB-RgdsDzc4OKUhmilSfVrEHmWRx0EeCaj-cEaVW>
+X-ME-Proxy: <xmx:b_pfZqZToVYD8Tj3NTq3Mhr0MwCD6IOkfZjkgLbCaOjy1rojo8-Ldg>
+    <xmx:b_pfZgaGIyEh5sbLYJMjTmHkZFZ04wEZW7T_Yiu2L4SvpoyBWRBHZw>
+    <xmx:b_pfZuAQ-EgYfAWWouiJUf0cxknLP_Cz50AWcb-P6VFvVG4SZHFPkQ>
+    <xmx:b_pfZuYA5jFCJJl7TGZUdnQzNhLuVnmIGWfnuYmszmX3Rfpe3WyQUA>
+    <xmx:cPpfZvxTvz4hel7Y7nmKppqDUX-PqiySPRzV8FQXUtv5urL4mjsH0Rlx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Jun 2024 01:32:39 -0400 (EDT)
+ 5 Jun 2024 01:41:02 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 7ccd458b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 5 Jun 2024 05:32:10 +0000 (UTC)
-Date: Wed, 5 Jun 2024 07:32:36 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id ddaf35c6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 5 Jun 2024 05:40:33 +0000 (UTC)
+Date: Wed, 5 Jun 2024 07:40:58 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Justin Tobler <jltobler@gmail.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH v6 0/4] docs: document upcoming breaking changes
-Message-ID: <Zl_4dDkmj8sJegrp@tanuki>
-References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
- <cover.1717504292.git.ps@pks.im>
- <f231d5ff-08e5-47b3-aadc-0f88566c2588@gmail.com>
- <xmqqjzj4vb7y.fsf@gitster.g>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 24/27] builtin/rebase: do not assign default backend
+ to non-constant field
+Message-ID: <Zl_6anUl_C3W2j2Z@tanuki>
+References: <cover.1716983704.git.ps@pks.im>
+ <cover.1717504517.git.ps@pks.im>
+ <e19457d20c80f9ce332f2d890a5089972e28f0cf.1717504517.git.ps@pks.im>
+ <be8a315a-3fa7-40d3-80e1-6a5c01afee70@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,71 +87,64 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="E+sVN0N6G02v9zC2"
+	protocol="application/pgp-signature"; boundary="ueZeAxY+6BmRy1OE"
 Content-Disposition: inline
-In-Reply-To: <xmqqjzj4vb7y.fsf@gitster.g>
+In-Reply-To: <be8a315a-3fa7-40d3-80e1-6a5c01afee70@gmail.com>
 
 
---E+sVN0N6G02v9zC2
+--ueZeAxY+6BmRy1OE
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 04, 2024 at 11:01:21AM -0700, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+On Tue, Jun 04, 2024 at 03:06:38PM +0100, Phillip Wood wrote:
+> Hi Patrick
 >=20
-> > Hi Patrick
-> >
-> > On 04/06/2024 13:32, Patrick Steinhardt wrote:
-> >> Hi,
-> >> another day, another version of this patch series that aims to give
-> >> a
-> >> framework for documenting upcoming breaking changes in Git.
-> >> Changes compared to v5:
-> >>    - Note that Git 1.6 was a breaking release, despite the fact that
-> >> its
-> >>      major version wasn't bumped.
-> >>    - Several smallish rewordings.
-> >>    - Note that items on the lists should only be discussed anew when
-> >>      circumstances have changed.
-> >>    - Add some conditions to the move to "sha256". Also, note that we
-> >> do
-> >>      not plan to deprecate "sha1".
-> >>    - Note that replacement refs are also superior over grafts
-> >> because
-> >>      they can be carried across repos.
-> >
-> > This version looks good to me
-> >
-> > Thanks for writing this document
+> On 04/06/2024 13:38, Patrick Steinhardt wrote:
+> > The `struct rebase_options::default_backend` field is a non-constant
+> > string, but is being assigned a constant via `REBASE_OPTIONS_INIT`.
+> > Refactor the code to initialize and release options via two functions
+> > `rebase_options_init()` and `rebase_options_release()`. Like this, we
+> > can easily adapt the former funnction to use `xstrdup()` on the default
+> > value without hiding it away in a macro.
 >=20
-> Yup, aside from two typos and a misstatement I did not spot anything
-> that need correction.  Will queue.
+> Personally I'd be happy with
 >=20
-> Thanks.
+> -		.default_backend =3D "merge",		\
+> +		.default_backend =3D xstrdup("merge"),	\
+>=20
+> rather than adding an init function. I do agree that adding
+> rebase_options_release() is a good idea and the rest of the changes look
+> good to me
 
-Thanks to both of you!
+Do we have any other cases where we allocate inside of a `_INIT` style
+macro? If so, I'd go with that precedence and just allocate inside of
+the macro. But if we don't, then I think I'm leaning more towards the
+way I did it in this patch.
+
+Happy to be convinced otherwise, I don't really feel all that strongly
+about this. I'm merely aiming for the interface wth least surprises.
 
 Patrick
 
---E+sVN0N6G02v9zC2
+--ueZeAxY+6BmRy1OE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZf+HMACgkQVbJhu7ck
-PpS4tA/9EZ98sjsiuD4HfyVMCQuZA/Jz+7WLdDH5HhWzECeoHWdUFZuzt5gYVHFn
-jThVA/vODR9fLM+tybtqbCS0xGcMmnB7Z4C8zxPaJUK99igt4CKR5PDNdQX0sb6m
-fQqBSf0YwsyjuDssJyErDJANfwcp41Fwx8Yo/Hwwqadpq8WT4dvcGYLWYsySyPiu
-Tb0mOFlIUTIlO7qwhtSoWGJC96vRaBLAubmlnOqV1+Zm863xGcWY2Sst/yVEBTsV
-OeA9r2pnoLwWkXIQHeUVTjhPEDgUenWbTAVraE6vjrB6P0Zod7ghz762gdINRaHp
-aWDOr/mXL6pIrCbUe5TAguU6BU1mTGeEBCRZjnvb/nXSbv8uuF/20W9Ago0hqDQG
-eA6K97InfSfiyHg24DOvkmzsjdmftItMegp17/jHSJXNqGNgSRUb4XfF24i8xlcQ
-KUxezg6L4jNo1NrwKXLEW9lINrx7W8jFVmgYPwUHVlLe56o9akjR3eoNBraU5m4f
-IhbPyFRRzVOb6dpoOjtFnm7vUoBLDqf9zV+lj8wAvb5/QYW6Wf8JTQi9y8K0gsnw
-k76Lv+mM7QnL169OLqvfnY0Xqw3UkHv61BEa0quGoWsaM4QIXIBX4s6t0dVBjhoi
-AT1MPIcBASkLCdCU1fd1OXIJKn2UzpI4S16EE17m9llborE3QQo=
-=8lo6
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZf+moACgkQVbJhu7ck
+PpTACRAAnV7ZBlUM4kU7mwrTaWcZZJpMXMqg20OjxLuPdNelryaPvma0Qvbub5vC
+NMUxRzxxAXoVNQ2RQWQyvTDctTuFKIUrTe18Nz+t2B3ytZ4zAoCjM71PmNKNL/4V
+MO0I51vZIQCP4CgLnfln+G216JZHq61h1jLEI+YeIkki2j/G1pyKoEXt0zMw2mW1
+m6jgw1HEq4urmgvg8yltfQgnnJUmEvQQk24yYicu9/K0MnQEfEqBhVoSxFbuOweW
+NczWcEBesgpoqF2+nzG5+X9AeZnskwtfjoUUhPZvNNwIa4O0glb/rnQZok7A5aNg
+sOv/7nVWG5Kph99WkvqrMm3xIKuXUzwLW0SM5GJng69P0UDR2UDk0Om+R8BJnFiI
+Y73P3P93HRqwtJDuwB514ZbVw8m+KobsRQ4fqPdv7R58dwlUV7gjpvtoUCLxZrpF
+XoZMWjgAzjsG2dUjQ69h3MpleJ77Bh8135uO7Sxvu1cacAuDAtSgSCr9gHjgag3k
+juU1LbT0N3SsOMGmkGfPxCKLkkUP1caEOguPcJHSI1zBWmJm9TTCCrtuHXhFkT5o
+iwGBw9ofzkAub0VIjwkM19ul+4ZNPZKX7dw7DBQAttMoQrvqL4MFr6a+TIBfDIED
+lvfkIWWP1oY78r4PjEEAc7q2AdQLSUDgHMq6HPIuXDzm9zD7al8=
+=p2cd
 -----END PGP SIGNATURE-----
 
---E+sVN0N6G02v9zC2--
+--ueZeAxY+6BmRy1OE--
