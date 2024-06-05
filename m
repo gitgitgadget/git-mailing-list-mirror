@@ -1,55 +1,57 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE282575A
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 17:13:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBF3139D00
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 17:24:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717607614; cv=none; b=ZdVWlCsfojAV+r0ec53mYmOeNwyKmd0Dtb61tUfMDHuasJCxT6zi2Mj6EuFIfOlagowATxBdCdj6CBXARiNNSfBUY7yIQJdg9v4ulW9Jg0y19rhs54TwDrNxmKLA36m3a2CI+aXP0lvkchxlKc5GaN1w4h0O7J8xnG4XOEe6k0w=
+	t=1717608285; cv=none; b=gvL2n0LwNZI7KCjRH6JLhJE5733uKNhkQTaWJFcplKQXHSRceJfdJIN2DkXeBe4GP5bpIKd9i2o8Gly/zLMkEs15DmHzQpmoJyXBMBgMuOk2sWwwrk0SKmme9SDsWFeqFKtnhzGQt0+mtmg9JQCzE2zc+C2RXEfFhB1G3hZAAd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717607614; c=relaxed/simple;
-	bh=GHAEWax8Y1oUEHTX6ckj6lGpSqNYwu/olz2epG50Ki0=;
+	s=arc-20240116; t=1717608285; c=relaxed/simple;
+	bh=KrLNzf5d6H/myIF4wsmXOvgSORdAt2PnX0s3kRPEreE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cMLNskUpKSnTEJ8/663T7+rz/kJGcUn57UhoT82+Ksj8vjR5eiU35qmdd7cfBBGyRJBVKtN9H1fAkFm1PYJTaYSKl6bs11psiiD/dm0Ov6cBI1+7ySx9yQ2TWDYfyGf5ENJf1e9YiAVvV9lCaITCVYpgZeoAo+5clOPmhTYYfVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FpCgA0RY; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=VChhsuGOuToP8OaB2l1dv48hDOgH971RNoTv9Pr6G9xrxUq4zwgiO9QOZAppF7VBInWJXAKGZc1VWf0MbANo+eltoPPfV3WPic1ccSc5Q3o4Gakybh3hhkPzj2pArdMc47OdltH1dWi0sTqH09buCARqRHrUReA/Hk2ePPBvZL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=U4E6mJ7F; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FpCgA0RY"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 858CC25892;
-	Wed,  5 Jun 2024 13:13:32 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="U4E6mJ7F"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id B06951B5FC;
+	Wed,  5 Jun 2024 13:24:43 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=GHAEWax8Y1oUEHTX6ckj6lGpSqNYwu/olz2epG
-	50Ki0=; b=FpCgA0RY/SI9u2VAyDnJjDx90CesXmc9Xc4oWad4jdUpMrocc3+pxs
-	tuZYQQUEkc1qx5ZB/kAx5uvC36Dvr6JNYYKwpEJ0USfcDZb20TWWPOfb+aIGuheN
-	W8HPgST5eBv1mdcRrfHZpbr57zO5YpqN/m9LGeCXRakf/GswmDFes=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7C21D25891;
-	Wed,  5 Jun 2024 13:13:32 -0400 (EDT)
+	:content-type; s=sasl; bh=KrLNzf5d6H/myIF4wsmXOvgSORdAt2PnX0s3kR
+	PEreE=; b=U4E6mJ7FoB7o+6iF+jgAVnsOEyiHP6DCiAc6s/hSN1FBsUn1C3hhy1
+	IiEoWCO9BLuriWtpIpjxi2igydL/iTLstea8LaaIT8BLXB33F42y/j7RXdkXcUl3
+	V16NVOr3YpcYavy0kKQpSRPgbc3PwOni+ehRVBSOE5UmL4bxJJmWc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A8DB71B5FB;
+	Wed,  5 Jun 2024 13:24:43 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 991F025890;
-	Wed,  5 Jun 2024 13:13:29 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C11CB1B5FA;
+	Wed,  5 Jun 2024 13:24:40 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 02/19] global: assign non-const strings as required
-In-Reply-To: <20240605104646.GA3972667@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 5 Jun 2024 06:46:46 -0400")
-References: <cover.1716983704.git.ps@pks.im>
-	<51ee5660a1452797ac0a45819210141c57f3dcb9.1716983704.git.ps@pks.im>
-	<xmqqplt4y1gk.fsf@gitster.g> <ZlhjN7K8JKYz6Opd@tanuki>
-	<xmqq34pzozsq.fsf@gitster.g> <ZlnJ83qSnGlQ0FWR@tanuki>
-	<xmqq4jaehui6.fsf@gitster.g>
-	<20240605104646.GA3972667@coredump.intra.peff.net>
-Date: Wed, 05 Jun 2024 10:13:28 -0700
-Message-ID: <xmqqplsvtirr.fsf@gitster.g>
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>,  Dragan
+ Simic <dsimic@manjaro.org>
+Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
+In-Reply-To: <20240605090935.GF2345232@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 5 Jun 2024 05:09:35 -0400")
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+	<199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+	<b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
+	<20240604101700.GA1781455@coredump.intra.peff.net>
+	<xmqqikyo207f.fsf@gitster.g>
+	<20240605090935.GF2345232@coredump.intra.peff.net>
+Date: Wed, 05 Jun 2024 10:24:39 -0700
+Message-ID: <xmqq5xunti94.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,22 +61,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- EDDD937E-235E-11EF-9188-8F8B087618E4-77302942!pb-smtp21.pobox.com
+ 7DE9494E-2360-11EF-8ECC-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
 Jeff King <peff@peff.net> writes:
 
-> On Fri, May 31, 2024 at 08:27:13AM -0700, Junio C Hamano wrote:
+> Just to note some prior art, mutt's "<pipe-message>" faces a similar
+> problem. You might want the raw message (if you're going to poke at
+> headers, MIME parts, etc yourself) or you may want a decoded one (if you
+> just care about body text and don't want to deal with base64, qp, etc,
+> yourself). They provide a stateful config knob, but then you end up with
+> horrible macros that toggle the knob, like:
 >
->> I wonder if we can do something to separate these two concerns
->> apart, using a trick similar to what we often use with an extra
->> variable "to_free".  Doing so would bloat the refspec_item, but
->> unlike the references themselves, there won't be thousands of them,
->> so it may not be an issue, perhaps?
+>   :set pipe_decode=yes<enter><pipe-message>my-script<enter>:set pipe_decode=no<enter>
 >
-> I had a similar thought while looking at this spot a while ago, so I dug
-> this attempt out of my stash. It's quite ugly, as you need to keep the
-> storage pointer and the const pointer in sync. Especially because
-> there's a lot of clever pointer indirection via match_name_with_pattern().
+> I think having two separate commands for the two modes would be less
+> confusing.
 
-Ah, true.  The patch itself does not look _too_ bad, but that may
-simply be because the original is bad enough ;-)
+Yup, I have been suffering from its equivalent in Gnus/Emacs every
+day, where decoded version of multipart/signed messages look
+different enough from valid RFC2822 messages and break application
+with "git am", and there of course is "feed the undecoded original
+to pipe" option.
+
+But the need for both is pretty much known, and the real issue is
+that what the default should be.  The default destination of the
+pipe being a pager, making the colored output the default is
+consistent with that, I would think.
+
+Thanks.
