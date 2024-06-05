@@ -1,65 +1,65 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BA2191475
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 10:30:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4600E191466
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 10:30:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717583405; cv=none; b=dnrlFtLkLgD+TzNwpK1dC2DBq21hUGAPU7kTJ8E9L+FFHv9UWlASA1dV7JzXP9kFl8xTQd60uzyG81pl1Rz/WbOQdcjjCL73XfSExX6L2rhd7I7tZ+OOTBjSlGUkVW6SkwPcAi4OStPvDVE/jv4dQsUHSMAZsW8HrtdAwSeyKco=
+	t=1717583405; cv=none; b=MhYoNJ23CGWFgqZtxxgcOskWjz5A4+ZVJLQizJ9w8PhxCUGA6HLYcpVQs+tApG6fw4kwtV5DuvmRupfSIdjG6KJ15ClPIJNDV1CGqATmTM6pliyYekcR5eXaZGCEKzX65r6tW9wZuw7IZHGfQmaKwpbJPGHE81ccHLgq9686aaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717583405; c=relaxed/simple;
-	bh=4mu8PMhREAzeogJjov3XHSYwwxuKDmsxoN6gRqaUs7o=;
+	bh=t2Sh2uOYymZ8PY1NxFZ+tdvRzLosECEg/jwYIX9U8wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNB8zRMWLSqqpgfHMCd3Z6KhagwD88e0fgy5ZE3Rtjo9wrrGwR7eMPQzmOIt9D867hRaw2iK/YruIao/i+VnXcva/AAkk9sRdjn97frITA9HIoAD1HvhZP/AGVOKXlf1qExK/tvkK9f6sMbXus5VAVmqAP0XDYnyDi28/x8yfsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OYV5XiXd; arc=none smtp.client-ip=209.85.218.53
+	 MIME-Version; b=TIpEbjShTfkL7+gEcfoDWGN23q1ljzB5nZzGIKSAR2wWx1kOFDiT5rKCabve0cu2EIpgqHXxjWRbRCadc+ewxoI7ZiCgwtv1kdcia2/PF8xuaqzObkWLJ1NZ8WRr/+EpOwEHhkVppdZeBgoUfOfth5bNSdDMiamgbEdf9TXiLuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kbi6XIJy; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OYV5XiXd"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a68ee841138so412040966b.1
-        for <git@vger.kernel.org>; Wed, 05 Jun 2024 03:30:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kbi6XIJy"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a626919d19dso143350166b.0
+        for <git@vger.kernel.org>; Wed, 05 Jun 2024 03:30:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717583402; x=1718188202; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1717583403; x=1718188203; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2cjaLvOYDaz48+OfD2i8KP4jj0OHGiYycoEz2ERZP4Q=;
-        b=OYV5XiXd8fa807FPJ70g7gyiU+vqc+K19I8Hy7yy4flkRtKKWn96m/W1xFv0543Ps8
-         76PbWzDVMhneL9AY2bRVoODgc+I3Y5wj/J0PEo2kLSlWaoopuHBXEUmB9trOWvSVKKuU
-         Og8J7XnTrj1njdVB5JBEApRMGg13zYvYfWnV5bMAIMhrD7BM/AVrEYlueDjrTACX6pcs
-         aWzDOxxInzww9/Gv1tRArx0/yPDO0fq7WEb+aHF8P1Xpaj2iYDwmcclRKKMq0hZVznqf
-         myfCUrs9reD3e1106qMjqW/BFaoIRdOfphXAZ9BjXjNtbwOCbLEKOgRkDLXa1OfMNlyW
-         63oQ==
+        bh=o/VAe/ORVbUECRLIQtAb+P3zV3BjjcPefMr5fQ54+9M=;
+        b=kbi6XIJyHPC4eF3IdwwzsFyh+MTpGiTlkecqKZAyrfsBtBNENSQJba3E32zMyf/lPs
+         PcAilvxxA5jN7yKIMHyux8p/AjKlGPU6kgXAlALd+FAC138PBVED8o76Hch6chc/nmb9
+         c5tjJpsMnHX6/1uptl6Hs5uVZivXSjtsloXDPY7oPHNyLWI0Rp/YomYkpacKrr7QVUlg
+         BXcu6++qxYQCekDhvJOVMZ7pZFQk1aV+iR8grzk+Df+F0RiRLu4FRpi08lrnl3xEjsEh
+         mHE15OTsf4Ji058j18HuPrYL/awElmkpmjz79BAiu5pSdCXIBjhnnO8yJRlCLt0nvddA
+         E79g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717583402; x=1718188202;
+        d=1e100.net; s=20230601; t=1717583403; x=1718188203;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2cjaLvOYDaz48+OfD2i8KP4jj0OHGiYycoEz2ERZP4Q=;
-        b=gew+AiJiVldHs4K5LgK6nddj2vlBh4sQFtCg89sTy1OuJyD80FgWAIQLJch7b76qNF
-         aZ8DzQdMuv9NyDKMhYrdlgq0dFjaiTec82SJ+krKleA1Y96FTAnzFFWnZvVvEObrvPHV
-         Wu/o9MM2CuCTz0hFg+bfHh5RqIav+QF0GnGkGJIOD8UYE2Vdb2zKh/dqLC7O1ukGRQef
-         5R+lzWdseBk4Ewua3cpobm4jLMvJvgOOW+kr3BCkOiRjaq2+xMsUCcu6dMTiKMND6bba
-         jci2Pe8TMxHb8vSpBiuk3mxznLz5gR74FgSxS9LIakyeG3/3Ng64KXkuZfHkqZQiRugX
-         fNHQ==
-X-Gm-Message-State: AOJu0Yzwvlk06CqBbTaqSkQhy60T3+4syjTgcLo3UvbuIXTSmSSkOcFB
-	yxKaeKgjQ437isjuqjIofRePyzNCMX6UF1Y6kp+A1g3Kwfap8mIYtUdmenI+
-X-Google-Smtp-Source: AGHT+IFoES9edwGcxWGh8+aOegjW7m93rqJRn0S/CAc8XDhMusits2lXX3Z71tcnqM9I11d9MPgPvQ==
-X-Received: by 2002:a17:906:2759:b0:a58:eba0:6716 with SMTP id a640c23a62f3a-a69a002e87dmr119101966b.60.1717583401678;
-        Wed, 05 Jun 2024 03:30:01 -0700 (PDT)
+        bh=o/VAe/ORVbUECRLIQtAb+P3zV3BjjcPefMr5fQ54+9M=;
+        b=j+sFxW+KB5uVjz0XA6ZqsL8hiu7zti8ALo6M39iRmdU4b+bf5lj8yDjg7mCDXbltiX
+         gSntiTwo5PWamYfUkDR/iI1IcCxIAxZyIVdD3Se42h3HGJMBKoFT2sx56UrlrdkOhlHp
+         rabAOG4sHp23RXjYgwg9woFB9sSvUoMCamvYoflvnUgq2rgHay2o1/MNhrfxLCo2U3i6
+         VKLlsyAG+ozywKMlgQ0lrXdXL8UgsScK+fyIZq6T7Rd2iO5YoLv0PFoy7IHRNplT8snG
+         hzyOfD9wLJPzptDNHJGXdcncmzVICSeHxEZ3+DqPSvKkWsETglHP6uZm504GJdhWWcWr
+         tjZw==
+X-Gm-Message-State: AOJu0Yz1rtfiF5mm4nyl80YR9Ijm685BpQEqW7u0LqndqikSODkyajVW
+	yUUYI47PJ7rKFc5kE/Z4LTf7qYCkGc8U8QyVAwEksWqdN1dVNOeImG3S8EPA
+X-Google-Smtp-Source: AGHT+IF0LQvEupp42GhTvcSJ7PuC7/DrzsSnSiX+EBUgZhzQuLG+eU6nWtk9FArMItqHdtJMKCLcBA==
+X-Received: by 2002:a17:906:b09:b0:a5a:89a8:49c5 with SMTP id a640c23a62f3a-a699d862f04mr178017466b.33.1717583402539;
+        Wed, 05 Jun 2024 03:30:02 -0700 (PDT)
 Received: from localhost.localdomain ([185.223.147.210])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a68f0e03cfdsm510453166b.195.2024.06.05.03.30.00
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a68f0e03cfdsm510453166b.195.2024.06.05.03.30.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jun 2024 03:30:01 -0700 (PDT)
+        Wed, 05 Jun 2024 03:30:02 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org,
 	gitster@pobox.com,
 	ps@pks.im
-Subject: [PATCH v4 0/7] update-ref: add symref support for --stdin
-Date: Wed,  5 Jun 2024 12:29:51 +0200
-Message-ID: <20240605102958.716432-1-knayak@gitlab.com>
+Subject: [PATCH v4 1/7] refs: create and use `ref_update_expects_existing_old_ref()`
+Date: Wed,  5 Jun 2024 12:29:52 +0200
+Message-ID: <20240605102958.716432-2-knayak@gitlab.com>
 X-Mailer: git-send-email 2.44.1
 In-Reply-To: <https://lore.kernel.org/r/20240530120940.456817-1-knayak@gitlab.com>
 References: <https://lore.kernel.org/r/20240530120940.456817-1-knayak@gitlab.com>
@@ -73,218 +73,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-The 'update-ref' command is used to update refs using transactions. The
-command allows users to also utilize a '--stdin' mode to provide a
-batch of sub-commands which can be processed in a transaction.
+The files and reftable backend, need to check if a ref must exist, so
+that the required validation can be done. A ref must exist only when the
+`old_oid` value of the update has been explicitly set and it is not the
+`null_oid` value.
 
-Currently, the sub-commands involve {verify, delete, create, update}
-and they allow users to work with regular refs in the repository. To
-work with symrefs, users only have the option of using
-'git-symbolic-ref', which doesn't provide transaction support to the
-users eventhough it uses the same behind the hood.
+Since we also support symrefs now, we need to ensure that even when
+`old_target` is set a ref must exist. While this was missed when we
+added symref support in transactions, there are no active users of this
+path. As we introduce the 'symref-verify' command in the upcoming
+commits, it is important to fix this.
 
-Recently, we modified the reference backend to add symref support,
-following which, 'git-symbolic-ref' also uses the transaction backend.
-But, it doesn't expose this to the user. To allow users to work with
-symrefs via transaction, this series adds support for new sub-commands
-{symrer-verify, symref-delete, symref-create, symref-update} to the
-'--stdin' mode of update-ref. These complement the existing
-sub-commands.
+So let's export this to a function called
+`ref_update_expects_existing_old_ref()` and expose it internally via
+'refs-internal.h'.
 
-The patches 1, 2, & 6 fix small issues in the reference backends. The other
-patches 3, 4, 5, & 7 each add one of the new sub-commands.
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ refs.c                  | 6 ++++++
+ refs/files-backend.c    | 3 +--
+ refs/refs-internal.h    | 6 ++++++
+ refs/reftable-backend.c | 2 +-
+ 4 files changed, 14 insertions(+), 3 deletions(-)
 
-The series is based off master, with 'kn/ref-transaction-symref' merged
-in.
-
-There was some discussion [1] also about adding `old_target` support to
-the existing `update` command. I think its worthwhile to do this with
-some tests cleanup, will follow that up as a separate series.
-
-Changes since v3:
-* Changed the position of `old_target` and `flags` in `ref_transaction_delete`
-to make it a coherent.
-* Added tests for deletion of regular refs using 'symref-delete', this lead to
-adding a new commit to have specific errors for when a regular update contains
-`old_target`.
-
-[1]: https://lore.kernel.org/r/CAOLa=ZQW-cCV5BP_fCvuZimfkjwAzjEiqXYRPft1Wf9kAX=_bw@mail.gmail.com
-
-Karthik Nayak (7):
-  refs: create and use `ref_update_expects_existing_old_ref()`
-  refs: specify error for regular refs with `old_target`
-  update-ref: add support for 'symref-verify' command
-  update-ref: add support for 'symref-delete' command
-  update-ref: add support for 'symref-create' command
-  reftable: pick either 'oid' or 'target' for new updates
-  update-ref: add support for 'symref-update' command
-
- Documentation/git-update-ref.txt |  25 ++
- builtin/clone.c                  |   2 +-
- builtin/fetch.c                  |   4 +-
- builtin/receive-pack.c           |   3 +-
- builtin/update-ref.c             | 237 ++++++++++++++++-
- refs.c                           |  40 ++-
- refs.h                           |   6 +-
- refs/files-backend.c             |  16 +-
- refs/refs-internal.h             |   6 +
- refs/reftable-backend.c          |  16 +-
- t/t0600-reffiles-backend.sh      |  32 +++
- t/t1400-update-ref.sh            | 430 ++++++++++++++++++++++++++++++-
- t/t1416-ref-transaction-hooks.sh |  54 ++++
- t/t5605-clone-local.sh           |   2 +-
- 14 files changed, 832 insertions(+), 41 deletions(-)
-
-Range-diff against v3:
--:  ---------- > 1:  cab5265c3c refs: create and use `ref_update_expects_existing_old_ref()`
--:  ---------- > 2:  57b5ff46c0 refs: specify error for regular refs with `old_target`
-1:  ed54b0dfb9 = 3:  5710fa81bf update-ref: add support for 'symref-verify' command
-2:  b82b86ff40 ! 4:  5f8fc4eb6e update-ref: add support for 'symref-delete' command
-    @@ Commit message
-         within a transaction, which promises atomicity of the operation and can
-         be batched with other commands.
-     
-    +    When no 'old_target' is provided it can also delete regular refs,
-    +    similar to how the 'delete' command can delete symrefs when no 'old_oid'
-    +    is provided.
-    +
-         Helped-by: Patrick Steinhardt <ps@pks.im>
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-     
-    @@ Documentation/git-update-ref.txt: verify::
-     
-      ## builtin/fetch.c ##
-     @@ builtin/fetch.c: static int prune_refs(struct display_state *display_state,
-    + 	if (!dry_run) {
-      		if (transaction) {
-      			for (ref = stale_refs; ref; ref = ref->next) {
-    - 				result = ref_transaction_delete(transaction, ref->name, NULL, 0,
-    +-				result = ref_transaction_delete(transaction, ref->name, NULL, 0,
-     -								"fetch: prune", &err);
-    -+								NULL, "fetch: prune", &err);
-    ++				result = ref_transaction_delete(transaction, ref->name, NULL,
-    ++								NULL, 0, "fetch: prune", &err);
-      				if (result)
-      					goto cleanup;
-      			}
-    @@ builtin/receive-pack.c: static const char *update(struct command *cmd, struct sh
-      					   namespaced_name,
-      					   old_oid,
-     -					   0, "push", &err)) {
-    -+					   0, NULL,
-    ++					   NULL, 0,
-     +					   "push", &err)) {
-      			rp_error("%s", err.buf);
-      			ret = "failed to delete";
-    @@ builtin/update-ref.c: static void parse_cmd_delete(struct ref_transaction *trans
-      	if (ref_transaction_delete(transaction, refname,
-      				   have_old ? &old_oid : NULL,
-     -				   update_flags, msg, &err))
-    -+				   update_flags, NULL, msg, &err))
-    ++				   NULL, update_flags, msg, &err))
-      		die("%s", err.buf);
-      
-      	update_flags = default_flags;
-    @@ builtin/update-ref.c: static void parse_cmd_delete(struct ref_transaction *trans
-     +		die("symref-delete %s: extra input: %s", refname, next);
-     +
-     +	if (ref_transaction_delete(transaction, refname, NULL,
-    -+				   update_flags, old_target, msg, &err))
-    ++				   old_target, update_flags, msg, &err))
-     +		die("%s", err.buf);
-     +
-     +	update_flags = default_flags;
-    @@ refs.c: int refs_delete_ref(struct ref_store *refs, const char *msg,
-      	if (!transaction ||
-      	    ref_transaction_delete(transaction, refname, old_oid,
-     -				   flags, msg, &err) ||
-    -+				   flags, NULL, msg, &err) ||
-    ++				   NULL, flags, msg, &err) ||
-      	    ref_transaction_commit(transaction, &err)) {
-      		error("%s", err.buf);
-      		ref_transaction_free(transaction);
-    @@ refs.c: int ref_transaction_create(struct ref_transaction *transaction,
-      			   const char *refname,
-      			   const struct object_id *old_oid,
-     -			   unsigned int flags, const char *msg,
-    -+			   unsigned int flags,
-     +			   const char *old_target,
-    ++			   unsigned int flags,
-     +			   const char *msg,
-      			   struct strbuf *err)
-      {
-    @@ refs.c: int refs_delete_refs(struct ref_store *refs, const char *logmsg,
-      	for_each_string_list_item(item, refnames) {
-      		ret = ref_transaction_delete(transaction, item->string,
-     -					     NULL, flags, msg, &err);
-    -+					     NULL, flags, NULL, msg, &err);
-    ++					     NULL, NULL, flags, msg, &err);
-      		if (ret) {
-      			warning(_("could not delete reference %s: %s"),
-      				item->string, err.buf);
-    @@ refs.h: int ref_transaction_create(struct ref_transaction *transaction,
-      			   const char *refname,
-      			   const struct object_id *old_oid,
-     -			   unsigned int flags, const char *msg,
-    -+			   unsigned int flags,
-     +			   const char *old_target,
-    ++			   unsigned int flags,
-     +			   const char *msg,
-      			   struct strbuf *err);
-      
-    @@ t/t1400-update-ref.sh: do
-     +		grep "fatal: symref-delete: missing <ref>" err
-     +	'
-     +
-    ++	test_expect_success "stdin $type symref-delete fails deleting regular ref" '
-    ++		test_when_finished "git update-ref -d refs/heads/regularref" &&
-    ++		git update-ref refs/heads/regularref $a &&
-    ++		format_command $type "symref-delete refs/heads/regularref" "$a" >stdin &&
-    ++		test_must_fail git update-ref --stdin $type --no-deref <stdin 2>err &&
-    ++		grep "fatal: cannot update regular ref: ${SQ}refs/heads/regularref${SQ}: symref target ${SQ}$a${SQ} set" err
-    ++	'
-    ++
-     +	test_expect_success "stdin $type symref-delete fails with too many arguments" '
-     +		format_command $type "symref-delete refs/heads/symref" "$a" "$a" >stdin &&
-     +		test_must_fail git update-ref --stdin $type --no-deref <stdin 2>err &&
-    @@ t/t1400-update-ref.sh: do
-     +		git update-ref --stdin $type --no-deref <stdin &&
-     +		test_must_fail git symbolic-ref -d refs/heads/symref2
-     +	'
-    ++
-    ++	test_expect_success "stdin $type symref-delete fails deleting regular ref without target" '
-    ++		git update-ref refs/heads/regularref $a &&
-    ++		format_command $type "symref-delete refs/heads/regularref" >stdin &&
-    ++		git update-ref --stdin $type --no-deref <stdin
-    ++	'
-     +
-      done
-      
-3:  ae127f7d52 ! 5:  1542cfb806 update-ref: add support for 'symref-create' command
-    @@ t/t0600-reffiles-backend.sh: test_expect_success POSIXPERM 'git reflog expire ho
-     
-      ## t/t1400-update-ref.sh ##
-     @@ t/t1400-update-ref.sh: do
-    - 		test_must_fail git symbolic-ref -d refs/heads/symref2
-    + 		git update-ref --stdin $type --no-deref <stdin
-      	'
-      
-     +	test_expect_success "stdin $type symref-create fails with too many arguments" '
-4:  8889dcbf40 = 6:  ec5380743d reftable: pick either 'oid' or 'target' for new updates
-5:  19d85d56c4 ! 7:  f8d91f7fc9 update-ref: add support for 'symref-update' command
-    @@ Commit message
-         we don't use a `(ref | oid)` prefix for the old_value, then there is
-         ambiguity around if the value provided should be treated as an oid or a
-         reference. This is more so the reason, because we allow anything
-    -    committish to be provided as an oid.
-    +    committish to be provided as an oid. While 'symref-verify' and
-    +    'symref-delete' also take in `<old-target>` we do not have this
-    +    divergence there as those commands only work with symrefs. Whereas
-    +    'symref-update' also works with regular refs and allows users to convert
-    +    regular refs to symrefs.
-     
-         The command allows users to perform symbolic ref updates within a
-         transaction. This provides atomicity and allows users to perform a set
+diff --git a/refs.c b/refs.c
+index 8260c27cde..50d8d7d777 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2679,3 +2679,9 @@ int ref_update_check_old_target(const char *referent, struct ref_update *update,
+ 			    referent, update->old_target);
+ 	return -1;
+ }
++
++int ref_update_expects_existing_old_ref(struct ref_update *update)
++{
++	return (update->flags & REF_HAVE_OLD) &&
++		(!is_null_oid(&update->old_oid) || update->old_target);
++}
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 5f3089d947..194e74eb4d 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2412,8 +2412,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 			       struct strbuf *err)
+ {
+ 	struct strbuf referent = STRBUF_INIT;
+-	int mustexist = (update->flags & REF_HAVE_OLD) &&
+-		!is_null_oid(&update->old_oid);
++	int mustexist = ref_update_expects_existing_old_ref(update);
+ 	int ret = 0;
+ 	struct ref_lock *lock;
+ 
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 53a6c5d842..ee298ec0d5 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -765,4 +765,10 @@ int ref_update_has_null_new_value(struct ref_update *update);
+ int ref_update_check_old_target(const char *referent, struct ref_update *update,
+ 				struct strbuf *err);
+ 
++/*
++ * Check if the ref must exist, this means that the old_oid or
++ * old_target is non NULL.
++ */
++int ref_update_expects_existing_old_ref(struct ref_update *update);
++
+ #endif /* REFS_REFS_INTERNAL_H */
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 1af86bbdec..b838cf8f00 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -824,7 +824,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 					      &current_oid, &referent, &u->type);
+ 		if (ret < 0)
+ 			goto done;
+-		if (ret > 0 && (!(u->flags & REF_HAVE_OLD) || is_null_oid(&u->old_oid))) {
++		if (ret > 0 && !ref_update_expects_existing_old_ref(u)) {
+ 			/*
+ 			 * The reference does not exist, and we either have no
+ 			 * old object ID or expect the reference to not exist.
 -- 
 2.43.GIT
 
