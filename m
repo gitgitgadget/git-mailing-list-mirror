@@ -1,185 +1,145 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from wfout7-smtp.messagingengine.com (wfout7-smtp.messagingengine.com [64.147.123.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9837C10E5
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 05:16:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4C010E5
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 05:16:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717564573; cv=none; b=XKmkvTuJy5iKF68IyleiyNa4LxCsUvYY21naPxE2dws4Vj4AVQf1FhxZSFCeuaij5DYlhRporrYKdfAOPxdpUB8X9NGsCh35QTr2nnu8rmBydAKpjsXpejDytuejQQKJzSR2FWi1Zp6DEPQk3OXgPZNQ7ZKgobBDI7g4EekOWpg=
+	t=1717564612; cv=none; b=LuaR4huOnA35cnAn34lhEAxlQQWhzusYsyWvakh3/2+65uDXnMFRw7y560Si0sSDrYvYHA6Vi3DtKViZ38jRtb0+N20IaLllOKaI8X1XwL4Pqm4znoZ9qBPDnnw7Adh1sAkGjIZn2S/ZqWQwgY8u1tFExMF6iMcfB4z3/nNweNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717564573; c=relaxed/simple;
-	bh=IWP4qSKUFrOBr0mTG8Om3MOew2KIvOIT2MKGmBC1k5Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Xa5gYB3zMWRX+sd1BugnhQwa599ddZifcLEaSLDCdcAGOSF7yQsUIdflVFJ8PLTisMHR763mrQ4siqePsmDTq0UHQRNwTebggmhXzz7e+qtgQMWXliUBdeSH9/Hp1h6kLzzRvjJoVn4hNPSKByK/0uFLMI0kvmhoPksQyjyJSF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AgVb/Z/3; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1717564612; c=relaxed/simple;
+	bh=CxPyvWfuyLlNiHwvbZQr/fXY05PWDNEKsEKbzVqwnyg=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=M//c5fXE40TuwanfI/NnstbuxdIiTFm277CoLdtbbceYJUQQJfkaeHrGskcBeDbm6b4nhUvXQYCCk7ST/TZbKr5HQV4cy0lMCLMNPGmS2Pr+kagtpbHzKcgHxxKt3B3ANRKQH9J7mdBOvcyVWI6rmwXRWfRrzCfVnhNQV6kT3v4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=akPJKPAW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lcAuMeX6; arc=none smtp.client-ip=64.147.123.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AgVb/Z/3"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 28CFF21201;
-	Wed,  5 Jun 2024 01:16:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=IWP4qSKUFrOBr0mTG8Om3MOew2KIvOIT2MKGmB
-	C1k5Q=; b=AgVb/Z/3pP4zg6tagRakQUAUmS5AIRYSNOmCk8tQhrJvsfGE+K8Wef
-	Gbub1yP69/XRX7sURNlRhwZA3ZRyBaVcVlV590yLxtwN6aLHoklGYLewpF/qJ/nL
-	todByNTs/MRn2g+Qkhp705i003fGdug547OJ/d4BQHxEOSB+KFvQ4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1455521200;
-	Wed,  5 Jun 2024 01:16:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1A53D211FF;
-	Wed,  5 Jun 2024 01:16:08 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  Dragan Simic <dsimic@manjaro.org>,
-  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 6/6] add-patch: introduce the command '|'
-In-Reply-To: <xmqqy17kws2k.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	04 Jun 2024 10:12:03 -0700")
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
-	<199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
-	<b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
-	<1ef0ac3a-3be5-4fc2-93f8-46610f3d1880@gmail.com>
-	<75a3cc89-4d23-4eae-b0ad-e52e2c8ba550@gmail.com>
-	<xmqqy17kws2k.fsf@gitster.g>
-Date: Tue, 04 Jun 2024 22:16:06 -0700
-Message-ID: <xmqq4ja8ynop.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="akPJKPAW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lcAuMeX6"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id A34B21C0017A
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 01:16:48 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Wed, 05 Jun 2024 01:16:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1717564608; x=1717651008; bh=ONcLAkGTZhoBOJxZK6LnLLMyDSz59FXY
+	KuGf/fBcoRY=; b=akPJKPAWQcmjzU6kADGfdBFd8yUCpU8Rw0XJxClag9fDXHIj
+	Fwyrt+rF8DMsFVyqZ4ML23+FBwabD+wTtxUOYr65tLCTwNXmFA3vzS+ynWAxoEmW
+	FNuzN0K/LJ/Qww+rcGhLRDqN+pF9XMwzeg2Mt9k4xlngarriCZI86mJp1DRrzuN9
+	Tbc5d+XN7pLhc/NwKGN5PheaQLa4qj8ycauzF5HOMiiKTRQIyufXK3SYbdL56GbI
+	bUbPLC6MiLk/URz/Q+4y0ZNdQ/CiWZSdbkA3z3UyWDAGfwpyhCc+VLXLAOaJMt+L
+	QfTexH3GWarA45aSAGxgYu7r8/ajRe2hVDBK+w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1717564608; x=1717651008; bh=ONcLAkGTZhoBOJxZK6LnLLMyDSz59FXYKuG
+	f/fBcoRY=; b=lcAuMeX6PMzhbDndJ5kfGFQfL8b4uCjNbE18g57r6kIg/rhP+w0
+	fpZEKS6zqn9AKAmb473TUuURAIaAlPJT5bH6+VbdcY9frTEbpYuUnCXZ5rgKVbes
+	UCwoWKJDuy8OJQUfrYcboSU1OMsxX2r+nzdFuQAPxA7GlX1eVjTxJat6PhN8+sW0
+	dsOP1lcEhHOzzNBZ1RVju7aoHOxOE5xzjTRlfjS2vl45wh1E0byEcS4UqC9b65/S
+	THhYKxVIY9XxpFJlaiBCIFo8o1bp5ZCQ8BQGmySWRDJ4L3xIbKoHdPORW54vuHr0
+	F72yk74XPG8PnRKkTRv0V8qmTD6v6WQ8CSg==
+X-ME-Sender: <xms:v_RfZvclR8cM08Y9Rb4VNAeMJD19YkQB5bNpQ6Z6wUx0ZOzJ11RdLA>
+    <xme:v_RfZlMwET-mvZNRVi1BpA7brb1t4t-LIL7XIURGS8WKh4Em4NMS_m7ipLBcGFWta
+    i8_LMZLZ_UOWP3MzA>
+X-ME-Received: <xmr:v_RfZoh9oMnVJNuFmh14zEJ_MleWYlvJfSb2jsswFSiyDFJMVfV0WNbWzCz-ljdEgXuVLTRbQyUCMU-N3NmNF_gLNRE70BhREwj33JNFkKmfdnNLico>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelhedgleefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
+    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:wPRfZg8PYfjBMo2rXnAFzwCT9scLK5voLjhxwIJaXQ7FPFuTUcXBQg>
+    <xmx:wPRfZrun8hTwNAx4IlLHwj-JJMGxi6zEun3P7TN9SbmrkiqDWqvMhQ>
+    <xmx:wPRfZvEITjnx25leo3R56xWqfMXtkvBOGbEyHOaxiGHvj8NGMPI_fA>
+    <xmx:wPRfZiPmCzGaEClsopB3EbafjRuuX7O5YG4CUzmxNkY9PvPDMOW_lw>
+    <xmx:wPRfZkVNX-ZfBTpeWdxDe_bfJ4PDuWxSGHJlopHpENpX0HOvwWKR9xgT>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 5 Jun 2024 01:16:47 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 01b12cc9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Wed, 5 Jun 2024 05:16:16 +0000 (UTC)
+Date: Wed, 5 Jun 2024 07:16:42 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Subject: [PATCH 0/4] Documentation: improve linting of manpage existence
+Message-ID: <cover.1717564310.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B71F7640-22FA-11EF-AC85-8F8B087618E4-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="DKvpu/23JU7ha7M7"
+Content-Disposition: inline
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> By the way, it should be trivial to make the "custom" pager more sticky.
+--DKvpu/23JU7ha7M7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Here is what you can squash into this step.  I gave many other
-pieces of style and design advices in other messages, which are not
-covered by this patch but the necessary fixes should be obvious.
+Hi,
 
-This message is only about making the custom pager stick during a
-session.  It does not adjust the command help to give the last pager
-command (or literally "your pager"), either.
+in [1], Junio noticed that `make check-docs` was failing for a recent
+patch series of mine that introduces the new git-refs(1) command.
+Curiously though, while the checks do print errors, the Makefile target
+itself succeeded and thus did not make the corresponding CI job fail.
 
----- >8 ----
-Subject: [PATCH] add-p: make custom pager sticky during a session
+This patch series fixes that issue and also refactors the infrastructure
+such that it fits better into our existing set of linter targets for our
+documentation. Finally, this series then adds a job to GitLab CI that is
+equivalent to the job we already have on GitHub Actions.
 
-The original design kept resetting the choice of the custom pager
-every time the '|' command is used.  This was way cumbersome to use.
+[1]: <xmqqjzj9czop.fsf@gitster.g>
 
-Keep track of the last choice in the add_p_state.custom_pager
-member.  This value can stick across calls to patch_update_file()
-function, so a custom pager used for choosing hunks in one file
-can be carried over to the view hunks in the next file.
+Patrick
 
-As we make the custom pager stick, we need a way to reset it back to
-the default value (which we use NULL for, as set_custom_pager()
-takes the value to mean "use the default one").
+Patrick Steinhardt (4):
+  Makefile: extract script to lint missing/extraneous manpages
+  Documentation/lint-manpages: bubble up errors
+  gitlab-ci: add job to run `make check-docs`
+  ci/test-documentation: work around SyntaxWarning in Python 3.12
 
-As there is no value that can say "pager is not used" suitable for
-the custom_pager member to take, we need a separate "use_pager" flag
-so that the fact that '|' command was used can be propagated to the
-next iteration of the loop, independent from what custom pager is
-used.
+ .gitlab-ci.yml                 |   9 +++
+ Documentation/Makefile         |   4 ++
+ Documentation/lint-manpages.sh | 107 +++++++++++++++++++++++++++++++++
+ Makefile                       |  36 -----------
+ ci/test-documentation.sh       |   1 +
+ 5 files changed, 121 insertions(+), 36 deletions(-)
+ create mode 100755 Documentation/lint-manpages.sh
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- add-patch.c | 33 +++++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+--=20
+2.45.2.409.g7b0defb391.dirty
 
-diff --git a/add-patch.c b/add-patch.c
-index da13e267db..71ee7f9a94 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -272,6 +272,7 @@ struct add_p_state {
- 	/* patch mode */
- 	struct patch_mode *mode;
- 	const char *revision;
-+	char *custom_pager;
- };
- 
- static void add_p_state_clear(struct add_p_state *s)
-@@ -285,6 +286,7 @@ static void add_p_state_clear(struct add_p_state *s)
- 	for (i = 0; i < s->file_diff_nr; i++)
- 		free(s->file_diff[i].hunk);
- 	free(s->file_diff);
-+	free(s->custom_pager);
- 	clear_add_i_state(&s->s);
- }
- 
-@@ -1403,7 +1405,7 @@ static int patch_update_file(struct add_p_state *s,
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	int colored = !!s->colored.len, quit = 0;
- 	enum prompt_mode_type prompt_mode_type;
--	const char* pager = NULL;
-+	int use_pager = 0;
- 	enum {
- 		ALLOW_GOTO_PREVIOUS_HUNK = 1 << 0,
- 		ALLOW_GOTO_PREVIOUS_UNDECIDED_HUNK = 1 << 1,
-@@ -1452,14 +1454,14 @@ static int patch_update_file(struct add_p_state *s,
- 		strbuf_reset(&s->buf);
- 		if (file_diff->hunk_nr) {
- 			if (rendered_hunk_index != hunk_index) {
--				if (pager)
--					setup_custom_pager(pager);
-+				if (use_pager)
-+					setup_custom_pager(s->custom_pager);
- 				render_hunk(s, hunk, 0, colored, &s->buf);
- 				fputs(s->buf.buf, stdout);
- 				rendered_hunk_index = hunk_index;
--				if (pager) {
-+				if (use_pager) {
- 					wait_for_pager();
--					pager = NULL;
-+					use_pager = 0;
- 				}
- 			}
- 
-@@ -1685,15 +1687,26 @@ static int patch_update_file(struct add_p_state *s,
- 		} else if (s->answer.buf[0] == 'p') {
- 			rendered_hunk_index = -1;
- 		} else if (ch == '|') {
--			strbuf_remove(&s->answer, 0, 1);
--			if (s->s.use_single_key && s->answer.len == 0) {
-+			if (!s->s.use_single_key) {
-+				strbuf_remove(&s->answer, 0, 1);
-+			} else {
- 				printf("%s", _("program? "));
- 				fflush(stdout);
- 				strbuf_getline(&s->answer, stdin);
--				strbuf_trim_trailing_newline(&s->answer);
- 			}
--			strbuf_trim(&s->answer);
--			pager = s->answer.buf;
-+			strbuf_trim_trailing_newline(&s->answer);
-+
-+			if (!s->answer.len)
-+				; /* empty input - reuse the previous */
-+			else {
-+				strbuf_trim(&s->answer);
-+				FREE_AND_NULL(s->custom_pager);
-+				if (!s->answer.len)
-+					; /* semi-empty - use your pager */
-+				else
-+					s->custom_pager = xstrdup(s->answer.buf);
-+			}
-+			use_pager = 1;
- 			rendered_hunk_index = -1;
- 		} else if (s->answer.buf[0] == '?') {
- 			const char *p = _(help_patch_remainder), *eol = p;
--- 
-2.45.2-409-g7b0defb391
 
+--DKvpu/23JU7ha7M7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZf9LMACgkQVbJhu7ck
+PpTPrw//ZsJD8lnZQEMe1MFKeZgrorn7YDH6HrUAmp5EFGa3X65/zcuBbfYO66I1
+Xte6CXmhgv0LKj96yh5ntI9KXnaSWeBnnfRFyGIjh361nUQeZtDb5Voz+RXu8tkE
+KcnLt7bBoZjghWhRDYk3AOphp9oV+ViwCuudOh1w9IvXf4KlUWsUC7bOvqRi/kuR
+nQhZR9WfdH2Tkc+dlz/8C5C5K3/XiRioQo4yA190zZIZERJ8paIJfrLETYYjszpS
+RxPOtnJC+Iv/Q01snwK537Dk906PoeRR+nMTub8PwdUIXfo/3MyOEg2vLOJdVkrh
+XP6qTr8YISrYC73kgvyticT6ZnwZ51OvAKXqlD0VhuvAZWywRjyiSxIWqLP6E4zc
+x0x2dhlL4zb8EaWxUHFrdOWcCeTDLwh/3uWYv8cbjIKbcn/ukFB0CTNtqkfVf7tH
+WjH3hzcgV0KNi/CJPBvajUL7IMCXR2VikOBxivvWmsdNVFoMIAJ/hfJn50wu5Dmt
+Tfmvuxk4+5fPR9COUMzgWnoo2Ba+o8CMeS3UkB7MPVk+MqiZh/dENY48fivV+9Wo
+zaVn3QFeKsYL+ClZjj8if9KNhOPzOkJmevkH/CCemhA6GO+7XcmG2INTFZBPi0X8
+eC9heJ6JjUCBCFs9Qpys+CsHjHhc1WPkpwevKywYlVttqezXCpM=
+=eDNK
+-----END PGP SIGNATURE-----
+
+--DKvpu/23JU7ha7M7--
