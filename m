@@ -1,160 +1,64 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17552C8D1
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 18:01:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C01364BE
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 18:01:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717610487; cv=none; b=U2WXMw6/LwtuheVM7IW0s2qBwy3AipzmYF0dLgovF/6MNLzWVM4036ryOIHwO+H0XO+4kzBxSMUx6752KY1MqtJaz5tmXsNu1f0wsoBpJ0ylPUL8TFKPdoUOOubFeWqILcjM11gJgwQd6/nICvWdlqG+FnaLwWWzLYaGa5OKpZs=
+	t=1717610503; cv=none; b=HvLgXMq7J7FJ8aUGAp7Q+c0f6WqVmqsPbJENaRGZ5ll7+k601fHp7Yayi0RZsiqoGlgo1RBbx53tdw+DNlweagQDm33frZ5X5THrfXd6Ved33XXY8ZOmuxlttbt94Fp29YW193y+b+RkxMhhvlSlt03GzkepcB/f6CuM6OyGr9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717610487; c=relaxed/simple;
-	bh=NV8d9hGsrhIkICDwniHZgHm0DCaBjxn8vtPppg1btHs=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:Cc:
-	 In-Reply-To:Content-Type; b=DqJDPzuUYSQqQDkr7z2jV6zGsF06h03Ll0QVb0o46+Cr8G7Ytna/BdxEvDKIOQiOCZmhS/wq/f2sTgG1O/gbx/aRk15dApMVbGrcWLm80Sii8Ys53fVfdJ8KfUQM3kD2jX5wm9Gy1/MAF6zDVlBw9IB1lmp7y66w35AA4kn/WlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XD10R/ir; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1717610503; c=relaxed/simple;
+	bh=HOce+IkfBEFKNFdebYX1pAmokWUslQoqtvlsqSayL0c=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Aen4PjbiyEFITYqPivz5XVQJ+ucbcqDIE4DOThDyjseGe0FT8BDJD/hVF0yFNKzqzIFY5sqJAST6H5Mad00scoDW2Uw5Msu4fvf4sUk+upAvRP38KXqHx9uiVa1CKPM58o867d5swZli3HZpMp9yuU16MG2CLkhF+eEThiInVk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFpStnUh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XD10R/ir"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-35dc36b107fso41532f8f.1
-        for <git@vger.kernel.org>; Wed, 05 Jun 2024 11:01:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717610483; x=1718215283; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:content-language
-         :references:to:from:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i+y3Kkv8ujQKfYM4UQadMjGGH1D5jcGeGCBhORcg/9w=;
-        b=XD10R/iry9gLZLMCLEM3RZr4e9d71Jg/zjRqurtcCI1yb2O5+PlOAVlp4980A+ryuB
-         6QPgGpuLebaR9hEJglBHeqQQs5LZIm1adfZ7Mh6aUBtgUIdqgjSHcIj+NswEhfSJYr1/
-         1dkLOBUBGf5DalEBkjLm9Vq684J61RvaKIJrjC9SGgF9GtoJgES/RYDLGXdDmOx2QVX0
-         klCptWAZDG/l525YoJ+E1CpZCbze0QWpHOlLiBP4gJq8k6dku6XXxKaQ2K1iZXm1LGDJ
-         YsFpbjvXQ1OkAzsTM+VSqWvQEqXzdT3R1YCVgU4q58VDIDUs4uXUKbg6ydm5oOB7/+fU
-         x/OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717610483; x=1718215283;
-        h=content-transfer-encoding:in-reply-to:cc:content-language
-         :references:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i+y3Kkv8ujQKfYM4UQadMjGGH1D5jcGeGCBhORcg/9w=;
-        b=FOU5MAXn6gStE0wTfS6CQZaj04hMoy7Gr50Y8KOv48/ti3w+/pH6YKmE4FtCrVRasQ
-         Wow0u0H58Z7WTPxj3rHh5req05Uh/i8kdHjRm8xSArWGxLt5ryBrnUYbvrcwrpuvth8q
-         bGGU8+ALp9+GXLgRjUhM8OfdaajNZdMuwUHY/IkbWXvEcpREHKI2n4kvCbSEU3gmHjSD
-         6iIMVvrbZT/RIzXx88zkMNPKIKueW+NPwzs3PzhL1sPVz3ybAyE/N+L56aCXzZuLPO1q
-         vhF5RDDqqBynsyuJQZVv+OD7f6+GX31C0cAVLiXsdJguBiiQDxETcZoAf5Rx5gWOZGfO
-         13TA==
-X-Gm-Message-State: AOJu0Yz53rJwLFJB2MbL/CuARxfLNZ1ZEXC7iZN/UnSnZYj6icE0X/8w
-	CiVyqOxsTviQau25vmTVz5jSITakgvr9CjifIvgnggc2wY1oGXOsMi/tFrv0
-X-Google-Smtp-Source: AGHT+IFVPHHKYA8WXqmXV9rzRz48gmYo5pGVBb/0ki064THCZhbvhKHQmlydIAuJCLuumsGPtWSSQA==
-X-Received: by 2002:a5d:6a0f:0:b0:34f:f540:bdbc with SMTP id ffacd0b85a97d-35e8ef09a6amr2606893f8f.38.1717610483147;
-        Wed, 05 Jun 2024 11:01:23 -0700 (PDT)
-Received: from gmail.com (19.red-88-14-42.dynamicip.rima-tde.net. [88.14.42.19])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd03fae7csm15413211f8f.0.2024.06.05.11.01.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jun 2024 11:01:22 -0700 (PDT)
-Message-ID: <14365d68-ed04-44fe-823b-a3959626684e@gmail.com>
-Date: Wed, 5 Jun 2024 20:01:21 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFpStnUh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56185C2BD11;
+	Wed,  5 Jun 2024 18:01:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1717610502;
+	bh=HOce+IkfBEFKNFdebYX1pAmokWUslQoqtvlsqSayL0c=;
+	h=Date:From:To:Subject:From;
+	b=TFpStnUheVSf3zi5dGp0X9J/BlTLc38wZi8/MYPvzqcnpa0MIz9HVWGsWBg/4Cyci
+	 p8xYh+P76NVd+6l7356tVYQpmC109lvft4jf6g0iWBKEU3jjhK8EYxf+EQgVZbVvCw
+	 1jM55SrmHwXwjXwvKRq443kryAWohJMJb16DK8dY=
+Date: Wed, 5 Jun 2024 14:01:38 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: git@vger.kernel.org
+Subject: RFC: indicating diff strategy in format-patch message headers
+Message-ID: <20240605-hilarious-dramatic-mushroom-7fd941@lemur>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] format-patch: assume --cover-letter for diff in
- multi-patch series
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>
-References: <6269eed5-f1ff-43f3-9249-d6a0f1852a6c@gmail.com>
-Content-Language: en-US
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-In-Reply-To: <6269eed5-f1ff-43f3-9249-d6a0f1852a6c@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-When we deal with a multi-patch series in git-format-patch(1), if we see
-`--interdiff` or `--range-diff` but no `--cover-letter`, we return with
-an error, saying:
+Hello, all:
 
-    fatal: --range-diff requires --cover-letter or single patch
+When developing tooling that attempts to map commits to patches, we often
+don't have more than just the git-patch-id to go by. The problem is, there is
+any number of ways to generate patches from commits:
 
-or:
+- using a different strategy (--histogram, --patience, etc)
+- using a different number of context lines (-U5)
 
-    fatal: --interdiff requires --cover-letter or single patch
+Without knowing what options were used by the original author, we cannot be
+certain that we'll create a patch with the same git-patch-id, even if it's
+from the exact same commit.
 
-This makes sense because the cover-letter is where we place the diff
-from the previous version.
+Would it make sense to have git-format-patch (and friends) include an
+additional header hinting at the options used to generate the patch? E.g.:
 
-However, considering that `format-patch` generates a multi-patch as
-needed, let's adopt a similar "cover as necessary" approach when using
-`--interdiff` or `--range-diff`.
+    X-git-diff-options: algo=myers; context=3;
 
-Therefore, relax the requirement for an explicit `--cover-letter` in a
-multi-patch series when the user says `--iterdiff` or `--range-diff`.
+It won't help for all cases where we need to make a match (e.g. when we match
+from git commits to a patch query), but it will help matching the other way.
 
-Still, if only to return the error, respect "format.coverLetter=no" and
-`--no-cover-letter`.
+Any thoughts?
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
-
-This is a hopefully more curated version that better explains the
-current situation and adds a couple of tests.
-
-Thanks!
-
-
- builtin/log.c           | 2 ++
- t/t3206-range-diff.sh   | 6 ++++++
- t/t4014-format-patch.sh | 6 ++++++
- 3 files changed, 14 insertions(+)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index c8ce0c0d88..8032909d4f 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -2277,6 +2277,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	if (cover_letter == -1) {
- 		if (config_cover_letter == COVER_AUTO)
- 			cover_letter = (total > 1);
-+		else if ((idiff_prev.nr || rdiff_prev) && (total > 1))
-+			cover_letter = (config_cover_letter != COVER_OFF);
- 		else
- 			cover_letter = (config_cover_letter == COVER_ON);
- 	}
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index 7b05bf3961..5af155805d 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -545,6 +545,12 @@ do
- 	'
- done
- 
-+test_expect_success "format-patch --range-diff, implicit --cover-letter" '
-+	git format-patch -v2 --range-diff=topic main..unmodified &&
-+	test_when_finished "rm v2-000?-*" &&
-+	test_grep "^Range-diff against v1:$" v2-0000-*
-+'
-+
- test_expect_success 'format-patch --range-diff as commentary' '
- 	git format-patch --range-diff=HEAD~1 HEAD~1 >actual &&
- 	test_when_finished "rm 0001-*" &&
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index ba85b582c5..c844fbfe47 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -2492,6 +2492,12 @@ test_expect_success 'interdiff: solo-patch' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'interdiff: multi-patch, implicit --cover-letter' '
-+	git format-patch --interdiff=boop~2 -2 -v23 &&
-+	test_grep "^Interdiff against v22:$" v23-0000-cover-letter.patch &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'format-patch does not respect diff.noprefix' '
- 	git -c diff.noprefix format-patch -1 --stdout >actual &&
- 	grep "^--- a/blorp" actual
--- 
-2.45.2.410.g52d620e86a
+-K
 
