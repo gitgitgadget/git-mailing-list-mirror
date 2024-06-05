@@ -1,190 +1,100 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A950A1922FC
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 08:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46D149638
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 08:31:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717574596; cv=none; b=TjqxOLdWF2u4bGZgkQoXDYJs+tGY6shKE2ITrVCRbEP+JuF40mxZrh44FzuvSCuTBHAc0IM/Ez+op7XIqMJKJe1nS4AVUl1wqsZrlsGakK4nOBxovSgE+wTr3CIx0CurRkWmxeOi8kkOATIEiNQKI7MuolB/b3S+z/VGlOKqvxw=
+	t=1717576305; cv=none; b=e3TTaaa5YJxHDLXvxIkK6kEJL/cNWxgebr5MhuH/xu+d41dR0VvUHFhOd9+WH1Z3kEJrkAbypUB68TsBsQ1Of4FKN5V9iTT5wyw3xmLLoZ5mCNa8mZCZ0Yet7lkxG6VMaFEuyIxM2DkxMX8EglAnD9kg8qRLAsLTgvIYu1U36ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717574596; c=relaxed/simple;
-	bh=d8vt3PKTY6kn07tiTnsznhkUPq5/VXOyn/tSpNSy9yk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l/vyKcgDt1wUcWzv2jDzxHCqjw6+wYTP/xqX8BSAk18z7fRurfAIhjF0djPcoD0QPV+3t7wb2AVnG1Aq6xxQ+eVLUArufuvOQMOU+R2aFI0rLWdHhni3Po6g9bW+LlZjPlOhpp+eWOjCs6SJnx5FOYoe4NZlqbpXx1r39hzcIvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 23032 invoked by uid 109); 5 Jun 2024 08:03:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 05 Jun 2024 08:03:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27727 invoked by uid 111); 5 Jun 2024 08:03:07 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 05 Jun 2024 04:03:07 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 5 Jun 2024 04:03:08 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] dir.c: skip .gitignore, etc larger than INT_MAX
-Message-ID: <20240605080308.GA2345232@coredump.intra.peff.net>
-References: <20240531120034.GA442032@coredump.intra.peff.net>
- <xmqqh6eehvj4.fsf@gitster.g>
- <20240604103947.GC1781455@coredump.intra.peff.net>
- <xmqqikyowqjj.fsf@gitster.g>
+	s=arc-20240116; t=1717576305; c=relaxed/simple;
+	bh=fQXQ0GyP/00KV/hHDnr94PRBoShVSzzrhG2jKyIXIqI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=FllvgDllNZ31swaYZsDwmQcoAyblCA06sW1f6Gr+ijJnuGoA0Xp1dBhKkzbndIoX3gE9fxcjsSK9TP+XVS6BmxZJ1FIbnWYYM4ERXTLKcFDNcA2hz4XJ5OLe3y2RWncnlLRnI8VreVrvEeTYVlkaYNUeASABM2GqwsblAUB5z/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=on2NOYNl; arc=none smtp.client-ip=212.227.17.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="on2NOYNl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1717576292; x=1718181092; i=l.s.r@web.de;
+	bh=xfZVVd4WdqmCdSqUjxlxtVutIE/fUfXI8ylEOtjhxn4=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=on2NOYNljzLIJXUCTlf3ycO/sgJIZFVqs5ZfZI3C6N3PoY4HfQCgaEbf1ic/kAjV
+	 HkfA9eL4jDmuO5Vl+oz+HHYSQELMrZjIkxK6DPPprUp3ar9I5bX3oTeTRAZQLpJqx
+	 0VYuzu4mx8RVOq99gEead5Icj2gLdy4aSCjbt6PAdyFbJeFVRUnWfBI5UTwbF6Snf
+	 b3oxrn21N2aEaQTMPFGdA1F7j/XV8gshlJIO2lk7GcXpMOIU8grZ3fLejKAqKKCgc
+	 fPUKThh+EJP9CSpx5Fs5aLd2m/wJFC7zXibkR5C3KGxRfGubSTYOPUW0FBCGUsDQp
+	 cxlBl3i63XqnTfPO4g==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MjgX3-1siJAt36yZ-00htiP; Wed, 05
+ Jun 2024 10:31:32 +0200
+Message-ID: <6fa51a62-5dc1-4865-9f79-eaf7d65189ab@web.de>
+Date: Wed, 5 Jun 2024 10:31:32 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqikyowqjj.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH v2 0/3] diff: fix --exit-code with external diff
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+ German Lashevich <german.lashevich@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <CACDhgro3KXD0O9ZdE1q46jmXE0O=vf-Z+ZX50WMqmRHAeowGAA@mail.gmail.com>
+ <82561c70-ec33-41bf-b036-52310ffc1926@web.de>
+ <e2e4a4e9-55db-403c-902d-fd8af3aea05c@web.de>
+Content-Language: en-US
+In-Reply-To: <e2e4a4e9-55db-403c-902d-fd8af3aea05c@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ung+cqk8yh9MLebr4bntF2bAhwOMWBoEzfAvjoahurfW16St8hY
+ Fu3mmLdmSOG9dhvly/IecD/pKpWgeL5x5EOPb5o55uKEGtwYXO87pXVlw2Lbpen65+jY/UP
+ sv5PdgsLCjw4x/4hvgunrVkitiNylRAIqJLOOjBcybFmF5ttFJhQvgIkc08U1atwqvzfWCc
+ REUupWshHX2sNaI7lphBQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:5AjVwMdSRwo=;TxP/GCji9mq4r281LP99n+izVNG
+ M8hstIBzq6nQhRed5JvQEIggMzA1OlkhI6zaQJMzR4F/7ho1BVLqVcFpjMfM8CF5Frj8ndtKN
+ my91rW4YZkZ5nxjf0NmFU7Pei6z2gtDoWK3ECT8/adz7hG0O25EYSebZFjooQfD2xehMIOt4l
+ BoVlwUMGxijzuowcjB8btFulsfxp3Cg7mQHNbIoYXPKRuD3e4MJ6JywVMwj0yGCIN0GRqgyEn
+ wcIsbiuc7TJlewhimL91c2MY0BAI/4Nr+zYw9L9B0eckyklL5Cg7+CEjhqaqsGPLjgl3OTy2F
+ +9P8az1k7kc+Z/4ed6B+p2RM55bixya0twVAjcSJJQKhrJmfrAj53oFlHw4Z/ELmn+sCVWTVu
+ AfsUvK2TvsIx9kD4i71NedZX0ytXAR41Rlhhf/Ua0abEHAejLgq7XKB8dDNEUmggpZyXueqpo
+ pJLqqfztbtA68ZHTE0T8hrzpZ2TGQSg/svRacA9na5P8mz7I5iwMVwk5PwqOlO8ME4RmvH2U0
+ ftYuHzA2WcRjpLdQDRkEfBLKi/CnqXeQbaV9GcS5naSQBB4wPTBF1JvA7kU8fWUT4nZmP25Ud
+ DgJ9d8KLJ8SK7FKxh99Qd+a4sr2pafSyLBHp0vo/MMlVZV3aJaE6jaCeotksQ06TCz/suiW4D
+ hpxUS/GWv3859roE/TBIFn0NvMIMAYWnFLSB77svvubuNm2HUVBJY+ntg3II4gfL31ed+R3Jm
+ 8eOOjfbfRs4jUjWcvTxCjHTObxiVSouoJLRwC4lqQ1DG/FbSu4I5fsh/uftwn++A/AiVGxi70
+ n6U4F/Yxqf60UGFwmnoIBazqFfWw2H5X8N0n/D2xy9HKQ=
 
-On Tue, Jun 04, 2024 at 10:45:04AM -0700, Junio C Hamano wrote:
+Changes since v1:
+- old patch 1 was merged
+- old patch 2 was merged and reverted
+- new patch 1 adds tests that exercises diff --exit-code and --quiet
+  together with all methods for specifying external diffs
+- new patch 2 adds a struct to store the flag that patch 3 adds
+- patch 3 adds configuration options and an environment variable to
+  accept diff(1)-style exit codes from external diffs
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I was hoping to avoid making up an arbitrary number. But your question
-> > about gitattributes reminded me that we already did something similar in
-> > 3c50032ff5 (attr: ignore overly large gitattributes files, 2022-12-01).
-> > There it's a hard-coded 100MB limit (without even a config option).
-> >
-> > Maybe we should just do the same here?
-> 
-> Hmph, I thought the 100MB was only for blobs, as we stream the input
-> we read from a regular file, but we do have the same limit there
-> presumably to match what we do to blobs?  I do not mind that, but I
-> do not mind leaving it a future "consolidate various size limits on
-> control files used by Git" patch, that unifies the limit for attrs,
-> excludes, gitmodules, .git/config, etc.
+  t4020: test exit code with external diffs
+  userdiff: add and use struct external_diff
+  diff: let external diffs report that changes are uninteresting
 
-I think we enforce the limit for files, too. Which makes sense, as we'd
-read .gitattributes checked out from an untrusted tree. Even if we
-stream it line by line, we still end up scaling some structures with the
-total number of lines (and of course the file length also bounds the
-line length, though I think we have an even shorter line length limit).
+ Documentation/config/diff.txt   | 14 ++++++++
+ Documentation/git.txt           |  7 ++++
+ Documentation/gitattributes.txt |  5 +++
+ diff.c                          | 62 ++++++++++++++++++++++++---------
+ t/t4020-diff-external.sh        | 44 +++++++++++++++++++++++
+ userdiff.c                      |  8 +++--
+ userdiff.h                      |  7 +++-
+ 7 files changed, 128 insertions(+), 19 deletions(-)
 
-I do not mind if consolidation waits for later, but I guess the
-immediate question is whether we'd prefer to reduce the limit set by my
-patch to a more security-conservative value. It would be easy to swap
-out INT_MAX for a 100MB #define on top.
-
-Maybe this?
-
--- >8 --
-Subject: [PATCH] dir.c: reduce max pattern file size to 100MB
-
-In a2bc523e1e (dir.c: skip .gitignore, etc larger than INT_MAX,
-2024-05-31) we put capped the size of some files whose parsing code and
-data structures used ints. Setting the limit to INT_MAX was a natural
-spot, since we know the parsing code would misbehave above that.
-
-But it also leaves the possibility of overflow errors when we multiply
-that limit to allocate memory. For instance, a file consisting only of
-"a\na\n..." could have INT_MAX/2 entries. Allocating an array of
-pointers for each would need INT_MAX*4 bytes on a 64-bit system, enough
-to overflow a 32-bit int.
-
-So let's give ourselves a bit more safety margin by giving a much
-smaller limit. The size 100MB is somewhat arbitrary, but is based on the
-similar value for attribute files added by 3c50032ff5 (attr: ignore
-overly large gitattributes files, 2022-12-01).
-
-There's no particular reason these have to be the same, but the idea is
-that they are in the ballpark of "so huge that nobody would care, but
-small enough to avoid malicious overflow". So lacking a better guess, it
-makes sense to use the same value. The implementation here doesn't share
-the same constant, but we could change that later (or even give it a
-runtime config knob, though nobody has complained yet about the
-attribute limit).
-
-And likewise, let's add a few tests that exercise the limits, based on
-the attr ones. In this case, though, we never read .gitignore from the
-index; the blob code is exercised only for sparse filters. So we'll
-trigger it that way.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- dir.c                               | 10 ++++++++--
- t/t0008-ignores.sh                  |  8 ++++++++
- t/t6112-rev-list-filters-objects.sh | 12 ++++++++++++
- 3 files changed, 28 insertions(+), 2 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index 914060edfd..ad2b7ebe2d 100644
---- a/dir.c
-+++ b/dir.c
-@@ -32,6 +32,12 @@
- #include "tree.h"
- #include "hex.h"
- 
-+ /*
-+  * The maximum size of a pattern/exclude file. If the file exceeds this size
-+  * we will ignore it.
-+  */
-+#define PATTERN_MAX_FILE_SIZE (100 * 1024 * 1024)
-+
- /*
-  * Tells read_directory_recursive how a file or directory should be treated.
-  * Values are ordered by significance, e.g. if a directory contains both
-@@ -1149,7 +1155,7 @@ static int add_patterns(const char *fname, const char *base, int baselen,
- 		}
- 	}
- 
--	if (size > INT_MAX) {
-+	if (size > PATTERN_MAX_FILE_SIZE) {
- 		warning("ignoring excessively large pattern file: %s", fname);
- 		free(buf);
- 		return -1;
-@@ -1211,7 +1217,7 @@ int add_patterns_from_blob_to_list(
- 	if (r != 1)
- 		return r;
- 
--	if (size > INT_MAX) {
-+	if (size > PATTERN_MAX_FILE_SIZE) {
- 		warning("ignoring excessively large pattern blob: %s",
- 			oid_to_hex(oid));
- 		free(buf);
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index 361446b2f4..02a18d4fdb 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -945,4 +945,12 @@ test_expect_success SYMLINKS 'symlinks not respected in-tree' '
- 	test_grep "unable to access.*gitignore" err
- '
- 
-+test_expect_success EXPENSIVE 'large exclude file ignored in tree' '
-+	test_when_finished "rm .gitignore" &&
-+	dd if=/dev/zero of=.gitignore bs=101M count=1 &&
-+	git ls-files -o --exclude-standard 2>err &&
-+	echo "warning: ignoring excessively large pattern file: .gitignore" >expect &&
-+	test_cmp expect err
-+'
-+
- test_done
-diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
-index 43e1afd44c..0387f35a32 100755
---- a/t/t6112-rev-list-filters-objects.sh
-+++ b/t/t6112-rev-list-filters-objects.sh
-@@ -701,4 +701,16 @@ test_expect_success 'expand blob limit in protocol' '
- 	grep "blob:limit=1024" trace
- '
- 
-+test_expect_success EXPENSIVE 'large sparse filter file ignored' '
-+	blob=$(dd if=/dev/zero bs=101M count=1 |
-+	       git hash-object -w --stdin) &&
-+	test_must_fail \
-+		git rev-list --all --objects --filter=sparse:oid=$blob 2>err &&
-+	cat >expect <<-EOF &&
-+	warning: ignoring excessively large pattern blob: $blob
-+	fatal: unable to parse sparse filter data in $blob
-+	EOF
-+	test_cmp expect err
-+'
-+
- test_done
--- 
-2.45.2.807.g3b5fadc4da
-
+=2D-
+2.45.2
