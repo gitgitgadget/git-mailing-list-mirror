@@ -1,36 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B7614B951
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 08:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAACC84FDA
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 09:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717577862; cv=none; b=HveA7I96TdZComJvv1sOqpNVknd8DZ6/2UZSosjtvI9S813FRk5FMLbjqgbz6Qvxp8gsBL26OMBnb8BrFmSxefEpLQfrJoaUshL51aciFD40MDrmZReDaj90Un/ZY2aib0H8jDO6husCCLxdN4QDS7RcPBG5M9r0om+Nkydwi08=
+	t=1717578579; cv=none; b=Yz6oV3lQRINGtmzUjlwqPTYu/ihCv/HiEeFSoHg5t/2VbXHIkH/VVbqHn8wfvAGkx1w1KvunOl204EgmrUmcF2CHpx5VQiTiyHBQWz4/bM9DZ8YBm4XD/WIUjd/kBsQUyIEnAdyvdJOGYKRjhcPoeJwXGwNtOCKGy0leOO8HN+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717577862; c=relaxed/simple;
-	bh=01jC7b1mumdxW89HlZ+TdwdZ47kNQf7CqfMNiZuhIzQ=;
+	s=arc-20240116; t=1717578579; c=relaxed/simple;
+	bh=j1Y3Iu+tkBcBOlyuGpfAnFmYztQBdnN+OjG6emyYEVY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rU4zLewu5bDpQhs5NrxpoVu9vTeDmKZGij3MoRidV5StV3RzeAA09MAG2Dn9YJeOx7ZP9Pcv161WGfCFvWH3V4MUUoqlGH7KyA7ES547aMClEjU/J3cAPdDGnCoow5CKOsuT61osq5mAMGv3VTlvoLZ7xMKnpxK+YjKzf8FVZEg=
+	 Content-Type:Content-Disposition:In-Reply-To; b=lI9tNdSj23Q4O0FTE18FyNv1uFo2C5htwpHrkk64K0CeC02qrGCLblQ6aP4ll9r53g2bmGNCrNekYrvgD9k0uBfI9lZnIpyRPn76ZLegcFbYd6YW7NqOMYjtomXX2VbCJxaKWMVQVyq/yWt8nutquH7u9ICpCJ7KtPoKA+L/KW4=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 24530 invoked by uid 109); 5 Jun 2024 08:57:34 -0000
+Received: (qmail 24771 invoked by uid 109); 5 Jun 2024 09:09:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 05 Jun 2024 08:57:34 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 05 Jun 2024 09:09:36 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28065 invoked by uid 111); 5 Jun 2024 08:57:32 -0000
+Received: (qmail 28121 invoked by uid 111); 5 Jun 2024 09:09:34 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 05 Jun 2024 04:57:31 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 05 Jun 2024 05:09:34 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 5 Jun 2024 04:57:33 -0400
+Date: Wed, 5 Jun 2024 05:09:35 -0400
 From: Jeff King <peff@peff.net>
-To: Aaron Plattner <aplattner@nvidia.com>
-Cc: git@vger.kernel.org, Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] credential: clear expired c->credential, unify secret
- clearing
-Message-ID: <20240605085733.GE2345232@coredump.intra.peff.net>
-References: <20240604192929.3252626-1-aplattner@nvidia.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>,
+	Git List <git@vger.kernel.org>, Dragan Simic <dsimic@manjaro.org>
+Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
+Message-ID: <20240605090935.GF2345232@coredump.intra.peff.net>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+ <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+ <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
+ <20240604101700.GA1781455@coredump.intra.peff.net>
+ <xmqqikyo207f.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,60 +42,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240604192929.3252626-1-aplattner@nvidia.com>
+In-Reply-To: <xmqqikyo207f.fsf@gitster.g>
 
-On Tue, Jun 04, 2024 at 12:29:28PM -0700, Aaron Plattner wrote:
+On Tue, Jun 04, 2024 at 08:32:04AM -0700, Junio C Hamano wrote:
 
-> @@ -528,12 +532,7 @@ void credential_reject(struct credential *c)
->  	for (i = 0; i < c->helpers.nr; i++)
->  		credential_do(c, c->helpers.items[i].string, "erase");
->  
-> -	FREE_AND_NULL(c->username);
-> -	FREE_AND_NULL(c->password);
-> -	FREE_AND_NULL(c->credential);
-> -	FREE_AND_NULL(c->oauth_refresh_token);
-> -	c->password_expiry_utc = TIME_MAX;
-> -	c->approved = 0;
-> +	credential_clear(c);
->  }
+> The default that colors the output is something we might later
+> regret.  Those who want colored output can always use the
+> interactive.diffFilter configuration, but I am not sure if going
+> the other direction to strip coloring is just as easy.  But other
+> than that, I think we are at an OK place to stop.
 
-I'm skeptical of this hunk. The caller will usually have filled in parts
-of a credential struct like scheme and host, and then we picked up the
-rest from helpers or by prompting the user. Rejecting the credential
-should certainly clear the bogus password field and other secrets. But
-should it clear the host field?
+I don't think diffFilter is a great solution there. In my experience,
+that is augmenting the existing coloring done by "diff --color" itself
+(and of course many people do not use a separate filter in the first
+place, and just see the normal color output). So there's not an easy way
+to add the color back to a stripped version.
 
-I think it may be somewhat academic for now because we'll generally exit
-the program immediately after rejecting the credential. But occasionally
-the topic comes up of retrying auth within a command. So you might have
-a loop like this (or knowing our http code, probably some more baroque
-equivalent spread across multiple functions):
+The interactive-patch code is literally holding the two color/non-color
+variants in memory, splitting the hunks based on line counts, and then
+showing you one and applying the other. Even if you wanted to run "git
+diff --color" yourself in the "|" command, it would be a lot of work to
+pick out the hunk of interest.
 
-  credential_from_url(&cred, url);
-  for (int attempt = 0; attempt < 5; attempt++) {
-	credential_fill(&cred);
-	switch (do_something(url, &cred)) {
-	case OK: /* it worked */
-		return 0;
-	case AUTH_ERROR:
-		/* try again */
-		credential_reject(&cred);
-	}
-  }
-  return -1; /* too many failures */
+Given that the main use case for "|" is for human viewing through a
+pager, I think the colorful, filtered version meant for users is the
+best default. And then the "bare" version can come from an alternate
+command or a knob.
 
-And in that case you really want to retain the "query" parts of the
-credential after the reject. In this toy example you could just move the
-url-to-cred parsing into the loop, but in the real world it's often more
-complicated.
+Just to note some prior art, mutt's "<pipe-message>" faces a similar
+problem. You might want the raw message (if you're going to poke at
+headers, MIME parts, etc yourself) or you may want a decoded one (if you
+just care about body text and don't want to deal with base64, qp, etc,
+yourself). They provide a stateful config knob, but then you end up with
+horrible macros that toggle the knob, like:
 
-Arguably even the original code is a bit questionable for this, because
-we don't know if the username came from a helper or from the user, or if
-it was part of the original URL (e.g., "https://user@example.com/"
-should prompt only for the password). But it feels like this hunk is
-making it worse.
+  :set pipe_decode=yes<enter><pipe-message>my-script<enter>:set pipe_decode=no<enter>
 
-The rest of the patch made sense to me, though. As would using
-credential_clear_secrets() here to replace the equivalent lines.
+I think having two separate commands for the two modes would be less
+confusing.
 
 -Peff
