@@ -1,461 +1,93 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FBE19D8BB
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 13:44:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE22325601
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 14:48:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717595083; cv=none; b=QRbz8Uw21N0J4il/QJWCLC7Hi1pFdoBcfEbRf7fxCO1lqvKM/BgeYiUV5eJ6xdnhvOFednQQiVEPUDXgXhrJgZgUsV2YlFxLkUWIsydHxlAHDQXT1lb4Qn5GJd2EWm/Qn/SDtH5YYVbx9i/93O7rFdrjKHWXak2BLF5iTGExzvE=
+	t=1717598888; cv=none; b=fvn4cJzR54F8Veqtm8HJ3VycUAZDtU1+CmmQQ0UmuQBCUlaqIFYdkMK0RN4oLTr0s4ln2QXmdiWnioZWplv7kPLjBXMujqHytf0YekLFHfCsbTcqIgew41Vd6/ztoPCis0J6vF2dDVo92Jumy2It2YihmvO+CDLHLRYSXahz/xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717595083; c=relaxed/simple;
-	bh=D6qqCesG5eiOFkYhanxLQNnZxYnEgXY9atPZ9qfrfOY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lQtz5+qbOjGE/RnS/6zE0T/1Akki8GEIlnIrFlmmbj6QZB7oYgG9EWJfIsxXsveJl78vdMcXOnyCyaUV6LOp1L6tli72iaXfOwT7XeCf6+ke4bcZmbtHWopQSxYj1QcUZ6mVcCmL7cyQsq5NQTIVdg7B4EkX4cvsAC0mMCrAvnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dvLZLZZS; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1717598888; c=relaxed/simple;
+	bh=9+cR3kMvsbWVL3Y3FYLJl8RqSKJud7RtXLuq1bWYtNE=;
+	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=J0Ti1LPcTCC7nmQNKFiB0epQ9TKzxQA0mq1myVt9fVubxVAjYK1gmKF8s7WNW24pnnLZ4SWzsiq9WEulkTpmXXTpTXh3NOblQpGbkm/2mC5E2Ev2VGk/S221OZW8Vx4j2lz0joE387C9mw9gpYOrIedjltIOnTT72h6zXySP0tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=danoloan.es; spf=pass smtp.mailfrom=danoloan.es; dkim=pass (2048-bit key) header.d=danoloan.es header.i=@danoloan.es header.b=dpjBVIt5; arc=none smtp.client-ip=185.226.149.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=danoloan.es
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=danoloan.es
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dvLZLZZS"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1f44b42d1caso53048555ad.0
-        for <git@vger.kernel.org>; Wed, 05 Jun 2024 06:44:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717595081; x=1718199881; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TAeYXrkU8YBE2Lqq7lzgo869eVKXo6bfRn3EibBk430=;
-        b=dvLZLZZSS//QdCOjzrpESiZycQcf87VOwbmil8FL3+UacDO/9YIgPFk5onu7J6QUX4
-         xOp/1Ha7Ungq+wB7rRNpfviDg82jK4Isvs4f89tXzBUCKzNMZbDoaCv1PbsdLnM4Dx1j
-         ZOK9yc9NOgKXHZooO/hHX7RDXJC/1uBu9VAsBJhHK8DXjEfZ9cDEowtN5XkKzZ6IOU2K
-         HsqRJgcxBfXT2LYARzVjXZCVs94/JmdnC3453EPGsUP5arwEtw5s9oxwGA9NTJ/Y3sIa
-         qAwl00vagubAO44Bcou46ibRj0h4xqJpSrQMz0+kU8bp0fLoFqWXCb2I4JUqTzvAyyuz
-         de+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717595081; x=1718199881;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TAeYXrkU8YBE2Lqq7lzgo869eVKXo6bfRn3EibBk430=;
-        b=QGglN3ou9IpcleScLxJJcoNcBDd8nVuwkSmYpsCWSuH3kk66yC5tLSwg2j5NrbCP1U
-         SkT/IroXDR+EfIFBZ6HVRy7r6U+ahW4aZ6lssrdWo+wZnODZfoN7cNmis6tjHhubt/Vv
-         ZJZuRYSBMCUkkPiSr2eZutoHeEnG2bciXBtMUCXone7eqDV4JUTkF91uDv4fzAn/7l4B
-         hc569pMgv1N6K5fAFjpAs/HWwnKfgn9iBpbNyHX2QT+xYMGdLTe6YtRQ2P6Bvuzulb//
-         aTqhDZqKnnfe0gNDXZ0QLcJ66sLaQi1jExVFt+LhjPMSoQCa8S35zHsavNhZG1vh5gQN
-         34+A==
-X-Gm-Message-State: AOJu0YxbqidmrvBmf7CbiGU8BsmiTLjKf0Nehc0aiOEXaufyG91mmGLx
-	zoJRXfb4h3Ms1xKffaB0fAOhOi0fjXVXheYUQ+Tho6FyKue/HS7S1HrwSKdJZS2DVg==
-X-Google-Smtp-Source: AGHT+IFdn057U39km6nVQcMM/7BSReH3v8eIXT4Iga81H+DXLy7y0d4Ydkv+T78kEiS759tQ5kGgKQ==
-X-Received: by 2002:a17:902:dcd4:b0:1f6:7e02:7ab8 with SMTP id d9443c01a7336-1f6a5a8529emr18477045ad.68.1717595080754;
-        Wed, 05 Jun 2024 06:44:40 -0700 (PDT)
-Received: from localhost.localdomain ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6881bb4dcsm47103535ad.236.2024.06.05.06.44.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jun 2024 06:44:40 -0700 (PDT)
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+	dkim=pass (2048-bit key) header.d=danoloan.es header.i=@danoloan.es header.b="dpjBVIt5"
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <danolo@danoloan.es>)
+	id 1sErDb-0034Sy-4K
+	for git@vger.kernel.org; Wed, 05 Jun 2024 16:02:23 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=danoloan.es
+	; s=selector2; h=MIME-Version:Content-Transfer-Encoding:Content-Type:Date:To:
+	From:Subject:Message-ID; bh=SV8vHzo258PdpvZ298kJk+2Y7c2RacTTzNI9qsRQh3s=; b=d
+	pjBVIt5KoDH7Cu8taiiLwTHB6NUKIgugkaowIfLIMksdtlwzNnkJrHN1yNNgbx3ZVXkveN1OddlBu
+	z0QzgNpD8qnG+5W4wET9uneSWhBqvmL7+E11cRi2LqkRQWIxR60Yv5pQGA1JVLUExmdH3aWVFU2du
+	08lAkA5xqqDUO/04bhndQECXkvuyDQCGfo90lFv8EKG3iePzIq2vG3T3bAVCardMFtoMhFV1MJz6Y
+	xnPt0qTAhYYZnEvZcWdx7iJvckaEMcWP6x8jHVBNcpW5KWZk1t1ci7B2mL0SnrhbAAmFfVkHen/YE
+	AVBODOBIElynDdnlxMvRpydYobuCYB1aQ==;
+Received: from [10.9.9.73] (helo=submission02.runbox)
+	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <danolo@danoloan.es>)
+	id 1sErDa-00072K-OO
+	for git@vger.kernel.org; Wed, 05 Jun 2024 16:02:22 +0200
+Received: by submission02.runbox with esmtpsa  [Authenticated ID (1188930)]  (TLS1.2:ECDHE_SECP256R1__RSA_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1sErDQ-007ZWF-66
+	for git@vger.kernel.org; Wed, 05 Jun 2024 16:02:12 +0200
+Message-ID: <7869f213fe59fa80b9e8331dde89e795bd8cd5d4.camel@danoloan.es>
+Subject: Git submodule recursive update not syncing submodule URLs makes the
+ operation fail for commits updating the URLs
+From: Danoloan <danolo@danoloan.es>
 To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: [GSoC][PATCH] t/: migrate helper/test-oidtree.c to unit-tests/t-oidtree.c
-Date: Wed,  5 Jun 2024 19:13:52 +0530
-Message-ID: <20240605134400.37309-1-shyamthakkar001@gmail.com>
-X-Mailer: git-send-email 2.45.2
+Date: Wed, 05 Jun 2024 16:02:10 +0200
+Autocrypt: addr=danolo@danoloan.es; prefer-encrypt=mutual;
+ keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.4 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-helper/test-oidtree.c along with t0069-oidtree.sh test the oidtree.h
-library, which is a wrapper around crit-bit tree. Migrate them to
-the unit testing framework for better debugging and runtime
-performance.
+Hello all,
 
-To achieve this, introduce a new library called 'lib-oid.h'
-exclusively for the unit tests to use. It currently mainly includes
-utility to generate object_id from an arbitrary hex string
-(i.e. '12a' -> '12a0000000000000000000000000000000000000').
-This will also be helpful when we port other unit tests such
-as oid-array, oidset etc.
+I've noticed that changing the URL of a submodule may break=C2=A0the
+usefulness of git submodule update --recursive. For example, take a
+commit A1 in the repo A that has a submodule B with the commit B1. In
+commit A2, the URL of the submodule B is updated, and the commit is
+updated too to commit B2. B2 is present in the new URL of B but not in
+the old one. This is typical when the new URL may be a fork or a mirror
+in another server.
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
----
- Makefile                 |  8 +++-
- t/helper/test-oidtree.c  | 54 ------------------------
- t/helper/test-tool.c     |  1 -
- t/helper/test-tool.h     |  1 -
- t/t0069-oidtree.sh       | 50 ----------------------
- t/unit-tests/lib-oid.c   | 52 +++++++++++++++++++++++
- t/unit-tests/lib-oid.h   | 17 ++++++++
- t/unit-tests/t-oidtree.c | 91 ++++++++++++++++++++++++++++++++++++++++
- 8 files changed, 166 insertions(+), 108 deletions(-)
- delete mode 100644 t/helper/test-oidtree.c
- delete mode 100755 t/t0069-oidtree.sh
- create mode 100644 t/unit-tests/lib-oid.c
- create mode 100644 t/unit-tests/lib-oid.h
- create mode 100644 t/unit-tests/t-oidtree.c
+Given this scenario, the following steps will fail:
+  - Clone A
+  - Check out A1
+  - Init submodules and recursively update
+  - Check out A2
+  - git submodule update --recursive --force will fail
 
-diff --git a/Makefile b/Makefile
-index 59d98ba688..6c9927afae 100644
---- a/Makefile
-+++ b/Makefile
-@@ -811,7 +811,6 @@ TEST_BUILTINS_OBJS += test-mergesort.o
- TEST_BUILTINS_OBJS += test-mktemp.o
- TEST_BUILTINS_OBJS += test-oid-array.o
- TEST_BUILTINS_OBJS += test-oidmap.o
--TEST_BUILTINS_OBJS += test-oidtree.o
- TEST_BUILTINS_OBJS += test-online-cpus.o
- TEST_BUILTINS_OBJS += test-pack-mtimes.o
- TEST_BUILTINS_OBJS += test-parse-options.o
-@@ -1335,6 +1334,7 @@ THIRD_PARTY_SOURCES += sha1dc/%
- 
- UNIT_TEST_PROGRAMS += t-ctype
- UNIT_TEST_PROGRAMS += t-mem-pool
-+UNIT_TEST_PROGRAMS += t-oidtree
- UNIT_TEST_PROGRAMS += t-prio-queue
- UNIT_TEST_PROGRAMS += t-strbuf
- UNIT_TEST_PROGRAMS += t-strcmp-offset
-@@ -1342,6 +1342,7 @@ UNIT_TEST_PROGRAMS += t-trailer
- UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
- UNIT_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
- UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
-+UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
- 
- # xdiff and reftable libs may in turn depend on what is in libgit.a
- GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
-@@ -3882,7 +3883,10 @@ $(FUZZ_PROGRAMS): %: %.o oss-fuzz/dummy-cmd-main.o $(GITLIBS) GIT-LDFLAGS
- 		-Wl,--allow-multiple-definition \
- 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS) $(LIB_FUZZING_ENGINE)
- 
--$(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_DIR)/test-lib.o $(GITLIBS) GIT-LDFLAGS
-+$(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o \
-+	$(UNIT_TEST_DIR)/test-lib.o \
-+	$(UNIT_TEST_DIR)/lib-oid.o \
-+	$(GITLIBS) GIT-LDFLAGS
- 	$(call mkdir_p_parent_template)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
- 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS)
-diff --git a/t/helper/test-oidtree.c b/t/helper/test-oidtree.c
-deleted file mode 100644
-index c7a1d4c642..0000000000
---- a/t/helper/test-oidtree.c
-+++ /dev/null
-@@ -1,54 +0,0 @@
--#include "test-tool.h"
--#include "hex.h"
--#include "oidtree.h"
--#include "setup.h"
--#include "strbuf.h"
--
--static enum cb_next print_oid(const struct object_id *oid, void *data UNUSED)
--{
--	puts(oid_to_hex(oid));
--	return CB_CONTINUE;
--}
--
--int cmd__oidtree(int argc UNUSED, const char **argv UNUSED)
--{
--	struct oidtree ot;
--	struct strbuf line = STRBUF_INIT;
--	int nongit_ok;
--	int algo = GIT_HASH_UNKNOWN;
--
--	oidtree_init(&ot);
--	setup_git_directory_gently(&nongit_ok);
--
--	while (strbuf_getline(&line, stdin) != EOF) {
--		const char *arg;
--		struct object_id oid;
--
--		if (skip_prefix(line.buf, "insert ", &arg)) {
--			if (get_oid_hex_any(arg, &oid) == GIT_HASH_UNKNOWN)
--				die("insert not a hexadecimal oid: %s", arg);
--			algo = oid.algo;
--			oidtree_insert(&ot, &oid);
--		} else if (skip_prefix(line.buf, "contains ", &arg)) {
--			if (get_oid_hex(arg, &oid))
--				die("contains not a hexadecimal oid: %s", arg);
--			printf("%d\n", oidtree_contains(&ot, &oid));
--		} else if (skip_prefix(line.buf, "each ", &arg)) {
--			char buf[GIT_MAX_HEXSZ + 1] = { '0' };
--			memset(&oid, 0, sizeof(oid));
--			memcpy(buf, arg, strlen(arg));
--			buf[hash_algos[algo].hexsz] = '\0';
--			get_oid_hex_any(buf, &oid);
--			oid.algo = algo;
--			oidtree_each(&ot, &oid, strlen(arg), print_oid, NULL);
--		} else if (!strcmp(line.buf, "clear")) {
--			oidtree_clear(&ot);
--		} else {
--			die("unknown command: %s", line.buf);
--		}
--	}
--
--	strbuf_release(&line);
--
--	return 0;
--}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 7ad7d07018..253324a06b 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -46,7 +46,6 @@ static struct test_cmd cmds[] = {
- 	{ "mktemp", cmd__mktemp },
- 	{ "oid-array", cmd__oid_array },
- 	{ "oidmap", cmd__oidmap },
--	{ "oidtree", cmd__oidtree },
- 	{ "online-cpus", cmd__online_cpus },
- 	{ "pack-mtimes", cmd__pack_mtimes },
- 	{ "parse-options", cmd__parse_options },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index d14b3072bd..460dd7d260 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -39,7 +39,6 @@ int cmd__match_trees(int argc, const char **argv);
- int cmd__mergesort(int argc, const char **argv);
- int cmd__mktemp(int argc, const char **argv);
- int cmd__oidmap(int argc, const char **argv);
--int cmd__oidtree(int argc, const char **argv);
- int cmd__online_cpus(int argc, const char **argv);
- int cmd__pack_mtimes(int argc, const char **argv);
- int cmd__parse_options(int argc, const char **argv);
-diff --git a/t/t0069-oidtree.sh b/t/t0069-oidtree.sh
-deleted file mode 100755
-index 889db50818..0000000000
---- a/t/t0069-oidtree.sh
-+++ /dev/null
-@@ -1,50 +0,0 @@
--#!/bin/sh
--
--test_description='basic tests for the oidtree implementation'
--TEST_PASSES_SANITIZE_LEAK=true
--. ./test-lib.sh
--
--maxhexsz=$(test_oid hexsz)
--echoid () {
--	prefix="${1:+$1 }"
--	shift
--	while test $# -gt 0
--	do
--		shortoid="$1"
--		shift
--		difference=$(($maxhexsz - ${#shortoid}))
--		printf "%s%s%0${difference}d\\n" "$prefix" "$shortoid" "0"
--	done
--}
--
--test_expect_success 'oidtree insert and contains' '
--	cat >expect <<-\EOF &&
--		0
--		0
--		0
--		1
--		1
--		0
--	EOF
--	{
--		echoid insert 444 1 2 3 4 5 a b c d e &&
--		echoid contains 44 441 440 444 4440 4444 &&
--		echo clear
--	} | test-tool oidtree >actual &&
--	test_cmp expect actual
--'
--
--test_expect_success 'oidtree each' '
--	echoid "" 123 321 321 >expect &&
--	{
--		echoid insert f 9 8 123 321 a b c d e &&
--		echo each 12300 &&
--		echo each 3211 &&
--		echo each 3210 &&
--		echo each 32100 &&
--		echo clear
--	} | test-tool oidtree >actual &&
--	test_cmp expect actual
--'
--
--test_done
-diff --git a/t/unit-tests/lib-oid.c b/t/unit-tests/lib-oid.c
-new file mode 100644
-index 0000000000..37105f0a8f
---- /dev/null
-+++ b/t/unit-tests/lib-oid.c
-@@ -0,0 +1,52 @@
-+#include "test-lib.h"
-+#include "lib-oid.h"
-+#include "strbuf.h"
-+#include "hex.h"
-+
-+static int init_hash_algo(void)
-+{
-+	static int algo = -1;
-+
-+	if (algo < 0) {
-+		const char *algo_name = getenv("GIT_TEST_DEFAULT_HASH");
-+		algo = algo_name ? hash_algo_by_name(algo_name) : GIT_HASH_SHA1;
-+
-+		if (!check(algo != GIT_HASH_UNKNOWN))
-+			test_msg("BUG: invalid GIT_TEST_DEFAULT_HASH value ('%s')",
-+				 algo_name);
-+	}
-+	return algo;
-+}
-+
-+static int get_oid_arbitrary_hex_algop(const char *hex, struct object_id *oid,
-+				       const struct git_hash_algo *algop)
-+{
-+	int ret;
-+	size_t sz = strlen(hex);
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	if (!check(sz <= algop->hexsz)) {
-+		test_msg("BUG: hex string (%s) bigger than maximum allowed (%lu)",
-+			 hex, (unsigned long)algop->hexsz);
-+		return -1;
-+	}
-+
-+	strbuf_add(&buf, hex, sz);
-+	strbuf_addchars(&buf, '0', algop->hexsz - sz);
-+
-+	ret = get_oid_hex_algop(buf.buf, oid, algop);
-+	if (!check_int(ret, ==, 0))
-+		test_msg("BUG: invalid hex input (%s) provided", hex);
-+
-+	strbuf_release(&buf);
-+	return ret;
-+}
-+
-+int get_oid_arbitrary_hex(const char *hex, struct object_id *oid)
-+{
-+	int hash_algo = init_hash_algo();
-+
-+	if (!check_int(hash_algo, !=, GIT_HASH_UNKNOWN))
-+		return -1;
-+	return get_oid_arbitrary_hex_algop(hex, oid, &hash_algos[hash_algo]);
-+}
-diff --git a/t/unit-tests/lib-oid.h b/t/unit-tests/lib-oid.h
-new file mode 100644
-index 0000000000..bfde639190
---- /dev/null
-+++ b/t/unit-tests/lib-oid.h
-@@ -0,0 +1,17 @@
-+#ifndef LIB_OID_H
-+#define LIB_OID_H
-+
-+#include "hash-ll.h"
-+
-+/*
-+ * Convert arbitrary hex string to object_id.
-+ * For example, passing "abc12" will generate
-+ * "abc1200000000000000000000000000000000000" hex of length 40 for SHA-1 and
-+ * create object_id with that.
-+ * WARNING: passing a string of length more than the hexsz of respective hash
-+ * algo is not allowed. The hash algo is decided based on GIT_TEST_DEFAULT_HASH
-+ * environment variable.
-+ */
-+int get_oid_arbitrary_hex(const char *s, struct object_id *oid);
-+
-+#endif /* LIB_OID_H */
-diff --git a/t/unit-tests/t-oidtree.c b/t/unit-tests/t-oidtree.c
-new file mode 100644
-index 0000000000..0ebe17d2b9
---- /dev/null
-+++ b/t/unit-tests/t-oidtree.c
-@@ -0,0 +1,91 @@
-+#include "test-lib.h"
-+#include "lib-oid.h"
-+#include "oidtree.h"
-+#include "hash.h"
-+#include "hex.h"
-+
-+#define FILL_TREE(tree, ...)                                       \
-+	do {                                                       \
-+		const char *hexes[] = { __VA_ARGS__ };             \
-+		if (fill_tree_loc(tree, hexes, ARRAY_SIZE(hexes))) \
-+			return;                                    \
-+	} while (0)
-+
-+static int fill_tree_loc(struct oidtree *ot, const char *hexes[], int n)
-+{
-+	for (size_t i = 0; i < n; i++) {
-+		struct object_id oid;
-+		if (!check_int(get_oid_arbitrary_hex(hexes[i], &oid), ==, 0))
-+			return -1;
-+		oidtree_insert(ot, &oid);
-+	}
-+	return 0;
-+}
-+
-+static void check_contains(struct oidtree *ot, const char *hex, int expected)
-+{
-+	struct object_id oid;
-+
-+	if (!check_int(get_oid_arbitrary_hex(hex, &oid), ==, 0))
-+		return;
-+	if (!check_int(oidtree_contains(ot, &oid), ==, expected))
-+		test_msg("oid: %s", oid_to_hex(&oid));
-+}
-+
-+static enum cb_next check_each_cb(const struct object_id *oid, void *data)
-+{
-+	const char *hex = data;
-+	struct object_id expected;
-+
-+	if (!check_int(get_oid_arbitrary_hex(hex, &expected), ==, 0))
-+		return CB_CONTINUE;
-+	if (!check(oideq(oid, &expected)))
-+		test_msg("expected: %s\n       got: %s",
-+			 hash_to_hex(expected.hash), hash_to_hex(oid->hash));
-+	return CB_CONTINUE;
-+}
-+
-+static void check_each(struct oidtree *ot, char *hex, char *expected)
-+{
-+	struct object_id oid;
-+
-+	if (!check_int(get_oid_arbitrary_hex(hex, &oid), ==, 0))
-+		return;
-+	oidtree_each(ot, &oid, 40, check_each_cb, expected);
-+}
-+
-+static void setup(void (*f)(struct oidtree *ot))
-+{
-+	struct oidtree ot;
-+
-+	oidtree_init(&ot);
-+	f(&ot);
-+	oidtree_clear(&ot);
-+}
-+
-+static void t_contains(struct oidtree *ot)
-+{
-+	FILL_TREE(ot, "444", "1", "2", "3", "4", "5", "a", "b", "c", "d", "e");
-+	check_contains(ot, "44", 0);
-+	check_contains(ot, "441", 0);
-+	check_contains(ot, "440", 0);
-+	check_contains(ot, "444", 1);
-+	check_contains(ot, "4440", 1);
-+	check_contains(ot, "4444", 0);
-+}
-+
-+static void t_each(struct oidtree *ot)
-+{
-+	FILL_TREE(ot, "f", "9", "8", "123", "321", "a", "b", "c", "d", "e");
-+	check_each(ot, "12300", "123");
-+	check_each(ot, "3211", ""); /* should not reach callback */
-+	check_each(ot, "3210", "321");
-+	check_each(ot, "32100", "321");
-+}
-+
-+int cmd_main(int argc UNUSED, const char **argv UNUSED)
-+{
-+	TEST(setup(t_contains), "oidtree insert and contains works");
-+	TEST(setup(t_each), "oidtree each works");
-+	return test_done();
-+}
--- 
-2.45.2
+This is because B2 is not present in the URL of B configured in the
+.gitmodules file of A2.
+
+Do you think this use case should be fixed? I'm thinking that the
+"sync" operation should be implied in the git submodule update. It can
+be the default behaviour or a new option "--sync" could be added.
+
+Thanks in advance for your attention & BR
+
 
