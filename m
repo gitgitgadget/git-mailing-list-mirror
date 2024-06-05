@@ -1,89 +1,96 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9415F3C28
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 21:39:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479B61373
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 21:43:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717623573; cv=none; b=mDslxaxtkPoElUZCnDf9e1ysEDYD7iDDZDOxgugtn/d+cG8vfUPGlG/zErIdBoM2wRLTDmFGTP/ksjvP5M3+Fqbaqdg1G1oIIdvPfyNwyZYH+wbwEZRnqUoNbvT/GvUmCp2fJu0j/fCQ5RhMgQ+7SedgGWM+25GdEMMI0ne/QOM=
+	t=1717623795; cv=none; b=lziR9Ub7f3TfZcXVhELExODs5L5qFF7XnlcIGzkkOgToo1vOCks8dbJGuTU9KPleuTRE4idAOqdWHYVImqrlADtpT+aaYkEKf+XVA9DvSMUBc3oDROww/+dXz/Ff0rLefvYQG3m7ZYWpOf9qR2TvhRGrA7Lv3k7O2+mY3LAWrJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717623573; c=relaxed/simple;
-	bh=uy+stx5A1GHxEw8euTc+B9gRCgy9H3E8GNRpeqwfjT0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G+EuKhh0MXk1YHZFYLl9iiAfp2Wu8EDKD8/Kb2I3HwgwJov+0qsZgwIY+V2MH/mYuhpfnsb7uH+icn/ee8zWiyK4BHVEBKAggAaRr3YtsyqKLkQ2ZfdtEu4Ogr9jTvyYeo+0DzOOu5JnrWov6WMcPl5jb4HNcIyZTfaJFv53QPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bp8JAvvJ; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1717623795; c=relaxed/simple;
+	bh=gfqjhj0JM1QZ9Ipx7+G/FsCi8qreuUVZI/lkxhNQxK8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=umeHnAXNYbA23BHWoAXwXFBl043U41IkXHHjiZSSv3i+HRUcHzv8aTU4ub0EofU6nVADXGXXnMeoXwe8Q/Ug5O5x2qYnIeZhQAk3lD/ot2MQWGbaUvTLVyzzr3AbLu3UJ5tT/ezpckJ8lzttu+lFmk9QduNtUkjhJI263i15dd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mJq0vl/A; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bp8JAvvJ"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-35dc1d8867eso300442f8f.0
-        for <git@vger.kernel.org>; Wed, 05 Jun 2024 14:39:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717623570; x=1718228370; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2cYvBmFOIhpg2Dod0Qs0tmSimi56H38oY7ILJ+zJjXU=;
-        b=Bp8JAvvJYn0sgBPUbkCmaq1JF0K0m6pbAHqFXtRkKG+BU7dBsFkFsNpSxt4LCQJ8hq
-         Hr7iGaILIkTIV7DlLu4IlvyyMBlzND7G/F+X+AfhTmIj6YbxiLsfGYu82TmM+t8bKAUo
-         FPmPIQM1UgPrhv3Bdf5dc3P9jwvlBnaIXFJFHanjlUJZcR2xyAElyJ7q2snV7heHYm5E
-         /gpjLlU2Efkw6KHIdn2a3cRlbLnGdx7PHeGkVZ43zCAf6+ZhxqistknkWlqa+/26sP6s
-         OjM7GVXZBwvAF7zXDPw+hFkeUoJpISlsDiRuay+eoYt3MJQ3X9/k+p2cFEnhkORfy+V3
-         OlXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717623570; x=1718228370;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2cYvBmFOIhpg2Dod0Qs0tmSimi56H38oY7ILJ+zJjXU=;
-        b=eVkhJXrTk5y2lE73eLWYM2ihHKUWKzSW3jsk3H6LRDRqu//fH/DJDctOdaxy7OKbUA
-         KRxBs5vn0vFm42Qwmhjo/HEx5Ud9+wPP4Vzpnwwui0aXzBRNfOQ1/1c9ocu//KKeGGBE
-         Gw5D8rNj3l/FLMV9kjOOJKypWb2aUtwMyycP20kmQ0AsAkUo3jcE7ZHFProxA3m/5qN5
-         oqYWRURk5b5GobTswb7nt6RX9ZQVpiR4RW9Xp6X/xAgCaNc3tOH7fowhHIScZn1MZhKl
-         bfSrJn57XmYy3nnFzCDaWKKusquTNtcu+G9/aWGHhNn1ilHhKPcd66Ty8/Bni8Gi/iFT
-         9KAg==
-X-Gm-Message-State: AOJu0YwVbcjyQpxvu+wX/phxogr/0e1RK5LjeNi8tEKCK+LGIwKMliry
-	WN0mR4815Y7ck6NqRTZ1IBXYjsj/kT8QYN63zjF4Ip2ELd4O0Fz4zse0Ig==
-X-Google-Smtp-Source: AGHT+IESBxpjJIDbEHsP041nRXWB0m9GgjclFm67AQzqfrQiQGXMhO6qr1oUuBlXpIaLQV/YqKIQiQ==
-X-Received: by 2002:adf:e68f:0:b0:354:e0e8:33ea with SMTP id ffacd0b85a97d-35e8ef94698mr2713794f8f.66.1717623569546;
-        Wed, 05 Jun 2024 14:39:29 -0700 (PDT)
-Received: from gmail.com (52.red-88-14-62.dynamicip.rima-tde.net. [88.14.62.52])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd04c0f57sm15804064f8f.12.2024.06.05.14.39.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jun 2024 14:39:29 -0700 (PDT)
-Message-ID: <054e2032-8d09-491a-bc33-309fb20fa9bc@gmail.com>
-Date: Wed, 5 Jun 2024 23:39:28 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mJq0vl/A"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B519227D69;
+	Wed,  5 Jun 2024 17:43:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=gfqjhj0JM1QZ9Ipx7+G/FsCi8qreuUVZI/lkxh
+	NQxK8=; b=mJq0vl/AHTlqEOGEwfmXGGoMraHaM5iHXhupJjk5da+Bc7h6LPH/CQ
+	7A39RQfgA+3sif6biuIjjfdAzS65ETtfjspjRAUrxm1j6TlNUwBLtnUR71/iAl51
+	669PvW9uuiaddr2m7pUY7CpmaTAwz6gFNG5PRb0d/spZYOr5n4U7Y=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 775B027D68;
+	Wed,  5 Jun 2024 17:43:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7C6D727D67;
+	Wed,  5 Jun 2024 17:43:05 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>,  Taylor Blau <me@ttaylorr.com>,
+  Jeff King <peff@peff.net>,  John Cai <johncai86@gmail.com>,  Dhruva
+ Krishnamurthy <dhruvakm@gmail.com>
+Subject: [PATCH] attr.tree: HEAD:.gitattributes is no longer the default in
+ a bare repo
+In-Reply-To: <xmqqzft6aozg.fsf_-_@gitster.g> (Junio C. Hamano's message of
+	"Fri, 03 May 2024 08:34:27 -0700")
+References: <CAKOHPAn1btewYTdLYWpW+fOaXMY+JQZsLCQxUSwoUqnnFN_ohA@mail.gmail.com>
+	<20240501220030.GA1442509@coredump.intra.peff.net>
+	<ZjLfcCxjLq4o7hpw@nand.local> <ZjPOd83r+tkmsv3o@nand.local>
+	<xmqqfrv0ds7f.fsf@gitster.g> <ZjPTlrMdpI+jXxyW@nand.local>
+	<CAOLa=ZRe6eWJ_ZyH+HRq=6Lh0-xZ=1X2Z2f3HW4+EVXNquaDTQ@mail.gmail.com>
+	<xmqqbk5ndiqk.fsf@gitster.g>
+	<CAKOHPA==xgRBLXmyURkdZ9X4LqQoBHYy=XD0Q_KTQHbK54DOFg@mail.gmail.com>
+	<xmqqzft6aozg.fsf_-_@gitster.g>
+Date: Wed, 05 Jun 2024 14:43:03 -0700
+Message-ID: <xmqqa5jzqd5k.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] format-patch: assume --cover-letter for diff in
- multi-patch series
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>
-References: <6269eed5-f1ff-43f3-9249-d6a0f1852a6c@gmail.com>
- <14365d68-ed04-44fe-823b-a3959626684e@gmail.com>
- <cb6b6d54-959f-477d-83e5-027c81ae85de@gmail.com> <xmqqr0dbqfv8.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqr0dbqfv8.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 97727E0C-2384-11EF-9A4E-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Wed, Jun 05, 2024 at 01:44:27PM -0700, Junio C Hamano wrote:
+51441e64 (stop using HEAD for attributes in bare repository by
+default, 2024-05-03) has addressed a recent performance regression
+by partially reverting a topic that was merged at 26dd307c (Merge
+branch 'jc/attr-tree-config', 2023-10-30).  But it forgot to update
+the documentation to remove the mention of a special case in bare
+repositories.
 
-> > +	git format-patch -v2 --range-diff=topic main..unmodified &&
-> > +	test_when_finished "rm v2-000?-*" &&
+Let's update the document before the update hits the next release.
 
-At any rate, I agree with you this is confusing.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/config/attr.txt | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-I'll address this and the other similar ones in t3206, in a
-preparation patch within this series.
-
-However, I'll refrain for two or three days before sending a new
-iteration.
-
-Thanks.
+diff --git c/Documentation/config/attr.txt w/Documentation/config/attr.txt
+index 1a482d6af2..c4a5857993 100644
+--- c/Documentation/config/attr.txt
++++ w/Documentation/config/attr.txt
+@@ -1,7 +1,6 @@
+ attr.tree::
+ 	A reference to a tree in the repository from which to read attributes,
+-	instead of the `.gitattributes` file in the working tree. In a bare
+-	repository, this defaults to `HEAD:.gitattributes`. If the value does
+-	not resolve to a valid tree object, an empty tree is used instead.
++	instead of the `.gitattributes` file in the working tree. If the value
++	does not resolve to a valid tree object, an empty tree is used instead.
+ 	When the `GIT_ATTR_SOURCE` environment variable or `--attr-source`
+ 	command line option are used, this configuration variable has no effect.
