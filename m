@@ -1,53 +1,53 @@
-Received: from wfout7-smtp.messagingengine.com (wfout7-smtp.messagingengine.com [64.147.123.150])
+Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F220233999
-	for <git@vger.kernel.org>; Wed,  5 Jun 2024 05:31:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A02D2F24
+	for <git@vger.kernel.org>; Wed,  5 Jun 2024 05:32:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717565484; cv=none; b=kVOPumB7k+J68hbiijkyf+7mMgy9T5bkAxL2JB7ocAoDBPOBtQMDWaP2vs0S4SdT76tEMezct91OZMfuLTsQGfHbVUPKFqcJ9gn/QYWzfDwZK2vFdJpGiibq/Qd0EkMGIG0rXYaK4z/BxIHcvAhM71d9cF6fAD0r1G1cyIe7IeE=
+	t=1717565563; cv=none; b=Ilt3WgShiIZMDFdxxqE5ZLDddOvOjBQ5INVMmuO/HxV0eRifTl94dSj2//Brq63hmis/4Smc2VeqLoj7BAVEEq7JimBbYH8ySSXw47le6vXv4ipyUP4fwvaf9h6pmTVsoFRT40+jzo3iQEfLxkhbtHcmZ7u1GNPbInQSMB/rc7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717565484; c=relaxed/simple;
-	bh=jcAlrGmELTg6Af9NB395QYcCtHKSk8grbNt284QK9/Q=;
+	s=arc-20240116; t=1717565563; c=relaxed/simple;
+	bh=FbTN9IprpRWsoeQsBpF4i+laDy0I5/CvlgmeSDnvHWw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k4vUdP9qhjndivLQpyuXLimk0ARTinpR/i745F3iu6FCxBnI4C4bMVZnvBrHXQc2CfCqCKfuUSIyyRAukIEkQ86FQ6EkgGWQE4o1Ul4RiJgqmTVquApHl5EHLT/+wSx5sXCWsCjFnPBUFtbRrrXUnCWU7eqKmAd+lQCnAknweZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MfKfejfo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=acPLmHfK; arc=none smtp.client-ip=64.147.123.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hpqq2VEEieR8F2zlfL/ORXQohU+cAF/unoEddL1xX9eLrozvstNA3mgVCK0ukeBy4+1BlfjU9OVpKonQuqs/bYbqS9XO01jDQJYuj9cHzD1dlDSZMPKzpzkqunpYgrWxQSczZwBUAsAl1gMV4nq11KgHSoTbt4Y6tOlClYSK9v4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F8p3o45s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ep3wjNyn; arc=none smtp.client-ip=64.147.123.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MfKfejfo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="acPLmHfK"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.west.internal (Postfix) with ESMTP id AE51A1C0018D;
-	Wed,  5 Jun 2024 01:31:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F8p3o45s";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ep3wjNyn"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 3980C180011A;
+	Wed,  5 Jun 2024 01:32:41 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Wed, 05 Jun 2024 01:31:18 -0400
+  by compute1.internal (MEProxy); Wed, 05 Jun 2024 01:32:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717565477; x=1717651877; bh=TMJBfMk0hm
-	Y4VyCtQfcBCAbVjHl5qupDXw+p8Zcxds4=; b=MfKfejfoT1XbMSnkF3OqTv8ttp
-	NI/JL/Tjud4d606jrBQp8rG7BewVkuf1wJvYx1a8WdJRsow7hFaBPDaZad6zanDr
-	gqvgZTV7ybKJcTE3GzVm+heWM+gfuhRTBOm8yQnjo03ymFBoK1BVwmkowiLD546J
-	Rlfxa8lRgUDPKOVje/eNvP8RZOVrhur6NgL2tGP2q5d1eCElmVNqWTU71otn6Dvh
-	DR+tvfDfK3UWTzSESRjJYF8fTmX4EmPpxiVsP0ORXJ4ZwLZTcrKqKSP0yn/d/T17
-	MrijT899tTqABVtAgfqFwEOlAf5BReD86L4AtOR1Xeh+JyoJK/C7fcoAeYwg==
+	:subject:to:to; s=fm1; t=1717565560; x=1717651960; bh=8gNZWLW/og
+	6ZFdkpUrqXodmm6T+pcDTn0oTRQAp3Ao0=; b=F8p3o45sKVBhLgowmO4eGW3a9B
+	aPSwcVFELTbBUbE8w1+JjxA8yE/RvsghoI2HyeVnFFDZ15SIao7W2pQkPUx3wZr5
+	h+jKshdaRkCQQMbD7mYGvWp95vH0orh4XhGsuHGhdKVvALARY4Ahc169vYMutcb/
+	1SdMcSpL3nZi0rq2nKsGFUxysPq0IsRn6c26kwLUZLYhfFOidXpVw7JcZTu18Xwr
+	b2dsbFqhPP/bLKx72lQBWLoW2Wr/oS5ugtyz37Ik9NCW8jUgVAgid5tn79+Qx98P
+	OOm4QUQ5MPg6Ve0G22diiq1QIHuQQS8rASvdlcepERLpc8zq4sdsvFAIi2Wg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717565477; x=1717651877; bh=TMJBfMk0hmY4VyCtQfcBCAbVjHl5
-	qupDXw+p8Zcxds4=; b=acPLmHfKETWrR12cv18vMc0DtJyD0vXpKHnWZx2Rrv2Q
-	Cln0IbRuFIHd+i0IJlptxoWjLDs3tg/4JrANbtoA1UMdg9tTKlMlO5DWd1lbdUaY
-	bgNYH3ah3V+4uSAfm6bqYjJ8GCR5fTCURivfKM296VZXgsHEaUCsn54gAcq78HMQ
-	qYD8B+vmTymQ28KVQCjFYd7eaGZaauEJyPzjjeLla53QoanlSy2hKTT/zWSpSTT5
-	thKpKkLeZ7seyurkFjJO/jVteubYPBqxfM6yJTNe/qMctdr0ZJvSoZPERV03mOD9
-	nE2ligXR0STdT+OJKxun4OlX4KVGg5Pk504QzHCJWg==
-X-ME-Sender: <xms:JPhfZjmtPw4Gfs8TPx4uJUJwVNLaVj8xtx8zYAyZcvGQf6k3hIB_Yw>
-    <xme:JPhfZm0TQK1h5RDZ9fzngn_A7xbjdOzYeC_q4fEtKa4PWcqEckIEMvtMya5aAZ97-
-    0QsClbVwwmeMByq2Q>
-X-ME-Received: <xmr:JPhfZpqLmLuIL9aIO8KzgKJJMH8-AJ3nAAeRxujvSAQ03H4ZI5qCytnWNDVyFff9hJ2CasdFt0M5NM54yuw96Bfkqe64GQt6wCODuL3_g4dxYynsq-Q>
+	fm1; t=1717565560; x=1717651960; bh=8gNZWLW/og6ZFdkpUrqXodmm6T+p
+	cDTn0oTRQAp3Ao0=; b=Ep3wjNynSRqczmzQlClocQsIpAtBpyuMghXT9KdTjMl0
+	7p3DR+jrSNTt5SyNaQhrYjX7NoUAlYt8tCPIm4YJifu/D148NJQ7vMmuls8AdyPm
+	TE0rpu7OsaLVa23XUYTg0deE+kLIfyY/gpRUZ2agmtkWze9ISjhWQiHqg1yTqAFo
+	BgeB/LAptrPOnnPEP7EkOQi9JWuM/MXyPeQYallfSIgDAf8VJ8pa2fmY+VK/57LK
+	muXpBgodFLRmfMoQy2b7ixsagke18YSfJiGjmOELieKgpzPn2gzBPAk2EnhAnkHz
+	L+9A9mqh0mLjPlo9hnv3Ts80oAn/VgTBGlpSEke1bg==
+X-ME-Sender: <xms:ePhfZrxd9BTtQSEhARi_1ui3GyPTDwUJx64Tr0hLO54AA8B-rWr40g>
+    <xme:ePhfZjTtiDGdhDpsS3MUZZcTciIYCS3HzDvWphVnCdA2tsinYWo8vspFy1lddv9mL
+    bnRhDrt8BQGHp2hnQ>
+X-ME-Received: <xmr:ePhfZlUPute_Wzv3qi0tXfCKXlv5ixeGCa31toFtkGiVdShKdHHv5RUSobtKz9d387d6P8sPe7-wuq-NzJDczNCtpmbkkG6SBmX15-QOIkoHqEJAb1o>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelhedgleeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -56,33 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelhedgleeiucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:JfhfZrk4O3BYqWIs_1WKSpmkcWs0wu2BcADyp6fsdc96U8NdiUhM3g>
-    <xmx:JfhfZh0h_fKZcieJ_72L1BHHtxyRNKLjkv4PiAb63BZ58kUxZKZWnA>
-    <xmx:JfhfZqvDKQ9_YUr1DaagtbiA3wPnEsiQSiHsw8PePgPF1aaR1zl7kA>
-    <xmx:JfhfZlWD1RhbFVZpnMEjE2M13kEiNJo-H02g2dc2a4Go1aCSNrVu2g>
-    <xmx:JfhfZqKOSQwFeDuG-DJaLbv_61md_5qwzwxR4iSCu7-zEXehlqiBxS5F>
+X-ME-Proxy: <xmx:ePhfZlhRPiFKHTylIZRUtSnQefrMmm_1RVdUqCeUi_8K-IGffEwXTQ>
+    <xmx:ePhfZtB2Aa6lPKhJtcIO_QXlUh-TK1cOp-bEkz_7ZZTJ5oagO_9NRA>
+    <xmx:ePhfZuISBdA2485ZLQAzRwLpkspKngI3K02wUwxwclFkPKr38jYkIw>
+    <xmx:ePhfZsCnFfhDJrEruh82H_l-qmAvUn_e2hcYEJcfodotjciOnYWeQg>
+    <xmx:ePhfZh13j0SNzdJ5VB-RgdsDzc4OKUhmilSfVrEHmWRx0EeCaj-cEaVW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Jun 2024 01:31:15 -0400 (EDT)
+ 5 Jun 2024 01:32:39 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id a649e659 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 5 Jun 2024 05:30:46 +0000 (UTC)
-Date: Wed, 5 Jun 2024 07:31:12 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 7ccd458b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 5 Jun 2024 05:32:10 +0000 (UTC)
+Date: Wed, 5 Jun 2024 07:32:36 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Phillip Wood <phillip.wood123@gmail.com>,
+Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Justin Tobler <jltobler@gmail.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH v6 1/4] docs: introduce document to announce breaking
- changes
-Message-ID: <Zl_4IIqFmoPhx1Gc@tanuki>
+Subject: Re: [PATCH v6 0/4] docs: document upcoming breaking changes
+Message-ID: <Zl_4dDkmj8sJegrp@tanuki>
 References: <fc1a9fa03de7330f79dc56b0f2712834cb236b5a.1715070296.git.ps@pks.im>
  <cover.1717504292.git.ps@pks.im>
- <a260bbf281d2975562a042a71ca0dd7f88f03da4.1717504292.git.ps@pks.im>
- <xmqqsexsvbaf.fsf@gitster.g>
+ <f231d5ff-08e5-47b3-aadc-0f88566c2588@gmail.com>
+ <xmqqjzj4vb7y.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,57 +89,71 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="09rqs04OG7wTjjTx"
+	protocol="application/pgp-signature"; boundary="E+sVN0N6G02v9zC2"
 Content-Disposition: inline
-In-Reply-To: <xmqqsexsvbaf.fsf@gitster.g>
+In-Reply-To: <xmqqjzj4vb7y.fsf@gitster.g>
 
 
---09rqs04OG7wTjjTx
+--E+sVN0N6G02v9zC2
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 04, 2024 at 10:59:52AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Jun 04, 2024 at 11:01:21AM -0700, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 >=20
-> > +* Git 1.6, released in August 2008. In retrospect, this release should=
- likely
-> > +  have bumped the major version.
+> > Hi Patrick
+> >
+> > On 04/06/2024 13:32, Patrick Steinhardt wrote:
+> >> Hi,
+> >> another day, another version of this patch series that aims to give
+> >> a
+> >> framework for documenting upcoming breaking changes in Git.
+> >> Changes compared to v5:
+> >>    - Note that Git 1.6 was a breaking release, despite the fact that
+> >> its
+> >>      major version wasn't bumped.
+> >>    - Several smallish rewordings.
+> >>    - Note that items on the lists should only be discussed anew when
+> >>      circumstances have changed.
+> >>    - Add some conditions to the move to "sha256". Also, note that we
+> >> do
+> >>      not plan to deprecate "sha1".
+> >>    - Note that replacement refs are also superior over grafts
+> >> because
+> >>      they can be carried across repos.
+> >
+> > This version looks good to me
+> >
+> > Thanks for writing this document
 >=20
-> No need to reroll just for this alone, but back then, a non-zero
-> third component did not mean they are maintenance releases (e.g.,
-> v1.5.3.3 was the third maintenance update for the v1.5.3 series) and
-> v1.6.0 _was_ a departure, a breaking change from the v1.5.x series.
+> Yup, aside from two typos and a misstatement I did not spot anything
+> that need correction.  Will queue.
 >=20
-> It is more recent tradition that we only use three numbers.  I'd
-> strike the whole "In retrospect" comment if I were writing this.
+> Thanks.
 
-The reason why I included it is that I didn't want to create the
-impression that breaking releases may also happen when bumping the
-second version component. It did happen with v1.6.0, but in the future I
-think we'd want to always bump the first component on such releases, do
-we?
+Thanks to both of you!
 
 Patrick
 
---09rqs04OG7wTjjTx
+--E+sVN0N6G02v9zC2
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZf+B8ACgkQVbJhu7ck
-PpQ1lw/9EGxlYsiKRVo97kjocZkadXWwroEZDatGV/vIlJDzXsaYL8+gT588d7Ns
-YhcOsDEzKqOoct3b3dFBJTRhf2jAacJ+j4LloRMn8RC/xSnh5ybToAW/wAUPAzMS
-KoiNwuDyLia7B3r6IrwPiCe8ecGvTdRy5YPpdnoOC6m9HsQE/2V2NnW4n7RaPLpX
-U94pEEf7PqDwwfdomAS3Edpc++kkUXkTCMDDzlyKahhJ8xyWSLlwrXttQIabvWoX
-Q10lnnmxcyjwNWRcSk1PprR6XHWs1FEC+wk8iZj1nO+4MPz51Rd+YUiMJENdOWJq
-s5JRqWqj56Ee4SVuYAy7gImxaHJQA9O73zoli+CXs/YPlWatXsp/eSdaSsh2DaVg
-Tff3xC8Gwbq21Blumla183cd/a6ZSfezYzM+twKEKmqqjH5+j8xBBrxH5OGa886r
-oBYGjxiUTDKXHyyyS+YxMVzxKXZHZ5gZ7fET/6iS2qW7zPF87QC4zM21xKApIUqK
-C/2rJk+0ut+lM7TEe21n/MhJiREhKaxgMZzA78h0KR2fjRrUIN4qUOnA3nnQZXap
-2aHbL5OV5LLyFi247UvX2fnnJrKTka1hmRdbWB45wT1AG6IG2MzFDKVk6/RLPNcU
-wtgKzcb+WVvAsOxWoUmol0rcvYjhjAZAeA5Kuovo7vzPRZHlCsg=
-=g1nL
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZf+HMACgkQVbJhu7ck
+PpS4tA/9EZ98sjsiuD4HfyVMCQuZA/Jz+7WLdDH5HhWzECeoHWdUFZuzt5gYVHFn
+jThVA/vODR9fLM+tybtqbCS0xGcMmnB7Z4C8zxPaJUK99igt4CKR5PDNdQX0sb6m
+fQqBSf0YwsyjuDssJyErDJANfwcp41Fwx8Yo/Hwwqadpq8WT4dvcGYLWYsySyPiu
+Tb0mOFlIUTIlO7qwhtSoWGJC96vRaBLAubmlnOqV1+Zm863xGcWY2Sst/yVEBTsV
+OeA9r2pnoLwWkXIQHeUVTjhPEDgUenWbTAVraE6vjrB6P0Zod7ghz762gdINRaHp
+aWDOr/mXL6pIrCbUe5TAguU6BU1mTGeEBCRZjnvb/nXSbv8uuF/20W9Ago0hqDQG
+eA6K97InfSfiyHg24DOvkmzsjdmftItMegp17/jHSJXNqGNgSRUb4XfF24i8xlcQ
+KUxezg6L4jNo1NrwKXLEW9lINrx7W8jFVmgYPwUHVlLe56o9akjR3eoNBraU5m4f
+IhbPyFRRzVOb6dpoOjtFnm7vUoBLDqf9zV+lj8wAvb5/QYW6Wf8JTQi9y8K0gsnw
+k76Lv+mM7QnL169OLqvfnY0Xqw3UkHv61BEa0quGoWsaM4QIXIBX4s6t0dVBjhoi
+AT1MPIcBASkLCdCU1fd1OXIJKn2UzpI4S16EE17m9llborE3QQo=
+=8lo6
 -----END PGP SIGNATURE-----
 
---09rqs04OG7wTjjTx--
+--E+sVN0N6G02v9zC2--
