@@ -1,78 +1,78 @@
 Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DBA13C81B
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 08:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3652713D2A4
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 08:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717660872; cv=none; b=jsrXHULk+IOQG3E2FSte8pjpTbKDVTui57tWgSR6ZZEzSfkQO9SLhtxyJu6G0L9+zM8GMQG7Mokj57FmdBkvKdz9Bh++XGJgT4vx0S7DV5TvN3LtFtkO3GRYK4h6NNPau+E/RdASlo9F1ntJ7F8an/YcY0S6fkku7NtTYMirc5U=
+	t=1717660877; cv=none; b=XTNQKmcxkO/4pl4ugWXm3GXr0wMtriAFp3bYneeGZwYbydIgN/v42wxF5e3uz7FtmYjsubAcQ+PtYrsXMaVsM9RHGro5L9F2RaT8pGCzuxA71DRSF/nyY1f2K09Z6wkeXtfOPv8gUg2SXy5jOERmbu+o5vCOYLdNyoOLGIvWSac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717660872; c=relaxed/simple;
-	bh=xHuqFSa0V+tA81ascgkGDC+L15DCOnQZ1aFwe1+yepk=;
+	s=arc-20240116; t=1717660877; c=relaxed/simple;
+	bh=/DUChj8jSyEDoy9MZKHYdXG8m4yZzrlL8o+xzKZjxeM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z3c2WvzPe00sdFL4PKb5KOITnDp70jPFdVJs63QNM8bSrdz5BhzPKw8emZzqBukhoVoxAHw1Bw5u41yvHzxxITS9nIRwascP2XSblpYalAXjHLtDiMlDzfk9n+dJVSuqtMRiYRoFSt//QPZOW38NjLx197ComkdXYYnopVJfgZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G2RAGUUd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DoT86jCo; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=KdRhjaaKBE+jeDEafDr4LjSJ2SYxZuLaODQeo67l2loHXl4lBsXYR3kPuBWfSd7nElvnRcnfdWOZiNVP2Oxing0TbxhzZGVIIoTYqGe0eDo7jGWKxNvYry/pmymN7OYIm98RvTsb7UbhH4M/GgJmlp6CDxZa9ZjVgJhv6XvQ138=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UE3jBAbb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ODN3DbU9; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G2RAGUUd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DoT86jCo"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id D80FA13800A2;
-	Thu,  6 Jun 2024 04:01:08 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UE3jBAbb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ODN3DbU9"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 51AB01380114;
+	Thu,  6 Jun 2024 04:01:14 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Thu, 06 Jun 2024 04:01:08 -0400
+  by compute6.internal (MEProxy); Thu, 06 Jun 2024 04:01:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717660868; x=1717747268; bh=R/8jpItGen
-	nXl2gpotfsuF3qYZJSZLnHZkg/ds4H13g=; b=G2RAGUUd3ZkTasL66jBkhVV6V7
-	zep/HbxXubFFDFRnoLmPlQAPZUP5wjM/SCbZicmH6LWmheUAk06dlTTPojWDt3ka
-	rY/WZb7S3Ou78l2x4njNHAcerh23WyO7ivJW9rtdUEs+LwQKhwU5Lct6m7qhOgHp
-	CjK2S+Rs5txwAjs2Re1/Tv5Pk0I9OWiS6xgWWcs/EsWEw6/QfSfPg0rCjRURdbfJ
-	sJHhtNpMyOdu90cEqSEdq5Bqv423VhtwYYjBf/vETdkZz+riZ/U8M10zR7cQYjMj
-	grrOFQ7HPG5JuDs1CO+4oR/xDJYDfCFCa/VRK7QHyRT2E4jb/jGKuOxyjhng==
+	:subject:to:to; s=fm1; t=1717660874; x=1717747274; bh=N6mmtVu9q+
+	gdATPS1RbBYm3U/hc/yIqsopF3O43JriM=; b=UE3jBAbbxNL4CzMGPVlvE5NxlM
+	yIr6Af7Zzxp1KQ5usn243fvzmBr73rWXt/Q69oTTFIFpawW3niT3BwGo7Zo+115+
+	e22AWI4zA00nII/k3HXdqjXUGeViJcDdH8LIbHeKBZ6xLewS4aFADMNGGTOP+XjE
+	k2CnfZibUtKPoIqdglGZz03ysXWl/REw3RXfHYKcgJ7gdk+FJaZwql6zgOognwxH
+	TQPbSmFgda24rlX2gQ14ETXwkak2azyVPE28oJDPMFbmW+uYUdibhBHQv+1lLUKC
+	cIUR8X7HkFve8t5sSGuVvL3fUzRQxHiaAxpcztaQ/+P2tXmDRdflElm/uICg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717660868; x=1717747268; bh=R/8jpItGennXl2gpotfsuF3qYZJS
-	ZLnHZkg/ds4H13g=; b=DoT86jCoEYk1l/fx0wkxgGQGc9to64zuu37sIEqmqxkT
-	RLVqwwARUfsd+GxhP6RO0zRypghKIiCSM6vH4aeg2Q2b5xktIQ7NNEddeyaZamyp
-	FORIm7bseON73iSVVa+MpzX7k+901LW9HPNP3vzhJvX6BVdo6NyqE4yvUQpzXh/X
-	+tJTgket36zyWQgDhxgN0h1Pr5ChA6oCNDhXBxamOA71GWdKcSPfydEN5dFYOANA
-	hsyAQku5yGdcHlQJwcPWmt+VRTlHyCwEb4c5e3TrKohOBM/DqXahJIwZTNAhWekC
-	qvH9Fwbf7OhTu/pp6EBT9R6dILljRzddfBRE4AwWqw==
-X-ME-Sender: <xms:xGxhZpISc4uLV6rO73wcpPo66G-n3shL_HqN8wKE02qJfd6kRa01YA>
-    <xme:xGxhZlIwPMXqhpaKVfu9OCTnRIAT5Y8mxxPYr39DjfkUnuHP2gX3FCPKiqxa3-XjZ
-    k7GtJPxl9k32ZFLNA>
-X-ME-Received: <xmr:xGxhZhuXAq3a-MP1nXLmcZ5h0HupFiIWUbOBg_Z2EabVhBXCMSALvRTfdLf-8nAItnt6E4oJw3SlpDJqoa_ALOmVBm-EIGVNCR0MLewYeejj9rtr>
+	fm1; t=1717660874; x=1717747274; bh=N6mmtVu9q+gdATPS1RbBYm3U/hc/
+	yIqsopF3O43JriM=; b=ODN3DbU9ZmlyowyAmwSvN5yOh7Xa5QaGSbcmQ34vgHOa
+	NYfMIen84HWygZgZtN/J4qlNVlN0GQcCLO07pQNsTQ7/EHW/SZbHty3/UPOEA+Re
+	Nxht/P2TtkRMwRUqSuzBQ/MREJvj7KLrsrZJX/k+oXfJKxB87KxiX53kkcQNBtUZ
+	M7MEWE2L1W1142pdj0s60h0efoxeGjs0WzB0anv+xSPvp8soAS4yMQZFb8ewwpKo
+	OMdqxk0cC5/mRdJ8XZhfRG9P3W1uRhJ6I2971bIpxYpyxGgzk/DWBCHCZokailMb
+	dWzxlyDsr9CpuIAY6tZyum20qDLVVMwMmGzHQuGppA==
+X-ME-Sender: <xms:yWxhZmY7EcU3z_J75FukHdR7xw3dLTCEd3dJ6hkFOoDiinaZNHDrjA>
+    <xme:yWxhZpYKsuHORBQhnxU96RL3h2108D1YQ6JqYe4x8kb4yrmNGpkcPtpxzF6ozXHk4
+    Ue-_Ef23N82drxgmA>
+X-ME-Received: <xmr:yWxhZg-e-dscuVEI0VGbzMgVA4__YophPcJKaCZ9hWCBEfS0qXhse_M30GA7vgtDZB7EWlbXs5cRG-DEEqer0x30JX_oJj9RZgadeG_soMk-uDb3>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeljedguddvjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:xGxhZqYEpPm5GTc0qKbpSk4riesrVAxJ53c1QjQRAiNMChTeS1_0tA>
-    <xmx:xGxhZgbjTiChc8KfkItuhwwX2bBO5vNYy5xtUBnwrz9kHK9HxLoHxA>
-    <xmx:xGxhZuCp_J_WA5Oq7kqB0xGAgBTNgEMDljVV2RDltK4_ufXQh-k_sw>
-    <xmx:xGxhZuYlUWyH0lOACtvCwXjNOJsGI9BRDT9C4sPACvMw-NVXMfK06A>
-    <xmx:xGxhZoFrHCCp10mqz4mkAMFCE6bGLeN6im70XFHL7eYa1BbGACX-SWbA>
+X-ME-Proxy: <xmx:yWxhZooyAept-W_X8a4qYwf8LS9XyrsJw-_JCuky2-egdRnk8eQraw>
+    <xmx:yWxhZhpFZjVxgZRXfNsQGw_tRd1wFOFrq1Nmk0a7GsX0a3l2n4-W4Q>
+    <xmx:yWxhZmRkf1_1FW0gVkOr8Mb2u426ayQOqfPpKOGj8-jONr_lzvpYjw>
+    <xmx:yWxhZhooPdTnAUz6YhRoc1nIhKXzwRtWVnmipz9Pg2I4fKoG5pyDWw>
+    <xmx:ymxhZoVy4vJydUQHdztcbvSmKOK2NeCAc3n9PPSOt1A9Ydi57hvCuhj1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Jun 2024 04:01:07 -0400 (EDT)
+ 6 Jun 2024 04:01:13 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id fcdfe412 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Jun 2024 08:00:37 +0000 (UTC)
-Date: Thu, 6 Jun 2024 10:01:05 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 198eea69 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Jun 2024 08:00:42 +0000 (UTC)
+Date: Thu, 6 Jun 2024 10:01:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: James Liu <james@jamesliu.io>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/4] Documentation/lint-manpages: bubble up errors
-Message-ID: <9f21c305b9e0e63ddf1f1b78535f09ae957812d4.1717660597.git.ps@pks.im>
+Subject: [PATCH v2 3/4] gitlab-ci: add job to run `make check-docs`
+Message-ID: <d6d3628797a70ffff32676d3fd64f5179b19c94d.1717660597.git.ps@pks.im>
 References: <cover.1717564310.git.ps@pks.im>
  <cover.1717660597.git.ps@pks.im>
 Precedence: bulk
@@ -82,140 +82,64 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9+9tZi3t9z0d4zkX"
+	protocol="application/pgp-signature"; boundary="GpjnK78ToHknmBiG"
 Content-Disposition: inline
 In-Reply-To: <cover.1717660597.git.ps@pks.im>
 
 
---9+9tZi3t9z0d4zkX
+--GpjnK78ToHknmBiG
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The "lint-manpages.sh" script does not return an error in case any of
-its checks fail. While this is faithful to the implementation that we
-had as part of the "check-docs" target before the preceding commit, it
-makes it hard to spot any violations of the rules via the corresponding
-CI job, which will of course exit successfully, too.
-
-Adapt the script to bubble up errors.
+Add another job to execute `make check-docs`, which lints our
+documentation and makes sure that expected manpages exist. This job
+mirrors the same job that we already have for GitHub Actions.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/lint-manpages.sh | 41 +++++++++++++++++++++++++++-------
- 1 file changed, 33 insertions(+), 8 deletions(-)
+ .gitlab-ci.yml | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/Documentation/lint-manpages.sh b/Documentation/lint-manpages.sh
-index 0abb4e0b4c..92cfc0a15a 100755
---- a/Documentation/lint-manpages.sh
-+++ b/Documentation/lint-manpages.sh
-@@ -12,7 +12,9 @@ EOF
- 	sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p'
- }
-=20
--check_missing_docs () {
-+check_missing_docs () (
-+	ret=3D0
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index f676959ca0..37b991e080 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -122,3 +122,12 @@ check-whitespace:
+     - ./ci/check-whitespace.sh "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
+   rules:
+     - if: $CI_PIPELINE_SOURCE =3D=3D 'merge_request_event'
 +
- 	for v in $ALL_COMMANDS
- 	do
- 		case "$v" in
-@@ -32,6 +34,7 @@ check_missing_docs () {
- 		if ! test -f "$v.txt"
- 		then
- 			echo "no doc: $v"
-+			ret=3D1
- 		fi
-=20
- 		if ! sed -e '1,/^### command list/d' -e '/^#/d' ../command-list.txt |
-@@ -41,11 +44,15 @@ check_missing_docs () {
- 			git)
- 				;;
- 			*)
--				echo "no link: $v";;
-+				echo "no link: $v"
-+				ret=3D1
-+				;;
- 			esac
- 		fi
- 	done
--}
-+
-+	exit $ret
-+)
-=20
- check_extraneous_docs () {
- 	(
-@@ -61,15 +68,19 @@ check_extraneous_docs () {
- 		    -e 's/\.txt//'
- 	) | (
- 		all_commands=3D"$(printf "%s " "$ALL_COMMANDS" "$BUILT_INS" "$EXCLUDED_P=
-ROGRAMS" | tr '\n' ' ')"
-+		ret=3D0
-=20
- 		while read how cmd
- 		do
- 			case " $all_commands " in
- 			*" $cmd "*) ;;
- 			*)
--				echo "removed but $how: $cmd";;
-+				echo "removed but $how: $cmd"
-+				ret=3D1;;
- 			esac
- 		done
-+
-+		exit $ret
- 	)
- }
-=20
-@@ -77,7 +88,21 @@ BUILT_INS=3D"$(extract_variable BUILT_INS)"
- ALL_COMMANDS=3D"$(extract_variable ALL_COMMANDS)"
- EXCLUDED_PROGRAMS=3D"$(extract_variable EXCLUDED_PROGRAMS)"
-=20
--{
--	check_missing_docs
--	check_extraneous_docs
--} | sort
-+findings=3D$(
-+	if ! check_missing_docs
-+	then
-+		ret=3D1
-+	fi
-+
-+	if ! check_extraneous_docs
-+	then
-+		ret=3D1
-+	fi
-+
-+	exit $ret
-+)
-+ret=3D$?
-+
-+printf "%s" "$findings" | sort
-+
-+exit $ret
++documentation:
++  image: ubuntu:latest
++  variables:
++    jobname: Documentation
++  before_script:
++    - ./ci/install-dependencies.sh
++  script:
++    - ./ci/test-documentation.sh
 --=20
 2.45.2.409.g7b0defb391.dirty
 
 
---9+9tZi3t9z0d4zkX
+--GpjnK78ToHknmBiG
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhbMAACgkQVbJhu7ck
-PpRjOw//T6joJYflY+EwNqxuxOWjrCz+2PaJV23NaYQ33diy+SRIy6nKWgwwHrh8
-4SaDP44apth+zQJyAw2d5cfAz05lQBA/rZmE+tZo5SzbeZIZZDlOW/sVc/PU9AO3
-55TGc2K1pJz0skx4VSQYXdeUaC1kAPHQK8X/SX/KyD7KL7ZlwhbsQh8787EvV1Dp
-LX8bPXzO0DNIpnDI1+F9kX2OHJQHIqMFAKXXKhdYPidxPVU/CzrIHyZ10PQzoQ8g
-gzv178giSqvkh2SkXQQo3uaIqn9BWmpw2lw9nQp+O4r36Imr9TxqX20ZcQbACSIB
-jQQVkiAjI9lK7ri1oGBh7agPwofaRpx6ysCvkU9PftAaOumZMAfg9l79QAHlbnPe
-L52PUGU76nc++STP1v0uGhiMG01AMiJviYJQ5XA1eQ1gkOD2nugK89i5VFApd9pa
-mB6SB+XAC8p2cfUtb/ZfT3eSoDvOiORu5pRhR61zUMP5VQPeNt8b5Y2wlF6UO94f
-BNquhKGp+Q7Wc4b+fveMP2xU5BkxTa+/BMLoZ/r9yxCJBQOSulNx9W2OHnQflrXq
-ALTVF7elYFoLsyLwM2Ogy2IguPZWxVBigEExG5TW63Ivdd7HQjOAIHwUklI5JPyF
-GPQgMUJTE+MwQ+XocC9qK7iHuuapoX2HhTOl0+Mo33uf8jQ9HCo=
-=FVJJ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhbMUACgkQVbJhu7ck
+PpSCrQ//XOvPeHuqRDzcd9wdkyFTgtjJRXRW7oRgd5/mh/jlHt9gebos6Cxio2DJ
+mBdFT/YyTXxJStf0+rPGcHWj1j0BQOeMzhXvTrLqsgb7J17iwAJu3XF3qAIPsnZt
+GbdMTzsokn18IPXDDvIjZ+HOr48XJnIQK2KoLbSDoPeDowFbYhjXWX9PyqMWO6Ov
+SYiMmPuMk8Lmgc+ZCDFq0A3lTefx93XhNaX+2KQo0Ax7UNs4+eq0roxFE8Mw+jDF
+Tfnxab8XJzQkU/Lqo2ZV/G2Kyn+J1mAa/vDOsLQeCLyReN2FXOMJHjzKMZJNg/0k
+Q/NUqgowYljGIFoZSvSo+RbFECNLtqq4H/joNZhgnen6D3AKTP1rJz5W0OpaZcX+
+t2wH+BSFmSUM7dy8B9aMdVjjJZ5+0QyT7Hb4UZyG/TxAYSpO5xgpVOn4m5Tl4hNv
+1ZaenCnQ2KIOfqhYRWEX9pF/2feggSweMuE3KAQ1cQJffx72XvYjRQrrL5ft11je
+mpKCEc1PAMIXTCZyfDNPsrLY/HBfNbnQz55cXG6m4hkba5t54aAHg12+5oolCRHz
+rjmDxeqJkloOkkeXHQoKM8q2/4aVpvE4gHKYyuY1F+R7qlVUh8y6kWLKqA83lfTF
+owxWeQL0fhKjB17nHwJz3KUWFd8xSbeFaCSQH5rVmmv26m9WyPM=
+=4sob
 -----END PGP SIGNATURE-----
 
---9+9tZi3t9z0d4zkX--
+--GpjnK78ToHknmBiG--
