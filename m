@@ -1,64 +1,64 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1CF13BC35
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 07:57:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8094613C839
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 07:57:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717660645; cv=none; b=ehN4HyvaJO5g8NwSuJe0Chj1FxtAsc0nXLjVcfQGR0d23N1j37bGpc7H24uZ17Oh1YfBqYWtb+KxNI1XJyVe9o+bLjRsMvT6CB07G48bW/4CJXcR83jColnq3uKGqpz6TNICWVh2sktilpuhNMV9weuyUl4XZCVrpH9JYEPB0Ow=
+	t=1717660648; cv=none; b=Ymx+hvEC5OFhmQvkbMq30VurkLZrk/WLZRA1dgOK2/p7Zb9eu8H2VVloNe1uGEthEIaNq0kzUamZwuemEQJq2MQ1b+dOB+u8BmY6D+xWn101cZnvZrriKz5M0jy+BntQ3PXmKihklToij1ktXtkMbVGAj3exrWvaSmSi4gZtw6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717660645; c=relaxed/simple;
-	bh=D9nQ2fEUIFfTJnU7qIz1ApVrJNrk/Bf8EA+KDXb9HEY=;
+	s=arc-20240116; t=1717660648; c=relaxed/simple;
+	bh=xXngqgh62RZ/0fbXn8qQInGgMtHxNDVVRPdYlYvxIAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t9yxAteUUgg1rJJUCZ9ed+3ut6t6bOb8yhTEl/NXXQpe3gyoBham8oNGlz7WkNGUBTdRMXmOIrGf2c2LrC6C4RS022ZtfOnpO3Vbg3rcT1on5RD70wM3hOxsvbNiaSGMI1Sbo6/56Y+Q/V/0QEorQdCF8gGISnjtzI/ukzUdYOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WHTtadfA; arc=none smtp.client-ip=209.85.214.177
+	 MIME-Version; b=MkkuXMf9wIKEneCCsHEhuabqbWLY2P7sG8L4lI0lMyToqwAuwQBVOZCkmgFikvkQKONDnQzIJ6JDHwziUwVSGdkkbnpuQU65/+c4a/9ucLE3td71Al5VNnDtA24s2kaCYRLE7JA9whQJ7vKGcFxxMqjhKew7V5rC3rwJ+76QIlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B19wqniO; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WHTtadfA"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1f6c7cdec83so178455ad.0
-        for <git@vger.kernel.org>; Thu, 06 Jun 2024 00:57:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B19wqniO"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1f6c7cded01so153015ad.0
+        for <git@vger.kernel.org>; Thu, 06 Jun 2024 00:57:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717660643; x=1718265443; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1717660647; x=1718265447; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QenudIcxVUzKolxgrGVwZKl4XyKKumgzlhfspZL21Ns=;
-        b=WHTtadfAhh7LsQzMcTuaP/h6dJ/1vRPeZIN4FJrW8uWzQSoDIUWg+OM3dr4F+b0e5N
-         2QyZuxfFHphFoAgk0VFcn7dh/VWK4syvE+f+3eVeZMcXwk8KSt9FHmK75hJZS94jzVoy
-         tnfQ7DxFsjspSFHQvIv8xBhOeqjyjSCW7PMTTIiwRWqer06wNj2oHsAzVhc/jcWtTP0r
-         HCuNeZTeLRMX6FpM+eftjBUauO7IVuA/8BIciFyczMJBYuGosad+JRASXdvv2h0/YPv0
-         Yfy8FfgQ6NmvniPFQ4o34A9wb2Rx8WZk/r82sFHQc+7QgH3LQMPTZ+knDiW5ZsOCRGPg
-         H0yA==
+        bh=WSqITE4lscpEpiyPN4IT3WNL1I4RvWn06OSc1XrW0Oc=;
+        b=B19wqniO+aRRCIXj8FEACHMWfpB6obsHlCXLW5pftjeadI4IhD2XOAcyzGxzEgI0f0
+         Wru78Sl/0BBuaF7kTK1KbW539oN+Q795IezdeIHIrT2z8YTxR/ICNbynQUh8X+Nhu29u
+         csQ8th3rn9d9Mab53Vd4eUdSjboWI/EvQ+snlJ++M0v1R7066mwAf5jfiNm4uSWq39YZ
+         LBlwU/6b6qBq9LxqvwVk35KZmavt9aqrYggX2mQAgc1kQ/e1LX83k3SWj4haU+tdN69p
+         eynRVqMIiAv4vExckZ5O2O+z6NPmjn6xzzITy54Dfx6FqW1K3z85qBkvvwIOspWrlKIS
+         lgSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717660643; x=1718265443;
+        d=1e100.net; s=20230601; t=1717660647; x=1718265447;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QenudIcxVUzKolxgrGVwZKl4XyKKumgzlhfspZL21Ns=;
-        b=YOBz8uQDkF1jrlZaKQfzHV+0n8YdmjSl4kZDRMDwuewH112orzrBM6GsN+p7xEtH6e
-         dpOhh79vueXkmLrqBoBBO00xQJE9eGL8gEg+f+DG8AjJkVuDmrnk9YFcs5S0ICz7XjdD
-         DxS+ylGmuowlPEymNyc6rmkcI+hd6PuU0Zvtan+lST/1Bm7eQOYtWD/ua8jrxBSjPJcf
-         zE3CZ1FIH1mS7EhtGi7K9KVdMcvZw6dW2tW2YMj3qzks3hw/Wi9+gm1Z4h2lb9fx8vzT
-         oXLofiEN+kHnw/RSBaxTi3WFNravMV+uCWg4GH63RgAEL0LJrDfS5ff0Ouet+j92Gcf1
-         NJlQ==
-X-Gm-Message-State: AOJu0Yzf4k4uSt4pejwVgKOK7HVfgBzkfh6ohHzI3x/OXGb3nS8FluXY
-	/zxydSV9bDoQyylE/sXdrkZzgFmPUVl6qR56K5AVlg9mWVBMsxRyvNqA3XiA
-X-Google-Smtp-Source: AGHT+IFFw0B8/O49Le+FiS/LqQK1bsfhF5NL6CiI/QQwKHmMIcVOqNmdXbCpd1Kjwj9z14HCuFTkJA==
-X-Received: by 2002:a17:902:d2ca:b0:1f6:5013:7842 with SMTP id d9443c01a7336-1f6a5a12932mr61535185ad.27.1717660643518;
-        Thu, 06 Jun 2024 00:57:23 -0700 (PDT)
+        bh=WSqITE4lscpEpiyPN4IT3WNL1I4RvWn06OSc1XrW0Oc=;
+        b=MAwN9e90k4o7QD75pKfqaHukBPFjXXqpSZh+aT+FrIegh33KX1NOPbllBE1Ue7ejBF
+         zM/kgqcdWUTWZd1ZaI4nCn2f2PRV8QW7wM55TlkJRtMOvgy3wx10pWJEeFUSiVwK+9ap
+         1/VphCKj3nc8GEPtWI0QppSRtJt+8tR/xLi3K52r16AoZ5jHB163lVBZ98v/xmDHLqrn
+         XBnAawbD/on2Gg2Qso0uORYA2B+5nhbLoWG1+cy8a2xGR6Ss9+Lrnba/QQG2MrpEOkzC
+         ICpVqBPB4/AR1dbmXOv9Y8ANMHmOgJ0IvBOyfEFKOt9HXMsfExw7do/Gx5w5F0Ts1eW/
+         XQNw==
+X-Gm-Message-State: AOJu0YyfhgH2MWwtgGe05Kb1l2/MXHSrHG346EXr2nGFzgwKfSYujhrR
+	uJEwyevUfuRAt4ST5+qsu56fJIxB8Hf2Cpl4zMK9a2yK+MC0n/VcBS68kKYw
+X-Google-Smtp-Source: AGHT+IGdBqAf1NET++Ib0lK/igG+qOa0PqPpq88cSELdstYJDDLuppfk/UEMqc7Fp5ojMC+lOkg1cg==
+X-Received: by 2002:a17:902:d511:b0:1f4:7713:8f6 with SMTP id d9443c01a7336-1f6a5a5a85fmr60960235ad.52.1717660646600;
+        Thu, 06 Jun 2024 00:57:26 -0700 (PDT)
 Received: from Ubuntu.. ([27.61.69.112])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1f6bd7ed6b2sm8192415ad.246.2024.06.06.00.57.21
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1f6bd7ed6b2sm8192415ad.246.2024.06.06.00.57.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 00:57:23 -0700 (PDT)
+        Thu, 06 Jun 2024 00:57:25 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [GSoC][PATCH 4/6] t-reftable-pq: make merged_iter_pqueue_check() callable by reference
-Date: Thu,  6 Jun 2024 13:10:48 +0530
-Message-ID: <20240606075601.6989-5-chandrapratap3519@gmail.com>
+Subject: [GSoC][PATCH 5/6] t-reftable-pq: add test for index based comparison
+Date: Thu,  6 Jun 2024 13:10:49 +0530
+Message-ID: <20240606075601.6989-6-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.2.404.g9eaef5822c
 In-Reply-To: <20240606075601.6989-1-chandrapratap3519@gmail.com>
 References: <20240606075601.6989-1-chandrapratap3519@gmail.com>
@@ -70,58 +70,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-merged_iter_pqueue_check() checks the validity of a priority queue
-represented by a merged_iter_pqueue struct by asserting the
-parent-child relation in the struct's heap. Explicity passing a
-struct to this function means a copy of the entire struct is created,
-which is inefficient.
+When comparing two entries, the priority queue as defined by
+reftable/pq.{c, h} first compares the entries on the basis of
+their ref-record's keys. If the keys turn out to be equal, the
+comparison is then made on the basis of their update indices
+(which are never equal).
 
-Make the function accept a pointer to the struct instead. This is
-safe to do since the function doesn't modify the struct in any way.
-Make the function parameter 'const' to assert immutability.
+In the current testing setup, only the case for comparison on
+the basis of ref-record's keys is exercised. Add a test for
+index-based comparison as well. Rename the existing test to
+reflect its nature of only testing record-based comparison.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- t/unit-tests/t-reftable-pq.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/unit-tests/t-reftable-pq.c | 44 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 42 insertions(+), 2 deletions(-)
 
 diff --git a/t/unit-tests/t-reftable-pq.c b/t/unit-tests/t-reftable-pq.c
-index 5c5a4ecdc5..30bf9cb492 100644
+index 30bf9cb492..6f6bf58307 100644
 --- a/t/unit-tests/t-reftable-pq.c
 +++ b/t/unit-tests/t-reftable-pq.c
-@@ -10,11 +10,11 @@ license that can be found in the LICENSE file or at
- #include "reftable/constants.h"
- #include "reftable/pq.h"
- 
--static void merged_iter_pqueue_check(struct merged_iter_pqueue pq)
-+static void merged_iter_pqueue_check(const struct merged_iter_pqueue *pq)
- {
--	for (int i = 1; i < pq.len; i++) {
-+	for (int i = 1; i < pq->len; i++) {
- 		int parent = (i - 1) / 2;
--		check(pq_less(&pq.heap[parent], &pq.heap[i]));
-+		check(pq_less(&pq->heap[parent], &pq->heap[i]));
+@@ -18,7 +18,7 @@ static void merged_iter_pqueue_check(const struct merged_iter_pqueue *pq)
  	}
  }
  
-@@ -40,13 +40,13 @@ static void test_pq(void)
- 		};
+-static void test_pq(void)
++static void test_pq_record(void)
+ {
+ 	struct merged_iter_pqueue pq = { 0 };
+ 	struct reftable_record recs[54];
+@@ -59,9 +59,49 @@ static void test_pq(void)
+ 	merged_iter_pqueue_release(&pq);
+ }
  
- 		merged_iter_pqueue_add(&pq, &e);
--		merged_iter_pqueue_check(pq);
++
++static void test_pq_index(void)
++{
++	struct merged_iter_pqueue pq = { 0 };
++	struct reftable_record recs[14];
++	char *last = NULL;
++	size_t N = ARRAY_SIZE(recs), i;
++
++	for (i = 0; i < N; i++) {
++		reftable_record_init(&recs[i], BLOCK_TYPE_REF);
++		recs[i].u.ref.refname = xstrdup("refs/heads/master");
++	}
++
++	for (i = 0; i < N; i++) {
++		struct pq_entry e = {
++			.rec = &recs[i],
++			.index = i,
++		};
++
++		merged_iter_pqueue_add(&pq, &e);
 +		merged_iter_pqueue_check(&pq);
- 		i = (i * 7) % N;
- 	} while (i != 1);
- 
- 	while (!merged_iter_pqueue_is_empty(pq)) {
- 		struct pq_entry e = merged_iter_pqueue_remove(&pq);
--		merged_iter_pqueue_check(pq);
++	}
++
++	for (i = N - 1; !merged_iter_pqueue_is_empty(pq); i--) {
++		struct pq_entry e = merged_iter_pqueue_remove(&pq);
 +		merged_iter_pqueue_check(&pq);
++
++		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
++		check_int(e.index, ==, i);
++		if (last)
++			check_str(last, e.rec->u.ref.refname);
++		last = e.rec->u.ref.refname;
++	}
++
++	for (i = 0; i < N; i++)
++		reftable_record_release(&recs[i]);
++	merged_iter_pqueue_release(&pq);
++}
++
+ int cmd_main(int argc, const char *argv[])
+ {
+-	TEST(test_pq(), "pq works");
++	TEST(test_pq_record(), "pq works with record-based comparison");
++	TEST(test_pq_index(), "pq works with index-based comparison");
  
- 		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
- 		if (last)
+ 	return test_done();
+ }
 -- 
 2.45.2.404.g9eaef5822c
 
