@@ -1,69 +1,69 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08AB1F171
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 16:32:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC93197A8A
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 16:38:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717691532; cv=none; b=R9gKJS6oCsb5VF42zUzYKSPzrhFUpoLbJmfedb2fgpG+k76SVXd+MEty2m+0/pNM4mrhSWbiUEsVKS1rtPNpWrMLdszRxDBZhcN86PZD7TbR3ZsEwKYa2lq8l4PmiYYOFmKij9PQJl+1Yj87gK41rMkZHir1pF8fTwV0wpWnxPs=
+	t=1717691929; cv=none; b=bAtJCFoeHPusNnlNAWrCfQAqG5E0WxO/6TGYQQBJ0bZy3onOTkmtSZAd3PE3ux/jPgXuaYYy/u0nPyvDO1IFpg4XK5lXnG8UUvsccoZIlmMZgFk5CCBQB5pTBAVr/OU5g2fYLX+yBgiUzpnXVDLGW8uRhzC6s4NDfA79ceeZXFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717691532; c=relaxed/simple;
-	bh=16thv84HhygDVkWszKYSBpAASO+7BFuMc316VCQkNoY=;
+	s=arc-20240116; t=1717691929; c=relaxed/simple;
+	bh=SIUzLBq4twD6T/OmBl15yN7rhJAe8M+Xg+TdTlpzgJw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uvvDEWA46GqcVzs/2ecIuUu2XUqoUv3IPDYGVFDzxAp+rVfUtp3Sq0EzEmi5KheU0eFu0P97ZwlByOHuMHcUtcODTHK1HsgQsYsT3GDqxrxPY/jEHhWTdVDKtKMXdOayLZaH/mCRXp6r9HQxhSv5nrBddAPotwZowNAe94cCA58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PdwfUK1b; arc=none smtp.client-ip=209.85.210.181
+	 MIME-Version:Content-Type; b=kNTsOPpgdNSS8dp6BFKpq6CtCiDPzoRidOYkGF/G5kpnktQH+zyw6/g5PEnkfSMMxABRpQJwjvdtqMqqteMtDxED1AUn2nx1LO/Uibngs9gUPvqq2dhVLwwtAq9kVHa0VzQ49jRhWAUFkbzF8thTdEPjITKVuD/JDh5Y6KODEmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JKdR45UO; arc=none smtp.client-ip=209.85.210.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PdwfUK1b"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7024d571d8eso995570b3a.0
-        for <git@vger.kernel.org>; Thu, 06 Jun 2024 09:32:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JKdR45UO"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-704090c11easo218702b3a.2
+        for <git@vger.kernel.org>; Thu, 06 Jun 2024 09:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717691530; x=1718296330; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1717691927; x=1718296727; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dmMhAMq+8g2voBzeWmNyftIi6edd7atK34ybVGdaLsc=;
-        b=PdwfUK1bjRQ0gtmfJEsvX58RJYT6UBWAbfJGcoNcy3KeMg/WQT5AC5trklS2kqAo9H
-         ch69S+qmnzsrS1/TGZcBYAfDc3RAvgPtK26kOHlY1dpsM6b3Q0GWPF0KkoQjM6Tdv/44
-         88dPWrYmiJjwGUCstXDCM+aRvrtuO323PFiFu8ZlZ+CS1CAdPLe1WzNZfh3Kt2WYJzD2
-         6oFBXZNsHQXFI3H+XHQiQUjzCNIkWb8TdsPkr6Z6yYzUGFhySQcBF8zhJJlZvE1vp2bV
-         BTUZN3BG4W4VYscmgInGM1UKiraRuwNgHXGDgpCyIFFDzJRWk+228KZEMs/I2gtGy9/o
-         6uXw==
+        bh=jfUQNDwVZXBLPWOS6RPEGu0sqdgFm2wm1uXMOc4EDKU=;
+        b=JKdR45UOFeNuqwLVNq+W8pJGdLOOdianvu5U1dIOsDe51eGpyR8uywdfLPpHgbECJ4
+         Km3BbrSwQOMhTIlunznyHZiFt/dRr6bzIJmGykJvFPrkHcTx29QTCi+XAZle6Yvj3Qew
+         UgF8vR0ZoD2H7Y5qzu/kZkZFcUSjdobfIN3f3mCiQTtbexYuEuQVW0dQVNgEHvowbIKZ
+         72fODhfqxY8ZUDs3/vsFInbIJdHaauQHWJKiGB+cAU5aHyk8eq6GdjKAhHzhCudFaKLe
+         udX75zMT3lI/xJHcY0Esn3rLst3luMb5w1+35qQvf9l+2bs7vn+aDOo4TV3+s5aV3Yu1
+         C8Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717691530; x=1718296330;
+        d=1e100.net; s=20230601; t=1717691927; x=1718296727;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=dmMhAMq+8g2voBzeWmNyftIi6edd7atK34ybVGdaLsc=;
-        b=nTA0pPWPv2PL35Ai8mTE1GR9CbWbuwR+UrfNSLQ6GAHDsYYYY2njy9EJqoyXu7+/v8
-         1/CkjrHJzZVc0oXreH2HANkJMDl47InNNX8XjU1oWbQR/JN85o7OBAZgCm2ZWZ879JuH
-         007jS0UDAlOnW3hvb759UE7WE4y+/5psAIPYkLuhzIPxvtRoWzpBAmutqakAPYdxtSXA
-         grk3kGyB7P8x5TkbzVVjYP2k8EEJG8HmZq9dIOyobiK9xs66XATZYbPU7SdOFWQPHCgy
-         2CVsLLhvxqiuYNQxSVZ4nVAl+2+JmjGpzz8t/DYC7io6f4BfVxs/CrQEJZkq5lbMPab5
-         OJSg==
-X-Forwarded-Encrypted: i=1; AJvYcCWq6p6cpn2WhgstQ+jUaln3i9VbdxpL4K75iu7o8Xkzulrsl/9/VyX5XAU2L9R9LnCCAkPnR31mYmQgkSRKqzFxGNxw
-X-Gm-Message-State: AOJu0YzaWTbcMRhn9+jVH7VyBT6UpmXxZ7J2k3z6lMDTJ5cJ/9OI2Nfc
-	1p1OqHMWRqA9bsnjnRLovjtn68U/8qFZGF4QhRcgqWguSDkP3WpcVHAw4Q==
-X-Google-Smtp-Source: AGHT+IH8aWD4kMAKlci/oYr54cPYUsdJBluWih1QRLSdO4/AXeaMzfoCQh3FNfKT4WO5XZlzfGjCUA==
-X-Received: by 2002:a05:6a00:1307:b0:6ea:b818:f499 with SMTP id d2e1a72fcca58-703e599ca68mr7095598b3a.19.1717691529967;
-        Thu, 06 Jun 2024 09:32:09 -0700 (PDT)
+        bh=jfUQNDwVZXBLPWOS6RPEGu0sqdgFm2wm1uXMOc4EDKU=;
+        b=vkafwoemCi1amBAXbyWKsOcdl42kEK7vz0v82a6WTUZN55vounNA4YzpAHqkHleoKj
+         +fWB7wNIJvHa9Uw8Prh1w9EFE6mtvuGceBAURN2TqBCedbnVG6SUPz9kLFvQrvdIjZjF
+         9Mg6+dgl7yegf4EC6/pE2+K4PiX1cVXbW2rzTb6JftaGaJ+FTTGBRINqkyI+d0MJoHar
+         oqFNmE1XPyIE1N1+t8by2cwA4C66WbxP0lPymyYwpL2BN1uouxtVt6agWEmWTgzu+0oX
+         Kkv8tcOv4r8peGiJ4sXeZXGWY2dbGa+YuVnnJAodvHwsm6ZcybQ73JbmYnxocDPrY1ZR
+         TkiQ==
+X-Gm-Message-State: AOJu0Yzyh8UbPNh7eTEQQMtutnxVoWDHjbVGUmiflFHjZhiDTGhePxIs
+	BzUcHTieUSRnCMwltNtPmIY+Zn3V+si29CjVGUXJCxbw1freeDUc
+X-Google-Smtp-Source: AGHT+IGuCyR2fdLiGL7vuNuxBmVcxyE3pP8qPxVyMS1PKIsK5Q+WuTGTQhEDylhBdEDBOmaxxfxTPA==
+X-Received: by 2002:a05:6a21:6da1:b0:1b1:d519:6cce with SMTP id adf61e73a8af0-1b2f9df70cemr57645637.57.1717691926565;
+        Thu, 06 Jun 2024 09:38:46 -0700 (PDT)
 Received: from localhost (201.204.125.34.bc.googleusercontent.com. [34.125.204.201])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-703fd4951bdsm1294689b3a.128.2024.06.06.09.32.09
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-703fd530d25sm1284487b3a.213.2024.06.06.09.38.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 09:32:09 -0700 (PDT)
+        Thu, 06 Jun 2024 09:38:46 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/2] ci: let pedantic job compile with -Og
-In-Reply-To: <20240606065236.GA646308@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 6 Jun 2024 02:52:36 -0400")
-References: <cover.1717655210.git.ps@pks.im>
-	<351dec4a4d5a5619e7627e11a8e674e32125125e.1717655210.git.ps@pks.im>
-	<20240606065236.GA646308@coredump.intra.peff.net>
-Date: Thu, 06 Jun 2024 09:32:09 -0700
-Message-ID: <xmqq4ja6niba.fsf@gitster.g>
+Cc: git@vger.kernel.org,  phillip.wood@dunelm.org.uk,  =?utf-8?Q?Rub=C3=A9?=
+ =?utf-8?Q?n?= Justo
+ <rjusto@gmail.com>
+Subject: Re: [PATCH 1/2] am: add explicit "--retry" option
+In-Reply-To: <20240606082114.GA1167215@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 6 Jun 2024 04:21:14 -0400")
+References: <20240606081724.GA1166769@coredump.intra.peff.net>
+	<20240606082114.GA1167215@coredump.intra.peff.net>
+Date: Thu, 06 Jun 2024 09:38:45 -0700
+Message-ID: <xmqqzfrym3fu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -75,36 +75,16 @@ Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
-> So for the pedantic warnings, we're left with a guess as to whether -Og
-> or -O2 will yield more results. And in my experience it is probably -O2.
->
-> If we want to get coverage of -Og, I'd suggest doing it in a job that is
-> otherwise overlapping with another (maybe linux-TEST-vars, which I think
-> is otherwise a duplicate build?).
+> I think even without the test-terminal cleanup, this is a good thing.
+> Any time there is a heuristic like isatty(), we should have a way for
+> the user to be more explicit about what they want().
 
-The same knee-jerk reaction came to me.
+I very often do "git am --no-3" to countermand a failed "git am -3"
+(or vice versa), so I'll be hit very hard with a need to retrain my
+fingers.  But I'll live ;-)
 
-Speaking of variants, is there any interest in migrating one or some
-of the existing x86-64 CI jobs to arm64 CI jobs GitHub introduced
-recently?  I suspect that we won't find any endianness bugs (I
-expect they are configured to do little endian just like everybody
-else) and there may no longer be lurking unaligned read bugs (but
-"git log --grep=unaligned" finds surprising number of them we have
-seen and fixed), so the returns may be very small.
-
-> Your command above also loses the "-g" and "-Wall" from the default
-> CFLAGS. Maybe OK, since DEVELOPER=1 implies -Wall anyway, and "-g" isn't
-> important. But one thing I've done for a long time in my config.mak is:
->
->   O ?= 2
->   CFLAGS = -g -Wall -O$(O)
->
-> Then you can "make O=0" or "make O=g" if you want. And I think that
-> setting O=g in the environment (exported) would work, as well.
-
-I do something similar, but my $(O) replaces the whole -O2 thing, so
-I can say something silly like
-
-    make O="-O2 -g -Wall"
-
-
+"--retry" is a horrible word, in that it makes it sound like it will
+keep trying to apply the same patch over and over until it applies
+cleanly or something.  Can't we use "--continue" like everybody else
+(like "git rebase --continue", etc.), or would that be even more
+confusing?
