@@ -1,204 +1,105 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC8313B5B9
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 21:55:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B064D73444
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 22:19:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717710908; cv=none; b=uVOl58PFL3HJDjoyMNycS8bMvhCPY3iqg0YbW+1e9/Q6UXLHWcgg2uKlPklJasTZQSf/IAIMBAMyU4dJ/8ieIPcAwgnIc+Buy4kL7MMeHCCtpUDyJEPbtY34A+fkgtURb3pFbEwiRJ+pygEwjvCK1CUJf5JE1pKBWQKXs1X609A=
+	t=1717712366; cv=none; b=fZTfmbnAMKa6CTDUygEn4vHT8tKQMpXFWA60PtB1M7sZVYxkrmmoqDZq1vpZVdH8qROz5jz1wK/sHWGfc9EqDJuPOjVPvQNc2MYyeGEvcPtMRDJJzOf8iyDrDDznuCiBqiLouj5nbp6c8RLyNv75qqKHRj9RtBkOd/UJ/l3Wf6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717710908; c=relaxed/simple;
-	bh=Kasls9kIPu4IerfqUcXYNA9D21AgXElMBNKONYnc0+0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=blkageG4cYO+vLt9rMZWMdgquFNX4NZQVLNUET2FDrw07YUlCeld2SI4unQsdOycyZmeWhg5Kw9plyxOEWtMYjO9T1l/mnRqU9t7lkoA02ahUSRVhSQw5i1WgQPycjpYAOKTjoPVpyzaVHMI0CWEjStW5rLP/ORlpc30PTi0EiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hvbmE+9A; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1717712366; c=relaxed/simple;
+	bh=TuV+kyHhGLppDsB/tA3ttAbw9eso2bCNGWpk83rI0xA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=ZwHUcCUSjWqH1kKfwHUbr4okgJLHawllfqJzdNF9z1IXuPWoWk7qZzz8JoH3KS3QuAMd1NxYWaUbfNTEaCKoHcLJ9NA6dp7/fEmc6XhhSN3jVzFJM5s2XMPC3QiiwMo6Wgf60azFUFumscnsXrh9EFxHtvHOmow3eI/IIamSI8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=r0DGkGpb; arc=none smtp.client-ip=209.85.160.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hvbmE+9A"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F45B25F67;
-	Thu,  6 Jun 2024 17:55:00 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Kasls9kIPu4IerfqUcXYNA9D21AgXElMBNKONY
-	nc0+0=; b=hvbmE+9A5FOPzLKcc9mMPvFVc7WBO3ddcbtO6ZGckFgrU88twKMEAN
-	fyX0NfCmJUa00FGFfINiD6L0w/cye3eodeZ6Axb1PolsbaQUGHDHrv7DnJ5mEcu5
-	KReIQvPq/14IS5+mXbOsdtKddOOkL7BttYm+bZDZmEj5QH+C1T6SI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4788025F66;
-	Thu,  6 Jun 2024 17:55:00 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5FA2D25F63;
-	Thu,  6 Jun 2024 17:54:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,  Christian Couder
- <chriscool@tuxfamily.org>,  Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][PATCH] t/: migrate helper/test-oidtree.c to
- unit-tests/t-oidtree.c
-In-Reply-To: <20240605134400.37309-1-shyamthakkar001@gmail.com> (Ghanshyam
-	Thakkar's message of "Wed, 5 Jun 2024 19:13:52 +0530")
-References: <20240605134400.37309-1-shyamthakkar001@gmail.com>
-Date: Thu, 06 Jun 2024 14:54:26 -0700
-Message-ID: <xmqqo78dka99.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="r0DGkGpb"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-44043348a9cso874581cf.3
+        for <git@vger.kernel.org>; Thu, 06 Jun 2024 15:19:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717712363; x=1718317163; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ypUmHEP1dY1bzlv5I9/ldQzKK8XwxBNndNFXyx2bSSE=;
+        b=r0DGkGpbMb8696dqH0LmIrQMJfrag3DtOpLWJ67l/DniLHcD3RvNkNWBxKlp0LM1kO
+         pOFEaUwYEkChhMFLQiv+EiCBFuin0wgz2Y/JPm75QOfo/a2bqMh0Yb5K4yQCYIrd7Jrr
+         3O3Xvr1HGrfz2L5b05cgyOtfqfhD+AIxlTz7Ss2xjekPTm+I0MZkz3bOz5DdE8zA07/I
+         XcrHySyKa0VWKDnASHZPsuwafAiI/U/MdlGWYwGpWTneGTKVdpHggwtAS6mxP3BhVfmR
+         uRyBwbAkniTH/BxHqXBEUGvxVpsmeslRk3kxisWf6WI+pAdtDuC5wELzWHnY46P7j2Ef
+         n7OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717712363; x=1718317163;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ypUmHEP1dY1bzlv5I9/ldQzKK8XwxBNndNFXyx2bSSE=;
+        b=pxGEehjpcMeuVQCX8zHIRcZi69vKg4c1LEWfZmg9QVBf4CDYB5ssLbQ4B/CYJoSaVy
+         xw8e65MY9dGXd6cWySC54xfyYEXYQGd31Q8O6N18x+bFuq7tI0BBkRJCUyNk/j38bDb3
+         ui0kAmVC6bW7l+L4mq0hvY4ZPRrubfqb0usZSzpkogwxL36ehKLYc2ambaCB/nAusYAz
+         gh+uinW87K9Es4c6xAUa2aT2gv+cADvea4GiCrTJY37nvmdzjNooa+2UK7SdpJ9Mh/8r
+         JNZz/TSglU9QuM81XszWkyceJAhnaZTGYpb4CPCqhLxiUM9E81mpVNuDKYNWVMV+iYEK
+         AdTg==
+X-Gm-Message-State: AOJu0Yxv2E+sQCBzTX3ZMkOOA2uMxSpELDWe51Z4iAzeoZC17F8zAUuT
+	mI02aD2DnWFzqGoc8wAw1DxAJhmNeTaddVo4T1I5QFLNyvO4sPkka5xuV91PEBrwf3DNq6bZWWY
+	v24Y=
+X-Google-Smtp-Source: AGHT+IGgkCqc0OMRTpsUntv1rDAwcAAopD3QhQd0lnGciEnNYkAuvcWoP8Zb5KIvE9QMPfOrt7MOHA==
+X-Received: by 2002:a05:622a:1993:b0:437:bf2f:9bcb with SMTP id d75a77b69052e-44041b67bdfmr10115791cf.22.1717712363122;
+        Thu, 06 Jun 2024 15:19:23 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44038aa1266sm7578881cf.46.2024.06.06.15.19.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Jun 2024 15:19:22 -0700 (PDT)
+Date: Thu, 6 Jun 2024 18:19:21 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] commit-graph/server-info: use tempfile.h in more places
+Message-ID: <cover.1717712358.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6A2C6DC4-244F-11EF-BE04-ACC938F0AE34-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
+This pair of patches addresses two issues (in the commit-graph and
+update-server-info areas, respectively), where temporary files are
+created outside of the tempfile.h API and thus survive abnormal process
+death.
 
-> helper/test-oidtree.c along with t0069-oidtree.sh test the oidtree.h
-> library, which is a wrapper around crit-bit tree. Migrate them to
-> the unit testing framework for better debugging and runtime
-> performance.
->
-> To achieve this, introduce a new library called 'lib-oid.h'
-> exclusively for the unit tests to use. It currently mainly includes
-> utility to generate object_id from an arbitrary hex string
-> (i.e. '12a' -> '12a0000000000000000000000000000000000000').
-> This will also be helpful when we port other unit tests such
-> as oid-array, oidset etc.
+The commit-graph one is more prevalent, and has been the cause of some
+minor headaches (for e.g. automated tooling to detect repository cruft
+at GitHub complaining about unknown tmp_graph_XXXXXX files left around).
 
-Perhaps.  With only a single user it is hard to judge if it is worth
-doing, but once the code is written, it is not worth a code churn to
-merge it into t-oidtree.c.
+The fixes in both instances are relatively straightforward conversions
+to use the tempfile.h API.
 
-> +#define FILL_TREE(tree, ...)                                       \
-> +	do {                                                       \
-> +		const char *hexes[] = { __VA_ARGS__ };             \
-> +		if (fill_tree_loc(tree, hexes, ARRAY_SIZE(hexes))) \
-> +			return;                                    \
-> +	} while (0)
+Looking at the remaining uses of mkstemp(), the remaining class of
+callers that don't use the tempfile.h API are for creating temporary
+.idx, .rev files, and similar. My personal feeling is that we should
+apply similar treatment there, since these files are generated based on
+.pack data, and thus keeping around temporary copies is unnecessary when
+they can be regenerated.
 
-Nice.
+But I'd rather keep that part out of this series and clean up a couple
+of more straightforward spots where possible.
 
-> +static enum cb_next check_each_cb(const struct object_id *oid, void *data)
-> +{
-> +	const char *hex = data;
-> +	struct object_id expected;
-> +
-> +	if (!check_int(get_oid_arbitrary_hex(hex, &expected), ==, 0))
-> +		return CB_CONTINUE;
-> +	if (!check(oideq(oid, &expected)))
-> +		test_msg("expected: %s\n       got: %s",
-> +			 hash_to_hex(expected.hash), hash_to_hex(oid->hash));
-> +	return CB_CONTINUE;
-> +}
+Thanks in advance for your review!
 
-The control flow looks somewhat strange here.  I would have written:
+Taylor Blau (2):
+  commit-graph.c: remove temporary graph layers on exit
+  server-info.c: remove temporary info files on exit
 
-	if (!check_int(..., ==, 0))
-		; /* the data is bogus and cannot be used */
-	else if (!check(oideq(...))
-		test_msg(... expected and got differ ...);
-	return CB_CONTINUE;
+ commit-graph.c                | 19 ++++++++-----------
+ server-info.c                 | 26 ++++++++++----------------
+ t/t5324-split-commit-graph.sh | 26 +++++++++++++++++++++++++-
+ 3 files changed, 43 insertions(+), 28 deletions(-)
 
-but OK.
 
-> +static void check_each(struct oidtree *ot, char *hex, char *expected)
-> +{
-> +	struct object_id oid;
-> +
-> +	if (!check_int(get_oid_arbitrary_hex(hex, &oid), ==, 0))
-> +		return;
-> +	oidtree_each(ot, &oid, 40, check_each_cb, expected);
-> +}
-> +
-> +static void setup(void (*f)(struct oidtree *ot))
-> +{
-> +	struct oidtree ot;
-> +
-> +	oidtree_init(&ot);
-> +	f(&ot);
-> +	oidtree_clear(&ot);
-> +}
-> +
-> +static void t_contains(struct oidtree *ot)
-> +{
-> +	FILL_TREE(ot, "444", "1", "2", "3", "4", "5", "a", "b", "c", "d", "e");
-> +	check_contains(ot, "44", 0);
-> +	check_contains(ot, "441", 0);
-> +	check_contains(ot, "440", 0);
-> +	check_contains(ot, "444", 1);
-> +	check_contains(ot, "4440", 1);
-> +	check_contains(ot, "4444", 0);
-> +}
-
-OK.
-
-Compared to the original, this makes the correspondence between the
-input and the expected result slightly easier to see, which is good.
-
-> +static void t_each(struct oidtree *ot)
-> +{
-> +	FILL_TREE(ot, "f", "9", "8", "123", "321", "a", "b", "c", "d", "e");
-> +	check_each(ot, "12300", "123");
-> +	check_each(ot, "3211", ""); /* should not reach callback */
-> +	check_each(ot, "3210", "321");
-> +	check_each(ot, "32100", "321");
-> +}
-
-Testing "each" with test data that yields only at most one response
-smells iffy.  It is a problem in the original test, and not a
-problem with the conversion, ...
-
-BUT
-
-... in the original, it is easy to do something like the attached to
-demonstrate that "each" can yield all oid that the shares the query
-prefix.  But the rewritten unit test bakes the assumption that we
-will only try a query that yields at most one response into the test
-helper functions.  Shouldn't we do a bit better, perhaps allowing the
-check_each() helper to take variable number of parameters, e.g.
-
-	check_each(ot, "12300", "123", NULL);
-	check_each(ot, "32", "320", "321", NULL);
-
-so the latter invocation asks "ot" trie "I have prefix 32, please
-call me back with each element you have that match", and makes sure
-that we get called back with "320" and then "321" and never after.
-
-Come to think of it, how is your check_each_cb() ensuring that it is
-only called once with "123" when queried with "12300"?  If the
-callback is made with "123" 100 times with the single query with
-"12300", would it even notice?  I would imagine that the original
-would (simply because it dumps each and every callback to a file to
-be compared with the golden copy).
-
- t/t0069-oidtree.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git c/t/t0069-oidtree.sh w/t/t0069-oidtree.sh
-index 889db50818..40b836aff5 100755
---- c/t/t0069-oidtree.sh
-+++ w/t/t0069-oidtree.sh
-@@ -35,13 +35,14 @@ test_expect_success 'oidtree insert and contains' '
- '
- 
- test_expect_success 'oidtree each' '
--	echoid "" 123 321 321 >expect &&
-+	echoid "" 123 321 321 320 321 >expect &&
- 	{
--		echoid insert f 9 8 123 321 a b c d e &&
-+		echoid insert f 9 8 123 321 320 a b c d e &&
- 		echo each 12300 &&
- 		echo each 3211 &&
- 		echo each 3210 &&
- 		echo each 32100 &&
-+		echo each 32 &&
- 		echo clear
- 	} | test-tool oidtree >actual &&
- 	test_cmp expect actual
+base-commit: 7b0defb3915eaa0bd118f0996e8c00b4eb2dc1ca
+-- 
+2.45.2.411.g2d5a0536af1
