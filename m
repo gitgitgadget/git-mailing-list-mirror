@@ -1,64 +1,64 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED05145340
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 23:05:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD93145340
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 23:05:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717715105; cv=none; b=AaboT0R6g9HRTmo2LzV9eLkNFdb/9+tS03LbK4yNQVN2/ijAmrAfYiYy7BGfO1EbrHlQnl1CLNp0Olv6Ma96NETk95cVb5Z7Cil4HaHBJKyi2NVhDJn247n3fdjd7gLsl9VQO5xNZ+TAWpYVKsBcdFun/YHEfkXa+L5adz7ZS40=
+	t=1717715108; cv=none; b=ldkn1dxGFTiQvPYhG9mzT+jevroQSs8Oh7MGiqfrSgKzPBFaEZanTUz6Cc2UpYZqfUQzI8qzWLd3IkNYRLwxjpBTb5mj5S5NjPW3U3ebbFJPR+LNJnt8MqXOlwFDOlxF87KsFdMUnMKGdsc0FPNlPIr+VqeBsWCyH45yEsQFU6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717715105; c=relaxed/simple;
-	bh=wZkMPJXgxN+jJ/mpkGELC6VTlJjyUb6fGqGFJZJh4N0=;
+	s=arc-20240116; t=1717715108; c=relaxed/simple;
+	bh=d7yb1MkZ1pzoP33tv+pwTcQt5kBPD+zsloB2eZbZX3s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eaD7w6yCS4U2AOzNWfZpvA+EEiTr9VBsyp3Sy5/P7nZKmN+tZukBAoDiVjinDi9R9BB+ij/Avqls+EuasYN497WOYFJngwx+SX0StSVDKS3pPL7MJL+PHZq5kGo0ggBA8EXNigT7wFtxvksJFJnjIYWGVgCsA4J9wQ+ZrV/RmJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=J5DV97pN; arc=none smtp.client-ip=209.85.160.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=oegw6fyLkBj5cghs8kTQuaN3mxD82qO4xp+hHvnvRs0qZe8IuSon59loWiWcbiwrtUD2czLtiIylErNhAGc6zdXpGpg6MCKgSzA4SGrjAI34rL4JH73phZozTbBQbr4P5L8W/UY0mUy/natZi9DLeuBG+q/IenrQk2XFwX2oxy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=1RHwaJAc; arc=none smtp.client-ip=209.85.222.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="J5DV97pN"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-44028fc3d22so5987671cf.2
-        for <git@vger.kernel.org>; Thu, 06 Jun 2024 16:05:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="1RHwaJAc"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-795004bd75dso92000385a.2
+        for <git@vger.kernel.org>; Thu, 06 Jun 2024 16:05:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717715103; x=1718319903; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717715106; x=1718319906; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1IsGWTT09U0jo7NzjPDH0aF6BbG115ADPoCDm5mLfg4=;
-        b=J5DV97pN1zCLDdLSiA1VqshBt5T5kV8Dxlh+vltIXECDjrGqtl2ieH4wlcULcbxp7x
-         AdnCvsoDD0nN2sIedINCUeCNYNUKIxq6IFrHC0uJ9Ma0GHjZPfcN5P/+Ji2CEQJ2PViX
-         +jeO5h9UScSq2MMEjVYxGMMUJPsVlocxlH/WrRNijIdmze01Bjd03Nyc9ZuDK5wJXySu
-         CGb1LHqMtaVLfOtqfZj6T5wt32RnS301wE2lAUpylb/bU2pyPimqvjlpCYkiLE0DW+wP
-         Ga94p3pDq4wjZd0HAP+8AddjebWX0QSGFphY/0nigKmrkZmeaHkHyObDEBeX+1L0XExf
-         J4og==
+        bh=TXcxJyt9JgMl7vfM8SQYzGKD/c7BlhJ4KGIF9sFn1v0=;
+        b=1RHwaJAcTKxfPveVuM0O91oLqSRHyEyg2hH5Slug7Q6NNR5s/NyPbiPkKCawtzaTsF
+         P++/Wxr+GkrK/dtj1Fx86WM0N4JdJ5+8j3kG7UQ4PP5nrrpncMLRzCLhHBxPhCNcJODH
+         UPf0gXHmSv/O7SL3PrTn01kjDMmo3tT/HWdPbbldig6KVZYB8R+lf++jL4W7MRHeHj20
+         onJe8s9j01iH/pWCjUHplr/KDOWWUtFviKc+3JCTrT5c6HDkVLyqOfATdAdIffAX6bVW
+         dCIUw9UjKeD3V9BpPRaxBSN2Jfuzynek+/PsqD4xVsVOiNpXfGjeqFpUJCTKMyLyh2rZ
+         JDjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717715103; x=1718319903;
+        d=1e100.net; s=20230601; t=1717715106; x=1718319906;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1IsGWTT09U0jo7NzjPDH0aF6BbG115ADPoCDm5mLfg4=;
-        b=sdzDG/yiYdLpAoXs8WJuD5OCeeWGLtNwbQexLFE9DEdTc0gbnoJJ+YSSq8v6WulhzA
-         Cs5T0N9nOC+S4ziFgTzGR89UnIYQwT/U20gyo1PcxMc3bqwgJJbnCLUtw/HQY4NKWVDr
-         JWtcAn/+LLk597U6XOtz7XrTRuJneUqF0OJv3FJzFaiL9O2VinuY8YtxVn/iEl+Uz08M
-         jIqeoqCNvkvTNGSAyexpu+8Iz8peckE3rFfDH5wIMd7PSN6okWsNLPbnRBruCeVUubfW
-         GhELbt7jFQWzMWyrCSxoJ9TIv+/rk/K0H6jD6dMP8YaHqQobkv49Y4JfC9E46quMIFKm
-         OGoQ==
-X-Gm-Message-State: AOJu0YzAbVhdl8ZDIfPVisYcB3IqsULOcMYVqaRLsMPfCj09h0nROQLZ
-	vOWRY2dy7UPvqkMm1ADRFW+La7JqRtmK5p3TLjItHsmxFvkYzQC66pH/pbd0WZ3TD9gTU+UwFig
-	UzUI=
-X-Google-Smtp-Source: AGHT+IHnGvKgW8pDFjWJa3AmLYRtcdD20SiJ1k0vGcwQSX0sAiRSEfTMum+yxT4KD74Jo9Pq1zpOkA==
-X-Received: by 2002:a05:622a:1a09:b0:43e:40bb:a0db with SMTP id d75a77b69052e-44041c12b17mr11429281cf.54.1717715102754;
-        Thu, 06 Jun 2024 16:05:02 -0700 (PDT)
+        bh=TXcxJyt9JgMl7vfM8SQYzGKD/c7BlhJ4KGIF9sFn1v0=;
+        b=PHaMBh3aI1JYmAsbQaF40mCiafag5EIr2XFW/FL7/lmrpMP7EgT/EXku/0kEbKGzPO
+         mWu6MG0Oa/FCkxJ+AEUC7h1/XP3FhBGteb81/BD8sr/lNJR31nVeaxnDfiJ95HKkZjTS
+         M+BDN7k3oqNjUhRpAsXcTnHmpvPmqgVcH8UcpSz4H3k3WvpVVacCnUBc3R0cwNTy6u+D
+         07sFY/Mme41wOghu7f4x6oIq3VnkdLtuXIJxZvm+IuAr5HwuYs/KcV69wM934Jod1cB9
+         dQNw347gcVwVAfVT41PsVk+0nB+MV0FbVNFx1FiAwfXijcc3+AhhJLPFdYFxqFaK+ngZ
+         7CoQ==
+X-Gm-Message-State: AOJu0YwAMXMyKp1U0xKTr78WfFJ33npeOFoIVWUpjJhdokz2lXUGPSqW
+	UWKT7BoJzdKpaU86j/wE+W24SF+0JRfaWMQvQSwLy/wXViUxqj4Gw449PwqNVBoDEa/cQo5ObO1
+	LyxY=
+X-Google-Smtp-Source: AGHT+IEIvruCNP2aweSWIkVPz6Kfw6eLPBPzn1yOpCaQBs2MxQZ3IgycMCMNNIpJ1ezL7rrdN0CyEw==
+X-Received: by 2002:a05:620a:458a:b0:792:91bb:9ca3 with SMTP id af79cd13be357-7953c45fe7fmr118576785a.37.1717715105844;
+        Thu, 06 Jun 2024 16:05:05 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44038b5e617sm7543131cf.93.2024.06.06.16.05.02
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-79532813981sm103624185a.25.2024.06.06.16.05.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 16:05:02 -0700 (PDT)
-Date: Thu, 6 Jun 2024 19:05:01 -0400
+        Thu, 06 Jun 2024 16:05:05 -0700 (PDT)
+Date: Thu, 6 Jun 2024 19:05:04 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 12/19] midx: teach `midx_contains_pack()` about incremental
+Subject: [PATCH 13/19] midx: teach `midx_preferred_pack()` about incremental
  MIDXs
-Message-ID: <2288683674ba6858d1ea217dc7f84bff269024b1.1717715060.git.me@ttaylorr.com>
+Message-ID: <53b71c6514dac9abe7472d95842b7be5675b8a4e.1717715060.git.me@ttaylorr.com>
 References: <cover.1717715060.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,54 +70,55 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1717715060.git.me@ttaylorr.com>
 
-Now that the `midx_contains_pack()` versus `midx_locate_pack()` debacle
-has been cleaned up, teach the former about how to operate in an
-incremental MIDX-aware world in a similar fashion as in previous
-commits.
+The function `midx_preferred_pack()` is used to determine the identity
+of the preferred pack, which is the identity of a unique pack within
+the MIDX which is used as a tie-breaker when selecting from which pack
+to represent an object that appears in multiple packs within the MIDX.
 
-Instead of using either of the two `midx_for_object()` or
-`midx_for_pack()` helpers, this function is split into two: one that
-determines whether a pack is contained in a single MIDX, and another
-which calls the former in a loop over all MIDXs.
+Historically we have said that the MIDX's preferred pack has the unique
+property that all objects from that pack are represented in the MIDX.
+But that isn't quite true: a more precise statement would be that all
+objects from that pack *which appear in the MIDX* are selected from that
+pack.
 
-This approach does not require that we change any of the implementation
-in what is now `midx_contains_pack_1()` as it still operates over a
-single MIDX.
+This helps us extend the concept of preferred packs across a MIDX chain,
+where some object(s) in the preferred pack may appear in other packs
+in an earlier MIDX layer, in which case those object(s) will not appear
+in a subsequent MIDX layer from either the preferred pack or any other
+pack.
+
+Extend the concept of preferred packs by using the pack which represents
+the object at the first position in MIDX pseudo-pack order belonging to
+the current MIDX layer (i.e., at position 'm->num_objects_in_base').
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ midx.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/midx.c b/midx.c
-index 186d8344dc..564e922533 100644
+index 564e922533..cb7b623b5d 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -462,7 +462,8 @@ int cmp_idx_or_pack_name(const char *idx_or_pack_name,
- 	return strcmp(idx_or_pack_name, idx_name);
- }
- 
--int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name)
-+static int midx_contains_pack_1(struct multi_pack_index *m,
-+				const char *idx_or_pack_name)
- {
- 	uint32_t first = 0, last = m->num_packs;
- 
-@@ -485,6 +486,14 @@ int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name)
- 	return 0;
- }
- 
-+int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name)
-+{
-+	for (; m; m = m->base_midx)
-+		if (midx_contains_pack_1(m, idx_or_pack_name))
-+			return 1;
-+	return 0;
-+}
-+
+@@ -497,13 +497,16 @@ int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name)
  int midx_preferred_pack(struct multi_pack_index *m, uint32_t *pack_int_id)
  {
  	if (m->preferred_pack_idx == -1) {
++		uint32_t midx_pos;
+ 		if (load_midx_revindex(m) < 0) {
+ 			m->preferred_pack_idx = -2;
+ 			return -1;
+ 		}
+ 
+-		m->preferred_pack_idx =
+-			nth_midxed_pack_int_id(m, pack_pos_to_midx(m, 0));
++		midx_pos = pack_pos_to_midx(m, m->num_objects_in_base);
++
++		m->preferred_pack_idx = nth_midxed_pack_int_id(m, midx_pos);
++
+ 	} else if (m->preferred_pack_idx == -2)
+ 		return -1; /* no revindex */
+ 
 -- 
 2.45.2.437.gecb9450a0e
 
