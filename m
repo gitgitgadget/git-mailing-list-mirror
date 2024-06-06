@@ -1,53 +1,53 @@
-Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
+Received: from wfhigh1-smtp.messagingengine.com (wfhigh1-smtp.messagingengine.com [64.147.123.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9681EB3E
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 05:29:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F13A1EB3E
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 05:29:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717651768; cv=none; b=cMgUd5tD7pDlRybJo5c2S6rPSdkAMCTl4W5wT4yCn8Utuvbszrwh7VlhBQElkfF26KV3Zg8EforxqNUyXdSAP0QLFkcPuWDVu/YRIMK/9/agFKDrbw50sNdtzLTg1c718Ck2FsydEO4vhwend3ngHSWZpTWCGmcsr+O82Z4Q9SE=
+	t=1717651771; cv=none; b=fsnjSO0dBGs1KMJZoi3QAOL5nCJqj6iiA+lenJPP1P3ki6GTEGmCkDhEEr0X9Jg0hB9PqG5sXMPqwCO+uKQI1o7iG/RKg2sQvyq/SSykzTj/34kXvha8Kwi0MntNYy3NdjqFMYF3fdtfeYtdk9JnhWtTB2aotLSMPdhAKEu6lrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717651768; c=relaxed/simple;
-	bh=KIEow5x8ANkf91C51IUkchPizzQarlOpQ8kcOeN1XpE=;
+	s=arc-20240116; t=1717651771; c=relaxed/simple;
+	bh=1YdQl7j7f+9Y19Av3QmNoFuFJrRzizkSS0fFsV+HNdY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dXzIKgRZ3Hq91aB7+Kue43fazHQtVas51k4buZtr4BChEBiiCRN4OMoOLeIRfprPupN3Lr6Dp0fPnpIbB3svrXy+X9p9nhUzRxEAtC0LCFHo4OtWikNAVu8vYV9WhsQxbiHSFa23HQTMojjW6mI/TuKP0ByiZ4wmkidCeU1+hS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V1REwk4i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fH7VtIP3; arc=none smtp.client-ip=64.147.123.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ki/I7bVXeTVvZPuRAkL3ejahe5mVnxdchKcCsBHt2/1s1gFv1mVnI2pqLsRa1fbyZDLXRjWcX9RjvhKL06mDFMSylts7lDj5WDBhtPo1rk1s5DX/Wyfg3VcXZCUowoTCC8IzSO5jl+diuz3wIpt2B3aqP7BKFTWadQXXUf5up20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dZ93h024; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jmsuNm+X; arc=none smtp.client-ip=64.147.123.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V1REwk4i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fH7VtIP3"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dZ93h024";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jmsuNm+X"
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.west.internal (Postfix) with ESMTP id 9A3CC1C001D3;
-	Thu,  6 Jun 2024 01:29:25 -0400 (EDT)
+	by mailfhigh.west.internal (Postfix) with ESMTP id 687EB180019C;
+	Thu,  6 Jun 2024 01:29:29 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Thu, 06 Jun 2024 01:29:26 -0400
+  by compute2.internal (MEProxy); Thu, 06 Jun 2024 01:29:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717651765; x=1717738165; bh=WQJP1pnefI
-	aouRU8eOongE19YDHwuzNv0UWTEwiZDgk=; b=V1REwk4iowKxpqLm0ql+dHdSkB
-	h4sp75g8iicCCBZfwS5WmgYc8WcC4t4TABKO9CBg9XHD0AHSiE5B9TgnnuC8tx4M
-	Lpayb+20YZkIEIel/OBtXyToEFNOTO3x5IUbZ3/stbxqhrFQmEfqmP8UFjDd+dHB
-	1SrNlDl8907pmrSI2rXIz48aJ8ZSq6K6gvjVLioTs4zC36XdP/xTXcm/4sUPB0Tx
-	x/GNXT5m7Ar6cve/cBDKpwab46OJ20JTaEf8Ktwf+DzUVNRslPZMnisMI18ofZLf
-	KSzyakXKFXho4J/A0HRTOiquZIrWhXVssad/gUUCSxXWbtybjGPKjY7SjMyQ==
+	:subject:to:to; s=fm1; t=1717651769; x=1717738169; bh=rK+Q01T0xB
+	NzBMGjzOJmAYTcwS9seinEch1wZkGBYBg=; b=dZ93h024MHAEZE/mvVzb+SjMq/
+	JzN8PBSoSom/KirHZbieXgMMuGVWjbnx76qk/PDCMFGDamxjfVHXVJSBK+/vwh4b
+	z8l/hD5rRcS6o/yZiorK3mJpOVaBmW9ye+Oo5Wq5Mm0ETMsE0rDeKWrB154w24F9
+	M4gkZGzg0dGDY/0hCvOxrVfXK3aN8A9lX7GNZwMOzVMiqzMjQu8mK9HiRbRXdwdg
+	2gJVFHYxDsl0s12OCh8vWh+OmxsjS040MVTupkqlSOUGRH1PuRRHzuYRtZPc9PSV
+	V23vQPIaGIKvfMguptuAsIhGbOMmgEgJ9UhTh5/k4QKjFThcP8H//7ZThdgw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717651765; x=1717738165; bh=WQJP1pnefIaouRU8eOongE19YDHw
-	uzNv0UWTEwiZDgk=; b=fH7VtIP3kWr0dPl1eIA9AI5vHSvQYS08v3W8uavMVEm/
-	yGR96icOAv2gbMMUvSUuwaRT00nJDe/Wd3rqgGQ72zmNiYa+RSRo58+IoTHUvWzl
-	aSrgAct5j8+VbjUtxxZy5EhbqPtwX44mXMv/WZDOxpKPu9Phf5VumNijMmDBwEix
-	FtURXsrqc3zMCVHMAxMH25Z/+hAW30gzMZVvwQNYHD31k2iFjcVziv9DNvh6eyH/
-	9qgvvSrE3soZ9JiXobue2n7VchVpFgbmJqqU0nRhvNU3fjullDw69pRx6ArEBvyu
-	e2KNZzubvm+RHRNAElRX/Iwvq8iUuUZhjSSxTZkLYw==
-X-ME-Sender: <xms:NUlhZjPY9HB5FOt6ijrYQhr5UO193abiFTa0kwIfUTxNA7zr4WIlTA>
-    <xme:NUlhZt_7d-Nj5oz7AJQLSZCYnTttLBf6bpB50g8aqyhFHLEVuGkny6KbZCIB4kWP7
-    uRuizcBY5-FB64Rgg>
-X-ME-Received: <xmr:NUlhZiTwVDEO2QqlBONTbYmK2msYDNXBa5-0KKzfzm0UW2X41jO-a-pNoCpWAeWj7PkRyVhrfQ2g7JRmxfEMDTnpqQFn1c2_CGt6eoZiM7H2FT6E>
+	fm1; t=1717651769; x=1717738169; bh=rK+Q01T0xBNzBMGjzOJmAYTcwS9s
+	einEch1wZkGBYBg=; b=jmsuNm+XvpMq+YCVTmNHzALwMRpxSF6lw5YF0Jd8FbqT
+	AfUeoOq/5urDj+SZMRCzXoW1mZj396n3AwvPFuwLVS/50dI09gjeP7Ckhth0NS7R
+	GKDJgaApsHpZu0TOpp2kUq7+MX27pSZUUjQUfE2jUjjWDW8pGXVVY9PJN6jN7kKl
+	q1p1Teg84Z3wYqBa5Gmuhv2JxhPdhkys2rw90SS6laRIpc/0EeFSl4RezdPOPm76
+	fNKg8QN/87dTzaenB634Rz+kH1JeOjDgVE+LpLqTdXiUwRgejgrsTpvAk4w4b07Z
+	FNUKYBr44GmLQOQ7wM6ZyQ4pAGUQ1Pzlg+m4dDRQdg==
+X-ME-Sender: <xms:OElhZpyv3J3rMXsowfkFaSVup3okR0KLaDXsvq_BgcF-FLRpgtTHkw>
+    <xme:OElhZpQJg_Ax32zh6SXzDF0F4Gy2bjOasPoxHP1u8XS00sFmAPcchEPFIhWkERVhy
+    bsDOBcFzFmlcs_q_Q>
+X-ME-Received: <xmr:OElhZjVkNka4hXgCYyMGuXqE380fKXm5l08NduMu4i-yzLnRdJ5hD7E_X183qwupDXUefKSfyErug2OTMtkfNHmwUxRdpL3v2liFTrsuRe0pD7s9>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeljedgleeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -56,18 +56,18 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeljedgleeiucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:NUlhZnsD_i5x5NY0ut-_5qW8PG27X16-xFzw-rrYqRWNuahqxCmJBg>
-    <xmx:NUlhZrfB71Swh6YykKaBcVxOh46rasawPhtOPLDEwDMN1U0XtPtsGA>
-    <xmx:NUlhZj2Buln72MbzOIhFPt28FQPqc3DhKxx7-WzGJYqioo1Hi2ib9w>
-    <xmx:NUlhZn9mX0GDceSSqkLSHCxlstAeUFNLoz5B8U6gRwU4prhJbolPTQ>
-    <xmx:NUlhZts75GQUg28g3gKC2SJbHX8oL3aNoNl8jkQWPwb4qeNFIFp3k0CR>
+X-ME-Proxy: <xmx:OElhZri0714n9khIq0G2eIJ2cF86VMKWETfop3zlbLVg7C9w_WxlBQ>
+    <xmx:OElhZrAGUS5purR921tSYBtYRrZQb8-PNQos7jbMUJSih-Qyr6k63g>
+    <xmx:OElhZkKVqM9UrVJA0fl-OPwpcmAg2QM6Lki4YOAWDYj3tZJI4pDQBA>
+    <xmx:OElhZqBqVigSOkoxNFXB53WcliQMReyL4hrK8TZmGk0DNX6xQ_Dj0w>
+    <xmx:OUlhZtAg0uCEplbkbyUSGR74d8ACtPQbzUyWHdTCz0eGer4u_Wz5G2aD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Jun 2024 01:29:23 -0400 (EDT)
+ 6 Jun 2024 01:29:27 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id c501f3c2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Jun 2024 05:28:53 +0000 (UTC)
-Date: Thu, 6 Jun 2024 07:29:20 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 7ffdc90c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Jun 2024 05:28:57 +0000 (UTC)
+Date: Thu, 6 Jun 2024 07:29:25 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
@@ -75,9 +75,9 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Justin Tobler <jltobler@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v5 06/12] refs/files: extract function to iterate through
- root refs
-Message-ID: <86cf0c84b121f23e7cbc3ba96299d9264123b485.1717649802.git.ps@pks.im>
+Subject: [PATCH v5 07/12] refs/files: fix NULL pointer deref when releasing
+ ref store
+Message-ID: <6b0aaf2ac829fe2c223a7e7b6ea0d86732a6a0eb.1717649802.git.ps@pks.im>
 References: <cover.1716451672.git.ps@pks.im>
  <cover.1717649802.git.ps@pks.im>
 Precedence: bulk
@@ -87,138 +87,60 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="clW9gKAcxbEeunV0"
+	protocol="application/pgp-signature"; boundary="5+iv9InFwlTWxmgF"
 Content-Disposition: inline
 In-Reply-To: <cover.1717649802.git.ps@pks.im>
 
 
---clW9gKAcxbEeunV0
+--5+iv9InFwlTWxmgF
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Extract a new function that can be used to iterate through all root refs
-known to the "files" backend. This will be used in the next commit,
-where we start to teach ref backends to remove themselves.
+The `free_ref_cache()` function is not `NULL` safe and will thus
+segfault when being passed such a pointer. This can easily happen when
+trying to release a partially initialized "files" ref store. Fix this.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/files-backend.c | 51 ++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 42 insertions(+), 9 deletions(-)
+ refs/ref-cache.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index b4e5437ffe..de8cc83174 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -323,17 +323,15 @@ static void loose_fill_ref_dir(struct ref_store *ref_=
-store,
- 	add_per_worktree_entries_to_dir(dir, dirname);
- }
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index b6c53fc8ed..4ce519bbc8 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -71,6 +71,8 @@ static void free_ref_entry(struct ref_entry *entry)
 =20
--/*
-- * Add root refs to the ref dir by parsing the directory for any files whi=
-ch
-- * follow the root ref syntax.
-- */
--static void add_root_refs(struct files_ref_store *refs,
--			  struct ref_dir *dir)
-+static int for_each_root_ref(struct files_ref_store *refs,
-+			     int (*cb)(const char *refname, void *cb_data),
-+			     void *cb_data)
+ void free_ref_cache(struct ref_cache *cache)
  {
- 	struct strbuf path =3D STRBUF_INIT, refname =3D STRBUF_INIT;
- 	const char *dirname =3D refs->loose->root->name;
- 	struct dirent *de;
- 	size_t dirnamelen;
-+	int ret;
- 	DIR *d;
-=20
- 	files_ref_path(refs, &path, dirname);
-@@ -341,7 +339,7 @@ static void add_root_refs(struct files_ref_store *refs,
- 	d =3D opendir(path.buf);
- 	if (!d) {
- 		strbuf_release(&path);
--		return;
-+		return -1;
- 	}
-=20
- 	strbuf_addstr(&refname, dirname);
-@@ -357,14 +355,49 @@ static void add_root_refs(struct files_ref_store *ref=
-s,
- 		strbuf_addstr(&refname, de->d_name);
-=20
- 		dtype =3D get_dtype(de, &path, 1);
--		if (dtype =3D=3D DT_REG && is_root_ref(de->d_name))
--			loose_fill_ref_dir_regular_file(refs, refname.buf, dir);
-+		if (dtype =3D=3D DT_REG && is_root_ref(de->d_name)) {
-+			ret =3D cb(refname.buf, cb_data);
-+			if (ret)
-+				goto done;
-+		}
-=20
- 		strbuf_setlen(&refname, dirnamelen);
- 	}
-+
-+	ret =3D 0;
-+
-+done:
- 	strbuf_release(&refname);
- 	strbuf_release(&path);
- 	closedir(d);
-+	return ret;
-+}
-+
-+struct fill_root_ref_data {
-+	struct files_ref_store *refs;
-+	struct ref_dir *dir;
-+};
-+
-+static int fill_root_ref(const char *refname, void *cb_data)
-+{
-+	struct fill_root_ref_data *data =3D cb_data;
-+	loose_fill_ref_dir_regular_file(data->refs, refname, data->dir);
-+	return 0;
-+}
-+
-+/*
-+ * Add root refs to the ref dir by parsing the directory for any files whi=
-ch
-+ * follow the root ref syntax.
-+ */
-+static void add_root_refs(struct files_ref_store *refs,
-+			  struct ref_dir *dir)
-+{
-+	struct fill_root_ref_data data =3D {
-+		.refs =3D refs,
-+		.dir =3D dir,
-+	};
-+
-+	for_each_root_ref(refs, fill_root_ref, &data);
++	if (!cache)
++		return;
+ 	free_ref_entry(cache->root);
+ 	free(cache);
  }
-=20
- static struct ref_cache *get_loose_ref_cache(struct files_ref_store *refs,
 --=20
 2.45.2.409.g7b0defb391.dirty
 
 
---clW9gKAcxbEeunV0
+--5+iv9InFwlTWxmgF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhSS8ACgkQVbJhu7ck
-PpSzuA/9FhXveFb0D0aSuLF6NnTCFinOOozVJ3BW1lafvELE3Q/R5/a105yl8R7V
-/VFlK+vvb2qFEksbc29zSFSYRLcUQGXDmLeaDGdf+CTbL44JKtIvq8TL/rvXPltp
-Mq0Gx0hn96ktKoR9EksjLDZpjHOM7pl106gYaInXYBRx4f+GRbUV+Ks61fb4PKig
-C8RYkZMcueIPADwNlNxlOOwAC3wHIsKwJ/4Nsjbj9zCP+3excbKhDKGwXYNTK6WZ
-dKh8U4vQEOjwjlwhQFNHIDTYoKkychHbjjwDViPKQWGRar4LQQaUEarRE4lwJc2n
-Xer1LvEQvb1ZUwqC1xeZBk0vjngkgS5w/cJjRKcqpLA2vHgmWSxNkvxjNd7+0C15
-j4uBKw0ifw5gEXE2PcwHIvIMtWUGNZfKIScGqQTX2G5KADj8IMEyig5aATMMLthL
-IyUncQq9asRNf9TbaUCsgt1o+xEmNZ+0a7PAI+0JWU8og/AUtcbWT18uhvSNhFlX
-6DDarByHQeC3cVNDZWjsc3kGhLPHu8Bpmi1LhwDiYFfdyp3p/KNb7+vELhvEVn9q
-oR5jX6l+jpbPh+7qXCqbv50JFtj+PvaxSOSBHcyfoS7RVs1n9GtLxWOsGLOkfFm5
-sh2axza1AF08Y1G6rmxYQ/I6PSqwwfRiyAQ9nLThBXOT1kG/VOk=
-=g8en
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhSTQACgkQVbJhu7ck
+PpSV7A//T6wEKmnw/Y/4zy+0aPWNdAHHNVFWIJSDMal1m5Muk9JByoS9QFPAlc+8
+T3Jngl9XFpJJNIx790+jtFRVdmirngVwc6BkNuihp6XgCQEaTVpYUIaO+9dZh6C1
+bD6V5GcsfQrhKgKJd64eo7jMwT+TMWh+n0l2XxTPujQMT0nbPCetvXohgplh+ax6
+P+njgn4PmTWFsiozFIhMzErbSDKTk7L6TBgs73XFxrPvQawQ9IxgHkBHE77P/uDr
+OaBjvxRbFz4JOXjg9R2utsbRUzNls5SVUCpJV/jK7+nlxGN0FsrVKCFcG7M7QGoL
+QS0fSVXq3sMZigkij3ZoqprV1PyZ5enWtph9ZjB/A1eBypBCbwSjrjKEX0mvH21q
+Lr09zRieyytYulzRXuoVt8m9TRdDlx2d03cCiTDIPLWBte6s/diFHJu2Na/LR06d
+ZKbzVw94f+FAU+i68v/JcFXTyzqn8w1CfDq3TBg75iAOscTFSg0Dh80QqfKh9csZ
+Ql/3OVOuyprP6XGlhYSwl5HvB8k/s13jVLOv5od66sp/CmlHYVNiYesBYroQkGtp
+gelY0ndCS0g+KlQIQzeDE4PuhUB17MvFL0IV8CyWkYdAbRKlFKmnqbxpIm8Ag8To
+kwft5HqNsXBy2hK8plHQn901XUoJmr2dopQRNR+EavCijiOkeX4=
+=rh5g
 -----END PGP SIGNATURE-----
 
---clW9gKAcxbEeunV0--
+--5+iv9InFwlTWxmgF--
