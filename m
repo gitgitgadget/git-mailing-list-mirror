@@ -1,63 +1,64 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC61535C8
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 23:04:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85980535C8
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 23:04:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717715073; cv=none; b=n1lc0sk7KlE2FCwr/ISkmuhkND1MlvJbIboMW4ajYNDRPOvwx+jZQq/x1Lr/SqnCD68TFRIwyaCTDg4bea70j4p29ZWXwSeLp12wwM0wF6aGWQ5hMPUK0gNdtCA15h+kgNzoT+tq2HQfZ3MzfAOeyMe+jfCoCMnS3EwEpSTy0n4=
+	t=1717715077; cv=none; b=akyUu6StdB66CMN17gN+WoHlgL7qx1Y/BUb8qtk8tzk/tEbMqfCavRTA6gdogOIamLTI9FbzAoh/vzvw+sbxY1oNMzlRN9YtDysr7KnoXVwQoyO7RHj7Ohz1f5mCk11rE0InkcW+czM1p2KUvgJTbqGb17i/IrQEDHVZ4fQIzmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717715073; c=relaxed/simple;
-	bh=N3Z1PZ72V5odW9/MQjFz+L5vJqRbXcSiFIR91zHCaL4=;
+	s=arc-20240116; t=1717715077; c=relaxed/simple;
+	bh=aKz6PjgmFYmhXt9wGM4ig7A8ibAxI5QSOQ2/L7icZqM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XcOkzdysi11TLlu8+YVcO6IHZgrRBw2R7ddgWf1v6hD+ZSuTKB3q+nn7XX+RFRT1EIUic4y1L+nxI6aUcBu04KBFtng1LeNx20M8DngIjDIurcO+OIRR6qXPl3e9eYtjCliNPCiwoF9rFWeuTpoWjA7fzkKdBbrvELcnxZ21Bmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=qwSLVh9f; arc=none smtp.client-ip=209.85.160.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=gINIvVbSJVjSGsYSULSCcTZIP+eW5gmXnb5OhUwagqQfn7nd+L8gCeLA5W8NCrgvAneBOI1l2TakrfsIMTOlcVD7HvnRTe+iSmm3nhD90J+XnkM8ZSP02KibN5kfWGesWbRe+EdsQDz/TeKq2/ZFkdz3PVYRga9zGQENmS60IfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=aZrWi9LN; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="qwSLVh9f"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-24c9f2b7b19so800890fac.0
-        for <git@vger.kernel.org>; Thu, 06 Jun 2024 16:04:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="aZrWi9LN"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-79535efc9d8so68528885a.0
+        for <git@vger.kernel.org>; Thu, 06 Jun 2024 16:04:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717715071; x=1718319871; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717715074; x=1718319874; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+NUBPmlrNk7t035RPVDJ8n/QQM107S7lc+8eGlqfjLY=;
-        b=qwSLVh9fbD51Dco013aqlKsY4KG378E6j0AM3lsB7CDhFBZZjFh6YjTpbUppPA2fAY
-         XfnCHs77QejJvqoHZU9hBP2YWiAwXs0Kp5ztu+ZO0ds9sjHmjBvVH8/bctc/hK/UpOSL
-         zdK+c6gHWNyS3gpXrFX5gUI8Mk5p4O+7CfqlPt9tYSBHMtzI6ne48K1Bm3mH0kK21+/E
-         NQ7nzdcgsr9GQXvH1n4fRBzBMa8WOpTO32mpkRmLkgWVnJiwiOSaHQnFM9UWwb+eoFDt
-         soaI7PEeR2Esv6wmYTQZDeyyMjhxDiWDdCi1LpSx+XbFvdztCHJbEc7FhJT2eeGjiJ3R
-         Sb1w==
+        bh=lvfhUyiIBUHEVPo4UsdIp09q3jyUZir7shtDZpw/IOQ=;
+        b=aZrWi9LN8Iz3JeOB8a+qwV+S1LbAnKkYhCz7WKMrAk92nsWR5b0Cvz9p0kyy0djEIm
+         dWHKR/QsCTwQb07hH8u75eh7GpHzyzB/KOT46A77IXZlqfQmI5y+ICvQNe574KqQ/5QB
+         TnYmM0jm5/sHh4A37+snkqeBb6TmRbhLtQHBgskUB9BN64B0Lq8f88sRV9X+tE6YZQHO
+         odH4gYTfgDCAMw/MoeeKQ3FUOKBkBs2gLDFxmWLaiadshbwblHG6xsc1mvtXePY62V50
+         O5lRuh3okpNP6pl1lwh4BVyGeGOPrIb1DGn01i8E81MtRbr7SrWpStvr+9D7ZXuAHQCU
+         NIOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717715071; x=1718319871;
+        d=1e100.net; s=20230601; t=1717715074; x=1718319874;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+NUBPmlrNk7t035RPVDJ8n/QQM107S7lc+8eGlqfjLY=;
-        b=kjXcMVPGt+aJexwrA3rXdR23vbNWTqEEoHhrogP3px5xh7BSTx40FtiIqyH0ZbqjxB
-         PKCgoA42hn2W6W/0dhjt8ttZSUYfdVBHIPvvfT4sZwgVcjRn3tt6/yLWP+YFNWEYF7cg
-         dnPs0HErsX/RSkcDEFXFsEeFdl+76GI1QTXfp7EAbCeHcrL7Xu9mkt752ECFJlulaaEV
-         fXvYMHKzLV+O+XvlV8x+5ry3LS2m4G5wvDsDR0E8uXeYeuXkKbfNKtJYTMUXlH1V7t6L
-         p5Jiknx7F7CCRVEE84locjsnDuCgMsbDTb7lZXTKsAEoP/1v3H84kkDIEpaDcFYfvzt/
-         VTmQ==
-X-Gm-Message-State: AOJu0Yw7sqB9swW+FXWrrF9Dw8pRLUAwhhoBbmsWKZWrmJ2jCrpanqr0
-	iwjdL+5bBj0zGBV3+Bwem9NIYsPaeFwzE8U5YHKYFbIqvsh7RK3KL1sUffAvZCOrfH9D+ODibSw
-	3j+c=
-X-Google-Smtp-Source: AGHT+IHExkUtA8VVFPRnrpJadtRnAXhUXNhLv3VUml4j4IXJURtVRV4tbNxLH5NZrGsbz6QWtoMlDQ==
-X-Received: by 2002:a05:6870:c1d4:b0:250:129a:d0ef with SMTP id 586e51a60fabf-25464e9e9a6mr937817fac.36.1717715070846;
-        Thu, 06 Jun 2024 16:04:30 -0700 (PDT)
+        bh=lvfhUyiIBUHEVPo4UsdIp09q3jyUZir7shtDZpw/IOQ=;
+        b=HUMrytOG2kSCe5Cbbr12aTfFYOD2TeRWV7A/H+YfYoBQsS1hp642D6Vv8WgABMhPwo
+         rvxIGKhqkn9KD50ra+kCS7hOGBJkfouUI31oJLgX/muztw+rSOC1/4jT12oLux6HXAx5
+         /uNSKgNHuePXiASEeE2fhYjU3GrnXuSllTd5XA+sxF9uSXl+7Z6Se3Azq7kNr7CxL69C
+         hRmaj54ACQaonmURGCcBtm+MRT5/XwoNijgSHdRQx5e5c2MzxDRYDaxuu3qfmhE2RdHA
+         p1UsTx/nxCWoHyFjBP72p5AnYvOgSJHb5fpctE/kvZ42quDkpPk78WlyWELqdgMO+lxI
+         do1A==
+X-Gm-Message-State: AOJu0Yz2ZqPs+cAKGjvPjzJl8DPOJKiQ9Gw/ENNLrAN0JUUob3Ggu/jo
+	p+HerpdZYEz2holJYyrUzJ7zqvAAvY6K+0AzlGj5BAWG+lfLl/Gt2DwLgoCpNQIPgXT6BJqg1xP
+	3UXk=
+X-Google-Smtp-Source: AGHT+IFT1a/RrG3pyov6/aMKwV1eSlVDUvQAArF8IcM9Y6xcO0isGfF6q4wYfWWQvwiVFhKPhAVpig==
+X-Received: by 2002:a05:620a:204d:b0:792:b938:90ef with SMTP id af79cd13be357-7953c6475d7mr68463185a.35.1717715073935;
+        Thu, 06 Jun 2024 16:04:33 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-795394389e5sm52735185a.15.2024.06.06.16.04.30
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-795331c9320sm103069685a.120.2024.06.06.16.04.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 16:04:30 -0700 (PDT)
-Date: Thu, 6 Jun 2024 19:04:29 -0400
+        Thu, 06 Jun 2024 16:04:33 -0700 (PDT)
+Date: Thu, 6 Jun 2024 19:04:32 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 02/19] midx: add new fields for incremental MIDX chains
-Message-ID: <b810521bdba2d6990e3213c626ca00bfdcaaa4fe.1717715060.git.me@ttaylorr.com>
+Subject: [PATCH 03/19] midx: teach `nth_midxed_pack_int_id()` about
+ incremental MIDXs
+Message-ID: <9f2cec7aa27b806bedf62826be2a58639717b289.1717715060.git.me@ttaylorr.com>
 References: <cover.1717715060.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -69,50 +70,101 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1717715060.git.me@ttaylorr.com>
 
-The incremental MIDX chain feature is designed around the idea of
-indexing into a concatenated lexicographic ordering of object IDs
-present in the MIDX.
+The function `nth_midxed_pack_int_id()` takes in a object position in
+MIDX lexicographic order and returns an identifier of the pack from
+which that object was selected in the MIDX.
 
-When given an object position, the MIDX machinery needs to be able to
-locate both (a) which MIDX layer contains the given object, and (b) at
-what position *within that MIDX layer* that object appears.
+Currently, the given object position is an index into the lexicographic
+order of objects in a single MIDX. Change this position to instead refer
+into the concatenated lexicographic order of all MIDXs in a MIDX chain.
 
-To do this, three new fields are added to the `struct multi_pack_index`:
+This has two visible effects within the implementation of
+`prepare_midx_pack()`:
 
-  - struct multi_pack_index *base_midx;
-  - uint32_t num_objects_in_base;
-  - uint32_t num_packs_in_base;
+  - First, the given position is now an index into the concatenated
+    lexicographic order of all MIDXs in the order in which they appear
+    in the MIDX chain.
 
-These three fields store the pieces of information suggested by their
-respective field names. In turn, the `num_objects_in_base` and
-`num_packs_in_base` fields are used to crawl backwards along the
-`base_midx` pointer to locate the appropriate position for a given
-object within the MIDX that contains it.
+  - Second the pack ID returned from this function is now also in the
+    concatenated order of packs among all layers of the MIDX chain in
+    the same order that they appear in the MIDX chain.
 
-The following commits will update various parts of the MIDX machinery
-(as well as their callers from outside of midx.c and midx-write.c) to be
-aware and make use of these fields when performing object lookups.
+To do this, introduce the first of two general purpose helpers, this one
+being `midx_for_object()`. `midx_for_object()` takes a double pointer to
+a `struct multi_pack_index` as well as an object `pos` in terms of the
+entire MIDX chain[^1].
+
+The function chases down the '->base_midx' field until it finds the MIDX
+layer within the chain that contains the given object. It then:
+
+  - modifies the double pointer to point to the containing MIDX, instead
+    of the tip of the chain, and
+
+  - returns the MIDX-local position[^2] at which the given object can be
+    found.
+
+Use this function within `nth_midxed_pack_int_id()` so that the `pos` it
+expects is now relative to the entire MIDX chain, and that it returns
+the appropriate pack position for that object.
+
+[^1]: As a reminder, this means that the object is identified among the
+  objects contained in all layers of the incremental MIDX chain, not any
+  particular layer. For example, consider MIDX chain with two individual
+  MIDXs, one with 4 objects and another with 3 objects. If the MIDX with
+  4 objects appears earlier in the chain, then asking for pack "6" would
+  return the second object in the MIDX with 3 objects.
+
+[^2]: Building on the previous example, asking for object 6 in a MIDX
+  chain with (4, 3) objects, respectively, this would set the double
+  pointer to point at the MIDX containing three objects, and would
+  return an index to the second object within that MIDX.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ midx.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/midx.h b/midx.h
-index 8554f2d616..020e49f77c 100644
---- a/midx.h
-+++ b/midx.h
-@@ -63,6 +63,10 @@ struct multi_pack_index {
- 	const unsigned char *chunk_revindex;
- 	size_t chunk_revindex_len;
+diff --git a/midx.c b/midx.c
+index bc4797196f..d5828b48fd 100644
+--- a/midx.c
++++ b/midx.c
+@@ -240,6 +240,23 @@ void close_midx(struct multi_pack_index *m)
+ 	free(m);
+ }
  
-+	struct multi_pack_index *base_midx;
-+	uint32_t num_objects_in_base;
-+	uint32_t num_packs_in_base;
++static uint32_t midx_for_object(struct multi_pack_index **_m, uint32_t pos)
++{
++	struct multi_pack_index *m = *_m;
++	while (m && pos < m->num_objects_in_base)
++		m = m->base_midx;
 +
- 	const char **pack_names;
- 	struct packed_git **packs;
- 	char object_dir[FLEX_ARRAY];
++	if (!m)
++		BUG("NULL multi-pack-index for object position: %"PRIu32, pos);
++
++	if (pos >= m->num_objects + m->num_objects_in_base)
++		die(_("invalid MIDX object position, MIDX is likely corrupt"));
++
++	*_m = m;
++
++	return pos - m->num_objects_in_base;
++}
++
+ int prepare_midx_pack(struct repository *r, struct multi_pack_index *m, uint32_t pack_int_id)
+ {
+ 	struct strbuf pack_name = STRBUF_INIT;
+@@ -331,8 +348,10 @@ off_t nth_midxed_offset(struct multi_pack_index *m, uint32_t pos)
+ 
+ uint32_t nth_midxed_pack_int_id(struct multi_pack_index *m, uint32_t pos)
+ {
+-	return get_be32(m->chunk_object_offsets +
+-			(off_t)pos * MIDX_CHUNK_OFFSET_WIDTH);
++	pos = midx_for_object(&m, pos);
++
++	return m->num_packs_in_base + get_be32(m->chunk_object_offsets +
++					       (off_t)pos * MIDX_CHUNK_OFFSET_WIDTH);
+ }
+ 
+ int fill_midx_entry(struct repository *r,
 -- 
 2.45.2.437.gecb9450a0e
 
