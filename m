@@ -1,116 +1,91 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F101974E7
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 15:49:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CBF196C7C
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 15:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717688945; cv=none; b=F4vxEgB6l7YepncUzkmAJ8CgecDgHCm8llLOBsaOiRs42IrskDLeHQt0bjcPvpmqDnQiLo297fSTz4zEu/j6lF7Obn3IUHT/dO2tFy0o+fP2Ilq9pbYpKLSTcjzy+WFlqJeJyTPG53u3KGsBq8iFu1cUVI40EBtEKqB/r1pVegA=
+	t=1717689137; cv=none; b=mWnyA9PnudnWTbyymH+izBzFA/OcpCuAQtLA/Sh3meA7/2+Z6LVfqaMEFnSZ7hT75V8YriZJt6UymEcagm79tiVbKycDnRbQzBS7i6y9JKej7cq4vpXIlo7itqwAkXYOCMcwWcCFOqs3IMIWJr1JNELv+b2wyx7VM5eQDc0fDl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717688945; c=relaxed/simple;
-	bh=2pDLjTkQXRnmEX369JK2JzaXF3wU/eGJ3A8tUtpRgBc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B0tYv9s8biXMUWIYfHWjLdcYLH2xg3SNWWN80XR5dpbi6jzNKyfulre+XMs9Qfh5NOYrXNpJY5nqiyoDS0F5GaLLkYtVP4s3oyOGAJy+L+CzOVJwHnkg/cySFrIAVZwwydku0QvBo4ll8TQfagkamrZG426WZrqYWYBDvDXQk9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=cBuSZEX0; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1717689137; c=relaxed/simple;
+	bh=qNXVTIl4bFHNloZ1+VvtFu9OoY9t1jjDGU3EtMdcMq4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=WczPsoQchdNAnNz2kbPWdUah13GhMuIzo5JdTkH/JPzcTrbkIwHQpQ9JGLZ1hw2yQS5hbF3o1aQMhiURFgTfS4hl//fCRgEmw9ulqhboFPe3oVTsenyiXjGcrdbH2iMXkHv+rxRBM7UzxGAk4jfiDgen1k5jYtCKDxSB/W+vPJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A2IuIrOZ; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cBuSZEX0"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AAB2D2E4B7;
-	Thu,  6 Jun 2024 11:49:02 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=2pDLjTkQXRnm
-	EX369JK2JzaXF3wU/eGJ3A8tUtpRgBc=; b=cBuSZEX0jZRyeGuR1edYYp3vkSLp
-	x3UnEDTJfCx0G0qnF3W0E+Zy8N3DjnhAdZ1kKro5MRrdQnxSNTwoO1SxbLv9uC+J
-	uR3Ex/E/Dn8wHP4GV6eQoGQQE+vSRFjL2j5O2oijgMEDflTY5y/IEdWYxLlqrp8L
-	7Px6rt8PC+rAh1s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A5452E4B5;
-	Thu,  6 Jun 2024 11:49:02 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C4BB2E4B4;
-	Thu,  6 Jun 2024 11:49:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Johannes Sixt <j6t@kdbg.org>,  German Lashevich
- <german.lashevich@gmail.com>,  Phillip Wood <phillip.wood@dunelm.org.uk>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] diff: let external diffs report that changes are
- uninteresting
-In-Reply-To: <55389f35-5762-4b86-81bf-b9fe956815d2@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Thu, 6 Jun 2024 10:28:24 +0200")
-References: <CACDhgro3KXD0O9ZdE1q46jmXE0O=vf-Z+ZX50WMqmRHAeowGAA@mail.gmail.com>
-	<82561c70-ec33-41bf-b036-52310ffc1926@web.de>
-	<e2e4a4e9-55db-403c-902d-fd8af3aea05c@web.de>
-	<6fa51a62-5dc1-4865-9f79-eaf7d65189ab@web.de>
-	<99a99e5c-4fe4-413a-9281-363e280716b8@web.de>
-	<1c055e96-76b0-4174-a8e2-cb6df041fabf@kdbg.org>
-	<55389f35-5762-4b86-81bf-b9fe956815d2@web.de>
-Date: Thu, 06 Jun 2024 08:49:00 -0700
-Message-ID: <xmqqsexqnkb7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A2IuIrOZ"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42108856c33so13622125e9.1
+        for <git@vger.kernel.org>; Thu, 06 Jun 2024 08:52:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717689134; x=1718293934; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VGbs9oMqvocTtUezRD7o5+QYso7gtdx1mr9NSQS2FZI=;
+        b=A2IuIrOZ/sN7trWKju5Q2BPjXrb4YCZewmcy0xdJ/p2YUPhhY+6JdFbeSe5i5Z20v6
+         FBDWwSZl8x2zNO598W5ZB6nEfdkIBk74gGU5IX3dntH7sfVrsi1tov2p+J8s2YkZfkZM
+         U11Dqb1yGgDSQds+Wpi+tFQpaaY+Hmx6oIlBfZlbqMuVSEK0fT4NC8cGftfYLaLjiuAA
+         vQPFELIc9gY3DQzxfykuoQsXx84fQLltyYjDMY5LrYQyR2RGYtXyiQ22beTw0B+stPcZ
+         B4RerNl8rQxeyBr63zBTNSKhPCewM6CTQqVBDBXk14+1s9rceQAJ2WKKDSAZoqOWAPKh
+         pGdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717689134; x=1718293934;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VGbs9oMqvocTtUezRD7o5+QYso7gtdx1mr9NSQS2FZI=;
+        b=en3jZ4xVvBiHIkNVBr8Rn3dD90cBcvv/odgIfK9MPBLPk+BPpiT+r8XbuR5zs7u6CF
+         Dt591e2QOrcRByafTtrKHVqnXXaxUjgmOtjKFZhjNpa/DQ04K6SM9meLbgxHG8XI9xu1
+         09DYiQYLgs5InFBhmFI6621uOmtqv7oBPpXo7sXvap9p+bL2jrCmyUV5WqA9dm+3BQtI
+         VbjlzDH/X67isIM1t4dWBVsc+2SRkZ7BrV2SNfEgMkFe5FZ3BNtidfeDBmFt81Sp+Yd5
+         9QGO+NTs8QnRmdtaEGOAHKaFIdebO47n24Jjp+/N7IlTv+woQREqxWap+qB7dDQ9UDSx
+         bkPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXQl6rVLmqoK9Pup5kYuHA/0BmAgkS3q7CcXhnKe5X1GGbbHouxcZLNeMhKWRgKwj7APAXgtZuFRw+T/5/0OnW9cGt3
+X-Gm-Message-State: AOJu0Yz9mW3rMmfl+z/rjLUosFpqwwXZ9FBEFdHMwoqz0xFL1mzznj3J
+	OOXX9bpTmJvuLz9c76UOqYrVaMTqm4qtfNzlxblV/DxcRfBRbNbC
+X-Google-Smtp-Source: AGHT+IEe2Tls3zrquooZ9aR7tLPgwZYaOOtgSOElKmOhU8Phz5FIzEHlK2FZVQHWsJfBrGVBPHX6gQ==
+X-Received: by 2002:a05:600c:45cc:b0:41f:c5c5:c9df with SMTP id 5b1f17b1804b1-42164a32c1amr898215e9.14.1717689134260;
+        Thu, 06 Jun 2024 08:52:14 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:641:9001:124f:b55:b414:cf29? ([2a0a:ef40:641:9001:124f:b55:b414:cf29])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4215c2cd247sm26497495e9.40.2024.06.06.08.52.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Jun 2024 08:52:14 -0700 (PDT)
+Message-ID: <4ba1343d-1467-46a0-85b0-b249e1ddedf7@gmail.com>
+Date: Thu, 6 Jun 2024 16:52:11 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 4BC4D200-241C-11EF-A5EC-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 13/29] merge-recursive: fix memory leak when finalizing
+ merge
+To: Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ git@vger.kernel.org
+References: <cover.1717402439.git.ps@pks.im>
+ <930de119116355f0b6df9e7e1d5d0fe38d93755a.1717402439.git.ps@pks.im>
+ <CAOLa=ZQ5qN9+GGp2Cmks+J2dCbZpNvd0ZEGTWejedUCtzXF9Ew@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAOLa=ZQ5qN9+GGp2Cmks+J2dCbZpNvd0ZEGTWejedUCtzXF9Ew@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On 06/06/2024 11:50, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+>> We do not free some members of `struct merge_options`' private data.
+> 
+> Nit: s/`struct merge_options`'/`struct merge_options`'s/
 
->>> +diff.trustExitCode::
->>> +	If this boolean value is set to true then the `diff.external`
->>> +	command is expected to return exit code 1 if it finds
->>> +	significant changes and 0 if it doesn't, like diff(1).  If it's
->>> +	false then the `diff.external` command is expected to always
->>> +	return exit code 0.  Defaults to false.
->>
->> I find this somewhat unclear. What are the consequences when this valu=
-e
->> is set to false, but the command exits with code other than 0? Is it
->>
->>     If it's false then any exit code other than 0 of the `diff.externa=
-l`
->>     command is treated as an error.
->
-> Yes, unexpected exit codes are reported as errors.
->
-> If trustExitCode is false and --quiet is given then the execution of
-> external diffs is skipped, so in that situation there is no exit code t=
-o
-> expect, though.  Not sure how to express it concisely, though.  This
-> attempt looks a bit bloated:
->
-> --quiet::
->         Disable all output of the program. Implies `--exit-code`.
->         Disables execution of external diff helpers whose exit code
->         is not trusted, i.e. their respective configuration option
-> 	`diff.trustExitCode` or `diff.<driver>.trustExitCode` or
-> 	environment variable `GIT_EXTERNAL_DIFF_TRUST_EXIT_CODE` is
-> 	false.
->
-> Might be worth documenting this original behavior somehow, anyway.  It
-> makes sense in hindsight, but surprised me a bit when I wrote the tests=
-.
+Either is correct, it is a matter of style whether one adds the trailing 
+"s".
 
-Yes.  The explanation of trustExitCode makes sense as an explanation
-of what the variable means (i.e. if set, we pay attention to the
-exit code of the external diff driver, otherwise a non-zero exit is
-an error), but I suspect that readers are _more_ interested in how
-the external diff driver contributes to the answer to the "has this
-path been changed?" question when the variable is on and off.  And
-the above description of "--quiet" does help answer that question
-somewhat.
+Best Wishes
 
+Phillip
