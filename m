@@ -1,80 +1,80 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DA6328A0
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 10:29:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA067194C8D
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 10:29:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717669782; cv=none; b=o2Tkm2Mz9qiCIDqT0ZTUH1hna++e9QNJBTWgg2dcA90tAs8k+crY21G87ssxgw4B9ejZii729pQIEikKNoGl9/Y8I9O23ytIo5uLREzNaZMjGYI0s9RXvat11onrlc9aWdFubijBTKK40woOpSSwfXelMsSO4TVdtsILd+p+hnQ=
+	t=1717669791; cv=none; b=QfSkgQildRBX+SLLhynr/dbb8ZEs6PRh8t0lgM1qW8wukfpYkpL96BjWCIlcSDS6y7tRAhk7v6GTgJKz0rLVhDVa82FB5Q7qeBPpRx1U1qTxOzTGaxQM4Xvjec22krkIxTkZ2B16kBbnMcB3xXJ5WUc1Mp6IXIf+/1Apo7hU7k8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717669782; c=relaxed/simple;
-	bh=/AdVA6oi2gEFZOFJD0Z1gQgF+nfRg+Gt0mqT9VoEQ60=;
+	s=arc-20240116; t=1717669791; c=relaxed/simple;
+	bh=JvqsNVlQ6XOk6mydVYvrV4kAmuD/y3FVClNGVqMFnYo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A7NWcEe4jVzwBIj8y52hHlXssCCibKanKKjmuTUZkpw/FloYiDdpgopY4FJAXuGLFddyKjmK1xBzPEqJvqd8fOHx3pmPyQPYAq+qgJ00F648fiapYPckar/ep2PS34+JqOOUEYJvR2MdtlLMkRnmcuaezGNo4FQI3EpKTt7iD+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZSc+leWc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fzArxOpz; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=lJ7goaPPAmq/DjoePXPiYZdIq6KIPR4s6Y1YZXgjIN2F6Us1wlakoXGd8BS0IhAbiLjk6Y+YCG/soQF9bLbjvhgsnUjleiTaV9xp7epuD83CWIhnMQ38ko+u8adnmbRTZFSYjY1bY0PX9ySvBKQPYni639l9HCcUpVirlJVs0VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TLQTlu5N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PHrOBWgU; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZSc+leWc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fzArxOpz"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 7EA1911401AD;
-	Thu,  6 Jun 2024 06:29:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TLQTlu5N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PHrOBWgU"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 3743D13800ED;
+	Thu,  6 Jun 2024 06:29:49 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 06 Jun 2024 06:29:40 -0400
+  by compute6.internal (MEProxy); Thu, 06 Jun 2024 06:29:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717669780; x=1717756180; bh=U9xvczMRvk
-	Zge9hFefhIEXdxgI9RDORPck5qooUjVYY=; b=ZSc+leWcCJ2jvzV4WjnL4ZrYsA
-	0+ndGiqqJNnJqTqYCgDiHN5/rRENX02z5q29ntdXmodyLhW1QglP5wEPpdY8eD1i
-	YU2k9SECvn9epe8N3/Zzbnu+TZocV0xoF02BpVKL7g4WKOfx8Gr9H9DHCO8ZU8Wv
-	tO+WwbAomK0xvOnpHfLngUGvb48cFP3EARR/2/GB4aA/U9p2AMDial4hA0mVvMY+
-	2LU8hAh4RMrkO8kwWmbWlbZxlYtNUtLuyxwbxSeQOHic//L1PdVw+45a+i6dbBgK
-	bX/3yTOwXPflzNfG68SsO6X4dbwdgIi/3mQdl1WUIys42yknb5qKG/z6azDg==
+	:subject:to:to; s=fm1; t=1717669789; x=1717756189; bh=5guQbolLuJ
+	XFL3BZCLaWyaGx7Uw8X2YN25QsOyYEfmU=; b=TLQTlu5N4kUwpiGMUZQGeDdlMn
+	WVP9Ol22JnNP0SeJbQJ9yo/ev7+oV46UW4xXZbcwAxAShEuOdEth2KN2A33yUpXp
+	ZkOQYEf50zIkNynLoQ8en2ktBqTvDZYUZ8OB78UbaK7J4eXLS8oQuhha99CMktnm
+	ivMNSyuG8HjIwQzv0ixf+/c67pZwCLp6qdvnc+pmr5H81n/ovYiT4B9a5QgzzPyT
+	Z2vo3yWR3+0EU/5DLFR7JPqcHXFqcS41unXRnSMKapHhDANZZWMn2xu0SQbVXCGH
+	X0WPK8as2JvQQJKi89RMMfGlcZwhXc/6ihSg6VPBmZP/FXspMSKEYFbkOSUg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717669780; x=1717756180; bh=U9xvczMRvkZge9hFefhIEXdxgI9R
-	DORPck5qooUjVYY=; b=fzArxOpz5wBpTKKCt85ommyQ+URcKJOCpPSA+1OPOYg6
-	SfAfT3lSMVfxkzCRuYyqvlPG2tDVDltnSnBSJyku3Zr8CpMrs0L/DX8NEBavKelx
-	sftEWg9To5Hji+MPl+Ras9AEFHVa0FB1v82ZQ/9vQoKkiELHDHqgRHIcpwV1s9wl
-	y8shk/L/8qkVZo1SuysYYsHvEtxMN2Grcospl5k4q2IWJc5O822ujLxxPe6KQVIX
-	NQC2xU50+1ATZTGe72klF7xkA5buK5cxG3LrKOnibCcy4+t05YK083lxmxx9wUvC
-	Zs1fGfXBbpELfxSkYqeL9zc/iHlNxSFPWuAC/e6k6w==
-X-ME-Sender: <xms:lI9hZoo_NiVOS0RDA-oPE0fqWBCCj_lExngr4_UsIwLyXn8BQaThTA>
-    <xme:lI9hZuolXRxxFMxfKiJUWii17nz532UFOv2EhYhhb_mOG7uvqzZ5TbOuRiYnhMl1O
-    nVIU2kIZSLSKd2AIA>
-X-ME-Received: <xmr:lI9hZtO40ZqqyhZk-KLeue1fjiNZ2J43XOoCjzmHbfgqmPVpTpFnUQMdFlw3am9F_qUyrJda-tj1SicUR-g-3hE7RHOnYL4T8AevSnnOelZC3nkn>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelkedgvdelucetufdoteggodetrfdotf
+	fm1; t=1717669789; x=1717756189; bh=5guQbolLuJXFL3BZCLaWyaGx7Uw8
+	X2YN25QsOyYEfmU=; b=PHrOBWgUIl8rzg0Z16/q798NrxictAwllELDc9ayK0uu
+	31dh7XBJsQlnBpn6f4348UWt8p1IAbXJsq9uak5uPv9Lu5xnp5jaJY11QiDeYswi
+	7lqJpTy5on0pnEYLqz7E/vqGk5T7MRqGC2rVpAUAN+D65NcGXSL8GDaty4E4OHHG
+	PksoJxoa9UwctXplX6XDsv7DwQSd3Hvnh9fD3g5tGgEa6ZHF9bQ9jBvptBRKhaHk
+	26C1m/l7G2xdpJJFrFkc85Zi6jTI2kr3dmGJDtqda64K6kD1NcuVWQJyxmgloAwV
+	I7Xzc0OwXJLDSWbq4u+X1j8q68AOpbiviSmzw8+Ipg==
+X-ME-Sender: <xms:nY9hZoXWe2Jp_JhbOX5VcFpX_mx0jP008OCmb2d9bvX1qW-jAOj5AQ>
+    <xme:nY9hZsnwB5KY0OCji2pPik3OJcRCHWHyycBr_Jx44JM16RPeyqK66OnBaos2cqs43
+    9lG3t8o6LgLZ4G1tg>
+X-ME-Received: <xmr:nY9hZsZzYo4E7Y2we-jVaE6oBamxwy5Oa5goG-B7hIi3JATy7WqG301uEuZmu2WNx7cbzTwP0Xwu-gWrhyqm5H9TcEKmBBrKKIyQoB4i5AXh_7Ss>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelkedgvdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:lI9hZv6vwPi8pW67x8Fc672dfVEwh6GuOZbJbDXsIge3j1BMe4JXEA>
-    <xmx:lI9hZn7nlMbOiUDyXoC-TZ8e1buVqv64ecwz4pkEIAszM80jtVuKaQ>
-    <xmx:lI9hZvhgcIIofB29KNgYWWfThprnjOMxB-ioYoHYSdvP9adwZzLGAA>
-    <xmx:lI9hZh6rNWhTaHcEw9UEYDz-zt0GLV8tQwEmcpVd2U91jQ_e03IxaA>
-    <xmx:lI9hZq0_enZailBfs03m-mwUwVCh4-RWfLwy7iXMZXVdthAh7NyFNLks>
+X-ME-Proxy: <xmx:nY9hZnWbWseFeq6t9G9cKpm5286xTLptC3XDy3D7Rsh8_fQxKW1fRA>
+    <xmx:nY9hZikTX0sEqe1KJaCl6RkZfI-Vma2O4G8sQtDaAqGrBBsuYjVF1A>
+    <xmx:nY9hZseaZDvR9jSzRHijXwmXnPeg_DNdGRmtBfwIa0u_INWNroKZsw>
+    <xmx:nY9hZkFC9mDdK3nFasjb2m7XeHW47NZ3Kl06yJzUOChjZCMc9sHgXQ>
+    <xmx:nY9hZjB4O7oyqaQg5JJmmZCCUCfQ2gXVmitu85rr-kWqoZokWOMzFYhr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Jun 2024 06:29:39 -0400 (EDT)
+ 6 Jun 2024 06:29:48 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id f2e6c6c0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Jun 2024 10:29:08 +0000 (UTC)
-Date: Thu, 6 Jun 2024 12:29:36 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 2a88264d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Jun 2024 10:29:17 +0000 (UTC)
+Date: Thu, 6 Jun 2024 12:29:45 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v5 24/27] builtin/rebase: do not assign default backend to
- non-constant field
-Message-ID: <81c69da2e830d04d4fbb2108944d55c8711d4e8b.1717667854.git.ps@pks.im>
+Subject: [PATCH v5 26/27] builtin/merge: always store allocated strings in
+ `pull_twohead`
+Message-ID: <a1d2149429db608e42cd71870ba1b6f0337d34fd.1717667854.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717667854.git.ps@pks.im>
 Precedence: bulk
@@ -84,109 +84,103 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4d+Q7tKnQq90XzMc"
+	protocol="application/pgp-signature"; boundary="6ZI1Ff1NuSPCg4gE"
 Content-Disposition: inline
 In-Reply-To: <cover.1717667854.git.ps@pks.im>
 
 
---4d+Q7tKnQq90XzMc
+--6ZI1Ff1NuSPCg4gE
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `struct rebase_options::default_backend` field is a non-constant
-string, but is being assigned a constant via `REBASE_OPTIONS_INIT`.
-Fix this by using `xstrdup()` to assign the variable and introduce a new
-function `rebase_options_release()` that releases memory held by the
-structure, including the newly-allocated variable.
+The `pull_twohead` configuration may sometimes contain an allocated
+string, and sometimes it may contain a string constant. Refactor this to
+instead always store an allocated string such that we can release its
+resources without risk.
+
+While at it, manage the lifetime of other config strings, as well. Note
+that we explicitly don't free `cleanup_arg` here. This is because the
+variable may be assigned a string constant via command line options.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/rebase.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ builtin/merge.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 14d4f0a5e6..adc990b55e 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -135,7 +135,7 @@ struct rebase_options {
- 		.type =3D REBASE_UNSPECIFIED,	  	\
- 		.empty =3D EMPTY_UNSPECIFIED,	  	\
- 		.keep_empty =3D 1,			\
--		.default_backend =3D "merge",	  	\
-+		.default_backend =3D xstrdup("merge"),  	\
- 		.flags =3D REBASE_NO_QUIET, 		\
- 		.git_am_opts =3D STRVEC_INIT,		\
- 		.exec =3D STRING_LIST_INIT_NODUP,		\
-@@ -151,6 +151,19 @@ struct rebase_options {
- 		.strategy_opts =3D STRING_LIST_INIT_NODUP,\
+diff --git a/builtin/merge.c b/builtin/merge.c
+index daed2d4e1e..fb3eb15b89 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -611,17 +611,19 @@ static int git_merge_config(const char *k, const char=
+ *v,
+ 		return 0;
  	}
 =20
-+static void rebase_options_release(struct rebase_options *opts)
-+{
-+	free(opts->default_backend);
-+	free(opts->reflog_action);
-+	free(opts->head_name);
-+	strvec_clear(&opts->git_am_opts);
-+	free(opts->gpg_sign_opt);
-+	string_list_clear(&opts->exec, 0);
-+	free(opts->strategy);
-+	string_list_clear(&opts->strategy_opts, 0);
-+	strbuf_release(&opts->git_format_patch_opt);
-+}
-+
- static struct replay_opts get_replay_opts(const struct rebase_options *opt=
-s)
- {
- 	struct replay_opts replay =3D REPLAY_OPTS_INIT;
-@@ -796,6 +809,7 @@ static int rebase_config(const char *var, const char *v=
-alue,
+-	if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat"))
++	if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat")) {
+ 		show_diffstat =3D git_config_bool(k, v);
+-	else if (!strcmp(k, "merge.verifysignatures"))
++	} else if (!strcmp(k, "merge.verifysignatures")) {
+ 		verify_signatures =3D git_config_bool(k, v);
+-	else if (!strcmp(k, "pull.twohead"))
++	} else if (!strcmp(k, "pull.twohead")) {
++		FREE_AND_NULL(pull_twohead);
+ 		return git_config_string(&pull_twohead, k, v);
+-	else if (!strcmp(k, "pull.octopus"))
++	} else if (!strcmp(k, "pull.octopus")) {
++		FREE_AND_NULL(pull_octopus);
+ 		return git_config_string(&pull_octopus, k, v);
+-	else if (!strcmp(k, "commit.cleanup"))
++	} else if (!strcmp(k, "commit.cleanup")) {
+ 		return git_config_string(&cleanup_arg, k, v);
+-	else if (!strcmp(k, "merge.ff")) {
++	} else if (!strcmp(k, "merge.ff")) {
+ 		int boolval =3D git_parse_maybe_bool(v);
+ 		if (0 <=3D boolval) {
+ 			fast_forward =3D boolval ? FF_ALLOW : FF_NO;
+@@ -1294,7 +1296,7 @@ int cmd_merge(int argc, const char **argv, const char=
+ *prefix)
+ 	if (!pull_twohead) {
+ 		char *default_strategy =3D getenv("GIT_TEST_MERGE_ALGORITHM");
+ 		if (default_strategy && !strcmp(default_strategy, "ort"))
+-			pull_twohead =3D "ort";
++			pull_twohead =3D xstrdup("ort");
  	}
 =20
- 	if (!strcmp(var, "rebase.backend")) {
-+		FREE_AND_NULL(opts->default_backend);
- 		return git_config_string(&opts->default_backend, var, value);
+ 	init_diff_ui_defaults();
+@@ -1793,6 +1795,8 @@ int cmd_merge(int argc, const char **argv, const char=
+ *prefix)
  	}
-=20
-@@ -1833,14 +1847,7 @@ int cmd_rebase(int argc, const char **argv, const ch=
-ar *prefix)
- cleanup:
  	strbuf_release(&buf);
- 	strbuf_release(&revisions);
--	free(options.reflog_action);
--	free(options.head_name);
--	strvec_clear(&options.git_am_opts);
--	free(options.gpg_sign_opt);
--	string_list_clear(&options.exec, 0);
--	free(options.strategy);
--	string_list_clear(&options.strategy_opts, 0);
--	strbuf_release(&options.git_format_patch_opt);
-+	rebase_options_release(&options);
- 	free(squash_onto_name);
- 	free(keep_base_onto_name);
- 	return !!ret;
+ 	free(branch_to_free);
++	free(pull_twohead);
++	free(pull_octopus);
+ 	discard_index(the_repository->index);
+ 	return ret;
+ }
 --=20
 2.45.2.409.g7b0defb391.dirty
 
 
---4d+Q7tKnQq90XzMc
+--6ZI1Ff1NuSPCg4gE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhj48ACgkQVbJhu7ck
-PpSAaA//WqzjWpwcn2ZCBILcpdC0zyzr+eItcdUZAS6lKmGQUXR9lu+8JaRHmiMm
-Yz2gkfMCWL72toA7c5ALkUMCR3RDLZ53xSj2jIhdPdMAZ518mDgl1/1eVGSEIpum
-cdxywGjjzTf5wssOn370LRkWBS0iaywJTbPEgkK3zoFoTZ/2NKh4gNYZ/Jtn+xsh
-wsvE5lr31oQefu9C8hL3F3OP9jYeurDpllWkE7VZsxjdkzmhGu7Heet8rSrzkSLX
-aOPv+54KH8TOSqht2H83PE0Db97Acn8jGu9e9cUQdCf60msiuu4h7Occ7dFNZdZ2
-k1p8CrINafUQhk4zWZJNlzGm9eDSw+pXnW397r/FC3eDiaV4s8z3s9rFR6ZwX3Ty
-X0u+fZs+OogPvsjlRRl20maTdAPNBC1CyugfxEDJgJf0Y9+aERZwjzZTIzuNj9NR
-+h9etQ6WIiUWDkjcUS74Va57pargaOkuAIynxhnDmXMiGgdauIIE3IS3thFg8voA
-6XO0rJfn7CdWWGNW168wDW6fmFwU3JrKHNhSvETnvOmYtux0BMEFBXR4GeHGmOpW
-purwtgadiqXomkWJblHuK2InTuJuELAJ0XV6DQS2uDlZDwUbSiTDqALKZ0g+Sv2b
-1suOrY9LX9Ilq+zI6AROFIE7bFx6sVrNroy7DqFQY7DhpeYd3dk=
-=BV+O
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhj5kACgkQVbJhu7ck
+PpRGMg/6Ag2ausEcquU89s0KjW3Qp5bwwtk7fN1UWllpiobpmVBQjTVsfUSdOEZI
+EGckKXtPRXg9YEpPoutBT2Sg9FNyFSbjyJPGqEawUafc4VdmSpFQ/y13gzaZs4R5
+EAOLmUTk7S8KeRRnNvIYnLHSHm3FQrTZVqQk2Ba5bhCPF0U108QfNvHTNOaQTl+d
+WAHk2Uw7wW2QUGqgZZux2w7I2HFgJUrKyx86wEcBNOC5uuATp6RFw1u1iN3yeLCr
+mBDOLmrlDtjRt1We49tK35DsxMZJ5+BDEFzSK/ZTNQfU61h2xfrYD374+A1GEjC1
+zxrNaGgOdp8hu3x1Ixvy+rhhoqDLe+D5g6+gRjlm32y1Wg9K4HCrNmI0Ko8yh5UF
+wmFpCrLqb7aKXPZ/m4QmUL0YC7C3+uQMQwqGjITPoai2qFZX6YNtMVf/Tl6qRR17
+wx5rmDuykALkdhEa+lCBIJX7k0PxXF6D1j+IEUgIGwC4PQE4UHEvVE11asSPp7LT
+5HffhSlGMuz/0LFSl+cb+zXnmD5uVKCbp8Yselj2H7yUPULE9zmx1BOltQnXEG89
+Qt+y0LvkE3FlbHbaO0URs7tYeHlZv+btYtTGeIR66xYULX3uajKPZFSZEnf1KrBH
+rOrfB7GnaFt1lc6uJgyaSnD9EbiujOAzfSqCB7fVc7wJH0qw8U0=
+=VIhT
 -----END PGP SIGNATURE-----
 
---4d+Q7tKnQq90XzMc--
+--6ZI1Ff1NuSPCg4gE--
