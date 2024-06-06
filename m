@@ -1,64 +1,64 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DBA140364
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 23:04:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC43B13E041
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 23:04:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717715082; cv=none; b=p38RlQiWmr28A8X5vu2MPtX9ipi/VHCrr0VN/pumM9PW7bAUIysSLZYmXsqu7OjbPFe39Q3DmIgEyyem+4FfLJECC5ZS29YOfEUGGn7Bxz3VW1AxkmT7tmpwqwmLkApVP3B8m1L7Dss1oB1cUfWuiDFwDDYNKvdZzoCAjFVHL6k=
+	t=1717715086; cv=none; b=ZCgFI9seQstCTQM3rqEzheCFnoBbXBFYkZo52wGKFKCwjov+JMZzZS4zd9yIBbjsrcsRzBTz+4h1a/nVEWqKtUVqrNUrpAt37iJUPA78YElAGZOjLgI2RLSyeSclg0d9ws7IRuWCIHeoqTrRxBUN5mFXdKpcs2YkeyTNUtURbBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717715082; c=relaxed/simple;
-	bh=kmMeGIqJUXwb3X46dMrlMwaBvEhuH5d+I7M5n254914=;
+	s=arc-20240116; t=1717715086; c=relaxed/simple;
+	bh=X4FhyZ4CxJjAmal+fkdOsRJjyhIrgvlpgMZPkEFASBI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fv3fl+Ox1imEfM6ftvB/OEsVhuiI3xGU2qc1QEF2WyT8llK44f4HyRkQs2ZPaJDx42C2hLyZ7eoU1NoY9znD9p7Brq97wbYyPRlQ/tSx5qFMBNoLcj6Ol7KK15gknjXND8fb8AU92iC5zzZ31x49LCPthWpcfN0vnTv3oSQmgm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Pg3AqFjm; arc=none smtp.client-ip=209.85.210.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=J0Hhiaw4srlJdd3SVV/bQY6im7RVpFZg8ZYs7NiSIbQQg8DfZqdQhrNCRARGIWwJm6MSWr8eJNMnYFp7QDVwk06oslthRdICTfnfJSFb5NPvEnc56Ikk5jKixVBuG98hQSBJfklBwUV9SaEl1g4eqmuhazL5KLiAoB1Hx6Rq9XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=mO/cogAV; arc=none smtp.client-ip=209.85.166.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Pg3AqFjm"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-6f938a7f492so771290a34.1
-        for <git@vger.kernel.org>; Thu, 06 Jun 2024 16:04:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="mO/cogAV"
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-7eb35c5dd37so65153939f.2
+        for <git@vger.kernel.org>; Thu, 06 Jun 2024 16:04:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717715080; x=1718319880; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717715083; x=1718319883; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VNY0AS1hSrzf0C4LWgDRvNdiqZb4JuvAfrGShKK43sk=;
-        b=Pg3AqFjmotI1Egzn4BSbA2MD9AGuFXuBS4zKglYpfdZ9uQSrKNGS8CWakGfU/ZbTOX
-         nYLy9Fc0uzTP/OxSRDmaibV97Ggzlc8p/DhQdf+yNrIqjAzJsED/DGF53fszQ3Wbz2eY
-         +yw4pvesvLjuLGi6FKAvLuHcJTUWUyUqpzRPhKlzl5chVlvhrwFZuFjRrCpklOKqFFuC
-         Iuv0eR52wdjvJFFviVsl7gK8dupHJcPuIj24AL1MUAf9pkZ2ieGoiXJya+pWi4AnSfDF
-         eXTMB3r2rgU2np8ftwNbEGSUSq3mWQ3i72s1xfPYbhCTIhJXw4A+kNI83d6kNU3Cf0gY
-         tCpg==
+        bh=rR9Fx9Hvg//c4k8/nWiH1uMBTJxu4YfQn1Pw+o+UU2k=;
+        b=mO/cogAVrujo8WLQI9Pcg1rCD1bkx0muEPl8MbAA8HZLCaVgR+z8v4Sz5GPh8aA/TX
+         wf8axjA9jrI7wuE2qX9HYpx6eZ7rO9yPm0XvQlOODi5MMbzCH4L7zh6C06wuXoj9ejQz
+         XQRT/OXpcFlJ12p2s4Z+0K2qXtr3BQ+MMmRi5gpUAOb5Jfe5Lw5Y4LE413OsswA2pbYj
+         rFDzZqu5R5dOo6tIXPSC0mwJ2pCm3oFJ+vfPJ0GlPGB7bPp5FOgOCGZSn4R4O+UIEyDD
+         0qde2ZQJMIxoOJxJfxEO5aiQGLAkx3uK4+nj+cCDuIfXwPdWvLWZNvB8Xd2eHMccxqpS
+         ZVjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717715080; x=1718319880;
+        d=1e100.net; s=20230601; t=1717715083; x=1718319883;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VNY0AS1hSrzf0C4LWgDRvNdiqZb4JuvAfrGShKK43sk=;
-        b=Sy5ZDjVtvSpRPd66QNUPWppVLbNrJAfG8THdIgb2k3YJhlgvg+pOQkU1NVN6Q+5GSn
-         niwUcLI0JxQITuR6hRX1XW2SFDq+Iorw6Tj19XU0suDgpQAdr3LH7VHVAOc8icXZKkSb
-         khiWvzjQUkC+GomHW4TmZmDFWadh4E2K7y6DrAPF9vuOKayOukpGyUY44Bk/7Rn5zsqA
-         Bv76C//fUogJ/+4Jn7rD1WJsNmnrphVlVD2fbFm7/D6UaHFDyttryxr3E/NlVWVwiixZ
-         19QRKiZWa6wW4IxdiCduFgIw5vXNVExq64TaMTe1AXjw2e4YO984ARTIfeyJn5Jgiaiu
-         IlQA==
-X-Gm-Message-State: AOJu0Yw5JzL1xBoSMyDsSI76x9rrS8riuqks79ad2cUmvo2nvLn9tr20
-	5YLE3B0LT6e7EfcRREM4FUShAug1rPp2rSQNYR0GTdRAngChDplsAa2FCYqQIBBkoKCQ3iL1L2H
-	iGYU=
-X-Google-Smtp-Source: AGHT+IH+gJ8lCdEU3SQIIYqI18aMkCngKS+0f0fBeY6mZsjAOIdiw7REkR3HYAncBKL0oTWD0w2SIA==
-X-Received: by 2002:a9d:7f8a:0:b0:6f9:4164:bb3c with SMTP id 46e09a7af769-6f957351a13mr796067a34.31.1717715080096;
-        Thu, 06 Jun 2024 16:04:40 -0700 (PDT)
+        bh=rR9Fx9Hvg//c4k8/nWiH1uMBTJxu4YfQn1Pw+o+UU2k=;
+        b=GG3P8XwObZnGbwUzE7OV6V5fqAoU8Sz/1UGhzhB2jjmAsEUygi5j8AK0kdvEOlvn5W
+         aiIXG4TG6uZY+LAbyqodMsOefOEtJUlmymHIw3VcayFnqOp0tJnW4MzOGzMc+iE6S1F4
+         dVxx7b986n/4JX/is7m2HXZqnpj7fYuHVjeZ6bA9WQnN1PFZCWevTu/EhlMfceERyioG
+         406AI6zf5LCcCzL3Kvf3kJOmu4C6krHWCS6JeuEOZl3YVvUTi+I364su/WQKDU92hAnD
+         SuckYYO6UWwTXoSI6Q8ZNgLaYv3OkcEtgcALvbuWicHTvaQWubTdJw9kEMISi4o6Ld64
+         /Beg==
+X-Gm-Message-State: AOJu0YxnVuBBpjt/KREYrxKHlelEm1zHbmaES68bBbCv5V+QlBa+xUw/
+	sOgzI+ocTUh8rxPefRzPBrqXGmBqvolQfzoeFOiYwxUzlVhg7SIx7dXRF7waFJ3dyzBj3mYgcw3
+	PObw=
+X-Google-Smtp-Source: AGHT+IEN0t6n5NsyEBRiTY03nwszjj3nxrR8CO1dtY/njnpwa+a6XJ2WJUYOBVA9kyGIfWruP1vmQQ==
+X-Received: by 2002:a05:6602:2dcd:b0:7e1:7dcb:7806 with SMTP id ca18e2360f4ac-7eb5725b6cdmr108686839f.18.1717715083418;
+        Thu, 06 Jun 2024 16:04:43 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-795330b2277sm102689585a.79.2024.06.06.16.04.39
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44038b5e617sm7541601cf.93.2024.06.06.16.04.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 16:04:39 -0700 (PDT)
-Date: Thu, 6 Jun 2024 19:04:38 -0400
+        Thu, 06 Jun 2024 16:04:43 -0700 (PDT)
+Date: Thu, 6 Jun 2024 19:04:41 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 05/19] midx: teach `nth_midxed_object_oid()` about
- incremental MIDXs
-Message-ID: <a10772585d5fa9dcfd6f5bf5ec6fa81154181144.1717715060.git.me@ttaylorr.com>
+Subject: [PATCH 06/19] midx: teach `nth_bitmapped_pack()` about incremental
+ MIDXs
+Message-ID: <4e960edf8a1018b8425d4d6ae5bb3553bfd38023.1717715060.git.me@ttaylorr.com>
 References: <cover.1717715060.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,39 +70,47 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1717715060.git.me@ttaylorr.com>
 
-The function `nth_midxed_object_oid()` returns the object ID for a given
-object position in the MIDX lexicographic order.
+In a similar fashion as in previous commits, teach the function
+`nth_bitmapped_pack()` about incremental MIDXs by translating the given
+`pack_int_id` from the concatenated lexical order to a MIDX-local
+lexical position.
 
-Teach this function to instead operate over the concatenated
-lexicographic order defined in an earlier step so that it is able to be
-used with incremental MIDXs.
-
-To do this, we need to both (a) adjust the bounds check for the given
-'n', as well as record the MIDX-local position after chasing the
-`->base_midx` pointer to find the MIDX which contains that object.
+When accessing the containing MIDX's array of packs, use the local pack
+ID. Likewise, when reading the 'BTMP' chunk, use the MIDX-local offset
+when accessing the data within that chunk.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ midx.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/midx.c b/midx.c
-index 7fa3a1a7f8..cfab7f8113 100644
+index cfab7f8113..cdc754af97 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -335,9 +335,11 @@ struct object_id *nth_midxed_object_oid(struct object_id *oid,
- 					struct multi_pack_index *m,
- 					uint32_t n)
+@@ -308,17 +308,19 @@ int prepare_midx_pack(struct repository *r, struct multi_pack_index *m,
+ int nth_bitmapped_pack(struct repository *r, struct multi_pack_index *m,
+ 		       struct bitmapped_pack *bp, uint32_t pack_int_id)
  {
--	if (n >= m->num_objects)
-+	if (n >= m->num_objects + m->num_objects_in_base)
- 		return NULL;
- 
-+	n = midx_for_object(&m, n);
++	uint32_t local_pack_int_id = midx_for_pack(&m, pack_int_id);
 +
- 	oidread(oid, m->chunk_oid_lookup + st_mult(m->hash_len, n));
- 	return oid;
- }
+ 	if (!m->chunk_bitmapped_packs)
+ 		return error(_("MIDX does not contain the BTMP chunk"));
+ 
+ 	if (prepare_midx_pack(r, m, pack_int_id))
+ 		return error(_("could not load bitmapped pack %"PRIu32), pack_int_id);
+ 
+-	bp->p = m->packs[pack_int_id];
++	bp->p = m->packs[local_pack_int_id];
+ 	bp->bitmap_pos = get_be32((char *)m->chunk_bitmapped_packs +
+-				  MIDX_CHUNK_BITMAPPED_PACKS_WIDTH * pack_int_id);
++				  MIDX_CHUNK_BITMAPPED_PACKS_WIDTH * local_pack_int_id);
+ 	bp->bitmap_nr = get_be32((char *)m->chunk_bitmapped_packs +
+-				 MIDX_CHUNK_BITMAPPED_PACKS_WIDTH * pack_int_id +
++				 MIDX_CHUNK_BITMAPPED_PACKS_WIDTH * local_pack_int_id +
+ 				 sizeof(uint32_t));
+ 	bp->pack_int_id = pack_int_id;
+ 
 -- 
 2.45.2.437.gecb9450a0e
 
