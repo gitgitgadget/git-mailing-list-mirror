@@ -1,79 +1,80 @@
 Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBA42E639
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 10:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362472E639
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 10:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717669728; cv=none; b=KEe/wMzNIp2q9JGVcoOhI7b1Ss8T9p0qxbOH3nJA9a3lCfaO/rSAvya5Ex871Ghttj0vpZM2FZ56gBb7WjNBSZ99qB8vUJhf2B73yLPg8P9K1CXZh5B/DxHrod6ZUOp7hjXAh3QBRrRS+kcXTwZrGIcUIiVZpJaT9iehsEoKWAU=
+	t=1717669732; cv=none; b=BPq8GzaGRvpBIF6HK7l5MDG8DBtHPJ2Z7AengsdElxA8y1XQObRMxgkRKLlBjKrHG4KyZV5ktXrpXJ9S2bztCflR8EtQct5VYVo4ZOcAym8PJ3+/u2OECuw0wjf+zG7rbfmjDAoWjGqeozixlo1V0wYuNrRmy8TiBOgKWSrVFtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717669728; c=relaxed/simple;
-	bh=2Lt+rbiFO/tcKIyI+uVBiFMTTcW2r2yhmKFxnum3UPA=;
+	s=arc-20240116; t=1717669732; c=relaxed/simple;
+	bh=S7pNYq8sUxkS4WMnKi4+XIRef0cFxBTkb2ye2Y3fPQY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VSmVJZJVWBDmW2rG8RmAFDdbV3zPJbwlzxDbMpgCrCxp++kgFvRNHklg/r8MMkmFlnQevvwJwx2GFKDeuCykl0oS4nlLnQ+2ZjODf7UMO8flegKmM72KoDXedn3sungxDWoIHrV02bmxR4kXvhQ1nTEbZ+3QIhU+akOWmouPB18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CdkGLmNr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jzgrPaJN; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=iMH0d6l1J+qbvtol1G0h4aYPTOaBsKHFwqa3N0MPrcTZZoQJTzOpvqR/qRoXH9UiZTvK0W16yAszW6opDBMvfigg6W+33pi5tRDKMkA3w2LvIGCSx1tNrHCXpK4W682r/6ydyD4fCl38lrD4jsMDVVBjlVfY5u6qmpSfT2IKupA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y4mQBcPA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W5T8bScW; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CdkGLmNr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jzgrPaJN"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id D78DE138014F;
-	Thu,  6 Jun 2024 06:28:45 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y4mQBcPA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W5T8bScW"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 3C10C138016C;
+	Thu,  6 Jun 2024 06:28:50 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 06 Jun 2024 06:28:45 -0400
+  by compute5.internal (MEProxy); Thu, 06 Jun 2024 06:28:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717669725; x=1717756125; bh=jHSS9MXVTn
-	VzYskIe3vCOI77kMRSOs/D/5SvkYBKsIE=; b=CdkGLmNr94aKyLZBzbr/hFRySg
-	HRhfCrxioXN3LIollYr7doKG7zp4FOURDD9lnmmd5Rg6D9BKMB0eKZGUrH4WMGm9
-	MaJRa6gNE4Qiqx306/SxYjSwuuGnbtGisX2j7HBXF6mRbNO33FT/LJTgFPCz+a1k
-	8wLessHdFcB8VGB5rimLXHNeL7qlEzRMHK/g0dczgulf14VGeZzairI8oaRNQVoq
-	7GUT/ImHg/WkJmUVkvaqam20Ty/9LjsksQ21xY25rli/R1bGpeqrwHTl62svrjuM
-	JFB4XebTJuxAX+Fmeam15PnHFnoOKIkON+DmZLEqt1kTq+/VxVZgIcJqh/EQ==
+	:subject:to:to; s=fm1; t=1717669730; x=1717756130; bh=XnvRst57is
+	kanhb14a9rF3ak8Xxi3kYkn77vMmFHDik=; b=Y4mQBcPAURQynjBNMXlULaJSMo
+	vcPQHot1eXdwYkOYQvyMW7f6ge2t9EBPAfuqrqXjUxYqxRJQEDlIBoh/rA/onKpn
+	hjJiiSCnhdCYvpQ55sdW6hH0J9vhGZmwC6hKpJOH/INB+OOzdB/SxqI+oYAdFwoE
+	XVWnZ1IHi98TjctPq/ENNyns0kmzk/UrvK1tLNs7qagGNbOszVKt9IjwtBgHA/LU
+	wbQ6nCyFQqJ4Km03WszysvKLDGCbOKAL9S8VNyhWr3Tw0cqwXxga9qh+MEDwVFJs
+	UsWprWR/Epl9lyv7xcZd/ft8u3KatSKLspUTLuxucwj2JT8NPG5Uw00NoELQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717669725; x=1717756125; bh=jHSS9MXVTnVzYskIe3vCOI77kMRS
-	Os/D/5SvkYBKsIE=; b=jzgrPaJNAe6p6oIDg+4yBKUOG58FADqyPHe6XJQAox0t
-	ai0fVCVVLs3c3tFz+0H7OubrFXn9NoMQlz5Rjh17I6jVKr8W9Ze42OZkMBKv6UXy
-	3bJJr8OvidFdumdzIrmyAiRes82JXlfUNs4f2pHbMNP6V+lC+CI9WQEpDor7J/IO
-	ORy0yQrzFNwG1R+rVcbQ0Ina30VH2mbhW2XB8D/TlHWDWwRoHjY68Innd+UG3zey
-	Rrf/KmHRKCiXSu1VU/UjrLQu/uyRm2skPRsjvYSblcBlBkYIxlvq/bX8YxDoyGJl
-	Qs6tP19wvth2ImgCprxRU+axChRmln1hiJIHHZhbww==
-X-ME-Sender: <xms:XY9hZp_pIonkydEZoPE2n8Dk5dE4uWOIbVrMVucmiYAq3aD-BJnYUg>
-    <xme:XY9hZttuTErLnNlqii74TdRLPWBNsqZGkZe7Jq69c-wG_XQWCWBu8VM5P0g4bREWG
-    4qO0osZZ1JOzIKTXg>
-X-ME-Received: <xmr:XY9hZnBNaGFgNjuAuriK2vNsS8Fgm5MiPQwd-XnfNuvsWvPQ-Rii7MTsnaP9245pC9Y5lupMmiGg6V0vCaqFLo6YRh6O5IRx9aJCe6bO5iL9KDWb>
+	fm1; t=1717669730; x=1717756130; bh=XnvRst57iskanhb14a9rF3ak8Xxi
+	3kYkn77vMmFHDik=; b=W5T8bScWi35xudtGq9Rf2W9fk5VVVeW2RjOt/CIGLmpP
+	5c0K9nFbWGVKA0S17ex2DkekTiFpqHMNaAw2pUQ06JomBLWZIvvJwuclNmrrvcgm
+	JDWAzH8LCd+EF/Rf/GX4GylLvVILL0vBUGwPHp3Z22Qbnk6MBHKrT/7wzF2aAmOM
+	PyPPvEXcY7m9KV8ml9EAWjbTDCmWTOg5JEjmHcmYAfdJbbTXX7UECb2++S8BKH0B
+	SYKkau0CwlTZ/jurIs/8Qe6hfI06/7r/E1jIkpxviDyYn1QgDbZlWDq/rwaJlLTo
+	PdFuFlsK8srjDJ/Ecqog0Z4tMqlBsX/zrkjGk4Y/Qg==
+X-ME-Sender: <xms:Yo9hZna141_fH9Rputgn7CMtgHk0Hu6R7X01Y5dC26Go-FE4XQPcig>
+    <xme:Yo9hZmZjuk2ZAKoBqpYYckeHzwCxxaVq-yQGGjdt-oDb4K5Y2pDlP-sjpSm-zodOU
+    XQ8yt1OPjIWznK1aw>
+X-ME-Received: <xmr:Yo9hZp9OEpuSORY4Oc9Kpmn-whga5HHThgDh6UcmGDTbgKASLIFMAF3f2sOJji2WF2rcJrCb2qMXQOxpE3Q7rhKmYqKmXO0V3xnI_YfAfp8Z4ZV3>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelkedgvdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:XY9hZtcEH_daN4FAkQoI6DQFaXnhpTdwiVYzqR-WoQrBfFaet_aAwg>
-    <xmx:XY9hZuP9BTvP6TLY7P89CHe_UGnWLaBE1irem3zim_TIXvlpwL_peQ>
-    <xmx:XY9hZvmn0euHiO2kqER2LgcaSLWiwRUlB7PJJnQL6GLq_WeQtfsfpQ>
-    <xmx:XY9hZovMV_93AQP_ylr5mAqIxsAyQYjCPWdmcJjx6_3j5mPQ0LQFQA>
-    <xmx:XY9hZrpBZKxtj3B1d8Fg_gB0epS8ugyaza9NgUmGx9M6feVsy7Kwwv9D>
+X-ME-Proxy: <xmx:Yo9hZtq_5RoMXGnctualxhIi5PfWqwL7c-IaCx0nqFD5boq6v1CCNg>
+    <xmx:Yo9hZipQbANQOALKk1kUGCgUMW9Av5LsSD93UTad5l4Uf7aPWPfplw>
+    <xmx:Yo9hZjR6wpgJZaKY_f1ItBvE9RbnnnIP4E0iq-UTGsmSGqG80xAsjA>
+    <xmx:Yo9hZqpRJveA-xPky_e7lJifcVALueEu26IoGBlJAmtfJ8IuzH9ztQ>
+    <xmx:Yo9hZrmrLGHiC__QDwJ2p81HSKJzah_gVBYJrtllG2KK0TUOLDZMKPFQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Jun 2024 06:28:44 -0400 (EDT)
+ 6 Jun 2024 06:28:49 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 0f30e96e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Jun 2024 10:28:13 +0000 (UTC)
-Date: Thu, 6 Jun 2024 12:28:41 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 9cd43a59 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Jun 2024 10:28:18 +0000 (UTC)
+Date: Thu, 6 Jun 2024 12:28:46 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v5 12/27] object-file: mark cached object buffers as const
-Message-ID: <5cd014c22cb2fc7e34666aa6bd036d3cc4ce9039.1717667854.git.ps@pks.im>
+Subject: [PATCH v5 13/27] object-file: make `buf` parameter of `index_mem()`
+ a constant
+Message-ID: <69d904ddcec17519ee981a5db2a73f467c7e747e.1717667854.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717667854.git.ps@pks.im>
 Precedence: bulk
@@ -83,94 +84,97 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4xP8bO2zK+Teeu3v"
+	protocol="application/pgp-signature"; boundary="jHYp1sfo42F1oHfI"
 Content-Disposition: inline
 In-Reply-To: <cover.1717667854.git.ps@pks.im>
 
 
---4xP8bO2zK+Teeu3v
+--jHYp1sfo42F1oHfI
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The buffers of cached objects are never modified, but are still stored
-as a non-constant pointer. This will cause a compiler warning once we
-enable the `-Wwrite-strings` compiler warning as we assign an empty
-constant string when initializing the static `empty_tree` cached object.
+The `buf` parameter of `index_mem()` is a non-constant string. This will
+break once we enable `-Wwrite-strings` because we also pass constants
+=66rom at least one callsite.
 
-Convert the field to be constant. This requires us to shuffle around
-the code a bit because we memcpy(3P) into the allocated buffer in
-`pretend_object_file()`. This is easily fixed though by allocating the
-buffer into a temporary variable first.
+Adapt the parameter to be a constant. As we cannot free the buffer
+without casting now, this also requires us to move the lifetime of the
+nested buffer around.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- object-file.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ object-file.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index 610b1f465c..6309b24387 100644
+index 6309b24387..2d5bd3a211 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -277,7 +277,7 @@ int hash_algo_by_length(int len)
- static struct cached_object {
- 	struct object_id oid;
- 	enum object_type type;
--	void *buf;
-+	const void *buf;
- 	unsigned long size;
- } *cached_objects;
- static int cached_object_nr, cached_object_alloc;
-@@ -1778,17 +1778,22 @@ int pretend_object_file(void *buf, unsigned long le=
-n, enum object_type type,
- 			struct object_id *oid)
- {
- 	struct cached_object *co;
-+	char *co_buf;
-+
-+	co_buf =3D xmalloc(len);
-+	memcpy(co_buf, buf, len);
-=20
- 	hash_object_file(the_hash_algo, buf, len, type, oid);
- 	if (repo_has_object_file_with_flags(the_repository, oid, OBJECT_INFO_QUIC=
-K | OBJECT_INFO_SKIP_FETCH_OBJECT) ||
--	    find_cached_object(oid))
-+	    find_cached_object(oid)) {
-+		free(co_buf);
- 		return 0;
-+	}
- 	ALLOC_GROW(cached_objects, cached_object_nr + 1, cached_object_alloc);
- 	co =3D &cached_objects[cached_object_nr++];
- 	co->size =3D len;
- 	co->type =3D type;
--	co->buf =3D xmalloc(len);
--	memcpy(co->buf, buf, len);
-+	co->buf =3D co_buf;
- 	oidcpy(&co->oid, oid);
- 	return 0;
+@@ -2487,12 +2487,13 @@ static int hash_format_check_report(struct fsck_opt=
+ions *opts UNUSED,
  }
+=20
+ static int index_mem(struct index_state *istate,
+-		     struct object_id *oid, void *buf, size_t size,
++		     struct object_id *oid,
++		     const void *buf, size_t size,
+ 		     enum object_type type,
+ 		     const char *path, unsigned flags)
+ {
++	struct strbuf nbuf =3D STRBUF_INIT;
+ 	int ret =3D 0;
+-	int re_allocated =3D 0;
+ 	int write_object =3D flags & HASH_WRITE_OBJECT;
+=20
+ 	if (!type)
+@@ -2502,11 +2503,10 @@ static int index_mem(struct index_state *istate,
+ 	 * Convert blobs to git internal format
+ 	 */
+ 	if ((type =3D=3D OBJ_BLOB) && path) {
+-		struct strbuf nbuf =3D STRBUF_INIT;
+ 		if (convert_to_git(istate, path, buf, size, &nbuf,
+ 				   get_conv_flags(flags))) {
+-			buf =3D strbuf_detach(&nbuf, &size);
+-			re_allocated =3D 1;
++			buf =3D nbuf.buf;
++			size =3D nbuf.len;
+ 		}
+ 	}
+ 	if (flags & HASH_FORMAT_CHECK) {
+@@ -2523,8 +2523,8 @@ static int index_mem(struct index_state *istate,
+ 		ret =3D write_object_file(buf, size, type, oid);
+ 	else
+ 		hash_object_file(the_hash_algo, buf, size, type, oid);
+-	if (re_allocated)
+-		free(buf);
++
++	strbuf_release(&nbuf);
+ 	return ret;
+ }
+=20
 --=20
 2.45.2.409.g7b0defb391.dirty
 
 
---4xP8bO2zK+Teeu3v
+--jHYp1sfo42F1oHfI
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhj1gACgkQVbJhu7ck
-PpR2eQ/+Kkaz9W6veKNu73KSmyFjTAaR8xN1bL7T72vC8DfrE+Q0Hfhysc8XFwAx
-iXhbsexq5mAdt9oNBMOjqcU626kr/sZYNs7XDnwWJGxsfbGFSMaDYc7BOHZHcHYn
-O+qkLJh2oEZsZthmZQT7aCiPvouG2ySB4qRZYgLTfKxF2B5+tnefM/NpJ1twmvmH
-z0dlA6WrcHoS9bRw4cN3wyEB5lg+Bk/klyZjActg+EpndHq6mV1UrQ3HrJaCnt0v
-f9KjouiXYJwIoO5L5Z+9Ar1ar/IQAajFFjkOI+Xxc9vJQWWKVNsU4CG8PrABjBfv
-aU/tB/OJWxz7av8AyjoVS77xLttfT7KfnK2dFo0yGqEmHjWEom2G1nOKiIHvHU+g
-ISnTn6btvKOFA8wRV1BuDCcM4WpO8zCRbE5BJtiEBvBooCsTkwh0WQAkvnplEZje
-ScYB0cR4w/lxmXFNxBRq7EvhqajGXZ7YgRbMgf8SU8VDmcGHCz2XS+H63wnHmieC
-EIz3vEdeAAGx1Jm+1FG20OshUTwYaaPJCS8AH3ZZ805UHIF0JVLtU1yRdJsXmKhv
-4UUzoLfjRKfrLcH+knfxaSG4dzYKZpQnjTxeRWgIChL4sYEAByfyugQd35Q5M+qW
-BNvtdxXyso7iviozkrij2NXzyx8Yj9hswoGmvVU1yc4Zl6OkzFo=
-=bFXp
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhj10ACgkQVbJhu7ck
+PpS8bQ/+P/GBf+rGw0yq58i2zFULQHjkFNzupzyoaAbvu71lKkZfspQ9EHDCvQAv
+fuN9prJR8Rz2UI+NtMdyHhBBhLC8YdgOev9A7RV304t4JFLwXXeBLCMSxnBxNK8J
+Ke5g88/N1kyaNSp6EyCG1m+k6x8iINSXcXXq9AKmS4xcajXEHsJ8a5MvFFsoIb21
+jaZdVybJZ05uFDrvcj4i21+qs3AGxAqeswKzlyCmnGLUx234SOv8rBLW5J9i9V92
+val8ZT9oA7rYJ9uqcKMkqY9R8YIdfuSCtzzXdOE70U5PLEgp/u4ecNftTqNqdoaC
+L0eb+NDnmmnbngBBY8xzPHG4LHOzCHf2mJWVovdYiTsrNOiVjhB8X4udWCJvt4uR
+1W1eTXibevK0uZgyQ/DIFRyMV3l2fm7YgfnoqBlvCe8rddZYDRbH4dT/4anxr4q2
+pDGiUlGE6QhKh4e+FQg1Jg7WWCdsylnlolvBRhLm9lHon+4WFtTfACj2CerV3qb1
+QveW0EHpIft6ioUNr1+uO/LLF1wYcp1XCHKaJhqHfDnHWJg2eARc/CQkHwaeLA0/
+Z5wbzM3qIuPMT0xLjTlKEOSYiFb34SSCNxAxRQ19SlF4cf3NTglk5YdIwTxJF/ik
+hGHGKJm1HWJnE58r9FcWVqHHo8xyvJFcQVJcZN6kgADVhscH9Rk=
+=/oAl
 -----END PGP SIGNATURE-----
 
---4xP8bO2zK+Teeu3v--
+--jHYp1sfo42F1oHfI--
