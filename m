@@ -1,181 +1,185 @@
-Received: from mail187-37.suw11.mandrillapp.com (mail187-37.suw11.mandrillapp.com [198.2.187.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C88EFC02
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 13:36:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.2.187.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4301C2309
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 14:20:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717680999; cv=none; b=pxOxXTnjIj08ydoglcAt9u2YKzxf4ctWs2G3DUESSeEFEXe3kf2Nuo7ctux9KQICPYkbRKgJWX6aFvebdmn6MYEph+5p+SQArbi0Tfh1h1+iVfdKKE2GmG7Aguw+79fnLeLDnU9B44K5misHGMW9Ofw95J3+xuLE4oMEtfU8GmQ=
+	t=1717683646; cv=none; b=OlmkCpA2Wt5w9nod83bUo31IkNn8pZ2821p9ULSohNf/Jbx0GlMOQMO7Lfm+kQTPkhYT1IhAYtZheQXzz0Gcl9ac8wHNmNXY0CbOndkQbqCjAPwAQYGMJOeJclUuypYeyhxQ1kvTOdBEkI8ShaIQMJlUHq/WFCgxYAuIoEdtyTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717680999; c=relaxed/simple;
-	bh=zV/8Vney9EGbHGIrIgFw41AMRbQK9VLiJj7c8u0/Vho=;
-	h=From:Subject:To:Cc:Message-Id:Date:MIME-Version:Content-Type; b=L0nHK86AiChrryGZgv+jFqW/1Sn6nNgsqPTE6DLPajRDkuU7Zbs1c+Y9EOfCPNwVKufHPJAiZtWnVeF9BmOMyZSuiR/8vBSmYnHdotQIDmpaOHsYHFzHexSY13UmuoCpHDlsJLWolsPPPEZfezGJaFbMbOnmBb0391bOpPDxv4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexedi.com; spf=pass smtp.mailfrom=mandrillapp.mail.nexedi.com; dkim=pass (2048-bit key) header.d=mandrillapp.com header.i=@mandrillapp.com header.b=LzCiiQw/; dkim=pass (2048-bit key) header.d=nexedi.com header.i=kirr@nexedi.com header.b=Al57xGme; arc=none smtp.client-ip=198.2.187.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexedi.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mandrillapp.mail.nexedi.com
+	s=arc-20240116; t=1717683646; c=relaxed/simple;
+	bh=7oV/CaWV5FVxbF7AeI78f45wtTPxkGb7iOVIWbRAvu4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MARM8P4YnSilCyXN6NV4p6Eza/qQDqshSw7TP92ab0Rsku2GdbzMiJMfPfNnCdbvfMwqxFK1H4DW3AFRPEjpAvGKhmSDV5ixRQ2XwzVkeD+e4b9SrbVskI77w5X0GAWIvp+w0gAUmBjzzR18Lnt0n6gN/xIfM1PGB5TUqA4uSr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P7WL9vGs; arc=none smtp.client-ip=209.85.160.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mandrillapp.com header.i=@mandrillapp.com header.b="LzCiiQw/";
-	dkim=pass (2048-bit key) header.d=nexedi.com header.i=kirr@nexedi.com header.b="Al57xGme"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
-	s=mte1; t=1717680996; x=1717941496;
-	bh=OyvJLzNPWCnTnCmovniTINyXLsxQyZLosP/UnLUdelU=;
-	h=From:Subject:To:Cc:Message-Id:Feedback-ID:Date:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:CC:Date:Subject:From;
-	b=LzCiiQw//rSkaQrhOXjcBjN8v31w7B/kkp+43d3pin2B6P/bdVphS01/xEFRt9Y0y
-	 JjFhuQtx4vUhAVmf+kI78sbeIYx1lOS+KRfeMEG7mE1O0LXlG4WoHgAdBYJy9iBQMc
-	 S/hXzVHctPkqLLEjbk6nIwwrR2K0Wa3flnMApK4JqmJZRUobFKOf2GgF1kRqnXGT3k
-	 sWjQHW/3CFTF4V53doF9X9WS+HEJm9FcPyuqjCJhA4sX6puQtb3pKKdKQcKIC1PIpr
-	 /w2j7AWC2C8BrEts3It+gbBrERTRMs2yNwijNeWMtTK/ASyFvDIscEqOeex+5ibSeB
-	 2ePKdLY4PU6mg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nexedi.com; s=mte1;
-	t=1717680996; x=1717941496; i=kirr@nexedi.com;
-	bh=OyvJLzNPWCnTnCmovniTINyXLsxQyZLosP/UnLUdelU=;
-	h=From:Subject:To:Cc:Message-Id:Feedback-ID:Date:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:CC:Date:Subject:From;
-	b=Al57xGmee1o61y2u/ZrIQsIIycJnTjvx/WDL8DNJ6kykeKZkGg7muRBUnlMvsiwv6
-	 MF36Ul86y51gQq9xKvshCO+ABbaeZIjjpnoGH7HNNBGF6dGLYs5smk6JjoG4GMBqGt
-	 NMBGdM6EyAQv8dp/fScpZiq+YfOnbPCPxbWjjOFYuI8qyFcomdi0aNvPyC2vVbN0aX
-	 0oCKRViQXg2tUvmS6wtmZlK/BkZdHJ93KG79Qe/w2HI4C37gDYEakmErgStGvESSq5
-	 4OnD6RqIijw8rV+7lAAT1q6BH5YeTU6v40yraoWbfbcMMN7iThx3cQnbSC8sIs3gaJ
-	 RGOIsB33I43OA==
-Received: from pmta09.mandrill.prod.suw01.rsglab.com (localhost [127.0.0.1])
-	by mail187-37.suw11.mandrillapp.com (Mailchimp) with ESMTP id 4Vw52q70HPzG0CpTK
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 13:36:35 +0000 (GMT)
-From: Kirill Smelkov <kirr@nexedi.com>
-Subject: =?utf-8?Q?[PATCH]=20fetch-pack:=20test:=20demonstrate=20segmentation=20fault=20when=20run=20with=20fsckObjects=20but=20without=20--lock-pack?=
-Received: from [87.98.221.171] by mandrillapp.com id 26d5846df54047c794c24ab00d4e23e6; Thu, 06 Jun 2024 13:36:35 +0000
-X-Mailer: git-send-email 2.39.2
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Kirill Smelkov <kirr@nexedi.com>, Jonathan Tan <jonathantanmy@google.com>, Alain Takoudjou <alain.takoudjou@nexedi.com>, =?utf-8?Q?J=C3=A9rome=20Perrin?= <jerome@nexedi.com>
-Message-Id: <20240606133605.602276-1-kirr@nexedi.com>
-X-Native-Encoded: 1
-X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,=20including=20all=20headers,=20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D31050260.26d5846df54047c794c24ab00d4e23e6?=
-X-Mandrill-User: md_31050260
-Feedback-ID: 31050260:31050260.20240606:md
-Date: Thu, 06 Jun 2024 13:36:35 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P7WL9vGs"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-2512a0b6916so496861fac.0
+        for <git@vger.kernel.org>; Thu, 06 Jun 2024 07:20:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717683644; x=1718288444; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wQ4KIYhOCcfTT/cBKZQ2BpCdXxcZEhhHJeX55OXw7p4=;
+        b=P7WL9vGsFsI4+Bw7yIuQjcto3Jfl2hVHDbfZFzwzQ/6lJnqS9YJbviGFzdJwriFpEe
+         bgKVBTnyGquXeS4hBKwzMfI5g6/Bon8LHPUtXqS/48Bdjap/uglJQ2EubFTHqxz7G0HS
+         P2R+dsW0nNDcHyRicNL6ijmedSR3zZHAgqyhUxBeBdEdCZSqdM1fSw7kr4GZihYjXLr0
+         KSIz+j8goOuROmk+c8RjcwzG2v6/sJK0/viubFAtNKAh/HYWr4SAFurQdr9Yx4xOQ5P4
+         tUkczssCmpFIvA4/cV68wHKpQYFPsxpYrc9irNfhHiIgHp+ktbGsLNHMYMJ5bVL/AIDL
+         mRtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717683644; x=1718288444;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wQ4KIYhOCcfTT/cBKZQ2BpCdXxcZEhhHJeX55OXw7p4=;
+        b=DCMBK4uuRLlpJOII1jUjjelDvszhNT1tbcokp1FpR+hT5P+xZfaxYWE6ENvKc1xhAc
+         a/9gsIfFx0WjTxQ6JGvrt4mk8AVGIT2JcXrL4rDQ0PmMmcN5jnhA/DqlX+FUOR4HmdaY
+         mQHmlGxtH2AHNID3I4nY4rYDaARwiQWaEfm4x+0blNXGxTs8Dokcbmj8rePDSG7mgaCl
+         89UYnRPn40lofAXu34xIIjlH27a1esCe768AHKaS+6LI2p7KKzm+WKqVaEPAwLCKRRZo
+         A9uGjxjiZYqPDUd4WSaFN+fD4DdTMHjHd7DeWynqtuGAqr2URjT0RpbFOq0RnQ/5eCET
+         hdKQ==
+X-Gm-Message-State: AOJu0YywhSBKYiS9orxOU62nc50A/A42JEokNRW6QkBLKQbZLFI49C2v
+	cwClTfjL7y88ah0DTMl7BMfhQzkPPBqrZLSFfKwHi14Tro14OQugxgME8kkZMP7rwoknpFn7RzE
+	dNMeJh5evVhLHLeAfos3gyHtPVtw=
+X-Google-Smtp-Source: AGHT+IFhoHIukgwWjM32il1ogpxQf1J/iRectwjkXlzIpKCTv6WNwihIsX55SAz1h4CYXIsjq25qPqiRBMCBJvCT0AI=
+X-Received: by 2002:a05:6870:970e:b0:24f:d202:8ba3 with SMTP id
+ 586e51a60fabf-2512267b088mr6770721fac.11.1717683643773; Thu, 06 Jun 2024
+ 07:20:43 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 6 Jun 2024 07:20:42 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ZmGXREp9Xa6qHpMC@tanuki>
+References: <https://lore.kernel.org/r/20240530120940.456817-1-knayak@gitlab.com>
+ <20240605102958.716432-3-knayak@gitlab.com> <ZmGXREp9Xa6qHpMC@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Date: Thu, 6 Jun 2024 07:20:42 -0700
+Message-ID: <CAOLa=ZQcZ+pqhe+GbiG=UJi1a3vjQBCz4EDthpa+Rj85FQ0ecw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/7] refs: specify error for regular refs with `old_target`
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="0000000000006c90e8061a396329"
 
-When running git-backup[1] over lab.nexedi.com archive we noticed that
-Git started to crash on fetch-pack operation[2] after Git upgrade. We
-tracked this down to be a regression introduced by Git 2.31, more
-specifically by commit 5476e1efded5 (fetch-pack: print and use dangling
-.gitmodules), which started to index and lock packfiles on do_keep=3Dy &&
-fsck_objects=3Dy even if pack_lockfiles=3DNULL, which leads to
-NULL-dereference when trying to append an entry to that pack_lockfiles
-stringlist.
+--0000000000006c90e8061a396329
+Content-Type: text/plain; charset="UTF-8"
 
-Please find attached a test that demonstrates this problem.
+Patrick Steinhardt <ps@pks.im> writes:
 
-When run with test_expect_failure changed to test_expect_success the test
-crashes with
+> On Wed, Jun 05, 2024 at 12:29:53PM +0200, Karthik Nayak wrote:
+>> From: Karthik Nayak <karthik.188@gmail.com>
+>>
+>> When a regular reference update contains `old_target` set, we call the
+>
+> s/contains/has its/
+>
+>> `ref_update_check_old_target` function to check the referent value. But
+>> for regular refs we know that the referent value is not set and this
+>
+> This is fairly technical and focussed on the implementation. Can we
+> maybe talk more about intent ("expected a symref, but is a direct ref")
+> rather than the exact implementation to make the commit message a bit
+> easier to understand for folks?
+>
 
-    ./test-lib.sh: line 1063: 599675 Segmentation fault      (core dumped) =
-git -c fetch.fsckObjects=3Dtrue -c fetch.unpackLimit=3D1 -C client fetch-pa=
-ck ../server $(git -C server rev-parse refs/heads/main)
+Fair enough, will change this.
 
-and the backtrace is
+>> simply raises a generic error which says nothing about this being a
+>> regular ref. Instead let's raise a more specific error when a regular
+>> ref update contains `old_target`.
+>
+> It might be helpful to include before/after in this commit message to
+> show the change. Even better would be a test of course, but I think we
+> cannot add one at this point in time yet.
+>
 
-    Program terminated with signal SIGSEGV, Segmentation fault.
-    #0  0x0000558032c7ef3b in string_list_append_nodup (list=3D0x0,
-        string=3D0x558033b695f0 ".git/objects/pack/pack-c1b2455a361bb50a0db=
-087e7202db73d62938fa1.keep") at string-list.c:218
-    218             ALLOC_GROW(list->items, list->nr + 1, list->alloc);
-    (gdb) bt
-    #0  0x0000558032c7ef3b in string_list_append_nodup (list=3D0x0,
-        string=3D0x558033b695f0 ".git/objects/pack/pack-c1b2455a361bb50a0db=
-087e7202db73d62938fa1.keep") at string-list.c:218
-    #1  0x0000558032b5b83f in get_pack (args=3D0x7ffe680f3fa0, xd=3D0x7ffe6=
-80f4058, pack_lockfiles=3D0x0, index_pack_args=3D0x0,
-        sought=3D0x558033b65e90, nr_sought=3D1, gitmodules_oids=3D0x558032e=
-17b88 <fsck_options+72>) at fetch-pack.c:1042
-    #2  0x0000558032b5e0b3 in do_fetch_pack_v2 (args=3D0x7ffe680f3fa0, fd=
-=3D0x7ffe680f4058, orig_ref=3D0x558033b67b90, sought=3D0x558033b65e90,
-        nr_sought=3D1, shallows=3D0x7ffe680f3df0, si=3D0x7ffe680f3e10, pack=
-_lockfiles=3D0x0) at fetch-pack.c:1781
-    #3  0x0000558032b5ef3c in fetch_pack (args=3D0x7ffe680f3fa0, fd=3D0x7ff=
-e680f4058, ref=3D0x558033b67b90, sought=3D0x558033b65e90, nr_sought=3D1,
-        shallow=3D0x7ffe680f3f80, pack_lockfiles=3D0x0, version=3Dprotocol_=
-v2) at fetch-pack.c:2073
-    #4  0x0000558032a08851 in cmd_fetch_pack (argc=3D3, argv=3D0x7ffe680f45=
-00, prefix=3D0x0) at builtin/fetch-pack.c:242
-    #5  0x00005580329b2be3 in run_builtin (p=3D0x558032e0bb30 <commands+100=
-8>, argc=3D3, argv=3D0x7ffe680f4500) at git.c:474
-    #6  0x00005580329b2ffe in handle_builtin (argc=3D3, argv=3D0x7ffe680f45=
-00) at git.c:729
-    #7  0x00005580329b3222 in run_argv (argcp=3D0x7ffe680f433c, argv=3D0x7f=
-fe680f4330) at git.c:793
-    #8  0x00005580329b3796 in cmd_main (argc=3D3, argv=3D0x7ffe680f4500) at=
- git.c:928
-    #9  0x0000558032ab9002 in main (argc=3D10, argv=3D0x7ffe680f44c8) at co=
-mmon-main.c:62
+Yeah will do.
 
-A simple debug patch below
+Yeah, adding a test is only possible in the commit where we introduce
+`symref-delete` and we do test it there.
 
-    --- a/fetch-pack.c
-    +++ b/fetch-pack.c
-    @@ -1032,7 +1032,7 @@ static int get_pack(struct fetch_pack_args *args,
-            cmd.git_cmd =3D 1;
-            if (start_command(&cmd))
-                    die(_("fetch-pack: unable to fork off %s"), cmd_name);
-    -       if (do_keep && (pack_lockfiles || fsck_objects)) {
-    +       if (do_keep && (pack_lockfiles /*|| fsck_objects*/)) {
-                    int is_well_formed;
-                    char *pack_lockfile =3D index_pack_lockfile(cmd.out, &i=
-s_well_formed);
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>  refs/files-backend.c    | 13 +++++++------
+>>  refs/reftable-backend.c |  9 +++++++++
+>>  2 files changed, 16 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> index 194e74eb4d..f516d4d82f 100644
+>> --- a/refs/files-backend.c
+>> +++ b/refs/files-backend.c
+>> @@ -2491,14 +2491,15 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+>>
+>>  		/*
+>>  		 * Even if the ref is a regular ref, if `old_target` is set, we
+>> -		 * check the referent value. Ideally `old_target` should only
+>> -		 * be set for symrefs, but we're strict about its usage.
+>> +		 * fail with an error.
+>>  		 */
+>>  		if (update->old_target) {
+>> -			if (ref_update_check_old_target(referent.buf, update, err)) {
+>> -				ret = TRANSACTION_GENERIC_ERROR;
+>> -				goto out;
+>> -			}
+>> +			strbuf_addf(err, _("cannot update regular ref: '%s': "
+>> +					   "symref target '%s' set"),
+>> +				    ref_update_original_update_refname(update),
+>> +				    update->old_target);
+>> +			ret = TRANSACTION_GENERIC_ERROR;
+>> +			goto out;
+>
+> I feel like these error messages are somewhat technical. If I were
+> reading it as a user, I don't think I'd understand what it is trying to
+> tell me. How about:
+>
+>         strbuf_addf(err, _("cannot lock ref '%s': %s",
+>                            "expected symref but is a direct ref"));
+>
+> This also matches the other error messages we have in this function more
+> closely. The same is true for the equivalent in the reftable backend.
+>
+> Patrick
+>
 
-makes the crash go away, but I did not investigated what should be the
-proper logic.
+I do want to also note that there is a old_target set so perhaps
 
-Thanks beforehand for fixing this NULL-pointer dereference.
+modified   refs/files-backend.c
+@@ -2494,8 +2494,9 @@ static int lock_ref_for_update(struct
+files_ref_store *refs,
+ 		 * fail with an error.
+ 		 */
+ 		if (update->old_target) {
+-			strbuf_addf(err, _("cannot update regular ref: '%s': "
+-					   "symref target '%s' set"),
++			strbuf_addf(err, _("cannot lock ref '%s': "
++					   "expected symref with target '%s': "
++					   "but is a regular ref"),
+ 				    ref_update_original_update_refname(update),
+ 				    update->old_target);
+ 			ret = TRANSACTION_GENERIC_ERROR;
 
-Kirill
+--0000000000006c90e8061a396329
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e6e904c4f26dfd80_0.1
 
-[1] https://lab.nexedi.com/kirr/git-backup
-[2] https://lab.nexedi.com/kirr/git-backup/-/blob/3230197c/git-backup.go#L7=
-17-739
-
-Cc: Jonathan Tan <jonathantanmy@google.com>
-Cc: Alain Takoudjou <alain.takoudjou@nexedi.com>
-Cc: J=C3=A9rome Perrin <jerome@nexedi.com>
-Signed-off-by: Kirill Smelkov <kirr@nexedi.com>
----
- t/t5500-fetch-pack.sh | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 1bc15a3f08..e3dbe79613 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -1056,6 +1056,20 @@ test_expect_success 'fetch with --filter=3Dblob:limi=
-t=3D0' '
- =09fetch_filter_blob_limit_zero server server
- '
- 
-+test_expect_failure 'fetch with fsckObjects but without --lock-pack does n=
-ot segfault' '
-+=09rm -rf server client &&
-+=09git init server &&
-+=09test_commit -C server 1 &&
-+
-+=09git init client &&
-+=09# unpackLimit=3D1 forces to keep received pack as pack instead of
-+=09# unpacking it to loose objects. The code is currently segfaulting when
-+=09# trying to index that kept pack.
-+=09git -c fetch.fsckObjects=3Dtrue -c fetch.unpackLimit=3D1 \
-+=09    -C client fetch-pack ../server \
-+=09=09$(git -C server rev-parse refs/heads/main)
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
--- 
-2.39.2
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aaHhia1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN1V5Qy93TFl0Snl5L3ExU2FkZlJsRGNHd3ZrMXJBTApHZ014NE83R3Fa
+WUp4a2dvakdkTVRrUnRTdVZvanhtbXd2dzcwQVM5bWJEMXF4ZkdSeWNQeGFtKytISCtXS1BoClZj
+bm1ZQmpZL0dDblQ3Q1MzUXAxMklBTXFHVFhqRHFnUkEzZXJZd3VsWnUxKzFVMjl2S1VuOW8zU1RY
+VW1COWEKSjZnM0ZLQkhYNDMzaHN3YzVjQSsxR0xMb3NoL3NzN09aZHd6bVJqOUVHRGpKRDYrejN3
+bDVYNGRCRC9lbnNydQpxVjIrNHVMM2xZalBRT0s5RlJyRWlMT1JHSDJiOHVMSlhGR1kzc0w5V1pY
+ZW5IaC9OVm5oc3ZiSjJUN1ZON3JMCjZRNEJsQ1B6MDBVLzNBRDlMeWY1M3Y5MFNjNW5hYndaaXgy
+aElKODg2OEdDbDRkU1RVQ1VUNUNoS0N5d1BBV1AKVUZ2QlowWXhMaVAyWGlHVUpOSENUZGF2THFt
+bFdaMkZvbHVGblVZOUVsRjkrYnVNVThwV0VBSkM4Rkw2dXcxNgpuYnV5d0JnWkZKOVhrRjh6cXJv
+ek1TTW55SVpPNFQ2TDZNRWdOZnAwUzVubHFOYm9RTGxRSUc1Q2JoZTZPbzBlCnc2ZUsrV3pYSzZn
+VlFqYUlaa0RkalNrTUVWQVFZTUZuL1hEUVhHaz0KPVlqRU0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000006c90e8061a396329--
