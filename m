@@ -1,53 +1,53 @@
-Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4D6381BA
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 08:01:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4A0139CFC
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 08:01:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717660866; cv=none; b=VPqkgkXt9LnfkWk/cjS8u8PAjp18tt00lRqKOPRl6Uf9DKhwIzNZz9BI5NWFxaTIwX07WxjnsqwwsxjScXR9gmfoFy8gHpKpqzsk5jTKTopnVsn6PEkCBHov5k8izQawMLgtAREhOyPScDiKq/Uf2TOm+B7gD22Jm0E4Fxj9avM=
+	t=1717660870; cv=none; b=JePgKLxDb3dnHbPeyfp9n1T2VNc/BOQA1uDYz9zMFSWFPFOGqqrixUMSFsVZkkpjvKWH+w/mqcVg+8Cosw62UCTQTKXDO8DUrU/VxohJzTasOroZ3kfAvrUtfLVRN/QUL8/6rHCeVvVzV9qyFN74s+Zvy+zyCJDni4AgTLaJXV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717660866; c=relaxed/simple;
-	bh=ig0puIqhUyt8EAH3Du+sOm4NTkYBmM5vXAU8UAkBlUI=;
+	s=arc-20240116; t=1717660870; c=relaxed/simple;
+	bh=mUfPl3YcMykXzbX2soTdejmGsZ0omHFjmL8POun+V1s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c2za3Gjj7/P4wBx3jfE1wl2oZuU1LP0vCn/rSYjt3M2jKwhq/nsbPejMqxO/V6qol4P+oQkrNoUwoQnUB3FrVR2/9nUbu2wVaxnnuyl7HQT34wrvKvwYDkFq/HYeMPOLrKD0lB7j9qA4Mgvov+LdD4tugrT2zBoK7FktYxjBiIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KOt57JUB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GDGVjAOT; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=bX/PApCUQTAB3f5uTh8Ie+CfmMZCD/uXhdqxqYkq8yNB8pMbDHgG/dZdfJBiffSILSNLByBhKbLZSfESACXAXfuvbguoFI/IJ4qQViiW1aabSVwuEjNThdsbWCwFpvwBI5a4Sk9cm5Ly6invUetJE9CtvMjiObYWRYC/9r/Y+zE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iH0ruZf5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lrgmWWQR; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KOt57JUB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GDGVjAOT"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 3677F1380114;
-	Thu,  6 Jun 2024 04:01:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iH0ruZf5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lrgmWWQR"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id A805B114009E;
+	Thu,  6 Jun 2024 04:01:04 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Thu, 06 Jun 2024 04:01:01 -0400
+  by compute4.internal (MEProxy); Thu, 06 Jun 2024 04:01:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717660861; x=1717747261; bh=4heMV7Smaa
-	0W3q+kchydLfOczwFEcAQmh0wIrzyw/R8=; b=KOt57JUBThgOwa6EZ4MAclLtlm
-	0K8GdMRw43Xg5H6uE5oEbDpiLWmA30FScvayfxvJtWdJo3IQXXOZUwI0k2gjAVF+
-	zpzPR/fMarNwDqx+Scor2akcSNvDdK7qNTu3SEJR8ZCc6750unmjyrQ7Lyo1irVU
-	HrSMv4/QEXkDu6RelmRl5iYuMeROl8RqF/Js6c5dMEP0OhPlYZ8UZi4VjmI5JGyu
-	22DnhJ8gQde425JBBUhxgQMdtXELzGfXVRC64nmZRVeN0hhBCQVr10zyoBAfTeEY
-	ZQ04p8dSBNfld0zyTgr+hm5754/+7znP8/e3CPifebd8Q3BZRMAkN5pX0rJg==
+	:subject:to:to; s=fm1; t=1717660864; x=1717747264; bh=lcZK6CPYQ9
+	VbS/o2CjKBWhVgTJCqi1SHzR/MW4gt2m0=; b=iH0ruZf5o9GDE53L01QKyHaJ3j
+	n5pmh/D3I5Rn17qnisr68OHNf9hq97P9G+REsJTPJerbGJ/DZBHkULyAhJwj5wCD
+	3hPW7b7BIQvdriyKRrS0OVVZc8Kp+zyXhc1sY4Eb7gxq5vkYpLfW0m3AGWVciHbY
+	siGj2JNh+GysM3RRmf8scQcq/TLgCAv7s6d0UV45zTZRrJjhG/At0XOmJWBdGBVg
+	Rwvhulx1zNO7BeT12ESAK2mi78aqh1ksLTP02T/9iRpOT30Z1FJDpb/B5TEfLwg4
+	7rf3CDFMHs3Lrgm6ys2XgrsudcWN+07wGaL+D9weuM8DcB46s9n5bRNOWchg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717660861; x=1717747261; bh=4heMV7Smaa0W3q+kchydLfOczwFE
-	cAQmh0wIrzyw/R8=; b=GDGVjAOTvcTs98aY31nnruqTFm0Xp8UeHP59Z1vTbNOy
-	W0WMC001mSJzj0G4SfuHs21XpkAA7TZPJSShezf0HPKTwQeIBay43btxfy5xCHrq
-	HQrqQond7h2YyfkLjMeO39xV3qbWuX43E9E+eJbMCMyI1L/QEoRa9vHJZJhpfhXK
-	dTOUqM6UPMmzC4V+3230JmokIea+9SWCeADXnXRkecpkfQzrZhMIDW39oxNHKZTJ
-	XRGenH8CRSd1HIzSAWlHDxXskzdaq+uH55GdHRaAzdvgb1UnwE7xsEfel/Wt/imz
-	oVcT4zXH7J8irwuROA4aXimFiK9iyTqRkJ7kFXwZYw==
-X-ME-Sender: <xms:vGxhZtjJmH8IfJPekJcxNW3XbnXvB4fxpxV4YBDzKg-OAY54VU-HQw>
-    <xme:vGxhZiAdfET-KCc3L9PxT0OyXWhd8RxzJ1xL-nCr50se431dloTaKWbSzEIX8aUrb
-    e5kCzDqxOl2w1vboA>
-X-ME-Received: <xmr:vGxhZtF-4zsDhwNaUjmWtyHVOuuhkpSLGUqF-w8YHofmIOtmNjL3puJs0yVRZbPraFupAffcBJttdX5NS8Vg-PTaxx8YWxqc4LW55PeF_CJj-VY->
+	fm1; t=1717660864; x=1717747264; bh=lcZK6CPYQ9VbS/o2CjKBWhVgTJCq
+	i1SHzR/MW4gt2m0=; b=lrgmWWQRKpoYNQAoMpBJviMO376qLPtk8XVFMg2VnknG
+	ZEp2AuF2zY8Aztz3u5/658pUnQksG3banmiwHVjoHCpbw7R57JNu3Pqcrm5cL3QG
+	ohVoki2x9fAep1GgdrGK3khkHyRRlvEFXuHML+RgTShQZdERaXwswoPiIEn2fbfv
+	CpjfLab9CDx+ZIGyZE3CAdC55vKGx1RISZlQ7YntVVdBxbwNcz7o5pDmF2oI3arF
+	dom6/GTVyM2W02Hk7YNKecbq29LDbqEjc6VMCZmJZO3JtAIccoBjolDbGrKaLtcm
+	i/rdu3J0ZQwEx/A9d8lSjpYiOzxDDZvUk5o9VAbIGw==
+X-ME-Sender: <xms:wGxhZri07w6DyIQiXUBFDYtY51hMZQTNJEoknImm38FDQMdn9naMhg>
+    <xme:wGxhZoBeAyqbGwpdxQ8nHQ1QtazevyJuTJGNQS26SCwBel4J1v-5sayysWANmaBy3
+    u6Sgcef0sgUBGtVJg>
+X-ME-Received: <xmr:wGxhZrGUtv8uJnAMRJ8AhE_91n3W9S8NtPaTt2Czf67pr3ABoQhsAwhoD92h0eopi42hquWObbcJL76KwxiFEWJXCwpC6NAU731x-aLPF8nCmAkR>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeljedguddvjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
@@ -56,24 +56,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeljedguddvjecutefuodetgg
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
     teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:vWxhZiQxXE92VmbVMY3zM9tTA2i1Y5fnxY4JEoK2485nJd4HaAnIAA>
-    <xmx:vWxhZqwI218jdv0cgq0SiDzF5i0q_CQii5qB8-5cPWyK1__8vCJcSg>
-    <xmx:vWxhZo7Vg0Exf3_pxRXxQ-cKZq-YfStQvTerbN0Ce9hI8HwFkn8chA>
-    <xmx:vWxhZvwShcw60LV519ONKnYHvQCXfb5tQnbxyxJiC0vrU6OK1c2eXQ>
-    <xmx:vWxhZu8e0Ehlex8k7-cMGb06u1syZK9cltOtWef4JJFwB9nUKGUfVzze>
+X-ME-Proxy: <xmx:wGxhZoTBY8CNocwNvTdJzcELCp1VOeS58ypgwuLg_pKG9zsrEd29wA>
+    <xmx:wGxhZozBSaS04kVWRALNB2ydja28WT0WbHXczaSPcnCKBASUY6eb5w>
+    <xmx:wGxhZu7MQY0BvVmIxhfivz-8_4kd2DqmFnW2YYR2d4Nv3-tD95Tsow>
+    <xmx:wGxhZtymJwVks1-FfzdP8dN-OEJl-YE0U29cAQJK6Xc_A3oQYHQ88Q>
+    <xmx:wGxhZk-i0WnlZYK36wcnAgmvoJ9AaPhIXoYgOidbH-vWbKeTovlY0xs_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Jun 2024 04:01:00 -0400 (EDT)
+ 6 Jun 2024 04:01:03 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 4a72b63d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Jun 2024 08:00:28 +0000 (UTC)
-Date: Thu, 6 Jun 2024 10:00:56 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 2969fea1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Jun 2024 08:00:33 +0000 (UTC)
+Date: Thu, 6 Jun 2024 10:01:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: James Liu <james@jamesliu.io>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/4] Documentation: improve linting for manpage existence
-Message-ID: <cover.1717660597.git.ps@pks.im>
+Subject: [PATCH v2 1/4] Makefile: extract script to lint missing/extraneous
+ manpages
+Message-ID: <489a6eaf2d328044307f38ff23dd35ecc5a4c515.1717660597.git.ps@pks.im>
 References: <cover.1717564310.git.ps@pks.im>
+ <cover.1717660597.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,266 +83,227 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VY1qME50V0lJWPp1"
+	protocol="application/pgp-signature"; boundary="yfPG0unCLfTA4VX6"
 Content-Disposition: inline
-In-Reply-To: <cover.1717564310.git.ps@pks.im>
+In-Reply-To: <cover.1717660597.git.ps@pks.im>
 
 
---VY1qME50V0lJWPp1
+--yfPG0unCLfTA4VX6
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+The "check-docs" target of our top-level Makefile fulfills two different
+roles. For one it runs the "lint-docs" target of the "Documentation/"
+Makefile. And second it performs some checks of whether there are any
+manpages that are missing or extraneous via some inline scripts.
 
-this is the second version of my patch series that improves linting for
-the existence and/or absence of manpages.
+The second set of checks feels quite misplaced in the top-level Makefile
+as it would fit in much better with our "lint-docs" target. Back when
+the checks were introduced in 8c989ec528 (Makefile: $(MAKE) check-docs,
+2006-04-13), that target did not yet exist though.
 
-Changes compared to v1:
+Furthermore, the script makes use of several Makefile variables which
+are defined in the top-level Makefile, which makes it hard to access
+their contents from elsewhere. There is a trick though that we already
+use in "check-builtins.sh" to gain access: we can create an ad-hoc
+Makefile that has an extra target to print those variables.
 
-  - Converted the extracted script to be compatible with POSIX shells.
+Pull out the script into a separate "lint-manpages.sh" script by using
+that trick. Wire up that script via the "lint-docs" target. For one,
+normal shell scripts are way easier to reason about than those which are
+embedded in a Makefile. Second, it allows one to easily execute the
+script standalone without any of the other checks.
 
-  - Fix an empty line being printed when there are no findings.
-
-  - Silence the patched-in Makefile recipe, which otherwise leads to one
-    value existing twice in the converted output.
-
-  - Fix `check_missing_docs()` to use `ALL_COMMANDS`, not `BUILT_INS`.
-
-Thanks!
-
-Patrick
-
-Patrick Steinhardt (4):
-  Makefile: extract script to lint missing/extraneous manpages
-  Documentation/lint-manpages: bubble up errors
-  gitlab-ci: add job to run `make check-docs`
-  ci/test-documentation: work around SyntaxWarning in Python 3.12
-
- .gitlab-ci.yml                 |   9 +++
- Documentation/Makefile         |   4 ++
- Documentation/lint-manpages.sh | 108 +++++++++++++++++++++++++++++++++
- Makefile                       |  36 -----------
- ci/test-documentation.sh       |   1 +
- 5 files changed, 122 insertions(+), 36 deletions(-)
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ Documentation/Makefile         |  4 ++
+ Documentation/lint-manpages.sh | 83 ++++++++++++++++++++++++++++++++++
+ Makefile                       | 36 ---------------
+ 3 files changed, 87 insertions(+), 36 deletions(-)
  create mode 100755 Documentation/lint-manpages.sh
 
-Range-diff against v1:
-1:  b06088a2ff ! 1:  489a6eaf2d Makefile: extract script to lint missing/ex=
-traneous manpages
-    @@ Documentation/Makefile: $(LINT_DOCS_FSCK_MSGIDS): ../fsck.h fsck-msg=
-ids.txt
-    =20
-      ## Documentation/lint-manpages.sh (new) ##
-     @@
-    -+#!/usr/bin/env bash
-    -+
-    -+cd "$(dirname "${BASH_SOURCE[0]}")"/..
-    ++#!/bin/sh
-     +
-     +extract_variable () {
-     +	(
-    -+		cat Makefile
-    ++		cat ../Makefile
-     +		cat <<EOF
-     +print_variable:
-    -+	\$(foreach b,\$($1),echo XXX \$(b:\$X=3D) YYY;)
-    ++	@\$(foreach b,\$($1),echo XXX \$(b:\$X=3D) YYY;)
-     +EOF
-     +	) |
-    -+	make -f - print_variable 2>/dev/null |
-    ++	make -C .. -f - print_variable 2>/dev/null |
-     +	sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p'
-     +}
-     +
-     +check_missing_docs () {
-    -+	for v in $BUILT_INS
-    ++	for v in $ALL_COMMANDS
-     +	do
-     +		case "$v" in
-     +		git-merge-octopus) continue;;
-    @@ Documentation/lint-manpages.sh (new)
-     +		git-?*--?* ) continue ;;
-     +		esac
-     +
-    -+		if ! test -f "Documentation/$v.txt"
-    ++		if ! test -f "$v.txt"
-     +		then
-     +			echo "no doc: $v"
-     +		fi
-     +
-    -+		if ! sed -e '1,/^### command list/d' -e '/^#/d' command-list.txt |
-    ++		if ! sed -e '1,/^### command list/d' -e '/^#/d' ../command-list.txt=
- |
-     +			grep -q "^$v[ 	]"
-     +		then
-     +			case "$v" in
-    @@ Documentation/lint-manpages.sh (new)
-     +}
-     +
-     +check_extraneous_docs () {
-    -+	local commands=3D"$(printf "%s\n" "$ALL_COMMANDS" "$BUILT_INS" "$EXC=
-LUDED_PROGRAMS")"
-    -+
-    -+	while read how cmd
-    -+	do
-    -+		if ! [[ $commands =3D *"$cmd"* ]]
-    -+		then
-    -+			echo "removed but $how: $cmd"
-    -+		fi
-    -+	done < <(
-    ++	(
-     +		sed -e '1,/^### command list/d' \
-     +		    -e '/^#/d' \
-     +		    -e '/guide$/d' \
-     +		    -e '/interfaces$/d' \
-     +		    -e 's/[ 	].*//' \
-    -+		    -e 's/^/listed /' command-list.txt
-    -+		make -C Documentation print-man1 |
-    ++		    -e 's/^/listed /' ../command-list.txt
-    ++		make print-man1 |
-     +		grep '\.txt$' |
-     +		sed -e 's|^|documented |' \
-     +		    -e 's/\.txt//'
-    ++	) | (
-    ++		all_commands=3D"$(printf "%s " "$ALL_COMMANDS" "$BUILT_INS" "$EXCLU=
-DED_PROGRAMS" | tr '\n' ' ')"
-    ++
-    ++		while read how cmd
-    ++		do
-    ++			case " $all_commands " in
-    ++			*" $cmd "*) ;;
-    ++			*)
-    ++				echo "removed but $how: $cmd";;
-    ++			esac
-    ++		done
-     +	)
-     +}
-     +
-2:  b39a780d33 ! 2:  9f21c305b9 Documentation/lint-manpages: bubble up erro=
-rs
-    @@ Commit message
-    =20
-      ## Documentation/lint-manpages.sh ##
-     @@ Documentation/lint-manpages.sh: EOF
-    + 	sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p'
-      }
-     =20
-    - check_missing_docs () {
-    -+	local ret=3D0
-    +-check_missing_docs () {
-    ++check_missing_docs () (
-    ++	ret=3D0
-     +
-    - 	for v in $BUILT_INS
-    + 	for v in $ALL_COMMANDS
-      	do
-      		case "$v" in
-     @@ Documentation/lint-manpages.sh: check_missing_docs () {
-    - 		if ! test -f "Documentation/$v.txt"
-    + 		if ! test -f "$v.txt"
-      		then
-      			echo "no doc: $v"
-     +			ret=3D1
-      		fi
-     =20
-    - 		if ! sed -e '1,/^### command list/d' -e '/^#/d' command-list.txt |
-    + 		if ! sed -e '1,/^### command list/d' -e '/^#/d' ../command-list.txt=
- |
-     @@ Documentation/lint-manpages.sh: check_missing_docs () {
-      			git)
-      				;;
-    @@ Documentation/lint-manpages.sh: check_missing_docs () {
-      			esac
-      		fi
-      	done
-    +-}
-     +
-    -+	return $ret
-    - }
-    ++	exit $ret
-    ++)
-     =20
-      check_extraneous_docs () {
-    - 	local commands=3D"$(printf "%s\n" "$ALL_COMMANDS" "$BUILT_INS" "$EXC=
-LUDED_PROGRAMS")"
-    -+	local ret=3D0
-    -=20
-    - 	while read how cmd
-    - 	do
-    - 		if ! [[ $commands =3D *"$cmd"* ]]
-    - 		then
-    - 			echo "removed but $how: $cmd"
-    -+			ret=3D1
-    - 		fi
-    - 	done < <(
-    - 		sed -e '1,/^### command list/d' \
-    + 	(
-     @@ Documentation/lint-manpages.sh: check_extraneous_docs () {
-    - 		sed -e 's|^|documented |' \
-      		    -e 's/\.txt//'
-    - 	)
-    + 	) | (
-    + 		all_commands=3D"$(printf "%s " "$ALL_COMMANDS" "$BUILT_INS" "$EXCLU=
-DED_PROGRAMS" | tr '\n' ' ')"
-    ++		ret=3D0
-    +=20
-    + 		while read how cmd
-    + 		do
-    + 			case " $all_commands " in
-    + 			*" $cmd "*) ;;
-    + 			*)
-    +-				echo "removed but $how: $cmd";;
-    ++				echo "removed but $how: $cmd"
-    ++				ret=3D1;;
-    + 			esac
-    + 		done
-     +
-    -+	return $ret
-    ++		exit $ret
-    + 	)
-      }
-     =20
-    - BUILT_INS=3D"$(extract_variable BUILT_INS)"
-    +@@ Documentation/lint-manpages.sh: BUILT_INS=3D"$(extract_variable BUI=
-LT_INS)"
-      ALL_COMMANDS=3D"$(extract_variable ALL_COMMANDS)"
-      EXCLUDED_PROGRAMS=3D"$(extract_variable EXCLUDED_PROGRAMS)"
-     =20
-    @@ Documentation/lint-manpages.sh: check_extraneous_docs () {
-     +)
-     +ret=3D$?
-     +
-    -+echo "$findings" | sort
-    ++printf "%s" "$findings" | sort
-     +
-     +exit $ret
-3:  a44d57a732 =3D 3:  d6d3628797 gitlab-ci: add job to run `make check-doc=
-s`
-4:  c758b45282 =3D 4:  c13fed9ebf ci/test-documentation: work around Syntax=
-Warning in Python 3.12
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index a04da672c6..a3868a462f 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -485,12 +485,16 @@ $(LINT_DOCS_FSCK_MSGIDS): ../fsck.h fsck-msgids.txt
+=20
+ lint-docs-fsck-msgids: $(LINT_DOCS_FSCK_MSGIDS)
+=20
++lint-docs-manpages:
++	$(QUIET_GEN)./lint-manpages.sh
++
+ ## Lint: list of targets above
+ .PHONY: lint-docs
+ lint-docs: lint-docs-fsck-msgids
+ lint-docs: lint-docs-gitlink
+ lint-docs: lint-docs-man-end-blurb
+ lint-docs: lint-docs-man-section-order
++lint-docs: lint-docs-manpages
+=20
+ ifeq ($(wildcard po/Makefile),po/Makefile)
+ doc-l10n install-l10n::
+diff --git a/Documentation/lint-manpages.sh b/Documentation/lint-manpages.sh
+new file mode 100755
+index 0000000000..0abb4e0b4c
+--- /dev/null
++++ b/Documentation/lint-manpages.sh
+@@ -0,0 +1,83 @@
++#!/bin/sh
++
++extract_variable () {
++	(
++		cat ../Makefile
++		cat <<EOF
++print_variable:
++	@\$(foreach b,\$($1),echo XXX \$(b:\$X=3D) YYY;)
++EOF
++	) |
++	make -C .. -f - print_variable 2>/dev/null |
++	sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p'
++}
++
++check_missing_docs () {
++	for v in $ALL_COMMANDS
++	do
++		case "$v" in
++		git-merge-octopus) continue;;
++		git-merge-ours) continue;;
++		git-merge-recursive) continue;;
++		git-merge-resolve) continue;;
++		git-merge-subtree) continue;;
++		git-fsck-objects) continue;;
++		git-init-db) continue;;
++		git-remote-*) continue;;
++		git-stage) continue;;
++		git-legacy-*) continue;;
++		git-?*--?* ) continue ;;
++		esac
++
++		if ! test -f "$v.txt"
++		then
++			echo "no doc: $v"
++		fi
++
++		if ! sed -e '1,/^### command list/d' -e '/^#/d' ../command-list.txt |
++			grep -q "^$v[ 	]"
++		then
++			case "$v" in
++			git)
++				;;
++			*)
++				echo "no link: $v";;
++			esac
++		fi
++	done
++}
++
++check_extraneous_docs () {
++	(
++		sed -e '1,/^### command list/d' \
++		    -e '/^#/d' \
++		    -e '/guide$/d' \
++		    -e '/interfaces$/d' \
++		    -e 's/[ 	].*//' \
++		    -e 's/^/listed /' ../command-list.txt
++		make print-man1 |
++		grep '\.txt$' |
++		sed -e 's|^|documented |' \
++		    -e 's/\.txt//'
++	) | (
++		all_commands=3D"$(printf "%s " "$ALL_COMMANDS" "$BUILT_INS" "$EXCLUDED_P=
+ROGRAMS" | tr '\n' ' ')"
++
++		while read how cmd
++		do
++			case " $all_commands " in
++			*" $cmd "*) ;;
++			*)
++				echo "removed but $how: $cmd";;
++			esac
++		done
++	)
++}
++
++BUILT_INS=3D"$(extract_variable BUILT_INS)"
++ALL_COMMANDS=3D"$(extract_variable ALL_COMMANDS)"
++EXCLUDED_PROGRAMS=3D"$(extract_variable EXCLUDED_PROGRAMS)"
++
++{
++	check_missing_docs
++	check_extraneous_docs
++} | sort
+diff --git a/Makefile b/Makefile
+index 59d98ba688..84e2aa9686 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3757,42 +3757,6 @@ ALL_COMMANDS +=3D scalar
+ .PHONY: check-docs
+ check-docs::
+ 	$(MAKE) -C Documentation lint-docs
+-	@(for v in $(patsubst %$X,%,$(ALL_COMMANDS)); \
+-	do \
+-		case "$$v" in \
+-		git-merge-octopus | git-merge-ours | git-merge-recursive | \
+-		git-merge-resolve | git-merge-subtree | \
+-		git-fsck-objects | git-init-db | \
+-		git-remote-* | git-stage | git-legacy-* | \
+-		git-?*--?* ) continue ;; \
+-		esac ; \
+-		test -f "Documentation/$$v.txt" || \
+-		echo "no doc: $$v"; \
+-		sed -e '1,/^### command list/d' -e '/^#/d' command-list.txt | \
+-		grep -q "^$$v[ 	]" || \
+-		case "$$v" in \
+-		git) ;; \
+-		*) echo "no link: $$v";; \
+-		esac ; \
+-	done; \
+-	( \
+-		sed -e '1,/^### command list/d' \
+-		    -e '/^#/d' \
+-		    -e '/guide$$/d' \
+-		    -e '/interfaces$$/d' \
+-		    -e 's/[ 	].*//' \
+-		    -e 's/^/listed /' command-list.txt; \
+-		$(MAKE) -C Documentation print-man1 | \
+-		grep '\.txt$$' | \
+-		sed -e 's|^|documented |' \
+-		    -e 's/\.txt//'; \
+-	) | while read how cmd; \
+-	do \
+-		case " $(patsubst %$X,%,$(ALL_COMMANDS) $(BUILT_INS) $(EXCLUDED_PROGRAMS=
+)) " in \
+-		*" $$cmd "*)	;; \
+-		*) echo "removed but $$how: $$cmd" ;; \
+-		esac; \
+-	done ) | sort
+=20
+ ### Make sure built-ins do not have dups and listed in git.c
+ #
 --=20
 2.45.2.409.g7b0defb391.dirty
 
 
---VY1qME50V0lJWPp1
+--yfPG0unCLfTA4VX6
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhbLcACgkQVbJhu7ck
-PpThFg//Rzz0OkgwQYqPLnsWDEJa1e5UixHK29ZJcA3n8aHSqfS+h0Ma3iIO8PIL
-pghtqhwUSh1pXV2PyZj9uurwBDyKSHRNwMUFRdSpIiuwuwrdsbL8E8ioQ28rqvZG
-bYgS/ciGZpsBMQyx3O4zyCTEBe8NrELgyndF2X70GGewmdVBcgZEOFvNCUEY8E3A
-YzrdWmga7mlAc8aeGflZdNr8mFYkCxwxzIoT+dS061lht6QOa+0wrr5X3PR8l0tt
-FauT5WHxsA6p0Lc+NoNQYLnPvkMVbdFcApQqpsxiWgk2GXutzwVcLsC/YcKz/7kO
-WNqVoXE7CpshUbDRmSwT+oleotypLc0jj1Cl1iLKQu7lNbs3U5gzL2+QjA0EmRxR
-wiWpaYVaskQvh9NsDn0iKns9E1puGLlHGBcyKUUFbSo4OVSZteh9ZoxZM6l3d/eu
-tPrwxcLR+wS3fqwdBs9kWiqiowAJXaGSc69KMOuqYQ+ECqbFwuPGgV5UL5aiN1bS
-LSGPuSv/USPxuiQlWzakW40QZ6suqTMVe41YJu/zcifXs56d+9l0VIwWLOIJmibI
-03oQouAVy1hYXgbMyq/wBZ/Y+0vFUb5RdLlhlA0+NpSZvSRc/ew+k05bvU/4/hgc
-2ijTgVw24buG6Fw/41RnwbQtQNw7evfBmrhkE2VIYEOicEA+lPw=
-=suKa
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhbLsACgkQVbJhu7ck
+PpSJdA/8DBRbFXnZ/i0yaJu7GozWKPfAuW8wk8sW+cRf8F9flljEiaGuD+tyzg0w
+5gFS+A7CLaa1UOkgfk1NbB/SNb1oW266UmBnU2FyF18TT23KJsWN8EJrdlwTu0Ob
+04YKFnZR9oG9jIHeyHBxgtFTSvW8VIAHk4nz0nuPPKDRL8CMISF7o9SVnDzpqjyc
+N8rAHlYmjd8ULxDkECLeBsKSrIfiC6AiqxRuj/NXGCrDgQRnjYMpl/yPzh3Jprz8
+1eWKepT7+5MyacAhuA3Q6xOK6tCujGgbRatT4m9xUpwPtSiokC8y8MMPhH10eBaO
+PO8QQLdVPZTfmgUUX980VaT28OpNEa10QyQPMOH+fh3tC1xINZpRryN+ggbUKH53
+mKwxjzt7UoQYo2wbahT0dusk3Vac/j2fFafuIpBH7Sh/hqPH5avU4UZdYlJL0vDi
+5HCvgALMIfjHqbcDnJPvEV1laqWqHug01x7vOWC9OisF0sdV+BWnQbvvwM955dRJ
+sfg9+FISxPTzBjOuFVP+uPWIXy5ET9Dgme2gcM35R4g9XPyLCQABxTHIyPnWPn99
+ZILrF2cUb6VDnlADLyMCCSJwNNrkZc/kWe49ztTHmXFWN6iKma5eL5xr4XzWaVKi
+vq8rHoO5WBuSUQVs/MtCyFj1JwA/X0dPc4vbH0WfSKP1egz6YRo=
+=HkaQ
 -----END PGP SIGNATURE-----
 
---VY1qME50V0lJWPp1--
+--yfPG0unCLfTA4VX6--
