@@ -1,53 +1,53 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11791153517
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 09:31:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126CF178395
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 09:31:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717666303; cv=none; b=j6mGwY8m2yjrv0G+GnX2tDgKJW4WluKXeCZ5a46tNtTybRB8zfQoBgL3bG7fa1nlI2Ca9mqlT/sEa0Hif6KPYUiZjqyPvuQbUKbKIyKr5a6Avb4OiGdw8boIBqaMbRRkBtXNy/yNkljEbLwfMKuZ7rrb0L5bllHuNPMTAy1PtW4=
+	t=1717666313; cv=none; b=joMkA+/2JVR/H1Q7YdcPefQQjgRIC17s4A5sqFswJ3EUft5AxvvWqXmQSxFUtlXGKCTfYTLPjcTNgiy4FxWcFC5dYE3CdBS0fBK2rJCAwkM8/siJi9F8/XsJaWQ7klvmL0Xs3OZXeTYJtJ/V5SuKvAemcX62mdFMU8KIRoH1Ozk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717666303; c=relaxed/simple;
-	bh=ZaO2BsMk7l5iWbH/IfIqD/OhFIRHOvBXeEqj9ZgbhJc=;
+	s=arc-20240116; t=1717666313; c=relaxed/simple;
+	bh=s3O5p1J+UeQ2khwD8/2s030Pm2VUsZVJewLFqLgUeV0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FBoi2gfFGDponGrLPcWvKhgLgwGf8BWXdNdzALgBxLTgssQ4Hff0CdNWW1/xjKMHDlJNqg9hpvsUWi3GfRKoW3rFKTUY9r7h9FYWgiXmw7Bc6pMUqOCcteXyi7tKcxQqZnaV9mvdHOcvKaHY9ayd7/HvvlduY67Dv6BgHfV/SOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=La6WV2cU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AR6gmZ40; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=q9ayaDWKJLDUTFGWVfpeR+4XhIAK4FFs8XLh1AKtAHlwVtTKM5cv5/K564QvYL+rQZKG5midZOoikm6xmlMDWhyCp1I9kz8oKScxcfW7yPPtv+qKI5zGv1X8uQlB5oCmNvoaOWwPDPPp77NFfMgueVA+4jI1pJ3yJVtZ0mDGvc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ra9qrPoo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TNZdbCs7; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="La6WV2cU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AR6gmZ40"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2E3D21140163;
-	Thu,  6 Jun 2024 05:31:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ra9qrPoo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TNZdbCs7"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 0B9C5138011C;
+	Thu,  6 Jun 2024 05:31:51 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Thu, 06 Jun 2024 05:31:41 -0400
+  by compute6.internal (MEProxy); Thu, 06 Jun 2024 05:31:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717666301; x=1717752701; bh=hR3qS00X8D
-	CQFlsiLIU5Xl5TNy68c//HMN95VKGeY9w=; b=La6WV2cU036OPj5OQxAEFRlygP
-	dU5A3qtgt1HHN4L4CmGe3VdKMZES59mYDSd1hUyqklGNrIAfBaVroEmwu8/w8ADI
-	Kfc1wmdb4pWC9fRQMVD6AMImE0BEJ/JaKzq2kRq3YWAjALCoBahx8LAoCulYPIG9
-	CCDuXBWnFKF23+NtfKAQRaJ810VklmfJ6xRuSQh6irgG/FD9OmVGkwrVwebo+pYu
-	5Rllafydn3ecsjbtrEt5m/zoOEYZXqVZSHXExehE/OXhtIwDZDTD5K8oCKTCmY84
-	/Wljb9+Qxq3lv1TLWSDAP/Fdd5H5kNqe8WNslQoMZMFUFqLGbre0TqzJsCaA==
+	:subject:to:to; s=fm1; t=1717666311; x=1717752711; bh=WFEJpE1oKw
+	dgbR8KuQo+mk+YjsJ0gJJallABHnqOPf0=; b=Ra9qrPooez3oEqDrm6N6QVlLJJ
+	BkP0Fw+OtBSpBNbhxWh2ckN1nDkR6mZEArYXjthx2SOgWEWpt4JZJcdVohystroM
+	dLRMm5BRvNUkc80yRqeM2enQkXDL2LHfh9gPzGgVcT3AOaXddhlZfi4hwH38clJw
+	vHREbYT2UWi6r9mGflTf2tMAO1d8Be+gQ3YT3P0FjQ+UVWNUNFv/5/jlJl8JMeVg
+	agpXXexpmelW60gWnTKAW+qQWgU12ykcmp3hJfh6z66lqdse7mIqjIYeGnlWa/4j
+	+369W6km/u3KMJBtxR+imHna1C9pFvI927/EPryyQkVpjAtmryULjoG3+O6w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717666301; x=1717752701; bh=hR3qS00X8DCQFlsiLIU5Xl5TNy68
-	c//HMN95VKGeY9w=; b=AR6gmZ40RjX0gMc7ja04Mur+vJRLsnnwKGHOQ9jZigma
-	cPtMeEZp3JmVDr0W+aHrViReev9YXsaCdqj2wR0Y6yQpK02EFnRXubDDTta0cO+7
-	T0A8HwaB5RCiqmIQWK8eusTmMt2EAmPDWChzesAmTBh7jc1cjOXuD29oSxumCZVN
-	6XCI95BOd+XJwGIue28o8DGIt0MVT/2FosTTqDlBdBjATFaTEMD/gXzJSSlwTA9s
-	VW6FfErG2jbPV7z36GkXyb568Gt3Nq2AyutYzmKENdfY5eoXvtmEmIpIXG2SdAIp
-	dj2rPPASZotZ3cyd627uNMYOdY5Z/r1OcKfUjfCE9A==
-X-ME-Sender: <xms:_IFhZkcwo7R3AWhgmUWyrN-tvJgY8BlvgdZZ1uDWJCDd9Uh983SU4Q>
-    <xme:_IFhZmN0ReJYxrifQ5hyETfObLydh5XxxMPddPdSIN7Z6YfMeoF9ntHfSIxvJ2uND
-    Q1cte-g6a23XDZuZw>
-X-ME-Received: <xmr:_IFhZljYx9pefQUZqnA4QQR11lRPIOrLzplS21hiUReQUYtPeGFPDAGSB1nlFsnYhOeDD8ZzjACfbIpeajMnsmTTM3Vcux89CTduh1y6pHpOcz5E>
+	fm1; t=1717666311; x=1717752711; bh=WFEJpE1oKwdgbR8KuQo+mk+YjsJ0
+	gJJallABHnqOPf0=; b=TNZdbCs73q/KJp45BEOjM+chNWuXMxiBemf3bxNJLkGx
+	bLd87GaaP7PgBw/8nzsxY+TVO3+1Wgjop8jroh0vRpASYvslF3lCEA2Xk5DbLYJQ
+	w7yRPnexT2uJ5LXKSInldfUs/GyyDKyZY2zJ9MBlT33AKEn4urIoY6m9efJWw2cL
+	ARYATgnjBaYdolaTPKx2DtYot43DadN1NCwCcTiswlGNg2obTnFsi9QgnvkLbgXy
+	AlevIKE6g8ONJMkbyTOGWqJsT54DRM7NKpHjn5oMN/3ZFGuHgZNlO6WehmtdJ6CR
+	W8w9T1IOnHxxOjaLLjwGEvlpxvJvWXy4+UQEw8/Kuw==
+X-ME-Sender: <xms:BoJhZo8W2ew-JTfXQIdKKg4TKpwD6cLroUYkXXbNqRfFaxLW5wgVhA>
+    <xme:BoJhZgsxffh4I3cK0ALZDkC4htQVyqDdd4MBBKfgnoRDVJuZqe1DwkoOnsL_HP6nX
+    _-Th3rgbIYpxflO8w>
+X-ME-Received: <xmr:BoJhZuAb4v54Y87n19aUST-x3hv7Y9To6G5roN13lSihsLFgU2d5srnHQC6O-mlC-BRm5Cc0piyLtNmhIDQzfUlNctu2_IPBy_ixtvcT5uMNFwUR>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelkedgudeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
@@ -55,24 +55,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelkedgudeiucetufdoteggod
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
     eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:_YFhZp-Zebn8PFlSkA9noq4om_8yBSV-D1ePmJPsfPs0b7HK_Tydyw>
-    <xmx:_YFhZgsHo_WZu8NUYKZEEbrJivDnJ7BrEuWOudCP4IbEC63VBuD0Rg>
-    <xmx:_YFhZgF-yJdZK4KwgoO2F7R3g5nS2U1-0mZ1rUwCN0n8rWwV97JOSQ>
-    <xmx:_YFhZvMdHDtk7cNIDqhMcE4xfSEeVnxzP1Sua9GfKjFW2h0v6vzzGg>
-    <xmx:_YFhZsJC6NHPz4HHlnwAxSlwYCgUCGN7h8GsNh-GOngLjI1Jq9MDsFo9>
+X-ME-Proxy: <xmx:BoJhZoeKtOKer9fxqLZXDo8bXIp_ad1W7hrUkF5LD-I9y1Y3elB6-w>
+    <xmx:BoJhZtMJDL4hIZwYPYXM1kMmuG0e27c9Y5AAGkGumpW6ngaOs_DQlA>
+    <xmx:BoJhZildXkXYhgLcyvyWInCwBWvgJBEepQaS6yjLCFGSoAt0xX-jaw>
+    <xmx:BoJhZvsRSjM9iRHq2o0l5V-5VOEc1aiBd5NSHLTcBB2ymjltBmKGUA>
+    <xmx:B4JhZurem2AfG8dH9x9cuklKw1OZkuwsOuX8_npQIsF7huh6d3cbH1g3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Jun 2024 05:31:40 -0400 (EDT)
+ 6 Jun 2024 05:31:49 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 53fd21df (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Jun 2024 09:31:07 +0000 (UTC)
-Date: Thu, 6 Jun 2024 11:31:35 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id fbc1c5cb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Jun 2024 09:31:12 +0000 (UTC)
+Date: Thu, 6 Jun 2024 11:31:40 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/2] ci: detect more warnings via `-Og`
-Message-ID: <cover.1717662814.git.ps@pks.im>
+Subject: [PATCH v2 1/2] ci: fix check for Ubuntu 20.04
+Message-ID: <f91004a4382c95b1b87bf3d1aafc018af2b7b92e.1717662814.git.ps@pks.im>
 References: <20240606080552.GA658959@coredump.intra.peff.net>
+ <cover.1717662814.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,140 +81,65 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PUymp7WtpVr59xCg"
+	protocol="application/pgp-signature"; boundary="2j/ByfiJNcJopjCl"
 Content-Disposition: inline
-In-Reply-To: <20240606080552.GA658959@coredump.intra.peff.net>
+In-Reply-To: <cover.1717662814.git.ps@pks.im>
 
 
---PUymp7WtpVr59xCg
+--2j/ByfiJNcJopjCl
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+In 5ca0c455f1 (ci: fix Python dependency on Ubuntu 24.04, 2024-05-06),
+we made the use of Python 2 conditional on whether or not the CI job
+runs Ubuntu 20.04. There was a brown-paper-bag-style bug though, where
+the condition forgot to invoke the `test` builtin. The result of it is
+that the check always fails, and thus all of our jobs run with Python 3
+by accident.
 
-this is the second version of my patch series that modifies one of our
-CI jobs to compile with `-Og`. We have noticed that it may surface more
-warnings that we do not see with `-O2`, so this should help to find more
-bugs up front.
+Fix this.
 
-Changes compared to v1:
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ ci/lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  - Instead of adapting the "pedantic" job, we now adapt
-    "linux-gcc-default" to compile with `-Og`. This is because that job
-    uses ubuntu:latest and thus a recent compiler, and there are other
-    jobs with ubuntu:latest that continue to compile with `-O2`. So this
-    is a strict improvement of coverage for diagnostics.
-
-  - Add a way to override the optimization level to our Makefile, as
-    suggested by Peff.
-
-Patrick
-
-Patrick Steinhardt (2):
-  ci: fix check for Ubuntu 20.04
-  ci: compile "linux-gcc-default" job with -Og
-
- Makefile                  | 3 ++-
- ci/lib.sh                 | 2 +-
- ci/run-build-and-tests.sh | 9 +++++++++
- 3 files changed, 12 insertions(+), 2 deletions(-)
-
-Range-diff against v1:
-1:  f91004a438 =3D 1:  f91004a438 ci: fix check for Ubuntu 20.04
-2:  351dec4a4d ! 2:  bdf0e40a77 ci: let pedantic job compile with -Og
-    @@ Metadata
-     Author: Patrick Steinhardt <ps@pks.im>
-    =20
-      ## Commit message ##
-    -    ci: let pedantic job compile with -Og
-    +    ci: compile "linux-gcc-default" job with -Og
-    =20
-         We have recently noticed that our CI does not always notice variab=
-les
-         that may be used uninitialized. While it is expected that compiler
-    @@ Commit message
-    =20
-         While we could adapt all jobs to compile with `-Og` now, that would
-         potentially mask other warnings that only get diagnosed with `-O2`.
-    -    Instead, only adapt the "pedantic" job to compile with `-Og`.
-    +    Instead, adapt the "linux-gcc-default" job to compile with `-Og`. =
-This
-    +    job is chosen because it uses the "ubuntu:latest" image and should=
- thus
-    +    have a comparatively recent compiler toolchain, and because we have
-    +    other jobs that use "ubuntu:latest" so that we do not loose covera=
-ge for
-    +    warnings diagnosed only on `-O2` level.
-    +
-    +    To make it easier to set up the optimization level in our CI, add
-    +    support in our Makefile to specify the level via an environment
-    +    variable.
-    =20
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    =20
-    + ## Makefile ##
-    +@@ Makefile: endif
-    + # tweaked by config.* below as well as the command-line, both of
-    + # which'll override these defaults.
-    + # Older versions of GCC may require adding "-std=3Dgnu99" at the end.
-    +-CFLAGS =3D -g -O2 -Wall
-    ++O ?=3D 2
-    ++CFLAGS =3D -g -O$(O) -Wall
-    + LDFLAGS =3D
-    + CC_LD_DYNPATH =3D -Wl,-rpath,
-    + BASIC_CFLAGS =3D -I.
-    +
-      ## ci/run-build-and-tests.sh ##
-    -@@ ci/run-build-and-tests.sh: pedantic)
-    - 	# Don't run the tests; we only care about whether Git can be
-    - 	# built.
-    - 	export DEVOPTS=3Dpedantic
-    +@@ ci/run-build-and-tests.sh: esac
-    + run_tests=3Dt
-    +=20
-    + case "$jobname" in
-    ++linux-gcc-default)
-     +	# Warnings generated by compilers are unfortunately specific to the
-     +	# optimization level. With `-O0`, many warnings won't be shown at al=
-l,
-     +	# whereas the optimizations performed by our default optimization le=
-vel
-     +	# `-O2` will mask others. We thus use `-Og` here just so that we have
-     +	# at least one job with a different optimization level so that we can
-     +	# overall surface more warnings.
-    -+	cat >config.mak <<-EOF
-    -+	export CFLAGS=3D-Og
-    -+	EOF
-    - 	run_tests=3D
-    ++	export O=3Dg
-    ++	;;
-    + linux-gcc)
-    + 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
-      	;;
-    - esac
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 1f4059b1b8..814578ffc6 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -328,7 +328,7 @@ ubuntu-*)
+ 	# Python 2 is end of life, and Ubuntu 23.04 and newer don't actually
+ 	# have it anymore. We thus only test with Python 2 on older LTS
+ 	# releases.
+-	if "$distro" =3D "ubuntu-20.04"
++	if test "$distro" =3D "ubuntu-20.04"
+ 	then
+ 		PYTHON_PACKAGE=3Dpython2
+ 	else
 --=20
 2.45.2.409.g7b0defb391.dirty
 
 
---PUymp7WtpVr59xCg
+--2j/ByfiJNcJopjCl
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhgfcACgkQVbJhu7ck
-PpTVBw/+J02JfAYTHcdmhxo7yfH2RZ95Bgc//nsSjtnCVeplMkOBSnfTxjJ2kr1K
-cdynistusPgx3JmQRz6vYhA2cWBmue2nUyc6KHA54Yz+tlAIXs/PXi12raZp7g0N
-jrHiRXTz5+ON2oe4eTBeIkhDv6PlLek6YmC9LvXE+0LaQhVts/ObvtidWhtCRBih
-U9Vxj8S0rqriNA2LWM61L/iw5OwJFmv5ITj6DqChBZoWdRHjFONrnew2zOGGLnRH
-PqicdR9UPu6sWeYCKOj0N5TBJUEjDbiSkxcMRRyAelHEn8G80O0neu5XURo2EmeT
-RyeW00/gyq7Q+2FNHuYZitsB+2IEnejtVbEdfSBgT7N6GMie3q50iarAaO2dvrd+
-596g+BnHiAde3wbWEAzQm8QalyKogdrDHHd8SQ1S/1LL9xEb3xabVfbR63MgUGjM
-dPtA4b7bM+OP2Pee32T+vilzjRGSsN+o7MsQAedhlTwsOv7DdfmnxKafpo3E17zx
-3+uYrAeup26MeAN8IKf925ncAbWLOcGXHaCejKkaXjjWVfe81od8QSO6GL4XhlCN
-cr5Mu3LyDWNfePekYj6dhPds2KzGnVSCWU4Xusv2Vc7HneT5c+fMO9ioHI71Xj3D
-/BSXWfGMyY2UsrGFBKEPqrxWO1wE6JCh+cw4ffuFT59woAq41Jc=
-=uMku
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhgfwACgkQVbJhu7ck
+PpR7ug//SvWPoQxQe74JU9BiTVkIPs882jrDfgZb9Eay09yLzyArwMtde2V2cjUw
+p0QPcvSkAAovWGsxiw61g2Hil2oPYYEthvr7t2sFp/v3BZSfy7EfkC2lAE2Q+15G
+i2lHWvR8Fa3/AnzA0PoovSvjIEs9Ur6xUMab7FQI6rdKBj8B0QX+7iFbOSKpgJ2X
+BP5U7wiNNqiBSJ/RUYm8NPSfDB77pcQoJskY4SbSSLm9/VGPW17dbaugCLiHGOMw
++ijtLem27m2HsfWq9dtGHHSlbAYCacnbpU7aC7QSVW1O1ldSkaz/4xgV4iPY/Wuu
+x3t+fuH2bb//VvbUx0aBMGgtVCjQnPV/8iUaBHuGh21XSfr+SQZYFMilc7OmCal/
+5cXKWD4ehIRDIsFkYFVAVjLzZeok9ZWsTlQYAo5Ki8uwfGxWOlGCPegQHgpk255p
+C6j0LdtuUz5efVig1Uv4Zu+3/DsuZD2DD1bUkoYTQqiJDb4kWv8iNYY/KcZCXm/4
+o6LqptLKCXtVyvyHd6Z0Vl6jPLhesglLau1udjiMg/L9dcIeVziLwvg7ejgZyw/v
+mRYlS8eeLLFVLqbfABXuyGGMcm9zsAci3lsOE2e1SFofTQCE7slgXIp24XBAUisw
+gnH5Lps3CV+t2R1fMeccZioETA33EbYEb7+ngAiQ2egVjRZrVPE=
+=gPpU
 -----END PGP SIGNATURE-----
 
---PUymp7WtpVr59xCg--
+--2j/ByfiJNcJopjCl--
