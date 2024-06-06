@@ -1,152 +1,101 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE9F185081
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 10:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3751862A3
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 10:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717668043; cv=none; b=LuAIctq+gTkGrm6SV47bMGmSYQmlCuOgOs9da0TbkAIjL3wa6dm6ht8JewYFKeBviwVvgKSDcQQ8reHirveAUv1MtF7pHDV7XwNqw7uKs1MsKAoWWUEu5KjUrZKcn5r6iYjmk9mTbU4hlr8zuIN5RZtWLIKL1vcWx4pTX+A4SbI=
+	t=1717668131; cv=none; b=oEfDyL+HyRUx+orY80QCWVMuEkqa9+RPp8tZTy7xHQKZAaw+cico7uDEB7IpcA6z66AFRzH8YEcw6IgFiJSljPEpBTFAQxeE/xHG/WGJBhkVqCv9pYtU9D0MEgmLAV3yLvpfguKTrYbKfm9j9Uwq8IASqzUEuOUutjP97pN63js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717668043; c=relaxed/simple;
-	bh=PFXX5bL21OSGg2Pnlad3jjV/+y05KmS7oecgaF3j4Mk=;
+	s=arc-20240116; t=1717668131; c=relaxed/simple;
+	bh=a+g++QTIxLL5ZQo8sjGzAeaH/EK2p765jeyZ+GxYl7I=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=lZYA1mqe9Z6NVt3G8dZNpZb1ftrqhE/aPp9Qwhdfdc2lcb12t6Fyd/fYtzzcitOb7p/CKxJrSMnElvR7jp1ADSMMrzD5nZaaM/qGC+mcbtrwjUpQSUkVrGFW+6oce8pSpdDzHjmUs1rxDKM/gVODUlN9Zlw3u+Q+ufUCu/jKmtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YlS35Elg; arc=none smtp.client-ip=209.85.167.171
+	 To:Content-Type; b=ejsF+R7H00LgXp6c8Pdn0Y8qTS+JKdz2+w4GTQ1OQs0ww48YHOgn44aHY7bd8M+xBSS8xTvlQ25Yft5XTGlY/NdcUE0Qk8dngWTYEx/yUkXYrox6nfuLkNSuaM1GA2rOSd5Os7Sz53zlx9Q043MrXsDrAboztrt9WlJ33X3pVrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DYwgQj07; arc=none smtp.client-ip=209.85.160.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YlS35Elg"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3d1fe4f5bf5so362150b6e.2
-        for <git@vger.kernel.org>; Thu, 06 Jun 2024 03:00:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DYwgQj07"
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-250d5bc7793so904338fac.0
+        for <git@vger.kernel.org>; Thu, 06 Jun 2024 03:02:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717668041; x=1718272841; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1717668129; x=1718272929; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qv9c0RZCVygVhee6aLJoBKLPrRFoTWo2c6vSHOv8bP4=;
-        b=YlS35Elg6DAP6muGaKNvxeSNLTwDVR4jUqIfQGA51T7crVPEcPqQRXTPpctWlaKZzD
-         fDQWLfnq/RqyBXG89MrFXxCTRj2Q+mE7QDBLaGc9g9tCE0bjDvwb4v/qIzAH3S5F5eo6
-         /A15x8iD3RTSEuCeIrfjcNYOybz+0sTDa7cuWr5ZOZVOcTzfvzeZKCka82vffpfI6LNh
-         IobPsdhF1Ubbz3gWUdWnbVt1T5eBofPFyUTlj5GfzM1i7XTHa7r0e0wxVbbAg8MJxtu/
-         lOnc38NtIzJ80tlVra4bAemBmndFFHCrv9rLb9vOvoHSvcxLsBGOyflQ55vnGcpMii8P
-         UpNg==
+        bh=a+g++QTIxLL5ZQo8sjGzAeaH/EK2p765jeyZ+GxYl7I=;
+        b=DYwgQj07GkJEvRTremjCvONg2nZ20pXedcTuvFRO01buL1s/KPvNFc0e50bDIUZSLU
+         JVG1xRHY9skHOdYgseykKwOimbwNi4YZ/yJyhf1DprDDh1U10LkX9QtZQGO4Ze0zmBIX
+         Cq4DiV6b6vKj/nuY34cPEuRwut5Io0NDS6dBprZK5EdghhryRPHG6Hocn63dWgrgZ92A
+         muhRQ9CZVCDBHmbKr4XDYrcasbsphpbut427v4ylsQrkg8GstG7nD7f0o0y2EXfOCgwV
+         WiHQfCKq/rOZAQHOrD4Xj9DxDUoGX11n0kAczqsNhGezKNOLodORYvZYoih6i6P7M1lc
+         sM2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717668041; x=1718272841;
+        d=1e100.net; s=20230601; t=1717668129; x=1718272929;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qv9c0RZCVygVhee6aLJoBKLPrRFoTWo2c6vSHOv8bP4=;
-        b=gl+rWTRjgQZl4ytCtb4HB1gtfsZXtABtrVmyrEeDKlcX+ZTrJM0WV+6jiqIyRtLGKf
-         MlLMZlZdU4qM5RT3gxaL86q1gUgrRGuz2H1s0cdyOayMszEetV2h8F7Jv/6nh4SQF/Mk
-         QAjGXkyp0rYqCk5ekzV6TQl5CtYSxgU7OQEyNJAdKr0NDXpTPfjG4ZFFoJ3wNdqfjlx7
-         ozcBrEWX/Nzc8QRFetQBeGqPg+Pm/x2EKroEsaQJdBBvkPm51O+hRpDpd2wjhnlOT3NB
-         Kl3PF7vw6mZCdfhQF2Cm+LmMLRfp+OczrOeNlm7vczOuGq0wczHwBzk8RzC/ul4rcgcn
-         JZCg==
-X-Forwarded-Encrypted: i=1; AJvYcCUXQfdQkoVKaCXdkOnLJF2lGKxjjQ36b9Z7TSPDri5/GDO3iKZ+gbnMhdCG48G6HOOTE0ht28+CkG5Jxq/NcPB+Ws8w
-X-Gm-Message-State: AOJu0Yx4p63Y9t/yye+x1xFGv8YFd8Lb1YHPVmin7YVZqCIeAHUSatUM
-	uXT4GRR4j8BoiqtNiHohmbbXuQWJ8JgDYnJgsQSEMw74a+bDVr520CFNVPNoY1F5Gxkr7q+VfSV
-	UvLoJ0cHD/oVBRcwhPApHy+xC9aQ=
-X-Google-Smtp-Source: AGHT+IGmjREHrVrimFuxFLd/T9Gx4k6Qb1+DXapfseCL1LjPLxFgJQnBKHrMTtbCAMcnp8RFg7KknWSFw88zXvp2B1o=
-X-Received: by 2002:a54:4704:0:b0:3c9:76b0:753b with SMTP id
- 5614622812f47-3d2042959f2mr5242090b6e.14.1717668041235; Thu, 06 Jun 2024
- 03:00:41 -0700 (PDT)
+        bh=a+g++QTIxLL5ZQo8sjGzAeaH/EK2p765jeyZ+GxYl7I=;
+        b=V8aINCAgvcKM4brhrQCZfzCZoh7wyNdJHC5VwGwEUg8ojeQyTsGDMlVH9Asx46lHQH
+         xfOykyB3tx+H3s8F8j9rxdoDxgTFxut58HeBr7DsxutsG3+ad8G+5RFasxyAkqfYEu8t
+         9oPfaIQKyXtVlXYt0igFau/Y6hwo1xNHtFmNHSzA/YQBca4aoqqjHsXN80lEC5Iipl+p
+         P/Pssd86mAeT2nBQQK3rpnijPTzNCydr0wqdzpq5f9OtBzVj6V153KqbbKD8a+xTlNUT
+         qqmsExJOkRVc7MXBAgaRYZ1N4e1QzxYooQNpQ9/wjhPSIZrSzqCQONrCvwGHX1eEs6GV
+         y0qw==
+X-Forwarded-Encrypted: i=1; AJvYcCVFaHYJBZqv5HexvGCL6ZDF3jK/FRU8AmOSM9Oyh9ftLJ0VL+dGyp2497qGptBM5+/s3ruJlja/Zslr0w3ZPwF3ve2P
+X-Gm-Message-State: AOJu0Yz6JjX28RqaXGKeLkO5nefQ5PU4FLPQ9oem0UP95xdBXqBY51tU
+	Zc/ZSEgrv1I0uHa3AblWgnyp41XZVyw6rIzGER0n4fZcIVyTJHt7qRgQf4a0e8dnrC5Db9pPlj0
+	WqBwFZXnXo1ZG8A+gB3qjmzFiodA=
+X-Google-Smtp-Source: AGHT+IElIBiLLEGFDlr89t1U9KSXmZVk71GRlw+PkDI3bKcSFZqyB4uWFZRlWefAJna9PJAd5DkQl5zziSv3vhUK+7U=
+X-Received: by 2002:a05:6870:889d:b0:22a:57da:6fec with SMTP id
+ 586e51a60fabf-254404bf430mr1110017fac.16.1717668128647; Thu, 06 Jun 2024
+ 03:02:08 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 6 Jun 2024 03:00:40 -0700
+ HTTPREST; Thu, 6 Jun 2024 06:02:08 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ecabbb74e19ea773fd23719bd7fd4937b29679e5.1717402439.git.ps@pks.im>
-References: <cover.1717402439.git.ps@pks.im> <ecabbb74e19ea773fd23719bd7fd4937b29679e5.1717402439.git.ps@pks.im>
+In-Reply-To: <17a8f532752e005601b1cff5690a4dae16096b8b.1717402439.git.ps@pks.im>
+References: <cover.1717402439.git.ps@pks.im> <17a8f532752e005601b1cff5690a4dae16096b8b.1717402439.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 6 Jun 2024 03:00:40 -0700
-Message-ID: <CAOLa=ZQj1UrNO+nOxhp2kaO+F1hHDE14FMYi74Eg8sMAgXz8OQ@mail.gmail.com>
-Subject: Re: [PATCH 02/29] parse-options: fix leaks for users of OPT_FILENAME
+Date: Thu, 6 Jun 2024 06:02:08 -0400
+Message-ID: <CAOLa=ZQqGoVtG2uHRxf284H3JhYq09Dxy12Fj6UmiGyAjXwe=Q@mail.gmail.com>
+Subject: Re: [PATCH 03/29] notes-utils: free note trees when releasing copied notes
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000070bc98061a35c13a"
+Content-Type: multipart/mixed; boundary="000000000000a68686061a35c68c"
 
---00000000000070bc98061a35c13a
+--000000000000a68686061a35c68c
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-[snip]
-
-> diff --git a/builtin/archive.c b/builtin/archive.c
-> index 15ee1ec7bb..f29c0ef6ad 100644
-> --- a/builtin/archive.c
-> +++ b/builtin/archive.c
-> @@ -92,6 +92,7 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
->  			N_("path to the remote git-upload-archive command")),
->  		OPT_END()
->  	};
-> +	int ret;
->
->  	argc = parse_options(argc, argv, prefix, local_opts, NULL,
->  			     PARSE_OPT_KEEP_ALL);
-> @@ -106,6 +107,8 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
->
->  	setvbuf(stderr, NULL, _IOLBF, BUFSIZ);
->
-> -	UNLEAK(output);
-> -	return write_archive(argc, argv, prefix, the_repository, output, 0);
-> +	ret = write_archive(argc, argv, prefix, the_repository, output, 0);
-> +
-> +	free(output);
-> +	return ret;
-
-Since output is passed to `write_archive`, we capture the return and
-free output. Makes sense.
-
-[snip]
-
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 78a247d8a9..4e4b645a21 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -2021,7 +2021,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->  	const char *rfc = NULL;
->  	int creation_factor = -1;
->  	const char *signature = git_version_string;
-> -	const char *signature_file_arg = NULL;
-> +	char *signature_file_arg = NULL;
->  	struct keep_callback_data keep_callback_data = {
->  		.cfg = &cfg,
->  		.revs = &rev,
-> @@ -2559,6 +2559,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->  	strbuf_release(&rdiff1);
->  	strbuf_release(&rdiff2);
->  	strbuf_release(&rdiff_title);
-> +	free(description_file);
-> +	free(signature_file_arg);
->  	free(to_free);
->  	free(rev.message_id);
->  	if (rev.ref_message_ids)
+> While we clear most of the members of `struct notet_rewrite_cfg` in
+> `finish_copy_notes_for_rewrite()`, we do not clear the notes tree. Fix
+> this to plug this memory leak.
 >
 
-I see `char *description_file = NULL` already and it is also used
-`OPT_FILENAME`. So all good here.
+Nit: s/notet_rewrite_cfg/notes_rewrite_cfg
 
-The rest of the patch looks good too. This was commit was quite easy to
-ready. Appreciate the neat breakdown.
+The commit itself looks good.
 
---00000000000070bc98061a35c13a
+--000000000000a68686061a35c68c
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: c4af10911d1e9d73_0.1
+X-Attachment-Id: baad19cf90dafaf8_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aaGlNWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mKzFYQy85QkFjdGN4UHo4Z1g0ZUl0OW9wUVdiaHlzOAptWmtwRnA0dFhz
-Wk9RcS9RL1BTNU9xZ0N2MjY5SmlKK3FFQThWUWlhZXNBUUtJdWZMMFl1MWgrMmt4OTVFa3FJCmtn
-T3hrR1U2ck1wOVA4NC9jQTIxTG5Vc1htVDd3T0N5aVRnWC9UYTBaanhTclY2RjQ5UmZ2M21MYUlU
-VDg1YTIKaEdnQzlaRzZFaG4wUTY4a3Q0Um1VSVg2NzB6N05tUkxrRExkak1RZFNyRUtzeWRFZTNj
-enh1TGVSekFvUmw1Vgozc2x2MU02TUdUMHRYZ0hpYXBtZnd1SW53dHNTMjRHWGpkUnNqUUtjNitW
-VWpOblRaZEVNbTJ6R0VobVQ5NDRVCjhqNlVreHhqZ1BlaVRvOXlQZkxDNzRFUjlCdVJacW9Yb2M0
-OGdRMTV2OE5FQzJkQUtzcFdSM1hRY3ZmbE83Tm8KT2M2WnNIcXpvQUhHKzR6eXRsYlhsMDUrUXJx
-UThTYk9UMlRVckZSWGd3RUswODBQVHRFZkZyaW5FaHUwV2VETQpuL3lOU2xxby9ObGN3ckhMekJT
-SWQ2ckRscU16dHpiWFE5eHlFZ08zRDVndDhCcTM2K3F4dUh5SDhFKzRwdXhVCmhwdDVXcElCUm9P
-SWVURm1jNjJqdHNYZWsyai9kUU11bk1ZQm8yQT0KPUtnRCsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aaGlSNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMy82Qy85ZjdYNFJXZWtDK2VRT1JteFl0OFpGZ3FFaAo1TjVnaXJSWTBH
+NXNXQ2NMNkgwb1ZSeG41TnBYd2RlT1cvelFhRTN4NDhObzhUT0JpUzVwWkpZcUh2QXJzQnFJCkox
+dTBidko5VzEzbzd4WXJEem9LYW84K1ZUK2krQzJ1dmprYVFVb1B4Y3hxamxBbG0zcGZpQ3doV0xx
+NmhuazEKd0tZeng4NUM1SjB1QjN0WVdRaTJUaHRNanFsQ1BBS01WWVBMcWh0d0krc1hJNkdNUUkz
+MjF5NHFJT3J2YTUycwpsUXpqaVpVMlNGdktlcklxdUlRZWZmejNVVWcrRTRGTVUrRHM1MVVlbzlV
+djRuT3RNTy83NGRPVzJGVzZmeS9ICnNIMTFja2QxS2JnT20xckRiT2FROE04d2hQY25INkJiRlEx
+WGYwMGNNYmtjakZCZkgwaDl3V2dNMXJSRGx3cE8KdFVsM1VxM0hoQXVObDZjMnNrR3pETXJpYTRK
+ODh4TmV5UnAvVmJVZ2N4ZXJDMUFZdnZBREJJMDdaUEk0dk9PegpkU1AzYkQyR2FKVklrZlFPZWRU
+c3ZKYmNQc2RvY29MVVpXcitnVk4rNGdaZ3hxREhSS3NPSktxZ2dyT29qWWphClBDU0hlSzdTWWNt
+QWxNQXJtWVZWTTdZM2RaQ0JKbGwwTUNLRDhsTT0KPVNpc24KLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000070bc98061a35c13a--
+--000000000000a68686061a35c68c--
