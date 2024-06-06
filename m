@@ -1,77 +1,78 @@
 Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BF23D56D
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 06:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE51177104
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 06:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717655428; cv=none; b=qEFbahN5S1ko5SM4EWeh/uXRy2r/dZAyXpjosSTvtQ1GE3cZiaYEx9b9cQZJcpPKxw2am7sNUYQPLjMHrYgXd6GU1jHG4m1QpduG3y/Bwx2ls57M4j5ribyK7KTwC/c8WEv23tnAOsRHKOGx7IfQuPfIHEkCwFlg7b9V0o4gZfo=
+	t=1717655431; cv=none; b=qJ2XU3jKeExqJ8I7Xn48jt9lbmH8Ho/W/o260ebDCK5YwjzsJfJeYJgcMCVOmWVWjS1NGXqc7362uCbLWM1Jt1lqzJ/dOQe8vKpVoHoblnjIMH2oBcqDOd3+qJAyy5kC/OKY+o2wBzb1dlmREAICK9tlI6nUBOsrJbEXEJeXGS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717655428; c=relaxed/simple;
-	bh=jvfyN3OUvnI6NDuO1jlVBiwIJep6w4pr/edHdjKc5ok=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=WraBpZZ8czLuUVPx5y/dQKbMygZuwzOq8RchNZhGSV7UkMZipkvtU6AYm7FsCFjeJNsS0rEZm9/bKI0YfA5iNzg5Sx0L9riUVd77OZxu/h/92sX4in/1JOShHt8A/DWd2ePlj7l1FEkg1rOJViGp91CgUZTzqJYEpw7ftpyEhiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hzz1GwUU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g9UaJ0i6; arc=none smtp.client-ip=103.168.172.146
+	s=arc-20240116; t=1717655431; c=relaxed/simple;
+	bh=RD1Uk+ovYau83QM/JLCqvToxyiU1MdFfm3DQlFW8NE0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ec7GXZg9PNbAK5qjPOnxlpzqMFft8SQ4N+OUHTOx2SvoozG/GzwDo7BG6QZvubcfPrhXGn3NtvCughvRGBjCmNWFr3/A82ABVHt1CWjw7BHZIv1wOVWiht5tznBFygmitCqKlwLt3y3OEzEQNJzxT4O4kdnrktpPpL9JXZv4lkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d84BZt0l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BgqPAhVZ; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hzz1GwUU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g9UaJ0i6"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id A670A138011F;
-	Thu,  6 Jun 2024 02:30:25 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d84BZt0l";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BgqPAhVZ"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id F1F4013800FF;
+	Thu,  6 Jun 2024 02:30:28 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 06 Jun 2024 02:30:25 -0400
+  by compute5.internal (MEProxy); Thu, 06 Jun 2024 02:30:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1717655425; x=1717741825; bh=NtLnwGVOZt0nzCVfATevpK7oxFkZdWfN
-	GVnIJcYCsFk=; b=hzz1GwUUEwtGtX5wXejBwVD+THc4Unqnze14bClN5H2MPd4J
-	NjeyeTrSca2VBM4NuQWL9zoMy4Y0jia5jp/gxce/gIiEHXp8TAi1g5Ducakh722J
-	EjOJAguf+BVEUNqs34SFaK5E8lVTln4WNn0OELrwQpj/mWk99ynWsU0dHoO69/zl
-	O5D1P4xRpDuxvVg6b93xa8ZLHx5rv5MdwUQzqVuPF7orULsGMFpfcw4nTXzbve4F
-	7yf9vfpNayKq+Dx1Dgkjf2oylVjEC3qfLgDBzExXq6/X6YsFgedQaQMVYF5+SmQ2
-	gZI+wXOXvDvTmPRerTsTA2dHLb35TNuT6pTthg==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1717655428; x=1717741828; bh=22wBAmn/Pj
+	RvBkqJhwenbmlKBj84cPARjSOWao6xp48=; b=d84BZt0lBENjZYnIskKTqgaY5W
+	Ov3e1YGYJnPmSkwYVekIk8+m6ajtVWNCc/GuKaGHpe39PkGgaI6QusPEWj0A/4FL
+	cDJSG6Cd+Qu4PVmqPuotxSphnSwmYRBREQ1hXJqrD/X4sngxcRFgk0t4HAwkUbRV
+	7UaSr5TuiqKnB0+1CwIdUVvxfIBuXKZgcLO0NMeyCE6StoaIg1EkPnZHBMqk4SS0
+	t1CZgkM/hikr3l0m1UpEfcddsBdyAX7C4wihOpiRfuW104BLh7JoGr3I54yi6wir
+	/TOycWGZkpFpJe8yBMAYild9AYgqjIAkoFcQBCIJ0BbGXuXYqfVLo/sx14sw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1717655425; x=1717741825; bh=NtLnwGVOZt0nzCVfATevpK7oxFkZdWfNGVn
-	IJcYCsFk=; b=g9UaJ0i6y2ZtZ+e1kpNRbd4TIl9BmN2ERUlBOdnnIgpgjVmCnyi
-	CEs4qjebcc+5D0gOkluwOrU8XzkUNzD02bK+jK/BRnqXlVpl2HdivNexUmmkWUE4
-	v48bwUMY7eRBEH5rffJ1tek7N1fIx8OT1wHtUG+AwIdb01t2MFhi/rM6zPSOrPNU
-	8wy/Pnu9LdoMsVIZwu6x7ZIGV0gN3ii+65dMSyx+0BAr9iBbNmHV+84gMk1korCt
-	plTxhJev9Grku9z7p+5wKa8tWSCpVT2X+5dBTP+4aqUi1CvEcKgvskaAaV5tEs/l
-	1SXOgKXrmMZsa4s32EjRKHNCMx7jCRJPBGg==
-X-ME-Sender: <xms:gVdhZr2GMT5wAPwCw9E-Bba4IncWTruw9wuzLQ83RL4EiAND80DIYg>
-    <xme:gVdhZqFIVl4Z9DmL1lR06hah7flJWDBrm78vKsYiIctBeOzSMaPKLbgpCP_RI5ked
-    bajDwic8Lt-fnR6-Q>
-X-ME-Received: <xmr:gVdhZr7qyTlry2GeJBRxXldaZOXD0OoijzoSiNPJzu7MnkZNjDDgzZ9u5qxZ2tzPqKq_kioYNviV2tDxqVZ66xd0X2ogByME6ImyLJqHzNyvWmwQ>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1717655428; x=1717741828; bh=22wBAmn/PjRvBkqJhwenbmlKBj84
+	cPARjSOWao6xp48=; b=BgqPAhVZ8eeDiQISr1rbWOhMOjAcfAI+gi/Wdf2nxFtt
+	7hWzrrhB4JnXCrZosnd5IUPAabHwAi/v97WC7JaFH1GsP5i5yzc4Lu6cS2+7iCNa
+	MaxYs5bh6SYDaH2fS0fKPb8CnEVSZgtk1J19txgxeJwocOeM88VwwY/dZFkP7On/
+	uzJt+AoNPu2mM8G+XLdP/DA4m2OFhoOoe/SxG+sYkMXn5vLYRGiRSKMRAwuGv6eh
+	+KetSeliGgZqfyh/M/j2aBDKrcc9k9WoexcHUfLE4aUS2xglGaFTbeTmbN3LxbBB
+	VUEc3QQtgUP8JHzLIJ0gLv3Nr98+g6qKymihn8isVg==
+X-ME-Sender: <xms:hFdhZlncdL7EaTAwi5zGvzvXIhC2WOzCC1BBxSfDgbAISz-y3kbOoA>
+    <xme:hFdhZg3ku61mi9lgx7BYDCkQdblHeVmqAyb9vgr1ubcgSefSOgf7C4FSAeUww6b52
+    gt6YUE4MdhuiHuGyg>
+X-ME-Received: <xmr:hFdhZrofQEE0JQ9EToYq5xMsof3lUvmH8LmQwWoZ5ljFuThgnheEtZ_b47X-o_1DDBfGv_S6kOLgc2877lnXKwriOrvht4EOpYEG_iFuUCgJ1b7k>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeljedguddtlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkgggtugesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepuefguedtueeiheetleevgedujeekjeehle
-    ejjefhhffghfevgfekueekjedtieejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:gVdhZg0T63OdVs4dLC1hhf0oIHMwGzDdf2tXZn7qyhuPSNlfM0Po5A>
-    <xmx:gVdhZuGOdKCVvDVpRKw8nfYnP7t6zFnrp1vr7mQcxNLzMe4R2ge1zQ>
-    <xmx:gVdhZh-YUWDgev8aEdFd_ITOqGDcqtfNXw4CSQDhKcfY-UbCI4l0AA>
-    <xmx:gVdhZrkwm-J9fUtx6_R2pcnGSpWwShiP6QP2ZPfI9E7pUUlO4xC4Bg>
-    <xmx:gVdhZqBCIzsBwm2JcmsWjR2NeUKpS_e91qnThoOitQpdMYWRRPzmtpKu>
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:hFdhZlkKKjXw7i-mNNdTTnz1Gri5Svm889PV-LlbvV-Lhvpxzzlgtw>
+    <xmx:hFdhZj0iglwWdTdeIAYGfp00cu9fn2CRMkjjGvn3R7SAXpGI6hGG7A>
+    <xmx:hFdhZkv-TUUALneSpoN9qPFe13CanheZTIJOOdUsiInX-3r7pT36tw>
+    <xmx:hFdhZnU5bn48-z-9_vGgsOs7KZEsvL36ofi3EngwzTInp4BK5V2rJw>
+    <xmx:hFdhZkzCfZs8ldkvmCr3NLAIcn4HJBrxjtXwxxiWgCdwPMoLdBx3i3KU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Jun 2024 02:30:24 -0400 (EDT)
+ 6 Jun 2024 02:30:27 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id adfde936 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Jun 2024 06:29:51 +0000 (UTC)
-Date: Thu, 6 Jun 2024 08:30:19 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 0622e7a7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Jun 2024 06:29:57 +0000 (UTC)
+Date: Thu, 6 Jun 2024 08:30:25 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/2] ci: detect more warnings via `-Og`
-Message-ID: <cover.1717655210.git.ps@pks.im>
+Subject: [PATCH 1/2] ci: fix check for Ubuntu 20.04
+Message-ID: <f91004a4382c95b1b87bf3d1aafc018af2b7b92e.1717655210.git.ps@pks.im>
+References: <cover.1717655210.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,61 +80,65 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8J+HofWnkWD2H1ai"
+	protocol="application/pgp-signature"; boundary="vffGxV1B5J6Pdnsg"
 Content-Disposition: inline
+In-Reply-To: <cover.1717655210.git.ps@pks.im>
 
 
---8J+HofWnkWD2H1ai
+--vffGxV1B5J6Pdnsg
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+In 5ca0c455f1 (ci: fix Python dependency on Ubuntu 24.04, 2024-05-06),
+we made the use of Python 2 conditional on whether or not the CI job
+runs Ubuntu 20.04. There was a brown-paper-bag-style bug though, where
+the condition forgot to invoke the `test` builtin. The result of it is
+that the check always fails, and thus all of our jobs run with Python 3
+by accident.
 
-this patch series is triggered by the thread at [1], where Peff noted a
-potentially-uninitialized variable. In theory, GCC is able to diagnose
-such issues via `-Wmaybe-uninitialized`. But in practice, this warning
-is dependent on the optimization level used by GCC, where the issue in
-the thread is only noticed when compiling with `-Og`.
+Fix this.
 
-The first patch is just a small fix to our CI I found while at it. The
-second patch adapts our "pedantic" job to compile with `-Og` so that we
-overall surface more issues. This would've catched the issue.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ ci/lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Patrick
-
-[1]: <20240605100728.GA3440281@coredump.intra.peff.net>
-
-Patrick Steinhardt (2):
-  ci: fix check for Ubuntu 20.04
-  ci: let pedantic job compile with -Og
-
- ci/lib.sh                 | 2 +-
- ci/run-build-and-tests.sh | 9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
-
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 1f4059b1b8..814578ffc6 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -328,7 +328,7 @@ ubuntu-*)
+ 	# Python 2 is end of life, and Ubuntu 23.04 and newer don't actually
+ 	# have it anymore. We thus only test with Python 2 on older LTS
+ 	# releases.
+-	if "$distro" =3D "ubuntu-20.04"
++	if test "$distro" =3D "ubuntu-20.04"
+ 	then
+ 		PYTHON_PACKAGE=3Dpython2
+ 	else
 --=20
 2.45.2.409.g7b0defb391.dirty
 
 
---8J+HofWnkWD2H1ai
+--vffGxV1B5J6Pdnsg
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhV3oACgkQVbJhu7ck
-PpSnKhAAlDoZjusqY3ke5dYZVoSpP+TiyKuK3O0hwhTocfFf2pdwruWIClVsnQOu
-/Aav0rMf2UjIVFZayEiew939joaQApTdaAWZee8OFsgo59vxHBVFkjB+5icQISco
-4Lk+wTixePznlmekUy9GQHB9pQ7G6DcjYPXedH2kDffHVJ+qFfaJrAhbrsGR16OX
-IOx+GE49Si608zvv7ua0Tc2MhbOzMpnfJQJzpRqUQ/Ixi8CAbMYiTnGtYtXiJoxC
-YnENZQMm0B6nOegvHGmunzKsfwXgO0idXWcac/RhFxmrfHThFeHKY0hIg3zLvyDT
-Ge9U2eNZnRmPEN3v+7pDjCio6NjjvFmU1yBdAvmpBPAPqMgNgAYvck1B5bRAmQ4n
-WUIFmmdnJCDB+mAkNEcJoXe4DWzy4kghr1ksXagv36/FexY+LBkEEVZ6S+bpi5cg
-avj3VAvHuWzLoff3mj7pG0d11epeaZcvloixCh1dtemKPYNZvzib3b/6eUbOJyHq
-Gj7v2sBohb7EBQwBfBMot/wMDzDk29N9DzpXub/EpzMKaOTLon4lpuBiwvm5SIe9
-erc2oBHGYRFPQB/uh+eAxQ/Zbg8/gY2KJfWS3r92gWP5wJCZsh0qkn/quoMCUChT
-ukzdUduvTBESr5DhEN0BKcivphPJu6mtWbknbpEwh4EsrFZPPSc=
-=L97q
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhV4AACgkQVbJhu7ck
+PpQhow/+P6mHMDLrvJaSroid7aROmN43LKg6QBBFsVqw/x4lvprk0Rb+M+jKDgjX
+M2Y0xXvmVHFpKIZ8Qy3waZEySrQsOH67K87QnIyxAoA3b5/S4Ha6wy6Hg9JzMtQX
+KShVfSMAB3BeLRFXPNbMy4vOJlVmo5/P5sx2ohZ348bg2+DcFSpXj+HtzFB7nnQ6
+cXj2hocJZjyxCg7Rcye6aG2c+WiFMd/RgtbjUj4lt0aDYEEW/qmVQYR5I5OeR8k8
+UFIF4g5Zf5LdKiwEVHohUKRf+0EeaQNXIeotq19xwv3d/OdKVW1lvYRTegccr46F
+Sbm/HbcOknkULU1ql4CcIUCgohlTgwUhto6L9QjblkA009bSBeJV7UySqoWAgZfi
+s1NAN4Jko1pKwm1gpO2vWONwuvDiaEG5rp2iJZc05GfM1XJWcgzUOaXyYVFF0AAe
+nh9aeMRZ70PqbXkCIDMlW6ugjOMIgLyNFVRHHiXKJIftr7hVDfcY1hcU2d1e+FDD
+Y2pjDIGYGKqmcuX3RLiAZSeh71d++eAqcHtCl5doCPUmS3OjJAU05jHVyGYV7JKt
+KxqGKgT9tOBMmcvOthYUFNEZRaOxjougjm3154ueoKLq5Fzfoon0Fl7V/vPG6iAu
+R9MItrl16tJWrpnbsYnwjgnuZMjAxxZXmGPeRIWkbQufBLE2E1s=
+=hTJm
 -----END PGP SIGNATURE-----
 
---8J+HofWnkWD2H1ai--
+--vffGxV1B5J6Pdnsg--
