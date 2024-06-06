@@ -1,54 +1,54 @@
 Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114BF194C63
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 10:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF67D194AF4
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 10:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717669699; cv=none; b=D0//XpYmowdu/yjLigQWKufEgfxDBvD4cvdbHSUi/kH8qb6gRfwo51XNENKCbxE7IkTIyUR781j2mJ6hMpyPyGiqbocpF+CP6oSaX5pR8izChC+GDYIqjth4aR6nn9O1L770UJk1QXt05/BnJkIde8VCdWMCGSKzTqhexYnNhas=
+	t=1717669704; cv=none; b=o2rqWshLxbmIjzqjiL+jr75CYQkKc6tJ0UNZkrV6rZF/mlZkKGQrkBdbGsnkejs9udoKakfUHdZ/1FrJe7B4sp7evzHl6MtxGCzLKgKUMZmPMXwZl0ACgNjsbtJ09Fie/rBmkSGFMGBGpIYO2WUPyVzju4TXAojumItP0c1CMY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717669699; c=relaxed/simple;
-	bh=0bS7aRYM3Q8tJpoWSI3o7WBrHh/0am1NVRPSJ5vQeYo=;
+	s=arc-20240116; t=1717669704; c=relaxed/simple;
+	bh=mjJtdrpnPq0jn+Hsh+X/oszp9UAGw8L0bqzKp5Lld/o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dHm2IrtJ7UW9lGEKtiRiSLS+LAiOkc9K+ne5xz6/cW7sONbrmDmLGcRQf1Czgl7piNQ+DABBMrRk2e+XpPQOBWNf8NkDaayKdMM5cZjbDi9h9UQjPsBYe3enzVh+gvHBrWnjo83til4CU/PA6eCmtr9XLPb0HkanUPV8BiUU83c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AkKjQlVR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cjcIH69g; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=sQu3Cb4smkQjZDw33/A6cqom+eIOakRxHpLNULr+b51HNz9wysP07tMWwuSJNVzWOQE15ANiC2iC0pa7lEMUNITsQ46I37t4cvtEckBgHz31+cxQWQu6T4VoD1+BAvBN7gxglkwtHUodYcKGY/EjlV/9iNL02kA37KFivHXuEC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PD8yeuQx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SXyPO2rF; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AkKjQlVR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cjcIH69g"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 5CCC11140138;
-	Thu,  6 Jun 2024 06:28:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PD8yeuQx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SXyPO2rF"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id B88361140138;
+	Thu,  6 Jun 2024 06:28:21 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 06 Jun 2024 06:28:17 -0400
+  by compute1.internal (MEProxy); Thu, 06 Jun 2024 06:28:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717669697; x=1717756097; bh=fVkiEtQ/HB
-	K5UD8HhMs9EzhPtmEzqQ0/JCdWJd8OyVU=; b=AkKjQlVRvfAG8cIDCaGh26P5Ok
-	Q5PAUbExP08cEUS+KceGDYzLGtw2fotOIHjhpBzKODf8Ki2MtxH2IWRqQFwLQSlh
-	Kcz2j3XJv5xm6lIS4IeP4pavvNLfnvLyYiOFfQuMXTMbAuGArRj3cKL8+JHCfhgq
-	dgz3Q+MXtJpY8H0+TBEw5jclvjlkJ5tks7jXj/Mlz/mFxVYxgBfOOp9me3e82oBr
-	MD5cq/d5dNVgTvWaVUMXZM93pOPNsiiP8ZNfcCk1s87b8J42C9JqWcHwUcrQIXE3
-	klCRMUx0T9Eyz1d3em6QBcntMtJDLKWthfTWJvsRcP9icXb9Xll12lgknRhQ==
+	:subject:to:to; s=fm1; t=1717669701; x=1717756101; bh=a3/cE6CrmL
+	y6mm0EMKp6w0OJoQOslWTR4oyK/ltBVyw=; b=PD8yeuQxwRhZ1AqCS0cvQ/l9wO
+	xfFbHRXZ+aDIxt0A40RICGTngoXlW2f7TMJ2HRhusDBS2EH56fHfWBwWrCsGayFx
+	/LpJ5KLlwkYszWT+DvQ2CrQtEwh1LoBDNdPij8XjQtne2jF3/gSCX+4knK2++Eo5
+	ZfLAHI3SHeeN4Jsse/+Zy5Ww1uf9kgQUmEQ9OfA4y4kj0/7ep9Xcd4PPGhdmKU88
+	WDjLa7e9SXcC5kG+xgs/SleFP+oUXqIFB57b9LHbdtTVt1Qogd5UyQmVwSJT0d00
+	ibgYHb0FOr/VQ8n6JZVig74f0uu24AmODmYhjGVi4ESMRYOWxZQcrLnm6VEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717669697; x=1717756097; bh=fVkiEtQ/HBK5UD8HhMs9EzhPtmEz
-	qQ0/JCdWJd8OyVU=; b=cjcIH69g2NmkVH6PPGSTRaZ61153FtIS4erqSU3jwUPk
-	STxYqNWbPryJO2tybfSVy8tRgDk3ikKFGHISIepDErHEERR2H2dqCuBpBEt1D9+j
-	FxyzNqSbR5dPn/XhkHTBz4nT44NKzLxeTjNZa2aZYFsOBEXGfb3G3HR2sHyR9p+H
-	+zIUJBnn3EjvWroy+Oc7LaqRgfMW2HgHkx2zdRTqZjRX+TZA5uFOI1XF2ueDfOIC
-	NBrLXH8O7FbPDKgeHpBhalgxNRk8o+KibOfWPBL2TxpZi4o+GcsChuvQgUg4e6th
-	6+gqUytd9TwbJh0kgYTxAqNtt90ZS8xzwhG8l/26rw==
-X-ME-Sender: <xms:QY9hZsY4wwJAJTlMi991styzp1LHXd8Wogk8Vv4NLoqiOPR4Oq4aSA>
-    <xme:QY9hZnYsn-RaK90IrRbhusNEid92QtQ70lz5GZnCa41rdG7nr_98cvaWqXrqW1r1m
-    AmmOWdkanaeAVc4xA>
-X-ME-Received: <xmr:QY9hZm9K4KEx30PPMd0xumApyMTK24IJhEYTJZLazXFnGmQgFLONlhroDQwmWeuiEa3ETve8959S39-plCQx9ijLtc6jhywPlWCXGbT58gglfcHp>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelkedgvdejucetufdoteggodetrfdotf
+	fm1; t=1717669701; x=1717756101; bh=a3/cE6CrmLy6mm0EMKp6w0OJoQOs
+	lWTR4oyK/ltBVyw=; b=SXyPO2rFI84ETU2NwYlg2NFTBoBo2ztZtljlTDp0DAYI
+	7hZHv1tzTiEK0cT77nEaWoFZFVHx66rSZ0u1pYfoQo2vf/lEnxmVj0lPhRMvnxaW
+	vmhUNrVhT75Ce3iQtehDCKQKe9BCATe8HqiOR1xXWPPBLVqfcGK3Q2X8V5gQtZfb
+	5qeAXAGy9/bL8mEZv7cbaavz2YLCGMSXsm/p8JfN7g81VFW3D2llaXLqnZVxcXjl
+	WuUs6h6DNL+ji3RPPUaN+2z+iWU4R3zA7B7QIHZRI9KNjtFRTjTxL4aYWmUxTo7n
+	WRGvbFsAfRra+yelbG6w4mcsRFJr1UbmDOJj1L9XLg==
+X-ME-Sender: <xms:RY9hZmz_9pZeDDQ2xIbSC6Cfv-BczSqX9yYSpBG4-1i3Mgcwx2Fqdg>
+    <xme:RY9hZiTlK5gyrUpByyVv8rs9G7p0D3IO0AAIN5W6QDPzkdiyeyqQpipkGpqLOD2yA
+    drwWuY1XJl0ORt0YQ>
+X-ME-Received: <xmr:RY9hZoVAH6ckkW07MQaOhJhDugff3sLhSazX5FwDfLG0M5Fkci6DNEy7rrXunS5OF-Qv_lHz-tmGPePDaAX6KkxxkZr8bJE-iinWr5Q7PCB-3bi1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelkedgvdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -56,25 +56,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelkedgvdejucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:QY9hZmrXlpT9aqSB4Wk8T6Gky6GVbx7-BP-4WPZ-mb-xspLQKhysbA>
-    <xmx:QY9hZnq4vocfF_OSNPnYwl7K5KfEJBnTJKBGMgYKt-ijy6lhclOVaQ>
-    <xmx:QY9hZkTEUIMh5iHSKrN4FpEpx28sJ5nwOBrPTqKNwGMPh5iPxy5hGQ>
-    <xmx:QY9hZno6BtPJNj67-sn2krxykaQlZ0bJ1fsl9MHp5jT7N8rj-LMfJw>
-    <xmx:QY9hZonesqBbqR_yP8kbacPRXkB1TvjrwtMQnWDQFhiRGA4u6kk9yPVI>
+X-ME-Proxy: <xmx:RY9hZshixVFXnvSq2x7QJdBCFkOIjqiY24BMENrKOvGK5ptBfqkXTQ>
+    <xmx:RY9hZoCDbuRRUJhZyMAfOxeFTff8FEKK_f4Jj8aCT6tdJu1xCrkXKg>
+    <xmx:RY9hZtKZGUg87lAWxKiDswLm_1ULwHEcRs2LhaiMY1gYMQbG5aBFsw>
+    <xmx:RY9hZvC7Tg_UNoYEjousTT3KU_UO5HxEzxyqJ3e-I-ALTtnVHxf_6g>
+    <xmx:RY9hZr_YgW68VsufC5qwBpGQdwlikxCcb7TchyIcGfSGa19Rx6d6SCqT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Jun 2024 06:28:16 -0400 (EDT)
+ 6 Jun 2024 06:28:20 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 7487993c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Jun 2024 10:27:45 +0000 (UTC)
-Date: Thu, 6 Jun 2024 12:28:13 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 714c7b2a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Jun 2024 10:27:50 +0000 (UTC)
+Date: Thu, 6 Jun 2024 12:28:18 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v5 06/27] builtin/remote: cast away constness in
- `get_head_names()`
-Message-ID: <7cb5df9182e5739f54be089832d85e0447efe46d.1717667854.git.ps@pks.im>
+Subject: [PATCH v5 07/27] diff: cast string constant in `fill_textconv()`
+Message-ID: <6e631a9ea46aa563d197f4a057698a0af53ad50f.1717667854.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717667854.git.ps@pks.im>
 Precedence: bulk
@@ -84,101 +83,75 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2XJ97WAJMfcaUbnk"
+	protocol="application/pgp-signature"; boundary="Cc37i13HYIXZuaYf"
 Content-Disposition: inline
 In-Reply-To: <cover.1717667854.git.ps@pks.im>
 
 
---2XJ97WAJMfcaUbnk
+--Cc37i13HYIXZuaYf
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In `get_head_names()`, we assign the "refs/heads/*" string constant to
-`struct refspec_item::{src,dst}`, which are both non-constant pointers.
-Ideally, we'd refactor the code such that both of these fields were
-constant. But `struct refspec_item` is used for two different usecases
-with conflicting requirements:
+The `fill_textconv()` function is responsible for converting an input
+file with a textconv driver, which is then passed to the caller. Weirdly
+though, the function also handles the case where there is no textconv
+driver at all. In that case, it will return either the contents of the
+populated filespec, or an empty string if the filespec is invalid.
 
-  - To query for a source or destination based on the given refspec. The
-    caller either sets `src` or `dst` as the branch that we want to
-    search for, and the respective other field gets populated. The
-    fields should be constant when being used as a query parameter,
-    which is owned by the caller, and non-constant when being used as an
-    out parameter, which is owned by the refspec item. This is is
-    contradictory in itself already.
+These two cases have differing memory ownership semantics. When there is
+a textconv driver, then the result is an allocated string. Otherwise,
+the result is either a string constant or owned by the filespec struct.
+All callers are in fact aware of this weirdness and only end up freeing
+the output buffer when they had a textconv driver.
 
-  - To store refspec items with their respective source and destination
-    branches, in which case both fields should be owned by the struct.
-
-Ideally, we'd split up this interface to clearly separate between
-querying and storing, which would enable us to clarify lifetimes of the
-strings. This would be a much bigger undertaking though.
-
-Instead, accept the status quo for now and cast away the constness of
-the source and destination patterns. We know that those are not being
-written to or freed, so while this is ugly it certainly is fine for now.
+Ideally, we'd split up this interface to only perform the conversion via
+the textconv driver, and BUG in case the caller didn't provide one. This
+would make memory ownership semantics much more straight forward. For
+now though, let's simply cast the empty string constant to `char *` to
+avoid a warning with `-Wwrite-strings`. This is equivalent to the same
+cast that we already have in `fill_mmfile()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/remote.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index d52b1c0e10..b44f580b8c 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -493,12 +493,13 @@ static int get_head_names(const struct ref *remote_re=
-fs, struct ref_states *stat
- {
- 	struct ref *ref, *matches;
- 	struct ref *fetch_map =3D NULL, **fetch_map_tail =3D &fetch_map;
--	struct refspec_item refspec;
-+	struct refspec_item refspec =3D {
-+		.force =3D 0,
-+		.pattern =3D 1,
-+		.src =3D (char *) "refs/heads/*",
-+		.dst =3D (char *) "refs/heads/*",
-+	};
+diff --git a/diff.c b/diff.c
+index ffd867ef6c..cecda216cf 100644
+--- a/diff.c
++++ b/diff.c
+@@ -7235,7 +7235,7 @@ size_t fill_textconv(struct repository *r,
 =20
--	memset(&refspec, 0, sizeof(refspec));
--	refspec.force =3D 0;
--	refspec.pattern =3D 1;
--	refspec.src =3D refspec.dst =3D "refs/heads/*";
- 	get_fetch_map(remote_refs, &refspec, &fetch_map_tail, 0);
- 	matches =3D guess_remote_head(find_ref_by_name(remote_refs, "HEAD"),
- 				    fetch_map, 1);
-@@ -507,7 +508,6 @@ static int get_head_names(const struct ref *remote_refs=
-, struct ref_states *stat
-=20
- 	free_refs(fetch_map);
- 	free_refs(matches);
--
- 	return 0;
- }
-=20
+ 	if (!driver) {
+ 		if (!DIFF_FILE_VALID(df)) {
+-			*outbuf =3D "";
++			*outbuf =3D (char *) "";
+ 			return 0;
+ 		}
+ 		if (diff_populate_filespec(r, df, NULL))
 --=20
 2.45.2.409.g7b0defb391.dirty
 
 
---2XJ97WAJMfcaUbnk
+--Cc37i13HYIXZuaYf
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhjzwACgkQVbJhu7ck
-PpQBARAArAC9Shhgz4apT2oP+QUehwyLfxkEydwVzf9lk1QJy6a3NjFzXUfYSWJp
-9jfTXlIc1/+FhFk1i2ri/qIU4tuGjhMmNvNH7Vl9uczy8fVk5Y9uSN9OQF4504Om
-xPdZVvWgUSYHDibp8OGB4SMRTf/GM/2Dc28x0Y8R0JkRPCF30o1tUD2YYf/cx18A
-uWEgsBiPLGXeZFaxyT16gsW3h9/tK16wous2wWGsjGyG9ALg64/ggBtwM88tvqWz
-RJJmi9GjGmdK0ZKbDX3l9nVDDk7vgI/weMnHmKhrxPoPSTT00nPVOeuzbxiU9q0t
-vnUCAXO1GDLhN9hH0Ihyuy2Vv/AC3Ag26gVZvUcMwjbKCC9O3pxmp1jFNURelyLL
-Y/5xjHI6Db9OmT/QyMRbcejvFaJEGvg3wvicQB8ZVk17HGF3a9Ohjnvm+4mfwJSM
-AFazKxSLMJiyFurBMF/v6bNE4B10AUF8WDrKmdDHKxxm+s4YxvZBVfoBXVivaN0N
-ZTpivc/d09ZNDEmNzNh5CoFE1APYAAfnlWEf9DXbDP0Mtf2xMiDyNNXyWvnyLYzS
-ZRde3TfdTdPe8uSE57vyIbtgiIYV2NrGAS+1BDrYyIAhgiaZRKnE2Ha3PLhdLDQH
-dUd3gZgqemWTC9FEnCy/O3fVkg8rtp71l82hb6aXhjCmzvHgUPU=
-=N0J1
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhj0EACgkQVbJhu7ck
+PpRRFRAAhMBo914+p2+PFvAs/9zkAVc+VQdHOdKx9bn59BQZe1rmeAabz3T8u+nw
+MchhNHq6c6eSK1PsaJWBf0Ck2KgaIMH3P65jPKz2lgYrJ2qIHJufsU0DVZ4kSuBv
+Y8Bp4prM3dDfGBeiS8pMNPWYplj/WkgR4z1zSkHCmBUMdS9hulp2WwC5F6RGMMwm
+hU8Yazo+ClI4hbPCSB31fZjDLI37dx/qLbQMedQlYiWmVE3tLjBYoU4o7BAZfgAT
+T+M8HZeRvjEgFqELSk661eCdX3m0o9c2/sg/Q/d0XRl/lpUyHOPT63y637EtZger
+YJoG+MeGD930WJWcWKp/v9pezvV9O0JXoXIPskGd0fZ61FzL4WdJWuXoz7AYlC/U
+/Ce5i0lbHcV609FHa4D0RdKk9NkKJzBDAWt6zjYwCDl4/XWZYSmTFkN7eE06Q9B6
+Pv0znmupZS9uFz06RsY9nKA7sON/0wdx0zUwDkL378gcJbhsp9oCf4czHsjXapf+
+aewxRHZA3w+e6pqg3BXCKx17ZW7cv8m8m/lDp5+v57PpmTG3SYlSeMSazJdDFoYb
+efhGEjOqtdjV+sphLEcnOq6Yju4E9uZMYtE0OqxNUd6wQk7kv86WyAFL9TahzX9Z
+JAwXHdD0VdojLoOZUDmg4OSRhselNuNV7znHKXbhSfo4EFKwe7g=
+=ZosL
 -----END PGP SIGNATURE-----
 
---2XJ97WAJMfcaUbnk--
+--Cc37i13HYIXZuaYf--
