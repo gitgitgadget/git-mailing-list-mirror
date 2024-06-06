@@ -1,69 +1,74 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FBA2AD33
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 17:54:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CC7199382
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 18:21:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717696446; cv=none; b=hFiP9w9iJTu8nj2b6gt3oTgy0O8gqBJOYNsMzPipJJcQ/OVUdTx3ajjsT59yEgr5o8ZBp8vJjouN8KzlDuYnBfw05h+3Ebhya7LuWWeyVkL0TRIux6klyHWnSlW0MajJ46QDYzGyh29zXkg50iiY+SJCDsTOKsBoCTnmzesCD/M=
+	t=1717698084; cv=none; b=q59mf5lF/XXPkIc+Z+/s2O+i8r1rlUf5z6eRkztlhQ22zRQnUFYLd0dGVj0tGPmwgwYyrvA0li7kxu8nrLrUrRW4ConRRsWixjs7T1PK6CBPaDWDCTG4Pto33DwkTGoiUsSgTGVM17HxnodlRTtN2DxnX3AnhbIXEGVuKf18qe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717696446; c=relaxed/simple;
-	bh=Mb6km49X/T7b5HRx3ZJ6TgXhNZ8riOj7FPgqocpFd5w=;
+	s=arc-20240116; t=1717698084; c=relaxed/simple;
+	bh=CHnXGSHyb45FtxdciA1XOvZ/fdnJ1ELhMWp+t8xyOqI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N5IzNfAsqnX9c+fSriU6gh1OP+go8NziKLaTfIoLcphU4XCi4WZ09L94rU/MpsZRzDBOXVgYBc8UXmnN71Thq4AwkJLyCzPQOcH0FbqKvBK+UiADPUMRK31A7UzMiF0O1Zuc+y3mpl7BqTKmCuB0osboz+lpngpf2s6YCy2DtGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GtbYUs0j; arc=none smtp.client-ip=209.85.210.174
+	 MIME-Version:Content-Type; b=JnmLlddkovk2Ym+zRvwru0uRu8xnl6t7IDVMzD19QuJQPA5PSiTp26DVRhCCyrh2T8aiR5dvSs1HcN/t0JHTWhQ3ExOg287ebzuG5q+CDC4bVgPYfpM+RXsVTXgFOODp0Q2+b7OjnTXe0YxRNfXs6UHOkTbSg88jPJefc7Bywec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EzsXcHzj; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GtbYUs0j"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7024791a950so1638330b3a.0
-        for <git@vger.kernel.org>; Thu, 06 Jun 2024 10:54:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EzsXcHzj"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1f692d6e990so13284385ad.3
+        for <git@vger.kernel.org>; Thu, 06 Jun 2024 11:21:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717696444; x=1718301244; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
+        d=gmail.com; s=20230601; t=1717698082; x=1718302882; darn=vger.kernel.org;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=drKZiHJ8kQ5uUy/ZCwr8beK223T7Y2F9mIs22/xOTxA=;
-        b=GtbYUs0jCwAQErHEchB3Wxj5IlWSaeASxbIjx5kdFF+bn6NITs0FuGTGdEjHjWmsOX
-         KdoYfO101nZ2Y4xyhp3q9hb7hiCwpO2/G0KpY69jRv9t84qrz6SxkXlJC8k27eADfxZE
-         Byr5oGhIrGvxhctlW3PfZymVACW1g7oLJAc6UbaUZ7C2deB1DRv2rKucGESI6SU2YvrE
-         266N55vvYl4YX6Fr0/vombaKtGT3eD96/Le3QrLab87eCzxyqzlTA0++5AzUSLHIWwLa
-         6atYmc2f5bRxp64Nf9XLkyHLZTsZclFm1KeEjTLz4rvGqckqU7UU0vSRA75oj8yU+I6n
-         6+bw==
+        bh=BSk8o52vUQ+Qyq8B8MTk6cPGF0ySGQnrO8SDBVkJCNA=;
+        b=EzsXcHzjEm64Tqi8D6iNU3eGQVEurMrTHQT005FgbgucVo/d32YJJPgIrWiFoyabFe
+         J0Qt3pfYnsoU14HTH4hYF8G0t32I7i6M/scXVcUaK1xup4AFIdlH7e9pMHswwKhiUfEw
+         efhwVctuG6ZKDyHj41KlKLdgRHmuqnC7UfFGJY5ttbIqAJLwpo/uTtjmAL9DzIuaefw/
+         trr+Ydn+PeawHoC5lsHzYNulD3/J4er3CUGH2CKL9I5b+4n+kxXushMjm6H768RKf13l
+         q1t2/X7guGAYVPTahsQsogtad0XYuCbOvfRBiVKdehdLCvSFXl23NtPNHBsP++PqxXsg
+         wuQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717696444; x=1718301244;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
+        d=1e100.net; s=20230601; t=1717698082; x=1718302882;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=drKZiHJ8kQ5uUy/ZCwr8beK223T7Y2F9mIs22/xOTxA=;
-        b=sx6Uxn3rCDTTveJLvOrCJtTSuu23Xad/laDiTYwjkD5hq2ceg/ImUyA+xr1eyc83xR
-         Vdlhk8PcbpWOfnoye/+j057u7rJiSicIcI98o4wVmo6EFI38LPQD3I438+wNAr9vael/
-         5g4VDVoGVpktZDhgLe38ZkoBKWSnf2RwTzwRZcYEAyDKyIXfPH4BxIL94kGsBf9CbuTj
-         38VLmaJRtY8rPMq9rnox2h06rpuWlT8aeQ/NYGUwuEn1Oa/2G7qQ2/WS4MODFq6pSYrS
-         EIKC7OoGsjoYXuDUYmeE/ZGCTvzy4RPixjPGOELrQVkctEBB34l7ToxDl88sJ9JuMKn9
-         5uzg==
-X-Gm-Message-State: AOJu0YxUW58W3K9jgcSlT9gu5Hl5793RdcFvAYHy+7geip2B57utZjEZ
-	RH1OgcPWkZ0T8MtIdJVvz/xd2UpGFVI796C8sOEaexkgc86MaUEx
-X-Google-Smtp-Source: AGHT+IHXI6/wdwuRPBRVkHw6wYGjiZ8lBMxQsmpkrKt2kO25WIsbiZ3yoDbjvlDwzv8TaBo6QLn/6A==
-X-Received: by 2002:a05:6a20:244f:b0:1b2:cd79:f41b with SMTP id adf61e73a8af0-1b2e781a5b9mr550439637.25.1717696443823;
-        Thu, 06 Jun 2024 10:54:03 -0700 (PDT)
+        bh=BSk8o52vUQ+Qyq8B8MTk6cPGF0ySGQnrO8SDBVkJCNA=;
+        b=qhUCOCL8+reqEaidb/0JLVqLjD4BUaYjwKrAtp0ClgHBJSeUtI2jh+H1qfwt3c29gg
+         RwHjoVol/eQ6U8euUt8DpuCsjlaFLHa3v27Wqv1zbaGWL++9pheexbvOwY/EGcMch2o6
+         8aJc8A9e2j6wHBhRRqWSnPkTLeC/M5moLffpAF80CQk20i2Y+KUh7O+DM+A8r0K3U6XQ
+         lH0jGJWnDjlbZzuTwmn+MMB34IbIlS3lCGbmOEk6Wyg0sqdN45yZcjG2/pd7q59M9t3l
+         WudhKT/zoOJKCv/x6yCBHgzcCHnGF1NdtYrn9i6bd9sigXWHPQGima3ZKYkVGdERRzVL
+         80gA==
+X-Gm-Message-State: AOJu0YwdIk4EdSzG9wgBWJK5CVxbAqyzNLv3ApnhpVj3+m0zDaXD6SBA
+	sn2fAK69Ys4UGG+/z19n28mEGvtRJPKRLXNbjlJznPqtpx85MV5C
+X-Google-Smtp-Source: AGHT+IHhEMxMXOSJbDCQQ2f0+jF6QtkzuL0nNzBGrEQYwsFKoyAkdoGSNdA2FOd0xAUXssR1J0czbg==
+X-Received: by 2002:a17:902:dac6:b0:1f6:678c:9e8c with SMTP id d9443c01a7336-1f6d03be125mr3727135ad.67.1717698082128;
+        Thu, 06 Jun 2024 11:21:22 -0700 (PDT)
 Received: from localhost (201.204.125.34.bc.googleusercontent.com. [34.125.204.201])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-703fd4dead8sm1350960b3a.151.2024.06.06.10.54.03
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6bd778259sm18270745ad.117.2024.06.06.11.21.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 10:54:03 -0700 (PDT)
+        Thu, 06 Jun 2024 11:21:21 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Eric Sunshine
- <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 12/27] object-file: mark cached object buffers as const
-In-Reply-To: <5cd014c22cb2fc7e34666aa6bd036d3cc4ce9039.1717667854.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Thu, 6 Jun 2024 12:28:41 +0200")
-References: <cover.1716983704.git.ps@pks.im> <cover.1717667854.git.ps@pks.im>
-	<5cd014c22cb2fc7e34666aa6bd036d3cc4ce9039.1717667854.git.ps@pks.im>
-Date: Thu, 06 Jun 2024 10:54:01 -0700
-Message-ID: <xmqqfrtqlzye.fsf@gitster.g>
+To: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+    "Phillip Wood" <phillip.wood123@gmail.com>,
+    Kristoffer Haugsbakk <code@khaugsbakk.name>,
+    "Jeff King" <peff@peff.net>,
+    "Patrick Steinhardt" <ps@pks.im>,
+    =?utf-8?Q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>,
+    John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH 1/4] refs: add referent parameter to
+ refs_resolve_ref_unsafe
+In-Reply-To: <011c10f488610b0a795a843bff66723477783761.1717694801.git.gitgitgadget@gmail.com>
+References: <pull.1712.git.git.1717694800.gitgitgadget@gmail.com>
+	<011c10f488610b0a795a843bff66723477783761.1717694801.git.gitgitgadget@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Thu, 06 Jun 2024 11:21:21 -0700
+Message-ID: <xmqq34pqlyou.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,39 +77,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+ADMINISTRIVIA.  Check the address you place on the CC: line.  What
+we can see for this message at
 
-> @@ -1778,17 +1778,22 @@ int pretend_object_file(void *buf, unsigned long len, enum object_type type,
->  			struct object_id *oid)
+https://lore.kernel.org/git/011c10f488610b0a795a843bff66723477783761.1717694801.git.gitgitgadget@gmail.com/raw
+
+looks like this.
+
+    Cc: "Phillip Wood [ ]" <phillip.wood123@gmail.com>,
+        Kristoffer Haugsbakk <[code@khaugsbakk.name]>,
+        "Jeff King [ ]" <peff@peff.net>,
+        "Patrick Steinhardt [ ]" <ps@pks.im>,
+        "=?UTF-8?Q?Jean-No=C3=ABl?= Avila [ ]" <avila.jn@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        John Cai <johncai86@gmail.com>
+
+I fixed them manually, but it wasn't pleasant.  I think we saw a
+similar breakage earlier coming via GGG, but I do not recall the
+details of how to cause such breakages (iow, what to avoid repeating
+this).
+
+Anyway.
+
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+>  29 files changed, 64 insertions(+), 52 deletions(-)
+
+Wow, the blast radius of this thing is rather big.  Among these
+existing callers of refs_resolve_ref_unsafe(), how many of them
+will benefit from being able to pass a non NULL parameter at the end
+of the series, and more importantly, in the future to take advantage
+of the new feature possibly with a separate series?
+
+I am assuming that this will benefit only a selected few and the
+callers that would want to take advantage of the new feature will
+remain low.  Have you considered renaming refs_resolve_ref_unsafe()
+to a new name (say, refs_resolve_ref_unsafe_with_referent()) and
+implement the new feature (which is only triggered when the new
+parameter gets a non NULL value), make refs_resolve_ref_unsafe() a
+very thin wrapper that passes NULL to the new thing?
+
+That way, you do not have to touch those existing callers that will
+never benefit from the new capability in the future.  You won't risk
+conflicting with in flight topics semantically, either.
+
+Or will they also benefit from the new feature in the future?
+
+Offhand, I do not know how a caller like this ...
+
+> diff --git a/add-interactive.c b/add-interactive.c
+> index b5d6cd689a1..041d30cf2b3 100644
+> --- a/add-interactive.c
+> +++ b/add-interactive.c
+> @@ -533,7 +533,7 @@ static int get_modified_files(struct repository *r,
 >  {
->  	struct cached_object *co;
-> +	char *co_buf;
-> +
-> +	co_buf = xmalloc(len);
-> +	memcpy(co_buf, buf, len);
+>  	struct object_id head_oid;
+>  	int is_initial = !refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
+> -						  "HEAD", RESOLVE_REF_READING,
+> +						  "HEAD", NULL, RESOLVE_REF_READING,
+>  						  &head_oid, NULL);
+>  	struct collection_status s = { 0 };
+>  	int i;
 
-I do not see why we need to do this so early.  The copy is not used
-or buf gets modified by the call to hash_object_file(), so ...
+... would be helped.
 
->  	hash_object_file(the_hash_algo, buf, len, type, oid);
->  	if (repo_has_object_file_with_flags(the_repository, oid, OBJECT_INFO_QUICK | OBJECT_INFO_SKIP_FETCH_OBJECT) ||
-> -	    find_cached_object(oid))
-> +	    find_cached_object(oid)) {
-> +		free(co_buf);
->  		return 0;
-> +	}
->  	ALLOC_GROW(cached_objects, cached_object_nr + 1, cached_object_alloc);
->  	co = &cached_objects[cached_object_nr++];
->  	co->size = len;
->  	co->type = type;
-> -	co->buf = xmalloc(len);
-> -	memcpy(co->buf, buf, len);
-> +	co->buf = co_buf;
-
-... wouldn't this be a better place to do the "copy to the heap
-memory pointed by a writable pointer and then point that piece of
-memory with a read-only pointer" pattern?
-
->  	oidcpy(&co->oid, oid);
->  	return 0;
->  }
+Thanks.
