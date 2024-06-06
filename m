@@ -1,84 +1,64 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A792F19D890
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 07:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62BC1BDEF
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 07:23:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717657583; cv=none; b=jQVHETlUyP669R2jBjRqkblWMIW7oHF4TRgLj5gzjBMToqcMcoOWIQM7ICwRpmpb8BPQ7t3pZfE73mHk9wAMnTmMK6yhGKta04fz0s0sC4jvvr8hehr7aQ5YQhWNli9toUzu68vJUtKr+DLIL4Qd3gvEf8TsdV6plaIFfVOjIpo=
+	t=1717658627; cv=none; b=TTaZXgMenAZJLds0HjRdj0zwggXf0v3q0jeWsn3tU9jNaXrn+ZgB2rcdZZdp+qLJdO/5bra4NW6gq7RdidY07ymdZCk87jfjvZ+mOQ+SgsHMzyJGe0YnoHyQImIirurN8spggINuTV8n6tzm6eqlvTusw4swvRoMciHBFbeR1vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717657583; c=relaxed/simple;
-	bh=3vY9hvI+ThkrN0sYy0xfYP+7OSPEqu8apYjVmyKRgGw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u9UdIvRzImHrA/Ns9v+Od+pdXSgqUc/f+GCbzf5ccT/c6plhKlvdxX9VAtxcaV+uDJEsH74YuZT+zJ1DO0yVJH7D+G7Q3VGE3AphDt/HAvNZ52eiNfvjAAQMA3iuTABKj2H6Rkg1sP2XQ8/tS1I0i0sXwyi8mgi7GUpKoRSoDRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 9963 invoked by uid 109); 6 Jun 2024 07:06:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 06 Jun 2024 07:06:20 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6038 invoked by uid 111); 6 Jun 2024 07:06:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 06 Jun 2024 03:06:18 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 6 Jun 2024 03:06:19 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v5 00/12] refs: ref storage migrations
-Message-ID: <20240606070619.GD646308@coredump.intra.peff.net>
-References: <cover.1716451672.git.ps@pks.im>
- <cover.1717649802.git.ps@pks.im>
+	s=arc-20240116; t=1717658627; c=relaxed/simple;
+	bh=hHF0+bNRmg1uZkC2+gjlT7qbKxznC1QLvJ0iNfglJoA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fVOzvAkHUNq7A1y4WpsjLu1NOJLen+WsKQgS6gQbuAb6DNzF42uuddEC8V34xnGaP/ALLFX0aXJKsaDH21fVvFRiIiftChDUkvGb8/Jv5K3jN5enydOn1zri1r4l0oYdOzRHQcW6tiI80pdvWfh2aqtGs0Id/NyI0bcZZdpRLjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.107])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4VvvnW6yhhz5vZ4
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 08:39:27 +0200 (CEST)
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4VvvnL12QlzRnmT;
+	Thu,  6 Jun 2024 08:39:18 +0200 (CEST)
+Message-ID: <1c055e96-76b0-4174-a8e2-cb6df041fabf@kdbg.org>
+Date: Thu, 6 Jun 2024 08:39:17 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1717649802.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] diff: let external diffs report that changes are
+ uninteresting
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ German Lashevich <german.lashevich@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+References: <CACDhgro3KXD0O9ZdE1q46jmXE0O=vf-Z+ZX50WMqmRHAeowGAA@mail.gmail.com>
+ <82561c70-ec33-41bf-b036-52310ffc1926@web.de>
+ <e2e4a4e9-55db-403c-902d-fd8af3aea05c@web.de>
+ <6fa51a62-5dc1-4865-9f79-eaf7d65189ab@web.de>
+ <99a99e5c-4fe4-413a-9281-363e280716b8@web.de>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <99a99e5c-4fe4-413a-9281-363e280716b8@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jun 06, 2024 at 07:28:52AM +0200, Patrick Steinhardt wrote:
+Am 05.06.24 um 10:38 schrieb René Scharfe:
+> +diff.trustExitCode::
+> +	If this boolean value is set to true then the `diff.external`
+> +	command is expected to return exit code 1 if it finds
+> +	significant changes and 0 if it doesn't, like diff(1).  If it's
+> +	false then the `diff.external` command is expected to always
+> +	return exit code 0.  Defaults to false.
 
-> the ref storage migration was merged to `next`, but got reverted due to
-> some additional findings by Peff and/or Coverity.
-> 
-> Changes compared to v4:
-> 
->   - Adapt comment of `ref_store_init()` to the new parameter.
-> 
->   - Fix use of an uninitialized return value in `for_each_root_ref()`.
-> 
->   - Fix overwrite of ret code in `files_ref_store_remove_on_disk()`.
-> 
->   - Adapt an error message to more clearly point out that deletion of
->     "refs/" directory failed in `reftable_be_remove_on_disk()`.
-> 
->   - Fix a leak when `mkdtemp()` fails.
+I find this somewhat unclear. What are the consequences when this value
+is set to false, but the command exits with code other than 0? Is it
 
-These all looked good to me (though I did not carefully read the
-original topic, so was just looking at the parts I mentioned earlier).
+    If it's false then any exit code other than 0 of the `diff.external`
+    command is treated as an error.
 
->  6:  f7577a0ab3 !  6:  86cf0c84b1 refs/files: extract function to iterate through root refs
->     @@ refs/files-backend.c: static void add_root_refs(struct files_ref_store *refs,
->       		strbuf_setlen(&refname, dirnamelen);
->       	}
->      +
->     ++	ret = 0;
->     ++
->      +done:
->       	strbuf_release(&refname);
->       	strbuf_release(&path);
+-- Hannes
 
-Since the context doesn't show much, I wondered whether there was any
-case where we'd overwrite an earlier "ret" here. But nope, we always
-jump to "done" after finding "ret" contains a non-zero value. So setting
-it to zero here is the right thing.
-
--Peff
