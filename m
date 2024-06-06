@@ -1,73 +1,73 @@
-Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
+Received: from wfhigh1-smtp.messagingengine.com (wfhigh1-smtp.messagingengine.com [64.147.123.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6DD38F9C
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 05:29:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588D738F9C
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 05:29:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717651786; cv=none; b=AhdQTr5otke4GMl6SDqo7VZlR6BW1w1tYYKd1buOPZ7mdUlhKncdMkX6deiIfwRjQMmqlKAsoDmfXydh7C5egK6mjfumd1zbiYcgstuWW/4OfD0r3MdsVNchHDX4urV4nlQTEWhARAAp5GTz9hivYjPmDfJGDFOM35fcqTV+WFw=
+	t=1717651792; cv=none; b=Vcdp0bmHe5bpfdb7bSohavwga3f0wg/udLoO7DUZoK54grVaffJkyOxhxYtF1GoC9ESy99CB7rZ56xU2ktbAS2c+WEkky4S/qSCIwFjgfKl3dP8nVb/Szz5+1jWkjddNqp0AU3TIEpKJGhgs5n0nLTYOO5l9oqJVCs4W9fOccHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717651786; c=relaxed/simple;
-	bh=GWsPpmc/e8WlZsLw60fwdL0NJea4HGKtxXdmiTChUmM=;
+	s=arc-20240116; t=1717651792; c=relaxed/simple;
+	bh=1tr9XhwRvfMdT/ifnal/9H4ylbW1BX/8wNio8OszqXo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IiKRudbfxeAMkQdTFBRD3xOONDvEFlVqAEAqdbUVHpBkVisg4azk0eia/1RW61yYolu1tGDrcAiz+J/NNjXWYGSorms7RWwGHpqcUPzbZJrst6luF8QLY2RfWUA3jFBuzLk8f3n5GsRWnv0YGCdlQvzqaftaFkviBgdTfhtdSA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fHzk787e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CLyoRi5M; arc=none smtp.client-ip=64.147.123.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=j4NRloCLmUo/FeBOM75EUOIi0je4Y7L3D7+VrabmaQGOD/cMEiup8eG6YC/FNbAJxU2enJ55SfgZDE2ud8nUifI68B6g5GKLjoFfVH8C2AIO51rbESjPnbhkPUG2DO+iw48b3GexxKcIm6dD6J9RNq+aNTmBPvpkUkNngIPAC7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CKHb2+G3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FLLrRO+K; arc=none smtp.client-ip=64.147.123.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fHzk787e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CLyoRi5M"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.west.internal (Postfix) with ESMTP id 99B3E1C001CF;
-	Thu,  6 Jun 2024 01:29:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CKHb2+G3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FLLrRO+K"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 5B16E180019C;
+	Thu,  6 Jun 2024 01:29:49 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 06 Jun 2024 01:29:44 -0400
+  by compute2.internal (MEProxy); Thu, 06 Jun 2024 01:29:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717651783; x=1717738183; bh=YBjFRcmq/9
-	dGqKp+ruDeWDGb9J0m4MXTI9lpZeQ36hM=; b=fHzk787eNwxUL9dl2qP+lhsiO6
-	N17FYf15P5sW531cyOjdTUZL6Swe4ZDHaoZK4BuWIMVeUbjiB9C4KnscXvgaXKK6
-	z9lbRRr2ddboJnTYw3V1an43ESGfWM6mNiJzrY12YaAyOAeuS/wr6AfIldkkMmYZ
-	Wo+NM6xrhqzLpkq4+itnbaMyjClJAHaCYpe1PLiT8kWyPm8pBKMHm+q2CEJY3VUY
-	T9zvVh3VKT1isVrsF+n7JVkahNmM9iykUNbEBBDqkfGIWJsVfrNI7r1dy7SECQsU
-	+7Vz8mPzU5+y8k2Dzrr7rpa5vmNMTXVI3p/rz7JIwZKivv/Z6ohhv20VeWgQ==
+	:subject:to:to; s=fm1; t=1717651789; x=1717738189; bh=o2qBq0Y8NU
+	8IavnD7S1O7juVcY8HOGyY7cdGbq5FODc=; b=CKHb2+G3M3JoH5aXy2cc7xwbKX
+	QnMdN4/6trn/LjVdItOAm341lB6vpuxCHg7U02J41wzTkdjtNumsWfxtdiVExTR/
+	xa/kY2SYJlxDKLs99jnLHTVdGImKbDeaUX93qMZoJmcTZ9il/lhyvg4B9JVMSa47
+	/+dzM383eYYWSkzRjSnQemeXuBV4OtCk4jt1LSDTU9EXL6Y6/7ZUjT4AvFIm656t
+	U0c+x5X1luB/FvShTSMRId3hZPxsErUQHtiIyTQrEAErRzWOlsY+NC54TBaXeLOh
+	ydshptS7QWSiyGlsCKg2aHy1fX5IfMxefcIQPC01u2/QtxlNwD0I2gU0ep9w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717651783; x=1717738183; bh=YBjFRcmq/9dGqKp+ruDeWDGb9J0m
-	4MXTI9lpZeQ36hM=; b=CLyoRi5MYYUCPOVGuI/ncw0DcGHh+sPfVJkvzOs5CQVe
-	1ybre0EWfHJgd47JYkLFN0w0rQ3oq7qHSrFo3nsEs7a+6BHF605Rbq6XUYTdYrBq
-	oOVBSvvtUlAn7XXZ44sgBduIskEbgMNnRBJbjCp55XlVftNilQMGelWYUY2ANJvD
-	TazS41eFuYAesl3Sv20d4+hp60sjq9/MruqNAsqGkyLs+d4MxAkym1/scSrrY74A
-	sKgXgmRl3P7jZTJhqyRKaAvJ/SJ/fxCtP68G2tbLbtEHxzq+z7nIQcsypMhpj/VG
-	s11dwDnR2TtGZixWjc63nzXG7TtCawholnNq2RaLvQ==
-X-ME-Sender: <xms:R0lhZueV-07iV9fVojG2f4wib3LZ98D6QqJYn-KcoIAXjaPEmf8vYg>
-    <xme:R0lhZoN5tnQgHCYsGI73GOfC3vv8uSet2R8x_6Q7_ieHmjllWso5bKDcruBzWq2l2
-    QKjOjLulswh9fllJw>
-X-ME-Received: <xmr:R0lhZvjGATmlGSyQsi6r5JdOa4RtYJc-8peEm66pEtJ3V67fR92GC0UgK22UkoRp2kCxNnFmQA7E-5-6dTHDEN1a2PugrVjfuGrpeVP_UyJMRBMs>
+	fm1; t=1717651789; x=1717738189; bh=o2qBq0Y8NU8IavnD7S1O7juVcY8H
+	OGyY7cdGbq5FODc=; b=FLLrRO+KXuzqyDyIrvVx0EWlnjT3HxmdGWooQ3przo1S
+	FGNKtdOhi+i8XrrIkmXfhw5tIS0KAXpl4fJ0kZAnhZ/S9hBNLnUw6FvIWVXkL/4l
+	8r49+/t03nicVL9NDiIQyJT0Sh1kASANTM9ofJzfHvnNS2H5n9EeK+hEVGDDYMpL
+	DvGFAOe22TQiNWn4tDIgbu9vtMfg+X3rvO3hYZ27zJe8idEPoGJJ/x/vWVBWWVpJ
+	DXGfmBeM4O4s6f72bsCkLl2xZ8z6QD+50w8QFanixz6cEBcf8XD4oHIy+9hzJDhG
+	IDNBKy9IKRUSHSUKTEQ3vrPARrsBrwnHl0/lWM76jw==
+X-ME-Sender: <xms:TElhZirWBOpvEwH0pCPSl1V56grbdllLpdYoYFzEjqP_e-sXATp8_w>
+    <xme:TElhZgoIJx-zt-JsQ9Em-F37YJI-2B4M9V-O0PkWVW6kvBDhmy0vrvPepR5GjwjmV
+    LiR66W3FLDLHVc5pg>
+X-ME-Received: <xmr:TElhZnPAb2GI3F_tsvdkn1d1n_Reilxy2yQ3Q4UJBhm_x6J29jvWMU9ROnTiyehhcO9hvsBfUUWaXCNysszqneN3saUPtpO_03-WJZPYJ56ckpnU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeljedgleeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepgeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:R0lhZr_zB6AXD3nAFEGFdB6Af61oGMvEMyhpqgbAgf0LbQ7086vsLA>
-    <xmx:R0lhZqsmuNowlDdhXErqxBXegCThK6urlMW6Nx5yViJe0FcUKPF4Dw>
-    <xmx:R0lhZiG1sANTKJzkzEsM97wwqa_ejak4Dc8ZM7hsLPl79zjsoEk60w>
-    <xmx:R0lhZpNWAmD4YTqjrP0Z835IdM7Yf4SbXQdczr7iJwApYm_o58Mlmg>
-    <xmx:R0lhZn9qDTE6uHiEPDONJ9UPjemNLVkoIch511CfF6Y1BjTF8B_gJAR6>
+X-ME-Proxy: <xmx:TElhZh6vY0xznY2-EeFTtEvyUg5uo7Iiy3d35RpX_tSsxe_5XNvVtg>
+    <xmx:TElhZh5IssVd5rd1WjzdheXY9t3WkRvsz9VpbQ3NR3FaRxp-y43N5g>
+    <xmx:TElhZhhFQlo30aaJZvljx0uQwy122TiV5AwPCV5pdB6NM1JQRbEzDQ>
+    <xmx:TElhZr6MCO1G5b40dspox4w0-Kz1pAzuWhP9O_LO0SXzujUx_jMuVw>
+    <xmx:TElhZsao6o2FtrN9ZZAZ9jmsJrlg6ci7qrhKfaNpLgPAjqm1hCDi_6u0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Jun 2024 01:29:41 -0400 (EDT)
+ 6 Jun 2024 01:29:47 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 82111a79 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Jun 2024 05:29:11 +0000 (UTC)
-Date: Thu, 6 Jun 2024 07:29:39 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 4f99c112 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Jun 2024 05:29:17 +0000 (UTC)
+Date: Thu, 6 Jun 2024 07:29:45 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
@@ -75,8 +75,9 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Justin Tobler <jltobler@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v5 10/12] refs: implement removal of ref storages
-Message-ID: <7b5fee21856d970bdf6cd423d2b354e610e78df6.1717649802.git.ps@pks.im>
+Subject: [PATCH v5 11/12] refs: implement logic to migrate between ref
+ storage formats
+Message-ID: <893d99e98ed820ad210540de190d706cc057b2ee.1717649803.git.ps@pks.im>
 References: <cover.1716451672.git.ps@pks.im>
  <cover.1717649802.git.ps@pks.im>
 Precedence: bulk
@@ -86,313 +87,430 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="06GrAdbcIM2z1KW4"
+	protocol="application/pgp-signature"; boundary="gPADlXq7HknV91I2"
 Content-Disposition: inline
 In-Reply-To: <cover.1717649802.git.ps@pks.im>
 
 
---06GrAdbcIM2z1KW4
+--gPADlXq7HknV91I2
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're about to introduce logic to migrate ref storages. One part of the
-migration will be to delete the files that are part of the old ref
-storage format. We don't yet have a way to delete such data generically
-across ref backends though.
+With the introduction of the new "reftable" backend, users may want to
+migrate repositories between the backends without having to recreate the
+whole repository. Add the logic to do so.
 
-Implement a new `delete` callback and expose it via a new
-`ref_storage_delete()` function.
+The implementation is generic and works with arbitrary ref storage
+formats so that a backend does not need to implement any migration
+logic. It does have a few limitations though:
+
+  - We do not migrate repositories with worktrees, because worktrees
+    have separate ref storages. It makes the overall affair more complex
+    if we have to migrate multiple storages at once.
+
+  - We do not migrate reflogs, because we have no interfaces to write
+    many reflog entries.
+
+  - We do not lock the repository for concurrent access, and thus
+    concurrent writes may end up with weird in-between states. There is
+    no way to fully lock the "files" backend for writes due to its
+    format, and thus we punt on this topic altogether and defer to the
+    user to avoid those from happening.
+
+In other words, this version is a minimum viable product for migrating a
+repository's ref storage format. It works alright for bare repos, which
+often have neither worktrees nor reflogs. But it will not work for many
+other repositories without some preparations. These limitations are not
+set into stone though, and ideally we will eventually address them over
+time.
+
+The logic is not yet used by anything, and thus there are no tests for
+it. Those will be added in the next commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c                  |  5 ++++
- refs.h                  |  5 ++++
- refs/files-backend.c    | 62 +++++++++++++++++++++++++++++++++++++++++
- refs/packed-backend.c   | 15 ++++++++++
- refs/refs-internal.h    |  7 +++++
- refs/reftable-backend.c | 52 ++++++++++++++++++++++++++++++++++
- 6 files changed, 146 insertions(+)
+ refs.c | 308 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ refs.h |  18 ++++
+ 2 files changed, 326 insertions(+)
 
 diff --git a/refs.c b/refs.c
-index fa3b0a82d4..31fd391214 100644
+index 31fd391214..1304d3dd87 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1861,6 +1861,11 @@ int ref_store_create_on_disk(struct ref_store *refs,=
- int flags, struct strbuf *e
- 	return refs->be->create_on_disk(refs, flags, err);
+@@ -2570,3 +2570,311 @@ int ref_update_check_old_target(const char *referen=
+t, struct ref_update *update,
+ 			    referent, update->old_target);
+ 	return -1;
  }
-=20
-+int ref_store_remove_on_disk(struct ref_store *refs, struct strbuf *err)
-+{
-+	return refs->be->remove_on_disk(refs, err);
-+}
 +
- int repo_resolve_gitlink_ref(struct repository *r,
- 			     const char *submodule, const char *refname,
- 			     struct object_id *oid)
-diff --git a/refs.h b/refs.h
-index 50a2b3ab09..61ee7b7a15 100644
---- a/refs.h
-+++ b/refs.h
-@@ -129,6 +129,11 @@ int ref_store_create_on_disk(struct ref_store *refs, i=
-nt flags, struct strbuf *e
-  */
- void ref_store_release(struct ref_store *ref_store);
-=20
-+/*
-+ * Remove the ref store from disk. This deletes all associated data.
-+ */
-+int ref_store_remove_on_disk(struct ref_store *refs, struct strbuf *err);
-+
- /*
-  * Return the peeled value of the oid currently being iterated via
-  * for_each_ref(), etc. This is equivalent to calling:
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index de8cc83174..e663781199 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3342,11 +3342,73 @@ static int files_ref_store_create_on_disk(struct re=
-f_store *ref_store,
- 	return 0;
- }
-=20
-+struct remove_one_root_ref_data {
-+	const char *gitdir;
-+	struct strbuf *err;
++struct migration_data {
++	struct ref_store *old_refs;
++	struct ref_transaction *transaction;
++	struct strbuf *errbuf;
 +};
 +
-+static int remove_one_root_ref(const char *refname,
-+			       void *cb_data)
++static int migrate_one_ref(const char *refname, const struct object_id *oi=
+d,
++			   int flags, void *cb_data)
 +{
-+	struct remove_one_root_ref_data *data =3D cb_data;
-+	struct strbuf buf =3D STRBUF_INIT;
-+	int ret =3D 0;
++	struct migration_data *data =3D cb_data;
++	struct strbuf symref_target =3D STRBUF_INIT;
++	int ret;
 +
-+	strbuf_addf(&buf, "%s/%s", data->gitdir, refname);
++	if (flags & REF_ISSYMREF) {
++		ret =3D refs_read_symbolic_ref(data->old_refs, refname, &symref_target);
++		if (ret < 0)
++			goto done;
 +
-+	ret =3D unlink(buf.buf);
-+	if (ret < 0)
-+		strbuf_addf(data->err, "could not delete %s: %s\n",
-+			    refname, strerror(errno));
++		ret =3D ref_transaction_update(data->transaction, refname, NULL, null_oi=
+d(),
++					     symref_target.buf, NULL,
++					     REF_SKIP_CREATE_REFLOG | REF_NO_DEREF, NULL, data->errbuf);
++		if (ret < 0)
++			goto done;
++	} else {
++		ret =3D ref_transaction_create(data->transaction, refname, oid,
++					     REF_SKIP_CREATE_REFLOG | REF_SKIP_OID_VERIFICATION,
++					     NULL, data->errbuf);
++		if (ret < 0)
++			goto done;
++	}
 +
-+	strbuf_release(&buf);
++done:
++	strbuf_release(&symref_target);
 +	return ret;
 +}
 +
-+static int files_ref_store_remove_on_disk(struct ref_store *ref_store,
-+					  struct strbuf *err)
++static int move_files(const char *from_path, const char *to_path, struct s=
+trbuf *errbuf)
 +{
-+	struct files_ref_store *refs =3D
-+		files_downcast(ref_store, REF_STORE_WRITE, "remove");
-+	struct remove_one_root_ref_data data =3D {
-+		.gitdir =3D refs->base.gitdir,
-+		.err =3D err,
-+	};
-+	struct strbuf sb =3D STRBUF_INIT;
-+	int ret =3D 0;
++	struct strbuf from_buf =3D STRBUF_INIT, to_buf =3D STRBUF_INIT;
++	size_t from_len, to_len;
++	DIR *from_dir;
++	int ret;
 +
-+	strbuf_addf(&sb, "%s/refs", refs->base.gitdir);
-+	if (remove_dir_recursively(&sb, 0) < 0) {
-+		strbuf_addf(err, "could not delete refs: %s",
-+			    strerror(errno));
++	from_dir =3D opendir(from_path);
++	if (!from_dir) {
++		strbuf_addf(errbuf, "could not open source directory '%s': %s",
++			    from_path, strerror(errno));
 +		ret =3D -1;
++		goto done;
 +	}
-+	strbuf_reset(&sb);
 +
-+	strbuf_addf(&sb, "%s/logs", refs->base.gitdir);
-+	if (remove_dir_recursively(&sb, 0) < 0) {
-+		strbuf_addf(err, "could not delete logs: %s",
-+			    strerror(errno));
-+		ret =3D -1;
++	strbuf_addstr(&from_buf, from_path);
++	strbuf_complete(&from_buf, '/');
++	from_len =3D from_buf.len;
++
++	strbuf_addstr(&to_buf, to_path);
++	strbuf_complete(&to_buf, '/');
++	to_len =3D to_buf.len;
++
++	while (1) {
++		struct dirent *ent;
++
++		errno =3D 0;
++		ent =3D readdir(from_dir);
++		if (!ent)
++			break;
++
++		if (!strcmp(ent->d_name, ".") ||
++		    !strcmp(ent->d_name, ".."))
++			continue;
++
++		strbuf_setlen(&from_buf, from_len);
++		strbuf_addstr(&from_buf, ent->d_name);
++
++		strbuf_setlen(&to_buf, to_len);
++		strbuf_addstr(&to_buf, ent->d_name);
++
++		ret =3D rename(from_buf.buf, to_buf.buf);
++		if (ret < 0) {
++			strbuf_addf(errbuf, "could not link file '%s' to '%s': %s",
++				    from_buf.buf, to_buf.buf, strerror(errno));
++			goto done;
++		}
 +	}
-+	strbuf_reset(&sb);
 +
-+	if (for_each_root_ref(refs, remove_one_root_ref, &data) < 0)
++	if (errno) {
++		strbuf_addf(errbuf, "could not read entry from directory '%s': %s",
++			    from_path, strerror(errno));
 +		ret =3D -1;
++		goto done;
++	}
 +
-+	if (ref_store_remove_on_disk(refs->packed_ref_store, err) < 0)
-+		ret =3D -1;
++	ret =3D 0;
 +
-+	strbuf_release(&sb);
++done:
++	strbuf_release(&from_buf);
++	strbuf_release(&to_buf);
++	if (from_dir)
++		closedir(from_dir);
 +	return ret;
 +}
 +
- struct ref_storage_be refs_be_files =3D {
- 	.name =3D "files",
- 	.init =3D files_ref_store_init,
- 	.release =3D files_ref_store_release,
- 	.create_on_disk =3D files_ref_store_create_on_disk,
-+	.remove_on_disk =3D files_ref_store_remove_on_disk,
-=20
- 	.transaction_prepare =3D files_transaction_prepare,
- 	.transaction_finish =3D files_transaction_finish,
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 2789fd92f5..c4c1e36aa2 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1,5 +1,6 @@
- #include "../git-compat-util.h"
- #include "../config.h"
-+#include "../dir.h"
- #include "../gettext.h"
- #include "../hash.h"
- #include "../hex.h"
-@@ -1266,6 +1267,19 @@ static int packed_ref_store_create_on_disk(struct re=
-f_store *ref_store UNUSED,
- 	return 0;
- }
-=20
-+static int packed_ref_store_remove_on_disk(struct ref_store *ref_store,
-+					   struct strbuf *err)
++static int count_reflogs(const char *reflog UNUSED, void *payload)
 +{
-+	struct packed_ref_store *refs =3D packed_downcast(ref_store, 0, "remove");
-+
-+	if (remove_path(refs->path) < 0) {
-+		strbuf_addstr(err, "could not delete packed-refs");
-+		return -1;
-+	}
-+
++	size_t *reflog_count =3D payload;
++	(*reflog_count)++;
 +	return 0;
 +}
 +
- /*
-  * Write the packed refs from the current snapshot to the packed-refs
-  * tempfile, incorporating any changes from `updates`. `updates` must
-@@ -1724,6 +1738,7 @@ struct ref_storage_be refs_be_packed =3D {
- 	.init =3D packed_ref_store_init,
- 	.release =3D packed_ref_store_release,
- 	.create_on_disk =3D packed_ref_store_create_on_disk,
-+	.remove_on_disk =3D packed_ref_store_remove_on_disk,
-=20
- 	.transaction_prepare =3D packed_transaction_prepare,
- 	.transaction_finish =3D packed_transaction_finish,
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 33749fbd83..cbcb6f9c36 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -517,6 +517,12 @@ typedef int ref_store_create_on_disk_fn(struct ref_sto=
-re *refs,
- 					int flags,
- 					struct strbuf *err);
-=20
-+/*
-+ * Remove the reference store from disk.
-+ */
-+typedef int ref_store_remove_on_disk_fn(struct ref_store *refs,
-+					struct strbuf *err);
-+
- typedef int ref_transaction_prepare_fn(struct ref_store *refs,
- 				       struct ref_transaction *transaction,
- 				       struct strbuf *err);
-@@ -649,6 +655,7 @@ struct ref_storage_be {
- 	ref_store_init_fn *init;
- 	ref_store_release_fn *release;
- 	ref_store_create_on_disk_fn *create_on_disk;
-+	ref_store_remove_on_disk_fn *remove_on_disk;
-=20
- 	ref_transaction_prepare_fn *transaction_prepare;
- 	ref_transaction_finish_fn *transaction_finish;
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index bffed9257f..da6b3162f3 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1,6 +1,7 @@
- #include "../git-compat-util.h"
- #include "../abspath.h"
- #include "../chdir-notify.h"
-+#include "../dir.h"
- #include "../environment.h"
- #include "../gettext.h"
- #include "../hash.h"
-@@ -343,6 +344,56 @@ static int reftable_be_create_on_disk(struct ref_store=
- *ref_store,
- 	return 0;
- }
-=20
-+static int reftable_be_remove_on_disk(struct ref_store *ref_store,
-+				      struct strbuf *err)
++static int has_worktrees(void)
 +{
-+	struct reftable_ref_store *refs =3D
-+		reftable_be_downcast(ref_store, REF_STORE_WRITE, "remove");
-+	struct strbuf sb =3D STRBUF_INIT;
++	struct worktree **worktrees =3D get_worktrees();
 +	int ret =3D 0;
++	size_t i;
 +
-+	/*
-+	 * Release the ref store such that all stacks are closed. This is
-+	 * required so that the "tables.list" file is not open anymore, which
-+	 * would otherwise make it impossible to remove the file on Windows.
-+	 */
-+	reftable_be_release(ref_store);
-+
-+	strbuf_addf(&sb, "%s/reftable", refs->base.gitdir);
-+	if (remove_dir_recursively(&sb, 0) < 0) {
-+		strbuf_addf(err, "could not delete reftables: %s",
-+			    strerror(errno));
-+		ret =3D -1;
-+	}
-+	strbuf_reset(&sb);
-+
-+	strbuf_addf(&sb, "%s/HEAD", refs->base.gitdir);
-+	if (unlink(sb.buf) < 0) {
-+		strbuf_addf(err, "could not delete stub HEAD: %s",
-+			    strerror(errno));
-+		ret =3D -1;
-+	}
-+	strbuf_reset(&sb);
-+
-+	strbuf_addf(&sb, "%s/refs/heads", refs->base.gitdir);
-+	if (unlink(sb.buf) < 0) {
-+		strbuf_addf(err, "could not delete stub heads: %s",
-+			    strerror(errno));
-+		ret =3D -1;
-+	}
-+	strbuf_reset(&sb);
-+
-+	strbuf_addf(&sb, "%s/refs", refs->base.gitdir);
-+	if (rmdir(sb.buf) < 0) {
-+		strbuf_addf(err, "could not delete refs directory: %s",
-+			    strerror(errno));
-+		ret =3D -1;
++	for (i =3D 0; worktrees[i]; i++) {
++		if (is_main_worktree(worktrees[i]))
++			continue;
++		ret =3D 1;
 +	}
 +
-+	strbuf_release(&sb);
++	free_worktrees(worktrees);
 +	return ret;
 +}
 +
- struct reftable_ref_iterator {
- 	struct ref_iterator base;
- 	struct reftable_ref_store *refs;
-@@ -2196,6 +2247,7 @@ struct ref_storage_be refs_be_reftable =3D {
- 	.init =3D reftable_be_init,
- 	.release =3D reftable_be_release,
- 	.create_on_disk =3D reftable_be_create_on_disk,
-+	.remove_on_disk =3D reftable_be_remove_on_disk,
++int repo_migrate_ref_storage_format(struct repository *repo,
++				    enum ref_storage_format format,
++				    unsigned int flags,
++				    struct strbuf *errbuf)
++{
++	struct ref_store *old_refs =3D NULL, *new_refs =3D NULL;
++	struct ref_transaction *transaction =3D NULL;
++	struct strbuf new_gitdir =3D STRBUF_INIT;
++	struct migration_data data;
++	size_t reflog_count =3D 0;
++	int did_migrate_refs =3D 0;
++	int ret;
++
++	if (repo->ref_storage_format =3D=3D format) {
++		strbuf_addstr(errbuf, "current and new ref storage format are equal");
++		ret =3D -1;
++		goto done;
++	}
++
++	old_refs =3D get_main_ref_store(repo);
++
++	/*
++	 * We do not have any interfaces that would allow us to write many
++	 * reflog entries. Once we have them we can remove this restriction.
++	 */
++	if (refs_for_each_reflog(old_refs, count_reflogs, &reflog_count) < 0) {
++		strbuf_addstr(errbuf, "cannot count reflogs");
++		ret =3D -1;
++		goto done;
++	}
++	if (reflog_count) {
++		strbuf_addstr(errbuf, "migrating reflogs is not supported yet");
++		ret =3D -1;
++		goto done;
++	}
++
++	/*
++	 * Worktrees complicate the migration because every worktree has a
++	 * separate ref storage. While it should be feasible to implement, this
++	 * is pushed out to a future iteration.
++	 *
++	 * TODO: we should really be passing the caller-provided repository to
++	 * `has_worktrees()`, but our worktree subsystem doesn't yet support
++	 * that.
++	 */
++	if (has_worktrees()) {
++		strbuf_addstr(errbuf, "migrating repositories with worktrees is not supp=
+orted yet");
++		ret =3D -1;
++		goto done;
++	}
++
++	/*
++	 * The overall logic looks like this:
++	 *
++	 *   1. Set up a new temporary directory and initialize it with the new
++	 *      format. This is where all refs will be migrated into.
++	 *
++	 *   2. Enumerate all refs and write them into the new ref storage.
++	 *      This operation is safe as we do not yet modify the main
++	 *      repository.
++	 *
++	 *   3. If we're in dry-run mode then we are done and can hand over the
++	 *      directory to the caller for inspection. If not, we now start
++	 *      with the destructive part.
++	 *
++	 *   4. Delete the old ref storage from disk. As we have a copy of refs
++	 *      in the new ref storage it's okay(ish) if we now get interrupted
++	 *      as there is an equivalent copy of all refs available.
++	 *
++	 *   5. Move the new ref storage files into place.
++	 *
++	 *   6. Change the repository format to the new ref format.
++	 */
++	strbuf_addf(&new_gitdir, "%s/%s", old_refs->gitdir, "ref_migration.XXXXXX=
+");
++	if (!mkdtemp(new_gitdir.buf)) {
++		strbuf_addf(errbuf, "cannot create migration directory: %s",
++			    strerror(errno));
++		ret =3D -1;
++		goto done;
++	}
++
++	new_refs =3D ref_store_init(repo, format, new_gitdir.buf,
++				  REF_STORE_ALL_CAPS);
++	ret =3D ref_store_create_on_disk(new_refs, 0, errbuf);
++	if (ret < 0)
++		goto done;
++
++	transaction =3D ref_store_transaction_begin(new_refs, errbuf);
++	if (!transaction)
++		goto done;
++
++	data.old_refs =3D old_refs;
++	data.transaction =3D transaction;
++	data.errbuf =3D errbuf;
++
++	/*
++	 * We need to use the internal `do_for_each_ref()` here so that we can
++	 * also include broken refs and symrefs. These would otherwise be
++	 * skipped silently.
++	 *
++	 * Ideally, we would do this call while locking the old ref storage
++	 * such that there cannot be any concurrent modifications. We do not
++	 * have the infra for that though, and the "files" backend does not
++	 * allow for a central lock due to its design. It's thus on the user to
++	 * ensure that there are no concurrent writes.
++	 */
++	ret =3D do_for_each_ref(old_refs, "", NULL, migrate_one_ref, 0,
++			      DO_FOR_EACH_INCLUDE_ROOT_REFS | DO_FOR_EACH_INCLUDE_BROKEN,
++			      &data);
++	if (ret < 0)
++		goto done;
++
++	/*
++	 * TODO: we might want to migrate to `initial_ref_transaction_commit()`
++	 * here, which is more efficient for the files backend because it would
++	 * write new refs into the packed-refs file directly. At this point,
++	 * the files backend doesn't handle pseudo-refs and symrefs correctly
++	 * though, so this requires some more work.
++	 */
++	ret =3D ref_transaction_commit(transaction, errbuf);
++	if (ret < 0)
++		goto done;
++	did_migrate_refs =3D 1;
++
++	if (flags & REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN) {
++		printf(_("Finished dry-run migration of refs, "
++			 "the result can be found at '%s'\n"), new_gitdir.buf);
++		ret =3D 0;
++		goto done;
++	}
++
++	/*
++	 * Until now we were in the non-destructive phase, where we only
++	 * populated the new ref store. From hereon though we are about
++	 * to get hands by deleting the old ref store and then moving
++	 * the new one into place.
++	 *
++	 * Assuming that there were no concurrent writes, the new ref
++	 * store should have all information. So if we fail from hereon
++	 * we may be in an in-between state, but it would still be able
++	 * to recover by manually moving remaining files from the
++	 * temporary migration directory into place.
++	 */
++	ret =3D ref_store_remove_on_disk(old_refs, errbuf);
++	if (ret < 0)
++		goto done;
++
++	ret =3D move_files(new_gitdir.buf, old_refs->gitdir, errbuf);
++	if (ret < 0)
++		goto done;
++
++	if (rmdir(new_gitdir.buf) < 0)
++		warning_errno(_("could not remove temporary migration directory '%s'"),
++			      new_gitdir.buf);
++
++	/*
++	 * We have migrated the repository, so we now need to adjust the
++	 * repository format so that clients will use the new ref store.
++	 * We also need to swap out the repository's main ref store.
++	 */
++	initialize_repository_version(hash_algo_by_ptr(repo->hash_algo), format, =
+1);
++
++	free(new_refs->gitdir);
++	new_refs->gitdir =3D xstrdup(old_refs->gitdir);
++	repo->refs_private =3D new_refs;
++	ref_store_release(old_refs);
++
++	ret =3D 0;
++
++done:
++	if (ret && did_migrate_refs) {
++		strbuf_complete(errbuf, '\n');
++		strbuf_addf(errbuf, _("migrated refs can be found at '%s'"),
++			    new_gitdir.buf);
++	}
++
++	if (ret && new_refs)
++		ref_store_release(new_refs);
++	ref_transaction_free(transaction);
++	strbuf_release(&new_gitdir);
++	return ret;
++}
+diff --git a/refs.h b/refs.h
+index 61ee7b7a15..76d25df4de 100644
+--- a/refs.h
++++ b/refs.h
+@@ -1070,6 +1070,24 @@ int is_root_ref(const char *refname);
+  */
+ int is_pseudo_ref(const char *refname);
 =20
- 	.transaction_prepare =3D reftable_be_transaction_prepare,
- 	.transaction_finish =3D reftable_be_transaction_finish,
++/*
++ * The following flags can be passed to `repo_migrate_ref_storage_format()=
+`:
++ *
++ *   - REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN: perform a dry-run migration
++ *     without touching the main repository. The result will be written in=
+to a
++ *     temporary ref storage directory.
++ */
++#define REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN (1 << 0)
++
++/*
++ * Migrate the ref storage format used by the repository to the
++ * specified one.
++ */
++int repo_migrate_ref_storage_format(struct repository *repo,
++				    enum ref_storage_format format,
++				    unsigned int flags,
++				    struct strbuf *err);
++
+ /*
+  * The following functions have been removed in Git v2.45 in favor of func=
+tions
+  * that receive a `ref_store` as parameter. The intent of this section is
 --=20
 2.45.2.409.g7b0defb391.dirty
 
 
---06GrAdbcIM2z1KW4
+--gPADlXq7HknV91I2
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhSUIACgkQVbJhu7ck
-PpTnKQ/+KsfP8/IkKa1ySsPCjdvKe4mGukG5rEU0Z2L85X6OOe3UYtn+XLxrkE7n
-wlLa5hfoS5inOjz8zEn5jGXCrIQWOKdtXzKw/o7s9zgDtxmzeECX836AG3yVYrOP
-YpfnFK1y+oSp/YAwGpTKVphSmg2ezfCzgUFf7RBC7LaIU6kcssorX/Pk9XctA1c5
-rulU0LoJzAGaJlE17ctGF2GyX/1G046jGLb6pIxMNKfWxc27r9l07k7FxDA3s3mF
-txJVtBjAxQl5stbhXwyQMp3UOid1loK/6Biy+UBgluW75f8I+wMqDjPamaj9VTXR
-ZGgW8xH2BYrWUtRV3fYXJ34dxA8WdUxjDXwgZxISTIbFWJj9zjjHLyGQEWywzsZ8
-uh7p7T+mOezIHZqXyksGeWnBDv+s/rAuTxwaXLAJWTKj+cRT4g6PfxTjFSPJdkit
-5Sg0bjP9lABf/smhVorT5FEVxmRRz+ZCJcYfLkDvEJwlI9KgeXLL2km6+Y9l44r/
-D5Qty/RkC1myoa9GRKq8ZtoY4vJ2aiydNCRpIa0l06gMusQSiDU1FZwgQULf0wer
-5jRKXBQK5DnWNpZlaBIuwFU634ZajCtdpGtlPm8iMyPK0iX87dVnht+YQfEuH2Au
-OZsX6vwHnrOLqZhms6SseLXmMspav6iyLyvFK/regkFPXHvYHLI=
-=HwI/
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhSUgACgkQVbJhu7ck
+PpT1dA/+JAcjh2Wd7xl5jdTR26QuEcB2cBYACVqy4Vbsno4SRBx4GWEMLpmsBTpo
+i2khl9ser1t6jSKCM+ilvvLtPqokurXSXxfioVS6MayHgSyxKZggrnvHos/1msX2
+DvpzDsbNEo58Xy7j/hDPL5uxK0JW377WEQauPGf9sd3vh7cw6DJEufpSNSqYoLQE
+hMomQLTGGME4WLPgqSUqEdBJm0e7hP22m1uKOBEUcReBQXy2vwe7Qr1wpesiUsLn
+e0oHghm6cwOp708UW3NMUb5K9VFOm3bYcC54smyerit9QdyrQm9xJ4S/JUI7PF28
+LKeGHaCIyG0RQ0XQmqveQNC10ccyw4qUdC8NJkIV59LqzFRD7GduTcpLzOYF065Z
+Ep4LAWMYjmDcGTWyDrxyl+yE554dw+Y+zCslHbl0vPH3UtYyjLip4BNkPu+HN5pF
+NjMn6fJypZjnMXRlLbdL3hInqe5YsoNZZ+19nXtSyAuYbharUs66rMS/UWbIBn6m
+BO1ek85I2lYg0JTaybCHZXO4zCPum5d1Kf4YaMDI9mw6vpmLTKAHf1mbdFzeng89
+KrQHYisFXpujH/6zlPkRgkodtxhNH+3Uk74f5+gAAKJJCrr6+bZEgKTVu4sKWbJ+
+Tl3lulno6xZOdM1bEeekIFxVfozF7lKlVxE2FAyZOFGqjpWtF2g=
+=aPNj
 -----END PGP SIGNATURE-----
 
---06GrAdbcIM2z1KW4--
+--gPADlXq7HknV91I2--
