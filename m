@@ -1,55 +1,53 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CF9196D94
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 15:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C15197A97
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 15:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717686832; cv=none; b=PehwlZDy4vUatFpCYPdo9bF987toHkjL38+41/mJNNecM0QtZw85l6iCfmPHZ9Sn3Fu2aoDIDCh7vukwWGc8ZprBbBWc7Kd4Fw8hZ4JLGuvhhNw2bZunau5hbzNqKLqT+dPzzSrVne/Lb8Lg9V0YSPTr6fHwfW/YIvS4WQAFN9g=
+	t=1717687112; cv=none; b=mXvMGbsreM2S69bhbuqS1PeuYNhinEBcPzYLzO/jHCti8eNXnIX0EDyMEVTM555oLwS3z5Hw8c7wIpvsoxfCt01h+afxtqysWUJL5DEo5ixkorbo1kT7/8tOAWjfZGQLG1gbTFAQsktgBMU1C2+zKADraP06r4g/WLu/8N5WtK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717686832; c=relaxed/simple;
-	bh=sjvg3QbAieJHftK8mgT60n5twD9/G+uAHqTAlafx7o0=;
+	s=arc-20240116; t=1717687112; c=relaxed/simple;
+	bh=2Pac7+ETD33K9Q7/Y/ppBGP/f+xMr38kRBmlOXvL2/8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gAkfIZmKkgOxVALexlvMwJWA5fbMOjAV7xpbiqzvidgZCH/iaO0lYcgiD/z60Gl9cBA2ZsgoAK+8ojKcDhUKOT8Q7+AKQXUWjdLj0jY0ozMfQmnXnj55vKOP9mxQv2wGXjjb+fdGiY8Bv+9deW9szeHLgrp+sCroFdxBNjEsmW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Cxr0Q0uz; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=eLGkoDkCv97lMirMdUN5oPIFG72AEeFptq9LwQmIgLR9px4s2ydFrZT4q5yVK36vxLSDOXe5zoDZylL7m+ZLVog4EyEtoY/nEGBI6gIuR9Oas3MfcpCZhHHmZ9y8CYzXw1ctF4c4bYnuOKIdZfe8hvsthTlqxqF4bgZ3PYCCTHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=MR/Q/EtX; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Cxr0Q0uz"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MR/Q/EtX"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 97A2B23660;
-	Thu,  6 Jun 2024 11:13:50 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 061FC237F7;
+	Thu,  6 Jun 2024 11:18:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=sjvg3QbAieJHftK8mgT60n5twD9/G+uAHqTAla
-	fx7o0=; b=Cxr0Q0uzDSZ1vMormsA0lTBuLEw9kLyV4m6luIl6C4rW2K77DsZZ88
-	mzxbw+gg9AHWdw3iSGV8Zoj5uhLXq//TXYGKZubJ08YV0Hj96jzkCdlvMRtZ5dVp
-	icvGtvrs47fC9JPsOD/iSLmCkUHxFRquhfldrCq2tIx2iGifo8+HQ=
+	:content-type; s=sasl; bh=2Pac7+ETD33K9Q7/Y/ppBGP/f+xMr38kRBmlOX
+	vL2/8=; b=MR/Q/EtXeLR+RM8ceXQgkmuAzQFE8mnW0nZlb3bh1bQYSwBalTD/uc
+	UYGCwuNCnSRAbIE8A8rrPxSLlsewrqC+8s0pDgTGrUMaE9UhI7N+ZaId3WdEv8DN
+	cZaq3l9GX5M8xRqtA+T5dCzN7mPyc55jhdqQweLxxTEiN/78dzebM=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8F6932365E;
-	Thu,  6 Jun 2024 11:13:50 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id F20F0237F6;
+	Thu,  6 Jun 2024 11:18:30 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AB8872365A;
-	Thu,  6 Jun 2024 11:13:47 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1C658237F5;
+	Thu,  6 Jun 2024 11:18:28 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Aaron Plattner <aplattner@nvidia.com>,  git@vger.kernel.org,  Rahul
- Rameshbabu <rrameshbabu@nvidia.com>
-Subject: Re: [PATCH v2] credential: clear expired c->credential, unify
- secret clearing
-In-Reply-To: <20240606081054.GC658959@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 6 Jun 2024 04:10:54 -0400")
-References: <20240604192929.3252626-1-aplattner@nvidia.com>
-	<20240605085733.GE2345232@coredump.intra.peff.net>
-	<xmqqtti7tj32.fsf@gitster.g>
-	<20240606081054.GC658959@coredump.intra.peff.net>
-Date: Thu, 06 Jun 2024 08:13:46 -0700
-Message-ID: <xmqqed9ap0id.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] ls-remote: introduce --branches and deprecate
+ --heads
+In-Reply-To: <ZmGDuThKIbexY-xa@tanuki> (Patrick Steinhardt's message of "Thu,
+	6 Jun 2024 11:39:05 +0200")
+References: <20240603200539.1473345-1-gitster@pobox.com>
+	<20240604220145.3260714-1-gitster@pobox.com>
+	<20240604220145.3260714-3-gitster@pobox.com> <ZmGDuThKIbexY-xa@tanuki>
+Date: Thu, 06 Jun 2024 08:18:26 -0700
+Message-ID: <xmqqa5jyp0al.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,17 +57,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 5F8520A6-2417-11EF-AEA6-ACC938F0AE34-77302942!pb-smtp20.pobox.com
+ 06A89188-2418-11EF-A70A-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
-Jeff King <peff@peff.net> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> items that reject() is clearing is the best one. So I'd just as soon
-> leave it as a weird internal detail for now, rather than codifying it in
-> a function.
+>> +test_expect_success 'ls-remote -h is deprecated w/o warning' '
+>> +	git ls-remote -h self >actual 2>warning &&
+>> +	test_cmp expected.branches actual &&
+>> +	test_grep ! deprecated warning
+>> +'
 >
-> I dunno. I guess it is the same lines of code in either spot, but
-> somehow sticking it in a clear_response() helper seems like an
-> endorsement that the author knew what they were doing. ;)
+> It is a bit funny to grep for something that wasn't ever there. But I
+> don't mind it much as we may eventually want to introduce such a
+> deprecation warning if we ever decide to go through with the
+> deprecation.
 
-True.  It probably belongs to too premature abstraction.  Thanks.
+It is indeed funny.  We thought about adding and then made a
+conscious decision not to add a deprecation warning, so this
+testpiece serves as a documentation of the status quo, and a
+back-pointer for readers to blame back to the message of the
+commit that introduced this one, which clearly says the lack
+of warning is something we may want to reconsider later.
+
+So, this should be fine (the same for 3/3).
+
+Thanks.
 
