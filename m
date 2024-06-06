@@ -1,103 +1,97 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06F6224D6
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 22:38:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80EE7345D
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 22:44:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717713486; cv=none; b=FqAvyZWa1HuYvyDDgTjQ/tb882ZT65wvTRIhScUSkJWo+8rQQ2NPi6JFw0tWJRiFmLFgk6VHtMqXdCj7f4kjtqUhdDM78i43W3m+N2WHb5RV84KgX1f6onz9XEPW6iynyBLSAj1CKDHVAWvluioSWuEclrMX7NqZJZ38Tug4hzI=
+	t=1717713882; cv=none; b=sjQs0Vn5FSL6fbW/eZAP0sQBe3D28DcgcACIA9hBPTMla9pIcHsADwgfEpX8m2PGJ2Efj7ZSq0Rxa03eNSoXHyAyHRtJfecka+FVOl9hyzJXGiZmXugb6IZ3B/miBFXHPEhU9O8G5zgHZtj4J+p3MPcXQdC1P4YcG2URAvkK1ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717713486; c=relaxed/simple;
-	bh=mUUk2Z4QefkyCvBFeXowJzTRNRfjcyNKymAB5d9egRk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cBiNYN0ReNVjRQvFkvxgU9E9ukDR8irkx+b2M2PF/MKDAiWnVMWSjV++P20fBkmd7HRf0Icyx4l52Sxvcuq7Z60k7NTPnSdbDbp2DX8DMlCBSHWb7ijOkvgbXYKUUu9gesy4KATnX/o37GssO/uV7q72zI47tjUquB2/HpEpKz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=CykCybHb; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1717713882; c=relaxed/simple;
+	bh=J9FNpqqzHm5EecZizf3iiob4UIwN002eWpnoYqsh/nM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NdPg7Qj2ZSgM3ZIySa4cNgaKAtHzqsiEukiaY71geNFlNFXBpXifDshTmZMXpR8HF6XAg4OlzF+C0ZEiK9jpn9xFCQMUXpujla/YtJykB+MVLzFvr5yo5U7cilfI8gB25XNJxOkFp1LFbF1q+P8UnybMzOg61BeO4UdcKfPohGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=D4qYXcfA; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="CykCybHb"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7951713ba08so124911685a.1
-        for <git@vger.kernel.org>; Thu, 06 Jun 2024 15:38:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717713483; x=1718318283; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kNMd7GvOYrN9tNaIx8VIECICEwcI8kdWyY4eHQtRPmo=;
-        b=CykCybHb17e+n/Z4XRpAC1DTEdjwQQnuUIrgnRUJaUAqKeK0symlKevyBpnaYSJeX3
-         UstJ3Ns8t8tFz9UvZypIxuWNTaITe+EvsjXb1oIeeNAWzbxg0AiHi5f2YaxuANeURl+J
-         vj87yK8DsVKlDSwwQCOhMoBUGYyL9+UTclPjInVE8AaWPQrjmdMjA8zkgoRlxed+kNXW
-         GO/uyrvWfRwRToV9m2by7kDZ0KwrAQGOADICCv7GGNgKmjw9ADGKV4IYcyyI4inREA8p
-         VFmqGgIB0+iB+55y3W4uywJpfk/61AstZ1ut6dHPWOOCDAhfDqMo3+bu+0FVDcNvX9Zm
-         9SrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717713483; x=1718318283;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kNMd7GvOYrN9tNaIx8VIECICEwcI8kdWyY4eHQtRPmo=;
-        b=Dm1rRNTLRO34EN6yYlQAO1x/7oG/ON1/QSYvOByQ4DennnBc4rMci2dmd0CAYnTKEL
-         QLoOQSZfusae1Y2nDuQNKsZntLVsumMGZ/AEc1ccmn69WH+ppgO4HJVGuPTF5rLQgYsw
-         6ImAg1qQvMLOF54BWD6chK/F1C/zt0CDkYRAmtdmNkNa8A+6EymcTffAaaVZ+jHzyHjf
-         V+Z1/BYcbyjTt8e+SYXUDum4sfxLxnwiwzqNEAezw5icafxej4IByzTIdgJUkmnmIiWw
-         FFRUqHDKtR0oFIHoZR0CbKCHK9txIIu6mvPZFdnkdBTsyZYEIjASbkD1NCemdw2J2c7W
-         8kHw==
-X-Gm-Message-State: AOJu0YyK1zmvXsCKTUvUujZMZgbLGHzQsJGxgbCdPby/pA+xP0N2kujU
-	YUSFNSaxoGJEG/aBeAa4l5/R9+Yp7m4cZBukngqyMGKVUK7NnLnYDJIqrDR3dJ+u2Lzy9UmcnE5
-	TyLI=
-X-Google-Smtp-Source: AGHT+IFk6R8ewmnsSn+fYJZZjHsbRb4g/dPd4sDKl8In74TTWGtL0uV3jocUy/xNUdFJlSR7sS+clA==
-X-Received: by 2002:a05:620a:4594:b0:795:1e65:933d with SMTP id af79cd13be357-7953af0d56bmr235929585a.13.1717713483644;
-        Thu, 06 Jun 2024 15:38:03 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-79532885e70sm100917585a.63.2024.06.06.15.38.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 15:38:03 -0700 (PDT)
-Date: Thu, 6 Jun 2024 18:38:02 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 2/2] pack-bitmap.c: ensure pseudo-merge offset reads are
- bounded
-Message-ID: <ZmI6SqIFkWz8OPr1@nand.local>
-References: <a71ec05e5dc0c8c40e1cce14a7c5fe946437a24d.1717699237.git.me@ttaylorr.com>
- <0a16399d14afd527f4db63f2a4a3b0a3cbf112f1.1717699237.git.me@ttaylorr.com>
- <xmqqfrtpluws.fsf@gitster.g>
- <ZmI3RYSsx6VRHdc9@nand.local>
- <xmqqjzj1k8c8.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D4qYXcfA"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F834264B5;
+	Thu,  6 Jun 2024 18:44:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=J9FNpqqzHm5EecZizf3iiob4UIwN002eWpnoYq
+	sh/nM=; b=D4qYXcfAus21/WCjyn/CgYv5WffuFarkf96tYMgsSagOvZt50x2RwF
+	flL8l7tszY/774r/Bmkfm5SblprZ8/vIISmJuZeQWNwwVYVoukzNqZ35upO5Hdi2
+	y7Bamzur4mZ68mHsYWpZjyl32cLBkOoAVyb2T2jbN+f++q/zrLcTc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 477B7264B4;
+	Thu,  6 Jun 2024 18:44:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 662B7264B3;
+	Thu,  6 Jun 2024 18:44:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: John Cai <johncai86@gmail.com>, Aryan Gupta <garyan447@gmail.com>
+Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,
+  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Jeff King <peff@peff.net>,
+  Patrick Steinhardt <ps@pks.im>,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <avila.jn@gmail.com>
+Subject: Re: [PATCH 1/4] refs: add referent parameter to
+ refs_resolve_ref_unsafe
+In-Reply-To: <F64F4F3A-EF82-4281-8A75-0DDC8FA65D4B@gmail.com> (John Cai's
+	message of "Thu, 06 Jun 2024 17:02:05 -0400")
+References: <pull.1712.git.git.1717694800.gitgitgadget@gmail.com>
+	<011c10f488610b0a795a843bff66723477783761.1717694801.git.gitgitgadget@gmail.com>
+	<xmqq34pqlyou.fsf@gitster.g>
+	<F64F4F3A-EF82-4281-8A75-0DDC8FA65D4B@gmail.com>
+Date: Thu, 06 Jun 2024 15:44:35 -0700
+Message-ID: <xmqqed99k7xo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqjzj1k8c8.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 5A682DF4-2456-11EF-8813-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
-On Thu, Jun 06, 2024 at 03:35:51PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > On Thu, Jun 06, 2024 at 12:42:59PM -0700, Junio C Hamano wrote:
-> >> Can table_size at this point be smaller than 24, which will allow
-> >> (table_size - 24) to be a huge number that st_mult() will
-> >> comfortably fit?
-> >
-> > It could be smaller than 24, but I think we're at the point of
-> > diminishing returns here.
->
-> I only meant to say that we could easily rewrite
->
-> 	if (st_mult() > table_size - 24)
->
-> condition to
->
-> 	if (st_add(st_mult(), 24) > table_size)
->
-> and we do not have to think if we have already checked table_size
-> before we reach this point of the control flow.
+John Cai <johncai86@gmail.com> writes:
 
-Ah. Thanks for the clarification. Yes, I think you could do so; I'm
-happy to send another version if you like.
+> On 6 Jun 2024, at 14:21, Junio C Hamano wrote:
+>
+>> ADMINISTRIVIA.  Check the address you place on the CC: line.  What
+>> we can see for this message at
+>> ...
+>> I fixed them manually, but it wasn't pleasant.  I think we saw a
+>> similar breakage earlier coming via GGG, but I do not recall the
+>> details of how to cause such breakages (iow, what to avoid repeating
+>> this).
+>
+> oof, apologies. Didn't notice that. I'll be more mindful about the cc line.
 
-Thanks,
-Taylor
+I found the previous occurrences of the same problem:
+
+  https://lore.kernel.org/git/xmqqjzm3qumx.fsf@gitster.g/
+  https://lore.kernel.org/git/xmqqh6hkxox6.fsf@gitster.g/
+
+The last message in the thread
+
+  https://lore.kernel.org/git/CAMbn=B7J4ODf9ybJQpL1bZZ7qdWSDGaLEyTmVv+ZBiSeC9T+yw@mail.gmail.com/
+
+says that the original user of GGG found what was wrong in the way
+the user was using GGG to send and fixed it, but unfortunately we
+didn't hear exactly *what* the breakage was and *how* it was fixed.
+
+Aryan, do you remember what the problem was and more importantly
+what the fix was?
+
+Thanks.
