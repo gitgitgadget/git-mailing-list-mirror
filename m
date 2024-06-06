@@ -1,64 +1,64 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BE513A3F1
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 23:04:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B51535C8
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 23:04:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717715070; cv=none; b=N8pTwCINqZ0PWXWpwin/jDm2lDfE0z6/d/qXAWvd0v3SnaiF8cVc9UrOEy5SqggKe9HEzJNHSCpinH6gTVkwI0BskkQ/XQT+YDcVelWCRxvkoE8DsRdcmnOY3Ug3TqvFI/PANviB3AzlVbS3RVcVPzV4LAxtriqoh+MvS/56N2Q=
+	t=1717715070; cv=none; b=o99quXurmq4NMQun/9QcugMw7NOQwqpVxFxkwUAMR1Qi3c5aED0tjCmIkW7nKIMNjzLBeuIARdwNp68z733gKD6zHwBMYDmPoG6el+0BFY3oLbVYpTWobv7YyFthBZfnZkwJUevl0WRvBdhPODQV2Uh0rYjSysv8r8ge2lfqAXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717715070; c=relaxed/simple;
-	bh=wmc1CedVA/kuRiNysYPzAKgToMkFKojZvSYewPyUlyg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OxKuY8buocaotqtNEQCfnAo+QJ1gUrfyymY/latN2BhJ4DrDdQQPaRXU6n2h80JKVuh0BDos+qxg7hEKii1ubmDXWDOfhOzn/tWBYCCZroC7cwanOSR1ISKvDitidY15l1mZ58V5nf4rrXEpEU9g9r0JEZD9omLqFYMPAqC22Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=eBDWaMiS; arc=none smtp.client-ip=209.85.160.175
+	bh=rY5B1rT7X9JHR5XUrwCUYdVOGe6cTmqDe3KSx/9ScDc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Y5UQLaUacYeDZ+1yKgYyPXsUhcf4Xac7fu6guzIIVWXV4eFHOPdXLqq+rUzDdy5FxMuo7zWzhrGG77oupgFBR4JlzWCaEYK/WFnAaq2yO66P/Okf3JDyvE1UeKxwYyRprvAFNvw5wuCtHGgkjoIRPWLwQdl/QDqVt4UJYt8jbbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=euoRRhTp; arc=none smtp.client-ip=209.85.161.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="eBDWaMiS"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-44026036ea8so7443571cf.0
-        for <git@vger.kernel.org>; Thu, 06 Jun 2024 16:04:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="euoRRhTp"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-5b9776123a3so794122eaf.0
+        for <git@vger.kernel.org>; Thu, 06 Jun 2024 16:04:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717715067; x=1718319867; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ms/sbqYvdaFtTktSi0nsCL9HM3ughK0GKElkwM5WjN0=;
-        b=eBDWaMiSfFtGzIGCAuoql6+JE/3P4LPUn9VDvkx0//ytDLLtS6UCRLsLZ6bAlvQ2Gf
-         Ig2q0q5hJT1JlYiQ0vQr/MbjiDAuDapQIaqYhG5aGZAPmG2Ss9ItJX7qa+FvXrJKyR1F
-         K6eR9LVfp8YkuvG+fbE4+IRqrzSpr4KpuOsg2X/StVoDe4nd4Ui7kwc0hPpGRRbmyt7o
-         H6tTPW1YnQPDj3kdeAvx8l0iTHd46w1fzEpsKyw02y5B7qCJmHXIRhIr4nxW3VrF/Jrm
-         +gv89oQdF4ZPml7nWlT94G0RZW1C+VERh4GVDh9loetxoBAtAuv5+TbdHolP33CwsCP5
-         lxhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717715067; x=1718319867;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717715064; x=1718319864; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ms/sbqYvdaFtTktSi0nsCL9HM3ughK0GKElkwM5WjN0=;
-        b=DgTfUugkasppKL5PsysLO/xW9/xyxSJ4R5JVr904HVVbc/hDwoFRJyrqano8+ZoO7/
-         TkGcfPPei1WaCgjY8xMZ11t5/aqx1gI3CNa/wjXBVYF2m+HOuFCaxh1HTTOdfZ15gpPJ
-         epQQjDyDqukGHQ3Jq6zAVKmriMsZpO0mjXRIm7+fveQPMRKiFghjIMyUk9Qgpltz5vI+
-         4TnWw2UuErGt9fOw1J8+034E36eFHqmchXmE1jCpBQfxKUvlE9muS9opSSyGrTG/o1UZ
-         MuXHQDzwYe6FfYcLiXFimATHXkii44HBx8Qxa74zn0EVz7ToJSO6qwZhK1c2ZvEgY8yM
-         kNYg==
-X-Gm-Message-State: AOJu0Yxng4m5yoLAGoDRUdfde21xyZx+t46OG8j/x0B56cG7ZRBD+ZPh
-	4hEsiX888tzmxuWWCSXnsMO2REHJ3cvnMNL2cUP8s58g3fgWt6f/gh9tH4cxvr5buavTclfvKP0
-	MFVA=
-X-Google-Smtp-Source: AGHT+IFrTNCktzRabGmGJXqnWilfVMehkKHxcEJvyo52wxTzlkKu0sc/VluAv07ItWFgYVFnGirCLQ==
-X-Received: by 2002:a05:622a:107:b0:43e:391a:1a20 with SMTP id d75a77b69052e-44041c544b1mr13684361cf.15.1717715067067;
-        Thu, 06 Jun 2024 16:04:27 -0700 (PDT)
+        bh=5XgPuF1jDStH/+DGSFjVusIVBzBUT+1JhL9m6Pp5EoU=;
+        b=euoRRhTpT3NxkpfGaoCgIu8R6kmQE2Y8DFSjmpbiK7Uo/jXD4sOAAhuYJwo6aKRLVN
+         uaLSG2KimMsBhXTeqtQmUSU/osJp4xR6x8pW/mJMEF8MMMCmrAKwU8xlM1pX4b9mM+3E
+         u2MkWQfkM+uiizjHZBmXHREkhqCakJ58JRrdlgGDAqp0gSblbQcP3qqcybanIx/LIfgG
+         CRtEG7wzy4Y3HQJuiILMX2aWQPT4FJcKhRBMZnI9BnYbmemDOWScLO8sSYx/2JFIwjE8
+         wHJpOrQZ5qT6ve03Soign6TnLC5xpOcRGNS9T7/wRPrBic6+KXYKsxR81ezoQpzNaAy+
+         FDLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717715064; x=1718319864;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5XgPuF1jDStH/+DGSFjVusIVBzBUT+1JhL9m6Pp5EoU=;
+        b=fMIzA8aIVynoS05/B5HgMbkbCCKSyfcdE3XkK2J9IA/Pk3rX/86YZLGI3QxSTUQy67
+         /ClyLvGDXn0THrXsDEnLynt3wttQmpJAuFxDVwDHCI7riroBjPN/Cy/t6m6YV8sSb6MO
+         U+uJasvQj5a51Z3TLHa33YIdlZUwZKeSeteoTlm5eXxfUriJfO6ZvBAWuE2NeCqnWZ2n
+         r9SPnS1fiSHp1/Vn/kSGTS5y7R3JLUWjJlER3q15kXIdYEPcrq+6JRcbPYSJwXDbnq1d
+         Y1zUB+9fDJ35CKtdM0578Jh7EzTePPvbAXKvDHV1klWVT/5iQ8fL20AaS3WsQ3JRLu31
+         6dLA==
+X-Gm-Message-State: AOJu0YzBHEtkuKiuVLO4Rr/J3U8SKlXrI+J1n8u5XrPoCqgIQORMIdMR
+	wXorZt/ot5f9B8yTYQ/l6x9JAXGd84KDc3zGmj9piZIZdETgfk8wngWM3ibrRVTePjQq+CHwWrU
+	aIFQ=
+X-Google-Smtp-Source: AGHT+IGUASIjAk5XhcFac753wrWnk+AeUi4oXsugSUsjc0pxn0PGqXtIWdNsOB7agh4NhaGTPfuf8w==
+X-Received: by 2002:a05:6358:5e17:b0:17b:f721:4565 with SMTP id e5c5f4694b2df-19f1fe18697mr117799955d.9.1717715063845;
+        Thu, 06 Jun 2024 16:04:23 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7953287548esm102847485a.64.2024.06.06.16.04.26
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b04f623c5asm10489626d6.11.2024.06.06.16.04.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 16:04:26 -0700 (PDT)
-Date: Thu, 6 Jun 2024 19:04:25 -0400
+        Thu, 06 Jun 2024 16:04:23 -0700 (PDT)
+Date: Thu, 6 Jun 2024 19:04:22 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 01/19] Documentation: describe incremental MIDX format
-Message-ID: <d3aaf18b0a8a17c16d111d93042af52268800989.1717715060.git.me@ttaylorr.com>
-References: <cover.1717715060.git.me@ttaylorr.com>
+Subject: [PATCH 00/19] midx: incremental multi-pack indexes, part one
+Message-ID: <cover.1717715060.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,137 +67,123 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1717715060.git.me@ttaylorr.com>
+Content-Transfer-Encoding: 8bit
 
-Prepare to implement incremental multi-pack indexes (MIDXs) over the
-next several commits by first describing the relevant prerequisites
-(like a new chunk in the MIDX format, the directory structure for
-incremental MIDXs, etc.)
+This series implements incremental MIDXs, which allow for storing
+a MIDX across multiple layers, each with their own distinct set of
+packs.
 
-The format is described in detail in the patch contents below, but the
-high-level description is as follows.
+MOTIVATION
+==========
 
-Incremental MIDXs live in $GIT_DIR/objects/pack/multi-pack-index.d, and
-each `*.midx` within that directory has a single "parent" MIDX, which is
-the MIDX layer immediately before it in the MIDX chain. The chain order
-resides in a file 'multi-pack-index-chain' in the same directory.
+Doing so allows large repositories to make use of the MIDX feature
+without having to rewrite the entire MIDX every time they want to update
+the set of packs contained in the MIDX. For extremely large
+repositories, doing so is often infeasible.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/technical/multi-pack-index.txt | 100 +++++++++++++++++++
- 1 file changed, 100 insertions(+)
+OVERVIEW
+========
 
-diff --git a/Documentation/technical/multi-pack-index.txt b/Documentation/technical/multi-pack-index.txt
-index f2221d2b44..d05e3d6dd9 100644
---- a/Documentation/technical/multi-pack-index.txt
-+++ b/Documentation/technical/multi-pack-index.txt
-@@ -61,6 +61,106 @@ Design Details
- - The MIDX file format uses a chunk-based approach (similar to the
-   commit-graph file) that allows optional data to be added.
- 
-+Incremental multi-pack indexes
-+------------------------------
-+
-+As repositories grow in size, it becomes more expensive to write a
-+multi-pack index (MIDX) that includes all packfiles. To accommodate
-+this, the "incremental multi-pack indexes" feature allows for combining
-+a "chain" of multi-pack indexes.
-+
-+Each individual component of the chain need only contain a small number
-+of packfiles. Appending to the chain does not invalidate earlier parts
-+of the chain, so repositories can control how much time is spent
-+updating the MIDX chain by determining the number of packs in each layer
-+of the MIDX chain.
-+
-+=== Design state
-+
-+At present, the incremental multi-pack indexes feature is missing two
-+important components:
-+
-+  - The ability to rewrite earlier portions of the MIDX chain (i.e., to
-+    "compact" some collection of adjacent MIDX layers into a single
-+    MIDX). At present the only supported way of shrinking a MIDX chain
-+    is to rewrite the entire chain from scratch without the `--split`
-+    flag.
-++
-+There are no fundamental limitations that stand in the way of being able
-+to implement this feature. It is omitted from the initial implementation
-+in order to reduce the complexity, but will be added later.
-+
-+  - Support for reachability bitmaps. The classic single MIDX
-+    implementation does support reachability bitmaps (see the section
-+    titled "multi-pack-index reverse indexes" in
-+    linkgit:gitformat-pack[5] for more details).
-++
-+As above, there are no fundamental limitations that stand in the way of
-+extending the incremental MIDX format to support reachability bitmaps.
-+The design below specifically takes this into account, and support for
-+reachability bitmaps will be added in a future patch series. It is
-+omitted from this series for the same reason as above.
-++
-+In brief, to support reachability bitmaps with the incremental MIDX
-+feature, the concept of the pseudo-pack order is extended across each
-+layer of the incremental MIDX chain to form a concatenated pseudo-pack
-+order. This concatenation takes place in the same order as the chain
-+itself (in other words, the concatenated pseudo-pack order for a chain
-+`{$H1, $H2, $H3}` would be the pseudo-pack order for `$H1`, followed by
-+the pseudo-pack order for `$H2`, followed by the pseudo-pack order for
-+`$H3`).
-++
-+The layout will then be extended so that each layer of the incremental
-+MIDX chain can write a `*.bitmap`. The objects in each layer's bitmap
-+are offset by the number of objects in the previous layers of the chain.
-+
-+=== File layout
-+
-+Instead of storing a single `multi-pack-index` file (with an optional
-+`.rev` and `.bitmap` extension) in `$GIT_DIR/objects/pack`, incremental
-+MIDXs are stored in the following layout:
-+
-+----
-+$GIT_DIR/objects/pack/multi-pack-index.d/
-+$GIT_DIR/objects/pack/multi-pack-index.d/multi-pack-index-chain
-+$GIT_DIR/objects/pack/multi-pack-index.d/multi-pack-index-$H1.midx
-+$GIT_DIR/objects/pack/multi-pack-index.d/multi-pack-index-$H2.midx
-+$GIT_DIR/objects/pack/multi-pack-index.d/multi-pack-index-$H3.midx
-+----
-+
-+The `multi-pack-index-chain` file contains a list of the incremental
-+MIDX files in the chain, in order. The above example shows a chain whose
-+`multi-pack-index-chain` file would contain the following lines:
-+
-+----
-+$H1
-+$H2
-+$H3
-+----
-+
-+The `multi-pack-index-$H1.midx` file contains the first layer of the
-+multi-pack-index chain. The `multi-pack-index-$H2.midx` file contains
-+the second layer of the chain, and so on.
-+
-+=== Object positions for incremental MIDXs
-+
-+In the original multi-pack-index design, we refer to objects via their
-+lexicographic position (by object IDs) within the repository's singular
-+multi-pack-index. In the incremental multi-pack-index design, we refer
-+to objects via their index into a concatenated lexicographic ordering
-+among each component in the MIDX chain.
-+
-+If `objects_nr()` is a function that returns the number of objects in a
-+given MIDX layer, then the index of an object at lexicographic position
-+`i` within, say, $H3 is defined as:
-+
-+----
-+objects_nr($H2) + objects_nr($H1) + i
-+----
-+
-+(in the C implementation, this is often computed as `i +
-+m->num_objects_in_base`).
-+
- Future Work
- -----------
- 
+This series implements the first component of incremental MIDXs, meaning
+by the end of it you can run:
+
+    $ git multi-pack-index write --incremental
+
+a couple of times, and produce a directory structure like:
+
+    $ .git/objects/pack/multi-pack-index.d
+    .git/objects/pack/multi-pack-index.d
+    ├── multi-pack-index-chain
+    ├── multi-pack-index-baa53bc5092bed50378fe9232ae7878828df2890.midx
+    └── multi-pack-index-f60023a8a104be94eab96dd7c42a6a5db67c82ba.midx
+
+where each *.midx file behaves the same way as existing non-incremental
+MIDX implementation behaves today, but in a way that stitches together
+multiple MIDX "layers" without having to rewrite the whole MIDX anytime
+you want to make a modification to it.
+
+This is "part one" of a multi-part series. The overview of how all of
+these series fit together is as follows:
+
+  - "Part zero": preparatory work like 'tb/midx-write-cleanup' and my
+    series to clean up temporary file handling [1, 2].
+
+  - "Part one": this series, which enables reading and writing
+    incremental MIDXs, but does not have support for more advanced
+    features like bitmaps support or rewriting parts of the MIDX chain.
+
+  - "Part two": the next series, which builds on support for multi-pack
+    reachability bitmaps in an incremental MIDX world, meaning that each
+    `*.midx` layer can have its own `*.bitmap`, and the bitmaps at each
+    layer can be used together.
+
+  - "Part three": which supports more advanced management of the MIDX
+    chain, like compressing intermediate layers to avoid the chain
+    growing too long.
+
+Parts zero, one, and two all exist, and the first two have been shared
+with the list. Part two exists in ttaylorr/git [3], but is excluded from
+this series to keep the length manageable. I avoided sending this series
+until I was confident that bitmaps worked on top of incremental MIDXs to
+avoid designing ourselves into a corner.
+
+Part three doesn't exist yet, but is straightforward to do on top. None
+of the design decisions made in this series inhibit my goals for part
+three.
+
+[1]: https://lore.kernel.org/git/cover.1717023301.git.me@ttaylorr.com/
+[2]: https://lore.kernel.org/git/cover.1717712358.git.me@ttaylorr.com/
+[3]: https://github.com/ttaylorr/git/compare/tb/incremental-midx...ttaylorr:git:tb/incremental-midx-bitmaps
+
+Taylor Blau (19):
+  Documentation: describe incremental MIDX format
+  midx: add new fields for incremental MIDX chains
+  midx: teach `nth_midxed_pack_int_id()` about incremental MIDXs
+  midx: teach `prepare_midx_pack()` about incremental MIDXs
+  midx: teach `nth_midxed_object_oid()` about incremental MIDXs
+  midx: teach `nth_bitmapped_pack()` about incremental MIDXs
+  midx: introduce `bsearch_one_midx()`
+  midx: teach `bsearch_midx()` about incremental MIDXs
+  midx: teach `nth_midxed_offset()` about incremental MIDXs
+  midx: teach `fill_midx_entry()` about incremental MIDXs
+  midx: remove unused `midx_locate_pack()`
+  midx: teach `midx_contains_pack()` about incremental MIDXs
+  midx: teach `midx_preferred_pack()` about incremental MIDXs
+  midx: teach `midx_fanout_add_midx_fanout()` about incremental MIDXs
+  midx: support reading incremental MIDX chains
+  midx: implement verification support for incremental MIDXs
+  t: retire 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP'
+  t/t5313-pack-bounds-checks.sh: prepare for sub-directories
+  midx: implement support for writing incremental MIDX chains
+
+ Documentation/git-multi-pack-index.txt       |  11 +-
+ Documentation/technical/multi-pack-index.txt | 100 +++++
+ builtin/multi-pack-index.c                   |   2 +
+ builtin/repack.c                             |   8 +-
+ ci/run-build-and-tests.sh                    |   2 +-
+ midx-write.c                                 | 293 +++++++++++--
+ midx.c                                       | 410 ++++++++++++++++---
+ midx.h                                       |  26 +-
+ object-name.c                                |  99 ++---
+ packfile.c                                   |  21 +-
+ packfile.h                                   |   4 +
+ t/README                                     |   6 +-
+ t/helper/test-read-midx.c                    |  24 +-
+ t/lib-bitmap.sh                              |   6 +-
+ t/lib-midx.sh                                |  28 ++
+ t/t0410-partial-clone.sh                     |   2 -
+ t/t5310-pack-bitmaps.sh                      |   4 -
+ t/t5313-pack-bounds-checks.sh                |   8 +-
+ t/t5319-multi-pack-index.sh                  |  30 +-
+ t/t5326-multi-pack-bitmaps.sh                |   4 +-
+ t/t5327-multi-pack-bitmaps-rev.sh            |   6 +-
+ t/t5332-multi-pack-reuse.sh                  |   2 +
+ t/t5334-incremental-multi-pack-index.sh      |  46 +++
+ t/t7700-repack.sh                            |  48 +--
+ 24 files changed, 935 insertions(+), 255 deletions(-)
+ create mode 100755 t/t5334-incremental-multi-pack-index.sh
+
+
+base-commit: 680474691b4639280a73baa0bb8792634f99f611
 -- 
 2.45.2.437.gecb9450a0e
-
