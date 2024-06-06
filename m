@@ -1,34 +1,34 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8DA13AA48
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 08:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C16113AD06
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 08:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717662078; cv=none; b=jx7pxjxLOO3N6aiyEVb9v3/KHxyV6pydtRWhT6OHQoQMijNjW5SNd2iYLFJ0cwssgBdeovoTN0kZrL0EkYPztuwk0z/n6TtTvl+UI6COuC4LllVYgKZJhZb3BkGFH8bGrtng5L1gSj/mNUXsdwxMwAiP1GOx/2bJHok6adNWOIg=
+	t=1717662160; cv=none; b=C+EhXvLEX0txMZchCtblSK/Bh8/92goDT/x/IuMAcdBXHSgjuR97K1oprcL14MRBhiNef/rvJ/fyvQzcO9NzJJ3EibHwtCBTSDflKtFSswW5vGUS3xar0+OSD7Rrhk2k0WtvEQURCvQXHm+vdYXAaxwZClN/S2VafoCTTIA+EqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717662078; c=relaxed/simple;
-	bh=U42q475rM8MrVl/DjB1zvCEujtTgNSU33LmnzaPVb4w=;
+	s=arc-20240116; t=1717662160; c=relaxed/simple;
+	bh=LAjlTxeJa1/MRXfllYq1GOTIbZsXGlYmOcfTDH7iZzw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qpP4RhtJnpJ3M2ZUUpdqkU9+ezV4xq0ze+hBgty5cJduvZEzGlx1fFv5HMsTBhOBlHyxSVIrHVEyOnkUxECKQYzKuoXs32+Onvm6dh7438URGwAzrRhs3YrE3/2AaQnE2ZtNPt1MPXQuGhjdVoQ2JB8VaHpK8SblPEYVTjteWKo=
+	 Content-Type:Content-Disposition:In-Reply-To; b=bOdVnOzz8MwdtNldu+t7JN2STEKP6au+6BjJjzpOSLPCp0L9cZCeBn+nKIeJzq1lD19y/i3cl/zIshyw3R7Fh5owyOo6hBXrVvrHAIA00YvSB+XUbiuH1JFSQ6JnyuVo7rqE6eWzZioUN20+XRR5MHYcgWIXX2J1aIdm41oGzaQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 11203 invoked by uid 109); 6 Jun 2024 08:21:15 -0000
+Received: (qmail 11215 invoked by uid 109); 6 Jun 2024 08:22:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 06 Jun 2024 08:21:15 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 06 Jun 2024 08:22:38 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6653 invoked by uid 111); 6 Jun 2024 08:21:12 -0000
+Received: (qmail 6662 invoked by uid 111); 6 Jun 2024 08:22:35 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 06 Jun 2024 04:21:12 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 06 Jun 2024 04:22:35 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 6 Jun 2024 04:21:14 -0400
+Date: Thu, 6 Jun 2024 04:22:37 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, phillip.wood@dunelm.org.uk,
 	=?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
-Subject: [PATCH 1/2] am: add explicit "--retry" option
-Message-ID: <20240606082114.GA1167215@coredump.intra.peff.net>
+Subject: [PATCH 2/2] test-terminal: drop stdin handling
+Message-ID: <20240606082237.GB1167215@coredump.intra.peff.net>
 References: <20240606081724.GA1166769@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -40,167 +40,110 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240606081724.GA1166769@coredump.intra.peff.net>
 
-After a patch fails, you can ask "git am" to try applying it again with
-new options by running without any of the resume options. E.g.:
+Since 18d8c26930 (test_terminal: redirect child process' stdin to a pty,
+2015-08-04), we set up a pty and copy stdin to the child program. But
+this ends up being racy; once we send all of the bytes and close the
+descriptor, the child program will no longer see a terminal! isatty()
+will return 0, and trying to read may return EIO, even if we didn't yet
+get all of the bytes.
 
-  git am <patch
-  # oops, it failed; let's try again
-  git am --3way
+This was mentioned even in the commit message of 18d8c26930, but we
+hacked around it by just sending an infinite input from /dev/zero (in
+the intended case, we only cared about isatty(0), not reading actual
+input).
 
-But since this second command has no explicit resume option (like
-"--continue"), it looks just like an invocation to read a fresh patch
-from stdin. To avoid confusing the two cases, there are some heuristics,
-courtesy of 8d18550318 (builtin-am: reject patches when there's a
-session in progress, 2015-08-04):
+And it came up again recently in:
 
-	if (in_progress) {
-		/*
-		 * Catch user error to feed us patches when there is a session
-		 * in progress:
-		 *
-		 * 1. mbox path(s) are provided on the command-line.
-		 * 2. stdin is not a tty: the user is trying to feed us a patch
-		 *    from standard input. This is somewhat unreliable -- stdin
-		 *    could be /dev/null for example and the caller did not
-		 *    intend to feed us a patch but wanted to continue
-		 *    unattended.
-		 */
-		if (argc || (resume_mode == RESUME_FALSE && !isatty(0)))
-			die(_("previous rebase directory %s still exists but mbox given."),
-				state.dir);
+  https://lore.kernel.org/git/d42a55b1-1ba9-4cfb-9c3d-98ea4d86da33@gmail.com/
 
-		if (resume_mode == RESUME_FALSE)
-			resume_mode = RESUME_APPLY;
-		[...]
+where we tried to actually send bytes, but they don't always all come
+through. So this interface is somewhat of an accident waiting to happen;
+a caller might not even care about stdin being a tty, but will get bit
+by the flaky behavior.
 
-So if no resume command is given, then we require that stdin be a tty,
-and otherwise complain about (potentially) receiving an mbox on stdin.
-But of course you might not actually have a terminal available! And
-sadly there is no explicit way to hit this same code path; this is the
-only place that sets RESUME_APPLY. So you're stuck, and scripts like our
-test suite have to bend over backwards to create a pseudo-tty.
+One solution would probably be to avoid closing test_terminal's end of
+the pty altogether. But then the other side would never see EOF on its
+stdin.  That may be OK for some cases, but it's another gotcha that
+might cause races or deadlocks, depending on what the child expects to
+read.
 
-Let's provide an explicit option to trigger this mode. The code turns
-out to be quite simple; just setting "resume_mode" to RESUME_FALSE is
-enough to dodge the tty check, and then our state is the same as it
-would be with the heuristic case (which we'll continue to allow).
-
-When we don't have a session in progress, there's already code to
-complain when resume_mode is set (but we'll add a new test to cover
-that).
-
-To test the new option, we'll convert the existing tests that rely on
-the fake stdin tty. That lets us test them on more platforms, and will
-let us simplify test_terminal a bit in a future patch.
-
-It does, however, mean we're not testing the tty heuristic at all.
+Let's instead just drop test_terminal's stdin feature completely. Since
+the previous commit dropped the two cases from t4153 for which the
+feature was originally added, there are no callers left that need it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I think even without the test-terminal cleanup, this is a good thing.
-Any time there is a heuristic like isatty(), we should have a way for
-the user to be more explicit about what they want().
+ t/test-terminal.perl | 29 +++--------------------------
+ 1 file changed, 3 insertions(+), 26 deletions(-)
 
-Do we are about losing the testing of the tty heuristic?
-
- Documentation/git-am.txt           |  8 +++++++-
- builtin/am.c                       |  3 +++
- t/t4153-am-resume-override-opts.sh | 14 +++++++++-----
- 3 files changed, 19 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 624a6e6fe4..69d5cc9f21 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -18,7 +18,7 @@ SYNOPSIS
- 	 [--quoted-cr=<action>]
- 	 [--empty=(stop|drop|keep)]
- 	 [(<mbox> | <Maildir>)...]
--'git am' (--continue | --skip | --abort | --quit | --show-current-patch[=(diff|raw)] | --allow-empty)
-+'git am' (--continue | --skip | --abort | --quit | --retry | --show-current-patch[=(diff|raw)] | --allow-empty)
+diff --git a/t/test-terminal.perl b/t/test-terminal.perl
+index 3810e9bb43..b8fd6a4f13 100755
+--- a/t/test-terminal.perl
++++ b/t/test-terminal.perl
+@@ -5,17 +5,15 @@
+ use IO::Pty;
+ use File::Copy;
  
- DESCRIPTION
- -----------
-@@ -208,6 +208,12 @@ Valid <action> for the `--whitespace` option are:
- 	Abort the patching operation but keep HEAD and the index
- 	untouched.
+-# Run @$argv in the background with stdio redirected to $in, $out and $err.
++# Run @$argv in the background with stdio redirected to $out and $err.
+ sub start_child {
+-	my ($argv, $in, $out, $err) = @_;
++	my ($argv, $out, $err) = @_;
+ 	my $pid = fork;
+ 	if (not defined $pid) {
+ 		die "fork failed: $!"
+ 	} elsif ($pid == 0) {
+-		open STDIN, "<&", $in;
+ 		open STDOUT, ">&", $out;
+ 		open STDERR, ">&", $err;
+-		close $in;
+ 		close $out;
+ 		exec(@$argv) or die "cannot exec '$argv->[0]': $!"
+ 	}
+@@ -51,17 +49,6 @@ sub xsendfile {
+ 	copy($in, $out, 4096) or $!{EIO} or die "cannot copy from child: $!";
+ }
  
-+--retry::
-+	Try to apply the last conflicting patch again. This is generally
-+	only useful for passing extra options to the retry attempt
-+	(e.g., `--3way`), since otherwise you'll just see the same
-+	failure again.
-+
- --show-current-patch[=(diff|raw)]::
- 	Show the message at which `git am` has stopped due to
- 	conflicts.  If `raw` is specified, show the raw contents of
-diff --git a/builtin/am.c b/builtin/am.c
-index 36839029d2..926592691a 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2393,6 +2393,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 		  N_("show the patch being applied"),
- 		  PARSE_OPT_CMDMODE | PARSE_OPT_OPTARG | PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
- 		  parse_opt_show_current_patch, RESUME_SHOW_PATCH_RAW },
-+		OPT_CMDMODE(0, "retry", &resume_mode,
-+			N_("try to apply current patch again"),
-+			RESUME_APPLY),
- 		OPT_CMDMODE(0, "allow-empty", &resume_mode,
- 			N_("record the empty patch as an empty commit"),
- 			RESUME_ALLOW_EMPTY),
-diff --git a/t/t4153-am-resume-override-opts.sh b/t/t4153-am-resume-override-opts.sh
-index 4add7c7757..a32cec42aa 100755
---- a/t/t4153-am-resume-override-opts.sh
-+++ b/t/t4153-am-resume-override-opts.sh
-@@ -3,7 +3,6 @@
- test_description='git-am command-line options override saved options'
- 
- . ./test-lib.sh
--. "$TEST_DIRECTORY"/lib-terminal.sh
- 
- format_patch () {
- 	git format-patch --stdout -1 "$1" >"$1".eml
-@@ -27,7 +26,12 @@ test_expect_success 'setup' '
- 	format_patch side2
- '
- 
--test_expect_success TTY '--3way overrides --no-3way' '
-+test_expect_success '--retry fails without in-progress operation' '
-+	test_must_fail git am --retry 2>err &&
-+	test_grep "operation not in progress" err
-+'
-+
-+test_expect_success '--3way overrides --no-3way' '
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout renamed-file &&
-@@ -40,7 +44,7 @@ test_expect_success TTY '--3way overrides --no-3way' '
- 
- 	# Applying side1 with am --3way will succeed due to the threeway-merge.
- 	# Applying side2 will fail as --3way does not apply to it.
--	test_must_fail test_terminal git am --3way </dev/zero &&
-+	test_must_fail git am --retry --3way &&
- 	test_path_is_dir .git/rebase-apply &&
- 	test side1 = "$(cat file2)"
- '
-@@ -84,7 +88,7 @@ test_expect_success '--signoff overrides --no-signoff' '
- 	test $(git cat-file commit HEAD | grep -c "Signed-off-by:") -eq 0
- '
- 
--test_expect_success TTY '--reject overrides --no-reject' '
-+test_expect_success '--reject overrides --no-reject' '
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
-@@ -94,7 +98,7 @@ test_expect_success TTY '--reject overrides --no-reject' '
- 	test_path_is_dir .git/rebase-apply &&
- 	test_path_is_missing file.rej &&
- 
--	test_must_fail test_terminal git am --reject </dev/zero &&
-+	test_must_fail git am --retry --reject </dev/zero &&
- 	test_path_is_dir .git/rebase-apply &&
- 	test_path_is_file file.rej
- '
+-sub copy_stdin {
+-	my ($in) = @_;
+-	my $pid = fork;
+-	if (!$pid) {
+-		xsendfile($in, \*STDIN);
+-		exit 0;
+-	}
+-	close($in);
+-	return $pid;
+-}
+-
+ sub copy_stdio {
+ 	my ($out, $err) = @_;
+ 	my $pid = fork;
+@@ -81,25 +68,15 @@ sub copy_stdio {
+ 	die "usage: test-terminal program args";
+ }
+ $ENV{TERM} = 'vt100';
+-my $parent_in = new IO::Pty;
+ my $parent_out = new IO::Pty;
+ my $parent_err = new IO::Pty;
+-$parent_in->set_raw();
+ $parent_out->set_raw();
+ $parent_err->set_raw();
+-$parent_in->slave->set_raw();
+ $parent_out->slave->set_raw();
+ $parent_err->slave->set_raw();
+-my $pid = start_child(\@ARGV, $parent_in->slave, $parent_out->slave, $parent_err->slave);
+-close $parent_in->slave;
++my $pid = start_child(\@ARGV, $parent_out->slave, $parent_err->slave);
+ close $parent_out->slave;
+ close $parent_err->slave;
+-my $in_pid = copy_stdin($parent_in);
+ copy_stdio($parent_out, $parent_err);
+ my $ret = finish_child($pid);
+-# If the child process terminates before our copy_stdin() process is able to
+-# write all of its data to $parent_in, the copy_stdin() process could stall.
+-# Send SIGTERM to it to ensure it terminates.
+-kill 'TERM', $in_pid;
+-finish_child($in_pid);
+ exit($ret);
 -- 
 2.45.2.817.g6f0d0f2a6c
-
