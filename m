@@ -1,35 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED15A13A3EC
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 06:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7671419D890
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 06:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717656762; cv=none; b=sVlBZ8DZEgrK7uYyPGejyp/s54Dv3VIUQlN4hp0sPpXZHOvpoDrfGSI4Sgiry4tr3R0R0/4KtS0bf4HSnayHnhsMs/2oeCvh9JKKkGxt0jjIj//pyx4GHxzHuR8Gm3YH2owKib37Zk7xrZ6uRrb7FB/ES2QVNGcCN9JI2xH5aeQ=
+	t=1717656812; cv=none; b=eZi+iR7+ngvQ0WyZ8uQAUvgeQ3LuilN2L6KCVqpp/t5m/ApbFcTnJxnuQk9CF1T19icmWa94YpPZDPC9gTGvluR6JOoHowlvdd/bMIdFyulTssiPHEfEt4RccXcpUESPHTeGYn1/EXOEmiPxWBKrRIVRIin2CiXIVkt9okgIlVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717656762; c=relaxed/simple;
-	bh=xo00+SWCob7tZlaSkhN3YBVjqivwf6TYXN6VEg0BB2o=;
+	s=arc-20240116; t=1717656812; c=relaxed/simple;
+	bh=HkbAI1rApjWmdVF+4f1cYUFn1t1FNmhr2GYTQGFKXRQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dit3PHwY56hbAqu7qwL83so4VDlDavjoAWSBabEasPrT12PtgavwczXGrytJDIi8+R96wcXmyDtmOpaVlBxukfD0ePI9PZ4Phq/I0x4yXlv8WVdpA6UyqyrZJnTW66OTufhSmnO1xfbyYwlx5bToLAOiwcR3X4qct3bu/DPgXLA=
+	 Content-Type:Content-Disposition:In-Reply-To; b=W9QxNmvcJI/Oz9gEZzctM2X+Tyo4bzoJCqswXNIIqeVJuPVZxjFywewwrbU1agwuj7sf7/ILbp8/lNgfNVmPZ2Bb+QzYI5+quI9yKfyuPHm9TgbsCl6ItPqLK+1h48JGuTs7+XybK7cROf4gRgl+rDc0t16Blr2lvTwiHfGXfX0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 9820 invoked by uid 109); 6 Jun 2024 06:52:38 -0000
+Received: (qmail 9831 invoked by uid 109); 6 Jun 2024 06:53:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 06 Jun 2024 06:52:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 06 Jun 2024 06:53:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5876 invoked by uid 111); 6 Jun 2024 06:52:34 -0000
+Received: (qmail 5916 invoked by uid 111); 6 Jun 2024 06:53:27 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 06 Jun 2024 02:52:34 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 06 Jun 2024 02:53:27 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 6 Jun 2024 02:52:36 -0400
+Date: Thu, 6 Jun 2024 02:53:28 -0400
 From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] ci: let pedantic job compile with -Og
-Message-ID: <20240606065236.GA646308@coredump.intra.peff.net>
+Subject: Re: [PATCH 1/2] ci: fix check for Ubuntu 20.04
+Message-ID: <20240606065328.GB646308@coredump.intra.peff.net>
 References: <cover.1717655210.git.ps@pks.im>
- <351dec4a4d5a5619e7627e11a8e674e32125125e.1717655210.git.ps@pks.im>
+ <f91004a4382c95b1b87bf3d1aafc018af2b7b92e.1717655210.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,77 +38,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <351dec4a4d5a5619e7627e11a8e674e32125125e.1717655210.git.ps@pks.im>
+In-Reply-To: <f91004a4382c95b1b87bf3d1aafc018af2b7b92e.1717655210.git.ps@pks.im>
 
-On Thu, Jun 06, 2024 at 08:30:34AM +0200, Patrick Steinhardt wrote:
+On Thu, Jun 06, 2024 at 08:30:25AM +0200, Patrick Steinhardt wrote:
 
-> We have recently noticed that our CI does not always notice variables
-> that may be used uninitialized. While it is expected that compiler
-> warnings aren't perfect, this one was a but puzzling because it was
-> rather obvious that the variable can be uninitialized.
+> In 5ca0c455f1 (ci: fix Python dependency on Ubuntu 24.04, 2024-05-06),
+> we made the use of Python 2 conditional on whether or not the CI job
+> runs Ubuntu 20.04. There was a brown-paper-bag-style bug though, where
+> the condition forgot to invoke the `test` builtin. The result of it is
+> that the check always fails, and thus all of our jobs run with Python 3
+> by accident.
 > 
-> Many compiler warnings unfortunately depend on the optimization level
-> used by the compiler. While `-O0` for example will disable a lot of
-> warnings altogether because optimization passes go away, `-O2`, which is
-> our default optimization level used in CI, may optimize specific code
-> away or even double down on undefined behaviour. Interestingly, this
-> specific instance that triggered the investigation does get noted by GCC
-> when using `-Og`.
-> 
-> While we could adapt all jobs to compile with `-Og` now, that would
-> potentially mask other warnings that only get diagnosed with `-O2`.
-> Instead, only adapt the "pedantic" job to compile with `-Og`.
+> Fix this.
 
-Hmm. This is the first time I've ever seen lower optimization levels
-produce more warnings. It is almost always the opposite case in my
-experience. So it's not clear to me that moving to "-Og" will generally
-find more warning spots, and that this isn't a bit of a fluke.
-
-As you note, we'll still compile with -O2 in other jobs. But isn't the
-point of the pedantic job to enable a bunch of extra warnings that
-aren't available elsewhere? We wouldn't have any coverage of those.
-
-So for the pedantic warnings, we're left with a guess as to whether -Og
-or -O2 will yield more results. And in my experience it is probably -O2.
-
-If we want to get coverage of -Og, I'd suggest doing it in a job that is
-otherwise overlapping with another (maybe linux-TEST-vars, which I think
-is otherwise a duplicate build?).
-
-> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> index 98dda42045..e78e19e4a6 100755
-> --- a/ci/run-build-and-tests.sh
-> +++ b/ci/run-build-and-tests.sh
-> @@ -44,6 +44,15 @@ pedantic)
->  	# Don't run the tests; we only care about whether Git can be
->  	# built.
->  	export DEVOPTS=pedantic
-> +	# Warnings generated by compilers are unfortunately specific to the
-> +	# optimization level. With `-O0`, many warnings won't be shown at all,
-> +	# whereas the optimizations performed by our default optimization level
-> +	# `-O2` will mask others. We thus use `-Og` here just so that we have
-> +	# at least one job with a different optimization level so that we can
-> +	# overall surface more warnings.
-> +	cat >config.mak <<-EOF
-> +	export CFLAGS=-Og
-> +	EOF
-
-Writing config.mak is unusual, though I guess just setting CFLAGS in the
-environment isn't enough, because we set it unconditionally in the
-Makefile. Doing "make CFLAGS=-Og" would work, but we'd need help from
-the code that actually runs "make".
-
-I do suspect the "export" is unnecessary; it should just be used by the
-Makefile recipes themselves.
-
-Your command above also loses the "-g" and "-Wall" from the default
-CFLAGS. Maybe OK, since DEVELOPER=1 implies -Wall anyway, and "-g" isn't
-important. But one thing I've done for a long time in my config.mak is:
-
-  O ?= 2
-  CFLAGS = -g -Wall -O$(O)
-
-Then you can "make O=0" or "make O=g" if you want. And I think that
-setting O=g in the environment (exported) would work, as well.
+Yikes. This looks obviously correct. Though I guess nobody noticed or
+cared that we were not using python 2? It sounds like it is a
+nice-to-have to get more coverage, but the platform in question is happy
+to use python 3).
 
 -Peff
