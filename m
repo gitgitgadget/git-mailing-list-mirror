@@ -1,98 +1,167 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44371E52A
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 04:56:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4DB1754B
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 05:15:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717649777; cv=none; b=Hypr0QBBiJ/w0qITqgYg39Y7LpDeoy/q8R5xi72q/yeflq94rMm4/652DlUm8r1eCbTUJDpj7aC5XLNDcB6L5JbeqgM5NO3u0IHYk337gMq48vt0Ydzfp479554uEx1cE/uaWs1ri2qx4758LzDZLs9NDmSmPbhuyvNND8hJbJ8=
+	t=1717650948; cv=none; b=GsPz8rnHRRm/wSAZ/qE5u9wd0uCh/DHDE+O/ObyiYdvVJgegcQ+Cz6KsLsKsrX4ulBy93/9BaOFXlj8CgAPBWC4M+6CVjYhjFw8SoqFnfgV+gjFRHiQO4qwqj74TuHoNE/QOApVECqa5X9H3Ixu0pZw+pj0WdRDr+8J2kjuCh/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717649777; c=relaxed/simple;
-	bh=AwnjjM1rTljM+7tCIJDoKc0biPx5+BrSF1TQjECLQvw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IXyNtgqslniptC/MoV/6BI7jNarBDUUs2dgdHLvQ6VVQmnHTtbmmrYmCXEkOO22no7yuCeT3WxnKbmr5wtayU0kandOn1U/1scHPnhxkbSuCtgplGRwIbkvFwCZDFmqpXvFl+biefi4Gf2a0T+Umiiwc4uvJpK4+LqGMPX2Mbhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZIsqboev; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1717650948; c=relaxed/simple;
+	bh=UYxIItkiRb7H2vG8yqGQ/POOKvlHCS7XGz1xcHah7OY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BA2zXwZTbn9osLqWXR84R1sUC0/KM01H7nMkYAlHdPEBHfRS7RexC3RIqD9rx388kZYFoxlKCaXbD8xrIwMRWs64swUxg4KGAeeIzAUNkAzIQyg1DngHxpGQRWjfmm/wx6wzwwvdgelkfgK/ckBttcH7u9WU6dciEtVjNNG/kqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UpayXJzT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c3QjQj3N; arc=none smtp.client-ip=64.147.123.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZIsqboev"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-6c7bf648207so427534a12.0
-        for <git@vger.kernel.org>; Wed, 05 Jun 2024 21:56:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717649775; x=1718254575; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wlQ5ROVDE+PqJnHaltzIRtzAs37ZuEDHJlDNB59C5/M=;
-        b=ZIsqboevCtU57JldtL7Tzw6dYWimjnl3kgDq8PlnAywFRV1SQisCzL9xs6d7rORk4R
-         fluZ3FUmqhAggoArPG+8NAcbh2gvWKb1+l9lcw+5eiDOAWa2j+hrxTBLRb1ZAoK5Abch
-         L4inqV+Y02ktf5X6TmhqjsOdTjKPpvpjyOr2dHhDHhx4BLncVf2mdRmD14q2A1yiIHpO
-         ExAWsSVCyBG6xoLqSTWMPxFC9IYjvdqZe+hmxVDJLXUI+Afe0qSeUYW9GXGnDthpIpuh
-         jwXUtwQQsD30Af2ZoH0ilGMCiicqGSaXAan+EprEjyKuV/Ab920N7/sG3rgLRPglnkim
-         4YLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717649775; x=1718254575;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wlQ5ROVDE+PqJnHaltzIRtzAs37ZuEDHJlDNB59C5/M=;
-        b=PwtGbhRj6kSnDSUPNeP5kdayM3JSDLi2LUOqSfjbWl4Lq/GKjkGEUs3lZgQj4FuNdq
-         jYS1gL1Hm3czCrD+w1JzwZtUGuo9NO6LjTmHD1XdT+RgNiYhu8sIKv/VFL3kj3oxW0Q0
-         tXzmBv9f/dvDpr2gEr5eAtZofO2LBM+fUq4E4ojByt7YETcSEr/7WiiuoFoNjCwtX5g8
-         TSgfj53MOnrOPxNY3zt5i09brubDZeiGrYB/SVpBblNZdH9XfHfU2lv72P9ChMwu6eF7
-         w52CojVSvRJb0+ptIe4j4H6yyJ/bDvlxjgb8Mq2FL/VWO7gYQ/6rfoS814pKSACHILB0
-         Qgkg==
-X-Forwarded-Encrypted: i=1; AJvYcCXhIhQrO/XCQwoH1VGSiL/9IpacINRH2EoatNO742ZRIYc7grcc/YZnd6qnzSN5zLq/3svQTt3G7Y4JdbCgRYU2/suS
-X-Gm-Message-State: AOJu0YxcbkihwBRfY1JBQ2FkL7cSKFVc+drA6gC9ix8X7AFlK3y62MCu
-	2EfDBK4VPxYKPxxt4YcTS5iy0lFgU5W1IxKMUn7OlrYMeRXbvHUq
-X-Google-Smtp-Source: AGHT+IFEb0QHdJOs8X9TPQEH9GWhMJ1ZuS8Kzm3gdchFA4+vdsxMYRoOTqrIejUy8OLdycaG/7I36A==
-X-Received: by 2002:a05:6a20:2588:b0:1af:dd56:76f0 with SMTP id adf61e73a8af0-1b2b6f2cc6bmr5515245637.22.1717649774840;
-        Wed, 05 Jun 2024 21:56:14 -0700 (PDT)
-Received: from [100.113.38.39] ([116.90.72.247])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c2806bd67csm2431735a91.43.2024.06.05.21.56.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jun 2024 21:56:14 -0700 (PDT)
-Message-ID: <a3b8a245-fd88-4798-990c-a06c911ce067@gmail.com>
-Date: Thu, 6 Jun 2024 14:56:08 +1000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UpayXJzT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c3QjQj3N"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.west.internal (Postfix) with ESMTP id A0DF01C001A5;
+	Thu,  6 Jun 2024 01:15:44 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Thu, 06 Jun 2024 01:15:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1717650944; x=1717737344; bh=vGp+zU/NrG
+	hfR2NZiaHsEycEV7vw5BehiKL7t+/eJcg=; b=UpayXJzTmaHbndtS5Ft6MRqmXO
+	E4UwaHk2tm7MJrBpTSSY4UhQavbSJrtcdm0Cy3KvKGV1oLNLRO0BHUOWGl2aRw3M
+	55xnDKfd0G1fpmICsGuXD8eNwes/+jDwr0tUTlyj7POeeSsepC1GWDXwKMeicKM5
+	BGVFzCIH0Zcs/r9p/xmWlHkyWBCDMh9AofxB9YbEuFm155n5DeLcVL0SfRV6tP9H
+	C3sj9dabyEXxOX1tD8n5XUu3tR2voe+IMji1dEKRULJHg1AWdHW6hVrOS8ITowMg
+	WddtJWPEPf6P3BI7I1PPpBFAJwzxgyWQ8s94yuLUF6EUli5QN42y09JcN1fw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1717650944; x=1717737344; bh=vGp+zU/NrGhfR2NZiaHsEycEV7vw
+	5BehiKL7t+/eJcg=; b=c3QjQj3NWzAkR4OFMnWIVbn7TEQpNyli+/+dV4vQjDT7
+	zYf2GjAKCgkNXwDDk09XUvJ0od7D6lOcBCwbg2vuFSh8I/fCulksAKnkQC4UmvuO
+	QtSz7r4JPQ876/7Mnv6mLePLi+bfRC41qTBCVaE2ySHgDGZ0IkZWtL7f1yS0BU9N
+	FAl23diJfwlF2n4IWL4yLXiueqbY1/M5RbaMEETGZsaW6t+FU8HMjHJoE9mv3CQr
+	fUjNjpJsvikHFAbWUUygOV/fHxOA7vsApVmtn+rDzYdKywEXOXhGIUrAMNGDETb+
+	4xGDSmzYkFnuLhKkW+vUHfBGhEJcufUm1SjGlDnYQw==
+X-ME-Sender: <xms:_0VhZuoVv8P4h22_2Cv8yDWkbzO41rLQGBscx2Ejk8M3ERbcFj7FEQ>
+    <xme:_0VhZsqsum2S9Kpj6kzDg_Rq93yMoN5BW6T3x6RcbJ1E9XsaHBqfjmbgns0xz0aWJ
+    v6yM7nKzRknel_jQw>
+X-ME-Received: <xmr:_0VhZjNmUd2zE0PJwgYZz4MgxCy76V4iMhdA5yuQnblDW9hMNFIQKquK7oL9GLLF0nYUBzv77soB7Q_Z3X5X-Mp8E71MIKpl4VXk2yX8Qm7BAmpC>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeljedgleefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:_0VhZt7BYRNThuxjuU45FfjVmeu1YAY4hN2Xx2Pv3eugJ7R8Tu-e1Q>
+    <xmx:_0VhZt7DuI2gCI0cvEqt83X4seJiwpugMoaAFzcwDy_63t_3BqxlLA>
+    <xmx:_0VhZth1M-1aWGE5ZSqieihZzs60yzCPB030FLxh-HY2pfrbdwhKhA>
+    <xmx:_0VhZn7OhqChZHGOUGKGOtHV2xWLd0cjKPFeUDJazmtSl8w9cqw9Tw>
+    <xmx:AEZhZqvJJYswm7HB-zw2JEGDnh8O7G5rf5OjQF4BXbKv0PJb4USrhqwf>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Jun 2024 01:15:42 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id eeafdd52 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Jun 2024 05:15:10 +0000 (UTC)
+Date: Thu, 6 Jun 2024 07:15:38 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v4 06/12] refs/files: extract function to iterate through
+ root refs
+Message-ID: <ZmFF-kgZSlB6O7Gs@tanuki>
+References: <cover.1716451672.git.ps@pks.im>
+ <cover.1717402363.git.ps@pks.im>
+ <f7577a0ab37988476cdb83e310f96f4841c9364a.1717402363.git.ps@pks.im>
+ <20240605100728.GA3440281@coredump.intra.peff.net>
+ <ZmFAMBhkuUQEhgCR@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Betterbird (Linux)
-Subject: Re: [PATCH v2] date: detect underflow when parsing dates with
- positive timezone offset
-To: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood123@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,
- darcy via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
-References: <pull.1726.git.git.1716801427015.gitgitgadget@gmail.com>
- <pull.1726.v2.git.git.1717369608923.gitgitgadget@gmail.com>
- <xmqqwmn66zzc.fsf@gitster.g> <2d771a72-3021-46db-ac32-e008a7ace34c@gmail.com>
- <67c23773-21a4-4ad5-9b98-5e44578166dd@gmail.com>
- <4574e410-ca1a-495f-9835-14ee3fa454a1@gmail.com>
- <7ae05b6a-fb63-4ec7-8006-e968862cc5c7@gmail.com> <xmqq1q5bti4g.fsf@gitster.g>
-Content-Language: en-US
-From: darcy <acednes@gmail.com>
-In-Reply-To: <xmqq1q5bti4g.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="LyKGinUk9vEyyav7"
+Content-Disposition: inline
+In-Reply-To: <ZmFAMBhkuUQEhgCR@tanuki>
 
-On 6/6/24 03:27, Junio C Hamano wrote:
 
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
->> Thanks for taking a closer look, I wasn't aware of that. Reading
->> Peff's reply it seems like timestamp is actually unsigned and as we
->> limit the maximum year to 2099 it seems unlikely we'll overflow from
->> too larger date after all.
-> Thanks all.
->
-> I haven't seen one question I posed answered, though.  Has
-> https://git.github.io/htmldocs/SubmittingPatches.html#real-name
-> been followed in this patch when signing off the patch?
+--LyKGinUk9vEyyav7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I have changed the line in the commit to properly follow that rule.
+On Thu, Jun 06, 2024 at 06:50:56AM +0200, Patrick Steinhardt wrote:
+> On Wed, Jun 05, 2024 at 06:07:28AM -0400, Jeff King wrote:
+> > On Mon, Jun 03, 2024 at 11:30:35AM +0200, Patrick Steinhardt wrote:
+> >=20
+> > > +static int for_each_root_ref(struct files_ref_store *refs,
+> > > +			     int (*cb)(const char *refname, void *cb_data),
+> > > +			     void *cb_data)
+> > >  {
+> > >  	struct strbuf path =3D STRBUF_INIT, refname =3D STRBUF_INIT;
+> > >  	const char *dirname =3D refs->loose->root->name;
+> > >  	struct dirent *de;
+> > >  	size_t dirnamelen;
+> > > +	int ret;
+> > >  	DIR *d;
+> >=20
+> > Should we initialize ret to 0 here?
+>=20
+> Yeah, we should. Or rather, I'll set `ret =3D 0;` on the successful path.
+>=20
+> Patrick
 
+I was wondering why the compiler didn't flag it, because I know that GCC
+has `-Wmaybe-uninitialized`. Turns out that this warning only works when
+having optimizations enabled, but if we do then it correctly flags this
+use:
+
+     (git) ~/Development/git:HEAD $ make refs/files-backend.o
+        * new build flags
+        CC refs/files-backend.o
+    refs/files-backend.c: In function =E2=80=98for_each_root_ref=E2=80=99:
+    refs/files-backend.c:371:16: error: =E2=80=98ret=E2=80=99 may be used u=
+ninitialized [-Werror=3Dmaybe-uninitialized]
+      371 |         return ret;
+          |                ^~~
+    refs/files-backend.c:334:13: note: =E2=80=98ret=E2=80=99 was declared h=
+ere
+      334 |         int ret;
+          |             ^~~
+    cc1: all warnings being treated as errors
+
+I'll have a look at our CI jobs and adapt my own config.mak to include
+`-Og`.
+
+Patrick
+
+--LyKGinUk9vEyyav7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhRfkACgkQVbJhu7ck
+PpRbYxAAoUaL/lExoj+NKgq8e6XgvK0DfhrwrlDat/P/qdtKlRN4i8Mzf3IQkd7F
+DIv3vS31LqIS/WOHGni77NirmVuwaTibmXwqAmfroSw0qEagz19Y7vvJwq0wj8Vt
+9lllKi+YKeRofV6WfFZqic4J6zqoA73ozuH5S5M5W9ZR9HHZBN6eXcrU+X7Mxo3f
+d+CkiETXgBa1/pFD6XFfKXHdOwhuL2qvRGZVD5YtW5WVkJiZ4jAs+LSW5y+oejYU
+xZPm4YTHbrUmBkni4rdyV+aSSKFuPKDEeEqCkW1lGQ+Ky8LHXBF0XNkvzvyGgTgc
+hfaUatRvpC02S+v+FlGiwNwANq0ZDB8ihyCFiJ35ow02OM6uLjHx8vegNVmux2Xf
+Ic+Wh0Iz6ydShxebzWciZO5fiaKh7Livf3eMhJprh/R5cvCBPtAvEJoGb50tr0Hs
+mlRowRnYJSUwKQY1yfUUOUEmebi38ct6qt3yrzK06w+tY7HLA+swu2N5QS16TnVf
+pAnMznwtlyxEtCL/BMabjluno62dYaaIZIRZOxOKS6g83rj4Cr1LWWr8c01NJm0V
+pWOjsoyhMAJTk2nSeWEzC4TXJWRB7UPrLkDGVtqBqyoE7rqiUFM03qWyOgqb9ORb
+7XiyjmBDCPsqmISZP4JoBIf/ncj5SPaiBEV19+QLwhF0qyuJjO8=
+=aSmM
+-----END PGP SIGNATURE-----
+
+--LyKGinUk9vEyyav7--
