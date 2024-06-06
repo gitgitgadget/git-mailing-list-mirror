@@ -1,164 +1,98 @@
-Received: from wfhigh8-smtp.messagingengine.com (wfhigh8-smtp.messagingengine.com [64.147.123.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE171FBA
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 04:51:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44371E52A
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 04:56:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717649482; cv=none; b=WCuyXeA44ztqlt3a5himE1DIjrrc7h/ViL4COmAXH71Sx/9S5EYTrFZESobu1jFKhmvyO8B6/LgBiAHAJ9/BQ5u//VYbIckgyms20mT4wfyXtwcHGN3q2nXmlYm6PMlpEVaZytyKkMTx87NMSk7OSqNE4QxaGdyRloCI0I7Rn84=
+	t=1717649777; cv=none; b=Hypr0QBBiJ/w0qITqgYg39Y7LpDeoy/q8R5xi72q/yeflq94rMm4/652DlUm8r1eCbTUJDpj7aC5XLNDcB6L5JbeqgM5NO3u0IHYk337gMq48vt0Ydzfp479554uEx1cE/uaWs1ri2qx4758LzDZLs9NDmSmPbhuyvNND8hJbJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717649482; c=relaxed/simple;
-	bh=E2dyWavcNszzLM0iD+kTy7NUIH2fkLzxAIWYlfrMamY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NZo6PXJvO4b61qh/JKLOzfgq/G/6aAScu5o7FUBCHj66rJOavxkuKSAoFN46Wig2cAjA2l4ntYMJmOck4K7CE49IFLM+W5BOF1CCwzk1c7YDxz31UF6ZG/cNQ9b/67rh1trZqTlm9biQAir9VcaWOCx5c1PbB53l7W55bndoGuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bZfv9v8o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CcaDDmLO; arc=none smtp.client-ip=64.147.123.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1717649777; c=relaxed/simple;
+	bh=AwnjjM1rTljM+7tCIJDoKc0biPx5+BrSF1TQjECLQvw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IXyNtgqslniptC/MoV/6BI7jNarBDUUs2dgdHLvQ6VVQmnHTtbmmrYmCXEkOO22no7yuCeT3WxnKbmr5wtayU0kandOn1U/1scHPnhxkbSuCtgplGRwIbkvFwCZDFmqpXvFl+biefi4Gf2a0T+Umiiwc4uvJpK4+LqGMPX2Mbhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZIsqboev; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bZfv9v8o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CcaDDmLO"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 3088A1800186;
-	Thu,  6 Jun 2024 00:51:20 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 06 Jun 2024 00:51:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717649479; x=1717735879; bh=36bJ8uf7KN
-	DVkXCy4JunBVTRb5E/m/cEafncE6KgE1s=; b=bZfv9v8oKD5wqGF0ouWsT3+4xP
-	nRA6+CkleYOikveSYMero1tF46E3yC6HzhBcQ/aMC6yvE3mmVRxZXWfiJLaZTQ8E
-	tOHNjEQZrfNxxG7/mqxrQN6z31l+/qfBuZBQmyeTJOvOmZPq81kxvVjYeazlYc4k
-	aMzk5MnKwjwMSEVyXDD9MvJttBAcCI/dW5Y+DiLJmjbyPj1Bbl0bIVEWlr9RipJZ
-	rzXe8z7clM6ifbNAeIEcSMAFIkynl/o1L0SlPXDH2G5/AHSF2OybZcAfgZlPRHwi
-	R77+asWPDQA38y1sGLi/Mg0HAfLdi0NUvRgL6tI3E11PuPx5oNGyh1piAbsQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717649479; x=1717735879; bh=36bJ8uf7KNDVkXCy4JunBVTRb5E/
-	m/cEafncE6KgE1s=; b=CcaDDmLOTN6a0blLAbTKLjDAwSw3oZcMPCgmhqu0WEyD
-	qfRVR4PMf35kgExBbWe2IPGnlHG1geTkv0ktO0Z4FNZqdk1UwJ1Xo1j+cjRlUpSY
-	Sopt/JhTvsfHjvkYQYTW8J9QEDe0pPnugyOgd9dwDxJNySHxBw0x2rhQR/6cfxdv
-	mMGNW5+tjshcy5j9ux4hhctWszti/B8WKJcDLwkQV3as2e0yj38p3b8XOKe09W3g
-	briUjUAO+XqhzZKm4H1lSNXk6x8oBbxCNIM2GbxboWQPWf7GM+MUdL1LVef56qVG
-	PIZLYKk/bmRtIvJext+PfilGTpGaLqYLa0wMnPBs8g==
-X-ME-Sender: <xms:R0BhZtQ7u_FqJXJSEDv6Dhz4MJvc3lyRpPv-dNs0_dfLRjNkbS5PRA>
-    <xme:R0BhZmwN32uxHwJWRcrLBcaKtXTxf3w0WbnOOBb7STxjlYBDPgFwM5EQZOpuBtbnh
-    mHWNpKPnKN9vq1kqw>
-X-ME-Received: <xmr:R0BhZi0X-FJY5vwrXUY3YoUxWYa2N86lCueupfwYCQhNmzJKXPtHYvvd2QhWTNXL8ZqYpcQqBkffxpKsMcUT43IsIkXOjMCZukfKOaYeGd9m7y0s>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeljedgkeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:R0BhZlC40-DKmE5d_f2KzlSsThM-hfr7tgbyL3-osfZP_AdA62nZOQ>
-    <xmx:R0BhZmgewXdWexIw8fpUAN-Kca0MG0GMXBQegLn9F690s2NgvgSSPA>
-    <xmx:R0BhZpr-UTdPqMErAZSQ3q6BBj7pxWdRSLNvSQrjDO1USe_zZtv2XA>
-    <xmx:R0BhZhhVPe3nDPhIIvDMLMKDXezqlzgHRp9abMzc5qTlfTMvXYIExg>
-    <xmx:R0BhZhU-fx5aaQuuYIAha0OIiQgmzTHaSXEmL0v9y4F4kbeXBGuvsP_T>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Jun 2024 00:51:18 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id d2a77749 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Jun 2024 04:50:48 +0000 (UTC)
-Date: Thu, 6 Jun 2024 06:51:15 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v4 11/12] refs: implement logic to migrate between ref
- storage formats
-Message-ID: <ZmFAQ1UT6ePxHtzq@tanuki>
-References: <cover.1716451672.git.ps@pks.im>
- <cover.1717402363.git.ps@pks.im>
- <1f26051eff8b7c18bb7114803454611272f84e19.1717402363.git.ps@pks.im>
- <20240605100318.GA3436391@coredump.intra.peff.net>
- <xmqq1q5buxzx.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZIsqboev"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-6c7bf648207so427534a12.0
+        for <git@vger.kernel.org>; Wed, 05 Jun 2024 21:56:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717649775; x=1718254575; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wlQ5ROVDE+PqJnHaltzIRtzAs37ZuEDHJlDNB59C5/M=;
+        b=ZIsqboevCtU57JldtL7Tzw6dYWimjnl3kgDq8PlnAywFRV1SQisCzL9xs6d7rORk4R
+         fluZ3FUmqhAggoArPG+8NAcbh2gvWKb1+l9lcw+5eiDOAWa2j+hrxTBLRb1ZAoK5Abch
+         L4inqV+Y02ktf5X6TmhqjsOdTjKPpvpjyOr2dHhDHhx4BLncVf2mdRmD14q2A1yiIHpO
+         ExAWsSVCyBG6xoLqSTWMPxFC9IYjvdqZe+hmxVDJLXUI+Afe0qSeUYW9GXGnDthpIpuh
+         jwXUtwQQsD30Af2ZoH0ilGMCiicqGSaXAan+EprEjyKuV/Ab920N7/sG3rgLRPglnkim
+         4YLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717649775; x=1718254575;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wlQ5ROVDE+PqJnHaltzIRtzAs37ZuEDHJlDNB59C5/M=;
+        b=PwtGbhRj6kSnDSUPNeP5kdayM3JSDLi2LUOqSfjbWl4Lq/GKjkGEUs3lZgQj4FuNdq
+         jYS1gL1Hm3czCrD+w1JzwZtUGuo9NO6LjTmHD1XdT+RgNiYhu8sIKv/VFL3kj3oxW0Q0
+         tXzmBv9f/dvDpr2gEr5eAtZofO2LBM+fUq4E4ojByt7YETcSEr/7WiiuoFoNjCwtX5g8
+         TSgfj53MOnrOPxNY3zt5i09brubDZeiGrYB/SVpBblNZdH9XfHfU2lv72P9ChMwu6eF7
+         w52CojVSvRJb0+ptIe4j4H6yyJ/bDvlxjgb8Mq2FL/VWO7gYQ/6rfoS814pKSACHILB0
+         Qgkg==
+X-Forwarded-Encrypted: i=1; AJvYcCXhIhQrO/XCQwoH1VGSiL/9IpacINRH2EoatNO742ZRIYc7grcc/YZnd6qnzSN5zLq/3svQTt3G7Y4JdbCgRYU2/suS
+X-Gm-Message-State: AOJu0YxcbkihwBRfY1JBQ2FkL7cSKFVc+drA6gC9ix8X7AFlK3y62MCu
+	2EfDBK4VPxYKPxxt4YcTS5iy0lFgU5W1IxKMUn7OlrYMeRXbvHUq
+X-Google-Smtp-Source: AGHT+IFEb0QHdJOs8X9TPQEH9GWhMJ1ZuS8Kzm3gdchFA4+vdsxMYRoOTqrIejUy8OLdycaG/7I36A==
+X-Received: by 2002:a05:6a20:2588:b0:1af:dd56:76f0 with SMTP id adf61e73a8af0-1b2b6f2cc6bmr5515245637.22.1717649774840;
+        Wed, 05 Jun 2024 21:56:14 -0700 (PDT)
+Received: from [100.113.38.39] ([116.90.72.247])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c2806bd67csm2431735a91.43.2024.06.05.21.56.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jun 2024 21:56:14 -0700 (PDT)
+Message-ID: <a3b8a245-fd88-4798-990c-a06c911ce067@gmail.com>
+Date: Thu, 6 Jun 2024 14:56:08 +1000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OSF+HxLansa7ZUam"
-Content-Disposition: inline
-In-Reply-To: <xmqq1q5buxzx.fsf@gitster.g>
+User-Agent: Betterbird (Linux)
+Subject: Re: [PATCH v2] date: detect underflow when parsing dates with
+ positive timezone offset
+To: Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood <phillip.wood123@gmail.com>
+Cc: phillip.wood@dunelm.org.uk,
+ darcy via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
+References: <pull.1726.git.git.1716801427015.gitgitgadget@gmail.com>
+ <pull.1726.v2.git.git.1717369608923.gitgitgadget@gmail.com>
+ <xmqqwmn66zzc.fsf@gitster.g> <2d771a72-3021-46db-ac32-e008a7ace34c@gmail.com>
+ <67c23773-21a4-4ad5-9b98-5e44578166dd@gmail.com>
+ <4574e410-ca1a-495f-9835-14ee3fa454a1@gmail.com>
+ <7ae05b6a-fb63-4ec7-8006-e968862cc5c7@gmail.com> <xmqq1q5bti4g.fsf@gitster.g>
+Content-Language: en-US
+From: darcy <acednes@gmail.com>
+In-Reply-To: <xmqq1q5bti4g.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 6/6/24 03:27, Junio C Hamano wrote:
 
---OSF+HxLansa7ZUam
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+>> Thanks for taking a closer look, I wasn't aware of that. Reading
+>> Peff's reply it seems like timestamp is actually unsigned and as we
+>> limit the maximum year to 2099 it seems unlikely we'll overflow from
+>> too larger date after all.
+> Thanks all.
+>
+> I haven't seen one question I posed answered, though.  Has
+> https://git.github.io/htmldocs/SubmittingPatches.html#real-name
+> been followed in this patch when signing off the patch?
 
-On Wed, Jun 05, 2024 at 09:59:14AM -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
->=20
-> > Coverity complains here of a leak of the xstrdup(). The return from
-> > mkdtemp() should generally point to the same buffer we passed in, but if
-> > it sees an error it will return NULL and the new heap buffer will be
-> > lost.
-> >
-> > Probably unlikely, but since you are on a leak-checking kick, I thought
-> > I'd mention it. ;)
-> >
-> > Since you have a writable strbuf already, maybe:
-> >
-> >   new_gitdir =3D mkdtemp(buf.buf);
-> >   if (!new_gitdir)
-> > 	...
-> >   new_gitdir =3D strbuf_detach(&buf, NULL); /* same pointer, but now we=
- own it */
-> >
-> > Or since "buf" is not used for anything else, we could just leave it
-> > attached to the strbuf. And probably give it a better name. Maybe:
-> > ...
->=20
-> Hmph, I think this is the second one we want to amend on the topic
-> and it seems that I merged it a bit too prematurely.
->=20
-> I do not mind reverting the topic out of 'next' and actually would
-> prefer replacing it with a corrected version, which would allow us
-> to merge the clean copy to the next release.
+I have changed the line in the commit to properly follow that rule.
 
-I wouldn't exactly say prematurely, given that it likely wouldn't have
-gotten a review without the merge because it was spurred by Coverity :)
-I really wish that the Coverity tooling was available to run at will and
-locally in our pipelines so that we can stop reacting to it, but instead
-address whatever it flags _before_ the code hits the target branch. But,
-well, that's not how Coverity works.
-
-Anyway, I'll send a revised version in a bit. Thanks for your extra
-review, Peff!
-
-Patrick
-
---OSF+HxLansa7ZUam
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhQEMACgkQVbJhu7ck
-PpSWvxAApzF4RNPbAvPWdRRutIddzNSEe9dcHIsNYqZh3p4oAlsXPzXQPag7XE61
-g8/Ym6I69YgZJktVQHfeZiEytlGA3QIP+/CcO4xXLq9zGTuE9ldSFZnh+85cAsZm
-V8cTIwsXn6h1+Hqye84eXMRlhMnMYyYh0MoI1BB5A+NW21c6qvBKaJFuCGpNsPeS
-4ZKoKXsEnnVatZunDy2U9xD7gYoIB0sWyQ4xp2/+c8TTT1DeY6b61vfmPgt4/Mg+
-IVbnURqJ0BUIvvkOuejkaJJgQSomDCtYfkuBjkE3CG61JGeD9Udz0c1SpcqLLUtj
-e1SkubeTUm3Ow2e1rCIFTNLj+5bxo7YWpDXbFyCkdoh1E7k4+6PqKXTBz/j2quRO
-vTQFQfEXz9ZAweqD8v7yECvBw09FrVnFTZJUcimVTx3AcOkJMB2ou2mZ8fcUh5kv
-HaJPxw5reh42oIdm5JS4hg6TkytIF4ORnkpIjyFC1UUllQRGmQhY+dMTgzpKALIv
-kD6oyKoPoZtjLnxt44zn4whkY1MHqH6vOb7C+DlbLeeSXdnkhE8WyXmhIc9/+i/L
-rKb+E3q30cJsnxNKKq89km/5Kja1Cm84egvvA3q5vgxdEW6V263iutQU0os4eSIc
-yewuoc+8sBwFloCyGybnBgfDQE+jSgWj6qeYyiAbBKSiQQjkw0c=
-=6iV+
------END PGP SIGNATURE-----
-
---OSF+HxLansa7ZUam--
