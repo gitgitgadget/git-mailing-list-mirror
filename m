@@ -1,69 +1,69 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494D08F58
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 16:25:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08AB1F171
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 16:32:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717691123; cv=none; b=NfsbxdZJcQuAv1r5qATllA5lMMVQGpt40xiz27L3Z18ziFAknQ9tw1LCah3I1nrLyW6ScKclja3L3rx/ZE1iW5x87B2wq+jdiyc32LZjGEaLDRlMOvOGmajNZXNuov2iZo7i2k7jMnFVDT47vPG8LdeKfQcdUGKyyNdN4pkJ4uk=
+	t=1717691532; cv=none; b=R9gKJS6oCsb5VF42zUzYKSPzrhFUpoLbJmfedb2fgpG+k76SVXd+MEty2m+0/pNM4mrhSWbiUEsVKS1rtPNpWrMLdszRxDBZhcN86PZD7TbR3ZsEwKYa2lq8l4PmiYYOFmKij9PQJl+1Yj87gK41rMkZHir1pF8fTwV0wpWnxPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717691123; c=relaxed/simple;
-	bh=0wnOwPcz6zwlL99jPdCcmClJMUuVRDEQvaw7gcB/E0I=;
+	s=arc-20240116; t=1717691532; c=relaxed/simple;
+	bh=16thv84HhygDVkWszKYSBpAASO+7BFuMc316VCQkNoY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TyMh6UHNXxoO5M9LOPo39+GYhJjQaK/WhAvzaFWabpE9J6vvP3v8PXiIoIjt4FR9Otlgi367JHCeYI/xgeHj4e2b264FHhL0O0ysB5tkGdDuUkqQvqdhG0KyrVzPPAoFHRK8jqfPUbeMC0tSM74KaZ4fBK5Tl8+ZldFWJab6W/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WFDx7hgM; arc=none smtp.client-ip=209.85.210.172
+	 MIME-Version:Content-Type; b=uvvDEWA46GqcVzs/2ecIuUu2XUqoUv3IPDYGVFDzxAp+rVfUtp3Sq0EzEmi5KheU0eFu0P97ZwlByOHuMHcUtcODTHK1HsgQsYsT3GDqxrxPY/jEHhWTdVDKtKMXdOayLZaH/mCRXp6r9HQxhSv5nrBddAPotwZowNAe94cCA58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PdwfUK1b; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WFDx7hgM"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-70109d34a16so1067812b3a.2
-        for <git@vger.kernel.org>; Thu, 06 Jun 2024 09:25:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PdwfUK1b"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7024d571d8eso995570b3a.0
+        for <git@vger.kernel.org>; Thu, 06 Jun 2024 09:32:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717691122; x=1718295922; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1717691530; x=1718296330; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mcsGSidAXAhmnCuUmNH/sH3ptmh19pfQpddwcwBnvv0=;
-        b=WFDx7hgMmiLSYjoA10QW/d9pxMr2UPlfRrH1sD+jPLV4x6gNfuqLxlrdPtegq0uakx
-         9kw0Xd6/K0TiYqxugO/drGh/AT30NdOlCiElBu/aLsn5lZv1YhnS8w6EZYjfN0alktbZ
-         CWhC3x11xUWTK8sZL7gViiLasu6UI5fcy8ZamPtjwygR9KdGh7cPSEnJnT+S12l5zrOr
-         NcD2cI4KynnLmQxaTk9bu6DN9BRarAayv5JnksXjkXZ904gcL5GuovsWxRBQe4c+Br4L
-         1Lco+vKI5N6Q2jwEcCVCSzlUa63+Gz5R6Dk0TynMz8qd0QEvzdyUm6ZP9jKWbbFpbAfI
-         ciMg==
+        bh=dmMhAMq+8g2voBzeWmNyftIi6edd7atK34ybVGdaLsc=;
+        b=PdwfUK1bjRQ0gtmfJEsvX58RJYT6UBWAbfJGcoNcy3KeMg/WQT5AC5trklS2kqAo9H
+         ch69S+qmnzsrS1/TGZcBYAfDc3RAvgPtK26kOHlY1dpsM6b3Q0GWPF0KkoQjM6Tdv/44
+         88dPWrYmiJjwGUCstXDCM+aRvrtuO323PFiFu8ZlZ+CS1CAdPLe1WzNZfh3Kt2WYJzD2
+         6oFBXZNsHQXFI3H+XHQiQUjzCNIkWb8TdsPkr6Z6yYzUGFhySQcBF8zhJJlZvE1vp2bV
+         BTUZN3BG4W4VYscmgInGM1UKiraRuwNgHXGDgpCyIFFDzJRWk+228KZEMs/I2gtGy9/o
+         6uXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717691122; x=1718295922;
+        d=1e100.net; s=20230601; t=1717691530; x=1718296330;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=mcsGSidAXAhmnCuUmNH/sH3ptmh19pfQpddwcwBnvv0=;
-        b=jTOHQd21FpjgyqYqAWSNR38fWRYyZdXcltR9U6zGUVmjHVGGtWxDhdoRRZgr3VRlNL
-         nyGceNKZWNxGEzTWQv9HPvOFZmKgZW9iNXyGzxyMgG4tqt8C08CJRFbtvan3zKSWZhZd
-         K3QtSBMQxaMlT3Wsbf+2lLvCN2LEqJqJaAJ35y3062ceOhUWRuTisSetkLjwNdMYW0xs
-         JULFkO+ISlC5m04l6HZfgs4ZD+5ClAquLtviDn858VonnyX0FUfH9kXVyZBnK9yuCDZ9
-         PP1CYQu16tdbjpCYKSDkWQ2pyL+mvm/+/Gx0HjuCDLVZ1+X0tPURjWsjcUV2E7CeiXXY
-         t+HQ==
-X-Gm-Message-State: AOJu0YwsVZ2tCuHUOsLocylM/DEAiG4Otn6dExI/1fVU+8mKbfiPLZJt
-	fmWRpxOlqp8dtcBoEAPKVZy8SeA20T8EAS8eppE5Cd5XkfwkD6Ls
-X-Google-Smtp-Source: AGHT+IGYle6yPN/tblIS1CW3BZz3ZEOFUgvHLzWVU/6Mj/dPPj8mW+ragfBub02hpzxdEDcHmruEog==
-X-Received: by 2002:a17:90b:198d:b0:2c2:4129:91a6 with SMTP id 98e67ed59e1d1-2c27dc60fdcmr6024492a91.42.1717691121540;
-        Thu, 06 Jun 2024 09:25:21 -0700 (PDT)
+        bh=dmMhAMq+8g2voBzeWmNyftIi6edd7atK34ybVGdaLsc=;
+        b=nTA0pPWPv2PL35Ai8mTE1GR9CbWbuwR+UrfNSLQ6GAHDsYYYY2njy9EJqoyXu7+/v8
+         1/CkjrHJzZVc0oXreH2HANkJMDl47InNNX8XjU1oWbQR/JN85o7OBAZgCm2ZWZ879JuH
+         007jS0UDAlOnW3hvb759UE7WE4y+/5psAIPYkLuhzIPxvtRoWzpBAmutqakAPYdxtSXA
+         grk3kGyB7P8x5TkbzVVjYP2k8EEJG8HmZq9dIOyobiK9xs66XATZYbPU7SdOFWQPHCgy
+         2CVsLLhvxqiuYNQxSVZ4nVAl+2+JmjGpzz8t/DYC7io6f4BfVxs/CrQEJZkq5lbMPab5
+         OJSg==
+X-Forwarded-Encrypted: i=1; AJvYcCWq6p6cpn2WhgstQ+jUaln3i9VbdxpL4K75iu7o8Xkzulrsl/9/VyX5XAU2L9R9LnCCAkPnR31mYmQgkSRKqzFxGNxw
+X-Gm-Message-State: AOJu0YzaWTbcMRhn9+jVH7VyBT6UpmXxZ7J2k3z6lMDTJ5cJ/9OI2Nfc
+	1p1OqHMWRqA9bsnjnRLovjtn68U/8qFZGF4QhRcgqWguSDkP3WpcVHAw4Q==
+X-Google-Smtp-Source: AGHT+IH8aWD4kMAKlci/oYr54cPYUsdJBluWih1QRLSdO4/AXeaMzfoCQh3FNfKT4WO5XZlzfGjCUA==
+X-Received: by 2002:a05:6a00:1307:b0:6ea:b818:f499 with SMTP id d2e1a72fcca58-703e599ca68mr7095598b3a.19.1717691529967;
+        Thu, 06 Jun 2024 09:32:09 -0700 (PDT)
 Received: from localhost (201.204.125.34.bc.googleusercontent.com. [34.125.204.201])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c29c154d48sm1848068a91.0.2024.06.06.09.25.21
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-703fd4951bdsm1294689b3a.128.2024.06.06.09.32.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 09:25:21 -0700 (PDT)
+        Thu, 06 Jun 2024 09:32:09 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Eric Sunshine
- <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 12/27] object-file: mark cached object buffers as const
-In-Reply-To: <xmqqmsnyppo3.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	05 Jun 2024 23:10:20 -0700")
-References: <cover.1716983704.git.ps@pks.im> <cover.1717504517.git.ps@pks.im>
-	<ecca8e973df77cfc8233ab63bf7d1f6fa83031a3.1717504517.git.ps@pks.im>
-	<xmqqr0dapq1s.fsf@gitster.g> <xmqqmsnyppo3.fsf@gitster.g>
-Date: Thu, 06 Jun 2024 09:25:20 -0700
-Message-ID: <xmqqa5jynimn.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 2/2] ci: let pedantic job compile with -Og
+In-Reply-To: <20240606065236.GA646308@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 6 Jun 2024 02:52:36 -0400")
+References: <cover.1717655210.git.ps@pks.im>
+	<351dec4a4d5a5619e7627e11a8e674e32125125e.1717655210.git.ps@pks.im>
+	<20240606065236.GA646308@coredump.intra.peff.net>
+Date: Thu, 06 Jun 2024 09:32:09 -0700
+Message-ID: <xmqq4ja6niba.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -73,64 +73,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Indeed, that seems to be the case.  With the attached at the tip of
-> the branch and rebuilding 'seen' seems to pass these 6130, 7010, 8002
-> tests with SANTIZE=leak.
+> So for the pedantic warnings, we're left with a guess as to whether -Og
+> or -O2 will yield more results. And in my experience it is probably -O2.
 >
-> From f307bbf7bd317d90db29bd1589b49e84b9e37e88 Mon Sep 17 00:00:00 2001
-> From: Junio C Hamano <gitster@pobox.com>
-> Date: Wed, 5 Jun 2024 23:03:34 -0700
-> Subject: [PATCH] fixup! object-file: mark cached object buffers as const
+> If we want to get coverage of -Og, I'd suggest doing it in a job that is
+> otherwise overlapping with another (maybe linux-TEST-vars, which I think
+> is otherwise a duplicate build?).
+
+The same knee-jerk reaction came to me.
+
+Speaking of variants, is there any interest in migrating one or some
+of the existing x86-64 CI jobs to arm64 CI jobs GitHub introduced
+recently?  I suspect that we won't find any endianness bugs (I
+expect they are configured to do little endian just like everybody
+else) and there may no longer be lurking unaligned read bugs (but
+"git log --grep=unaligned" finds surprising number of them we have
+seen and fixed), so the returns may be very small.
+
+> Your command above also loses the "-g" and "-Wall" from the default
+> CFLAGS. Maybe OK, since DEVELOPER=1 implies -Wall anyway, and "-g" isn't
+> important. But one thing I've done for a long time in my config.mak is:
 >
-> ---
->  object-file.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+>   O ?= 2
+>   CFLAGS = -g -Wall -O$(O)
 >
-> diff --git a/object-file.c b/object-file.c
-> index b5b5a59dc6..2d5bd3a211 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1785,8 +1785,10 @@ int pretend_object_file(void *buf, unsigned long len, enum object_type type,
->  
->  	hash_object_file(the_hash_algo, buf, len, type, oid);
->  	if (repo_has_object_file_with_flags(the_repository, oid, OBJECT_INFO_QUICK | OBJECT_INFO_SKIP_FETCH_OBJECT) ||
-> -	    find_cached_object(oid))
-> +	    find_cached_object(oid)) {
-> +		free(co_buf);
->  		return 0;
-> +	}
->  	ALLOC_GROW(cached_objects, cached_object_nr + 1, cached_object_alloc);
->  	co = &cached_objects[cached_object_nr++];
->  	co->size = len;
+> Then you can "make O=0" or "make O=g" if you want. And I think that
+> setting O=g in the environment (exported) would work, as well.
 
-Wait.  Why do we need to allocate co_buf that early in the first
-place?  IOW, shouldn't the fixup be more like this?
+I do something similar, but my $(O) replaces the whole -O2 thing, so
+I can say something silly like
 
- object-file.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+    make O="-O2 -g -Wall"
 
-diff --git c/object-file.c w/object-file.c
-index b5b5a59dc6..0b58751f94 100644
---- c/object-file.c
-+++ w/object-file.c
-@@ -1780,9 +1780,6 @@ int pretend_object_file(void *buf, unsigned long len, enum object_type type,
- 	struct cached_object *co;
- 	char *co_buf;
- 
--	co_buf = xmalloc(len);
--	memcpy(co_buf, buf, len);
--
- 	hash_object_file(the_hash_algo, buf, len, type, oid);
- 	if (repo_has_object_file_with_flags(the_repository, oid, OBJECT_INFO_QUICK | OBJECT_INFO_SKIP_FETCH_OBJECT) ||
- 	    find_cached_object(oid))
-@@ -1791,6 +1788,8 @@ int pretend_object_file(void *buf, unsigned long len, enum object_type type,
- 	co = &cached_objects[cached_object_nr++];
- 	co->size = len;
- 	co->type = type;
-+	co_buf = xmalloc(len);
-+	memcpy(co_buf, buf, len);
- 	co->buf = co_buf;
- 	oidcpy(&co->oid, oid);
- 	return 0;
+
