@@ -1,125 +1,115 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3A78821
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 19:43:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6181C71B4C
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 20:12:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717702983; cv=none; b=aos8OQgim04x0Qxv63J7ts2lyBU6YrVzWPDq4yrc8OlG4GqtwJcC8nZW5x40KAT9NckszGiNTKf3DeBARAtIpHaD2E3FfA6rrB8fLpIjejUC/DV2y5qtBiL21og0n92JcGL6nM9DCdAo2xkB/GgvfB/jt33Aa/2FplfxHPaQPG8=
+	t=1717704755; cv=none; b=PwPOWxaqYMV1USLo9TFwfVZHA5d6uUW2Am9Xw+Uu+V0CCgxmfvINnuCROlHGxMrYv/GvEeu6LWMVF93ug7XMOJkzpsVHcaGE3mxEmFMsbRpptJuqoiR/EzHhPpwgnmsWvzqKx/wrGJdLQI9H+cW3IHH7AQOlb4HxsSLhjOD0m7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717702983; c=relaxed/simple;
-	bh=5qWMyIAWfD/XyeojIG1+T0Fr+0AXd2BXD6tlPl12MnM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=j633BMHsyWcSp2kAFwukl7VwEq2cosBQFROw4Ctmj6toF///BLLTDV8salqohKxVNam+sgioJ0tI68ifWIX4vnmr2RdI3dIqR+cJVcFYmmV1+r5xBrpcXXJxxPlvFX5SgkogXjJq/c5FiGupA6t5bWPM/X8CexQwXH3wwqThyy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BO3WxyGn; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1717704755; c=relaxed/simple;
+	bh=IzzbclxxHsj+IMolf1oUXHMV+xs/PdeCZSJgTaRMD3A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ck+emYd2FqC9INlJ6ykkwbsG5Iy60bi6uFbPGmZ7+2A4jIkgxoeaC8iOU/8pj9yWojHUtvq6zHNJPeRd3Hm7867I3iDoNrv7xHMHn73DxVTGdjIwWeM+kCbRcZ6whalL4qSrYF1qsqugDh+lofP9s9BCOzm40jASldS4mHdh87U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.fm; spf=pass smtp.mailfrom=fastmail.fm; dkim=pass (2048-bit key) header.d=fastmail.fm header.i=@fastmail.fm header.b=kfJq6ini; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SzO+rGaL; arc=none smtp.client-ip=64.147.123.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.fm
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.fm
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BO3WxyGn"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1f480624d10so13207055ad.1
-        for <git@vger.kernel.org>; Thu, 06 Jun 2024 12:43:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717702981; x=1718307781; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=q2aTorAgrZao2UyGpQNKzVCSp2hSQmv7nIdvq0OTWa8=;
-        b=BO3WxyGnZxzuW5GCxrmS1iRsVo56HquLwDocCO5lEY2VsAvU/vq0uFA7x6AIehlgdR
-         dJeX5gAauLW90bJlPly35RQ8Bn9AnCG26OOPJOFRSaka98m3YEp6ho3lLUxwqXq3Kvlo
-         /n5rSu8TDRMa1nWaTzg0LMyIh864jFy4nadKYSg5UV4sVjKUH9r9183aQkaF9hDs391f
-         4j1/T1bpe51Xvht6bs5tjUFmm2RD4cnbSs1KGMTl+0VDmGwHLGSKfEc0LFZSVxReHdg1
-         1p3HSL5a6rhWrDcyLOwDosDPD1rZ05cbfs/JqV3tfe7ZJKgazb4YLFvqQ+KQSQN1YsKX
-         AzNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717702981; x=1718307781;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=q2aTorAgrZao2UyGpQNKzVCSp2hSQmv7nIdvq0OTWa8=;
-        b=baAxHKdKE2Xe99Io7omb02+LaX7wDmaMQ6WAja/dafqxIJdwYo7HwNwYdoL4UhUbo0
-         mDGmMm6Z6+PQbMrzTlFnHCqjC5qW7HwdshxDN+9/Qeu08NoKOazLy70GmiyoBY5rPses
-         dUNgehUBDy/smNQHnjG/a5QoFPz2ZjZb8UYDjc4BVqpEdQxidW84TDomtOXmm66Hk3Xs
-         JGbc3CcNreyBdkWCanSwGRImW2zFYbRfnPsDwnoyd7QLSu7hU9g9LLEUOJPS159CxyRU
-         rVNWXN8DRzIuRqLf4+gCo5eQjE6ONZvpqww+kjhVSN2XYwtrg7ZytARtn2R6ZaZ5pGY2
-         TRwA==
-X-Gm-Message-State: AOJu0YzliRM2QP1GXmBuSlDMNtutS8mRVsbY/SLYMJYgjJ6xSkzhl9Jl
-	ouLnoTWTBsk0JVcRNtMgexVlYjotoCp1YCmxVcTaOq1BkybEXmNw
-X-Google-Smtp-Source: AGHT+IEgWDr0IZ2sZONmhyEeAJTtFH2oKu9oixNRfS3kpaXzDc/rlhtwP3Ivy/sjFl673SnzfpoUDA==
-X-Received: by 2002:a17:903:41cf:b0:1f3:590:71d9 with SMTP id d9443c01a7336-1f6d02d217dmr7512165ad.2.1717702980675;
-        Thu, 06 Jun 2024 12:43:00 -0700 (PDT)
-Received: from localhost (201.204.125.34.bc.googleusercontent.com. [34.125.204.201])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6bd771d36sm19083585ad.113.2024.06.06.12.43.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 12:43:00 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 2/2] pack-bitmap.c: ensure pseudo-merge offset reads are
- bounded
-In-Reply-To: <0a16399d14afd527f4db63f2a4a3b0a3cbf112f1.1717699237.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Thu, 6 Jun 2024 14:41:00 -0400")
-References: <a71ec05e5dc0c8c40e1cce14a7c5fe946437a24d.1717699237.git.me@ttaylorr.com>
-	<0a16399d14afd527f4db63f2a4a3b0a3cbf112f1.1717699237.git.me@ttaylorr.com>
-Date: Thu, 06 Jun 2024 12:42:59 -0700
-Message-ID: <xmqqfrtpluws.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=fastmail.fm header.i=@fastmail.fm header.b="kfJq6ini";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SzO+rGaL"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 5D9EA18000C3;
+	Thu,  6 Jun 2024 16:12:32 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute7.internal (MEProxy); Thu, 06 Jun 2024 16:12:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.fm; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1717704752;
+	 x=1717791152; bh=KLZtCtIDSS+umkHfWdJRrEZ5cRFoumNYjuExAiuccjI=; b=
+	kfJq6inidBs/oXEdzBX2DCIHrfv/jaepvi0A1XWPIuZeRPoOdDDXW2Ekb7Q7m5va
+	VvSsqDTe0RtVoPnRg1icrgKCMQ7bi3S5AynRLC237X/QimjdQ+Y0lFoj28+YTyj7
+	ptnnTc1psFKLeSVJmWXvKvs3IzaM/TiSfBJ/TwfhBeWRm6xM/rgmasABgWaAZY7J
+	nQsvT2vWEP5ye13YQ/d5EaJcuVbGjZ5tGQZCnxW6JraEhPlSSFD2Sf8UjKxFe+WV
+	tc/y73F2gkaLxVhQxxRLHj451rDvUZd2GRCsDMy4rOXKU6QNHZPVdwYJa3SC/72l
+	w9r2GSDdF+UH1EFP+m7vQw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1717704752; x=
+	1717791152; bh=KLZtCtIDSS+umkHfWdJRrEZ5cRFoumNYjuExAiuccjI=; b=S
+	zO+rGaLrpkpdVI41tTiVLT/2tYpyOJF9pKbDoW0hZU8S8CE1HrpHHVpxF8Ka+9fr
+	AeMSwPLmHm+4pT1+wFMeCLR8S2IFI8eE8RHcKRj60v/af5dyxeqX5/xR9FKb3Sf8
+	6C/5xPiheOzq2DkbqOYbjB8P79z6p/p6o0LwU0S06tcQrFLRfffJFP3h9esSBEEb
+	v+9bHjXTo9REUy+XlD7i7i+Dca9tCk+oRnnWq6T4/m1Z93HZsGxqMfuQdSZtl7EA
+	a2Us/XRXXFxdNK0KJbaE+qa+rkcXfvPEHfvaDzSnQfAijyLufoNzq7Kumafa5olp
+	sLCRILaZ8v3+QtVKxA8WA==
+X-ME-Sender: <xms:LxhiZiycDTtLFsLzHd_Lvi6sctuupm0m8BC2YJ0gYicdFCfaSSqzww>
+    <xme:LxhiZuQioceYr17EYw8v-2erpXA5DoTjgxspehTcSBbfUZF5Xwm46RBjLk8D9Af-K
+    loHmAR6e6g>
+X-ME-Received: <xmr:LxhiZkULhZ5GElCA2c-URsMUnKVdfrRXlvFX9Ot_r-aRqw_8pu1wqUZ1gk6fx79Lxyp4A2pLIUMsnIbI9_KbMPc8WFMK>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelkedgudeghecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepkfffgggfuffvvehfhfgjtgfgse
+    htjeertddtfeejnecuhfhrohhmpefhrhgvugcunfhonhhguceofhhrvggupghlohhnghes
+    fhgrshhtmhgrihhlrdhfmheqnecuggftrfgrthhtvghrnhepteekledugfduheejffduie
+    eugeelteeigeeujeegteegfffhvedvieeuhefhteeinecuffhomhgrihhnpehgohhoghhl
+    vghsohhurhgtvgdrtghomhdpihhnthgvrhhnrghlqdhfshdqlhgrhihouhhtrdhmugenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehfrhgvuggp
+    lhhonhhgsehfrghsthhmrghilhdrfhhm
+X-ME-Proxy: <xmx:LxhiZog2RYU9oUkinHI8j6fWCWOnDN5tgj-4rXO5Irb0wK0hyEw5GA>
+    <xmx:LxhiZkAsGl8AVpw_ewzKVyKcz00KnlnbBd-jgOenBMXesYqmFcEgvA>
+    <xmx:LxhiZpLzzM1SM2QcLqNBA7kjf9_wzLh4i3woDvR3r8pPVAr8wJvFWA>
+    <xmx:LxhiZrByTlw39mD4LccnQoqYTqkU0PokiutGsl7F-Dz2opAyNcEkXw>
+    <xmx:LxhiZn-nudfDOEf0iXK1Xxo2-8cAs-L8piOB1NqWmWe1eHjyGpG_-UWm>
+Feedback-ID: i08fc41ae:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Jun 2024 16:12:31 -0400 (EDT)
+Message-ID: <5469592f-69eb-b1da-1218-abeae88f7303@fastmail.fm>
+Date: Thu, 6 Jun 2024 13:12:31 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: git fetch --prune fails with "fatal: bad object"
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com,
+ git@vger.kernel.org
+References: <16919-1717194882-875013@sneakemail.com>
+ <xmqqplt1d0k0.fsf@gitster.g> <000501dab3b3$51779400$f466bc00$@nexbridge.com>
+ <xmqqo78kbqwo.fsf@gitster.g>
+ <20240604104437.GD1781455@coredump.intra.peff.net>
+ <876fbb07-210e-128e-5289-57ab01761750@fastmail.fm>
+ <20240605084718.GD2345232@coredump.intra.peff.net>
+ <c2a02982-40a9-6629-05c2-c8de3335f35b@fastmail.fm>
+ <20240606011453.GA623737@coredump.intra.peff.net>
+Content-Language: en-US
+From: Fred Long <fred_long@fastmail.fm>
+In-Reply-To: <20240606011453.GA623737@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Taylor Blau <me@ttaylorr.com> writes:
+On 6/5/2024 6:14 PM, Jeff King wrote:
+>
+> Certainly this warning is ominous:
+>
+>    https://gerrit.googlesource.com/git-repo/+/refs/tags/v2.45/docs/internal-fs-layout.md#project-objects
+>
+> -Peff
+Yeah, I saw that, and I think I know what's causing the problem. First I 
+create a bare mirror of AOSP with "repo init --mirror" and "repo sync", 
+then for all my different source trees I use "repo init --reference" to 
+share objects with the mirror using alternates files. Running "repo 
+sync" on the bare mirror works fine. The problem occurs when I run "repo 
+sync" in one of my source trees. Commits and refs have been deleted from 
+the mirror, but the refs are not deleted from the repos that point to 
+the mirror. So it all makes sense now. Still, I wish there were a simple 
+command I could run to remove the dangling refs.
 
-> After reading the pseudo-merge extension's metadata table, we allocate
-> an array to store information about each pseudo-merge, including its
-> byte offset within the .bitmap file itself.
->
-> This is done like so:
->
->     pseudo_merge_ofs = index_end - 24 -
->             (index->pseudo_merges.nr * sizeof(uint64_t));
->     for (i = 0; i < index->pseudo_merges.nr; i++) {
->             index->pseudo_merges.v[i].at = get_be64(pseudo_merge_ofs);
->             pseudo_merge_ofs += sizeof(uint64_t);
->     }
->
-> But if the pseudo-merge table is corrupt, we'll keep calling get_be64()
-> past the end of the pseudo-merge extension, potentially reading off the
-> end of the mmap'd region.
->
-> Prevent this by ensuring that we have at least `table_size - 24` many
-> bytes available to read (subtracting 24 as the length of the metadata
-> component).
->
-> This is sufficient to prevent us from reading off the end of the
-> pseudo-merge extension, and ensures that all of the get_be64() calls
-> below are in bounds.
 
-Can table_size at this point be smaller than 24, which will allow
-(table_size - 24) to be a huge number that st_mult() will
-comfortably fit?
-
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  pack-bitmap.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index 70230e2647..ad2635c025 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -238,6 +238,9 @@ static int load_bitmap_header(struct bitmap_index *index)
->  				index->pseudo_merges.commits_nr = get_be32(index_end - 20);
->  				index->pseudo_merges.nr = get_be32(index_end - 24);
->  
-> +				if (st_mult(index->pseudo_merges.nr, sizeof(uint64_t)) > table_size - 24)
-> +					return error(_("corrupted bitmap index file, pseudo-merge table too short"));
-> +
->  				CALLOC_ARRAY(index->pseudo_merges.v,
->  					     index->pseudo_merges.nr);
