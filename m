@@ -1,148 +1,181 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
+Received: from mail187-37.suw11.mandrillapp.com (mail187-37.suw11.mandrillapp.com [198.2.187.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD894C153
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 12:06:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C88EFC02
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 13:36:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.2.187.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717675614; cv=none; b=iU2L8IL4qLBt4O1C4B534m+5QU7RvHRXJpbBM/d1WfjD724/s58tOJrNfU1Bher/Pfyshb0e6GXGn2DW3vjvZaTSnBl5x7sUSzXQr6ajxjX3DxSNm8aKhe4MX2zOLNdqkZbNmEtEaLqVZOcg8p4xCZAfDfR9FD+SZEKntDOnBWg=
+	t=1717680999; cv=none; b=pxOxXTnjIj08ydoglcAt9u2YKzxf4ctWs2G3DUESSeEFEXe3kf2Nuo7ctux9KQICPYkbRKgJWX6aFvebdmn6MYEph+5p+SQArbi0Tfh1h1+iVfdKKE2GmG7Aguw+79fnLeLDnU9B44K5misHGMW9Ofw95J3+xuLE4oMEtfU8GmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717675614; c=relaxed/simple;
-	bh=irbM16YkxcR452TMvPU0V3MNOIXBL1k/9OHmQunBJb4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mlWN7YHTQJ1Awp8FlvQAIlP58EncnK1LqyU7g9OCVAhvzlxvkykCyIbzbrlQzHIvsLIdqOQREqX7X5lpHpg1cfxnravre1v4o/McSuXOpNR918BaTuF2HCYRWBHZc7iIeHGg5niMQfL9FuOJXgHxm+OCxmaCFV1WYF/dlCq+0ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UxAhitx3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TJjt9RoR; arc=none smtp.client-ip=64.147.123.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1717680999; c=relaxed/simple;
+	bh=zV/8Vney9EGbHGIrIgFw41AMRbQK9VLiJj7c8u0/Vho=;
+	h=From:Subject:To:Cc:Message-Id:Date:MIME-Version:Content-Type; b=L0nHK86AiChrryGZgv+jFqW/1Sn6nNgsqPTE6DLPajRDkuU7Zbs1c+Y9EOfCPNwVKufHPJAiZtWnVeF9BmOMyZSuiR/8vBSmYnHdotQIDmpaOHsYHFzHexSY13UmuoCpHDlsJLWolsPPPEZfezGJaFbMbOnmBb0391bOpPDxv4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexedi.com; spf=pass smtp.mailfrom=mandrillapp.mail.nexedi.com; dkim=pass (2048-bit key) header.d=mandrillapp.com header.i=@mandrillapp.com header.b=LzCiiQw/; dkim=pass (2048-bit key) header.d=nexedi.com header.i=kirr@nexedi.com header.b=Al57xGme; arc=none smtp.client-ip=198.2.187.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexedi.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mandrillapp.mail.nexedi.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UxAhitx3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TJjt9RoR"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id D0354180016D;
-	Thu,  6 Jun 2024 08:06:51 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Thu, 06 Jun 2024 08:06:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717675611; x=1717762011; bh=rhpdHkbFxo
-	s0C1Ee3JFsxM6I78gcbuC5tMo+HN56/oA=; b=UxAhitx3eSTQ09IZ6q4YYH9rI+
-	yrLK5h6U+Eqir14XWekI8DXTkJxn15QkgQpqa2FvK+vcfOvjkFDiwnAswhBFgNmR
-	lnPPXUubKC5LvQz9speUo+749GlPtTpS0akZBRge/Y7RCTrd21+9U2UgpaP7gzdc
-	/mE+SopDAetBoCsEPhkvr5lo3yR1vnbb8DWrsj7XadIVuBpcyv7r8pvva0bz3uHM
-	GCEvWVzwHVBNWm8G/Q2GFUH2nrqcdIsCAqnA0Kj9ZWiVtxK96DVxHPajwJSAiJVs
-	xtlegDeykf608J+duZjBne5brbGUxjVk7XqTmz+VmbYyTjvs3setifbJUNVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717675611; x=1717762011; bh=rhpdHkbFxos0C1Ee3JFsxM6I78gc
-	buC5tMo+HN56/oA=; b=TJjt9RoRQFek0AMPO6y+9fjJ8RrxNGXJhWyosAOgs84e
-	ZYEKXqFsTlcQvNJ0U55bUXIUwvcmhD3xvjFBbHAAgCg1oDL7+DyZw3R7+Ecb0UUv
-	R+HjjwLkZV3Id4juyMWZX1/4vtyKWuoqK/YWDxqdJyjQvKWEb38QUnx5AXela0V5
-	J7Kh5MrEoOJOR/g2J+y/N5vm29qxjbVrSgSllpaJ6rYr7jO0wjSwzJ5Vc1zs7uil
-	Shy+f5J+EEPmGzh2N1vvb6smWxy5Eew/GZLYgLPfx8NqdcpRPSav+AvilOe/n0dg
-	UkqCoePDCn2DVH0KkBQVI5CVfncQ/UlVO2ZlOgMIbw==
-X-ME-Sender: <xms:W6ZhZkx1DZdxgHxMt-VuWONUGMXPHzgxcfS57nKJAidamKaonv8x5w>
-    <xme:W6ZhZoRVI7qwpuO58V-Uo3cCtW7nkL09lVOF4gaJ7evRJ94QCjK-EyDB58IIAPn4t
-    QiTwL7FY5wcZBOWdQ>
-X-ME-Received: <xmr:W6ZhZmVZ8EQK9XYjURLtYcsHiuKbSV8UcLKXYXnSc_moPhD5ZtgZjzbfwL_rU2Ra63do7zYLtschOWXsEyvYgLkcoRMQhyVRAFVSNIYxb1867hQj>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelkedggeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:W6ZhZig6po4xsoNdv66RXBQPZIZriWssK8xU1Y-OLZdBmGVHmlt4nA>
-    <xmx:W6ZhZmB3Kp7zcFdUC11WuEfpNdL8M-0R7lNcbIMiWOWeQlE2B_Pt2w>
-    <xmx:W6ZhZjKwu0yy-7KUVEdF58LlpQ6nV2zaCRrKu7kJ68MayYLVGK5CYA>
-    <xmx:W6ZhZtCC7Ijgo7VUWstGnpzpF_o5ZFpm1onucgvxHQgMjrh6VkyMig>
-    <xmx:W6ZhZt4Sac-BZAH8DWFL4_bWruB5yRqrFULe_jo33V8oq-PPLxrGK_wT>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Jun 2024 08:06:49 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 54475472 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Jun 2024 12:06:18 +0000 (UTC)
-Date: Thu, 6 Jun 2024 14:06:47 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Xing Xin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	blanet <bupt_xingxin@163.com>, Xing Xin <xingxin.xx@bytedance.com>
-Subject: Re: [PATCH v4 4/4] unbundle: introduce option
- VERIFY_BUNDLE_FSCK_FOLLOW_FETCH
-Message-ID: <ZmGmV8-QNMN643ou@tanuki>
-References: <pull.1730.v3.git.1716824518.gitgitgadget@gmail.com>
- <pull.1730.v4.git.1717057290.gitgitgadget@gmail.com>
- <68b9bca9f8b19897997c2adc9a278ac5052e75cd.1717057290.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=mandrillapp.com header.i=@mandrillapp.com header.b="LzCiiQw/";
+	dkim=pass (2048-bit key) header.d=nexedi.com header.i=kirr@nexedi.com header.b="Al57xGme"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
+	s=mte1; t=1717680996; x=1717941496;
+	bh=OyvJLzNPWCnTnCmovniTINyXLsxQyZLosP/UnLUdelU=;
+	h=From:Subject:To:Cc:Message-Id:Feedback-ID:Date:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:CC:Date:Subject:From;
+	b=LzCiiQw//rSkaQrhOXjcBjN8v31w7B/kkp+43d3pin2B6P/bdVphS01/xEFRt9Y0y
+	 JjFhuQtx4vUhAVmf+kI78sbeIYx1lOS+KRfeMEG7mE1O0LXlG4WoHgAdBYJy9iBQMc
+	 S/hXzVHctPkqLLEjbk6nIwwrR2K0Wa3flnMApK4JqmJZRUobFKOf2GgF1kRqnXGT3k
+	 sWjQHW/3CFTF4V53doF9X9WS+HEJm9FcPyuqjCJhA4sX6puQtb3pKKdKQcKIC1PIpr
+	 /w2j7AWC2C8BrEts3It+gbBrERTRMs2yNwijNeWMtTK/ASyFvDIscEqOeex+5ibSeB
+	 2ePKdLY4PU6mg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nexedi.com; s=mte1;
+	t=1717680996; x=1717941496; i=kirr@nexedi.com;
+	bh=OyvJLzNPWCnTnCmovniTINyXLsxQyZLosP/UnLUdelU=;
+	h=From:Subject:To:Cc:Message-Id:Feedback-ID:Date:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:CC:Date:Subject:From;
+	b=Al57xGmee1o61y2u/ZrIQsIIycJnTjvx/WDL8DNJ6kykeKZkGg7muRBUnlMvsiwv6
+	 MF36Ul86y51gQq9xKvshCO+ABbaeZIjjpnoGH7HNNBGF6dGLYs5smk6JjoG4GMBqGt
+	 NMBGdM6EyAQv8dp/fScpZiq+YfOnbPCPxbWjjOFYuI8qyFcomdi0aNvPyC2vVbN0aX
+	 0oCKRViQXg2tUvmS6wtmZlK/BkZdHJ93KG79Qe/w2HI4C37gDYEakmErgStGvESSq5
+	 4OnD6RqIijw8rV+7lAAT1q6BH5YeTU6v40yraoWbfbcMMN7iThx3cQnbSC8sIs3gaJ
+	 RGOIsB33I43OA==
+Received: from pmta09.mandrill.prod.suw01.rsglab.com (localhost [127.0.0.1])
+	by mail187-37.suw11.mandrillapp.com (Mailchimp) with ESMTP id 4Vw52q70HPzG0CpTK
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 13:36:35 +0000 (GMT)
+From: Kirill Smelkov <kirr@nexedi.com>
+Subject: =?utf-8?Q?[PATCH]=20fetch-pack:=20test:=20demonstrate=20segmentation=20fault=20when=20run=20with=20fsckObjects=20but=20without=20--lock-pack?=
+Received: from [87.98.221.171] by mandrillapp.com id 26d5846df54047c794c24ab00d4e23e6; Thu, 06 Jun 2024 13:36:35 +0000
+X-Mailer: git-send-email 2.39.2
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Kirill Smelkov <kirr@nexedi.com>, Jonathan Tan <jonathantanmy@google.com>, Alain Takoudjou <alain.takoudjou@nexedi.com>, =?utf-8?Q?J=C3=A9rome=20Perrin?= <jerome@nexedi.com>
+Message-Id: <20240606133605.602276-1-kirr@nexedi.com>
+X-Native-Encoded: 1
+X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,=20including=20all=20headers,=20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D31050260.26d5846df54047c794c24ab00d4e23e6?=
+X-Mandrill-User: md_31050260
+Feedback-ID: 31050260:31050260.20240606:md
+Date: Thu, 06 Jun 2024 13:36:35 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ej8kn9TDfKcxKwGq"
-Content-Disposition: inline
-In-Reply-To: <68b9bca9f8b19897997c2adc9a278ac5052e75cd.1717057290.git.gitgitgadget@gmail.com>
-
-
---ej8kn9TDfKcxKwGq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 30, 2024 at 08:21:30AM +0000, Xing Xin via GitGitGadget wrote:
-> From: Xing Xin <xingxin.xx@bytedance.com>
+When running git-backup[1] over lab.nexedi.com archive we noticed that
+Git started to crash on fetch-pack operation[2] after Git upgrade. We
+tracked this down to be a regression introduced by Git 2.31, more
+specifically by commit 5476e1efded5 (fetch-pack: print and use dangling
+.gitmodules), which started to index and lock packfiles on do_keep=3Dy &&
+fsck_objects=3Dy even if pack_lockfiles=3DNULL, which leads to
+NULL-dereference when trying to append an entry to that pack_lockfiles
+stringlist.
 
-Same here, the important part is not that we introduce the flag, but
-that we start using it in `unbundle_from_file()`.
+Please find attached a test that demonstrates this problem.
 
-> diff --git a/bundle-uri.c b/bundle-uri.c
-> index 066ff788104..e7ebac6ce57 100644
-> --- a/bundle-uri.c
-> +++ b/bundle-uri.c
-> @@ -373,7 +373,7 @@ static int unbundle_from_file(struct repository *r, c=
-onst char *file)
->  	 * the prerequisite commits.
->  	 */
->  	if ((result =3D unbundle(r, &header, bundle_fd, NULL,
-> -			       VERIFY_BUNDLE_QUIET | VERIFY_BUNDLE_FSCK_ALWAYS)))
-> +			       VERIFY_BUNDLE_QUIET | VERIFY_BUNDLE_FSCK_FOLLOW_FETCH)))
->  		return 1;
-> =20
->  	/*
+When run with test_expect_failure changed to test_expect_success the test
+crashes with
 
-One thing that is a bit weird is that we first change `unbundle()` to
-use `FSCK_ALWAYS` in a preceding patch, and then convert it to use
-`FSCK_FOLLOW_FETCH` in the same series. It could be restructured a bit
-to first introduce the flags, only, while not modifying any of the
-callsites yet. Passing the respective flags would then be done in a
-separate commit.
+    ./test-lib.sh: line 1063: 599675 Segmentation fault      (core dumped) =
+git -c fetch.fsckObjects=3Dtrue -c fetch.unpackLimit=3D1 -C client fetch-pa=
+ck ../server $(git -C server rev-parse refs/heads/main)
 
-Patrick
+and the backtrace is
 
---ej8kn9TDfKcxKwGq
-Content-Type: application/pgp-signature; name="signature.asc"
+    Program terminated with signal SIGSEGV, Segmentation fault.
+    #0  0x0000558032c7ef3b in string_list_append_nodup (list=3D0x0,
+        string=3D0x558033b695f0 ".git/objects/pack/pack-c1b2455a361bb50a0db=
+087e7202db73d62938fa1.keep") at string-list.c:218
+    218             ALLOC_GROW(list->items, list->nr + 1, list->alloc);
+    (gdb) bt
+    #0  0x0000558032c7ef3b in string_list_append_nodup (list=3D0x0,
+        string=3D0x558033b695f0 ".git/objects/pack/pack-c1b2455a361bb50a0db=
+087e7202db73d62938fa1.keep") at string-list.c:218
+    #1  0x0000558032b5b83f in get_pack (args=3D0x7ffe680f3fa0, xd=3D0x7ffe6=
+80f4058, pack_lockfiles=3D0x0, index_pack_args=3D0x0,
+        sought=3D0x558033b65e90, nr_sought=3D1, gitmodules_oids=3D0x558032e=
+17b88 <fsck_options+72>) at fetch-pack.c:1042
+    #2  0x0000558032b5e0b3 in do_fetch_pack_v2 (args=3D0x7ffe680f3fa0, fd=
+=3D0x7ffe680f4058, orig_ref=3D0x558033b67b90, sought=3D0x558033b65e90,
+        nr_sought=3D1, shallows=3D0x7ffe680f3df0, si=3D0x7ffe680f3e10, pack=
+_lockfiles=3D0x0) at fetch-pack.c:1781
+    #3  0x0000558032b5ef3c in fetch_pack (args=3D0x7ffe680f3fa0, fd=3D0x7ff=
+e680f4058, ref=3D0x558033b67b90, sought=3D0x558033b65e90, nr_sought=3D1,
+        shallow=3D0x7ffe680f3f80, pack_lockfiles=3D0x0, version=3Dprotocol_=
+v2) at fetch-pack.c:2073
+    #4  0x0000558032a08851 in cmd_fetch_pack (argc=3D3, argv=3D0x7ffe680f45=
+00, prefix=3D0x0) at builtin/fetch-pack.c:242
+    #5  0x00005580329b2be3 in run_builtin (p=3D0x558032e0bb30 <commands+100=
+8>, argc=3D3, argv=3D0x7ffe680f4500) at git.c:474
+    #6  0x00005580329b2ffe in handle_builtin (argc=3D3, argv=3D0x7ffe680f45=
+00) at git.c:729
+    #7  0x00005580329b3222 in run_argv (argcp=3D0x7ffe680f433c, argv=3D0x7f=
+fe680f4330) at git.c:793
+    #8  0x00005580329b3796 in cmd_main (argc=3D3, argv=3D0x7ffe680f4500) at=
+ git.c:928
+    #9  0x0000558032ab9002 in main (argc=3D10, argv=3D0x7ffe680f44c8) at co=
+mmon-main.c:62
 
------BEGIN PGP SIGNATURE-----
+A simple debug patch below
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhplYACgkQVbJhu7ck
-PpTk5g/9EWJiwAEHX0nuukhbF8U7c63IBtPDMr5vuZazT3fjZBpbDKUPcmtLZnAP
-CUCQF+4VbApamjbY6Zq8bY24D6E3vfFFcSldtsM1I21teeGf3ONHnZtoJIrzJza1
-xfOfxDu+VfAtAXRUMUTaaCEihhI3r2Pi2uHUcYr16IBoQT4fTKtyWNyZlvV8AyW6
-IxID+UqXmH6wzVzTATC+XnZvhRMPEA6doJa5F76LIuRzttk5SqwbTadIDzGfqFNX
-qSN1dbevPxfBoN7YdA0e111DJXisz2BgFtQwRUhP4mdM13aIBmVEUHWtrBNX5R1d
-RYhiRJrUnUy5XyMBjEnSKU6OwFPe7hL9EDYhPDRvyynwkj25Cjs32Mzlt6/kHw1l
-PdyUDyPFu26ndVQwLl9Lfi1teb7wAdOj1cAkezyC1CWjbOsb8509UfHoVhUWFAYt
-5MnTWYPQR0LxOC1mj2KMHa33dWAQliv3XEY1sbGiQ7G0yPUvkOoUPHgUGBOj4Vc6
-KkABS95aW91Jp5VIU222TkSVSZKwnrWlAfGVJXf/iYZhyU61XxxlvwjCocSM19DZ
-LaYi8SZNRCMcOAuExCG/ARlc/7dN2GmVs8ooSZljyZvMBc70hQY46azefogGWVtE
-TvyP/GfqgxCAURZhFgHjVx7jnj4LYuHOuCX+qR9nMIHKGpoafcs=
-=iDeH
------END PGP SIGNATURE-----
+    --- a/fetch-pack.c
+    +++ b/fetch-pack.c
+    @@ -1032,7 +1032,7 @@ static int get_pack(struct fetch_pack_args *args,
+            cmd.git_cmd =3D 1;
+            if (start_command(&cmd))
+                    die(_("fetch-pack: unable to fork off %s"), cmd_name);
+    -       if (do_keep && (pack_lockfiles || fsck_objects)) {
+    +       if (do_keep && (pack_lockfiles /*|| fsck_objects*/)) {
+                    int is_well_formed;
+                    char *pack_lockfile =3D index_pack_lockfile(cmd.out, &i=
+s_well_formed);
 
---ej8kn9TDfKcxKwGq--
+makes the crash go away, but I did not investigated what should be the
+proper logic.
+
+Thanks beforehand for fixing this NULL-pointer dereference.
+
+Kirill
+
+[1] https://lab.nexedi.com/kirr/git-backup
+[2] https://lab.nexedi.com/kirr/git-backup/-/blob/3230197c/git-backup.go#L7=
+17-739
+
+Cc: Jonathan Tan <jonathantanmy@google.com>
+Cc: Alain Takoudjou <alain.takoudjou@nexedi.com>
+Cc: J=C3=A9rome Perrin <jerome@nexedi.com>
+Signed-off-by: Kirill Smelkov <kirr@nexedi.com>
+---
+ t/t5500-fetch-pack.sh | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 1bc15a3f08..e3dbe79613 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -1056,6 +1056,20 @@ test_expect_success 'fetch with --filter=3Dblob:limi=
+t=3D0' '
+ =09fetch_filter_blob_limit_zero server server
+ '
+ 
++test_expect_failure 'fetch with fsckObjects but without --lock-pack does n=
+ot segfault' '
++=09rm -rf server client &&
++=09git init server &&
++=09test_commit -C server 1 &&
++
++=09git init client &&
++=09# unpackLimit=3D1 forces to keep received pack as pack instead of
++=09# unpacking it to loose objects. The code is currently segfaulting when
++=09# trying to index that kept pack.
++=09git -c fetch.fsckObjects=3Dtrue -c fetch.unpackLimit=3D1 \
++=09    -C client fetch-pack ../server \
++=09=09$(git -C server rev-parse refs/heads/main)
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+ 
+-- 
+2.39.2
+
