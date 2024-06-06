@@ -1,78 +1,88 @@
 Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3B433F7
-	for <git@vger.kernel.org>; Thu,  6 Jun 2024 06:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED2219D890
+	for <git@vger.kernel.org>; Thu,  6 Jun 2024 06:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717655440; cv=none; b=fCVAzW4uj57lSn0tXN2/c3h7K3QZYEPo35DetsgC5xfYP6qi8H4DWL7j9pAbMOTTMkRVgc2h3dVDU5yNnfKB/KKQ3EhJ6B9B58JWwSV/Qur8m/php+eHiU0ljYMlyl1gx5E+rSSPIPcERZBS5inK75YnrN5paxPMP4DhRNIE3+k=
+	t=1717655553; cv=none; b=nsT2m7vDuhPBQMcAYEvgA5LveVDfwH/Zyg2eYe+jsw2xajaehVwkXoAST/m2r4Uv0X/p9imf8cGAXobiuQnLg0zEXDh4rF0hLaOAofiVXfZZyp7SC7Z+hKxbv8yPBN55FrHk3xY96cO/jIfUiZHUJgoO9Ga3nwDkdbVmYgQPWi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717655440; c=relaxed/simple;
-	bh=sB0kqqBX3P3JaRwi1G4uDcdbHE7B2nAqKxeq+hJWm60=;
+	s=arc-20240116; t=1717655553; c=relaxed/simple;
+	bh=isVWC3BC7BiOk+KCHhDrOQglLBLCkw3CuI2oeMKvCyc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hf4GdDpWOKFVReiHbRkmsiAVDy3jPxKOfHVlKvVNSy+k9cD+oNPwv7D8yXgiFYGr7mqIAbwSubWwRa8qXULHQpdm1crFT9S1nsk72mBa5eNJqI7sfKw+fkrPfZ+btSVFGTDg0+qQ1IRN8y/rmZLyKGKpxiyD4P/+j+gZduRuNls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fr6rZvBF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PfxMrTU8; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=fmLfFZbsPnmLbQI465HnQT+Ba5SYZlgNopn3oUkdWSwaiSzK/qjEC0zIbVPllu2UwjqCDx6GOxb5Q+oytKiCOehlLxxLGemcXG3r5vls5u0uXvbeRG2AOBmLYLOOPcMTE5UObKdfDYZmT+Ico5wplv+9o9L2QbwlmMVAs6AZubI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aK1GXTkO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eWfniHKd; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fr6rZvBF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PfxMrTU8"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 31CBA13800FF;
-	Thu,  6 Jun 2024 02:30:38 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 06 Jun 2024 02:30:38 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aK1GXTkO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eWfniHKd"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 2E517138011F;
+	Thu,  6 Jun 2024 02:32:31 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Thu, 06 Jun 2024 02:32:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717655438; x=1717741838; bh=PmfvErgxDM
-	qqzwqWIIHYEAPKZIrNxibc6RGiSkPkYAY=; b=fr6rZvBFivbWWNz8ZMIgIPH58U
-	bHDE0bfKAoR8lKm/zSmyClo+8AyXkAZfYT6aF/KbjflAGudlyK0+TgQ9ihyRlumW
-	WW2jUHKBjdGrOWe7E9DH5q8ni6s+FkQAyOazvPjYzMTMcSz33PEqzuGdj5RFHXGM
-	CHC0ZahEOfdEbeBm4jH91aBRZYfEEbQnnnOmz0SIEUDZktJpJ1UqLonsbo7dgT9p
-	WOOadFkRweJPTuyiLbm14lgicmXPPERUaibMrE4EQOCmEUgvrcKmdTgpVdLWac14
-	ywvxwIntvQ7F+jkJdgpMBuumE6zvfMjckHX95BnQWZbD8ZUoyY+aoZVfAL4w==
+	:subject:to:to; s=fm1; t=1717655551; x=1717741951; bh=YKvHQBOtlH
+	zXaRatd6bdwVP/68+EXkirY75+1WkrQLw=; b=aK1GXTkOOvwunzfJbzwpILXVJZ
+	b7iFiROtPhUg4hgZzqcdP6XRnKzOt7u5n93P8gcVlUO3nl/Wa5sF0Yz9J3aqROpk
+	+nPW+xqFXl3lSpwHK9BYhfpZ5DxMwvvA4RtZO4Pz1HLD2ZCST4l5cC2QIvf2TRI0
+	Ces0K7tcBzq/vJBsar9UGQEUnKtwrgVbaag+GgTx1ydcmVgn6Hwc5C1dmT3DQcH2
+	lNwGoyPRW3AkApLFzKlsIOnoNcKKPus3ICjWhYmQXiICM55nTvj6nhMM1cT7YfLJ
+	nnNL647jMiLolqO5fjIAHztY+gplEY4K7duxfdoTgYb2PR1XqI4M1pwbg6ug==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717655438; x=1717741838; bh=PmfvErgxDMqqzwqWIIHYEAPKZIrN
-	xibc6RGiSkPkYAY=; b=PfxMrTU8EE1U6SqTUogIwVgTq3mJPNKE5jbfxKn5yPAv
-	CsEAT057goXaWr9jJe4WunZwSdRECiMLv99O9ku0hT9N8yV3U2Hq+NUq/L2hbqru
-	HtcVuO0PGlPG/v4DdaKrJBkpoNCtl5cyKW0wz/TuP5B1uid63JBz2t8DOSgm2JNl
-	4nGiE4yBXSdKTccbyEf8prAy5Xvtf2FS/0La3ghX2IejdQ9UzNdl3/iww9wJT1Xy
-	16897c4kAWokh/Fc7vAzIdSTfQs5aXkBL4Lj4WXwm2mdslg0C+9phL6L2Oef9WqJ
-	yPCQ2n945rQ3ghPzAvzLNFchQqhmKf2xYfMWzzbJOw==
-X-ME-Sender: <xms:jVdhZhT2_3XHZK7iL1sEyZ7mshZE-2hPqnN7L8dHc-oVRhzjXCrLfQ>
-    <xme:jVdhZqzad6_ICsi2HF7Eu5xzve8W4vCeaJWwzdIhr6lD3vI3qB1dScyHVqdL-RXaI
-    jR6jMxxpVL3gkwczA>
-X-ME-Received: <xmr:jVdhZm37bhp0gts45cyAOgNWPNxOJWW5aRH1OdKwo9laX2SqM9T0rlElUFupiydUDNAwJnJ0De0akvyUiFqQvUP1wwdXuyMH9cxrlnVMe-Ps900t>
+	fm1; t=1717655551; x=1717741951; bh=YKvHQBOtlHzXaRatd6bdwVP/68+E
+	XkirY75+1WkrQLw=; b=eWfniHKdnIVpPH7hnKFV0IP31IFqyEUj0DjVYhnd8Ffc
+	MNe2PZLu+gLL+zRI02Ul/D1GTJYkZflfNkVjuqLDJLpf6TnuEWeO4JDVlXivJYKS
+	zxwVKp2FkoE+C6LZ9B4pWsWXodmE7JAE1adQo6ZBdTyccO7kZUIZp8DAg/dQdNxN
+	yKlS/7aKajCkvKqloxF1ANr1pfceIbA6rWgKLocqmZrQgvX3Qkb8Hy+igC94kVhK
+	rxA9DBrm/Xd7rIoew0/7WdrCUFAcOtx7fC+1/vWQ1K4F21YIiNSd8uXkfGvalaKg
+	j4tUd2f6TWYhBh3hNtU8477bGg4HpFrXuhno66fZFw==
+X-ME-Sender: <xms:_ldhZs0qChMJY87zolNTlfi3VCwq_iGllKOPFww4NiSt0rBtqyWOtQ>
+    <xme:_ldhZnGDusA0ED6A7CGcD_pJoDZfJw9-6JNajqz61n30HyAcSVsMZnJ6ATX_BTtxP
+    8WoY7TePSyKs79SdQ>
+X-ME-Received: <xmr:_ldhZk7VDcNFS3GTW2YDUEG4Hpohx-MjpwwWmW7cyUJ7LIlcvy-EWoiQyhBS0ZZvIsUjHx2dgZtk4z9AZjEDSIyWv6a5HBMrDi06_h5VkruBQMdg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeljedguddtlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:jldhZpBnhIpzdCoORBEFbkhjPTiKv03G6ekt_JVMkF-rjATOljmk6g>
-    <xmx:jldhZqg8b4RNXM-gn9-_6rU4iYS8plzyiWmQBZltC0towNfxAU28-w>
-    <xmx:jldhZtpfom__zmHYvRHCIxpwoswC1_LUpzIQqSFBhmD3d7FNvYLMvQ>
-    <xmx:jldhZlg91kU02wSnLalQyBhlB7MQmlm694lqY2_Lp8ZE5A0G6RGJTw>
-    <xmx:jldhZrsmoWOeiAupx8UevMNpkguikOpHD-p-GO0xfh_Z6rKaNEjIs-TQ>
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpedtieffleelvdffgfdtjefgveevhfelteejudfhuefhieelvdelteeigfekjeeu
+    ffenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:_ldhZl1SUwfBMrfrK_2d6-Z26CweXKPYTagElNpL7Tb5xwpINVyHwQ>
+    <xmx:_ldhZvFjecqx4qTblq0_QUXsK_Q-mB5syh7A6KPgnMoxB1s2Z6d8RQ>
+    <xmx:_ldhZu-vjOY1qSQYUR7jKmzlZbfIb4dJvuSCW2Rgb1JLGz1CyLEapw>
+    <xmx:_ldhZkk06XTgQYNqBjD2ohGNbOJtE2H9BkwmUjrmEAgCaOPOPj5ZDw>
+    <xmx:_1dhZk7dO9pQI6IS0J00VJIxkAWf1h0KLTx08KeVjPV0HkAdq2LiNHTh>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Jun 2024 02:30:37 -0400 (EDT)
+ 6 Jun 2024 02:32:29 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 11178211 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Jun 2024 06:30:06 +0000 (UTC)
-Date: Thu, 6 Jun 2024 08:30:34 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 2315590d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Jun 2024 06:31:58 +0000 (UTC)
+Date: Thu, 6 Jun 2024 08:32:26 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] ci: let pedantic job compile with -Og
-Message-ID: <351dec4a4d5a5619e7627e11a8e674e32125125e.1717655210.git.ps@pks.im>
-References: <cover.1717655210.git.ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v4 06/12] refs/files: extract function to iterate through
+ root refs
+Message-ID: <ZmFX-lE5_vcgXghw@tanuki>
+References: <cover.1716451672.git.ps@pks.im>
+ <cover.1717402363.git.ps@pks.im>
+ <f7577a0ab37988476cdb83e310f96f4841c9364a.1717402363.git.ps@pks.im>
+ <20240605100728.GA3440281@coredump.intra.peff.net>
+ <ZmFAMBhkuUQEhgCR@tanuki>
+ <ZmFF-kgZSlB6O7Gs@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,80 +90,88 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="WopGbZi/KLMjYnbS"
+	protocol="application/pgp-signature"; boundary="zFD2v9sQBCPWtZpK"
 Content-Disposition: inline
-In-Reply-To: <cover.1717655210.git.ps@pks.im>
+In-Reply-To: <ZmFF-kgZSlB6O7Gs@tanuki>
 
 
---WopGbZi/KLMjYnbS
-Content-Type: text/plain; charset=us-ascii
+--zFD2v9sQBCPWtZpK
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We have recently noticed that our CI does not always notice variables
-that may be used uninitialized. While it is expected that compiler
-warnings aren't perfect, this one was a but puzzling because it was
-rather obvious that the variable can be uninitialized.
+On Thu, Jun 06, 2024 at 07:15:38AM +0200, Patrick Steinhardt wrote:
+> On Thu, Jun 06, 2024 at 06:50:56AM +0200, Patrick Steinhardt wrote:
+> > On Wed, Jun 05, 2024 at 06:07:28AM -0400, Jeff King wrote:
+> > > On Mon, Jun 03, 2024 at 11:30:35AM +0200, Patrick Steinhardt wrote:
+> > >=20
+> > > > +static int for_each_root_ref(struct files_ref_store *refs,
+> > > > +			     int (*cb)(const char *refname, void *cb_data),
+> > > > +			     void *cb_data)
+> > > >  {
+> > > >  	struct strbuf path =3D STRBUF_INIT, refname =3D STRBUF_INIT;
+> > > >  	const char *dirname =3D refs->loose->root->name;
+> > > >  	struct dirent *de;
+> > > >  	size_t dirnamelen;
+> > > > +	int ret;
+> > > >  	DIR *d;
+> > >=20
+> > > Should we initialize ret to 0 here?
+> >=20
+> > Yeah, we should. Or rather, I'll set `ret =3D 0;` on the successful pat=
+h.
+> >=20
+> > Patrick
+>=20
+> I was wondering why the compiler didn't flag it, because I know that GCC
+> has `-Wmaybe-uninitialized`. Turns out that this warning only works when
+> having optimizations enabled, but if we do then it correctly flags this
+> use:
+>=20
+>      (git) ~/Development/git:HEAD $ make refs/files-backend.o
+>         * new build flags
+>         CC refs/files-backend.o
+>     refs/files-backend.c: In function =E2=80=98for_each_root_ref=E2=80=99:
+>     refs/files-backend.c:371:16: error: =E2=80=98ret=E2=80=99 may be used=
+ uninitialized [-Werror=3Dmaybe-uninitialized]
+>       371 |         return ret;
+>           |                ^~~
+>     refs/files-backend.c:334:13: note: =E2=80=98ret=E2=80=99 was declared=
+ here
+>       334 |         int ret;
+>           |             ^~~
+>     cc1: all warnings being treated as errors
+>=20
+> I'll have a look at our CI jobs and adapt my own config.mak to include
+> `-Og`.
+>=20
+> Patrick
 
-Many compiler warnings unfortunately depend on the optimization level
-used by the compiler. While `-O0` for example will disable a lot of
-warnings altogether because optimization passes go away, `-O2`, which is
-our default optimization level used in CI, may optimize specific code
-away or even double down on undefined behaviour. Interestingly, this
-specific instance that triggered the investigation does get noted by GCC
-when using `-Og`.
+I've sent out a patch series [1] that would have made CI detect this
+issue before hitting any of the mainline branches.
 
-While we could adapt all jobs to compile with `-Og` now, that would
-potentially mask other warnings that only get diagnosed with `-O2`.
-Instead, only adapt the "pedantic" job to compile with `-Og`.
+[1]: https://lore.kernel.org/git/cover.1717655210.git.ps@pks.im/
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- ci/run-build-and-tests.sh | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Patrick
 
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 98dda42045..e78e19e4a6 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -44,6 +44,15 @@ pedantic)
- 	# Don't run the tests; we only care about whether Git can be
- 	# built.
- 	export DEVOPTS=3Dpedantic
-+	# Warnings generated by compilers are unfortunately specific to the
-+	# optimization level. With `-O0`, many warnings won't be shown at all,
-+	# whereas the optimizations performed by our default optimization level
-+	# `-O2` will mask others. We thus use `-Og` here just so that we have
-+	# at least one job with a different optimization level so that we can
-+	# overall surface more warnings.
-+	cat >config.mak <<-EOF
-+	export CFLAGS=3D-Og
-+	EOF
- 	run_tests=3D
- 	;;
- esac
---=20
-2.45.2.409.g7b0defb391.dirty
-
-
---WopGbZi/KLMjYnbS
+--zFD2v9sQBCPWtZpK
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhV4kACgkQVbJhu7ck
-PpS74BAAnvStpPo+CLqHIVxiXwt69l2J0IlHf41HZ+3lQK0kI68hvWva/V08lD0h
-GU12GXU6wyxTZJFERWQLN4VtkEkhguI+BWvRFDn5UEZk1oifL+v7xTbBRBLPrRLD
-Ec3mVqQ4mRNF9EsBgjtpouHHYmQL+H036lyf9GKbeIr77V/Ee72vJR393BeePGQl
-WSPQr/NRMr8VffwgHsvid55ART4J5VxIrFimycmqBXYIHCb7ETIPrsB/c2H4QUeu
-9aTWGO99Y5wYAGGuDttAOo132vlLQUzO1wLnj+ULOviqNglN1yt8gmVEaqJ0y2ea
-Ro7lD/u/eVxsEnZ9JrdUfix8ti2MlLKH2oJ8Da2LCzlbXjv2bu+fFJLPsTnOm9rj
-xiNFjtBEe+1cbRJ6g7tP7h6HnOQTDfaaFH0lU092pX9CnMLWzy969ve6VMOSucIM
-aHwMkmF3TUBflL84HxyfZupOg1zMego4GaHm6QP9b3hoOysEK/ocv9JGQd19Ryjk
-4FvWpOz/SSge/v/Bj7Hpr9ygbvkyLcWNI93Y3InI9dl1Rhonful1M+DzxZ/UTmQ+
-4tuW4/14LFzXDd1xoOoTaqM/0812JzYIhxyZsdX3DW57r7ARKf4Je3yH7ImOoMlj
-d1FjH3YfzsdcrnC+Rg+YNuJlcAqRrRIK9PVNyWf5jcjlePD4BaA=
-=4Qen
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZhV/kACgkQVbJhu7ck
+PpS0Xg/+MmeHLeypv+GkAd9mnCp+ITplcPqR0nnruWntm/QtceVAliBpdrdU82JV
+m+hUpxqWqgqr9ulmcgWbxSQCTMt62eOsbvjnwopNYdlZwWRfZiD6XUca1ixdtXQY
+uQDrDokNlMn9WsOK1urBCZw8ArmrrrUcJ9xJd7RSDAv7trt9yfJ3ypFaKFigcFii
+BQq11zGmTWkKCNpwhnAweAOYFeF0767WXV3FlL/FeBLh/vUcBh6lF63e3c+u2thB
+gtK7VtJW79logHn9Pyif+t04Jrm3VcmVKN7WK4zR8VZ6SaI6eVu4Awk/maTZHPrM
+Eg2tY4JZIAdGv+bmZp1oyD2VAvMjigChKW7yQOkp6rScehs1Qvu4sv1sUqTNxiwR
+efB4qVWb749psWo+1CV9e8L4snJtqcUMaGDrUXhNNlUwUXqS17reTfhwHRssdklQ
+vV3oPyo/bKrZrvS4cOa8j61cBO+tf4pP8QphM1c+HWug21ED7Vlddvc20eJzDDjM
+xRHfNNPpLvDPbuZdjdjoOd1X9DXsznfAU/t7glhwVWJrmz0ecy8UdzUsd4PWH4dG
+kZXsUUpIQbyHnr02gUv2EjKGWhGOQtHTcRpYczJari1lJnf+0WsWbkolJx8wHt6m
+UNulBNanBcIl5/87SxWpVZx+9slZmYHo5HRfDNDFWkV7h1Di1D4=
+=ByAA
 -----END PGP SIGNATURE-----
 
---WopGbZi/KLMjYnbS--
+--zFD2v9sQBCPWtZpK--
