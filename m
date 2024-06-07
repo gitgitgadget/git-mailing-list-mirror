@@ -1,79 +1,80 @@
 Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCC6153506
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 06:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9775814F13B
+	for <git@vger.kernel.org>; Fri,  7 Jun 2024 06:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717742367; cv=none; b=tXaXSSCqMs/TWEAvhm030tp5Nyq0/7C0GPWBDKqZWrLVUYQETgUr366qERKs/sM0uRFgJ8tNqpaWKREdQonEuA1r8esnk+0x2nTvXl8Kb4R4dz4iA0Hqs60QB6oLdHlCugoeuUb3ElswYll9GQyv1nX1pKDq1KOjmhAbVHZDUjs=
+	t=1717742372; cv=none; b=B8lBIC/ukbqTCfkEP0a72wCoPUrj/BHFKHfuH3ij1oVz4yK25VHU4a8fvRiodgZMDItJ9kFpnqIEaMRsYKa8HDLStzU34E40jyi4nnlEcyw70FGk/vBMtzfTYJN8X0kuOYBEPBoMmz37o4r3/5BU7BvZa9MS72cVfqz14/1ljcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717742367; c=relaxed/simple;
-	bh=iXvhNOncMeBzvCegxVXAagx5wypI0ZjMaAmxNsQtpRM=;
+	s=arc-20240116; t=1717742372; c=relaxed/simple;
+	bh=HrySaTa3lpsXCYFMNeBbevuLghDw0N9T00VgrqOAEYc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OYHaxjnKEEc+AZsc1kF/Uu0V3i4j5u3xj1yhKE++ctFSzYbu07NKuKO6olEkMlmy8eqblRbXMrTB85xatXi7GRV6S1fQ1x5x0fMNjSxfoXZ37ojvs1EOCoufxhE2k66e2PAG1oJcjK9uWZ/XD2G9ZXcQ3NUz395AwOyy7bFmzYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=axua2TqW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E9U8L79C; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=QeZ6t/rE9fyV909sjoQbPKWY/m2PFTvHwHQ646zxvZnGUTWSuJYW5dxpvAgLLKVMMPBD7RhQQG6oFEIzuZS1wN8b6UgcIij8zoQgKkB3l0uBFOOIu8tbs5HbjssgEyc1Q1sqSoF+2czEjsu0vqqgjdA4kz0MaLbCkfqk7G2u894=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HfxSPYXt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BOqy5f0N; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="axua2TqW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E9U8L79C"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 6C65111401F5;
-	Fri,  7 Jun 2024 02:39:25 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HfxSPYXt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BOqy5f0N"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 9FE0711401EA;
+	Fri,  7 Jun 2024 02:39:29 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 07 Jun 2024 02:39:25 -0400
+  by compute6.internal (MEProxy); Fri, 07 Jun 2024 02:39:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717742365; x=1717828765; bh=uAset29Kxi
-	Putse+QfdkHIaNsQbR6uMmYLmzBtBZtrs=; b=axua2TqWARJ/3mIQwswH5nCGJ5
-	qQ3eE+YQTYMJ0npOp26UJHoIZ5unctU51ezz4FcH23nxn/jCiE5gx5L/3p0I6+E3
-	WGrkgGRKEuZoNxy0McgByyfv+/kyjXUZr1bd11pZXuqqFiMaBZEkJwdrzmFbf3zG
-	2sT5rbq/9RcnN0dui9oqTigZY4+qIM9VWg7YYYKmbr6yh7UHEvfUsfYwpGyMHN0Y
-	du+CaWdQ8p+V/+fwukUZh9SxFcJjcc2BEhXHk9boJcmZxy/JcMZKsBygFkZdJDwe
-	q7AwbUqdVeDW++7muEoc1tZ+RgWTVd+c1IoAxEqMlP26V4Jb1LbFV06e7YSQ==
+	:subject:to:to; s=fm1; t=1717742369; x=1717828769; bh=DQtESg44cZ
+	6tgI5CAaW0aflAJpd40dgOC+lproDaLQo=; b=HfxSPYXtkVuqUpru8Y4ZYX3iTN
+	36rx7vO1biNevg3xL6phOqkTbsCm0ZqtQqPBM6E0vpwscd362be9vL0VUyRY2qzN
+	1fokx/Aktiq9zlsyXe+laqTIS9tO+Iw3SOMqgc/GaU+aSC1ObMktAoiQFEn2/SR5
+	Yux4Fxhus3+H1raFoAUHA/bJFRrtHuj3mHhVeBhwwsmJGCiCDrprsq0iUZo7fq5b
+	QVISqFH43XV3TeAbQW6cYWGZQPmut3UJ0/tDWVuDudkUqPtrizjUuvpIbJSvgq7O
+	U2IfoUr786MvuzoYLcsaiCzo0EAHm+nYhFzJ/QonMzdMH7Lyj6ta/U7SefUw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717742365; x=1717828765; bh=uAset29KxiPutse+QfdkHIaNsQbR
-	6uMmYLmzBtBZtrs=; b=E9U8L79CcG8MHkptH6nO5KLSdwBotgRq9u/LTv326qNl
-	o7tRB+uH/SZ8dChDrcX81rmW3fJ5og4gmfUPDZAxfQsOP4bsWE5ispn0op2dPiYh
-	Q/9/KZMhM9zgyi5o+vvVt4hh+KEwAHAf/UamMAextsv2j664uvZfmK3V7+RWhGUo
-	6Upd4hV8w6Ixsq9qiq9Mu5juCISReYN6Vg1iEIzxgUrtM9zVBXJRzUWYGtvyeZ1+
-	GvUGB/3CiVUoaj0eQFuqXfxKvUdZaqE0iNEUQoHQyGRylWJ3E7ruvzcgP68XY+3Z
-	b/SQQu3B3hDzLBqpjoXdb2S77EojkVIW6APpaCuH4A==
-X-ME-Sender: <xms:HatiZj8e8rViA935Tjsky5ksu55ALnlkcMMKoo5YJaL0DOMDuluTSg>
-    <xme:HatiZvuWTctem8Qdni8uagMFIxmyxUKQ3GcVaLEIw1ZwNgV2_LTU-fWZSq4ZoCFlw
-    5Jc1JbIMm6qjL5zag>
-X-ME-Received: <xmr:HatiZhAjcxYm_B3RlZQp-Ambb50Xs_AELp-PT7_6QAa5gWIXpMfAwNYY7aXGneVtYxZoEPU1tsqgnTztVJ1Q4eJatZLWQc5IBiIjZOzUkHkvvJud>
+	fm1; t=1717742369; x=1717828769; bh=DQtESg44cZ6tgI5CAaW0aflAJpd4
+	0dgOC+lproDaLQo=; b=BOqy5f0NQRTC+EYP8VE/cKhdrtzbepJ8uTmXyfth29rT
+	gjXH0vhkswCoBOeYUBWJzEtE+jufrn6k3owE6wZeFFuxdzxqE7XJ/DvY/bsouUfY
+	fr/JqZRl69uPYZAKEWoqa7Hamng12A0u/9zmrrOi5l5tEyKVCEdVN/3k09DooftT
+	L0qiPAjbE6jBRIf+9EYnf+Y1boH/9mJ30imZehbMJWWNB3UWJrQcqNCHpsnepDEQ
+	5/GMR+lNkGMxlOJMNa6XSFEjQ8Zag5GLt68cXs7NoTdRQmJM3Cgmcvtubi4p7omC
+	d2al2xdeHzwKJ2Iswz68codOeG5pHSvGI1f7glPc8A==
+X-ME-Sender: <xms:IatiZjBEwytlVEwCjWuTbnsW9nb9YU4EXJbSSXvIeJIprKigAO6OFA>
+    <xme:IatiZphEndV6q3cHP4c409Kwb8GHpmxb26NmBZ61iDX9LSmG80JY476C-8ee_QYz7
+    lXIEOVoIqeGq1TNPw>
+X-ME-Received: <xmr:IatiZukcF0PorS9N_rXywkhmZfQkC9y5q27w3GXMvetIM-Qig7zBM3os5B6fHeX6_k3W0J4JjwBRDFgNgFsraSM9d7hJUgN05jw-1hZ1G9frlwVV>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelledguddtkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpeeknecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:HatiZve5KXjRyCCb29JPdDcA-9JiQ-OX2xAGlM_RnZF2KPL6svcjow>
-    <xmx:HatiZoPcz4Sc07Fxs3SOyWjN7BGynCNbM-B5wfGc30BifpQG6F151Q>
-    <xmx:HatiZhkySbAuFe9Ag6wF5_4_0-1Mm4SorZU7A0N_XOTYHxQb1Nymnw>
-    <xmx:HatiZitc1iEY6kRh2DYJJSXqGLWDf6kO31FjbNaJ4ISD46FxSEpMEA>
-    <xmx:HatiZlolCdzDXHWrvswF9gfXB6JEp9QMfqv-P2prebMc26hKoSr8OaiJ>
+X-ME-Proxy: <xmx:IatiZlwRgE5xfJw7-7VEiNWLQFVRh9pV0wFdKYa5QTAbnhxE7tZgYg>
+    <xmx:IatiZoTQM4FX39dXClf5AYH2emWu1I1hjM3OQkwSCh20k5BbWaI0yQ>
+    <xmx:IatiZob8_MK1PelvH2d8kvsVnrtStWrIJNkPaAYy6NrvnCtIXc1Mgw>
+    <xmx:IatiZpR6vcJPFipZDCm8Bxbf46Ba7qoRECAmP2xi1APdeVcM4SPsCQ>
+    <xmx:IatiZuNH5MHwZ69Qo0PJPwgPt8BLheNzm1DrKB2bgCW-w4GILGV9PsJH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Jun 2024 02:39:24 -0400 (EDT)
+ 7 Jun 2024 02:39:28 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 7059a141 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Jun 2024 06:39:23 +0000 (UTC)
-Date: Fri, 7 Jun 2024 08:39:22 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id d1a20c12 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Jun 2024 06:39:27 +0000 (UTC)
+Date: Fri, 7 Jun 2024 08:39:26 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v6 23/27] imap-send: fix leaking memory in `imap_server_conf`
-Message-ID: <04c9cfd34df33f1bc099bfd8f2729a4259584ce9.1717740366.git.ps@pks.im>
+Subject: [PATCH v6 24/27] builtin/rebase: do not assign default backend to
+ non-constant field
+Message-ID: <b2b4a01a2e71bf09c85014da05f74c226596f0f7.1717740366.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717740365.git.ps@pks.im>
 Precedence: bulk
@@ -83,188 +84,109 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eU5W60nKOItWDjME"
+	protocol="application/pgp-signature"; boundary="I355eoJ/Q1X9DpEd"
 Content-Disposition: inline
 In-Reply-To: <cover.1717740365.git.ps@pks.im>
 
 
---eU5W60nKOItWDjME
+--I355eoJ/Q1X9DpEd
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We never free any of the config strings that we populate into the
-`struct imap_server_conf`. Fix this by creating a common exit path where
-we can free resources.
-
-While at it, drop the unused member `imap_server_conf::name`.
+The `struct rebase_options::default_backend` field is a non-constant
+string, but is being assigned a constant via `REBASE_OPTIONS_INIT`.
+Fix this by using `xstrdup()` to assign the variable and introduce a new
+function `rebase_options_release()` that releases memory held by the
+structure, including the newly-allocated variable.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- imap-send.c | 65 ++++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 42 insertions(+), 23 deletions(-)
+ builtin/rebase.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/imap-send.c b/imap-send.c
-index 67a7a6c456..da3e7ec17e 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -69,7 +69,6 @@ static void imap_warn(const char *, ...);
- static char *next_arg(char **);
-=20
- struct imap_server_conf {
--	const char *name;
- 	char *tunnel;
- 	char *host;
- 	int port;
-@@ -1300,23 +1299,28 @@ static int git_imap_config(const char *var, const c=
-har *val,
- {
- 	struct imap_server_conf *cfg =3D cb;
-=20
--	if (!strcmp("imap.sslverify", var))
-+	if (!strcmp("imap.sslverify", var)) {
- 		cfg->ssl_verify =3D git_config_bool(var, val);
--	else if (!strcmp("imap.preformattedhtml", var))
-+	} else if (!strcmp("imap.preformattedhtml", var)) {
- 		cfg->use_html =3D git_config_bool(var, val);
--	else if (!strcmp("imap.folder", var))
-+	} else if (!strcmp("imap.folder", var)) {
-+		FREE_AND_NULL(cfg->folder);
- 		return git_config_string(&cfg->folder, var, val);
--	else if (!strcmp("imap.user", var))
-+	} else if (!strcmp("imap.user", var)) {
-+		FREE_AND_NULL(cfg->folder);
- 		return git_config_string(&cfg->user, var, val);
--	else if (!strcmp("imap.pass", var))
-+	} else if (!strcmp("imap.pass", var)) {
-+		FREE_AND_NULL(cfg->folder);
- 		return git_config_string(&cfg->pass, var, val);
--	else if (!strcmp("imap.tunnel", var))
-+	} else if (!strcmp("imap.tunnel", var)) {
-+		FREE_AND_NULL(cfg->folder);
- 		return git_config_string(&cfg->tunnel, var, val);
--	else if (!strcmp("imap.authmethod", var))
-+	} else if (!strcmp("imap.authmethod", var)) {
-+		FREE_AND_NULL(cfg->folder);
- 		return git_config_string(&cfg->auth_method, var, val);
--	else if (!strcmp("imap.port", var))
-+	} else if (!strcmp("imap.port", var)) {
- 		cfg->port =3D git_config_int(var, val, ctx->kvi);
--	else if (!strcmp("imap.host", var)) {
-+	} else if (!strcmp("imap.host", var)) {
- 		if (!val) {
- 			return config_error_nonbool(var);
- 		} else {
-@@ -1330,8 +1334,9 @@ static int git_imap_config(const char *var, const cha=
-r *val,
- 				val +=3D 2;
- 			cfg->host =3D xstrdup(val);
- 		}
--	} else
-+	} else {
- 		return git_default_config(var, val, ctx, cb);
-+	}
-=20
- 	return 0;
- }
-@@ -1503,6 +1508,7 @@ int cmd_main(int argc, const char **argv)
- 	struct strbuf all_msgs =3D STRBUF_INIT;
- 	int total;
- 	int nongit_ok;
-+	int ret;
-=20
- 	setup_git_directory_gently(&nongit_ok);
- 	git_config(git_imap_config, &server);
-@@ -1529,42 +1535,55 @@ int cmd_main(int argc, const char **argv)
-=20
- 	if (!server.folder) {
- 		fprintf(stderr, "no imap store specified\n");
--		return 1;
-+		ret =3D 1;
-+		goto out;
- 	}
- 	if (!server.host) {
- 		if (!server.tunnel) {
- 			fprintf(stderr, "no imap host specified\n");
--			return 1;
-+			ret =3D 1;
-+			goto out;
- 		}
--		server.host =3D "tunnel";
-+		server.host =3D xstrdup("tunnel");
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 14d4f0a5e6..adc990b55e 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -135,7 +135,7 @@ struct rebase_options {
+ 		.type =3D REBASE_UNSPECIFIED,	  	\
+ 		.empty =3D EMPTY_UNSPECIFIED,	  	\
+ 		.keep_empty =3D 1,			\
+-		.default_backend =3D "merge",	  	\
++		.default_backend =3D xstrdup("merge"),  	\
+ 		.flags =3D REBASE_NO_QUIET, 		\
+ 		.git_am_opts =3D STRVEC_INIT,		\
+ 		.exec =3D STRING_LIST_INIT_NODUP,		\
+@@ -151,6 +151,19 @@ struct rebase_options {
+ 		.strategy_opts =3D STRING_LIST_INIT_NODUP,\
  	}
 =20
- 	/* read the messages */
- 	if (strbuf_read(&all_msgs, 0, 0) < 0) {
- 		error_errno(_("could not read from stdin"));
--		return 1;
-+		ret =3D 1;
-+		goto out;
- 	}
-=20
- 	if (all_msgs.len =3D=3D 0) {
- 		fprintf(stderr, "nothing to send\n");
--		return 1;
-+		ret =3D 1;
-+		goto out;
- 	}
-=20
- 	total =3D count_messages(&all_msgs);
- 	if (!total) {
- 		fprintf(stderr, "no messages to send\n");
--		return 1;
-+		ret =3D 1;
-+		goto out;
- 	}
-=20
- 	/* write it to the imap server */
-=20
- 	if (server.tunnel)
--		return append_msgs_to_imap(&server, &all_msgs, total);
--
-+		ret =3D append_msgs_to_imap(&server, &all_msgs, total);
- #ifdef USE_CURL_FOR_IMAP_SEND
--	if (use_curl)
--		return curl_append_msgs_to_imap(&server, &all_msgs, total);
-+	else if (use_curl)
-+		ret =3D curl_append_msgs_to_imap(&server, &all_msgs, total);
- #endif
--
--	return append_msgs_to_imap(&server, &all_msgs, total);
-+	else
-+		ret =3D append_msgs_to_imap(&server, &all_msgs, total);
++static void rebase_options_release(struct rebase_options *opts)
++{
++	free(opts->default_backend);
++	free(opts->reflog_action);
++	free(opts->head_name);
++	strvec_clear(&opts->git_am_opts);
++	free(opts->gpg_sign_opt);
++	string_list_clear(&opts->exec, 0);
++	free(opts->strategy);
++	string_list_clear(&opts->strategy_opts, 0);
++	strbuf_release(&opts->git_format_patch_opt);
++}
 +
-+out:
-+	free(server.tunnel);
-+	free(server.host);
-+	free(server.folder);
-+	free(server.user);
-+	free(server.pass);
-+	free(server.auth_method);
-+	return ret;
- }
+ static struct replay_opts get_replay_opts(const struct rebase_options *opt=
+s)
+ {
+ 	struct replay_opts replay =3D REPLAY_OPTS_INIT;
+@@ -796,6 +809,7 @@ static int rebase_config(const char *var, const char *v=
+alue,
+ 	}
+=20
+ 	if (!strcmp(var, "rebase.backend")) {
++		FREE_AND_NULL(opts->default_backend);
+ 		return git_config_string(&opts->default_backend, var, value);
+ 	}
+=20
+@@ -1833,14 +1847,7 @@ int cmd_rebase(int argc, const char **argv, const ch=
+ar *prefix)
+ cleanup:
+ 	strbuf_release(&buf);
+ 	strbuf_release(&revisions);
+-	free(options.reflog_action);
+-	free(options.head_name);
+-	strvec_clear(&options.git_am_opts);
+-	free(options.gpg_sign_opt);
+-	string_list_clear(&options.exec, 0);
+-	free(options.strategy);
+-	string_list_clear(&options.strategy_opts, 0);
+-	strbuf_release(&options.git_format_patch_opt);
++	rebase_options_release(&options);
+ 	free(squash_onto_name);
+ 	free(keep_base_onto_name);
+ 	return !!ret;
 --=20
 2.45.2.436.gcd77e87115.dirty
 
 
---eU5W60nKOItWDjME
+--I355eoJ/Q1X9DpEd
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZiqxkACgkQVbJhu7ck
-PpTGmA/+PdjXHgHmM8O0RkycN9loC8DJuoUcvr0RTRHlAcDQiM9BLSY5Bw6do2ZP
-MP34M1fM+QpEgmisF97TASxBvamqbqO5lQXxh3Ib//V/QPJo14kfrkNfXk0gG0sB
-DrLi4Pvr+iPfPVLTu6FNdCX8BsDu6xGbJBDNepjUQMAxykIhf6OoGo+Kz8yTUdIg
-lsZXjLezpzQCtvwd4ePlP7b2FUqNUF4ChRwNux7JKd5ktoIiuyX5YwhZaeuiyIJm
-pPeFDV4vTfs9Mr21fyAF8FJRr/DYYqa/2s9uuiJ5AYPCh9q+f2u7fR3pBpjLvdLD
-vvAPq2XaQBeq825P2gSjCZfcrGLTQRdi3CjB+16zIId/K839N7F/eucDsD2lJ2iM
-CqLx7uSzlaJCnDQtOw7ptjSRXYINqawrzwthN/czKAUhLQ4BW6irJ7ZzV93D4fnc
-Wr06vEaD1WsqJFmPt4go6pm8NPTgNK2kg+iyiw7fpgi6tr7KUpjktw+R67YHVt0G
-GTGr5yDrzLv7sNKiidSdDMIhd0cewlcgDCwW6NNE3RLJlu2/OeVzE6wQIQKJzohv
-GOv/TLZRI4A4t9Q2r0YOoI3AbzAoLW4+2AEcH+beQMUNct6mem62QqxSAWlybAC9
-hinFJnpQYXiJ7x/IuJzoWvx083eBzFvnD3tRgmGsvmnR62Ysovw=
-=XdOA
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZiqx0ACgkQVbJhu7ck
+PpQNqA//VHNsfrc6l90oKQZIUcCBOqSeNWPIEVCZv2C7k4iA0RosVoyRwl0PJu9K
+9RUKN91EjW49BKn7go+tmdbZrIKN0gkkXUiuaGL2IrJGx3CZcFZIzyTB649MXJqG
+Kve4/zF9KeqCEAjmOSeNe/J2gMPfn1Z+Ri5XQlnqraZ8eeMnG6vDWADfI0OTiPmz
+PZ7i2fT13cDZ6MXF1WpFlCfbkOXn2gfz1MFsy06gM990dFVm9IJWtZrCqpLdJY3G
+MRKy/nE6ZWRVXaQse3X1O1bx8yvqlJ9jVIlW0dhAwh/rPeZaqcgN3QGjDPr2pS+S
++MVHSlmZ6jXJ4XxnQ0cpIaCQZd2fRspJcL8cjFjAtmmi5VzbZ9pOMe07p/Jm2rDo
+I0lIMFoipqfbc+Adf6dAvurUt+gQg/VKK9a01WUZTCSkKKDMJ1OJTMZlDlM6qf0C
+PgGGnNcKKaHIz0xI4ayGtSbMalUf7EyZstbwf2Ze13OAq4ItFxWkoIlcstnSMOvj
+GKB8NGLuKAjNzTIhkXVhgF6L7h3cAtg4A6Ek1CbhAAkQijckKKcDXHINfK3HxTKQ
+SHZTgsf7kp07U/kN6Vfsl0dD2FZdDRurunklZyFK5h3mc+thaRV3xHsz/cdv4/1a
+xBp+ZWqjl483/qjhFdjvt0s57Nhc0w+CmlIYRXDOI3yBxEubgLg=
+=rNem
 -----END PGP SIGNATURE-----
 
---eU5W60nKOItWDjME--
+--I355eoJ/Q1X9DpEd--
