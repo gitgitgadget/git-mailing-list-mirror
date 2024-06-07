@@ -1,53 +1,53 @@
 Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABFC1CABF
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 06:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD84E1CABF
+	for <git@vger.kernel.org>; Fri,  7 Jun 2024 06:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717742306; cv=none; b=VleUtgezkmtTYQm5vP5sXq6apqu03NMOOMom868D2l2EQRDcHIqvnlEWdi1udt3WPouAhcBUcjvnif26GIZ4PlGHp0RvQJOq1peI+qr4gEM05UQWdGrPevkt0CwBCB0y4WFIb4D4gRTuJvOEFpyHrbnO7LNU4uECxEZ9OBzy11s=
+	t=1717742311; cv=none; b=VcH+CQere7nPiTlRGlkOFd/yPiyTJRzYDe9OEcmlNiGY5zDzWxX2cFiwLXxZ4QAxOnDOXu6lEBanVwg6uluazRAdCea9bo+LkDwLzMks/epTcwGen11fSErY91ENibt4FTTyU8XbpNcmEOkFJe4a7SSf+7kjKO8iR2gEgH2/Dxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717742306; c=relaxed/simple;
-	bh=EQ9tBHGPa4dUpfS4ANshpnQDwZa2dqiYyYPEWPj0DJo=;
+	s=arc-20240116; t=1717742311; c=relaxed/simple;
+	bh=Yhf3brKIXv92JvYx03I/V25XcJVOtgEbkIheNbKschI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rK0sRbjnzLQlWn8PDx8WL4GvhXaAFJElNX8kxiKdwsZshZeIIpjPBUSvMzzjNF2ie285O9jM86DuJ6t1B92xMuvScYy2Qxi6saO7QpO0F2fvYRwieOM6OSZtP1OWOHcPu5/rHbAr+CItO9k3uVI8C4wlrgnG3I1CoD/N585kFk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QkJZ3gE9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xe5q4Df3; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=tVN0Ypoz5U6PMEup9bG2/L2P9yJTkk10YJHjyTD8ArMTa2ByZBceRu6BpfAb29VbMtADMDPyT3PkVfaWQ0mIPVM4Tkwpxm+MEyMm9ForgT40Y2eoEqZ+PzZ81B/oEDvZDWtR++hdNeUThAqsl7n8Qcj5f58C/5Gpe56uGw3NqJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kd69rm6d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZwgYDJIF; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QkJZ3gE9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xe5q4Df3"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kd69rm6d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZwgYDJIF"
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 8E88613801EF;
-	Fri,  7 Jun 2024 02:38:24 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id CC3AB13801ED;
+	Fri,  7 Jun 2024 02:38:28 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 07 Jun 2024 02:38:24 -0400
+  by compute1.internal (MEProxy); Fri, 07 Jun 2024 02:38:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717742304; x=1717828704; bh=xI2mHvxT3G
-	WwsBbdc5ijKx3ef4cLWnvY1zE7IEphVV4=; b=QkJZ3gE9pv0eX4V6NOD1M0h4Ys
-	iSNZdMPeYx0sbNAWN9X0pdsQ3cGjiC6/2L/T0SvavFSehSzxNzQ0hY5S9qGIphM7
-	pEYvih3JXTlo0LNR6GLRQntdhmlIICb8xmKRvJxAeyAg+fkvGPQ4EVvEKMxuQ736
-	KRP61AuWqa5ETZ+GnGTqWCK0p4nzU/nRFj4DweuDtcxJBO07zQFqEsfyUeJUZ0mB
-	wMbSBCTvdWP7Sp9CWFhhXu200a6Nd5q9ilZ8fE0fcv0JL9bHEdPUQ8Su6Wkcgklq
-	aHiun96OWehix8mXqKAhxaXoSX3IB15NxwvhKUBEdnlD8G11TiCDiH0O3jCQ==
+	:subject:to:to; s=fm1; t=1717742308; x=1717828708; bh=iEq6NJRiHp
+	F1Ubhl+vGKDFtNdtNciKo787fZ8CYmaPc=; b=kd69rm6d+/q8SLuhyiva6lTzL2
+	x76XCVYqsPS/uqmh4BOFsIidDp2xwrkTzleywHJv6XyTyDouYsYz4CYIFAULI6NK
+	oe5L1OPbKNOZ2qv7jNSKWUJu00VzmZ8DOvNH2Ky4KfRlBEOurtkmZELBD/dnQVC7
+	Q0Wf1SYCVa2Lh84VxNw48yHcYZU7GhBk0DGFElfDLWgTrrHrYC3hl7Q/LevobTXx
+	W1x3DZ8hxug1QsccuF7EhX39ZhG1Ty5OiQ7iMC9MW/fMk1ws4I4ltI5cmQUuRU9+
+	bTw+hU2RDUmJDkH4jD0iyTzb/EAak3M8IdOCoqPBS9evl9+DV4ONoVyfLiJQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717742304; x=1717828704; bh=xI2mHvxT3GWwsBbdc5ijKx3ef4cL
-	WnvY1zE7IEphVV4=; b=Xe5q4Df3qSnckLy1zfrFZt5VcIOE+xKPIV7LzQO6el/j
-	mrl6uYdKnhskpD16xOXkDSw6zcNO8v0GBf9aKL5NeiWWwPKEsgmE98COJcP5gbxk
-	avzgfA2P2T+K/tHRF4Dsf1QFYK1q4GEY/V4oC89ITII39Y7PKfDAKNpOU1gzS5F9
-	ennqHerdlaGX0crldJVRDj201N/GjDTIM4DtTHtouFA9LBDwo1BiuPI18VFD9LzG
-	xkMRPUxWp9nHvGiv6YziQgy6ZgEVT1VoaVmgYPAo2qiuz45gr6IhMXrZ8fN3toDv
-	ADxBKxoUSc07cV1kTsjoM6j3rd5TNyHN3JaJ9t0tFg==
-X-ME-Sender: <xms:4KpiZhf4ZWFmUEw9WDKvH3gL5jhUHyWyBNrGZjD3M9rgOmg57qeFYg>
-    <xme:4KpiZvNneQTTp_s4MGhBptqIk9XpRwRZ_Gw_Y0xRA5JLEa8eevN16Adm1SCnWQkto
-    oauwy1IaG-z0A2iqg>
-X-ME-Received: <xmr:4KpiZqjseYAFeZJUXyC8uIZZ-Y0qAmFriF4Gr6WkiW_32Gfe2TLASModGEQ1jGoS1rs4OR0cZ4h9J_GVSasDTztVdPRnqZGwHTtC58p7NSDrVgn_>
+	fm1; t=1717742308; x=1717828708; bh=iEq6NJRiHpF1Ubhl+vGKDFtNdtNc
+	iKo787fZ8CYmaPc=; b=ZwgYDJIFpRt2y/FdWNGvBqVEnwTMSglr2SV1AdKJ98MZ
+	WmkD99M2DcRtfBA46r7R95eBWmYdVdlTv2ojY1EjKTTPGa4Qq88G65FybKZ/PR48
+	g2xceM/4SpwFVxp2ukEd9qwdr5MPqlHpBlL6Hi7QAqrHW/tsj7wEZ7p+LRYM57JH
+	gAcptoE50heT7oZ2luuXDthfQQNeiUHeQoE0I0BbpZ9EQ8uO9XHNTqU6+ZAkuAnS
+	+HgWcRQR4S6jLfJ6KTFyxptn6cETSulu9pjITLemALn49nup+owniKXxCbLAQ6Na
+	WzGJWKObXoNbxhn1GzAL+dqI1vpbWc/gQaEWDdjeQw==
+X-ME-Sender: <xms:5KpiZvPm7qVjhW-j5i4aXSTmBPpRxsjbzVWvDH9qsY9pFD_aEcLn5A>
+    <xme:5KpiZp_DMDQjRRGaVyc0ccqrXsksVL9xw0S9d6xQ-PWQJGDydb_1TRNiUD5x0t4xU
+    bdxxs9VsDDJRD9-gg>
+X-ME-Received: <xmr:5KpiZuR8eDg5u0BnyhTFvK-i2RO_KHPRG0QnZCagEtlDAI3aLcSE9ceAg15KQ_mhW03Pumfg3AgCNj1bflXWy0mQQGbmRL7e9M0GSCUu9VqIL87O>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelledguddtkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
@@ -56,25 +56,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelledguddtkecutefuodetgg
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
     teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:4KpiZq8fTF6XwzjRk4p3zbqfpPf5jt2obifYDz__tBreCW4W2FVfcg>
-    <xmx:4KpiZtt7eL4O1K_4eUYp4r-LFhULOQyQSWx9yyEHm63Tg1RDeQo2Yg>
-    <xmx:4KpiZpEaXvGDPW1miNXxpt73ycvvqubuP8p_9yHTF_womgzkHajawA>
-    <xmx:4KpiZkMnOf_vaajQ0BkWjb5A-6wYmYCmwr28P60VC8KXUy2HfeVy6Q>
-    <xmx:4KpiZnI7YQQd9AStiwHP4jZwcoaUFGMbLl91ZlAZWd1cKxEXh6TG6XWs>
+X-ME-Proxy: <xmx:5KpiZjtxlWqdfMy46YhEcjxOruiLPUmVkDpLkZCRCi-K9ekEC29iCw>
+    <xmx:5KpiZnf8A27hD78MWzVKVv5ClYpuBkrbZggSrCbhltj6e4YzmaH0PQ>
+    <xmx:5KpiZv0EIN0ViT2t7A3QIhE2HIHehm9VNP9-yBPBd3idc8hy-L8X6A>
+    <xmx:5KpiZj__9lx9CnLHvSEDp2DDYaWse5jgXrUpCmqsisvFp9NQpYETwQ>
+    <xmx:5KpiZu6Wa76m-pb-PAhHmNCpp9tCVMfAtzjBX5a894rkc6HRAscc6pXd>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Jun 2024 02:38:23 -0400 (EDT)
+ 7 Jun 2024 02:38:27 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 4bc5b767 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Jun 2024 06:38:22 +0000 (UTC)
-Date: Fri, 7 Jun 2024 08:38:20 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id e9f20832 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Jun 2024 06:38:27 +0000 (UTC)
+Date: Fri, 7 Jun 2024 08:38:25 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v6 10/27] entry: refactor how we remove items for delayed
- checkouts
-Message-ID: <4d0b8dcbaff0335a3020d2ee742b91393fc99e75.1717740366.git.ps@pks.im>
+Subject: [PATCH v6 11/27] ident: add casts for fallback name and GECOS
+Message-ID: <0d36b6e5d777864559e48b0af874f11e46cb852d.1717740366.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717740365.git.ps@pks.im>
 Precedence: bulk
@@ -84,111 +83,68 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="FB5CaFQwV0En5wsa"
+	protocol="application/pgp-signature"; boundary="G1rLFVgiaEUC6T6Q"
 Content-Disposition: inline
 In-Reply-To: <cover.1717740365.git.ps@pks.im>
 
 
---FB5CaFQwV0En5wsa
+--G1rLFVgiaEUC6T6Q
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When finalizing a delayed checkout, we sort out several strings from the
-passed-in string list by first assigning the empty string to those
-filters and then calling `string_list_remove_empty_items()`. Assigning
-the empty string will cause compiler warnings though as the string is
-a `char *` once we enable `-Wwrite-strings`.
+In `xgetpwuid_self()`, we return a fallback identity when it was not
+possible to look up the current identity. This fallback identity needs
+to be internal and must never be written to by the calles as specified
+by getpwuid(3P). As both the `pw_name` and `pw_gecos` fields are marked
+as non-constant though, it will cause a warning to assign constant
+strings to them once compiling with `-Wwrite-strings`.
 
-Refactor the code to use a `NULL` pointer with `filter_string_list()`
-instead to avoid this warning.
+Add explicit casts to avoid the warning.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- entry.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ ident.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index b8c257f6f9..f291d8eee6 100644
---- a/entry.c
-+++ b/entry.c
-@@ -167,6 +167,11 @@ static int remove_available_paths(struct string_list_i=
-tem *item, void *cb_data)
- 	return !available;
- }
-=20
-+static int string_is_not_null(struct string_list_item *item, void *data UN=
-USED)
-+{
-+	return !!item->string;
-+}
-+
- int finish_delayed_checkout(struct checkout *state, int show_progress)
- {
- 	int errs =3D 0;
-@@ -189,7 +194,7 @@ int finish_delayed_checkout(struct checkout *state, int=
- show_progress)
- 			if (!async_query_available_blobs(filter->string, &available_paths)) {
- 				/* Filter reported an error */
- 				errs =3D 1;
--				filter->string =3D "";
-+				filter->string =3D NULL;
- 				continue;
- 			}
- 			if (available_paths.nr <=3D 0) {
-@@ -199,7 +204,7 @@ int finish_delayed_checkout(struct checkout *state, int=
- show_progress)
- 				 * filter from the list (see
- 				 * "string_list_remove_empty_items" call below).
- 				 */
--				filter->string =3D "";
-+				filter->string =3D NULL;
- 				continue;
- 			}
-=20
-@@ -225,7 +230,7 @@ int finish_delayed_checkout(struct checkout *state, int=
- show_progress)
- 					 * Do not ask the filter for available blobs,
- 					 * again, as the filter is likely buggy.
- 					 */
--					filter->string =3D "";
-+					filter->string =3D NULL;
- 					continue;
- 				}
- 				ce =3D index_file_exists(state->istate, path->string,
-@@ -239,7 +244,8 @@ int finish_delayed_checkout(struct checkout *state, int=
- show_progress)
- 					errs =3D 1;
- 			}
- 		}
--		string_list_remove_empty_items(&dco->filters, 0);
-+
-+		filter_string_list(&dco->filters, 0, string_is_not_null, NULL);
- 	}
- 	stop_progress(&progress);
- 	string_list_clear(&dco->filters, 0);
+diff --git a/ident.c b/ident.c
+index cc7afdbf81..caf41fb2a9 100644
+--- a/ident.c
++++ b/ident.c
+@@ -46,9 +46,9 @@ static struct passwd *xgetpwuid_self(int *is_bogus)
+ 	pw =3D getpwuid(getuid());
+ 	if (!pw) {
+ 		static struct passwd fallback;
+-		fallback.pw_name =3D "unknown";
++		fallback.pw_name =3D (char *) "unknown";
+ #ifndef NO_GECOS_IN_PWENT
+-		fallback.pw_gecos =3D "Unknown";
++		fallback.pw_gecos =3D (char *) "Unknown";
+ #endif
+ 		pw =3D &fallback;
+ 		if (is_bogus)
 --=20
 2.45.2.436.gcd77e87115.dirty
 
 
---FB5CaFQwV0En5wsa
+--G1rLFVgiaEUC6T6Q
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZiqtsACgkQVbJhu7ck
-PpTS0xAAgKLMaMp9y05y8zOMNXY5mitw0pRYLjWlfK/05OnD0KWITfmG/maQm71T
-eFAfuVWQTIizOwhNU0RqE6X5dyPqh403jIEKO+rAEBCVkbydWAa/hfC39rM9gd1D
-4IBLEVeHUh+6P9BDNJmVas3OjREClR+ywdWAZ9O4DTAybBksV2EOsZ8Fz0G0ZyXY
-3MiJyH4Hcp1tY21+loO3bIcxdAMLrXRx1iE9rktZaeZB9GAdRqDykEWzdLdGYS7N
-yaqK6wU99k52gGyBYdDZB4vvr7XiUbMsRNtUkXLcQwNm8TWEkqRmCs7+V+RCjyH/
-LIQfwYQvmiklg3FGrsiA6XSJP6sanWhN37LLpVBC2wL400fyqDve73bB2mdltH7D
-FzZZtlFrFtOVKmfjzfXjQ/EwIZhEV84LPr1FrmmLB2PLlLh8IRi7T8S8PDuX6Oz1
-yLmeq/eZh76SnVsAa0T4VWUaKer6jDz1kCvaMzyAQNQXmuc36c5ODjzGjRsUhHRE
-4ZMtlmjVTV1VlfvDAs6uyn98Fzv119tJUyGa+u+rkt7kWGD5TE7kZ/cwnhcw+h8u
-e1jMfFxQylw6IPk0oPDe4tlO6nba82ZxQURBpjwhyYcknTLSbKcKUFctanA2658T
-T8+6Ts75Kw8YblfOC3CN1S69vsFEDlDhZOIKpJ68TXhBFT4AbXk=
-=h7AO
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZiquAACgkQVbJhu7ck
+PpSihA//ZrSyc3kke4GL/nKZbbw5iC3RdBd4RahIVQeQktcK1X4viv2ngxvAAboB
+e4AfiDyU01ca3+tQSCNm0Ay4wZL1Xsdocd9w3US/Je3yyZWrslFU7/06uxDCUs7S
+Ea1DLKBvLUAQafHFMEtTkvGvjrfhj026XdbtSO2woSnpKIeUN22Xem+VOe3wC9Xp
+LGhHoBDTycNFN+R58m5d9ldUIADq5LZHsAuXigmedfZbA1Db52+cWCoSNP0ZcVwx
+EJMIhAhMSWsXgNryYp6MfwetkWWBmr9+ZO1LJRkNopuhSwFl9BgBXD5bjid78mEw
+cw+iJ94+ca+IiNCJ0pMLQpFz+54VdcIazxZeZylQ/ewPfJB0uBsouvNz31FlfX3+
+IxqB61z4Gat32N5lYSRIK8nEeHiJgyI2JUWKTtwY8hNl1ReMQRRD9SBPX5vYj3vN
+OxBSG6MZGts0aWg0fRJ2zAC1XuTCobXGf8sooVguExfdZFUg4b/N5c4qBqSZASWG
+OscD9dR5dsuFNIQpB/pigomLsVIQKNdIKNUY3ZIthocxDaDcUWajfMeE+oH7JASG
+FZ8jQS5mxfXI9yb5SrnT0jqmjcEfeRf6/VN0G0KQLJCO7ITWBf8pzAuzzcGKmB4E
+rR8ojxuCvEwywQt+X4ry5Lf8x4CZ78NIxrUhS5FSIbS1Ys4yPpc=
+=m960
 -----END PGP SIGNATURE-----
 
---FB5CaFQwV0En5wsa--
+--G1rLFVgiaEUC6T6Q--
