@@ -1,80 +1,104 @@
-Received: from mail.ekdawn.com (mail.ekdawn.com [159.69.120.39])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611B718059
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 23:28:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.120.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2188C11718
+	for <git@vger.kernel.org>; Fri,  7 Jun 2024 23:33:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717802890; cv=none; b=pDEUGkKY1iKDZd2DB/lxwRWW6sgavcHplHbiGbQOZ5pruaLKXwE1jWlaCTvo7M+J+qtoTeG/k1yCxNFKyzCadB/Ye8o5Uw7pEbzXIXSdvZuT8RkfN0BjDZjeTbSnLeKH1SPhKE41yM7dj0xbfBnbx7MknGv63bgo7Vxt0Yn5L4o=
+	t=1717803216; cv=none; b=RAXCdrdxhVK2xvBe5yGkZfhRMD4RAxt41lobzNT4VPStg1uKsyrEzUfi0dE1GZ/49PBu4KeJ0IBW6v1yoNG3izlHuoASx5QR2iqj3xy8X0ea4sSBYzkqvf5ZKy+VWMv3TX1UsV196QkSjpv7+wkw5nuVtw5WdYb268Q5oT5KhVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717802890; c=relaxed/simple;
-	bh=A3F83lDI5drTOqp9YbbQgV7EhvEpH1KyMGYRUPBi930=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=NkqvKuEaXAAjWHrOeIOd5SKsUFWyVHM64KlJLTI0PfiqlFSx3BD6FGIgaPw825IwglUgX4AqzVz0p8YoSzQFr3likO4xDxGdxmULAKaUs94mRb61eFmQV/w76RTuufblyXQ5sRtahhhROvAHeFB7cJARk2G/mQOuTwqZeRb7O+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=horse64.org; spf=pass smtp.mailfrom=horse64.org; arc=none smtp.client-ip=159.69.120.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=horse64.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=horse64.org
-Received: from [10.42.0.97] (dynamic-176-007-192-159.176.7.pool.telefonica.de [176.7.192.159])
-	by mail.ekdawn.com (Postfix) with ESMTPSA id 9326A1806A1
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 23:27:01 +0000 (UTC)
-Message-ID: <fec6ebc7-efd7-4c86-9dcc-2b006bd82e47@horse64.org>
-Date: Sat, 8 Jun 2024 01:28:05 +0200
+	s=arc-20240116; t=1717803216; c=relaxed/simple;
+	bh=5N8PQQ/LdYPTDTq9Y4B+hurf938U0J/iVGVhYvdTYPI=;
+	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SqqHhSsqkRYFicU1SIOE/TzOsI28l+7yrkxz2EqtKSi4iFOgxr1Be+CXflePU7tV/ul9C8KzXoh5SUV+0Bp2dESQr7Rlt3HVFpecyz/tW5s8hyrivkJtDCEH8FS00SgCrundyY/2loHg9MM5roVfpKyInUH4q/p9eJqPFyC0Xhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 457NXOg01171585
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 7 Jun 2024 23:33:25 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'ellie'" <el@horse64.org>, <git@vger.kernel.org>
+References: <fec6ebc7-efd7-4c86-9dcc-2b006bd82e47@horse64.org>
+In-Reply-To: <fec6ebc7-efd7-4c86-9dcc-2b006bd82e47@horse64.org>
+Subject: RE: With big repos and slower connections, git clone can be hard to work with
+Date: Fri, 7 Jun 2024 19:33:19 -0400
+Organization: Nexbridge Inc.
+Message-ID: <0be201dab933$17c02530$47406f90$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git@vger.kernel.org
-From: ellie <el@horse64.org>
-Subject: With big repos and slower connections, git clone can be hard to work
- with
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJ8D86lVlMiQEsTuxPOCK2qhFj8v7B6Re1Q
+Content-Language: en-ca
 
-Dear git team,
+On Friday, June 7, 2024 7:28 PM, ellie wrote:
+>I'm terribly sorry if this is the wrong place, but I'd like to suggest =
+a potential issue
+>with "git clone".
+>
+>The problem is that any sort of interruption or connection issue, no =
+matter how
+>brief, causes the clone to stop and leave nothing behind:
+>
+>$ git clone https://github.com/Nheko-Reborn/nheko
+>Cloning into 'nheko'...
+>remote: Enumerating objects: 43991, done.
+>remote: Counting objects: 100% (6535/6535), done.
+>remote: Compressing objects: 100% (1449/1449), done.
+>error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly:
+>CANCEL (err 8)
+>error: 2771 bytes of body are still expected
+>fetch-pack: unexpected disconnect while reading sideband packet
+>fatal: early EOF
+>fatal: fetch-pack: invalid index-pack output $ cd nheko
+>bash: cd: nheko: No such file or director
+>
+>In my experience, this can be really impactful with 1. big repositories =
+and 2.
+>unreliable internet - which I would argue isn't unheard of! E.g.
+>a developer may work via mobile connection on a business trip. The =
+result can even
+>be that a repository is uncloneable for some users!
+>
+>This has left me in the absurd situation where I was able to download a =
+tarball via
+>HTTPS from the git hoster just fine, even way larger binary release =
+items, thanks to
+>the browser's HTTPS resume. And yet a simple git clone of the same =
+project failed
+>repeatedly.
+>
+>My deepest apologies if I missed an option to fix or address this. But =
+summed up,
+>please consider making git clone recover from hiccups.
+>
+>Regards,
+>
+>Ellie
+>
+>PS: I've seen git hosters have apparent proxy bugs, like timing out =
+slower git clone
+>connections from the server side even if the transfer is ongoing. A git =
+auto-resume
+>would reduce the impact of that, too.
 
-I'm terribly sorry if this is the wrong place, but I'd like to suggest a 
-potential issue with "git clone".
-
-The problem is that any sort of interruption or connection issue, no 
-matter how brief, causes the clone to stop and leave nothing behind:
-
-$ git clone https://github.com/Nheko-Reborn/nheko
-Cloning into 'nheko'...
-remote: Enumerating objects: 43991, done.
-remote: Counting objects: 100% (6535/6535), done.
-remote: Compressing objects: 100% (1449/1449), done.
-error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly: 
-CANCEL (err 8)
-error: 2771 bytes of body are still expected
-fetch-pack: unexpected disconnect while reading sideband packet
-fatal: early EOF
-fatal: fetch-pack: invalid index-pack output
-$ cd nheko
-bash: cd: nheko: No such file or director
-
-In my experience, this can be really impactful with 1. big repositories 
-and 2. unreliable internet - which I would argue isn't unheard of! E.g. 
-a developer may work via mobile connection on a business trip. The 
-result can even be that a repository is uncloneable for some users!
-
-This has left me in the absurd situation where I was able to download a 
-tarball via HTTPS from the git hoster just fine, even way larger binary 
-release items, thanks to the browser's HTTPS resume. And yet a simple 
-git clone of the same project failed repeatedly.
-
-My deepest apologies if I missed an option to fix or address this. But 
-summed up, please consider making git clone recover from hiccups.
-
-Regards,
-
-Ellie
-
-PS: I've seen git hosters have apparent proxy bugs, like timing out 
-slower git clone connections from the server side even if the transfer 
-is ongoing. A git auto-resume would reduce the impact of that, too.
-
-
+I suggest that you look into two git topics: --depth, which controls how =
+much history is obtained in a clone, and sparse-checkout, which =
+describes the part of the repository you will retrieve. You can prune =
+the contents of the repository so that clone is faster, if you do not =
+need all of the history, or all of the files. This is typically done in =
+complex large repositories, particularly those used for production =
+support as release repositories.
+--Randall
 
