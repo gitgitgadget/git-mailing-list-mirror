@@ -1,55 +1,55 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BE81581E3
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 08:31:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757B415B109
+	for <git@vger.kernel.org>; Fri,  7 Jun 2024 08:37:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717749105; cv=none; b=eYgcRUo2ogY2BK0ZVCT7n/i8U/pBvAytaFXCsDSHAvUrAiZjiRY093vtBhH7hqbXePeeDNPhPhJOXnzn9aqJDxPR+bjV2knArQ+QysC6hVIR73+d1MBP/7aiZSRmdSQqCZ4DxknL36CDgjgplsWCOVHM9XdlBURm8CYVJa5o8RU=
+	t=1717749432; cv=none; b=ktuuf966D+V4R/n3EnuOJbjdUt93t5Wq+h/iC1rixjcXl1Pw0wKd+uBJHNg4prsNT3jMDGQAojCbWuyTdAF0HJy8yJx8YghO9QreAP8xnF8AH4BBowzZokgeDJXKhpXBughhKojhQB/jkVnTirbomKqnge9QZSp9+KLGDhg+1MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717749105; c=relaxed/simple;
-	bh=WnXio9gYPHpOS6dOazBCKGjoZ0PlCqjfxrFqVO/hZuk=;
+	s=arc-20240116; t=1717749432; c=relaxed/simple;
+	bh=i2LWT7NJhui3IYCWuDV1O4Xgw/N4J2m9JGMwHyt703I=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=E2/OVRHtn0Bvcp6InCUApY4HucZRaVYS8m9ZWToZvHC9cVj9LxXCb8pTSoIxaplu2rhqGSSPKoGVOKcsVNO+IvNFv9zYUD1kDmecZ//6zlnXnlRPMIz/R9UwQlAASM8Xwb6INIhctBxIDL2hB5rPJ10YE2EAnpZzRE44bfAwHow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A7pBLbx/; arc=none smtp.client-ip=209.85.218.49
+	 To:Cc:Content-Type; b=NQZZjZdwYBBaZB750UMphvIGsSb0NEVm8CtXqOMBc54fwbYnQuEVjFBKBnoFU04e2w1jPn9S0l11kto6JhU27eQd2Bv37jB7Jd4M+ABO4mxf530d1oW2MzIsX6RBeTYikeLdzf3ta6PjJ3UAUqvkjQ1U+e4FAAT+4e90LrsRtWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HYqrj8Dl; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A7pBLbx/"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a6267778b3aso207827866b.3
-        for <git@vger.kernel.org>; Fri, 07 Jun 2024 01:31:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HYqrj8Dl"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a6265d48ec3so218952866b.0
+        for <git@vger.kernel.org>; Fri, 07 Jun 2024 01:37:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717749102; x=1718353902; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1717749430; x=1718354230; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aoSffvQs9kCXvkXlsp/79ecejL1CJiLR/18oFuqQjZg=;
-        b=A7pBLbx/klVw1wS1n3eCf7jvNwXJ6Kw1QA5eL0HKst5pWGo18SSWd2ytViVxgxJGnR
-         sUgsbADSB50pqOy2TYNEq/IHc+90RGDkw2+OqnRRiS8xaXAQkR4OV2vlNTTNC1C8/ZVi
-         rUN5HRfxsGHBMFuHO86ewrJfb1hTf6vTGi28W2GhY5Chc+gT/sr9fK7cnvJeVuf7YVpF
-         joW5iUN/p4fYw7MghJpZWGIaILej0DSSjxL9vT+lWS8EnfhciNZ6Nz47n1v1+aLXjahV
-         evlCYYQ3JM/yEc4D62u9IBbOdNIgAwd3Ja9Ye4scsEpcj+Mo+LOg0kJlgx5bFMs09/Th
-         MaYw==
+        bh=fNWEDvLW3bqpnbRZiHIGZ2/+Uy8YBWrOYBD3U0IW62s=;
+        b=HYqrj8DlMsRaoySONYPqQW1izXqxPfD/j1j6q/XETd9STh6Y2AtcHvAHNOF9yVZ4rs
+         EGgu64psqFyqOSkFjqT5yMEUl8EzwgjcT+Q/zhCrQzXoIWN4oTMBaSO6CNw9RMspBPWL
+         x24CUQZuy103U0bRrEUAeg+jkk3Ow3N7lBuzi3XmcAkekA+ZlmEIe5cjgzjB7UtoieBy
+         jBmmnveWjpfG3jZBpfajgHZwrT4Uf7Lcd28dKbEnvQVqVMnq2iMWdwHfkQflIrbV6TzL
+         0CFtmWXk6A+1F4mUHmr+2+5H0YmnLQ796OiFJNsYf2oX8wdTE5yf9H8bhQwikXZUgJRw
+         NDlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717749102; x=1718353902;
+        d=1e100.net; s=20230601; t=1717749430; x=1718354230;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=aoSffvQs9kCXvkXlsp/79ecejL1CJiLR/18oFuqQjZg=;
-        b=F3ALRkIBT9JXte7+3DaP0JKQXyZOsGUAY8/0P1XEa8hMMqo+lJ5SKkRHDWJr9DZ5r5
-         9Hrb1ITCJCq/cukrFSDPl8DdZJAfu7VGAsfJmGbARoP5CHVsiMmw/j7Q0ioLFBXD9d0x
-         /w9jWT9AaLEpNC7iAaGZHL7cgNmjNzbbicw8wYaK5Hf6mPnqTg4WA6oT6YYO+ZwbPrcJ
-         2n9IxlfR8NQIiPqTSOhzvRjxnkwkFy6G+FGUSu4R2xuz8JUpTjvOKJCRhJ8wIFXScBU0
-         c66Odmh15DExAY8TekqMQwxaAdR22+LG518paCn3b5jMNgQOKUwTs/Btth+HfPcxzFlR
-         XdQA==
-X-Forwarded-Encrypted: i=1; AJvYcCUPgkUaXnrPVRDWzfOMdOezGbDtGTBEpypAnXOnPmx0IiCypi9MPd9e2COgP8XtH8rH5xFkU62SU6zk/3YBj35OTIBL
-X-Gm-Message-State: AOJu0YzuLHLIJ3Ll60qn87wcrtvai+iyIhNcjmrinl5WhFuIUYl2n5OF
-	+5FC8WXOBlyj3RQGPaX4RKnxCTSyU9QofCp70EWSsWkKTOexeLKhc5ZrZXfWcdPFJDMwncP9PJ2
-	dMPbMKrXF6MD6rn89aZBOKsIsQjI=
-X-Google-Smtp-Source: AGHT+IELarYKckrWck1TFikXy8M4gBGEnjxvRNGzv2bJoTBEWznNmKKuzZEETk6kn71RYa0oSnAb1+N2/0jvWJCNDDo=
-X-Received: by 2002:a17:906:55cd:b0:a6a:bcd1:6e85 with SMTP id
- a640c23a62f3a-a6cdb9f3e31mr136506166b.75.1717749101710; Fri, 07 Jun 2024
- 01:31:41 -0700 (PDT)
+        bh=fNWEDvLW3bqpnbRZiHIGZ2/+Uy8YBWrOYBD3U0IW62s=;
+        b=ceZVC2Nsswk2W82k+LX66VJfoggjW5L8pHn7gqfGlUeRcSSsWE1KJ0YJ9c8FaIRsZi
+         W/8Ph35LmQ+YrPMo7uaNC3Zc9qoHmjXU5Ymoq+U2UtKwqfrBKDMACb+pKa+r+RZXNunE
+         XhGUn9DdIz82g6oweqnbfFRd1c9ARYkofdA43lBzdC8hPJD7x5kn3Jyb8dXossKnfs7T
+         CaMNmb94miXK77IF3zijYxZCg6zxQtNAyN/H7T/PjXHC+cw+rMCheMOjjHx5wsGvNKAo
+         UJgIQigrBp8iBwC6TCGbRTS7gA5IGuMDeeDhKSJm0oJER4ZJEuf4Otbd8ne6HlJ6T9t9
+         S6mQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU15bWoaTOcJz2L7qBOSK1VvUuVGqJmJIdJDZbcyWxTjwjl/w4DELLoedTPkw/egXcUdW3gjJahpuZJHcRfnYSUhN70
+X-Gm-Message-State: AOJu0YxesusFkcaO2hH7dPguXu/7ZGS4gQRbz2W3r7Z7EcwGyHZ/giSp
+	cNDiSSJ6dN586+1Y+nnSaurVyMe2GH3aUspnpROVOfgIjovmzwoR1hN3GyvSX9Yn+IxLykK1e+Y
+	s0sUrdo2qgcKm5X9ti2y79rBj9FA=
+X-Google-Smtp-Source: AGHT+IGWcWH9iwvWtAjwwoQGJ5tVX5X/IZz2fLREgMs4PvrUWRPCzxE1Bz0f9dXqh1Ibj1/bK6pChO3fmzMNMlNWHCw=
+X-Received: by 2002:a17:906:c191:b0:a59:a83b:d438 with SMTP id
+ a640c23a62f3a-a6cd675c490mr129798066b.23.1717749429687; Fri, 07 Jun 2024
+ 01:37:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -58,10 +58,11 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240605134400.37309-1-shyamthakkar001@gmail.com>
  <xmqqo78dka99.fsf@gitster.g> <dohbd64jxuahelut63esztozdozqrhx5rgv5m4t3wt5gz6v6kv@6q2aivlcvxcq>
-In-Reply-To: <dohbd64jxuahelut63esztozdozqrhx5rgv5m4t3wt5gz6v6kv@6q2aivlcvxcq>
+ <CAP8UFD0r+YYxAvN2Ej1mGa2Kt5M2dQgQEGLraB3iQ30cPWuA6Q@mail.gmail.com>
+In-Reply-To: <CAP8UFD0r+YYxAvN2Ej1mGa2Kt5M2dQgQEGLraB3iQ30cPWuA6Q@mail.gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 7 Jun 2024 10:31:29 +0200
-Message-ID: <CAP8UFD0r+YYxAvN2Ej1mGa2Kt5M2dQgQEGLraB3iQ30cPWuA6Q@mail.gmail.com>
+Date: Fri, 7 Jun 2024 10:36:57 +0200
+Message-ID: <CAP8UFD2eUxrr2Z0etZKbakXEB5VAfXH63jLhfAYJyOxBwvJPEQ@mail.gmail.com>
 Subject: Re: [GSoC][PATCH] t/: migrate helper/test-oidtree.c to unit-tests/t-oidtree.c
 To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
@@ -69,91 +70,85 @@ Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 7, 2024 at 1:35=E2=80=AFAM Ghanshyam Thakkar
-<shyamthakkar001@gmail.com> wrote:
-
-> > Come to think of it, how is your check_each_cb() ensuring that it is
-> > only called once with "123" when queried with "12300"?  If the
-> > callback is made with "123" 100 times with the single query with
-> > "12300", would it even notice?  I would imagine that the original
-> > would (simply because it dumps each and every callback to a file to
-> > be compared with the golden copy).
+On Fri, Jun 7, 2024 at 10:31=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
-> That's true! I did not think of that. What do you think about something
-> like this then? I will clean it up to send in v2.
+> On Fri, Jun 7, 2024 at 1:35=E2=80=AFAM Ghanshyam Thakkar
+> <shyamthakkar001@gmail.com> wrote:
 >
-> ---
+> > > Come to think of it, how is your check_each_cb() ensuring that it is
+> > > only called once with "123" when queried with "12300"?  If the
+> > > callback is made with "123" 100 times with the single query with
+> > > "12300", would it even notice?  I would imagine that the original
+> > > would (simply because it dumps each and every callback to a file to
+> > > be compared with the golden copy).
+> >
+> > That's true! I did not think of that. What do you think about something
+> > like this then? I will clean it up to send in v2.
+> >
+> > ---
+> >
+> > struct cb_data {
+> >         int *i;
+> >         struct strvec *expected_hexes;
+> > };
 >
-> struct cb_data {
->         int *i;
->         struct strvec *expected_hexes;
-> };
+> It might be better to use a more meaningful name for the struct, like
+> perhaps 'expected_hex_iter'. Also I think 'i' could be just 'size_t i'
+> instead of 'int *i', and 'expected_hexes' could be just 'hexes'.
 
-It might be better to use a more meaningful name for the struct, like
-perhaps 'expected_hex_iter'. Also I think 'i' could be just 'size_t i'
-instead of 'int *i', and 'expected_hexes' could be just 'hexes'.
+Maybe even:
 
-> static enum cb_next check_each_cb(const struct object_id *oid, void *data=
-)
-> {
->         struct cb_data *cb_data =3D data;
+struct expected_hex_iter {
+       size_t i;
+       struct strvec hexes;
+};
 
-Maybe: `struct expected_hex_iter *hex_iter =3D data;`
+(so without any pointer)
 
->         struct object_id expected;
+...
+
+> > static enum cb_next check_each_cb(const struct object_id *oid, void *da=
+ta)
+> > {
+> >         struct cb_data *cb_data =3D data;
 >
->         if(!check_int(*cb_data->i, <, cb_data->hexes->nr)) {
-
-A space character is missing between 'if' and '('. And by the way you
-use 'hexes' instead of 'expected_hexes' here.
-
->                 test_msg("error: extraneous callback. found oid: %s", oid=
-_to_hex(oid));
->                 return CB_BREAK;
->         }
+> Maybe: `struct expected_hex_iter *hex_iter =3D data;`
 >
->         if (!check_int(get_oid_arbitrary_hex(cb_data->expected_hexes->v[*=
-cb_data->i], &expected), =3D=3D, 0))
->                 return CB_BREAK;
->         if (!check(oideq(oid, &expected)))
->                 test_msg("expected: %s\n       got: %s",
->                          hash_to_hex(expected.hash), hash_to_hex(oid->has=
-h));
+> >         struct object_id expected;
+> >
+> >         if(!check_int(*cb_data->i, <, cb_data->hexes->nr)) {
 >
->         *cb_data->i +=3D 1;
->         return CB_CONTINUE;
-> }
+> A space character is missing between 'if' and '('. And by the way you
+> use 'hexes' instead of 'expected_hexes' here.
 >
-> static void check_each(struct oidtree *ot, char *query, ...)
-> {
->         struct object_id oid;
->         struct strvec hexes =3D STRVEC_INIT;
->         struct cb_data cb_data;
->         const char *arg;
->         int i =3D 0;
->
->         va_list expected;
->         va_start(expected, query);
->
->         while ((arg =3D va_arg(expected, const char *)))
->                 strvec_push(&hexes, arg);
->
->         cb_data.i =3D &i;
->         cb_data.expected_hexes =3D &hexes;
+> >                 test_msg("error: extraneous callback. found oid: %s", o=
+id_to_hex(oid));
+> >                 return CB_BREAK;
+> >         }
+> >
+> >         if (!check_int(get_oid_arbitrary_hex(cb_data->expected_hexes->v=
+[*cb_data->i], &expected), =3D=3D, 0))
+> >                 return CB_BREAK;
+> >         if (!check(oideq(oid, &expected)))
+> >                 test_msg("expected: %s\n       got: %s",
+> >                          hash_to_hex(expected.hash), hash_to_hex(oid->h=
+ash));
+> >
+> >         *cb_data->i +=3D 1;
+> >         return CB_CONTINUE;
+> > }
+> >
+> > static void check_each(struct oidtree *ot, char *query, ...)
+> > {
+> >         struct object_id oid;
+> >         struct strvec hexes =3D STRVEC_INIT;
+> >         struct cb_data cb_data;
+> >         const char *arg;
+> >         int i =3D 0;
 
-Can't we just have something like:
+... and above only:
 
-        struct expected_hex_iter hex_iter =3D { .i =3D 0, .hexes =3D &hexes=
- };
-
-above when 'hex_iter' is declared?
-
->         if (!check_int(get_oid_arbitrary_hex(query, &oid), =3D=3D, 0))
->                 return;
->         oidtree_each(ot, &oid, strlen(query), check_each_cb, &cb_data);
->
->         if (!check_int(*cb_data.i, =3D=3D, cb_data.expected_hexes->nr))
->                 test_msg("error: could not find some oids");
-> }
-
-Thanks.
+        struct object_id oid;
+        const char *arg;
+        struct expected_hex_iter hex_iter =3D { 0 };
