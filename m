@@ -1,58 +1,66 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711A314F9E9
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 21:10:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AC41E495
+	for <git@vger.kernel.org>; Fri,  7 Jun 2024 21:41:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717794652; cv=none; b=kdaRFyfsPTjpYJcm2tvGKFvD+27K3GaRhlP05e4cnE0wJa/BcUA9a+4rKygWeCyxWjz94sMSsytSE3Dv1lbo0hFCzjQHxZgxcglU54aRXffOUlRfVUk6Ywfeihte0pDrD/KHtFSbPzGQZtsPVPn60QuRW4uFHhshrKCht3aCxrA=
+	t=1717796472; cv=none; b=WZCKxNyxiVxbWmw7vlmUlM1iwVCK1ksKTXpNEv/N/aOXReBvtkfsHRIf4ABmrzCW+VwWwhLivqfjai1maRwK7p/jASNmGP7vpw0giK79tVpuHKjf3/hdZcwcwjs6tTTLmPEjEJ8mAl5V+EiN80V5w3C1d0xinAhlouVV8pxeUzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717794652; c=relaxed/simple;
-	bh=LvdAq90kiTG8Ffbs4xSVjzE3iLdYHcxkHoXgKAiIk7w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ST8QgRnvi2OASV78Z11ERl2LuVF8VEnhkE1j0uIl5231C8GmVoYqKkTrNRCevGg3u9oCPsXQAVceJRc7t1xgsDaqrcbZwUjAOFqUsT2jU1GVL8HUVroOkqTl3c0DDZXBtjfFztvwOZp6q/rZDDJs/KUhLVVaUPO3fAMQgVp3gVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=P4MBRzqE; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1717796472; c=relaxed/simple;
+	bh=+SvggxI3pFtRkW1cXdl88CJ+ihZyDMjQcGalN+kROBQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kRj2yJ7Bc2QjTmmA1F4yaKJeNp6Xorqey9kf0RIyYWxT51MdItT/9mDW9kGGrkNiDyVWay5SZanfoy3rlYk/OU3g8HrWzkYIssCOJe73agB5t/f5tMGGCxMxcr53c50QdLLDDFZgEubwfvZXGCtVVsxeJc+/8h4P0mexFjlszQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=TreFzLLl; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P4MBRzqE"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id D131B2E0EA;
-	Fri,  7 Jun 2024 17:10:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=LvdAq90kiTG8
-	Ffbs4xSVjzE3iLdYHcxkHoXgKAiIk7w=; b=P4MBRzqE6O5wDoclBCL/3mAz5N/N
-	EJWKbMKbAplWNmNDaChZDYh4ARliWCHj2B/VrkOdoKoEuUHdxqsXa2j/qi0FY9Uo
-	hlavbR/dSLaMHxS87vv4Ia0/r0LKzqr8nyiz3kwnImQy8JHxU0dETe1IGF8ZzgJ6
-	2hzXxhDtjhdvZ60=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id CABA82E0E9;
-	Fri,  7 Jun 2024 17:10:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E72352E0E8;
-	Fri,  7 Jun 2024 17:10:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v5 0/2] format-patch: assume --cover-letter for diff in
- multi-patch series
-In-Reply-To: <91014071-13f2-46d3-aae7-75c8ea036786@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Fri, 7 Jun 2024 22:52:53 +0200")
-References: <6269eed5-f1ff-43f3-9249-d6a0f1852a6c@gmail.com>
-	<14365d68-ed04-44fe-823b-a3959626684e@gmail.com>
-	<cb6b6d54-959f-477d-83e5-027c81ae85de@gmail.com>
-	<9f520828-f87e-49b1-aa4b-c00ec6bb0133@gmail.com>
-	<91014071-13f2-46d3-aae7-75c8ea036786@gmail.com>
-Date: Fri, 07 Jun 2024 14:10:46 -0700
-Message-ID: <xmqqsexoe9wp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="TreFzLLl"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dfa7faffa6cso3023182276.0
+        for <git@vger.kernel.org>; Fri, 07 Jun 2024 14:41:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717796469; x=1718401269; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=REPE9pPHrDDTyyxlDiUlscsuQuyXcg6kB3xPce67f9Q=;
+        b=TreFzLLluSDd44wQ329FEhhLp1/XTiz0BB/eSgPPLJjc0eecImal9OHWBcolTngxYW
+         sWqv3yM48nQxIfTKriW1Cd1i1aopNiQ69zC6IQ2w1MttuNO2dMT9TLwjuWCcf2L84lbA
+         CH8yfRUaLNIqwbPFJMDfT9xRs0AI2q8163a38KLrbaKO+Ow/LyF/I4NDpQ3K4PesMswM
+         8fokvKFCLPz/n7VIEF2lIOZCUMakJVAh0H9Peu8BhTXHdmd8v2m6m/ttSmfw7Vr0WmT2
+         qEobLylCXIa20JdS+ArdNtPw4UGVIA+O9GXuLRrnY3aWAmoobDdRuB/mJD8k0tKjco5F
+         3Z2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717796469; x=1718401269;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=REPE9pPHrDDTyyxlDiUlscsuQuyXcg6kB3xPce67f9Q=;
+        b=YEnSQgtSX7dE2kYjbmbwl23OFdgTHmKBrJOSgp04NUzwjCu47g5xgp2Ayh/YcCtj/g
+         YNbReoagNZqZ145eRvFBq4pKNWxWKEVSIbrbS58by0JvJY/QiGAcESAWMclILTKssCHw
+         vsS5zMF3X2xeAXlqMQVLZwDoyzmMcc9FmClNi/gyRNmMlakhGhD4bweLRJCkWwMIUvx5
+         +zcgrCK2CsQehvr0xzNKvf3ym9r1b+1mMALDQ5Q0ue5vrrlDBoTYwQA8G/MnVVFfy7xn
+         1KGk6vGvlRH5ZfgAdHeWiNkhbdFsuBu8iypuMD5ik5oZWFNUrNqk5gX4M9q8hMMHEuXT
+         KjQw==
+X-Gm-Message-State: AOJu0Yy07TeJdQKB29AsD0rESnL8ysjoJMU2WzZP8PIBPm1a5ykFLeJi
+	nO2CG8Lg68ljgeFI8w12QZ+hPatjyGA8x8x7o9MLJqTyUnFpOcQ7xFF7YWpdShZQ3tHFIN5UKEO
+	5kyc=
+X-Google-Smtp-Source: AGHT+IFHIiRMf9YvcftXcBYHW5GLOZvzpr0sDXsY2ZFSLfqxYorHVDOd+60Gw90E2dBksOIGyPoizw==
+X-Received: by 2002:a25:ec0a:0:b0:dfa:6c3b:ec03 with SMTP id 3f1490d57ef6-dfaf65927f4mr3879604276.5.1717796467876;
+        Fri, 07 Jun 2024 14:41:07 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44038aa38e6sm15901381cf.44.2024.06.07.14.41.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Jun 2024 14:41:07 -0700 (PDT)
+Date: Fri, 7 Jun 2024 17:41:06 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/2] commit-graph.c: remove temporary graph layers on exit
+Message-ID: <ZmN+crXyZOze122U@nand.local>
+References: <cover.1717712358.git.me@ttaylorr.com>
+ <25324fea5b7c7f748d7f4e1e40299c0af04006e8.1717712358.git.me@ttaylorr.com>
+ <xmqqa5jwg1aj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,15 +68,36 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 696467AC-2512-11EF-AE6F-ACC938F0AE34-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqa5jwg1aj.fsf@gitster.g>
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+On Fri, Jun 07, 2024 at 09:33:56AM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > @@ -2133,8 +2132,6 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+> >  		char *final_graph_name;
+> >  		int result;
+> >
+> > -		close(fd);
+> > -
+> >  		if (!chainf) {
+> >  			error(_("unable to open commit-graph chain file"));
+> >  			return -1;
+> > @@ -2169,7 +2166,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+> >  		free(ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 1]);
+> >  		ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 1] = final_graph_name;
+> >
+> > -		result = rename(ctx->graph_name, final_graph_name);
+> > +		result = rename_tempfile(&graph_layer, final_graph_name);
+>
+> Before this rename, after the close(fd) we saw in the previous hunk,
+> there is one early error return when we fail to rename the base
+> graph file.  Do we need to do anything there, or an unfinished
+> tempfile getting removed at the process termination is sufficient
+> for cleaning up the mess?
 
-> This iteration fixes some tests introduced in the previous iteration.
+We could explicitly clean it up, but we'll do so implicitly upon exit,
+so I think it's fine to leave it as-is.
 
-Looking good.  Let's mark it for 'next' and merge it down unless
-somebody finds other issues.
-
-Thanks.
+Thanks,
+Taylor
