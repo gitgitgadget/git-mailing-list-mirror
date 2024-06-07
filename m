@@ -1,168 +1,202 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from mout.web.de (mout.web.de [212.227.15.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D163C14F9DB
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 06:46:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1AF15A863
+	for <git@vger.kernel.org>; Fri,  7 Jun 2024 08:20:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717742811; cv=none; b=STA4ra/qJV1rGMO5i2qU4DcERyQ3Z3hX3o9R7XTdTAbmu99JvQmX7qszo/RaX3AIOaZ7KycXTOE7dkZsdFJdTeDKilwGkP21OkR/fLIjgkMezRgKyedDWy17+8qGmF5VP3nBeb1j7I/fagLSocjPYBiBOUw3JAuCG16TbDj3fCM=
+	t=1717748408; cv=none; b=GG899svsZYFZiSrI7qbbaopM9Iwc6e39To2cA6c2qf0V9rxQmvI+yNm/v4VwC/4NhcihNmD9c4Yf9LGMMpyGkuT/oxtW77fr2sGy1gR/aadZZu4WzT9g0pGXu1fY8UiubDEhMslQYZb6ElILV1zK841KZ+J7/0dFGdxC/ketOaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717742811; c=relaxed/simple;
-	bh=w2iN7ji5o9WhldeE1kKfKiVY7V8gSD0os3ukzuXcbCs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dLhk61s3AZOyWp+le+WLZ00mr4ATIKMO0pmuATq0ngnOjkPJy4gCNbsgFuBi2MdUHa8rfVn1SfIFIwyRvwj/UCtINh8zcfzUSd9YnZrb6QfPiyqjwKKiptvHT7qSm4kqJ6sGJwWL12AImKwp8OeYEpGPqCh4pgmq7fk0mTbQ4eQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ogOqRmSM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RCVOKLWF; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1717748408; c=relaxed/simple;
+	bh=1S571/SfQQrfcKHQcc7geXZpKapH4env9aSGG4CYJrA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NwunySoyEyI/6oJIX0JmmMEyIg2T0/yPGh2nDHKZP9+HAE0Vv3hV97ZPUBpuwGBzdOHO1JrQAvIBGmPCSiFTPwYXs/Rq8FJnvetbLO+4vbicYqPpKUENUyvSxJ9X5Csz95tbF7yFmC4T+ND6Z+OmqVq0fMCqyV1IXicuP9ZxQ7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=JtrV+Mfv; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ogOqRmSM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RCVOKLWF"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id EE7FE1140085;
-	Fri,  7 Jun 2024 02:46:48 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Fri, 07 Jun 2024 02:46:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717742808; x=1717829208; bh=OnzHzsbOmZ
-	KNPQcUzeyUs9f+AZ+EPf1SZUOC41QFKv0=; b=ogOqRmSMCJVwQx9W4E0ztmqgV4
-	g/IZuQ0OiE78jmzYsBwdPa7iCb7dkziDH6XYdsuvfnUKoqaYjHJkR+bfL4UrlTVA
-	+On3bSpQoiVWEtqPqEne7Pcq6NuxEDLeqgZbax6iRifFhqfCfk2gxlttpw2VA48H
-	c+1d99DqHoqMJJeD+xDegPpWJUEUUR08cVr5Iw9rDBfi7QVDlfv4SCIQNF0qY7cy
-	IMbcrVlR/cwDX1xDA+OQA8T4J9Ki6biyslwX4nmzdj8bstAzMI0nhz0ozeB/tgMd
-	7AxD5mooG111uJDuI70Fw+gzrqZQrGdZrYZDDobXLECdlY2b93l+uDIi9qbw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717742808; x=1717829208; bh=OnzHzsbOmZKNPQcUzeyUs9f+AZ+E
-	Pf1SZUOC41QFKv0=; b=RCVOKLWFyaCH6tjEfkkG5fLV6c5hRA4jKIziHQSi0fRY
-	OHQhgkBns+B/t6YBvDuh6IDWdljdNnhIhVd55FgOiqiZ3kwHCFUKp4S+GYgfSBVx
-	1A9oIfRBqBxAPpNEWpGYtXGc111qmSPe/xJeLNBQ6fJXH2K9j8+1vmnbM783ig6O
-	VP4riYGw9AaaducK/2fCilVolTUUhxWuCOtPY7tlJXuwXL7Tf609RgHXmtUAbQWm
-	v01IF5+asUzTaE6qbhsIizIYJx+3ksjo47vsc0pkv/KmNmhRgngJoLY/4c7vIiwm
-	6wCMGJRjdOl68RaotOlj+ol5VIoKSZPnATEM7g5cuQ==
-X-ME-Sender: <xms:2KxiZom-_ZT33pAEwpfgDyrWuVcLmqw8yRbJdvfdXhRWPEL0lrYmhg>
-    <xme:2KxiZn1SeyVOi38-y55IyYkKOfcym-Nc9iS_UMyJvRxAIdhsexhLz33K1QJ3d5Z39
-    i0M3WW__4UyrRPeWg>
-X-ME-Received: <xmr:2KxiZmrFOioz6D2tpJ36vWVVVUJeyNTt5IswzJlirfWUXHHXpkL9_tlHYVSy5EYPXPyYtMyNNB5Gr32gGjDPlyGfDS1_vPyWfeZBtvu1HVhIrOt5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelledguddutdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgepudenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:2KxiZkm2_vao5w-FDn9_lcDcgaEAnN9xp05jhp7_NDi3rvTAYkfTJg>
-    <xmx:2KxiZm33yJcXFnhVdC66_yzMULMrjbhap9kiTpMCfl-CQzfiNqoqAA>
-    <xmx:2KxiZrvjP063WDnXL-Yl5vDo0Gv32CT6JBr4KaPikJgz8GFU8yRhOA>
-    <xmx:2KxiZiWKz0SmOdHfA32zMCsTfu7TQPQoIBE9yWoA0E_eNbNIytDJ5w>
-    <xmx:2KxiZrzlXLkDNRxinco7KGXto9EKuNT27qXZrrwPAyXybQzjc6BLqjHL>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Jun 2024 02:46:47 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 763a70dc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Jun 2024 06:46:46 +0000 (UTC)
-Date: Fri, 7 Jun 2024 08:46:45 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 4/4] ci: compile "linux-gcc-default" job with -Og
-Message-ID: <c7b5b62d9c5b6c737d9afe3d32382ccf835e23ce.1717742752.git.ps@pks.im>
-References: <20240606080552.GA658959@coredump.intra.peff.net>
- <cover.1717742752.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="JtrV+Mfv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1717748391; x=1718353191; i=l.s.r@web.de;
+	bh=KcOHH77QZZUkbeOCVzi2wlyRHHJq45qCPH3SnyirEaQ=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=JtrV+MfvJCg0iFSJ8OZQjjBu+Sbeurqx+CoyM8WEESpnl2yv25rWwO4TDK/mIP3m
+	 rBn8Mn0AQutze8bzIWkj3G3Axv/PjdhU1DmBqg7LsBMocW4zGweGVueesCIePI1m7
+	 jttbu6cQf9HrEuXIaEFeXFnf2MaQC9C9E1iTGTGd9pshYtkR3L5rIbMc2uyUHWsPC
+	 Vo5Z7UOHkUNtYFw27Q4bS/YVqbe1VzGo10H/3r+WA1XHIK82Ecdisup4aphLfYFQI
+	 Wcr/AA9GfUAo6gTn/OSr/f3X4ytuO0e02vvFNuZUwxcxZ0DSU2+fgzAx8wxP2QU1K
+	 4DLR5t5j4KL8r/HmJw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mq182-1sjehp0Z0c-00gLQF; Fri, 07
+ Jun 2024 10:19:51 +0200
+Message-ID: <524e4728-a63c-46fc-af73-35933c1906ee@web.de>
+Date: Fri, 7 Jun 2024 10:19:50 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="T88NZkYpO5l/UCS3"
-Content-Disposition: inline
-In-Reply-To: <cover.1717742752.git.ps@pks.im>
-
-
---T88NZkYpO5l/UCS3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] diff: let external diffs report that changes are
+ uninteresting
+To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+ German Lashevich <german.lashevich@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+References: <CACDhgro3KXD0O9ZdE1q46jmXE0O=vf-Z+ZX50WMqmRHAeowGAA@mail.gmail.com>
+ <82561c70-ec33-41bf-b036-52310ffc1926@web.de>
+ <e2e4a4e9-55db-403c-902d-fd8af3aea05c@web.de>
+ <6fa51a62-5dc1-4865-9f79-eaf7d65189ab@web.de>
+ <99a99e5c-4fe4-413a-9281-363e280716b8@web.de>
+ <7ef4a566-6d55-4924-b02c-38137c15791a@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <7ef4a566-6d55-4924-b02c-38137c15791a@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:A8aQl2hlVl3Fok4/HoXU8dal7Tj8z1lJdMxlAC2F0pxuXbywHpe
+ SYbcWUeZbaLXXQP5GAbDvMKCGyl9sXglAL1BDRakcwZtCO2jU+6IAMtbixas4olVhYrNTR2
+ mA5EbD9dBJcsFz+E/wZDvuNfhk93tR1DGgXhAR8Pr6X//MeT4pWvs6OdLd9N29RH9F9uLZb
+ GJ6DaPtB/FmmMW5WCzeJw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Y7m5mwNobNY=;/CRozLHKqOSdUmj+rIwZlUuqH3I
+ IBFzn2t9NJ6HYZ4VUhZOEHxJ+esOzKy4j95IhdX90LTZQJSUDhbiPOyVTSsrrkV9+iOYWFpnB
+ 7CI7arYBaNMm1tnG+HEHqNj9h4uxvHBvxcmMd3zWrYLCstGBnWogaBIJW3vPB2pjPVX/3pb+L
+ zW3ZkPwhkyD2C7D8poeOxmH6KFxH/QBOSntGY94s9gbhCRjn+2fpYLd8FQGOjngkneaxYvKAB
+ krxpqwAeeo2KELTaZFxGVa0qyDE2OPabPn2T4lCGyeuqKea5pjJVA98mtKaPTVTIjSw78kxhh
+ WDU/9CCNnLAXxhBzkWwAtC4TqT1sypk9Iy89GDMN6Mp9FytOZpL0sOWeFaP49z8pk5jZ3EiCC
+ dCYISfbxmqUDscodCVlowCK7pcE4v1fpimYcGkEQp524SYzZGMCEBzjkmx76j50fqB+/e05KY
+ sY0jJv10vkfzkaM+NG0ar/PtDuXVyBIxMCTKNfK66qa8NiTcVavWG1utPKx6srE2zcTCHrMWV
+ f7HReW066wtt2oBDbDsBJ0zf7TtfnpqYFKb+SqnZ9YdmXd3spfgLU5azP4eJ2/OCBPLp561Ms
+ eR7oLpmnKH8DNP41BR40Aue4PY2toNUmiwmVHwoa9I2zthzkjQiOG1m8UnB3Ibtnv/04Rs+ch
+ auDL2wtYskRyG9AoWrI36tkbvAbT+e86DDIJ34TjfhEQSBe+fVdgIBgl65PCXYuRMUSTvNB7y
+ phW5D3FDE+JK9XW3zyQaSVfRacZmMOc3SDBDddSOYTQGJP14fhOteU7TtHidvERD2heGqebNz
+ eVJudXnbu86oFh4htHY9/rFVPZTK2PC7qUoCz+LfP4XAM=
 
-We have recently noticed that our CI does not always notice variables
-that may be used uninitialized. While it is expected that compiler
-warnings aren't perfect, this one was a bit puzzling because it was
-rather obvious that the variable can be uninitialized.
+Am 06.06.24 um 11:48 schrieb Phillip Wood:
+> On 05/06/2024 09:38, Ren=C3=A9 Scharfe wrote:
+>> +diff.trustExitCode::
+>> +=C2=A0=C2=A0=C2=A0 If this boolean value is set to true then the `diff=
+.external`
+>> +=C2=A0=C2=A0=C2=A0 command is expected to return exit code 1 if it fin=
+ds
+>> +=C2=A0=C2=A0=C2=A0 significant changes and 0 if it doesn't, like diff(=
+1).=C2=A0 If it's
+>> +=C2=A0=C2=A0=C2=A0 false then the `diff.external` command is expected =
+to always
+>> +=C2=A0=C2=A0=C2=A0 return exit code 0.=C2=A0 Defaults to false.
+>
+> I wonder if "significant changes" is a bit ambiguous and as Johannes
+> said it would be good to mention that other exit codes are errors.
+> Perhaps
+>
+> =C2=A0=C2=A0=C2=A0=C2=A0If this boolean value is set to true then the `d=
+iff.external`
+> =C2=A0=C2=A0=C2=A0=C2=A0command is expected to return exit code 0 if it =
+considers the
+> =C2=A0=C2=A0=C2=A0=C2=A0input files to be equal and 1 if they are not, l=
+ike diff(1).
+> =C2=A0=C2=A0=C2=A0=C2=A0If it is false then the `diff.external` command =
+is expected to
+> =C2=A0=C2=A0=C2=A0=C2=A0always return exit code 0. In both cases any oth=
+er exit code
+> =C2=A0=C2=A0=C2=A0=C2=A0is considered to be an error. Defaults to false.
 
-Many compiler warnings unfortunately depend on the optimization level
-used by the compiler. While `-O0` for example will disable a lot of
-warnings altogether because optimization passes go away, `-O2`, which is
-our default optimization level used in CI, may optimize specific code
-away or even double down on undefined behaviour. Interestingly, this
-specific instance that triggered the investigation does get noted by GCC
-when using `-Og`.
+The first part looks like an obvious improvement.  Stating that
+unexpected exit codes are errors looks tautological to me, though.
+Perhaps mentioning that git diff stops at that point adds would be
+useful?  Or perhaps a tad of redundancy is just what's needed here?
 
-While we could adapt all jobs to compile with `-Og` now, that would
-potentially mask other warnings that only get diagnosed with `-O2`.
-Instead, adapt the "linux-gcc-default" job to compile with `-Og`. This
-job is chosen because it uses the "ubuntu:latest" image and should thus
-have a comparatively recent compiler toolchain, and because we have
-other jobs that use "ubuntu:latest" so that we do not lose coverage for
-warnings diagnosed only on `-O2` level.
+>
+>
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 strvec_push(&cmd.args, pgm->cmd);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 strvec_push(&cmd.args, name);
+>> @@ -4406,7 +4424,10 @@ static void run_external_diff(const struct exter=
+nal_diff *pgm,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 diff_free_filespec_data(one);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 diff_free_filespec_data(two);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cmd.use_shell =3D 1;
+>
+> Should we be redirecting stdout to /dev/null here when the user
+> passes --quiet?
 
-To make it easier to set up the optimization level in our CI, add
-support in our Makefile to specify the level via an environment
-variable.
+Oh, yes.  We didn't even start the program before, but with the
+patch it becomes necessary.  Good find!
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- ci/run-build-and-tests.sh | 9 +++++++++
- 1 file changed, 9 insertions(+)
+>
+>> -=C2=A0=C2=A0=C2=A0 if (run_command(&cmd))
+>> +=C2=A0=C2=A0=C2=A0 rc =3D run_command(&cmd);
+>> +=C2=A0=C2=A0=C2=A0 if ((!pgm->trust_exit_code && !rc) || (pgm->trust_e=
+xit_code && rc =3D=3D 1))
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 o->found_changes =3D 1;
+>> +=C2=A0=C2=A0=C2=A0 else if (!pgm->trust_exit_code || rc)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 die(_("external =
+diff died, stopping at %s"), name);
+>
+> This is a bit fiddly because we may, or may not trust the exit code
+> but the logic here looks good.
 
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 2aaaf40f94..e5fbe7f531 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -13,6 +13,15 @@ esac
- run_tests=3Dt
-=20
- case "$jobname" in
-+linux-gcc-default)
-+	# Warnings generated by compilers are unfortunately specific to the
-+	# optimization level. With `-O0`, many warnings won't be shown at all,
-+	# whereas the optimizations performed by our default optimization level
-+	# `-O2` will mask others. We thus use `-Og` here just so that we have
-+	# at least one job with a different optimization level so that we can
-+	# overall surface more warnings.
-+	export CFLAGS_APPEND=3D-Og
-+	;;
- linux-gcc)
- 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- 	;;
---=20
-2.45.2.436.gcd77e87115.dirty
+Yeah, it's not as clear as it could be.  One reason is that it avoids
+redundancy at the action side and the other is adherence to the rule of
+not explicitly comparing to zero.  We could enumerate all cases:
 
+	if (!pgm->trust_exit_code && rc =3D=3D 0)
+		o->found_changes =3D 1;
+	else if (pgm->trust_exit_code && rc =3D=3D 0)
+		; /* nothing */
+	else if (pgm->trust_exit_code && rc =3D=3D 1)
+		o->found_changes =3D 1;
+	else
+		die(_("external diff died, stopping at %s"), name);
 
---T88NZkYpO5l/UCS3
-Content-Type: application/pgp-signature; name="signature.asc"
+Or avoid redundancy in the conditions:
 
------BEGIN PGP SIGNATURE-----
+	if (pgm->trust_exit_code) {
+		if (rc =3D=3D 1)
+			o->found_changes =3D 1;
+		else if (rc !=3D 0)
+			die(_("external diff died, stopping at %s"), name);
+	} else {
+		if (rc =3D=3D 0)
+			o->found_changes =3D 1;
+		else
+			die(_("external diff died, stopping at %s"), name);
+	}
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZirNQACgkQVbJhu7ck
-PpT2Lg/+MdWYBCsLj6QasXBcGaYEwUmn7BshBrok9yZNSQkhiZJJoP88hhA8PaAb
-Uxgbwc9YnnBAHdv36vk9ttpaxZKpwaK3OL4HzJAp4s1YB75t6pMMBfHiUNO+rFoI
-4d/CCXNDHo4LY4eA+n5cpYDj7LFLF4/CZM3dAUrG5hUy5rcq3uv9kiQVyLoaob8P
-C6H4B+K7pQuiUEaBLFhFWeNGGFontWDLkE4qkhXcgl7qCryGOxc+Ko0Kh9hv/OWX
-QDv0BHgViN2Dm7tIanhaA8Xj5yvqjAas+c6vBHRP5U7HMfAkQjy/8w2dXFzez7kR
-po+pjSJX1UGGsn69ihuwFTycIGL61hcpYed+MrYNPh5ys0KCgfWbqTlN5VuenNlp
-fMbQ87P+l6Ugp2Y0s6GwoT/MG7nCf1fI563Tg4gEs4CP51HftL9R7PPElWIMe/mp
-cfOaU10v9oCtGLpYAjt+IVf0+G+Yb41sFEwz9sp2hm5KHkypXazjXTfM+eDLfY6H
-Pn9LjwxikrlmoR67rL+XalcBacjrsJ3JN8c2N+nqAzsdHRYc57eoCOFejvPB3OiO
-lRltj1zo7Z8eSD3PaGi6V4/V/o7V56g1S5wZiD/ug9W0QWywc5hKNS2hXr9MQyNs
-PscrozmikQev66Era5jUNV8JvdLVu2xXmOsBshij02Z137Yryr0=
-=xu5b
------END PGP SIGNATURE-----
+We should not get into bit twiddling, though:
 
---T88NZkYpO5l/UCS3--
+	o->found_changes |=3D rc =3D=3D pgm->trust_exit_code;
+	if ((unsigned)rc > pgm->trust_exit_code)
+		die(_("external diff died, stopping at %s"), name);
+
+>
+>> -check_external_exit_code=C2=A0=C2=A0 1 0 --exit-code
+>> -check_external_exit_code=C2=A0=C2=A0 1 0 --quiet
+>> -check_external_exit_code 128 1 --exit-code
+>> -check_external_exit_code=C2=A0=C2=A0 1 1 --quiet # we don't even call =
+the program
+>> +check_external_exit_code=C2=A0=C2=A0 1 0 off --exit-code
+>> +check_external_exit_code=C2=A0=C2=A0 1 0 off --quiet
+>> +check_external_exit_code 128 1 off --exit-code
+>> +check_external_exit_code=C2=A0=C2=A0 1 1 off --quiet # we don't even c=
+all the program
+>> +
+>> +check_external_exit_code=C2=A0=C2=A0 0 0 on --exit-code
+>> +check_external_exit_code=C2=A0=C2=A0 0 0 on --quiet
+>> +check_external_exit_code=C2=A0=C2=A0 1 1 on --exit-code
+>> +check_external_exit_code=C2=A0=C2=A0 1 1 on --quiet
+>> +check_external_exit_code 128 2 on --exit-code
+>> +check_external_exit_code 128 2 on --quiet
+>
+> It would be nice if the tests checked that --quiet does not produce
+> any output on stdout.
+
+Right, we need this after unlocking external diff execution with
+=2D-quiet.
+
+Ren=C3=A9
