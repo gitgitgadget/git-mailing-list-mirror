@@ -1,65 +1,65 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293EA19AA7B
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 13:33:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B3219AD45
+	for <git@vger.kernel.org>; Fri,  7 Jun 2024 13:33:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717767195; cv=none; b=i5aENjVbDagudjnZhtnzmfcvLEFfeDavypv2OWIVnLojnOmtm7oT8LRRHtuO+kOUtMDjjFJNWF12+EmOj/gTcTszpoLh70XpSDi/RHvPXdnymqvtqnYDrZF3tihL91MPAkqG+3JcKvXutM+i2Rx3LRwIIo3iJLxRlGQXbBtcXAE=
+	t=1717767196; cv=none; b=Y97yLwy+2MCEJ0sCZs0ELFjdmWIwfoj+rD6ngWQY1NJcksqe8/Ki3nLa3J45Qp0Xh2uApkrwXbHmEoNWAC3uY4tVdz0HIsDZcPKt65n29qjwjRAJfA/f9Zdx0zffOinLMi34WE9OZQr546Bj/1+xD5Ku9679a0Kyx4d5+8+1iBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717767195; c=relaxed/simple;
-	bh=O2+/Q+Pfe5DyK11g9zZwE8t13U2HhLgOEVhqVIWKfbE=;
+	s=arc-20240116; t=1717767196; c=relaxed/simple;
+	bh=tccQa9apapwPadVEimKtQhpBVPCWKWR/m8xEkXqMkyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHV6zAgXtvMvwk9/XzZWoV/SunAnaP+ztX9gE/WA7VEPmMXuytY2qLmn2sXxz2/J62rA1DlKbDwpmT1gACiimMf3MDW2l9rpe6JBhNRGwl1vPu5hU046XRqCRT2aDx8kA+iUfc/tKh1/nfr5+IeTsBgtite0RymqoUWsw5765/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XRRJWQSs; arc=none smtp.client-ip=209.85.208.179
+	 MIME-Version; b=V3/Crv3+ZOfaIjMf7SZg+uj7OOriUdN7cZo3+ZXGUCU05ojin/Fn6pOh9Q719e6WlYXlQ3ATD5uaAsbdzfAh5LMgd1AbzY/tBb2sC0u9w99vdjlEGFBm/yuUWMjpnTkBjGEMa8GqOxuahfI4ejCG7pb4HM7SIv8jzxzd6YgXXsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fvMoeTFn; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XRRJWQSs"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2eabd22d404so22433491fa.2
-        for <git@vger.kernel.org>; Fri, 07 Jun 2024 06:33:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fvMoeTFn"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-57864327f6eso2528273a12.1
+        for <git@vger.kernel.org>; Fri, 07 Jun 2024 06:33:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717767191; x=1718371991; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1717767192; x=1718371992; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nI8zy/rRUgerxKZmHDTJz4Abr5iixEv9BJDLAsh9Fec=;
-        b=XRRJWQSsLBoPUCxTXw6KcAIl5GHl78zAGVPhA2qjHqDfo4J1ZLu8p9Apy1V5loOCjt
-         82oNVUEC4FhUv34cE+Plo19x+Qavf5EsqPh8Y0xFDPgS8+EpivMEJw+Y1B1J68OGLRmw
-         qr+lVLkW6CJlmQYMUHpBuofaIhzI93ELmQYGhI4h6e4aNJaEZUqM5md+7MBKsmDOi1HR
-         +LKEYaSqEo2XW00H84ZERgVWMdGfSOVWlm+tdvEDGsK7/dLmPTjlvHihzI7zL0UOGrJV
-         Ycvb1K18vBP2CgREmPszHZ9iYftEWZ8k6morrvLfA8boOyEXsrlNotSXE6VhB22W1ZLb
-         q/wg==
+        bh=nFcj+mdknZOgGisB0w6Lt0rRxZc3ODf2cQ1u0SvmRjM=;
+        b=fvMoeTFnv4gFEolVQcmDJiTnCM4VnEs7MLl1f6GP08HqTecDNE4ewxtWaGnK6frHDK
+         tILzDVIfdOYHWjFuv8AioxgorLUN7ssooEOmB+VXNNqRk57cw3X7GFvR3iY0up14xARi
+         +VMGUKY29rPk5Edq50dfbAYQH4cZOc34K0U//9L7Hn6vrYnlbHCKi772jr5V7zHCTu8T
+         v/YRCukrMn84zEYtxkf0nSL8mNJ81EuvzIEM1dzVH7X7BiJR7ckvIgN5qbfo0pC0jpsM
+         B9ILwhiCgU/z+hlc41mRovUy69p5/SLTmJmHKykMhzZO3vMgcTZ81ZFVVnNaRPajRJps
+         KWqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717767191; x=1718371991;
+        d=1e100.net; s=20230601; t=1717767192; x=1718371992;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nI8zy/rRUgerxKZmHDTJz4Abr5iixEv9BJDLAsh9Fec=;
-        b=hF/xL5oldV/GuNMFzY/tbvu9JybORuEssW55N+RFPmbX9yT0LZdNiIdleQkeRug4xy
-         iNpssge/Bhu6C42/LY81hJtAYRZ/yINuaJViwCWbUl+e0yK2AngnMswdlRRfLwUNN1Id
-         2o2dqVjFRRthuSZKsXYSfTj4+e9WT2yCxFJwuuxDiKXOF72e7WDx33wpW2nP1ooB3kAq
-         fUYcAwxxt02efCdV1eLDxFgYsPG/CB7sr2IZsEL6GW164bcbDLub3N524jebTygq8T67
-         vnTYVW71DxIEzz53jv75ZgBi+SudBVVtXwSPs1e5Rq03JNcTeACh8O462WJyzA+c/QbR
-         650A==
-X-Gm-Message-State: AOJu0YxoKykqGvAtZEKHmj5r0nvSd4d/D68HMCoJqcQu9y1TLIM7EUcC
-	5KU1CJ2cF9jY0ITXTPKdIX4CXeLA7zRgsjmjY7PT1/3TcF6L8hxR
-X-Google-Smtp-Source: AGHT+IED6m3Gc7bbaGI7Qo9chjkjmCAferv65KxsUFX3NmG5OOdD8t03+phNb+RL/PBdcxQhIoK7Vg==
-X-Received: by 2002:a2e:a16f:0:b0:2ea:e26d:c9b5 with SMTP id 38308e7fff4ca-2eae26dca5amr9717931fa.30.1717767190962;
-        Fri, 07 Jun 2024 06:33:10 -0700 (PDT)
+        bh=nFcj+mdknZOgGisB0w6Lt0rRxZc3ODf2cQ1u0SvmRjM=;
+        b=irv/BBAGbfSa4jJES1mwW+64ZF0hlcSb4M275GcwwVdAE8GYZS+1KnEC7AiPajYtD2
+         1XFx2csZ6FRDILHNhNoc44n6oF3aWOPvAhv1IEVxzKokbDLHjtALcgj9lOjQd+FWfx0n
+         NHRIGTGSyZ2uW2jxyRZyxFq/xdadxqngNW94W3VDrBL6Tjj34PUmkxKIJn34nBnBUAaP
+         YMBwWqmXget2psfKt25sZU1Cfp6ekDyGqNTqVT3e7vMm3S6JPmaRqWhbKlEvD1v6+ah0
+         KjZhlHbvVGY4oMwbO2O3YMpbw+gH2yNrWaPKQXzNgq780EOpyJKJm5quNkSZO2zoz06g
+         s8tA==
+X-Gm-Message-State: AOJu0YwI7UlH0JDg4J/tuN/s/95vmOumdU/tFxFbCR1/L0AzW5mSKyYx
+	qffBjsDH0BXatY9pXMRfTI9bN3vIzZ9v5K0d/4dEJ0666aIZr5x2
+X-Google-Smtp-Source: AGHT+IEJI++86zx4Kp/8R0fdLyXl56Aq+qqPHGwH3JyObXLaWEdiXADTZfOEB1BLs3Sgmhu6S0jOAw==
+X-Received: by 2002:a50:8a82:0:b0:578:d846:fc0a with SMTP id 4fb4d7f45d1cf-57c4e412760mr2106232a12.20.1717767191869;
+        Fri, 07 Jun 2024 06:33:11 -0700 (PDT)
 Received: from localhost.localdomain ([185.223.147.210])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57aae2340f6sm2764167a12.90.2024.06.07.06.33.09
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57aae2340f6sm2764167a12.90.2024.06.07.06.33.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jun 2024 06:33:10 -0700 (PDT)
+        Fri, 07 Jun 2024 06:33:11 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org,
 	gitster@pobox.com,
 	ps@pks.im
-Subject: [PATCH v5 4/7] update-ref: add support for 'symref-delete' command
-Date: Fri,  7 Jun 2024 15:33:01 +0200
-Message-ID: <20240607133304.2333280-5-knayak@gitlab.com>
+Subject: [PATCH v5 5/7] update-ref: add support for 'symref-create' command
+Date: Fri,  7 Jun 2024 15:33:02 +0200
+Message-ID: <20240607133304.2333280-6-knayak@gitlab.com>
 X-Mailer: git-send-email 2.44.1
 In-Reply-To: <20240607133304.2333280-1-knayak@gitlab.com>
 References: <20240605102958.716432-1-knayak@gitlab.com>
@@ -74,340 +74,321 @@ Content-Transfer-Encoding: 8bit
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Add a new command 'symref-delete' to allow deletions of symbolic refs in
-a transaction via the '--stdin' mode of the 'git-update-ref' command.
-The 'symref-delete' command can, when given an <old-target>, delete the
-provided <ref> only when it points to <old-target>.
+Add 'symref-create' command to the '--stdin' mode 'git-update-ref' to
+allow creation of symbolic refs in a transaction. The 'symref-create'
+command takes in a <new-target>, which the created <ref> will point to.
 
-This command is only compatible with the 'no-deref' mode because we
-optionally want to check the 'old_target' of the ref being deleted.
-De-referencing a symbolic ref would provide a regular ref and we already
-have the 'delete' command for regular refs.
-
-While users can also use 'git symbolic-ref -d' to delete symbolic refs,
-the 'symref-delete' command in 'git-update-ref' allows users to do so
-within a transaction, which promises atomicity of the operation and can
-be batched with other commands.
-
-When no 'old_target' is provided it can also delete regular refs,
-similar to how the 'delete' command can delete symrefs when no 'old_oid'
-is provided.
+Also, support the 'core.prefersymlinkrefs' config, wherein if the config
+is set and the filesystem supports symlinks, we create the symbolic ref
+as a symlink. We fallback to creating a regular symref if creating the
+symlink is unsuccessful.
 
 Helped-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-update-ref.txt |  5 +++
- builtin/fetch.c                  |  4 +-
- builtin/receive-pack.c           |  3 +-
- builtin/update-ref.c             | 33 +++++++++++++++-
- refs.c                           | 14 +++++--
- refs.h                           |  4 +-
- t/t1400-update-ref.sh            | 68 ++++++++++++++++++++++++++++++++
- t/t1416-ref-transaction-hooks.sh | 19 ++++++++-
- 8 files changed, 140 insertions(+), 10 deletions(-)
+ Documentation/git-update-ref.txt |  6 +++
+ builtin/clone.c                  |  2 +-
+ builtin/update-ref.c             | 32 +++++++++++++++-
+ refs.c                           |  9 +++--
+ refs.h                           |  1 +
+ t/t0600-reffiles-backend.sh      | 32 ++++++++++++++++
+ t/t1400-update-ref.sh            | 65 ++++++++++++++++++++++++++++++++
+ t/t1416-ref-transaction-hooks.sh |  3 ++
+ t/t5605-clone-local.sh           |  2 +-
+ 9 files changed, 146 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
-index 9fe78b3501..16e02f6979 100644
+index 16e02f6979..364ef78af1 100644
 --- a/Documentation/git-update-ref.txt
 +++ b/Documentation/git-update-ref.txt
 @@ -65,6 +65,7 @@ performs all modifications together.  Specify commands of the form:
  	create SP <ref> SP <new-oid> LF
  	delete SP <ref> [SP <old-oid>] LF
  	verify SP <ref> [SP <old-oid>] LF
-+	symref-delete SP <ref> [SP <old-target>] LF
++	symref-create SP <ref> SP <new-target> LF
+ 	symref-delete SP <ref> [SP <old-target>] LF
  	symref-verify SP <ref> [SP <old-target>] LF
  	option SP <opt> LF
- 	start LF
-@@ -87,6 +88,7 @@ quoting:
+@@ -88,6 +89,7 @@ quoting:
  	create SP <ref> NUL <new-oid> NUL
  	delete SP <ref> NUL [<old-oid>] NUL
  	verify SP <ref> NUL [<old-oid>] NUL
-+	symref-delete SP <ref> [NUL <old-target>] NUL
++	symref-create SP <ref> NUL <new-target> NUL
+ 	symref-delete SP <ref> [NUL <old-target>] NUL
  	symref-verify SP <ref> [NUL <old-target>] NUL
  	option SP <opt> NUL
- 	start NUL
-@@ -119,6 +121,9 @@ verify::
+@@ -121,6 +123,10 @@ verify::
  	Verify <ref> against <old-oid> but do not change it.  If
  	<old-oid> is zero or missing, the ref must not exist.
  
-+symref-delete::
-+	Delete <ref> after verifying it exists with <old-target>, if given.
++symref-create:
++	Create symbolic ref <ref> with <new-target> after verifying
++	it does not exist.
 +
- symref-verify::
- 	Verify symbolic <ref> against <old-target> but do not change it.
- 	If <old-target> is missing, the ref must not exist.  Can only be
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 75255dc600..d63100e0d3 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1386,8 +1386,8 @@ static int prune_refs(struct display_state *display_state,
- 	if (!dry_run) {
- 		if (transaction) {
- 			for (ref = stale_refs; ref; ref = ref->next) {
--				result = ref_transaction_delete(transaction, ref->name, NULL, 0,
--								"fetch: prune", &err);
-+				result = ref_transaction_delete(transaction, ref->name, NULL,
-+								NULL, 0, "fetch: prune", &err);
- 				if (result)
- 					goto cleanup;
- 			}
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 01c1f04ece..0a30fac239 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1576,7 +1576,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 		if (ref_transaction_delete(transaction,
- 					   namespaced_name,
- 					   old_oid,
--					   0, "push", &err)) {
-+					   NULL, 0,
-+					   "push", &err)) {
- 			rp_error("%s", err.buf);
- 			ret = "failed to delete";
- 		} else {
+ symref-delete::
+ 	Delete <ref> after verifying it exists with <old-target>, if given.
+ 
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 23993b905b..6ddb3084e6 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -576,7 +576,7 @@ static void write_remote_refs(const struct ref *local_refs)
+ 		if (!r->peer_ref)
+ 			continue;
+ 		if (ref_transaction_create(t, r->peer_ref->name, &r->old_oid,
+-					   0, NULL, &err))
++					   NULL, 0, NULL, &err))
+ 			die("%s", err.buf);
+ 	}
+ 
 diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 50f5472160..0cb7eef3c6 100644
+index 0cb7eef3c6..9c40e94626 100644
 --- a/builtin/update-ref.c
 +++ b/builtin/update-ref.c
-@@ -293,7 +293,7 @@ static void parse_cmd_delete(struct ref_transaction *transaction,
+@@ -257,7 +257,7 @@ static void parse_cmd_create(struct ref_transaction *transaction,
+ 	if (*next != line_termination)
+ 		die("create %s: extra input: %s", refname, next);
  
- 	if (ref_transaction_delete(transaction, refname,
- 				   have_old ? &old_oid : NULL,
--				   update_flags, msg, &err))
-+				   NULL, update_flags, msg, &err))
+-	if (ref_transaction_create(transaction, refname, &new_oid,
++	if (ref_transaction_create(transaction, refname, &new_oid, NULL,
+ 				   update_flags | create_reflog_flag,
+ 				   msg, &err))
  		die("%s", err.buf);
- 
- 	update_flags = default_flags;
-@@ -301,6 +301,36 @@ static void parse_cmd_delete(struct ref_transaction *transaction,
+@@ -267,6 +267,35 @@ static void parse_cmd_create(struct ref_transaction *transaction,
  	strbuf_release(&err);
  }
  
 +
-+static void parse_cmd_symref_delete(struct ref_transaction *transaction,
++static void parse_cmd_symref_create(struct ref_transaction *transaction,
 +				    const char *next, const char *end)
 +{
 +	struct strbuf err = STRBUF_INIT;
-+	char *refname, *old_target;
-+
-+	if (!(update_flags & REF_NO_DEREF))
-+		die("symref-delete: cannot operate with deref mode");
++	char *refname, *new_target;
 +
 +	refname = parse_refname(&next);
 +	if (!refname)
-+		die("symref-delete: missing <ref>");
++		die("symref-create: missing <ref>");
 +
-+	old_target = parse_next_refname(&next);
++	new_target = parse_next_refname(&next);
++	if (!new_target)
++		die("symref-create %s: missing <new-target>", refname);
 +
 +	if (*next != line_termination)
-+		die("symref-delete %s: extra input: %s", refname, next);
++		die("symref-create %s: extra input: %s", refname, next);
 +
-+	if (ref_transaction_delete(transaction, refname, NULL,
-+				   old_target, update_flags, msg, &err))
++	if (ref_transaction_create(transaction, refname, NULL, new_target,
++				   update_flags | create_reflog_flag,
++				   msg, &err))
 +		die("%s", err.buf);
 +
 +	update_flags = default_flags;
 +	free(refname);
-+	free(old_target);
++	free(new_target);
 +	strbuf_release(&err);
 +}
 +
-+
- static void parse_cmd_verify(struct ref_transaction *transaction,
+ static void parse_cmd_delete(struct ref_transaction *transaction,
  			     const char *next, const char *end)
  {
-@@ -443,6 +473,7 @@ static const struct parse_cmd {
+@@ -473,6 +502,7 @@ static const struct parse_cmd {
  	{ "create",        parse_cmd_create,        2, UPDATE_REFS_OPEN },
  	{ "delete",        parse_cmd_delete,        2, UPDATE_REFS_OPEN },
  	{ "verify",        parse_cmd_verify,        2, UPDATE_REFS_OPEN },
-+	{ "symref-delete", parse_cmd_symref_delete, 2, UPDATE_REFS_OPEN },
++	{ "symref-create", parse_cmd_symref_create, 2, UPDATE_REFS_OPEN },
+ 	{ "symref-delete", parse_cmd_symref_delete, 2, UPDATE_REFS_OPEN },
  	{ "symref-verify", parse_cmd_symref_verify, 2, UPDATE_REFS_OPEN },
  	{ "option",        parse_cmd_option,        1, UPDATE_REFS_OPEN },
- 	{ "start",         parse_cmd_start,         0, UPDATE_REFS_STARTED },
 diff --git a/refs.c b/refs.c
-index cdc4d25557..01f3188a09 100644
+index 01f3188a09..8807e87e3c 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -950,7 +950,7 @@ int refs_delete_ref(struct ref_store *refs, const char *msg,
- 	transaction = ref_store_transaction_begin(refs, &err);
- 	if (!transaction ||
- 	    ref_transaction_delete(transaction, refname, old_oid,
--				   flags, msg, &err) ||
-+				   NULL, flags, msg, &err) ||
- 	    ref_transaction_commit(transaction, &err)) {
- 		error("%s", err.buf);
- 		ref_transaction_free(transaction);
-@@ -1283,14 +1283,20 @@ int ref_transaction_create(struct ref_transaction *transaction,
- int ref_transaction_delete(struct ref_transaction *transaction,
+@@ -1268,15 +1268,18 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ int ref_transaction_create(struct ref_transaction *transaction,
  			   const char *refname,
- 			   const struct object_id *old_oid,
--			   unsigned int flags, const char *msg,
-+			   const char *old_target,
-+			   unsigned int flags,
-+			   const char *msg,
+ 			   const struct object_id *new_oid,
++			   const char *new_target,
+ 			   unsigned int flags, const char *msg,
  			   struct strbuf *err)
  {
- 	if (old_oid && is_null_oid(old_oid))
- 		BUG("delete called with old_oid set to zeros");
-+	if (old_oid && old_target)
-+		BUG("delete called with both old_oid and old_target set");
-+	if (old_target && !(flags & REF_NO_DEREF))
-+		BUG("delete cannot operate on symrefs with deref mode");
- 	return ref_transaction_update(transaction, refname,
- 				      null_oid(), old_oid,
--				      NULL, NULL, flags,
-+				      NULL, old_target, flags,
+-	if (!new_oid || is_null_oid(new_oid)) {
+-		strbuf_addf(err, "'%s' has a null OID", refname);
++	if (new_oid && new_target)
++		BUG("create called with both new_oid and new_target set");
++	if ((!new_oid || is_null_oid(new_oid)) && !new_target) {
++		strbuf_addf(err, "'%s' has neither a valid OID nor a target", refname);
+ 		return 1;
+ 	}
+ 	return ref_transaction_update(transaction, refname, new_oid,
+-				      null_oid(), NULL, NULL, flags,
++				      null_oid(), new_target, NULL, flags,
  				      msg, err);
  }
  
-@@ -2599,7 +2605,7 @@ int refs_delete_refs(struct ref_store *refs, const char *logmsg,
- 
- 	for_each_string_list_item(item, refnames) {
- 		ret = ref_transaction_delete(transaction, item->string,
--					     NULL, flags, msg, &err);
-+					     NULL, NULL, flags, msg, &err);
- 		if (ret) {
- 			warning(_("could not delete reference %s: %s"),
- 				item->string, err.buf);
 diff --git a/refs.h b/refs.h
-index 906299351c..974cf4dd08 100644
+index 974cf4dd08..28e3bb8a42 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -722,7 +722,9 @@ int ref_transaction_create(struct ref_transaction *transaction,
- int ref_transaction_delete(struct ref_transaction *transaction,
+@@ -708,6 +708,7 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ int ref_transaction_create(struct ref_transaction *transaction,
  			   const char *refname,
- 			   const struct object_id *old_oid,
--			   unsigned int flags, const char *msg,
-+			   const char *old_target,
-+			   unsigned int flags,
-+			   const char *msg,
+ 			   const struct object_id *new_oid,
++			   const char *new_target,
+ 			   unsigned int flags, const char *msg,
  			   struct strbuf *err);
  
- /*
+diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
+index 92f570313d..b2a771ff2b 100755
+--- a/t/t0600-reffiles-backend.sh
++++ b/t/t0600-reffiles-backend.sh
+@@ -468,4 +468,36 @@ test_expect_success POSIXPERM 'git reflog expire honors core.sharedRepository' '
+ 	esac
+ '
+ 
++test_expect_success SYMLINKS 'symref transaction supports symlinks' '
++	test_when_finished "git symbolic-ref -d TEST_SYMREF_HEAD" &&
++	git update-ref refs/heads/new @ &&
++	test_config core.prefersymlinkrefs true &&
++	cat >stdin <<-EOF &&
++	start
++	symref-create TEST_SYMREF_HEAD refs/heads/new
++	prepare
++	commit
++	EOF
++	git update-ref --no-deref --stdin <stdin &&
++	test_path_is_symlink .git/TEST_SYMREF_HEAD &&
++	test "$(test_readlink .git/TEST_SYMREF_HEAD)" = refs/heads/new
++'
++
++test_expect_success 'symref transaction supports false symlink config' '
++	test_when_finished "git symbolic-ref -d TEST_SYMREF_HEAD" &&
++	git update-ref refs/heads/new @ &&
++	test_config core.prefersymlinkrefs false &&
++	cat >stdin <<-EOF &&
++	start
++	symref-create TEST_SYMREF_HEAD refs/heads/new
++	prepare
++	commit
++	EOF
++	git update-ref --no-deref --stdin <stdin &&
++	test_path_is_file .git/TEST_SYMREF_HEAD &&
++	git symbolic-ref TEST_SYMREF_HEAD >actual &&
++	echo refs/heads/new >expect &&
++	test_cmp expect actual
++'
++
+ test_done
 diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 52801be07d..9dbe28bd13 100755
+index 9dbe28bd13..253263320d 100755
 --- a/t/t1400-update-ref.sh
 +++ b/t/t1400-update-ref.sh
-@@ -1731,6 +1731,74 @@ do
- 		test_cmp expect actual
+@@ -1799,6 +1799,71 @@ do
+ 		git update-ref --stdin $type --no-deref <stdin
  	'
  
-+	test_expect_success "stdin $type symref-delete fails without --no-deref" '
-+		git symbolic-ref refs/heads/symref $a &&
-+		format_command $type "symref-delete refs/heads/symref" "$a" >stdin &&
-+		test_must_fail git update-ref --stdin $type <stdin 2>err &&
-+		grep "fatal: symref-delete: cannot operate with deref mode" err
-+	'
-+
-+	test_expect_success "stdin $type symref-delete fails with no ref" '
-+		format_command $type "symref-delete " >stdin &&
-+		test_must_fail git update-ref --stdin $type --no-deref <stdin 2>err &&
-+		grep "fatal: symref-delete: missing <ref>" err
-+	'
-+
-+	test_expect_success "stdin $type symref-delete fails deleting regular ref" '
-+		test_when_finished "git update-ref -d refs/heads/regularref" &&
-+		git update-ref refs/heads/regularref $a &&
-+		format_command $type "symref-delete refs/heads/regularref" "$a" >stdin &&
-+		test_must_fail git update-ref --stdin $type --no-deref <stdin 2>err &&
-+		grep "fatal: cannot lock ref ${SQ}refs/heads/regularref${SQ}: expected symref with target ${SQ}$a${SQ}: but is a regular ref" err
-+	'
-+
-+	test_expect_success "stdin $type symref-delete fails with too many arguments" '
-+		format_command $type "symref-delete refs/heads/symref" "$a" "$a" >stdin &&
++	test_expect_success "stdin $type symref-create fails with too many arguments" '
++		format_command $type "symref-create refs/heads/symref" "$a" "$a" >stdin &&
 +		test_must_fail git update-ref --stdin $type --no-deref <stdin 2>err &&
 +		if test "$type" = "-z"
 +		then
 +			grep "fatal: unknown command: $a" err
 +		else
-+			grep "fatal: symref-delete refs/heads/symref: extra input:  $a" err
++			grep "fatal: symref-create refs/heads/symref: extra input:  $a" err
 +		fi
 +	'
 +
-+	test_expect_success "stdin $type symref-delete fails with wrong old value" '
-+		format_command $type "symref-delete refs/heads/symref" "$m" >stdin &&
-+		test_must_fail git update-ref --stdin $type --no-deref <stdin 2>err &&
-+		grep "fatal: verifying symref target: ${SQ}refs/heads/symref${SQ}: is at $a but expected refs/heads/main" err &&
++	test_expect_success "stdin $type symref-create fails with no target" '
++		format_command $type "symref-create refs/heads/symref" >stdin &&
++		test_must_fail git update-ref --stdin $type --no-deref <stdin
++	'
++
++	test_expect_success "stdin $type symref-create fails with empty target" '
++		format_command $type "symref-create refs/heads/symref" "" >stdin &&
++		test_must_fail git update-ref --stdin $type --no-deref <stdin
++	'
++
++	test_expect_success "stdin $type symref-create works" '
++		test_when_finished "git symbolic-ref -d refs/heads/symref" &&
++		format_command $type "symref-create refs/heads/symref" "$a" >stdin &&
++		git update-ref --stdin $type --no-deref <stdin &&
 +		git symbolic-ref refs/heads/symref >expect &&
 +		echo $a >actual &&
 +		test_cmp expect actual
 +	'
 +
-+	test_expect_success "stdin $type symref-delete works with right old value" '
-+		format_command $type "symref-delete refs/heads/symref" "$a" >stdin &&
-+		git update-ref --stdin $type --no-deref <stdin &&
-+		test_must_fail git rev-parse --verify -q refs/heads/symref
++	test_expect_success "stdin $type symref-create works with --no-deref" '
++		test_when_finished "git symbolic-ref -d refs/heads/symref" &&
++		format_command $type "symref-create refs/heads/symref" "$a" &&
++		git update-ref --stdin $type <stdin 2>err
 +	'
 +
-+	test_expect_success "stdin $type symref-delete works with empty old value" '
-+		git symbolic-ref refs/heads/symref $a >stdin &&
-+		format_command $type "symref-delete refs/heads/symref" "" >stdin &&
++	test_expect_success "stdin $type create dangling symref ref works" '
++		test_when_finished "git symbolic-ref -d refs/heads/symref" &&
++		format_command $type "symref-create refs/heads/symref" "refs/heads/unkown" >stdin &&
 +		git update-ref --stdin $type --no-deref <stdin &&
-+		test_must_fail git rev-parse --verify -q $b
++		git symbolic-ref refs/heads/symref >expect &&
++		echo refs/heads/unkown >actual &&
++		test_cmp expect actual
 +	'
 +
-+	test_expect_success "stdin $type symref-delete succeeds for dangling reference" '
-+		test_must_fail git symbolic-ref refs/heads/nonexistent &&
-+		git symbolic-ref refs/heads/symref2 refs/heads/nonexistent &&
-+		format_command $type "symref-delete refs/heads/symref2" "refs/heads/nonexistent" >stdin &&
++	test_expect_success "stdin $type symref-create does not create reflogs by default" '
++		test_when_finished "git symbolic-ref -d refs/symref" &&
++		format_command $type "symref-create refs/symref" "$a" >stdin &&
 +		git update-ref --stdin $type --no-deref <stdin &&
-+		test_must_fail git symbolic-ref -d refs/heads/symref2
++		git symbolic-ref refs/symref >expect &&
++		echo $a >actual &&
++		test_cmp expect actual &&
++		test_must_fail git reflog exists refs/symref
 +	'
 +
-+	test_expect_success "stdin $type symref-delete deletes regular ref without target" '
-+		git update-ref refs/heads/regularref $a &&
-+		format_command $type "symref-delete refs/heads/regularref" >stdin &&
-+		git update-ref --stdin $type --no-deref <stdin
++	test_expect_success "stdin $type symref-create reflogs with --create-reflog" '
++		test_when_finished "git symbolic-ref -d refs/heads/symref" &&
++		format_command $type "symref-create refs/heads/symref" "$a" >stdin &&
++		git update-ref --create-reflog --stdin $type --no-deref <stdin &&
++		git symbolic-ref refs/heads/symref >expect &&
++		echo $a >actual &&
++		test_cmp expect actual &&
++		git reflog exists refs/heads/symref
 +	'
 +
  done
  
  test_done
 diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
-index fd58b902f4..ccde1b944b 100755
+index ccde1b944b..ff77dcca6b 100755
 --- a/t/t1416-ref-transaction-hooks.sh
 +++ b/t/t1416-ref-transaction-hooks.sh
-@@ -162,6 +162,7 @@ test_expect_success 'hook gets all queued symref updates' '
- 
- 	git update-ref refs/heads/branch $POST_OID &&
- 	git symbolic-ref refs/heads/symref refs/heads/main &&
-+	git symbolic-ref refs/heads/symrefd refs/heads/main &&
- 
- 	test_hook reference-transaction <<-\EOF &&
- 	echo "$*" >>actual
-@@ -171,16 +172,32 @@ test_expect_success 'hook gets all queued symref updates' '
- 	done >>actual
- 	EOF
- 
--	cat >expect <<-EOF &&
-+	# In the files backend, "delete" also triggers an additional transaction
-+	# update on the packed-refs backend, which constitutes additional reflog
-+	# entries.
-+	if test_have_prereq REFFILES
-+	then
-+		cat >expect <<-EOF
-+		aborted
-+		$ZERO_OID $ZERO_OID refs/heads/symrefd
-+		EOF
-+	else
-+		>expect
-+	fi &&
-+
-+	cat >>expect <<-EOF &&
+@@ -189,15 +189,18 @@ test_expect_success 'hook gets all queued symref updates' '
  	prepared
  	ref:refs/heads/main $ZERO_OID refs/heads/symref
-+	ref:refs/heads/main $ZERO_OID refs/heads/symrefd
+ 	ref:refs/heads/main $ZERO_OID refs/heads/symrefd
++	$ZERO_OID ref:refs/heads/main refs/heads/symrefc
  	committed
  	ref:refs/heads/main $ZERO_OID refs/heads/symref
-+	ref:refs/heads/main $ZERO_OID refs/heads/symrefd
+ 	ref:refs/heads/main $ZERO_OID refs/heads/symrefd
++	$ZERO_OID ref:refs/heads/main refs/heads/symrefc
  	EOF
  
  	git update-ref --no-deref --stdin <<-EOF &&
  	start
  	symref-verify refs/heads/symref refs/heads/main
-+	symref-delete refs/heads/symrefd refs/heads/main
+ 	symref-delete refs/heads/symrefd refs/heads/main
++	symref-create refs/heads/symrefc refs/heads/main
  	prepare
  	commit
  	EOF
+diff --git a/t/t5605-clone-local.sh b/t/t5605-clone-local.sh
+index a3055869bc..339d8c786f 100755
+--- a/t/t5605-clone-local.sh
++++ b/t/t5605-clone-local.sh
+@@ -163,7 +163,7 @@ test_expect_success REFFILES 'local clone from repo with corrupt refs fails grac
+ 	echo a >corrupt/.git/refs/heads/topic &&
+ 
+ 	test_must_fail git clone corrupt working 2>err &&
+-	grep "has a null OID" err
++	grep "has neither a valid OID nor a target" err
+ '
+ 
+ test_done
 -- 
 2.43.GIT
 
