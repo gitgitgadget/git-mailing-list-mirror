@@ -1,66 +1,66 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AC41E495
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 21:41:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C609F14EC4F
+	for <git@vger.kernel.org>; Fri,  7 Jun 2024 21:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717796472; cv=none; b=WZCKxNyxiVxbWmw7vlmUlM1iwVCK1ksKTXpNEv/N/aOXReBvtkfsHRIf4ABmrzCW+VwWwhLivqfjai1maRwK7p/jASNmGP7vpw0giK79tVpuHKjf3/hdZcwcwjs6tTTLmPEjEJ8mAl5V+EiN80V5w3C1d0xinAhlouVV8pxeUzo=
+	t=1717796665; cv=none; b=luJljMQkMx/jbJjmIh1zAbLGLxs/xVm0R2B1MJhXQe6wJwiDlEYpq1qBCP+ITjEUQ7O6xo70dILms07inyMIVWgIP8USFh8yxysgZp4KoQy4fhMdUTIjo5+jqYg31VxZ3PuU4iaqPlnOoxb12XpI1KeMAGx7GoYlTCS1DjudbaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717796472; c=relaxed/simple;
-	bh=+SvggxI3pFtRkW1cXdl88CJ+ihZyDMjQcGalN+kROBQ=;
+	s=arc-20240116; t=1717796665; c=relaxed/simple;
+	bh=L6SUh80TGRbAJ9/pOS1oFPdA0Q//SHqWawK2Rh6KlqE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kRj2yJ7Bc2QjTmmA1F4yaKJeNp6Xorqey9kf0RIyYWxT51MdItT/9mDW9kGGrkNiDyVWay5SZanfoy3rlYk/OU3g8HrWzkYIssCOJe73agB5t/f5tMGGCxMxcr53c50QdLLDDFZgEubwfvZXGCtVVsxeJc+/8h4P0mexFjlszQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=TreFzLLl; arc=none smtp.client-ip=209.85.219.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=ONVwwsBKHv1MMtQhCD++bzwKRBlAxG6iy4QdHXF0eD+lP45EYOaUNEjljISDpjpkeh3BRZdaXeYQNuegIbwhWriyLb+j9qmOXuOWa5RERd1x1sbOLOkWva0sgtErRMkpf8BSoeczOE7tQ1JlEHzd2qMonsF2sVr9dwuQjCZyS70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=cP7hQ6aZ; arc=none smtp.client-ip=209.85.160.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="TreFzLLl"
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dfa7faffa6cso3023182276.0
-        for <git@vger.kernel.org>; Fri, 07 Jun 2024 14:41:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="cP7hQ6aZ"
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-43fdb797ee2so14805001cf.3
+        for <git@vger.kernel.org>; Fri, 07 Jun 2024 14:44:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717796469; x=1718401269; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717796663; x=1718401463; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=REPE9pPHrDDTyyxlDiUlscsuQuyXcg6kB3xPce67f9Q=;
-        b=TreFzLLluSDd44wQ329FEhhLp1/XTiz0BB/eSgPPLJjc0eecImal9OHWBcolTngxYW
-         sWqv3yM48nQxIfTKriW1Cd1i1aopNiQ69zC6IQ2w1MttuNO2dMT9TLwjuWCcf2L84lbA
-         CH8yfRUaLNIqwbPFJMDfT9xRs0AI2q8163a38KLrbaKO+Ow/LyF/I4NDpQ3K4PesMswM
-         8fokvKFCLPz/n7VIEF2lIOZCUMakJVAh0H9Peu8BhTXHdmd8v2m6m/ttSmfw7Vr0WmT2
-         qEobLylCXIa20JdS+ArdNtPw4UGVIA+O9GXuLRrnY3aWAmoobDdRuB/mJD8k0tKjco5F
-         3Z2A==
+        bh=UhIsXnpKLsNZbbExCBKZX/O1ZXQ8j7QiaryV+b1DYVQ=;
+        b=cP7hQ6aZlccyNBN2eRoCi6XgUwQiq9vfoM1Z+vSLK7ivSRBvdryP/ZqemLvqnY2220
+         1TH4REVl3ZhPsPhnN+HEt/ukgHfemqkXsotMDxLz5+281yqfy7FROKGNGYYmNzuAPQ/Q
+         Xlwvp5SVsMOrvGmgdz1//uDmXdGr3mAAuD/yWrsmc4KWWO0ZqTWBK0mTq1bxq1aF4/F+
+         9xtSl7kG38AOE9zfWMrIujYPzTwiSPkxGLrwok34JNk4Ir0CnBsBLKuY1JOp6xU9ds8Q
+         nFs48IVKd67sh8v9E43RF5tVcK4R1Aw1h87bCU9nri4U7LgIO012fWzr7XH7FLKtXWek
+         5wgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717796469; x=1718401269;
+        d=1e100.net; s=20230601; t=1717796663; x=1718401463;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=REPE9pPHrDDTyyxlDiUlscsuQuyXcg6kB3xPce67f9Q=;
-        b=YEnSQgtSX7dE2kYjbmbwl23OFdgTHmKBrJOSgp04NUzwjCu47g5xgp2Ayh/YcCtj/g
-         YNbReoagNZqZ145eRvFBq4pKNWxWKEVSIbrbS58by0JvJY/QiGAcESAWMclILTKssCHw
-         vsS5zMF3X2xeAXlqMQVLZwDoyzmMcc9FmClNi/gyRNmMlakhGhD4bweLRJCkWwMIUvx5
-         +zcgrCK2CsQehvr0xzNKvf3ym9r1b+1mMALDQ5Q0ue5vrrlDBoTYwQA8G/MnVVFfy7xn
-         1KGk6vGvlRH5ZfgAdHeWiNkhbdFsuBu8iypuMD5ik5oZWFNUrNqk5gX4M9q8hMMHEuXT
-         KjQw==
-X-Gm-Message-State: AOJu0Yy07TeJdQKB29AsD0rESnL8ysjoJMU2WzZP8PIBPm1a5ykFLeJi
-	nO2CG8Lg68ljgeFI8w12QZ+hPatjyGA8x8x7o9MLJqTyUnFpOcQ7xFF7YWpdShZQ3tHFIN5UKEO
-	5kyc=
-X-Google-Smtp-Source: AGHT+IFHIiRMf9YvcftXcBYHW5GLOZvzpr0sDXsY2ZFSLfqxYorHVDOd+60Gw90E2dBksOIGyPoizw==
-X-Received: by 2002:a25:ec0a:0:b0:dfa:6c3b:ec03 with SMTP id 3f1490d57ef6-dfaf65927f4mr3879604276.5.1717796467876;
-        Fri, 07 Jun 2024 14:41:07 -0700 (PDT)
+        bh=UhIsXnpKLsNZbbExCBKZX/O1ZXQ8j7QiaryV+b1DYVQ=;
+        b=XggLWgzUyqC8WAC1ZjpWhB7Cgo7LnUB47XtQN0U8QmzL7BP94x61rNQBKnhpo5mToB
+         qz9ZSY8VeYtkoepZx2DD2IpzyfOibDbf3QXUF2brkZWiSxxldOiXSpisxxeIYsIIbKAc
+         oaFMWm8wDkV1ESONzziyrJtDt7a2UIZZDL6rtLneGSmKzMejZgVER+j0kJTP+o9MzHd9
+         aGwprbxnzNnaOwKxI2ctLwA9mRz19iGCMRKuR1WfnQ+uEwiixpQxlxuL2cXiHHIFTRnN
+         wARKDqm5WCghBI55crfPs4aGq68URRUz8JO4haEYJq3W5BzPot1OStBaUXtQkNNgc2ZD
+         mFCg==
+X-Gm-Message-State: AOJu0YxounPm/+texYWdJ5KD1st0BnvPeucCpc8Ns6Dxeu6zYpiENLku
+	RFyIPxZAKwaig4+NK418yksfhPeXVfwNrXB0n7HaMLUUnFtjsb+bO5pvcNn8NKZg0wVaq2SeRjj
+	gWgk=
+X-Google-Smtp-Source: AGHT+IFWuxFuRRLbilEfT6LYkdosnll0yfco02X7NwMPUH1dPr7lfyPDImr/PoZidWadrCwd9506oQ==
+X-Received: by 2002:a05:622a:1314:b0:43d:9d93:f601 with SMTP id d75a77b69052e-44041c7efa6mr51195861cf.56.1717796662659;
+        Fri, 07 Jun 2024 14:44:22 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44038aa38e6sm15901381cf.44.2024.06.07.14.41.07
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44038b59429sm15507421cf.80.2024.06.07.14.44.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jun 2024 14:41:07 -0700 (PDT)
-Date: Fri, 7 Jun 2024 17:41:06 -0400
+        Fri, 07 Jun 2024 14:44:22 -0700 (PDT)
+Date: Fri, 7 Jun 2024 17:44:21 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/2] commit-graph.c: remove temporary graph layers on exit
-Message-ID: <ZmN+crXyZOze122U@nand.local>
+Subject: Re: [PATCH 2/2] server-info.c: remove temporary info files on exit
+Message-ID: <ZmN/NZlriT3gsw7p@nand.local>
 References: <cover.1717712358.git.me@ttaylorr.com>
- <25324fea5b7c7f748d7f4e1e40299c0af04006e8.1717712358.git.me@ttaylorr.com>
- <xmqqa5jwg1aj.fsf@gitster.g>
+ <2d5a0536af1a6d45835622e2c020266079fa0873.1717712358.git.me@ttaylorr.com>
+ <xmqqfrtog2rd.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,35 +69,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqa5jwg1aj.fsf@gitster.g>
+In-Reply-To: <xmqqfrtog2rd.fsf@gitster.g>
 
-On Fri, Jun 07, 2024 at 09:33:56AM -0700, Junio C Hamano wrote:
+On Fri, Jun 07, 2024 at 09:02:14AM -0700, Junio C Hamano wrote:
 > Taylor Blau <me@ttaylorr.com> writes:
 >
-> > @@ -2133,8 +2132,6 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
-> >  		char *final_graph_name;
-> >  		int result;
+> > @@ -121,27 +120,22 @@ static int update_info_file(char *path,
+> >  	}
 > >
-> > -		close(fd);
-> > -
-> >  		if (!chainf) {
-> >  			error(_("unable to open commit-graph chain file"));
-> >  			return -1;
-> > @@ -2169,7 +2166,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
-> >  		free(ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 1]);
-> >  		ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 1] = final_graph_name;
-> >
-> > -		result = rename(ctx->graph_name, final_graph_name);
-> > +		result = rename_tempfile(&graph_layer, final_graph_name);
+> >  	uic.cur_fp = NULL;
+> > -	if (fclose(to_close))
+> > -		goto out;
 >
-> Before this rename, after the close(fd) we saw in the previous hunk,
-> there is one early error return when we fail to rename the base
-> graph file.  Do we need to do anything there, or an unfinished
-> tempfile getting removed at the process termination is sufficient
-> for cleaning up the mess?
+> We should fflush() of cur_fp before nuking it, at least, no?
+>
+> In the original code, to_close was a mere copy of uic.cur_fp and we
+> made sure that anything buffered at the stdio layer are flushed to
+> the underlying file desciptor (fd that we obtained from
+> git_mkstemp_mode() in the original code) with this fclose() call.
+>
+> We no longer do so.  We later call rename_tempfile() to close the
+> underlying file descriptor and move the temporary file to its final
+> place, but I do not see what guarantee we have that we do not lose
+> what we had buffered in the stdio with the updated code.
 
-We could explicitly clean it up, but we'll do so implicitly upon exit,
-so I think it's fine to leave it as-is.
+rename_tempfile() first calls close_tempfile_gently() before calling
+rename(). close_tempfile_gently() calls fclose() on temp->fp before
+returns, so we get our fflush() call implicitly there.
+
+IOW, the tempfile.h API is happy for us to call rename_tempfile()
+without having explicitly closed or flushed the underlying file pointer.
 
 Thanks,
 Taylor
