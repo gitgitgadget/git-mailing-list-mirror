@@ -1,65 +1,65 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6E219AA5A
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 13:33:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72ABA19AA5B
+	for <git@vger.kernel.org>; Fri,  7 Jun 2024 13:33:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717767192; cv=none; b=j7AUHJwzoR2vBl/F6G/xzn1ykAynDRiRlDejxlivVvudMOriP4CviKtgODzYQ2Ek+5E+PVJAxVV+JW6nabZ9e6OKG1z3FFc9RUgKdNKB9QeWQ3GtnnFv+R1/v4msTGIExoPU40McPBpo1DrwiySEjZFOLvv257PiAmR0/GNj4KU=
+	t=1717767192; cv=none; b=mtiT1KtlIELRGxj4Vrr/q+JuPBWXwh08hea1/dgRKS/eDnjPD/skmX282XbNxJqkoko1ouC246TMLiLSiY51YWKn/XWfDfe8Ga153Rl7X0qADKdDDmp6JnAZkw+Gou67hqgFNHyt23aF+jNbj1CW8VXp411l+N8lc3V6CH/M/Gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717767192; c=relaxed/simple;
-	bh=LeBg6I0inzCH069uGqVhz17t46bmb4xO3YXRPb4rsGc=;
+	bh=t2Sh2uOYymZ8PY1NxFZ+tdvRzLosECEg/jwYIX9U8wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXGjy29BDN+vIMVPZ+HbF4R75DIfML7wa+mwdc9gExEkRr6CzbyIIngJdheAd4y5z9dxC8FQFkO4pNelc9IJBewIq04lvvp798EVZlckCQtSyC3CnIRdT5XdljgkO3Ah/o4EdOjp02STXPaSoxG0ACdhMMyvXCO4qexH7FTCyUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nLrQBVbu; arc=none smtp.client-ip=209.85.208.48
+	 MIME-Version; b=rp+mmOGEsGE1PYnfXD9pxTOEfA0DdECgN/5TBKqtsSrz3zzdAnoBB3Ht2pga2tpFsdxsmVpmMj7Wd8O+DMXcB2CNoUrW9jNdijYw0FdgdL7kSxX8U44eKicJjGM5OlCqBpPOiwhZbF3CvTDpkVsQM/uXll6MPzuAhRA+1zK4Hcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GVPdWEss; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nLrQBVbu"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-579fa270e53so3211843a12.3
-        for <git@vger.kernel.org>; Fri, 07 Jun 2024 06:33:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GVPdWEss"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-57c60b13a56so417682a12.0
+        for <git@vger.kernel.org>; Fri, 07 Jun 2024 06:33:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717767189; x=1718371989; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1717767188; x=1718371988; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jGDFtCyuHoAE6524CRKSHIhfq1Okh4M+NjKMp35vqwQ=;
-        b=nLrQBVbuSeJXzwlQpW9szefDUmR1aML2OEWqcCSlzTYXjiXJlqncJksf4jePJc3m1M
-         PuSsGDBWwC2voNnFW5iUwtKxhL/1LH8aeLirnYLZtCJ6EXED5Iv1grJMoM72dzLQap6D
-         8X36y1rJxQuggEil4nmPoMWkjDzy9eo+69LA+LLWEytks9kgUdyoRUwXFHI/SDpjBwV3
-         nkzaxaLC2jwHBvnwaGbbciCzn86s09N8PmTOW7ChPBClndXjpqoxDltU/7ZhZhMQmfIe
-         21dtDfmcmKSK4pt/hi7uAANqVoJ/R5vR4XALhsM26X3ZrOfREPXhPq3JWkhMxSUZoiWc
-         AESg==
+        bh=o/VAe/ORVbUECRLIQtAb+P3zV3BjjcPefMr5fQ54+9M=;
+        b=GVPdWEss7/ppWYcjV0n7qjfE7uOTI3Vh50Zaf4d7ArOsl4rqx5Mqqy79RY5UkoyM8C
+         kXaTF5mHsaaSDUgwfrUOYf5pATJ0r/Sg09tG9lhD+uj1Ba3dSiD5GxU2Gb0FW8G5x3pD
+         okgZDEzZfFFgPNsZq9xzZjmi+Fyaeyhg5j3pgr/OWhqVJAP95RkyXvQil3vqcSzhwtAL
+         Hbd4skHXapfOdXIByRO7Fv3JrzvsorLzwH6/0ZjuMSiKHV+LNp+dJ5QfRDSKY8WfaKyE
+         swhQ2eLqjgN2d94zTwirzb/sQe6ztU8C/gAjad117G0fk521IJ5B4eRBEDyoRNWcmI0G
+         +uLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717767189; x=1718371989;
+        d=1e100.net; s=20230601; t=1717767188; x=1718371988;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jGDFtCyuHoAE6524CRKSHIhfq1Okh4M+NjKMp35vqwQ=;
-        b=ryffJU6qpEuaSaYoWBlHFei/3yHt/awk98r1h+jFDt6oj3J3vSeipXh9qYsi2Pziq/
-         sIHCz9QoS75PijUg6fMcw1aMAh+2uCNRH46q1DsOs1xWcBGi1Uc+u91qUWSSLaYUqtLE
-         HVhZZnBMQropeHaG/DuhUpfoWlXSRu91n+QaAYzT95AlwDWlJXsqrR1P2ygcVZGDz0FG
-         LM0T3Nbze8RbUsoI6FPH8DNhXlmrMSw/5ciYP5P2e20V9dLrVv4oTNowy9uxF3omXPg0
-         FLmmawz4sF9dQblxm/5DmTOZaP1lDh0vOBnnb/RS1rXISQaAAUb+c3y55Cc3pI5f5qVH
-         HQiw==
-X-Gm-Message-State: AOJu0YzCz8y7bvoY/JS4KczcbBnQqgoRC92rqFK+kBBmudFDlcl078iA
-	JCYx55ioAxMmm/RfDgnlo+ARfJrFViWDNEtdKJ7si97H/anlVWQF
-X-Google-Smtp-Source: AGHT+IGHLqCkMf9J95454a35WvjChqbfnpiz2C3jZ5X3/9mNlTsx4qGDbP5gvUUjQqZJK5ZumPb1mg==
-X-Received: by 2002:a50:9b5a:0:b0:579:7b6c:5ab3 with SMTP id 4fb4d7f45d1cf-57c508fc040mr1908139a12.22.1717767188671;
-        Fri, 07 Jun 2024 06:33:08 -0700 (PDT)
-Received: from localhost.localdomain ([185.223.147.210])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57aae2340f6sm2764167a12.90.2024.06.07.06.33.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=o/VAe/ORVbUECRLIQtAb+P3zV3BjjcPefMr5fQ54+9M=;
+        b=kNe2UNGaN/ItgJ8rF28r/BkSSPiG9j/dTlSi8ha5xrBs2U5bowC9lztUW3K4vBRqo6
+         fotd0nRv+97NMi18lYwIs6eOB7iftUq6nyDGj2MRYBJWKaWNxzNaly9rOJr+qps4Y+VV
+         rFBlIeXXsvUnQlUO55u1AcalNO1/CC1PJ3qjhv5Ssmd4+NNXCpUMsGqkB/ApyZ4lRqjK
+         8zm2s5Xkru0UcOKdYJJ1C6+vZZaRLMu/wsoN6cKF9DpWo6Lnor46rJs2slSom5skqsxI
+         lp8T45h1vzRnteb8IbJ4ejkQLEjo0zBPwLf4rgpPGNBYoMUPSZxljE+NG89v6OHq7c7S
+         dESw==
+X-Gm-Message-State: AOJu0YxHkhRB0EL7MmmYCiVXEKMiP6bJYXUg2PgUklPgo8ZwWfsMkr2b
+	p1HpZPrnnR8VD93uWTMq4Hh5lOgyoARUsfXo7Dm3VtPX/RRQ+Yi5HqQ9LJph
+X-Google-Smtp-Source: AGHT+IFQ8eOGtpIaCBfOPJ20VudUroU3iW6VyCgW4NGnGI3x+FmIx9GEoS8pcCrz3VJoVB9jQBKvNg==
+X-Received: by 2002:a50:d79c:0:b0:57a:259a:489a with SMTP id 4fb4d7f45d1cf-57c508921b8mr1623650a12.14.1717767187356;
         Fri, 07 Jun 2024 06:33:07 -0700 (PDT)
+Received: from localhost.localdomain ([185.223.147.210])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57aae2340f6sm2764167a12.90.2024.06.07.06.33.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Jun 2024 06:33:06 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <knayak@gitlab.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org,
 	gitster@pobox.com,
 	ps@pks.im
-Subject: [PATCH v5 2/7] refs: specify error for regular refs with `old_target`
-Date: Fri,  7 Jun 2024 15:32:59 +0200
-Message-ID: <20240607133304.2333280-3-knayak@gitlab.com>
+Subject: [PATCH v5 1/7] refs: create and use `ref_update_expects_existing_old_ref()`
+Date: Fri,  7 Jun 2024 15:32:58 +0200
+Message-ID: <20240607133304.2333280-2-knayak@gitlab.com>
 X-Mailer: git-send-email 2.44.1
 In-Reply-To: <20240607133304.2333280-1-knayak@gitlab.com>
 References: <20240605102958.716432-1-knayak@gitlab.com>
@@ -74,73 +74,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-When a reference update tries to update a symref, but the ref in
-question is actually a regular ref, we raise an error. However the error
-raised in this situation is:
+The files and reftable backend, need to check if a ref must exist, so
+that the required validation can be done. A ref must exist only when the
+`old_oid` value of the update has been explicitly set and it is not the
+`null_oid` value.
 
-  verifying symref target: '<ref>': reference is missing but expected <old-target>
+Since we also support symrefs now, we need to ensure that even when
+`old_target` is set a ref must exist. While this was missed when we
+added symref support in transactions, there are no active users of this
+path. As we introduce the 'symref-verify' command in the upcoming
+commits, it is important to fix this.
 
-which is very generic and doesn't indicate the mismatch of types. Let's
-make this error more specific:
+So let's export this to a function called
+`ref_update_expects_existing_old_ref()` and expose it internally via
+'refs-internal.h'.
 
-  cannot lock ref '<ref>': expected symref with target '<old-target>': but is a regular ref
-
-so that users have a clearer understanding.
-
+Helped-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs/files-backend.c    | 14 ++++++++------
- refs/reftable-backend.c | 10 ++++++++++
- 2 files changed, 18 insertions(+), 6 deletions(-)
+ refs.c                  | 6 ++++++
+ refs/files-backend.c    | 3 +--
+ refs/refs-internal.h    | 6 ++++++
+ refs/reftable-backend.c | 2 +-
+ 4 files changed, 14 insertions(+), 3 deletions(-)
 
+diff --git a/refs.c b/refs.c
+index 8260c27cde..50d8d7d777 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2679,3 +2679,9 @@ int ref_update_check_old_target(const char *referent, struct ref_update *update,
+ 			    referent, update->old_target);
+ 	return -1;
+ }
++
++int ref_update_expects_existing_old_ref(struct ref_update *update)
++{
++	return (update->flags & REF_HAVE_OLD) &&
++		(!is_null_oid(&update->old_oid) || update->old_target);
++}
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 194e74eb4d..fc57c9d220 100644
+index 5f3089d947..194e74eb4d 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2491,14 +2491,16 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+@@ -2412,8 +2412,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 			       struct strbuf *err)
+ {
+ 	struct strbuf referent = STRBUF_INIT;
+-	int mustexist = (update->flags & REF_HAVE_OLD) &&
+-		!is_null_oid(&update->old_oid);
++	int mustexist = ref_update_expects_existing_old_ref(update);
+ 	int ret = 0;
+ 	struct ref_lock *lock;
  
- 		/*
- 		 * Even if the ref is a regular ref, if `old_target` is set, we
--		 * check the referent value. Ideally `old_target` should only
--		 * be set for symrefs, but we're strict about its usage.
-+		 * fail with an error.
- 		 */
- 		if (update->old_target) {
--			if (ref_update_check_old_target(referent.buf, update, err)) {
--				ret = TRANSACTION_GENERIC_ERROR;
--				goto out;
--			}
-+			strbuf_addf(err, _("cannot lock ref '%s': "
-+					   "expected symref with target '%s': "
-+					   "but is a regular ref"),
-+				    ref_update_original_update_refname(update),
-+				    update->old_target);
-+			ret = TRANSACTION_GENERIC_ERROR;
-+			goto out;
- 		} else if  (check_old_oid(update, &lock->old_oid, err)) {
- 			ret = TRANSACTION_GENERIC_ERROR;
- 			goto out;
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 53a6c5d842..ee298ec0d5 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -765,4 +765,10 @@ int ref_update_has_null_new_value(struct ref_update *update);
+ int ref_update_check_old_target(const char *referent, struct ref_update *update,
+ 				struct strbuf *err);
+ 
++/*
++ * Check if the ref must exist, this means that the old_oid or
++ * old_target is non NULL.
++ */
++int ref_update_expects_existing_old_ref(struct ref_update *update);
++
+ #endif /* REFS_REFS_INTERNAL_H */
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index b838cf8f00..c66ab9ecd8 100644
+index 1af86bbdec..b838cf8f00 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -928,6 +928,16 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
- 		 * backend returns, which keeps our tests happy.
- 		 */
- 		if (u->old_target) {
-+			if (!(u->type & REF_ISSYMREF)) {
-+				strbuf_addf(err, _("cannot lock ref '%s': "
-+					   "expected symref with target '%s': "
-+					   "but is a regular ref"),
-+					    ref_update_original_update_refname(u),
-+					    u->old_target);
-+				ret = -1;
-+				goto done;
-+			}
-+
- 			if (ref_update_check_old_target(referent.buf, u, err)) {
- 				ret = -1;
- 				goto done;
+@@ -824,7 +824,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 					      &current_oid, &referent, &u->type);
+ 		if (ret < 0)
+ 			goto done;
+-		if (ret > 0 && (!(u->flags & REF_HAVE_OLD) || is_null_oid(&u->old_oid))) {
++		if (ret > 0 && !ref_update_expects_existing_old_ref(u)) {
+ 			/*
+ 			 * The reference does not exist, and we either have no
+ 			 * old object ID or expect the reference to not exist.
 -- 
 2.43.GIT
 
