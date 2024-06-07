@@ -1,64 +1,55 @@
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E0A14F9CE
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 20:31:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F15639FFB
+	for <git@vger.kernel.org>; Fri,  7 Jun 2024 20:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717792278; cv=none; b=ln686ahO6glG1SrYZPEyzSPZtWHaEzDe1ESNGQY6CoiGhdVFRVpHdUafY6/sPYLYNFznDAW6+s9unyPjtznnYl352TMg3MMcFDQNEsiXt4YRhO5JZCOYLlGckr6/h2BclCWGHpgGQd2EytCXtRPyT3uhC0iFP1fisWfdu6I+gSQ=
+	t=1717792534; cv=none; b=pzAv8V7IwxTZtkdfHocScdKB9tDJ4wDFvxDhy4TpBoKnBOuHQlBYPp4oo31JQ5O7IAOxXaa4J0w+aEf8k0TKc18DMUorFt31NeA6QwgRUag+Nw1hdMTBrHxqyF4CTXko5kYC7JVqLAFUXcoJgUZ7tQQEVcCa127Dh+K7dCpX9hU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717792278; c=relaxed/simple;
-	bh=l97EPJP5H87HgSpCVsZZf146Z0cMpn54VPYlCMY0cRg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sazuwHKkaJrP1geY3cTghNIAiUQeKDMs5J6g86YQdDwZuSetC2TR04qzZQTDxGCEICXrGe90VJP0D2jIpivP+Nfe1Ihns5K+5e36aLe8ezgsX15KHzBpQuawPwHSVT+QjQ1djhB9gB19V30vCD98z6nUfPRAAgUe7qU5j93qYxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=gh+7vyvl; arc=none smtp.client-ip=209.85.161.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1717792534; c=relaxed/simple;
+	bh=uUX4XSSEh/wRRnDA/h8j8aLncHrUVzW6s09r8thacAA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Lu4OK1T9FCx3nAI+K9lwtU0J9Z+9gaf0MaJSejb7aYW7KU7I0jbkjt6atANTdvjCcptyM5M68nGFNhdsroaKdxSs4TSWb4IE5x1hd2XAdOhldgJhflFtJT3Gp+axhdgJLC/l4/6+QTBtsT7S1MkWEQJTk0XWgFi+PN7+khluybw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=j15CvPVi; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="gh+7vyvl"
-Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-5b5254f9c32so1327143eaf.0
-        for <git@vger.kernel.org>; Fri, 07 Jun 2024 13:31:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717792276; x=1718397076; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uDJ5BjTbUqPas1zRW7B2ZW/nJgOWb9Gbdlx3z1AsTYg=;
-        b=gh+7vyvlp0ru8r5UeV2NVemDCSkV4obv7Ib58ia12k/BD4+fOvV+wsqDbgW8jlDB9N
-         P7HxLxzlFAUdHdhPI1t+TOKByksZ0Dv+LdkYqAOTwvUkBpsB0Vo2jSoiMcN/lRHIoyyJ
-         PFqmO05qU7S/6K0vZzGcMIev13SzG1Jy540CAcUVfWB8FiK62q1TwH6JWeBCFVjzZoMZ
-         efckKxHMHmNfcuMZhhOnwpL7hNAlzYVEzNuWNUbRxJ6H9T5D5YsUMnYUBoUDJMZWHGsC
-         opLP42p4eRNnpcLUkYpHLg6+6Exc6PckvYEn9bWLd4I2UvAcYTzQM01gNbjsRpfvATSG
-         aG+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717792276; x=1718397076;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uDJ5BjTbUqPas1zRW7B2ZW/nJgOWb9Gbdlx3z1AsTYg=;
-        b=bzCVNt8UV4F7lFOyzL4pHhUAocEbWvxG8Iyhf7hQ7dwIjjrHhJ2u2+pRwRygYc8Bc4
-         NdGMHdbPdh7IwoYCjDx8F5wawTOImvM4mH0mG7W9yfqbwTR8yRy1dXxPIncBHpAgfH6D
-         /fw7CaEcv4efIgqRZpHyns9McqL2gpC48PewVcK79umuZcR4YLeNLwxP75znWot0PaHG
-         Ra8cMp/b9mJ938Kz+/YbBrMUX/sPFIWDIibG1PqxJVzy4vYa8CG7YN/9tJ+/bfpvUkn4
-         W4OZpwe448EypCDW9R+Gg2OphoYnNsMgr630fiByRp+gMGoC1hs/NQRNWbO5G65NfN52
-         VQ9g==
-X-Gm-Message-State: AOJu0Yyul0wEEX3NU9VXM2HgpFdDai//mZbFA7dUJkaYbndzb0a3W7Xv
-	HkNjJvfFqdiMU9tQYPDrGPN2+XLppQV05UO7v6wod6aMK0MglR+LF1yL4ot5XA4=
-X-Google-Smtp-Source: AGHT+IEAlUmXZJhtSmqrYBr2y35QTr/54axveAMi3cmtj4S3eA9Q4qwtCxj1OWpeL4mzf85XEHXQlA==
-X-Received: by 2002:a05:6358:9105:b0:19f:1d66:3ba1 with SMTP id e5c5f4694b2df-19f1ffaa1a8mr385408755d.31.1717792276222;
-        Fri, 07 Jun 2024 13:31:16 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44038a72a35sm15185331cf.29.2024.06.07.13.31.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jun 2024 13:31:15 -0700 (PDT)
-Date: Fri, 7 Jun 2024 16:31:14 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 00/19] midx: incremental multi-pack indexes, part one
-Message-ID: <ZmNuEinqUV7DJQKQ@nand.local>
-References: <cover.1717715060.git.me@ttaylorr.com>
- <xmqqwmn0d4dc.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="j15CvPVi"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 58F9718842;
+	Fri,  7 Jun 2024 16:35:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=uUX4XSSEh/wR
+	RnDA/h8j8aLncHrUVzW6s09r8thacAA=; b=j15CvPViN/ICCjUulyhVUY8J5RYV
+	jZSUJp0BQSCF/oKOVhnjI7m0U65X1In4ZzQfrG43qi5jyzTGPBSTKu1y3ossdQ69
+	dm/AYmyNIs+Riyrc9At15Wq3wRYt2eO+07QwpobiZD7+hHR+aEOOc6THoBGFOlQV
+	UhC8zeHJvVS41po=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 51C5918841;
+	Fri,  7 Jun 2024 16:35:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6FC1818840;
+	Fri,  7 Jun 2024 16:35:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/2] ci: compile "linux-gcc-default" job with -Og
+In-Reply-To: <xmqqed98d1wn.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	07 Jun 2024 11:48:56 -0700")
+References: <20240606080552.GA658959@coredump.intra.peff.net>
+	<cover.1717662814.git.ps@pks.im>
+	<bdf0e40a770c57b63e7519983d37b97a85ce07bf.1717662814.git.ps@pks.im>
+	<xmqqed98d1wn.fsf@gitster.g>
+Date: Fri, 07 Jun 2024 13:35:28 -0700
+Message-ID: <xmqq34pofq3z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,36 +57,72 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqwmn0d4dc.fsf@gitster.g>
+X-Pobox-Relay-ID:
+ 7AACD9A4-250D-11EF-B746-8F8B087618E4-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 07, 2024 at 10:55:43AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > Part three doesn't exist yet, but is straightforward to do on top. None
-> > of the design decisions made in this series inhibit my goals for part
-> > three.
->
-> Nice to always see the bigger picture to come to understand where
-> the current series fits, but the above is a bit peculiar thing to
-> say.  Of course there should be no design decision the currently
-> posted series makes that would block your future work---otherwise
-> you would not be posting it.i
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yeah. What I was trying to say was that part two actually exists, and
-works in practice rather than just thinking that it would work without
-having actually demonstrated anything ;-).
+>   pack-mtimes.c: In function =E2=80=98load_pack_mtimes_file=E2=80=99:
+>   Error: pack-mtimes.c:89:25: =E2=80=98mtimes_size=E2=80=99 may be used=
+ uninitialized in this function [-Werror=3Dmaybe-uninitialized]
+>      89 |                         munmap(data, mtimes_size);
+>         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+>   cc1: all warnings being treated as errors
+>   make: *** [Makefile:2757: pack-mtimes.o] Error 1
+>   make: *** Waiting for unfinished jobs....
 
-> The real question is rather the future and yet to be written work is
-> still feasible after the design decisions the current series made are
-> found to be broken and need to be revised (if it happens---but we do
-> not know until we see reviews).
+The use on line 89 is guarded with "if (data)" and data can become
+non-NULL only after mtimes_size is computed, so this is benign.
 
-Indeed. I'll make sure that before I push out a new round that the
-rebased part two still works as I expect it to.
+They have excuse for a false positive because the warning is about
+"maybe" uninitialized, but that does not help our annoyance factor
+X-<.
 
-Certainly all of this could be avoided by combining the two together,
-but I think the result is just too large to review.
+>   pack-revindex.c: In function =E2=80=98load_revindex_from_disk=E2=80=99=
+:
+>   Error: pack-revindex.c:260:25: =E2=80=98revindex_size=E2=80=99 may be=
+ used uninitialized in this function [-Werror=3Dmaybe-uninitialized]
+>     260 |                         munmap(data, revindex_size);
+>         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   cc1: all warnings being treated as errors
+>   make: *** [Makefile:2757: pack-revindex.o] Error 1
+>   cat: exit.status: No such file or directory
 
-Thanks,
-Taylor
+This follows exactly the same pattern established by the other one
+(or perhaps the other one copied from here).  It is another false
+positive.
+
+I am not sure what the right fix would be.  For example, if we were
+interested in avoiding to incur too much resources for revindex, we
+might do something like this
+
+--- i/pack-revindex.c
++++ w/pack-revindex.c
+@@ -258,6 +258,8 @@ static int load_revindex_from_disk(char *revindex_nam=
+e,
+ 	if (ret) {
+ 		if (data)
+ 			munmap(data, revindex_size);
++		fprintf(stderr, "would have fit %d revindex in 10MB\n",
++			10 * 1024 * 1024 / revindex_size);
+ 	} else {
+ 		*len_p =3D revindex_size;
+ 		*data_p =3D (const uint32_t *)data;
+
+without even guarding with "if (data)".
+
+If we "initialize" revindex_size to a meaningless dummy value like 0
+like the attached would _hide_ such a real bug from the compiler, so
+I dunno.
+
+@@ -206,7 +206,7 @@ static int load_revindex_from_disk(char *revindex_nam=
+e,
+ 	int fd, ret =3D 0;
+ 	struct stat st;
+ 	void *data =3D NULL;
+-	size_t revindex_size;
++	size_t revindex_size =3D 0;
+ 	struct revindex_header *hdr;
+=20
+ 	if (git_env_bool(GIT_TEST_REV_INDEX_DIE_ON_DISK, 0))
