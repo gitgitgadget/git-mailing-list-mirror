@@ -1,80 +1,80 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C5B153801
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 06:39:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB1A153BFC
+	for <git@vger.kernel.org>; Fri,  7 Jun 2024 06:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717742349; cv=none; b=cgjTpyaBdqDdYvX7piAagR8QHUthFMxho2dzuBWuut6m7nIbHZl+9Xlr528M9CtNPVheeYV6+91oljJgRqsqUokO71XDHIQVmw+6RvHKQmdemDDUnYdXdg4bxaBzG5/9P74NpgdglqXe2t+vDcYNFiJ2vZIMbpRTpvIKwPR69Vs=
+	t=1717742353; cv=none; b=Q2VJWjUzsUtsJ7pqIQh1NzWqyPv5P49lliEh/v/pctRt/UcJ5LVtPHj9ew9ZGbUIt7z9kqrIlLO3/1W4+oZHSSBph29dOAvzfnaB+FMHWRnoooJyGO3p+5BKnXkXIUsR6tZv0VqvN52+ppoMoxBueYti7bdkucYoXNlyupXzCaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717742349; c=relaxed/simple;
-	bh=SGP+P3ftOGuvOcbM7QL7rlkj/GpeQ2UfUWmfT2v87Qo=;
+	s=arc-20240116; t=1717742353; c=relaxed/simple;
+	bh=i67vFad5Ot5Dj8ehshhU5dTGfqtU0+gzw2E0ZAb5Rks=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ftzeh2TxGp6wWVaW36b61JAY5cJTduRGrd/yBBtxHzLGxY4z4Kkj26YEPi06jlJieLv6z/Vj/2OJV/6f98t5NLCJjVO7L3kAfQjWivjfgO9XzFtxApM7N89NMI3lbJVe8eq/4y8kjU49v+Rt1FON+MsllGd1daV6voBRiZ5fnBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jyO+uXtm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yc2uWkoD; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=bsz4BcwDy/zUvP5a8OqJenVgfISpgZQynQMaMIYoLm3djpUKSaMhE1Tsyi7jTCZkgERUXm0xO7Wg4PV1CPHDOWSuFCP2KTHsJ5rQ1mPMtlmMIXxxKckG24XGfjEbAa2iUJRXcKfVeSA6IEtjRkMLk0+S1vXUkiGGmuOse4396no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L0Fn4OGU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L4S9/zYm; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jyO+uXtm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yc2uWkoD"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 01D2813801ED;
-	Fri,  7 Jun 2024 02:39:07 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L0Fn4OGU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L4S9/zYm"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 4EC1A11401EA;
+	Fri,  7 Jun 2024 02:39:11 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Fri, 07 Jun 2024 02:39:07 -0400
+  by compute1.internal (MEProxy); Fri, 07 Jun 2024 02:39:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717742346; x=1717828746; bh=5aWecju8pf
-	Ggtgv68CBe9wFLNmM39Vve2i/OWm0QM8g=; b=jyO+uXtm3aTUO3RFCmFwO0GG/Y
-	VXiMjJpBTpSsEwuuVO4vXYNoe5mbPZW+4b+sqmeTG4A4QboB5KyQHWAe97u30e87
-	neIR3+/Yzg/K0c5k/47BwngKTnxhSXP64P2/Eu58ycE4Tkg8vCt5bWyLm64uAXZB
-	+TATBOS9Be5KO+0jKRzPpZF/us1T7PLWSJXMf0A+YlDoZc9cAZckTcAimHJepwMj
-	Q/svANWUChi4iBpD9tYt5+RfHEA0Wscu/dpQHHv9EpM+RcFedJV1bUSzblR+T2A1
-	+cVn/5BcwTu8xfTqpBjjLxB6g0mSCyqjHmjgijvni74EOiEYUJ4Dma3heGyQ==
+	:subject:to:to; s=fm1; t=1717742351; x=1717828751; bh=2p27yCUu7T
+	JgiwGnlrLZeFJDNAge3wNUQjHHxo54l54=; b=L0Fn4OGUnv45gNYovuJxb4Zvsm
+	lZB4tDfbPEOFw0v8ftLDckFIdz596xrIzmzS/KyLHEiNQ75+WQNjAo4hphK3ggxS
+	yH0B9DI1WlbSlyNpoa/+9IVGKe5hj7uuBs7F6yo+7COszF+sOa8DX9iCqcmdb7Gf
+	WcsvA3+Ci76v+FH1YD2Fh5P2XlC/N8giHvj5VdqknKGpTEu5GZ/MAx/ReF+asMxL
+	doZhn5nKQIrSO4pB6Xt//P/4lmiNPHVqQJgZ3NDm3my/Lx4wm45SVI70nyLrbNWt
+	5Ko4RnaOq5pEi/HhQ7mgKO1nwZPe/mNKTcOaTr5YUN0GWXG4e3F8mAeVSNww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717742346; x=1717828746; bh=5aWecju8pfGgtgv68CBe9wFLNmM3
-	9Vve2i/OWm0QM8g=; b=Yc2uWkoD3Bd2EoGCXP8t2KHqRfyvPiM6AEgANnzIFbSG
-	85T6kBD/6sPN/c2Fd3nDAjoUqKjil56SChHwrD/y5hoTRINV4yRtjxH4HDb9QSSn
-	EM+67oxIkYeENchSUg361sjDeMucKdkMy77d5leoQUZAtuKXhRQ/O0xN9nyamhSG
-	+HStRBjctp0HrZ/Lu94sJeZU4FWuh1h5v3i4aPilNHDOjk8iSlSsS/zoKVCTzZIl
-	BKABRSWQMcTcv0CuDlTxL+oGGqJfpKQdQGQJdi7wamfTvtpaqokBSY1nbrnBuH/5
-	xtASMF3LoQbowGvHwGqvZO9uOc9m6/70jzerBbCCaw==
-X-ME-Sender: <xms:CqtiZtftkRaR3Yy8RSYk_gAozc3QbrQ18tA6cBjn0ZrtSaHe-8yT7g>
-    <xme:CqtiZrOK-7Num32DV2JLiSTTeBZZDVsRtd0XLvp6-VpNXCA0CkKsyCsX2dh7AwGEV
-    IWlSc3nLjBqhzufgg>
-X-ME-Received: <xmr:CqtiZmg4G68uMP_QP_phyDwc2MYLoKkvWxmCog6uMJkxNj8HxE7EOF9iGiwDB_6_By5di3gYHMDv2vTqnjjCSejhx6u3xeWTjYTCQGgzt8u5RkKE>
+	fm1; t=1717742351; x=1717828751; bh=2p27yCUu7TJgiwGnlrLZeFJDNAge
+	3wNUQjHHxo54l54=; b=L4S9/zYm2xN98vt/CC1PWrOmfIb01bbSmHf5fFMvzgJJ
+	a3BC/X5057ZW7vQPg3DauGfpmlcXjTkcw+kfdV9LJ5W1B9oUI186D4oZ+6v13m9g
+	9w6WOhZBGqJ/l8nf7m4NN67HWK4FwJiWnsZ9lFlbJK4Vczy+qrI5dl3EAFmcJ0KL
+	q/m1+kSM9J7HalVqqASctk8yn64IwG9n+SvgCMZc6jRzo4RSe6O3oeFsMRA7K4Yl
+	Rgoi1x8wIpnD6FkLPhB2ZfhD3+3sMjUdlDlqTyFKuPR2Ip/bPzRNdyhiZ9998GBs
+	m+5qqU+WLj+JfImermWo3cXTQvJTxyc2S4+r+NEC1g==
+X-ME-Sender: <xms:D6tiZvKBqwVW3EZNlSLE_moIEoDJKWybujlHSWQcN99qqcbvNhwatg>
+    <xme:D6tiZjLc02-tUO3SfrCdLXQOPBNyqZih02Lyl0ZJpPt1M_xpRegTUQpP4Zmmh_ZzV
+    9DKVkcd6ncV2L7UVA>
+X-ME-Received: <xmr:D6tiZnsFgkaFQivWsFGXTOj9TFSQG3je0k9kxjq3nNNfRNo6S6-s2qv4Lnx6rumhFt_MkFK5KVOLk67KMLj-KxJbgGJobk0Oe0DOm5xlcInFMloR>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelledguddtkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpeeinecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:CqtiZm_gB3j1lYlBka_kw_LxCLGuofMgfyd37H3uUuHiAzzI6hYmdw>
-    <xmx:CqtiZpsNlpMvSDaGj4paUKt4fU2YfCBqnWqV3GD9dO_SuCQb4BXD1w>
-    <xmx:CqtiZlGp5xyeAhKDJJsA5LozBSOCx6q_v-vEWNeKb3KNvXj_hWyrJg>
-    <xmx:CqtiZgNvCzj-SvrdBtVpONleNwcqbYQ1cJG_oSkpRE9NE-DqB9R0Mw>
-    <xmx:CqtiZjK7zJAErUZf12wlV6AwEEsDZbA6pZzzvH5Bi4ch9mYDFGbRpHqh>
+X-ME-Proxy: <xmx:D6tiZoZDkNLhhFGND9CMDo69_mK_YsJXfZHlPiBxJEseY5tHo9l4BA>
+    <xmx:D6tiZmbo4vP99tcd5mDVmBiocdpEIA8sSqgk2hQs_po3kGVMpP8Hlw>
+    <xmx:D6tiZsAzV-c4PHbXlF9xm-gxYd33lkExKbcehmrJaZZu_5PsFP5zeg>
+    <xmx:D6tiZkYaPYBLG9jzsjeT_OmNAhyhNGhAMwETUAyJH42x1wvhvW1m-A>
+    <xmx:D6tiZtVrQRaLK_OASg3dy8HprmwNGDDdWCyyONWaSqnNaMu3tABLhCt6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Jun 2024 02:39:05 -0400 (EDT)
+ 7 Jun 2024 02:39:10 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id b85b38f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Jun 2024 06:39:04 +0000 (UTC)
-Date: Fri, 7 Jun 2024 08:39:03 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 13f85735 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Jun 2024 06:39:09 +0000 (UTC)
+Date: Fri, 7 Jun 2024 08:39:07 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v6 19/27] remote-curl: avoid assigning string constant to
- non-const variable
-Message-ID: <99c88897be33bc1ed1c50f84e48cae7717a7b10b.1717740366.git.ps@pks.im>
+Subject: [PATCH v6 20/27] revision: always store allocated strings in output
+ encoding
+Message-ID: <03556233d6296973176a4edbcaffb12746cd2f1a.1717740366.git.ps@pks.im>
 References: <cover.1716983704.git.ps@pks.im>
  <cover.1717740365.git.ps@pks.im>
 Precedence: bulk
@@ -84,265 +84,105 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="XCUvrOsdIF0QrqGe"
+	protocol="application/pgp-signature"; boundary="iVC8AYdCir31hKl6"
 Content-Disposition: inline
 In-Reply-To: <cover.1717740365.git.ps@pks.im>
 
 
---XCUvrOsdIF0QrqGe
+--iVC8AYdCir31hKl6
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When processing remote options, we split the option line into two by
-searching for a space. If there is one, we replace the space with '\0',
-otherwise we implicitly assume that the value is "true" and thus assign
-a string constant.
+The `git_log_output_encoding` variable can be set via the `--encoding=3D`
+option. When doing so, we conditionally either assign it to the passed
+value, or if the value is "none" we assign it the empty string.
+Depending on which of the both code paths we pick though, the variable
+may end up being assigned either an allocated string or a string
+constant.
 
-As the return value of strchr(3P) weirdly enough is a `char *` even
-though it gets a `const char *` as input, the assigned-to variable also
-is a non-constant. This is fine though because the argument is in fact
-an allocated string, and thus we are allowed to modify it. But this will
-break once we enable `-Wwrite-strings`.
+This is somewhat risky and may easily lead to bugs when a different code
+path may want to reassign a new value to it, freeing the previous value.
+We already to this when parsing the "i18n.logoutputencoding" config in
+`git_default_i18n_config()`. But because the config is typically parsed
+before we parse command line options this has been fine so far.
 
-Refactor the code stop splitting the fields with '\0' altogether.
-Instead, we can pass the length of the option name to `set_option()` and
-then use strncmp(3P) instead of strcmp(3P).
+Regardless of that, safeguard the code such that the variable always
+contains an allocated string. While at it, also free the old value in
+case there was any to plug a potential memory leak.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- remote-curl.c | 53 ++++++++++++++++++++++++++-------------------------
- 1 file changed, 27 insertions(+), 26 deletions(-)
+ revision.c             | 3 ++-
+ t/t3900-i18n-commit.sh | 1 +
+ t/t3901-i18n-patch.sh  | 1 +
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index cae98384da..d0f767df8e 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -58,9 +58,9 @@ struct options {
- static struct options options;
- static struct string_list cas_options =3D STRING_LIST_INIT_DUP;
+diff --git a/revision.c b/revision.c
+index 7ddf0f151a..2ee6886078 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2650,10 +2650,11 @@ static int handle_revision_opt(struct rev_info *rev=
+s, int argc, const char **arg
+ 	} else if (!strcmp(arg, "--invert-grep")) {
+ 		revs->grep_filter.no_body_match =3D 1;
+ 	} else if ((argcount =3D parse_long_opt("encoding", argv, &optarg))) {
++		free(git_log_output_encoding);
+ 		if (strcmp(optarg, "none"))
+ 			git_log_output_encoding =3D xstrdup(optarg);
+ 		else
+-			git_log_output_encoding =3D "";
++			git_log_output_encoding =3D xstrdup("");
+ 		return argcount;
+ 	} else if (!strcmp(arg, "--reverse")) {
+ 		revs->reverse ^=3D 1;
+diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+index f27d09cfd9..db7b403bc1 100755
+--- a/t/t3900-i18n-commit.sh
++++ b/t/t3900-i18n-commit.sh
+@@ -5,6 +5,7 @@
 =20
--static int set_option(const char *name, const char *value)
-+static int set_option(const char *name, size_t namelen, const char *value)
- {
--	if (!strcmp(name, "verbosity")) {
-+	if (!strncmp(name, "verbosity", namelen)) {
- 		char *end;
- 		int v =3D strtol(value, &end, 10);
- 		if (value =3D=3D end || *end)
-@@ -68,7 +68,7 @@ static int set_option(const char *name, const char *value)
- 		options.verbosity =3D v;
- 		return 0;
- 	}
--	else if (!strcmp(name, "progress")) {
-+	else if (!strncmp(name, "progress", namelen)) {
- 		if (!strcmp(value, "true"))
- 			options.progress =3D 1;
- 		else if (!strcmp(value, "false"))
-@@ -77,7 +77,7 @@ static int set_option(const char *name, const char *value)
- 			return -1;
- 		return 0;
- 	}
--	else if (!strcmp(name, "depth")) {
-+	else if (!strncmp(name, "depth", namelen)) {
- 		char *end;
- 		unsigned long v =3D strtoul(value, &end, 10);
- 		if (value =3D=3D end || *end)
-@@ -85,15 +85,15 @@ static int set_option(const char *name, const char *val=
-ue)
- 		options.depth =3D v;
- 		return 0;
- 	}
--	else if (!strcmp(name, "deepen-since")) {
-+	else if (!strncmp(name, "deepen-since", namelen)) {
- 		options.deepen_since =3D xstrdup(value);
- 		return 0;
- 	}
--	else if (!strcmp(name, "deepen-not")) {
-+	else if (!strncmp(name, "deepen-not", namelen)) {
- 		string_list_append(&options.deepen_not, value);
- 		return 0;
- 	}
--	else if (!strcmp(name, "deepen-relative")) {
-+	else if (!strncmp(name, "deepen-relative", namelen)) {
- 		if (!strcmp(value, "true"))
- 			options.deepen_relative =3D 1;
- 		else if (!strcmp(value, "false"))
-@@ -102,7 +102,7 @@ static int set_option(const char *name, const char *val=
-ue)
- 			return -1;
- 		return 0;
- 	}
--	else if (!strcmp(name, "followtags")) {
-+	else if (!strncmp(name, "followtags", namelen)) {
- 		if (!strcmp(value, "true"))
- 			options.followtags =3D 1;
- 		else if (!strcmp(value, "false"))
-@@ -111,7 +111,7 @@ static int set_option(const char *name, const char *val=
-ue)
- 			return -1;
- 		return 0;
- 	}
--	else if (!strcmp(name, "dry-run")) {
-+	else if (!strncmp(name, "dry-run", namelen)) {
- 		if (!strcmp(value, "true"))
- 			options.dry_run =3D 1;
- 		else if (!strcmp(value, "false"))
-@@ -120,7 +120,7 @@ static int set_option(const char *name, const char *val=
-ue)
- 			return -1;
- 		return 0;
- 	}
--	else if (!strcmp(name, "check-connectivity")) {
-+	else if (!strncmp(name, "check-connectivity", namelen)) {
- 		if (!strcmp(value, "true"))
- 			options.check_self_contained_and_connected =3D 1;
- 		else if (!strcmp(value, "false"))
-@@ -129,7 +129,7 @@ static int set_option(const char *name, const char *val=
-ue)
- 			return -1;
- 		return 0;
- 	}
--	else if (!strcmp(name, "cas")) {
-+	else if (!strncmp(name, "cas", namelen)) {
- 		struct strbuf val =3D STRBUF_INIT;
- 		strbuf_addstr(&val, "--force-with-lease=3D");
- 		if (*value !=3D '"')
-@@ -139,7 +139,7 @@ static int set_option(const char *name, const char *val=
-ue)
- 		string_list_append(&cas_options, val.buf);
- 		strbuf_release(&val);
- 		return 0;
--	} else if (!strcmp(name, TRANS_OPT_FORCE_IF_INCLUDES)) {
-+	} else if (!strncmp(name, TRANS_OPT_FORCE_IF_INCLUDES, namelen)) {
- 		if (!strcmp(value, "true"))
- 			options.force_if_includes =3D 1;
- 		else if (!strcmp(value, "false"))
-@@ -147,7 +147,7 @@ static int set_option(const char *name, const char *val=
-ue)
- 		else
- 			return -1;
- 		return 0;
--	} else if (!strcmp(name, "cloning")) {
-+	} else if (!strncmp(name, "cloning", namelen)) {
- 		if (!strcmp(value, "true"))
- 			options.cloning =3D 1;
- 		else if (!strcmp(value, "false"))
-@@ -155,7 +155,7 @@ static int set_option(const char *name, const char *val=
-ue)
- 		else
- 			return -1;
- 		return 0;
--	} else if (!strcmp(name, "update-shallow")) {
-+	} else if (!strncmp(name, "update-shallow", namelen)) {
- 		if (!strcmp(value, "true"))
- 			options.update_shallow =3D 1;
- 		else if (!strcmp(value, "false"))
-@@ -163,7 +163,7 @@ static int set_option(const char *name, const char *val=
-ue)
- 		else
- 			return -1;
- 		return 0;
--	} else if (!strcmp(name, "pushcert")) {
-+	} else if (!strncmp(name, "pushcert", namelen)) {
- 		if (!strcmp(value, "true"))
- 			options.push_cert =3D SEND_PACK_PUSH_CERT_ALWAYS;
- 		else if (!strcmp(value, "false"))
-@@ -173,7 +173,7 @@ static int set_option(const char *name, const char *val=
-ue)
- 		else
- 			return -1;
- 		return 0;
--	} else if (!strcmp(name, "atomic")) {
-+	} else if (!strncmp(name, "atomic", namelen)) {
- 		if (!strcmp(value, "true"))
- 			options.atomic =3D 1;
- 		else if (!strcmp(value, "false"))
-@@ -181,7 +181,7 @@ static int set_option(const char *name, const char *val=
-ue)
- 		else
- 			return -1;
- 		return 0;
--	} else if (!strcmp(name, "push-option")) {
-+	} else if (!strncmp(name, "push-option", namelen)) {
- 		if (*value !=3D '"')
- 			string_list_append(&options.push_options, value);
- 		else {
-@@ -192,7 +192,7 @@ static int set_option(const char *name, const char *val=
-ue)
- 						 strbuf_detach(&unquoted, NULL));
- 		}
- 		return 0;
--	} else if (!strcmp(name, "family")) {
-+	} else if (!strncmp(name, "family", namelen)) {
- 		if (!strcmp(value, "ipv4"))
- 			git_curl_ipresolve =3D CURL_IPRESOLVE_V4;
- 		else if (!strcmp(value, "ipv6"))
-@@ -202,16 +202,16 @@ static int set_option(const char *name, const char *v=
-alue)
- 		else
- 			return -1;
- 		return 0;
--	} else if (!strcmp(name, "from-promisor")) {
-+	} else if (!strncmp(name, "from-promisor", namelen)) {
- 		options.from_promisor =3D 1;
- 		return 0;
--	} else if (!strcmp(name, "refetch")) {
-+	} else if (!strncmp(name, "refetch", namelen)) {
- 		options.refetch =3D 1;
- 		return 0;
--	} else if (!strcmp(name, "filter")) {
-+	} else if (!strncmp(name, "filter", namelen)) {
- 		options.filter =3D xstrdup(value);
- 		return 0;
--	} else if (!strcmp(name, "object-format")) {
-+	} else if (!strncmp(name, "object-format", namelen)) {
- 		options.object_format =3D 1;
- 		if (strcmp(value, "true"))
- 			die(_("unknown value for object-format: %s"), value);
-@@ -1588,15 +1588,16 @@ int cmd_main(int argc, const char **argv)
- 			parse_push(&buf);
+ test_description=3D'commit and log output encodings'
 =20
- 		} else if (skip_prefix(buf.buf, "option ", &arg)) {
--			char *value =3D strchr(arg, ' ');
-+			const char *value =3D strchrnul(arg, ' ');
-+			size_t arglen =3D value - arg;
- 			int result;
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
 =20
--			if (value)
--				*value++ =3D '\0';
-+			if (*value)
-+				value++; /* skip over SP */
- 			else
- 				value =3D "true";
+ compare_with () {
+diff --git a/t/t3901-i18n-patch.sh b/t/t3901-i18n-patch.sh
+index 4b37f78829..5f0b9afc3f 100755
+--- a/t/t3901-i18n-patch.sh
++++ b/t/t3901-i18n-patch.sh
+@@ -8,6 +8,7 @@ test_description=3D'i18n settings and format-patch | am pip=
+e'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 =20
--			result =3D set_option(arg, value);
-+			result =3D set_option(arg, arglen, value);
- 			if (!result)
- 				printf("ok\n");
- 			else if (result < 0)
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ check_encoding () {
 --=20
 2.45.2.436.gcd77e87115.dirty
 
 
---XCUvrOsdIF0QrqGe
+--iVC8AYdCir31hKl6
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZiqwYACgkQVbJhu7ck
-PpRfQQ/9GM07T3j8vYqgbt1zoonUxubtuVNS+edwW87lzEvWQUju8Moh2E+ZcZkJ
-JZmdXaSOxRnciL+4xuglNQkpv0CBMqqTZr2pke6gaYeFc+kPVxwnQR6y+6TMnIiX
-mOalSxjZg0LiqvWLizQ4YvonCK/GFmh/UR4/FHcj+BL9Re7yaw6NuaGfnaGiECWr
-X1CvzO9R3U06s7gcEX3Llj8M8z0lePrgL4RY6Bsm3gB9HRNIPRdvQKqAkJrr031c
-fiwJVRn9odCxvbvyMz+SDH9lsOUCzZlbnv8yeF1tIYw5Tn6GWEk6gZS7cxLoahB+
-/co/gOs4yuRw3u+a1axmDpE1odJYvFZBDgbnnYIGAPK4+9HhzU04n1o9o93tges+
-JYHAQkgSt8Xo3Fjx6L01t9cdOlAzWm3XtFSVDWRfu/ftGgnVojRr0qhEqm3+b0vq
-95iTffWgf6bJX9tRpcVXIK/XsGGvInJSXxkxGo5fC2xwA8biRbK5Oalo9+8qCnAu
-9NJWFKxD34byn1s9/NbWN8i+7Q1ezQ9FgEMKTmZ5RWJvLkwz8LSO/988MUQ8Ew0s
-WRPKBVckR4k/gwZT7y4nVzyZcwKVJZzytCVQTZakUAnbEA+Q5+b7P7Rs5uGBZcmH
-YbnRd1LRJoFMZYHr4VXncQH3PYrbcHZEKrQxb5AubhgClzFfyZ0=
-=EOQi
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZiqwoACgkQVbJhu7ck
+PpSz0g/+Lvr8zBVnl0yuM//TgSiYoRMzRcBEoogoMQJL8TycuDripk2pwjxnNGY+
+9liDfabY3ctOxlgeRKUQsg1sNxVa+LJ0W6mlbSd8yrTSHEgI3TRrBuBIwzDtK+t3
+RvzGltCnlTIGYzuH5kB2RhHDj1gU1Hb+slDpUAVMwPiJjZwR5oa9w7V2kgNexqj1
+LwEoxM/52iT9mjL4Cp3HEL/iSuwiwS/r90FjteQKdQhCTK3mcsEpZOED+A7W00OV
+6gzNaEs94lI46JgqDsNtTEE+o5VSa/JAHva+ptGpHkfK6N5UREfDlYSTSJJHwgHZ
+Ksjk2HFj/unKz5m+W/TOM0YV8EoWkPZQfT8XXPqSYvSUfXmVgAIa1221gxkixWz2
+CDY1wa/vLaX3FZVy2IAadzfP4wHMrAYZ6dkRws/IPYv1j+WWkfKsybVE7vcVOYuo
+xR8Y2BNdx7Y3Vmbws2LgLDYLkIuvHTQgs3UIa2UAFY9mOGRZRfBVbh7rnY7gyGwf
+xT/sVaOLiy0312oecpBNfY9q2qg6NY1QKGwYlnYj4BBinZ3djTsSPkJnmrZcb9L2
+MeIRm3HIlUxrHHN4LddAryksv42UkK7fc4uxjk8t4xtzS4laBWVsKPyKR+XhMk79
+K+d5cTcTX2guA2S/Li9f4SZ4rnwO1O+2/rug3kdqfR54/2yBgOU=
+=Ol7Z
 -----END PGP SIGNATURE-----
 
---XCUvrOsdIF0QrqGe--
+--iVC8AYdCir31hKl6--
