@@ -1,85 +1,81 @@
-Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B731BC23
-	for <git@vger.kernel.org>; Fri,  7 Jun 2024 04:52:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138B512B73
+	for <git@vger.kernel.org>; Fri,  7 Jun 2024 05:10:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717735951; cv=none; b=i7TyJK+a1ftkBA9Vl0pHaDOqxHbXI4/XHAGQWHfg6negM3x9FfUvcsx71jXX/9J9mcaDuruKUryIxkvR0U8lxaqojGipdUb9+dEr1+0N89DDgzRm3jHqEI9WW9BmdkFJZ+X4utow7aLv+7wYyJeSPSlYRNla7EvfnFht/7sj3Q4=
+	t=1717737015; cv=none; b=C+8WCxVOltR+nKtJLOQbisrq9jgxirZcnFuLrlOlSgyBb21Uz2buHcEWXYyWvm10w4rpmWpAkjwKEgz52i46mIkbuPguqpT+VjcpmmXlOvdexMvsaTji/+fV4a/78JWwklILavQKGSBYvGupNh07wwiMaIvLA1Ip9IJJE9NDroE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717735951; c=relaxed/simple;
-	bh=M5/ypRRhsLQTnIxdpbhfVqs/YbsaNrp9sDVAHvx653I=;
+	s=arc-20240116; t=1717737015; c=relaxed/simple;
+	bh=Fks6LZlBJGGd3+lSB5eH8l9sujI+SHCnAOB29xzosYI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=POib0ugr75v1Y2/mNxKwvbEQrHkUfILxZ7no6blzaMCu9xuBg/v1sTLe1GSCKXp+fm4m+nkRq2AWNrMldgFgJpIjgiBnHlP3rGrbz0r+rLp9d+EjUZ5yyTDSQrQC41x9GAwF3FnF1+mDWX/LIRzKLKOKfFpNJyWfgVIW3jv9rGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NK3rhw2Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LGkyr2/j; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=oAZvlgiR4RaiHnEnfH4+In7NLCvBKNtlYDQmjRTwCE/lj4g+sl6nDbU7Z5OGcvlfVHaxNoEIJBN4lgaC/dXbtgniHtX5ynzZxKcP9Xe3DF/c2EQkR2hvqWzH9R74R8c8VrHx+JHLnNp4HadRY5KYiBH0WqZOdHgRgxYAYHrJ6xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iZx225vI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=drmLaVRT; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NK3rhw2Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LGkyr2/j"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id B3ADA13800FA;
-	Fri,  7 Jun 2024 00:52:28 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 07 Jun 2024 00:52:28 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iZx225vI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="drmLaVRT"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3725E114022D;
+	Fri,  7 Jun 2024 01:10:12 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Fri, 07 Jun 2024 01:10:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1717735948; x=1717822348; bh=JHBf1k5RbC
-	z6liAbfT6mL+irPhXw2f1H1mbH5lRAynU=; b=NK3rhw2YLCBbMvljsSHHpKLhhz
-	vl2p2eHNJiporec/yPpZRnS8HiVefEacPKK9KKUm3u8nyIg/eKW4psCfPby11izM
-	HDQtG7clJ1nT2luVtGtKwKlH8RE+xdgRMOPglPO17iHtDBS/Vt44UrhUuo7DfkeA
-	xD+xBf+MqJqXqQLg8xAhOa90tmtcBxsBHD68qnMOZvHYj3iB7lJmGB8/y4p7yho3
-	u7V2qdu21fpYLCN/Lp9n5+FucHMwptq0Jw1nmcoROHHZ0OXSJ0ZNU5cnVYSb1e0Z
-	DfWck/dTFgwx8LIs7Lgm2mS2eO4qvaqwGX/l1gQ1TDaKc0lEYPyMxeKmKXuw==
+	:subject:to:to; s=fm1; t=1717737012; x=1717823412; bh=ZCCnuC5TGN
+	Z3I1Fxx0lx5Ki2dG3OcwW4tb7wMzC9E4s=; b=iZx225vI2FtlLVRURPjZdXiJC9
+	K41ogDxredgJPtRKgG03L+gxcSkb/gs6hEZQj3Ltvop0zvLc4GZy16/posKjO9g7
+	S0CLeIyZha1HuetSB314LxWlbQLEKt8RVb5lcdo8kXXrVvkZoI8ENMEbD+SwRLbR
+	1X2yKsm3Kh3KvoYaS/+Tau4oSSvwefsCriK37zP79/1fJweWwarvN+1c/UatJu12
+	ze7n/h/aZPkXsQwKG/GsHlXHOfBcZiJHcq20Wk3cGhgURA33sPAclx3EMmK0ecWD
+	gw+3osehh6bJY7LT9TnTABQ+caD/426Mf/KRJybbhNLPUXzQXnk8Wb2bbNSQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1717735948; x=1717822348; bh=JHBf1k5RbCz6liAbfT6mL+irPhXw
-	2f1H1mbH5lRAynU=; b=LGkyr2/jFsAtNA0VEenrtaeSHgQDp60aMjQvqew+AZB9
-	dWbyetAvZMp8bFb46gFXDvXThpkYLsCqwQo+TTVXftzyM8AT6iYfCMYXlBKsXpZ2
-	jRpTLIRbU2+nXWZIGvhATiGGoC0mAogtcjdMBVyT8QDuFxXGPjwv777xc0NAousX
-	OdNtZ8BWHkRKx0iNXgJd+qYgA5GZ8eP/rvLo2ceMk/UxCgsAN8o1HDumxtQ7vqxv
-	kt1Foe1VqxTkdQwmrre5Trx182xBRS3w6U7O8OqwQ401H3QcOpQck7xeTjnVySKN
-	1CYa3kI5bdWHKKi8W96+XZ10utiqV0tSoArvUggeug==
-X-ME-Sender: <xms:DJJiZhneaizDceisyZ_GDB0uyg97AKXnhF19lKuvJDwUKEfuj2h0-Q>
-    <xme:DJJiZs0iDaK1AicsU2uUag-nKoOIFaN_JzJkmmhokbqBcWjnjoQuO1hd6HMjNvA6c
-    Rm5aq3ZkCDbVUqPCw>
-X-ME-Received: <xmr:DJJiZnpXOJ_mUXi308_U7nneiwcivIh5RJkUA_rjwwF2YVfOEXTYgV-b2RjWeaPAw-hijGsU9PHETIHPKwln4hkVaq0oA1MhZ_5Ns3-cOWlYa4QX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelledgkeejucetufdoteggodetrfdotf
+	fm1; t=1717737012; x=1717823412; bh=ZCCnuC5TGNZ3I1Fxx0lx5Ki2dG3O
+	cwW4tb7wMzC9E4s=; b=drmLaVRTYdULVfeFAPA5tSrLuC5TDgA3PeXNqB3B5obJ
+	EXyyOc/BHRGYI801KXh6vXyoqswKT0hycKuILWZOTndHekKTh0RV2EJ6Q7NGgPXV
+	raEPdANypwLAGFSPVMSnV94rWsqbADHeDMQESSa4wGDzVqf0rhStE4RYGV6D+uN4
+	aZKBlewdXS3TwP4ucQjuAhqrATkYXFLbY5NK63pGjqRhQ/3xLqXRraVwNOKLDXtv
+	rlyyrTGY9zUZAfK6JXE8HotAiTJ48GKtYp60LfHpgi1I4KQAjm2d2HXHhQkmwIh1
+	O1JLl1/wSo+s5sWNlSc9Kmf7sDHyrWwfrQVRgXVkEA==
+X-ME-Sender: <xms:NJZiZu6rj1r3-BwKDwzjOiPlcDn-cTvGzw-qo7-6PULV7s9rMAEL3A>
+    <xme:NJZiZn4kAs-dVXSDhjhw_iS4ng6QmvA1WweDaDG15bMUqfv-RXj22T6B1F4lVzPJM
+    aQq9QfQ1lHvjtA4QA>
+X-ME-Received: <xmr:NJZiZtcVO_AaNqKE10s0H6xnqI0WsRhMk5b9gs2Kuqd57QatCWv7-MtB2-7wqw25vyIblNgRiNg9IVjxwAx5oDElUsr3lTmU6EXcgl_JmSyICe-b>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelledgleduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepheefhfeutdevtdefieetueeggfefleegleevheffueekleefhfeikeetveduhfff
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:DJJiZhlH8B4lMnYj4vIPzfcmMODeFU1HTXUpFDZGsasdK8X3l3lXHQ>
-    <xmx:DJJiZv1_foEYdQIPpBpk6FsbBs_iEr0vApnylztPVFvHMDFl1FZGdA>
-    <xmx:DJJiZgtp_K1MyKxb-82GQ-52amHmSdD7d7xfSyP22mE7waUvRD1Mdw>
-    <xmx:DJJiZjUtmq2Jtg5026H-zxastML5ANm-XASMvRuPxpY0s-4WrZniWQ>
-    <xmx:DJJiZqRNjuvpuQV0BUmgwKe6iYUgY1HvZ68xT7uA_jD_pOL-zLBmlPO4>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:NJZiZrLi3jdZWBbtYyargyJq2uSgkWfSSjXPx_nmGKUeOrHehZpsyg>
+    <xmx:NJZiZiI27p3Yu2F9DaWm0G_xnEsMmZ_6PFBfyD_hM5twXiQNtUsF7A>
+    <xmx:NJZiZsw0TieiuC1PKfL1TluQ7gnHY6EKMeN9wh4BS32Pf7xm7RlDag>
+    <xmx:NJZiZmJUaQaSGtlmtifNduzXFlwVV45WVLKMF47ALfpSaEAIieBDIA>
+    <xmx:NJZiZu3nA9_HlXvv8ZIqjkZDR7NBZo0RgG3-9fiBW7CGNjJeKK2QcpV_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Jun 2024 00:52:27 -0400 (EDT)
+ 7 Jun 2024 01:10:11 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 9f27bb51 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Jun 2024 04:52:25 +0000 (UTC)
-Date: Fri, 7 Jun 2024 06:52:23 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 6b287307 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Jun 2024 05:10:07 +0000 (UTC)
+Date: Fri, 7 Jun 2024 07:10:05 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 12/27] object-file: mark cached object buffers as const
-Message-ID: <ZmKSBwqIkOLUhOlK@tanuki>
-References: <cover.1716983704.git.ps@pks.im>
- <cover.1717504517.git.ps@pks.im>
- <ecca8e973df77cfc8233ab63bf7d1f6fa83031a3.1717504517.git.ps@pks.im>
- <xmqqr0dapq1s.fsf@gitster.g>
- <xmqqmsnyppo3.fsf@gitster.g>
- <xmqqa5jynimn.fsf@gitster.g>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] ci: let pedantic job compile with -Og
+Message-ID: <ZmKWLV29TQ71DQ7u@tanuki>
+References: <cover.1717655210.git.ps@pks.im>
+ <351dec4a4d5a5619e7627e11a8e674e32125125e.1717655210.git.ps@pks.im>
+ <20240606065236.GA646308@coredump.intra.peff.net>
+ <xmqq4ja6niba.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,76 +83,62 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Z/CWqTOz3GAG3Vxu"
+	protocol="application/pgp-signature"; boundary="OD4kry8YxnHnb7MD"
 Content-Disposition: inline
-In-Reply-To: <xmqqa5jynimn.fsf@gitster.g>
+In-Reply-To: <xmqq4ja6niba.fsf@gitster.g>
 
 
---Z/CWqTOz3GAG3Vxu
+--OD4kry8YxnHnb7MD
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 06, 2024 at 09:25:20AM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Jun 06, 2024 at 09:32:09AM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 >=20
-> > Indeed, that seems to be the case.  With the attached at the tip of
-> > the branch and rebuilding 'seen' seems to pass these 6130, 7010, 8002
-> > tests with SANTIZE=3Dleak.
+> > So for the pedantic warnings, we're left with a guess as to whether -Og
+> > or -O2 will yield more results. And in my experience it is probably -O2.
 > >
-> > From f307bbf7bd317d90db29bd1589b49e84b9e37e88 Mon Sep 17 00:00:00 2001
-> > From: Junio C Hamano <gitster@pobox.com>
-> > Date: Wed, 5 Jun 2024 23:03:34 -0700
-> > Subject: [PATCH] fixup! object-file: mark cached object buffers as const
-> >
-> > ---
-> >  object-file.c | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/object-file.c b/object-file.c
-> > index b5b5a59dc6..2d5bd3a211 100644
-> > --- a/object-file.c
-> > +++ b/object-file.c
-> > @@ -1785,8 +1785,10 @@ int pretend_object_file(void *buf, unsigned long=
- len, enum object_type type,
-> > =20
-> >  	hash_object_file(the_hash_algo, buf, len, type, oid);
-> >  	if (repo_has_object_file_with_flags(the_repository, oid, OBJECT_INFO_=
-QUICK | OBJECT_INFO_SKIP_FETCH_OBJECT) ||
-> > -	    find_cached_object(oid))
-> > +	    find_cached_object(oid)) {
-> > +		free(co_buf);
-> >  		return 0;
-> > +	}
-> >  	ALLOC_GROW(cached_objects, cached_object_nr + 1, cached_object_alloc);
-> >  	co =3D &cached_objects[cached_object_nr++];
-> >  	co->size =3D len;
+> > If we want to get coverage of -Og, I'd suggest doing it in a job that is
+> > otherwise overlapping with another (maybe linux-TEST-vars, which I think
+> > is otherwise a duplicate build?).
 >=20
-> Wait.  Why do we need to allocate co_buf that early in the first
-> place?  IOW, shouldn't the fixup be more like this?
+> The same knee-jerk reaction came to me.
+>=20
+> Speaking of variants, is there any interest in migrating one or some
+> of the existing x86-64 CI jobs to arm64 CI jobs GitHub introduced
+> recently?  I suspect that we won't find any endianness bugs (I
+> expect they are configured to do little endian just like everybody
+> else) and there may no longer be lurking unaligned read bugs (but
+> "git log --grep=3Dunaligned" finds surprising number of them we have
+> seen and fixed), so the returns may be very small.
 
-That is of course the much more elegant solution here. Will adapt.
+Note that we already run arm64 via GitLab's macOS runners. That's not
+Linux of course, but I guess that any architectural issues should still
+be caught by that.
+
+Not to say that we shouldn't adapt GitHub.
 
 Patrick
 
---Z/CWqTOz3GAG3Vxu
+--OD4kry8YxnHnb7MD
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZikgYACgkQVbJhu7ck
-PpQMYw//WL0r67KYYemQ+2jWVnoBBfAQJAdYe6zhVBnto/TFUJBgmIWq1SsAKnzu
-3Y7B6bTIdRJpgMKRWHpM9gvrvxTSBhqAKm33E+H6tZF997L1LikSP2vWA1IqAN2F
-9JiUevEmFaKYQlOxjdZSNMxGwuAP1rAbJBVBDtdeshcA17Z9/Br4YoFO8cCPyNmY
-Q0ABwpm+w47Q7sb5meJIPdtoZs493j4aLk1u41YzOaMN6nz5I7dZpMzIg24PzVn7
-C0VIILTeDEQJ6Qd1iWu5iN7qDP9VoMzjE2gbZJ4++70/orbKu4yWG4NJVJfEDW4i
-9VMTktY79CpGjrfox4DzQk3XU6Dp7BgICvzNEMIFS9kzW0FiBeeX+2KCct1HvkG9
-wOvDiYG5c6ztCHykubWpPci6ewlnMy3UlKibn9JeMR49C23y18UmTpI/wlcj0949
-U3vbwte+fyNnAXxaHqOCzUpbg2AKvVrw/Fg/RdWkpgIHgy0yOPCh/xjz/lTONjQP
-3J4Ajx4P7a194rYdwrrNm4NkyzAfUv1voaAq3SPC+h3VXCmFqOA7U4dHCi3YB6D7
-ybnRguAmRHRqDJtJoPEAzWwhsoxMsHCibPxf/Zk2CJQAgfe6r5WWr/Z4VCWfDma3
-40xtKd6HJHdijNHl+djdqONu8iOZ18mJfX4serH+3eE1Lc3764o=
-=aTpy
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZiliwACgkQVbJhu7ck
+PpQr3A/+PNOTox845AxQ7/P/tmEP5kll6s4HN+l7620yl9SWAHzAiI1kpwOatwDG
+0Ww0s2DCgyoEmTEjBCQfqsH+aGpN+99ZPwUC+oIf09FXMUyrxg0WIjgKGrfCxxia
+iepi53g+8UTDql7JxnP86bY1n55l9woILVxmJqZ4WHU/wdnUAr8khwjMyZreXUKH
+VSq6xRxNiFDjb5/xzxEPTcjQfjFbM7i4/WVbFIAAP1HORqbT/ALZ9r+seOqXAK6k
+WuOS38P2jFVScMUcG1XPGpanPeTDlBHG6wdU0VjQoDVqEtPTNGJjkF4YU9vCQKNG
+WR8QE5lqunNVzbT05QfqwGi7sKi/AEmv/drlHvB/1esanSKLk/wonvOZ0L49ruje
+8Hq2+Swn2joBroJUpu/dTEgSGtl4R6zPmAlp6sDoFu8bw2Q/48CM+/L3sZ1v8XV5
+s5V1ah0LpsfCv3kfv1tuSn8v50fewwT0b+ebsUiNQhDVWRJEVoZsDUe9jB7kf6vs
+eDV32/QCru4zxctz8EaNFYkn2sUduAnI0gf56OnrDcdAc4O1AxCS/EJQzy2boXs8
+1C2jHuDcckSTPHbDvrTJOtU/ZWBt4U5quOdF3BSyxyFucDWxt93MiHZGsElguDos
+kXn7Hjqf57Bp4HC/eFTPHcbDb3ZdgYSFIYubPPe1eU4JMBVVtME=
+=qcNz
 -----END PGP SIGNATURE-----
 
---Z/CWqTOz3GAG3Vxu--
+--OD4kry8YxnHnb7MD--
