@@ -1,130 +1,87 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623401A702
-	for <git@vger.kernel.org>; Sat,  8 Jun 2024 18:39:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFD8134DE
+	for <git@vger.kernel.org>; Sat,  8 Jun 2024 18:53:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717871946; cv=none; b=EgpR1bL9i/VUvC9RXbCCmF7AwumA6mUZNrLbsPNCWgs/+gT58j0zEz+ybqn5sIWsdEHIaOfideChhviPWsSw4xtN0KtOMZJ0pY4xFNeCIpdy2g9HAKgpWpHXpfTFOlVk/XZCLPzWS7i3H5lSW0HvCatTjSAjWJu4FTDtZ7gSCns=
+	t=1717872819; cv=none; b=Zle0ER6vWneYuC2PTFxQToaVBwTK8ZRFDYJIM/z3SDX5gmZvc5vBMLoyEM5GWvmHnu7QPRgg+tX7yBc7jyj3R4jN2Q5FoqsbBUA0MMv2CK9SLCTDuc/uq8A+1ydBy3Z8qyDlSFXsh99ZwY7ZywB/QAzXaMpCO3kPUAxC0+zizYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717871946; c=relaxed/simple;
-	bh=7LbS2FPu2RY3f+DJ5tv9Hfo45OMRUBIk6Ie6CsJObUg=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=alL7W259rsgOPk+xT8DrcBIeiyLmVA1S7UACBFZfUOpuI2S/xNL9RA7mvoyDYGzNuH89y9ZsMc2KiS1tthXTUfPVpOpQAT1rxVC2tSSWkVYI4jWC8XY0+rab00MrVdztvxV+ftwwmiLyRYtlG/l3/EsEYZ4PdjV4vyE8P26nN8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hyUW+LLE; arc=none smtp.client-ip=64.147.108.71
+	s=arc-20240116; t=1717872819; c=relaxed/simple;
+	bh=ejNmIiqtCntO00mnsnpsUWWJU8MO7FhJ4dIKoDpqWKQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TUZzTHVb6FgtM3WkhTfCo1Azz+VeZz48FqcVE70xnla+IXDLm0TCd9NRM3SCNkb1KTLAbuWFgKyj7VTQTa+QaPiVjZ3U7FP2X42DgGeN+WT5oxpXc9jrrdseeDKgYMVzkHbgOBV4BXjFZKVsc6JKu4eIBBzLJ9DS70Ol5CqAxBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=tynHHlfq; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hyUW+LLE"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1137A38CD3;
-	Sat,  8 Jun 2024 14:39:04 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-transfer-encoding;
-	 s=sasl; bh=7LbS2FPu2RY3f+DJ5tv9Hfo45OMRUBIk6Ie6CsJObUg=; b=hyUW
-	+LLEJzCvWX0vzxY4EOcDaDNMEJHpKXcTaxMSDqw5zef4Ks+zwUaoIhqP3Ii5HF2L
-	cq0STZxP/QevlkSO2P4tEG8Ybn6/N8FVh5AOd9twGxs7hFfBmxw/TvNDQ031KF40
-	vTne3U2J2jEl9pYfGIpVj2EoMP4QfVv+/ms/XDs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D55E338CD2;
-	Sat,  8 Jun 2024 14:39:03 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tynHHlfq"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 10A9833266;
+	Sat,  8 Jun 2024 14:53:38 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=ejNmIiqtCntO00mnsnpsUWWJU8MO7FhJ4dIKoD
+	pqWKQ=; b=tynHHlfqzZ3Cq6l5JoyOFj8qkHjWW8B0NtH7yuZIX763DcPb568bhl
+	tlhSv2j+EOcUyhssTLFzdT310drotErCCsYlR+TIH+ADqMXmSWgZueFeB1yXR3Fv
+	tMcR1szwRiZReufLxTM5XrPY6XOi6/f2iw8Tgi9DXeWqrrnSDjxbI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id F02B733265;
+	Sat,  8 Jun 2024 14:53:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 86C6838CD1;
-	Sat,  8 Jun 2024 14:39:02 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 98A0633264;
+	Sat,  8 Jun 2024 14:53:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] worktree_git_path(): move the declaration to path.h
-Date: Sat,  8 Jun 2024 11:39:01 -0700
-Message-ID: <20240608183901.2084546-1-gitster@pobox.com>
-X-Mailer: git-send-email 2.45.2-445-g1b76f06508
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Konstantin Tokarev <annulen@yandex.ru>,  git@vger.kernel.org
+Subject: Re: Autosplit option for git add -p
+In-Reply-To: <CAP8UFD3JM_h1BvK59R4wT1DeZyo6o-9T3GXGK8xE6vLnDMDCaQ@mail.gmail.com>
+	(Christian Couder's message of "Sat, 8 Jun 2024 12:43:33 +0200")
+References: <20240607120530.74297526@yuvnserver>
+	<CAP8UFD3JM_h1BvK59R4wT1DeZyo6o-9T3GXGK8xE6vLnDMDCaQ@mail.gmail.com>
+Date: Sat, 08 Jun 2024 11:53:33 -0700
+Message-ID: <xmqqmsnvclle.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- 609134E8-25C6-11EF-AF13-6488940A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ 685D473C-25C8-11EF-B7E6-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
-The definition of this function is in path.c but its declaration is
-in worktree.h, which is something unexpected.  The function is
-explained as "Similar to git_path()"; declaring it next to where
-git_path() is declared would make more sense.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- path.h     | 9 +++++++++
- revision.c | 1 +
- worktree.h | 8 --------
- 3 files changed, 10 insertions(+), 8 deletions(-)
+> It doesn't look like there is any option to do that. About
+> implementing it, it depends if it would be a command line option or a
+> config option.
 
-diff --git a/path.h b/path.h
-index c3bc8617bd..a6f0b70692 100644
---- a/path.h
-+++ b/path.h
-@@ -4,6 +4,7 @@
- struct repository;
- struct strbuf;
- struct string_list;
-+struct worktree;
-=20
- /*
-  * The result to all functions which return statically allocated memory =
-may be
-@@ -81,6 +82,14 @@ void strbuf_repo_git_path(struct strbuf *sb,
- const char *git_path(const char *fmt, ...)
- 	__attribute__((format (printf, 1, 2)));
-=20
-+/*
-+ * Similar to git_path() but can produce paths for a specified
-+ * worktree instead of current one
-+ */
-+const char *worktree_git_path(const struct worktree *wt,
-+			      const char *fmt, ...)
-+	__attribute__((format (printf, 2, 3)));
-+
- /*
-  * Return a path into the main repository's (the_repository) git directo=
-ry.
-  */
-diff --git a/revision.c b/revision.c
-index 7ddf0f151a..09024cf4aa 100644
---- a/revision.c
-+++ b/revision.c
-@@ -29,6 +29,7 @@
- #include "bisect.h"
- #include "packfile.h"
- #include "worktree.h"
-+#include "path.h"
- #include "read-cache.h"
- #include "setup.h"
- #include "sparse-index.h"
-diff --git a/worktree.h b/worktree.h
-index 7cc6d90e66..11279d0c8f 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -177,14 +177,6 @@ int other_head_refs(each_ref_fn fn, void *cb_data);
- int is_worktree_being_rebased(const struct worktree *wt, const char *tar=
-get);
- int is_worktree_being_bisected(const struct worktree *wt, const char *ta=
-rget);
-=20
--/*
-- * Similar to git_path() but can produce paths for a specified
-- * worktree instead of current one
-- */
--const char *worktree_git_path(const struct worktree *wt,
--			      const char *fmt, ...)
--	__attribute__((format (printf, 2, 3)));
--
- /*
-  * Return a refname suitable for access from the current ref store.
-  */
---=20
-2.45.2-445-g1b76f06508
+Having these alone make no sense to me.
+
+I'd suggest extending the lowest level (i.e. interactive prompt
+response) first so that a stronger 's' splits all hunks in the
+current file.  It might be sufficient for the use case.
+
+On top of that, it happens to be that when changes to _all_ paths
+want to be split, it may prove handy to also have a command line
+option.
+
+But the reason why I am hesitant to endorse a command line option
+that splits everything is because:
+
+ (1) it is dubious to expect the user to _know_ that it makes sense
+     to split all changes before starting "add -p" (and friends).
+
+ (2) if the user gives such an option and then in the interactive
+     session regrets that it was too much to split all the hunks, it
+     is unclear how the user can easily recover (there is no "merge
+     all hunks back to the original" operation).
+
 
