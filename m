@@ -1,110 +1,77 @@
-Received: from mail.ekdawn.com (mail.ekdawn.com [159.69.120.39])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B10225AE
-	for <git@vger.kernel.org>; Sat,  8 Jun 2024 11:05:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.120.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A58482D3
+	for <git@vger.kernel.org>; Sat,  8 Jun 2024 11:20:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717844752; cv=none; b=jIj23G+MdoP1qcPjs4mhuKbUyZ7IuEGAgdd3ri8HfD4z1kdXRzWs77k+TLprtYSYvPs90hA48tqkP/rEJzDSGrMcDDbDoiloGP4qcHAr8h7LooMN/+QcRAMlze1fZ1MuG6Z72xxjepMDVm3549m0aXKzssBukf7QW4C/yZZmPhQ=
+	t=1717845636; cv=none; b=VDPm+49KaWODwYiX9g1zDzsOFUCTclWRjrNbBnHhAGSlPo2Vqyr0HltIdt3iDray48MHi6OK0Po4usI+BeANc/xkrq6ZKEpAVDVeEyIcnAWoRQO6SoWDjbR+tOA4z1vB/TR8WbZVNDU7ERf3tLTdYnuk/agFUByLKnBx5Ky5XlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717844752; c=relaxed/simple;
-	bh=ZbK/Sp0XmpVYvuhQJ+OMV7BarJSD14Y2L1LZmb0G1MQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EsulCOD6SNWKpV2jXpKvvtG/Z6nltGKzUfmyptUmXYHBUE8wQXcLI1fSndLyEu5NRv2Uw9qBjT7bgOEN/ogHgg1cH3n1dI7K9gTA2Hx5FwUyQpmnKK3WS5kkxikyqsoi4jhPIhaMGNQNe7QIOLNLbWx/sswSckpDQRm1R8dziLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=horse64.org; spf=pass smtp.mailfrom=horse64.org; arc=none smtp.client-ip=159.69.120.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=horse64.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=horse64.org
-Received: from [10.42.0.97] (dynamic-176-007-192-159.176.7.pool.telefonica.de [176.7.192.159])
-	by mail.ekdawn.com (Postfix) with ESMTPSA id E9DEC185CBA;
-	Sat,  8 Jun 2024 11:04:43 +0000 (UTC)
-Message-ID: <a424b43f-d477-46bf-a28e-9d7a87a0130e@horse64.org>
-Date: Sat, 8 Jun 2024 13:05:47 +0200
+	s=arc-20240116; t=1717845636; c=relaxed/simple;
+	bh=U161xa7m//U+QGTvb4Fi9C0Bv6as/SCMqGpTg2lqMVI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z9/jr7U5fvapll43fUqYSBuzO2B5UnUA/uff0XVEzLELnwy6FtEa6Z0SuTaI27ZMwVdyqztQWVmKcT4D2nCKowTnmUjsYgYmda8LmO3aY4Pko21UnDVOMUvjVkd5vC3vO/t/UXC82qoO9VSRmEK2eWG8hCLJTeS8gtOUrZpwe40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 8929 invoked by uid 109); 8 Jun 2024 11:20:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 08 Jun 2024 11:20:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29788 invoked by uid 111); 8 Jun 2024 11:20:33 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 08 Jun 2024 07:20:33 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 8 Jun 2024 07:20:33 -0400
+From: Jeff King <peff@peff.net>
+To: Fred Long <fred_long@fastmail.fm>
+Cc: Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com,
+	git@vger.kernel.org
+Subject: Re: git fetch --prune fails with "fatal: bad object"
+Message-ID: <20240608112033.GB2966571@coredump.intra.peff.net>
+References: <16919-1717194882-875013@sneakemail.com>
+ <xmqqplt1d0k0.fsf@gitster.g>
+ <000501dab3b3$51779400$f466bc00$@nexbridge.com>
+ <xmqqo78kbqwo.fsf@gitster.g>
+ <20240604104437.GD1781455@coredump.intra.peff.net>
+ <876fbb07-210e-128e-5289-57ab01761750@fastmail.fm>
+ <20240605084718.GD2345232@coredump.intra.peff.net>
+ <c2a02982-40a9-6629-05c2-c8de3335f35b@fastmail.fm>
+ <20240606011453.GA623737@coredump.intra.peff.net>
+ <5469592f-69eb-b1da-1218-abeae88f7303@fastmail.fm>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: With big repos and slower connections, git clone can be hard to
- work with
-To: Jeff King <peff@peff.net>
-Cc: rsbecker@nexbridge.com, git@vger.kernel.org
-References: <fec6ebc7-efd7-4c86-9dcc-2b006bd82e47@horse64.org>
- <0be201dab933$17c02530$47406f90$@nexbridge.com>
- <fdb869ef-4ce9-4859-9e36-445fd9200776@horse64.org>
- <0beb01dab93b$c01dfa10$4059ee30$@nexbridge.com>
- <200c3bd2-6aa9-4bb2-8eda-881bb62cd064@horse64.org>
- <20240608084323.GB2390433@coredump.intra.peff.net>
- <bc030171-70fa-41cf-945a-2d20bf237372@horse64.org>
- <20240608103533.GD2659849@coredump.intra.peff.net>
-Content-Language: en-US
-From: ellie <el@horse64.org>
-In-Reply-To: <20240608103533.GD2659849@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5469592f-69eb-b1da-1218-abeae88f7303@fastmail.fm>
 
+On Thu, Jun 06, 2024 at 01:12:31PM -0700, Fred Long wrote:
 
-I see! Unfortunate, but I'm thankful for your detailed explanation.
+> Yeah, I saw that, and I think I know what's causing the problem. First I
+> create a bare mirror of AOSP with "repo init --mirror" and "repo sync", then
+> for all my different source trees I use "repo init --reference" to share
+> objects with the mirror using alternates files. Running "repo sync" on the
+> bare mirror works fine. The problem occurs when I run "repo sync" in one of
+> my source trees. Commits and refs have been deleted from the mirror, but the
+> refs are not deleted from the repos that point to the mirror. So it all
+> makes sense now. Still, I wish there were a simple command I could run to
+> remove the dangling refs.
 
-The "shallow-cloning and deepening is [...] expensive for the server" 
-makes me sadder about the current situation. I don't like that I need to 
-make the server's life hard just because my connection is shaky... :-|
+Yep, that all makes sense.
 
- > It's possible the client could do some analysis to see if it has
- > complete segments of history. In practice it won't, because of the way
- > we order packfiles (it's split by type, and then roughly
- > reverse-chronological through history). If the server re-ordered its
- > response to fill history from the bottom up, it would be possible.
+As I said before, I don't think auto-deleting corrupted refs is great in
+general, just because it can make a bad situation worse. But if you want
+the foot-gun, here's a more complete script that you could run. It
+_just_ looks in refs/remotes/, which is perhaps a bit safer.
 
-I wonder if that would be the most feasible idea, if any at all...?
+  git for-each-ref --format='%(refname)' refs/remotes/ |
+  git cat-file --batch-check='%(objectname)' |
+  perl -alne 'print "delete $F[0]" if $F[1] eq "missing"' |
+  tee /dev/stderr |
+  git update-ref --stdin
 
-My main take-away is that I don't know enough to suggest a good way out, 
-and that git is even more impressive and complex tech than I thought. 
-Thanks so much for the detailed responses, and I hope at least some of 
-my uninformed rambling was of any use.
-
-Regards,
-
-Ellie
-
-On 6/8/24 12:35 PM, Jeff King wrote:
-> On Sat, Jun 08, 2024 at 11:40:47AM +0200, ellie wrote:
-> 
->> Sorry if I'm misunderstanding, and I assume this is a naive suggestion that
->> may not work in some way: but couldn't git somehow retain all the objects it
->> already has fully downloaded cached? And then otherwise start over cleanly
->> (and automatically), but just get the objects it already has from the local
->> cache? In practice, that might already be enough to get through a longer
->> clone despite occasional hiccups.
-> 
-> The problem is that the client/server communication does not share an
-> explicit list of objects. Instead, the client tells the server some
-> points in the object graph that it wants (i.e., the tips of some
-> branches that it wants to fetch) and that it already has (existing
-> branches, or nothing in the case of a clone), and then the server can do
-> its own graph traversal to figure out what needs to be sent.
-> 
-> When you've got a partially completed clone, the client can figure out
-> which objects it received. But it can't tell the server "hey, I have
-> commit XYZ, don't send that". Because the server would assume that
-> having XYZ means that it has all of the objects reachable from there
-> (parent commits, their trees and blobs, and so on). And the pack does
-> not come in that order.
-> 
-> And even if there was a way to disable reachability analysis, and send a
-> "raw" set of objects that we already have, it would be prohibitively
-> large. The full set of sha1 hashes for linux.git is over 200MB. So
-> naively saying "don't send object X, I have it" would approach that
-> size.
-> 
-> It's possible the client could do some analysis to see if it has
-> complete segments of history. In practice it won't, because of the way
-> we order packfiles (it's split by type, and then roughly
-> reverse-chronological through history). If the server re-ordered its
-> response to fill history from the bottom up, it would be possible. We
-> don't do that now because it's not really the optimal order for
-> accessing objects in day-to-day use, and the packfile the server sends
-> is stored directly on disk by the client.
-> 
-> -Peff
+-Peff
