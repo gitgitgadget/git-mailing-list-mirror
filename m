@@ -1,160 +1,89 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701807F
-	for <git@vger.kernel.org>; Sat,  8 Jun 2024 02:44:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1974C65
+	for <git@vger.kernel.org>; Sat,  8 Jun 2024 05:54:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717814656; cv=none; b=mhbsrYSmXSSSLEqW1OxbfwUxKPjmtDO3JAAUZSKkmwsAhutkewqQYWs7QNT5dVoXxSsvLsTh/6Ez06N7losJnrI7jH3jzpTfwNZZ6GvneJwsPedXlpFeu+qoRRN4kxiwfd+J5k9+3D9Xur4XJzDPvt6CASLcoC6mzsnaG8AJAvY=
+	t=1717826088; cv=none; b=bKhO4j3F8rQnMqzRpVZx8vODx468TyrudUJfqQrg8LcOms0Ws0+50u1tC2Hxuiy+qfFs7VOH4QRgFrjd7sxe84TCwylILSo0/WYcpX7oyUHFUnfXcEmhsqsPqYmWc2o0Cuxu14wAjbS1tmN4K/tmTyMBKNsPQbIOALXJfnC9q9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717814656; c=relaxed/simple;
-	bh=/WvEl2dhlH6HsiSsYrHNgB/JJzO58opsCcBft/1TONs=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=ZaqR6meUhNqBaCLZIxo0wYun5oIqvmhWcImBqeNMQdiLyD8zu9KufWtIyv6LBu1Pmb/GgwyLhme9XHYvag8ckaA2jU73ptXcFrD8JS3L7ZqvJoL5vewR+RnX9vtL3GDzyNO/mtSSqruaSf1yGUpXxPbK2vZ3WWKcT3tfMsqW6ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=gluH5lC1; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1717826088; c=relaxed/simple;
+	bh=VvC5QvzGHBr/+zl0n34no7JXUCCXSK1InG3LAa5rVsY=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=MEKTtYs98VZJ/o3Rat+1A8pXAv0C8lpzcFPdTrx6PUVEsS2su27dE8aGm3N5lPrqFOKO8c+a+p2T25/MgiOAq5+zBCuyqpvWnKQdjHDQw6bd+G3iEN82F+i0v/CHUNMhqQ7SFW68ID6G02kQnEEwTnYUNehv6m7HvEn8QbKqGaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=cZA7QH7n; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gluH5lC1"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52bc27cfb14so1218635e87.0
-        for <git@vger.kernel.org>; Fri, 07 Jun 2024 19:44:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1717814652; x=1718419452; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=/WvEl2dhlH6HsiSsYrHNgB/JJzO58opsCcBft/1TONs=;
-        b=gluH5lC1KFgyyYGJWgt/+XUX9Krkn56WrBLGZN1QaRzL/lYpHfOgT2OWQ2/QJ94Rn5
-         Gcu9pTSYUIaTF4GAuZOgxDgQsxNzjaK0qXeLhnp12Z3FEBj/GIPDJo9UTLBri2lPFAoG
-         e98zeoU4cCsrF9Iz6+tfOKg6c5COaUrLkwyoYAVeGoQbrlwZFi9hepn7dmBaZu4JaqMm
-         IAgwgJhAsdsRDH1SFibZmHj3/RAueccwRYG7GLnim7CLwRirtjA9Pchx++FYDN/CZsGQ
-         PFQlnIGs//SXaRBo6OHxijeOczy/1yIuNiCG9bsTNgHY/K9OefiI/O58jrzw2siXnTqx
-         OZCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717814652; x=1718419452;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/WvEl2dhlH6HsiSsYrHNgB/JJzO58opsCcBft/1TONs=;
-        b=CqoNLR+Ih3m/jbqr1S2sYm80zntCS3b22zFgQEgeoDMSxpj5cRb20uWSA+eP73hZtZ
-         4K3s62iMZ8trZowwlAMVsmkX4OuTYveAp6TtHibwLP/DUsSElhyTPdErbfDz1tMczmYU
-         4dObaD6j2qG059ug1fvSIP95n7YrmDDyja9djRPtMcfAiVlY4b8CA26Wc511jRp9E/Ig
-         gJSxXKjg1XA2lJ6q7tk7WKqKPGir0UQz06ep0eCQwdaProYZ5SCIGbcjjBDiMft/0Sws
-         JfET+Y3htAVKyiHDFWScrzey91P9xyAfWWY+Eatyfhl4W00Xy9ViAqOpp1bggoHTivHG
-         lvYA==
-X-Gm-Message-State: AOJu0YzUFWvc+KuSqTGjk9XbPgJRfF36Yu7Y08sujIbOVskv1x92f/3s
-	0xeeh66pWvkz4eHdU91E6RQUp5bG11b0oPUg9zpw4SPAotzNeuCnfPRGUajFjFmSfw0RCKppDeQ
-	mJC3DwNlQgYY7wB2FaJjCGG7tZIyRRtve8XlDeowfouiZorxCNw==
-X-Google-Smtp-Source: AGHT+IEEaP9GfLXHGBDh4vM1a3C7+P1HX/+zVBOqrsubv8jXHfD56196iGzvA2UisR8r9kBvWZSubv9x2clye6RW3LQ=
-X-Received: by 2002:a05:6512:3f09:b0:51f:3e0c:ace3 with SMTP id
- 2adb3069b0e04-52bb9f785d9mr4460137e87.16.1717814652043; Fri, 07 Jun 2024
- 19:44:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="cZA7QH7n"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Kyle Lippincott <spectral@google.com>
-Date: Fri, 7 Jun 2024 19:43:56 -0700
-Message-ID: <CAO_smVjSy6j7jpSxHNsxzJfxnHwjLphsqu5jwd8TBhMLp72XPw@mail.gmail.com>
-Subject: MSan failures in pack-bitmap
-To: Git Mailing List <git@vger.kernel.org>
-Cc: Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1717826076;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HYBQuY5BNEuPkZSLSgRSivyTMxQPw3dkOcqfpHgocL4=;
+	b=cZA7QH7nIv+bG9cEPOxHZpAveghqDfhOtx/H7S7D99LaecGb6FsJH4ygI0bxp5qp92wHS/
+	YtV+Zvc12MUfLdjHIQWaQeucqooBLpkkKo9idlsmHiikw/GKTwx+r/l+2GSB9DRoxHPkEs
+	eJsWPZI5PHsSa1Xh9KYa0iBtagcX7UWlvEbpdQ2PH+V/rl6655Yk5EPj1wYD6izkG/qI7t
+	zEBtuU5BO4Edn7lm2OL+HVxuoKkhiLqaHPHvXft3NiznOWa40GZMr9rsdoeTpSrCDxqUyI
+	DdeTDDcHM8y6kwraX8VCuJoQWVv3tUBzbTiYC5nQkgpMvG3AMmY94HM7uAk/nA==
+Date: Sat, 08 Jun 2024 07:54:34 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: phillip.wood@dunelm.org.uk
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>, Git List
+ <git@vger.kernel.org>
+Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
+In-Reply-To: <6056d585-6380-43e7-adf1-9f9aadd2a7db@gmail.com>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+ <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+ <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
+ <20240604101700.GA1781455@coredump.intra.peff.net>
+ <xmqqikyo207f.fsf@gitster.g>
+ <20240605090935.GF2345232@coredump.intra.peff.net>
+ <6056d585-6380-43e7-adf1-9f9aadd2a7db@gmail.com>
+Message-ID: <a8d3415e3913e3a0798a748ed7f7a093@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-While running t/t5326-multi-pack-bitmaps:
+On 2024-06-05 15:21, Phillip Wood wrote:
+> On 05/06/2024 10:09, Jeff King wrote:
+>> On Tue, Jun 04, 2024 at 08:32:04AM -0700, Junio C Hamano wrote:
+>> 
+>> Given that the main use case for "|" is for human viewing through a
+>> pager, I think the colorful, filtered version meant for users is the
+>> best default. And then the "bare" version can come from an alternate
+>> command or a knob.
+> 
+> I think that's a very good point. It is hard to see what "|" can be
+> used for other than viewing the hunk as (a) git does not read the
+> output so it cannot be used to filter or edit the hunk that is applied
+> and (b) we pass an isolated hunk so the post-image offset in the hunk
+> header is likely to be wrong and there is no indication as to which
+> file it comes from so the program being run cannot apply the hunk
+> itself. Having the escape codes does make it harder to filter the
+> hunk. For example to just look at the post-image as one needs to do
+> something like
+> 
+> 	grep '^[^-+ @]*[+ @]'
+> 
+> instead of just using '^[+ @]' as the pattern but the bonus is that
+> the output is colored.
 
-test 24:
-expecting success of 5326.24 'clone from bitmapped repository':
-rm -fr clone.git &&
-git clone --no-local --bare . clone.git &&
-git rev-parse HEAD >expect &&
-git --git-dir=clone.git rev-parse HEAD >actual &&
-test_cmp expect actual
+Agreed, but as I already explained, [1] only when using the bare "|"
+command.  When "|xyz" is used instead, the version of the hunk with
+no coloring escape sequences should be piped to xyz.
 
-Cloning into bare repository 'clone.git'...
-remote: ==7474==WARNING: MemorySanitizer: use-of-uninitialized-value
-remote: #0 0x55c5cd191dde in try_partial_reuse pack-bitmap.c:1887:8
-remote: #1 0x55c5cd191dde in reuse_partial_packfile_from_bitmap_1
-pack-bitmap.c:2001:8
-remote: #2 0x55c5cd191dde in reuse_partial_packfile_from_bitmap
-pack-bitmap.c:2105:3
-remote: #3 0x55c5cce0bd0e in get_object_list_from_bitmap
-builtin/pack-objects.c:4043:3
-remote: #4 0x55c5cce0bd0e in get_object_list builtin/pack-objects.c:4156:27
-remote: #5 0x55c5cce0bd0e in cmd_pack_objects builtin/pack-objects.c:4596:3
-remote: #6 0x55c5ccc8fac8 in run_builtin git.c:474:11
-remote: #7 0x55c5ccc8d660 in handle_builtin git.c:729:3
-remote: #8 0x55c5ccc8b634 in run_argv git.c:793:4
-remote: #9 0x55c5ccc8b634 in cmd_main git.c:928:19
-remote: #10 0x55c5ccf10a5b in main common-main.c:62:11
-remote: #11 0x7f9ef142e3d3 in __libc_start_main
-remote: #12 0x55c5ccbf28e9 in _start
-remote:
-remote: Uninitialized value was stored to memory at
-remote: #0 0x55c5cd191dd7 in try_partial_reuse pack-bitmap.c:1888:15
-remote: #1 0x55c5cd191dd7 in reuse_partial_packfile_from_bitmap_1
-pack-bitmap.c:2001:8
-remote: #2 0x55c5cd191dd7 in reuse_partial_packfile_from_bitmap
-pack-bitmap.c:2105:3
-remote: #3 0x55c5cce0bd0e in get_object_list_from_bitmap
-builtin/pack-objects.c:4043:3
-remote: #4 0x55c5cce0bd0e in get_object_list builtin/pack-objects.c:4156:27
-remote: #5 0x55c5cce0bd0e in cmd_pack_objects builtin/pack-objects.c:4596:3
-remote: #6 0x55c5ccc8fac8 in run_builtin git.c:474:11
-remote: #7 0x55c5ccc8d660 in handle_builtin git.c:729:3
-remote: #8 0x55c5ccc8b634 in run_argv git.c:793:4
-remote: #9 0x55c5ccc8b634 in cmd_main git.c:928:19
-remote: #10 0x55c5ccf10a5b in main common-main.c:62:11
-remote: #11 0x7f9ef142e3d3 in __libc_start_main
-remote: #12 0x55c5ccbf28e9 in _start
-remote:
-remote: Uninitialized value was created by a heap allocation
-remote: #0 0x55c5ccc052ca in realloc msan/msan_interceptors.cpp:1009:3
-remote: #1 0x55c5cd3d04d6 in xrealloc wrapper.c:137:8
-remote: #2 0x55c5cd190d95 in reuse_partial_packfile_from_bitmap
-pack-bitmap.c:2091:3
-remote: #3 0x55c5cce0bd0e in get_object_list_from_bitmap
-builtin/pack-objects.c:4043:3
-remote: #4 0x55c5cce0bd0e in get_object_list builtin/pack-objects.c:4156:27
-remote: #5 0x55c5cce0bd0e in cmd_pack_objects builtin/pack-objects.c:4596:3
-remote: #6 0x55c5ccc8fac8 in run_builtin git.c:474:11
-remote: #7 0x55c5ccc8d660 in handle_builtin git.c:729:3
-remote: #8 0x55c5ccc8b634 in run_argv git.c:793:4
-remote: #9 0x55c5ccc8b634 in cmd_main git.c:928:19
-remote: #10 0x55c5ccf10a5b in main common-main.c:62:11
-remote: #11 0x7f9ef142e3d3 in __libc_start_main
-remote: #12 0x55c5ccbf28e9 in _start
-remote:
-remote: SUMMARY: MemorySanitizer: use-of-uninitialized-value
-pack-bitmap.c:1887:8 in try_partial_reuse
-remote: Exiting
-error: git upload-pack: git-pack-objects died with error.
-fatal: git upload-pack: aborting due to possible repository corruption
-on the remote side.
-remote: aborting due to possible repository corruption on the remote side.
-fatal: early EOF
-fatal: fetch-pack: invalid index-pack output
-not ok 24 - clone from bitmapped repository
-#
-# rm -fr clone.git &&
-# git clone --no-local --bare . clone.git &&
-# git rev-parse HEAD >expect &&
-# git --git-dir=clone.git rev-parse HEAD >actual &&
-# test_cmp expect actual
-#
-
-There are similar failures in test 25, 198, 199, 319, and 320.
----
-
-I believe what's happening is that pack-bitmap.c:2091 grows the packs
-list and sets up some of the fields, but doesn't set pack_int_id. We
-then use it at pack-bitmap.c:1888.
-
-I investigated, but couldn't prove to myself what value should be
-placed there while growing it, or if it's incorrect to read from it in
-this case (so we shouldn't be in pack-bitmap.c:1888 with this pack).
-
-Reproducing is potentially non-trivial. This may work:
-
-make -j CFLAGS="-fsanitize=memory -fsanitize-memory-track-origins
--fno-omit-frame-pointer -g -O2" CC=clang && \
-make -C t t5326-multi-pack-bitmaps.sh GIT_TEST_OPTS="--verbose --debug"
+[1] 
+https://lore.kernel.org/git/844704794168f9fcb85c75014c84cde0@manjaro.org/
