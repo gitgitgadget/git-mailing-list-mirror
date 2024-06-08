@@ -1,36 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D402C6A33A
-	for <git@vger.kernel.org>; Sat,  8 Jun 2024 10:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D991E890
+	for <git@vger.kernel.org>; Sat,  8 Jun 2024 10:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717842305; cv=none; b=oI301sEfee6KDwjNPc4SF75DB3L97Wp0haxzgLoKpKXVFV5F4Lmk4cftAlwYVFGvc0x3mbgnEiUyS0PulFDCU4ZMQh7J2A16L1xsTC5agcN8jmrTsCvrgolldB3X3Wp1YXB9GmgwLlm3KbVfWKtnaAqcLTlGfJZ1EZTJ+pJ7IR8=
+	t=1717842937; cv=none; b=FZwcKoxb/1Q5ycy2UMgNUKAN/fMAsgTWmS6mjI5DxfepiovjEHYW6Awri2okp4kammRejqVB35t2YBqQjbxB4DHTulCHm7CQjQMcYZ50pUprhdI5TD+eDE2xY7F/kGEgluunvaxUb+pGKfLSY1aWo1Jtyo6gc7FEOxH5IwpHcwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717842305; c=relaxed/simple;
-	bh=SoMHy32L/0VLJHmWK5GO3KTjH3u5n1COli7/aW3P0PU=;
+	s=arc-20240116; t=1717842937; c=relaxed/simple;
+	bh=AGzrbyo0sKVQruKpCWmOyhiWPWEV25sgU5fM3pq05fY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HlGfmZeIFteNntCpmHwpDmrLq2OdNPo7iEoE5yGDHAHEghj3SyF1Qh4WFK/IImXM2Kiu/zdWQp4njkvfjcpGx3tlRbjCTrg3pTy0q4G5k8nbu1CBqr2bam6WD2+QlFOs0erqDH+iydj3WSHhIhqP9siAa4bscyvl9mHoaInoArk=
+	 Content-Type:Content-Disposition:In-Reply-To; b=GqB87rLkTZaa3Ji2cW9Fy+8MAKHmrlYg612HPpTPIaxQjOBHf0SY4qbYbbgYdmfE83bAhCCzxI7/hohZk50dsbQDr0rYcvO0juA+u8C2wIQxb/xuXJ8eVE1syjV+XcA5ojqG50IRAW0HFyfJZ5UB/r5DGHKL02tpn/sOD4wlU6k=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 7907 invoked by uid 109); 8 Jun 2024 10:25:03 -0000
+Received: (qmail 8118 invoked by uid 109); 8 Jun 2024 10:35:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 08 Jun 2024 10:25:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 08 Jun 2024 10:35:34 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29241 invoked by uid 111); 8 Jun 2024 10:25:00 -0000
+Received: (qmail 29320 invoked by uid 111); 8 Jun 2024 10:35:31 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 08 Jun 2024 06:25:00 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 08 Jun 2024 06:35:31 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 8 Jun 2024 06:25:02 -0400
+Date: Sat, 8 Jun 2024 06:35:33 -0400
 From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] server-info.c: remove temporary info files on exit
-Message-ID: <20240608102502.GC2659849@coredump.intra.peff.net>
-References: <cover.1717712358.git.me@ttaylorr.com>
- <2d5a0536af1a6d45835622e2c020266079fa0873.1717712358.git.me@ttaylorr.com>
+To: ellie <el@horse64.org>
+Cc: rsbecker@nexbridge.com, git@vger.kernel.org
+Subject: Re: With big repos and slower connections, git clone can be hard to
+ work with
+Message-ID: <20240608103533.GD2659849@coredump.intra.peff.net>
+References: <fec6ebc7-efd7-4c86-9dcc-2b006bd82e47@horse64.org>
+ <0be201dab933$17c02530$47406f90$@nexbridge.com>
+ <fdb869ef-4ce9-4859-9e36-445fd9200776@horse64.org>
+ <0beb01dab93b$c01dfa10$4059ee30$@nexbridge.com>
+ <200c3bd2-6aa9-4bb2-8eda-881bb62cd064@horse64.org>
+ <20240608084323.GB2390433@coredump.intra.peff.net>
+ <bc030171-70fa-41cf-945a-2d20bf237372@horse64.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,110 +44,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2d5a0536af1a6d45835622e2c020266079fa0873.1717712358.git.me@ttaylorr.com>
+In-Reply-To: <bc030171-70fa-41cf-945a-2d20bf237372@horse64.org>
 
-On Thu, Jun 06, 2024 at 06:19:31PM -0400, Taylor Blau wrote:
+On Sat, Jun 08, 2024 at 11:40:47AM +0200, ellie wrote:
 
-> The update_info_file() function within server-info.c is responsible for
-> moving the info/refs and info/packs files around when updating server
-> info.
-> 
-> These updates are staged into a temporary file and then moved into place
-> atomically to avoid race conditions when reading those files. However,
-> the temporary file used to stage these changes is managed outside of the
-> tempfile.h API, and thus survives process death.
-> 
-> Manage these files instead with the tempfile.h API so that they are
-> automatically cleaned up upon abnormal process death.
+> Sorry if I'm misunderstanding, and I assume this is a naive suggestion that
+> may not work in some way: but couldn't git somehow retain all the objects it
+> already has fully downloaded cached? And then otherwise start over cleanly
+> (and automatically), but just get the objects it already has from the local
+> cache? In practice, that might already be enough to get through a longer
+> clone despite occasional hiccups.
 
-Makes sense. I was going to suggest that these could even be lockfiles,
-but it is intentional to let two simultaneous processes race (with an
-atomic last-one-wins result). See d38379ece9 (make update-server-info
-more robust, 2014-09-13).
+The problem is that the client/server communication does not share an
+explicit list of objects. Instead, the client tells the server some
+points in the object graph that it wants (i.e., the tips of some
+branches that it wants to fetch) and that it already has (existing
+branches, or nothing in the case of a clone), and then the server can do
+its own graph traversal to figure out what needs to be sent.
 
-> Unfortunately, and unlike in the previous step, there isn't a
-> straightforward way to inject a failure into the update-server-info step
-> that causes us to die() rather than take the cleanup path in label
-> 'out', hence the lack of a test here.
+When you've got a partially completed clone, the client can figure out
+which objects it received. But it can't tell the server "hey, I have
+commit XYZ, don't send that". Because the server would assume that
+having XYZ means that it has all of the objects reachable from there
+(parent commits, their trees and blobs, and so on). And the pack does
+not come in that order.
 
-That sounds like a challenge. ;)
+And even if there was a way to disable reachability analysis, and send a
+"raw" set of objects that we already have, it would be prohibitively
+large. The full set of sha1 hashes for linux.git is over 200MB. So
+naively saying "don't send object X, I have it" would approach that
+size.
 
-  $ echo garbage >.git/packed-refs
-  $ git update-server-info
-  fatal: unexpected line in .git/packed-refs: garbage
-  $ ls .git/info/
-  exclude  refs  refs_QYvQGb
-
-I don't know if it's worth adding such a test. It seems rather brittle
-to assume that we'd die() here (let alone that we are using the files
-backend at all).
-
-> @@ -86,13 +86,12 @@ static int update_info_file(char *path,
->  	};
->  
->  	safe_create_leading_directories(path);
-> -	fd = git_mkstemp_mode(tmp, 0666);
-> -	if (fd < 0)
-> +	f = mks_tempfile_m(tmp, 0666);
-> +	if (!f)
->  		goto out;
-> -	to_close = uic.cur_fp = fdopen(fd, "w");
-> +	uic.cur_fp = fdopen_tempfile(f, "w");
-
-OK, good, fdopen_tempfile() means that the FILE handle is owned by the
-tempfile, too.
-
-> @@ -121,27 +120,22 @@ static int update_info_file(char *path,
->  	}
->  
->  	uic.cur_fp = NULL;
-> -	if (fclose(to_close))
-> -		goto out;
-
-And we don't need to fclose() anymore since the tempfile code handles
-that for us. Nice.
-
->  	if (uic_is_stale(&uic)) {
-> -		if (adjust_shared_perm(tmp) < 0)
-> +		if (adjust_shared_perm(get_tempfile_path(f)) < 0)
->  			goto out;
-> -		if (rename(tmp, path) < 0)
-> +		if (rename_tempfile(&f, path) < 0)
->  			goto out;
->  	} else {
-> -		unlink(tmp);
-> +		delete_tempfile(&f);
->  	}
->  	ret = 0;
-
-OK, so we always rename or delete here, unless we jumped to the error
-path...
-
->  out:
->  	if (ret) {
->  		error_errno("unable to update %s", path);
-> -		if (uic.cur_fp)
-> -			fclose(uic.cur_fp);
-> -		else if (fd >= 0)
-> -			close(fd);
-> -		unlink(tmp);
-> +		if (f)
-> +			delete_tempfile(&f);
->  	}
-
-And here we do an explicit delete, which is good for a lib-ified world
-where the process doesn't just exit immediately.
-
-I think you could actually call delete_tempfile() unconditionally, even
-outside the "if (ret)" block. It is a noop for a NULL tempfile (so OK
-even if we jump to "out" before opening it). And a renamed tempfile goes
-back to NULL as well.
-
-I.e., one of the advantages to using the tempfile interface is that it's
-always in a consistent state, and you just use delete() on exit, like we
-do strbuf_release().
-
-That said, it's a pretty minor style question, and I don't think is
-worth a re-roll.
+It's possible the client could do some analysis to see if it has
+complete segments of history. In practice it won't, because of the way
+we order packfiles (it's split by type, and then roughly
+reverse-chronological through history). If the server re-ordered its
+response to fill history from the bottom up, it would be possible. We
+don't do that now because it's not really the optimal order for
+accessing objects in day-to-day use, and the packfile the server sends
+is stored directly on disk by the client.
 
 -Peff
