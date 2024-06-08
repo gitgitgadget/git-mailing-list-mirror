@@ -1,44 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A58482D3
-	for <git@vger.kernel.org>; Sat,  8 Jun 2024 11:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628AA482D3
+	for <git@vger.kernel.org>; Sat,  8 Jun 2024 11:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717845636; cv=none; b=VDPm+49KaWODwYiX9g1zDzsOFUCTclWRjrNbBnHhAGSlPo2Vqyr0HltIdt3iDray48MHi6OK0Po4usI+BeANc/xkrq6ZKEpAVDVeEyIcnAWoRQO6SoWDjbR+tOA4z1vB/TR8WbZVNDU7ERf3tLTdYnuk/agFUByLKnBx5Ky5XlQ=
+	t=1717846164; cv=none; b=AwSc1l0JDCdE0nBGNLIz6ShUy+E8H2XiDxH7ALWfTbjPuHIjwJ6pqcw4Vl8eGS3/8r1uYIs40l2jRKaGhqmlV+NloUDm5dGmRrugKG/S+CdaozaVXDLnYg5BmilHpAZ5sMShSQFXtlCcIYYr7rxWyRU2Q7wT+hASmTYTfsCgJDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717845636; c=relaxed/simple;
-	bh=U161xa7m//U+QGTvb4Fi9C0Bv6as/SCMqGpTg2lqMVI=;
+	s=arc-20240116; t=1717846164; c=relaxed/simple;
+	bh=DYW7lVN09qEYVwwkyv39p4VR8TFCsG5ZKr3AccaZ5A4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z9/jr7U5fvapll43fUqYSBuzO2B5UnUA/uff0XVEzLELnwy6FtEa6Z0SuTaI27ZMwVdyqztQWVmKcT4D2nCKowTnmUjsYgYmda8LmO3aY4Pko21UnDVOMUvjVkd5vC3vO/t/UXC82qoO9VSRmEK2eWG8hCLJTeS8gtOUrZpwe40=
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z3f+S0CDCvJ9m5nk1+977U5j8MQkji2eAtQ83LiUieE3JY7Jpst7/wUsuqNs4V4e1PU94pB8ei95wZnCLBuyo8LoO0W2RSoveG2IV3jZ279H7luBoxDaRqviNdv0p3xvKuaT+CjVErQhXTWtSd3Kf6ztH9EfnDFwKmGAcfqbJak=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 8929 invoked by uid 109); 8 Jun 2024 11:20:34 -0000
+Received: (qmail 9004 invoked by uid 109); 8 Jun 2024 11:29:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 08 Jun 2024 11:20:34 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 08 Jun 2024 11:29:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29788 invoked by uid 111); 8 Jun 2024 11:20:33 -0000
+Received: (qmail 29828 invoked by uid 111); 8 Jun 2024 11:29:20 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 08 Jun 2024 07:20:33 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 08 Jun 2024 07:29:20 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 8 Jun 2024 07:20:33 -0400
+Date: Sat, 8 Jun 2024 07:29:20 -0400
 From: Jeff King <peff@peff.net>
-To: Fred Long <fred_long@fastmail.fm>
-Cc: Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com,
-	git@vger.kernel.org
-Subject: Re: git fetch --prune fails with "fatal: bad object"
-Message-ID: <20240608112033.GB2966571@coredump.intra.peff.net>
-References: <16919-1717194882-875013@sneakemail.com>
- <xmqqplt1d0k0.fsf@gitster.g>
- <000501dab3b3$51779400$f466bc00$@nexbridge.com>
- <xmqqo78kbqwo.fsf@gitster.g>
- <20240604104437.GD1781455@coredump.intra.peff.net>
- <876fbb07-210e-128e-5289-57ab01761750@fastmail.fm>
- <20240605084718.GD2345232@coredump.intra.peff.net>
- <c2a02982-40a9-6629-05c2-c8de3335f35b@fastmail.fm>
- <20240606011453.GA623737@coredump.intra.peff.net>
- <5469592f-69eb-b1da-1218-abeae88f7303@fastmail.fm>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk,
+	=?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
+Subject: Re: [PATCH 1/2] am: add explicit "--retry" option
+Message-ID: <20240608112920.GC2966571@coredump.intra.peff.net>
+References: <20240606081724.GA1166769@coredump.intra.peff.net>
+ <20240606082114.GA1167215@coredump.intra.peff.net>
+ <xmqqzfrym3fu.fsf@gitster.g>
+ <xmqqtti6m2yz.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,31 +41,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <5469592f-69eb-b1da-1218-abeae88f7303@fastmail.fm>
+In-Reply-To: <xmqqtti6m2yz.fsf@gitster.g>
 
-On Thu, Jun 06, 2024 at 01:12:31PM -0700, Fred Long wrote:
+On Thu, Jun 06, 2024 at 09:48:52AM -0700, Junio C Hamano wrote:
 
-> Yeah, I saw that, and I think I know what's causing the problem. First I
-> create a bare mirror of AOSP with "repo init --mirror" and "repo sync", then
-> for all my different source trees I use "repo init --reference" to share
-> objects with the mirror using alternates files. Running "repo sync" on the
-> bare mirror works fine. The problem occurs when I run "repo sync" in one of
-> my source trees. Commits and refs have been deleted from the mirror, but the
-> refs are not deleted from the repos that point to the mirror. So it all
-> makes sense now. Still, I wish there were a simple command I could run to
-> remove the dangling refs.
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Jeff King <peff@peff.net> writes:
+> >
+> >> I think even without the test-terminal cleanup, this is a good thing.
+> >> Any time there is a heuristic like isatty(), we should have a way for
+> >> the user to be more explicit about what they want().
+> >
+> > I very often do "git am --no-3" to countermand a failed "git am -3"
+> > (or vice versa), so I'll be hit very hard with a need to retrain my
+> > fingers.  But I'll live ;-)
+> 
+> Ah, no, this is not about not paying attention to isatty(0), but
+> give us an additional way.  I can see how it would help our tests;
+> it would be nicer if the feature also has real world use.
 
-Yep, that all makes sense.
+Exactly, you can still do "git am -3" as before, and that's what I'd
+expect everyone to do. It is just about letting you be explicit if you
+want.
 
-As I said before, I don't think auto-deleting corrupted refs is great in
-general, just because it can make a bad situation worse. But if you want
-the foot-gun, here's a more complete script that you could run. It
-_just_ looks in refs/remotes/, which is perhaps a bit safer.
+I don't know if it could have real world use or not. In theory if you
+had a more complex program driving "git am", you'd need this. But in
+practice, I think the overlap between "people who write GUIs for Git"
+and "people who think mailing patches is a good idea" is pretty small.
+Let alone one with advanced features like "try this patch again with
+--3way". ;)
 
-  git for-each-ref --format='%(refname)' refs/remotes/ |
-  git cat-file --batch-check='%(objectname)' |
-  perl -alne 'print "delete $F[0]" if $F[1] eq "missing"' |
-  tee /dev/stderr |
-  git update-ref --stdin
+But I do think as a general rule we should never provide any action
+_only_ through heuristics like "is stdin a tty". We should let the user
+be explicit, and use heuristics to guess the right thing when they don't
+feel like being so.
+
+> > "--retry" is a horrible word, in that it makes it sound like it will
+> > keep trying to apply the same patch over and over until it applies
+> > cleanly or something.  Can't we use "--continue" like everybody else
+> > (like "git rebase --continue", etc.), or would that be even more
+> > confusing?
+
+There is already "am --continue", but it is not quite the same thing. It
+will try to commit the resolved tree state and keep going. Whereas with
+--retry we really are trying the same patch again. So it really is "over
+and over again", but only once per invocation. ;)
+
+I'm open to a better name if you can come up with one.
 
 -Peff
