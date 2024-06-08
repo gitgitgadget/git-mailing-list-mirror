@@ -1,47 +1,47 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA8F20B3E
-	for <git@vger.kernel.org>; Sat,  8 Jun 2024 18:38:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570631CAB9
+	for <git@vger.kernel.org>; Sat,  8 Jun 2024 18:38:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717871885; cv=none; b=GG8Du1FHrxL0yudZfI0olTpZ8n8NO2QT1sdSDBV3swmp3tYe1x+V3Q8+JhW/gg39q+Q4p2xZtcV/wV60AE0fiyhM2Iyg7aHhVEt4xjfx4i8+zRuXBYW+uWnJEBpsX5G8UXDenKk6bJsYbqkNMoSciXBVeUEup/oemqlAjB1dlP0=
+	t=1717871887; cv=none; b=eDeLut06v3SpBs69VCtapeEkWEExeWjaEveJBQEn5DsbSS0fgkgQJ0Nny9SRpPcOGW+LeqlkgGjOK1p8AGfU2BVWiB6mcKCNjMDZ46nO64e+XvWXR8tzBGLAWbIY2E4C/buA07ek82J0HLWB2zkAaeCYBNdHQLeYkZgcuEWBK1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717871885; c=relaxed/simple;
-	bh=XvRZIBdceofUvcMn6XOO4psWr8m2EK0JROr01LjShlQ=;
+	s=arc-20240116; t=1717871887; c=relaxed/simple;
+	bh=jf6tOsW6mpj1Rz9S1Y+UVFK/4j3K7rBSX8Tk2mTq/Cw=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fv0l0/BdvisDM2F3oxRCfJ3K7BZ4CgXAnXwtC5HTvE3BvbLQ/zgag8e5hRDo5/TfvSQqfLqN46sGJUcefVKMozKYiLLt6sAuDhBBgyTzOTVe5nGoLgcpMOTfv71Pr9qSXshafn9jM/HrZjnk4tC7TMNeU9Hdr6TwXa2NS9fceIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CnBtjevd; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version; b=eLq4aZeco3SVBKSywNV3ePHaIyIwHfFhAtniO+x1NCBJsuMDEvaqHtpC7A0zqCRKS/Edg1j6HsgvxuQfZ2C+h81ieyDMOgzPOAOOxnW8PkhvJgkfa3Cf7sNU3hjgbEOdD7C6rBa1eMWTYR+Jk4Zme3niyAMw1HL5mWl+wdGV/Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=x+C5kyp9; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CnBtjevd"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id B060A1FCC9;
-	Sat,  8 Jun 2024 14:37:58 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="x+C5kyp9"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4AC28209A9;
+	Sat,  8 Jun 2024 14:37:59 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=XvRZIBdceofUvcMn6XOO4psWr
-	8m2EK0JROr01LjShlQ=; b=CnBtjevdNRE3o/lWYYh5YyK4ol5SiixaD8E7n4zt7
-	O5YpVlCWHSQYaYMc4vkIoKtFWBXQkZZlSjjEgSIAJpzj04/e4iFj0otpQC3x94Hq
-	I4uMrU/SMRAomzz7l30yYx5UabABl3b5JJ7py90VvZCFpUh7rP1uEJqau75IhrHZ
-	yE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A95BA1FCC8;
-	Sat,  8 Jun 2024 14:37:58 -0400 (EDT)
+	:content-transfer-encoding; s=sasl; bh=jf6tOsW6mpj1Rz9S1Y+UVFK/4
+	j3K7rBSX8Tk2mTq/Cw=; b=x+C5kyp9O2ywt7YMk0OG9iVtTi2o0NOMBKNGZ4OC7
+	l7HrBBuLZl1fPnrGbuKU//eyiKoKbmhIMwXIrvU4tLeFmyFGNPGSRuWXIXVt+2QY
+	HNgrtFHp+1XLJHdGqbPQBp0Q4FBS1Yk514kbD5ynSWtHWhm5ztKah3R7ZgNa4QNc
+	+8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4334F209A8;
+	Sat,  8 Jun 2024 14:37:59 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 629AE1FCC7;
-	Sat,  8 Jun 2024 14:37:55 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A7996209A7;
+	Sat,  8 Jun 2024 14:37:58 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH 3/4] __attribute__: mark some functions with LAST_ARG_MUST_BE_NULL
-Date: Sat,  8 Jun 2024 11:37:46 -0700
-Message-ID: <20240608183747.2084294-4-gitster@pobox.com>
+Subject: [PATCH 4/4] __attribute__: add a few missing format attributes
+Date: Sat,  8 Jun 2024 11:37:47 -0700
+Message-ID: <20240608183747.2084294-5-gitster@pobox.com>
 X-Mailer: git-send-email 2.45.2-445-g1b76f06508
 In-Reply-To: <20240608183747.2084294-1-gitster@pobox.com>
 References: <20240608183747.2084294-1-gitster@pobox.com>
@@ -52,72 +52,60 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-Pobox-Relay-ID:
- 388B32BE-25C6-11EF-9799-8F8B087618E4-77302942!pb-smtp21.pobox.com
+ 3A805E46-25C6-11EF-8C85-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-Some varargs functions that use NULL-terminated parameter list were
-missing __attributes__ ((sentinel)) aka LAST_ARG_MUST_BE_NULL.
+A public function mem_pool_strfmt() takes printf like parameters,
+but is not given an attribute as such.  Also a few file-scope static
+functions were missing their format attribute.
 
 Add them.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- add-patch.c | 1 +
- attr.h      | 2 ++
- hook.h      | 1 +
+ mem-pool.h  | 1 +
  scalar.c    | 1 +
- 4 files changed, 5 insertions(+)
+ wt-status.c | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/add-patch.c b/add-patch.c
-index 814de57c4a..d8ea05ff10 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -299,6 +299,7 @@ static void err(struct add_p_state *s, const char *fm=
-t, ...)
- 	va_end(args);
- }
-=20
-+LAST_ARG_MUST_BE_NULL
- static void setup_child_process(struct add_p_state *s,
- 				struct child_process *cp, ...)
- {
-diff --git a/attr.h b/attr.h
-index e7cc318b0c..bb33b60880 100644
---- a/attr.h
-+++ b/attr.h
-@@ -190,6 +190,8 @@ struct attr_check {
- };
-=20
- struct attr_check *attr_check_alloc(void);
-+
-+LAST_ARG_MUST_BE_NULL
- struct attr_check *attr_check_initl(const char *, ...);
- struct attr_check *attr_check_dup(const struct attr_check *check);
-=20
-diff --git a/hook.h b/hook.h
-index 19ab9a5806..6511525aeb 100644
---- a/hook.h
-+++ b/hook.h
-@@ -86,5 +86,6 @@ int run_hooks(const char *hook_name);
-  * argument. These things will be used as positional arguments to the
-  * hook. This function behaves like the old run_hook_le() API.
+diff --git a/mem-pool.h b/mem-pool.h
+index d1c66413ec..321d86a63c 100644
+--- a/mem-pool.h
++++ b/mem-pool.h
+@@ -50,6 +50,7 @@ char *mem_pool_strndup(struct mem_pool *pool, const cha=
+r *str, size_t len);
+ /*
+  * Allocate memory from the memory pool and format a string into it.
   */
-+LAST_ARG_MUST_BE_NULL
- int run_hooks_l(const char *hook_name, ...);
- #endif
++__attribute__((format (printf, 2, 3)))
+ char *mem_pool_strfmt(struct mem_pool *pool, const char *fmt, ...);
+=20
+ /*
 diff --git a/scalar.c b/scalar.c
-index 331b91dbdb..62dd77aaec 100644
+index 62dd77aaec..a8318078c9 100644
 --- a/scalar.c
 +++ b/scalar.c
-@@ -70,6 +70,7 @@ static void setup_enlistment_directory(int argc, const =
-char **argv,
- 	strbuf_release(&path);
+@@ -289,6 +289,7 @@ static int unregister_dir(void)
  }
 =20
-+LAST_ARG_MUST_BE_NULL
- static int run_git(const char *arg, ...)
+ /* printf-style interface, expects `<key>=3D<value>` argument */
++__attribute__((format (printf, 1, 2)))
+ static int set_config(const char *fmt, ...)
  {
- 	struct child_process cmd =3D CHILD_PROCESS_INIT;
+ 	struct strbuf buf =3D STRBUF_INIT;
+diff --git a/wt-status.c b/wt-status.c
+index ff4be071ca..c4dac01999 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -126,6 +126,7 @@ void status_printf(struct wt_status *s, const char *c=
+olor,
+ 	va_end(ap);
+ }
+=20
++__attribute__((format (printf, 3, 4)))
+ static void status_printf_more(struct wt_status *s, const char *color,
+ 			       const char *fmt, ...)
+ {
 --=20
 2.45.2-445-g1b76f06508
 
