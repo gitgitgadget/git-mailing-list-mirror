@@ -1,36 +1,45 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81E44C65
-	for <git@vger.kernel.org>; Sat,  8 Jun 2024 11:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA8A4C65
+	for <git@vger.kernel.org>; Sat,  8 Jun 2024 11:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717846355; cv=none; b=kbhzi5dnKvqMmnLSvXVBUVHpy4u4iv0sDU7bTA9+NBGNvDIu07l48PW1jF32i3kIYscLUqYvMZLhxjKhwxz5GfVCPcgJXRquULFJyl6KxPQuMkj6fUTBgwhBec+2gry9ZhZja486H9p2BKE2SXBpHisCiqwSO8Ol+OVe9pB0ZRs=
+	t=1717846584; cv=none; b=h1SpLdvzOUw5MrxyVlpVRedvpFnkHCNgMwbJOsSdBm35QpL2azEs7gBCLpKwDeN6mXF70lz1TQ1Fv67SgQTzC3gjIpKcUkTQvaz6fy3Yop+es9WHU5HDNAqhWJUx4A4MFkjqFnkN/Zp39uMKoQrZc+FoiTpvC7mWt5hY7QynFgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717846355; c=relaxed/simple;
-	bh=McYkSe5hPkOZD5nUDwoDYlUpX66kyi4I/vrR4o1wnik=;
+	s=arc-20240116; t=1717846584; c=relaxed/simple;
+	bh=DT9uNl0SG1LTQqMjiz7etjCtDYeQJyIP8erNKkWwq0w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uuKhb+P1rC5LdC+KWGOUANBvZDQlvGcnNk49nRnJTc1PGc9vrS5Iy4KPTK4NaoQm5m+vXMggZ4cgMtubBIQeG9SFtn4+fdk+K59u5iWyEx9a6ZfUf74XJPKhFrbK35RdbEQz1HzcUJ9jso0vy//p4hWuqIny1uM2/2TO6gzs9N4=
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ft+INHlT1b5CC92OiUKBbm4yAtXjPma2ZpurmFkhqrUEwkvzojHP56RRxSt3Lzq6INjrmDn/DSya6+agvzFVtS312cCspikQ0Q+4lFmT90qyiaTq9BriVDRYxCbgD4z08PekLWeZ2ETnsR/+gZ7zUyZu39i8xjgLTd5UDZfgcNs=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 9035 invoked by uid 109); 8 Jun 2024 11:32:32 -0000
+Received: (qmail 9073 invoked by uid 109); 8 Jun 2024 11:36:22 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 08 Jun 2024 11:32:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 08 Jun 2024 11:36:22 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29870 invoked by uid 111); 8 Jun 2024 11:32:32 -0000
+Received: (qmail 29902 invoked by uid 111); 8 Jun 2024 11:36:21 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 08 Jun 2024 07:32:32 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 08 Jun 2024 07:36:21 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 8 Jun 2024 07:32:31 -0400
+Date: Sat, 8 Jun 2024 07:36:21 -0400
 From: Jeff King <peff@peff.net>
-To: Aaron Plattner <aplattner@nvidia.com>
-Cc: git@vger.kernel.org, Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] credential: clear expired c->credential, unify secret
- clearing
-Message-ID: <20240608113231.GD2966571@coredump.intra.peff.net>
-References: <20240606183516.4077896-2-aplattner@nvidia.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v4 11/12] refs: implement logic to migrate between ref
+ storage formats
+Message-ID: <20240608113621.GE2966571@coredump.intra.peff.net>
+References: <cover.1716451672.git.ps@pks.im>
+ <cover.1717402363.git.ps@pks.im>
+ <1f26051eff8b7c18bb7114803454611272f84e19.1717402363.git.ps@pks.im>
+ <20240605100318.GA3436391@coredump.intra.peff.net>
+ <xmqq1q5buxzx.fsf@gitster.g>
+ <ZmFAQ1UT6ePxHtzq@tanuki>
+ <20240606070109.GC646308@coredump.intra.peff.net>
+ <xmqqwmn2nko9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,22 +48,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240606183516.4077896-2-aplattner@nvidia.com>
+In-Reply-To: <xmqqwmn2nko9.fsf@gitster.g>
 
-On Thu, Jun 06, 2024 at 11:35:16AM -0700, Aaron Plattner wrote:
+On Thu, Jun 06, 2024 at 08:41:10AM -0700, Junio C Hamano wrote:
 
-> v3: I reverted the behavior change to credential_reject() and just unified
-> everything to use credential_clear_secrets() instead. We can rework
-> credential_reject() in a later change if we decide to. So the only behavior
-> change now should be the expiration case in credential_fill()
+> Jeff King <peff@peff.net> writes:
 > 
-> I also updated some of the comments in credential.h to mention the new struct
-> fields.
+> > In my fork I trigger Coverity runs based on my personal integration
+> > branch, which is based on next plus a list of non-garbage topics I'm
+> > working on. So I get to see (and fix) my own bugs before anybody else
+> > does. But I don't see other people's bugs until they're in next.
+> 
+> I am on a mostly same boat but doing a bit better ;-) in that my
+> daily driver is a point marked as 'jch', somewhere between 'next'
+> and 'seen', that appears on "git log --first-parent --oneline
+> master..seen", and this serves as a very small way [*] to see
+> breakages by others before they hit 'next'.
+> 
+>     Side note: This does not work as well as I should, because my
+>     use cases are too narrow to prevent all breakage from getting
+>     into 'next'.
 
-Thanks, this one looks great to me.
-
-> Thanks for your patience with this series, everyone!
-
-Likewise!
+Possibly I should base my daily driver branch on "jch". Like you, there
+are many parts of the code I won't exercise day to day. But it would
+mean I'd do more testing (and CI) on those topics. The big question is
+whether that would introduce a bunch of noise from not-quite-ready
+topics being merged to jch. It depends how careful / conservative you
+are. :)
 
 -Peff
