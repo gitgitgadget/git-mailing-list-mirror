@@ -1,114 +1,92 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5267B177990
-	for <git@vger.kernel.org>; Sat,  8 Jun 2024 09:53:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB8F176FDB
+	for <git@vger.kernel.org>; Sat,  8 Jun 2024 09:59:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717840406; cv=none; b=LkiZo95wOsF9gfYcprqYgKQkdhZEFX7X92TJ29y2glLGMu2JqMdtUjRERLtFsISz0WCWR18wGuMvBz6ARM/8cqIM7TICnVDDxvTDWnfYELZoMtW3FQy3FCjOpCfCuVZR0SU6ZUYt3dJCAa6uljwnG91pqIfBgrUFyqV45QBZPTM=
+	t=1717840783; cv=none; b=mmSRguwYG32I5k3oR0hsTR8UkSwZ0w4lcDo35+nA/1UfMpcl7XQHYV1k875o3CfCjGRDjDNicjk9pb+heo9MdKlpn1Ku0+pZkRQmoGN0Mq6GiEo4EoXrXZWz2U+7XoAHec8ChER1s7hayq10F1KIaYK5jsJho54Wa4++cXg9t48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717840406; c=relaxed/simple;
-	bh=t+DcxX5fyA73S7XVwKTtbwKne95rZz1b+Qa36PxNcSc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UvFgpD/3tNHyPvicyKGvxQlEl5WZ8eORxMpg0GFcviPU8/R/sw8+5qsmMB42xb2bCoc2XAUnqAoB2a4nH64tqBjKQVA/Dl5bIXpkq6N/irHRGI1LEVULMEO1Wpt8mHz+EjVlV6lfyxU3ACvFB/cgUQL3/GHw1WHyMyLblKzkdDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 7788 invoked by uid 109); 8 Jun 2024 09:53:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 08 Jun 2024 09:53:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29086 invoked by uid 111); 8 Jun 2024 09:53:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 08 Jun 2024 05:53:20 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 8 Jun 2024 05:53:22 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] commit-graph.c: remove temporary graph layers on exit
-Message-ID: <20240608095322.GB2659849@coredump.intra.peff.net>
-References: <cover.1717712358.git.me@ttaylorr.com>
- <25324fea5b7c7f748d7f4e1e40299c0af04006e8.1717712358.git.me@ttaylorr.com>
+	s=arc-20240116; t=1717840783; c=relaxed/simple;
+	bh=UGzqJUGiyQM5g/487aX9ZxQTjM/rp7DD+eYu1HED6oA=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=M9GfS/YDf0Hl+dvOqMaD/jMN9j5xrS8AlLRGCXKcnjGoGJnFt9VnDUUK4JWuzjoSkFJC09JfVjtbIbLYL8vbN5OKiZVnPP6YLEJL4KNEkdfLnW23f6G3mSY3HsTR0FQCx0kvPFhk2yUSotjWz5Bai/TMUVn0kWrSsA7EuPCulCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=CALVAErG; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="CALVAErG"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <25324fea5b7c7f748d7f4e1e40299c0af04006e8.1717712358.git.me@ttaylorr.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1717840778;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=JuIV50rgSU23rYVIFO4CC6789pBp4OaKl6EKYXYlffU=;
+	b=CALVAErGvSr/m8y35XVjspfvxS/BjtUeJF10sqRKjNwm8xtmvk03ojy4JxoteB4M7lZY4O
+	J1o+JpbBQptXx79LYvW5uQu70ldD7Q6CSt/DNj1dhOwYgznMnhOZcoMZcvPiS/vljCwLt/
+	Spft+kroBKCqUUJwt78UihhER2SCGTQms3vCM0dM6IIxA6JLfeh511iSYns+eVClDfp103
+	iSVeW5uW4eBCMa1IFI35w/qSxXERbHTEne9YYXATkZgCk8G2wb0AU8SUqQbcL1II5wxI+T
+	XOXslIomaduoFDbGTyW+EqRODXivYBApUCps5Z+eaWlkHSZZvLa6+P1LGQXZ9A==
+Date: Sat, 08 Jun 2024 11:59:38 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, rjusto@gmail.com, sunshine@sunshineco.com
+Subject: Re: [PATCH v2] doc: imply that interactive.singleKey is disabled by
+ default
+In-Reply-To: <xmqqbk4ce6w3.fsf@gitster.g>
+References: <7da73f15a018d858519eefa373001ccb3eaf32e2.1716412958.git.dsimic@manjaro.org>
+ <xmqqy1811qkx.fsf@gitster.g> <673887a14c4f74deb4ef7771a331689b@manjaro.org>
+ <35f5633ebf263ec743d673770eb86487@manjaro.org> <xmqq5xutgajw.fsf@gitster.g>
+ <e5eb72eeb2f8e2de9400ed9373b72236@manjaro.org>
+ <61f46d925e89b6a574d84970089f3c50@manjaro.org> <xmqqbk4ce6w3.fsf@gitster.g>
+Message-ID: <0a3e229942b314947b3a301a85cfef8c@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Thu, Jun 06, 2024 at 06:19:25PM -0400, Taylor Blau wrote:
+Hello Junio,
 
-> @@ -2035,24 +2035,23 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
->  					       LOCK_DIE_ON_ERROR, 0444);
->  		free(lock_name);
->  
-> -		fd = git_mkstemp_mode(ctx->graph_name, 0444);
-> -		if (fd < 0) {
-> +		graph_layer = mks_tempfile_m(ctx->graph_name, 0444);
-> +		if (!graph_layer) {
->  			error(_("unable to create temporary graph layer"));
->  			return -1;
->  		}
->  
-> -		if (adjust_shared_perm(ctx->graph_name)) {
-> +		if (adjust_shared_perm(get_tempfile_path(graph_layer))) {
->  			error(_("unable to adjust shared permissions for '%s'"),
-> -			      ctx->graph_name);
-> +			      get_tempfile_path(graph_layer));
->  			return -1;
->  		}
+On 2024-06-08 00:15, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>> On 2024-06-01 00:21, Dragan Simic wrote:
+>>> On 2024-05-31 19:23, Junio C Hamano wrote:
+>>>> Dragan Simic <dsimic@manjaro.org> writes:
+>>>>> Just checking, is there something left to be addressed for this
+>>>>> patch,
+>>>>> before it can be considered to be pulled into the next branch?
+>>>> Thanks for pinging, as these small things were on the back burner
+>>>> while preparing for updates to maintenance tracks.
+>>>> Apparently v2 cannot be pulled into the next branch, and I forgot
+>>>> if
+>>>> I saw v3 already.  In general, unless I explicitly say there is no
+>>>> need to resend (sometimes with conditions), I'd expect an updated
+>>>> iteration sent to the list.
+>>> I see, but I'm not really sure is there need for the v3?  Maybe the
+>>> patch description could be tweaked a bit further, but I wasn't under
+>>> impression that you asked for that to be done?  Am I wrong there?
+>> 
+>> Any chances, please, to have a look at this?
+> 
+> I _have_ taken a look---as I said, "I saw v3 already".
+> 
+> Unless you were asking other folks, that is, but the message was
+> addressed to me with others CC'ed, so I am not sure what the true
+> intention was.
 
-Most errors will cause us to die(), but this "return" and the one that
-Junio noted later (when renaming the base graph file fails) mean we'll
-return with the tempfile still active. We'll clean it up when the
-program exits, but if there were a long-running program that
-called write_commit_graph_file(), that tempfile might hang around longer
-than necessary.
+Ah, I see now [1] what you asked for, which was a slight rewording
+of the patch subject and description.  That's what my intention was,
+to check was rewording the patch v2 subject and description necessary.
+Sorry for the confusion, and thanks for putting the v3 [1] together.
 
-But that is the same strategy that the existing code uses for the lock
-we use for the chain filename! And it is much worse there, because now
-it is not just a tempfile hanging around, but we're blocking anybody
-else from taking the lock.
-
-So I think it would be OK to punt on this for now. Your patch is not
-making the situation worse, and it's all a problem for a hypothetical
-libification of this function.
-
-> +test_expect_success 'temporary graph layer is discarded upon failure' '
-> +	git init layer-discard &&
-> +	(
-> +		cd layer-discard &&
-> +
-> +		test_commit A &&
-> +		test_commit B &&
-> +
-> +		# Intentionally remove commit "A" from the object store
-> +		# so that the commit-graph machinery fails to parse the
-> +		# parents of "B".
-> +		#
-> +		# This takes place after the commit-graph machinery has
-> +		# initialized a new temporary file to store the contents
-> +		# of the new graph layer, so will allow us to ensure
-> +		# that the temporary file is discarded upon failure.
-> +		rm $objdir/$(test_oid_to_path $(git rev-parse HEAD^)) &&
-> +
-> +		test_must_fail git commit-graph write --reachable --split &&
-> +		test_dir_is_empty $graphdir
-> +	)
-> +'
-
-I'm glad you were able to come up with a case that fails cleanly and
-non-racily. The exit code of rev-parse will be lost. I doubt that it
-matters in practice, but I wouldn't be surprised if our shell linting
-eventually learns to complain about this spot.
-
-Looks like there are a few similar ones in the test suite already, from
-t5329. I'd be content to leave it for now and deal with it later if
-somebody really wants to go on a crusade against lost exit codes.
-
--Peff
+[1] https://lore.kernel.org/git/xmqq4ja4e6d6.fsf@gitster.g/
