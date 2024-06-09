@@ -1,63 +1,66 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4824B33C9
-	for <git@vger.kernel.org>; Sun,  9 Jun 2024 15:27:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D2F210E4
+	for <git@vger.kernel.org>; Sun,  9 Jun 2024 15:31:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717946859; cv=none; b=bF3djlRRhzVXyC46X9A6ss8/EDEu73EsQYEdOOh+6a+DKcVIICsQr2UJ5Z9ZQcHu7JeSSYHWFxB82xXG8tsCbTv561K5HlEgeFWUco26tqpBOIYMHMY+N6xUtyiSO8RTIuTAB7WIzUGFMg5ZQlnau/dq0cWQfzG/35lo/UZ6HGo=
+	t=1717947089; cv=none; b=arn+GUBY7sPH5uoRehGNBxLiHDX0f9Txd9LoqDqeZFMhdpDZsuHHTikCsDkzqo+c3su0ScYIuyL/0Y5ce+ZTBBIgtLhhlhj0wjTTSISjU60UZPSO+084K1vvlqO6WzUA0wFdE10UQPoAB7u6p+Q8Ixce/focVaicu7nxUFlRuho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717946859; c=relaxed/simple;
-	bh=wH0nwefDg+F5LMr4n4H3DwkJ3t/ZJ/hC0bafXtmfzXg=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=r2Uowi4rRnlLm1H5lSRmg7lsVzBIQTLiJ3I8XUEsu+OQX8Y/NiFDJG/WZcX3FX/egZIXlEZqLvdsJEF7sw+X1iNa4QyrMwF2z7piqmdkzHy7maCtpSFHFZcMNsOg+DMDNRaVl8wPuPex5mRiQjrYFdzauwM7xG+rp96uqjyZ0og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=22gpBZhY; arc=none smtp.client-ip=209.85.128.175
+	s=arc-20240116; t=1717947089; c=relaxed/simple;
+	bh=cQNH054FdJgNbFLWc/6HYJwSkjMjoNE+vwESyqvWnY4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O6MvfeFp0i26OztjPhimRO23I67UWBi8vAjMxNyZZwd3NvV1Q1vXCwkBASL9B2SdD4EnIdc6Zk13DOMUgBaG7JNyKANJywcrf9pi+ieXvi3d9ORbiA701r7n1WcO4FDCR3gsRSMAozgffyiXvH2KLvNpaRJ85THc4ZJlhrU4Lvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=A42ULfpT; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="22gpBZhY"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-62a145e0bb2so38665687b3.0
-        for <git@vger.kernel.org>; Sun, 09 Jun 2024 08:27:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="A42ULfpT"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7960454db4fso8033385a.2
+        for <git@vger.kernel.org>; Sun, 09 Jun 2024 08:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717946857; x=1718551657; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ECbvdl6EtSZfQJ5GaKVciW9hOOgfcYF2Yff83CQzYlk=;
-        b=22gpBZhY/eZhxl4OBwvdNs/IIQt5vNKxYfXZAOca0+vx57iGdEyjrQEmzFFGc1JNOn
-         LERlKtzFSUV3JBe3Oxu1qxovOUKBfW8XP3rLSaWehZ4jSsvhX1HAEa15tWidtO4DFtI3
-         yTen1E34wJPVLc/7Kcc+CvXbJVO4sQcMDtOODcl2BwkwDRPwLxq8K7WmPkjvAcMTV2mX
-         7gn3S9hn/AotOQMIkmFJdV52KMv97PVfGobk5J4SfLjwRDbIMjlWVypGrLzRO3hur9uf
-         bu9BPsU+4n3G6akApnhYDeqGXdQNH+t88rqIUa3m6Tr8AF6/rduB7sUHY2Db270l2O19
-         j0Kw==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1717947087; x=1718551887; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IK+tUi/Fksvtpdm4An/zHyYrTGFwVsoMPNGiG+GFENg=;
+        b=A42ULfpT8coTbR9T1StfoxvQ7Q7AYEutcWEC7CHZqb1xZg6JEMGP7ijwIUkjQnhbOm
+         ETtN/bMiRcnMjcZQ57rsuieCxo0zDOVSN3M+VHp/iPAX2kkW0sswSLYzdHZwiI+330NK
+         AcPUTss2tPcbBPKVDSTXbn6QPrMsY4nMFB6nfPUAIUe5m+ohcxh7uHRCuXj15cw6Ve2E
+         gd3PQEjprNsOxvWcOucfj7BS61OJWSiBwcjHqfZ8XyeYBD3TcFafunvrrXKHFjGiPdpa
+         HxawT1V7VPPF9BZ/yWvrn8QJ0qCRkhuMquLuv8mNbgyfaM1zQS+WOgXxYwZKJ4C2Wklv
+         7Amg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717946857; x=1718551657;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ECbvdl6EtSZfQJ5GaKVciW9hOOgfcYF2Yff83CQzYlk=;
-        b=A1Z57Yq53rxZgxTzV3geUgqjwzsdDHuIHGn0Zzui4mAkplpOeYCbb2TPwz449uexc4
-         El6+opAA5/QZCnF3SxbrsnMGt9mraZm6k0LOZvNOsCKLXTIxsga46KXzU10H/3y4fjuC
-         ALNOPbjGW8SDuo26lFlU7H/TYG0ZpDhNJix7Hh3Xjd70o5fI4ppfivUUhgNIsdp7zdWD
-         8u/hbLsDK1BVlxv/9slw4xHW6FJP6CWFvF98Zg5/UYymKoNXTtgdFJVr0mPDNz1RhhVf
-         jXoH8CcIQdyMcStYHpMUzLO67NC9GYsqMtNA2QD9shhYGjLp+CeQC/Q9lcPC1JxcsNT5
-         4qng==
-X-Gm-Message-State: AOJu0Yy46N9JLNCZDxEPYy6HPgM0tEmmTSrM9L0/iczrsK41uk/JDnQm
-	Ab0bVjZt10Rdt+DC9R9NiKHTpL7ok1qLHitDBxnH8togQcWVi9OcbpEGWDYyGXTewgSgMpv17FP
-	RYCo=
-X-Google-Smtp-Source: AGHT+IE6gYVoGN3YT5IWCgKWL9kDvX2T3Ebs6D76QBAvfS75cEHzcjzfqIq3izHoI4c7Hr/oBUC13g==
-X-Received: by 2002:a81:8402:0:b0:61a:e903:8d4f with SMTP id 00721157ae682-62cd5653d09mr68571347b3.37.1717946856878;
-        Sun, 09 Jun 2024 08:27:36 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1717947087; x=1718551887;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IK+tUi/Fksvtpdm4An/zHyYrTGFwVsoMPNGiG+GFENg=;
+        b=xHEPweheEJxuBhgoGUgpjwXzpImuKzAlXbct34e0ygIIMNbGTuJiZ7/UVEYXxmZnHp
+         4hXUVYvcO3gQpvv7ICho5R+Sw6ui8sVPJb1nJ/ibU19lLK08+WGj4UscgC4PLVpGBOOf
+         jPuXWqfR1EXpGfVIIzcJ4dIqC+fTrZKtJ+g4y8gl30U8cvee5IaCgbuzEvaGxQz9/UMw
+         r7jn2g/PwePRBgr2ItOkancqDZMLkSdni/LNSYLKiMzhaGbUZpLFSTvMqB7mCV0JXdxZ
+         a19QE21DVOJMlr+Q6E6PVnh0BoLqezwW7bg93E0XErkbeJJt8iXYhKN8jnqbTYmRAeaK
+         uvpw==
+X-Forwarded-Encrypted: i=1; AJvYcCWLGrP5zQdeucmIl4bdaU9Avvu/s1Sx96v5TH8vguNqIgFjziGVn+mLeK9fzWFnDMszfzm+iWZB0Sb+bEi+N+FbjoUs
+X-Gm-Message-State: AOJu0YwuQFHmSVtrA83akrMkai5bErVVe5xnZid2iqP7OaKzblA1yFmi
+	/6PylAMX4ROSR77PlQ4/ZZx47Mxobsz84YcuF4uho4r6hJg8qWlUplahgRABmGLyGEffu+y/5UF
+	mlXE=
+X-Google-Smtp-Source: AGHT+IEHWUOw6coJd/oebNg0agjIq+Zd13LCBms9bnnSpoLVO+SepnhaqNpG8y5S9k0j6hyeW3GiEA==
+X-Received: by 2002:a05:620a:8521:b0:794:cdc3:949a with SMTP id af79cd13be357-7953c5c6fc4mr698468685a.78.1717947086811;
+        Sun, 09 Jun 2024 08:31:26 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-62ccad1b12csm13861987b3.64.2024.06.09.08.27.36
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-79532813a67sm346356485a.9.2024.06.09.08.31.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Jun 2024 08:27:36 -0700 (PDT)
-Date: Sun, 9 Jun 2024 11:27:35 -0400
+        Sun, 09 Jun 2024 08:31:26 -0700 (PDT)
+Date: Sun, 9 Jun 2024 11:31:24 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Kyle Lippincott <spectral@google.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH] pack-bitmap.c: avoid uninitialized `pack_int_id` during reuse
-Message-ID: <4aceb9233ed24fb1e1a324a77b665eea2cf22b39.1717946847.git.me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: Kyle Lippincott <spectral@google.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: MSan failures in pack-bitmap
+Message-ID: <ZmXKzJ9CpbYTmTwC@nand.local>
+References: <CAO_smVjSy6j7jpSxHNsxzJfxnHwjLphsqu5jwd8TBhMLp72XPw@mail.gmail.com>
+ <20240608081855.GA2390433@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,93 +69,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20240608081855.GA2390433@coredump.intra.peff.net>
 
-When performing multi-pack reuse, reuse_partial_packfile_from_bitmap()
-is responsible for generating an array of bitmapped_pack structs from
-which to perform reuse.
+On Sat, Jun 08, 2024 at 04:18:55AM -0400, Jeff King wrote:
+> On Fri, Jun 07, 2024 at 07:43:56PM -0700, Kyle Lippincott wrote:
+>
+> > I believe what's happening is that pack-bitmap.c:2091 grows the packs
+> > list and sets up some of the fields, but doesn't set pack_int_id. We
+> > then use it at pack-bitmap.c:1888.
+> >
+> > I investigated, but couldn't prove to myself what value should be
+> > placed there while growing it, or if it's incorrect to read from it in
+> > this case (so we shouldn't be in pack-bitmap.c:1888 with this pack).
+>
+> Hmm, I'm not sure.
+>
+> In reuse_partial_packfile_from_bitmap(), the code path that creates the
+> struct only kicks in when the "multi_pack_reuse" flag isn't set. Which
+> generally would correspond to whether we have a midx. And then the code
+> in try_partial_reuse() that uses the struct similarly checks
+> bitmap_is_midx() before looking at the pack_int_id field.
+>
+> But that changed in 795006fff4 (pack-bitmap: gracefully handle missing
+> BTMP chunks, 2024-04-15), where we also disable multi_pack_reuse if we
+> have a midx but it has no BTMP chunk. So we end up in the non-multi code
+> path to create the struct, but then try_partial_reuse() still realizes
+> we have a midx and uses that code path.
+>
+> I guess this gets into the "we have a midx, but are only doing reuse out
+> of a single pack" case. Which I think is supported, but I'm not familiar
+> enough with the code to know where the assumption is going wrong.
 
-In the multi-pack case, we loop over the MIDXs packs and copy the result
-of calling `nth_bitmapped_pack()` to construct the list of reusable
-paths.
+That's right. We support single-pack reuse even with a MIDX either (a)
+because it was configured that way with
+pack.allowPackReuse=(true|single), or (b) because the MIDX has no BTMP
+chunk, which is what prompted the change in 795006fff4.
 
-But we may also want to do pack-reuse over a single pack, either because
-we only had one pack to perform reuse over (in the case of single-pack
-bitmaps), or because we explicitly asked to do single pack reuse even
-with a MIDX[^1].
+When in that case, our reuse packfile is either the pack attached to a
+single-pack bitmap, or the MIDX's preferred pack. When using the MIDX's
+preferred pack, we need to make sure that we correctly assign the
+pack_int_id to be the ID of the preferred pack. (We use this field to
+reject cross-pack deltas later on in try_partial_reuse(), which is where
+the MSan failure is happening).
 
-When this is the case, the array we generate of reusable packs contains
-only a single element, which is either (a) the pack attached to the
-single-pack bitmap, or (b) the MIDX's preferred pack.
+The fix should be to set pack_int_id to the preferred pack's ID in the
+MIDX case, and an arbitrary value in the single-pack bitmap case. I
+posted a patch which should fix that here:
 
-In 795006fff4 (pack-bitmap: gracefully handle missing BTMP chunks,
-2024-04-15), we refactored the reuse_partial_packfile_from_bitmap()
-function and stopped assigning the pack_int_id field when reusing only
-the MIDX's preferred pack. This results in an uninitialized read down in
-try_partial_reuse() like so:
+    https://lore.kernel.org/git/4aceb9233ed24fb1e1a324a77b665eea2cf22b39.1717946847.git.me@ttaylorr.com/T/#u
 
-    ==7474==WARNING: MemorySanitizer: use-of-uninitialized-value
-    #0 0x55c5cd191dde in try_partial_reuse pack-bitmap.c:1887:8
-    #1 0x55c5cd191dde in reuse_partial_packfile_from_bitmap_1 pack-bitmap.c:2001:8
-    #2 0x55c5cd191dde in reuse_partial_packfile_from_bitmap pack-bitmap.c:2105:3
-    #3 0x55c5cce0bd0e in get_object_list_from_bitmap builtin/pack-objects.c:4043:3
-    #4 0x55c5cce0bd0e in get_object_list builtin/pack-objects.c:4156:27
-    #5 0x55c5cce0bd0e in cmd_pack_objects builtin/pack-objects.c:4596:3
-    #6 0x55c5ccc8fac8 in run_builtin git.c:474:11
+Unfortunately, the regression happened in 795006fff4, so this is in a
+released version of Git. But this is all behind a configuration option,
+so affected users can reasonably work around this issue.
 
-which happens when try_partial_reuse() tries to call
-midx_pair_to_pack_pos() when it tries to reject cross-pack deltas.
-
-Avoid the uninitialized read by ensuring that the pack_int_id field is
-set in the single-pack reuse case by setting it to either the MIDX
-preferred pack's pack_int_id, or '0', in the case of single-pack
-bitmaps.  In the latter case, we never read the pack_int_id field, so
-the choice of '0' is arbitrary.
-
-[^1]: This can happen for a couple of reasons, either because the
-  repository is configured with 'pack.allowPackReuse=(true|single)', or
-  because the MIDX was generated prior to the introduction of the BTMP
-  chunk, which contains information necessary to perform multi-pack
-  reuse.
-
-Reported-by: Kyle Lippincott <spectral@google.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- pack-bitmap.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index fe8e8a51d3..8b9a2c698f 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -2073,6 +2073,7 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 		QSORT(packs, packs_nr, bitmapped_pack_cmp);
- 	} else {
- 		struct packed_git *pack;
-+		uint32_t pack_int_id;
-
- 		if (bitmap_is_midx(bitmap_git)) {
- 			uint32_t preferred_pack_pos;
-@@ -2083,12 +2084,21 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 			}
-
- 			pack = bitmap_git->midx->packs[preferred_pack_pos];
-+			pack_int_id = preferred_pack_pos;
- 		} else {
- 			pack = bitmap_git->pack;
-+			/*
-+			 * Any value for 'pack_int_id' will do here. When we
-+			 * process the pack via try_partial_reuse(), we won't
-+			 * use the `pack_int_id` field since we have a non-MIDX
-+			 * bitmap.
-+			 */
-+			pack_int_id = 0;
- 		}
-
- 		ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
- 		packs[packs_nr].p = pack;
-+		packs[packs_nr].pack_int_id = pack_int_id;
- 		packs[packs_nr].bitmap_nr = pack->num_objects;
- 		packs[packs_nr].bitmap_pos = 0;
-
---
-2.45.2.445.g1b76f06508
+Thanks,
+Taylor
