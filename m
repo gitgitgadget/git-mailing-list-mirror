@@ -1,164 +1,90 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F89363AE
-	for <git@vger.kernel.org>; Sun,  9 Jun 2024 06:51:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E32D17997
+	for <git@vger.kernel.org>; Sun,  9 Jun 2024 07:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717915914; cv=none; b=ZrTItik2kGEqaMPlPh2H1BRbK/LkdkV1seniTVqtJ4WMWtYiLqLkYxibrRKDKKGqQ31wVlxzrD/Uq84hpqeXtrzofLzAxAXkz9PPc/zKNt2lXthIYsxq73NAfX7dgdUQ2XRVcnDQWjMy2JhLQ0ILHkohyi8aixghJ0G5Nqh9wNk=
+	t=1717917989; cv=none; b=trmX9cR7tLF9odxIo7AhLQTxWHOgpfm+6YK5R2CpZqjih0JT12bPjf2lH6lTTRqRSHb61zmENq81LLu6V5BQlCJg4Kk2bMnqbVMhM3SGzzFMgaQD1aSZRYb+wQgpLyjfrs9f3KUiDWt1ZL1BxKyUa+UpFsovPhDhWmzIFvRK8vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717915914; c=relaxed/simple;
-	bh=Fj6gTlTn5+CW73nFhLhwW3SPwKO5ZPWzHlawYw218mg=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=cuMIagZtcYsIzVLWFupVVAIecbQHswRFdELcVtBEXPvAoPAymUSxeZp86mXFn0dANT5HP1+qMzHTXRjgWHe1vn9V3qGuDtDtE7sM38uc82M8qA8jDg0HVbJwSBy4SoPYDxZnI5bGU/QI0hOKAT+uQ4u08E4Mg/+kfhKF4rG7sDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EpyomKA/; arc=none smtp.client-ip=209.85.214.176
+	s=arc-20240116; t=1717917989; c=relaxed/simple;
+	bh=9glUrcnyancxDkMB6H8F9i6dLigPOdxJkba1wj84bic=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dH3n6Z02rP30k3HkJSZKE/YIZLgxSmflEDdyGp2Rfm9fFfNQn3nuTBFBtGOfMelYxtVSaEQCvdnjDzXpo5lrmOiV/1+Cr8TcX8r3LAwVRJ+aL8Wzvroj/Bdwz8oNJDPecsNxis4Jv95Tw3hu104t9RpO/3vdmyt0qrIbaFKznkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NPMJCDzm; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EpyomKA/"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1f658800344so27511375ad.0
-        for <git@vger.kernel.org>; Sat, 08 Jun 2024 23:51:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NPMJCDzm"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-421792aa955so10459595e9.1
+        for <git@vger.kernel.org>; Sun, 09 Jun 2024 00:26:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717915912; x=1718520712; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:user-agent
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=02kCars3P1UfGSVasszAKnMUrRQts1KTTAh52OIF0Vo=;
-        b=EpyomKA/ppnwokfZ/Cf7jqrvnj/ZVR3ImHTjpB72n/Q5J0P3KWvuby9vbPd9mli+Sb
-         rIY4QkuIRkc8jk+SPOLKso9jHSW4gWD/VxircyxZJfARg/8WtGYHt1+cHflJ8UnIPpVQ
-         /vvwoImH099rt6k1rvGRrHNDZVy5lRo9hXXfbUlq1zCZXe1G7TO8VerEaei5b1yfhntM
-         0sim9PNNeWj9/xMPZ7mqe0/XNW0aOiHGoWk6Mv3XBi+TLRMnetXg70eSYpYlHalUxpMw
-         D/497X4xcIJ8w6VMyT9zaRyCy3s7yMnJF7be2qe5tkYz5PSlRJOtayXqPzr8KYnKSaUJ
-         +o6g==
+        d=gmail.com; s=20230601; t=1717917987; x=1718522787; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IVlJVYVYvbEP8dn9UrG9KaFVaLD4TFBdz6uNhz7fzy4=;
+        b=NPMJCDzmGodLspNip96IaM/5KshYOpVSU0cGRlgaiXXgSM2DUYIO7JSnw/ybksFjZ8
+         CfJ7BQDGSkGA4SL3hLbN4h5RdwntnPavc5WhIzfzqqMWl2KcvtfbMYbUk/TQD2pFvuNA
+         DdjhUeJj+z2NaiB1JB/WTFRD9/wWQESWyXn55Sntw6xVi9gnKUTsea5HnJ3f9BR+5uZB
+         uRa1uRn8xDLuCSPOoKcThn/MmCP5khPtzQZMdRf5ruEljkDykD1uuLfBnR2gZ+U/K7HM
+         +5faV25EnoiIZ1pMTz5amaduUL/no9fqTpFziPXDTL2xtXyNsiR0Zucz65nSO875PGwI
+         j0ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717915912; x=1718520712;
-        h=content-transfer-encoding:mime-version:message-id:user-agent
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=02kCars3P1UfGSVasszAKnMUrRQts1KTTAh52OIF0Vo=;
-        b=SfSjZJH25KxT0uReN0A4hM8cgqF8YzaQxN3Q2vqppTtRzFrqvMyYDM1tAW3CiZ61sa
-         Y40lZKsC34G1Fh2cyT40MBpjqepAaduc2gRAODPAifBN5HFAZtcpiwLQEkgIU6NaW9p3
-         0qYMquWcx7GDtlTcOWIsnv0osI6PmVS/ETNiTOQp78XtehGyjDxdCTT5hV7c7CB0Xvfs
-         w19vwru3myybCIPnWz1J9/N0qoKhdQvFz3zu5FdB2vPKDbR1A9uzhBr1GkLLe4CSvWx3
-         IYgPdyx5MU9LKSrHJu/PCMjQodeYoUoZ+l7LYftR7N0232F1MFBdEl7A9tU6uhWijmi5
-         F1ug==
-X-Gm-Message-State: AOJu0Yz22tMxfp4dQPuwiMX87wh1TmC2VFEro6bNa8eOLTJcF32GocTD
-	9lCeEEJW979giNqM1iB5GqleQPBsAerXVhmTF5aBBonpXRbH5HQ4ZMyjuQ==
-X-Google-Smtp-Source: AGHT+IGp1FvF6/TYnffIzyZkpm79x4wJrJhUEl8UfXixX91Ui/nhBTn5n2SU1AFzkCE0kgq+nn5XKQ==
-X-Received: by 2002:a17:902:e887:b0:1f6:a8d2:4ab3 with SMTP id d9443c01a7336-1f6d02dd157mr92738035ad.19.1717915911648;
-        Sat, 08 Jun 2024 23:51:51 -0700 (PDT)
-Received: from ?IPv6:::1? ([2401:4900:330a:9be4:10a2:99d3:a699:eea9])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6d8cc0496sm39729925ad.6.2024.06.08.23.51.50
-        for <git@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1717917987; x=1718522787;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IVlJVYVYvbEP8dn9UrG9KaFVaLD4TFBdz6uNhz7fzy4=;
+        b=QU8RylexTmQPIFPZtKxCNdZxM7yo3r/Xq43Woibk0zULF/bI8nQ3ztrvQ5JLyP2ttI
+         sjJWvddd5D0mjjTBHNcNn/lWte1pO1/d8LfAdW7zYo3ioM1Wbc9QJNxt4dxgwdpfwopm
+         VH515Kt+JWgYVMo0kco/QhgqdS369SvH5lCTvE4q2lHIbB/u1fyvITBRUzyvlQQGtzwt
+         ffA46EiinPtLfGxnlxm2bzzZuujP4yokQ82cIMJvnPJ1WDg0FJGkMsvpy6p1DpF3qZVs
+         3MCkW7NsTikL303zJf5uzGPncVrKgCTHXhc/+xctv8S+gmA6nMG+wSKlvJ7nqMqaSMuB
+         0Tqw==
+X-Forwarded-Encrypted: i=1; AJvYcCWo4bXHIBd71xaHclC6NvjGVFrzONSdPeupbo7cohPUaf8GjmARfUxZyKBWl86XvHvJFuWH3CoQHFVJHkxkhqtoDVNZ
+X-Gm-Message-State: AOJu0YylpVzOw0SPGcyWjNR6n3WC0BsCRkikspi0n5QvWne5V9CXr4r3
+	PIpKRzoZgZ6D9gWKQqPU57RYhr1ILcGkFFRedgvvsR3QFcQ0eMt7
+X-Google-Smtp-Source: AGHT+IGkk7DEellI64wJlx2T7Lyi2OF5JvOFVunGsBRnSCuhEDan+soojXSbOKeogB2//phrPnsYUg==
+X-Received: by 2002:a05:600c:4fc7:b0:41f:ed4b:93f9 with SMTP id 5b1f17b1804b1-42164a02777mr54661525e9.19.1717917986452;
+        Sun, 09 Jun 2024 00:26:26 -0700 (PDT)
+Received: from gmail.com (62.red-88-14-48.dynamicip.rima-tde.net. [88.14.48.62])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4218144244dsm10693835e9.1.2024.06.09.00.26.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Jun 2024 23:51:51 -0700 (PDT)
-Date: Sun, 09 Jun 2024 12:21:47 +0530
-From: Mathew George <mathewegeorge@gmail.com>
-To: git@vger.kernel.org
-Subject: Cannot override `remote.origin.url` with `-c` option
-User-Agent: K-9 Mail for Android
-Message-ID: <83D801A8-3878-43C1-B7A7-78B3B7315FD8@gmail.com>
+        Sun, 09 Jun 2024 00:26:25 -0700 (PDT)
+Message-ID: <da18f9c2-018f-4808-92e0-d2fb67a427fb@gmail.com>
+Date: Sun, 9 Jun 2024 09:26:12 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/6] test-terminal: introduce --no-stdin-pty
+Content-Language: en-US
+To: Jeff King <peff@peff.net>
+Cc: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>,
+ Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+ <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+ <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
+ <1ef0ac3a-3be5-4fc2-93f8-46610f3d1880@gmail.com>
+ <d95180fc-8f8a-4e1d-987d-3aa0811be7de@gmail.com>
+ <600d27c1-f9e2-4a03-af24-4de8f66526d6@gmail.com>
+ <9c76f1f3-f858-400e-8fc7-8e3bc9764e87@gmail.com>
+ <20240606082748.GD658959@coredump.intra.peff.net>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <20240606082748.GD658959@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue=
-=2E
+On Thu, Jun 06, 2024 at 04:27:48AM -0400, Jeff King wrote:
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
+> I just sent a series, and I think you could either build on top, or
+> the merge resolution could just drop your new option.
 
-```
-# Create a test repo to pull into
-git init test
-cd $_
-git remote add origin wrong-url
-# Create a test repo to pull from
-git init =2E=2E/test2
-cd $_
-touch a
-git add =2E
-git commit -m 'commit to pull'
-# Attempt to pull, setting remote=2Eorigin=2Eurl
-# The following git commands will fail:
-cd =2E=2E/test
-git -c remote=2Eorigin=2Eurl=3D=2E=2E/test2 pull
-git -c remote=2Eorigin=2Eurl=3D=2E=2E/test2 fetch
-# However, this succeeds:
-git pull =2E=2E/test2
-```
+I've already responded to your series, but just to confirm here.  I'm
+glad to drop this step and building on top of jk/am-retry.
 
-
-> What did you expect to happen? (Expected behavior)
-
-The '-c' option should allow me to override the remote URL,
-which, as a result of running `git remote add`, is configured as
-follows in test/=2Egit/config:
-
-```
-[remote "origin"]
-	url =3D wrong-url
-```
-
-From=20git(1):=20
-```
--c <name>=3D<value>
-    Pass a configuration parameter to the command=2E The
-    value given will override values from configuration
-    files=2E
-```
-
-
-> What happened instead? (Actual behavior)
-
-The following errors are produced for both 'fetch' and 'pull'
-operations:
-
-```
-fatal: 'wrong-url' does not appear to be a git repository
-fatal: Could not read from remote repository=2E
-
-Please make sure you have the correct access rights
-and the repository exists=2E
-```
-
-Regardless of the -c option, the commands above use the url
-'wrong-url' from =2Egit/config=2E
-
-
-> What's different between what you expected and what actually
-> happened?
-
-The -c option is not respected=2E
-
-
-> Anything else you want to add:
-
-It may be that this is not supported, but if that's the case, I
-missed any documentation saying so=2E
-
-
-> Please review the rest of the bug report below=2E
-> You can delete any lines you don't wish to share=2E
-
-
-[System Info]
-git version:
-git version 2=2E45=2E2
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /usr/bin/sh
-compiler info: clang: 17=2E0=2E2 (https://android=2Egooglesource=2Ecom/too=
-lchain/llvm-project d9f89f4d16663d5012e5c09495f3b30ece3d2362)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /usr/bin/bash
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+Thanks!
