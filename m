@@ -1,40 +1,40 @@
 Received: from mout.web.de (mout.web.de [212.227.15.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363C318C3D
-	for <git@vger.kernel.org>; Sun,  9 Jun 2024 07:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D9D1BF40
+	for <git@vger.kernel.org>; Sun,  9 Jun 2024 07:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717918722; cv=none; b=lmOK7EZSoWdwnwTim/G5A5dFETWC8/dfz9TeJVSOtFT2lb5ptpYmsxK4EZTSfmzKy1/mY4HWz/TsdM2Ofd2UC7JdqRvTcgg5jBnm4tOuJF4Zv3vxgc19xwAzEheSiL5EN+jmO/mpgJEkhN/MEc0xxG6N+mEz924FX2SV2aJRmxQ=
+	t=1717918757; cv=none; b=pFLw8TJ6eb2iAm+fdMsGESS7pvVCJfpKgOcrRhEcz348WtPrqXbESrKwl0A7vhLkSPTzLNCHT7m28HxergSy9IF1MUzJuyfadp97p9ocsNsFkgmbknulNlngdlvYNHWMCdRTYU+If7+DH3IdQDwJsWMoAzESvtCF8oyCKfT2UNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717918722; c=relaxed/simple;
-	bh=0STcVmAPNNsn85GMwJVIiF216J3lKtbRFlSMLJ2cNu8=;
+	s=arc-20240116; t=1717918757; c=relaxed/simple;
+	bh=Ff4SKO1h8WU9QiV/k7A7pSBYC3F5y78Rm1F+KokwtOQ=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=i7OTQ/A+wZI5sl19I8x7dbgRTzSn2Eizgusm+n9i4JBEujJHBLUT6LNpu14iXtByLQHsL3rCrzwiuOdLmOrPd3p8fM0zmDJfI5NtI0zYa6XKvLEebNZpgyFyfaWSlxjE7Udsn88Rz45bKHe1QVl/S7f0OXf8vKP4JhwBFvPsZOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=m+rQYuZV; arc=none smtp.client-ip=212.227.15.4
+	 In-Reply-To:Content-Type; b=IZEvP5M5J5+F3h39v4VGP4tcO2VHLcuKHpJDUtfuBsx/Yhe/qvTgZ1o9+0gVYb20PwQ4LnHppa09cvxx44oMcJzNDqxMygMW7MXfo4NxbsdiHBJN7FGN5vk9QUb0cNeHczDtGfxkm2ZmO6L+Ww/294AWQIEiiAlY9am2djlwXBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=ho1Zm7kH; arc=none smtp.client-ip=212.227.15.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="m+rQYuZV"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="ho1Zm7kH"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1717918705; x=1718523505; i=l.s.r@web.de;
-	bh=Bqt9Rg7hPRbBAzr4LAsNgx/ralLwMDpofq4Rnpicyy4=;
+	s=s29768273; t=1717918748; x=1718523548; i=l.s.r@web.de;
+	bh=oCLkyEMNqoqKFAfp5x4mE0m6AwFFc2iCve8pW9tfhOI=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
 	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=m+rQYuZVOg09aVjRtC5/t/XNvl7a/Xik/IC0tXNDC4w7obArxzGD5ePNi4ZEKy55
-	 maN4Hwp5XEAihY0Lw99K/y+JbmbjYUu+w4/h1AxlAMrLIaVlKoIZ/1wFC8EX52NVO
-	 RwwSmYgXR6gliX0pLiIbIJcVmWzy7YhKsu48kaVBuxnFoVh5hx9Gou2UyTYJVR6iq
-	 GtXHe3VsJt2MzARy9TGzM1lQ9meoT+GbVTSXyXugfB5hzHa6WmcRr/fbxDLzC7bUJ
-	 x1zZdQFK8598ATxLS8fOw9Ije899ejWBy0MMY6pCIOCOVLbkqmoYCkdnM+l/jTNDT
-	 QBUVXCHCa++a4T7OPg==
+	b=ho1Zm7kH/bbWX7zjyln4CYxMTR8F1179Qtu898SJduEe15v16GOiovkcO+W7zNoM
+	 a+4tDATyTDjanCpQt8NGJmwXF/I5AZVwwRZ/jQET8xS2UdOM9402Uk1RABaZb3eFP
+	 6wvCvzMZE0gDDG/sCwVTf6UbXhQC9R6RcbVMp/o9c/tlzeQk9jYh6mdqelT2SKBXJ
+	 noNWluOQdisLrjw8CJTZ7wtZM+I85CQ7oLjLPGoiolisZBD6gps0OAXH4If6HGAo2
+	 PWDtbo8Ar0ZPCPAMFBsy46XkoM4RTujxDRNslzmC4naABqiaai0e6C9ozrcGhKAte
+	 zKrAcytCxdiH3sTtgQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MJnrh-1s0ST21oQz-00Qy1k; Sun, 09
- Jun 2024 09:38:25 +0200
-Message-ID: <79a951f8-cf35-4159-a90e-f95d69773413@web.de>
-Date: Sun, 9 Jun 2024 09:38:24 +0200
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MK574-1s0BOM2USU-00RnBv; Sun, 09
+ Jun 2024 09:39:08 +0200
+Message-ID: <0dd72a49-1c6d-4cd9-9257-d942443e1bc3@web.de>
+Date: Sun, 9 Jun 2024 09:39:08 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,7 +42,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v3 1/3] t4020: test exit code with external diffs
+Subject: [PATCH v3 2/3] userdiff: add and use struct external_diff
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -56,116 +56,186 @@ Content-Language: en-US
 In-Reply-To: <168fecaa-2ebd-4897-b0ba-3bd2a37c01e7@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:j7JNx8eqHtolTuYE5hlPELhEc75L8vhlJyMmKuFwU/YcR4RBt35
- MF7TLiIkiUgduncNIjYLPTf7/PCvYVkgKoN92Hj4fxQbjoc3u9IqNZVG4U9AzOtj/GdVBSY
- iZoct3uto95nld9qDskDXNnEXla2R6NjTcbCEB6J/TNNFlCzS9p/YY41VSTuL8GgVwomZaZ
- 3cWyFUe0bB2Pw2F0ba4pw==
+X-Provags-ID: V03:K1:jjqr12oY32eEBXrB5GfjYghKMaAUcKK2f0zce7J0XZCHtq9YUzY
+ JVUO+tLcHd1K8QUWYU9OvjyAfksDTN5fWIKfxY3483wQbwYmWX+dj7rENNMQX8HZupiSTO6
+ AVnNPLZlQYbWwQv4VsBmmI8PCRDfKPWgZxU0Cq8FCgeDdFNAG+n8SZ9JZwiomCjjQCl5YW5
+ csH+xzEznzvzl2v3m6PAQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:1Mmr9sZm+58=;HVgamukdEZXd4Sr1YRULz4vTYW/
- vxOetxIshsEMJnwfBca7ViiyU4BTZNf4Yo1PZFO+hafLC565GOkvkwyQ7egmIjrnqaDjhrnLZ
- Vc3ARbknYLg+ZI0qgxzuW6znGUIAyDNNhcmW8hieqjt80/dMhLgKuI5zfwVQSeFNFmX45Vu4q
- 3QLTDo8vUZ5JHZdgiBdW6Mss8aUv9oQS6PEYradn1jRmZob7/0Kyz13VKoVSaORthZUTmsMBJ
- wdAIVpetdXCRbZcjJioarSaMPXkH8r1DXohVetou2iotptqYGnt1QImEpvM4RlTqruD3KslC1
- 2kaebyPRog9CD57+mLoXvLQVTg0p2R6PdV5qYEKrLJ/i0rjdP/vfpGPL4iTd85NQLhqtNUo9r
- j5+M38grku+IIRtn+2XMH2x3iY2mycDm5WwNgyLM76j0kO3yduzL0BfpdM0YwzNK5ZD1VjqXe
- mCiTXBc5QtV7/l/lO8szoxa7GrQ4+QYV772pBJ3eHULRVx+wSGEm1W4xLdqpvqH5ZqlyBAQRH
- ou0iMBq0+gXZOMKBLbOLvcz2dOzgvEuWpG81WH29N8jIx9WKlRa+wjmWausaOyyxWpqlEl4sL
- +T41ps26JSFKycthiiVnPeL0tRkuFqCKaUK8HzN8g3hEG6BVdOFlMmYBzSIk56Cbe5/b0QkVi
- Q4/DM3eJL/38I+CEtXmetiZl3H2jDVHXQY6v1+HqIGlG1MbajcYNeJ/CoB5q+67YODnaqHmBv
- cNiFLTwTaxlSIHo8VU/op+gjZtJ+QQGLusivmrchFTvNrSA82QKuvX0cz7CWbCka4WX1aZ1qz
- g6T08OWW6BYradj31rpyWpbaPW/TJ5if56e0rjEMpxu4g=
+UI-OutboundReport: notjunk:1;M01:P0:uqhf/LgFh6o=;VCMhs2U//7kgEH+PknBQL9yqj/O
+ UnNyr6QVOmDYEwX8mga0FJlAubfE6Yd5pGXO/10fWdnlisypbWMfUN8TSt+BQQyVmUIG8m5G6
+ sGnhhrcW8IEA8jOAdi6X/7QUe1qQ7B6YXS4xbO8WrcD3LKWrRm1l3UZRHaHHo/IaRS/o7V4EH
+ LyvVN2va1YK5z8WFiu0+uhsisdf2MrNJ+PtyvGwqpsZrzxFFzZicz/qUyDfDNV3T42jnDusKB
+ jRzi+WG1NB5WP6wZLXATrLhbc0T4Q7gVmwtT3/V9JPkWbnvBfs7gEjv4Ub0m5ofwuyG4+JCA0
+ 30sjcmiqN6hkPg/4FZGrNGyMJqWJZYgt1UqsgAnRQupcoyxlCNrFoXTvxEOvY/ySh8W/KfKwq
+ sz1Efp5stvTsgyir4EZKtrPuh21iupffHWZF4cPW6ysqJdl++LbdSIfBsogyWB3hmkuWqmbDX
+ Uwhew4ZX/tiqfqGvRgQLEAT2Joi8x9IADISBPHDIVQfGkh0YAq0Msxhl1HIM8w7zIc+2qFWVa
+ wCUlww9cpEntWaimwMWEi7Y7f1TZK+ivICm/jvgflGSFMfeEg0FTz4WpYNtAhqJbGDstgq3Wk
+ C2p5DBxzYgGHoPmDkV2p1qX+T9VAb4uXBmvi8VU5KKgviP187BC1AmP2I9kk2Gf/1e5jvxN80
+ skZ+NOR3a+Th8k0ESJ7cbkMSm0PtAfAGLWIdz44paeLH6jNbM3VISkPtWZSurCFk7zAK3Fp4j
+ A5eYBQ6LzfDpuqkc2Qft9Va/0XIuCC+gB4ybpcRZ1A9U7fTElhCHUSQHA9Imt5GjBCedfWyA4
+ +B3HPMFU0JQDQyxjovApYDEvLpQ0fOSE1tsIKZReyakms=
 
-Add tests to check the exit code of git diff with its options --quiet
-and --exit-code when using an external diff program.  Currently we
-cannot tell whether it found significant changes or not.
+Wrap the string specifying the external diff command in a new struct to
+simplify adding attributes, which the next patch will do.
 
-While at it, document briefly that --quiet turns off execution of
-external diff programs because that behavior surprised me for a moment
-while writing the tests.
+Make sure external_diff() still returns NULL if neither the environment
+variable GIT_EXTERNAL_DIFF nor the configuration option diff.external is
+set, to continue allowing its use in a boolean context.
+
+Use a designated initializer for the default builtin userdiff driver to
+adjust to the type change of the second struct member.  Spelling out
+only the non-zero members improves readability as a nice side-effect.
+
+No functional change intended.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- Documentation/diff-options.txt |  1 +
- t/t4020-diff-external.sh       | 53 ++++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+)
+ diff.c     | 32 +++++++++++++++++---------------
+ userdiff.c |  4 ++--
+ userdiff.h |  6 +++++-
+ 3 files changed, 24 insertions(+), 18 deletions(-)
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.t=
-xt
-index c7df20e571..6b73daf540 100644
-=2D-- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -820,6 +820,7 @@ ifndef::git-log[]
+diff --git a/diff.c b/diff.c
+index e70301df76..4b86c61631 100644
+=2D-- a/diff.c
++++ b/diff.c
+@@ -57,7 +57,7 @@ static int diff_color_moved_ws_default;
+ static int diff_context_default =3D 3;
+ static int diff_interhunk_context_default;
+ static char *diff_word_regex_cfg;
+-static char *external_diff_cmd_cfg;
++static struct external_diff external_diff_cfg;
+ static char *diff_order_file_cfg;
+ int diff_auto_refresh_index =3D 1;
+ static int diff_mnemonic_prefix;
+@@ -431,7 +431,7 @@ int git_diff_ui_config(const char *var, const char *va=
+lue,
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "diff.external"))
+-		return git_config_string(&external_diff_cmd_cfg, var, value);
++		return git_config_string(&external_diff_cfg.cmd, var, value);
+ 	if (!strcmp(var, "diff.wordregex"))
+ 		return git_config_string(&diff_word_regex_cfg, var, value);
+ 	if (!strcmp(var, "diff.orderfile"))
+@@ -548,18 +548,20 @@ static char *quote_two(const char *one, const char *=
+two)
+ 	return strbuf_detach(&res, NULL);
+ }
 
- --quiet::
- 	Disable all output of the program. Implies `--exit-code`.
-+	Disables execution of external diff helpers.
- endif::git-log[]
- endif::git-format-patch[]
+-static const char *external_diff(void)
++static const struct external_diff *external_diff(void)
+ {
+-	static const char *external_diff_cmd =3D NULL;
++	static struct external_diff external_diff_env, *external_diff_ptr;
+ 	static int done_preparing =3D 0;
 
-diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
-index fdd865f7c3..4070523cdb 100755
-=2D-- a/t/t4020-diff-external.sh
-+++ b/t/t4020-diff-external.sh
-@@ -172,6 +172,59 @@ test_expect_success 'no diff with -diff' '
- 	grep Binary out
- '
+ 	if (done_preparing)
+-		return external_diff_cmd;
+-	external_diff_cmd =3D xstrdup_or_null(getenv("GIT_EXTERNAL_DIFF"));
+-	if (!external_diff_cmd)
+-		external_diff_cmd =3D external_diff_cmd_cfg;
++		return external_diff_ptr;
++	external_diff_env.cmd =3D xstrdup_or_null(getenv("GIT_EXTERNAL_DIFF"));
++	if (external_diff_env.cmd)
++		external_diff_ptr =3D &external_diff_env;
++	else if (external_diff_cfg.cmd)
++		external_diff_ptr =3D &external_diff_cfg;
+ 	done_preparing =3D 1;
+-	return external_diff_cmd;
++	return external_diff_ptr;
+ }
 
-+check_external_diff () {
-+	expect_code=3D$1
-+	expect_out=3D$2
-+	expect_err=3D$3
-+	command_code=3D$4
-+	shift 4
-+	options=3D"$@"
-+
-+	command=3D"echo output; exit $command_code;"
-+	desc=3D"external diff '$command'"
-+	with_options=3D"${options:+ with }$options"
-+
-+	test_expect_success "$desc via attribute$with_options" "
-+		test_config diff.foo.command \"$command\" &&
-+		echo \"file diff=3Dfoo\" >.gitattributes &&
-+		test_expect_code $expect_code git diff $options >out 2>err &&
-+		test_cmp $expect_out out &&
-+		test_cmp $expect_err err
-+	"
-+
-+	test_expect_success "$desc via diff.external$with_options" "
-+		test_config diff.external \"$command\" &&
-+		>.gitattributes &&
-+		test_expect_code $expect_code git diff $options >out 2>err &&
-+		test_cmp $expect_out out &&
-+		test_cmp $expect_err err
-+	"
-+
-+	test_expect_success "$desc via GIT_EXTERNAL_DIFF$with_options" "
-+		>.gitattributes &&
-+		test_expect_code $expect_code env \
-+			GIT_EXTERNAL_DIFF=3D\"$command\" \
-+			git diff $options >out 2>err &&
-+		test_cmp $expect_out out &&
-+		test_cmp $expect_err err
-+	"
-+}
-+
-+test_expect_success 'setup output files' '
-+	: >empty &&
-+	echo output >output &&
-+	echo "fatal: external diff died, stopping at file" >error
-+'
-+
-+check_external_diff   0 output empty 0
-+check_external_diff 128 output error 1
-+
-+check_external_diff   1 output empty 0 --exit-code
-+check_external_diff 128 output error 1 --exit-code
-+
-+check_external_diff   1 empty  empty 0 --quiet
-+check_external_diff   1 empty  empty 1 --quiet # we don't even call the p=
-rogram
-+
- echo NULZbetweenZwords | perl -pe 'y/Z/\000/' > file
+ /*
+@@ -4375,7 +4377,7 @@ static void add_external_diff_name(struct repository=
+ *r,
+  *               infile2 infile2-sha1 infile2-mode [ rename-to ]
+  *
+  */
+-static void run_external_diff(const char *pgm,
++static void run_external_diff(const struct external_diff *pgm,
+ 			      const char *name,
+ 			      const char *other,
+ 			      struct diff_filespec *one,
+@@ -4386,7 +4388,7 @@ static void run_external_diff(const char *pgm,
+ 	struct child_process cmd =3D CHILD_PROCESS_INIT;
+ 	struct diff_queue_struct *q =3D &diff_queued_diff;
 
- test_expect_success 'force diff with "diff"' '
+-	strvec_push(&cmd.args, pgm);
++	strvec_push(&cmd.args, pgm->cmd);
+ 	strvec_push(&cmd.args, name);
+
+ 	if (one && two) {
+@@ -4512,7 +4514,7 @@ static void fill_metainfo(struct strbuf *msg,
+ 	}
+ }
+
+-static void run_diff_cmd(const char *pgm,
++static void run_diff_cmd(const struct external_diff *pgm,
+ 			 const char *name,
+ 			 const char *other,
+ 			 const char *attr_path,
+@@ -4530,8 +4532,8 @@ static void run_diff_cmd(const char *pgm,
+ 	if (o->flags.allow_external || !o->ignore_driver_algorithm)
+ 		drv =3D userdiff_find_by_path(o->repo->index, attr_path);
+
+-	if (o->flags.allow_external && drv && drv->external)
+-		pgm =3D drv->external;
++	if (o->flags.allow_external && drv && drv->external.cmd)
++		pgm =3D &drv->external;
+
+ 	if (msg) {
+ 		/*
+@@ -4597,7 +4599,7 @@ static void strip_prefix(int prefix_length, const ch=
+ar **namep, const char **oth
+
+ static void run_diff(struct diff_filepair *p, struct diff_options *o)
+ {
+-	const char *pgm =3D external_diff();
++	const struct external_diff *pgm =3D external_diff();
+ 	struct strbuf msg;
+ 	struct diff_filespec *one =3D p->one;
+ 	struct diff_filespec *two =3D p->two;
+diff --git a/userdiff.c b/userdiff.c
+index 82bc76b910..f47e2d9f36 100644
+=2D-- a/userdiff.c
++++ b/userdiff.c
+@@ -333,7 +333,7 @@ PATTERNS("scheme",
+ 	 "|([^][)(}{[ \t])+"),
+ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+ 	 "\\\\[a-zA-Z@]+|\\\\.|([a-zA-Z0-9]|[^\x01-\x7f])+"),
+-{ "default", NULL, NULL, -1, { NULL, 0 } },
++{ .name =3D "default", .binary =3D -1 },
+ };
+ #undef PATTERNS
+ #undef IPATTERN
+@@ -445,7 +445,7 @@ int userdiff_config(const char *k, const char *v)
+ 	if (!strcmp(type, "binary"))
+ 		return parse_tristate(&drv->binary, k, v);
+ 	if (!strcmp(type, "command"))
+-		return git_config_string(&drv->external, k, v);
++		return git_config_string(&drv->external.cmd, k, v);
+ 	if (!strcmp(type, "textconv"))
+ 		return git_config_string(&drv->textconv, k, v);
+ 	if (!strcmp(type, "cachetextconv"))
+diff --git a/userdiff.h b/userdiff.h
+index cc8e5abfef..2d59a8fc56 100644
+=2D-- a/userdiff.h
++++ b/userdiff.h
+@@ -11,9 +11,13 @@ struct userdiff_funcname {
+ 	int cflags;
+ };
+
++struct external_diff {
++	char *cmd;
++};
++
+ struct userdiff_driver {
+ 	const char *name;
+-	char *external;
++	struct external_diff external;
+ 	char *algorithm;
+ 	int binary;
+ 	struct userdiff_funcname funcname;
 =2D-
 2.45.2
