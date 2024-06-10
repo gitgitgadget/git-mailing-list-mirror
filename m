@@ -1,157 +1,90 @@
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E471509AE
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 23:02:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8325854FAD
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 23:20:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718060526; cv=none; b=Qx7CXTjKfed0eyCmFcB8P36+L2/EJZsxQx8KEvQZztzUSE1zx5t5hM5ZmUWnsYNdAoCTM+as17Z8d9XtfiP/z62J5zxKDofNl0mEx0sxrUug6QM4SADOZ6N24onxw02CwWiOHAUw/gPg6D0iNlRs4hK81Z+Rno2ml4yhFzwPFRQ=
+	t=1718061624; cv=none; b=Lz9j+JoRUMIRS0/MAjkg6ePTa6oNk21zxcrA4cOCxpjbvRAPKlJSpuWQFi/BFY5G37yNU+BlBtc6LJ0Mw4YkBompDITTk8dH3RbBYjE5P/9s7b0Di3B1uksoyLrXVJ2cJEKu383caZHZ9jv0gAvvAWtdrmvMQNBilStbtl7riZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718060526; c=relaxed/simple;
-	bh=lp5/y+P2UdEUvfYCcAtChx8VUef4h3BtuQ2FYE5oESI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=t2LjaF+UaOL5JpwKKXiRqwZaS3fZF8+k1wQixJbHC2aK2WQ3+HHkJ72dsMmgZsoh5Qnf/kPoG+T/ssaKzYqbArHR8t2t6Yxk+OIrcewZjaVUus6LivohcWZSMVu0n3Kppg8su5eUPZlQziiLr4QmEfiVzaIsdjsQOAx9d+XTZZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=X8lqpjL6; arc=none smtp.client-ip=209.85.161.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1718061624; c=relaxed/simple;
+	bh=p7M1HfAuHLeFmwkoqHCv0z4L8wg0OjQnq9OKbEAP2V0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=utpvoj3/xmTDqpk2PATlz4Q54iM5uwgvKkb4rLIXf9Zm4dlsoogkRG6G2CUB/rKsmq0AXyuR93DdHGXasPeuAv8mAIEzY7AEgFPP7SqKEMVhU+XXQHu0S8fOScWQaF028hTCqNMtqYDbzf5yqTe0ykONNDFom+AeRpnHL9E6u6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Vlbvskk4; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="X8lqpjL6"
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5ba70a0ed75so241678eaf.1
-        for <git@vger.kernel.org>; Mon, 10 Jun 2024 16:02:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1718060519; x=1718665319; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2NMtOKSZ7NraxTFFkbLaa2gW2HTDnFenEDXl+1mSZ78=;
-        b=X8lqpjL6GkjfyxhJJtadJ1g3x4fQoN+gOjE8PjWmuunzQbXBMJWknWds8Wzgr3+kDZ
-         HIAuYMqkR8tkS6j2tUBbqPZmkxFIQ4h8Ki7DNbNX83AfS+5B8exQ/d2IXaixvjW7rF4A
-         QRDx1aoXtVR32MHaX6j9lKyOXf1jjWNYgGEHE+JYwdLfFSmwi+R3iPIN6RV3DA4gVRKo
-         lDQPm38TbpJRjF+7FXfUwZPOry+2YCsQT56YNT5CMUcHVzvALnNIjA1GZDwpsMpcOptb
-         kF2MDjpDFP8OuSZKDsPOL3hJFHjFvZOravt39zekbRqjmjA+TtYZVWmvOSvXNFvM85Av
-         Ho9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718060519; x=1718665319;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2NMtOKSZ7NraxTFFkbLaa2gW2HTDnFenEDXl+1mSZ78=;
-        b=nD4FQwxSCYvhK45q/mvTNT0xZax2XctYKDU2NJUWXDbJDLQu9sbhyJQnyzgMvqpqEZ
-         dz6j1Mo99+k+jwaSdsa2fIR5ZxnJT+r1fqYDHj3nVVTRJFfRgYevAQA0jLivaaYqihSH
-         wXrq9xiFbyostcET/7hlvW+LmRYtSJwRN4GtvbiDKsKmTERNzzCRlc5S1ilPZEHUDRy+
-         IVuKFA3FwNK0fv2A/qfdHRMN2metaGK7RwlqCYb8mR/9abA+X49YGpbGeZN+M5OdK8It
-         mUqSMMheXKk9QYF6dNHYJSWEmtOZaF8kYHNmCPHzRN9sxJ5fs4pDDb+hB5nwfJfIegQa
-         CgQQ==
-X-Gm-Message-State: AOJu0Yz7KKapZlVTToclC00f3bMU0Qjd0YZnpVeyMc9PB7jwGi8rL/HB
-	asxOlCVbvxsj0ohcQ43itaA9by0h5wasyNuRPK+iH0cq7sdPwadrt0PjSKBN/BQ7MQdDe03T7Ke
-	USmQlGmDy8/gYHV0EsVlzAeHPngVHB5vcoXGcGmdlzrTePSzjIHxP
-X-Google-Smtp-Source: AGHT+IHSpj84629un8qrznt0XMVeFzlNbm7lr9DXs9O5KUOh4U3Ol/70XpyM4SWlrU0cAfITvZu95aHL+qwsOTn8Otg=
-X-Received: by 2002:a4a:a381:0:b0:5ba:e1aa:9346 with SMTP id
- 006d021491bc7-5bae1aa93f9mr5641394eaf.4.1718060519002; Mon, 10 Jun 2024
- 16:01:59 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vlbvskk4"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 12405328C0;
+	Mon, 10 Jun 2024 19:20:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=p7M1HfAuHLeFmwkoqHCv0z4L8wg0OjQnq9OKbE
+	AP2V0=; b=Vlbvskk46uKKCX3IA6QDVuz4TKmR+SZQoR9TJ9qVrlqF3QosGTkPyd
+	hbghk8s5fbEKSxdPM69HKwKdPBu3RpCi5F7C3wrPqBrdCIlfKPwH0nysdg5yEX2Z
+	uPZAbOYPpPmHpE4tQyt8Pu521hYwI2S6K8CVr8+ti0ooA1RSqVaIo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B487328BD;
+	Mon, 10 Jun 2024 19:20:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6DA49328B7;
+	Mon, 10 Jun 2024 19:20:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  Christian Couder
+ <chriscool@tuxfamily.org>,  Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [GSoC][PATCH v2] t/: migrate helper/test-oidtree.c to
+ unit-tests/t-oidtree.c
+In-Reply-To: <7o6fuymnfn6b6buyw3yyctjd4dlwlrazspv3xgxvys6djjivxh@qbhyurorgbtt>
+	(Ghanshyam Thakkar's message of "Tue, 11 Jun 2024 03:31:59 +0530")
+References: <20240605134400.37309-1-shyamthakkar001@gmail.com>
+	<20240608165731.29467-1-shyamthakkar001@gmail.com>
+	<xmqqed944uq7.fsf@gitster.g>
+	<72dncmhj2qt6ufh67gbj3ctnwnssnlc3w22x77chcigzxou36f@mnwnrwg4oo5r>
+	<xmqqr0d4zevq.fsf@gitster.g>
+	<7o6fuymnfn6b6buyw3yyctjd4dlwlrazspv3xgxvys6djjivxh@qbhyurorgbtt>
+Date: Mon, 10 Jun 2024 16:20:14 -0700
+Message-ID: <xmqq8qzcz8pd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
-In-Reply-To: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
-From: Kyle Lippincott <spectral@google.com>
-Date: Mon, 10 Jun 2024 16:01:42 -0700
-Message-ID: <CAO_smVjL+Ms1e_Rd5e1k-zMJb_NydBtX76Dh=ifK9Ym9ME9roQ@mail.gmail.com>
-Subject: Re: SEGV (detected by Address Sanitizer) when using `core.abbrev` option
-To: Git Mailing List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ FE6CBC86-277F-11EF-AE5D-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Mon, Jun 10, 2024 at 3:27=E2=80=AFPM Kyle Lippincott <spectral@google.co=
-m> wrote:
->
+Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
 
-I just realized I didn't give a reproduction command, sorry about
-that; here's the reproduction command provided by our user:
+> Yeah, I'll reroll as rebasing on 'ps/no-writable-strings' did produce some
+> errors but the change required was minimal, so I'll include it anyway:
+>
+> diff --git a/t/unit-tests/t-oidtree.c b/t/unit-tests/t-oidtree.c
+> index cecefde899..a38754b066 100644
+> --- a/t/unit-tests/t-oidtree.c
+> +++ b/t/unit-tests/t-oidtree.c
+> @@ -62,7 +62,7 @@ static enum cb_next check_each_cb(const struct object_id *oid, void *data)
+>  }
+>
+>  LAST_ARG_MUST_BE_NULL
+> -static void check_each(struct oidtree *ot, char *query, ...)
+> +static void check_each(struct oidtree *ot, const char *query, ...)
+>  {
+>         struct object_id oid;
+>         struct expected_hex_iter hex_iter = { .expected_hexes = STRVEC_INIT,
 
-git config --global core.abbrev 12
-git clone https://github.com/git/git.git
+I somehow suspect that you do not even need to depend on the
+Patrick's series---tightening the constness in the function
+signature by itself is a good thing as you are not writing into
+"query" anyway, even without his topic.
 
-I realized this because Josh Steadmon informed me that config
-loading/parsing is lazy when I asked why `git bisect` still worked
-with this setting in my git config. So I think this might be a problem
-only for things that go through `git_default_config` (if we set up the
-repo object, we probably work just fine).
-
-> c8aed5e8dadf (repository: stop setting SHA1 as the default object
-> hash, 2024-05-07) stopped initializing the_hash_algo, but config.c
-> references it when it observes a user setting core.abbrev, in two
-> ways:
-> - if core.abbrev is detected as a 'no' boolean value, then
-> default_abbrev is set to the_hash_algo->hexsz
-> - if core.abbrev is set to an integer, it verifies that it's within
-> range for the hash algorithm (specifically: it errors out if the value
-> is < minimum_abbrev or > the_hash_algo->hexsz).
->
-> Stack:
-> =3D=3D2421488=3D=3DERROR: AddressSanitizer: SEGV on unknown address
-> 0x000000000018 (pc 0x56344202585f bp 0x7fff9546fe10 sp 0x7fff9546fcb0
-> T0)
-> =3D=3D2421488=3D=3DThe signal is caused by a READ memory access.
-> =3D=3D2421488=3D=3DHint: address points to the zero page.
->     #0 0x56344202585f in git_default_core_config git/config.c:1466
->     #1 0x56344202585f in git_default_config git/config.c:1815
->     #2 0x56344202064e in configset_iter git/config.c:2185
->     #3 0x563441d531cb in cmd_clone builtin/clone.c:981
->     #4 0x563441cebac2 in run_builtin git/git.c:474
->     #5 0x563441cebac2 in handle_builtin git/git.c:729
->     #6 0x563441ceed0a in run_argv git/git.c:793
->     #7 0x563441cf0aea in cmd_main git/git.c:928
->     #8 0x563441ce9323 in main git/common-main.c:62
->     #9 0x7fa3228456c9 in __libc_start_call_main
-> ../sysdeps/nptl/libc_start_call_main.h:58
->     #10 0x7fa322845784 in __libc_start_main_impl ../csu/libc-start.c:360
->     #11 0x563441ceb530 in _start (git/git+0x1e0530) (BuildId:
-> c0e4b09d5b212a201769f1eb8e7592cddbe3af1d)
->
-> AddressSanitizer can not provide additional info.
->
-> ---
->
-> My first thought for a fix was to just cap it at 40, with the
-> assumption that the code would handle it correctly in the unlikely
-> event that the hash size ever decreased, but I don't think that does
-> the right thing if `core.abbrev=3Dno`. That's documented as a way of
-> obtaining the full hashes (with no abbreviation), and if we're using
-> sha256, capping that at 40 hex (160bits) is incorrect.
->
-> My second thought was that we could store the requested value and
-> validate it on every usage. This complicates usage locations, and can
-> lead to poor behavior (crashes in the middle of operation when we
-> finally get around to checking the value).
->
-> My third thought was that we could store the requested value and
-> validate when we have a repository that initializes the hash for us as
-> part of that initialization. If we attempt to abbreviate some hashes
-> without that setup, we act as if core.abbrev isn't set at all (so they
-> get the default behavior). That seems like the best option overall.
-> Exploring that further ...
->
-> I've looked at a semi-random collection of places where
-> `default_abbrev` or `DEFAULT_ABBREV` are used, and they all seem to
-> eventually go through `repo_find_unique_abbrev_r`, and they pass in
-> the len. This also always has a repository available (otherwise it
-> wouldn't be able to disambiguate). Furthermore, it has `if (len < 0)`.
-> We could thus carry the "unvalidated" request in default_abbrev by
-> having special magic values (auto=3D-1 like today, no=3D-2 (replaced with
-> hexsz when we know it), other requests are <=3D -4, for a requested
-> length of 4 or higher), or we could have another variable
-> (requested_default_abbrev) that gets copied to default_abbrev when we
-> have a repo.
->
-> The one potential issue I can think of with this is that setting
-> `core.abbrev =3D no`, having that resolve to 64 (sha256) when we set up
-> the repo, and then if we ever read from a repo that uses 40 hexsz
-> (such as sha1), then we have to ensure that we tolerate a requested
-> length greater than the current hash algorithm's maximum length. This
-> likely wasn't a problem when sha1 was the default, because we're
-> unlikely to go to a hash algorithm with <160 bits in the future. But
-> if sha256 becomes the default, then this can be problematic.
+Thanks.
