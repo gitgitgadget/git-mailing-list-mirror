@@ -1,105 +1,99 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F1763C7
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 08:36:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0786F314
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 09:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718008596; cv=none; b=KYJuDmxETbwM+7rFpqnNrEBZHPvc3HmVD9WSt+4qAEnbadRsKR3Ne0BplJFYe0ek5HR5Q+FROBFk9nU5SDfRIjnEXCUK9snu5ol5DHj4n4RJOegcnNsjtUOBuqSpZHlpjQKYUscoc6uVyTvton7Q3kWnLBwd8uTufBce5tsHpDI=
+	t=1718010588; cv=none; b=FrVlxPHOlQAbQ9C+vRTSSmvePsKnCpKVIyZU2QiEYc5SNjlzNBdCf/wTJpCEf5Cz4uSL8dkLjFr+rucB8hniMmAz/z4agX3gW2chad2BnRai6mrUjzGTcjbm2siVlVO1/OSt8ulK9GroRXxB1I4+LkQohE3zwl4DTF4YK8+yhgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718008596; c=relaxed/simple;
-	bh=/Xz7yFvnWokr0rA0zD/zIP5UIdu+3Vovs4SkEa1BrDc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SiVcLou4/O1WmlWNfi17DKqOHw6yYIw1cPNYsuKJQEGI/oIKWonaQCtwjacL6tIBtzcpLAUON64JNrq3+C1tEmENYG5V1YUCowyrnjNTKups84D8UAFXTh1mQrXJUDoIXL3+C4eeZxomAC8kq/xFBPGwN0IoTi+g6qstV291CMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sa1AsKvr; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718010588; c=relaxed/simple;
+	bh=HTOt2VpdOH6v9acPoBR+8uYhA9bRaRAKO6rWo25NQxs=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=m9wgYOtIAz9wVJJEaO17P0+HtQKvUT+Kewk2+BGLo9ZXdlErZ0TAQEHADzwuajiSVONcyzjh0ResOGYAqaji3UF7PVI142VNGEaexWwXSMxTbtdWo7fcBJdYfHKSQDNgxf0H/JyiNDOD2j9ieH2RH8K6/Km4VPK/Awpac+ksyzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=u2zcleXl; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sa1AsKvr"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-421b9068274so6301825e9.1
-        for <git@vger.kernel.org>; Mon, 10 Jun 2024 01:36:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718008593; x=1718613393; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dGKrub9d3ZujudmV83HBe/a61trDfLnCL3aOI91LLSM=;
-        b=Sa1AsKvri2zUwPUF0avnUiWlODZoGhTmK1qanONIA5CzhPUGCa3IJrvuccW/229YjN
-         8jkfT3Hsq9AW+m86xt7V77oAIGCCJBiLXL8YrY91prUYrAVKgRlGT4V/3TLQfnDioB0i
-         u+mG9sMgxuNHYrpTpcPW8uoOmSBx9d3QmDZxrXtHj3xFlDRFZ1WCsKVEL70ufjFuKgpT
-         CSQpOlL0wzOvIqdKDLyOHQv7Xn8DmKSvPg0RL/owe2fEu1yzuj3ju9BtA8u+8SVlAT3f
-         +zwao/aTLkKAia84K+wVpoqDjZxiAD01QGJvgF9f7lkFEAZxhnKcpQj6KFjWDWywhDuY
-         BvuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718008593; x=1718613393;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dGKrub9d3ZujudmV83HBe/a61trDfLnCL3aOI91LLSM=;
-        b=kBbYEsIMfnHPw09mctIRxZ5xOi9vEFah4Xr4FvyvYwGWYp5qiSOlfIdHWMGcsD6oli
-         CjDBOh6tqJ2DEkrC5Ks8oHP8ch4Eh/Bji3Cwg6QWg72dTgUK+HGNorCLqWZ1amoFcqst
-         AWHe4MlhLC3DsSXdWCKkogIb94MFARtoVwBVHV0ijwsc6FEgQTkOo/+ehk+xdFcwYRSO
-         Ss+NBPo31GQqAkcySdDZQwP3m5vXYPJgFLOHFhC61PkHAHzkjT0H9usAhoEBzEGXi1yX
-         R8es2Qu9vdmDjVP0WI04fegVt3lAOFPGtyLVUi0HBa5keMZvCUw6EDH1Bol5Dxnaxdx2
-         wcdw==
-X-Gm-Message-State: AOJu0YzG4odPU/KiLJtAGEHyoU3rQ9vj+PjgGkOrzC+0eYSJodVSinPA
-	lDTNNsTqVC+i8EjLAE25t1R6Rhy4U5EzhpmYTE0+a//HZwAwYIHT
-X-Google-Smtp-Source: AGHT+IG+It5L5GOKi/+hslptHgEPGiGPxGtLBMQ1OZ8tSxmxRYUzT8syv3taEz59iGcUIdwtd5qzsw==
-X-Received: by 2002:a05:600c:4506:b0:41f:b0e7:f299 with SMTP id 5b1f17b1804b1-421649f0c0fmr70660385e9.9.1718008593015;
-        Mon, 10 Jun 2024 01:36:33 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-421f23d06ddsm15598745e9.8.2024.06.10.01.36.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Jun 2024 01:36:32 -0700 (PDT)
-Message-ID: <16a6b206-1733-4d64-89e6-c3e2368903ac@gmail.com>
-Date: Mon, 10 Jun 2024 09:36:28 +0100
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="u2zcleXl"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] am: add explicit "--retry" option
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk,
- =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-References: <20240606081724.GA1166769@coredump.intra.peff.net>
- <20240606082114.GA1167215@coredump.intra.peff.net>
- <xmqqzfrym3fu.fsf@gitster.g> <xmqqtti6m2yz.fsf@gitster.g>
- <20240608112920.GC2966571@coredump.intra.peff.net>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20240608112920.GC2966571@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1718010578;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=iZ3vXTOKw1kyKzDeLyOjqBe7h06YteCkCQ6xcV13yj4=;
+	b=u2zcleXluYmSKSWVl1xYLq7yuVgJv4xmDM2F5TNJe1rif4rZ0JiITM5DblWwXN8FpFGx4A
+	YaSty+SKOVSo7hhZg6jX/gtm1J5/+18OlWDmJoreQmq7cbKadZoO6m5Psww347kxwFwFbz
+	VUfkXnAESI14KamSc4iCUXS6jRECHJn9HKzq7bFmgtFC5+fBo9WzTS7o1bl2XrqmITdeuj
+	PCA/KXJg4SvEZfVfJyWVgbPehbljb0T0983hGbcFKl/D1Y6dzbklNQdSCITw2VXzWbsYjd
+	Wrt02XJxOXhm/jPdudf3ruT41xL/IP3zZbLEy2OAmlUBSTbJg/qVJxDawMcINQ==
+Date: Mon, 10 Jun 2024 11:09:37 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: phillip.wood@dunelm.org.uk
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>, Git List
+ <git@vger.kernel.org>
+Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
+In-Reply-To: <1ae0715d-df76-4019-995e-f00f3506f2ac@gmail.com>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+ <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+ <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
+ <20240604101700.GA1781455@coredump.intra.peff.net>
+ <xmqqikyo207f.fsf@gitster.g>
+ <20240605090935.GF2345232@coredump.intra.peff.net>
+ <6056d585-6380-43e7-adf1-9f9aadd2a7db@gmail.com>
+ <a8d3415e3913e3a0798a748ed7f7a093@manjaro.org>
+ <a2a59f5e-fd55-41d3-8472-b99256e1f428@gmail.com>
+ <d092f5bb1d3bc7b7a821000a3cad8a1e@manjaro.org>
+ <1ae0715d-df76-4019-995e-f00f3506f2ac@gmail.com>
+Message-ID: <bed3ddc6e330c67fb127c045ee4530ba@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Hi Peff and Junio
+Hello Phillip,
 
-On 08/06/2024 12:29, Jeff King wrote:
-> On Thu, Jun 06, 2024 at 09:48:52AM -0700, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>> Jeff King <peff@peff.net> writes:
-> But I do think as a general rule we should never provide any action
-> _only_ through heuristics like "is stdin a tty". We should let the user
-> be explicit, and use heuristics to guess the right thing when they don't
-> feel like being so.
+On 2024-06-10 10:27, Phillip Wood wrote:
+> On 09/06/2024 18:20, Dragan Simic wrote:
+>> On 2024-06-09 16:29, phillip.wood123@gmail.com wrote:
+>> 
+>>> Having read the message you referenced I'm struggling to understand
+>>> the use-case for stripping escape codes - what do you want to do with
+>>> the hunk that means you want to remove the color?
+>> 
+>> Let me recap, please.
+>> [...]
+>> I hope this makes the whole thing more clear.
+> 
+> It is very clear _how_ you think it should work and I agree that makes
+> sense in the context of a generic shell pipeline. What's not clear to
+> me is _why_ that is useful in the context of displaying hunks in "git
+> add -p". The purpose of "git add -p" is to allow the user to
+> interactively stage individual hunks. The "|" command allows the user
+> to display the hunk in a way that helps them decide whether to stage
+> that particular hunk. Are you able to give a specific example of a
+> command that would help you decide whether to stage a particular hunk
+> where you would not want to keep the escape codes?
 
-I agree that's a good general rule to have
+Well, it isn't about not _wanting_ to keep the coloring escape
+sequences, but about the _need_ to play it safe, so to speak.
+In other words, we can't know that a random "xyz", as in "|xyz",
+can actually handle the coloring escape sequences, so we need
+to be on the safe side and protect the users from being hit by
+garbled outputs.
 
->>> "--retry" is a horrible word, in that it makes it sound like it will
->>> keep trying to apply the same patch over and over until it applies
->>> cleanly or something.
-
-"retry" means "try once more", so I think it is a reasonable name for 
-this option. (Programs often retrying a failing operation in a loop but 
-then they are retrying many times.)
-
-I haven't looked at these patches in detail so I cannot comment on the 
-code changes but I do think the general aim is a good one.
-
-Best Wishes
-
-Phillip
+That's why it would be the best to have "P", "|xyz" and ">xyz"
+as the different "git add -p" options (piped to the configured
+pager with preserved escape sequences, piped to "xyz" with
+stripped escape sequences, and piped to "xyz" with preserved
+escape sequences, respectively), as I proposed earlier.
