@@ -1,65 +1,65 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A39314F9CA
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 20:10:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C8D14F9F3
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 20:10:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718050255; cv=none; b=M7U60+z/ZDGm53tCXDPXQrY+p3Xf/14SEPh4liyHq0y9Oz2ye+BbExkRUPHW8k+03TEV+a5xvKFSP3yhr++2Zv/p8z4fuaYArbP0hD9u+Bm/ttOGfLHlVlDBCABH5kPLi6h8NH/TGvmB7upNFNc6hq4ALFRph6f8Byw53XrQVSI=
+	t=1718050257; cv=none; b=YvUWI8SepDvwucrj97rFiXheL6/wYNS8vrNQTdzCw/4vW26NqPMouYPEFvi/mxR9R4Jij+iR1+7bGZm/s+0Sh0agRV9ynuWKc3NmmsZuYtgXQ8S3o1n+XKUlckaKSVRp8uqhfNCgD/9nesVGAQxMpIvzqIi31KRg2vFUAnA0zlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718050255; c=relaxed/simple;
-	bh=8xAOmHVY+qa4uLk1XpWHyQDR7Si89+aRyZ0tdcwCtlY=;
+	s=arc-20240116; t=1718050257; c=relaxed/simple;
+	bh=W16oYFJANyV3wznygtJUE7HwNtDrAAtCVOm062LhO44=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BtekXX61pg4Plx9toJpwv3PMoDnLywBGDHIya8kd4LXlT8JCgbWWtbkZS5h+AUe3LqHryNBGs52wt15p/KlKBceuSFdGRmkmIfjho9FhpYOW2HVkYERLcPORURmUbn1YaaYrv55/bya61zzN4TSKLdTKmEv4adsBYYVffWxNx4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=FSmD76gY; arc=none smtp.client-ip=209.85.160.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=pWTKbYRbG50Xnadh8S4+eJMmTk+T04XGHvMKMII4OlK42p7UhwFZhekmoB5UtrBzAoQIuS2ctYOlYt3Xbc02BUCrpCkYzKiM+IR6IxOXLky1fhpvYOiTeQdpIofiCVCWEecA2x2u/fXWRffwJfIVAA/6RZXS5bDxytKX9uNbLsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=1DdDOkDR; arc=none smtp.client-ip=209.85.167.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="FSmD76gY"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-43fdb114e07so21419831cf.2
-        for <git@vger.kernel.org>; Mon, 10 Jun 2024 13:10:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="1DdDOkDR"
+Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3c9b94951cfso2805710b6e.3
+        for <git@vger.kernel.org>; Mon, 10 Jun 2024 13:10:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1718050252; x=1718655052; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1718050255; x=1718655055; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nRf5EIHyMgFgZuzctv1TrIznG/0YBURSGXztY/WKJj4=;
-        b=FSmD76gYVUsMg+HPtCiOnFwPN/TxVWZ7mgV4n4Qlmc4gMNucJizuOhgYXNlPcqEyYG
-         DZpD7KqdQRaZ/sjRC+TVmXGm65LQRxO/oNSVldq9IQL+IlYsxwPYTStad5pQ+RyQzuAe
-         eFB3CzYDnMQZhQy+WFp3gKnblbVdJrHqzNacupiqYA3ZjgeM/KH2gvTZszuOb/1RX8v7
-         PnJ6MeRKKGGkj6b4n6KkfZ1lCXeb/MWVvnpedVUC29zG9Ro0a2KHkersLFWNPy+DehEX
-         dXpQogj1iGV4cB2fi4vPyaIOx8sAG75YuHCZ7Z05lsej0PkS7dsyFilXKmcUVMlUevW6
-         z0Tg==
+        bh=381zQgZH8a+V2M4tHyEJzLE15vxwNRilN4ptupM0eaU=;
+        b=1DdDOkDROk/UW+aBZYfRtbEbrsK4yAERcmu6aJIYfOX83LGGfa3Zrlh/sfiLHIGK26
+         9U1GDYqwUdDipyXtYQoKeTsKb0EsWENfcE8YscJPseyYpDkmegqzNZ6Q1YazYvCk/kCL
+         Obj0AmD9e5ZCndPpvNPjsJBXEc0d6i+AngfFlqRUfn4YrX7aV62DwXv5F55vbtD0n+8y
+         /mh/WVWYx3o5Neuz3DUOx0F9IWMgSEyieKiLOJXaUwOPYKJ9G24+um5L6qKEe3w2gKlQ
+         woKyaF0YN/xMWtZYcLJjlyvkjhYyXmRinx18nA1Ch03SEiPhltgV5NRawe0J5pFFbYuV
+         GMPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718050252; x=1718655052;
+        d=1e100.net; s=20230601; t=1718050255; x=1718655055;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nRf5EIHyMgFgZuzctv1TrIznG/0YBURSGXztY/WKJj4=;
-        b=szGENu0httScBYzUu5/4kc7JWrfPOYjJ6EJMi0/tck7yUIseE4rG7k6Vjk+YosaoTB
-         0QSB6WiRFzi6ot20Vvup1LqDMEi+MHLebifmK8oRpj5r8ZMzDtBODgesnClgvP2kgzCW
-         zzXcTWbVHfI8pKfuMP+1xfMOazSpVmNX3wJRw+2hZhuXCE6KBQaxq2viSOq9kR3PeBv6
-         73qXRHl6YMlvKr9aoA5w+UnMWaVpLS1bMqGZJvl08t1bMwOGWRCJCLFgD85Hv1PY492t
-         PfHxe6Nn3qFKkwtkKxLV3DbIRrEavATZus0ypeu5SkJ8eG2KRM+KRmo8ntTvhpONrXOH
-         MeyQ==
-X-Gm-Message-State: AOJu0YxyesW9mAXQjJHoxldjrZVSzeYJrY2LDy1ojUkeaNDTiSPHkoCL
-	vmzA6Xphy+cZyaJP0PZUgXRgdkKG0ZKChx/6GG6xNXn+4YcHBEk0wg87QrD1O3HXrFqBSKxFHkF
-	go/U=
-X-Google-Smtp-Source: AGHT+IHkmJU9vV1S00T89nuuOeX5Dgql9b47PTjzWkaaSUvQrRBDaEYz9tZvvRXFRz9DHxDk56QW7g==
-X-Received: by 2002:a05:622a:1483:b0:440:25d4:805e with SMTP id d75a77b69052e-44041cd4a57mr131114151cf.65.1718050251576;
-        Mon, 10 Jun 2024 13:10:51 -0700 (PDT)
+        bh=381zQgZH8a+V2M4tHyEJzLE15vxwNRilN4ptupM0eaU=;
+        b=mZSBF3I938AJR1jcOYH6PBXhKBr8/sk7BA0wCZQTRXrQ8vj3pCLeY/vNFb69Sl+0g2
+         iJBzEe3YSix0ItTrk+jjU1RRpKAcRIvVSSBCMGUvX5IYg4a15ysnQTijOLYr2YTg1Voa
+         K2+sdPRRD6qz/peXoQsVYjxNA8KC3WgZJyvRw7oAPKGnHkvVVdP+SpuL9OkeKxx3rMwi
+         nMDccnFifrnnp8FG+rILdPxkJby9+etYV64hOeXUNuN/Bb3baeoGY9lgGWTHo+zyedtU
+         /Zjuw00s7+MVasNsUCpE2uq0KqqhFlVJCGl7t5WV0F9xb/o0+4iET9LVjGOCOzMXJA40
+         7P7Q==
+X-Gm-Message-State: AOJu0YwxkWhrVPiFSeFTg1iiMWz2YToIu1XEJiWYBsQ1ud3KZbMeWTn9
+	s26cbVWezoHnwW28AvKx+M1D4DYTI6Zr5xHirwrRrov5G9ecP/Oo6YnuUw/31YcgAsaHvGF6ER8
+	iCWc=
+X-Google-Smtp-Source: AGHT+IFTaR84WSb9RW4KTQ62YoOoD2NNNOSgx2s3IxlcCpeSKouVFCufdcVmAmfMvP+tYkf5VHIfPA==
+X-Received: by 2002:a05:6808:1385:b0:3d2:1503:6ca5 with SMTP id 5614622812f47-3d2150371c5mr11801393b6e.26.1718050254993;
+        Mon, 10 Jun 2024 13:10:54 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44038ac8860sm40213781cf.58.2024.06.10.13.10.51
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-795499515adsm317767485a.103.2024.06.10.13.10.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jun 2024 13:10:51 -0700 (PDT)
-Date: Mon, 10 Jun 2024 16:10:49 -0400
+        Mon, 10 Jun 2024 13:10:54 -0700 (PDT)
+Date: Mon, 10 Jun 2024 16:10:53 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Kyle Lippincott <spectral@google.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 1/3] midx-write.c: do not read existing MIDX with
- `packs_to_include`
-Message-ID: <0bdf925366daea7ed229883272da79dbcf7023b3.1718050244.git.me@ttaylorr.com>
+Subject: [PATCH v2 2/3] pack-bitmap.c: avoid uninitialized `pack_int_id`
+ during reuse
+Message-ID: <a3c28f12020712818060bd50d1483507c9b11556.1718050244.git.me@ttaylorr.com>
 References: <4aceb9233ed24fb1e1a324a77b665eea2cf22b39.1717946847.git.me@ttaylorr.com>
  <cover.1718050244.git.me@ttaylorr.com>
 Precedence: bulk
@@ -72,191 +72,130 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1718050244.git.me@ttaylorr.com>
 
-Commit d6a8c58675 (midx-write.c: support reading an existing MIDX with
-`packs_to_include`, 2024-05-29) changed the MIDX generation machinery to
-support reading from an existing MIDX when writing a new one.
+When performing multi-pack reuse, reuse_partial_packfile_from_bitmap()
+is responsible for generating an array of bitmapped_pack structs from
+which to perform reuse.
 
-Unfortunately, the rest of the MIDX generation machinery is not prepared
-to deal with such a change. For instance, the function responsible for
-adding to the object ID fanout table from a MIDX source
-(midx_fanout_add_midx_fanout()) will gladly add objects from an existing
-MIDX for some fanout level regardless of whether or not those objects
-came from packs that are to be included in the subsequent MIDX write.
+In the multi-pack case, we loop over the MIDXs packs and copy the result
+of calling `nth_bitmapped_pack()` to construct the list of reusable
+paths.
 
-This results in broken pseudo-pack object order (leading to incorrect
-object traversal results) and segmentation faults, like so (generated by
-running the added test prior to the changes in midx-write.c):
+But we may also want to do pack-reuse over a single pack, either because
+we only had one pack to perform reuse over (in the case of single-pack
+bitmaps), or because we explicitly asked to do single pack reuse even
+with a MIDX[^1].
 
-    #0  0x000055ee31393f47 in midx_pack_order (ctx=0x7ffdde205c70) at midx-write.c:590
-    #1  0x000055ee31395a69 in write_midx_internal (object_dir=0x55ee32570440 ".git/objects",
-        packs_to_include=0x7ffdde205e20, packs_to_drop=0x0, preferred_pack_name=0x0,
-        refs_snapshot=0x0, flags=15) at midx-write.c:1171
-    #2  0x000055ee31395f38 in write_midx_file_only (object_dir=0x55ee32570440 ".git/objects",
-        packs_to_include=0x7ffdde205e20, preferred_pack_name=0x0, refs_snapshot=0x0, flags=15)
-        at midx-write.c:1274
-    [...]
+When this is the case, the array we generate of reusable packs contains
+only a single element, which is either (a) the pack attached to the
+single-pack bitmap, or (b) the MIDX's preferred pack.
 
-In stack frame #0, the code on midx-write.c:590 is using the new pack ID
-corresponding to some object which was added from the existing MIDX.
-Importantly, the pack from which that object was selected in the
-existing MIDX does not appear in the new MIDX as it was excluded via
-`--stdin-packs`.
+In 795006fff4 (pack-bitmap: gracefully handle missing BTMP chunks,
+2024-04-15), we refactored the reuse_partial_packfile_from_bitmap()
+function and stopped assigning the pack_int_id field when reusing only
+the MIDX's preferred pack. This results in an uninitialized read down in
+try_partial_reuse() like so:
 
-In this instance, the pack in question had pack ID "1" in the existing
-MIDX, but since it was excluded from the new MIDX, we never filled in
-that entry in the pack_perm table, resulting in:
+    ==7474==WARNING: MemorySanitizer: use-of-uninitialized-value
+    #0 0x55c5cd191dde in try_partial_reuse pack-bitmap.c:1887:8
+    #1 0x55c5cd191dde in reuse_partial_packfile_from_bitmap_1 pack-bitmap.c:2001:8
+    #2 0x55c5cd191dde in reuse_partial_packfile_from_bitmap pack-bitmap.c:2105:3
+    #3 0x55c5cce0bd0e in get_object_list_from_bitmap builtin/pack-objects.c:4043:3
+    #4 0x55c5cce0bd0e in get_object_list builtin/pack-objects.c:4156:27
+    #5 0x55c5cce0bd0e in cmd_pack_objects builtin/pack-objects.c:4596:3
+    #6 0x55c5ccc8fac8 in run_builtin git.c:474:11
 
-    (gdb) p *ctx->pack_perm@2
-    $1 = {0, 1515870810}
+which happens when try_partial_reuse() tries to call
+midx_pair_to_pack_pos() when it tries to reject cross-pack deltas.
 
-Which is what causes the segfault above when we try and read:
+Avoid the uninitialized read by ensuring that the pack_int_id field is
+set in the single-pack reuse case by setting it to either the MIDX
+preferred pack's pack_int_id, or '0', in the case of single-pack
+bitmaps.  In the latter case, we never read the pack_int_id field, so
+the choice of '0' is arbitrary.
 
-    struct pack_info *pack = &ctx->info[ctx->pack_perm[i]];
-    if (pack->bitmap_pos == BITMAP_POS_UNKNOWN)
-        pack->bitmap_pos = 0;
+Guard against further regressions in this area by adding a test which
+ensures that we do not throw out deltas from the preferred pack as
+"cross-pack" due to an uninitialized pack_int_id.
 
-Fundamentally, we should be able to read information from an existing
-MIDX when generating a new one. But in practice the midx-write.c code
-assumes that we won't run into issues like the above with incongruent
-pack IDs, and often makes those assumptions in extremely subtle and
-fragile ways.
+[^1]: This can happen for a couple of reasons, either because the
+  repository is configured with 'pack.allowPackReuse=(true|single)', or
+  because the MIDX was generated prior to the introduction of the BTMP
+  chunk, which contains information necessary to perform multi-pack
+  reuse.
 
-Instead, let's avoid reading from an existing MIDX altogether, and stick
-with the pre-d6a8c58675 implementation. Harden against any regressions
-in this area by adding a test which demonstrates these issues.
-
+Reported-by: Kyle Lippincott <spectral@google.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx-write.c                  | 42 ++++++++++++++++++++++++++---------
- t/t5326-multi-pack-bitmaps.sh | 30 +++++++++++++++++++++++++
- 2 files changed, 61 insertions(+), 11 deletions(-)
+ pack-bitmap.c               | 10 ++++++++++
+ t/t5332-multi-pack-reuse.sh | 26 ++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
 
-diff --git a/midx-write.c b/midx-write.c
-index 55a6b63bac..0125aa4dc9 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -101,13 +101,27 @@ struct write_midx_context {
- };
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index fe8e8a51d3..8b9a2c698f 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -2073,6 +2073,7 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 		QSORT(packs, packs_nr, bitmapped_pack_cmp);
+ 	} else {
+ 		struct packed_git *pack;
++		uint32_t pack_int_id;
  
- static int should_include_pack(const struct write_midx_context *ctx,
--			       const char *file_name,
--			       int exclude_from_midx)
-+			       const char *file_name)
- {
--	if (exclude_from_midx && ctx->m && midx_contains_pack(ctx->m, file_name))
-+	/*
-+	 * Note that at most one of ctx->m and ctx->to_include are set,
-+	 * so we are testing midx_contains_pack() and
-+	 * string_list_has_string() independently (guarded by the
-+	 * appropriate NULL checks).
-+	 *
-+	 * We could support passing to_include while reusing an existing
-+	 * MIDX, but don't currently since the reuse process drags
-+	 * forward all packs from an existing MIDX (without checking
-+	 * whether or not they appear in the to_include list).
-+	 *
-+	 * If we added support for that, these next two conditional
-+	 * should be performed independently (likely checking
-+	 * to_include before the existing MIDX).
-+	 */
-+	if (ctx->m && midx_contains_pack(ctx->m, file_name))
- 		return 0;
--	if (ctx->to_include && !string_list_has_string(ctx->to_include,
--						       file_name))
-+	else if (ctx->to_include &&
-+		 !string_list_has_string(ctx->to_include, file_name))
- 		return 0;
- 	return 1;
- }
-@@ -121,7 +135,7 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
- 	if (ends_with(file_name, ".idx")) {
- 		display_progress(ctx->progress, ++ctx->pack_paths_checked);
+ 		if (bitmap_is_midx(bitmap_git)) {
+ 			uint32_t preferred_pack_pos;
+@@ -2083,12 +2084,21 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 			}
  
--		if (!should_include_pack(ctx, file_name, 1))
-+		if (!should_include_pack(ctx, file_name))
- 			return;
+ 			pack = bitmap_git->midx->packs[preferred_pack_pos];
++			pack_int_id = preferred_pack_pos;
+ 		} else {
+ 			pack = bitmap_git->pack;
++			/*
++			 * Any value for 'pack_int_id' will do here. When we
++			 * process the pack via try_partial_reuse(), we won't
++			 * use the `pack_int_id` field since we have a non-MIDX
++			 * bitmap.
++			 */
++			pack_int_id = 0;
+ 		}
  
- 		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
-@@ -880,9 +894,6 @@ static int fill_packs_from_midx(struct write_midx_context *ctx,
- 	uint32_t i;
+ 		ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
+ 		packs[packs_nr].p = pack;
++		packs[packs_nr].pack_int_id = pack_int_id;
+ 		packs[packs_nr].bitmap_nr = pack->num_objects;
+ 		packs[packs_nr].bitmap_pos = 0;
  
- 	for (i = 0; i < ctx->m->num_packs; i++) {
--		if (!should_include_pack(ctx, ctx->m->pack_names[i], 0))
--			continue;
--
- 		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
+diff --git a/t/t5332-multi-pack-reuse.sh b/t/t5332-multi-pack-reuse.sh
+index 3c20738bce..ed823f37bc 100755
+--- a/t/t5332-multi-pack-reuse.sh
++++ b/t/t5332-multi-pack-reuse.sh
+@@ -204,4 +204,30 @@ test_expect_success 'omit delta from uninteresting base (cross pack)' '
+ 	test_pack_objects_reused_all $(($objects_nr - 1)) $packs_nr
+ '
  
- 		if (flags & MIDX_WRITE_REV_INDEX || preferred_pack_name) {
-@@ -937,7 +948,15 @@ static int write_midx_internal(const char *object_dir,
- 		die_errno(_("unable to create leading directories of %s"),
- 			  midx_name.buf);
- 
--	ctx.m = lookup_multi_pack_index(the_repository, object_dir);
-+	if (!packs_to_include) {
-+		/*
-+		 * Only reference an existing MIDX when not filtering which
-+		 * packs to include, since all packs and objects are copied
-+		 * blindly from an existing MIDX if one is present.
-+		 */
-+		ctx.m = lookup_multi_pack_index(the_repository, object_dir);
-+	}
++test_expect_success 'non-omitted delta in MIDX preferred pack' '
++	test_config pack.allowPackReuse single &&
 +
- 	if (ctx.m && !midx_checksum_valid(ctx.m)) {
- 		warning(_("ignoring existing multi-pack-index; checksum mismatch"));
- 		ctx.m = NULL;
-@@ -946,7 +965,6 @@ static int write_midx_internal(const char *object_dir,
- 	ctx.nr = 0;
- 	ctx.alloc = ctx.m ? ctx.m->num_packs : 16;
- 	ctx.info = NULL;
--	ctx.to_include = packs_to_include;
- 	ALLOC_ARRAY(ctx.info, ctx.alloc);
- 
- 	if (ctx.m && fill_packs_from_midx(&ctx, preferred_pack_name,
-@@ -963,6 +981,8 @@ static int write_midx_internal(const char *object_dir,
- 	else
- 		ctx.progress = NULL;
- 
-+	ctx.to_include = packs_to_include;
++	cat >p1.objects <<-EOF &&
++	$(git rev-parse $base)
++	^$(git rev-parse $delta^)
++	EOF
++	cat >p2.objects <<-EOF &&
++	$(git rev-parse F)
++	EOF
 +
- 	for_each_file_in_pack_dir(object_dir, add_pack_to_midx, &ctx);
- 	stop_progress(&ctx.progress);
- 
-diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
-index cc7220b6c0..916da389b6 100755
---- a/t/t5326-multi-pack-bitmaps.sh
-+++ b/t/t5326-multi-pack-bitmaps.sh
-@@ -551,4 +551,34 @@ do
- 	'
- done
- 
-+test_expect_success 'remove one packfile between MIDX bitmap writes' '
-+	git init remove-pack-between-writes &&
-+	(
-+		cd remove-pack-between-writes &&
++	p1="$(git pack-objects --revs $packdir/pack <p1.objects)" &&
++	p2="$(git pack-objects --revs $packdir/pack <p2.objects)" &&
 +
-+		test_commit A &&
-+		test_commit B &&
-+		test_commit C &&
++	cat >in <<-EOF &&
++	pack-$p1.idx
++	pack-$p2.idx
++	EOF
++	git multi-pack-index write --bitmap --stdin-packs \
++		--preferred-pack=pack-$p1.pack <in &&
 +
-+		# Create packs with the prefix "pack-A", "pack-B",
-+		# "pack-C" to impose a lexicographic order on these
-+		# packs so the pack being removed is always from the
-+		# middle.
-+		packdir=.git/objects/pack &&
-+		A="$(echo A | git pack-objects $packdir/pack-A --revs)" &&
-+		B="$(echo B | git pack-objects $packdir/pack-B --revs)" &&
-+		C="$(echo C | git pack-objects $packdir/pack-C --revs)" &&
++	git show-index <$packdir/pack-$p1.idx >expect &&
 +
-+		git multi-pack-index write --bitmap &&
-+
-+		cat >in <<-EOF &&
-+		pack-A-$A.idx
-+		pack-C-$C.idx
-+		EOF
-+		git multi-pack-index write --bitmap --stdin-packs <in &&
-+
-+		git rev-list --test-bitmap HEAD
-+	)
++	test_pack_objects_reused_all $(wc -l <expect) 1
 +'
 +
  test_done
