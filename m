@@ -1,51 +1,52 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5FD149C43
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 19:58:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A907B1BF2A
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 20:05:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718049516; cv=none; b=cuhTYoMQcu9NY79ESvdWCTZhlyUB1Zozm2VLe7jaQ6HALn6R2zrtyUoj082gOD+yG9B4INgZ117WE6cWGm0lI5hphzaZ9f0GkCnwls6qG2eW749CAF11gdekVdvq4AqWc+yEZ5PRl9HMGLfLm0GWuR+eAiRhaoHKSQIPHunE1wY=
+	t=1718049908; cv=none; b=Z8RIyugAQ7Bq/Ftp8EqKXDqa+9QeHnsqbjGuYslI/xx/7Bj5N7pEkEuAkhDvLs5KFuw7A6mXfc+Y/p50i6PtQwQigeOEReyE3U6nXDenMrjeJlslduMDCViVsHLZqID6MdVpvfeuwFUKY1ZAUl4rK8PG8JFPzHc/Pm/dbDGS3ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718049516; c=relaxed/simple;
-	bh=8v0rZ7UkL5i35qcPX+C/zzXUGJ/rqs1Lniwc1VakfsY=;
+	s=arc-20240116; t=1718049908; c=relaxed/simple;
+	bh=522FPaeZXuy+/0FpYanzM0Np45u1jBAr1Aq4BS5afTU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hy/Xk6h7pUw3JlOkyoV9Dz9x3qxFXFm0Ckaow/rk+D7OlehDyOmm5aIhPdUIaA8xhiM3dWrG3i+B9uiIxqWLbF6+KS8q8iwQd2vpGJLs+rbWAs+Sk70udUyBuARO3JwU0+ePZM4nQGHdRZ+xd88iMOwhg0qCXYaMp/76VnRp1Hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jmMLZMc9; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=hhJybiSyuHstlm49+7NbzDgC47MlClW6Le0ts2vhCFsra+26tzGyE83cale/EQk/hVZnzvxIBEGRlilAsb+3RDjBZX3ThGuDb6/B3CWSrtuvnDeGRnc5s07OOljaygtn8Y45NZtmHy2fSBbknlGJTP2WZFhRcT2fQHgd8gVuut4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=whuvFxLO; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jmMLZMc9"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D35D21182;
-	Mon, 10 Jun 2024 15:58:34 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="whuvFxLO"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id F41A01F70F;
+	Mon, 10 Jun 2024 16:05:05 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=8v0rZ7UkL5i35qcPX+C/zzXUGJ/rqs1Lniwc1V
-	akfsY=; b=jmMLZMc9oQU2RxC3ABWvDL/3vl6YvupWqhVvdjvKevvUe1ElnkvqKm
-	ztpEgr0v//do8gODg9PvfdVG1L0xPaiDzFVBFstDaKuP+NRakXO2meO5UnRRMmGS
-	WvBVqZQ3JiMn5NRFU5HTQVxmDBH2fFmLPiBA3kMEU8PiFdYwrpvwA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 668CF21181;
-	Mon, 10 Jun 2024 15:58:34 -0400 (EDT)
+	:content-type; s=sasl; bh=522FPaeZXuy+/0FpYanzM0Np45u1jBAr1Aq4BS
+	5afTU=; b=whuvFxLO5Yux+oHyYdl3spETMgjyZZ0NmebwyC0UuEAlAZ5cEnRdP9
+	hYkmH4ukSNCWTWArSptSpniKPQ6CpUxLjaHs7vLpBeB2dRmplv4TiXnCyYSNbt/s
+	TCo/do1fchUSpDG8cefrX++ZRnFLzOD6sVcJHqfI97IGZA/B1eK+I=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id EC2CB1F70E;
+	Mon, 10 Jun 2024 16:05:05 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CCCF021180;
-	Mon, 10 Jun 2024 15:58:33 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9163B1F708;
+	Mon, 10 Jun 2024 16:05:02 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Yuri <yuri@rawbw.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Subject: Re: [BUG] "git clean -df ." silently doesn't delete folders with
- stale .nfs* files
-In-Reply-To: <ae862adb-1475-48e9-bd50-0c07dc42a520@rawbw.com>
-	(yuri@rawbw.com's message of "Mon, 10 Jun 2024 11:36:28 -0700")
-References: <ae862adb-1475-48e9-bd50-0c07dc42a520@rawbw.com>
-Date: Mon, 10 Jun 2024 12:58:32 -0700
-Message-ID: <xmqqwmmw1sev.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] DONTAPPLY: -Og fallout workaround
+In-Reply-To: <xmqqjziw3arr.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	10 Jun 2024 11:36:40 -0700")
+References: <cover.1717655210.git.ps@pks.im> <cover.1718001244.git.ps@pks.im>
+	<03270d3414117ae7229d87127cff81e349557039.1718001244.git.ps@pks.im>
+	<xmqqed946auc.fsf@gitster.g> <xmqqjziw3arr.fsf@gitster.g>
+Date: Mon, 10 Jun 2024 13:05:00 -0700
+Message-ID: <xmqqsexk1s43.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,20 +56,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- D14D5920-2763-11EF-8E4F-6488940A682E-77302942!pb-smtp2.pobox.com
+ B904ADCC-2764-11EF-BB6C-ACC938F0AE34-77302942!pb-smtp20.pobox.com
 
-Yuri <yuri@rawbw.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> NFS sometimes leaves files like .nfsXXXXXXXXXXX which usually means
-> that some process that has this file open is alive.
+> These "workarounds" are to mark variables that are used after
+> initialized, but some compilers with lower optimization levels
+> cannot see and report "used uninitialized".
+>
+> This set targets "gcc-12 -Og".  For the reason why this is a wrong
+> thing to do for longer-term code health, see
+>
+>   https://lore.kernel.org/git/xmqqed946auc.fsf@gitster.g/
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * Even though I said I won't do the actual patch, since I had to
+>    gauge the extent of damage, I ended up doing so anyways.
+>
+>    As I explained already, the size of this patch, i.e. number of
+>    places that need the workaround, does not really matter.  What
+>    is horrible is how each of these workaround will hide real bugs
+>    we may introduce in the future from the compilers.
+>
+>  builtin/branch.c          | 2 +-
+>  builtin/fast-import.c     | 4 ++--
+>  builtin/repack.c          | 2 +-
+>  fetch-pack.c              | 2 +-
+>  http-backend.c            | 2 +-
+>  http.c                    | 2 +-
+>  pack-mtimes.c             | 2 +-
+>  pack-revindex.c           | 2 +-
+>  refs/packed-backend.c     | 2 +-
+>  reftable/stack.c          | 2 +-
+>  remote-curl.c             | 4 ++--
+>  t/helper/test-ref-store.c | 2 +-
+>  trailer.c                 | 4 ++--
+>  13 files changed, 16 insertions(+), 16 deletions(-)
 
-Yes, and from everybody's point of view, including "git", a
-directory with such a file is not yet empty.
+And depending on the version of compilers, apparently even this is
+not enough.  I do not offhand know what GitHub CI is running for
+linux-gcc-default (ubuntu-latest), but this gets flagged for using
+(try to guess which one without looking at the answer below) ...
 
-> "git clean -df ." was supposed to remove the folder where such file is
-> located, but it encountered the failure, and silently ignored it and
-> succeeded.
+        static int parse_count(const char *arg)
+        {
+                int count;
 
-So "was supposed to remove" above is not quite correct.  Where did
-such a piece of misinformation come from?
+                if (strtol_i(arg, 10, &count) < 0)
+                        die("'%s': not an integer", arg);
+                return count;
+        }
+
+... count uninitilaized, since the compiler does not realize that
+strtol_i() always touches "count" unless the function returns
+negative, and die() never returns.  Exactly the same pattern
+continues.
+
+So, unless we disable -Werror, let's not continue this experiment
+with -Og or -Os as the damage seems to be far greater than the
+benefit (which I haven't seen any, but that is largely due to
+timezone differences---I asked "what's the real bug you found with
+this" a few hours ago that is past EOB in Europe).
 
