@@ -1,57 +1,52 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8325854FAD
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 23:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F6554FAD
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 23:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718061624; cv=none; b=Lz9j+JoRUMIRS0/MAjkg6ePTa6oNk21zxcrA4cOCxpjbvRAPKlJSpuWQFi/BFY5G37yNU+BlBtc6LJ0Mw4YkBompDITTk8dH3RbBYjE5P/9s7b0Di3B1uksoyLrXVJ2cJEKu383caZHZ9jv0gAvvAWtdrmvMQNBilStbtl7riZ4=
+	t=1718061672; cv=none; b=fy1GBrwSZaRB5oXyLYjqpBpOoKwXAtLxOuAiT5NMx7vpAuS+snJ8U10vdOGMG1W4bSHBv5OFX5YhFTnyVxk+OGhvSCLthCCkILXqQ3+9WiMq6UfeKUKJtxCEhiup7rpP60tWiGI0AzMcFR0Ur8ToYFdS8dFLdn+wXumx/FoQgxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718061624; c=relaxed/simple;
-	bh=p7M1HfAuHLeFmwkoqHCv0z4L8wg0OjQnq9OKbEAP2V0=;
+	s=arc-20240116; t=1718061672; c=relaxed/simple;
+	bh=/tRYhcbEGtzc/Pad2U6rcFzmGS5Bn0/58isOiDSCcJU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=utpvoj3/xmTDqpk2PATlz4Q54iM5uwgvKkb4rLIXf9Zm4dlsoogkRG6G2CUB/rKsmq0AXyuR93DdHGXasPeuAv8mAIEzY7AEgFPP7SqKEMVhU+XXQHu0S8fOScWQaF028hTCqNMtqYDbzf5yqTe0ykONNDFom+AeRpnHL9E6u6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Vlbvskk4; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=i7xGscS7Cpi4Hv40h9KY/h9Vc7HWvqyuOReMRd4tTLcXootd3QhmXzspaWLxY53+N6viRM5zEwuTbfw87wztlscPlOkIvl/73rxX7wIEDGJ/KkfaoxOVnaPpR00jlMgWsJ9edf8tMay5nkGlgw4s66lttHTTQpTW0puYYMSeTpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=J1tWZiNM; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vlbvskk4"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="J1tWZiNM"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 12405328C0;
-	Mon, 10 Jun 2024 19:20:16 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 27AF5328CF;
+	Mon, 10 Jun 2024 19:21:10 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=p7M1HfAuHLeFmwkoqHCv0z4L8wg0OjQnq9OKbE
-	AP2V0=; b=Vlbvskk46uKKCX3IA6QDVuz4TKmR+SZQoR9TJ9qVrlqF3QosGTkPyd
-	hbghk8s5fbEKSxdPM69HKwKdPBu3RpCi5F7C3wrPqBrdCIlfKPwH0nysdg5yEX2Z
-	uPZAbOYPpPmHpE4tQyt8Pu521hYwI2S6K8CVr8+ti0ooA1RSqVaIo=
+	:content-type; s=sasl; bh=/tRYhcbEGtzc/Pad2U6rcFzmGS5Bn0/58isOiD
+	SCcJU=; b=J1tWZiNMmq/+gF3ouqbrO4U/ZvmDx1lT0dmKhCQa7iZPD8aMqzWOv5
+	NuKh09YvKtqtXmQ0qe8LuNZBDPdyNFvwNFgYBha6gNnBfz89XHpA42VZDK5Ho0Uk
+	b76acgwqPk1NRz0YWFnaoBroGPywAwap4OHbGfFhL2ETsc3496iA4=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B487328BD;
-	Mon, 10 Jun 2024 19:20:16 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F95F328CE;
+	Mon, 10 Jun 2024 19:21:10 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6DA49328B7;
-	Mon, 10 Jun 2024 19:20:15 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 93BB0328CC;
+	Mon, 10 Jun 2024 19:21:09 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,  Christian Couder
- <chriscool@tuxfamily.org>,  Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][PATCH v2] t/: migrate helper/test-oidtree.c to
- unit-tests/t-oidtree.c
-In-Reply-To: <7o6fuymnfn6b6buyw3yyctjd4dlwlrazspv3xgxvys6djjivxh@qbhyurorgbtt>
-	(Ghanshyam Thakkar's message of "Tue, 11 Jun 2024 03:31:59 +0530")
-References: <20240605134400.37309-1-shyamthakkar001@gmail.com>
-	<20240608165731.29467-1-shyamthakkar001@gmail.com>
-	<xmqqed944uq7.fsf@gitster.g>
-	<72dncmhj2qt6ufh67gbj3ctnwnssnlc3w22x77chcigzxou36f@mnwnrwg4oo5r>
-	<xmqqr0d4zevq.fsf@gitster.g>
-	<7o6fuymnfn6b6buyw3yyctjd4dlwlrazspv3xgxvys6djjivxh@qbhyurorgbtt>
-Date: Mon, 10 Jun 2024 16:20:14 -0700
-Message-ID: <xmqq8qzcz8pd.fsf@gitster.g>
+To: Kyle Lippincott <spectral@google.com>
+Cc: Git Mailing List <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: SEGV (detected by Address Sanitizer) when using `core.abbrev`
+ option
+In-Reply-To: <CAO_smVjL+Ms1e_Rd5e1k-zMJb_NydBtX76Dh=ifK9Ym9ME9roQ@mail.gmail.com>
+	(Kyle Lippincott's message of "Mon, 10 Jun 2024 16:01:42 -0700")
+References: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
+	<CAO_smVjL+Ms1e_Rd5e1k-zMJb_NydBtX76Dh=ifK9Ym9ME9roQ@mail.gmail.com>
+Date: Mon, 10 Jun 2024 16:21:08 -0700
+Message-ID: <xmqq1q54z8nv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -61,30 +56,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- FE6CBC86-277F-11EF-AE5D-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
+ 1EB3F1E4-2780-11EF-AEE6-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
+Kyle Lippincott <spectral@google.com> writes:
 
-> Yeah, I'll reroll as rebasing on 'ps/no-writable-strings' did produce some
-> errors but the change required was minimal, so I'll include it anyway:
+> I just realized I didn't give a reproduction command, sorry about
+> that; here's the reproduction command provided by our user:
 >
-> diff --git a/t/unit-tests/t-oidtree.c b/t/unit-tests/t-oidtree.c
-> index cecefde899..a38754b066 100644
-> --- a/t/unit-tests/t-oidtree.c
-> +++ b/t/unit-tests/t-oidtree.c
-> @@ -62,7 +62,7 @@ static enum cb_next check_each_cb(const struct object_id *oid, void *data)
->  }
->
->  LAST_ARG_MUST_BE_NULL
-> -static void check_each(struct oidtree *ot, char *query, ...)
-> +static void check_each(struct oidtree *ot, const char *query, ...)
->  {
->         struct object_id oid;
->         struct expected_hex_iter hex_iter = { .expected_hexes = STRVEC_INIT,
+> git config --global core.abbrev 12
+> git clone https://github.com/git/git.git
 
-I somehow suspect that you do not even need to depend on the
-Patrick's series---tightening the constness in the function
-signature by itself is a good thing as you are not writing into
-"query" anyway, even without his topic.
+Or "git -c core.abbrev=12 clone https://any/thing".
 
-Thanks.
+Nicely spotted.  And this is a curious one, as you would generally
+expect that having a fallback setting in the global space would help
+you instead of hurting you.
