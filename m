@@ -1,82 +1,83 @@
-Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
+Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F04A22619
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 06:54:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173FF10A14
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 07:01:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718002451; cv=none; b=GG73leabwN3SLj0LRMsTxZtXbXOTdf4exKQKgAq0obJrjoYTwADHK5CqUv3JqAOWkm0UOhLZTIrH5m1XU7ywgAc6CAjIKi5QOGPw7np60RkgrvCqcA5J+gdchCmlxbqPRfbrr+t7rncoMCsXzwwYpm8B/KOz4XtmFe+jB3C2oGc=
+	t=1718002874; cv=none; b=QzIuE+22AEiG5tV3Bl8XbqBW1RRdpgcF4JY7ONxJIncccHyYsxZdzNGdAdGLq/DPhOYJADpooGewfMYlcpzwmRoMIE1D4pSUzTEyYiOBl9xxpSzN1plg22Jfh260oVeSMSMWWxrLD57hqg4F3/+RBtr49dDxmVzgmYoR8W6/vWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718002451; c=relaxed/simple;
-	bh=wryDd27yd7P8IE/E3eOWGxhi2qrztCabPQWf6Gi17TM=;
+	s=arc-20240116; t=1718002874; c=relaxed/simple;
+	bh=hoAixqZwklrVltt6cd4YzwImsSdCVu9h/Byph7u3FUQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rieuoMRJDihrESxdmA4ryx6RAvDDl7n/aLL1AG2V2PX/BbPeurcy2mkx2wWJXI5xwXv421NumX1nvGoWrwse4hC5a36Tusfx1s7VNB8QN1uTzzvKc79AyiEwXhGmCYHyllPfbjrkpr2kzjKxopNXhh1IxytDR1tgAhkKTT1mzVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RIerGwIE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DoTufvic; arc=none smtp.client-ip=64.147.123.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=RLMQ3v8Qh9QEyP7sr14V4yxOBDWthQ4h5RK/k9u6bPwHQqftXYTJDOyNt4RaDEXs3nnE7Fw32UEd7722SEQsqGMddTDWYZWxlwTfcqS6bG3Dstn4rG5NLPdiXBVq8EPKbbiFCQeDhMxGtt1gMl5X+cOmfTTErSZs3uWZOd2Y6SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QvTJvmfd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QunEKKeH; arc=none smtp.client-ip=64.147.123.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RIerGwIE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DoTufvic"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QvTJvmfd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QunEKKeH"
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id B1D2F1800189;
-	Mon, 10 Jun 2024 02:54:08 -0400 (EDT)
+	by mailfhigh.west.internal (Postfix) with ESMTP id 0FE791800081;
+	Mon, 10 Jun 2024 03:01:11 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 10 Jun 2024 02:54:08 -0400
+  by compute7.internal (MEProxy); Mon, 10 Jun 2024 03:01:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718002448; x=1718088848; bh=T5oPRMuZJ6
-	AxsO88bqUqsxxz1P0x6s+MrQwA08UN7Jc=; b=RIerGwIET1pt7W//qjIHvMlhhx
-	NaNm78FKnCxBL4QG1uUW4Xv3OMGABLpor35J1dGtxVOK3c66wKhRc5zsfEHN8bCB
-	65h3PLt9KDbNvsOz5zV0FSa6fr6yc+8KZ4cldSuHT5MicmzighCcEqjSMw7tRp4C
-	vlAJP3o4TUGBdu14RsyvWtfaNA3TVZmPjM5ibkNIlJqXka8kWrLp3c75PVAc4GuI
-	Jonn1SOVIdBvp0IXymWlnuEp+RSt4Z/8OwqUSN+fmcX+AjWvIEtzVSW+Vn1DkENM
-	D6/d45k3Ev47685aLtk5aROspKOsYNKfdqkycdLXi5+8udZAOvcKMDq9XJvw==
+	:subject:to:to; s=fm1; t=1718002871; x=1718089271; bh=P8USY8egEw
+	HDhxJHPvPpejYdW7dQyNARkNay+2Crzv4=; b=QvTJvmfdnawbKX/0ffzntnfE54
+	dRbijGaGRotO+5ev+H57I2d1NuetOXmV7zyz9HAGxzEjp74zz4y9qB899CH4fWVD
+	j1c2XghTg0daFyX5mwPIHpOg4OTltRJxuiXgMLVbcWcZqiwJlbr6nj0xqJVDbpEy
+	6yTIx55q1nkqFmvEYXpd2DVNHDHZTqhHvVhwYfkEWA64DZNAca3rBxFdaYnUTnxF
+	1ALuuJr5cA5ez3PKzr0IFNENFeQpGG4rQ2ETwFiC9GGu34zxFZgZRSLZIPJGFVyD
+	/8FC/n0bcZPN8RMEeUYj4QUIgasInNHxK4oK4gnMn3EhYv7/lrUIneh1KyQA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718002448; x=1718088848; bh=T5oPRMuZJ6AxsO88bqUqsxxz1P0x
-	6s+MrQwA08UN7Jc=; b=DoTufvicVvgU6aYorv3iMsuqSP4Xkr8H2eb1lcXlaLYu
-	tyDaOaV4lCro1E+lnUxVSTvGTPsowzXPMLMDW4rvxtz0hXPK3c9sLs+7umYs2luD
-	hfsOlXDNcuk8l4yHwiDxjgf6Wgd8QCeyAaLad3N6Ws1LPA7FLCuJbN1R1wAkI7JU
-	8s2kyx8EyfZ14/Sz1ZbKj9zyvJyjR7xCu2/3fWNc0rL8yNwwMxKkZ/rHYPVte93B
-	PJgtAOi3n+G0ZVBluNR2FkWfTuva14HIGnk0VEcXZU2UNDmr+fdQmi1OF/g8//SZ
-	uDdSLGVaoKrSp09cLOo473mzwHm2kUjpVFzSwbJ+3Q==
-X-ME-Sender: <xms:EKNmZlq5qtMl62Sa1dcb-QoFS9brHUDUnRki7OGGJAHfINu_1tCDFg>
-    <xme:EKNmZnrjJbVn5D-BATqvNND7bUgjOd6IT4FCMPTSC3eohjUbZeZ891y4KfHjQK6--
-    7c5vqdrT6no8RY0fw>
-X-ME-Received: <xmr:EKNmZiPPWaO-cDfRmgxuuRQeDU5M_XixljarhOgwUWKoUNrzeWf-WuyoXtVqzRO3GqOCfyEVlPEmSwsi9H51tDRs177LZU9PpbSNrbBrFsSNvCLW>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedtledgheeiucetufdoteggodetrfdotf
+	fm1; t=1718002871; x=1718089271; bh=P8USY8egEwHDhxJHPvPpejYdW7dQ
+	yNARkNay+2Crzv4=; b=QunEKKeHa3ZWs8xD/cgii/JeFoGbAKsFALvChz26AGsq
+	+eqL9ZV7bIDYCg/9y8j1QLemRjEpcJbMh7I2fl0NsmOGMlQU5BT5Ss6vIFjr8Qsd
+	iph6xKKPVh7HLii+RIo11brkWODth7TJ34otRFj2qn/Knf/qAtfM1Uv7NvgRTPWM
+	1vdksJplx+/rZSJ/LgiCYXSOroORiW3yOdIjCgtJpEocDonZ7Q1THR6ysvj4LqTu
+	zQtSMLBDfWQLmv9YHcQoiBlaUdfFKWKWHpzddZpOUmU/D9umkgiEUW1ysWAUjALE
+	IzIk9meOzdVTwA3NO9mMkG0rIH0U41dK9bMMLWx+oA==
+X-ME-Sender: <xms:t6RmZkU5volx1QxDILCmOqvAsODlfr8RebQEB4-rk5W-R-Zp2NSyrA>
+    <xme:t6RmZol8BHcYttQ4dvNctqtwJHihw-yuBKqiTE7XVw-6FWZj9bsuN48hTENACMQ0Y
+    kZkoFezIWchbbQqHA>
+X-ME-Received: <xmr:t6RmZoZ0eEin0Zrs6smA5PUNCY6cpWJj0G-oltjWp6D6CyWsELG1jtXaskA5LKMc-p32DLoKAMvIlqaKUZ3izZzYN7TtJlZXunCmM46s7iL5cSSK>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedtledgheekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepheefhfeutdevtdefieetueeggfefleegleevheffueekleefhfeikeetveduhfff
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:EKNmZg4QftDlx4PplU3d3TWPvS9ZU-WQ9F5DkpFP5_Kr34xKwqkz-g>
-    <xmx:EKNmZk4uRTXlnDgw-JVFeMb6_sschs-ot2Hgv4Db0jahYvyKtnMHLA>
-    <xmx:EKNmZohn3aqpKR8qISSpbhjPiQ0lPC0e_XU2k8W5fnxMnDs0kT8igQ>
-    <xmx:EKNmZm7WRn_5CigDNPvLMVD5Gm7Ku_02cohzA9obdTkAJUDmph8QbA>
-    <xmx:EKNmZik2KN4tqYds6kfYlyF-0m0wB8XO4dUJ3fLMnTgtIYN7FwPcPMay>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    orredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehfefhuedtvedtfeeiteeugefgfeelge
+    elveehffeukeelfefhieekteevudfhffenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:t6RmZjVtZfgdPNEs3G_RLRsFqhesjVBDtTvAoNOc6-efdnKqsxNCtA>
+    <xmx:t6RmZunhbMLoJvwr2DwGvsgScTAHO28Qurk9ol39oBYcAojQTvLs2w>
+    <xmx:t6RmZociBm0hLHBFumkTDSkRcyJFA6kuWz8s0kb_h0mOS16dC3gmXg>
+    <xmx:t6RmZgGPs0c4i2Ob-oUPaVE_7tfroq9v9EKi1chN2VszIwZDe5n-wg>
+    <xmx:t6RmZgiyZ5mBslcckz2PMeUlGrNGQU7X0Hvl94VgYN5lm13gr-Hm3DbE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Jun 2024 02:54:07 -0400 (EDT)
+ 10 Jun 2024 03:01:10 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 4616e4cb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 10 Jun 2024 06:53:58 +0000 (UTC)
-Date: Mon, 10 Jun 2024 08:54:03 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id fb43a85b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 10 Jun 2024 07:01:01 +0000 (UTC)
+Date: Mon, 10 Jun 2024 09:01:06 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v5 2/7] refs: specify error for regular refs with
- `old_target`
-Message-ID: <ZmajCzuQftZlmlmS@tanuki>
-References: <20240605102958.716432-1-knayak@gitlab.com>
- <20240607133304.2333280-1-knayak@gitlab.com>
- <20240607133304.2333280-3-knayak@gitlab.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH v3 2/4] Makefile: add ability to append to CFLAGS and
+ LDFLAGS
+Message-ID: <ZmaksqGEpLcMCjrn@tanuki>
+References: <20240606080552.GA658959@coredump.intra.peff.net>
+ <cover.1717742752.git.ps@pks.im>
+ <d68539834f3827fa3ffe91517e053c043243a378.1717742752.git.ps@pks.im>
+ <20240608085528.GD2390433@coredump.intra.peff.net>
+ <xmqq4ja3cl87.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,69 +85,60 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9owGQvgCSS0J8+zd"
+	protocol="application/pgp-signature"; boundary="pSF9xpcNOk+W8wSb"
 Content-Disposition: inline
-In-Reply-To: <20240607133304.2333280-3-knayak@gitlab.com>
+In-Reply-To: <xmqq4ja3cl87.fsf@gitster.g>
 
 
---9owGQvgCSS0J8+zd
+--pSF9xpcNOk+W8wSb
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 07, 2024 at 03:32:59PM +0200, Karthik Nayak wrote:
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 194e74eb4d..fc57c9d220 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2491,14 +2491,16 @@ static int lock_ref_for_update(struct files_ref_s=
-tore *refs,
-> =20
->  		/*
->  		 * Even if the ref is a regular ref, if `old_target` is set, we
-> -		 * check the referent value. Ideally `old_target` should only
-> -		 * be set for symrefs, but we're strict about its usage.
-> +		 * fail with an error.
->  		 */
->  		if (update->old_target) {
-> -			if (ref_update_check_old_target(referent.buf, update, err)) {
-> -				ret =3D TRANSACTION_GENERIC_ERROR;
-> -				goto out;
-> -			}
-> +			strbuf_addf(err, _("cannot lock ref '%s': "
-> +					   "expected symref with target '%s': "
-> +					   "but is a regular ref"),
-> +				    ref_update_original_update_refname(update),
-> +				    update->old_target);
-> +			ret =3D TRANSACTION_GENERIC_ERROR;
-> +			goto out;
+On Sat, Jun 08, 2024 at 12:01:28PM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+>=20
+> > Another way to do this is just:
+> >
+> > diff --git a/Makefile b/Makefile
+> > index 2f5f16847a..9cd3b252ff 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -1446,8 +1446,8 @@ ALL_COMMANDS_TO_INSTALL +=3D git-upload-archive$(=
+X)
+> >  ALL_COMMANDS_TO_INSTALL +=3D git-upload-pack$(X)
+> >  endif
+> > =20
+> > -ALL_CFLAGS =3D $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS)
+> > -ALL_LDFLAGS =3D $(LDFLAGS)
+> > +ALL_CFLAGS =3D $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS) $(CFLAGS_APPE=
+ND)
+> > +ALL_LDFLAGS =3D $(LDFLAGS) $(LDFLAGS_APPEND)
+>=20
+> Much nicer.
 
-Shouldn't the second colon be a comma? "expected symref, but is a
-regular ref" reads way more natural to me than "expected symref: but is
-a regular ref".
-
-Other than that this series looks good to me now, thanks!
+Agreed, this is much nicer. Will adapt, thanks!
 
 Patrick
 
---9owGQvgCSS0J8+zd
+--pSF9xpcNOk+W8wSb
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZmowoACgkQVbJhu7ck
-PpTDPg//U9wCE96wTMJsJ0ikieX0rIcBPqxTufF25DNXbEEtlIVjg0C2J2U17hLQ
-hMU7+xHTw2fwa2fQPAW2sbR+K1WQGLCtZcEwcdgbVMTRc6HZxrkFsg2RcMKfIlHS
-K9Mu/zLDGJs0DJ6AA6AEOArmD5J6WWoddgxytsUD11yn3MVTLA6TW7SQ4hgDCZrZ
-p65+O6o2B68SF5YGxsNqA98SAjOD55GWBtG6Nb3X1xiPpmpGmNC9L0yJGJBSgSlK
-0LrOFmagWeKDWhmwU/SFQajp/TRjGJ++5v5FO08NfY+PMwozxibUepIF+gVJ7jy1
-Smsp6JZBvCsYxLYiVByGTo0nntQAGnnFf/KTUgxx9BTJ2i4THxIskuX2elPzy1EQ
-knq/Gn7EMgQLkOrRAxNaNr3klBl5NYsMb0In/+M1q8T5HKWcdAj2EwlARfvgpCtB
-HZKT98Dm6v5Jev/jBmRWz328rzKxIwVkZoIzi2h2r75Glv8ayGKuzMbn+gaIfvhd
-RXtwKk4EP6WytdL7/eysvrFV72KAWIqN1ndaIoS4j7E5aQs+RBkRaAqMXo8US5ua
-CtSRik0r8SgoLqY+R5xKQItTnNozzEPzN0RlpYyZLTVvpeg5kPmYPfBJFpUBljE/
-XarEbXbfWoUJzjInC9p79YMUv9JtpMCUuY5nTXs/D/5mkVhBnnE=
-=Q1FV
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZmpLEACgkQVbJhu7ck
+PpTOtQ/+PuuuEeyzqlNCIvaSKF51MBFbzBsI98yyj32KN/Upb9EyORtu8/GEk14s
+ZukRiHniiqmURLJUgLyxnEQSMSphc+5HE/XS91djHYUJljYCiP8CsW3F7tfMn4yq
+BbIHdZ9XnRjyRImu1oftMfaTcqBick3dW5tVyG0nJh88vpC9y/j8wpzWUein+5Eo
+zUu7woWmoSy6lSRg64wvU/CLHtBKr3/qBtDImfcgjKn+F+mO+7IkEeIBQ1g3H+7k
+s25jykng5QqbO/CoybxcV8wBIxd5w166PUp49FR4B0tomdkmr7hqwEDZW9DUCjW7
+eZGQ16YIJ+mneKRYljznvYodhwqUpE+Frx736cymLDodYieagiNHCAOG2P7NApQu
+GAEkGtP7R2+iCaflNWjg/1mFt2NFJD8qmenv0dNCZhLGBiM6Zhmfqs9BZDh3etcL
+Yc2qc0gilUd/K6ii2zWu6L/4B7OCtvlc7UvQbmUV2Ieh0/s7Cfwpsw9GHOEHD9LH
+Km8zQbAY50Hq4aCO8T1A1VbPoVMcOQ8LOkraxHomNWpftP4VaYFprvaJVdqY6RbJ
+SXx0zhQnrTwC4aUIuD2a8wQEJG1JTq3vKnABBaUpztwJ6HomDs9wx9UtPKD0oeiW
+Hf0PaBfqR2SNEkUVAk7pepLZinqZVQqOoJug7igdC3zyvwyW2mM=
+=8IQq
 -----END PGP SIGNATURE-----
 
---9owGQvgCSS0J8+zd--
+--pSF9xpcNOk+W8wSb--
