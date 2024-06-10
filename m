@@ -1,52 +1,57 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FDB1411DE
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 16:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34191422CF
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 16:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718036117; cv=none; b=VRczlGa30sOlf+4lnsQsVA9bsqEWOXspcVVMQNzBo0jz07yYsE5UarrUBuWmxN/ufF8H6ZvVtjKMpBTMXRDSyR9ft0sXVt1rTK98vS4H6Xl4VM0p1KKiS5mocf98BNYX+SGCy6olQfpS03reDKJuOZx0/rLJiyrswMfj0m3tfGc=
+	t=1718037230; cv=none; b=MV9kLIm8Hv0msxKsOha0Ej8WC//lt3e64AwWf79uv8ciCf8S+rRtCLPVvz5jdHx9O6oxRiF1GqLNeu0neIMx+f0QZvwa+9NF6ybooAGGzGa320KUD7AmNMVkG6BugS+mwNmCkFDd3XUYG2zOLXgWPnkRpVhDxc0ch6lCVp79Nzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718036117; c=relaxed/simple;
-	bh=jZidZgASxe9DL2hmIdPgc0wlRL61gr0pupBy3osJeIs=;
+	s=arc-20240116; t=1718037230; c=relaxed/simple;
+	bh=PWoZxJkI/kQtR2TTIShO9OyfUZceMXqKG26DeFl+2pI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Sxq9ydynriCZk7lc2CjjClYj/MelBGWnProFClUYoeL5Qxq5EQ4U3B9ZUffxbTeM5NHV/kk9ep7gr3xYgEBBY586lg4UsL14Te/uq8Z7zm7EF1cFoUCo/ez0DaEavGCsLMWeBtXzGuAFv1llGZ52T9HAajvGVCkLh9M9kAxM8Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=H9CEJiCP; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=uLclUKrlXvoFsF9EzB6iXBm5I6/j6G8EITopXUBQ9OoCQdCjmq7CDPTxTIRuB5MMAyDBUf2shZiM7ap88ivUn09Tpu2dfydw3wSLDqxUkyMgjzPiI0m9Fl3fXr3a15FMZgnmBIh6CwNokAjHYov1oOevNWQrm9S8ZCorMTb+hJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=n/XebSco; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="H9CEJiCP"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="n/XebSco"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 63EE11E120;
-	Mon, 10 Jun 2024 12:15:09 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2B3341E379;
+	Mon, 10 Jun 2024 12:33:48 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=jZidZgASxe9DL2hmIdPgc0wlRL61gr0pupBy3o
-	sJeIs=; b=H9CEJiCP07e+RhbxJX6q6HOTnIIz9dExJil+OR8ANWaesuParBUPxA
-	/2N0cpEinRVT1vRdRRrBQgs9k1uYezm9NC8kGF0EjuDRO2wBhlNm2eTsz98VqMgg
-	IzVyol0SE2bbZRbB3bR5gZiFFTzoXAqbbQ+1iFRk9KU9TPCQ0CQMI=
+	:content-type:content-transfer-encoding; s=sasl; bh=PWoZxJkI/kQt
+	R2TTIShO9OyfUZceMXqKG26DeFl+2pI=; b=n/XebScoFz0cxyCzvv+BVilnb+QT
+	AcrpeeQIfkoOXFOfpU9vRjqOJJF7ui1p6Ig5bixms3dpyAqlDoHNxtnFaeNz8KEZ
+	e3BE37KhT8Kj5+9LHgHw08J0KAwf79NW/5NDXEz6gVCer3yV/0M843CwXYOPOU2R
+	yLYyXr4xTHJjdkw=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5CA181E11F;
-	Mon, 10 Jun 2024 12:15:09 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 237431E378;
+	Mon, 10 Jun 2024 12:33:48 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 122441E11D;
-	Mon, 10 Jun 2024 12:15:06 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D2E301E373;
+	Mon, 10 Jun 2024 12:33:44 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/4] __attribute__: trace2_region_enter_printf() is like
- "printf"
-In-Reply-To: <ZmakwSVBXbjfRpUi@tanuki> (Patrick Steinhardt's message of "Mon,
-	10 Jun 2024 09:01:21 +0200")
-References: <20240608183747.2084294-1-gitster@pobox.com>
-	<20240608183747.2084294-2-gitster@pobox.com> <ZmakwSVBXbjfRpUi@tanuki>
-Date: Mon, 10 Jun 2024 09:15:04 -0700
-Message-ID: <xmqqy17c4vw7.fsf@gitster.g>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: git@vger.kernel.org,  German Lashevich <german.lashevich@gmail.com>,
+  Phillip Wood <phillip.wood@dunelm.org.uk>,  Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 1/3] t4020: test exit code with external diffs
+In-Reply-To: <79a951f8-cf35-4159-a90e-f95d69773413@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Sun, 9 Jun 2024 09:38:24 +0200")
+References: <CACDhgro3KXD0O9ZdE1q46jmXE0O=vf-Z+ZX50WMqmRHAeowGAA@mail.gmail.com>
+	<82561c70-ec33-41bf-b036-52310ffc1926@web.de>
+	<e2e4a4e9-55db-403c-902d-fd8af3aea05c@web.de>
+	<168fecaa-2ebd-4897-b0ba-3bd2a37c01e7@web.de>
+	<79a951f8-cf35-4159-a90e-f95d69773413@web.de>
+Date: Mon, 10 Jun 2024 09:33:43 -0700
+Message-ID: <xmqqmsns4v14.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -54,21 +59,22 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 99A6FA4A-2744-11EF-A5E0-ACC938F0AE34-77302942!pb-smtp20.pobox.com
+ 34812372-2747-11EF-AD17-ACC938F0AE34-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> On Sat, Jun 08, 2024 at 11:37:44AM -0700, Junio C Hamano wrote:
->> The last part of the parameter list the function takes is like
->> parameters to printf. mark it as such.
->
-> s/mark/Mark, or convert the dot to a semicolon.
->
->> An existing call that formats a value of type size_t using "%d" was
->> found by the compiler with the help with this annotation; fix it.
->
-> Makes sense, as do all the other patches in this series.
+> +check_external_diff () {
+> +	expect_code=3D$1
+> +	expect_out=3D$2
+> +	expect_err=3D$3
+> +	command_code=3D$4
+> +	shift 4
+> +	options=3D"$@"
 
-Thanks, will amend.
+Tiny nit, but I'd prefer to see "$@" reserved for its magic and all
+other times where it is equivalent to "$*", see the latter used.
+
+Other than that, all three patches looked good to me.  Thanks.
