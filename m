@@ -1,59 +1,59 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37EE53BBC5
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 08:27:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F1763C7
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 08:36:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718008077; cv=none; b=tgLDoh0KVwUWr36+5RKU30T8X7G7NqXboZEyiNsFk6ezAyB2ED6vaCinZD05HjukI2SwxcdEE3yYMoAKIM2yiy1EtMzPW6cWQ3K6oFsG6B8erD8hOLfv828nHSvCY3oOnlvcdsDAQb9bw5hkXPo5qyQOewnTSDbKiALM2s9s5ac=
+	t=1718008596; cv=none; b=KYJuDmxETbwM+7rFpqnNrEBZHPvc3HmVD9WSt+4qAEnbadRsKR3Ne0BplJFYe0ek5HR5Q+FROBFk9nU5SDfRIjnEXCUK9snu5ol5DHj4n4RJOegcnNsjtUOBuqSpZHlpjQKYUscoc6uVyTvton7Q3kWnLBwd8uTufBce5tsHpDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718008077; c=relaxed/simple;
-	bh=cxTuSDQ7bYK9kAYtoD0hd05Td3juhbiLeuK9K45APKc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=jlqyD3JlM6KxZwzT0IpLwSVUwvFlkeO2DunYCbgzit5Nhc52weUXtQsOkdnpx9SAdMaHtbAzr3FtCH5hq88IZJuM+TvueWXbhhw4z2J1YLIg4FDsh6qMGnIPve4X8N2hgcNrL2L/gKoOUdV9v8z3sojxeECFq+A9PW/JscJVK+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HdaRphmW; arc=none smtp.client-ip=209.85.208.177
+	s=arc-20240116; t=1718008596; c=relaxed/simple;
+	bh=/Xz7yFvnWokr0rA0zD/zIP5UIdu+3Vovs4SkEa1BrDc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SiVcLou4/O1WmlWNfi17DKqOHw6yYIw1cPNYsuKJQEGI/oIKWonaQCtwjacL6tIBtzcpLAUON64JNrq3+C1tEmENYG5V1YUCowyrnjNTKups84D8UAFXTh1mQrXJUDoIXL3+C4eeZxomAC8kq/xFBPGwN0IoTi+g6qstV291CMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sa1AsKvr; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HdaRphmW"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2e724bc466fso50969291fa.3
-        for <git@vger.kernel.org>; Mon, 10 Jun 2024 01:27:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sa1AsKvr"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-421b9068274so6301825e9.1
+        for <git@vger.kernel.org>; Mon, 10 Jun 2024 01:36:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718008074; x=1718612874; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kYu2t6wfW1KqX2MR/dqULFnWfAHbhMjZWaZmpCEWTrE=;
-        b=HdaRphmWG/SWvKRnupUlVuMfR7S3fXcSkNhTS99tdpIaxF6EFxEHNypNTuf8A26rou
-         jBlMfU4f0OR/joNfzxqE4+3MyXxCj+dU3wKFTw3VrZoLvgxGv+J523UjR+naK0cSjEfI
-         NbPkrlGzlyEZypZ8eTfqOcSF5Jgc7gTOXiCDeI45wPY/6g6J005sCo7iyUfwdvRhaskj
-         7mmX6rUhNrX42Fd4n3jnIbKjkLgihHufB42R+n4pA6mYAVsEPHAq8l3fUKBqUktnfPjv
-         qxJQRe9U7N5qw7dpejzGAsQO0jSpb28v98rfirvqqznoQN9+S9ub6BiOVE992AJpdJel
-         nTyg==
+        d=gmail.com; s=20230601; t=1718008593; x=1718613393; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=dGKrub9d3ZujudmV83HBe/a61trDfLnCL3aOI91LLSM=;
+        b=Sa1AsKvri2zUwPUF0avnUiWlODZoGhTmK1qanONIA5CzhPUGCa3IJrvuccW/229YjN
+         8jkfT3Hsq9AW+m86xt7V77oAIGCCJBiLXL8YrY91prUYrAVKgRlGT4V/3TLQfnDioB0i
+         u+mG9sMgxuNHYrpTpcPW8uoOmSBx9d3QmDZxrXtHj3xFlDRFZ1WCsKVEL70ufjFuKgpT
+         CSQpOlL0wzOvIqdKDLyOHQv7Xn8DmKSvPg0RL/owe2fEu1yzuj3ju9BtA8u+8SVlAT3f
+         +zwao/aTLkKAia84K+wVpoqDjZxiAD01QGJvgF9f7lkFEAZxhnKcpQj6KFjWDWywhDuY
+         BvuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718008074; x=1718612874;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kYu2t6wfW1KqX2MR/dqULFnWfAHbhMjZWaZmpCEWTrE=;
-        b=Qr5o8QrWXD6Mou7pWpUSDf/zUaJINBYsfLNeMWHeLdeQaqnveIxhL9sCYNs25aZr0h
-         5OBcLYLC92I7Jhx6evzY1yxI1RgYfMyP+GrOMKEiJu9tU0oQZnOdVDLX/ZZU6hMJvxy2
-         fFztfzJD5QI8/WXS2rgA/DyOIygr/ffHyjvlCev5in9MWQyE95xVdeT6g6zmn1FL3iwZ
-         TPzNklwUebEOT1Ie2fZhxyrwHGBhnxwbCfUpjzlhcPlJ+Pdl9LkWXGfyKgq2eoTsNCb0
-         ecTXi7ZKaomdaFrlWcFDpCUfXZIIKs6FHFBudsn6uDb96d4QC80ukx9RoiRjhpedlXC6
-         l4ow==
-X-Forwarded-Encrypted: i=1; AJvYcCVgGHPciidjn+gDtgd3z8T+WFj5+EYs+xAilmqopnB+KacWZ8Avp57/trfCdf4zjNeUKmeE5EbaO171Wrvf7REmYsM0
-X-Gm-Message-State: AOJu0YyjV+lAVhnpcdK7/TCyXYxs3oed2MstrRTf/PyPCpKUrrM60PC3
-	7NdOjf9ExBLHF8Y5lULmr77Qv1YqV70H7BHBOQv/EM3fLkEX1Olg
-X-Google-Smtp-Source: AGHT+IGFZpaaDyMunM1OrHZ5lmZ28k4XVCZji0RgWcwCIlYK8JJVv3iPV/BD53bwrQ4gvkXdhb5p1w==
-X-Received: by 2002:a2e:9598:0:b0:2eb:e266:f9b0 with SMTP id 38308e7fff4ca-2ebe266fa77mr23507961fa.34.1718008074025;
-        Mon, 10 Jun 2024 01:27:54 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718008593; x=1718613393;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dGKrub9d3ZujudmV83HBe/a61trDfLnCL3aOI91LLSM=;
+        b=kBbYEsIMfnHPw09mctIRxZ5xOi9vEFah4Xr4FvyvYwGWYp5qiSOlfIdHWMGcsD6oli
+         CjDBOh6tqJ2DEkrC5Ks8oHP8ch4Eh/Bji3Cwg6QWg72dTgUK+HGNorCLqWZ1amoFcqst
+         AWHe4MlhLC3DsSXdWCKkogIb94MFARtoVwBVHV0ijwsc6FEgQTkOo/+ehk+xdFcwYRSO
+         Ss+NBPo31GQqAkcySdDZQwP3m5vXYPJgFLOHFhC61PkHAHzkjT0H9usAhoEBzEGXi1yX
+         R8es2Qu9vdmDjVP0WI04fegVt3lAOFPGtyLVUi0HBa5keMZvCUw6EDH1Bol5Dxnaxdx2
+         wcdw==
+X-Gm-Message-State: AOJu0YzG4odPU/KiLJtAGEHyoU3rQ9vj+PjgGkOrzC+0eYSJodVSinPA
+	lDTNNsTqVC+i8EjLAE25t1R6Rhy4U5EzhpmYTE0+a//HZwAwYIHT
+X-Google-Smtp-Source: AGHT+IG+It5L5GOKi/+hslptHgEPGiGPxGtLBMQ1OZ8tSxmxRYUzT8syv3taEz59iGcUIdwtd5qzsw==
+X-Received: by 2002:a05:600c:4506:b0:41f:b0e7:f299 with SMTP id 5b1f17b1804b1-421649f0c0fmr70660385e9.9.1718008593015;
+        Mon, 10 Jun 2024 01:36:33 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4217d7f9a6esm67611345e9.48.2024.06.10.01.27.53
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-421f23d06ddsm15598745e9.8.2024.06.10.01.36.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Jun 2024 01:27:53 -0700 (PDT)
-Message-ID: <1ae0715d-df76-4019-995e-f00f3506f2ac@gmail.com>
-Date: Mon, 10 Jun 2024 09:27:49 +0100
+        Mon, 10 Jun 2024 01:36:32 -0700 (PDT)
+Message-ID: <16a6b206-1733-4d64-89e6-c3e2368903ac@gmail.com>
+Date: Mon, 10 Jun 2024 09:36:28 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,50 +61,44 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
-To: Dragan Simic <dsimic@manjaro.org>, phillip.wood@dunelm.org.uk
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
- =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
- Git List <git@vger.kernel.org>
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
- <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
- <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
- <20240604101700.GA1781455@coredump.intra.peff.net>
- <xmqqikyo207f.fsf@gitster.g>
- <20240605090935.GF2345232@coredump.intra.peff.net>
- <6056d585-6380-43e7-adf1-9f9aadd2a7db@gmail.com>
- <a8d3415e3913e3a0798a748ed7f7a093@manjaro.org>
- <a2a59f5e-fd55-41d3-8472-b99256e1f428@gmail.com>
- <d092f5bb1d3bc7b7a821000a3cad8a1e@manjaro.org>
+Subject: Re: [PATCH 1/2] am: add explicit "--retry" option
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk,
+ =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+References: <20240606081724.GA1166769@coredump.intra.peff.net>
+ <20240606082114.GA1167215@coredump.intra.peff.net>
+ <xmqqzfrym3fu.fsf@gitster.g> <xmqqtti6m2yz.fsf@gitster.g>
+ <20240608112920.GC2966571@coredump.intra.peff.net>
+From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <d092f5bb1d3bc7b7a821000a3cad8a1e@manjaro.org>
+In-Reply-To: <20240608112920.GC2966571@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Dragan
+Hi Peff and Junio
 
-On 09/06/2024 18:20, Dragan Simic wrote:
-> On 2024-06-09 16:29, phillip.wood123@gmail.com wrote:
->
->> Having read the message you referenced I'm struggling to understand
->> the use-case for stripping escape codes - what do you want to do with
->> the hunk that means you want to remove the color?
-> 
-> Let me recap, please.
-> [...]
-> I hope this makes the whole thing more clear.
+On 08/06/2024 12:29, Jeff King wrote:
+> On Thu, Jun 06, 2024 at 09:48:52AM -0700, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>> Jeff King <peff@peff.net> writes:
+> But I do think as a general rule we should never provide any action
+> _only_ through heuristics like "is stdin a tty". We should let the user
+> be explicit, and use heuristics to guess the right thing when they don't
+> feel like being so.
 
-It is very clear _how_ you think it should work and I agree that makes 
-sense in the context of a generic shell pipeline. What's not clear to me 
-is _why_ that is useful in the context of displaying hunks in "git add 
--p". The purpose of "git add -p" is to allow the user to interactively 
-stage individual hunks. The "|" command allows the user to display the 
-hunk in a way that helps them decide whether to stage that particular 
-hunk. Are you able to give a specific example of a command that would 
-help you decide whether to stage a particular hunk where you would not 
-want to keep the escape codes?
+I agree that's a good general rule to have
+
+>>> "--retry" is a horrible word, in that it makes it sound like it will
+>>> keep trying to apply the same patch over and over until it applies
+>>> cleanly or something.
+
+"retry" means "try once more", so I think it is a reasonable name for 
+this option. (Programs often retrying a failing operation in a loop but 
+then they are retrying many times.)
+
+I haven't looked at these patches in detail so I cannot comment on the 
+code changes but I do think the general aim is a good one.
 
 Best Wishes
 
