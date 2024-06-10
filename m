@@ -1,134 +1,95 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A409A144D19
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 19:28:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F8A1BC39
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 19:56:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718047730; cv=none; b=opGmTfIe876Bi7SArzxWcUIu8niXls+K42/do+IK279xRyWuZB1gy03hXht9EfkV6b/OwTU/dmfaikApEWdaMjz7eRC4xVNfeA7pXm6UrxAxvP0bpsmTpnEyX6X06jp2EXXOVXjcZdPBjDxOdrIffDLs5mqd1W6O0wjCX8WMlac=
+	t=1718049411; cv=none; b=ZLQ//CVVFhnl/GQG4aFwo90sYYWDTYP69tGQdHXZMA7Cr5rU749F3B3neRlQD19gjgFhP+QhvlwnFPdjsx+MYW6ahMmtca7RSzwhFDwVQH8TzAxsJQMPwE3mqzSBMCPkypP/UEbyxG2TOM4u+ehc2f4OGBp1nm/RBcj///HGavk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718047730; c=relaxed/simple;
-	bh=1lfUyoVL3nzncdXmsqc67iJyf6EBUp+7KarjAKSZKXU=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=tnYcHCfJjNXwSiQVQVbMmnrKKJFvP1/HsIS+4nuf4YlwkK0SmpJpbR2jj9BwqwUPiHoQ09uHFtjbhyLwKpJJrEW8Cv0Q9fA+Vo+BMjuixBL7ab0AfzmXeuGD3CGtRwd4jOPl6FVqnRVyJJRS0TUtVLyaxal93ln1hNVZE0Qf/ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=oMI7zwwP; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1718049411; c=relaxed/simple;
+	bh=wikQs4s91ec+hUMYjiuf90y+74mgZ1McdtDcN5rAtfA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MfKZ4WLvxoSggV5EpvXraSxv8/LsE1ZZlYbiuUeMl97Q/Q+CMWpRpsVxlO5iCyJa5Swtl6WzEsb1Wzr3BmYqwo540qyWsr/LFY4hGqsElztHYX69Us/iKAZmvN+JvJeP1d43mIitkbTjk4mwZ3XcKWIVG+X60iQBmDVKbe2+a0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hMNsXuRq; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="oMI7zwwP"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hMNsXuRq"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 463A421034;
+	Mon, 10 Jun 2024 15:56:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=wikQs4s91ec+
+	hUMYjiuf90y+74mgZ1McdtDcN5rAtfA=; b=hMNsXuRqGfEm9Z/ccTOvCTKmBqd0
+	HlcRt6Kx1ee1NLnJDAEsj/ZNOu7gR0tpUwC47Yu6uG2r/tdad7n0t13jRBQYkM/B
+	o7N888ogQN7FDTXhCf8ImVNDC9t3fKzBb/XdOKJdUOm6e/86KbUMFrKmb1Eo1/65
+	nPixZTekj04aCto=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3EDA321033;
+	Mon, 10 Jun 2024 15:56:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A34EE21032;
+	Mon, 10 Jun 2024 15:56:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: phillip.wood@dunelm.org.uk,  Dragan Simic <dsimic@manjaro.org>,  Jeff
+ King <peff@peff.net>,  Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
+In-Reply-To: <1f7b27b1-9bb2-49af-854a-762d0e75d508@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Mon, 10 Jun 2024 21:14:04 +0200")
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+	<199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+	<b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
+	<20240604101700.GA1781455@coredump.intra.peff.net>
+	<xmqqikyo207f.fsf@gitster.g>
+	<20240605090935.GF2345232@coredump.intra.peff.net>
+	<6056d585-6380-43e7-adf1-9f9aadd2a7db@gmail.com>
+	<a8d3415e3913e3a0798a748ed7f7a093@manjaro.org>
+	<219a195c-74d0-4c21-bf54-0752bb5b01df@gmail.com>
+	<9f1884ae-0f9f-4d9f-a262-b6929b81d7d8@gmail.com>
+	<1f7b27b1-9bb2-49af-854a-762d0e75d508@gmail.com>
+Date: Mon, 10 Jun 2024 12:56:46 -0700
+Message-ID: <xmqq1q543729.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1718047723;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BIKp8U7nvDGjmLnNmZNNNySRpl+VHz41euBSMTp3ggY=;
-	b=oMI7zwwPoohQQzJ9i84AgBJe5JsDl2XNvSN99JLNrNhp/b/C4fvMerr9YJtqzwwGpK6sJe
-	SQ3323JibMClBILn8uvAxIWtVnJFudEUY/tSiL1YuPpyeOlWyVWtBEr8cPViSjtlm8DwcW
-	caHFPpk0BKPeJ7TLibxaA0RMIOdWPi+uzJNn4riSgv9d4VT9UBRrncyhE5ojhDsOl9opJM
-	UNLB9nKy2cM586PaSscJ2XmFpgBy5sHdIOg4jP8NYYcZifg9ptf+0Sk07xIqELPSDy7e4K
-	qETu/C5+aL0wDkfa00/kyqtjjPRnnQR8gRsyyDQ/naYEiCD2K5imNFOoTqBO+w==
-Date: Mon, 10 Jun 2024 21:28:40 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: phillip.wood@dunelm.org.uk
-Cc: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>, Jeff King
- <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, Git List
- <git@vger.kernel.org>
-Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
-In-Reply-To: <9f1884ae-0f9f-4d9f-a262-b6929b81d7d8@gmail.com>
-References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
- <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
- <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
- <20240604101700.GA1781455@coredump.intra.peff.net>
- <xmqqikyo207f.fsf@gitster.g>
- <20240605090935.GF2345232@coredump.intra.peff.net>
- <6056d585-6380-43e7-adf1-9f9aadd2a7db@gmail.com>
- <a8d3415e3913e3a0798a748ed7f7a093@manjaro.org>
- <219a195c-74d0-4c21-bf54-0752bb5b01df@gmail.com>
- <9f1884ae-0f9f-4d9f-a262-b6929b81d7d8@gmail.com>
-Message-ID: <1a9f8385377d3aadfeb07ad62810b2df@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 9205669A-2763-11EF-B936-6488940A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Hello Phillip,
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-On 2024-06-10 16:09, Phillip Wood wrote:
-> On 09/06/2024 08:44, Rubén Justo wrote:
->> On Sat, Jun 08, 2024 at 07:54:34AM +0200, Dragan Simic wrote:
->> 
->>> When "|xyz" is used instead, the version of the hunk with no coloring
->>> escape sequences should be piped to xyz.
->> 
->> That is a sane and conservative approach, and I'm not opposed.  
->> However,
->> giving the colorful version though a custom pager is a good thing to
->> have, I think, i.e: allowing a simple "head" without losing the
->> coloring.
->> 
->> Let's recap a bit.
->> 
->> Initially, this series aimed to enable sending chunks to the pager
->> during "add -p" sessions.
->> 
->> To reduce the blast radius of spawning a pager for each chunk, we
->> introduced a new command "P".
->> 
->> Junio suggested opening up the command to allow specifying a custom
->> pager, in the form of "P<program>".
->> 
->> The "P" command started to resemble a lot to the common pipe operator.
->> Thus, we shifted to "|<program>".
->> 
->> Some concerns were raised about controlling when to send coloring 
->> escape
->> sequences.
-> 
-> I'm still not really convinced that the escape sequences are a
-> problem. As Peff has pointed out [1] this new command exists primarily
-> to display the current hunk. I've asked for concrete examples of
-> programs that it would be useful to run from "git add -p" where the
-> escape codes are a problem [2,3]. Sadly the replies talked in generic
-> terms about an imaginary program without any reference to displaying
-> or processing a hunk from "git add -p". Without a clear use case for
-> stripping the escape codes I think we should add a single command that
-> pipes the colored output to a user specified program. We can make it
-> clear in the documentation that the input to the user's command will
-> contain escape sequences unless they pass "-c color.diff=false" when
-> starting "git add -p". If it becomes clear that there is a use for the
-> plain output we can add that at a later stage.
+> On Mon, Jun 10, 2024 at 03:09:48PM +0100, Phillip Wood wrote:
+>
+>> I'm still not really convinced that the escape sequences are a problem=
+.
+>
+> A concern about the escape sequences was mentioned in this message:
+> https://lore.kernel.org/git/b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.=
+com/
+>
+> It arose when exploring the possibility of using the new command "|"
+> with tools that do not support escape sequences, e.g.: "| vim -", or
+> "| clip.exe" to send the hunk to the clipboard, on Windows.
 
-Regarding examples, just have a look at less(1), [4] which is probably
-the most commonly used pager.  It requires "-R" to be specified as one
-of its command-line parameters for the coloring escape sequences to be
-processed properly.  The presence of "-R" is taken as granted these 
-days,
-but it hasn't always been the case.
+Let's not bikeshed this for too long.
 
-If you want to see an example of the garbled output, as a result of the
-coloring escape sequences not being processed correctly, just "cd" into
-your favorite Git repository and run the following commands (assuming
-you're using bash, if not, please adjust the first command):
-
-   export GIT_PAGER='less'
-   git log --patch
-
-I hope that will make more clear why I'm "advocating" for three separate
-new commands for "git add -p", i.e. "P", "|xyz" and ">xyz".
-
-> [1] 
-> https://lore.kernel.org/git/20240605090935.GF2345232@coredump.intra.peff.net
-> [2] 
-> https://lore.kernel.org/git/a2a59f5e-fd55-41d3-8472-b99256e1f428@gmail.com>
-> [3] 
-> https://lore.kernel.org/git/1ae0715d-df76-4019-995e-f00f3506f2ac@gmail.com
-[4] https://man.archlinux.org/man/less.1.en
+Pipe "|" stuff that is suitable for pager in the context of Git
+(i.e. if color.ui does not forbid coloring with "no", their usual
+pager is capable of color, so we send colored output to the pipe),
+and if somebody wants uncolored output later, they can use "P" to
+pipe or ">" to file or whatever other enhancement they want, but
+let's leave them out of this round.
