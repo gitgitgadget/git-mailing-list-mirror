@@ -1,109 +1,99 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3423C0C
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 23:36:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E853BB48
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 23:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718062583; cv=none; b=GeoqPbm0CQpiY9VRY2wtqKsjly32yK1odhEvSn9b65TIAUWYVdUMZUXr66bEcHsPUGkRaWJZQoLZdgM2FsbVBrOPB7WdNkwS92nsV7OEvw0q7iuYyZNr7xyFOuMm/wuBRCVlJV1/uwk1rBYLzmPHqaTzXwSeBLFYvrI/rPa3cRw=
+	t=1718063740; cv=none; b=mEPICHmM4/TGs4oPIAxzfamWbX2nd/aEGVaueYA/UexYwylu1L71bsRcSFcculm7H/cX2gqU/lbNx2I/69cEVDM9GCrPihqAsgqCbOFAsv5eRTdwMCpWpAQZtdRFX+wmR5ZsNCVJi070rlBX5+SWPgXdyQ7GLWbeZU1f18nVkVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718062583; c=relaxed/simple;
-	bh=cCnF5CVV9+5fnIOLrL0rXqOeO0j9BleYt9wV2WHy79Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EcUzi9jUT3x9ZlWv2/3szIIrYKbBlPVJ3mu/mFH2I3+N9nTbRdXwwhb2ZUDPMqu5TIAY3cM7EjyJMZmecKwkwd5OMQSTL44uDGHF7as7oEYBhvKoZiqklszyQwNBYXULy8V2r9fOblgiBpIjnoaaW8omNNeY7UpeoDxhy3DSA8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G5MuCJJt; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G5MuCJJt"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-702555eb23bso3873314b3a.1
-        for <git@vger.kernel.org>; Mon, 10 Jun 2024 16:36:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718062581; x=1718667381; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gow1yIyxvOh28uXmDi4NbybOiXbsXTzO1Y1LxydMwHA=;
-        b=G5MuCJJtH5LZqmNu3ageNu4laqz7IrxEPZexnIjEtLoY6ld1HwxRHvgP9qS0mdDrN/
-         /BRgZIBuWjmPkODm8c87QfKFLBx/eu6WVenci/AwXRZxZ0RrFdpdf/BmgsUl9eAHu267
-         S9/8hKQ6l+O9m6DWhgKz5TDyvGNOJzqqjTicN3nEMEC4P2+ud3w6U32hL3XeN2A3lwf4
-         hl8DAJyGogGDd2kpb3flxOJNHSJ5hozm8dx0WBXAcc7tRiHfy8riIENg0bSpdjC5VFo+
-         cLJ5XtwQ3UQeb9YRULUEUV/yunFHrJRiPuUUMawLPSxxmL5cXBySSyfPyaKeIXxDp22C
-         5UmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718062581; x=1718667381;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Gow1yIyxvOh28uXmDi4NbybOiXbsXTzO1Y1LxydMwHA=;
-        b=J5Ammacns/hB2MY1gec22dvK/Is9ncp/yiBybWqaaX0jKu6BOKx5GlmneEP7c13k9L
-         1Y8KwVIN97fLmA2zZea6+D0MXxtouLKC8+UP0MZ6YAI4ifdpw7pIwRiMqFHElA4hGf2G
-         /0yRUvYUYc+NWSEoCE9GYdPKpfbkl0Zu8CBs7sF6kb6wq/A75by+gRCH9RkcFcx9r4HF
-         NQ8/SHQmOIFLWAdzafIyPI2PgNqL3R3zH6XXNF9suQXLh7GSTKrsZVRDrIOE3U+q1+4p
-         c3gc4NM4qVisPJvSGwykphWc3cIexS/8I1wgysLnWdMS+/V7GAvjSv6vdRrNEOOiYfYR
-         1tcQ==
-X-Gm-Message-State: AOJu0YxWKMiosQwFYVh4/o5rR6vMOxt7KaD9bEG52H19Qr00F4coLEX6
-	Aq/yjmg0ngS1iYkLnelPvrKxf+cHkamAakqCHXY7Bf5xSyoi9/PK
-X-Google-Smtp-Source: AGHT+IGQ0vRK1F4utD/NMSFmiMCSTTdnKdL8dqB7j0gq7gM2k+N35ZkfhamrV/msn4lGDAGxCdIOqw==
-X-Received: by 2002:a05:6a00:4fc1:b0:705:98e7:ce6b with SMTP id d2e1a72fcca58-70598e7d1e8mr4130133b3a.20.1718062581143;
-        Mon, 10 Jun 2024 16:36:21 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7041d383a46sm5154201b3a.93.2024.06.10.16.36.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jun 2024 16:36:20 -0700 (PDT)
-Date: Tue, 11 Jun 2024 05:06:17 +0530
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, 
-	Christian Couder <chriscool@tuxfamily.org>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][PATCH v2] t/: migrate helper/test-oidtree.c to
- unit-tests/t-oidtree.c
-Message-ID: <ssl4pyng2id3hcp2ssvi4artjxnsdcm7h4mnocidasxggnztqe@c62anllwrded>
-References: <20240605134400.37309-1-shyamthakkar001@gmail.com>
- <20240608165731.29467-1-shyamthakkar001@gmail.com>
- <xmqqed944uq7.fsf@gitster.g>
- <72dncmhj2qt6ufh67gbj3ctnwnssnlc3w22x77chcigzxou36f@mnwnrwg4oo5r>
- <xmqqr0d4zevq.fsf@gitster.g>
- <7o6fuymnfn6b6buyw3yyctjd4dlwlrazspv3xgxvys6djjivxh@qbhyurorgbtt>
- <xmqq8qzcz8pd.fsf@gitster.g>
+	s=arc-20240116; t=1718063740; c=relaxed/simple;
+	bh=b4kcy5D+7dIkjR5KQbEQH0kDGGtqRcmkRlWO81XHHLg=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Iew4kD3m4mbv8tPQJmPnK3/JYPXu9QiUF1Mu0OKlFaIb479BLjSGSFVrFeEov69trR/gx58xS1VJCjk+KUYk1xRMlTD/ZeZ4vK5ybiAx2PD9f4nhx3SIEZwx82MB/49m382V0RAq7eXQqjSbJNXLAm889LDf2ZpplQvF/uZgf3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 45ANtPcd1825388
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Jun 2024 23:55:25 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Yuri'" <yuri@rawbw.com>, "'Junio C Hamano'" <gitster@pobox.com>
+Cc: "'Git Mailing List'" <git@vger.kernel.org>
+References: <ae862adb-1475-48e9-bd50-0c07dc42a520@rawbw.com> <xmqqwmmw1sev.fsf@gitster.g> <4ed426e4-beb6-45ed-b493-1e19c7c0511b@rawbw.com> <xmqqikygzdgk.fsf@gitster.g> <e8feffd0-ba6d-4aae-8c80-3d6482896b08@rawbw.com>
+In-Reply-To: <e8feffd0-ba6d-4aae-8c80-3d6482896b08@rawbw.com>
+Subject: RE: [BUG] "git clean -df ." silently doesn't delete folders with stale .nfs* files
+Date: Mon, 10 Jun 2024 19:55:20 -0400
+Organization: Nexbridge Inc.
+Message-ID: <0ee501dabb91$aa2340a0$fe69c1e0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8qzcz8pd.fsf@gitster.g>
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQETpLHCLpFQr2QiGEI4aCI0uZSumAGFDyW3ASm+LNUCETu8/AHXUzFksxsaZWA=
+Content-Language: en-ca
 
-On Mon, 10 Jun 2024, Junio C Hamano <gitster@pobox.com> wrote:
-> Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
-> 
-> > Yeah, I'll reroll as rebasing on 'ps/no-writable-strings' did produce some
-> > errors but the change required was minimal, so I'll include it anyway:
-> >
-> > diff --git a/t/unit-tests/t-oidtree.c b/t/unit-tests/t-oidtree.c
-> > index cecefde899..a38754b066 100644
-> > --- a/t/unit-tests/t-oidtree.c
-> > +++ b/t/unit-tests/t-oidtree.c
-> > @@ -62,7 +62,7 @@ static enum cb_next check_each_cb(const struct object_id *oid, void *data)
-> >  }
-> >
-> >  LAST_ARG_MUST_BE_NULL
-> > -static void check_each(struct oidtree *ot, char *query, ...)
-> > +static void check_each(struct oidtree *ot, const char *query, ...)
-> >  {
-> >         struct object_id oid;
-> >         struct expected_hex_iter hex_iter = { .expected_hexes = STRVEC_INIT,
-> 
-> I somehow suspect that you do not even need to depend on the
-> Patrick's series---tightening the constness in the function
-> signature by itself is a good thing as you are not writing into
-> "query" anyway, even without his topic.
+On Monday, June 10, 2024 7:28 PM, Yuri wrote:
+>On 6/10/24 14:37, Junio C Hamano wrote:
+>> But .nfs* files are not something you as an application are not
+>> supposed to touch, so a directory that still contains one cannot be
+>> removed, either. It's a limitation (I wouldn't call it a "bug") of
+>> NFS. You can kill the process (or wait until they exit) holding the
+>> file open and then run "clean -df" again, perhaps.
+>
+>
+>With the '-f' the user tells git to remove all, and if this doesn't =
+work git should tell
+>the user that this didn't work for the .nfsNNNNNNN file and for the =
+directory as
+>well.
+>
+>
+>Why is git quiet about leaving the files. It should complain.
+>
+>Or maybe there should be a verbosity option, like -v 10, that would =
+make git
+>complain about such things.
 
-I'll clarify "I'll reroll as rebasing..." -> "I'll reroll, as rebasing..." 
+I have tried to reproduce your situation using git 2.43.0 without =
+success.
 
-Yeah, I meant as not depending on 'ps/no-writable-strings' but only
-including the diff above. But since you already did that, I'll refrain from
-sending another version unless some other changes are required. :)
+$ mkdir test
+$ cd test
+$ touch .nfs12309
+$ git clean -df .
+Removing .nfs12309
 
-Thanks.
+I have tried this with and without existing commits and files, but =
+outside of an NFS context. Do you have a reproducible set of commands =
+that I can try? What is in your .gitignore file? I saw a very old NFS =
+situation where . prefix files did not get reported on some operating =
+systems - I do not think this is what is happening, however. What do the =
+commands ls -a and ls and find . -exec {} ";" report at the root of your =
+repository? In NFSv4.1, there is a known situation where .nfsXXXXXX and =
+.smbXXXXXX files are retained by NFS until the server is notified (or =
+NFS determines) that the files have been closed by all clients. These =
+files (with those names) may be automatically created by NFS (at its =
+whim) and are managed by that subsystem - As I understand it, NFS =
+manages removal of those files independently of the client or programs =
+running on the client, so git may think the file is actually removed but =
+the file may not actually be removed because the unlink() can be =
+deferred by NFS. My suspicion is that this NFS itself might be =
+contributing to the situation.
+
+Can you try creating your repository, then restarting your server and =
+client to isolate the "is open" tests that NFS could be doing, and see =
+whether git clean continues to experience this?
+
+--Randall
+
