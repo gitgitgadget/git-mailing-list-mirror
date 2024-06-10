@@ -1,144 +1,111 @@
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0474D8BC
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 08:26:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37EE53BBC5
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 08:27:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718007980; cv=none; b=FUnyMjtttPLUurapg7+AttXYLfbot5NIf02vC2DIOkHbguKB1zBD3qboeRKUp2mKWrZbEP7RNcEk73HiP5zcYeslas2tCHvWgBOr5hOOuD5Hq9MQXgI7RXufuhSOor9mRUdTU/2nYXVehXXWXEJAa+oruloPiHQ1Z5tgqV/6pPk=
+	t=1718008077; cv=none; b=tgLDoh0KVwUWr36+5RKU30T8X7G7NqXboZEyiNsFk6ezAyB2ED6vaCinZD05HjukI2SwxcdEE3yYMoAKIM2yiy1EtMzPW6cWQ3K6oFsG6B8erD8hOLfv828nHSvCY3oOnlvcdsDAQb9bw5hkXPo5qyQOewnTSDbKiALM2s9s5ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718007980; c=relaxed/simple;
-	bh=3uHLWk9Eq5VJt3pUpUSV7wLRV/YkEsm+p+KNKDFIAZg=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bvzFW1dhPzgNRqjhlehh76FO4x5XRKIHtdtBsNBWfn+aYbJKA/3DRHdE/eD7unrDEtGa3L0wgbLVXQxe5y7SpOJGI9QKbrEI9h8QBPn8kRaauRl6hS1MFW4mwYm85uLJeUZiuuCtYRP4ND6nPzMC40qe/1Z+oVLXtUlljdjEdfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aRUZvtyt; arc=none smtp.client-ip=209.85.167.175
+	s=arc-20240116; t=1718008077; c=relaxed/simple;
+	bh=cxTuSDQ7bYK9kAYtoD0hd05Td3juhbiLeuK9K45APKc=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=jlqyD3JlM6KxZwzT0IpLwSVUwvFlkeO2DunYCbgzit5Nhc52weUXtQsOkdnpx9SAdMaHtbAzr3FtCH5hq88IZJuM+TvueWXbhhw4z2J1YLIg4FDsh6qMGnIPve4X8N2hgcNrL2L/gKoOUdV9v8z3sojxeECFq+A9PW/JscJVK+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HdaRphmW; arc=none smtp.client-ip=209.85.208.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aRUZvtyt"
-Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3d21f253a53so657071b6e.2
-        for <git@vger.kernel.org>; Mon, 10 Jun 2024 01:26:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HdaRphmW"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2e724bc466fso50969291fa.3
+        for <git@vger.kernel.org>; Mon, 10 Jun 2024 01:27:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718007978; x=1718612778; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qy4fSlkvsUCbV9K/KNR1WeyQkxEjUl2wKWj3gtneXx0=;
-        b=aRUZvtytpurukNzamq7O9DZ7Or04FxyQUlpfIMCO78ZGLXvX9SKsfOxPkiE2dvugQZ
-         OqZdN1R1CvE+d1DsK0mcX0bOPjaCOyr4UL84FwlsMRy2d2vou5OhV7CT9MgcIB1qQeGU
-         koJ4YIyVuI7xaTmp7TiPpXtnHmnCDZZIbXrKJqRARGI+cTTi/46Erlk+zMn7g6LXO4xb
-         gWVOgC7Pop3i198i6UFv6cOXfN8NB0lf1vi9MeUzu1wuUZAFnnLDL4cG0OkI2jETLP4Z
-         Y2XfbPKu2/kQCkomPDcGj6qLo0+XyCAc+jLHmWL8zxFvmSj1JP1+z1fGsj1qgIl1QVGA
-         pb/g==
+        d=gmail.com; s=20230601; t=1718008074; x=1718612874; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kYu2t6wfW1KqX2MR/dqULFnWfAHbhMjZWaZmpCEWTrE=;
+        b=HdaRphmWG/SWvKRnupUlVuMfR7S3fXcSkNhTS99tdpIaxF6EFxEHNypNTuf8A26rou
+         jBlMfU4f0OR/joNfzxqE4+3MyXxCj+dU3wKFTw3VrZoLvgxGv+J523UjR+naK0cSjEfI
+         NbPkrlGzlyEZypZ8eTfqOcSF5Jgc7gTOXiCDeI45wPY/6g6J005sCo7iyUfwdvRhaskj
+         7mmX6rUhNrX42Fd4n3jnIbKjkLgihHufB42R+n4pA6mYAVsEPHAq8l3fUKBqUktnfPjv
+         qxJQRe9U7N5qw7dpejzGAsQO0jSpb28v98rfirvqqznoQN9+S9ub6BiOVE992AJpdJel
+         nTyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718007978; x=1718612778;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qy4fSlkvsUCbV9K/KNR1WeyQkxEjUl2wKWj3gtneXx0=;
-        b=QkrY7fRBY0iigBwlLnYW953h11T+qHVfcUvySyILYiGYw8w3a+qOqJxyiR9rGhiHyP
-         bs/aOZEsDTma3UOC4TqJz9rWMXrKsDHDl4PF5LEmbSWzf7ynPft4SwTq+ovJMvD27S67
-         8VJKxhIZMREl1/ka6IOCulXQ6db2vtueg6rKbCcvEJCjXmtSo7O2ZmMXxsd+7Wjk4R4e
-         X//oG7O4Hd9cEP4NV05AmR9xANezYClbJkyV+Cbf5/j6HUGvsicYjH0LfiAMtLln/d2b
-         ZW/f1pdCaMLtEhE7fF1/DIQBNzZW8p9jtmNc4tu+ZqxCpi8+9E1NRB9EgyZ/cwzEN6xu
-         bWig==
-X-Gm-Message-State: AOJu0YyD0bTIQm1zUcN+Baiaka5iqTXL5CJzH2X4dTGaxygoH69cmkj/
-	9zaKKHOBS7ByzqAnXJ7jVdwS2kNkRXNUUhLWzysrgUROweb08JkpadmmvEIbBGp9jm90jKvwDZp
-	1eY3PC1gMSBiOlC1sC5UGCfhxpfs=
-X-Google-Smtp-Source: AGHT+IESBr6lOxXVAhV/O4CNAp7CoGlvqC66I7yPzxBwGoR4ooQJn9/55cvfKGMwJh1tUrb/wtVgsfFZhTRlTGm3Yag=
-X-Received: by 2002:a05:6871:289e:b0:254:421b:3dc5 with SMTP id
- 586e51a60fabf-25464807bf0mr8736303fac.46.1718007978366; Mon, 10 Jun 2024
- 01:26:18 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 10 Jun 2024 04:26:17 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZmajCzuQftZlmlmS@tanuki>
-References: <20240605102958.716432-1-knayak@gitlab.com> <20240607133304.2333280-1-knayak@gitlab.com>
- <20240607133304.2333280-3-knayak@gitlab.com> <ZmajCzuQftZlmlmS@tanuki>
+        d=1e100.net; s=20230601; t=1718008074; x=1718612874;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kYu2t6wfW1KqX2MR/dqULFnWfAHbhMjZWaZmpCEWTrE=;
+        b=Qr5o8QrWXD6Mou7pWpUSDf/zUaJINBYsfLNeMWHeLdeQaqnveIxhL9sCYNs25aZr0h
+         5OBcLYLC92I7Jhx6evzY1yxI1RgYfMyP+GrOMKEiJu9tU0oQZnOdVDLX/ZZU6hMJvxy2
+         fFztfzJD5QI8/WXS2rgA/DyOIygr/ffHyjvlCev5in9MWQyE95xVdeT6g6zmn1FL3iwZ
+         TPzNklwUebEOT1Ie2fZhxyrwHGBhnxwbCfUpjzlhcPlJ+Pdl9LkWXGfyKgq2eoTsNCb0
+         ecTXi7ZKaomdaFrlWcFDpCUfXZIIKs6FHFBudsn6uDb96d4QC80ukx9RoiRjhpedlXC6
+         l4ow==
+X-Forwarded-Encrypted: i=1; AJvYcCVgGHPciidjn+gDtgd3z8T+WFj5+EYs+xAilmqopnB+KacWZ8Avp57/trfCdf4zjNeUKmeE5EbaO171Wrvf7REmYsM0
+X-Gm-Message-State: AOJu0YyjV+lAVhnpcdK7/TCyXYxs3oed2MstrRTf/PyPCpKUrrM60PC3
+	7NdOjf9ExBLHF8Y5lULmr77Qv1YqV70H7BHBOQv/EM3fLkEX1Olg
+X-Google-Smtp-Source: AGHT+IGFZpaaDyMunM1OrHZ5lmZ28k4XVCZji0RgWcwCIlYK8JJVv3iPV/BD53bwrQ4gvkXdhb5p1w==
+X-Received: by 2002:a2e:9598:0:b0:2eb:e266:f9b0 with SMTP id 38308e7fff4ca-2ebe266fa77mr23507961fa.34.1718008074025;
+        Mon, 10 Jun 2024 01:27:54 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4217d7f9a6esm67611345e9.48.2024.06.10.01.27.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Jun 2024 01:27:53 -0700 (PDT)
+Message-ID: <1ae0715d-df76-4019-995e-f00f3506f2ac@gmail.com>
+Date: Mon, 10 Jun 2024 09:27:49 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 10 Jun 2024 04:26:17 -0400
-Message-ID: <CAOLa=ZSum=gWbxMyekwjfxqJ38EPTbQ-d4ts-xGxKaiiDgUTNw@mail.gmail.com>
-Subject: Re: [PATCH v5 2/7] refs: specify error for regular refs with `old_target`
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="00000000000045c58a061a84e715"
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
+To: Dragan Simic <dsimic@manjaro.org>, phillip.wood@dunelm.org.uk
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+ Git List <git@vger.kernel.org>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+ <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+ <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
+ <20240604101700.GA1781455@coredump.intra.peff.net>
+ <xmqqikyo207f.fsf@gitster.g>
+ <20240605090935.GF2345232@coredump.intra.peff.net>
+ <6056d585-6380-43e7-adf1-9f9aadd2a7db@gmail.com>
+ <a8d3415e3913e3a0798a748ed7f7a093@manjaro.org>
+ <a2a59f5e-fd55-41d3-8472-b99256e1f428@gmail.com>
+ <d092f5bb1d3bc7b7a821000a3cad8a1e@manjaro.org>
+Content-Language: en-US
+In-Reply-To: <d092f5bb1d3bc7b7a821000a3cad8a1e@manjaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---00000000000045c58a061a84e715
-Content-Type: text/plain; charset="UTF-8"
+Hi Dragan
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Fri, Jun 07, 2024 at 03:32:59PM +0200, Karthik Nayak wrote:
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index 194e74eb4d..fc57c9d220 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -2491,14 +2491,16 @@ static int lock_ref_for_update(struct files_ref_store *refs,
->>
->>  		/*
->>  		 * Even if the ref is a regular ref, if `old_target` is set, we
->> -		 * check the referent value. Ideally `old_target` should only
->> -		 * be set for symrefs, but we're strict about its usage.
->> +		 * fail with an error.
->>  		 */
->>  		if (update->old_target) {
->> -			if (ref_update_check_old_target(referent.buf, update, err)) {
->> -				ret = TRANSACTION_GENERIC_ERROR;
->> -				goto out;
->> -			}
->> +			strbuf_addf(err, _("cannot lock ref '%s': "
->> +					   "expected symref with target '%s': "
->> +					   "but is a regular ref"),
->> +				    ref_update_original_update_refname(update),
->> +				    update->old_target);
->> +			ret = TRANSACTION_GENERIC_ERROR;
->> +			goto out;
+On 09/06/2024 18:20, Dragan Simic wrote:
+> On 2024-06-09 16:29, phillip.wood123@gmail.com wrote:
 >
-> Shouldn't the second colon be a comma? "expected symref, but is a
-> regular ref" reads way more natural to me than "expected symref: but is
-> a regular ref".
->
+>> Having read the message you referenced I'm struggling to understand
+>> the use-case for stripping escape codes - what do you want to do with
+>> the hunk that means you want to remove the color?
+> 
+> Let me recap, please.
+> [...]
+> I hope this makes the whole thing more clear.
 
-It makes sense the way you put it, but we also print the 'target', so it
-is something like "cannot lock ref 'refs/heads/branch1': expected symref with
-target 'refs/heads/master': but is a regular ref". I felt here the colon
-divides the error into three segments
-1. States that we couldn't lock the file
-2. States that we were expecting a symref with a particular target
-3. States that the ref in question is actually a regular ref
+It is very clear _how_ you think it should work and I agree that makes 
+sense in the context of a generic shell pipeline. What's not clear to me 
+is _why_ that is useful in the context of displaying hunks in "git add 
+-p". The purpose of "git add -p" is to allow the user to interactively 
+stage individual hunks. The "|" command allows the user to display the 
+hunk in a way that helps them decide whether to stage that particular 
+hunk. Are you able to give a specific example of a command that would 
+help you decide whether to stage a particular hunk where you would not 
+want to keep the escape codes?
 
-Having said that, I'm not too bullish on this and happy to change it :)
+Best Wishes
 
-> Other than that this series looks good to me now, thanks!
->
-> Patrick
->
-
-Thanks for all the reviews. Since this is the only change, I'm inclined
-to leave it as is.
-
-Karthik
-
---00000000000045c58a061a84e715
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: a38203e9d907fd83_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1abXVLUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMjh5Qy80c2hrQ3NWMGdpK2tBajFiZE11aXZsM3JpZwpsTFJIaXl5Tnd1
-cFZId2tiWm0wOFpTNTdHZDJzYndkTXRvZmJFOTlrbE03R05WeU9RRmRHN2VsRE11NmVYM3lUCkxI
-UXVSb3gyeHlsaWVUV2RDWVBRd3pDQ1ltRnNTOXZvQkk5N2V6VGFWVzlDMGo1NW1xSU51R3FiZXFS
-aWxMSkcKOHVsVlgvNmxiQXI3aDVHYlgyZUtyL2ZKTEhBYjBBWDFCU0VuSHpIbEQzZlVlOVpPK01C
-bWhZSE1ES1hoOGJMRApZdzZYeERUS2FsbFNnL3EvVjR6RHlUUjhra2wvOTNPU0RlYnJnb3FXU09a
-TGNnZENERllPNHdCSDZmbFdxQ2kyCkh4clRWUlpBc2NaN1dEdG0wTGpzK1JQa1JXQWNUcHVuSGQv
-cWkwZmRxaUthUWtSYk1CRE1KUnVLYjZiQ1VCYlcKMnYvbnhEdXlGK3VWcDVOKzBKRzc0UlZQckFn
-cWJDcDZRY1Y0b2RiOWtYSXlYdklBMlhqdGwwN0RWaHIvOW13RwoyeUJST0ZCM2VpbjhKTDVKS0xX
-aThVN09tYUcxSkJWMHRmbnBwQWtmTHNLakdBZnp3UHBJcGlKMStiSmtvSzFvCjQzTXJVTjhYaS9h
-ZU9RMDhRcktWd05GY0F6eUlDYURGa2dvV3hVUT0KPU80ckIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000045c58a061a84e715--
+Phillip
