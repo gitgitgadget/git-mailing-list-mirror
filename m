@@ -1,126 +1,113 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B2B63D0
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 22:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB9814F9C4
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 22:02:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718056924; cv=none; b=lHO1RXwN/x6oqVO7inwUAR2YgEiVOZWprqzolRprLm4qR2yqtPvL+g+FsVrCLAxh+SWA+oICq/wCmdFxA5wpPEjGVV/ce9VObHXfpQqbkiFP6JkamZjVpzqOYnpGNuYg74zjNnNal9uqvAcHHgtlqNy58xBOyZxwIZ39ci/85Ls=
+	t=1718056947; cv=none; b=I9Qkk5KBiwraZScXtEKuhnYcKwDlnETdzjRsHoUZNeFU7WmJ1NvAB2oR+cxJaomlaIl2ODfbUxIRHa832BCdO6rRZctXA0Lm4WEqXCbXTKBTGyU8nI4KOgz48QdfvNc9F6eNFhgVy5u3cnzmXUBKCWuSTz7FTGQJH2OE2RQ7nK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718056924; c=relaxed/simple;
-	bh=WB9z4w2wf+plca8l90Bszwf938S8euC8BMqMspU/bjI=;
+	s=arc-20240116; t=1718056947; c=relaxed/simple;
+	bh=0X0mUzJJY2rFWcMkG1LOrMbBU5UIUZpQphRPNe2ePuQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CEyxjXHZSdPqyuc33ZbdZsAY9Gp4UZaMqi9+gyMRrfGWvEqQcTLL9at8MOcjEa5kL5MJuNhqiKHP6YRtGIhpQZ9dWVAQx9sqTlfgQuKsvoN3TfATsU7tK52M1r5RKzH6LGCRv8BkFNNygv13ny9VHSQwb3CWJbl42OGOiovcNgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E9anpDEQ; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=C7qodNnINQsjby6L15wP1wiO5rlGH3sugo+jUawocFiqDih68SRauyq3i0igTx6IYjkzK8Gho5MLJtQs7HVD/+8F7gUftYJ6xykycKvXqR57aL/UcbOA/8CeRp33ulC9k9TrnTrCEo84j/7l1VTcwgb6ctugWlGyvmAt1I620h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=SUZwh3uS; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E9anpDEQ"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1f717ee193fso3023805ad.0
-        for <git@vger.kernel.org>; Mon, 10 Jun 2024 15:02:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718056923; x=1718661723; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hvkj7ENiKdXDEimpy/VRmQhwEDphtoVyQ0y+sYcQvL0=;
-        b=E9anpDEQxaQKg7KpFErzffG3qgZCMT/GS7pA5HFdlVQoGRH4FKCMavhTm64gSpqWrZ
-         fqdheT/ZAq/lqYgWInkFmz8ibUnObZTCQBrj1/FWFqKVVS8i/46+M9OT1N12MR49i85w
-         DdIHDQ4DhE6SO1btiq2GLn+1NSMTBgkhq8gNCSJH0QYENZoISRGj4VlqEGlumYeRCgJj
-         BWmQCOCyUhvhvH3/stAc8EgHjg3Ni7sFvIl4utOJdbkpExvARusCffFn4EKz6FmkGt/1
-         P9EeIF6Rk7LazMA5D693f0z6hCEzZvc5oyLXWjCNiXVi0vhcU4LLTjQXBgjEj0CwfiNb
-         MzYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718056923; x=1718661723;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Hvkj7ENiKdXDEimpy/VRmQhwEDphtoVyQ0y+sYcQvL0=;
-        b=GiPR7dwEon5dRheN5p4KvWFhrxMBm4XaP9rS3Hedz9EXNUvZ6U8gFJyGa0A4vo01MS
-         9QhS9iPYMMZdzkTXn3dbMdlWY5ieYV2qKjkbaxqvAW12MV0KZKVXrEphZSJ5sjSavcKE
-         tEGIJkgBQSJp1xKNvzCAi4AotfTiMiSY3WcAkmXk87KV/pqRVoG17FZd5vzaZsXWwLyB
-         etWugPvQOQQKVtlF5N6k7yWE3/p1+E+T7gbgAX2Y4vsQh8a1ZDHLMl9RjPrh8zjr6+ig
-         EOUzN+WXdBvY3NCyPPCur4mCC5xJAIQEfarYeezns0N5Fev8GAFw7G7caXyFmSp+IJzu
-         rtxg==
-X-Gm-Message-State: AOJu0Ywg7KEBQslSC52w5DiYeIJi/Lgn+Bt6ieLEUOPZ04aKCNl1Gkh4
-	uQopuKYMzDgcNZzdK0eK+dMgMWJFPHAQiKqFyHLFeFXrDBgHnsfM
-X-Google-Smtp-Source: AGHT+IEXb7N16rwHZkpGH+J6B4xlNOT5Nl/UfnfbEqSSbFXbfy5fQQumpuZLdvJpW7fHwFSmVgGF9A==
-X-Received: by 2002:a17:903:22c5:b0:1f7:13b1:7530 with SMTP id d9443c01a7336-1f713b177d5mr59521655ad.0.1718056922411;
-        Mon, 10 Jun 2024 15:02:02 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6bd76c1d2sm87351315ad.107.2024.06.10.15.02.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jun 2024 15:02:02 -0700 (PDT)
-Date: Tue, 11 Jun 2024 03:31:59 +0530
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, 
-	Christian Couder <chriscool@tuxfamily.org>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][PATCH v2] t/: migrate helper/test-oidtree.c to
- unit-tests/t-oidtree.c
-Message-ID: <7o6fuymnfn6b6buyw3yyctjd4dlwlrazspv3xgxvys6djjivxh@qbhyurorgbtt>
-References: <20240605134400.37309-1-shyamthakkar001@gmail.com>
- <20240608165731.29467-1-shyamthakkar001@gmail.com>
- <xmqqed944uq7.fsf@gitster.g>
- <72dncmhj2qt6ufh67gbj3ctnwnssnlc3w22x77chcigzxou36f@mnwnrwg4oo5r>
- <xmqqr0d4zevq.fsf@gitster.g>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="SUZwh3uS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1718056940;
+	bh=0X0mUzJJY2rFWcMkG1LOrMbBU5UIUZpQphRPNe2ePuQ=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=SUZwh3uSRN2sxCoqn8XmeJ3rp7Tl0Wf68/0KhQy5yBZsx7glySERBfwIlSLogV5St
+	 9TAWVIUxX03lF80VcGzSwro+YZU53OfbWPmWot9AHzpvl29jSvQA50pPqjvqsvqwVp
+	 ZY3diu5cdA3/mjc1wNnLCBVfBMNa3S3ij26IspDXKBhTTaDRj32QvH8Hst7ntjNuhx
+	 g02O0vOtbkGh9lA0xdjbbwR5fsQdjcNJ2z3Ya42vsmgk5288RqYCpYYppxf5+3QVpb
+	 xDbIdgq+tFxvHW+W5Q7a3tKoqkiWGJMshwfTyCekI45c2NXqbyEh2aesXxKhom+Zd8
+	 NtUTiXKK+jCImId1fmg3gOoe4qwhVdJnuAWB3jIo5nPYIFtrJ3o4puFidqe1P3uoDv
+	 aiMNISdWvqr7ZkAORmwYUS1OWqMxug8ydMRUWS8PG7SWvNTu7atml3trSGTCTBpW8n
+	 G3k53Yw+nddNuAS8++P5vXJLChb2uWr6KRdwkUx/36QbB2NttW2
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5C2982639A;
+	Mon, 10 Jun 2024 22:02:20 +0000 (UTC)
+Date: Mon, 10 Jun 2024 22:02:18 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Andry <andry@inbox.ru>
+Cc: Git <git@vger.kernel.org>
+Subject: Re: [ISSUE] `git submodule update --init --recursive` does ignore
+ `fetchRecurseSubmodules` flag in `.gitmodules` and in `.git/config`
+Message-ID: <Zmd36kkRM543zlQs@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Andry <andry@inbox.ru>, Git <git@vger.kernel.org>
+References: <153002248.20240610041910@inbox.ru>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="fkvwboW8VAwvv9qE"
 Content-Disposition: inline
-In-Reply-To: <xmqqr0d4zevq.fsf@gitster.g>
+In-Reply-To: <153002248.20240610041910@inbox.ru>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-On Mon, 10 Jun 2024, Junio C Hamano <gitster@pobox.com> wrote:
-> Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
-> 
-> > On Mon, 10 Jun 2024, Junio C Hamano <gitster@pobox.com> wrote:
-> >> Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
-> >> 
-> >> > helper/test-oidtree.c along with t0069-oidtree.sh test the oidtree.h
-> >> > library, which is a wrapper around crit-bit tree. Migrate them to
-> >> > the unit testing framework for better debugging and runtime
-> >> > performance. Along with the migration, add an extra check for
-> >> > oidtree_each() test, which showcases how multiple expected matches can
-> >> > be given to check_each() helper.
-> >> > ...
-> >> 
-> >> Use "LAST_ARG_MUST_BE_NULL" here, probably.
-> >> > +static void check_each(struct oidtree *ot, char *query, ...)
-> >
-> > I see that you already made this change in merge-fix/gt/unit-test-oidtree.
-> > Thanks for that.
-> 
-> That is merely tentative.  LAST_ARG_MUST_BE_NULL must be on the base
-> topic, as it is not something that suddenly becomes required after
-> getting merged to the integration branch (unlike other changes in
-> the merge-fix which became necessary in the world order after Patrick's
-> const string fixes are merged).
-> 
-> I do not know what other fixes are needed, and if there is nothing
-> else that needs to be done in gt/unit-test-oidtree topic, I can do
-> "git commit --amend" before merging it to 'next' (unless I forget,
-> that is ;-)), but if you are rerolling, please do not forget to add
-> that (you do not need to do the constness changes, which will require
-> you to rebase on top of whatever contains Patrick's work).
 
-Yeah, I'll reroll as rebasing on 'ps/no-writable-strings' did produce some
-errors but the change required was minimal, so I'll include it anyway:
+--fkvwboW8VAwvv9qE
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/t/unit-tests/t-oidtree.c b/t/unit-tests/t-oidtree.c
-index cecefde899..a38754b066 100644
---- a/t/unit-tests/t-oidtree.c
-+++ b/t/unit-tests/t-oidtree.c
-@@ -62,7 +62,7 @@ static enum cb_next check_each_cb(const struct object_id *oid, void *data)
- }
+On 2024-06-10 at 01:19:10, Andry wrote:
+> Hello Git,
+>=20
+> First discovered here: https://github.com/gitextensions/gitextensions/iss=
+ues/11783
+> Another discussion: https://stackoverflow.com/questions/58403616/does-git=
+-submodule-update-recursive-override-fetchrecursesubmodules
+> Manual: https://git-scm.com/docs/gitmodules#Documentation/gitmodules.txt-=
+submoduleltnamegtfetchRecurseSubmodules
+> ---
+>=20
+> If use a recursive submodule, for example:
+>=20
+> A->B->A->...
+>=20
+> And call submodules Update on A, then the Update does ignore the flag and=
+ keeps fetch recursively with the error at the end:
+>=20
+> >  fatal: Failed to recurse into submodule path ...
+>=20
+> Is that supposed to work this way or is an bug?
 
- LAST_ARG_MUST_BE_NULL
--static void check_each(struct oidtree *ot, char *query, ...)
-+static void check_each(struct oidtree *ot, const char *query, ...)
- {
-        struct object_id oid;
-        struct expected_hex_iter hex_iter = { .expected_hexes = STRVEC_INIT,
+Yes, it's working as designed.  From the documentation,
+`fetchRecurseSubmodules` only applies to `git fetch` and `git pull`, not
+`git submodule`.  Even if it did, you still specified recursive
+behaviour in a command-line option, and command-line operations override
+the configuration.
 
-Thanks.
+If you don't want recursion, you'll need to skip the `--recursive` flag.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--fkvwboW8VAwvv9qE
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZmd36gAKCRB8DEliiIei
+ge0HAP443EnQQuaTRJOSS1gEKzK8+/osGH6LNKCDLcmB6q8+RgD/dZCu0mgaNk8v
+DNvLFxqi0CxJz1XE+49Mww8hGvXyTwc=
+=j/nS
+-----END PGP SIGNATURE-----
+
+--fkvwboW8VAwvv9qE--
