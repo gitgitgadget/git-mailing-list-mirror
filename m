@@ -1,384 +1,160 @@
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA2A135A6D
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 13:48:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C258286D
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 13:49:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718027334; cv=none; b=eqoAXHQjal2K0CiUOBxSBdUF20wSz0PcFETViY9+9y2EjYB4uS9ga2sKVUZ4c88rrrUtg/Cdq7Z2j+2RxWm0DpR7+WJ0Us5vqK6frPw/eX1TcMq0jFO2uHoA9pLWl1VViSLEwnPwaxdfVVDEJYN3mJHHsHle3UGPGxMg+nb+99E=
+	t=1718027377; cv=none; b=QD6MMWUxGiP6oIddokogt4UPt5yHzSyZG9lNMlesB4UvbvZPOkNilZoC7259WccgK/L9l41VvArxl8/trOdkT5QUcCl0acu6oA/91slmopFZ/2ZElWn3xhX1Ze37l62QhdoDSYo/Glr0Q9HrU8v++uvHkW9+OsEFM0aKBgFn1ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718027334; c=relaxed/simple;
-	bh=Bk+ekDIt+yatXXLE9WI/+fQlUUJfDCYEoIm0nlsTHDI=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=hALc1u8QG60Ls0LaWt47qWxFhuImwRJUlFvVD5YZ0gxF4l2x6ZrajEiOuUApGuLQoVROFLKpc8D7+8vnYTSAZZ4p7BHw1pUVdP7mn0I7it0KuYoF3n2qo0/bEF+UCmRAxgPuR3212t62bZh2cYFyMAykxxs5Zm5bQDBjdpFK1Lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iJ4I/vX+; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718027377; c=relaxed/simple;
+	bh=1t3UTfO0JKBznsaDF5aKHtd7Tnt4I3L5bdQFU4O7IfA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f5omzjWZ/yAp0x0JbM4y5f3D8NkH/MFIaRS3ALPgS6RrHw4H9QdEHJORP9x/g1N8WI9TeGSVzNYknk/U0B6bYbT81LJnPdUwVCya8ezadFd+Yza6QaCjYdtgnO2tIPPSI5aOdA4Zd0Mx0v5dVneo4vzi/Y4Vx1Ex4ezKdhnC73o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jzr5SDt9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ez0KcY7q; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iJ4I/vX+"
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52bc1acb9f0so2979670e87.2
-        for <git@vger.kernel.org>; Mon, 10 Jun 2024 06:48:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718027330; x=1718632130; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zWTlb5LwvLe9AIrvyqk/28so9+B75X8LTRv4iqVW2cQ=;
-        b=iJ4I/vX+FpR8WVNiwfORLQtyrwcOw9hJNR/RcHB/OJ6ZryFJE1T3b3f4GPJhs/fmdi
-         wEUe4rNbnQe1f78kQ8fAOUma/MKC2zGaTO2nZxIDYCpJdWAnMevMQxee189M8ftOlyMf
-         zN0oRyUVIvZk9Uvrxr1Mo4yf4rG86IAKbqLsdE8X9j4Q777imjJ9TvldT9E/RfF8ULPR
-         d5znZSC65lCLl4MHo9wBGaz7v4pmsT9oDH2FioCvX2+kzKKiLGgxJJ3RP1O3Mhmz6WlP
-         23JVi/577ZixMPDUgC9p0Rd8+ligWrwTlvq+3tgdolD9tLh+bjRB1k3Rkq5iPnHRys3a
-         GuxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718027330; x=1718632130;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zWTlb5LwvLe9AIrvyqk/28so9+B75X8LTRv4iqVW2cQ=;
-        b=hKKLIOomCtOxGNecIWaGzhilKilEV+soe0RI4UuPTon6yGCL46sKozF55wlCdEyJay
-         a8nZ/d6xoCaWANZ7cdZQcXW5Cj5gqQodHIAsuvmxOQAxUUkr2T+Q8E5NIlgfLJpxMWiE
-         AapESX/leTTiq4RNdVj2bI5XIlx703737dgpD2IaLRULMVUxNEpitCkUZfbkP0UZMzm+
-         Xu5+y8vblVKdq+VgY6+HFpTAuigDODbgeVKtpfo3sOabYEwxEzLeC+H04Uf0r+Cp0mbC
-         fTsE8AyzjqEtG7BhIbS+Q7gMFEZ9KxB6p8l/cIW1LZHPM/aP5IEQasY2aQLayjjmgIjE
-         s6mw==
-X-Forwarded-Encrypted: i=1; AJvYcCWH5M5ALumDVjUP6So8TxZEnkceTUVVazK/R6mx4xiTHnscruDbUQokRQFaGI1XLoWT/MgGK2OZFjdOjuMzojqNVFev
-X-Gm-Message-State: AOJu0Yy/jH6XawXlchrq3Ttjzii+MkvhGegbvCVZV/+ctekBxAAl7XJv
-	BOnMWBbjJvJXMjo+GPNaIjX1SqCaZTWjJrHuvGEKCvsEpC3rbKoE
-X-Google-Smtp-Source: AGHT+IE/dfoB6Ut0Qw79wE5W87tmqGgsZoFwoNNEq9EuqF75Kz16VsPhayQSnTpePoG4VK720DBgnA==
-X-Received: by 2002:a19:f707:0:b0:52c:83ef:19f0 with SMTP id 2adb3069b0e04-52c83ef1e9cmr2742400e87.44.1718027329904;
-        Mon, 10 Jun 2024 06:48:49 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35f2774bb64sm1579318f8f.103.2024.06.10.06.48.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Jun 2024 06:48:48 -0700 (PDT)
-Message-ID: <7aabf47d-7e0e-44e3-b85e-ba46951ad0e0@gmail.com>
-Date: Mon, 10 Jun 2024 14:48:42 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jzr5SDt9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ez0KcY7q"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 731E713801DA;
+	Mon, 10 Jun 2024 09:49:34 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Mon, 10 Jun 2024 09:49:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1718027374; x=1718113774; bh=fQKYmEYpJc
+	kx6Zy4uW2ghsf1p+GGsILVAtP5a1x+0KM=; b=jzr5SDt9btNjIzWbtbj4qat9FG
+	XH6AN8oyahs1fSHFZX6ag2jc/7bhyhl5IlRd90W4oXe8nItFLlG4FFnco6yWR2Vu
+	6vqoAz/Vjjf1meHcUnZQecAajZDZZqBlx4zjzrRlbsxhZTc+B/r46UdiZrwfA3JJ
+	EWo752Pt5eFi0hyPP4s03YCcczX9+6/cGOklLmv45YzTs+XmWzCfz6Ymi0+mdGgI
+	kaiiGZl7MRAdN72LdXo8YaHqVdMg0CHcOrEGO42CnIiIaJTFx7owtfNq4lLWUQrV
+	KhJCzQoPHJJ1OZ259J25UbcnMeX4G+IvDlGncpsaj5IdGHFy6RhezGFwfVbA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1718027374; x=1718113774; bh=fQKYmEYpJckx6Zy4uW2ghsf1p+GG
+	sILVAtP5a1x+0KM=; b=Ez0KcY7qqaI78U37SDvCm4q2kTMPIksTNKkQfDBgCMKb
+	KBab6VbJxiN00trV+JC2CsPv9AiLfUHXBehZnDM80c7PiIepQ+dz+aMJmZEEZTAd
+	V14wqG89Hbkll7fOY9eyt94ZtfWcympIJ5z3g0Lu5p7uc/MZ9t+JFCj2dMxvFOnF
+	aBSm+hEM9UxBS8E7f08oEtcF/MbvNFodUWYWphZwqw1bafWSdBCEH0au8by28oS0
+	nm+0EMZ2zkgX1h0Mg8lRkUDGdJFWG8aaBY6t4RdDsh82pe7XxLcdjMhxunmGtZ7e
+	SrTTCxALf1iuzgNGzGyEdH/D7BtOEi89Kyf9GcO9Rg==
+X-ME-Sender: <xms:bgRnZlua-OIyjlEdfxga7sS202RM1ROa7SizTUsq7XsoH1zoXNYIkw>
+    <xme:bgRnZueWYXxMlKWnQjn8QplQdxKCTe65Bv3UoVa85JH0qvZGTSIznfDEY4mr4RFQY
+    ZCFeuzP96Yvfql9lw>
+X-ME-Received: <xmr:bgRnZowidQnrhqtzAUPIXPL8vwCRSqbQagh50d12zamcITuolICVa7klXaJV-DFch1jVzFoVwMz9WX63qaY-1TlyGgjlTccxMTiWOdCDv400Uu8v>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedutddgieelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:bgRnZsPp3Mm8ybElOxkgaKKlmR19V_ACUJNC3hMAABHCaPUny1bCPw>
+    <xmx:bgRnZl9-HEPYATMkn_ldyPFs7jAhWF85Ec1DgE3dbdt5YaD7rL6ykQ>
+    <xmx:bgRnZsXEJY_XAkpD_tXHNpCWy0BCdZ51heA17kbMCPUrkfNZzAAM3Q>
+    <xmx:bgRnZmdXF5A2dXm1fV0qAG2gyzktq-dlaaKNFLZ5EN_m1pssD_tzzw>
+    <xmx:bgRnZgYeNprMTlcM9uABmsnJplF7J_TA07K40lSPxxGvbwbiHeZFdk44>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Jun 2024 09:49:33 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id bc1fbf23 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 10 Jun 2024 13:49:24 +0000 (UTC)
+Date: Mon, 10 Jun 2024 15:49:28 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 3/4] t-reftable-tree: split test_tree() into two sub-test
+ functions
+Message-ID: <ZmcEaFxZhpyrFd-b@tanuki>
+References: <20240610131017.8321-1-chandrapratap3519@gmail.com>
+ <20240610131017.8321-4-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/3] diff: fix --exit-code with external diff
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
- German Lashevich <german.lashevich@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>, Johannes Sixt <j6t@kdbg.org>
-References: <CACDhgro3KXD0O9ZdE1q46jmXE0O=vf-Z+ZX50WMqmRHAeowGAA@mail.gmail.com>
- <82561c70-ec33-41bf-b036-52310ffc1926@web.de>
- <e2e4a4e9-55db-403c-902d-fd8af3aea05c@web.de>
- <168fecaa-2ebd-4897-b0ba-3bd2a37c01e7@web.de>
-Content-Language: en-US
-In-Reply-To: <168fecaa-2ebd-4897-b0ba-3bd2a37c01e7@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="TNpj8uPfQcgM9Oh/"
+Content-Disposition: inline
+In-Reply-To: <20240610131017.8321-4-chandrapratap3519@gmail.com>
 
-Hi René
 
-On 09/06/2024 08:35, René Scharfe wrote:
-> Changes since v2:
-> - rebase; config strings are no longer const
-> - document the handling of unexpected exit codes
-> - document that external diffs are skipped with --quiet and trustExitCode=off
-> - silence external diff output with --quiet
-> - check output in tests
-> - test diff runs without --exit-code and --quiet as well
-> - slightly untangle the exit code handling code to make it easier to read
-> - fix copy/paste error in documentation of diff.<driver>.trustExitCode
+--TNpj8uPfQcgM9Oh/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The changes in this version all look good. I've re-read the patches and 
-didn't spot any other issues so this is ready as far as I'm concerned.
+On Mon, Jun 10, 2024 at 06:31:30PM +0530, Chandra Pratap wrote:
+> @@ -44,13 +44,29 @@ static void test_tree(void)
+>  		check_pointer_eq(nodes[i], tree_search(values + i, &root, &test_compar=
+e, 0));
+>  	}
+> =20
+> -	infix_walk(root, check_increasing, &c);
+> +	tree_free(root);
+> +}
+> +
+> +static void test_infix_walk(void)
+> +{
+> +	struct tree_node *root =3D NULL;
+> +	void *values[13] =3D { 0 };
 
-Thanks
+Is there a reason why we have 13 values here while we had 11 values in
+the test this was split out from?
 
-Phillip
+> +	struct curry c =3D { 0 };
+> +	size_t i =3D 1;
+> +
+> +	do {
+> +		tree_search(values + i, &root, &test_compare, 1);
+> +		i =3D (i * 5) % 13;
+> +	} while (i !=3D 1);
 
->    t4020: test exit code with external diffs
->    userdiff: add and use struct external_diff
->    diff: let external diffs report that changes are uninteresting
-> 
->   Documentation/config/diff.txt   | 18 +++++++++
->   Documentation/diff-options.txt  |  5 +++
->   Documentation/git.txt           | 10 +++++
->   Documentation/gitattributes.txt |  5 +++
->   diff.c                          | 68 +++++++++++++++++++++++++--------
->   t/t4020-diff-external.sh        | 66 ++++++++++++++++++++++++++++++++
->   userdiff.c                      |  8 +++-
->   userdiff.h                      |  7 +++-
->   8 files changed, 168 insertions(+), 19 deletions(-)
-> 
-> Range-Diff gegen v2:
-> 1:  118aba667b < -:  ---------- t4020: test exit code with external diffs
-> -:  ---------- > 1:  d59f0c6fdf t4020: test exit code with external diffs
-> 2:  0b4dabebe1 ! 2:  4ad160ab1f userdiff: add and use struct external_diff
->      @@ diff.c
->       @@ diff.c: static int diff_color_moved_ws_default;
->        static int diff_context_default = 3;
->        static int diff_interhunk_context_default;
->      - static const char *diff_word_regex_cfg;
->      --static const char *external_diff_cmd_cfg;
->      + static char *diff_word_regex_cfg;
->      +-static char *external_diff_cmd_cfg;
->       +static struct external_diff external_diff_cfg;
->      - static const char *diff_order_file_cfg;
->      + static char *diff_order_file_cfg;
->        int diff_auto_refresh_index = 1;
->        static int diff_mnemonic_prefix;
->       @@ diff.c: int git_diff_ui_config(const char *var, const char *value,
->      @@ userdiff.h: struct userdiff_funcname {
->        };
-> 
->       +struct external_diff {
->      -+	const char *cmd;
->      ++	char *cmd;
->       +};
->       +
->        struct userdiff_driver {
->        	const char *name;
->      --	const char *external;
->      +-	char *external;
->       +	struct external_diff external;
->      - 	const char *algorithm;
->      + 	char *algorithm;
->        	int binary;
->        	struct userdiff_funcname funcname;
-> 3:  4d54ca8281 ! 3:  29c8d3b61a diff: let external diffs report that changes are uninteresting
->      @@ Commit message
->           diff is not able to report empty diffs.  We can only do that check after
->           evaluating the file-specific attributes in run_external_diff().
-> 
->      +    If we do run the external diff with --quiet, send its output to
->      +    /dev/null.
->      +
->           I considered checking the output of the external diff to check whether
->           its empty.  It was added as 11be65cfa4 (diff: fix --exit-code with
->           external diff, 2024-05-05) and quickly reverted, as it does not work
->      @@ Documentation/config/diff.txt: diff.external::
->        	your files, you might want to use linkgit:gitattributes[5] instead.
-> 
->       +diff.trustExitCode::
->      -+	If this boolean value is set to true then the `diff.external`
->      -+	command is expected to return exit code 1 if it finds
->      -+	significant changes and 0 if it doesn't, like diff(1).  If it's
->      -+	false then the `diff.external` command is expected to always
->      -+	return exit code 0.  Defaults to false.
->      ++	If this boolean value is set to true then the
->      ++	`diff.external` command is expected to return exit code
->      ++	0 if it considers the input files to be equal or 1 if it
->      ++	considers them to be different, like `diff(1)`.
->      ++	If it is set to false, which is the default, then the command
->      ++	is expected to return exit code 0 regardless of equality.
->      ++	Any other exit code causes Git to report a fatal error.
->       +
->        diff.ignoreSubmodules::
->        	Sets the default value of --ignore-submodules. Note that this
->      @@ Documentation/config/diff.txt: diff.<driver>.command::
->       +diff.<driver>.trustExitCode::
->       +	If this boolean value is set to true then the
->       +	`diff.<driver>.command` command is expected to return exit code
->      -+	1 if it finds significant changes and 0 if it doesn't, like
->      -+	diff(1).  If it's false then the `diff.external` command is
->      -+	expected to always return exit code 0.  Defaults to false.
->      ++	0 if it considers the input files to be equal or 1 if it
->      ++	considers them to be different, like `diff(1)`.
->      ++	If it is set to false, which is the default, then the command
->      ++	is expected to return exit code 0 regardless of equality.
->      ++	Any other exit code causes Git to report a fatal error.
->       +
->        diff.<driver>.xfuncname::
->        	The regular expression that the diff driver should use to
->        	recognize the hunk header.  A built-in pattern may also be used.
-> 
->      + ## Documentation/diff-options.txt ##
->      +@@ Documentation/diff-options.txt: ifndef::git-log[]
->      +
->      + --quiet::
->      + 	Disable all output of the program. Implies `--exit-code`.
->      +-	Disables execution of external diff helpers.
->      ++	Disables execution of external diff helpers whose exit code
->      ++	is not trusted, i.e. their respective configuration option
->      ++	`diff.trustExitCode` or `diff.<driver>.trustExitCode` or
->      ++	environment variable `GIT_EXTERNAL_DIFF_TRUST_EXIT_CODE` is
->      ++	false.
->      + endif::git-log[]
->      + endif::git-format-patch[]
->      +
->      +
->        ## Documentation/git.txt ##
->       @@ Documentation/git.txt: parameter, <path>.
->        For each path `GIT_EXTERNAL_DIFF` is called, two environment variables,
->        `GIT_DIFF_PATH_COUNTER` and `GIT_DIFF_PATH_TOTAL` are set.
-> 
->       +`GIT_EXTERNAL_DIFF_TRUST_EXIT_CODE`::
->      -+	Setting this environment variable indicates the the program
->      -+	specified with `GIT_EXTERNAL_DIFF` returns exit code 1 if it
->      -+	finds significant changes and 0 if it doesn't, like diff(1).
->      -+	If it's not set, the program is expected to always return
->      -+	exit code 0.
->      ++	If this Boolean environment variable is set to true then the
->      ++	`GIT_EXTERNAL_DIFF` command is expected to return exit code
->      ++	0 if it considers the input files to be equal or 1 if it
->      ++	considers them to be different, like `diff(1)`.
->      ++	If it is set to false, which is the default, then the command
->      ++	is expected to return exit code 0 regardless of equality.
->      ++	Any other exit code causes Git to report a fatal error.
->      ++
->       +
->        `GIT_DIFF_PATH_COUNTER`::
->        	A 1-based counter incremented by one for every path.
->      @@ diff.c: static void run_external_diff(const struct external_diff *pgm,
->        {
->        	struct child_process cmd = CHILD_PROCESS_INIT;
->        	struct diff_queue_struct *q = &diff_queued_diff;
->      ++	int quiet = !(o->output_format & DIFF_FORMAT_PATCH);
->       +	int rc;
->       +
->       +	/*
->      @@ diff.c: static void run_external_diff(const struct external_diff *pgm,
->       +	 * external diff program lacks the ability to tell us whether
->       +	 * it's empty then we consider it non-empty without even asking.
->       +	 */
->      -+	if (!(o->output_format & DIFF_FORMAT_PATCH) && !pgm->trust_exit_code) {
->      ++	if (!pgm->trust_exit_code && quiet) {
->       +		o->found_changes = 1;
->       +		return;
->       +	}
->      @@ diff.c: static void run_external_diff(const struct external_diff *pgm,
->        	diff_free_filespec_data(two);
->        	cmd.use_shell = 1;
->       -	if (run_command(&cmd))
->      ++	cmd.no_stdout = quiet;
->       +	rc = run_command(&cmd);
->      -+	if ((!pgm->trust_exit_code && !rc) || (pgm->trust_exit_code && rc == 1))
->      ++	if (!pgm->trust_exit_code && rc == 0)
->      ++		o->found_changes = 1;
->      ++	else if (pgm->trust_exit_code && rc == 0)
->      ++		; /* nothing */
->      ++	else if (pgm->trust_exit_code && rc == 1)
->       +		o->found_changes = 1;
->      -+	else if (!pgm->trust_exit_code || rc)
->      ++	else
->        		die(_("external diff died, stopping at %s"), name);
-> 
->        	remove_tempfile();
->      @@ diff.c: void diff_setup_done(struct diff_options *options)
->        	if (options->flags.follow_renames)
-> 
->        ## t/t4020-diff-external.sh ##
->      -@@ t/t4020-diff-external.sh: test_expect_success 'no diff with -diff' '
->      - check_external_exit_code () {
->      - 	expect_code=$1
->      - 	command_code=$2
->      --	option=$3
->      -+	trust_exit_code=$3
->      -+	option=$4
->      -
->      - 	command="exit $command_code;"
->      +@@ t/t4020-diff-external.sh: check_external_diff () {
->      + 	expect_out=$2
->      + 	expect_err=$3
->      + 	command_code=$4
->      +-	shift 4
->      ++	trust_exit_code=$5
->      ++	shift 5
->      + 	options="$@"
->      +
->      + 	command="echo output; exit $command_code;"
->       -	desc="external diff '$command'"
->       +	desc="external diff '$command' with trustExitCode=$trust_exit_code"
->      + 	with_options="${options:+ with }$options"
-> 
->      - 	test_expect_success "$desc via attribute with $option" "
->      + 	test_expect_success "$desc via attribute$with_options" "
->        		test_config diff.foo.command \"$command\" &&
->       +		test_config diff.foo.trustExitCode $trust_exit_code &&
->        		echo \"file diff=foo\" >.gitattributes &&
->      - 		test_expect_code $expect_code git diff $option
->      - 	"
->      + 		test_expect_code $expect_code git diff $options >out 2>err &&
->      + 		test_cmp $expect_out out &&
->      +@@ t/t4020-diff-external.sh: check_external_diff () {
-> 
->      - 	test_expect_success "$desc via diff.external with $option" "
->      + 	test_expect_success "$desc via diff.external$with_options" "
->        		test_config diff.external \"$command\" &&
->       +		test_config diff.trustExitCode $trust_exit_code &&
->        		>.gitattributes &&
->      - 		test_expect_code $expect_code git diff $option
->      - 	"
->      -@@ t/t4020-diff-external.sh: check_external_exit_code () {
->      + 		test_expect_code $expect_code git diff $options >out 2>err &&
->      + 		test_cmp $expect_out out &&
->      +@@ t/t4020-diff-external.sh: check_external_diff () {
->        		>.gitattributes &&
->        		test_expect_code $expect_code env \
->        			GIT_EXTERNAL_DIFF=\"$command\" \
->       +			GIT_EXTERNAL_DIFF_TRUST_EXIT_CODE=$trust_exit_code \
->      - 			git diff $option
->      - 	"
->      - }
->      -
->      --check_external_exit_code   1 0 --exit-code
->      --check_external_exit_code   1 0 --quiet
->      --check_external_exit_code 128 1 --exit-code
->      --check_external_exit_code   1 1 --quiet # we don't even call the program
->      -+check_external_exit_code   1 0 off --exit-code
->      -+check_external_exit_code   1 0 off --quiet
->      -+check_external_exit_code 128 1 off --exit-code
->      -+check_external_exit_code   1 1 off --quiet # we don't even call the program
->      + 			git diff $options >out 2>err &&
->      + 		test_cmp $expect_out out &&
->      + 		test_cmp $expect_err err
->      +@@ t/t4020-diff-external.sh: test_expect_success 'setup output files' '
->      + 	echo "fatal: external diff died, stopping at file" >error
->      + '
->      +
->      +-check_external_diff   0 output empty 0
->      +-check_external_diff 128 output error 1
->      +-
->      +-check_external_diff   1 output empty 0 --exit-code
->      +-check_external_diff 128 output error 1 --exit-code
->      +-
->      +-check_external_diff   1 empty  empty 0 --quiet
->      +-check_external_diff   1 empty  empty 1 --quiet # we don't even call the program
->      ++check_external_diff   0 output empty 0 off
->      ++check_external_diff 128 output error 1 off
->      ++check_external_diff   0 output empty 0 on
->      ++check_external_diff   0 output empty 1 on
->      ++check_external_diff 128 output error 2 on
->      ++
->      ++check_external_diff   1 output empty 0 off --exit-code
->      ++check_external_diff 128 output error 1 off --exit-code
->      ++check_external_diff   0 output empty 0 on  --exit-code
->      ++check_external_diff   1 output empty 1 on  --exit-code
->      ++check_external_diff 128 output error 2 on  --exit-code
->       +
->      -+check_external_exit_code   0 0 on --exit-code
->      -+check_external_exit_code   0 0 on --quiet
->      -+check_external_exit_code   1 1 on --exit-code
->      -+check_external_exit_code   1 1 on --quiet
->      -+check_external_exit_code 128 2 on --exit-code
->      -+check_external_exit_code 128 2 on --quiet
->      ++check_external_diff   1 empty  empty 0 off --quiet
->      ++check_external_diff   1 empty  empty 1 off --quiet # we don't even call the program
->      ++check_external_diff   0 empty  empty 0 on  --quiet
->      ++check_external_diff   1 empty  empty 1 on  --quiet
->      ++check_external_diff 128 empty  error 2 on  --quiet
-> 
->        echo NULZbetweenZwords | perl -pe 'y/Z/\000/' > file
-> 
->      @@ userdiff.h
->       @@ userdiff.h: struct userdiff_funcname {
-> 
->        struct external_diff {
->      - 	const char *cmd;
->      + 	char *cmd;
->       +	unsigned trust_exit_code:1;
->        };
-> 
-> --
-> 2.45.2
+It's completely non-obvious that `tree_search()` ends up _inserting_
+nodes into the tree when the entry we're searching for wasn't found (and
+if the last parameter is `1`. I feel like this interface could really
+use a complete makeover and split up its concerns. In any case, that
+does not need to happen as part of this patch seriesr
+
+What I think would help though is if the commit message itself mentioned
+this unorthodox way of inserting values into the tree.
+
+> +	infix_walk(root, &check_increasing, &c);
+
+Not a fault of this commit, but this test certainly isn't great. It
+would succeed even if `infix_walk()` didn't do anything as we do not
+verify at all whether all nodes have been traversed (and traversed once,
+exactly).
+
+Patrick
+
+--TNpj8uPfQcgM9Oh/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZnBGgACgkQVbJhu7ck
+PpSETg//VAk1Gdga+bX0yj8N1DhXJ0pBkPlOBZVYKVeazvgqHPvX6PNCL5PFieXX
+1dINjOSES0q1HmauHaPoGB1nZMm/OBuu6ADHUvzZMY59ivFB/U0c6wNtlltMtNEi
+e6ugYRwt0YP28pooaNwgezPu8kGKUb5LOIklBSwKVig/SWAaW+dkZO2VAK7aEGTM
+WU1AXDikdGoDWK8jRlftv01TA+VctHIAlTFALSKcHOzljOJufEKe8SfsPEs1P+Hg
+2RNs17zyDNriUydyefWVWVOnEc3mHM4LB/bDY+DprQF5XugLazGy2LTEV81qIQTA
+nfwcimfX5a8CRmXCLrSNNDd3DMQIpFhdTKiJ92nv/Z6OLMjUMahGDmrLVh9+EVIm
+IYSiPJel79ETqWJbQlFj8+Htn7ktyQHpfgbCmqTSAgjuQGyYesQ1OWmU9UiCLloT
+Ws3W3h+qJFdZSCJAlv10IPaNVTRHtiN0buj+71egSMU0SEsDxYLtUfsSsrHBIidv
+cqb4cXkt3q1MDeG/veOuiCoXxkv8QDw40IaZ7YClpIHILS8+W5Jiw6zzjx/Qx7T/
+L1IE9rXrWdxXBbwvbHCH7njOrPBOQU9KByRD+NgZgjNtonozaX/PAYMUB9BKWAkd
+2VqiW4K6d6NtHcLtvrnR7nxww6vpwIuONl9L0NoIFl8etlzRwPQ=
+=UkFC
+-----END PGP SIGNATURE-----
+
+--TNpj8uPfQcgM9Oh/--
