@@ -1,122 +1,113 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601681B5A4
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 19:04:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0A31B5A4
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 19:09:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718046283; cv=none; b=ggdaKQrFbBKK7pg0NxqS0uoCPoOWRbGZJhP7hKhTYt3kMKvbheVdsXN6EGsqNXyUiy8mb1IwjfDO4jdG7YZR4RoKqAZTKnTGeaAwfGMCmcI9m8LpbwQfEMcFlv3AJ9suiy3p3oFx0+uQfq9BMAMQW/6LXewpLV1bPBQ/xZi5P9E=
+	t=1718046579; cv=none; b=s1XflhHHmgBs3W1jLZMiZSZMRUHRjfKf9UTRGZSk/vAlV70bNt0alkQNDDOdowg1Kdd5eWop5p9IdjQvbDaoZPWbc0aRFbl4hQUxgoZZM4gDVVkHZ/SR6lTl1GhYSQVZ8xUojkWri+1eBKicfOlkG474/Gt6PJPuGBpfriW//+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718046283; c=relaxed/simple;
-	bh=567uYo2OHkdE7YRqumZlnZDn43eNveyuB//P30K+kVM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mlDVHOwCidgBH6XkrMw63dZpUw+GZ5x5pXMwIWXTEkQpalJ9RFQDm1G9KI7AJzOsklCA4lnVLjgFk+h+FaWAj3kkGuHJ0A/Ws4RzzQJGdNOmWsYWJcONDd0D9mM5eN0/568Apd1WTuWO3l5+cb1Tnh5EuaJz/qEr5rpkCAHM7Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=RWZAsxds; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1718046579; c=relaxed/simple;
+	bh=ytwDQV6vPUXUcdG04ILC9YGp+IFkt2cwxdwKmWedzhs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=P3Gn7q7CxgCTQ1vYdqetcJwBQEVinNqzWvh3Ml6r63GQA3Zbl7/QiE+vT//4pRlUdFTccU0cixPFDULi0TUTDzfqRpYea/TITqcCAt36FsSyxR4smb1G9Hnje3zRek3A40EZB+SNBBHhNi2NRqq3rGa5/vMpdr0NseW6pg99/Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gPc6oGD1; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="RWZAsxds"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4405dffca81so31411cf.1
-        for <git@vger.kernel.org>; Mon, 10 Jun 2024 12:04:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gPc6oGD1"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-35f1bc63981so1359734f8f.1
+        for <git@vger.kernel.org>; Mon, 10 Jun 2024 12:09:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1718046281; x=1718651081; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=567uYo2OHkdE7YRqumZlnZDn43eNveyuB//P30K+kVM=;
-        b=RWZAsxdsXPav/Zhl0sEaWNvNhvzJuO3/b2+5jQ8ZfYqrEyS6bHm/dI9HZVDAdtTicW
-         AkmmR8Pcys5+eqbNPnadBRYT10DM2IU9wioialG2hm4ZmDsS8ajg/3FC4BVuCfQ7C1YM
-         5vrw5x1HYDb3KFBIyODWntLGEhKjpx6FJZ/iV67gsF+SvhF1kw8R2lsl92swX84GKfsg
-         GZ7adxxrCjFviUVgMez45BpvFOGqJX8tVJOp5HIE0eYlA/TRutRE15JWKST8HD7/q51y
-         LwYj+LWGKhz0bbUryCUThB5AZufT8XnnzbOaU4Eyb+jUUZEdGav3owonkDlQ5qDS8U2n
-         2GAQ==
+        d=gmail.com; s=20230601; t=1718046577; x=1718651377; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PvaW6RgnbbyWPrHs9A+D6Oqk1Xe9DI6jSvyscWawKn0=;
+        b=gPc6oGD1xbUMEbNKEQKRsM/yUw6d58ioWTwTg5iu3t/cIkDGqxUfr7bEM+sVAJSCpo
+         9UnuY4dzG75D9PLNFqsTAKlf1whd0IQly5rFMDMCyz60DtmJVlxlCVZYZHcCG8xcmh11
+         Tw4LMFzOuzcU9e7oW8ESCu/FGm2SpV/6j+OC9iwRJm4VK4xxELCiG6trqPb/SAF0YVJP
+         Zu5k20f0Kd54L3XNiWAtWLq1Pob8dzx723cLQyEnBfDa1X95ltjtfBoJGsOgShQVqQwk
+         MHnEQWDv5qpbyPmf7k4CIbuzOkX1gZC3OmTeJ870Pydlza5wSbPaKSGnvvZDEbwcA4us
+         OuyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718046281; x=1718651081;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=567uYo2OHkdE7YRqumZlnZDn43eNveyuB//P30K+kVM=;
-        b=Z8xWiA69KMYh8brl35CcYn08xYTw09L3ao4KV2lBuB0rv9Bnum4nklGVaBltFmyX8G
-         WOZ0hKXSSzdFzwOnGzcNSPXEu47k2gKCg/+9xh/8BxecAmNJaNnuEHFR4ziWsZ7a8KyN
-         JdGWahoj4t5glbd/spOXLSn3wnM+18lk/egD3/7w7e80g1qKUzE9GAYsQ9nAssBVsM+Z
-         k1eKeNfyvXlJmm7C4aQlEMhxv4LyxE47QsL0cOF3RV13eVxYXBPStyT9QGv7A09siX+8
-         2AE6pQJWoWiw4BPW83ne7xVlUA8+yDOy6mMG/+HFEp+YETshqQrKYyKc4KzJZS0nfmpz
-         fkWA==
-X-Forwarded-Encrypted: i=1; AJvYcCWLPp52TkCQb4yYT8+xcqehmyIf7jVmlGNz0Zd2sq3RUOjAQDuFD+t+hsFEt3PjiemsTLB8+2gO0Au8LJpBGSBDQnca
-X-Gm-Message-State: AOJu0YzL0NGMRQsIbAkZ3zhctWt5hhzFGydbh8U8LB/dMnrdEQE5s96q
-	yA2hahV0eifsYNWTs1iyXonMUXQ56tPjtQtEcN6EMSQar4eaAWiwwE40mqsnPZo6k6XYdLZE5zM
-	X+u7P9mNJ+TMcQVlI3ybnyZCkDgqKeq8KqbvR
-X-Google-Smtp-Source: AGHT+IH5YDoKRGlsqbFqLpS9wCSeLBI+jTUWG+P5M3YcO8J7PwTRny8LE9P/2q2dtDyZjieq1Cqiu21/QXuZNzFlMPs=
-X-Received: by 2002:a05:622a:5a89:b0:43f:fbb0:b74 with SMTP id
- d75a77b69052e-441416a108dmr337281cf.29.1718046280917; Mon, 10 Jun 2024
- 12:04:40 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718046577; x=1718651377;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PvaW6RgnbbyWPrHs9A+D6Oqk1Xe9DI6jSvyscWawKn0=;
+        b=ZgpAydtGpmyW9FDoy/Q3xbflY6on7DLka2hgOHK6u2Ili6pcjveX73QHYj9I3iHPXi
+         lbmvHiJS4+JybDcGH/8V4TzJ1Tmj6Aio43UQDM4OmnNPqEHj7W/Ie6ua7J/51vhibhnO
+         9nMkxr+t7z4XHPSaMjmM3kfKA+uF6TPh+cWcHHwyiA4wynkGX4nL/K00Nsvwv4vrfp44
+         zDIKJMYqUeGkd8NN7xEVaXr00OBZ1TexRQv6jCAl+z+xTz9wRxchb/B4nhx/oqOe8xT5
+         PrbquAsJhR01wDoPkr+AjLQ0PdVFDUXLy29ZHB3fS2xu8XOj0qUPfichL8SAhqbCKyLp
+         UWEw==
+X-Forwarded-Encrypted: i=1; AJvYcCXpQum4pYBCrBzb7lWqBC4BoFHDqWwgypmnwD01ezeGEYNDgYi2L5ezEpRRRBygiumLN6CTHCXDDfoM/2JJu4ymFBPw
+X-Gm-Message-State: AOJu0YxbrbKQt0qeXxnRkrORpwf8WTVhIquwhmKdB8F9eMOs2zC+TtSl
+	lYbWGf5MdogF58cA5U64/sNxI6Zdb47MSZKhnAdU2Z1f3nejUoi5
+X-Google-Smtp-Source: AGHT+IHmJif4+wIg5K2EyV6Z6VE5gRjge0OA2EaI8AAWYQXUbILL4RRpDBfw6LY1uCAxMcysajno9A==
+X-Received: by 2002:adf:fd10:0:b0:35f:bb3:56b1 with SMTP id ffacd0b85a97d-35f2b225fa6mr646658f8f.0.1718046576354;
+        Mon, 10 Jun 2024 12:09:36 -0700 (PDT)
+Received: from gmail.com (62.red-88-14-48.dynamicip.rima-tde.net. [88.14.48.62])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35f29116506sm1777431f8f.60.2024.06.10.12.09.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Jun 2024 12:09:35 -0700 (PDT)
+Message-ID: <c4f54fdb-bf89-405b-a48a-acb58088557c@gmail.com>
+Date: Mon, 10 Jun 2024 21:09:34 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <fec6ebc7-efd7-4c86-9dcc-2b006bd82e47@horse64.org>
- <0be201dab933$17c02530$47406f90$@nexbridge.com> <fdb869ef-4ce9-4859-9e36-445fd9200776@horse64.org>
- <0beb01dab93b$c01dfa10$4059ee30$@nexbridge.com> <200c3bd2-6aa9-4bb2-8eda-881bb62cd064@horse64.org>
- <20240608084323.GB2390433@coredump.intra.peff.net>
-In-Reply-To: <20240608084323.GB2390433@coredump.intra.peff.net>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Mon, 10 Jun 2024 12:04:30 -0700
-Message-ID: <CAJoAoZkP58ZM4J3ejemyiqkkbEaQdphoyGj_LmX9-xb_eMgb4A@mail.gmail.com>
-Subject: Re: With big repos and slower connections, git clone can be hard to
- work with
-To: Jeff King <peff@peff.net>
-Cc: ellie <el@horse64.org>, rsbecker@nexbridge.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/6] use the pager in 'add -p'
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: phillip.wood@dunelm.org.uk, Jeff King <peff@peff.net>,
+ Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+References: <1d0cb55c-5f32-419a-b593-d5f0969a51fd@gmail.com>
+ <199072a9-a3fb-4c8d-b867-b0717a10bacc@gmail.com>
+ <b7e24b08-40a1-4b18-89f6-e25ab96facaf@gmail.com>
+ <20240604101700.GA1781455@coredump.intra.peff.net>
+ <xmqqikyo207f.fsf@gitster.g>
+ <20240605090935.GF2345232@coredump.intra.peff.net>
+ <6056d585-6380-43e7-adf1-9f9aadd2a7db@gmail.com>
+ <a8d3415e3913e3a0798a748ed7f7a093@manjaro.org>
+ <219a195c-74d0-4c21-bf54-0752bb5b01df@gmail.com>
+ <7937845d7cb7ae0179c4922ed154c5c7@manjaro.org>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <7937845d7cb7ae0179c4922ed154c5c7@manjaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sat, Jun 8, 2024 at 1:43=E2=80=AFAM Jeff King <peff@peff.net> wrote:
->
-> On Sat, Jun 08, 2024 at 02:46:38AM +0200, ellie wrote:
->
-> > The deepening worked perfectly, thank you so much! I hope a resume will
-> > still be considered however, if even just to help out newcomers.
->
-> Because the packfile to send the user is created on the fly, making a
-> clone fully resumable is tricky (a second clone may get an equivalent
-> but slightly different pack due to new objects entering the repo, or
-> even raciness between threads).
->
-> One strategy people have worked on is for servers to point clients at
-> static packfiles (which _do_ remain byte-for-byte identical, and can be
-> resumed) to get some of the objects. But it requires some scheme on the
-> server side to decide when and how to create those packfiles. So while
-> there is support inside Git itself for this idea (both on the server and
-> client side), I don't know of any servers where it is in active use.
+On Sun, Jun 09, 2024 at 09:57:20AM +0200, Dragan Simic wrote:
+> Hello Ruben,
+> 
+> On 2024-06-09 09:44, Rubén Justo wrote:
+> > Some concerns were raised about controlling when to send coloring escape
+> > sequences.  Several ideas were discussed to address this, including
+> > introducing a new command ">", a modifier for "|": "||", and others.
+> > Alternatively, we could leave it up to the user to filter as needed.
+> > Or, simply, do not send escape codes at all.
+> > 
+> > So, looking back at the ideas discussed in the thread, perhaps a
+> > reasonable next step might be to reintroduce the 'P<program>' command
+> > and let '|<program>' be the way to send raw, uncolored, chunks.
+> 
+> Actually, it would be better to re-introduce the "P" option, without
+> any parameters, which would display the current hunk through the
+> already configured pager
 
-We use packfile offloading heavily at Google (any repositories hosted
-at *.googlesource.com, as well as our internal-facing hosting). It
-works quite well for us scaling large projects like Android and
-Chrome; we've been using it for some time now and are happy with it.
+I'm sorry, but why limit the "P" command now?  
 
-However, one thing that's missing is the resumable download Ellie is
-describing. With a clone which has been turned into a packfile fetch
-from a different data store, it *should* be resumable. But the client
-currently lacks the ability to do that. (This just came up for us
-internally the other day, and we ended up moving an internal bug to
-https://git.g-issues.gerritcodereview.com/issues/345241684.) After a
-resumed clone like this, you may not necessarily have latest - for
-example, you may lose connection with 90% of the clone finished, then
-not get connection back for some days, after which point upstream has
-moved as Peff described elsewhere in this thread. But it would still
-probably be cheaper to resume that 10% of packfile fetch from the
-offloaded data store, then do an incremental fetch back to the server
-to get the couple days of updates on top, as compared to starting over
-from zero with the server.
+I understand the caution expressed in another message of this thread
+about playing it safe, but I think the user won't be surprised if we
+respect here the "color.diff" setting, just like we do with "p", and
+...
 
-It seems to me that packfile URIs and bundle URIs are similar enough
-that we could work out similar logic for both, no? Or maybe there's
-something I'm missing about the way bundle offloading differs from
-packfiles.
+> and let "|<program>" be the new option
+> that pipes hunks _without_ coloring escape sequences to "<program>".
 
- - Emily
-
->
-> -Peff
->
+... we'll offer the command "|" to allow the user to process the raw
+chunk.
