@@ -1,75 +1,177 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6105A1B812
-	for <git@vger.kernel.org>; Mon, 10 Jun 2024 06:04:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F9D1C68F
+	for <git@vger.kernel.org>; Mon, 10 Jun 2024 06:25:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717999477; cv=none; b=OpExmjEgEpB4hBIBZPebwhva1QkS5doZ7m2TZB4WjiJQLyHh3Ye8yE1sQne6QP9A69n9ONOt3G8Hr7+M2e9YxQjuWQQnD/c9eXEmY/H9YkOQHIeVzIUxyRbziJ9yM1uJm+0Gx/zUQUMN30dfxYDBo9+EC6gSgmS9YkfGJsQYKpI=
+	t=1718000722; cv=none; b=IwoYZ3NbKe+sZv6L+2aU2F6CanF9KToF+ZG+R4OgIUFxzWHJEZopOri7d9sM7QyyJjGAF85RsPSojRwm6fL/1ePg7eLgHIDfDWO6EzWeG1Z4DWmM4Bmp04tJ+OiUPfHRNZiyiikutf0byDo9AEQqZ9/VZ2a4rvPtem62ywJRhrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717999477; c=relaxed/simple;
-	bh=vTmZwcvoKi39PMk/8nsII6Z/BMtGdpoDIEsyX5ZUUxo=;
+	s=arc-20240116; t=1718000722; c=relaxed/simple;
+	bh=Z0steIfFrn1+EE/mD//jyZGJ27+ToW/R9rMergLDzNc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BW5ELnHlkl7b7hv6Q0K5ed8xXRK2kkekPm06SiWYhLFfaU73ww+NgJmxH/SXbQxFA7auuZ7ftBHBqcSb//ENyaZNEWEyZXyC1jrl7dG4lhkb3IszycW6Q+7ZGYh2XmVzuGnmjqd55PwbBrwKGl4INDpuG0yObLOTqVjgfdWUpkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aNNW+V27; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bf6mmQ6yiDfKoAyqKEyZOeiv9Rkjr7ji/CEqI/8KRJyxNxNYhgUBbtdPk5sHz4RNeNH0k26yZPl9JbTcC9eaXcfQget1awrAIVFNjZnseyZVB0eVbddWPVyBwYmzRpqSKuzARn73vdT0/CqJ9k2m7AL85NVfMWIRD/P8X42PTjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KTEVrzDj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H1ywQBGC; arc=none smtp.client-ip=64.147.123.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aNNW+V27"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-6f6a045d476so2919145b3a.1
-        for <git@vger.kernel.org>; Sun, 09 Jun 2024 23:04:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717999474; x=1718604274; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=T+KKBjetKPotgBkntCfnCRczFssWoRvkw+mH2DiYQPw=;
-        b=aNNW+V27sOrpWF9lLbqyEeHs/EtQTGoT5z1qPj+qnn863d8tdGP6y9+sZl5PDzypi9
-         T5srdSozcBL0hEAO6JHG7qh8ZyjdjxXPWrCzc+vPycK5Z1en3XL46WnoRUZ0abeJ3Ysi
-         JFefodC1dbS7gzwcpYLjTyHR59PLz+6msaQldbWddFWMMBjZWYshcaKG8zFoaLxKKjKU
-         2NrT7A/q1WO81oIZe4I99Exdb/SFjqFB6rqV1sSLeMtaACad0v+L8kHLjcUKvpFVZLsW
-         loljHIUWI2hNoud0zs0j8OZ9U2aVf2gVPpbgy0NDZvZB+/nW5dhZN1F24IJnwwc+hQrn
-         qQwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717999474; x=1718604274;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T+KKBjetKPotgBkntCfnCRczFssWoRvkw+mH2DiYQPw=;
-        b=IjB4hVd60zR3BBtgW8ETVGyFOR0zjUfGY8KPgg9xeIs/Fx86QT1bX6shoG8r6K11We
-         /3t2lZrMCrMWSTyAyD961EY4XmoLTtTjKtdQgYmkwtjqc85JkmDSULmzu0CzYYoA9/MM
-         mS/dj240H9aQqXjQBmqUn+vc9Lxm1Qanf3dio4ly5amra8F+v4u9DOog+g5d5PkWrV6a
-         U91hpUYKm2AFLFC2KCqnaxnnrs86+9n/Rt6xP3a9D7NnkbYeVf4Sl7vkhLlPQcRUK83o
-         Ic1OzgQE/tlU3sjs5JKlzrOp9JWbj5MYEs/OF0hTo+Uo6x5UKRFaH9YA1C2jTwxp5bE8
-         9pIA==
-X-Gm-Message-State: AOJu0YylqmvhvnzMUIqvGOuOOhquAk3gTJ8M2Ks4TOUXZP7io+rdzX1v
-	/8+pLalEE9kAqPGLKx8jkXVXZpLOTy+p7mYqL3UCrHbNcQ1bhHgBTF6t+w==
-X-Google-Smtp-Source: AGHT+IH+VoFvtrciO3XwJcSHIb326YLi4+fCW5Sw3o7oegcKkaesEx3+1yhis49nxRRTlNg6//cp2Q==
-X-Received: by 2002:a05:6a21:6d9a:b0:1a9:8836:ae37 with SMTP id adf61e73a8af0-1b2f969bf66mr8908739637.12.1717999474119;
-        Sun, 09 Jun 2024 23:04:34 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70597b74dd5sm902691b3a.34.2024.06.09.23.04.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Jun 2024 23:04:33 -0700 (PDT)
-Date: Mon, 10 Jun 2024 14:04:32 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [GSoC]: Implement consistency check for refs blog
-Message-ID: <ZmaXcCwLfvXcaTxJ@ArchLinux>
-References: <ZlQ7j9HYVOpP2Xga@ArchLinux>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KTEVrzDj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H1ywQBGC"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 204BC1C00124;
+	Mon, 10 Jun 2024 02:25:19 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Mon, 10 Jun 2024 02:25:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1718000718; x=1718087118; bh=VhHvOBLCK6
+	Ofm4/vLTiLIkx/y7EmMpx52VbYnDjHFSY=; b=KTEVrzDjk5zQ3QO3cxAtcI7OgH
+	rfTNoq6RCATfyp3UNb0uWUQQ+YUB0NP7ilSRM7kDpun6XHgLlZYOBHXu41uuSm1g
+	kTNbjFsw+G9wpVg8E8ENzUYUmAiaefxuLOofIlooaiqR0FIjNm/fqLR06Ur8KFvA
+	ya+39vxdrPnwSgsCCRof+S8s5KdNSMCNdhPnRrGeWbvvAY1BH7xcsqAcNfzzNlum
+	ILYztkopRRKkyjB41SobgCx4PNmpdmE910y4PntkOZ9SxJ6jxaPxecr1RxPA4mfr
+	vnJ1Lhppl/q55/bOL7qUyvmgAoSQMZ7ZsbMG/Q96h5vJ/SJ98+EoNXph5iIQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1718000718; x=1718087118; bh=VhHvOBLCK6Ofm4/vLTiLIkx/y7Em
+	Mpx52VbYnDjHFSY=; b=H1ywQBGC062f7RhILCKNt1Xevuk94jzh7gMhXcScSmW2
+	JdN5ky0nKGRxmIGd7kjCbhgCCtFkAkE0xgi999k1OvxURH/xy0YN6FqVwmLpiBAT
+	ggoft8ZpWmoFmPGq19Rx3Rpul9F/BVWlf4ca5xSwztZmEg1yM8TcqCvk39qzCGoR
+	g8mfc3LMSRoa418qlhDOKPwElFCkswRG1xqLGfl0Nj113sSa5DV0xc3avj86UpQB
+	t9NKG3NbXEwAvWbWAMkKodQV583QYb3lg5cLGs0XUWy7DFOc2CJBkXVvzlolshp2
+	FkF4O7UjSPaN6hqSAou+m5hNT0ml6H0QsnlrZUKl3w==
+X-ME-Sender: <xms:TpxmZlewN2qcIf_A0s8sjvuOZn_Nt8j9XDwawpJmrUsxIOKKrE6NcQ>
+    <xme:TpxmZjNbToyoD10UhsUB0IeFG8lFb86BY4_gsA1SAYRnrDBcxz9yVr_vVId9T515t
+    YEAE64exSTIbCgy4g>
+X-ME-Received: <xmr:TpxmZuj-sGef-ywzXxwGJCyhrG-fXgZtzdJfwJM3PpOZQ5YvZsD2JdmXM19ck--psP8k9WvG0ofa9MupCNhtZO69SZYF_1feE_c0d83MEpu3BvMZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedtledgheduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeljeetffevheeggeetkeetieduieeiie
+    egieegtdffheegkefhjeehfeekhfevleenucffohhmrghinhepghhithhhuhgsrdgtohhm
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:TpxmZu9kJJ6t9cDRhaIlJoaCVBz6d9inb1aW0oDx0xg0iHIt3TqzSw>
+    <xmx:TpxmZht4xZKyHb2GJsWFeiHZlU8GVbfH-HcOJr_X53ePNGMee8ph3w>
+    <xmx:TpxmZtEBx4uk4rnPO-YJ9la9Ja4d9KDJkk612SdWAaD-a9sFIKWZ7g>
+    <xmx:TpxmZoMdp6z1piwss1cw_I4L_zGTwYTigfeqKIFtafzwgPpWa7GNvA>
+    <xmx:TpxmZpJwpZbJzyT4uifwXxR5Tvd5MAt93K8mK4ZB7Ic2HD3UNXYQpp4R>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Jun 2024 02:25:17 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 5e19eacf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 10 Jun 2024 06:25:08 +0000 (UTC)
+Date: Mon, 10 Jun 2024 08:25:13 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH v3 0/4] ci: detect more warnings via `-Og`
+Message-ID: <ZmacSUI3d1nbx_F9@tanuki>
+References: <20240606080552.GA658959@coredump.intra.peff.net>
+ <cover.1717742752.git.ps@pks.im>
+ <xmqqwmn0eazm.fsf@gitster.g>
+ <20240608092855.GE2390433@coredump.intra.peff.net>
+ <xmqqsexnav1s.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="NjW4A7pGKpJyGYsN"
+Content-Disposition: inline
+In-Reply-To: <xmqqsexnav1s.fsf@gitster.g>
+
+
+--NjW4A7pGKpJyGYsN
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZlQ7j9HYVOpP2Xga@ArchLinux>
+Content-Transfer-Encoding: quoted-printable
 
-This is my GSoC week 1 post:
+On Sat, Jun 08, 2024 at 04:12:15PM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+>=20
+> > On Fri, Jun 07, 2024 at 01:47:25PM -0700, Junio C Hamano wrote:
+> >
+> >> I am not sure how annoying people will find the V=3D1 output.  It is
+> >> irrelevant that it is in a collapsible section.  What matters is if
+> >> it helps those who *need* to expand that collapsible section to take
+> >> a look, or if it clutteres what they have to wade through.
+> >>=20
+> >> When studying a build failure, I rarely found the exact command line
+> >> given by V=3D1 helpful, but YMMV---while I am not 100% convinced, let's
+> >> take the series as-is, because not losing information may sometimes
+> >> help even when we need to visually filter out extra clutter.
+> >
+> > I had the same thought. I have used V=3D1 for debugging, but usually
+> > debugging Makefile changes locally (i.e., why is my option not being
+> > passed correctly). I don't think I've ever wanted it for a CI run.
+> >
+> > And I do think people see the output. It may be in a collapsible section
+> > on the site, but:
+> >
+> >   - you'd uncollapse that section if there is a build failure, and now
+> >     your error messages are that much harder to find
+> >
+> >   - if you look at the output outside of the site, you'll see the
+> >     uncollapsed sections. And I usually view them in a local pager using
+> >     curl[1].
+> >
+> > I guess I won't know until I see it in action, but I have a pretty
+> > strong suspicion that it will be annoying.
+>=20
+> https://github.com/git/git/actions/runs/9424299208/job/25964282150#step:6=
+:573
+>=20
+> I _knew_ that this run will fail compiling the updated timestamp
+> parsing logic in date.c but it still took me a while to find the
+> exact error.
+>=20
+> I typed "date.o" in the search box, which showed 5 hits (first two
+> are false hits to fuzz-date.o and test-date.o), with
+>=20
+>     3rd hit on l.566 "gcc -o date.o ... long long command line"
+>     4th hit on l.594 "Makefile:2758: recipe for target 'date.o' failed"
+>     5th hit on l.595 "make: *** [date.o] Error 1"
+>=20
+> Nitice that the error message with "date.c" is on 571 but with each
+> line being very bloated to around 10 physical lines on screen, it is
+> very far from either 3rd or 4th hit.
+>=20
+> So, this time it was annoying.  But I suspect I'd be praising the
+> wisdom of using V=3D1 if I were hunting for some breakage caused by
+> tweaks in command line generation that broke the build or something,
+> so I dunno.
 
-  https://luolibrary.com/2024/06/10/GSoC-Week-2/
+I'll just drop this patch for now.
 
-Thanks,
-Jialuo
+Patrick
+
+--NjW4A7pGKpJyGYsN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZmnEgACgkQVbJhu7ck
+PpQwYg//eYsPI7a6IIpRHRTBrqyRGrtLQVRwaA+iZldYiIpSYpE654ZDF0dBxm22
+YToCza4G6uyWRo4HQI6prr7wUWj1PKy8oF2F4P1b8LBkIcRE0MKYfnQtds76USbA
+vmwRuWZvfBNCHJJr6np2euNr2WKTJBPCG2xRcjYOVLH35t5YiYLMC/rGRsBq1ZBP
+cTr820jbrAvJFzrZUZzM3oDCLS7w7b3rxVY3VgeT3AKp3FMKzhg4XSPJtji8gMEJ
+dBX+2h0dauf7w9sD/oPeERjiQXUz8WKeGcnGWcSpeUjp+Hfm9V205jkTD2r1+m97
+LpfCsosFKSA+daHiRq1egxWt5NjsGZjaQbmo6iMVHcckaiMoGWmiLrdFdpybce08
+JRSCxSnE9MHcVpNYZnm6Clk3LL6eLWFe3u2OytwF42V4I8o/14XO1SuGztdsMFh2
+Vk7RtCST2HXaow64B8dUEvpfJgVpNCaRNq+Zm1r83r2Q7b3r2A3GZK8qkf5w6X9X
+0x7rx07m4QYpYFNPKThPhec1vL8DrpAsAI1vlH7he5JHTHrZtsaml59e9yNjVZXB
+ApdbsvdUKM6jOGFv1NXBXR5wbaDXvbQnwCiJX9G5lpIZ+7AmHpV7M8CJ8vfkdJYO
+iFzum4jR5si8czw0rkHJEa4CxonhCQS8Zfh06QA8MIJFsIlFiDw=
+=KRKE
+-----END PGP SIGNATURE-----
+
+--NjW4A7pGKpJyGYsN--
