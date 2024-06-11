@@ -1,58 +1,62 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766FF249E5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0CD2628D
 	for <git@vger.kernel.org>; Tue, 11 Jun 2024 18:24:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718130294; cv=none; b=eQRbyjzztkUYdQq9yqRPL6sr/QfI2Z297B9+6fN+gD2Och5hC/GeuBoyxwiDPzcj75kO8H6ltETjh6SoirHAp9pBM4GL/DeTKRNf8jxTCDTLUG1AFYTebQjCEKSuYo8mSmVcKAcq98DfPikkbo1GzhY2vbPfG4Yxn4/VpfiR4+I=
+	t=1718130294; cv=none; b=V90UAr9jis1Wcr5CHe1toPEz5SN8cPduv5xKPJ0CKtasI7B9FlKdfXHw6li7L2w8wXB+8stryDv/464qHmyOsSgNUvPRaoiirplmdKpiRODNS54GprruqXZff/EuR/qFbrdOmjpClYlOM2JoRA8fOuyduAG2cwUORhavHIuh/Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1718130294; c=relaxed/simple;
-	bh=ckBezX9QcsSn+3IhP3/EiS7jekxo22iA5D7XmSr1G0A=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=G3si3iiN4HPyjfZxZXQvZluN+/TZY696bJStlmR/R1Fdvor8Zyv0kyyFaFBmunVl3sRG6zeVyD9qbafnLA8nxNZU0rhySI+Z6aTpqcX45QzfJ4eeBtrYjG/GeONzeUaJBurGTyQJV7Er1vlnhv6KPMm8tc6/D8ZkcCR18gNLmzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NCWQnnRa; arc=none smtp.client-ip=209.85.221.54
+	bh=fBat4Yp3gYivyKXamk3+/10ToBE4v9Q8CQR4fkIkCNw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=sbxuJxO++NAlWDYtcFEFZMbBDjdZ8KREqXvBEJc7Xt5bcQ0OjdgScagYTVApI/RHMiw5y4Lu0PUNPscAWiNBxbbLze7dy0muMoyLiZWJp/aZU3lAKO2iYVLbGw6IjTyuRi+4groqHSNfuLLu2e7ssBUsLW2XpKAea5o5f0Ml1FQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bjfc7Xql; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NCWQnnRa"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-35f23f3da44so2294752f8f.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bjfc7Xql"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-35f23f3da44so2294761f8f.0
         for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:24:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718130290; x=1718735090; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718130291; x=1718735091; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9lSZQvtHK8bpj510EMfU2pbXEjSWj7mLfI2wOz6ukLs=;
-        b=NCWQnnRaMZyMor9fN5ARja11gPCZ6abOFzW8eKeHyo1x2Arrv3Pb9TJwe7EP6e1kwX
-         xFqOAPYDAXGKWgIi+J30HWNfA4zlbYBnwryX3BOGOIsfAdl6ESKYW/wnB7LCnoOyIGyx
-         h9bsSMWoX8C/4zE1xW3FMoXFGRIfnOJDF4hzXcRJpUWH8zzHtVDsdmXxWTQamteK7bc0
-         cwv1BrCFmcXaRHYHTazo/HdhCuG/JnkdJ0AC4LDJHKLcK+k/sO1finUps6PFPB5wUkE6
-         XZdTucVIrbo5j318RRFK822ETrvzME1H4ojagh4cKYsyTu+wAYM+V4aKg8GQtTzOOffy
-         HJEw==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=J6phZVwBXrsTJRIGQvTlUYZADysZjBXsqztO7asPnDE=;
+        b=bjfc7Xql3hB7VfkyaJ3hTkOA4sUP5kFvBqCMCp+lOb8rf7ICDb+ca/JMxcXuO3wJ56
+         iX4h0KQcjcVoKF48kvXaTk9ywy8rvqDJblAgpPY4gfrTChLnVfVwYgQG84j+N/Nk/sR7
+         NcpQaJT7NflqMS2nMJ+28AjyRdfYts2ar398usPnwP11q90aihe4uDTzZdEjSBcQKE7m
+         aaL6t4uOAzgSGk+gUElkULBfHSLVGFnd6XIYkWRvK+rCxOfCzSsnQbOjKF7cOqYHeTwL
+         KTBbDSnqIetPwO0Dk1DMPULbRQFYQxT2rvgCvERfV7fVAxLRRj3EW0Ay/1jxJ20jB06A
+         6Ukw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718130290; x=1718735090;
+        d=1e100.net; s=20230601; t=1718130291; x=1718735091;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9lSZQvtHK8bpj510EMfU2pbXEjSWj7mLfI2wOz6ukLs=;
-        b=OfhknuNfR2nyTLE6hNTiqYi/dtPASnct98OP0/UVZWKWaHBQn8hzxpD2qI4ysxeqxK
-         Yl59Zo+M7BCtaDkif6yO9J+pKgQi7nMMTgnwYnAfiYpnWcGTk8T7Nus7boXbckHxIllb
-         zK0tx8WRzzVY7Yjuqzw158UBCMLH84ic+aoTWoxtryO47pwk/K7JVK7IOhybXVhRVQNR
-         oAKQTT2FlBvsx63SNVoPUkkzzSR2/xKKIf6gKT1eL9HCwE3ifaGUboF9ue/fiAEO3d+m
-         2B7mCnmdCDVkpwgeVyM7p7brr/J8UqiqARKBhVTUUqF6W1JAnA6qVYN8M7y/3ZVeDnN5
-         WqZA==
-X-Gm-Message-State: AOJu0YymeOWQJxtoRqw5iwx7hKzqsU9PxIvWvG6OItyZ3nYHB+1iHyf4
-	m7dvtVqqTy1d6heAi+9b9uFcoS5L+q+1rInzVhMh8c3LsD1LWMko4+N30Q==
-X-Google-Smtp-Source: AGHT+IFNoOZF+f5Y1oVj7QZ2C7/sbKfeNN3qLrK4WY+BFdfjOI/OUSm30kHzfRfkUk+ffUfl1y+HKQ==
-X-Received: by 2002:a5d:408d:0:b0:35f:11c5:5c74 with SMTP id ffacd0b85a97d-35f11c55ee3mr7436858f8f.36.1718130290065;
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=J6phZVwBXrsTJRIGQvTlUYZADysZjBXsqztO7asPnDE=;
+        b=tIFtpE+YqYoLxDhPPoiVsahAb/Og0khYCYu2nug3fxhd0NJxwvBMNaY2GXjGI6NPG1
+         MZPOaKB3G2KGDwGvmrIm0Z7800bbgq7qc07wSNJoCwgRMAMTFenjdESbdw+464BeXaAy
+         Z+1Bsuowtu/lgNBgNZRm/m3/yN8pIOe8kQX7u1IOsvLfHH5EFvA6uRixwq6m7a4Ypi7A
+         EB5qBsUpnIKzuob/lP6kW6d0FtCke3mWRQKJMcP1XRSqGHQdJGih/J/tKSO2kCg0JE+B
+         oPPx97Sx3dV6ra7txZ/zRRaKTyZIMj/ShruPCENWK0T71GIRFwdJ94iadoiZZrcUEnSq
+         zN0A==
+X-Gm-Message-State: AOJu0YwxFLctBWni/nWOmqIETs//T6S/5xEEuYBC9eqpYIaTO14wqyvf
+	wChLzByrfDc8MsfSj9BQLhZpM6CLDlUYujM9O8MQGYYiRlvfWxZKLi4z9Q==
+X-Google-Smtp-Source: AGHT+IFw6B3BwnI9QWggsAOd03gq8cq3qNJ0SeduRlzfWoO0Dj5mIxLbAq72LqtOiytICEfYukEsWA==
+X-Received: by 2002:a05:6000:1449:b0:35f:23f3:e95 with SMTP id ffacd0b85a97d-35f23f30fd6mr5582689f8f.35.1718130290780;
         Tue, 11 Jun 2024 11:24:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35f0d512556sm10989224f8f.29.2024.06.11.11.24.49
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35f2774bb64sm4946140f8f.103.2024.06.11.11.24.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jun 2024 11:24:49 -0700 (PDT)
-Message-Id: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
+        Tue, 11 Jun 2024 11:24:50 -0700 (PDT)
+Message-Id: <074dc98acc79e08d07cf4f5c8105b872ec57980c.1718130288.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
+References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
 From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 11 Jun 2024 18:24:32 +0000
-Subject: [PATCH 00/16] mktree: support more flexible usage
+Date: Tue, 11 Jun 2024 18:24:33 +0000
+Subject: [PATCH 01/16] mktree: use OPT_BOOL
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,102 +67,35 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Victoria Dye <vdye@github.com>
+Cc: Victoria Dye <vdye@github.com>,
+    Victoria Dye <vdye@github.com>
 
-The goal of this series is to make 'git mktree' a much more flexible and
-powerful tool for constructing arbitrary trees in memory without the use of
-an index or worktree. The main additions are:
+From: Victoria Dye <vdye@github.com>
 
- * Using an optional "base tree" to add or replace entries in an existing
-   tree rather than creating a new one from scratch.
-   * Building off of this, having entries with mode "0" indicate "remove
-     this entry, if it exists, from the tree"
- * Handling tree entries inside of subtrees (e.g., folder1/my-file.txt)
+Replace 'OPT_SET_INT' with 'OPT_BOOL' for the options '--missing' and
+'--batch'. The use of 'OPT_SET_INT' in these options is identical to
+'OPT_BOOL', but 'OPT_BOOL' provides slightly simpler syntax.
 
-It also introduces some quality-of-life updates:
+Signed-off-by: Victoria Dye <vdye@github.com>
+---
+ builtin/mktree.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- * Using the same input parsing as 'update-index' to allow a wider variety
-   of tree entry formats.
- * Adding deduplication of input entries & more thorough validation of
-   inputs (with an option to disable both - plus input sorting - if desired
-   with '--literally').
-
-The implementation change underpinning the new features is completely
-revamping how the tree is constructed in memory. Instead of writing a single
-tree object into a strbuf and hashing it into the object database, we
-construct an in-core sparse index and write out the root tree, as well as
-any new subtrees, using the cache tree infrastructure.
-
-The series is organized as follows:
-
- * Commits 1-3 contain miscellaneous small renames/refactors to make the
-   code more readable & prepare for larger refactoring later.
- * Commits 4-7 generalize the input parsing performed by 'read_index_info()'
-   in 'update-index' and update 'mktree' to use it.
- * Commit 8 adds the '--literally' option to 'mktree'. Practically, this
-   option allows tests that currently use 'mktree' to generate corrupt trees
-   to continue functioning after we strengthen input validations.
- * Commits 9 & 10 add input path validation & entry deduplication,
-   respectively.
- * Commit 11 replaces the strbuf-to-object tree creation with construction
-   of an in-core index & writing out the cache tree.
- * Commits 12-14 add the ability to add tree entries to an existing "base"
-   tree. Takes 3 commits to do it because it requires a bit of finesse
-   around directory/file deduplication and iterating over a tree with
-   'read_tree()' with a parallel iteration over the input tree entries.
- * Commit 15 allows for deeper paths in the input.
- * Commit 16 adds handling for mode '0' as "removal" entries.
-
-I also plan to add a '--strict' option that runs 'fsck' checks on the new
-tree(s) before writing to the object database (similar to 'mkttag
---strict'), but this series is pretty long as it is and that part can easily
-be separated out into its own series.
-
-Thanks!
-
- * Victoria
-
-Victoria Dye (16):
-  mktree: use OPT_BOOL
-  mktree: rename treeent to tree_entry
-  mktree: use non-static tree_entry array
-  update-index: generalize 'read_index_info'
-  index-info.c: identify empty input lines in read_index_info
-  index-info.c: parse object type in provided in read_index_info
-  mktree: use read_index_info to read stdin lines
-  mktree: add a --literally option
-  mktree: validate paths more carefully
-  mktree: overwrite duplicate entries
-  mktree: create tree using an in-core index
-  mktree: use iterator struct to add tree entries to index
-  mktree: add directory-file conflict hashmap
-  mktree: optionally add to an existing tree
-  mktree: allow deeper paths in input
-  mktree: remove entries when mode is 0
-
- Documentation/git-mktree.txt       |  42 +-
- Makefile                           |   1 +
- builtin/mktree.c                   | 595 +++++++++++++++++++++++------
- builtin/update-index.c             | 119 ++----
- index-info.c                       | 104 +++++
- index-info.h                       |  14 +
- t/t1010-mktree.sh                  | 354 ++++++++++++++++-
- t/t1014-read-tree-confusing.sh     |   6 +-
- t/t1450-fsck.sh                    |   4 +-
- t/t1601-index-bogus.sh             |   2 +-
- t/t1700-split-index.sh             |   6 +-
- t/t2107-update-index-basic.sh      |  32 ++
- t/t7008-filter-branch-null-sha1.sh |   6 +-
- t/t7417-submodule-path-url.sh      |   2 +-
- t/t7450-bad-git-dotfiles.sh        |   8 +-
- 15 files changed, 1055 insertions(+), 240 deletions(-)
- create mode 100644 index-info.c
- create mode 100644 index-info.h
-
-
-base-commit: 8d94cfb54504f2ec9edc7ca3eb5c29a3dd3675ae
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1746%2Fvdye%2Fvdye%2Fmktree-recursive-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1746/vdye/vdye/mktree-recursive-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1746
+diff --git a/builtin/mktree.c b/builtin/mktree.c
+index 9a22d4e2773..8b19d440747 100644
+--- a/builtin/mktree.c
++++ b/builtin/mktree.c
+@@ -162,8 +162,8 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
+ 
+ 	const struct option option[] = {
+ 		OPT_BOOL('z', NULL, &nul_term_line, N_("input is NUL terminated")),
+-		OPT_SET_INT( 0 , "missing", &allow_missing, N_("allow missing objects"), 1),
+-		OPT_SET_INT( 0 , "batch", &is_batch_mode, N_("allow creation of more than one tree"), 1),
++		OPT_BOOL(0, "missing", &allow_missing, N_("allow missing objects")),
++		OPT_BOOL(0, "batch", &is_batch_mode, N_("allow creation of more than one tree")),
+ 		OPT_END()
+ 	};
+ 
 -- 
 gitgitgadget
+
