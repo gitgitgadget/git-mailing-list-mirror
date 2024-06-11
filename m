@@ -1,251 +1,119 @@
-Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF002171640
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 06:06:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076F717164F
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 06:26:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718086000; cv=none; b=NaCfA0D46ZLvnlFILmFJFyQhZkJzZCQPQHdD9ndAOvazSmRdXvjLS4uYQTg61jciy3niCK84Q5muOmAHsSwT22ojL3FCdPoXBp929xgmYsaj3pAW7ZLrVUyZlVyuFoH9c4jOk3qDNrVzCm62NuL0cVbm07MgnHottpNkFddT5T8=
+	t=1718087194; cv=none; b=g2ipKdq+6i8Lb5JUxZpzy2rmaRQQkCLDBjJZdRvo1sWYUdLU7jTQWimoomE7fOB9bzSPriQbO0j0YetAfe5oP9gEV3vdFmCAqPGBeiUzb/qjdHaVhwwXFhpWw99AUSXA/xb/k8Iipt7A2k05YKKwRl5mGmUDIx3njWpFYNpDHzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718086000; c=relaxed/simple;
-	bh=J65Hv7Jo9DWKXEdUpDwggbqQvMdNOUEnZEml8Em1oro=;
+	s=arc-20240116; t=1718087194; c=relaxed/simple;
+	bh=8ihQ36h/Bp7RHV+PMQwO3tGjGmQ4G6RYHM3WR5SLu+4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m/aWkpfM6FPF2QfEvuY2FOgjWn7Y+Qa7jm8mpDWsmrtPLoGutv7qFRLoBmTH0D3UqwB0GsuHBrmwLkd1Loq25WeFTGtpzzHF0W33RmSoxqhk+opKNqgrd0ERClsDSCtOVwFUIBTZx7rVTx2jElxT/hJsPk2JVKhkuZU7TUuenzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y9JBMMm4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XaEcgMTJ; arc=none smtp.client-ip=64.147.123.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y9JBMMm4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XaEcgMTJ"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.west.internal (Postfix) with ESMTP id 8EF941C00103;
-	Tue, 11 Jun 2024 02:06:36 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 11 Jun 2024 02:06:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718085996; x=1718172396; bh=0eXoNS9CIv
-	6COlTxuel8hZsjCRZ9lbfslHSsJwgfak8=; b=Y9JBMMm4ewsTRE85rEaLs3MNrC
-	QmTuau7K4WbuqaAz5/Y6FzxPEwQKyoX/Cx1T6H667j4krCBqRb5gNVtj+vHBZxMv
-	yQzQZlfkGKhuc6SsFZ4f4u9hMLESg4tPuP3i0zYKsZHqxD329d42uOPZ81fpHz8p
-	2Ck866tZj/e7tPmMoHQ5XSEjaelsXo81BymJkKuZaj0LdKjWrtWx8sGYVpTbG8jL
-	uU53VDrBVHVDGU2Zkc++7K7fmBsawFWwlGKdtIO8jhndaX5hYwWaCQoZIP1wo2Jr
-	K5s89WqPfqVdqpaDIo0mDbmaVYZ9XHES1/YkbXr8mhko2GNP5zZ5Lw6woBeQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718085996; x=1718172396; bh=0eXoNS9CIv6COlTxuel8hZsjCRZ9
-	lbfslHSsJwgfak8=; b=XaEcgMTJgjqS1pjy+dKBnug3aKcA5GH0dOZ9OXvQBweZ
-	UvxsSu/Tyz91nX6Pex8rh44TXkMfrQoQA5Fy4gDyhiRoOX87GPKxHnpgvGdlucc5
-	1ZYLmxZ4UUUOCKuEwW12Sdhe2FqHBnN7hnPaIrPHTus+j0RIvNhBQ8naaIg/i0aZ
-	y6Dnotq9EM9DmB1BNmO6PeYzLA/BxRRC9HGuAIVdJKpsDymR5NgXRKdWtNHok2Sv
-	wFCIWYnEigyAHFh8WP04NymRX7D5QBSPkbPbpTsN/YclyVqPwqX10MXwFAIwacbN
-	Jg7PYvEFayq3dN2oi0bKUqhKJG+8sIW1n/8BBYrIUg==
-X-ME-Sender: <xms:bOlnZmVS4LmA2RYFP-VM4A91hmph4IN1F9BicQSkIJAMBe7GYul7rg>
-    <xme:bOlnZinvm4FOtw16XQA7baYhATL2QDj3TztSnzFU-yuSx1uQvPzcHspl3x5QIYSc4
-    elj-vXEOv3lhUOlSg>
-X-ME-Received: <xmr:bOlnZqYCcEeiOHcJIeW8KM2b4juWgc0SHM5tIUU3PucZP_cwyIneKDqByE82bT55owGSJXb42dAAkzSCB3DnzSoAQ0s1b-WS6nSBzkJQPqDX2tVyhwqO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduuddguddttdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:bOlnZtWw_bZXG0zRR_zjABDckrA_7jh4W8myt-CzcnIebKudu4OBsw>
-    <xmx:bOlnZgltg80JdsyfVSRvAA5K1w9yOq2T7ClXFuaXO0SRxYtNGigCIA>
-    <xmx:bOlnZicfHmiMGP9RCkVf0443tDWXzRFYWRvwf7PRZE3kts10-gWqKw>
-    <xmx:bOlnZiHfYWFJeqqlwPsOPuNXDCUjOK9Dac0308XwqlFB3G9HTKUjdg>
-    <xmx:bOlnZlyywTT6_62tvQR90n_CGJoKS8mwoe28VBcXKwSgqeuUt8uWWGAm>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Jun 2024 02:06:35 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id f878eadc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 11 Jun 2024 06:06:24 +0000 (UTC)
-Date: Tue, 11 Jun 2024 08:06:30 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kyle Lippincott <spectral@google.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Subject: Re: SEGV (detected by Address Sanitizer) when using `core.abbrev`
- option
-Message-ID: <ZmfpZm2vuwx0fl1w@tanuki>
-References: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=gTpxaKGTFQkCvHpQ+AybhKOaYTDwZuuzm/7/8Amtqi6kc24lGqRyV0CyXhyOPEnCjCxlAp1C599Dc+oeKMq8lpNM+KeeXAopw6fXlhlUVprUlDKSX+j0jhtaWu/jLGiMByeI86mei/2817BnMBGsGhdEw4L50dzEpw/hDPXAQAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 16603 invoked by uid 109); 11 Jun 2024 06:26:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Jun 2024 06:26:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23882 invoked by uid 111); 11 Jun 2024 06:26:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Jun 2024 02:26:21 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 11 Jun 2024 02:26:23 -0400
+From: Jeff King <peff@peff.net>
+To: Emily Shaffer <nasamuffin@google.com>
+Cc: ellie <el@horse64.org>, rsbecker@nexbridge.com, git@vger.kernel.org
+Subject: Re: With big repos and slower connections, git clone can be hard to
+ work with
+Message-ID: <20240611062623.GA3248245@coredump.intra.peff.net>
+References: <fec6ebc7-efd7-4c86-9dcc-2b006bd82e47@horse64.org>
+ <0be201dab933$17c02530$47406f90$@nexbridge.com>
+ <fdb869ef-4ce9-4859-9e36-445fd9200776@horse64.org>
+ <0beb01dab93b$c01dfa10$4059ee30$@nexbridge.com>
+ <200c3bd2-6aa9-4bb2-8eda-881bb62cd064@horse64.org>
+ <20240608084323.GB2390433@coredump.intra.peff.net>
+ <CAJoAoZkP58ZM4J3ejemyiqkkbEaQdphoyGj_LmX9-xb_eMgb4A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="JazGhyRWTVflWVB8"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
+In-Reply-To: <CAJoAoZkP58ZM4J3ejemyiqkkbEaQdphoyGj_LmX9-xb_eMgb4A@mail.gmail.com>
 
+On Mon, Jun 10, 2024 at 12:04:30PM -0700, Emily Shaffer wrote:
 
---JazGhyRWTVflWVB8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > One strategy people have worked on is for servers to point clients at
+> > static packfiles (which _do_ remain byte-for-byte identical, and can be
+> > resumed) to get some of the objects. But it requires some scheme on the
+> > server side to decide when and how to create those packfiles. So while
+> > there is support inside Git itself for this idea (both on the server and
+> > client side), I don't know of any servers where it is in active use.
+> 
+> We use packfile offloading heavily at Google (any repositories hosted
+> at *.googlesource.com, as well as our internal-facing hosting). It
+> works quite well for us scaling large projects like Android and
+> Chrome; we've been using it for some time now and are happy with it.
 
-On Mon, Jun 10, 2024 at 03:27:11PM -0700, Kyle Lippincott wrote:
-> c8aed5e8dadf (repository: stop setting SHA1 as the default object
-> hash, 2024-05-07) stopped initializing the_hash_algo, but config.c
-> references it when it observes a user setting core.abbrev, in two
-> ways:
-> - if core.abbrev is detected as a 'no' boolean value, then
-> default_abbrev is set to the_hash_algo->hexsz
-> - if core.abbrev is set to an integer, it verifies that it's within
-> range for the hash algorithm (specifically: it errors out if the value
-> is < minimum_abbrev or > the_hash_algo->hexsz).
->=20
-> Stack:
-> =3D=3D2421488=3D=3DERROR: AddressSanitizer: SEGV on unknown address
-> 0x000000000018 (pc 0x56344202585f bp 0x7fff9546fe10 sp 0x7fff9546fcb0
-> T0)
-> =3D=3D2421488=3D=3DThe signal is caused by a READ memory access.
-> =3D=3D2421488=3D=3DHint: address points to the zero page.
->     #0 0x56344202585f in git_default_core_config git/config.c:1466
->     #1 0x56344202585f in git_default_config git/config.c:1815
->     #2 0x56344202064e in configset_iter git/config.c:2185
->     #3 0x563441d531cb in cmd_clone builtin/clone.c:981
->     #4 0x563441cebac2 in run_builtin git/git.c:474
->     #5 0x563441cebac2 in handle_builtin git/git.c:729
->     #6 0x563441ceed0a in run_argv git/git.c:793
->     #7 0x563441cf0aea in cmd_main git/git.c:928
->     #8 0x563441ce9323 in main git/common-main.c:62
->     #9 0x7fa3228456c9 in __libc_start_call_main
-> ../sysdeps/nptl/libc_start_call_main.h:58
->     #10 0x7fa322845784 in __libc_start_main_impl ../csu/libc-start.c:360
->     #11 0x563441ceb530 in _start (git/git+0x1e0530) (BuildId:
-> c0e4b09d5b212a201769f1eb8e7592cddbe3af1d)
->=20
-> AddressSanitizer can not provide additional info.
+Cool! I'm glad to hear it is in use.
 
-Good find.
+It might be helpful for other potential users if you can share how you
+decide when to create the off-loaded packfiles, what goes in them, and
+so on. IIRC the server-side config is mostly geared at stuffing a few
+large blobs into a pack (since each blob must have an individual config
+key). Maybe JGit (which I'm assuming is what powers googlesource) has
+better options there.
 
-> My first thought for a fix was to just cap it at 40, with the
-> assumption that the code would handle it correctly in the unlikely
-> event that the hash size ever decreased, but I don't think that does
-> the right thing if `core.abbrev=3Dno`. That's documented as a way of
-> obtaining the full hashes (with no abbreviation), and if we're using
-> sha256, capping that at 40 hex (160bits) is incorrect.
+> However, one thing that's missing is the resumable download Ellie is
+> describing. With a clone which has been turned into a packfile fetch
+> from a different data store, it *should* be resumable. But the client
+> currently lacks the ability to do that. (This just came up for us
+> internally the other day, and we ended up moving an internal bug to
+> https://git.g-issues.gerritcodereview.com/issues/345241684.) After a
+> resumed clone like this, you may not necessarily have latest - for
+> example, you may lose connection with 90% of the clone finished, then
+> not get connection back for some days, after which point upstream has
+> moved as Peff described elsewhere in this thread. But it would still
+> probably be cheaper to resume that 10% of packfile fetch from the
+> offloaded data store, then do an incremental fetch back to the server
+> to get the couple days of updates on top, as compared to starting over
+> from zero with the server.
 
-Exactly, this doesn't feel like the right solution.
+I do agree that resuming the offloaded parts, even if it is a few days
+later, will generally be beneficial.
 
-> My second thought was that we could store the requested value and
-> validate it on every usage. This complicates usage locations, and can
-> lead to poor behavior (crashes in the middle of operation when we
-> finally get around to checking the value).
+For packfile offloading, I think the server has to be aware of what's in
+the packfiles (since it has to know not to send you those objects). So
+if you got all of the server's response packfile, but didn't finish the
+offloaded packfiles, it's a no-brainer to finish downloading them,
+completing your old clone. And then you can fetch on top of that to get
+fully up to date.
 
-This feels more complex than needed indeed.
+But if you didn't get all of the server's response, then you have to
+contact it again. If it points you to the same offloaded packfile, you
+can resume that transfer. But if it has moved on and doesn't advertise
+that packfile anymore, I don't think it's useful.
 
-> My third thought was that we could store the requested value and
-> validate when we have a repository that initializes the hash for us as
-> part of that initialization. If we attempt to abbreviate some hashes
-> without that setup, we act as if core.abbrev isn't set at all (so they
-> get the default behavior). That seems like the best option overall.
-> Exploring that further ...
->=20
-> I've looked at a semi-random collection of places where
-> `default_abbrev` or `DEFAULT_ABBREV` are used, and they all seem to
-> eventually go through `repo_find_unique_abbrev_r`, and they pass in
-> the len. This also always has a repository available (otherwise it
-> wouldn't be able to disambiguate). Furthermore, it has `if (len < 0)`.
-> We could thus carry the "unvalidated" request in default_abbrev by
-> having special magic values (auto=3D-1 like today, no=3D-2 (replaced with
-> hexsz when we know it), other requests are <=3D -4, for a requested
-> length of 4 or higher), or we could have another variable
-> (requested_default_abbrev) that gets copied to default_abbrev when we
-> have a repo.
+Whereas with bundleURI offloading, I think the client could always
+resume grabbing the bundle. Whatever it got is going to be useful
+because it will tell the server what it already has in the usual way
+(packfile offloads can't do that because the individual packfiles don't
+enforce the usual reachability guarantees).
 
-This also feels a bit too complex in my opinion.
+> It seems to me that packfile URIs and bundle URIs are similar enough
+> that we could work out similar logic for both, no? Or maybe there's
+> something I'm missing about the way bundle offloading differs from
+> packfiles.
 
-> The one potential issue I can think of with this is that setting
-> `core.abbrev =3D no`, having that resolve to 64 (sha256) when we set up
-> the repo, and then if we ever read from a repo that uses 40 hexsz
-> (such as sha1), then we have to ensure that we tolerate a requested
-> length greater than the current hash algorithm's maximum length. This
-> likely wasn't a problem when sha1 was the default, because we're
-> unlikely to go to a hash algorithm with <160 bits in the future. But
-> if sha256 becomes the default, then this can be problematic.
+They are pretty similar, but I think the resume strategy would be a
+little different, based on what I wrote above.
 
-I think this is the best solution. I don't quite see why we need to
-abort in the first place when the caller asks for something longer
-than GIT_MAX_HEXSZ. If they do, it's rather clear that the intent is to
-show the full object hash, so we can do that.
+In general I don't think packfile-uris are that useful for resuming,
+compared to bundle URIs.
 
-In other words, the following should be sufficient, shouldn't it?
-
-diff --git a/config.c b/config.c
-index abce05b774..0416b0f2b6 100644
---- a/config.c
-+++ b/config.c
-@@ -1460,10 +1460,10 @@ static int git_default_core_config(const char *var,=
- const char *value,
- 		if (!strcasecmp(value, "auto"))
- 			default_abbrev =3D -1;
- 		else if (!git_parse_maybe_bool_text(value))
--			default_abbrev =3D the_hash_algo->hexsz;
-+			default_abbrev =3D GIT_MAX_HEXSZ;
- 		else {
- 			int abbrev =3D git_config_int(var, value, ctx->kvi);
--			if (abbrev < minimum_abbrev || abbrev > the_hash_algo->hexsz)
-+			if (abbrev < minimum_abbrev)
- 				return error(_("abbrev length out of range: %d"), abbrev);
- 			default_abbrev =3D abbrev;
- 		}
-diff --git a/object-name.c b/object-name.c
-index 523af6f64f..1be2ad1a16 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -837,7 +837,7 @@ int repo_find_unique_abbrev_r(struct repository *r, cha=
-r *hex,
- 	}
-=20
- 	oid_to_hex_r(hex, oid);
--	if (len =3D=3D hexsz || !len)
-+	if (len >=3D hexsz || !len)
- 		return hexsz;
-=20
- 	mad.repo =3D r;
-
-This is also in line with `parse_opt_abbrev_cb()`, which does the
-following:
-
-    if (v && v < MINIMUM_ABBREV)
-        v =3D MINIMUM_ABBREV;
-    else if (startup_info->have_repository && v > the_hash_algo->hexsz)
-        v =3D the_hash_algo->hexsz;
-
-In other words, it trims to `the_hash_algo->hexsz` or, if we don't have
-a repository, it doesn't bother to trim the value at all.
-
-I'll send a patch that does this.
-
-Patrick
-
---JazGhyRWTVflWVB8
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZn6WEACgkQVbJhu7ck
-PpSaDQ//cj8jznMfftbZjLUqXTbb62KITUKWQh3QeNFYFg3UIDF2wU439Pmau0/I
-/hnCdvAbi8AKu8U29sjiWyDp3o5GsMP5+LQObxe5omeC+IVdBdeBcveYAkSwugmg
-uW6UBR1ftu35A3UzZcvAhUjezi9iZaisVmHtHlyxs5V+4R+EkpSvO0GaJ5N2MbX7
-Ikp/wjpPbceQfOaFZs0g4XXbiJ9fdoQfNVLC+iRYzJYEjLP7t6hHJQ8pZvHlw3J4
-tBd2S1MZBqiNt0UJZ+6OQAGzRrccaqe8GEk/6R3g26X9JwylV9JOP64v6oSLiLOe
-ZtxctQfaa6H0Z2JhmvuJNvuF5FsAzfsBaZf2te/kk2Ja9m+l55K8D2mskgpq6BtT
-qCZtYOKfdnuNmHDbqp+NRTUBQ1YTAD3ES0YzIu0XZMWbMrfaW3JW4N+BQ2eXODZ+
-jNm4fJmYnCvcWek6UtzrwmiOeCEcSjgOXnY5jdbzkL4mSBkq/QGIdkOTD9knx+k4
-Y8ss3fEy2Je3a3vVCqUmghLHiX2rPHuPE9Pz68IeP1FiW65/o2dk2MM7A3aC8Fra
-cZQtrRCwknTVBqlKRKctyHsBjsAD7ymoBe4/NyNe5e/TVOXDlSzJOBEJkrZbU3dV
-OljsOL5UPFa5jyKP5YurwzAYFgY3OT8lNelrcZJqSbUx6vlkXU0=
-=7Ann
------END PGP SIGNATURE-----
-
---JazGhyRWTVflWVB8--
+-Peff
