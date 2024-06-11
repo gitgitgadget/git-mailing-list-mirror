@@ -1,51 +1,51 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFBB14A96
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 15:17:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE59219E7
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 15:28:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718119033; cv=none; b=J/IVbfxXxHFU78KkhdWf8ZjMXMxj5+6cEiefLE8pEnhJH35vaqiq9b4Sflp1cPoWClQ5+AOp8wWUm2u4HVAozq6n3s0YiXTXKueINVKqN5wRa6rOh9hHNkob7jx8ECqwPSWdsTa7SS8GfE00FrXOi0IGKPYXM0Hfvi9sOvV+H/M=
+	t=1718119725; cv=none; b=Mv+y38wg2NAlUjSqO4vep2h6z6ByHMC+B6x99H5ESjCZHQSBfEqPzsnT9uTbvwzDKk+vGAUKENTTmvxTghiHFVAXQI0KBD7OPi865qLBscjSD6EADAaNBJ/s0NmUK4FKNUZKBSnYFg93MEoLHXmyUAsGlsYyWkFe7CaRHcJDRfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718119033; c=relaxed/simple;
-	bh=F+OCiYBQfJ/J8gFOLq96cV3SsWf/U8iI//snF6eKyzw=;
+	s=arc-20240116; t=1718119725; c=relaxed/simple;
+	bh=fI6aBayRe1mQsoK4D3ZAJwgqOGVpubjxX0NfDFoqBWU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LvMkPOVPi0hK/w19EoemzQ+5UvxYjhnqD8e+7+WJpL2DVeRmK9m6vOS+u/YHC6QGh/rhqyTbPb9X1pCMcGAgZjHVgy0wrJTmSg5NlUohhNUIEDz/fnCCgjCS6bJwrbnrJsPHGZxmRZa3w1a1/8nukaYPGVk7uFVlE0PjqXRBS6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=eJv18erK; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=YtEYq7eAS7Lns1jTk0/J7k3XPangMKOeX/SCByJuB3inLd2Jg+BhAUGzm2FzwIIFm/UEllGDQfH18sQA70vNa3HCW20dgDyfvvAd7XLRmWnFgQ8OqzhCnPkKhdDI188CtKH6JPSTmjvmlcS5wiwfSTFawPfDxVBvQm55zjsoyoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kUXZa6pf; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eJv18erK"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id ACA6828129;
-	Tue, 11 Jun 2024 11:17:10 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kUXZa6pf"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0686D18250;
+	Tue, 11 Jun 2024 11:28:43 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=F+OCiYBQfJ/J8gFOLq96cV3SsWf/U8iI//snF6
-	eKyzw=; b=eJv18erK3T9j7xR5Jm7AaHAsPR87buAgmhGYmsoLJRYPwQLcgStvli
-	tUTk8kkIrTFJ/hThkL58xRGukIxAkXSKaUDzUgDlQMqFvln+N5izyeWAEKrrI175
-	NPlpV++tTKTKkvHciQCyvri6iqVudXKWzGoriDmBNJIIT7kwSs6k4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A2EF028128;
-	Tue, 11 Jun 2024 11:17:10 -0400 (EDT)
+	:content-type; s=sasl; bh=fI6aBayRe1mQsoK4D3ZAJwgqOGVpubjxX0NfDF
+	oqBWU=; b=kUXZa6pf9av8BoyFFTj8EeOJ6cMIA0Tml+lUZZRq+LsUiUwOWUn1v8
+	dXCxnd01Z7+tANymKLjDEnhEcMlhEpPthxqpIJHjkdji2hbqV6jfYmKvYfZGrQFI
+	pyDkQV+SsTstImL1BpaWlhDh42lvemFFt08aaoIz9zHQ4i6C6tV1A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F138D1824F;
+	Tue, 11 Jun 2024 11:28:42 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 136E528127;
-	Tue, 11 Jun 2024 11:17:10 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6263A1824E;
+	Tue, 11 Jun 2024 11:28:42 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/4] varargs functions with __attributes__(())
-In-Reply-To: <20240611081735.GI3248245@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 11 Jun 2024 04:17:35 -0400")
-References: <20240608183747.2084294-1-gitster@pobox.com>
-	<20240611081735.GI3248245@coredump.intra.peff.net>
-Date: Tue, 11 Jun 2024 08:17:08 -0700
-Message-ID: <xmqqcyony0ej.fsf@gitster.g>
+Cc: Mathew George <mathewegeorge@gmail.com>,  git@vger.kernel.org
+Subject: Re: Cannot override `remote.origin.url` with `-c` option
+In-Reply-To: <20240611075137.GF3248245@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 11 Jun 2024 03:51:37 -0400")
+References: <83D801A8-3878-43C1-B7A7-78B3B7315FD8@gmail.com>
+	<20240611075137.GF3248245@coredump.intra.peff.net>
+Date: Tue, 11 Jun 2024 08:28:41 -0700
+Message-ID: <xmqq34pjxzva.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,35 +55,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- AC366B3E-2805-11EF-AAAD-6488940A682E-77302942!pb-smtp2.pobox.com
+ 48DE9884-2807-11EF-A15B-B84BEB2EC81B-77302942!pb-smtp1.pobox.com
 
 Jeff King <peff@peff.net> writes:
 
-> On Sat, Jun 08, 2024 at 11:37:43AM -0700, Junio C Hamano wrote:
+> Of course that leaves two questions:
 >
->> There are several varargs functions that take either NULL-terminated
->> list of parameters, or printf-like format followed by list of
->> parameters, that are not declared as such with __attributes__(()).
->> 
->> Adding such a missing attribute to trace2_region_enter_printf()
->> revealed that an existing call to it was trying to format a value of
->> type size_t using "%d", which is not such an excellent idea.  Other
->> functions that were lacking attributes fortunately did not have any
->> broken existing callers.
->
-> Great, I am happy to see these. I assume you found them all by grepping?
->
-> I wonder if there is a way to convince the compiler (or coccinelle) to
-> complain about any varargs function that does not have one of our
-> usual annotations. It's possible to have other conventions (e.g., an
-> "int" up front specifying the number of entries) but in practice I doubt
-> we would ever use one.
->
-> Still, I suspect the answer is probably "no", there is not an easy way
-> to do it.
+>   1. What are multiple URLs actually good for? I have no idea. I
 
-I just went from grepping for fixed "...)" in *.[ch] files.  I do
-admit I wished some form of automation, but didn't come up with one.
+It came from days back when there weren't a separate push URL IIRC.
+You may pull from a central place like everybody else, but you may
+have other publishing points of your work.
 
-I was happy that the exercise found a real bug ;-)  I started it
-only as a clean-up topic.
+Place to fetch must be a single known stable place for obvious
+reasons.  "I have N, so I'll pull from one chosen at random among
+these N" would lead to madness ;-).
+
+>   2. Is there a way to override the list?
+>
+>      Sadly, no. For some config keys, we allow a value-less boolean
+>      entry to reset the list.
+
+Hmph, I somehow thought that a more widely used "clear" was an empty
+string, but if we can make the convention around the "I exist and I
+mean true" entries, that would be great.  It would not make much
+sense to have multi-valued Boolean variable to begin with.
+
+> Of course none of that helps your immediate case. I did think of one
+> workaround, though, which is to use the "insteadOf" config to rewrite
+> the URL. So:
+>
+>   git -c url.right-url.insteadOf=wrong-url ...
+>
+> will rewrite all instances of "wrong-url" to use "right-url" instead (in
+> origin and elsewhere).
+
+Yup, that is an excellent idea.
+
+> diff --git a/remote.c b/remote.c
+> index dcb5492c85..69b0f28637 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -63,6 +63,10 @@ static const char *alias_url(const char *url, struct rewrites *r)
+>  
+>  static void add_url(struct remote *remote, const char *url)
+>  {
+> +	if (!url) {
+> +		remote->url_nr = 0;
+> +		return;
+> +	}
+>  	ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
+>  	remote->url[remote->url_nr++] = url;
+>  }
+> @@ -430,10 +434,7 @@ static int handle_config(const char *key, const char *value,
+>  	else if (!strcmp(subkey, "prunetags"))
+>  		remote->prune_tags = git_config_bool(key, value);
+>  	else if (!strcmp(subkey, "url")) {
+> -		char *v;
+> -		if (git_config_string(&v, key, value))
+> -			return -1;
+> -		add_url(remote, v);
+> +		add_url(remote, xstrdup_or_null(value));
+>  	} else if (!strcmp(subkey, "pushurl")) {
+>  		char *v;
+>  		if (git_config_string(&v, key, value))
+
+I was expecting (with excitement) a mess, but the above is as clean
+as we can make the idea, I would say.  Lack of documentation and
+tests do count as incompleteness though of course.
+
