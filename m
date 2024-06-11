@@ -1,78 +1,78 @@
-Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
+Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D86E17D889
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:58:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347DA16F839
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:59:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718107137; cv=none; b=kEZTyrj8/DZC/e3KaDuH5/xr1pG6+bldHiIOlgEw8lEnuJ1Bcv0EjOo8/17yb5+w/25o3OhflHnRp1n19TPJEpCIeR/qcH3lYj331KjilTVZFyzNTUgABAghJmXQZ3sjUgzEJh2kDkbwqGTTUo6PcOi6BO/eUEtIhfOb3M68WNY=
+	t=1718107142; cv=none; b=FGe4m7Gkj1j7mYwIRV7o+w+yqFfovAj4Hi/LkbsEZ8NJHU4kFPjHsu+btrTk40IXoSYcrqfydclpA/4WXmGAG23X2ad+65IBW9NFpO3j0dhX0RUo9ZBhXnRaweP5o46xhNlMQypysYfBl1jSP5heli6jfizcxKWC0/IhvRNKcBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718107137; c=relaxed/simple;
-	bh=tX2vZ+c4ezE0VGsnDYOybfa/eEQci6DfUzPQC/boCGg=;
+	s=arc-20240116; t=1718107142; c=relaxed/simple;
+	bh=lUEgPFOgwcGzuvI5FMkrkhQGrA77HJgs6NB2igH615A=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IzbDnXqwXSi+qcQhkxpFLcVMENVvcOKkEfFvkqgp++eZBhg6wS6FWg4wWNYMXAX/WM5udu9p/SgAfP3SL/cuLGh6Rm++NF0nJRaaz4IUNANRLY0immk7rqsb6/kA3C9MLTKoMFXDM7XJQg1pcHdi/zi/WwXN4t3f33Iy5qjTDdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CcsJj4PU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DV973H6C; arc=none smtp.client-ip=64.147.123.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bug5CoZzHHhg5sjo1OF+FfUOHDBsg699T8CEEgWMuiz6+qisW288I38pq66HJMWQvfN4nStmw7OjF1w+wll9W8tLNqK/UzNbk2mF9ESTLB/UdTV37n8k/ucHCB+VymIByEdAyxZEHB+Ocsr0fOdo7ic5mFZklOYTqsApyz/T6Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MeUhG9gn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UefZZ4V2; arc=none smtp.client-ip=64.147.123.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CcsJj4PU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DV973H6C"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 151BD1800060
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MeUhG9gn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UefZZ4V2"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.west.internal (Postfix) with ESMTP id 8125B1C000EC
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 07:59:00 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 11 Jun 2024 07:58:56 -0400
+  by compute1.internal (MEProxy); Tue, 11 Jun 2024 07:59:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718107135; x=1718193535; bh=juXcTt1UvI
-	1XEVkb2x1AX6LFALmtl+GpDIFDuSt7s2g=; b=CcsJj4PUoxRzC4T7k5rofveTi9
-	Pmyzpt7SuK+s65EfmVAnnJuiotqNkbbjRoLmyFVWRu3l+UFvQV8QHJpiY7IXSqjl
-	BYemTlEB3XsrKMbdkbxC7I7q3q5Qx3zbw5B7dLvMF59wG2QyV7LO6/cv3A5ZFjEY
-	sl2X5xIQiHCC/1Ki2ggi3lI/ytqPWknei+uyRFRQK5KB+sMMryam039md6+7nO82
-	GXBvxZYz2Fq2zkRKSeodP2FEucPsejlMCYS1X/J7VicSCaglDOPLL4PIH7hLoUah
-	Icbm/SqY/nsgPu1QWPkd0psuhuxDV/+RsbTMYijhjuqVk7jKQfEtflqLDkJQ==
+	:subject:to:to; s=fm1; t=1718107140; x=1718193540; bh=MMdwDqJlam
+	PsmbxBJHiZZprs5fff4Z2Mgt2XXUNXsr0=; b=MeUhG9gnH45Kcx7FqrvUmZkVaE
+	n1o0XE3Houpoix6kKoxGMonOsFJIS4/mxcP3K26Qbznan7RqC71oZXqb1Bo1Ojas
+	YQtEIsQlh0Iax0LtMtDei7eUTy9Z5/dVWJRWjqD2Y2+R1JyZSXqZlnPNpvoIPqpN
+	0l5LmFJUrJ7ic5EmylvdlP/kHqomsRM4btb5NWSeWVuy7rKWejCxnGGumvVrD8Vp
+	BCObsUlDGwESLVoKjP73Mr1rexE0TKbEqC7VeBoaDYLf6aUeXH1vuRnF1LqEDAJk
+	U7U0DllKHJz/f+ruqHXk/A3aQnmTh6fW7Ymfgp3dt2GRI4hz/3YWU70mskPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718107135; x=1718193535; bh=juXcTt1UvI1XEVkb2x1AX6LFALmt
-	l+GpDIFDuSt7s2g=; b=DV973H6CCoOMnidXsGdTw6IEhu/KHczaOohW0NtnjORO
-	OaEDVouuQ+kV2PHi0u/7bj3nHGvvE83521TVyqbq07fqcQ3vllHZgDYkGcoM7sJG
-	8vEbiqbByl3P1906IEbZlMPFIpxSJr+P0IpM2Yd8LB9w5GaPMCF9ISVRgyKFDyGc
-	NGhNgMWwKs2RDSMTRrB/FxIgNEyAU7or608qVsT3l2iyMtgKkXHK/7Qkv0cXG5Ya
-	CrxE41/4Smd7FKs9VSwqf2frv7DU02vImUd8w/yHKAl7rtmqy++Jc9MmGG1Fy4pi
-	fYLmGQOrFPqdnjf8jM+IvDhtCZ2bmTAhzHbGy2epyA==
-X-ME-Sender: <xms:_ztoZnlh6T1-XD6kGSUeg6sM0QWcKS-NXFGLklO6WewgHcSP9datoA>
-    <xme:_ztoZq1Scxsk5P7sBG22K8otdt78n-wo4-B96vpD6Kc9YbVHgH9qYXW37flK8lBXG
-    qxKJYu6D2TOnR_jNA>
-X-ME-Received: <xmr:_ztoZtr5PYFzYmW4L5peLTEpNrmQ2qUSzuzK-jXFvVBEQrfNTglMvX5T2R59YeJqPZJ5lQYJS8HLdYfl-JwAQmKCIo3z_zGEVw1jfnmIHp-f5EP9wc8w>
+	fm1; t=1718107140; x=1718193540; bh=MMdwDqJlamPsmbxBJHiZZprs5fff
+	4Z2Mgt2XXUNXsr0=; b=UefZZ4V20kHR8zgrAfTeM+0ajFA+wz/HpGb06wB8QEEF
+	40ZhEkke7lhSk27xW3OeyKyl0z+AQxYcQWsedMEf9zg0FjEhOTLUaAww2w0DxeLL
+	c42L9JE+zkc9lA/ASMQMiUHHoNbCNAX7Z/rbeRbN45bwZaRm6AgDLpEWnVl2gFyA
+	K4tLpJd07zIYgOGTcS+2tMh5w0hF4W4SV3uWCEdnGjcgM6ScI81iHwy0/4GheMl2
+	hHfFxwCiByV2h8t/bsR195G5613onOhKEtq992ka+yg56XFKvEyOBLCC8OqnC6xa
+	49/jAoAgr5jcVpVUoGsZgUrSXZH5sYBlTGZ6PwkY9A==
+X-ME-Sender: <xms:AzxoZpbNAjcxoOXolceX-Om19nCC-GaPm78vFRhTAt5vbYVrVl2HEA>
+    <xme:AzxoZgZpJNPYKlbqgRiN_5ITMMVkLWatjY0YHu9OIJ1FHgDU-vhqaBy-k6KNXbT7n
+    zj78x4ucqK20nG-HA>
+X-ME-Received: <xmr:AzxoZr9zxJlPwRPh4KdYLwwFCAk_A1QCIHdnUb6RCM9pCzVsqPsKUtQNGuwMG83lKNQHQNxsJDsJuq91NXuVipMD97e2c9S9vviWmIjacLeqkDHwlKK3>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduvddggeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepvdenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:_ztoZvmpuFv-Opd8WykErcQv4OUxZJ7kYC6ZEilM-26havI3afCTxA>
-    <xmx:_ztoZl3ZJdJd7XLUacpQxjcZ-xJXwELcIbhVSZGMd4yzBzHAUKKwcA>
-    <xmx:_ztoZuu2CQS24WeHTvT3m26HTV_-SPlkegZsIifW9gNeznjcQ-efMQ>
-    <xmx:_ztoZpWVu0_TsgZ1bTXZCUulZ021wvCTfkKLuaDHgPGc09tMlK9zDA>
-    <xmx:_ztoZm-bs9ceN5LuA9rLp4IQQ9E0gKbAjvbyzsdgvP-GbAiTQu9cM1xw>
+X-ME-Proxy: <xmx:BDxoZnpOmpMbt529Oavo8lL4u5YZK6UqJh9TVlr9RwzaK3vvjqp_hg>
+    <xmx:BDxoZkrK8NvA2-f0ykeaiOl49HFTLEtBkxy_86DswuRael7Qhx7syw>
+    <xmx:BDxoZtQ5YyS1l8_TVvgGu4O6PrJmaTK20E50eZwAWwJi_4E9eZBoUQ>
+    <xmx:BDxoZsqoQT5H-CFUduGwNv_ZoJL-pjGEo-Dl5rIDGfhIdAnGjsYoSw>
+    <xmx:BDxoZhDvmhYBGSVN8YX4qdel0tdgeY7LtOU_4Ln-LiLaq61z_lWfe24F>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:54 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:59 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 5f1ed894 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 96ed57ef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 11 Jun 2024 11:58:45 +0000 (UTC)
-Date: Tue, 11 Jun 2024 13:58:52 +0200
+	Tue, 11 Jun 2024 11:58:49 +0000 (UTC)
+Date: Tue, 11 Jun 2024 13:58:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 17/21] t/helper: use correct object hash in partial-clone
- helper
-Message-ID: <5310883469e3366a82dd22d4a552715d3bc580e7.1718106285.git.ps@pks.im>
+Subject: [PATCH 18/21] t/helper: fix segfault in "oid-array" command without
+ repository
+Message-ID: <2774b8500fdecb0d73543dbfc5ac18c6bb8d8090.1718106285.git.ps@pks.im>
 References: <cover.1718106284.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,64 +81,102 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="GPRu3o6Jd7hMTIC/"
+	protocol="application/pgp-signature"; boundary="hL20NNmF8MCMg2X4"
 Content-Disposition: inline
 In-Reply-To: <cover.1718106284.git.ps@pks.im>
 
 
---GPRu3o6Jd7hMTIC/
+--hL20NNmF8MCMg2X4
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `object_info()` function of the partial-clone helper is responsible
-for checking the object ID of a repository other than `the_repository`.
-We use `parse_oid_hex()` in this function though, which means that we
-still depend on `the_repository->hash_algo`.
+The "oid-array" test helper can supposedly work without a Git
+repository, but will in fact crash because `the_repository->hash_algo`
+is not initialized. This is because `oid_pos()`, which is used by
+`oid_array_lookup()`, depends on `the_hash_algo->rawsz`.
 
-Fix this by using the object hash of the function-local repository.
+Ideally, we'd adapt `oid_pos()` to not depend on `the_hash_algo`
+anymore. That is a bigger untertaking though, so instead we fall back to
+SHA1 when there is no repository.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/helper/test-partial-clone.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/helper/test-oid-array.c |  4 ++++
+ t/t0064-oid-array.sh      | 18 ++++++++++++++++++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/t/helper/test-partial-clone.c b/t/helper/test-partial-clone.c
-index 910a128614..0ead529167 100644
---- a/t/helper/test-partial-clone.c
-+++ b/t/helper/test-partial-clone.c
-@@ -21,7 +21,7 @@ static void object_info(const char *gitdir, const char *o=
-id_hex)
+diff --git a/t/helper/test-oid-array.c b/t/helper/test-oid-array.c
+index aafe398ef0..076b849cbf 100644
+--- a/t/helper/test-oid-array.c
++++ b/t/helper/test-oid-array.c
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "test-tool.h"
+ #include "hex.h"
+ #include "oid-array.h"
+@@ -17,6 +19,8 @@ int cmd__oid_array(int argc UNUSED, const char **argv UNU=
+SED)
+ 	int nongit_ok;
 =20
- 	if (repo_init(&r, gitdir, NULL))
- 		die("could not init repo");
--	if (parse_oid_hex(oid_hex, &oid, &p))
-+	if (parse_oid_hex_algop(oid_hex, &oid, &p, r.hash_algo))
- 		die("could not parse oid");
- 	if (oid_object_info_extended(&r, &oid, &oi, 0))
- 		die("could not obtain object info");
+ 	setup_git_directory_gently(&nongit_ok);
++	if (nongit_ok)
++		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+=20
+ 	while (strbuf_getline(&line, stdin) !=3D EOF) {
+ 		const char *arg;
+diff --git a/t/t0064-oid-array.sh b/t/t0064-oid-array.sh
+index 88c89e8f48..de74b692d0 100755
+--- a/t/t0064-oid-array.sh
++++ b/t/t0064-oid-array.sh
+@@ -15,6 +15,24 @@ echoid () {
+ 	done
+ }
+=20
++test_expect_success 'without repository' '
++	cat >expect <<-EOF &&
++	4444444444444444444444444444444444444444
++	5555555555555555555555555555555555555555
++	8888888888888888888888888888888888888888
++	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
++	EOF
++	cat >input <<-EOF &&
++	append 4444444444444444444444444444444444444444
++	append 5555555555555555555555555555555555555555
++	append 8888888888888888888888888888888888888888
++	append aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
++	for_each_unique
++	EOF
++	nongit test-tool oid-array <input >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'ordered enumeration' '
+ 	echoid "" 44 55 88 aa >expect &&
+ 	{
 --=20
 2.45.2.436.gcd77e87115.dirty
 
 
---GPRu3o6Jd7hMTIC/
+--hL20NNmF8MCMg2X4
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoO/sACgkQVbJhu7ck
-PpRcFA/+L/Zt3crF86880B/IUqSXDxhC8RolX7be3laUmfgcSZYcWO8Ancq/fPpH
-HyN68WykkdAR3Oyy5RKog4CidkY6SwLYOJfQFd74NxF3R0NTr295OlV7H6LzvgDY
-D9HOVKRVhfHNydE9/ZX82Coe3q9IvBSfaSso1LXkz3oPNs2GEznZwWFXKdI8vBjL
-O1ZV784g6LCGE8uTp63iiNxevM0WVVl+Gmz4RzMMHo+ZKVzGQkJ0/SuCHr4xdOiI
-ldSlcgBs5qTkDl8gcF7agGGmPJb7Bbz3j98SV9nZ3KSc0dIjof1lnsctvGcd5BFN
-oW5rculxTXWzDLTCALUvLcSZpaDAQCn0vnO8Htw91IN5u+K0DNEmH9TeEq37rEzh
-8LN2i8GnpARX8M1zNFnu3aRBb6hn5gEgJaEgZTsxEv09ASWqqQSmd9WBZiqOODKP
-fAe3T2Pr+76XqRmt0hEGq3ncb+oUCA7GWyzs4TD8JWJ1FqBcw31cengNDEZx2iAH
-oTDL4VnBL2NQCgkfms86CY6vG4URFXqWiQrtrqIqyJFalNCSl6icbSaiA7P0TUMn
-uXXzINmErpvBNIExJNSjj9qI/v80t9+lj03WoNS3hY35zqSbjo9/ES2pKz8+XMS0
-7AMR3CrlruJYJ8We8+gPupK68LyF10o755maaRcLB83R0qvvJ6A=
-=1TfS
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoO/8ACgkQVbJhu7ck
+PpTaMw/9EvtDA1ZZSpuvyq29KfUdqMD2R8fUOA8jIunD8akdV0uEt0fo01xYZcBq
+mdBQDPLTADxc13Vt7cAFzvQAiIX+Jk4Q+e/oOktWWxQdDm+rYANVLaG7RNoQaXvl
+hRrLT1BOqEIjwQnNHzvbWwGY16GtmSjo7pmt45zk89rrGPsX9FyYebiXYvwbbA1d
+alrWLf7KJFc6wmBmp6wg11r5Xs9B15vbccximGjlvX5J5DHoBmOrAeHUBevBo+lv
+Fd9sUkm3AmkM+20LYZpUV7uacEdVb5WYbBKMgeVPfMpbW93iEJ/Y0mmeuEIrWKKL
+ZtYIZ1I4Q1vG1ep3DpIniRB6wKbNRHy9djkqMmHMMtg7jFAAy94/8q/wnJXstUh3
+73mVeu0MYjbqjACa956gt5F0sFh5vzzgYzGO4Pb6MapItrzROJz525BLaw1FEbjz
+H2eWnZersIpKUwsqhOAJFnGagRjA8SAtm7uU/FVPHYqCLh7FSBt9nNTCAOYhEbjG
+zKjx4ALOvKoOA98DQ7PhsDj9LBqkv4ZqrZEkP8JRFwStp1pbGnsu/eY5irjO79tl
+pRK4i4IiBYS4MKURbrdbfbTcjLaHUwxAz+ZaYoHFnoeOdmHfZSN40/c/cEw8I5ty
+LUXZCvw7UDwx/LCVNbhT6xcnMA0VCBo6JzI2KM0lJQZXIxUd9ec=
+=Fx5D
 -----END PGP SIGNATURE-----
 
---GPRu3o6Jd7hMTIC/--
+--hL20NNmF8MCMg2X4--
