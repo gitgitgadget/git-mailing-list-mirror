@@ -1,78 +1,78 @@
-Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
+Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F383617C7A2
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:58:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43295176AD4
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:58:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718107128; cv=none; b=EdsyE7Ntx4PgghXffayQeyIYkoXnZWkIAKeqXhC7RHLU+IhMpLrTjYiuKHhvz6rNedksaWWO0NPQTL8JjPJSUWXCnpwFT+z3a4rmY5pnfr8VHBjPDLk2ZRmbl2GtRErvIHRpPoQjtpC3rJVcjW/4Wg/4y+h3hob9rT6ywdMEpn0=
+	t=1718107133; cv=none; b=jpLgBcDC1rnaRr+U4jCj8iwvvjhLx/1YfCOuWlzMDJnf/xIpFAFbMDjnlBkjhV2ClCr5zjfvX0veK/X745uX+4FXYnilDX1yvFtV6ZALelNOEXPp2my4y3L8b6nVY0I9ZvyADbP3RSxOFkJavMY2duCkXBKMrSV3CYkZ4vFfHYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718107128; c=relaxed/simple;
-	bh=M989npf6UeL+gnkSnGxMWlZXkhQlQOKDVmOizU2AdpA=;
+	s=arc-20240116; t=1718107133; c=relaxed/simple;
+	bh=34rHzqYBbh60jEbfBfujiU92Y4dYNmMTgx09Ovpq/ZA=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GRTjBz+Ut0+5sUbW510doIvzejXyciH7K3wD0IsHyYE+E+FkrSSgjhRd6JIWi5HXGwiAiGztf6KfG41A1GoM+GRbRUYhPeqHPxVhE/gDXANJx0Mokz5b0/Qjb7WEFsdymqHQ9tSyIfvR7ppHZPtuwYKkRVayGZmzyUo1TNAAHdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pLhsIBhS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bux4KBKz; arc=none smtp.client-ip=64.147.123.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=l002sFE7+Jpvhsv037BOjvBLhaoAT1P1Pk0Cipk4VJUYFMSgUGaHHBOW9kG6Q8KYFGqMPrP/jDasZ7MoL1xLNcM4S0nB9wPEdUEM8ZMGRu3LhnFoGSsls5EOjEpRlkGd7JNWlqUTwlD6l/b/R41HBJmFE+Q0wTMC0SpD9jPS1TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F8/e5tP1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Uf9VVQ3b; arc=none smtp.client-ip=64.147.123.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pLhsIBhS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bux4KBKz"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.west.internal (Postfix) with ESMTP id 351521C000AF
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:46 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F8/e5tP1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Uf9VVQ3b"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 9AD2A18000B9
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:51 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Tue, 11 Jun 2024 07:58:46 -0400
+  by compute1.internal (MEProxy); Tue, 11 Jun 2024 07:58:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718107125; x=1718193525; bh=hHuV/DHRrH
-	z0RoP/TeLu6yt82XT8EU5AtIbkNMnd6Ew=; b=pLhsIBhSXBVpRPYjC3xNbV9V5I
-	vwGECmtjlZ3MYRrzEtEnJDqTIH+7HX2V+1nGUXFlWMJ5KxS6Ry80yvZi0OdpyxYU
-	1JvP1ej3RGg8xWpda+U+w0zO4Wyq+SOPSNeyAvcgFrJTjawqHXFpTefK8ZulX03j
-	0N7RBUOk1phLnsG6d0FtMLxkB3SJSjzFnH6e9obGdhDTreXDDjIwzbzoao2OjGFA
-	9UJEK3aVAH/qGKt4q9qnpAxd4tqkOq1zfpl3eElzUNbBarBnAKueXgx405RcUI6v
-	8STCvD1DogfnBwugJvEUGyxKIZOzcfyDT0smII76Jk5DArOnphAyUhPB8p6A==
+	:subject:to:to; s=fm1; t=1718107131; x=1718193531; bh=5RyAq2z45q
+	fKj8PdG1NZpZ8nIidOU6GFuzTgAd3wW2Y=; b=F8/e5tP17aaOjoN/92Z5iS4UMl
+	AHqsAM4+XJS809GGsLhtR6iGmJtrWgiy6awLYhbL8o9NpN/ipJiPOAnu3gLlloXe
+	fIVgmFw3H2hvteIa0XU8N0+tugr0jTI5yixQbSqPrXscRDb+033YE5gzwegfzkaM
+	c3wbButKrS2FmaElfhP6CoDbKGmB+E5O3NW4LmoW71D47bKPqQpe6iIoSWHmZRRS
+	A7/OKAfEs7HXCiF8ccPJkrPNsN6fR4QbOKGFytXy/ntUeFUSYlqnt6HCy2bsFBER
+	Cj1fan2M+DWEJUqHiJS6nEegyVh+R2zWlQivTO9EdXi/+4bbs7bMrCXOGDJw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718107125; x=1718193525; bh=hHuV/DHRrHz0RoP/TeLu6yt82XT8
-	EU5AtIbkNMnd6Ew=; b=bux4KBKz8hK5GDXHbn1YnbXV0fX5X3v/SvRcIGkLdpXM
-	cIxzxRqGT/BZhvbxQl3VoneIR1GbkKJvMhKcA3C+A+jzg37wLiyi2WdLnVkCaMU7
-	vuM5gP3KbT9bZE2x7Cotx69Lk6fkYZZrjdFg3vSGxZTiwwDVuRLcN7nLvqvSG945
-	MsVyoPlvLS/Aqmj5t49Jp0Nc2dUxXmYWVSTq2y9/NNObhvmaW97LZkfhP4oPt3Pw
-	AcxDlhceM0bPMclXMR/3wK0A3iI7vujBPCL8+WKrAhlDZt6OuiFSm0BtPdcfKzWW
-	TjYDMUyUNTsQMyv0hOnvnN+Q2wCSApr6Iejc6tc02g==
-X-ME-Sender: <xms:9TtoZsE77yXOSY96-ZF5YqSpZQzEvPTHU8uOv5hps4S7c_-1KruskA>
-    <xme:9TtoZlXzbdJpkKdlktP5PcGcnVA6isEQOheC0s7vyNmC3fBRCDnID976n3fNUZyso
-    9oeJ0_aSLj2F3bLBA>
-X-ME-Received: <xmr:9TtoZmJRK2GDLJ6DbFn6MoywCRQE5mqj0Sj4WWZbDhqqrr2y-uaHQH2yn2LW-0Fn2oUUTkfQtA6sWPe18IbpFoUi1U_MkZ50TtX9Vv0SQP-grGzI2l3c>
+	fm1; t=1718107131; x=1718193531; bh=5RyAq2z45qfKj8PdG1NZpZ8nIidO
+	U6GFuzTgAd3wW2Y=; b=Uf9VVQ3butZnLdUHkN5B4dvHub+/3Sso1DUKDV7rf2hH
+	CUy0YZ0a6V/A7PIBnCvjpGhi+af8P/dHdBe57M9VoDmZieCv6qP7yl1skyBnsj/M
+	Rr0UGa8j+uh/m7MLdoqJE1fsOuPPs8VP5KiF7SMju14Q+3tLQgokSbCaC+zV2iaU
+	Hi0h9ISCf+yYvmRrCo9SMo64Uky/XNJpER9FNXEv6FaFWtacSCAzGTc4me1z4Qah
+	2nkmfYbY4rPlPcfqsVXz6GzcrdZb9hCsKvNr7vvYEBlvFSW8UT117cVidnEUXzEW
+	6dst1yhVIFcuzTilLcxUewL+BMsmspbErEZdaxIeSg==
+X-ME-Sender: <xms:-ztoZlW4rMLmcPQcDvBsf2a875MEJkJcZYoKvXf3YtFo9_mJZ3wMqg>
+    <xme:-ztoZln2eP28p6XdUms9Mq_mHhxpSu7bsHaAlVGvOn8hIYJ09_E8EHUBqkDQXvhtw
+    CMECwDWjSCBmhXYcA>
+X-ME-Received: <xmr:-ztoZhYyQdnBOZBICc1mvUXQ3IaPJgr2-FksMHuvmhv0d6poOq1Vv0kd18USlDhQn_muFMjEM7YaN4QV_7McnzMMeusq6fbp5CBKyHzC6CnZV4fKlkJc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduvddggeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepvdenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:9TtoZuEey5GELAv_IIqhF9jTKCCHxkIyyJ12dVNlSqLqKCr-nnUf3A>
-    <xmx:9TtoZiUQ6mIMi_b5COBMgjBrSJ7s4lAH05Q7dTUvwLmWjYuy33qm1w>
-    <xmx:9TtoZhO6LOHrLzywq03C6xOnPQB5X23XckshS01ST3nG8Ap80XLSrA>
-    <xmx:9TtoZp3dWYULLyhKR-Z8MkUuss2cDTluuuLgzG3746Jon0WxXRuS4w>
-    <xmx:9TtoZlfFOEQnelfPngKBx7yr7NMwGbalQmtmjuOTnVgNGPqwXxXkKQKp>
+X-ME-Proxy: <xmx:-ztoZoWD7ZjyR96bMLxgsGbwVu8OtQmNIBITslNNaRcJM8durczRvw>
+    <xmx:-ztoZvlBKlLh_5PFtzjswWQMBe3QsbX43Z1-zoYi8YsrNE8Nr93clA>
+    <xmx:-ztoZldptjMm90b_HM-sHF9nzK5m1cs7_6WBXposcLR7dN3BgICPkA>
+    <xmx:-ztoZpGVIOjwpEODxKl4FqWj7y_knWq4pBUM8S_VfKpyiScwr2Hbyw>
+    <xmx:-ztoZnua3fNRmZVdboEzGOLJDx8yEYJre06hZ3PUs2PriGauQ3XAtzZ6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:44 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:50 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id d1ca596f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id c1919028 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 11 Jun 2024 11:58:36 +0000 (UTC)
-Date: Tue, 11 Jun 2024 13:58:43 +0200
+	Tue, 11 Jun 2024 11:58:40 +0000 (UTC)
+Date: Tue, 11 Jun 2024 13:58:47 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 15/21] replace-object: use hash algorithm from passed-in
- repository
-Message-ID: <ca5f4056fbdac83fb47ca4c51622e9e45ea2287d.1718106285.git.ps@pks.im>
+Subject: [PATCH 16/21] compat/fsmonitor: remove dependency on
+ `the_repository` in Darwin IPC
+Message-ID: <d4e87f9d6b4813fe359e22f4b5d5ebda28e09a08.1718106285.git.ps@pks.im>
 References: <cover.1718106284.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,61 +81,77 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+LLs71o/YmFIDfX7"
+	protocol="application/pgp-signature"; boundary="y+Yj4fl1lroKE94s"
 Content-Disposition: inline
 In-Reply-To: <cover.1718106284.git.ps@pks.im>
 
 
---+LLs71o/YmFIDfX7
+--y+Yj4fl1lroKE94s
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In `register_replace_ref()`, we pass in a repository but then use
-`get_oid_hex()` to parse passed-in object IDs, which implicitly uses
-`the_repository`. Fix this by using the hash algorithm from the
-passed-in repository instead.
+The IPC socket used by the fsmonitor on Darwin is usually contained in
+the Git repository itself. When the repository is hosted on a networked
+filesystem though, we instead create the socket path in the user's home
+directory or the socket directory. In that case, we derive the path by
+hashing the repository path.
+
+The hashing implicitly depends on `the_repository` though via
+`hash_to_hex()`. For one, this is wrong because we really should be
+using the passed-in repository. But arguably, it is not sensible to
+derive the path hash from the repository's object hash in the first
+place -- they don't have anything to do with each other, and a
+repository that is hosted in the same path should always derive the same
+IPC socket path.
+
+Fix this by unconditionally using SHA1 to derive the path.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- replace-object.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ compat/fsmonitor/fsm-ipc-darwin.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/replace-object.c b/replace-object.c
-index 73f5acbcd9..59252d565e 100644
---- a/replace-object.c
-+++ b/replace-object.c
-@@ -20,7 +20,7 @@ static int register_replace_ref(const char *refname,
- 	const char *hash =3D slash ? slash + 1 : refname;
- 	struct replace_object *repl_obj =3D xmalloc(sizeof(*repl_obj));
+diff --git a/compat/fsmonitor/fsm-ipc-darwin.c b/compat/fsmonitor/fsm-ipc-d=
+arwin.c
+index 6f3a95410c..b4d21d6dc2 100644
+--- a/compat/fsmonitor/fsm-ipc-darwin.c
++++ b/compat/fsmonitor/fsm-ipc-darwin.c
+@@ -41,9 +41,10 @@ const char *fsmonitor_ipc__get_path(struct repository *r)
+ 	/* Create the socket file in either socketDir or $HOME */
+ 	if (sock_dir && *sock_dir) {
+ 		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
+-					sock_dir, hash_to_hex(hash));
++			    sock_dir, hash_to_hex_algop(hash, &hash_algos[GIT_HASH_SHA1]));
+ 	} else {
+-		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
++		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s",
++			    hash_to_hex_algop(hash, &hash_algos[GIT_HASH_SHA1]));
+ 	}
+ 	free(sock_dir);
 =20
--	if (get_oid_hex(hash, &repl_obj->original.oid)) {
-+	if (get_oid_hex_algop(hash, &repl_obj->original.oid, r->hash_algo)) {
- 		free(repl_obj);
- 		warning(_("bad replace ref name: %s"), refname);
- 		return 0;
 --=20
 2.45.2.436.gcd77e87115.dirty
 
 
---+LLs71o/YmFIDfX7
+--y+Yj4fl1lroKE94s
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoO/IACgkQVbJhu7ck
-PpQ83g//SqBijAMO8eBmXfftuCM5T16Esf78dc4b6QhhItCEfLtLZJ0PUqIDao+D
-aFgLbDEsRpJR8YOD5lJr3hha+a5FAbNu01Tl5EzsPr//c53YAc1sLAyoZLN4GPFn
-h6vut44N6uvd2GvdGbm6YWKLhUVfYZAo9yVWTzSUYP3TxGbdZoW34XnnrTdN+Ku8
-PStdo+j4mp+GAqjTcwuMmcb8YEs/XVcvNWRPZ7eAe5T1ZYbN5b3eZ09hOgiIriyr
-NAiCuUmmZ4FtcFIX8dT6TAOl361zaB4c116c/z0J7bVaBkMDFR7TKRJ561T3PIbb
-/jnlG4KcnFVKJmlFJO8Rm3BTEgdA8O4VEQFfnQY1JXbMPwsrxNiZGWXNkCJxrwwC
-EeOm/kDT28BQIJZaKpuz8pGxrDDD1JFrCAg0lD3YK2NvoVEJnR0FyKFMhS1dO40O
-1DmtSs+xbPs4s0YNgtU//slR/AUQn5yOhPKoRcNxlrHBHbK93LCSTCzaHVvRqzQU
-eNKgmHpkMy7/rzcf5OblLzUIYE26d0GUBSp1Sw0YPtQjromQBZimSfJR7TIlCldT
-SVCTvmNpvgnv+znvlrfS1QfD7/oFHEXXnZfffMBzYdzuhlWGHVWIvMdrQMAvPX1g
-qVGCIc0dZRgzzIcLfjsAPwyIE8ziE+OG/U1BB5oHmoPLtWLdDzI=
-=1ItW
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoO/YACgkQVbJhu7ck
+PpQG4w/+L/BtyYwra0c1XCeKFwPU0qzF1Phb33uAM36vIIMLQv9JMq4Uu8GuHa6N
+amG/thYntmIvttuuZQdj0jb/pXWhIH8PLtlw769Wp47qE4svoryL7IfCjMKqnC96
+thiOxEAufeNh/cS8kC59d0Zy7C3xNLZPBmZMGU9b600qinf94RqYoy58BXf3J+V9
+IIpBNqDYYhU9mD03cgdXT6pFQ7412HhShkY+UqO49tgLTMDpYos49lD2Vlr8h063
+4X625Fbfa78kHONASm2l75lKiasyrlej5rE9845LbaJmmeIbLqvPbWwGwqSTGpbB
+Zm54TuvdNls4l7wLrF8/6kWp2WqV+tLFhPf8O3Ba+wUjT1gVjO+MjX/a8dzC6gfd
+Gsn0GcL0SaKgiN75JqPB8f1hmnPwpViFVgVCfDByM678R2gpcADOt8Q47vGwOqpD
+rw4yJZuWUNo/ASgKHIbSVjiHgXNyatX34wr9NDMpMTnoM4oNIdgTe2s1E4iQWhBx
+2Sn4WWqtsp2QRQXEeK1uUfYx7vqwrmD2p1qLhZmOeLD+vPFSe/l58cLwDsuMWjEP
+HwL35wxQqk39Zwj0WU6dWaANfm5hQDYsQ+zRtf5emtN+tZixSqGcBclb78nboD16
+rF3SZ4moCPZxv12Nf9Z9TUaYkZ3CYj9YFCh+djb4NwqRFgJpy8o=
+=W7mC
 -----END PGP SIGNATURE-----
 
---+LLs71o/YmFIDfX7--
+--y+Yj4fl1lroKE94s--
