@@ -1,62 +1,96 @@
-Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3F017FF
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 00:21:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205BE1109
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 00:29:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718065302; cv=none; b=O7mpZvf7KIuv+CxGA/jgLVtneZFUuS9to8MPBI48ijjj7fk0H6Q/Tz1e1xCNXjEzZEUMMAVcGit+Ui7acULzar5MhHdXZfDzAp7M24exLSUMkVLDoDeVQTIHycfT8YSzdB3TnWHcfjG6xMMiuz3BXAC1BVOEj9t58brDypOvpzI=
+	t=1718065796; cv=none; b=SbYyFKoUrBptCcsdxAjAn0Z/O6aHAdx3tBSOkgzBVHMRo7Qir1XcXs/Ykh/lTnGhwWQYKmsSu9ToP0Lc0D9OrUMbLTYbBkLD5bD5TsHEORttspWoFRXwG7MKzWUnDcRAIigc3HqOWyeAIXZC55Up9dTovZbSGWxCT9PssxpbJdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718065302; c=relaxed/simple;
-	bh=Amvzv4sAeYx4j9fFZiaka0DJpEA/DOHqMMj+7THa6qI=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=R65Cj+2jlZj38kf3rhlsFXk/mZFO/fJNJEhat2Ih0i9BbIHPvZVR3UP0UraYHP6DPW+cJtaGDZ5yJ2rLgkPSUhh8qA27nR3gdjcKf0Cq8cYSOpaWqCYBleyxaN6+2S31/Jz/CJ/Q4E+N+nx2NjQ+FiNLU2GlADvUtsWpp3UJtBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=kfs+jk45; arc=none smtp.client-ip=185.70.40.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	s=arc-20240116; t=1718065796; c=relaxed/simple;
+	bh=j9uNN99fZKUZDkjZOTzfHS1rpsSy1q0EeddVilD5Qps=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EXxuQQ0Hmk3nuigcpHvrvawWec9xwIrzQOuCzPHqrGOkY8zIAboejRJs8TX33M4FOk2EjGYha4D9i5tibgquLH603mhe/pB1uWtuD8zUxtvldVcRq0Y77uJDV+SirgxEk0ckUQ+KPYKbuVWkBblQjV8aDS00WzOrXcx5y1csat0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FzY8YtZs; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="kfs+jk45"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=i6ywtmgzkjallhmps42vdbrir4.protonmail; t=1718065291; x=1718324491;
-	bh=Amvzv4sAeYx4j9fFZiaka0DJpEA/DOHqMMj+7THa6qI=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=kfs+jk45mg14VDTlXD3NCyx0iq7EGdEMT40oziMS0tKkrRvavwWrK3S+K3hLxAK29
-	 QApK8KMLWlr6D7MvPpgXQGvgMZvgG/6NkWqva7fQDWYMH3zPg37uLLfZhaYEVRISKR
-	 dK996fsbtdt+cuy5nQKUXudhNg8Fqi1jcumNo9XpY7RimdcR6ECuMLTdS8jE9Arq0M
-	 PbSt2RjKKAffjMjXanuyoKa103MhKtF1LvR2pSYtOYZ3bWEGg9EsNqRWS1aCrqtp+r
-	 3C3W5I2dBtiVevhw+vf6VznhNABL7F585jL4y+7aTw+VMeHcd/2owF5lwbtAyUREL4
-	 23//7TgfusCCQ==
-Date: Tue, 11 Jun 2024 00:21:26 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-From: rlee <rlee287@proton.me>
-Subject: Question about Git protocol v2 status
-Message-ID: <kMdINBpG8_XazfNJVjKkaYyCH4VKRgjQryAvNw2ceVZrNmJ8pqoowMgmGBhhDMS_-nQ02OX0dMglJA2EPrE39XIBtcZc8Wkr2Vcoh6_pzMg=@proton.me>
-Feedback-ID: 61965011:user:proton
-X-Pm-Message-ID: 1a73b71e05b27c6556e94d0ba66de7501d067288
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FzY8YtZs"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7818532461;
+	Mon, 10 Jun 2024 20:29:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=j9uNN99fZKUZDkjZOTzfHS1rpsSy1q0EeddVil
+	D5Qps=; b=FzY8YtZsk0Y/NNoSSpZYiHxVa4/5P6Qj5asSRQXzJ3/KRlRLDME29m
+	+tgP2FCQQyzSOFa4tx9TQLDqSvLR2rPJjCNRvKbGi8EOpYsLDPdfQNKhi58/6T3b
+	RPDy+B1nCmj2StCB7r3SDxHMMpu+T+ByRLqoD3dXObRTAMMNJrWiw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6380E32460;
+	Mon, 10 Jun 2024 20:29:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 10A9E3245F;
+	Mon, 10 Jun 2024 20:29:50 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: <rsbecker@nexbridge.com>
+Cc: "'Yuri'" <yuri@rawbw.com>,  "'Git Mailing List'" <git@vger.kernel.org>
+Subject: Re: [BUG] "git clean -df ." silently doesn't delete folders with
+ stale .nfs* files
+In-Reply-To: <0ee501dabb91$aa2340a0$fe69c1e0$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Mon, 10 Jun 2024 19:55:20
+	-0400")
+References: <ae862adb-1475-48e9-bd50-0c07dc42a520@rawbw.com>
+	<xmqqwmmw1sev.fsf@gitster.g>
+	<4ed426e4-beb6-45ed-b493-1e19c7c0511b@rawbw.com>
+	<xmqqikygzdgk.fsf@gitster.g>
+	<e8feffd0-ba6d-4aae-8c80-3d6482896b08@rawbw.com>
+	<0ee501dabb91$aa2340a0$fe69c1e0$@nexbridge.com>
+Date: Mon, 10 Jun 2024 17:29:49 -0700
+Message-ID: <xmqqmsnsxqwy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B74930D2-2789-11EF-B435-8F8B087618E4-77302942!pb-smtp21.pobox.com
 
-Hi all,
+<rsbecker@nexbridge.com> writes:
 
-I've been looking into writing a custom Git remote helper. The man page for=
- "gitremote-helpers" states that stateless-connect is used to connect to a =
-Git server using v2 of the wire protocol, but that it is "Experimental; for=
- internal use only." Moreover, the page describing protocol-v2 at https://g=
-it-scm.com/docs/protocol-v2 uses future tense, implying that v2 has not yet=
- been finalized. However, the older blog post https://opensource.googleblog=
-.com/2018/05/introducing-git-protocol-version-2.html states that v2 is expe=
-cted to become part of Git v2.18 (with Git being many versions ahead of v2.=
-18 by now), and my own testing shows that stateless-connect is used when pe=
-rforming Git operations via HTTPS with Github. Could I get some clarificati=
-on on whether v2 is still experimental and on whether a custom gitremote-he=
-lper should declare (and implement) support for stateless-connect?
+> I have tried to reproduce your situation using git 2.43.0 without success.
+>
+> $ mkdir test
+> $ cd test
+> $ touch .nfs12309
+> $ git clean -df .
+> Removing .nfs12309
 
-Thanks,
+I suspec that this is different from a real NFSv3 client in that
+removal of such "removed while still open" files would result in
+another one automatically resurrected by the filesystem.
 
-rlee287 [at] proton [dot] me
+In any case, if we cannot remove a file (due to filesystem
+limitation), we should report the fact, just like in a case
+where we cannot remove a regular file, e.g.
+
+    $ cd git.git/
+    $ mkdir -p junk/ttt
+    $ >junk/ttt/sss
+    $ chmod a-w junk/ttt
+    $ cd junk
+    $ git clean -f -d -x ttt; echo $?
+    warning: failed to remove ttt/sss: Permission denied
+    1
+
+Figuring out why it is not happening is left as an exercise to
+readers ;-), as I no longer have an NFSv3 environment handy.
+
+Thanks.
