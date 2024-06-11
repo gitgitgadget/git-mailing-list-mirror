@@ -1,42 +1,34 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697AB171E4F
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 06:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5096526AF6
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 07:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718088531; cv=none; b=bxHUVfVGsUwStBGvb5m2eEoqnlxjWLt/aXhIyOIqf3Z7cDuSIxFacoANEqHt/wH+5SqNgHo3ZUIAwStZg8MnIR+2dzxjn7rSLga1Tbi1PMqcJPzhlLQyvXKGX3aGD2v0BJpqvBq6UrJsQ+DaHl5n5s3RtRDMT+VlV/CQ7+ehom0=
+	t=1718090508; cv=none; b=U1sfCNAPBAOxPrnRm2eLmhVyUeZkKBCJwFJccoZz7ZPztnMw5c+YUfT1DpX6QNVbeHK47Fub63IQBadujr/gokzaH3tq7tlZNQjvPX3gqHFb5ffsx024HKz7svzr9834Np1JuAzcs9mi2IKL0TpYEWpxky3XB3bH4mxAF58Ql50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718088531; c=relaxed/simple;
-	bh=W3e2086mK1RxVeIUDA6XsNYDqdAgeiBWRMrdC0E58rg=;
+	s=arc-20240116; t=1718090508; c=relaxed/simple;
+	bh=G3Vhh6XoXJAPgRxepg7WWYUCudmwwVXjcS8m9AH/RzE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FusRWIlqXACmJw+Z5jsgDOizAYhfKamo1ZmTtHV2BZcQxR2fnMXBO1ruc9UNdK5KBFT2lf6PQvQb/YKjQOD3D4otpqtWIwj2MJ+zO38piE25ixjna06b2p0OitEEOTrMOaTNINUbyMalROTM8A8wNYUHv07rkpUl0X50TltOrlo=
+	 Content-Type:Content-Disposition:In-Reply-To; b=UK3V44qonKrAh5b/IpBWNlflFtifS8Qb4eKhsQa7Bdyo9P+BfFxPhD/5Jv9R9v9NzPEZU5+S2tfISifpFW3qeh5GuDVHinNM/Xc9Z9QYNjPrbsK7DhvpFIJo5S/+2gLNnFqXhfXdcAPA0Jxu5LGuBXKfRLOAPFxUPllyWRcH2Eo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 17037 invoked by uid 109); 11 Jun 2024 06:48:48 -0000
+Received: (qmail 17981 invoked by uid 109); 11 Jun 2024 07:21:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Jun 2024 06:48:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Jun 2024 07:21:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24125 invoked by uid 111); 11 Jun 2024 06:48:46 -0000
+Received: (qmail 24320 invoked by uid 111); 11 Jun 2024 07:21:42 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Jun 2024 02:48:45 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Jun 2024 03:21:42 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 11 Jun 2024 02:48:47 -0400
+Date: Tue, 11 Jun 2024 03:21:44 -0400
 From: Jeff King <peff@peff.net>
-To: 'Yuri' <yuri@rawbw.com>
-Cc: rsbecker@nexbridge.com, 'Junio C Hamano' <gitster@pobox.com>,
-	'Git Mailing List' <git@vger.kernel.org>
-Subject: Re: [BUG] "git clean -df ." silently doesn't delete folders with
- stale .nfs* files
-Message-ID: <20240611064847.GC3248245@coredump.intra.peff.net>
-References: <ae862adb-1475-48e9-bd50-0c07dc42a520@rawbw.com>
- <xmqqwmmw1sev.fsf@gitster.g>
- <4ed426e4-beb6-45ed-b493-1e19c7c0511b@rawbw.com>
- <xmqqikygzdgk.fsf@gitster.g>
- <e8feffd0-ba6d-4aae-8c80-3d6482896b08@rawbw.com>
- <0ee501dabb91$aa2340a0$fe69c1e0$@nexbridge.com>
- <8fdc76e2-3de2-4312-956c-2662336fa54d@rawbw.com>
+To: matthew sporleder <msporleder@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Re: bundles discovery and clones
+Message-ID: <20240611072144.GD3248245@coredump.intra.peff.net>
+References: <CAHKF-AsoF10coLP=+MV-NfkEvWzp2Xbucs7OwtOoCBs3TVMg3A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,44 +37,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <8fdc76e2-3de2-4312-956c-2662336fa54d@rawbw.com>
+In-Reply-To: <CAHKF-AsoF10coLP=+MV-NfkEvWzp2Xbucs7OwtOoCBs3TVMg3A@mail.gmail.com>
 
-On Mon, Jun 10, 2024 at 06:09:52PM -0700, 'Yuri' wrote:
+On Mon, Jun 10, 2024 at 02:25:19PM -0400, matthew sporleder wrote:
 
-> "touch .nfs12309" isn't enough.
+> I have recently been playing with git clone --bundle-uri and loving it
+> because I can clone with almost-*zero* resources being used on the
+> server!
 > 
-> Here is a reliable way to reproduce the problem:
-> 1. Have a git repository on an NFS disk.
-> 2. mkdir xx
-> 3. touch xx/x
-> 4. tail -f xx/x &
-> 5. rm xx/x
-> 6. git clean -df .
+> I am a little confused by https://git-scm.com/docs/bundle-uri
+> mentioning "discovery" and things. Is this something being added to
+> the git cli, a special feature for other clients, or is it still too
+> early-days to talk about much?
 > 
-> The last operation reproduces the problem. The xx directory and the .nfsNNNN
-> file in it stay without warnings.
-> The .nfsNNNN file is created by the NFS client when the xx/x file is
-> removed.
+> I would love to produce bundles of common use cases and have them
+> auto-discovered by git clone *without* the --bundle-uri parameter, and
+> then let our CDN do the heavy lifting of satisfying things like:
+> git clone
+> git clone --depth=0
+> git clone --single-branch --branch main
+> 
+> I'm not sure I hold out as much hope for pre-bundling pulls/updates
+> but any movement towards offloading our big-ish repos to CDNs is a win
+> for us.
 
-That is not the behavior I get. I see:
+I don't think the server side is well documented, but peeking at the
+code, I think you want this on the server:
 
-  $ git clean -df .
-  warning: failed to remove xx/.nfs0000000002c8197f00000002: Device or resource busy
+  git config uploadpack.advertiseBundleURIs true
+  git config bundle.version 1
+  git config bundle.mode any
+  git config bundle.foo.uri https://example.com/your.bundle
 
-Which makes sense, since the kernel fails our unlink() call. Maybe your
-system behaves differently at the syscall level?
+And then the clients need to tell Git that they allow bundle transfers:
 
-This is a pretty standard Debian system with kernel 6.8.12. I set up the
-NFS mount with:
+  git config --global transfer.bundleURI true
 
-   mkdir /mnt/{server,client}
-   exportfs -o rw,sync 127.0.0.1:/mnt/server
-   mount -t nfs 127.0.0.1:/mnt/server /mnt/client
+I'm not sure if we'd eventually flip the client-side switch to "true" by
+default (which is what you'd need for this to happen without any user
+participation at all).
 
-and then made the repository in /mnt/client. "mount" tells me it's using
-nfs4.
+One gotcha there is that clients are now accessing an arbitrary URL
+provided by the server, so there are cross-site security implications.
+It might make more sense to allow only relative URLs without ".." (so if
+I fetched from https://example.com/foo.git, the server could use only
+the relative "bundles/bar.bundle", which would then be found at
+https://example.com/foo.git/bundles/bar.bundle").
 
-Running "git clean" on the server side does remove the files (no
-warning, but the directories are actually removed).
-
--peff
+-Peff
