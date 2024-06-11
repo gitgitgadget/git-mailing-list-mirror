@@ -1,62 +1,119 @@
-Received: from shell1.rawbw.com (shell1.rawbw.com [198.144.192.42])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DA402570
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 17:46:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.144.192.42
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D03D3D388
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 17:54:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718127996; cv=none; b=GbKgazi4xn4FaOWSoO4rHOH5hJOoFaZpaH1plJC6azl3zGe+EmUKYUvz1YbVhY5nQDnf+Mo8qUTXHfey5da0VrP1FTGCTDbk5bMNSRdl1wubGB8+LxpmO8w3EVsRCOZJpotkZMejbJnuRI90ue9F83pKOyJ9CLd3xzNvP89kxzk=
+	t=1718128468; cv=none; b=g7RoDc39r+8s2MUP9sCU7SoByWmOMzYs/ShEjXBrXpjaFR12eXlXrXMsNMv7Uk76lzR+GOBY0IAMpFNB0gNLO62mRwx+cn7bIq1KWU1WjqlCyjHLlYaxf2MVNxtjsTU6Mpn3DY75+nzYHQ2pk/IvCXbkCxmdDM32vRV2Lb/DdSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718127996; c=relaxed/simple;
-	bh=6iNV3iA1h2SmVtIXIoGmUwMozcI1tf4GGh/sp6RUjhs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=V+GxTV9n7XQST4TVMsdPv5jTmbF0Ws7FyMkQ4vdw222DJuZTTvLEENccitPno7GbYZMiJPg3K84/6rOtOGZk3e4e32kc/XnUdc/pmDd3509aDry5Z09yxUfd2wmVfe0sqINv1zJ4C4XZWqMafPwN5oWb9At8bj26EsTA6DkEmpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rawbw.com; spf=pass smtp.mailfrom=rawbw.com; arc=none smtp.client-ip=198.144.192.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rawbw.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rawbw.com
-Received: from [192.168.5.3] (c-98-42-44-116.hsd1.ca.comcast.net [98.42.44.116])
-	(authenticated bits=0)
-	by shell1.rawbw.com (8.15.1/8.15.1) with ESMTPSA id 45BHkS5k087838
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
-	Tue, 11 Jun 2024 10:46:29 -0700 (PDT)
-	(envelope-from yuri@rawbw.com)
-X-Authentication-Warning: shell1.rawbw.com: Host c-98-42-44-116.hsd1.ca.comcast.net [98.42.44.116] claimed to be [192.168.5.3]
-Message-ID: <c98ac093-73a8-45eb-a82a-5274606de336@rawbw.com>
-Date: Tue, 11 Jun 2024 10:46:27 -0700
+	s=arc-20240116; t=1718128468; c=relaxed/simple;
+	bh=CjbyDgPIh+Fy0H3HkaM6MLmja7tEZf06CZajKPSILoE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t5m9gHWHWCPMQtI/u7W761Qfv2kwrP5+3HdAhEyaK9WRBUCYaITP4Xr7boMyF09Z2GajSAcB2BPmENm1dmZ0DWoVb34bYNu+eevqFlMYhStZLuflvy4QDq7slMkQv0j+UXaE/BpZO7zQWQOYzTdgCDVba2qjg/qED203SSUGoVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FIejWLYO; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FIejWLYO"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D4D919258;
+	Tue, 11 Jun 2024 13:54:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=CjbyDgPIh+Fy0H3HkaM6MLmja7tEZf06CZajKP
+	SILoE=; b=FIejWLYOSbK3CdmgfPcSuojK7oPeeq8ms8DtaoDGwkSZKU8XlrwkUq
+	AjK93UzLaoc4yJJMHiLarleLeWSYuJo86+d5TDhiXWS1rOfqjFSNQ9K7pX6IxK7M
+	n72uHoSTfX0hZe4xr59VutLjFwkNBh0Dmtg7GdwkG0RyLGTFZLLqQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 45EB119257;
+	Tue, 11 Jun 2024 13:54:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A587819256;
+	Tue, 11 Jun 2024 13:54:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Kyle Lippincott <spectral@google.com>
+Subject: Re: [PATCH 1/2] config: fix segfault when parsing "core.abbrev"
+ without repo
+In-Reply-To: <7ded51bbce1b23cf4110e3bf0abb7579efd4d344.1718095090.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Tue, 11 Jun 2024 10:42:02 +0200")
+References: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
+	<7ded51bbce1b23cf4110e3bf0abb7579efd4d344.1718095090.git.ps@pks.im>
+Date: Tue, 11 Jun 2024 10:54:23 -0700
+Message-ID: <xmqqh6dzwek0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [BUG] "git clean -df ." silently doesn't delete folders with
- stale .nfs* files
-To: rsbecker@nexbridge.com, "'Jeff King'" <peff@peff.net>
-Cc: "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Git Mailing List'" <git@vger.kernel.org>
-References: <ae862adb-1475-48e9-bd50-0c07dc42a520@rawbw.com>
- <xmqqwmmw1sev.fsf@gitster.g> <4ed426e4-beb6-45ed-b493-1e19c7c0511b@rawbw.com>
- <xmqqikygzdgk.fsf@gitster.g> <e8feffd0-ba6d-4aae-8c80-3d6482896b08@rawbw.com>
- <0ee501dabb91$aa2340a0$fe69c1e0$@nexbridge.com>
- <8fdc76e2-3de2-4312-956c-2662336fa54d@rawbw.com>
- <20240611064847.GC3248245@coredump.intra.peff.net>
- <102101dabc06$16dfead0$449fc070$@nexbridge.com>
-Content-Language: en-US
-From: "'Yuri'" <yuri@rawbw.com>
-In-Reply-To: <102101dabc06$16dfead0$449fc070$@nexbridge.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ A3AC265A-281B-11EF-86F3-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-On 6/11/24 06:48, rsbecker@nexbridge.com wrote:
-> It has been a while since I did a self-mount in NFS, but I do not 
-> think that will reproduce the issue. The mounts have to be on 
-> different servers from the client to experience this silly rename 
-> situation. On self-mount, IIRC, the client is aware that it is on its 
-> own machine and will not try to detect the situation. 
+Patrick Steinhardt <ps@pks.im> writes:
 
+> Fix both of these issues by not making it an error anymore when the
+> given length exceeds the hash length. Instead, if we have a repository,
+> then we truncate the length to the maximum length of `the_hash_algo`.
+> Otherwise, we simply leave the abbreviated length intact and store it
+> as-is. This is equivalent to the logic in `parse_opt_abbrev_cb()` and is
+> handled just fine by `repo_find_unique_abbrev_r()`. In practice, we
+> should never even end up using `default_abbrev` without a repository
+> anyway given that abbreviating object IDs to unique prefixes requires us
+> to have access to an object database.
 
-You can use a VirtualBox VM.
+Makes sense.
 
+> diff --git a/config.c b/config.c
+> index abce05b774..ab2844d9e1 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1460,11 +1460,14 @@ static int git_default_core_config(const char *var, const char *value,
+>  		if (!strcasecmp(value, "auto"))
+>  			default_abbrev = -1;
+>  		else if (!git_parse_maybe_bool_text(value))
+> -			default_abbrev = the_hash_algo->hexsz;
+> +			default_abbrev = startup_info->have_repository ?
+> +				the_hash_algo->hexsz : GIT_MAX_HEXSZ;
 
+We will need to have some code that further adjusts overly long
+default_abbrev when we really have to abbreviate (at which time,
+hopefully we are already aware of the real hash algorithm used in
+the repository, and that may be SHA-1) anyway.
 
-Yuri
+So do we even need the conditional here?  Can't we just set it to
+GIT_MAX_HEXSZ here unconditionally?
 
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index 86c695eb0a..99c063e4cd 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -1237,6 +1237,12 @@ test_expect_success 'log.abbrevCommit configuration' '
+>  	test_cmp expect.whatchanged.full actual
+>  '
+>  
+> +test_expect_success 'log.abbrevCommit with --abbrev=9000' '
+> +	git log --no-abbrev >expect &&
+> +	git log --abbrev-commit --abbrev=9000 >actual &&
+> +	test_cmp expect actual
+> +'
+
+Interesting.  We didn't have coverage for "we want to see full
+object names" case.
+
+> +test_expect_success 'output from clone with core.abbrev does not crash' '
+> +	rm -fr dst &&
+> +	echo "Cloning into ${SQ}dst${SQ}..." >expect &&
+> +	git -c core.abbrev=12 clone -n "file://$(pwd)/src" dst >actual 2>&1 &&
+> +	test_cmp expect actual
+> +'
+
+OK.
