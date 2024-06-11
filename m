@@ -1,78 +1,77 @@
 Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D02517C7C1
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89C5176ACC
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718107091; cv=none; b=XVF0yL/nsMgTuraUKt28UZeIOuAfwmO5ZNFgowd7wjY1L/ryvVGutixykMAp7CGJMwCfg7Vlr/cOQmk/qu+ZrMkB13h7ZTctHQ16kBM0QezlsgU2vkpjyil6TjWKy6RtcL3pB+yuPp4ivwXujLwUfd+Mo2Uzxfd1EDrvQh9vzTQ=
+	t=1718107095; cv=none; b=b6xxaVpox3M/XU7tFWk//9wC947LXPUk106eKiZrRJI/PHIoTmeJtBgS+rDsR3fm7Wb+4QPwuoQ6QLC/5j2G1CIATy3AAn7BPdjbiIlAvBIoT6mOzB+YQO5noy1h7/kaX9lUXfImaNsNV2Wu48LCb1PJjaZuM2vOfQG9TG+52n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718107091; c=relaxed/simple;
-	bh=zSqiLGhOR1qC0SVRehwzqCtcZrNfOFDXllPls+X6ZHg=;
+	s=arc-20240116; t=1718107095; c=relaxed/simple;
+	bh=MwReKTs8T4IIB8SoUisImpdqJJcA9j12p3C00zrZECY=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=seYsSWO2NRw/j+qSqxx8rp4ApUwqKbx1Ny09E0i7kf6OueyyK9C5EMAj308uUoKYRfmAF7OOYv5PaybSS8BwXncg7rOo1aClG2/RHY1rDgFsHzCfuZMBoaJab0FaZp5npoi4uD6KCbktrvGjZfonclZqOKXiyl0cHWEnftq8oVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AvVo1nkW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iTRpxwmm; arc=none smtp.client-ip=64.147.123.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=D1WHJeZF95s+8KzmTKUteUEyInwk9JDZ6DT43x1zHLLoASKiVpqEN9ukvbe66mukgaEVRg9Lq800+mlceb4ceX2ZGk/BJR/bmK9QDCQT//kgPLrqTE6+Fng6WS+Khmco06+Qa3ekxmX+MupLnrqWkUsxv4YncIYV5hTkdV+t1WE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S/zJjC2x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Uk86nYD+; arc=none smtp.client-ip=64.147.123.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AvVo1nkW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iTRpxwmm"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.west.internal (Postfix) with ESMTP id DCC281C000EC
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:08 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S/zJjC2x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Uk86nYD+"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.west.internal (Postfix) with ESMTP id 559DE1C000E6
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:13 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 11 Jun 2024 07:58:09 -0400
+  by compute3.internal (MEProxy); Tue, 11 Jun 2024 07:58:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718107088; x=1718193488; bh=HlLoMyX/5C
-	byNypNumsAwqA9UA3HJB5u7TCn9xtfm/k=; b=AvVo1nkWCQJzGx/VMBDY2q13P7
-	87Lr/IDmo81M94e5CuoQnwzv8Q4h15oGa1IGqMka98xB01XgdvsvGfTcFdxxZCeO
-	3FzwHC43rdiiWCfCmLfCIOkSy6mySCN+SIE07EPF+sl88M0GJNmSk1DoY2+OpUQQ
-	RbCMClQGEsnmQ8uWBLO0NbjmlPRmY/NncQieqTibqkquKuFEd+apAD9I6fT92oh2
-	Emtj5nM2Ec7oJSyuUksE2mVxOK2ogHJO+Wd8+iAwopDVS8uXPCjzy9h1jXj0m5VN
-	wWmfHZmlZ14EoZCHnPYpcdkr9bp+4bplDZ+k4FhmyeK0UwX8PfzoB61GJ6MA==
+	:subject:to:to; s=fm1; t=1718107092; x=1718193492; bh=nyOUbk7N58
+	u4YmBfCK6E69mfNUVMdfWjB3kfwh0aIgQ=; b=S/zJjC2xcOCz2l8gLL/nnaYycU
+	Xw0sq7TV1jXbY0AHXqRXlRe9+6GaoAHTjUbT6wyNWmRErMpgHMcloedXelh5YC+e
+	0Unx82FuB+S88oiFYx5wrdGAO9vB490XiddWogrRfwAxmZFK0EkNJEyJFuOJA2Vx
+	UbMFKRRFkcv71f1f4cwXTA1dGk+29Jv/fubnDjdFDxgGg/Cw2xX/1ZhC9qcRicRV
+	c0VYNzFJfUcjpHEz0Ajolo0CmDk1Kv656SX5u4zJgWmOK00vRDkqhmkWimeXhCKb
+	NkjxSzo7So3CV95TYf/DF0cLC5gV6t9tTl3aB53cIRuPiJoaqo0wx1tYwG9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718107088; x=1718193488; bh=HlLoMyX/5CbyNypNumsAwqA9UA3H
-	JB5u7TCn9xtfm/k=; b=iTRpxwmmO2DO0n9hW+ArI2kaEKHb/Qj//G4fMLstwApI
-	AzfXmBH7xBv1k+n8MbrcWyFKNsCXFBiZc/qM6mjhOG3HWbameRR1YCvlpvXDd2mU
-	PgF50VLCACFcVqAW2vlgWW8RCdBUletxowQQIjEsqtFxDvkouqK4SastNiVWqhgq
-	y7xpaXLY/cjbo4CvRxemZGXXRTLsKHp1o8GakFvLRWRFux2otf24uiNvgJPcbcPX
-	9FIwi1nWBJnbcd5fNSnHS9NX5jXt5kOwSdkPKiADuXLekCoGWFe1wJfpS7nrZhQr
-	EmSFo9zjkyAH6vPTGNxcB34GSzVk5pI5E5l/MPB1rw==
-X-ME-Sender: <xms:0DtoZk8AWlLuDjxHzC0unAJATvs-yHU7YwTNT7s8uiyx6b-I6GF2zA>
-    <xme:0DtoZss3Y_-K2exSAIPvGYDgBgAStDvDDqzuDR1cHCvVbyDAEid5JkKDLCmAoK-VZ
-    eOJZKvdaRhZvyJprQ>
-X-ME-Received: <xmr:0DtoZqB741FXoOSRFGRxSRpMj92EqtAYm-hJ9Sf_wozGtyNlPrdofEkL2-A85iErM8AEl87Vu0j1kY2gFBqPawfdm_NP8B6k3k0Mp5Ub4yO_R1PZaSq8>
+	fm1; t=1718107092; x=1718193492; bh=nyOUbk7N58u4YmBfCK6E69mfNUVM
+	dfWjB3kfwh0aIgQ=; b=Uk86nYD+4y/wjugRoyKHzY6kTuqeidv3mOUoTP95zo5V
+	ZRqSrT2NA5rRKqwUQAP9dBJYk6NalJnG6ehT1E5fFfqIEzeeZWI8P96W4vN0Zmto
+	SdLGZr/TSRaL0pHLJyQHU4AohFFFATxy3roN/fVNMN+uiDKfUDnWVqaXnNpLuN5c
+	hvdvxvXjWfM17qJP6dcSVJDsvWk+68LUHKbkLx0pwYPS+tnqFwBQVytPXmqae+ho
+	j/cNwHV3DvmS14+xw7JiU9pCXOHrG2c1zMyennOnU2Cih7xVF6ZWaRrb73MP02pV
+	hWhXbdyPqyw63+d9cfzMrPIZTZJtKHL3gmfMetHoMA==
+X-ME-Sender: <xms:1DtoZsgIIzzGvNEeOZalcN8qR6O9cfYB0jQB0-IEmXRlV5MY2bevCw>
+    <xme:1DtoZlCJJOUtyj_LlTxqPYNNYn50lsIi4sRjdWuIswQhuL30cKJO8GzEBonjo56WE
+    GT_DZ3QQIe7wIBxag>
+X-ME-Received: <xmr:1DtoZkGvDFFZToc8QwEldJ_7WaA0TkX6FqygjMGDau4HAT-mhcxe40Wne9Hsxf-MxbBTOMa0WXcThiRhhpdUV9HzNhXQTfCTyIqjbdqgl6LmimWd0sAr>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduvddggeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:0DtoZkfPUDs5TNLuSrYHkToQwlhSe9sQD4s315fsjtkRgPbt69yWFg>
-    <xmx:0DtoZpPPWb_RLaRc44ecDsKhdRVBUGanwbTozSumWFoUd42c4sCh6w>
-    <xmx:0DtoZukPJoAvUmldnZhvsbmfV1sxJTgp7jARYX6FBXjjhLmGiDFl4A>
-    <xmx:0DtoZrut6e2Z_YslPAszzTW08Ghtm2xBEbY6wxD_E6OEhs_IetIQYQ>
-    <xmx:0DtoZn3cwf-rYMlBINX9t77NJ3q3amNDOAPpEH03LZbvJB6Gh-Wb8F4C>
+X-ME-Proxy: <xmx:1DtoZtRwqhqKwwV1S4zYNYw3rpS4600h0Hollphl5omIfFd1qNTZSw>
+    <xmx:1DtoZpxGpJOugKdYjN0fM7kROZ_Lgq5FFWTp-1y35nqJyCECSMb2IA>
+    <xmx:1DtoZr7UGFUXSyYxfz7oEronPhXiAFLb3I4LJcGzQ287ZZNVClnpsQ>
+    <xmx:1DtoZmzaeuAV6POC5uyL3kcmrKlDRhOgobcXzMCVIvPk8zI95KJPgg>
+    <xmx:1DtoZqpCB2LouJ1H6Tz5O-g2aCRqa-ybFwPCoFNc3cXsmQDyO-OHJDzs>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:07 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:12 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 72cc5d6f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 5d7d7251 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 11 Jun 2024 11:57:58 +0000 (UTC)
-Date: Tue, 11 Jun 2024 13:58:05 +0200
+	Tue, 11 Jun 2024 11:58:03 +0000 (UTC)
+Date: Tue, 11 Jun 2024 13:58:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 07/21] hash: require hash algorithm in
- `is_empty_{blob,tree}_oid()`
-Message-ID: <82a391acaced9182258933123ed27f17463aa0e2.1718106285.git.ps@pks.im>
+Subject: [PATCH 08/21] hash: require hash algorithm in `empty_tree_oid_hex()`
+Message-ID: <3f091dd94abaea467f87408884b9e6fbda71941a.1718106285.git.ps@pks.im>
 References: <cover.1718106284.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,160 +80,219 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Yd6j6+kpFZqd/Uyg"
+	protocol="application/pgp-signature"; boundary="U7dLzX7CM98mGBf9"
 Content-Disposition: inline
 In-Reply-To: <cover.1718106284.git.ps@pks.im>
 
 
---Yd6j6+kpFZqd/Uyg
+--U7dLzX7CM98mGBf9
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Both functions `is_empty_{blob,tree}_oid()` use `the_repository` to
-derive the hash function that shall be used. Require callers to pass in
-the hash algorithm to get rid of this implicit dependency.
+The `empty_tree_oid_hex()` function use `the_repository` to derive the
+hash function that shall be used. Require callers to pass in the hash
+algorithm to get rid of this implicit dependency.
+
+While at it, remove the unused `empty_blob_oid_hex()` function.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fast-import.c |  4 +++-
- cache-tree.c          |  2 +-
- diffcore-rename.c     |  4 ++--
- hash-ll.h             | 12 ++++++++++++
- hash.h                | 10 ----------
- read-cache.c          |  2 +-
- 6 files changed, 19 insertions(+), 15 deletions(-)
+ add-interactive.c      |  2 +-
+ add-patch.c            |  2 +-
+ builtin/merge.c        |  3 ++-
+ builtin/receive-pack.c |  2 +-
+ hash-ll.h              |  3 +--
+ object-file.c          | 10 ++--------
+ sequencer.c            |  2 +-
+ submodule.c            |  6 +++---
+ wt-status.c            |  4 ++--
+ 9 files changed, 14 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 12543488f3..d21c4053a7 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -2361,7 +2361,9 @@ static void file_change_m(const char *p, struct branc=
-h *b)
- 	parse_path_eol(&path, p, "path");
+diff --git a/add-interactive.c b/add-interactive.c
+index b5d6cd689a..a0961096cd 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -557,7 +557,7 @@ static int get_modified_files(struct repository *r,
+ 		s.skip_unseen =3D filter && i;
 =20
- 	/* Git does not track empty, non-toplevel directories. */
--	if (S_ISDIR(mode) && is_empty_tree_oid(&oid) && *path.buf) {
-+	if (S_ISDIR(mode) &&
-+	    is_empty_tree_oid(&oid, the_repository->hash_algo) &&
-+	    *path.buf) {
- 		tree_content_remove(&b->branch_tree, path.buf, NULL, 0);
- 		return;
+ 		opt.def =3D is_initial ?
+-			empty_tree_oid_hex() : oid_to_hex(&head_oid);
++			empty_tree_oid_hex(the_repository->hash_algo) : oid_to_hex(&head_oid);
+=20
+ 		repo_init_revisions(r, &rev, NULL);
+ 		setup_revisions(0, NULL, &rev, &opt);
+diff --git a/add-patch.c b/add-patch.c
+index 814de57c4a..86181770f2 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -420,7 +420,7 @@ static int parse_diff(struct add_p_state *s, const stru=
+ct pathspec *ps)
+ 			    /* could be on an unborn branch */
+ 			    !strcmp("HEAD", s->revision) &&
+ 			    repo_get_oid(the_repository, "HEAD", &oid) ?
+-			    empty_tree_oid_hex() : s->revision);
++			    empty_tree_oid_hex(the_repository->hash_algo) : s->revision);
  	}
-diff --git a/cache-tree.c b/cache-tree.c
-index e4255c4d02..3290a1b8dd 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -422,7 +422,7 @@ static int update_one(struct cache_tree *it,
- 		/*
- 		 * "sub" can be an empty tree if all subentries are i-t-a.
- 		 */
--		if (contains_ita && is_empty_tree_oid(oid))
-+		if (contains_ita && is_empty_tree_oid(oid, the_repository->hash_algo))
- 			continue;
+ 	color_arg_index =3D args.nr;
+ 	/* Use `--no-color` explicitly, just in case `diff.color =3D always`. */
+diff --git a/builtin/merge.c b/builtin/merge.c
+index abe66311c7..bb94b7df21 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -330,7 +330,8 @@ static void read_empty(const struct object_id *oid)
+ {
+ 	struct child_process cmd =3D CHILD_PROCESS_INIT;
 =20
- 		strbuf_grow(&buffer, entlen + 100);
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 5a6e2bcac7..5abb958651 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -1422,7 +1422,7 @@ void diffcore_rename_extended(struct diff_options *op=
-tions,
- 				 strcmp(options->single_follow, p->two->path))
- 				continue; /* not interested */
- 			else if (!options->flags.rename_empty &&
--				 is_empty_blob_oid(&p->two->oid))
-+				 is_empty_blob_oid(&p->two->oid, the_repository->hash_algo))
- 				continue;
- 			else if (add_rename_dst(p) < 0) {
- 				warning("skipping rename detection, detected"
-@@ -1432,7 +1432,7 @@ void diffcore_rename_extended(struct diff_options *op=
-tions,
- 			}
- 		}
- 		else if (!options->flags.rename_empty &&
--			 is_empty_blob_oid(&p->one->oid))
-+			 is_empty_blob_oid(&p->one->oid, the_repository->hash_algo))
- 			continue;
- 		else if (!DIFF_PAIR_UNMERGED(p) && !DIFF_FILE_VALID(p->two)) {
- 			/*
+-	strvec_pushl(&cmd.args, "read-tree", "-m", "-u", empty_tree_oid_hex(),
++	strvec_pushl(&cmd.args, "read-tree", "-m", "-u",
++		     empty_tree_oid_hex(the_repository->hash_algo),
+ 		     oid_to_hex(oid), NULL);
+ 	cmd.git_cmd =3D 1;
+=20
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index aa5ba27d17..41d5fb8e60 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1371,7 +1371,7 @@ static const char *push_to_deploy(unsigned char *sha1,
+ 	strvec_pushl(&child.args, "diff-index", "--quiet", "--cached",
+ 		     "--ignore-submodules",
+ 		     /* diff-index with either HEAD or an empty tree */
+-		     head_has_history() ? "HEAD" : empty_tree_oid_hex(),
++		     head_has_history() ? "HEAD" : empty_tree_oid_hex(the_repository->ha=
+sh_algo),
+ 		     "--", NULL);
+ 	strvec_pushv(&child.env, env->v);
+ 	child.no_stdin =3D 1;
 diff --git a/hash-ll.h b/hash-ll.h
-index faf6c292d2..1000a9af22 100644
+index 1000a9af22..3161c778b9 100644
 --- a/hash-ll.h
 +++ b/hash-ll.h
-@@ -350,4 +350,16 @@ static inline int is_null_oid(const struct object_id *=
-oid)
- const char *empty_tree_oid_hex(void);
- const char *empty_blob_oid_hex(void);
+@@ -347,8 +347,7 @@ static inline int is_null_oid(const struct object_id *o=
+id)
+ 	return !memcmp(oid->hash, null_hash, GIT_MAX_RAWSZ);
+ }
 =20
-+static inline int is_empty_blob_oid(const struct object_id *oid,
-+				    const struct git_hash_algo *algop)
-+{
-+	return oideq(oid, algop->empty_blob);
-+}
-+
-+static inline int is_empty_tree_oid(const struct object_id *oid,
-+				    const struct git_hash_algo *algop)
-+{
-+	return oideq(oid, algop->empty_tree);
-+}
-+
- #endif
-diff --git a/hash.h b/hash.h
-index 84f2296cfb..39a0164be3 100644
---- a/hash.h
-+++ b/hash.h
-@@ -6,14 +6,4 @@
+-const char *empty_tree_oid_hex(void);
+-const char *empty_blob_oid_hex(void);
++const char *empty_tree_oid_hex(const struct git_hash_algo *algop);
 =20
- #define the_hash_algo the_repository->hash_algo
+ static inline int is_empty_blob_oid(const struct object_id *oid,
+ 				    const struct git_hash_algo *algop)
+diff --git a/object-file.c b/object-file.c
+index bb97f8a809..72318c8dd4 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -227,16 +227,10 @@ const struct object_id *null_oid(void)
+ 	return the_hash_algo->null_oid;
+ }
 =20
--static inline int is_empty_blob_oid(const struct object_id *oid)
--{
--	return oideq(oid, the_hash_algo->empty_blob);
+-const char *empty_tree_oid_hex(void)
++const char *empty_tree_oid_hex(const struct git_hash_algo *algop)
+ {
+ 	static char buf[GIT_MAX_HEXSZ + 1];
+-	return oid_to_hex_r(buf, the_hash_algo->empty_tree);
 -}
 -
--static inline int is_empty_tree_oid(const struct object_id *oid)
+-const char *empty_blob_oid_hex(void)
 -{
--	return oideq(oid, the_hash_algo->empty_tree);
--}
--
- #endif
-diff --git a/read-cache.c b/read-cache.c
-index 836f1db721..085b22faf3 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -337,7 +337,7 @@ static int ce_match_stat_basic(const struct cache_entry=
- *ce, struct stat *st)
+-	static char buf[GIT_MAX_HEXSZ + 1];
+-	return oid_to_hex_r(buf, the_hash_algo->empty_blob);
++	return oid_to_hex_r(buf, algop->empty_tree);
+ }
 =20
- 	/* Racily smudged entry? */
- 	if (!ce->ce_stat_data.sd_size) {
--		if (!is_empty_blob_oid(&ce->oid))
-+		if (!is_empty_blob_oid(&ce->oid, the_repository->hash_algo))
- 			changed |=3D DATA_CHANGED;
+ int hash_algo_by_name(const char *name)
+diff --git a/sequencer.c b/sequencer.c
+index 68d62a12ff..823691e379 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2263,7 +2263,7 @@ static int do_pick_commit(struct repository *r,
+ 			unborn =3D 1;
+ 		} else if (unborn)
+ 			oidcpy(&head, the_hash_algo->empty_tree);
+-		if (index_differs_from(r, unborn ? empty_tree_oid_hex() : "HEAD",
++		if (index_differs_from(r, unborn ? empty_tree_oid_hex(the_repository->ha=
+sh_algo) : "HEAD",
+ 				       NULL, 0))
+ 			return error_dirty_index(r, opts);
  	}
+diff --git a/submodule.c b/submodule.c
+index 759cf1e1cd..caf3aa5600 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -2119,7 +2119,7 @@ static void submodule_reset_index(const char *path, c=
+onst char *super_prefix)
+ 	strvec_pushf(&cp.args, "--super-prefix=3D%s%s/",
+ 		     (super_prefix ? super_prefix : ""), path);
 =20
+-	strvec_push(&cp.args, empty_tree_oid_hex());
++	strvec_push(&cp.args, empty_tree_oid_hex(the_repository->hash_algo));
+=20
+ 	if (run_command(&cp))
+ 		die(_("could not reset submodule index"));
+@@ -2229,9 +2229,9 @@ int submodule_move_head(const char *path, const char =
+*super_prefix,
+ 		strvec_push(&cp.args, "-m");
+=20
+ 	if (!(flags & SUBMODULE_MOVE_HEAD_FORCE))
+-		strvec_push(&cp.args, old_head ? old_head : empty_tree_oid_hex());
++		strvec_push(&cp.args, old_head ? old_head : empty_tree_oid_hex(the_repos=
+itory->hash_algo));
+=20
+-	strvec_push(&cp.args, new_head ? new_head : empty_tree_oid_hex());
++	strvec_push(&cp.args, new_head ? new_head : empty_tree_oid_hex(the_reposi=
+tory->hash_algo));
+=20
+ 	if (run_command(&cp)) {
+ 		ret =3D error(_("Submodule '%s' could not be updated."), path);
+diff --git a/wt-status.c b/wt-status.c
+index ff4be071ca..5051f5e599 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -641,7 +641,7 @@ static void wt_status_collect_changes_index(struct wt_s=
+tatus *s)
+=20
+ 	repo_init_revisions(s->repo, &rev, NULL);
+ 	memset(&opt, 0, sizeof(opt));
+-	opt.def =3D s->is_initial ? empty_tree_oid_hex() : s->reference;
++	opt.def =3D s->is_initial ? empty_tree_oid_hex(the_repository->hash_algo)=
+ : s->reference;
+ 	setup_revisions(0, NULL, &rev, &opt);
+=20
+ 	rev.diffopt.flags.override_submodule_config =3D 1;
+@@ -1136,7 +1136,7 @@ static void wt_longstatus_print_verbose(struct wt_sta=
+tus *s)
+ 	rev.diffopt.ita_invisible_in_index =3D 1;
+=20
+ 	memset(&opt, 0, sizeof(opt));
+-	opt.def =3D s->is_initial ? empty_tree_oid_hex() : s->reference;
++	opt.def =3D s->is_initial ? empty_tree_oid_hex(the_repository->hash_algo)=
+ : s->reference;
+ 	setup_revisions(0, NULL, &rev, &opt);
+=20
+ 	rev.diffopt.output_format |=3D DIFF_FORMAT_PATCH;
 --=20
 2.45.2.436.gcd77e87115.dirty
 
 
---Yd6j6+kpFZqd/Uyg
+--U7dLzX7CM98mGBf9
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoO8wACgkQVbJhu7ck
-PpR6GA/+JROxmHwmrAZXX3AsDDv75iNUPoI9roeO93/PWPaV5DOaTCrC7fkOr4aD
-+/bhFmrU2ynNmyp+wkDlYUm529orLMnnQaq86EtYUadQbbmNPp7Rv4s84UMZ1YTy
-7nyg0sh9STk9OpYf1PJei2Aju22edmkPyDFSLZ5Noj89fqnWRua0iIsVlio72Co4
-g/xJ+6OlciswiR2fFKulKW/TT+ueeoGhnWD7qY6VN9RpHQuXoZbzMe0ikUVqGMzt
-NpIS/YQux7jibPuL808AJ/X3sHA1mFJL6nAQzK+XsaEBjitTKJUZZtmC8mzlqbh9
-a21PhGxFWoLPzyUTwhIBi2yC5NZLOnlEatL2wtQoZTjiC8e33lnOLwxE4yHYkroU
-Klpjm/Ks3OQGWumvmYNMQ7KIpy0IdqNWlFujGSRnE5Q5wOanmZlbpG+mVZY+RWqq
-vHMw3s61ZXkGhxsVhuxroDh/VJSTfni5OlYr7Y0TYq6FwDZ/c/LvFZYkR+ITTiqC
-9sjUhtIKjmwQc+mDhfaOrJMsK8zuFBY32jnyBHauDh4F6l0WH7gN7lIS5ewYQ6TH
-hvFlT6bF5Vqtv46QdvuXcVCQyx7nMxwR4J7QFRiDnmSmsjZhSFHzdubBDvmmhNBx
-3l8SFQ8FGPIZsReo2EgoSltBmygSOgPITxZ7iy9Do1ZnDX75GuY=
-=sVYZ
+iQIyBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoO9EACgkQVbJhu7ck
+PpSVAg/3TyztQGJHj4ANVCOUL84QSscjpfwuwRKNJAqA63ROKzPf8vRxdzLnRWbz
+jqNCCOcbvNhCzH+UWd3UE35aQnY0yGTeN4VEZjogONxVb6nV4S5IPwJdZHfCxCrg
+IVTl799cijhhsLq0FVJxiSJiPvcDMG85pLUV9Uz/KAKw7FG7hCr6YvGMsRJwuYBY
+Ak7nhKmNiN+IBYQbtvU6PcVLeKpUUsA2GNzMLVqE03PoyftaS5c+uWlxS3ZhrbIA
+ocLbzzW9pY24d4WxyVFqc+R/1mLwAzDPCa95ZjueQFChIdYDWQ1OlhpFMhMuJOop
+ajywCfS3WbL8GMxJmjj01SS6ib6ym393bVoQtmgjm0zSh5s8ttFLaFLygalpllWJ
+FUgafKRJFHv7bceqzzuqBrGfJNb8c3z2f4jN6qzF9/G59X/NR94EoT9aF9FDWtQM
+/QoMp/4gd3+SoIT0Lh/jUvUB/2TqZyqvMUASanOZxtwwrrt6BazqiY6+KX8ve+U1
+HCFYm3bvoaMuhOHtt49E/vVjarYlkqOw37mnbu9SX9rIkxVmbjgDOvzsEZHOXxK3
+jjGnyluotNaQBeyWlqhbUbsXpcx0X+RAQIo5IGy4u5wjmdF6VmzUMzcQO1JSp+q0
+q316OyOGXHhKXzto5CNZwFLM/ESXKpSvevo7CtbO/AaYfZ3Fmg==
+=pWl1
 -----END PGP SIGNATURE-----
 
---Yd6j6+kpFZqd/Uyg--
+--U7dLzX7CM98mGBf9--
