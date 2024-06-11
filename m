@@ -1,96 +1,82 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205BE1109
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 00:29:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+Received: from shell1.rawbw.com (shell1.rawbw.com [198.144.192.42])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9768AAD4C
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 01:09:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.144.192.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718065796; cv=none; b=SbYyFKoUrBptCcsdxAjAn0Z/O6aHAdx3tBSOkgzBVHMRo7Qir1XcXs/Ykh/lTnGhwWQYKmsSu9ToP0Lc0D9OrUMbLTYbBkLD5bD5TsHEORttspWoFRXwG7MKzWUnDcRAIigc3HqOWyeAIXZC55Up9dTovZbSGWxCT9PssxpbJdM=
+	t=1718068200; cv=none; b=cslYh9g/t7Wt3YMxi5OusVAjLRHeS4spaUlt9hqp1w9oqoAurT480Gkoq2KMLk47Rcmgd+XaxtkTMi1DsyMtf+ZBdzV4zaGAahU7FMMyq7zXy9uDoo95iRF/4SOcDXxcTC1i/3Gd66DmuLE0w9mts54w+PZHHUeC2LzCsEE5dT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718065796; c=relaxed/simple;
-	bh=j9uNN99fZKUZDkjZOTzfHS1rpsSy1q0EeddVilD5Qps=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EXxuQQ0Hmk3nuigcpHvrvawWec9xwIrzQOuCzPHqrGOkY8zIAboejRJs8TX33M4FOk2EjGYha4D9i5tibgquLH603mhe/pB1uWtuD8zUxtvldVcRq0Y77uJDV+SirgxEk0ckUQ+KPYKbuVWkBblQjV8aDS00WzOrXcx5y1csat0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FzY8YtZs; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FzY8YtZs"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7818532461;
-	Mon, 10 Jun 2024 20:29:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=j9uNN99fZKUZDkjZOTzfHS1rpsSy1q0EeddVil
-	D5Qps=; b=FzY8YtZsk0Y/NNoSSpZYiHxVa4/5P6Qj5asSRQXzJ3/KRlRLDME29m
-	+tgP2FCQQyzSOFa4tx9TQLDqSvLR2rPJjCNRvKbGi8EOpYsLDPdfQNKhi58/6T3b
-	RPDy+B1nCmj2StCB7r3SDxHMMpu+T+ByRLqoD3dXObRTAMMNJrWiw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6380E32460;
-	Mon, 10 Jun 2024 20:29:54 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 10A9E3245F;
-	Mon, 10 Jun 2024 20:29:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: <rsbecker@nexbridge.com>
-Cc: "'Yuri'" <yuri@rawbw.com>,  "'Git Mailing List'" <git@vger.kernel.org>
-Subject: Re: [BUG] "git clean -df ." silently doesn't delete folders with
- stale .nfs* files
-In-Reply-To: <0ee501dabb91$aa2340a0$fe69c1e0$@nexbridge.com>
-	(rsbecker@nexbridge.com's message of "Mon, 10 Jun 2024 19:55:20
-	-0400")
-References: <ae862adb-1475-48e9-bd50-0c07dc42a520@rawbw.com>
-	<xmqqwmmw1sev.fsf@gitster.g>
-	<4ed426e4-beb6-45ed-b493-1e19c7c0511b@rawbw.com>
-	<xmqqikygzdgk.fsf@gitster.g>
-	<e8feffd0-ba6d-4aae-8c80-3d6482896b08@rawbw.com>
-	<0ee501dabb91$aa2340a0$fe69c1e0$@nexbridge.com>
-Date: Mon, 10 Jun 2024 17:29:49 -0700
-Message-ID: <xmqqmsnsxqwy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1718068200; c=relaxed/simple;
+	bh=rr0bVxHQXbkYwimpFODYL/ARxe0k1YK+B3v/8/Wffu4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OCwOSc8ODHPDxz0PSODDp6CgnPIHepSOMPTIWvhh0hiBpn7NJj7eWPeJ77cUYDcbgIQbWMM9wxkPpKFIbwL/LhsB5/Bq9q3T98brbVbFmYxCiiiCYIEFLIqGpcXF888pbnbxQ0HFOlb6CT3+0/UKAxvrfr86S340RuC4+LhcsGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rawbw.com; spf=pass smtp.mailfrom=rawbw.com; arc=none smtp.client-ip=198.144.192.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rawbw.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rawbw.com
+Received: from [192.168.5.3] (c-98-42-44-116.hsd1.ca.comcast.net [98.42.44.116])
+	(authenticated bits=0)
+	by shell1.rawbw.com (8.15.1/8.15.1) with ESMTPSA id 45B19rrN038248
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+	Mon, 10 Jun 2024 18:09:53 -0700 (PDT)
+	(envelope-from yuri@rawbw.com)
+X-Authentication-Warning: shell1.rawbw.com: Host c-98-42-44-116.hsd1.ca.comcast.net [98.42.44.116] claimed to be [192.168.5.3]
+Message-ID: <8fdc76e2-3de2-4312-956c-2662336fa54d@rawbw.com>
+Date: Mon, 10 Jun 2024 18:09:52 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B74930D2-2789-11EF-B435-8F8B087618E4-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [BUG] "git clean -df ." silently doesn't delete folders with
+ stale .nfs* files
+To: rsbecker@nexbridge.com, "'Junio C Hamano'" <gitster@pobox.com>
+Cc: "'Git Mailing List'" <git@vger.kernel.org>
+References: <ae862adb-1475-48e9-bd50-0c07dc42a520@rawbw.com>
+ <xmqqwmmw1sev.fsf@gitster.g> <4ed426e4-beb6-45ed-b493-1e19c7c0511b@rawbw.com>
+ <xmqqikygzdgk.fsf@gitster.g> <e8feffd0-ba6d-4aae-8c80-3d6482896b08@rawbw.com>
+ <0ee501dabb91$aa2340a0$fe69c1e0$@nexbridge.com>
+Content-Language: en-US
+From: "'Yuri'" <yuri@rawbw.com>
+In-Reply-To: <0ee501dabb91$aa2340a0$fe69c1e0$@nexbridge.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-<rsbecker@nexbridge.com> writes:
+On 6/10/24 16:55, rsbecker@nexbridge.com wrote:
+> I have tried to reproduce your situation using git 2.43.0 without 
+> success. $ mkdir test $ cd test $ touch .nfs12309 $ git clean -df . 
+> Removing .nfs12309 
 
-> I have tried to reproduce your situation using git 2.43.0 without success.
->
-> $ mkdir test
-> $ cd test
-> $ touch .nfs12309
-> $ git clean -df .
-> Removing .nfs12309
 
-I suspec that this is different from a real NFSv3 client in that
-removal of such "removed while still open" files would result in
-another one automatically resurrected by the filesystem.
+"touch .nfs12309" isn't enough.
 
-In any case, if we cannot remove a file (due to filesystem
-limitation), we should report the fact, just like in a case
-where we cannot remove a regular file, e.g.
 
-    $ cd git.git/
-    $ mkdir -p junk/ttt
-    $ >junk/ttt/sss
-    $ chmod a-w junk/ttt
-    $ cd junk
-    $ git clean -f -d -x ttt; echo $?
-    warning: failed to remove ttt/sss: Permission denied
-    1
+Here is a reliable way to reproduce the problem:
+1. Have a git repository on an NFS disk.
+2. mkdir xx
+3. touch xx/x
+4. tail -f xx/x &
+5. rm xx/x
+6. git clean -df .
 
-Figuring out why it is not happening is left as an exercise to
-readers ;-), as I no longer have an NFSv3 environment handy.
 
-Thanks.
+
+
+The last operation reproduces the problem. The xx directory and the 
+.nfsNNNN file in it stay without warnings.
+The .nfsNNNN file is created by the NFS client when the xx/x file is 
+removed.
+
+
+Anybody with an NFS disk should be able to reproduce it.
+
+FYI: Git generally warns about files that it can't remove because of 
+permissions and special flags reasons.
+But Git doesn't warn users about this situation with an NFS directory 
+lock file.
+
+
+Thanks,
+Yuri
+
+
