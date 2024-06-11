@@ -1,79 +1,77 @@
-Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
+Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F70C17BB3E
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:58:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD7117C20E
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:58:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718107113; cv=none; b=MAir7DDn5P7SpEivsKJpS548T9+WftyXnCv1druxzxFy9AHDBB7B2Zf73sm29b1MO2HP+SBWjGAWtsHEPewsIBhnyUY97APRPHqbqJqCm8r7eXEtYPWPE/D6hkYxFMyvxiHQc90Ze2qBRqXjTT0k6MfFFiNFm63QnmSzmTIHJz8=
+	t=1718107119; cv=none; b=RkgFKGMz6uhjsDfExdvA1DyymhbTLxA5BbBLKs1sZzewxXEofAjrYchni1NP2C4oqOw1jcT5l+NIeHQDfP0bVmLri6/Rbgcc831ksJpAejvMjl4D0QQExd26RALQbi5V5sVZC/DdtPEUgVM/7gIr85FnDRPhmcB3EvwdN2YHvTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718107113; c=relaxed/simple;
-	bh=QO07YH1+VBGlZRBvhyBH1q8PrEIZdG5cHVt0NaD2Wbk=;
+	s=arc-20240116; t=1718107119; c=relaxed/simple;
+	bh=lP9MDDQZ0IJNf+/pNaoaMIIbN2irhWPTWzS+wlSQAgA=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QpEzUDEEelr56PUw/XmQKHTEhrbvIBDj6EHtaUTu01A8ncAWMmN597f3L+wylVG1+PAo34lGWMZnofKF3L652Jp1x+6IjpWEWJFqjpWr7rOY/BOe6UZX5DWrvsdWh1dUy9pY9OIKMvXjA1/67PP1zlDlSEOEsAdbFzJ5JY/N1rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V/7qZszP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AKJDF/yl; arc=none smtp.client-ip=64.147.123.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=mPO0JOiBhaaRedpC6KnFDf7qLfsPyQER4K+U7Yrshe2SLSwNOOcwvuRZRfZmpBYEukWXf4H21DBksa7ABGIaaZp9bgjrfeDbPnturqpuo6H5G+qjc4VJBxJpMwiGauVm3Vct3MbuuF2dl3wbqQtNdJLNqbTEJstvzQ9gcZe12sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Cs/talYR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AfLMd1Gk; arc=none smtp.client-ip=64.147.123.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V/7qZszP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AKJDF/yl"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 97B851800060
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Cs/talYR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AfLMd1Gk"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.west.internal (Postfix) with ESMTP id 0F6781C000EC
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:36 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Tue, 11 Jun 2024 07:58:31 -0400
+  by compute5.internal (MEProxy); Tue, 11 Jun 2024 07:58:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718107111; x=1718193511; bh=fAeU979ZNy
-	vyEebLJwTVLv/Qu8FL2i5dH7FxKyA3OfM=; b=V/7qZszPZr52ribUko3D1eHrE+
-	KVVwHxiUNmNOqD1coHrVXilfqRy6t3/VcVXU8GmcnFSF6xf4Q4virWdcuQmZWEF2
-	moTDJTtBn09b00rUMxf1EzGlQ45/wfCwR24yAjbkcQHm+V/M+Fn8N2MlUI0FJeuU
-	Tfkq98BAOBwopcf/A7BoOGtrGfAyfs8wfm7c5BfmpVnhb0tgq9ydplYBcixHV5Al
-	eYrGkdKPwn+a0hWfNbVMXZRaIhbf6KDXB/cN4Jp8v0pi6ZXzRm07uVROaug4h8Kj
-	Fp7cSLthLaPM/DnU9rRomMw2q7YThdPvzn3gHfl1FmZUFU6tdUBwPr+jyJPw==
+	:subject:to:to; s=fm1; t=1718107116; x=1718193516; bh=4bJFESBao8
+	RCw4cLV52nC63rStX2erUyAqLGDdnmiD4=; b=Cs/talYRBZuk/4g4Mo2bXZGGfF
+	H8sJi7Z1LWBu7XqVOd+oEwMmwskA2OBEP0+13fuUc7QOJRBZltPGOGu2E/TXW/f0
+	T995tjHH4CbxDntiZ9HZTXU6rBzlBsgnwlYTxDD+w/d8zbvxZG1Y+URgoA/U+2jI
+	SnVDVuhMcw2fDO2XQVrqmvQAVeQmo+qNVZr034TeHSlj9hQJNJ65/bJTh+ldXdpP
+	PfP1qsmUurUu74t1R6Y5TpVT/UmLY8LzaZLBQ/LJ1wcL5A7zxHeblThwqnS0PP/A
+	uRDjV1y+x6q2d2k66FPLf99CYIBbxgEqoE6KiUk8Wf11LIW5NL0/4E6gn9pg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718107111; x=1718193511; bh=fAeU979ZNyvyEebLJwTVLv/Qu8FL
-	2i5dH7FxKyA3OfM=; b=AKJDF/ylp7E043gt6ESg2oyYHSMdi9VvZgML2bouUQ8e
-	p1Z5qNyuVeosUJHSFzx1OCZLLW9shDiJn5/BX0HaXLYQ8UhvfmGg7Y8AdYaxuZn/
-	4mikSmRv+13H8oqJYbHj/FFejiSiRnIB596ANQApuEJ3GSDoxggozlUrEQ8ppkY2
-	VD81S0eF1L/FCyA0guktdTPFGtvqkaHg+Xl3qLqQG/rhVO3JRLQUkT0wuBjRVhZK
-	k/ZXJOz+fyOSIGEleJz33qhbEix9pnAza5EZJ7hLQiRNQHaIfUBdgymN1MrwWGDs
-	LmkxbWHMlm7urYf7pnFs83OjUm7Gc/1g2WoQBIKsDw==
-X-ME-Sender: <xms:5ztoZg4MAvTyhjMIhudw-vWl_L0Zdn87sJSpkwogk4mHvkposNsbeA>
-    <xme:5ztoZh7SkUTziRZRVFLqx68D0t_OOmF9-LYLtat1uEN7PttZhPHwtVa97EXb7viop
-    -Nvur6p988kpsnJhg>
-X-ME-Received: <xmr:5ztoZvfC5ePKU7qXPy3NuLJt8AjJJKxHPaFbbqBCgki8o_JyNRFWqRcTPwlZlQhFP5Fq6bkX17N4WD6sHawTzuB-IyDz9x9M_HEhr9Z9WZ23xDl3otPH>
+	fm1; t=1718107116; x=1718193516; bh=4bJFESBao8RCw4cLV52nC63rStX2
+	erUyAqLGDdnmiD4=; b=AfLMd1GkuP0KIEBWuKn8tQvZf5fpGFGRW5JhCISmATjm
+	GA6ErIt+FP4ejy5moshILXrOI+H8oj51mal4RnujepgUO4Tyf8JBoYnbRzgW2e9K
+	v/lhURWdkCKbXS/YbDshZ+kHXG1k3vZ9jlrwiBILkwC3iCA9oLirAO030pCVNr93
+	4Ia7bGBOm7vJwSmDsBBsngb685L/NpeDmX5yU+uWUdVrIi/Chs+3wD1FAAjvK6NH
+	7upRjia6sHLorNTgfu5nZxxPUaq36wp0d8YCypfRe0xq7cCCEKrS6TfoOx4YiW7b
+	YaSsFaaxHoXrKzQVXBeFRUHqattVz+jpbpI/54qJyg==
+X-ME-Sender: <xms:7DtoZiB0f1LruMnn9eAGVTFZlHp59LVMa4aDiihMY-laVJ56H5E3qQ>
+    <xme:7DtoZshND7g340bzlQRIVPkZ_cXDyClhVtNy27w9vaUEAYEstSNs-Ebk8nFCdAeD1
+    XZn619j80hggzi3_g>
+X-ME-Received: <xmr:7DtoZlkmJjpA186MmUALly7Fp8Ec8ZO-tKDic03ESQv6HDGYt-yqzx3qF0x2QxJKb412Xhle5-vNIQylLDoqwsd4Kxi_J2A59deSBxi7vjkEB1z7gQCG>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduvddggeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdfhkefhtefggfefjeefteffteeivedtte
-    efieetteejleejkedugeetgfetvdfgnecuffhomhgrihhnpehhthhtphdqfhgvthgthhdq
-    ughumhgsrdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
-    hrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:5ztoZlJZlaizPKQNws9gB09X-xsisRr3t4nexJl8bd7QbuXPb9-lpw>
-    <xmx:5ztoZkJ4sqVUbjASgJs5xmUkLbxDbuZUxBPiCqpHg5JBnUuvvxXZQQ>
-    <xmx:5ztoZmwcx36Oa9foHDFX23k1lTcGq6KqV56VP0BUk2OWJ1005CM3nA>
-    <xmx:5ztoZoKzfSz04qWMtGDRVPPHb9dLvWVSHpHo-3LkHiul_jyOmoMZ0g>
-    <xmx:5ztoZuh862_P5hNVJjpUDwCgdkIyRAbk_Ygdpg-S77g_bgzNi4Y8Y6cE>
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:7DtoZgy2odXSe9l392AKPF5ysx-BNgFQ0QX4AP_hbtZH74_c564_mg>
+    <xmx:7DtoZnQPvbYU_sqv7oITghd-UzdzZyGsqXITftHWyvITvIYuGU_Miw>
+    <xmx:7DtoZrZoOAJ4AaPyc86_X2R5cpODhd0ehpj08R9qKkQZUVMLkqupBA>
+    <xmx:7DtoZgSrfW7PkEJun5PsTqyDYIVhfcbt8h01MVTBWLjfUWfQTGoloQ>
+    <xmx:7DtoZuL2_NjoViidL5MEzw-lR7VfEJeuxGXH_T4WIoHGeqhuWLEsKqmp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:30 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:35 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 266d69f9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 56602aeb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 11 Jun 2024 11:58:21 +0000 (UTC)
-Date: Tue, 11 Jun 2024 13:58:28 +0200
+	Tue, 11 Jun 2024 11:58:26 +0000 (UTC)
+Date: Tue, 11 Jun 2024 13:58:33 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 12/21] http-fetch: don't crash when parsing packfile without
- a repo
-Message-ID: <b47fa99f3d9b5f4edbeb681dcac56ac2ae26e894.1718106285.git.ps@pks.im>
+Subject: [PATCH 13/21] oidset: pass hash algorithm when parsing file
+Message-ID: <95d9b5fa3e184d10d55971167c55aef36ce31f8f.1718106285.git.ps@pks.im>
 References: <cover.1718106284.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,123 +80,133 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5B9Ujm1PuF174lST"
+	protocol="application/pgp-signature"; boundary="iiBCAqYCQn+AnZmm"
 Content-Disposition: inline
 In-Reply-To: <cover.1718106284.git.ps@pks.im>
 
 
---5B9Ujm1PuF174lST
+--iiBCAqYCQn+AnZmm
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The git-http-fetch(1) command accepts a `--packfile=3D` option, which
-allows the user to specify that it shall fetch a specific packfile,
-only. The parameter here is the hash of the packfile, which is specific
-to the object hash used by the repository. This requirement is implicit
-though via our use of `parse_oid_hex()`, which internally uses
-`the_repository`.
-
-The git-http-fetch(1) command allows for there to be no repository
-though, which only exists such that we can show usage via the "-h"
-option. In that case though, starting with c8aed5e8da (repository: stop
-setting SHA1 as the default object hash, 2024-05-07), `the_repository`
-does not have its object hash initialized anymore and thus we would
-crash when trying to parse the object ID outside of a repository.
-
-Fix this issue by dying immediately when we see a "--packfile=3D"
-parameter when outside a Git repository. This is not a functional
-regression as we would die later on with the same error anyway.
-
-Add a test to detect the segfault. We use the "nongit" function to do
-so, which we need to allow-list in `test_must_fail ()`.
+The `oidset_parse_file_carefully()` function implicitly depends on
+`the_repository` when parsing object IDs. Fix this by having callers
+pass in the hash algorithm to use.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- http-fetch.c               | 8 +++++++-
- t/t5550-http-fetch-dumb.sh | 6 ++++++
- t/test-lib-functions.sh    | 5 +++++
- 3 files changed, 18 insertions(+), 1 deletion(-)
+ builtin/blame.c | 1 +
+ fsck.c          | 3 ++-
+ oidset.c        | 8 +++++---
+ oidset.h        | 4 +++-
+ 4 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/http-fetch.c b/http-fetch.c
-index bec94988bb..d460bb1837 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "config.h"
- #include "gettext.h"
-@@ -127,8 +129,12 @@ int cmd_main(int argc, const char **argv)
- 		} else if (skip_prefix(argv[arg], "--packfile=3D", &p)) {
- 			const char *end;
+diff --git a/builtin/blame.c b/builtin/blame.c
+index de89fff3f8..18f1a3cea0 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -852,6 +852,7 @@ static void build_ignorelist(struct blame_scoreboard *s=
+b,
+ 			oidset_clear(&sb->ignore_list);
+ 		else
+ 			oidset_parse_file_carefully(&sb->ignore_list, i->string,
++						    the_repository->hash_algo,
+ 						    peel_to_commit_oid, sb);
+ 	}
+ 	for_each_string_list_item(i, ignore_rev_list) {
+diff --git a/fsck.c b/fsck.c
+index 432996cbb6..304f4a17ec 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -205,7 +205,8 @@ void fsck_set_msg_types(struct fsck_options *options, c=
+onst char *values)
+ 		if (!strcmp(buf, "skiplist")) {
+ 			if (equal =3D=3D len)
+ 				die("skiplist requires a path");
+-			oidset_parse_file(&options->skiplist, buf + equal + 1);
++			oidset_parse_file(&options->skiplist, buf + equal + 1,
++					  the_repository->hash_algo);
+ 			buf +=3D len + 1;
+ 			continue;
+ 		}
+diff --git a/oidset.c b/oidset.c
+index 91d1385910..8d36aef8dc 100644
+--- a/oidset.c
++++ b/oidset.c
+@@ -48,12 +48,14 @@ void oidset_clear(struct oidset *set)
+ 	oidset_init(set, 0);
+ }
 =20
-+			if (nongit)
-+				die(_("not a git repository"));
-+
- 			packfile =3D 1;
--			if (parse_oid_hex(p, &packfile_hash, &end) || *end)
-+			if (parse_oid_hex_algop(p, &packfile_hash, &end,
-+						the_repository->hash_algo) || *end)
- 				die(_("argument to --packfile must be a valid hash (got '%s')"), p);
- 		} else if (skip_prefix(argv[arg], "--index-pack-arg=3D", &p)) {
- 			strvec_push(&index_pack_args, p);
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index 5f16cbc58d..ea8e48f627 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -25,6 +25,12 @@ test_expect_success 'setup repository' '
- 	git commit -m two
- '
+-void oidset_parse_file(struct oidset *set, const char *path)
++void oidset_parse_file(struct oidset *set, const char *path,
++		       const struct git_hash_algo *algop)
+ {
+-	oidset_parse_file_carefully(set, path, NULL, NULL);
++	oidset_parse_file_carefully(set, path, algop, NULL, NULL);
+ }
 =20
-+test_expect_success 'packfile without repository does not crash' '
-+	echo "fatal: not a git repository" >expect &&
-+	test_must_fail nongit git http-fetch --packfile=3Dabc 2>err &&
-+	test_cmp expect err
-+'
-+
- setup_post_update_server_info_hook () {
- 	test_hook --setup -C "$1" post-update <<-\EOF &&
- 	exec git update-server-info
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 862d80c974..34bc7d7da4 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1096,6 +1096,11 @@ test_must_fail_acceptable () {
- 		done
- 	fi
+ void oidset_parse_file_carefully(struct oidset *set, const char *path,
++				 const struct git_hash_algo *algop,
+ 				 oidset_parse_tweak_fn fn, void *cbdata)
+ {
+ 	FILE *fp;
+@@ -79,7 +81,7 @@ void oidset_parse_file_carefully(struct oidset *set, cons=
+t char *path,
+ 		if (!sb.len)
+ 			continue;
 =20
-+	if test "$1" =3D "nongit"
-+	then
-+		shift
-+	fi
-+
- 	case "$1" in
- 	git|__git*|scalar|test-tool|test_terminal)
- 		return 0
+-		if (parse_oid_hex(sb.buf, &oid, &p) || *p !=3D '\0')
++		if (parse_oid_hex_algop(sb.buf, &oid, &p, algop) || *p !=3D '\0')
+ 			die("invalid object name: %s", sb.buf);
+ 		if (fn && fn(&oid, cbdata))
+ 			continue;
+diff --git a/oidset.h b/oidset.h
+index 262f4256d6..0106b6f278 100644
+--- a/oidset.h
++++ b/oidset.h
+@@ -80,7 +80,8 @@ void oidset_clear(struct oidset *set);
+  * are allowed.  Leading whitespace and empty or white-space only lines are
+  * ignored.
+  */
+-void oidset_parse_file(struct oidset *set, const char *path);
++void oidset_parse_file(struct oidset *set, const char *path,
++		       const struct git_hash_algo *algop);
+=20
+ /*
+  * Similar to the above, but with a callback which can (1) return non-zero=
+ to
+@@ -89,6 +90,7 @@ void oidset_parse_file(struct oidset *set, const char *pa=
+th);
+  */
+ typedef int (*oidset_parse_tweak_fn)(struct object_id *, void *);
+ void oidset_parse_file_carefully(struct oidset *set, const char *path,
++				 const struct git_hash_algo *algop,
+ 				 oidset_parse_tweak_fn fn, void *cbdata);
+=20
+ struct oidset_iter {
 --=20
 2.45.2.436.gcd77e87115.dirty
 
 
---5B9Ujm1PuF174lST
+--iiBCAqYCQn+AnZmm
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoO+MACgkQVbJhu7ck
-PpSTJw//eLGctvJcBDqW/5KdrHz6+dEcdKSt1UvBTYumf1wei8aCWtqV5ZnBE+B4
-KEHd3fym8BSRqRKomDmHccYI63ts8/xdhfk5+GdoLcH9TeQ88KVL8hMkl0wThezv
-4v0XMZaybvLOYzdkvth6OYMRRFulWD2Hyr6pXoy/AZbuv6Ru/JkycEztSKeJAwFj
-KWc0ltjsyv5jp8Va4+R6Kv+AdlRf5DsbUyOIL+IBZ4CzX125WOPX0/rC5i1j5OCG
-0FgJWOEiO/IO0FyqUt5rpiw1yr78/0AJZ2/oegXzQqXUaioi7dQ1Q4Xs5sBcWokp
-XuWaOPeVmloQdPDvgU8FjfwaqV00nUzOvp24gqO6LBtTjGQii8KukKQ3S1eDsAEv
-QgSea7FN2wtNOjWRNixH8UUyJqQrKYIM4FpFFol/1/ORV5rFKpPhTCZomg4eYvIE
-m06doLXDhaeNiWp+7WMelxIHysO/kkkP6Ru3gj8WSK6tAn4gQyUGPVgjE8GjgClL
-YdqfZDs3t3rdEIz2qD8Xqd3vap2H5o28av83uuNwKO8U4gvcWmnqM3+eaBixIZJW
-tr9iVVMCo2dGsuisJtOFZiuHwMksggVI4SH/IeMUdOljGyTw6D1HTHv11XUCWgHW
-AXjUgq8jxVKQeDN8X5Otc5Y6KCwOya3av9uGXq1Xp/BpH07/TBo=
-=W/y8
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoO+gACgkQVbJhu7ck
+PpQC5RAAmB3GFdF3J/hBN6iQFAAt04V3pwUE57vrIp+lTc7iM7ZBTOiMRluEvmCw
+cTgszpGrAi1kU4GqnrtdArUTvCCYEITqLY/oALWi6PWQ/aOdEQBDSCD02kbYr0f2
+RIGL0jsoLKwURz8MoYvD0e3wgMNmlOnCnsMkbWbZhsl9yjvebcV7iipaSmxeDeTQ
+fat6evpCLPFS7HIDJb7NVoghEimRnal9vc+6f1T6mdEdp3Q90NvoxCnzisO0tiZx
+Nl4WL+hQNI6e2nDD66otsCxgJmccGFypp4V4B3/Rr6GuJSjQnoUI2PJ5Eqii2+uk
+ytAG6YQP3xF8KFyGz654aDcgQp6TznDhEnkY5thCMw1Ef/6tW9UMNYTCPdHafhyH
++3xOVSp5/7Bdy+SO70fGVc5gFbvWaPcc4WLBr23FW4QJXm/BD19tc3fVWSndsxU3
+mPrzKYNqWWHThB7ekl2Kx+yMp9O2VdzD3UJ8Dx3ZqKq1zsYx8Po3DMEzdMPcuWhF
+kWC4JqNetHNZQMgXqIwOxArqItRisa2P+d1i6t14MxPDuHb/smlbEgR+nBoMzR1J
+Q759tDRDJIvWH8YuZCRNKis/B00NaBpCiQEyBWPSBzVXr9VWSl7L5zDoqIpn0cTT
+oyYB8f1Dz8hwSlpx04OGk66Cpwgvj07pxnvBkLxZGJB4PH1F5W8=
+=gb3P
 -----END PGP SIGNATURE-----
 
---5B9Ujm1PuF174lST--
+--iiBCAqYCQn+AnZmm--
