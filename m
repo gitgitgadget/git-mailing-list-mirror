@@ -1,62 +1,62 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3506181AC8
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 18:25:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FB884D14
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 18:25:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718130304; cv=none; b=rJQk9wT+o6lm/1uYnijWRFkbZCBVbKFBbm8A09ARcjJttMRfkAa5l+tU+m6HVch87zhQR2CG7NepUdBqN/2wHczlgZF/zunUdjViyF1oK0d8FWtAKRnzQ34kfn+j6vKctI+pdSOAfuP5TVAumwWdUOd6ReHlAwv0OGv4yd3ODik=
+	t=1718130306; cv=none; b=Z9ckCDNfVoh57TeB9ZgUXyXSs97xUjN3zqgxCNliEdLAxyko6XM9xBODxHBcupiTqgfDFAK2E6N+A9dfjWJUTiZW8LGz7fk0UiUifrBwZdyIVNGfEqk/D0gOQUqitShLu8KDqsNQEUjE3ye2wXY19iL+gXZKdR6kGj9Wnhj1fTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718130304; c=relaxed/simple;
-	bh=juJ5A/iY2RufRgHGN13pLErLvvIEMMqU9+2X4YJBL28=;
+	s=arc-20240116; t=1718130306; c=relaxed/simple;
+	bh=EYIU2ZUTPNHcI8Ir1ovFkeSNyZ5uNmYuDke9nuYLUW8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JuCOmTQ9ZniLBmwM+tF0eIEdKZ0HvajvBerZYMp+BXZmAWGXVXGWLUD0XtdZHh3+2KzycFF9/5X2HqftXyQQkrLqzwzNZLzvm4iu0yA5buKDQ6ngk6RkXWQvv/u3Ka+8JLQpBMrm3f/JIpdND6R7PbVkpt5v0PZo0Obb5PapOQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ckyKpG8K; arc=none smtp.client-ip=209.85.221.47
+	 MIME-Version:To:Cc; b=svZHdfhqGp56Cb6xuWGdfYXLBLYxlAMkcYy/UFXfitqeoYzE9pilm7egGcG59RDMMWjEqoG72c8WvtrpmT0g+QearKqSsY7LzjD7DqR47oVyXz7WeV+EsX8HDQ+hzvwvO98UD0aDPN4ivDeiCZAJXh/kN/AuAvxzt3BaoLhSvEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SEcuC0dS; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ckyKpG8K"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-35f1c567ae4so2719869f8f.1
-        for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:25:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SEcuC0dS"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-42281d8cd2dso327405e9.3
+        for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:25:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718130301; x=1718735101; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718130302; x=1718735102; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LIbDgrZZzLffzDsPZ7EVcEJznmdLDB8xTVpvzkl5Em8=;
-        b=ckyKpG8KCQJz9wv1cNBRUiasMoPGm2FHRU8U6mHPrsjAa+pzjlk7UtFb9Uexh9mtJt
-         v8rXzqVrwrNbq05Y73U0yP2F8GM5Xh14EXb5BxjSUurQ+UAdd0EMacjn7D+tp8MCgvro
-         ALhqmnoYG3TaFA83CwFvSjR8px5rXMFJFlH7hl8DcYmBCyEOyYAf4VyOHE7xqjVfzNjt
-         X7/zqU0lXXh+Fp+OP1llJdMFZRM5MCjbLiRlkrR9/ALtQ5umF+EkDgTuP+joS4jgeyEL
-         PYuQhJFx527DG/Xv5b3v8uVIs0a5Wiv4kmu3fUgJMhbohy3quaEaQyx1if+V85O3RyU4
-         a2Ug==
+        bh=NV51om7aiHQeQkc031BzkWonrWwPeiG+D47N+moPbpw=;
+        b=SEcuC0dSNNqRQBxqpElkiMN8EKbeXhea8JFTN8XYsSno/IjDQWzjZMTpG3zE3BnJ3N
+         slN84pMQSvQoPPcpdWQXEYFGLkVi+WGXY5sdQEfHLwf8cMdUuVzx+WjwXEw31+hslDlq
+         GS7Sb+LT0yYtktYyAj1WQ8Z4T6YzdsePZ5aEnhHkXlCE60V6LBujk8wHUU0l6YPd6XCK
+         5FCE7/eMrZdgxKGEAhrWt5l6Svr8TaGzYzVhXbDdqukmTrZknMJ9r7Niq+VlfoI1Z2l1
+         txe85bKYrk1IXV3rvH/aiZOxTM7fZPgT6Mr/dBwbsvgXqjO1z8KSj7LhHMdEMW0y+U5e
+         a0BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718130301; x=1718735101;
+        d=1e100.net; s=20230601; t=1718130302; x=1718735102;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LIbDgrZZzLffzDsPZ7EVcEJznmdLDB8xTVpvzkl5Em8=;
-        b=aHeBcLRY/So7nztZQm+u60NRq3LRNAGT+dCTUGRWi0GkbTrzvMHzEeGH13+c+YkUhk
-         Oxu9+COJTGKKYm8ntnsi1ge56gVf5oNd94p7weelE/gDNA6g0nKaDFa0U1C6I/0HtMLd
-         2YAq3BReuTK9gVEZSGQHIEcggd5M/TluiTTi3V2w7rSJmSptG7LStUw/RUji1KVsk40R
-         j8jobDWg+1bG25tQT++RqfPbVXNIbve1+Of2v/JvplNb1p7zZz1McPnSGMddYSOzrNpW
-         A3h++phXVuUAhcr2TTOY3CL46hznwOm4c3sMnpwwT13vMdk8+V5ZBFlxr8CtLFY07CTR
-         cvDQ==
-X-Gm-Message-State: AOJu0Ywialrct5PgHbE77eBX8oNvHPYlP+Ih1cK6yHpbiaAexBXv35N3
-	1laCQtSm3PcgHBW6jUU11emBemYYVl4kFxdMQq8ym+7CWz+ENTJky0kxGQ==
-X-Google-Smtp-Source: AGHT+IHGs0ag/KRifTEUft8rRrCTklG+krgc5+4mvBNtK/61u3IIz3Y3DiQuC4rlo2WEl11vaS0iqg==
-X-Received: by 2002:a5d:4644:0:b0:35f:1522:10b1 with SMTP id ffacd0b85a97d-35f1522121cmr6567511f8f.52.1718130301263;
-        Tue, 11 Jun 2024 11:25:01 -0700 (PDT)
+        bh=NV51om7aiHQeQkc031BzkWonrWwPeiG+D47N+moPbpw=;
+        b=H+yM4XFzhp/pm4CSYSfdDE2YdtRWzHS1+9VBa6U2vJzjxjP/PxbLPrpx/mjW36Wo+Q
+         S2seTZlJj6PFzz39YcGD1d4A2yn2aDSMTXQESpTphQBp3Jvv54QGM+lY3mSyUuMew+Gw
+         ppBdNc1VmhFir5cSh+p4KUEPG8QKt6wYGtS+6L0Am9pYL1LtVYHRdid3FGQyvZE28Ymg
+         bJGQrBtnH1FLO86Fo5IcWfIkyyW/FJ6bxRhlz1uXHHvrPAbN8I8jkQ23p3d/lxMikTls
+         BDZ7Alam8rSbWG1/GwwDZDIAc0SNze72BnwwB/XX9P4X/FKO8DCzpj4GVXlDudslx5qw
+         RuYg==
+X-Gm-Message-State: AOJu0YxnqUOEQvKPC0uQEDgbz0rwp5UWH5VaH372AcNK95cxVxujffCW
+	6rGONSovBnE7OXj7teM8RT4vCoJF8G9lPmfsz2LFFwtuXaaNgkhed9ykLA==
+X-Google-Smtp-Source: AGHT+IFMRuO4rW2ZiK4v2nJ6Gh0JjbLcNz9d6VOAveyvO3UHGLq4fTQtaKGgPX5VgGgLtspdzZsnsA==
+X-Received: by 2002:a05:600c:35c7:b0:422:48a:c04d with SMTP id 5b1f17b1804b1-422048ac3e8mr51040635e9.6.1718130302314;
+        Tue, 11 Jun 2024 11:25:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35f2169fc45sm7016616f8f.10.2024.06.11.11.25.00
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4217f633f2asm113132635e9.28.2024.06.11.11.25.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jun 2024 11:25:00 -0700 (PDT)
-Message-Id: <68acdd3c5ee266fd0c1d3ae45f69af4ef9012e07.1718130288.git.gitgitgadget@gmail.com>
+        Tue, 11 Jun 2024 11:25:01 -0700 (PDT)
+Message-Id: <df0c50dfea3cb77e0070246efdf7a3f070b2ad97.1718130288.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
 References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
 From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 11 Jun 2024 18:24:45 +0000
-Subject: [PATCH 13/16] mktree: add directory-file conflict hashmap
+Date: Tue, 11 Jun 2024 18:24:46 +0000
+Subject: [PATCH 14/16] mktree: optionally add to an existing tree
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,104 +72,310 @@ Cc: Victoria Dye <vdye@github.com>,
 
 From: Victoria Dye <vdye@github.com>
 
-Create a hashmap member of a 'struct tree_entry_array' that contains all of
-the (de-duplicated) provided tree entries, indexed by the hash of their path
-with *no* trailing slash. This hashmap will be used in a later commit to
-avoid adding a file to an existing tree that has the same path as a
-directory, or vice versa.
+Allow users to specify a single "tree-ish" value as a positional argument.
+If provided, the contents of the given tree serve as the basis for the new
+tree (or trees, in --batch mode) created by 'mktree', on top of which all of
+the stdin-provided tree entries are applied.
+
+At a high level, the entries are "applied" to a base tree by iterating
+through the base tree using 'read_tree' in parallel with iterating through
+the sorted & deduplicated stdin entries via their iterator. That is, for
+each call to the 'build_index_from_tree callback of 'read_tree':
+
+* If the iterator entry precedes the base tree entry, add it to the in-core
+  index, increment the iterator, and repeat.
+* If the iterator entry has the same name as the base tree entry, add the
+  iterator entry to the index, increment the iterator, and return from the
+  callback to continue the 'read_tree' iteration.
+* If the iterator entry follows the base tree entry, first check
+  'df_name_hash' to ensure we won't be adding an entry with the same name
+  later (with a different mode). If there's no directory/file conflict, add
+  the base tree entry to the index. In either case, return from the callback
+  to continue the 'read_tree' iteration.
+
+Finally, once 'read_tree' is complete, add the remaining entries in the
+iterator to the index and write out the index as a tree.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/mktree.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ Documentation/git-mktree.txt |   7 +-
+ builtin/mktree.c             | 134 ++++++++++++++++++++++++++++++-----
+ t/t1010-mktree.sh            |  36 ++++++++++
+ 3 files changed, 157 insertions(+), 20 deletions(-)
 
+diff --git a/Documentation/git-mktree.txt b/Documentation/git-mktree.txt
+index afbc846d077..99abd3c31a6 100644
+--- a/Documentation/git-mktree.txt
++++ b/Documentation/git-mktree.txt
+@@ -9,7 +9,7 @@ git-mktree - Build a tree-object from formatted tree entries
+ SYNOPSIS
+ --------
+ [verse]
+-'git mktree' [-z] [--missing] [--literally] [--batch]
++'git mktree' [-z] [--missing] [--literally] [--batch] [--] [<tree-ish>]
+ 
+ DESCRIPTION
+ -----------
+@@ -40,6 +40,11 @@ OPTIONS
+ 	optional.  Note - if the `-z` option is used, lines are terminated
+ 	with NUL.
+ 
++<tree-ish>::
++	If provided, the tree entries provided in stdin are added to this tree
++	rather than a new empty one, replacing existing entries with identical
++	names. Not compatible with `--literally`.
++
+ INPUT FORMAT
+ ------------
+ Tree entries may be specified in any of the formats compatible with the
 diff --git a/builtin/mktree.c b/builtin/mktree.c
-index bee359e9978..09b3c5c6244 100644
+index 09b3c5c6244..9e9d2554cad 100644
 --- a/builtin/mktree.c
 +++ b/builtin/mktree.c
-@@ -16,6 +16,8 @@
+@@ -12,7 +12,9 @@
+ #include "read-cache-ll.h"
+ #include "strbuf.h"
+ #include "tree.h"
++#include "object-name.h"
+ #include "parse-options.h"
++#include "pathspec.h"
  #include "object-store-ll.h"
  
  struct tree_entry {
-+	struct hashmap_entry ent;
-+
- 	/* Internal */
- 	size_t order;
+@@ -206,45 +208,122 @@ static struct tree_entry *advance_tree_entry_iterator(struct tree_entry_iterator
+ 	return prev;
+ }
  
-@@ -33,8 +35,33 @@ static inline size_t df_path_len(size_t pathlen, unsigned int mode)
- struct tree_entry_array {
- 	size_t nr, alloc;
- 	struct tree_entry **entries;
+-static int add_tree_entry_to_index(struct index_state *istate,
++struct build_index_data {
++	struct tree_entry_iterator iter;
++	struct hashmap *df_name_hash;
++	struct index_state istate;
++};
 +
-+	struct hashmap df_name_hash;
++static int add_tree_entry_to_index(struct build_index_data *data,
+ 				   struct tree_entry *ent)
+ {
+ 	struct cache_entry *ce;
+-	struct strbuf ce_name = STRBUF_INIT;
+-	strbuf_add(&ce_name, ent->name, ent->len);
+-
+-	ce = make_cache_entry(istate, ent->mode, &ent->oid, ent->name, 0, 0);
++	ce = make_cache_entry(&data->istate, ent->mode, &ent->oid, ent->name, 0, 0);
+ 	if (!ce)
+ 		return error(_("make_cache_entry failed for path '%s'"), ent->name);
+ 
+-	add_index_entry(istate, ce, ADD_CACHE_JUST_APPEND);
+-	strbuf_release(&ce_name);
++	add_index_entry(&data->istate, ce, ADD_CACHE_JUST_APPEND);
+ 	return 0;
+ }
+ 
+-static void write_tree(struct tree_entry_array *arr, struct object_id *oid)
++static int build_index_from_tree(const struct object_id *oid,
++				 struct strbuf *base, const char *filename,
++				 unsigned mode, void *context)
+ {
+-	struct tree_entry_iterator iter = { NULL };
++	int result;
++	struct tree_entry *base_tree_ent;
++	struct build_index_data *cbdata = context;
++	size_t filename_len = strlen(filename);
++	size_t path_len = S_ISDIR(mode) ? st_add3(filename_len, base->len, 1)
++					: st_add(filename_len, base->len);
++
++	/* Create a tree entry from the current entry in read_tree iteration */
++	base_tree_ent = xcalloc(1, st_add3(sizeof(struct tree_entry), path_len, 1));
++	base_tree_ent->len = path_len;
++	base_tree_ent->mode = mode;
++	oidcpy(&base_tree_ent->oid, oid);
++
++	memcpy(base_tree_ent->name, base->buf, base->len);
++	memcpy(base_tree_ent->name + base->len, filename, filename_len);
++	if (S_ISDIR(mode))
++		base_tree_ent->name[base_tree_ent->len - 1] = '/';
++
++	while (cbdata->iter.current) {
++		struct tree_entry *ent = cbdata->iter.current;
++
++		int cmp = name_compare(ent->name, ent->len,
++				       base_tree_ent->name, base_tree_ent->len);
++		if (!cmp || cmp < 0) {
++			advance_tree_entry_iterator(&cbdata->iter);
++
++			if (add_tree_entry_to_index(cbdata, ent) < 0) {
++				result = error(_("failed to add tree entry '%s'"), ent->name);
++				goto cleanup_and_return;
++			}
++
++			if (!cmp) {
++				result = 0;
++				goto cleanup_and_return;
++			} else
++				continue;
++		}
++
++		break;
++	}
++
++	/*
++	 * If the tree entry should be replaced with an entry with the same name
++	 * (but different mode), skip it.
++	 */
++	hashmap_entry_init(&base_tree_ent->ent,
++			   memhash(base_tree_ent->name, df_path_len(base_tree_ent->len, base_tree_ent->mode)));
++	if (hashmap_get_entry(cbdata->df_name_hash, base_tree_ent, ent, NULL)) {
++		result = 0;
++		goto cleanup_and_return;
++	}
++
++	if (add_tree_entry_to_index(cbdata, base_tree_ent)) {
++		result = -1;
++		goto cleanup_and_return;
++	}
++
++	result = 0;
++
++cleanup_and_return:
++	FREE_AND_NULL(base_tree_ent);
++	return result;
++}
++
++static void write_tree(struct tree_entry_array *arr, struct tree *base_tree,
++		       struct object_id *oid)
++{
++	struct build_index_data cbdata = { 0 };
+ 	struct tree_entry *ent;
+-	struct index_state istate = INDEX_STATE_INIT(the_repository);
+-	istate.sparse_index = 1;
++	struct pathspec ps = { 0 };
+ 
+ 	sort_and_dedup_tree_entry_array(arr);
+ 
+-	init_tree_entry_iterator(&iter, arr);
++	index_state_init(&cbdata.istate, the_repository);
++	cbdata.istate.sparse_index = 1;
++	init_tree_entry_iterator(&cbdata.iter, arr);
++	cbdata.df_name_hash = &arr->df_name_hash;
+ 
+ 	/* Construct an in-memory index from the provided entries & base tree */
+-	while ((ent = advance_tree_entry_iterator(&iter))) {
+-		if (add_tree_entry_to_index(&istate, ent))
++	if (base_tree &&
++	    read_tree(the_repository, base_tree, &ps, build_index_from_tree, &cbdata) < 0)
++		die(_("failed to create tree"));
++
++	while ((ent = advance_tree_entry_iterator(&cbdata.iter))) {
++		if (add_tree_entry_to_index(&cbdata, ent))
+ 			die(_("failed to add tree entry '%s'"), ent->name);
+ 	}
+ 
+ 	/* Write out new tree */
+-	if (cache_tree_update(&istate, WRITE_TREE_SILENT | WRITE_TREE_MISSING_OK))
++	if (cache_tree_update(&cbdata.istate, WRITE_TREE_SILENT | WRITE_TREE_MISSING_OK))
+ 		die(_("failed to write tree"));
+-	oidcpy(oid, &istate.cache_tree->oid);
++	oidcpy(oid, &cbdata.istate.cache_tree->oid);
+ 
+-	release_index(&istate);
++	release_index(&cbdata.istate);
+ }
+ 
+ static void write_tree_literally(struct tree_entry_array *arr,
+@@ -268,7 +347,7 @@ static void write_tree_literally(struct tree_entry_array *arr,
+ }
+ 
+ static const char *mktree_usage[] = {
+-	"git mktree [-z] [--missing] [--literally] [--batch]",
++	"git mktree [-z] [--missing] [--literally] [--batch] [--] [<tree-ish>]",
+ 	NULL
  };
  
-+static int df_name_hash_cmp(const void *cmp_data UNUSED,
-+			    const struct hashmap_entry *eptr,
-+			    const struct hashmap_entry *entry_or_key,
-+			    const void *keydata UNUSED)
-+{
-+	const struct tree_entry *e1, *e2;
-+	size_t e1_len, e2_len;
-+
-+	e1 = container_of(eptr, const struct tree_entry, ent);
-+	e2 = container_of(entry_or_key, const struct tree_entry, ent);
-+
-+	e1_len = df_path_len(e1->len, e1->mode);
-+	e2_len = df_path_len(e2->len, e2->mode);
-+
-+	return e1_len != e2_len ||
-+	       name_compare(e1->name, e1_len, e2->name, e2_len);
-+}
-+
-+static void init_tree_entry_array(struct tree_entry_array *arr)
-+{
-+	hashmap_init(&arr->df_name_hash, df_name_hash_cmp, NULL, 0);
-+}
-+
- static void tree_entry_array_push(struct tree_entry_array *arr, struct tree_entry *ent)
- {
- 	ALLOC_GROW(arr->entries, arr->nr + 1, arr->alloc);
-@@ -43,6 +70,7 @@ static void tree_entry_array_push(struct tree_entry_array *arr, struct tree_entr
+@@ -326,6 +405,7 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
+ 	int is_batch_mode = 0;
+ 	struct tree_entry_array arr = { 0 };
+ 	struct mktree_line_data mktree_line_data = { .arr = &arr };
++	struct tree *base_tree = NULL;
+ 	int ret;
  
- static void clear_tree_entry_array(struct tree_entry_array *arr)
- {
-+	hashmap_clear(&arr->df_name_hash);
- 	for (size_t i = 0; i < arr->nr; i++)
- 		FREE_AND_NULL(arr->entries[i]);
- 	arr->nr = 0;
-@@ -50,6 +78,7 @@ static void clear_tree_entry_array(struct tree_entry_array *arr)
- 
- static void release_tree_entry_array(struct tree_entry_array *arr)
- {
-+	hashmap_clear(&arr->df_name_hash);
- 	FREE_AND_NULL(arr->entries);
- 	arr->nr = arr->alloc = 0;
- }
-@@ -135,6 +164,14 @@ static void sort_and_dedup_tree_entry_array(struct tree_entry_array *arr)
- 	/* Sort again to order the entries for tree insertion */
- 	ignore_mode = 0;
- 	QSORT_S(arr->entries, arr->nr, ent_compare, &ignore_mode);
-+
-+	/* Finally, initialize the directory-file conflict hash map */
-+	for (size_t i = 0; i < count; i++) {
-+		struct tree_entry *curr = arr->entries[i];
-+		hashmap_entry_init(&curr->ent,
-+				   memhash(curr->name, df_path_len(curr->len, curr->mode)));
-+		hashmap_put(&arr->df_name_hash, &curr->ent);
-+	}
- }
- 
- struct tree_entry_iterator {
-@@ -302,6 +339,8 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
+ 	const struct option option[] = {
+@@ -338,6 +418,22 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
+ 	};
  
  	ac = parse_options(ac, av, prefix, option, mktree_usage, 0);
- 
-+	init_tree_entry_array(&arr);
++	if (ac > 1)
++		usage_with_options(mktree_usage, option);
 +
- 	do {
- 		ret = read_index_info(nul_term_line, mktree_line, &mktree_line_data);
- 		if (ret < 0)
++	if (ac) {
++		struct object_id base_tree_oid;
++
++		if (mktree_line_data.literally)
++			die(_("option '%s' and tree-ish cannot be used together"), "--literally");
++
++		if (repo_get_oid(the_repository, av[0], &base_tree_oid))
++			die(_("not a valid object name %s"), av[0]);
++
++		base_tree = parse_tree_indirect(&base_tree_oid);
++		if (!base_tree)
++			die(_("not a tree object: %s"), oid_to_hex(&base_tree_oid));
++	}
+ 
+ 	init_tree_entry_array(&arr);
+ 
+@@ -361,7 +457,7 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
+ 			if (mktree_line_data.literally)
+ 				write_tree_literally(&arr, &oid);
+ 			else
+-				write_tree(&arr, &oid);
++				write_tree(&arr, base_tree, &oid);
+ 			puts(oid_to_hex(&oid));
+ 			fflush(stdout);
+ 		}
+diff --git a/t/t1010-mktree.sh b/t/t1010-mktree.sh
+index 956692347f0..ea5a011405e 100755
+--- a/t/t1010-mktree.sh
++++ b/t/t1010-mktree.sh
+@@ -238,4 +238,40 @@ test_expect_success 'mktree with duplicate entries' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'mktree with base tree' '
++	tree_oid=$(cat tree) &&
++	folder_oid=$(git rev-parse ${tree_oid}:folder) &&
++	before_oid=$(git rev-parse ${tree_oid}:before) &&
++	head_oid=$(git rev-parse HEAD) &&
++
++	{
++		printf "040000 tree $folder_oid\ttest\n" &&
++		printf "100644 blob $before_oid\ttest.txt\n" &&
++		printf "040000 tree $folder_oid\ttest-\n" &&
++		printf "160000 commit $head_oid\ttest0\n"
++	} >top.base &&
++	git mktree <top.base >tree.base &&
++
++	{
++		printf "100755 blob $before_oid\tz\n" &&
++		printf "160000 commit $head_oid\ttest.xyz\n" &&
++		printf "040000 tree $folder_oid\ta\n" &&
++		printf "100644 blob $before_oid\ttest\n"
++	} >top.append &&
++	git mktree $(cat tree.base) <top.append >tree.actual &&
++
++	{
++		printf "040000 tree $folder_oid\ta\n" &&
++		printf "100644 blob $before_oid\ttest\n" &&
++		printf "040000 tree $folder_oid\ttest-\n" &&
++		printf "100644 blob $before_oid\ttest.txt\n" &&
++		printf "160000 commit $head_oid\ttest.xyz\n" &&
++		printf "160000 commit $head_oid\ttest0\n" &&
++		printf "100755 blob $before_oid\tz\n"
++	} >expect &&
++	git ls-tree $(cat tree.actual) >actual &&
++
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 gitgitgadget
 
