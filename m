@@ -1,68 +1,88 @@
-Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AEF818641
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 06:47:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697AB171E4F
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 06:48:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718088431; cv=none; b=kAyE1iYndghE6lXJsin3R0NRlUCpeqH5o2MMBqfHoq9LW256ocKVyTKGTzWr2ERSAzmhhNrVJH4lVkzISqfGwDPY5mnURyIwS/0A0VGMjr1Gjs56iPHRZSHZiddZcba8ltuttdZuSNgQajBdhVXKtpwKZVSF+lmmn54NfVFAQW8=
+	t=1718088531; cv=none; b=bxHUVfVGsUwStBGvb5m2eEoqnlxjWLt/aXhIyOIqf3Z7cDuSIxFacoANEqHt/wH+5SqNgHo3ZUIAwStZg8MnIR+2dzxjn7rSLga1Tbi1PMqcJPzhlLQyvXKGX3aGD2v0BJpqvBq6UrJsQ+DaHl5n5s3RtRDMT+VlV/CQ7+ehom0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718088431; c=relaxed/simple;
-	bh=P5uuCSZpJtEDIZkNFjzEUWEBjLTxwY6kDQWy0CB+0vI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=B1s0+SdejC4m/UyiAKnJuHwCXw3p8pvVCDq37TNWQKNWHjFJSmNg3uVjqoUZqPXQgmWG+uo4IAYdzb7DErzYcB6xehuebUr2yhmKAq0t9DoUoF4+wxrWQyzgYwojb34s0y1NcjTOtu0ZwqHk/AybiCFkoHriIVAdXFKlfNJrXZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=LgaYLHwU reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="LgaYLHwU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=EZVJABbGGjdCYveuQEfxyT227YS2cAMipGJgzvF1bIU=; b=L
-	gaYLHwUra0OSnfB5PNcNRZwBuOAH42KdH1mYs5+laj4QwxhhbnoXUoFWUHiq1O0F
-	zypxupp83DyU+mWwrNAsypxHcZgEhy24wuC7FbINF/Qb05QY1ZY4id7g2hNnqaha
-	/R+wEJO0SXdU0NmcbCv0FMtrGlB2kirPzdR53jywl8=
-Received: from bupt_xingxin$163.com ( [124.160.72.194] ) by
- ajax-webmail-wmsvr-40-126 (Coremail) ; Tue, 11 Jun 2024 14:46:47 +0800
- (CST)
-Date: Tue, 11 Jun 2024 14:46:47 +0800 (CST)
-From: "Xing Xin" <bupt_xingxin@163.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"Karthik Nayak" <karthik.188@gmail.com>, 
-	"Xing Xin" <xingxin.xx@bytedance.com>
-Subject: Re:Re: [PATCH v4 2/4] unbundle: extend verify_bundle_flags to
- support fsck-objects
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <ZmGmUcO8OYuPnH9H@tanuki>
-References: <pull.1730.v3.git.1716824518.gitgitgadget@gmail.com>
- <pull.1730.v4.git.1717057290.gitgitgadget@gmail.com>
- <beb7073581123c1a9096d466f1ccff7fa68f3a19.1717057290.git.gitgitgadget@gmail.com>
- <ZmGmUcO8OYuPnH9H@tanuki>
-X-NTES-SC: AL_Qu2aCvyTt0wr4SKQY+kXn0oVhe85UMW2ufsg3YReP500lSTjxiIlZFJ9N1fa2/u0FR+unTWLfjh2xfRKcalEdLw3G5NkZ1efX0WZs5t1/yR0
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	s=arc-20240116; t=1718088531; c=relaxed/simple;
+	bh=W3e2086mK1RxVeIUDA6XsNYDqdAgeiBWRMrdC0E58rg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FusRWIlqXACmJw+Z5jsgDOizAYhfKamo1ZmTtHV2BZcQxR2fnMXBO1ruc9UNdK5KBFT2lf6PQvQb/YKjQOD3D4otpqtWIwj2MJ+zO38piE25ixjna06b2p0OitEEOTrMOaTNINUbyMalROTM8A8wNYUHv07rkpUl0X50TltOrlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 17037 invoked by uid 109); 11 Jun 2024 06:48:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Jun 2024 06:48:48 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24125 invoked by uid 111); 11 Jun 2024 06:48:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Jun 2024 02:48:45 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 11 Jun 2024 02:48:47 -0400
+From: Jeff King <peff@peff.net>
+To: 'Yuri' <yuri@rawbw.com>
+Cc: rsbecker@nexbridge.com, 'Junio C Hamano' <gitster@pobox.com>,
+	'Git Mailing List' <git@vger.kernel.org>
+Subject: Re: [BUG] "git clean -df ." silently doesn't delete folders with
+ stale .nfs* files
+Message-ID: <20240611064847.GC3248245@coredump.intra.peff.net>
+References: <ae862adb-1475-48e9-bd50-0c07dc42a520@rawbw.com>
+ <xmqqwmmw1sev.fsf@gitster.g>
+ <4ed426e4-beb6-45ed-b493-1e19c7c0511b@rawbw.com>
+ <xmqqikygzdgk.fsf@gitster.g>
+ <e8feffd0-ba6d-4aae-8c80-3d6482896b08@rawbw.com>
+ <0ee501dabb91$aa2340a0$fe69c1e0$@nexbridge.com>
+ <8fdc76e2-3de2-4312-956c-2662336fa54d@rawbw.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <5670c216.6e3d.190060c98fb.Coremail.bupt_xingxin@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3fwzX8mdm_fUwAA--.46598W
-X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiRRn6bWXAmx22egACsm
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8fdc76e2-3de2-4312-956c-2662336fa54d@rawbw.com>
 
-QXQgMjAyNC0wNi0wNiAyMDowNjo0MSwgIlBhdHJpY2sgU3RlaW5oYXJkdCIgPHBzQHBrcy5pbT4g
-d3JvdGU6Cj5PbiBUaHUsIE1heSAzMCwgMjAyNCBhdCAwODoyMToyOEFNICswMDAwLCBYaW5nIFhp
-biB2aWEgR2l0R2l0R2FkZ2V0IHdyb3RlOgo+PiBGcm9tOiBYaW5nIFhpbiA8eGluZ3hpbi54eEBi
-eXRlZGFuY2UuY29tPgo+Cj5UaW55IG5pdDogdGhlIGltcG9ydGFudCBjaGFuZ2UgaW4gdGhpcyBj
-b21taXQgaXMgbm90IHRoYXQgeW91IHdpcmUgdXAKPnRoZSBmbGFnLCBidXQgcmF0aGVyIHRoYXQg
-d2Ugc3RhcnQgdG8gZXhlY3V0ZSBnaXQtZnNjaygxKSBub3cuIEknZCB0aHVzCgpUbyBiZSBwcmVj
-aXNlLCBpdCBpcyBhZGRpbmcgYSAiLS1mc2NrLW9iamVjdHMiIGZsYWcgdG8gImdpdC1pbmRleC1w
-YWNrIi4KCj5wcm9wb3NlIHRvIGFkYXB0IHRoZSBjb21taXQgdGl0bGUgYWNjb3JkaW5nbHkuCgpU
-aGlzIGNvbW1pdCBpcyBtYXBwZWQgdG8gW1BBVENIIHY1IDMvNF0gZHVlIHRvIHNvbWUgYWRqdXN0
-bWVudHMgdG8gdGhlCmNvbW1pdCBvcmRlciBhbmQgaW1wbGVtZW50YXRpb24gZGV0YWlscy4gSG9w
-ZSB0aGUgbmV3IHRpdGxlIGNhbiBiZXR0ZXIKZGVzY3JpYmUgdGhlIG5ldyBwYXRjaC4KClhpbmcg
-WGluCg==
+On Mon, Jun 10, 2024 at 06:09:52PM -0700, 'Yuri' wrote:
+
+> "touch .nfs12309" isn't enough.
+> 
+> Here is a reliable way to reproduce the problem:
+> 1. Have a git repository on an NFS disk.
+> 2. mkdir xx
+> 3. touch xx/x
+> 4. tail -f xx/x &
+> 5. rm xx/x
+> 6. git clean -df .
+> 
+> The last operation reproduces the problem. The xx directory and the .nfsNNNN
+> file in it stay without warnings.
+> The .nfsNNNN file is created by the NFS client when the xx/x file is
+> removed.
+
+That is not the behavior I get. I see:
+
+  $ git clean -df .
+  warning: failed to remove xx/.nfs0000000002c8197f00000002: Device or resource busy
+
+Which makes sense, since the kernel fails our unlink() call. Maybe your
+system behaves differently at the syscall level?
+
+This is a pretty standard Debian system with kernel 6.8.12. I set up the
+NFS mount with:
+
+   mkdir /mnt/{server,client}
+   exportfs -o rw,sync 127.0.0.1:/mnt/server
+   mount -t nfs 127.0.0.1:/mnt/server /mnt/client
+
+and then made the repository in /mnt/client. "mount" tells me it's using
+nfs4.
+
+Running "git clean" on the server side does remove the files (no
+warning, but the directories are actually removed).
+
+-peff
