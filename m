@@ -1,53 +1,53 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E8C7D3FA
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 23:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7239D154430
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 23:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718147774; cv=none; b=jJt7CEHodYFSPKIuN3NDwq1hlxgE0E1iRbVfOq+q73u7EONl8vPQHsSLRmr56xb9mcZBL8aDWSu9XbwMiQbq25/dBGTeFxwB4mlgVgp2r5VG/USIoeO+dPk8I+YSXFPxR3KVRoanC7bUZyAWI8D+IXAZNd8UDmpYGPUTyv3K8R4=
+	t=1718147882; cv=none; b=NKxqfAujSPZlCLbUZFTrfaKDUHF2/klt5wjADtZYIFkbVe7LrlYZVEfco3h4WetN22ZxuB4kWBcuXdQ1eujkj6CcshgCcoa7QsgM3jd88gVN6zHvE7s8CNxH0LpwPHyFIL7fHbS+lzp3G8ylSX30O2Tlb80sfyMs11FzWFIUqUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718147774; c=relaxed/simple;
-	bh=hjBw3wqJuTsPXFMUszHXYYOaUW3gZl3DMSdUpKcMcwM=;
+	s=arc-20240116; t=1718147882; c=relaxed/simple;
+	bh=sNJNAoHQZbeeXsAqyClxENHGEmGyXdFAGzgPSikJats=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G5tTCB52M13V/Af88dIxZkEXKzPJmgROvToYp0x8y4CuL8zJeFCh3fhv5rmLBvuyCOvsiCD8vrNPe/CSla92Gih88Y+S1ppf20zGXSwWws6ExBUPD1hH6dbgW8DHJTmVR3D8FUDc5Zq0WsqfteIyYSKF8d/gG/o3nJG02aXtHsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=g67wEkRG; arc=none smtp.client-ip=172.105.7.114
+	 Content-Type:Content-Disposition:In-Reply-To; b=R+iaPQ6dWkFsJJ/47ZXhUuaZ+Xfhk7YtB+XEj8iVRAL5jaMGgmuye1Bv9fIVJzlZx62ncw3enqlJ+b4oiAbGarQBFETUEny1uqdjFUu57Uoiv43398yfqDJ376rRp8aiFkFa9fUGt3L3lyUNvaHkVt45UOBqrXR8TBf0MJfvv/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=MqDgWwUS; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="g67wEkRG"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MqDgWwUS"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1718147765;
-	bh=hjBw3wqJuTsPXFMUszHXYYOaUW3gZl3DMSdUpKcMcwM=;
+	s=default; t=1718147879;
+	bh=sNJNAoHQZbeeXsAqyClxENHGEmGyXdFAGzgPSikJats=;
 	h=Date:From:To:Cc:Subject:References:Content-Type:
 	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
 	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
 	 Content-Type:Content-Disposition;
-	b=g67wEkRGzz60gqmb1/+VePl04JtAoMihivDL+fvt9eEllm3myt0rf/BlUSbOtarPN
-	 R/aAR87girtddsMB6kee0bori1cp6LcKsBwbGamBNZpUkq1NzpjrIeXw+A2MmCgrLk
-	 eHbDtxQhg9J7HFHotaSLEGrDCnkZXeTExJ/LAQ+nXxF3kygOYnNEqZVKsIi2t/Gy0i
-	 6foziHYlHPjrPcmvjBS9oHTa9Scm6ZyE2+62nNSWxKBhDEI0PwfDgGVJPqkGLu6euq
-	 +5O9sVzt8I+0CCgnxUFkhLOshkKsvokSjUw06DjWOy5ZHI4QAd2zySuOdCRDBQ5b4R
-	 143nNpri0RjU7SmOU++p5MvE0eAT1LCUEmXWOzAqtGdJvE5Az0MBNsdLIoedgjA/+N
-	 KBMynGD9aVITpNCDOFEKJP3Itq+lyaXWfG61nbVsQXpl11ec9k0iMxsrlEkha/Frzh
-	 w7YM7E7cOasQ17Op8TzUn2Pr7umE/ZO51X6/KC+dXSBE8e3z4Md
+	b=MqDgWwUSip0JPY3MsCE49+5s3W8f5ckgBw3UIlEshw8K8yhXx3rCYi76wl8ArGhX6
+	 EcoxXy5Tyw82H4mAC2SAkN6h4P8Anm60/MUAoVOjfIcLoeR1IlirpeE9rvJjRWlNmi
+	 c0MBDSvXIH8kt2U2VeHgQnh0NtWzdezZ37BrRs6DgCx/XXEpR1LXGq3hfigbCNW+ZQ
+	 vX5ugbvJBFb7jUVOhKt9qktEITrW1gJTj7tLU9cLKLQYUXQRLP3UeZSfCgDsBL8f3K
+	 ICOJ3hhUFXZpszYsLv/g4h7ySZhYW6eHDv6oMxLZTs0PkG5i4U52SiRL7iAB5zysoK
+	 lWdeGAb7JXOfnuaJZomuQXigRxu9NvzJEqLyhfZxCFBxr+5WjCzHkpi+FZQ8JmVLM5
+	 kfkMLC9ojxMO+Xp2/XjiyY6i2tAnBRtEVLavZzRmY2cwbTkrLuYz9N9Bh1X/KI/ee/
+	 zQ9dOdzGW6Xej91ubXEz3AU/FndE/vKCfsyAm03C6CWFqZywQLr
 Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2BEF92639C;
-	Tue, 11 Jun 2024 23:16:05 +0000 (UTC)
-Date: Tue, 11 Jun 2024 23:16:03 +0000
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 634432639C;
+	Tue, 11 Jun 2024 23:17:59 +0000 (UTC)
+Date: Tue, 11 Jun 2024 23:17:57 +0000
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 16/21] compat/fsmonitor: remove dependency on
- `the_repository` in Darwin IPC
-Message-ID: <Zmjas3s9OPJ9Ff5E@tapette.crustytoothpaste.net>
+Subject: Re: [PATCH 19/21] t/helper: remove dependency on `the_repository` in
+ "oidtree"
+Message-ID: <ZmjbJU1Rnnx0ggHt@tapette.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
 	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 References: <cover.1718106284.git.ps@pks.im>
- <d4e87f9d6b4813fe359e22f4b5d5ebda28e09a08.1718106285.git.ps@pks.im>
+ <339d668da837ab5b4b11399ece4efaf5bc27d313.1718106285.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,55 +55,70 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5hbQvqdmQbN1lNMq"
+	protocol="application/pgp-signature"; boundary="ZWYe5C+cJOGP1PRV"
 Content-Disposition: inline
-In-Reply-To: <d4e87f9d6b4813fe359e22f4b5d5ebda28e09a08.1718106285.git.ps@pks.im>
+In-Reply-To: <339d668da837ab5b4b11399ece4efaf5bc27d313.1718106285.git.ps@pks.im>
 User-Agent: Mutt/2.2.12 (2023-09-09)
 
 
---5hbQvqdmQbN1lNMq
+--ZWYe5C+cJOGP1PRV
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-06-11 at 11:58:47, Patrick Steinhardt wrote:
-> The IPC socket used by the fsmonitor on Darwin is usually contained in
-> the Git repository itself. When the repository is hosted on a networked
-> filesystem though, we instead create the socket path in the user's home
-> directory or the socket directory. In that case, we derive the path by
-> hashing the repository path.
->=20
-> The hashing implicitly depends on `the_repository` though via
-> `hash_to_hex()`. For one, this is wrong because we really should be
-> using the passed-in repository. But arguably, it is not sensible to
-> derive the path hash from the repository's object hash in the first
-> place -- they don't have anything to do with each other, and a
-> repository that is hosted in the same path should always derive the same
-> IPC socket path.
->=20
-> Fix this by unconditionally using SHA1 to derive the path.
+On 2024-06-11 at 11:59:01, Patrick Steinhardt wrote:
+> diff --git a/t/helper/test-oidtree.c b/t/helper/test-oidtree.c
+> index c7a1d4c642..04ec24cc84 100644
+> --- a/t/helper/test-oidtree.c
+> +++ b/t/helper/test-oidtree.c
+> @@ -1,7 +1,6 @@
+>  #include "test-tool.h"
+>  #include "hex.h"
+>  #include "oidtree.h"
+> -#include "setup.h"
+>  #include "strbuf.h"
+> =20
+>  static enum cb_next print_oid(const struct object_id *oid, void *data UN=
+USED)
+> @@ -14,11 +13,9 @@ int cmd__oidtree(int argc UNUSED, const char **argv UN=
+USED)
+>  {
+>  	struct oidtree ot;
+>  	struct strbuf line =3D STRBUF_INIT;
+> -	int nongit_ok;
+>  	int algo =3D GIT_HASH_UNKNOWN;
+> =20
+>  	oidtree_init(&ot);
+> -	setup_git_directory_gently(&nongit_ok);
+> =20
+>  	while (strbuf_getline(&line, stdin) !=3D EOF) {
+>  		const char *arg;
+> @@ -30,7 +27,7 @@ int cmd__oidtree(int argc UNUSED, const char **argv UNU=
+SED)
+>  			algo =3D oid.algo;
+>  			oidtree_insert(&ot, &oid);
+>  		} else if (skip_prefix(line.buf, "contains ", &arg)) {
+> -			if (get_oid_hex(arg, &oid))
+> +			if (get_oid_hex_any(arg, &oid) =3D=3D GIT_HASH_UNKNOWN)
+>  				die("contains not a hexadecimal oid: %s", arg);
 
-Let's instead use SHA-256 to derive the path.  I can imagine that there
-might be a time when some users would like to drop support for SHA-1
-altogether (for FIPS compliance reasons, say) and we'll make our lives a
-lot easier if we avoid more uses of SHA-1.
-
-It is also typically faster when compiled appropriately, although the
-amount of data we're processing is very small.
+This is not a problem in your code, but this might read more naturally
+as "does not contain a hexadecimal oid" or "contains no hexadecimal
+oid".
 --=20
 brian m. carlson (they/them or he/him)
 Toronto, Ontario, CA
 
---5hbQvqdmQbN1lNMq
+--ZWYe5C+cJOGP1PRV
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.4.4 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZmjaswAKCRB8DEliiIei
-gRp0AP9A/PACQm6uw/jpdX0pJa1QQ3E0Ol5mvJw7CQqKp8ASdQD7BdGU2FY2XnG+
-+oXT81zRAJzBRjDBjRL1820qOIN9gQ8=
-=V44C
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZmjbJQAKCRB8DEliiIei
+gU2QAQC5N5PkzBdR2nDk7UKV7G3jeJH+8+sOTmcmKS+TfSyZqgEAvSA1Crrgmczs
+21AsaXqrRmjQwgiq/hL8uiGyh/YitAE=
+=Jwny
 -----END PGP SIGNATURE-----
 
---5hbQvqdmQbN1lNMq--
+--ZWYe5C+cJOGP1PRV--
