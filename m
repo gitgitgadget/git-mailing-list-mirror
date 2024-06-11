@@ -1,62 +1,62 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB776EB7C
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 18:24:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF3C7441E
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 18:24:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718130297; cv=none; b=DsDYNi4hr+vTGIkehp2Yr+nJA3bqeGTToDUk0uoUcnkBdE8T+b3UHe9PqgV5igNMXxNqlrNjbJZbtWPFd6O7G4NSyXQaR5EtTtVi0nDZobnNOv9tMOv9KOGJ+d0vAG4AXPjPT1Y/SKnyABMQQFS1375HtpCF+C82r740x1rHMI4=
+	t=1718130297; cv=none; b=O98Z9TubZha2nfNuCJS1LYOtkepwYXpiq9zmFnadLQ9wOi9F+3jAJo1EwXvHB6ZJHorMX1mN/e0kPE3wYuBbCQx/cDC4i3v7epCofNJQkZ4pGeFvU7uVW3TrnQ3XzzzeGQlPr3PYMF+M0YIvtqzo8oRkxjFA/QoqkRc+oPZaM3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1718130297; c=relaxed/simple;
-	bh=giZOSQaaicN2icYxYpzSBgby9eHhjxzSw2wZ5PkEF5c=;
+	bh=kWwvRTjg9Hemaz0ymKYMG4JoE9jb1NA6f1/ya6Sp99s=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lpplzzG9dhE8IODAMFn5nVmojTyhkyScits/n2T+37RFokw64T8FkQBWFno3uQIpSyDZ4Tr8UFY0eIE70rQQWeREkeavWyVNgyZiCfctEiIV9osHdj+PdDul86tt+uOw2ZQj7BQHXEA+T54MqriuutS8RGKRDwb6xEpsBbpfZdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eiuQrGiK; arc=none smtp.client-ip=209.85.128.43
+	 MIME-Version:To:Cc; b=b2TBoH5r59yKxvvJG9Ka8C6o+0IV9olyTRzcGo9QqJ2kr7s2VcGcPLtCn9oDlZ2aeScP+g2zGSs8Fk3BVu/wmTfH9eSw4VOAFDN7/8UM0xGJ521aaJgg5HnPHTWxJbT2rAWJBYgEE9R9TXzssTCTPV6YeG83OMCyBY7QJkk3euw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Na5E3rWU; arc=none smtp.client-ip=209.85.208.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eiuQrGiK"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-42198492353so11139605e9.1
-        for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:24:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Na5E3rWU"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2ebed33cbadso19634941fa.0
+        for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:24:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1718130293; x=1718735093; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/e400LHKdvhOuQ+OVWma9RT1Sfyor6/Vi4GK8onwiwk=;
-        b=eiuQrGiKUMh1zx1ELFulH0rrb0NEjZdmAOd8c6aTHDc8goZqhF58dNoeVq/dH0J3qY
-         8bnKc+5APAsaroJTu/AKlZ7lIn4NNLi3+zlewnOhgFFpAVZNZM5hA7uREkWvlfLflYCo
-         +0lGtvi6VGptMxddm3/W/OxwGZcU01j96e0fLeqPijoHsJH+UMWaCjwvq+bTtm5g2vrq
-         2mpAK/5AQjSGuMKSYa42p9F/16BMY3RR8U5FKprhMYSg4e5ySDuO0j4dLSX2KY0y33zI
-         IdelIvj3JvbAIJTz8LQk2GXLNKEuGZcQsRi//E9gD0aZL8A8vKOfG2+wQtrsXrJ6OCi5
-         MT5Q==
+        bh=MKqRbGm/RW+V6fq9cVwuHYuiNBW4lFAV7W6d0xw6R6M=;
+        b=Na5E3rWUWkKavbNVE6aKfC3eIQDsnbgsNU7NttISmqUNyyK2SOQ6xwBwb9wRh1b9m3
+         L3WVmgsqO2euZ4F2+TfhnbHoAzIbM7Hp4rRGW1pVTQ+PsfhRsySJ2MHVoxQ9gD+GG/jv
+         Iy2YBXZLxx1nD1Qd3XVrBmPARQN35xPuz5A2pm9i2Fz/B+KaskZTpPBjfQjBC+s/F/ox
+         GaNprYWC6hoKExDmwWLMFXSw1VDT3XAk+rBdz8IeHbMQcFUY/vIWBTl7RRtoFFwshxHF
+         +R9rwwNwFbMKxUxBCWO86SOeKzpkTKgPrAfGCxdSubkFuHU1pHii0j2r/xbsr8JAzWCQ
+         Q9hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1718130293; x=1718735093;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/e400LHKdvhOuQ+OVWma9RT1Sfyor6/Vi4GK8onwiwk=;
-        b=d4cT1CLsN/u9haEX1HSfN89UK5h85+13DaVkQo1JIRdTPFywCZab2upjlIAe5jOgP8
-         Ds0P9A6l46fNXWEYD9IZDflQg0GYLEJwxv6BdIp5Oe1fl5382bpwEkNFa8pzwxhJEuEx
-         nuwfXSQwRZiisitEZXC/J1PSdcceuUTyXBZugyrEcSVSe3PXEDilmu11JP/ZQtB3GlXV
-         mloAD28oiD7wRr2lnk3/3MhmTb6u7aNOByEqmuz3FJmoLjyBoGN5WPGz5ebiEj/deNYL
-         aVByGL3aLDHcHUs1TX80y209OQZZeCKxh+4/ND/6xB5/gM2k2G21aN6S0APSFNDQnyjy
-         mvvg==
-X-Gm-Message-State: AOJu0Yxngq5Q9ttd57WJbpR/Coa7l15ygrJ4tf9WqoNMWMm1IA6m63zt
-	f1Kb86ZSkioZZcl+Tbghubqgn4s0p7di/sxddl9ZZMe8HI8Nt4nWHYfWGQ==
-X-Google-Smtp-Source: AGHT+IGJYLXc+7S0WuObEK/42qJtKzvW/wPm51eHTuaL3CN7Z60Z7/eEzH51l8eRRvHmu6hu7+u/qQ==
-X-Received: by 2002:a05:600c:3c83:b0:41c:13f6:206d with SMTP id 5b1f17b1804b1-42164a2e9d4mr117116145e9.25.1718130292609;
-        Tue, 11 Jun 2024 11:24:52 -0700 (PDT)
+        bh=MKqRbGm/RW+V6fq9cVwuHYuiNBW4lFAV7W6d0xw6R6M=;
+        b=XOSzhVj+8n4j52aA/Dj/GkHVb+RVQDOFU0vq8qqU0mVhFKmHVoYd50wwizE1hmILjG
+         WQPDcD/YyF6+SNOush2btzCHko4EBtJpbJpw+U2TLiMSnmYU6fm0duUGjB+Njzooahxl
+         h18o7zBsSvMkbFZt3QIQwuHr8tBPfmD7a2QMkuQ/D+0uWndCqeP0PZ52IrvwbCoee+gr
+         8shWQ1spAozjIR41Lys4Xenls0DVIrfnnmmRaicMH+x7ofq1mPpnCg4o5qwfS4dH7sO+
+         j6FfVHdpHiDkrpk48kadC5kZRNazeGXzLMpGcJKfVNI+CmOrydND7BgXNs28sRX47hQh
+         pZZg==
+X-Gm-Message-State: AOJu0Yx2StNFypNaho6sN8OD3M2O45mvWZkCuDUM6uzFzjj3hWRhKlMG
+	2jZkFx3206ug5K5Y9uFBz/Wf6435p9z1tFy5sAO0EnAMFZp7KThOGRH0Bg==
+X-Google-Smtp-Source: AGHT+IF2AFmN76jNhi6Rdm+FY4mbp8+vfH7a8jzqRUvbrxE45X6ZDhNvUz+49NtmGjgTqHfK3QU+8g==
+X-Received: by 2002:a2e:9096:0:b0:2eb:1de9:bede with SMTP id 38308e7fff4ca-2eb1de9c5e2mr52514251fa.51.1718130293261;
+        Tue, 11 Jun 2024 11:24:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-422048a40a3sm63984315e9.33.2024.06.11.11.24.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-422760ce994sm12242195e9.13.2024.06.11.11.24.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 11 Jun 2024 11:24:52 -0700 (PDT)
-Message-Id: <5ade145352f44b431c16a2ec29cd87de489e8032.1718130288.git.gitgitgadget@gmail.com>
+Message-Id: <9d0689e9c285b375b0067760929011038c085d65.1718130288.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
 References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
 From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 11 Jun 2024 18:24:35 +0000
-Subject: [PATCH 03/16] mktree: use non-static tree_entry array
+Date: Tue, 11 Jun 2024 18:24:36 +0000
+Subject: [PATCH 04/16] update-index: generalize 'read_index_info'
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,160 +72,343 @@ Cc: Victoria Dye <vdye@github.com>,
 
 From: Victoria Dye <vdye@github.com>
 
-Replace the static 'struct tree_entry **entries' with a non-static 'struct
-tree_entry_array' instance. In later commits, we'll want to be able to
-create additional 'struct tree_entry_array' instances utilizing common
-functionality (create, push, clear, free). To avoid code duplication, create
-the 'struct tree_entry_array' type and add functions that perform those
-basic operations.
+Move 'read_index_info()' into a new header 'index-info.h' and generalize the
+function to call a provided callback for each parsed line. Update
+'update-index.c' to use this generalized 'read_index_info()', adding the
+callback 'apply_index_info()' to verify the parsed line and update the index
+according to its contents.
+
+The input parsing done by 'read_index_info()' is similar to, but more
+flexible than, the parsing done in 'mktree' by 'mktree_line()' (handling not
+only 'git ls-tree' output but also the outputs of 'git apply --index-info'
+and 'git ls-files --stage' outputs). To make 'mktree' more flexible, a later
+patch will replace mktree's custom parsing with 'read_index_info()'.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/mktree.c | 67 +++++++++++++++++++++++++++++++++---------------
- 1 file changed, 47 insertions(+), 20 deletions(-)
+ Makefile                      |   1 +
+ builtin/update-index.c        | 116 ++++++++--------------------------
+ index-info.c                  |  91 ++++++++++++++++++++++++++
+ index-info.h                  |  11 ++++
+ t/t2107-update-index-basic.sh |  27 ++++++++
+ 5 files changed, 155 insertions(+), 91 deletions(-)
+ create mode 100644 index-info.c
+ create mode 100644 index-info.h
 
-diff --git a/builtin/mktree.c b/builtin/mktree.c
-index c02feb06aff..15bd908702a 100644
---- a/builtin/mktree.c
-+++ b/builtin/mktree.c
-@@ -12,15 +12,39 @@
- #include "parse-options.h"
- #include "object-store-ll.h"
- 
--static struct tree_entry {
-+struct tree_entry {
- 	unsigned mode;
- 	struct object_id oid;
- 	int len;
- 	char name[FLEX_ARRAY];
--} **entries;
--static int alloc, used;
-+};
-+
-+struct tree_entry_array {
-+	size_t nr, alloc;
-+	struct tree_entry **entries;
-+};
- 
--static void append_to_tree(unsigned mode, struct object_id *oid, char *path)
-+static void tree_entry_array_push(struct tree_entry_array *arr, struct tree_entry *ent)
-+{
-+	ALLOC_GROW(arr->entries, arr->nr + 1, arr->alloc);
-+	arr->entries[arr->nr++] = ent;
-+}
-+
-+static void clear_tree_entry_array(struct tree_entry_array *arr)
-+{
-+	for (size_t i = 0; i < arr->nr; i++)
-+		FREE_AND_NULL(arr->entries[i]);
-+	arr->nr = 0;
-+}
-+
-+static void release_tree_entry_array(struct tree_entry_array *arr)
-+{
-+	FREE_AND_NULL(arr->entries);
-+	arr->nr = arr->alloc = 0;
-+}
-+
-+static void append_to_tree(unsigned mode, struct object_id *oid, const char *path,
-+			   struct tree_entry_array *arr)
- {
- 	struct tree_entry *ent;
- 	size_t len = strlen(path);
-@@ -32,8 +56,8 @@ static void append_to_tree(unsigned mode, struct object_id *oid, char *path)
- 	ent->len = len;
- 	oidcpy(&ent->oid, oid);
- 
--	ALLOC_GROW(entries, used + 1, alloc);
--	entries[used++] = ent;
-+	/* Append the update */
-+	tree_entry_array_push(arr, ent);
+diff --git a/Makefile b/Makefile
+index 2f5f16847ae..db9604e59c3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1037,6 +1037,7 @@ LIB_OBJS += hex.o
+ LIB_OBJS += hex-ll.o
+ LIB_OBJS += hook.o
+ LIB_OBJS += ident.o
++LIB_OBJS += index-info.o
+ LIB_OBJS += json-writer.o
+ LIB_OBJS += kwset.o
+ LIB_OBJS += levenshtein.o
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index d343416ae26..77df380cb54 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -11,6 +11,7 @@
+ #include "gettext.h"
+ #include "hash.h"
+ #include "hex.h"
++#include "index-info.h"
+ #include "lockfile.h"
+ #include "quote.h"
+ #include "cache-tree.h"
+@@ -509,100 +510,29 @@ static void update_one(const char *path)
+ 	report("add '%s'", path);
  }
  
- static int ent_compare(const void *a_, const void *b_)
-@@ -44,19 +68,18 @@ static int ent_compare(const void *a_, const void *b_)
- 				 b->name, b->len, b->mode);
- }
- 
--static void write_tree(struct object_id *oid)
-+static void write_tree(struct tree_entry_array *arr, struct object_id *oid)
+-static void read_index_info(int nul_term_line)
++static int apply_index_info(unsigned int mode, struct object_id *oid, int stage,
++			    const char *path_name, void *cbdata UNUSED)
  {
- 	struct strbuf buf;
--	size_t size;
--	int i;
-+	size_t size = 0;
+-	const int hexsz = the_hash_algo->hexsz;
+-	struct strbuf buf = STRBUF_INIT;
+-	struct strbuf uq = STRBUF_INIT;
+-	strbuf_getline_fn getline_fn;
++	if (!verify_path(path_name, mode)) {
++		fprintf(stderr, "Ignoring path %s\n", path_name);
++		return 0;
++	}
  
--	QSORT(entries, used, ent_compare);
--	for (size = i = 0; i < used; i++)
--		size += 32 + entries[i]->len;
-+	QSORT(arr->entries, arr->nr, ent_compare);
-+	for (size_t i = 0; i < arr->nr; i++)
-+		size += 32 + arr->entries[i]->len;
- 
- 	strbuf_init(&buf, size);
--	for (i = 0; i < used; i++) {
--		struct tree_entry *ent = entries[i];
-+	for (size_t i = 0; i < arr->nr; i++) {
-+		struct tree_entry *ent = arr->entries[i];
- 		strbuf_addf(&buf, "%o %s%c", ent->mode, ent->name, '\0');
- 		strbuf_add(&buf, ent->oid.hash, the_hash_algo->rawsz);
+-	getline_fn = nul_term_line ? strbuf_getline_nul : strbuf_getline_lf;
+-	while (getline_fn(&buf, stdin) != EOF) {
+-		char *ptr, *tab;
+-		char *path_name;
+-		struct object_id oid;
+-		unsigned int mode;
+-		unsigned long ul;
+-		int stage;
+-
+-		/* This reads lines formatted in one of three formats:
+-		 *
+-		 * (1) mode         SP sha1          TAB path
+-		 * The first format is what "git apply --index-info"
+-		 * reports, and used to reconstruct a partial tree
+-		 * that is used for phony merge base tree when falling
+-		 * back on 3-way merge.
+-		 *
+-		 * (2) mode SP type SP sha1          TAB path
+-		 * The second format is to stuff "git ls-tree" output
+-		 * into the index file.
+-		 *
+-		 * (3) mode         SP sha1 SP stage TAB path
+-		 * This format is to put higher order stages into the
+-		 * index file and matches "git ls-files --stage" output.
++	if (!mode) {
++		/* mode == 0 means there is no such path -- remove */
++		if (remove_file_from_index(the_repository->index, path_name))
++			die("git update-index: unable to remove %s", path_name);
++	}
++	else {
++		/* mode ' ' sha1 '\t' name
++		 * ptr[-1] points at tab,
++		 * ptr[-41] is at the beginning of sha1
+ 		 */
+-		errno = 0;
+-		ul = strtoul(buf.buf, &ptr, 8);
+-		if (ptr == buf.buf || *ptr != ' '
+-		    || errno || (unsigned int) ul != ul)
+-			goto bad_line;
+-		mode = ul;
+-
+-		tab = strchr(ptr, '\t');
+-		if (!tab || tab - ptr < hexsz + 1)
+-			goto bad_line;
+-
+-		if (tab[-2] == ' ' && '0' <= tab[-1] && tab[-1] <= '3') {
+-			stage = tab[-1] - '0';
+-			ptr = tab + 1; /* point at the head of path */
+-			tab = tab - 2; /* point at tail of sha1 */
+-		}
+-		else {
+-			stage = 0;
+-			ptr = tab + 1; /* point at the head of path */
+-		}
+-
+-		if (get_oid_hex(tab - hexsz, &oid) ||
+-			tab[-(hexsz + 1)] != ' ')
+-			goto bad_line;
+-
+-		path_name = ptr;
+-		if (!nul_term_line && path_name[0] == '"') {
+-			strbuf_reset(&uq);
+-			if (unquote_c_style(&uq, path_name, NULL)) {
+-				die("git update-index: bad quoting of path name");
+-			}
+-			path_name = uq.buf;
+-		}
+-
+-		if (!verify_path(path_name, mode)) {
+-			fprintf(stderr, "Ignoring path %s\n", path_name);
+-			continue;
+-		}
+-
+-		if (!mode) {
+-			/* mode == 0 means there is no such path -- remove */
+-			if (remove_file_from_index(the_repository->index, path_name))
+-				die("git update-index: unable to remove %s",
+-				    ptr);
+-		}
+-		else {
+-			/* mode ' ' sha1 '\t' name
+-			 * ptr[-1] points at tab,
+-			 * ptr[-41] is at the beginning of sha1
+-			 */
+-			ptr[-(hexsz + 2)] = ptr[-1] = 0;
+-			if (add_cacheinfo(mode, &oid, path_name, stage))
+-				die("git update-index: unable to update %s",
+-				    path_name);
+-		}
+-		continue;
+-
+-	bad_line:
+-		die("malformed index info %s", buf.buf);
++		if (add_cacheinfo(mode, oid, path_name, stage))
++			die("git update-index: unable to update %s", path_name);
  	}
-@@ -70,7 +93,8 @@ static const char *mktree_usage[] = {
- 	NULL
- };
- 
--static void mktree_line(char *buf, int nul_term_line, int allow_missing)
-+static void mktree_line(char *buf, int nul_term_line, int allow_missing,
-+			struct tree_entry_array *arr)
- {
- 	char *ptr, *ntr;
- 	const char *p;
-@@ -146,7 +170,7 @@ static void mktree_line(char *buf, int nul_term_line, int allow_missing)
- 		}
- 	}
- 
--	append_to_tree(mode, &oid, path);
-+	append_to_tree(mode, &oid, path, arr);
- 	free(to_free);
- }
- 
-@@ -158,6 +182,7 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
- 	int allow_missing = 0;
- 	int is_batch_mode = 0;
- 	int got_eof = 0;
-+	struct tree_entry_array arr = { 0 };
- 	strbuf_getline_fn getline_fn;
- 
- 	const struct option option[] = {
-@@ -182,9 +207,9 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
- 					break;
- 				die("input format error: (blank line only valid in batch mode)");
- 			}
--			mktree_line(sb.buf, nul_term_line, allow_missing);
-+			mktree_line(sb.buf, nul_term_line, allow_missing, &arr);
- 		}
--		if (is_batch_mode && got_eof && used < 1) {
-+		if (is_batch_mode && got_eof && arr.nr < 1) {
- 			/*
- 			 * Execution gets here if the last tree entry is terminated with a
- 			 * new-line.  The final new-line has been made optional to be
-@@ -192,12 +217,14 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
- 			 */
- 			; /* skip creating an empty tree */
- 		} else {
--			write_tree(&oid);
-+			write_tree(&arr, &oid);
- 			puts(oid_to_hex(&oid));
- 			fflush(stdout);
- 		}
--		used=0; /* reset tree entry buffer for re-use in batch mode */
-+		clear_tree_entry_array(&arr); /* reset tree entry buffer for re-use in batch mode */
- 	}
+-	strbuf_release(&buf);
+-	strbuf_release(&uq);
 +
-+	release_tree_entry_array(&arr);
- 	strbuf_release(&sb);
++	return 0;
+ }
+ 
+ static const char * const update_index_usage[] = {
+@@ -849,6 +779,7 @@ static enum parse_opt_result stdin_cacheinfo_callback(
+ 	const char *arg, int unset)
+ {
+ 	int *nul_term_line = opt->value;
++	int ret;
+ 
+ 	BUG_ON_OPT_NEG(unset);
+ 	BUG_ON_OPT_ARG(arg);
+@@ -856,7 +787,10 @@ static enum parse_opt_result stdin_cacheinfo_callback(
+ 	if (ctx->argc != 1)
+ 		return error("option '%s' must be the last argument", opt->long_name);
+ 	allow_add = allow_replace = allow_remove = 1;
+-	read_index_info(*nul_term_line);
++	ret = read_index_info(*nul_term_line, apply_index_info, NULL);
++	if (ret)
++		return -1;
++
  	return 0;
  }
+ 
+diff --git a/index-info.c b/index-info.c
+new file mode 100644
+index 00000000000..0b68e34c361
+--- /dev/null
++++ b/index-info.c
+@@ -0,0 +1,91 @@
++#include "git-compat-util.h"
++#include "index-info.h"
++#include "hash.h"
++#include "hex.h"
++#include "strbuf.h"
++#include "quote.h"
++
++int read_index_info(int nul_term_line, each_index_info_fn fn, void *cbdata)
++{
++	const int hexsz = the_hash_algo->hexsz;
++	struct strbuf buf = STRBUF_INIT;
++	struct strbuf uq = STRBUF_INIT;
++	strbuf_getline_fn getline_fn;
++	int ret = 0;
++
++	getline_fn = nul_term_line ? strbuf_getline_nul : strbuf_getline_lf;
++	while (getline_fn(&buf, stdin) != EOF) {
++		char *ptr, *tab;
++		char *path_name;
++		struct object_id oid;
++		unsigned int mode;
++		unsigned long ul;
++		int stage;
++
++		/* This reads lines formatted in one of three formats:
++		 *
++		 * (1) mode         SP sha1          TAB path
++		 * The first format is what "git apply --index-info"
++		 * reports, and used to reconstruct a partial tree
++		 * that is used for phony merge base tree when falling
++		 * back on 3-way merge.
++		 *
++		 * (2) mode SP type SP sha1          TAB path
++		 * The second format is to stuff "git ls-tree" output
++		 * into the index file.
++		 *
++		 * (3) mode         SP sha1 SP stage TAB path
++		 * This format is to put higher order stages into the
++		 * index file and matches "git ls-files --stage" output.
++		 */
++		errno = 0;
++		ul = strtoul(buf.buf, &ptr, 8);
++		if (ptr == buf.buf || *ptr != ' '
++		    || errno || (unsigned int) ul != ul)
++			goto bad_line;
++		mode = ul;
++
++		tab = strchr(ptr, '\t');
++		if (!tab || tab - ptr < hexsz + 1)
++			goto bad_line;
++
++		if (tab[-2] == ' ' && '0' <= tab[-1] && tab[-1] <= '3') {
++			stage = tab[-1] - '0';
++			ptr = tab + 1; /* point at the head of path */
++			tab = tab - 2; /* point at tail of sha1 */
++		} else {
++			stage = 0;
++			ptr = tab + 1; /* point at the head of path */
++		}
++
++		if (get_oid_hex(tab - hexsz, &oid) ||
++			tab[-(hexsz + 1)] != ' ')
++			goto bad_line;
++
++		path_name = ptr;
++		if (!nul_term_line && path_name[0] == '"') {
++			strbuf_reset(&uq);
++			if (unquote_c_style(&uq, path_name, NULL)) {
++				ret = error("bad quoting of path name");
++				break;
++			}
++			path_name = uq.buf;
++		}
++
++		ret = fn(mode, &oid, stage, path_name, cbdata);
++		if (ret) {
++			ret = -1;
++			break;
++		}
++
++		continue;
++
++	bad_line:
++		ret = error("malformed input line '%s'", buf.buf);
++		break;
++	}
++	strbuf_release(&buf);
++	strbuf_release(&uq);
++
++	return ret;
++}
+diff --git a/index-info.h b/index-info.h
+new file mode 100644
+index 00000000000..d650498325a
+--- /dev/null
++++ b/index-info.h
+@@ -0,0 +1,11 @@
++#ifndef INDEX_INFO_H
++#define INDEX_INFO_H
++
++#include "hash.h"
++
++typedef int (*each_index_info_fn)(unsigned int, struct object_id *, int, const char *, void *);
++
++/* Iterate over parsed index info from stdin */
++int read_index_info(int nul_term_line, each_index_info_fn fn, void *cbdata);
++
++#endif /* INDEX_INFO_H */
+diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
+index cc72ead79f3..29696ade0d0 100755
+--- a/t/t2107-update-index-basic.sh
++++ b/t/t2107-update-index-basic.sh
+@@ -142,4 +142,31 @@ test_expect_success '--index-version' '
+ 	test_must_be_empty actual
+ '
+ 
++test_expect_success '--index-info fails on malformed input' '
++	# empty line
++	echo "" |
++	test_must_fail git update-index --index-info 2>err &&
++	grep "malformed input line" err &&
++
++	# bad whitespace
++	printf "100644 $EMPTY_BLOB A" |
++	test_must_fail git update-index --index-info 2>err &&
++	grep "malformed input line" err &&
++
++	# invalid stage value
++	printf "100644 $EMPTY_BLOB 5\tA" |
++	test_must_fail git update-index --index-info 2>err &&
++	grep "malformed input line" err &&
++
++	# invalid OID length
++	printf "100755 abc123\tA" |
++	test_must_fail git update-index --index-info 2>err &&
++	grep "malformed input line" err &&
++
++	# bad quoting
++	printf "100644 $EMPTY_BLOB\t\"A" |
++	test_must_fail git update-index --index-info 2>err &&
++	grep "bad quoting of path name" err
++'
++
+ test_done
 -- 
 gitgitgadget
 
