@@ -1,62 +1,62 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618272746D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB776EB7C
 	for <git@vger.kernel.org>; Tue, 11 Jun 2024 18:24:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718130296; cv=none; b=hUY+r189WTUD2ptJOHE8PJxNizAom5uHHMGy9iTL5GFJX3x4FCuOzdtA/fqJ8e0lonhzNgVMqmeeG/pYxv88JwQtcW+lMQF+0d84Zt4DrHyMC4B2EBpofhpsL2JuwITUac6D6l3L9oyyZPy5nkVNeBnetcc9MMSmL6swJg1sNeM=
+	t=1718130297; cv=none; b=DsDYNi4hr+vTGIkehp2Yr+nJA3bqeGTToDUk0uoUcnkBdE8T+b3UHe9PqgV5igNMXxNqlrNjbJZbtWPFd6O7G4NSyXQaR5EtTtVi0nDZobnNOv9tMOv9KOGJ+d0vAG4AXPjPT1Y/SKnyABMQQFS1375HtpCF+C82r740x1rHMI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718130296; c=relaxed/simple;
-	bh=Y3uGIenf3VzNzcILgOt57Fdj/xN4aa5LA6kSN4497Ug=;
+	s=arc-20240116; t=1718130297; c=relaxed/simple;
+	bh=giZOSQaaicN2icYxYpzSBgby9eHhjxzSw2wZ5PkEF5c=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=sNbRTxslLKq7Z17CYI4e47n+TQnIhEg3zK0aGIxi6AhhHdzy2D9y33r0Izvy+FejoY8C+JaHnNlt++dbLWic0s57k8mnySaQ7clGk/thH4Xy6QxD7fLpsICypg1ha8cn4FdpJJkexgYa8n7EvfuHGs9fDt75gj5Q685rsDeFC/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jBMpXOYG; arc=none smtp.client-ip=209.85.208.175
+	 MIME-Version:To:Cc; b=lpplzzG9dhE8IODAMFn5nVmojTyhkyScits/n2T+37RFokw64T8FkQBWFno3uQIpSyDZ4Tr8UFY0eIE70rQQWeREkeavWyVNgyZiCfctEiIV9osHdj+PdDul86tt+uOw2ZQj7BQHXEA+T54MqriuutS8RGKRDwb6xEpsBbpfZdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eiuQrGiK; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jBMpXOYG"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2ead2c6b50bso64444081fa.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eiuQrGiK"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-42198492353so11139605e9.1
         for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:24:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718130292; x=1718735092; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718130293; x=1718735093; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Urh7rNdpn2o/o6whqr985oqkaAGHqzZf69s+OZ65PsE=;
-        b=jBMpXOYGyaxiCKu4F+h6nmnBOw2lbi+sugBIWRDqHC4Tj7wZLbZ5XHkH5B63wXbPff
-         zb+EaxoFGYS6q5doJSvOvGTv1BzCDJiPhCvBemt7R79lEyOBXfi9LDTLJUnn+S+/VZlm
-         wVV1ZRQRDdgH80RbqU85HmeSPmX0yhO+l+a4Otbg3TJFqCdXU5j1FSPIq4RrFgXHlmYN
-         1I3GRbd8LgsQsoPXM3tqzrkLfOAzg4WQNj66sqZsq+aE3TFsiuZsFpfHBP129AN5U18a
-         ART1OetZuvkvKNgBZniELYfJzeb/RInesOZz07/m0At1V2TSOYEZYhiPeViOwoTynU2L
-         aYlg==
+        bh=/e400LHKdvhOuQ+OVWma9RT1Sfyor6/Vi4GK8onwiwk=;
+        b=eiuQrGiKUMh1zx1ELFulH0rrb0NEjZdmAOd8c6aTHDc8goZqhF58dNoeVq/dH0J3qY
+         8bnKc+5APAsaroJTu/AKlZ7lIn4NNLi3+zlewnOhgFFpAVZNZM5hA7uREkWvlfLflYCo
+         +0lGtvi6VGptMxddm3/W/OxwGZcU01j96e0fLeqPijoHsJH+UMWaCjwvq+bTtm5g2vrq
+         2mpAK/5AQjSGuMKSYa42p9F/16BMY3RR8U5FKprhMYSg4e5ySDuO0j4dLSX2KY0y33zI
+         IdelIvj3JvbAIJTz8LQk2GXLNKEuGZcQsRi//E9gD0aZL8A8vKOfG2+wQtrsXrJ6OCi5
+         MT5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718130292; x=1718735092;
+        d=1e100.net; s=20230601; t=1718130293; x=1718735093;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Urh7rNdpn2o/o6whqr985oqkaAGHqzZf69s+OZ65PsE=;
-        b=YnYCiR0FHfBjjZ5LRm+3fKXXDGQ2MND8yrrNjYaiTycqu+PfqDjNi7+sJ4cBqESlRq
-         WQ1lGzew0CQzdQnPL7nVGrqjfkT0Huo80WU2WHFxjQOSES7pWiTRGqWyle/77m4J6XHg
-         /uvZ3i0XfQZ9qSg8ZSmwFdMC1QA4nzecjjb7wgKs3vjhN9ymLhvY1p65lmgBQjD71S8A
-         4toE7CmhbPwCy3G1Pke9bEcIGFdKgAjKy0+5wi12ikOTEukrYViuijWVvHsmB/UpkynK
-         eij93tjyDvf4n1umka+KPXBIMJ4llPz2Y9jD2QCnIRGXtDLRhiL/3A44jxvj+QCRq6ai
-         aO0w==
-X-Gm-Message-State: AOJu0YwpqBnH/KbJC27syB1HKVOzJkzQVrel5dv/DQBVJnxSyOJXy+yz
-	e+c+CSv40zYvvSZI9tIl7o3ay00AJlSph5apugug5SGznuIfFfjTDFtZig==
-X-Google-Smtp-Source: AGHT+IGtTbd6ANRM+Ti0MF8j6dXWqQ3Pjyax1fgrjO+XE/QlbJJWwZ58lX0beMXqjfTpE6xOdnGhaA==
-X-Received: by 2002:a2e:3615:0:b0:2eb:e9c0:ab69 with SMTP id 38308e7fff4ca-2ebe9c0ac3bmr33700901fa.39.1718130291889;
-        Tue, 11 Jun 2024 11:24:51 -0700 (PDT)
+        bh=/e400LHKdvhOuQ+OVWma9RT1Sfyor6/Vi4GK8onwiwk=;
+        b=d4cT1CLsN/u9haEX1HSfN89UK5h85+13DaVkQo1JIRdTPFywCZab2upjlIAe5jOgP8
+         Ds0P9A6l46fNXWEYD9IZDflQg0GYLEJwxv6BdIp5Oe1fl5382bpwEkNFa8pzwxhJEuEx
+         nuwfXSQwRZiisitEZXC/J1PSdcceuUTyXBZugyrEcSVSe3PXEDilmu11JP/ZQtB3GlXV
+         mloAD28oiD7wRr2lnk3/3MhmTb6u7aNOByEqmuz3FJmoLjyBoGN5WPGz5ebiEj/deNYL
+         aVByGL3aLDHcHUs1TX80y209OQZZeCKxh+4/ND/6xB5/gM2k2G21aN6S0APSFNDQnyjy
+         mvvg==
+X-Gm-Message-State: AOJu0Yxngq5Q9ttd57WJbpR/Coa7l15ygrJ4tf9WqoNMWMm1IA6m63zt
+	f1Kb86ZSkioZZcl+Tbghubqgn4s0p7di/sxddl9ZZMe8HI8Nt4nWHYfWGQ==
+X-Google-Smtp-Source: AGHT+IGJYLXc+7S0WuObEK/42qJtKzvW/wPm51eHTuaL3CN7Z60Z7/eEzH51l8eRRvHmu6hu7+u/qQ==
+X-Received: by 2002:a05:600c:3c83:b0:41c:13f6:206d with SMTP id 5b1f17b1804b1-42164a2e9d4mr117116145e9.25.1718130292609;
+        Tue, 11 Jun 2024 11:24:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-421f053bf89sm67305055e9.26.2024.06.11.11.24.51
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-422048a40a3sm63984315e9.33.2024.06.11.11.24.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jun 2024 11:24:51 -0700 (PDT)
-Message-Id: <4558f35e7bf9a1594510951ee54252069bdcfc5b.1718130288.git.gitgitgadget@gmail.com>
+        Tue, 11 Jun 2024 11:24:52 -0700 (PDT)
+Message-Id: <5ade145352f44b431c16a2ec29cd87de489e8032.1718130288.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
 References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
 From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 11 Jun 2024 18:24:34 +0000
-Subject: [PATCH 02/16] mktree: rename treeent to tree_entry
+Date: Tue, 11 Jun 2024 18:24:35 +0000
+Subject: [PATCH 03/16] mktree: use non-static tree_entry array
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,56 +72,160 @@ Cc: Victoria Dye <vdye@github.com>,
 
 From: Victoria Dye <vdye@github.com>
 
-Rename the type for better readability, clearly specifying "entry" (instead
-of the "ent" abbreviation) and separating "tree" from "entry".
+Replace the static 'struct tree_entry **entries' with a non-static 'struct
+tree_entry_array' instance. In later commits, we'll want to be able to
+create additional 'struct tree_entry_array' instances utilizing common
+functionality (create, push, clear, free). To avoid code duplication, create
+the 'struct tree_entry_array' type and add functions that perform those
+basic operations.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/mktree.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/mktree.c | 67 +++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 47 insertions(+), 20 deletions(-)
 
 diff --git a/builtin/mktree.c b/builtin/mktree.c
-index 8b19d440747..c02feb06aff 100644
+index c02feb06aff..15bd908702a 100644
 --- a/builtin/mktree.c
 +++ b/builtin/mktree.c
-@@ -12,7 +12,7 @@
+@@ -12,15 +12,39 @@
  #include "parse-options.h"
  #include "object-store-ll.h"
  
--static struct treeent {
-+static struct tree_entry {
+-static struct tree_entry {
++struct tree_entry {
  	unsigned mode;
  	struct object_id oid;
  	int len;
-@@ -22,7 +22,7 @@ static int alloc, used;
+ 	char name[FLEX_ARRAY];
+-} **entries;
+-static int alloc, used;
++};
++
++struct tree_entry_array {
++	size_t nr, alloc;
++	struct tree_entry **entries;
++};
  
- static void append_to_tree(unsigned mode, struct object_id *oid, char *path)
+-static void append_to_tree(unsigned mode, struct object_id *oid, char *path)
++static void tree_entry_array_push(struct tree_entry_array *arr, struct tree_entry *ent)
++{
++	ALLOC_GROW(arr->entries, arr->nr + 1, arr->alloc);
++	arr->entries[arr->nr++] = ent;
++}
++
++static void clear_tree_entry_array(struct tree_entry_array *arr)
++{
++	for (size_t i = 0; i < arr->nr; i++)
++		FREE_AND_NULL(arr->entries[i]);
++	arr->nr = 0;
++}
++
++static void release_tree_entry_array(struct tree_entry_array *arr)
++{
++	FREE_AND_NULL(arr->entries);
++	arr->nr = arr->alloc = 0;
++}
++
++static void append_to_tree(unsigned mode, struct object_id *oid, const char *path,
++			   struct tree_entry_array *arr)
  {
--	struct treeent *ent;
-+	struct tree_entry *ent;
+ 	struct tree_entry *ent;
  	size_t len = strlen(path);
- 	if (strchr(path, '/'))
- 		die("path %s contains slash", path);
-@@ -38,8 +38,8 @@ static void append_to_tree(unsigned mode, struct object_id *oid, char *path)
+@@ -32,8 +56,8 @@ static void append_to_tree(unsigned mode, struct object_id *oid, char *path)
+ 	ent->len = len;
+ 	oidcpy(&ent->oid, oid);
+ 
+-	ALLOC_GROW(entries, used + 1, alloc);
+-	entries[used++] = ent;
++	/* Append the update */
++	tree_entry_array_push(arr, ent);
+ }
  
  static int ent_compare(const void *a_, const void *b_)
- {
--	struct treeent *a = *(struct treeent **)a_;
--	struct treeent *b = *(struct treeent **)b_;
-+	struct tree_entry *a = *(struct tree_entry **)a_;
-+	struct tree_entry *b = *(struct tree_entry **)b_;
- 	return base_name_compare(a->name, a->len, a->mode,
+@@ -44,19 +68,18 @@ static int ent_compare(const void *a_, const void *b_)
  				 b->name, b->len, b->mode);
  }
-@@ -56,7 +56,7 @@ static void write_tree(struct object_id *oid)
+ 
+-static void write_tree(struct object_id *oid)
++static void write_tree(struct tree_entry_array *arr, struct object_id *oid)
+ {
+ 	struct strbuf buf;
+-	size_t size;
+-	int i;
++	size_t size = 0;
+ 
+-	QSORT(entries, used, ent_compare);
+-	for (size = i = 0; i < used; i++)
+-		size += 32 + entries[i]->len;
++	QSORT(arr->entries, arr->nr, ent_compare);
++	for (size_t i = 0; i < arr->nr; i++)
++		size += 32 + arr->entries[i]->len;
  
  	strbuf_init(&buf, size);
- 	for (i = 0; i < used; i++) {
--		struct treeent *ent = entries[i];
-+		struct tree_entry *ent = entries[i];
+-	for (i = 0; i < used; i++) {
+-		struct tree_entry *ent = entries[i];
++	for (size_t i = 0; i < arr->nr; i++) {
++		struct tree_entry *ent = arr->entries[i];
  		strbuf_addf(&buf, "%o %s%c", ent->mode, ent->name, '\0');
  		strbuf_add(&buf, ent->oid.hash, the_hash_algo->rawsz);
  	}
+@@ -70,7 +93,8 @@ static const char *mktree_usage[] = {
+ 	NULL
+ };
+ 
+-static void mktree_line(char *buf, int nul_term_line, int allow_missing)
++static void mktree_line(char *buf, int nul_term_line, int allow_missing,
++			struct tree_entry_array *arr)
+ {
+ 	char *ptr, *ntr;
+ 	const char *p;
+@@ -146,7 +170,7 @@ static void mktree_line(char *buf, int nul_term_line, int allow_missing)
+ 		}
+ 	}
+ 
+-	append_to_tree(mode, &oid, path);
++	append_to_tree(mode, &oid, path, arr);
+ 	free(to_free);
+ }
+ 
+@@ -158,6 +182,7 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
+ 	int allow_missing = 0;
+ 	int is_batch_mode = 0;
+ 	int got_eof = 0;
++	struct tree_entry_array arr = { 0 };
+ 	strbuf_getline_fn getline_fn;
+ 
+ 	const struct option option[] = {
+@@ -182,9 +207,9 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
+ 					break;
+ 				die("input format error: (blank line only valid in batch mode)");
+ 			}
+-			mktree_line(sb.buf, nul_term_line, allow_missing);
++			mktree_line(sb.buf, nul_term_line, allow_missing, &arr);
+ 		}
+-		if (is_batch_mode && got_eof && used < 1) {
++		if (is_batch_mode && got_eof && arr.nr < 1) {
+ 			/*
+ 			 * Execution gets here if the last tree entry is terminated with a
+ 			 * new-line.  The final new-line has been made optional to be
+@@ -192,12 +217,14 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
+ 			 */
+ 			; /* skip creating an empty tree */
+ 		} else {
+-			write_tree(&oid);
++			write_tree(&arr, &oid);
+ 			puts(oid_to_hex(&oid));
+ 			fflush(stdout);
+ 		}
+-		used=0; /* reset tree entry buffer for re-use in batch mode */
++		clear_tree_entry_array(&arr); /* reset tree entry buffer for re-use in batch mode */
+ 	}
++
++	release_tree_entry_array(&arr);
+ 	strbuf_release(&sb);
+ 	return 0;
+ }
 -- 
 gitgitgadget
 
