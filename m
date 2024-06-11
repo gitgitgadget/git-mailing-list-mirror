@@ -1,172 +1,128 @@
-Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE8A175548
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 08:42:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA4D17556B
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 08:51:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718095336; cv=none; b=VHbWejBhVyBn/7Upk9X1CGyOSRvGS4u0bR4NRTPUnMOBSi7CDwxIJZPscgCbCOG4dmB2sduw/qGun0SmzvaFEAct1OumSv6JRFNnP2nsKKzoyyujX6mzxaqZLmTLD7GADHQZoLg/eH4hGVKgVNTuwzDR6zmi4+24REXg85NOdAs=
+	t=1718095862; cv=none; b=mhmNMuTvsDEVVIwhh8MM4aKlPJu2flWm3EHAHkOeHct0nvI0nBc1DF8rlhN0+iRuWO9xEzPehrQuiUudMUVnLLZtRDYN0O6Mt44gvI4Va0aYsuaWe3y2rTs7xBi4X8PMpPZujIYEXA3Hpx2PA+TdO+iI4rCsUmrSx48KPxcQdvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718095336; c=relaxed/simple;
-	bh=d5y/Xr+S033Gm21xOaDeJGKqMjDzpdvygaAIkhjez+8=;
+	s=arc-20240116; t=1718095862; c=relaxed/simple;
+	bh=MCh/XWM3dlyFl9k4Kvie+Iv4qPCDgDEvv62A8qLhAiE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oHWo89R3JfNYf04+pveBtbXVltHEwQewWzcJF5IvVyjWXCtZLOZB5iAMZNSm0jMg6/WjPSbQkkL71HWAHB5ZPlMDnx7wKrWb6mwC/pdGVYKjNRIe8jc3W/Cu2omHTPz+sWY7008mUY2cLK9keJxy3tgsB/9OFmtQLEWerkiZpn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OsmIn6ce; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zuy51Of5; arc=none smtp.client-ip=64.147.123.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OsmIn6ce";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zuy51Of5"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 7CBE51800079;
-	Tue, 11 Jun 2024 04:42:13 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Tue, 11 Jun 2024 04:42:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718095333; x=1718181733; bh=YZioig+mQC
-	o3CJiF/pMqrDgAOtQoEXmlA6Hg6GSEnY4=; b=OsmIn6ceubspkGYjHelSuMNXsU
-	EfHJEAHin9NN3Uujh6RWfp78GlbzvOz8pYwbCCoityPMGdmafwWzKlVN88Nj3F6K
-	OIBijLZeU0MJdlBKkLTUw+FbNRXCxxJRafzTDhFSj3kCUrCm+S51HqaU7419/FBO
-	3BDv+9+cBp6HQepMBqJ6coAV0bcpgVx511J8qTQtXcZzSwrdZPTgMSNClkfo3oSf
-	M6QQxFwW86TeoJQww4qDjLWZDfXUdKbBSVqm5hbtGK2ksVnS6qwJfOUBykuCciUF
-	3nTy+QQtMVaXTRRZaVt83WB5whV4t/hqRgpa11A9VZVvMr7L9JGA91BEI03w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718095333; x=1718181733; bh=YZioig+mQCo3CJiF/pMqrDgAOtQo
-	EXmlA6Hg6GSEnY4=; b=Zuy51Of5OnsmEdo4aNsofxFyP9eL3J4+JhGRtEvrCzYH
-	35yhtBczaqTMh80TbPV/c+mzrKyVcj/FkXQmtasvhjFVNx50QLE1uRDRpn/KYz0T
-	5guKAIeXb19noPQr2fuUCW4XLjKJsscEg/rdei3B3Hym5TeUbgp16xeJof305JyY
-	w9MPXOXLRxugZogisE2Ddgx1eqiZXs7kfGPAWztd3OtnOEudkJNxY1CFcNac5v4l
-	IW8iv3Who5LtQGloLXn6jpfOJg5fKuEpOrGRngRTT+xd/J9VEXmn1vF8a2NmQ9fN
-	9xZU7xAXmj6lNojbvzHLJJsTYuoFeKQnIARyTBCTgQ==
-X-ME-Sender: <xms:5A1oZuOJ93-eNL_5SQA_px5KwkvI70dji6HHfkrWXTpEl3F0tQDwCA>
-    <xme:5A1oZs_DgSH8SpgYh3Zvv-emfZRSBNhSyOFjFoN8YHAZRg5a7ro_0kEq0Hg85L0iD
-    BRcQVecvpffx0Fasg>
-X-ME-Received: <xmr:5A1oZlSxYNbWCvkclzGT-Ox_nK4GTlbjTuxd4mdKuA3Z3Fb2RBZEPfZb3YMVLY5P3ZGzt9-cMlPfwiZZwnvUzIE_O0GtT9dpsd09zP_htbEweC7dI2a3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduvddgtdeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeetueevhffhudefvdegieeuieelgedthf
-    egfedtueevjeejtdfgjeehudejuedtudenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:5Q1oZutk0LxSBwPXRrCqb7V4bBqspweU4PEJqNTL9ufZ_z4vY88XjQ>
-    <xmx:5Q1oZmfeTa5Hsm6AT56p5CvFX1KqnGRfHdsGH3TRfGTg_KiNZsJKkA>
-    <xmx:5Q1oZi3Y0gYjE6Ffh0NJpTIDYyhmlYkwGH_MdT_ORrHqaVczhFlKng>
-    <xmx:5Q1oZq8KGBhxMkDYxfozskiYYIpszQmcUZh89j-wQ9Itfkrx5I96gA>
-    <xmx:5Q1oZm42m-wJyeBwtJbAyB096bKmtinPXWiiLBBeiaSx0uCN-SPFfRO7>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Jun 2024 04:42:12 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ffc4e333 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 11 Jun 2024 08:42:03 +0000 (UTC)
-Date: Tue, 11 Jun 2024 10:42:10 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Kyle Lippincott <spectral@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] object-name: don't try to abbreviate to lengths greater
- than hexsz
-Message-ID: <31c0405f85552b6f30468607b7a210d5961ea416.1718095090.git.ps@pks.im>
-References: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=RJn81ftw91T7Sbo8mGDoixIBEsSfCrFyWZLiygglLjsS7XAbB2OYkarmdLegpioVKUzwmtUSwgN8IfQEAxQQ1+5UGXlEOi/X36yRzENPMJGwoTj8cUJVu3LVIvyOyB2axeH//2Rqzw9yEh4tQZVDaOndHLg0grH2kyEHDfN365Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 18667 invoked by uid 109); 11 Jun 2024 08:50:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Jun 2024 08:50:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24907 invoked by uid 111); 11 Jun 2024 08:50:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Jun 2024 04:50:56 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 11 Jun 2024 04:50:58 -0400
+From: Jeff King <peff@peff.net>
+To: John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <avila.jn@gmail.com>,
+	John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH 1/4] refs: add referent parameter to
+ refs_resolve_ref_unsafe
+Message-ID: <20240611085058.GJ3248245@coredump.intra.peff.net>
+References: <pull.1712.git.git.1717694800.gitgitgadget@gmail.com>
+ <011c10f488610b0a795a843bff66723477783761.1717694801.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="XJwn9eBPl5yVAQ+a"
-Content-Disposition: inline
-In-Reply-To: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
-
-
---XJwn9eBPl5yVAQ+a
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <011c10f488610b0a795a843bff66723477783761.1717694801.git.gitgitgadget@gmail.com>
 
-When given a length that equals the current hash algorithm's hex size,
-then `repo_find_unique_abbrev_r()` exits early without trying to find an
-abbreviation. This is only sensible because there is nothing to
-abbreviate in the first place, so searching through objects to find a
-unique prefix would be a waste of compute.
+On Thu, Jun 06, 2024 at 05:26:37PM +0000, John Cai via GitGitGadget wrote:
 
-What we don't handle though is the case where the user passes a length
-greater than the hash length. This is fine in practice as we still
-compute the correct result. But at the very least, this is a waste of
-resources as we try to abbreviate a value that cannot be abbreviated,
-which causes us to hit the object database.
+> From: John Cai <johncai86@gmail.com>
+> 
+> refs_resolve_ref_unsafe retrieves the referent, the unresolved value of
+> a reference. Add a parameter to allow refs_resolve_ref_unsafe to pass up
+> the value of referent to the caller so it can save this value in ref
+> iterators for more efficient access.
 
-Start to explicitly handle values larger than hexsz to avoid this
-performance penalty, which leads to a measureable speedup. The following
-benchmark has been executed in linux.git:
+This commit message left me with a lot of questions.
 
-  Benchmark 1: git -c core.abbrev=3D9000 log --abbrev-commit (revision =3D =
-HEAD~)
-    Time (mean =C2=B1 =CF=83):     12.812 s =C2=B1  0.040 s    [User: 12.22=
-5 s, System: 0.554 s]
-    Range (min =E2=80=A6 max):   12.723 s =E2=80=A6 12.857 s    10 runs
+For one, it wasn't immediately obvious to me what a "referent" is. ;) I
+think an example could help. If I understand, you mean that if you have
+a situation like:
 
-  Benchmark 2: git -c core.abbrev=3D9000 log --abbrev-commit (revision =3D =
-HEAD)
-    Time (mean =C2=B1 =CF=83):     11.095 s =C2=B1  0.029 s    [User: 10.54=
-6 s, System: 0.521 s]
-    Range (min =E2=80=A6 max):   11.037 s =E2=80=A6 11.122 s    10 runs
+  - refs/heads/one is a symref pointing to refs/heads/two
+  - refs/heads/two is a regular ref
 
-  Summary
-    git -c core.abbrev=3D9000 log --abbrev-commit HEAD (revision =3D HEAD) =
-ran
-      1.15 =C2=B1 0.00 times faster than git -c core.abbrev=3D9000 log --ab=
-brev-commit HEAD (revision =3D HEAD~)
+and we resolve "one", then "two" is the referent? And the caller might
+want to know that?
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- object-name.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+But I think we already pass that out as the return value from
+refs_resolve_ref_unsafe(). That is how something like "rev-parse
+--symbolic-full-name" works now.
 
-diff --git a/object-name.c b/object-name.c
-index 523af6f64f..1be2ad1a16 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -837,7 +837,7 @@ int repo_find_unique_abbrev_r(struct repository *r, cha=
-r *hex,
- 	}
-=20
- 	oid_to_hex_r(hex, oid);
--	if (len =3D=3D hexsz || !len)
-+	if (len >=3D hexsz || !len)
- 		return hexsz;
-=20
- 	mad.repo =3D r;
---=20
-2.45.2.436.gcd77e87115.dirty
+But there are some subtleties. In a chain of symbolic refs (say, "two"
+is a symbolic ref to "three"), we return only the final name ("three").
+And you might want to know about "two".
 
+You can pass RESOLVE_REF_NO_RECURSE to inhibit this, and get back just
+"two". You can see that now with "git symbolic-ref --no-recurse". The
+downside is that we never look at the referent at all, so you get only
+the symref value (and no information about the actual oid, or if the
+referent even exists). You would still get an oid for any non-symrefs
+you examine.
 
---XJwn9eBPl5yVAQ+a
-Content-Type: application/pgp-signature; name="signature.asc"
+So reading between the lines, you have a caller in mind which wants to
+know the immediate referent in addition to the final recursive oid?
 
------BEGIN PGP SIGNATURE-----
+Looking at the rest of your series, I guess that caller is the one in
+loose_fill_ref_dir_regular_file(), so that it can get passed to the
+for-each-ref callback. But why is it right thing for it to record and
+pass along the immediate referent there, and not the final one? For that
+matter, would a caller ever want to see the whole chain of
+one/two/three?
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoDeEACgkQVbJhu7ck
-PpQCwQ/+NVCDD4LqKst7T1L/stKyFtxFm0zEZkrDqWNZe92Si6B/h4R4Y3qacqtM
-iZs+ep5NvchiAV9jgPks0OYVA5LFZDyJGwZxJ31FSN+jR7Elc4U9rFTJ2yAsWTar
-/UxA1tNP33G/M9h8rknQTCVtgOY8vaBX0LERmcCUaAEDeDbsQgH901T3SdDQKemt
-/YgAPDKm5E6bk1tmsHT1JqfZKhLC0mk2F+jJZ/wowLraGBxALp+QyMalfYINHTmO
-Rl8OaG6oWO0GXmOHVnne/wYeDN149WYpFbNSXazKAk3ncfi1UWYhZBCnFas5WX9W
-RCWLAc37bTlzIk/Ug+vVlrMFaouu2KEF+J14nvLm5e/vdBn/FPVGrkRfEDrt06cw
-g8+zfdF7AvHCLuyVNEJ5XOgvSB6IVZ9mdAtft+qmZ05h/YD9oYtmHHVED1V/HNji
-dhhDmEYXB5A7cRztZTHksQ+wrP/KMJSzzhFMJY1hgJWaXtblToAwQYJ3g+qDqzLK
-+8DRA6OWteFgfCHJ4pj9hiejkIRQnRSVJ1yJnRDU8Ani8OL1gQfwOTyNxTaNNmfq
-6aMynospcu2aoqig4b9kQJNX90O/64fk/3A8GYi60NYE5SeDfWpog71FGgUiry0p
-0RMZSWG+xe74YetaKQXySOIZ19L4aNah5HvntBLJoeTsAGaHVqo=
-=5Rjc
------END PGP SIGNATURE-----
+> @@ -1761,6 +1761,7 @@ int refs_read_symbolic_ref(struct ref_store *ref_store, const char *refname,
+>  
+>  const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+>  				    const char *refname,
+> +				    const char *referent,
+>  				    int resolve_flags,
+>  				    struct object_id *oid,
+>  				    int *flags)
 
---XJwn9eBPl5yVAQ+a--
+Unless I am misunderstanding the purpose of your patch completely, this
+"referent" is meant to be an out-parameter, right? In which case,
+shouldn't it be "const char **referent"?
+
+As the code is now:
+
+> @@ -1822,6 +1823,9 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+>  		}
+>  
+>  		*flags |= read_flags;
+> +		if (referent && (read_flags & REF_ISSYMREF) &&
+> +		    sb_refname.len > 0)
+> +			referent = sb_refname.buf;
+>  
+>  		if (!(read_flags & REF_ISSYMREF)) {
+>  			if (*flags & REF_BAD_NAME) {
+
+...we'd assign the local "referent" pointer to our refname buf, but
+the caller would never see that. Plus doing so would not help you
+anyway, since sb_refname will be used again as we recurse. So at best,
+you end up with the final name in the chain anyway. Or at worst,
+sb_refname gets reallocated and "referent" is left as a dangling
+pointer.
+
+-Peff
