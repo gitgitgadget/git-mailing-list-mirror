@@ -1,80 +1,79 @@
-Received: from wfout3-smtp.messagingengine.com (wfout3-smtp.messagingengine.com [64.147.123.146])
+Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EE4178367
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 09:21:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5C017624A
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 09:21:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718097672; cv=none; b=eL155kY3GzonEO6MAXmWHp8iNtsPFVpvBq93oB3O1RPj3377c0GtF56r3euZVQIf/6y9tnJkf5iusSFwvkCdCsFQPyLMIQBvz/rzfciAo6geW7pZ7fgilY6ttHKe17N3tZhqGhO3N9NpU+JswNa3+o16dkYdzEkq8cjMykx7dHg=
+	t=1718097677; cv=none; b=HYpRFzEiQVDW9+pbi5yR4OWgsL0d5ngsv5dgkj1Kng3C2Ll1WrOn2S10VF+eRWVkHgAMdEmS+cv3XFN2QIs66Vk8+3Fa9GLwbAWlHEhKkU6aLWyntdTVULxhBRsUlckdN013RB2Pvs79wJ7vQIBsli48R1lz/l8AO8DgWiwDi2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718097672; c=relaxed/simple;
-	bh=BphcU00v+raR/uCl+wLKDQI0/4036zPH2JgllF+/TMY=;
+	s=arc-20240116; t=1718097677; c=relaxed/simple;
+	bh=YcfZaYG1CdaycKf413zUqrP7m6lLFdMkfkuNgoUGelc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Smk1XSROQNtqBZer8a8lqaIdi3S291QPIoagoYY6/77nTBDuiuQod03FhSFHc6vu0iBpqUqIfllDaxzIHN19Yr7SPj0zIc4dhwRmXHYi/poIRzVPSUbvBSDnxWwoxBD8ogA5oP7F0X5x2ZsGo404CdHI6wF2OFufmpCfoorCexY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hG8+mKA3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IlX6IAwt; arc=none smtp.client-ip=64.147.123.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=lll0uiv5ZpajyPA+b/1MVew41PJax/LzA+8XNPCNnoiCFkHhXJp20OL5aaB0h3bUtt0CxqfJDOVQPzFoDNX4Sr82kITwMFGzNP77+BY4ArdUPotyo1PHLM9aq/3thK52gONNJ3m4bgJqMlt/IE4s2Sr8PRU80M/TFJSkkSMRHaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B1o9qI+W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lmXfxZQG; arc=none smtp.client-ip=64.147.123.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hG8+mKA3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IlX6IAwt"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.west.internal (Postfix) with ESMTP id 511A31C000C0;
-	Tue, 11 Jun 2024 05:21:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B1o9qI+W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lmXfxZQG"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 44D5D1800076;
+	Tue, 11 Jun 2024 05:21:15 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Tue, 11 Jun 2024 05:21:10 -0400
+  by compute2.internal (MEProxy); Tue, 11 Jun 2024 05:21:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718097669; x=1718184069; bh=OV2jzFbIlB
-	WdBPFpHg6roN6CbhQjyno97vDor/eg+PA=; b=hG8+mKA3ympqG09vN84qT4nX8j
-	0U70Tce2zyc/uuJjOluburIfjnV13H2HxYdqNEuxne3f6fdu6WFa60PcgQfZXA8V
-	o6z3jhe+poxnGCgmoF3efBTFLKddTHGstfv65eTVWto72CZhPIBQ5Cd5Y/5afe8/
-	q0R2Mv+v5V/tgojxhxuLi46SsbNEKwq7URBD0BHVXuDaGufrgq9fEqrTsWYvRRvT
-	X1YAfjYU2+9UQeQEjSunfnEWXCaqSqeM0jxscg69yIkoPB8mqGweQxV5UfajtL8C
-	Sj3DBhpj47Mo+wMk0VmP8XwXNTgtDc1pmTsV3bPsG7uTREbY2Wofch25qqmw==
+	:subject:to:to; s=fm1; t=1718097674; x=1718184074; bh=JNOUQfNsK3
+	3VIKFzqF/MP92SGw+QfECLoCqWdfys3Kw=; b=B1o9qI+WEzNvJcQcM0XohYknwd
+	rPchIKVlCpC9JvZcVzo8vSyU/8iO3QSdtIZcWEVlDvSac5T7q8x3njVThVytgTdF
+	b3u39ZbDSpLajUOtFQ1GUatLFiLD2m4xNB8bhbqAX9naiK9TL8ZFIZWaRMkv/A1c
+	/kNnl2qrEeQg9TtwH2oG4e+wHCV/H7oikzBM16ozOzgU9dUVYb9VVnqhSyXrt88h
+	Mx6LQ/KYE3zpsEJQCvfuwdeifZTtO97oY/U5pqqxPEGRtiiFyz6JhO314Eg0qv36
+	I27WhBbIz/xjn32l1vC2LIWjJKAQcwpgQ5N0vQA23XR2spHMbQmtLVA8Dj2w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718097669; x=1718184069; bh=OV2jzFbIlBWdBPFpHg6roN6CbhQj
-	yno97vDor/eg+PA=; b=IlX6IAwt38ekyltHtjUJeO9G3RONNirQ/0ysrVVXpzlR
-	BfTzx6YiErhD8pYPymjMxzVRLkdI6E8QEQZ4yciyzYXqAwTTL30asmwlvvPPlrd1
-	RitxgeKOwE3eKKxgYSh2e775fAF0wi2WWIrWr7F01C5YW6nlD9nw5XvG+Yk0hrvd
-	3naAL2W4WivEg6MbVhvAdOz+NkPJ7bPH3SUgiLcc1FQMUIrweJ5ShOuwQaOr6Nwo
-	DUVJDRVy/dy4pSn8hhekG/uklwOlB/tvKDn6uXHExd2hPiZ2l5X/kBPgChNLc299
-	G69g3WLG/hlgRrA7hmHgwkUiWP5bNhAWplnwBDADiw==
-X-ME-Sender: <xms:BRdoZi0OGyS9nVs3hU9noL8xD0XtCPlwnhhN9YxqZu5bXlgNCjsR4w>
-    <xme:BRdoZlGTsw222FbfUcIO0bRMv8VhqjQwY9SLHAt1ePxdZi2DUHEr9Z0F6y00wZ4PA
-    TXqiUM9YDGxqzCeQw>
-X-ME-Received: <xmr:BRdoZq7X3C8fxn7Fe7Snwy69E1MHd8IUO-OUW8FmvoLmtcSlQhf6OUqxIkn2u3MZWhGeQK6tkHvBPhbl5tBRB7nO1Lrrw-pXhrizymeCjzlPPRs3kRRK>
+	fm1; t=1718097674; x=1718184074; bh=JNOUQfNsK33VIKFzqF/MP92SGw+Q
+	fECLoCqWdfys3Kw=; b=lmXfxZQGMkyR/gxpccUyQVC3A6kHfOJ85TgpFTaxM8TT
+	CEWW0/uABDLAUCHycg1Ufgr4MtqexHQZacz4FYTZ/C1MZOJz4+GYN821vqejnBgi
+	VLdAxAmCnktqmqfNvmYlyKKR3R2/Yd5AL8JXolCOucyP31PZlXzwRVAcju5QqutF
+	gU0CLQiPxYDOAuitcX35A/7UL1xzhC7Carb5Zc9FYN2Scn/54z4sWywyH1XAF5HN
+	zsalnb+y/9uMATDp3gHJD4ZkXZ0Fl8di21unir+TuVMv7I15R9D66JEJ5baV6rCh
+	PfOZwzuQSWZ2l1w5J0YROGlrWha0R1kch2DuVSpGrw==
+X-ME-Sender: <xms:ChdoZr91eOrnBXimH9lPje5goDDFQoIotsvRfPuQuQeNNr8MLWHEsA>
+    <xme:ChdoZnvYHYUC1_m7BGb0D4ASSQ8M13dXXeV4wsEJaiVHNaJUpwp8oEXMhPv0CCCb_
+    pNlegKKtbNc4Qf-xA>
+X-ME-Received: <xmr:ChdoZpAG-LDQcnpSuGyievDJK49IgyukLlhzrDxYo5ZPosxJp_ubH9exnh4tXgs3LxNn35SVnNsjLfrR1xxdNbXxEJerc-G0SyEXfeXEwpqVUWkc8eHt>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduvddgudegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepheenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:BRdoZj2VGcj9SZbiFRd-LIvpqn3IQfzEEVw_fIaBdUHAzFWt0vT5Tw>
-    <xmx:BRdoZlEdeeX-01-6V-kmon2cG7_O8WqT9fV_jwEx_EofezxyaqWscg>
-    <xmx:BRdoZs_dekoaXZ-kGdyCVvPcCwhNzcFLUiuIsJl1oDFP_bYbo9to0A>
-    <xmx:BRdoZqn8CYnKyaDhyiUtDDL7a2LORWfsY7s7yYhG7gR9_1q1KokYog>
-    <xmx:BRdoZlCOLW8ilISu6pe2LxVURDqC-02ni51BCXOaeqUzk_4HeBUKNONX>
+X-ME-Proxy: <xmx:ChdoZneXI2H9R5veNKQaTKMjPQAbmk70WUraKtYXpCsiDA1o9sqz2A>
+    <xmx:ChdoZgMsNGYQqYgtLTtd92ZOiUy8pQNoJk0uMwsbi7sDQFHZ6CqURg>
+    <xmx:ChdoZpkLbBGzP5o0ACsBj8a0C1BBwRUbIbtO1NYH5bXjUXlNz17OWg>
+    <xmx:ChdoZqv3FU89WETwXxENu4kxLVdSIToSJnVft0Om8WqGQAlAm6adaQ>
+    <xmx:ChdoZlrr5vPTNLqqoz7lwPYwOiyO8P5j2b73_IRzJjxtOpJ-UiUWCwLV>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Jun 2024 05:21:08 -0400 (EDT)
+ 11 Jun 2024 05:21:13 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id e488623d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 11 Jun 2024 09:21:00 +0000 (UTC)
-Date: Tue, 11 Jun 2024 11:21:06 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id be3d0530 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 11 Jun 2024 09:21:04 +0000 (UTC)
+Date: Tue, 11 Jun 2024 11:21:11 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood123@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 24/29] builtin/merge: fix leaking `struct cmdnames` in
- `get_strategy()`
-Message-ID: <be9bccc853c690b047fbef6dad419cc35cbbd4c0.1718095906.git.ps@pks.im>
+Subject: [PATCH v2 25/29] merge: fix leaking merge bases
+Message-ID: <6f6456494cc63b28cf64057ee6555b29ac1147a6.1718095906.git.ps@pks.im>
 References: <cover.1717402439.git.ps@pks.im>
  <cover.1718095906.git.ps@pks.im>
 Precedence: bulk
@@ -84,169 +83,440 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vUmxz8GHRI4ikeRq"
+	protocol="application/pgp-signature"; boundary="wM+tGVnMbtidWhlF"
 Content-Disposition: inline
 In-Reply-To: <cover.1718095906.git.ps@pks.im>
 
 
---vUmxz8GHRI4ikeRq
+--wM+tGVnMbtidWhlF
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In "builtin/merge.c" we use the helper infrastructure to figure out what
-merge strategies there are. We never free contents of the `cmdnames`
-structures though and thus leak their memory.
+When calling either the recursive or the ORT merge machineries we need
+to provide a list of merge bases. The ownership of that parameter is
+then implicitly transferred to the callee, which is somewhat fishy.
+Furthermore, that list may leak in some cases where the merge machinery
+runs into an error, thus causing a memory leak.
 
-Fix this by exposing the already existing `clean_cmdnames()` function to
-release their memory. As this name isn't quite idiomatic, rename it to
-`cmdnames_release()` while at it.
+Refactor the code such that we stop transferring ownership. Instead, the
+merge machinery will now create its own local copies of the passed in
+list as required if they need to modify the list. Free the list at the
+callsites as required.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/merge.c         | 10 +++++++---
- help.c                  | 12 ++++++------
- help.h                  |  2 ++
- t/t7606-merge-custom.sh |  1 +
- 4 files changed, 16 insertions(+), 9 deletions(-)
+ builtin/merge-tree.c       |  1 +
+ builtin/merge.c            |  2 ++
+ commit.c                   |  2 +-
+ commit.h                   |  2 +-
+ log-tree.c                 |  1 +
+ merge-ort-wrappers.c       |  2 +-
+ merge-ort-wrappers.h       |  2 +-
+ merge-ort.c                | 12 ++++++----
+ merge-ort.h                |  2 +-
+ merge-recursive.c          | 49 +++++++++++++++++++++++---------------
+ merge-recursive.h          |  2 +-
+ sequencer.c                |  1 +
+ t/t3430-rebase-merges.sh   |  1 +
+ t/t6402-merge-rename.sh    |  1 +
+ t/t6430-merge-recursive.sh |  1 +
+ t/t6436-merge-overwrite.sh |  1 +
+ t/t7611-merge-abort.sh     |  1 +
+ 17 files changed, 54 insertions(+), 29 deletions(-)
 
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index 1082d919fd..dab2fdc2a6 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -482,6 +482,7 @@ static int real_merge(struct merge_tree_options *o,
+ 			die(_("refusing to merge unrelated histories"));
+ 		merge_bases =3D reverse_commit_list(merge_bases);
+ 		merge_incore_recursive(&opt, merge_bases, parent1, parent2, &result);
++		free_commit_list(merge_bases);
+ 	}
+=20
+ 	if (result.clean < 0)
 diff --git a/builtin/merge.c b/builtin/merge.c
-index 50b0c87a95..682c6ed868 100644
+index 682c6ed868..1120a6e2f8 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -164,7 +164,7 @@ static struct strategy *get_strategy(const char *name)
+@@ -746,6 +746,8 @@ static int try_merge_strategy(const char *strategy, str=
+uct commit_list *common,
+ 		else
+ 			clean =3D merge_recursive(&o, head, remoteheads->item,
+ 						reversed, &result);
++		free_commit_list(reversed);
++
+ 		if (clean < 0) {
+ 			rollback_lock_file(&lock);
+ 			return 2;
+diff --git a/commit.c b/commit.c
+index f674eca320..1386b12df1 100644
+--- a/commit.c
++++ b/commit.c
+@@ -680,7 +680,7 @@ unsigned commit_list_count(const struct commit_list *l)
+ 	return c;
+ }
+=20
+-struct commit_list *copy_commit_list(struct commit_list *list)
++struct commit_list *copy_commit_list(const struct commit_list *list)
  {
- 	int i;
- 	struct strategy *ret;
--	static struct cmdnames main_cmds, other_cmds;
-+	static struct cmdnames main_cmds =3D {0}, other_cmds =3D {0};
- 	static int loaded;
- 	char *default_strategy =3D getenv("GIT_TEST_MERGE_ALGORITHM");
+ 	struct commit_list *head =3D NULL;
+ 	struct commit_list **pp =3D &head;
+diff --git a/commit.h b/commit.h
+index 442e50ff24..acabb05785 100644
+--- a/commit.h
++++ b/commit.h
+@@ -181,7 +181,7 @@ struct commit_list *commit_list_insert_by_date(struct c=
+ommit *item,
+ void commit_list_sort_by_date(struct commit_list **list);
 =20
-@@ -182,10 +182,9 @@ static struct strategy *get_strategy(const char *name)
- 			return &all_strategy[i];
+ /* Shallow copy of the input list */
+-struct commit_list *copy_commit_list(struct commit_list *list);
++struct commit_list *copy_commit_list(const struct commit_list *list);
 =20
- 	if (!loaded) {
--		struct cmdnames not_strategies;
-+		struct cmdnames not_strategies =3D {0};
- 		loaded =3D 1;
+ /* Modify list in-place to reverse it, returning new head; list will be ta=
+il */
+ struct commit_list *reverse_commit_list(struct commit_list *list);
+diff --git a/log-tree.c b/log-tree.c
+index 41416de4e3..91b96d83a0 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -1047,6 +1047,7 @@ static int do_remerge_diff(struct rev_info *opt,
+ 	log_tree_diff_flush(opt);
 =20
--		memset(&not_strategies, 0, sizeof(struct cmdnames));
- 		load_command_list("git-merge-", &main_cmds, &other_cmds);
- 		for (i =3D 0; i < main_cmds.cnt; i++) {
- 			int j, found =3D 0;
-@@ -197,6 +196,8 @@ static struct strategy *get_strategy(const char *name)
- 				add_cmdname(&not_strategies, ent->name, ent->len);
+ 	/* Cleanup */
++	free_commit_list(bases);
+ 	cleanup_additional_headers(&opt->diffopt);
+ 	strbuf_release(&parent1_desc);
+ 	strbuf_release(&parent2_desc);
+diff --git a/merge-ort-wrappers.c b/merge-ort-wrappers.c
+index 4acedf3c33..d6f6135996 100644
+--- a/merge-ort-wrappers.c
++++ b/merge-ort-wrappers.c
+@@ -48,7 +48,7 @@ int merge_ort_nonrecursive(struct merge_options *opt,
+ int merge_ort_recursive(struct merge_options *opt,
+ 			struct commit *side1,
+ 			struct commit *side2,
+-			struct commit_list *merge_bases,
++			const struct commit_list *merge_bases,
+ 			struct commit **result)
+ {
+ 	struct tree *head =3D repo_get_commit_tree(opt->repo, side1);
+diff --git a/merge-ort-wrappers.h b/merge-ort-wrappers.h
+index 0c4c57adbb..90af1f69c5 100644
+--- a/merge-ort-wrappers.h
++++ b/merge-ort-wrappers.h
+@@ -19,7 +19,7 @@ int merge_ort_nonrecursive(struct merge_options *opt,
+ int merge_ort_recursive(struct merge_options *opt,
+ 			struct commit *h1,
+ 			struct commit *h2,
+-			struct commit_list *ancestors,
++			const struct commit_list *ancestors,
+ 			struct commit **result);
+=20
+ #endif
+diff --git a/merge-ort.c b/merge-ort.c
+index eaede6cead..8ed8a4c9dc 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -5071,11 +5071,12 @@ static void merge_ort_nonrecursive_internal(struct =
+merge_options *opt,
+  * Originally from merge_recursive_internal(); somewhat adapted, though.
+  */
+ static void merge_ort_internal(struct merge_options *opt,
+-			       struct commit_list *merge_bases,
++			       const struct commit_list *_merge_bases,
+ 			       struct commit *h1,
+ 			       struct commit *h2,
+ 			       struct merge_result *result)
+ {
++	struct commit_list *merge_bases =3D copy_commit_list(_merge_bases);
+ 	struct commit *next;
+ 	struct commit *merged_merge_bases;
+ 	const char *ancestor_name;
+@@ -5085,7 +5086,7 @@ static void merge_ort_internal(struct merge_options *=
+opt,
+ 		if (repo_get_merge_bases(the_repository, h1, h2,
+ 					 &merge_bases) < 0) {
+ 			result->clean =3D -1;
+-			return;
++			goto out;
  		}
- 		exclude_cmds(&main_cmds, &not_strategies);
+ 		/* See merge-ort.h:merge_incore_recursive() declaration NOTE */
+ 		merge_bases =3D reverse_commit_list(merge_bases);
+@@ -5129,7 +5130,7 @@ static void merge_ort_internal(struct merge_options *=
+opt,
+ 		opt->branch2 =3D "Temporary merge branch 2";
+ 		merge_ort_internal(opt, NULL, prev, next, result);
+ 		if (result->clean < 0)
+-			return;
++			goto out;
+ 		opt->branch1 =3D saved_b1;
+ 		opt->branch2 =3D saved_b2;
+ 		opt->priv->call_depth--;
+@@ -5152,6 +5153,9 @@ static void merge_ort_internal(struct merge_options *=
+opt,
+ 					result);
+ 	strbuf_release(&merge_base_abbrev);
+ 	opt->ancestor =3D NULL;  /* avoid accidental re-use of opt->ancestor */
 +
-+		cmdnames_release(&not_strategies);
++out:
++	free_commit_list(merge_bases);
+ }
+=20
+ void merge_incore_nonrecursive(struct merge_options *opt,
+@@ -5181,7 +5185,7 @@ void merge_incore_nonrecursive(struct merge_options *=
+opt,
+ }
+=20
+ void merge_incore_recursive(struct merge_options *opt,
+-			    struct commit_list *merge_bases,
++			    const struct commit_list *merge_bases,
+ 			    struct commit *side1,
+ 			    struct commit *side2,
+ 			    struct merge_result *result)
+diff --git a/merge-ort.h b/merge-ort.h
+index ce56ec1a78..6af97c0828 100644
+--- a/merge-ort.h
++++ b/merge-ort.h
+@@ -59,7 +59,7 @@ struct merge_result {
+  *           first", 2006-08-09)
+  */
+ void merge_incore_recursive(struct merge_options *opt,
+-			    struct commit_list *merge_bases,
++			    const struct commit_list *merge_bases,
+ 			    struct commit *side1,
+ 			    struct commit *side2,
+ 			    struct merge_result *result);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 832c8ef3f3..1ac0316cce 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3633,15 +3633,16 @@ static int merge_trees_internal(struct merge_option=
+s *opt,
+ static int merge_recursive_internal(struct merge_options *opt,
+ 				    struct commit *h1,
+ 				    struct commit *h2,
+-				    struct commit_list *merge_bases,
++				    const struct commit_list *_merge_bases,
+ 				    struct commit **result)
+ {
++	struct commit_list *merge_bases =3D copy_commit_list(_merge_bases);
+ 	struct commit_list *iter;
+ 	struct commit *merged_merge_bases;
+ 	struct tree *result_tree;
+-	int clean;
+ 	const char *ancestor_name;
+ 	struct strbuf merge_base_abbrev =3D STRBUF_INIT;
++	int ret;
+=20
+ 	if (show(opt, 4)) {
+ 		output(opt, 4, _("Merging:"));
+@@ -3651,8 +3652,10 @@ static int merge_recursive_internal(struct merge_opt=
+ions *opt,
+=20
+ 	if (!merge_bases) {
+ 		if (repo_get_merge_bases(the_repository, h1, h2,
+-					 &merge_bases) < 0)
+-			return -1;
++					 &merge_bases) < 0) {
++			ret =3D -1;
++			goto out;
++		}
+ 		merge_bases =3D reverse_commit_list(merge_bases);
  	}
- 	if (!is_in_cmdlist(&main_cmds, name) && !is_in_cmdlist(&other_cmds, name)=
-) {
- 		fprintf(stderr, _("Could not find merge strategy '%s'.\n"), name);
-@@ -216,6 +217,9 @@ static struct strategy *get_strategy(const char *name)
- 	CALLOC_ARRAY(ret, 1);
- 	ret->name =3D xstrdup(name);
- 	ret->attr =3D NO_TRIVIAL;
+=20
+@@ -3702,14 +3705,18 @@ static int merge_recursive_internal(struct merge_op=
+tions *opt,
+ 		opt->branch1 =3D "Temporary merge branch 1";
+ 		opt->branch2 =3D "Temporary merge branch 2";
+ 		if (merge_recursive_internal(opt, merged_merge_bases, iter->item,
+-					     NULL, &merged_merge_bases) < 0)
+-			return -1;
++					     NULL, &merged_merge_bases) < 0) {
++			ret =3D -1;
++			goto out;
++		}
+ 		opt->branch1 =3D saved_b1;
+ 		opt->branch2 =3D saved_b2;
+ 		opt->priv->call_depth--;
+=20
+-		if (!merged_merge_bases)
+-			return err(opt, _("merge returned no commit"));
++		if (!merged_merge_bases) {
++			ret =3D err(opt, _("merge returned no commit"));
++			goto out;
++		}
+ 	}
+=20
+ 	/*
+@@ -3726,17 +3733,16 @@ static int merge_recursive_internal(struct merge_op=
+tions *opt,
+ 		repo_read_index(opt->repo);
+=20
+ 	opt->ancestor =3D ancestor_name;
+-	clean =3D merge_trees_internal(opt,
+-				     repo_get_commit_tree(opt->repo, h1),
+-				     repo_get_commit_tree(opt->repo, h2),
+-				     repo_get_commit_tree(opt->repo,
+-							  merged_merge_bases),
+-				     &result_tree);
+-	strbuf_release(&merge_base_abbrev);
++	ret =3D merge_trees_internal(opt,
++				   repo_get_commit_tree(opt->repo, h1),
++				   repo_get_commit_tree(opt->repo, h2),
++				   repo_get_commit_tree(opt->repo,
++							merged_merge_bases),
++				   &result_tree);
+ 	opt->ancestor =3D NULL;  /* avoid accidental re-use of opt->ancestor */
+-	if (clean < 0) {
++	if (ret < 0) {
+ 		flush_output(opt);
+-		return clean;
++		goto out;
+ 	}
+=20
+ 	if (opt->priv->call_depth) {
+@@ -3745,7 +3751,11 @@ static int merge_recursive_internal(struct merge_opt=
+ions *opt,
+ 		commit_list_insert(h1, &(*result)->parents);
+ 		commit_list_insert(h2, &(*result)->parents->next);
+ 	}
+-	return clean;
 +
-+	cmdnames_release(&main_cmds);
-+	cmdnames_release(&other_cmds);
++out:
++	strbuf_release(&merge_base_abbrev);
++	free_commit_list(merge_bases);
++	return ret;
+ }
+=20
+ static int merge_start(struct merge_options *opt, struct tree *head)
+@@ -3827,7 +3837,7 @@ int merge_trees(struct merge_options *opt,
+ int merge_recursive(struct merge_options *opt,
+ 		    struct commit *h1,
+ 		    struct commit *h2,
+-		    struct commit_list *merge_bases,
++		    const struct commit_list *merge_bases,
+ 		    struct commit **result)
+ {
+ 	int clean;
+@@ -3895,6 +3905,7 @@ int merge_recursive_generic(struct merge_options *opt,
+ 	repo_hold_locked_index(opt->repo, &lock, LOCK_DIE_ON_ERROR);
+ 	clean =3D merge_recursive(opt, head_commit, next_commit, ca,
+ 				result);
++	free_commit_list(ca);
+ 	if (clean < 0) {
+ 		rollback_lock_file(&lock);
+ 		return clean;
+diff --git a/merge-recursive.h b/merge-recursive.h
+index 839eb6436e..3136c7cc2d 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -104,7 +104,7 @@ int merge_trees(struct merge_options *opt,
+ int merge_recursive(struct merge_options *opt,
+ 		    struct commit *h1,
+ 		    struct commit *h2,
+-		    struct commit_list *merge_bases,
++		    const struct commit_list *merge_bases,
+ 		    struct commit **result);
+=20
+ /*
+diff --git a/sequencer.c b/sequencer.c
+index 20807ea7e5..131443c242 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4315,6 +4315,7 @@ static int do_merge(struct repository *r,
+ 	strbuf_release(&ref_name);
+ 	rollback_lock_file(&lock);
+ 	free_commit_list(to_merge);
++	free_commit_list(bases);
  	return ret;
  }
 =20
-diff --git a/help.c b/help.c
-index 1d057aa607..3686285ca3 100644
---- a/help.c
-+++ b/help.c
-@@ -157,7 +157,7 @@ void add_cmdname(struct cmdnames *cmds, const char *nam=
-e, int len)
- 	cmds->names[cmds->cnt++] =3D ent;
- }
+diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+index 59b5d6b6f2..36ca126bcd 100755
+--- a/t/t3430-rebase-merges.sh
++++ b/t/t3430-rebase-merges.sh
+@@ -21,6 +21,7 @@ Initial setup:
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 =20
--static void clean_cmdnames(struct cmdnames *cmds)
-+void cmdnames_release(struct cmdnames *cmds)
- {
- 	int i;
- 	for (i =3D 0; i < cmds->cnt; ++i)
-@@ -359,8 +359,8 @@ void list_all_main_cmds(struct string_list *list)
- 	for (i =3D 0; i < main_cmds.cnt; i++)
- 		string_list_append(list, main_cmds.names[i]->name);
-=20
--	clean_cmdnames(&main_cmds);
--	clean_cmdnames(&other_cmds);
-+	cmdnames_release(&main_cmds);
-+	cmdnames_release(&other_cmds);
- }
-=20
- void list_all_other_cmds(struct string_list *list)
-@@ -375,8 +375,8 @@ void list_all_other_cmds(struct string_list *list)
- 	for (i =3D 0; i < other_cmds.cnt; i++)
- 		string_list_append(list, other_cmds.names[i]->name);
-=20
--	clean_cmdnames(&main_cmds);
--	clean_cmdnames(&other_cmds);
-+	cmdnames_release(&main_cmds);
-+	cmdnames_release(&other_cmds);
- }
-=20
- void list_cmds_by_category(struct string_list *list,
-@@ -689,7 +689,7 @@ const char *help_unknown_cmd(const char *cmd)
- 	if (autocorrect && n =3D=3D 1 && SIMILAR_ENOUGH(best_similarity)) {
- 		const char *assumed =3D main_cmds.names[0]->name;
- 		main_cmds.names[0] =3D NULL;
--		clean_cmdnames(&main_cmds);
-+		cmdnames_release(&main_cmds);
- 		fprintf_ln(stderr,
- 			   _("WARNING: You called a Git command named '%s', "
- 			     "which does not exist."),
-diff --git a/help.h b/help.h
-index af073a7a02..e716ee27ea 100644
---- a/help.h
-+++ b/help.h
-@@ -13,6 +13,8 @@ struct cmdnames {
- 	} **names;
- };
-=20
-+void cmdnames_release(struct cmdnames *cmds);
-+
- static inline void mput_char(char c, unsigned int num)
- {
- 	while (num--)
-diff --git a/t/t7606-merge-custom.sh b/t/t7606-merge-custom.sh
-index 81fb7c474c..135cb23085 100755
---- a/t/t7606-merge-custom.sh
-+++ b/t/t7606-merge-custom.sh
-@@ -14,6 +14,7 @@ Testing a custom strategy.
- * (tag: c0) c0
- "
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-rebase.sh
+ . "$TEST_DIRECTORY"/lib-log-graph.sh
+diff --git a/t/t6402-merge-rename.sh b/t/t6402-merge-rename.sh
+index 2738b50c2a..729aac9842 100755
+--- a/t/t6402-merge-rename.sh
++++ b/t/t6402-merge-rename.sh
+@@ -4,6 +4,7 @@ test_description=3D'Merge-recursive merging renames'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 =20
 +TEST_PASSES_SANITIZE_LEAK=3Dtrue
  . ./test-lib.sh
 =20
- test_expect_success 'set up custom strategy' '
+ modify () {
+diff --git a/t/t6430-merge-recursive.sh b/t/t6430-merge-recursive.sh
+index ca15e6dd6d..555f00f78a 100755
+--- a/t/t6430-merge-recursive.sh
++++ b/t/t6430-merge-recursive.sh
+@@ -5,6 +5,7 @@ test_description=3D'merge-recursive backend test'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-merge.sh
+=20
+diff --git a/t/t6436-merge-overwrite.sh b/t/t6436-merge-overwrite.sh
+index 4f4376421e..ccc620477d 100755
+--- a/t/t6436-merge-overwrite.sh
++++ b/t/t6436-merge-overwrite.sh
+@@ -7,6 +7,7 @@ Do not overwrite changes.'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ test_expect_success 'setup' '
+diff --git a/t/t7611-merge-abort.sh b/t/t7611-merge-abort.sh
+index d6975ca48d..992a8f9874 100755
+--- a/t/t7611-merge-abort.sh
++++ b/t/t7611-merge-abort.sh
+@@ -25,6 +25,7 @@ Next, test git merge --abort with the following variables:
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ test_expect_success 'setup' '
 --=20
 2.45.2.436.gcd77e87115.dirty
 
 
---vUmxz8GHRI4ikeRq
+--wM+tGVnMbtidWhlF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoFwEACgkQVbJhu7ck
-PpRuABAAhw4OzJ498vSvQ/0BzwKbbZofh1QNvXyf6r99lIqnC0JNfpI0SrNRQ28y
-isIUka84to/WcxZcO92hOqe+IzQUSp0CtziSoV3Npmlj4Nc/kGTJC4UAVHjeut/P
-ZpBI7CWEO66xRrE+Cf0YDXj9Pq97415ixp4acHAb9rmCKjEKhEGfzSguZqw0eb9U
-teHiNdYLnsMk5Mqq6RBVa6J/MAwuyLZQNrQt//vhd2bJRJBUzBuq7mP5do/JC7wk
-m2a2CUdR/GnIvO0GdOUmfvBTqe21PmFDf9fD89F1GCCU8l7do+HBHF5Cwtls5Ytr
-VxprAWrXhcoqeyIVmfNty8gBdEYmqIa2uUHp6fiMA5Elj1r+QmJe9YxSs/1SXl3I
-Tbc++YZ6EBxCfp8fiJDqXpS4bM4M9z71UGW3C3qfGWOtsLAkgOFGSQeU5HjZUwxX
-1c9umA/5djGEbhMfaGmexiHiRW4SlrpSNdPkII2ecqeQ9LYF/ZSpdObbHAdboKe3
-Ax0xAr//h2PBcDGqOX6jFL65M7Q9dtRQ5RQ0r73cH06NicjUxNwrTSgkmBdJ+HhV
-k8l4RyMn+gg03j/p//OvrkmJwMwTAD6IRssYgju+0P50otthLmPwtjcLrC9UPL39
-65bC5BnoX7nXLX3IGur5Bv8q/+vmIs5cJLfHkvK+IdysObjdBlM=
-=fws4
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoFwYACgkQVbJhu7ck
+PpQVHw/9GpYuAKNWfWQa9QpxNmWcfJzA3uzbbg8hwsbBeFk+dn7/txZIZ8+uOrW6
+2kof70oZwCZz6t4QD6LLtEt8+GicF+Gy2wAGIANolKv9Ne/fxuqDK72DjsXMZUJS
+fT2GKa+2JNIqUFpACv6kNQIfPySwLruCa3QDTcnrl4tAlf+e13Dkx/YWuf6uEzRQ
+Qdy7MBp934CkeGpj6ODrTv4vcqFolVYaFZjbVzJjCtabf0zHkSdTFwZ9FRA0Ruul
+2XtTHaI56bPs/oSwdxAVHIUXkF4XTOnBHsaIxk7evhmBmxu9+Go7ciGsoYchchBu
+j0LXcQaaxTyGO1GY4d6zmut/3uu8N6lHsD+i7kX48MTKFGDEf5pvYBHaFW9zsRVU
+V9W9bTAR63UWHsyfZuxbNqey4hmJoFkFrvRsk0xYrC7ANkFh6oc4yODrV+UEqXlE
+9Ti1EJ0z9ReBb81LLIsYven/dIZZcectVT8OyNhEi4kQTTzlwpse0Hl7lbse6OnG
+cbtPz76pz7YGb1dolrdEudYe3+fyt9rQfyCmqDCvJ8pQI4eKHoh9w9yAkvuHSoBP
+jVQWkR8rfSc3jYWZDqz1R0Mmg7NqtvglkD38CZQi0baaKW53w9dSIvyp1AYfSQyb
+I0/VPlepHHnQB4YikKOO2IVxI1/v5gs+a3h0Gg+UppWBk5ZU/n0=
+=DxoI
 -----END PGP SIGNATURE-----
 
---vUmxz8GHRI4ikeRq--
+--wM+tGVnMbtidWhlF--
