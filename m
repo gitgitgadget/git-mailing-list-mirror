@@ -1,145 +1,251 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D903748A
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 01:46:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF002171640
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 06:06:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718070420; cv=none; b=mtRpBPz3eAwg8SHhQA9peXaySq29KKSnRHcCOTdT1s85N3MGa6DY0WntsJlNXi9ONeSV4d2P9lSyepq2gy3QSp+kluVa3LaHc7NTNPG1+3DpHHM3i3Mtz91d5MKsgToTYZ4GxBgxTUU9QOppZ5v1EujK8M0sfG/iSgIl7xz1n3w=
+	t=1718086000; cv=none; b=NaCfA0D46ZLvnlFILmFJFyQhZkJzZCQPQHdD9ndAOvazSmRdXvjLS4uYQTg61jciy3niCK84Q5muOmAHsSwT22ojL3FCdPoXBp929xgmYsaj3pAW7ZLrVUyZlVyuFoH9c4jOk3qDNrVzCm62NuL0cVbm07MgnHottpNkFddT5T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718070420; c=relaxed/simple;
-	bh=oCkZ5/Wb2qqliEDN05g6W4dIUKlgMsT3I7vi70JEQZQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ciUJhakhsFnIRrYia0y3e50GcGvvscSO0ITE77KDC8KmiNJv56Ez1SyOEjczE23NlKYmYeZWmHCA7ftC5Dy8CeIqFatveYK73hkYLbG6LGjqerMuNsVilsOhmtqnKvvp42PJnotdSZY95nz2lROuJNCe+vtjMj7vBRcRJ7d/aSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cWEulTBz; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718086000; c=relaxed/simple;
+	bh=J65Hv7Jo9DWKXEdUpDwggbqQvMdNOUEnZEml8Em1oro=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m/aWkpfM6FPF2QfEvuY2FOgjWn7Y+Qa7jm8mpDWsmrtPLoGutv7qFRLoBmTH0D3UqwB0GsuHBrmwLkd1Loq25WeFTGtpzzHF0W33RmSoxqhk+opKNqgrd0ERClsDSCtOVwFUIBTZx7rVTx2jElxT/hJsPk2JVKhkuZU7TUuenzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y9JBMMm4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XaEcgMTJ; arc=none smtp.client-ip=64.147.123.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cWEulTBz"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-57c7681ccf3so2456515a12.2
-        for <git@vger.kernel.org>; Mon, 10 Jun 2024 18:46:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718070417; x=1718675217; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P3CHk9/k9UlbSzDqdl2FCS897EukR0/iricUmvavxJY=;
-        b=cWEulTBzuP2UBFaoVC/sjgcrfiTzX71PjXXk9PxlcBf4yvJLPdaJkiR1alH/wGThi+
-         zDrgh/je8WEK4+ioaApQQ7EWc4wpg+r56gKYN6czTnh9qlRqQ/CWfSdufkWjiDrd0BFF
-         tFQSvb0Mm1Mzzq2OhxpFtzLTxu2LsCsc8FlMvDLqFRS9hVF6rGqVxtniBl3on9Wo8i1R
-         MnSBK3h8G3IgiRkKhRdAHIr4hS3u85rqDEvQYhi1diATSTPXRy+RpzODmHD0U4P8GxEK
-         PW01mIqdmDenUMo/2s4SJYE4dKtJDiBtxNfLFaXDBuFiAqUgrqJlm/xLhD2pZAppOgeU
-         5nmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718070417; x=1718675217;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P3CHk9/k9UlbSzDqdl2FCS897EukR0/iricUmvavxJY=;
-        b=plags4ezMK2Si5wCt56WmBUSjTnJeTu0jcFgfuf5COXwqSkclHM2ZpG4hRwJLyl3+j
-         is/es4fgjtpvTgMOJCWXEDtd+WTJJ4Vj4rw/m+OAhM1f+py0nlSGx6Sgadxvj0JqpATg
-         XwVCArkn21CXbfAk33ye44Vx/I9SN+7ZJqaHVvPCxBn5ZwcitlzPSLx1rymvJ9ndQAjH
-         PJw1/dsQYxp+EoUP2dFHpXIV8vXMyYwghB/szpryE7tGL11VOrxutETBTmBjKZGBErxm
-         Tm5jg1gdlyFUswXb+cfgSXzMUbD80KYqI3nTdxgjytMREfKY82mxAGCk70IXRasgEjlN
-         4nFg==
-X-Forwarded-Encrypted: i=1; AJvYcCWNyCV2X/7BbyidQN0r3Qerh3aayKFSNGJdh5vg2CVuiVoCWd63x2lHpF7q79StW5X3B6GkTBV2W47Vd23Ug94mhmub
-X-Gm-Message-State: AOJu0YwBWMzfG9A6tdn3BgLDo1UuHV7/vI4DxLDzjsNOBEu/h7oGWBvM
-	FI9deQChNpEPA/OO1ffCe7XQC5YOIUA8xjHAjSwQ/NmM4Z+NowSM+j636eIRJhyZLPYm1/p9lBg
-	xauqP9zR47oM0gtvq8ceuO8Pku8c=
-X-Google-Smtp-Source: AGHT+IG4Tf0v4VGfe1TyrF8rB5yjYj+Scb8b4p3Wuu3587Ra/SVuvW1ttthDqSaKxLSK4F496NEEbqTvAg7+uSenS9w=
-X-Received: by 2002:a50:d58b:0:b0:57c:621e:b7ee with SMTP id
- 4fb4d7f45d1cf-57c621eb89cmr5205704a12.34.1718070417161; Mon, 10 Jun 2024
- 18:46:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y9JBMMm4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XaEcgMTJ"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 8EF941C00103;
+	Tue, 11 Jun 2024 02:06:36 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 11 Jun 2024 02:06:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1718085996; x=1718172396; bh=0eXoNS9CIv
+	6COlTxuel8hZsjCRZ9lbfslHSsJwgfak8=; b=Y9JBMMm4ewsTRE85rEaLs3MNrC
+	QmTuau7K4WbuqaAz5/Y6FzxPEwQKyoX/Cx1T6H667j4krCBqRb5gNVtj+vHBZxMv
+	yQzQZlfkGKhuc6SsFZ4f4u9hMLESg4tPuP3i0zYKsZHqxD329d42uOPZ81fpHz8p
+	2Ck866tZj/e7tPmMoHQ5XSEjaelsXo81BymJkKuZaj0LdKjWrtWx8sGYVpTbG8jL
+	uU53VDrBVHVDGU2Zkc++7K7fmBsawFWwlGKdtIO8jhndaX5hYwWaCQoZIP1wo2Jr
+	K5s89WqPfqVdqpaDIo0mDbmaVYZ9XHES1/YkbXr8mhko2GNP5zZ5Lw6woBeQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1718085996; x=1718172396; bh=0eXoNS9CIv6COlTxuel8hZsjCRZ9
+	lbfslHSsJwgfak8=; b=XaEcgMTJgjqS1pjy+dKBnug3aKcA5GH0dOZ9OXvQBweZ
+	UvxsSu/Tyz91nX6Pex8rh44TXkMfrQoQA5Fy4gDyhiRoOX87GPKxHnpgvGdlucc5
+	1ZYLmxZ4UUUOCKuEwW12Sdhe2FqHBnN7hnPaIrPHTus+j0RIvNhBQ8naaIg/i0aZ
+	y6Dnotq9EM9DmB1BNmO6PeYzLA/BxRRC9HGuAIVdJKpsDymR5NgXRKdWtNHok2Sv
+	wFCIWYnEigyAHFh8WP04NymRX7D5QBSPkbPbpTsN/YclyVqPwqX10MXwFAIwacbN
+	Jg7PYvEFayq3dN2oi0bKUqhKJG+8sIW1n/8BBYrIUg==
+X-ME-Sender: <xms:bOlnZmVS4LmA2RYFP-VM4A91hmph4IN1F9BicQSkIJAMBe7GYul7rg>
+    <xme:bOlnZinvm4FOtw16XQA7baYhATL2QDj3TztSnzFU-yuSx1uQvPzcHspl3x5QIYSc4
+    elj-vXEOv3lhUOlSg>
+X-ME-Received: <xmr:bOlnZqYCcEeiOHcJIeW8KM2b4juWgc0SHM5tIUU3PucZP_cwyIneKDqByE82bT55owGSJXb42dAAkzSCB3DnzSoAQ0s1b-WS6nSBzkJQPqDX2tVyhwqO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduuddguddttdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:bOlnZtWw_bZXG0zRR_zjABDckrA_7jh4W8myt-CzcnIebKudu4OBsw>
+    <xmx:bOlnZgltg80JdsyfVSRvAA5K1w9yOq2T7ClXFuaXO0SRxYtNGigCIA>
+    <xmx:bOlnZicfHmiMGP9RCkVf0443tDWXzRFYWRvwf7PRZE3kts10-gWqKw>
+    <xmx:bOlnZiHfYWFJeqqlwPsOPuNXDCUjOK9Dac0308XwqlFB3G9HTKUjdg>
+    <xmx:bOlnZlyywTT6_62tvQR90n_CGJoKS8mwoe28VBcXKwSgqeuUt8uWWGAm>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Jun 2024 02:06:35 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id f878eadc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 11 Jun 2024 06:06:24 +0000 (UTC)
+Date: Tue, 11 Jun 2024 08:06:30 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Kyle Lippincott <spectral@google.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Re: SEGV (detected by Address Sanitizer) when using `core.abbrev`
+ option
+Message-ID: <ZmfpZm2vuwx0fl1w@tanuki>
+References: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ae862adb-1475-48e9-bd50-0c07dc42a520@rawbw.com>
- <xmqqwmmw1sev.fsf@gitster.g> <4ed426e4-beb6-45ed-b493-1e19c7c0511b@rawbw.com>
- <xmqqikygzdgk.fsf@gitster.g> <e8feffd0-ba6d-4aae-8c80-3d6482896b08@rawbw.com>
- <0ee501dabb91$aa2340a0$fe69c1e0$@nexbridge.com> <8fdc76e2-3de2-4312-956c-2662336fa54d@rawbw.com>
- <0eef01dabb9d$70c99690$525cc3b0$@nexbridge.com> <b8f8fa08-e4a0-4755-99f0-9311b05945dd@rawbw.com>
-In-Reply-To: <b8f8fa08-e4a0-4755-99f0-9311b05945dd@rawbw.com>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Mon, 10 Jun 2024 18:46:45 -0700
-Message-ID: <CAPx1GveJ-ckaoxqTQ9-jpRGw8p0SO0+xxL4vErW1tv3tE83=Kw@mail.gmail.com>
-Subject: Re: [BUG] "git clean -df ." silently doesn't delete folders with
- stale .nfs* files
-To: Yuri <yuri@rawbw.com>
-Cc: rsbecker@nexbridge.com, Junio C Hamano <gitster@pobox.com>, 
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="JazGhyRWTVflWVB8"
+Content-Disposition: inline
+In-Reply-To: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
+
+
+--JazGhyRWTVflWVB8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 10, 2024 at 6:22=E2=80=AFPM Yuri <yuri@rawbw.com> wrote:
-> No, *only* the .nfsXXXX file exists in the xx directory when git runs.
+On Mon, Jun 10, 2024 at 03:27:11PM -0700, Kyle Lippincott wrote:
+> c8aed5e8dadf (repository: stop setting SHA1 as the default object
+> hash, 2024-05-07) stopped initializing the_hash_algo, but config.c
+> references it when it observes a user setting core.abbrev, in two
+> ways:
+> - if core.abbrev is detected as a 'no' boolean value, then
+> default_abbrev is set to the_hash_algo->hexsz
+> - if core.abbrev is set to an integer, it verifies that it's within
+> range for the hash algorithm (specifically: it errors out if the value
+> is < minimum_abbrev or > the_hash_algo->hexsz).
+>=20
+> Stack:
+> =3D=3D2421488=3D=3DERROR: AddressSanitizer: SEGV on unknown address
+> 0x000000000018 (pc 0x56344202585f bp 0x7fff9546fe10 sp 0x7fff9546fcb0
+> T0)
+> =3D=3D2421488=3D=3DThe signal is caused by a READ memory access.
+> =3D=3D2421488=3D=3DHint: address points to the zero page.
+>     #0 0x56344202585f in git_default_core_config git/config.c:1466
+>     #1 0x56344202585f in git_default_config git/config.c:1815
+>     #2 0x56344202064e in configset_iter git/config.c:2185
+>     #3 0x563441d531cb in cmd_clone builtin/clone.c:981
+>     #4 0x563441cebac2 in run_builtin git/git.c:474
+>     #5 0x563441cebac2 in handle_builtin git/git.c:729
+>     #6 0x563441ceed0a in run_argv git/git.c:793
+>     #7 0x563441cf0aea in cmd_main git/git.c:928
+>     #8 0x563441ce9323 in main git/common-main.c:62
+>     #9 0x7fa3228456c9 in __libc_start_call_main
+> ../sysdeps/nptl/libc_start_call_main.h:58
+>     #10 0x7fa322845784 in __libc_start_main_impl ../csu/libc-start.c:360
+>     #11 0x563441ceb530 in _start (git/git+0x1e0530) (BuildId:
+> c0e4b09d5b212a201769f1eb8e7592cddbe3af1d)
+>=20
+> AddressSanitizer can not provide additional info.
 
-In the case you showed, yes. However, there are *at least* two
-*different* problem cases, one of which gives Git no warning that
-something weird is going on.
+Good find.
 
-The way "NFS silly renames" work is this:
+> My first thought for a fix was to just cap it at 40, with the
+> assumption that the code would handle it correctly in the unlikely
+> event that the hash size ever decreased, but I don't think that does
+> the right thing if `core.abbrev=3Dno`. That's documented as a way of
+> obtaining the full hashes (with no abbreviation), and if we're using
+> sha256, capping that at 40 hex (160bits) is incorrect.
 
- * an NFS client tells an NFS server to do operations, and this
-   is (nominally) stateless;
+Exactly, this doesn't feel like the right solution.
 
- * if an NFS client tells the server to remove a file, the server
-   attempts to remove the file;
+> My second thought was that we could store the requested value and
+> validate it on every usage. This complicates usage locations, and can
+> lead to poor behavior (crashes in the middle of operation when we
+> finally get around to checking the value).
 
- * but for POSIX-style operation, if a client knows that some file
-   is *open* and that *same client* intends to remove the file,
-   the client *must not* send a removal request.  Instead, the
-   client sends a "rename" request, renaming the original file
-   to ".nfs<unique-id>".  When the client's last user of the file
-   closes its last file descriptor, the client *then* sends the
-   final remove for the renamed file.
+This feels more complex than needed indeed.
 
-So, the scenarios we must consider are these:
+> My third thought was that we could store the requested value and
+> validate when we have a repository that initializes the hash for us as
+> part of that initialization. If we attempt to abbreviate some hashes
+> without that setup, we act as if core.abbrev isn't set at all (so they
+> get the default behavior). That seems like the best option overall.
+> Exploring that further ...
+>=20
+> I've looked at a semi-random collection of places where
+> `default_abbrev` or `DEFAULT_ABBREV` are used, and they all seem to
+> eventually go through `repo_find_unique_abbrev_r`, and they pass in
+> the len. This also always has a repository available (otherwise it
+> wouldn't be able to disambiguate). Furthermore, it has `if (len < 0)`.
+> We could thus carry the "unvalidated" request in default_abbrev by
+> having special magic values (auto=3D-1 like today, no=3D-2 (replaced with
+> hexsz when we know it), other requests are <=3D -4, for a requested
+> length of 4 or higher), or we could have another variable
+> (requested_default_abbrev) that gets copied to default_abbrev when we
+> have a repo.
 
- 1. Nobody has the file open anywhere.  The client will send a
-    removal request and the server will obey or not depending on
-    permissions.
+This also feels a bit too complex in my opinion.
 
- 2. The server itself has the file open, but no client does.  The
-    client will send a removal request and the server (assuming it
-    is itself a POSIX system) will unlink the open file, really
-    deleting the file later on final close.
+> The one potential issue I can think of with this is that setting
+> `core.abbrev =3D no`, having that resolve to 64 (sha256) when we set up
+> the repo, and then if we ever read from a repo that uses 40 hexsz
+> (such as sha1), then we have to ensure that we tolerate a requested
+> length greater than the current hash algorithm's maximum length. This
+> likely wasn't a problem when sha1 was the default, because we're
+> unlikely to go to a hash algorithm with <160 bits in the future. But
+> if sha256 becomes the default, then this can be problematic.
 
- 3. The server does not have the file open, but some client does.
-    This could be a *different* client, in which case your Git
-    process will result in a removal request, which will operate
-    as in cases 1 and 2 above.  Or this could be *your* client, in
-    which case your Git process will cause your client OS to send
-    a "silly rename" if it has not already done so, *or* will cause
-    your client *not* to send a removal request.
+I think this is the best solution. I don't quite see why we need to
+abort in the first place when the caller asks for something longer
+than GIT_MAX_HEXSZ. If they do, it's rather clear that the intent is to
+show the full object hash, so we can do that.
 
-So, the main problem cases are case 3, where your own client is
-the one that has the file open.  This causes your OS to *convert*
-an unlink() call into a rename() call for a "silly rename", in
-effect, *if* your OS has not yet done a silly rename.  But if your
-OS has *already done* a "silly rename", your OS knows that the
-".nfs<unique-id>" name is its own preserved name.
+In other words, the following should be sufficient, shouldn't it?
 
-If the silly-rename operation has already occurred, your OS has
-the option of making the unlink(".nfs<unique-id>") operation fail,
-or ignoring it entirely.  If not, however, your OS has only one
-option: to convert the unlink() to a silly rename and *report
-success*.
+diff --git a/config.c b/config.c
+index abce05b774..0416b0f2b6 100644
+--- a/config.c
++++ b/config.c
+@@ -1460,10 +1460,10 @@ static int git_default_core_config(const char *var,=
+ const char *value,
+ 		if (!strcasecmp(value, "auto"))
+ 			default_abbrev =3D -1;
+ 		else if (!git_parse_maybe_bool_text(value))
+-			default_abbrev =3D the_hash_algo->hexsz;
++			default_abbrev =3D GIT_MAX_HEXSZ;
+ 		else {
+ 			int abbrev =3D git_config_int(var, value, ctx->kvi);
+-			if (abbrev < minimum_abbrev || abbrev > the_hash_algo->hexsz)
++			if (abbrev < minimum_abbrev)
+ 				return error(_("abbrev length out of range: %d"), abbrev);
+ 			default_abbrev =3D abbrev;
+ 		}
+diff --git a/object-name.c b/object-name.c
+index 523af6f64f..1be2ad1a16 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -837,7 +837,7 @@ int repo_find_unique_abbrev_r(struct repository *r, cha=
+r *hex,
+ 	}
+=20
+ 	oid_to_hex_r(hex, oid);
+-	if (len =3D=3D hexsz || !len)
++	if (len >=3D hexsz || !len)
+ 		return hexsz;
+=20
+ 	mad.repo =3D r;
 
-That last case will definitely fool Git, which sees a successful
-result of its unlink() call.  The other case -- the one where the
-silly rename has already occurred -- will either report a failure
-to unlink the silly-name ".nfs<unique-id>" file, which Git could
-detect at that point, or will report success, lying to Git.
+This is also in line with `parse_opt_abbrev_cb()`, which does the
+following:
 
-In both cases, of course, the directory will be non-empty at
-the end of the series of unlink() calls, and the attempt to remove
-the directory will fail with ENOTEMPTY.  Presumably Git should
-detect this and warn, but there's nothing else Git can do here.
+    if (v && v < MINIMUM_ABBREV)
+        v =3D MINIMUM_ABBREV;
+    else if (startup_info->have_repository && v > the_hash_algo->hexsz)
+        v =3D the_hash_algo->hexsz;
 
-Anyway, that's the OS view of this mess. I leave the work on
-Git itself to others. :-)
+In other words, it trims to `the_hash_algo->hexsz` or, if we don't have
+a repository, it doesn't bother to trim the value at all.
 
-Chris
+I'll send a patch that does this.
+
+Patrick
+
+--JazGhyRWTVflWVB8
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZn6WEACgkQVbJhu7ck
+PpSaDQ//cj8jznMfftbZjLUqXTbb62KITUKWQh3QeNFYFg3UIDF2wU439Pmau0/I
+/hnCdvAbi8AKu8U29sjiWyDp3o5GsMP5+LQObxe5omeC+IVdBdeBcveYAkSwugmg
+uW6UBR1ftu35A3UzZcvAhUjezi9iZaisVmHtHlyxs5V+4R+EkpSvO0GaJ5N2MbX7
+Ikp/wjpPbceQfOaFZs0g4XXbiJ9fdoQfNVLC+iRYzJYEjLP7t6hHJQ8pZvHlw3J4
+tBd2S1MZBqiNt0UJZ+6OQAGzRrccaqe8GEk/6R3g26X9JwylV9JOP64v6oSLiLOe
+ZtxctQfaa6H0Z2JhmvuJNvuF5FsAzfsBaZf2te/kk2Ja9m+l55K8D2mskgpq6BtT
+qCZtYOKfdnuNmHDbqp+NRTUBQ1YTAD3ES0YzIu0XZMWbMrfaW3JW4N+BQ2eXODZ+
+jNm4fJmYnCvcWek6UtzrwmiOeCEcSjgOXnY5jdbzkL4mSBkq/QGIdkOTD9knx+k4
+Y8ss3fEy2Je3a3vVCqUmghLHiX2rPHuPE9Pz68IeP1FiW65/o2dk2MM7A3aC8Fra
+cZQtrRCwknTVBqlKRKctyHsBjsAD7ymoBe4/NyNe5e/TVOXDlSzJOBEJkrZbU3dV
+OljsOL5UPFa5jyKP5YurwzAYFgY3OT8lNelrcZJqSbUx6vlkXU0=
+=7Ann
+-----END PGP SIGNATURE-----
+
+--JazGhyRWTVflWVB8--
