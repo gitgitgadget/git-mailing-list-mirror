@@ -1,147 +1,95 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B30717CA01
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 13:23:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456AC1E4AF
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 13:49:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718112225; cv=none; b=Uzo70QH8F56nkq3gzbOo+PIE/3wq5DcQUstksftHoxd29tZ+yYezZrrKnVQzqlFybBXTD9ZBSLJUUyfyBo/I9V/lkvhBJzr0irxITbyc4Zcz5WuqZH7O8QUzBybC4BE+b8m2gQ4i8bv4IGg6qSF/6NPM+GcOgOHJB/HNSzXhzr4=
+	t=1718113750; cv=none; b=ljowbjqXwkhStqTpZn3fGNE6QvFGu+Yd04mVo+mmdiBhqXkueiBDfymoG++lgWRz34/smJg45vzMuq5OZ3NkjpLP5lT7rBn0NvJ5BNNUNIz5L0oNGqEItNFGaDLEThyC5jP/WEg6cTM5M08CfeQc2Tlay/XTSYvvFBdeRBUI8o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718112225; c=relaxed/simple;
-	bh=9550tBYMTGWyI7d2HOpTDD6Hw0wOH/kgicKe8r5oYUM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bb0w8c79Cye64u8zxIkkza+gV9zpIY/qns+RaTxLOEagra5pzN74XhKQyu5lUTwR2J1q0o8yuQz0oa0bBZwoKJq/NKZ169Kfu5HF0qre8pbK8vCPuN1j/YWQOPK1zaGXNkFEksfiV5cp6Rhj+T0F7B7yJw322E6+tHFCYz9RQ50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dg81CnxN; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dg81CnxN"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2c2eb5b1917so970826a91.2
-        for <git@vger.kernel.org>; Tue, 11 Jun 2024 06:23:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718112224; x=1718717024; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=R+AFN/ZO7LKKUHzzLYDJ0ogzStxfZyicfq1Cc7vLnzc=;
-        b=dg81CnxNXTgj6WFy0+FIeaCSxFD5jWjoPleMkuQ9F5YP7dGOsuKs1Pr0aZAxwpMHH+
-         4dyrj3QX+rA4vOXkOr+nWLiFY5w5Xdj13GWWy8HsWFEv4hGwzvbOXys1Pm4wQbBue6Vk
-         ZrQCWWUl1oj7pPpBM6C5Z2at/gpxP0iv+1Kbz9O2IjWM0F3DXc5CigSrQL0+5/nZNCpD
-         Yop+jRwNiypcQDAQTbPibYffrd1aE+q1fWENINBaFaIFP8+dtlTTCIlY2xG839X0KP8t
-         wpE81DOlbMaiwTEvXiw7ZYE1abhXd/y+gDCh56s0xHAiDExMmkS7S1AePusG89NYKwwT
-         IL+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718112224; x=1718717024;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R+AFN/ZO7LKKUHzzLYDJ0ogzStxfZyicfq1Cc7vLnzc=;
-        b=jgNYK37tD89jqorQGAJups0zq3tSaJR5l/WKaqMORVOAA8JyvNU5vG77HjILJXvcRL
-         EcTjYk+xKCTiBvDeREb6HNnp+5USb6dTeGzfLOFk4DqcVc9mwca/kd+NOooV+PW1gIHl
-         5G6OOyjB+LecLj4GoYi3Ntpb+k83lPw+Vp4mGyShpsdWmVTTtHdw7ym/7KYgla+bx/3O
-         A29HNRdgBOfvtrNcZOWackNGg/cfBsxUZYNgs1fqd/kpdL6WgJY10Vt7vZ4itk7bgROy
-         Yl/XTKEnW4Hqr2Mv0zkxFTYv2gdSdjvswRBV3KLUWkCw0Ev/rh00KfoqhyBpusUv397w
-         WBRQ==
-X-Gm-Message-State: AOJu0YyrlKHVphtynEqOHFXrnkBT1EwoeW33IF0S+wwvL/VyR0GqHIxU
-	KarzHzVzsBmxwYey22Cpkou31436b2Hu+EZq9YkHgMBqijuc3CEaJ4t7rVGC
-X-Google-Smtp-Source: AGHT+IG2lmEpFX1eulamVobOf75RM2GrrNiA9niqZy5+C+C09eH5WoYRNOytZNk8A2hggP4L/chl4g==
-X-Received: by 2002:a17:90a:7803:b0:2c2:fad6:3fc with SMTP id 98e67ed59e1d1-2c2fad605abmr6985488a91.11.1718112223415;
-        Tue, 11 Jun 2024 06:23:43 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c300adaf94sm4851612a91.49.2024.06.11.06.23.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jun 2024 06:23:43 -0700 (PDT)
-Date: Tue, 11 Jun 2024 18:53:39 +0530
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 18/21] t/helper: fix segfault in "oid-array" command
- without repository
-Message-ID: <cc2go3x24cftqml2byx5oh3ggvsqdz32yufdpn2box2jpehtlo@hnsubup3sefn>
-References: <cover.1718106284.git.ps@pks.im>
- <2774b8500fdecb0d73543dbfc5ac18c6bb8d8090.1718106285.git.ps@pks.im>
+	s=arc-20240116; t=1718113750; c=relaxed/simple;
+	bh=OHi7+XBFgBIx7JgJfpDGYblloJjg1UvxfgU1MUkkalA=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oQ2/pjt0Kn7Q6lTpay47nx9KER3weSiXbFFXsacHnhsqXyjuYgqiPOfMN9I+6KXVfIq7wkQ545075Vo5AxUv9ptSWa9cBNhOwNubYe4VxblTH7ER/CFzPwxzNCP6HHDfcfqWtjB6B5nLZ+OV3u87N4ZV9S8QJf4+bUruZm9RMD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 45BDmmFR1933685
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Jun 2024 13:48:49 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Jeff King'" <peff@peff.net>, "'Yuri'" <yuri@rawbw.com>
+Cc: "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Git Mailing List'" <git@vger.kernel.org>
+References: <ae862adb-1475-48e9-bd50-0c07dc42a520@rawbw.com> <xmqqwmmw1sev.fsf@gitster.g> <4ed426e4-beb6-45ed-b493-1e19c7c0511b@rawbw.com> <xmqqikygzdgk.fsf@gitster.g> <e8feffd0-ba6d-4aae-8c80-3d6482896b08@rawbw.com> <0ee501dabb91$aa2340a0$fe69c1e0$@nexbridge.com> <8fdc76e2-3de2-4312-956c-2662336fa54d@rawbw.com> <20240611064847.GC3248245@coredump.intra.peff.net>
+In-Reply-To: <20240611064847.GC3248245@coredump.intra.peff.net>
+Subject: RE: [BUG] "git clean -df ." silently doesn't delete folders with stale .nfs* files
+Date: Tue, 11 Jun 2024 09:48:43 -0400
+Organization: Nexbridge Inc.
+Message-ID: <102101dabc06$16dfead0$449fc070$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2774b8500fdecb0d73543dbfc5ac18c6bb8d8090.1718106285.git.ps@pks.im>
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQETpLHCLpFQr2QiGEI4aCI0uZSumAGFDyW3ASm+LNUCETu8/AHXUzFkAMoJcpkCHbeU6QEt3DN5svtaVkA=
+Content-Language: en-ca
 
-On Tue, 11 Jun 2024, Patrick Steinhardt <ps@pks.im> wrote:
-> The "oid-array" test helper can supposedly work without a Git
-> repository, but will in fact crash because `the_repository->hash_algo`
-> is not initialized. This is because `oid_pos()`, which is used by
-> `oid_array_lookup()`, depends on `the_hash_algo->rawsz`.
-> 
-> Ideally, we'd adapt `oid_pos()` to not depend on `the_hash_algo`
-> anymore. That is a bigger untertaking though, so instead we fall back to
-> SHA1 when there is no repository.
+On Tuesday, June 11, 2024 2:49 AM, Jeff King wrote:
+>On Mon, Jun 10, 2024 at 06:09:52PM -0700, 'Yuri' wrote:
+>
+>> "touch .nfs12309" isn't enough.
+>>
+>> Here is a reliable way to reproduce the problem:
+>> 1. Have a git repository on an NFS disk.
+>> 2. mkdir xx
+>> 3. touch xx/x
+>> 4. tail -f xx/x &
+>> 5. rm xx/x
+>> 6. git clean -df .
+>>
+>> The last operation reproduces the problem. The xx directory and the
+>> .nfsNNNN file in it stay without warnings.
+>> The .nfsNNNN file is created by the NFS client when the xx/x file is
+>> removed.
+>
+>That is not the behavior I get. I see:
+>
+>  $ git clean -df .
+>  warning: failed to remove xx/.nfs0000000002c8197f00000002: Device or
+>resource busy
+>
+>Which makes sense, since the kernel fails our unlink() call. Maybe your =
+system
+>behaves differently at the syscall level?
+>
+>This is a pretty standard Debian system with kernel 6.8.12. I set up =
+the NFS mount
+>with:
+>
+>   mkdir /mnt/{server,client}
+>   exportfs -o rw,sync 127.0.0.1:/mnt/server
+>   mount -t nfs 127.0.0.1:/mnt/server /mnt/client
+>
+>and then made the repository in /mnt/client. "mount" tells me it's =
+using nfs4.
+>
+>Running "git clean" on the server side does remove the files (no =
+warning, but the
+>directories are actually removed).
 
-Thanks for working on this. This would make t-oid-array migration
-smoother.
-
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  t/helper/test-oid-array.c |  4 ++++
->  t/t0064-oid-array.sh      | 18 ++++++++++++++++++
->  2 files changed, 22 insertions(+)
-> 
-> diff --git a/t/helper/test-oid-array.c b/t/helper/test-oid-array.c
-> index aafe398ef0..076b849cbf 100644
-> --- a/t/helper/test-oid-array.c
-> +++ b/t/helper/test-oid-array.c
-> @@ -1,3 +1,5 @@
-> +#define USE_THE_REPOSITORY_VARIABLE
-> +
->  #include "test-tool.h"
->  #include "hex.h"
->  #include "oid-array.h"
-> @@ -17,6 +19,8 @@ int cmd__oid_array(int argc UNUSED, const char **argv UNUSED)
->  	int nongit_ok;
->  
->  	setup_git_directory_gently(&nongit_ok);
-> +	if (nongit_ok)
-> +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-
-Ideally we would want to test with both SHA1 and SHA256 without the
-repo, but it is not a necessity for this patch as it would get solved
-when we migrate to the unit testing framework.
-
->  	while (strbuf_getline(&line, stdin) != EOF) {
->  		const char *arg;
-> diff --git a/t/t0064-oid-array.sh b/t/t0064-oid-array.sh
-> index 88c89e8f48..de74b692d0 100755
-> --- a/t/t0064-oid-array.sh
-> +++ b/t/t0064-oid-array.sh
-> @@ -15,6 +15,24 @@ echoid () {
->  	done
->  }
->  
-> +test_expect_success 'without repository' '
-> +	cat >expect <<-EOF &&
-> +	4444444444444444444444444444444444444444
-> +	5555555555555555555555555555555555555555
-> +	8888888888888888888888888888888888888888
-> +	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-> +	EOF
-> +	cat >input <<-EOF &&
-> +	append 4444444444444444444444444444444444444444
-> +	append 5555555555555555555555555555555555555555
-> +	append 8888888888888888888888888888888888888888
-> +	append aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-> +	for_each_unique
-> +	EOF
-> +	nongit test-tool oid-array <input >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'ordered enumeration' '
->  	echoid "" 44 55 88 aa >expect &&
->  	{
-> -- 
-> 2.45.2.436.gcd77e87115.dirty
-> 
-
+It has been a while since I did a self-mount in NFS, but I do not think =
+that will reproduce the issue. The mounts have to be on different =
+servers from the client to experience this silly rename situation. On =
+self-mount, IIRC, the client is aware that it is on its own machine and =
+will not try to detect the situation.=20
 
