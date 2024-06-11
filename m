@@ -1,53 +1,53 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
+Received: from wfout3-smtp.messagingengine.com (wfout3-smtp.messagingengine.com [64.147.123.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE60176FB7
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 09:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0250C176FB6
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 09:20:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718097653; cv=none; b=qGrY5OO0QXMRoZIRCcbts4eqOzvKn5gsh8IYjtIUbjnqmFT8F6hqkFD/gVsHKUphh73LqfgfNQ1Vcv0LdQeiHgWFGWyeuhgQ3NdfcehkCf13uluaMS3yYQ88BsbdjOHKEhl4rn8icOxhSGAp1l1UC5Y1/6AvtmX+5TIvmoEP/Zo=
+	t=1718097658; cv=none; b=FMgp/Jbe+8bQuZdd0n4xscuoLJ1l6TP1r8w8B8RN5WNpWaLlhtUc7MhpkKdmJLFAhxic8KWFZh4IS1J/sF4hOYo6sL63XlLuSnRVytb4BsufnPe5ZfkwHqHL+kdoYBWlU9n+9BJkon3xOiVZNlh+lsW1QTJKWZdTW/h6NJRvggQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718097653; c=relaxed/simple;
-	bh=o91lmRYNXQFWlMipyMhs2mxFbm7jxyft+Hs66Nq61Gg=;
+	s=arc-20240116; t=1718097658; c=relaxed/simple;
+	bh=JfwPmBQ4C9eiybS97SLKo/o77NKTghV8xiVRpPrF/+4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iBsACQ0lzcny+2Ani27jgSp9zN10EQ7IGkkcSRmUWAwxSUXHqbGQpnp8aUqv8D/LWcsI32K1yxn2V2SgJPc0A/7NE2XtWS94qBVa4d498mOM8+/Ak52sNFgZ+Hh08ddUsbL60PqxQryIJglCNs7aW2GHtqyLxQyQ0RdOZbZkroo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cdLz6Bk7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RA7/KNy1; arc=none smtp.client-ip=64.147.123.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=P0+45h+tOAdyFsQ6rvSo7HENoc0WLqr+FwQb4YlKJmCmj2YvVyMb8bD9k9sacLMtUUbkTLpXMK6ImLaufKrSR97a2hWtXlL+v6EljP9I+3t/C+baFuFsq9+tf4dOYKgGBHqZic/oGQzuOMU1usvtfrbixwbslkRAClUilaS4mFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P0v7kl+Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qBPSKiBr; arc=none smtp.client-ip=64.147.123.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cdLz6Bk7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RA7/KNy1"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 7217B180011C;
-	Tue, 11 Jun 2024 05:20:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P0v7kl+Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qBPSKiBr"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.west.internal (Postfix) with ESMTP id 644EF1C0010B;
+	Tue, 11 Jun 2024 05:20:56 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Tue, 11 Jun 2024 05:20:51 -0400
+  by compute2.internal (MEProxy); Tue, 11 Jun 2024 05:20:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718097651; x=1718184051; bh=lc1xXGNF27
-	I26DDVVP+5oCuT41mIXh3s2fP0jor4UZM=; b=cdLz6Bk7oXdZkLukab+IvkWsiu
-	5FUJWp9AOu56Gc9P9QwfCAA9EY97zUZRl8lpI/dY4p6Bf3AdQrQ+z0rhZGWBzcyd
-	VG041qcJ3ZKnXn7goOHz5mZtOQ+DbKUIISx+rUfuL677N++ajUaED+9BsWIkTqQY
-	+46nKK/Gmmh8+37CBAK5nm1Q/04EAWpu3cJejgOK9fPQk1ZYKR10JhuLLpV1f13p
-	8ioaZzQcRUmOUr7mISsdLcMUTDp+C7V1TuC7XmZrPTAh5aNzvIy3evrI0LC1k/nG
-	0qDh9Knabx4heZwdZOSz87VcsUbdLgene1ccUly5FQ3PovQ1t4JNua3c0LvQ==
+	:subject:to:to; s=fm1; t=1718097656; x=1718184056; bh=oMX9upXI6R
+	tFBjXEvLKFdhGawBVG48TNBRB5KVcTt1Y=; b=P0v7kl+YecMXXL9zTpHnUvYFvA
+	YXnexhk6Qu1Gh+fUh8K+STBLuUaB2IN0Ukb1yQeVWSKbnuF0Rcd1IIWnKojxemZW
+	K7Qwy//CJxZAbQHf4S1V11ABRENejFCupBS0YhPWrNXaggNENT3QGQH72ArRFPO8
+	I8ct/WDAISF3D17RXYyZ3GoZsOdUstwRCNZL8SkhGd+KViaLmB6BI8To+wiyiMFc
+	MlLOvNA8NzVHm4VpmZkzQc2R5MGnKW+AEmhaI+bAIpO0+9EXvDnuVUifT1AhdYGl
+	Fdd4tFzCxxR8NDJkinLPWL1C/agPFFssy/fAW1qD8wxckiwYy1iAPK6/jSGQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718097651; x=1718184051; bh=lc1xXGNF27I26DDVVP+5oCuT41mI
-	Xh3s2fP0jor4UZM=; b=RA7/KNy1RHFaSiF08G6TrInP5VVcFdTBZF44UksyCgVY
-	eQ6MoKHA2jnYTzSxdlC5dZyJD3QVrMJt5Fmc4YsyWzj/3pdSMyXVpUtsjpAcfVuV
-	Artwu+9Qkjp2gNWwEG6RE3wzqyRZl7UOvnbBL/ytnZQ0VqqE5MR8+xk0uHxe0xQn
-	++TLna9ftLtrbtyeePIWZjyoIGKqkcXK4BAk0+8/pVJxIfJRZf4gcS2vAVM5r7NL
-	+T7HnJekR5NVHn02vofElmjB406xnOjedDfmAkhA94mU6+oIyX6ZFi8/gksgAixS
-	T/CxpIuYYZ60Vs87EcAacP98O1T/DDapZMSzu1n30w==
-X-ME-Sender: <xms:8hZoZttktY29BrYUhy9dPK9OEqGMR_7l99Jc2thjHqwL6j7gu0Yu6Q>
-    <xme:8hZoZmfPsnqHK4czhO4GIvWtTlrYggN_xaO_PDqf_d2s-s1chbKtPaei4nRkuhTif
-    HpRmo-IPbb8QPa1GA>
-X-ME-Received: <xmr:8hZoZgwxzWCIxaiPXJZ9ZD6i_dLBDVfL98Oftuh63ZCo7s8uUXPL6L2bOXR0h04AKH1ZEmcCehm9L21cTviTm0uDULBrfRNpQciTG8lG8_fawlgz7foh>
+	fm1; t=1718097656; x=1718184056; bh=oMX9upXI6RtFBjXEvLKFdhGawBVG
+	48TNBRB5KVcTt1Y=; b=qBPSKiBrRcC34AEJ9Ol0gIYHjD/f4Q89Hhg0CsZuYvwp
+	rXrC8iqfB4cvRXiykCk8ZFSP6f+Ym8N9/LT53vSM+T3mCv9LH5XDhTkFTOZug0rR
+	X4M7SGVPWzfBJeXZ+HhE1b5ZuFS4WcS+BfbDWCfaVpQRFCbUOHwmnnMJ8WrUwf/2
+	XWQcqhu30cH+/KrabvEQM2g/FmaQHJNxg7egSOwgp+bqvGDBcqYUoLO2Sq1bvNIi
+	tVR97o9NECpBsMngNfnmudGKraY5ZkBhdNj9jP6ysIyhorcQ8+oh4h2C7JW+nGAO
+	UntBjd2zjRD9iwuK8kpOTULUxMwUqZNvCjURJvgqdg==
+X-ME-Sender: <xms:9xZoZnCZPqcAb4_bOjNdxJpUu381vttKEwKmi4HjNB9zYNJTgyXTxA>
+    <xme:9xZoZtgQuE7P1UR4VrzEn7gNIju0n_aM7Tlm_S8lwsyDh-e92vfWjGeUflQsE7jzS
+    SllEaEk3gsrpkJihg>
+X-ME-Received: <xmr:9xZoZimUAbIkj1qDI-A3rHlJDM1aMFQovbbsyaDzmv_jXSH_guCzESDF9ZN6sJHlalfgKB3pqI4g8uLKjCKzdQpESVcY8MT_4GPbJs72_oU2on99wLO_>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduvddgudegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -56,25 +56,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduvddgudegucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:8hZoZkMWYnU0snR13vvZDRSd9n7MQybdRZ_oLNgXEILiH5xuELmufw>
-    <xmx:8hZoZt9wy_beiQydy2isRmba-P03IaFWe8KXdjer0NzGfQr9vPYH1g>
-    <xmx:8hZoZkUFgsw2dv8Fk4I0Onn5gOTja0bxu0zb0o5ODWr1sDNebM92TA>
-    <xmx:8hZoZufNUQjx8OdlnV3xxlmgabDZBl1J1XdvapmpIyDYqCoWqcMn2A>
-    <xmx:8xZoZobuqaGsiKFnQ_4FDsLEO1UliW0jekySBgxWGspC0k7sjiFSa2J0>
+X-ME-Proxy: <xmx:9xZoZpxXeJ4NcJKgGZ2nnMyviteLnT_Xt55smuJjKTtORJxNHO0AMg>
+    <xmx:9xZoZsQ5B-DPEh0zOdxEIs7-AZ0e6RBO7nntozFNTPN1DvMahAshOA>
+    <xmx:9xZoZsZMkJr1I1exbaygj5mV0CCnigH1Q9StnsAXwafWIjfL7yqvJw>
+    <xmx:9xZoZtQlkGGceA6bBQPa57cz_LfjQCCP25zeJDG7irkDyxbmEGrFNg>
+    <xmx:-BZoZidFj4T8Vo6PFocmDz6SM6tR6H1KVvSs1TEqYHQ1RqLLW40nYWjM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Jun 2024 05:20:50 -0400 (EDT)
+ 11 Jun 2024 05:20:54 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 3a38f187 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 11 Jun 2024 09:20:41 +0000 (UTC)
-Date: Tue, 11 Jun 2024 11:20:47 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id c500de65 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 11 Jun 2024 09:20:45 +0000 (UTC)
+Date: Tue, 11 Jun 2024 11:20:52 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood123@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 20/29] sequencer: fix leaking string buffer in
- `commit_staged_changes()`
-Message-ID: <144eb23617f679034581ec7ffefde8a803499d3b.1718095906.git.ps@pks.im>
+Subject: [PATCH v2 21/29] apply: fix leaking string in `match_fragment()`
+Message-ID: <8e1cf8a18b9926db801d9a44afe8d4edeb2401a0.1718095906.git.ps@pks.im>
 References: <cover.1717402439.git.ps@pks.im>
  <cover.1718095906.git.ps@pks.im>
 Precedence: bulk
@@ -84,240 +83,245 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5wTKzCkUdLniK+be"
+	protocol="application/pgp-signature"; boundary="yNdvES+OrPLfoPpw"
 Content-Disposition: inline
 In-Reply-To: <cover.1718095906.git.ps@pks.im>
 
 
---5wTKzCkUdLniK+be
+--yNdvES+OrPLfoPpw
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're leaking the `rev` string buffer in various call paths. Refactor
-the function to have a common exit path so that we can release its
-memory reliably.
+Before calling `update_pre_post_images()`, we call `strbuf_detach()` to
+put its buffer into a new string variable that we then pass to that
+function. Besides being rather pointless, it also causes us to leak
+memory of that variable because we never free it.
 
-This fixes a subset of tests failing with the memory sanitizer in t3404.
-But as there are more failures, we cannot yet mark the whole test suite
-as passing.
+Get rid of the variable altogether and instead reach into the `strbuf`
+directly. While at it, refactor the code to have a common exit path and
+mark string that do not contain allocated memory as constant.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- sequencer.c | 111 ++++++++++++++++++++++++++++++++++------------------
- 1 file changed, 73 insertions(+), 38 deletions(-)
+ apply.c                          | 87 ++++++++++++++++++++------------
+ t/t3417-rebase-whitespace-fix.sh |  1 +
+ 2 files changed, 56 insertions(+), 32 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 475646671a..c581061b6d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5146,33 +5146,47 @@ static int commit_staged_changes(struct repository =
-*r,
- 	struct replay_ctx *ctx =3D opts->ctx;
- 	unsigned int flags =3D ALLOW_EMPTY | EDIT_MSG;
- 	unsigned int final_fixup =3D 0, is_clean;
-+	struct strbuf rev =3D STRBUF_INIT;
+diff --git a/apply.c b/apply.c
+index d8d26a48f1..fd7e3d649f 100644
+--- a/apply.c
++++ b/apply.c
+@@ -2494,18 +2494,21 @@ static int match_fragment(struct apply_state *state,
+ 			  int match_beginning, int match_end)
+ {
+ 	int i;
+-	char *fixed_buf, *buf, *orig, *target;
+-	struct strbuf fixed;
+-	size_t fixed_len, postlen;
++	const char *orig, *target;
++	struct strbuf fixed =3D STRBUF_INIT;
++	size_t postlen;
+ 	int preimage_limit;
 +	int ret;
 =20
--	if (has_unstaged_changes(r, 1))
--		return error(_("cannot rebase: You have unstaged changes."));
-+	if (has_unstaged_changes(r, 1)) {
-+		ret =3D error(_("cannot rebase: You have unstaged changes."));
+ 	if (preimage->nr + current_lno <=3D img->nr) {
+ 		/*
+ 		 * The hunk falls within the boundaries of img.
+ 		 */
+ 		preimage_limit =3D preimage->nr;
+-		if (match_end && (preimage->nr + current_lno !=3D img->nr))
+-			return 0;
++		if (match_end && (preimage->nr + current_lno !=3D img->nr)) {
++			ret =3D 0;
++			goto out;
++		}
+ 	} else if (state->ws_error_action =3D=3D correct_ws_error &&
+ 		   (ws_rule & WS_BLANK_AT_EOF)) {
+ 		/*
+@@ -2522,17 +2525,23 @@ static int match_fragment(struct apply_state *state,
+ 		 * we are not removing blanks at the end, so we
+ 		 * should reject the hunk at this position.
+ 		 */
+-		return 0;
++		ret =3D 0;
++		goto out;
+ 	}
+=20
+-	if (match_beginning && current_lno)
+-		return 0;
++	if (match_beginning && current_lno) {
++		ret =3D 0;
 +		goto out;
 +	}
 =20
- 	is_clean =3D !has_uncommitted_changes(r, 0);
-=20
- 	if (!is_clean && !file_exists(rebase_path_message())) {
- 		const char *gpg_opt =3D gpg_sign_opt_quoted(opts);
--
--		return error(_(staged_changes_advice), gpg_opt, gpg_opt);
-+		ret =3D error(_(staged_changes_advice), gpg_opt, gpg_opt);
-+		goto out;
- 	}
-+
- 	if (file_exists(rebase_path_amend())) {
--		struct strbuf rev =3D STRBUF_INIT;
- 		struct object_id head, to_amend;
-=20
--		if (repo_get_oid(r, "HEAD", &head))
--			return error(_("cannot amend non-existing commit"));
--		if (!read_oneliner(&rev, rebase_path_amend(), 0))
--			return error(_("invalid file: '%s'"), rebase_path_amend());
--		if (get_oid_hex(rev.buf, &to_amend))
--			return error(_("invalid contents: '%s'"),
--				rebase_path_amend());
--		if (!is_clean && !oideq(&head, &to_amend))
--			return error(_("\nYou have uncommitted changes in your "
--				       "working tree. Please, commit them\n"
--				       "first and then run 'git rebase "
--				       "--continue' again."));
-+		if (repo_get_oid(r, "HEAD", &head)) {
-+			ret =3D error(_("cannot amend non-existing commit"));
-+			goto out;
-+		}
-+
-+		if (!read_oneliner(&rev, rebase_path_amend(), 0)) {
-+			ret =3D error(_("invalid file: '%s'"), rebase_path_amend());
-+			goto out;
-+		}
-+
-+		if (get_oid_hex(rev.buf, &to_amend)) {
-+			ret =3D error(_("invalid contents: '%s'"),
-+				    rebase_path_amend());
-+			goto out;
-+		}
-+		if (!is_clean && !oideq(&head, &to_amend)) {
-+			ret =3D error(_("\nYou have uncommitted changes in your "
-+				      "working tree. Please, commit them\n"
-+				      "first and then run 'git rebase "
-+				      "--continue' again."));
-+			goto out;
-+		}
- 		/*
- 		 * When skipping a failed fixup/squash, we need to edit the
- 		 * commit message, the current fixup list and count, and if it
-@@ -5204,9 +5218,11 @@ static int commit_staged_changes(struct repository *=
-r,
- 				len--;
- 			strbuf_setlen(&ctx->current_fixups, len);
- 			if (write_message(p, len, rebase_path_current_fixups(),
--					  0) < 0)
--				return error(_("could not write file: '%s'"),
--					     rebase_path_current_fixups());
-+					  0) < 0) {
-+				ret =3D error(_("could not write file: '%s'"),
-+					    rebase_path_current_fixups());
-+				goto out;
-+			}
-=20
- 			/*
- 			 * If a fixup/squash in a fixup/squash chain failed, the
-@@ -5236,35 +5252,38 @@ static int commit_staged_changes(struct repository =
-*r,
- 				 * We need to update the squash message to skip
- 				 * the latest commit message.
- 				 */
--				int res =3D 0;
- 				struct commit *commit;
- 				const char *msg;
- 				const char *path =3D rebase_path_squash_msg();
- 				const char *encoding =3D get_commit_output_encoding();
-=20
--				if (parse_head(r, &commit))
--					return error(_("could not parse HEAD"));
-+				if (parse_head(r, &commit)) {
-+					ret =3D error(_("could not parse HEAD"));
-+					goto out;
-+				}
-=20
- 				p =3D repo_logmsg_reencode(r, commit, NULL, encoding);
- 				if (!p)  {
--					res =3D error(_("could not parse commit %s"),
-+					ret =3D error(_("could not parse commit %s"),
- 						    oid_to_hex(&commit->object.oid));
- 					goto unuse_commit_buffer;
- 				}
- 				find_commit_subject(p, &msg);
- 				if (write_message(msg, strlen(msg), path, 0)) {
--					res =3D error(_("could not write file: "
-+					ret =3D error(_("could not write file: "
- 						       "'%s'"), path);
- 					goto unuse_commit_buffer;
- 				}
-+
-+				ret =3D 0;
-+
- 			unuse_commit_buffer:
- 				repo_unuse_commit_buffer(r, commit, p);
--				if (res)
--					return res;
-+				if (ret)
-+					goto out;
- 			}
- 		}
-=20
--		strbuf_release(&rev);
- 		flags |=3D AMEND_MSG;
- 	}
-=20
-@@ -5272,18 +5291,29 @@ static int commit_staged_changes(struct repository =
-*r,
- 		if (refs_ref_exists(get_main_ref_store(r),
- 				    "CHERRY_PICK_HEAD") &&
- 		    refs_delete_ref(get_main_ref_store(r), "",
--				    "CHERRY_PICK_HEAD", NULL, REF_NO_DEREF))
--			return error(_("could not remove CHERRY_PICK_HEAD"));
--		if (unlink(git_path_merge_msg(r)) && errno !=3D ENOENT)
--			return error_errno(_("could not remove '%s'"),
--					   git_path_merge_msg(r));
--		if (!final_fixup)
+ 	/* Quick hash check */
+-	for (i =3D 0; i < preimage_limit; i++)
++	for (i =3D 0; i < preimage_limit; i++) {
+ 		if ((img->line[current_lno + i].flag & LINE_PATCHED) ||
+-		    (preimage->line[i].hash !=3D img->line[current_lno + i].hash))
 -			return 0;
-+				    "CHERRY_PICK_HEAD", NULL, REF_NO_DEREF)) {
-+			ret =3D error(_("could not remove CHERRY_PICK_HEAD"));
++		    (preimage->line[i].hash !=3D img->line[current_lno + i].hash)) {
++			ret =3D 0;
 +			goto out;
 +		}
-+
-+		if (unlink(git_path_merge_msg(r)) && errno !=3D ENOENT) {
-+			ret =3D error_errno(_("could not remove '%s'"),
-+					  git_path_merge_msg(r));
++	}
+=20
+ 	if (preimage_limit =3D=3D preimage->nr) {
+ 		/*
+@@ -2545,8 +2554,10 @@ static int match_fragment(struct apply_state *state,
+ 		if ((match_end
+ 		     ? (current + preimage->len =3D=3D img->len)
+ 		     : (current + preimage->len <=3D img->len)) &&
+-		    !memcmp(img->buf + current, preimage->buf, preimage->len))
+-			return 1;
++		    !memcmp(img->buf + current, preimage->buf, preimage->len)) {
++			ret =3D 1;
 +			goto out;
 +		}
-+
-+		if (!final_fixup) {
+ 	} else {
+ 		/*
+ 		 * The preimage extends beyond the end of img, so
+@@ -2555,7 +2566,7 @@ static int match_fragment(struct apply_state *state,
+ 		 * There must be one non-blank context line that match
+ 		 * a line before the end of img.
+ 		 */
+-		char *buf_end;
++		const char *buf, *buf_end;
+=20
+ 		buf =3D preimage->buf;
+ 		buf_end =3D buf;
+@@ -2565,8 +2576,10 @@ static int match_fragment(struct apply_state *state,
+ 		for ( ; buf < buf_end; buf++)
+ 			if (!isspace(*buf))
+ 				break;
+-		if (buf =3D=3D buf_end)
+-			return 0;
++		if (buf =3D=3D buf_end) {
 +			ret =3D 0;
 +			goto out;
 +		}
  	}
 =20
- 	if (run_git_commit(final_fixup ? NULL : rebase_path_message(),
--			   opts, flags))
--		return error(_("could not commit staged changes."));
-+			   opts, flags)) {
-+		ret =3D error(_("could not commit staged changes."));
+ 	/*
+@@ -2574,12 +2587,16 @@ static int match_fragment(struct apply_state *state,
+ 	 * fuzzy matching. We collect all the line length information because
+ 	 * we need it to adjust whitespace if we match.
+ 	 */
+-	if (state->ws_ignore_action =3D=3D ignore_ws_change)
+-		return line_by_line_fuzzy_match(img, preimage, postimage,
+-						current, current_lno, preimage_limit);
++	if (state->ws_ignore_action =3D=3D ignore_ws_change) {
++		ret =3D line_by_line_fuzzy_match(img, preimage, postimage,
++					       current, current_lno, preimage_limit);
 +		goto out;
 +	}
+=20
+-	if (state->ws_error_action !=3D correct_ws_error)
+-		return 0;
++	if (state->ws_error_action !=3D correct_ws_error) {
++		ret =3D 0;
++		goto out;
++	}
+=20
+ 	/*
+ 	 * The hunk does not apply byte-by-byte, but the hash says
+@@ -2608,7 +2625,7 @@ static int match_fragment(struct apply_state *state,
+ 	 * but in this loop we will only handle the part of the
+ 	 * preimage that falls within the file.
+ 	 */
+-	strbuf_init(&fixed, preimage->len + 1);
++	strbuf_grow(&fixed, preimage->len + 1);
+ 	orig =3D preimage->buf;
+ 	target =3D img->buf + current;
+ 	for (i =3D 0; i < preimage_limit; i++) {
+@@ -2644,8 +2661,10 @@ static int match_fragment(struct apply_state *state,
+ 			postlen +=3D tgtfix.len;
+=20
+ 		strbuf_release(&tgtfix);
+-		if (!match)
+-			goto unmatch_exit;
++		if (!match) {
++			ret =3D 0;
++			goto out;
++		}
+=20
+ 		orig +=3D oldlen;
+ 		target +=3D tgtlen;
+@@ -2666,9 +2685,13 @@ static int match_fragment(struct apply_state *state,
+ 		/* Try fixing the line in the preimage */
+ 		ws_fix_copy(&fixed, orig, oldlen, ws_rule, NULL);
+=20
+-		for (j =3D fixstart; j < fixed.len; j++)
+-			if (!isspace(fixed.buf[j]))
+-				goto unmatch_exit;
++		for (j =3D fixstart; j < fixed.len; j++) {
++			if (!isspace(fixed.buf[j])) {
++				ret =3D 0;
++				goto out;
++			}
++		}
 +
- 	unlink(rebase_path_amend());
- 	unlink(git_path_merge_head(r));
- 	refs_delete_ref(get_main_ref_store(r), "", "AUTO_MERGE",
-@@ -5301,7 +5331,12 @@ static int commit_staged_changes(struct repository *=
-r,
- 		strbuf_reset(&ctx->current_fixups);
- 		ctx->current_fixup_count =3D 0;
+=20
+ 		orig +=3D oldlen;
  	}
--	return 0;
-+
-+	ret =3D 0;
+@@ -2678,16 +2701,16 @@ static int match_fragment(struct apply_state *state,
+ 	 * has whitespace breakages unfixed, and fixing them makes the
+ 	 * hunk match.  Update the context lines in the postimage.
+ 	 */
+-	fixed_buf =3D strbuf_detach(&fixed, &fixed_len);
+ 	if (postlen < postimage->len)
+ 		postlen =3D 0;
+ 	update_pre_post_images(preimage, postimage,
+-			       fixed_buf, fixed_len, postlen);
+-	return 1;
++			       fixed.buf, fixed.len, postlen);
+=20
+- unmatch_exit:
++	ret =3D 1;
 +
 +out:
-+	strbuf_release(&rev);
+ 	strbuf_release(&fixed);
+-	return 0;
 +	return ret;
  }
 =20
- int sequencer_continue(struct repository *r, struct replay_opts *opts)
+ static int find_pos(struct apply_state *state,
+diff --git a/t/t3417-rebase-whitespace-fix.sh b/t/t3417-rebase-whitespace-f=
+ix.sh
+index 96f2cf22fa..22ee3a2045 100755
+--- a/t/t3417-rebase-whitespace-fix.sh
++++ b/t/t3417-rebase-whitespace-fix.sh
+@@ -5,6 +5,7 @@ test_description=3D'git rebase --whitespace=3Dfix
+ This test runs git rebase --whitespace=3Dfix and make sure that it works.
+ '
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ # prepare initial revision of "file" with a blank line at the end
 --=20
 2.45.2.436.gcd77e87115.dirty
 
 
---5wTKzCkUdLniK+be
+--yNdvES+OrPLfoPpw
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoFu4ACgkQVbJhu7ck
-PpRHcA//R1+chvxMhzB4snYzJx5afDfj8piavjyTwRk4elZVG9gxogjpwRwIZ6n+
-ZW9r+zmHIvxV2A1cU3mZldSGRWUdqkrQhs0y1vsbY8m6KoxlK3KLhwGvo5LJU0pp
-n+38PJMZ6Mxq1AtgSzG//4c/+/6zy10gvz0xpLhXfUrgkQawJIkXuY+iSPqspmCl
-SBZ2V5vxWLSftWMkLMUl+AK2YGKPWJ22GfR8npsJRmzcpQOArQIUaBiJMoZIVaeN
-zePBJTFmojsXT6A0IWrEevRsaA+kuTx6iK2NhSnlI+xroANTc7yvX7z6QUoQSNB7
-Hzm7pneCE8p2bXzb6ofxlUuB5h3QC9PDw24A5JdCEqVrcfuq85v4chmYmpGX1Gsp
-ZyYKhnpu7NrOo0TXKScl41GTlfKf9n48K3yZmdTyx0//jnZzR1CrRoismD2WBMH2
-mwG8micRLh6Hkgjbp47WC2E8xAsB3JgFrJ8A62ZNZS+P/oRGQWB4hfGVlBjPh2RL
-AyzHKG9iHWNaNKLrYbKMq4RO9o2iMlWQMbmqUdMMYi8piunlDYSQPsN3Ryd0zWgv
-yK9vPPFCkkhG8PI4EVRWgBWEWyiOCQIlFmtRwOrViCzNEYjSAOkm5h2YY00hOi45
-Hbcgl96ngRlNrHyKwyh9bg0gWlTguiJ4O0cP9LX1Z9JMR4IJogE=
-=G4I0
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoFvMACgkQVbJhu7ck
+PpSboRAArP2oKckovOXv0/KvgiuY8VgGdbg1ctGBnuACi9ht2uamYfOrca2Uw26O
+hpFyghTsgaxxyVcxKAUElic9eRwG/bjHNXU4uf7u9hPW0T8rRkUJR54Wh40rrW5g
+mP5w62FR0kph3Wy7KL1Y95/tYaMxmMplZrAdnv3Iutqc5JqwBzzm4CFaztYUm5c8
+iaff7s+Py1mbOf8cm2iKvpf9sUZB0EDQm+IrGoyjkXpS0tkrhGlXCoQBkbvdyB2m
+QchqSPuNbZO9CJuGLMgJj5gdYtN+826kaT+txJKCvE36zyZ84kCvVLFnwfXCAgwG
+c3WoUSyza7Jbf+KjowxK6WUHc9UoQPGyEjHzL2uHFfjTsPWI+eJkhT25IaTOTn3v
+ZokQ5pwE4mWGLreqpAfZ5W7w6MVPk54YBdjl+ULz5In7yZZgZ/TkPKK1SuOdnxAv
++nzFms5p15pOMWdDk655U5rPLd/nJ7Q+azJrlKUqV6ufO57kYHHBDHovulNOFN5d
+j7G/k9UU1mBeEQcNqQma1QQBMUHUv1XLtf+LNOxmgqOo4KFx0lGegaz/kzBJ2PZy
+5VI8fkzTJP2Ce1QBbNngFynBvqM6vBhg7PhC/j0wQk4kjsEldScUCRLyJ9Zcgr+l
+sDNQiUTZ/Ey3l1g07Zbo/64nIPg5aDA90FL+mg7a8lbEmj7k2WE=
+=F9sR
 -----END PGP SIGNATURE-----
 
---5wTKzCkUdLniK+be--
+--yNdvES+OrPLfoPpw--
