@@ -1,77 +1,79 @@
 Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B2817B4E7
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F70C17BB3E
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 11:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718107111; cv=none; b=hLUfVE4/O5sjigbmoEoVQiT8dH1C07A2dvOXN5JQ26bYgs9+65mcz11wX2j2qY8z2fFLciK/06lGSHjTcXAYiy59BKCRq1GJ6ZJW4ptHep156EDmDnioan9IDOHealDtC+1N07As1G5hUjiTK4AuCIa2KN+V7NUOaZBRAUQdgz4=
+	t=1718107113; cv=none; b=MAir7DDn5P7SpEivsKJpS548T9+WftyXnCv1druxzxFy9AHDBB7B2Zf73sm29b1MO2HP+SBWjGAWtsHEPewsIBhnyUY97APRPHqbqJqCm8r7eXEtYPWPE/D6hkYxFMyvxiHQc90Ze2qBRqXjTT0k6MfFFiNFm63QnmSzmTIHJz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718107111; c=relaxed/simple;
-	bh=4YWExDIyAqGANrYA5WGykIgSMF4FeeAW+SI5rf3+5Q4=;
+	s=arc-20240116; t=1718107113; c=relaxed/simple;
+	bh=QO07YH1+VBGlZRBvhyBH1q8PrEIZdG5cHVt0NaD2Wbk=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pZKO2pg7rNvZk2IXTesybxZM6fh97cFN7l/FOxwDRsLjrH+aTK9IYxKoBPIXgwQiXx9wa9KaZ38x8vdo7G56U8z+LrM2TuVb3J/vKeXNBu+emWtnbjXacZrLOBkKBIQpOdxQmsNzzyXagYFLaD4XM+s97Vx2UL0t1PRZMD4opEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fgMDwRmi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qq78OCoG; arc=none smtp.client-ip=64.147.123.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=QpEzUDEEelr56PUw/XmQKHTEhrbvIBDj6EHtaUTu01A8ncAWMmN597f3L+wylVG1+PAo34lGWMZnofKF3L652Jp1x+6IjpWEWJFqjpWr7rOY/BOe6UZX5DWrvsdWh1dUy9pY9OIKMvXjA1/67PP1zlDlSEOEsAdbFzJ5JY/N1rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V/7qZszP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AKJDF/yl; arc=none smtp.client-ip=64.147.123.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fgMDwRmi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qq78OCoG"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 206251800060
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V/7qZszP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AKJDF/yl"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 97B851800060
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:31 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Tue, 11 Jun 2024 07:58:28 -0400
+  by compute7.internal (MEProxy); Tue, 11 Jun 2024 07:58:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718107107; x=1718193507; bh=66N5eB44xF
-	Lt2z0o0vkT34/N7S7a+TsykHTHBTp685I=; b=fgMDwRmi7FYrY4LVQAPIx7iBEZ
-	3YZ8BaKOCYVm1ZryBXCVHXVrg0TxOw4jZbVgMyGKUfatGt2E2f46bSWNp24AO+54
-	MLSzKE/+R5yMHDtAtgBb95NZOd1RRspkc2sRvc9IPeecYA6nZvjs9iuBtb3IaVlF
-	wX+63wscKfZtdAovZ/P5oonOPhcUpGw50CntsDDBKryycX837ZajizBHSvCfxVnf
-	HLNPmpcu/nbbwvmExAM2wUSfJ0HK9b/LKA757NX+5ns/9fK2vH0Xy+4ysgEvYAgG
-	FFt0R0FAunGQULxij/4RIbLVoiGYmovTbQ3CSpaiGiuS3KSZVqY/lTKBZCug==
+	:subject:to:to; s=fm1; t=1718107111; x=1718193511; bh=fAeU979ZNy
+	vyEebLJwTVLv/Qu8FL2i5dH7FxKyA3OfM=; b=V/7qZszPZr52ribUko3D1eHrE+
+	KVVwHxiUNmNOqD1coHrVXilfqRy6t3/VcVXU8GmcnFSF6xf4Q4virWdcuQmZWEF2
+	moTDJTtBn09b00rUMxf1EzGlQ45/wfCwR24yAjbkcQHm+V/M+Fn8N2MlUI0FJeuU
+	Tfkq98BAOBwopcf/A7BoOGtrGfAyfs8wfm7c5BfmpVnhb0tgq9ydplYBcixHV5Al
+	eYrGkdKPwn+a0hWfNbVMXZRaIhbf6KDXB/cN4Jp8v0pi6ZXzRm07uVROaug4h8Kj
+	Fp7cSLthLaPM/DnU9rRomMw2q7YThdPvzn3gHfl1FmZUFU6tdUBwPr+jyJPw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718107107; x=1718193507; bh=66N5eB44xFLt2z0o0vkT34/N7S7a
-	+TsykHTHBTp685I=; b=Qq78OCoGxXVGpbH/Dh61vE+RsHOuCt6Mz3RbXd4o3IzE
-	ktYKXb9wlkuJiMpAT6WgPTNC6UNPwwNmBDmrT9czYOETcqhgJ8E9uPa0l0E5gjPL
-	keIOcf+Y0euJt8if1WjTa+qhVaAd+WI4kmi6XxOuaRIzUSPRAbon2Pb3C91U39NT
-	E6ZFc96603V3x0kU/dz0Jzak0HXPWJ7CeyxH8Ceifo2q5d5SUgpGEoDi26ge5Zlc
-	2P1jpfOJ7ZnKTSu6Z+xvQ+9r/t1zbHkXBhmpb+2rVJCNsMqF9UPY+9NJLj3+Ppdn
-	5Y0+937ihMHNNKa79d6EtSHxT2IgRwcBksp9fegMTA==
-X-ME-Sender: <xms:4ztoZtCPpKb-orbLJETEaZrLTOXtqJhyvIrVTHEsdlW0Vmy1rE9v7g>
-    <xme:4ztoZrg3_AjMyJ6hgHqV9qENzw3L2o4-GhhFdFj6_eU_UdJCZB2zU3nFBIdxHdSoL
-    Epa0YDVHqw43729lg>
-X-ME-Received: <xmr:4ztoZolhc1L4rbMh7ES0sYx6eL3HypKiOcuQ3qNLLEcbiYay46P4MszfXvaymiTCs0x1twGbTkGbSN2OfNdZ1g3nkWzysAWFlyRyEUe_9cWXv-0IkHJP>
+	fm1; t=1718107111; x=1718193511; bh=fAeU979ZNyvyEebLJwTVLv/Qu8FL
+	2i5dH7FxKyA3OfM=; b=AKJDF/ylp7E043gt6ESg2oyYHSMdi9VvZgML2bouUQ8e
+	p1Z5qNyuVeosUJHSFzx1OCZLLW9shDiJn5/BX0HaXLYQ8UhvfmGg7Y8AdYaxuZn/
+	4mikSmRv+13H8oqJYbHj/FFejiSiRnIB596ANQApuEJ3GSDoxggozlUrEQ8ppkY2
+	VD81S0eF1L/FCyA0guktdTPFGtvqkaHg+Xl3qLqQG/rhVO3JRLQUkT0wuBjRVhZK
+	k/ZXJOz+fyOSIGEleJz33qhbEix9pnAza5EZJ7hLQiRNQHaIfUBdgymN1MrwWGDs
+	LmkxbWHMlm7urYf7pnFs83OjUm7Gc/1g2WoQBIKsDw==
+X-ME-Sender: <xms:5ztoZg4MAvTyhjMIhudw-vWl_L0Zdn87sJSpkwogk4mHvkposNsbeA>
+    <xme:5ztoZh7SkUTziRZRVFLqx68D0t_OOmF9-LYLtat1uEN7PttZhPHwtVa97EXb7viop
+    -Nvur6p988kpsnJhg>
+X-ME-Received: <xmr:5ztoZvfC5ePKU7qXPy3NuLJt8AjJJKxHPaFbbqBCgki8o_JyNRFWqRcTPwlZlQhFP5Fq6bkX17N4WD6sHawTzuB-IyDz9x9M_HEhr9Z9WZ23xDl3otPH>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduvddggeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:4ztoZnwJ8cHbIUwtoV8R45QOzsGO-C9faxLFSPXbB8GVvWRyYEx64Q>
-    <xmx:4ztoZiQ2uqSir2GY0KaJbNbQMvLADEkec8HAoxr-rS8J9Cg32Yniqw>
-    <xmx:4ztoZqYBBBLlcb3xZuNqVxuWl0qy7NLDDjn8XA6TwekubJpMpg-3Qg>
-    <xmx:4ztoZjRp1TDRUsn4_OlsygUa-G4dUn_tj4Le2BbkjH6umcn8MqmEFw>
-    <xmx:4ztoZlJIOTPm0gf_hV9gVM-dXFgEKK8TgV10GbcYMbDKM_XAdlYwbt7E>
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdfhkefhtefggfefjeefteffteeivedtte
+    efieetteejleejkedugeetgfetvdfgnecuffhomhgrihhnpehhthhtphdqfhgvthgthhdq
+    ughumhgsrdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
+    hrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:5ztoZlJZlaizPKQNws9gB09X-xsisRr3t4nexJl8bd7QbuXPb9-lpw>
+    <xmx:5ztoZkJ4sqVUbjASgJs5xmUkLbxDbuZUxBPiCqpHg5JBnUuvvxXZQQ>
+    <xmx:5ztoZmwcx36Oa9foHDFX23k1lTcGq6KqV56VP0BUk2OWJ1005CM3nA>
+    <xmx:5ztoZoKzfSz04qWMtGDRVPPHb9dLvWVSHpHo-3LkHiul_jyOmoMZ0g>
+    <xmx:5ztoZuh862_P5hNVJjpUDwCgdkIyRAbk_Ygdpg-S77g_bgzNi4Y8Y6cE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:26 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 11 Jun 2024 07:58:30 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id e1f0a332 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 266d69f9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 11 Jun 2024 11:58:17 +0000 (UTC)
-Date: Tue, 11 Jun 2024 13:58:23 +0200
+	Tue, 11 Jun 2024 11:58:21 +0000 (UTC)
+Date: Tue, 11 Jun 2024 13:58:28 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 11/21] hash-ll: merge with "hash.h"
-Message-ID: <fb7544181a5ddb0c373f03ad399dbfd9597185a3.1718106285.git.ps@pks.im>
+Subject: [PATCH 12/21] http-fetch: don't crash when parsing packfile without
+ a repo
+Message-ID: <b47fa99f3d9b5f4edbeb681dcac56ac2ae26e894.1718106285.git.ps@pks.im>
 References: <cover.1718106284.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,1340 +82,123 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="B2uNVEp5L4jp2hGY"
+	protocol="application/pgp-signature"; boundary="5B9Ujm1PuF174lST"
 Content-Disposition: inline
 In-Reply-To: <cover.1718106284.git.ps@pks.im>
 
 
---B2uNVEp5L4jp2hGY
+--5B9Ujm1PuF174lST
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The "hash-ll.h" header was introduced via d1cbe1e6d8 (hash-ll.h: split
-out of hash.h to remove dependency on repository.h, 2023-04-22) to make
-explicit the split between hash-related functions that rely on the
-global `the_repository`, and those that don't. This split is no longer
-necessary now that we we have removed the reliance on `the_repository`.
+The git-http-fetch(1) command accepts a `--packfile=3D` option, which
+allows the user to specify that it shall fetch a specific packfile,
+only. The parameter here is the hash of the packfile, which is specific
+to the object hash used by the repository. This requirement is implicit
+though via our use of `parse_oid_hex()`, which internally uses
+`the_repository`.
 
-Merge "hash-ll.h" back into "hash.h". This causes some code units to not
-include "repository.h" anymore, which requires us to add some forward
-declarations.
+The git-http-fetch(1) command allows for there to be no repository
+though, which only exists such that we can show usage via the "-h"
+option. In that case though, starting with c8aed5e8da (repository: stop
+setting SHA1 as the default object hash, 2024-05-07), `the_repository`
+does not have its object hash initialized anymore and thus we would
+crash when trying to parse the object ID outside of a repository.
+
+Fix this issue by dying immediately when we see a "--packfile=3D"
+parameter when outside a Git repository. This is not a functional
+regression as we would die later on with the same error anyway.
+
+Add a test to detect the segfault. We use the "nongit" function to do
+so, which we need to allow-list in `test_must_fail ()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- apply.h                    |   2 +-
- bloom.c                    |   1 +
- checkout.h                 |   2 +-
- chunk-format.h             |   2 +-
- commit-graph.h             |   2 +
- compat/sha1-chunked.c      |   2 +-
- convert.h                  |   2 +-
- csum-file.h                |   2 +-
- diff.h                     |   2 +-
- diffcore.h                 |   2 +-
- dir.h                      |   2 +-
- hash-ll.h                  | 364 -------------------------------------
- hash.h                     | 362 +++++++++++++++++++++++++++++++++++-
- hex.h                      |   2 +-
- loose.h                    |   2 +
- merge-ort.h                |   2 +-
- object-file-convert.c      |   2 +-
- object.h                   |   2 +-
- oidmap.h                   |   2 +-
- oidtree.h                  |   2 +-
- packfile.h                 |   2 +
- protocol-caps.c            |   2 +-
- read-cache-ll.h            |   2 +-
- refs/ref-cache.h           |   2 +-
- reftable/dump.c            |   2 +-
- reftable/reftable-record.h |   2 +-
- reftable/system.h          |   2 +-
- remote.h                   |   2 +-
- reset.h                    |   2 +-
- resolve-undo.h             |   2 +-
- serve.c                    |   2 +-
- split-index.h              |   2 +-
- t/helper/test-hash-speed.c |   2 +-
- t/helper/test-sha1.c       |   2 +-
- t/helper/test-sha256.c     |   2 +-
- tree-diff.c                |   1 +
- tree-walk.h                |   2 +-
- xdiff-interface.h          |   2 +-
- 38 files changed, 399 insertions(+), 397 deletions(-)
- delete mode 100644 hash-ll.h
+ http-fetch.c               | 8 +++++++-
+ t/t5550-http-fetch-dumb.sh | 6 ++++++
+ t/test-lib-functions.sh    | 5 +++++
+ 3 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/apply.h b/apply.h
-index 7cd38b1443..b9f18ce87d 100644
---- a/apply.h
-+++ b/apply.h
-@@ -1,7 +1,7 @@
- #ifndef APPLY_H
- #define APPLY_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
- #include "lockfile.h"
- #include "string-list.h"
- #include "strmap.h"
-diff --git a/bloom.c b/bloom.c
-index e529f7605c..bbf146fc30 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -6,6 +6,7 @@
- #include "commit-graph.h"
- #include "commit.h"
- #include "commit-slab.h"
-+#include "repository.h"
-=20
- define_commit_slab(bloom_filter_slab, struct bloom_filter);
-=20
-diff --git a/checkout.h b/checkout.h
-index ba15a13fb3..55920e7aeb 100644
---- a/checkout.h
-+++ b/checkout.h
-@@ -1,7 +1,7 @@
- #ifndef CHECKOUT_H
- #define CHECKOUT_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
-=20
- /*
-  * Check if the branch name uniquely matches a branch name on a remote
-diff --git a/chunk-format.h b/chunk-format.h
-index 14b76180ef..212a0a6af1 100644
---- a/chunk-format.h
-+++ b/chunk-format.h
-@@ -1,7 +1,7 @@
- #ifndef CHUNK_FORMAT_H
- #define CHUNK_FORMAT_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
-=20
- struct hashfile;
- struct chunkfile;
-diff --git a/commit-graph.h b/commit-graph.h
-index e519cb81cb..6781940195 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -122,6 +122,8 @@ struct commit_graph *load_commit_graph_chain_fd_st(stru=
-ct repository *r,
- struct commit_graph *read_commit_graph_one(struct repository *r,
- 					   struct object_directory *odb);
-=20
-+struct repo_settings;
+diff --git a/http-fetch.c b/http-fetch.c
+index bec94988bb..d460bb1837 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
 +
- /*
-  * Callers should initialize the repo_settings with prepare_repo_settings()
-  * prior to calling parse_commit_graph().
-diff --git a/compat/sha1-chunked.c b/compat/sha1-chunked.c
-index a4a6f930d7..0446f9983f 100644
---- a/compat/sha1-chunked.c
-+++ b/compat/sha1-chunked.c
-@@ -1,5 +1,5 @@
  #include "git-compat-util.h"
--#include "hash-ll.h"
-+#include "hash.h"
-=20
- int git_SHA1_Update_Chunked(platform_SHA_CTX *c, const void *data, size_t =
-len)
- {
-diff --git a/convert.h b/convert.h
-index d925589444..0a6e4086b8 100644
---- a/convert.h
-+++ b/convert.h
-@@ -4,7 +4,7 @@
- #ifndef CONVERT_H
- #define CONVERT_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
- #include "string-list.h"
-=20
- struct index_state;
-diff --git a/csum-file.h b/csum-file.h
-index bc5bec27ac..566e05cbd2 100644
---- a/csum-file.h
-+++ b/csum-file.h
-@@ -1,7 +1,7 @@
- #ifndef CSUM_FILE_H
- #define CSUM_FILE_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
- #include "write-or-die.h"
-=20
- struct progress;
-diff --git a/diff.h b/diff.h
-index 66bd8aeb29..9901c8ca8c 100644
---- a/diff.h
-+++ b/diff.h
-@@ -4,7 +4,7 @@
- #ifndef DIFF_H
- #define DIFF_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
- #include "pathspec.h"
- #include "strbuf.h"
-=20
-diff --git a/diffcore.h b/diffcore.h
-index 5ffe4ec788..1701ed50b9 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -4,7 +4,7 @@
- #ifndef DIFFCORE_H
- #define DIFFCORE_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
-=20
- struct diff_options;
- struct mem_pool;
-diff --git a/dir.h b/dir.h
-index b9e8e96128..c9b0123e05 100644
---- a/dir.h
-+++ b/dir.h
-@@ -1,7 +1,7 @@
- #ifndef DIR_H
- #define DIR_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
- #include "hashmap.h"
- #include "pathspec.h"
- #include "statinfo.h"
-diff --git a/hash-ll.h b/hash-ll.h
-deleted file mode 100644
-index 3161c778b9..0000000000
---- a/hash-ll.h
-+++ /dev/null
-@@ -1,364 +0,0 @@
--#ifndef HASH_LL_H
--#define HASH_LL_H
--
--#if defined(SHA1_APPLE)
--#include <CommonCrypto/CommonDigest.h>
--#elif defined(SHA1_OPENSSL)
--#  include <openssl/sha.h>
--#  if defined(OPENSSL_API_LEVEL) && OPENSSL_API_LEVEL >=3D 3
--#    define SHA1_NEEDS_CLONE_HELPER
--#    include "sha1/openssl.h"
--#  endif
--#elif defined(SHA1_DC)
--#include "sha1dc_git.h"
--#else /* SHA1_BLK */
--#include "block-sha1/sha1.h"
--#endif
--
--#if defined(SHA256_NETTLE)
--#include "sha256/nettle.h"
--#elif defined(SHA256_GCRYPT)
--#define SHA256_NEEDS_CLONE_HELPER
--#include "sha256/gcrypt.h"
--#elif defined(SHA256_OPENSSL)
--#  include <openssl/sha.h>
--#  if defined(OPENSSL_API_LEVEL) && OPENSSL_API_LEVEL >=3D 3
--#    define SHA256_NEEDS_CLONE_HELPER
--#    include "sha256/openssl.h"
--#  endif
--#else
--#include "sha256/block/sha256.h"
--#endif
--
--#ifndef platform_SHA_CTX
--/*
-- * platform's underlying implementation of SHA-1; could be OpenSSL,
-- * blk_SHA, Apple CommonCrypto, etc...  Note that the relevant
-- * SHA-1 header may have already defined platform_SHA_CTX for our
-- * own implementations like block-sha1, so we list
-- * the default for OpenSSL compatible SHA-1 implementations here.
-- */
--#define platform_SHA_CTX	SHA_CTX
--#define platform_SHA1_Init	SHA1_Init
--#define platform_SHA1_Update	SHA1_Update
--#define platform_SHA1_Final    	SHA1_Final
--#endif
--
--#define git_SHA_CTX		platform_SHA_CTX
--#define git_SHA1_Init		platform_SHA1_Init
--#define git_SHA1_Update		platform_SHA1_Update
--#define git_SHA1_Final		platform_SHA1_Final
--
--#ifdef platform_SHA1_Clone
--#define git_SHA1_Clone	platform_SHA1_Clone
--#endif
--
--#ifndef platform_SHA256_CTX
--#define platform_SHA256_CTX	SHA256_CTX
--#define platform_SHA256_Init	SHA256_Init
--#define platform_SHA256_Update	SHA256_Update
--#define platform_SHA256_Final	SHA256_Final
--#endif
--
--#define git_SHA256_CTX		platform_SHA256_CTX
--#define git_SHA256_Init		platform_SHA256_Init
--#define git_SHA256_Update	platform_SHA256_Update
--#define git_SHA256_Final	platform_SHA256_Final
--
--#ifdef platform_SHA256_Clone
--#define git_SHA256_Clone	platform_SHA256_Clone
--#endif
--
--#ifdef SHA1_MAX_BLOCK_SIZE
--#include "compat/sha1-chunked.h"
--#undef git_SHA1_Update
--#define git_SHA1_Update		git_SHA1_Update_Chunked
--#endif
--
--#ifndef SHA1_NEEDS_CLONE_HELPER
--static inline void git_SHA1_Clone(git_SHA_CTX *dst, const git_SHA_CTX *src)
--{
--	memcpy(dst, src, sizeof(*dst));
--}
--#endif
--
--#ifndef SHA256_NEEDS_CLONE_HELPER
--static inline void git_SHA256_Clone(git_SHA256_CTX *dst, const git_SHA256_=
-CTX *src)
--{
--	memcpy(dst, src, sizeof(*dst));
--}
--#endif
--
--/*
-- * Note that these constants are suitable for indexing the hash_algos arra=
-y and
-- * comparing against each other, but are otherwise arbitrary, so they shou=
-ld not
-- * be exposed to the user or serialized to disk.  To know whether a
-- * git_hash_algo struct points to some usable hash function, test the form=
-at_id
-- * field for being non-zero.  Use the name field for user-visible situatio=
-ns and
-- * the format_id field for fixed-length fields on disk.
-- */
--/* An unknown hash function. */
--#define GIT_HASH_UNKNOWN 0
--/* SHA-1 */
--#define GIT_HASH_SHA1 1
--/* SHA-256  */
--#define GIT_HASH_SHA256 2
--/* Number of algorithms supported (including unknown). */
--#define GIT_HASH_NALGOS (GIT_HASH_SHA256 + 1)
--
--/* "sha1", big-endian */
--#define GIT_SHA1_FORMAT_ID 0x73686131
--
--/* The length in bytes and in hex digits of an object name (SHA-1 value). =
-*/
--#define GIT_SHA1_RAWSZ 20
--#define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
--/* The block size of SHA-1. */
--#define GIT_SHA1_BLKSZ 64
--
--/* "s256", big-endian */
--#define GIT_SHA256_FORMAT_ID 0x73323536
--
--/* The length in bytes and in hex digits of an object name (SHA-256 value)=
-=2E */
--#define GIT_SHA256_RAWSZ 32
--#define GIT_SHA256_HEXSZ (2 * GIT_SHA256_RAWSZ)
--/* The block size of SHA-256. */
--#define GIT_SHA256_BLKSZ 64
--
--/* The length in byte and in hex digits of the largest possible hash value=
-=2E */
--#define GIT_MAX_RAWSZ GIT_SHA256_RAWSZ
--#define GIT_MAX_HEXSZ GIT_SHA256_HEXSZ
--/* The largest possible block size for any supported hash. */
--#define GIT_MAX_BLKSZ GIT_SHA256_BLKSZ
--
--struct object_id {
--	unsigned char hash[GIT_MAX_RAWSZ];
--	int algo;	/* XXX requires 4-byte alignment */
--};
--
--#define GET_OID_QUIETLY           01
--#define GET_OID_COMMIT            02
--#define GET_OID_COMMITTISH        04
--#define GET_OID_TREE             010
--#define GET_OID_TREEISH          020
--#define GET_OID_BLOB             040
--#define GET_OID_FOLLOW_SYMLINKS 0100
--#define GET_OID_RECORD_PATH     0200
--#define GET_OID_ONLY_TO_DIE    04000
--#define GET_OID_REQUIRE_PATH  010000
--#define GET_OID_HASH_ANY      020000
--
--#define GET_OID_DISAMBIGUATORS \
--	(GET_OID_COMMIT | GET_OID_COMMITTISH | \
--	GET_OID_TREE | GET_OID_TREEISH | \
--	GET_OID_BLOB)
--
--enum get_oid_result {
--	FOUND =3D 0,
--	MISSING_OBJECT =3D -1, /* The requested object is missing */
--	SHORT_NAME_AMBIGUOUS =3D -2,
--	/* The following only apply when symlinks are followed */
--	DANGLING_SYMLINK =3D -4, /*
--				* The initial symlink is there, but
--				* (transitively) points to a missing
--				* in-tree file
--				*/
--	SYMLINK_LOOP =3D -5,
--	NOT_DIR =3D -6, /*
--		       * Somewhere along the symlink chain, a path is
--		       * requested which contains a file as a
--		       * non-final element.
--		       */
--};
--
--/* A suitably aligned type for stack allocations of hash contexts. */
--union git_hash_ctx {
--	git_SHA_CTX sha1;
--	git_SHA256_CTX sha256;
--};
--typedef union git_hash_ctx git_hash_ctx;
--
--typedef void (*git_hash_init_fn)(git_hash_ctx *ctx);
--typedef void (*git_hash_clone_fn)(git_hash_ctx *dst, const git_hash_ctx *s=
-rc);
--typedef void (*git_hash_update_fn)(git_hash_ctx *ctx, const void *in, size=
-_t len);
--typedef void (*git_hash_final_fn)(unsigned char *hash, git_hash_ctx *ctx);
--typedef void (*git_hash_final_oid_fn)(struct object_id *oid, git_hash_ctx =
-*ctx);
--
--struct git_hash_algo {
--	/*
--	 * The name of the algorithm, as appears in the config file and in
--	 * messages.
--	 */
--	const char *name;
--
--	/* A four-byte version identifier, used in pack indices. */
--	uint32_t format_id;
--
--	/* The length of the hash in binary. */
--	size_t rawsz;
--
--	/* The length of the hash in hex characters. */
--	size_t hexsz;
--
--	/* The block size of the hash. */
--	size_t blksz;
--
--	/* The hash initialization function. */
--	git_hash_init_fn init_fn;
--
--	/* The hash context cloning function. */
--	git_hash_clone_fn clone_fn;
--
--	/* The hash update function. */
--	git_hash_update_fn update_fn;
--
--	/* The hash finalization function. */
--	git_hash_final_fn final_fn;
--
--	/* The hash finalization function for object IDs. */
--	git_hash_final_oid_fn final_oid_fn;
--
--	/* The OID of the empty tree. */
--	const struct object_id *empty_tree;
--
--	/* The OID of the empty blob. */
--	const struct object_id *empty_blob;
--
--	/* The all-zeros OID. */
--	const struct object_id *null_oid;
--};
--extern const struct git_hash_algo hash_algos[GIT_HASH_NALGOS];
--
--/*
-- * Return a GIT_HASH_* constant based on the name.  Returns GIT_HASH_UNKNO=
-WN if
-- * the name doesn't match a known algorithm.
-- */
--int hash_algo_by_name(const char *name);
--/* Identical, except based on the format ID. */
--int hash_algo_by_id(uint32_t format_id);
--/* Identical, except based on the length. */
--int hash_algo_by_length(int len);
--/* Identical, except for a pointer to struct git_hash_algo. */
--static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
--{
--	return p - hash_algos;
--}
--
--const struct object_id *null_oid(void);
--
--static inline int hashcmp(const unsigned char *sha1, const unsigned char *=
-sha2, const struct git_hash_algo *algop)
--{
--	/*
--	 * Teach the compiler that there are only two possibilities of hash size
--	 * here, so that it can optimize for this case as much as possible.
--	 */
--	if (algop->rawsz =3D=3D GIT_MAX_RAWSZ)
--		return memcmp(sha1, sha2, GIT_MAX_RAWSZ);
--	return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
--}
--
--static inline int hasheq(const unsigned char *sha1, const unsigned char *s=
-ha2, const struct git_hash_algo *algop)
--{
--	/*
--	 * We write this here instead of deferring to hashcmp so that the
--	 * compiler can properly inline it and avoid calling memcmp.
--	 */
--	if (algop->rawsz =3D=3D GIT_MAX_RAWSZ)
--		return !memcmp(sha1, sha2, GIT_MAX_RAWSZ);
--	return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
--}
--
--static inline void hashcpy(unsigned char *sha_dst, const unsigned char *sh=
-a_src,
--			   const struct git_hash_algo *algop)
--{
--	memcpy(sha_dst, sha_src, algop->rawsz);
--}
--
--static inline void hashclr(unsigned char *hash, const struct git_hash_algo=
- *algop)
--{
--	memset(hash, 0, algop->rawsz);
--}
--
--static inline int oidcmp(const struct object_id *oid1, const struct object=
-_id *oid2)
--{
--	return memcmp(oid1->hash, oid2->hash, GIT_MAX_RAWSZ);
--}
--
--static inline int oideq(const struct object_id *oid1, const struct object_=
-id *oid2)
--{
--	return !memcmp(oid1->hash, oid2->hash, GIT_MAX_RAWSZ);
--}
--
--static inline void oidcpy(struct object_id *dst, const struct object_id *s=
-rc)
--{
--	memcpy(dst->hash, src->hash, GIT_MAX_RAWSZ);
--	dst->algo =3D src->algo;
--}
--
--static inline void oidread(struct object_id *oid, const unsigned char *has=
-h,
--			   const struct git_hash_algo *algop)
--{
--	memcpy(oid->hash, hash, algop->rawsz);
--	if (algop->rawsz < GIT_MAX_RAWSZ)
--		memset(oid->hash + algop->rawsz, 0, GIT_MAX_RAWSZ - algop->rawsz);
--	oid->algo =3D hash_algo_by_ptr(algop);
--}
--
--static inline void oidclr(struct object_id *oid,
--			  const struct git_hash_algo *algop)
--{
--	memset(oid->hash, 0, GIT_MAX_RAWSZ);
--	oid->algo =3D hash_algo_by_ptr(algop);
--}
--
--static inline struct object_id *oiddup(const struct object_id *src)
--{
--	struct object_id *dst =3D xmalloc(sizeof(struct object_id));
--	oidcpy(dst, src);
--	return dst;
--}
--
--static inline void oid_set_algo(struct object_id *oid, const struct git_ha=
-sh_algo *algop)
--{
--	oid->algo =3D hash_algo_by_ptr(algop);
--}
--
--/*
-- * Converts a cryptographic hash (e.g. SHA-1) into an int-sized hash code
-- * for use in hash tables. Cryptographic hashes are supposed to have
-- * uniform distribution, so in contrast to `memhash()`, this just copies
-- * the first `sizeof(int)` bytes without shuffling any bits. Note that
-- * the results will be different on big-endian and little-endian
-- * platforms, so they should not be stored or transferred over the net.
-- */
--static inline unsigned int oidhash(const struct object_id *oid)
--{
--	/*
--	 * Equivalent to 'return *(unsigned int *)oid->hash;', but safe on
--	 * platforms that don't support unaligned reads.
--	 */
--	unsigned int hash;
--	memcpy(&hash, oid->hash, sizeof(hash));
--	return hash;
--}
--
--static inline int is_null_oid(const struct object_id *oid)
--{
--	static const unsigned char null_hash[GIT_MAX_RAWSZ];
--	return !memcmp(oid->hash, null_hash, GIT_MAX_RAWSZ);
--}
--
--const char *empty_tree_oid_hex(const struct git_hash_algo *algop);
--
--static inline int is_empty_blob_oid(const struct object_id *oid,
--				    const struct git_hash_algo *algop)
--{
--	return oideq(oid, algop->empty_blob);
--}
--
--static inline int is_empty_tree_oid(const struct object_id *oid,
--				    const struct git_hash_algo *algop)
--{
--	return oideq(oid, algop->empty_tree);
--}
--
--#endif
-diff --git a/hash.h b/hash.h
-index cb85d26a2f..72ffbc862e 100644
---- a/hash.h
-+++ b/hash.h
-@@ -1,11 +1,369 @@
- #ifndef HASH_H
- #define HASH_H
-=20
--#include "hash-ll.h"
--#include "repository.h"
-+#if defined(SHA1_APPLE)
-+#include <CommonCrypto/CommonDigest.h>
-+#elif defined(SHA1_OPENSSL)
-+#  include <openssl/sha.h>
-+#  if defined(OPENSSL_API_LEVEL) && OPENSSL_API_LEVEL >=3D 3
-+#    define SHA1_NEEDS_CLONE_HELPER
-+#    include "sha1/openssl.h"
-+#  endif
-+#elif defined(SHA1_DC)
-+#include "sha1dc_git.h"
-+#else /* SHA1_BLK */
-+#include "block-sha1/sha1.h"
-+#endif
-+
-+#if defined(SHA256_NETTLE)
-+#include "sha256/nettle.h"
-+#elif defined(SHA256_GCRYPT)
-+#define SHA256_NEEDS_CLONE_HELPER
-+#include "sha256/gcrypt.h"
-+#elif defined(SHA256_OPENSSL)
-+#  include <openssl/sha.h>
-+#  if defined(OPENSSL_API_LEVEL) && OPENSSL_API_LEVEL >=3D 3
-+#    define SHA256_NEEDS_CLONE_HELPER
-+#    include "sha256/openssl.h"
-+#  endif
-+#else
-+#include "sha256/block/sha256.h"
-+#endif
-+
-+#ifndef platform_SHA_CTX
-+/*
-+ * platform's underlying implementation of SHA-1; could be OpenSSL,
-+ * blk_SHA, Apple CommonCrypto, etc...  Note that the relevant
-+ * SHA-1 header may have already defined platform_SHA_CTX for our
-+ * own implementations like block-sha1, so we list
-+ * the default for OpenSSL compatible SHA-1 implementations here.
-+ */
-+#define platform_SHA_CTX	SHA_CTX
-+#define platform_SHA1_Init	SHA1_Init
-+#define platform_SHA1_Update	SHA1_Update
-+#define platform_SHA1_Final    	SHA1_Final
-+#endif
-+
-+#define git_SHA_CTX		platform_SHA_CTX
-+#define git_SHA1_Init		platform_SHA1_Init
-+#define git_SHA1_Update		platform_SHA1_Update
-+#define git_SHA1_Final		platform_SHA1_Final
-+
-+#ifdef platform_SHA1_Clone
-+#define git_SHA1_Clone	platform_SHA1_Clone
-+#endif
-+
-+#ifndef platform_SHA256_CTX
-+#define platform_SHA256_CTX	SHA256_CTX
-+#define platform_SHA256_Init	SHA256_Init
-+#define platform_SHA256_Update	SHA256_Update
-+#define platform_SHA256_Final	SHA256_Final
-+#endif
-+
-+#define git_SHA256_CTX		platform_SHA256_CTX
-+#define git_SHA256_Init		platform_SHA256_Init
-+#define git_SHA256_Update	platform_SHA256_Update
-+#define git_SHA256_Final	platform_SHA256_Final
-+
-+#ifdef platform_SHA256_Clone
-+#define git_SHA256_Clone	platform_SHA256_Clone
-+#endif
-+
-+#ifdef SHA1_MAX_BLOCK_SIZE
-+#include "compat/sha1-chunked.h"
-+#undef git_SHA1_Update
-+#define git_SHA1_Update		git_SHA1_Update_Chunked
-+#endif
-+
-+#ifndef SHA1_NEEDS_CLONE_HELPER
-+static inline void git_SHA1_Clone(git_SHA_CTX *dst, const git_SHA_CTX *src)
-+{
-+	memcpy(dst, src, sizeof(*dst));
-+}
-+#endif
-+
-+#ifndef SHA256_NEEDS_CLONE_HELPER
-+static inline void git_SHA256_Clone(git_SHA256_CTX *dst, const git_SHA256_=
-CTX *src)
-+{
-+	memcpy(dst, src, sizeof(*dst));
-+}
-+#endif
-+
-+/*
-+ * Note that these constants are suitable for indexing the hash_algos arra=
-y and
-+ * comparing against each other, but are otherwise arbitrary, so they shou=
-ld not
-+ * be exposed to the user or serialized to disk.  To know whether a
-+ * git_hash_algo struct points to some usable hash function, test the form=
-at_id
-+ * field for being non-zero.  Use the name field for user-visible situatio=
-ns and
-+ * the format_id field for fixed-length fields on disk.
-+ */
-+/* An unknown hash function. */
-+#define GIT_HASH_UNKNOWN 0
-+/* SHA-1 */
-+#define GIT_HASH_SHA1 1
-+/* SHA-256  */
-+#define GIT_HASH_SHA256 2
-+/* Number of algorithms supported (including unknown). */
-+#define GIT_HASH_NALGOS (GIT_HASH_SHA256 + 1)
-+
-+/* "sha1", big-endian */
-+#define GIT_SHA1_FORMAT_ID 0x73686131
-+
-+/* The length in bytes and in hex digits of an object name (SHA-1 value). =
-*/
-+#define GIT_SHA1_RAWSZ 20
-+#define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
-+/* The block size of SHA-1. */
-+#define GIT_SHA1_BLKSZ 64
-+
-+/* "s256", big-endian */
-+#define GIT_SHA256_FORMAT_ID 0x73323536
-+
-+/* The length in bytes and in hex digits of an object name (SHA-256 value)=
-=2E */
-+#define GIT_SHA256_RAWSZ 32
-+#define GIT_SHA256_HEXSZ (2 * GIT_SHA256_RAWSZ)
-+/* The block size of SHA-256. */
-+#define GIT_SHA256_BLKSZ 64
-+
-+/* The length in byte and in hex digits of the largest possible hash value=
-=2E */
-+#define GIT_MAX_RAWSZ GIT_SHA256_RAWSZ
-+#define GIT_MAX_HEXSZ GIT_SHA256_HEXSZ
-+/* The largest possible block size for any supported hash. */
-+#define GIT_MAX_BLKSZ GIT_SHA256_BLKSZ
-+
-+struct object_id {
-+	unsigned char hash[GIT_MAX_RAWSZ];
-+	int algo;	/* XXX requires 4-byte alignment */
-+};
-+
-+#define GET_OID_QUIETLY           01
-+#define GET_OID_COMMIT            02
-+#define GET_OID_COMMITTISH        04
-+#define GET_OID_TREE             010
-+#define GET_OID_TREEISH          020
-+#define GET_OID_BLOB             040
-+#define GET_OID_FOLLOW_SYMLINKS 0100
-+#define GET_OID_RECORD_PATH     0200
-+#define GET_OID_ONLY_TO_DIE    04000
-+#define GET_OID_REQUIRE_PATH  010000
-+#define GET_OID_HASH_ANY      020000
-+
-+#define GET_OID_DISAMBIGUATORS \
-+	(GET_OID_COMMIT | GET_OID_COMMITTISH | \
-+	GET_OID_TREE | GET_OID_TREEISH | \
-+	GET_OID_BLOB)
-+
-+enum get_oid_result {
-+	FOUND =3D 0,
-+	MISSING_OBJECT =3D -1, /* The requested object is missing */
-+	SHORT_NAME_AMBIGUOUS =3D -2,
-+	/* The following only apply when symlinks are followed */
-+	DANGLING_SYMLINK =3D -4, /*
-+				* The initial symlink is there, but
-+				* (transitively) points to a missing
-+				* in-tree file
-+				*/
-+	SYMLINK_LOOP =3D -5,
-+	NOT_DIR =3D -6, /*
-+		       * Somewhere along the symlink chain, a path is
-+		       * requested which contains a file as a
-+		       * non-final element.
-+		       */
-+};
-=20
- #ifdef USE_THE_REPOSITORY_VARIABLE
-+# include "repository.h"
- # define the_hash_algo the_repository->hash_algo
- #endif
-=20
-+/* A suitably aligned type for stack allocations of hash contexts. */
-+union git_hash_ctx {
-+	git_SHA_CTX sha1;
-+	git_SHA256_CTX sha256;
-+};
-+typedef union git_hash_ctx git_hash_ctx;
-+
-+typedef void (*git_hash_init_fn)(git_hash_ctx *ctx);
-+typedef void (*git_hash_clone_fn)(git_hash_ctx *dst, const git_hash_ctx *s=
-rc);
-+typedef void (*git_hash_update_fn)(git_hash_ctx *ctx, const void *in, size=
-_t len);
-+typedef void (*git_hash_final_fn)(unsigned char *hash, git_hash_ctx *ctx);
-+typedef void (*git_hash_final_oid_fn)(struct object_id *oid, git_hash_ctx =
-*ctx);
-+
-+struct git_hash_algo {
-+	/*
-+	 * The name of the algorithm, as appears in the config file and in
-+	 * messages.
-+	 */
-+	const char *name;
-+
-+	/* A four-byte version identifier, used in pack indices. */
-+	uint32_t format_id;
-+
-+	/* The length of the hash in binary. */
-+	size_t rawsz;
-+
-+	/* The length of the hash in hex characters. */
-+	size_t hexsz;
-+
-+	/* The block size of the hash. */
-+	size_t blksz;
-+
-+	/* The hash initialization function. */
-+	git_hash_init_fn init_fn;
-+
-+	/* The hash context cloning function. */
-+	git_hash_clone_fn clone_fn;
-+
-+	/* The hash update function. */
-+	git_hash_update_fn update_fn;
-+
-+	/* The hash finalization function. */
-+	git_hash_final_fn final_fn;
-+
-+	/* The hash finalization function for object IDs. */
-+	git_hash_final_oid_fn final_oid_fn;
-+
-+	/* The OID of the empty tree. */
-+	const struct object_id *empty_tree;
-+
-+	/* The OID of the empty blob. */
-+	const struct object_id *empty_blob;
-+
-+	/* The all-zeros OID. */
-+	const struct object_id *null_oid;
-+};
-+extern const struct git_hash_algo hash_algos[GIT_HASH_NALGOS];
-+
-+/*
-+ * Return a GIT_HASH_* constant based on the name.  Returns GIT_HASH_UNKNO=
-WN if
-+ * the name doesn't match a known algorithm.
-+ */
-+int hash_algo_by_name(const char *name);
-+/* Identical, except based on the format ID. */
-+int hash_algo_by_id(uint32_t format_id);
-+/* Identical, except based on the length. */
-+int hash_algo_by_length(int len);
-+/* Identical, except for a pointer to struct git_hash_algo. */
-+static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
-+{
-+	return p - hash_algos;
-+}
-+
-+const struct object_id *null_oid(void);
-+
-+static inline int hashcmp(const unsigned char *sha1, const unsigned char *=
-sha2, const struct git_hash_algo *algop)
-+{
-+	/*
-+	 * Teach the compiler that there are only two possibilities of hash size
-+	 * here, so that it can optimize for this case as much as possible.
-+	 */
-+	if (algop->rawsz =3D=3D GIT_MAX_RAWSZ)
-+		return memcmp(sha1, sha2, GIT_MAX_RAWSZ);
-+	return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
-+}
-+
-+static inline int hasheq(const unsigned char *sha1, const unsigned char *s=
-ha2, const struct git_hash_algo *algop)
-+{
-+	/*
-+	 * We write this here instead of deferring to hashcmp so that the
-+	 * compiler can properly inline it and avoid calling memcmp.
-+	 */
-+	if (algop->rawsz =3D=3D GIT_MAX_RAWSZ)
-+		return !memcmp(sha1, sha2, GIT_MAX_RAWSZ);
-+	return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
-+}
-+
-+static inline void hashcpy(unsigned char *sha_dst, const unsigned char *sh=
-a_src,
-+			   const struct git_hash_algo *algop)
-+{
-+	memcpy(sha_dst, sha_src, algop->rawsz);
-+}
-+
-+static inline void hashclr(unsigned char *hash, const struct git_hash_algo=
- *algop)
-+{
-+	memset(hash, 0, algop->rawsz);
-+}
-+
-+static inline int oidcmp(const struct object_id *oid1, const struct object=
-_id *oid2)
-+{
-+	return memcmp(oid1->hash, oid2->hash, GIT_MAX_RAWSZ);
-+}
-+
-+static inline int oideq(const struct object_id *oid1, const struct object_=
-id *oid2)
-+{
-+	return !memcmp(oid1->hash, oid2->hash, GIT_MAX_RAWSZ);
-+}
-+
-+static inline void oidcpy(struct object_id *dst, const struct object_id *s=
-rc)
-+{
-+	memcpy(dst->hash, src->hash, GIT_MAX_RAWSZ);
-+	dst->algo =3D src->algo;
-+}
-+
-+static inline void oidread(struct object_id *oid, const unsigned char *has=
-h,
-+			   const struct git_hash_algo *algop)
-+{
-+	memcpy(oid->hash, hash, algop->rawsz);
-+	if (algop->rawsz < GIT_MAX_RAWSZ)
-+		memset(oid->hash + algop->rawsz, 0, GIT_MAX_RAWSZ - algop->rawsz);
-+	oid->algo =3D hash_algo_by_ptr(algop);
-+}
-+
-+static inline void oidclr(struct object_id *oid,
-+			  const struct git_hash_algo *algop)
-+{
-+	memset(oid->hash, 0, GIT_MAX_RAWSZ);
-+	oid->algo =3D hash_algo_by_ptr(algop);
-+}
-+
-+static inline struct object_id *oiddup(const struct object_id *src)
-+{
-+	struct object_id *dst =3D xmalloc(sizeof(struct object_id));
-+	oidcpy(dst, src);
-+	return dst;
-+}
-+
-+static inline void oid_set_algo(struct object_id *oid, const struct git_ha=
-sh_algo *algop)
-+{
-+	oid->algo =3D hash_algo_by_ptr(algop);
-+}
-+
-+/*
-+ * Converts a cryptographic hash (e.g. SHA-1) into an int-sized hash code
-+ * for use in hash tables. Cryptographic hashes are supposed to have
-+ * uniform distribution, so in contrast to `memhash()`, this just copies
-+ * the first `sizeof(int)` bytes without shuffling any bits. Note that
-+ * the results will be different on big-endian and little-endian
-+ * platforms, so they should not be stored or transferred over the net.
-+ */
-+static inline unsigned int oidhash(const struct object_id *oid)
-+{
-+	/*
-+	 * Equivalent to 'return *(unsigned int *)oid->hash;', but safe on
-+	 * platforms that don't support unaligned reads.
-+	 */
-+	unsigned int hash;
-+	memcpy(&hash, oid->hash, sizeof(hash));
-+	return hash;
-+}
-+
-+static inline int is_null_oid(const struct object_id *oid)
-+{
-+	static const unsigned char null_hash[GIT_MAX_RAWSZ];
-+	return !memcmp(oid->hash, null_hash, GIT_MAX_RAWSZ);
-+}
-+
-+const char *empty_tree_oid_hex(const struct git_hash_algo *algop);
-+
-+static inline int is_empty_blob_oid(const struct object_id *oid,
-+				    const struct git_hash_algo *algop)
-+{
-+	return oideq(oid, algop->empty_blob);
-+}
-+
-+static inline int is_empty_tree_oid(const struct object_id *oid,
-+				    const struct git_hash_algo *algop)
-+{
-+	return oideq(oid, algop->empty_tree);
-+}
-+
- #endif
-diff --git a/hex.h b/hex.h
-index e0b83f776f..9809667f33 100644
---- a/hex.h
-+++ b/hex.h
-@@ -1,7 +1,7 @@
- #ifndef HEX_H
- #define HEX_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
- #include "hex-ll.h"
-=20
- /*
-diff --git a/loose.h b/loose.h
-index 2c2957072c..28512306e5 100644
---- a/loose.h
-+++ b/loose.h
-@@ -3,6 +3,8 @@
-=20
- #include "khash.h"
-=20
-+struct repository;
-+
- struct loose_object_map {
- 	kh_oid_map_t *to_compat;
- 	kh_oid_map_t *to_storage;
-diff --git a/merge-ort.h b/merge-ort.h
-index ce56ec1a78..a994c9a5fc 100644
---- a/merge-ort.h
-+++ b/merge-ort.h
-@@ -2,7 +2,7 @@
- #define MERGE_ORT_H
-=20
- #include "merge-recursive.h"
--#include "hash-ll.h"
-+#include "hash.h"
-=20
- struct commit;
- struct tree;
-diff --git a/object-file-convert.c b/object-file-convert.c
-index 958f61f094..3887d6d57b 100644
---- a/object-file-convert.c
-+++ b/object-file-convert.c
-@@ -5,7 +5,7 @@
- #include "strbuf.h"
- #include "hex.h"
- #include "repository.h"
--#include "hash-ll.h"
-+#include "hash.h"
- #include "hash.h"
- #include "object.h"
- #include "loose.h"
-diff --git a/object.h b/object.h
-index 73b4ec3904..9fa42d51d9 100644
---- a/object.h
-+++ b/object.h
-@@ -1,7 +1,7 @@
- #ifndef OBJECT_H
- #define OBJECT_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
-=20
- struct buffer_slab;
- struct repository;
-diff --git a/oidmap.h b/oidmap.h
-index 05c673eb7c..fad412827a 100644
---- a/oidmap.h
-+++ b/oidmap.h
-@@ -1,7 +1,7 @@
- #ifndef OIDMAP_H
- #define OIDMAP_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
- #include "hashmap.h"
-=20
- /*
-diff --git a/oidtree.h b/oidtree.h
-index 55c83513fd..77898f510a 100644
---- a/oidtree.h
-+++ b/oidtree.h
-@@ -2,7 +2,7 @@
- #define OIDTREE_H
-=20
- #include "cbtree.h"
--#include "hash-ll.h"
-+#include "hash.h"
- #include "mem-pool.h"
-=20
- struct oidtree {
-diff --git a/packfile.h b/packfile.h
-index 28c8fd3e39..eb18ec15db 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -101,6 +101,8 @@ int close_pack_fd(struct packed_git *p);
-=20
- uint32_t get_pack_fanout(struct packed_git *p, uint32_t value);
-=20
-+struct raw_object_store;
-+
- unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t,=
- unsigned long *);
- void close_pack_windows(struct packed_git *);
- void close_pack(struct packed_git *);
-diff --git a/protocol-caps.c b/protocol-caps.c
-index 75f4cbb0a7..fe8d1d5c63 100644
---- a/protocol-caps.c
-+++ b/protocol-caps.c
-@@ -3,7 +3,7 @@
- #include "gettext.h"
- #include "hex.h"
- #include "pkt-line.h"
--#include "hash-ll.h"
-+#include "hash.h"
- #include "hex.h"
- #include "object.h"
- #include "object-store-ll.h"
-diff --git a/read-cache-ll.h b/read-cache-ll.h
-index 09414afd04..e0e39607ef 100644
---- a/read-cache-ll.h
-+++ b/read-cache-ll.h
-@@ -1,7 +1,7 @@
- #ifndef READ_CACHE_LL_H
- #define READ_CACHE_LL_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
- #include "hashmap.h"
- #include "statinfo.h"
-=20
-diff --git a/refs/ref-cache.h b/refs/ref-cache.h
-index 95c76e27c8..31ebe24f6c 100644
---- a/refs/ref-cache.h
-+++ b/refs/ref-cache.h
-@@ -1,7 +1,7 @@
- #ifndef REFS_REF_CACHE_H
- #define REFS_REF_CACHE_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
-=20
- struct ref_dir;
- struct ref_store;
-diff --git a/reftable/dump.c b/reftable/dump.c
-index 41abbb8ecf..dd65d9e8bb 100644
---- a/reftable/dump.c
-+++ b/reftable/dump.c
-@@ -7,7 +7,7 @@ license that can be found in the LICENSE file or at
- */
-=20
- #include "git-compat-util.h"
--#include "hash-ll.h"
-+#include "hash.h"
-=20
- #include "reftable-blocksource.h"
- #include "reftable-error.h"
-diff --git a/reftable/reftable-record.h b/reftable/reftable-record.h
-index 2a2943cd13..ff486eb1f7 100644
---- a/reftable/reftable-record.h
-+++ b/reftable/reftable-record.h
-@@ -9,7 +9,7 @@ license that can be found in the LICENSE file or at
- #ifndef REFTABLE_RECORD_H
- #define REFTABLE_RECORD_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
- #include <stdint.h>
-=20
- /*
-diff --git a/reftable/system.h b/reftable/system.h
-index 5d8b6dede5..d0cabd5d17 100644
---- a/reftable/system.h
-+++ b/reftable/system.h
-@@ -15,7 +15,7 @@ license that can be found in the LICENSE file or at
- #include "lockfile.h"
- #include "strbuf.h"
- #include "tempfile.h"
--#include "hash-ll.h" /* hash ID, sizes.*/
-+#include "hash.h" /* hash ID, sizes.*/
- #include "dir.h" /* remove_dir_recursively, for tests.*/
-=20
- int hash_size(uint32_t id);
-diff --git a/remote.h b/remote.h
-index e8c6655e42..7d04e1be1b 100644
---- a/remote.h
-+++ b/remote.h
-@@ -1,7 +1,7 @@
- #ifndef REMOTE_H
- #define REMOTE_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
- #include "hashmap.h"
- #include "refspec.h"
-=20
-diff --git a/reset.h b/reset.h
-index 10708d8ddc..a28f81829d 100644
---- a/reset.h
-+++ b/reset.h
-@@ -1,7 +1,7 @@
- #ifndef RESET_H
- #define RESET_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
- #include "repository.h"
-=20
- #define GIT_REFLOG_ACTION_ENVIRONMENT "GIT_REFLOG_ACTION"
-diff --git a/resolve-undo.h b/resolve-undo.h
-index f3f8462751..89a3227262 100644
---- a/resolve-undo.h
-+++ b/resolve-undo.h
-@@ -6,7 +6,7 @@ struct index_state;
- struct pathspec;
- struct string_list;
-=20
--#include "hash-ll.h"
-+#include "hash.h"
-=20
- struct resolve_undo_info {
- 	unsigned int mode[3];
-diff --git a/serve.c b/serve.c
-index 33608ea4d5..884cd84ca8 100644
---- a/serve.c
-+++ b/serve.c
-@@ -3,7 +3,7 @@
- #include "git-compat-util.h"
- #include "repository.h"
  #include "config.h"
--#include "hash-ll.h"
-+#include "hash.h"
- #include "pkt-line.h"
- #include "version.h"
- #include "ls-refs.h"
-diff --git a/split-index.h b/split-index.h
-index 15a29cd08c..1a153f47ba 100644
---- a/split-index.h
-+++ b/split-index.h
-@@ -1,7 +1,7 @@
- #ifndef SPLIT_INDEX_H
- #define SPLIT_INDEX_H
+ #include "gettext.h"
+@@ -127,8 +129,12 @@ int cmd_main(int argc, const char **argv)
+ 		} else if (skip_prefix(argv[arg], "--packfile=3D", &p)) {
+ 			const char *end;
 =20
--#include "hash-ll.h"
-+#include "hash.h"
++			if (nongit)
++				die(_("not a git repository"));
++
+ 			packfile =3D 1;
+-			if (parse_oid_hex(p, &packfile_hash, &end) || *end)
++			if (parse_oid_hex_algop(p, &packfile_hash, &end,
++						the_repository->hash_algo) || *end)
+ 				die(_("argument to --packfile must be a valid hash (got '%s')"), p);
+ 		} else if (skip_prefix(argv[arg], "--index-pack-arg=3D", &p)) {
+ 			strvec_push(&index_pack_args, p);
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index 5f16cbc58d..ea8e48f627 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -25,6 +25,12 @@ test_expect_success 'setup repository' '
+ 	git commit -m two
+ '
 =20
- struct index_state;
- struct strbuf;
-diff --git a/t/helper/test-hash-speed.c b/t/helper/test-hash-speed.c
-index b235da594f..7de822af51 100644
---- a/t/helper/test-hash-speed.c
-+++ b/t/helper/test-hash-speed.c
-@@ -1,5 +1,5 @@
- #include "test-tool.h"
--#include "hash-ll.h"
-+#include "hash.h"
++test_expect_success 'packfile without repository does not crash' '
++	echo "fatal: not a git repository" >expect &&
++	test_must_fail nongit git http-fetch --packfile=3Dabc 2>err &&
++	test_cmp expect err
++'
++
+ setup_post_update_server_info_hook () {
+ 	test_hook --setup -C "$1" post-update <<-\EOF &&
+ 	exec git update-server-info
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 862d80c974..34bc7d7da4 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1096,6 +1096,11 @@ test_must_fail_acceptable () {
+ 		done
+ 	fi
 =20
- #define NUM_SECONDS 3
-=20
-diff --git a/t/helper/test-sha1.c b/t/helper/test-sha1.c
-index dcb7f6c003..e60d000c03 100644
---- a/t/helper/test-sha1.c
-+++ b/t/helper/test-sha1.c
-@@ -1,5 +1,5 @@
- #include "test-tool.h"
--#include "hash-ll.h"
-+#include "hash.h"
-=20
- int cmd__sha1(int ac, const char **av)
- {
-diff --git a/t/helper/test-sha256.c b/t/helper/test-sha256.c
-index 08cf149001..2fb20438f3 100644
---- a/t/helper/test-sha256.c
-+++ b/t/helper/test-sha256.c
-@@ -1,5 +1,5 @@
- #include "test-tool.h"
--#include "hash-ll.h"
-+#include "hash.h"
-=20
- int cmd__sha256(int ac, const char **av)
- {
-diff --git a/tree-diff.c b/tree-diff.c
-index 46107772d1..9252481df3 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -8,6 +8,7 @@
- #include "tree.h"
- #include "tree-walk.h"
- #include "environment.h"
-+#include "repository.h"
-=20
- /*
-  * Some mode bits are also used internally for computations.
-diff --git a/tree-walk.h b/tree-walk.h
-index 0b1067fbc5..aaea689f9a 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -1,7 +1,7 @@
- #ifndef TREE_WALK_H
- #define TREE_WALK_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
-=20
- struct index_state;
- struct repository;
-diff --git a/xdiff-interface.h b/xdiff-interface.h
-index 38537169b7..1ed430b622 100644
---- a/xdiff-interface.h
-+++ b/xdiff-interface.h
-@@ -1,7 +1,7 @@
- #ifndef XDIFF_INTERFACE_H
- #define XDIFF_INTERFACE_H
-=20
--#include "hash-ll.h"
-+#include "hash.h"
- #include "xdiff/xdiff.h"
-=20
- /*
++	if test "$1" =3D "nongit"
++	then
++		shift
++	fi
++
+ 	case "$1" in
+ 	git|__git*|scalar|test-tool|test_terminal)
+ 		return 0
 --=20
 2.45.2.436.gcd77e87115.dirty
 
 
---B2uNVEp5L4jp2hGY
+--5B9Ujm1PuF174lST
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoO94ACgkQVbJhu7ck
-PpTs3xAAhoWF47yfUKOXniwUtdA9FsSYm0rCPJ13WtsNg10ZQme6FvphCxkVMK3C
-cu/I7X1uROef7V0gUwb5jbTQ38WF0tL0xnrV7+F6ndo7Pew+6b8q3d59Qq187eLe
-Ue3V2gcn67WxTaDOjIcTmecxxFhaYulTY533eUoI3QhKCPQ6Gz4YkxDIid5VHkHf
-U98BwvIpHgxDDPOyxGL2yqSEc72gCV1qNaJ4M8EHoj1/DiDPSyxT/ClDI5YAUdyy
-pSi6NIQY0d5OafkoWTkWzTAB7EIDyyISB7Ls9WnJDBSj0jq4R2M4E4v62ppSK6W8
-J9ggqv9yAb7jMfbmkTnpxci59MpGtyaH7EHWrgqMnHjF/xfPHXOebVVjfqxxsA0J
-/Jazk4+crHodHmxA5nBd4aNMyxqi2sV5rcQhFHaY1vesMF1gmWzqPVDj9MqJh2r/
-FEK59rR2G6hB4jaLxYNmQYNSNVgHL+hjLobN/KwdMtcjWxZ69IBjcwneZ2cFX5pK
-DmvM0yuJK65kHUVBUjqEPDDqqtyn9sYNtmo8Ni0+2Vd/G2laaAnL9DISTHFWbf4U
-NcUKG2kFzTu2dGIpMgXy1Z6DXvwWyGsWlrXQfrkMmlyWLKUimkD+Sv9RWgPBrNMR
-CDZjSGkOpKRv8pFCHjefx9u2Me2r+N0wb9T/K8E+AADn4W4shJY=
-=jG9h
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZoO+MACgkQVbJhu7ck
+PpSTJw//eLGctvJcBDqW/5KdrHz6+dEcdKSt1UvBTYumf1wei8aCWtqV5ZnBE+B4
+KEHd3fym8BSRqRKomDmHccYI63ts8/xdhfk5+GdoLcH9TeQ88KVL8hMkl0wThezv
+4v0XMZaybvLOYzdkvth6OYMRRFulWD2Hyr6pXoy/AZbuv6Ru/JkycEztSKeJAwFj
+KWc0ltjsyv5jp8Va4+R6Kv+AdlRf5DsbUyOIL+IBZ4CzX125WOPX0/rC5i1j5OCG
+0FgJWOEiO/IO0FyqUt5rpiw1yr78/0AJZ2/oegXzQqXUaioi7dQ1Q4Xs5sBcWokp
+XuWaOPeVmloQdPDvgU8FjfwaqV00nUzOvp24gqO6LBtTjGQii8KukKQ3S1eDsAEv
+QgSea7FN2wtNOjWRNixH8UUyJqQrKYIM4FpFFol/1/ORV5rFKpPhTCZomg4eYvIE
+m06doLXDhaeNiWp+7WMelxIHysO/kkkP6Ru3gj8WSK6tAn4gQyUGPVgjE8GjgClL
+YdqfZDs3t3rdEIz2qD8Xqd3vap2H5o28av83uuNwKO8U4gvcWmnqM3+eaBixIZJW
+tr9iVVMCo2dGsuisJtOFZiuHwMksggVI4SH/IeMUdOljGyTw6D1HTHv11XUCWgHW
+AXjUgq8jxVKQeDN8X5Otc5Y6KCwOya3av9uGXq1Xp/BpH07/TBo=
+=W/y8
 -----END PGP SIGNATURE-----
 
---B2uNVEp5L4jp2hGY--
+--5B9Ujm1PuF174lST--
