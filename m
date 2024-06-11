@@ -1,103 +1,79 @@
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DCD47F5D
-	for <git@vger.kernel.org>; Tue, 11 Jun 2024 17:28:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F2125776
+	for <git@vger.kernel.org>; Tue, 11 Jun 2024 17:30:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718126907; cv=none; b=RrCkSME9nGdxZS3MZNtQj1Aon0il09I9Vfv7ecRRUYZZ9tCA1XDYsQWpKV2RYZxsXimZFkJQHdolYWTgvwnYiaSP26WhCQ9V7pFijmNGjEKg+C0FS/Q3oTT7Q5yV1W810jW205lMmM1aDiWtpIQjiDHXBAjBxejZSXwGxn6Zw5g=
+	t=1718127034; cv=none; b=Xyqw26eKzYKWI6AOw1zEOS74bBFzuWOMfxo3xzhSUq7aClnfaEgm2aLcx01MF9f8fCO3AbOy4narWgNTiNAlMtWvflSHw6q4x/50/kliUNbWxCbEF6MeztJQk6GUIAhrkFW7ZrJqMn+wRt9PVDFiz3ugiyUgQGZKC1w7JFxF9j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718126907; c=relaxed/simple;
-	bh=XLmBgdYvzO2opiSP7Lfa58zo+DqYe9LA1lHWzLhzq4M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EpBxyWI1pjR8eLaiwsN8zIXpk1x4cKV3veHc0/Zd4RlccnbMayQpXyA1WlGFo3GkkOaECxp5G5HvFrV5Knc6kjkAnm9U+PEJ3BWvTujrYLuzKvOBtEiooyH3t3q0gNaWAEURxl9vd9a3FbI1t791uet34ReyUcqOsWRtkpNGnXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=j5fjTQOh; arc=none smtp.client-ip=209.85.160.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1718127034; c=relaxed/simple;
+	bh=W/1cEEpl0/cnBlx2Dfr70D37vqjg+53xZL+fJrrXlQk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=R6Ec5bm0U00IkeUcJXD0nEjrQ+C7o3ydy2OdPq7uICpENmOysPk2w7Stt6PlixxG8WEmUMx1Kn4tvBEf4X7Kb1CnnxXwkGcHguOtJJg4YiV7EMYKQz3mcqh1IGuU3lrmUEr1JB4NAdB9jJObPE3eb2azV0PoNbXrVS8BcsbtrpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=HajDKbgr; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="j5fjTQOh"
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-24c9f297524so3319735fac.0
-        for <git@vger.kernel.org>; Tue, 11 Jun 2024 10:28:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1718126905; x=1718731705; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7xjSmD23sLlXv3mrqs0SrsHiTZego6HQFibXfnZ+W2Y=;
-        b=j5fjTQOhlgA0qK43f8c31/qqtPsWsxhcJcnGMUSYZTDkdyzsAi9O9AWC1vr1iiYy5g
-         IjW0xNzgZqzNIy+gFrxml1bw128No2q+yVJkytJSXVuyuuvJFzNeHT0QYfa0EcXwifqr
-         Ow4wmpMHBeP7wRbQtjZ24tNviNkgvbsqW0fohQ4oIfZaqP8tXs3O01VI6ttAsCTCB4zz
-         S3iNvInp7exPYwP5pq3kx4G4Ahu9TU3P9q9KJt+KEtkx395f6HabKDAKIiKP/VFTveEm
-         H8aaJVXMJWuwSFXb1hT6ee1pOtoVCTjwr17uUp8YEqKIV30ZUPIVBVgIEaNNhMPmss9B
-         QQBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718126905; x=1718731705;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7xjSmD23sLlXv3mrqs0SrsHiTZego6HQFibXfnZ+W2Y=;
-        b=WO48fSF04SZLXF7chEeQSclpjQHoar5NEH6CyRBjWYrdmJ7w+qpRnCYMo0prRHMYR8
-         p9DrNvT9uUAhnhNzQyGdADV/9ld4zpIrBJMmbjOLCRlnTrTOt2BQ+PR+qUhDVNdjB43c
-         FQ3DLMqx8GtzsoQbE13y8msaR4YX0PJkL7X1eyJ+UVIdoLFSUz7XAi8LkoUjhAXfldTd
-         7lY2b0CEyVtni9b/+FFvpp4V0ESk0C5JqSgkA0WhMyb+dEliB3qPMHN5MAhs+xpWLkkr
-         q8TG7HNu8TS/1aOHTPyC6eK7lTn6O70QkSz6qSvEJLfqd/Sj0hgU7tN1aiXOlkoVaqAc
-         jKYg==
-X-Gm-Message-State: AOJu0Yw21KslrmB+bZ4wP9vgl+aTphtVEsz/Jy65YF4hM1oa6jfG4i25
-	hr+gjtGquTFbgCWAvVopHeE3sBs95/X+r+OebF+Z2dmNfhS6T+e8TFwC5cj/Ja8macM5rVyv+AQ
-	Q/S0=
-X-Google-Smtp-Source: AGHT+IHdXyb1ZgQgFMNcKd5+3YzFPnZNyj3yIcayFZMbs/dAlXud1gD34NodZfrE/DEPNCW0qPAc1A==
-X-Received: by 2002:a05:6871:3313:b0:254:8666:34d9 with SMTP id 586e51a60fabf-25486663d0dmr12765818fac.16.1718126905454;
-        Tue, 11 Jun 2024 10:28:25 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7955d6e91e2sm265589285a.27.2024.06.11.10.28.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jun 2024 10:28:25 -0700 (PDT)
-Date: Tue, 11 Jun 2024 13:28:24 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Kyle Lippincott <spectral@google.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 3/3] pack-revindex.c: guard against out-of-bounds pack
- lookups
-Message-ID: <06de4005f15a970628cef1aeb7f159ca05b8e34d.1718126886.git.me@ttaylorr.com>
-References: <4aceb9233ed24fb1e1a324a77b665eea2cf22b39.1717946847.git.me@ttaylorr.com>
- <cover.1718126886.git.me@ttaylorr.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HajDKbgr"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 51A6928FCA;
+	Tue, 11 Jun 2024 13:30:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=W/1cEEpl0/cnBlx2Dfr70D37vqjg+53xZL+fJr
+	rXlQk=; b=HajDKbgrgj6yUxy8yfvf4Z6NbMjsAMjM9AhblwmsJUlaHB8P1AGFw5
+	0zE+4bgcdIMg8Of1jgfGD3mUhBIeMAgqThqTxN0Ww7HdwscOspuJPGMzBLHG9V1e
+	5tzF5Yx9hnLHCFCWnNErQe4KlPAbvWTs/ZdfsoHrWKYEMbIPK2LMY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 495D328FC9;
+	Tue, 11 Jun 2024 13:30:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AFD5328FC8;
+	Tue, 11 Jun 2024 13:30:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] DONTAPPLY: -Og fallout workaround
+In-Reply-To: <Zmg-jl83UA0P2Dnk@tanuki> (Patrick Steinhardt's message of "Tue,
+	11 Jun 2024 14:09:50 +0200")
+References: <cover.1717655210.git.ps@pks.im> <cover.1718001244.git.ps@pks.im>
+	<03270d3414117ae7229d87127cff81e349557039.1718001244.git.ps@pks.im>
+	<xmqqed946auc.fsf@gitster.g> <xmqqjziw3arr.fsf@gitster.g>
+	<xmqqsexk1s43.fsf@gitster.g> <Zmg-jl83UA0P2Dnk@tanuki>
+Date: Tue, 11 Jun 2024 10:30:24 -0700
+Message-ID: <xmqqtthzwfnz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1718126886.git.me@ttaylorr.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 49FC9B38-2818-11EF-8DB4-965B910A682E-77302942!pb-smtp2.pobox.com
 
-The function midx_key_to_pack_pos() is a helper function used by
-midx_to_pack_pos() and midx_pair_to_pack_pos() to translate a (pack,
-offset) tuple into a position into the MIDX pseudo-pack order.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Ensure that the pack ID given to midx_pair_to_pack_pos() is bounded by
-the number of packs within the MIDX to prevent, for instance,
-uninitialized memory from being used as a pack ID.
+> The real bug that "-Og" would have been able to detect was reported by
+> Peff via [1]. In this case it wasn't "-Og" that detected it, but
+> Coverity did. But it would have been detected if we had a job that
+> compiled with "-Og".
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- pack-revindex.c | 3 +++
- 1 file changed, 3 insertions(+)
+Thanks.  It is curious that you singled out "-Og" here, but with the
+usual "-O2" optimization level, it does not seem to get noticed.
 
-diff --git a/pack-revindex.c b/pack-revindex.c
-index fc63aa76a2..93ffca7731 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -527,6 +527,9 @@ static int midx_key_to_pack_pos(struct multi_pack_index *m,
- {
- 	uint32_t *found;
- 
-+	if (key->pack >= m->num_packs)
-+		BUG("MIDX pack lookup out of bounds (%"PRIu32" >= %"PRIu32")",
-+		    key->pack, m->num_packs);
- 	/*
- 	 * The preferred pack sorts first, so determine its identifier by
- 	 * looking at the first object in pseudo-pack order.
--- 
-2.45.2.448.g06de4005f1
+> But now that I see the full picture of this with different compiler
+> options I have to agree that this is not really worth it. Especially not
+> given that Coverity is able to detect such cases, even though that only
+> happens retroactively after a topic has landed.
+>
+> Let's drop this experiment.
+
+OK, but let's keep the CFLAGS_APPEND one ;-)
