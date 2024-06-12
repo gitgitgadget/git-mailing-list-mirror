@@ -1,236 +1,156 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFBD3209
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 18:38:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFDC5474A
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 18:48:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718217526; cv=none; b=fHCvn32wnJUXI4BwtoL3SOmyqloT3r7/i0VpDvF/ipnB9m7eGThF7vs7AcL/q72Z8XBPyCdT9xu09WgspW74qpBsoXNiqX6GSg6F+W8jRNQWwp0umKWTLwhpP7kpt6IgUY6Aejp67/GcNZsl3L6+tJmGjxGot37pyN9+rOc4rFU=
+	t=1718218121; cv=none; b=QnHqv9kcXJCMv5beOVvHcZB1fKtrgtQIdxCPF7dY92/0qDPocXs4LF/pGTATvtf2wU2ve+DhvPThzs7/aOM4yZhDINLIFAv6v+v28kZjDew75dlGKUanStRtGqe+Fm+rWyyid+OwJ9nKBw7sUaktpO95S3Z3yDEfLTGwL/XhsNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718217526; c=relaxed/simple;
-	bh=8ZLwffB5GM97Q87VOAxK7ZEdjCVh6q1v+PvJsidPsc4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RlnIDvQoodB0Kge+ENW7ggVPsCGCxWR4Rf96wq1WfLY02vTV+4owVcc8Fy4NXOUNcflTUAOkOmhdMm99UDx16iK6YjyKIAXHuOZxavE1rnjlUlOIfATH9Kd4Ajd+o9/hV3wAqzHipD6j/NQc/SfX8XFCxbmfEH5YzTOUHXeNJL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4Duwswdl; arc=none smtp.client-ip=209.85.161.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1718218121; c=relaxed/simple;
+	bh=L3c+iXsEeyPO+JgddOMLdVGMhhup36E3ijdHDRrDmNE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=t+1fRWOrT39rDy1Jz3H4xCJRHE5JEHyt1OdnzauyGJbdagHOL5MbLxEoAQrvmkSfQv31p3vy52SbwN3loxhqQcy4LC+vK/5VhNAntCcvIv8Hg214DI48hKPig6Eu/u6eIn3jN80MZ0KJpJII/KVVIwVbmetZ7RHDLynBbP2nVRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b=VqNUlYtk; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4Duwswdl"
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-5b9794dad09so110019eaf.3
-        for <git@vger.kernel.org>; Wed, 12 Jun 2024 11:38:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="VqNUlYtk"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7041ed475acso106194b3a.2
+        for <git@vger.kernel.org>; Wed, 12 Jun 2024 11:48:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1718217523; x=1718822323; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J5zabzevass76lG87MqzwgznW2WQfxE5Vhw80otYPzw=;
-        b=4DuwswdllvAZxoMRFzU/XmysxFU7ZDRtC5cGXwQKjqg/0uwNgXC4c4U4ngIAlVKAKc
-         YZhMTvyt33JbTBSIkKB2dfwxmB84fumlKwWMUUViDP1hDNN8+IwH56KlJh4s71vjr0Nw
-         ui1MTMtB/jrT5JUilBYOHcTxaA6me7HKXwvz89E9ii80XPzNCJWu4KpPT/TpCf/N+u8M
-         cA38kL4lOWC9W91zNeSL/MQi9vDej4BHK14dZ0WRSqZmiLxhWOxC3ejOBrw5fItB0Lt1
-         DvaaNDW9aENBT6W6Sc/HJ9b6/EmQe0vjJhqkilYAHD2KEgShYTb2Uu5q4TvHGxv+jl9i
-         C2ag==
+        d=github.com; s=google; t=1718218119; x=1718822919; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Yo0RS9XNUfHGThsMHAVOm+X+C6BnBqLvHVC9+SufVZg=;
+        b=VqNUlYtkxns6da9DCIThPGrgd6jcke8Uh+GL62fqRzdbjaaurQYuSSt1OlXxYAVPWe
+         tIfirys5iNJVEn/n5pDTZhaxJ3DBzIN8o82/gPQtZtTbLh120dJCG/ndPUfgB/nRLyif
+         C5ZpTGD/Fcte7B5T2DhktLe+itEO3PtRXEJgcZFaD2GHATUCv9qfc1mKmHOhUZFNWZIg
+         6HsgEO5bNAetFr4sUd6TNuFCK43ED2G2hMokntZHMuE3TZZCLNue0ZjxVhyDxrtqDaGP
+         5Mb/D55KY7JmEDK0QRWZzDS4NQuN0Xl0gQws33v2Q85ueHRxgc3CMezkjhR0ZCSp8Wy9
+         95TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718217523; x=1718822323;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=J5zabzevass76lG87MqzwgznW2WQfxE5Vhw80otYPzw=;
-        b=G311vy1Hbvh+5b16NqHVpq98KjPHJNs1cXP/ywwHGON45c+YAcaj8VGU0DY5pEWEyl
-         a46ASa6Qkwp6G71ucB6h11FHdk8lR7NhyXlvzXvssZ3HHAY4gcUsqtpEHB+aacSqI1kI
-         HR6dtvnIq50/sl4cn35z9NySC0nJikiTR8EHb8q5kRHRH4Ln/+SLVoW5cixnGJba24UM
-         4YNKlIo/ryyfbqX4ZuX9n+Oe+apJFZQu0nb9+Lh1kHOFKKpwcMXd/3ViUZNd9LSU7QQx
-         5lbnnAhEQB6D2+WUFGmgnSBD/mFnUKAMwuirB0z5OJ1cHsj1arMfE9QN6GpZ3Pw98uVz
-         AkpQ==
-X-Gm-Message-State: AOJu0YxRFjz/7H17KE1IGWXZQgl0GYAT3Us9akXG2CoQk/1mf62iz6kT
-	jEC/2AtvZsw0CBssRuFS4fQL0e4jSmRchHF1x6HbJBcVVjrIJptYAJvm4JhumS+OQoE5W1gYvhY
-	3RibYZMfaBAP4kj6QN0LPm7nlXABRU1iVO+hfxhLimRO+nGipfpCY
-X-Google-Smtp-Source: AGHT+IFzv4oHsh4yp5CMKn9m5ofp1x8XgIVyJud+hIKv1Usjsp/2lJziQQptf3L41oTxWEzeI5TnyqisL4q73VR26QU=
-X-Received: by 2002:a05:6820:16a0:b0:5ba:ef23:7011 with SMTP id
- 006d021491bc7-5bb3ba14d68mr3266039eaf.4.1718217523144; Wed, 12 Jun 2024
- 11:38:43 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718218119; x=1718822919;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yo0RS9XNUfHGThsMHAVOm+X+C6BnBqLvHVC9+SufVZg=;
+        b=SNf9tTw90Vs6P3UJ6ppFsg3iNXS0t/T9/Sx+JK9I4pzuvXHowu95VG/7AHbuyhB8Zf
+         WMw0srfiEFOau1q0tkMJousIQEf/Po/0E/IlM5rjV5+emQXK3OR88K9ibU9gWUX1gb4f
+         1Qmo/K05AVbbC3j7YiQ/miyBfzhOkAg4GPnqQWFqYAaFHf1ccQ7amlPwjNfbI2ZrAvHm
+         NzhKeXk9wWk/hDDv2dSmUutHFMyDQyDUcbD++VfhXE1MuMacACts7L0G6Yh9rrzVR32T
+         iX71rzaOeU77yiH4TyW5RXdXHLFZATMglJeQFtmDUWSuZnAU2POgu+htIPi+jTCtlMHz
+         XhIA==
+X-Gm-Message-State: AOJu0YwIjaPjPuvjl5jn4MPrg0gDyjmrTnORhGCvTSaoVGcxE/hXYXUQ
+	vpzUtMSqKZloEZzO97+hHUzX9Qjk0x9CGHHEhvmnfiuNhOE0FyxWywbhzDz959S42gP/5MCxDw=
+	=
+X-Google-Smtp-Source: AGHT+IGd1XikTUhCUbYXncifDO+hCnVQasXVtickd1jORobFeYIM0q032Rmi3y+Z49LZ7xIg7iWQaw==
+X-Received: by 2002:a05:6a20:da90:b0:1b4:efbb:d1d3 with SMTP id adf61e73a8af0-1b8a9c886e4mr3052302637.51.1718218119331;
+        Wed, 12 Jun 2024 11:48:39 -0700 (PDT)
+Received: from [192.168.50.41] (syn-172-091-184-234.res.spectrum.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7042d735b55sm7440078b3a.39.2024.06.12.11.48.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jun 2024 11:48:38 -0700 (PDT)
+Message-ID: <dab4b0e3-8000-465e-8f0a-61df3d9168a3@github.com>
+Date: Wed, 12 Jun 2024 11:48:37 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqr0d2p1x3.fsf@gitster.g>
-In-Reply-To: <xmqqr0d2p1x3.fsf@gitster.g>
-From: Kyle Lippincott <spectral@google.com>
-Date: Wed, 12 Jun 2024 11:38:30 -0700
-Message-ID: <CAO_smVh2yZRfs2vq2RKY=eLj8-0BgPierxksq376u=X-=pbKWA@mail.gmail.com>
-Subject: Re: [RFH] t9500 failing???
-To: Junio C Hamano <gitster@pobox.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/16] mktree: overwrite duplicate entries
+To: Patrick Steinhardt <ps@pks.im>,
+ Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
+ <b59a4ad8ab4b0e47373f811700eba59141fdc6c6.1718130288.git.gitgitgadget@gmail.com>
+ <ZmltGAPQ2dAfW0kG@tanuki>
+Content-Language: en-US
+From: Victoria Dye <vdye@github.com>
+In-Reply-To: <ZmltGAPQ2dAfW0kG@tanuki>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 12, 2024 at 9:23=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Suddenly t9500.70 has started failing for me in my local environment
-> (but $Corp IT folks control pretty much which version of base software
-> is installed and updated at what time, once I choose "I want to do CGI
-> in Perl" by selecting the libcgi-pm-perl module, I am not sure from
-> which version the thing was updated from.  The Debian version claims
-> to be 4.62-1.
+Patrick Steinhardt wrote:
+> On Tue, Jun 11, 2024 at 06:24:42PM +0000, Victoria Dye via GitGitGadget wrote:
+>> From: Victoria Dye <vdye@github.com>
+>>
+>> If multiple tree entries with the same name are provided as input to
+>> 'mktree', only write the last one to the tree. Entries are considered
+>> duplicates if they have identical names (*not* considering mode); if a blob
+>> and a tree with the same name are provided, only the last one will be
+>> written to the tree. A tree with duplicate entries is invalid (per 'git
+>> fsck'), so that condition should be avoided wherever possible.
+>>
+>> Signed-off-by: Victoria Dye <vdye@github.com>
+>> ---
+>>  Documentation/git-mktree.txt |  8 ++++---
+>>  builtin/mktree.c             | 45 ++++++++++++++++++++++++++++++++----
+>>  t/t1010-mktree.sh            | 36 +++++++++++++++++++++++++++--
+>>  3 files changed, 80 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/Documentation/git-mktree.txt b/Documentation/git-mktree.txt
+>> index fb07e40cef0..afbc846d077 100644
+>> --- a/Documentation/git-mktree.txt
+>> +++ b/Documentation/git-mktree.txt
+>> @@ -43,9 +43,11 @@ OPTIONS
+>>  INPUT FORMAT
+>>  ------------
+>>  Tree entries may be specified in any of the formats compatible with the
+>> -`--index-info` option to linkgit:git-update-index[1]. The order of the tree
+>> -entries is normalized by `mktree` so pre-sorting the input by path is not
+>> -required.
+>> +`--index-info` option to linkgit:git-update-index[1].
+>> +
+>> +The order of the tree entries is normalized by `mktree` so pre-sorting the input
+>> +by path is not required. Multiple entries provided with the same path are
+>> +deduplicated, with only the last one specified added to the tree.
+> 
+> Hm. I'm not sure whether this is a good idea. With git-mktree(1) being
+> part of our plumbing layer, you can expect that it's mostly going to be
+> fed input from scripts. And any script that generates duplicate tree
+> entries is broken, but we now start to paper over such brokenness
+> without giving the user any indicator of this. As user of git-mktree(1)
+> in Gitaly I can certainly say that I'd rather want to see it die instead
+> of silently fixing my inputs so that I start to notice my own bugs.
 
-I have the same version (I'm on the same $Corp IT setup). I downgraded
-to 4.61 and it succeeded. Upgraded to 4.62 again, and it started
-failing. The only difference in 4.62 besides a version number change
-in several files is:
+'git mktree' already does some cleaning of the inputs by sorting the
+entries, presumably so that a valid tree is created rather than one with
+ordering errors. Deduplication is also a cleanup of user inputs to ensure a
+valid tree is created, so to me it's a consistent extension to existing
+behavior. Conversely, rejecting the inputs and failing would be introducing
+an error scenario where none existed previously, which to me would be a
+bigger deviation.
 
-```
-diff -ur 4.61/usr/share/perl5/CGI.pm 4.62/usr/share/perl5/CGI.pm
---- 4.61/usr/share/perl5/CGI.pm 2024-01-08 07:13:22.000000000 -0800
-+++ 4.62/usr/share/perl5/CGI.pm 2024-03-01 05:43:03.000000000 -0800
-@@ -1,13 +1,14 @@
- package CGI;
- require 5.008001;
- use Carp 'croak';
-+use URI;
+One potential way to get the kind of functionality you're looking for,
+though, might be to combine something like '--literally' and a '--strict'
+that validates the tree before writing. Like I mentioned in the cover letter
+[1], I do plan to submit a follow-up series with '--strict' (it's just that
+this series is already pretty long and it would add 4-ish more patches). 
 
- my $appease_cpants_kwalitee =3D q/
- use strict;
- use warnings;
- #/;
+[1] https://lore.kernel.org/git/pull.1746.git.1718130288.gitgitgadget@gmail.com/
 
--$CGI::VERSION=3D'4.61';
-+$CGI::VERSION=3D'4.62';
+> So without seeing a strong motivating usecase for this feature I'd think
+> that git-mktree(1) should reject such inputs and return an error such
+> that the user can fix their tooling.
 
- use CGI::Util qw(rearrange rearrange_header make_attributes unescape
-escape expires ebcdic2ascii ascii2ebcdic);
+Practically, there are a couple of reasons that led me to wanting this
+behavior. One is that it allows using data structures with more rigid
+integrity checks (like the index & cache tree). The other is that, once the
+ability to add nested entries is introduced, the concept of a "duplicate"
+gets fuzzier and blocking them entirely could lead to inconsistencies and/or
+limited flexibility. If, for example a user wants to create a tree with a
+directory 'folder1/' with OID '0123456789012345678901234567890123456789',
+but update a blob 'folder1/file1' in it to OID
+'0987654321098765432109876543210987654321', the latter is technically a
+"duplicate" but rejecting it would avoid being able to create the tree
+without first expanding 'folder1/'with something like 'ls-tree', replacing the
+appropriate entry, then calling 'mktree'.
 
-@@ -2747,8 +2748,10 @@
-     $url .=3D $path         if $path_info and defined $path;
-     $url .=3D "?$query_str" if $query     and $query_str ne '';
-     $url ||=3D '';
--    $url =3D~ s/([^a-zA-Z0-9_.%;&?\/\\:+=3D~-])/sprintf("%%%02X",ord($1))/=
-eg;
--    return $url;
-+
-+ $url =3D URI->new( $url )->canonical;
-+ $url =3D~ s!/$!!;
-+ return $url
- }
+> 
+> Patrick
 
- #### Method: cookie
-```
 
-I can confirm that backing that out fixes the issue. I also don't know
-enough perl to know what's wrong with that statement, but looking at
-the current head version, my guess is that it's the wrong type. The
-current head version
-(https://github.com/leejo/CGI.pm/blob/89c51a088db2a45b1c759e02c8d4772f5b6a3=
-6a9/lib/CGI.pm#L2752)
-has `$url =3D URI->new( $url )->canonical->as_string;`, applying that
-patch locally makes this work again. Running blame points us at
-https://github.com/leejo/CGI.pm/issues/263 ("->url being a object
-breaks everything"). One person even references this gitweb.perl
-breakage in the issue comments :)
-
-So my conclusion is that 4.62 is broken, and that newer versions are unbrok=
-en.
-
->
-> It fails with path-info test, starting at t9500.70 with extra
-> warning in the log.  This code
->
->         if ($path_info) {
->                 # $path_info has already been URL-decoded by the web serv=
-er, but
->                 # $my_url and $my_uri have not. URL-decode them so we can=
- properly
->                 # strip $path_info.
->                 $my_url =3D unescape($my_url);
->                 $my_uri =3D unescape($my_uri);
->                 if ($my_url =3D~ s,\Q$path_info\E$,, &&
->                     $my_uri =3D~ s,\Q$path_info\E$,, &&
->                     defined $ENV{'SCRIPT_NAME'}) {
->                         $base_url =3D $cgi->url(-base =3D> 1) . $ENV{'SCR=
-IPT_NAME'};
->                 }
->         }
->
-> before it calls unescape(), I know $my_url is a
-> http://localhost/gitweb.cgi and after it calls unescape, it becomes
-> undefined.  That will trigger a "Use of uninitialized value $my_url
-> in substitution (s///)" warning.
->
-> unescape comes from CGI::Util because we do
->
->         use CGI::Util qw(unescape);
->
-> early in the program.
->
-> As a workaround I locally have the attached patch to disable calling
-> CGI::Util::unescape implicitly as a sub, and instead make an
-> explicit call to it as a class method, and it seems to make the
-> tests pass.  Please do not ask me why it works---the reason why I am
-> posting this message is to find somebody who can explain it to me ;-)
-
-I also don't know why this fixes the issue, unfortunately.
-
->
-> The "unescape" thing in CGI::Util.pm begins with the standard
-> boilerplate that lets you call it as a plain-vanilla sub as well as
-> a class method, like so:
->
->     # unescape URL-encoded data
->     sub unescape {
->       shift() if @_ > 0 and (ref($[0]) || (defined $[1] && $_[0] eq $CGI:=
-:DefaultClass));
->
-> but it seems that it has been that way since 2009, so it does not
-> explain why it started breaking for me all of sudden, even though
-> it _is_ curious that its counterpart in the same file, escape,
-> starts slightly differently to (presumably) achieve the same thing.
->
->     sub escape {
->       # If we being called in an OO-context, discard the first argument.
->       shift() if @_ > 1 and ( ref($[0]) || (defined $[1] && $_[0] eq $CGI=
-::DefaultClass));
->
-> Notice that the former does "shift" as long as there is even a
-> single argument, while the latter does so only when there are at
-> least two arguments.  Both presumably would take a single argument,
-> the string to either escape or unescape, and the shift is presumably
-> to shift away the class object if they are called as class methods,
-> so the guard at the beginning of unscape looks suspect, but I am not
-> a Perl person, and as I said, it seems that the code has been that
-> way since 2009, so it is very likely that I am barking up a wrong
-> tree.
->
-> Anyway.  TIA for whoever explains the solution to this puzzle to me.
->
->
->  gitweb/gitweb.perl | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git c/gitweb/gitweb.perl w/gitweb/gitweb.perl
-> index ccd14e0e30..a0a8b79ef4 100755
-> --- c/gitweb/gitweb.perl
-> +++ w/gitweb/gitweb.perl
-> @@ -13,7 +13,7 @@
->  # handle ACL in file access tests
->  use filetest 'access';
->  use CGI qw(:standard :escapeHTML -nosticky);
-> -use CGI::Util qw(unescape);
-> +use CGI::Util qw();
->  use CGI::Carp qw(fatalsToBrowser set_message);
->  use Encode;
->  use Fcntl ':mode';
-> @@ -22,6 +22,11 @@
->  use Time::HiRes qw(gettimeofday tv_interval);
->  use Digest::MD5 qw(md5_hex);
->
-> +sub unescape {
-> +       my $url =3D shift;
-> +       return CGI::Util->unescape($url);
-> +}
-> +
->  binmode STDOUT, ':utf8';
->
->  if (!defined($CGI::VERSION) || $CGI::VERSION < 4.08) {
->
