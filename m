@@ -1,159 +1,236 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7B93209
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 18:35:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFBD3209
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 18:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718217336; cv=none; b=FX9Vn1AD6+R5Dvf/7E8/rXFMvy/Yf8/7N/JUlnSKv++1rFZ5tY3gOxA86azN+G85/EErR4V9kJn4i7PPoqF6fSGakbpn8+pznADV2E83pe3SS8zYyFXPxZ0cPGA9sPcFTXxxQSmEKI55QpNSxs5dYqSijw3l7Sh7mbLahW3eGGs=
+	t=1718217526; cv=none; b=fHCvn32wnJUXI4BwtoL3SOmyqloT3r7/i0VpDvF/ipnB9m7eGThF7vs7AcL/q72Z8XBPyCdT9xu09WgspW74qpBsoXNiqX6GSg6F+W8jRNQWwp0umKWTLwhpP7kpt6IgUY6Aejp67/GcNZsl3L6+tJmGjxGot37pyN9+rOc4rFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718217336; c=relaxed/simple;
-	bh=Nz8F82wq7ylEef+4wdgAlY4ZT3mrQ891S0RbkWFrBPg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bmo+NdxYBv1W+JppnhBa+zsNuizIRT9y8lH4TtvoUvHods05j1asrC0uYL8xjag72tZDNsrYVnfd2OkVyjs+Bs3Gll26918jfa953YRm3tsR5uj+HpEMFNy7cl6ncBd044NrolF2Kxeve5KXyDge8NC+GwziMYfyoLTGpa2IwJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ofTLImBE; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1718217526; c=relaxed/simple;
+	bh=8ZLwffB5GM97Q87VOAxK7ZEdjCVh6q1v+PvJsidPsc4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RlnIDvQoodB0Kge+ENW7ggVPsCGCxWR4Rf96wq1WfLY02vTV+4owVcc8Fy4NXOUNcflTUAOkOmhdMm99UDx16iK6YjyKIAXHuOZxavE1rnjlUlOIfATH9Kd4Ajd+o9/hV3wAqzHipD6j/NQc/SfX8XFCxbmfEH5YzTOUHXeNJL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4Duwswdl; arc=none smtp.client-ip=209.85.161.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ofTLImBE"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A418121722;
-	Wed, 12 Jun 2024 14:35:34 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Nz8F82wq7ylEef+4wdgAlY4ZT3mrQ891S0RbkW
-	FrBPg=; b=ofTLImBEYtQ1npRCDuU3bFclxetsWsPGU08JegnETRZhUAMzELn2qJ
-	4oxV6rr51I+UPEFRWkLwuiNh7TH/kf0SsLs2RqYKyyx08XTc9l2Mvx/vGpImwPKm
-	7APlX4ahJk2Ofvy6t5UTi/cgqr++74ZO37IQjNq8mEQ0+yI9usZGY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9D52B21721;
-	Wed, 12 Jun 2024 14:35:34 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3EC7D21720;
-	Wed, 12 Jun 2024 14:35:31 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH 07/16] mktree: use read_index_info to read stdin lines
-In-Reply-To: <ZmltEti7TRpaiCD-@tanuki> (Patrick Steinhardt's message of "Wed,
-	12 Jun 2024 11:40:34 +0200")
-References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
-	<8d1e1eaa70b96779416f2f48a862d31a730c4521.1718130288.git.gitgitgadget@gmail.com>
-	<ZmltEti7TRpaiCD-@tanuki>
-Date: Wed, 12 Jun 2024 11:35:29 -0700
-Message-ID: <xmqqle3aovpq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4Duwswdl"
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-5b9794dad09so110019eaf.3
+        for <git@vger.kernel.org>; Wed, 12 Jun 2024 11:38:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1718217523; x=1718822323; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=J5zabzevass76lG87MqzwgznW2WQfxE5Vhw80otYPzw=;
+        b=4DuwswdllvAZxoMRFzU/XmysxFU7ZDRtC5cGXwQKjqg/0uwNgXC4c4U4ngIAlVKAKc
+         YZhMTvyt33JbTBSIkKB2dfwxmB84fumlKwWMUUViDP1hDNN8+IwH56KlJh4s71vjr0Nw
+         ui1MTMtB/jrT5JUilBYOHcTxaA6me7HKXwvz89E9ii80XPzNCJWu4KpPT/TpCf/N+u8M
+         cA38kL4lOWC9W91zNeSL/MQi9vDej4BHK14dZ0WRSqZmiLxhWOxC3ejOBrw5fItB0Lt1
+         DvaaNDW9aENBT6W6Sc/HJ9b6/EmQe0vjJhqkilYAHD2KEgShYTb2Uu5q4TvHGxv+jl9i
+         C2ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718217523; x=1718822323;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=J5zabzevass76lG87MqzwgznW2WQfxE5Vhw80otYPzw=;
+        b=G311vy1Hbvh+5b16NqHVpq98KjPHJNs1cXP/ywwHGON45c+YAcaj8VGU0DY5pEWEyl
+         a46ASa6Qkwp6G71ucB6h11FHdk8lR7NhyXlvzXvssZ3HHAY4gcUsqtpEHB+aacSqI1kI
+         HR6dtvnIq50/sl4cn35z9NySC0nJikiTR8EHb8q5kRHRH4Ln/+SLVoW5cixnGJba24UM
+         4YNKlIo/ryyfbqX4ZuX9n+Oe+apJFZQu0nb9+Lh1kHOFKKpwcMXd/3ViUZNd9LSU7QQx
+         5lbnnAhEQB6D2+WUFGmgnSBD/mFnUKAMwuirB0z5OJ1cHsj1arMfE9QN6GpZ3Pw98uVz
+         AkpQ==
+X-Gm-Message-State: AOJu0YxRFjz/7H17KE1IGWXZQgl0GYAT3Us9akXG2CoQk/1mf62iz6kT
+	jEC/2AtvZsw0CBssRuFS4fQL0e4jSmRchHF1x6HbJBcVVjrIJptYAJvm4JhumS+OQoE5W1gYvhY
+	3RibYZMfaBAP4kj6QN0LPm7nlXABRU1iVO+hfxhLimRO+nGipfpCY
+X-Google-Smtp-Source: AGHT+IFzv4oHsh4yp5CMKn9m5ofp1x8XgIVyJud+hIKv1Usjsp/2lJziQQptf3L41oTxWEzeI5TnyqisL4q73VR26QU=
+X-Received: by 2002:a05:6820:16a0:b0:5ba:ef23:7011 with SMTP id
+ 006d021491bc7-5bb3ba14d68mr3266039eaf.4.1718217523144; Wed, 12 Jun 2024
+ 11:38:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8C476DE2-28EA-11EF-9C0B-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
+References: <xmqqr0d2p1x3.fsf@gitster.g>
+In-Reply-To: <xmqqr0d2p1x3.fsf@gitster.g>
+From: Kyle Lippincott <spectral@google.com>
+Date: Wed, 12 Jun 2024 11:38:30 -0700
+Message-ID: <CAO_smVh2yZRfs2vq2RKY=eLj8-0BgPierxksq376u=X-=pbKWA@mail.gmail.com>
+Subject: Re: [RFH] t9500 failing???
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Wed, Jun 12, 2024 at 9:23=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Suddenly t9500.70 has started failing for me in my local environment
+> (but $Corp IT folks control pretty much which version of base software
+> is installed and updated at what time, once I choose "I want to do CGI
+> in Perl" by selecting the libcgi-pm-perl module, I am not sure from
+> which version the thing was updated from.  The Debian version claims
+> to be 4.62-1.
 
-> It makes perfect sense to not single out git-ls-tree(1) anymore. But I
-> think we should help the reader a bit by continuing to point out which
-> commands can be used as input here. That can be either here in the
-> description, further down in the new "INPUT FORMAT" section, or in both
-> places.
+I have the same version (I'm on the same $Corp IT setup). I downgraded
+to 4.61 and it succeeded. Upgraded to 4.62 again, and it started
+failing. The only difference in 4.62 besides a version number change
+in several files is:
 
-Here is a way to do so, which I alluded to earlier.  The original
-text is too specific to "update-index" in that it talked about
-"stuffing them into the index", which does not apply in the context
-of "mktree".
+```
+diff -ur 4.61/usr/share/perl5/CGI.pm 4.62/usr/share/perl5/CGI.pm
+--- 4.61/usr/share/perl5/CGI.pm 2024-01-08 07:13:22.000000000 -0800
++++ 4.62/usr/share/perl5/CGI.pm 2024-03-01 05:43:03.000000000 -0800
+@@ -1,13 +1,14 @@
+ package CGI;
+ require 5.008001;
+ use Carp 'croak';
++use URI;
 
-And then it made me realize that "ls-files -s" output has the stage
-information, which of course is needed for "update-index" to be able
-to recreate the index state from a textual dump, but "mktree" should
-reject if given a higher stage entry.
+ my $appease_cpants_kwalitee =3D q/
+ use strict;
+ use warnings;
+ #/;
 
-It seems that the code after applying all these 16 patches does not
-diagnose it as an error if you feed a non-zero stage.  The callback
-starts like so.
+-$CGI::VERSION=3D'4.61';
++$CGI::VERSION=3D'4.62';
 
-    static int mktree_line(unsigned int mode, struct object_id *oid,
-                           enum object_type obj_type, int stage UNUSED,
-                           const char *path, void *cbdata)
-    {
-    
-I _think_ it should be made an error if the input has non-zero
-stage, which would be a sign that it was taken from "ls-files -s"
-(or even "ls-files -u"), out of which "git write-tree" will REFUSE
-to create a tree object.  "mktree" should behave the same way, no?
+ use CGI::Util qw(rearrange rearrange_header make_attributes unescape
+escape expires ebcdic2ascii ascii2ebcdic);
 
-In any case, here is the documentation split/refactor.
-
- Documentation/git-mktree.txt         |  4 +++-
- Documentation/git-update-index.txt   | 14 +-------------
- Documentation/index-info-formats.txt | 13 +++++++++++++
- 3 files changed, 17 insertions(+), 14 deletions(-)
-
-diff --git c/Documentation/git-mktree.txt w/Documentation/git-mktree.txt
-index a660438c67..fefaa83d29 100644
---- c/Documentation/git-mktree.txt
-+++ w/Documentation/git-mktree.txt
-@@ -48,7 +48,9 @@ OPTIONS
- INPUT FORMAT
- ------------
- Tree entries may be specified in any of the formats compatible with the
--`--index-info` option to linkgit:git-update-index[1].
-+`--index-info` option to linkgit:git-update-index[1].  That is:
+@@ -2747,8 +2748,10 @@
+     $url .=3D $path         if $path_info and defined $path;
+     $url .=3D "?$query_str" if $query     and $query_str ne '';
+     $url ||=3D '';
+-    $url =3D~ s/([^a-zA-Z0-9_.%;&?\/\\:+=3D~-])/sprintf("%%%02X",ord($1))/=
+eg;
+-    return $url;
 +
-+include::index-info-formats.txt[]
- 
- Entries may use full pathnames containing directory separators to specify
- entries nested within one or more directories. These entries are inserted into
-diff --git c/Documentation/git-update-index.txt w/Documentation/git-update-index.txt
-index 7128aed540..2287a5d4be 100644
---- c/Documentation/git-update-index.txt
-+++ w/Documentation/git-update-index.txt
-@@ -280,19 +280,7 @@ USING --INDEX-INFO
- multiple entry definitions from the standard input, and designed
- specifically for scripts.  It can take inputs of three formats:
- 
--    . mode SP type SP sha1          TAB path
--+
--This format is to stuff `git ls-tree` output into the index.
--
--    . mode         SP sha1 SP stage TAB path
--+
--This format is to put higher order stages into the
--index file and matches 'git ls-files --stage' output.
--
--    . mode         SP sha1          TAB path
--+
--This format is no longer produced by any Git command, but is
--and will continue to be supported by `update-index --index-info`.
-+include::index-info-formats.txt[]
- 
- To place a higher stage entry to the index, the path should
- first be removed by feeding a mode=0 entry for the path, and
-diff --git c/Documentation/index-info-formats.txt w/Documentation/index-info-formats.txt
-new file mode 100644
-index 0000000000..037ebd2432
---- /dev/null
-+++ w/Documentation/index-info-formats.txt
-@@ -0,0 +1,13 @@
-+    . mode SP type SP sha1          TAB path
-++
-+This format is to use `git ls-tree` output.
-+
-+    . mode         SP sha1 SP stage TAB path
-++
-+This format allows higher order stages to appear and
-+matches 'git ls-files --stage' output.
-+
-+    . mode         SP sha1          TAB path
-++
-+This format is no longer produced by any Git command, but is
-+and will continue to be supported.
++ $url =3D URI->new( $url )->canonical;
++ $url =3D~ s!/$!!;
++ return $url
+ }
+
+ #### Method: cookie
+```
+
+I can confirm that backing that out fixes the issue. I also don't know
+enough perl to know what's wrong with that statement, but looking at
+the current head version, my guess is that it's the wrong type. The
+current head version
+(https://github.com/leejo/CGI.pm/blob/89c51a088db2a45b1c759e02c8d4772f5b6a3=
+6a9/lib/CGI.pm#L2752)
+has `$url =3D URI->new( $url )->canonical->as_string;`, applying that
+patch locally makes this work again. Running blame points us at
+https://github.com/leejo/CGI.pm/issues/263 ("->url being a object
+breaks everything"). One person even references this gitweb.perl
+breakage in the issue comments :)
+
+So my conclusion is that 4.62 is broken, and that newer versions are unbrok=
+en.
+
+>
+> It fails with path-info test, starting at t9500.70 with extra
+> warning in the log.  This code
+>
+>         if ($path_info) {
+>                 # $path_info has already been URL-decoded by the web serv=
+er, but
+>                 # $my_url and $my_uri have not. URL-decode them so we can=
+ properly
+>                 # strip $path_info.
+>                 $my_url =3D unescape($my_url);
+>                 $my_uri =3D unescape($my_uri);
+>                 if ($my_url =3D~ s,\Q$path_info\E$,, &&
+>                     $my_uri =3D~ s,\Q$path_info\E$,, &&
+>                     defined $ENV{'SCRIPT_NAME'}) {
+>                         $base_url =3D $cgi->url(-base =3D> 1) . $ENV{'SCR=
+IPT_NAME'};
+>                 }
+>         }
+>
+> before it calls unescape(), I know $my_url is a
+> http://localhost/gitweb.cgi and after it calls unescape, it becomes
+> undefined.  That will trigger a "Use of uninitialized value $my_url
+> in substitution (s///)" warning.
+>
+> unescape comes from CGI::Util because we do
+>
+>         use CGI::Util qw(unescape);
+>
+> early in the program.
+>
+> As a workaround I locally have the attached patch to disable calling
+> CGI::Util::unescape implicitly as a sub, and instead make an
+> explicit call to it as a class method, and it seems to make the
+> tests pass.  Please do not ask me why it works---the reason why I am
+> posting this message is to find somebody who can explain it to me ;-)
+
+I also don't know why this fixes the issue, unfortunately.
+
+>
+> The "unescape" thing in CGI::Util.pm begins with the standard
+> boilerplate that lets you call it as a plain-vanilla sub as well as
+> a class method, like so:
+>
+>     # unescape URL-encoded data
+>     sub unescape {
+>       shift() if @_ > 0 and (ref($[0]) || (defined $[1] && $_[0] eq $CGI:=
+:DefaultClass));
+>
+> but it seems that it has been that way since 2009, so it does not
+> explain why it started breaking for me all of sudden, even though
+> it _is_ curious that its counterpart in the same file, escape,
+> starts slightly differently to (presumably) achieve the same thing.
+>
+>     sub escape {
+>       # If we being called in an OO-context, discard the first argument.
+>       shift() if @_ > 1 and ( ref($[0]) || (defined $[1] && $_[0] eq $CGI=
+::DefaultClass));
+>
+> Notice that the former does "shift" as long as there is even a
+> single argument, while the latter does so only when there are at
+> least two arguments.  Both presumably would take a single argument,
+> the string to either escape or unescape, and the shift is presumably
+> to shift away the class object if they are called as class methods,
+> so the guard at the beginning of unscape looks suspect, but I am not
+> a Perl person, and as I said, it seems that the code has been that
+> way since 2009, so it is very likely that I am barking up a wrong
+> tree.
+>
+> Anyway.  TIA for whoever explains the solution to this puzzle to me.
+>
+>
+>  gitweb/gitweb.perl | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git c/gitweb/gitweb.perl w/gitweb/gitweb.perl
+> index ccd14e0e30..a0a8b79ef4 100755
+> --- c/gitweb/gitweb.perl
+> +++ w/gitweb/gitweb.perl
+> @@ -13,7 +13,7 @@
+>  # handle ACL in file access tests
+>  use filetest 'access';
+>  use CGI qw(:standard :escapeHTML -nosticky);
+> -use CGI::Util qw(unescape);
+> +use CGI::Util qw();
+>  use CGI::Carp qw(fatalsToBrowser set_message);
+>  use Encode;
+>  use Fcntl ':mode';
+> @@ -22,6 +22,11 @@
+>  use Time::HiRes qw(gettimeofday tv_interval);
+>  use Digest::MD5 qw(md5_hex);
+>
+> +sub unescape {
+> +       my $url =3D shift;
+> +       return CGI::Util->unescape($url);
+> +}
+> +
+>  binmode STDOUT, ':utf8';
+>
+>  if (!defined($CGI::VERSION) || $CGI::VERSION < 4.08) {
+>
