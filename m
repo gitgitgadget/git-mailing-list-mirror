@@ -1,147 +1,136 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33B117B4F9
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 13:02:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0FB17E8EB
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 14:43:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718197381; cv=none; b=kapouqszo1lBcmGDi8M+Rh4mnLnhrzebkAM4RVPxcVrA3rfOuzhYxdy7jMIImrthOqJ9ZSwu6/8RkfuUwdrAKDG36GVem0ZUPuNPePfFmxmKI47h5gTWFF79RZz3roOJnjRcYT7ga41snMZKYR7nWYg7+Ttepob5VSbMQcN4TMM=
+	t=1718203435; cv=none; b=iebzRVNJoKYKbwqnTyZ5hxZ6OgQegkBzCBu4WPNnTbZmKQsi54jb/lpmSRBelykNPZLTWIoW4AGr6un6wEQxSU8Oe3vWhd2UqoNtViONc31WQakEYLmDTHi5FMIZvdjAOZ+IH5tX7RShD1JYV/7XLw9hYiY/9p8+d4V1lXS1VQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718197381; c=relaxed/simple;
-	bh=yX2T3elDEVRqBCMX8TyAPaCGbctUnnI/YTPaZ895czs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMeRPZnOPmJS3Mm1BqDrO4RF+t1j03Vp3e98CppuzLq+5uTAbVPY7wA84rEibiDWxTXhIQ7xhIa6JoG2y0ZBQ0k24k+0gHDNGBMfOO68DEG4WAZs1QlIxeb1yZAgCC+cb19Io/KokGmHfXvM+QsFp8B4BhmRdkhuB5hVNJ+l8Gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OgYNxiMo; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718203435; c=relaxed/simple;
+	bh=XQiTQEZrJeK3VZwnmKpJi3Lm5p41Ac4OVco89AEWNKE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FGwqCrPDIRxUbMQMs/gm66tjYUE7pTZVFVzkHXwYK15MrkLkoSzXYWQBa6SqvMXIpBjTEBenw6SOJ4P0lsN/c2SpfJuZrJ0B7ZXrPBfwk5Kgr5XYjG2L29gT7v7924Eo201QrYhl1qzw0dhT1ic4yszdp47qH0BUbBfJJVt56x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=DKCecgD1; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OgYNxiMo"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1f7028196f2so28225305ad.2
-        for <git@vger.kernel.org>; Wed, 12 Jun 2024 06:02:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="DKCecgD1"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-62f518bbab1so14972097b3.2
+        for <git@vger.kernel.org>; Wed, 12 Jun 2024 07:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718197379; x=1718802179; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yu1WY0FKnfrUCF7ffjbGaaeh3Ox0MGFf9/paH5Qp8yY=;
-        b=OgYNxiMonleQbjMFj0PP1PZbKvPZ6WFxXwv7O3z6FDV0l7PuVf3o5hIvWN9a8xEx4M
-         6mNhB8vrJb6Sbeu7U2VMS/kx/lqwCplFRq6bKK4UMPxMHzN+FX8iax9oHecP6CiDLdgo
-         PK2M2Q+ucqxKkv+dTrEVHGUgrdmQla81Tb5GtjPvAtV0uPpbpaiOzI+ogtrmZU8XxOrY
-         xRoDDsrs4XXoSG7NOYq7M21dXrvUxr6uwG8m87B/wWRHc+dAYTHTTIgkjcM2uqvxojsN
-         uuDaRec6d+HPGGpcet4Df+kJT0Nh2e76goXVCHTgoHsSuP7w5p36cGjkmmgikD06gXw8
-         tpiw==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1718203432; x=1718808232; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=gAhwHOycWgMQOPFKxoTMPpXSthU+FpIBEhB2Aqys7/g=;
+        b=DKCecgD1u3HWTMX0rt7ChLm/R5eO3X+2Yle1xOqW0W+sGsgQcwADT4/oNMcDlPws19
+         Q6fv93SouK/MBS3UQyACHYJyRFzuNJcp2fUkY2Iv3m4BRrvpQiiXZNyLaTUY6qszSGBD
+         2eG/n4Wzs5t2zv8uo8fLoKLxG9vIUaEfevqDIKUbbm/Q677Pc9yQPR83iat62bkXZDf2
+         cl8gPRk549qmDLHDRDYU4OVyGohlZWu2MkOduGXCHgz1zKKdD4yrh39nCMT/XJxBOAVw
+         8Qu9nrTAyVtsu2ENTbEy0+ftMgjpDt5wfPOlxO/90w3OmVvHx3s9zwL5lD3tR+FXDiQb
+         39kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718197379; x=1718802179;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yu1WY0FKnfrUCF7ffjbGaaeh3Ox0MGFf9/paH5Qp8yY=;
-        b=NJpgNSJNQyvDaTE+omrygqz5TRhwcTALtjW9manQr+5Kkd4Pq1fH4EJQPTPE5chtl5
-         A3t+pUCfcruP1+tEFhS/rU30UfkFZH9hvg6Bjyf1KRAatPgx4p+WoNtj7RHUdvjKusqW
-         RFkcttiHRJwP0mn/pW9a+MHrDR28qCdl/NtnlXGBL2bnP0NhUachHBfFFTb5EIT3h3Qz
-         t4vg6ekRcM7SofqiJg9Fuffjc/IsMf9aU7fHtaMCS+q7tSFf5Dcq7VFth8d69jTksUTc
-         MZvCmUx5l/0IkwERIcyIKtNiO3JDiyzZE2PZmqrOzxDlcp1Y0xxKQYvavvsnxj9mRhEE
-         pXlQ==
-X-Gm-Message-State: AOJu0YzumE97lMamaq2fDFm/CgbVs/JdpGcJhc51Q3JElkDCuBxl3Z1h
-	91fcGYNHF2715qUU1mZ+lZVlWAQGDxsMcvtA8uAZXKZFwK/ESewjUgZjwrz2tJU=
-X-Google-Smtp-Source: AGHT+IE29qH/uLuUtOnfcN0SJrFpWcqgkdqJq34vBIczCDfX1/6nRDUutj8tW5NAxvPyvDS75Adw9g==
-X-Received: by 2002:a17:902:d512:b0:1f8:3c47:9d9d with SMTP id d9443c01a7336-1f83c47b2f7mr17290115ad.38.1718197378851;
-        Wed, 12 Jun 2024 06:02:58 -0700 (PDT)
-Received: from Ubuntu.. ([106.206.196.39])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1f6bd7fd25fsm123942325ad.280.2024.06.12.06.02.56
+        d=1e100.net; s=20230601; t=1718203432; x=1718808232;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gAhwHOycWgMQOPFKxoTMPpXSthU+FpIBEhB2Aqys7/g=;
+        b=Hg3ghIgIuEFfHjshrnH9EgEMQsw3ke3wZxYLQm3S2jEUNh4ipPBcGL2W11ijfTUYDf
+         B5dT5P01Kpw/+6BQFxAqa/Q28NKD4iYubmhY5kezEJkQ/d7hmuWUbBG/dPN9w+lHZ6cg
+         CXtUpuNX1OScuDL2DUshT7zIh5Z6uiBHcXQ05wS2IGOPQy9PS6epiSo4PwOXJraOit9G
+         gy4oyo3BNZ2vjD2Lo/DNMi4K2L1/7oI+MB8O7Wvcho5UqrLvqk6qyPMQzBmb2wy0lJaF
+         gUbIj2iLQGcW2ho5UdAO0ftOHPmyFbXzR4T/yVBSeyOlUv6rCv6Bat9XWpHnk+eNwQrO
+         f2ww==
+X-Gm-Message-State: AOJu0YwnQWQZ+r1n5KWr1Lfy7xOQwWsxq+XcxTNLPa0uLkSuZ2+18OrT
+	EnIEITq3eKayXs4Pa15dhmGHVN9BWMEtCHMgveblF/BvVgEK3pEKbMzY0dOOmhM=
+X-Google-Smtp-Source: AGHT+IH3dX7ptGq/qoMRtGWl2PaDAKyeENa0I/+X6+KK+xY94jRpPCIYa+RI0qCypLHlS/OfynBUrw==
+X-Received: by 2002:a81:bb43:0:b0:618:8a27:6150 with SMTP id 00721157ae682-62fb8d4730emr17454577b3.24.1718203431675;
+        Wed, 12 Jun 2024 07:43:51 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b04f6c4022sm68449466d6.51.2024.06.12.07.43.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jun 2024 06:02:58 -0700 (PDT)
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-To: git@vger.kernel.org
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 5/5] t-reftable-tree: improve the test for infix_walk()
-Date: Wed, 12 Jun 2024 18:23:03 +0530
-Message-ID: <20240612130217.8877-6-chandrapratap3519@gmail.com>
-X-Mailer: git-send-email 2.45.2.404.g9eaef5822c
-In-Reply-To: <20240612130217.8877-1-chandrapratap3519@gmail.com>
-References: <20240612055031.3607-1-chandrapratap3519@gmail.com>
- <20240612130217.8877-1-chandrapratap3519@gmail.com>
+        Wed, 12 Jun 2024 07:43:51 -0700 (PDT)
+Date: Wed, 12 Jun 2024 10:43:49 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] commit-graph: increment progress indicator
+Message-ID: <Zmm0JcJRguLqxeif@nand.local>
+References: <pull.1743.git.1718118555197.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1743.git.1718118555197.gitgitgadget@gmail.com>
 
-In the current testing setup for infix_walk(), the following
-properties of an infix traversal of a tree remain untested:
-- every node of the tree must be visited
-- every node must be visited exactly once
-In fact, only the property 'traversal in increasing order' is tested.
-Modify test_infix_walk() to check for all the properties above.
+Hi Johannes,
 
-This can be achieved by storing the nodes' keys linearly, in a nullified
-buffer, as we visit them and then checking the input keys against this
-buffer in increasing order. By checking that the element just after
-the last input key is 'NULL' in the output buffer, we ensure that
-every node is traversed exactly once.
+On Tue, Jun 11, 2024 at 03:09:15PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Derrick Stolee <derrickstolee@github.com>
+>
+> This fixes a bug that was introduced by 368d19b0b7 (commit-graph:
+> refactor compute_topological_levels(), 2023-03-20): Previously, the
+> progress indicator was updated from `i + 1` where `i` is the loop
+> variable of the enclosing `for` loop. After this patch, the update used
+> `info->progress_cnt + 1` instead, however, unlike `i`, the
+> `progress_cnt` attribute was not incremented. Let's increment it.
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
----
- t/unit-tests/t-reftable-tree.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+Nice find and fix. I remember vaguely working on what became upstream
+368d19b0b7 with Stolee, and I'm glad to see the bug fix he wrote on top
+is also going upstream.
 
-diff --git a/t/unit-tests/t-reftable-tree.c b/t/unit-tests/t-reftable-tree.c
-index f1adab4458..79c6bfd49a 100644
---- a/t/unit-tests/t-reftable-tree.c
-+++ b/t/unit-tests/t-reftable-tree.c
-@@ -15,15 +15,14 @@ static int test_compare(const void *a, const void *b)
- }
- 
- struct curry {
--	void *last;
-+	void **arr;
-+	size_t len;
- };
- 
--static void check_increasing(void *arg, void *key)
-+static void store(void *arg, void *key)
- {
- 	struct curry *c = arg;
--	if (c->last)
--		check_int(test_compare(c->last, key), <, 0);
--	c->last = key;
-+	c->arr[c->len++] = key;
- }
- 
- static void test_tree_search(void)
-@@ -51,15 +50,24 @@ static void test_infix_walk(void)
- {
- 	struct tree_node *root = NULL;
- 	void *values[11] = { 0 };
--	struct curry c = { 0 };
-+	void *out[11] = { 0 };
-+	struct curry c = {
-+		.arr = (void **) &out,
-+	};
- 	size_t i = 1;
-+	size_t count = 0;
- 
- 	do {
- 		tree_search(values + i, &root, &test_compare, 1);
- 		i = (i * 7) % 11;
-+		count++;
- 	} while (i != 1);
- 
--	infix_walk(root, &check_increasing, &c);
-+	infix_walk(root, &store, &c);
-+	for (i = 1; i < ARRAY_SIZE(values); i++)
-+		check_pointer_eq(values + i, out[i - 1]);
-+	check(!out[i - 1]);
-+	check_int(c.len, ==, count);
- 	tree_free(root);
- }
- 
--- 
-2.45.2.404.g9eaef5822c
+> diff --git a/commit-graph.c b/commit-graph.c
+> index e5dd3553dfe..41a2e1b4c6d 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -1597,7 +1597,7 @@ static void compute_reachable_generation_numbers(
+>  		timestamp_t gen;
+>  		repo_parse_commit(info->r, c);
+>  		gen = info->get_generation(c, info->data);
+> -		display_progress(info->progress, info->progress_cnt + 1);
+> +		display_progress(info->progress, ++info->progress_cnt);
 
+It looks like this info->progress_cnt is only used in
+compute_reachable_generation_numbers() here, so I wonder if it may be
+worth it to do the following on top (ideally squashed into your patch
+here):
+
+--- 8< ---
+diff --git a/commit-graph.c b/commit-graph.c
+index 41a2e1b4c6..0410f6a9c3 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1558,7 +1558,6 @@ struct compute_generation_info {
+ 	struct repository *r;
+ 	struct packed_commit_list *commits;
+ 	struct progress *progress;
+-	int progress_cnt;
+
+ 	timestamp_t (*get_generation)(struct commit *c, void *data);
+ 	void (*set_generation)(struct commit *c, timestamp_t gen, void *data);
+@@ -1597,7 +1596,7 @@ static void compute_reachable_generation_numbers(
+ 		timestamp_t gen;
+ 		repo_parse_commit(info->r, c);
+ 		gen = info->get_generation(c, info->data);
+-		display_progress(info->progress, ++info->progress_cnt);
++		display_progress(info->progress, i + 1);
+
+ 		if (gen != GENERATION_NUMBER_ZERO && gen != GENERATION_NUMBER_INFINITY)
+ 			continue;
+--- >8 ---
+
+That would get rid of the info->progress_cnt field entirely, which seems
+beneficial since it's only used by this single function, and we already
+have 'i' which we can use as a replacement (as you note, effectively the
+pre-image behavior of 368d19b0b7).
+
+But I do not feel strongly either way, so no worries if you'd prefer to
+keep this as-is.
+
+Thanks,
+Taylor
