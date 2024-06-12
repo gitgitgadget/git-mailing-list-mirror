@@ -1,81 +1,80 @@
 Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A9D16DEDD
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 09:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B4316DED1
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 09:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718185257; cv=none; b=CSAz7Udae+WS2LBpb27VlB5CMomeJCAO/fVWGUYRCd9PrvyuWWZU3opHQkSYaAeLr1NC87IXRlm6PmVy3VBDlgABwJFA0Dhhpueu7Zu/hQs+5UJowVnNtk0R93JjByn13uuzLjrBnhXi5hUJmnupupFlnZSagcVSW5raFIpzTRs=
+	t=1718185262; cv=none; b=n8KRU/f6TkQygwHGPYbo9TD3BzTZa1FiFe9fGp22U99OZcVU96tLLUVf33vmn7Pzsh4YNb37S2CvNhPlrUqwevZAn/GdzzcZZqN2rJwhDRTlg0d1SgHYdn8rC6JrgyhuKuLy28toKyQhZ+jzFc/yApz+vu++Rblk2RjBx7BhLaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718185257; c=relaxed/simple;
-	bh=Q45btjMjm5/Xjf60GmK9cCI0r1nssFTJEpgkyl3T4qk=;
+	s=arc-20240116; t=1718185262; c=relaxed/simple;
+	bh=X3SntwOS8GMy5pQjwRJ9mS/Ds59+gxlrLZpDTPlYYkA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ox+JoDZvE5Ua4HrZKAqTGmieeCu4uhdWCh39srmr1Mo2hJRg6Xd4iFgVbBzPIjTkfItC61RMRfLgw9ZGuA5Z+DeSsk2fcBoO5ghome4arHvMyfb+Azoi0dpzdCVow39+ExkRM+FywouQb7c595fSOpx0uHpy3UV9xU4MoakiFB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kmn3dgXA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UQKaSzRl; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=emQkZ2eOV7lBKW8cYAzBF+DAziIb2XkSgkl0JqH81GXSZYrZA70Oj402kmCrO1fFdlil98vrpYIQ6x9mXchS45IcrwHWUBpaz7H+xX+ZX/SV9wTMY9zelgjWLFb+t7cB4k1M2EuDOhSB+8tbsnHohe6a3m62BnTJDxHzpbWb4DQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ft4JrB3m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UKdxJ4EM; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kmn3dgXA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UQKaSzRl"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id EA532138008C;
-	Wed, 12 Jun 2024 05:40:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ft4JrB3m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UKdxJ4EM"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 1F0BA13801AC;
+	Wed, 12 Jun 2024 05:41:00 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 12 Jun 2024 05:40:54 -0400
+  by compute4.internal (MEProxy); Wed, 12 Jun 2024 05:41:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718185254; x=1718271654; bh=lkR0/B3vRa
-	rzPk1V0aTb7KfgnamZYJhfPFR0Y5bUv+g=; b=kmn3dgXAjq4ujb+5xXivdnLI8r
-	LbuczdV7I1qDRoups01r9+l8hkzizS5FffpCdbNxHLK3RkpDIergJa1pU1ciUGdY
-	BeOpg5KpSCu7L3G+0yOuzaI2GDUEGJoD2htkDJbMSHgHD8FG+gdSImVXHvHRTta4
-	kUtMlEwRORSXNvkmuOxVGj0xwil6RHzB0GLDP6dn1EHzrdTuPb0nkIbqnterS8/V
-	aLgXNBStJyNxq5X0gHPohGAt2thEmVQsDDYC3pwkOzn3WEni0nF9/jPzj07YC9rm
-	7Wd6ZswDLWvFPVuUmtpncmyXvWMSLuF8P8WPdAX/sUjl3641rMpUBU1y4/9A==
+	:subject:to:to; s=fm1; t=1718185260; x=1718271660; bh=f31kKqEBTX
+	z4AJa5vX97Stj9BLX2cq1bp1PiYfp+3I0=; b=ft4JrB3mDjaZWgJ77sm6ZuOmOF
+	xPIYMnHaPhBlYHZNHnRbs0mLSo3VoBGIqhc6P3JPJo9k71VG1qTZN33oT0eLaowU
+	DA46KlcIW2pT0LDp2pQJDyKCYK38Bviz7HCYi5KGOB5MxK3+WkBlhqPi8teRH8Af
+	gJ3FTYEAYbdK8zdDvJu1xcwOA/O4xgIqASpcn+JBw1e+T844dfZJYN+Qw/9Qeq+v
+	DchoQ35qzxL+iWbl0MuG5qtfIxoiDrezKEMPWg7v0hRrArjz8Bf9CYzwnSZwf+ME
+	5oI/uVzv7Zvca9flE/lR8T0v/9qKWfJt93zXPg4Gv7SP6KcN7alJkGBDfNEQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718185254; x=1718271654; bh=lkR0/B3vRarzPk1V0aTb7KfgnamZ
-	YJhfPFR0Y5bUv+g=; b=UQKaSzRltnT7wn3paQAMYCDNCiT3BD74zeUVRuMdrUEd
-	1XbdphuU93kevxbD41H3jdjLQmn5wrLtPDzh9A18SAPSJlf9Onyo85bnL2f7kf6m
-	jzIP7cMw9Zo+eAM9918PBPln8ILyXyheSZeJSek0+J/9RRCJa9aG4pARKj/Hw5uV
-	/LCX1zG8/KA/opZplZUCP/5UFvGBxDNXsp9cJhVtWBviEr57hKeITXYO41AF4BSJ
-	E9rOC0dzKdhmWpFIC0fZ+GpYNWBrTrLLt7m9Bz2b+w78ZhTFeQLymeWDCDYEprST
-	UzVY2SbwdDX+l8BrVxiszS4XDEaUCHex1XR2pQw53Q==
-X-ME-Sender: <xms:Jm1pZvZK8f5UBNDFbEds-CQjCF6FhKbJm9TUiwrbVEZYZdFjJVj26A>
-    <xme:Jm1pZuYK1Aw9huzTsKd1y4DxW0KDgLbCZJh1ljkJTrH1P3W-nRIOs3cFRgKGk8EQ7
-    wNqeFwJz-4T3GBUdg>
-X-ME-Received: <xmr:Jm1pZh-ge2_NCsgv2P_xDeIHFduHu1uNUUBXrKcQEuKnnYzKxLYZMnrkCVlzopsIXR7l_0mymkt_tOOD5yQ5PEweQxsVl62u9sUCwc4Sm-hZZXTt0pY>
+	fm1; t=1718185260; x=1718271660; bh=f31kKqEBTXz4AJa5vX97Stj9BLX2
+	cq1bp1PiYfp+3I0=; b=UKdxJ4EMaKXXRnkoRvkFkulG8vGPDCAPL7kVlutSloxc
+	ic6bpIPMaD6HWO6nmr+HfDXqkAH9zZmcDf/eFoNm8b3ft2otRDx7n/isuKvwcN+y
+	eFiDXgsydYb9FUEmmIppkK54bbWQ4GgyWOrARinZshMXAZc6YFLHrFtL/DO9jjBq
+	dJDNUo23mDAXqs+rhESqx0Jp4UdfPuX/I7Wbg6mFfWnVM3yh05yculiapCLXh8ud
+	v+BgZOHDR7/cJvpu+OM+DPki3UOyzi7fnx2OTCs7ZQgIUYKLaRoTWmsORvdurtMa
+	p+GiS2tUzTf0rEeIRfD8YNdlivvobcj0g+wQAt/Eqw==
+X-ME-Sender: <xms:K21pZmmFRPKYgk6BTSQfc32Z-_rSpykhw5Kg7C9FjK3UNKRjHxYjpg>
+    <xme:K21pZt0_ywlfyn7cDALra_8UP_9M-k98U6KxX_4HJm16DWLaGTAsfcxAd25i5THjw
+    L2-FZHX8qGCwnznAg>
+X-ME-Received: <xmr:K21pZkoXB0RNP1LmyeL5V0wABVU3C-Hlsast3VBYgywFkPhjMXX0FmslB31aJfM51lg2EaeZn_9nZq8DrCwWXfOpZa25BKLkBg78N8_a8gY8ogpfpas>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedugedgudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:Jm1pZlpz9kzdQmIj5K8VjUti4duqUmUM7aJL_SQoBYTackBKj8PLXA>
-    <xmx:Jm1pZqq9zc8xZOS9OVu7fonomEg2dnHIaPuy_w3OfBCUqPbccp5gIQ>
-    <xmx:Jm1pZrQZnxiT6Kk4q77HGuKaBqK50iQDo-kt1oJNni2LRjQZo56nhQ>
-    <xmx:Jm1pZio7Y6mQT0DBpohf-_aeK6fv5ESc9ZEQ9273fhf0rVYOcBgxxw>
-    <xmx:Jm1pZtWBJWakwOJZ-w-zbpFgm1yleyQ93-A7m4sdCYlVtBOh3hEy46hk>
+X-ME-Proxy: <xmx:K21pZqnSDD-pAl4w2at3p2-0TeA9Trju8HKYbB3L3042jWuQmsyjNg>
+    <xmx:K21pZk1MyVtE6SiiJN68BPYfKwTcIQy_VHBLEBxMkMGss_N6llpkEQ>
+    <xmx:K21pZhtHJY24FHQj3wrn663AecUHXEe3Ts6voruVsYDizco-HWCU5g>
+    <xmx:K21pZgUaQwAw5P0YiHBsN7RGtcVA1gECS0g9G3iYLMbU5LCSpLKFlg>
+    <xmx:LG1pZhxVh0qfxipZvLQLkk2XlEjYK5n4GveogNw2KoJAgjrSk1UKuSOX>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Jun 2024 05:40:53 -0400 (EDT)
+ 12 Jun 2024 05:40:59 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id abbf9351 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Jun 2024 09:40:42 +0000 (UTC)
-Date: Wed, 12 Jun 2024 11:40:51 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 0fee68ce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Jun 2024 09:40:47 +0000 (UTC)
+Date: Wed, 12 Jun 2024 11:40:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH 12/16] mktree: use iterator struct to add tree entries to
- index
-Message-ID: <ZmltI7HA7O4w2E-6@tanuki>
+Subject: Re: [PATCH 14/16] mktree: optionally add to an existing tree
+Message-ID: <ZmltKHI-Vz1L44r8@tanuki>
 References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
- <94d6615d634c4f78c88d3e01abbb27f13f85828c.1718130288.git.gitgitgadget@gmail.com>
+ <df0c50dfea3cb77e0070246efdf7a3f070b2ad97.1718130288.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,108 +82,57 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PwnTo26SdXqDeNJn"
+	protocol="application/pgp-signature"; boundary="tolv3iW5MZdf4Dmu"
 Content-Disposition: inline
-In-Reply-To: <94d6615d634c4f78c88d3e01abbb27f13f85828c.1718130288.git.gitgitgadget@gmail.com>
+In-Reply-To: <df0c50dfea3cb77e0070246efdf7a3f070b2ad97.1718130288.git.gitgitgadget@gmail.com>
 
 
---PwnTo26SdXqDeNJn
+--tolv3iW5MZdf4Dmu
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 11, 2024 at 06:24:44PM +0000, Victoria Dye via GitGitGadget wro=
+On Tue, Jun 11, 2024 at 06:24:46PM +0000, Victoria Dye via GitGitGadget wro=
 te:
-> From: Victoria Dye <vdye@github.com>
->=20
-> Create 'struct tree_entry_iterator' to manage iteration through a 'struct
-> tree_entry_array'. Using an iterator allows for conditional iteration; th=
-is
-> functionality will be necessary in later commits when performing parallel
-> iteration through multiple sets of tree entries.
->=20
-> Signed-off-by: Victoria Dye <vdye@github.com>
-> ---
->  builtin/mktree.c | 40 +++++++++++++++++++++++++++++++++++++---
->  1 file changed, 37 insertions(+), 3 deletions(-)
->=20
-> diff --git a/builtin/mktree.c b/builtin/mktree.c
-> index 12f68187221..bee359e9978 100644
-> --- a/builtin/mktree.c
-> +++ b/builtin/mktree.c
-> @@ -137,6 +137,38 @@ static void sort_and_dedup_tree_entry_array(struct t=
-ree_entry_array *arr)
->  	QSORT_S(arr->entries, arr->nr, ent_compare, &ignore_mode);
->  }
+> diff --git a/Documentation/git-mktree.txt b/Documentation/git-mktree.txt
+> index afbc846d077..99abd3c31a6 100644
+> --- a/Documentation/git-mktree.txt
+> +++ b/Documentation/git-mktree.txt
+> @@ -40,6 +40,11 @@ OPTIONS
+>  	optional.  Note - if the `-z` option is used, lines are terminated
+>  	with NUL.
 > =20
-> +struct tree_entry_iterator {
-> +	struct tree_entry *current;
-> +
-> +	/* private */
-> +	struct {
-> +		struct tree_entry_array *arr;
-> +		size_t idx;
-> +	} priv;
-> +};
-> +
-> +static void init_tree_entry_iterator(struct tree_entry_iterator *iter,
-> +				     struct tree_entry_array *arr)
-> +{
-> +	iter->priv.arr =3D arr;
-> +	iter->priv.idx =3D 0;
-> +	iter->current =3D 0 < arr->nr ? arr->entries[0] : NULL;
-> +}
+> +<tree-ish>::
+> +	If provided, the tree entries provided in stdin are added to this tree
+> +	rather than a new empty one, replacing existing entries with identical
+> +	names. Not compatible with `--literally`.
 
-Nit: Same comment as before, I think these should rather be named
-`tree_entry_iterator_init()` and `tree_entry_iterator_advance()`.
+I think it'd be a bit more intuitive is this was an option, like
+`--base-tree=3D` or just `--base=3D`.
 
-> +/*
-> + * Advance the tree entry iterator to the next entry in the array. If no=
- entries
-> + * remain, 'current' is set to NULL. Returns the previous 'current' valu=
-e of the
-> + * iterator.
-> + */
-> +static struct tree_entry *advance_tree_entry_iterator(struct tree_entry_=
-iterator *iter)
-> +{
-> +	struct tree_entry *prev =3D iter->current;
-> +	iter->current =3D (iter->priv.idx + 1) < iter->priv.arr->nr
-> +			? iter->priv.arr->entries[++iter->priv.idx]
-> +			: NULL;
-> +	return prev;
-> +}
-
-I think it's somewhat confusing to have this return a different value
-than `current`. When I call `next()`, then I expect the iterator to
-return the next item. And after having called `next()`, I expect that
-the current value is the one that the previous call to `next()` has
-returned.
-
-To avoid confusion, I'd propose to get rid of the `current` member
-altogether. It's not needed as we already save the current index and
-avoids the confusion.
+One question that comes up naturally in this context: when I have a base
+tree, how do I remove entries from it?
 
 Patrick
 
---PwnTo26SdXqDeNJn
+--tolv3iW5MZdf4Dmu
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZpbSIACgkQVbJhu7ck
-PpQ2MA/9G8Dq3Y7+kHBGb9a/FJc2g7+TZQkTGQ3g0S2BxU1tabaP56yIFeXi8DA0
-Tkrh4Eeagx1eJKczQ4QZfJ8x9nrFREk/eiNSfVtITWDjBdQSFfppqTL6+NhsIuPH
-+hFfQgJZynkOkVyiWVYSV3daCYcTN9bJHMnB8e397hyG3o1ND3RAyFlSTQlJ9v06
-tkpeZtTO6g3dYZnGGvM3oCnpDcitw+uKaJOTTPtzY7XZ++KGDvCwR4lVtfH1jb+l
-7Zw2Va4gH8D/UUX8azZ7oxYq9BC6sRDdThCf1iywutk3hcu/59BFQgZ/orrYaUQW
-RRf7jqBKkKEtrrMMTRVHmxX/kyzCklJmv1B0xPYf8dDE4tT90sT1JnP7By8ZyOCO
-JmB4wHSWkLSrogKvZ87Lz/iRhfXc8YVHX/d1EPPibD6rGB8zJbiCQ/Nhhyuhctnz
-i/P0UR1I4LfX1UFO1QnhEk49pgtAxRgR3EU23LaRYRXPCNfUBmkdsUvkJ5n5+ETt
-Tc72O20CPKmFr4WfvKcwwLvKj/UfZWedOaH0Oa1QXTvjcO19gj52Vt2TRJaeGbNk
-dm1oi7bx0xeYuIGjLYTfQEeV9l51XLs0rjVx9d+OovW4ZLtwxTYZXM38UeVe85zq
-7tjTLg0/PDWwCIop16L3zN5HkQ2bC/iphMw8yj0qUcSVfM24rxU=
-=L2xt
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZpbScACgkQVbJhu7ck
+PpT27A/+J3tweLBUKdKx6en51H2PA2t3dAYgL934KFKmy84EkVvczj2EWJ+CPuyC
+1emuzu3TJp8ooWHQ7ez2mMwYVCZAVzx+udqd0ha5iZDlQNk/2qUB8/GYtRkgbMlY
+OSJDwFxDrgh2ymtbnxOQG4iOigrF4D9BEFXImlmrwqetH6lcglIejneB+xsWWGTH
+lyWtp0lMRhyhDzqo9mW1c+b2SgLreUHzDCqCSKmEWS80mikzcPWu61me4Khehv+h
++TBAAhbK9V1lorR5DY0j5BEhBVc/UavPgx4Msf+PKumpwSxgY+OIohtjEE7U5H2e
+VfFos75r60B6tN94XKYFQ1bJx4ScWbeMSb5tEsmJnrrXsiNPNJhYOTB8nTeQTsF1
+Y3HhZ8Z7wU8uE7uQKMW7/4Tzf1VlwyMwH24Gaz5lh6VEFRmXyMYGxS1/KeJJuzkC
+y/0GNB01IbSITu7iic4i/VwYNbvs7BZXe9m7kQ4iZDnL77csjsSXmEo+j3VeMdQC
+DDkIL2xYEJWEXvq8y2wHX9rhlf85+BOIr6MP8+S89X2dWddTaJ27hQpVXQrbYL+a
+Mx6OnohS/s91U7rVzHY3TTgVngsq0N4pIggWMcVcEOCBU10Xqg5Dt8krY7znrnhU
+FSraEkG2pqTHzWx40Se0knF5R8M0DhsFBJdYyYB+swO/qXREUdA=
+=1i+y
 -----END PGP SIGNATURE-----
 
---PwnTo26SdXqDeNJn--
+--tolv3iW5MZdf4Dmu--
