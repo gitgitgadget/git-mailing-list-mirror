@@ -1,138 +1,120 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B4316DED1
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 09:41:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E276D16DEB2
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 09:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718185262; cv=none; b=n8KRU/f6TkQygwHGPYbo9TD3BzTZa1FiFe9fGp22U99OZcVU96tLLUVf33vmn7Pzsh4YNb37S2CvNhPlrUqwevZAn/GdzzcZZqN2rJwhDRTlg0d1SgHYdn8rC6JrgyhuKuLy28toKyQhZ+jzFc/yApz+vu++Rblk2RjBx7BhLaQ=
+	t=1718185767; cv=none; b=Eh+IRiRnwD9gm3/WDJUv03ESbir9kv74taOsU/zREcyjM0qgMId59USyvgp+gsDIhbuO7y/7RbiIJEqB1JE44G16w4LGzabYt47mATBzZQJAqNk4eVPd37WQWmbCr2yA5mtTie1yhXxJ4Og/cYpvyBVfV6qQMjHtI0wbzLmwGng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718185262; c=relaxed/simple;
-	bh=X3SntwOS8GMy5pQjwRJ9mS/Ds59+gxlrLZpDTPlYYkA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=emQkZ2eOV7lBKW8cYAzBF+DAziIb2XkSgkl0JqH81GXSZYrZA70Oj402kmCrO1fFdlil98vrpYIQ6x9mXchS45IcrwHWUBpaz7H+xX+ZX/SV9wTMY9zelgjWLFb+t7cB4k1M2EuDOhSB+8tbsnHohe6a3m62BnTJDxHzpbWb4DQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ft4JrB3m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UKdxJ4EM; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1718185767; c=relaxed/simple;
+	bh=dHeEp0pk4vzBmTBLbP28y72TwA0CB25AVvQdjA2x9+M=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZrhuF2eAo1bJaPmN9ad6yXne8JlUdrO2VYCMlDqYWeeLEejnh1+Gv4EDldX8y7erjSioXqVz9tM0w2HIJt7GeP94LhKgxaXzlUTprFhUDcsOJWajCAX5l5x9lKiY7OmhDxZtssYHEOHPloFMW0VaDR6K1PLWW/Vf88fZ+irG2aE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z6W0l5lk; arc=none smtp.client-ip=209.85.167.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ft4JrB3m";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UKdxJ4EM"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 1F0BA13801AC;
-	Wed, 12 Jun 2024 05:41:00 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Wed, 12 Jun 2024 05:41:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718185260; x=1718271660; bh=f31kKqEBTX
-	z4AJa5vX97Stj9BLX2cq1bp1PiYfp+3I0=; b=ft4JrB3mDjaZWgJ77sm6ZuOmOF
-	xPIYMnHaPhBlYHZNHnRbs0mLSo3VoBGIqhc6P3JPJo9k71VG1qTZN33oT0eLaowU
-	DA46KlcIW2pT0LDp2pQJDyKCYK38Bviz7HCYi5KGOB5MxK3+WkBlhqPi8teRH8Af
-	gJ3FTYEAYbdK8zdDvJu1xcwOA/O4xgIqASpcn+JBw1e+T844dfZJYN+Qw/9Qeq+v
-	DchoQ35qzxL+iWbl0MuG5qtfIxoiDrezKEMPWg7v0hRrArjz8Bf9CYzwnSZwf+ME
-	5oI/uVzv7Zvca9flE/lR8T0v/9qKWfJt93zXPg4Gv7SP6KcN7alJkGBDfNEQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718185260; x=1718271660; bh=f31kKqEBTXz4AJa5vX97Stj9BLX2
-	cq1bp1PiYfp+3I0=; b=UKdxJ4EMaKXXRnkoRvkFkulG8vGPDCAPL7kVlutSloxc
-	ic6bpIPMaD6HWO6nmr+HfDXqkAH9zZmcDf/eFoNm8b3ft2otRDx7n/isuKvwcN+y
-	eFiDXgsydYb9FUEmmIppkK54bbWQ4GgyWOrARinZshMXAZc6YFLHrFtL/DO9jjBq
-	dJDNUo23mDAXqs+rhESqx0Jp4UdfPuX/I7Wbg6mFfWnVM3yh05yculiapCLXh8ud
-	v+BgZOHDR7/cJvpu+OM+DPki3UOyzi7fnx2OTCs7ZQgIUYKLaRoTWmsORvdurtMa
-	p+GiS2tUzTf0rEeIRfD8YNdlivvobcj0g+wQAt/Eqw==
-X-ME-Sender: <xms:K21pZmmFRPKYgk6BTSQfc32Z-_rSpykhw5Kg7C9FjK3UNKRjHxYjpg>
-    <xme:K21pZt0_ywlfyn7cDALra_8UP_9M-k98U6KxX_4HJm16DWLaGTAsfcxAd25i5THjw
-    L2-FZHX8qGCwnznAg>
-X-ME-Received: <xmr:K21pZkoXB0RNP1LmyeL5V0wABVU3C-Hlsast3VBYgywFkPhjMXX0FmslB31aJfM51lg2EaeZn_9nZq8DrCwWXfOpZa25BKLkBg78N8_a8gY8ogpfpas>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedugedgudekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:K21pZqnSDD-pAl4w2at3p2-0TeA9Trju8HKYbB3L3042jWuQmsyjNg>
-    <xmx:K21pZk1MyVtE6SiiJN68BPYfKwTcIQy_VHBLEBxMkMGss_N6llpkEQ>
-    <xmx:K21pZhtHJY24FHQj3wrn663AecUHXEe3Ts6voruVsYDizco-HWCU5g>
-    <xmx:K21pZgUaQwAw5P0YiHBsN7RGtcVA1gECS0g9G3iYLMbU5LCSpLKFlg>
-    <xmx:LG1pZhxVh0qfxipZvLQLkk2XlEjYK5n4GveogNw2KoJAgjrSk1UKuSOX>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Jun 2024 05:40:59 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 0fee68ce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Jun 2024 09:40:47 +0000 (UTC)
-Date: Wed, 12 Jun 2024 11:40:56 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH 14/16] mktree: optionally add to an existing tree
-Message-ID: <ZmltKHI-Vz1L44r8@tanuki>
-References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
- <df0c50dfea3cb77e0070246efdf7a3f070b2ad97.1718130288.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z6W0l5lk"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3c9b94951cfso3813165b6e.3
+        for <git@vger.kernel.org>; Wed, 12 Jun 2024 02:49:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718185765; x=1718790565; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qy4jE9jdZHA5hNSzfiv/gZ8ZeGcLHMzXUI2k3AxIYZg=;
+        b=Z6W0l5lkyf0Wffs0sxL0r26XMOXDa2LhrYGrg1Lzs2AFw31HSdltIYDVw8E1n/PCeE
+         vv8wsilHnGok0QGdHZjQe5jp6TwfayL3iSzIU0r+dFtL1q979RnYR5mDRcpQSpPAmD+e
+         abLqJmLj3r0aX9wNsOoBNlxM9amCQl1CwNRE70iqzrkMT/GkPu1TxF10jsOaZK0mIeMM
+         jRc0pOxZoAa4gHkQPzW+ecH6C/maOHLqOG6vuHTVlI/xrBYXYJcQuTJcxEUZ5/7bY+Iv
+         oruhapVvDJnzn7tGFxaIsfemt2nu760Xs9wxMN202CN4u8GPvrjEsjYyS5/YZTZsJdyv
+         289Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718185765; x=1718790565;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qy4jE9jdZHA5hNSzfiv/gZ8ZeGcLHMzXUI2k3AxIYZg=;
+        b=T+WyF4mB7yF5SivrHli8Q0nZmfMYl8I139u23S5AWtUQ+s+h1J+TaZ7WEBx2kqO1sv
+         9Tea3oolpIgkd9GEUEgN/kyI7ZcYV6XfmRxf7J5Uk6LhiKwvA7cMCLdKiIYEnx+OE4S8
+         td1JZyOd3s76uZm+qZf0eXSCHYDCwI8uHDIcm4y/N4JlzoPG2JUoH2ZX0ueh7Gh3Gd2R
+         TeaACxyLNAl5gwsaDKSw1l2rDtEheqV9KFoJuaN2WXsdk1hv6nXvqj3PedUIuOqcp7b8
+         IImbC91p9yfIImI0cTU9js4Tss56PAZ+3w449JpmLTMaoqjKd4NkeugNUhGXoU4FX9j8
+         Fsgw==
+X-Forwarded-Encrypted: i=1; AJvYcCUw40pY2r57GNgQ8AXl25CMf8FCwK3lTSXgqVJ6NVFJkeC07eJYYJVpRuHcuqZRwLIzFMY2iwx4v2ltnttcbwNZ9z1h
+X-Gm-Message-State: AOJu0Yx/P1KWHRlQSFMESJ8CkwV0VyT25VF5FHfXV7AHtOPSHZeIqcuY
+	QM8hQTW7cBKUaqTpuTxk9gxr5JMaddebVEmg2zrckdwRedEhEoKMxJYcN/pHuMeBe0mkiOtSB9D
+	kAYytt7RqzbFzcKHGmiqZezBzyRE=
+X-Google-Smtp-Source: AGHT+IEeNJnL4FWv/sHGRcOPqPrBp6Blal3FOYxOr1tGmk2PTvfGaZXpBk2HvyIoxpklrJDzN+0pVs5FKo3yiQgEr44=
+X-Received: by 2002:a05:6870:420b:b0:254:b299:47b with SMTP id
+ 586e51a60fabf-25514ee5705mr1350852fac.58.1718185764787; Wed, 12 Jun 2024
+ 02:49:24 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 12 Jun 2024 09:49:23 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <pull.1726.v3.git.git.1717719428510.gitgitgadget@gmail.com>
+References: <pull.1726.v2.git.git.1717369608923.gitgitgadget@gmail.com> <pull.1726.v3.git.git.1717719428510.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tolv3iW5MZdf4Dmu"
-Content-Disposition: inline
-In-Reply-To: <df0c50dfea3cb77e0070246efdf7a3f070b2ad97.1718130288.git.gitgitgadget@gmail.com>
+Date: Wed, 12 Jun 2024 09:49:23 +0000
+Message-ID: <CAOLa=ZTgP+OwVrT87=og4tVdhsqjErMUJzCuT9bdDatFS=J8hQ@mail.gmail.com>
+Subject: Re: [PATCH v3] date: detect underflow/overflow when parsing dates
+ with timezone offset
+To: darcy via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: darcy <acednes@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000002b3659061aae4c4e"
 
+--0000000000002b3659061aae4c4e
+Content-Type: text/plain; charset="UTF-8"
 
---tolv3iW5MZdf4Dmu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+"darcy via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Tue, Jun 11, 2024 at 06:24:46PM +0000, Victoria Dye via GitGitGadget wro=
-te:
-> diff --git a/Documentation/git-mktree.txt b/Documentation/git-mktree.txt
-> index afbc846d077..99abd3c31a6 100644
-> --- a/Documentation/git-mktree.txt
-> +++ b/Documentation/git-mktree.txt
-> @@ -40,6 +40,11 @@ OPTIONS
->  	optional.  Note - if the `-z` option is used, lines are terminated
->  	with NUL.
-> =20
-> +<tree-ish>::
-> +	If provided, the tree entries provided in stdin are added to this tree
-> +	rather than a new empty one, replacing existing entries with identical
-> +	names. Not compatible with `--literally`.
+> From: darcy <acednes@gmail.com>
+>
+> Overriding the date of a commit to be close to "1970-01-01 00:00:00"
+> with a large enough positive timezone for the equivelant GMT time to be
 
-I think it'd be a bit more intuitive is this was an option, like
-`--base-tree=3D` or just `--base=3D`.
+s/equivelant/equivalent
 
-One question that comes up naturally in this context: when I have a base
-tree, how do I remove entries from it?
+[snip]
 
-Patrick
+> diff --git a/date.c b/date.c
+> index 7365a4ad24f..95776c8a92f 100644
+> --- a/date.c
+> +++ b/date.c
+> @@ -868,6 +868,10 @@ static int match_object_header_date(const char *date, timestamp_t *timestamp, in
+>  	return 0;
+>  }
+>
+> +
+> +/* timestamp of 2099-12-31T23:59:59Z, including 32 leap days */
+> +static const time_t timestamp_max = ((2100L - 1970) * 365 + 32) * 24 * 60 * 60 - 1;
+>
 
---tolv3iW5MZdf4Dmu
+Nit: but since we're calculating the number of years here (2100L -
+1970), shouldn't we also be calculating the number of leap days instead
+of hardcoding it?
+
+--0000000000002b3659061aae4c4e
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d24c542f3b531b7c_0.1
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZpbScACgkQVbJhu7ck
-PpT27A/+J3tweLBUKdKx6en51H2PA2t3dAYgL934KFKmy84EkVvczj2EWJ+CPuyC
-1emuzu3TJp8ooWHQ7ez2mMwYVCZAVzx+udqd0ha5iZDlQNk/2qUB8/GYtRkgbMlY
-OSJDwFxDrgh2ymtbnxOQG4iOigrF4D9BEFXImlmrwqetH6lcglIejneB+xsWWGTH
-lyWtp0lMRhyhDzqo9mW1c+b2SgLreUHzDCqCSKmEWS80mikzcPWu61me4Khehv+h
-+TBAAhbK9V1lorR5DY0j5BEhBVc/UavPgx4Msf+PKumpwSxgY+OIohtjEE7U5H2e
-VfFos75r60B6tN94XKYFQ1bJx4ScWbeMSb5tEsmJnrrXsiNPNJhYOTB8nTeQTsF1
-Y3HhZ8Z7wU8uE7uQKMW7/4Tzf1VlwyMwH24Gaz5lh6VEFRmXyMYGxS1/KeJJuzkC
-y/0GNB01IbSITu7iic4i/VwYNbvs7BZXe9m7kQ4iZDnL77csjsSXmEo+j3VeMdQC
-DDkIL2xYEJWEXvq8y2wHX9rhlf85+BOIr6MP8+S89X2dWddTaJ27hQpVXQrbYL+a
-Mx6OnohS/s91U7rVzHY3TTgVngsq0N4pIggWMcVcEOCBU10Xqg5Dt8krY7znrnhU
-FSraEkG2pqTHzWx40Se0knF5R8M0DhsFBJdYyYB+swO/qXREUdA=
-=1i+y
------END PGP SIGNATURE-----
-
---tolv3iW5MZdf4Dmu--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1acGJ5SVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNmxCQy80OFlPc1J6Z3BycjFKZ3JmZmNJbkpZK0NmaApjLzlWSFNaeGZs
+bG5BN280TWhONEorbDA1V05MNUJ1dnBwczlTNVkxcnR3aXU0RnQ3TnJyaU9pNjBua1E4azBKCjVv
+NXdSRlRETVJiblpxcnd5QTA1UWNxaUN5OHFmM1lzWGZJMzIyZjJwOFNBeG9pRXdockhzblVDUUxH
+ZnV4a2IKczZzUFlhM094V2pIZkxHUmhHZXVQendTdysvU21peEJQR3JKTUNmZVJBb2R4Y2IzREVh
+SW1yZU96UjBMY1l6SQpqaG83MkRUQlN4ak1NSE51UVNQSmE1L3Q2USttRHUyeS92WFRPZXFsTmp5
+TXM0NncrTGZnK2VOc01FVWFlSjRmCjFUcm5BTi9aaGlOaWg1YUNMUys5dmdudVBoeDdEMGxrYUx3
+VUZvRXlPTWRPWkcrY3h4MDVPTk9jK242QTd5RGsKR24rcnVSNHBpTTlhYXBiRndtM2grbENJU29G
+R05HNEZKdXVaZ1RlZVUvWldzeHJwU25JMUdsdzBKYmxSWlYxTgpBMGhlQmFFb3lZTXJybEZCUDg5
+Um9HL25yUGN0UW5XQ1g1d1dkWVNCOTA1VHozdFJNUWo0dDBtSFlHUHlqMDlFCit3K2tKR1YvNkRV
+bWN4MXVJUisva1oya2x3cDNvcDNOTHdhNE9oUT0KPUJFeDIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000002b3659061aae4c4e--
