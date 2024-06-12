@@ -1,142 +1,155 @@
-Received: from wfout7-smtp.messagingengine.com (wfout7-smtp.messagingengine.com [64.147.123.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B357D25605
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 04:45:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9661EB45
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 05:51:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718167513; cv=none; b=WvcvKcO7fNiSE7mQwCswtpypFpWk7VduIfHFj4IncJRrU43Tnxq69s4jigm1kebgmPAuwII63UdFOwr/OSTk3rFx9pOG0rVJpVvaeaEUMAhuKN9FZ0WZnWSdXbvimB8oQDZRlnQWi5zALdbllk8j+nGdiLfHraI64XySvFUqPVs=
+	t=1718171464; cv=none; b=GTaerSW5Ccyu1usnjlqKgsAGX83H/CtbCtt5GcH7uXuck3WFaQGEw/Ia4/x/kVaQaDOjIcdwMaAXUhpj84kECvAkhkOuP98L/otU1oQAaDGYa3cu7cMcl0YC7Qd8hUy+OSz+9mozoxB/iSOlc1pZ9hT877tab1m893rpDOCt5+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718167513; c=relaxed/simple;
-	bh=SB7tOU2Fu1+5eZ3ul2BzISUl7sShk106clYIhomH+/k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XTXbn7s/WKj9+9cyPPuRStR4B7QRmPdemRldjGy11+QRWKrIk4qZyNTrqyG91DlJvCV5GGWs2Awm4thOhlsrAH4UQs826OL2oT8BLc07dEiKOfx1VeysAGQnrry6bTTBYdvWV/XynZqHS/E8RPvc2ZwMt7CvqiQvWowcCTLl9Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WNDYdXYy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p0b8kVXk; arc=none smtp.client-ip=64.147.123.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1718171464; c=relaxed/simple;
+	bh=KcrX0oP4WpcpSWbYiEcMVVqZbJa54IqgaFCTApnodVY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sv2ZuYxC3GBh1MnDourHQ//8wV0XCPh38mH//5vdsi/rTwsZAiNbSa+as2vkKG14xFcWOhNgCxyCLv+zRDd3vZ310DVcjPe8wLKmk+pPsJimx/QxK8KVXDgucFOYYhYv/Oavnz+ZC+vkcSQ44bwE6X0r4H6Tq8CMLu7B3Lltdps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L4rDBWHE; arc=none smtp.client-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WNDYdXYy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p0b8kVXk"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.west.internal (Postfix) with ESMTP id D8FA11C000C5;
-	Wed, 12 Jun 2024 00:45:10 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Wed, 12 Jun 2024 00:45:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718167510; x=1718253910; bh=SB7tOU2Fu1
-	+5eZ3ul2BzISUl7sShk106clYIhomH+/k=; b=WNDYdXYyDPVfUtj09qD9R5Tife
-	/NpOu4zlpTzY91dk/xdOhNXB+k8j3Ni5I87cvgbzmCYP988N/d06lwlq53ZZZcof
-	dbny7wm0+dgP/YcOjBkrv3OjIRrM0+LIA8fl9eTYrS4zrk4mn7+KWRYCtSnDFkrn
-	u+CwA1frj3iiq5NFWGGY9j0PV7L7OsCEp4EF0cB0pbfqkuD+2osJ93xeu2k8wRzV
-	pAoLFcvCKpwuJFicUui3MVC3NAnh7OnEU/+/V0zs/uDl52Zv0F8cO4dEpZuIJqIm
-	tCn0RtFTlWSgSA8ppJBLGwOY/AeZGv5eZo2Y37xyjq/JBKxkPYxKuBneM51g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718167510; x=1718253910; bh=SB7tOU2Fu1+5eZ3ul2BzISUl7sSh
-	k106clYIhomH+/k=; b=p0b8kVXkOZmR58fOsjIuhTm8WEAqp5qy0UzaDwETUYH4
-	U1Dma6sN+eBAL/+r2ztSV1IWF0eVKWEgVyHzPZ6HSEUEMK+7iarlFoZpY9Jhte93
-	hsmcX63GbrFM3yn4viRZhMtDxVZmUF/W6lRHYROsuuQpZp3L8qYJirnTrVM4PBfT
-	ZxN3s+ryze4IO2QtFc8LKQd23egb7W6VC+wwMHyOTr/9Hqrjm5SdnP9dOb2zx7XO
-	fAabkNuIv+RsdN23GiWppQTUAGvgx/o2qfyDmNpPDFcaLqbcnewvgS5zf2FLHWqZ
-	7lXcdyR33eqmvlRh0uDWfFjUDEplYYnVZBYctr2iHw==
-X-ME-Sender: <xms:1idpZphlH821ZRGO5dgSpDUxmHy5d-CjxAuQgwLfEzKW7DtR1ZLjiQ>
-    <xme:1idpZuDtukv8LsM_VdNTUm_iOCORbn5WtODcWz16zpuFoUpFbxLYsX38T2vGyhawC
-    BRqN3ZDfAVnYaaxgA>
-X-ME-Received: <xmr:1idpZpHgLrKefzPpzD3OCD-HZkjbeXIokag66Vc7So6DxAW0tzfq190ySE6jEgFjKl5QpvzwQZkFLzKCrYTYJm-G4-P7_AHeTIkzTSwSMHlgzSoU1Jc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedufedgkeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:1idpZuRPRwSmgHliVrP0CrTEO7xSNNV6bCJWemAHZlfYzTi8fw0aBw>
-    <xmx:1idpZmygl37F2RN0MEHMqd5tiNP9RXQGa-vtC0XeOhVHVSZXX0nrSQ>
-    <xmx:1idpZk7yJi2FdTfAL6vRF8X2KO5QXN5En0SFMl2hDtEfdCWChWhFww>
-    <xmx:1idpZrzQzK14gch1LiC8lQspiDgME53GS1pqwLwlpWWXSYcczhMtAQ>
-    <xmx:1idpZq8Tcl86zRg71_gU8ZSFEmrBmbhkJCcyAs9mCerSkgm1YH3kn-dN>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Jun 2024 00:45:09 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 844b3ad9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Jun 2024 04:44:58 +0000 (UTC)
-Date: Wed, 12 Jun 2024 06:45:06 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] DONTAPPLY: -Og fallout workaround
-Message-ID: <Zmkn0oWnWvVB6Nej@tanuki>
-References: <cover.1717655210.git.ps@pks.im>
- <cover.1718001244.git.ps@pks.im>
- <03270d3414117ae7229d87127cff81e349557039.1718001244.git.ps@pks.im>
- <xmqqed946auc.fsf@gitster.g>
- <xmqqjziw3arr.fsf@gitster.g>
- <xmqqsexk1s43.fsf@gitster.g>
- <Zmg-jl83UA0P2Dnk@tanuki>
- <xmqqtthzwfnz.fsf@gitster.g>
- <ZmknNDRnYGCeqAoQ@tanuki>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L4rDBWHE"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-7041053c0fdso3585826b3a.3
+        for <git@vger.kernel.org>; Tue, 11 Jun 2024 22:51:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718171462; x=1718776262; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6qqCniF37KBNJuwiFj46dyNeWnNZVgqIlYq1SLE7lOE=;
+        b=L4rDBWHEgbD18+VJs/lvJRWH3Lab8I1GyfwG6EvzTXorCoSp0KCuOOH9oZ7t+QklDD
+         shsbJjuRhnUTlwRi+WO2eWU1AYFO2NRE/0PDnBPgJROYsVv6wcV2wkB8mXOpPKzsPkfL
+         pRxy8PSQ4SifNce9O4PVgfsk57hVatNaC6424coRmYX5QaWhQUbCgqjzNx1nBxgsTGT7
+         vaNCUofiQ/GlA+AxqD+iGd3piPkHdEyoEwqakke30wr+NL9fdtg/IxzJngCWkppnQzjB
+         ZkbSsCGfbm3MdRuqq+HInU8wdQJhRLYJjPO4cun2YBC9Ly0JWF6dyLQ5KWwinmS0LH3z
+         qbEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718171462; x=1718776262;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6qqCniF37KBNJuwiFj46dyNeWnNZVgqIlYq1SLE7lOE=;
+        b=GeFWkEF3zWX46j992C28QPhn7ZYVxBA3UkgG8UnHOgtxiZzTMQRrOFILI8gAvBsAg0
+         6HN5pmCRLAqdPcGNneuNQbrCHWWiPdR9GRAMOLyuEDdTq2NKthGr2eiw85SNh1sCetPs
+         mRTMhCdLr4EbdAdyhCNutehtE4zSDHepT8fXCyGhJZDfcRtptpL9HTKJ61LjnL/A+XEN
+         T1lDtzvgeWSCTc7a2Wjsoj2TxYiOCS4ZAKIon764ATQR7NwcIPCONsdkgMzUsRHeiFGw
+         OPDe5cFDwmAcvhQ71kfvHzjcuDWx7Sx2Tfp+c8c9YLrJl2ZUkqzcfqBXu0oNN5drlbUH
+         7aOg==
+X-Gm-Message-State: AOJu0YzyIRBeXauhTf8VZf0lfLpocdjuED/RIERkp0pc5zMAIlU2aoM+
+	e9Itd3/SGxZaYzOw4SA0LhS+FFealhmvYWGhadnrg4YpRCLTgeFGrnrJvzGV
+X-Google-Smtp-Source: AGHT+IEonlDquo0FbkfGuk3w2qrzMqsKSSqFsGB5mnCa3pbcybEgrweS1wX3r7lM1CdnT4gyiTgtNg==
+X-Received: by 2002:a05:6a00:14d3:b0:704:2402:37ae with SMTP id d2e1a72fcca58-705bce08245mr1154948b3a.10.1718171461468;
+        Tue, 11 Jun 2024 22:51:01 -0700 (PDT)
+Received: from Ubuntu.. ([106.206.194.53])
+        by smtp.googlemail.com with ESMTPSA id 41be03b00d2f7-6f78b8336a7sm1934114a12.73.2024.06.11.22.50.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jun 2024 22:51:00 -0700 (PDT)
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: [GSoC][PATCH v2 0/5] t: port reftable/tree_test.c to the unit testing framework
+Date: Wed, 12 Jun 2024 11:08:09 +0530
+Message-ID: <20240612055031.3607-1-chandrapratap3519@gmail.com>
+X-Mailer: git-send-email 2.45.2.404.g9eaef5822c
+In-Reply-To: <20240610131017.8321-1-chandrapratap3519@gmail.com>
+References: <20240610131017.8321-1-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wpONmVJrqYhKxhkJ"
-Content-Disposition: inline
-In-Reply-To: <ZmknNDRnYGCeqAoQ@tanuki>
+Content-Transfer-Encoding: 8bit
 
 
---wpONmVJrqYhKxhkJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In the recent codebase update (commit 8bf6fbd, 2023-12-09), a new unit
+testing framework written entirely in C was introduced to the Git project
+aimed at simplifying testing and reducing test run times.
+Currently, tests for the reftable refs-backend are performed by a custom
+testing framework defined by reftable/test_framework.{c, h}. Port
+reftable/tree_test.c to the unit testing framework and improve upon
+the ported test.
 
-On Wed, Jun 12, 2024 at 06:42:28AM +0200, Patrick Steinhardt wrote:
-> On Tue, Jun 11, 2024 at 10:30:24AM -0700, Junio C Hamano wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> > > But now that I see the full picture of this with different compiler
-> > > options I have to agree that this is not really worth it. Especially =
-not
-> > > given that Coverity is able to detect such cases, even though that on=
-ly
-> > > happens retroactively after a topic has landed.
-> > >
-> > > Let's drop this experiment.
-> >=20
-> > OK, but let's keep the CFLAGS_APPEND one ;-)
->=20
-> Sure, let's do that. I assume you'll just cherry-pick that single
-> commit?
+The first patch in the series is preparatory cleanup, the second patch
+moves the test to the unit testing framework, and the rest of the patches
+improve upon the ported test.
 
-Ah, just spotted that you already did. Thanks!
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 
-Patrick
+---
+Changes in v2:
+- Add more context in the commit message of the third patch
+- Add an improvement patch for test_infix_walk()
+- Small refactor changes
 
---wpONmVJrqYhKxhkJ
-Content-Type: application/pgp-signature; name="signature.asc"
+CI/PR: https://github.com/gitgitgadget/git/pull/1740
 
------BEGIN PGP SIGNATURE-----
+Chandra Pratap(5):
+reftable: remove unnecessary curly braces in
+t: move reftable/tree_test.c to the unit testing
+t-reftable-tree: split test_tree() into two sub-test
+t-reftable-tree: add test for non-existent key
+t-reftable-tree: improve the test for infix_walk()
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZpJ9EACgkQVbJhu7ck
-PpT/8A/9GCQn6iizV/ksb877P++jvYNxA1rz1n8w/+PYHxX7IkOodfwnK8nNI/Gx
-3JMoPUPU3RgElc6emklNGdZwYTTyuJdJrk4zocWnbmWkQuXZV3vSU01mdiMQHdaz
-ciPKoyF+o8xuXPdtH07G+wVdtbyXF+0v6us//qyeW10pgIwbpiekv3DD+k55LLK0
-2jt/g9gUpEIrYfqoI6iETXe39jgRdqK1TcOam961yjY9a9fj5JY+4qPWXU+GxZoz
-LtAWEjKLt7gTfTac9yt1p+31z2h2YFujyir3ohFDCFpahQ+l8VpJL5wP2e2M9hg4
-atF61b6tHwdKgcdYs7Am1bpunLIZQwyT3XuYd4BvpPk7k5YZ2HG4tI42JfhonDkX
-KHlWMVUWO9PAxrTMh/bARjgnKv3wKBnwriqHNtP7KwhqMaT8LvkDF5x1zjoE/O2y
-LG3WoWnNQvA+QGSj3ussfjYzVhW8BzJtZk8K5Hx+ctiictXXeFJaGwycWXVp7Ane
-Cj7XA3zUyEKgRIB/HjtHkdTV8Vu1LVZXcfTfDTcSN42gDs4nVTeFtp87hUkbvNkh
-hBUAGEoTfCY8oAloyteR5oJ4OyQNPjG2pY7+ji0Y5qkQ05obg6UBoDXRe+cJND7w
-Zsh35AMJEY7btw4sKOTSfP+9dQ592xkzX1yZ5Zk6FPk43V/nQ8o=
-=hc5q
------END PGP SIGNATURE-----
+Makefile                       |  2 +-
+reftable/tree.c                | 15 +++--------
+reftable/tree_test.c           | 60 -------------------------------
+t/helper/test-reftable.c       |  1 -
+t/unit-tests/t-reftable-tree.c | 76 ++++++++++++++++++++++++++++++++++++++++++++
+5 files changed, 82 insertions(+), 72 deletions(-)
 
---wpONmVJrqYhKxhkJ--
+Range-diff against v1:
+1:  161d8892d6 ! 1:  542e497334 t-reftable-tree: split test_tree() into two sub-test functions
+    @@ Commit message
+         This improves the overall readability of the test file as well as
+         simplifies debugging.
+     
+    +    Note that the last parameter in the tree_search() functiom is
+    +    'int insert' which when set, inserts the key if it is not found
+    +    in the tree. Otherwise, the function returns NULL for such cases.
+    +
+         Mentored-by: Patrick Steinhardt <ps@pks.im>
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+    @@ t/unit-tests/t-reftable-tree.c: static void check_increasing(void *arg, void *ke
+      {
+      	struct tree_node *root = NULL;
+      	void *values[11] = { 0 };
+    + 	struct tree_node *nodes[11] = { 0 };
+    + 	size_t i = 1;
+    +-	struct curry c = { 0 };
+    + 
+    + 	do {
+    + 		nodes[i] = tree_search(values + i, &root, &test_compare, 1);
+     @@ t/unit-tests/t-reftable-tree.c: static void test_tree(void)
+      		check_pointer_eq(nodes[i], tree_search(values + i, &root, &test_compare, 0));
+      	}
+    @@ t/unit-tests/t-reftable-tree.c: static void test_tree(void)
+     +static void test_infix_walk(void)
+     +{
+     +	struct tree_node *root = NULL;
+    -+	void *values[13] = { 0 };
+    ++	void *values[11] = { 0 };
+     +	struct curry c = { 0 };
+     +	size_t i = 1;
+     +
+     +	do {
+     +		tree_search(values + i, &root, &test_compare, 1);
+    -+		i = (i * 5) % 13;
+    ++		i = (i * 7) % 11;
+     +	} while (i != 1);
+     +
+     +	infix_walk(root, &check_increasing, &c);
+2:  d649c4a193 = 2:  c976a37cbc t-reftable-tree: add test for non-existent key
+-:  ---------- > 3:  3010c8f01a t-reftable-tree: improve the test for infix_walk()
