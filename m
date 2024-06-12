@@ -1,56 +1,56 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622F716D4EF
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 08:54:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E52516D4DE
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 08:54:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718182451; cv=none; b=oeChNeRuDbWxFURP9A9IxrvzxADOxZBz19Fmy01rr1pyDE327vexlggqwXnznLaY62pcTqDs/w3XksY/mrhFv1ouQaubl0m6aJLLYVqozB0S4yWKuSKqGcSGN1ffe6NnXJPBp+Umx6MayRJOcYpsBEii4WyVpDwKtPISlKTYuzo=
+	t=1718182456; cv=none; b=lhclmzpjaGkNqMxIsrAPbQrFyrMhhkuTVtci8bmGK+jJVQ2cZ3cUGW50IwgEwT8zDvK6PqE21NcLUnBkKQotqRW6GOaLSHsC1YXYdQqDZd6/ktvW7/WAgOTv2Cnw4h3jK495kNbgs60P0NASorgETGw8q6F14Zz72idZUHWIKg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718182451; c=relaxed/simple;
-	bh=Wt488ytTtHs3k9YyRHY0iLARXB3ECkoCQfArcMw8fd4=;
+	s=arc-20240116; t=1718182456; c=relaxed/simple;
+	bh=GeM1so+jqF0PEfqMJA5GfVxBAyCKoK4hViYPnZVMLJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bqRZSPg/VAtYKGUMnp6G5+2yG0z320uRRpAup2OSrTTTTx2QJKO88I4b1YK+0menWO1w1EMhWtm/z78kqpKgASIryFZ7KdP8u/n8QxEi4gnf+3rwcstziK5Zvn0uoUCa4z7envPGmEj9sS1PDaQVBxHSe9qfObquWefB02Nbb00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jGQG3kvT; arc=none smtp.client-ip=209.85.214.181
+	 MIME-Version; b=cMomqcLz6FWMJHpXlheTidxyeSwGLkzi8kOzzP02bjd/iI/ruVSsXSwQJXM9OtSnRjUSyHOsNWFROWNK95JDJC6i6/auDszgResEl/U7BBOFiaohbZdMlFDy6bWvTbJSiBD8E99q1k3JWxSNVuCcrvHcQUnnguRUOFM+aQ+WF+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mKZ4xcxi; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jGQG3kvT"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1f4a5344ec7so5699605ad.1
-        for <git@vger.kernel.org>; Wed, 12 Jun 2024 01:54:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mKZ4xcxi"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1f70509b811so25406165ad.1
+        for <git@vger.kernel.org>; Wed, 12 Jun 2024 01:54:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718182448; x=1718787248; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718182452; x=1718787252; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gDNyAA5zgUU7lYVxSw0ppe+Urq5or0MFtM5ktEyjxDk=;
-        b=jGQG3kvTMo0a/h1cNFtbkvJ+dI02AppagMyE793MYNjGehDseSct7APqwpPGzmI0Ft
-         /DePndV+9XXUuGIWrEUACgpWu4OFyqYm08p1V8Ax5mphIoMb8ndV7Pxpyy9pctwzV+UE
-         5Op/zv8rKxsyrv29lXQBYN0oqeBvv3lqO9l7t+jAf6TS5S/RIRACI3QWp/UFbtqAGbS2
-         Lp8+DufLOsR3E/Ck7j4cEcX0uNdV7dgOrZJFfb1lm1vws1usTtLT+3R4LO2LPH0Oq2iv
-         PkjBwKncADV1n8IUpuZmxPQG/BMPnRffRTpveZNOHRWnTBQeHoCTTZqUXa6rIv+vGJFk
-         t+6Q==
+        bh=waBbTMwh1Mg0f6uQ7T7X5z4S4xZWlD4xYL5ehF5enUE=;
+        b=mKZ4xcxiK9CdQeUdXJnDcDKzHfYsI4xqgyCPt5tJMDK3AEUFFD9FvmDmyX0CnH6OA0
+         6cwih79mmFNaU5PALfhpI9vHHjzoANIbSQaXHLTc5nFmu81SHxU36/XfmwNVmkuyAunC
+         OlMU36RlXOiqm2qe0B68nu+nonSCVlDqNqdDxIwhRpTvCaAKdxFLjht6ET574hMuvptR
+         yITN++D0PHr7TFxzbZOiKNINz2ode2loprtj4yTrP1UiqymIJE3T2FCkg9DPgFSH6ZK8
+         v47m7haAeoJOaeMidgLPYodvbrEAkXS1t2vNVYnEYlw/vKw9aeURewhlpEENGYgPOjxr
+         n6BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718182448; x=1718787248;
+        d=1e100.net; s=20230601; t=1718182452; x=1718787252;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gDNyAA5zgUU7lYVxSw0ppe+Urq5or0MFtM5ktEyjxDk=;
-        b=pVh6l3KTAK9JKj/oHX7bh/hA9rrUTLbeIE1p5JkKWlhAM9jjcJStkTJ6+BwrK9Ybws
-         VJR9yLPiE6F4qRpszx/z9Ky/JbZHxF3dYxmeuoTh7/Gl3KJpM9zbbf336MPQPlxRNm+B
-         WOc7OD9NBLicO7QrUUDGusoq9QNe/eNxNx1jNHl9YpWmaorr/e/QhzjA7CsNYd5r3CDu
-         R/FJJwGsh22oUz+8rRn5dnogH9kNoI2Q6V4aRZJK/0zWPKcIxpbagb9aw80ioHktepy4
-         eTyHw5faXLJgEUMz/og26SV/eGkH83jwF8sdkvjweMrxTag5elrBMUOZmeuYLvXMAiuJ
-         YH+A==
-X-Gm-Message-State: AOJu0YzxIahs5Vt35oUi8czahbwxNqR0xtBU2q/DMaMuU0wcV0cy3j0h
-	x2wiDv/ToICHedoAri4x/Q6iKDHFXP27RfepyVuIQu9ecZRMxWvDtytlR9Do
-X-Google-Smtp-Source: AGHT+IEffXsSSOZzJl6rTxiPD4kHSrLEkFlBY9HB3Na50aoKC6NuhYACNXSGC0SZIDyLdcTnt5JqFQ==
-X-Received: by 2002:a17:902:e80e:b0:1f6:1a86:37ba with SMTP id d9443c01a7336-1f83ae5eccemr22798805ad.2.1718182448082;
-        Wed, 12 Jun 2024 01:54:08 -0700 (PDT)
+        bh=waBbTMwh1Mg0f6uQ7T7X5z4S4xZWlD4xYL5ehF5enUE=;
+        b=ljEHKY6hTXBwUe5nXq+UvhAxFhiiFE26YRmpR0rYoiGVAItpsOo5UznIf7ZEVbP+hy
+         HSs5MWeoT6RIDIi3CU+vvEjQZCtTlzXKVy1tVi8i8H/uv+fSW+E5iYoSY2sfJCns4UC4
+         pjX8G5GdDllPW6FEj2M1YIBjb7WqqQ1fQSx2sfp0wLH7JW4CyHLHtWBw4m5h2fNnTuh+
+         4N5Vaf/9DctgoJdPtlxE7KMTlaa6d7D14cHYFySpQ8uYouwgo82yVGKV0JO95rT2Rj1m
+         9XhXE4/1XirMDRwmwmVFW0SozZb74A/y4lCP7nl/idnJAkvk27lGu2+ajIku7HJ8hnYl
+         Ss2Q==
+X-Gm-Message-State: AOJu0YymVlqzKwCD+w1b6CZ7z9YGIBAUX7wX3wnN2b9vRUqj8cbhuOjT
+	cvLizWTUmuckxmKNBhsIdePuYvl52QBR6ZnOM5mAy4bE5P0t/xO7ZnbLJVT4
+X-Google-Smtp-Source: AGHT+IGANwqzh3aqSSSeGwU7l8Vh+M7y7QjrzeD6P2kvgDtzr1WAGiexArqWbWCmrbxIozL33+ydgg==
+X-Received: by 2002:a17:902:ecc8:b0:1f4:a3a1:a7e5 with SMTP id d9443c01a7336-1f83b566b3dmr13652585ad.13.1718182452380;
+        Wed, 12 Jun 2024 01:54:12 -0700 (PDT)
 Received: from ArchLinux.localdomain ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6eccc0bd0sm84066855ad.105.2024.06.12.01.54.05
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6eccc0bd0sm84066855ad.105.2024.06.12.01.54.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jun 2024 01:54:07 -0700 (PDT)
+        Wed, 12 Jun 2024 01:54:11 -0700 (PDT)
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
@@ -58,9 +58,9 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	shejialuo <shejialuo@gmail.com>
-Subject: [GSoC][PATCH v2 1/7] fsck: add refs check interfaces to interface with fsck error levels
-Date: Wed, 12 Jun 2024 16:53:43 +0800
-Message-ID: <20240612085349.710785-2-shejialuo@gmail.com>
+Subject: [GSoC][PATCH v2 2/7] refs: set up ref consistency check infrastructure
+Date: Wed, 12 Jun 2024 16:53:44 +0800
+Message-ID: <20240612085349.710785-3-shejialuo@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240612085349.710785-1-shejialuo@gmail.com>
 References: <20240530122753.1114818-1-shejialuo@gmail.com>
@@ -73,203 +73,210 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The git-fsck(1) focuses on object database consistency check. It relies
-on the "fsck_options" to interact with fsck error levels. However,
-"fsck_options" aims at checking the object database which makes it
-unsuitable to change the semantics of it. Instead, create
-"fsck_refs_options" structure to handle refs consistency check.
+The interfaces defined in the `ref_storage_be` are carefully structured
+in semantic. It's organized as the five parts:
 
-The "git_fsck_config" sets up the "msg_type" and "skiplist" member of
-the "fsck_options". For refs, we just need the "msg_type". In order to
-allow setting up more refs-specific options easily later, add a separate
-function "git_fsck_refs_config" to initialize the refs-specific options.
+1. The name and the initialization interfaces.
+2. The ref transaction interfaces.
+3. The ref internal interfaces (pack, rename and copy).
+4. The ref filesystem interfaces.
+5. The reflog related interfaces.
 
-Move the "msg_type" and "strict" member to the top of the "fsck_options"
-which allows us to convert "fsck_refs_options *" to "fsck_options *" to
-reuse the interfaces provided by "fsck.h" without changing the original
-code.
-
-The static function "report" provided by "fsck.c" aims at reporting the
-problems related to object database which cannot be reused for refs.
-Provide "fsck_refs_report" function to integrate the fsck error levels
-into reference consistency check.
+To keep consistent with the git-fsck(1), add a new interface named
+"fsck_refs_fn" to the end of "ref_storage_be". This semantic cannot be
+grouped into any above five categories. Explicitly add blank line to
+make it different from others.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- fsck.c | 69 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- fsck.h | 39 +++++++++++++++++++++++++++++++--
- 2 files changed, 106 insertions(+), 2 deletions(-)
+ refs.c                  |  5 +++++
+ refs.h                  |  8 ++++++++
+ refs/debug.c            |  9 +++++++++
+ refs/files-backend.c    | 15 ++++++++++++++-
+ refs/packed-backend.c   |  8 ++++++++
+ refs/refs-internal.h    |  6 ++++++
+ refs/reftable-backend.c |  8 ++++++++
+ 7 files changed, 58 insertions(+), 1 deletion(-)
 
-diff --git a/fsck.c b/fsck.c
-index 8ef962199f..13528c646e 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -1249,6 +1249,20 @@ int fsck_buffer(const struct object_id *oid, enum object_type type,
- 		      type);
+diff --git a/refs.c b/refs.c
+index f7c7765d23..0922439275 100644
+--- a/refs.c
++++ b/refs.c
+@@ -316,6 +316,11 @@ int check_refname_format(const char *refname, int flags)
+ 	return check_or_sanitize_refname(refname, flags, NULL);
  }
  
-+int fsck_refs_error_function(struct fsck_refs_options *o UNUSED,
-+			     const char *name,
-+			     enum fsck_msg_type msg_type,
-+			     enum fsck_msg_id msg_id UNUSED,
-+			     const char *message)
++int refs_fsck(struct ref_store *refs, struct fsck_refs_options *o)
 +{
-+	if (msg_type == FSCK_WARN) {
-+		warning("%s: %s", name, message);
-+		return 0;
-+	}
-+	error("%s: %s", name, message);
-+	return 1;
++	return refs->be->fsck(refs, o);
 +}
 +
- int fsck_error_function(struct fsck_options *o,
- 			const struct object_id *oid,
- 			enum object_type object_type UNUSED,
-@@ -1323,6 +1337,61 @@ int fsck_finish(struct fsck_options *options)
+ void sanitize_refname_component(const char *refname, struct strbuf *out)
+ {
+ 	if (check_or_sanitize_refname(refname, REFNAME_ALLOW_ONELEVEL, out))
+diff --git a/refs.h b/refs.h
+index 76d25df4de..5a042695f5 100644
+--- a/refs.h
++++ b/refs.h
+@@ -3,6 +3,7 @@
+ 
+ #include "commit.h"
+ 
++struct fsck_refs_options;
+ struct object_id;
+ struct ref_store;
+ struct repository;
+@@ -547,6 +548,13 @@ int refs_for_each_reflog(struct ref_store *refs, each_reflog_fn fn, void *cb_dat
+  */
+ int check_refname_format(const char *refname, int flags);
+ 
++/*
++ * Check the reference database for consistency. Return 0 if refs and
++ * reflogs are consistent, and non-zero otherwise. The errors will be
++ * written to stderr.
++ */
++int refs_fsck(struct ref_store *refs, struct fsck_refs_options *o);
++
+ /*
+  * Apply the rules from check_refname_format, but mutate the result until it
+  * is acceptable, and place the result in "out".
+diff --git a/refs/debug.c b/refs/debug.c
+index 547d9245b9..110a264522 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -419,6 +419,13 @@ static int debug_reflog_expire(struct ref_store *ref_store, const char *refname,
+ 	return res;
+ }
+ 
++static int debug_fsck(struct ref_store *ref_store,
++		      struct fsck_refs_options *o)
++{
++	trace_printf_key(&trace_refs, "fsck\n");
++	return 0;
++}
++
+ struct ref_storage_be refs_be_debug = {
+ 	.name = "debug",
+ 	.init = NULL,
+@@ -451,4 +458,6 @@ struct ref_storage_be refs_be_debug = {
+ 	.create_reflog = debug_create_reflog,
+ 	.delete_reflog = debug_delete_reflog,
+ 	.reflog_expire = debug_reflog_expire,
++
++	.fsck = debug_fsck,
+ };
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index cb752d32b6..e965345ad8 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3402,6 +3402,17 @@ static int files_ref_store_remove_on_disk(struct ref_store *ref_store,
  	return ret;
  }
  
-+int fsck_refs_report(struct fsck_refs_options *o,
-+		     const char *name,
-+		     enum fsck_msg_id msg_id,
-+		     const char *fmt, ...)
++static int files_fsck(struct ref_store *ref_store,
++		      struct fsck_refs_options *o)
 +{
-+	va_list ap;
-+	struct strbuf sb = STRBUF_INIT;
-+	enum fsck_msg_type msg_type =
-+		fsck_msg_type(msg_id, (struct fsck_options*)o);
-+	int ret = 0;
++	int ret;
++	struct files_ref_store *refs =
++		files_downcast(ref_store, REF_STORE_READ, "fsck");
 +
-+	if (msg_type == FSCK_IGNORE)
-+		return 0;
-+
-+	if (msg_type == FSCK_FATAL)
-+		msg_type = FSCK_ERROR;
-+	else if (msg_type == FSCK_INFO)
-+		msg_type = FSCK_WARN;
-+
-+	prepare_msg_ids();
-+	strbuf_addf(&sb, "%s: ", msg_id_info[msg_id].camelcased);
-+
-+	va_start(ap, fmt);
-+	strbuf_vaddf(&sb, fmt, ap);
-+	ret = o->error_func(o, name, msg_type, msg_id, sb.buf);
-+	strbuf_release(&sb);
-+	va_end(ap);
-+
++	ret = refs->packed_ref_store->be->fsck(refs->packed_ref_store, o);
 +	return ret;
 +}
 +
-+int git_fsck_refs_config(const char *var, const char *value,
-+			 const struct config_context *ctx, void *cb)
+ struct ref_storage_be refs_be_files = {
+ 	.name = "files",
+ 	.init = files_ref_store_init,
+@@ -3428,5 +3439,7 @@ struct ref_storage_be refs_be_files = {
+ 	.reflog_exists = files_reflog_exists,
+ 	.create_reflog = files_create_reflog,
+ 	.delete_reflog = files_delete_reflog,
+-	.reflog_expire = files_reflog_expire
++	.reflog_expire = files_reflog_expire,
++
++	.fsck = files_fsck,
+ };
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index c4c1e36aa2..db152053f8 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1733,6 +1733,12 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
+ 	return empty_ref_iterator_begin();
+ }
+ 
++static int packed_fsck(struct ref_store *ref_store,
++		       struct fsck_refs_options *o)
 +{
-+	struct fsck_refs_options *options = cb;
-+	const char *msg_id;
-+
-+	/*
-+	 * We don't check the value of fsck.skiplist here, because it
-+	 * is specific to object database, not reference database.
-+	 */
-+	if (strcmp(var, "fsck.skiplist") == 0) {
-+		return 0;
-+	}
-+
-+	if (skip_prefix(var, "fsck.", &msg_id)) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		fsck_set_msg_type((struct fsck_options*)options, msg_id, value);
-+		return 0;
-+	}
-+
-+	return git_default_config(var, value, ctx, cb);
++	return 0;
 +}
 +
- int git_fsck_config(const char *var, const char *value,
- 		    const struct config_context *ctx, void *cb)
- {
-diff --git a/fsck.h b/fsck.h
-index 17fa2dda5d..7451b1f91b 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -96,6 +96,7 @@ enum fsck_msg_id {
+ struct ref_storage_be refs_be_packed = {
+ 	.name = "packed",
+ 	.init = packed_ref_store_init,
+@@ -1760,4 +1766,6 @@ struct ref_storage_be refs_be_packed = {
+ 	.create_reflog = NULL,
+ 	.delete_reflog = NULL,
+ 	.reflog_expire = NULL,
++
++	.fsck = packed_fsck,
  };
- #undef MSG_ID
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index cbcb6f9c36..8f42f21e77 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -4,6 +4,7 @@
+ #include "refs.h"
+ #include "iterator.h"
  
 +struct fsck_refs_options;
- struct fsck_options;
- struct object;
+ struct ref_transaction;
  
-@@ -107,6 +108,21 @@ void fsck_set_msg_type(struct fsck_options *options,
- void fsck_set_msg_types(struct fsck_options *options, const char *values);
- int is_valid_msg_type(const char *msg_id, const char *msg_type);
- 
-+/*
-+ * callback function for fsck refs and reflogs.
-+ */
-+typedef int (*fsck_refs_error)(struct fsck_refs_options *o,
-+			       const char *name,
-+			       enum fsck_msg_type msg_type,
-+			       enum fsck_msg_id msg_id,
-+			       const char *message);
-+
-+int fsck_refs_error_function(struct fsck_refs_options *o,
-+			     const char *name,
-+			     enum fsck_msg_type msg_type,
-+			     enum fsck_msg_id msg_id,
-+			     const char *message);
-+
  /*
-  * callback function for fsck_walk
-  * type is the expected type of the object or OBJ_ANY
-@@ -135,11 +151,22 @@ int fsck_error_cb_print_missing_gitmodules(struct fsck_options *o,
- 					   enum fsck_msg_id msg_id,
- 					   const char *message);
+@@ -650,6 +651,9 @@ typedef int read_raw_ref_fn(struct ref_store *ref_store, const char *refname,
+ typedef int read_symbolic_ref_fn(struct ref_store *ref_store, const char *refname,
+ 				 struct strbuf *referent);
  
-+struct fsck_refs_options {
-+	enum fsck_msg_type *msg_type;
-+	unsigned strict:1;
-+	fsck_refs_error error_func;
-+	unsigned verbose:1;
-+};
++typedef int fsck_fn(struct ref_store *ref_store,
++		    struct fsck_refs_options *o);
 +
-+#define FSCK_REFS_OPTIONS_DEFAULT { \
-+	.error_func = fsck_refs_error_function, \
+ struct ref_storage_be {
+ 	const char *name;
+ 	ref_store_init_fn *init;
+@@ -677,6 +681,8 @@ struct ref_storage_be {
+ 	create_reflog_fn *create_reflog;
+ 	delete_reflog_fn *delete_reflog;
+ 	reflog_expire_fn *reflog_expire;
++
++	fsck_fn *fsck;
+ };
+ 
+ extern struct ref_storage_be refs_be_files;
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index e555be4671..7f606faa9e 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -2242,6 +2242,12 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+ 	return ret;
+ }
+ 
++static int reftable_be_fsck(struct ref_store *ref_store,
++			    struct fsck_refs_options *o)
++{
++	return 0;
 +}
 +
- struct fsck_options {
-+	enum fsck_msg_type *msg_type;
-+	unsigned strict:1;
- 	fsck_walk_func walk;
- 	fsck_error error_func;
--	unsigned strict:1;
--	enum fsck_msg_type *msg_type;
- 	struct oidset skiplist;
- 	struct oidset gitmodules_found;
- 	struct oidset gitmodules_done;
-@@ -221,6 +248,12 @@ int fsck_tag_standalone(const struct object_id *oid, const char *buffer,
-  */
- int fsck_finish(struct fsck_options *options);
- 
-+__attribute__((format (printf, 4, 5)))
-+int fsck_refs_report(struct fsck_refs_options *o,
-+		     const char *name,
-+		     enum fsck_msg_id msg_id,
-+		     const char *fmt, ...);
+ struct ref_storage_be refs_be_reftable = {
+ 	.name = "reftable",
+ 	.init = reftable_be_init,
+@@ -2269,4 +2275,6 @@ struct ref_storage_be refs_be_reftable = {
+ 	.create_reflog = reftable_be_create_reflog,
+ 	.delete_reflog = reftable_be_delete_reflog,
+ 	.reflog_expire = reftable_be_reflog_expire,
 +
- /*
-  * Subsystem for storing human-readable names for each object.
-  *
-@@ -247,6 +280,8 @@ const char *fsck_describe_object(struct fsck_options *options,
- 				 const struct object_id *oid);
- 
- struct key_value_info;
-+int git_fsck_refs_config(const char *var, const char *value,
-+			 const struct config_context *ctx, void *cb);
- /*
-  * git_config() callback for use by fsck-y tools that want to support
-  * fsck.<msg> fsck.skipList etc.
++	.fsck = reftable_be_fsck,
+ };
 -- 
 2.45.2
 
