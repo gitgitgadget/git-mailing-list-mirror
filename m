@@ -1,168 +1,182 @@
-Received: from wfhigh1-smtp.messagingengine.com (wfhigh1-smtp.messagingengine.com [64.147.123.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A42736AF8
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 05:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C789167DA0
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 06:27:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718171719; cv=none; b=hFlKuvMF689wPNn/95ebzSGHAM6nMQ2hXleIeCjiONm546qM1d8H5ogck85qBe2kwCGRbXYXoljhG3iZOSLtnQAIfJZR0iOqZ+FL1wB61zOPXRUDXMgDi48bNn74DTQRAMC/Uh18M3xvc1wf+M8ZuCLXUufvwfI8ORTiLI8g88o=
+	t=1718173645; cv=none; b=Lz66mrWizXS7INihhdaj1ANEAb0IGSIh9jH9sRFwpemGHpBDr9Su8X6PnsUhHW19xA9EwAwaiaa8fdxM9ValZa/gMHfCJ9FGx7Gam++48Qq/vlfrmT7Yic6NPhfJp+1hAWnJJZAcJM1DdOJCKVkE27OACc6jLBTyah9VCxOunQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718171719; c=relaxed/simple;
-	bh=n/9WsSDfpWPhmu5aefL1XzoWc5YTkRctvH8jukKbpa4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FF3UM3dRxUnVKBDEot8v6ywGOJXbqVLyNkJTsjcuZuAIE34KndhAEpxbF7uO/Ibg38ytcb0786Rdu1ywT++PZHWXXvOJiX/7Bhl2xc02IpORcw8KimDkXp3IZZ0rZHV0wNzCFaFEtafK4j0+n2ceIieHHoIK5XsLE5QuI8o0DrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A556pfar; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m0EB5IU6; arc=none smtp.client-ip=64.147.123.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1718173645; c=relaxed/simple;
+	bh=YIPIgyNIc+LeNO9YfnREF9wMfAzMlInag+jlclhgzsg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=RTqiFwutSP34lw49IPPvZI52itZvUL5eITrv1lxOkMTVJBRUKgDHpr6GbwwC1Gf8+wLESX2yXHayygO34ewsI7sfga0XPwMP2cNBmEvSYYHLhJwrJ3pSL70hz41WbuiQpWsSVgRKUPV81nSrUUhBtiX4O5tA3wE0fWMzezHCKgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BHgnRx16; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A556pfar";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m0EB5IU6"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 8CC901800147;
-	Wed, 12 Jun 2024 01:55:16 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Wed, 12 Jun 2024 01:55:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718171716; x=1718258116; bh=bC1GBzdn+M
-	U5lP280BcU3p2GqEohtyXZWAFUzBRw46M=; b=A556pfarpkX3VgFwXxOf2kZmwK
-	dntGCYcBcuGlIZLqon6NL8t3J5cN8P4Q6c3m4WAtR1Y2FHswzVeADgZA0T4HTwkR
-	ucTijIzEiwiZ5J4q8KHXal1QNkuMYD3fdluLiov0pTF6zIHlOaRUoYHwq129Mb8t
-	aOo1RPUtHhvcZ+DoQSCqlxqQ29NPy1N9pSiTo52ExoiD+tDoslRm6Sq7QYqGH0xo
-	dfmTACPKoNO+5bjkaUHtz/nRlGgmh8XDTUbJIb1Oy/NV22NcfzRCBM06LBoapX0f
-	thphu/ZjrYEEP+KBq00xfbb7jXKGJt7AvQ+MOr9O8kgJq9nAF4xFYPnOkFaQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718171716; x=1718258116; bh=bC1GBzdn+MU5lP280BcU3p2GqEoh
-	tyXZWAFUzBRw46M=; b=m0EB5IU6TPila5OZ+fGdnX+t4O3ikpL4zeGdf9QSQcPk
-	xNSj/a79h0eqrg3HADwtTkFzR10SGyR14RzD41ahHqVDA6O1Di3lF4XzYc/bV7Z9
-	Vsp9oXLLkZvgHnzVkxiyglOQ61PTKanlh4a8b1gwpjEZKxgl8giL2lYQOZ4rZDvc
-	QpnV1+ejwaWWVZtDCun6n4vWx1SfL3c951iRCWFCXJ7INEBK0DvSMcCVxtapN29Z
-	6FwbxrMDVebXPxY/pEIF7owpENFSflntsGiL21v7U2/bSorS3Z98QwCWjSAorLL0
-	4Gqh6en8FHmtPqKFb4Ra0Y6oQPx+ZZ3fta3DGHUhgw==
-X-ME-Sender: <xms:QzhpZvBtVJlTvufE5WrGoj_px5W9H9JpRhWidyAB70_EZMukT7ovhg>
-    <xme:QzhpZliL7uT7gAB7oN37TlzkLTH2qCwc9uYCPxk65yYFXd-bJhcwKzUVZTENDNOCX
-    rOcva858z5qHeZInw>
-X-ME-Received: <xmr:QzhpZqm8Qod1yztrl0njueN-eGpVFCJEpG_wdkwhRQnnwrbgJXbbDhhgc6DLIDn3GjX1Pap4MDmJjXNfWyIJe1hlZGglRfg-ckKzubwmX3c5AgcQp2A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedufedgleelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:RDhpZhyWmUup1DOIsnBqpghZmB5PNgp_ZQOME7_ZM7CykBHQJRNjJw>
-    <xmx:RDhpZkTWVRPeIgfGn7dl4-bwSCj5xBRPpOActzXPFTssRmXQiCIQXg>
-    <xmx:RDhpZkbvo1mgQHtfhxdYB_Ku57TIl9d7zY-WbYR3CknfLkrzlzUAtA>
-    <xmx:RDhpZlRW6y6CXlTnz0_mf-RvSAAoNb8S5SNUHbzRDw0uAZnd7uLv5A>
-    <xmx:RDhpZqe3hFTUc8bo-6dgVYRsBOCnP48_CoHpGkbXe6GF0fjNFCzZ8tPX>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Jun 2024 01:55:14 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 52ff24a3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Jun 2024 05:55:02 +0000 (UTC)
-Date: Wed, 12 Jun 2024 07:55:10 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Kyle Lippincott <spectral@google.com>
-Subject: Re: [PATCH 1/2] config: fix segfault when parsing "core.abbrev"
- without repo
-Message-ID: <Zmk4PvvBMwEzePrk@tanuki>
-References: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
- <7ded51bbce1b23cf4110e3bf0abb7579efd4d344.1718095090.git.ps@pks.im>
- <xmqqh6dzwek0.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BHgnRx16"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-42108856c33so2886695e9.1
+        for <git@vger.kernel.org>; Tue, 11 Jun 2024 23:27:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718173642; x=1718778442; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VkkkJNoH8RoNxrCljtE2o7c3D6vhGV7MqqhfdRNZieI=;
+        b=BHgnRx16uM6xoaP7gXxAahSdjkeRHM0gY1I5Mn0HGmEZk3icbf0tKSpxdmpY/AqJOK
+         P0/a76tKvKeNyIoKh5OCQXv4mh0fF1RGkq4Yw0U1ClrirNVX23B0bcBbwGFow7/HoN1C
+         TQKEpbijF6EFFxim0qQx60EbKgaifRnToNVebf7pfREvQF1irzvp31CuXUVw6RxZUCNI
+         o5iQK8u6lokOJmNStXIj38DDiqxIYmrLYg3jqTool9ROYnI5aLmy/2pLa0J/Ze01BMaH
+         x1TDvcF4ShDLy0mZY2TRpPLfCMtxi9tlgOiCuAE+Jckln4Q6JvPwunJsZ2wShTpf7tYd
+         JvYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718173642; x=1718778442;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VkkkJNoH8RoNxrCljtE2o7c3D6vhGV7MqqhfdRNZieI=;
+        b=XFAjK+KLRMKMsPwSJYVw9JHnohmMkgyK6ovrkBq/vhVu9mQKM4NV0H00F45f3Z8qYq
+         APlQo9wPo/WYdwZlRBilYDG9frU+K86jwKHBU7lj8pftHZFakF6D/WedR1/R1iqeGdQF
+         72obxhPv7KO3AXVuYXzriM9drH+DOzkxMUBR3gWWoJGosR/CmEiop3SNDlYP1+8Ftr94
+         1Y1rIA50rtOX29kVKW6xz0UmscjqlEUrJHBr1Dhik8nTTO+mehR3bSbQHlWcxnSa1pIw
+         L57qaZwe7qMTNRbTzgQzuy0KOHyV38dlawRtiPiYsfW1Dlu0jbaoCGYEpLMqLHirCUqW
+         xIpw==
+X-Gm-Message-State: AOJu0YxHyPFxQkgy6mi61BMyhMHoDptry4LYftw1lkQU6kvBwtSkJigP
+	Uhg+rYFZPU+irqjaWLggu5SDAO+GxrirfR4G21c34wqZXp5ZLp/C3PDulw==
+X-Google-Smtp-Source: AGHT+IF91Q9OkZImugXpCnL6uv8ltlBotuVioRbhJNe6qwXKFMaw6QLHvXMmW9uTQqSL2x3f0zVsEQ==
+X-Received: by 2002:a5d:584e:0:b0:35f:2ac4:732f with SMTP id ffacd0b85a97d-35f5db92d0bmr1008654f8f.24.1718173641478;
+        Tue, 11 Jun 2024 23:27:21 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35f1c57bac8sm9626226f8f.83.2024.06.11.23.27.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jun 2024 23:27:20 -0700 (PDT)
+Message-Id: <pull.1731.v5.git.1718173639942.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1731.v4.git.1715920862420.gitgitgadget@gmail.com>
+References: <pull.1731.v4.git.1715920862420.gitgitgadget@gmail.com>
+From: "Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 12 Jun 2024 06:27:19 +0000
+Subject: [PATCH v5] merge: avoid write merge state when unable to write index
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="W0Q6ol4Lzc5giySP"
-Content-Disposition: inline
-In-Reply-To: <xmqqh6dzwek0.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Kyle Zhao <kylezhao@tencent.com>,
+    Kyle Zhao <kylezhao@tencent.com>
+
+From: Kyle Zhao <kylezhao@tencent.com>
+
+When running a merge while the index is locked (presumably by another
+process), the merge state is written, the index is not updated, and then
+the merge fails. This might cause unexpected results.
+
+E.g., if another running process is "git commit", MERGE_HEAD and other
+state files we write on our side will be taken into account by them and
+cause them to record a merge, even though they may have been trying to
+record something entirely different.
+
+Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
+---
+    merge: avoid write merge state when unable to write index
+    
+    In some of our monorepos, code is sometimes lost after merging.
+    
+    After investigation, we discovered the problem.
+    
+    This happens if we perform "git pull" or "git merge" when another git
+    process is writing to the index, especially in a monorepo (because its
+    index will be larger).
+    
+    How to reproduce:
+    
+    git init demo
+    cd demo
+    touch 1.txt && git add . && git commit -m "1"
+    git checkout -b source-branch
+    touch 2.txt && git add . && git commit -m "2"
+    git checkout master
+    echo "1" >> 1.txt && git add . && git commit -m "3"
+    # another git process runnning
+    touch .git/index.lock
+    git merge source-branch
+    # another git process finished
+    rm .git/index.lock
+    git commit -m "4"
+    
+    
+    Then the modifications from the source branch are lost.
+    
+    Regards, Kyle
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1731%2Fkeyu98%2Fkz%2Ffix-merge-when-index-lock-exists-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1731/keyu98/kz/fix-merge-when-index-lock-exists-v5
+Pull-Request: https://github.com/gitgitgadget/git/pull/1731
+
+Range-diff vs v4:
+
+ 1:  7055dfb82c7 ! 1:  a5156088514 merge: avoid write merge state when unable to write index
+     @@ Commit message
+          process), the merge state is written, the index is not updated, and then
+          the merge fails. This might cause unexpected results.
+      
+     -    i.g. if another running process is "git commit", MERGE_HEAD and other state
+     -    files we write on our side will be taken into account by them and cause them
+     -    to record a merge, even though they may have been trying to record something
+     -    entirely different.
+     +    E.g., if another running process is "git commit", MERGE_HEAD and other
+     +    state files we write on our side will be taken into account by them and
+     +    cause them to record a merge, even though they may have been trying to
+     +    record something entirely different.
+      
+          Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
+      
 
 
---W0Q6ol4Lzc5giySP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ builtin/merge.c  |  2 +-
+ t/t7600-merge.sh | 10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-On Tue, Jun 11, 2024 at 10:54:23AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > Fix both of these issues by not making it an error anymore when the
-> > given length exceeds the hash length. Instead, if we have a repository,
-> > then we truncate the length to the maximum length of `the_hash_algo`.
-> > Otherwise, we simply leave the abbreviated length intact and store it
-> > as-is. This is equivalent to the logic in `parse_opt_abbrev_cb()` and is
-> > handled just fine by `repo_find_unique_abbrev_r()`. In practice, we
-> > should never even end up using `default_abbrev` without a repository
-> > anyway given that abbreviating object IDs to unique prefixes requires us
-> > to have access to an object database.
->=20
-> Makes sense.
->=20
-> > diff --git a/config.c b/config.c
-> > index abce05b774..ab2844d9e1 100644
-> > --- a/config.c
-> > +++ b/config.c
-> > @@ -1460,11 +1460,14 @@ static int git_default_core_config(const char *=
-var, const char *value,
-> >  		if (!strcasecmp(value, "auto"))
-> >  			default_abbrev =3D -1;
-> >  		else if (!git_parse_maybe_bool_text(value))
-> > -			default_abbrev =3D the_hash_algo->hexsz;
-> > +			default_abbrev =3D startup_info->have_repository ?
-> > +				the_hash_algo->hexsz : GIT_MAX_HEXSZ;
->=20
-> We will need to have some code that further adjusts overly long
-> default_abbrev when we really have to abbreviate (at which time,
-> hopefully we are already aware of the real hash algorithm used in
-> the repository, and that may be SHA-1) anyway.
->=20
-> So do we even need the conditional here?  Can't we just set it to
-> GIT_MAX_HEXSZ here unconditionally?
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 6a6d3798858..12c1b048fe1 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -699,7 +699,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET,
+ 					 SKIP_IF_UNCHANGED, 0, NULL, NULL,
+ 					 NULL) < 0)
+-		return error(_("Unable to write index."));
++		die(_("Unable to write index."));
+ 
+ 	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree") ||
+ 	    !strcmp(strategy, "ort")) {
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index e5ff073099a..ef54cff4faa 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -236,6 +236,16 @@ test_expect_success 'merge c1 with c2' '
+ 	verify_parents $c1 $c2
+ '
+ 
++test_expect_success 'merge c1 with c2 when index.lock exists' '
++	test_when_finished rm .git/index.lock &&
++	git reset --hard c1 &&
++	>.git/index.lock &&
++	test_must_fail git merge c2 &&
++	test_path_is_missing .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_MODE &&
++	test_path_is_missing .git/MERGE_MSG
++'
++
+ test_expect_success 'merge --squash c3 with c7' '
+ 	git reset --hard c3 &&
+ 	test_must_fail git merge --squash c7 &&
 
-Not really. I was erring on the safe side here to retain the status quo
-for all relevant cases. As explained in the commit message, the length
-is only relevant when we have a repository because we otherwise wouldn't
-be able to abbreviate anything anyway. So essentially, this change is a
-functional no-op.
-
-There's also the question of the second commit, where we only handle
-`abbrev =3D=3D the_hash_algo->size`, but not `abbrev > the_hash_algo->size`.
-It works, but is slower when not truncating the length until the second
-patch fixes it.
-
-So yes, we can set this unconditionally to `GIT_MAX_HEXSZ`, but out of
-abundance of caution I decided to make this conditional.
-
-Patrick
-
---W0Q6ol4Lzc5giySP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZpOD0ACgkQVbJhu7ck
-PpTI6xAArd8WeqGuqmyLc3tmhi0dg0WZ9WN9txEgyTlh2WVN6IBATmIAJ5Hx3R91
-vLJM7O3DU5KHArnbz0cBLZgns0ZJ/ZEM0JlfhN63xzOh20mjgLzqYhK0eKXDu8rw
-s8WMkEHnh65e6HVzd6Hiq8yLNpLEDgC0bn8K8/hRFV6ALddEFj3RwaR2uweLCH7l
-sBlV8ahxU8vuGfSNW3fSsNJVWbHpjM3TP7w1ObdnYVu7vazwIyXj+o95zsl23ALo
-1wxLoNZTRxG+4uKMdMCiF1JZceqZjKqC80XzTjXfRC5xozJbINdadsMBtt6IiasX
-efLnNej2ZbHlAfpwtAUZ3pTi+fv+blfevaGBfXfTJaxzN3q/7ijAHRLd+lDFTwUi
-PQmX8QeziYEa1Zp7r6Vj9REEHjzFxOD7vohswf11ICsA2oMDRbcCcNHH7GTNMeCK
-UyrtLBkSKW5WRJsz9tn65LaxjSwDdzg9BB4hphb+7SH6RsPixLFOD2nJbbATvSr4
-inANZQLwk+cr4OFxTLKibIEzmvPfxuWowhZFka9Wz9yYC0klurwE1yEoN6sRiEdu
-jx5KGTOMaACmeJU3HY/tfhCAud9TUHAro6ocKIBnGnWheIZDdExew3CG/qkVCmji
-a20vwXR2jP+vzwq/hACAQV50QZ7MFXmjQnUJS/gms6LwYOyly5I=
-=C19/
------END PGP SIGNATURE-----
-
---W0Q6ol4Lzc5giySP--
+base-commit: 19fe900cfce8096b7645ec9611a0b981f6bbd154
+-- 
+gitgitgadget
