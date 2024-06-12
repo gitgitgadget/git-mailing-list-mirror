@@ -1,59 +1,59 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F5712B89
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 09:07:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D148B16C440
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 09:09:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718183277; cv=none; b=piOyS5rL+h63A+x9TZr2uRUcpkCWGuOO96PPWxfAdBQXrE+AvWddJ5ygAsiS5r///5v0bznSf81Y8coKFVCTBHj4pIpJzGBrH6NtspbnX1cBNqB8wLFobu25mGNaJJFvBdp18/rEKWN5vFaS9RPASXCtc3J25X1zPi7lp1leOYw=
+	t=1718183394; cv=none; b=QxQZKhK5c9pDhjIkhbTLAh53Qd4O+mUVB3Rf4s7GSGNtRDLnhzsz19CSpwqe0AeYqrSuQkXnI4cUXVb/rU/ERNxOwMP0lju/CgtXHV27Gv3cyb/Yi01ehNfU/BM1+0KxdmlPiUp7BdntttYUtFErNylkApI+eX9o7yu2/i4FgC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718183277; c=relaxed/simple;
-	bh=iuXYOFmez8HGkzGtlvdIt3Dn2EHyCXiZ+vYFP6igENM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lgJnmlJdcWZEWKvgoo5UFGy9zvOaWRzyes/fTubegvbeRrRdQ3N0EHoDVnsc3v43MiGMVrRaKxcvaRzRTbKm7gQCZbHuP1okZWlp4qUm2DJoQ0NZjZIP2wfbSVPYE58f+t9dbgLLUOR8/dnDksnAd6nqpgio4JsRZA9UTB1QVFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gebuJbkf; arc=none smtp.client-ip=209.85.208.175
+	s=arc-20240116; t=1718183394; c=relaxed/simple;
+	bh=oYJ/S+Te51QfMStP7GIaGU7MzLxpU6Im3MWNh6MHqKs=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=RK13kbD6AXrDo61pTREbpSjiurEGFQPHJQl0TwMRf1huxDmo0+JEiITHJm9ieByZutWwHDovaU0HV0FBGzuVUrlNEvtBMgawu3kcGsfSNbXDBBnyv45idmBixgytdxYI72Ky451JUJqpM/Fq+W6UHDdW7LTMj02Pxyzu81xSpnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lK8+6+Ki; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gebuJbkf"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2ebeefb9a7fso32364191fa.0
-        for <git@vger.kernel.org>; Wed, 12 Jun 2024 02:07:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lK8+6+Ki"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-35f223e7691so414499f8f.1
+        for <git@vger.kernel.org>; Wed, 12 Jun 2024 02:09:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718183274; x=1718788074; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=mWGkNyv/k+hgfT5gRHXmOCCIlwi8SpQNukUCvBsQ/7g=;
-        b=gebuJbkfF0vDCZ913vtCKrzi3ZK5/FYV/pqb85wYRwwREKloh3xnsZNG0xYWLCpVxL
-         Jk92SSJd0q+cBjru3zYHxWpqk6kuyDCg8qjF+CMherfMybaJ5/jeFT2NEs5JPgNdSbx7
-         X0fYIsQiqnB4Y56ryPfvwu1+YyJEPbiDckKkdqrnUIrPz1DKI2bqlNnNj3vF3l/VX8RV
-         aEWLrz4dBJnehB6239s7in8CLL61Ys9bxZQ9Kai25cg3iI7B9jlAFC+GYIdhSmw38MMv
-         /p9Qhvg11gDdQZ2xl7/yYiy3bFIvEoY3NMoLx7PNHtsqEGcFrHPMYHDtJD4W9TP1SziU
-         zP8Q==
+        d=gmail.com; s=20230601; t=1718183391; x=1718788191; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=g4sfGo3Zmtqt7kdNQdQmig7cswYAQ8CEbRSdJq9LwuI=;
+        b=lK8+6+Ki5fihIc7hXuXTlFXgY8lcnI74j+BazdabS79AxKCZn4a71FkvJNN6+abGHm
+         0x+CIVgR2NDWr8Ui2qV8O3AXZFS75zjBwSp/ICk0RnDNy3IOMA1Eot/376Nh21UVSwjv
+         3ysHGhEDulfvRlBSGfeMggfZoiH0Ah4AD897T3ZTjJqIwOvGPbsQfi+LPPCcajPkDlKz
+         taKBZBml5A+/893ZMV66i0xhpxMvZJCVr6GmO810SoAqMBaVTuL+pD2NDgQ+NYUp2xng
+         2ta5VqIRTEzEvNANcRYVRyIRJts8glyVwGDrxPO5TPq/9rilJSOqEk35yYiCiB6GtG2e
+         k1Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718183274; x=1718788074;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mWGkNyv/k+hgfT5gRHXmOCCIlwi8SpQNukUCvBsQ/7g=;
-        b=iK0g7cQyiwKIa99s3R2p2WlwJweYkR7L93ci/KVKQzCXiCTeiR4pEI7+x6CGadwSUw
-         apdv0vEMjU2TNK77utdVsnhhPErSTq/XI6KlMMt8xkRaSU+IqLtUdd58q5i904/X9uN/
-         HoH+IDIw5m6prbaq8r+nMWskFUkCadjP22niuKZhYAN66O8KqQ8I5QMtWsPfrb5uyUMw
-         YiRrZLqYWRF1ecLzc66vykYGmqTFty3SSyJ9covtLAw0p9jMWdnLYCNStES2PeCj9bXp
-         DaIpH82aXbLteKSeG+5nDR7+VPmjeSGk6Sm2C766u2MvYetCRY5jF557Tw3rk+N8wJiP
-         InOA==
-X-Gm-Message-State: AOJu0YxRn9dSoaoVwIIZV6puqPaoOvUsKDOmMQHLfeiXj6GHHSSVc2/P
-	s2Ebs0Bliyip0jjtZYPWPW5nDbMtXpSGTHssRqvDL/PXA5sbAKAA
-X-Google-Smtp-Source: AGHT+IHewfwGUh6jXmyg3dhH+YBxXdxtkndkGmMJZ5EBn3pJzmZf9LE2EOk3JQdEAAV4U0AHFORV1g==
-X-Received: by 2002:a2e:8808:0:b0:2eb:d6a7:feba with SMTP id 38308e7fff4ca-2ebfc932920mr7085671fa.16.1718183273416;
-        Wed, 12 Jun 2024 02:07:53 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718183391; x=1718788191;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g4sfGo3Zmtqt7kdNQdQmig7cswYAQ8CEbRSdJq9LwuI=;
+        b=v1oHODwwNEy/VP3BcaG0MLF55kOIClc6Vrzjc18E67rk/YGeWF8UZiT08IcZoxLs6M
+         Amdb0ctQ69LClYe3Ps7nImfxvTdTQ8aXqVXrC9XD8h4W8QYVFJvvCQhuV3lnd9zNwNIy
+         yf8FER39d3ysrTCOzhaGCd0gqNn7dLdGVgp+PaG0dRLnPC6Z0fUTfRYE6s3pCyPo3O//
+         vFLyFJwKEY3LG6oOBXjRsLIe37khCsM823dIuvmDUJGfqmTYFkWwan1pBgAv2I5yyFw0
+         cLJm4q6gRbIINzTYMv5odG20cvWv0tX7K1gjWHWjRyWKW8m7u57TUtljoMsltsaT8tVz
+         5q7g==
+X-Forwarded-Encrypted: i=1; AJvYcCUZTdlu/0/5IWSUJ3F2AMhb8qVTPrWo0Gqh6OdyMbSDF/gbZXhgTzh+TxxFlH30ETW6AzJyPWZxcVWhE5XO1punaZMy
+X-Gm-Message-State: AOJu0YyR1YjT/uJIevwAJZIBsx1jpzrx1gbpTQ0htmThkIWiLi3/8Lws
+	8UcVG00aHfbeUvKIL8zGxXHxbHKgFmE6bCHg6N59ooD1MCGL98Q1
+X-Google-Smtp-Source: AGHT+IHuKMsSoXmUvTRssiuG1F5EqWroTvN5FqAfd0Aik52hX3bxfqeXrKRTRXewHostjSPoNOMzSw==
+X-Received: by 2002:a05:6000:1882:b0:360:6fa6:60c5 with SMTP id ffacd0b85a97d-3606fa66446mr358014f8f.10.1718183390947;
+        Wed, 12 Jun 2024 02:09:50 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42286eef9fcsm17840085e9.4.2024.06.12.02.07.52
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35f26857582sm6732303f8f.77.2024.06.12.02.09.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Jun 2024 02:07:53 -0700 (PDT)
-Message-ID: <2c2aade1-ee83-4ea2-94ae-3d6714a52db1@gmail.com>
-Date: Wed, 12 Jun 2024 10:07:50 +0100
+        Wed, 12 Jun 2024 02:09:50 -0700 (PDT)
+Message-ID: <7b62e733-0816-43be-a1b2-4d7d288ec6ee@gmail.com>
+Date: Wed, 12 Jun 2024 10:09:48 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,34 +61,72 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] date: detect underflow/overflow when parsing dates
- with timezone offset
-To: Junio C Hamano <gitster@pobox.com>,
- darcy via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, darcy <acednes@gmail.com>
-References: <pull.1726.v2.git.git.1717369608923.gitgitgadget@gmail.com>
- <pull.1726.v3.git.git.1717719428510.gitgitgadget@gmail.com>
- <xmqq1q58ejnw.fsf@gitster.g>
 From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 00/29] Memory leak fixes (pt.2)
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>
+References: <cover.1717402439.git.ps@pks.im> <cover.1718095906.git.ps@pks.im>
 Content-Language: en-US
-In-Reply-To: <xmqq1q58ejnw.fsf@gitster.g>
+In-Reply-To: <cover.1718095906.git.ps@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 07/06/2024 18:40, Junio C Hamano wrote:
-> "darcy via GitGitGadget" <gitgitgadget@gmail.com> writes:
- >
->> +/* timestamp of 2099-12-31T23:59:59Z, including 32 leap days */
->> +static const time_t timestamp_max = ((2100L - 1970) * 365 + 32) * 24 * 60 * 60 - 1;
-> 
-> I wonder if this should be of timestamp_t type instead, as the check
-> is done against *timestamp in parse_date_basic() where *timestamp is
-> of type timestamp_t to match?
+Hi Patrick
 
-I think that would make sense. We'd want to cast one of the numbers to 
-timestamp_t to ensure that sum uses a wide enough integer as well. Using 
-2100L is probably OK but an explicit cast would be clearer I think.
+On 11/06/2024 10:19, Patrick Steinhardt wrote:
+> Hi,
+> 
+> this is the second version of my patch series that fixes various memory
+> leaks in our codebase.
+> 
+> 20:  48bcd0ac80 ! 20:  144eb23617 sequencer: fix leaking string buffer in `commit_staged_changes()`
+>      @@ sequencer.c: static int commit_staged_changes(struct repository *r,
+>        			/*
+>        			 * If a fixup/squash in a fixup/squash chain failed, the
+>       @@ sequencer.c: static int commit_staged_changes(struct repository *r,
+>      + 				 * We need to update the squash message to skip
+>      + 				 * the latest commit message.
+>      + 				 */
+>      +-				int res = 0;
+>      + 				struct commit *commit;
+>      + 				const char *msg;
+>        				const char *path = rebase_path_squash_msg();
+>        				const char *encoding = get_commit_output_encoding();
+>        
+>      @@ sequencer.c: static int commit_staged_changes(struct repository *r,
+>        
+>        				p = repo_logmsg_reencode(r, commit, NULL, encoding);
+>        				if (!p)  {
+>      -@@ sequencer.c: static int commit_staged_changes(struct repository *r,
+>      +-					res = error(_("could not parse commit %s"),
+>      ++					ret = error(_("could not parse commit %s"),
+>      + 						    oid_to_hex(&commit->object.oid));
+>      + 					goto unuse_commit_buffer;
+>      + 				}
+>      + 				find_commit_subject(p, &msg);
+>      + 				if (write_message(msg, strlen(msg), path, 0)) {
+>      +-					res = error(_("could not write file: "
+>      ++					ret = error(_("could not write file: "
+>      + 						       "'%s'"), path);
+>      + 					goto unuse_commit_buffer;
+>        				}
+>      ++
+>      ++				ret = 0;
+>      ++
+>        			unuse_commit_buffer:
+>        				repo_unuse_commit_buffer(r, commit, p);
+>       -				if (res)
+>       -					return res;
+>      -+				if (res) {
+>      -+					ret = res;
+>      ++				if (ret)
+>       +					goto out;
+>      -+				}
+>        			}
+>        		}
+
+This looks good, thanks for tweaking it
 
 Best Wishes
 
