@@ -1,53 +1,51 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9B5381C4
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 19:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAC754BD8
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 20:09:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718221836; cv=none; b=ds1cOHuVMugKu3kyoqm7M5Rpat2oCTMB6GjMUNXb0JvqfEci9ibafc2kwO3um1d6LB+4HNAuKmyKcCBaOL1GTeGSzz3aPbVV3jSGsI74jlq8XN/WKUxJ/MnJrFW6kG3DroydWoBeIVkgTiT84Vymr7vIx1YwVXbWHWb87P1ccpo=
+	t=1718222956; cv=none; b=TJf+qDJBzx1XDAXP2VG6IRk5ljDCn4uDBfV99jZWV/2D/A4955ZDqmTN5gurGG8u/xNI9nwdmAusYi16PmCSWc2N1flJSQIJsuNMsBZ1KMkQqRzjtiHa9Yf6Li3rXzRFVMCnc4KVT8bRGiZzAEu/NE4ZZDGp2wgmxplsOSesX+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718221836; c=relaxed/simple;
-	bh=fv55mZ7EzQm+AfO1pkSflXPivQkT4FNzOgiYvUd56zo=;
+	s=arc-20240116; t=1718222956; c=relaxed/simple;
+	bh=WYZf/yqSwD604bkx1w2asZZriYXwwznFM0tpLasNGd0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=umXOGNyN+xSTBHaQKxqp0/7/YSbfy1qNFp75Tldwha/6TmoQtoZ4S6WLBctkGdWzYjSXasQr/px0rTBlHZKduRyrZcFKUOhamwSJLWpoPtT8fgv3OyLDPZnuzxqrdVMRdHqCNgWTkKYxyDdTBmP/YnFm7P0vATOGs7fJa0mWI8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RYhHp31N; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=pwgh0bFy+dbfsa6sCpEnAaZaDyQ4yfN+mcNOeanFBoW6U3cSNcZ6IbNGyiKhoXpwg1cxIci08gzG4oNsdaMSGsABo06U/4L4QFRcjOLczZnyflCS6614EZ54EByUth7tMwvBmPVHTOk4xEzMqczNsW72RNogzlA1Hm36M3bqX8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=p5XdCUi2; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RYhHp31N"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 03A63227CD;
-	Wed, 12 Jun 2024 15:50:34 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="p5XdCUi2"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0634E2FAA0;
+	Wed, 12 Jun 2024 16:09:09 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=fv55mZ7EzQm+AfO1pkSflXPivQkT4FNzOgiYvU
-	d56zo=; b=RYhHp31NkT5pLPP0JhoqQ5IQB49pqlgcOjkI5j18sZxNimgTQnEMm/
-	w4RN94SG8U2csr5DJwOKKWQKJGKfJo5tos3i4d4YRsu7JTzAoN/uzEdHzo9GNMku
-	M7jOO5rzxKRhG54hVrQhGEoMimDcda5twXRCAuVUz+/tOAg6qLrVA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EFBAF227CC;
-	Wed, 12 Jun 2024 15:50:33 -0400 (EDT)
+	:content-type; s=sasl; bh=WYZf/yqSwD604bkx1w2asZZriYXwwznFM0tpLa
+	sNGd0=; b=p5XdCUi2UUC7NSvrnyyOqTtH4vG5eg3/g5/yQI2v5ZfrqcGU8oSlY6
+	pUnJcT9lnQHhwIrsWq1tFUpxEHOM+Gj4G67jHiyDRX/KRjyhuweGgf647hjnTaeT
+	ovPIpCscRCymsxHY6EOSrH1KafQSVa4VIEUjoj51X1BKHmLWBkoRs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id F29212FA9F;
+	Wed, 12 Jun 2024 16:09:08 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6E077227CA;
-	Wed, 12 Jun 2024 15:50:33 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 63FE62FA9E;
+	Wed, 12 Jun 2024 16:09:04 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH 14/16] mktree: optionally add to an existing tree
-In-Reply-To: <ZmltKHI-Vz1L44r8@tanuki> (Patrick Steinhardt's message of "Wed,
-	12 Jun 2024 11:40:56 +0200")
-References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
-	<df0c50dfea3cb77e0070246efdf7a3f070b2ad97.1718130288.git.gitgitgadget@gmail.com>
-	<ZmltKHI-Vz1L44r8@tanuki>
-Date: Wed, 12 Jun 2024 12:50:32 -0700
-Message-ID: <xmqqcyomos8n.fsf@gitster.g>
+To: Kyle Lippincott <spectral@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: [RFH] t9500 failing???
+In-Reply-To: <CAO_smVh2yZRfs2vq2RKY=eLj8-0BgPierxksq376u=X-=pbKWA@mail.gmail.com>
+	(Kyle Lippincott's message of "Wed, 12 Jun 2024 11:38:30 -0700")
+References: <xmqqr0d2p1x3.fsf@gitster.g>
+	<CAO_smVh2yZRfs2vq2RKY=eLj8-0BgPierxksq376u=X-=pbKWA@mail.gmail.com>
+Date: Wed, 12 Jun 2024 13:09:02 -0700
+Message-ID: <xmqq5xudq5y9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,30 +55,10 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 07CB93F8-28F5-11EF-960D-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+ 9DFA98E0-28F7-11EF-9C8C-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Kyle Lippincott <spectral@google.com> writes:
 
-> On Tue, Jun 11, 2024 at 06:24:46PM +0000, Victoria Dye via GitGitGadget wrote:
->> diff --git a/Documentation/git-mktree.txt b/Documentation/git-mktree.txt
->> index afbc846d077..99abd3c31a6 100644
->> --- a/Documentation/git-mktree.txt
->> +++ b/Documentation/git-mktree.txt
->> @@ -40,6 +40,11 @@ OPTIONS
->>  	optional.  Note - if the `-z` option is used, lines are terminated
->>  	with NUL.
->>  
->> +<tree-ish>::
->> +	If provided, the tree entries provided in stdin are added to this tree
->> +	rather than a new empty one, replacing existing entries with identical
->> +	names. Not compatible with `--literally`.
->
-> I think it'd be a bit more intuitive is this was an option, like
-> `--base-tree=` or just `--base=`.
->
-> One question that comes up naturally in this context: when I have a base
-> tree, how do I remove entries from it?
+> So my conclusion is that 4.62 is broken, and that newer versions are unbroken.
 
-Presumably the same way how you remove entries with "update-index --index-info"?
-I.e. mode=0 entry in the input would serve as a signal to remove the
-path?
+Thanks for digging.
