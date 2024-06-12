@@ -1,134 +1,159 @@
-Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5C3244C94
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 18:34:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7B93209
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 18:35:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718217261; cv=none; b=pCRomiXTS8NGgpym+GSNGivboHBcDxEeGY+iUJmu74PEc2DRXOcx3LcXTHr0yIMJ/bxsRLDtFwOlGEgXobokqG30AwFUd6oQNokUnmViVgO6VlAjygcbmL/r+Ol81cZdOwRaAvav8iiPwXgkReKTX/4UtI7EYJ//Elrb/2v1DsE=
+	t=1718217336; cv=none; b=FX9Vn1AD6+R5Dvf/7E8/rXFMvy/Yf8/7N/JUlnSKv++1rFZ5tY3gOxA86azN+G85/EErR4V9kJn4i7PPoqF6fSGakbpn8+pznADV2E83pe3SS8zYyFXPxZ0cPGA9sPcFTXxxQSmEKI55QpNSxs5dYqSijw3l7Sh7mbLahW3eGGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718217261; c=relaxed/simple;
-	bh=/nBAzoo6dhl9oOjHHxcnv6up9voJl2vFXJEJcdI5eNc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=NlORp9lCAERuD/KwC+MCeefa0xZTMNbGF5Ii3xWHYs66AhfX2tb4yGqgWp/oyE6MQBtJccgChwHFyHuW9pA9pmAZhmbCiGODf4LD/52MhUOzoJVEMrNi0MepUqzdgU+oPp31YerNpA1wTL8liaowMnUQEMmdvzdt3uN2lBmMwo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=mBdHrCNj reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1718217336; c=relaxed/simple;
+	bh=Nz8F82wq7ylEef+4wdgAlY4ZT3mrQ891S0RbkWFrBPg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bmo+NdxYBv1W+JppnhBa+zsNuizIRT9y8lH4TtvoUvHods05j1asrC0uYL8xjag72tZDNsrYVnfd2OkVyjs+Bs3Gll26918jfa953YRm3tsR5uj+HpEMFNy7cl6ncBd044NrolF2Kxeve5KXyDge8NC+GwziMYfyoLTGpa2IwJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ofTLImBE; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="mBdHrCNj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=5q2zg/5QItiO65BWE+AVaUd/wLledUxxydsdJksRZP0=; b=m
-	BdHrCNjM0kl+yh+nAFAHS+229u7IzMvHG+7ioMqGmMC90VKy2xg1B7rrFzB1VVLr
-	I1FlT+6aquGawK5gC6RlMF2IBfPLQLXqBebgjbEtBSWQvUv2L71RsFvZvZlYqUXF
-	/bzq8zxfDQMdkcTPxSepL4X/oeREkApkJnTiLsNyys=
-Received: from bupt_xingxin$163.com ( [117.147.106.151] ) by
- ajax-webmail-wmsvr-40-104 (Coremail) ; Thu, 13 Jun 2024 02:33:50 +0800
- (CST)
-Date: Thu, 13 Jun 2024 02:33:50 +0800 (CST)
-From: "Xing Xin" <bupt_xingxin@163.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"Patrick Steinhardt" <ps@pks.im>, 
-	"Karthik Nayak" <karthik.188@gmail.com>, 
-	"Xing Xin" <xingxin.xx@bytedance.com>
-Subject: Re:Re: [PATCH v6 3/3] unbundle: support object verification for
- fetches
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <xmqqsexjtfcg.fsf@gitster.g>
-References: <pull.1730.v5.git.1718088126.gitgitgadget@gmail.com>
- <pull.1730.v6.git.1718109943.gitgitgadget@gmail.com>
- <53395e8c08a8487f3e53dca15766307854a24b3b.1718109943.git.gitgitgadget@gmail.com>
- <xmqqsexjtfcg.fsf@gitster.g>
-X-NTES-SC: AL_Qu2aCv6auEoo5iOeZOkXn0oVhe85UMW2ufsg3YReP500tiTTwCs7QkBvBEPY4P6/JgmxjyeMcRp82v1nXbZ9Y63A8nTliXmFIq/zCQH5BXx3
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ofTLImBE"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A418121722;
+	Wed, 12 Jun 2024 14:35:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Nz8F82wq7ylEef+4wdgAlY4ZT3mrQ891S0RbkW
+	FrBPg=; b=ofTLImBEYtQ1npRCDuU3bFclxetsWsPGU08JegnETRZhUAMzELn2qJ
+	4oxV6rr51I+UPEFRWkLwuiNh7TH/kf0SsLs2RqYKyyx08XTc9l2Mvx/vGpImwPKm
+	7APlX4ahJk2Ofvy6t5UTi/cgqr++74ZO37IQjNq8mEQ0+yI9usZGY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9D52B21721;
+	Wed, 12 Jun 2024 14:35:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3EC7D21720;
+	Wed, 12 Jun 2024 14:35:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH 07/16] mktree: use read_index_info to read stdin lines
+In-Reply-To: <ZmltEti7TRpaiCD-@tanuki> (Patrick Steinhardt's message of "Wed,
+	12 Jun 2024 11:40:34 +0200")
+References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
+	<8d1e1eaa70b96779416f2f48a862d31a730c4521.1718130288.git.gitgitgadget@gmail.com>
+	<ZmltEti7TRpaiCD-@tanuki>
+Date: Wed, 12 Jun 2024 11:35:29 -0700
+Message-ID: <xmqqle3aovpq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <5ee13e97.c24f.1900dba4822.Coremail.bupt_xingxin@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wAnL40O6mlm5lxeAA--.4411W
-X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiYAL7bWV4HI72OAADs2
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 8C476DE2-28EA-11EF-9C0B-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-QXQgMjAyNC0wNi0xMiAwNDowNTozNSwgIkp1bmlvIEMgSGFtYW5vIiA8Z2l0c3RlckBwb2JveC5j
-b20+IHdyb3RlOgo+IlhpbmcgWGluIHZpYSBHaXRHaXRHYWRnZXQiIDxnaXRnaXRnYWRnZXRAZ21h
-aWwuY29tPiB3cml0ZXM6Cj4KPj4gRnJvbTogWGluZyBYaW4gPHhpbmd4aW4ueHhAYnl0ZWRhbmNl
-LmNvbT4KPj4KPj4gVGhpcyBjb21taXQgZXh0ZW5kcyBvYmplY3QgdmVyaWZpY2F0aW9uIHN1cHBv
-cnQgZm9yIGZldGNoZXMgaW4KPj4gYGJ1bmRsZS5jOnVuYnVuZGxlYCBieSBhZGRpbmcgdGhlIGBW
-RVJJRllfQlVORExFX0ZTQ0tfRk9MTE9XX0ZFVENIYAo+PiBvcHRpb24gdG8gYHZlcmlmeV9idW5k
-bGVfZmxhZ3NgLiBXaGVuIHRoaXMgb3B0aW9uIGlzIGVuYWJsZWQsCj4+IGBidW5kbGUuYzp1bmJ1
-bmRsZWAgaW52b2tlcyBgZmV0Y2gtcGFjay5jOmZldGNoX3BhY2tfZnNja19vYmplY3RzYCB0bwo+
-PiBkZXRlcm1pbmUgd2hldGhlciB0byBhcHBlbmQgdGhlICItLWZzY2stb2JqZWN0cyIgZmxhZyB0
-bwo+PiAiZ2l0LWluZGV4LXBhY2siLgo+Cj5QbGVhc2Ugc3RhcnQgeW91ciBwcm9wb3NlZCBsb2cg
-bWVzc2FnZSBieSBzdGF0aW5nIHdoYXQgdGhlIHBlcmNlaXZlZAo+cHJvYmxlbSB3aXRob3V0IHRo
-aXMgcGF0Y2ggaW4gdGhlIGN1cnJlbnQgd29ybGQgaXMuICBXaXRob3V0IGl0LCB5b3UKPmNhbm5v
-dCBlYXNpbHkgYW5zd2VyIHRoZSBtb3N0IGJhc2ljIHF1ZXN0aW9uOiAid2h5IGFyZSB3ZSBkb2lu
-ZyB0aGlzPyIKCkdvdCBpdC4KCj5UaGUgbmFtZSBWRVJJRllfQlVORExFX0ZTQ0tfRk9MTE9XX0ZF
-VENIIGRvZXMgbm90IHJlYWQgdmVyeSB3ZWxsLgo+VkVSSUZZX0JVTkRMRSBwYXJ0IGlzIGNvbW1v
-biBhY3Jvc3MgdmFyaW91cyBmbGFncywgc28gd2hhdCBpcwo+c3BlY2lmaWMgdG8gdGhlIGZlYXR1
-cmUgaXMgIkZTQ0tfRk9MTE9XX0ZFVENIIiwgYW5kIGl0IGlzIGdvb2QgdGhhdAo+d2UgY29udmV5
-IHRoZSBmYWN0IHRoYXQgd2UgZG8gYSBiaXQgbW9yZSB0aGFuIHRoZSBub3JtYWwKPlZFUklGWV9C
-VU5ETEUgKHdoaWNoIGlzLCB0byByZWFkIHRoZSBwcmVyZXF1aXNpdGUgaGVhZGVycyBhbmQgbWFr
-ZQo+c3VyZSB3ZSBoYXZlIHRoZW0gaW4gdGhlIHNlbnNlIHRoYXQgdGhleSBhcmUgcmVhY2hhYmxl
-IGZyb20gb3VyCj5yZWZzKSB3aXRoIHRoZSB3b3JkIEZTQ0suCj4KPkJ1dCBpcyBpdCBuZWNlc3Nh
-cnkgKG9yIGV2ZW4gYSBnb29kIGlkZWEpIHRvIGxpbWl0IGl0cyB1c2FiaWxpdHkKPndpdGggIkZP
-TExPV19GRVRDSCIgKHdoaWNoIGRvZXMgbm90IGxvb2sgZXZlbiBncmFtbWF0aWNhbCk/ICBBcmVu
-J3QKPndlIGNsb3NpbmcgdGhlIGRvb3IgdG8gb3RoZXIgZm9sa3Mgd2hvIG1heSB3YW50IHRvIGRv
-IGEgbW9yZQo+dGhvcm91Z2ggZnNjay1saWtlIGNoZWNrcyBpbiBvdGhlciBjb2RlcGF0aHMgYnkg
-c2F5aW5nICJpZiB5b3UgYXJlCj5ub3QgZG9pbmcgdGhpcyBpbW1lZGlhdGVseSBhZnRlciB5b3Ug
-ZmV0Y2gsIHlvdSBhcmUgdW53ZWxjb21lIHRvIHVzZQo+dGhpcyBmbGFnIj8KCkkgaW5pdGlhbGx5
-IGNvbnNpZGVyZWQgYWRkaW5nIGFub3RoZXIgb3B0aW9uIFZFUklGWV9CVU5ETEVfRlNDS19BTFdB
-WVMKZm9yIG90aGVyIHNjZW5hcmlvcywgd2hpY2ggd291bGQgdGFrZSBhIGhpZ2hlciBwcmlvcml0
-eSB0aGFuClZFUklGWV9CVU5ETEVfRlNDS19GT0xMT1dfRkVUQ0guIEhvd2V2ZXIsIHRoYXQgYXBw
-cm9hY2ggaXMgYWxzbwpjb25mdXNpbmcsIGFzIHdlIHdvdWxkIGhhdmUgdHdvIGZsYWdzIGJvdGgg
-Y29udHJvbGxpbmcgdGhlIGZzY2sKYmVoYXZpb3IuCgpIb3cgYWJvdXQgZXh0ZW5kaW5nIFZFUklG
-WV9CVU5ETEVfRlNDSyBhbmQgbGV0dGluZyB0aGUgY2FsbGVycyBkZWNpZGUKd2hldGhlciB0byBh
-ZGQgdGhlIGZsYWcgZm9yIGZzY2tpbmc/CgpJbiBidW5kbGUuYywgd2UgY2FuIG1ha2UgYSBzbWFs
-bCBjaGFuZ2UgbGlrZToKCkBAIC02MjUsNiArNjI2LDkgQEAgaW50IHVuYnVuZGxlKHN0cnVjdCBy
-ZXBvc2l0b3J5ICpyLCBzdHJ1Y3QgYnVuZGxlX2hlYWRlciAqaGVhZGVyLAogCWlmIChoZWFkZXIt
-PmZpbHRlci5jaG9pY2UpCiAJCXN0cnZlY19wdXNoKCZpcC5hcmdzLCAiLS1wcm9taXNvcj1mcm9t
-LWJ1bmRsZSIpOwoKKwlpZiAoZmxhZ3MgJiBWRVJJRllfQlVORExFX0ZTQ0spCisJCXN0cnZlY19w
-dXNoKCZpcC5hcmdzLCAiLS1mc2NrLW9iamVjdHMiKTsKKwogCWlmIChleHRyYV9pbmRleF9wYWNr
-X2FyZ3MpIHsKIAkJc3RydmVjX3B1c2h2KCZpcC5hcmdzLCBleHRyYV9pbmRleF9wYWNrX2FyZ3Mt
-PnYpOwogCQlzdHJ2ZWNfY2xlYXIoZXh0cmFfaW5kZXhfcGFja19hcmdzKTsKCkZvciBleGFtcGxl
-LCBpbiBgYnVuZGxlLXVyaS5jOnVuYnVuZGxlX2Zyb21fZmlsZWAsIHdoaWNoIGlzIG9uZSBvZiB0
-aGUKY2FsbGVycyBvZiB1bmJ1bmRsZSwgd2UgY2FuIHVzZSBgZmV0Y2hfcGFja19mc2NrX29iamVj
-dHNgIHRvIGRlY2lkZQp3aGV0aGVyIHRvIGFkZCB0aGF0IG9wdGlvbjoKCkBAIC0zNzMsNyArMzcz
-LDcgQEAgc3RhdGljIGludCB1bmJ1bmRsZV9mcm9tX2ZpbGUoc3RydWN0IHJlcG9zaXRvcnkgKnIs
-IGNvbnN0IGNoYXIgKmZpbGUpCiAJICogdGhlIHByZXJlcXVpc2l0ZSBjb21taXRzLgogCSAqLwog
-CWlmICgocmVzdWx0ID0gdW5idW5kbGUociwgJmhlYWRlciwgYnVuZGxlX2ZkLCBOVUxMLAotCQkJ
-ICAgICAgIFZFUklGWV9CVU5ETEVfUVVJRVQpKSkKKwkJCSAgICAgICBWRVJJRllfQlVORExFX1FV
-SUVUIHwgKGZldGNoX3BhY2tfZnNja19vYmplY3RzKCkgPyBWRVJJRllfQlVORExFX0ZTQ0sgOiAw
-KSkpKQogCQlyZXR1cm4gMTsKClRoaXMgYXBwcm9hY2ggc2hvdWxkIHN0cmVhbWxpbmUgdGhlIGNv
-ZGUgd2hpbGUgbWFpbnRhaW5pbmcgZmxleGliaWxpdHkuClRoZSBmb2xsb3ctdXAgcGF0Y2ggeW91
-IG1lbnRpb25lZCBiZWxvdyBzaG91bGQganVzdCB3b3JrIHRoZW4sIGl0IGlzIG5vdApmb3Igbm93
-IGJlY2F1c2Ugd2UgYXJlIHRvdWNoaW5nIHRoZSB1bndhbnRlZCBgZmV0Y2hfcGFja19mc2NrX29i
-amVjdHNgCndpdGhpbiBgdW5idW5kbGVgLgoKWGluZyBYaW4KCj5JIHdvbmRlciBpZiBzb21ldGhp
-bmcgbGlrZSB0aGlzIGlzIGEgcG90ZW50aWFsIGZvbGxvdy11cCB0b3BpYwo+c29tZWJvZHkgbWF5
-IGJlIGludGVyZXN0ZWQgaW4gYWZ0ZXIgdGhlIGR1c3Qgc2V0dGxlcy4gIFRoYXQgaXMKPmV4YWN0
-bHkgd2h5IHRoZSBuYW1lIG9mIHRoaXMgYml0IG1hdHRlcnMuCj4KPgo+Cj4gYnVpbHRpbi9idW5k
-bGUuYyB8IDYgKysrKystCj4gMSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKSwgMSBkZWxl
-dGlvbigtKQo+Cj5kaWZmIC0tZ2l0IGMvYnVpbHRpbi9idW5kbGUuYyB3L2J1aWx0aW4vYnVuZGxl
-LmMKPmluZGV4IGQ1ZDQxYThmNjcuLmVlYjU5NjNkY2IgMTAwNjQ0Cj4tLS0gYy9idWlsdGluL2J1
-bmRsZS5jCj4rKysgdy9idWlsdGluL2J1bmRsZS5jCj5AQCAtMTk0LDEwICsxOTQsMTMgQEAgc3Rh
-dGljIGludCBjbWRfYnVuZGxlX3VuYnVuZGxlKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwg
-Y29uc3QgY2hhciAqcHJlZml4KQo+IAlpbnQgYnVuZGxlX2ZkID0gLTE7Cj4gCWludCByZXQ7Cj4g
-CWludCBwcm9ncmVzcyA9IGlzYXR0eSgyKTsKPisJaW50IGZzY2tfb2JqZWN0cyA9IDA7Cj4gCj4g
-CXN0cnVjdCBvcHRpb24gb3B0aW9uc1tdID0gewo+IAkJT1BUX0JPT0woMCwgInByb2dyZXNzIiwg
-JnByb2dyZXNzLAo+IAkJCSBOXygic2hvdyBwcm9ncmVzcyBtZXRlciIpKSwKPisJCU9QVF9CT09M
-KDAsICJmc2NrLW9iamVjdHMiLCAmZnNja19vYmplY3RzLAo+KwkJCSBOXygiY2hlY2sgdGhlIG9i
-amVjdHMgaW4gdGhlIGJ1bmRsZSIpKSwKPiAJCU9QVF9FTkQoKQo+IAl9Owo+IAljaGFyICpidW5k
-bGVfZmlsZTsKPkBAIC0yMTcsNyArMjIwLDggQEAgc3RhdGljIGludCBjbWRfYnVuZGxlX3VuYnVu
-ZGxlKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQo+IAkJ
-c3RydmVjX3B1c2hsKCZleHRyYV9pbmRleF9wYWNrX2FyZ3MsICItdiIsICItLXByb2dyZXNzLXRp
-dGxlIiwKPiAJCQkgICAgIF8oIlVuYnVuZGxpbmcgb2JqZWN0cyIpLCBOVUxMKTsKPiAJcmV0ID0g
-ISF1bmJ1bmRsZSh0aGVfcmVwb3NpdG9yeSwgJmhlYWRlciwgYnVuZGxlX2ZkLAo+LQkJCSAmZXh0
-cmFfaW5kZXhfcGFja19hcmdzLCAwKSB8fAo+KwkJCSAmZXh0cmFfaW5kZXhfcGFja19hcmdzLAo+
-KwkJCSBmc2NrX29iamVjdHMgPyBWRVJJRllfQlVORExFX0ZTQ0tfRk9MTE9XX0ZFVENIIDogMCkg
-fHwKPiAJCWxpc3RfYnVuZGxlX3JlZnMoJmhlYWRlciwgYXJnYywgYXJndik7Cj4gCWJ1bmRsZV9o
-ZWFkZXJfcmVsZWFzZSgmaGVhZGVyKTsKPiBjbGVhbnVwOgo=
+Patrick Steinhardt <ps@pks.im> writes:
+
+> It makes perfect sense to not single out git-ls-tree(1) anymore. But I
+> think we should help the reader a bit by continuing to point out which
+> commands can be used as input here. That can be either here in the
+> description, further down in the new "INPUT FORMAT" section, or in both
+> places.
+
+Here is a way to do so, which I alluded to earlier.  The original
+text is too specific to "update-index" in that it talked about
+"stuffing them into the index", which does not apply in the context
+of "mktree".
+
+And then it made me realize that "ls-files -s" output has the stage
+information, which of course is needed for "update-index" to be able
+to recreate the index state from a textual dump, but "mktree" should
+reject if given a higher stage entry.
+
+It seems that the code after applying all these 16 patches does not
+diagnose it as an error if you feed a non-zero stage.  The callback
+starts like so.
+
+    static int mktree_line(unsigned int mode, struct object_id *oid,
+                           enum object_type obj_type, int stage UNUSED,
+                           const char *path, void *cbdata)
+    {
+    
+I _think_ it should be made an error if the input has non-zero
+stage, which would be a sign that it was taken from "ls-files -s"
+(or even "ls-files -u"), out of which "git write-tree" will REFUSE
+to create a tree object.  "mktree" should behave the same way, no?
+
+In any case, here is the documentation split/refactor.
+
+ Documentation/git-mktree.txt         |  4 +++-
+ Documentation/git-update-index.txt   | 14 +-------------
+ Documentation/index-info-formats.txt | 13 +++++++++++++
+ 3 files changed, 17 insertions(+), 14 deletions(-)
+
+diff --git c/Documentation/git-mktree.txt w/Documentation/git-mktree.txt
+index a660438c67..fefaa83d29 100644
+--- c/Documentation/git-mktree.txt
++++ w/Documentation/git-mktree.txt
+@@ -48,7 +48,9 @@ OPTIONS
+ INPUT FORMAT
+ ------------
+ Tree entries may be specified in any of the formats compatible with the
+-`--index-info` option to linkgit:git-update-index[1].
++`--index-info` option to linkgit:git-update-index[1].  That is:
++
++include::index-info-formats.txt[]
+ 
+ Entries may use full pathnames containing directory separators to specify
+ entries nested within one or more directories. These entries are inserted into
+diff --git c/Documentation/git-update-index.txt w/Documentation/git-update-index.txt
+index 7128aed540..2287a5d4be 100644
+--- c/Documentation/git-update-index.txt
++++ w/Documentation/git-update-index.txt
+@@ -280,19 +280,7 @@ USING --INDEX-INFO
+ multiple entry definitions from the standard input, and designed
+ specifically for scripts.  It can take inputs of three formats:
+ 
+-    . mode SP type SP sha1          TAB path
+-+
+-This format is to stuff `git ls-tree` output into the index.
+-
+-    . mode         SP sha1 SP stage TAB path
+-+
+-This format is to put higher order stages into the
+-index file and matches 'git ls-files --stage' output.
+-
+-    . mode         SP sha1          TAB path
+-+
+-This format is no longer produced by any Git command, but is
+-and will continue to be supported by `update-index --index-info`.
++include::index-info-formats.txt[]
+ 
+ To place a higher stage entry to the index, the path should
+ first be removed by feeding a mode=0 entry for the path, and
+diff --git c/Documentation/index-info-formats.txt w/Documentation/index-info-formats.txt
+new file mode 100644
+index 0000000000..037ebd2432
+--- /dev/null
++++ w/Documentation/index-info-formats.txt
+@@ -0,0 +1,13 @@
++    . mode SP type SP sha1          TAB path
+++
++This format is to use `git ls-tree` output.
++
++    . mode         SP sha1 SP stage TAB path
+++
++This format allows higher order stages to appear and
++matches 'git ls-files --stage' output.
++
++    . mode         SP sha1          TAB path
+++
++This format is no longer produced by any Git command, but is
++and will continue to be supported.
