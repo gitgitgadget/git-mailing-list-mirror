@@ -1,80 +1,78 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A29310E3
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 07:14:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6C454FB5
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 07:37:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718176497; cv=none; b=KWOdiXR+XZt6sdokHd0WLNVAFdyo9kMy5tK9t6HpBcDoOUWFDwfKUCMubUJFGGeTr8xp4ZM8mrzsMGOhVEEqJiOOd7J96gXuKZdochIUhM6cVXDLali1fBBZ4uN823KJEhBzy1R+8pc5iAYtl5efoG7yGR2xdmG4cN7vRdy3EpA=
+	t=1718177865; cv=none; b=KCSB6/NlFUiAegdzltyZGflADNg7sxtBhU5y5+FC1nJT0a2NxahM0dSqFabFryXEbevP8cH49RFpxlyOsuWdyK/qWIt0cu+Nvz33Us/oGFptUJqLN+BLJTC1nQE/84QDWiFJMrBDGE0JSgz3qJjr8HhXpSWX2QSpKPYvJx6rEcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718176497; c=relaxed/simple;
-	bh=Dy7q0xHg62zf9E+/Uhyisefgef3CO4jrK8vorpJpjeQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lAZCdtmZtWe8NHQvGlOir61n10382/qgETygpelC8lcfChYdAalE1RCzH0pU09KehqlS3bWXNut2pfwPSFaftswItjjq+dtTZrsnFeJHLnIzW4t7pgRSkkRllDjheCrKS6c5NuPFrNDlr2ikrWdzz+Y8tEjw07C7S8fqw+x0Xrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GIkzfwWq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FrDSJdjB; arc=none smtp.client-ip=103.168.172.153
+	s=arc-20240116; t=1718177865; c=relaxed/simple;
+	bh=zcUk8UC8s+gL/pUkq1P239pDGymqRJh7CfHqjg3YvDA=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mn+2kijUHi/g95cd6jwsVRihfP011xDVR0K3I9UPvGySClun+WfyAOPoFafYpfNjbknoWzMtAxX7EQnfSvOUpHO3JZEv3bcj77L2/ufQr7jfzDgPU48QMdw8Y+1ccdu3CXYxD5DIiG1uwkWTsOI5EtiMOPrETrrn+7NWaclXTYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VMoTjXfS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HyXyqDN3; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GIkzfwWq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FrDSJdjB"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 4C70C11401DB;
-	Wed, 12 Jun 2024 03:14:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VMoTjXfS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HyXyqDN3"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 786551380159;
+	Wed, 12 Jun 2024 03:37:42 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 12 Jun 2024 03:14:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+  by compute2.internal (MEProxy); Wed, 12 Jun 2024 03:37:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718176493; x=1718262893; bh=JlohQZL4OI
-	yAyAgQUZO4xM6WtVVz7PfWVidH8YNOR40=; b=GIkzfwWqqRAJEtwavnh5CKvD8j
-	XxLfEQeAOhpIai4jgVQPQpVZt0kKErJLBXrwacWtC+weKmmQ1FlHhhIATEpVZ5cd
-	WV00r+0Ka8ScBzBBZ1f4Z8HBEITCjZYCf5Fc1BHQfz7UEuVIqo3BrzbhWz6wSMMk
-	phCl24Esg/t6Nn3iyx8LbQPxZTszAjlzFw9zfTPhdtdnuPpZtHIpJpDG0xKrrN2T
-	q1mBzzbCccUtVzd6q3gmvfWKKynoFQjZ4H5ncx+Bnbl9wyrABEJo+4tNW6+qSOAJ
-	m0NYeAuhe8RY4Fb8QhmjFhTpAuxO7VBv9oiOeVIBlQCja7imzABzc54IW6Ng==
+	:subject:to:to; s=fm1; t=1718177862; x=1718264262; bh=bzeEmGPHYW
+	+ywr31aofaAkK036qQz/2AyA9oLbEYTag=; b=VMoTjXfSKHIkYdcdhYQnCxtf4p
+	v0qrV8cepvXvceYaL+ktErsY0SXzln3fw3Hsaz1GuRDTv8dQiCOt0J8DUdrYjFSQ
+	rf8HIFzq6YmvOwGnzbu43lvAn006RBSB5CMNSVLa/idmFQCMhQXtV1iTJZpmTKjw
+	YEkD3HueqIirhmt5qcOJ4jMNLcrRdbIaPTmO/16UBseLuJnNhh9P4N224LBZ+r47
+	pp5fbDKXiu7P7ZSsUm4MAPs1jFA3YWTeuoPisHe8ft2NQJCsYLRD3Ru6xmkqWc4u
+	pWfukKakZooC1pCB+3YtJ+wXYH33wXFQbBsuJEKuwomRgUXhPCvrk2JryC+A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718176493; x=1718262893; bh=JlohQZL4OIyAyAgQUZO4xM6WtVVz
-	7PfWVidH8YNOR40=; b=FrDSJdjBGPDL0IMW7z/YRrpLznVPs+o8QRTA91wu7MHv
-	g030q0NVNCw8dj5DKKdzmFM97rcCjBVEthk8b6I4bKWxOOgLVnSgrCCJ6bnRMW1h
-	E5X5tnDKn2IQIsKDEfD3EWWoE4JLPcUKBbpEGSl/YvegRJAbAiL3erLw+xKk0AMt
-	slJTRLGrmkr3Git7Yzf8s3p6RvFW+LrIWaad9HuBchttz9cKIzJgtu4+0xnMpSWc
-	RMzuC53HuwM3Xl8W1bwt55Z8qCT6BPukeNg/BajIzzCzn0k1xqylPiHqQoghZjvW
-	OARhpMyEDbwa9JFub7gyA+B6hjpoBq5zPAYwB92jxg==
-X-ME-Sender: <xms:7UppZjMqSD4jZ9rW0WBhMV1EyoU_41oVh9Rigd2kv8c5bIM9BPeY4A>
-    <xme:7UppZt_lncPSt77BVEGt46z11NNGaZBZ3KhBnlDbV2ne17LbnKVKvIl5S351ZA0Ya
-    vY0SNRM95sfZK-YqA>
-X-ME-Received: <xmr:7UppZiSStWnzx9ElECEPtOnDv5ZedvSryWgxFwGYoOIaa9e3NhnaeGSGvnHy0GT26wMQjGzj9M1NnFK4IqX3Hi6itSME67wKeIbt5iwy6PeOVnoiLRA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedufedguddugecutefuodetggdotefrod
+	fm1; t=1718177862; x=1718264262; bh=bzeEmGPHYW+ywr31aofaAkK036qQ
+	z/2AyA9oLbEYTag=; b=HyXyqDN3WsBuBZ0aL8uXf7uu9LYhgk576hUgI77J99Qw
+	KCB3aJPunM3QsuUhsrFQfEAdkFAHIEO3nRzhK6eHltN98rq5BK7v2uT9xkQQfAp5
+	wI/npI16URFseQmt9uLw8kvRNX8Y9Mv4my+rwZT+f3t2DRm5r81LeF5FnzFC+VPc
+	2DQ63D5e8NvI5+mjj7NtmPrapKbJNB/yUZsgmXYb8Ws9dFR3JBMvp5Q2rJHbai8H
+	MoGQY1qXqkKy3uhmu5sKNP93peIDo7snCQr3mr/64vNf7BVqE7khwFygZyjxZBOo
+	GagXnFHIpPSeDDby0J30pOc1gdHxYEN5skp8NR7BnQ==
+X-ME-Sender: <xms:RlBpZvRfcjYJ1ofQ8cBrroO-p2I3jrsEtwmRayeFn1JkhyW4G1C7Xw>
+    <xme:RlBpZgwvzkWJOi5K6YAWSO1UrGDnFLcqf9DavgCPXsSkvg2qV0v4Q3QdQDuUtLGhu
+    yOQuEz-eUBmi5qsvw>
+X-ME-Received: <xmr:RlBpZk0of7UkNF-2KZ5c0Zm1-BKzmsNj5_pbbPp4ks532SABPcGfTj90L-nfdz5fa7dfBCZCRgUAUJsL-xzAR0n4UKfSkRi2jlFLWcC92PUFkbGuoDw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedufedguddulecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeljeetffevheeggeetkeetieduieeiieegieegtdffheegkefhjeehfeekhfev
-    leenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:7UppZnv9rlkwG_zE7hs5YfHdaGRj2exmuUPM3gG1wHpmhtYMyD_kow>
-    <xmx:7UppZrcz5voQbKIkK2Urkk3AcjjoQodAudha79ecUBPfFPCYdii4_w>
-    <xmx:7UppZj0LFYZ8Y6qZBHpdUWt6EUnGytQT-p8yzByV0wDTZzQtWwN_9Q>
-    <xmx:7UppZn8o6LPPgEi6l-IIT3h6H197sVSPtfj2rMMP68t_RhhP0r0CDw>
-    <xmx:7UppZi6oYHIKmwdNEiOOxwfd7r3B1OIEBVBdTvzAgqbl22Cyivp5Zgz1>
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
+    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:RlBpZvDCOLctZePL-uAYXdvxpHkdmsZugvnQjJGWyQr5pFtFArEDDA>
+    <xmx:RlBpZohk0hMkJ5KRKghmxR_Y7eBozgn7A0Og-peApO91eMaEdR4i5Q>
+    <xmx:RlBpZjqaLZXahpqGRwFCtRRuPT6jMxbrariUtvYeLIIkJ_3aw2zclA>
+    <xmx:RlBpZjhYEGkf0zuwlllZBXtE1EL2SFl-QZ0EL_KUHgIBeFWVzx6QUw>
+    <xmx:RlBpZrt6Avddoq1lE3Y4GgF3L0QHqVXqM89hI2gET7FKJbN6MBGknaQu>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Jun 2024 03:14:52 -0400 (EDT)
+ 12 Jun 2024 03:37:41 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 3149c22c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Jun 2024 07:14:38 +0000 (UTC)
-Date: Wed, 12 Jun 2024 09:14:47 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 8142d6bc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Jun 2024 07:37:28 +0000 (UTC)
+Date: Wed, 12 Jun 2024 09:37:37 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] commit-graph: increment progress indicator
-Message-ID: <ZmlK59HYWY_aXgv5@tanuki>
-References: <pull.1743.git.1718118555197.gitgitgadget@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Subject: Re: [PATCH 00/21] Introduce `USE_THE_REPOSITORY_VARIABLE` macro
+Message-ID: <ZmlQQadfFyCHo_k1@tanuki>
+References: <cover.1718106284.git.ps@pks.im>
+ <ZmjcrqnDnHAZjr6V@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,110 +80,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="E88Sh0crk9CY2YKn"
+	protocol="application/pgp-signature"; boundary="+XC4035BtXa+jZTd"
 Content-Disposition: inline
-In-Reply-To: <pull.1743.git.1718118555197.gitgitgadget@gmail.com>
+In-Reply-To: <ZmjcrqnDnHAZjr6V@tapette.crustytoothpaste.net>
 
 
---E88Sh0crk9CY2YKn
+--+XC4035BtXa+jZTd
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 11, 2024 at 03:09:15PM +0000, Johannes Schindelin via GitGitGad=
-get wrote:
-> From: Derrick Stolee <derrickstolee@github.com>
+On Tue, Jun 11, 2024 at 11:24:30PM +0000, brian m. carlson wrote:
+> On 2024-06-11 at 11:57:33, Patrick Steinhardt wrote:
+> > Hi,
+> >=20
+> > use of the `the_repository` variable is nowadays considered to be
+> > deprecated, and over time we want to convert our codebase to stop using
+> > it in favor of explicitly passing down the repository to functions via
+> > parameters. This effort faces some important problems though.
+> >=20
+> >   - It is hard to prove that a certain code unit does not use
+> >     `the_repository` anymore when sending patch series. The reviewer has
+> >     no way to verify that it's not used anymore without reading through
+> >     the code itself.
+> >=20
+> >   - It is easy to sneak in new usages of `the_repository` by accident
+> >     into a code unit that is already `the_repository`-clean.
+> >=20
+> >   - There are many functions which implicitly use `the_repository`,
+> >     which is really hard to spot.
+> >=20
+> > This patch series aims to address those problems by introducing a new
+> > `USE_THE_REPOSITORY_VARIABLE` macro. When unset, then the declarations
+> > of `the_repository`, `the_hash_algo` and some functions that implicitly
+> > depend on them will be hidden away. This makes it trivial to demonstrate
+> > that a code unit is `the_repository`-free by removing the definition of
+> > any such macro.
 >=20
-> This fixes a bug that was introduced by 368d19b0b7 (commit-graph:
-> refactor compute_topological_levels(), 2023-03-20): Previously, the
-> progress indicator was updated from `i + 1` where `i` is the loop
-> variable of the enclosing `for` loop. After this patch, the update used
-> `info->progress_cnt + 1` instead, however, unlike `i`, the
-> `progress_cnt` attribute was not incremented. Let's increment it.
+> Overall, I left a few comments, but I think this definitely moves us in
+> the right direction and I'm glad to see it.  This obviously improves the
+> experience with libification and unit testing in a lot of ways, which is
+> good.
 >=20
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->     commit-graph: fix a progress indicator bug
->    =20
->     Stolee noticed this bug when integrating the for-each-ref --ahead-beh=
-ind
->     patches into GitHub's internal fork of Git, and fixed it. For a varie=
-ty
->     of reasons, upstreaming this fix fell between the cracks. Until now.
->=20
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1743%2F=
-dscho%2Fincrement-progress-in-commit-graph-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1743/dscho=
-/increment-progress-in-commit-graph-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1743
->=20
->  commit-graph.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/commit-graph.c b/commit-graph.c
-> index e5dd3553dfe..41a2e1b4c6d 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -1597,7 +1597,7 @@ static void compute_reachable_generation_numbers(
->  		timestamp_t gen;
->  		repo_parse_commit(info->r, c);
->  		gen =3D info->get_generation(c, info->data);
-> -		display_progress(info->progress, info->progress_cnt + 1);
-> +		display_progress(info->progress, ++info->progress_cnt);
-> =20
->  		if (gen !=3D GENERATION_NUMBER_ZERO && gen !=3D GENERATION_NUMBER_INFI=
-NITY)
->  			continue;
+> My only caution is that using the *_any functions will cause us a world
+> of pain if we ever adopt another 256-bit hash function, since it will be
+> ambiguous which algorithm is to be used.  That's why, traditionally, we
+> haven't assumed a hash algorithm based on the object ID length.  I don't
+> think the amount of uses we have is excessive, even with your changes,
+> but we'll need to be mindful of that going forward.
 
-The fix looks obviously correct. Do we also want to amend tests? We have
-e.g. "t6500-gc.sh", "gc --no-quiet", where we already grep for the
-progress report without verifying numbers. The output there is:
+The only cases where I add new calls to `_any()` are in test helpers:
 
-    Computing commit graph topological levels:  25% (1/4), done.
-    Computing commit graph generation numbers:  25% (1/4), done.
+  - "t/helper/test-oidtree.c". This one is getting converted to a unit
+    test by Ghanshyam, so I'll leave it to him to improve this.
 
-, which clearly demonstrates the bug for both callsites of the buggy
-function.
+  - "t/helper/test-proc-receive.c". Here we don't care about the actual
+    algorithm, the only thing we care about is that we can correctly
+    parse them and then eventually emit them via `oid_to_hex()` again.
+    So even if we introduce a second hash function with the same length
+    this code would continue to work alright.
 
-The following change would thus detect such regressions in the future:
+So I think it should be fine in the context of this series. But the
+remark is certainly valid and something we should be cautious about
+going forward.
 
-    diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-    index 43d40175f8..1b5909d1b7 100755
-    --- a/t/t6500-gc.sh
-    +++ b/t/t6500-gc.sh
-    @@ -158,7 +158,7 @@ test_expect_success TTY 'with TTY: gc --no-quiet' '
-            git -c gc.writeCommitGraph=3Dtrue gc --no-quiet >stdout 2>stder=
-r &&
-        test_must_be_empty stdout &&
-        test_grep "Enumerating objects" stderr &&
-    -	test_grep "Computing commit graph generation numbers" stderr
-    +	test_grep "Computing commit graph generation numbers: 100% (4/4), don=
-e." stderr
-     '
-    =20
-     test_expect_success 'gc --quiet' '
+Thanks!
 
 Patrick
 
---E88Sh0crk9CY2YKn
+--+XC4035BtXa+jZTd
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZpSuYACgkQVbJhu7ck
-PpQ3Ww/9Eh3nJ1hiWCKB7NWxqRgrty1ZbjVTpMRzVGCyNUXCaOx6PoNmN6QaHTAJ
-Dv0DoTw6akz7nbSOy4J0brUdwF410LWpOin7NAEv3/v00YntxNGZhsoEgVTGSR+9
-TIqjaWEWsKPSI+DpOquHpaICHglKnGaLyRxVM+UMfh3rO3hq7MoOvMbUQLAExwFL
-skJ5iOAdIkEjqUPBeA3LzpCdfLd4SCJV2M4YVI2sme6+oOmgKarGzzEusQqCrI/+
-eZQg3q6sybw77b9vtRHlpIcKO+VYrJFBj/IaQi+BRyJ4bkJtRqombY+ByKxVcjrP
-j72s8xQUQ+JDLVrmvGoCu1HP6MRCCIfCQBoJo2uZ37+xSpOR45fudrT8O9eZ+oH8
-YKW/A0+kGGYcGCpbkvYah6d5DYp5n4GqNj1rK8CtfGfHzYrapwh1sBo7WfzaWqr9
-dFMg/hQ3xJhfLPXABm1USEGobeMhXZu2fcxsQzOsdH2Fh9CwInKr/i3lQcrsK/g0
-/viJV83nEu9HtgfIUOM29fmnC6E829KBfpj7HO8wdWwmu3yX2MrrD/jb1uHLDmOr
-RDykpGRAUdQECTMzMTMDSemU/mey582J9YII6fEXxlROhA5LAwBx4AHdOa7ICqnw
-mKZ2OiASMvr09gSvvRvlsaPR7MTT2d8AgeqBwXjXEHB81Uj7zSg=
-=uUhY
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZpUEAACgkQVbJhu7ck
+PpQ0ZxAAm6/dPHP/l17mPuYjOwL8db97HtjaINHvKuz4i5hee6WMZephdwdz1qi3
+gHp8ygPG/XpWEQOX6+pYlRblFKw4CZXEsnz4KbGEuVCK1LSrexj8m64/EibCBBsc
+0ftJYA2XSN3v4u9/2vsC/dmUjuSqr4eE7y+1Jr7bl1ZmVIepLrde5VHUeRHu4n9m
+V/UXs/B5kCq4qF4fF53/Fb4XsNkK3T1GYFAzAqj4cw3U42AVhkZXdlSkYA09cdk4
+i+I93g7b66TEA3XW3/XPoilTHk9Xy8XXHdzUPmdyHYa+54Qh/4tgewqido4GTWvp
+VKpCW6HIypfVa266nyVs2xdzwWHjp5/hKoEBBguFwstdwWmneMkfVx7+QpAMCQkz
+SjZNFboKOGWG+aLGttSBf+BHbwWcol27TpCWUgdf6p43aKPXeCT9aXOhIydCBUaf
+gRe7c97Y+s2sue8ml6HPBmIBTQLVoIOpjHRioCmnzRZh0Ypt0F5SvI7UQrIrmJHq
+yD2sRhwesY7gCwXWmXFQ1Czv9DdBInHXsaxwRY9AQrQy2Tv1RrAjrBv9D31DLW42
+SyHgTlT/PDqj/GEFdNnCjLrPwBI1TrS7F4pGtmOqf7Y1z9NAdrugxluJ3jTYXze/
+7+5l6fb9waO19PDW9ewyg8E2mnzcRHdmrx01HiUtqj6Ke0GxThE=
+=RhPI
 -----END PGP SIGNATURE-----
 
---E88Sh0crk9CY2YKn--
+--+XC4035BtXa+jZTd--
