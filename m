@@ -1,79 +1,80 @@
 Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269EE16F29D
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 11:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D7816F828
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 11:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718193040; cv=none; b=YKaroH4QyJq3cFkOVjDDzd4LMe9NM1fiLoWi6JtlYGJizX5l2LDnDEqzSeB411X87wkbfZrqWvROhlB+BWBS3x9PO4Wv/5e+aXSNNLxbR2DbkRprwLTLJ9sPpWj+xRaveJzHx98RP2rHqckLC9f86sFr1cN/4sodJ7ZWCWRTP3Q=
+	t=1718193042; cv=none; b=MdQ/iNaPNgjFqWtoCvSMp9qaAkpPE7JiQ/N1hhVDAyN2/JnzP1lZwKhDs3BaSijIPkp1q+hbhTpl73cfVy3qlPRsGhSHO7geaoQ5nP0x9WDfIx547muClU4+yBRvHEXzk8ETS9kR1uzd4ng13nbVsRGtStgFS/ozZP+rtNujOLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718193040; c=relaxed/simple;
-	bh=vsb5fRoAMgYoUfNCfhh6S+25ec3OnDq+yjfb0ukvwD8=;
+	s=arc-20240116; t=1718193042; c=relaxed/simple;
+	bh=u6rH9cXUJ4mH/yaXWfYXvx9dQWnVUISLySxnyp/SHHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pVSlaPBrY8NFbziAgi5O/CdAnV7e9fIepMDDmdmcTYjg/yp4UeBaQpyKqD8i3DiMTWwVWqFFBzTK3UWHLLx2zR+omkMqXLIEBJ5v+1oSFo0wk1iJgbns5BLFUn1bXlM725WSZVxfYNmNee1kDNz0hLJUSUS4nFpngKAavTVu7fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dwim.me; spf=pass smtp.mailfrom=dwim.me; dkim=pass (2048-bit key) header.d=dwim.me header.i=@dwim.me header.b=bpITIaBM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HoJDHve5; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=I5a2+VQMSdkRJdqzt4/4JX3SCRf11CixJ4TayMkns5itrPBU9Lxkl5qeKOYMCXzc9MW1VK3lpFVS1dQ0XEUB/CFgK/jbnFqxh0+y5mCfhIZoubO6qMahP7Z/3gb2JHg0I2t3Z9896BC5rt+Zi0Gue+sRUp3z662T3mLZFrqzlwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dwim.me; spf=pass smtp.mailfrom=dwim.me; dkim=pass (2048-bit key) header.d=dwim.me header.i=@dwim.me header.b=QtS7zguf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WlhuKi12; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dwim.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dwim.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dwim.me header.i=@dwim.me header.b="bpITIaBM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HoJDHve5"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 40D3213801CB;
-	Wed, 12 Jun 2024 07:50:38 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Wed, 12 Jun 2024 07:50:38 -0400
+	dkim=pass (2048-bit key) header.d=dwim.me header.i=@dwim.me header.b="QtS7zguf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WlhuKi12"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id D26B113801D2;
+	Wed, 12 Jun 2024 07:50:39 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Wed, 12 Jun 2024 07:50:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dwim.me; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1718193038;
-	 x=1718279438; bh=F1JGHRV6IUH7m0K5xcyzgGLr2Sd9NLJ8lf4dHPVc/ys=; b=
-	bpITIaBMhnN+NuNhSPwsxhXNWQD3NSDavIVluXUCCAfJbOOQacbFujGuo0Psc87Q
-	W6yw9XVEUyH2TuNze/QSmcX35uQPBUGBoqPfgIP5/yS/Dzclq6gMEtH3EEfxWEM0
-	z3YvDBkRXCfZQGrlzxGCI1XElnL1jPzyNepq/Y5WMt8pwRz+Rs8SgReKuxog9MML
-	502DbZul3wwEmcWcYgWRQaV2UeskkKURwNQs2RQFYvbjjmbLiOZBxUmHmaGi5h/X
-	s5VUplk1yoo9JKgVyyFFCLilBSPe6biqj2jWWg9PMDQnzJnbfx1qyo1Y103YVzRq
-	p3t/H/Mb/3UE6Edo/r8r3A==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1718193039;
+	 x=1718279439; bh=QC6/AqqzppyBFgICUDal1pPMJFDweIpY2y4CbylzbuE=; b=
+	QtS7zgufeFp8e66Xo3XJAGL+NXZw335/GPlaHAsP4mjgMsnNeTqFZI4Mlc10nLxL
+	FHTLMOCfBpLczKwx0dM9osf638xhV5zwHwx1q7tkCqfHSbT/LbGqIkR2PJIS/SKu
+	Vxilq1hRptUVdvEbHHnPVxXMqthDkGVWOnUOmtIt/xn+6VRs/B201SxtfHLWB9Q2
+	3/kEgCibBlmAAuJGKr8E7ugZwVVftUkknmm8/jOPlZPWLiRaMjDiO6/SGU26SR9t
+	CzRTSziDssZrroOpXnLRaYCrQBr3kWCrPjq28mHfC05k8bU5yvJuwDBRaGvvmJKS
+	+O8w2bPURxsIhbZcUgv2fQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1718193038; x=
-	1718279438; bh=F1JGHRV6IUH7m0K5xcyzgGLr2Sd9NLJ8lf4dHPVc/ys=; b=H
-	oJDHve5/Ef9+TcXR1ZpTtv23CLtjrTZgeI3acsbrtG7DHL9ZkEbR42NCExvejgS7
-	nWlIl5VfX5a00r/py8cte3LCT0d8KuZTe6wRYOBG5WTfuvQ3Mib08Bj1+pt3D8Sa
-	xKyzospL3T0amoGn9t+qQ4YFhD3K5FHnAouF3rEofQozY7tZ22HdgWrMl98sfB38
-	i6HoCA5TECxd3F1v48wKLikCiobvUd9k6i/f2Acwa5po6hLe7MFZb2Im7swApBmU
-	0pU9aSCbunMh2t4E+VXp+4t7YkuEZ3xOeYJ/GywG0uAlcOy7lmjd/eYbjabFbx4v
-	R4vMYLlO9BgY+FiDCV7RA==
-X-ME-Sender: <xms:jotpZgLK8TRhuTWWfVkNlsfI6Fve5sSEEG6IP2qy6UFqPa-5S4Z7rg>
-    <xme:jotpZgLrPgQEn3Ewurnyo3IZdTdHIYiXh7070wkzCCgtNpj2f1yiDOV0SL2uCYODf
-    RxJ_tyB6Jltjpu--w>
-X-ME-Received: <xmr:jotpZgs0Jq8640m89EMNH8clJmMWmVtj53iJck-nbWAJ9dupOGnWGLuU_qoVFVjjPwBwslgCkdS0XQgdz9NxvP4aR8l4vRR9y5kLi1o4JuLzkwOIIg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1718193039; x=
+	1718279439; bh=QC6/AqqzppyBFgICUDal1pPMJFDweIpY2y4CbylzbuE=; b=W
+	lhuKi12XLGOSkkM2+uspDzZ8h8Ngnn61oJE3/nJHTzwgsH8ksehPJNPIAdyayiqa
+	vNrs2cCtwG0WhhX85fhNqJ5V7J9j3J2HzQ2u5miFUuRwaxnScGA/JKO3oyJUv1FQ
+	Zkki5VqIWkCHyjbmWTkyrczyx3gbV2hYAW6amp44t2Hq9IBcADsEiqUA3wqDYyZX
+	TPjLR4WlFU0d1N/BuLKXHF8L2mhXrIccPtccg0iBmQTxRfY9rez513mqshLsKJPM
+	bQTTh0DrXT269JUKUZZdPpDg8eLV60wd7FvzSToezTczRmGAmsav3M5I4c1b/FjI
+	T6cqNu9+/QJ757/pg1qFw==
+X-ME-Sender: <xms:j4tpZqwb-dr1oKSADZVueVRCWjS31CTFBb3SEFkFVymB-KkPEMpe8w>
+    <xme:j4tpZmRsc_2d6tP53lcLTIrB2yjD79--XE08A4VMIIk1QVcyjaWFn1JILF2R-lUe2
+    CpNBu0w_uUQU-_G0g>
+X-ME-Received: <xmr:j4tpZsVWFzmgo4URweUSLjDTZU-FCxhgtqsHgCghy9jMwS6VvcGUNIzNFJKO3yrXe4DEbabGpzjUVcDR0ncF2o1XeqfHvNvrOLtKDlaQ4CBABNfo0A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedugedggeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfgggtgfesth
     ekredtredtjeenucfhrhhomhepvegrrhhlohhsucforghrthovnhcupfhivghtohcuoegt
-    mhhnsegufihimhdrmhgvqeenucggtffrrghtthgvrhhnpeffvdfhgeeftdehfffhveeuhf
-    ekudduffefieeiudehudefgeefueeufeehvdfftdenucffohhmrghinhephhhtthhpugdr
-    shhhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptg
-    hmnhesugifihhmrdhmvg
-X-ME-Proxy: <xmx:jotpZtZ2Da8UdlaT88X_Am0AErrniSRgByeOlDtcu8QQmRVjlikIVA>
-    <xmx:jotpZnahC__NSuxbSM8tGloUnJr5G6h0lIyVVrpAvS4c-IXjclMU4g>
-    <xmx:jotpZpBfsrgbp2TJrWoKLDuhrOZD9cclstbaiO1-Qj8oqO0nhm6_nw>
-    <xmx:jotpZtahK1HNR768QqisVWleHD9CHhdIuG8fzhl90L3UdkWiCTjkjg>
-    <xmx:jotpZmknoXalQp0kk-TTYIm7yR0ZLAwufxmS5d98zs_U_x3PZth00Ozk>
+    mhhnsegufihimhdrmhgvqeenucggtffrrghtthgvrhhnpeelheehgfelkeevveegheetve
+    eutddthfehieefjeelieeugfelvdeggfdvieduffenucffohhmrghinhephhhtthhpugdr
+    shhhpdhhthhtphgupghrohhothgpphgrthhhghhithdqshgvrhhvvgdrphhiugdphhhtth
+    hprdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+    pegtmhhnsegufihimhdrmhgv
+X-ME-Proxy: <xmx:j4tpZghcZF86E9Vbzwfo7zgUM-cSdadJQRxXW9BCGri6qnnO7L8bjQ>
+    <xmx:j4tpZsAjDszLGzlH0GTGcuQvQS7NmsOI-EfVU09_06TFYLNCJtxKkA>
+    <xmx:j4tpZhJVCoxAoZHDpCthrCD2QrfA76qQSEuRjytuE7kHPTv-yhJIJg>
+    <xmx:j4tpZjD2CWQBgepnrWIYLa2HSNpaWD4KvNdpKywKzX2G1BZtZyDtXw>
+    <xmx:j4tpZvPokT35lrZShCuarNVUUknLnTGS8QrkLXpxo0IX8HhkfV9ZRI5w>
 Feedback-ID: ifc4b4307:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Jun 2024 07:50:37 -0400 (EDT)
-Received: (nullmailer pid 1169212 invoked by uid 1000);
+ 12 Jun 2024 07:50:39 -0400 (EDT)
+Received: (nullmailer pid 1169209 invoked by uid 1000);
 	Wed, 12 Jun 2024 11:50:29 -0000
 From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@dwim.me>
 To: git@vger.kernel.org
 Cc: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@dwim.me>
-Subject: [PATCH 3/4] t5541: add test for rejecting a push due to packfile size
-Date: Wed, 12 Jun 2024 13:50:27 +0200
-Message-ID: <20240612115028.1169183-4-cmn@dwim.me>
+Subject: [PATCH 2/4] t/lib-http.sh: add functions related to serve-git.py
+Date: Wed, 12 Jun 2024 13:50:26 +0200
+Message-ID: <20240612115028.1169183-3-cmn@dwim.me>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240612115028.1169183-1-cmn@dwim.me>
 References: <20240612115028.1169183-1-cmn@dwim.me>
@@ -86,55 +87,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This rejection requires us to make sure we handle this kind of error
-correctly rather than throw away the report in remote-curl and end up
-with "Everything up-to-date" due to the lack of report.
+These functions manage the custom git serving script for use in tests.
 
 Signed-off-by: Carlos Martín Nieto <cmn@dwim.me>
 ---
- t/t5546-receive-limits.sh | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ t/lib-httpd.sh | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/t/t5546-receive-limits.sh b/t/t5546-receive-limits.sh
-index 9fc9ba552f1..ccbdf3945ab 100755
---- a/t/t5546-receive-limits.sh
-+++ b/t/t5546-receive-limits.sh
-@@ -5,6 +5,11 @@ test_description='check receive input limits'
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index d83bafeab32..6454300a041 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -94,6 +94,8 @@ esac
+ LIB_HTTPD_PATH=${LIB_HTTPD_PATH-"$DEFAULT_HTTPD_PATH"}
+ test_set_port LIB_HTTPD_PORT
  
++test_set_port LIB_GIT_SERVE_PORT
 +
-+ROOT_PATH="$PWD"
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_serve_git
-+
- # Let's run tests with different unpack limits: 1 and 10000
- # When the limit is 1, `git receive-pack` will call `git index-pack`.
- # When the limit is 10000, `git receive-pack` will call `git unpack-objects`.
-@@ -83,4 +88,23 @@ test_expect_success "create known-size (1024 bytes) commit" '
- test_pack_input_limit index
- test_pack_input_limit unpack
+ TEST_PATH="$TEST_DIRECTORY"/lib-httpd
+ HTTPD_ROOT_PATH="$PWD"/httpd
+ HTTPD_DOCUMENT_ROOT_PATH=$HTTPD_ROOT_PATH/www
+@@ -250,6 +252,24 @@ stop_httpd() {
+ 		-f "$TEST_PATH/apache.conf" $HTTPD_PARA -k stop
+ }
  
-+test_expect_success 'reject too-large push over HTTP' '
-+	git init "$HTTPD_DOCUMENT_ROOT_PATH/error_too_large" &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/error_too_large" config receive.maxInputSize 128 &&
-+	test-tool genrandom foo $((10*1024*1024)) >large-file &&
-+	git add large-file &&
-+	test_commit large-file &&
-+	test_must_fail git push --porcelain \
-+		$GIT_SERVE_URL/error_too_large \
-+		HEAD:refs/tags/will-fail >actual &&
-+	test_must_fail git -C "$HTTPD_DOCUMENT_ROOT_PATH/error_too_large" \
-+		rev-parse --verify refs/tags/will-fail &&
-+	cat >expect <<-EOF &&
-+	To $GIT_SERVE_URL/error_too_large
-+	!	HEAD:refs/tags/will-fail	[remote rejected] (unpacker error)
-+	Done
-+	EOF
-+	test_cmp expect actual
-+'
++start_serve_git() {
++	test_atexit stop_serve_git
 +
- test_done
++	"$TEST_DIRECTORY"/lib-httpd/serve-git.py \
++		--document-root "$HTTPD_ROOT_PATH"/www \
++		--port "$LIB_GIT_SERVE_PORT" &
++
++	mkdir -p "$HTTPD_ROOT_PATH"
++	echo $! >"$HTTPD_ROOT_PATH"/git-serve.pid
++
++	GIT_SERVE_DEST=127.0.0.1:$LIB_GIT_SERVE_PORT
++	GIT_SERVE_URL=http://$GIT_SERVE_DEST
++}
++
++stop_serve_git() {
++	kill -9 $(cat "$HTTPD_ROOT_PATH"/git-serve.pid)
++}
++
+ test_http_push_nonff () {
+ 	REMOTE_REPO=$1
+ 	LOCAL_REPO=$2
 -- 
 2.43.0
 
