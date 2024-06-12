@@ -1,59 +1,58 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFDC5474A
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 18:48:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27001C14
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 19:01:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718218121; cv=none; b=QnHqv9kcXJCMv5beOVvHcZB1fKtrgtQIdxCPF7dY92/0qDPocXs4LF/pGTATvtf2wU2ve+DhvPThzs7/aOM4yZhDINLIFAv6v+v28kZjDew75dlGKUanStRtGqe+Fm+rWyyid+OwJ9nKBw7sUaktpO95S3Z3yDEfLTGwL/XhsNQ=
+	t=1718218888; cv=none; b=KxeVcR0/ACXNHAAUTmPGAO7qVf0YmvL4pKatBtHaVKiBXwqtfKxe8Q0E1DzM/yW0QlsFlkSJxWAiuDupOTZHVBxP0PfW7iUsWF7ovzz/MEWwcSVTR43bMUy/XLO0CbdLlgH6ZV3uKrbmrtjN3FBHyi3Zje1qTNstDKh+j0RfzJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718218121; c=relaxed/simple;
-	bh=L3c+iXsEeyPO+JgddOMLdVGMhhup36E3ijdHDRrDmNE=;
+	s=arc-20240116; t=1718218888; c=relaxed/simple;
+	bh=vcht/wq1yyWm8Hr0BnJzzOhYaUyxO/q0xwUzAivQZ90=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t+1fRWOrT39rDy1Jz3H4xCJRHE5JEHyt1OdnzauyGJbdagHOL5MbLxEoAQrvmkSfQv31p3vy52SbwN3loxhqQcy4LC+vK/5VhNAntCcvIv8Hg214DI48hKPig6Eu/u6eIn3jN80MZ0KJpJII/KVVIwVbmetZ7RHDLynBbP2nVRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b=VqNUlYtk; arc=none smtp.client-ip=209.85.210.177
+	 In-Reply-To:Content-Type; b=jmniEzGJejx6Jzy++wWMlKTwEWk2WoqfbiJaDSNTGy9ZkI9DoCjo8soDAJXz50KfE3dPXREXyQH9o2lIyzOMHEPpkX72gC4NvtjbR4Vv19mdyBHEhdkbgTSLvLOaJwloZrc8trD6hg6Y9kxxU65hBnaC4qzvo935gvH1Du7O1Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b=VkjXPhEg; arc=none smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="VqNUlYtk"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7041ed475acso106194b3a.2
-        for <git@vger.kernel.org>; Wed, 12 Jun 2024 11:48:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="VkjXPhEg"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-704090c11easo116568b3a.2
+        for <git@vger.kernel.org>; Wed, 12 Jun 2024 12:01:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1718218119; x=1718822919; darn=vger.kernel.org;
+        d=github.com; s=google; t=1718218886; x=1718823686; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Yo0RS9XNUfHGThsMHAVOm+X+C6BnBqLvHVC9+SufVZg=;
-        b=VqNUlYtkxns6da9DCIThPGrgd6jcke8Uh+GL62fqRzdbjaaurQYuSSt1OlXxYAVPWe
-         tIfirys5iNJVEn/n5pDTZhaxJ3DBzIN8o82/gPQtZtTbLh120dJCG/ndPUfgB/nRLyif
-         C5ZpTGD/Fcte7B5T2DhktLe+itEO3PtRXEJgcZFaD2GHATUCv9qfc1mKmHOhUZFNWZIg
-         6HsgEO5bNAetFr4sUd6TNuFCK43ED2G2hMokntZHMuE3TZZCLNue0ZjxVhyDxrtqDaGP
-         5Mb/D55KY7JmEDK0QRWZzDS4NQuN0Xl0gQws33v2Q85ueHRxgc3CMezkjhR0ZCSp8Wy9
-         95TA==
+        bh=3Nx2B+UTJIyYdUYs5NG6QHwE6B+uVZPZWtViF7y6GTI=;
+        b=VkjXPhEguYWkeoesUK17Ah90adHynFN9ksR21An9SRqi88HNB3+tBn+XxZxCyPMyGL
+         QxQW6MKghIIxpod9yEEw0th/cHe20zsj3E52W6bcDZ92aPA5lU8AUwfx/V5mS1j0z0o4
+         vkL0UkwHi8DpPj+9C6zklvul92jMLQdEN8hwEVg84rXNaw3af/MndvbatqHupD0AUuwa
+         EpH3QJkIIxnmez+QZNRfEATYKkip295ZoOaz+o6rAYMilxu/odFeaA3mayR0zlKd5HRU
+         B42/Tpz7X98Vqz3Lc+MdH3G4TQuK8MWi9tvMPj1cfweW39sIDpbo/9OEt2RdTTuSGgc8
+         RjLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718218119; x=1718822919;
+        d=1e100.net; s=20230601; t=1718218886; x=1718823686;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yo0RS9XNUfHGThsMHAVOm+X+C6BnBqLvHVC9+SufVZg=;
-        b=SNf9tTw90Vs6P3UJ6ppFsg3iNXS0t/T9/Sx+JK9I4pzuvXHowu95VG/7AHbuyhB8Zf
-         WMw0srfiEFOau1q0tkMJousIQEf/Po/0E/IlM5rjV5+emQXK3OR88K9ibU9gWUX1gb4f
-         1Qmo/K05AVbbC3j7YiQ/miyBfzhOkAg4GPnqQWFqYAaFHf1ccQ7amlPwjNfbI2ZrAvHm
-         NzhKeXk9wWk/hDDv2dSmUutHFMyDQyDUcbD++VfhXE1MuMacACts7L0G6Yh9rrzVR32T
-         iX71rzaOeU77yiH4TyW5RXdXHLFZATMglJeQFtmDUWSuZnAU2POgu+htIPi+jTCtlMHz
-         XhIA==
-X-Gm-Message-State: AOJu0YwIjaPjPuvjl5jn4MPrg0gDyjmrTnORhGCvTSaoVGcxE/hXYXUQ
-	vpzUtMSqKZloEZzO97+hHUzX9Qjk0x9CGHHEhvmnfiuNhOE0FyxWywbhzDz959S42gP/5MCxDw=
-	=
-X-Google-Smtp-Source: AGHT+IGd1XikTUhCUbYXncifDO+hCnVQasXVtickd1jORobFeYIM0q032Rmi3y+Z49LZ7xIg7iWQaw==
-X-Received: by 2002:a05:6a20:da90:b0:1b4:efbb:d1d3 with SMTP id adf61e73a8af0-1b8a9c886e4mr3052302637.51.1718218119331;
-        Wed, 12 Jun 2024 11:48:39 -0700 (PDT)
+        bh=3Nx2B+UTJIyYdUYs5NG6QHwE6B+uVZPZWtViF7y6GTI=;
+        b=DDnbbMeQtYgKvxCQJEOjRU7Pv3C/IILZGAZn5E1RQAqey50K7yAYnqLOx+QE6Y0z2v
+         xA2OB26aefyRkXorNPlfEaaEwfA1jQNbBI8HZYHf/n+1Mgm51z2KnHeAMWSVOZPpDms8
+         MkDwiY23s9wJuunebQ4mSkYVfyiveWMWtH2jnYZhg5pUqbd9H9VbQMtwolBAbsPcSMuI
+         LRSnc5bXOZar36gsW5IHUpjSxoOozDqjEUrDAjJEIIw2eyWDpzmRjE/0JTp8UTzL+0V6
+         WHIPQu5lGR1jTD19GWz195nX142ZKMsr4H2YRRgP8LjyX8HuNTOm1CnRvPgI/oEdCVYK
+         SHAg==
+X-Gm-Message-State: AOJu0YyQ3J2I5UJR7fJBsb23H6X4VT/aQkvQxg0jzzJ0kstGhTTv1Q7p
+	BJI1RMuDILUgQU2yEfAhkabJjXGxojUNUYXM1Icun6Q9Iq4+Khc/WDKIRAXG
+X-Google-Smtp-Source: AGHT+IEz2Vcrq861Rcr2zsYZX1vj1+BFr/KuZobZEel/d+CNz5E1uYNOUxCM6GNReUhgyrCq52eOaw==
+X-Received: by 2002:a05:6a00:1146:b0:704:1fc9:a859 with SMTP id d2e1a72fcca58-705bce43adbmr3267090b3a.20.1718218885953;
+        Wed, 12 Jun 2024 12:01:25 -0700 (PDT)
 Received: from [192.168.50.41] (syn-172-091-184-234.res.spectrum.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7042d735b55sm7440078b3a.39.2024.06.12.11.48.38
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7041d383a46sm8722500b3a.93.2024.06.12.12.01.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Jun 2024 11:48:38 -0700 (PDT)
-Message-ID: <dab4b0e3-8000-465e-8f0a-61df3d9168a3@github.com>
-Date: Wed, 12 Jun 2024 11:48:37 -0700
+        Wed, 12 Jun 2024 12:01:25 -0700 (PDT)
+Message-ID: <63fd367e-4246-46a8-9b95-6353a5a54b36@github.com>
+Date: Wed, 12 Jun 2024 12:01:24 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,96 +60,71 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/16] mktree: overwrite duplicate entries
-To: Patrick Steinhardt <ps@pks.im>,
+Subject: Re: [PATCH 09/16] mktree: validate paths more carefully
+To: Junio C Hamano <gitster@pobox.com>,
  Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org
 References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
- <b59a4ad8ab4b0e47373f811700eba59141fdc6c6.1718130288.git.gitgitgadget@gmail.com>
- <ZmltGAPQ2dAfW0kG@tanuki>
+ <4f9f77e693cfc4fbe72a2ae739bc7e236a3b82d3.1718130288.git.gitgitgadget@gmail.com>
+ <xmqq34pirj51.fsf@gitster.g>
 Content-Language: en-US
 From: Victoria Dye <vdye@github.com>
-In-Reply-To: <ZmltGAPQ2dAfW0kG@tanuki>
+In-Reply-To: <xmqq34pirj51.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt wrote:
-> On Tue, Jun 11, 2024 at 06:24:42PM +0000, Victoria Dye via GitGitGadget wrote:
->> From: Victoria Dye <vdye@github.com>
->>
->> If multiple tree entries with the same name are provided as input to
->> 'mktree', only write the last one to the tree. Entries are considered
->> duplicates if they have identical names (*not* considering mode); if a blob
->> and a tree with the same name are provided, only the last one will be
->> written to the tree. A tree with duplicate entries is invalid (per 'git
->> fsck'), so that condition should be avoided wherever possible.
->>
->> Signed-off-by: Victoria Dye <vdye@github.com>
->> ---
->>  Documentation/git-mktree.txt |  8 ++++---
->>  builtin/mktree.c             | 45 ++++++++++++++++++++++++++++++++----
->>  t/t1010-mktree.sh            | 36 +++++++++++++++++++++++++++--
->>  3 files changed, 80 insertions(+), 9 deletions(-)
->>
->> diff --git a/Documentation/git-mktree.txt b/Documentation/git-mktree.txt
->> index fb07e40cef0..afbc846d077 100644
->> --- a/Documentation/git-mktree.txt
->> +++ b/Documentation/git-mktree.txt
->> @@ -43,9 +43,11 @@ OPTIONS
->>  INPUT FORMAT
->>  ------------
->>  Tree entries may be specified in any of the formats compatible with the
->> -`--index-info` option to linkgit:git-update-index[1]. The order of the tree
->> -entries is normalized by `mktree` so pre-sorting the input by path is not
->> -required.
->> +`--index-info` option to linkgit:git-update-index[1].
->> +
->> +The order of the tree entries is normalized by `mktree` so pre-sorting the input
->> +by path is not required. Multiple entries provided with the same path are
->> +deduplicated, with only the last one specified added to the tree.
+Junio C Hamano wrote:
+> "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
-> Hm. I'm not sure whether this is a good idea. With git-mktree(1) being
-> part of our plumbing layer, you can expect that it's mostly going to be
-> fed input from scripts. And any script that generates duplicate tree
-> entries is broken, but we now start to paper over such brokenness
-> without giving the user any indicator of this. As user of git-mktree(1)
-> in Gitaly I can certainly say that I'd rather want to see it die instead
-> of silently fixing my inputs so that I start to notice my own bugs.
+>> Also,
+>> remove trailing slashes on directories before validating, allowing users to
+>> provide 'folder-name/' as the path for a tree object entry.
+> 
+> Is that a good idea for a plumbing like this command?  We would
+> silently accept these after silently stripping the trailing slash?
+> 
+> 040000 tree 82a33d5150d9316378ef1955a49f2a5bf21aaeb2    templates/
+> 100644 blob 1f89ffab4c32bc02b5d955851401628a5b9a540e    thread-utils.c/
+> 
+> The former _might_ count as "usability improvement", but if we are
+> doing the same for the latter we might be going a bit too lenient.
 
-'git mktree' already does some cleaning of the inputs by sorting the
-entries, presumably so that a valid tree is created rather than one with
-ordering errors. Deduplication is also a cleanup of user inputs to ensure a
-valid tree is created, so to me it's a consistent extension to existing
-behavior. Conversely, rejecting the inputs and failing would be introducing
-an error scenario where none existed previously, which to me would be a
-bigger deviation.
-
-One potential way to get the kind of functionality you're looking for,
-though, might be to combine something like '--literally' and a '--strict'
-that validates the tree before writing. Like I mentioned in the cover letter
-[1], I do plan to submit a follow-up series with '--strict' (it's just that
-this series is already pretty long and it would add 4-ish more patches). 
-
-[1] https://lore.kernel.org/git/pull.1746.git.1718130288.gitgitgadget@gmail.com/
-
-> So without seeing a strong motivating usecase for this feature I'd think
-> that git-mktree(1) should reject such inputs and return an error such
-> that the user can fix their tooling.
-
-Practically, there are a couple of reasons that led me to wanting this
-behavior. One is that it allows using data structures with more rigid
-integrity checks (like the index & cache tree). The other is that, once the
-ability to add nested entries is introduced, the concept of a "duplicate"
-gets fuzzier and blocking them entirely could lead to inconsistencies and/or
-limited flexibility. If, for example a user wants to create a tree with a
-directory 'folder1/' with OID '0123456789012345678901234567890123456789',
-but update a blob 'folder1/file1' in it to OID
-'0987654321098765432109876543210987654321', the latter is technically a
-"duplicate" but rejecting it would avoid being able to create the tree
-without first expanding 'folder1/'with something like 'ls-tree', replacing the
-appropriate entry, then calling 'mktree'.
+The trailing slashes are only ignored on tree entries (with mode 040000), so
+the latter case would not be allowed (and triggers a 'die()' as it would
+today).
 
 > 
-> Patrick
+> Let's see what really happens in the code.
+> 
+>> @@ -49,10 +50,23 @@ static void append_to_tree(unsigned mode, struct object_id *oid, const char *pat
+>>  {
+>>  	struct tree_entry *ent;
+>>  	size_t len = strlen(path);
+>> -	if (!literally && strchr(path, '/'))
+>> -		die("path %s contains slash", path);
+>>  
+>> -	FLEX_ALLOC_MEM(ent, name, path, len);
+>> +	if (literally) {
+>> +		FLEX_ALLOC_MEM(ent, name, path, len);
+>> +	} else {
+>> +		/* Normalize and validate entry path */
+>> +		if (S_ISDIR(mode)) {
+>> +			while(len > 0 && is_dir_sep(path[len - 1]))
+>> +				len--;
+>> +		}
+> 
+> Leave a single SP after "while", please.
 
+Ah, sorry about that, thanks for catching it.
+
+> We do this only to subtree entries, and all trailing slashes, not
+> just a single one.  OK, but I am not sure if the extra leniency is a
+> good idea to begin with.  "ls-tree" output does not have such a
+> trailing slashes, so it is unclear whom we are trying to be extra
+> nice with this.
+
+It might be a bit niche, but 'git ls-files -s --sparse' does print
+directories with a trailing slash, and in a format that is otherwise
+accepted by the command after switching to 'read_index_info' for input
+parsing. 
 
