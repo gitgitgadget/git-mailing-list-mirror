@@ -1,199 +1,120 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5951616C875
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 09:22:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0019216D4F6
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 09:29:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718184180; cv=none; b=kc4TLf3NUXGRYwRsU1zAbiXhpDHjmpcUJDskIaOwPDMkmoi/4r722xfZ8EY46SE82EGdqOIVggMlYHcqgCVJCftI8nkTMODDr/G4rXEucbn2yDKIQcskthvwneTsBd6Mma7wu939NzRryaLkSBdyI1rgPC8rbg9okzSZ5lCKR4w=
+	t=1718184564; cv=none; b=DfcUoUKlzGMYQ+EPqG0u528XWVpnlKN9+JS+4Z5EAcBqWJAex1Jgz+PIC0CpPYGuTfyd6lxSQxEmdtX0u8O51SQ/kkA1DqtFjCzwRH/W36XQAwFcOEVai239zyQ16SmVvPnruR1u2n3FtSY9t6pmnvhZPoWXDGoqKmeeiPw5KQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718184180; c=relaxed/simple;
-	bh=FZNg3gTdzbOpfGPSFvciSjauSNNzzYjTSnBNvfQxHUI=;
+	s=arc-20240116; t=1718184564; c=relaxed/simple;
+	bh=NwA0yCZXgLBwLAl/QTMZb2e+QtfcrjUFQlMmuXO61SI=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jHD5e3a0Q3daz4UJ1eCI7JyUe4UfSS/a3dP7hJiFkecuYl+rF95biK7IlLlW8sKUEA1HfCY7AnhIbcY0Fb+RHVjE1bq52KlW7pQK1v9Ypa0SZNZ+qqtnYJXrsAwTNofYlbdAxLGQph1mJp/0i7xjyvHlM25HdFLjqYUjxTgjwiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cj4EpZTs; arc=none smtp.client-ip=209.85.167.171
+	 To:Cc:Content-Type; b=uQUfwpfcql/SjZVNRfbDRI3mZaiqye3PwqXb8dHyHU6zpbbfG5mhzDStu4g7JGNR/vN/jRGVHmxbfGVjVmtfitScGM7eQPgDSdFa5kfUKPBqKZAZIxTwqEqz0Squr4rbNoGQOp92cUEVS3pz/r102XSGoRv1p0nAqZdBvufNll4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JTwCajiC; arc=none smtp.client-ip=209.85.160.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cj4EpZTs"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3d2220a11a8so1304286b6e.0
-        for <git@vger.kernel.org>; Wed, 12 Jun 2024 02:22:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JTwCajiC"
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-24c9f91242dso917172fac.2
+        for <git@vger.kernel.org>; Wed, 12 Jun 2024 02:29:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718184178; x=1718788978; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718184562; x=1718789362; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qm6Pcs4ZwfmrHQ2iMq21STq85PecxNedsnB3mGnoG2I=;
-        b=cj4EpZTsf47wAldicMP9O5sqdI8a4BVaThvmheNCTJ1Qy4DHR5kWr2PB2O8DebYsp8
-         qBpGfY/a57GkMfm1w6K6F7CoCuFisKC/C9pDF/Snuis7kuxaMqTtTWhpcEjj00a9Mi2q
-         EzprYB5bvQoAuV2sFInK3hW++MVxEeAc9gaxUQtonNeGw6f4YgZ2+YKAluS1+W1VfQhB
-         hxNupCiKCspFcWc9orQZQTK24B6hBim0ajtw9MkIN+hBkZ1nwSkERD/9NsO5qXWu7Dwe
-         eyiz1VaDRNVfQXe3cfrdj95QDo4UcG4yqBfsSi6ZrSI8+ydCO9CxB4FYSVzgOV3oPVsf
-         ysSw==
+        bh=nA8cClOzFFzbePwOqYu0YYzduggOySKKQ9QHurR9SBA=;
+        b=JTwCajiCoLBuBqMCVOHbmiMVANpveJdr8DOpdpAh2v9ySqlCNRkPW0l7lTwIApS+w4
+         52dIlWhuZsqVgLrDFie7I8j7AhWHvBZk33kKssRztIPXoF6FW20JvbWlMlLf3XA+3Ah+
+         kqRSrjYfRbZuKQmYFUYs70S5HvZzsBzXgW3bSiLIFpKODDYPjF8eXELnP9Y/lJ6D06le
+         AC+urkGUNEsOwCWHxcgVFTQkJyKUMTuc66abWuBn3gbqP9I6tE/dxjxDUsFWyyBaMedb
+         7wvsI7VI54IVREJdvGX1B0kMBNrxXAYYvDoV97MVf9PA/uHyCwwQqS5ocWY8ChdV8Ybd
+         685w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718184178; x=1718788978;
+        d=1e100.net; s=20230601; t=1718184562; x=1718789362;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qm6Pcs4ZwfmrHQ2iMq21STq85PecxNedsnB3mGnoG2I=;
-        b=EhkxxgbExIfLiiAKpU/TvKWWufLGvW+k6jAnXtp6kd8aDN9Xw6V0o8bEcj0NCk1/Xe
-         A33uwvV2L23PQMQVLzu9od3GixkNCx8QUT0+cxYgiDpZJ1oq4xDD4cXZvlCZdk9ZzvyR
-         UkE8fu2qmlvlKuCCHO416ks7DYOsi927xTXqGx/olunSTCvR6hA+zqWnLThMufh5Afts
-         KLuP+UuK5EYHCp9YkJirC30qqe7F4KX/IZwtgqHLzLWspu88rN5lNR49JURNIQoG1OEs
-         K50zRDAl/06iR96ifcKZ2PVzsbY5u9S5/HkvJzN74/mHJBkGbZSFABxxFiC/0sWA2Cv1
-         YHPg==
-X-Forwarded-Encrypted: i=1; AJvYcCUZsr71C/bPOO3eL3C3+OxvwecY7P7mexDNLKVLVYaaOJYNvoeZH73HSIudN45kPU7SPR08d0D4Rknz2f4fxlH1ozeI
-X-Gm-Message-State: AOJu0YwHdiDUl5zDmSsHq6isbWubYQchLvHCiOs7keEYbujb91Ill040
-	tkG+Mq6bJZBro/xbAs/yxvqD8FTeN/+yJeiFT8a5G3G1jOU5bhucTkx4oG3WO+fdgmKYFPU19vg
-	hf4d6MK8nr1P5qp766KZXASXSJBQ=
-X-Google-Smtp-Source: AGHT+IGLATKhBF/YfuMLCeK71rNRy5GuIjvh5MIoLit0OD1jV1eVyVQFUlcdONzidfbENHLqK5X/DI1AFw2WZrQv+ik=
-X-Received: by 2002:a05:6870:c6a9:b0:254:8666:34cd with SMTP id
- 586e51a60fabf-25514ba6a00mr1356334fac.14.1718184178026; Wed, 12 Jun 2024
- 02:22:58 -0700 (PDT)
+        bh=nA8cClOzFFzbePwOqYu0YYzduggOySKKQ9QHurR9SBA=;
+        b=aWRjZPPnNXhfTJeeDQn+0ihJ9JCzQJOo7fGQoGtOm38X5xjZtxhsMqssDIPQBqFik8
+         8Z/Vz/oF/lqaUcZj4MvBscFG1Bj+9CcWBvpBykgeb6f+5CSuEYDcXfLLQfVXk3mCQFul
+         qlyvFT0tsA1NuhWoXboULd2mRI44+JhjBbadcbqiA2GZIPMZPYIK6hK7DSWn4VBGQ5lh
+         5TmtK54kXMb3ynSmR7TjRQ9pKelRV5xjwqo9R+tUewq/QJ7kQ3cAJlse5ElXT7oOKYN/
+         FXH2wV9fQK8RbyKd/oe3AbUSTi+XrRy3pCxKfKvBKRZEXwvzipGzNXvsaH1v8bld28B0
+         KxPw==
+X-Forwarded-Encrypted: i=1; AJvYcCX4JjtPqCt+jOEjDcyTgtmdukhQ21EfoX5t6KyBbPDsKNQNXWP6d6dm+QexO7/6oDM9XXgPmofNNT4l5LEmFfTYLorQ
+X-Gm-Message-State: AOJu0Yzcepwh+BkgUYXARKj2iTruf/vF3CRENziI5fpi6kwueZK691By
+	ilGUHP+7U0j4wAM6tfXlcylDzJg0wXe3g2+9r74R7V8V5DaTiSUPQZTnmDCQwH2amJq48JjOv8g
+	tyV2AA7AEymcx7PEMwktLq3tInq4=
+X-Google-Smtp-Source: AGHT+IEZYrpC9Qv1vkVbyh8VJsL2f+79iSQIi0mbFFDAg+XFMcgBgbPgT54Rw3JICSCDngezWqXAi+ffV/59MbXi6WU=
+X-Received: by 2002:a05:6871:5b26:b0:24f:d873:9f32 with SMTP id
+ 586e51a60fabf-25514c195ccmr1430722fac.26.1718184561822; Wed, 12 Jun 2024
+ 02:29:21 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 12 Jun 2024 09:22:57 +0000
+ HTTPREST; Wed, 12 Jun 2024 09:29:21 +0000
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <b48c50dd92769c7acc5c561f746a7d64dd4d2263.1718178996.git.ps@pks.im>
+In-Reply-To: <cover.1718178996.git.ps@pks.im>
 References: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
- <cover.1718178996.git.ps@pks.im> <b48c50dd92769c7acc5c561f746a7d64dd4d2263.1718178996.git.ps@pks.im>
+ <cover.1718178996.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 12 Jun 2024 09:22:57 +0000
-Message-ID: <CAOLa=ZTLfN665svPMaCJvBT7rjVrg2_=CiZmb3u5XfmmOR6_aQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] config: fix segfault when parsing "core.abbrev"
+Date: Wed, 12 Jun 2024 09:29:21 +0000
+Message-ID: <CAOLa=ZQBmp3Aj135HppKzkcVhpNC40JgtX6YN6Dam34cmeSg5Q@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] config: fix segfault when parsing "core.abbrev"
  without repo
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: Kyle Lippincott <spectral@google.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="000000000000972b5a061aadedf8"
+Content-Type: multipart/mixed; boundary="00000000000077660d061aae0444"
 
---000000000000972b5a061aadedf8
+--00000000000077660d061aae0444
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The "core.abbrev" config allows the user to specify the minimum length
-> when abbreviating object hashes. Next to the values "auto" and "no",
-> this config also accepts a concrete length that needs to be bigger or
-> equal to the minimum length and smaller or equal to the hash algorithm's
-> hex length. While the former condition is trivial, the latter depends on
-> the object format used by the current repository. It is thus a variable
-> upper boundary that may either be 40 (SHA-1) or 64 (SHA-256).
+> Hi,
 >
-> This has two major downsides. First, the user that specifies this config
-> must be aware of the object hashes that its repository use. If they want
-> to configure the value globally, then they cannot pick any value in the
-> range `[41, 64]` if they have any repository that uses SHA-1. If they
-> did, Git would error out when parsing the config.
+> this is the second version of my patch series that fixes a segfault when
+> parsing "core.abbrev" without a repository.
 >
-> Second, and more importantly, parsing "core.abbrev" crashes when outside
-> of a Git repository because we dereference `the_hash_algo` to figure out
-> its hex length. Starting with c8aed5e8da (repository: stop setting SHA1
-> as the default object hash, 2024-05-07) though, we stopped initializing
-> `the_hash_algo` outside of Git repositories.
+> Changes compared to v1:
 >
-> Fix both of these issues by not making it an error anymore when the
-> given length exceeds the hash length. Instead, leave the abbreviated
-> length intact. `repo_find_unique_abbrev_r()` handles this just fine
-> except for a performance penalty which we will fix in a subsequent
-> commit.
+>   - Stop truncating the abbreviation length to the upper boundary
+>     completely. It's unnecessary, complicates the code and makes us
+>     dependent on `the_repository`.
 >
-> Reported-by: Kyle Lippincott <spectral@google.com>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  config.c         |  4 ++--
->  t/t4202-log.sh   | 12 ++++++++++++
->  t/t5601-clone.sh |  7 +++++++
->  3 files changed, 21 insertions(+), 2 deletions(-)
+>   - Adapt `parse_opt_abbrev_cb()` to also stop truncating such that the
+>     behaviour of "core.abbrev" and `--abbrev` is the same.
 >
-> diff --git a/config.c b/config.c
-> index abce05b774..0416b0f2b6 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1460,10 +1460,10 @@ static int git_default_core_config(const char *var, const char *value,
->  		if (!strcasecmp(value, "auto"))
->  			default_abbrev = -1;
->  		else if (!git_parse_maybe_bool_text(value))
-> -			default_abbrev = the_hash_algo->hexsz;
-> +			default_abbrev = GIT_MAX_HEXSZ;
+>   - Extend test coverage a bit.
+>
+> Thanks!
+>
+> Patrick
 
-So if the value is set to 'no'ish, we set it to the max value possible.
+The changes look good, I wasn't expecting a benchmark in the last commit
+for such a small change, but that was nice to see. Thanks.
 
->  		else {
->  			int abbrev = git_config_int(var, value, ctx->kvi);
-> -			if (abbrev < minimum_abbrev || abbrev > the_hash_algo->hexsz)
-> +			if (abbrev < minimum_abbrev)
->  				return error(_("abbrev length out of range: %d"), abbrev);
->  			default_abbrev = abbrev;
->  		}
->
+[snip]
 
-I was wondering if the documentation for 'core.abbrev' needs to be
-modified, but seems like we don't mention how the max value can error
-out in the first place so all good there.
-
-> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> index 86c695eb0a..e97826458c 100755
-> --- a/t/t4202-log.sh
-> +++ b/t/t4202-log.sh
-> @@ -1237,6 +1237,18 @@ test_expect_success 'log.abbrevCommit configuration' '
->  	test_cmp expect.whatchanged.full actual
->  '
->
-> +test_expect_success '--abbrev-commit with core.abbrev=false' '
-> +	git log --no-abbrev >expect &&
-> +	git -c core.abbrev=false log --abbrev-commit >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success '--abbrev-commit with core.abbrev=9000' '
-> +	git log --no-abbrev >expect &&
-> +	git -c core.abbrev=9000 log --abbrev-commit >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'show added path under "--follow -M"' '
->  	# This tests for a regression introduced in v1.7.2-rc0~103^2~2
->  	test_create_repo regression &&
-> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-> index cc0b953f14..5d7ea147f1 100755
-> --- a/t/t5601-clone.sh
-> +++ b/t/t5601-clone.sh
-> @@ -46,6 +46,13 @@ test_expect_success 'output from clone' '
->  	test $(grep Clon output | wc -l) = 1
->  '
->
-> +test_expect_success 'output from clone with core.abbrev does not crash' '
-> +	rm -fr dst &&
-> +	echo "Cloning into ${SQ}dst${SQ}..." >expect &&
-> +	git -c core.abbrev=12 clone -n "file://$(pwd)/src" dst >actual 2>&1 &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'clone does not keep pack' '
->
->  	rm -fr dst &&
-> --
-> 2.45.2.457.g8d94cfb545.dirty
-
---000000000000972b5a061aadedf8
+--00000000000077660d061aae0444
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 44d0d7f6e0fa1ce0_0.1
+X-Attachment-Id: 8b7f92f95f38be36_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1acGFPOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOVZJQy85dkR0NUV1REFPVVFKbGU0SjZscUlnT29FRgpXRWtoYXVZS29v
-ZFpsVGltQlVWSklRdnBlMWh6eHAvbkN6NmVPdjdlQjQ0Z1pzSnFqK3FpTmlSYld0TWxOc3c2CkQw
-SGhXVW5oOGZlUGFNU2tWUzBid3JhUXpYV2x1RHlsb3J5V1dWa2NENmxzZ1JnNXNGQ2hlOEx2eVJi
-c3BmTU0KTThndUw1SDJNOEx4TFdtVFA1enJKQVN3MG1aM1E1R2h5ZlFHV2h0U25wUmFvZWZJVHND
-eFk1ZEcxdXdaZ3Iwdwo1YWlUazJYYVdjcjZQYWFRVHRMajBmdCtnY0RBOTkvRjNQdXFGcXNqand5
-L1BmWlorcDVZRG1PSnJMSG92NXN4CkkzbGhvL2E4NFhuTFcwalFNQ0xMZHkyYSs5WEI2SE1YQlZL
-cFlWN2FtaERlTDZlY210S0Jma2lOOGl6blh5SFYKSDVRSlhPQ1NGejJQS2FCbUQxUlJEbHhFK1hB
-ZCtCU3BiN2Z3YnBVMXZ2Tkk2eEhnOFNJcHpRYkhDUjFuaGluSQpkOGNlNUtFOXdMd2pySWxQRUxt
-ZUVTMTgrdVBmTmJ0TjJBbm1PaWd1OWFsU0FsWDNQTVJJWGNYcUxCUUdsMmJECmpQejVlMk9ELzhh
-WE1VTWhpWGtqV3lDaVA1WHM3RjE5WjVaQ01BTT0KPXVrbmMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1acGFtOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meUxpREFDT1VhMTNYdXFCQ0xtZEFJQ01wdnBaTDR6SApCYUJYZm9Mam5B
+TXJ6QzlPUEdqclJOaFliTVFSZ2cxeEpxaTlGWGNWZUdKK0NwWCsyU2YrYU1aUXpTRzUyTlhZCmtl
+aGxOVDBBalZ0YVdxemxqUC9xRUROV293enNDRlJqaVNPd0VLczlYcWdIYzBqajhuSk9tWXZadVpz
+c2lXQXIKalNOQ1VCdktaV29CQWRQcU9yN21zYXYvYzVTSlVmMHZKUVJCdXZOaU11djZsYy8wUlNr
+bHp3eGl2d2x4bVhteQpCdS9NNmVQcXhoQktJVjdPZHJlOFQ3UFV0alljcTVxcWQ2ZExTanFoeldQ
+Ulhxc3VITDN1WUVPZVRvbjY1dURlClRtZ3hNTi96bVRWV0hFUUYxQ3VvbzJjRUZJWEhxQUFCSzNL
+UXdwcnY3S3U3N0JWbEE3anRxNEc2YjZHVFNqZUsKUFFNSHlBRS9Fc2xIeDlPWFljNWVVWmNNeUtB
+MFFtOGZxTmlFR0wxSlo5Zys4ZUxQeGNJZlM1RUNBdkdnZWJpSgpFMjJJU0RqUWVqaDRBajMwTXlY
+L1FRMnZYbHpFcGlhSlRKd1JveFJSK28yaVM5eDRsbUd4bG9FeCtPUHNTU01VCjRZODhLeU5kcGx5
+Q2NnQzBUU09zT0VaU2ZOYTJJRmg1anFHSVYvbz0KPTBQcGgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000972b5a061aadedf8--
+--00000000000077660d061aae0444--
