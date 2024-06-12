@@ -1,173 +1,123 @@
-Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0789016D9B0
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 08:03:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA1B16C847
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 08:26:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718179422; cv=none; b=qt635rxFAHTh+cv4UdRwrFMTlCNjSHDc1hKftFUz3XfHNU1CvdiuOPNHEywXfzChM/PZfet4U3B9yZpAGDi1DK/wvMY4XL7tIM/avxyTwhwPhtvWaIIlycA3BenRJzwkWJcEWqMm1/TnHM5A6t3srj2q/JXhcvcOIOsqDFodN0E=
+	t=1718180803; cv=none; b=BvXyidlIxNnNxK0jtfwn4qcMTVBCK2DybK1FqCJblBbLakM47MJ6otlyMB0b2p+tD6fOhyRLAw3c0cf8pY1L67uaWvPleK2pouFFM0Airrgmoo4AvzjY1uYfTEOuvYoYIKcsC3sYYN+LzT0tq+kmAXW9zn+QGkwiX7hTGtoAsvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718179422; c=relaxed/simple;
-	bh=Ys644v6hgwqRUjsDfxjHDW3z0uuwXuTjGRNrXI2uTIA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DX3FpjGnVBnmCBX3qbYXy1yvuhwqD3dFuc+/gikxr4DJkPuNsBiPGrD8/e+FPXAF5tG5/C05QFLzVX2i5FcMVj8JsbgPTVR4+RGSYzh9u/0eyuIYHIDtKrUMzcX/zi9KJ2l8yoXXtBSYsEunAMbqVDZWPH2prs47ScZYh06ocaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LdLCUOoM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MpNxkekO; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1718180803; c=relaxed/simple;
+	bh=KfsZOQzb8WWbb1Q9q7pfQFtd7e8AIb6kwFOeKCK2zV8=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=M1rrfDL9p9pJ+0wmREmImpEFbftg15LyAc+NusoDs3tglkSYRTtnXR/0qdw/eTJhd60MoKNInBpkSCTwtgUYF8knSpeJgjDGwnR9QEIL95mh8z7Ghc6Ma8wPRpQI/UaY0Q6Skd/tAEdtpmF2FhLVTpuVzFbklOmbhmv/gEXe0mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=h7m/MXdl; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LdLCUOoM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MpNxkekO"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 5BCE413800FC;
-	Wed, 12 Jun 2024 04:03:40 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Wed, 12 Jun 2024 04:03:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718179420; x=1718265820; bh=KNWaneA2gC
-	NzKmNZFUlaFCk2pozweAFT2BdSugPa01o=; b=LdLCUOoMAZVyGioiD7bl7WRUbA
-	Dn+twiWbH+HtHK8sREWLUy2FFl255KMOjoRs2pcXUtOEVTAl0ZTbUkUOFOUmyRju
-	Tj+CMaZv7BG+BI+iha8yF+1vfb89Tz0xUn8A+w1JoAr/LZ7ueX3EqL9naGW2kK7u
-	yCsx/ElLiwP7b+WnodoQYqNkQL83sHgOrI7HqIyq0gxxNYL2sS4O/5IlIMUY1rBy
-	tuAbSeoJrimEOZe2zvLFA4OyNTdtHGqddI/L8yuL8kl8F5BKEwcADs22upNGNK6s
-	ccviD/2163f+lM124TLFY57v+dLqdmefEBp2qLAoIF1n1VgwOt0XUq/C8jLA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718179420; x=1718265820; bh=KNWaneA2gCNzKmNZFUlaFCk2pozw
-	eAFT2BdSugPa01o=; b=MpNxkekOrkwOIiJzhNXBSqonwOfn4+6pjkjO/HDHafy8
-	+alwkqq1W+jIRI37S8jq1kS2DbR35m18KiRmz80tT0nfgp7ABGgulgOhR7V7FZRV
-	hZY3VOb8KwKJn099mLR1EACUjllJgRsBsexgYvzLhVLfW/fUKWyl//NYeWVmyxit
-	G4LlQasKVk2v+XYURN3JIDndBJR9IVU72OaY5LcYgLB/Ee96mDfJhWfE7F7PPfys
-	lGpLT1RgKk2J44uTTQ5dNxCOFWtje90YIL2eyosXeZCDzmKuLG528ZUUEQO5fDF4
-	2mOrcj1FmFiFGvoaESLPyJHyc04GbgKAStZNrDhv5Q==
-X-ME-Sender: <xms:XFZpZpJSg_F_KtWtFaz7SGI1-KNYSx3Cu_gNs1dXY5hbkqjYQfde8w>
-    <xme:XFZpZlJwp9Opv6liR-JQNIyQNVo-cCiygRYe2O_oEf3U9WDUfE9e1j7Qf5FWJmGCj
-    F-QZsDnxBF2zBY8Mg>
-X-ME-Received: <xmr:XFZpZhvXLCyZ6mJnHH8BoqKv25b3CRzTcpPv4jk97rzctXsuquYS-bVduQGEsA8uOjTuNIgNiCr_v_Jmfmc-uzEzzaT_UuyCrhEc-ChzkWqn-UfqAfw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedufedguddvgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepteeuvefhhfdufedvgeeiueeileegtd
-    fhgeeftdeuveejjedtgfejhedujeeutddunecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:XFZpZqZEIRRFPzwyYz_uDxmFcBcOyU39jLwjfaqvTJ7pm8p1sJS1kw>
-    <xmx:XFZpZgYjI-9nf2dP80bxLdQXrVU9uk3Z_vuytRajYR7WBOrV4y69uQ>
-    <xmx:XFZpZuDp22Gm92wGBK7fYB-TImdebeN8Ot7SVAXkprcOGhN_sfbDlw>
-    <xmx:XFZpZuZl34tfl95yADtPXKbquxlP42j-FUHpKBOrzMrIHE-CJc9mOg>
-    <xmx:XFZpZoGrowbug3BTxK9ykWDP-puL6hLE_wRlhBdy2fgwPCB-rC33Fzi5>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Jun 2024 04:03:39 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 7993d7e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Jun 2024 08:03:27 +0000 (UTC)
-Date: Wed, 12 Jun 2024 10:03:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Kyle Lippincott <spectral@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/3] object-name: don't try to abbreviate to lengths
- greater than hexsz
-Message-ID: <0ccb8d8efa4010c4a7ba00ca1abe7f3e923843ed.1718178996.git.ps@pks.im>
-References: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
- <cover.1718178996.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="h7m/MXdl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1718180795; x=1718785595;
+	i=johannes.schindelin@gmx.de;
+	bh=FSYwBRGderVQetw67vtCsUQlstH8mtB5fvi/bfhh6i4=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=h7m/MXdl0emT5Jmn9CFEDCvWyqQnJCrGNXJloqqrrL3lpS5JiiRD3mvQLSpSG/GY
+	 HjiIJbNqkbILPWMEgw0Ru9Pm40vpkcfGlvkyjDgm42P2UurAu4FKnEosBL19h5iFq
+	 dOuRPm+bd4DgC2oCxSJBw/B1Td5LqNHKfia21UIpSzmGpfLXVSeLus6B2UffWdnIj
+	 Ms91Neh4M48MMGV2Lo33K9H1dNN8QrdCQr7wqJN26MCwyx/9t8nYb8zzkdPaiE3Z1
+	 JMfcQh1zcvD2zRTmpUVI++ZsmEYtR7itBl00uEGEK2EIBfUIeQAChwkIBHm7cjJB4
+	 AedZPlESmj1enmCNNA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.216.58]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N5VHM-1sSvzt0HiE-00r1rJ; Wed, 12
+ Jun 2024 10:26:35 +0200
+Date: Wed, 12 Jun 2024 10:26:33 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH] commit-graph: increment progress indicator
+In-Reply-To: <ZmlK59HYWY_aXgv5@tanuki>
+Message-ID: <515d055e-a785-6d25-237d-bdfe06a2a69c@gmx.de>
+References: <pull.1743.git.1718118555197.gitgitgadget@gmail.com> <ZmlK59HYWY_aXgv5@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jiY2XQcYUHwWnLyC"
-Content-Disposition: inline
-In-Reply-To: <cover.1718178996.git.ps@pks.im>
-
-
---jiY2XQcYUHwWnLyC
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:0m9EamwCEszdx5S3z7DjmGkMgzIMsG08Tb27kczgPQQfAjQbltp
+ yDEyp3yKWNcb0ct+LfIlhpMqjtBBBj+ShUpxIvGZqMZrhzXKofdG8aEnnF/I4gHp+pVmGDf
+ 4fu08L7Sf2q2Cj4jaz2xJZ8i31qgxa1aUwEAcADbOKUCcQ+6Wp+L7HApphaf246fUHd+xP/
+ 8+QgKfgAC/dGoJHudAI3Q==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:LMMi9Z7DaYw=;vbxW+aYTwGT/cR6nJ+jDH6dGnuv
+ Ih5t0irEa08ra+u8g7wCmWqmA8tIjL7by8h5R6oheR6OPMoMT+pzt4Lb71y4riAiRH/5Tr4Z7
+ NmrJHXBwEQBGY2m2t2DcEYYG/q8SGDJB3l+4O4Rh02WlP2qOo7nYtO7v4hvKl3kBeyYhD9+Th
+ 62t8eQPYr+dUsmclqMn629tHUSQ+PQQtGg+/CJVfAzXtPWSuRVtbTJiXx38kxU9fei36wHcd8
+ Gu4pnqf2ClMGam9vZF94eTfdurlXt1AevXAueV68yfgEf8DzNaxTiVUjAnxZI3/ombKTE8otL
+ kLGR74Uw/O280PtsFMzNEkZUKgWrILWJgALIPnVgecrzV43LjGmWuXjSfMHwNfp9QkBEC0jI+
+ 1M/YIQsbNs/GO7WhRtTSXeFlCT0Zh4fLtHCaHDvHAQ0nrEc/Btu1mTIUDJBbcCPc+TgRExHNf
+ n51oqnGrhoDEdTtBK3YigJ4pb6Yot+FjZudRoJeA/8GmZeexILiBVOt3IxrCAfn+zQ1QAwjWG
+ wSOBi7V0T1xEbmaMgPcDpyD/fZOchZFOP4MPIZPqGofZHKSZwM/L4xRc12VCvzfaZh+4oDscj
+ NKiuxhqA82jyiCoIDxj1tRd6N18n0N7MtXYKiytMvp//yNOEbCrLtkS9iQeU0OJupXZOpRPxs
+ CjGSylSGGym1VF3mrs1NDrBqSc94QROY2rmv9tl4l0g819DOMOHB79dzghQD8RCUAycG2rMoc
+ uzA547cSvyTJs5/t5H720e60K3vsJX1upD2Z3LXgB77OjoE1akL3IozaraKTB0mnXlr+GE4+9
+ Ugde1aCDZgq4bJXlwoBBpOOnG6Eyu6l1lhpamUpyTdxNk=
 Content-Transfer-Encoding: quoted-printable
 
-When given a length that equals the current hash algorithm's hex size,
-then `repo_find_unique_abbrev_r()` exits early without trying to find an
-abbreviation. This is only sensible because there is nothing to
-abbreviate in the first place, so searching through objects to find a
-unique prefix would be a waste of compute.
+Hi Patrick,
 
-What we don't handle though is the case where the user passes a length
-greater than the hash length. This is fine in practice as we still
-compute the correct result. But at the very least, this is a waste of
-resources as we try to abbreviate a value that cannot be abbreviated,
-which causes us to hit the object database.
+On Wed, 12 Jun 2024, Patrick Steinhardt wrote:
 
-Start to explicitly handle values larger than hexsz to avoid this
-performance penalty, which leads to a measureable speedup. The following
-benchmark has been executed in linux.git:
+> On Tue, Jun 11, 2024 at 03:09:15PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > From: Derrick Stolee <derrickstolee@github.com>
+> >
+> > This fixes a bug that was introduced by 368d19b0b7 (commit-graph:
+> > refactor compute_topological_levels(), 2023-03-20): Previously, the
+> > progress indicator was updated from `i + 1` where `i` is the loop
+> > variable of the enclosing `for` loop. After this patch, the update use=
+d
+> > `info->progress_cnt + 1` instead, however, unlike `i`, the
+> > `progress_cnt` attribute was not incremented. Let's increment it.
+> >
+> > [...]
+>
+> The fix looks obviously correct. Do we also want to amend tests? We have
+> e.g. "t6500-gc.sh", "gc --no-quiet", where we already grep for the
+> progress report without verifying numbers. The output there is:
+>
+>     Computing commit graph topological levels:  25% (1/4), done.
+>     Computing commit graph generation numbers:  25% (1/4), done.
+>
+> , which clearly demonstrates the bug for both callsites of the buggy
+> function.
+>
+> The following change would thus detect such regressions in the future:
+>
+>     diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+>     index 43d40175f8..1b5909d1b7 100755
+>     --- a/t/t6500-gc.sh
+>     +++ b/t/t6500-gc.sh
+>     @@ -158,7 +158,7 @@ test_expect_success TTY 'with TTY: gc --no-quiet=
+' '
+>             git -c gc.writeCommitGraph=3Dtrue gc --no-quiet >stdout 2>st=
+derr &&
+>         test_must_be_empty stdout &&
+>         test_grep "Enumerating objects" stderr &&
+>     -	test_grep "Computing commit graph generation numbers" stderr
+>     +	test_grep "Computing commit graph generation numbers: 100% (4/4), =
+done." stderr
+>      '
+>
+>      test_expect_success 'gc --quiet' '
 
-  Benchmark 1: git -c core.abbrev=3D9000 log --abbrev-commit (revision =3D =
-HEAD~)
-    Time (mean =C2=B1 =CF=83):     12.812 s =C2=B1  0.040 s    [User: 12.22=
-5 s, System: 0.554 s]
-    Range (min =E2=80=A6 max):   12.723 s =E2=80=A6 12.857 s    10 runs
+Good idea!
 
-  Benchmark 2: git -c core.abbrev=3D9000 log --abbrev-commit (revision =3D =
-HEAD)
-    Time (mean =C2=B1 =CF=83):     11.095 s =C2=B1  0.029 s    [User: 10.54=
-6 s, System: 0.521 s]
-    Range (min =E2=80=A6 max):   11.037 s =E2=80=A6 11.122 s    10 runs
-
-  Summary
-    git -c core.abbrev=3D9000 log --abbrev-commit HEAD (revision =3D HEAD) =
-ran
-      1.15 =C2=B1 0.00 times faster than git -c core.abbrev=3D9000 log --ab=
-brev-commit HEAD (revision =3D HEAD~)
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- object-name.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/object-name.c b/object-name.c
-index 523af6f64f..1be2ad1a16 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -837,7 +837,7 @@ int repo_find_unique_abbrev_r(struct repository *r, cha=
-r *hex,
- 	}
-=20
- 	oid_to_hex_r(hex, oid);
--	if (len =3D=3D hexsz || !len)
-+	if (len >=3D hexsz || !len)
- 		return hexsz;
-=20
- 	mad.repo =3D r;
---=20
-2.45.2.457.g8d94cfb545.dirty
-
-
---jiY2XQcYUHwWnLyC
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZpVlcACgkQVbJhu7ck
-PpRumQ//fnNVlbaNqwAv2/SHfD/lW2iV5y5d6poc/FwTb4/t2/FMsqXXZ2PhVOdV
-cyfFI5JHxuxakgaxDK7qUB8RdeMNbpFdVmoTAGftPL/IrG+Qa9Ow0L4e2iQs+LkJ
-Vr9W7hMGyu63nAynca+iJw1zD8i252aFhuom4/NOemH+wOCpO09jMaKLhoo8YRcG
-4v0Z5pFLF15GETBAx8l6LSQ4tiym7wYR8Kr1mYaE1vC/UJ82kI1hEPu+R1LdpX5b
-a/jsNaaWjZvEZOikBS88yjGRiSV1wA9Otx3nKW+iH/MNmSGZ1+48ivlbBBza2kdl
-ddYp4Ylcp0ToCpJ/xfYGjnHR9eDB7Hrca4Gen1+coHJP3f2UPwIAqVkHA0nRYeUo
-/vvZfJH5Qm49sak296vGA8LYhyelZWNCdd2+qU3aUdquiFD2igtd2lrkPq/1Ta0N
-d0OpPmgY84qrMI6U9KbGbkV6AE17mdLRpGz4v3Wq04QqgRgzGD4I6l0zx5wB8PWm
-Fw1JGHKQ6hfdP1H7Mpt8D1hiECgAQo3/WOYTrsy8wHNV9iAjHYiCfm2Ie5n4zhSo
-kYUZ67fVroRiBmyvdoM6y7Ep28TJ/h4Zu7Ok0PdgjzJj6XBWC70Eom4anGguO1lV
-mI8v9aUQGjkvFNKQQWPCghRUVJl64UtLZ7rATy9BY3j2/WY7R9k=
-=bvps
------END PGP SIGNATURE-----
-
---jiY2XQcYUHwWnLyC--
+Thank you,
+Johannes
