@@ -1,53 +1,53 @@
 Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB6D16DEDE
-	for <git@vger.kernel.org>; Wed, 12 Jun 2024 08:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FF74C63
+	for <git@vger.kernel.org>; Wed, 12 Jun 2024 08:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718179409; cv=none; b=nNJi1obuWnbGmjsb31CbmLL/Ggl26AhcdF/iB8W2VHlZh0WUiZo8Ed4X4kvLARTDvyzYjPFfFV+1Ht+A4koqvTC9KsIsCvfrTkUMiDCD54+uG4HE/ZKeLQGNZQ0yEni/dujs166xFS1/BZd96278K6KxvDU9NO5Gevf62QcDRMc=
+	t=1718179417; cv=none; b=MHh9tURMA7PYXVt0jhKNj1sXz5jrVVt8g1MSu++VhSid3SFN/9ToMHXgBmT9EBLYFVB9GoVd99R9NTx9ONbseWiTV7/xYiZWx43iPNSNZkikKZBzppircIM7b2heB4DqkhdBOge1uNpbaWTbpcEc6vEK+tDRJx7+1dfaBfK0KsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718179409; c=relaxed/simple;
-	bh=5zGctpDrL1iI4VjGKVQmkbZP4uiCd4O9sDeT1iTCHjs=;
+	s=arc-20240116; t=1718179417; c=relaxed/simple;
+	bh=s040zfoMXTy6c4VuGPjHQsbxYV8k0DuUEjrNYuz4xdo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QbUTUQ0u4BJuwBUtAshebWQJpFdk3lnbos8qoFa2reVQPQpfvc30MTv2HiEohcw0zxZZKz91yt3PU5iJ49q1brm4LCSOew5B6oU4RZj12ZpPbGy5PW4IWmgmIlh7aaQ6oUfxPLqCvG8DAK4CsrcoDOFEks7BHqGUSXvIGc/+040=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fDOsyC5I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YAxZ98hV; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=EtNqTJkAKMq4svzxf6aISbk/OQ6Q1ox+Q0+WH1R2MMFUh9JUU5de0lFr0rGp2oCQMJyC0pEIcJGo4HsZXbit/sBIBAtSeT3e0bWTFCHFkOiHNktES/roISnxfHk7unMyzFefS/2fRAPONkSraX9yYLvyyme8RJj0LmK39tCYaEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GXSo93mc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HWv0vHCO; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fDOsyC5I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YAxZ98hV"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id E73181380153;
-	Wed, 12 Jun 2024 04:03:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GXSo93mc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HWv0vHCO"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 2BA5013800FC;
+	Wed, 12 Jun 2024 04:03:35 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 12 Jun 2024 04:03:26 -0400
+  by compute7.internal (MEProxy); Wed, 12 Jun 2024 04:03:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718179406; x=1718265806; bh=xbhjltAIUf
-	HnDJig1OhBBkMn/eJoo/s90NMTvY6fyBA=; b=fDOsyC5Ida0Ss/1NyZLIn/Q81k
-	vt4oizo+s/SdBhzrN4VHGVvec0btqKq00yz/9y3fCku8nCrUp9VbdKm+qfPzp7ky
-	ltKhCXN/Yq32D/f80ZBzuizOdGNbaR99LLF6bXoFrs1UfnQS1R1cJedVzMOFw7s8
-	sUijk1GVsoUwOzWFDczaKJAEI1ttU1iRcQgAqSrl2Zxo/scZ1XsT8KACabpqj94s
-	o1zDh9+nXHM+V4AW7GMi0A2S6VENMMpbufo5pSAum6SAf+KKN0SLzYnOOovGBxj3
-	bKzhAmZQKdBinj28QDk09J2iai8WKW6QUzQ/wL141uF5JmqIOQBVYO3m/Nvg==
+	:subject:to:to; s=fm1; t=1718179415; x=1718265815; bh=DjoEtAMor0
+	ldAWdXpi0x++sFQCNnX1sMW2hAUhcUpuw=; b=GXSo93mcTKn/C+d571cwzr1s5D
+	dZeN8mw+TLu73GuLXMjE32I4aQbAZYzaSBO7bUMon3HqHTB9xzp4wC2Bau4+w50Y
+	Yf9whIM1n08stD23t8JNJ9ThwG3N3PvDQj4P+sewuwzRQWGQLBkxCHUo4vLlwri3
+	+yjTKEWg5ChzDMdcD3jTuG73P+wZuOAthka1qHVPHC+8o+vjnKQyUxd0PEYx0UMK
+	DDLp3Hj7Ga8Bic5t0pkSZq/Tqw2OCJyPSXvT40TchBrA5Toow8xBt9Pc1s66ZeEr
+	fVq6X/Ise56a9+lwHvZwAAlE64KDceGB52nee4VdQm+NFumq6usoFw7yR7SQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718179406; x=1718265806; bh=xbhjltAIUfHnDJig1OhBBkMn/eJo
-	o/s90NMTvY6fyBA=; b=YAxZ98hVrFhlcrWkO+gP3cYySpnVbEvl4z0VFdXcc603
-	6PmOqJPCiiy9QdCCQwJF2Fanv8jVLGLCU7I5WiM1QXe2KLzgXNH3FivJmu8N/inW
-	VEMBDWGJkKOrAJRwuCAg7AuxRg3cznos89CeZmYJApQ5n1FKJjAZGGzRwyomeCHh
-	Dnz46JnfiWDflFAaBRbpZUQepaJxjL11+DlqL2wI+Jf8P1jTO5Walym8s+Y8BEWQ
-	1e14Yi3a13LO+Lnl8VndrDishsIBTIRYpimIbjEkuXL4v4gDo4glayp5vSf3HGOA
-	opuWWuyd5PRZgKMK3HEQd+346EigenfAWZPK520VLA==
-X-ME-Sender: <xms:TlZpZoYpYf367cPknWmfWGlOaZWEvVDXXKPNrrh5tu1ns1xxezwF7g>
-    <xme:TlZpZjYuK_G4Ry_UHx5VchBbgulDn02DNpMtVaxwO0uYy809J5kfv9gzPG7KbDJ33
-    sX1c7fg6-lXcFGQvQ>
-X-ME-Received: <xmr:TlZpZi-JD-BEXGZN5w4h8saas0Jwo5Oj4Jv7wQ8qmtEm-spx95yYpdRkrAPE3II6BjL8tL3SJYlcOORWX61xlEpimK6Xph7g0D0offJS8VIxgDIijSY>
+	fm1; t=1718179415; x=1718265815; bh=DjoEtAMor0ldAWdXpi0x++sFQCNn
+	X1sMW2hAUhcUpuw=; b=HWv0vHCOpGvAz8PkcUllgZbYbbRg52W8MvWSNd8YF593
+	8/vepd8x715AUj5wVDYBRtK5bKtk3KPFUC7UCEJLBEjW+DJJ50v38YLeIbnk2pBX
+	53SvJ+/u7tR0GSoY5rOaMm5knSi6CgR9NHbTuchpiym63YQTyKmoqotky50f6NEN
+	FDdsD5aLD+7sp5XDK02R5uLT5MbGQQm0yacA8vVg46Hl0B0HAVrJGkrEp4PeMhuU
+	qRH7WBKn3AJmy+iBh0OJEh727BrNQsdOOYTtyTkl4LzhhwHwOHIyqSIHDH5tBrS3
+	FIAqaxfPt61F6NlS6xbV7EDPmZPZBWGDsdHFpSkAJw==
+X-ME-Sender: <xms:VlZpZgrcr6BcwzorIl7_9nbdfdmZxTYeMKYd54_rwNR8njRtuvKWmw>
+    <xme:VlZpZmrIvzedEFAAms-7nfKEvnEm4tmbYEmn55kJl4NaLnHJQCgdGQSnIOS5iPBqy
+    -13hvmnR5ls6QjLeA>
+X-ME-Received: <xmr:VlZpZlPpz6-KxXemcMen-Ok5KvI85c0sEg8XHOJtZqSb7u9HR4U0E1Jb01t_a6-qDo0oFlVtoISnZFZp04emk65PvtlZBStxN4dT5T197DEK_SeZJUA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedufedguddvgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
@@ -55,25 +55,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedufedguddvgecutefuodetgg
     sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
     ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
     rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:TlZpZioPFdoYl8RjLZZA4r_X9rQ4j403MZyW1tZZ2ehoBpR3N2D9-A>
-    <xmx:TlZpZjr1kmn59_MnutxzdXID5XVJ6ubrwKjAUyeHPAD4nwuo__UJng>
-    <xmx:TlZpZgQiQ9pFfaBCg8YtTr_YPR5kXUFP4d8oaUVVvY-e6h-9n6pGOg>
-    <xmx:TlZpZjqlcoXX2IkRzPHET2XQO7J_azk_OdbfgKNGLi0oE1c0S6BW3Q>
-    <xmx:TlZpZiVEBCEKEawGizQEZ95AckSDCcdPUTmMgCUve0AKyeDkBtPY08rQ>
+X-ME-Proxy: <xmx:VlZpZn5Wjv48GHjSzNOcw1BRq7vzecZp3WCOaN8omi2jVv1Pl_OzlQ>
+    <xmx:VlZpZv7Lu4DNx9LjFGb6A0m1mehYnGse9wEwJAuAEWi5sPO6Vh1hvA>
+    <xmx:VlZpZnirSlwZ1ZYYpDqcrbLX0XiEflICQm9jh7nKGJsfPm6JCB5_aw>
+    <xmx:VlZpZp5jFvdMb7ev4TUN35E2j_bBiSR3PNWLG3uUIWeP6KGkMpVw9g>
+    <xmx:V1ZpZhkIIHwYo39zGzFo2evPaWmzg3XsJjao8-BD045otmmcHCTG0TYr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Jun 2024 04:03:25 -0400 (EDT)
+ 12 Jun 2024 04:03:34 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 8a4a2fd2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Jun 2024 08:03:14 +0000 (UTC)
-Date: Wed, 12 Jun 2024 10:03:23 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 441d1ec9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Jun 2024 08:03:23 +0000 (UTC)
+Date: Wed, 12 Jun 2024 10:03:31 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Kyle Lippincott <spectral@google.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/3] config: fix segfault when parsing "core.abbrev"
- without repo
-Message-ID: <b48c50dd92769c7acc5c561f746a7d64dd4d2263.1718178996.git.ps@pks.im>
+Subject: [PATCH v2 2/3] parse-options-cb: stop clamping "--abbrev=" to hash
+ length
+Message-ID: <92860256a61f14b60d6172d396f3ba5fd7be557c.1718178996.git.ps@pks.im>
 References: <CAO_smVimsHAPbMxy09mcYZY8apFgCbpnS9eSF7UOL6_BLqntNw@mail.gmail.com>
  <cover.1718178996.git.ps@pks.im>
 Precedence: bulk
@@ -83,132 +83,101 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yFcfiHMxN++urF6m"
+	protocol="application/pgp-signature"; boundary="j+yoq447CiK9sX+c"
 Content-Disposition: inline
 In-Reply-To: <cover.1718178996.git.ps@pks.im>
 
 
---yFcfiHMxN++urF6m
+--j+yoq447CiK9sX+c
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The "core.abbrev" config allows the user to specify the minimum length
-when abbreviating object hashes. Next to the values "auto" and "no",
-this config also accepts a concrete length that needs to be bigger or
-equal to the minimum length and smaller or equal to the hash algorithm's
-hex length. While the former condition is trivial, the latter depends on
-the object format used by the current repository. It is thus a variable
-upper boundary that may either be 40 (SHA-1) or 64 (SHA-256).
+The `OPT__ABBREV()` option allows the user to specify the length that
+object hashes shall be abbreviated to. This length needs to be in the
+range of `(MIN_ABBREV, the_hash_algo->hexsz)`, which is why we clamp the
+value as required. While this makes sense in the case of `MIN_ABBREV`,
+it is unnecessary for the upper boundary as the value is eventually
+passed down to `repo_find_unnique_abbrev_r()`, which handles values
+larger than the current hash length just fine.
 
-This has two major downsides. First, the user that specifies this config
-must be aware of the object hashes that its repository use. If they want
-to configure the value globally, then they cannot pick any value in the
-range `[41, 64]` if they have any repository that uses SHA-1. If they
-did, Git would error out when parsing the config.
+In the preceding commit, we have changed parsing of the "core.abbrev"
+config to stop clamping to the upper boundary. Let's do the same here so
+that the code becomes simpler, we are consistent with how we treat the
+"core.abbrev" config and so that we stop depending on `the_repository`.
 
-Second, and more importantly, parsing "core.abbrev" crashes when outside
-of a Git repository because we dereference `the_hash_algo` to figure out
-its hex length. Starting with c8aed5e8da (repository: stop setting SHA1
-as the default object hash, 2024-05-07) though, we stopped initializing
-`the_hash_algo` outside of Git repositories.
-
-Fix both of these issues by not making it an error anymore when the
-given length exceeds the hash length. Instead, leave the abbreviated
-length intact. `repo_find_unique_abbrev_r()` handles this just fine
-except for a performance penalty which we will fix in a subsequent
-commit.
-
-Reported-by: Kyle Lippincott <spectral@google.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- config.c         |  4 ++--
- t/t4202-log.sh   | 12 ++++++++++++
- t/t5601-clone.sh |  7 +++++++
- 3 files changed, 21 insertions(+), 2 deletions(-)
+ parse-options-cb.c |  2 --
+ t/t4202-log.sh     | 12 ++++++++++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/config.c b/config.c
-index abce05b774..0416b0f2b6 100644
---- a/config.c
-+++ b/config.c
-@@ -1460,10 +1460,10 @@ static int git_default_core_config(const char *var,=
- const char *value,
- 		if (!strcasecmp(value, "auto"))
- 			default_abbrev =3D -1;
- 		else if (!git_parse_maybe_bool_text(value))
--			default_abbrev =3D the_hash_algo->hexsz;
-+			default_abbrev =3D GIT_MAX_HEXSZ;
- 		else {
- 			int abbrev =3D git_config_int(var, value, ctx->kvi);
--			if (abbrev < minimum_abbrev || abbrev > the_hash_algo->hexsz)
-+			if (abbrev < minimum_abbrev)
- 				return error(_("abbrev length out of range: %d"), abbrev);
- 			default_abbrev =3D abbrev;
- 		}
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index d99d688d3c..b2aa62a9dc 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -30,8 +30,6 @@ int parse_opt_abbrev_cb(const struct option *opt, const c=
+har *arg, int unset)
+ 				     opt->long_name);
+ 		if (v && v < MINIMUM_ABBREV)
+ 			v =3D MINIMUM_ABBREV;
+-		else if (startup_info->have_repository && v > the_hash_algo->hexsz)
+-			v =3D the_hash_algo->hexsz;
+ 	}
+ 	*(int *)(opt->value) =3D v;
+ 	return 0;
 diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 86c695eb0a..e97826458c 100755
+index e97826458c..51f7beb59f 100755
 --- a/t/t4202-log.sh
 +++ b/t/t4202-log.sh
-@@ -1237,6 +1237,18 @@ test_expect_success 'log.abbrevCommit configuration'=
- '
- 	test_cmp expect.whatchanged.full actual
+@@ -1243,12 +1243,24 @@ test_expect_success '--abbrev-commit with core.abbr=
+ev=3Dfalse' '
+ 	test_cmp expect actual
  '
 =20
-+test_expect_success '--abbrev-commit with core.abbrev=3Dfalse' '
++test_expect_success '--abbrev-commit with --no-abbrev' '
 +	git log --no-abbrev >expect &&
-+	git -c core.abbrev=3Dfalse log --abbrev-commit >actual &&
++	git log --abbrev-commit --no-abbrev >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success '--abbrev-commit with core.abbrev=3D9000' '
+ test_expect_success '--abbrev-commit with core.abbrev=3D9000' '
+ 	git log --no-abbrev >expect &&
+ 	git -c core.abbrev=3D9000 log --abbrev-commit >actual &&
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success '--abbrev-commit with --abbrev=3D9000' '
 +	git log --no-abbrev >expect &&
-+	git -c core.abbrev=3D9000 log --abbrev-commit >actual &&
++	git log --abbrev-commit --abbrev=3D9000 >actual &&
 +	test_cmp expect actual
 +'
 +
  test_expect_success 'show added path under "--follow -M"' '
  	# This tests for a regression introduced in v1.7.2-rc0~103^2~2
  	test_create_repo regression &&
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index cc0b953f14..5d7ea147f1 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -46,6 +46,13 @@ test_expect_success 'output from clone' '
- 	test $(grep Clon output | wc -l) =3D 1
- '
-=20
-+test_expect_success 'output from clone with core.abbrev does not crash' '
-+	rm -fr dst &&
-+	echo "Cloning into ${SQ}dst${SQ}..." >expect &&
-+	git -c core.abbrev=3D12 clone -n "file://$(pwd)/src" dst >actual 2>&1 &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'clone does not keep pack' '
-=20
- 	rm -fr dst &&
 --=20
 2.45.2.457.g8d94cfb545.dirty
 
 
---yFcfiHMxN++urF6m
+--j+yoq447CiK9sX+c
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZpVkoACgkQVbJhu7ck
-PpTn+Q/5AWO3s0rSwkMuiG/XuNfJGxdA7YadVR1bGpS9NOoLT12y5+bhUxamwAhx
-m/Rq2qEdOkIptyCXOaP7FXRV/P7yDQWwmZW3C0SwHi41yc9AonSZ6Bj1FdtwN3tH
-bWboe9J6rIoxEm35nyR01nkp8RvaUnZ49buSsmubgQrbuxJWyvBhwzYnBECkzEmF
-7Fwx1PeejEMKesNloB1DFZqATsa0pbkHyPJOjJHb8dAVvV2OLjhmhOOEqyyVT6RD
-uStgRBx4ky9PhsemhiBhWaHBQCytV/x5dPRYsMRaKqfhmiC2pL6+VbEaBBNzoIPr
-lC/Mfc6RMreXxsYwmNbA08kF62mTgHKt0KQ/E0ofE4NaQj9Vd8vMUe9Q+CBIs5qM
-XLuwk0p3EuGHdpMUYUw902dog/iJsqCAMl1T/c78iAPzhlcLfaG5w1QEF5RyZcw/
-F4oqa/Wjzi/TzHSlmm/NeOK9j+pcRg4ady++nqsN82TnvH0FHMZ2JgxZYAAeqEz8
-gHOC1UbGHsbmHwZUMl8vznZQ2ZsTVmWvBvn1GQgW2jz6cfodEGF09Qnv8e3ZTndX
-961fqDfuyr8h/jHesT1gRmoEDZmqSAOcTEwc8VMgiJm/ZcR5yU95DSWyfDsFvees
-mcJS7DkFCJRqfr3YOIe4aUp0w2Jhv+0LSTydwGLYQkiO6bvPDEc=
-=d7MT
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZpVlIACgkQVbJhu7ck
+PpRjVw//RaynvdlFTXqJrBCFCunCmTwRhVWr5wyZ9HGIp9w43XK2LRYZp7XmwpPJ
+OXSs0wTyHRmn9/VJwvTcXwbe4a2pdCUjGzvFTdctXAHa4OFZC/QG/VLCxZe1HHJU
+pxGgtYsSN2hbLoyI2vDRjASyaedkD4lUo0M0272oVIUGg9JwBRNDqjWqmKCnYp2g
+JDHFZKr5E+Rs9vZxDwevbHHx0ssCwu9DqtcbidxzLmGAyXd1KgDU+Z3nLfnDj3Tn
+XHwGe426/p8T6aYDl3AvYrJwfftDWWmVk0DF/J195yEr4v6LRfbDsIohdMBxqQKI
+AOAdesfIvywLcCoYKK4BIfUgKsA2INGA8orztUXzkvyzPvtLK4PY9ipPUaHQ8WbS
+yKdWKOa0zvo7nmg0aDReXD29hvkHUxRON8BjSQjSW7qBuiTYIYKHEec3wCMjFRtC
+n/bsMw7NPtkBiMlmKefSVxMQBuLW3sCKdSWfBfIXalBTgWDQRiZEpNp7qXYVPE1P
+Q8DBeJjzTf6WA9Loq+KgFLUlmY0X6ImFddSbrywhqoQNzgo1QYcKtKrt5mi4WxQs
+QrfSrHBGXMeMozjQ+XZ6pm0jucSwuOTrtg+o2XeozvSHPQmRZ7Onwqr6X8bvJiGn
+FQCUMWjVlbSi3vV7LsQf8FSHNzpMAxu6gAovr7N+OrwYZB6cFXs=
+=a16B
 -----END PGP SIGNATURE-----
 
---yFcfiHMxN++urF6m--
+--j+yoq447CiK9sX+c--
