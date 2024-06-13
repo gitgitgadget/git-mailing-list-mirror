@@ -1,63 +1,62 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15CC182C67
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 20:25:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A8D83A12
+	for <git@vger.kernel.org>; Thu, 13 Jun 2024 20:25:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718310313; cv=none; b=A/jzK3J63wz/vju++yRS1h7UzgO3FTaOYHJXl0Dz9DlgH9zUHt6688IhyVim925ydQQyuEPdWeLsRwlRYmmGV9kUP4ozI7ZorvGsLBWz6lpn5VxLDmr4C4heUpFdConb6z3bosctSpvMuf6zcdG6qHXv7SaAoVb3OtukP7XvyK0=
+	t=1718310314; cv=none; b=tZLI4T9JE2ec5IKkBMVyg/608smDA/Szq8BSiecXAn+ZxOPuwKQXCJlHcIR1gjEaujPMEimTFN9rMXvXzYHWsV0JNaIx+7K62X22a4+oaLkz2tzgsry5ET0AoMQ09W10xitcgSlJC+tpi9eSrOv4XhG7ILIUFfnp17jVQLX3JVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718310313; c=relaxed/simple;
-	bh=OPi3b/GMulpBT0QV1VdSJlP0mGfS7ONhiG6/DdJUfJk=;
+	s=arc-20240116; t=1718310314; c=relaxed/simple;
+	bh=5ndp5kc1EkksktK0FqHk2q/UQlZ+VcDAkqqo4gh0kiA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Yh8mR1lqeENexuspY1K6KTT8NMtXqxyhr/yPvNbwp4qm9l3OfJDyd7F9YBHy53uyVAMr8dn6ibcjbKJeTt/wvbd1e0xqXePHOHtPu+z1xS0mGiEa0mIQKLFn35LeP77dUfmSq++ZN7Ckbgn2jDvMhED+tnRw8bRicEjnEixhdFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ddYtnuWg; arc=none smtp.client-ip=209.85.128.41
+	 MIME-Version:To:Cc; b=cYJiSfPJDth5y0F7SqUbPvTPRl8JsHfp5cZxwx7LVOVtxqcOZzRJnYhXrlhs+q3SawstNOfJCXEm/xWZz8iLaBJi2rLG52KQK9/HchQHKLnN4nzJxtK0d+5Rx9sOdQSKRUHfwRiZwgBuTxB77D2qvT4AAxSsZQP0wMmnSBoRR9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UJWNh2fg; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ddYtnuWg"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-421757d217aso16272915e9.3
-        for <git@vger.kernel.org>; Thu, 13 Jun 2024 13:25:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UJWNh2fg"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-35f090093d8so1236356f8f.0
+        for <git@vger.kernel.org>; Thu, 13 Jun 2024 13:25:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718310310; x=1718915110; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718310311; x=1718915111; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WQB926BDScI7gAUE1hQ2OAdJAxYFLzHUV8FSZigHySU=;
-        b=ddYtnuWgpRsxEwG5s1z4NOoHIXGsHOs68P8Q3f77/GXDpb9PRPVOTTHZOKSbkZx8uy
-         dxfcU+EMgyqT7H7jHb42cwyMU84Cs+HhEVe0Az7ziTBEzJELTqeNFp2+MSEvbUMOqxL+
-         BUWK/6Z4/dB2yBGrYex0LkGHxOwpL2UNF91AvGlr0yu05cfeCv+zftSwkTxUvYlVJXSn
-         XqB9OUu5bI273cP9guyhDPVZnNLuJ4mVp8MbmDtOypoD3YLCP8usw9WG/rQyDNpmtQea
-         by6PnuMQy6TkK3z71nocg7SnvoOhr0KGYiKUoA+7nVACyx+rLlL/Nvmhp0Fl6rCd108x
-         LNZA==
+        bh=G4N2+McsKqskjMX3WjohnPbDfySDHNpuGo3pNeSOEAI=;
+        b=UJWNh2fgy5l4o+QmIk0lBQBWxa60j0rJsC0BZmNMUP39PcpQ+SyCNwM5fpHSAvgOYG
+         2EM+mleuflDKOuwb1CY4Aox1oSb506CvvRetYs152axTXVKKnioqRJRQqcO6LevmeS4d
+         61EOBdBBw4+Rcx8iM7zeXFvfIKYUe3J3F6LNZc25T5JgktyUPFjKa6q0LyqyO+MeCXIQ
+         nBf4TRi3T42X6TF57Id9Or82fyin4AEzka8gvVOu8HeTqBvlTFG++k6e6Vuhvy3rhrsB
+         Sx378NbLcv846JV9Ozx8XlVdIdG35OC/ei1DNbDznZe7MlvR+hK38eNAFgaOCvqs6izy
+         tyxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718310310; x=1718915110;
+        d=1e100.net; s=20230601; t=1718310311; x=1718915111;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WQB926BDScI7gAUE1hQ2OAdJAxYFLzHUV8FSZigHySU=;
-        b=qss7+1xhTT0zGc3+N6NLoHMVnicicu0WzsIpQVyb5jqgC5iO6E/NzdBhQX2ZlOGEsg
-         8OmPb4sJ8qdBA5nbxgBKlCdJghcgaYl3WwtfMI2RLtw40QS4Bx4ei0AWiApluqumbTF3
-         ByUOcSyyr/y87a11Al2XRnSjv5/AUvwqVS6HWAUu/7FVcUzxgz0CdDMFhELEH8FB7rzS
-         rUBASb05v1Mb2OsYmHsUTB0boluB/D1qTmx+6VzGxZ7VqFe33JfzMqaPI//zswGica9f
-         nIqHMXYezQMCj2mwJ69tAQsx2dAP0Dswjo0oKTGM5+M9lzQFXfeV6nkrQo19NoA5FBTb
-         nwxQ==
-X-Gm-Message-State: AOJu0YwHgm9cY/C4i8vg7+7ASme+wngDgviOxdUD6rOHW5zvIkPiJANo
-	HajqMTezUgi1iD3SonyEoCMcbz4gRcGFlsxxup8ET5ei2iAOotK35q0sYg==
-X-Google-Smtp-Source: AGHT+IFy9a6VsEkbV730nIpos3DRBUwAj83fL7JEYtf97V2jEEHMfo8jiU/MpUsmDpHMY58vazUuhA==
-X-Received: by 2002:a05:600c:354f:b0:421:e7ae:955b with SMTP id 5b1f17b1804b1-42304825ca9mr7502285e9.21.1718310309999;
-        Thu, 13 Jun 2024 13:25:09 -0700 (PDT)
+        bh=G4N2+McsKqskjMX3WjohnPbDfySDHNpuGo3pNeSOEAI=;
+        b=EA+9ldOKZjPEQYIxVaJD+Pbhd2aSd6U958oAdGmqrH2An/foTK6FxhVA22cNMAcA3c
+         s9RE6uuCdSOi59zdm37HgSXMv9LNgelu3nnY5r7AcvTso4eVTK0xG0KvRvg2lvzIJ1yB
+         le24e3vD6jGGYQDGkmIKFBTGMkMs4rrxm9oS9to8iu8MGVjU4p+eNJ91pSXBiNHeaz3T
+         LWgzoTAi83lwqJjsvBSUvLrI9zCOGyEjTnpqhnXdPBT7mnPXywpmUvKYg7DqA1RzbXua
+         A6nlh16KlAUYi4lTy+zQ4eEhcSoKpR+IzqwKSwLCKfd0OiSu4HJeY0I6Ml+gYWmkyWPW
+         3V9Q==
+X-Gm-Message-State: AOJu0YxvxidwJpPbPPRgOIHl2/OJ6ZpSUYBkA0XBpI/OffWSwPHD8Kcg
+	FMvTx31L9rCgsv9WuSkxMkBHpj0v5sQLpkRtfvvwWAC+D9VvPWnTk4kdNA==
+X-Google-Smtp-Source: AGHT+IFqQC3pLeu9cOJIqv/K9y65wD1G3f3moVUf45cOA6XIeraF0FowFF+IutRxRSOghk3sR1xoig==
+X-Received: by 2002:adf:e802:0:b0:35f:1d13:c843 with SMTP id ffacd0b85a97d-3607a720704mr504615f8f.11.1718310311066;
+        Thu, 13 Jun 2024 13:25:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-423047e28b7sm9942485e9.44.2024.06.13.13.25.09
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3607509c911sm2583377f8f.33.2024.06.13.13.25.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jun 2024 13:25:09 -0700 (PDT)
-Message-Id: <d4ba1fccd9145db9b3fe1530881052315cfa16b8.1718310307.git.gitgitgadget@gmail.com>
+        Thu, 13 Jun 2024 13:25:10 -0700 (PDT)
+Message-Id: <17c97301baa829a993cf8838deb9271add5bd1cd.1718310307.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1748.git.1718310307.gitgitgadget@gmail.com>
 References: <pull.1748.git.1718310307.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 13 Jun 2024 20:25:01 +0000
-Subject: [PATCH 1/7] merge-ort: extract handling of priv member into reusable
- function
+Date: Thu, 13 Jun 2024 20:25:02 +0000
+Subject: [PATCH 2/7] merge-ort: maintain expected invariant for priv member
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,63 +72,110 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-In preparation for a subsequent commit which will ensure we do not
-forget to maintain our invariants for the priv member in error
-codepaths, extract the necessary functionality out into a separate
-function.  This change is cosmetic at this point, and introduces no
-changes beyond an extra assertion sanity check.
+The calling convention for the merge machinery is
+   One call to          init_merge_options()
+   One or more calls to merge_incore_[non]recursive()
+   One call to          merge_finalize()
+      (possibly indirectly via merge_switch_to_result())
+Both merge_switch_to_result() and merge_finalize() expect
+   opt->priv == NULL && result->priv != NULL
+which is supposed to be set up by our move_opt_priv_to_result_priv()
+function.  However, two codepath dealing with error cases did not
+execute this necessary logic, which could result in assertion failures
+(or, if assertions were compiled out, could result in segfaults).  Fix
+the oversight and add a test that would have caught one of these
+problems.
 
+While at it, also tighten an existing test for a non-recursive merge
+to verify that it fails correctly, i.e. with the expected exit code
+rather than with an assertion failure.
+
+Reported-by: Matt Cree <matt.cree@gearset.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ merge-ort.c           |  3 ++-
+ t/t6406-merge-attr.sh | 42 +++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 43 insertions(+), 2 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index eaede6cead9..10f5a655f29 100644
+index 10f5a655f29..6ca7b0f9be4 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -5000,6 +5000,28 @@ static void merge_check_renames_reusable(struct merge_result *result,
- 
- /*** Function Grouping: merge_incore_*() and their internal variants ***/
- 
-+static void move_opt_priv_to_result_priv(struct merge_options *opt,
-+					 struct merge_result *result)
-+{
-+	/*
-+	 * opt->priv and result->priv are a bit weird.  opt->priv contains
-+	 * information that we can re-use in subsequent merge operations to
-+	 * enable our cached renames optimization.  The best way to provide
-+	 * that to subsequent merges is putting it in result->priv.
-+	 * However, putting it directly there would mean retrofitting lots
-+	 * of functions in this file to also take a merge_result pointer,
-+	 * which is ugly and annoying.  So, we just make sure at the end of
-+	 * the merge (the outer merge if there are internal recursive ones)
-+	 * to move it.
-+	 */
-+	assert(opt->priv && !result->priv);
-+	if (!opt->priv->call_depth) {
-+		result->priv = opt->priv;
-+		result->_properly_initialized = RESULT_INITIALIZED;
-+		opt->priv = NULL;
-+	}
-+}
-+
- /*
-  * Originally from merge_trees_internal(); heavily adapted, though.
-  */
-@@ -5060,11 +5082,7 @@ static void merge_ort_nonrecursive_internal(struct merge_options *opt,
- 		/* existence of conflicted entries implies unclean */
- 		result->clean &= strmap_empty(&opt->priv->conflicted);
- 	}
+@@ -5015,7 +5015,7 @@ static void move_opt_priv_to_result_priv(struct merge_options *opt,
+ 	 * to move it.
+ 	 */
+ 	assert(opt->priv && !result->priv);
 -	if (!opt->priv->call_depth) {
--		result->priv = opt->priv;
--		result->_properly_initialized = RESULT_INITIALIZED;
--		opt->priv = NULL;
--	}
-+	move_opt_priv_to_result_priv(opt, result);
- }
++	if (!opt->priv->call_depth || result->clean < 0) {
+ 		result->priv = opt->priv;
+ 		result->_properly_initialized = RESULT_INITIALIZED;
+ 		opt->priv = NULL;
+@@ -5052,6 +5052,7 @@ static void merge_ort_nonrecursive_internal(struct merge_options *opt,
+ 		    oid_to_hex(&side1->object.oid),
+ 		    oid_to_hex(&side2->object.oid));
+ 		result->clean = -1;
++		move_opt_priv_to_result_priv(opt, result);
+ 		return;
+ 	}
+ 	trace2_region_leave("merge", "collect_merge_info", opt->repo);
+diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
+index 156a1efacfe..b6db5c2cc36 100755
+--- a/t/t6406-merge-attr.sh
++++ b/t/t6406-merge-attr.sh
+@@ -185,7 +185,7 @@ test_expect_success !WINDOWS 'custom merge driver that is killed with a signal'
  
- /*
+ 	>./please-abort &&
+ 	echo "* merge=custom" >.gitattributes &&
+-	test_must_fail git merge main 2>err &&
++	test_expect_code 2 git merge main 2>err &&
+ 	grep "^error: failed to execute internal merge" err &&
+ 	git ls-files -u >output &&
+ 	git diff --name-only HEAD >>output &&
+@@ -261,4 +261,44 @@ test_expect_success 'binary files with union attribute' '
+ 	grep -i "warning.*cannot merge.*HEAD vs. bin-main" output
+ '
+ 
++test_expect_success !WINDOWS 'custom merge driver that is killed with a signal on recursive merge' '
++	test_when_finished "rm -f output please-abort" &&
++	test_when_finished "git checkout side" &&
++
++	git reset --hard anchor &&
++
++	git checkout -b base-a main^ &&
++	echo base-a >text &&
++	git commit -m base-a text &&
++
++	git checkout -b base-b main^ &&
++	echo base-b >text &&
++	git commit -m base-b text &&
++
++	git checkout -b recursive-a base-a &&
++	test_must_fail git merge base-b &&
++	echo recursive-a >text &&
++	git add text &&
++	git commit -m recursive-a &&
++
++	git checkout -b recursive-b base-b &&
++	test_must_fail git merge base-a &&
++	echo recursive-b >text &&
++	git add text &&
++	git commit -m recursive-b &&
++
++	git config --replace-all \
++	merge.custom.driver "./custom-merge %O %A %B 0 %P %S %X %Y" &&
++	git config --replace-all \
++	merge.custom.name "custom merge driver for testing" &&
++
++	>./please-abort &&
++	echo "* merge=custom" >.gitattributes &&
++	test_expect_code 2 git merge recursive-a 2>err &&
++	grep "^error: failed to execute internal merge" err &&
++	git ls-files -u >output &&
++	git diff --name-only HEAD >>output &&
++	test_must_be_empty output
++'
++
+ test_done
 -- 
 gitgitgadget
 
