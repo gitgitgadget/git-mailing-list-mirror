@@ -1,112 +1,106 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD9586136
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 10:07:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE7B13E3E4
+	for <git@vger.kernel.org>; Thu, 13 Jun 2024 10:10:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718273240; cv=none; b=u3qAy80E6+idzbO90lvrfa869fUs9fQeaGudA6i/FaAE57pSX3AJYFZYJJSuCACoQgYOkiogngQrZ+3a0AtP6XTQdDU3jXdbYuYz+B0T6mXp1eftGO/WKbvB26MnyZggVwbcU2hmfx4Sm7ZFRguosnxaLjr7182ZwsgQqFMx434=
+	t=1718273440; cv=none; b=QTTdREg3h8fOhj+EZ8MgxiAmtn12M4gC4vTVn3qmWtSc9IsoMKQ70hAMRxVXJR6LlChRfPAPthLQdP57tuN9SG8l1DWtUcN1iNOJr0mSSLUFqPy2db+lekNZsLnwm+wd58SDtW38V0JOXnq2FMFZiVp3UiZrbnTVThDhccokyB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718273240; c=relaxed/simple;
-	bh=MREJXckfs8hWRhWkIJHn68dEOgl3nLT8lVpwGgyAfMM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tuUJrrBG8q1STfKV18m0CLH626bf+fbSvI/rKkVA8BqeAdHOHsBcB6ozK5slfZ3WWwf+BS4Z7bJ2zQgin22KPTLas1LpKhZ8QoJS6e3SkuI/8MVZah7yG11sOspl36FZMF9HjWgamHlzKH8RCFn/P54pjl7nGGG3JSeeQEQ56bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 25964 invoked by uid 109); 13 Jun 2024 10:07:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Jun 2024 10:07:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15888 invoked by uid 111); 13 Jun 2024 10:07:15 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Jun 2024 06:07:14 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 13 Jun 2024 06:07:16 -0400
-From: Jeff King <peff@peff.net>
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@dwim.me>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/4] t5541: add test for rejecting a push due to packfile
- size
-Message-ID: <20240613100716.GB817573@coredump.intra.peff.net>
-References: <20240612115028.1169183-1-cmn@dwim.me>
- <20240612115028.1169183-4-cmn@dwim.me>
+	s=arc-20240116; t=1718273440; c=relaxed/simple;
+	bh=ePDmJZh1v0JGhibb4PT950mpdW24XCVHhzbSAbkZQc0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZMDyYTBjNAqYT3wy5vUC6I7AA451djYTIjr2YMuwz/Xp3p+QtNlgUfrFQRwFYnUKjojZCTZiACY0+JEkGsetV3zOpdgxBxVwe0AC94GjgYPJDW3+fKZ369LJfu5C4JjjBDFTjJ/Nj3334ZsfFRrsSlh2Roe+0bMD7xWt6+rwjL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=xN7iZU8s; arc=none smtp.client-ip=91.218.175.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="xN7iZU8s"
+X-Envelope-To: el@horse64.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1718273432;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ePDmJZh1v0JGhibb4PT950mpdW24XCVHhzbSAbkZQc0=;
+	b=xN7iZU8sc3ncgaCZPHiOpe38RgXbKI+MoOaWTwXOupcSicM9/v0lHFtUIMx+LqITUuM0Pn
+	aZORW2+PdzCKESKsC73we7hI/TnBNKsGh3o5IAn5qTPyP94kkKmsS5dN28R0eQ8yGrtpI0
+	/uUsF3t7FTCbjXVQ87KxHYSrhkT5Vi8=
+X-Envelope-To: gitster@pobox.com
+X-Envelope-To: nasamuffin@google.com
+X-Envelope-To: peff@peff.net
+X-Envelope-To: rsbecker@nexbridge.com
+X-Envelope-To: git@vger.kernel.org
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Toon claes <toon@iotcl.com>
+To: ellie <el@horse64.org>, Junio C Hamano <gitster@pobox.com>, Emily
+ Shaffer <nasamuffin@google.com>
+Cc: Jeff King <peff@peff.net>, rsbecker@nexbridge.com, git@vger.kernel.org
+Subject: Re: With big repos and slower connections, git clone can be hard to
+ work with
+In-Reply-To: <f5c24dfc-8d35-4418-b8f6-0a03d70c0917@horse64.org>
+References: <fec6ebc7-efd7-4c86-9dcc-2b006bd82e47@horse64.org>
+ <0be201dab933$17c02530$47406f90$@nexbridge.com>
+ <fdb869ef-4ce9-4859-9e36-445fd9200776@horse64.org>
+ <0beb01dab93b$c01dfa10$4059ee30$@nexbridge.com>
+ <200c3bd2-6aa9-4bb2-8eda-881bb62cd064@horse64.org>
+ <20240608084323.GB2390433@coredump.intra.peff.net>
+ <CAJoAoZkP58ZM4J3ejemyiqkkbEaQdphoyGj_LmX9-xb_eMgb4A@mail.gmail.com>
+ <xmqq5xug1qrf.fsf@gitster.g>
+ <f5c24dfc-8d35-4418-b8f6-0a03d70c0917@horse64.org>
+Date: Thu, 13 Jun 2024 12:10:19 +0200
+Message-ID: <87msnpjgqc.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240612115028.1169183-4-cmn@dwim.me>
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Wed, Jun 12, 2024 at 01:50:27PM +0200, Carlos Martín Nieto wrote:
+ellie <el@horse64.org> writes:
 
-> +test_expect_success 'reject too-large push over HTTP' '
-> +	git init "$HTTPD_DOCUMENT_ROOT_PATH/error_too_large" &&
-> +	git -C "$HTTPD_DOCUMENT_ROOT_PATH/error_too_large" config receive.maxInputSize 128 &&
-> +	test-tool genrandom foo $((10*1024*1024)) >large-file &&
-> +	git add large-file &&
-> +	test_commit large-file &&
-> +	test_must_fail git push --porcelain \
-> +		$GIT_SERVE_URL/error_too_large \
-> +		HEAD:refs/tags/will-fail >actual &&
-> +	test_must_fail git -C "$HTTPD_DOCUMENT_ROOT_PATH/error_too_large" \
-> +		rev-parse --verify refs/tags/will-fail &&
-> +	cat >expect <<-EOF &&
-> +	To $GIT_SERVE_URL/error_too_large
-> +	!	HEAD:refs/tags/will-fail	[remote rejected] (unpacker error)
-> +	Done
-> +	EOF
-> +	test_cmp expect actual
-> +'
+> Sorry for again another total newcomer/outsider question:
 
-This test fails for me (even with the fix in the next patch) with:
+Don't apologize for asking these questions, you're more than welcome.
 
-  Exception occurred during processing of request from ('127.0.0.1', 47480)
-  Traceback (most recent call last):
-    File "/usr/lib/python3.11/socketserver.py", line 317, in _handle_request_noblock
-      self.process_request(request, client_address)
-    File "/usr/lib/python3.11/socketserver.py", line 348, in process_request
-      self.finish_request(request, client_address)
-    File "/usr/lib/python3.11/socketserver.py", line 361, in finish_request
-      self.RequestHandlerClass(request, client_address, self)
-    File "/home/peff/compile/git/t/lib-httpd/serve-git.py", line 35, in __init__
-      super().__init__(*args, **kwargs)
-    File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
-      self.handle()
-    File "/usr/lib/python3.11/http/server.py", line 436, in handle
-      self.handle_one_request()
-    File "/usr/lib/python3.11/http/server.py", line 424, in handle_one_request
-      method()
-    File "/home/peff/compile/git/t/lib-httpd/serve-git.py", line 117, in do_GET
-      self.do_receive_pack(responder, gitdir, True, protocol)
-    File "/home/peff/compile/git/t/lib-httpd/serve-git.py", line 243, in do_receive_pack
-      self._run_command(resp, 'receive-pack', gitdir, advertisement, protocol)
-    File "/home/peff/compile/git/t/lib-httpd/serve-git.py", line 192, in _run_command
-      with subprocess.Popen(argv, stdin=stdin, stdout=subprocess.PIPE, cwd=gitdir, env=env) as proc:
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/usr/lib/python3.11/subprocess.py", line 1026, in __init__
-      self._execute_child(args, executable, preexec_fn, close_fds,
-    File "/usr/lib/python3.11/subprocess.py", line 1955, in _execute_child
-      raise child_exception_type(errno_num, err_msg, err_filename)
-  FileNotFoundError: [Errno 2] No such file or directory: 'git'
+> Is a bundle or pack file something any regular git HTTPS instance
+> would naturally provide when setup the usual ways?
 
-which seems...odd. It should be finding "git" in bin-wrappers/, but I
-think it is using a restricted/vanilla path. If I put "git" into
-/usr/bin, it stops complaining (but obviously this is very wrong, as we
-are not running the Git we're trying to test!).
+Yes and no. Bundle and packfile format can used in many places.
+Packfiles are used to transfer a bunch of objects, or store them locally
+in Git's object database. A bundle is a packfile, but with a leading
+header describing refs. You can read about that at
+https://git-scm.com/docs/gitformat-bundle.
 
-Ah, I think I see it. You set up an environment for the Popen like:
+> Like, if resume relied on that, would this work when following the
+> standard smart HTTP setup procedure
+> https://git-scm.com/book/en/v2/Git-on-the-Server-Smart-HTTP (sorry if
+> I got the wrong link) and then git cloning from that? That would
+> result in the best availability of such a resume feature, if it ever
+> came to be.
 
-  env = {k:v for k, v in os.environ.items() if k.startswith('GIT_')}
-  if protocol is not None:
-      env['GIT_PROTOCOL'] = protocol
+As mentioned elsewhere in the thread, on clone (and fetch) the client
+negotiates with the server which objects to download. Because the state
+of the remote repository can change between clones, so will the result
+of this negotiation. This means the content of the packfile sent over
+might differ, which is disruptive for caching these files.
 
-so it does not contain $PATH (nor other possibly useful things!), so
-presumably a fallback $PATH is used. I think you'd want to start with
-"env = os.environ.copy()" and then modify it from there.
+That's why the proposal of bundle URI or packfile URI is suggested. In
+case of bundle URI, it will tell the client to download a pre-made
+bundle before starting the negotiation. This bundle can be stored on a
+CDN or whatever static HTTP(s) server. But it requires the server to
+create it, store it, and tell the client about it. This is not something
+that's builtin into Git itself at the moment.
 
--Peff
+This is not really related to the Smart HTTP protocol, because it can be
+used over SSH as well. But when such file is stored on a regular HTTP
+server, we can rely on resumable downloads. Only after that bundle is
+downloaded, the client will start the negotiation with the server to get
+missing objects and refs (which should be a small subset when the bundle
+is recent).
+
+
+--
+Toon
