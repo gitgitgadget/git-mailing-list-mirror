@@ -1,80 +1,80 @@
 Received: from wfhigh8-smtp.messagingengine.com (wfhigh8-smtp.messagingengine.com [64.147.123.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE7213774D
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 06:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB1A137923
+	for <git@vger.kernel.org>; Thu, 13 Jun 2024 06:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718259285; cv=none; b=bgfkdzv9IPfEpIRCHhPe5Nj7uuORvEIhLpPsqF3wcsY/XsIO/E2Ve7ELIYGOjdBjCi9/mQ0MWeGJG0hCCWJhXdJrcE/s9sJXHkAYTaE2WPoGLXZxH4t1pTK0xeVL7iFl8a4PMwr+GGM5RbuNdmEZ/tGCO7iUULb75d/k1rt44kE=
+	t=1718259290; cv=none; b=istQfEmarN8H6UHsunkhxO/RqUBO79wKEXACG9Vs5TowQCFZ1Wo63nAsHJhxs1hM0M+dDzQ9mWLBgiJUv3Dpi+85pDw+HO1urYVHiw9hSsjQAFc6tdHeFA/8Zkj2+4OWMZSyfOUNoJt8jDAtEqiva50tLPngE5BdBJRVm6XPUg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718259285; c=relaxed/simple;
-	bh=v5L9+t6f9hYnO0SjHNiIRUmn0PQHxDhgdnl2uWVwSG4=;
+	s=arc-20240116; t=1718259290; c=relaxed/simple;
+	bh=w77GrZX/VM91X80PfhvxmLmSeTdjTLyhH4jM1zWARhs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=crWwOYJKikNdQdvZgBFFdEiVhSmtrrAD6eebz7eyj79n15+TNFYonLa1Tw2uJt5DR4fUWsG88Un0awXWiqsukpOxRBjZEVn2Gw2WsG2d2ipzNaoxIhnm4+M8TRdgW9eS7OkkxPaTUnfJa+s3JqJTuONzGRvtvdKLrrDrSK3C8Cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P3o+98jU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G1UOiYu3; arc=none smtp.client-ip=64.147.123.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=eUMjJ1//02s6jVeEDjjPmqEkoA0DIYrDIa0GUJ1+y4qnO1Ykw5qOmvokDFWWwu+MOIrTVRH9pZfiqpwtlclc9zGH2AZHWmHZu9i2baW7z0p4vF6fOoJH3nkaLl7OPrjTy2gnt/9MXuXQuTpqGQhkF0/NsbXouMlacPhga6FoSwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=czVkXMaH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G2mJeleX; arc=none smtp.client-ip=64.147.123.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P3o+98jU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G1UOiYu3"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="czVkXMaH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G2mJeleX"
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 4598018000AC;
-	Thu, 13 Jun 2024 02:14:43 -0400 (EDT)
+	by mailfhigh.west.internal (Postfix) with ESMTP id 42C1018000AC;
+	Thu, 13 Jun 2024 02:14:48 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 13 Jun 2024 02:14:43 -0400
+  by compute4.internal (MEProxy); Thu, 13 Jun 2024 02:14:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718259282; x=1718345682; bh=drili+VLs4
-	rkVAtTYz9iGRI0i53OdrEWU9GK//clySo=; b=P3o+98jUVFinuFtYyBXsfYUFvQ
-	AUprhMP3xSi3+LGJE/p1T24vFUovaLTg2uJMDx+NUaXejYhuE1koOHbg+SP6qfXT
-	iCNAP+B69Zjj5pqlVGX/AfoH3pKKwwXlMyyawVBv+rF9jf48lIEt3OsfxhRLaiee
-	T0VHWngYJlzlcKG/gzQwuV/KAwL3P9uHqSbKQD/rkqGlYJDNzOzSfdQtAVi+TDni
-	llY4okcMzNYbKF0okZelydrjQCixBG0i0cAU19Srq5bJ4tPOQuarrBJztI6RpiDC
-	F6fcOXvgc1zxOqBLBuDVc3OC9f2gITs5hCpH8P7nm4wOc3VM7c7NL+aQA7+A==
+	:subject:to:to; s=fm1; t=1718259287; x=1718345687; bh=nOT9G5Wpv6
+	Qp7K7yu04+zjgfOZ8HlhWiQ7znLQsnau0=; b=czVkXMaHFw8Y6zgIUYn41eai+B
+	W++PkRYX8Qzj9XQU9QmGaOlr5YYam+bTX+gzThosTjKSX8vm4NZf2T50JOg9u8xl
+	6aPD+wGPDchA7lKELAxX8cd9AsWWAi4mcSErlOuM12teSKMFSoqAiQBKFZQ7qPy3
+	9KP9IRy5EN8f2+9NrLH8d9In3rjveM4pr2brNGZYOk69X8kbu98r351OhR6GauJw
+	YnCJXpzFVTuk9uEcAegYlwmPVnG3hu1+1NVv/gjE8zo8tbrF3SkkP3aTPRBbvzfH
+	P+yJKncNE4M46Q3/Kl0LWkewJKLzkk9tzkp+uaFFKEPcPRZJVekJ3neoGIzw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718259282; x=1718345682; bh=drili+VLs4rkVAtTYz9iGRI0i53O
-	drEWU9GK//clySo=; b=G1UOiYu39P4QjjxPW/lEpbgqqSc0YKTPM7yY9SRT2M5A
-	ml+pO03KQwnweSDe8/TPnYYpbxPIsnwl/c0JJ5iqUMIhEI+axwB+k7PGALRsW70F
-	MxF1Gj3D0qCIr3v6snA3nfNgsmZI5ABkkb+ViSNXPmd3iP+DawsxoVXXM0pGtu6g
-	Y1g2de0KjqhAs3QY3wvV8M1Jm8ytZvVFTXrXRiw2MwTP/ZLtb9faqEhNMX+DwY05
-	cm2N909JTgnSOam11UMJywxUp3cQMDZ1iNX6Sq2weEvogGLFfPVdGLd45DB99f70
-	J51FO+2oX3aea2vo08IS2nTJZuYJhuCz/ZR30k6Z9A==
-X-ME-Sender: <xms:Uo5qZpvBuJOrQYPr15_y67peiTfIuTHC5ezQhOppJYIE12MQcJkOyw>
-    <xme:Uo5qZifNdRB2tavdWlBhlAFxnyQjWqVu-z2eLo_VS6I4PWUuc-QAWicpioJGgyLHf
-    qWuw7PW2KTWdyvH4w>
-X-ME-Received: <xmr:Uo5qZsy7zcGKU0NStnXhNtrIQ6OJng593s1z2ioqdFs-bEEX-tvBsuRDSZF9LlR3JLQA__tVDiB4AjhH1nzww2DVair2hs_pvsFExJqHeMa9TwcWxDk>
+	fm1; t=1718259287; x=1718345687; bh=nOT9G5Wpv6Qp7K7yu04+zjgfOZ8H
+	lhWiQ7znLQsnau0=; b=G2mJeleXLGfYNDQfzH59iNaaAz8iBZaS2gRXexAygd25
+	Mig2uWQkUfHTytxUJoLMyNOsImzVwqoE8XyNKLhFB5w0HHLekc/ATt1c5ZoKOm7H
+	sBqhQBoXpnZiG91Co5Y31xyM54sSTakl4/GSXdOqep2dz2Ghs2aGOfkKcZdjVA4R
+	/Yo19cQ7Vx4lm6ksKHLLDjPUlzK7K5VR/8km/x6dvE0oFGbaQlkMMwPEhjHDL+0R
+	z5/Oo0B6zfKKvcG5auh1ZecWUOUWsYYKepsIswzI+i6jcGvy++Mu6wtqKRqy7Dv2
+	fnIb+kPKih0B2P1zj10UEaTzIV2G/oGVVWlAAQTNXQ==
+X-ME-Sender: <xms:V45qZn1bpojDWxyB7zRjwBtUB0Cdlf7bJicrNDgfAt405wIntFY_-w>
+    <xme:V45qZmFeOaoqKY54LQq7cj3hclIXIfxwKIYEbYFLAi0njMNF0XUviZRooLxP7sJbg
+    7q8a0t0B3HTYXCcIw>
+X-ME-Received: <xmr:V45qZn6tBByTIEcsQHSNXOAAy6FiuDMZJmXsY3sDGGRJBkutNMHUxBVFVwaeVsFmYHcELDIuJvr60oi2qa2KuD6gD_J7HzZc30KrGUo20ZapFx5E5ZY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduiedgjeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:Uo5qZgOqRahG-g6qRdv493BlXhfW0mdMJZ8QK7Q3U6O52Bv1DZl0vg>
-    <xmx:Uo5qZp_Zb83BPbAU3XAALklqBRhiCQmHyHzu8R7VFPTbprOM8IbTuQ>
-    <xmx:Uo5qZgUfn_fqjByhupOUpgK4s5yDpo5RCvXr1p5KasYGajA1JxJMJw>
-    <xmx:Uo5qZqdE2MUNbp7xl6IXQCLn5LTqHpQ8VaPr7tVFnQY-rZ-wsuBv1g>
-    <xmx:Uo5qZkaAKDxAkmWS7ST3WvlJGFJ9wJqnOlghx_EDioyGpx8Cv_0-Ypot>
+X-ME-Proxy: <xmx:V45qZs1-6JqIsLTpxZiiQgAd8VrGSGfgLCkxMKvoZYfKLQjJ-fvNZA>
+    <xmx:V45qZqHvKb41P5-1mFIwzC0HQf-zh4PIWsnEM4KJny0MqRLZu_ojqg>
+    <xmx:V45qZt9JeKzfbkGAG223r7qDFQdFUoYRhL7Z-uNlVtYx-ra8KAUPAg>
+    <xmx:V45qZnlfx2-9WH_nvzfTydsTH0-r743NbXX993fTGWiLN8wfTQvWwQ>
+    <xmx:V45qZmBsRgXzIQd97LmqUG1xX-NzdqmbVJXgYvn3yLzu2lRGoYgjuSe->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Jun 2024 02:14:41 -0400 (EDT)
+ 13 Jun 2024 02:14:46 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id d2bd5e26 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 13 Jun 2024 06:14:28 +0000 (UTC)
-Date: Thu, 13 Jun 2024 08:14:39 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 98761864 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 13 Jun 2024 06:14:33 +0000 (UTC)
+Date: Thu, 13 Jun 2024 08:14:44 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 16/20] compat/fsmonitor: fix socket path in networked
- SHA256 repos
-Message-ID: <3ceb726655e72f8bca0864b5bc3978df5b011e19.1718259125.git.ps@pks.im>
+Subject: [PATCH v2 17/20] t/helper: use correct object hash in partial-clone
+ helper
+Message-ID: <74e5489bd077ee60b08fd4631c8113669bbc2b25.1718259125.git.ps@pks.im>
 References: <cover.1718106284.git.ps@pks.im>
  <cover.1718259125.git.ps@pks.im>
 Precedence: bulk
@@ -84,85 +84,64 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9+yhtxWhK9lzoKaa"
+	protocol="application/pgp-signature"; boundary="1GcrF6HiV5Z9swUO"
 Content-Disposition: inline
 In-Reply-To: <cover.1718259125.git.ps@pks.im>
 
 
---9+yhtxWhK9lzoKaa
+--1GcrF6HiV5Z9swUO
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The IPC socket used by the fsmonitor on Darwin is usually contained in
-the Git repository itself. When the repository is hosted on a networked
-filesystem though, we instead create the socket path in the user's home
-directory or the socket directory. In that case, we derive the path by
-hashing the repository path.
+The `object_info()` function of the partial-clone helper is responsible
+for checking the object ID of a repository other than `the_repository`.
+We use `parse_oid_hex()` in this function though, which means that we
+still depend on `the_repository->hash_algo`.
 
-But while we always use SHA1 to hash the repository path, we then end up
-using `hash_to_hex()` to append the computed hash to the socket path.
-This is wrong because `hash_to_hex()` uses the hash algorithm configured
-in `the_repository`, which may not be SHA1. The consequence is that we
-may append uninitialized bytes to the path when operating in a SHA256
-repository.
-
-Fix this bug by using `hash_to_hex_algop()` with SHA1.
+Fix this by using the object hash of the function-local repository.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- compat/fsmonitor/fsm-ipc-darwin.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ t/helper/test-partial-clone.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/compat/fsmonitor/fsm-ipc-darwin.c b/compat/fsmonitor/fsm-ipc-d=
-arwin.c
-index 6f3a95410c..52f4f29720 100644
---- a/compat/fsmonitor/fsm-ipc-darwin.c
-+++ b/compat/fsmonitor/fsm-ipc-darwin.c
-@@ -17,7 +17,7 @@ const char *fsmonitor_ipc__get_path(struct repository *r)
- 	git_SHA_CTX sha1ctx;
- 	char *sock_dir =3D NULL;
- 	struct strbuf ipc_file =3D STRBUF_INIT;
--	unsigned char hash[GIT_MAX_RAWSZ];
-+	unsigned char hash[GIT_SHA1_RAWSZ];
+diff --git a/t/helper/test-partial-clone.c b/t/helper/test-partial-clone.c
+index 910a128614..0ead529167 100644
+--- a/t/helper/test-partial-clone.c
++++ b/t/helper/test-partial-clone.c
+@@ -21,7 +21,7 @@ static void object_info(const char *gitdir, const char *o=
+id_hex)
 =20
- 	if (!r)
- 		BUG("No repository passed into fsmonitor_ipc__get_path");
-@@ -41,9 +41,10 @@ const char *fsmonitor_ipc__get_path(struct repository *r)
- 	/* Create the socket file in either socketDir or $HOME */
- 	if (sock_dir && *sock_dir) {
- 		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
--					sock_dir, hash_to_hex(hash));
-+			    sock_dir, hash_to_hex_algop(hash, &hash_algos[GIT_HASH_SHA1]));
- 	} else {
--		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
-+		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s",
-+			    hash_to_hex_algop(hash, &hash_algos[GIT_HASH_SHA1]));
- 	}
- 	free(sock_dir);
-=20
+ 	if (repo_init(&r, gitdir, NULL))
+ 		die("could not init repo");
+-	if (parse_oid_hex(oid_hex, &oid, &p))
++	if (parse_oid_hex_algop(oid_hex, &oid, &p, r.hash_algo))
+ 		die("could not parse oid");
+ 	if (oid_object_info_extended(&r, &oid, &oi, 0))
+ 		die("could not obtain object info");
 --=20
 2.45.2.457.g8d94cfb545.dirty
 
 
---9+yhtxWhK9lzoKaa
+--1GcrF6HiV5Z9swUO
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZqjk4ACgkQVbJhu7ck
-PpRmlA//eRpBquWePLvrswjk5NJjUDa0MIGxu2c8a0/wecun6gQMoDLE5DYUnscj
-o7XYVP3SaHiUTY02UsKNZtB6287000ziLvOe+TM3StThSv86z9mYBt0cNBqx80ci
-AJN9BvAvk1XpxNquzVRA/eVA7pAL6Laobh84mSFYlSElWxEu/lY/a+whKqtfuab6
-aDrwzNRhRdUbMj/RepUzlyzkF4RItlD5UT4HnY1h/mUwGjLHFQOZz596ry8icjlz
-tFvqWGa77WCO4gVW+57RMQ4vM6vmgNn6BoqKIDw5k84xcEoMlW0q8c+gRtmLT4fa
-oj5UPeH+8xmmLQh5pf/F7zFDZ3hzeZyzkLWzVUE4LLIEAEA+FdrZfUrysqAjt7VS
-wIVdmSFJYVrqyK0fI6vtbDxxeDA0EuUFr/ha3PE4GN7tnmcZb8UZqNlb+ouwDMfL
-aJF2ddYCOl98ePXgA0f9GqxtyQ7xst+rMEN9c5Ilrap1jVCj5eCoX9vGR8bmLUkl
-dwHMR6tYz3s0PgjB/nmiiX0AnC3yeHb7KRChFBIshx/XuZDpGcQwbRt85ztBdzsc
-K1fqtq3cQbMCNdDSUUAyv1pQGcUVoUapSfoydq76mftAb4nUQRX04cLKjZmN+gnW
-WSRi6rb3Lwbf1tdXRJlZEQY/sUP55+gZHz8EgO2LqZnclcakzzY=
-=JruA
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZqjlMACgkQVbJhu7ck
+PpT/0w//fujFk/ybV8d/6d/MfaUMrksJXJHnru+TugBUml6NGtXsxajBrPyQ150q
+mmHlwNMAtV0ctyZsV/N/ILmYH4HdS9XssYLB9iNmdxggC2xbaKZe/KO7ZhVIMft9
+dPxo9bgVXrZ/Ak+SHUL89+Tmfu7kQjZ7WfqRFca+00ehekSNjROPmVqfMvuczu4s
+98L12pRf3aEeWoOjVInTJuDopTyXsuZ2bN8KAKHy07BjhjnBaALxtSGtgOYleyaz
+/NzyjlaWlcO8W2lRnZ2owZVqSSE0quSPcXqJvbcTx27Pj2H6HdPmxn79WA+qaolz
+QFNOoryH04JiHC22v3bj4WxIAjrNvpIujWoY/01CjBm+vsS5EMd6F8invsGCclQu
+HL6zEkAEMDRtiwBx0P8GmajDDsK5Be6f8zDzc6H8IpCEZnmjNW7umddDbI+Qz8kO
+65zp2mpq0mxnxX1ox7Z+B7kyxto853HFYmWT0QBQPfpGvClrCGqc2vsi8KJ9QDH0
+QiE4d/tK+vfJVqoYkjzwMBX+ksD9+Hyns8b3UPNL/VDuvl/Q3wZOAfx4386A6xqR
+StEhGA6dMtkFd7lJZHTZecdZogSvfNTkhhCZCDtBqN5fXqi2iBT9qN4CzzWP1PGe
+FQ3tVI2oIH17MS1mvtmw1nFf4kzz4rb+1fnGBttnYHnGyp6hzHQ=
+=XOo/
 -----END PGP SIGNATURE-----
 
---9+yhtxWhK9lzoKaa--
+--1GcrF6HiV5Z9swUO--
