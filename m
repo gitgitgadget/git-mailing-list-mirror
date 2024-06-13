@@ -1,171 +1,129 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F8514D71E
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 18:38:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7AED139CFE
+	for <git@vger.kernel.org>; Thu, 13 Jun 2024 18:48:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718303938; cv=none; b=RK1FTtBa3+EWY8sDWC36JXrRaQd5IGXOEvjh/FEClhrIIS0au0GnQhCG5IKzVWLay2ocnazgdvyxF5PiX6oo2PWJmTybuv3yTvWzR743OP3FYsL4jgzwHUVciqgWWieT6JC+ooZr4Oy/kxfv1S6cH/i0vEIaVW/X0sggfqcqBPM=
+	t=1718304541; cv=none; b=BdfSR9taJW6jBpHN+mDPAOqZ0a27B3z3h3NnoDOmSQo+tI5PRhoYo2XQP7EYQScrssDKJbM2vqa3O2vysKJenONCWBbZAX5SKL/AMRDpbS9Y+kCHdtdlrZGavOrOnbytw12XM0YFocYnX5VJPuX+HqUBqU/lsg7nX1u9FSLzPOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718303938; c=relaxed/simple;
-	bh=RYkeLtw/JeyTbQVPJ3ucP2+XeoKuhFYnawXumN4Spoc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AePeHYpMRzwr9TiD0GobcqhR38uAdJUCOyJ1ivcyYJckM8TWbz/R936vZ6wvFg5K8VbJrDbCQcDjNu6uCyEAABEU4EU+cXCQDzAkMGkqjxiLQH9XX3qomcz/wmcOQyjgelIrdYUuUp2MHjGKU8cfIXesffOjBdpZKK3nSYqU6+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b=WKUakrGY; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+	s=arc-20240116; t=1718304541; c=relaxed/simple;
+	bh=7fyGbn1quE1Pn+uFij/cEvQE88viRm+uVJghM3U9fDI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hcKRLK+vGQyQkuVWWb2EWuytaL7kkgc93pHry2At9FBOplsOaEySGsbibpkckUr2Stnm/nqIY3/CiMz9vuz6pvnZZnWiTIkU5hROJJ5RQNaU+XpD3lgDIuOcPmOo7lErI6OebnUhysp9AZNHBRMQwS5iy1JgSiQ6mdZupBVyBPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=IpxEpUWP; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="WKUakrGY"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1f862f7c7edso1118605ad.3
-        for <git@vger.kernel.org>; Thu, 13 Jun 2024 11:38:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1718303936; x=1718908736; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sO94JOwrQt3VpotG7aYJt/MhE2m25Gefp+0jaKf6qIo=;
-        b=WKUakrGYVkqBNEj5jMLCzgNG83Tc55Tg1uqUADKXem52YAVsYBxpVBE3Qw4Fen3UKG
-         IItIqUoOy4sMmsGk/4CItrlBjlPkFsu9a6Ejy2NLKVwrbj/LFInqyTXjMC6IGay58G8b
-         P5ugWYKLCJR7A7rST04TE1Va6PvMvN8AkWQBvYO52qTSEHYRrVhihIST1d7IubXJGamE
-         /CoL5dxzyW5cM65nyL9f82ECwxaBnXu3eunRKSbZfYJdX8EMS5LJE1HvbOIq8GvFNXnM
-         o5Usb7OzyG1ETxFr6d+Eu58cdnFxy+EUQjNv+iwej7q9eCnBceCIL3az+OLY/ZhzuntN
-         4x4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718303936; x=1718908736;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sO94JOwrQt3VpotG7aYJt/MhE2m25Gefp+0jaKf6qIo=;
-        b=VKXmXKKS5ZES7Oaa+x0fqf3VmZ8bvBGvsdoYEq96GddvojnieXNyh7YPghfsy9ZDIL
-         3/JdOSTjbHISPNv9HDx7rGJrAFj8iciMImXNhb+yhzL4mplO14sTWNUYDXUd6B/TM71V
-         Ih3Q7j3SOVK8P4np9ej3q3eKIK0p0JWk4elraykpOrdin2nwltNp6QnvvmhiuRhrdxBL
-         AWBldAJ3j1zfvbyVULSPqpPyEowB3p/KvMlsDFh7dX1rWtn1JY+XIcWdUI6y5s7ROsvY
-         lzSdz9jY2zPBnnyDJgkdAdtNrY6+3vVqndQKFKR32i419l+Iy0NeyBHAeO96FngYPz0y
-         FaZQ==
-X-Gm-Message-State: AOJu0YzB201G5kJcI7w/2xOBNa2RxZm6aIaHS5ChjzMGIg2qMPP5CSVl
-	ozz0YdAyepNlyAmJlqfdUCutwk9W+OF8Z2vH98tIJlKpbIMDn9+/h2rzwZBb
-X-Google-Smtp-Source: AGHT+IHE73AINjQipUawdgIb1q4A0J2eAhgL1CfRkOhVXeBFtm7O2PAEQh5eDsSFSpXsDWL+S7iPYg==
-X-Received: by 2002:a17:902:d486:b0:1f7:648:e742 with SMTP id d9443c01a7336-1f8627c7694mr5207905ad.37.1718303935977;
-        Thu, 13 Jun 2024 11:38:55 -0700 (PDT)
-Received: from [192.168.50.41] (syn-172-091-184-234.res.spectrum.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f855f1b13bsm17129615ad.245.2024.06.13.11.38.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Jun 2024 11:38:55 -0700 (PDT)
-Message-ID: <da036540-531f-4ad8-8be8-93c104930976@github.com>
-Date: Thu, 13 Jun 2024 11:38:54 -0700
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IpxEpUWP"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3BA1D37EEF;
+	Thu, 13 Jun 2024 14:48:59 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=7fyGbn1quE1Pn+uFij/cEvQE88viRm+uVJghM3
+	U9fDI=; b=IpxEpUWPJm3UeZMgUkUS3vMiFJu1jiffKuGhdlCUj5Jc9XuifwKh94
+	iyPp0oEUfPH7GnGe1DYPlv1GDlimRpSLJGuHUi/6nAzS2J1vCOdA524muP0hJN/q
+	RVdnr2sFMtTRepcnA38KQBKk3Oga9mPsgvOHjBUb7D14v9Y3SE9pU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3403C37EEE;
+	Thu, 13 Jun 2024 14:48:59 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9F79137EEA;
+	Thu, 13 Jun 2024 14:48:55 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
+  "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 00/20] Introduce `USE_THE_REPOSITORY_VARIABLE` macro
+In-Reply-To: <xmqqcyoklo26.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	13 Jun 2024 11:01:21 -0700")
+References: <cover.1718106284.git.ps@pks.im> <cover.1718259125.git.ps@pks.im>
+	<xmqqcyoklo26.fsf@gitster.g>
+Date: Thu, 13 Jun 2024 11:48:54 -0700
+Message-ID: <xmqqfrtgk7ah.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/16] mktree: use iterator struct to add tree entries to
- index
-To: Patrick Steinhardt <ps@pks.im>,
- Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
- <94d6615d634c4f78c88d3e01abbb27f13f85828c.1718130288.git.gitgitgadget@gmail.com>
- <ZmltI7HA7O4w2E-6@tanuki>
-Content-Language: en-US
-From: Victoria Dye <vdye@github.com>
-In-Reply-To: <ZmltI7HA7O4w2E-6@tanuki>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 96263FDE-29B5-11EF-AFDB-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-Patrick Steinhardt wrote:
-> On Tue, Jun 11, 2024 at 06:24:44PM +0000, Victoria Dye via GitGitGadget wrote:
->> From: Victoria Dye <vdye@github.com>
->>
->> Create 'struct tree_entry_iterator' to manage iteration through a 'struct
->> tree_entry_array'. Using an iterator allows for conditional iteration; this
->> functionality will be necessary in later commits when performing parallel
->> iteration through multiple sets of tree entries.
->>
->> Signed-off-by: Victoria Dye <vdye@github.com>
->> ---
->>  builtin/mktree.c | 40 +++++++++++++++++++++++++++++++++++++---
->>  1 file changed, 37 insertions(+), 3 deletions(-)
->>
->> diff --git a/builtin/mktree.c b/builtin/mktree.c
->> index 12f68187221..bee359e9978 100644
->> --- a/builtin/mktree.c
->> +++ b/builtin/mktree.c
->> @@ -137,6 +137,38 @@ static void sort_and_dedup_tree_entry_array(struct tree_entry_array *arr)
->>  	QSORT_S(arr->entries, arr->nr, ent_compare, &ignore_mode);
->>  }
->>  
->> +struct tree_entry_iterator {
->> +	struct tree_entry *current;
->> +
->> +	/* private */
->> +	struct {
->> +		struct tree_entry_array *arr;
->> +		size_t idx;
->> +	} priv;
->> +};
->> +
->> +static void init_tree_entry_iterator(struct tree_entry_iterator *iter,
->> +				     struct tree_entry_array *arr)
->> +{
->> +	iter->priv.arr = arr;
->> +	iter->priv.idx = 0;
->> +	iter->current = 0 < arr->nr ? arr->entries[0] : NULL;
->> +}
-> 
-> Nit: Same comment as before, I think these should rather be named
-> `tree_entry_iterator_init()` and `tree_entry_iterator_advance()`.
+Junio C Hamano <gitster@pobox.com> writes:
 
-That works for me. I'm not attached to the naming convention I used and your
-justification for changing it in [1] is reasonable.
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+>> this is the second version of my patch series that introduce a new
+>> `USE_THE_REPOSITORY_VARIABLE` macro. If undefined, then declarations
+>> like `the_repository`, `the_hash_algo` and a subset of functions that
+>> implicitly depend on either of these are hidden away.
+>
+> ;-)
 
-[1] https://lore.kernel.org/git/ZmltDQ5SlVvrEDGP@tanuki/
+Two things.
 
->> +/*
->> + * Advance the tree entry iterator to the next entry in the array. If no entries
->> + * remain, 'current' is set to NULL. Returns the previous 'current' value of the
->> + * iterator.
->> + */
->> +static struct tree_entry *advance_tree_entry_iterator(struct tree_entry_iterator *iter)
->> +{
->> +	struct tree_entry *prev = iter->current;
->> +	iter->current = (iter->priv.idx + 1) < iter->priv.arr->nr
->> +			? iter->priv.arr->entries[++iter->priv.idx]
->> +			: NULL;
->> +	return prev;
->> +}
-> 
-> I think it's somewhat confusing to have this return a different value
-> than `current`. When I call `next()`, then I expect the iterator to
-> return the next item. And after having called `next()`, I expect that
-> the current value is the one that the previous call to `next()` has
-> returned.
+(1) This stupid change was needed to please "make sparse", or we'd
+    get this:
 
-I do see how it's confusing. I was attempting to mimic the various
-array/stack "pop" methods throughout the codebase (which return the "popped"
-value while moving the stack pointer), but that doesn't really work here
-with an iterator. 
+    repository.c:21:19: error: symbol 'the_repository' was not declared. Should it be static?
+    gmake: *** [Makefile:3259: repository.sp] Error 1
 
-The only real benefit of this was that it simplified a loop somewhere later
-on, but not by a ton. I'll drop the 'tree_entry *' return value from the
-method and access 'iter->current' directly where it's needed.
+ repository.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> To avoid confusion, I'd propose to get rid of the `current` member
-> altogether. It's not needed as we already save the current index and
-> avoids the confusion.
+diff --git c/repository.c w/repository.c
+index 95d10cc4a0..22ef85b0b3 100644
+--- c/repository.c
++++ w/repository.c
+@@ -18,6 +18,8 @@
+ 
+ /* The main repository */
+ static struct repository the_repo;
++
++extern struct repository *the_repository;
+ struct repository *the_repository = &the_repo;
+ 
+ /*
 
-The idea of the iterator is to have callers only ever reference the
-'current' value to avoid needing to deal with the array & current index
-directly; I find that it majorly simplifies the parallel iteration through
-the base tree and entry array in [2]. IOW, in a language with support for
-it, 'idx' would be private & 'current' would be public. So I would like to
-keep the 'current' value as the publicly-accessible way of interacting with
-the iterator (although, as mentioned above, I'm happy to drop it from the
-'advance' method return value).
 
-[2] https://lore.kernel.org/git/df0c50dfea3cb77e0070246efdf7a3f070b2ad97.1718130288.git.gitgitgadget@gmail.com/
+(2) Aside from a few trivial and expected textual conflicts to be
+    resolved, there were a few new files added that needed
+    merge-fixes, with which I have this topic at the tip of the
+    'seen' branch.
 
-> 
-> Patrick
+ index-info.c   | 2 ++
+ pseudo-merge.c | 2 ++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/index-info.c b/index-info.c
+index 5d61e61e28..791380f910 100644
+--- a/index-info.c
++++ b/index-info.c
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "git-compat-util.h"
+ #include "index-info.h"
+ #include "hash.h"
+diff --git a/pseudo-merge.c b/pseudo-merge.c
+index e3e0393f11..f0fde13c47 100644
+--- a/pseudo-merge.c
++++ b/pseudo-merge.c
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "git-compat-util.h"
+ #include "pseudo-merge.h"
+ #include "date.h"
+-- 
+2.45.2-683-gddb3e810f1
 
