@@ -1,36 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166B8141999
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 10:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F431422CC
+	for <git@vger.kernel.org>; Thu, 13 Jun 2024 10:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718274043; cv=none; b=LP56wQub7Rl2WCNEGf5eYclmQALjWPfFLqJ6ITOEZ1StRbmN25KIytIyKAglWY41xAI2tSVlJNxfqNSRXZbnhct4DVtbwMEYijW21eVIeqZpUvEIQ4bFGNz/pn7gie8+KLwLVBqhKqA9CWsodn8fqKJY7+PT1ygUpKpSCknveiA=
+	t=1718274252; cv=none; b=SmkWsogX0n6hZ39ZckcbRxA+wZS//o/gS+U8fxSzWJQW8BVRMHAtRtf0deop7Z5si7hXM6Fy7iyBaiojB8y4/AtAzXxv2tVaDQ1Utf5GfKQ/Lb01L3V97PdwumszDF7M9uLMVbsnF8lyfXVJCR9XSXntKsJ/CUXcBAWK5WeZkSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718274043; c=relaxed/simple;
-	bh=ySzZk+lr8URkPkM8zjCyFZJRVTmGk4vtPVxaBMt4T20=;
+	s=arc-20240116; t=1718274252; c=relaxed/simple;
+	bh=Dn78z5TkS7hvu2QbYB7sEOu6gbGwn9g8h+2VKZH7vhw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ntzJEGn81DK2TI0spYStkQtLHAYX/Q+/UjpXIjhZizny9AMpDU5Q9V7FbnLbQubVrcC3yltXegSkEavD8427TMUeeLoZYq9LtWEoaLEGiOZJkGW9MB3rp7UvYSSx2OpTuGSECmVh79j8PNdznJ9asUN0Z3FhE6Cf3cu5TVatc2k=
+	 Content-Type:Content-Disposition:In-Reply-To; b=SRPHAGKpqvcm4N/ikv2mrmWfUwkUifAsZi9zDXkfv3b8w+Sg5+NH5tkSuNKeI+IuNjTMDxduXHfP98sMmUlIZqEuQZBIOooHI3GLqTg7SFFCI+Le2ApVd8o4/haXZP/VLoSNLhw9JPq9UgDKnxUf1V7VMcslgqC9gbwnOUHBST4=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 26407 invoked by uid 109); 13 Jun 2024 10:20:41 -0000
+Received: (qmail 26504 invoked by uid 109); 13 Jun 2024 10:24:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Jun 2024 10:20:41 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Jun 2024 10:24:10 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15996 invoked by uid 111); 13 Jun 2024 10:20:38 -0000
+Received: (qmail 16004 invoked by uid 111); 13 Jun 2024 10:24:07 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Jun 2024 06:20:38 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Jun 2024 06:24:07 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 13 Jun 2024 06:20:40 -0400
+Date: Thu, 13 Jun 2024 06:24:09 -0400
 From: Jeff King <peff@peff.net>
-To: matthew sporleder <msporleder@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Subject: Re: bundles discovery and clones
-Message-ID: <20240613102040.GD817573@coredump.intra.peff.net>
-References: <CAHKF-AsoF10coLP=+MV-NfkEvWzp2Xbucs7OwtOoCBs3TVMg3A@mail.gmail.com>
- <20240611072144.GD3248245@coredump.intra.peff.net>
- <CAHKF-AskyrhNYyzZytarKYbEUMz7MzWZhL9jNbk3VQi7s84ceg@mail.gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Mathew George <mathewegeorge@gmail.com>, git@vger.kernel.org
+Subject: Re: Cannot override `remote.origin.url` with `-c` option
+Message-ID: <20240613102409.GE817573@coredump.intra.peff.net>
+References: <83D801A8-3878-43C1-B7A7-78B3B7315FD8@gmail.com>
+ <20240611075137.GF3248245@coredump.intra.peff.net>
+ <xmqq34pjxzva.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,39 +39,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAHKF-AskyrhNYyzZytarKYbEUMz7MzWZhL9jNbk3VQi7s84ceg@mail.gmail.com>
+In-Reply-To: <xmqq34pjxzva.fsf@gitster.g>
 
-On Tue, Jun 11, 2024 at 07:14:48AM -0400, matthew sporleder wrote:
+On Tue, Jun 11, 2024 at 08:28:41AM -0700, Junio C Hamano wrote:
 
-> > I don't think the server side is well documented, but peeking at the
-> > code, I think you want this on the server:
+> >   2. Is there a way to override the list?
 > >
-> >   git config uploadpack.advertiseBundleURIs true
-> >   git config bundle.version 1
-> >   git config bundle.mode any
-> >   git config bundle.foo.uri https://example.com/your.bundle
-> >
-> > And then the clients need to tell Git that they allow bundle transfers:
-> >
-> >   git config --global transfer.bundleURI true
+> >      Sadly, no. For some config keys, we allow a value-less boolean
+> >      entry to reset the list.
+> 
+> Hmph, I somehow thought that a more widely used "clear" was an empty
+> string, but if we can make the convention around the "I exist and I
+> mean true" entries, that would be great.  It would not make much
+> sense to have multi-valued Boolean variable to begin with.
+
+No, you're right. I was just misremembering (maybe because "--no-foo" is
+the command-line way to reset the "foo" list). The three instances of
+config I found (merge.suppressdest, http.extraheaders, and
+credential.helper) all treat the empty string that way.
+
+The multi-valued boolean thing would cover config keys where an empty
+string was semantically meaningful, but I wouldn't be surprised if we
+never run across such a case. So probably using "empty string is reset"
+as the convention is fine, and matches existing cases.
+
+> > diff --git a/remote.c b/remote.c
 > [...]
 > 
-> It wasn't clear to me what the <id> (bundle.foo in your case) referred
-> to. Where did 'foo' come from?
+> I was expecting (with excitement) a mess, but the above is as clean
+> as we can make the idea, I would say.  Lack of documentation and
+> tests do count as incompleteness though of course.
 
-It is not clear to me either. ;) I don't know if <id> is meaningful,
-beyond grouping related bundle options into a single stanza. In my
-example, "foo" is just a made-up word you can replace with whatever you
-want. It is visible to clients at the protocol layer, though I don't
-think Git actually shows it to the user.
-
-> Anyway if people are taking suggestions for UX I'll give my $0.02:
-> git clone --try-bundle, with --bundle-uri overriding, to allow the
-> client to ask the server for bundles that satisfy their request.
-
-Yeah, I looked for something similar at first but couldn't find it. You
-can do:
-
-  git -c transfer.bundleURI clone ...
+Yeah, and we should probably do the same for pushurl. And I think there
+could be some cleanup of the memory ownership handling of add_url().
 
 -Peff
