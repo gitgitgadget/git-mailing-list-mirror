@@ -1,60 +1,60 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43271392
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 13:31:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52A91E49B
+	for <git@vger.kernel.org>; Thu, 13 Jun 2024 13:35:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718285472; cv=none; b=RBUFMdfopVWfDwYXk1gKRlrmvnkVbh4zOYsqStbiuq//aAdbJEZYyKcGodr0IQXj45S7RXAJYUtRzRvD6yuTc8Mz3or5lRrwTtt3mqHxDZUHDu7bMGEtQEJawtgkcI+Xyg9cIg76q1xVlIuLhUda4fLix6h339wy3dBpI+0ns/0=
+	t=1718285712; cv=none; b=M9XursZg1rYE3360Bx58Q+63N2FbxiMqdZYou24DcXqiN+ZoZjJAzDTF2wM8ZWWosBEWqk4DsQGt8xyr6lic/V50+KyIOVDynaFUdmmU+L7KGh7SrBvwiLUVNkZ+d0sbPyd+lAOjn0STmHGH1b/CXooWLaxImcIn3RCcmnyiCBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718285472; c=relaxed/simple;
-	bh=rBXhYWIBPGSRRkB0yHE258MpToUqyvBnH6cWXePNscE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GfHOb5kou1/vpHPnYZrXR7id9dawH+hWNUeSTNKLVUmctVRqk3gP4sLOf9ECWwE4QxMW4+Fs0pNetmTFl03Qtktam+4z1h8Xg6V9TKgraWZ5cnPtu48rzpa80LBNGE61pwm4NmAKwk7zTQTsWqDL8bsA5JI+fmdjCzftfBWo/SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gxVdFn5D; arc=none smtp.client-ip=209.85.128.53
+	s=arc-20240116; t=1718285712; c=relaxed/simple;
+	bh=MFaUtUjzP1GuB/nN1O9e4ufAHOexMINoRnrHo0vLC48=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=uy8oAOsOiQbYKrrIKrgdQfd4oRfj4ATplMt+9cCmq/v0KVkxN42je21ZV0Sup8nW1zeOMUXF+1YR+ioF08hn3uXdQkFEPSUD7h106Lwkn3SDe03fUT6JGNR1Pa51WBOTgDzLMWvlJzBie70JAvaiGBKr59mxVS0Rkj3QhgeW/G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EexvZswA; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gxVdFn5D"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42278f3aea4so10394875e9.1
-        for <git@vger.kernel.org>; Thu, 13 Jun 2024 06:31:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EexvZswA"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-421820fc26dso9212505e9.2
+        for <git@vger.kernel.org>; Thu, 13 Jun 2024 06:35:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718285468; x=1718890268; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1718285709; x=1718890509; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=5ArwUn62hMctSSwX/5iNWsTPkLu/0bwMwoE4rsqO9JE=;
-        b=gxVdFn5DF3K30UsAIgVnR0PI+ADh39GRJNZn1obia699PePo1Gf9zC/oVhhF6uK59y
-         rpzMrEVH6ADFmlf21f37WyT4R//aRAPKSzbx64XgVu6sY4XvMDnkgXOW6VGGr0H6wjqP
-         fe+0eoDVLWheQDm72NAUlr0qWFUQCkod9Q49p3T0EMrq/i2HbxsXZylBPFJaJ1herRJF
-         unIO5JmGI2gqL9r+wiA9O7PNVfaSGKCBJupDHGGyGzdXIXyHIo7w4kF0xWVGsif88W6i
-         6STCBXjdTPZqRXbMCNloNics4KT9KLP9kb9oyyiQFL2W2c9j+sUMSQJ6gphpFmIOFudv
-         UH0g==
+        bh=lUnBXpgTqPssJY39dQj9dUJVBhQr/RiWD81TN2AW6RQ=;
+        b=EexvZswAV61fuIq1laFe9g5IFGDXcz3RZ+1A5aDx4dwEF9Ygr0pNjHBavRRoxSZ3zA
+         znSUfMPqunm1RHCMvxwGIBsLyPvBgT7wuxOZvfHLkDVbtynwZ6o8XpPM6p3ygz6exsuH
+         BGpWSIuXRabmmon5rmi5I38KHFp4AbjtMYNH4VzGbwQyrn2IhAiwVe5Lniv1dsRWK6Fi
+         S6gC5piWrytvan4JiyiZAhO7bQHGk2qFSyxd509HTQtb/SJnOIbCRhLJXNA6Gi7qRaMP
+         Q3gjmINol25ORspuCaBLS0g05GwfqyWm0rKsk1+XEY7ePZfAilG5hKBMpbAGFFNgXWGR
+         5DWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718285468; x=1718890268;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1718285709; x=1718890509;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5ArwUn62hMctSSwX/5iNWsTPkLu/0bwMwoE4rsqO9JE=;
-        b=uKeB55IsKMF61KZxtN3oBAzioEBp/FoxBtQHlmBW25YumriLkmOQ3TtZsxqqVHwGHI
-         bqEVVU1p3H7z4LWiQesMci3GCikKG8DWUAqZZnM9o7JXWIYA/GwhUDHcktq+k9ImGG6e
-         KTiuit5AyhPoii1gmfPw9qkqtinoPb97aJ9X40tQJ7C8FuJHuzV/Vg1c1aHU/Y0yPqsZ
-         +UwjrV6FA/SydIb66xhZqUE1fw3fmMcNd2ieD9Iult55bmHHEK5iqyNEKQUjxVfJpEt6
-         yW3XNa1EAqHLwH305kyIEiUeG+mL71VV+eEknb/YThodJJ32jUBUryTjkkhOaRMm7Jo8
-         Um+A==
-X-Forwarded-Encrypted: i=1; AJvYcCU3WsKPPO1ghO2P0nrZvfP0E6Or6TZerEtou9YmnGJXu8BmIk3MsNYYyWI/q4zDhISCgi9EdyQu0z3dkfKB+T1sJI3z
-X-Gm-Message-State: AOJu0Yxi4z009rupwTMwOyBNPhbr9y/fXuag17HkRIGRpWzQWJ0yrOTc
-	pai37w3QymcBXsRuoySrxoFlSYPqxKA5LhPiDKlJdCPWIRLDGeSf
-X-Google-Smtp-Source: AGHT+IFg2WmEYWsZKAI2yoH/IltRWx2gdIUuyEqZP0oaGK0UMHYy4FmIkzclZWWagDJKQIJ7u6a5/Q==
-X-Received: by 2002:a05:600c:1d1c:b0:421:f68f:a144 with SMTP id 5b1f17b1804b1-422867beeccmr49866765e9.36.1718285467882;
-        Thu, 13 Jun 2024 06:31:07 -0700 (PDT)
+        bh=lUnBXpgTqPssJY39dQj9dUJVBhQr/RiWD81TN2AW6RQ=;
+        b=u0C3bNuF/YK6DMooAqvYK0q2Tumnw4LlcYeLmPyRYT/OVc9naBePChcfNHOfPEE7cS
+         iNTVJ8QRDYBwjbrvOooRXXRsstSGRhTnNkk9Ksceo271Kxx6p7AQJZZT6axsuXrR0Lri
+         JveIctXYrtbDx1x56le8s+azsJdAKvruNbmOy9vxXD6SNA8rNTLlA/zXg7BohHQFbrtM
+         WJ3ktucgieIgzsVpyiOapSitL+ozdDitSseF0x0YlhELFsc6sgg59b1Ot9Jv8iuUVMks
+         eHEqr1WALHmV0zQubWjF4J3qIlIJ63tLtW48hwLkqXgHXZ23xpxNZSIvcjlLuFu7QFGz
+         x/Ow==
+X-Forwarded-Encrypted: i=1; AJvYcCWkh14Wj7hRz1P37N5MmYoNHIKR66/0R6gd38DBXYnE0sdMQnZVkNU3znI/gqHBOdrybyk/SSWNAZyr5MtcQR518j08
+X-Gm-Message-State: AOJu0Yxthn/BsQBMflGAMBOzVDJUCSEr/Mt7mDgxlokYV/uptLDzuVbb
+	HhuEsfvP3Qudsqej/Vuq5dlRiDx1pQ9Dh8dvqalYYiygbYFocKsozlelPA==
+X-Google-Smtp-Source: AGHT+IGWTG6grwi0DP3iGdn3npBMZN5khGp0717x2MtBTIikPsb5qskN0ckPNoE7PeX91Fovm028KQ==
+X-Received: by 2002:a05:600c:a08:b0:421:f4da:f60 with SMTP id 5b1f17b1804b1-422866c63efmr41670025e9.37.1718285708964;
+        Thu, 13 Jun 2024 06:35:08 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42284d1130esm27145015e9.0.2024.06.13.06.31.07
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36075103237sm1744383f8f.92.2024.06.13.06.35.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Jun 2024 06:31:07 -0700 (PDT)
-Message-ID: <a03cd45e-e4e0-42c7-bb98-b25cac12e42f@gmail.com>
-Date: Thu, 13 Jun 2024 14:31:06 +0100
+        Thu, 13 Jun 2024 06:35:08 -0700 (PDT)
+Message-ID: <9f4aa9cc-fa63-4137-acba-14e41ea8fe78@gmail.com>
+Date: Thu, 13 Jun 2024 14:35:08 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,39 +63,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] date: detect underflow/overflow when parsing dates
- with timezone offset
-To: Karthik Nayak <karthik.188@gmail.com>,
- darcy via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: darcy <acednes@gmail.com>
-References: <pull.1726.v2.git.git.1717369608923.gitgitgadget@gmail.com>
- <pull.1726.v3.git.git.1717719428510.gitgitgadget@gmail.com>
- <CAOLa=ZTgP+OwVrT87=og4tVdhsqjErMUJzCuT9bdDatFS=J8hQ@mail.gmail.com>
-Content-Language: en-US
+Subject: Re: What's cooking in git.git (Jun 2024, #04; Wed, 12)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqcyolofar.fsf@gitster.g>
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAOLa=ZTgP+OwVrT87=og4tVdhsqjErMUJzCuT9bdDatFS=J8hQ@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqcyolofar.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Karthik
+Hi Junio
 
-On 12/06/2024 10:49, Karthik Nayak wrote:
-> "darcy via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> +
->> +/* timestamp of 2099-12-31T23:59:59Z, including 32 leap days */
->> +static const time_t timestamp_max = ((2100L - 1970) * 365 + 32) * 24 * 60 * 60 - 1;
->>
+On 13/06/2024 01:30, Junio C Hamano wrote:
+> * pw/rebase-i-error-message (2024-05-30) 2 commits
+>   - rebase -i: improve error message when picking merge
+>   - rebase -i: pass struct replay_opts to parse_insn_line()
 > 
-> Nit: but since we're calculating the number of years here (2100L -
-> 1970), shouldn't we also be calculating the number of leap days instead
-> of hardcoding it?
+>   When the user adds to "git rebase -i" instruction to "pick" a merge
+>   commit, the error experience is not pleasant.  Such an error is now
+>   caught earlier in the process that parses the todo list.
+> 
+>   Expecting a reroll.
+>   cf. <88bc0787-e7ae-49e5-99e8-97f6c55ea8c6@gmail.com>
+>   source: <pull.1672.v3.git.1717076630.gitgitgadget@gmail.com>
 
-I'm happy with a hard coded constant for the number of leap days - I 
-think it is probably easier to check that (which I have done) than it 
-would be to check the calculation as I'm not sure off the top of my head 
-if is it safe to do (2100-1970)/4 or whether we need something more 
-complicated.
+I think this comment is out of date. c.f. <xmqq7cfbp6pb.fsf@gitster.g> 
+where you said
 
-Best Wishes
+     Thanks, will replace.  Let's see if we see comments from
+     others and then mark it for 'next' soonish.
+
+It has been a while and no one has commented so maybe it is time to 
+merge this to 'next'?
+
+Thanks
 
 Phillip
