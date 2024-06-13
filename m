@@ -1,106 +1,100 @@
-Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE7B13E3E4
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 10:10:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8188413D276
+	for <git@vger.kernel.org>; Thu, 13 Jun 2024 10:15:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718273440; cv=none; b=QTTdREg3h8fOhj+EZ8MgxiAmtn12M4gC4vTVn3qmWtSc9IsoMKQ70hAMRxVXJR6LlChRfPAPthLQdP57tuN9SG8l1DWtUcN1iNOJr0mSSLUFqPy2db+lekNZsLnwm+wd58SDtW38V0JOXnq2FMFZiVp3UiZrbnTVThDhccokyB0=
+	t=1718273727; cv=none; b=tlGIM5o7EEuMfNXYgn4SiUykcdlctL9fgzdjUdyDP3MipXeeT+F2V9oTU9wNmaGcu3dvnkjJy0yC8v8R4Z4Vjqn9MmCUVhTfEMU7XDuau3EJS40QQ4pNfYwxa+oQTbSikJTioUSkemz9UDw24G1QgHprk10cg5f1Yn5eZ+V64/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718273440; c=relaxed/simple;
-	bh=ePDmJZh1v0JGhibb4PT950mpdW24XCVHhzbSAbkZQc0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZMDyYTBjNAqYT3wy5vUC6I7AA451djYTIjr2YMuwz/Xp3p+QtNlgUfrFQRwFYnUKjojZCTZiACY0+JEkGsetV3zOpdgxBxVwe0AC94GjgYPJDW3+fKZ369LJfu5C4JjjBDFTjJ/Nj3334ZsfFRrsSlh2Roe+0bMD7xWt6+rwjL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=xN7iZU8s; arc=none smtp.client-ip=91.218.175.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="xN7iZU8s"
-X-Envelope-To: el@horse64.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1718273432;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ePDmJZh1v0JGhibb4PT950mpdW24XCVHhzbSAbkZQc0=;
-	b=xN7iZU8sc3ncgaCZPHiOpe38RgXbKI+MoOaWTwXOupcSicM9/v0lHFtUIMx+LqITUuM0Pn
-	aZORW2+PdzCKESKsC73we7hI/TnBNKsGh3o5IAn5qTPyP94kkKmsS5dN28R0eQ8yGrtpI0
-	/uUsF3t7FTCbjXVQ87KxHYSrhkT5Vi8=
-X-Envelope-To: gitster@pobox.com
-X-Envelope-To: nasamuffin@google.com
-X-Envelope-To: peff@peff.net
-X-Envelope-To: rsbecker@nexbridge.com
-X-Envelope-To: git@vger.kernel.org
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Toon claes <toon@iotcl.com>
-To: ellie <el@horse64.org>, Junio C Hamano <gitster@pobox.com>, Emily
- Shaffer <nasamuffin@google.com>
-Cc: Jeff King <peff@peff.net>, rsbecker@nexbridge.com, git@vger.kernel.org
-Subject: Re: With big repos and slower connections, git clone can be hard to
- work with
-In-Reply-To: <f5c24dfc-8d35-4418-b8f6-0a03d70c0917@horse64.org>
-References: <fec6ebc7-efd7-4c86-9dcc-2b006bd82e47@horse64.org>
- <0be201dab933$17c02530$47406f90$@nexbridge.com>
- <fdb869ef-4ce9-4859-9e36-445fd9200776@horse64.org>
- <0beb01dab93b$c01dfa10$4059ee30$@nexbridge.com>
- <200c3bd2-6aa9-4bb2-8eda-881bb62cd064@horse64.org>
- <20240608084323.GB2390433@coredump.intra.peff.net>
- <CAJoAoZkP58ZM4J3ejemyiqkkbEaQdphoyGj_LmX9-xb_eMgb4A@mail.gmail.com>
- <xmqq5xug1qrf.fsf@gitster.g>
- <f5c24dfc-8d35-4418-b8f6-0a03d70c0917@horse64.org>
-Date: Thu, 13 Jun 2024 12:10:19 +0200
-Message-ID: <87msnpjgqc.fsf@iotcl.com>
+	s=arc-20240116; t=1718273727; c=relaxed/simple;
+	bh=+R3cb6rJgwE8vpTn0cbmXd8LLd/1Uk8YwvSsTIUIIJA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iI+xgci30VBAL7V7LIC/q82Wv7xKanccKclI8X3QjFeCVfpQbJ4SDFfd1pqjywZQIBQreJyEGOX9wqtNdJtsa9ecR9BZFckGKNnQlrj8EuvD8iHbVA5SEVAPoi4U/iatlxcyOLntENUlxs7YA+tKoTNqTiqe9aHJGPNc8J3q1lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 26250 invoked by uid 109); 13 Jun 2024 10:15:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Jun 2024 10:15:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15958 invoked by uid 111); 13 Jun 2024 10:15:20 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Jun 2024 06:15:20 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 13 Jun 2024 06:15:22 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] ci: compile "linux-gcc-default" job with -Og
+Message-ID: <20240613101522.GC817573@coredump.intra.peff.net>
+References: <cover.1717655210.git.ps@pks.im>
+ <cover.1718001244.git.ps@pks.im>
+ <03270d3414117ae7229d87127cff81e349557039.1718001244.git.ps@pks.im>
+ <xmqqed946auc.fsf@gitster.g>
+ <xmqqo785olpp.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqo785olpp.fsf@gitster.g>
 
-ellie <el@horse64.org> writes:
+On Wed, Jun 12, 2024 at 03:11:30PM -0700, Junio C Hamano wrote:
 
-> Sorry for again another total newcomer/outsider question:
+> By the way, I do not know if any compiler gives us such a feature,
+> but if the trick to squelch a false positive were finer grained, I
+> would have been much more receptive to the idea of building with
+> different optimization level, allowing a bit more false positives.
+> 
+> The workaround everybody jumps at is to initialize the variable to a
+> meaningless value (like 0) and I have explained why it is suboptimal
+> already.  But if we can tell less intelligent compilers "we know our
+> use of this variable AT THIS POINT is safe", e.g. by annotating the
+> above snippet of the code, perhaps like this:
+> 
+>                 if (ret) {
+>                         if (data)
+> 				/* -Wno-uninitialized (mtimes_size) */
+>                                 munmap(data, mtimes_size);
+> 			printf("debug %d\n", (int)mtimes_size);
+> 
+> then it would be clear to the compiler that understand the
+> annotation that inside that "if (data)" block, we know that
+> the use of mtimes_size is not using an uninitialized variable.
+> 
+> For the use of the same variable on the next "debug" line, because
+> it is outside of that "if (data)" block, the annotation should have
+> no effect, and the compiler is free to do its own analysis and we
+> will accept if it finds mtimes_size can be used uninitialized there.
+> Any new use added for the same variable will not be masked by a
+> meaningless initialization if we can use such a "workaround" to
+> squelch false positives.
 
-Don't apologize for asking these questions, you're more than welcome.
+I agree that such an annotation is much more focused. It's still not
+foolproof, though (e.g., we might chance earlier code so that the
+data/mtimes_size correlation is no longer true).
 
-> Is a bundle or pack file something any regular git HTTPS instance
-> would naturally provide when setup the usual ways?
+I think you could do it with:
 
-Yes and no. Bundle and packfile format can used in many places.
-Packfiles are used to transfer a bunch of objects, or store them locally
-in Git's object database. A bundle is a packfile, but with a leading
-header describing refs. You can read about that at
-https://git-scm.com/docs/gitformat-bundle.
+			if (data)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wuninitialized"
+				munmap(data, mtimes_size);
+#pragma GCC diagnostic pop
 
-> Like, if resume relied on that, would this work when following the
-> standard smart HTTP setup procedure
-> https://git-scm.com/book/en/v2/Git-on-the-Server-Smart-HTTP (sorry if
-> I got the wrong link) and then git cloning from that? That would
-> result in the best availability of such a resume feature, if it ever
-> came to be.
+which is...ugly. There's a _Pragma() operator, too, which I think would
+let you make a macro like:
 
-As mentioned elsewhere in the thread, on clone (and fetch) the client
-negotiates with the server which objects to download. Because the state
-of the remote repository can change between clones, so will the result
-of this negotiation. This means the content of the packfile sent over
-might differ, which is disruptive for caching these files.
+			if (data)
+				SUPPRESS("-Wuninitialized", munmap(data, mtimes_size));
 
-That's why the proposal of bundle URI or packfile URI is suggested. In
-case of bundle URI, it will tell the client to download a pre-made
-bundle before starting the negotiation. This bundle can be stored on a
-CDN or whatever static HTTP(s) server. But it requires the server to
-create it, store it, and tell the client about it. This is not something
-that's builtin into Git itself at the moment.
+which is maybe slightly less horrific? Still pretty magical though.
 
-This is not really related to the Smart HTTP protocol, because it can be
-used over SSH as well. But when such file is stored on a regular HTTP
-server, we can rely on resumable downloads. Only after that bundle is
-downloaded, the client will start the negotiation with the server to get
-missing objects and refs (which should be a small subset when the bundle
-is recent).
+But if the alternative is to do none of that, and just continue to avoid
+looking for warnings with -Os, I prefer that.
 
-
---
-Toon
+-Peff
