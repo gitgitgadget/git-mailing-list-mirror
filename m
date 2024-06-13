@@ -1,97 +1,107 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72FE1369AF
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 23:04:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DC2811FE
+	for <git@vger.kernel.org>; Thu, 13 Jun 2024 23:18:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718319862; cv=none; b=a/NCDJw5PEsBf6RExlHI5MpvmK+Mn/bEOTu4gnjyIfIrWmC+ZGKlCpnC27LrgJNAjfUIzhymqWNHz06mzYKja/C/GG7xSYTbjZHbq4YKmY2uy+BPn3+X5C+QJBwNDKUrBDzYj6tck3Vok5ZhjxfTKfAEx+ByBqXxMh/Tu2bohmE=
+	t=1718320694; cv=none; b=lHbmyzF42KeZ4KQeWZ6sKPqiMS2FA0z/i+6MjWE635+xMkeFbyKKp8XBY8njuIYreBQHsICbql0fmsyEguEWRvRRQUzbGmLeFuiaHKFDOs4oUTiBbz4Mnwkas+Q0gC8HbwhbeDIfnXr3eQmkXEk46IPCZw+kb5y3L3POo6qtKOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718319862; c=relaxed/simple;
-	bh=ALColgANZr6Nb4eEbikmzhj6ypWHWfH3dd8b8BUsZ3Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gj8PyJHboCj0H+YmIZxRg6iIQHVEFlLrVyCwLkXamEpLIrLPGCDqREXvAHrB8dXKxDSZCGrOdg+ardU6QF2D9nbSzjKmLHQhB/IRYvgcRrTs73+lyA9/LkzzJlNoVkDjvh5hvGlJLXk7KNmo+g7R8mC6G8gHc5wvgVudmxF8sKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=TYlGJVD1; arc=none smtp.client-ip=209.85.160.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1718320694; c=relaxed/simple;
+	bh=QSobSG+qn3KBbduYZOJoz5w9j8og9dhr+k6DBuMRPpQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OwQsf108xzuFzMbGNBYyBVSnurWGDOFApvJQqHYLROfPVcnTH4nWWo94JpX1tgd3dSC2XIgGZqBLTzqTyQcvrUhWwXZZghQSZ+7TEww+nc+tCIay5JkTTjwqrvx8F/MAjmZz5Ebg23ZAqecXbBs2fglciT6l7hlRgSnz8209fW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=QSJzZwAf; arc=none smtp.client-ip=84.93.230.244
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="TYlGJVD1"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-43ff9d1e0bbso9031941cf.3
-        for <git@vger.kernel.org>; Thu, 13 Jun 2024 16:04:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1718319859; x=1718924659; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/Vj4MMD8iQUjkb8t9xe3xZO4pL92lnBisrXRCIQJPqM=;
-        b=TYlGJVD1M8QvWtrShmUb+owzHks1erPXtQywbF/lbeiytVmOcegDex686HjG4pOyX8
-         O1Kf3bdNVkv5Mw8MoYdWSYU3tDp45AeZkl6iUHD0Cd75R4TXaFgcutUYJvdGIJajnmMb
-         EGAP7lGiD+Z+d+k1oB+ZnmM/gAK7EhDl/7eddEEqTO4zkYnzvJFUvtCoHpiUv++O4e7Q
-         jM7xNgxhiuGLpsCLr3U9VOYaqSV+Fa+4Rj/YhC1wQHppocpBqsKE9kC5fQvN9XgHKgiI
-         cjDGQuNTdP7Pd1ebtTJb+4WNSnIa+iTY7qo6RBUZVTx0mCA2qipCjenbEng71BqS87IE
-         r1tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718319859; x=1718924659;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/Vj4MMD8iQUjkb8t9xe3xZO4pL92lnBisrXRCIQJPqM=;
-        b=J7GqeUui+miy9c+rII5a9XXBPePImefgBAEowF96G2hPZqLembCrC0LfT6q52m2lh7
-         mQFMvwzrHHESdZpD+PZEY6/IzplQ4QBy5CHVCcsQfu+KKNnRWCxqDzfkcqM82wwLk2Vx
-         zwygtHNNRFaB8khcVKqua/CJ7Ohn2zfl0CYDQBdnwcoU/yoq+4vsOfQEWt6lmK8A6SmA
-         QB9hsG5ApTqPwMc7BEuUW9iXR2Iy4q5MA+e1CS0Ewn/P4+zq4C8uLtRtufjJipbDbLT2
-         nFWsvS5gOvULVeL70veER5YlyuvDio+r6OiVyy14tt0I8k9Ucttv8b1s43kSHxqDw/WX
-         exng==
-X-Gm-Message-State: AOJu0YzBVEgZI+rLH55h/8xxniBVDDf9UVVB1WjBnSMAy3CLOY6LXC97
-	Q2vJkaQGLDHOl/NhshH9bqL0vW2b2TCglQqdAEiGtwRBbkw/EZnNwOh23RaHAmo=
-X-Google-Smtp-Source: AGHT+IF/YmAJv8XXc0RQAS4789VClzNhNt//xVkxUaJ+fMiNC1//CSroFIPFIJ20U2xuIj27w0mSUA==
-X-Received: by 2002:a05:622a:148d:b0:440:5fff:50d7 with SMTP id d75a77b69052e-44216b394f6mr10232291cf.62.1718319859459;
-        Thu, 13 Jun 2024 16:04:19 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44212efe609sm6587011cf.52.2024.06.13.16.04.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jun 2024 16:04:19 -0700 (PDT)
-Date: Thu, 13 Jun 2024 19:04:17 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 0/7] Fix and improve some error codepaths in merge-ort
-Message-ID: <Zmt68bR3v6+kxrfN@nand.local>
-References: <pull.1748.git.1718310307.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="QSJzZwAf"
+Received: from [10.0.2.15] ([51.6.185.229])
+	by smtp with ESMTPA
+	id HtelsISnadfdlHtemsIjIx; Fri, 14 Jun 2024 00:15:01 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1718320501; bh=t01ItuV7amPl/0A1siMnbgHRca2gNtJmjkpk3v0e7fM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=QSJzZwAfccxjA5K8MNjglfNbz03ginx6qMGjqCtxeHkZyYPWE9PCvBoofQp84T4IK
+	 9GA1cO/3xzCeymDVVDuo9BuO+dEgA5MZuoagRXxjkM0DNRtHmayCqRe14wR34qf5iP
+	 YOishVtcBF6JgL0Fo4UcvWhsc/gieAEPiqlZ1ZDyhMF5u+nnoaCg7Tc4it0Ayd2Rsw
+	 WaFHxrJWJJbXUfo1nEfyl6LkfkJEggWKf/Kzzez+53fggguONGE4fNWN5YKHVCmqIk
+	 GWOJ27Pem487lwcqR0atFhQWfVush9wmlE6V5QDPMA/Qd1hHqKi4obursN+/O0PYNb
+	 roiNb/MdTKatQ==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=DtP1+3/+ c=1 sm=1 tr=0 ts=666b7d75
+ a=7htyVA9VkOexEuxjfJyH6w==:117 a=7htyVA9VkOexEuxjfJyH6w==:17
+ a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=Zonxl2ovAxeDah0vPicA:9 a=QEXdDO2ut3YA:10
+ a=dmR7ekUwijcA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <b69449d0-46f4-448e-b80e-002a8b5c4e1f@ramsayjones.plus.com>
+Date: Fri, 14 Jun 2024 00:14:59 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1748.git.1718310307.gitgitgadget@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/20] Introduce `USE_THE_REPOSITORY_VARIABLE` macro
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <cover.1718106284.git.ps@pks.im> <cover.1718259125.git.ps@pks.im>
+ <xmqqcyoklo26.fsf@gitster.g> <xmqqfrtgk7ah.fsf@gitster.g>
+Content-Language: en-GB
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <xmqqfrtgk7ah.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfFQORb0pLnFntEFdo8pKB7sfQPg7jEYXnuQdzLPLoXRtGp2TY/gB97qCtU9hCVMY01HeGB6ym6bncUXPLW+z0ZFFTjyVUKHATJtN3EYdIUcApv0nh0bL
+ dohzEZngSFzZnesDzyyUBCJ2zFqwITVseq7r8bkR8FFTLraLWPxd+9p/TD6Yc8/wh6zq/BHy0dOBNw==
 
-On Thu, Jun 13, 2024 at 08:25:00PM +0000, Elijah Newren via GitGitGadget wrote:
-> Elijah Newren (7):
->   merge-ort: extract handling of priv member into reusable function
->   merge-ort: maintain expected invariant for priv member
->   merge-ort: fix type of local 'clean' var in handle_content_merge()
->   merge-ort: clearer propagation of failure-to-function from
->     merge_submodule
->   merge-ort: loosen commented requirements
->   merge-ort: upon merge abort, only show messages causing the abort
->   merge-ort: convert more error() cases to path_msg()
->
->  merge-ort.c           | 167 +++++++++++++++++++++++++++++++-----------
->  t/t6406-merge-attr.sh |  42 ++++++++++-
->  2 files changed, 164 insertions(+), 45 deletions(-)
 
-Very nice. I had a couple of minor thoughts on the earlier patches, but
-I agree with the substantive ones that printing only messages related to
-paths that we were processing when something went horribly wrong is a
-good idea.
 
-I don't think that either of my comments alone merit a reroll, and I'd
-be happy to see this version move along as-is. But I'm equally happy if
-you want to fix a typo here or there or do some bikeshedding ;-).
+On 13/06/2024 19:48, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Patrick Steinhardt <ps@pks.im> writes:
+>>
+>>> this is the second version of my patch series that introduce a new
+>>> `USE_THE_REPOSITORY_VARIABLE` macro. If undefined, then declarations
+>>> like `the_repository`, `the_hash_algo` and a subset of functions that
+>>> implicitly depend on either of these are hidden away.
+>>
+>> ;-)
+> 
+> Two things.
+> 
+> (1) This stupid change was needed to please "make sparse", or we'd
+>     get this:
+> 
+>     repository.c:21:19: error: symbol 'the_repository' was not declared. Should it be static?
+>     gmake: *** [Makefile:3259: repository.sp] Error 1
+> 
+>  repository.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git c/repository.c w/repository.c
+> index 95d10cc4a0..22ef85b0b3 100644
+> --- c/repository.c
+> +++ w/repository.c
+> @@ -18,6 +18,8 @@
+>  
+>  /* The main repository */
+>  static struct repository the_repo;
+> +
+> +extern struct repository *the_repository;
+>  struct repository *the_repository = &the_repo;
+>  
 
-Thanks for fixing this issue.
+Hmm, odd; isn't the declaration of 'the_repository' from
+the "repository.h" header file visible at this point?
 
-Thanks,
-Taylor
+puzzled.
+
+ATB,
+Ramsay Jones
+
+
