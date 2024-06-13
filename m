@@ -1,79 +1,80 @@
 Received: from wfout7-smtp.messagingengine.com (wfout7-smtp.messagingengine.com [64.147.123.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE4E136E15
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 06:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F47136E12
+	for <git@vger.kernel.org>; Thu, 13 Jun 2024 06:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718259226; cv=none; b=m7ZWd5vs9pSfFpbH7eWb3tJGloedHmudUjfK0lM4EN1zEkFWboXRRfOMcowvoTBVTodjGmaFqvutu3pbSgTN4+MtuoSgT2DmwIkmTPnQRrUjd3FXH12rchQJZixJKIKmfgIgPj9CIlhhg/zLJ2qf7ZHBF1KSt9DP5N/7u2ss3Vg=
+	t=1718259231; cv=none; b=FdN6C2A8abqNhPanvrw4pK/hQyob0PIs1vUTMNiT5SjrNhpVmWT82+q4mR8NjhDWbg2vKMOAPJ8CgMPlQo5BnZJXcDy7uzPqOgk7TBn6XGrAePSxra2zjZkhuzQlpHsaXl8eMcs9kL0iIHy7olNZ3jy50gBjDJGNHgkO5rWq9tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718259226; c=relaxed/simple;
-	bh=VOhU519ExT0DiHoUxW7wOWNK0sqEntKzcCOi4wkT2D8=;
+	s=arc-20240116; t=1718259231; c=relaxed/simple;
+	bh=gTPA9JiyE3U/cxgV4sOSEYv845aZpNr9nC9V6RpMEzA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TwvOCIZOrmItCN1RXikiFUn64RDq1Is63Xo+5fuj+HKDx3i33iUHiycuOYSdRkvz1Jqxcwa1KaVyq275IuNlgGZ/4vlwJTyvy2Q4wFgCW4CW37MKDY23ARhr1B1Dto/3uuG91DtSrW8kYD+sCmCHSYhSjzw8cLAn08FOgtTu/Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nGU8bwAi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TNh0j4XU; arc=none smtp.client-ip=64.147.123.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=QIQRnQr/UNhqNq4ZlisA/0bAjOUDR74ujVtDZF1oRBbi1WNmXvBJi+iMg7g2HLt5A6eJl4gO/9xkmXx0gjjWGixmX9fj5XsWLSUXRwfQ9jevTAM4WTYDCeERJ41AqPm7K7sLIx9w1Fy6mS+eNaxv2/v9gS0WJBEHfiOtUDaxf0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aesweUTq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nmKZ48h7; arc=none smtp.client-ip=64.147.123.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nGU8bwAi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TNh0j4XU"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.west.internal (Postfix) with ESMTP id 57F1B1C000D0;
-	Thu, 13 Jun 2024 02:13:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aesweUTq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nmKZ48h7"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.west.internal (Postfix) with ESMTP id 559591C000D7;
+	Thu, 13 Jun 2024 02:13:49 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 13 Jun 2024 02:13:44 -0400
+  by compute2.internal (MEProxy); Thu, 13 Jun 2024 02:13:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718259223; x=1718345623; bh=jttBxGIt5l
-	X594QRFHtU9NJNXKpQpBNieUsbmUXMnak=; b=nGU8bwAiXaCLdoDsG9cVaTlNFO
-	EHqA/xVfGKqpAP4Ozkb1FkJGtNDaS2bIt3hSv/xlqQGr1SMsUmDukPtZacCCjinF
-	AcAJxcXqTLhj8ix43RmT67TO8tdYbL58taWZCvN1ct4ks//80xlmen9J31CVj278
-	adK8ecSebzvc1UWxLtri4SzzcIgDhC6wq8aZV1L0lmpRccSmjV0J0/GfeUYVdlAl
-	8Lz1II24xh/j27GHvhX9haByN548p/+Gtm2U0zR0FYP8D/3A7g54MnYsScR3SqFM
-	J2WUbD4i1S9X3V6mn1yPLICEiMv1yirEVGIn8L+Tgiv6l/fXhwhbREPX+Yxg==
+	:subject:to:to; s=fm1; t=1718259228; x=1718345628; bh=3EE8yWZlwL
+	g2Vb4rsThBPIdww8jSfPh7St31LlIFGuQ=; b=aesweUTq/Cr7Rl6vzzOzzFP+JD
+	5HF/qaxyMdGa2yI/iilXWmoBBcdGwtgGF1jURDJFaYTYPr+cWGqRTj4NaIYXlgGa
+	Lq4yYgYkiT+XzDyXWuwMWrdvThjwDbZbOzKLVjxD80wiaAzCisf+jHi52DX0FxI5
+	ZuNYOM3XNQJCkCJvsXpTT+lUqsXYxqr8j4z2uagSMlVeNsuXuerOjwqg2Bm2fWPh
+	DUbkTqC/zI2ycpHJoxUJz8XmBHfL6RRSX6ccYJcGCHc2Eokhvh47LORxt/7Cfa4M
+	ITF9dIjme+WftHxsRFdAcvxAXAFKwzms2KlqHZ8SUZm3FrKeKxyEBeMwrUNQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718259223; x=1718345623; bh=jttBxGIt5lX594QRFHtU9NJNXKpQ
-	pBNieUsbmUXMnak=; b=TNh0j4XUZ0TLFgeNi6U1YemY3m0O+iUoK2d0XeaxhWtL
-	SNDT6rX6TtD3EevdH1f8BHEPglTFHPD9IrU1YtWaZoHsVwyluy/nqsVKqJqf3a0O
-	UlHv+ytwRHn/8u2Q/S/xTniXquLabwYVec2OlWz1jdHMMrHC8i7kiDSSwnsRRbbC
-	fhcFB81WwitziOvaX627y/tpv91ma7pVQKYZVJXwfrur7KsdtgtWEgujAnJat2JV
-	1SPOryJHRdaJWYYYpqbsVIFvSYaso97e5+V7/gu94P8vmCg2ENmPTvEuLrdvku3f
-	gekHfBn2hk6GvHDLVBpQOIrOE2EreyruzXZrgFG9kA==
-X-ME-Sender: <xms:F45qZmUtq0cZZx2M5F_gfrwR1UeNqPXrhcWOQC-s5wxG3hzED0C9rQ>
-    <xme:F45qZikuvQULORK-88OKQLLoj9ITFO9kd2N4Q9BzOU34BDwIQvrBA1hBvcodWlhdm
-    rNZIMPm_96QyNCQSQ>
-X-ME-Received: <xmr:F45qZqbVMXwUh0_4EviBwKhB0XNJ8ZjMTt0YAD-nwtjhA9AZiujGAwcrbp4NDUps8b3ZsSDOrN1pQ3EVzYTkxaPaywc52LcSE3bJPv3Pdq1JhtpkMT8>
+	fm1; t=1718259228; x=1718345628; bh=3EE8yWZlwLg2Vb4rsThBPIdww8jS
+	fPh7St31LlIFGuQ=; b=nmKZ48h7IJfc3+eO+pE5A3t9PDSuiCJPyI/SdG4EAJ/7
+	348qpH+zXDFp6P5gB5YoXfXmLOB/fLxx7oC0anKkGGypOaE/11nBu1ZrCRFxCDJn
+	tvhQdEo4DHRdPu7xaG65q+csZa5QVB4UOFCYWqygfXEPEGTwNITG3Q7t9hIH0wlb
+	q5zTmW/RxtMiqk44vHaZsegGZvEh46o6Kz4cbjNOJbGSxMaaxW/13nlm5Zp2PBOS
+	k1g6swLsGQoiR44dMM4lMa3eU1SwGxwQdw3P7RYomkIz2VgcTia/1TbJAoZVUyfn
+	HVCHvx5LDyAXE9jxNI7G+KDGvKKe4okcP4Mh3azAxg==
+X-ME-Sender: <xms:HI5qZpZB63XjHO32TwY0e8kX7TOLMddYggLoK-LYPBMC7oor26awKQ>
+    <xme:HI5qZgbNVWTtrKomXk9H8XK6uQsdTLVYN5cATmaVIYve43jn7hZcOpIsE1a2ECWDa
+    VJew0HLt2nI5zdn8Q>
+X-ME-Received: <xmr:HI5qZr8HpPtZL522BfcbQjq3JJmkdtdJhb-sduTc6-c57CUXzz5hJyhVxppjlEqx3tn4oFPzrEy4ArO422RhYvoKCCHxGDK6jjIN-v82GQ-q0kJZU4s>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduiedgjeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:F45qZtWHFtXSGO6xuh6hIYvJIg_l1SrbHYePJEsNOwdf10xpwW6lJQ>
-    <xmx:F45qZgn4QCNnKrUoiVcA_Qk1fIBkPjOjn51vtYd0h6w7UgdArC6Xqw>
-    <xmx:F45qZidOtFgQprrUd8jBLIL_gB7-8Rw8stOYCayLfEGAZX3lTWUPog>
-    <xmx:F45qZiHijRNq2m2QsA4TCytr5qJUTWkyQuuZXc9hfoL0x_Nj7ytCNg>
-    <xmx:F45qZqixE9ax4mb-kFNu8WUZpP0B7idJd9inTEyvgaYwkl4EBjP1RUcb>
+X-ME-Proxy: <xmx:HI5qZnpSxI6tH5z-1mMd-zrkxkcHwCCv2OPXBMQ2jgPLfV0Ui_XBGQ>
+    <xmx:HI5qZkp-bDz809Ncf_RdMapss5zVqLo1HDwjImJSXlpSsv4JYJfLGA>
+    <xmx:HI5qZtTdxkzPLeiwJQqCh5KmAWA7jIVFkpbS43BImdjnQmPRkGrg2w>
+    <xmx:HI5qZsp8BiYw0IrWfkAtKF01ayYtZ_z1tqEPjMUiXQP-MRJWTdd9NA>
+    <xmx:HI5qZvWptQogM1b3O3MBl2UB5EI0RnBZdlm_VZM3jiVKqD5p3Ksj7cRN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Jun 2024 02:13:42 -0400 (EDT)
+ 13 Jun 2024 02:13:47 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id fa405a7c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 13 Jun 2024 06:13:30 +0000 (UTC)
-Date: Thu, 13 Jun 2024 08:13:40 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id ac49cc45 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 13 Jun 2024 06:13:35 +0000 (UTC)
+Date: Thu, 13 Jun 2024 08:13:45 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 04/20] global: ensure that object IDs are always padded
-Message-ID: <fa263d6b0777ba8d157f7364507590c19069ed56.1718259125.git.ps@pks.im>
+Subject: [PATCH v2 05/20] hash: convert `oidcmp()` and `oideq()` to compare
+ whole hash
+Message-ID: <a7df209bda9bacf3dc88c8a021f9162069f78867.1718259125.git.ps@pks.im>
 References: <cover.1718106284.git.ps@pks.im>
  <cover.1718259125.git.ps@pks.im>
 Precedence: bulk
@@ -83,219 +84,229 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wvWqfqJBGniy1VM4"
+	protocol="application/pgp-signature"; boundary="5qoqQe/FTVFNGhbc"
 Content-Disposition: inline
 In-Reply-To: <cover.1718259125.git.ps@pks.im>
 
 
---wvWqfqJBGniy1VM4
+--5qoqQe/FTVFNGhbc
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `oidcmp()` and `oideq()` functions only compare the prefix length as
-specified by the given hash algorithm. This mandates that the object IDs
-have a valid hash algorithm set, or otherwise we wouldn't be able to
-figure out that prefix. As we do not have a hash algorithm in many
-cases, for example when handling null object IDs, this assumption cannot
-always be fulfilled. We thus have a fallback in place that instead uses
-`the_repository` to derive the hash function. This implicit dependency
-is hidden away from callers and can be quite surprising, especially in
-contexts where there may be no repository.
+With the preceding commit, the hash array of object IDs is now fully
+zero-padded even when the hash algorithm's output is smaller than the
+array length. With that, we can now adapt both `oidcmp()` and `oideq()`
+to unconditionally memcmp(3P) the whole array instead of depending on
+the hash size.
 
-In theory, we can adapt those functions to always memcmp(3P) the whole
-length of their hash arrays. But there exist a couple of sites where we
-populate `struct object_id`s such that only the prefix of its hash that
-is actually used by the hash algorithm is populated. The remaining bytes
-are left uninitialized. The fact that those bytes are uninitialized also
-leads to warnings under Valgrind in some places where we copy those
-bytes.
+While it may feel inefficient to compare unused bytes for e.g. SHA-1, in
+practice the compiler should now be able to produce code that is better
+optimized both because we have no branch anymore, but also because the
+size to compare is now known at compile time. Goldbolt spits out the
+following assembly on an x86_64 platform with GCC 14.1 for the old and
+new implementations of `oidcmp()`:
 
-Refactor callsites where we populate object IDs to always initialize all
-bytes. This also allows us to get rid of `oidcpy_with_padding()`, for
-one because the input is now fully initialized, and because `oidcpy()`
-will now always copy the whole hash array.
+    oidcmp_old:
+            movsx   rax, DWORD PTR [rdi+32]
+            test    eax, eax
+            jne     .L2
+            mov     rax, QWORD PTR the_repository[rip]
+            cmp     QWORD PTR [rax+16], 32
+            je      .L6
+    .L4:
+            mov     edx, 20
+            jmp     memcmp
+    .L2:
+            lea     rdx, [rax+rax*2]
+            lea     rax, [rax+rdx*4]
+            lea     rax, hash_algos[0+rax*8]
+            cmp     QWORD PTR [rax+16], 32
+            jne     .L4
+    .L6:
+            mov     edx, 32
+            jmp     memcmp
+
+    oidcmp_new:
+            mov     edx, 32
+            jmp     memcmp
+
+The new implementation gets ridi of all the branches and effectively
+only ends setting up `edx` for `memcmp()` and then calling it.
+
+And for `oideq()`:
+
+    oideq_old:
+            movsx   rcx, DWORD PTR [rdi+32]
+            mov     rax, rdi
+            mov     rdx, rsi
+            test    ecx, ecx
+            jne     .L2
+            mov     rcx, QWORD PTR the_repository[rip]
+            cmp     QWORD PTR [rcx+16], 32
+            mov     rcx, QWORD PTR [rax]
+            je      .L12
+    .L4:
+            mov     rsi, QWORD PTR [rax+8]
+            xor     rcx, QWORD PTR [rdx]
+            xor     rsi, QWORD PTR [rdx+8]
+            or      rcx, rsi
+            je      .L13
+    .L8:
+            mov     eax, 1
+            test    eax, eax
+            sete    al
+            movzx   eax, al
+            ret
+    .L2:
+            lea     rsi, [rcx+rcx*2]
+            lea     rcx, [rcx+rsi*4]
+            lea     rcx, hash_algos[0+rcx*8]
+            cmp     QWORD PTR [rcx+16], 32
+            mov     rcx, QWORD PTR [rax]
+            jne     .L4
+    .L12:
+            mov     rsi, QWORD PTR [rax+8]
+            xor     rcx, QWORD PTR [rdx]
+            xor     rsi, QWORD PTR [rdx+8]
+            or      rcx, rsi
+            jne     .L8
+            mov     rcx, QWORD PTR [rax+16]
+            mov     rax, QWORD PTR [rax+24]
+            xor     rcx, QWORD PTR [rdx+16]
+            xor     rax, QWORD PTR [rdx+24]
+            or      rcx, rax
+            jne     .L8
+            xor     eax, eax
+    .L14:
+            test    eax, eax
+            sete    al
+            movzx   eax, al
+            ret
+    .L13:
+            mov     edi, DWORD PTR [rdx+16]
+            cmp     DWORD PTR [rax+16], edi
+            jne     .L8
+            xor     eax, eax
+            jmp     .L14
+
+    oideq_new:
+            mov     rax, QWORD PTR [rdi]
+            mov     rdx, QWORD PTR [rdi+8]
+            xor     rax, QWORD PTR [rsi]
+            xor     rdx, QWORD PTR [rsi+8]
+            or      rax, rdx
+            je      .L5
+    .L2:
+            mov     eax, 1
+            xor     eax, 1
+            ret
+    .L5:
+            mov     rax, QWORD PTR [rdi+16]
+            mov     rdx, QWORD PTR [rdi+24]
+            xor     rax, QWORD PTR [rsi+16]
+            xor     rdx, QWORD PTR [rsi+24]
+            or      rax, rdx
+            jne     .L2
+            xor     eax, eax
+            xor     eax, 1
+            ret
+
+Interestingly, the compiler decides to split the comparisons into two so
+that it first compares the lower half of the object ID for equality and
+then the upper half. If the first check shows a difference, then we
+wouldn't even end up comparing the second half.
+
+In both cases, the new generated code is significantly shorter and has
+way less branches. While I didn't benchmark the change, I'd be surprised
+if the new code was slower.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- hash-ll.h           |  2 ++
- hash.h              | 16 ----------------
- hex.c               |  6 +++++-
- http-push.c         |  1 +
- notes.c             |  2 ++
- object-file.c       |  2 ++
- oidtree.c           |  4 ++--
- parallel-checkout.c |  8 +-------
- 8 files changed, 15 insertions(+), 26 deletions(-)
+ hash-ll.h | 10 ++++++++++
+ hash.h    | 20 --------------------
+ 2 files changed, 10 insertions(+), 20 deletions(-)
 
 diff --git a/hash-ll.h b/hash-ll.h
-index dbb96369fc..b72f84f4ae 100644
+index b72f84f4ae..b04fe12aef 100644
 --- a/hash-ll.h
 +++ b/hash-ll.h
-@@ -288,6 +288,8 @@ static inline void oidread(struct object_id *oid, const=
- unsigned char *hash,
- 			   const struct git_hash_algo *algop)
- {
- 	memcpy(oid->hash, hash, algop->rawsz);
-+	if (algop->rawsz < GIT_MAX_RAWSZ)
-+		memset(oid->hash + algop->rawsz, 0, GIT_MAX_RAWSZ - algop->rawsz);
- 	oid->algo =3D hash_algo_by_ptr(algop);
+@@ -278,6 +278,16 @@ static inline void hashclr(unsigned char *hash, const =
+struct git_hash_algo *algo
+ 	memset(hash, 0, algop->rawsz);
  }
 =20
++static inline int oidcmp(const struct object_id *oid1, const struct object=
+_id *oid2)
++{
++	return memcmp(oid1->hash, oid2->hash, GIT_MAX_RAWSZ);
++}
++
++static inline int oideq(const struct object_id *oid1, const struct object_=
+id *oid2)
++{
++	return !memcmp(oid1->hash, oid2->hash, GIT_MAX_RAWSZ);
++}
++
+ static inline void oidcpy(struct object_id *dst, const struct object_id *s=
+rc)
+ {
+ 	memcpy(dst->hash, src->hash, GIT_MAX_RAWSZ);
 diff --git a/hash.h b/hash.h
-index 43623a0c86..e43e3d8b5a 100644
+index e43e3d8b5a..ddc2e5ca47 100644
 --- a/hash.h
 +++ b/hash.h
-@@ -31,22 +31,6 @@ static inline int is_null_oid(const struct object_id *oi=
-d)
- 	return oideq(oid, null_oid());
- }
+@@ -6,26 +6,6 @@
 =20
--/* Like oidcpy() but zero-pads the unused bytes in dst's hash array. */
--static inline void oidcpy_with_padding(struct object_id *dst,
--				       const struct object_id *src)
+ #define the_hash_algo the_repository->hash_algo
+=20
+-static inline int oidcmp(const struct object_id *oid1, const struct object=
+_id *oid2)
 -{
--	size_t hashsz;
--
--	if (!src->algo)
--		hashsz =3D the_hash_algo->rawsz;
+-	const struct git_hash_algo *algop;
+-	if (!oid1->algo)
+-		algop =3D the_hash_algo;
 -	else
--		hashsz =3D hash_algos[src->algo].rawsz;
--
--	memcpy(dst->hash, src->hash, hashsz);
--	memset(dst->hash + hashsz, 0, GIT_MAX_RAWSZ - hashsz);
--	dst->algo =3D src->algo;
+-		algop =3D &hash_algos[oid1->algo];
+-	return hashcmp(oid1->hash, oid2->hash, algop);
 -}
 -
- static inline int is_empty_blob_oid(const struct object_id *oid)
+-static inline int oideq(const struct object_id *oid1, const struct object_=
+id *oid2)
+-{
+-	const struct git_hash_algo *algop;
+-	if (!oid1->algo)
+-		algop =3D the_hash_algo;
+-	else
+-		algop =3D &hash_algos[oid1->algo];
+-	return hasheq(oid1->hash, oid2->hash, algop);
+-}
+-
+ static inline int is_null_oid(const struct object_id *oid)
  {
- 	return oideq(oid, the_hash_algo->empty_blob);
-diff --git a/hex.c b/hex.c
-index d42262bdca..bc9e86a978 100644
---- a/hex.c
-+++ b/hex.c
-@@ -25,8 +25,12 @@ int get_oid_hex_algop(const char *hex, struct object_id =
-*oid,
- 		      const struct git_hash_algo *algop)
- {
- 	int ret =3D get_hash_hex_algop(hex, oid->hash, algop);
--	if (!ret)
-+	if (!ret) {
- 		oid_set_algo(oid, algop);
-+		if (algop->rawsz !=3D GIT_MAX_RAWSZ)
-+			memset(oid->hash + algop->rawsz, 0,
-+			       GIT_MAX_RAWSZ - algop->rawsz);
-+	}
- 	return ret;
- }
-=20
-diff --git a/http-push.c b/http-push.c
-index 86de238b84..a97df4a1fb 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1016,6 +1016,7 @@ static void remote_ls(const char *path, int flags,
- /* extract hex from sharded "xx/x{38}" filename */
- static int get_oid_hex_from_objpath(const char *path, struct object_id *oi=
-d)
- {
-+	memset(oid->hash, 0, GIT_MAX_RAWSZ);
- 	oid->algo =3D hash_algo_by_ptr(the_hash_algo);
-=20
- 	if (strlen(path) !=3D the_hash_algo->hexsz + 1)
-diff --git a/notes.c b/notes.c
-index 3a8da92fb9..afe2e2882e 100644
---- a/notes.c
-+++ b/notes.c
-@@ -427,6 +427,8 @@ static void load_subtree(struct notes_tree *t, struct l=
-eaf_node *subtree,
- 					 hashsz - prefix_len))
- 				goto handle_non_note; /* entry.path is not a SHA1 */
-=20
-+			memset(object_oid.hash + hashsz, 0, GIT_MAX_RAWSZ - hashsz);
-+
- 			type =3D PTR_TYPE_NOTE;
- 		} else if (path_len =3D=3D 2) {
- 			/* This is potentially an internal node */
-diff --git a/object-file.c b/object-file.c
-index c161e3e2a5..bb97f8a809 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2743,6 +2743,8 @@ int for_each_file_in_obj_subdir(unsigned int subdir_n=
-r,
- 		    !hex_to_bytes(oid.hash + 1, de->d_name,
- 				  the_hash_algo->rawsz - 1)) {
- 			oid_set_algo(&oid, the_hash_algo);
-+			memset(oid.hash + the_hash_algo->rawsz, 0,
-+			       GIT_MAX_RAWSZ - the_hash_algo->rawsz);
- 			if (obj_cb) {
- 				r =3D obj_cb(&oid, path->buf, data);
- 				if (r)
-diff --git a/oidtree.c b/oidtree.c
-index daef175dc7..92d03b52db 100644
---- a/oidtree.c
-+++ b/oidtree.c
-@@ -42,7 +42,7 @@ void oidtree_insert(struct oidtree *ot, const struct obje=
-ct_id *oid)
- 	 * Clear the padding and copy the result in separate steps to
- 	 * respect the 4-byte alignment needed by struct object_id.
- 	 */
--	oidcpy_with_padding(&k, oid);
-+	oidcpy(&k, oid);
- 	memcpy(on->k, &k, sizeof(k));
-=20
- 	/*
-@@ -60,7 +60,7 @@ int oidtree_contains(struct oidtree *ot, const struct obj=
-ect_id *oid)
- 	struct object_id k;
- 	size_t klen =3D sizeof(k);
-=20
--	oidcpy_with_padding(&k, oid);
-+	oidcpy(&k, oid);
-=20
- 	if (oid->algo =3D=3D GIT_HASH_UNKNOWN)
- 		klen -=3D sizeof(oid->algo);
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index b5a714c711..08b960aac8 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -429,13 +429,7 @@ static void send_one_item(int fd, struct parallel_chec=
-kout_item *pc_item)
- 	fixed_portion->ident =3D pc_item->ca.ident;
- 	fixed_portion->name_len =3D name_len;
- 	fixed_portion->working_tree_encoding_len =3D working_tree_encoding_len;
--	/*
--	 * We pad the unused bytes in the hash array because, otherwise,
--	 * Valgrind would complain about passing uninitialized bytes to a
--	 * write() syscall. The warning doesn't represent any real risk here,
--	 * but it could hinder the detection of actual errors.
--	 */
--	oidcpy_with_padding(&fixed_portion->oid, &pc_item->ce->oid);
-+	oidcpy(&fixed_portion->oid, &pc_item->ce->oid);
-=20
- 	variant =3D data + sizeof(*fixed_portion);
- 	if (working_tree_encoding_len) {
+ 	return oideq(oid, null_oid());
 --=20
 2.45.2.457.g8d94cfb545.dirty
 
 
---wvWqfqJBGniy1VM4
+--5qoqQe/FTVFNGhbc
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZqjhMACgkQVbJhu7ck
-PpRt4g//R8uxk+Hrd7HVtCXZoCTUBajDJdMU7870jihna40eYdYwEL39nN7XhrLM
-E8BVWINoVdOSnRZvWRRwStC5RgkL7FKmWDIQ5FZXg4P8olHv0WtHl4M3xlyJninA
-iLRaCADAeF16ueccskxV5M5+cpmVTkpZs3cDuFqzVCCxpxvStxzNcCbbBK4qQouD
-DAlCIZMkCK+ze+qtkKm0wlQi+0dbYAQtxa77P6nQSQsggf2/XZ0+gXtYInE/RR/O
-86Btoy2aRPEzh7OfHz7EJdOlRyrbaKWtzV4joG0KKkAfSvC+pLwhmg6gmMR2T6xJ
-FdYY58mZ4iWhrbMYfDcyPXByee5paL/f83ePMDJ2tTSf1v45zz/qGWOrTajrOgWG
-F1eK6wO9NG+jJhExW9Kt4dbOjFi/wyQV5Wfh7iTNMwV06VX90HIiCKyshvojUAlL
-2jY4rcDZRcqdA34NxkOT1B4VP07jvcnRbXUZspWXPS7DOlvy1GiXx/OZYmvRqm3P
-AIVooJFuDzy36mfwCixQXdSwQdbml6d/LxLgaLh/mdxWT9BraNLFf5hsy91W6um0
-TydYVj8iT4HfXz/mM02BikPP460JQBT7s4APpotGNDimkyiamGL7LoiLSsMoXELb
-ewyYjDFl8N8I2gSw4tcD9wW6pFjlte0OE3ZrrghzEF3ZPB4Dv8Y=
-=gLGL
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZqjhgACgkQVbJhu7ck
+PpQ6Lg/7BsOb0nM7LQDpEXAYDFrdJhQwCqmnVIIglJBfr2yOCANeqnpPx8UXVVqX
+QxPzwNoDsoy3kLHE1RaynxaYC9uWSStcn4DunOZrfX4vCwzNozVDb2JgxJHD6fbs
+p1ETx2312lZzPrPfqPMOFDyyoAyV2qXZkI2bDFuq/EcCatMvChnw4fKttH976Jrk
+O/XtuJp6JOHDWMUs2MSM4tnc9w0qZXTTAWlUqesEtSN/tbII9cPeN44bDmKqNLrr
+f1ofzlCrnhMVT6quWQWR7cz+Ji6a/IBcB35VaUC7edTGRafpCtpzsjJe5l8RXHX7
+PgNMvvUKgldxQd3znzu70rDHcp2aKnQmIZQNy6tVJ0rkwS4L3VMRTsJ677c08874
+b0WdbgcAba1eeBE/uIlXPNJXIMVTLWPFl5T+YYItR21KhF3h9ft9skpZklAP4BQ2
+UttonyhlwBvc6UH+nQqrqVwtYNWB+plL3upxgm5MMrKKZUI3/ygHH77tSARG8T66
+4TPR7Wav+R62rUcbM0iZCUTiI8nUOJxu1yoxiHRx7Wxx19bhhHwowEYMu/ZZLY9R
+/K/mpak7jpRGVlcvvIpU3njwXoo61ptDAcBg3eLzlMjD534Brvs7WyMxz9lv8eKC
+wn6i8FJFmvCxKSo7RUh4LQq9ZVF02qgZ0KNENH2FGYKrEzxUBe0=
+=q1gC
 -----END PGP SIGNATURE-----
 
---wvWqfqJBGniy1VM4--
+--5qoqQe/FTVFNGhbc--
