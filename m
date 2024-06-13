@@ -1,80 +1,80 @@
 Received: from wfout7-smtp.messagingengine.com (wfout7-smtp.messagingengine.com [64.147.123.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E3D136E37
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 06:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6301369A7
+	for <git@vger.kernel.org>; Thu, 13 Jun 2024 06:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718259295; cv=none; b=rDOjSdnY7YplFXc56nmpNykEfhiMnoyqaUCLHXmreUI1swuNWxN6tcrPHpNYPofldJkGplFPfvHuEuB6DvJ9oo5mqYLHRc+b61qR5isjqcQl5ONBt+a+cPRaGwn7jnIgm83yksGmNuwSVkfDVx/6tyucv/iII1ttZkEf8++APFk=
+	t=1718259300; cv=none; b=NaokBnBm9TWLuRm2VpZYfy9VYRhxodOmyfvOmrU2Rp/t77FU5hDNwvFX3BhdOVPeA8CCkrRw1FKayytB7NRWnz5HxbhLjk+VTRVsa0+xQ5GHCIhqTzaS7QhZHp1zo1w5Ae5jF6SjSrtftdqHUvtFHNKHMa3iql11xaTd6v600wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718259295; c=relaxed/simple;
-	bh=eUcLBmHIeuQ5u7+hWUyL35EKRCcHOSHug/8a0vowiHw=;
+	s=arc-20240116; t=1718259300; c=relaxed/simple;
+	bh=7R6WhlSHDxQK+htA98I0tvckYBgVoTTPRK7nLhmPKTs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YfU3RsOvbceOXSh/Peru4UBXeKfXovRm9+n7BQBnRY1Si3ZAM50fU66wWFEgGS09+CDZ31nCrO0JIihhpYo66w80GKbvS1BqXaZQIPP74vnh47/PtEDChBwetVtYYnlzyWQPyrZBgJ0x1UULz32XdSUUIFVuwl6fXO5+0GB+B6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Vs7BnJVP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BpGNl6tK; arc=none smtp.client-ip=64.147.123.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=FZ2sm0RmaF5dOpUtEN1xTREdJQUIvSilVHZouGtkbczU0N60UhL+x+Ws5Lapg0LVg6A2ugosOqG4q5ueqUqTET/1IyGJ+KzNDLcQVXnjc26W+UYcE9hSwVf2BnJt8YMdg1E/67M/ZONnejZYtsjFIpIGEXomSCkgMF2o4nx/RV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oDctWsXi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lOnVT/Zp; arc=none smtp.client-ip=64.147.123.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Vs7BnJVP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BpGNl6tK"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.west.internal (Postfix) with ESMTP id 367401C000A6;
-	Thu, 13 Jun 2024 02:14:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oDctWsXi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lOnVT/Zp"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 2B5A01C000A6;
+	Thu, 13 Jun 2024 02:14:58 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 13 Jun 2024 02:14:53 -0400
+  by compute6.internal (MEProxy); Thu, 13 Jun 2024 02:14:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718259292; x=1718345692; bh=Tm8RlfYOVk
-	Wzv5nzxlL6MPoU5X5cKffBHEsi/FsL3nY=; b=Vs7BnJVP/E7YG/q9PuOVFYdhsI
-	8953dIRKUoU4Kvg3SpK/CNRxE0bBlNav/snoUm2yNX44//T4hNESP1YTm1uK7i5O
-	mEi2uHEFHxrKfw20qwKKPcn3iZBaL14Gvr2G+ks0lVzVrRDUm41HoLbuYGVPhVVb
-	VgtR6ryuL1noXuRgPTRrmCkGPfLOUzEaKYzLPNTTuXjgtaE1Jm1qDe15rPZMMgFI
-	2VDm5QNeLaPlUrAhP+JQjJzA+KFEpie2ZR0qDEbfKIYn4Zatp8tc3KjsAePB9/sp
-	kmrHmts860TS59LryMGMvhtBPN9iYicXW9mWMfb07rcN0ZOm9f85pu7+o5PA==
+	:subject:to:to; s=fm1; t=1718259297; x=1718345697; bh=VNFzFU5+aV
+	uv021wcXxbYy6i4jrvat9DIcmn0tWAdes=; b=oDctWsXimLEVPBIMp/KGsTuUY7
+	j/9+fxWm+9m4Z8KqgLONWKFBpcHSpJ4Ug5rtn+4XK6jTJ3ISL95frewuFZnLVacu
+	lFGjpknRXPKNxKxjEI7UlymSksbBhGxA1sPOUn3wzUfZouJ1TjItBTT5LzHqEWnU
+	UsLAXWPwTUKbelYCqKHbI729pqyhxQtHwGvwOktBKqqszZb+mBHTMadCvGlChpFW
+	RPPXoX1gy3LIw6s+wDyu83rgbfYD9ur2hlIvO8LBJgjn+nV1I2eHdjhTef7G1vBB
+	pmdwkWJEX8q0znKr6gh9HBNSIQIXmHaquoi/75e39jHYaF3t8I4gCJ6sCn6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718259292; x=1718345692; bh=Tm8RlfYOVkWzv5nzxlL6MPoU5X5c
-	KffBHEsi/FsL3nY=; b=BpGNl6tK9XP8sNQwJSd9YPKY1g6wli5Yj8xGE8ynESRv
-	WQ7Xobr2L43pUx+VIjAJtXZ1zubS8cgCSdsQrzBVUanFbX7yejz9QDGW4lKaja6z
-	ksClxYzO/GeIi/dYyz0UQbLXZeO/3ozq94NBJEIg3imvJSYHMIkXVDaVO955ivk0
-	plYpDh9f3EB72nhikzUSdWCGUkLIWX8rQoHlpSItVlu0Wi4TZZf2GrD32e0iSBs/
-	eHz+qE4CWWes5PtT4DHecCrvTgT3ivT+mfWP4VnpUZGPS9ZWOh6JTM/4djWMdXG5
-	umZD8u5NAseRp8OUgXY+9mGwVabwyPXEmIjFRW4yqA==
-X-ME-Sender: <xms:XI5qZhUcqHWPJHARzFDrV_u67_xLxu9hqupZ_FPs2kur9lO2TNOOzA>
-    <xme:XI5qZhnvIIM-sw8BJQSuzeONJGdUt8X-wCp5wADXCutSwbkxiHBb93exruNcPBjf1
-    h8sVzYV61YgiQGDDA>
-X-ME-Received: <xmr:XI5qZtabQnxhghJ-gN4-_Xlu8xEmJ1GFqMlfOlsk0y24PIUsP5eaTeXBrM-s9hgIPkgXd5JLdjiRMXbfPhmxp_AhHRfECm4NxSWFjvT0ldPY7pFjxWE>
+	fm1; t=1718259297; x=1718345697; bh=VNFzFU5+aVuv021wcXxbYy6i4jrv
+	at9DIcmn0tWAdes=; b=lOnVT/Zpw2uFaZubmYnaia2my4IG+51xVrR+HS/fukL8
+	gy1v95ZAb0tDeRxCGiQABnkUEKBiDu6vPBhcbWTpzL8G3VsayahLWK40D7+9o60c
+	ell/qCK1AMT0gk7wU62feo02+u4VwrryG8nZQFYeG89NDpk3VIOryKKA/TwqzjS/
+	ktJbmLeUUgJWBhb5WBaO5BnQXMqKe7RT+x1bHcXkw6S/Y9zLoIx0D3Ewemb5mOeL
+	cuVZ602KcdWHp+hjrWFjJKAukqb/BxBAGNEj+fsqbwlqQi0quOjGSCQylKLp5Wn8
+	fQ26fCt8JjA51qarTysHSKkg3+csk0oJ4XSsRUsGcA==
+X-ME-Sender: <xms:YY5qZkNjTjrph1awthtwHfK2fJ2Bqp1m6jXZaa8wd8lCGMZ1E1VOJg>
+    <xme:YY5qZq-RSCRrUPjVEnpuitS9NiPZaYe9arWJtsFEI_vlhPEvoULyivlFKdwKZDXwM
+    h0-xMwoRMM-PrFrng>
+X-ME-Received: <xmr:YY5qZrSZfaywu4_njTwIuEcZ1B9cYED9qqBPNTI1KlYiER0mkZ5_EqSHQV4AoglPBrGAwDnnmuEH0HxOH-u_4-i8Ypx7vzmxRLGTwzPmQsS4zhv6ZuA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduiedgjeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepgeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:XI5qZkUKikIqvECcjBWKFZeyxG3yRI-kh-j3mzuGP69aNDwFaZkHiA>
-    <xmx:XI5qZrkh4OM8XMcBiEwFIbQpt7yN3BFU9czhcu-C2_yd05oHzGSpnA>
-    <xmx:XI5qZhcuLWolR-KsG1dOSxmpdB4OZkbmEsdwIpkIKuxxy3-qksdWqQ>
-    <xmx:XI5qZlHbdq73tfUzF9Y_5IEE4dLPKXzrZ87LPrXWIHYRLhwe2PwarQ>
-    <xmx:XI5qZpifbpdpP19r8kqcY9X6hHhZrGxG4Sk7qeTZM3Z_Qv2H5UQX0wJs>
+X-ME-Proxy: <xmx:YY5qZsuVZViXW7OBW2GWVy_Bgn46dqC4EQXM6KZndBFxhI28GkoWlA>
+    <xmx:YY5qZsftPEWzg6MIkzPeBKJ1GGvU1G0uIhkysNyunacCJDdkKgyb8A>
+    <xmx:YY5qZg2k7H6CWeeRn42scl9v3KlRVvHvrAwGkZgWkEcJCjwIsnrZdg>
+    <xmx:YY5qZg8Zv5qFB6MZ7jNe696FqEIx7UAjPlu4DXX9XjepTmxxyn6v3Q>
+    <xmx:YY5qZk6e7gTGd4TjUi9z-bsHL3y0N_pXEBSm29lvMxhYAYEDCkqrB59X>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Jun 2024 02:14:51 -0400 (EDT)
+ 13 Jun 2024 02:14:56 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id b1f0a34f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 13 Jun 2024 06:14:38 +0000 (UTC)
-Date: Thu, 13 Jun 2024 08:14:49 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 797ff8a6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 13 Jun 2024 06:14:43 +0000 (UTC)
+Date: Thu, 13 Jun 2024 08:14:54 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 18/20] t/helper: fix segfault in "oid-array" command
- without repository
-Message-ID: <470aea1fc85b0dce983ce5a81aeac28df62e8ea7.1718259125.git.ps@pks.im>
+Subject: [PATCH v2 19/20] t/helper: remove dependency on `the_repository` in
+ "proc-receive"
+Message-ID: <1f0682fc7dfa63a50838316bb85717b576274289.1718259125.git.ps@pks.im>
 References: <cover.1718106284.git.ps@pks.im>
  <cover.1718259125.git.ps@pks.im>
 Precedence: bulk
@@ -84,102 +84,97 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Z8jh964vSU5JFsM6"
+	protocol="application/pgp-signature"; boundary="bTp1+pdmfQyZkfMi"
 Content-Disposition: inline
 In-Reply-To: <cover.1718259125.git.ps@pks.im>
 
 
---Z8jh964vSU5JFsM6
+--bTp1+pdmfQyZkfMi
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The "oid-array" test helper can supposedly work without a Git
-repository, but will in fact crash because `the_repository->hash_algo`
-is not initialized. This is because `oid_pos()`, which is used by
-`oid_array_lookup()`, depends on `the_hash_algo->rawsz`.
+The "proc-receive" test helper implicitly relies on `the_repository` via
+`parse_oid_hex()`. This isn't necessary though, and in fact the whole
+command does not depend on `the_repository` at all.
 
-Ideally, we'd adapt `oid_pos()` to not depend on `the_hash_algo`
-anymore. That is a bigger untertaking though, so instead we fall back to
-SHA1 when there is no repository.
+Stop setting up `the_repository` and use `parse_oid_hex_any()` to parse
+object IDs.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/helper/test-oid-array.c |  4 ++++
- t/t0064-oid-array.sh      | 18 ++++++++++++++++++
- 2 files changed, 22 insertions(+)
+ t/helper/test-proc-receive.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/t/helper/test-oid-array.c b/t/helper/test-oid-array.c
-index aafe398ef0..076b849cbf 100644
---- a/t/helper/test-oid-array.c
-+++ b/t/helper/test-oid-array.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "test-tool.h"
+diff --git a/t/helper/test-proc-receive.c b/t/helper/test-proc-receive.c
+index f30022d222..29361c7aab 100644
+--- a/t/helper/test-proc-receive.c
++++ b/t/helper/test-proc-receive.c
+@@ -3,8 +3,8 @@
  #include "hex.h"
- #include "oid-array.h"
-@@ -17,6 +19,8 @@ int cmd__oid_array(int argc UNUSED, const char **argv UNU=
-SED)
- 	int nongit_ok;
+ #include "parse-options.h"
+ #include "pkt-line.h"
+-#include "setup.h"
+ #include "sigchain.h"
++#include "string-list.h"
 =20
- 	setup_git_directory_gently(&nongit_ok);
-+	if (nongit_ok)
-+		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+ static const char *proc_receive_usage[] =3D {
+ 	"test-tool proc-receive [<options>]",
+@@ -92,9 +92,9 @@ static void proc_receive_read_commands(struct packet_read=
+er *reader,
+ 		if (die_read_commands)
+ 			die("die with the --die-read-commands option");
 =20
- 	while (strbuf_getline(&line, stdin) !=3D EOF) {
- 		const char *arg;
-diff --git a/t/t0064-oid-array.sh b/t/t0064-oid-array.sh
-index 88c89e8f48..de74b692d0 100755
---- a/t/t0064-oid-array.sh
-+++ b/t/t0064-oid-array.sh
-@@ -15,6 +15,24 @@ echoid () {
- 	done
- }
+-		if (parse_oid_hex(reader->line, &old_oid, &p) ||
++		if (parse_oid_hex_any(reader->line, &old_oid, &p) =3D=3D GIT_HASH_UNKNOW=
+N ||
+ 		    *p++ !=3D ' ' ||
+-		    parse_oid_hex(p, &new_oid, &p) ||
++		    parse_oid_hex_any(p, &new_oid, &p) =3D=3D GIT_HASH_UNKNOWN ||
+ 		    *p++ !=3D ' ')
+ 			die("protocol error: expected 'old new ref', got '%s'",
+ 			    reader->line);
+@@ -128,7 +128,6 @@ static void proc_receive_read_push_options(struct packe=
+t_reader *reader,
 =20
-+test_expect_success 'without repository' '
-+	cat >expect <<-EOF &&
-+	4444444444444444444444444444444444444444
-+	5555555555555555555555555555555555555555
-+	8888888888888888888888888888888888888888
-+	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-+	EOF
-+	cat >input <<-EOF &&
-+	append 4444444444444444444444444444444444444444
-+	append 5555555555555555555555555555555555555555
-+	append 8888888888888888888888888888888888888888
-+	append aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-+	for_each_unique
-+	EOF
-+	nongit test-tool oid-array <input >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'ordered enumeration' '
- 	echoid "" 44 55 88 aa >expect &&
- 	{
+ int cmd__proc_receive(int argc, const char **argv)
+ {
+-	int nongit_ok =3D 0;
+ 	struct packet_reader reader;
+ 	struct command *commands =3D NULL;
+ 	struct string_list push_options =3D STRING_LIST_INIT_DUP;
+@@ -154,8 +153,6 @@ int cmd__proc_receive(int argc, const char **argv)
+ 		OPT_END()
+ 	};
+=20
+-	setup_git_directory_gently(&nongit_ok);
+-
+ 	argc =3D parse_options(argc, argv, "test-tools", options, proc_receive_us=
+age, 0);
+ 	if (argc > 0)
+ 		usage_msg_opt("Too many arguments.", proc_receive_usage, options);
 --=20
 2.45.2.457.g8d94cfb545.dirty
 
 
---Z8jh964vSU5JFsM6
+--bTp1+pdmfQyZkfMi
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZqjlgACgkQVbJhu7ck
-PpSTNxAAnz7nxzSGm2xOPrruoN6LZtbCQ/BS0GSgVJ2/ytH+f0tEchvxPxTZp/ei
-Mc9N1x2Iokn8VWHlAJpWWJ15nID6VSZGfthMnvVA1i1v/rJvvmPb4Ai/JZdHHXC4
-c9cpmESK1uqNAE+a8Oa2Heub/lCWVyTpkdQe/ND2Gubdo4fbiZrmlp6QSVggOwB6
-cvl/C8zmh7jdRAKrqbh28ao+h5GY+Y/ApDOpPsLfXFmZKlXWbbsL98E7aITcAXEx
-yZDjhNoCf7aqRGg2wKvci5oDAQY/PtfuwcKMmI2CBATGTm81qM3XEEcqXREw9Q0b
-5AcGAqrQ4nYWPUWpz9k9EsUS8RLB4RgjPZUcYMIjFUPSDMhgQj8RL21Vja46SjMc
-AcqTVwsRQIKdKFxL4YRM3E8atGGUg1UxxruXVvsWOPkrojH7SJKsBeUIQEBIojOW
-8nCDr27KrqHnpLyTBzp00Mow7Z0aCQsO1664lNvKKQ4XL23z43aUS/Yf4saUOoEX
-4uisiTXAW9AOnN01jWiSeeb3ibjaz91JRbXWoQaXDkTwUdUAngHiEXPYRyWUwfH6
-acLP8EV+ET/3SdIJ8LLmdm+hcp7BjdIdc1+KOMAjpnOJNDR3eGe40PRr4FF1IIin
-isAAQltgEvajIfMFDghm0zipiRZ1SxfZEmeblsPt6mcipzoBueM=
-=IOvI
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZqjl0ACgkQVbJhu7ck
+PpSFxhAAjbm+pN5AJ5EcjqjzHXA8/zl0XQ+oyKwjRZ+hwHLjrzq0uIQVmscxsB0j
+5NvhESdfAexXyPSFcmi9UJu6VNDRTHisOjZWMJuAXMkVhLEYlKof+PYqVISBchUz
+yvBcwZ3gNHy4C5iS8g7X7xXY9Ey1LqSjoYjkWXPWUN1Y8wpXrN/DwkV0vq1SRSxt
+OHpWPRFmQWR3R+vWgfB8yHsiC738nqyxk+Yh+KdX20h07M8xiA9XNr374K+vR1uG
+vJIV7K3EhyIcvN7KxURC2FkO2lktz0l9hJ5p+RsOkAXmU2/eqx1vBBWRq6vKfs8k
+EoG8XWGoE55/gZPFqrVhqFfwOD3WjPgFVG0vseUEccztE9iEUJcC+QTADxVrFKAn
+GXah1Y2MYjdMrWrSbZAAe4fye67z7RYm2+NeNyTKcQ3G4GmsWnyqu1/YeMf4hPKC
+jRSCGoRvGKYH2Bi+pAcSBkev+BjFIhyBRA1hWNw+0/mF9/GVXmw9g2tAHp4VlheA
+DUEyWJdcxy4jKILU36GV2ncrK346/Qf84Hqf6sPP8wESGqv97Wu75cKGSoTe8+Xf
+oNfQ9yhRaXHabhAPjILyw8MDIV7N5ymMYrJaUbUImqcOZhgRG+t7ah5qww4eUXif
+mQkTzt/xCzb0yKw0sJodF6/F67P3o/+EabKSGunenJBT0rYxuUQ=
+=tjJC
 -----END PGP SIGNATURE-----
 
---Z8jh964vSU5JFsM6--
+--bTp1+pdmfQyZkfMi--
