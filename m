@@ -1,106 +1,121 @@
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605A713541B
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 20:50:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8144F8A0
+	for <git@vger.kernel.org>; Thu, 13 Jun 2024 21:00:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718311818; cv=none; b=DGYdbbvy2fSoVSfpST9lsiY2QmQT/JAU//8sfPqPIMk1px3VUt+8Xr9ywM1SHzY1hYRdQTwMlqI0K+AKjErvD0u2lJrSi6RHJM5jOtKuo/3HS1SiQgUYbEoBKxH0XjIAPjkOQNSHkeWuxBdLvVbismiimcVUmiucvqoHrdM+i/8=
+	t=1718312410; cv=none; b=BLMMQxIJ6i3FLvO0jVEpg2YijbFEhrOCqBOfbhhqGM74GWSs1QbtQOuh4B77Ht2+Cjcw609CWXZTJE+/0lBmTsXjvd4oFfBr7XPk6H8GdhfS3ijtNMOwKYWBC8xidof7mBbw1VFY5cdfAsxTisKhfYzjoU4+aKZcBbD2X93kGqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718311818; c=relaxed/simple;
-	bh=ekiyZW9YjyiYTB4kWIvIbnhgF5705D8R5kmDNQ3bTaA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=Wuni7aVJMvWlXM2AqCd+pckXtshxHfaK4JIlslos+AlaCf5/AoAjqiQzuO2KQzkfEtf426uT1l0zRX0lks+mG2/ha5TQu/H1e4i5jXVL33+w8XXBgyaTALMBMpOODk5HmO0iWZWS5QhfjBQ6Q24R7Ldtvuvah1i0nFU6NOGLxtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m2DyUZ++; arc=none smtp.client-ip=209.85.166.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718312410; c=relaxed/simple;
+	bh=ry3p+34KWjrsWi7sJBuJKgkTA2ZcBG1EpaHYRzZ7D20=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nxuZVk8zDn81/aOq41eaZ9WsKZj63ZIFVPrz9+TEVV2nTrXba/gnxRh39uyteScrTZP/Bk/OVn+6jXXvizCx4n0YOC/hOjcmUny2ZUzDdK92jJCBfqovBmD5CQgtir391TEjMbqewOl07e//ioCeaYnPCwDizEXkrlbHlON6ths=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=N+p5XIV9; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m2DyUZ++"
-Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-7eb7bf1357cso59710339f.1
-        for <git@vger.kernel.org>; Thu, 13 Jun 2024 13:50:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718311816; x=1718916616; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YsS+E4/gfX1S7GSS+ck9SWLNfNKvFIWAG+yYCH9WM80=;
-        b=m2DyUZ++tvINzyGd9TL0Lp0321WIsPCewZfiNgUycE9MoGu0LCWbBAjRfVM8LGEv43
-         WkB0XrbRa4tlWe+UXnW3oxZmjSMS6EBq4XYK/Mj4Fyg360V2SmkjZKt57Lvbh2hybpJv
-         6PPqseStz8sh8pj4pkepZhbp80Qjs/T1lcCF1LivgM+WJX1loenF9hOE72Vv5oxgDpjF
-         52w2LfWa0zBjj+RO6a2eWmVb96gQf/2qs378o5phLin+1wQBLT2hPPUkrUZGTIH45Vap
-         HIZyHT8VO82iEbio64kYmrvqkeEf7L+VPFHZfVqHpv4U58qYZ/xLrIPFqw4rzCIG7qKb
-         1TvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718311816; x=1718916616;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YsS+E4/gfX1S7GSS+ck9SWLNfNKvFIWAG+yYCH9WM80=;
-        b=sdyinzwMFenjE5WgCzyugkdWTVg0MKVL/R/kMcyFoaPZ4W4ZK3JqGIjr3UCb9cRm/9
-         V+7f+k1ixVBWja54IXxNdcPwR9wGUmcDMmlIk5H3JNjbP2WHjQwCrzDRje5o6wePIZUC
-         n+EfWVyCui10CvzfMtMhH6Sz9H26jImuhQqDiMdBATDCqDw1+uH+HeWckxS8FqyAve6U
-         aCflY3qj0iu+QpUMArHO6a6x0ohC1VFqGFZVILVDsWHkHI98g+o2qSwkVdQATfdOf8sD
-         BYbaUh60Bgi1kyJX6+fjjsjALtSiiQJFmkslQLBrVFkBFhqQsRlpapFkhAcySJ/PPJkw
-         dKFA==
-X-Forwarded-Encrypted: i=1; AJvYcCWDmckaDt9NdSbs6HvMbll+PiW3VlH8vItCWBRUlOd3Z3B9VBAUUvlcho5/PuIKj3YFJDPg814/VOP13t4JB/vvDzdR
-X-Gm-Message-State: AOJu0YyKCe1olkZUcEQqvXb2Mze0HZ9OhLurchhg8iTfcbMFWGz0ZlmP
-	Dpq+Fg8NPUZUrMuPhmlFrbMNcx3A+1+7RIxEL+lWBBGo8YhaSAjR+UWvgj7ZZ8zackw2+2z5lIF
-	AhndqU3/0YzdLEfTCcFkgn/deyDA=
-X-Google-Smtp-Source: AGHT+IE+0i7Q1XZF1ynwLEJOOnmbD5pBaiM+cKmd7+Czb4Mq28NTtLmv+QvE81IkPsgEcVrXDK0EkV2a8iPUco4V02E=
-X-Received: by 2002:a05:6602:1647:b0:7eb:7bc9:7fc2 with SMTP id
- ca18e2360f4ac-7ebeb63e1a5mr65892639f.20.1718311816358; Thu, 13 Jun 2024
- 13:50:16 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="N+p5XIV9"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 72FFA1C2EA;
+	Thu, 13 Jun 2024 17:00:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=ry3p+34KWjrsWi7sJBuJKgkTA2ZcBG1EpaHYRz
+	Z7D20=; b=N+p5XIV9uaytt/Yd3WuP2YGSud43160GfM8iUJU+tyW8ew6KlkcVO/
+	27H3D0axOWNC14ia3QQ4I1oRRxZAuL4vCl6cyeBG+th4BQX+mwwqB9Gi8kBqijYN
+	ONA6RxlKpfgZ6sQGZjuznROtlLIz71N1vwrMHa34lpFtNZiilNfvA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1CD131C2E5;
+	Thu, 13 Jun 2024 17:00:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AE2351C2D8;
+	Thu, 13 Jun 2024 17:00:03 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/7] merge-ort: extract handling of priv member into
+ reusable function
+In-Reply-To: <d4ba1fccd9145db9b3fe1530881052315cfa16b8.1718310307.git.gitgitgadget@gmail.com>
+	(Elijah Newren via GitGitGadget's message of "Thu, 13 Jun 2024
+	20:25:01 +0000")
+References: <pull.1748.git.1718310307.gitgitgadget@gmail.com>
+	<d4ba1fccd9145db9b3fe1530881052315cfa16b8.1718310307.git.gitgitgadget@gmail.com>
+Date: Thu, 13 Jun 2024 14:00:00 -0700
+Message-ID: <xmqqjzisimnj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <75F8BD12-7743-4863-B4C5-049FDEC4645E@gearset.com>
- <ZhBZOY1aEFW4YoD8@tapette.crustytoothpaste.net> <CABPp-BEogmpG7pYmC84WhQCy0tP97cV8BZ8epPeo4fzmRjU5Rg@mail.gmail.com>
-In-Reply-To: <CABPp-BEogmpG7pYmC84WhQCy0tP97cV8BZ8epPeo4fzmRjU5Rg@mail.gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 13 Jun 2024 13:50:04 -0700
-Message-ID: <CABPp-BFrcNLA-714gw+JogtAQLhmcs_sLnkkaBiGERF+riwZLQ@mail.gmail.com>
-Subject: Re: Unexpected git merge exit code when killing merge driver during
- ancestor merge
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Matt Cree <matt.cree@gearset.com>, 
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E7E1FA5E-29C7-11EF-9E96-965B910A682E-77302942!pb-smtp2.pobox.com
 
-On Wed, May 8, 2024 at 10:03=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
-ote:
->
-> On Fri, Apr 5, 2024 at 1:04=E2=80=AFPM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> >
-> > On 2024-04-04 at 16:16:05, Matt Cree wrote:
-> > > Hello all. I have observed some strange behaviour when exiting a cust=
-om merge driver that I was wondering if there=E2=80=99s any reason for =E2=
-=80=94 I think it may be a bug but I=E2=80=99ll leave that to you to decide=
-.
-> > >
-[...]
-> > This is definitely a bug because we triggered an assertion.  The
-> > assertion asserts that that case will never happen, so if it does, we'v=
-e
-> > made a mistake in our code.
-[...]
-> > I've CC'd Elijah Newren, who's the author of merge-ort and who wrote th=
-e
-> > code.  I'm not familiar at all with merge-ort, so I can't speak to what
-> > might be going wrong here.
->
-> brian: Thanks for tagging me and expounding on the testcase.
-> Matt: sorry for taking so long to respond.
->
-> This is just a quick note to say I'm aware of the bug and will respond
-> (I think there might be a simple fix here), but for various reasons
-> it's going to be a couple more weeks.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Again, sorry for the delay.  For those reading through the archives, I
-posted a fix to this and a few other issues found while investigating
-this problem over here:
-https://lore.kernel.org/git/pull.1748.git.1718310307.gitgitgadget@gmail.com=
-/
+> +static void move_opt_priv_to_result_priv(struct merge_options *opt,
+> +					 struct merge_result *result)
+> +{
+> +	/*
+> +	 * opt->priv and result->priv are a bit weird.  opt->priv contains
+> +	 * information that we can re-use in subsequent merge operations to
+> +	 * enable our cached renames optimization.  The best way to provide
+> +	 * that to subsequent merges is putting it in result->priv.
+> +	 * However, putting it directly there would mean retrofitting lots
+> +	 * of functions in this file to also take a merge_result pointer,
+> +	 * which is ugly and annoying.  So, we just make sure at the end of
+> +	 * the merge (the outer merge if there are internal recursive ones)
+> +	 * to move it.
+> +	 */
+> +	assert(opt->priv && !result->priv);
+> +	if (!opt->priv->call_depth) {
+> +		result->priv = opt->priv;
+> +		result->_properly_initialized = RESULT_INITIALIZED;
+> +		opt->priv = NULL;
+> +	}
+> +}
+> +
+>  /*
+>   * Originally from merge_trees_internal(); heavily adapted, though.
+>   */
+> @@ -5060,11 +5082,7 @@ static void merge_ort_nonrecursive_internal(struct merge_options *opt,
+>  		/* existence of conflicted entries implies unclean */
+>  		result->clean &= strmap_empty(&opt->priv->conflicted);
+>  	}
+> -	if (!opt->priv->call_depth) {
+> -		result->priv = opt->priv;
+> -		result->_properly_initialized = RESULT_INITIALIZED;
+> -		opt->priv = NULL;
+> -	}
+> +	move_opt_priv_to_result_priv(opt, result);
+>  }
+
+I have a feeling that making it the caller's responsibility to check
+"are we doing the outermost merge?"  and not the callee's problem
+would result in a better code organization.  If we write
+
+	if (!opt->priv->call_depth)
+		move_opt_priv_to_result_priv(opt, result);
+
+then for this call site, it is still crystal clear that this will
+happen only at the outermost level.  The new caller you add in the
+next step would also be simpler to reason about.
+
+You have the assert() to make sure callers do not call the "move"
+helper at a wrong place already, and if the organization in this
+patch somehow comes from a desire that the "move" is done only at
+the outermost level (and "or immediately before an error causes the
+whole thing to abort" after the next patch), it does not have to be
+a silent "if call_depth is not zero we return silently", but another
+assert() that insists that the callers are allowed to call it under
+these two specific conditions.
+
+Thanks.
