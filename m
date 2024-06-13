@@ -1,50 +1,55 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D97149C45
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 15:22:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDF512D757
+	for <git@vger.kernel.org>; Thu, 13 Jun 2024 15:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718292172; cv=none; b=oBsHSUH4SR4UOM+0VbLHGYJrxvYdyETLHcUA9ot+b7PdHfrqJ9kxOwhTrB9Y6+Nj5Ludeitw9A8U0WMfyb82BIeCIUALVknYDTT3Cy0kV8bjeT/bRimwlDvUqWVvEAxxuh/PkIxW578n+r/gACMsbAQbrSno0dTMfVv0y1tsndA=
+	t=1718293162; cv=none; b=bblFw/BZZx4soCzZ+cdj0tpvFu4hUcE1bngZyVztrqGJh5neR0wUAw1mKSUeD9H2RMOns6mgJxAsM5pgwsV7pQoMQ42qPF2JXX6GwsAi9Tg2E/XgHcUTbld9ItN19p712H1VwFVsablj2BhYZDrxMFToIft7GhO5LebtwKSzQSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718292172; c=relaxed/simple;
-	bh=oQAoTxMhjcnH7Z/7ZE1I0iDc1QngG/QkcFylMFeLVkg=;
+	s=arc-20240116; t=1718293162; c=relaxed/simple;
+	bh=bdRV7FApkIWY5JyiwV++gx2IMJvwlw9zxE4SXmPTZak=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=apF66EOQuos8Whe+IV9BZ2NXGZG6EzV24fcgwYVm4a0r4cps+saYH48YkFUcy6yQVbaA5+/YcD2ntisDgt/2L3TeQZ3DrQJljL6BgCf1sAv6Kr9kSVfL3gYe6qfGjED10m818K6g73AsauiWDYlakCts1ciWoajyVEvP9HQQt4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fECdi/R2; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=EtGGzI8O3B/LsLxJYxXbsiM/XmhV3Ix2qvrxVZ1n3PjcIdK+9XWNaLE93dhBWcVJBl9CmvpCjHubYzk9H/SE/PzsizyeUM+py1FCXTOxDeIyxUhz+fZHGoPpGou8A/zgBEUN7Sxdw3+qH+LOjQmmfUmbhyrOPSuhWwRTs9eIG6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bsCYsA/t; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fECdi/R2"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D29F119D1F;
-	Thu, 13 Jun 2024 11:22:49 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bsCYsA/t"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 440DC29974;
+	Thu, 13 Jun 2024 11:39:20 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=oQAoTxMhjcnH7Z/7ZE1I0iDc1QngG/QkcFylMF
-	eLVkg=; b=fECdi/R2eptFk4BAoVh5wKiVXz5nzCLEeHwHN6W26sXxw6xXpwPR3H
-	4lJznKC2Wo9OZvkVEqUJ0yaYQWiBFxsvetjmyWxJS4M0f9w7jWJ3H4okMOtlb9Tp
-	0MBsR9GToSicDYhf6e8l8RzZ2VM+j83YoUpqVWALxwAaw9mofvTBw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CB41B19D1E;
-	Thu, 13 Jun 2024 11:22:49 -0400 (EDT)
+	:content-type; s=sasl; bh=bdRV7FApkIWY5JyiwV++gx2IMJvwlw9zxE4SXm
+	PTZak=; b=bsCYsA/tOzTygLyZjPKZ0KYkaFlX3lgiA9sMZro+FA0eitpwOtHMZm
+	2v9wp0b9krHUz95RLc6SRVWxJ6VV4qbp5MBM72+SWE0QEmNX7hZiBIg+qPyvX9AR
+	4LSA5N9a5v2BWHzC0XNtqXl1wSMRG21Mayr+hQsBK0kAP5cVw9fIk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 39AC329973;
+	Thu, 13 Jun 2024 11:39:20 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3381819D1D;
-	Thu, 13 Jun 2024 11:22:49 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9C96029972;
+	Thu, 13 Jun 2024 11:39:19 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jun 2024, #04; Wed, 12)
-In-Reply-To: <ZmqJDVTAiBrYJGRW@tanuki> (Patrick Steinhardt's message of "Thu,
-	13 Jun 2024 07:52:13 +0200")
-References: <xmqqcyolofar.fsf@gitster.g> <ZmqJDVTAiBrYJGRW@tanuki>
-Date: Thu, 13 Jun 2024 08:22:47 -0700
-Message-ID: <xmqq7cesoojc.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Ghanshyam Thakkar
+ <shyamthakkar001@gmail.com>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 08/20] hash: require hash algorithm in
+ `empty_tree_oid_hex()`
+In-Reply-To: <66763b5a-3ea6-481f-b4d3-5fad76f5da0c@gmail.com> (Phillip Wood's
+	message of "Thu, 13 Jun 2024 11:01:35 +0100")
+References: <cover.1718106284.git.ps@pks.im> <cover.1718259125.git.ps@pks.im>
+	<4858cca25fe9e57c984fc3181fe8498d0b7222b0.1718259125.git.ps@pks.im>
+	<66763b5a-3ea6-481f-b4d3-5fad76f5da0c@gmail.com>
+Date: Thu, 13 Jun 2024 08:39:18 -0700
+Message-ID: <xmqqv82cn97d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -54,55 +59,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- CB2E199E-2998-11EF-9C14-965B910A682E-77302942!pb-smtp2.pobox.com
+ 1984A17E-299B-11EF-8B56-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On Wed, Jun 12, 2024 at 05:30:04PM -0700, Junio C Hamano wrote:
->> * ps/document-breaking-changes (2024-06-04) 4 commits
->>  - BreakingChanges: document that we do not plan to deprecate git-checkout
->>  - BreakingChanges: document removal of grafting
->>  - BreakingChanges: document upcoming change from "sha1" to "sha256"
->>  - docs: introduce document to announce breaking changes
->> 
->>  The structure of the document that records longer-term project
->>  decisions to deprecate/remove/update various behaviour has been
->>  outlined.
->> 
->>  Getting there.
->>  source: <cover.1717504292.git.ps@pks.im>
+>> diff --git a/add-interactive.c b/add-interactive.c
+>> index b5d6cd689a..a0961096cd 100644
+>> --- a/add-interactive.c
+>> +++ b/add-interactive.c
+>> @@ -557,7 +557,7 @@ static int get_modified_files(struct repository *r,
+>>   		s.skip_unseen = filter && i;
+>>     		opt.def = is_initial ?
+>> -			empty_tree_oid_hex() : oid_to_hex(&head_oid);
+>> +			empty_tree_oid_hex(the_repository->hash_algo) : oid_to_hex(&head_oid);
 >
-> Just to make sure I understand the status: do you expect me to do
-> anything in this context? The latest version did have some final
-> discussion, but from my point of view there wasn't anything actionable.
+> The hunk fragment shows that we already have a struct repository
+> instance in this function which we should use instead of
+> "the_repository"
 
-Yeah, the only thing from the discussion that may be missing is this
-one on [1/4]:
+As an internal helper function in add-interactive.c, all of whose
+callers deal with "struct add_i_state *", it probably should not
+even take "struct repository *" as a parameter.  The state knows
+what repository we are working with.
 
- - https://lore.kernel.org/git/ZmE8myG5c99UJeCA@tanuki/
+>> diff --git a/add-patch.c b/add-patch.c
+>> index 814de57c4a..86181770f2 100644
+>> --- a/add-patch.c
+>> +++ b/add-patch.c
+>> @@ -420,7 +420,7 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+>>   			    /* could be on an unborn branch */
+>>   			    !strcmp("HEAD", s->revision) &&
+>>   			    repo_get_oid(the_repository, "HEAD", &oid) ?
+>> -			    empty_tree_oid_hex() : s->revision);
+>> +			    empty_tree_oid_hex(the_repository->hash_algo) : s->revision);
+>
+> It's not obvious from this hunk but there is a repository instance in
+> "s->s->r" which we should use instead of "the_repository"
 
-But otherwise, the typofix for [3/4] in the thread has already been
-amended in when the topic was queued, so we are almost there.
+I agree it is the same issue.
 
-I do not know if we want to explain the version number scheme there
-(in your first response [*], you said you didn't want to give the
-impression that the jump from 1.5.x to 1.6.0 was a huge deal,
-implying a move from 2.45.x to 2.46.0 can be equally huge, but in a
-later response [*], you seem to have liked the explanation to clear
-potential confusion.  If that is your final position, then [1/4]
-needs updating (with a reroll or just saying "yeah, squash that
-update in").  If that is not, we can go with what we have, but I
-haven't heard an explicit "even though I said it is a good addition,
-explanation of the historical version scheme is a bit out of place,
-so let's scratch it", either.  I have no strong preference myself,
-but merging it to 'next' will close the door for you to say "ah, I
-forgot about 1/4" later, so that was primarily what I was waiting
-for.
+Just like a previous effort, making a "faithful" conversion from the
+original that used the_repository implicitly by explicitly passing
+the_repository in one patch, and then making semantics corrections
+of the original (if we were ever working on a repository in s->r
+that is different from the_repository, the existing code is already
+buggy) in a separate patch, is a reasonable approach to limit the
+cognitive load while reviewing the first step, I would say.
 
-Thanks.
+> diff --git a/sequencer.c b/sequencer.c
+>> index 68d62a12ff..823691e379 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -2263,7 +2263,7 @@ static int do_pick_commit(struct repository *r,
+>>   			unborn = 1;
+>>   		} else if (unborn)
+>>   			oidcpy(&head, the_hash_algo->empty_tree);
+>> -		if (index_differs_from(r, unborn ? empty_tree_oid_hex() : "HEAD",
+>> +		if (index_differs_from(r, unborn ? empty_tree_oid_hex(the_repository->hash_algo) : "HEAD",
+>
+> The hunk fragment shows that we already have a struct repository
+> instance in "r" which we should use instead of "the_repository" here.
 
+Yes, but the same "it is better to make a faithful conversion first,
+corrections separately in a later step" would apply.
 
-[References]
-
- * https://lore.kernel.org/git/Zl_4IIqFmoPhx1Gc@tanuki/
- * https://lore.kernel.org/git/ZmE8myG5c99UJeCA@tanuki/
+As the sequencer machinery is inherently stateful, I wonder if we
+should pass around not "repository" but a sequencer state object
+that may have a pointer to a repository in use.  But that of course
+belongs to the latter, i.e., "making corrections", theme.
