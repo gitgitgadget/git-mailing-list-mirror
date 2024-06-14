@@ -1,219 +1,144 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3B315CD6E
-	for <git@vger.kernel.org>; Fri, 14 Jun 2024 17:05:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544E6D52A
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 17:40:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718384759; cv=none; b=l+utsOukkDUaHB4Kkw/dUg/Vggiubl3UyCOTdy1OB9Z9tz0bHwv7zXFJpGxtFIkE0oSAQ6QyPtB+u8dxzNe+CwbWrsKJxtda2QtH5hnU5vlP5aMzjeZl0zz7o/xEcyLF3HLzvgvFMA6IotdZptqH3puw+bGnj27nXSUpViP5RkA=
+	t=1718386813; cv=none; b=YNNJfCXTdyQC/BKNIPtfyI+Drr6sBv4LHFMFUcOCAwj2GRI6fnWgPTdh+i31/YclOXOjRX+ll4NRM+QaaX3fET9vT0N/jDDxK2EJSus5Ndd1SP8jlFYNNgQI4rneTSu4DlD1p8CFHmdIzlG/MG8Cd9TCcizfH9gw9HKW5WwWWmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718384759; c=relaxed/simple;
-	bh=dOFeFHSLooSByfoBQkdPIM6OFVHI84CdsKyaZ5S10mM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dwjWkB2yrhoNHEbfTkxKoZS+kBQEDq3SEj2w42oieDiYeOxNeUO0VwaWb5K3NqqoW0piswOnYV5ppyX1GGNb983XGt5Xr/m8/KPyRFPKPJetf5Wet42AL4kB/V+lLmaGyE3P1se8Zj68o3+EeygN+1DgR9ZdjiuUesbPksZCd9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nH+pip7l; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718386813; c=relaxed/simple;
+	bh=mM2UEAwsVle7/JyVHUk31UeRzfIP5xZRQXpp2PXRRvk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MuW2uxyaWAyZtINge1AyfJP617svDgj1H+Udha7bmmN5wUwFAdK13Ds6inVknVQptaC2o6oWIPtRBKvECwB7W5nI93P9Zat+WH9Dkm3qzjU+28hZHy/Ty1v6Ztn4D5l6cPhsuTwjT+LeG+2nb7OgzEungd/UDndWOhb6Nr6u1Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uu6LyGgg; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nH+pip7l"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-57cbc66a0a6so2294894a12.1
-        for <git@vger.kernel.org>; Fri, 14 Jun 2024 10:05:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718384755; x=1718989555; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p3skx02oc1L6QkP+c42ktFwUt1R1WQs90H8pzxt0wBI=;
-        b=nH+pip7lZbUD9cFrViAKrEU0HB3ufpJl1x9UmSLjn2nJDHhRWcoEJZTFXFZJ9WLanb
-         OInxOXxfsPYS1SRCYsVLdLkpM3D7fLDr0EWMi3Sj15aFFixeab5naAF+GIN40mMHbiKY
-         7/XebyNTU9HJN+wYjCkqLthsDYu6sCgFLwV+yWXt9CjkHqetNiSt6JlYW7wlN31IxAf0
-         nqgtKzNyheDRX7LFA/JdC08GNjNJHeg6NH55aaOs1200mHX1ZDcKf/TqwvhlMuUWR1Y1
-         btOEj+v3zkh0MoY6P581Bvnx36nPPC6cw4SnmV/+DmzUHZhBV6BepqxzSD8ytNDFR7ib
-         a87w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718384755; x=1718989555;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p3skx02oc1L6QkP+c42ktFwUt1R1WQs90H8pzxt0wBI=;
-        b=TM2ZDgBn/1CoKt7sSdaoVkLqafnsxPFR3Ip5zvEMqnO8co1qw66uruZeopSMyuXoYP
-         N791Cwes0gLCNhMe7DN6weVYhhVwA0PAsV0WGpx+ewTNq8cXGGoaVg/+LS5jL1HVwTnB
-         TPstKhAnqghCxJtmahtQv6fmRTCliMlTHP3BE63ykgHpfiCu4bdcEmeqRr4WNjLKagEm
-         VQD3Fo3l2qDNAEGsBCyQyCV3bbs5IE9d1EEh/CBT68TuNaypA3/UWLgxaOTGUJ/ylrAX
-         jrQVE/7sxBztKkOJSmUc6pVudttFp3Z/gfcsUm2q7ShTXNWLe/PV7QDUVACjMLGBdy9G
-         jYJg==
-X-Gm-Message-State: AOJu0Yw1wgqo6wO9Mp90rnavEaWTBvUl2zMXHhB9rTuX/r7d1a9PDegM
-	Nb8wgWyfUyQfj7OkLsuz2YqAzZfq4Hi6kc6GDZxaQ3aI3juxz9duQxyqzeoh+qRjYMiSWUZX7DF
-	qdQMbpj2YdJo1KEi3acD2qTucGtk=
-X-Google-Smtp-Source: AGHT+IF0sZ/wWTP6VFZ4+kSQgRsmS9cnRZfsp5PT6Dp3eBx9ynZlxb67HZ9BGzBfoBEmDwNqu+Aage8BpCbgxKeQufA=
-X-Received: by 2002:aa7:d153:0:b0:578:6360:aa11 with SMTP id
- 4fb4d7f45d1cf-57cb4bb0d59mr4751353a12.5.1718384755231; Fri, 14 Jun 2024
- 10:05:55 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uu6LyGgg"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A8C061FD94;
+	Fri, 14 Jun 2024 13:40:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=mM2UEAwsVle7/JyVHUk31UeRzfIP5xZRQXpp2P
+	XRRvk=; b=uu6LyGggX/jOIhGaelsC7eFjRWxjpDnkyF+iI33n4tm+Z0Ypi3AG8t
+	k4RT3/9FBpBcaxSST9BOKBY35+YvhHRkobELng4vho+ph36vju9+pXbJ477q1Aao
+	MfkPKUEo/uJ390icZFadtXsQEBpY5JEMMZATbAyfl6aSXiCDVYXc8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A0E3B1FD91;
+	Fri, 14 Jun 2024 13:40:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CA1E71FD90;
+	Fri, 14 Jun 2024 13:40:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Christian Couder
+ <chriscool@tuxfamily.org>
+Subject: Re: [GSoC][PATCH v4 0/7] t: port reftable/pq_test.c to the unit
+ testing framework
+In-Reply-To: <20240614095136.12052-1-chandrapratap3519@gmail.com> (Chandra
+	Pratap's message of "Fri, 14 Jun 2024 15:18:00 +0530")
+References: <20240611083157.9876-1-chandrapratap3519@gmail.com>
+	<20240614095136.12052-1-chandrapratap3519@gmail.com>
+Date: Fri, 14 Jun 2024 10:40:06 -0700
+Message-ID: <xmqqo783fmo9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240530122753.1114818-1-shejialuo@gmail.com> <20240612085349.710785-1-shejialuo@gmail.com>
- <20240612085349.710785-8-shejialuo@gmail.com> <xmqqr0d0iqey.fsf@gitster.g>
- <ZmvTI73P2fQ6AkOp@ArchLinux> <xmqqo783im5k.fsf@gitster.g>
-In-Reply-To: <xmqqo783im5k.fsf@gitster.g>
-From: jialuo she <shejialuo@gmail.com>
-Date: Sat, 15 Jun 2024 01:05:43 +0800
-Message-ID: <CAH-kW5f0u1uFH7Y83e4Vp8avM_7MPLkDG7v9NPV1nL=wZ--wmw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v2 7/7] fsck: add ref content check for files backend
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 242FA7A6-2A75-11EF-B12E-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes=EF=BC=9A
+Chandra Pratap <chandrapratap3519@gmail.com> writes:
+
+> In the recent codebase update (commit 8bf6fbd, 2023-12-09), a new unit
+> testing framework written entirely in C was introduced to the Git project
+> aimed at simplifying testing and reducing test run times.
+> Currently, tests for the reftable refs-backend are performed by a custom
+> testing framework defined by reftable/test_framework.{c, h}. Port
+> reftable/pq_test.c to the unit testing framework and improve upon
+> the ported test.
 >
-> shejialuo <shejialuo@gmail.com> writes:
+> The first two patches in the series are preparatory cleanup, the third patch
+> moves the test to the unit testing framework, and the rest of the patches
+> improve upon the ported test.
 >
-> >> > +static int files_fsck_symref(struct fsck_refs_options *o,
-> >> > +                       struct strbuf *refname,
-> >> > +                       struct strbuf *path)
-> >>
-> >> This does not take things like HEAD or refs/remotes/origin/HEAD to
-> >> validate.  Instead, the caller is responsible for either doing a
-> >> readlink on a symbolic link, or reading a textual symref and
-> >> stripping "ref: " prefix from it, before calling this function.
-> >> The "refname" parameter is not HEAD or refs/remotes/origin/HEAD but
-> >> the pointee of the symref.
-> >>
-> >> So I'd imagine that renaming it to fsck_symref_target or along that
-> >> line to clarify that we are not checking the symref, but the target
-> >> of a symref, would be a good idea.
-> >
-> > That's not correct. The "refname" parameter is EXACTLY the symref
-> > itself.
+> Mentored-by: Patrick Steinhardt <ps@pks.im>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 >
-> Yeah, but the story is the same.  We are not really checking
-> anything about the symref (i.e. the thing in "refname") being funny.
-> We are checking what is in "path" (like "does it exist?") and the
-> "refname" is there only for reporting purposes (i.e. "we have a
-> symbolic ref REFNAME, that points at PATH which is a wrong thing").
+> ---
+> Changes in v4:
+> - Add a commit message for the second patch
 >
+> CI/PR for v4: https://github.com/gitgitgadget/git/pull/1745
 
-Yes, I agree, will rename the function in the next version.
+Hmph.
 
-> >> > +{
-> >> > +  struct stat st;
-> >> > +  int ret =3D 0;
-> >> > +
-> >> > +  if (lstat(path->buf, &st) < 0) {
-> >> > +          ret =3D fsck_refs_report(o, refname->buf,
-> >> > +                                 FSCK_MSG_DANGLING_SYMREF,
-> >> > +                                 "point to non-existent ref");
-> >> > +          goto out;
-> >> > +  }
-> >>
-> >> Is that an error?  Just like being on an unborn branch is not an
-> >> error, it could be argued that a symref that points at a branch yet
-> >> to be born wouldn't be an error, either, no?
-> >>
-> >
-> > The reason why I choose "danglingSymref" and warn severity is that I le=
-t
-> > the code be align with "git checkout". When we use "git checkout" for a
-> > dangling symref. It would produce the following output:
-> >
-> >   $ git checkout branch-3
-> >   warning: ignoring dangling symref refs/heads/branch-3
-> >   error: pathspec 'branch-3' did not match any file(s) known to git
-> >
-> > So I prefer to warn severity.
+A larger question is how pristine we want to keep the "imported
+source" that is reftable/* stuff.
+
+Obviously we are getting rid of some parts of it (like pq_test.c
+here) so our "fork" will no longer be usable, without pulling some
+of the stuff our project offers from outside that directory, by
+outside people.  This concern is shared with other topics we saw
+recently to move the unit tests bundled with the reftable library to
+t/unit-tests/.
+
+But this series brings in another twist that makes it a larger
+question.  If we are willing to butcher our copy of reftable library
+to a shape that cannot be reused by outside folks, do we still want
+to use reftable/pq.c instead of getting rid of it and use the other
+prio queue implementation we use elsewhere in our system?  If that
+will be the longer term direction we want to go, then porting the
+unit tests for reftable/pq.c may end up being a wasted effort.
+
+So, I dunno.
+
+> Chandra Pratap(7):
+> reftable: remove unncessary curly braces in reftable/pq.c
+> reftable: change the type of array indices to 'size_t' in
+> t: move reftable/pq_test.c to the unit testing framework
+> t-reftable-pq: make merged_iter_pqueue_check() static
+> t-reftable-pq: make merged_iter_pqueue_check() callable
+> t-reftable-pq: add test for index based comparison
+> t-reftable-pq: add tests for merged_iter_pqueue_top()
 >
-> If you do this from that situation,
+> Makefile                     |   2 +-
+> reftable/pq.c                |  29 +++--------
+> reftable/pq.h                |   1 -
+> reftable/pq_test.c           |  74 ----------------------------
+> t/helper/test-reftable.c     |   1 -
+> t/unit-tests/t-reftable-pq.c | 155 +++++++++++++++++++++++++++++++++++++++++++++
+> 6 files changed, 166 insertions(+), 96 deletions(-)
 >
->     $ git branch branch-3 master
->
-> what happens is that the pointee of branch-3 is created at the
-> commit pointed at by 'master'.  No error.  No warnings.
->
-> In a freshly created respository, HEAD is a dangling symbolic ref,
-> and that is not an error.  You can create a root commit from there
-> just fine.
->
-
-I am totally shocked by the fact that it will create the pointee file. I am
-a little curious about the design here. I know when creating a new repo,
-HEAD is a dangling symbolic ref. When we do first commit, it will
-create the pointee file. But HEAD is a special file, it should be treated
-differently. Why we treat the other symrefs the same way.
-
-> If there is anything that needs improvement in your example, it is
-> that "checkout branch-3" should be taught to either (1) not warn
-> about dangling symbolic link and just give the error, which is in
-> line with how "git checkout HEAD" in a freshly created repository
-> behaves, or (2) just like unborn 'master' pointed at by 'HEAD' is
-> perfectly happy to be checked out, allow the unborn 'branch-3' to be
-> pointed at by 'HEAD', and arrange the first commit (which will be a
-> root commit) you create in that state to be pointed by the ref
-> 'branch-3' points at.
->
-
-Should we really improve this? From my perspective, a user will get
-more information when this warn message shows up. The
-"error: pathspec 'branch-3' did not match any file(s) known to git" is
-less informative.
-
-Maybe the pro git users do not use git command to write to the git file
-system. However, this is a bad way to do this. We always want to
-the user to use the command to handle with git file system.
-
-Instead, we should warn about the user when using
-
-  $ git branch branch-3 master
-
-It will create a new pointee here, I suppose we should warn the user
-here except HEAD ref. The user could get the dangling symref by
-deleting the pointee ref. For example:
-
-  $ git symbolic-ref refs/heads/main master
-  $ git checkout -b master-copy
-  $ git branch --delete master
-
-Should we warn this for user in git-fsck(1)?
-
-> So from all of these reasons, I do not think missing target should
-> be treated as any error worthy event.  Not even warning.
->
-
-Yes, if git-branch implicitly creates the pointee ref file. We should not
-handle such case. But I think giving a warning here except HEAD
-ref is worthful.
-
-> On the other hand, the target of the symref in "path" must be
-> checked, even if it does not currently exist, for its validity, the
-> same way an existing ref gets checked (lives inside refs/, passes
-> check-ref-format, etc.).
->
-
-Yes!
-
-> > I intentionally ignored the "escape" situation. Actually, the path coul=
-d
-> > be either absolute or relative. It may be a little complicated. I will
-> > find a way to support this in the next version.
->
-> Yes, if this wants to claim to be part of "FSCK", it should catch
-> all the errors the regular runtime would complain about, and
-> "escape" thing is one of the first things that you need to get
-> right.  Whatever refs.c:read_ref_internal() for S_ISLNK(st.st_mode)
-> case takes as legit should be considered legit, the "fallback - read
-> through the symlink as if it were a non-symlink" case probably wants
-> to be warned.  refs.c:resolve_ref_unsafe(), which is used at the low
-> level from object-name.c:get_oid_basic() via refs.c:repo_dwim_ref(),
-> has further checks to see if a refname that a symref resolves to is
-> valid and the runtime sanity relies on these checks.
->
-
-Thanks for your help! I will look at these codes to implement the
-"escape" check.
-
-> Thanks.
->
+> Range-diff against v3:
+> 1:  3c333e7770 ! 1:  1873fb02ce reftable: change the type of array indices to 'size_t' in reftable/pq.c
+>     @@ Metadata
+>       ## Commit message ##
+>          reftable: change the type of array indices to 'size_t' in reftable/pq.c
+>      
+>     +    The variables 'i', 'j', 'k' and 'min' are used as indices for
+>     +    'pq->heap', which is an array. Additionally, 'pq->len' is of
+>     +    type 'size_t' and is often used to assign values to these
+>     +    variables. Hence, change the type of these variables from 'int'
+>     +    to 'size_t'.
+>     +
+>          Mentored-by: Patrick Steinhardt <ps@pks.im>
+>          Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+>          Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+> 2:  bf547f705a = 2:  3cccf8266a t: move reftable/pq_test.c to the unit testing framework
+> 3:  7dd3a2b27f = 3:  4b63849694 t-reftable-pq: make merged_iter_pqueue_check() static
+> 4:  c803e7adfc = 4:  3698a7189f t-reftable-pq: make merged_iter_pqueue_check() callable by reference
+> 5:  0b03f3567d = 5:  d58c8f709e t-reftable-pq: add test for index based comparison
+> 6:  0cdfa6221e = 6:  69521f0ff7 t-reftable-pq: add tests for merged_iter_pqueue_top()
