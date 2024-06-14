@@ -1,114 +1,122 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DEB17C72
-	for <git@vger.kernel.org>; Fri, 14 Jun 2024 19:22:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510D417C72
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 19:23:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718392939; cv=none; b=oQVnf4DMSaiw5E4m4M6T98TxDhE26/BOopuD/Fh+KHmx8wHnClkFaaF39qlAdsBlLG26pGsrg5XxJhWGSIFXyjT3oudsV5flMz+FH38/owCVHw8sT/6ryaaQ29/kMBTkndPCoZ2H5FvXkvKPqgkvN8Wsu5nPtYDP7VN/VM5A4y0=
+	t=1718393036; cv=none; b=cx7KzihMR8xBZBUPSReGCg1slpyn+51FhBSZiZ6aQxSTN7YmqHsbtIKq2IJqy5DOrbOyROi635OfP/jESAL+Ky7/I0DvfneIVghEaMcAjXsDGG3/sOu6XeJmzvagKM8Y8pSOxeXnu5lIig8RW/p6n3Zcaq9naWJp5tp8/JCS9DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718392939; c=relaxed/simple;
-	bh=NO6MqiqiKyRGipQdNiiZcfnOBed19pOm4GlW0NEjOjg=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=gR2GjHrvstERcYlpG31NECJuKeAuXGAFo6v0j4PNM/SZGjcvTZsZ1KZq48GNOXqp1meBD3bNLhSjaQWln5wkrQkqss3Zn0pUmBUX51n+PADB6I/mO+1cC85uwNGYs3J2xAByW2ixaNmR35MERENZcWlNYAeYz8UaStH6v4yfn8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KlD0C3QD; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718393036; c=relaxed/simple;
+	bh=c3ZRQjRO3x6Ewy7+9lqjlqXhGLfRkU4AXRnqA9LxOrI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AX2JNofCFnuVZhnby7Naywt5GMNajfN/0ZoEpCOzBSQfV3iMVFdAAHJ2FNjAjBklYzuLsownHcKz+BYzJ/4jYiKeOrPQHvthV8BansmHoEcp9TpIqjc819NWIamsW8boYFdDyLT9r6Pv7trS0X9AcnJv+QqCj9VEUD1OJpd3WBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=XPSEz6Zb; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KlD0C3QD"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-681bc7f50d0so2592995a12.0
-        for <git@vger.kernel.org>; Fri, 14 Jun 2024 12:22:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="XPSEz6Zb"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6adc63c2ee0so12845166d6.3
+        for <git@vger.kernel.org>; Fri, 14 Jun 2024 12:23:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718392937; x=1718997737; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=PfgDQN6Rk9cJXyKwixs1Jl6tk8zE2eAr7UOKzBUa00s=;
-        b=KlD0C3QDjUySqoF2NsdM0Pod3d0EX8bcHgAMYMWL9O9/fcQazUhpP395mx6/VzYKDu
-         j6QEgipwEWxf1K7iTYLlrUzqC7AIwUalO7+jqkcnMMU3gidoTI5BKYVbQNUFC5e+wMPy
-         tnSWhTu5pJkgLqHH3SZ0CeNeszajKgsJHAluAPVUCCL7JDcFSqIrK7zHmrvAZ/At5P8J
-         Gfv0VPvfmdjOeB4oLEf3ed2IlxWSgeIdSObveRJ1l1rLMbwgLVaRkL8jvlSMCDlqTTNu
-         g0eIgOStIODsWqPSujbRUe56/0fJFzMhmYXs7iWAtDGQLsbtKY08dPGdh79kbIlZB18Z
-         kmbg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1718393034; x=1718997834; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=avE3jGoM4USURxvMt2u/xwBY8XYf3l9ljDlU13lhcBw=;
+        b=XPSEz6ZbMm/twOwx3ret7nQ4kA40OHk/sVMQlLQ3nFGj9BDniQCAQ4epove/hgMm8j
+         76KfByqLqqjhAGscxwVFdKNvgcWdYeTabFsIEPDsHJwuJd3/6PifkvidAjp4EdxzaGR+
+         oVBre7jleVNpWn8I3ruzfJCteI8hy4zKyxgJ+psKX3ULM4fzdeOQw5jp2q/toejjiUdX
+         ZDwHR2NRUYZekooiwCKAe/nlrOSnFbefwfXuIUm8jYTE/lmrstmvZlVjKwWX9iUUzPdo
+         eVtZwOCB821202HFGyJ0Nt6rtVZDDyp/X6YPsAOCcQ1cJoB1YV+oxIlWeFdfHbXoLNrj
+         kX0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718392937; x=1718997737;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PfgDQN6Rk9cJXyKwixs1Jl6tk8zE2eAr7UOKzBUa00s=;
-        b=LvGiPwtIGHJliM+Eelz8vjxO0QGzks/tiZtejP1/jakxJb7G43FeHXbmBuFQkv5ZpO
-         4fDPtpITMAYC7sJBgs1UJ18z+BHGY4+Ca0E1/q7tie4T0YXqsa0UZHFGVk5ccY2zAoPR
-         W7DKJejQswadbM8/FzqScjQ5tzJAZbBhPxjmWVOxJpsZNwxoNGrVWCa9wbvK9PsT1L2+
-         xmBRSwM8VSHureZcNH+rfk8BA6xURKXfvDy2WZYqiV5VKdK5Wl1RfmLwkpQ1hrMzX2xt
-         mvm8AQERJYJQi2mdBoUsk/dO1zReu8AdwC5tYxWUDJXrDBSfAbW9YQ8uUngYUUm6pKDc
-         7X7w==
-X-Gm-Message-State: AOJu0YyQf6RphQh2S+ldbLoXZcfz/l9gMMy1tUiBSFJ/lBtaGzJNubFh
-	ZztOg9Wvd8jw2wW9KQpCL4a1ZxEMPc+M2GcjWz2kanb7VxA6L/JNYEEJjyjtffIlMx7GvQvDlUF
-	7hP0DbbDXfMaqAIjqCDU9reMNQYbl4Ekb
-X-Google-Smtp-Source: AGHT+IGvTN5xyzpkYxQN+O44W+J3+BdGd8DpOQATYwbNL261N4y1wb/sGU1aT7kJdgdkqx/NNCEcU6BvkFTQJVyc2YQ=
-X-Received: by 2002:a17:90a:d301:b0:2c3:2f5a:17d4 with SMTP id
- 98e67ed59e1d1-2c4da524c78mr5690215a91.4.1718392937043; Fri, 14 Jun 2024
- 12:22:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718393034; x=1718997834;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=avE3jGoM4USURxvMt2u/xwBY8XYf3l9ljDlU13lhcBw=;
+        b=r5WglpgNRY2bPhLNyhgrDeZr87PemubI9GVOsEb1lcJrMSOFo+F86zDZ28L0PY6tx3
+         HOjeQbT8IEQfL0rIzFJSWKXxUxVsgzJ9RsHAyx+lc2X28ttpLq3mZdyJVxPHuPyYWr32
+         y8crlsbIw4IOVN2FCs0oFGsg9ySWdXfnVjlH2eUJQGnnRf9jCl78pa025nborqUYokAV
+         Jp3n3rUcjbopaiw6A2Dc7M6jdoQll0Fwbc5KqpLkTiOdVN6jJ9Eg1lp0fgWB5JPF4iP0
+         kmHGe0aXbQC52qVjKiBYRuhWH7ipTiA7YodspP8Egshv8zTJaGKoyIxTqFBWad0vcYjH
+         L1+Q==
+X-Gm-Message-State: AOJu0YxU1f1qrj2Y1QPByWgVcizExhHJOM8He5n4k5oLkSQFtwNxalgB
+	/2/nmIHjVoAJgyuc7V+Ej1iivC9ZT0tsoKN3tid7PaTzmr2esv2e7R3j6FPu1A0ZR+940HCYqLk
+	po2A=
+X-Google-Smtp-Source: AGHT+IHe/mrwFNj3aq/ETP9iEVBMvrOC3SfKSK6k16EQU3n3S+RG4SnxpohlrxM43PSaufKC9vVOqw==
+X-Received: by 2002:a0c:8e42:0:b0:6b0:7b72:4f7 with SMTP id 6a1803df08f44-6b2afdb567emr36312486d6.55.1718393033804;
+        Fri, 14 Jun 2024 12:23:53 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-442187175e5sm9883861cf.24.2024.06.14.12.23.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Jun 2024 12:23:53 -0700 (PDT)
+Date: Fri, 14 Jun 2024 15:23:52 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>
+Subject: [PATCH v2 0/2] pseudo-merge: various small fixes
+Message-ID: <cover.1718392943.git.me@ttaylorr.com>
+References: <a71ec05e5dc0c8c40e1cce14a7c5fe946437a24d.1717699237.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rickard Andersson <rickard.a1992@gmail.com>
-Date: Fri, 14 Jun 2024 21:21:40 +0200
-Message-ID: <CALyzih__9sZD31SVMECcxk55+MAMjkfgpLzecoHo0xUoauerqA@mail.gmail.com>
-Subject: git grep bug replacing - with :
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <a71ec05e5dc0c8c40e1cce14a7c5fe946437a24d.1717699237.git.me@ttaylorr.com>
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+Here is a small reroll of a couple of patches I wrote to fix various
+small issues with the tb/pseudo-merge-reachability-bitmaps topic.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-   Added 2 files to my repo with words in them
-   text-file.txt
-   text-file-file.txt
+The only change since last time is replacing:
 
-   I did a git grep for said words that exists in both, and used
-argument `-l` to only
-   show matching filename
-   ```
-   git grep -l ExtremelyInterestingWord
-   ```
+    if (st_mult(index->pseudo_merges.nr, sizeof(uint64_t)) > table_size - 24)
 
-What did you expect to happen? (Expected behavior)
-   I expected to get the following output
-   ```
-   text-file.txt
-   text-file-file.txt
-   ```
+with:
 
-What happened instead? (Actual behavior)
-   I get
-   ```
-   text:file.txt
-   text:file-file.txt
-   ```
+    if (st_add(st_mult(index->pseudo_merges.nr, sizeof(uint64_t)), 24) > table_size)
 
+based on helpful review from Junio. For convenience, a range-diff is
+below. Thanks in advance for any final review on this topic :-).
 
-What's different between what you expected and what actually happened?
-   It seems that when using the argument `-l` the first `-` in a filename is
-   replaced with a `:`. It also seems that it is just the first one as the
-   second file keeps it's second occurence of `-`.
+Taylor Blau (2):
+  Documentation/technical/bitmap-format.txt: add missing position table
+  pack-bitmap.c: ensure pseudo-merge offset reads are bounded
 
-Anything else you want to add:
+ Documentation/technical/bitmap-format.txt | 9 +++++++++
+ pack-bitmap.c                             | 5 +++++
+ 2 files changed, 14 insertions(+)
 
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
+Range-diff against v1:
+-:  ---------- > 1:  a71ec05e5d Documentation/technical/bitmap-format.txt: add missing position table
+1:  0a16399d14 ! 2:  8abd564e7c pack-bitmap.c: ensure pseudo-merge offset reads are bounded
+    @@ Commit message
+         end of the mmap'd region.
 
-[System Info]
-git version:
-git version 2.34.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 6.5.0-35-generic #35~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC
-Tue May  7 09:00:52 UTC 2 x86_64
-compiler info: gnuc: 11.4
-libc info: glibc: 2.35
-$SHELL (typically, interactive shell): /usr/bin/zsh
+         Prevent this by ensuring that we have at least `table_size - 24` many
+    -    bytes available to read (subtracting 24 as the length of the metadata
+    -    component).
+    +    bytes available to read (adding 24 to the left-hand side of our
+    +    inequality to account for the length of the metadata component).
+
+         This is sufficient to prevent us from reading off the end of the
+         pseudo-merge extension, and ensures that all of the get_be64() calls
+    @@ pack-bitmap.c: static int load_bitmap_header(struct bitmap_index *index)
+      				index->pseudo_merges.commits_nr = get_be32(index_end - 20);
+      				index->pseudo_merges.nr = get_be32(index_end - 24);
+
+    -+				if (st_mult(index->pseudo_merges.nr, sizeof(uint64_t)) > table_size - 24)
+    ++				if (st_add(st_mult(index->pseudo_merges.nr,
+    ++						   sizeof(uint64_t)),
+    ++					   24) > table_size)
+     +					return error(_("corrupted bitmap index file, pseudo-merge table too short"));
+     +
+      				CALLOC_ARRAY(index->pseudo_merges.v,
+
+base-commit: 0b7500dc66ffcb6b1ccc3332715936a59c6b5ce4
+--
+2.45.0.33.g0a16399d14.dirty
