@@ -1,82 +1,83 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D564142658
-	for <git@vger.kernel.org>; Fri, 14 Jun 2024 06:49:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7F1142658
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 06:49:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718347796; cv=none; b=kXwSftZyTEgWUU3DMXphdQhLA4elwzggMn3737vyO4+2CJB6FtrFqK1NFSYT2Sn2wy8z0dUtmYKEkCC3GLAudS8nRkFHyEBhEkKhXTxjvRWOfnHXeONZJhqkM0n/NSP4NY4zAvFcz95Ea3DwYehg1+0oCjX45RyRVf15mi+K2Wk=
+	t=1718347802; cv=none; b=kC16MTMCe6rOVW+JtAgDG5bnlDkAgMTTMsOZYZkG33GasNJXb2PJJwL0fSE3u5XFdFbGhl9naLZtgtBl0gs07TT4BeavTwjYeXxiFDE0sUMkBhMFYnrSkHBL/0viVh038kdzrPgWRbYehOqCBZkFQ2kexXdlUhN38yagbVWtVug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718347796; c=relaxed/simple;
-	bh=zLxE3IfLSKqeUTQFKluXSk7gSVJaIpZHw7a7zkzFF5M=;
+	s=arc-20240116; t=1718347802; c=relaxed/simple;
+	bh=BwUzC+rk63YC0zGpN2ovfRwdf8qhc2qkg6Z+ZNizGQE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QPkZaOFRZjtl7A06r8mRm3+wKb+Nelfb9IojQt/YlSMevPMSLBSTiRo5Pk52CzpOqA6Pp8EdBK6OIenR5BFip1oKgeVDmP7m3qTqU8Ftpa5PymThFf+qfItZZK/H/5fzJGwuBFIbV6/A8PCrqxExUC68VcDIHeUrNwMOLseR4N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SrvNUI38; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RGbr4svh; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=plHBAnsUryOBTo16b6HCqirQCghoFKS2rBReR661nTUeSNyjTzuJx0pwqkxU6nj1dNrKL9tz/IxtMg/8By+pBPDNOOguIjnyS6B8lZf2wfrrSD+WmJH7dSOR/GHDIJFznVz4GFsP23PIN/F16XTW+bKRncGZdGHT06mMUCjhptk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iq8wciaC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kVCk3a0d; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SrvNUI38";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RGbr4svh"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3BED01140259;
-	Fri, 14 Jun 2024 02:49:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iq8wciaC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kVCk3a0d"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id C1EF413803FE;
+	Fri, 14 Jun 2024 02:49:58 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 14 Jun 2024 02:49:53 -0400
+  by compute1.internal (MEProxy); Fri, 14 Jun 2024 02:49:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718347793; x=1718434193; bh=PXriS8dXG3
-	qdfKoFcaxy6QTdfJCf4dmUcF7csdXKldo=; b=SrvNUI38onn9Riw6t96LUf5l4n
-	xEPR4WMCeGdl2trTdFs7KmTlR4jEcFMBlv1fBlUJREWmsPD30AQ0hCuwHPVWhAf8
-	Y0BTUkpALjKX1b+gUOnOzCdtih22IIk6T0DdkxpngzLNFcCst7u+q/qibpUb/QhQ
-	mzq6zjKG51FwYNqyEi988l5EI0eqq1ZqdpnV4sYfXsyUEC1TKhXZHaiTVHMlXWoG
-	ZBp05vPCVI6WIzyjX1YC+9BK3nyM239jXudLqPL25p/GURp23sD9ays9MA+jkVID
-	K21E0xbTTYN1LhNCR2R6NiBawHBrfKfkt01qkSFyw5UR8R1LofbkBGOmXCtA==
+	:subject:to:to; s=fm1; t=1718347798; x=1718434198; bh=QVzAfmNRw1
+	dwykAja/G0+BOXj8naAGR49zX0rXxezDU=; b=iq8wciaCKKCUJeL4uFUElxRq8D
+	hJ8aHg/t8ytCLe2OtKMKigWE7d+kMBNcFsqc/gRh5X+/S9ekRZGHnOLnRLPT7U1S
+	/7zZhMtKk3SUE6sa4N9IH0D3x9CXKaxHsH9ISgcUecj/RplYfqnmTi7vmDfoKXxM
+	Vf+LV1iBJyiopqeXznlt4wE9LRNrZowD9G9dAB7cDY08k4OvjfFynwAzCEXBqlxu
+	XvHGCWACw8vTrfic17ykZUuRcBHTkfLPn00t50KlK5u3d9g6fd1Jatm/+7eh6f3c
+	vORyKoy+J+RTi+rQP3X6Wsk99XADzzGLOZ16EoPeYvnlHRmry+Z6RvG7EJeQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718347793; x=1718434193; bh=PXriS8dXG3qdfKoFcaxy6QTdfJCf
-	4dmUcF7csdXKldo=; b=RGbr4svhBl7dvkVbxGaN4XT/T1fcuZbPdXpbzLwemGB/
-	LdOeKTVjQ+yR97iY+dsHJJNkjRhTnT1l4HRSMD0jObzIyUHEJdQc/BUGOlQSTMH6
-	1oXwYgWCnvEsCI2TW5rb63t+MzcTmu64vk5KANzi+wEswUNi88Dtzbk2m8BeBa0/
-	ZVlWgUeLWeNKovQgRAJu4PiktWI494XpGeO4aYvW+JndY7KVLA9+6PTqGNsOaL8u
-	ecUK74FsdioWBSl6fmUMGKu3Agux1nQPMUpx6Y/t2PRFwhut/ISASkcY/ANsNOdL
-	woeAS+l+GubVOPL+crfKUWFdmN9E55+KgppqAKLtfg==
-X-ME-Sender: <xms:EehrZs3N1aDgeB-rKjJZptK4FzIkeKxdMM3DyHtqPFbgmFsXI7dU3w>
-    <xme:EehrZnHq4FhZuIhMsiLAuN_rctRndK96MJeOUCwLU3lxhyVDoE8Wk1YVVDJY31Sb2
-    jET3_jbLbAFJ3lY7A>
-X-ME-Received: <xmr:EehrZk6w8f9UvQTxu2WfkfgdifV0KUY99ge5nSxwrJoGcO0zjtT0txc3cqPCW74XSceXz_LEm9HHhr-iE-6sYLpv-HbOjfS004KQ8z0U7VUHQQ>
+	fm1; t=1718347798; x=1718434198; bh=QVzAfmNRw1dwykAja/G0+BOXj8na
+	AGR49zX0rXxezDU=; b=kVCk3a0dfcEHLwTpFFLyJ2hPTzcUzHO08eFIiQq8Hp94
+	RMhOpn2RIY3s67hrg28LNtAmEkOOUEtlw3BRSfugXxe+R85unDgMhyyUzVjhxIdu
+	jcILSFHyCWyPcoektHEseg5csB+Ld/SkJvTAM/Q7l9LBAcLE161nyEBd/sSO3C9d
+	ZhvA7tvMeaStgb76zoekqqLkJSRZmvDjnil/iof/OaUF7bLTrC3DMeLeieenBWna
+	xo9Ec2Ya6++0FcNIIUAgMSpD3UQpC7opySYH5xiega43bk95OaVSqdS0ktOB/fU2
+	KX6jim1DPEHq4nvAh+pZJjw4RvoW3cm+a3MwZUDutQ==
+X-ME-Sender: <xms:FuhrZn6QgMxQEWDT-FYjgiFVdM636LkkyJMbDXbRPZ_XurM-gRzFDw>
+    <xme:FuhrZs7VrFRy2C8KHbt0gdnFPhVJJCy5XLxUQBQ1oqehZGz-vG7Nje5W7XIOTH3Cj
+    k85964JA6pyYVI_lg>
+X-ME-Received: <xmr:FuhrZud09gqDcjX0DhbmgirEnU5Bkp291QnxGe6GEb0PImZOb1P47Xo-l74T94b8jkTDU6c7ep6kXu4p35CSg7P5QOkNXoCd6OQe33pOCnG1uA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedukedguddtfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:EehrZl2RGY-jFlGDPH9cyBeG5w-rwaFQ7udcQkXyJ5uSusArFgq5pA>
-    <xmx:EehrZvE2fMpasmc9eaiSnzLQlxmgYEJurC8gxFlfWcHfud7YsAS9kA>
-    <xmx:EehrZu-GUvVoQex5JLb-g_Q5gjWY7LwyeSMMXMKFAJlqPKmtJkE21Q>
-    <xmx:EehrZkm_T7KFopxfzHL8Aj_WcLFCMTdBpg8IFiPY868ztsEwJDNwfA>
-    <xmx:EehrZgPU70fOPqIpPNo1LAp7ESA2_BOCF_VPr-UPLnynKC4ZmtuQIRHC>
+    gvrhhnpeehkeekheetfffgleejgfeuteeghfduieektddtgeejleeifeeiheekffeukeel
+    geenucffohhmrghinhepvhgrlhdvrdhtrghrghgvthdpuhhpuggrthgvrdhnvgifpdhuph
+    gurghtvgdrvghmrghilhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:FuhrZoK8znOyhWCc_9tengSfxCnYjEgrIBc0_XfGNt-lxu3YkmTNUw>
+    <xmx:FuhrZrLTfsyg7PzUeJvNyFlMcu7Q37q--kUSYdEhu0YM7SHMbGJskg>
+    <xmx:FuhrZhyrMAmqNwCTIaOWY97iMzvAATlT6fHDyO1wyT8WkNTLzLXMig>
+    <xmx:FuhrZnKU4RsEtwCZ6Z2K6DsKSfCIR2pfm9p0TD89gKcEAIkTBvpsnQ>
+    <xmx:FuhrZhgmw8lcObHUtilBrROK2Q1-sr4X55Y4zeTO1P1p782-lT8ZwED4>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Jun 2024 02:49:52 -0400 (EDT)
+ 14 Jun 2024 02:49:57 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id fc58d886 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 14 Jun 2024 06:49:37 +0000 (UTC)
-Date: Fri, 14 Jun 2024 08:49:50 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 7d8434e5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 14 Jun 2024 06:49:42 +0000 (UTC)
+Date: Fri, 14 Jun 2024 08:49:54 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 02/20] hash: require hash algorithm in `hasheq()`,
- `hashcmp()` and `hashclr()`
-Message-ID: <c481479598411894283c300dfeae78cdeb15f130.1718347699.git.ps@pks.im>
+Subject: [PATCH v3 03/20] hash: require hash algorithm in `oidread()` and
+ `oidclr()`
+Message-ID: <226173a92b7bc35b13b7b6cde272bd36d1128529.1718347699.git.ps@pks.im>
 References: <cover.1718106284.git.ps@pks.im>
  <cover.1718347699.git.ps@pks.im>
 Precedence: bulk
@@ -86,537 +87,1446 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1HvrUllo5guHgkgg"
+	protocol="application/pgp-signature"; boundary="boaSvyN/wSKDN+h8"
 Content-Disposition: inline
 In-Reply-To: <cover.1718347699.git.ps@pks.im>
 
 
---1HvrUllo5guHgkgg
+--boaSvyN/wSKDN+h8
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Many of our hash functions have two variants, one receiving a `struct
-git_hash_algo` and one that derives it via `the_repository`. Adapt all
-of those functions to always require the hash algorithm as input and
-drop the variants that do not accept one.
-
-As those functions are now independent of `the_repository`, we can move
-them from "hash.h" to "hash-ll.h".
-
-Note that both in this and subsequent commits in this series we always
-just pass `the_repository->hash_algo` as input even if it is obvious
-that there is a repository in the context that we should be using the
-hash from instead. This is done to be on the safe side and not introduce
-any regressions. All callsites should eventually be amended to use a
-repo passed via parameters, but this is outside the scope of this patch
-series.
+Both `oidread()` and `oidclr()` use `the_repository` to derive the hash
+function that shall be used. Require callers to pass in the hash
+algorithm to get rid of this implicit dependency.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/index-pack.c     |  6 +++---
- builtin/pack-redundant.c |  8 +++++---
- builtin/unpack-objects.c |  3 ++-
- commit-graph.c           |  3 ++-
- csum-file.c              |  6 +++---
- hash-ll.h                | 15 +++++++++++++--
- hash-lookup.c            |  3 ++-
- hash.h                   | 24 ++----------------------
- http-walker.c            |  2 +-
- match-trees.c            |  2 +-
- notes.c                  |  2 +-
- pack-bitmap-write.c      |  4 ++--
- pack-bitmap.c            |  3 ++-
- pack-check.c             |  5 +++--
- pack-write.c             |  3 ++-
- packfile.c               |  8 ++++----
- read-cache.c             |  8 ++++----
- 17 files changed, 52 insertions(+), 53 deletions(-)
+ apply.c                          |  2 +-
+ blame.c                          |  2 +-
+ builtin/am.c                     |  8 +++----
+ builtin/fast-export.c            |  2 +-
+ builtin/fast-import.c            | 39 +++++++++++++++++---------------
+ builtin/fetch-pack.c             |  4 ++--
+ builtin/index-pack.c             |  5 ++--
+ builtin/log.c                    |  2 +-
+ builtin/merge.c                  |  4 ++--
+ builtin/notes.c                  |  2 +-
+ builtin/pack-objects.c           |  3 ++-
+ builtin/pack-redundant.c         |  2 +-
+ builtin/patch-id.c               |  6 ++---
+ builtin/pull.c                   |  6 ++---
+ builtin/receive-pack.c           |  2 +-
+ builtin/replace.c                |  2 +-
+ builtin/rm.c                     |  2 +-
+ builtin/tag.c                    |  2 +-
+ builtin/unpack-objects.c         |  6 ++---
+ builtin/update-ref.c             |  8 +++----
+ cache-tree.c                     |  3 ++-
+ commit-graph.c                   | 17 +++++++++-----
+ diff-lib.c                       |  4 ++--
+ diff.c                           |  6 ++---
+ dir.c                            |  6 ++---
+ hash-ll.h                        | 14 ++++++++++++
+ hash.h                           | 17 --------------
+ http-push.c                      |  2 +-
+ http-walker.c                    |  2 +-
+ match-trees.c                    |  2 +-
+ midx.c                           |  3 ++-
+ notes-merge.c                    |  6 ++---
+ notes.c                          |  8 +++----
+ object-file-convert.c            |  2 +-
+ object-file.c                    |  4 ++--
+ packfile.c                       | 10 ++++----
+ read-cache.c                     |  8 ++++---
+ refs.c                           |  6 ++---
+ refs/files-backend.c             |  6 ++---
+ refs/packed-backend.c            |  6 ++---
+ refs/reftable-backend.c          | 37 ++++++++++++++++++------------
+ remote.c                         |  8 +++----
+ resolve-undo.c                   |  3 ++-
+ sequencer.c                      |  4 ++--
+ split-index.c                    |  2 +-
+ submodule-config.c               |  2 +-
+ t/helper/test-submodule-config.c |  2 +-
+ tree-walk.c                      |  4 ++--
+ 48 files changed, 163 insertions(+), 140 deletions(-)
 
+diff --git a/apply.c b/apply.c
+index 901b67e625..528939abb6 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3680,7 +3680,7 @@ static int try_threeway(struct apply_state *state,
+ 	if (status) {
+ 		patch->conflicted_threeway =3D 1;
+ 		if (patch->is_new)
+-			oidclr(&patch->threeway_stage[0]);
++			oidclr(&patch->threeway_stage[0], the_repository->hash_algo);
+ 		else
+ 			oidcpy(&patch->threeway_stage[0], &pre_oid);
+ 		oidcpy(&patch->threeway_stage[1], &our_oid);
+diff --git a/blame.c b/blame.c
+index 33586b9777..a80f5e2e61 100644
+--- a/blame.c
++++ b/blame.c
+@@ -1246,7 +1246,7 @@ static int fill_blob_sha1_and_mode(struct repository =
+*r,
+ 		goto error_out;
+ 	return 0;
+  error_out:
+-	oidclr(&origin->blob_oid);
++	oidclr(&origin->blob_oid, the_repository->hash_algo);
+ 	origin->mode =3D S_IFINVALID;
+ 	return -1;
+ }
+diff --git a/builtin/am.c b/builtin/am.c
+index 36839029d2..45c305ec86 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -408,7 +408,7 @@ static void am_load(struct am_state *state)
+ 	read_commit_msg(state);
+=20
+ 	if (read_state_file(&sb, state, "original-commit", 1) < 0)
+-		oidclr(&state->orig_commit);
++		oidclr(&state->orig_commit, the_repository->hash_algo);
+ 	else if (get_oid_hex(sb.buf, &state->orig_commit) < 0)
+ 		die(_("could not parse %s"), am_path(state, "original-commit"));
+=20
+@@ -1121,7 +1121,7 @@ static void am_next(struct am_state *state)
+ 	unlink(am_path(state, "author-script"));
+ 	unlink(am_path(state, "final-commit"));
+=20
+-	oidclr(&state->orig_commit);
++	oidclr(&state->orig_commit, the_repository->hash_algo);
+ 	unlink(am_path(state, "original-commit"));
+ 	refs_delete_ref(get_main_ref_store(the_repository), NULL,
+ 			"REBASE_HEAD", NULL, REF_NO_DEREF);
+@@ -2151,11 +2151,11 @@ static int safe_to_abort(const struct am_state *sta=
+te)
+ 		if (get_oid_hex(sb.buf, &abort_safety))
+ 			die(_("could not parse %s"), am_path(state, "abort-safety"));
+ 	} else
+-		oidclr(&abort_safety);
++		oidclr(&abort_safety, the_repository->hash_algo);
+ 	strbuf_release(&sb);
+=20
+ 	if (repo_get_oid(the_repository, "HEAD", &head))
+-		oidclr(&head);
++		oidclr(&head, the_repository->hash_algo);
+=20
+ 	if (oideq(&head, &abort_safety))
+ 		return 1;
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 4693d18cc9..4b6e8c6832 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -415,7 +415,7 @@ static char *generate_fake_oid(void)
+ 	struct object_id oid;
+ 	char *hex =3D xmallocz(GIT_MAX_HEXSZ);
+=20
+-	oidclr(&oid);
++	oidclr(&oid, the_repository->hash_algo);
+ 	put_be32(oid.hash + hashsz - 4, counter++);
+ 	return oid_to_hex_r(hex, &oid);
+ }
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index d1c0243d04..12543488f3 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -1279,8 +1279,10 @@ static void load_tree(struct tree_entry *root)
+ 		e->versions[0].mode =3D e->versions[1].mode;
+ 		e->name =3D to_atom(c, strlen(c));
+ 		c +=3D e->name->str_len + 1;
+-		oidread(&e->versions[0].oid, (unsigned char *)c);
+-		oidread(&e->versions[1].oid, (unsigned char *)c);
++		oidread(&e->versions[0].oid, (unsigned char *)c,
++			the_repository->hash_algo);
++		oidread(&e->versions[1].oid, (unsigned char *)c,
++			the_repository->hash_algo);
+ 		c +=3D the_hash_algo->rawsz;
+ 	}
+ 	free(buf);
+@@ -1386,7 +1388,7 @@ static void tree_content_replace(
+ {
+ 	if (!S_ISDIR(mode))
+ 		die("Root cannot be a non-directory");
+-	oidclr(&root->versions[0].oid);
++	oidclr(&root->versions[0].oid, the_repository->hash_algo);
+ 	oidcpy(&root->versions[1].oid, oid);
+ 	if (root->tree)
+ 		release_tree_content_recursive(root->tree);
+@@ -1445,7 +1447,7 @@ static int tree_content_set(
+ 				if (S_ISDIR(e->versions[0].mode))
+ 					e->versions[0].mode |=3D NO_DELTA;
+=20
+-				oidclr(&root->versions[1].oid);
++				oidclr(&root->versions[1].oid, the_repository->hash_algo);
+ 				return 1;
+ 			}
+ 			if (!S_ISDIR(e->versions[1].mode)) {
+@@ -1455,7 +1457,7 @@ static int tree_content_set(
+ 			if (!e->tree)
+ 				load_tree(e);
+ 			if (tree_content_set(e, slash1 + 1, oid, mode, subtree)) {
+-				oidclr(&root->versions[1].oid);
++				oidclr(&root->versions[1].oid, the_repository->hash_algo);
+ 				return 1;
+ 			}
+ 			return 0;
+@@ -1467,7 +1469,7 @@ static int tree_content_set(
+ 	e =3D new_tree_entry();
+ 	e->name =3D to_atom(p, n);
+ 	e->versions[0].mode =3D 0;
+-	oidclr(&e->versions[0].oid);
++	oidclr(&e->versions[0].oid, the_repository->hash_algo);
+ 	t->entries[t->entry_count++] =3D e;
+ 	if (*slash1) {
+ 		e->tree =3D new_tree_content(8);
+@@ -1478,7 +1480,7 @@ static int tree_content_set(
+ 		e->versions[1].mode =3D mode;
+ 		oidcpy(&e->versions[1].oid, oid);
+ 	}
+-	oidclr(&root->versions[1].oid);
++	oidclr(&root->versions[1].oid, the_repository->hash_algo);
+ 	return 1;
+ }
+=20
+@@ -1523,7 +1525,8 @@ static int tree_content_remove(
+ 			if (tree_content_remove(e, slash1 + 1, backup_leaf, 0)) {
+ 				for (n =3D 0; n < e->tree->entry_count; n++) {
+ 					if (e->tree->entries[n]->versions[1].mode) {
+-						oidclr(&root->versions[1].oid);
++						oidclr(&root->versions[1].oid,
++						       the_repository->hash_algo);
+ 						return 1;
+ 					}
+ 				}
+@@ -1542,8 +1545,8 @@ static int tree_content_remove(
+ 		release_tree_content_recursive(e->tree);
+ 	e->tree =3D NULL;
+ 	e->versions[1].mode =3D 0;
+-	oidclr(&e->versions[1].oid);
+-	oidclr(&root->versions[1].oid);
++	oidclr(&e->versions[1].oid, the_repository->hash_algo);
++	oidclr(&root->versions[1].oid, the_repository->hash_algo);
+ 	return 1;
+ }
+=20
+@@ -1609,7 +1612,7 @@ static int update_branch(struct branch *b)
+ 		return 0;
+ 	}
+ 	if (refs_read_ref(get_main_ref_store(the_repository), b->name, &old_oid))
+-		oidclr(&old_oid);
++		oidclr(&old_oid, the_repository->hash_algo);
+ 	if (!force_update && !is_null_oid(&old_oid)) {
+ 		struct commit *old_cmit, *new_cmit;
+ 		int ret;
+@@ -2550,8 +2553,8 @@ static void note_change_n(const char *p, struct branc=
+h *b, unsigned char *old_fa
+ static void file_change_deleteall(struct branch *b)
+ {
+ 	release_tree_content_recursive(b->branch_tree.tree);
+-	oidclr(&b->branch_tree.versions[0].oid);
+-	oidclr(&b->branch_tree.versions[1].oid);
++	oidclr(&b->branch_tree.versions[0].oid, the_repository->hash_algo);
++	oidclr(&b->branch_tree.versions[1].oid, the_repository->hash_algo);
+ 	load_tree(&b->branch_tree);
+ 	b->num_notes =3D 0;
+ }
+@@ -2570,8 +2573,8 @@ static void parse_from_commit(struct branch *b, char =
+*buf, unsigned long size)
+ static void parse_from_existing(struct branch *b)
+ {
+ 	if (is_null_oid(&b->oid)) {
+-		oidclr(&b->branch_tree.versions[0].oid);
+-		oidclr(&b->branch_tree.versions[1].oid);
++		oidclr(&b->branch_tree.versions[0].oid, the_repository->hash_algo);
++		oidclr(&b->branch_tree.versions[1].oid, the_repository->hash_algo);
+ 	} else {
+ 		unsigned long size;
+ 		char *buf;
+@@ -2894,9 +2897,9 @@ static void parse_reset_branch(const char *arg)
+=20
+ 	b =3D lookup_branch(arg);
+ 	if (b) {
+-		oidclr(&b->oid);
+-		oidclr(&b->branch_tree.versions[0].oid);
+-		oidclr(&b->branch_tree.versions[1].oid);
++		oidclr(&b->oid, the_repository->hash_algo);
++		oidclr(&b->branch_tree.versions[0].oid, the_repository->hash_algo);
++		oidclr(&b->branch_tree.versions[1].oid, the_repository->hash_algo);
+ 		if (b->branch_tree.tree) {
+ 			release_tree_content_recursive(b->branch_tree.tree);
+ 			b->branch_tree.tree =3D NULL;
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 44c05ee86c..af329e8d5c 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -29,11 +29,11 @@ static void add_sought_entry(struct ref ***sought, int =
+*nr, int *alloc,
+ 			; /* <oid>, leave oid as name */
+ 		} else {
+ 			/* <ref>, clear cruft from oid */
+-			oidclr(&oid);
++			oidclr(&oid, the_repository->hash_algo);
+ 		}
+ 	} else {
+ 		/* <ref>, clear cruft from get_oid_hex */
+-		oidclr(&oid);
++		oidclr(&oid, the_repository->hash_algo);
+ 	}
+=20
+ 	ref =3D alloc_ref(name);
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 856428fef9..ea727fba16 100644
+index ea727fba16..fd968d673d 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -1204,7 +1204,7 @@ static void parse_pack_objects(unsigned char *hash)
- 	the_hash_algo->init_fn(&tmp_ctx);
- 	the_hash_algo->clone_fn(&tmp_ctx, &input_ctx);
- 	the_hash_algo->final_fn(hash, &tmp_ctx);
--	if (!hasheq(fill(the_hash_algo->rawsz), hash))
-+	if (!hasheq(fill(the_hash_algo->rawsz), hash, the_repository->hash_algo))
- 		die(_("pack is corrupted (SHA1 mismatch)"));
- 	use(the_hash_algo->rawsz);
+@@ -528,7 +528,8 @@ static void *unpack_raw_entry(struct object_entry *obj,
 =20
-@@ -1307,11 +1307,11 @@ static void conclude_pack(int fix_thin_pack, const =
-char *curr_pack, unsigned cha
- 		stop_progress_msg(&progress, msg.buf);
- 		strbuf_release(&msg);
- 		finalize_hashfile(f, tail_hash, FSYNC_COMPONENT_PACK, 0);
--		hashcpy(read_hash, pack_hash);
-+		hashcpy(read_hash, pack_hash, the_repository->hash_algo);
- 		fixup_pack_header_footer(output_fd, pack_hash,
- 					 curr_pack, nr_objects,
- 					 read_hash, consumed_bytes-the_hash_algo->rawsz);
--		if (!hasheq(read_hash, tail_hash))
-+		if (!hasheq(read_hash, tail_hash, the_repository->hash_algo))
- 			die(_("Unexpected tail checksum for %s "
- 			      "(disk corruption?)"), curr_pack);
- 	}
+ 	switch (obj->type) {
+ 	case OBJ_REF_DELTA:
+-		oidread(ref_oid, fill(the_hash_algo->rawsz));
++		oidread(ref_oid, fill(the_hash_algo->rawsz),
++			the_repository->hash_algo);
+ 		use(the_hash_algo->rawsz);
+ 		break;
+ 	case OBJ_OFS_DELTA:
+@@ -1372,7 +1373,7 @@ static struct object_entry *append_obj_to_pack(struct=
+ hashfile *f,
+ 	obj[1].idx.offset +=3D write_compressed(f, buf, size);
+ 	obj[0].idx.crc32 =3D crc32_end(f);
+ 	hashflush(f);
+-	oidread(&obj->idx.oid, sha1);
++	oidread(&obj->idx.oid, sha1, the_repository->hash_algo);
+ 	return obj;
+ }
+=20
+diff --git a/builtin/log.c b/builtin/log.c
+index 78a247d8a9..ccbda8a005 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1938,7 +1938,7 @@ static void print_bases(struct base_tree_info *bases,=
+ FILE *file)
+ 	free(bases->patch_id);
+ 	bases->nr_patch_id =3D 0;
+ 	bases->alloc_patch_id =3D 0;
+-	oidclr(&bases->base_commit);
++	oidclr(&bases->base_commit, the_repository->hash_algo);
+ }
+=20
+ static const char *diff_title(struct strbuf *sb,
+diff --git a/builtin/merge.c b/builtin/merge.c
+index daed2d4e1e..abe66311c7 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -494,7 +494,7 @@ static void merge_name(const char *remote, struct strbu=
+f *msg)
+ 	strbuf_branchname(&bname, remote, 0);
+ 	remote =3D bname.buf;
+=20
+-	oidclr(&branch_head);
++	oidclr(&branch_head, the_repository->hash_algo);
+ 	remote_head =3D get_merge_parent(remote);
+ 	if (!remote_head)
+ 		die(_("'%s' does not point to a commit"), remote);
+@@ -1690,7 +1690,7 @@ int cmd_merge(int argc, const char **argv, const char=
+ *prefix)
+ 	 * index and working tree polluted.
+ 	 */
+ 	if (save_state(&stash))
+-		oidclr(&stash);
++		oidclr(&stash, the_repository->hash_algo);
+=20
+ 	for (i =3D 0; i < use_strategies_nr; i++) {
+ 		int ret, cnt;
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 7f80b3449b..d9c356e354 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -828,7 +828,7 @@ static int merge_commit(struct notes_merge_options *o)
+ 	if (partial->parents)
+ 		oidcpy(&parent_oid, &partial->parents->item->object.oid);
+ 	else
+-		oidclr(&parent_oid);
++		oidclr(&parent_oid, the_repository->hash_algo);
+=20
+ 	CALLOC_ARRAY(t, 1);
+ 	init_notes(t, "NOTES_MERGE_PARTIAL", combine_notes_overwrite, 0);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 638f5c57f0..2b00983a99 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2078,7 +2078,8 @@ static void check_object(struct object_entry *entry, =
+uint32_t object_index)
+ 				oidread(&base_ref,
+ 					use_pack(p, &w_curs,
+ 						 entry->in_pack_offset + used,
+-						 NULL));
++						 NULL),
++					the_repository->hash_algo);
+ 				have_base =3D 1;
+ 			}
+ 			entry->in_pack_header_size =3D used + the_hash_algo->rawsz;
 diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 4c735ba069..103c11b9d3 100644
+index 103c11b9d3..dd9bf35f5b 100644
 --- a/builtin/pack-redundant.c
 +++ b/builtin/pack-redundant.c
-@@ -155,7 +155,7 @@ static inline struct llist_item * llist_sorted_remove(s=
-truct llist *list, const
- 	l =3D (hint =3D=3D NULL) ? list->front : hint;
- 	prev =3D NULL;
- 	while (l) {
--		const int cmp =3D hashcmp(l->oid.hash, oid);
-+		const int cmp =3D hashcmp(l->oid.hash, oid, the_repository->hash_algo);
- 		if (cmp > 0) /* not in list, since sorted */
- 			return prev;
- 		if (!cmp) { /* found */
-@@ -258,7 +258,8 @@ static void cmp_two_packs(struct pack_list *p1, struct =
-pack_list *p2)
- 	while (p1_off < p1->pack->num_objects * p1_step &&
- 	       p2_off < p2->pack->num_objects * p2_step)
- 	{
--		const int cmp =3D hashcmp(p1_base + p1_off, p2_base + p2_off);
-+		const int cmp =3D hashcmp(p1_base + p1_off, p2_base + p2_off,
-+					the_repository->hash_algo);
- 		/* cmp ~ p1 - p2 */
- 		if (cmp =3D=3D 0) {
- 			p1_hint =3D llist_sorted_remove(p1->unique_objects,
-@@ -296,7 +297,8 @@ static size_t sizeof_union(struct packed_git *p1, struc=
-t packed_git *p2)
- 	while (p1_off < p1->num_objects * p1_step &&
- 	       p2_off < p2->num_objects * p2_step)
- 	{
--		int cmp =3D hashcmp(p1_base + p1_off, p2_base + p2_off);
-+		int cmp =3D hashcmp(p1_base + p1_off, p2_base + p2_off,
-+				  the_repository->hash_algo);
- 		/* cmp ~ p1 - p2 */
- 		if (cmp =3D=3D 0) {
- 			ret++;
+@@ -100,7 +100,7 @@ static inline struct llist_item *llist_insert(struct ll=
+ist *list,
+ 					      const unsigned char *oid)
+ {
+ 	struct llist_item *new_item =3D llist_item_get();
+-	oidread(&new_item->oid, oid);
++	oidread(&new_item->oid, oid, the_repository->hash_algo);
+ 	new_item->next =3D NULL;
+=20
+ 	if (after) {
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index 583099cacf..d790ae6354 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -70,7 +70,7 @@ static int get_one_patchid(struct object_id *next_oid, st=
+ruct object_id *result,
+ 	git_hash_ctx ctx;
+=20
+ 	the_hash_algo->init_fn(&ctx);
+-	oidclr(result);
++	oidclr(result, the_repository->hash_algo);
+=20
+ 	while (strbuf_getwholeline(line_buf, stdin, '\n') !=3D EOF) {
+ 		char *line =3D line_buf->buf;
+@@ -166,7 +166,7 @@ static int get_one_patchid(struct object_id *next_oid, =
+struct object_id *result,
+ 	}
+=20
+ 	if (!found_next)
+-		oidclr(next_oid);
++		oidclr(next_oid, the_repository->hash_algo);
+=20
+ 	flush_one_hunk(result, &ctx);
+=20
+@@ -179,7 +179,7 @@ static void generate_id_list(int stable, int verbatim)
+ 	int patchlen;
+ 	struct strbuf line_buf =3D STRBUF_INIT;
+=20
+-	oidclr(&oid);
++	oidclr(&oid, the_repository->hash_algo);
+ 	while (!feof(stdin)) {
+ 		patchlen =3D get_one_patchid(&n, &result, &line_buf, stable, verbatim);
+ 		flush_current_id(patchlen, &oid, &result);
+diff --git a/builtin/pull.c b/builtin/pull.c
+index d622202bce..2a73e673f3 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -1038,7 +1038,7 @@ int cmd_pull(int argc, const char **argv, const char =
+*prefix)
+ 		die_conclude_merge();
+=20
+ 	if (repo_get_oid(the_repository, "HEAD", &orig_head))
+-		oidclr(&orig_head);
++		oidclr(&orig_head, the_repository->hash_algo);
+=20
+ 	if (opt_rebase) {
+ 		if (opt_autostash =3D=3D -1)
+@@ -1053,7 +1053,7 @@ int cmd_pull(int argc, const char **argv, const char =
+*prefix)
+ 				_("Please commit or stash them."), 1, 0);
+=20
+ 		if (get_rebase_fork_point(&rebase_fork_point, repo, *refspecs))
+-			oidclr(&rebase_fork_point);
++			oidclr(&rebase_fork_point, the_repository->hash_algo);
+ 	}
+=20
+ 	if (run_fetch(repo, refspecs))
+@@ -1063,7 +1063,7 @@ int cmd_pull(int argc, const char **argv, const char =
+*prefix)
+ 		return 0;
+=20
+ 	if (repo_get_oid(the_repository, "HEAD", &curr_head))
+-		oidclr(&curr_head);
++		oidclr(&curr_head, the_repository->hash_algo);
+=20
+ 	if (!is_null_oid(&orig_head) && !is_null_oid(&curr_head) &&
+ 			!oideq(&orig_head, &curr_head)) {
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 01c1f04ece..aa5ba27d17 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -741,7 +741,7 @@ static void prepare_push_cert_sha1(struct child_process=
+ *proc)
+ 		already_done =3D 1;
+ 		if (write_object_file(push_cert.buf, push_cert.len, OBJ_BLOB,
+ 				      &push_cert_oid))
+-			oidclr(&push_cert_oid);
++			oidclr(&push_cert_oid, the_repository->hash_algo);
+=20
+ 		memset(&sigcheck, '\0', sizeof(sigcheck));
+=20
+diff --git a/builtin/replace.c b/builtin/replace.c
+index ce9f6974d2..1ef833c07f 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -167,7 +167,7 @@ static int check_ref_valid(struct object_id *object,
+ 		return error(_("'%s' is not a valid ref name"), ref->buf);
+=20
+ 	if (refs_read_ref(get_main_ref_store(the_repository), ref->buf, prev))
+-		oidclr(prev);
++		oidclr(prev, the_repository->hash_algo);
+ 	else if (!force)
+ 		return error(_("replace ref '%s' already exists"), ref->buf);
+ 	return 0;
+diff --git a/builtin/rm.c b/builtin/rm.c
+index d195c16e74..0e79cbab62 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -377,7 +377,7 @@ int cmd_rm(int argc, const char **argv, const char *pre=
+fix)
+ 	if (!force) {
+ 		struct object_id oid;
+ 		if (repo_get_oid(the_repository, "HEAD", &oid))
+-			oidclr(&oid);
++			oidclr(&oid, the_repository->hash_algo);
+ 		if (check_local_mod(&oid, index_only))
+ 			exit(1);
+ 	}
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 6e2c0cf342..a1fb218512 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -650,7 +650,7 @@ int cmd_tag(int argc, const char **argv, const char *pr=
+efix)
+ 		die(_("'%s' is not a valid tag name."), tag);
+=20
+ 	if (refs_read_ref(get_main_ref_store(the_repository), ref.buf, &prev))
+-		oidclr(&prev);
++		oidclr(&prev, the_repository->hash_algo);
+ 	else if (!force)
+ 		die(_("tag '%s' already exists"), tag);
+=20
 diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index f1c85a00ae..0855572c27 100644
+index 0855572c27..08fa2a7a74 100644
 --- a/builtin/unpack-objects.c
 +++ b/builtin/unpack-objects.c
-@@ -674,7 +674,8 @@ int cmd_unpack_objects(int argc, const char **argv, con=
-st char *prefix UNUSED)
- 		if (fsck_finish(&fsck_options))
- 			die(_("fsck error in pack objects"));
- 	}
--	if (!hasheq(fill(the_hash_algo->rawsz), oid.hash))
-+	if (!hasheq(fill(the_hash_algo->rawsz), oid.hash,
-+		    the_repository->hash_algo))
- 		die("final sha1 did not match");
- 	use(the_hash_algo->rawsz);
+@@ -439,7 +439,7 @@ static void unpack_delta_entry(enum object_type type, u=
+nsigned long delta_size,
+ 	struct object_id base_oid;
 =20
+ 	if (type =3D=3D OBJ_REF_DELTA) {
+-		oidread(&base_oid, fill(the_hash_algo->rawsz));
++		oidread(&base_oid, fill(the_hash_algo->rawsz), the_repository->hash_algo=
+);
+ 		use(the_hash_algo->rawsz);
+ 		delta_data =3D get_data(delta_size);
+ 		if (!delta_data)
+@@ -451,7 +451,7 @@ static void unpack_delta_entry(enum object_type type, u=
+nsigned long delta_size,
+ 			return; /* we are done */
+ 		else {
+ 			/* cannot resolve yet --- queue it */
+-			oidclr(&obj_list[nr].oid);
++			oidclr(&obj_list[nr].oid, the_repository->hash_algo);
+ 			add_delta_to_list(nr, &base_oid, 0, delta_data, delta_size);
+ 			return;
+ 		}
+@@ -500,7 +500,7 @@ static void unpack_delta_entry(enum object_type type, u=
+nsigned long delta_size,
+ 			 * The delta base object is itself a delta that
+ 			 * has not been resolved yet.
+ 			 */
+-			oidclr(&obj_list[nr].oid);
++			oidclr(&obj_list[nr].oid, the_repository->hash_algo);
+ 			add_delta_to_list(nr, null_oid(), base_offset,
+ 					  delta_data, delta_size);
+ 			return;
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 6cda1c08aa..f8a5b087f8 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -122,7 +122,7 @@ static int parse_next_oid(const char **next, const char=
+ *end,
+ 				goto invalid;
+ 		} else {
+ 			/* Without -z, an empty value means all zeros: */
+-			oidclr(oid);
++			oidclr(oid, the_repository->hash_algo);
+ 		}
+ 	} else {
+ 		/* With -z, read the next NUL-terminated line */
+@@ -142,7 +142,7 @@ static int parse_next_oid(const char **next, const char=
+ *end,
+ 			/* With -z, treat an empty value as all zeros: */
+ 			warning("%s %s: missing <new-oid>, treating as zero",
+ 				command, refname);
+-			oidclr(oid);
++			oidclr(oid, the_repository->hash_algo);
+ 		} else {
+ 			/*
+ 			 * With -z, an empty non-required value means
+@@ -291,7 +291,7 @@ static void parse_cmd_verify(struct ref_transaction *tr=
+ansaction,
+=20
+ 	if (parse_next_oid(&next, end, &old_oid, "verify", refname,
+ 			   PARSE_SHA1_OLD))
+-		oidclr(&old_oid);
++		oidclr(&old_oid, the_repository->hash_algo);
+=20
+ 	if (*next !=3D line_termination)
+ 		die("verify %s: extra input: %s", refname, next);
+@@ -564,7 +564,7 @@ int cmd_update_ref(int argc, const char **argv, const c=
+har *prefix)
+ 			 * The empty string implies that the reference
+ 			 * must not already exist:
+ 			 */
+-			oidclr(&oldoid);
++			oidclr(&oldoid, the_repository->hash_algo);
+ 		else if (repo_get_oid(the_repository, oldval, &oldoid))
+ 			die("%s: not a valid old SHA1", oldval);
+ 	}
+diff --git a/cache-tree.c b/cache-tree.c
+index 387c0a3e5b..e4255c4d02 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -578,7 +578,8 @@ static struct cache_tree *read_one(const char **buffer,=
+ unsigned long *size_p)
+ 	if (0 <=3D it->entry_count) {
+ 		if (size < rawsz)
+ 			goto free_return;
+-		oidread(&it->oid, (const unsigned char *)buf);
++		oidread(&it->oid, (const unsigned char *)buf,
++			the_repository->hash_algo);
+ 		buf +=3D rawsz;
+ 		size -=3D rawsz;
+ 	}
 diff --git a/commit-graph.c b/commit-graph.c
-index e5dd3553df..3429156b28 100644
+index 3429156b28..98cbd53eea 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -565,7 +565,8 @@ static int add_graph_to_chain(struct commit_graph *g,
+@@ -475,7 +475,8 @@ struct commit_graph *parse_commit_graph(struct repo_set=
+tings *s,
+ 		FREE_AND_NULL(graph->bloom_filter_settings);
+ 	}
 =20
- 		if (!cur_g ||
- 		    !oideq(&oids[n], &cur_g->oid) ||
--		    !hasheq(oids[n].hash, g->chunk_base_graphs + st_mult(g->hash_len, n)=
-)) {
-+		    !hasheq(oids[n].hash, g->chunk_base_graphs + st_mult(g->hash_len, n),
-+			    the_repository->hash_algo)) {
- 			warning(_("commit-graph chain does not match"));
- 			return 0;
- 		}
-diff --git a/csum-file.c b/csum-file.c
-index 870748e016..f4be0804b7 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -68,12 +68,12 @@ int finalize_hashfile(struct hashfile *f, unsigned char=
- *result,
- 	hashflush(f);
+-	oidread(&graph->oid, graph->data + graph->data_len - graph->hash_len);
++	oidread(&graph->oid, graph->data + graph->data_len - graph->hash_len,
++		the_repository->hash_algo);
 =20
- 	if (f->skip_hash)
--		hashclr(f->buffer);
-+		hashclr(f->buffer, the_repository->hash_algo);
- 	else
- 		the_hash_algo->final_fn(f->buffer, &f->ctx);
+ 	free_chunkfile(cf);
+ 	return graph;
+@@ -838,7 +839,8 @@ static void load_oid_from_graph(struct commit_graph *g,
 =20
- 	if (result)
--		hashcpy(result, f->buffer);
-+		hashcpy(result, f->buffer, the_repository->hash_algo);
- 	if (flags & CSUM_HASH_IN_STREAM)
- 		flush(f, f->buffer, the_hash_algo->rawsz);
- 	if (flags & CSUM_FSYNC)
-@@ -237,5 +237,5 @@ int hashfile_checksum_valid(const unsigned char *data, =
-size_t total_len)
- 	the_hash_algo->update_fn(&ctx, data, data_len);
- 	the_hash_algo->final_fn(got, &ctx);
+ 	lex_index =3D pos - g->num_commits_in_base;
 =20
--	return hasheq(got, data + data_len);
-+	return hasheq(got, data + data_len, the_repository->hash_algo);
+-	oidread(oid, g->chunk_oid_lookup + st_mult(g->hash_len, lex_index));
++	oidread(oid, g->chunk_oid_lookup + st_mult(g->hash_len, lex_index),
++		the_repository->hash_algo);
  }
+=20
+ static struct commit_list **insert_parent_or_die(struct repository *r,
+@@ -1080,7 +1082,7 @@ static struct tree *load_tree_for_commit(struct repos=
+itory *r,
+ 	commit_data =3D g->chunk_commit_data +
+ 			st_mult(GRAPH_DATA_WIDTH, graph_pos - g->num_commits_in_base);
+=20
+-	oidread(&oid, commit_data);
++	oidread(&oid, commit_data, the_repository->hash_algo);
+ 	set_commit_tree(c, lookup_tree(r, &oid));
+=20
+ 	return c->maybe_tree;
+@@ -2556,7 +2558,8 @@ int write_commit_graph(struct object_directory *odb,
+ 		struct commit_graph *g =3D ctx->r->objects->commit_graph;
+ 		for (i =3D 0; i < g->num_commits; i++) {
+ 			struct object_id oid;
+-			oidread(&oid, g->chunk_oid_lookup + st_mult(g->hash_len, i));
++			oidread(&oid, g->chunk_oid_lookup + st_mult(g->hash_len, i),
++				the_repository->hash_algo);
+ 			oid_array_append(&ctx->oids, &oid);
+ 		}
+ 	}
+@@ -2675,7 +2678,8 @@ static int verify_one_commit_graph(struct repository =
+*r,
+ 	for (i =3D 0; i < g->num_commits; i++) {
+ 		struct commit *graph_commit;
+=20
+-		oidread(&cur_oid, g->chunk_oid_lookup + st_mult(g->hash_len, i));
++		oidread(&cur_oid, g->chunk_oid_lookup + st_mult(g->hash_len, i),
++			the_repository->hash_algo);
+=20
+ 		if (i && oidcmp(&prev_oid, &cur_oid) >=3D 0)
+ 			graph_report(_("commit-graph has incorrect OID order: %s then %s"),
+@@ -2719,7 +2723,8 @@ static int verify_one_commit_graph(struct repository =
+*r,
+ 		timestamp_t generation;
+=20
+ 		display_progress(progress, ++(*seen));
+-		oidread(&cur_oid, g->chunk_oid_lookup + st_mult(g->hash_len, i));
++		oidread(&cur_oid, g->chunk_oid_lookup + st_mult(g->hash_len, i),
++			the_repository->hash_algo);
+=20
+ 		graph_commit =3D lookup_commit(r, &cur_oid);
+ 		odb_commit =3D (struct commit *)create_object(r, &cur_oid, alloc_commit_=
+node(r));
+diff --git a/diff-lib.c b/diff-lib.c
+index 5a5a50c5a1..3fb8d79fef 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -160,7 +160,7 @@ void run_diff_files(struct rev_info *revs, unsigned int=
+ option)
+ 			dpath->next =3D NULL;
+ 			memcpy(dpath->path, ce->name, path_len);
+ 			dpath->path[path_len] =3D '\0';
+-			oidclr(&dpath->oid);
++			oidclr(&dpath->oid, the_repository->hash_algo);
+ 			memset(&(dpath->parent[0]), 0,
+ 			       sizeof(struct combine_diff_parent)*5);
+=20
+@@ -412,7 +412,7 @@ static int show_modified(struct rev_info *revs,
+ 		memcpy(p->path, new_entry->name, pathlen);
+ 		p->path[pathlen] =3D 0;
+ 		p->mode =3D mode;
+-		oidclr(&p->oid);
++		oidclr(&p->oid, the_repository->hash_algo);
+ 		memset(p->parent, 0, 2 * sizeof(struct combine_diff_parent));
+ 		p->parent[0].status =3D DIFF_STATUS_MODIFIED;
+ 		p->parent[0].mode =3D new_entry->ce_mode;
+diff --git a/diff.c b/diff.c
+index e70301df76..60d1f7be81 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4567,7 +4567,7 @@ static void diff_fill_oid_info(struct diff_filespec *=
+one, struct index_state *is
+ 		if (!one->oid_valid) {
+ 			struct stat st;
+ 			if (one->is_stdin) {
+-				oidclr(&one->oid);
++				oidclr(&one->oid, the_repository->hash_algo);
+ 				return;
+ 			}
+ 			if (lstat(one->path, &st) < 0)
+@@ -4577,7 +4577,7 @@ static void diff_fill_oid_info(struct diff_filespec *=
+one, struct index_state *is
+ 		}
+ 	}
+ 	else
+-		oidclr(&one->oid);
++		oidclr(&one->oid, the_repository->hash_algo);
+ }
+=20
+ static void strip_prefix(int prefix_length, const char **namep, const char=
+ **otherp)
+@@ -6404,7 +6404,7 @@ static int diff_get_patch_id(struct diff_options *opt=
+ions, struct object_id *oid
+ 	the_hash_algo->init_fn(&ctx);
+ 	memset(&data, 0, sizeof(struct patch_id_t));
+ 	data.ctx =3D &ctx;
+-	oidclr(oid);
++	oidclr(oid, the_repository->hash_algo);
+=20
+ 	for (i =3D 0; i < q->nr; i++) {
+ 		xpparam_t xpp;
+diff --git a/dir.c b/dir.c
+index 45be4ad261..5de421c29c 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1687,7 +1687,7 @@ static void prep_exclude(struct dir_struct *dir,
+ 		}
+=20
+ 		/* Try to read per-directory file */
+-		oidclr(&oid_stat.oid);
++		oidclr(&oid_stat.oid, the_repository->hash_algo);
+ 		oid_stat.valid =3D 0;
+ 		if (dir->exclude_per_dir &&
+ 		    /*
+@@ -3794,7 +3794,7 @@ static void read_oid(size_t pos, void *cb)
+ 		rd->data =3D rd->end + 1;
+ 		return;
+ 	}
+-	oidread(&ud->exclude_oid, rd->data);
++	oidread(&ud->exclude_oid, rd->data, the_repository->hash_algo);
+ 	rd->data +=3D the_hash_algo->rawsz;
+ }
+=20
+@@ -3802,7 +3802,7 @@ static void load_oid_stat(struct oid_stat *oid_stat, =
+const unsigned char *data,
+ 			  const unsigned char *sha1)
+ {
+ 	stat_data_from_disk(&oid_stat->stat, data);
+-	oidread(&oid_stat->oid, sha1);
++	oidread(&oid_stat->oid, sha1, the_repository->hash_algo);
+ 	oid_stat->valid =3D 1;
+ }
+=20
 diff --git a/hash-ll.h b/hash-ll.h
-index 2cfde63ae1..fabdd8ecc7 100644
+index fabdd8ecc7..dbb96369fc 100644
 --- a/hash-ll.h
 +++ b/hash-ll.h
-@@ -245,7 +245,7 @@ static inline int hash_algo_by_ptr(const struct git_has=
-h_algo *p)
-=20
- const struct object_id *null_oid(void);
-=20
--static inline int hashcmp_algop(const unsigned char *sha1, const unsigned =
-char *sha2, const struct git_hash_algo *algop)
-+static inline int hashcmp(const unsigned char *sha1, const unsigned char *=
-sha2, const struct git_hash_algo *algop)
- {
- 	/*
- 	 * Teach the compiler that there are only two possibilities of hash size
-@@ -256,7 +256,7 @@ static inline int hashcmp_algop(const unsigned char *sh=
-a1, const unsigned char *
- 	return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
+@@ -284,6 +284,20 @@ static inline void oidcpy(struct object_id *dst, const=
+ struct object_id *src)
+ 	dst->algo =3D src->algo;
  }
 =20
--static inline int hasheq_algop(const unsigned char *sha1, const unsigned c=
-har *sha2, const struct git_hash_algo *algop)
-+static inline int hasheq(const unsigned char *sha1, const unsigned char *s=
-ha2, const struct git_hash_algo *algop)
- {
- 	/*
- 	 * We write this here instead of deferring to hashcmp so that the
-@@ -267,6 +267,17 @@ static inline int hasheq_algop(const unsigned char *sh=
-a1, const unsigned char *s
- 	return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
- }
-=20
-+static inline void hashcpy(unsigned char *sha_dst, const unsigned char *sh=
-a_src,
++static inline void oidread(struct object_id *oid, const unsigned char *has=
+h,
 +			   const struct git_hash_algo *algop)
 +{
-+	memcpy(sha_dst, sha_src, algop->rawsz);
++	memcpy(oid->hash, hash, algop->rawsz);
++	oid->algo =3D hash_algo_by_ptr(algop);
 +}
 +
-+static inline void hashclr(unsigned char *hash, const struct git_hash_algo=
- *algop)
++static inline void oidclr(struct object_id *oid,
++			  const struct git_hash_algo *algop)
 +{
-+	memset(hash, 0, algop->rawsz);
++	memset(oid->hash, 0, GIT_MAX_RAWSZ);
++	oid->algo =3D hash_algo_by_ptr(algop);
 +}
 +
- static inline void oidcpy(struct object_id *dst, const struct object_id *s=
-rc)
+ static inline struct object_id *oiddup(const struct object_id *src)
  {
- 	memcpy(dst->hash, src->hash, GIT_MAX_RAWSZ);
-diff --git a/hash-lookup.c b/hash-lookup.c
-index 9f0f95e2b9..9aa6b82eb7 100644
---- a/hash-lookup.c
-+++ b/hash-lookup.c
-@@ -112,7 +112,8 @@ int bsearch_hash(const unsigned char *hash, const uint3=
-2_t *fanout_nbo,
-=20
- 	while (lo < hi) {
- 		unsigned mi =3D lo + (hi - lo) / 2;
--		int cmp =3D hashcmp(table + mi * stride, hash);
-+		int cmp =3D hashcmp(table + mi * stride, hash,
-+				  the_repository->hash_algo);
-=20
- 		if (!cmp) {
- 			if (result)
+ 	struct object_id *dst =3D xmalloc(sizeof(struct object_id));
 diff --git a/hash.h b/hash.h
-index a1161e1b22..714938e2eb 100644
+index 714938e2eb..43623a0c86 100644
 --- a/hash.h
 +++ b/hash.h
-@@ -6,11 +6,6 @@
-=20
- #define the_hash_algo the_repository->hash_algo
-=20
--static inline int hashcmp(const unsigned char *sha1, const unsigned char *=
-sha2)
--{
--	return hashcmp_algop(sha1, sha2, the_hash_algo);
--}
--
- static inline int oidcmp(const struct object_id *oid1, const struct object=
-_id *oid2)
- {
- 	const struct git_hash_algo *algop;
-@@ -18,12 +13,7 @@ static inline int oidcmp(const struct object_id *oid1, c=
-onst struct object_id *o
- 		algop =3D the_hash_algo;
- 	else
- 		algop =3D &hash_algos[oid1->algo];
--	return hashcmp_algop(oid1->hash, oid2->hash, algop);
--}
--
--static inline int hasheq(const unsigned char *sha1, const unsigned char *s=
-ha2)
--{
--	return hasheq_algop(sha1, sha2, the_hash_algo);
-+	return hashcmp(oid1->hash, oid2->hash, algop);
- }
-=20
- static inline int oideq(const struct object_id *oid1, const struct object_=
-id *oid2)
-@@ -33,7 +23,7 @@ static inline int oideq(const struct object_id *oid1, con=
-st struct object_id *oi
- 		algop =3D the_hash_algo;
- 	else
- 		algop =3D &hash_algos[oid1->algo];
--	return hasheq_algop(oid1->hash, oid2->hash, algop);
-+	return hasheq(oid1->hash, oid2->hash, algop);
- }
-=20
- static inline int is_null_oid(const struct object_id *oid)
-@@ -41,11 +31,6 @@ static inline int is_null_oid(const struct object_id *oi=
-d)
- 	return oideq(oid, null_oid());
- }
-=20
--static inline void hashcpy(unsigned char *sha_dst, const unsigned char *sh=
-a_src)
--{
--	memcpy(sha_dst, sha_src, the_hash_algo->rawsz);
--}
--
- /* Like oidcpy() but zero-pads the unused bytes in dst's hash array. */
- static inline void oidcpy_with_padding(struct object_id *dst,
- 				       const struct object_id *src)
-@@ -62,11 +47,6 @@ static inline void oidcpy_with_padding(struct object_id =
+@@ -47,23 +47,6 @@ static inline void oidcpy_with_padding(struct object_id =
 *dst,
  	dst->algo =3D src->algo;
  }
 =20
--static inline void hashclr(unsigned char *hash)
+-static inline void oidclr(struct object_id *oid)
 -{
--	memset(hash, 0, the_hash_algo->rawsz);
+-	memset(oid->hash, 0, GIT_MAX_RAWSZ);
+-	oid->algo =3D hash_algo_by_ptr(the_hash_algo);
 -}
 -
- static inline void oidclr(struct object_id *oid)
+-static inline void oidread_algop(struct object_id *oid, const unsigned cha=
+r *hash, const struct git_hash_algo *algop)
+-{
+-	memcpy(oid->hash, hash, algop->rawsz);
+-	oid->algo =3D hash_algo_by_ptr(algop);
+-}
+-
+-static inline void oidread(struct object_id *oid, const unsigned char *has=
+h)
+-{
+-	oidread_algop(oid, hash, the_hash_algo);
+-}
+-
+ static inline int is_empty_blob_oid(const struct object_id *oid)
  {
- 	memset(oid->hash, 0, GIT_MAX_RAWSZ);
+ 	return oideq(oid, the_hash_algo->empty_blob);
+diff --git a/http-push.c b/http-push.c
+index 1fe51226fd..86de238b84 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1552,7 +1552,7 @@ static void fetch_symref(const char *path, char **sym=
+ref, struct object_id *oid)
+ 	free(url);
+=20
+ 	FREE_AND_NULL(*symref);
+-	oidclr(oid);
++	oidclr(oid, the_repository->hash_algo);
+=20
+ 	if (buffer.len =3D=3D 0)
+ 		return;
 diff --git a/http-walker.c b/http-walker.c
-index b395ef1327..cf7f8c82bc 100644
+index cf7f8c82bc..b7110b6f82 100644
 --- a/http-walker.c
 +++ b/http-walker.c
-@@ -485,7 +485,7 @@ static int fetch_object(struct walker *walker, unsigned=
- char *hash)
+@@ -152,7 +152,7 @@ static void prefetch(struct walker *walker, unsigned ch=
+ar *sha1)
 =20
- 	list_for_each(pos, head) {
- 		obj_req =3D list_entry(pos, struct object_request, node);
--		if (hasheq(obj_req->oid.hash, hash))
-+		if (hasheq(obj_req->oid.hash, hash, the_repository->hash_algo))
- 			break;
- 	}
- 	if (!obj_req)
+ 	newreq =3D xmalloc(sizeof(*newreq));
+ 	newreq->walker =3D walker;
+-	oidread(&newreq->oid, sha1);
++	oidread(&newreq->oid, sha1, the_repository->hash_algo);
+ 	newreq->repo =3D data->alt;
+ 	newreq->state =3D WAITING;
+ 	newreq->req =3D NULL;
 diff --git a/match-trees.c b/match-trees.c
-index 3412b6a140..849b391d3d 100644
+index 849b391d3d..50c42e2061 100644
 --- a/match-trees.c
 +++ b/match-trees.c
-@@ -237,7 +237,7 @@ static int splice_tree(const struct object_id *oid1, co=
+@@ -229,7 +229,7 @@ static int splice_tree(const struct object_id *oid1, co=
 nst char *prefix,
- 	} else {
- 		rewrite_with =3D oid2;
- 	}
--	hashcpy(rewrite_here, rewrite_with->hash);
-+	hashcpy(rewrite_here, rewrite_with->hash, the_repository->hash_algo);
- 	status =3D write_object_file(buf, sz, OBJ_TREE, result);
- 	free(buf);
- 	return status;
+ 		    oid_to_hex(oid1));
+ 	if (*subpath) {
+ 		struct object_id tree_oid;
+-		oidread(&tree_oid, rewrite_here);
++		oidread(&tree_oid, rewrite_here, the_repository->hash_algo);
+ 		status =3D splice_tree(&tree_oid, subpath, oid2, &subtree);
+ 		if (status)
+ 			return status;
+diff --git a/midx.c b/midx.c
+index bc4797196f..1e75f1a7eb 100644
+--- a/midx.c
++++ b/midx.c
+@@ -304,7 +304,8 @@ struct object_id *nth_midxed_object_oid(struct object_i=
+d *oid,
+ 	if (n >=3D m->num_objects)
+ 		return NULL;
+=20
+-	oidread(oid, m->chunk_oid_lookup + st_mult(m->hash_len, n));
++	oidread(oid, m->chunk_oid_lookup + st_mult(m->hash_len, n),
++		the_repository->hash_algo);
+ 	return oid;
+ }
+=20
+diff --git a/notes-merge.c b/notes-merge.c
+index 6a9a139b12..801941c2d1 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -240,7 +240,7 @@ static void diff_tree_local(struct notes_merge_options =
+*o,
+ 			 *     (will be overwritten by following addition)
+ 			 */
+ 			if (oideq(&mp->local, &uninitialized))
+-				oidclr(&mp->local);
++				oidclr(&mp->local, the_repository->hash_algo);
+ 		} else if (is_null_oid(&p->one->oid)) { /* addition */
+ 			/*
+ 			 * Either this is a true addition (1), or it is part
+@@ -556,7 +556,7 @@ int notes_merge(struct notes_merge_options *o,
+=20
+ 	assert(o->local_ref && o->remote_ref);
+ 	assert(!strcmp(o->local_ref, local_tree->ref));
+-	oidclr(result_oid);
++	oidclr(result_oid, the_repository->hash_algo);
+=20
+ 	trace_printf("notes_merge(o->local_ref =3D %s, o->remote_ref =3D %s)\n",
+ 	       o->local_ref, o->remote_ref);
+@@ -579,7 +579,7 @@ int notes_merge(struct notes_merge_options *o,
+ 		 * unborn ref, perform the merge using an empty notes tree.
+ 		 */
+ 		if (!check_refname_format(o->remote_ref, 0)) {
+-			oidclr(&remote_oid);
++			oidclr(&remote_oid, the_repository->hash_algo);
+ 			remote =3D NULL;
+ 		} else {
+ 			die("Failed to resolve remote notes ref '%s'",
 diff --git a/notes.c b/notes.c
-index 53ca25c814..5296fd863f 100644
+index 5296fd863f..3a8da92fb9 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -149,7 +149,7 @@ static struct leaf_node *note_tree_find(struct notes_tr=
-ee *t,
- 	void **p =3D note_tree_search(t, &tree, &n, key_sha1);
- 	if (GET_PTR_TYPE(*p) =3D=3D PTR_TYPE_NOTE) {
- 		struct leaf_node *l =3D (struct leaf_node *) CLR_PTR_TYPE(*p);
--		if (hasheq(key_sha1, l->key_oid.hash))
-+		if (hasheq(key_sha1, l->key_oid.hash, the_repository->hash_algo))
- 			return l;
- 	}
- 	return NULL;
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 6cae670412..59d2e3a387 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -790,7 +790,7 @@ static void write_hash_cache(struct hashfile *f,
- void bitmap_writer_set_checksum(struct bitmap_writer *writer,
- 				const unsigned char *sha1)
- {
--	hashcpy(writer->pack_checksum, sha1);
-+	hashcpy(writer->pack_checksum, sha1, the_repository->hash_algo);
+@@ -353,7 +353,7 @@ static void add_non_note(struct notes_tree *t, char *pa=
+th,
+ 	n->next =3D NULL;
+ 	n->path =3D path;
+ 	n->mode =3D mode;
+-	oidread(&n->oid, sha1);
++	oidread(&n->oid, sha1, the_repository->hash_algo);
+ 	t->prev_non_note =3D n;
+=20
+ 	if (!t->first_non_note) {
+@@ -1036,7 +1036,7 @@ void init_notes(struct notes_tree *t, const char *not=
+es_ref,
+ 		die("Failed to read notes tree referenced by %s (%s)",
+ 		    notes_ref, oid_to_hex(&object_oid));
+=20
+-	oidclr(&root_tree.key_oid);
++	oidclr(&root_tree.key_oid, the_repository->hash_algo);
+ 	oidcpy(&root_tree.val_oid, &oid);
+ 	load_subtree(t, &root_tree, t->root, 0);
+ }
+@@ -1146,8 +1146,8 @@ int remove_note(struct notes_tree *t, const unsigned =
+char *object_sha1)
+ 	if (!t)
+ 		t =3D &default_notes_tree;
+ 	assert(t->initialized);
+-	oidread(&l.key_oid, object_sha1);
+-	oidclr(&l.val_oid);
++	oidread(&l.key_oid, object_sha1, the_repository->hash_algo);
++	oidclr(&l.val_oid, the_repository->hash_algo);
+ 	note_tree_remove(t, t->root, 0, &l);
+ 	if (is_null_oid(&l.val_oid)) /* no note was removed */
+ 		return 1;
+diff --git a/object-file-convert.c b/object-file-convert.c
+index 4f6189095b..f684038f7f 100644
+--- a/object-file-convert.c
++++ b/object-file-convert.c
+@@ -56,7 +56,7 @@ static int decode_tree_entry_raw(struct object_id *oid, c=
+onst char **path,
+ 		return -1;
+ 	*len =3D strlen(*path) + 1;
+=20
+-	oidread_algop(oid, (const unsigned char *)*path + *len, algo);
++	oidread(oid, (const unsigned char *)*path + *len, algo);
+ 	return 0;
  }
 =20
- void bitmap_writer_finish(struct bitmap_writer *writer,
-@@ -816,7 +816,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
- 	header.version =3D htons(default_version);
- 	header.options =3D htons(flags | options);
- 	header.entry_count =3D htonl(writer->selected_nr);
--	hashcpy(header.checksum, writer->pack_checksum);
-+	hashcpy(header.checksum, writer->pack_checksum, the_repository->hash_algo=
-);
+diff --git a/object-file.c b/object-file.c
+index a40300ce4a..c161e3e2a5 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1446,7 +1446,7 @@ static int loose_object_info(struct repository *r,
+ 	int allow_unknown =3D flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE;
 =20
- 	hashwrite(f, &header, sizeof(header) - GIT_MAX_RAWSZ + the_hash_algo->raw=
-sz);
- 	dump_bitmap(f, writer->commits);
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index fe8e8a51d3..184d28f05c 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -367,7 +367,8 @@ static int open_midx_bitmap_1(struct bitmap_index *bitm=
-ap_git,
- 	if (load_bitmap_header(bitmap_git) < 0)
- 		goto cleanup;
+ 	if (oi->delta_base_oid)
+-		oidclr(oi->delta_base_oid);
++		oidclr(oi->delta_base_oid, the_repository->hash_algo);
 =20
--	if (!hasheq(get_midx_checksum(bitmap_git->midx), bitmap_git->checksum)) {
-+	if (!hasheq(get_midx_checksum(bitmap_git->midx), bitmap_git->checksum,
-+		    the_repository->hash_algo)) {
- 		error(_("checksum doesn't match in MIDX and bitmap"));
- 		goto cleanup;
- 	}
-diff --git a/pack-check.c b/pack-check.c
-index 25104d5b14..e7b214fcbd 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -78,10 +78,11 @@ static int verify_packfile(struct repository *r,
- 	} while (offset < pack_sig_ofs);
- 	r->hash_algo->final_fn(hash, &ctx);
- 	pack_sig =3D use_pack(p, w_curs, pack_sig_ofs, NULL);
--	if (!hasheq(hash, pack_sig))
-+	if (!hasheq(hash, pack_sig, the_repository->hash_algo))
- 		err =3D error("%s pack checksum mismatch",
- 			    p->pack_name);
--	if (!hasheq(index_base + index_size - r->hash_algo->hexsz, pack_sig))
-+	if (!hasheq(index_base + index_size - r->hash_algo->hexsz, pack_sig,
-+		    the_repository->hash_algo))
- 		err =3D error("%s pack checksum does not match its index",
- 			    p->pack_name);
- 	unuse_pack(w_curs);
-diff --git a/pack-write.c b/pack-write.c
-index 80ecfa544c..eef625fa5b 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -428,7 +428,8 @@ void fixup_pack_header_footer(int pack_fd,
- 		if (partial_pack_offset =3D=3D 0) {
- 			unsigned char hash[GIT_MAX_RAWSZ];
- 			the_hash_algo->final_fn(hash, &old_hash_ctx);
--			if (!hasheq(hash, partial_pack_hash))
-+			if (!hasheq(hash, partial_pack_hash,
-+				    the_repository->hash_algo))
- 				die("Unexpected checksum for %s "
- 				    "(disk corruption?)", pack_name);
- 			/*
+ 	/*
+ 	 * If we don't care about type or size, then we don't
+@@ -1580,7 +1580,7 @@ static int do_oid_object_info_extended(struct reposit=
+ory *r,
+ 		if (oi->disk_sizep)
+ 			*(oi->disk_sizep) =3D 0;
+ 		if (oi->delta_base_oid)
+-			oidclr(oi->delta_base_oid);
++			oidclr(oi->delta_base_oid, the_repository->hash_algo);
+ 		if (oi->type_name)
+ 			strbuf_addstr(oi->type_name, type_name(co->type));
+ 		if (oi->contentp)
 diff --git a/packfile.c b/packfile.c
-index d4df7fdeea..9156e9122c 100644
+index 9156e9122c..ec7312cd20 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -242,7 +242,7 @@ struct packed_git *parse_pack_index(unsigned char *sha1=
-, const char *idx_path)
- 	struct packed_git *p =3D alloc_packed_git(alloc);
-=20
- 	memcpy(p->pack_name, path, alloc); /* includes NUL */
--	hashcpy(p->hash, sha1);
-+	hashcpy(p->hash, sha1, the_repository->hash_algo);
- 	if (check_packed_git_idx(idx_path, p)) {
- 		free(p);
- 		return NULL;
-@@ -596,7 +596,7 @@ static int open_packed_git_1(struct packed_git *p)
- 	if (read_result !=3D hashsz)
- 		return error("packfile %s signature is unavailable", p->pack_name);
- 	idx_hash =3D ((unsigned char *)p->index_data) + p->index_size - hashsz * =
-2;
--	if (!hasheq(hash, idx_hash))
-+	if (!hasheq(hash, idx_hash, the_repository->hash_algo))
- 		return error("packfile %s does not match index", p->pack_name);
- 	return 0;
- }
-@@ -751,7 +751,7 @@ struct packed_git *add_packed_git(const char *path, siz=
-e_t path_len, int local)
- 	p->mtime =3D st.st_mtime;
- 	if (path_len < the_hash_algo->hexsz ||
- 	    get_hash_hex(path + path_len - the_hash_algo->hexsz, p->hash))
--		hashclr(p->hash);
-+		hashclr(p->hash, the_repository->hash_algo);
- 	return p;
- }
-=20
-@@ -1971,7 +1971,7 @@ off_t find_pack_entry_one(const unsigned char *sha1,
- 			return 0;
+@@ -1251,7 +1251,7 @@ static int get_delta_base_oid(struct packed_git *p,
+ {
+ 	if (type =3D=3D OBJ_REF_DELTA) {
+ 		unsigned char *base =3D use_pack(p, w_curs, curpos, NULL);
+-		oidread(oid, base);
++		oidread(oid, base, the_repository->hash_algo);
+ 		return 0;
+ 	} else if (type =3D=3D OBJ_OFS_DELTA) {
+ 		uint32_t base_pos;
+@@ -1593,7 +1593,7 @@ int packed_object_info(struct repository *r, struct p=
+acked_git *p,
+ 				goto out;
+ 			}
+ 		} else
+-			oidclr(oi->delta_base_oid);
++			oidclr(oi->delta_base_oid, the_repository->hash_algo);
  	}
 =20
--	hashcpy(oid.hash, sha1);
-+	hashcpy(oid.hash, sha1, the_repository->hash_algo);
- 	if (bsearch_pack(&oid, p, &result))
- 		return nth_packed_object_offset(p, result);
+ 	oi->whence =3D in_delta_base_cache(p, obj_offset) ? OI_DBCACHED :
+@@ -1917,10 +1917,12 @@ int nth_packed_object_id(struct object_id *oid,
+ 		return -1;
+ 	index +=3D 4 * 256;
+ 	if (p->index_version =3D=3D 1) {
+-		oidread(oid, index + st_add(st_mult(hashsz + 4, n), 4));
++		oidread(oid, index + st_add(st_mult(hashsz + 4, n), 4),
++			the_repository->hash_algo);
+ 	} else {
+ 		index +=3D 8;
+-		oidread(oid, index + st_mult(hashsz, n));
++		oidread(oid, index + st_mult(hashsz, n),
++			the_repository->hash_algo);
+ 	}
  	return 0;
+ }
 diff --git a/read-cache.c b/read-cache.c
-index 10e002ce6d..2642ac9558 100644
+index 2642ac9558..836f1db721 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -1735,7 +1735,7 @@ static int verify_hdr(const struct cache_header *hdr,=
+@@ -1728,7 +1728,7 @@ static int verify_hdr(const struct cache_header *hdr,=
  unsigned long size)
- 	the_hash_algo->init_fn(&c);
- 	the_hash_algo->update_fn(&c, hdr, size - the_hash_algo->rawsz);
- 	the_hash_algo->final_fn(hash, &c);
--	if (!hasheq(hash, start))
-+	if (!hasheq(hash, start, the_repository->hash_algo))
- 		return error(_("bad index file sha1 signature"));
- 	return 0;
- }
-@@ -2641,7 +2641,7 @@ static void copy_cache_entry_to_ondisk(struct ondisk_=
-cache_entry *ondisk,
- 	ondisk->uid  =3D htonl(ce->ce_stat_data.sd_uid);
- 	ondisk->gid  =3D htonl(ce->ce_stat_data.sd_gid);
- 	ondisk->size =3D htonl(ce->ce_stat_data.sd_size);
--	hashcpy(ondisk->data, ce->oid.hash);
-+	hashcpy(ondisk->data, ce->oid.hash, the_repository->hash_algo);
 =20
- 	flags =3D ce->ce_flags & ~CE_NAMEMASK;
- 	flags |=3D (ce_namelen(ce) >=3D CE_NAMEMASK ? CE_NAMEMASK : ce_namelen(ce=
-));
-@@ -2730,7 +2730,7 @@ static int verify_index_from(const struct index_state=
- *istate, const char *path)
- 	if (n !=3D the_hash_algo->rawsz)
- 		goto out;
-=20
--	if (!hasheq(istate->oid.hash, hash))
-+	if (!hasheq(istate->oid.hash, hash, the_repository->hash_algo))
- 		goto out;
-=20
- 	close(fd);
-@@ -3603,7 +3603,7 @@ static size_t read_eoie_extension(const char *mmap, s=
-ize_t mmap_size)
- 		src_offset +=3D extsize;
- 	}
- 	the_hash_algo->final_fn(hash, &c);
--	if (!hasheq(hash, (const unsigned char *)index))
-+	if (!hasheq(hash, (const unsigned char *)index, the_repository->hash_algo=
-))
+ 	end =3D (unsigned char *)hdr + size;
+ 	start =3D end - the_hash_algo->rawsz;
+-	oidread(&oid, start);
++	oidread(&oid, start, the_repository->hash_algo);
+ 	if (oideq(&oid, null_oid()))
  		return 0;
 =20
- 	/* Validate that the extension offsets returned us back to the eoie exten=
-sion. */
+@@ -1876,7 +1876,8 @@ static struct cache_entry *create_from_disk(struct me=
+m_pool *ce_mem_pool,
+ 	ce->ce_flags =3D flags & ~CE_NAMEMASK;
+ 	ce->ce_namelen =3D len;
+ 	ce->index =3D 0;
+-	oidread(&ce->oid, (const unsigned char *)ondisk + offsetof(struct ondisk_=
+cache_entry, data));
++	oidread(&ce->oid, (const unsigned char *)ondisk + offsetof(struct ondisk_=
+cache_entry, data),
++		the_repository->hash_algo);
+=20
+ 	if (expand_name_field) {
+ 		if (copy_len)
+@@ -2249,7 +2250,8 @@ int do_read_index(struct index_state *istate, const c=
+har *path, int must_exist)
+ 	if (verify_hdr(hdr, mmap_size) < 0)
+ 		goto unmap;
+=20
+-	oidread(&istate->oid, (const unsigned char *)hdr + mmap_size - the_hash_a=
+lgo->rawsz);
++	oidread(&istate->oid, (const unsigned char *)hdr + mmap_size - the_hash_a=
+lgo->rawsz,
++		the_repository->hash_algo);
+ 	istate->version =3D ntohl(hdr->hdr_version);
+ 	istate->cache_nr =3D ntohl(hdr->hdr_entries);
+ 	istate->cache_alloc =3D alloc_nr(istate->cache_nr);
+diff --git a/refs.c b/refs.c
+index 1304d3dd87..6e7caefdcf 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1822,7 +1822,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store =
+*refs,
+ 			    failure_errno !=3D ENOTDIR)
+ 				return NULL;
+=20
+-			oidclr(oid);
++			oidclr(oid, the_repository->hash_algo);
+ 			if (*flags & REF_BAD_NAME)
+ 				*flags |=3D REF_ISBROKEN;
+ 			return refname;
+@@ -1832,7 +1832,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store =
+*refs,
+=20
+ 		if (!(read_flags & REF_ISSYMREF)) {
+ 			if (*flags & REF_BAD_NAME) {
+-				oidclr(oid);
++				oidclr(oid, the_repository->hash_algo);
+ 				*flags |=3D REF_ISBROKEN;
+ 			}
+ 			return refname;
+@@ -1840,7 +1840,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store =
+*refs,
+=20
+ 		refname =3D sb_refname.buf;
+ 		if (resolve_flags & RESOLVE_REF_NO_RECURSE) {
+-			oidclr(oid);
++			oidclr(oid, the_repository->hash_algo);
+ 			return refname;
+ 		}
+ 		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 4519b46171..b484b5880d 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -246,7 +246,7 @@ static void loose_fill_ref_dir_regular_file(struct file=
+s_ref_store *refs,
+=20
+ 	if (!refs_resolve_ref_unsafe(&refs->base, refname, RESOLVE_REF_READING,
+ 				     &oid, &flag)) {
+-		oidclr(&oid);
++		oidclr(&oid, the_repository->hash_algo);
+ 		flag |=3D REF_ISBROKEN;
+ 	} else if (is_null_oid(&oid)) {
+ 		/*
+@@ -263,7 +263,7 @@ static void loose_fill_ref_dir_regular_file(struct file=
+s_ref_store *refs,
+ 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+ 		if (!refname_is_safe(refname))
+ 			die("loose refname is dangerous: %s", refname);
+-		oidclr(&oid);
++		oidclr(&oid, the_repository->hash_algo);
+ 		flag |=3D REF_BAD_NAME | REF_ISBROKEN;
+ 	}
+ 	add_entry_to_dir(dir, create_ref_entry(refname, &oid, flag));
+@@ -1150,7 +1150,7 @@ static struct ref_lock *lock_ref_oid_basic(struct fil=
+es_ref_store *refs,
+=20
+ 	if (!refs_resolve_ref_unsafe(&refs->base, lock->ref_name, 0,
+ 				     &lock->old_oid, NULL))
+-		oidclr(&lock->old_oid);
++		oidclr(&lock->old_oid, the_repository->hash_algo);
+ 	goto out;
+=20
+  error_return:
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index c4c1e36aa2..5ab1b21d10 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -894,7 +894,7 @@ static int next_record(struct packed_ref_iterator *iter)
+ 		if (!refname_is_safe(iter->base.refname))
+ 			die("packed refname is dangerous: %s",
+ 			    iter->base.refname);
+-		oidclr(&iter->oid);
++		oidclr(&iter->oid, the_repository->hash_algo);
+ 		iter->base.flags |=3D REF_BAD_NAME | REF_ISBROKEN;
+ 	}
+ 	if (iter->snapshot->peeled =3D=3D PEELED_FULLY ||
+@@ -919,13 +919,13 @@ static int next_record(struct packed_ref_iterator *it=
+er)
+ 		 * we suppress it if the reference is broken:
+ 		 */
+ 		if ((iter->base.flags & REF_ISBROKEN)) {
+-			oidclr(&iter->peeled);
++			oidclr(&iter->peeled, the_repository->hash_algo);
+ 			iter->base.flags &=3D ~REF_KNOWS_PEELED;
+ 		} else {
+ 			iter->base.flags |=3D REF_KNOWS_PEELED;
+ 		}
+ 	} else {
+-		oidclr(&iter->peeled);
++		oidclr(&iter->peeled, the_repository->hash_algo);
+ 	}
+=20
+ 	return ITER_OK;
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 9886fc67a4..57df2aba66 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -217,7 +217,8 @@ static int read_ref_without_reload(struct reftable_stac=
+k *stack,
+ 		strbuf_addstr(referent, ref.value.symref);
+ 		*type |=3D REF_ISSYMREF;
+ 	} else if (reftable_ref_record_val1(&ref)) {
+-		oidread(oid, reftable_ref_record_val1(&ref));
++		oidread(oid, reftable_ref_record_val1(&ref),
++			the_repository->hash_algo);
+ 	} else {
+ 		/* We got a tombstone, which should not happen. */
+ 		BUG("unhandled reference value type %d", ref.value_type);
+@@ -483,15 +484,17 @@ static int reftable_ref_iterator_advance(struct ref_i=
+terator *ref_iterator)
+=20
+ 		switch (iter->ref.value_type) {
+ 		case REFTABLE_REF_VAL1:
+-			oidread(&iter->oid, iter->ref.value.val1);
++			oidread(&iter->oid, iter->ref.value.val1,
++				the_repository->hash_algo);
+ 			break;
+ 		case REFTABLE_REF_VAL2:
+-			oidread(&iter->oid, iter->ref.value.val2.value);
++			oidread(&iter->oid, iter->ref.value.val2.value,
++				the_repository->hash_algo);
+ 			break;
+ 		case REFTABLE_REF_SYMREF:
+ 			if (!refs_resolve_ref_unsafe(&iter->refs->base, iter->ref.refname,
+ 						     RESOLVE_REF_READING, &iter->oid, &flags))
+-				oidclr(&iter->oid);
++				oidclr(&iter->oid, the_repository->hash_algo);
+ 			break;
+ 		default:
+ 			BUG("unhandled reference value type %d", iter->ref.value_type);
+@@ -503,7 +506,7 @@ static int reftable_ref_iterator_advance(struct ref_ite=
+rator *ref_iterator)
+ 		if (check_refname_format(iter->ref.refname, REFNAME_ALLOW_ONELEVEL)) {
+ 			if (!refname_is_safe(iter->ref.refname))
+ 				die(_("refname is dangerous: %s"), iter->ref.refname);
+-			oidclr(&iter->oid);
++			oidclr(&iter->oid, the_repository->hash_algo);
+ 			flags |=3D REF_BAD_NAME | REF_ISBROKEN;
+ 		}
+=20
+@@ -545,7 +548,8 @@ static int reftable_ref_iterator_peel(struct ref_iterat=
+or *ref_iterator,
+ 		(struct reftable_ref_iterator *)ref_iterator;
+=20
+ 	if (iter->ref.value_type =3D=3D REFTABLE_REF_VAL2) {
+-		oidread(peeled, iter->ref.value.val2.target_value);
++		oidread(peeled, iter->ref.value.val2.target_value,
++			the_repository->hash_algo);
+ 		return 0;
+ 	}
+=20
+@@ -1776,8 +1780,8 @@ static int yield_log_record(struct reftable_log_recor=
+d *log,
+ 	struct object_id old_oid, new_oid;
+ 	const char *full_committer;
+=20
+-	oidread(&old_oid, log->value.update.old_hash);
+-	oidread(&new_oid, log->value.update.new_hash);
++	oidread(&old_oid, log->value.update.old_hash, the_repository->hash_algo);
++	oidread(&new_oid, log->value.update.new_hash, the_repository->hash_algo);
+=20
+ 	/*
+ 	 * When both the old object ID and the new object ID are null
+@@ -2178,7 +2182,8 @@ static int reftable_be_reflog_expire(struct ref_store=
+ *ref_store,
+ 	if (ret < 0)
+ 		goto done;
+ 	if (reftable_ref_record_val1(&ref_record))
+-		oidread(&oid, reftable_ref_record_val1(&ref_record));
++		oidread(&oid, reftable_ref_record_val1(&ref_record),
++			the_repository->hash_algo);
+ 	prepare_fn(refname, &oid, policy_cb_data);
+=20
+ 	while (1) {
+@@ -2193,8 +2198,10 @@ static int reftable_be_reflog_expire(struct ref_stor=
+e *ref_store,
+ 			break;
+ 		}
+=20
+-		oidread(&old_oid, log.value.update.old_hash);
+-		oidread(&new_oid, log.value.update.new_hash);
++		oidread(&old_oid, log.value.update.old_hash,
++			the_repository->hash_algo);
++		oidread(&new_oid, log.value.update.new_hash,
++			the_repository->hash_algo);
+=20
+ 		/*
+ 		 * Skip over the reflog existence marker. We will add it back
+@@ -2225,8 +2232,10 @@ static int reftable_be_reflog_expire(struct ref_stor=
+e *ref_store,
+ 		struct object_id old_oid, new_oid;
+=20
+ 		*dest =3D logs[i];
+-		oidread(&old_oid, logs[i].value.update.old_hash);
+-		oidread(&new_oid, logs[i].value.update.new_hash);
++		oidread(&old_oid, logs[i].value.update.old_hash,
++			the_repository->hash_algo);
++		oidread(&new_oid, logs[i].value.update.new_hash,
++			the_repository->hash_algo);
+=20
+ 		if (should_prune_fn(&old_oid, &new_oid, logs[i].value.update.email,
+ 				    (timestamp_t)logs[i].value.update.time,
+@@ -2243,7 +2252,7 @@ static int reftable_be_reflog_expire(struct ref_store=
+ *ref_store,
+=20
+ 	if (flags & EXPIRE_REFLOGS_UPDATE_REF && last_hash &&
+ 	    reftable_ref_record_val1(&ref_record))
+-		oidread(&arg.update_oid, last_hash);
++		oidread(&arg.update_oid, last_hash, the_repository->hash_algo);
+=20
+ 	arg.refs =3D refs;
+ 	arg.records =3D rewritten;
+diff --git a/remote.c b/remote.c
+index dcb5492c85..1064171085 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1164,7 +1164,7 @@ static void tail_link_ref(struct ref *ref, struct ref=
+ ***tail)
+ static struct ref *alloc_delete_ref(void)
+ {
+ 	struct ref *ref =3D alloc_ref("(delete)");
+-	oidclr(&ref->new_oid);
++	oidclr(&ref->new_oid, the_repository->hash_algo);
+ 	return ref;
+ }
+=20
+@@ -2531,7 +2531,7 @@ static int parse_push_cas_option(struct push_cas_opti=
+on *cas, const char *arg, i
+ 	if (!*colon)
+ 		entry->use_tracking =3D 1;
+ 	else if (!colon[1])
+-		oidclr(&entry->expect);
++		oidclr(&entry->expect, the_repository->hash_algo);
+ 	else if (repo_get_oid(the_repository, colon + 1, &entry->expect))
+ 		return error(_("cannot parse expected object name '%s'"),
+ 			     colon + 1);
+@@ -2733,7 +2733,7 @@ static void apply_cas(struct push_cas_option *cas,
+ 		else if (remote_tracking(remote, ref->name,
+ 					 &ref->old_oid_expect,
+ 					 &ref->tracking_ref))
+-			oidclr(&ref->old_oid_expect);
++			oidclr(&ref->old_oid_expect, the_repository->hash_algo);
+ 		else
+ 			ref->check_reachable =3D cas->use_force_if_includes;
+ 		return;
+@@ -2747,7 +2747,7 @@ static void apply_cas(struct push_cas_option *cas,
+ 	if (remote_tracking(remote, ref->name,
+ 			    &ref->old_oid_expect,
+ 			    &ref->tracking_ref))
+-		oidclr(&ref->old_oid_expect);
++		oidclr(&ref->old_oid_expect, the_repository->hash_algo);
+ 	else
+ 		ref->check_reachable =3D cas->use_force_if_includes;
+ }
+diff --git a/resolve-undo.c b/resolve-undo.c
+index cd02dc9928..4e6f0e4676 100644
+--- a/resolve-undo.c
++++ b/resolve-undo.c
+@@ -93,7 +93,8 @@ struct string_list *resolve_undo_read(const char *data, u=
+nsigned long size)
+ 				continue;
+ 			if (size < rawsz)
+ 				goto error;
+-			oidread(&ui->oid[i], (const unsigned char *)data);
++			oidread(&ui->oid[i], (const unsigned char *)data,
++				the_repository->hash_algo);
+ 			size -=3D rawsz;
+ 			data +=3D rawsz;
+ 		}
+diff --git a/sequencer.c b/sequencer.c
+index 30513e87bf..68d62a12ff 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3334,12 +3334,12 @@ static int rollback_is_safe(void)
+ 		strbuf_release(&sb);
+ 	}
+ 	else if (errno =3D=3D ENOENT)
+-		oidclr(&expected_head);
++		oidclr(&expected_head, the_repository->hash_algo);
+ 	else
+ 		die_errno(_("could not read '%s'"), git_path_abort_safety_file());
+=20
+ 	if (repo_get_oid(the_repository, "HEAD", &actual_head))
+-		oidclr(&actual_head);
++		oidclr(&actual_head, the_repository->hash_algo);
+=20
+ 	return oideq(&actual_head, &expected_head);
+ }
+diff --git a/split-index.c b/split-index.c
+index 8c38687c04..058a8f448e 100644
+--- a/split-index.c
++++ b/split-index.c
+@@ -29,7 +29,7 @@ int read_link_extension(struct index_state *istate,
+ 	if (sz < the_hash_algo->rawsz)
+ 		return error("corrupt link extension (too short)");
+ 	si =3D init_split_index(istate);
+-	oidread(&si->base_oid, data);
++	oidread(&si->base_oid, data, the_repository->hash_algo);
+ 	data +=3D the_hash_algo->rawsz;
+ 	sz -=3D the_hash_algo->rawsz;
+ 	if (!sz)
+diff --git a/submodule-config.c b/submodule-config.c
+index ec45ea67b9..ad43a282da 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -682,7 +682,7 @@ static int gitmodule_oid_from_commit(const struct objec=
+t_id *treeish_name,
+ 	int ret =3D 0;
+=20
+ 	if (is_null_oid(treeish_name)) {
+-		oidclr(gitmodules_oid);
++		oidclr(gitmodules_oid, the_repository->hash_algo);
+ 		return 1;
+ 	}
+=20
+diff --git a/t/helper/test-submodule-config.c b/t/helper/test-submodule-con=
+fig.c
+index 9df2f03ac8..4b809d9dca 100644
+--- a/t/helper/test-submodule-config.c
++++ b/t/helper/test-submodule-config.c
+@@ -44,7 +44,7 @@ int cmd__submodule_config(int argc, const char **argv)
+ 		path_or_name =3D arg[1];
+=20
+ 		if (commit[0] =3D=3D '\0')
+-			oidclr(&commit_oid);
++			oidclr(&commit_oid, the_repository->hash_algo);
+ 		else if (repo_get_oid(the_repository, commit, &commit_oid) < 0)
+ 			die_usage(argc, argv, "Commit not found.");
+=20
+diff --git a/tree-walk.c b/tree-walk.c
+index 6565d9ad99..535a3a2539 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -38,8 +38,8 @@ static int decode_tree_entry(struct tree_desc *desc, cons=
+t char *buf, unsigned l
+ 	desc->entry.path =3D path;
+ 	desc->entry.mode =3D (desc->flags & TREE_DESC_RAW_MODES) ? mode : canon_m=
+ode(mode);
+ 	desc->entry.pathlen =3D len - 1;
+-	oidread_algop(&desc->entry.oid, (const unsigned char *)path + len,
+-		      desc->algo);
++	oidread(&desc->entry.oid, (const unsigned char *)path + len,
++		desc->algo);
+=20
+ 	return 0;
+ }
 --=20
 2.45.2.457.g8d94cfb545.dirty
 
 
---1HvrUllo5guHgkgg
+--boaSvyN/wSKDN+h8
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZr6A0ACgkQVbJhu7ck
-PpTa1A/+MN1ZqaoDUktvCRg3bwXRoYez76dFYtzaR02B1jgOvLq0Zkr479ikJiiu
-JWMqih5mSCHGz09WPsJSl/LnZ57D9fUMs4QU/eU8BqM9Oh/9Sl4BIPHCVuTCUP3r
-1QiGxYujb8UYLBJrOuMU6SLo5+6orCHcyFsI8H6HEOV/fm1Zebn1dKtRHJGrYdWw
-VmJGyOm68JdFU+BQ+vcQ6D6X2zkPSRZB5m7N/S8fywVNTpFQf5iVWjKIoMP59/JM
-9s6mXIsHgMtJsHPGkM+PMB+PFiIQ4BbGQdAY1d4adNcXuWD0oUwKW3u0yczQjwPQ
-kfFyU9/4fIvfAzBeSw5eXZXS7qv9EHetdIyEbLkupCsRMpLy4HQE0L0mNiSk/OdK
-dtaEpR+DWv/rezcEJm9jObFnzkAfJKP2zbM0KOYBuHFfxux5aXgFtEjr2Qh3Nt7n
-Ofc4mEJF/oK6LXXY0LCSUZ+iIkn/RBvZ5im4unZJQLhjWvcYhThi2VM5EVm9FApf
-TKIcBk4Yj7YiJIwkOVXv7mBhmNgkf3o9pWbZnnDhulvlkqi6eFO9kpLfMTvcTHrS
-VwUjLLqGAsXOXDLjMt6TOSIRTwwCO02TFqviJqE192DbYwGrVBPla8Edf8yoH1x0
-YBCoZIR6yitdNu5F2c7hKU/NPpbhdAvo3NyNuiZ3j/Iuu3x4zxQ=
-=KOos
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZr6BEACgkQVbJhu7ck
+PpSJ7Q//f4yZF7efIzN4TYu7FBG9li+F6ERNlehcbN6vKfh7GQNoLFUiERjqJUF5
+nYtUD/TZoM6vLJiGCoY/b44gCX5lC979C6t5Oc9A+R2KOMv2+VOu0FLmi1JD1tfT
+GyiZ2E6aPuKMD5jKxOBgHl2b7GvigtxyZq9aJGJzfmH7yGbfVS4rGx/vPEBeckq/
+YL6LuYRAwMxe6pl9QzBoJeh9bPjOHC/dt44loU30pIuojqds/q3FYYVRiLPwMzXE
+pXhrbto2E7hfb8RW3IZyzEHdBW+8sDxG1ER4NWfeC9eUCyUJ6SyPksD9ur7x8HS4
+ehR4h4+33VMZfTJb6SDn8dW6qv6P9cuR7xUOJulYcTTSiljlLJrKZLd0Ktupnlqh
+TjGlxNWel9q9C/XS8gmn0wJVMiFOUZAUNIxsajHN787l0A3LGsidqycQlGQSSlSy
+0KRT0lSrf5jz02eyjlKtPsR6FlkXaLzdbxzI3XwXoNOnrOsjOfoaBfSjKvaP8XCZ
+9COwlTb6vqOOdi8MoJHcA+of4tIT4vL1hhbTK9mqHvzARnSaXEg1jqk2oHC8jNzA
+S2bx99Wiii8gdDSkoF8jMpZWGNWON1fYYNbyzlN5KMl7HNMRoEdksJZi5h9bj9mX
+7p/r+LPCg+iAV9F4aIAtRFi7mZyEOvGkghRURcT7jl+W1HSKAZo=
+=zEjD
 -----END PGP SIGNATURE-----
 
---1HvrUllo5guHgkgg--
+--boaSvyN/wSKDN+h8--
