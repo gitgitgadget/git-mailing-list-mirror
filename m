@@ -1,106 +1,85 @@
-Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA84181CFC
-	for <git@vger.kernel.org>; Fri, 14 Jun 2024 21:42:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E72E186E20
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 22:48:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718401350; cv=none; b=K8ihv4GZ5EUTzh7QsKIs4U5shoVZUkV9/BvN8IJ/5NI2TgQSI60a5DLqA5hOWUG7fNEjTrvraDzbVva1l8ziB7GKY/U35jX4LK07EyJu0avAg2d5zHnamgBixRxdrOac5mPbaXfAgBVMlobOWHZdSLG42mCincn20xlG4XOZk9M=
+	t=1718405290; cv=none; b=GpWk/YzttMQA5xPNB95oHwdG+O2UsGlA1Jb8Ag13HOW1rag5O/ZS7wXOIIWB3+inDCrdAQu2M32jJb65HjWJ0SjgGemqK/hjFAYv4lwV0Cz5wDwQfGNFIOt8GAcl08xlNAtA4ydo9euvYWmkHj8Qa2EjsLFVA9znIhNL5x1rfTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718401350; c=relaxed/simple;
-	bh=RrBK1ubBCaJ68yQwjWp2B6yCWSoXPNguI14BpI+1VVg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F5NWd0UofQT8AAoZPQaJsz3In7QKJQsuXhBaISlDcpskvYIRLs16eYDHzF1mgr0j5o9RPeZq1lDq1z7PTi5Yz8wc66+4pQuoz4t9fNwQqBjD1xQ6wVFRsf7GXKsapJMJSv5QWRGM+ytzkk/onIDxl1l3JYbZ2mgj8/DLN2xEmNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aSpRV6mP; arc=none smtp.client-ip=209.85.166.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718405290; c=relaxed/simple;
+	bh=ttxzN3K2TdlIBEXo9EDx+H2LGjimLuP08/E4zOnVXVk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=s1B4P5VVLQoZfsqPh8p3lAYXJ6rYHjJ8eOSVQxKdnqU1r0wWcVmOe3R02NpDE2y1IkJQIrv2CJH48RP5hbTZB/ME9i2eJTkG1HAW8Zn4N4uzoq9pzPbyEdz4Z73PnGXB1ZRTPEmwB/wbwrINaAO7xGF9gx0ajjvYkBi4ntnlIYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KD+Aqsn7; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aSpRV6mP"
-Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-7ea0b5e0977so121976139f.2
-        for <git@vger.kernel.org>; Fri, 14 Jun 2024 14:42:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718401348; x=1719006148; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z8X3vVnandVHqqE5BZ68IG4f4/wjJNKCzTKQ40ufsdg=;
-        b=aSpRV6mP45A32WngkSPV8jekZ0656w0+zlNKAs+CWMlUHz4hzhbVMF5zU9yavHIhmA
-         Ej5tWmuZGDoAsZSQyTPBlNOVJ+/MNUe9J18W4Ss1BPj/GKoNz50vlfNX0bfVyfkI09S/
-         6nwXgJMHUP+yF7FdiQeawX9/Har/gbqLAvY1vPv//G0dORt52Zkb8uNYUHDdoSO8OP3x
-         IJSbTB+T6NEXZc2gsXncK5XlNxNCgo0eBancy+upI+5LyZSev+DElIAeyWJY23sYEV54
-         eEL+56QfgCb1NTKtSv892+BrGpVosRvBSspZZGYLl4PM2Mv2+FxvpG2+vROUEJcCO2pq
-         4tFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718401348; x=1719006148;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z8X3vVnandVHqqE5BZ68IG4f4/wjJNKCzTKQ40ufsdg=;
-        b=DeSTADgX7yNt6cnLH5CWTK2Xkigep/sOVfxT1npE9byYdm4VkCPfj32ll8oGRHois5
-         pTlnlf639hyOvFoyfUyophzbXlfNn97XSL+NpURdeN5dFMmyr+YKOIXkSTwFjshAoObU
-         ePW6tlcBFRyzaexV9KdNE8Y1kV7fra5APe+QWN3bQf076NbAvl7WtPJqIol+2UkGIqjO
-         njlPehyEWnv3L4A+tborexrkABUTCQSuFTMzxmv6bYiCM+tBmqpDMa1F1zWLmM/zCOrw
-         /FiYI2FFHCo1x3OELChomHhQYJq4KY9AKt/oc2YuPkYcDYi870MHKn4a2p0zi9KAupU3
-         wlbg==
-X-Gm-Message-State: AOJu0YyMy6K3/CcmbRCDlVS7vs+WqT06wAZP1GfVbPnFS5Nyty7AiWQf
-	queNdA+/qXmumbufR/amrQGQ8OcYHg6SepKQJ55YXocLWAQscFn3Mql+g+Dt+Oo6nFk8oelgA0e
-	zZizREcohTLmbDJtvL66BMidhFMZFfQ==
-X-Google-Smtp-Source: AGHT+IFOe0pkVx9GX5TRs0Xs1VSjaKDnHYFDZrobAPcKHUqbKQ+renwfEMRZ0hv37+TiA1atogiJiwUXWAg30hlC6iE=
-X-Received: by 2002:a05:6602:608c:b0:7eb:76fa:1209 with SMTP id
- ca18e2360f4ac-7ebeb4b8746mr360299239f.5.1718401348420; Fri, 14 Jun 2024
- 14:42:28 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KD+Aqsn7"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9507734F77;
+	Fri, 14 Jun 2024 18:46:33 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=ttxzN3K2TdlIBEXo9EDx+H2LGjimLuP08/E4zO
+	nVXVk=; b=KD+Aqsn7eiY2U9bjYWQAHK1E9MrRwUSAmJ0Nhf7ymHr6yh8dzektns
+	LZd02TWnN1BCkWC0n8314DSwIR3udoyipxd6EoPT71w8Be7tulMS/uOCDIFsXgUG
+	nAVvw/H0iwgL8ekIckBk7QDKqODU+Aup88yvxf0scqtJez6nyOBHU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AD8B34F76;
+	Fri, 14 Jun 2024 18:46:33 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F01F334F75;
+	Fri, 14 Jun 2024 18:46:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] show-ref: introduce --branches and deprecate
+ --heads
+In-Reply-To: <CABPp-BEZhR8T56bwxpi+_uGG8w7nms+7HtCR45S4oVjPom9Stg@mail.gmail.com>
+	(Elijah Newren's message of "Fri, 14 Jun 2024 21:42:17 +0000")
+References: <20240603200539.1473345-1-gitster@pobox.com>
+	<20240604220145.3260714-1-gitster@pobox.com>
+	<20240604220145.3260714-4-gitster@pobox.com>
+	<CABPp-BH3ZozGnDueK=J4QvZMYZkS13Gk+0rhe+Dywqbx1F30DA@mail.gmail.com>
+	<xmqq7cerdxv4.fsf@gitster.g>
+	<CABPp-BEM4fqU9s7_dxgi_twe_T169mGjZN9-CJRLU5cjnUi8WQ@mail.gmail.com>
+	<CABPp-BEZhR8T56bwxpi+_uGG8w7nms+7HtCR45S4oVjPom9Stg@mail.gmail.com>
+Date: Fri, 14 Jun 2024 15:46:31 -0700
+Message-ID: <xmqq5xubcfco.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240603200539.1473345-1-gitster@pobox.com> <20240604220145.3260714-1-gitster@pobox.com>
- <20240604220145.3260714-4-gitster@pobox.com> <CABPp-BH3ZozGnDueK=J4QvZMYZkS13Gk+0rhe+Dywqbx1F30DA@mail.gmail.com>
- <xmqq7cerdxv4.fsf@gitster.g> <CABPp-BEM4fqU9s7_dxgi_twe_T169mGjZN9-CJRLU5cjnUi8WQ@mail.gmail.com>
-In-Reply-To: <CABPp-BEM4fqU9s7_dxgi_twe_T169mGjZN9-CJRLU5cjnUi8WQ@mail.gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 14 Jun 2024 21:42:17 +0000
-Message-ID: <CABPp-BEZhR8T56bwxpi+_uGG8w7nms+7HtCR45S4oVjPom9Stg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] show-ref: introduce --branches and deprecate --heads
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F297FEFC-2A9F-11EF-A45C-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-On Fri, Jun 14, 2024 at 9:34=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
-ote:
->
-> On Fri, Jun 14, 2024 at 9:21=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
-> >
-> > Elijah Newren <newren@gmail.com> writes:
-> >
-> > > If we are renaming --heads to --branches, should --head also be renam=
-ed?
-> >
-> > I do not think so.  It is specifically about HEAD (the thing that
-> > lives above refs/ hierarchy, historically implemented as a file
-> > whose name is "HEAD" that is directly inside $GIT_DIR).
-> >
-> > Thanks.
->
-> I'm fine if we don't want to rename it, but I don't quite follow this
-> particular rationale.  The logic you use here seems to be about
-> internal details ("it's the file named HEAD") and ignores what users
-> might refer to it as ("current branch"), whereas --branches ignored
-> the internal details ("the files under refs/heads/") and instead
-> concentrates on what users might refer to them as ("branches") and
-> used that as the rationale for renaming.
->
-> That said, I've almost never seen users use --head (and haven't used
-> it myself), whereas asking for heads/branches is much more common, and
-> I'm very happy with the change from --heads to --branches.  Also, even
-> if we do agree --head should be renamed, I'd be fine with punting it
-> to later in order to get this improvement in now...it just seemed like
-> a small inconsistency that I thought was worth pointing out.
+Elijah Newren <newren@gmail.com> writes:
 
-...or maybe my argument breaks down because `HEAD` is more prominent
-and tends to be used by users more (`git reset --hard HEAD`, `git
-checkout HEAD~1`), and thus there's an argument it already is somewhat
-aligned with user terminology?
+> ...or maybe my argument breaks down because `HEAD` is more prominent
+> and tends to be used by users more (`git reset --hard HEAD`, `git
+> checkout HEAD~1`), and thus there's an argument it already is somewhat
+> aligned with user terminology?
+
+Yeah, you are correct to say that HEAD is a lot more prominent than
+"refs/heads/".  "git branch --list" does not expose the
+"refs/heads/" part (but "git for-each-ref" does), but you'd see HEAD
+in many places (e.g. "git show -s <RETURN>" gives the --decorate
+output that says "HEAD -> master" etc.).
+
+Of course we _could_ plan to rename "HEAD" to something else, like
+"CURRENT" and deal with the fallout, and then rename "refs/heads/"
+to "refs/branches/", but for what cost to achieve what benefit?  The
+tradeoff does not look all that good to me.
+
+So I'd say renaming --heads to --branches would probably be a good
+place to stop, at least for now.
