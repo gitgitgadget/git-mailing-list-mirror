@@ -1,52 +1,51 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C2D146D45
-	for <git@vger.kernel.org>; Fri, 14 Jun 2024 17:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FECD19D07B
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 17:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718384695; cv=none; b=d6ApLjyP4iBXfsT2SJsuG5JR7JecryHmiw3R+5q5HDkD0HRftgxOnU4FDuZpoC3mUFNqbk+kq4vJUYIV5PRq19gXYTFQTsAUjVGqPFoXkRceYEzKGlvdtWsgIg7Tg5TPOYCzBd1wJ/3pM6z+zwQvvNPksfvqmPym4wJjhoHdoRw=
+	t=1718384707; cv=none; b=K40gTXa2VW9MGSYp9QfdsPYgN6oFGAFo20o9xyFlW+aLMbXUpVYM83TdPll9FFC+fLH9rVC1sBPX3+q+tP5iYj7SPSu9JvZr2B3xxTY5Qg8aYacplILubLfDcd+kWMns+fYCyF5JsLKgvaMbayKoxNRr3NkVqIkKqrUwhVztxkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718384695; c=relaxed/simple;
-	bh=jRsInCGsN6smVrrFc2pDZE/VIUrJjmwCHndzcSQrhv0=;
+	s=arc-20240116; t=1718384707; c=relaxed/simple;
+	bh=ea0GXNZlS8FpfhvGBUBdgcEmzD1/RuOcM3ynmpO91Do=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PcUy45hOjfM/vLOwoV3ivgHIzgY1YDREUGhiyeSRlq6ldDGrkaFhzJGc0GdzBRJmshP3v2DQGzRLwpkriI33QrN5pmTMHFgZYRBZ+l0poZdN2YB4vz92tCprLl1sUf7KJsr5bJaBubWZdRMbhEQKo39lP0n/tdNa5lo4/2HrKIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SCIUbrjq; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=Tu1dRIMr1YMNNZ2Sspi17OOx18I9uglPRtSFhzrYkrBHtm0uhCoLGoM8e/DPDG9n31gSkoxbdufs6542DYqW5htxJi3RVu4wokd9JnHO3lFxM7DOGTQrehaHQTqclKtYd/bsknVHB2pgqmX1sOHrXM20PC6n1xrm3JtBaC/JdZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LHKN8irl; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SCIUbrjq"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LHKN8irl"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7C807239DC;
-	Fri, 14 Jun 2024 13:04:52 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4ED7E239E2;
+	Fri, 14 Jun 2024 13:05:04 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=jRsInCGsN6smVrrFc2pDZE/VIUrJjmwCHndzcS
-	Qrhv0=; b=SCIUbrjq9Ook0x5xcHgl48bRUYO374dFCyDgOPBQinooOt0MYkGo5/
-	QGksi8ztPQCm5btwCfl2rUXntSVDRQr6nytNBPL23amWi1YOZ5kuUb/n/qUDikNu
-	WSWFICxqHZ+hBe2AYo83NNSYcKr/sinE4xudSR/GyEnPH+HSj5few=
+	:content-type; s=sasl; bh=ea0GXNZlS8FpfhvGBUBdgcEmzD1/RuOcM3ynmp
+	O91Do=; b=LHKN8irl3+vxDBxG+3abI3SHkSMfwwOVlEb7lFSlaW1ykX6VGjaVfq
+	MKk5HeuGO9Qk3ZeJpDu73/ZpHZQi6YLjGLfOZJ/4p4W1eHuW4vglkzbuZL6oMG3M
+	O82aIskJ3oD7IGGjTVylega9P+ZLCu8h7iAUUQo23LNY3+XVzsTlU=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 737B3239DB;
-	Fri, 14 Jun 2024 13:04:52 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EB552239E0;
+	Fri, 14 Jun 2024 13:05:03 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D9608239DA;
-	Fri, 14 Jun 2024 13:04:51 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 06D55239DF;
+	Fri, 14 Jun 2024 13:05:02 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
 Cc: Mathew George <mathewegeorge@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 03/11] remote: transfer ownership of memory in
- add_url(), etc
-In-Reply-To: <20240614102722.GC222445@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 14 Jun 2024 06:27:22 -0400")
+Subject: Re: [PATCH 02/11] remote: refactor alias_url() memory ownership
+In-Reply-To: <20240614102616.GB222445@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 14 Jun 2024 06:26:16 -0400")
 References: <20240614102439.GA222287@coredump.intra.peff.net>
-	<20240614102722.GC222445@coredump.intra.peff.net>
-Date: Fri, 14 Jun 2024 10:04:50 -0700
-Message-ID: <xmqq1q4zh2vh.fsf@gitster.g>
+	<20240614102616.GB222445@coredump.intra.peff.net>
+Date: Fri, 14 Jun 2024 10:05:01 -0700
+Message-ID: <xmqqtthvfoaq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,109 +55,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 36FDA22A-2A70-11EF-9B12-965B910A682E-77302942!pb-smtp2.pobox.com
+ 3DA1E7BC-2A70-11EF-B48B-965B910A682E-77302942!pb-smtp2.pobox.com
 
 Jeff King <peff@peff.net> writes:
 
-> diff --git a/remote.c b/remote.c
-> index fd9d58f820..f7c846865f 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -64,13 +64,13 @@ static char *alias_url(const char *url, struct rewrites *r)
->  static void add_url(struct remote *remote, const char *url)
->  {
->  	ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
-> -	remote->url[remote->url_nr++] = url;
-> +	remote->url[remote->url_nr++] = xstrdup(url);
->  }
->  
->  static void add_pushurl(struct remote *remote, const char *pushurl)
->  {
->  	ALLOC_GROW(remote->pushurl, remote->pushurl_nr + 1, remote->pushurl_alloc);
-> -	remote->pushurl[remote->pushurl_nr++] = pushurl;
-> +	remote->pushurl[remote->pushurl_nr++] = xstrdup(pushurl);
->  }
+> ... So instead of
+> returning the original string, return NULL, forcing callers to decide
+> what to do with it explicitly. We can then build further cleanups on top
+> of that.
 
-OK.  This makes it easier to reason about why these elements are
-freed in remote_clear().
+OK.
 
+> @@ -76,15 +76,16 @@ static void add_pushurl(struct remote *remote, const char *pushurl)
 >  static void add_pushurl_alias(struct remote_state *remote_state,
-> @@ -79,6 +79,7 @@ static void add_pushurl_alias(struct remote_state *remote_state,
->  	char *alias = alias_url(url, &remote_state->rewrites_push);
->  	if (alias)
->  		add_pushurl(remote, alias);
-> +	free(alias);
->  }
+>  			      struct remote *remote, const char *url)
+>  {
+> -	const char *pushurl = alias_url(url, &remote_state->rewrites_push);
+> -	if (pushurl != url)
+> -		add_pushurl(remote, pushurl);
+> +	char *alias = alias_url(url, &remote_state->rewrites_push);
+> +	if (alias)
+> +		add_pushurl(remote, alias);
 
-OK.  I wondered if we want to strdup(url) in my review on the
-previous step, but now we are making the add_url() responsible
-for making a copy, we instead do the opposite, i.e. free alias
-that was allocated for us because we no longer need it.
+OK, that's an obviously equivalent rewrite.
 
 >  static void add_url_alias(struct remote_state *remote_state,
-> @@ -87,6 +88,7 @@ static void add_url_alias(struct remote_state *remote_state,
->  	char *alias = alias_url(url, &remote_state->rewrites);
->  	add_url(remote, alias ? alias : url);
+>  			  struct remote *remote, const char *url)
+>  {
+> -	add_url(remote, alias_url(url, &remote_state->rewrites));
+> +	char *alias = alias_url(url, &remote_state->rewrites);
+> +	add_url(remote, alias ? alias : url);
 >  	add_pushurl_alias(remote_state, remote, url);
-> +	free(alias);
 >  }
 
-Likewise.
+This is also an obviously equivalent rewrite.
 
-> @@ -336,7 +338,7 @@ static void read_branches_file(struct remote_state *remote_state,
->  	else
->  		frag = to_free = repo_default_branch_name(the_repository, 0);
->  
-> -	add_url_alias(remote_state, remote, strbuf_detach(&buf, NULL));
-> +	add_url_alias(remote_state, remote, buf.buf);
+Looking at how remote_clear() deals with the .url[] and .pushurl[]
+elements, add_url() makes the remote structure take ownership, which
+is perfectly fine when we got a non-NULL alias back (i.e. it is a
+new piece of string allocated just for us).  Depending on who owns
+the incoming url parameter, we might need strdup(url) here, but
+since we haven't heard crashes due to freeing remote->url[] elements
+that should not be freed, presumably url is a piece memory the
+caller is giving us the ownership?  In any case, I imagine that
+untangling that ownership mess is left to the later steps of the
+series.
 
-It is curious that you delay ...
-
-> @@ -347,6 +349,7 @@ static void read_branches_file(struct remote_state *remote_state,
->  	refspec_appendf(&remote->push, "HEAD:refs/heads/%s", frag);
->  	remote->fetch_tags = 1; /* always auto-follow */
->  
-> +	strbuf_release(&buf);
->  	free(to_free);
->  }
-
-... strbuf_release() of the buf to the very end of the function.  
-
-In the original, buf became invalid by doing strbuf_detach(), so we
-could do strbuf_release() immediately after add_url_alias() returns
-to us if we wanted to.
-
-> @@ -431,15 +434,13 @@ static int handle_config(const char *key, const char *value,
->  	else if (!strcmp(subkey, "prunetags"))
->  		remote->prune_tags = git_config_bool(key, value);
->  	else if (!strcmp(subkey, "url")) {
-> -		char *v;
-> -		if (git_config_string(&v, key, value))
-> -			return -1;
-> -		add_url(remote, v);
-> +		if (!value)
-> +			return config_error_nonbool(key);
-> +		add_url(remote, value);
-
-OK.  config_string() does (1) check for "I exist hence I am true"
-boolean, and (2) give us a duplicate of the value.  We do not want
-the latter, so we do the former ourselves here.  The same story
-repeats for pushurl below (ellided).
-
-> @@ -495,8 +496,10 @@ static void alias_all_urls(struct remote_state *remote_state)
+> @@ -492,19 +493,22 @@ static void alias_all_urls(struct remote_state *remote_state)
+>  		if (!remote_state->remotes[i])
+>  			continue;
 >  		for (j = 0; j < remote_state->remotes[i]->pushurl_nr; j++) {
->  			char *alias = alias_url(remote_state->remotes[i]->pushurl[j],
->  						&remote_state->rewrites);
-> -			if (alias)
-> +			if (alias) {
-> +				free((char *)remote_state->remotes[i]->pushurl[j]);
->  				remote_state->remotes[i]->pushurl[j] = alias;
-> +			}
->  		}
+> -			remote_state->remotes[i]->pushurl[j] =
+> -				alias_url(remote_state->remotes[i]->pushurl[j],
+> -					  &remote_state->rewrites);
+> +			char *alias = alias_url(remote_state->remotes[i]->pushurl[j],
+> +						&remote_state->rewrites);
+> +			if (alias)
+> +				remote_state->remotes[i]->pushurl[j] = alias;
 
-OK, this is the replacement codepath we saw earlier.  Makes sense
-for this and the .url[] side on the other hunk (it is curious that
-this has .pushurl[] before .url[], which is the opposite order of
-how everybody else deals with them, as pushurl came later).
+Does this change behaviour?  No.  We used to (1) grab the current
+value, (2) replace it if it is an alias, or (3) otherwise replace it
+with itself.  We just do not do the obvious noop anymore.
+
+The story is the same with the last remaing hunk of this patch.
+Looking good.
 
 Thanks.
+
+>  		}
+>  		add_pushurl_aliases = remote_state->remotes[i]->pushurl_nr == 0;
+>  		for (j = 0; j < remote_state->remotes[i]->url_nr; j++) {
+> +			char *alias;
+>  			if (add_pushurl_aliases)
+>  				add_pushurl_alias(
+>  					remote_state, remote_state->remotes[i],
+>  					remote_state->remotes[i]->url[j]);
+> -			remote_state->remotes[i]->url[j] =
+> -				alias_url(remote_state->remotes[i]->url[j],
+> +			alias = alias_url(remote_state->remotes[i]->url[j],
+>  					  &remote_state->rewrites);
+> +			if (alias)
+> +				remote_state->remotes[i]->url[j] = alias;
+>  		}
+>  	}
+>  }
