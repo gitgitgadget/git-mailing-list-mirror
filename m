@@ -1,146 +1,149 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E7F1A01CF
-	for <git@vger.kernel.org>; Fri, 14 Jun 2024 18:41:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F0849638
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 18:50:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718390462; cv=none; b=IWSJFge4IbhdLT5urnDOogyct4WaMhBqjz4twXnCDfWLq3oRmCwFHcd5WOu3WwCNDThsodrGkhIrTvBd08SX4VhTCdL9CdUWDIISmoMgFPngt9HXmzPDyhdC26IJteFhA7+CbBX4amuFm1935+k97uD8FiMKhVRhKMHcR8gA+b8=
+	t=1718391057; cv=none; b=oh1xA2MzoD/nykGeAmrVV13igdzzU28pqbvVuGc5RxMe1GCMNZGjzcZUieEuV+fX5vzYv9StIx8Ny1GUnp4qVZ3aNn5fhrjRVQzEkajGKt7/OGq+gUH25pky90ChAaWj868NezSKXIOAqgunF9QSz+pWJI4eynN/WTTYgE7bkFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718390462; c=relaxed/simple;
-	bh=X8EXE+E7YSFp4FUC0NO6ZlFSYhuPeyl9fbXMz2Ncgzc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eCWyxbgbNDlT4FkKhEzhcI2tZjdqHrA+52Vx/kaw9Wi/kZfLz4ow6ZyY9+YpoUFRYOLb0YSivTMZqYtV5vyPowDqdZ830v6gzTAe5ynipMXGbxVk1P0bomzX0ji04w0KzToDMAgHWy6xQHz8+iGZ8AFZlr0QRutkU8HM8Wa+1Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=n3rC8n6h; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1718391057; c=relaxed/simple;
+	bh=XrhZi3A8Gr0qeG+JWtwB3DXAF3neQdzAAM//pQY1k5Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZyUiiWkUZDB6aWdqfymxrK29LafTecKyG3kg0h79zEhmGqqv8Pdjxp3MOYqX9i064pkjjUUzCk6XwqdubS0L3lniDLvH1SzUZ6MXDqj272LG4UrrM3TiERtWYwx5lD3w2C+mUeQuGJ4Q46ef4eo4d7Z8xrUgNlIEJzKOgURS/uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cYBZ44Va; arc=none smtp.client-ip=209.85.166.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="n3rC8n6h"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AA83F244C4;
-	Fri, 14 Jun 2024 14:40:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=X8EXE+E7YSFp
-	4FUC0NO6ZlFSYhuPeyl9fbXMz2Ncgzc=; b=n3rC8n6hj1L2tqbVDf6juJoEzTtG
-	j1qpXEVO8iKpA4BPMrTIuzYhaV9mbkQ4rpUSVLtBVOvuStIgUfQpYkIEVUJc4h9q
-	CEI6Mx4Aq7+K6P0i+OF1bs1ComyFwCshDyRKrNcSuHr+x/P2kiZ+4YDmFnoaC6H+
-	Lmr0VR2kXo4GELM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A231D244C2;
-	Fri, 14 Jun 2024 14:40:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 033C3244C1;
-	Fri, 14 Jun 2024 14:40:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Tom Scogland <scogland1@llnl.gov>,  Tom Scogland via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: [PATCH] archive: document that --add-virtual-file takes full path
-In-Reply-To: <xmqqh6dvflea.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	14 Jun 2024 11:07:41 -0700")
-References: <pull.1719.git.git.1715721327429.gitgitgadget@gmail.com>
-	<pull.1719.v2.git.git.1715967267420.gitgitgadget@gmail.com>
-	<bc3711a7-37d5-46bc-979e-83bd0b2cf900@web.de>
-	<95B94723-BCBF-48B4-A02C-A5C61FB060DA@llnl.gov>
-	<01b21870-b37e-47fe-9bd7-225499ae5eaf@web.de>
-	<xmqqh6dvflea.fsf@gitster.g>
-Date: Fri, 14 Jun 2024 11:40:57 -0700
-Message-ID: <xmqq5xubfjuu.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cYBZ44Va"
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-7eb01106015so110220939f.1
+        for <git@vger.kernel.org>; Fri, 14 Jun 2024 11:50:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718391055; x=1718995855; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iN4H+VssjtdYQNFkETNVaz2/MwbujMTilkHbaMgX1pM=;
+        b=cYBZ44VaPuR9Qnyg6eRqvgq7o825nbAJzWnXpIx8KrRJ1bps8wQptPCD2C4NxNqvX2
+         MA7/NhExYa5EBlexcZDYGK0Py6iACAslMzgA/vaGMiqtcsIFUcanpdB87Th/kaQ6aOGw
+         ixCLozvxSUrVFM0jH5//RU3FeDjVt1pF6ktVAamoT7uHaHMTI1kgtdaOGncyuXQ5GppM
+         jn0TvQYXzayX6NPiiCiiNUeb+tTbXFEvCLf2Vps3STcln46Y9q2cwCTQ1g6LcBN63/zU
+         WFsaQBBVSj5x5vYieVGJOEEIRO44GQD0PexNeJ8Ule+He1tUQ9B7y/An8tJX401L70vR
+         u5bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718391055; x=1718995855;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iN4H+VssjtdYQNFkETNVaz2/MwbujMTilkHbaMgX1pM=;
+        b=t8uJ6lVyOeIY+kL9yCRh2+/DcRp2bldY406Xhji0u9u2fzb6KeHPJ1RU4e3lD3J+N7
+         nCC7keWRzRDAc0vXe5L8uLx3dQN4kkptB/iU3EqrfgVFljlCHKmBqF2uZW4cRYYKp7ZS
+         Cj/7AJkK9nFiiFodyh/dxw6xFgfqs6csy7si4spA52KYM1jBejQ0yqtjBBASCIuBDmG6
+         0hUHUpJFPCl4iMWCYtaADH/YvRTLamAJ/G8vglUUOgVI66/SdWBsQkkwJee4v0pqe2u8
+         RhtfMmBpel0TuPOePQsn61OTi6/Cm3a8j/dY1BoyZKNaR6P0tHSPK/ZkF/2NS4P7Q84t
+         vSIQ==
+X-Gm-Message-State: AOJu0Yxni9mPfR4dvy9DolUs2V0OJtzY53CmLKpAD3LTST6BGWfGmEzw
+	EdZBVoV1XpRL4KzB+bGMdyNG55wZtv3CgGRXXZWXS2nBQ/iviqyi1PWZJ19vvL1jHx4qvBUL5n4
+	l0tJDFfMjlFuBF/Ev1bvocoRI9+0=
+X-Google-Smtp-Source: AGHT+IFhoexaSaslY1zqXZ+bBpRTCgT1Vts8inOn0Z4JueKxL98Q7cV480Rm+1tDi95UsoDG64D891Q1MqUIiiJR564=
+X-Received: by 2002:a05:6602:6b85:b0:7eb:ae17:c234 with SMTP id
+ ca18e2360f4ac-7ebeb4d4f64mr360852439f.11.1718391055020; Fri, 14 Jun 2024
+ 11:50:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- A476E85E-2A7D-11EF-A7B6-965B910A682E-77302942!pb-smtp2.pobox.com
+References: <20240608183901.2084546-1-gitster@pobox.com>
+In-Reply-To: <20240608183901.2084546-1-gitster@pobox.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 14 Jun 2024 18:50:43 +0000
+Message-ID: <CABPp-BEnhJt_5mJ2rY3FFU-4_v41zt2NHOkf_Xp8DYxUsGgYPQ@mail.gmail.com>
+Subject: Re: [PATCH] worktree_git_path(): move the declaration to path.h
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On Sat, Jun 8, 2024 at 6:39=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
->> I'm not sure I have an opinion on that topic, yet.  Fixing the
->> documentation is certainly easier.  Adding the prefix to the path of
->> virtual files as well is a breaking change.  I feel that the easier
->> route should at least be mentioned in the commit message and why it
->> was not taken.
+> The definition of this function is in path.c but its declaration is
+> in worktree.h, which is something unexpected.  The function is
+> explained as "Similar to git_path()"; declaring it next to where
+> git_path() is declared would make more sense.
 >
-> It has been a few weeks since this discussion stalled.  Let me make
-> an executive decision on the direction here---let's keep the behaviour
-> and align the documentation so that we won't break existing users.
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  path.h     | 9 +++++++++
+>  revision.c | 1 +
+>  worktree.h | 8 --------
+>  3 files changed, 10 insertions(+), 8 deletions(-)
 >
-> Thanks.
+> diff --git a/path.h b/path.h
+> index c3bc8617bd..a6f0b70692 100644
+> --- a/path.h
+> +++ b/path.h
+> @@ -4,6 +4,7 @@
+>  struct repository;
+>  struct strbuf;
+>  struct string_list;
+> +struct worktree;
+>
+>  /*
+>   * The result to all functions which return statically allocated memory =
+may be
+> @@ -81,6 +82,14 @@ void strbuf_repo_git_path(struct strbuf *sb,
+>  const char *git_path(const char *fmt, ...)
+>         __attribute__((format (printf, 1, 2)));
+>
+> +/*
+> + * Similar to git_path() but can produce paths for a specified
+> + * worktree instead of current one
+> + */
+> +const char *worktree_git_path(const struct worktree *wt,
+> +                             const char *fmt, ...)
+> +       __attribute__((format (printf, 2, 3)));
+> +
+>  /*
+>   * Return a path into the main repository's (the_repository) git directo=
+ry.
+>   */
+> diff --git a/revision.c b/revision.c
+> index 7ddf0f151a..09024cf4aa 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -29,6 +29,7 @@
+>  #include "bisect.h"
+>  #include "packfile.h"
+>  #include "worktree.h"
+> +#include "path.h"
+>  #include "read-cache.h"
+>  #include "setup.h"
+>  #include "sparse-index.h"
+> diff --git a/worktree.h b/worktree.h
+> index 7cc6d90e66..11279d0c8f 100644
+> --- a/worktree.h
+> +++ b/worktree.h
+> @@ -177,14 +177,6 @@ int other_head_refs(each_ref_fn fn, void *cb_data);
+>  int is_worktree_being_rebased(const struct worktree *wt, const char *tar=
+get);
+>  int is_worktree_being_bisected(const struct worktree *wt, const char *ta=
+rget);
+>
+> -/*
+> - * Similar to git_path() but can produce paths for a specified
+> - * worktree instead of current one
+> - */
+> -const char *worktree_git_path(const struct worktree *wt,
+> -                             const char *fmt, ...)
+> -       __attribute__((format (printf, 2, 3)));
+> -
+>  /*
+>   * Return a refname suitable for access from the current ref store.
+>   */
+> --
+> 2.45.2-445-g1b76f06508
 
-So here is to re-ignite the discussion.
-
------ >8 -----
-Subject: [PATCH] archive: document that --add-virtual-file takes full pat=
-h
-
-Tom Scogland noticed that `--add-virtual-file` option uses the path
-specified as its value as-is, without prepending any value given to
-the `--prefix` option like `--add-file` does.
-
-The behaviour has always been that way since the option was
-introduced, but the documentation has always been wrong and said
-that it would use the value of `--prefix` just like `--add-file`
-does.
-
-We could modify the behaviour to make it literally work like the
-documentation said, but it would break existing scripts the users
-use.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-archive.txt | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.tx=
-t
-index 98526f2beb..a0e3fe7996 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -53,7 +53,7 @@ OPTIONS
- --prefix=3D<prefix>/::
- 	Prepend <prefix>/ to paths in the archive.  Can be repeated; its
- 	rightmost value is used for all tracked files.  See below which
--	value gets used by `--add-file` and `--add-virtual-file`.
-+	value gets used by `--add-file`.
-=20
- -o <file>::
- --output=3D<file>::
-@@ -67,9 +67,7 @@ OPTIONS
-=20
- --add-virtual-file=3D<path>:<content>::
- 	Add the specified contents to the archive.  Can be repeated to add
--	multiple files.  The path of the file in the archive is built
--	by concatenating the value of the last `--prefix` option (if any)
--	before this `--add-virtual-file` and `<path>`.
-+	multiple files.
- +
- The `<path>` argument can start and end with a literal double-quote
- character; the contained file name is interpreted as a C-style string,
-@@ -81,6 +79,10 @@ if the path begins or ends with a double-quote charact=
-er.
- The file mode is limited to a regular file, and the option may be
- subject to platform-dependent command-line limits. For non-trivial
- cases, write an untracked file and use `--add-file` instead.
-++
-+Note that unlike `--add-file` the path created in the archive is not
-+affected by the `--prefix` option, as a full `<path>` can be given as
-+the value of the option.
-=20
- --worktree-attributes::
- 	Look for attributes in .gitattributes files in the working tree
---=20
-2.45.2-683-g09b5b61c39
-
+Simple and straightforward, and the rationale makes sense to me.
