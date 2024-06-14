@@ -1,82 +1,82 @@
 Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5A71487DA
-	for <git@vger.kernel.org>; Fri, 14 Jun 2024 06:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAFB1487DA
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 06:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718347876; cv=none; b=bIrnl0f4M449E1gCJez2JCn5to34HI1b7JiVen3u2vr2pQeIzB13Uo0P8ITkWV/kvcR2QsP3lQgeHHn2alXkqYrDTkNtKU7pq2FSUd87vcXPoqkgMyQamSxSmJTdo4J26F5VlW9zzZkOEoFY704q2zATXiromO+PL4F7KYouTHI=
+	t=1718347881; cv=none; b=gsCFrxjXgih1N4avb+TTkLpp2HOXUZo1tQJWUKqiE1tcMtcwFFa8dD4gmpAB+IsyCSHHnzjnFzgRCTsSsv/ukkZ2zrx4TP6hocYx1hPgxHMvb+Ku8/DHrBQ3uXYwFNPokNnqj9M1MbquEd2YRfhZwP8GwP9VMYYKcCRbZbTwbNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718347876; c=relaxed/simple;
-	bh=yqL6BPZETSaCqazuoBKbMIh+IrqflPwYhSpZjBr8WUY=;
+	s=arc-20240116; t=1718347881; c=relaxed/simple;
+	bh=6v2R8RfShcL+tzrlOebJJy9txFKLKES1Ay6WQT0lk04=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NhVy38OynQBBOfAoQCxIcwjLWXb2xYpquL+ALeXqD35O0pL/vsCbpcsaef6nAVIeY8DnLhO5Aq50dkrKUKvaEjIs9+PeTA8xxIA+D4+8I+xNTXOg59gixvIqzSOE+EplQNmn5VOiDJtoZXx5Wzu4eJWcCFQ8EqwWDDpg2BkLwg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cG3Nx0xY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zqrqd/Kq; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=SgwRbpHAZ68gBPcja9BHFI8uFxGpb2tfGbR/iZlL5C2zvT9Qvtrg6h3VfeKdpH2d19l5AaeCZweazlq7AXuE4rCCrj9A2saP0ifVW4RDzoq3ZrozAYThCD+BQ+DnM+8GhxT9yaFEJpQDrsUTCwbi88er+DBEaE0dwMY+nM9Qr9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pYtA5PCC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GtUEL8Pm; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cG3Nx0xY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zqrqd/Kq"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pYtA5PCC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GtUEL8Pm"
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3DB7A1140259;
-	Fri, 14 Jun 2024 02:51:14 -0400 (EDT)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 97E3C1140259;
+	Fri, 14 Jun 2024 02:51:18 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 14 Jun 2024 02:51:14 -0400
+  by compute1.internal (MEProxy); Fri, 14 Jun 2024 02:51:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1718347874; x=1718434274; bh=FkIm+7fpTh
-	ZfCpBhTwRUMDWM77oBFv09ycZV8XuaxKw=; b=cG3Nx0xYm8737ZAcMFlGYSISin
-	FBdybV6JSgWNeDVVWiLlqhB8dWEV+oOea1vTUJiDxwWXrazgw2JNGIWL4qEItwjW
-	rhAyTpYfUhUq6PicvHXeFBN3qi+PPGZf4jcRi1e7AakbFPt6TPmVkJniiHfAdW4l
-	azCA1sgwc9quNEptwxSNbSbCsnI0Qmi6ksz0xshT9+WI6j+BcmM5gCs7SRIf5ISz
-	rfJPK6i5htEG+6sDJjOZoJQPb3C0EefabN0ybVx9m1euhE1lWI+5p+LZAwEQuOx5
-	jAviZ8++mt6o5/WzbjCpETPqodJRFskrA+rJsQwBzaRhMC2Qbb6K9X4XjrqQ==
+	:subject:to:to; s=fm1; t=1718347878; x=1718434278; bh=qWqzKZkh2w
+	3iA5TDca/pl0kLcBMqWZy9wPl9PFr0mj0=; b=pYtA5PCCTTBczfalShxpCE2xvR
+	JkwtSpfs/KJmhi5LkCjrgiYhLh30KfZpeC3iUJyEfEkIcg4pfwnWPW1P9aK+s6ir
+	wU91NgLZ7lSftLfICftTUoE7Ej5PL6cKsfefgwwIfsopZ4eQnOJrZITD/vxkgC6R
+	bS3zPW93hHn2K3TNGO5il9o3Bs8Tv+UVsvH0NYrrOqw3OJDaEsdWqcBcEPzaFyFa
+	oq8JFIQKbmbrcl+5bCunBGr7axzP8Y613plUw4NZtWXe/d2+EwAKzqbaGbat2pB5
+	W29uETzxGLCxY9jBxc9vGPq+YpYNQffz5WXT1Qppmn+KO9Cgput2AoSHixXg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1718347874; x=1718434274; bh=FkIm+7fpThZfCpBhTwRUMDWM77oB
-	Fv09ycZV8XuaxKw=; b=Zqrqd/KqRxyR25a6J6Zb/JVqB25ExPGKqHKlYOwEP3Li
-	6uIbpgGMU7jHrb1pK1Dn9MtmMzyNBYkQSEzOqP0GmXLyLdFP9EOm+q1bmIjgyVD4
-	sQcWIG1O7Wk8ZNI830VJF+Zak3I9oxMbOmP9Zd2EQoXfA7I49QBAcnDIToo0sXMf
-	EIsV+s9ujL2Vhz+MDPklOERmii8wmryQRMCB10+8dXdX977h9MO2XK4Fb+SwCWiW
-	7SNH5MiH7DUeyw2I38rBeCGb4oxJiHhyM09x+UHndqifpnRRsSTUCJ49LGsFYfzX
-	eV/C2WbPdnORCGyrTngre+JVLBL837nMimPWl0u8xA==
-X-ME-Sender: <xms:YuhrZtV4uUE2DXXMuJzOtwA_l5juglDq9KKbuehWN03kEdhhwAFXjA>
-    <xme:YuhrZtns2QBH4OaTuSHBqi3tSBCgx6k-byRMkjUoRaAd2WAVPJ1w3z5-8DMUmp8mc
-    rJD9HWNh4PgIMUGpw>
-X-ME-Received: <xmr:YuhrZpYmAaXsFgXi8DNdL9j7dcY37lW8r4MiPGZj1E4rtJFlv9tDf9SZRLDBHzadzWSxfaqzp-V95R3wNZIfTlbBy7pIN8rN8SINc0aMimcT5A>
+	fm1; t=1718347878; x=1718434278; bh=qWqzKZkh2w3iA5TDca/pl0kLcBMq
+	WZy9wPl9PFr0mj0=; b=GtUEL8PmGru+ETD4Wq+RgI91jL0sj3pkhrmV8MbBpBYd
+	R+57SaJjoy3W6Mqf9fsZ4Yw7N3QXWXd9XJsIDtupQQbLT53Dy6aiHrS0xhCoDNe8
+	I1KAdcNTKJGkT1ya/YDSjTkPCV2145D7zjeDYdxYAGz673dWFjxrdcIk+CyE+mhw
+	FEa2GQLtcEc3Zk0hFsuBAp7y3+2VnlVsivrUpxALAU8BfTyr5GsK1w0tLtpbQjdQ
+	oXYyf2105Om5XywD4PkmoDwVPcN4Q+L8kl+0yyhwvx47q4HKbFSM7Osk9W8O95qN
+	KuwkgDZr7ipnJ5JdjYpRtUypxZ4x5pSWX4JMgTFKFA==
+X-ME-Sender: <xms:ZuhrZou-o4-g-9AdcWyeaKO0zCbI0Ws5nk7mdDcFXY6W1pDSaY24Ng>
+    <xme:ZuhrZlcfA8D5ww8En4yWUL7Pj7_SDU1PPfx-yvT9zWNCBWPdcsqMuETl6x432gdpa
+    yPgVgpXymGBQ0CiPw>
+X-ME-Received: <xmr:ZuhrZjzaEN0HWRgQX7dQ_rMDVqtf75mNdTWZN_kjb1MclENqCZawEyu3KWWiLPTPNU08NdI7RDsQ-H1ZZoYxGPtv47FFs_mU3BlCoCGQ4qpABg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedukedguddtfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpeejnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpeeknecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:YuhrZgWeUzXBAKUU5t8B0ncG1WWH462taL9bhZxPBikIYIIxAhfefw>
-    <xmx:YuhrZnmKchMPUIcoK0Th0rwi_neidXgxBWegJ3G6D6cnjDoJRJmK9A>
-    <xmx:YuhrZtdHoEYycfDweqmYphxCxCg2oKf1eUI6caTsKQ3zQTl9o5P3UQ>
-    <xmx:YuhrZhFSmzFl0LGLb8yuHh4wKk0GE2ZMiaZvzOIFX8vdngPoyo08kw>
-    <xmx:YuhrZivAFMhZtb3lHj7eiNeiSNxD3S5ZsJyeSYhWVy43hTiY8mVWDq3m>
+X-ME-Proxy: <xmx:ZuhrZrM_csAPS0zGjBS0MQ24hEcHmpHtMkGIQHJGkLTnXAGMeIePQw>
+    <xmx:ZuhrZo-1J8UwF1eRRp31hdKlxrfOyv-iQeKyRk5e2Nkd8yk63J0SJw>
+    <xmx:ZuhrZjVkwYF1p_LDp9CQ-x1q-7w6mV9hnarZ0qABXp1pxEKz4-fO1Q>
+    <xmx:ZuhrZhfa2MiI5HUVDpG8Fr7ti2ADaKIzyOdYe_MabAHm1Ukbzjlzfg>
+    <xmx:ZuhrZnkSX7pnZVGJbUF1DjgHUd6eATo2gm28w4gL3Of0ZvY442luC5i9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Jun 2024 02:51:12 -0400 (EDT)
+ 14 Jun 2024 02:51:17 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 772f53e5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 14 Jun 2024 06:50:57 +0000 (UTC)
-Date: Fri, 14 Jun 2024 08:51:10 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 393e5ed5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 14 Jun 2024 06:51:02 +0000 (UTC)
+Date: Fri, 14 Jun 2024 08:51:14 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 19/20] t/helper: remove dependency on `the_repository` in
- "proc-receive"
-Message-ID: <5de7a01af54267fa65e6b3269abe80b1c5301919.1718347699.git.ps@pks.im>
+Subject: [PATCH v3 20/20] hex: guard declarations with
+ `USE_THE_REPOSITORY_VARIABLE`
+Message-ID: <436ffc05701845e1e3bb19ea46d017d5b9b4114f.1718347699.git.ps@pks.im>
 References: <cover.1718106284.git.ps@pks.im>
  <cover.1718347699.git.ps@pks.im>
 Precedence: bulk
@@ -86,97 +86,119 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7OIi5LAdN4xHtFyz"
+	protocol="application/pgp-signature"; boundary="kWTL7F45AESNNKnR"
 Content-Disposition: inline
 In-Reply-To: <cover.1718347699.git.ps@pks.im>
 
 
---7OIi5LAdN4xHtFyz
+--kWTL7F45AESNNKnR
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The "proc-receive" test helper implicitly relies on `the_repository` via
-`parse_oid_hex()`. This isn't necessary though, and in fact the whole
-command does not depend on `the_repository` at all.
-
-Stop setting up `the_repository` and use `parse_oid_hex_any()` to parse
-object IDs.
+Guard declarations of functions that implicitly use `the_repository`
+with `USE_THE_REPOSITORY_VARIABLE` such that callers don't accidentally
+rely on that global variable.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/helper/test-proc-receive.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ hex.h | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/t/helper/test-proc-receive.c b/t/helper/test-proc-receive.c
-index f30022d222..29361c7aab 100644
---- a/t/helper/test-proc-receive.c
-+++ b/t/helper/test-proc-receive.c
-@@ -3,8 +3,8 @@
- #include "hex.h"
- #include "parse-options.h"
- #include "pkt-line.h"
--#include "setup.h"
- #include "sigchain.h"
-+#include "string-list.h"
-=20
- static const char *proc_receive_usage[] =3D {
- 	"test-tool proc-receive [<options>]",
-@@ -92,9 +92,9 @@ static void proc_receive_read_commands(struct packet_read=
-er *reader,
- 		if (die_read_commands)
- 			die("die with the --die-read-commands option");
-=20
--		if (parse_oid_hex(reader->line, &old_oid, &p) ||
-+		if (parse_oid_hex_any(reader->line, &old_oid, &p) =3D=3D GIT_HASH_UNKNOW=
-N ||
- 		    *p++ !=3D ' ' ||
--		    parse_oid_hex(p, &new_oid, &p) ||
-+		    parse_oid_hex_any(p, &new_oid, &p) =3D=3D GIT_HASH_UNKNOWN ||
- 		    *p++ !=3D ' ')
- 			die("protocol error: expected 'old new ref', got '%s'",
- 			    reader->line);
-@@ -128,7 +128,6 @@ static void proc_receive_read_push_options(struct packe=
-t_reader *reader,
-=20
- int cmd__proc_receive(int argc, const char **argv)
- {
--	int nongit_ok =3D 0;
- 	struct packet_reader reader;
- 	struct command *commands =3D NULL;
- 	struct string_list push_options =3D STRING_LIST_INIT_DUP;
-@@ -154,8 +153,6 @@ int cmd__proc_receive(int argc, const char **argv)
- 		OPT_END()
- 	};
-=20
--	setup_git_directory_gently(&nongit_ok);
+diff --git a/hex.h b/hex.h
+index 9809667f33..e9ccb54065 100644
+--- a/hex.h
++++ b/hex.h
+@@ -13,10 +13,6 @@
+  * input, so it is safe to pass this function an arbitrary
+  * null-terminated string.
+  */
+-int get_hash_hex(const char *hex, unsigned char *hash);
+-int get_oid_hex(const char *hex, struct object_id *oid);
 -
- 	argc =3D parse_options(argc, argv, "test-tools", options, proc_receive_us=
-age, 0);
- 	if (argc > 0)
- 		usage_msg_opt("Too many arguments.", proc_receive_usage, options);
+-/* Like get_oid_hex, but for an arbitrary hash algorithm. */
+ int get_oid_hex_algop(const char *hex, struct object_id *oid, const struct=
+ git_hash_algo *algop);
+=20
+ /*
+@@ -35,7 +31,6 @@ int get_oid_hex_algop(const char *hex, struct object_id *=
+oid, const struct git_h
+ char *hash_to_hex_algop_r(char *buffer, const unsigned char *hash, const s=
+truct git_hash_algo *);
+ char *oid_to_hex_r(char *out, const struct object_id *oid);
+ char *hash_to_hex_algop(const unsigned char *hash, const struct git_hash_a=
+lgo *);	/* static buffer result! */
+-char *hash_to_hex(const unsigned char *hash);						/* same static buffer */
+ char *oid_to_hex(const struct object_id *oid);						/* same static buffer =
+*/
+=20
+ /*
+@@ -45,13 +40,9 @@ char *oid_to_hex(const struct object_id *oid);						/* s=
+ame static buffer */
+  * other invalid character.  end is only updated on success; otherwise, it=
+ is
+  * unmodified.
+  */
+-int parse_oid_hex(const char *hex, struct object_id *oid, const char **end=
+);
+-
+-/* Like parse_oid_hex, but for an arbitrary hash algorithm. */
+ int parse_oid_hex_algop(const char *hex, struct object_id *oid, const char=
+ **end,
+ 			const struct git_hash_algo *algo);
+=20
+-
+ /*
+  * These functions work like get_oid_hex and parse_oid_hex, but they will =
+parse
+  * a hex value for any algorithm. The algorithm is detected based on the l=
+ength
+@@ -61,4 +52,19 @@ int parse_oid_hex_algop(const char *hex, struct object_i=
+d *oid, const char **end
+ int get_oid_hex_any(const char *hex, struct object_id *oid);
+ int parse_oid_hex_any(const char *hex, struct object_id *oid, const char *=
+*end);
+=20
+-#endif
++#ifdef USE_THE_REPOSITORY_VARIABLE
++
++/* Like get_oid_hex_algop, but for `the_hash_algo`. */
++int get_hash_hex(const char *hex, unsigned char *hash);
++int get_oid_hex(const char *hex, struct object_id *oid);
++
++/* Like parse_oid_hex_algop, but uses `the_hash_algo`. */
++int parse_oid_hex(const char *hex, struct object_id *oid, const char **end=
+);
++
++/*
++ * Same as `hash_to_hex_algop()`, but uses `the_hash_algo`.
++ */
++char *hash_to_hex(const unsigned char *hash);
++
++#endif /* USE_THE_REPOSITORY_VARIABLE */
++#endif /* HEX_H */
 --=20
 2.45.2.457.g8d94cfb545.dirty
 
 
---7OIi5LAdN4xHtFyz
+--kWTL7F45AESNNKnR
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZr6F0ACgkQVbJhu7ck
-PpRJJRAAi5iQWU1A+KkRn9Djrt9csieVb2NBJ1IIEtZxCrrD1vxP7xAWpxhbliza
-Ya08qmMO9OMVNazJicoXoxqujx/bnZBe/5qzuS1549dabXgLjDSMSAb1j6eImllL
-c7b77VGFApsViJfHWJZUHLMQ1U7h3lGcQwNCo99cagnUaW76UcOZljG7zwh8FEG5
-8GIB7EYAVAaFZ4jSRzAYJ35RdxloEbjWzFJEaP4dlIbgE5vmMzFxqC/ksR7knCEW
-eXcwIYSt6prRI6fftEnOjww4NbcEG6D9gXJIydR8Ma7HcRZYb0E/TX9qBC83xoe3
-OSA9KEFggdspu7nSvLvD22gknEeUmr4nGEfQICvnj0evbq+NLZKgo8CnEmRPfMH0
-YEmJjib7+/IqyejTJjnVjZVTpdITWX9kyx+6US3WW2ZFlHbT3MdcU1SOXRXAgvrT
-lpQsGIW7kKeZkq8SEt8uBSD1TKiaigl+oihaSFztK7IEYDta2Z34PJaQpZ5AywHm
-mcsA87DFbGuU86O04U3ots4vkWenigj+pHswhrBJYS5XRfbR7SkcwBfyNp8fp13v
-Ceq3Ew0HPZbo6Xw2IAyZo1aR47YCmONF3rvnHz/3DbnceiHVttCcMqMP4TZYBhiA
-glaWSTMQDmyi25uynl7VzWWZr6NPT+b7uBSBQ1j2dDGbabIVxuc=
-=IfLU
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZr6GEACgkQVbJhu7ck
+PpRr1hAAkApDLc/UhtdjKeQEyTFHRALixrE18aPxU2s2oC9uFOSLakqqo7Rp8m3b
+/aRfwLnZNWgOH5a1cN9shPXW5+AGwDn1+RFigosart/ED7Jk+Fu1ncKRYgaAWJtV
+Kvk1gYyGRBT9nA1XqMkUo8zZfSaMKEERjIABoKZjO3nI4jxxCDy8YYI730yLFBCI
+7Zmn1sZoCsNg9cVCGH9YBt/ICptD/mu6W5omp7U2sEx347ybYO8KIIYaZe4/AZah
+kxpAgMdLJsAqggJrg8Bo8oGentijrbm1t1s0byvCkKXoYgeHi2rIDoyly5BQkhbm
+4gsH/RywWWl1o45wXKAxqNC3z4NHdcP1NTkQVtiiMxIkhwU7Mt/9sraoHFpNAp3v
+glJdMVp6pGBnBRjtezKLVxTIa7F9uNz+0aSjLPiaQpdwrUsCuF2uRtOtVKWvkrkq
+fEx2SSpd1OlOZGM6pUSsYhx930ZqW6+pooINQjdN0ZOeviDyYqqehmeoLClLuhtL
+uFjzVssLPEBPryDnLwE/fRl91q0MjnWeZAzMnLaeCrpEJG8j3V+STP4/TADQGmP1
+0HkMt0RSrPGEtlFovGzdeTJ/SY3+s6kMnMopotZNCKfedxHJDs35fjh+iYKGhn4P
+9As+T1CdMSF+/WV+YZh4CvvXI69p2WvhtVlAQIYOnE788q+NSrg=
+=jQ/P
 -----END PGP SIGNATURE-----
 
---7OIi5LAdN4xHtFyz--
+--kWTL7F45AESNNKnR--
