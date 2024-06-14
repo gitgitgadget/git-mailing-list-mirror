@@ -1,179 +1,112 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B59C19AA6A
-	for <git@vger.kernel.org>; Fri, 14 Jun 2024 09:52:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582501922DF
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 10:24:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718358744; cv=none; b=j7KhgGQyoA6vMBqyoXJl3iSE6mxwa/YbXHISsW+zwSEmzVuGrzhj6saRe/7uREB9leihSnR1Mc/7r8ZULT5Z27KxfdhrBpN3Mpe8kTqTh0wFmZMudCsgZRX8C9jAAfvT9f4q3puA8Z1nY4clUQwYVIsuxR1yXf5KzSM7UsnFWW8=
+	t=1718360689; cv=none; b=l1qxCzw4mPec5fdvm2nlsf3haWC6a3y5O8kCl/NcgHTAHqTDX4NVwVfVKTIN23XHaAxQwTQbZimwPh4eTe3l6Y+Bdi84ke2SXBWQswDAAjIDBJ6LApSTMRM88bcjqpaOxWU9Yvw6SbMnw+5rfApS+Zj2a9nDvTXgAnScJ39NXYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718358744; c=relaxed/simple;
-	bh=M3NmnPJY+UewlcIXn2gNvLekbAtEtQCb1WnANKxJPUA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LbD0ORz1F1IGv5L92XtU3DIUN74RFUFHj3sMHxAAzj3ebaQapWsJS3qkmads/No9yXWT8VBJRnlWZlOgzyeeFIT6QaylH17TZWEZ9BfzzlbD0OR8aoeP8KtCdYGe3u7frZfOAm4WJa2gVYFjQ5A+ElY4cbWylFN6refq+5LXDyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A2npOs8i; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A2npOs8i"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1f7274a453bso18031125ad.2
-        for <git@vger.kernel.org>; Fri, 14 Jun 2024 02:52:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718358742; x=1718963542; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RTbXFHflckCzDT75U/jzwQ6rjk8DD6Zkca0vVmURxp8=;
-        b=A2npOs8iqJ42OIZ+f44GcGIwJKL3h4uovku6NQ3iYkw8fb/nYwx6NHVyx/Y/nJevyv
-         gd4MQ2qWgbMorVtIVfvqp1iVw25C3NPsPqE6ADs+qFFEgfwhIsm7xX8LU5vKUojC68yl
-         ab5bqcJfXAW4O/FIL4MlifbZ4aSfMJZ8GYSMReOnaklbwAURgDV8eL0oaEppcRolA+hZ
-         lCJbgJgsM/7x/Psf5RKwlMCrbsqm40bGcNqHiG4BnmpdLeTh7vZKvS5M12vINbquZIGD
-         FIF+5GqcwFbLqv0LFxhEnXf62QfeEOAdaMk++1+TiZztgzo+9pQLU3K6l0onzEyv/Cvv
-         /S6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718358742; x=1718963542;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RTbXFHflckCzDT75U/jzwQ6rjk8DD6Zkca0vVmURxp8=;
-        b=ueXWGj0w/t7XYbihcnZsNUf/X8MsCkiQkJdYgpIuFIy7dFEKsYrcZS6T459L7+oAnm
-         LaI0IJ4oLhLghjzQH29VWL9sPsN3meztUDRQCjgvLa4epUqv3+x71EupHp8NfEa0PS5A
-         V79VeQCvqsAK7aRsK9L+sRQdSScGUuhLkoWZpFNyua5Xt4gM1KJWWZy2u0EUC3QwWIAN
-         EJ0S53UWOg6mdjgKdqe7X9OuSfs+ElCHHdCBbJHieRmyQcRvIu6x57rs7AW07exU7WKb
-         zXO+qLfkOQ9URxv4HYZSv4y6ILAWNPEgidKkZnFVwhdYEsVdoE2Pg1GB+Ifoa+ueRZvF
-         xFcA==
-X-Gm-Message-State: AOJu0YzUptjOwnkrzmjltNZ7w91Rk6sSGbAosihhwEA49EX/kwyemwwb
-	NaWJqSKiw2rWZ6SqbvRjPufLdEsK4CzFEyZz5sEnP03kj5YWyvAm9aW3jkFW4dk=
-X-Google-Smtp-Source: AGHT+IHpJ9r3tS+lkT23tOwbBNNzOyJbeX40IIqMuayqM/BPhpBVhIg07KYIpEtue4IC2G3+IFtSfg==
-X-Received: by 2002:a17:903:2290:b0:1f7:2a3a:dda2 with SMTP id d9443c01a7336-1f8627d473emr22860495ad.32.1718358742098;
-        Fri, 14 Jun 2024 02:52:22 -0700 (PDT)
-Received: from Ubuntu.. ([117.96.146.43])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1f868b83afesm9230005ad.156.2024.06.14.02.52.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jun 2024 02:52:21 -0700 (PDT)
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-To: git@vger.kernel.org
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 7/7] t-reftable-pq: add tests for merged_iter_pqueue_top()
-Date: Fri, 14 Jun 2024 15:18:07 +0530
-Message-ID: <20240614095136.12052-8-chandrapratap3519@gmail.com>
-X-Mailer: git-send-email 2.45.2.404.g9eaef5822c
-In-Reply-To: <20240614095136.12052-1-chandrapratap3519@gmail.com>
-References: <20240611083157.9876-1-chandrapratap3519@gmail.com>
- <20240614095136.12052-1-chandrapratap3519@gmail.com>
+	s=arc-20240116; t=1718360689; c=relaxed/simple;
+	bh=5JLmpGwkUcBOnRiZ8I8SsLOqBwbjCofOW6Kj62wzLhE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YKvJoIJGoiPPWMv37nUXGKUthgA1Gcsuhq+al7fs3daMXH2ddhTMo7Sf9j8oyTfYxrXbzOkUxGH2KFVkCgh5eIq/O1Z52UE/rTGA7JyEN6BleE2nfJa+ufByMNC/D/Wr+aIYaW7d4cfzanYevJkYy3qhWlAK2Fy1IoSCCCkz2yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 16437 invoked by uid 109); 14 Jun 2024 10:24:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Jun 2024 10:24:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27050 invoked by uid 111); 14 Jun 2024 10:24:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Jun 2024 06:24:37 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 14 Jun 2024 06:24:39 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Mathew George <mathewegeorge@gmail.com>, git@vger.kernel.org
+Subject: [PATCH 0/11] allow overriding remote.*.url
+Message-ID: <20240614102439.GA222287@coredump.intra.peff.net>
+References: <83D801A8-3878-43C1-B7A7-78B3B7315FD8@gmail.com>
+ <20240611075137.GF3248245@coredump.intra.peff.net>
+ <xmqq34pjxzva.fsf@gitster.g>
+ <20240613102409.GE817573@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240613102409.GE817573@coredump.intra.peff.net>
 
-merged_iter_pqueue_top() as defined by reftable/pq.{c, h} returns
-the element at the top of a priority-queue's heap without removing
-it. Since there are no tests for this function in the existing
-setup, add tests for the same.
+On Thu, Jun 13, 2024 at 06:24:09AM -0400, Jeff King wrote:
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
----
- t/unit-tests/t-reftable-pq.c | 49 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+> > I was expecting (with excitement) a mess, but the above is as clean
+> > as we can make the idea, I would say.  Lack of documentation and
+> > tests do count as incompleteness though of course.
+> 
+> Yeah, and we should probably do the same for pushurl. And I think there
+> could be some cleanup of the memory ownership handling of add_url().
 
-diff --git a/t/unit-tests/t-reftable-pq.c b/t/unit-tests/t-reftable-pq.c
-index e114a8cb0f..0e93cc97b1 100644
---- a/t/unit-tests/t-reftable-pq.c
-+++ b/t/unit-tests/t-reftable-pq.c
-@@ -18,6 +18,11 @@ static void merged_iter_pqueue_check(const struct merged_iter_pqueue *pq)
- 	}
- }
- 
-+static int pq_entry_equal(struct pq_entry *a, struct pq_entry *b)
-+{
-+	return !reftable_record_cmp(a->rec, b->rec) && (a->index == b->index);
-+}
-+
- static void test_pq_record(void)
- {
- 	struct merged_iter_pqueue pq = { 0 };
-@@ -45,9 +50,11 @@ static void test_pq_record(void)
- 	} while (i != 1);
- 
- 	while (!merged_iter_pqueue_is_empty(pq)) {
-+		struct pq_entry top = merged_iter_pqueue_top(pq);
- 		struct pq_entry e = merged_iter_pqueue_remove(&pq);
- 		merged_iter_pqueue_check(&pq);
- 
-+		check(pq_entry_equal(&top, &e));
- 		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
- 		if (last)
- 			check_int(strcmp(last, e.rec->u.ref.refname), <, 0);
-@@ -82,9 +89,11 @@ static void test_pq_index(void)
- 	}
- 
- 	for (i = N - 1; !merged_iter_pqueue_is_empty(pq); i--) {
-+		struct pq_entry top = merged_iter_pqueue_top(pq);
- 		struct pq_entry e = merged_iter_pqueue_remove(&pq);
- 		merged_iter_pqueue_check(&pq);
- 
-+		check(pq_entry_equal(&top, &e));
- 		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
- 		check_int(e.index, ==, i);
- 		if (last)
-@@ -97,10 +106,50 @@ static void test_pq_index(void)
- 	merged_iter_pqueue_release(&pq);
- }
- 
-+static void test_merged_iter_pqueue_top(void)
-+{
-+	struct merged_iter_pqueue pq = { 0 };
-+	struct reftable_record recs[14];
-+	size_t N = ARRAY_SIZE(recs), i;
-+
-+	for (i = 0; i < N; i++) {
-+		reftable_record_init(&recs[i], BLOCK_TYPE_REF);
-+		recs[i].u.ref.refname = xstrdup("refs/heads/master");
-+	}
-+
-+	for (i = 0; i < N; i++) {
-+		struct pq_entry e = {
-+			.rec = &recs[i],
-+			.index = i,
-+		};
-+
-+		merged_iter_pqueue_add(&pq, &e);
-+		merged_iter_pqueue_check(&pq);
-+	}
-+
-+	for (i = N - 1; !merged_iter_pqueue_is_empty(pq); i--) {
-+		struct pq_entry top = merged_iter_pqueue_top(pq);
-+		struct pq_entry e = merged_iter_pqueue_remove(&pq);
-+
-+		merged_iter_pqueue_check(&pq);
-+		check(pq_entry_equal(&top, &e));
-+		check(reftable_record_equal(top.rec, &recs[i], GIT_SHA1_RAWSZ));
-+		for (size_t j = 0; i < pq.len; j++) {
-+			check(pq_less(&top, &pq.heap[j]));
-+			check_int(top.index, >, j);
-+		}
-+	}
-+
-+	for (i = 0; i < N; i++)
-+		reftable_record_release(&recs[i]);
-+	merged_iter_pqueue_release(&pq);
-+}
-+
- int cmd_main(int argc, const char *argv[])
- {
- 	TEST(test_pq_record(), "pq works with record-based comparison");
- 	TEST(test_pq_index(), "pq works with index-based comparison");
-+	TEST(test_merged_iter_pqueue_top(), "merged_iter_pqueue_top works");
- 
- 	return test_done();
- }
--- 
-2.45.2.404.g9eaef5822c
+So as always with this crufty 2009-era code, there turned out to be some
+subtleties. ;)
 
+The good news is that I think dealing with them left the code in a
+better place. It's easier to reason about, and a few possible leaks have
+been plugged (I don't know if they were triggered in the test suite or
+not; if so they weren't enough to tip any scripts over to being
+leak-free).
+
+We can split the series into segments:
+
+  [01/11]: archive: fix check for missing url
+
+    A nearby trivial bugfix.
+
+  [02/11]: remote: refactor alias_url() memory ownership
+  [03/11]: remote: transfer ownership of memory in add_url(), etc
+  [04/11]: remote: use strvecs to store remote url/pushurl
+  [05/11]: remote: simplify url/pushurl selection
+
+    Fixing memory handling weirdness, which is a necessary prereq for
+    the "reset" operation to avoid leaking. The switch to using a strvec
+    isn't strictly necessary, but it does make the code (including the
+    later patch 7) simpler.
+
+  [06/11]: config: document remote.*.url/pushurl interaction
+  [07/11]: remote: allow resetting url list
+
+    The actual change is in patch 7 here, but it was hard to add new
+    docs to the rather anemic existing ones. Hence patch 6.
+
+  [08/11]: t5801: make remote-testgit GIT_DIR setup more robust
+  [09/11]: t5801: test remote.*.vcs config
+  [10/11]: remote: always require at least one url in a remote
+  [11/11]: remote: drop checks for zero-url case
+
+    This is a related cleanup I found while working in the area.
+    Arguably it could be a separate topic, though it does depend
+    textually on what came before.
+
+ Documentation/config/remote.txt | 11 +++-
+ builtin/archive.c               |  4 +-
+ builtin/clone.c                 |  4 +-
+ builtin/ls-remote.c             |  6 +--
+ builtin/push.c                  | 28 ++--------
+ builtin/remote.c                | 88 +++++++++---------------------
+ remote-curl.c                   |  2 +-
+ remote.c                        | 94 ++++++++++++++++++---------------
+ remote.h                        | 13 ++---
+ t/helper/test-bundle-uri.c      |  2 -
+ t/t5505-remote.sh               | 36 +++++++++++++
+ t/t5801-remote-helpers.sh       | 23 ++++++++
+ t/t5801/git-remote-nourl        |  3 ++
+ t/t5801/git-remote-testgit      |  3 +-
+ transport.c                     | 19 +++----
+ 15 files changed, 174 insertions(+), 162 deletions(-)
+ create mode 100755 t/t5801/git-remote-nourl
+
+-Peff
