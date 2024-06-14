@@ -1,122 +1,89 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF501F946
-	for <git@vger.kernel.org>; Fri, 14 Jun 2024 19:35:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B70E1F946
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 19:37:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718393714; cv=none; b=Ae0NChcl2VPcR7N0KrtBomVhbkgQMvMyOMYfep2dA1Iw2yj8nmEBn2xcoM5Hik2I80ubTSXrdl5SlCKGDMkt4ylRJNWpUYs6g+l1mffsX4jaFFObgMiIsQegkOsI1cNlZpsW+n81T/Bj6F1Xj1lE4KEeFnWPHqwnvq1DArMmhJU=
+	t=1718393832; cv=none; b=TKuFZJdmJUXZkJI3xd4uEvy666gueyKCuvsLvh9V69llXsRjVUfihC+MntcRi5eDbJSZpQeShrSpj6fPnejeDGqqblK6kNwjsULjmE8+W/nQdRW66k9OzTOU57iPvqo+HLdyo6zPAdtnQhtgqAU4Duj6xiqk8XEsx+JEYeN9jg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718393714; c=relaxed/simple;
-	bh=9nQMVIaddep1yP78WBbS2YUFf+0fVdQnKKFAsHkwkOM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GJhMEplqH7yDRwdScxQfC/0XCuxA1aC8svcjbeOCED+/kOjqUKc6nVcpKQChA1wyiWvL5ue243iFZST7IxlUwowcJN70/phzQmBA3giEzM/9tRgZrZpSLRTjVvuQZbl1zyhV4G9szKBZ4Gk88TZUN3ln+92yrSJ3fH2cuPc+JUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=chyz9+L2; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="chyz9+L2"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4405743ac19so22140211cf.0
-        for <git@vger.kernel.org>; Fri, 14 Jun 2024 12:35:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1718393712; x=1718998512; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9nQMVIaddep1yP78WBbS2YUFf+0fVdQnKKFAsHkwkOM=;
-        b=chyz9+L2v3muOF+D4W6/2aWvkbb9bDJ8HKMu0/uN1hKt1a932sAjhvfE+Lt7SjjLNT
-         wGEMpy3lAYy91UqSlLiatEzYg99FOlPEeFLxK737EG3teEwuLDV6sH50iZx9RkOFb/vQ
-         GbNtlYcOMHaGQOTERy9dY6AWLyDoc7RiwEhSGpVneAxU3iQRgb90mIqK3JCpOboNPkLp
-         6xxjN1q88OwByWk3aNlFTzJORPs6uuD8j2TpqfhE016e+7F2hwrvKUB4Awx1MyO6F6II
-         4XhYEgvYAZLJIfbNVFMtXc8UA39qkzgJFkAed4sLSHNMyh3vJh2YG/Uf3OFIZ0pvl9BG
-         a6kw==
+	s=arc-20240116; t=1718393832; c=relaxed/simple;
+	bh=LN0u6IMihpchU7rC2IgZ3ZzgRgCNB3zxWwaRNkI+vQg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=k11FYRqyxGngppngJiw/U0PhmGiyRXdBNK9xTOcZ44E3rYTyBRlBgfVmfXsM+3QVF7UBlt2MElxyXc0Rg6a4F7GWFa50458lO32fCGZTVnSpFWRdbmVS03QG6j5ay7LNPpoVVvopJQZnDIZ7K3Z4NSM9q3Xt23R4Ka3OpJ7h1fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-627e3368394so27722637b3.2
+        for <git@vger.kernel.org>; Fri, 14 Jun 2024 12:37:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718393712; x=1718998512;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9nQMVIaddep1yP78WBbS2YUFf+0fVdQnKKFAsHkwkOM=;
-        b=aMql3RPEjQl8jFFZq2+ru5ef9mKkJLdRHI6EiLmi9BZGkleEZMPTD4J0t32QT2wrmN
-         BV2L6+gxwOSRn29CctP4TIjwMzdaZQ9031hqXBE/V79VIIXKZ14n9gj4lHBNhz24NsMz
-         oVtR+3pqg3mvDFUqJLN+SfRc42cXgRUlk4LahyTn1BxosCcVVY0Wi+bKkBM8QF8b08ys
-         9lejwB73ZqMKy5MOdVcf6lN5BPJhfiEGDzEtEYRI5whBh8G5NqS8PGd9qi+ikGCPblwP
-         X1kW5hcFr7hZ8UjizpQWeHjNcvrHpbBLPNznk6Wq+5u9DXHaOwqroLPQ8MBohxGiZH3a
-         z1qA==
-X-Gm-Message-State: AOJu0Yx1XGb5PXAxOgREoumcGfDjqZNewMFH54jC7wIhIPs54VTWDhId
-	+vnFLMLQk9s8Ln+ev4eIi/LKgVHvJ2CqNiwHVDHl+aIrE5XYl+i+2EAICszehSs=
-X-Google-Smtp-Source: AGHT+IEY4EseMjN4ZXLeK8Pyz6ZWTGbwQuiHcWzFDngeVXFGQj7iYlmHteXCZhOAMWMVVCiDvVGlEg==
-X-Received: by 2002:a05:622a:15cd:b0:440:97b5:cb with SMTP id d75a77b69052e-442160b43c5mr62072921cf.32.1718393712098;
-        Fri, 14 Jun 2024 12:35:12 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4421772802fsm11346671cf.58.2024.06.14.12.35.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jun 2024 12:35:11 -0700 (PDT)
-Date: Fri, 14 Jun 2024 15:35:06 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] commit-graph/server-info: use tempfile.h in more
- places
-Message-ID: <ZmybaokdVIXOX+6D@nand.local>
-References: <cover.1717712358.git.me@ttaylorr.com>
- <20240608104821.GF2659849@coredump.intra.peff.net>
+        d=1e100.net; s=20230601; t=1718393829; x=1718998629;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LNMSdLzVxojBxBpFHw//ACzAiwaral4ISUoaCgN4O/s=;
+        b=iueOQzpKLhrrgC8+JQkEYttR1tu+cx3jq+9qPUY3l+66GlynU8Tbx0m2b+niRdkoN9
+         uxv4dfOjBskRKA+h4wuJCbTp0Tc9D7HvdlN/kck8UjXnr8afWsW5aq/2/c+JVqYAcQcG
+         iUv5oqRxbdDOa0oq2SBx3wAe+i6NdPgv29i3D1zd7b442dWaXnoFbZsvT1fy8xW1YP3Z
+         +yCqea+HeAAkpFe3DnvjyzsKxrHdB0gJpaNJI4nkEzQsVrF7xS1rf7bcgMrtLPQbhqNy
+         h9WysEQj9I8ypGyvMc1euH9Gjv6x+P23hs7XGq0BCZ6MIqu7EEMV+9YE3f3k2BB344MW
+         LQIA==
+X-Gm-Message-State: AOJu0YyF/9lgu6dKzSf4uiOF8+YrA0OWn4zwv8wmFJfat+UumoWt4etG
+	bAhu5p0LjiCXn5H/dLNUoisLwP29EP5LeS4a9pb89oUi5A43y73/LZw0DoNEefEnup477NJPQKW
+	8u+65oN+GBIVq6YvitKr78GPWhbE=
+X-Google-Smtp-Source: AGHT+IEksv5ggJPPdM7yNkL99PLn7Tw2jESES+4g7NH5f/a5lGTUo9fBBPfOJJct//uIwwQ1ByvqKkmPj7j8m6AgDOU=
+X-Received: by 2002:a05:690c:95c:b0:62f:4791:4e90 with SMTP id
+ 00721157ae682-63222b50602mr32800337b3.19.1718393829618; Fri, 14 Jun 2024
+ 12:37:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240608104821.GF2659849@coredump.intra.peff.net>
+References: <CALyzih__9sZD31SVMECcxk55+MAMjkfgpLzecoHo0xUoauerqA@mail.gmail.com>
+In-Reply-To: <CALyzih__9sZD31SVMECcxk55+MAMjkfgpLzecoHo0xUoauerqA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 14 Jun 2024 15:36:58 -0400
+Message-ID: <CAPig+cRGnAcfpr4JWp9WWC0b4yvjKx-_0up_S2iaXCBxgcSLjQ@mail.gmail.com>
+Subject: Re: git grep bug replacing - with :
+To: Rickard Andersson <rickard.a1992@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jun 08, 2024 at 06:48:21AM -0400, Jeff King wrote:
-> On Thu, Jun 06, 2024 at 06:19:21PM -0400, Taylor Blau wrote:
+On Fri, Jun 14, 2024 at 3:22=E2=80=AFPM Rickard Andersson
+<rickard.a1992@gmail.com> wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>    Added 2 files to my repo with words in them
+>    text-file.txt
+>    text-file-file.txt
+>    ```
+>    git grep -l ExtremelyInterestingWord
+>    ```
 >
-> > Looking at the remaining uses of mkstemp(), the remaining class of
-> > callers that don't use the tempfile.h API are for creating temporary
-> > .idx, .rev files, and similar. My personal feeling is that we should
-> > apply similar treatment there, since these files are generated based on
-> > .pack data, and thus keeping around temporary copies is unnecessary when
-> > they can be regenerated.
->
-> And actual loose object and pack files themselves, I think. I think it
-> was a deliberate choice long ago to keep those files around, since in
-> the worst case they could be used to recover actual repo content (e.g.,
-> a failed fetch will leave its tmp_pack_* file around, and you could
-> probably extract _some_ objects from it).
+> What happened instead? (Actual behavior)
+>    I get
+>    ```
+>    text:file.txt
+>    text:file-file.txt
+>    ```
 
-Heh, yes. Those were intentionally omitted from this list ;-).
+I am unable to reproduce this problem:
 
-I agree that having the content stick around in failed packfile and
-loose object writes is useful as a last-resort recovery mechanism. I
-suspect that it is often difficult or impossible to recover the contents
-of an object/pack from a broken write, but I think it's better than the
-alternative of just throwing it away up front.
-
-> And the philosophy is that we'd leave them sitting around until gc ran
-> and found tmp_* in objects/, check their mtimes, and remove them then.
->
-> In practice, I don't think I have really seen anybody recover anything
-> from a temporary file. You're better off looking at whatever was feeding
-> the temporary file (if it was "git add", then look at the filesystem,
-> and if it was index-pack, look at the fetch/push source, etc).
-
-Yup.
-
-> So I'd argue that we should just treat object/pack tempfiles like the
-> rest, and delete them if they don't make it all the way to the rename
-> step. If we really want to support debugging, we could perhaps provide
-> a run-time knob to leave them in place (and maybe even have it apply to
-> _all_ tempfiles).
-
-I dunno... I don't disagree with what you're saying, but it does seem a
-little scary to delete files containing data that we might have been
-able to recover.
-
-I think the current series ends at a reasonable stopping point... I'd
-honestly have to think more about whether I agree with what you're
-saying here or not ;-).
-
-Thanks,
-Taylor
+    $ git version
+    git version 2.45.2
+    $ git init foo
+    Initialized empty Git repository in .../foo/.git/
+    $ cd foo
+    $ echo ExtremelyInterestingWord >text-file.txt
+    $ echo ExtremelyInterestingWord >text-file-file.txt
+    $ git add text-file.txt text-file-file.txt
+    $ git commit -m msg
+    [main (root-commit) 765269f] msg
+     2 files changed, 2 insertions(+)
+     create mode 100644 text-file-file.txt
+     create mode 100644 text-file.txt
+    $ git grep -l ExtremelyInterestingWord
+    text-file-file.txt
+    text-file.txt
