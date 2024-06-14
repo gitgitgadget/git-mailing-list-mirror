@@ -1,85 +1,107 @@
-Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8DC139D04
-	for <git@vger.kernel.org>; Thu, 13 Jun 2024 23:55:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B40383
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 00:17:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718322946; cv=none; b=KK+ok5d/UQ09w7giLYAwcnp0R2ROR4IJP3oyGRsZ6WeF4fS7uoyaxPb6KwADmTHPK1fSKNyu5T3gIRTQXwSjyoZHyL+mF9ws0jWCIgvVHbgfRrTVBzfTvtAmpJvp5duzILd9/+nfebSfU4KwRHYaDaexlblc84HCFmKiT61aAPE=
+	t=1718324233; cv=none; b=i+AcVsjYDm8ZjvCcHKJhwf/TZ+ZIk3zOc5Uo8D7n9qFGjRbSLm2mibu6UiBUwJg8W2IA68oeRwXSFXn1NfI/QeDS7XLf+wHDOHVegoH1cy20fcP+RuCJjMmuqVGMEk3/TUZS/HAODIwsKCjlSMpKTnHoE9X5fk3U9lOdX5ccVuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718322946; c=relaxed/simple;
-	bh=zpjlWJwXE4QROh0kj9IPhtXQXd4ozc2a/iuFdodEUuQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=r4HY0K+c38EJb8+hLMFlM83H12J3/sGjFqm/wx3KnFUSW+NtJ22uZR6u1VcTZYXkt2XKeGk5HHyWiUC0KbalBtmGQjj5627tu14v99m/tWmKbXAHbvKcJ0ubSof8GVo2/KFjPaDzvblEU9U0Gj5FqBsJ0K2BheXs4So6lai0qgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=RUrMPY5e; arc=none smtp.client-ip=84.93.230.244
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1718324233; c=relaxed/simple;
+	bh=KWF/bVEcilVxWDAdjz18xmYq6JaeHSBq5OoP8Hwrb/8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=O3q/zsBUq/tXpCqVKddMGG6KJ6U15X1Op0DcD9WeOFzdqsRR0EAOMHRJ73gIGZUvyrUyDbrB0WTzZhIJzDQujTnRlNyUSMgRLu6iF3V05Lb1zH/fDeabFGm5Ddppwac1p5d/qxrJpR32si8wPMunDr+fRx9v64XEl5RAh9sokC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Hw0XAHJo; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="RUrMPY5e"
-Received: from [10.0.2.15] ([51.6.185.229])
-	by smtp with ESMTPA
-	id HuI6sIVKIdfdlHuI7sIjwT; Fri, 14 Jun 2024 00:55:40 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1718322940; bh=xOBTipOWBsf/3gXHAveEqOlkJcnxmoUysfSCjsVsaYM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=RUrMPY5eX6o7xcbYy23RMycJCb69n7pMaBcmpDodQxDDnsuv/doTDH/6zAIuS8Jff
-	 v/9V2YASU4on5w5s3/Fpf5ooe0D2HZ5IID+RIwj0+GAtO2ntuq6u9kRvmvjwapl4H7
-	 SiJiB9t3fPvX9nxyYp5w2sa5pifopVyEjMWTmlQlmVs+sB4wNFOpuL6XC96y0r1CNr
-	 vnvXbwHr3kQrqIciOSk0RsZM8DGr9/O4izLGLb82ufJOaOTzoKGKHVpnQY+s5yO0CX
-	 s8MaaxV+xU49+xgf2woewej74CzkIcV3xM/xlMgtdcnv5oiMfJ8oh17vQS65j0HxEs
-	 qjwH55uK8SzbQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=DtP1+3/+ c=1 sm=1 tr=0 ts=666b86fc
- a=7htyVA9VkOexEuxjfJyH6w==:117 a=7htyVA9VkOexEuxjfJyH6w==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=xoVt_Sx5ql3gxYh7dzsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <9d085d3f-5fdf-4a28-b31c-458ba68ebcd4@ramsayjones.plus.com>
-Date: Fri, 14 Jun 2024 00:55:38 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Hw0XAHJo"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8FCEA1D781;
+	Thu, 13 Jun 2024 20:17:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=KWF/bVEcilVx
+	WDAdjz18xmYq6JaeHSBq5OoP8Hwrb/8=; b=Hw0XAHJo4Ba3W2Ceut2qHj4gOfwu
+	LKcVNqt3s/REgBFMxli/T/sFlLWpf42yv43v/KP3FeRLnEj+VALM7IuKxX76IA1Q
+	AYMwFi2tlIwUHUgFqChgohnuLvM22VPvwyL4gaFXY/r4dMweI6/S/RYsl36yx9Cu
+	1ynxobVqjpguJ8o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 765A91D77F;
+	Thu, 13 Jun 2024 20:17:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BF6BE1D77E;
+	Thu, 13 Jun 2024 20:17:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Ghanshyam Thakkar
+ <shyamthakkar001@gmail.com>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 00/20] Introduce `USE_THE_REPOSITORY_VARIABLE` macro
+In-Reply-To: <9d085d3f-5fdf-4a28-b31c-458ba68ebcd4@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Fri, 14 Jun 2024 00:55:38 +0100")
+References: <cover.1718106284.git.ps@pks.im> <cover.1718259125.git.ps@pks.im>
+	<xmqqcyoklo26.fsf@gitster.g> <xmqqfrtgk7ah.fsf@gitster.g>
+	<b69449d0-46f4-448e-b80e-002a8b5c4e1f@ramsayjones.plus.com>
+	<CAPc5daUpzc+FDTH4-ajjf6ctnchE5Z6mHVvpm0qnbPLup18ykg@mail.gmail.com>
+	<9d085d3f-5fdf-4a28-b31c-458ba68ebcd4@ramsayjones.plus.com>
+Date: Thu, 13 Jun 2024 17:17:08 -0700
+Message-ID: <xmqqfrtgjs3f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/20] Introduce `USE_THE_REPOSITORY_VARIABLE` macro
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
- Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <cover.1718106284.git.ps@pks.im> <cover.1718259125.git.ps@pks.im>
- <xmqqcyoklo26.fsf@gitster.g> <xmqqfrtgk7ah.fsf@gitster.g>
- <b69449d0-46f4-448e-b80e-002a8b5c4e1f@ramsayjones.plus.com>
- <CAPc5daUpzc+FDTH4-ajjf6ctnchE5Z6mHVvpm0qnbPLup18ykg@mail.gmail.com>
-Content-Language: en-GB
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <CAPc5daUpzc+FDTH4-ajjf6ctnchE5Z6mHVvpm0qnbPLup18ykg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfA3RSSUwopHMuw5zSp1FPU6I5fIL3I6+DwrFNdRb9fFtvSbK5LPNJFaP6FRDjfPSAlR/e1BK7pfiZ2bP0i9/nh5utEQvrhujRK0TibNpt6ujNBbHhj62
- ivONIC6UP07HNtiZBgki0w4jd8IkvBckiH4K067JBCQKC5+jxilomAtP69KaeViWyNn7kyDBAF07hA==
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 70C4889E-29E3-11EF-AC0E-965B910A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
+> On 14/06/2024 00:18, Junio C Hamano wrote:
+>> On Thu, Jun 13, 2024 at 4:15=E2=80=AFPM Ramsay Jones
+>> <ramsay@ramsayjones.plus.com> wrote:
+>>>
+>>> Hmm, odd; isn't the declaration of 'the_repository' from
+>>> the "repository.h" header file visible at this point?
+>>=20
+>> No. The declaration is guarded with USE_THE_REPOSITORY_VARIABLE CPP ma=
+cro
+>> in the header, and repository.c does not define it.
+>>=20
+>
+> Ah, OK. I haven't been following too closely and didn't
+> notice that the declaration in the header file was now
+> conditional. :(
+>
+> But that does beg the question - why is repository.c not
+> defining the USE_THE_REPOSITORY_VARIABLE?
 
-On 14/06/2024 00:18, Junio C Hamano wrote:
-> On Thu, Jun 13, 2024 at 4:15 PM Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
->>
->> Hmm, odd; isn't the declaration of 'the_repository' from
->> the "repository.h" header file visible at this point?
-> 
-> No. The declaration is guarded with USE_THE_REPOSITORY_VARIABLE CPP macro
-> in the header, and repository.c does not define it.
-> 
+I think the goal of the series is to eventually get to the point
+where nobody uses the_repository variable.  If repository.c, which
+consists of a set of service routines that work on a repository
+instance, defined it, showing willingness to implicitly rely on
+the_repository through things like get_oid_hex() (which would rely
+on the_repository->hash_algo), that would go the opposite direction,
+so everything, other than the definition of the_repository variable
+itself that allows other files that still do rely implicitly on the
+variable to link with it, in repository.c would actively want to
+refuse to use services only available to those who define USE_THE_*
+macro.
 
-Ah, OK. I haven't been following too closely and didn't
-notice that the declaration in the header file was now
-conditional. :(
+It is a similar pattern we took when we weaned ourselves off of
+the_index compatibility macros.  The read-cache.c was the central
+thing that defined the in-core index services, and it was the first
+thing that lost the_index compatibility macros like read_cache(),
+add_file_to_cache(), etc. that implicitly worked on the singleton
+the_index instance, while everybody else still relied on the
+singleton and services that implicitly worked on the singleton.
 
-But that does beg the question - why is repository.c not
-defining the USE_THE_REPOSITORY_VARIABLE?
-
-ATB,
-Ramsay Jones
