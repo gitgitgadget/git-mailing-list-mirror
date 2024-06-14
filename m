@@ -1,105 +1,160 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3DD811FE
-	for <git@vger.kernel.org>; Fri, 14 Jun 2024 12:03:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED6E15E5CB
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 15:23:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718366601; cv=none; b=eq/DooVkuVIgpzYUBKuq64QlAFFN8+3SrXusHPIdbxwNPLk6G/voCjstHoNkGyK+vBnen8vHsB2sVDkdrbUCwNbyVQt1HC6FZcg21ChaofNKGm3aYyErrY6NRRUlAPZq3wafbxDqDH7aQZyMVTS+MCM5RlNRxNNQmktltdykjgg=
+	t=1718378595; cv=none; b=NqKlBlhKkNmhKs461Z5Hc2EhaFzD/AexLEpETbyFocJ4hAB+i4KOpJFRsq5r3ufuwVsZ2X0kuI/M/SIOlKNkZW+FYsfBj/O5m67KD8F9/I9L6x2/GCoJ2MpPmsh5mn6ZfiF+J5yDF3O8KvdW0bSozadoaKUnii0nzrpMWStczLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718366601; c=relaxed/simple;
-	bh=46IGzdLL5FQQv6JCM9mPUf1ym5YkzI8ccJnQ/ANS+VM=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=XIl2Iij9rR/oh+4jpsRcI2ZpBlPegL8GMdaxUMqm5rzaGcSQ3mKqv2sUOctn73+RT+wTrcxF5BHozDA8jZ2q51VRrSnOTdKDBC9vQe/yeFeugyI7ksEj1DDcWfk0pbL6nnE8QT7QPl7jGfSC+fS6Y8s0K+MPJvNKr+RZSnE9UZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=adqmVVWV; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718378595; c=relaxed/simple;
+	bh=GIfGTDTR1PHPV+7AYJoEaH3j55uHTfKCMynmhm9Con4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CtMJINtnmBX4NoqyMseGbpawhL3cVVtuvO4ZIrkjSfyNBKH5kR54MonLmbg7cXfQHyQ/Bplb6niqs6ZjK058ziMlqxbwysmjFQLhh/K/4s4+eQ6v4eae4IpNZ0E05SwCK1TLNHDIL98HaakXZzwcFnebvOMkFptRvi7pZDVWWd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oGUZ3DqC; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="adqmVVWV"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-35f2c9e23d3so2125621f8f.0
-        for <git@vger.kernel.org>; Fri, 14 Jun 2024 05:03:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718366597; x=1718971397; darn=vger.kernel.org;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=YKN03u9g5iT5+/k2BMEzxqxt4fZZWU5+RJ0EOF1FT4A=;
-        b=adqmVVWV03H2lIJIISxe1Pa21ZZWppkQF8eGVzTj1BHU3pwS3qLw/QgmAF56rEg+Xi
-         lee6pzGst+2ywGyyGe01VWEYI5DuzKVZx9nlHn6DwDsXr0BO/YxUWgzOXrCipAoyMxsB
-         LFN/Q4RtmgWS6+rBzKN+wgmp5ZS0HCzeeLkI4IfiSbpGSYoeF7n8v8hcweFIMd5iJekq
-         rPkke6Km5ZT7+DEBXFGMcjuQ129sXGwgUWiXZW1OSnLek9dAJMamnaop9BvlRxChEVEU
-         xyL8gZ46udsJivBFLFGDe+WlmHIjUBGgM53j/QZjaoNg0pxvgXSZCSOXTuDRXhUmRQYf
-         ICaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718366597; x=1718971397;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YKN03u9g5iT5+/k2BMEzxqxt4fZZWU5+RJ0EOF1FT4A=;
-        b=tCaIIkcpXQuJqteA6I/YgIQz+cAU/x1ORXEa5/UTxTZ18irTMwqnuDS1XYKJj53Zos
-         YgqZ2ITXvHJNYzFm0j3bzjpunWTVBL4yptP6qifBXyNMsh6/BH41sX/NDN/JILHwp4zY
-         8IGB+YUzjIRfqRitTPSdpnQqRWMPDxkK4zBEPk3X7ylp8gSG93G0DAbskqoqyOCb2jpX
-         vjHOKVyDc8oz0yRkV5l5v5MlKL4tzYy6KIxDDAPbsPbE91apbbugukiQbT5oxMmO7tux
-         b61aPPvS/PHx7JgMoHkyI3Fu0HOs15ULAJBbFzAklYrx7tBmIiShC8r9r48TCzoUPb39
-         PsdA==
-X-Gm-Message-State: AOJu0YyklASGZxvFrpRIeMuM6/v6js3IsMrxTWTIJK4Hbf0kZBQy0s5X
-	ABb3PUztLnPNdqyeAYiYd69oE22cAbied665O2p/yLGTL2F3HtgF9hh7nbPZJ8Q=
-X-Google-Smtp-Source: AGHT+IH48cZi/etrNpMW4eknDW2p/7CMeUibLp6KHAr79MbRFTDcJ22xTlzoL2VLr6bHb9lSrsz+Tw==
-X-Received: by 2002:a5d:69c2:0:b0:35f:1c95:4042 with SMTP id ffacd0b85a97d-360718c9d97mr5153745f8f.4.1718366597003;
-        Fri, 14 Jun 2024 05:03:17 -0700 (PDT)
-Received: from smtpclient.apple ([2a01:e0a:565:11e0:e531:f1c9:c5b7:7516])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-422f602ef0bsm56882955e9.18.2024.06.14.05.03.16
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 14 Jun 2024 05:03:16 -0700 (PDT)
-From: Alexey Pelykh <alexey.pelykh@gmail.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oGUZ3DqC"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 44BCB322EC;
+	Fri, 14 Jun 2024 11:23:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=GIfGTDTR1PHPV+7AYJoEaH3j55uHTfKCMynmhm
+	9Con4=; b=oGUZ3DqCsF6kdABN2TibxifYEujh3TRQna12gPP/+hN1v0ywOEhvp5
+	z1UT6/ypgNUnxouJzkp6jxQkXAJgx8Ps7jtviWUXY7jV+hOa/5jW7tG+kqsvm3WU
+	QFi48tOZh+DcWsaOXb6zYTCnwKZeVoGrIIGsq7wIp/vUSYbyoMizk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 37C85322EB;
+	Fri, 14 Jun 2024 11:23:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 002A3322E9;
+	Fri, 14 Jun 2024 11:23:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [GSoC][PATCH v2 7/7] fsck: add ref content check for files backend
+In-Reply-To: <ZmvTI73P2fQ6AkOp@ArchLinux> (shejialuo@gmail.com's message of
+	"Fri, 14 Jun 2024 13:20:35 +0800")
+References: <20240530122753.1114818-1-shejialuo@gmail.com>
+	<20240612085349.710785-1-shejialuo@gmail.com>
+	<20240612085349.710785-8-shejialuo@gmail.com>
+	<xmqqr0d0iqey.fsf@gitster.g> <ZmvTI73P2fQ6AkOp@ArchLinux>
+Date: Fri, 14 Jun 2024 08:23:03 -0700
+Message-ID: <xmqqo783im5k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
-Subject: Non-blob .gitmodules and .gitattributes 
-Message-Id: <4F3AD9A8-DA3E-43E2-BF9A-9D7458EED7EA@gmail.com>
-Date: Fri, 14 Jun 2024 14:03:05 +0200
-To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.3774.600.62)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ FF03134A-2A61-11EF-9435-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-Greetings to all!
+shejialuo <shejialuo@gmail.com> writes:
 
-I've stumbled upon a check that ensures that .gitmodules and =
-.gitattributes must be blobs, yet while I get why they should not be =
-e.g. a symlink, what's the downside of permitting (and ignoring for the =
-actual purpose) e.g. .gitattributes folder?
+>> > +static int files_fsck_symref(struct fsck_refs_options *o,
+>> > +			     struct strbuf *refname,
+>> > +			     struct strbuf *path)
+>> 
+>> This does not take things like HEAD or refs/remotes/origin/HEAD to
+>> validate.  Instead, the caller is responsible for either doing a
+>> readlink on a symbolic link, or reading a textual symref and
+>> stripping "ref: " prefix from it, before calling this function.
+>> The "refname" parameter is not HEAD or refs/remotes/origin/HEAD but
+>> the pointee of the symref.
+>> 
+>> So I'd imagine that renaming it to fsck_symref_target or along that
+>> line to clarify that we are not checking the symref, but the target
+>> of a symref, would be a good idea.
+>
+> That's not correct. The "refname" parameter is EXACTLY the symref
+> itself.
 
-To better understand my use-case:
+Yeah, but the story is the same.  We are not really checking
+anything about the symref (i.e. the thing in "refname") being funny.
+We are checking what is in "path" (like "does it exist?") and the
+"refname" is there only for reporting purposes (i.e. "we have a
+symbolic ref REFNAME, that points at PATH which is a wrong thing").
 
-$ ls -lA dev/shared
-total 8
-drwxr-xr-x   3 alexey-pelykh  staff   96 Jun 14 11:53 .editorconfig
-drwxr-xr-x   3 alexey-pelykh  staff   96 Jun 14 13:32 .gitattributes
-drwxr-xr-x  14 alexey-pelykh  staff  448 Jun 14 11:53 .gitignore
--rwxr-xr-x   1 alexey-pelykh  staff  613 Jun 14 13:33 share
+>> > +{
+>> > +	struct stat st;
+>> > +	int ret = 0;
+>> > +
+>> > +	if (lstat(path->buf, &st) < 0) {
+>> > +		ret = fsck_refs_report(o, refname->buf,
+>> > +				       FSCK_MSG_DANGLING_SYMREF,
+>> > +				       "point to non-existent ref");
+>> > +		goto out;
+>> > +	}
+>> 
+>> Is that an error?  Just like being on an unborn branch is not an
+>> error, it could be argued that a symref that points at a branch yet
+>> to be born wouldn't be an error, either, no?
+>> 
+>
+> The reason why I choose "danglingSymref" and warn severity is that I let
+> the code be align with "git checkout". When we use "git checkout" for a
+> dangling symref. It would produce the following output:
+>
+>   $ git checkout branch-3
+>   warning: ignoring dangling symref refs/heads/branch-3
+>   error: pathspec 'branch-3' did not match any file(s) known to git
+>
+> So I prefer to warn severity.
 
-and
+If you do this from that situation, 
 
-$ ls -lA dev/shared/.*
-dev/shared/.editorconfig:
-total 8
--rw-r--r--  1 alexey-pelykh  staff  377 Jun 14 11:53 shared.editorconfig
+    $ git branch branch-3 master
 
-dev/shared/.gitattributes:
-total 8
--rw-r--r--  1 alexey-pelykh  staff  143 Jun 14 13:32 =
-shared.gitattributes
+what happens is that the pointee of branch-3 is created at the
+commit pointed at by 'master'.  No error.  No warnings.
 
-dev/shared/.gitignore:
-total 8
--rw-r--r--  1 alexey-pelykh  staff  4450 Jun 14 11:53 shared.gitignore
+In a freshly created respository, HEAD is a dangling symbolic ref,
+and that is not an error.  You can create a root commit from there
+just fine.
 
-Surely, the immediate workaround is use a "_gitattributes" or =
-".gitattributes_" name for the folder, yet if a directory with =
-.gitignore can exist - why can't .gitmodule or .gitattributes?
+If there is anything that needs improvement in your example, it is
+that "checkout branch-3" should be taught to either (1) not warn
+about dangling symbolic link and just give the error, which is in
+line with how "git checkout HEAD" in a freshly created repository
+behaves, or (2) just like unborn 'master' pointed at by 'HEAD' is
+perfectly happy to be checked out, allow the unborn 'branch-3' to be
+pointed at by 'HEAD', and arrange the first commit (which will be a
+root commit) you create in that state to be pointed by the ref
+'branch-3' points at.
 
-Be well,
-Alexey=
+So from all of these reasons, I do not think missing target should
+be treated as any error worthy event.  Not even warning.
+
+On the other hand, the target of the symref in "path" must be
+checked, even if it does not currently exist, for its validity, the
+same way an existing ref gets checked (lives inside refs/, passes
+check-ref-format, etc.).
+
+> I intentionally ignored the "escape" situation. Actually, the path could
+> be either absolute or relative. It may be a little complicated. I will
+> find a way to support this in the next version.
+
+Yes, if this wants to claim to be part of "FSCK", it should catch
+all the errors the regular runtime would complain about, and
+"escape" thing is one of the first things that you need to get
+right.  Whatever refs.c:read_ref_internal() for S_ISLNK(st.st_mode)
+case takes as legit should be considered legit, the "fallback - read
+through the symlink as if it were a non-symlink" case probably wants
+to be warned.  refs.c:resolve_ref_unsafe(), which is used at the low
+level from object-name.c:get_oid_basic() via refs.c:repo_dwim_ref(),
+has further checks to see if a refname that a symref resolves to is
+valid and the runtime sanity relies on these checks.
+
+Thanks.
+
