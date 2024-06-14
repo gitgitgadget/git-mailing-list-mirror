@@ -1,141 +1,108 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C161F157A47
-	for <git@vger.kernel.org>; Fri, 14 Jun 2024 15:43:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C9F4EB55
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 15:54:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718379834; cv=none; b=L6mkXvNuGQgJAofYefd7RrMFEJ8pL/mo/7R5tsokMhQ8BXN1FhTGaj1sKCbvMHjpb2RpjDuVU5si7I5lXF+gpwltHv6Lv0WkDFelUoaB9uT7dG4XandhgstRAAMAvfa2/pGC8XeWYogkK/YOycjLqSC3SK5x58OUNWyru543m7E=
+	t=1718380483; cv=none; b=BQ9v5ZHkGnzaA28KUMK/JDH7JY/Hkaoml1ZAxWwf0cREJAtRklCqblLkGe3d4TjMOj7lvK3U4D1W3p5qkkh6M+oJ/jstbN1EdNPONDWx4DmuNdKeueMMRsc5c3UyF2P5FthCw+DanKFzl+sYrjPiMpRizdyYcaXWLBc2KBgPiYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718379834; c=relaxed/simple;
-	bh=XrFXiM3j/LdsuLqI4teMR+i07Yavz4fLRxllFdv5yNA=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=WssWNetyJyXek201y8ODaUTTHXhcNbcNTlA8HiPHe2QiaYXHc+cavndEaH7p3h+iRix1V8qUuWA9L5s2H5tZwT1eAsjasfdFcgk/Vp6BemVden5QSLfKB6Vpw89eYjMRHfzT1euDW78UBe+Wz/GMklKjzPQDLCxJb4M6MOFc6kY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V/DhF3Nv; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718380483; c=relaxed/simple;
+	bh=siBIy+EVAx9oQ8dEu+Dcx/BiFcAN7/ol3lbzZ3sNaF8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bwk/uHnoUVVGquqgnefSEVVQyf6RS8lmu3e2EUZIeExKQIzgIsvWpsLIcNHS3yOsXXzbI3tAqLnByrqd+0J5+tv8sIfGKdG+CpAdTq0rx3szFJXsLSmrTy1ax85FcFSvmVv42eSpPhwfXEmq1+pgSjF2TlPHh4E3PKICvibOfkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=B76mNwd4; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V/DhF3Nv"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-52bc1261e8fso2726949e87.0
-        for <git@vger.kernel.org>; Fri, 14 Jun 2024 08:43:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718379831; x=1718984631; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gzxh89KHQFXi4nCdaVN0KoPQw06YJ149fPASbeMwn6Y=;
-        b=V/DhF3NvoKENCliGMitAhK+jXwiNoCAXKk/RpD+eYGAPqP8/qwb4pEQzvg7sCS7V7S
-         g9bOgRGmTd86shsHg0Eh66WtCKT3V7+TABwu/QwX04yMY3PDKBvzmhnuQ7AzHdNTVSf9
-         dFgXWKXLj5/0lF37hP04/l4hGY1rRVN3mKfySJCKKkNuNSxRkJcViGdPIpvJOvnILl35
-         GtSXapELOTAjRF42vqnActCIOQyFKNMMACZPPvjV1+e6w/k9gO9LOWXAMOwhc6rq50EE
-         runkFPG9S1O7lPFozFE0JNqAOfO0rPsNI9RT00MTNuJeb3Fg0040B7M4gmHJ97vXXoBC
-         SqCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718379831; x=1718984631;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gzxh89KHQFXi4nCdaVN0KoPQw06YJ149fPASbeMwn6Y=;
-        b=hAVdxxcZ5tHKEsZYAEDpLWqjKcinjy8JV33mDurOC2htr4DbC4d+21kthcC9TYAcxI
-         rzHhUFqyZt9fWPf7aYVBEDszVnyM8eCbHkQJVuzO6ItWY/c2QT8uhPW3KI9DALjkuubr
-         V+njLsx3c9cnNkExD9ehH0r6LZ4Tl+sHItmw9dMErf9oNoLYm50olSNWWk5vqE+rW6wI
-         mffaSZOQJFuUARNeC3PL1EU/VEXN96C724GzFUziDN+2TMON2LbyCcusJ3QsqWFWMfbq
-         HTdrwhAJmTcuJ36PmnfE/vttqD1U8iuLsxtsW+LSgblD+7wN8b6cRWPE9C7oo9sSES9K
-         YlzA==
-X-Gm-Message-State: AOJu0YzxKvDD5zy5fyILVxB1CuE/H6UNmhgoDHOygkXE3yH8bTLKUZCR
-	N4kkv3B+7lAiBailfwdM5Ae2T89ZDEQ/iENMbU/t3Tz4PZ/uPzDH/0TyaTktr6Q=
-X-Google-Smtp-Source: AGHT+IGa8frK5t9e0GTvia0D2uKSi3x7nH6PtjK31SNtao5rb8MphjhMjiqBnusu3YgVJ9fRXYG+1A==
-X-Received: by 2002:a19:f706:0:b0:52b:c071:f034 with SMTP id 2adb3069b0e04-52ca6e9d8f6mr2338129e87.60.1718379830483;
-        Fri, 14 Jun 2024 08:43:50 -0700 (PDT)
-Received: from smtpclient.apple ([2a01:e0a:565:11e0:e531:f1c9:c5b7:7516])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4228531a702sm62505115e9.1.2024.06.14.08.43.50
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 14 Jun 2024 08:43:50 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="B76mNwd4"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 947691F2D8;
+	Fri, 14 Jun 2024 11:54:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=siBIy+EVAx9oQ8dEu+Dcx/BiFcAN7/ol3lbzZ3
+	sNaF8=; b=B76mNwd4UUsl5TpISI5IZiFI2a1WjNCjuz9+ehOsWpk9qNyFxDUdew
+	RR/jCTgFPz/KDRX5rdv7lPmeatphobCcWFMOftWp5ZJbH0rAfrDOgUZSZSPtBtMR
+	3M9k3s7+Jqnc12jsUGvz8MIDcFirqcrOsFmLuhz1VbNjpwFKDCX1Q=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8C90C1F2D7;
+	Fri, 14 Jun 2024 11:54:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C01511F2D4;
+	Fri, 14 Jun 2024 11:54:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,  git@vger.kernel.org,
+  Ghanshyam Thakkar <shyamthakkar001@gmail.com>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 00/20] Introduce `USE_THE_REPOSITORY_VARIABLE` macro
+In-Reply-To: <ZmvVBwLEb0qofY2m@tanuki> (Patrick Steinhardt's message of "Fri,
+	14 Jun 2024 07:28:39 +0200")
+References: <cover.1718106284.git.ps@pks.im> <cover.1718259125.git.ps@pks.im>
+	<xmqqcyoklo26.fsf@gitster.g> <xmqqfrtgk7ah.fsf@gitster.g>
+	<b69449d0-46f4-448e-b80e-002a8b5c4e1f@ramsayjones.plus.com>
+	<CAPc5daUpzc+FDTH4-ajjf6ctnchE5Z6mHVvpm0qnbPLup18ykg@mail.gmail.com>
+	<9d085d3f-5fdf-4a28-b31c-458ba68ebcd4@ramsayjones.plus.com>
+	<xmqqfrtgjs3f.fsf@gitster.g> <ZmvVBwLEb0qofY2m@tanuki>
+Date: Fri, 14 Jun 2024 08:54:30 -0700
+Message-ID: <xmqq5xubikp5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
-Subject: Re: Non-blob .gitmodules and .gitattributes
-From: Alexey Pelykh <alexey.pelykh@gmail.com>
-In-Reply-To: <xmqqbk43ilk3.fsf@gitster.g>
-Date: Fri, 14 Jun 2024 17:43:39 +0200
-Cc: git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <8E37AD78-C480-4838-9F69-3E7FC209A9FC@gmail.com>
-References: <4F3AD9A8-DA3E-43E2-BF9A-9D7458EED7EA@gmail.com>
- <xmqqbk43ilk3.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3774.600.62)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 639CB064-2A66-11EF-A5AD-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-Dear Junio,
+Patrick Steinhardt <ps@pks.im> writes:
 
-Thanks for providing more insight!
+>> > But that does beg the question - why is repository.c not
+>> > defining the USE_THE_REPOSITORY_VARIABLE?
+>> 
+>> I think the goal of the series is to eventually get to the point
+>> where nobody uses the_repository variable.  If repository.c, which
+>> consists of a set of service routines that work on a repository
+>> instance, defined it, showing willingness to implicitly rely on
+>> the_repository through things like get_oid_hex() (which would rely
+>> on the_repository->hash_algo), that would go the opposite direction,
+>> so everything, other than the definition of the_repository variable
+>> itself that allows other files that still do rely implicitly on the
+>> variable to link with it, in repository.c would actively want to
+>> refuse to use services only available to those who define USE_THE_*
+>> macro.
+>
+> Exactly, that's why it doesn't declare `USE_THE_REPOSITORY_VARIABLE`.
+> The macro doesn't only guard use of `the_repository`, but does also
+> guards other functions that implicitly relies on it, and we do not want
+> to use these in "repository.c". So even though the added `extern`
+> declaration is somewhat ugly, I think it is preferable over defining the
+> macro.
 
-The error I'm seeing due to ".gitattributes" folder being present in the =
-diff via the ".gitattributes/shared.gitattributes" file is the =
-following:
+Slightly off-topic, but in retrospect, the approach of marking "this
+file is done" taken by the very initial version of the "no more
+implicit access to the_index" series may have been easier to grok
+easier to grok for reviewers casually looking at it from the
+sideline, than marking "this file still needs work".  When we
+gradually deprecated the convenience API that implicitly access
+the_index instance, we marked with NO_THE_INDEX_COMPATIBILITY_MACROS
+the files that no longer require it (in other words, we are done
+with the file wrt the transition).  We later flipped the polarity
+and gave USE_THE_INDEX_COMPATIBILITY_MACROS to those that are not
+marked with NO_THE_INDEX_COMPATIBILITY_MACROS as we progressed and
+the source files that still used the convenience API has become
+minorities.
 
-error in tree f8db7c96f9daf3ea8486804a3f717a807fc1a1d8: =
-gitattributesBlob: non-blob found at .gitattributes
+Anyway, I think now people understood what this series aims to
+achieve and how it does so, hopefully.
 
-I'm seeing this on both "git push" and "git fsck". Steps to reproduce:
-$ mkdir test
-$ cd test
-$ git init
-$ mkdir -p subdir/.gitattributes
-$ touch subdir/.gitattributes/some-file
-$ git add touch subdir/.gitattributes/some-file
-$ git commit -m "test"
-
-$ git fsck
-Checking object directories: 100% (256/256), done.
-error in tree 3666f1677ba5c7ec7e69544510a0d8b99a71774a: =
-gitattributesBlob: non-blob found at .gitattributes
-
-git-push will give the same, at least when pushing to GitHub.
-
-Kind regards,
-Alexey
-
-> On 14 Jun 2024, at 17:35, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Alexey Pelykh <alexey.pelykh@gmail.com> writes:
->=20
->> I've stumbled upon a check that ensures that .gitmodules and
->> .gitattributes must be blobs,
->=20
-> Alexey, thanks for a report.
->=20
-> For those who want to take a look, unfortunately Alexey does not
-> show any error message or describe the end-user visible effect that
-> the "check" caused, so there is a bit too little to go on.
->=20
->> yet while I get why they should not
->> be e.g. a symlink, what's the downside of permitting (and ignoring
->> for the actual purpose) e.g. .gitattributes folder?
->=20
-> My knee-jerk reaction is that we probably can safely loosen by
-> ignoring non-blob .gitWHATEVER files, but security-minded folks may
-> be able to come up with some plausible attack scenarios if we did
-> so.
->=20
-> Comments from those who have worked on transfer time and runtime
-> checks on these are highly appreciated.
->=20
-> Having said that, the checks for .gitmodules and .gitattributes in
-> fsck.c first collect objects that tree entries with these names
-> point at into oidsets (this all happens in fsck.c:fsck_tree()), but
-> the actual check for these found objects are done only when they are
-> blobs.  Only when we encounter a blob object, these oidsets are
-> looked at in fsck.c:fsck_blob(), and if it is .gitmodules its
-> contents inspected (and may result in a warning or an error).  So
-> the "checks" Alexey reports may not be in the runtime or transfer
-> time checks done in fsck but something else.  I dunno.
->=20
-> Thanks.
->=20
+Thanks.
 
