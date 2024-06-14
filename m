@@ -1,144 +1,99 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544E6D52A
-	for <git@vger.kernel.org>; Fri, 14 Jun 2024 17:40:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3272D3D66
+	for <git@vger.kernel.org>; Fri, 14 Jun 2024 17:41:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718386813; cv=none; b=YNNJfCXTdyQC/BKNIPtfyI+Drr6sBv4LHFMFUcOCAwj2GRI6fnWgPTdh+i31/YclOXOjRX+ll4NRM+QaaX3fET9vT0N/jDDxK2EJSus5Ndd1SP8jlFYNNgQI4rneTSu4DlD1p8CFHmdIzlG/MG8Cd9TCcizfH9gw9HKW5WwWWmI=
+	t=1718386883; cv=none; b=cv3GiHdwrvI0qq57+vQJUYxmbeXyq/FuLdyRJRcUhmCumDbYpehuErT+1xsFbcrD4GI9pXVWZEgvIFTKSgZoFsZJ/xC5Do35HjitE+1bzcPyfs2Kf4imfNC7JI06ttpW+HDZiNcfusO/8FNv4OB3KGPtX/eqwG2cz/g5ZDgTG9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718386813; c=relaxed/simple;
-	bh=mM2UEAwsVle7/JyVHUk31UeRzfIP5xZRQXpp2PXRRvk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MuW2uxyaWAyZtINge1AyfJP617svDgj1H+Udha7bmmN5wUwFAdK13Ds6inVknVQptaC2o6oWIPtRBKvECwB7W5nI93P9Zat+WH9Dkm3qzjU+28hZHy/Ty1v6Ztn4D5l6cPhsuTwjT+LeG+2nb7OgzEungd/UDndWOhb6Nr6u1Qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uu6LyGgg; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1718386883; c=relaxed/simple;
+	bh=SSYBsavZS6O5elN5ZKaHq3+3tgQI5EJMkGlrAvpXsp8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fxDFRlzAH3+UZmIqrkLOLunl+5INWa5hp03eysk3+wYCRux2i3F1hHeWmpapZxZP3NSPxFA9jX0EUN5RPcGp0qDeoYJifvkbPk3Re6dhD9E2/s2a6jPMXKTjzEdp1+ZvsfYdRk//BmuvIOLnRhAIpgR0gB1bOCmERj4MGPudWAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H4IIgAw8; arc=none smtp.client-ip=209.85.166.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uu6LyGgg"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A8C061FD94;
-	Fri, 14 Jun 2024 13:40:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=mM2UEAwsVle7/JyVHUk31UeRzfIP5xZRQXpp2P
-	XRRvk=; b=uu6LyGggX/jOIhGaelsC7eFjRWxjpDnkyF+iI33n4tm+Z0Ypi3AG8t
-	k4RT3/9FBpBcaxSST9BOKBY35+YvhHRkobELng4vho+ph36vju9+pXbJ477q1Aao
-	MfkPKUEo/uJ390icZFadtXsQEBpY5JEMMZATbAyfl6aSXiCDVYXc8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A0E3B1FD91;
-	Fri, 14 Jun 2024 13:40:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CA1E71FD90;
-	Fri, 14 Jun 2024 13:40:07 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Christian Couder
- <chriscool@tuxfamily.org>
-Subject: Re: [GSoC][PATCH v4 0/7] t: port reftable/pq_test.c to the unit
- testing framework
-In-Reply-To: <20240614095136.12052-1-chandrapratap3519@gmail.com> (Chandra
-	Pratap's message of "Fri, 14 Jun 2024 15:18:00 +0530")
-References: <20240611083157.9876-1-chandrapratap3519@gmail.com>
-	<20240614095136.12052-1-chandrapratap3519@gmail.com>
-Date: Fri, 14 Jun 2024 10:40:06 -0700
-Message-ID: <xmqqo783fmo9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H4IIgAw8"
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-7eb895539e3so96333539f.2
+        for <git@vger.kernel.org>; Fri, 14 Jun 2024 10:41:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718386881; x=1718991681; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=brSvAq6m5bJHoxG/YxzMmw7sKpLdTL3q7ZESGbWrmNw=;
+        b=H4IIgAw8vMvf9CVggAxL4lufHDFffnW+GS1+9ZjTsj2027Dx7KOz/yZQKEDYEn+LbG
+         dRPY2edGGU8juyyx5gB5mPgZ/les0bEggsqx2kFOQaf97GakAGyQyqJXV+WHla8stig3
+         VhZh+Do8J/cL8qAulLva4Ou/B5GzXpZ1IZDNSuyGo1sVms4zn8eYlz1WP2d2yxVmB7xl
+         DaiVXGgAZ6iV/m6fWtzpQUYRgZk+e56sCzokOI9fJFnBCfUXFXnF7MZOMIYgts3Qhkwb
+         UTLl+YxpxrZ7pAtbqNq1JsUkqotnMlxLed8tPymKCHJ9AgB9vk+RpSgLKlGmXYBMNqIU
+         t5XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718386881; x=1718991681;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=brSvAq6m5bJHoxG/YxzMmw7sKpLdTL3q7ZESGbWrmNw=;
+        b=h0evMvtVGCwC5mtWeSzRlUHw7c3J/mUn8q4xYrimrfJ7iWVXSwbeMEcfsKvtda8aA6
+         DiK0I/3IPJPoYoaeQfJ0t2a5K7AcGihzEx/ozGipEhg6Jb4D3UTJzUbb5Lgx4b9JuEog
+         cUZfvIe3olLfMAYGJD3LzyGp4N+9mBAuafdgO1p2wN5hhNxFxl7TXCpFO3kew0mhb/H5
+         WXRSutc167oNq7EJfYinH2C+Jk4nY+r8da3XHSQ3WUfhJRZ33eAsXoQNRobMLXBCeDVf
+         D5q08q4FxOCqlgrJNuXEYXvQ+SbiBT8vmg0LwX7W0aJbrpY82jqFwi8ewRfRhIPtNVpq
+         cQow==
+X-Forwarded-Encrypted: i=1; AJvYcCXI2N4qZSdUc+5GMadFOj14wjpdBSZmzkwNAhV4TkNCR2s5JD+rgGq5JEpbzZm7ZdpxJ4ERuVSkiK3gCYIMeIzhdraZ
+X-Gm-Message-State: AOJu0YyYkhH0vOZIucW35A1BzLJuIet8ABEpUo5i/FnP1Q+Gdexj6dUE
+	b07DCMKI0pdotr0FvwCOIcbV0RgwsJsSaEVl7NVd5m6q+I8P70BMnhH4CS6U4h2iedYqIyOCy2M
+	54AKjbOYYDoAGAufgr2oNLTX6FerItg==
+X-Google-Smtp-Source: AGHT+IHNSulsYzaflud/o3oz9ffoVHGGu+47s/CbE95Rj7/o7lGlyk2mxe7UOs/78WbjQRba/kUYJFCjJERLRqKT/Ks=
+X-Received: by 2002:a05:6602:3426:b0:7eb:8afa:ecf8 with SMTP id
+ ca18e2360f4ac-7ebeb4d5eb9mr360400939f.11.1718386881197; Fri, 14 Jun 2024
+ 10:41:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 242FA7A6-2A75-11EF-B12E-C38742FD603B-77302942!pb-smtp20.pobox.com
+References: <cover.1717712358.git.me@ttaylorr.com> <20240608104821.GF2659849@coredump.intra.peff.net>
+In-Reply-To: <20240608104821.GF2659849@coredump.intra.peff.net>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 14 Jun 2024 17:41:09 +0000
+Message-ID: <CABPp-BFvGa5KhoBs6n+mzka9LoHe3-Gx0JeAYjDQjaB=TyXGkg@mail.gmail.com>
+Subject: Re: [PATCH 0/2] commit-graph/server-info: use tempfile.h in more places
+To: Jeff King <peff@peff.net>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Chandra Pratap <chandrapratap3519@gmail.com> writes:
-
-> In the recent codebase update (commit 8bf6fbd, 2023-12-09), a new unit
-> testing framework written entirely in C was introduced to the Git project
-> aimed at simplifying testing and reducing test run times.
-> Currently, tests for the reftable refs-backend are performed by a custom
-> testing framework defined by reftable/test_framework.{c, h}. Port
-> reftable/pq_test.c to the unit testing framework and improve upon
-> the ported test.
+On Sat, Jun 8, 2024 at 3:48=E2=80=AFAM Jeff King <peff@peff.net> wrote:
 >
-> The first two patches in the series are preparatory cleanup, the third patch
-> moves the test to the unit testing framework, and the rest of the patches
-> improve upon the ported test.
+> On Thu, Jun 06, 2024 at 06:19:21PM -0400, Taylor Blau wrote:
 >
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+> > Looking at the remaining uses of mkstemp(), the remaining class of
+> > callers that don't use the tempfile.h API are for creating temporary
+> > .idx, .rev files, and similar. My personal feeling is that we should
+> > apply similar treatment there, since these files are generated based on
+> > .pack data, and thus keeping around temporary copies is unnecessary whe=
+n
+> > they can be regenerated.
 >
-> ---
-> Changes in v4:
-> - Add a commit message for the second patch
+> And actual loose object and pack files themselves, I think.
+[...]
+> So I'd argue that we should just treat object/pack tempfiles like the
+> rest, and delete them if they don't make it all the way to the rename
+> step. If we really want to support debugging, we could perhaps provide
+> a run-time knob to leave them in place (and maybe even have it apply to
+> _all_ tempfiles).
 >
-> CI/PR for v4: https://github.com/gitgitgadget/git/pull/1745
+> But that is all way beyond your series, and I don't think there is any
+> urgent need to tackle it.
 
-Hmph.
-
-A larger question is how pristine we want to keep the "imported
-source" that is reftable/* stuff.
-
-Obviously we are getting rid of some parts of it (like pq_test.c
-here) so our "fork" will no longer be usable, without pulling some
-of the stuff our project offers from outside that directory, by
-outside people.  This concern is shared with other topics we saw
-recently to move the unit tests bundled with the reftable library to
-t/unit-tests/.
-
-But this series brings in another twist that makes it a larger
-question.  If we are willing to butcher our copy of reftable library
-to a shape that cannot be reused by outside folks, do we still want
-to use reftable/pq.c instead of getting rid of it and use the other
-prio queue implementation we use elsewhere in our system?  If that
-will be the longer term direction we want to go, then porting the
-unit tests for reftable/pq.c may end up being a wasted effort.
-
-So, I dunno.
-
-> Chandra Pratap(7):
-> reftable: remove unncessary curly braces in reftable/pq.c
-> reftable: change the type of array indices to 'size_t' in
-> t: move reftable/pq_test.c to the unit testing framework
-> t-reftable-pq: make merged_iter_pqueue_check() static
-> t-reftable-pq: make merged_iter_pqueue_check() callable
-> t-reftable-pq: add test for index based comparison
-> t-reftable-pq: add tests for merged_iter_pqueue_top()
->
-> Makefile                     |   2 +-
-> reftable/pq.c                |  29 +++--------
-> reftable/pq.h                |   1 -
-> reftable/pq_test.c           |  74 ----------------------------
-> t/helper/test-reftable.c     |   1 -
-> t/unit-tests/t-reftable-pq.c | 155 +++++++++++++++++++++++++++++++++++++++++++++
-> 6 files changed, 166 insertions(+), 96 deletions(-)
->
-> Range-diff against v3:
-> 1:  3c333e7770 ! 1:  1873fb02ce reftable: change the type of array indices to 'size_t' in reftable/pq.c
->     @@ Metadata
->       ## Commit message ##
->          reftable: change the type of array indices to 'size_t' in reftable/pq.c
->      
->     +    The variables 'i', 'j', 'k' and 'min' are used as indices for
->     +    'pq->heap', which is an array. Additionally, 'pq->len' is of
->     +    type 'size_t' and is often used to assign values to these
->     +    variables. Hence, change the type of these variables from 'int'
->     +    to 'size_t'.
->     +
->          Mentored-by: Patrick Steinhardt <ps@pks.im>
->          Mentored-by: Christian Couder <chriscool@tuxfamily.org>
->          Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
-> 2:  bf547f705a = 2:  3cccf8266a t: move reftable/pq_test.c to the unit testing framework
-> 3:  7dd3a2b27f = 3:  4b63849694 t-reftable-pq: make merged_iter_pqueue_check() static
-> 4:  c803e7adfc = 4:  3698a7189f t-reftable-pq: make merged_iter_pqueue_check() callable by reference
-> 5:  0b03f3567d = 5:  d58c8f709e t-reftable-pq: add test for index based comparison
-> 6:  0cdfa6221e = 6:  69521f0ff7 t-reftable-pq: add tests for merged_iter_pqueue_top()
+Regardless, it provides more context around the exact questions I had
+while reading the series.  Everything in the series looked fine to me,
+but I wondered about packs and loose objects and why those are
+different.  Anyway, I like your suggestions as a long term goal.
+(Perhaps handling packs and loose objects with tempfiles could serve
+as good microprojects?)
