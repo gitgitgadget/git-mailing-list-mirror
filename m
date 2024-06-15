@@ -1,147 +1,87 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE133C482
-	for <git@vger.kernel.org>; Sat, 15 Jun 2024 15:02:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6398B481B3
+	for <git@vger.kernel.org>; Sat, 15 Jun 2024 16:33:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718463740; cv=none; b=ESAVg8caI93KIpAp6P+nqtjf63LAjwQ03msB2cYWD7HpDqN01FidOpUPnAExclIXJMX5bTfaKteCC3gRIHqG6bLpqL4/CayI4Oh7KaKELyiCUBCmMoSUiex8/hRGPRQG/7iJUMZF5lHZ+PkUKq+EEO1mMLT7bCfwug7MeTtuC8Q=
+	t=1718469184; cv=none; b=SLJ0SYtmgRyMOIfYInGcOlpIieWpWCqFCXqWs/Y2Z1VSFDzyNBTt22zdpTUGoLxxKXVPUHUFjTxUfzBpL0GRM1YZXTZlS/dZOxFnewvDv9Ui8ebyEKNnFzQvWAqOlu13lHCJvpqt5gJ+YkMWB42IjZ1eFpDTAOP3z4EmcvFbrG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718463740; c=relaxed/simple;
-	bh=lKFeRols7KBqWbXCnhDJ6ZWdhetCuxlAi2g2TvBL+nQ=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sI5V9oEBAAk9I4admrWXEFZ5cGOsF4b76uV1lIYQhWyOqJINn/JXtq4ENU88ENfEI7bRRlU/fHteBWnSN2dg04mMc/vqGwOF8gh3f1Yye2eKxCJLNWN6GRx2i/BQrCauIAiC1QoBHcQvAo58HtC3ZMaMgPx1leoOvK8FMyikBUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DFYMifCE; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1718469184; c=relaxed/simple;
+	bh=OYN6nEfKvgkQNxbwJf2U3Vt649abKSCb8aCNPOhDR/c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=buWP3S8CtOFdx5v5P64oWYiLUzNIwBdMdtEkJv0IfZExjITTxrBIkckqwjRAsoJGyT3BsXIVmCYNwL3bm5po5KoHVN5S9EEJx7sSS6PymBEqGh9/gzCEA0kGJJBerDA2Cz7zv1NigBb0qE+SQbQNM48nOQHpAuud8IRgCwsbb4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DFYMifCE"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2ebd95f136bso33575791fa.0
-        for <git@vger.kernel.org>; Sat, 15 Jun 2024 08:02:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718463736; x=1719068536; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0F05udSx9mlfbMkxgod9UQpQUzrrz5HPJB3N3W6bsUs=;
-        b=DFYMifCEmc5xulR/0JB0JWmZSkkV4dLWO/L8kPMLwj+c5GqdZBsElKvgA8sZVc9+7f
-         JSGEgX3W5HOtzPPM25yIvrbUoCsy3t1u2YlgSYwKpZTaBILhG0gVXkKOvghvQn1Gbn86
-         QOol10FCQxyxi6WLIcsgsd4r/xBDzsimvg4QkxdrIklzbVkhKGFFbXWrYejXLraIiyV+
-         o3LQSodKbA5zYpVh3sCV6VtadUU+pTnEpCLezGG3iY5qO6TZ6lQZzDmYMiUjiBUGIz3p
-         4d/oNvT6Zzg0fMo+iRnHieFk3ce98+kcyqa5OzEwwB/x+K9DUlaEccQV1xd2DCdTth2k
-         K84w==
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4415e623653so30983141cf.1
+        for <git@vger.kernel.org>; Sat, 15 Jun 2024 09:33:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718463736; x=1719068536;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0F05udSx9mlfbMkxgod9UQpQUzrrz5HPJB3N3W6bsUs=;
-        b=gp8eisiVsPZ/Jkku9fRbN7mGUxnnLRLYYZlPACd/suoc1+GyDLJRnz/jJm2sYOeC8x
-         NYrP/hH3v6eehD/cF31vg+zo1n/5l6eKEtHODe3LH3Z4HaTLmyPsc2k4jmdwS5fk+KMq
-         p5g0UbUgIGN1Ur5TfY/MEfJ7RN3Ji1b1jfTuYiNGpFn4rPvtLi4P6CGlCa9ec7lKCH1q
-         XTb6X9tATC6ULN1FFVvUKrq5O8oNdVaOz+lbUuh2fFysQ0AAq+6ojfiNwG4X2XrKNJn/
-         leu7cXIye4Ns03aumiEiyMRn417Yo5AMqFiAYOFsjb/g1S2OD+I/ZVNQUG3Y9YFYNk+O
-         yqPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXnq9KV1OacWgM4eXuXQRBm8+CNYa8dhyjTL5XnY87ngCFyErWVGO9ebXYB+PH7aAn6NehblDHKGVGTmI8AtTEnXiRl
-X-Gm-Message-State: AOJu0YymCnJfPiBTKiBRP079JB/PdWwbDzdamJmT7TMSkdsZdL6GXqpW
-	npM63wZkSynxElSuXF4LekJgThGCas4fDaNiKeZLjkDzzAlCMi/z0EI4Uqja210edgCzjk9xcv1
-	/Dt2wO40og8ZoRN+5SW36Knx1/QE=
-X-Google-Smtp-Source: AGHT+IFelZxzms7/VT+qVBCs6yOjIprv1PzT5ukf4zdX1XY8ATaP57wh6zUEaa+fNeD0nLmpX2uwYAv11fmSfWcjzBU=
-X-Received: by 2002:a2e:b052:0:b0:2ec:174b:75bf with SMTP id
- 38308e7fff4ca-2ec174b77ccmr30655281fa.4.1718463736334; Sat, 15 Jun 2024
- 08:02:16 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 15 Jun 2024 08:02:12 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240612085349.710785-5-shejialuo@gmail.com>
-References: <20240530122753.1114818-1-shejialuo@gmail.com> <20240612085349.710785-1-shejialuo@gmail.com>
- <20240612085349.710785-5-shejialuo@gmail.com>
+        d=1e100.net; s=20230601; t=1718469181; x=1719073981;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AtGGvKfn/4BB9x/avge4Y6zNMeF+Dwzk9lhB1ag5OGI=;
+        b=N/rcwh+cNZ6Ycf2+uMLMZH+zXkQ8oLpxuLdZkHEmCKfaIB1nxCxOj17/GkPzqnyh6p
+         aqiuG3Ug3Z5ctKuj+FiMi6PvjlhqJbwWKmyzGCm0ztd0JouOV/idEzxJN2BaqOThb2wQ
+         PySGuGf2LVHK2p49ygbA5yvhJgluofQV/oOsMe3Re/AAr6zRTUQgWvv2kVmg59NkXQT6
+         rjGvQMBXB6JZhe8vj5uy26OFomEUmjk0T3GXVeQzbh1QkAKd7XmSUN12KZUv+8g92a2a
+         pm0Ymjzdhp4VlKYwzIRCaAnrwqzFrOFV8NaRz7DebVIoZkRfLKlnZYM217QEaxhHLIY+
+         Ogag==
+X-Gm-Message-State: AOJu0Yz+0YLcvmyck+MQgbPtplwRnApuC+ACAPa0EBMHDuexA9mOnukD
+	YsMbb+pugbF0GUcItDaFgMdSG+4dbq0E404K/EXOsmGlotIYen+XfMs6LR/ZPHyfW6P4h/BKwH2
+	DnoZtbMXLKZE/m59ssI0aM1tKNAU=
+X-Google-Smtp-Source: AGHT+IHWS0yV9fDbbpwAepdGfcNXUkAJNsWc/JxWdvlwh2VjBjYEPR/wKM8v9ISJL/KWS2ljzPKywBgdDohyTrikoHI=
+X-Received: by 2002:ad4:5f87:0:b0:6b0:72ac:b306 with SMTP id
+ 6a1803df08f44-6b2a33a9d16mr159703886d6.1.1718469181311; Sat, 15 Jun 2024
+ 09:33:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 15 Jun 2024 08:02:12 -0700
-Message-ID: <CAOLa=ZRQX+7gYrrPZXQtTy=yq+oBGvyWGYXtwMZatpm+VSaUyw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v2 4/7] builtin/fsck: add `git-refs verify` child process
-To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: multipart/mixed; boundary="000000000000906a37061aef04e7"
-
---000000000000906a37061aef04e7
+References: <20240615085345.47278-1-serg.partizan@gmail.com>
+In-Reply-To: <20240615085345.47278-1-serg.partizan@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sat, 15 Jun 2024 12:32:49 -0400
+Message-ID: <CAPig+cSRkAFu8hnCDT_Fcih9kpiJXsmHZLTdAEdHYjS94wntYA@mail.gmail.com>
+Subject: Re: [PATCH] Fix default font scaling
+To: Serhii Tereshchenko <serg.partizan@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-shejialuo <shejialuo@gmail.com> writes:
-
-> Introduce a new function "fsck_refs" that initializes and runs a child
-> process to execute the "git-refs verify" command.
+On Sat, Jun 15, 2024 at 4:54=E2=80=AFAM Serhii Tereshchenko
+<serg.partizan@gmail.com> wrote:
+> This fixes font scaling for default fonts, where we don't set font
+> sizes explicitly.
 >
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> Signed-off-by: shejialuo <shejialuo@gmail.com>
+> Without this, on 4k monitor with text-scaling-factor configured in Gnome,
+> labels, buttons and settings are using very small font sizes. (Probably,
+> not just Gnome but anything that sets custom DPI).
+>
+> Signed-off-by: Serhii Tereshchenko <serg.partizan@gmail.com>
 > ---
->  builtin/fsck.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->
-> diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index d13a226c2e..10d73f534f 100644
-> --- a/builtin/fsck.c
-> +++ b/builtin/fsck.c
-> @@ -896,6 +896,21 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
->  	return res;
->  }
->
-> +static void fsck_refs(void)
-> +{
-> +	struct child_process refs_verify = CHILD_PROCESS_INIT;
-> +	child_process_init(&refs_verify);
-> +	refs_verify.git_cmd = 1;
-> +	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
-> +	if (verbose)
-> +		strvec_push(&refs_verify.args, "--verbose");
-> +	if (check_strict)
-> +		strvec_push(&refs_verify.args, "--strict");
-> +
-> +	if (run_command(&refs_verify))
-> +		errors_found |= ERROR_REFS;
+
+I'm adding Johannes Sixt <j6t@kdbg.org>, the new git-gui
+maintainer[*], to the Cc: list.
+
+[*]: https://lore.kernel.org/git/0241021e-0b17-4031-ad9f-8abe8e0c0097@kdbg.=
+org/
+
+> diff --git a/git-gui.sh b/git-gui.sh
+> @@ -810,6 +810,16 @@ if {[is_Windows]} {
+> +# For whatever reason, Tk does not apply font scaling to default fonts,
+> +# but applies font scaling when setting size explicitly.
+> +# Default -size 10 is still 10, when you look at it with `font actual ..=
+.`,
+> +# but explicitl -size 10 becomes 10 * scale factor.
+
+s/explicitl/explicit/
+
+> +# So, we need to configure fonts to use their default font sizes, but sc=
+aled.
+> +foreach font_name [font names] {
+> +       font configure $font_name -size [font actual $font_name -size]
 > +}
-> +
-
-At first I thought we need to call `child_process_clear()` here, but
-seems like `run_command` does that internally.
-
->  static char const * const fsck_usage[] = {
->  	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
->  	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
-> @@ -1065,6 +1080,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
->
->  	check_connectivity();
->
-> +	fsck_refs();
-> +
->  	if (the_repository->settings.core_commit_graph) {
->  		struct child_process commit_graph_verify = CHILD_PROCESS_INIT;
->
-> --
-> 2.45.2
-
---000000000000906a37061aef04e7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 5cee8997cf0edfdd_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1adHJQSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN3dxREFDV294NGNQWWVmdXhSUWtqOThzWHBFQ2pPSApwem5jUjdZSko4
-eEJsTlVlaWhMVUJPaFlXelplS2Q4WGJLTW96Y05Mbyt3TjFHTi9PRmdtaUhvamplS1crSFFBClFh
-NEdrWkVzbWExbEpVRlNNbkdYNm84ME9UbHNjeW9Vd242U2JPTjZpNmU4UnoxSkMzOERUNmxOMDdh
-NEdFWG0KV0NFOGRtOVdZeHlJNXJCUWNTZ2ZkNi9XeWkrNHFiMGxGck50NHpmSzd0VHNrMzZyVm1S
-UTdOOHNBS2dlejZGSQpzZ1lRaGpGektaZXBkdUJKc3h3YStmVzZxTVNpVXRUdE1ab2k4MVNvVHdL
-ZXFSdG4xT0tEZ3g3NFJGYjEyU0hYCnBEL2g4aHRPYWRxQmpDSUpGQVB0WUVydFhBeXRBamp0bm5C
-amlXMVFiVk1lMHBpM28yMm9pRVVWMUVHMHZpdHcKanYzODZLMURNMUp6dmxXTjdLVENqdmtrdURD
-bnFQUTdBWEFiUmk2cU5HMU44TEpZY1Z6RE9DYjFFNjMwOFlEQQoxeW9Fc0d3SzVqeHVQZW4zQmd3
-VTd6bTh6cTQ4UElZd0J2R1J6M1lqZ2VKWHpaWHIzRGdTSHpLM1ErMGpzS3IzClhYVko5UkJPOXdx
-UXY3SjkwOENmcHZKZGVRSzNPTTVvdmhha2trTT0KPW5XSEkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000906a37061aef04e7--
