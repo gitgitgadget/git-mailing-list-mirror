@@ -1,140 +1,209 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163211849
-	for <git@vger.kernel.org>; Sat, 15 Jun 2024 10:22:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D884C3C28
+	for <git@vger.kernel.org>; Sat, 15 Jun 2024 11:47:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718446928; cv=none; b=OgfZEWBu+EQ5XofeFxodNstPCYBkVYtgHvS/Yewe7yYoftq/sTd9stCvjQCe1TXsMzDjPdEtPz4Emkzens3PP+/xO/bLVzw6TRN8kUGsEe75VqWY0Fo51F+eYd3ZPRX1JWYPZZWmjvPBEXKODrYwer2Xc8nibMp24+N166O/QeQ=
+	t=1718452079; cv=none; b=i6h6yYp2s7JSNNRwzk34EGWb4GUXN6Tj9zpqSO5gRkuw9Qydq3rRd+3ohaVuDmKksu4lcUGe2bSvfk44wmuUg5SSgyniLn32wir+zlLMQe5Vi+cxCnidoPrv9xijEWBRL+NPE4hV7e1abCfM5ohNkZhbUzELbhYjqFC7bilREjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718446928; c=relaxed/simple;
-	bh=Y/WOK6B4TWktwxjfszkYLBcC/W5i8Q1qk1WuyK5OMaU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Iu1IQv5uq+FrYdLJfQiRYWa4gZYuMEkT0kuk0G9wcN7Ayzql24VTOkNy4cw8iNkhZh9M+FbsCPXQqWJxXpIg25lQDRu4JneGhbTKhW5cGkY7bmQbcmJZBCABGXKSQeTxoUFCsrj2pKwvdtWMVIDYcG5u8ZzXMCQbIGFOLUhQ0mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HyMyjxCj; arc=none smtp.client-ip=209.85.215.179
+	s=arc-20240116; t=1718452079; c=relaxed/simple;
+	bh=632D6PMNe/nHUw+trjOt/XixCq4ewbikySEB5REK0Fk=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d6sTQgoyoFmfbwdp15WCUf2wYtyKJqor7pZ7/RigVp/bME9ZAmya2HCmEa/Z/iJVkzbFu9f8Cn8/WBas1cr1Q0xIJndTj8W8atMQXZJmJC6gFf0HNpbriX70MKRmyfKikfVZhefuzGe7TtyBusIvh6MKXWRaNB+WxoSPIZEKUQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y2vQUy5R; arc=none smtp.client-ip=209.85.210.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HyMyjxCj"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-6e9f52e99c2so2286574a12.1
-        for <git@vger.kernel.org>; Sat, 15 Jun 2024 03:22:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y2vQUy5R"
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-6f9a4f9923aso1614302a34.0
+        for <git@vger.kernel.org>; Sat, 15 Jun 2024 04:47:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718446926; x=1719051726; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GrQnAnQpgFSHZ0erFWBoI94kCITDsuikhj2sjk3nKHA=;
-        b=HyMyjxCj5MQex3OpIW+c1qHCTmyl+k8veTnzfexEetgA+kfR+PvrQPOouZbtBB+Er+
-         G/AfJ/HRJdosUJA2nc74FYpzWW4zxhf0a1PPvNGJXstFUEwhFkNcr3WRycsWrM5WccHv
-         8DM1YuakgS3QZgAl1RLgNq1ekDlz8QVw9luHV0FxrqZL9dovtxAsJOX+tShzy9OTJzXw
-         wticbOcABU9/O3AB80T9rsojSeEYccPlixe+tiMWIPoOZzYguptTIqgC+wQRYMNRlq/B
-         m1T7yQDXw8XUZAbZQ0RD95GQd/gsYMOMuQnw/E7japxC0ZGQBOamVPG1hGBN0RcHGcmJ
-         aJCg==
+        d=gmail.com; s=20230601; t=1718452077; x=1719056877; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OMNZARZsEWDKdM8OkRsGIlpS72gEt73TRWHVu/H2lZc=;
+        b=Y2vQUy5RJCvUlnEO36oE7YHCoCtY40PHGvgfI+bdBY25S9EoH8hovpTWuq/KpTHPPa
+         Tp8zGXrUj0enuSivI0JMwTXVgn3FeuEIce6kDoBEZfu15vkmT7H28ttCyROlWGcNqdvJ
+         q+dlYtXM//UIKwSA5f4sKXOZ7yyVuwS4tDvUanvq9GLhcUjFg/Vh+CVenMecM95EenCw
+         FViHKHVI0aaKnI41hIX5wbB1Pbduapjduo1hwoWzYQb9ouIPkr/CTO8YUqDrs3mvVbJJ
+         qskPM8PoE7/kHD4dVwhEM2Jfgcr2phJIb7oYLCpoqRghpNZSgWse4wX4FKTJLhNNnkLw
+         yTZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718446926; x=1719051726;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GrQnAnQpgFSHZ0erFWBoI94kCITDsuikhj2sjk3nKHA=;
-        b=GzroyFkOyLmKdt/GZnKsXrKLDR/c58DopD8XxqS7GJ6syP7pNAj9zY7zEbfu9dTTfN
-         FjkkYCjaUGeHv8vZG6mzIEml/jbx8WjeMA9+YUfEw+ECxQ1JIudnyvmpx3U6tB9divmV
-         eJfIMsS5clrKTb6uXwem4XMZuUl42gJRbKImVtZc3hmOjHjjh3t6rEn13b1qDUqcf4HQ
-         qNZ/hwhe34W3RlaMtsQYVRurSDlrW8eU8nRESWlYIgqP7z/RyYrAeG3wQg5vAv8wO0Ye
-         MX4udBh9mrXJOzyqXDusui0o41HuJ+qW1gE7se4uDK1RwDvjKSzLYv2tGiThE4kXBNVD
-         IKFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXH2jZhH5mExzPSqOslAl/87Y5fmHxgNBnez4E2SDRkwT0NAmdAL26rS5putlH7aQwaaZ2i4pKvwfLuM+pYEd78UYIK
-X-Gm-Message-State: AOJu0YzWrzJjxf08hgNn+wWWvgyyNr5h1SyBosL9K2Hz0c6gGZPi5r2Z
-	mNJR7SqtjEhqWeVmksYDn4A7NrEc70m7e3VGBdRAIPmKZgW++qjAkMmgs7lP8wbgk/u0JFKXvdB
-	ccMlrhwMcD2oNr582idG7IzK4i9E=
-X-Google-Smtp-Source: AGHT+IEYhZjk3DmW7Ag0y8eJtgCjMqgt/7dcCTrCHbD4PZlFLQxhbCn+sTfBA0YTXUqc6mQQzZdjdXp00+wGlbBqR3s=
-X-Received: by 2002:a05:6a21:3987:b0:1b1:ed95:c9b1 with SMTP id
- adf61e73a8af0-1bae800c4b2mr6231057637.40.1718446926481; Sat, 15 Jun 2024
- 03:22:06 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718452077; x=1719056877;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OMNZARZsEWDKdM8OkRsGIlpS72gEt73TRWHVu/H2lZc=;
+        b=EY1PwCsnHbbQclchjLJpLOCCRXcXJu6SP95uMwy1V9zCAyD/LzB4JJXjvn6jUtwrw2
+         TQ/BeXP7dNPKdO+kDGS7LkiVtPLL/kPdPMihA7lQlUuWM/RZhQ0Wr4sR20+5VQeYn523
+         LVRbm4M/tyqWPTefhcqnKRnCNtT/QMsFRdrWZ5/Irvk1dk9o+lhNqTi/CUn+pNJ1Cbn6
+         Q4KkWnL/PWSUcX3b6keN6RVYnnZBjMrGChuRk5Amooi4ni/Xu3iwYqLnMI18bi5jDhDu
+         AO5z1gb60LLYNWIADHI6oCrDHqJ6iWVaVTJ7K9hfUTlU78KzUIQwou4WmWHBp5fmOKIx
+         mdiQ==
+X-Gm-Message-State: AOJu0YyhBJ0o+5WSLZkT2Z0ES9vHZqYL/VJ1ixfJQufDHI6Xmf9b5F5q
+	l79gCQi78LbtAaR09e1E+wlbD6zDd1s3ewCD18HHgtLLz1+buSk2SaW8OnOB2hZkH4a6lm8ntDC
+	U6qDooHPw37HMZ5MKwUYOW7jnq4vXAogI
+X-Google-Smtp-Source: AGHT+IE98iTWGUZkue/SWcMyfb0Zib9I7Z+CVh/QUZdJsn0RdYi2d1YtiiCNEinz43NR+5K5KUvcxrUIbAkAJnmUVbs=
+X-Received: by 2002:a05:6870:9725:b0:254:ada1:aa29 with SMTP id
+ 586e51a60fabf-258429d808amr5373445fac.27.1718452076668; Sat, 15 Jun 2024
+ 04:47:56 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 15 Jun 2024 07:47:54 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqwmmsiakq.fsf@gitster.g>
+References: <pull.1726.v2.git.git.1717369608923.gitgitgadget@gmail.com>
+ <pull.1726.v3.git.git.1717719428510.gitgitgadget@gmail.com>
+ <xmqq1q58ejnw.fsf@gitster.g> <xmqqcyorcldv.fsf@gitster.g> <xmqqwmmsiakq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALyzih__9sZD31SVMECcxk55+MAMjkfgpLzecoHo0xUoauerqA@mail.gmail.com>
- <CAPig+cRGnAcfpr4JWp9WWC0b4yvjKx-_0up_S2iaXCBxgcSLjQ@mail.gmail.com> <xmqqbk43dyln.fsf@gitster.g>
-In-Reply-To: <xmqqbk43dyln.fsf@gitster.g>
-From: Rickard Andersson <rickard.a1992@gmail.com>
-Date: Sat, 15 Jun 2024 12:21:30 +0200
-Message-ID: <CALyzih-5qtezCnizj07Gi0MyoeweXU1Kw5-gnv7YwSg0DC965w@mail.gmail.com>
-Subject: Re: git grep bug replacing - with :
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Date: Sat, 15 Jun 2024 07:47:54 -0400
+Message-ID: <CAOLa=ZT_ZSV7gCexZhcKBvqJCva5UEY+66TgqDUoBo=q=pOqzQ@mail.gmail.com>
+Subject: Re: [PATCH v3] date: detect underflow/overflow when parsing dates
+ with timezone offset
+To: Junio C Hamano <gitster@pobox.com>, darcy via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, darcy <acednes@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000980d78061aec4d80"
+
+--000000000000980d78061aec4d80
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hello,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Kudos for the very quick response times, nice!
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The CI build on Windows tells me that my worry was warranted.
+>>
+>>   https://github.com/git/git/actions/runs/9424299208/job/25964281907#step:4:643
+>>
+>> (GitHub seems to show the breakage details only to those who are
+>> logged in, so you'd need to be logged in to visit that link)
+>
+> So here is what I accumulated in SQUASH??? patches on top of your
+> topic while waiting for an updated version to unbreak the CI.
+>
+>  * The "end of git time" timestamp does not fit in time_t on 32-bit
+>    systems, so I updated it to use timestamp_t at least for now.
+>
+>  * t0006 has two tests that use TIME_IS_64BIT,TIME_T_IS_64BIT
+>    prerequisites; I introduced HAVE_64BIT_TIME to simplify them.
+>
+>  * nobody passes $4 to check_parse to tell it to expect a failure,
+>    so I removed it.  It always expects success.
+>
+>  * check_parse now honors a global variable REQUIRE_64BIT_TIME that
+>    is used as the prerequisite to run its test_expect_success; the
+>    "near the end of git time" tests you added use the mechanism to
+>    pass HAVE_64BIT_TIME prerequisite.
+>
+> The last one is a bit questionable, as it only "punts" on 32-bit
+> systems, instead of making sure we get the expected error messages.
+> I think it is OK to punt here and have a separate test that checks
+> timestamp around year 2040 for that condition.
+>
+>  date.c          |  2 +-
+>  t/t0006-date.sh | 20 ++++++++++++++------
+>  2 files changed, 15 insertions(+), 7 deletions(-)
+>
+> diff --git a/date.c b/date.c
+> index 95776c8a92..bee9fe8f10 100644
+> --- a/date.c
+> +++ b/date.c
+> @@ -870,7 +870,7 @@ static int match_object_header_date(const char *date, timestamp_t *timestamp, in
+>
+>
+>  /* timestamp of 2099-12-31T23:59:59Z, including 32 leap days */
+> -static const time_t timestamp_max = ((2100L - 1970) * 365 + 32) * 24 * 60 * 60 - 1;
+> +static const timestamp_t timestamp_max = (((timestamp_t)2100 - 1970) * 365 + 32) * 24 * 60 * 60 - 1;
+>
+>  /* Gr. strptime is crap for this; it doesn't have a way to require RFC2822
+>     (i.e. English) day/month names, and it doesn't work correctly with %z. */
+> diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+> index e8fdf361ad..fd373e1b39 100755
+> --- a/t/t0006-date.sh
+> +++ b/t/t0006-date.sh
+> @@ -8,6 +8,11 @@ TEST_PASSES_SANITIZE_LEAK=true
+>  # arbitrary reference time: 2009-08-30 19:20:00
+>  GIT_TEST_DATE_NOW=1251660000; export GIT_TEST_DATE_NOW
+>
+> +if test_have_prereq TIME_IS_64BIT,TIME_T_IS_64BIT
+> +then
+> +	test_set_prereq HAVE_64BIT_TIME
+> +fi
+> +
 
-I tried to reproduce this in a more isolated way and did Eric's setup
-where the issue was reproduced again. However, I realized I should
-test this without my gitconfig and could then isolate the issue to the
-pager delta. I then noticed the issue is reported there already:
-https://github.com/dandavison/delta/issues/1674.
+This does make sense, I did check and noticed that the two are always
+used together everywhere, so outside of these patches, it perhaps would
+also make sense to combine them altogether.
 
-So this is clearly not an issue in git, I should have tried without my
-gitconfig before even sending this bugreport so I hope I didn't
-take too much of your time.
+>  check_relative() {
+>  	t=$(($GIT_TEST_DATE_NOW - $1))
+>  	echo "$t -> $2" >expect
+> @@ -80,14 +85,15 @@ check_show raw "$TIME" '1466000000 -0200'
+>
+>  # arbitrary time absurdly far in the future
+>  FUTURE="5758122296 -0400"
+> -check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400" TIME_IS_64BIT,TIME_T_IS_64BIT
+> -check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000" TIME_IS_64BIT,TIME_T_IS_64BIT
+> +check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400" HAVE_64BIT_TIME
+> +check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000" HAVE_64BIT_TIME
+>
+> -check_parse() {
+> +REQUIRE_64BIT_TIME=
+> +check_parse () {
+>  	echo "$1 -> $2" >expect
+> -	test_expect_${4:-success} "parse date ($1${3:+ TZ=$3})" "
+> -	TZ=${3:-$TZ} test-tool date parse '$1' >actual &&
+> -	test_cmp expect actual
+> +	test_expect_success $REQUIRE_64BIT_TIME "parse date ($1${3:+ TZ=$3}) -> $2" "
+> +		TZ=${3:-$TZ} test-tool date parse '$1' >actual &&
+> +		test_cmp expect actual
+>  	"
+>  }
+>
+> @@ -133,6 +139,7 @@ check_parse '1969-12-31 23:59:59 Z' bad
+>  check_parse '1969-12-31 23:59:59 +11' bad
+>  check_parse '1969-12-31 23:59:59 -11' bad
+>
+> +REQUIRE_64BIT_TIME=HAVE_64BIT_TIME
+>  check_parse '2099-12-31 23:59:59' '2099-12-31 23:59:59 +0000'
+>  check_parse '2099-12-31 23:59:59 +00' '2099-12-31 23:59:59 +0000'
+>  check_parse '2099-12-31 23:59:59 Z' '2099-12-31 23:59:59 +0000'
+> @@ -147,6 +154,7 @@ check_parse '2100-00-00 00:00:00 +00' bad
+>  check_parse '2100-00-00 00:00:00 Z' bad
+>  check_parse '2100-00-00 00:00:00 -11' bad
+>  check_parse '2100-00-00 00:00:00 +11' bad
+> +REQUIRE_64BIT_TIME=
+>
+>  check_approxidate() {
+>  	echo "$1 -> $2 +0000" >expect
 
-Best regards,
-Rickard
+I think this patch looks good. I also think we should probably look into
+fixing the 2099 limit overall. I think Jeff already posted a patch to do
+the same already:
 
-On Fri, 14 Jun 2024 at 23:05, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
-> > On Fri, Jun 14, 2024 at 3:22=E2=80=AFPM Rickard Andersson
-> > <rickard.a1992@gmail.com> wrote:
-> >> What did you do before the bug happened? (Steps to reproduce your issu=
-e)
-> >>    Added 2 files to my repo with words in them
-> >>    text-file.txt
-> >>    text-file-file.txt
-> >>    ```
-> >>    git grep -l ExtremelyInterestingWord
-> >>    ```
-> >>
-> >> What happened instead? (Actual behavior)
-> >>    I get
-> >>    ```
-> >>    text:file.txt
-> >>    text:file-file.txt
-> >>    ```
->
-> If the command line were "git grep -l <pattern> text", and there is
-> a branch whose name is "text", and in the top level tree of that
-> "text" branch's commit there are file.txt and file-file.txt both of
-> which have the pattern, the symptom observed may appear.
->
-> But ...
->
-> > I am unable to reproduce this problem:
-> >
-> >     $ git version
-> >     git version 2.45.2
-> >     $ git init foo
-> >     Initialized empty Git repository in .../foo/.git/
-> >     $ cd foo
-> >     $ echo ExtremelyInterestingWord >text-file.txt
-> >     $ echo ExtremelyInterestingWord >text-file-file.txt
-> >     $ git add text-file.txt text-file-file.txt
-> >     $ git commit -m msg
-> >     [main (root-commit) 765269f] msg
-> >      2 files changed, 2 insertions(+)
-> >      create mode 100644 text-file-file.txt
-> >      create mode 100644 text-file.txt
-> >     $ git grep -l ExtremelyInterestingWord
-> >     text-file-file.txt
-> >     text-file.txt
->
-> ... with your (i.e. Eric's) reproduction setup, which agrees with
-> the way how I interpreted the problem description in the original
-> report, I do not see there is any other possible output from it.
->
-> Thanks.
+https://lore.kernel.org/r/20240604093345.GA1279521@coredump.intra.peff.net
+
+--000000000000980d78061aec4d80
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: c9c7105fb21aab86_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1adGYyY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK2p4Qy93Skc4V1doWjZKOU9jYlZDYTluU3lDMGc4VwowSCtLNlpaTFV6
+aUlXS1dBaDVadTY0N3d3RFZMZUxwY0VPUHJZRkF3OWhGZ1NVdS82b25vM0ljMnhGUFY3SFNYCjcr
+a0ovWUhqWkN5QVVXS1RTcHQ1eU9RUWdZUHd3LzZ6ZUMxTXh1ZHlabFZWMm5EOTNjTEpWbXFuQ1ND
+cnpSY1YKR3p5b2xwb3dpTFVzZ3lUdXR0K1laN0FUUDdyNHE4ekZMUHNLdERZUkhkZ3VYSVYxcFZR
+NXpTNkU2MzJ6K1ZmTgp0ek5DY2szTFlJcG9xbytxaTZBWDVSbXFESklpNWNyMUdSQms4Rjdtb250
+STJOK1Z2djR0cE5SSG5kNUhwdlBBCm9qWTFacCtndGVJZGVwRFoxdm1peU81S0R1M09UZjN2Um1I
+dHFLUFl2N0t5REhMWExCM05xTHF0dktUeXlZN1EKMGczcjd1NzVBems3NytrejViVGFxbXZZeTRX
+ZTVVUFlrV0kreVI1YmRoRi9ud1hucDRvbW9mMUEvSjRQYnNISQp3dUxSYVRmYWJPcWx0dmFSMDZs
+eFJXNVZkMGxjOXRiWlVIZHRTUFpUZDRhUWI5LzdCWCtHeWtCdHMzY0N5Q2lQCmczcHJlWnp4cWdm
+TVlucTBjbmtoZldqYlJjd0tEUEZCLzhIZVU5ND0KPW9RdzUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000980d78061aec4d80--
