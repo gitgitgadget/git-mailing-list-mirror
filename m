@@ -1,153 +1,119 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F56182B3
-	for <git@vger.kernel.org>; Sat, 15 Jun 2024 13:01:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C35847F5F
+	for <git@vger.kernel.org>; Sat, 15 Jun 2024 14:50:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718456476; cv=none; b=NnRKQ/XNTepK3twyqgjAJn8QsDGJZNEq7j4mk+JkWB7ipVdRXOwgn76DYXhqRQUg4eM4R33MwWi8u0FEiMt6yxasgngJ0mOPth2ltsCJPCpY9lHtl8HXl6zKFYcaijADGugyZBARar72v87vxda85E7/LNlOn3aTuuxJDOXVHMk=
+	t=1718463008; cv=none; b=VarvE/iKYvq/w32dvNpUZwUgCaGKxJx2oB/p4h4iFVDGu6twBvgvsR/eugGylFY73zeOzhrPk2mMcDeEDo2JXex2inbma5zAYDAE+z0AKL3wnomWOkR2Ywahml/ldfqS6Ivcg/KX5F/f/jCcWjWn64J/zviY56TVT3HD3gFuP3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718456476; c=relaxed/simple;
-	bh=06zwgUQmusoxiO9Xy3odyVEJUy85htsC0AOLjRGc9ZM=;
+	s=arc-20240116; t=1718463008; c=relaxed/simple;
+	bh=+WpNdOpJz/tMhXK6Oxn4bVKXvRbyCV0SF9Pn9VHuOiY=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Lu5tsm+Dtkw0QERIKSTE52JoxPDTWEORWzno/licvupNkJ2Ts+ABsSLiun8TbNUJEi4dxncTTlKcsENhVvPzPIQ3rnFL7u7XORECKfFD5sSlmhXmK7X/UDcaMzFBnnlvh8jLLcQ7Pg06lSIs1Jmay7eXpZxiQLb1e/XzzBMkg9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dE6u9vVS; arc=none smtp.client-ip=209.85.160.54
+	 To:Cc:Content-Type; b=C4hmblAf+a5gqIHPjqPj2qTgb9qbYBDF+UFXVpOSGdBl87Q1xSlr6vx+TdphyNj7tYZVa56RsIsJms/704yM7zofI2X3fvIUVFvfc6EcLTyLsj6CuVzDdZXl3SyphByXW1fNiKI9nfhZXVDaKyWopz76zGRNm0Bo3jmOz9BDMng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DXcFXFGA; arc=none smtp.client-ip=209.85.167.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dE6u9vVS"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-2548c80efc6so1391453fac.0
-        for <git@vger.kernel.org>; Sat, 15 Jun 2024 06:01:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DXcFXFGA"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3cabac56b38so1773187b6e.3
+        for <git@vger.kernel.org>; Sat, 15 Jun 2024 07:50:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718456474; x=1719061274; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718463006; x=1719067806; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1EJeGQgDqyxAuoHL7ryTpN2S23RqSo94iA4WBe3TTic=;
-        b=dE6u9vVSMa2XsVrBuueb/AKdxl1IyGl8K5VFU7e3wJZAKCs4CbqFvGDpgk0pBI8rhL
-         pWsdJbJoxzvXMF5tpKPsCNgoQLvhr2ckCyMgykr5aGVoteLe7i6AadZ7RE8pzueOYbPs
-         aPkceAcpUeNlXnEp0Z116ulmNyKN9U48BUIf3ZiKIyEY9wxEFZRF0OxijpdC4QHMNKYO
-         aMKQoffBtCW5cSP09G7+dbCzmNCC44mN0PoOB6SVtgY4u9pOYQR0SF06/Z7bNQePEIvY
-         B31HTohK1aGhmRXcm6OqUHyiw1+fRqWHwmVd1UYh3uz/CVHvG2Npo52+J8MgNvax5yhW
-         li/Q==
+        bh=q/IlQYujPkQzFJptuhcCPqXXnJcj3PgCLi7Segvk/C0=;
+        b=DXcFXFGAOxowVHuM3FOHgIcrWcv576F+wmz/N/cIWhKbmQN+7UM6ibWvDsMCtRlKqc
+         hDMz2xqMW5M1GYpl5n3EdCZcnepZLqxCCx1hAJENwIbphevzBvK+DM+9+BEkCF8jBvx3
+         cXha1vDeElA2gmwTFhp18zcivFQwIE2G8gblBByJI5AaMPUKHuZK9I4HnfhHppRHoCmn
+         +6m7fp8jgDNUzA4wMAtoVMYMlxKFrLH8xBW6qHDen2L8qceLIy0tSbxyEG97GBPdP1zo
+         ruJdINB3QTYLKuRHr3imtBLS8g7TBssfX0JY5C0k6LdjHsoHT3e5cBxxCUbq2uVoDRAT
+         bqMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718456474; x=1719061274;
+        d=1e100.net; s=20230601; t=1718463006; x=1719067806;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1EJeGQgDqyxAuoHL7ryTpN2S23RqSo94iA4WBe3TTic=;
-        b=QGtJeLC/DeYj9YSNsLon3R6RddhWIWTNr58NlDmpaMHWll0XEe3c5+6whlFSlDuPxb
-         AKQLS/Xfqb/S36vEK/CfbLOSNvbxBeO3Sa3Erbzcm85+mZZ625rLsFc6OBLl+VJ2he/L
-         tI7sUg+2YxLhhhc2KP0oRHL8DT9lSgZho5kgx7qn4Svz+/vX9qJJvgqwFYb3VZCh9upJ
-         OYjkoee9/SWmdRDrmwXVfON5+kQP8rIH6yxKYS13aO27+XVAZpZcdkKR0acrG5g7/64V
-         a7/80f395PUHYnwVRlG9L2AND/Byl1NVekVDms72Vjpu+Bw4sb5MTtfPPpAOPIWbo3rt
-         1xEA==
-X-Gm-Message-State: AOJu0Yzbm4pechcITQS2sWzI1ZgY/IUvBiCCpQxomHCV8MNNzKzYvM4f
-	T1ZvzBR7SO4a7LoHb2MPDmL2V2hJsnk7e8Tq30ebKybsseq6WVfFCxkOSse7TsRnldk82x0ryuG
-	aDZjrtkp3R8PWO+d+nf0W0NSWNNDNGhD8
-X-Google-Smtp-Source: AGHT+IFkh31J2mCYB63L8fCjr2srebyu7BcRIqS68j5Ebkisg4n3skW8uD5ZsZtTLrMyUh5f4A70RmT/LEYGrywynzg=
-X-Received: by 2002:a05:6870:c6a7:b0:254:a0e3:b2f5 with SMTP id
- 586e51a60fabf-2552b1a5a91mr4491922fac.2.1718456474115; Sat, 15 Jun 2024
- 06:01:14 -0700 (PDT)
+        bh=q/IlQYujPkQzFJptuhcCPqXXnJcj3PgCLi7Segvk/C0=;
+        b=jCgVfDi28uipcemNCu0+Io5L69x6oGgsSsZRB18pbvVrlLwk9hnLl/ld1KkUeKaxXD
+         Y3RhUTuzL264di/+vqT/8sST2Ttst8/C8eGIp84rxf/NAQDabaeZmAym0Oem73ZFM2cP
+         YzQm0Wsj3w/k925lLMgAGp0Fvcm0FpAsgdWYH0i46MT85cd2djRoqlMD6HEesb4tqFf/
+         RkUtcEBL03QB8MjsbCxh7FbcuWSFeLqe2DTkYTkY/MO+vsRD8WLfa5OisUKwWv5WRInC
+         MClMEcT83h2nS7j4RLUPZDp7XYIFOrJDLPTEu31viZcpZnQHGcuiQ+OsOT3jKCbe1CfS
+         J/Tw==
+X-Forwarded-Encrypted: i=1; AJvYcCWP7sbjZ+b0yFNfAjycelKi84q9j0fR3FaeUomv1PpbxlGhntRl13EB2Ht/TwnJ5IwPAP4KO/rxpdn7DIvWFYf00ZWY
+X-Gm-Message-State: AOJu0YyFVQdJfSEiGxoLweY4GzFzX1UUN0qmyQnoAaVnrBe6ujUwSJ6M
+	+wPwP68scHa6710Y9j4r1J4aGJK0StyhZ8nn45h58WYAhwTdKaGmaeUQhmf9mvqMdWKIaGAK0SG
+	yM2BST4tyqxBe8UJbOT9ro1/u73jjsHS/
+X-Google-Smtp-Source: AGHT+IHB5XI80cfe5e64M+SIlNZu19jfRT2bT17QS0BcI8X2jMIUPHZuUrKxSdzEdmrZwKzAkrRfT4T0g9NSTbymsVk=
+X-Received: by 2002:a05:6871:b28:b0:24f:f413:301e with SMTP id
+ 586e51a60fabf-2584297babcmr6149268fac.25.1718463006344; Sat, 15 Jun 2024
+ 07:50:06 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 15 Jun 2024 09:01:12 -0400
+ HTTPREST; Sat, 15 Jun 2024 10:50:05 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240611072144.GD3248245@coredump.intra.peff.net>
-References: <CAHKF-AsoF10coLP=+MV-NfkEvWzp2Xbucs7OwtOoCBs3TVMg3A@mail.gmail.com>
- <20240611072144.GD3248245@coredump.intra.peff.net>
+In-Reply-To: <20240612085349.710785-3-shejialuo@gmail.com>
+References: <20240530122753.1114818-1-shejialuo@gmail.com> <20240612085349.710785-1-shejialuo@gmail.com>
+ <20240612085349.710785-3-shejialuo@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 15 Jun 2024 09:01:12 -0400
-Message-ID: <CAOLa=ZRkZb65b1NawPBNOnnxi_gjCU9=85cJuxj0mQxyrPJe0g@mail.gmail.com>
-Subject: Re: bundles discovery and clones
-To: Jeff King <peff@peff.net>, matthew sporleder <msporleder@gmail.com>, Toon Claes <toon@iotcl.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="000000000000b3cadc061aed53f3"
+Date: Sat, 15 Jun 2024 10:50:05 -0400
+Message-ID: <CAOLa=ZQtAOnD8kX4d5C0WKFOjqU9tgeWtHp-aXu+rDe3gmK4yA@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v2 2/7] refs: set up ref consistency check infrastructure
+To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: multipart/mixed; boundary="0000000000000da7d4061aeed9c1"
 
---000000000000b3cadc061aed53f3
+--0000000000000da7d4061aeed9c1
 Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+shejialuo <shejialuo@gmail.com> writes:
 
-> On Mon, Jun 10, 2024 at 02:25:19PM -0400, matthew sporleder wrote:
+[snip]
+
+> diff --git a/refs/debug.c b/refs/debug.c
+> index 547d9245b9..110a264522 100644
+> --- a/refs/debug.c
+> +++ b/refs/debug.c
+> @@ -419,6 +419,13 @@ static int debug_reflog_expire(struct ref_store *ref_store, const char *refname,
+>  	return res;
+>  }
 >
->> I have recently been playing with git clone --bundle-uri and loving it
->> because I can clone with almost-*zero* resources being used on the
->> server!
->>
->> I am a little confused by https://git-scm.com/docs/bundle-uri
->> mentioning "discovery" and things. Is this something being added to
->> the git cli, a special feature for other clients, or is it still too
->> early-days to talk about much?
->>
->> I would love to produce bundles of common use cases and have them
->> auto-discovered by git clone *without* the --bundle-uri parameter, and
->> then let our CDN do the heavy lifting of satisfying things like:
->> git clone
->> git clone --depth=0
->> git clone --single-branch --branch main
->>
->> I'm not sure I hold out as much hope for pre-bundling pulls/updates
->> but any movement towards offloading our big-ish repos to CDNs is a win
->> for us.
->
-> I don't think the server side is well documented, but peeking at the
-> code, I think you want this on the server:
->
->   git config uploadpack.advertiseBundleURIs true
->   git config bundle.version 1
->   git config bundle.mode any
->   git config bundle.foo.uri https://example.com/your.bundle
->
-> And then the clients need to tell Git that they allow bundle transfers:
->
->   git config --global transfer.bundleURI true
->
-> I'm not sure if we'd eventually flip the client-side switch to "true" by
-> default (which is what you'd need for this to happen without any user
-> participation at all).
+> +static int debug_fsck(struct ref_store *ref_store,
+> +		      struct fsck_refs_options *o)
+> +{
+> +	trace_printf_key(&trace_refs, "fsck\n");
+> +	return 0;
+> +}
+> +
 >
 
-This would indeed be nice. We at GitLab have been experimenting with
-bundle-uri. While it is easy to flip the switch for clients under our
-control (CI pipelines). End users loose out on these benefits, especially
-for large monorepos where the servers spend a lot of time computing the
-packfile.
+The debug interface acts as a wrapper around the actual refs backend
+being used, as such, you need to still call the underlying backend here.
 
-> One gotcha there is that clients are now accessing an arbitrary URL
-> provided by the server, so there are cross-site security implications.
-> It might make more sense to allow only relative URLs without ".." (so if
-> I fetched from https://example.com/foo.git, the server could use only
-> the relative "bundles/bar.bundle", which would then be found at
-> https://example.com/foo.git/bundles/bar.bundle").
->
-> -Peff
+[snip]
 
-True. But I suspect servers using bundle uri might not always serve them
-from the same domain. I know we were experimenting using cloud storage
-and providing the client with a one-time signed URL.
-
-https://cloud.google.com/storage/docs/access-control/signed-urls
-
---000000000000b3cadc061aed53f3
+--0000000000000da7d4061aeed9c1
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 6fc8fe9e42afddb2_0.1
+X-Attachment-Id: 34b1549455792a07_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1adGtKWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mLzM5Qy85cHZ1T1RISGMyaXZPU1pmc2laQmJ0TXVwSwpudFMyQU9zOCtt
-OURDdjMwMk1zY1J3V050MFg5MnY5VE9pK2pySW5ibHRHUFNhTkNxbSt5WnRaQ25KaStLejh4Cnhi
-cURCR21ZNExQdjJZR1MzM3FCa0RZMlh6TUdvRDJUMFJ2OUFYVnRxY2M4T0traUJUSTZ5NGpCWE5r
-ZG9XVFoKS05Fb2JqeUdQWUhOQjY1YVRrd3UxZjJXMTYrUHlyNElpSVRReW9wOTM5ei9jN21xaGk4
-WlBBNTJELzlPUmZ3ZAplU0hUak8zd1E1QzE0ZUR0RDBlb0VUL2dLTjh2c3kxc1k3NkhxQmxMWVVM
-RG1XU0U5OUIwbzJYVHZPczRXMWtiCnVVMEUyNE9US3FXWXJNOHBlNE81Q2ZKckYrdjFiYmJSaDBJ
-U0NyZmhiTGVKRmVJTm5zTnhOcWRUQjkxeUIrUlUKLzFrY3NuU3Nxd3F2K2R6N2M1ekJaRXNkdys0
-NE5KMFdodjVvRkZMZithd1JKaGlyQ2wvUzlVMHk2QVNQdHI1dgo5WHJ4R1Y1WFNOb0M1NlBkYkY2
-STl1RlhyeENpQzc4ZDZKeWZ1N2NkejFiUGlIWHl1b2pxTXNyZ1NrL3Q2MnJFCkR2Yy9kbjR0OGNs
-eEZVWjJaSExvbkZvS0JzaWk4K0pwcFdaUDVJYz0KPXl2bFAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1adHFob1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNzhLQy85Vnl5TVpuYkJpUFo4YkhVY0pSaG1mOWdMaQpCMjMwaDRwbldk
+Nnl3WXRmejc4c002cnBrL1dXdDM4TUdCak96YW5wem5ZR1ZxMnMyV2w4UzQybUs2dlllUkt4CmNK
+aVlpVEZlTmJna3hiRkdra0NuYjkyS2kvblk4ZUdvMTdWUFB0RlZGV08rRCsyWEI2WHNuVHMvYVVU
+d1RzNUEKajI3elAxM3RGc2dGL0Z0cnJzb1JrN0pEQWlUaE5ZZGYzdUNVY3M4bitjcTdISTluWGtE
+VnY2eVZxMzlUZSt4Sgo5U3NqeGdVNXA1NU5VZTZSNHE2b3Z3NHpSOWF3bVBtdVgwK25sQWtQSEtV
+SnJnK0tNdURrZzNOUW5DM0pCTm02CmlwMTloTHhiTWVLL1JKNEQvd3NjZUkwSlhpNGlxbGJjV2xo
+QWQ2dUpJRi9LY0xQRmN2ZkN3MDhTNUxMTjNUMVUKR3p4Z1J2eU1hZjhpNnZaeW9hcXJMbXV2Mkh5
+MHBTNTNpaEl2eHM4ZUxPU0ZzdjJGWkY5SmVqczU4RzZlbUo4YwpzTk5WVmxvaDRTaXcyTm9USUsr
+MkFHajJLeUpUMmFadFdCQis1WTJUaTdBSE1qcUFsV1RCNmNqdDdSWkRsMENlClNXaWJZOHFuTU5H
+dXJha2lBVk9lVU1TM3pMRjYzdUNFZGs5YlNUUT0KPXdiNGMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000b3cadc061aed53f3--
+--0000000000000da7d4061aeed9c1--
