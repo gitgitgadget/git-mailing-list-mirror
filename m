@@ -1,104 +1,140 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062F7179A8
-	for <git@vger.kernel.org>; Sat, 15 Jun 2024 08:54:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163211849
+	for <git@vger.kernel.org>; Sat, 15 Jun 2024 10:22:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718441642; cv=none; b=i8Y1YxBIcBDDIGAvvP/UzklExTDDd4pUXUPjEnJs16WSuvyPFqt96D3ApSGukAusFZsWYqSiaa7g+jt/VEcQkqjzzdAiHQcPfQPDES2faYyp90JzxWSfXlJK57cPT2UdjWPSUgcMdwrAtr4b19L63U5FMytoLsKmciQ302AcySI=
+	t=1718446928; cv=none; b=OgfZEWBu+EQ5XofeFxodNstPCYBkVYtgHvS/Yewe7yYoftq/sTd9stCvjQCe1TXsMzDjPdEtPz4Emkzens3PP+/xO/bLVzw6TRN8kUGsEe75VqWY0Fo51F+eYd3ZPRX1JWYPZZWmjvPBEXKODrYwer2Xc8nibMp24+N166O/QeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718441642; c=relaxed/simple;
-	bh=VesPKPWtncqInbLVlaPlz+FHJCIsrxFV2+a60fFwwoA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=B59uC5xYP3Ur6nlT/tlmyesRIx3At2QBzTkIAj+edn+CrQarMJP30F/TEyqRsVuAywxunrHPXD1g+YcKWdKTQQy22YxsMqmJ6A6mTb31yBkID/qSNLm5L/WfbrJsoDNZVFrUU3qCz/VEg+Lobn5nxFw08sAOYvD259IeA9NcIY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VHhAZSuR; arc=none smtp.client-ip=209.85.218.41
+	s=arc-20240116; t=1718446928; c=relaxed/simple;
+	bh=Y/WOK6B4TWktwxjfszkYLBcC/W5i8Q1qk1WuyK5OMaU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Iu1IQv5uq+FrYdLJfQiRYWa4gZYuMEkT0kuk0G9wcN7Ayzql24VTOkNy4cw8iNkhZh9M+FbsCPXQqWJxXpIg25lQDRu4JneGhbTKhW5cGkY7bmQbcmJZBCABGXKSQeTxoUFCsrj2pKwvdtWMVIDYcG5u8ZzXMCQbIGFOLUhQ0mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HyMyjxCj; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VHhAZSuR"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a6f1c4800easo372866666b.3
-        for <git@vger.kernel.org>; Sat, 15 Jun 2024 01:54:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HyMyjxCj"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-6e9f52e99c2so2286574a12.1
+        for <git@vger.kernel.org>; Sat, 15 Jun 2024 03:22:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718441639; x=1719046439; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OyiUSwHHeP8mhpxGD1Iq6+v4GErnFlfFPrlEQRDjziE=;
-        b=VHhAZSuRq1DXUWbziW2QmHMuV4eJUBP1uNceGbToA0+0PXp5etMlM8cJDg0huAZ3iX
-         ZvMbn4dY3bsrnKWC0AmQ5TLiXEIARl9VE9/1Fo3lnjXt8zobkIKxVc+epa946XxWp3/Q
-         b7IpvBro1wF8vnt3jWJSvQljlPhRSN3USp/xwvjcUFm49fCJnDjTQgChSKvf0XSUoE89
-         0TNw1EQPk3d1M5E/NKqCZiedcOot6forhbjidTsCRkRlP9gY/bIQe4tAUqWjyoQGblb+
-         EWaszrmC195ey4c4V5tpm+kfKv7kUyd41X9RDI62JZ6R8WmaEfmJFfRKxsnL0uBtcAmg
-         kjJg==
+        d=gmail.com; s=20230601; t=1718446926; x=1719051726; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GrQnAnQpgFSHZ0erFWBoI94kCITDsuikhj2sjk3nKHA=;
+        b=HyMyjxCj5MQex3OpIW+c1qHCTmyl+k8veTnzfexEetgA+kfR+PvrQPOouZbtBB+Er+
+         G/AfJ/HRJdosUJA2nc74FYpzWW4zxhf0a1PPvNGJXstFUEwhFkNcr3WRycsWrM5WccHv
+         8DM1YuakgS3QZgAl1RLgNq1ekDlz8QVw9luHV0FxrqZL9dovtxAsJOX+tShzy9OTJzXw
+         wticbOcABU9/O3AB80T9rsojSeEYccPlixe+tiMWIPoOZzYguptTIqgC+wQRYMNRlq/B
+         m1T7yQDXw8XUZAbZQ0RD95GQd/gsYMOMuQnw/E7japxC0ZGQBOamVPG1hGBN0RcHGcmJ
+         aJCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718441639; x=1719046439;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OyiUSwHHeP8mhpxGD1Iq6+v4GErnFlfFPrlEQRDjziE=;
-        b=Kv0x/HBLhxchlGRb7beW1wx5ZydTj/LbOLF7WkKEVimud/1KB1pyaCTGz8Uhc69ke8
-         ZERi/XF27btRHI0EFaNRLzaIwYFWyUn9ZahggMAjaq08NKMmY/kwWVXFOpTzksvwM/SJ
-         w02aClWQsGqUJCcOJptnakTKAySwrXliVpfW7XM+L+r7+3gv2GWPdCPFjbDQA/e/MwCa
-         Qd/yBl9ix47Yyo4jh4CZyFdKRqptFx2gkjYJNKtdvnG90FcxVfamNw8JUsK4bcPA4lkB
-         0wFbgLSbCuw11aJsQz+01uCKbLpy54rjMQ0OjtqbI1XFqrIz15vm9GQUitd+/hmdBSbR
-         Lz1Q==
-X-Gm-Message-State: AOJu0YxC7+Nb4ps2pRkWCa4PalRzEeYwB4xgf4JFoXhS4YeNoSTwDNGO
-	Om2tfsX1AMaW4ACyugWoRKwt+5b55ezCC522d5vk2U9E31/ofhulxWJAsMUC
-X-Google-Smtp-Source: AGHT+IHjnw34FZDFCi4O4viyoUDPJRPHz0spd/OcbzxKxPTGDnijFF82six+SrPFVtqlkb4g7e/PbQ==
-X-Received: by 2002:a17:906:3749:b0:a6f:2d3c:6b94 with SMTP id a640c23a62f3a-a6f60dc8956mr271831966b.49.1718441638488;
-        Sat, 15 Jun 2024 01:53:58 -0700 (PDT)
-Received: from localhost.localdomain ([93.170.44.26])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f56f40fe2sm281271266b.148.2024.06.15.01.53.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Jun 2024 01:53:58 -0700 (PDT)
-From: Serhii Tereshchenko <serg.partizan@gmail.com>
-To: git@vger.kernel.org
-Cc: Serhii Tereshchenko <serg.partizan@gmail.com>
-Subject: [PATCH] Fix default font scaling
-Date: Sat, 15 Jun 2024 11:53:39 +0300
-Message-ID: <20240615085345.47278-1-serg.partizan@gmail.com>
-X-Mailer: git-send-email 2.45.2
+        d=1e100.net; s=20230601; t=1718446926; x=1719051726;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GrQnAnQpgFSHZ0erFWBoI94kCITDsuikhj2sjk3nKHA=;
+        b=GzroyFkOyLmKdt/GZnKsXrKLDR/c58DopD8XxqS7GJ6syP7pNAj9zY7zEbfu9dTTfN
+         FjkkYCjaUGeHv8vZG6mzIEml/jbx8WjeMA9+YUfEw+ECxQ1JIudnyvmpx3U6tB9divmV
+         eJfIMsS5clrKTb6uXwem4XMZuUl42gJRbKImVtZc3hmOjHjjh3t6rEn13b1qDUqcf4HQ
+         qNZ/hwhe34W3RlaMtsQYVRurSDlrW8eU8nRESWlYIgqP7z/RyYrAeG3wQg5vAv8wO0Ye
+         MX4udBh9mrXJOzyqXDusui0o41HuJ+qW1gE7se4uDK1RwDvjKSzLYv2tGiThE4kXBNVD
+         IKFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXH2jZhH5mExzPSqOslAl/87Y5fmHxgNBnez4E2SDRkwT0NAmdAL26rS5putlH7aQwaaZ2i4pKvwfLuM+pYEd78UYIK
+X-Gm-Message-State: AOJu0YzWrzJjxf08hgNn+wWWvgyyNr5h1SyBosL9K2Hz0c6gGZPi5r2Z
+	mNJR7SqtjEhqWeVmksYDn4A7NrEc70m7e3VGBdRAIPmKZgW++qjAkMmgs7lP8wbgk/u0JFKXvdB
+	ccMlrhwMcD2oNr582idG7IzK4i9E=
+X-Google-Smtp-Source: AGHT+IEYhZjk3DmW7Ag0y8eJtgCjMqgt/7dcCTrCHbD4PZlFLQxhbCn+sTfBA0YTXUqc6mQQzZdjdXp00+wGlbBqR3s=
+X-Received: by 2002:a05:6a21:3987:b0:1b1:ed95:c9b1 with SMTP id
+ adf61e73a8af0-1bae800c4b2mr6231057637.40.1718446926481; Sat, 15 Jun 2024
+ 03:22:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CALyzih__9sZD31SVMECcxk55+MAMjkfgpLzecoHo0xUoauerqA@mail.gmail.com>
+ <CAPig+cRGnAcfpr4JWp9WWC0b4yvjKx-_0up_S2iaXCBxgcSLjQ@mail.gmail.com> <xmqqbk43dyln.fsf@gitster.g>
+In-Reply-To: <xmqqbk43dyln.fsf@gitster.g>
+From: Rickard Andersson <rickard.a1992@gmail.com>
+Date: Sat, 15 Jun 2024 12:21:30 +0200
+Message-ID: <CALyzih-5qtezCnizj07Gi0MyoeweXU1Kw5-gnv7YwSg0DC965w@mail.gmail.com>
+Subject: Re: git grep bug replacing - with :
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This fixes font scaling for default fonts, where we don't set font
-sizes explicitly.
+Hello,
 
-Without this, on 4k monitor with text-scaling-factor configured in Gnome,
-labels, buttons and settings are using very small font sizes. (Probably,
-not just Gnome but anything that sets custom DPI).
+Kudos for the very quick response times, nice!
 
-Screenshots here: https://twiukraine.com/@partizan/112619567918546426
+I tried to reproduce this in a more isolated way and did Eric's setup
+where the issue was reproduced again. However, I realized I should
+test this without my gitconfig and could then isolate the issue to the
+pager delta. I then noticed the issue is reported there already:
+https://github.com/dandavison/delta/issues/1674.
 
-Signed-off-by: Serhii Tereshchenko <serg.partizan@gmail.com>
----
- git-gui.sh | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+So this is clearly not an issue in git, I should have tried without my
+gitconfig before even sending this bugreport so I hope I didn't
+take too much of your time.
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 8bc8892..23dd82d 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -810,6 +810,16 @@ if {[is_Windows]} {
- ## config defaults
- 
- set cursor_ptr arrow
-+
-+# For whatever reason, Tk does not apply font scaling to default fonts,
-+# but applies font scaling when setting size explicitly.
-+# Default -size 10 is still 10, when you look at it with `font actual ...`,
-+# but explicitl -size 10 becomes 10 * scale factor.
-+# So, we need to configure fonts to use their default font sizes, but scaled.
-+foreach font_name [font names] {
-+	font configure $font_name -size [font actual $font_name -size]
-+}
-+
- font create font_ui
- if {[lsearch -exact [font names] TkDefaultFont] != -1} {
- 	eval [linsert [font actual TkDefaultFont] 0 font configure font_ui]
--- 
-2.45.2
+Best regards,
+Rickard
 
+On Fri, 14 Jun 2024 at 23:05, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+> > On Fri, Jun 14, 2024 at 3:22=E2=80=AFPM Rickard Andersson
+> > <rickard.a1992@gmail.com> wrote:
+> >> What did you do before the bug happened? (Steps to reproduce your issu=
+e)
+> >>    Added 2 files to my repo with words in them
+> >>    text-file.txt
+> >>    text-file-file.txt
+> >>    ```
+> >>    git grep -l ExtremelyInterestingWord
+> >>    ```
+> >>
+> >> What happened instead? (Actual behavior)
+> >>    I get
+> >>    ```
+> >>    text:file.txt
+> >>    text:file-file.txt
+> >>    ```
+>
+> If the command line were "git grep -l <pattern> text", and there is
+> a branch whose name is "text", and in the top level tree of that
+> "text" branch's commit there are file.txt and file-file.txt both of
+> which have the pattern, the symptom observed may appear.
+>
+> But ...
+>
+> > I am unable to reproduce this problem:
+> >
+> >     $ git version
+> >     git version 2.45.2
+> >     $ git init foo
+> >     Initialized empty Git repository in .../foo/.git/
+> >     $ cd foo
+> >     $ echo ExtremelyInterestingWord >text-file.txt
+> >     $ echo ExtremelyInterestingWord >text-file-file.txt
+> >     $ git add text-file.txt text-file-file.txt
+> >     $ git commit -m msg
+> >     [main (root-commit) 765269f] msg
+> >      2 files changed, 2 insertions(+)
+> >      create mode 100644 text-file-file.txt
+> >      create mode 100644 text-file.txt
+> >     $ git grep -l ExtremelyInterestingWord
+> >     text-file-file.txt
+> >     text-file.txt
+>
+> ... with your (i.e. Eric's) reproduction setup, which agrees with
+> the way how I interpreted the problem description in the original
+> report, I do not see there is any other possible output from it.
+>
+> Thanks.
