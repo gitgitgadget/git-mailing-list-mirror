@@ -1,230 +1,147 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D751DA22
-	for <git@vger.kernel.org>; Sat, 15 Jun 2024 14:57:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE133C482
+	for <git@vger.kernel.org>; Sat, 15 Jun 2024 15:02:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718463457; cv=none; b=LOw+oq81KsBPYSYamn2n5YqI+GOpImE+beEOlIxDCefxMMGUapSKLOS2Vo4ky0vD3Uof/mTukZNtjoGOZo2vVuaCsy42efEz3xBmSD5bemIdzAvgtwIVLvJae9aL9YXzEPJTp/pxCP50wWds5ernES8vozS2pJ/cb8Ty3JCIhoY=
+	t=1718463740; cv=none; b=ESAVg8caI93KIpAp6P+nqtjf63LAjwQ03msB2cYWD7HpDqN01FidOpUPnAExclIXJMX5bTfaKteCC3gRIHqG6bLpqL4/CayI4Oh7KaKELyiCUBCmMoSUiex8/hRGPRQG/7iJUMZF5lHZ+PkUKq+EEO1mMLT7bCfwug7MeTtuC8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718463457; c=relaxed/simple;
-	bh=EmKOwRvRYUYMBJ01culAaJbuhNimBznhfvZoLb1nO9g=;
+	s=arc-20240116; t=1718463740; c=relaxed/simple;
+	bh=lKFeRols7KBqWbXCnhDJ6ZWdhetCuxlAi2g2TvBL+nQ=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CLuOB1i65q7UN+3Bc30RkP3cRuRNCzKRp7YbR8WVxOqp0FmLZpwtk65aXv49n+c4lEcCqt57xhWbHeKQCHXrUG/0MN93TVeZyVZ3aLjNVPp3Fg4mHXWikiLTWOsk8r6zmKz8qtyX4JFkSN5517r17uMcPUbIZtx2bsw66GPNiLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z+Xieh1A; arc=none smtp.client-ip=209.85.208.182
+	 To:Cc:Content-Type; b=sI5V9oEBAAk9I4admrWXEFZ5cGOsF4b76uV1lIYQhWyOqJINn/JXtq4ENU88ENfEI7bRRlU/fHteBWnSN2dg04mMc/vqGwOF8gh3f1Yye2eKxCJLNWN6GRx2i/BQrCauIAiC1QoBHcQvAo58HtC3ZMaMgPx1leoOvK8FMyikBUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DFYMifCE; arc=none smtp.client-ip=209.85.208.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z+Xieh1A"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2e72224c395so30109431fa.3
-        for <git@vger.kernel.org>; Sat, 15 Jun 2024 07:57:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DFYMifCE"
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2ebd95f136bso33575791fa.0
+        for <git@vger.kernel.org>; Sat, 15 Jun 2024 08:02:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718463454; x=1719068254; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718463736; x=1719068536; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WaLrR5vJnuR37x36BemUMxBkBprhEJ2T/kWPRX61EJg=;
-        b=Z+Xieh1AflboVk+qDUFuyB4GfoeHEAWZgNHwtAr+qodGwcXhaZ4OYd7J/RWNlZdCfM
-         U01u6K3MTTnjq4caUgJK77dvDrbweFc5ahB9eUeBfPmAt5kRVD+9of4AcUOfblSnX9Ze
-         PDB372ufci1AavxHw2M8d/udx0pKMo1g63uRAmcFPyWp/0SU2xuxI80hgfvtAn8/9xE2
-         O/74Bmyjhh8DpbtYV3fys0JeaP+3sI/jf5kCniDzZXuiRjf1T2ZgFwH5wf8JaCuDDlfP
-         kXgRey9mb9q6MqYHBNz1bNi+j+QTxnfZ4pA+uRHPrpZlZMtxithsKqFCAXQ7R7vARome
-         ptHg==
+        bh=0F05udSx9mlfbMkxgod9UQpQUzrrz5HPJB3N3W6bsUs=;
+        b=DFYMifCEmc5xulR/0JB0JWmZSkkV4dLWO/L8kPMLwj+c5GqdZBsElKvgA8sZVc9+7f
+         JSGEgX3W5HOtzPPM25yIvrbUoCsy3t1u2YlgSYwKpZTaBILhG0gVXkKOvghvQn1Gbn86
+         QOol10FCQxyxi6WLIcsgsd4r/xBDzsimvg4QkxdrIklzbVkhKGFFbXWrYejXLraIiyV+
+         o3LQSodKbA5zYpVh3sCV6VtadUU+pTnEpCLezGG3iY5qO6TZ6lQZzDmYMiUjiBUGIz3p
+         4d/oNvT6Zzg0fMo+iRnHieFk3ce98+kcyqa5OzEwwB/x+K9DUlaEccQV1xd2DCdTth2k
+         K84w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718463454; x=1719068254;
+        d=1e100.net; s=20230601; t=1718463736; x=1719068536;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WaLrR5vJnuR37x36BemUMxBkBprhEJ2T/kWPRX61EJg=;
-        b=Zy7cgKgbcpoBKkp+l5GMNne0oMtsVTiSLrv591uT11NRWea959n239x3DIVXkLfa8S
-         aCDnQIMJen8g6Qe/7HY7cUqYKefrAmE1Pu+CGFw3npuCBzCRuxCagnPmvEwfrWk5meJz
-         VHaDULIAxOIw6VirrDlFVKMgvsKY/P3XsXn9JNIkpndSX1No0qAz5rqPtIq9wwqFHrQh
-         HXIrjhbi31FkY3M2PYnsn/vHHlePU6EGuN7ebJx7xHZQfLvfu0C3v5tecScA20C0vIMk
-         iNStijd758AKosM6YtsNPWpQmHtkBkOp/EZKmKVTC5RgwPHTwgl8wec4gok4lcoi8lpa
-         WMpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUQFtHrlfexwiMuXCYnHqz6hJUVLOJekJcXTFE6PhZ9rOhr1vBkJfzT3fZRsvbL3rtBtcYI9YzyM9+Yqakdj+T+LYVj
-X-Gm-Message-State: AOJu0YxIKUDMYDLXZgWTHrOdJOzqybqmgEhvCwM7biG1LD+nXEvCw9BM
-	gE/l+9pn+U3xeaxQTj5wHM/B7gD2397IljmWV/43ImZTAFcUlKGfFLLZUYPXGIGG25G8exqSC/C
-	zPfnO5ez3Oiwcrxc8/Z16bhtvo2M8lanK
-X-Google-Smtp-Source: AGHT+IEGlzR5NbZeUzPlVB+ppL27XSldZyyiM04w2s1xC1F3zmR/0XgsdsSiG2FFpNRLWT68D2xoU8p/D4a91D3m1xo=
-X-Received: by 2002:a2e:9acf:0:b0:2ea:e26e:e6d6 with SMTP id
- 38308e7fff4ca-2ec0e5d13b6mr36813681fa.30.1718463453295; Sat, 15 Jun 2024
- 07:57:33 -0700 (PDT)
+        bh=0F05udSx9mlfbMkxgod9UQpQUzrrz5HPJB3N3W6bsUs=;
+        b=gp8eisiVsPZ/Jkku9fRbN7mGUxnnLRLYYZlPACd/suoc1+GyDLJRnz/jJm2sYOeC8x
+         NYrP/hH3v6eehD/cF31vg+zo1n/5l6eKEtHODe3LH3Z4HaTLmyPsc2k4jmdwS5fk+KMq
+         p5g0UbUgIGN1Ur5TfY/MEfJ7RN3Ji1b1jfTuYiNGpFn4rPvtLi4P6CGlCa9ec7lKCH1q
+         XTb6X9tATC6ULN1FFVvUKrq5O8oNdVaOz+lbUuh2fFysQ0AAq+6ojfiNwG4X2XrKNJn/
+         leu7cXIye4Ns03aumiEiyMRn417Yo5AMqFiAYOFsjb/g1S2OD+I/ZVNQUG3Y9YFYNk+O
+         yqPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXnq9KV1OacWgM4eXuXQRBm8+CNYa8dhyjTL5XnY87ngCFyErWVGO9ebXYB+PH7aAn6NehblDHKGVGTmI8AtTEnXiRl
+X-Gm-Message-State: AOJu0YymCnJfPiBTKiBRP079JB/PdWwbDzdamJmT7TMSkdsZdL6GXqpW
+	npM63wZkSynxElSuXF4LekJgThGCas4fDaNiKeZLjkDzzAlCMi/z0EI4Uqja210edgCzjk9xcv1
+	/Dt2wO40og8ZoRN+5SW36Knx1/QE=
+X-Google-Smtp-Source: AGHT+IFelZxzms7/VT+qVBCs6yOjIprv1PzT5ukf4zdX1XY8ATaP57wh6zUEaa+fNeD0nLmpX2uwYAv11fmSfWcjzBU=
+X-Received: by 2002:a2e:b052:0:b0:2ec:174b:75bf with SMTP id
+ 38308e7fff4ca-2ec174b77ccmr30655281fa.4.1718463736334; Sat, 15 Jun 2024
+ 08:02:16 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 15 Jun 2024 07:57:31 -0700
+ HTTPREST; Sat, 15 Jun 2024 08:02:12 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240612085349.710785-4-shejialuo@gmail.com>
+In-Reply-To: <20240612085349.710785-5-shejialuo@gmail.com>
 References: <20240530122753.1114818-1-shejialuo@gmail.com> <20240612085349.710785-1-shejialuo@gmail.com>
- <20240612085349.710785-4-shejialuo@gmail.com>
+ <20240612085349.710785-5-shejialuo@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 15 Jun 2024 07:57:31 -0700
-Message-ID: <CAOLa=ZS+3_=Q=KNdauWrU3javdDNneHPaS5KaoM6iCTLP8O8mA@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v2 3/7] builtin/refs: add verify subcommand
+Date: Sat, 15 Jun 2024 08:02:12 -0700
+Message-ID: <CAOLa=ZRQX+7gYrrPZXQtTy=yq+oBGvyWGYXtwMZatpm+VSaUyw@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v2 4/7] builtin/fsck: add `git-refs verify` child process
 To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
 	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: multipart/mixed; boundary="000000000000b19215061aeef36c"
+Content-Type: multipart/mixed; boundary="000000000000906a37061aef04e7"
 
---000000000000b19215061aeef36c
+--000000000000906a37061aef04e7
 Content-Type: text/plain; charset="UTF-8"
 
 shejialuo <shejialuo@gmail.com> writes:
 
-> Introduce a new subcommand "verify" in git-refs(1) to allow the user to
-> check the reference database consistency.
+> Introduce a new function "fsck_refs" that initializes and runs a child
+> process to execute the "git-refs verify" command.
 >
 > Mentored-by: Patrick Steinhardt <ps@pks.im>
 > Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 > Signed-off-by: shejialuo <shejialuo@gmail.com>
 > ---
->  Documentation/git-refs.txt | 11 ++++++++++
->  builtin/refs.c             | 45 ++++++++++++++++++++++++++++++++++++++
->  2 files changed, 56 insertions(+)
+>  builtin/fsck.c | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
 >
-> diff --git a/Documentation/git-refs.txt b/Documentation/git-refs.txt
-> index 5b99e04385..f9d36ea19d 100644
-> --- a/Documentation/git-refs.txt
-> +++ b/Documentation/git-refs.txt
-> @@ -10,6 +10,7 @@ SYNOPSIS
->  --------
->  [verse]
->  'git refs migrate' --ref-format=<format> [--dry-run]
-> +'git refs verify' [--strict] [--verbose]
->
->  DESCRIPTION
->  -----------
-> @@ -22,6 +23,9 @@ COMMANDS
->  migrate::
->  	Migrate ref store between different formats.
->
-> +verify::
-> +	Verify reference database consistency.
-> +
->  OPTIONS
->  -------
->
-> @@ -39,6 +43,13 @@ include::ref-storage-format.txt[]
->  	can be used to double check that the migration works as expected before
->  	performing the actual migration.
->
-
-Above it states that the options mentioned are "specific to 'git refs
-migrate'", shouldn't we do something similar here?
-
-> +--strict::
-> +	Enable more strict checking, every WARN severity for the `Fsck Messages`
-> +	be seen as ERROR.
-> +
-> +--verbose::
-> +	When verifying the reference database consistency, be chatty.
-> +
->  KNOWN LIMITATIONS
->  -----------------
->
-> diff --git a/builtin/refs.c b/builtin/refs.c
-> index 46dcd150d4..82ed0d57c1 100644
-> --- a/builtin/refs.c
-> +++ b/builtin/refs.c
-> @@ -1,4 +1,6 @@
->  #include "builtin.h"
-> +#include "config.h"
-> +#include "fsck.h"
->  #include "parse-options.h"
->  #include "refs.h"
->  #include "repository.h"
-> @@ -7,6 +9,9 @@
->  #define REFS_MIGRATE_USAGE \
->  	N_("git refs migrate --ref-format=<format> [--dry-run]")
->
-> +#define REFS_VERIFY_USAGE \
-> +	N_("git refs verify [--strict] [--verbose]")
-> +
->  static int cmd_refs_migrate(int argc, const char **argv, const char *prefix)
->  {
->  	const char * const migrate_usage[] = {
-> @@ -58,15 +63,55 @@ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix)
->  	return err;
+> diff --git a/builtin/fsck.c b/builtin/fsck.c
+> index d13a226c2e..10d73f534f 100644
+> --- a/builtin/fsck.c
+> +++ b/builtin/fsck.c
+> @@ -896,6 +896,21 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
+>  	return res;
 >  }
 >
-> +static int cmd_refs_verify(int argc, const char **argv, const char *prefix)
+> +static void fsck_refs(void)
 > +{
-> +	const char * const verify_usage[] = {
-> +		REFS_VERIFY_USAGE,
-> +		NULL,
-> +	};
-> +	int ret = 0;
-> +	unsigned int verbose = 0, strict = 0;
-> +	struct fsck_refs_options fsck_refs_options = FSCK_REFS_OPTIONS_DEFAULT;
-> +	struct option options[] = {
-> +		OPT__VERBOSE(&verbose, N_("be verbose")),
-> +		OPT_BOOL(0, "strict", &strict, N_("enable strict checking")),
-> +		OPT_END(),
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, options, verify_usage, 0);
-> +	if (argc)
-> +		usage(_("too many arguments"));
-> +
+> +	struct child_process refs_verify = CHILD_PROCESS_INIT;
+> +	child_process_init(&refs_verify);
+> +	refs_verify.git_cmd = 1;
+> +	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
 > +	if (verbose)
-> +		fsck_refs_options.verbose = 1;
-> +	if (strict)
-> +		fsck_refs_options.strict = 1;
+> +		strvec_push(&refs_verify.args, "--verbose");
+> +	if (check_strict)
+> +		strvec_push(&refs_verify.args, "--strict");
 > +
-> +	git_config(git_fsck_refs_config, &fsck_refs_options);
-> +	prepare_repo_settings(the_repository);
-> +
-> +	ret = refs_fsck(get_main_ref_store(the_repository), &fsck_refs_options);
-> +
-> +	/*
-> +	 * Explicitly free the allocated array. This is necessary because
-> +	 * this program is executed as child process of git-fsck(1) and the
-> +	 * allocated array may not freed when git-fsck(1) aborts somewhere.
-> +	 */
-> +	free(fsck_refs_options.msg_type);
-
-Nice, this is a good thing to do even if this isn't called as a child
-process.
-
-> +	return ret;
+> +	if (run_command(&refs_verify))
+> +		errors_found |= ERROR_REFS;
 > +}
 > +
->  int cmd_refs(int argc, const char **argv, const char *prefix)
->  {
->  	const char * const refs_usage[] = {
->  		REFS_MIGRATE_USAGE,
-> +		REFS_VERIFY_USAGE,
->  		NULL,
->  	};
->  	parse_opt_subcommand_fn *fn = NULL;
->  	struct option opts[] = {
->  		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
-> +		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
->  		OPT_END(),
->  	};
+
+At first I thought we need to call `child_process_clear()` here, but
+seems like `run_command` does that internally.
+
+>  static char const * const fsck_usage[] = {
+>  	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
+>  	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
+> @@ -1065,6 +1080,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+>
+>  	check_connectivity();
+>
+> +	fsck_refs();
+> +
+>  	if (the_repository->settings.core_commit_graph) {
+>  		struct child_process commit_graph_verify = CHILD_PROCESS_INIT;
 >
 > --
 > 2.45.2
 
---000000000000b19215061aeef36c
+--000000000000906a37061aef04e7
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 75d33861627e4749_0.1
+X-Attachment-Id: 5cee8997cf0edfdd_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1adHE5a1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNzFjREFDTk5ScUNnQmR5cDJMMTIyMG96WUNBUGhNUQpWakdWSWV0bkk2
-T0oxV0RHVjRqYWpjd2lVbDJHRTV2WFI1Tm1DanAzNWQ4ZlRheCtIUFFxa3V6NFVqbmxzdWFNCndj
-NHR3b0hXbjF2VWYycjN1ZTNQb05WRU56YVFKTWh4VTNLSU9HWFJqM0lZVFFZL2xhTTB3emtPbTVj
-eTdpaTkKSm1lQ1p0WW5LckE1YkZJcDN1MktGYmViaytYS011U2cyNjZia0JuUDNOdk9WTFpjclJj
-S25DekVGSXFBUmh3UQorUXBXME9DeVpxMS9HVzRpY1J1R1h0dHE4SWttZkdLcmplVkpMb2o5Ky9N
-eVRsNW5jK2doMjM2M0s3UHE5ZE9qCnhTS1UzNFBMYThPUEVlWk9pakREY2F1eGkwcTIvVUVDeGVS
-cnBoUXh0MWRqMy9RanFtZlJ2M0ZhcW1NOXNXcUMKK0NsNWNJOHFGbFlENEpvbVBxUVJWY21QRERo
-dzBiMzVzeEJheGVpWHZQdDZoU2ZzaFJ3NUV6TnhJVis2SWtFVApSWHdkV3N5MmxUd0JGT3lpTmtl
-a0dFKytPaHVwUk1zZENWMmEyekM2RXNJSXFmLzY0Qk5zbHdnUlhIQUdvbkRaCnUvUUtxQVRhZFJa
-QTA0cUpPbjJ1d1BsTlMzbHMvbEZwdk83dExiST0KPXJGL1EKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1adHJQSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN3dxREFDV294NGNQWWVmdXhSUWtqOThzWHBFQ2pPSApwem5jUjdZSko4
+eEJsTlVlaWhMVUJPaFlXelplS2Q4WGJLTW96Y05Mbyt3TjFHTi9PRmdtaUhvamplS1crSFFBClFh
+NEdrWkVzbWExbEpVRlNNbkdYNm84ME9UbHNjeW9Vd242U2JPTjZpNmU4UnoxSkMzOERUNmxOMDdh
+NEdFWG0KV0NFOGRtOVdZeHlJNXJCUWNTZ2ZkNi9XeWkrNHFiMGxGck50NHpmSzd0VHNrMzZyVm1S
+UTdOOHNBS2dlejZGSQpzZ1lRaGpGektaZXBkdUJKc3h3YStmVzZxTVNpVXRUdE1ab2k4MVNvVHdL
+ZXFSdG4xT0tEZ3g3NFJGYjEyU0hYCnBEL2g4aHRPYWRxQmpDSUpGQVB0WUVydFhBeXRBamp0bm5C
+amlXMVFiVk1lMHBpM28yMm9pRVVWMUVHMHZpdHcKanYzODZLMURNMUp6dmxXTjdLVENqdmtrdURD
+bnFQUTdBWEFiUmk2cU5HMU44TEpZY1Z6RE9DYjFFNjMwOFlEQQoxeW9Fc0d3SzVqeHVQZW4zQmd3
+VTd6bTh6cTQ4UElZd0J2R1J6M1lqZ2VKWHpaWHIzRGdTSHpLM1ErMGpzS3IzClhYVko5UkJPOXdx
+UXY3SjkwOENmcHZKZGVRSzNPTTVvdmhha2trTT0KPW5XSEkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000b19215061aeef36c--
+--000000000000906a37061aef04e7--
