@@ -1,37 +1,44 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7680616C6A4
-	for <git@vger.kernel.org>; Sun, 16 Jun 2024 04:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C880C16C6A4
+	for <git@vger.kernel.org>; Sun, 16 Jun 2024 04:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718513981; cv=none; b=U2k8yMlnz0H86m/ikZK3swX6Qq4fDkdusblrXUYX9EPZNs6EuJ0kDzwDwJNViFRtEm26c/QwnpVoU2LRTD6ccttxrMlksVn0JpFTVut/ja8+EWOaI4rys6LUYGRj08Xns5WzDO4a8JC7Cl4SSozjOHGUcoKnn/RKB5nJs8iBKUQ=
+	t=1718513984; cv=none; b=W88mCds+CRk4X8UVKMSAOTnHOfJx4Lv9LyHh1tTRpCFkka4BfNm5HnEMSZz7Ek/eNu7Z/8lqpNUOUQI2G6z6CnQCCfUwCRmsEUJYfqWlVt4WZk2L45pIMTXZi06M3TPu79/BwkD8AdxujNzdpxtb0cJO+byyYLbRm91cFnthJPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718513981; c=relaxed/simple;
-	bh=D8JTd4Nq7SGs6yb0Lbc0sM0dJoUDR6OUU2g1CCn0Aj0=;
+	s=arc-20240116; t=1718513984; c=relaxed/simple;
+	bh=lh1/it1ZRa+ZatnPEhyVEePwMC9TGtsSmENhJkDBNVY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u8ywedV3whSjZ5o+2MWnNXGXYudEDWeGBPYc3cFAUs9+zUFfFpRPeKRkGM3q5/vYrj0+jo4jN8puoFfpOkeqPFdJ/gRBGY4aeJ8T/2JM/qwMuQh7i6mPv5GY3HlPYxT8mthqFu/hd7Sn/R2XSBUKBitjCzntsyWhPKSr//E5FDQ=
+	 Content-Type:Content-Disposition:In-Reply-To; b=MSaLD7QvaGqDN3IRfnDJVfCVlQ+chlt27PAgQmSMOQzWyhaj/ZE5H/zkvhnW7lNvHr/PPAGEpBtqw51nceG+GObjBCSJ35jEl+xW9WLu9cgHMvlZfhxdFJqXFm1qEgcG4B32TPpi1jxcnXZlx+fEWlxxtczvHkT4XN7nxT5U4Rk=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 2636 invoked by uid 109); 16 Jun 2024 04:59:38 -0000
+Received: (qmail 2618 invoked by uid 109); 16 Jun 2024 04:53:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 16 Jun 2024 04:59:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 16 Jun 2024 04:53:01 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14770 invoked by uid 111); 16 Jun 2024 04:59:36 -0000
+Received: (qmail 14734 invoked by uid 111); 16 Jun 2024 04:52:58 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 16 Jun 2024 00:59:36 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 16 Jun 2024 00:52:58 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sun, 16 Jun 2024 00:59:37 -0400
+Date: Sun, 16 Jun 2024 00:52:59 -0400
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Mathew George <mathewegeorge@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 03/11] remote: transfer ownership of memory in add_url(),
- etc
-Message-ID: <20240616045937.GB17750@coredump.intra.peff.net>
-References: <20240614102439.GA222287@coredump.intra.peff.net>
- <20240614102722.GC222445@coredump.intra.peff.net>
- <xmqq1q4zh2vh.fsf@gitster.g>
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, ach.lumap@gmail.com,
+	chriscool@tuxfamily.org, git@vger.kernel.org,
+	kaartic.sivaraam@gmail.com
+Subject: Re: [PATCH v3 2/3] t/: port helper/test-sha1.c to unit-tests/t-hash.c
+Message-ID: <20240616045259.GA17750@coredump.intra.peff.net>
+References: <20240229054004.3807-1-ach.lumap@gmail.com>
+ <20240523235945.26833-1-shyamthakkar001@gmail.com>
+ <20240523235945.26833-3-shyamthakkar001@gmail.com>
+ <ZlCWcpcUkgUMWJYz@tanuki>
+ <CAP8UFD1=yjZEZWvMYKq1RyY8fMSHze4XcLbCZMSFhCLBheaM+w@mail.gmail.com>
+ <xmqqo78vnrba.fsf@gitster.g>
+ <6fhpz4aqq7jr6ca2durig7e5a37g6ndzjjc2v46kjjkldohtja@tu7cdo4tu2r6>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,79 +47,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq1q4zh2vh.fsf@gitster.g>
+In-Reply-To: <6fhpz4aqq7jr6ca2durig7e5a37g6ndzjjc2v46kjjkldohtja@tu7cdo4tu2r6>
 
-On Fri, Jun 14, 2024 at 10:04:50AM -0700, Junio C Hamano wrote:
+On Sun, Jun 16, 2024 at 01:44:07AM +0530, Ghanshyam Thakkar wrote:
 
-> >  static void add_pushurl_alias(struct remote_state *remote_state,
-> > @@ -79,6 +79,7 @@ static void add_pushurl_alias(struct remote_state *remote_state,
-> >  	char *alias = alias_url(url, &remote_state->rewrites_push);
-> >  	if (alias)
-> >  		add_pushurl(remote, alias);
-> > +	free(alias);
-> >  }
+> On Fri, 24 May 2024, Junio C Hamano <gitster@pobox.com> wrote:
+> > Christian Couder <christian.couder@gmail.com> writes:
+> > 
+> > >> Can we refactor this test to stop doing that? E.g., would it work if we
+> > >> used git-hash-object(1) to check that SHA1DC does its thing? Then we
+> > >> could get rid of the helper altogether, as far as I understand.
+> > >
+> > > It could perhaps work if we used git-hash-object(1) instead of
+> > > `test-tool sha1` in t0013-sha1dc to check that SHA1DC does its thing,
+> > > but we could do that in a separate patch or patch series.
+> > 
+> > Yeah, I think such a plan to make preliminary refactoring as a
+> > separate series, and then have another series to get rid of
+> > "test-tool sha1" (and "test-tool sha256" as well?) on top of it
+> > would work well.
 > 
-> OK.  I wondered if we want to strdup(url) in my review on the
-> previous step, but now we are making the add_url() responsible
-> for making a copy, we instead do the opposite, i.e. free alias
-> that was allocated for us because we no longer need it.
+> It seems that git-hash-object does not die (or give an error) when
+> providing t0013/shattered-1.pdf, and gives a different hash than the
+> one explicitly mentioned t0013-sha1dc.sh. I suppose it is silently
+> replacing the hash when it detects the collision. Is this an expected
+> behaviour?
 
-Yeah. Possibly the two should be squashed. I was trying to make this
-patch a little less long/confusing, but maybe breaking things up just
-posed new questions. :)
+The shattered files do not create a collision (nor trigger the detection
+in sha1dc) when hashed as Git objects. The reason is that Git objects
+are not a straight hash of the contents, but have the object type and
+size prepended.  One _could_ use the same techniques that created the
+shattered files to create a colliding set of Git objects, but AFAIK
+nobody has done so (and it probably costs tens of thousands of USD,
+though perhaps getting cheaper every year).
 
-> > @@ -336,7 +338,7 @@ static void read_branches_file(struct remote_state *remote_state,
-> >  	else
-> >  		frag = to_free = repo_default_branch_name(the_repository, 0);
-> >  
-> > -	add_url_alias(remote_state, remote, strbuf_detach(&buf, NULL));
-> > +	add_url_alias(remote_state, remote, buf.buf);
-> 
-> It is curious that you delay ...
-> 
-> > @@ -347,6 +349,7 @@ static void read_branches_file(struct remote_state *remote_state,
-> >  	refspec_appendf(&remote->push, "HEAD:refs/heads/%s", frag);
-> >  	remote->fetch_tags = 1; /* always auto-follow */
-> >  
-> > +	strbuf_release(&buf);
-> >  	free(to_free);
-> >  }
-> 
-> ... strbuf_release() of the buf to the very end of the function.  
-> 
-> In the original, buf became invalid by doing strbuf_detach(), so we
-> could do strbuf_release() immediately after add_url_alias() returns
-> to us if we wanted to.
+So no, git-hash-object can't be used to test this. You have to directly
+hash some contents with sha1, and I don't think there is any way to do
+that with regular Git commands. Anything working with objects will use
+the type+size format. We also use sha1 for the csum-file.[ch] mechanism,
+where it is a straight hash of the contents (and we use this for
+packfiles, etc). But there's not an easy way to feed an arbitrary file
+to that system.
 
-Right. I had originally written it that way, since that would be the
-mechanical conversion. But since there was already cleanup at the bottom
-of the function, it felt more natural to shuffle it there. Which is
-correct as long as there are no other references to buf nor early
-returns. You can't see that from the context, but it is true in this
-case.
+It's possible there might be a way to abuse hashfd_check() to feed an
+arbitrary file. E.g., stick shattered-1.pdf into a .pack file or
+something, then ask "index-pack --verify" to check it. But I don't think
+even that works, because before we even get to the final checksum, we're
+verifying the actual contents as we go.
 
-Bumping to --inter-hunk-context=4 does it a little more obvious.
-
-> > @@ -431,15 +434,13 @@ static int handle_config(const char *key, const char *value,
-> >  	else if (!strcmp(subkey, "prunetags"))
-> >  		remote->prune_tags = git_config_bool(key, value);
-> >  	else if (!strcmp(subkey, "url")) {
-> > -		char *v;
-> > -		if (git_config_string(&v, key, value))
-> > -			return -1;
-> > -		add_url(remote, v);
-> > +		if (!value)
-> > +			return config_error_nonbool(key);
-> > +		add_url(remote, value);
-> 
-> OK.  config_string() does (1) check for "I exist hence I am true"
-> boolean, and (2) give us a duplicate of the value.  We do not want
-> the latter, so we do the former ourselves here.  The same story
-> repeats for pushurl below (ellided).
-
-Yep. If we followed through on the "bool means reset" approach, then these
-extra NULL checks would go away in favor of one in add_url(). I didn't
-pursue that here. And if we do, I think we should do it in all the other
-spots, too, for consistency.
+So I think we need to keep some mechanism for computing the sha1 of
+arbitrary contents.
 
 -Peff
