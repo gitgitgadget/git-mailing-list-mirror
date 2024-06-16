@@ -1,109 +1,93 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB241E867
-	for <git@vger.kernel.org>; Sun, 16 Jun 2024 11:17:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4CA171B0
+	for <git@vger.kernel.org>; Sun, 16 Jun 2024 11:47:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718536648; cv=none; b=nt7aKJiOu4xuD5smdxQLu9c3Rr+c7sZPx0KR1yJWP3MaA8+/EAFyX6DQsDO4Mf2nBvNEv/FyXbT5/Xe3/qpOPwOlgvkRy4l/th+f6GItaRJf5q843/g2kt34z9DbgbL/y4bFarkVPGASVdtasT3gxuDT6FRQi2VlaKt1eb1d+qs=
+	t=1718538477; cv=none; b=LncL9NIIvzXJl+k1lwkYVjIgAqlN+ysYvqNo6ULVW0enYRqkapwV7UhyUjvwxqUZZOB5c16Lajb+ev9iLQoapPiXewfHZuy3QlGTGDicqX1fxDIICFFtVvlZ8F0zR9lH0TOxBqI2ulTQTWrp5pbnzUFvSyrK57EzxLUQ7ASa7Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718536648; c=relaxed/simple;
-	bh=TpQQw/549WRcjEzIaM0wfbl6Q9tD6NtTa6TyMJan+Dw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=SBGczUDeB9LF/wcxLU2eULZ/djSugjdCj8p7CgDgxpdHr5RMhe1KuABtMVkse+GPD9HIjvK9bldgVUjT0qxuUygxvm08/wte1duxIGilOwRDq7K1ddalwqQCSZ5WBM3VrBvpDHLNXrQaXwdwQmEcG8OIrKxUQB1KFAPeLJxUsuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp1.bon.at (unknown [192.168.181.103])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4W28S42TCcz5tqr
-	for <git@vger.kernel.org>; Sun, 16 Jun 2024 12:31:00 +0200 (CEST)
-Received: from [192.168.0.105] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4W28Rw0BgMzRnmP;
-	Sun, 16 Jun 2024 12:30:51 +0200 (CEST)
-Message-ID: <5dd4de8a-255a-4f03-b4d8-fc160b3178e1@kdbg.org>
-Date: Sun, 16 Jun 2024 12:30:51 +0200
+	s=arc-20240116; t=1718538477; c=relaxed/simple;
+	bh=jlTMMsYvELHCO04vuGkJ9WUTfFNfrM7dlQD4V6h8R7A=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=MYYDvqOn2Cj8f4yTQc8sqAlCSJ5MBbDMx0ea9Ja//1oxSDubp0YK6FRO5W69xq0uRBBSg39xkqufSQtjbYc9xyUFA68cWeMPa3lNCKs4QJiO4y7S/21Ua1siYzP25A0TM75Gu/P+sdsK82zh6zYzlvKJub6GDKzNlA+EXJ0hXVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EffZizOE; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EffZizOE"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-52c82101407so6029388e87.3
+        for <git@vger.kernel.org>; Sun, 16 Jun 2024 04:47:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718538473; x=1719143273; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=jlTMMsYvELHCO04vuGkJ9WUTfFNfrM7dlQD4V6h8R7A=;
+        b=EffZizOEnqXTlel6SFTbOs9zgfOfhMl9JAAHNV9P8I3gAX/zcAAw6SG7/X5PiGnk+e
+         ZN+TzzV6jxFUeCEVT3NimHUQIP0OmjA709aizeO5urypTmd0Mp+B3DpZHVV0u//2GUJ5
+         eTx2n8rTPZH/1zybTxxtf1lVYoy7YmAFJzipeJMoq7yBqBOPTJy0aFiENxQXTKTvlzdk
+         2TkxTvnQazlLwoEnjJwakdqOXKDDPGWel0uwOAP4LfNCvmQgiJXnnWSFcT7czTTZOKDQ
+         jeYb2ZOzSzCZm0yblGMjWYs/5tLC9gCL1hd2YWgpRi/wZOVQXKHUW8ql+ByDpMnlELB4
+         oghw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718538473; x=1719143273;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jlTMMsYvELHCO04vuGkJ9WUTfFNfrM7dlQD4V6h8R7A=;
+        b=XagsRu0zL5G2i07aciKGHBt2QoLev0x5poK6kZtGz2injna5gEVqPY0o12f8hdnRRE
+         zYZ7tRac60A4LpXZM0vNti0ifBevblcnbLaSSD12X7AyzTMqIXw5mUHlA/GCJLj05MGv
+         FbBa8AaO2KQIaC9IlLBDwNaYJ9qd2Nu5dwUJeYTQPvp/veCiY9NPbFQfLXi7XG2ThbR1
+         nYOGg0v/rPYpn0BH5lMu9TbzZW12gAATa7Qco0Ob3dKQvwflRfwthwPhT//sBRp1GZdp
+         QyYx7T9KJKcfZuvPOQHPlIAvPzW8wZA72xXx/6iraHWP+ykGMmPJnUFCv6ek1yeUT3Rq
+         l4/Q==
+X-Gm-Message-State: AOJu0YwMPkF5pQGRZIt06eJ2Vq1+7XtCV42Ujmo3Ste22NuIlpdlB2vy
+	CmU6Pz4AhLwmmyL7x9anRhaQbudlY0tlrgcJCw0sOo/zILcaRhYnbJ+m18xCjYCY4xJZtRJhkMQ
+	Vbg/rcYLfK/9IyM+4F8NB5HwcXP6mFUrmQBo=
+X-Google-Smtp-Source: AGHT+IHQgOH72jYUwc4FnfzLKL0BymUzCYc5k6TertCaUjcKzk4Izaof+kXVIbIuSONJOlp1fG/mvV2uU2rG58vJMiU=
+X-Received: by 2002:ac2:532a:0:b0:52c:8075:4f3 with SMTP id
+ 2adb3069b0e04-52ca6e6e9c6mr5344994e87.36.1718538473346; Sun, 16 Jun 2024
+ 04:47:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Fix default font scaling
-To: Serhii Tereshchenko <serg.partizan@gmail.com>
-References: <20240615085345.47278-1-serg.partizan@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org
-In-Reply-To: <20240615085345.47278-1-serg.partizan@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Devste Devste <devstemail@gmail.com>
+Date: Sun, 16 Jun 2024 13:47:41 +0200
+Message-ID: <CANM0SV3CQPRyJCDanB8JFpkAMwuoo-mg3A=_L743_GXJtoFtQA@mail.gmail.com>
+Subject: Add warning when v0 protocol is used/downgraded
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Am 15.06.24 um 10:53 schrieb Serhii Tereshchenko:
-> This fixes font scaling for default fonts, where we don't set font
-> sizes explicitly.
-> 
-> Without this, on 4k monitor with text-scaling-factor configured in Gnome,
-> labels, buttons and settings are using very small font sizes. (Probably,
-> not just Gnome but anything that sets custom DPI).
-> 
-> Screenshots here: https://twiukraine.com/@partizan/112619567918546426
-> 
-> Signed-off-by: Serhii Tereshchenko <serg.partizan@gmail.com>
+- When "git config protocol.version 2" is used, there is no
+warning/message when the remote returns a response in v0 format. This
+leads to any issues related to slow(er) git caused by old protocol use
+being unnoticed, leading to wasted time debugging.
 
-Thank you. I have adjusted the title to read
+- v2 protocol has been standard since 2.26
+https://github.com/git/git/blob/master/Documentation/RelNotes/2.26.0.txt#L101
+However, there are still large providers (that rhyme with
+Nuntucket...) that do not support it/have actively disabled it now
+(years after the release)
+Additionally, we encountered various self-hosted git servers that had
+the protocol version restricted to 1 in their initial setup and this
+being forgotten about. This led to unnecessarily slow fetches by their
+users unaware of this problem, since git just silently accepts v1 (0)
+protocol.
 
-  git-gui: fix scaled default fonts
+Since v2 is the default protocol, I think it would be expected that if
+a non-default protocol reply is returned, there is a message shown to
+the user (like e.g. the detached head warning) to make the user aware
+that an outdated git protocol was used making git slow.
 
-to follow the convention.
+Otherwise, this (currently) leads to reports that e.g. git fetch is
+getting slower and slower (as repo sizes increase over time). However
+the issue in all cases we have handled so far, has always been that
+the old protocol was used without the user being aware of it and not
+an issue with git itself.
 
-> ---
->  git-gui.sh | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/git-gui.sh b/git-gui.sh
-> index 8bc8892..23dd82d 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -810,6 +810,16 @@ if {[is_Windows]} {
->  ## config defaults
->  
->  set cursor_ptr arrow
-> +
-> +# For whatever reason, Tk does not apply font scaling to default fonts,
-> +# but applies font scaling when setting size explicitly.
-> +# Default -size 10 is still 10, when you look at it with `font actual ...`,
-> +# but explicitl -size 10 becomes 10 * scale factor.
-
-I fixed this typo: s/explicitl/explict/
-
-> +# So, we need to configure fonts to use their default font sizes, but scaled.
-> +foreach font_name [font names] {
-> +	font configure $font_name -size [font actual $font_name -size]
-> +}
-
-Have you seen https://wiki.tcl-lang.org/page/font+scaling where [font
-configure ...] instead of [font actual ...] is suggested as a preferable
-solution? I am not so much into Tcl/Tk that I can judge what is best.
-
-> +
->  font create font_ui
->  if {[lsearch -exact [font names] TkDefaultFont] != -1} {
->  	eval [linsert [font actual TkDefaultFont] 0 font configure font_ui]
-
-My setup does not have a 4k monitor, I run KDE and I do not know if I
-have changed a DPI setting. For the test, I have removed the [gui]
-sections from my configurations to ensure that the defaults are used.
-
-Under these conditions, this change does not make a difference in how
-Git GUI appears. I assume this is the expected outcome, so I take it as
-a good sign.
-
-The patch is available as
-
-https://github.com/j6t/git-gui.git st/font-scaling-fix
-
-for others to test. I'd appreciate your feedback.
-
--- Hannes
-
+e.g.
+If
+protocol.version is not explicitly set or v2
+and both the local and server git version are >=2.26
+and the reply is not in v2 protocol format
