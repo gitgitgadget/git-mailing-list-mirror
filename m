@@ -1,101 +1,109 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C880C16C6A4
-	for <git@vger.kernel.org>; Sun, 16 Jun 2024 04:59:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB241E867
+	for <git@vger.kernel.org>; Sun, 16 Jun 2024 11:17:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718513984; cv=none; b=W88mCds+CRk4X8UVKMSAOTnHOfJx4Lv9LyHh1tTRpCFkka4BfNm5HnEMSZz7Ek/eNu7Z/8lqpNUOUQI2G6z6CnQCCfUwCRmsEUJYfqWlVt4WZk2L45pIMTXZi06M3TPu79/BwkD8AdxujNzdpxtb0cJO+byyYLbRm91cFnthJPw=
+	t=1718536648; cv=none; b=nt7aKJiOu4xuD5smdxQLu9c3Rr+c7sZPx0KR1yJWP3MaA8+/EAFyX6DQsDO4Mf2nBvNEv/FyXbT5/Xe3/qpOPwOlgvkRy4l/th+f6GItaRJf5q843/g2kt34z9DbgbL/y4bFarkVPGASVdtasT3gxuDT6FRQi2VlaKt1eb1d+qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718513984; c=relaxed/simple;
-	bh=lh1/it1ZRa+ZatnPEhyVEePwMC9TGtsSmENhJkDBNVY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MSaLD7QvaGqDN3IRfnDJVfCVlQ+chlt27PAgQmSMOQzWyhaj/ZE5H/zkvhnW7lNvHr/PPAGEpBtqw51nceG+GObjBCSJ35jEl+xW9WLu9cgHMvlZfhxdFJqXFm1qEgcG4B32TPpi1jxcnXZlx+fEWlxxtczvHkT4XN7nxT5U4Rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 2618 invoked by uid 109); 16 Jun 2024 04:53:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 16 Jun 2024 04:53:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14734 invoked by uid 111); 16 Jun 2024 04:52:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 16 Jun 2024 00:52:58 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sun, 16 Jun 2024 00:52:59 -0400
-From: Jeff King <peff@peff.net>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, ach.lumap@gmail.com,
-	chriscool@tuxfamily.org, git@vger.kernel.org,
-	kaartic.sivaraam@gmail.com
-Subject: Re: [PATCH v3 2/3] t/: port helper/test-sha1.c to unit-tests/t-hash.c
-Message-ID: <20240616045259.GA17750@coredump.intra.peff.net>
-References: <20240229054004.3807-1-ach.lumap@gmail.com>
- <20240523235945.26833-1-shyamthakkar001@gmail.com>
- <20240523235945.26833-3-shyamthakkar001@gmail.com>
- <ZlCWcpcUkgUMWJYz@tanuki>
- <CAP8UFD1=yjZEZWvMYKq1RyY8fMSHze4XcLbCZMSFhCLBheaM+w@mail.gmail.com>
- <xmqqo78vnrba.fsf@gitster.g>
- <6fhpz4aqq7jr6ca2durig7e5a37g6ndzjjc2v46kjjkldohtja@tu7cdo4tu2r6>
+	s=arc-20240116; t=1718536648; c=relaxed/simple;
+	bh=TpQQw/549WRcjEzIaM0wfbl6Q9tD6NtTa6TyMJan+Dw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=SBGczUDeB9LF/wcxLU2eULZ/djSugjdCj8p7CgDgxpdHr5RMhe1KuABtMVkse+GPD9HIjvK9bldgVUjT0qxuUygxvm08/wte1duxIGilOwRDq7K1ddalwqQCSZ5WBM3VrBvpDHLNXrQaXwdwQmEcG8OIrKxUQB1KFAPeLJxUsuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp1.bon.at (unknown [192.168.181.103])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4W28S42TCcz5tqr
+	for <git@vger.kernel.org>; Sun, 16 Jun 2024 12:31:00 +0200 (CEST)
+Received: from [192.168.0.105] (unknown [93.83.142.38])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4W28Rw0BgMzRnmP;
+	Sun, 16 Jun 2024 12:30:51 +0200 (CEST)
+Message-ID: <5dd4de8a-255a-4f03-b4d8-fc160b3178e1@kdbg.org>
+Date: Sun, 16 Jun 2024 12:30:51 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6fhpz4aqq7jr6ca2durig7e5a37g6ndzjjc2v46kjjkldohtja@tu7cdo4tu2r6>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Fix default font scaling
+To: Serhii Tereshchenko <serg.partizan@gmail.com>
+References: <20240615085345.47278-1-serg.partizan@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <20240615085345.47278-1-serg.partizan@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, Jun 16, 2024 at 01:44:07AM +0530, Ghanshyam Thakkar wrote:
-
-> On Fri, 24 May 2024, Junio C Hamano <gitster@pobox.com> wrote:
-> > Christian Couder <christian.couder@gmail.com> writes:
-> > 
-> > >> Can we refactor this test to stop doing that? E.g., would it work if we
-> > >> used git-hash-object(1) to check that SHA1DC does its thing? Then we
-> > >> could get rid of the helper altogether, as far as I understand.
-> > >
-> > > It could perhaps work if we used git-hash-object(1) instead of
-> > > `test-tool sha1` in t0013-sha1dc to check that SHA1DC does its thing,
-> > > but we could do that in a separate patch or patch series.
-> > 
-> > Yeah, I think such a plan to make preliminary refactoring as a
-> > separate series, and then have another series to get rid of
-> > "test-tool sha1" (and "test-tool sha256" as well?) on top of it
-> > would work well.
+Am 15.06.24 um 10:53 schrieb Serhii Tereshchenko:
+> This fixes font scaling for default fonts, where we don't set font
+> sizes explicitly.
 > 
-> It seems that git-hash-object does not die (or give an error) when
-> providing t0013/shattered-1.pdf, and gives a different hash than the
-> one explicitly mentioned t0013-sha1dc.sh. I suppose it is silently
-> replacing the hash when it detects the collision. Is this an expected
-> behaviour?
+> Without this, on 4k monitor with text-scaling-factor configured in Gnome,
+> labels, buttons and settings are using very small font sizes. (Probably,
+> not just Gnome but anything that sets custom DPI).
+> 
+> Screenshots here: https://twiukraine.com/@partizan/112619567918546426
+> 
+> Signed-off-by: Serhii Tereshchenko <serg.partizan@gmail.com>
 
-The shattered files do not create a collision (nor trigger the detection
-in sha1dc) when hashed as Git objects. The reason is that Git objects
-are not a straight hash of the contents, but have the object type and
-size prepended.  One _could_ use the same techniques that created the
-shattered files to create a colliding set of Git objects, but AFAIK
-nobody has done so (and it probably costs tens of thousands of USD,
-though perhaps getting cheaper every year).
+Thank you. I have adjusted the title to read
 
-So no, git-hash-object can't be used to test this. You have to directly
-hash some contents with sha1, and I don't think there is any way to do
-that with regular Git commands. Anything working with objects will use
-the type+size format. We also use sha1 for the csum-file.[ch] mechanism,
-where it is a straight hash of the contents (and we use this for
-packfiles, etc). But there's not an easy way to feed an arbitrary file
-to that system.
+  git-gui: fix scaled default fonts
 
-It's possible there might be a way to abuse hashfd_check() to feed an
-arbitrary file. E.g., stick shattered-1.pdf into a .pack file or
-something, then ask "index-pack --verify" to check it. But I don't think
-even that works, because before we even get to the final checksum, we're
-verifying the actual contents as we go.
+to follow the convention.
 
-So I think we need to keep some mechanism for computing the sha1 of
-arbitrary contents.
+> ---
+>  git-gui.sh | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 8bc8892..23dd82d 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -810,6 +810,16 @@ if {[is_Windows]} {
+>  ## config defaults
+>  
+>  set cursor_ptr arrow
+> +
+> +# For whatever reason, Tk does not apply font scaling to default fonts,
+> +# but applies font scaling when setting size explicitly.
+> +# Default -size 10 is still 10, when you look at it with `font actual ...`,
+> +# but explicitl -size 10 becomes 10 * scale factor.
 
--Peff
+I fixed this typo: s/explicitl/explict/
+
+> +# So, we need to configure fonts to use their default font sizes, but scaled.
+> +foreach font_name [font names] {
+> +	font configure $font_name -size [font actual $font_name -size]
+> +}
+
+Have you seen https://wiki.tcl-lang.org/page/font+scaling where [font
+configure ...] instead of [font actual ...] is suggested as a preferable
+solution? I am not so much into Tcl/Tk that I can judge what is best.
+
+> +
+>  font create font_ui
+>  if {[lsearch -exact [font names] TkDefaultFont] != -1} {
+>  	eval [linsert [font actual TkDefaultFont] 0 font configure font_ui]
+
+My setup does not have a 4k monitor, I run KDE and I do not know if I
+have changed a DPI setting. For the test, I have removed the [gui]
+sections from my configurations to ensure that the defaults are used.
+
+Under these conditions, this change does not make a difference in how
+Git GUI appears. I assume this is the expected outcome, so I take it as
+a good sign.
+
+The patch is available as
+
+https://github.com/j6t/git-gui.git st/font-scaling-fix
+
+for others to test. I'd appreciate your feedback.
+
+-- Hannes
+
