@@ -1,82 +1,144 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A7C1993A3
-	for <git@vger.kernel.org>; Mon, 17 Jun 2024 21:15:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E4114F128
+	for <git@vger.kernel.org>; Mon, 17 Jun 2024 21:15:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718658904; cv=none; b=tPDe6eDzcn/g4I5aRO6usIxXP8pMAyZBWec6y1DDXFDKhYfiDgFTSLv7DzEJ75ADVjChNGzrbj7432I48HBDjgKQIJ75koJfzI+vGVFzJBp0LqN9vkShR3iBj/kEJ5UCDfGi6+liBX7hAKtGKTlx3YYk5veCiBBoMi01vdlYx30=
+	t=1718658918; cv=none; b=ivuaR8GplLeH18ghuE900ZGjoTSwO9d+OqICladOgp1KSgylpmVST89YTBXFDgrmRcY1ESpaoT/4IaRo8NImQO7F3JeHQ2iOuPl2x3A3VVV79tDHF7HWaQtJSnL0a+osnJ0Z9zXCCc0TUo0GHsD225JLH85gTpNEskViZcFC1xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718658904; c=relaxed/simple;
-	bh=8DErNisvHpiQRscp7wTeLYiLK4odwBbbggH4OQiOpLM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=vE0oTWGdHdKm3lOsdutIG8TJSubrUbKfhsrSVW+fpuxWMfOWtTzcWg04ZPqQ/4tqdrC9u9fee/6mB18cf9LAg4pMZ5z+IqIYj2Lr9hUAs29W+aZoMxQ8abixKcfYIMnhjTbo1UajfAWDhsqVqtkJmCC7EoFfa+aeegq4mTgaDYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JhBc0MNZ; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1718658918; c=relaxed/simple;
+	bh=1agVyWKgO9x5qyM4/4ZzNq8Icfce2H/bvSoFOnN6ln0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pa7Mc/UPy5f1GIbe1h2pewNVNHkQWxGyzM/g8++mDdsqRj6Qs6CzdITJjpKbRAsI6tiksakHwbRN2xgWADwmv5rTueMlKPjCKyX8yE1NKH1f049A0EmVea0m9yxhiFFw06Uu6M7wzvQOEBBUxIfqLXo3PnETrm28xDIsNYnxue0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=HiOtnMkm; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=zLdHvyft; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=HiOtnMkm; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=zLdHvyft; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JhBc0MNZ"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id B2D513632B;
-	Mon, 17 Jun 2024 17:15:02 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=8DErNisvHpiQRscp7wTeLYiLK4odwBbbggH4OQ
-	iOpLM=; b=JhBc0MNZZPJS0pr7J/rKFcsm1UxmE6eMjl0HJQrlqd7tTZuw1sxMze
-	lFY3VBvaJ9ytZqeYUjuEX8uwC2Qv+MGIF+66kWfWUUtYjOdOFgl5AnZNHhIJWrEk
-	xR+Ew/Nh/FHvui0TwaRP9AhG8D7u+NuLhpE/pDmHoUGvcJeuMn3VI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AB2353632A;
-	Mon, 17 Jun 2024 17:15:02 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="HiOtnMkm";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="zLdHvyft";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="HiOtnMkm";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="zLdHvyft"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4492436326;
-	Mon, 17 Jun 2024 17:14:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kyle Lippincott <spectral@google.com>
-Subject: Re: [PATCH] attr: fix msan issue in read_attr_from_index
-In-Reply-To: <xmqqcyof5n2t.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	17 Jun 2024 13:30:34 -0700")
-References: <pull.1747.git.1718654424683.gitgitgadget@gmail.com>
-	<xmqqcyof5n2t.fsf@gitster.g>
-Date: Mon, 17 Jun 2024 14:14:57 -0700
-Message-ID: <xmqqwmmn46ge.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 004561F397;
+	Mon, 17 Jun 2024 21:15:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1718658915; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1z0e1ZlnszfCz6lhZZPfFSi9Jh0JBBc/yWfo1ypbLMU=;
+	b=HiOtnMkm4PtiyqF301q8KcwSyyx/AR0GXbHxFrptCkN/JVX0xbdfz4GN0m6x+d0oyKtrCN
+	teLmCcn9uTOZPSGVIq3kNTcvSj/l7IIosB1VvBU7wXipi37NnchvbXFPtB5R651IxMdBr7
+	uf0oDsusmb9SzoZOCIc7hWqQY1LE3t0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1718658915;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1z0e1ZlnszfCz6lhZZPfFSi9Jh0JBBc/yWfo1ypbLMU=;
+	b=zLdHvyftmGgn+3OxLP7/F9KOxQpXFMroQd54tBu3NklsEh328AYs1g5ElT461D7qlrrhQ4
+	mG1tttAiz1Xt4aBw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1718658915; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1z0e1ZlnszfCz6lhZZPfFSi9Jh0JBBc/yWfo1ypbLMU=;
+	b=HiOtnMkm4PtiyqF301q8KcwSyyx/AR0GXbHxFrptCkN/JVX0xbdfz4GN0m6x+d0oyKtrCN
+	teLmCcn9uTOZPSGVIq3kNTcvSj/l7IIosB1VvBU7wXipi37NnchvbXFPtB5R651IxMdBr7
+	uf0oDsusmb9SzoZOCIc7hWqQY1LE3t0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1718658915;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1z0e1ZlnszfCz6lhZZPfFSi9Jh0JBBc/yWfo1ypbLMU=;
+	b=zLdHvyftmGgn+3OxLP7/F9KOxQpXFMroQd54tBu3NklsEh328AYs1g5ElT461D7qlrrhQ4
+	mG1tttAiz1Xt4aBw==
+Date: Mon, 17 Jun 2024 23:15:13 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "David C. Rankin" <drankinatty@gmail.com>, git@vger.kernel.org
+Subject: Re: Local git server can't serve https until repos owned by http,
+ can't serve ssh unless repos owned by user after 2.45.1
+Message-ID: <20240617211513.GM19642@kitsune.suse.cz>
+References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
+ <xmqq8qz376fb.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- A7546F38-2CEE-11EF-9F62-C38742FD603B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8qz376fb.fsf@gitster.g>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Score: -4.30
+X-Spam-Level: 
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	RCVD_COUNT_ZERO(0.00)[0];
+	ARC_NA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCPT_COUNT_THREE(0.00)[3]
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hello,
 
-> Having said all that ...
->
->> Make the call to `read_attr_from_buf` conditional on `buf` being
->> non-NULL, ensuring that `size` is not read if it's never set.
->
-> ... this makes the logic at the caller crystal clear, so even if
-> there are suboptimal checker that bothers us with false positives,
-> the change itself justifies itself, I would say.
+On Mon, Jun 17, 2024 at 11:47:20AM -0700, Junio C Hamano wrote:
+> "David C. Rankin" <drankinatty@gmail.com> writes:
+> 
+> >   Security enhancement in 2.45.1 have broken ability to serve git over
+> >   https and ssh from local git server running Apache. (web server runs
+> >   as http:http on Archlinux)
+> >
+> >   The fix of adding the following to gitconfig (system-wide and
+> >   per-user in ~/.gitconfig) does not solve the problem:
+> >
+> > [safe]
+> > 	directory = *
+> 
+> It is not clear what you exactly meant "per-user" above, so just to
+> make sure.  Is this set in the global configuration file for the
+> httpd (or whoever Apache runs as) user?
+> 
+> The purpose of "dubious ownershop" thing is to protect the user who
+> runs Git from random repositories' with potentially malicious hooks
+> and configuration files, so the user being protected (in this case,
+> whoever Apache runs as) needs to declare "I trust these
+> repositories" in its ~/.gitconfig file.  What individual owners of
+> /srv/my-repo.git/ project has in their ~/.gitconfig file does not
+> matter when deciding if Apache trusts these repositories.
 
-Well, "even if there were *no* MSAN or other issues wrt usage of size"
-was what I wanted to say.  Sorry for a noise.
 
->>  	} else {
->>  		buf = read_blob_data_from_index(istate, path, &size);
->> -		stack = read_attr_from_buf(buf, size, path, flags);
->> +		if (buf)
->> +			stack = read_attr_from_buf(buf, size, path, flags);
->>  	}
->>  	return stack;
->
-> Thanks.
+looks like the semantic of 'dubious ownershop' changed recently.
+
+Disro backport of fixes for CVE-2024-32002 CVE-2024-32004 CVE-2024-32020
+CVE-2024-32021 CVE-2024-32465 to 2.35.3 broke git-daemon. No amount of
+whitelisting makes the 'fixed' git serve the repository.
+
+Of course, this might be bug in the backpotrt as much as but in the
+upstream logic, not analyzed yet.
+
+However, serving repositories is a gaping security hole right now. At
+least on some 'stable' distributions.
+
+Thanks
+
+Michal
