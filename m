@@ -1,178 +1,75 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161FB367
-	for <git@vger.kernel.org>; Mon, 17 Jun 2024 03:08:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD542F5B
+	for <git@vger.kernel.org>; Mon, 17 Jun 2024 05:57:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718593723; cv=none; b=ZZRXlugw9JZLTLoQFa6voCu+Nxz56GR1iLYu2WJUHRbBF+yb7BVWrWXB0F3+x+RVEyM7x1G5cBvtA/9jttlREEPIZFVDpJDNpQ8P/6qLLFS25Vjnt9cD5eB0hSilC925tL1w0to5pVza0oPuGiTyuj0HUDPhIgJJG6aCrBI4HG8=
+	t=1718603878; cv=none; b=T6QS0bq7hiWNgpSbKy+jD9ZsYlLRInMhycmW4Pq+aWitCvYYdWEYxPZRluGRZ9eHKl0O1sQSh0LOz9EmKJ0AeA1dEN4WCUTBUwkWb/T1cJQNfyuC8PwIZTiIFsFPTQYrZwNKT4YPoio1fgj0OmDk+/IDnWTmJuVd0alQwqjLtQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718593723; c=relaxed/simple;
-	bh=JS+sFKSxem0uweiH753I+if9XrzhJzUOITyckFmH5hw=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rgRBybYRbYNhzDxz8mCpvZCQskjH4itBODg6K78xz76gJ80XEm57uRnAcOPQetRiVUHcJavawCLDftXJpsyqx+Hj7WsGIjY8/51Mv7TPnwE1l4bN/AIXVT6LFvBppLafacxMtYzuQTIP8MiZDoMzTJ2Hw18ruRjYMdmsj6JBekA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A1EB9tPo; arc=none smtp.client-ip=209.85.128.53
+	s=arc-20240116; t=1718603878; c=relaxed/simple;
+	bh=3qMIIF/0GpudhbME623JKTGUri7Ke63A+Oc8+fGFlIc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jqdGglw2UOT3Xl5Tp/wOVZiNJszmfNuZ1XGOj6r0Q/r3gy9zNWW2Cteg17bhGWjjzv05sqqkA2iqkm+wKoU/gkGtOuMgmtB0RKFOj0lRbFNQ3zXB0eQz+dPieOxDdEsprYxPyRsQV4GxxugL8gCWnvRcFnhBMTu+u5HDbB2t3s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c8iCZa+4; arc=none smtp.client-ip=209.85.215.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A1EB9tPo"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42172ed3597so24153475e9.0
-        for <git@vger.kernel.org>; Sun, 16 Jun 2024 20:08:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c8iCZa+4"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-656d8b346d2so2832375a12.2
+        for <git@vger.kernel.org>; Sun, 16 Jun 2024 22:57:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718593720; x=1719198520; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Z4lxPB/8ZkAMiO1y7issmbE0O1PLjfnwlsS7XVGJQSk=;
-        b=A1EB9tPo0JWHHOrYNsKINy+S8Z1PjyKF/dPy77fCf9be4Kh+wv0os+uyZ5hi9xmZJO
-         elCO97K9qs7G0hg3BfQie+Lztge7oiF0MaJ7sB1RmQJD8aa18Jwc1LlmZV6lpkoC00GB
-         s3iiI28DgNxzQz/ogmzLaAvyg8wvxoZfl2a23rRb89p/ycXOp9dWR+tphYMHd6id4Gh9
-         AbTfrNEa6e6Ra0bFqtNEL1K97fhMZdit7avQxYiZhiOuCB0hbo27ei11x9Xf/N5QeKwA
-         7xAERpL0UZEqi8CtG5MuuRTQtQy0He3kHMIAOwTYvLweFomMjPK+Y18hpnftbKhb52nK
-         fWfQ==
+        d=gmail.com; s=20230601; t=1718603875; x=1719208675; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=MQcqGJm49fToOUbnv34MLcSL/JYUC1GMZ4OGFaUB7I4=;
+        b=c8iCZa+4Zxg/R30hyJGC/L3R7gJo6BLMPj5koidscCj00BeR9mZCCTnastnwut2oZt
+         ypPL83+nmKpY3Hjt5h/it31T5KaLlqPGJ9g9vekxZnQL0GX/zT5MbZNZmMwH86l85mqF
+         oe2KN2mUZ4M8fb7W2qHF21IRJ4iLL4PQSVJ1TN1r9a8oSohM+V9Jxw8o9TaKXh2ftLcS
+         U+T0VsmchCEd3QRJ7vlU2mnS/QO2g0WF0wzkIaGYIFftEkPe1ZlIDcZBQsE6JWJik/7P
+         W12GCwHx+T0cn575Hg9GjkVyaAfunVvrV563dAsZIcpj4dI7awBAnsej6VgV1SxmhJxc
+         F0Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718593720; x=1719198520;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z4lxPB/8ZkAMiO1y7issmbE0O1PLjfnwlsS7XVGJQSk=;
-        b=uxsEgUqmuwpQtjSks/0haHWt74FKEbXXoGe5IhBWaaIzcSkOzrG9WeEPaNoZlVlsKT
-         4KeMc+VwuzItKfwEgjTfRMxeBBqiMLofmcLGWgAIb5FPaB7ohQ0vKWtlNtDhoYL19gRT
-         XrynKVBhx7figxzZ4ZIYEZNQGHaa2fNHfZ2N2t97GGzftsWhHrIpz4v7QYcrBEaTGYQa
-         aIfgngYbJub8jE8oHDh0nY1HRoEsGMJuvVfL8OSVqGUCHsThukPAPn0ZxGg91xkfod0x
-         EyyRkb1RFtwDU1D/I5mBVsrnjLIkpHPyTThW6gaX9kUFOoaX66ZVRb+bCRupAgrGuG1P
-         fq6g==
-X-Gm-Message-State: AOJu0Yy18ZyKrhoTaQwFTRyQm8AdgSeejw2bMEcbOq3HJ+g/NrLiQ8V3
-	MfMpTUVM5Crb969mf4mUUJtqkS4vFTM0BciKEaK9f8oks6jvzqEpVJehlg==
-X-Google-Smtp-Source: AGHT+IElFmWD6RoP8yO6u6hidfDVzYxbOrq7tuCVL4nyUzgmoQc58HMiFQABUCzHIOTNEQCd0ohlbw==
-X-Received: by 2002:a05:600c:1c07:b0:422:eee2:573b with SMTP id 5b1f17b1804b1-423048448a8mr84043055e9.13.1718593719368;
-        Sun, 16 Jun 2024 20:08:39 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-422870e986asm186628165e9.27.2024.06.16.20.08.38
+        d=1e100.net; s=20230601; t=1718603875; x=1719208675;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MQcqGJm49fToOUbnv34MLcSL/JYUC1GMZ4OGFaUB7I4=;
+        b=gW/TdFYqEUPul0pcELVYoCTwplAkdp5lN5bsL27ev2RpqydZ/xP7hFxLg02jAiROSn
+         kLhu9nsCysVAzOK3zKdvgb50PU7Lk1hAG6g9+374+UMCKbE3nEisq6vq2TfOc6RLrRVZ
+         P2tm0XPW7IdRIv3N0oayz1VKp8R5GhhrCQiw2eaENDt1qvKY+cIERRavRiF+RGD5ZThp
+         kSqVMG059PIVGOCV3mpZDYkJlrjIX5UzcqV76WiHpGkM2TrgWrnreyQgaiYel8HzVWV6
+         sAQc1Z/XBmGKUa36g3GdEcVRq5LOHXOloBsHU49og1chIQxaYhTK+xPLj2DCcDZS/uxa
+         clfw==
+X-Gm-Message-State: AOJu0YwhtFyG3VsmkS3WwJlMw53/5ziWIUxPoThPTKcWvNfKgZh0qkR6
+	md3uDKHQ+VJ0rgzQ6PQbGdlA9B0cbwrQDbKMHTkYYDd9Vu2x01M2efrlTg==
+X-Google-Smtp-Source: AGHT+IEaLx78OShz77F2O6keZuUnozz6V6oLScuK9+I8daOpZ2hFuIVyk7wO8Ifcwpft28GVBmhQ1w==
+X-Received: by 2002:a05:6a20:7350:b0:1b4:4568:4c3e with SMTP id adf61e73a8af0-1bae7d9b7ccmr9197725637.9.1718603875573;
+        Sun, 16 Jun 2024 22:57:55 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f855f1cbe9sm72956695ad.247.2024.06.16.22.57.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Jun 2024 20:08:38 -0700 (PDT)
-Message-Id: <pull.1731.v6.git.1718593717745.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1731.v5.git.1718173639942.gitgitgadget@gmail.com>
-References: <pull.1731.v5.git.1718173639942.gitgitgadget@gmail.com>
-From: "Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 17 Jun 2024 03:08:37 +0000
-Subject: [PATCH v6] merge: avoid write merge state when unable to write index
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sun, 16 Jun 2024 22:57:55 -0700 (PDT)
+Date: Mon, 17 Jun 2024 13:57:54 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [GSoC]: Implement consistency check for refs blog
+Message-ID: <Zm_QYoij0rEaG9Ii@ArchLinux>
+References: <ZlQ7j9HYVOpP2Xga@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kyle Zhao <kylezhao@tencent.com>,
-    Kyle Zhao <kylezhao@tencent.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZlQ7j9HYVOpP2Xga@ArchLinux>
 
-From: Kyle Zhao <kylezhao@tencent.com>
+This is my GSoC week 3 post:
 
-Writing the merge state after the index write fails is meaningless and
-could potentially cause Git to lose changes.
+  https://luolibrary.com/2024/06/17/GSoC-Week-3/
 
-Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
----
-    merge: avoid write merge state when unable to write index
-    
-    In some of our monorepos, code is sometimes lost after merging.
-    
-    After investigation, we discovered the problem.
-    
-    This happens if we perform "git pull" or "git merge" when another git
-    process is writing to the index, especially in a monorepo (because its
-    index will be larger).
-    
-    How to reproduce:
-    
-    git init demo
-    cd demo
-    touch 1.txt && git add . && git commit -m "1"
-    git checkout -b source-branch
-    touch 2.txt && git add . && git commit -m "2"
-    git checkout master
-    echo "1" >> 1.txt && git add . && git commit -m "3"
-    # another git process runnning
-    touch .git/index.lock
-    git merge source-branch
-    # another git process finished
-    rm .git/index.lock
-    git commit -m "4"
-    
-    
-    Then the modifications from the source branch are lost.
-    
-    Regards, Kyle
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1731%2Fkeyu98%2Fkz%2Ffix-merge-when-index-lock-exists-v6
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1731/keyu98/kz/fix-merge-when-index-lock-exists-v6
-Pull-Request: https://github.com/gitgitgadget/git/pull/1731
-
-Range-diff vs v5:
-
- 1:  a5156088514 ! 1:  24150cd814a merge: avoid write merge state when unable to write index
-     @@ Metadata
-       ## Commit message ##
-          merge: avoid write merge state when unable to write index
-      
-     -    When running a merge while the index is locked (presumably by another
-     -    process), the merge state is written, the index is not updated, and then
-     -    the merge fails. This might cause unexpected results.
-     -
-     -    E.g., if another running process is "git commit", MERGE_HEAD and other
-     -    state files we write on our side will be taken into account by them and
-     -    cause them to record a merge, even though they may have been trying to
-     -    record something entirely different.
-     +    Writing the merge state after the index write fails is meaningless and
-     +    could potentially cause Git to lose changes.
-      
-          Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
-      
-
-
- builtin/merge.c  |  2 +-
- t/t7600-merge.sh | 10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/merge.c b/builtin/merge.c
-index daed2d4e1e2..03c405fa5df 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -701,7 +701,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
- 	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET,
- 					 SKIP_IF_UNCHANGED, 0, NULL, NULL,
- 					 NULL) < 0)
--		return error(_("Unable to write index."));
-+		die(_("Unable to write index."));
- 
- 	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree") ||
- 	    !strcmp(strategy, "ort")) {
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index e5ff073099a..ef54cff4faa 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -236,6 +236,16 @@ test_expect_success 'merge c1 with c2' '
- 	verify_parents $c1 $c2
- '
- 
-+test_expect_success 'merge c1 with c2 when index.lock exists' '
-+	test_when_finished rm .git/index.lock &&
-+	git reset --hard c1 &&
-+	>.git/index.lock &&
-+	test_must_fail git merge c2 &&
-+	test_path_is_missing .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_MODE &&
-+	test_path_is_missing .git/MERGE_MSG
-+'
-+
- test_expect_success 'merge --squash c3 with c7' '
- 	git reset --hard c3 &&
- 	test_must_fail git merge --squash c7 &&
-
-base-commit: d63586cb314731c851f28e14fc8012988467e2da
--- 
-gitgitgadget
+Thanks,
+Jialuo
