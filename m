@@ -1,62 +1,63 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5832E1662E4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2459B1662E6
 	for <git@vger.kernel.org>; Mon, 17 Jun 2024 13:55:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718632542; cv=none; b=eI2vZtGzxMrpP4DNJC5GJFZoCjSXJgHO0aFr/kAMui+QRkgtw9V3hxkcnh/DBbx66s96So/n3U1auVMjpvBTrcgr3Je8x9+kMgvn4RWKepnyse3rn9QFoH06uSlcGq+bv0se0IXGAKgaf+tftAy1NWoN/ZZa/IqAcBSPQXkXNxA=
+	t=1718632543; cv=none; b=sQ6djAjE8DHPBkiaab300AAAZEJ/vXwpK9bAJOUT+wlQIMrVsncC5dpVmV90s3IiI0L45mVNKT9EDYh8q7A/febi+ITLa9smqqTGLpbsCFrhm3dw0+rdjKmxIUyuURU92pQDhOAkuDIdup0E/B/+URtngUGTimp4ID84MHz3btQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718632542; c=relaxed/simple;
-	bh=scyfPdq2V06500G2pRDTi20fXcYcMuUDYoY3L8FDJcE=;
+	s=arc-20240116; t=1718632543; c=relaxed/simple;
+	bh=nAOMoDYHEnYUuR20sSvpU0d/WiRrME+5TtbkAF0N2SI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=hjBCJJCOsL/VTqpzrs4KhyNu7e/+wbr2wAIQEx1aTsdCTZmuKRGHFSZECZiJl498vulhcWuVwjyIDOIifYUgfrynJE7ynsq67Dzvx0RIm2vqbt16GnHCDx+PurwdxqN7xUmzEAEnAXuUFQhRG/Sas/G2O4Bblliqo98n25069fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I8hX4gg2; arc=none smtp.client-ip=209.85.221.41
+	 MIME-Version:To:Cc; b=CU5RRnkqSvkiL4ostEmlPeupkeU9RUBr+f+cd4RHcSRjgvkwBbDf9lLSJmgrqk1Al+MEl2aV3wscLZPq2tEjnpc98NCCiCuOjQ2razuVa/XuLR9dpQ1H87oQwD8okMXp45S7QuGVo+7lGW3MgwB94ZFwZfj111OfyEPdFZ9jd7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ekqqVS5o; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I8hX4gg2"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3609565a1bdso831782f8f.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ekqqVS5o"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-35f1bc2ab37so3822042f8f.1
         for <git@vger.kernel.org>; Mon, 17 Jun 2024 06:55:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718632538; x=1719237338; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718632539; x=1719237339; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6uzBgyJ6lpuMxoGz9mckqLchokCtBDb3zCBBOT6Xars=;
-        b=I8hX4gg2cVeu2VmQa9fJsOR4BpoTo9RQ+Onfp2iJSsPseyYWsS1z2s3NsQ6+344yHC
-         whU6NZ0spZbvNwNrHFKQpPGxpk+526jDnoPLcpE0ZznQ2Eq274rpX7T7NBKKTwnwKo9A
-         btxL6papNqrNouvMzCkzKuxxpgLX09aKx194MSZoXAN4ona3kg/zRKFIMHyhRkJXOUZ/
-         lRdzZVNYe5LzBdPIxJ3eX7tEjpVgIiWXLiKEd3u+Ymqy8EGLe1qhm9ej6PdzoCKvj2KM
-         rQTfWv3Ok0HN6zBQct3ibpwOCVD7G+MvYHKUcAS491c9rW5tCMpQlu6wIsB4xtClqaQk
-         vLJA==
+        bh=KlBf1ST5duZGJTppb2JfCp9+tjW2GKDNZCP8efh86c8=;
+        b=ekqqVS5oR3w0Y26bcGmqYyJ1bQpzcASGFr/OX0z0nBEwemdz+H+OMYTWFeJFyTdM8B
+         /7AHLZHjA1ugSTnHJ7vCLV7AbMwX2pSDy5emlXHq4msRQhsb/mbQmwUv3dN2i6pqXeIU
+         aYAOXIDiOlShram0W48cdDjUOsCg7J3J+Ac1msL94ySmNJCGNj/6fhuNLOtXv8en3DDP
+         dsLpOTc2LVChRhhq6MUjA+hXhHCMCtiuqYL98E/7X0Fujy/258L9fJW2emuQh1a3ina+
+         7RloJ/q+Ts4xnqNRS8j9AlaxdZmqVMlhht5q3nQNpsS728Qc4CuKd6fgWt9ZyC1JZSXJ
+         UPJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718632538; x=1719237338;
+        d=1e100.net; s=20230601; t=1718632539; x=1719237339;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6uzBgyJ6lpuMxoGz9mckqLchokCtBDb3zCBBOT6Xars=;
-        b=ve/DYn0ViPTFai5uwlnS3qyQEVJ5VzyE9Y+hqaNsp+MQqF73Q26ZioXPNJIamKrLe5
-         YObyvqiB3b7FBB+2WQaps/bIpkLnC+0qh+wSREDrsPgwsdknk6s95x6UwvQl8ODg9UWi
-         0gavdzNwc6nAG7TygqqkakNw5I2Mk8dHwTysxJCtup/LD7xY8ffP7bfuFnx++NZySknj
-         gLukqzh5PcfH7GezjPlGjhVH7wqZsl+1BlBIqN7kHJmPsWAF+Dbv+6bUvcb9C8STyQgV
-         oHrut3kZm1yKukQwPrJAHuCG7Wtb8pvFHIUwc1sSOVxOy3Ud62IUW+cjmgXllwT48K2A
-         /YSw==
-X-Gm-Message-State: AOJu0YwYL5gt6YCPL9CPM2ksxe1+PbcyVvOI7ZM1qUxCocKtza9FhCE0
-	d/Gh7bJgiet+Ggx5BCqCV1qvM9g2g+zkK6NOdwT6BkS/1xtpYRYdMQ0Neg==
-X-Google-Smtp-Source: AGHT+IERkKUz9xEbzTzeolExxfjObJq/jLOMslceI4c7sPhw3j0gNP6R7ONMFxAhuv8zYMTO6U6F7A==
-X-Received: by 2002:a5d:5231:0:b0:360:98dc:fe9 with SMTP id ffacd0b85a97d-36098dc1004mr1478017f8f.5.1718632537821;
-        Mon, 17 Jun 2024 06:55:37 -0700 (PDT)
+        bh=KlBf1ST5duZGJTppb2JfCp9+tjW2GKDNZCP8efh86c8=;
+        b=odzkFkLpNlULSsr/I0IkKfELzbwFuoZNnpSzenyvfVuoEb+xG3P/cHEOTecbWVKHSC
+         SBEERFprbpz/pmG8HWGebOKbnCrhgXmuuT74ddxBAaOl8qUmNMzN0k+9V2UTv/EhWWvL
+         m8rt8Ef7nXHmPvR5JlLL4CflClF3Y2MtJoDyj6nF6JZoeNlETrLDdmFjxsUldPYyUDj3
+         ac8ZjqprNgf98Wx1YbI2uVFLhNPmenpdRvGmEoyDJrHaKF9ltP34Z48qFsm/1H/MXyTc
+         X4Q4yYY/r3DhPOosvySE53aGgtSue//mqVpdBeqLTE37aYAtszP54QmK+thH6XjkuAbM
+         zKCw==
+X-Gm-Message-State: AOJu0Yxhz3tYgBZzPyRuDBNeIqBrn+TZH6P6uhCEpQ0/myPjVjjYWFsa
+	KK6yUWooVelPv4dcSp/0FgONwh8K3z+R6L6Qr6BpM2WcOyUa7y5zGfuANg==
+X-Google-Smtp-Source: AGHT+IFHOKJQH3762twnt5P/WFdJ+gsqMPLQG+nLvCovRLhFx6dqJQ48Vp6A/zSoNfmdkxec7G0GbA==
+X-Received: by 2002:adf:ab12:0:b0:35f:1545:b428 with SMTP id ffacd0b85a97d-3607a76b76fmr6585107f8f.38.1718632538721;
+        Mon, 17 Jun 2024 06:55:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-360751037b6sm11917153f8f.98.2024.06.17.06.55.37
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-360751037absm11845219f8f.91.2024.06.17.06.55.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jun 2024 06:55:37 -0700 (PDT)
-Message-Id: <pull.1730.v7.git.1718632535.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1730.v6.git.1718109943.gitgitgadget@gmail.com>
+        Mon, 17 Jun 2024 06:55:38 -0700 (PDT)
+Message-Id: <fc9f44fda0032ab1e5ee0c9bcc2886ddb8e17722.1718632536.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1730.v7.git.1718632535.gitgitgadget@gmail.com>
 References: <pull.1730.v6.git.1718109943.gitgitgadget@gmail.com>
-From: "blanet via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 17 Jun 2024 13:55:32 +0000
-Subject: [PATCH v7 0/3] object checking related additions and fixes for bundles in fetches
+	<pull.1730.v7.git.1718632535.gitgitgadget@gmail.com>
+From: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 17 Jun 2024 13:55:33 +0000
+Subject: [PATCH v7 1/3] bundle-uri: verify oid before writing refs
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,336 +70,309 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
     Karthik Nayak <karthik.188@gmail.com>,
-    blanet <bupt_xingxin@163.com>
+    blanet <bupt_xingxin@163.com>,
+    Xing Xin <xingxin.xx@bytedance.com>
 
-While attempting to fix a reference negotiation bug in bundle-uri, we
-identified that the fetch process lacks some crucial object validation
-checks when processing bundles. The primary issues are:
+From: Xing Xin <xingxin.xx@bytedance.com>
 
- 1. In the bundle-uri scenario, object IDs were not validated before writing
-    bundle references. This was the root cause of the original negotiation
-    bug in bundle-uri and could lead to potential repository corruption.
- 2. The existing "fetch.fsckObjects" and "transfer.fsckObjects"
-    configurations were not applied when directly fetching bundles or
-    fetching with bundle-uri enabled. In fact, there were no object
-    validation supports for unbundle.
+When using the bundle-uri mechanism with a bundle list containing
+multiple interrelated bundles, we encountered a bug where tips from
+downloaded bundles were not discovered, thus resulting in rather slow
+clones. This was particularly problematic when employing the
+"creationTokens" heuristic.
 
-The first patch addresses the bundle-uri negotiation issue by removing the
-REF_SKIP_OID_VERIFICATION flag when writing bundle references.
+To reproduce this issue, consider a repository with a single branch
+"main" pointing to commit "A". Firstly, create a base bundle with:
 
-Patches 2 through 3 extend verify_bundle_flags for bundle.c:unbundle to add
-support for object validation (fsck) in fetch scenarios, mainly following
-the suggestions from Junio and Patrick on the mailing list.
+  git bundle create base.bundle main
 
-Xing Xin (3):
-  bundle-uri: verify oid before writing refs
-  fetch-pack: expose fsckObjects configuration logic
-  unbundle: extend object verification for fetches
+Then, add a new commit "B" on top of "A", and create an incremental
+bundle for "main":
 
- bundle-uri.c                |   6 +-
- bundle.c                    |   3 +
- bundle.h                    |   1 +
- fetch-pack.c                |  17 ++--
- fetch-pack.h                |   5 +
- t/t5558-clone-bundle-uri.sh | 181 +++++++++++++++++++++++++++++++++++-
- t/t5607-clone-bundle.sh     |  33 +++++++
- transport.c                 |   3 +-
- 8 files changed, 235 insertions(+), 14 deletions(-)
+  git bundle create incr.bundle A..main
 
+Now, generate a bundle list with the following content:
 
-base-commit: b9cfe4845cb2562584837bc0101c0ab76490a239
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1730%2Fblanet%2Fxx%2Fbundle-uri-bug-using-bundle-list-v7
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1730/blanet/xx/bundle-uri-bug-using-bundle-list-v7
-Pull-Request: https://github.com/gitgitgadget/git/pull/1730
+  [bundle]
+      version = 1
+      mode = all
+      heuristic = creationToken
 
-Range-diff vs v6:
+  [bundle "base"]
+      uri = base.bundle
+      creationToken = 1
 
- 1:  e958a3ab20c ! 1:  fc9f44fda00 bundle-uri: verify oid before writing refs
-     @@ Commit message
-          be found for negotiation because it exists in "incr.pack", which is not
-          included in `packed_git`.
-      
-     -    This commit fixes the bug by removing `REF_SKIP_OID_VERIFICATION` flag
-     -    when writing bundle refs. When `refs.c:refs_update_ref` is called to to
-     -    write the corresponding bundle refs, it triggers
-     -    `refs.c:ref_transaction_commit`.  This, in turn, invokes
-     -    `refs.c:ref_transaction_prepare`, which calls `transaction_prepare` of
-     -    the refs storage backend. For files backend, this function is
-     -    `files-backend.c:files_transaction_prepare`, and for reftable backend,
-     -    it is `reftable-backend.c:reftable_be_transaction_prepare`. Both
-     -    functions eventually call `object.c:parse_object`, which can invoke
-     +    Fix the bug by removing `REF_SKIP_OID_VERIFICATION` flag when writing
-     +    bundle refs. When `refs.c:refs_update_ref` is called to write the
-     +    corresponding bundle refs, it triggers `refs.c:ref_transaction_commit`.
-     +    This, in turn, invokes `refs.c:ref_transaction_prepare`, which calls
-     +    `transaction_prepare` of the refs storage backend. For files backend, it
-     +    is `files-backend.c:files_transaction_prepare`, and for reftable
-     +    backend, it is `reftable-backend.c:reftable_be_transaction_prepare`.
-     +    Both functions eventually call `object.c:parse_object`, which can invoke
-          `packfile.c:reprepare_packed_git` to refresh `packed_git`. This ensures
-          that bundle refs point to valid objects and that all tips from bundle
-          refs are correctly parsed during subsequent negotiations.
-      
-     -    A test has been added to demonstrate that bundles with incorrect
-     -    headers, where refs point to non-existent objects, do not result in any
-     -    bundle refs being created in the repository. Additionally, a set of
-     -    negotiation-related tests for fetching with bundle-uri has been
-     -    included.
-     +    A set of negotiation-related tests for cloning with bundle-uri has been
-     +    included to demonstrate that downloaded bundles are utilized to
-     +    accelerate fetching.
-     +
-     +    Additionally, another test has been added to show that bundles with
-     +    incorrect headers, where refs point to non-existent objects, do not
-     +    result in any bundle refs being created in the repository.
-      
-          Reviewed-by: Karthik Nayak <karthik.188@gmail.com>
-          Reviewed-by: Patrick Steinhardt <ps@pks.im>
-     @@ bundle-uri.c: static int unbundle_from_file(struct repository *r, const char *fi
-       	bundle_header_release(&header);
-      
-       ## t/t5558-clone-bundle-uri.sh ##
-     +@@
-     + test_description='test fetching bundles with --bundle-uri'
-     + 
-     + . ./test-lib.sh
-     ++. "$TEST_DIRECTORY"/lib-bundle.sh
-     + 
-     + test_expect_success 'fail to clone from non-existent file' '
-     + 	test_when_finished rm -rf test &&
-      @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'fail to clone from non-bundle file' '
-       
-       test_expect_success 'create bundle' '
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'fail to clone from non-bundle
-      +		git bundle create B.bundle topic &&
-      +
-      +		# Create a bundle with reference pointing to non-existent object.
-     -+		sed "s/$(git rev-parse A)/$(git rev-parse B)/" <A.bundle >bad-header.bundle
-     ++		sed -e "/^$/q" -e "s/$(git rev-parse A) /$(git rev-parse B) /" \
-     ++			<A.bundle >bad-header.bundle &&
-     ++		convert_bundle_to_pack \
-     ++			<A.bundle >>bad-header.bundle
-      +	)
-       '
-       
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with path bundle' '
-       '
-       
-      +test_expect_success 'clone with bundle that has bad header' '
-     ++	# Write bundle ref fails, but clone can still proceed.
-      +	git clone --bundle-uri="clone-from/bad-header.bundle" \
-      +		clone-from clone-bad-header 2>err &&
-     -+	# Write bundle ref fails, but clone can still proceed.
-      +	commit_b=$(git -C clone-from rev-parse B) &&
-      +	test_grep "trying to write ref '\''refs/bundles/topic'\'' with nonexistent object $commit_b" err &&
-      +	git -C clone-bad-header for-each-ref --format="%(refname)" >refs &&
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
-       	! grep "refs/bundles/" refs
-       '
-       
-     -+#########################################################################
-     -+# Clone negotiation related tests begin here
-     -+
-      +test_expect_success 'negotiation: bundle with part of wanted commits' '
-     -+	test_when_finished rm -rf trace*.txt &&
-     ++	test_when_finished "rm -f trace*.txt" &&
-      +	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
-      +	git clone --no-local --bundle-uri="clone-from/A.bundle" \
-      +		clone-from nego-bundle-part &&
-      +	git -C nego-bundle-part for-each-ref --format="%(refname)" >refs &&
-      +	grep "refs/bundles/" refs >actual &&
-     -+	cat >expect <<-\EOF &&
-     -+	refs/bundles/topic
-     -+	EOF
-     ++	test_write_lines refs/bundles/topic >expect &&
-      +	test_cmp expect actual &&
-      +	# Ensure that refs/bundles/topic are sent as "have".
-     -+	grep "clone> have $(git -C clone-from rev-parse A)" trace-packet.txt
-     ++	test_grep "clone> have $(git -C clone-from rev-parse A)" trace-packet.txt
-      +'
-      +
-      +test_expect_success 'negotiation: bundle with all wanted commits' '
-     -+	test_when_finished rm -rf trace*.txt &&
-     ++	test_when_finished "rm -f trace*.txt" &&
-      +	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
-      +	git clone --no-local --single-branch --branch=topic --no-tags \
-      +		--bundle-uri="clone-from/B.bundle" \
-      +		clone-from nego-bundle-all &&
-      +	git -C nego-bundle-all for-each-ref --format="%(refname)" >refs &&
-      +	grep "refs/bundles/" refs >actual &&
-     -+	cat >expect <<-\EOF &&
-     -+	refs/bundles/topic
-     -+	EOF
-     ++	test_write_lines refs/bundles/topic >expect &&
-      +	test_cmp expect actual &&
-      +	# We already have all needed commits so no "want" needed.
-      +	! grep "clone> want " trace-packet.txt
-      +'
-      +
-      +test_expect_success 'negotiation: bundle list (no heuristic)' '
-     -+	test_when_finished rm -f trace*.txt &&
-     ++	test_when_finished "rm -f trace*.txt" &&
-      +	cat >bundle-list <<-EOF &&
-      +	[bundle]
-      +		version = 1
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
-      +	refs/bundles/left
-      +	EOF
-      +	test_cmp expect actual &&
-     -+	grep "clone> have $(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/left)" trace-packet.txt
-     ++	test_grep "clone> have $(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/left)" trace-packet.txt
-      +'
-      +
-      +test_expect_success 'negotiation: bundle list (creationToken)' '
-     -+	test_when_finished rm -f trace*.txt &&
-     ++	test_when_finished "rm -f trace*.txt" &&
-      +	cat >bundle-list <<-EOF &&
-      +	[bundle]
-      +		version = 1
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
-      +	refs/bundles/left
-      +	EOF
-      +	test_cmp expect actual &&
-     -+	grep "clone> have $(git -C nego-bundle-list-heuristic rev-parse refs/bundles/left)" trace-packet.txt
-     ++	test_grep "clone> have $(git -C nego-bundle-list-heuristic rev-parse refs/bundles/left)" trace-packet.txt
-      +'
-      +
-      +test_expect_success 'negotiation: bundle list with all wanted commits' '
-     -+	test_when_finished rm -f trace*.txt &&
-     ++	test_when_finished "rm -f trace*.txt" &&
-      +	cat >bundle-list <<-EOF &&
-      +	[bundle]
-      +		version = 1
- 2:  d21c236b8de = 2:  3dc0d9dd22f fetch-pack: expose fsckObjects configuration logic
- 3:  53395e8c08a ! 3:  2f15099bbb9 unbundle: support object verification for fetches
-     @@ Metadata
-      Author: Xing Xin <xingxin.xx@bytedance.com>
-      
-       ## Commit message ##
-     -    unbundle: support object verification for fetches
-     +    unbundle: extend object verification for fetches
-      
-     -    This commit extends object verification support for fetches in
-     -    `bundle.c:unbundle` by adding the `VERIFY_BUNDLE_FSCK_FOLLOW_FETCH`
-     -    option to `verify_bundle_flags`. When this option is enabled,
-     -    `bundle.c:unbundle` invokes `fetch-pack.c:fetch_pack_fsck_objects` to
-     -    determine whether to append the "--fsck-objects" flag to
-     -    "git-index-pack".
-     +    The existing fetch.fsckObjects and transfer.fsckObjects configurations
-     +    were not fully applied to bundle-involved fetches, including direct
-     +    bundle fetches and bundle-uri enabled fetches. Furthermore, there was no
-     +    object verification support for unbundle.
-      
-     -    `VERIFY_BUNDLE_FSCK_FOLLOW_FETCH` is now passed to `unbundle` in the
-     -    fetching process, including:
-     +    This commit extends object verification support in `bundle.c:unbundle`
-     +    by adding the `VERIFY_BUNDLE_FSCK` option to `verify_bundle_flags`. When
-     +    this option is enabled, we append the `--fsck-objects` flag to
-     +    `git-index-pack`.
-     +
-     +    The `VERIFY_BUNDLE_FSCK` option is now used by bundle-involved fetches,
-     +    where we use `fetch-pack.c:fetch_pack_fsck_objects` to determine whether
-     +    to enable this option for `bundle.c:unbundle`, specifically in:
-      
-          - `transport.c:fetch_refs_from_bundle` for direct bundle fetches.
-          - `bundle-uri.c:unbundle_from_file` for bundle-uri enabled fetches.
-      
-          This addition ensures a consistent logic for object verification during
-     -    fetch operations. Tests have been added to confirm functionality in the
-     -    scenarios mentioned above.
-     +    fetches. Tests have been added to confirm functionality in the scenarios
-     +    mentioned above.
-      
-          Reviewed-by: Patrick Steinhardt <ps@pks.im>
-          Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
-      
-       ## bundle-uri.c ##
-     +@@
-     + #include "hashmap.h"
-     + #include "pkt-line.h"
-     + #include "config.h"
-     ++#include "fetch-pack.h"
-     + #include "remote.h"
-     + 
-     + static struct {
-      @@ bundle-uri.c: static int unbundle_from_file(struct repository *r, const char *file)
-       	 * the prerequisite commits.
-       	 */
-       	if ((result = unbundle(r, &header, bundle_fd, NULL,
-      -			       VERIFY_BUNDLE_QUIET)))
-     -+			       VERIFY_BUNDLE_QUIET | VERIFY_BUNDLE_FSCK_FOLLOW_FETCH)))
-     ++			       VERIFY_BUNDLE_QUIET | (fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0))))
-       		return 1;
-       
-       	/*
-      
-       ## bundle.c ##
-     -@@
-     - #include "list-objects-filter-options.h"
-     - #include "connected.h"
-     - #include "write-or-die.h"
-     -+#include "fetch-pack.h"
-     - 
-     - static const char v2_bundle_signature[] = "# v2 git bundle\n";
-     - static const char v3_bundle_signature[] = "# v3 git bundle\n";
-      @@ bundle.c: int unbundle(struct repository *r, struct bundle_header *header,
-       	if (header->filter.choice)
-       		strvec_push(&ip.args, "--promisor=from-bundle");
-       
-     -+	if (flags & VERIFY_BUNDLE_FSCK_FOLLOW_FETCH)
-     -+		if (fetch_pack_fsck_objects())
-     -+			strvec_push(&ip.args, "--fsck-objects");
-     ++	if (flags & VERIFY_BUNDLE_FSCK)
-     ++		strvec_push(&ip.args, "--fsck-objects");
-      +
-       	if (extra_index_pack_args) {
-       		strvec_pushv(&ip.args, extra_index_pack_args->v);
-     @@ bundle.h: int create_bundle(struct repository *r, const char *path,
-       enum verify_bundle_flags {
-       	VERIFY_BUNDLE_VERBOSE = (1 << 0),
-       	VERIFY_BUNDLE_QUIET = (1 << 1),
-     -+	VERIFY_BUNDLE_FSCK_FOLLOW_FETCH = (1 << 2),
-     ++	VERIFY_BUNDLE_FSCK = (1 << 2),
-       };
-       
-       int verify_bundle(struct repository *r, struct bundle_header *header,
-      
-       ## t/t5558-clone-bundle-uri.sh ##
-      @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'create bundle' '
-     - 		git bundle create B.bundle topic &&
-     - 
-     - 		# Create a bundle with reference pointing to non-existent object.
-     --		sed "s/$(git rev-parse A)/$(git rev-parse B)/" <A.bundle >bad-header.bundle
-     -+		sed "s/$(git rev-parse A)/$(git rev-parse B)/" <A.bundle >bad-header.bundle &&
-     + 		sed -e "/^$/q" -e "s/$(git rev-parse A) /$(git rev-parse B) /" \
-     + 			<A.bundle >bad-header.bundle &&
-     + 		convert_bundle_to_pack \
-     +-			<A.bundle >>bad-header.bundle
-     ++			<A.bundle >>bad-header.bundle &&
-      +
-      +		cat >data <<-EOF &&
-      +		tree $(git rev-parse HEAD^{tree})
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with bundle that has bad
-      +		clone-from clone-bad-object-no-fsck &&
-      +	git -C clone-bad-object-no-fsck for-each-ref --format="%(refname)" >refs &&
-      +	grep "refs/bundles/" refs >actual &&
-     -+	cat >expect <<-\EOF &&
-     -+	refs/bundles/bad
-     -+	EOF
-     ++	test_write_lines refs/bundles/bad >expect &&
-      +	test_cmp expect actual &&
-      +
-      +	# Unbundle fails with fsckObjects set true, but clone can still proceed.
-     @@ transport.c: static int fetch_refs_from_bundle(struct transport *transport,
-       		get_refs_from_bundle_inner(transport);
-       	ret = unbundle(the_repository, &data->header, data->fd,
-      -		       &extra_index_pack_args, 0);
-     -+		       &extra_index_pack_args, VERIFY_BUNDLE_FSCK_FOLLOW_FETCH);
-     ++		       &extra_index_pack_args,
-     ++		       fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0);
-       	transport->hash_algo = data->header.hash_algo;
-       	return ret;
-       }
+  [bundle "incr"]
+      uri = incr.bundle
+      creationToken = 2
 
+A fresh clone with the bundle list above should result in a reference
+"refs/bundles/main" pointing to "B" in the new repository. However, git
+would still download everything from the server, as if it had fetched
+nothing locally.
+
+So why the "refs/bundles/main" is not discovered? After some digging I
+found that:
+
+1. Bundles in bundle list are downloaded to local files via
+   `bundle-uri.c:download_bundle_list` or via
+   `bundle-uri.c:fetch_bundles_by_token` for the "creationToken"
+   heuristic.
+2. Each bundle is unbundled via `bundle-uri.c:unbundle_from_file`, which
+   is called by `bundle-uri.c:unbundle_all_bundles` or called within
+   `bundle-uri.c:fetch_bundles_by_token` for the "creationToken"
+   heuristic.
+3. To get all prerequisites of the bundle, the bundle header is read
+   inside `bundle-uri.c:unbundle_from_file` to by calling
+   `bundle.c:read_bundle_header`.
+4. Then it calls `bundle.c:unbundle`, which calls
+   `bundle.c:verify_bundle` to ensure the repository contains all the
+   prerequisites.
+5. `bundle.c:verify_bundle` calls `parse_object`, which eventually
+   invokes `packfile.c:prepare_packed_git` or
+   `packfile.c:reprepare_packed_git`, filling
+   `raw_object_store->packed_git` and setting `packed_git_initialized`.
+6. If `bundle.c:unbundle` succeeds, it writes refs via
+   `refs.c:refs_update_ref` with `REF_SKIP_OID_VERIFICATION` set. Here
+   bundle refs which can target arbitrary objects are written to the
+   repository.
+7. Finally, in `fetch-pack.c:do_fetch_pack_v2`, the functions
+   `fetch-pack.c:mark_complete_and_common_ref` and
+   `fetch-pack.c:mark_tips` are called with `OBJECT_INFO_QUICK` set to
+   find local tips for negotiation. The `OBJECT_INFO_QUICK` flag
+   prevents `packfile.c:reprepare_packed_git` from being called,
+   resulting in failures to parse OIDs that reside only in the latest
+   bundle.
+
+In the example above, when unbunding "incr.bundle", "base.pack" is added
+to `packed_git` due to prerequisites verification. However, "B" cannot
+be found for negotiation because it exists in "incr.pack", which is not
+included in `packed_git`.
+
+Fix the bug by removing `REF_SKIP_OID_VERIFICATION` flag when writing
+bundle refs. When `refs.c:refs_update_ref` is called to write the
+corresponding bundle refs, it triggers `refs.c:ref_transaction_commit`.
+This, in turn, invokes `refs.c:ref_transaction_prepare`, which calls
+`transaction_prepare` of the refs storage backend. For files backend, it
+is `files-backend.c:files_transaction_prepare`, and for reftable
+backend, it is `reftable-backend.c:reftable_be_transaction_prepare`.
+Both functions eventually call `object.c:parse_object`, which can invoke
+`packfile.c:reprepare_packed_git` to refresh `packed_git`. This ensures
+that bundle refs point to valid objects and that all tips from bundle
+refs are correctly parsed during subsequent negotiations.
+
+A set of negotiation-related tests for cloning with bundle-uri has been
+included to demonstrate that downloaded bundles are utilized to
+accelerate fetching.
+
+Additionally, another test has been added to show that bundles with
+incorrect headers, where refs point to non-existent objects, do not
+result in any bundle refs being created in the repository.
+
+Reviewed-by: Karthik Nayak <karthik.188@gmail.com>
+Reviewed-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
+---
+ bundle-uri.c                |   3 +-
+ t/t5558-clone-bundle-uri.sh | 150 +++++++++++++++++++++++++++++++++++-
+ 2 files changed, 147 insertions(+), 6 deletions(-)
+
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 91b3319a5c1..65666a11d9c 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -400,8 +400,7 @@ static int unbundle_from_file(struct repository *r, const char *file)
+ 		refs_update_ref(get_main_ref_store(the_repository),
+ 				"fetched bundle", bundle_ref.buf, oid,
+ 				has_old ? &old_oid : NULL,
+-				REF_SKIP_OID_VERIFICATION,
+-				UPDATE_REFS_MSG_ON_ERR);
++				0, UPDATE_REFS_MSG_ON_ERR);
+ 	}
+ 
+ 	bundle_header_release(&header);
+diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
+index 1ca5f745e73..2dcdd238a90 100755
+--- a/t/t5558-clone-bundle-uri.sh
++++ b/t/t5558-clone-bundle-uri.sh
+@@ -3,6 +3,7 @@
+ test_description='test fetching bundles with --bundle-uri'
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-bundle.sh
+ 
+ test_expect_success 'fail to clone from non-existent file' '
+ 	test_when_finished rm -rf test &&
+@@ -19,10 +20,22 @@ test_expect_success 'fail to clone from non-bundle file' '
+ 
+ test_expect_success 'create bundle' '
+ 	git init clone-from &&
+-	git -C clone-from checkout -b topic &&
+-	test_commit -C clone-from A &&
+-	test_commit -C clone-from B &&
+-	git -C clone-from bundle create B.bundle topic
++	(
++		cd clone-from &&
++		git checkout -b topic &&
++
++		test_commit A &&
++		git bundle create A.bundle topic &&
++
++		test_commit B &&
++		git bundle create B.bundle topic &&
++
++		# Create a bundle with reference pointing to non-existent object.
++		sed -e "/^$/q" -e "s/$(git rev-parse A) /$(git rev-parse B) /" \
++			<A.bundle >bad-header.bundle &&
++		convert_bundle_to_pack \
++			<A.bundle >>bad-header.bundle
++	)
+ '
+ 
+ test_expect_success 'clone with path bundle' '
+@@ -33,6 +46,16 @@ test_expect_success 'clone with path bundle' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'clone with bundle that has bad header' '
++	# Write bundle ref fails, but clone can still proceed.
++	git clone --bundle-uri="clone-from/bad-header.bundle" \
++		clone-from clone-bad-header 2>err &&
++	commit_b=$(git -C clone-from rev-parse B) &&
++	test_grep "trying to write ref '\''refs/bundles/topic'\'' with nonexistent object $commit_b" err &&
++	git -C clone-bad-header for-each-ref --format="%(refname)" >refs &&
++	! grep "refs/bundles/" refs
++'
++
+ test_expect_success 'clone with path bundle and non-default hash' '
+ 	test_when_finished "rm -rf clone-path-non-default-hash" &&
+ 	GIT_DEFAULT_HASH=sha256 git clone --bundle-uri="clone-from/B.bundle" \
+@@ -259,6 +282,125 @@ test_expect_success 'clone bundle list (file, any mode, all failures)' '
+ 	! grep "refs/bundles/" refs
+ '
+ 
++test_expect_success 'negotiation: bundle with part of wanted commits' '
++	test_when_finished "rm -f trace*.txt" &&
++	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
++	git clone --no-local --bundle-uri="clone-from/A.bundle" \
++		clone-from nego-bundle-part &&
++	git -C nego-bundle-part for-each-ref --format="%(refname)" >refs &&
++	grep "refs/bundles/" refs >actual &&
++	test_write_lines refs/bundles/topic >expect &&
++	test_cmp expect actual &&
++	# Ensure that refs/bundles/topic are sent as "have".
++	test_grep "clone> have $(git -C clone-from rev-parse A)" trace-packet.txt
++'
++
++test_expect_success 'negotiation: bundle with all wanted commits' '
++	test_when_finished "rm -f trace*.txt" &&
++	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
++	git clone --no-local --single-branch --branch=topic --no-tags \
++		--bundle-uri="clone-from/B.bundle" \
++		clone-from nego-bundle-all &&
++	git -C nego-bundle-all for-each-ref --format="%(refname)" >refs &&
++	grep "refs/bundles/" refs >actual &&
++	test_write_lines refs/bundles/topic >expect &&
++	test_cmp expect actual &&
++	# We already have all needed commits so no "want" needed.
++	! grep "clone> want " trace-packet.txt
++'
++
++test_expect_success 'negotiation: bundle list (no heuristic)' '
++	test_when_finished "rm -f trace*.txt" &&
++	cat >bundle-list <<-EOF &&
++	[bundle]
++		version = 1
++		mode = all
++
++	[bundle "bundle-1"]
++		uri = file://$(pwd)/clone-from/bundle-1.bundle
++
++	[bundle "bundle-2"]
++		uri = file://$(pwd)/clone-from/bundle-2.bundle
++	EOF
++
++	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
++	git clone --no-local --bundle-uri="file://$(pwd)/bundle-list" \
++		clone-from nego-bundle-list-no-heuristic &&
++
++	git -C nego-bundle-list-no-heuristic for-each-ref --format="%(refname)" >refs &&
++	grep "refs/bundles/" refs >actual &&
++	cat >expect <<-\EOF &&
++	refs/bundles/base
++	refs/bundles/left
++	EOF
++	test_cmp expect actual &&
++	test_grep "clone> have $(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/left)" trace-packet.txt
++'
++
++test_expect_success 'negotiation: bundle list (creationToken)' '
++	test_when_finished "rm -f trace*.txt" &&
++	cat >bundle-list <<-EOF &&
++	[bundle]
++		version = 1
++		mode = all
++		heuristic = creationToken
++
++	[bundle "bundle-1"]
++		uri = file://$(pwd)/clone-from/bundle-1.bundle
++		creationToken = 1
++
++	[bundle "bundle-2"]
++		uri = file://$(pwd)/clone-from/bundle-2.bundle
++		creationToken = 2
++	EOF
++
++	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
++	git clone --no-local --bundle-uri="file://$(pwd)/bundle-list" \
++		clone-from nego-bundle-list-heuristic &&
++
++	git -C nego-bundle-list-heuristic for-each-ref --format="%(refname)" >refs &&
++	grep "refs/bundles/" refs >actual &&
++	cat >expect <<-\EOF &&
++	refs/bundles/base
++	refs/bundles/left
++	EOF
++	test_cmp expect actual &&
++	test_grep "clone> have $(git -C nego-bundle-list-heuristic rev-parse refs/bundles/left)" trace-packet.txt
++'
++
++test_expect_success 'negotiation: bundle list with all wanted commits' '
++	test_when_finished "rm -f trace*.txt" &&
++	cat >bundle-list <<-EOF &&
++	[bundle]
++		version = 1
++		mode = all
++		heuristic = creationToken
++
++	[bundle "bundle-1"]
++		uri = file://$(pwd)/clone-from/bundle-1.bundle
++		creationToken = 1
++
++	[bundle "bundle-2"]
++		uri = file://$(pwd)/clone-from/bundle-2.bundle
++		creationToken = 2
++	EOF
++
++	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
++	git clone --no-local --single-branch --branch=left --no-tags \
++		--bundle-uri="file://$(pwd)/bundle-list" \
++		clone-from nego-bundle-list-all &&
++
++	git -C nego-bundle-list-all for-each-ref --format="%(refname)" >refs &&
++	grep "refs/bundles/" refs >actual &&
++	cat >expect <<-\EOF &&
++	refs/bundles/base
++	refs/bundles/left
++	EOF
++	test_cmp expect actual &&
++	# We already have all needed commits so no "want" needed.
++	! grep "clone> want " trace-packet.txt
++'
++
+ #########################################################################
+ # HTTP tests begin here
+ 
 -- 
 gitgitgadget
+
