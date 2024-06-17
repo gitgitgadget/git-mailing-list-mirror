@@ -1,173 +1,178 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612BB10A24
-	for <git@vger.kernel.org>; Mon, 17 Jun 2024 03:02:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161FB367
+	for <git@vger.kernel.org>; Mon, 17 Jun 2024 03:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718593325; cv=none; b=SnsLucVcVlXt4Yndz0d1m6svNA30JTKIxm+D/RZUezc7yQaHq9a8+VYxykcY3hvZOgkMGZirTxvINTbMcn7dv4/nANw+HHn1zO6Vx+YaShTlIKJUt57uv6pTT5oqVmS7PziyTM67LMTcMJiPunLB2DIPIk15C9KbnQ2N5HbTx6I=
+	t=1718593723; cv=none; b=ZZRXlugw9JZLTLoQFa6voCu+Nxz56GR1iLYu2WJUHRbBF+yb7BVWrWXB0F3+x+RVEyM7x1G5cBvtA/9jttlREEPIZFVDpJDNpQ8P/6qLLFS25Vjnt9cD5eB0hSilC925tL1w0to5pVza0oPuGiTyuj0HUDPhIgJJG6aCrBI4HG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718593325; c=relaxed/simple;
-	bh=dbG3FRZunUnfspibjdbOOMWV6WUk+OK/OA0X4GOt7pg=;
-	h=Date:From:To:Cc:Subject:References:Mime-Version:Message-ID:
-	 Content-Type; b=uAvu1HubCS2v7JdP36QOeFj2lHGp81VfDTYc+a09Cur7Jp+4NtiVcLY5MnyQ0JiUpcpkxF8g+AMZ/KZqfBfEa9yEDdVYsbPrYYWaTwrt8JMekLza8Cv+8XHE2hUwtWaQwsUMTo0OpMlThvoKCyGNlJsELYooRFBsa4JHcTbrPzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Iaj++3cr; arc=none smtp.client-ip=209.85.215.176
+	s=arc-20240116; t=1718593723; c=relaxed/simple;
+	bh=JS+sFKSxem0uweiH753I+if9XrzhJzUOITyckFmH5hw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=rgRBybYRbYNhzDxz8mCpvZCQskjH4itBODg6K78xz76gJ80XEm57uRnAcOPQetRiVUHcJavawCLDftXJpsyqx+Hj7WsGIjY8/51Mv7TPnwE1l4bN/AIXVT6LFvBppLafacxMtYzuQTIP8MiZDoMzTJ2Hw18ruRjYMdmsj6JBekA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A1EB9tPo; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Iaj++3cr"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-681ad081695so2871552a12.3
-        for <git@vger.kernel.org>; Sun, 16 Jun 2024 20:02:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A1EB9tPo"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42172ed3597so24153475e9.0
+        for <git@vger.kernel.org>; Sun, 16 Jun 2024 20:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718593324; x=1719198124; darn=vger.kernel.org;
-        h=content-transfer-encoding:message-id:mime-version:references
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dbG3FRZunUnfspibjdbOOMWV6WUk+OK/OA0X4GOt7pg=;
-        b=Iaj++3crPFxY00kePpcDDSpk1amIORkrZOkfUv+93eydpxogI5BI/GRhXzsRGJCXls
-         XlyYYRdv/fdwebaKtqWZ74qVbnjs5L0jnvm0afba4GTWLDOrL/HQxo9UlgRDPyz0ym6n
-         sjp5QBh7EROkvPzm+G4i6SALVzliCUhML5kgWXC8sNudn88xAGUbhAAJezWSMfTc4iKM
-         KkBDay8rtamakwBI2gEJK+ag97eb6eQws9xJUZrIIq3fv0Cy1Z/Dkmk2/qFThD7NUUTr
-         rbxv9Ou4IyGh8kBH6qeW05ongxXUBj6hkB/ONqc+dRKMCLWKY4PFiohF4Di5xYeaAdhi
-         +yjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718593324; x=1719198124;
-        h=content-transfer-encoding:message-id:mime-version:references
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1718593720; x=1719198520; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dbG3FRZunUnfspibjdbOOMWV6WUk+OK/OA0X4GOt7pg=;
-        b=kz4dCnWfaDfGmqAAIGboMWWZSIXj1gVZtdloWjk/EwFu5zMdZagbWGgqwjNfoJqbGH
-         URIBZ+HJNPbV6cczAsS/3kajIivP8PKtLANHcRLwFS/iwhrlsDwuxZbopG71LX3f7skX
-         noUX4tKGVfqviCMNAQzd7nVJnuSQt3ROWxPlJFmrB9hTeZVXeVZsGkMR9ll7h0ZVOLB6
-         VbV3erLd10BeKDQ4bJdbhj/JWg3AnBzF+rGpAJNP7M81gku/kyy5OaXhT9DJmZVI4L9r
-         XLMGlx/LD76Yn8Q0vm5DQE4aS8hwJsxjZDwfnbY8sDOTE/LG0ou/qgW1rzmzi6/05Oyq
-         iRfw==
-X-Gm-Message-State: AOJu0YzSujRMvkJkIHy8hO5SAgYfd4Tf8aUwjEY3EY5w2BDvVUGin1Ce
-	wkDCaX09PHyugYM6+WgxeZfUwDEhXB7CEH9dmo8VIvO1DTk/SHuI
-X-Google-Smtp-Source: AGHT+IFx4Y/8bA3cGI+4WYOY5yfB1Y+y0GgbFYHjA8p0jwxK8pXu3jhUtNrIrpYAEv9iYBo8Rknw9A==
-X-Received: by 2002:a17:902:c40f:b0:1f6:8157:b52f with SMTP id d9443c01a7336-1f8625c60a2mr98828705ad.8.1718593323638;
-        Sun, 16 Jun 2024 20:02:03 -0700 (PDT)
-Received: from kylezhao-PC1 ([43.132.141.23])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f855f1af16sm70778175ad.246.2024.06.16.20.02.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 16 Jun 2024 20:02:03 -0700 (PDT)
-Date: Mon, 17 Jun 2024 11:02:02 +0800
-From: "goldofzky@gmail.com" <goldofzky@gmail.com>
-To: gitster <gitster@pobox.com>, 
-	gitgitgadget <gitgitgadget@gmail.com>
-Cc: git <git@vger.kernel.org>, 
-	"Kyle Zhao" <kylezhao@tencent.com>
-Subject: Re: [Internet]Re: [PATCH v5] merge: avoid write merge state when unable to write index
-References: <pull.1731.v4.git.1715920862420.gitgitgadget@gmail.com>, 
-	<pull.1731.v5.git.1718173639942.gitgitgadget@gmail.com>, 
-	<xmqqh6dwlpnb.fsf@gitster.g>
-X-Priority: 3
-X-GUID: 7D67538C-346D-44F3-BD80-E074FF3A15A1
-X-Has-Attach: no
-X-Mailer: Foxmail 7.2.25.254[cn]
+        bh=Z4lxPB/8ZkAMiO1y7issmbE0O1PLjfnwlsS7XVGJQSk=;
+        b=A1EB9tPo0JWHHOrYNsKINy+S8Z1PjyKF/dPy77fCf9be4Kh+wv0os+uyZ5hi9xmZJO
+         elCO97K9qs7G0hg3BfQie+Lztge7oiF0MaJ7sB1RmQJD8aa18Jwc1LlmZV6lpkoC00GB
+         s3iiI28DgNxzQz/ogmzLaAvyg8wvxoZfl2a23rRb89p/ycXOp9dWR+tphYMHd6id4Gh9
+         AbTfrNEa6e6Ra0bFqtNEL1K97fhMZdit7avQxYiZhiOuCB0hbo27ei11x9Xf/N5QeKwA
+         7xAERpL0UZEqi8CtG5MuuRTQtQy0He3kHMIAOwTYvLweFomMjPK+Y18hpnftbKhb52nK
+         fWfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718593720; x=1719198520;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Z4lxPB/8ZkAMiO1y7issmbE0O1PLjfnwlsS7XVGJQSk=;
+        b=uxsEgUqmuwpQtjSks/0haHWt74FKEbXXoGe5IhBWaaIzcSkOzrG9WeEPaNoZlVlsKT
+         4KeMc+VwuzItKfwEgjTfRMxeBBqiMLofmcLGWgAIb5FPaB7ohQ0vKWtlNtDhoYL19gRT
+         XrynKVBhx7figxzZ4ZIYEZNQGHaa2fNHfZ2N2t97GGzftsWhHrIpz4v7QYcrBEaTGYQa
+         aIfgngYbJub8jE8oHDh0nY1HRoEsGMJuvVfL8OSVqGUCHsThukPAPn0ZxGg91xkfod0x
+         EyyRkb1RFtwDU1D/I5mBVsrnjLIkpHPyTThW6gaX9kUFOoaX66ZVRb+bCRupAgrGuG1P
+         fq6g==
+X-Gm-Message-State: AOJu0Yy18ZyKrhoTaQwFTRyQm8AdgSeejw2bMEcbOq3HJ+g/NrLiQ8V3
+	MfMpTUVM5Crb969mf4mUUJtqkS4vFTM0BciKEaK9f8oks6jvzqEpVJehlg==
+X-Google-Smtp-Source: AGHT+IElFmWD6RoP8yO6u6hidfDVzYxbOrq7tuCVL4nyUzgmoQc58HMiFQABUCzHIOTNEQCd0ohlbw==
+X-Received: by 2002:a05:600c:1c07:b0:422:eee2:573b with SMTP id 5b1f17b1804b1-423048448a8mr84043055e9.13.1718593719368;
+        Sun, 16 Jun 2024 20:08:39 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-422870e986asm186628165e9.27.2024.06.16.20.08.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Jun 2024 20:08:38 -0700 (PDT)
+Message-Id: <pull.1731.v6.git.1718593717745.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1731.v5.git.1718173639942.gitgitgadget@gmail.com>
+References: <pull.1731.v5.git.1718173639942.gitgitgadget@gmail.com>
+From: "Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 17 Jun 2024 03:08:37 +0000
+Subject: [PATCH v6] merge: avoid write merge state when unable to write index
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <202406171101133354904@gmail.com>
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Kyle Zhao <kylezhao@tencent.com>,
+    Kyle Zhao <kylezhao@tencent.com>
 
-T24gRnJpLCBKdW4gMTQsIDIwMjQgYXQgMToyN+KAr0FNIEp1bmlvIEMgSGFtYW5vIDxnaXRzdGVy
-QHBvYm94LmNvbT4gd3JvdGU6Cj4KPiAiS3lsZSBaaGFvIHZpYSBHaXRHaXRHYWRnZXQiIDxnaXRn
-aXRnYWRnZXRAZ21haWwuY29tPiB3cml0ZXM6Cj4KPiA+IEZyb206IEt5bGUgWmhhbyA8a3lsZXpo
-YW9AdGVuY2VudC5jb20+Cj4gPgo+ID4gV2hlbiBydW5uaW5nIGEgbWVyZ2Ugd2hpbGUgdGhlIGlu
-ZGV4IGlzIGxvY2tlZCAocHJlc3VtYWJseSBieSBhbm90aGVyCj4gPiBwcm9jZXNzKSwgdGhlIG1l
-cmdlIHN0YXRlIGlzIHdyaXR0ZW4sIHRoZSBpbmRleCBpcyBub3QgdXBkYXRlZCwgYW5kIHRoZW4K
-PiA+IHRoZSBtZXJnZSBmYWlscy4gVGhpcyBtaWdodCBjYXVzZSB1bmV4cGVjdGVkIHJlc3VsdHMu
-Cj4KPiBGYWlsaW5nIHRoZSBtZXJnZSBpcyBnb29kIHRoaW5nLgo+Cj4gPiBFLmcuLCBpZiBhbm90
-aGVyIHJ1bm5pbmcgcHJvY2VzcyBpcyAiZ2l0IGNvbW1pdCIsIE1FUkdFX0hFQUQgYW5kIG90aGVy
-Cj4gPiBzdGF0ZSBmaWxlcyB3ZSB3cml0ZSBvbiBvdXIgc2lkZSB3aWxsIGJlIHRha2VuIGludG8g
-YWNjb3VudCBieSB0aGVtIGFuZAo+ID4gY2F1c2UgdGhlbSB0byByZWNvcmQgYSBtZXJnZSwgZXZl
-biB0aG91Z2ggdGhleSBtYXkgaGF2ZSBiZWVuIHRyeWluZyB0bwo+ID4gcmVjb3JkIHNvbWV0aGlu
-ZyBlbnRpcmVseSBkaWZmZXJlbnQuCj4KPiBJZiBJIHJlY2FsbCB0aGUgcHJldmlvdXMgZGlzY3Vz
-c2lvbiBjb3JyZWN0bHksIEkgdGhpbmsgdGhlIHByaW1hcnkKPiB0aGluZyB0aGlzIGNoYW5nZSBh
-Y2hpZXZlcyBpcyB0byBnZXQgdXMgY2xvc2VyIHRvIGEgc3RhdGUgd2hlcmUKPiBjb21wZXRpbmcg
-Y29tbWFuZHMgKGEgImdpdCBjb21taXQiIHJ1biB3aGlsZSB3ZSBhcmUgZG9pbmcgc29tZXRoaW5n
-Cj4gZWxzZSBsaWtlICJnaXQgbWVyZ2UiKSB0YWtlIHRoZSBpbmRleC5sb2NrIGFzIHRoZSBmaXJz
-dCB0aGluZyAoc28KPiBvdGhlcnMgYXJlIGJsb2NrZWQpLCBiZWZvcmUgbWFraW5nIGF1eGlsaWFy
-eSBmaWxlcyBsaWtlIE1FUkdFX0hFQUQKPiB0aGF0IHdvdWxkIGFmZmVjdCB0aGUgYmVoYXZpb3Vy
-IG9mIHdob2V2ZXIgaGFzIGluZGV4LmxvY2sgKGFuZCB0aHVzCj4gbWFraW5nIGEgbmV3IGNvbW1p
-dCkuICBBbmQgdGhhdCBpcyB3aGF0IHdlIG5lZWQgdG8gc3RyZXNzIGluIHRoZQo+IHByb3Bvc2Vk
-IGxvZyBtZXNzYWdlLCBJIHdvdWxkIHRoaW5rLgoKSSBhZ3JlZS4KCj4KPiBCdXQgdGhpcyBpcyBw
-cm9iYWJseSBvbmx5IGhhbGYtYS1zb2x1dGlvbi4KCgo+Cj4gPiBTaWduZWQtb2ZmLWJ5OiBLeWxl
-IFpoYW8gPGt5bGV6aGFvQHRlbmNlbnQuY29tPgo+ID4gLS0tCj4gPiBkaWZmIC0tZ2l0IGEvYnVp
-bHRpbi9tZXJnZS5jIGIvYnVpbHRpbi9tZXJnZS5jCj4gPiBpbmRleCA2YTZkMzc5ODg1OC4uMTJj
-MWIwNDhmZTEgMTAwNjQ0Cj4gPiAtLS0gYS9idWlsdGluL21lcmdlLmMKPiA+ICsrKyBiL2J1aWx0
-aW4vbWVyZ2UuYwo+ID4gQEAgLTY5OSw3ICs2OTksNyBAQCBzdGF0aWMgaW50IHRyeV9tZXJnZV9z
-dHJhdGVneShjb25zdCBjaGFyICpzdHJhdGVneSwgc3RydWN0IGNvbW1pdF9saXN0ICpjb21tb24s
-Cj4gPiAgICAgICBpZiAocmVwb19yZWZyZXNoX2FuZF93cml0ZV9pbmRleCh0aGVfcmVwb3NpdG9y
-eSwgUkVGUkVTSF9RVUlFVCwKPiA+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIFNLSVBfSUZfVU5DSEFOR0VELCAwLCBOVUxMLCBOVUxMLAo+ID4gICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgTlVMTCkgPCAwKQo+ID4gLSAgICAgICAgICAgICByZXR1
-cm4gZXJyb3IoXygiVW5hYmxlIHRvIHdyaXRlIGluZGV4LiIpKTsKPiA+ICsgICAgICAgICAgICAg
-ZGllKF8oIlVuYWJsZSB0byB3cml0ZSBpbmRleC4iKSk7Cj4gPgo+ID4gICAgICAgaWYgKCFzdHJj
-bXAoc3RyYXRlZ3ksICJyZWN1cnNpdmUiKSB8fCAhc3RyY21wKHN0cmF0ZWd5LCAic3VidHJlZSIp
-IHx8Cj4gPiAgICAgICAgICAgIXN0cmNtcChzdHJhdGVneSwgIm9ydCIpKSB7Cj4KPiBJZiB3ZSBm
-YWlsIHRvIHdyaXRlIHRoZSBpbmRleCBoZXJlLCBldmVuIGlmIHdlIGhhdmUgb3RoZXIgc3RyYXRl
-Z2llcwo+IHRvIHRyeSBhZnRlciB0aGUgY3VycmVudCBvbmUgZmFpbHMsIGl0IHByb2JhYmx5IGlz
-IGEgZ29vZCBpZGVhIHRvIGRpZQo+IGFuZCBzdG9wIHRoZSBvdGhlciBvbmVzIGZyb20gYmVpbmcg
-dHJpZWQsIG5vdCBiZWNhdXNlIHRoZWlyIGF0dGVtcHQKPiB0byB3cml0ZSB0aGUgaW5kZXggbWln
-aHQgZmFpbCB0aGUgc2FtZSB3YXksIGJ1dCBiZWNhdXNlIGl0IGlzIGxpa2VseQo+IHRoYXQgd2Ug
-YXJlIHJlYWxseSBpbiBhIHdlaXJkIHNpdHVhdGlvbiBhbmQgdGhlIHVzZXIgd291bGQgd2FudCB0
-bwo+IGluc3BlY3QgdGhlIHNpdHVhdGlvbiBiZWZvcmUgdGhpcyBwcm9jZXNzIG1ha2VzIHRvbyBt
-dWNoIGRhbWFnZSB0bwo+IHRoZSB3b3JraW5nIHRyZWUgYW5kIHRoZSBpbmRleC4KPgo+IEJ1dCB0
-aGlzIGlzIHByb2JhYmx5IG9ubHkgaGFsZi1hLXNvbHV0aW9uLiAgQmVjYXVzZSB3ZSByZWxlYXNl
-IHRoZQo+IGluZGV4LmxvY2sgd2hlbiB0aGUgcmVmcmVzaC1hbmQtd3JpdGUgY2FsbCByZXR1cm5z
-LCBhbmQgdGhlCj4gaW5kZXgubG9jayBpcyBmcmVlIGZvciB0aGUgb3RoZXIgcHJvY2VzcyB0byBn
-cmFiLCBkbyB3aGF0ZXZlciB0aGV5Cj4gd2FudCB0byBkbyB0byB0aGUgaW5kZXggYW5kIHRoZSB3
-b3JraW5nIHRyZWUgKGluY2x1ZGluZyBtYWtpbmcgYSBuZXcKPiBjb21taXQgb3V0IG9mIGl0IGFu
-ZCB1cGRhdGUgdGhlIEhFQUQpLCBiZWZvcmUgb3IgYWZ0ZXIgd2Ugd3JpdGUgb3V0Cj4gdGhlIG1l
-cmdlIHN0YXRlIGZpbGVzLiBTbyBpbiB0aGF0IHNlbnNlLCB0aGlzIHBhdGNoIGlzICpub3QqIHNv
-bHZpbmcKPiB0aGUgIkUuZy4sIGlmIGFub3RoZXIgcnVubmluZyBwcm9jZXNzIGlzIC4uLiIgIHBy
-b2JsZW0gYXQgYWxsLgo+Cj4gU28gLi4uCj4KCk9vcHMhClRoYW5rIHlvdSBmb3IgdGhlIHJlbWlu
-ZGVyLCBJIGluZGVlZCBkaWQgbm90IGNvbnNpZGVyIHRoaXMgcG9pbnQuIApFdmVuIGlmIHRoZSBp
-bmRleCBpcyB3cml0dGVuIHN1Y2Nlc3NmdWxseSwgYW5vdGhlciBydW5uaW5nICJnaXQgY29tbWl0
-IiBtYXkgCnJlY29yZCBhIG1lcmdlIChpZiBpdCBnZW5lcmF0ZXMgdGhlIGNvbW1pdCBiZWZvcmUg
-bWVyZ2Ugc3RhdGUgaXMgcmVtb3ZlZCkuCgo+ID4gZGlmZiAtLWdpdCBhL3QvdDc2MDAtbWVyZ2Uu
-c2ggYi90L3Q3NjAwLW1lcmdlLnNoCj4gPiBpbmRleCBlNWZmMDczMDk5YS4uZWY1NGNmZjRmYWEg
-MTAwNzU1Cj4gPiAtLS0gYS90L3Q3NjAwLW1lcmdlLnNoCj4gPiArKysgYi90L3Q3NjAwLW1lcmdl
-LnNoCj4gPiBAQCAtMjM2LDYgKzIzNiwxNiBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICdtZXJnZSBj
-MSB3aXRoIGMyJyAnCj4gPiAgICAgICB2ZXJpZnlfcGFyZW50cyAkYzEgJGMyCj4gPiAgJwo+ID4K
-PiA+ICt0ZXN0X2V4cGVjdF9zdWNjZXNzICdtZXJnZSBjMSB3aXRoIGMyIHdoZW4gaW5kZXgubG9j
-ayBleGlzdHMnICcKPiA+ICsgICAgIHRlc3Rfd2hlbl9maW5pc2hlZCBybSAuZ2l0L2luZGV4Lmxv
-Y2sgJiYKPiA+ICsgICAgIGdpdCByZXNldCAtLWhhcmQgYzEgJiYKPiA+ICsgICAgID4uZ2l0L2lu
-ZGV4LmxvY2sgJiYKPiA+ICsgICAgIHRlc3RfbXVzdF9mYWlsIGdpdCBtZXJnZSBjMiAmJgo+ID4g
-KyAgICAgdGVzdF9wYXRoX2lzX21pc3NpbmcgLmdpdC9NRVJHRV9IRUFEICYmCj4gPiArICAgICB0
-ZXN0X3BhdGhfaXNfbWlzc2luZyAuZ2l0L01FUkdFX01PREUgJiYKPiA+ICsgICAgIHRlc3RfcGF0
-aF9pc19taXNzaW5nIC5naXQvTUVSR0VfTVNHCj4KPiAuLi4gSSBkbyBub3QgcXVpdGUgc2VlIHRo
-ZSBwb2ludCBvZiB0aGlzIGV4ZXJjaXNlLiAgSXQgaXMgZ29vZCB0bwo+IG1ha2Ugc3VyZSB0aGF0
-ICJnaXQgbWVyZ2UgYzIiIGZhaWxzIHdoaWxlIGl0IGlzIGNsZWFyIHRoYXQgc29tZWJvZHkKPiBl
-bHNlIGlzIG11Y2tpbmcgd2l0aCB0aGUgc2FtZSByZXBvc2l0b3J5IHRvdWNoaW5nIHRoZSBpbmRl
-eC4gIEJ1dCBpdAo+IGRvZXMgbm90IGhlbHAgdGhlIG90aGVyIHByb2Nlc3MgYWxsIHRoYXQgbXVj
-aCBpZiB3ZSBzdG9wIG9ubHkgd2hlbgo+IHRoZXkgaGFwcGVuIHRvIGJlIGhvbGRpbmcgbG9jayBh
-dCB0aGUgcG9pbnQgd2UgdHJ5IHRvIHJlZnJlc2ggdGhlCj4gaW5kZXguICBJdCBpcyBtYWtpbmcg
-dGhlIHJhY2Ugd2luZG93IHNtYWxsZXIgYnkgYSB0aW55IGJpdC4KClRoaXMgdGVzdCBpcyBvbmx5
-IHVzZWQgdG8gdmVyaWZ5IHdoZXRoZXIgdGhlIG1lcmdlIHN0YXRlIGlzIGdlbmVyYXRlZCBhZnRl
-ciBhIG1lcmdlIGZhaWxzIApkdWUgdG8gdGhlIGluZGV4IHdyaXRpbmcuIApUbyBteSBrbm93bGVk
-Z2UsIGZvciBhIG1lcmdlLCB3cml0aW5nIHRoZSBtZXJnZSBzdGF0ZSBhbmQgdGhlIGluZGV4IGlz
-IG5vdCBhbiBhdG9taWMgb3BlcmF0aW9uLiAKU2ltcGx5IG1vZGlmeWluZyB0aGUgbG9naWMgb2Yg
-bWVyZ2UgaXMgdXNlbGVzcyBhbmQgd2UgbmVlZCB0byB0aGluayBhYm91dCBvdGhlciBzb2x1dGlv
-bnMuCgo+Cj4gU28sIEkgYW0gbm90IHN1cmUgaWYgdGhpcyBpcyB3b3J0aCBkb2luZy4KPgoKWzFd
-IEFzIGV4cGxhaW5lZCBpbiB0aGUgY29tbWl0IG1lc3NhZ2Ugb2YgdjEsIHdlIGFyZSBwYXJ0aWN1
-bGFybHkgY29uY2VybmVkIGFib3V0IHRoZQppc3N1ZSBvZiBzb3VyY2UgY29kZSBsb3NzLiBPbmNl
-IHRoaXMgcHJvYmxlbSBvY2N1cnMsIHRoZSBjb25zZXF1ZW5jZXMgd2lsbCBiZSBpbW1lYXN1cmFi
-bGUgCmFuZCBkZXRlY3RpbmcgdGhlc2UgYWJub3JtYWwgbWVyZ2UgcG9pbnRzIHdpbGwgYmUgdmVy
-eSBkaWZmaWN1bHQuCgpbMl0gRnJvbSBhIHVzYWJpbGl0eSBwZXJzcGVjdGl2ZSwgdGhlIG1lcmdl
-IHN0YXRlIHNob3VsZCBub3QgYmUgd3JpdHRlbiB3aGVuIHRoZSBpbmRleCBpcyBiZWluZwogd3Jp
-dHRlbiAobWVyZ2UgY29uZmxpY3RzIGFyZSBub3QgY29uc2lkZXJlZCBmYWlsdXJlcykuIFRvIGF2
-b2lkIGxvc2luZyBjaGFuZ2VzIGluIHRoZSBzb3VyY2UgYnJhbmNoLCAKdXNlcnMgY2FuIG9ubHkg
-ZXhlY3V0ZSAnZ2l0IG1lcmdlIC0tYWJvcnQnIGFuZCB0cnkgJ2dpdCBtZXJnZScgYWdhaW4uIEhv
-d2V2ZXIsIGlmIHRoZSBtZXJnZSBzdGF0ZSBpcwpub3Qgd3JpdHRlbiBpbiB0aGUgZmlyc3QgcGxh
-Y2UsIHRoZSB1c2VyIG9ubHkgbmVlZHMgdG8gcmV0cnkgJ2dpdCBtZXJnZScuCgpJbiBvdGhlciB3
-b3Jkcywgd3JpdGluZyB0aGUgbWVyZ2Ugc3RhdGUgYWZ0ZXIgdGhlIGluZGV4IHdyaXRlIGZhaWxz
-IGlzIG1lYW5pbmdsZXNzIGFuZCBjb3VsZCAKcG90ZW50aWFsbHkgY2F1c2UgR2l0IHRvIGxvc2Ug
-Y2hhbmdlcy4=
+From: Kyle Zhao <kylezhao@tencent.com>
 
+Writing the merge state after the index write fails is meaningless and
+could potentially cause Git to lose changes.
+
+Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
+---
+    merge: avoid write merge state when unable to write index
+    
+    In some of our monorepos, code is sometimes lost after merging.
+    
+    After investigation, we discovered the problem.
+    
+    This happens if we perform "git pull" or "git merge" when another git
+    process is writing to the index, especially in a monorepo (because its
+    index will be larger).
+    
+    How to reproduce:
+    
+    git init demo
+    cd demo
+    touch 1.txt && git add . && git commit -m "1"
+    git checkout -b source-branch
+    touch 2.txt && git add . && git commit -m "2"
+    git checkout master
+    echo "1" >> 1.txt && git add . && git commit -m "3"
+    # another git process runnning
+    touch .git/index.lock
+    git merge source-branch
+    # another git process finished
+    rm .git/index.lock
+    git commit -m "4"
+    
+    
+    Then the modifications from the source branch are lost.
+    
+    Regards, Kyle
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1731%2Fkeyu98%2Fkz%2Ffix-merge-when-index-lock-exists-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1731/keyu98/kz/fix-merge-when-index-lock-exists-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/1731
+
+Range-diff vs v5:
+
+ 1:  a5156088514 ! 1:  24150cd814a merge: avoid write merge state when unable to write index
+     @@ Metadata
+       ## Commit message ##
+          merge: avoid write merge state when unable to write index
+      
+     -    When running a merge while the index is locked (presumably by another
+     -    process), the merge state is written, the index is not updated, and then
+     -    the merge fails. This might cause unexpected results.
+     -
+     -    E.g., if another running process is "git commit", MERGE_HEAD and other
+     -    state files we write on our side will be taken into account by them and
+     -    cause them to record a merge, even though they may have been trying to
+     -    record something entirely different.
+     +    Writing the merge state after the index write fails is meaningless and
+     +    could potentially cause Git to lose changes.
+      
+          Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
+      
+
+
+ builtin/merge.c  |  2 +-
+ t/t7600-merge.sh | 10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index daed2d4e1e2..03c405fa5df 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -701,7 +701,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET,
+ 					 SKIP_IF_UNCHANGED, 0, NULL, NULL,
+ 					 NULL) < 0)
+-		return error(_("Unable to write index."));
++		die(_("Unable to write index."));
+ 
+ 	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree") ||
+ 	    !strcmp(strategy, "ort")) {
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index e5ff073099a..ef54cff4faa 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -236,6 +236,16 @@ test_expect_success 'merge c1 with c2' '
+ 	verify_parents $c1 $c2
+ '
+ 
++test_expect_success 'merge c1 with c2 when index.lock exists' '
++	test_when_finished rm .git/index.lock &&
++	git reset --hard c1 &&
++	>.git/index.lock &&
++	test_must_fail git merge c2 &&
++	test_path_is_missing .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_MODE &&
++	test_path_is_missing .git/MERGE_MSG
++'
++
+ test_expect_success 'merge --squash c3 with c7' '
+ 	git reset --hard c3 &&
+ 	test_must_fail git merge --squash c7 &&
+
+base-commit: d63586cb314731c851f28e14fc8012988467e2da
+-- 
+gitgitgadget
