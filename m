@@ -1,127 +1,92 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB46018A934
-	for <git@vger.kernel.org>; Mon, 17 Jun 2024 19:23:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B743AC16
+	for <git@vger.kernel.org>; Mon, 17 Jun 2024 19:33:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718652223; cv=none; b=X9CxaCPmDlmstx83Thx3WiqvWnP1Hd1bM9FyTtnh0ehs8rduP2zSZmHnucJ8s4EYgRw6Ac0lWqjqb2700/fULGw5XwClApc2TUePc1e6tlWtJcx6o6QRBzegUrzF1StrKTeWvpMPjjXDl3a4ObZAhW6Lc58X7ivXK9qTzX0ISXU=
+	t=1718652834; cv=none; b=faz/0ncXUC5MKJJtiaxqRoKFqeFKVg7z/5YyI41fw5NZQ52ardKoghpPPiWqwepPeELlUouf5pMczRuqGIE/0t96LQKviP6Y5Feeapt6einxc5my4uuvPt5lNBV7dR58he/B7aIBX9GFasgq2xdTg1rip26wOD3dX9tUIhm11YY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718652223; c=relaxed/simple;
-	bh=9lIYyMNL+pk3PIy4xPoEMaKrbAmcsYD/uasWkm8WgSM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CrNoohq/KJoDatRsW1BtCPwRlapX0GBXQqRA1VTf42qX1uwOwTvzboy3Eh4S+jY6hQCpCW3aV+mJpbLgvVQqpI7j9etiFS7K8Nf9VW5WimoxSvLFtSHIdqNogFCy4NTN/cElkQEINYJpmfmIc6VxeOzUL3AYeJhJKtyIHYirUog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b=ezrDKPvE; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+	s=arc-20240116; t=1718652834; c=relaxed/simple;
+	bh=qVTVsQKPPmmGWgwuKDuYEodfRWSCyuTrrHYL5nlZEQY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZlaTfaaaGHM7V/p2Vdfcq+Vgqv9H8W8GwBg/1dKNvwiv5+mlMKh3TLrSEQM6aTNYoRSKCWKJAHv64s9GY2Nt8ewCp14bIZv3UwxavtIFSCSlXrb7AEBKNDnch4LGU7XP4T7ROsfjCbW97qjQcDiBBAptHvFoSqchiVA2wcC4cpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GbyhO63j; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="ezrDKPvE"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-705ff14d159so1149054b3a.1
-        for <git@vger.kernel.org>; Mon, 17 Jun 2024 12:23:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1718652221; x=1719257021; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BiDXLtVAp18sdlCsCfsjMQizbOano2LTEmJPm6oyEvg=;
-        b=ezrDKPvEE4nttJXwP5JBfdGx9798P7gexv3tNoNMFt/6pkWOEuwOIRiM3QY6/toFRW
-         FCbueW8cGWVUdA+6/Pgs3OIoUv5cFGLGJbWJsv5Nozk1BmaVzFvs6LWGA7kEUpRivdlq
-         3Bzw4lgGbNx7fgcDA8DeSeVRfqYpztPfsOWKdQVupfGOLrmZJO9MW+3TGBJt4TUSTCpq
-         r352ndEs/bJtF2KDFKZ8thOWwbUt/4sAFctBiQNP5QafXkwEHn4rPeLJSKz4e5e/O5g6
-         UNpOEf9d3IzU2JLKaO7KyQLeKCzBiIPZoEd92Lsd/KouDlEVJk56h6zxPrGvoMN0n26h
-         ftRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718652221; x=1719257021;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BiDXLtVAp18sdlCsCfsjMQizbOano2LTEmJPm6oyEvg=;
-        b=g35vlkj5CABHBsmbEIJ72Y2014qUhPncLiNptG2f3DwZaT5xQfgaYgV0LrqvvcjVpg
-         dIyL9IArwfB3Ct/zLAjQOLgdyio61K8Jewg8tFzzmQaPhtYJaEk1tBrOunmQ9EGFA5hu
-         o9aIFnyLhBO5SlPKtXhTYCcvEO6jsfmvf676E3oF/kmnht3FSySxJqcPDCizmAkyalnO
-         fso5IWhHkxN9pKJ90RCCHUDbcUForOVveONl//umrCGTLC7xxUYFjPbqt+iweyNifZPA
-         oi0E2F2D/y4v3VbgBQjhG1yBKpG/X/qehdPaCrUqXu6kGRXzLekC0OrsvxGMDGrWhmEM
-         /RrQ==
-X-Gm-Message-State: AOJu0YzvRezgKpIBP0CKRSAvvy+CDCGNu4Vt1t56BzB6bpmcRXMPyWAu
-	RdV3rgXWRw2DazGKHFLkonp8A0+f722kxC4VSoe1HNA3pSYqwij3XvRpMIhX
-X-Google-Smtp-Source: AGHT+IFsVaJczGNtWIbHZ8Gyxiz0yPH31QZv7/TJ7fYODnWDFL5HrHkQdwNU+RxAWmyodMqQyOPGpg==
-X-Received: by 2002:a05:6a21:3213:b0:1b8:9933:14d7 with SMTP id adf61e73a8af0-1bae83c6cc0mr9747304637.43.1718652221110;
-        Mon, 17 Jun 2024 12:23:41 -0700 (PDT)
-Received: from [192.168.50.41] (syn-172-091-184-234.res.spectrum.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-6fedf59299fsm5850571a12.55.2024.06.17.12.23.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jun 2024 12:23:40 -0700 (PDT)
-Message-ID: <55e06e1b-580e-45fe-a914-d1ef252d5981@github.com>
-Date: Mon, 17 Jun 2024 12:23:39 -0700
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GbyhO63j"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 791A835934;
+	Mon, 17 Jun 2024 15:33:51 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=qVTVsQKPPmmG
+	WgwuKDuYEodfRWSCyuTrrHYL5nlZEQY=; b=GbyhO63jcrhIfRQseWSjdkN/Ealg
+	iKljVb4r4uSWFyFs/yZ6y27Z2tEKJPFHTUNdTLgtLzWdnHdu/mCNeH0T6HIeXMR2
+	/F3LxBZ2yn1snfY+thz4e/pJTmFCTn0y1UYheJzSgBRvixlMZdvEWKEOOIQHX3um
+	pa9Ggf0Kku1QZ5k=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 717B435933;
+	Mon, 17 Jun 2024 15:33:51 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1669735932;
+	Mon, 17 Jun 2024 15:33:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Miguel_=C3=81ngel_Pastor_Olivar_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Miguel =?utf-8?Q?=C3=81ngel?= Pastor Olivar
+ <miguelinlas3@gmail.com>
+Subject: Re: [PATCH 0/2] Symlink resolutions: limits and return modes
+In-Reply-To: <pull.1751.git.1718615028.gitgitgadget@gmail.com> ("Miguel
+ =?utf-8?Q?=C3=81ngel?=
+	Pastor Olivar via GitGitGadget"'s message of "Mon, 17 Jun 2024
+	09:03:46 +0000")
+References: <pull.1751.git.1718615028.gitgitgadget@gmail.com>
+Date: Mon, 17 Jun 2024 12:33:46 -0700
+Message-ID: <xmqq34pb749x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/16] mktree: optionally add to an existing tree
-To: Patrick Steinhardt <ps@pks.im>,
- Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
- <df0c50dfea3cb77e0070246efdf7a3f070b2ad97.1718130288.git.gitgitgadget@gmail.com>
- <ZmltKHI-Vz1L44r8@tanuki>
-Content-Language: en-US
-From: Victoria Dye <vdye@github.com>
-In-Reply-To: <ZmltKHI-Vz1L44r8@tanuki>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 849EB83A-2CE0-11EF-AB79-C38742FD603B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt wrote:
-> On Tue, Jun 11, 2024 at 06:24:46PM +0000, Victoria Dye via GitGitGadget wrote:
->> diff --git a/Documentation/git-mktree.txt b/Documentation/git-mktree.txt
->> index afbc846d077..99abd3c31a6 100644
->> --- a/Documentation/git-mktree.txt
->> +++ b/Documentation/git-mktree.txt
->> @@ -40,6 +40,11 @@ OPTIONS
->>  	optional.  Note - if the `-z` option is used, lines are terminated
->>  	with NUL.
->>  
->> +<tree-ish>::
->> +	If provided, the tree entries provided in stdin are added to this tree
->> +	rather than a new empty one, replacing existing entries with identical
->> +	names. Not compatible with `--literally`.
-> 
-> I think it'd be a bit more intuitive is this was an option, like
-> `--base-tree=` or just `--base=`.
+"Miguel =C3=81ngel Pastor Olivar via GitGitGadget"
+<gitgitgadget@gmail.com> writes:
 
-To me, the positional '<tree-ish>' is more intuitive; it's reminiscent of
-'read-tree' (but with '--empty' being the default, since there's no
-equivalent to the existing index to overwrite). I consider 'read-tree'
-relevant in this case because the updated 'mktree' allows a users to create
-trees like:
+> The current code already provides a limit to the maximum number of
+> resolutions that can be performed, and something similar to this is ret=
+urned
+> to the caller:
+>
+> loop SP <size> LF
+> <object> LF
+>
+>
+> With these patches, we are looking to return the actual information of =
+the
+> object where the resolution stopped. Something similar to:
+>
+> <oid> blob <size>\nndata\n
 
-$ git read-tree <tree-ish>
-$ git update-index <entries
-$ git write-tree
+Just a random and idle thought, but is it all that interesting to
+learn only about the object at the horizon?
 
-without the intermediate on-disk index. Conversely, there isn't really an
-equivalent option to base the name on ('--base' is a bit overloaded, as it
-typically refers to a merge/diff base), and I'd like to avoid adding more
-potentially-confusing names to the overall Git UX if I can help it (even if
-this is a plumbing command).
-
-However, looking at other command documentation, I should at least drop
-'[--]' from the usage string. While that is a separator used to signify "end
-of options" using 'parse_options()', it's typically only included in the
-usage string to separate different sets of positional arguments (e.g.
-revisions from pathspecs). 
-
-> 
-> One question that comes up naturally in this context: when I have a base
-> tree, how do I remove entries from it?
-
-In patch 16 [1], entries with mode "0" are removed from the tree (similar to
-'update-index').
-
-[1] https://lore.kernel.org/git/a90d6d0c943283e9e7bd181cd6e9bb6d4572aaeb.1718130288.git.gitgitgadget@gmail.com/
-
-> 
-> Patrick
-
+If recursive resolutions are limited to say 3 levels, I wonder if it
+is beneficial to give full record from each iteration without losing
+information, e.g., saying "A points at B which in turn points at C,
+and I stopped there but C is still not the final thing", instead of
+saying "I followed links and C was the last one I saw after I
+repeated for the maximum number of times the configuration allows me
+to".
