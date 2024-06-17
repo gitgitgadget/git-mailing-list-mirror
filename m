@@ -1,138 +1,83 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F431391
-	for <git@vger.kernel.org>; Mon, 17 Jun 2024 00:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224C511CB8
+	for <git@vger.kernel.org>; Mon, 17 Jun 2024 01:19:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718584624; cv=none; b=QEA1GkDyR+ov4J/ndqxvnFejHVpAYCiKhC8EP0C3L1kzCOxl3EZq+9z7N3UJ3ZtfA6f9rmb3oeWdWnQVUY67wryPI9ItDH1PwFzuj1BHh/akzHUVGTpQSe8mexsi+GTQRaE7fuw9rw6S2envHlVh6++URkFHmtgzul8Ma5kFL/0=
+	t=1718587169; cv=none; b=LcF0rOavfGRu4tEhWl1/7Kz6JlMCXjjWVEoEt8G0vNIZEdeK7spyjEe2QrA0Wyf4iKnDM+Moi8PlK2I5VQsYzJA4fKXTCIvS/pCFF6qulkVAzGRV5/J4aSSqJ+qLasDxPpwFPouBjbn60RxoCpy0c2uPDJtus1LcdZMBQHp+LnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718584624; c=relaxed/simple;
-	bh=alNG58mjgreCLZh5dTwR23GYE/JIdUFKC26wdbMUkvM=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=F+PKwwu8hwcBR1JBi3OFu3joa7PTTEbFRMGr0ShhFDz0d1Q5vj42Js0zcKUGQLdQlT75IUMNu4Kc7m9ViSwbf7xOfQD7AjrVlTp5vLFDEVPgovT3oP9k9ifgEHhesCDhvmgSGtIEfRhWw/HLfw48J9kxaAm4KTkgIpddtARSN8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BuGKoNfI; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718587169; c=relaxed/simple;
+	bh=H87Iq/WfSBHR9Q6kSqJzUGH8OYneJZB5QGwxIbSTD/M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OWeHmL8hDyh2N/PO9s3B378wIPGGBWXon4b+IqhDEUs+xwe8UruOR3leFAg3hcHKzFVPTp0gqatVHQgOM4zc0QBxo+ehO3p87jw8LUixJdrlFH02dwWx72LKsQGIXik0SBSB8ROWajOr3tLoNWYSHsS1YFXpmuXK3dahsEgYeEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wwXfmH9n; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BuGKoNfI"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-6f96f8489feso2223285a34.0
-        for <git@vger.kernel.org>; Sun, 16 Jun 2024 17:37:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718584622; x=1719189422; darn=vger.kernel.org;
-        h=content-transfer-encoding:disposition-notification-to:subject:from
-         :to:content-language:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3si4vLlMzroUNIB2BzeoQ7tyFaamcMarmxML5rlJGlc=;
-        b=BuGKoNfI6DcDxxHSU9oQraqzaggCAV5oR55vRT95gQXhrwFxtAVlabm5R13RwXSTP1
-         w1gNncv7tj93jFxTRYw1Xh58lLoj2QfrUfc7NFydAIdTUIWlCFVivpn9ZTaaJ9/yAfdR
-         ZpvSB1uYMNQ5NBmAGEUV+JiON6bd/pNouHz5Rz0bsKEmNZBHN3mnsjewvvPgV4EJRWle
-         kkyWYySjxUh56f4pDCkvJOqUmRhzEMx/LtY2+mAnYqZj46qqkbrnxEEGUdNyDY8uAL1C
-         Dtfh06M97QJOHfB8wKE/qB6+AOGIOKBKsgN1Y9eqY1Jb7OSjzQ8VWZtTOm8FJ2FsyoUV
-         9u7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718584622; x=1719189422;
-        h=content-transfer-encoding:disposition-notification-to:subject:from
-         :to:content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3si4vLlMzroUNIB2BzeoQ7tyFaamcMarmxML5rlJGlc=;
-        b=Phr0N/7RKEbvSrlY8SAjurm0tMalj1ESuidqz4oy5+WSt8gmWrndbvrQVh92Lkm3wU
-         oGoiBYnu/bKZ2WDWR4/QUMlLLIlBDFBerp2K4WpRJkTYMCI/8ujqLR7B/az7eQPfNNpy
-         0EVcvFnMZDw5GkYRC01tH5I0D+aoH07eLAj7/369KlJzb0TZniDimot2tHTY4HWnnzWx
-         61x3ryDwdNUB6tS0okxcVl4DMVCVPmpbSedHHjAUfwZA6FkrQwtDFCxELjIeS6c8pKtS
-         MQ+DryE62/db1z7U26FiWO574aiSMHqDH7iJv0GtB5uUsAdqSHBQgimQn65r7zuL+7xk
-         jQDQ==
-X-Gm-Message-State: AOJu0YwLpYvXuLk/dtTgon+LN2hTk8lepMIIO+RwIXmCrrs1WA8C866O
-	89+9/6BywEq1UL7s8Ti0wqFCgrq4USfsGVaDd6xjSP336WsiDOGTXlmRTQ==
-X-Google-Smtp-Source: AGHT+IHyPCKJmeRYFA5iPGm9vXvEHQ01XKLzo5lRZOHCzRMp8+1VA3g8DYNawmHfE8/IrT/BrmCT9w==
-X-Received: by 2002:a05:6871:4cd:b0:255:52d:44b1 with SMTP id 586e51a60fabf-25842b1e9admr7567234fac.41.1718584621262;
-        Sun, 16 Jun 2024 17:37:01 -0700 (PDT)
-Received: from [192.168.6.104] (mail.3111skyline.com. [66.76.46.195])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2569930f768sm2317502fac.41.2024.06.16.17.37.00
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Jun 2024 17:37:00 -0700 (PDT)
-Message-ID: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
-Date: Sun, 16 Jun 2024 19:36:59 -0500
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wwXfmH9n"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F7721D156;
+	Sun, 16 Jun 2024 21:19:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=H87Iq/WfSBHR9Q6kSqJzUGH8OYneJZB5QGwxIb
+	STD/M=; b=wwXfmH9nRzmib1UjeSRtaK6JTgRRZ9UFwUitiIcrrdujMA1n5rn65L
+	09hrgKgqmizV5pe4Aqc/gcoC6gjrWIYlh8bvUzkpKL6h7aJtKMhMIHTU8mZwcm6c
+	U6pbyxVbmBpU2L1Ccnyopvwkc/BOsyP/mFIt8FxycjzBfh01w+1ks=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5787B1D155;
+	Sun, 16 Jun 2024 21:19:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BD4991D154;
+	Sun, 16 Jun 2024 21:19:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+Cc: Devste Devste <devstemail@gmail.com>,  git@vger.kernel.org
+Subject: Re: Add warning when v0 protocol is used/downgraded
+In-Reply-To: <Zm8EqOfc_v4KBVVK@google.com> (Jonathan Nieder's message of "Sun,
+	16 Jun 2024 15:33:41 +0000")
+References: <CANM0SV3CQPRyJCDanB8JFpkAMwuoo-mg3A=_L743_GXJtoFtQA@mail.gmail.com>
+	<Zm8EqOfc_v4KBVVK@google.com>
+Date: Sun, 16 Jun 2024 18:19:19 -0700
+Message-ID: <xmqqjziobc2w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git@vger.kernel.org
-From: "David C. Rankin" <drankinatty@gmail.com>
-Subject: Local git server can't serve https until repos owned by http, can't
- serve ssh unless repos owned by user after 2.45.1
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9FD9775A-2C47-11EF-84BF-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-All,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-   Security enhancement in 2.45.1 have broken ability to serve git over https 
-and ssh from local git server running Apache. (web server runs as http:http on 
-Archlinux)
+> Specifying protocol version is meant to be backward compatible, and
+> there are cases where the old protocol still needs to be used - for
+> ...
+> more so for protocol v2 for push, which doesn't exist yet - once it
+> exists, it wouldn't be great if all pushes using existing servers
+> produced an extra piece of noisy output. :)
 
-   The fix of adding the following to gitconfig (system-wide and per-user in 
-~/.gitconfig) does not solve the problem:
+I do not think it is a great idea to add this as a warning, as if
+something bad is happening, either.
 
-[safe]
-	directory = *
+I also agree that it is a legitimate debugging issue.  When the user
+sees some symptom, after learning that the same symptom was reported
+to be associated with the use of v2 on the Internet somewhere, it is
+reasonable for the user to want to see what protocol is being used,
+in order to debug the configuration, especially when the user thinks
+they configured to use v0 (or vice versa)
 
-(* or the actual /srv/git/reponame.git makes no difference)
+So I am all for (1) adding to, if it is not already done, this kind
+of information to the GIT_TRACE* output, and (2) advertising and
+advocating GIT_TRACE* stuff as a useful debugging tool.
 
-   On Archlinux, all repos are served from /srv/git. This has worked well for 
-both https and ssh allowing repos under /srv/git to be owned by the user with 
-public-private ssh key. (they are members of group owning /srv/git with write 
-privileges)
-
-   After 2.45.1,
-
-   - git will not allow https unless the repositories are OWNED by http.
-   - git will not allow ssh   unless the repositories are OWNED by user.
-
-   A catch-22.
-
-   I've tried every possible file repository ownership of http:user and 
-user:http with permissions of 0775, but no luck, it is either one or the 
-other. I've even tried making users members of the http group, but ssh still 
-refuses push unless the repository is OWNED by user.
-
-   The errors run the gamut from https attmepts:
-
-$ git pull
-fatal: unable to access 'https://www.mydomain.com/git/examples.git/': The 
-requested URL returned error: 500
-
-to ssh attempts:
-
-$ git push
-Enumerating objects: 7, done.
-Counting objects: 100% (7/7), done.
-Delta compression using up to 4 threads
-Compressing objects: 100% (4/4), done.
-Writing objects: 100% (5/5), 1.01 KiB | 1.01 MiB/s, done.
-Total 5 (delta 2), reused 0 (delta 0), pack-reused 0
-remote: error: cannot lock ref 'HEAD': Unable to create 
-'/srv/git/pico.git/./HEAD.lock': Permission denied
-To valkyrie:/srv/git/pico.git
-  ! [remote rejected] master -> master (failed to update ref)
-error: failed to push some refs to 'valkyrie:/srv/git/pico.git'
-
-   This was discussed on the arch-general mailing list under the thread "git 
-server changes - how to allow https AND ssh now that /srv/git/xxx.git must be 
-owned by http?" at 
-https://lists.archlinux.org/archives/list/arch-general@lists.archlinux.org/thread/3GCCU6QZNGRY45WMQAQEVF572AIHN646/
-
-   There was a suggestion to try a bind mount for the repositories, but that 
-seems like it may introduce other issues, but if that is the correct approach 
-I'm happy to try it.
-
-   What is the correct local-server way to now serve repositories over https 
-AND ssh from Apache without running into this either-or ownership problem?
-
-(gitweb continues to work fine)
-
--- 
-David C. Rankin, J.D.,P.E.
+Thanks.
