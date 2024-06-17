@@ -1,235 +1,404 @@
-Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A23C4198E9F
-	for <git@vger.kernel.org>; Mon, 17 Jun 2024 13:54:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5832E1662E4
+	for <git@vger.kernel.org>; Mon, 17 Jun 2024 13:55:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718632463; cv=none; b=LMMUlA1IN0WurcK2FanH1/8gpOXnmbktwZ1tg/Cp+pxzrISBoREsNge259TMlrLIwTnYcsNfCbkHFPt37FL9Kcm5EHeNBmyLCGIxr3iMYlN94NDYoYG5zvQcaSgk6KVzlbv194CIwi2b1BDXgsA3TNQF7NvBgisSySM5vAInqZQ=
+	t=1718632542; cv=none; b=eI2vZtGzxMrpP4DNJC5GJFZoCjSXJgHO0aFr/kAMui+QRkgtw9V3hxkcnh/DBbx66s96So/n3U1auVMjpvBTrcgr3Je8x9+kMgvn4RWKepnyse3rn9QFoH06uSlcGq+bv0se0IXGAKgaf+tftAy1NWoN/ZZa/IqAcBSPQXkXNxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718632463; c=relaxed/simple;
-	bh=Ot+ezqa28EYQfAX3dcKVs86E0ealzLcxlW9uVep3H0Q=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=poBMIAmolH8T7cp8x4IIW0UTKg42a6vQ1/FKXaDcxaVbIQAK9kY+WTV8mjcFN6ybC832nd+CmNZ51+iVEWVKHz7O0cNUKNOLK+AWbWqMJ/xpaUGF8zVRi4ZsbPoClNoP3VZIU8QGBKaIDo6of+HNS9RLa3XHOVLcovTE1oBWqiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=UVcfGSmc reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1718632542; c=relaxed/simple;
+	bh=scyfPdq2V06500G2pRDTi20fXcYcMuUDYoY3L8FDJcE=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=hjBCJJCOsL/VTqpzrs4KhyNu7e/+wbr2wAIQEx1aTsdCTZmuKRGHFSZECZiJl498vulhcWuVwjyIDOIifYUgfrynJE7ynsq67Dzvx0RIm2vqbt16GnHCDx+PurwdxqN7xUmzEAEnAXuUFQhRG/Sas/G2O4Bblliqo98n25069fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I8hX4gg2; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="UVcfGSmc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=xwWGVByFYxPGOkV8Mrv4cretO0MZ43vlkWtTXlWQElo=; b=U
-	VcfGSmclFvfZBBA6YfN9UvVAkpB21zkxv1Cbpb1xP9Fcyxw+01WmPjbjCO+t6+Sp
-	h4GiaTclAHeBY/Ba1kcSeGDFQnboTa7F8E4va4FaOUmn0yP2akmwedBY3Hh6bR8Y
-	O4INmCqDyrifmKqt3WdsGdcOLGuJTtL8gpJVVB9vFM=
-Received: from bupt_xingxin$163.com ( [124.160.72.194] ) by
- ajax-webmail-wmsvr-40-148 (Coremail) ; Mon, 17 Jun 2024 21:53:56 +0800
- (CST)
-Date: Mon, 17 Jun 2024 21:53:56 +0800 (CST)
-From: "Xing Xin" <bupt_xingxin@163.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"Patrick Steinhardt" <ps@pks.im>, 
-	"Karthik Nayak" <karthik.188@gmail.com>, 
-	"Xing Xin" <xingxin.xx@bytedance.com>
-Subject: Re:Re: [PATCH v6 1/3] bundle-uri: verify oid before writing refs
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <xmqqa5jruwkr.fsf@gitster.g>
-References: <pull.1730.v5.git.1718088126.gitgitgadget@gmail.com>
- <pull.1730.v6.git.1718109943.gitgitgadget@gmail.com>
- <e958a3ab20c0c06f52a00038f39605f14302032a.1718109943.git.gitgitgadget@gmail.com>
- <xmqqa5jruwkr.fsf@gitster.g>
-X-NTES-SC: AL_Qu2aCvqYvUwo4CiZYekXn0oVhe85UMW2ufsg3YReP500uSbU/gU9d3VHHWTz1/qPGQavuhK4bx1q6eVGQJlFf4htWiuCIpfXTZRrIwGVtPgy
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I8hX4gg2"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3609565a1bdso831782f8f.1
+        for <git@vger.kernel.org>; Mon, 17 Jun 2024 06:55:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718632538; x=1719237338; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6uzBgyJ6lpuMxoGz9mckqLchokCtBDb3zCBBOT6Xars=;
+        b=I8hX4gg2cVeu2VmQa9fJsOR4BpoTo9RQ+Onfp2iJSsPseyYWsS1z2s3NsQ6+344yHC
+         whU6NZ0spZbvNwNrHFKQpPGxpk+526jDnoPLcpE0ZznQ2Eq274rpX7T7NBKKTwnwKo9A
+         btxL6papNqrNouvMzCkzKuxxpgLX09aKx194MSZoXAN4ona3kg/zRKFIMHyhRkJXOUZ/
+         lRdzZVNYe5LzBdPIxJ3eX7tEjpVgIiWXLiKEd3u+Ymqy8EGLe1qhm9ej6PdzoCKvj2KM
+         rQTfWv3Ok0HN6zBQct3ibpwOCVD7G+MvYHKUcAS491c9rW5tCMpQlu6wIsB4xtClqaQk
+         vLJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718632538; x=1719237338;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6uzBgyJ6lpuMxoGz9mckqLchokCtBDb3zCBBOT6Xars=;
+        b=ve/DYn0ViPTFai5uwlnS3qyQEVJ5VzyE9Y+hqaNsp+MQqF73Q26ZioXPNJIamKrLe5
+         YObyvqiB3b7FBB+2WQaps/bIpkLnC+0qh+wSREDrsPgwsdknk6s95x6UwvQl8ODg9UWi
+         0gavdzNwc6nAG7TygqqkakNw5I2Mk8dHwTysxJCtup/LD7xY8ffP7bfuFnx++NZySknj
+         gLukqzh5PcfH7GezjPlGjhVH7wqZsl+1BlBIqN7kHJmPsWAF+Dbv+6bUvcb9C8STyQgV
+         oHrut3kZm1yKukQwPrJAHuCG7Wtb8pvFHIUwc1sSOVxOy3Ud62IUW+cjmgXllwT48K2A
+         /YSw==
+X-Gm-Message-State: AOJu0YwYL5gt6YCPL9CPM2ksxe1+PbcyVvOI7ZM1qUxCocKtza9FhCE0
+	d/Gh7bJgiet+Ggx5BCqCV1qvM9g2g+zkK6NOdwT6BkS/1xtpYRYdMQ0Neg==
+X-Google-Smtp-Source: AGHT+IERkKUz9xEbzTzeolExxfjObJq/jLOMslceI4c7sPhw3j0gNP6R7ONMFxAhuv8zYMTO6U6F7A==
+X-Received: by 2002:a5d:5231:0:b0:360:98dc:fe9 with SMTP id ffacd0b85a97d-36098dc1004mr1478017f8f.5.1718632537821;
+        Mon, 17 Jun 2024 06:55:37 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-360751037b6sm11917153f8f.98.2024.06.17.06.55.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Jun 2024 06:55:37 -0700 (PDT)
+Message-Id: <pull.1730.v7.git.1718632535.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1730.v6.git.1718109943.gitgitgadget@gmail.com>
+References: <pull.1730.v6.git.1718109943.gitgitgadget@gmail.com>
+From: "blanet via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 17 Jun 2024 13:55:32 +0000
+Subject: [PATCH v7 0/3] object checking related additions and fixes for bundles in fetches
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <77366503.bef9.1902679d458.Coremail.bupt_xingxin@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3v6X0P3BmmW5uAA--.6591W
-X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiYBQBbWV4HPV+cgAFsl
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Karthik Nayak <karthik.188@gmail.com>,
+    blanet <bupt_xingxin@163.com>
 
-QXQgMjAyNC0wNi0xMiAwMzowODowNCwgIkp1bmlvIEMgSGFtYW5vIiA8Z2l0c3RlckBwb2JveC5j
-b20+IHdyb3RlOgo+IlhpbmcgWGluIHZpYSBHaXRHaXRHYWRnZXQiIDxnaXRnaXRnYWRnZXRAZ21h
-aWwuY29tPiB3cml0ZXM6Cj4KPj4gVGhpcyBjb21taXQgZml4ZXMgdGhlIGJ1ZyBieSByZW1vdmlu
-ZyBgUkVGX1NLSVBfT0lEX1ZFUklGSUNBVElPTmAgZmxhZwo+Cj4iRml4IHRoZSBidWcgYnkgLi4u
-Ii4KPgo+PiB3aGVuIHdyaXRpbmcgYnVuZGxlIHJlZnMuIFdoZW4gYHJlZnMuYzpyZWZzX3VwZGF0
-ZV9yZWZgIGlzIGNhbGxlZCB0byB0bwo+Cj4idG8gdG8iCgpBaCwgYWx3YXlzIHR5cG9zLiA6LSkK
-CltzbmlwXQo+PiAgdGVzdF9leHBlY3Rfc3VjY2VzcyAnY3JlYXRlIGJ1bmRsZScgJwo+PiAgCWdp
-dCBpbml0IGNsb25lLWZyb20gJiYKPj4gLQlnaXQgLUMgY2xvbmUtZnJvbSBjaGVja291dCAtYiB0
-b3BpYyAmJgo+PiAtCXRlc3RfY29tbWl0IC1DIGNsb25lLWZyb20gQSAmJgo+PiAtCXRlc3RfY29t
-bWl0IC1DIGNsb25lLWZyb20gQiAmJgo+PiAtCWdpdCAtQyBjbG9uZS1mcm9tIGJ1bmRsZSBjcmVh
-dGUgQi5idW5kbGUgdG9waWMKPj4gKwkoCj4+ICsJCWNkIGNsb25lLWZyb20gJiYKPj4gKwkJZ2l0
-IGNoZWNrb3V0IC1iIHRvcGljICYmCj4+ICsKPj4gKwkJdGVzdF9jb21taXQgQSAmJgo+PiArCQln
-aXQgYnVuZGxlIGNyZWF0ZSBBLmJ1bmRsZSB0b3BpYyAmJgo+PiArCj4+ICsJCXRlc3RfY29tbWl0
-IEIgJiYKPj4gKwkJZ2l0IGJ1bmRsZSBjcmVhdGUgQi5idW5kbGUgdG9waWMgJiYKPj4gKwo+PiAr
-CQkjIENyZWF0ZSBhIGJ1bmRsZSB3aXRoIHJlZmVyZW5jZSBwb2ludGluZyB0byBub24tZXhpc3Rl
-bnQgb2JqZWN0Lgo+PiArCQlzZWQgInMvJChnaXQgcmV2LXBhcnNlIEEpLyQoZ2l0IHJldi1wYXJz
-ZSBCKS8iIDxBLmJ1bmRsZSA+YmFkLWhlYWRlci5idW5kbGUKPgo+SSBzdXNwZWN0IHRoYXQgdGhp
-cyB3b3VsZCBiZSB0ZXJyaWJseSB1bnBvcnRhYmxlLiAgVGhlIGVhcmx5IHBhcnQgb2YKPmEgYnVu
-ZGxlIGZpbGUgbWF5IGJlIHRleHQgYW5kIHNlZCBtYXkgYmUgYWJsZSB0byBncm9rIGJ1dCBhcmUg
-eW91Cj5zdXJlIGV2ZXJ5Ym9keSdzIGltcGxlbWVudGF0aW9uIG9mIHNlZCB3b3VsZCBub3QgYmFy
-ZiAob3IgZXZlbgo+d29yc2UsIGNvcnJ1cHQpIHRoZSBwYWNrIHN0cmVhbSBkYXRhIHRoYXQgZm9s
-bG93cz8KPgo+VGhlIGNvZGUgdXNlZCBpbiB0L2xpYi1idW5kbGUuc2g6Y29udmVydF9idW5kbGVf
-dG9fcGFjaygpIGhhcyBiZWVuCj5pbiB1c2Ugc2luY2UgODMxNTU4OGIgKGJ1bmRsZTogZml4IHdy
-b25nIGNoZWNrIG9mIHJlYWRfaGVhZGVyKCkncwo+cmV0dXJuIHZhbHVlICYgYWRkIHRlc3RzLCAy
-MDA3LTAzLTA2KSwgc28gbXVuZ2luZyB0aGUgYnVuZGxlIHdpdGgKPmEgY29kZSBzaW1pbGFyIHRv
-IGl0IG1heSBoYXZlIGEgYmV0dGVyIHBvcnRhYmlsaXR5IHN0b3J5Lgo+Cj5BZGQgc29tZXRoaW5n
-IGxpa2U6Cj4KPiAgICAgICAgY29ycnVwdF9idW5kbGVfaGVhZGVyICgpIHsKPiAgICAgICAgICAg
-ICAgICBzZWQgLWUgJy9eJC9xJyAiJEAiCj4gICAgICAgICAgICAgICAgY2F0Cj4gICAgICAgIH0K
-Pgo+dG8gdC9saWItYnVuZGxlLnNoLCB3aGljaCBjYW4gdGFrZSBhbiBhcmJpdHJhcnkgc2VxdWVu
-Y2Ugb2YgY29tbWFuZAo+bGluZSBwYXJhbWV0ZXJzIHRvIGRyaXZlICJzZWQiLCBhbmQgY2FuIGJl
-IHVzZWQgbGlrZSBzbzoKPgo+CWNvcnJ1cHRfYnVuZGxlX2hlYWRlciBcCj4JCS1lICJzL14kKGdp
-dCByZXYtcGFyc2UgQSkgLyQoZ2l0IHJldi1wYXJzZSBCKSAvIiBcCj4JCTxBLmJuZGwgPkIuYm5k
-bAo+Cj5wZXJoYXBzPwoKVGhhbmtzLCBJIG5ldmVyIGtuZXcgc2VkIGNvdWxkIGJlIHVzZWQgdGhp
-cyB3YXkhIEl0J3Mgc28gY29uY2lzZSEKCkhvd2V2ZXIsIGFmdGVyIGFwcGx5aW5nIHRoZXNlIGNv
-ZGUsIHRoZSBhZGRlZCB0ZXN0ICJ0NTU1OC41IGNsb25lIHdpdGgKYnVuZGxlIHRoYXQgaGFzIGJh
-ZCBoZWFkZXIiIGZhaWxzIGluIHNvbWUgQ0kgam9icyBzaG93aW5nIHRoYXQgd2UgY2FuCm5vdCBn
-ZXQgZXhwZWN0ZWQgZXJyb3IuIEZvciBleGFtcGxlIENJICJsaW51eC1tdXNsIChhbHBpbmUpIiBn
-aXZlczoKCgkrIGdpdCBjbG9uZSAnLS1idW5kbGUtdXJpPWNsb25lLWZyb20vYmFkLWhlYWRlci5i
-dW5kbGUnIGNsb25lLWZyb20gY2xvbmUtYmFkLWhlYWRlcgoJKyBnaXQgLUMgY2xvbmUtZnJvbSBy
-ZXYtcGFyc2UgQgoJKyBjb21taXRfYj1kOWRmNDUwNWNiMzUyMjA4OGI5ZTI5ZDYwNTFhYzE2ZjE1
-NjQxNTRhCgkrIHRlc3RfZ3JlcCAndHJ5aW5nIHRvIHdyaXRlIHJlZiAnIiciJ3JlZnMvYnVuZGxl
-cy90b3BpYyciJyInIHdpdGggbm9uZXhpc3RlbnQgb2JqZWN0IGQ5ZGY0NTA1Y2IzNTIyMDg4Yjll
-MjlkNjA1MWFjMTZmMTU2NDE1NGEnIGVycgoJKyBldmFsICdsYXN0X2FyZz0kezJ9JwoJKyBsYXN0
-X2FyZz1lcnIKCSsgdGVzdCAtZiBlcnIKCSsgdGVzdCAyIC1sdCAyCgkrIHRlc3QgJ3ghJyAnPScg
-J3h0cnlpbmcgdG8gd3JpdGUgcmVmICciJyIncmVmcy9idW5kbGVzL3RvcGljJyInIicgd2l0aCBu
-b25leGlzdGVudCBvYmplY3QgZDlkZjQ1MDVjYjM1MjIwODhiOWUyOWQ2MDUxYWMxNmYxNTY0MTU0
-YScKCSsgdGVzdCAneCEnICc9JyAneHRyeWluZyB0byB3cml0ZSByZWYgJyInIidyZWZzL2J1bmRs
-ZXMvdG9waWMnIiciJyB3aXRoIG5vbmV4aXN0ZW50IG9iamVjdCBkOWRmNDUwNWNiMzUyMjA4OGI5
-ZTI5ZDYwNTFhYzE2ZjE1NjQxNTRhJwoJKyBncmVwICd0cnlpbmcgdG8gd3JpdGUgcmVmICciJyIn
-cmVmcy9idW5kbGVzL3RvcGljJyInIicgd2l0aCBub25leGlzdGVudCBvYmplY3QgZDlkZjQ1MDVj
-YjM1MjIwODhiOWUyOWQ2MDUxYWMxNmYxNTY0MTU0YScgZXJyCgkrIGVjaG8gJ2Vycm9yOiAnIici
-J2dyZXAgdHJ5aW5nIHRvIHdyaXRlIHJlZiAnIiciJ3JlZnMvYnVuZGxlcy90b3BpYyciJyInIHdp
-dGggbm9uZXhpc3RlbnQgb2JqZWN0IGQ5ZGY0NTA1Y2IzNTIyMDg4YjllMjlkNjA1MWFjMTZmMTU2
-NDE1NGEnICdlcnInIiciJyBkaWRuJyInIid0IGZpbmQgYSBtYXRjaCBpbjonCgllcnJvcjogJ2dy
-ZXAgdHJ5aW5nIHRvIHdyaXRlIHJlZiAncmVmcy9idW5kbGVzL3RvcGljJyB3aXRoIG5vbmV4aXN0
-ZW50IG9iamVjdCBkOWRmNDUwNWNiMzUyMjA4OGI5ZTI5ZDYwNTFhYzE2ZjE1NjQxNTRhIGVycicg
-ZGlkbid0IGZpbmQgYSBtYXRjaCBpbjoKCSsgdGVzdCAtcyBlcnIKCSsgY2F0IGVycgoJQ2xvbmlu
-ZyBpbnRvICdjbG9uZS1iYWQtaGVhZGVyJy4uLgoJZmF0YWw6IHBhY2sgc2lnbmF0dXJlIG1pc21h
-dGNoCgllcnJvcjogaW5kZXgtcGFjayBkaWVkCglkb25lLgoJKyByZXR1cm4gMQoJZXJyb3I6IGxh
-c3QgY29tbWFuZCBleGl0ZWQgd2l0aCAkPz0xCglub3Qgb2sgNSAtIGNsb25lIHdpdGggYnVuZGxl
-IHRoYXQgaGFzIGJhZCBoZWFkZXIKCgkrIyBDcmVhdGUgYSBidW5kbGUgd2l0aCByZWZlcmVuY2Ug
-cG9pbnRpbmcgdG8gbm9uLWV4aXN0ZW50IG9iamVjdC4KCStzZWQgLWUgIi9eJC9xIiAtZSAicy8k
-KGdpdCByZXYtcGFyc2UgQSkgLyQoZ2l0IHJldi1wYXJzZSBCKSAvIiBcCgkrCTxBLmJ1bmRsZSA+
-YmFkLWhlYWRlci5idW5kbGUgJiYKCStjb252ZXJ0X2J1bmRsZV90b19wYWNrIFwKCSsJPEEuYnVu
-ZGxlID4+YmFkLWhlYWRlci5idW5kbGUKCk1vcmUgZGV0YWlscyBjYW4gYmUgZm91bmQgYXQgaHR0
-cHM6Ly9naXRodWIuY29tL2JsYW5ldC9naXQvYWN0aW9ucy9ydW5zLzk1NDE0NzgxOTEvam9iLzI2
-Mjk0NzMxMjU0LgoKQWZ0ZXIgc29tZSBkaWdnaW5nLCBJIGRpc2NvdmVyZWQgdGhhdCBpbnNpZGUg
-dGhlIEFscGluZSBjb250YWluZXIsCmBjb3JydXB0X2J1bmRsZV9oZWFkZXJgIGlzIG1pc3Npbmcg
-dGhlIGxlYWRpbmcgIlBBQ0tceDAwIiBpbiB0aGUgcGFjawpzZWN0aW9uIG9mIHRoZSBjb252ZXJ0
-ZWQgYnVuZGxlLiBUaGlzIGlzIGxpa2VseSBjYXVzZWQgYnkgdGhlCmluY29tcGF0aWJpbGl0eSBv
-ZiAic2VkIiBhY3Jvc3MgZGlmZmVyZW50IG9wZXJhdGluZyBzeXN0ZW1zLiBJIHN0b3BwZWQKaW52
-ZXN0aWdhdGluZyBmdXJ0aGVyIGR1ZSB0byBteSB1bmZhbWlsaWFyaXR5IHdpdGggY29udGFpbmVy
-cyBhbmQgInNlZCIKaXRzZWxmLiBJbnN0ZWFkLCBJIGZvdW5kIGFub3RoZXIgYXBwcm9hY2ggdGhh
-dCB1dGlsaXplcyB0aGUgc3VnZ2VzdGVkCnVzYWdlIG9mICJzZWQiIGFuZCBgbGliLWJ1bmRsZS5z
-aDpjb252ZXJ0X2J1bmRsZV90b19wYWNrYC4KCiAJKyMgQ3JlYXRlIGEgYnVuZGxlIHdpdGggcmVm
-ZXJlbmNlIHBvaW50aW5nIHRvIG5vbi1leGlzdGVudCBvYmplY3QuCgkrc2VkIC1lICIvXiQvcSIg
-LWUgInMvJChnaXQgcmV2LXBhcnNlIEEpIC8kKGdpdCByZXYtcGFyc2UgQikgLyIgXAoJKwk8QS5i
-dW5kbGUgPmJhZC1oZWFkZXIuYnVuZGxlICYmCgkrY29udmVydF9idW5kbGVfdG9fcGFjayBcCgkr
-CTxBLmJ1bmRsZSA+PmJhZC1oZWFkZXIuYnVuZGxlCgo+PiBAQCAtMzMsNiArNDIsMTYgQEAgdGVz
-dF9leHBlY3Rfc3VjY2VzcyAnY2xvbmUgd2l0aCBwYXRoIGJ1bmRsZScgJwo+PiAgCXRlc3RfY21w
-IGV4cGVjdCBhY3R1YWwKPj4gICcKPj4gIAo+PiArdGVzdF9leHBlY3Rfc3VjY2VzcyAnY2xvbmUg
-d2l0aCBidW5kbGUgdGhhdCBoYXMgYmFkIGhlYWRlcicgJwo+PiArCWdpdCBjbG9uZSAtLWJ1bmRs
-ZS11cmk9ImNsb25lLWZyb20vYmFkLWhlYWRlci5idW5kbGUiIFwKPj4gKwkJY2xvbmUtZnJvbSBj
-bG9uZS1iYWQtaGVhZGVyIDI+ZXJyICYmCj4+ICsJIyBXcml0ZSBidW5kbGUgcmVmIGZhaWxzLCBi
-dXQgY2xvbmUgY2FuIHN0aWxsIHByb2NlZWQuCj4+ICsJY29tbWl0X2I9JChnaXQgLUMgY2xvbmUt
-ZnJvbSByZXYtcGFyc2UgQikgJiYKPj4gKwl0ZXN0X2dyZXAgInRyeWluZyB0byB3cml0ZSByZWYg
-J1wnJ3JlZnMvYnVuZGxlcy90b3BpYydcJycgd2l0aCBub25leGlzdGVudCBvYmplY3QgJGNvbW1p
-dF9iIiBlcnIgJiYKPj4gKwlnaXQgLUMgY2xvbmUtYmFkLWhlYWRlciBmb3ItZWFjaC1yZWYgLS1m
-b3JtYXQ9IiUocmVmbmFtZSkiID5yZWZzICYmCj4+ICsJISBncmVwICJyZWZzL2J1bmRsZXMvIiBy
-ZWZzCj4+ICsnCj4+ICsKPgo+U28gdGhpcyBpcyB0aGUgdGVzdCB0aGUgcHJvcG9zZWQgbG9nIG1l
-c3NhZ2UgZGlzY3Vzc2VkLiAgVGhlCj5kZXNjcmlwdGlvbiBnYXZlIGEgZmFsc2UgaW1wcmVzc2lv
-biB0aGF0IHRoZSAiYnJva2VuIGhlYWRlciIgdGVzdAo+dGhhdCBoYXMgbm90IG11Y2ggdG8gZG8g
-d2l0aCB0aGUgYnVnIGJlaW5nIGZpeGVkIHdhcyB0aGUgb25seSBhZGRlZAo+dGVzdC0tLXdlIHBy
-b2JhYmx5IHdhbnQgdG8gY29ycmVjdCB0aGF0IGltcHJlc3Npb24uCgpBZGp1c3RlZCB0aGUgY29t
-bWl0IG1lc3NhZ2UuCgo+PiBAQCAtMjU5LDYgKzI3OCwxMzIgQEAgdGVzdF9leHBlY3Rfc3VjY2Vz
-cyAnY2xvbmUgYnVuZGxlIGxpc3QgKGZpbGUsIGFueSBtb2RlLCBhbGwgZmFpbHVyZXMpJyAnCj4+
-ICAJISBncmVwICJyZWZzL2J1bmRsZXMvIiByZWZzCj4+ICAnCj4+ICAKPj4gKyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMKPj4gKyMgQ2xvbmUgbmVnb3RpYXRpb24gcmVsYXRlZCB0ZXN0cyBiZWdpbiBoZXJlCj4K
-PkRyb3AgdGhpcyBkaXZpZGVyIGFuZCBjb21tZW50LiAgVGhlIEhUVFAgdGVzdHMgeW91IHNlZSBi
-ZWxvdyBoYXMgYQo+bXVjaCBiZXR0ZXIgcmVhc29uIHRvIGJlIHNlcGFyYXRlZCBsaWtlIHRoYXQg
-aW4gb3JkZXIgdG8gd2FybiB0ZXN0Cj53cml0ZXJzICh0aGV5IHNob3VsZG4ndCBhZGQgdGhlaXIg
-cmFuZG9tIG5ldyB0ZXN0cyBhZnRlciB0aGF0IHBvaW50LAo+YmVjYXVzZSBldmVyeXRoaW5nIGFm
-dGVyIHRoYXQgb25lIGlzIHNraXBwZWQgd2hlbiBIVFRQRCB0ZXN0cyBhcmUKPmRpc2FibGVkLS0t
-c2VlIHRoZSBiZWdpbm5pbmcgb2YgdC9saWItaHR0cGQuc2ggd2hpY2ggaXMgaW5jbHVkZWQKPmFm
-dGVyIHRoYXQgZGl2aWRlciBsaW5lKSwgYnV0IGV2ZXJ5dGhpbmcgaGVyZSB5b3UgYWRkZWQgaXMg
-bm90Cj5zcGVjaWFsLiAgRXZlcnlib2R5IHNob3VsZCBydW4gdGhlc2UgdGVzdHMuCgpUaGFua3Mg
-Zm9yIHRoZSBleHBsYW5hdGlvbiwgZHJvcHBlZCB0aGUgZGl2aWRlciBpbiBuZXcgc2VyaWVzLgoK
-Pj4gK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ25lZ290aWF0aW9uOiBidW5kbGUgd2l0aCBwYXJ0IG9m
-IHdhbnRlZCBjb21taXRzJyAnCj4+ICsJdGVzdF93aGVuX2ZpbmlzaGVkIHJtIC1yZiB0cmFjZSou
-dHh0ICYmCj4KPkRvIG5vdCBvdmVybHkgZGVwZW5kIG9uIGdsb2Igbm90IG1hdGNoaW5nIGF0IHRo
-aXMgcG9pbnQgd2hlbiB5b3UKPmVzdGFibGlzaCB0aGUgd2hlbi1maW5pc2hlZCBoYW5kbGVyIChv
-ciBnbG9iIG1hdGNoaW5nIHRoZSBmaWxlcyB5b3UKPndhbnQgdG8gY2F0Y2ggYW5kIGxhdGVyIHRl
-c3Qgbm90IGFkZGluZyBhbnl0aGluZyB5b3Ugd291bGQgd2FudCB0bwo+Y2xlYW4pLiAgUXVvdGUg
-InJtIC1mIHRyYWNlKi50eHQiIGFuZCBkcm9wICJyIiBpZiB5b3UgZG8gbm90IGFic29sdXRlbHkK
-Pm5lZWQgaXQgKGFuZCBJIHdvdWxkIGltYWdpbmUgeW91IGRvbid0LCBnaXZlbiB0aGUgLnR4dCBz
-dWZmaXgpLgoKWWVzLCB0aGUgIi1yIiBpcyBub3Qgc2FmZSBhbmQgSSBqdXN0IG5lZWQgdG8gY2xl
-YW4gdGhlICIqLnR4dCIsIG5vdCBpbnZvbHZpbmcgZGlyZWN0b3JpZXMuCgo+PiArCUdJVF9UUkFD
-RV9QQUNLRVQ9IiQocHdkKS90cmFjZS1wYWNrZXQudHh0IiBcCj4+ICsJZ2l0IGNsb25lIC0tbm8t
-bG9jYWwgLS1idW5kbGUtdXJpPSJjbG9uZS1mcm9tL0EuYnVuZGxlIiBcCj4+ICsJCWNsb25lLWZy
-b20gbmVnby1idW5kbGUtcGFydCAmJgo+PiArCWdpdCAtQyBuZWdvLWJ1bmRsZS1wYXJ0IGZvci1l
-YWNoLXJlZiAtLWZvcm1hdD0iJShyZWZuYW1lKSIgPnJlZnMgJiYKPj4gKwlncmVwICJyZWZzL2J1
-bmRsZXMvIiByZWZzID5hY3R1YWwgJiYKPj4gKwljYXQgPmV4cGVjdCA8PC1cRU9GICYmCj4+ICsJ
-cmVmcy9idW5kbGVzL3RvcGljCj4+ICsJRU9GCj4KPkhtcGgsIGlmIHRoZSBleHBlY3RlZCBwYXR0
-ZXJuIGlzIG9ubHkgYSBmZXcgbGluZXMgd2l0aG91dCBhbnkgbWFnaWMsCj4KPgl0ZXN0X3dyaXRl
-X2xpbmVzID5leHBlY3QgcmVmcy9idW5kbGVzL3RvcGljICYmCj4KPm1heSBiZSBlYXNpZXIgdG8g
-Zm9sbG93LgoKQXBwbGllZCEKCj4+ICsJdGVzdF9jbXAgZXhwZWN0IGFjdHVhbCAmJgo+PiArCSMg
-RW5zdXJlIHRoYXQgcmVmcy9idW5kbGVzL3RvcGljIGFyZSBzZW50IGFzICJoYXZlIi4KPj4gKwln
-cmVwICJjbG9uZT4gaGF2ZSAkKGdpdCAtQyBjbG9uZS1mcm9tIHJldi1wYXJzZSBBKSIgdHJhY2Ut
-cGFja2V0LnR4dAo+PiArJwo+Cj5Vc2luZyAidGVzdF9ncmVwIiB3b3VsZCBtYWtlIGl0IGVhc2ll
-ciB0byBkaWFnbm9zZSB3aGVuIHRlc3QgYnJlYWtzLgo+QSBmYWlsaW5nICJncmVwIiB3aWxsIGJl
-IHNpbGVudCAoaS5lLiwgIkkgZGlkbid0IGZpbmQgYW55dGhpbmcgeW91Cj50b2xkIG1lIHRvIGxv
-b2sgZm9yIikuICBBIGZhaWxpbmcgInRlc3RfZ3JlcCIgd2lsbCB0ZWxsIHlvdSAiSSB3YXMKPnRv
-bGQgdG8gZmluZCB0aGlzLCBidXQgZGlkbid0IGZpbmQgYW55IGluIHRoYXQiLgoKVGhhbmtzLCBp
-dCBqdXN0IGFjY2VsZXJhdGVkIHRoZSBkaWdnaW5nIHByb2Nlc3Mgb2YgdGhlIHRlc3QgZmFpbHVy
-ZQptZW50aW9uZWQgYWJvdmUuIDopCgo+PiArdGVzdF9leHBlY3Rfc3VjY2VzcyAnbmVnb3RpYXRp
-b246IGJ1bmRsZSB3aXRoIGFsbCB3YW50ZWQgY29tbWl0cycgJwo+PiArCXRlc3Rfd2hlbl9maW5p
-c2hlZCBybSAtcmYgdHJhY2UqLnR4dCAmJgo+PiArCUdJVF9UUkFDRV9QQUNLRVQ9IiQocHdkKS90
-cmFjZS1wYWNrZXQudHh0IiBcCj4+ICsJZ2l0IGNsb25lIC0tbm8tbG9jYWwgLS1zaW5nbGUtYnJh
-bmNoIC0tYnJhbmNoPXRvcGljIC0tbm8tdGFncyBcCj4+ICsJCS0tYnVuZGxlLXVyaT0iY2xvbmUt
-ZnJvbS9CLmJ1bmRsZSIgXAo+PiArCQljbG9uZS1mcm9tIG5lZ28tYnVuZGxlLWFsbCAmJgo+PiAr
-CWdpdCAtQyBuZWdvLWJ1bmRsZS1hbGwgZm9yLWVhY2gtcmVmIC0tZm9ybWF0PSIlKHJlZm5hbWUp
-IiA+cmVmcyAmJgo+PiArCWdyZXAgInJlZnMvYnVuZGxlcy8iIHJlZnMgPmFjdHVhbCAmJgo+PiAr
-CWNhdCA+ZXhwZWN0IDw8LVxFT0YgJiYKPj4gKwlyZWZzL2J1bmRsZXMvdG9waWMKPj4gKwlFT0YK
-Pj4gKwl0ZXN0X2NtcCBleHBlY3QgYWN0dWFsICYmCj4+ICsJIyBXZSBhbHJlYWR5IGhhdmUgYWxs
-IG5lZWRlZCBjb21taXRzIHNvIG5vICJ3YW50IiBuZWVkZWQuCj4+ICsJISBncmVwICJjbG9uZT4g
-d2FudCAiIHRyYWNlLXBhY2tldC50eHQKPj4gKycKPj4gKwo+PiArdGVzdF9leHBlY3Rfc3VjY2Vz
-cyAnbmVnb3RpYXRpb246IGJ1bmRsZSBsaXN0IChubyBoZXVyaXN0aWMpJyAnCj4+ICsJdGVzdF93
-aGVuX2ZpbmlzaGVkIHJtIC1mIHRyYWNlKi50eHQgJiYKPj4gKwljYXQgPmJ1bmRsZS1saXN0IDw8
-LUVPRiAmJgo+PiArCVtidW5kbGVdCj4+ICsJCXZlcnNpb24gPSAxCj4+ICsJCW1vZGUgPSBhbGwK
-Pj4gKwo+PiArCVtidW5kbGUgImJ1bmRsZS0xIl0KPj4gKwkJdXJpID0gZmlsZTovLyQocHdkKS9j
-bG9uZS1mcm9tL2J1bmRsZS0xLmJ1bmRsZQo+PiArCj4+ICsJW2J1bmRsZSAiYnVuZGxlLTIiXQo+
-PiArCQl1cmkgPSBmaWxlOi8vJChwd2QpL2Nsb25lLWZyb20vYnVuZGxlLTIuYnVuZGxlCj4+ICsJ
-RU9GCj4KPk9LLiAgVGhpcyBpcyBhIGdvb2QgdXNlIG9mIGhlcmUtZG9jIChhcyBvcHBvc2VkIHRv
-IHRlc3Rfd3JpdGVfbGluZXMKPkkgc3VnZXN0ZWQgZWFybGllciBmb3IgZGlmZmVyZW50IHB1cnBv
-c2VzKS4gIEkgd29uZGVyZWQgaWYgdGhlc2UKPiQocHdkKSBhbmQgZmlsZTovLyQocHdkKSBhcmUg
-c2FmZSAoSSBhbHdheXMgZ2V0IGNvbmZ1c2VkIGJ5IHRoZSBuZWVkCj50byBzb21ldGltZXMgdXNl
-ICRQV0QgdG8gaGVscCBXaW5kb3dzKSwgYnV0IEkgc2VlIHRoZW0gdXNlZCBpbiB3aGF0Cj5EZXJy
-aWNrIHdyb3RlIGluIHRoaXMgZmlsZSwgc28gdGhleSBtdXN0IGJlIGZpbmUuCj4KPkJ1dCB0aGVy
-ZSBtYXkgYmUgY2hhcmFjdGVycyBpbiB0aGUgbGVhZGluZyBwYXJ0IG9mICQocHdkKSB0aGF0IHdl
-IGRvCj5ub3QgY29udHJvbCB0aGF0IG5lZWRzIHF1b3RpbmcgKGxpa2UgYSBkb3VibGUgcXVvdGUg
-JyInKS4gIFRoZSB2YWx1ZQo+b2YgYnVuZGxlLioudXJpIG1heSBuZWVkIHRvIGJlIHF1b3RlZCBh
-IGJpdCBjYXJlZnVsbHkuICBUaGlzIGlzIG5vdAo+YSBuZXcgcHJvYmxlbSB0aGlzIHBhdGNoIGlu
-dHJvZHVjZXMsIHNvIHlvdSBkbyBub3QgaGF2ZSB0byByZXdyaXRlCj50aGlzIHBhcnQgb2YgdGhl
-IHBhdGNoOyBJJ2xsIG1hcmsgaXQgd2l0aCAjbGVmdG92ZXJiaXRzIGhlcmUtLS10aGUKPmlkZWEg
-YmVpbmcgc29tZWJvZHkgZWxzZSB3aG8gaXMgdG9vIGJvcmVkIGNhbiBjb21lIGJhY2ssIHNlZSBp
-ZiBpdAo+aXMgdHJ1bHkgYnJva2VuLCBhbmQgZml4IHRoZW0gYWZ0ZXIgYWxsIGR1c3Qgc2V0dGxl
-cy4KPgo+QWJ1c2luZyAiZ2l0IGNvbmZpZyAtZiBidW5kbGUtbGlzdCIgbWlnaHQgYmUgc2FmZXIs
-IGUuZy4KPgo+CSQgZ2l0IGNvbmZpZyAtZiBidW5kbGUubGlzdCBidW5kbGUuYnVuZGxlLTEudXJp
-IFwKPgkJJ2ZpbGU6Ly8vaG9tZS9hYmMiZGVmL3QvdHJhc2ggZGlyL2Nsb25lLWZyb20vYjEuYm5k
-bCcKPgkkIGNhdCBidW5kbGUubGlzdAo+ICAgICAgICBbYnVuZGxlICJidW5kbGUtMSJdCj4gICAg
-ICAgICAgICAgICAgdXJpID0gZmlsZTovLy9ob21lL2FiY1wiZGVmL3QvdHJhc2ggZGlyL2Nsb25l
-LWZyb20vYjEuYm5kbAo+Cj5hcyB5b3UgZG8gbm90IGtub3cgd2hhdCBvdGhlciBnYXJiYWdlIGNo
-YXJhY3RlciBpcyBpbiAkKHB3ZCkgcGFydC4KPgo+PiArCSMgV2UgYWxyZWFkeSBoYXZlIGFsbCBu
-ZWVkZWQgY29tbWl0cyBzbyBubyAid2FudCIgbmVlZGVkLgo+PiArCSEgZ3JlcCAiY2xvbmU+IHdh
-bnQgIiB0cmFjZS1wYWNrZXQudHh0Cj4KPkp1c3QgRllJLCB0byBuZWdhdGUgdGVzdF9ncmVwLCB1
-c2UKPgo+CXRlc3RfZ3JlcCAhICJjbG9uZSA+IHdhbnQgIiB0cmFjZS1wYWNrZXQudHh0Cj4KPm5v
-dAkKPgo+CSEgdGVzdF9ncmVwICJjbG9uZSA+IHdhbnQgIiB0cmFjZS1wYWNrZXQudHh0IDsjIFdS
-T05HCgpUaGFua3MgeW91ciB0aHJvdWdoIHJldmlldyEKClhpbmcgWGluCgo=
+While attempting to fix a reference negotiation bug in bundle-uri, we
+identified that the fetch process lacks some crucial object validation
+checks when processing bundles. The primary issues are:
+
+ 1. In the bundle-uri scenario, object IDs were not validated before writing
+    bundle references. This was the root cause of the original negotiation
+    bug in bundle-uri and could lead to potential repository corruption.
+ 2. The existing "fetch.fsckObjects" and "transfer.fsckObjects"
+    configurations were not applied when directly fetching bundles or
+    fetching with bundle-uri enabled. In fact, there were no object
+    validation supports for unbundle.
+
+The first patch addresses the bundle-uri negotiation issue by removing the
+REF_SKIP_OID_VERIFICATION flag when writing bundle references.
+
+Patches 2 through 3 extend verify_bundle_flags for bundle.c:unbundle to add
+support for object validation (fsck) in fetch scenarios, mainly following
+the suggestions from Junio and Patrick on the mailing list.
+
+Xing Xin (3):
+  bundle-uri: verify oid before writing refs
+  fetch-pack: expose fsckObjects configuration logic
+  unbundle: extend object verification for fetches
+
+ bundle-uri.c                |   6 +-
+ bundle.c                    |   3 +
+ bundle.h                    |   1 +
+ fetch-pack.c                |  17 ++--
+ fetch-pack.h                |   5 +
+ t/t5558-clone-bundle-uri.sh | 181 +++++++++++++++++++++++++++++++++++-
+ t/t5607-clone-bundle.sh     |  33 +++++++
+ transport.c                 |   3 +-
+ 8 files changed, 235 insertions(+), 14 deletions(-)
+
+
+base-commit: b9cfe4845cb2562584837bc0101c0ab76490a239
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1730%2Fblanet%2Fxx%2Fbundle-uri-bug-using-bundle-list-v7
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1730/blanet/xx/bundle-uri-bug-using-bundle-list-v7
+Pull-Request: https://github.com/gitgitgadget/git/pull/1730
+
+Range-diff vs v6:
+
+ 1:  e958a3ab20c ! 1:  fc9f44fda00 bundle-uri: verify oid before writing refs
+     @@ Commit message
+          be found for negotiation because it exists in "incr.pack", which is not
+          included in `packed_git`.
+      
+     -    This commit fixes the bug by removing `REF_SKIP_OID_VERIFICATION` flag
+     -    when writing bundle refs. When `refs.c:refs_update_ref` is called to to
+     -    write the corresponding bundle refs, it triggers
+     -    `refs.c:ref_transaction_commit`.  This, in turn, invokes
+     -    `refs.c:ref_transaction_prepare`, which calls `transaction_prepare` of
+     -    the refs storage backend. For files backend, this function is
+     -    `files-backend.c:files_transaction_prepare`, and for reftable backend,
+     -    it is `reftable-backend.c:reftable_be_transaction_prepare`. Both
+     -    functions eventually call `object.c:parse_object`, which can invoke
+     +    Fix the bug by removing `REF_SKIP_OID_VERIFICATION` flag when writing
+     +    bundle refs. When `refs.c:refs_update_ref` is called to write the
+     +    corresponding bundle refs, it triggers `refs.c:ref_transaction_commit`.
+     +    This, in turn, invokes `refs.c:ref_transaction_prepare`, which calls
+     +    `transaction_prepare` of the refs storage backend. For files backend, it
+     +    is `files-backend.c:files_transaction_prepare`, and for reftable
+     +    backend, it is `reftable-backend.c:reftable_be_transaction_prepare`.
+     +    Both functions eventually call `object.c:parse_object`, which can invoke
+          `packfile.c:reprepare_packed_git` to refresh `packed_git`. This ensures
+          that bundle refs point to valid objects and that all tips from bundle
+          refs are correctly parsed during subsequent negotiations.
+      
+     -    A test has been added to demonstrate that bundles with incorrect
+     -    headers, where refs point to non-existent objects, do not result in any
+     -    bundle refs being created in the repository. Additionally, a set of
+     -    negotiation-related tests for fetching with bundle-uri has been
+     -    included.
+     +    A set of negotiation-related tests for cloning with bundle-uri has been
+     +    included to demonstrate that downloaded bundles are utilized to
+     +    accelerate fetching.
+     +
+     +    Additionally, another test has been added to show that bundles with
+     +    incorrect headers, where refs point to non-existent objects, do not
+     +    result in any bundle refs being created in the repository.
+      
+          Reviewed-by: Karthik Nayak <karthik.188@gmail.com>
+          Reviewed-by: Patrick Steinhardt <ps@pks.im>
+     @@ bundle-uri.c: static int unbundle_from_file(struct repository *r, const char *fi
+       	bundle_header_release(&header);
+      
+       ## t/t5558-clone-bundle-uri.sh ##
+     +@@
+     + test_description='test fetching bundles with --bundle-uri'
+     + 
+     + . ./test-lib.sh
+     ++. "$TEST_DIRECTORY"/lib-bundle.sh
+     + 
+     + test_expect_success 'fail to clone from non-existent file' '
+     + 	test_when_finished rm -rf test &&
+      @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'fail to clone from non-bundle file' '
+       
+       test_expect_success 'create bundle' '
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'fail to clone from non-bundle
+      +		git bundle create B.bundle topic &&
+      +
+      +		# Create a bundle with reference pointing to non-existent object.
+     -+		sed "s/$(git rev-parse A)/$(git rev-parse B)/" <A.bundle >bad-header.bundle
+     ++		sed -e "/^$/q" -e "s/$(git rev-parse A) /$(git rev-parse B) /" \
+     ++			<A.bundle >bad-header.bundle &&
+     ++		convert_bundle_to_pack \
+     ++			<A.bundle >>bad-header.bundle
+      +	)
+       '
+       
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with path bundle' '
+       '
+       
+      +test_expect_success 'clone with bundle that has bad header' '
+     ++	# Write bundle ref fails, but clone can still proceed.
+      +	git clone --bundle-uri="clone-from/bad-header.bundle" \
+      +		clone-from clone-bad-header 2>err &&
+     -+	# Write bundle ref fails, but clone can still proceed.
+      +	commit_b=$(git -C clone-from rev-parse B) &&
+      +	test_grep "trying to write ref '\''refs/bundles/topic'\'' with nonexistent object $commit_b" err &&
+      +	git -C clone-bad-header for-each-ref --format="%(refname)" >refs &&
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
+       	! grep "refs/bundles/" refs
+       '
+       
+     -+#########################################################################
+     -+# Clone negotiation related tests begin here
+     -+
+      +test_expect_success 'negotiation: bundle with part of wanted commits' '
+     -+	test_when_finished rm -rf trace*.txt &&
+     ++	test_when_finished "rm -f trace*.txt" &&
+      +	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
+      +	git clone --no-local --bundle-uri="clone-from/A.bundle" \
+      +		clone-from nego-bundle-part &&
+      +	git -C nego-bundle-part for-each-ref --format="%(refname)" >refs &&
+      +	grep "refs/bundles/" refs >actual &&
+     -+	cat >expect <<-\EOF &&
+     -+	refs/bundles/topic
+     -+	EOF
+     ++	test_write_lines refs/bundles/topic >expect &&
+      +	test_cmp expect actual &&
+      +	# Ensure that refs/bundles/topic are sent as "have".
+     -+	grep "clone> have $(git -C clone-from rev-parse A)" trace-packet.txt
+     ++	test_grep "clone> have $(git -C clone-from rev-parse A)" trace-packet.txt
+      +'
+      +
+      +test_expect_success 'negotiation: bundle with all wanted commits' '
+     -+	test_when_finished rm -rf trace*.txt &&
+     ++	test_when_finished "rm -f trace*.txt" &&
+      +	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
+      +	git clone --no-local --single-branch --branch=topic --no-tags \
+      +		--bundle-uri="clone-from/B.bundle" \
+      +		clone-from nego-bundle-all &&
+      +	git -C nego-bundle-all for-each-ref --format="%(refname)" >refs &&
+      +	grep "refs/bundles/" refs >actual &&
+     -+	cat >expect <<-\EOF &&
+     -+	refs/bundles/topic
+     -+	EOF
+     ++	test_write_lines refs/bundles/topic >expect &&
+      +	test_cmp expect actual &&
+      +	# We already have all needed commits so no "want" needed.
+      +	! grep "clone> want " trace-packet.txt
+      +'
+      +
+      +test_expect_success 'negotiation: bundle list (no heuristic)' '
+     -+	test_when_finished rm -f trace*.txt &&
+     ++	test_when_finished "rm -f trace*.txt" &&
+      +	cat >bundle-list <<-EOF &&
+      +	[bundle]
+      +		version = 1
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
+      +	refs/bundles/left
+      +	EOF
+      +	test_cmp expect actual &&
+     -+	grep "clone> have $(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/left)" trace-packet.txt
+     ++	test_grep "clone> have $(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/left)" trace-packet.txt
+      +'
+      +
+      +test_expect_success 'negotiation: bundle list (creationToken)' '
+     -+	test_when_finished rm -f trace*.txt &&
+     ++	test_when_finished "rm -f trace*.txt" &&
+      +	cat >bundle-list <<-EOF &&
+      +	[bundle]
+      +		version = 1
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
+      +	refs/bundles/left
+      +	EOF
+      +	test_cmp expect actual &&
+     -+	grep "clone> have $(git -C nego-bundle-list-heuristic rev-parse refs/bundles/left)" trace-packet.txt
+     ++	test_grep "clone> have $(git -C nego-bundle-list-heuristic rev-parse refs/bundles/left)" trace-packet.txt
+      +'
+      +
+      +test_expect_success 'negotiation: bundle list with all wanted commits' '
+     -+	test_when_finished rm -f trace*.txt &&
+     ++	test_when_finished "rm -f trace*.txt" &&
+      +	cat >bundle-list <<-EOF &&
+      +	[bundle]
+      +		version = 1
+ 2:  d21c236b8de = 2:  3dc0d9dd22f fetch-pack: expose fsckObjects configuration logic
+ 3:  53395e8c08a ! 3:  2f15099bbb9 unbundle: support object verification for fetches
+     @@ Metadata
+      Author: Xing Xin <xingxin.xx@bytedance.com>
+      
+       ## Commit message ##
+     -    unbundle: support object verification for fetches
+     +    unbundle: extend object verification for fetches
+      
+     -    This commit extends object verification support for fetches in
+     -    `bundle.c:unbundle` by adding the `VERIFY_BUNDLE_FSCK_FOLLOW_FETCH`
+     -    option to `verify_bundle_flags`. When this option is enabled,
+     -    `bundle.c:unbundle` invokes `fetch-pack.c:fetch_pack_fsck_objects` to
+     -    determine whether to append the "--fsck-objects" flag to
+     -    "git-index-pack".
+     +    The existing fetch.fsckObjects and transfer.fsckObjects configurations
+     +    were not fully applied to bundle-involved fetches, including direct
+     +    bundle fetches and bundle-uri enabled fetches. Furthermore, there was no
+     +    object verification support for unbundle.
+      
+     -    `VERIFY_BUNDLE_FSCK_FOLLOW_FETCH` is now passed to `unbundle` in the
+     -    fetching process, including:
+     +    This commit extends object verification support in `bundle.c:unbundle`
+     +    by adding the `VERIFY_BUNDLE_FSCK` option to `verify_bundle_flags`. When
+     +    this option is enabled, we append the `--fsck-objects` flag to
+     +    `git-index-pack`.
+     +
+     +    The `VERIFY_BUNDLE_FSCK` option is now used by bundle-involved fetches,
+     +    where we use `fetch-pack.c:fetch_pack_fsck_objects` to determine whether
+     +    to enable this option for `bundle.c:unbundle`, specifically in:
+      
+          - `transport.c:fetch_refs_from_bundle` for direct bundle fetches.
+          - `bundle-uri.c:unbundle_from_file` for bundle-uri enabled fetches.
+      
+          This addition ensures a consistent logic for object verification during
+     -    fetch operations. Tests have been added to confirm functionality in the
+     -    scenarios mentioned above.
+     +    fetches. Tests have been added to confirm functionality in the scenarios
+     +    mentioned above.
+      
+          Reviewed-by: Patrick Steinhardt <ps@pks.im>
+          Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
+      
+       ## bundle-uri.c ##
+     +@@
+     + #include "hashmap.h"
+     + #include "pkt-line.h"
+     + #include "config.h"
+     ++#include "fetch-pack.h"
+     + #include "remote.h"
+     + 
+     + static struct {
+      @@ bundle-uri.c: static int unbundle_from_file(struct repository *r, const char *file)
+       	 * the prerequisite commits.
+       	 */
+       	if ((result = unbundle(r, &header, bundle_fd, NULL,
+      -			       VERIFY_BUNDLE_QUIET)))
+     -+			       VERIFY_BUNDLE_QUIET | VERIFY_BUNDLE_FSCK_FOLLOW_FETCH)))
+     ++			       VERIFY_BUNDLE_QUIET | (fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0))))
+       		return 1;
+       
+       	/*
+      
+       ## bundle.c ##
+     -@@
+     - #include "list-objects-filter-options.h"
+     - #include "connected.h"
+     - #include "write-or-die.h"
+     -+#include "fetch-pack.h"
+     - 
+     - static const char v2_bundle_signature[] = "# v2 git bundle\n";
+     - static const char v3_bundle_signature[] = "# v3 git bundle\n";
+      @@ bundle.c: int unbundle(struct repository *r, struct bundle_header *header,
+       	if (header->filter.choice)
+       		strvec_push(&ip.args, "--promisor=from-bundle");
+       
+     -+	if (flags & VERIFY_BUNDLE_FSCK_FOLLOW_FETCH)
+     -+		if (fetch_pack_fsck_objects())
+     -+			strvec_push(&ip.args, "--fsck-objects");
+     ++	if (flags & VERIFY_BUNDLE_FSCK)
+     ++		strvec_push(&ip.args, "--fsck-objects");
+      +
+       	if (extra_index_pack_args) {
+       		strvec_pushv(&ip.args, extra_index_pack_args->v);
+     @@ bundle.h: int create_bundle(struct repository *r, const char *path,
+       enum verify_bundle_flags {
+       	VERIFY_BUNDLE_VERBOSE = (1 << 0),
+       	VERIFY_BUNDLE_QUIET = (1 << 1),
+     -+	VERIFY_BUNDLE_FSCK_FOLLOW_FETCH = (1 << 2),
+     ++	VERIFY_BUNDLE_FSCK = (1 << 2),
+       };
+       
+       int verify_bundle(struct repository *r, struct bundle_header *header,
+      
+       ## t/t5558-clone-bundle-uri.sh ##
+      @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'create bundle' '
+     - 		git bundle create B.bundle topic &&
+     - 
+     - 		# Create a bundle with reference pointing to non-existent object.
+     --		sed "s/$(git rev-parse A)/$(git rev-parse B)/" <A.bundle >bad-header.bundle
+     -+		sed "s/$(git rev-parse A)/$(git rev-parse B)/" <A.bundle >bad-header.bundle &&
+     + 		sed -e "/^$/q" -e "s/$(git rev-parse A) /$(git rev-parse B) /" \
+     + 			<A.bundle >bad-header.bundle &&
+     + 		convert_bundle_to_pack \
+     +-			<A.bundle >>bad-header.bundle
+     ++			<A.bundle >>bad-header.bundle &&
+      +
+      +		cat >data <<-EOF &&
+      +		tree $(git rev-parse HEAD^{tree})
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with bundle that has bad
+      +		clone-from clone-bad-object-no-fsck &&
+      +	git -C clone-bad-object-no-fsck for-each-ref --format="%(refname)" >refs &&
+      +	grep "refs/bundles/" refs >actual &&
+     -+	cat >expect <<-\EOF &&
+     -+	refs/bundles/bad
+     -+	EOF
+     ++	test_write_lines refs/bundles/bad >expect &&
+      +	test_cmp expect actual &&
+      +
+      +	# Unbundle fails with fsckObjects set true, but clone can still proceed.
+     @@ transport.c: static int fetch_refs_from_bundle(struct transport *transport,
+       		get_refs_from_bundle_inner(transport);
+       	ret = unbundle(the_repository, &data->header, data->fd,
+      -		       &extra_index_pack_args, 0);
+     -+		       &extra_index_pack_args, VERIFY_BUNDLE_FSCK_FOLLOW_FETCH);
+     ++		       &extra_index_pack_args,
+     ++		       fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0);
+       	transport->hash_algo = data->header.hash_algo;
+       	return ret;
+       }
+
+-- 
+gitgitgadget
