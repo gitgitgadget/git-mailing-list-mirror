@@ -1,83 +1,173 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224C511CB8
-	for <git@vger.kernel.org>; Mon, 17 Jun 2024 01:19:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612BB10A24
+	for <git@vger.kernel.org>; Mon, 17 Jun 2024 03:02:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718587169; cv=none; b=LcF0rOavfGRu4tEhWl1/7Kz6JlMCXjjWVEoEt8G0vNIZEdeK7spyjEe2QrA0Wyf4iKnDM+Moi8PlK2I5VQsYzJA4fKXTCIvS/pCFF6qulkVAzGRV5/J4aSSqJ+qLasDxPpwFPouBjbn60RxoCpy0c2uPDJtus1LcdZMBQHp+LnI=
+	t=1718593325; cv=none; b=SnsLucVcVlXt4Yndz0d1m6svNA30JTKIxm+D/RZUezc7yQaHq9a8+VYxykcY3hvZOgkMGZirTxvINTbMcn7dv4/nANw+HHn1zO6Vx+YaShTlIKJUt57uv6pTT5oqVmS7PziyTM67LMTcMJiPunLB2DIPIk15C9KbnQ2N5HbTx6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718587169; c=relaxed/simple;
-	bh=H87Iq/WfSBHR9Q6kSqJzUGH8OYneJZB5QGwxIbSTD/M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OWeHmL8hDyh2N/PO9s3B378wIPGGBWXon4b+IqhDEUs+xwe8UruOR3leFAg3hcHKzFVPTp0gqatVHQgOM4zc0QBxo+ehO3p87jw8LUixJdrlFH02dwWx72LKsQGIXik0SBSB8ROWajOr3tLoNWYSHsS1YFXpmuXK3dahsEgYeEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wwXfmH9n; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1718593325; c=relaxed/simple;
+	bh=dbG3FRZunUnfspibjdbOOMWV6WUk+OK/OA0X4GOt7pg=;
+	h=Date:From:To:Cc:Subject:References:Mime-Version:Message-ID:
+	 Content-Type; b=uAvu1HubCS2v7JdP36QOeFj2lHGp81VfDTYc+a09Cur7Jp+4NtiVcLY5MnyQ0JiUpcpkxF8g+AMZ/KZqfBfEa9yEDdVYsbPrYYWaTwrt8JMekLza8Cv+8XHE2hUwtWaQwsUMTo0OpMlThvoKCyGNlJsELYooRFBsa4JHcTbrPzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Iaj++3cr; arc=none smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wwXfmH9n"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F7721D156;
-	Sun, 16 Jun 2024 21:19:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=H87Iq/WfSBHR9Q6kSqJzUGH8OYneJZB5QGwxIb
-	STD/M=; b=wwXfmH9nRzmib1UjeSRtaK6JTgRRZ9UFwUitiIcrrdujMA1n5rn65L
-	09hrgKgqmizV5pe4Aqc/gcoC6gjrWIYlh8bvUzkpKL6h7aJtKMhMIHTU8mZwcm6c
-	U6pbyxVbmBpU2L1Ccnyopvwkc/BOsyP/mFIt8FxycjzBfh01w+1ks=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5787B1D155;
-	Sun, 16 Jun 2024 21:19:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BD4991D154;
-	Sun, 16 Jun 2024 21:19:20 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-Cc: Devste Devste <devstemail@gmail.com>,  git@vger.kernel.org
-Subject: Re: Add warning when v0 protocol is used/downgraded
-In-Reply-To: <Zm8EqOfc_v4KBVVK@google.com> (Jonathan Nieder's message of "Sun,
-	16 Jun 2024 15:33:41 +0000")
-References: <CANM0SV3CQPRyJCDanB8JFpkAMwuoo-mg3A=_L743_GXJtoFtQA@mail.gmail.com>
-	<Zm8EqOfc_v4KBVVK@google.com>
-Date: Sun, 16 Jun 2024 18:19:19 -0700
-Message-ID: <xmqqjziobc2w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Iaj++3cr"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-681ad081695so2871552a12.3
+        for <git@vger.kernel.org>; Sun, 16 Jun 2024 20:02:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718593324; x=1719198124; darn=vger.kernel.org;
+        h=content-transfer-encoding:message-id:mime-version:references
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dbG3FRZunUnfspibjdbOOMWV6WUk+OK/OA0X4GOt7pg=;
+        b=Iaj++3crPFxY00kePpcDDSpk1amIORkrZOkfUv+93eydpxogI5BI/GRhXzsRGJCXls
+         XlyYYRdv/fdwebaKtqWZ74qVbnjs5L0jnvm0afba4GTWLDOrL/HQxo9UlgRDPyz0ym6n
+         sjp5QBh7EROkvPzm+G4i6SALVzliCUhML5kgWXC8sNudn88xAGUbhAAJezWSMfTc4iKM
+         KkBDay8rtamakwBI2gEJK+ag97eb6eQws9xJUZrIIq3fv0Cy1Z/Dkmk2/qFThD7NUUTr
+         rbxv9Ou4IyGh8kBH6qeW05ongxXUBj6hkB/ONqc+dRKMCLWKY4PFiohF4Di5xYeaAdhi
+         +yjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718593324; x=1719198124;
+        h=content-transfer-encoding:message-id:mime-version:references
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dbG3FRZunUnfspibjdbOOMWV6WUk+OK/OA0X4GOt7pg=;
+        b=kz4dCnWfaDfGmqAAIGboMWWZSIXj1gVZtdloWjk/EwFu5zMdZagbWGgqwjNfoJqbGH
+         URIBZ+HJNPbV6cczAsS/3kajIivP8PKtLANHcRLwFS/iwhrlsDwuxZbopG71LX3f7skX
+         noUX4tKGVfqviCMNAQzd7nVJnuSQt3ROWxPlJFmrB9hTeZVXeVZsGkMR9ll7h0ZVOLB6
+         VbV3erLd10BeKDQ4bJdbhj/JWg3AnBzF+rGpAJNP7M81gku/kyy5OaXhT9DJmZVI4L9r
+         XLMGlx/LD76Yn8Q0vm5DQE4aS8hwJsxjZDwfnbY8sDOTE/LG0ou/qgW1rzmzi6/05Oyq
+         iRfw==
+X-Gm-Message-State: AOJu0YzSujRMvkJkIHy8hO5SAgYfd4Tf8aUwjEY3EY5w2BDvVUGin1Ce
+	wkDCaX09PHyugYM6+WgxeZfUwDEhXB7CEH9dmo8VIvO1DTk/SHuI
+X-Google-Smtp-Source: AGHT+IFx4Y/8bA3cGI+4WYOY5yfB1Y+y0GgbFYHjA8p0jwxK8pXu3jhUtNrIrpYAEv9iYBo8Rknw9A==
+X-Received: by 2002:a17:902:c40f:b0:1f6:8157:b52f with SMTP id d9443c01a7336-1f8625c60a2mr98828705ad.8.1718593323638;
+        Sun, 16 Jun 2024 20:02:03 -0700 (PDT)
+Received: from kylezhao-PC1 ([43.132.141.23])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f855f1af16sm70778175ad.246.2024.06.16.20.02.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 16 Jun 2024 20:02:03 -0700 (PDT)
+Date: Mon, 17 Jun 2024 11:02:02 +0800
+From: "goldofzky@gmail.com" <goldofzky@gmail.com>
+To: gitster <gitster@pobox.com>, 
+	gitgitgadget <gitgitgadget@gmail.com>
+Cc: git <git@vger.kernel.org>, 
+	"Kyle Zhao" <kylezhao@tencent.com>
+Subject: Re: [Internet]Re: [PATCH v5] merge: avoid write merge state when unable to write index
+References: <pull.1731.v4.git.1715920862420.gitgitgadget@gmail.com>, 
+	<pull.1731.v5.git.1718173639942.gitgitgadget@gmail.com>, 
+	<xmqqh6dwlpnb.fsf@gitster.g>
+X-Priority: 3
+X-GUID: 7D67538C-346D-44F3-BD80-E074FF3A15A1
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.25.254[cn]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 9FD9775A-2C47-11EF-84BF-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+Mime-Version: 1.0
+Message-ID: <202406171101133354904@gmail.com>
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+T24gRnJpLCBKdW4gMTQsIDIwMjQgYXQgMToyN+KAr0FNIEp1bmlvIEMgSGFtYW5vIDxnaXRzdGVy
+QHBvYm94LmNvbT4gd3JvdGU6Cj4KPiAiS3lsZSBaaGFvIHZpYSBHaXRHaXRHYWRnZXQiIDxnaXRn
+aXRnYWRnZXRAZ21haWwuY29tPiB3cml0ZXM6Cj4KPiA+IEZyb206IEt5bGUgWmhhbyA8a3lsZXpo
+YW9AdGVuY2VudC5jb20+Cj4gPgo+ID4gV2hlbiBydW5uaW5nIGEgbWVyZ2Ugd2hpbGUgdGhlIGlu
+ZGV4IGlzIGxvY2tlZCAocHJlc3VtYWJseSBieSBhbm90aGVyCj4gPiBwcm9jZXNzKSwgdGhlIG1l
+cmdlIHN0YXRlIGlzIHdyaXR0ZW4sIHRoZSBpbmRleCBpcyBub3QgdXBkYXRlZCwgYW5kIHRoZW4K
+PiA+IHRoZSBtZXJnZSBmYWlscy4gVGhpcyBtaWdodCBjYXVzZSB1bmV4cGVjdGVkIHJlc3VsdHMu
+Cj4KPiBGYWlsaW5nIHRoZSBtZXJnZSBpcyBnb29kIHRoaW5nLgo+Cj4gPiBFLmcuLCBpZiBhbm90
+aGVyIHJ1bm5pbmcgcHJvY2VzcyBpcyAiZ2l0IGNvbW1pdCIsIE1FUkdFX0hFQUQgYW5kIG90aGVy
+Cj4gPiBzdGF0ZSBmaWxlcyB3ZSB3cml0ZSBvbiBvdXIgc2lkZSB3aWxsIGJlIHRha2VuIGludG8g
+YWNjb3VudCBieSB0aGVtIGFuZAo+ID4gY2F1c2UgdGhlbSB0byByZWNvcmQgYSBtZXJnZSwgZXZl
+biB0aG91Z2ggdGhleSBtYXkgaGF2ZSBiZWVuIHRyeWluZyB0bwo+ID4gcmVjb3JkIHNvbWV0aGlu
+ZyBlbnRpcmVseSBkaWZmZXJlbnQuCj4KPiBJZiBJIHJlY2FsbCB0aGUgcHJldmlvdXMgZGlzY3Vz
+c2lvbiBjb3JyZWN0bHksIEkgdGhpbmsgdGhlIHByaW1hcnkKPiB0aGluZyB0aGlzIGNoYW5nZSBh
+Y2hpZXZlcyBpcyB0byBnZXQgdXMgY2xvc2VyIHRvIGEgc3RhdGUgd2hlcmUKPiBjb21wZXRpbmcg
+Y29tbWFuZHMgKGEgImdpdCBjb21taXQiIHJ1biB3aGlsZSB3ZSBhcmUgZG9pbmcgc29tZXRoaW5n
+Cj4gZWxzZSBsaWtlICJnaXQgbWVyZ2UiKSB0YWtlIHRoZSBpbmRleC5sb2NrIGFzIHRoZSBmaXJz
+dCB0aGluZyAoc28KPiBvdGhlcnMgYXJlIGJsb2NrZWQpLCBiZWZvcmUgbWFraW5nIGF1eGlsaWFy
+eSBmaWxlcyBsaWtlIE1FUkdFX0hFQUQKPiB0aGF0IHdvdWxkIGFmZmVjdCB0aGUgYmVoYXZpb3Vy
+IG9mIHdob2V2ZXIgaGFzIGluZGV4LmxvY2sgKGFuZCB0aHVzCj4gbWFraW5nIGEgbmV3IGNvbW1p
+dCkuICBBbmQgdGhhdCBpcyB3aGF0IHdlIG5lZWQgdG8gc3RyZXNzIGluIHRoZQo+IHByb3Bvc2Vk
+IGxvZyBtZXNzYWdlLCBJIHdvdWxkIHRoaW5rLgoKSSBhZ3JlZS4KCj4KPiBCdXQgdGhpcyBpcyBw
+cm9iYWJseSBvbmx5IGhhbGYtYS1zb2x1dGlvbi4KCgo+Cj4gPiBTaWduZWQtb2ZmLWJ5OiBLeWxl
+IFpoYW8gPGt5bGV6aGFvQHRlbmNlbnQuY29tPgo+ID4gLS0tCj4gPiBkaWZmIC0tZ2l0IGEvYnVp
+bHRpbi9tZXJnZS5jIGIvYnVpbHRpbi9tZXJnZS5jCj4gPiBpbmRleCA2YTZkMzc5ODg1OC4uMTJj
+MWIwNDhmZTEgMTAwNjQ0Cj4gPiAtLS0gYS9idWlsdGluL21lcmdlLmMKPiA+ICsrKyBiL2J1aWx0
+aW4vbWVyZ2UuYwo+ID4gQEAgLTY5OSw3ICs2OTksNyBAQCBzdGF0aWMgaW50IHRyeV9tZXJnZV9z
+dHJhdGVneShjb25zdCBjaGFyICpzdHJhdGVneSwgc3RydWN0IGNvbW1pdF9saXN0ICpjb21tb24s
+Cj4gPiAgICAgICBpZiAocmVwb19yZWZyZXNoX2FuZF93cml0ZV9pbmRleCh0aGVfcmVwb3NpdG9y
+eSwgUkVGUkVTSF9RVUlFVCwKPiA+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIFNLSVBfSUZfVU5DSEFOR0VELCAwLCBOVUxMLCBOVUxMLAo+ID4gICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgTlVMTCkgPCAwKQo+ID4gLSAgICAgICAgICAgICByZXR1
+cm4gZXJyb3IoXygiVW5hYmxlIHRvIHdyaXRlIGluZGV4LiIpKTsKPiA+ICsgICAgICAgICAgICAg
+ZGllKF8oIlVuYWJsZSB0byB3cml0ZSBpbmRleC4iKSk7Cj4gPgo+ID4gICAgICAgaWYgKCFzdHJj
+bXAoc3RyYXRlZ3ksICJyZWN1cnNpdmUiKSB8fCAhc3RyY21wKHN0cmF0ZWd5LCAic3VidHJlZSIp
+IHx8Cj4gPiAgICAgICAgICAgIXN0cmNtcChzdHJhdGVneSwgIm9ydCIpKSB7Cj4KPiBJZiB3ZSBm
+YWlsIHRvIHdyaXRlIHRoZSBpbmRleCBoZXJlLCBldmVuIGlmIHdlIGhhdmUgb3RoZXIgc3RyYXRl
+Z2llcwo+IHRvIHRyeSBhZnRlciB0aGUgY3VycmVudCBvbmUgZmFpbHMsIGl0IHByb2JhYmx5IGlz
+IGEgZ29vZCBpZGVhIHRvIGRpZQo+IGFuZCBzdG9wIHRoZSBvdGhlciBvbmVzIGZyb20gYmVpbmcg
+dHJpZWQsIG5vdCBiZWNhdXNlIHRoZWlyIGF0dGVtcHQKPiB0byB3cml0ZSB0aGUgaW5kZXggbWln
+aHQgZmFpbCB0aGUgc2FtZSB3YXksIGJ1dCBiZWNhdXNlIGl0IGlzIGxpa2VseQo+IHRoYXQgd2Ug
+YXJlIHJlYWxseSBpbiBhIHdlaXJkIHNpdHVhdGlvbiBhbmQgdGhlIHVzZXIgd291bGQgd2FudCB0
+bwo+IGluc3BlY3QgdGhlIHNpdHVhdGlvbiBiZWZvcmUgdGhpcyBwcm9jZXNzIG1ha2VzIHRvbyBt
+dWNoIGRhbWFnZSB0bwo+IHRoZSB3b3JraW5nIHRyZWUgYW5kIHRoZSBpbmRleC4KPgo+IEJ1dCB0
+aGlzIGlzIHByb2JhYmx5IG9ubHkgaGFsZi1hLXNvbHV0aW9uLiAgQmVjYXVzZSB3ZSByZWxlYXNl
+IHRoZQo+IGluZGV4LmxvY2sgd2hlbiB0aGUgcmVmcmVzaC1hbmQtd3JpdGUgY2FsbCByZXR1cm5z
+LCBhbmQgdGhlCj4gaW5kZXgubG9jayBpcyBmcmVlIGZvciB0aGUgb3RoZXIgcHJvY2VzcyB0byBn
+cmFiLCBkbyB3aGF0ZXZlciB0aGV5Cj4gd2FudCB0byBkbyB0byB0aGUgaW5kZXggYW5kIHRoZSB3
+b3JraW5nIHRyZWUgKGluY2x1ZGluZyBtYWtpbmcgYSBuZXcKPiBjb21taXQgb3V0IG9mIGl0IGFu
+ZCB1cGRhdGUgdGhlIEhFQUQpLCBiZWZvcmUgb3IgYWZ0ZXIgd2Ugd3JpdGUgb3V0Cj4gdGhlIG1l
+cmdlIHN0YXRlIGZpbGVzLiBTbyBpbiB0aGF0IHNlbnNlLCB0aGlzIHBhdGNoIGlzICpub3QqIHNv
+bHZpbmcKPiB0aGUgIkUuZy4sIGlmIGFub3RoZXIgcnVubmluZyBwcm9jZXNzIGlzIC4uLiIgIHBy
+b2JsZW0gYXQgYWxsLgo+Cj4gU28gLi4uCj4KCk9vcHMhClRoYW5rIHlvdSBmb3IgdGhlIHJlbWlu
+ZGVyLCBJIGluZGVlZCBkaWQgbm90IGNvbnNpZGVyIHRoaXMgcG9pbnQuIApFdmVuIGlmIHRoZSBp
+bmRleCBpcyB3cml0dGVuIHN1Y2Nlc3NmdWxseSwgYW5vdGhlciBydW5uaW5nICJnaXQgY29tbWl0
+IiBtYXkgCnJlY29yZCBhIG1lcmdlIChpZiBpdCBnZW5lcmF0ZXMgdGhlIGNvbW1pdCBiZWZvcmUg
+bWVyZ2Ugc3RhdGUgaXMgcmVtb3ZlZCkuCgo+ID4gZGlmZiAtLWdpdCBhL3QvdDc2MDAtbWVyZ2Uu
+c2ggYi90L3Q3NjAwLW1lcmdlLnNoCj4gPiBpbmRleCBlNWZmMDczMDk5YS4uZWY1NGNmZjRmYWEg
+MTAwNzU1Cj4gPiAtLS0gYS90L3Q3NjAwLW1lcmdlLnNoCj4gPiArKysgYi90L3Q3NjAwLW1lcmdl
+LnNoCj4gPiBAQCAtMjM2LDYgKzIzNiwxNiBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICdtZXJnZSBj
+MSB3aXRoIGMyJyAnCj4gPiAgICAgICB2ZXJpZnlfcGFyZW50cyAkYzEgJGMyCj4gPiAgJwo+ID4K
+PiA+ICt0ZXN0X2V4cGVjdF9zdWNjZXNzICdtZXJnZSBjMSB3aXRoIGMyIHdoZW4gaW5kZXgubG9j
+ayBleGlzdHMnICcKPiA+ICsgICAgIHRlc3Rfd2hlbl9maW5pc2hlZCBybSAuZ2l0L2luZGV4Lmxv
+Y2sgJiYKPiA+ICsgICAgIGdpdCByZXNldCAtLWhhcmQgYzEgJiYKPiA+ICsgICAgID4uZ2l0L2lu
+ZGV4LmxvY2sgJiYKPiA+ICsgICAgIHRlc3RfbXVzdF9mYWlsIGdpdCBtZXJnZSBjMiAmJgo+ID4g
+KyAgICAgdGVzdF9wYXRoX2lzX21pc3NpbmcgLmdpdC9NRVJHRV9IRUFEICYmCj4gPiArICAgICB0
+ZXN0X3BhdGhfaXNfbWlzc2luZyAuZ2l0L01FUkdFX01PREUgJiYKPiA+ICsgICAgIHRlc3RfcGF0
+aF9pc19taXNzaW5nIC5naXQvTUVSR0VfTVNHCj4KPiAuLi4gSSBkbyBub3QgcXVpdGUgc2VlIHRo
+ZSBwb2ludCBvZiB0aGlzIGV4ZXJjaXNlLiAgSXQgaXMgZ29vZCB0bwo+IG1ha2Ugc3VyZSB0aGF0
+ICJnaXQgbWVyZ2UgYzIiIGZhaWxzIHdoaWxlIGl0IGlzIGNsZWFyIHRoYXQgc29tZWJvZHkKPiBl
+bHNlIGlzIG11Y2tpbmcgd2l0aCB0aGUgc2FtZSByZXBvc2l0b3J5IHRvdWNoaW5nIHRoZSBpbmRl
+eC4gIEJ1dCBpdAo+IGRvZXMgbm90IGhlbHAgdGhlIG90aGVyIHByb2Nlc3MgYWxsIHRoYXQgbXVj
+aCBpZiB3ZSBzdG9wIG9ubHkgd2hlbgo+IHRoZXkgaGFwcGVuIHRvIGJlIGhvbGRpbmcgbG9jayBh
+dCB0aGUgcG9pbnQgd2UgdHJ5IHRvIHJlZnJlc2ggdGhlCj4gaW5kZXguICBJdCBpcyBtYWtpbmcg
+dGhlIHJhY2Ugd2luZG93IHNtYWxsZXIgYnkgYSB0aW55IGJpdC4KClRoaXMgdGVzdCBpcyBvbmx5
+IHVzZWQgdG8gdmVyaWZ5IHdoZXRoZXIgdGhlIG1lcmdlIHN0YXRlIGlzIGdlbmVyYXRlZCBhZnRl
+ciBhIG1lcmdlIGZhaWxzIApkdWUgdG8gdGhlIGluZGV4IHdyaXRpbmcuIApUbyBteSBrbm93bGVk
+Z2UsIGZvciBhIG1lcmdlLCB3cml0aW5nIHRoZSBtZXJnZSBzdGF0ZSBhbmQgdGhlIGluZGV4IGlz
+IG5vdCBhbiBhdG9taWMgb3BlcmF0aW9uLiAKU2ltcGx5IG1vZGlmeWluZyB0aGUgbG9naWMgb2Yg
+bWVyZ2UgaXMgdXNlbGVzcyBhbmQgd2UgbmVlZCB0byB0aGluayBhYm91dCBvdGhlciBzb2x1dGlv
+bnMuCgo+Cj4gU28sIEkgYW0gbm90IHN1cmUgaWYgdGhpcyBpcyB3b3J0aCBkb2luZy4KPgoKWzFd
+IEFzIGV4cGxhaW5lZCBpbiB0aGUgY29tbWl0IG1lc3NhZ2Ugb2YgdjEsIHdlIGFyZSBwYXJ0aWN1
+bGFybHkgY29uY2VybmVkIGFib3V0IHRoZQppc3N1ZSBvZiBzb3VyY2UgY29kZSBsb3NzLiBPbmNl
+IHRoaXMgcHJvYmxlbSBvY2N1cnMsIHRoZSBjb25zZXF1ZW5jZXMgd2lsbCBiZSBpbW1lYXN1cmFi
+bGUgCmFuZCBkZXRlY3RpbmcgdGhlc2UgYWJub3JtYWwgbWVyZ2UgcG9pbnRzIHdpbGwgYmUgdmVy
+eSBkaWZmaWN1bHQuCgpbMl0gRnJvbSBhIHVzYWJpbGl0eSBwZXJzcGVjdGl2ZSwgdGhlIG1lcmdl
+IHN0YXRlIHNob3VsZCBub3QgYmUgd3JpdHRlbiB3aGVuIHRoZSBpbmRleCBpcyBiZWluZwogd3Jp
+dHRlbiAobWVyZ2UgY29uZmxpY3RzIGFyZSBub3QgY29uc2lkZXJlZCBmYWlsdXJlcykuIFRvIGF2
+b2lkIGxvc2luZyBjaGFuZ2VzIGluIHRoZSBzb3VyY2UgYnJhbmNoLCAKdXNlcnMgY2FuIG9ubHkg
+ZXhlY3V0ZSAnZ2l0IG1lcmdlIC0tYWJvcnQnIGFuZCB0cnkgJ2dpdCBtZXJnZScgYWdhaW4uIEhv
+d2V2ZXIsIGlmIHRoZSBtZXJnZSBzdGF0ZSBpcwpub3Qgd3JpdHRlbiBpbiB0aGUgZmlyc3QgcGxh
+Y2UsIHRoZSB1c2VyIG9ubHkgbmVlZHMgdG8gcmV0cnkgJ2dpdCBtZXJnZScuCgpJbiBvdGhlciB3
+b3Jkcywgd3JpdGluZyB0aGUgbWVyZ2Ugc3RhdGUgYWZ0ZXIgdGhlIGluZGV4IHdyaXRlIGZhaWxz
+IGlzIG1lYW5pbmdsZXNzIGFuZCBjb3VsZCAKcG90ZW50aWFsbHkgY2F1c2UgR2l0IHRvIGxvc2Ug
+Y2hhbmdlcy4=
 
-> Specifying protocol version is meant to be backward compatible, and
-> there are cases where the old protocol still needs to be used - for
-> ...
-> more so for protocol v2 for push, which doesn't exist yet - once it
-> exists, it wouldn't be great if all pushes using existing servers
-> produced an extra piece of noisy output. :)
-
-I do not think it is a great idea to add this as a warning, as if
-something bad is happening, either.
-
-I also agree that it is a legitimate debugging issue.  When the user
-sees some symptom, after learning that the same symptom was reported
-to be associated with the use of v2 on the Internet somewhere, it is
-reasonable for the user to want to see what protocol is being used,
-in order to debug the configuration, especially when the user thinks
-they configured to use v0 (or vice versa)
-
-So I am all for (1) adding to, if it is not already done, this kind
-of information to the GIT_TRACE* output, and (2) advertising and
-advocating GIT_TRACE* stuff as a useful debugging tool.
-
-Thanks.
