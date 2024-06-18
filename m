@@ -1,75 +1,86 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D1F15EFAF
-	for <git@vger.kernel.org>; Tue, 18 Jun 2024 23:39:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE7218A950
+	for <git@vger.kernel.org>; Tue, 18 Jun 2024 23:44:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718753978; cv=none; b=KkoC/GVWgQvPZPU5T5sthp5RQ5Oee/P2VlCBn4ELCoovDN88GCG988WcjXSuCCMEg8LvZC2nkoW6LbuTBOC7z51+vGOHniQ55wAnS40JisWe4KDAf/R6pqfE2sU88w7Fq8nJAKuLYiIe5llwE5i1Yjq0Z/7UDhctzuoQUAAgcGE=
+	t=1718754283; cv=none; b=TYXrp0dZfhy8zMosntMzafYKZXHcD498BtxUnmHfiWuVvU++U4QPx1QxatoUTfHua9ILcF+Q4Z8Pu8OAfCPzkWU0wcORnZQUkO1VJvl82INTjac+lLQ2XoEvjeSikQs4z1FHP9aoVYRSl1xWC6+KBKrWZaH37ZnmsTYunBjEAhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718753978; c=relaxed/simple;
-	bh=Idu/SR9g8+OJ3MAzGjX/F3Vsfv8H9gIVa78kTQr3/B8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LMfPSMBAU3xxnLbTSDO7U3A+S+5ImFx3iloJJwxruGgArdWTbmrPaDaOF/z7/B4vGqBgSB4O0hPrHBY24LMKEJ0BMUtJDc1nDgeYxRC8IcxF7ticJGFCFmjgIsoIoxXfUnWZJhmDSom2QRoqOKr34lrurBTK9gCpcrKxzXbb3R8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 3109 invoked by uid 109); 18 Jun 2024 23:39:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Jun 2024 23:39:36 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15922 invoked by uid 111); 18 Jun 2024 23:39:34 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Jun 2024 19:39:34 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 18 Jun 2024 19:39:35 -0400
-From: Jeff King <peff@peff.net>
-To: Kyle Lippincott via GitGitGadget <gitgitgadget@gmail.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Kyle Lippincott <spectral@google.com>
-Subject: Re: [PATCH] attr: fix msan issue in read_attr_from_index
-Message-ID: <20240618233935.GB188880@coredump.intra.peff.net>
-References: <pull.1747.git.1718654424683.gitgitgadget@gmail.com>
+	s=arc-20240116; t=1718754283; c=relaxed/simple;
+	bh=jJ+hTzl2gudEsSZ3cOCZya01oVWu5MhMA9/toYOwkq4=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=d8jhSiqU1uEGWCeVZWezm1rUEbkl+PUBOOZs07SI5orpzQ9CTEvKPmcSp7AWrejy3LDvh3jF/C4Ioxs/KzVheJ69v07j1joQejNvdz4+DKCGhwi0Kzv5MdmDEjh3y1w4L3xwLL4j8v4pMukmi0cy/Qgr8Th3F/owPRUFQiTtnDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kg+YSOD9; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kg+YSOD9"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9AC522C5ED;
+	Tue, 18 Jun 2024 19:44:41 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references:mime-version
+	:content-transfer-encoding; s=sasl; bh=jJ+hTzl2gudEsSZ3cOCZya01o
+	VWu5MhMA9/toYOwkq4=; b=kg+YSOD9kuc8td7FPi6yFPoXCbFfaJN2Frm2IQeCx
+	dcAd6IK94opZ3j3B9DgTfIVU6II8/wclftr/pZVWDWeRD5dfc6iSMFRTPtZDSiNk
+	kN5JUk7HPVMAr3KQ5sMkKeldoKO6VYwNttJn9BqL+ONDd6yHmvVXW4IpGVDRh2+/
+	Rg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 87E892C5EC;
+	Tue, 18 Jun 2024 19:44:41 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AD0552C5EB;
+	Tue, 18 Jun 2024 19:44:37 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH 0/4] .git{ignore,attributes} directories?
+Date: Tue, 18 Jun 2024 16:44:31 -0700
+Message-ID: <20240618234436.4107855-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.45.2-711-gd2c001ca14
+In-Reply-To: <20240618233303.GA188880@coredump.intra.peff.net>
+References: <20240618233303.GA188880@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1747.git.1718654424683.gitgitgadget@gmail.com>
+X-Pobox-Relay-ID:
+ B94DEB2C-2DCC-11EF-84F3-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 17, 2024 at 08:00:24PM +0000, Kyle Lippincott via GitGitGadget wrote:
+We seem to blindly open .gitignore that is a directory and rely on
+subsequent read() to be more-or-less silent to implement a "non-file
+.gitignore is silently ignored" behaviour.
 
-> The issue exists because `size` is an output parameter from
-> `read_blob_data_from_index`, but it's only modified if
-> `read_blob_data_from_index` returns non-NULL. The read of `size` when
-> calling `read_attr_from_buf` unconditionally may read from an
-> uninitialized value. `read_attr_from_buf` checks that `buf` is non-NULL
-> before reading from `size`, but by then it's already too late: the
-> uninitialized read will have happened already. Furthermore, there's no
-> guarantee that the compiler won't reorder things so that it checks
-> `size` before checking `!buf`.
-> 
-> Make the call to `read_attr_from_buf` conditional on `buf` being
-> non-NULL, ensuring that `size` is not read if it's never set.
+Let's be a bit more strict in detecting and reporting I/O errors,
+and also stop reading from directories.
 
-Yeah, this is the same one I mentioned when bisecting in the other
-thread[1]. But I got confused by applying my fixup patch at various
-points in the bisection, and thought it _used_ to be a problem, and
-isn't anymore. It's the other way around. It was introduced by
-c793f9cb08, which moved the NULL check into the helper.
+I think the first three are reasonable changes, but the last one is
+of dubious value.
 
-That patch is from Taylor, but I'm listed as a co-author, and I'm almost
-certain moving that NULL check was my suggestion. So it's doubly bad
-that I didn't figure out what was going on earlier. ;)
+Junio C Hamano (4):
+  .gitignore: introduce GITIGNORE_FILE CPP macro
+  attr: notice and report read failure
+  exclude: notice and report read failure of .gitignore files
+  submodule: ignore .gitmodules that is not a regular file
 
-Possible UB aside, I doubt this can trigger bad behavior in practice.
-But I also wouldn't call it a false positive in MSan. We really are
-reading the uninitialized value and passing it. Your fix here is the
-obviously correct thing to do.
+ attr.c                | 10 +++++++++-
+ builtin/read-tree.c   |  3 ++-
+ dir.c                 | 16 ++++++++++++++--
+ dir.h                 |  1 +
+ environment.h         |  1 +
+ submodule-config.c    |  2 +-
+ t/t0003-attributes.sh |  9 +++++++++
+ t/t0008-ignores.sh    | 18 ++++++++++++++++++
+ 8 files changed, 55 insertions(+), 5 deletions(-)
 
--Peff
+--=20
+2.45.2-711-gd2c001ca14
 
-[1] https://lore.kernel.org/git/20240608081855.GA2390433@coredump.intra.peff.net/
