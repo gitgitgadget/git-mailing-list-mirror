@@ -1,91 +1,86 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E15041C89
-	for <git@vger.kernel.org>; Tue, 18 Jun 2024 23:33:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA0E155351
+	for <git@vger.kernel.org>; Tue, 18 Jun 2024 23:38:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718753587; cv=none; b=bmsHVrGjznoV87EhLhx2yUwGZXBdnsz/pT5tuyLakz/qXfsXCrQlKx3qVw3S9bLENNVZ9b+GQrcSoHJNLoycTzk6V6FgLVT68srYdprNK6eymlUKM7eygdE81VHeAVpfpBJj6poVZVVzDedV9kneqxemOAMIqb9k6Y0rtKKPEXk=
+	t=1718753882; cv=none; b=iEmYpB1FiTE7y1migEpOIKlvG6gmr3GTURYxjYvH19jKqmkHCHLz4j0bVfTjMYkI1b3MWL71Kq/ogwZ3k7OG46MjTPw6B2cisMGo/W60PyWVMxTfzO8EqkGoPZfQLrvGACQIXjQcgCKcvDfR+4HGWoX/hFc88vPt2+X5K94sfSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718753587; c=relaxed/simple;
-	bh=4+2JXgkN4ijdvf6EScfbCK/LTp3eOcwYLLNCGUqbo+M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FNjy3iFdbrFTamAExk+iReF3nD38JERYuhJ+z9x7auIV1zw4lWCgYsqHB0KTEdjVmVpuJgiZBuQH+G+Jl9jVMVHn15Ud04kI4Jh9qLyk7OtBmCgtRoFdwSOyRHK2Th8wG58sPFxPMepBYn0uBjQtbJZuqJuma5wMWlrp+M4ufU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 3082 invoked by uid 109); 18 Jun 2024 23:33:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Jun 2024 23:33:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15846 invoked by uid 111); 18 Jun 2024 23:33:02 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Jun 2024 19:33:02 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 18 Jun 2024 19:33:03 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Alexey Pelykh <alexey.pelykh@gmail.com>, git@vger.kernel.org
-Subject: Re: Non-blob .gitmodules and .gitattributes
-Message-ID: <20240618233303.GA188880@coredump.intra.peff.net>
-References: <4F3AD9A8-DA3E-43E2-BF9A-9D7458EED7EA@gmail.com>
- <xmqqbk43ilk3.fsf@gitster.g>
- <20240618183156.GB178291@coredump.intra.peff.net>
- <14349714-F8D1-4F7B-BB13-4FA39C6819DE@gmail.com>
- <xmqqa5jiypmm.fsf@gitster.g>
+	s=arc-20240116; t=1718753882; c=relaxed/simple;
+	bh=jViGV+Maw+VOx7hv/9c7zFCe6Vq+cETGp9aLoeHYgbw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HLZVhBEo9MSpOMLbhtusxTU+BsWDHlBwEeJOigJlsc3qwJnLZxtCNlLR1TaOSMRgzr57njl2u+mRdgf5ONlYjQjepYp9QUj60yMvNMszfuZwul9dLxNlQwNB4Ft5tqEcO75tUz12zSkUiMwfnU4G0qJSFdePMqYhPW/X+rPZ4+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KAYYinXf; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KAYYinXf"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 95BDE2C5C8;
+	Tue, 18 Jun 2024 19:37:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=jViGV+Maw+VOx7hv/9c7zFCe6Vq+cETGp9aLoe
+	HYgbw=; b=KAYYinXfkWzpq/sdMHUEWyq3s1KeupRktVMhsMCsx6kP8rT2W7ZNeF
+	GGuIazP+RSqoA/8Q5QVGNtBY/POJwYxuhuZtL1O15xfQpb4SLgHbrOoMc+LRqZx+
+	z4Lu5YiX1CfM6b4pqDPDUrWmDzfzLaVfGL2uHsXObWxj+K4b7FCpw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8E6EC2C5C7;
+	Tue, 18 Jun 2024 19:37:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C236B2C5C6;
+	Tue, 18 Jun 2024 19:37:50 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Wong <e@80x24.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] t1006: ensure cat-file info isn't buffered by
+ default
+In-Reply-To: <20240618213041.M462972@dcvr> (Eric Wong's message of "Tue, 18
+	Jun 2024 21:30:41 +0000")
+References: <20240617104326.3522535-1-e@80x24.org>
+	<20240617104326.3522535-3-e@80x24.org> <xmqq1q4v5m5a.fsf@gitster.g>
+	<20240618213041.M462972@dcvr>
+Date: Tue, 18 Jun 2024 16:37:48 -0700
+Message-ID: <xmqqzfrhyg8j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa5jiypmm.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C6C4126E-2DCB-11EF-87D8-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-On Tue, Jun 18, 2024 at 01:14:57PM -0700, Junio C Hamano wrote:
+Eric Wong <e@80x24.org> writes:
 
-> Alexey Pelykh <alexey.pelykh@gmail.com> writes:
-> 
-> >> But I'd also suspect that other non-POSIX platforms would see the error
-> >> at open(), and _would_ actually produce an error message. I seem to
-> >> recall running into this before with Windows, maybe?
-> >
-> > Is there an easy way to verify "what on Windows" part? I'd be happy to
-> > help, yet I'm not sure I got it right what to look for.
-> 
-> Create a .gitmodules and .gitattributes directory, "git add" it, and
-> perform various operations that want to read them, probably.  Even a
-> simple "git diff" should try to consult the attribute system (e.g.
-> because it wants to know if a path needs use custom function header
-> regexp pattern).  As Peff said, on Linux and probably on macOS, we
-> will silently ignore such .gitattributes and that is what we want.
-> On Windows we may see "cannot open" error reported and visible to
-> the users.
+>> Yes, using Perl is a good substitute for writing it in C in this
+>> case.  I however question the choice to use t9700/test.pl here,
+>> which is clearly stated that its purpose is to "test perl interface
+>> which is Git.pm", and added tests are not testing anything in Git.pm
+>> at all.
+>> 
+>> Using t9700/test.pl only because it happens to use "perl -MTest::More"
+>> sounds a bit eh, suboptimal.
+>
+> *shrug*  I figure Test::More is common enough since it's part of
+> the Perl standard library; but I consider Perl a better scripting
+> language than sh by far and wish our whole test suite were Perl :>
 
-I don't think you even need to "git add" it. Just making it in the
-working tree is enough for us to look at it. You probably do need an
-actual change in a tracked file for "git diff" to bother looking up
-attributes (an alternative is just "git show" on an existing commit).
+Oh, I think we (actually the author of t9700) considers it common
+enough that we have PERL_TEST_MORE prerequisite to allow us to write
+tests, assuming that it is available, and let us easily skip where
+it is not available.  So I do not think I mind the dependency on
+Test::More at all.  Moving the tests to t1006 and rewriting the
+tests not to use Test::More are two separate and unrelated things,
+and if you are more comfortable with Test::More (and more
+importantly if it is natural to write Perl based tests using
+Test::More), it is not necessary to switch away from it.
 
-Interestingly, a directory .gitmodules _does_ complain:
-
-  $ git status
-  warning: unable to access '/home/peff/tmp/.gitmodules': Is a directory
-  On branch main
-  nothing to commit, working tree clean
-
-That's because it uses fopen(), rather than open(). And we have a
-wrapper that complains about directories there, triggered by the
-FREAD_READS_DIRECTORIES knob in the Makefile. It's set for Linux, but
-not for Windows (which is why I suspect Windows might just complain by
-itself). We don't see that for ".gitattributes" or ".gitignore" because
-those use a raw open() syscall, and Linux is happy to allow it. Arguably
-that's a bug, as the intent of that knob is that we'd notice and avoid
-trying to read from directories.
-
-So even putting fsck warnings aside, I think it's mostly luck that
-having .git* files as directories doesn't produce noisy warnings during
-normal use.
-
--Peff
