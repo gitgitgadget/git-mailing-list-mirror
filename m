@@ -1,208 +1,143 @@
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CE8101EC
-	for <git@vger.kernel.org>; Tue, 18 Jun 2024 01:08:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7421B947
+	for <git@vger.kernel.org>; Tue, 18 Jun 2024 05:16:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718672893; cv=none; b=g2baxUGdEkknEGVGQoNLI1hdHeDFGlViG0CRHzRKxc1q0xXnKhxdWeOwldp7DF5N71HEpEM1WJxrhhZRDVEdcKQs85H3Gj3ketrFN6MR4qkQoHStAgzJlmaHHyJlvKXU4vjvfm6IMSmVqcEJQAnTnorFcdR/J8ylS0AU4n5koeY=
+	t=1718687810; cv=none; b=OkjDgjIkrS/o0ManyASjoRS8URP9EgCfV84fM47GBoOCxmc9QiR+xJkNkOT5N7POCErrycJVtyfj494MDBSzdi0yopsjsbv5SeCrV63DneW8ufCLfOleuKKE0OTsKc3DpJoI/K6J5HDtOPkXa7NZRHfSq5wgHZtlOpTnUqBDXLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718672893; c=relaxed/simple;
-	bh=8qY4p0uxCnpbieEcbMj+eIQSi7BrBzdli5B7PP0Rdy8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ux5rxb+lxempla0d6J9qyLfnPUXa9bD7Og4dRoBzFKrgeFm+ISqO3MYJrZUgqCyBaULfS2bdYQytIYzNogUVf27Q1xlb1sU25VBSUCfBul7LdJyC33hmOVoO3LnsmAahrgjqJquYD7iNZ/Exc++LYbFq7k3Dirs0P6tDZAkUV1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TuotS+so; arc=none smtp.client-ip=209.85.161.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718687810; c=relaxed/simple;
+	bh=zW9amFJXrU8iVQqKhRuSIiod+ZeETVC6XWmIT3f6sCc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dxTY4xuibvAKP/qR3J/GaHxYKz4Gw8/EiIrgsFtO8LpNn5CFVCbLWa8HoNw0UpjHo3hTdiyf74IpaLc928h7gx31mKMG/s0yIRR2RXkMyGNlxQ3jL3siVHZ2sLvDkzXy0B8JFKiCMEOn6EYqTMm5upK/aXImdstIM6j7OIuFSx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fDquFuOQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hDKw1Dmf; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TuotS+so"
-Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-5b97b5822d8so2412546eaf.3
-        for <git@vger.kernel.org>; Mon, 17 Jun 2024 18:08:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718672891; x=1719277691; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:disposition-notification-to
-         :from:content-language:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n3pQersoSKfAcZn3ibr4UM6IQd6zeSOb98oqaMYAtr8=;
-        b=TuotS+souOAe15Ztakdz8IdMMRv8zwlJetYyDKmC+e+pA2tb2gP1LJIbvSh+pqXT7p
-         UeUt8abl6D7gPJL72T4ANxSWVvH2cB34JUkN+tCFrH4X3pQkIij7TuxkBooi30/urck5
-         DzFu3vKV2r48llq2ZdgoO+xtOldQGygEeBK3tJmG99RfvHQ3h1a70YUDhq9iMQaDV+0/
-         XBe+2Ic94Gii8S/cdDudGQrZCARoewmtUtfa4XuxSXpgIuLaonu2VW0ThC61h3+iTzK5
-         YW7yYKC8DaaJMV2Lah7qnp4XbJQSUk9VP7U/mXxXArAcaimn6zLG3nM5i+61GvkWnped
-         qj0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718672891; x=1719277691;
-        h=content-transfer-encoding:in-reply-to:disposition-notification-to
-         :from:content-language:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=n3pQersoSKfAcZn3ibr4UM6IQd6zeSOb98oqaMYAtr8=;
-        b=bNRuQYJsdMTBMvEDdODVIicV9G9eD6bQYVUbC1y/fBKqftK6QmwRSnYr282rFcI7aL
-         Vtj/sUqdfkxQSGzAW0yJ3kzv3i0qMo5LISGIte9ukjnghWJ2d1jp7e+eTUfo51GoFNuk
-         y+vYDeDdsZukqZYjVC+Eq7DzXtosFQLCDACkZNUyh6M/e+2GClaE10rRVvlWaPtBtIQE
-         7xFFWdFDH0TdxBl8bOkm2kD5qUneon9O18jgndonrOyprbwCr8x0cBWb4zCJ8pfuVOjo
-         kIH69CPcNEVvGnKbLZLBfipPOSsRXuZwKfhMQATmA0NGi9QLNeMD7prla4cyOQYRVbMt
-         jzuA==
-X-Gm-Message-State: AOJu0YyiAyRkJinUs88XvNIycFDTFzgN+G475LA7RDEgkIJLDqSzfjmU
-	YKeTVet1/BqJZxm78cvAa9MmxY2NqwgYclDfrZb/8GkY7WbDs7W3
-X-Google-Smtp-Source: AGHT+IFJn1Gbb6JNsJSE/K0a9rG7xMjurLUNHpslWnYHTlTPkRaFaA256D6zOuPizywGeVCFdeYuvA==
-X-Received: by 2002:a05:6820:1ad4:b0:5b9:fc9f:6a6c with SMTP id 006d021491bc7-5bdad9fd485mr12268889eaf.0.1718672890894;
-        Mon, 17 Jun 2024 18:08:10 -0700 (PDT)
-Received: from [192.168.6.104] (mail.3111skyline.com. [66.76.46.195])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5c19ff14cdbsm91072eaf.16.2024.06.17.18.08.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jun 2024 18:08:08 -0700 (PDT)
-Message-ID: <d5ff3629-ef8c-472b-886a-3ec0dd6a2c9a@gmail.com>
-Date: Mon, 17 Jun 2024 20:08:07 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fDquFuOQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hDKw1Dmf"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 17F4E11402E8;
+	Tue, 18 Jun 2024 01:16:47 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Tue, 18 Jun 2024 01:16:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1718687807; x=1718774207; bh=ZgMxfoS+co
+	3eYk8UfLawZbJTskl411My3TQx96wwNWc=; b=fDquFuOQkSpCHQaNpl2Q9vzo9K
+	GK5CnOyCKlSairQH+C0mhIIK4Pkz9/INOSCq6DJfVwJbnd30OJ9KY6FIAZJiRHZf
+	WPUPYWJf8/q0VKcurCT5Yv6delBR7B2IEctXEJEANs3WfaLOb0DyQdg9fHe25XMd
+	O0OHnGZIvIDghQvRJAK4pF7/bXYEjcNO3zN5DphuqyB6mMhmwPmTGoRZ/U+GqZEf
+	/QIpx8B/4xT91ksJR7DjbGc0hz97Edj5On8tUH8+N1ZWXrjxUgmq0i6tpoc60YWi
+	H73kelRSk6zqtON174Eyf30wBrB4eP+I9MGjk1+Br+99j1343Xf8PDUVYL/A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1718687807; x=1718774207; bh=ZgMxfoS+co3eYk8UfLawZbJTskl4
+	11My3TQx96wwNWc=; b=hDKw1DmfZH03TwK0REU5C+/srE+CPREkwUv7ozWBSJ6+
+	/EOzDseKKPcXKUCsRhiVXP6RG4u1k1C04/nNWR/sxoJl0iVE0YxvQ0PmgVNaQXqM
+	dT1gVSw8JjDFVnv2d4q6xrbd8vF9TkL1dVF64ja38MvGQRJD9ilRyeTUcHbgaibw
+	QKWhtMLyTb9j3ikyvYb2NIHspniGR4h8gL24iIneohwBjY2yFZ0Kj2nGijVoRXZT
+	ZuUVtuTcKBpQwlrWbKFg5KzBIA5XQQ5OjZdt7jLtazy3BBWsxcH0xcp258NEteUK
+	+pipMgmvL1fYCLB/GQwORNbnKZUDRKCJM091zFfYKg==
+X-ME-Sender: <xms:PhhxZijuSzAXmxLUslWm4FdYrDDmpQC_b2dVXrw4TOvZygs-gZzDQg>
+    <xme:PhhxZjBzIk2M_a5v8MCRK4PVTePH--0QWBHxxsCq7Y9W7JmvQPVargFGAKdb3nVNB
+    R7T8j0xhWgRiCAciQ>
+X-ME-Received: <xmr:PhhxZqGDyJLaG0Ni3nEYflyy2Q63YNwzcHYZk-FrrlIFAzDNEk77jopm85eETxhKvjOY5OyVx2hUXJTREEEbPQRHEgtyHAhI91vFup2ip1302Kbc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedviedgleehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:PhhxZrQd8uDV38Dn4wPQZ2rJjTQPxrcc8bvJu3ozw7IrrOgSBjuqww>
+    <xmx:PhhxZvwh-gPmM-ksZiLkgyiMZ5G5Nefx_i69Wcg9Q2ImXiHltRxyWw>
+    <xmx:PhhxZp58P8lN9MBFFSPcvQ7G3a4CUQHF6FfwQQTzm-lGxGxD6bDa7Q>
+    <xmx:PhhxZsyUQxLkzuPkEnF-7_lYY7rwvsKuug7OkL68HFwHIGWxyb0AKg>
+    <xmx:PxhxZmktsXBLJUDs-L98M4qzBHwZqo4eZeSHsokMEE0U8EWJ1MQEoCK9>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Jun 2024 01:16:44 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 1d86e073 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 18 Jun 2024 05:16:34 +0000 (UTC)
+Date: Tue, 18 Jun 2024 07:16:39 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 09/20] global: introduce `USE_THE_REPOSITORY_VARIABLE`
+ macro
+Message-ID: <ZnEYNzLue3OIK-Ul@framework>
+References: <cover.1718106284.git.ps@pks.im>
+ <cover.1718347699.git.ps@pks.im>
+ <7e023a335f500658b09a0037aee48eff06c668f8.1718347699.git.ps@pks.im>
+ <CAOLa=ZTq+sQAtSiQm9xmdLyn=T=u8Ck0oXEBFLnJvH+54O+AHA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Local git server can't serve https until repos owned by http,
- can't serve ssh unless repos owned by user after 2.45.1
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
- <xmqq8qz376fb.fsf@gitster.g>
-Content-Language: en-US
-From: "David C. Rankin" <drankinatty@gmail.com>
-In-Reply-To: <xmqq8qz376fb.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-
-On 6/17/24 13:47, Junio C Hamano wrote:
-> "David C. Rankin" <drankinatty@gmail.com> writes:
-> 
->>    Security enhancement in 2.45.1 have broken ability to serve git over
->>    https and ssh from local git server running Apache. (web server runs
->>    as http:http on Archlinux)
->>
->>    The fix of adding the following to gitconfig (system-wide and
->>    per-user in ~/.gitconfig) does not solve the problem:
->>
->> [safe]
->> 	directory = *
-> 
-> It is not clear what you exactly meant "per-user" above, so just to
-> make sure.  Is this set in the global configuration file for the
-> httpd (or whoever Apache runs as) user?
-> 
-> The purpose of "dubious ownershop" thing is to protect the user who
-> runs Git from random repositories' with potentially malicious hooks
-> and configuration files, so the user being protected (in this case,
-> whoever Apache runs as) needs to declare "I trust these
-> repositories" in its ~/.gitconfig file.  What individual owners of
-> /srv/my-repo.git/ project has in their ~/.gitconfig file does not
-> matter when deciding if Apache trusts these repositories.
-> 
-> 
-
-   I apologize for being unclear. The directory on the server (valkyrie) that 
-hosts the repositories has the current ownerships:
-
-19:53 valkyrie:/srv/git> l
-total 60
-drwxr-xr-x 15 http  http  4096 Feb 13 02:37 .
-drwxr-xr-x  6 root  root  4096 Jan  4  2017 ..
-drwxr-xr-x  7 http  david 4096 Feb  1 06:54 arm.git
-drwxr-xr-x  7 david david 4096 Nov 13  2023 c_datastructs.git
-drwxr-xr-x  7 david david 4096 Jun 15 02:42 embedded.git
-drwxr-xr-x  7 http  http  4096 Jan 26 01:34 examples.git
-drwxr-xr-x  7 http  david 4096 Aug 13  2023 gtkedit.git
-drwxr-xr-x  7 http  david 4096 Aug 13  2023 gtkeditphmirror.git
-drwxr-xr-x  7 http  david 4096 Aug 13  2023 gtkwritemirror.git
-drwxr-xr-x  7 http  david 4096 Aug 13  2023 mtrxsolv.git
-drwxr-xr-x  7 http  devs  4096 Aug 13  2023 notesdlg.git
-drwxr-xr-x  7 http  david 4096 Aug 13  2023 objstate.git
-drwxr-xr-x  7 http  devs  4096 Nov 13  2023 pgauth.git
-drwxr-xr-x  7 david david 4096 Jun 16 19:14 pico.git
-drwxr-xr-x  7 http  david 4096 Aug 13  2023 vect_t.git
-
-   Prior to this dubious ownership issue, everything was owned by david:david, 
-other than notesdg.git and pgauth.git which were david:devs with other 
-developers made members of the devs group.
-
-   After 2.45.1 update, those with read-only access over https could not pull 
-updates anymore. I didn't notice right away because I pull everything over ssh.
-
-   I do have other machines where I pull https copies of repos, and that too 
-broke after 2.45.1.
-
-   I read the error from the server log and then attempted to add the 
-suggested config to ~/.gitconfig, e.g.:
-
-[safe]
-	directory = /srv/git/embedded.git
-
-   That failed. I then scoured the internet and many posts said use * for all 
-instead of individual directory names, e.g.
-
-[safe]
-	directory = *
-
-   Same error.
-
-   I then changed ownership over everything in /srv/git to http:http and https 
-started working again! But ... when I tried to push over ssh it failed, e.g.
-
-19:14 wizard:~/dev/arm/pico> git push
-Enumerating objects: 7, done.
-Counting objects: 100% (7/7), done.
-Delta compression using up to 4 threads
-Compressing objects: 100% (4/4), done.
-Writing objects: 100% (5/5), 1.01 KiB | 1.01 MiB/s, done.
-Total 5 (delta 2), reused 0 (delta 0), pack-reused 0
-remote: error: cannot lock ref 'HEAD': Unable to create 
-'/srv/git/pico.git/./HEAD.lock': Permission denied
-To valkyrie:/srv/git/pico.git
-  ! [remote rejected] master -> master (failed to update ref)
-error: failed to push some refs to 'valkyrie:/srv/git/pico.git'
-
-   I have tried every combination of ownership, e.g. david:david, david:http, 
-http:david and the bottom line is:
-
-   - https won't work unless http owns the repository (http:dontcare), and
-   - ssh won't work unless the user owns the repository (david:dontcare)
-
-   Somehow I need a configuration that allows both ssh and https to work 
-together. My apache config is setup per the scm-git.com book adapted to use my 
-server auth:
-
-## git directory for https access
-
-SetEnv GIT_PROJECT_ROOT /srv/git
-ScriptAlias /git/ /usr/lib/git-core/git-http-backend/
-ScriptAlias /git /usr/lib/git-core/git-http-backend/
-
-<Directory /usr/lib/git-core>
-   Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-   AllowOverride None
-   Require all granted
-</Directory>
-
-<Files "git-http-backend">
-   # authentication
-   AuthType Basic
-   AuthName "Skyline_Restricted"
-   AuthBasicProvider dbm
-   AuthDBMType DB
-   AuthDBMUserFile /usr/local/lib/apache2/dcraccess
-   Require expr !(%{QUERY_STRING} -strmatch '*service=git-receive-pack*' || 
-%{REQUEST_URI} =~ m#/git-receive-pack$#)
-   Require valid-user
-</Files>
-
-   This has always worked great. It's just the side effect of the latest 
-dubious ownership security changes that have killed it.
-
-   Hopefully this is just a temporary regression in the CVE fixes? Let me know 
-if you need any more information. I'm happy to provide it.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="sXAXvYjRbIf6DmEv"
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZTq+sQAtSiQm9xmdLyn=T=u8Ck0oXEBFLnJvH+54O+AHA@mail.gmail.com>
 
 
--- 
-David C. Rankin, J.D.,P.E.
+--sXAXvYjRbIf6DmEv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Jun 17, 2024 at 05:30:31AM -0400, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/hash.h b/hash.h
+> > index 39a0164be3..cb85d26a2f 100644
+> > --- a/hash.h
+> > +++ b/hash.h
+> > @@ -4,6 +4,8 @@
+> >  #include "hash-ll.h"
+> >  #include "repository.h"
+> >
+> > -#define the_hash_algo the_repository->hash_algo
+> > +#ifdef USE_THE_REPOSITORY_VARIABLE
+> > +# define the_hash_algo the_repository->hash_algo
+>=20
+> s/# define/#define/
+
+This is in fact intentional. We aren't strictly following this in our
+codebase, but when nesting preprocessor macros into ifdefs then we often
+indent the inner macros with spaces.
+
+Patrick
+
+--sXAXvYjRbIf6DmEv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmZxGDIACgkQVbJhu7ck
+PpSoKhAAonOBr+VtKD3eE6jlqwgCP5GC9eXs9UJSVSxRm1eMXTu78vAQOJIWTh8A
+9EY9cvGyZclaR+rgtZjZNtOkyq5qW3qNWDeD3tfY4cZW8yNtPzdRH90ALMiV90eb
+O++LAyv+Nrd3ZVVPf7SlrkIVRzbSU6jOcFo5crt0bmyMrdH7v3L362BoLbQXdwrC
+K3EQY0czaLEyMpS2OV5k/lS8WRstVggpPkGW7MgAKq5pXNoSCY3b01stv4hDc34k
+fDmQXN69Waocd8DzHwi2t5xHCcD/sSmR5WdfFSCtoF0Zkiehe2FwlW45nmWtCm+O
+JExDx3PJM8IuM0aUNQzYYuGaMpSsmghl0Xfp1Mmueievo8Z4XOMwaZAZE+ZTkwnr
+QQ65+WyqDBk2miLKwIDx41C6rYFaWgJDr2mD4339Zb+kxC66KC2CT+kAYz4TeGIG
+ws7wvYNRBt4YQUP+kD7TVOsR/lUVeoNBsmgNAufor5cuUw10QGa/74Fy4g+J7bKg
+OqI1LJy3IW+9uf6PVVjHtSIzazdwBOeQkS5mCiindS7dgui27yUCfq1clc/t0beS
+MhvXsJQuHxbEoPYGaycVC0+kxowBoIjDzFHI++r/jEOIEjYDk1pRmyXIaF6MVaPA
+2E3S28/g6cWvyLmYaxuTpRAgJrhsqmkuBmEU4h7p511gaYDcsUA=
+=Rl/H
+-----END PGP SIGNATURE-----
+
+--sXAXvYjRbIf6DmEv--
