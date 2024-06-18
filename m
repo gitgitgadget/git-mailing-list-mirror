@@ -1,214 +1,120 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4CA1BE86E
-	for <git@vger.kernel.org>; Tue, 18 Jun 2024 09:09:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5AE1CD5A2
+	for <git@vger.kernel.org>; Tue, 18 Jun 2024 09:25:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718701763; cv=none; b=n9P0zWY+vsHS3qZlB1YhCDfCFypGqX1vUNOCUshnvkh1ck6XbpOPw9axfZJvzW3K4oFLOOC4NIhmYrsGnvXtpbWlZbxWOOhA6S8QNefuzRvjtyQQw2Esfb3sVWWOKq1T2gGlXD0QZAwfxH7AZjYiz8mVlfEM3LGaSdEFrwFURLo=
+	t=1718702737; cv=none; b=GXGI2TtLMd+7TGfsB2j5m+wFUh/bgIy5gZ4u2cyh5p9sEyzZY2j5TrfOoK/a1yNFNJMij7/5fSh1xEZAQY/REJFvb/624hlvVJoBBrYAP6mtqZcJUnLxUCH5YhyelpI99sLtrHeLg41QOury93k4po3LNXoZ9jjH8lidTVrbCBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718701763; c=relaxed/simple;
-	bh=MwsGi3PN0zCSk4P/A6LqguIibGbtBB7J/iXZYJB4LQg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CsEMDCoQbFs66NR+vDN4Jm/NI8jQ9QzFC/KIULOpDFCIg4Q8QxwDwY5Y6QBPStZqv+kg2zuTvNLOpsG6h61GDEE4txtkFOzTaZ9tHbRjA9+tYuw6vm2TiLZ4DuxHKfXTcgEadtFFvxNlRFb+Uh+BbcSYbWeLHi38WtXhVA8BgAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b6Toq/V6; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1718702737; c=relaxed/simple;
+	bh=vGejdOXa3QkmRweVthZPtDmI5qTfFqFUfUFpz20/nE0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NWZADLqIwiGXr8PYeL+dQ230/uU41eQIavTI/HQqE3i8TvYP/cO3DULJM1RpNSwQlKgMRsRQMZ8AeL/zGlxuHuE5VWOf4r6GqDx9VluLwz1+piy1jE18BC4M1TjTEBEmGClojlzsIvktShf4YjPlags8snzJ6holLMU5zDdYIck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kh1tia6L; arc=none smtp.client-ip=209.85.160.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b6Toq/V6"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1f44b441b08so38548735ad.0
-        for <git@vger.kernel.org>; Tue, 18 Jun 2024 02:09:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kh1tia6L"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-24c9f628e71so2706525fac.1
+        for <git@vger.kernel.org>; Tue, 18 Jun 2024 02:25:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718701761; x=1719306561; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HgbSpn4E5peGIuOakdWNdfWimd131QYYCnmk/DOZjnI=;
-        b=b6Toq/V6kzGOLUU/kLuo3vb2eR27wTpfrzEnXL1RdQw5R96mlFR958875ttVAC8Eta
-         tPixyWKBeYlvhxZwYxPPZrUhwO6yps4MrgEO0VDxmNc1OcTONwkshvBXxd92kMdPJ5Sj
-         CCRobFpgtxkMObidq2jB7eWdQlmeYk5Dmkk724id9bUaNBuqZvWbnkDHah57hjMjvetf
-         Uq3LTytArejRloqgg7bDHCAZB5WC7BHhhhq63jeaOC3ENgdLZPTIjDNJyVW3ak2WP86V
-         l5dgt0apqiVOefDMhE5yvRk8nvIR9b15Flcuibhva2eLUPXT0T5aTcCy6WfCsH2VDHLm
-         TPeg==
+        d=gmail.com; s=20230601; t=1718702735; x=1719307535; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sKqn6otveolH92WyWnciUXS04Z8hyHXqQ9qG0nEQoEg=;
+        b=kh1tia6LETHGguqnXvQoU+3ePQco9q27P5XQX5FvbkMYNqy630CVF/3aNlWPxV0fH8
+         IGpWB7osKVLTLePNhrNdK6J3Y/acDCpaheJd+cK6ViEDjk7pBui6WytSyDDT/OO0E7fD
+         /CfomdwvomsYqp/Y7gyf9NueK0T9d8Nb14/c3pBVYj1+NyRaUE7l6zpJhMPQv0aAqRc4
+         AC6Tep66Yt7bpd+HqVowd6bQmc08mkIpD9+vtqwHZTWVmWfElHOrEAHuyvjZEjzlVRKd
+         gGYPqRZIV1WIxHLQAOcD8yP7BHqVOm+gLWgkMdSwoMGJYTTjphKqSagXOhsHpNSzm5Ok
+         lokA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718701761; x=1719306561;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HgbSpn4E5peGIuOakdWNdfWimd131QYYCnmk/DOZjnI=;
-        b=Wj06gXRBPA3KGGguNA1nQNcL89CW5lJma3Bh3KtnRGl2/Rv8mI6LYs4Afau3IGv4BX
-         /1VExt6VBXpAc4Etx6N1LR1SKXAnBBhv2jggahGj85EBT6txdpIRy1+VGY2AIqMWc1Su
-         EHllmvctfVL0coQIwAh6ATOniMS3VdaHe6aunGAgJhaN2jcOrBCzSLpYUhY40XZIileT
-         vWNUMdrlk0E/2x+LrKnIu0VVuVCZdN9Vb4MHeSFegUC0NP0Q+VoxpHBqAX09ikbA6os7
-         x4nOHUVaHntrl/bgyhC0QmzMdUz7akeO4iBfohHASg8xKYMUWiAXc+MFOJ/8c6mPhmHE
-         1cwg==
-X-Gm-Message-State: AOJu0Yx9aTdZFk3xntO2UxO1oEMfNptYcpWTmRVg6Cz5Q5qMrEaYcsoi
-	kcsv7ZIRNfkSS0MiURK6YE7ySErN6u3y04qKNoSoVOdzL3bv4YE6
-X-Google-Smtp-Source: AGHT+IGXP9dsO5/LiI7YmACj3/rR82YvulUVQu4R7OoJxaiCaTRSrPaxww3V1mpDLAn8k1FutVONoQ==
-X-Received: by 2002:a17:902:e542:b0:1f7:26f:9185 with SMTP id d9443c01a7336-1f8625c65a0mr119216015ad.10.1718701760648;
-        Tue, 18 Jun 2024 02:09:20 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f855f5c039sm92773635ad.306.2024.06.18.02.09.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jun 2024 02:09:20 -0700 (PDT)
-Date: Tue, 18 Jun 2024 17:09:17 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC][PATCH v2 5/7] files-backend: add unified interface for
- refs scanning
-Message-ID: <ZnFOvagjx6fRxJbw@ArchLinux>
-References: <20240530122753.1114818-1-shejialuo@gmail.com>
- <20240612085349.710785-1-shejialuo@gmail.com>
- <20240612085349.710785-6-shejialuo@gmail.com>
- <CAOLa=ZQ5msKTHwDou2RmCrUCdfDuYdFwJQx3Q9gK6aAJvGw-pg@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1718702735; x=1719307535;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sKqn6otveolH92WyWnciUXS04Z8hyHXqQ9qG0nEQoEg=;
+        b=tFZu7CquxrDK1sbbBZmhSbWdIdB2CzOO4GDOHUYBZTnzreH5O90E5F+0r7t8/B4NRj
+         AepW5uEAq5wdkjok5fIGmOSww2NKbKCDFLWRGm6y8O8nD2E0LZ2YdPUvevjoo2x2wk3A
+         mmkc3edvNQGf8bp25NI5+noQnpPPTzPeMJSEGc9FvAc2mbpcXn/xOpppXZ3Qf7ypZCDR
+         Sb/GpKBPj66c7T1+WleBca4WJ4nYYHnfTEL0tC/PzGAuLm87CeCTbkvb2BIi8GWpBmXZ
+         UjoKXCNHQ5RJAVovAL6/jgladerMw3acxY9tVHgfcSg9lheBJdry6zpcG+NGe7ixmdNF
+         pGCg==
+X-Gm-Message-State: AOJu0Yw2n+cOX0um61is+n1Q63Ft0hbPNnwXQQrKoY4Gx2hUcsPF+ciy
+	MS56RgB0fV6uW7FGFSSYjvKEwMWHqAYsGgkUbDDxLak1Ksk7fDsrbFF7vbth2e3d866hbjKs3sO
+	mJC4mxHcuLprlXv+BDU9Zc1y1x3A=
+X-Google-Smtp-Source: AGHT+IHJSqcgwCGEjcPVK/Q/aQZ2wv0f2xNBKqdCLHAApmH0iJuQeA3tlNgYTyKALEJcsOcOShXK6PSiWZRcFvaS5ts=
+X-Received: by 2002:a05:6870:b1ce:b0:259:88b4:976 with SMTP id
+ 586e51a60fabf-25988b41878mr312400fac.43.1718702734819; Tue, 18 Jun 2024
+ 02:25:34 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 18 Jun 2024 05:25:33 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ZnEYNzLue3OIK-Ul@framework>
+References: <cover.1718106284.git.ps@pks.im> <cover.1718347699.git.ps@pks.im>
+ <7e023a335f500658b09a0037aee48eff06c668f8.1718347699.git.ps@pks.im>
+ <CAOLa=ZTq+sQAtSiQm9xmdLyn=T=u8Ck0oXEBFLnJvH+54O+AHA@mail.gmail.com> <ZnEYNzLue3OIK-Ul@framework>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQ5msKTHwDou2RmCrUCdfDuYdFwJQx3Q9gK6aAJvGw-pg@mail.gmail.com>
+Date: Tue, 18 Jun 2024 05:25:33 -0400
+Message-ID: <CAOLa=ZRA6QDojbvP6btOGX5q1Pa0DivBZA_J1gojF1gJu9aENw@mail.gmail.com>
+Subject: Re: [PATCH v3 09/20] global: introduce `USE_THE_REPOSITORY_VARIABLE` macro
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Ghanshyam Thakkar <shyamthakkar001@gmail.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="000000000000fbe119061b26a963"
 
-On Sat, Jun 15, 2024 at 04:51:14PM -0400, Karthik Nayak wrote:
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > For refs and reflogs, we need to scan its corresponding directories to
-> > check every regular file or symbolic link which shares the same pattern.
-> > Introduce a unified interface for scanning directories for
-> > files-backend.
-> >
-> 
-> Here we talk about reflogs, but we only add a iterator for
-> "$GIT_DIR/refs". Should we add something for reflogs too?
-> 
+--000000000000fbe119061b26a963
+Content-Type: text/plain; charset="UTF-8"
 
-Here, we simply set up the basic structure. For both refs and reflogs,
-we will traverse the file system. What we concern about is the regular
-file and symlink file. The "refs_check_dir" parameter is used to
-indicate what we will check. Actually, we do not add any actual check
-operations for refs in this commit.
+Patrick Steinhardt <ps@pks.im> writes:
 
-> > Mentored-by: Patrick Steinhardt <ps@pks.im>
-> > Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> > Signed-off-by: shejialuo <shejialuo@gmail.com>
-> > ---
-> >  refs/files-backend.c | 75 ++++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 75 insertions(+)
-> >
-> > diff --git a/refs/files-backend.c b/refs/files-backend.c
-> > index e965345ad8..b26cfb8ba6 100644
-> > --- a/refs/files-backend.c
-> > +++ b/refs/files-backend.c
-> > @@ -4,6 +4,7 @@
-> >  #include "../gettext.h"
-> >  #include "../hash.h"
-> >  #include "../hex.h"
-> > +#include "../fsck.h"
-> >  #include "../refs.h"
-> >  #include "refs-internal.h"
-> >  #include "ref-cache.h"
-> > @@ -3402,6 +3403,78 @@ static int files_ref_store_remove_on_disk(struct ref_store *ref_store,
-> >  	return ret;
-> >  }
-> >
-> > +/*
-> > + * For refs and reflogs, they share a unified interface when scanning
-> > + * the whole directory. This function is used as the callback for each
-> > + * regular file or symlink in the directory.
-> > + */
-> > +typedef int (*files_fsck_refs_fn)(struct fsck_refs_options *o,
-> > +				  const char *gitdir,
-> > +				  const char *refs_check_dir,
-> > +				  struct dir_iterator *iter);
-> > +
-> > +static int files_fsck_refs_dir(struct ref_store *ref_store,
-> > +			       struct fsck_refs_options *o,
-> > +			       const char *refs_check_dir,
-> > +			       files_fsck_refs_fn *fsck_refs_fns)
-> > +{
-> > +	const char *gitdir = ref_store->gitdir;
-> > +	struct strbuf sb = STRBUF_INIT;
-> > +	struct dir_iterator *iter;
-> > +	int iter_status;
-> > +	int ret = 0;
-> > +
-> > +	strbuf_addf(&sb, "%s/%s", gitdir, refs_check_dir);
-> > +
-> > +	iter = dir_iterator_begin(sb.buf, 0);
-> > +
-> > +	if (!iter) {
-> > +		ret = error_errno("cannot open directory %s", sb.buf);
-> > +		goto out;
-> > +	}
-> > +
-> > +	while ((iter_status = dir_iterator_advance(iter)) == ITER_OK) {
-> > +		if (S_ISDIR(iter->st.st_mode)) {
-> > +			continue;
-> > +		} else if (S_ISREG(iter->st.st_mode) ||
-> > +			   S_ISLNK(iter->st.st_mode)) {
-> > +			if (o->verbose)
-> > +				fprintf_ln(stderr, "Checking %s/%s",
-> > +					   refs_check_dir, iter->relative_path);
-> > +			for (size_t i = 0; fsck_refs_fns[i]; i++) {
-> > +				if (fsck_refs_fns[i](o, gitdir, refs_check_dir, iter))
-> > +					ret = -1;
-> > +			}
-> > +		} else {
-> > +			ret = error(_("unexpected file type for '%s'"),
-> > +				    iter->basename);
-> > +		}
-> > +	}
-> > +
-> > +	if (iter_status != ITER_DONE)
-> > +		ret = error(_("failed to iterate over '%s'"), sb.buf);
-> > +
-> > +out:
-> > +	strbuf_release(&sb);
-> > +	return ret;
-> > +}
-> > +
-> > +static int files_fsck_refs(struct ref_store *ref_store,
-> > +			   struct fsck_refs_options *o)
-> > +{
-> > +	int ret;
-> > +	files_fsck_refs_fn fsck_refs_fns[]= {
-> > +		NULL
-> > +	};
-> > +
-> > +	if (o->verbose)
-> > +		fprintf_ln(stderr, "Checking references consistency");
-> > +
-> > +	ret = files_fsck_refs_dir(ref_store, o, "refs", fsck_refs_fns);
-> > +
-> > +	return ret;
-> > +}
-> 
-> I'm not fully sure why this needs to be separate from `files_fsck`. Is
-> that because we plan to also introduce `files_fsck_reflogs`?
-> 
+> On Mon, Jun 17, 2024 at 05:30:31AM -0400, Karthik Nayak wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> > diff --git a/hash.h b/hash.h
+>> > index 39a0164be3..cb85d26a2f 100644
+>> > --- a/hash.h
+>> > +++ b/hash.h
+>> > @@ -4,6 +4,8 @@
+>> >  #include "hash-ll.h"
+>> >  #include "repository.h"
+>> >
+>> > -#define the_hash_algo the_repository->hash_algo
+>> > +#ifdef USE_THE_REPOSITORY_VARIABLE
+>> > +# define the_hash_algo the_repository->hash_algo
+>>
+>> s/# define/#define/
+>
+> This is in fact intentional. We aren't strictly following this in our
+> codebase, but when nesting preprocessor macros into ifdefs then we often
+> indent the inner macros with spaces.
+>
+> Patrick
 
-Yes, exactly. Later we need to introduce "files_fsck_reflogs" which
-should define the different `files_fsck_refs_fn` here. So just introduce
-a function here.
+That's something I didn't know. Thanks.
 
-> > +
-> >  static int files_fsck(struct ref_store *ref_store,
-> >  		      struct fsck_refs_options *o)
-> >  {
-> > @@ -3410,6 +3483,8 @@ static int files_fsck(struct ref_store *ref_store,
-> >  		files_downcast(ref_store, REF_STORE_READ, "fsck");
-> >
-> >  	ret = refs->packed_ref_store->be->fsck(refs->packed_ref_store, o);
-> > +	ret = files_fsck_refs(ref_store, o);
-> > +
-> >  	return ret;
-> >  }
-> >
-> > --
-> > 2.45.2
+--000000000000fbe119061b26a963
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 9468329fe610c7a3_0.1
 
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aeFVvc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNDA3Qy80MnZmMXZuaytqRVJxZWN1UithS2QvR0FqYgp5ZTB2ZjZsempw
+TmZjZG5rNkFrMTZ5YTNRL1E5cUVZUzhMbmFqcVNGWFJjeFRRd3oyazVRMzdaQitDQ3hhVFdCCkRB
+Z3hFdWJ1RmNLVkJDYzJPYytHQTZFbnA2TDE5ZEhYRTBSUjBkbStIUU1ZeTB1cUw2WEdZWFljc1NP
+VlVWeDgKY0gzdlhoNFRKbGlGRVVKOGtPUkcyVGlMQmp3c0hYWVplc0gvb0VYbmlEbG9MUVY0ZDQr
+TGI3NE03Rmc2UU9CUQorR003YXpvbjF3ZUtNTUlmNGdpcDcyR0w5VGN2R2tFekhrYURBaWNOcE84
+MnhHdWFkbTdDTzAwcENxY1ZaVTFoCmplQkd1K0QvbjYxRlU5MkZWSUF3dUh6eHIrQ2J6blA2bnhF
+L2MxSEZXYXZXWVhZL0pRcTB2VCs0bndQOXIvZFEKYW5WRHJrU0xTTjdOTGUzekdPaEw5YmJIT05t
+eWFtemZod3FyVFFtWVdITlNDaFYva2pNNi91ZmlSNmpaYjhNYQpHanRGRWVvWFpYK05Pd1JXZTlK
+dHlOR2EyVEtDaENUd3Rtb1IrT1p6WGZCYlJHbTVEZllpWE1DQnI1dVpZZGhiCkZXdHd1amtxdjQ1
+MFNnT2FyWkRZT0hSMlRDM2Q4WnlMc1VOckdiOD0KPVVmbmsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000fbe119061b26a963--
