@@ -1,132 +1,110 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B2DD299
-	for <git@vger.kernel.org>; Tue, 18 Jun 2024 15:48:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B11BD299
+	for <git@vger.kernel.org>; Tue, 18 Jun 2024 15:57:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718725690; cv=none; b=MZhYXsj+A9ZDEp/d3ksc99baISVUmi+yULHacPiG86lXjxbbZnrW7LIFbBrM/qKeemLvu7NGAqtfnLauOfNX+tb0rGP7NzHtATL+mgr7Im1IoYVbgTJgOjtwFulwB0lDLeM106L/Rw5Q/Jd0eL3XVMbP5QodMfNf4wzVUOKj9YU=
+	t=1718726229; cv=none; b=Zoj7+PxC6PodvUl4XiVW5KgQczhuJUWiqkJvn9v1Om2Eln8V3bkEpMc9f/zK+aM3M5IrkhPhJ2ImWcLUR/0OcM1v3eLaZsQroRuUUkttRMJCRyucQldn3UCGftUjMzdrjE6vQXdmLGaShlbRiOII4cB6esDCTgLqTJCwvRLqJ0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718725690; c=relaxed/simple;
-	bh=osoNdpZNrYXP6s/HtUAjO40DM0u5KPV7HuQ4LNbiUMU=;
+	s=arc-20240116; t=1718726229; c=relaxed/simple;
+	bh=bonc78afVYF9Haf7yV9VznFG2BJYvquXhclfsdH4vxk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dVEeAj812/cmUGsm+05HSXNiVHs+cx9Vgvc8dQq64BmeXe5fP+5LZ88okSRR00QVwbfEBkL+XzvEy9rtUaQToxT4L3uAXdli5ni3i4MS/1tq1L5ncaAEaUSZjB5rggNVxN9HGzyxWj2MccyCJgXcJc4fYjchUySu42Llej7asAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QY95iweV; arc=none smtp.client-ip=209.85.216.49
+	 To:Cc:Content-Type; b=VtgJWkrSScbpPGEhCsMrhiAsw+E5yO7lV1tjMNbL3VOxObKy6/1McTbMJrCY/0GYezZow4TWXDjQBZD1urLGSFRgDyIzYKAQX+kFV3lDaNBV/7/q2BtR1P60MGMl4YXppMOdK55WemMB9asl92hqqg8MU0d8yfehHSreSqjlDSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a8h6fmvP; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QY95iweV"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2c508ea0cc5so2154420a91.1
-        for <git@vger.kernel.org>; Tue, 18 Jun 2024 08:48:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a8h6fmvP"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-709423bc2e5so1851297a12.0
+        for <git@vger.kernel.org>; Tue, 18 Jun 2024 08:57:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718725689; x=1719330489; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718726227; x=1719331027; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QgvM7jUmvTE8MF+c8QeyXzpjrTk/XLE4urAoR/beGkM=;
-        b=QY95iweVubnA4R46Kg7B6TynyyLPBfs2KcXxTqraUCxnTsHD9R/YZ9/YAb+wiVKm8H
-         hnNi2k8RTdl5iOF0Wreaq+H3xrSPXwXs6UBQ8wpF/huQEJh0pq1IdLo8u7PRMLl8NQ/y
-         uU2E3tlx2qyEVjCD4noDe7x6cLGkBZkONRaGTmZq1kiVBbqFl1GEKo93di71gHj3musx
-         iuPOhbIQhzwVW2NyXxJQJPOsexTroLg/NeASdHBOmn1rshqnK0lUOZRAnJQ6c/afrDQr
-         7xSkREAsgbWzZEEszrOsHwsPwbdGS3jqmoSrXSjTDdomPNiGCY6qcrjSJQUaXcihoLR6
-         bZaw==
+        bh=4PfYRvMqQ2T1I6kU+lZWJlVfgEf/c/ecM6JkLkaKwRc=;
+        b=a8h6fmvPsgLUyzI69zJl3Q6fKcQGt48u5CTY/Bc6r+Klum8t+M8ls9A36NHmMutWlK
+         1QxE+0Uqo8ZmuJMpOhtFPgCeAZ0s6DiorOFlhxnSJnTfria3xpK3sj/DZ4nGcO92HlCg
+         ufyBh/sbcNqpprDRvtNv73KakEKgAWcVE9g50kMl+pt6UMvKqP3dB0acQpmbRF7lD18e
+         EOS4IiJnCzyV2QsvoIOkqpanLErzEojppKu2IOnX6WGdmp8yMlqGWgbIY9o4JiQqf2+5
+         czal2F5+4s4jDacwGbhxn53/ZzDRriUEJUmeS8uKEIxdyVPqJCx6h3KokLsj2gO/XLFo
+         vM8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718725689; x=1719330489;
+        d=1e100.net; s=20230601; t=1718726227; x=1719331027;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QgvM7jUmvTE8MF+c8QeyXzpjrTk/XLE4urAoR/beGkM=;
-        b=YZd+uVuS628WApDnILg/+yRwR0H9+hkhP/2+03zg2Dl7u1qJQWbpfNSYAcq2HcJ7Lb
-         SEJAewSZIkT/IzsBytfOCKDhZEjoqtVYQhAGzmiK0DdarRDqXRmObe7pkPnlk9o+Psxp
-         hMYMx/t/MeeXFjsyOwDffb20n3YWc9ccWzDJmhfXycksrtNEXERYyKry4Yx9N/ZuJmrd
-         L1E8u+j2sbeKRmIUFMcTzSWbBujYo6BDDsvZBssUW4odpbwzCp7+2lIaavv01llLqeLT
-         u/UH5PgijTNVMbyhSlOHNrqWD00p3Ik5/acQ5vlo9HCrQtYB4h++09Vk9sJtvrXbYSMr
-         GWDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV+yiyPF2g5unTYLd2Sbk5k9V8d0pGmlkS6zV59YQYSGuzv6D0/SiM9KMYyYVvb+gCmR5DntkD8/Eg7FTR6sgsiAt4K
-X-Gm-Message-State: AOJu0YzTY/mx8PopEMJ2bMIdPO672lueqH/5BAzneH9AOdBGDGCDPF6P
-	CbakXoiW1UmP4ArUhDTIdjJz5mY17Yt9q5nBhHJ5V0GvzzyTaC5y/+sc01/oUYMvtRWUglPX6j6
-	ZnFPCDWVmhUOLasLbQk1ejBhUbyY=
-X-Google-Smtp-Source: AGHT+IFF0wyEcdVwmP85qxVQPpaXmnrs8i9eyUTIFXyXKfRwr5wUUrOYF9duTiOkXcp+MUa6YKitH/g+GqGXK/c7qdE=
-X-Received: by 2002:a17:90b:8c4:b0:2c5:2da3:7e1b with SMTP id
- 98e67ed59e1d1-2c7b5af2b6emr96260a91.1.1718725688703; Tue, 18 Jun 2024
- 08:48:08 -0700 (PDT)
+        bh=4PfYRvMqQ2T1I6kU+lZWJlVfgEf/c/ecM6JkLkaKwRc=;
+        b=jPLOVuY3Ocj9+6MerAZ7THGXgQPGo3BSdWfHfO+D+dx7VMw250NK4QNr8bxjg7AsnE
+         DZgkJErQ28FMP3DVffYoSHplOR5VplkLkQEkQKMtHzEU/X7/LJSJL8jMUGwDBoqA/6Ev
+         hvcubnZJDO3MjEjdPTtT2/VkpVyp6ftQUDZlN45BUhtmTFA++No5Uh/Ndt5mg5UK9MDB
+         DgsaGIMG9CNzSlL8IzlBGnRV/lHx9pmhgOOYxAItfj1k5A98Dc7DvMmu7fo2LEaXSvif
+         nAPwCaSnXyzMkyZydORWUqZjlXlTn5AmDRuXPyRaGgaeiqSqvSF/8vjkQnkYRlFvnawP
+         2KyQ==
+X-Gm-Message-State: AOJu0YyUf/jcNrFZ/IpZMp9LJ1nbyeBOuqrwmE2ZQu3iPDFrVhaivmaG
+	FGUpfei26jNU9qX9BOVYIfinttyVb/r6vj7WqzzEN0rQJaMGBv2j+s6lc4hNMevSWfsy513U9vd
+	XdwtlFTwYh1VZiS+52BE+6tGwHeY=
+X-Google-Smtp-Source: AGHT+IEixk3TDEtBzzOfLcy+qYU/ErX9n4UvKJp5z37fBfcO8ctJ16oWvdLZWkQTfk5s0wr/Zai07xlZDegTVWH6ClY=
+X-Received: by 2002:a17:90a:db17:b0:2c4:e3af:a026 with SMTP id
+ 98e67ed59e1d1-2c7b5d9193dmr91093a91.47.1718726227341; Tue, 18 Jun 2024
+ 08:57:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ZnFCEYypdAyXMMlg@ArchLinux> <CAOLa=ZS57EsZk+7xOW9imbA4oWANKf0b+HxBZ8hGFaQQkCsvcQ@mail.gmail.com>
- <ZnFJTdHQcHVagflt@ArchLinux> <xmqqfrta2ryp.fsf@gitster.g>
-In-Reply-To: <xmqqfrta2ryp.fsf@gitster.g>
+References: <ZnFByMI1lWUDSxLd@ArchLinux> <xmqq8qz22r6r.fsf@gitster.g>
+In-Reply-To: <xmqq8qz22r6r.fsf@gitster.g>
 From: jialuo she <shejialuo@gmail.com>
-Date: Tue, 18 Jun 2024 23:47:55 +0800
-Message-ID: <CAH-kW5cxQQFpr30FV9uB3HcyuSgoCYRs8UxiStd9v5P1cXjK7w@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v3 1/7] fsck: add refs check interfaces to interface
- with fsck error levels
+Date: Tue, 18 Jun 2024 23:56:54 +0800
+Message-ID: <CAH-kW5e079dkg99C3rroj+vh6C2L6roqVFYWg_Ykno3WVpHOhg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v3 0/7] ref consistency check infra setup
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 
 Junio C Hamano <gitster@pobox.com> writes:
 >
 > shejialuo <shejialuo@gmail.com> writes:
 >
-> > On Tue, Jun 18, 2024 at 04:38:07AM -0400, Karthik Nayak wrote:
-> >> shejialuo <shejialuo@gmail.com> writes:
-> >>
-> >> [snip]
-> >>
-> >> >  struct fsck_options {
-> >> > +  /*
-> >> > +   * Reorder the fields to allow `fsck_ref_options` to use
-> >> > +   * the interfaces using `struct fsck_options`.
-> >> > +   */
-> >>
-> >> Why is this added? It makes sense to have it in the commit message
-> >> because it talks about the change, but why make it persistent in the
-> >> code?
-> >>
+> > This is the third version. Mainly focuses on the following problems:
 > >
-> > I explicitly add this comments due to the following reasons:
+> > 1. Add "escape" check for symrefs and symbolic links.
+> > 2. Resolve the reviews.
+> > 3. Fix some errors in version 2.
 > >
-> > 1. If someone needs to change the `fsck_options`, without this comment,
-> > he might be just add some new fields at top. Although the change will
-> > fail the tests here, I think we should mention this in code.
+> > shejialuo (7):
+> >   fsck: add refs check interfaces to interface with fsck error levels
+> >   refs: set up ref consistency check infrastructure
+> >   builtin/refs: add verify subcommand
+> >   builtin/fsck: add `git-refs verify` child process
+> >   files-backend: add unified interface for refs scanning
+> >   fsck: add ref name check for files backend
+> >   fsck: add ref content check for files backend
 >
-> Do you mean you plan to take advantage of the fact that early
-> members of two structures are the same?  IOW, if there is a function
-> that takes a pointer to smaller fsck_refs_options, you plan to pass
-> a pointer to fsck_options from some callers, e.g.
->
->     extern void func(struct fsck_refs_options *);
->     void a_caller(struct fsck_options *o)
->     {
->         func((struct fsck_options *)o);
->         ...
->
+> What commit is this series based on?  It does not seem to apply
+> cleanly on top of the same base as I queued an earlier iteration of
+> this series (f931bfb2 (Merge branch 'ps/ref-storage-migration' into
+> sj/ref-fsck, 2024-06-13)), or the current tip of 'master' that
+> already merges that prerequisite topic.  The early 6 applies on top
+> of 'master' fine, but the last one.  I wiggled the last one in (the
+> patch to the fsck-msgids.txt documentation expects stale entries
+> that were already removed in 2.45.2), but if you are basing your
+> patches on an unusual commit, please describe it clearly here in the
+> cover letter so that others can locate (or recreate as needed) it.
 
-I do not want to convert "struct fsck_options*" to "struct fsck_refs_options*".
-Instead, I want to convert "struct fsck_refs_options*" to "struct fsck_options*"
-to reuse the functions which use the "struct fsck_options*" parameter.
+Well, I simply does "git checkout -b js-refs-fsck-v3" for the current branch
+"js-refs-fsck". And I use "git rebase" to change the code in this branch.
+So the base commit should be unchanged. However, maybe Patrick
+has changed the code and I forgot to update upstream.
 
-Like the commit message said:
+And I have set up the base using the following commands:
 
-  Move the "msg_type" and "strict" member to the top of the "fsck_options"
-  which allows us to convert "fsck_refs_options *" to "fsck_options *" to
-  reuse the interfaces provided by "fsck.h" without changing the original
-  code.
+  $ git remote add junio https://github.com/gister/git.git
+  $ git fetch junio
+  $ git branch js-refs-fsck junio/ps/ref-storage-migration
 
-It may seem we should add some fields into `fsck_options`, but I don't think
-it's a good idea. I will elaborate my design here:
-
-The git-fsck(1) is highly relevant with the object database. I don't want to add
-some new fields into "fsck_options" due to the following reason:
-
-The fields in fsck_options are all related to objects except "fsck_msg_type"
-and "strict". Adding some ref-related fields into "fsck_options" will break the
-semantics.
-
-Actually, it may be perfect that I may abstract some interfaces here, however,
-it would be too complicated for this patch, many functions use "fsck_options *"
-as the parameter. I think we may do this later.
+I am sorry for the confusion. Next version, I will merge the master code
+and send the patch. I am sorry to make you so inconvenient.
