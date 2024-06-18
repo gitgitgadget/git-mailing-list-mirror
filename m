@@ -1,155 +1,108 @@
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BAB1BF50
-	for <git@vger.kernel.org>; Tue, 18 Jun 2024 19:07:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D159E39AEC
+	for <git@vger.kernel.org>; Tue, 18 Jun 2024 20:15:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718737660; cv=none; b=Vtwp4yrhT60QRxE/0eul6qgj/ARmbToDArfTq7ecNAlWgvz7PfmeaZlwQV1YWeDLO68oeEth9YLEaLdkdWOdoq/Jtz5WyrxiPJxxzloNXgyQIkZFxIPS3RWdt1bx23wBU548lBpv8SEkIz84JHTg3uyLOxSQ6EQShO017GwJ0Yc=
+	t=1718741713; cv=none; b=E0rom7FN0wVjqzOSjgmBK3cKbG+odb/9Y5ISPEs+T7Dashd6lPDaSPzVZvS6LRs9zV1xEDPkrtBJhi6hQ5GiDl2Lo00k/yeih8Fd3j6ywLR0xhrJrHJJCStSyJzBBIj1CtQL2uH1R2Lev5bxa9MhNrk+J8lJVtN2K52J4N5S27Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718737660; c=relaxed/simple;
-	bh=zgVhCGC5AXxinUEJt9X35aiXqMVOaI89EWj10tgpWIk=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=O1IV7vFwrt90lPfwd1/hrP9kmKJ4URo61ef2ofKLzkXPHCuBCluM0L6DL7JE2DIDwUnYGqGssT7KY1+YjfBm32rXtzjhdxA8IXicyVM7oQU8CWa4pmnvGZmUNwilFd1YziJZshkpGKGIAhf1tN8wAL27EmGZaaf0sxVaLRcGBCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CQlUvTae; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718741713; c=relaxed/simple;
+	bh=r182SHhvog4mzEptxo/1h+s4Ccqb0HHJnm81tdFT6oU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WO2EJzAMX5i+W72LO46wwkkgMz3Up6OhOU0FKHVo85W6sq2aT4+Fa6c4zx+GWB698efcPjx2UnT1vXlDvEdJiBx9t4LmVFEsyDBHEEOZT4vxHJK0wKi73vj1k0izGrHGGqsgnJQ//vtVaZ+17w5hdKPhzvck0j9PofA8TDkh/+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=l8KjHqRQ; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CQlUvTae"
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52c819f6146so7702603e87.1
-        for <git@vger.kernel.org>; Tue, 18 Jun 2024 12:07:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718737656; x=1719342456; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P625zsGCOD9NCOEcBp7BgdNy7ig/qHdbX0sOH7VzWvE=;
-        b=CQlUvTaeM3lss8fGfgf2d4PhpMXXgt8cat7zs2KcUrL4C+UODwtIT9luiUEe0sZJmT
-         GTt8uPp0gA6f1AMQE0lbq0Jswf0Ks3e9ZMieMGsl6Slj4UdcmOlYMNGAnMjb1VRSPgNu
-         /QnsBwDnMSaa9h3e4Yp1K/h0S3yiqvs5naX/w4kATuDiSvy/+AZzylu2VvDX/De7COjX
-         pioYhwzsYUKdEgx6OBIySZkOe/F4wKXyR+AMzmHaUuGjzCTlUB11VIMWb1mDkQ7lRG/D
-         oDzYXeDLbuVt9f0UHkZEaa1Iso5KGUPhHmFnbNDC5S0SIz+HBiw9WjL/BmEV9hJR4tf8
-         twpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718737656; x=1719342456;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P625zsGCOD9NCOEcBp7BgdNy7ig/qHdbX0sOH7VzWvE=;
-        b=NeuCrYyJJzm1a7HFf0uYlJKAlogSjqZD2ZGiF8WLWBKhnQQyCKHyFXU+kz45IYxjcU
-         l1R0RwmiXIxTQrb7piYyo7XXUWW3nf5o/tEaJNaQmwgEiB1zDXdNmCRRRChOoEx5tPkc
-         uFvcSFoX0Tim+c3C2iOLFtFvox+EZnTEKxgBSFP2nSjcLzMEqC0bh2e5G1X6m8jX8AcU
-         SHLrOQlP8W5OIR1UoYPgqhhhrh7qmNWioLSsxYJzydluwni+8E8f6fSAePmmO7H26JcD
-         o9DhLD5WDCReMmR1s/TWjrqiu9B+u4Ld58WrEHf/bVTH9MggvhCCl+ynjVgB8RsfSb8B
-         eMdg==
-X-Forwarded-Encrypted: i=1; AJvYcCU0s7bSArv2tMM77uBEPZb4YdybrUQ5cbxrRpCSw4a8E4oj8qYhmwYk+0VWnjxVSwLJXdvPoPMjG/BYEycHJViQiJP6
-X-Gm-Message-State: AOJu0YwVO6L5VDHSSyOoJ2fL3piHzSH1IOq88T3XhnvHWJPNjW1/jLwy
-	i3Z1qH6Ee/y8gWOjAYScFQXJPwnFqLG/qIM14CLkSbZ0JNSfLrTQ
-X-Google-Smtp-Source: AGHT+IFRTkOolKtdoJxK3VRqEhDl+d3JgjlaOtCjR7L91viVlr6tYZD7wfdq1QwmOGi/pWoMcdyg6g==
-X-Received: by 2002:a05:6512:1c8:b0:52c:39eb:40d2 with SMTP id 2adb3069b0e04-52ccaa5e026mr278812e87.20.1718737655800;
-        Tue, 18 Jun 2024 12:07:35 -0700 (PDT)
-Received: from smtpclient.apple ([2a01:e0a:565:11e0:94ec:6f6c:b5bd:ddee])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-362907048b0sm1400831f8f.24.2024.06.18.12.07.35
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Jun 2024 12:07:35 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="l8KjHqRQ"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 151021E132;
+	Tue, 18 Jun 2024 16:15:05 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=r182SHhvog4mzEptxo/1h+s4Ccqb0HHJnm81td
+	FT6oU=; b=l8KjHqRQ4uOtPzOWhNQsO+B+oL9ED3iAb66IQFHAnYm1zZFRL/teM5
+	arDmBAFQWNLOAwhlpEBDx/4sazQktRNBQVGOwVYfNiK5/Yn3/KbQLRDshJMp4R2n
+	9crz7OgxBP/bKNEgLDKc/l25oo8aUAs/Z1+3Mgc1ZwXgHmIrwDclA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E5C121E131;
+	Tue, 18 Jun 2024 16:15:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4CA7E1E12D;
+	Tue, 18 Jun 2024 16:14:59 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Alexey Pelykh <alexey.pelykh@gmail.com>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
+Subject: Re: Non-blob .gitmodules and .gitattributes
+In-Reply-To: <14349714-F8D1-4F7B-BB13-4FA39C6819DE@gmail.com> (Alexey Pelykh's
+	message of "Tue, 18 Jun 2024 21:07:24 +0200")
+References: <4F3AD9A8-DA3E-43E2-BF9A-9D7458EED7EA@gmail.com>
+	<xmqqbk43ilk3.fsf@gitster.g>
+	<20240618183156.GB178291@coredump.intra.peff.net>
+	<14349714-F8D1-4F7B-BB13-4FA39C6819DE@gmail.com>
+Date: Tue, 18 Jun 2024 13:14:57 -0700
+Message-ID: <xmqqa5jiypmm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
-Subject: Re: Non-blob .gitmodules and .gitattributes
-From: Alexey Pelykh <alexey.pelykh@gmail.com>
-In-Reply-To: <20240618183156.GB178291@coredump.intra.peff.net>
-Date: Tue, 18 Jun 2024 21:07:24 +0200
-Cc: Junio C Hamano <gitster@pobox.com>,
- git@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <14349714-F8D1-4F7B-BB13-4FA39C6819DE@gmail.com>
-References: <4F3AD9A8-DA3E-43E2-BF9A-9D7458EED7EA@gmail.com>
- <xmqqbk43ilk3.fsf@gitster.g>
- <20240618183156.GB178291@coredump.intra.peff.net>
-To: Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3774.600.62)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 6FFE95D8-2DAF-11EF-A9E5-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-Hi Jeff,
+Alexey Pelykh <alexey.pelykh@gmail.com> writes:
 
-> But I'd also suspect that other non-POSIX platforms would see the error
-> at open(), and _would_ actually produce an error message. I seem to
-> recall running into this before with Windows, maybe?
+>> But I'd also suspect that other non-POSIX platforms would see the error
+>> at open(), and _would_ actually produce an error message. I seem to
+>> recall running into this before with Windows, maybe?
+>
+> Is there an easy way to verify "what on Windows" part? I'd be happy to
+> help, yet I'm not sure I got it right what to look for.
 
-Is there an easy way to verify "what on Windows" part? I'd be happy to
-help, yet I'm not sure I got it right what to look for.
+Create a .gitmodules and .gitattributes directory, "git add" it, and
+perform various operations that want to read them, probably.  Even a
+simple "git diff" should try to consult the attribute system (e.g.
+because it wants to know if a path needs use custom function header
+regexp pattern).  As Peff said, on Linux and probably on macOS, we
+will silently ignore such .gitattributes and that is what we want.
+On Windows we may see "cannot open" error reported and visible to
+the users.
 
-> So even if we loosened fsck, I'm not sure if it's something we want to
-> support. And of course my bigger question is: why? These are reserved
-> names that have special meaning to Git. Sticking stuff that Git doesn't
-> understand and may produce errors for seems odd.
+> Surely, reserved names are reserved for some reason. If there's a legit
+> reason alike cost-to-support, having an objection would be dumb. Yet
+> if supporting would turn out to be of an effort alike dropping the check
+> then it would seem having that check brings no value.
+>
+> With that said, if those are reserved names, why .gitignore is not reserved?
+> For consistency at least.
 
-Surely, reserved names are reserved for some reason. If there's a legit
-reason alike cost-to-support, having an objection would be dumb. Yet
-if supporting would turn out to be of an effort alike dropping the check
-then it would seem having that check brings no value.
+We do not bother with ".gitignore" since we see no security
+implications in that file.  But other two whose name begin with
+".git" do have some security implications (actually .gitattributes
+is designed not to have any, but .gitmodules certainly does), so
+we choose to inspect their sizes, contents, and types.
 
-With that said, if those are reserved names, why .gitignore is not reserved?
-For consistency at least.
+But that raises a few more questions.
 
-Cheers,
-Alexey
+What to do about our future needs that may conflict the needs of
+users who want to use names of their choice?  If we declare that
+any name that begin with ".git" is reserved, there will be fewer
+issues, but do we want to and can we afford to?
 
-> On 18 Jun 2024, at 20:31, Jeff King <peff@peff.net> wrote:
-> 
-> On Fri, Jun 14, 2024 at 08:35:56AM -0700, Junio C Hamano wrote:
-> 
->> My knee-jerk reaction is that we probably can safely loosen by
->> ignoring non-blob .gitWHATEVER files, but security-minded folks may
->> be able to come up with some plausible attack scenarios if we did
->> so.
->> 
->> Comments from those who have worked on transfer time and runtime
->> checks on these are highly appreciated.
-> 
-> I can't think of an immediate problem security-wise, since we know that
-> Git won't actually read the trees. In fact, I was a little surprised
-> that normal Git commands outside of fsck did not run into problems with
-> a .gitattributes directory. What happens on Linux, at least, is that we
-> try to fopen() the directory, which works, and then read() returns
-> EISDIR. But because we do so through strbuf_getline(), it just looks
-> like EOF and we don't complain.  Arguably that code (and all the other
-> loops like it) should check ferror() and complain.
-> 
-> But I'd also suspect that other non-POSIX platforms would see the error
-> at open(), and _would_ actually produce an error message. I seem to
-> recall running into this before with Windows, maybe?
-> 
-> So even if we loosened fsck, I'm not sure if it's something we want to
-> support. And of course my bigger question is: why? These are reserved
-> names that have special meaning to Git. Sticking stuff that Git doesn't
-> understand and may produce errors for seems odd.
-> 
->> Having said that, the checks for .gitmodules and .gitattributes in
->> fsck.c first collect objects that tree entries with these names
->> point at into oidsets (this all happens in fsck.c:fsck_tree()), but
->> the actual check for these found objects are done only when they are
->> blobs.  Only when we encounter a blob object, these oidsets are
->> looked at in fsck.c:fsck_blob(), and if it is .gitmodules its
->> contents inspected (and may result in a warning or an error).  So
->> the "checks" Alexey reports may not be in the runtime or transfer
->> time checks done in fsck but something else.  I dunno.
-> 
-> The fsck checks will kick in. When we fsck the containing tree, we learn
-> that some oid X is a .gitmodules file, and queue that. The hope is that
-> later we're fsck-ing X anyway, and we get to validate for free-ish. But
-> if we _don't_ see it (either we checked the blob before the tree, or
-> perhaps the blob is not even part of the set of objects we're checking),
-> then at the end we validate any queued items that are left.
-> 
-> We have to do it this way to catch the case of somebody pushing up blob
-> X in one push (perhaps with the name "foo"), and then doing a second
-> push that references it with a new name (i.e., renaming "foo" to
-> ".gitmodules").
-> 
-> -Peff
+Also what if we later find security implications in ".gitignore"
+files and decide to inspect their sizes, contents, and types?  The
+current system not issuing a warning does not give users any
+guarantee that the future systems won't (even though we try hard to
+avoid introducing such backward incompatible changes, we are human,
+too, and we sometimes screw up).
 
+Thanks.
