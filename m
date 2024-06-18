@@ -1,120 +1,98 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5AE1CD5A2
-	for <git@vger.kernel.org>; Tue, 18 Jun 2024 09:25:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0709D20BA8D
+	for <git@vger.kernel.org>; Tue, 18 Jun 2024 09:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718702737; cv=none; b=GXGI2TtLMd+7TGfsB2j5m+wFUh/bgIy5gZ4u2cyh5p9sEyzZY2j5TrfOoK/a1yNFNJMij7/5fSh1xEZAQY/REJFvb/624hlvVJoBBrYAP6mtqZcJUnLxUCH5YhyelpI99sLtrHeLg41QOury93k4po3LNXoZ9jjH8lidTVrbCBU=
+	t=1718704608; cv=none; b=braIJc+vkRXQq/KsRGR7MYS80+xSgPIaKVD9yaZB1pTnXCFxhR26S//Ztg2rr2rk95ePrNuGgs1k3PVJk9lWRfSaXBgu0VVKEKDtDADApsjsnKyMJ2Nsrjr/pWNFCxBteS64B+Zyc5ZHYtewhp6fLV/78HPt/r1LK4DbHlHskIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718702737; c=relaxed/simple;
-	bh=vGejdOXa3QkmRweVthZPtDmI5qTfFqFUfUFpz20/nE0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NWZADLqIwiGXr8PYeL+dQ230/uU41eQIavTI/HQqE3i8TvYP/cO3DULJM1RpNSwQlKgMRsRQMZ8AeL/zGlxuHuE5VWOf4r6GqDx9VluLwz1+piy1jE18BC4M1TjTEBEmGClojlzsIvktShf4YjPlags8snzJ6holLMU5zDdYIck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kh1tia6L; arc=none smtp.client-ip=209.85.160.41
+	s=arc-20240116; t=1718704608; c=relaxed/simple;
+	bh=ZsU5Hwh+6xBSZio+rthWO28+8674Wyfbnwx91D9wYGY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pEvn6tkV7FadShuSXWyRNmLFIqLwIFmAbc+S5fCsJUtFlXVKjkGFzMblQ/cnUJrghqXre9tjc0XP0kAtMuM3bbTntQZ0VdOCpraoyr+m1CZeWwQecF6qeseLmlYJJmfghRgmiU7WhVlLEC/2dl5XeI3aWsWeP8Vdm8WHEtsaW+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cNe08tor; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kh1tia6L"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-24c9f628e71so2706525fac.1
-        for <git@vger.kernel.org>; Tue, 18 Jun 2024 02:25:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cNe08tor"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-35f1c567ae4so4128604f8f.1
+        for <git@vger.kernel.org>; Tue, 18 Jun 2024 02:56:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718702735; x=1719307535; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sKqn6otveolH92WyWnciUXS04Z8hyHXqQ9qG0nEQoEg=;
-        b=kh1tia6LETHGguqnXvQoU+3ePQco9q27P5XQX5FvbkMYNqy630CVF/3aNlWPxV0fH8
-         IGpWB7osKVLTLePNhrNdK6J3Y/acDCpaheJd+cK6ViEDjk7pBui6WytSyDDT/OO0E7fD
-         /CfomdwvomsYqp/Y7gyf9NueK0T9d8Nb14/c3pBVYj1+NyRaUE7l6zpJhMPQv0aAqRc4
-         AC6Tep66Yt7bpd+HqVowd6bQmc08mkIpD9+vtqwHZTWVmWfElHOrEAHuyvjZEjzlVRKd
-         gGYPqRZIV1WIxHLQAOcD8yP7BHqVOm+gLWgkMdSwoMGJYTTjphKqSagXOhsHpNSzm5Ok
-         lokA==
+        d=gmail.com; s=20230601; t=1718704605; x=1719309405; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=O2JkJLypybo0g+X6kLGqNGSvLqikiOVlHLnGFe/XzaU=;
+        b=cNe08tordjzIl9kCiyGJ/oJcv3hHISOIqXSOmK68XxE60ALEdxG/9muLK3htT7AMuG
+         xCxgbF/gPWKE3qXyj44dSmFw0DKSclFL6IBbqT1pymWeCbs4BbskvweENK9Bb4NrZh5g
+         Yx9A3VNpwkCiz8US9AfFJI6md1cI0Uy0fH/rW17vxhj/0mN396iQijTcc4EGSCZ1IsFS
+         kQt0m8aK7xiuzXrmcI3wuWPbOdIomtkF2y0IbNw38KRviD5X4YXCvduEGpmb/cRoNMnt
+         K3m87OMvZ9NX3qoxuKYhhppoGBgLbqRxYNXwCm/+SVI+ljM2U8fAeyT3AfOJrWYSvP9y
+         YBrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718702735; x=1719307535;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sKqn6otveolH92WyWnciUXS04Z8hyHXqQ9qG0nEQoEg=;
-        b=tFZu7CquxrDK1sbbBZmhSbWdIdB2CzOO4GDOHUYBZTnzreH5O90E5F+0r7t8/B4NRj
-         AepW5uEAq5wdkjok5fIGmOSww2NKbKCDFLWRGm6y8O8nD2E0LZ2YdPUvevjoo2x2wk3A
-         mmkc3edvNQGf8bp25NI5+noQnpPPTzPeMJSEGc9FvAc2mbpcXn/xOpppXZ3Qf7ypZCDR
-         Sb/GpKBPj66c7T1+WleBca4WJ4nYYHnfTEL0tC/PzGAuLm87CeCTbkvb2BIi8GWpBmXZ
-         UjoKXCNHQ5RJAVovAL6/jgladerMw3acxY9tVHgfcSg9lheBJdry6zpcG+NGe7ixmdNF
-         pGCg==
-X-Gm-Message-State: AOJu0Yw2n+cOX0um61is+n1Q63Ft0hbPNnwXQQrKoY4Gx2hUcsPF+ciy
-	MS56RgB0fV6uW7FGFSSYjvKEwMWHqAYsGgkUbDDxLak1Ksk7fDsrbFF7vbth2e3d866hbjKs3sO
-	mJC4mxHcuLprlXv+BDU9Zc1y1x3A=
-X-Google-Smtp-Source: AGHT+IHJSqcgwCGEjcPVK/Q/aQZ2wv0f2xNBKqdCLHAApmH0iJuQeA3tlNgYTyKALEJcsOcOShXK6PSiWZRcFvaS5ts=
-X-Received: by 2002:a05:6870:b1ce:b0:259:88b4:976 with SMTP id
- 586e51a60fabf-25988b41878mr312400fac.43.1718702734819; Tue, 18 Jun 2024
- 02:25:34 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 18 Jun 2024 05:25:33 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZnEYNzLue3OIK-Ul@framework>
-References: <cover.1718106284.git.ps@pks.im> <cover.1718347699.git.ps@pks.im>
- <7e023a335f500658b09a0037aee48eff06c668f8.1718347699.git.ps@pks.im>
- <CAOLa=ZTq+sQAtSiQm9xmdLyn=T=u8Ck0oXEBFLnJvH+54O+AHA@mail.gmail.com> <ZnEYNzLue3OIK-Ul@framework>
+        d=1e100.net; s=20230601; t=1718704605; x=1719309405;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O2JkJLypybo0g+X6kLGqNGSvLqikiOVlHLnGFe/XzaU=;
+        b=gQhjcq2jUxWteUiGaS0KVe4AGzF2wZM9DaVrFQdWAtdXvvsSd11qLDYeXZr6yQWp7c
+         oyXeiaRn4qW3EVift5iRGYeq7+cqYcDQHbNpXzghQ/gljagipSyqijoRL0SBFPgD+AjV
+         jK7AdcLx4yXt2vPmhTVKsi8Tv0FQ8q277iyiYtSEc73iRNOFyXTUOVU9Gu43fYIx7lgE
+         5I0VgBKgJRSmj01+1Sh65aA5R9Z2GiyrbPrYuKgaIspaBEuba5ViUMUnE9hDDMFqP0vj
+         /iK5o3FFEsImOKT8PwA3mVM1bEh6A902syskVf/EwizQhq8drpq9VOGgEJ6s2B3Gbd6J
+         nwlw==
+X-Forwarded-Encrypted: i=1; AJvYcCXLR1rMAkbttDowe7XZ8aRuXbbe+Z3lgTHllsy+/GKCbZdX43OuP1X29bZdBkoO1qIA0eikIzXtiC/Sae7mHiltONjr
+X-Gm-Message-State: AOJu0Yxyxq7zrZ63H5iB7AOlMpAAgQa7uBnr6fGY9xUcjejUtuCG6tqK
+	1/FY3ztj9X1ZkOkoXNIocdolYD4shjmTuXbdVkk4V1Vs2W7eT6Su
+X-Google-Smtp-Source: AGHT+IHXWMcA6UxPg14G0B931FAU5Gl9LsCSmYKQSjC3HYqD4tSZfMGkTvCp7uiqHfDj16pH7P7+tw==
+X-Received: by 2002:a5d:414f:0:b0:360:7a68:1709 with SMTP id ffacd0b85a97d-3607a769141mr7632239f8f.39.1718704605234;
+        Tue, 18 Jun 2024 02:56:45 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:64f:8901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:64f:8901:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3607a43eedfsm12033761f8f.78.2024.06.18.02.56.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Jun 2024 02:56:45 -0700 (PDT)
+Message-ID: <b2a783cc-ad34-4647-a388-33f75b3122bd@gmail.com>
+Date: Tue, 18 Jun 2024 10:56:44 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 18 Jun 2024 05:25:33 -0400
-Message-ID: <CAOLa=ZRA6QDojbvP6btOGX5q1Pa0DivBZA_J1gojF1gJu9aENw@mail.gmail.com>
-Subject: Re: [PATCH v3 09/20] global: introduce `USE_THE_REPOSITORY_VARIABLE` macro
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Ghanshyam Thakkar <shyamthakkar001@gmail.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="000000000000fbe119061b26a963"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 00/20] Introduce `USE_THE_REPOSITORY_VARIABLE` macro
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Junio C Hamano <gitster@pobox.com>
+References: <cover.1718106284.git.ps@pks.im> <cover.1718347699.git.ps@pks.im>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <cover.1718347699.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000fbe119061b26a963
-Content-Type: text/plain; charset="UTF-8"
+Hi Patrick
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 14/06/2024 07:49, Patrick Steinhardt wrote:
+> Changes compared to v2:
+> 
+>    - Note in a commit message that we aim to have a faithful conversion
+>      when introducing a `struct git_hash_algo` parameter to functions. So
+>      even in case the calling context has a `struct git_hash_algo`
+>      available via a local repository, we still use `the_repository` such
+>      that there cannot be a change in behaviour here. Fixing those sites
+>      will be left for a future patch series such that we can avoid any
+>      kind of regressions caused by this comparatively large refactoring.
+>      I also adapted some conversions to fully follow through with this
+>      intent.
 
-> On Mon, Jun 17, 2024 at 05:30:31AM -0400, Karthik Nayak wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> > diff --git a/hash.h b/hash.h
->> > index 39a0164be3..cb85d26a2f 100644
->> > --- a/hash.h
->> > +++ b/hash.h
->> > @@ -4,6 +4,8 @@
->> >  #include "hash-ll.h"
->> >  #include "repository.h"
->> >
->> > -#define the_hash_algo the_repository->hash_algo
->> > +#ifdef USE_THE_REPOSITORY_VARIABLE
->> > +# define the_hash_algo the_repository->hash_algo
->>
->> s/# define/#define/
->
-> This is in fact intentional. We aren't strictly following this in our
-> codebase, but when nesting preprocessor macros into ifdefs then we often
-> indent the inner macros with spaces.
->
-> Patrick
+Thanks for clarifying that in the commit message of Patch 2.
 
-That's something I didn't know. Thanks.
+Best Wishes
 
---000000000000fbe119061b26a963
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 9468329fe610c7a3_0.1
+Phillip
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aeFVvc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNDA3Qy80MnZmMXZuaytqRVJxZWN1UithS2QvR0FqYgp5ZTB2ZjZsempw
-TmZjZG5rNkFrMTZ5YTNRL1E5cUVZUzhMbmFqcVNGWFJjeFRRd3oyazVRMzdaQitDQ3hhVFdCCkRB
-Z3hFdWJ1RmNLVkJDYzJPYytHQTZFbnA2TDE5ZEhYRTBSUjBkbStIUU1ZeTB1cUw2WEdZWFljc1NP
-VlVWeDgKY0gzdlhoNFRKbGlGRVVKOGtPUkcyVGlMQmp3c0hYWVplc0gvb0VYbmlEbG9MUVY0ZDQr
-TGI3NE03Rmc2UU9CUQorR003YXpvbjF3ZUtNTUlmNGdpcDcyR0w5VGN2R2tFekhrYURBaWNOcE84
-MnhHdWFkbTdDTzAwcENxY1ZaVTFoCmplQkd1K0QvbjYxRlU5MkZWSUF3dUh6eHIrQ2J6blA2bnhF
-L2MxSEZXYXZXWVhZL0pRcTB2VCs0bndQOXIvZFEKYW5WRHJrU0xTTjdOTGUzekdPaEw5YmJIT05t
-eWFtemZod3FyVFFtWVdITlNDaFYva2pNNi91ZmlSNmpaYjhNYQpHanRGRWVvWFpYK05Pd1JXZTlK
-dHlOR2EyVEtDaENUd3Rtb1IrT1p6WGZCYlJHbTVEZllpWE1DQnI1dVpZZGhiCkZXdHd1amtxdjQ1
-MFNnT2FyWkRZT0hSMlRDM2Q4WnlMc1VOckdiOD0KPVVmbmsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000fbe119061b26a963--
