@@ -1,128 +1,148 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9AA39AEC
-	for <git@vger.kernel.org>; Tue, 18 Jun 2024 20:22:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04C415099C
+	for <git@vger.kernel.org>; Tue, 18 Jun 2024 21:30:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718742163; cv=none; b=nhHY0KQwfbRPGAMdGLqEQGXS81Dhz42lwXLb20++Jcu0JUpJl4ULJDN78GgX4AMc0U05PXQRkWh1c2+hV7uuQ793+puOeCKzNJdOdITy/BtP+F3ZHyubuZHLRkrqgzHQOqvbxF+9IlqIavXOVGcbdhjZlGUwf6oD4wzo0g/PLvw=
+	t=1718746249; cv=none; b=Bf83Xw4l8GArM+wzwVJ/nprnLu+OYoQN8QTTaUkPWdGxQt9nl7UAr1RjgCrVQkp46dkaaGzIIntfu/XgwT2zATPUl4Jp1Iu4UtFcQ88OzJxDJuTn9dce2DKxhQ88LQ9ZMh//ESSeQJ7sQoLeqY8LPTtGcCwNqyFm1xtcNAsjCg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718742163; c=relaxed/simple;
-	bh=I4X9duTKrRyfLprPVuA5Bc/Eo9xUxM2UKeuDSsU/ALY=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WIRYRNh8jiey5KT382YIkKrbS2QS0n9oppdmX9jjGgV8p1YhwhV0PtJ/70SUPMCsE+KTizP6B9DiYAeXGU/C9yeXS0fLgq8jt/QrHHkxoJtqFLvbmPrBqH/HCsdxOApWSk9ooMGIcLqj6eML+2xMJLpARQa7q9hRoUoxVkMlE1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VHZcE2Yb; arc=none smtp.client-ip=209.85.167.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718746249; c=relaxed/simple;
+	bh=uIxIAr0j/JblKAhoHwkbHj0i5QLVqD9I6fXJeQMYwYI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mqBZMli5nW88hzGpdgZgjZ4f1OgYc7eEVZ3uKXVVgoC6IkM4I1uI0GD3edfTyaT9SQROjDPwURJJL6v9JnbfluP50gNGYjipMwL47BVrT7z7iqU6HCK0hPFc9lR8MQnCj1IMtnYaHJWxprIRGhvmJBHgwWQhcbPwE7IMMweY7fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=VCC/xT7j; arc=none smtp.client-ip=173.255.242.215
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VHZcE2Yb"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3d215a594b9so3091787b6e.3
-        for <git@vger.kernel.org>; Tue, 18 Jun 2024 13:22:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718742161; x=1719346961; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=YSlO4NBQnhX2wluMiq12/lzoz5REjL415GnUPZcHAls=;
-        b=VHZcE2YbRhuXYfeQhQwwYdyHisKKJHcHp78jP/Bil6IQgFRVPhMB15SmgvRJnflUz2
-         +COoUsRFS3cC7h3gX9EurkteZEm9PRaGgEeTEwkBOjiVxC4RPkp0yB/bOV6jC5x9cR0I
-         zJHKDgYezIHUulqVXIIKnShEUnQc+Zv/9TOlEXEjIwpls3P67kZ9F0ZcM9D9s347YUzY
-         WxbOq78RWbRScL7BqWGytRF/2UDd5QelG3kFdyGQ3jl7oiOpo9qXgCDz82RJzTNpvCWc
-         NmWzr6Fi5itF7D/IQTYuDx04uS5jj3T1Tsp/fMve3FJkz4BNdAonWfc39d0bhYhtJCoR
-         83Xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718742161; x=1719346961;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YSlO4NBQnhX2wluMiq12/lzoz5REjL415GnUPZcHAls=;
-        b=ctLI/CFYVIpX16I80c9tCkjbD+P1MNnbi79OmD2SM4n1xI4aWndq/lItRcn4RYLvrF
-         +3dquVEUkh8H/j4bwCcdhkBLBWYA4do44P8pSyo3042Zqweu5PiBDp9S4K7TnNParOHs
-         wYxRtbSzZTTtnGYOJpwuTXCbp6mwXUONAVXQ7QEBNGLixd00kQOGo5OvdHkUVzujf81i
-         2NefUVWFIB+vmIATIjzIP6Wkf9Zd1Ba+SuOVS1I1xdRzCIYOY3jwut/d2kUwje+BH57L
-         cW51HCs+zGP21iJvod8pc5uFoBjE5G+ONRcBDU+kpJwyGKgCYxxxj1DiyiaxqwGLq42E
-         IH1g==
-X-Forwarded-Encrypted: i=1; AJvYcCWMuolHkkL91yz0vLUNNtLul5fXmZIhSKtOfyBdCayIgRgaBcyVcqhaQEVLmImMvFrUWPqEtialFyuHAZatefthib+b
-X-Gm-Message-State: AOJu0Yyo8sIPeey6vpyJ0ZP3w2pswVzB6z8ePEE5MLHFOZ/4Bip0PC9e
-	RaDM9su6ou3CPGQHfTgC/xmx/j3dDtAnR0EHXlaJUCVzbKAC4qmH6mo4drtiIKhzhl7YIQcD3UQ
-	/9qtcqmbTNvpmkihaR1gx1PVQFpGfnA==
-X-Google-Smtp-Source: AGHT+IGxdaSgKvCL9lnxwghWv5L/YdBIR3IOLNPB0TDv+Pf1Cj1MtQtoXbA8qRoO03VgEFtJxoRLwK8Gtcj7etwIjAY=
-X-Received: by 2002:a05:6871:820:b0:258:39f1:96f1 with SMTP id
- 586e51a60fabf-25c94a0652bmr998273fac.25.1718742161140; Tue, 18 Jun 2024
- 13:22:41 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 18 Jun 2024 16:22:40 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <cover.1718347699.git.ps@pks.im>
-References: <cover.1718106284.git.ps@pks.im> <cover.1718347699.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="VCC/xT7j"
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9D4A1FB11;
+	Tue, 18 Jun 2024 21:30:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+	s=selector1; t=1718746241;
+	bh=uIxIAr0j/JblKAhoHwkbHj0i5QLVqD9I6fXJeQMYwYI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VCC/xT7j3E/tVFE0uSmE4FmPGhXu4sCru01YgbIJMOPrdpUcLe8cLqsyt0Zz7N3hC
+	 WRPhaRCs2pmhS1QIuKGo/KG+N9qMXtd0TxrSfH6dgrJHyGHtd/s6i+3OMAIY3oAjZc
+	 hufa137MRl3IPxtEb55Q7Jk1u8z3JrzjEkMwAxeY=
+Date: Tue, 18 Jun 2024 21:30:41 +0000
+From: Eric Wong <e@80x24.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: [PATCH v2 2/2] t1006: ensure cat-file info isn't buffered by default
+Message-ID: <20240618213041.M462972@dcvr>
+References: <20240617104326.3522535-1-e@80x24.org>
+ <20240617104326.3522535-3-e@80x24.org>
+ <xmqq1q4v5m5a.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 18 Jun 2024 16:22:40 -0400
-Message-ID: <CAOLa=ZSVJsPvQOnC7byRdpo7eJZRFOiSq=Rzio8QRvW_A3StOg@mail.gmail.com>
-Subject: Re: [PATCH v3 00/20] Introduce `USE_THE_REPOSITORY_VARIABLE` macro
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="000000000000f9da9e061b2fd7ac"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq1q4v5m5a.fsf@gitster.g>
 
---000000000000f9da9e061b2fd7ac
-Content-Type: text/plain; charset="UTF-8"
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <e@80x24.org> writes:
+> 
+> > Buffering by default breaks some 3rd-party Perl scripts using
+> > cat-file, but this breakage was not detected anywhere in our
+> > test suite.  The easiest place to test this behavior is with
+> > Git.pm, since (AFAIK) other equivalent way to test this behavior
+> > from Bourne shell and/or awk would require racy sleeps,
+> > non-portable FIFOs or tedious C code.
+> 
+> Yes, using Perl is a good substitute for writing it in C in this
+> case.  I however question the choice to use t9700/test.pl here,
+> which is clearly stated that its purpose is to "test perl interface
+> which is Git.pm", and added tests are not testing anything in Git.pm
+> at all.
+> 
+> Using t9700/test.pl only because it happens to use "perl -MTest::More"
+> sounds a bit eh, suboptimal.
 
-Patrick Steinhardt <ps@pks.im> writes:
+*shrug*  I figure Test::More is common enough since it's part of
+the Perl standard library; but I consider Perl a better scripting
+language than sh by far and wish our whole test suite were Perl :>
 
-> Hi,
->
-> this is the third version of my patch series that introduces the
-> `USE_THE_REPOSITORY_VARIABLE` macro. When unset, this will cause us to
-> hide `the_repository`, `the_hash_algo` and several other functions that
-> implicitly rely on those global variables from our headers. This is a
-> first step towards fully getting rid of this global state in favor of
-> passing it down explicitly via function parameters.
->
-> Changes compared to v2:
->
->   - Note in a commit message that we aim to have a faithful conversion
->     when introducing a `struct git_hash_algo` parameter to functions. So
->     even in case the calling context has a `struct git_hash_algo`
->     available via a local repository, we still use `the_repository` such
->     that there cannot be a change in behaviour here. Fixing those sites
->     will be left for a future patch series such that we can avoid any
->     kind of regressions caused by this comparatively large refactoring.
->     I also adapted some conversions to fully follow through with this
->     intent.
->
->   - Fix an issue with sparse by adding another `extern` declaration of
->     `the_repository` to "repository.c".
->
-> Thanks!
->
+> It seems that there are Perl snippets in other tests (including
+> t1006 that is specifically about cat-file).  How involved would it
+> be to implement these new tests without modifying unrelated test
+> scripts?
 
-I forgot to reply here earlier.
+> >  t/t9700/test.pl | 14 ++++++++++++++
+> >  1 file changed, 14 insertions(+)
 
-I went through the patches and only found 2 small typos, overall this
-was an elaborate set of patches. I don't expect a reroll for that
-however. Thanks!
+More code than that.  At least IPC::Open2 takes care of the nasty
+portability bits, but getting the Perl quoting nested properly
+inside sh was confusing :x
 
---000000000000f9da9e061b2fd7ac
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 91209187a8ad7b7f_0.1
+v2: moved test to t1006 to avoid Test::More,
+    add select timeout in case a buffering bug does get introduced,
+    updated commit message and clarified the bug it's supposed
+    to guard against
+    (I initially tried stdio buffering, but moved away from it for the
+    patch I'm testing...)
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aeDdJNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM0tjREFDV1BzMzJ0S1ZuUmdrVGh2TUNVUWpnNG9mOQpIQXhPT1BvWVlH
-NXdwS2dsQjRqRzhEb3l6eW9BVHpuSHZiMm83UlRPTG9wT1JtT1lxZmQrUE9FbkhscTFTT1FBCjJV
-NmpLL09XYjdBV1NSclIyQTZyVHNJZ1BNQjhhNi9ES0V5NDRJamZYN3pYR1l6WGdCSGJDQ2krbG1L
-L3JNa1QKQ1hvcHpYN0FiS2tYTzJQZjBLbTBONmF4YkJPa25Wc0xQRHVGQlFIV0xRNXpTdGN2OGR4
-UlBUOXh4YkZQdHJMZwo1V1hWVTkyL0NrK0JaU00rVzkzSys2OW1aM2RVQkVFTkxJV3AvSWdYdmZT
-YUV0aXRzUWdUenFZTjVjVVJjSWkzCiszakErQ0M5OGw3MVNpWHhmQ1F4eXBYUE92WU4vSm55dDla
-SVg5TG1ZK0RNUTJUcmZMQjE3OTdYdmNjakZMNGUKamVDa1NoRE5CYVhKOCt4NUhYMWJGMEJrV2l2
-RjhleWtCOWlYL3BqMkwyS2dwZUdMU3MwYjJGQXdjemI4dnFTSQp0U0JGYmtQWGFFSGdhYzdrTjdi
-ZnhMTnBFaXVMckJQZndNb0JwOExGZzlTYlYzL0h3N1RTOFFsMU5na1RDdWlmCmxjWHZYRFYrS2V1
-MDZXVkpYM3I5ZkRGYjd2UXRRcHd1Qmp0d3FWcz0KPXp1Z28KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000f9da9e061b2fd7ac--
+----8<----
+Subject: [PATCH] t1006: ensure cat-file info isn't buffered by default
+
+While working on buffering changes to `git cat-file' in a
+separate patch, I inadvertently made the output of --batch-check
+and the `info' command of --batch-command buffered as if
+opt->buffer_output is turned on by default.
+
+Buffering by default breaks some 3rd-party Perl scripts using
+cat-file, but this breakage was not detected anywhere in our
+test suite.  Add a small Perl snippet to test this problem since
+(AFAIK) other equivalent ways to test this behavior from Bourne
+shell and/or awk would require racy sleeps, non-portable FIFOs
+or tedious C code.
+
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+ t/t1006-cat-file.sh | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index e12b221972..ff9bf213aa 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -1294,4 +1294,34 @@ test_expect_success 'batch-command flush without --buffer' '
+ 	grep "^fatal:.*flush is only for --buffer mode.*" err
+ '
+ 
++script='
++use warnings;
++use strict;
++use IPC::Open2;
++my ($opt, $oid, $expect, @pfx) = @ARGV;
++my @cmd = (qw(git cat-file), $opt);
++my $pid = open2(my $out, my $in, @cmd) or die "open2: @cmd";
++print $in @pfx, $oid, "\n" or die "print $!";
++my $rvec = "";
++vec($rvec, fileno($out), 1) = 1;
++select($rvec, undef, undef, 30) or die "no response to `@pfx $oid` from @cmd";
++my $info = <$out>;
++chop($info) eq "\n" or die "no LF";
++$info eq $expect or die "`$info` != `$expect`";
++close $in or die "close in $!";
++close $out or die "close out $!";
++waitpid $pid, 0;
++$? == 0 or die "\$?=$?";
++'
++
++expect="$hello_oid blob $hello_size"
++
++test_expect_success PERL '--batch-check is unbuffered by default' '
++	perl -e "$script" -- --batch-check $hello_oid "$expect"
++'
++
++test_expect_success PERL '--batch-command info is unbuffered by default' '
++	perl -e "$script" -- --batch-command $hello_oid "$expect" "info "
++'
++
+ test_done
