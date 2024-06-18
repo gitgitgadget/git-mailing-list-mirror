@@ -1,110 +1,123 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B11BD299
-	for <git@vger.kernel.org>; Tue, 18 Jun 2024 15:57:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567A23B79C
+	for <git@vger.kernel.org>; Tue, 18 Jun 2024 15:58:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718726229; cv=none; b=Zoj7+PxC6PodvUl4XiVW5KgQczhuJUWiqkJvn9v1Om2Eln8V3bkEpMc9f/zK+aM3M5IrkhPhJ2ImWcLUR/0OcM1v3eLaZsQroRuUUkttRMJCRyucQldn3UCGftUjMzdrjE6vQXdmLGaShlbRiOII4cB6esDCTgLqTJCwvRLqJ0k=
+	t=1718726285; cv=none; b=FjdhMip8DJb0Fnj7DU/Rtz19N6Y1uUNmccJyfXkt7/v79Whe/CmpCt9FAQNkDUz/hUXigoiH9EbTzGhl/WKmybaqRDpzWc5Yn1lLy95Sp7jNMDPj4VnA/NhiNN1skDZQ/k4Q1+tM+K/5uNWHcba8hiE2POYpdvA36sOo9Uoflfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718726229; c=relaxed/simple;
-	bh=bonc78afVYF9Haf7yV9VznFG2BJYvquXhclfsdH4vxk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VtgJWkrSScbpPGEhCsMrhiAsw+E5yO7lV1tjMNbL3VOxObKy6/1McTbMJrCY/0GYezZow4TWXDjQBZD1urLGSFRgDyIzYKAQX+kFV3lDaNBV/7/q2BtR1P60MGMl4YXppMOdK55WemMB9asl92hqqg8MU0d8yfehHSreSqjlDSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a8h6fmvP; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718726285; c=relaxed/simple;
+	bh=VoDVPO3sSSkDZjpSvOoJ5Q2LoWZ7MWTnppYSLwgIqJ0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KQbYcHO0vzk5DLEODj7CRKgKyGlaorGyvVa0BVNjPOBUeA9SzLcQftTiXRxg7nkfKsQHnRauWf1dS782l801RGrMOfKzJrU3P4J/URxOG5s1jkwfVWSw8x/HnVxH3dNVZNawVF/sX3hEQuQs813SYywpitB3X/xc2MXkwFGGUtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ogB5MVEf; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a8h6fmvP"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-709423bc2e5so1851297a12.0
-        for <git@vger.kernel.org>; Tue, 18 Jun 2024 08:57:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718726227; x=1719331027; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4PfYRvMqQ2T1I6kU+lZWJlVfgEf/c/ecM6JkLkaKwRc=;
-        b=a8h6fmvPsgLUyzI69zJl3Q6fKcQGt48u5CTY/Bc6r+Klum8t+M8ls9A36NHmMutWlK
-         1QxE+0Uqo8ZmuJMpOhtFPgCeAZ0s6DiorOFlhxnSJnTfria3xpK3sj/DZ4nGcO92HlCg
-         ufyBh/sbcNqpprDRvtNv73KakEKgAWcVE9g50kMl+pt6UMvKqP3dB0acQpmbRF7lD18e
-         EOS4IiJnCzyV2QsvoIOkqpanLErzEojppKu2IOnX6WGdmp8yMlqGWgbIY9o4JiQqf2+5
-         czal2F5+4s4jDacwGbhxn53/ZzDRriUEJUmeS8uKEIxdyVPqJCx6h3KokLsj2gO/XLFo
-         vM8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718726227; x=1719331027;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4PfYRvMqQ2T1I6kU+lZWJlVfgEf/c/ecM6JkLkaKwRc=;
-        b=jPLOVuY3Ocj9+6MerAZ7THGXgQPGo3BSdWfHfO+D+dx7VMw250NK4QNr8bxjg7AsnE
-         DZgkJErQ28FMP3DVffYoSHplOR5VplkLkQEkQKMtHzEU/X7/LJSJL8jMUGwDBoqA/6Ev
-         hvcubnZJDO3MjEjdPTtT2/VkpVyp6ftQUDZlN45BUhtmTFA++No5Uh/Ndt5mg5UK9MDB
-         DgsaGIMG9CNzSlL8IzlBGnRV/lHx9pmhgOOYxAItfj1k5A98Dc7DvMmu7fo2LEaXSvif
-         nAPwCaSnXyzMkyZydORWUqZjlXlTn5AmDRuXPyRaGgaeiqSqvSF/8vjkQnkYRlFvnawP
-         2KyQ==
-X-Gm-Message-State: AOJu0YyUf/jcNrFZ/IpZMp9LJ1nbyeBOuqrwmE2ZQu3iPDFrVhaivmaG
-	FGUpfei26jNU9qX9BOVYIfinttyVb/r6vj7WqzzEN0rQJaMGBv2j+s6lc4hNMevSWfsy513U9vd
-	XdwtlFTwYh1VZiS+52BE+6tGwHeY=
-X-Google-Smtp-Source: AGHT+IEixk3TDEtBzzOfLcy+qYU/ErX9n4UvKJp5z37fBfcO8ctJ16oWvdLZWkQTfk5s0wr/Zai07xlZDegTVWH6ClY=
-X-Received: by 2002:a17:90a:db17:b0:2c4:e3af:a026 with SMTP id
- 98e67ed59e1d1-2c7b5d9193dmr91093a91.47.1718726227341; Tue, 18 Jun 2024
- 08:57:07 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ogB5MVEf"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2603D2636A;
+	Tue, 18 Jun 2024 11:58:03 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=VoDVPO3sSSkDZjpSvOoJ5Q2LoWZ7MWTnppYSLw
+	gIqJ0=; b=ogB5MVEfud85H13qvkpcmc5T2+SfBpLfYbCwB63sE3HFiJfoRaDOqU
+	lhC09zVJJiZ9IdqEhEXJMKlz5N4niClp4lqfMrT3khJ1ajTBtrCcYH3vW+hHkioM
+	QjxU9wtLzKNA6cv15+6E8q0fvg6CwpYXxQ4sGNrMcudoY+vjvEP2w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D5FA26369;
+	Tue, 18 Jun 2024 11:58:03 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 810BB26368;
+	Tue, 18 Jun 2024 11:58:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Ghanshyam Thakkar
+ <shyamthakkar001@gmail.com>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 09/20] global: introduce
+ `USE_THE_REPOSITORY_VARIABLE` macro
+In-Reply-To: <CAOLa=ZRA6QDojbvP6btOGX5q1Pa0DivBZA_J1gojF1gJu9aENw@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 18 Jun 2024 05:25:33 -0400")
+References: <cover.1718106284.git.ps@pks.im> <cover.1718347699.git.ps@pks.im>
+	<7e023a335f500658b09a0037aee48eff06c668f8.1718347699.git.ps@pks.im>
+	<CAOLa=ZTq+sQAtSiQm9xmdLyn=T=u8Ck0oXEBFLnJvH+54O+AHA@mail.gmail.com>
+	<ZnEYNzLue3OIK-Ul@framework>
+	<CAOLa=ZRA6QDojbvP6btOGX5q1Pa0DivBZA_J1gojF1gJu9aENw@mail.gmail.com>
+Date: Tue, 18 Jun 2024 08:58:01 -0700
+Message-ID: <xmqqwmmm1bw6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ZnFByMI1lWUDSxLd@ArchLinux> <xmqq8qz22r6r.fsf@gitster.g>
-In-Reply-To: <xmqq8qz22r6r.fsf@gitster.g>
-From: jialuo she <shejialuo@gmail.com>
-Date: Tue, 18 Jun 2024 23:56:54 +0800
-Message-ID: <CAH-kW5e079dkg99C3rroj+vh6C2L6roqVFYWg_Ykno3WVpHOhg@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v3 0/7] ref consistency check infra setup
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 8AE04F6E-2D8B-11EF-8349-965B910A682E-77302942!pb-smtp2.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+>>> s/# define/#define/
+>>
+>> This is in fact intentional. We aren't strictly following this in our
+>> codebase, but when nesting preprocessor macros into ifdefs then we often
+>> indent the inner macros with spaces.
+>>
+>> Patrick
 >
-> shejialuo <shejialuo@gmail.com> writes:
->
-> > This is the third version. Mainly focuses on the following problems:
-> >
-> > 1. Add "escape" check for symrefs and symbolic links.
-> > 2. Resolve the reviews.
-> > 3. Fix some errors in version 2.
-> >
-> > shejialuo (7):
-> >   fsck: add refs check interfaces to interface with fsck error levels
-> >   refs: set up ref consistency check infrastructure
-> >   builtin/refs: add verify subcommand
-> >   builtin/fsck: add `git-refs verify` child process
-> >   files-backend: add unified interface for refs scanning
-> >   fsck: add ref name check for files backend
-> >   fsck: add ref content check for files backend
->
-> What commit is this series based on?  It does not seem to apply
-> cleanly on top of the same base as I queued an earlier iteration of
-> this series (f931bfb2 (Merge branch 'ps/ref-storage-migration' into
-> sj/ref-fsck, 2024-06-13)), or the current tip of 'master' that
-> already merges that prerequisite topic.  The early 6 applies on top
-> of 'master' fine, but the last one.  I wiggled the last one in (the
-> patch to the fsck-msgids.txt documentation expects stale entries
-> that were already removed in 2.45.2), but if you are basing your
-> patches on an unusual commit, please describe it clearly here in the
-> cover letter so that others can locate (or recreate as needed) it.
+> That's something I didn't know. Thanks.
 
-Well, I simply does "git checkout -b js-refs-fsck-v3" for the current branch
-"js-refs-fsck". And I use "git rebase" to change the code in this branch.
-So the base commit should be unchanged. However, maybe Patrick
-has changed the code and I forgot to update upstream.
+Unlike borrowed sources in compat/, in our codebase, such
+indentation is minority.  IOW "often indent" -> "sometimes indent".
 
-And I have set up the base using the following commands:
+A quick look at an early part of git-compat-util.h would show that
+even within a single file we are not consistent at all.
 
-  $ git remote add junio https://github.com/gister/git.git
-  $ git fetch junio
-  $ git branch js-refs-fsck junio/ps/ref-storage-migration
+#if __STDC_VERSION__ - 0 < 199901L
+#error "Required C99 support is in a test phase.  Please see git-compat-util.h for more details."
+#endif
 
-I am sorry for the confusion. Next version, I will merge the master code
-and send the patch. I am sorry to make you so inconvenient.
+#ifdef USE_MSVC_CRTDBG
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif
+
+#define _FILE_OFFSET_BITS 64
+
+#if defined(__GNUC__) && defined(__GNUC_MINOR__)
+# define GIT_GNUC_PREREQ(maj, min) \
+	((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
+#else
+ #define GIT_GNUC_PREREQ(maj, min) 0
+#endif
+
+#ifndef FLEX_ARRAY
+#if defined(__SUNPRO_C) && (__SUNPRO_C <= 0x580)
+#elif defined(__GNUC__)
+# if (__GNUC__ >= 3)
+#  define FLEX_ARRAY /* empty */
+# else
+#  define FLEX_ARRAY 0 /* older GNU extension */
+# endif
+#elif defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
+# define FLEX_ARRAY /* empty */
+#endif
+...
+
+
+We may want to eventually fix this, but we need to decide what the
+desirable layout is.  I am not sure if the indented version is
+easier to read and maintain, but one thing that is sure is that a
+mixed mess is harder than either.  In the above excerpt, you cannot
+tell if I quoted everything related to FLEX_ARRAY (in other words,
+if "#ifndef FLEX_ARRAY" is already closed in the excerpt) without
+carefully looking.
+
