@@ -1,63 +1,63 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE05915B107
-	for <git@vger.kernel.org>; Wed, 19 Jun 2024 21:58:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB1E15E5B6
+	for <git@vger.kernel.org>; Wed, 19 Jun 2024 21:58:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718834312; cv=none; b=sw8toDtUDiAscIgOyrifvgcHQppKDQD+Xi/b4/W5ewW2hUJEE3XtSzQOHECy3EtejGBcNNbcikjd5CBktuZGzXuzN825LhZt9eaMZZ0svmr3f1NvZWh5jCA6LViHsfoJTycvEN3hjdeR7GfNVQQ/fE548gLndAHzvsR4u7/Homw=
+	t=1718834313; cv=none; b=EXdWhz1fwLlZ0VdJJG9KgV2nUHOa98gWP9V4woMIvK/LCfDGGikx5Dg9wm8Foq1J3PfSj4vY8t/nlQ2rzGdkj4ngvu14U1Maekdwqhwrjlonhx+mZ/YTqIHonS2wxHbkSUZq7QjlzlRXSIAFtn3J6Iv+r+McbNzCKm6eEndZ6Qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718834312; c=relaxed/simple;
-	bh=y9kXnukQCaW2qEZVpqJ03InrVGLJdG/hB61ORUmL5vw=;
+	s=arc-20240116; t=1718834313; c=relaxed/simple;
+	bh=1qdLIoFSUgyvssKL+DH0shSkFtdUFYfnIwnU85xRdZY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=TiUXEXhAduysz9aiQ25Li+/Rh2CxuPwaMk9+vk9CpfkemCzpwLUNZ+0AXrtYTGXr+X+TXK21s+iy4JcZh4Kt2w331uGomZ6EYXfCFHoZrbfvrWcoVi5W+N+3AXbEg8HMKRcMuR6BO2IzoKefISoRrsL5r4OUqy7N4aVeczpLf9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fKxCqwPc; arc=none smtp.client-ip=209.85.128.47
+	 MIME-Version:To:Cc; b=GCGJ9jJmaYmjqcfIDnjPW8Lk3YgfUi2Is/8zkLhb0zbvsPONQcck44LUqIDO2wmUqNmmpLniVt52k1ULKsJcvScdIcI+fIeMIU8G6onWQRk48YQQkXQQXdinxAvalibG65S8UkaeRTE7VPuhHmHXgBZZyzTKhs8QWbAaJR1zzXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HFOlGt4Z; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fKxCqwPc"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42172ab4b60so2925045e9.0
-        for <git@vger.kernel.org>; Wed, 19 Jun 2024 14:58:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HFOlGt4Z"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-421f4d1c057so2684375e9.3
+        for <git@vger.kernel.org>; Wed, 19 Jun 2024 14:58:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718834308; x=1719439108; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718834310; x=1719439110; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IACMqB6eF9Z/KR274+LycKgdN94U1Sz+Li3LNDTj2qw=;
-        b=fKxCqwPcGHms86pKfOCYy6FGMGU4KNKF5rx5ji6TLqa0hWgNbdeNndw9a/FTPsuGhK
-         eNh5aRlp1KDKGv1JGkHbIoWocrLvAca4LFr5l8xQaw8SfRC/+fMjm7No7Uk0PIbU92Wl
-         fvKgmgdRWRF5eH3ZX8aap/7C6qyOynVGlk/R8BGtkuiDiRn9gzdE2dZMGVPdm9+DORKf
-         RgFTzQELFoJpowYlMGzZA6g23+UpLzSlAgQ1Gm615aCqxnw6my9826wG/YV010QmlBFb
-         SzrWMOZ5q3xBToscAxzGbec2w4UNLbh+u8OXc/ZVyDDydgz+wTM2Ia4ERgf/TMJPaADA
-         BKyA==
+        bh=OKVNq4r8msXSpCZMZ10W80EOKH6+V9QNxWEoviIrmrM=;
+        b=HFOlGt4ZF0sUpiI5Xhnozjrv+ScHKd4wnsCU+sGO0EWkqI8gwzdriAYPYy0zYGRxyG
+         aUbVoYVlSvEgWkHUy9oslEtDw/S3jx8T5Yi84HCnHOSrzQ9t37WTHyPR4Zbcr8+eooFT
+         eMh/5ja95UBVVt+17c9ZVaOm0NNhcLKWh/t4WNdusvf4bXtTpn5nKI/yFUglQAXF2JQe
+         2VCyplqC9r5r4M/eRFdIU04OKaOt0z4yxwdwQTmcZco0rVGM1nkCQr13cKLo6duZlTuz
+         SS/ha29bj83jtSDUUZDIvQuo0j5nnYYMpoNJdQCZS/4PsN9L9T3t0qFDn9dNDi/PPW9u
+         no5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718834308; x=1719439108;
+        d=1e100.net; s=20230601; t=1718834310; x=1719439110;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IACMqB6eF9Z/KR274+LycKgdN94U1Sz+Li3LNDTj2qw=;
-        b=o1FJKBYz3vWLCqm218vEJv3t+jduxnnvYT10RyKsx1U4u9COgMAjq09jF5JnSKkdyR
-         RhOvuNqm51/9+vPdWi0SOndlCzx2A97+aKxRvdcs4Em1x8dpkmCccQKALv+3AW3RdKsv
-         ZL2UT1vUrMnITZdo38vWRcurBO4VNK8OmJSwtsc2zy7hFhhdfwmKV4Mr/M6cRNe/kKyL
-         I7GrOLa4gPd+8CPaGuyqaOniQgQN86h6+JBUr1axWecHvspEKANBIh/gFzf4819rWeJN
-         +ew8gwzitsK3kihmke3PqiQwK/GmLBV4nV2jbyRBOgEzwMGtlN9zdVjKRbE7tpE5cQVF
-         MCAA==
-X-Gm-Message-State: AOJu0Yzzh4Q1mJvxHkqniB/peZajK+48WDmDRn1AXhyyWVcOJCNqxg/k
-	8hd4S4COsxsJXLa80LJJo/+dhNwDPvcgS4CiPKUr1T+ahCUYP48vTiwzKw==
-X-Google-Smtp-Source: AGHT+IG8GfKuO2l0KLyrgYys6pj1iwxys1Jsuh4otGspxuMlZUrFNEZ+gy20KLpkkgl16U7F5G5jZg==
-X-Received: by 2002:a05:600c:2106:b0:422:e7e8:588a with SMTP id 5b1f17b1804b1-424751763ddmr26829345e9.16.1718834308332;
-        Wed, 19 Jun 2024 14:58:28 -0700 (PDT)
+        bh=OKVNq4r8msXSpCZMZ10W80EOKH6+V9QNxWEoviIrmrM=;
+        b=TJsiBvcdQ57TJ2iTGhJhb/GbDyLCXI/bVKvxq1toNjVMXwcL/RR1olXO8Ixus01HAG
+         y9ktf/FhG7tlnBBbONz3gjHFfgPZCl8xZqHzCPy9ilyuln6la7colLeWzYhu8ur1crYT
+         U6FL+wwD3K9KUf0eaKm7uSwR+HYhmgzwIQQKQmU/vKbB3BhzRmhzipEDxNVYXosP+9v3
+         erOR+wU3HEYkeVVJChLt5CyxZGrt3ZGHLfn90nMMfhux5Ot/3PSohH9ZsT30yei4JLN/
+         K3AKsr7k8FW0DEihjfuz6wbpyj2skGZujdMi8wrfsCUuC+qiAx/UOi8Skr6k/n7xkXJh
+         L4rg==
+X-Gm-Message-State: AOJu0Yx60/Rs9wkNi9AwnOjfVCW/WDp5XnvG8LdWo7wZzBQDerxQPyIs
+	vZaY3M/vf7XQoiOzqscJSI59Z/VfM6UnMgehxO07TejS4s7VqBniSix0JA==
+X-Google-Smtp-Source: AGHT+IEPP2F8/N+4wecG7jD/zqNAfbKIv2z2uSk0T0OH4jLu0suqEL9KDo6NAg3Qb2hADxqTwAE2dQ==
+X-Received: by 2002:a05:600c:214c:b0:422:615f:649c with SMTP id 5b1f17b1804b1-42475078374mr29183765e9.7.1718834309773;
+        Wed, 19 Jun 2024 14:58:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d0c54c9sm3907805e9.27.2024.06.19.14.58.27
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d0c0d56sm3828205e9.13.2024.06.19.14.58.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jun 2024 14:58:27 -0700 (PDT)
-Message-Id: <46756c4e3140d34838ad4cd5e7a070d1f9f46b53.1718834285.git.gitgitgadget@gmail.com>
+        Wed, 19 Jun 2024 14:58:28 -0700 (PDT)
+Message-Id: <d392c440b8a243a9fa3e5b603c42a81f02c26e62.1718834285.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1746.v2.git.1718834285.gitgitgadget@gmail.com>
 References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
 	<pull.1746.v2.git.1718834285.gitgitgadget@gmail.com>
 From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 19 Jun 2024 21:58:04 +0000
-Subject: [PATCH v2 16/17] mktree: allow deeper paths in input
+Date: Wed, 19 Jun 2024 21:58:05 +0000
+Subject: [PATCH v2 17/17] mktree: remove entries when mode is 0
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,342 +75,154 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 
 From: Victoria Dye <vdye@github.com>
 
-Update 'git mktree' to handle entries nested inside of directories (e.g.
-'path/to/a/file.txt'). This functionality requires a series of changes:
+If tree entries are specified with a mode with value '0', remove them from
+the tree instead of adding/updating them. If the mode is '0', both the
+provided type string (if specified) and the object ID of the entry are
+ignored.
 
-* In 'sort_and_dedup_tree_entry_array()', remove entries inside of
-  directories that come after them in input order.
-* Also in 'sort_and_dedup_tree_entry_array()', mark directories that contain
-  entries that come after them in input order (e.g., 'folder/' followed by
-  'folder/file.txt') as "need to expand".
-* In 'add_tree_entry_to_index()', if a tree entry is marked as "need to
-  expand", recurse into it with 'read_tree_at()' & 'build_index_from_tree'.
-* In 'build_index_from_tree()', if a user-specified tree entry is contained
-  within the current iterated entry, return 'READ_TREE_RECURSIVE' to recurse
-  into the iterated tree.
+Note that entries with mode '0' are added to the 'struct tree_ent_array'
+with a trailing slash so that it's always treated like a directory. This is
+a bit of a hack to ensure that the removal supercedes any preceding entries
+with matching names, as well as any nested inside a directory matching its
+name.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- Documentation/git-mktree.txt |   5 ++
- builtin/mktree.c             | 101 ++++++++++++++++++++++++++++++---
- t/t1010-mktree.sh            | 107 +++++++++++++++++++++++++++++++++--
- 3 files changed, 200 insertions(+), 13 deletions(-)
+ Documentation/git-mktree.txt |  4 ++++
+ builtin/mktree.c             | 16 +++++++++++----
+ t/t1010-mktree.sh            | 38 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 54 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/git-mktree.txt b/Documentation/git-mktree.txt
-index 260d0e0bd7b..43cd9b10cc7 100644
+index 43cd9b10cc7..52e6005c1d3 100644
 --- a/Documentation/git-mktree.txt
 +++ b/Documentation/git-mktree.txt
-@@ -58,6 +58,11 @@ Higher stages represent conflicted files in an index; this information
- cannot be represented in a tree object. The command will fail without
- writing the tree if a higher order stage is specified for any entry.
+@@ -63,6 +63,10 @@ entries nested within one or more directories. These entries are inserted
+ into the appropriate tree in the base tree-ish if one exists. Otherwise,
+ empty parent trees are created to contain the entries.
  
-+Entries may use full pathnames containing directory separators to specify
-+entries nested within one or more directories. These entries are inserted
-+into the appropriate tree in the base tree-ish if one exists. Otherwise,
-+empty parent trees are created to contain the entries.
++An entry with a mode of "0" will remove an entry of the same name from the
++base tree-ish. If no tree-ish argument is given, or the entry does not exist
++in that tree, the entry is ignored.
 +
  The order of the tree entries is normalized by `mktree` so pre-sorting the
  input by path is not required. Multiple entries provided with the same path
  are deduplicated, with only the last one specified added to the tree.
 diff --git a/builtin/mktree.c b/builtin/mktree.c
-index 96f06547a2a..74cec92a517 100644
+index 74cec92a517..e7adcb384c8 100644
 --- a/builtin/mktree.c
 +++ b/builtin/mktree.c
-@@ -22,6 +22,7 @@ struct tree_entry {
+@@ -32,7 +32,7 @@ struct tree_entry {
  
- 	/* Internal */
- 	size_t order;
-+	int expand_dir;
- 
- 	unsigned mode;
- 	struct object_id oid;
-@@ -39,6 +40,7 @@ struct tree_entry_array {
- 	struct tree_entry **entries;
- 
- 	struct hashmap df_name_hash;
-+	int has_nested_entries;
- };
- 
- static int df_name_hash_cmp(const void *cmp_data UNUSED,
-@@ -70,6 +72,13 @@ static void tree_entry_array_push(struct tree_entry_array *arr, struct tree_entr
- 	arr->entries[arr->nr++] = ent;
+ static inline size_t df_path_len(size_t pathlen, unsigned int mode)
+ {
+-	return S_ISDIR(mode) ? pathlen - 1 : pathlen;
++	return (S_ISDIR(mode) || !mode) ? pathlen - 1 : pathlen;
  }
  
-+static struct tree_entry *tree_entry_array_pop(struct tree_entry_array *arr)
-+{
-+	if (!arr->nr)
-+		return NULL;
-+	return arr->entries[--arr->nr];
-+}
-+
- static void tree_entry_array_clear(struct tree_entry_array *arr, int free_entries)
- {
- 	if (free_entries) {
-@@ -109,8 +118,10 @@ static void append_to_tree(unsigned mode, struct object_id *oid, const char *pat
+ struct tree_entry_array {
+@@ -108,7 +108,7 @@ static void append_to_tree(unsigned mode, struct object_id *oid, const char *pat
+ 		size_t len_to_copy = len;
  
- 		if (!verify_path(ent->name, mode))
- 			die(_("invalid path '%s'"), path);
--		if (strchr(ent->name, '/'))
--			die("path %s contains slash", path);
-+
-+		/* mark has_nested_entries if needed */
-+		if (!arr->has_nested_entries && strchr(ent->name, '/'))
-+			arr->has_nested_entries = 1;
+ 		/* Normalize and validate entry path */
+-		if (S_ISDIR(mode)) {
++		if (S_ISDIR(mode) || !mode) {
+ 			while(len_to_copy > 0 && is_dir_sep(path[len_to_copy - 1]))
+ 				len_to_copy--;
+ 			len = len_to_copy + 1; /* add space for trailing slash */
+@@ -124,7 +124,7 @@ static void append_to_tree(unsigned mode, struct object_id *oid, const char *pat
+ 			arr->has_nested_entries = 1;
  
  		/* Add trailing slash to dir */
- 		if (S_ISDIR(mode))
-@@ -168,6 +179,46 @@ static void sort_and_dedup_tree_entry_array(struct tree_entry_array *arr)
- 	ignore_mode = 0;
- 	QSORT_S(arr->entries, arr->nr, ent_compare, &ignore_mode);
+-		if (S_ISDIR(mode))
++		if (S_ISDIR(mode) || !mode)
+ 			ent->name[len - 1] = '/';
+ 	}
  
-+	if (arr->has_nested_entries) {
-+		struct tree_entry_array parent_dir_ents = { 0 };
-+
-+		count = arr->nr;
-+		arr->nr = 0;
-+
-+		/* Remove any entries where one of its parent dirs has a higher 'order' */
-+		for (size_t i = 0; i < count; i++) {
-+			const char *skipped_prefix;
-+			struct tree_entry *parent;
-+			struct tree_entry *curr = arr->entries[i];
-+			int skip_entry = 0;
-+
-+			while ((parent = tree_entry_array_pop(&parent_dir_ents))) {
-+				if (!skip_prefix(curr->name, parent->name, &skipped_prefix))
-+					continue;
-+
-+				/* entry in dir, so we push the parent back onto the stack */
-+				tree_entry_array_push(&parent_dir_ents, parent);
-+
-+				if (parent->order > curr->order)
-+					skip_entry = 1;
-+				else
-+					parent->expand_dir = 1;
-+
-+				break;
-+			}
-+
-+			if (!skip_entry) {
-+				arr->entries[arr->nr++] = curr;
-+				if (S_ISDIR(curr->mode))
-+					tree_entry_array_push(&parent_dir_ents, curr);
-+			} else {
-+				FREE_AND_NULL(curr);
-+			}
-+		}
-+
-+		tree_entry_array_release(&parent_dir_ents, 0);
-+	}
-+
- 	/* Finally, initialize the directory-file conflict hash map */
- 	for (size_t i = 0; i < count; i++) {
- 		struct tree_entry *curr = arr->entries[i];
-@@ -212,15 +263,40 @@ struct build_index_data {
- 	struct index_state istate;
- };
+@@ -209,7 +209,7 @@ static void sort_and_dedup_tree_entry_array(struct tree_entry_array *arr)
  
-+static int build_index_from_tree(const struct object_id *oid,
-+				 struct strbuf *base, const char *filename,
-+				 unsigned mode, void *context);
-+
+ 			if (!skip_entry) {
+ 				arr->entries[arr->nr++] = curr;
+-				if (S_ISDIR(curr->mode))
++				if (S_ISDIR(curr->mode) || !curr->mode)
+ 					tree_entry_array_push(&parent_dir_ents, curr);
+ 			} else {
+ 				FREE_AND_NULL(curr);
+@@ -270,6 +270,9 @@ static int build_index_from_tree(const struct object_id *oid,
  static int add_tree_entry_to_index(struct build_index_data *data,
  				   struct tree_entry *ent)
  {
--	struct cache_entry *ce;
--	ce = make_cache_entry(&data->istate, ent->mode, &ent->oid, ent->name, 0, 0);
--	if (!ce)
--		return error(_("make_cache_entry failed for path '%s'"), ent->name);
-+	if (ent->expand_dir) {
-+		int ret = 0;
-+		struct pathspec ps = { 0 };
-+		struct tree *subtree = parse_tree_indirect(&ent->oid);
-+		struct strbuf base_path = STRBUF_INIT;
-+		strbuf_add(&base_path, ent->name, ent->len);
++	if (!ent->mode)
++		return 0;
 +
-+		if (!subtree)
-+			ret = error(_("not a tree object: %s"), oid_to_hex(&ent->oid));
-+		else if (read_tree_at(the_repository, subtree, &base_path, 0, &ps,
-+				 build_index_from_tree, data) < 0)
-+			ret = -1;
-+
-+		strbuf_release(&base_path);
-+		if (ret)
-+			return ret;
-+
-+	} else {
-+		struct cache_entry *ce = make_cache_entry(&data->istate,
-+							  ent->mode, &ent->oid,
-+							  ent->name, 0, 0);
-+		if (!ce)
-+			return error(_("make_cache_entry failed for path '%s'"), ent->name);
-+
-+		add_index_entry(&data->istate, ce, ADD_CACHE_JUST_APPEND);
-+	}
+ 	if (ent->expand_dir) {
+ 		int ret = 0;
+ 		struct pathspec ps = { 0 };
+@@ -450,6 +453,10 @@ static int mktree_line(unsigned int mode, struct object_id *oid,
+ 	if (stage)
+ 		die(_("path '%s' is unmerged"), path);
  
--	add_index_entry(&data->istate, ce, ADD_CACHE_JUST_APPEND);
++	/* OID ignored for zero-mode entries; append unconditionally */
++	if (!mode)
++		goto append_entry;
++
+ 	if (obj_type != OBJ_ANY && mode_type != obj_type)
+ 		die("object type (%s) doesn't match mode type (%s)",
+ 		    type_name(obj_type), type_name(mode_type));
+@@ -484,6 +491,7 @@ static int mktree_line(unsigned int mode, struct object_id *oid,
+ 		}
+ 	}
+ 
++append_entry:
+ 	append_to_tree(mode, oid, path, data->arr, data->literally);
  	return 0;
  }
- 
-@@ -247,10 +323,12 @@ static int build_index_from_tree(const struct object_id *oid,
- 		base_tree_ent->name[base_tree_ent->len - 1] = '/';
- 
- 	while (cbdata->iter.current) {
-+		const char *skipped_prefix;
- 		struct tree_entry *ent = cbdata->iter.current;
-+		int cmp;
- 
--		int cmp = name_compare(ent->name, ent->len,
--				       base_tree_ent->name, base_tree_ent->len);
-+		cmp = name_compare(ent->name, ent->len,
-+				   base_tree_ent->name, base_tree_ent->len);
- 		if (!cmp || cmp < 0) {
- 			tree_entry_iterator_advance(&cbdata->iter);
- 
-@@ -264,6 +342,11 @@ static int build_index_from_tree(const struct object_id *oid,
- 				goto cleanup_and_return;
- 			} else
- 				continue;
-+		} else if (skip_prefix(ent->name, base_tree_ent->name, &skipped_prefix) &&
-+			   S_ISDIR(base_tree_ent->mode)) {
-+			/* The entry is in the current traversed tree entry, so we recurse */
-+			result = READ_TREE_RECURSIVE;
-+			goto cleanup_and_return;
- 		}
- 
- 		break;
 diff --git a/t/t1010-mktree.sh b/t/t1010-mktree.sh
-index 435ac23bd50..9b0e0cf302f 100755
+index 9b0e0cf302f..5ed4352054a 100755
 --- a/t/t1010-mktree.sh
 +++ b/t/t1010-mktree.sh
-@@ -85,12 +85,21 @@ test_expect_success 'mktree with invalid submodule OIDs' '
- 	done
+@@ -369,4 +369,42 @@ test_expect_success 'mktree fails on directory-file conflict' '
+ 	test_grep "You have both folder/one and folder/one/deeper/deep" err
  '
  
--test_expect_success 'mktree refuses to read ls-tree -r output (1)' '
--	test_must_fail git mktree <all
-+test_expect_success 'mktree reads ls-tree -r output (1)' '
-+	git mktree <all >actual &&
-+	test_cmp tree actual
- '
- 
--test_expect_success 'mktree refuses to read ls-tree -r output (2)' '
--	test_must_fail git mktree <all.withsub
-+test_expect_success 'mktree reads ls-tree -r output (2)' '
-+	git mktree <all.withsub >actual &&
-+	test_cmp tree.withsub actual
-+'
-+
-+test_expect_success 'mktree de-duplicates files inside directories' '
-+	git ls-tree $(cat tree) >everything &&
-+	cat <all >top_and_all &&
-+	git mktree <top_and_all >actual &&
-+	test_cmp tree actual
- '
- 
- test_expect_success 'mktree fails on malformed input' '
-@@ -234,6 +243,50 @@ test_expect_success 'mktree with duplicate entries' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'mktree adds entry after nested entry' '
-+	tree_oid=$(cat tree) &&
-+	folder_oid=$(git rev-parse ${tree_oid}:folder) &&
-+	one_oid=$(git rev-parse ${tree_oid}:folder/one) &&
-+
-+	{
-+		printf "040000 tree $folder_oid\tearly\n" &&
-+		printf "100644 blob $one_oid\tearly/one\n" &&
-+		printf "100644 blob $one_oid\tlater\n" &&
-+		printf "040000 tree $EMPTY_TREE\tnew-tree\n" &&
-+		printf "100644 blob $one_oid\tnew-tree/one\n" &&
-+		printf "100644 blob $one_oid\tzzz\n"
-+	} >top.rec &&
-+	git mktree <top.rec >tree.actual &&
-+
-+	{
-+		printf "040000 tree $folder_oid\tearly\n" &&
-+		printf "100644 blob $one_oid\tlater\n" &&
-+		printf "040000 tree $folder_oid\tnew-tree\n" &&
-+		printf "100644 blob $one_oid\tzzz\n"
-+	} >expect &&
-+	git ls-tree $(cat tree.actual) >actual &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'mktree inserts entries into directories' '
-+	folder_oid=$(git rev-parse ${tree_oid}:folder) &&
-+	one_oid=$(git rev-parse ${tree_oid}:folder/one) &&
-+	blob_oid=$(git rev-parse ${tree_oid}:before) &&
-+	{
-+		printf "040000 tree $folder_oid\tfolder\n" &&
-+		printf "100644 blob $blob_oid\tfolder/two\n"
-+	} | git mktree >actual &&
-+
-+	{
-+		printf "100644 blob $one_oid\tfolder/one\n" &&
-+		printf "100644 blob $blob_oid\tfolder/two\n"
-+	} >expect &&
-+	git ls-tree -r $(cat actual) >actual &&
-+
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'mktree with base tree' '
- 	tree_oid=$(cat tree) &&
- 	folder_oid=$(git rev-parse ${tree_oid}:folder) &&
-@@ -270,4 +323,50 @@ test_expect_success 'mktree with base tree' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'mktree with base tree (deep)' '
-+	tree_oid=$(cat tree) &&
-+	folder_oid=$(git rev-parse ${tree_oid}:folder) &&
-+	before_oid=$(git rev-parse ${tree_oid}:before) &&
-+	folder_one_oid=$(git rev-parse ${tree_oid}:folder/one) &&
-+	head_oid=$(git rev-parse HEAD) &&
-+
-+	{
-+		printf "100755 blob $before_oid\tfolder/before\n" &&
-+		printf "100644 blob $before_oid\tfolder/one.txt\n" &&
-+		printf "160000 commit $head_oid\tfolder/sub\n" &&
-+		printf "040000 tree $folder_oid\tfolder/one\n" &&
-+		printf "040000 tree $folder_oid\tfolder/one/deeper\n"
-+	} >top.append &&
-+	git mktree <top.append $(cat tree) >tree.actual &&
-+
-+	{
-+		printf "100755 blob $before_oid\tfolder/before\n" &&
-+		printf "100644 blob $before_oid\tfolder/one.txt\n" &&
-+		printf "100644 blob $folder_one_oid\tfolder/one/deeper/one\n" &&
-+		printf "100644 blob $folder_one_oid\tfolder/one/one\n" &&
-+		printf "160000 commit $head_oid\tfolder/sub\n"
-+	} >expect &&
-+	git ls-tree -r $(cat tree.actual) -- folder/ >actual &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'mktree fails on directory-file conflict' '
++test_expect_success 'mktree with remove entries' '
 +	tree_oid="$(cat tree)" &&
 +	blob_oid="$(git rev-parse $tree_oid:folder.txt)" &&
 +
 +	{
-+		printf "100644 blob $blob_oid\ttest\n" &&
-+		printf "100644 blob $blob_oid\ttest/deeper\n"
-+	} |
-+	test_must_fail git mktree 2>err &&
-+	test_grep "You have both test and test/deeper" err &&
++		printf "100644 blob $blob_oid\ttest/deeper/deep.txt\n" &&
++		printf "100644 blob $blob_oid\ttest.txt\n" &&
++		printf "100644 blob $blob_oid\texample\n" &&
++		printf "100644 blob $blob_oid\texample.a/file\n" &&
++		printf "100644 blob $blob_oid\texample.txt\n" &&
++		printf "040000 tree $tree_oid\tfolder\n" &&
++		printf "0 $ZERO_OID\tfolder\n" &&
++		printf "0 $ZERO_OID\tmissing\n"
++	} | git mktree >tree.base &&
 +
 +	{
-+		printf "100644 blob $blob_oid\tfolder/one/deeper/deep\n"
-+	} |
-+	test_must_fail git mktree $tree_oid 2>err &&
-+	test_grep "You have both folder/one and folder/one/deeper/deep" err
++		printf "0 $ZERO_OID\texample.txt\n" &&
++		printf "0 $ZERO_OID\ttest/deeper\n"
++	} | git mktree $(cat tree.base) >tree.actual &&
++
++	{
++		printf "100644 blob $blob_oid\texample\n" &&
++		printf "100644 blob $blob_oid\texample.a/file\n" &&
++		printf "100644 blob $blob_oid\ttest.txt\n"
++	} >expect &&
++	git ls-tree -r $(cat tree.actual) >actual &&
++
++	test_cmp expect actual
++'
++
++test_expect_success 'type and oid not checked if entry mode is 0' '
++	# type and oid do not match
++	printf "0 commit $EMPTY_TREE\tfolder.txt\n" |
++	git mktree >tree.actual &&
++
++	test "$(cat tree.actual)" = $EMPTY_TREE
 +'
 +
  test_done
 -- 
 gitgitgadget
-
