@@ -1,133 +1,133 @@
-Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA121262BD
-	for <git@vger.kernel.org>; Wed, 19 Jun 2024 02:39:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37E550249
+	for <git@vger.kernel.org>; Wed, 19 Jun 2024 02:58:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718764798; cv=none; b=k4ehbYhwMYljY0BzFiEi8Du4SmP41wYzMDs1dTGB0JuUoAVie44Sk7aD45mfCWFksiNPvTVQJ08ih+TqGhpf1hQVMpTyQJaI8rqDe8SGKKUZmb+7VpdYjJo9VZvNvZCpI8hVhXtHPvIG6UBPVKqbf16QzjizzTyqOo3zOBna4Sg=
+	t=1718765936; cv=none; b=p9pGE1Hp9RsoTtOpQnLbV6y1ynC+mrxwn7/J5JNU137/XgQV0ZoLxAkkrB1plNSgZjYjdbno6rdJoao0zeMVxX7sJVmFrlPj/da6bhHKB+a4IcKtYQGvChf/lvo/Z8Z8qIENJZeozb5mRgIWszdYpPB4guoWJ1ImfdxoX2VrQ/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718764798; c=relaxed/simple;
-	bh=puAWCdKebh3davHSCoapVZBeelUX+tqBV2h64WLlFvQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eVxhUF+jgUbou0OitNA8EKObCq2vVccLV4M71LTvz4UEhHZq9e5gaMrXufHQa+WImcC4DJwFvBeepNKFRzyv4u+nGLhxjyJoRiCDzELCanmgKowCr/yyN0pk+tOeynulxtGiwFg/TAnl3XDxaOgEFw+ZE/u4+eJsTO1iMYzT0t0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bAFPRTSO; arc=none smtp.client-ip=209.85.161.47
+	s=arc-20240116; t=1718765936; c=relaxed/simple;
+	bh=qiZUNQk8RlylIs3aw6DBZPyQWnIWvIxvx+XMu5anW4c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ewdawPZ11XZlnBdOH3XEnItORZjMMKoq4gU3/OPIO5mXmA0K3btZ2Ohuwd8rIyog+PUomL3+ZNN+pf/cPdEgPRhrW2+d5MSE4E1khpetQ+oSwDIzQfiHmAn9XZhZ7gUee4QqMEKtgj6HgKdJrpl8BQVXQB4sMU4rPi5ugzCpTkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L3ZGPEiE; arc=none smtp.client-ip=209.85.166.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bAFPRTSO"
-Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-5b9706c84e5so3540514eaf.1
-        for <git@vger.kernel.org>; Tue, 18 Jun 2024 19:39:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L3ZGPEiE"
+Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-7ea0b5e0977so287214639f.2
+        for <git@vger.kernel.org>; Tue, 18 Jun 2024 19:58:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718764796; x=1719369596; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qVbb+QzhzWxV5fK0HLi7ZZTz9SgotTa5W1g0r9AxH9s=;
-        b=bAFPRTSO8nVbf3OWILTGnN/WsW6Pp5fWi0R9UMC+xZLLsE8Uiu5VeZJT0J8GV7cT+b
-         TnEEveZDhpZapzQPXed0bQbP82twGFukrCrYscjaabXVg2Oo3irxYyWDm0lPfFrKKJai
-         ez2e+cSkDm3EOUId/6aO3gznsjNAbQu7K6b1lw+DLnjYsudaW0HL4k4CUnmtwVGaDY9M
-         x7ARfJnO78eTNi6BIdLmFcjBKuaEVSFZIbPxsVuPnW18uuBRlQazOt5kebAC2dQqLTQy
-         AxXaGe6ImTfv+QCmxNhDkBrcxsECOQBoOkvC03ZrVnAC2mq+yaREJ67gQgppPJs+5nle
-         +1PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718764796; x=1719369596;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1718765934; x=1719370734; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qVbb+QzhzWxV5fK0HLi7ZZTz9SgotTa5W1g0r9AxH9s=;
-        b=e2G8pZvepgaoAiL+k8lAdYfn1/4AmicSN8of/LJ2n/u0Sjlqy5c4XoKqWJ2VJ/HRm0
-         jSxypwJGZHKqNxy9fKtTbmyEIFuEjRLuzaEBlFbJtyMPIMQ3a7L5LQzfjxVKVFUhAhw1
-         0ppSCoogyeZRqi4U2sUCfSy3R80BUv307Z9B4d7GbZJVs/R2YCnGiG6Cq4fwcqKZIS+d
-         x1KChgBmT01rHdrsv1/0sNE3sFYLzOYrMThye7HJBXpKjTXRuUPvvxI4kTbYsIVrgRCe
-         1KI+ORExxG/NSboLT7vrKSWrC+7ggX8Ql4xZhezrrMpGalOzHu4x9xBTDHfuc3KQu9Go
-         laKQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXN4jl/G3Z/OsCkjtjAjAumN5BXi2CdPboHAEPbrtvTnoMy8p5VnNrYovyjSeDbwR0oG4dbmWYr4+/S2PkOzEcIcPpE
-X-Gm-Message-State: AOJu0YynllVmOgGCyx6C1JEjW6dFQ1AfpKxA4fWqCYiD7j9ooZjAtRhj
-	nzgqUiFKmqzhNe0zItrdMWrvc0WA+SAHEm0C4px9xVJuYjqcUBLzA4F1vQ==
-X-Google-Smtp-Source: AGHT+IGHNqFNmG1sCFbk4wc++q3txmVa8rL+CFcFKSjtB8yodVum080itDCBW+B8p6aExkM+Atpegw==
-X-Received: by 2002:a05:6870:1705:b0:254:9c46:8877 with SMTP id 586e51a60fabf-25c9499a393mr1625484fac.16.1718764795743;
-        Tue, 18 Jun 2024 19:39:55 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-6fedf592f0csm8755241a12.54.2024.06.18.19.39.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jun 2024 19:39:55 -0700 (PDT)
-Date: Wed, 19 Jun 2024 10:39:53 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC][PATCH v3 1/7] fsck: add refs check interfaces to
- interface with fsck error levels
-Message-ID: <ZnJE-QKgUfM3WSp5@ArchLinux>
-References: <ZnFCEYypdAyXMMlg@ArchLinux>
- <CAOLa=ZS57EsZk+7xOW9imbA4oWANKf0b+HxBZ8hGFaQQkCsvcQ@mail.gmail.com>
- <ZnFJTdHQcHVagflt@ArchLinux>
- <xmqqfrta2ryp.fsf@gitster.g>
+        bh=UWhEmcXYmVOVupqL2wC4AlsgBJcrSB19YnCJa2iFURs=;
+        b=L3ZGPEiEtm9RfStPWilG+iCXCmwjj0HCyXOi84wWDk1DlrHOVoon2Cr3TO/0lANXlk
+         wQxbt0b2/aFnifuEz5p0HCSXO+/zRhxWoJznaE3BAAw/oftobaa6eXnPSKf39BjYTDAv
+         N5JDxd9zoudG5R/526EnZgJs6fwZgiblXQhAqqcd/r09XRBEhsccW5X0CnP3RWpzGWuk
+         avMzSPt35OQsxak/osGCTSmGGZbW56bg2iBaRb4syDO73r+SQRyBRdspiB7tow6piTLa
+         fqcpF/AOSqy0nnbftOfJtW4f6fzJoPwg7XyeM7VJxn8b7QPjwUXtfdSR06SpkGpTOd2t
+         pd7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718765934; x=1719370734;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UWhEmcXYmVOVupqL2wC4AlsgBJcrSB19YnCJa2iFURs=;
+        b=iAQ1RefCcoz6tEakWcpyT/FC3N+bYJmpGGGb4lwXVIOsUimH0/jtUK59ndyUtsCs7U
+         Jg5V4M5kDdneOFoyyGvKMb/CkEEp1JtRLtOMKhbpZgFP2+YzGx42Jqw8tU1/zLx9ihCt
+         Mo26QIITWCnk2M+RVFD0ZaE0Zbq76IBKkHDpfZT/tsK2iwZiwNinqGg1kKj8itFGjTW4
+         p1aRJZCpPtIxJepeEbOODG2KplLvOx0cdy5+bONvExq4wF+cAW9M2zhuyewbHUVd38vN
+         1mXCioECK4y77Z0V6ePqQVrZprB6Ozg8p+AYndQoRLhxcXszgBAZHf2cQnStNXC/C1hJ
+         6IMw==
+X-Forwarded-Encrypted: i=1; AJvYcCV3Zs9aR0ohlb0wzYFkpDWcHiKph1wSNZqOmwqHfTBkBP0poSvaUTfsrBRbOGygt+KFXzLvgG3gLmxpSAaCrT763u/6
+X-Gm-Message-State: AOJu0YwVkvLmkyuZwwfRVMRCrTnU3OzhENuRYbUkPH98fH9upInL0VWR
+	ybnTk0QA9tZZHLiMm+1lAWhPdW947Oo/2RbqqxHawQ1mU195I5cGzj3eg56EBJEwLW+yqF9nh9C
+	Ff5LxR4cwr14uSUrZdkiFTvsyTwU=
+X-Google-Smtp-Source: AGHT+IGejzCwebXuPruM40jZ7lX62DyJtdw9qucblbSNXg3z8v3QFhPeV8Z33VKlqqrEoOfuONYnhiRWdzmfIQTD/8g=
+X-Received: by 2002:a05:6602:1685:b0:7eb:8c69:86cf with SMTP id
+ ca18e2360f4ac-7f13ee80225mr198768939f.18.1718765933848; Tue, 18 Jun 2024
+ 19:58:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqfrta2ryp.fsf@gitster.g>
+References: <pull.1748.git.1718310307.gitgitgadget@gmail.com>
+ <17c97301baa829a993cf8838deb9271add5bd1cd.1718310307.git.gitgitgadget@gmail.com>
+ <Zmt5tiuGIpTHLHRC@nand.local>
+In-Reply-To: <Zmt5tiuGIpTHLHRC@nand.local>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 18 Jun 2024 20:58:42 -0600
+Message-ID: <CABPp-BGhWkjdd+9oa_RuUA07exVRtMHWqg8Ri_Sg1twUBkdxWA@mail.gmail.com>
+Subject: Re: [PATCH 2/7] merge-ort: maintain expected invariant for priv member
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 18, 2024 at 08:25:34AM -0700, Junio C Hamano wrote:
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > On Tue, Jun 18, 2024 at 04:38:07AM -0400, Karthik Nayak wrote:
-> >> shejialuo <shejialuo@gmail.com> writes:
-> >> 
-> >> [snip]
-> >> 
-> >> >  struct fsck_options {
-> >> > +	/*
-> >> > +	 * Reorder the fields to allow `fsck_ref_options` to use
-> >> > +	 * the interfaces using `struct fsck_options`.
-> >> > +	 */
-> >> 
-> >> Why is this added? It makes sense to have it in the commit message
-> >> because it talks about the change, but why make it persistent in the
-> >> code?
-> >> 
+On Thu, Jun 13, 2024 at 10:59=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrot=
+e:
+>
+> On Thu, Jun 13, 2024 at 08:25:02PM +0000, Elijah Newren via GitGitGadget =
+wrote:
+> > From: Elijah Newren <newren@gmail.com>
 > >
-> > I explicitly add this comments due to the following reasons:
+> > The calling convention for the merge machinery is
+> >    One call to          init_merge_options()
+> >    One or more calls to merge_incore_[non]recursive()
+> >    One call to          merge_finalize()
+> >       (possibly indirectly via merge_switch_to_result())
+> > Both merge_switch_to_result() and merge_finalize() expect
+> >    opt->priv =3D=3D NULL && result->priv !=3D NULL
+> > which is supposed to be set up by our move_opt_priv_to_result_priv()
+> > function.  However, two codepath dealing with error cases did not
+>
+> s/codepath/&s/ ?
+
+Indeed.
+
+> > execute this necessary logic, which could result in assertion failures
+> > (or, if assertions were compiled out, could result in segfaults).  Fix
+> > the oversight and add a test that would have caught one of these
+> > problems.
 > >
-> > 1. If someone needs to change the `fsck_options`, without this comment,
-> > he might be just add some new fields at top. Although the change will
-> > fail the tests here, I think we should mention this in code.
-> 
-> Do you mean you plan to take advantage of the fact that early
-> members of two structures are the same?  IOW, if there is a function
-> that takes a pointer to smaller fsck_refs_options, you plan to pass
-> a pointer to fsck_options from some callers, e.g.
-> 
->     extern void func(struct fsck_refs_options *);
->     void a_caller(struct fsck_options *o)
->     {
-> 	func((struct fsck_options *)o);
-> 	...
-> 
-> If that is the case, then ...
-> 
-> Do not do that.
-> 
-> Your data structure design is broken.  Instead you would do this:
-> 
-> 	struct fsck_options {
-> 		struct fsck_refs_options refs;
-> 		... other members ...
-> 	};
-> 	void a_caller(struct fsck_options *o)
-> 	{
-> 		func(&o->refs);
-> 		...
+> > While at it, also tighten an existing test for a non-recursive merge
+> > to verify that it fails correctly, i.e. with the expected exit code
+> > rather than with an assertion failure.
 
-Well, I totally agree with this. It's bad to convert the pointer type. I
-will change the code in this patch to make it OK.
+It turns out my logic here was faulty; if a
+   test_must_fail git ARGS...
+command is run and git hits an assertion failure, the test_must_fail
+will fail with
+   test_must_fail: died by signal 6: git ARGS...
+similar to how it would fail if git were to segfault.
 
-Thanks for your advice.
+However, I still like the idea of testing the exit status here because
+of this comment in builtin/merge.c:
+    /*
+     * The backend exits with 1 when conflicts are
+     * left to be resolved, with 2 when it does not
+     * handle the given merge at all.
+     */
+and this is one of the few tests in the testsuite where we are
+explicitly testing a case where the merge is neither success nor
+conflicts, but failed-to-handle.
 
+> I suspect that this test was flaky, too, since if the assertion errors
+> were compiled out and it died via a segfault, the test would have failed
+> outright as test_must_fail does not allow for segfaults typically.
+>
+> So I'm glad to see us tightening up that area of the test suite.
+[...]
+> > +     test_must_fail git merge base-b &&
+>
+> Here and below, do you care about the particular exit code of merging as
+> above? IOW, should these be `test_expect_code`'s as well?
 
+Both of these comments led me on the path to check something out and
+discover my error above, which will lead to slightly different changes
+to the patch.
