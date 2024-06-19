@@ -1,62 +1,63 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED3D54673
-	for <git@vger.kernel.org>; Wed, 19 Jun 2024 04:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7831255898
+	for <git@vger.kernel.org>; Wed, 19 Jun 2024 04:07:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718770059; cv=none; b=KWn15ta4M+/zSCFS9kL5RVbMBuXV6z5s/enHK1yS+BOjZnatfNV6cRmBwWOYmvCGIsvD2gikchDp+JZj0Mz//UWEWpm4DG6xRlZK8BmbBzkNtquQaoVclcqVKoVLXkF0kLWn3K+Cymwfg5FtRg2dyK5+FvIKvviQ3k6Y36ZSJT8=
+	t=1718770062; cv=none; b=i0tYjMMz4LTSsKaSuch6dmbQjAu4KgGW19+CLqsIx/L8ATAyjuS8ozgDlyYBlc6S6kOZuO29TnXPoQTpMQ1EQj7p9ax/UrHZeIKBf/f95iwz8KnRuOnGe42CFX4bmN9uAB7EqmrrkVCpXJXoBtKnNyIKThA3FXmSaL6E4zrFsCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718770059; c=relaxed/simple;
-	bh=m/s2Xjv/M8p4QynW9jqbTEB5kjBDDg6cE7f5LpIUGfQ=;
+	s=arc-20240116; t=1718770062; c=relaxed/simple;
+	bh=8Cwl5o7RBkt8KKW6IaPAtNx50jRHMszrxhEG2mspNc8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kQCfF8/wnbu1T/SxawRD6d8UUFT7vWGoQy5GmaGFNU07UuQqCK+AmpceKbY9iacI3UDIBDtFmqhpTxBIGFyh8D4YmJ5PqHuq4DHgsTwRNb5xLkxFgNI7Xba+6fSNk9AvdhnlnsJv/UuqusHeN8JQZfaNGrhtgvNl2XpTJ9uZkkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hexj4OCf; arc=none smtp.client-ip=209.85.128.45
+	 MIME-Version:To:Cc; b=EC6z08ZmYlgyU7SnztBAOgPcwKHMP9XIadL2zf1IkJY8mVn9R1CngKkZPWv9qELAbFB5kj/q4KD+oMHNSDTRkQbAdAZiRXGRkDYP+guXc9NoL9Cn3JucgiiYeS4vYiCSYyGn8KjsVGcL/s98pOJs66KoiHI2AmDxh1baoAKnNLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XmVKq0fD; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hexj4OCf"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42198492353so47140775e9.1
-        for <git@vger.kernel.org>; Tue, 18 Jun 2024 21:07:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XmVKq0fD"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-35f1bc2ab37so5525818f8f.1
+        for <git@vger.kernel.org>; Tue, 18 Jun 2024 21:07:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718770056; x=1719374856; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718770058; x=1719374858; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=k3TpcVFTGzmzKYtzM8bJCjchzrljmJbuwEoHTl9lbTY=;
-        b=hexj4OCfGecgOlsMI6OiauBEofPyDO9uu1hl5iGB9ZEAiHBzRukbq7k6+LOIw6wjGB
-         KHZBWGsQxnCYhSoPXjrmmi0bqO/CgqiAu35l/yEx1DMbm4MjRqWpXb2IYiZ4qGN38ghd
-         933B/6tpCHwh2u3CTBh+Z795DwMBTYGtDFcbO2ZJlCQuibuv8wxECy08SinVOXr4SjZg
-         tDIY7NKIOAknEkX2ctz+BBdaIlSVOHr/WxmbTW+VxVQyU1OyaqCCJSQ1RRndwehqdNwL
-         vSi3h7SLYybjPqAvSUVFhI8WNTnd/am/cdtrXufuMFPeeIaeaIp2MmR7L5+x2U2BFfrZ
-         zm+A==
+        bh=TgK7CYiJc24Ca/CPKOckBNAC5hXOjIWL/DTmuIQBl6c=;
+        b=XmVKq0fDukLF7zDRUye1UMAHXWgWM7qQilLDAlEeJKnpLPdbh6fpvKAMt+JAcoW/ro
+         GnpbpB3XHbHR04lia/WDtYE8vZqDVm+zcuInLxqG8OT8GH9B3KR0OVJ9u7GvEMB4zjis
+         WIIjawK924kkchnkiLoQ/8V643Bpo4i/nMTYd82sntrk1AErud0X1Tn0VPv5PkiaaiSf
+         45mUF5nYRbrZnC8BxGXRB2F4iDuRdjYzkOTshyJ2v09MYzPf0SIzaEDWToplGusuX6Dh
+         U0DwQfSLNpKLXjNtPjLN5Bxt90wqw/prsKYx8fuP0n7tV4BCKA3Wr8MN7AnQwEwhDS1a
+         3qSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718770056; x=1719374856;
+        d=1e100.net; s=20230601; t=1718770058; x=1719374858;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=k3TpcVFTGzmzKYtzM8bJCjchzrljmJbuwEoHTl9lbTY=;
-        b=MDEQdh81UCP7KadERyfAfUnVZJ1QiZ/PGTsXhBXeNkaSoJQTaGa3uB7XuuGbkw0Bn2
-         hzc5a/XI9FOYdCi09U/9JeMTFhJjMjN2/jBjLpxLpSCcBLhzlOE3D6YIfv76Y1JZ5s4I
-         8OzEDPa5rlCVUCPLbdi7MNeXeJVvvnCbGhB8z2p2JR8iMcbXPesHqO0XLlElZ8KTheQ1
-         7su3oEnCzHlkMAmAT80IdCU3UZDFZOfZVBqmPuAGBI/kBcNMzgKVJyu/jmJgavAIf75u
-         aLNdXdEW+/6MDM7CdncVZAJNVTr5dECJubT58k/BTdtERVWF8EnwI3uch9KQhs3Oqeds
-         AADQ==
-X-Gm-Message-State: AOJu0Yx2UrwnwdA9PxPe3Kzat9B6SGikehFzr+nIpUBpOt1jwDlOqUpN
-	YawYSvByowZeBisYEWHldiCwvNIYAO8WmlU8MlWjqQw4N5iWTLfR2vJPvw==
-X-Google-Smtp-Source: AGHT+IHyQ0xtuxxi9QjRR1aUPtS6uNKOlhtwz2bE19+E6aHulVdKjsnLb/ABC07TG1Y453E5KdkrnQ==
-X-Received: by 2002:a05:600c:2e09:b0:421:79c8:dd37 with SMTP id 5b1f17b1804b1-4247529d570mr7088825e9.40.1718770055797;
-        Tue, 18 Jun 2024 21:07:35 -0700 (PDT)
+        bh=TgK7CYiJc24Ca/CPKOckBNAC5hXOjIWL/DTmuIQBl6c=;
+        b=iM7eiTSKKCroyZpDcn8vlGaZcwzAy183vB9ZDJILEJxQsG0zMbVDyeW57hW34z+R8G
+         MoEKkcH8nS6YqDWFWmzATCnJKpbVhaQNDOh/qIetXbi2RQB9Kv7W9mjEba64KbdzKEWX
+         0Vb4qV6ORjPSygMvtjusKK5r+eXcgRfcrsSAOTDrK+Gq+eNPzVxg1I8MaYkmIRfAGUHY
+         u6FPz7lrvStE0GAWs+PRQK+yIo/YXZWXDzY/Q1y19+aqgzZKw7XbV9w0gqMCmd3wF1OA
+         +/8Wl9KCAo7J50Dq8j5Dcf8XLiQFTqvLqA5mYm8Dh/UWflTjWQUn17i3Vwvx2gdvxS3S
+         p49A==
+X-Gm-Message-State: AOJu0YymDNespIXayINwH6YtzsBKeI8IJ6UbYiYBCKOzHma8vfsrIol8
+	JhW+3D8XkV2aq6HTb18M+oTuOUrQ5bJtz/S1+Ol/TVpmCTQReXqSq1w5Zg==
+X-Google-Smtp-Source: AGHT+IEfPEhObCXjNHMBeSj8UiVSRMxK2MO9brq9uqT2e8K/o3gbnAujZPDFenIkoFkJyeBMXEMV8w==
+X-Received: by 2002:a5d:4535:0:b0:360:7a01:6afd with SMTP id ffacd0b85a97d-363170eceddmr1167131f8f.10.1718770058267;
+        Tue, 18 Jun 2024 21:07:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42307d5b78fsm163773665e9.6.2024.06.18.21.07.34
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-362c19d798bsm2146497f8f.40.2024.06.18.21.07.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jun 2024 21:07:35 -0700 (PDT)
-Message-Id: <pull.1730.v8.git.1718770053.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1730.v7.git.1718632535.gitgitgadget@gmail.com>
+        Tue, 18 Jun 2024 21:07:37 -0700 (PDT)
+Message-Id: <518584c8698b9ab7d7145b841c22c5c3e430afa0.1718770053.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1730.v8.git.1718770053.gitgitgadget@gmail.com>
 References: <pull.1730.v7.git.1718632535.gitgitgadget@gmail.com>
-From: "blanet via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 19 Jun 2024 04:07:30 +0000
-Subject: [PATCH v8 0/3] object checking related additions and fixes for bundles in fetches
+	<pull.1730.v8.git.1718770053.gitgitgadget@gmail.com>
+From: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 19 Jun 2024 04:07:32 +0000
+Subject: [PATCH v8 2/3] fetch-pack: expose fsckObjects configuration logic
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,216 +70,80 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
     Karthik Nayak <karthik.188@gmail.com>,
-    blanet <bupt_xingxin@163.com>
+    blanet <bupt_xingxin@163.com>,
+    Xing Xin <xingxin.xx@bytedance.com>
 
-While attempting to fix a reference negotiation bug in bundle-uri, we
-identified that the fetch process lacks some crucial object validation
-checks when processing bundles. The primary issues are:
+From: Xing Xin <xingxin.xx@bytedance.com>
 
- 1. In the bundle-uri scenario, object IDs were not validated before writing
-    bundle references. This was the root cause of the original negotiation
-    bug in bundle-uri and could lead to potential repository corruption.
- 2. The existing "fetch.fsckObjects" and "transfer.fsckObjects"
-    configurations were not applied when directly fetching bundles or
-    fetching with bundle-uri enabled. In fact, there were no object
-    validation supports for unbundle.
+Currently, we can use "transfer.fsckObjects" and the more specific
+"fetch.fsckObjects" to control checks for broken objects in received
+packs during fetches. However, these configurations were only
+acknowledged by `fetch-pack.c:get_pack` and did not take effect in
+direct bundle fetches or fetches with _bundle-uri_ enabled.
 
-The first patch addresses the bundle-uri negotiation issue by removing the
-REF_SKIP_OID_VERIFICATION flag when writing bundle references.
+This commit exposes the fetch-then-transfer configuration logic by
+adding a new function `fetch_pack_fsck_objects` in fetch-pack.h. This
+new function is used to replace the assignment for `fsck_objects` in
+`fetch-pack.c:get_pack`. In the next commit, this function will also be
+used to extend fsck support for bundle-involved fetches.
 
-Patches 2 through 3 extend verify_bundle_flags for bundle.c:unbundle to add
-support for object validation (fsck) in fetch scenarios, mainly following
-the suggestions from Junio and Patrick on the mailing list.
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
+---
+ fetch-pack.c | 17 +++++++++++------
+ fetch-pack.h |  5 +++++
+ 2 files changed, 16 insertions(+), 6 deletions(-)
 
-Xing Xin (3):
-  bundle-uri: verify oid before writing refs
-  fetch-pack: expose fsckObjects configuration logic
-  unbundle: extend object verification for fetches
-
- bundle-uri.c                |   6 +-
- bundle.c                    |   3 +
- bundle.h                    |   1 +
- fetch-pack.c                |  17 ++--
- fetch-pack.h                |   5 +
- t/t5558-clone-bundle-uri.sh | 187 +++++++++++++++++++++++++++++++++++-
- t/t5607-clone-bundle.sh     |  35 +++++++
- transport.c                 |   3 +-
- 8 files changed, 243 insertions(+), 14 deletions(-)
-
-
-base-commit: b9cfe4845cb2562584837bc0101c0ab76490a239
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1730%2Fblanet%2Fxx%2Fbundle-uri-bug-using-bundle-list-v8
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1730/blanet/xx/bundle-uri-bug-using-bundle-list-v8
-Pull-Request: https://github.com/gitgitgadget/git/pull/1730
-
-Range-diff vs v7:
-
- 1:  fc9f44fda00 ! 1:  d8fbde2dcd4 bundle-uri: verify oid before writing refs
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'fail to clone from non-bundle
-      +		git bundle create B.bundle topic &&
-      +
-      +		# Create a bundle with reference pointing to non-existent object.
-     -+		sed -e "/^$/q" -e "s/$(git rev-parse A) /$(git rev-parse B) /" \
-     ++		commit_a=$(git rev-parse A) &&
-     ++		commit_b=$(git rev-parse B) &&
-     ++		sed -e "/^$/q" -e "s/$commit_a /$commit_b /" \
-      +			<A.bundle >bad-header.bundle &&
-      +		convert_bundle_to_pack \
-      +			<A.bundle >>bad-header.bundle
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with path bundle' '
-      +	commit_b=$(git -C clone-from rev-parse B) &&
-      +	test_grep "trying to write ref '\''refs/bundles/topic'\'' with nonexistent object $commit_b" err &&
-      +	git -C clone-bad-header for-each-ref --format="%(refname)" >refs &&
-     -+	! grep "refs/bundles/" refs
-     ++	test_grep ! "refs/bundles/" refs
-      +'
-      +
-       test_expect_success 'clone with path bundle and non-default hash' '
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
-      +	test_write_lines refs/bundles/topic >expect &&
-      +	test_cmp expect actual &&
-      +	# Ensure that refs/bundles/topic are sent as "have".
-     -+	test_grep "clone> have $(git -C clone-from rev-parse A)" trace-packet.txt
-     ++	tip=$(git -C clone-from rev-parse A) &&
-     ++	test_grep "clone> have $tip" trace-packet.txt
-      +'
-      +
-      +test_expect_success 'negotiation: bundle with all wanted commits' '
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
-      +	test_write_lines refs/bundles/topic >expect &&
-      +	test_cmp expect actual &&
-      +	# We already have all needed commits so no "want" needed.
-     -+	! grep "clone> want " trace-packet.txt
-     ++	test_grep ! "clone> want " trace-packet.txt
-      +'
-      +
-      +test_expect_success 'negotiation: bundle list (no heuristic)' '
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
-      +	refs/bundles/left
-      +	EOF
-      +	test_cmp expect actual &&
-     -+	test_grep "clone> have $(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/left)" trace-packet.txt
-     ++	tip=$(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/left) &&
-     ++	test_grep "clone> have $tip" trace-packet.txt
-      +'
-      +
-      +test_expect_success 'negotiation: bundle list (creationToken)' '
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
-      +	refs/bundles/left
-      +	EOF
-      +	test_cmp expect actual &&
-     -+	test_grep "clone> have $(git -C nego-bundle-list-heuristic rev-parse refs/bundles/left)" trace-packet.txt
-     ++	tip=$(git -C nego-bundle-list-heuristic rev-parse refs/bundles/left) &&
-     ++	test_grep "clone> have $tip" trace-packet.txt
-      +'
-      +
-      +test_expect_success 'negotiation: bundle list with all wanted commits' '
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
-      +	EOF
-      +	test_cmp expect actual &&
-      +	# We already have all needed commits so no "want" needed.
-     -+	! grep "clone> want " trace-packet.txt
-     ++	test_grep ! "clone> want " trace-packet.txt
-      +'
-      +
-       #########################################################################
- 2:  3dc0d9dd22f ! 2:  518584c8698 fetch-pack: expose fsckObjects configuration logic
-     @@ Commit message
-          "fetch.fsckObjects" to control checks for broken objects in received
-          packs during fetches. However, these configurations were only
-          acknowledged by `fetch-pack.c:get_pack` and did not take effect in
-     -    direct bundle fetches and fetches with _bundle-uri_ enabled.
-     +    direct bundle fetches or fetches with _bundle-uri_ enabled.
-      
-          This commit exposes the fetch-then-transfer configuration logic by
-          adding a new function `fetch_pack_fsck_objects` in fetch-pack.h. This
-          new function is used to replace the assignment for `fsck_objects` in
-     -    `fetch-pack.c:get_pack`. In the next commit, it will also be used by
-     -    `bundle.c:unbundle` to better fit fetching scenarios.
-     +    `fetch-pack.c:get_pack`. In the next commit, this function will also be
-     +    used to extend fsck support for bundle-involved fetches.
-      
-          Helped-by: Junio C Hamano <gitster@pobox.com>
-          Helped-by: Patrick Steinhardt <ps@pks.im>
- 3:  2f15099bbb9 ! 3:  698dd6e49b7 unbundle: extend object verification for fetches
-     @@ bundle.h: int create_bundle(struct repository *r, const char *path,
-      
-       ## t/t5558-clone-bundle-uri.sh ##
-      @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'create bundle' '
-     - 		sed -e "/^$/q" -e "s/$(git rev-parse A) /$(git rev-parse B) /" \
-     + 		sed -e "/^$/q" -e "s/$commit_a /$commit_b /" \
-       			<A.bundle >bad-header.bundle &&
-       		convert_bundle_to_pack \
-      -			<A.bundle >>bad-header.bundle
-      +			<A.bundle >>bad-header.bundle &&
-      +
-     ++		tree_b=$(git rev-parse B^{tree}) &&
-      +		cat >data <<-EOF &&
-     -+		tree $(git rev-parse HEAD^{tree})
-     -+		parent $(git rev-parse HEAD)
-     ++		tree $tree_b
-     ++		parent $commit_b
-      +		author A U Thor
-      +		committer A U Thor
-      +
-      +		commit: this is a commit with bad emails
-      +
-      +		EOF
-     -+		git hash-object --literally -t commit -w --stdin <data >commit &&
-     -+		git branch bad $(cat commit) &&
-     ++		bad_commit=$(git hash-object --literally -t commit -w --stdin <data) &&
-     ++		git branch bad $bad_commit &&
-      +		git bundle create bad-object.bundle bad &&
-      +		git update-ref -d refs/heads/bad
-       	)
-       '
-       
-      @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with bundle that has bad header' '
-     - 	! grep "refs/bundles/" refs
-     + 	test_grep ! "refs/bundles/" refs
-       '
-       
-      +test_expect_success 'clone with bundle that has bad object' '
-     -+	# Unbundle succeeds if no fsckObjects confugured.
-     ++	# Unbundle succeeds if no fsckObjects configured.
-      +	git clone --bundle-uri="clone-from/bad-object.bundle" \
-      +		clone-from clone-bad-object-no-fsck &&
-      +	git -C clone-bad-object-no-fsck for-each-ref --format="%(refname)" >refs &&
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with bundle that has bad
-      +		clone-from clone-bad-object-fsck 2>err &&
-      +	test_grep "missingEmail" err &&
-      +	git -C clone-bad-object-fsck for-each-ref --format="%(refname)" >refs &&
-     -+	! grep "refs/bundles/" refs
-     ++	test_grep ! "refs/bundles/" refs
-      +'
-      +
-       test_expect_success 'clone with path bundle and non-default hash' '
-     @@ t/t5607-clone-bundle.sh: test_expect_success 'fetch SHA-1 from bundle' '
-      +	test_create_repo bundle-fsck &&
-      +	(
-      +		cd bundle-fsck &&
-     -+		test_commit first &&
-     ++		test_commit A &&
-     ++		commit_a=$(git rev-parse A) &&
-     ++		tree_a=$(git rev-parse A^{tree}) &&
-      +		cat >data <<-EOF &&
-     -+		tree $(git rev-parse HEAD^{tree})
-     -+		parent $(git rev-parse HEAD)
-     ++		tree $tree_a
-     ++		parent $commit_a
-      +		author A U Thor
-      +		committer A U Thor
-      +
-      +		commit: this is a commit with bad emails
-      +
-      +		EOF
-     -+		git hash-object --literally -t commit -w --stdin <data >commit &&
-     -+		git branch bad $(cat commit) &&
-     ++		bad_commit=$(git hash-object --literally -t commit -w --stdin <data) &&
-     ++		git branch bad $bad_commit &&
-      +		git bundle create bad.bundle bad
-      +	) &&
-      +
-
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 7d2aef21add..3acff2baf09 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -954,12 +954,7 @@ static int get_pack(struct fetch_pack_args *args,
+ 		strvec_push(&cmd.args, alternate_shallow_file);
+ 	}
+ 
+-	if (fetch_fsck_objects >= 0
+-	    ? fetch_fsck_objects
+-	    : transfer_fsck_objects >= 0
+-	    ? transfer_fsck_objects
+-	    : 0)
+-		fsck_objects = 1;
++	fsck_objects = fetch_pack_fsck_objects();
+ 
+ 	if (do_keep || args->from_promisor || index_pack_args || fsck_objects) {
+ 		if (pack_lockfiles || fsck_objects)
+@@ -2046,6 +2041,16 @@ static const struct object_id *iterate_ref_map(void *cb_data)
+ 	return &ref->old_oid;
+ }
+ 
++int fetch_pack_fsck_objects(void)
++{
++	fetch_pack_setup();
++	if (fetch_fsck_objects >= 0)
++		return fetch_fsck_objects;
++	if (transfer_fsck_objects >= 0)
++		return transfer_fsck_objects;
++	return 0;
++}
++
+ struct ref *fetch_pack(struct fetch_pack_args *args,
+ 		       int fd[],
+ 		       const struct ref *ref,
+diff --git a/fetch-pack.h b/fetch-pack.h
+index 6775d265175..b5c579cdae2 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -101,4 +101,9 @@ void negotiate_using_fetch(const struct oid_array *negotiation_tips,
+  */
+ int report_unmatched_refs(struct ref **sought, int nr_sought);
+ 
++/*
++ * Return true if checks for broken objects in received pack are required.
++ */
++int fetch_pack_fsck_objects(void);
++
+ #endif
 -- 
 gitgitgadget
+
