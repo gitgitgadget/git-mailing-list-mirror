@@ -1,564 +1,85 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEE020DCB
-	for <git@vger.kernel.org>; Wed, 19 Jun 2024 17:50:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7ED55884
+	for <git@vger.kernel.org>; Wed, 19 Jun 2024 17:56:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718819453; cv=none; b=XrEDBW15akpFGUUIBwSHgFRk74TVzKTomePRogTq9EygzIwU9IsOsDM9kZ9v/cx8snx81mSs5JB8AFT42WP3sL9byJDWVVQUw/iLPHWCwVKlOrIOFayOG6pCWilsZRd3/U2q69/pbx40Ducg35z4Kf6f0W+zjwgzW4AI7B+r0pk=
+	t=1718819796; cv=none; b=hpFm8XzrBfxTUe26unX24re8ma/afBqE2C1TL0RFTq64HgN1sdi+E0XPGELNHOyalTAvh+4E04wlVckjFkABp9inPWZ8MX3MuhHYUCSSNAPlFpWYXHYBfQjSIDAmlp8HE8aMVxZSk0+KHkgvaVfRnDCKewuWZry+J/EsG6tLkAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718819453; c=relaxed/simple;
-	bh=szcJkk04vQAZhRxL6GEyMI9F7+lBzqVqNeZpliAvkss=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=o8okayG9zUQ0Pil36f/8lWPyrdXg/U4RWP/xGz0VEV7q9A5JddK+xy9HIRbjHBX19q9GjtbBxv7NVuhOMBRI4zbqxcWLQpuzQOAtQyo25btJ6yjNIbxTBXKG1h8vDXUzZoYpjbdfnGtt8EHAb7oN6e+A3JyjlBu/0x1XzcNw6wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m5WZwiak; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718819796; c=relaxed/simple;
+	bh=geiD0TwIQqIx3kKDPQq1hj9r5npXnudIk3XN9DkJMjs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jz6ISuA/ppLsmlbgBz5qEPMwURU/5ErFTWFIKfBuNrf2I5cMKDuDEs0y+30rnN9sSTIexaDPXOvEtijwgeDX2CPTqaitWOg/6nysZS9JzsLy/E3vAg5UCUfI9QhlAcbcpyA28Hfn3MjzuvZ/ood/C6Cg2J6LH2nBw1bQyk7lUZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=nNWlczy+; arc=none smtp.client-ip=173.255.242.215
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m5WZwiak"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1f4a5344ec7so662425ad.1
-        for <git@vger.kernel.org>; Wed, 19 Jun 2024 10:50:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718819451; x=1719424251; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/enMTzCnNuNypDvgpPmSD1ujDtqWwSO0W0U1EaP/ezE=;
-        b=m5WZwiakEEBzwetXngC+Y39lBXCM9j/reRzzrIjsOGYVdJwNw92K1TVAcpZ3UDWxZR
-         kkZtpVAjALW8Uq7JGWp3KGFHy9CRjsRYH3cKQoL5y0j03CcMoKWozgx0w7qMmGWnrhfv
-         3Hw1+B4Idm+Etv6OvQsBB6F55kO6boSSe8tY+4CVX9+NnEKZJGEJRGYwOfGLb3yR3Vwe
-         V3c7s4V9OYWj9IpuRnEa7HzbuQzd8hyT4pGfOLWFIr/vTvA6SYd72jdsKrg3r5vSgPMF
-         uUpsAFYm205A2JDDK2rBQ/pBlfUJcfAnlkquoHcNfUV9Vkmhmt62iu9GTbBmL039R/Dj
-         yk0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718819451; x=1719424251;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/enMTzCnNuNypDvgpPmSD1ujDtqWwSO0W0U1EaP/ezE=;
-        b=PMmR/BmWefsx3Ec8fvrFM8L+91xYj4vzB/D9nXe6bwItV7OzPh6hkfwDe/1iOONZ7U
-         hC6F6BE1NPQKgWUgzOAndlRl8lJwvSCAlBy8RnsQzc6iM4ZhvGdHhpUTmoJBPtnrdtwe
-         34ANWKf61GNxxUYqTFG4ITmSfacr5IFHAaOh215SlXTXie1Cpfjy5vR8Xl6v+cbYcar9
-         YbPAuynzFrf2bCkGXZaFAZJsl401UqjAiYH+7V7ofBBgx686foe982GjDfkDzonrH8gH
-         jJyLPPhd7MRKBZr7mE8gOKbwKztmNwyNJM07f+5rrQ4SK9wJSbbV7m7wsjuz8DSGcgDC
-         LnqA==
-X-Gm-Message-State: AOJu0YyQL1zOVDGGQicpLg5y9TetTzQABwB8mJRldthoHK3g1FjLG7lP
-	5zNaCwSK76zhfuNpIVBYPS/+DZCjKRuPaGeILAA/U6/WI7UtMfu/Hnw54vNK
-X-Google-Smtp-Source: AGHT+IFl6fvBrHlzmNr+RoYBWs68Y4/WiQiK/nK93yCDoi489yHcmBmZw+NSA/P822ynJzFwORvRSQ==
-X-Received: by 2002:a17:902:cecb:b0:1f6:dccd:c6db with SMTP id d9443c01a7336-1f98b28efc2mr82345645ad.30.1718819450764;
-        Wed, 19 Jun 2024 10:50:50 -0700 (PDT)
-Received: from localhost.localdomain ([2402:a00:401:a99b:446e:33cc:f0d8:7ed1])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-6fedd3fe89bsm9686485a12.11.2024.06.19.10.50.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jun 2024 10:50:50 -0700 (PDT)
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: [GSoC][PATCH] t: migrate helper/test-oidmap.c to unit-tests/t-oidmap.c
-Date: Wed, 19 Jun 2024 23:20:29 +0530
-Message-ID: <20240619175036.64291-1-shyamthakkar001@gmail.com>
-X-Mailer: git-send-email 2.45.2
+	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="nNWlczy+"
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AF1DD48B4;
+	Wed, 19 Jun 2024 17:56:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+	s=selector1; t=1718819794;
+	bh=geiD0TwIQqIx3kKDPQq1hj9r5npXnudIk3XN9DkJMjs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nNWlczy+F0NX4crJKZZSI0FYLHeVCrn29pAo/07ZKkNWyGjL1znFrfdL2qQmlguUj
+	 k9AaRMZBNJddUY00qiLhWxgzkYgsFnigAK4ZwpbPGsWXZZ5EPe6WkLJa5fI27AZ+Bi
+	 IpIAlgliB6ZG7A5SfZ+qIzMVXSHIdNWk8ieK2yUc=
+Date: Wed, 19 Jun 2024 17:56:33 +0000
+From: Eric Wong <e@80x24.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] t1006: ensure cat-file info isn't buffered by
+ default
+Message-ID: <20240619175633.M826655@dcvr>
+References: <20240617104326.3522535-1-e@80x24.org>
+ <20240617104326.3522535-3-e@80x24.org>
+ <xmqq1q4v5m5a.fsf@gitster.g>
+ <20240618213041.M462972@dcvr>
+ <xmqqzfrhyg8j.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzfrhyg8j.fsf@gitster.g>
 
-helper/test-oidmap.c along with t0016-oidmap.sh test the oidmap.h
-library which is built on top of hashmap.h to store arbitrary
-datastructure (which must contain oidmap_entry, which is a wrapper
-around object_id). These entries can be accessed by querying their
-associated object_id.
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <e@80x24.org> writes:
+> 
+> >> Yes, using Perl is a good substitute for writing it in C in this
+> >> case.  I however question the choice to use t9700/test.pl here,
+> >> which is clearly stated that its purpose is to "test perl interface
+> >> which is Git.pm", and added tests are not testing anything in Git.pm
+> >> at all.
+> >> 
+> >> Using t9700/test.pl only because it happens to use "perl -MTest::More"
+> >> sounds a bit eh, suboptimal.
+> >
+> > *shrug*  I figure Test::More is common enough since it's part of
+> > the Perl standard library; but I consider Perl a better scripting
+> > language than sh by far and wish our whole test suite were Perl :>
+> 
+> Oh, I think we (actually the author of t9700) considers it common
+> enough that we have PERL_TEST_MORE prerequisite to allow us to write
+> tests, assuming that it is available, and let us easily skip where
+> it is not available.  So I do not think I mind the dependency on
+> Test::More at all.  Moving the tests to t1006 and rewriting the
+> tests not to use Test::More are two separate and unrelated things,
+> and if you are more comfortable with Test::More (and more
+> importantly if it is natural to write Perl based tests using
+> Test::More), it is not necessary to switch away from it.
 
-Migrate them to the unit testing framework for better performance,
-concise code and better debugging. Along with the migration also plug
-memory leaks and make the test logic independent for all the tests.
-The migration removes 'put' tests from t0016, because it is used as
-setup to all the other tests, so testing it separately does not yield
-any benefit.
+OK, fair enough.  Given t1006 is mostly sh, I prefer keeping v2
+as-is because the Test::More->builder munging of test numbers in
+t9700/test.pl is nasty too and I wouldn't enjoy duplicating
+those bits in a hypothetical t1006/test.pl, either.
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
----
-This patch is depenedent on 'gt/unit-test-oidtree' for lib-oid.
-
- Makefile                |   2 +-
- t/helper/test-oidmap.c  | 123 ------------------------------
- t/helper/test-tool.c    |   1 -
- t/helper/test-tool.h    |   1 -
- t/t0016-oidmap.sh       | 112 ---------------------------
- t/unit-tests/t-oidmap.c | 165 ++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 166 insertions(+), 238 deletions(-)
- delete mode 100644 t/helper/test-oidmap.c
- delete mode 100755 t/t0016-oidmap.sh
- create mode 100644 t/unit-tests/t-oidmap.c
-
-diff --git a/Makefile b/Makefile
-index 03751e0fc0..f7ed50f3a9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -810,7 +810,6 @@ TEST_BUILTINS_OBJS += test-match-trees.o
- TEST_BUILTINS_OBJS += test-mergesort.o
- TEST_BUILTINS_OBJS += test-mktemp.o
- TEST_BUILTINS_OBJS += test-oid-array.o
--TEST_BUILTINS_OBJS += test-oidmap.o
- TEST_BUILTINS_OBJS += test-online-cpus.o
- TEST_BUILTINS_OBJS += test-pack-mtimes.o
- TEST_BUILTINS_OBJS += test-parse-options.o
-@@ -1334,6 +1333,7 @@ THIRD_PARTY_SOURCES += sha1dc/%
- 
- UNIT_TEST_PROGRAMS += t-ctype
- UNIT_TEST_PROGRAMS += t-mem-pool
-+UNIT_TEST_PROGRAMS += t-oidmap
- UNIT_TEST_PROGRAMS += t-oidtree
- UNIT_TEST_PROGRAMS += t-prio-queue
- UNIT_TEST_PROGRAMS += t-strbuf
-diff --git a/t/helper/test-oidmap.c b/t/helper/test-oidmap.c
-deleted file mode 100644
-index bd30244a54..0000000000
---- a/t/helper/test-oidmap.c
-+++ /dev/null
-@@ -1,123 +0,0 @@
--#include "test-tool.h"
--#include "hex.h"
--#include "object-name.h"
--#include "oidmap.h"
--#include "repository.h"
--#include "setup.h"
--#include "strbuf.h"
--#include "string-list.h"
--
--/* key is an oid and value is a name (could be a refname for example) */
--struct test_entry {
--	struct oidmap_entry entry;
--	char name[FLEX_ARRAY];
--};
--
--#define DELIM " \t\r\n"
--
--/*
-- * Read stdin line by line and print result of commands to stdout:
-- *
-- * hash oidkey -> sha1hash(oidkey)
-- * put oidkey namevalue -> NULL / old namevalue
-- * get oidkey -> NULL / namevalue
-- * remove oidkey -> NULL / old namevalue
-- * iterate -> oidkey1 namevalue1\noidkey2 namevalue2\n...
-- *
-- */
--int cmd__oidmap(int argc UNUSED, const char **argv UNUSED)
--{
--	struct string_list parts = STRING_LIST_INIT_NODUP;
--	struct strbuf line = STRBUF_INIT;
--	struct oidmap map = OIDMAP_INIT;
--
--	setup_git_directory();
--
--	/* init oidmap */
--	oidmap_init(&map, 0);
--
--	/* process commands from stdin */
--	while (strbuf_getline(&line, stdin) != EOF) {
--		char *cmd, *p1, *p2;
--		struct test_entry *entry;
--		struct object_id oid;
--
--		/* break line into command and up to two parameters */
--		string_list_setlen(&parts, 0);
--		string_list_split_in_place(&parts, line.buf, DELIM, 2);
--		string_list_remove_empty_items(&parts, 0);
--
--		/* ignore empty lines */
--		if (!parts.nr)
--			continue;
--		if (!*parts.items[0].string || *parts.items[0].string == '#')
--			continue;
--
--		cmd = parts.items[0].string;
--		p1 = parts.nr >= 1 ? parts.items[1].string : NULL;
--		p2 = parts.nr >= 2 ? parts.items[2].string : NULL;
--
--		if (!strcmp("put", cmd) && p1 && p2) {
--
--			if (repo_get_oid(the_repository, p1, &oid)) {
--				printf("Unknown oid: %s\n", p1);
--				continue;
--			}
--
--			/* create entry with oid_key = p1, name_value = p2 */
--			FLEX_ALLOC_STR(entry, name, p2);
--			oidcpy(&entry->entry.oid, &oid);
--
--			/* add / replace entry */
--			entry = oidmap_put(&map, entry);
--
--			/* print and free replaced entry, if any */
--			puts(entry ? entry->name : "NULL");
--			free(entry);
--
--		} else if (!strcmp("get", cmd) && p1) {
--
--			if (repo_get_oid(the_repository, p1, &oid)) {
--				printf("Unknown oid: %s\n", p1);
--				continue;
--			}
--
--			/* lookup entry in oidmap */
--			entry = oidmap_get(&map, &oid);
--
--			/* print result */
--			puts(entry ? entry->name : "NULL");
--
--		} else if (!strcmp("remove", cmd) && p1) {
--
--			if (repo_get_oid(the_repository, p1, &oid)) {
--				printf("Unknown oid: %s\n", p1);
--				continue;
--			}
--
--			/* remove entry from oidmap */
--			entry = oidmap_remove(&map, &oid);
--
--			/* print result and free entry*/
--			puts(entry ? entry->name : "NULL");
--			free(entry);
--
--		} else if (!strcmp("iterate", cmd)) {
--
--			struct oidmap_iter iter;
--			oidmap_iter_init(&map, &iter);
--			while ((entry = oidmap_iter_next(&iter)))
--				printf("%s %s\n", oid_to_hex(&entry->entry.oid), entry->name);
--
--		} else {
--
--			printf("Unknown command %s\n", cmd);
--
--		}
--	}
--
--	string_list_clear(&parts, 0);
--	strbuf_release(&line);
--	oidmap_free(&map, 1);
--	return 0;
--}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 253324a06b..5f013d8b2b 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -45,7 +45,6 @@ static struct test_cmd cmds[] = {
- 	{ "mergesort", cmd__mergesort },
- 	{ "mktemp", cmd__mktemp },
- 	{ "oid-array", cmd__oid_array },
--	{ "oidmap", cmd__oidmap },
- 	{ "online-cpus", cmd__online_cpus },
- 	{ "pack-mtimes", cmd__pack_mtimes },
- 	{ "parse-options", cmd__parse_options },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 460dd7d260..c7d3e43694 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -38,7 +38,6 @@ int cmd__lazy_init_name_hash(int argc, const char **argv);
- int cmd__match_trees(int argc, const char **argv);
- int cmd__mergesort(int argc, const char **argv);
- int cmd__mktemp(int argc, const char **argv);
--int cmd__oidmap(int argc, const char **argv);
- int cmd__online_cpus(int argc, const char **argv);
- int cmd__pack_mtimes(int argc, const char **argv);
- int cmd__parse_options(int argc, const char **argv);
-diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
-deleted file mode 100755
-index 0faef1f4f1..0000000000
---- a/t/t0016-oidmap.sh
-+++ /dev/null
-@@ -1,112 +0,0 @@
--#!/bin/sh
--
--test_description='test oidmap'
--
--TEST_PASSES_SANITIZE_LEAK=true
--. ./test-lib.sh
--
--# This purposefully is very similar to t0011-hashmap.sh
--
--test_oidmap () {
--	echo "$1" | test-tool oidmap $3 >actual &&
--	echo "$2" >expect &&
--	test_cmp expect actual
--}
--
--
--test_expect_success 'setup' '
--
--	test_commit one &&
--	test_commit two &&
--	test_commit three &&
--	test_commit four
--
--'
--
--test_expect_success 'put' '
--
--test_oidmap "put one 1
--put two 2
--put invalidOid 4
--put three 3" "NULL
--NULL
--Unknown oid: invalidOid
--NULL"
--
--'
--
--test_expect_success 'replace' '
--
--test_oidmap "put one 1
--put two 2
--put three 3
--put invalidOid 4
--put two deux
--put one un" "NULL
--NULL
--NULL
--Unknown oid: invalidOid
--2
--1"
--
--'
--
--test_expect_success 'get' '
--
--test_oidmap "put one 1
--put two 2
--put three 3
--get two
--get four
--get invalidOid
--get one" "NULL
--NULL
--NULL
--2
--NULL
--Unknown oid: invalidOid
--1"
--
--'
--
--test_expect_success 'remove' '
--
--test_oidmap "put one 1
--put two 2
--put three 3
--remove one
--remove two
--remove invalidOid
--remove four" "NULL
--NULL
--NULL
--1
--2
--Unknown oid: invalidOid
--NULL"
--
--'
--
--test_expect_success 'iterate' '
--	test-tool oidmap >actual.raw <<-\EOF &&
--	put one 1
--	put two 2
--	put three 3
--	iterate
--	EOF
--
--	# sort "expect" too so we do not rely on the order of particular oids
--	sort >expect <<-EOF &&
--	NULL
--	NULL
--	NULL
--	$(git rev-parse one) 1
--	$(git rev-parse two) 2
--	$(git rev-parse three) 3
--	EOF
--
--	sort <actual.raw >actual &&
--	test_cmp expect actual
--'
--
--test_done
-diff --git a/t/unit-tests/t-oidmap.c b/t/unit-tests/t-oidmap.c
-new file mode 100644
-index 0000000000..9b98a3ed09
---- /dev/null
-+++ b/t/unit-tests/t-oidmap.c
-@@ -0,0 +1,165 @@
-+#include "test-lib.h"
-+#include "lib-oid.h"
-+#include "oidmap.h"
-+#include "hash.h"
-+#include "hex.h"
-+
-+/*
-+ * elements we will put in oidmap structs are made of a key: the entry.oid
-+ * field, which is of type struct object_id, and a value: the name field (could
-+ * be a refname for example)
-+ */
-+struct test_entry {
-+	struct oidmap_entry entry;
-+	char name[FLEX_ARRAY];
-+};
-+
-+static const char *key_val[][2] = { { "11", "one" },
-+				    { "22", "two" },
-+				    { "33", "three" } };
-+
-+static int put_and_check_null(struct oidmap *map, const char *hex,
-+			      const char *entry_name)
-+{
-+	struct test_entry *entry;
-+
-+	FLEX_ALLOC_STR(entry, name, entry_name);
-+	if (get_oid_arbitrary_hex(hex, &entry->entry.oid))
-+		return -1;
-+	if (!check(oidmap_put(map, entry) == NULL))
-+		return -1;
-+	return 0;
-+}
-+
-+static void setup(void (*f)(struct oidmap *map))
-+{
-+	struct oidmap map = OIDMAP_INIT;
-+	int ret = 0;
-+
-+	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++)
-+		if ((ret = put_and_check_null(&map, key_val[i][0],
-+					      key_val[i][1])))
-+			break;
-+
-+	if (!ret)
-+		f(&map);
-+	oidmap_free(&map, 1);
-+}
-+
-+static void t_replace(struct oidmap *map)
-+{
-+	struct test_entry *entry, *prev;
-+
-+	FLEX_ALLOC_STR(entry, name, "un");
-+	if (get_oid_arbitrary_hex("11", &entry->entry.oid))
-+		return;
-+	prev = oidmap_put(map, entry);
-+	if (!check(prev != NULL))
-+		return;
-+	check_str(prev->name, "one");
-+	free(prev);
-+
-+	FLEX_ALLOC_STR(entry, name, "deux");
-+	if (get_oid_arbitrary_hex("22", &entry->entry.oid))
-+		return;
-+	prev = oidmap_put(map, entry);
-+	if (!check(prev != NULL))
-+		return;
-+	check_str(prev->name, "two");
-+	free(prev);
-+}
-+
-+static void t_get(struct oidmap *map)
-+{
-+	struct test_entry *entry;
-+	struct object_id oid;
-+
-+	if (get_oid_arbitrary_hex("22", &oid))
-+		return;
-+	entry = oidmap_get(map, &oid);
-+	if (!check(entry != NULL))
-+		return;
-+	check_str(entry->name, "two");
-+
-+	if (get_oid_arbitrary_hex("44", &oid))
-+		return;
-+	check(oidmap_get(map, &oid) == NULL);
-+
-+	if (get_oid_arbitrary_hex("11", &oid))
-+		return;
-+	entry = oidmap_get(map, &oid);
-+	if (!check(entry != NULL))
-+		return;
-+	check_str(entry->name, "one");
-+}
-+
-+static void t_remove(struct oidmap *map)
-+{
-+	struct test_entry *entry;
-+	struct object_id oid;
-+
-+	if (get_oid_arbitrary_hex("11", &oid))
-+		return;
-+	entry = oidmap_remove(map, &oid);
-+	if (!check(entry != NULL))
-+		return;
-+	check_str(entry->name, "one");
-+	check(oidmap_get(map, &oid) == NULL);
-+	free(entry);
-+
-+	if (get_oid_arbitrary_hex("22", &oid))
-+		return;
-+	entry = oidmap_remove(map, &oid);
-+	if (!check(entry != NULL))
-+		return;
-+	check_str(entry->name, "two");
-+	check(oidmap_get(map, &oid) == NULL);
-+	free(entry);
-+
-+	if (get_oid_arbitrary_hex("44", &oid))
-+		return;
-+	check(oidmap_remove(map, &oid) == NULL);
-+}
-+
-+static int key_val_contains(struct test_entry *entry)
-+{
-+	/* the test is small enough to be able to bear O(n) */
-+	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
-+		if (!strcmp(key_val[i][1], entry->name)) {
-+			struct object_id oid;
-+			if (get_oid_arbitrary_hex(key_val[i][0], &oid))
-+				return -1;
-+			if (oideq(&entry->entry.oid, &oid))
-+				return 0;
-+		}
-+	}
-+	return 1;
-+}
-+
-+static void t_iterate(struct oidmap *map)
-+{
-+	struct oidmap_iter iter;
-+	struct test_entry *entry;
-+	int ret;
-+
-+	oidmap_iter_init(map, &iter);
-+	while ((entry = oidmap_iter_next(&iter))) {
-+		if (!check_int((ret = key_val_contains(entry)), ==, 0)) {
-+			if (ret == -1)
-+				return;
-+			test_msg("obtained entry was not given in the input\n"
-+				 "  name: %s\n   oid: %s\n",
-+				 entry->name, oid_to_hex(&entry->entry.oid));
-+		}
-+	}
-+	check_int(hashmap_get_size(&map->map), ==, ARRAY_SIZE(key_val));
-+}
-+
-+int cmd_main(int argc UNUSED, const char **argv UNUSED)
-+{
-+	TEST(setup(t_replace), "replace works");
-+	TEST(setup(t_get), "get works");
-+	TEST(setup(t_remove), "remove works");
-+	TEST(setup(t_iterate), "iterate works");
-+	return test_done();
-+}
--- 
-2.45.2
-
+It would be nice to have first class support for Test::More in
+our suite so we could just have t/t0006-cat-file.t and
+t/t9700-perl-git.t implemented in Perl without sh at all, but
+that's a separate discussion.
