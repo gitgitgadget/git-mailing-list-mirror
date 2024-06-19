@@ -1,64 +1,63 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1250356766
-	for <git@vger.kernel.org>; Wed, 19 Jun 2024 03:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB1657CAC
+	for <git@vger.kernel.org>; Wed, 19 Jun 2024 03:00:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718766032; cv=none; b=X+lkNJJLWKeALT7D3uZEB5xjGvc65nBidOlkT/GjMjCyJSJDrMLlN11K577dv75cAfJtODpGqx0MUksYr9jxH4taynLlBS58pfQkcEuoGZlnxArre6PmUe41sHvEsnaDRO88x9tQR3KJmXKSZd8s35ZixhRNGFGGJW26Yo6bMjw=
+	t=1718766034; cv=none; b=aK5y0Bp7zSJUP4jqa/q4EOiaTmiliRe227P6Iq5KHfxsjTW8CXoIPq8hNcDmAamEHiQJ52mH22DKIwB+4n39HxBMd+5JnBgksJetRFmEUnDZZ/U3H5bG0Xij+XWZAGvGc77tJ7r5SLlWFvc7RQ82JiAEa7USp2hv2hHMPToR8mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718766032; c=relaxed/simple;
-	bh=g/s4pDKau4zJ3xPBXI+BdJob4svDmH9t1cmpJjEMLX0=;
+	s=arc-20240116; t=1718766034; c=relaxed/simple;
+	bh=KeZ+lF2i85IQ10NuNm8X7oFz8AX/wN4pg6t3AlQch7g=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=iM/ah8ID4QKhFcRApwFNhRrURla2xEPSNHytd+vGPa9bLdd5d/I82hhyRNXbyTUJMKdBscMIGyDGkRLZrX4oj5RxyCaJgDVKieF43EcKrtq1YS5r5k2oxyHYTi5B27dfRukiUqOTAm3b07peNw4CppgLkkC/WIVtCiVGnqKpKr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PvMLNOTR; arc=none smtp.client-ip=209.85.128.45
+	 MIME-Version:To:Cc; b=aMES521LFfibwmirFRL+CGFuJo8u9wiZ1DD1d3MSHThZGuwrxJBi+HAmD2t85adZ4rTaEgxtWoyTym1cE+o/4c6yX+omzXVTVmmIQc4/m/6xy/OZmL/Q1Bjqtl0LJke1gSFfNKym9YMmw76DjN+zuvpc1PBSXY7bZ2k4wfwRw0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ltw6XKQ2; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PvMLNOTR"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4217990f8baso55093415e9.2
-        for <git@vger.kernel.org>; Tue, 18 Jun 2024 20:00:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ltw6XKQ2"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-424720e73e0so11182735e9.0
+        for <git@vger.kernel.org>; Tue, 18 Jun 2024 20:00:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718766029; x=1719370829; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718766030; x=1719370830; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gCcoEWlJCrgh53o0wPpgv1dTJAB9+0KhbA69cFsF4GY=;
-        b=PvMLNOTRfwOi+YwBEKDm85XON0UsJwGjBhIxby3PpcNIukmsUaaqPzoDp0/0xhKOn5
-         gNCtoF8IjagwcPX9lfvdVsW1aj4t4bb8ydnRHQVLSc3AqOw5CoWEuFynnTVIL6eGULhO
-         XJidS3big0OWwWLNC3iClUyVoRR8XsqH4+YWbw7tk9g6Y64aOh7F0cmbfHfbsSY7BRQE
-         3yklb4CbrUNJ3hmkeViAjh+ajeLREi0t6B/Biu+apIHnSgPkQd7oV72sfBEnLv0mlec+
-         +oB4u9grzPu1ZPmtXQ5ZrblekEneS42YZ7wRbUPqueTgKYYWd3eblcPO5F4UAi/ZUez9
-         MwxQ==
+        bh=7kdoI+8QhUjtqoKbyy/tMgx0gjM9+4DotxjdiXk1cK4=;
+        b=ltw6XKQ2FY0NHyxDn0iaCYoCpB8988KqaPLpA+tBqLiYEIlPQuF3BteOyhS1ufC9XH
+         IIaPiqyPLZ9qZj37OG+xhHaqXoDn8LvJmi4Bo6uZyv+LlIJYbXklUboucBqxFI5Nn45w
+         wViVZ4MT4wbqCxD1ccBBzny6mIg7WWIPQYpFXXVVbY9C8KXayepadgsB46vmVGtKqwpS
+         IfhuXJ8BNXMT4vPctLu8cWh9jeqoq9cDLSjoeZGa2R9QIDI8L1ycXqRGmgG3NuLPVOjf
+         N36/LEqGQQW0dxnLqRCOF3LXU8TeS0pVjPp+lPSVjKM3eFsvKbzEbjxmUXQXEuBAH1L2
+         792A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718766029; x=1719370829;
+        d=1e100.net; s=20230601; t=1718766030; x=1719370830;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gCcoEWlJCrgh53o0wPpgv1dTJAB9+0KhbA69cFsF4GY=;
-        b=FZjo0tQW4cJwD9fHpqgVnyzxVFRrpSOnBzoE9CNe8H9p28rB0nMnsqMsp9BVccdxDk
-         rz/bKW5I9SKLgofvv1S5QuVxJRpst5qELAP5l5fj0rYIElST2IN31SywhYNRVwY129l5
-         KaxyqcMMdnHkDHrttQfejQVMzRzsbz7pWOdUN3JGK3Ls/9Bk5OxPjIhTsRHkQpF/+Yxr
-         YKfTBETHE7BktiiQ7SnIiOoI4JKTtPo4TDKc8gKqDgrFkjzrkKI5b3bWvbwiNLbpwvpw
-         zJ+TJrL+/wAuZnGd5hvHNShSC0P5pYZqbdtcsFQgE26P2M+xA4FZkHP7q2mrq2jjRrx/
-         nZPA==
-X-Gm-Message-State: AOJu0YwVkkg5zVgPmr2VA4wFTLNXoZuM+v5cMl8yjTOO0WEBxpLglWFr
-	0B4+6hYMApNX+IJ49kj4nsCkahYVnX9jD4o8wKpA2Bwthxss9I7stIEFLQ==
-X-Google-Smtp-Source: AGHT+IEKU6tAfF8RCkijMOpiFIBT7XMzOMEpTLZwWaSqtQTli1QvkW9fg+nrW82IgNfVGbn1VJt1BQ==
-X-Received: by 2002:a5d:53cd:0:b0:362:5b83:51dd with SMTP id ffacd0b85a97d-363192cdeb4mr979554f8f.49.1718766029205;
-        Tue, 18 Jun 2024 20:00:29 -0700 (PDT)
+        bh=7kdoI+8QhUjtqoKbyy/tMgx0gjM9+4DotxjdiXk1cK4=;
+        b=OMAZLIl3hR8vVXngQXspdomcswzjdDZPTH6cg+5atO4Gsu4q247OQ+HMgfFNxztRSB
+         Bb11VZEBA3qmiNlWk0DvsZZVeMJ7tpkhMyy+9Fsv43PayPpgEo/ftOvjKfcDi0bkdGnC
+         uxl3zPL8POGN9Z3ltfIDThnnWz1ijGYF6fPfP0yCBjJxu4HuLSCfpY03WsjQjtvYnLx1
+         px80peb0RlO7i6PHJM1AbP1sKEJrUZf/s/zoW+ZHekxDUVX0fhcSM7I9GgogfZaOq1U5
+         Jw81LRWoQjgPlHKUrpA2a39KfASvkL4HoVQEXfEh8EIkx4dNNbLmHjQDvlA1qP6WbN4w
+         5e6g==
+X-Gm-Message-State: AOJu0YwKoeDw/bB3sB8d5HnVCay5wz/h7TSsOaJzSEg9KM0nFsLrp4p7
+	asIU8yaXuuUlNM44U6f0RMRvtjybL2mYXx2xydUpQVXEU8d6J8yPSeQFRg==
+X-Google-Smtp-Source: AGHT+IEg5cj+OPVcE39GXrFNA21Uczb9a2SnflWHemVocRyYmoJDlNfyOCgwwSOab4D5eL3Qp6BboQ==
+X-Received: by 2002:a05:600c:212:b0:41f:b0e7:f299 with SMTP id 5b1f17b1804b1-424751762e5mr7015055e9.9.1718766030425;
+        Tue, 18 Jun 2024 20:00:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247101aac6sm28683705e9.0.2024.06.18.20.00.28
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3607509c890sm15803755f8f.28.2024.06.18.20.00.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jun 2024 20:00:28 -0700 (PDT)
-Message-Id: <6756956d0c7e3672a1a3b362b31b9d7e29bc5b9f.1718766019.git.gitgitgadget@gmail.com>
+        Tue, 18 Jun 2024 20:00:29 -0700 (PDT)
+Message-Id: <500433edf49a4df448b330e4ed9201cfac83cecf.1718766019.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1748.v2.git.1718766019.gitgitgadget@gmail.com>
 References: <pull.1748.git.1718310307.gitgitgadget@gmail.com>
 	<pull.1748.v2.git.1718766019.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 19 Jun 2024 03:00:18 +0000
-Subject: [PATCH v2 6/7] merge-ort: upon merge abort, only show messages
- causing the abort
+Date: Wed, 19 Jun 2024 03:00:19 +0000
+Subject: [PATCH v2 7/7] merge-ort: convert more error() cases to path_msg()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,193 +75,143 @@ Cc: Taylor Blau <me@ttaylorr.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-When something goes wrong enough that we need to abort early and not
-even attempt merging the remaining files, it probably does not make
-sense to report conflicts messages for the subset of files we processed
-before hitting the fatal error.  Instead, only show the messages
-associated with paths where we hit the fatal error.  Also, print these
-messages to stderr rather than stdout.
+merge_submodule() stores errors using path_msg(), whereas other call
+sites make use of the error() function.  This is inconsistent, and
+moving towards path_msg() seems more friendly for libification efforts
+since it will allow the caller to determine whether the error messages
+need to be printed.
+
+Note that this deferred handling of error messages changes the error
+message in a recursive merge from
+  error: failed to execute internal merge
+to
+  From inner merge:  error: failed to execute internal merge
+which provides a little more information about the error which may be
+useful.  Since the recursive merge strategy still only shows the older
+error, we had to adjust the new testcase introduced a few commits ago to
+just search for the older message somewhere in the output.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 78 ++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 53 insertions(+), 25 deletions(-)
+ merge-ort.c           | 53 +++++++++++++++++++++++++++++++++----------
+ t/t6406-merge-attr.sh |  2 +-
+ 2 files changed, 42 insertions(+), 13 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index d0b13463283..b337e4d74ef 100644
+index b337e4d74ef..8dfe80f1009 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -543,10 +543,24 @@ enum conflict_and_info_types {
- 	CONFLICT_SUBMODULE_HISTORY_NOT_AVAILABLE,
- 	CONFLICT_SUBMODULE_MAY_HAVE_REWINDS,
- 	CONFLICT_SUBMODULE_NULL_MERGE_BASE,
--	CONFLICT_SUBMODULE_CORRUPT,
-+
-+	/* INSERT NEW ENTRIES HERE */
-+
-+	/*
-+	 * Keep this entry after all regular conflict and info types; only
-+	 * errors (failures causing immediate abort of the merge) should
-+	 * come after this.
-+	 */
-+	NB_REGULAR_CONFLICT_TYPES,
-+
-+	/*
-+	 * Something is seriously wrong; cannot even perform merge;
-+	 * Keep this group _last_ other than NB_TOTAL_TYPES
-+	 */
-+	ERROR_SUBMODULE_CORRUPT,
+@@ -558,6 +558,10 @@ enum conflict_and_info_types {
+ 	 * Keep this group _last_ other than NB_TOTAL_TYPES
+ 	 */
+ 	ERROR_SUBMODULE_CORRUPT,
++	ERROR_THREEWAY_CONTENT_MERGE_FAILED,
++	ERROR_OBJECT_WRITE_FAILED,
++	ERROR_OBJECT_READ_FAILED,
++	ERROR_OBJECT_NOT_A_BLOB,
  
  	/* Keep this entry _last_ in the list */
--	NB_CONFLICT_TYPES,
-+	NB_TOTAL_TYPES,
- };
- 
- /*
-@@ -597,8 +611,10 @@ static const char *type_short_descriptions[] = {
- 		"CONFLICT (submodule may have rewinds)",
- 	[CONFLICT_SUBMODULE_NULL_MERGE_BASE] =
- 		"CONFLICT (submodule lacks merge base)",
--	[CONFLICT_SUBMODULE_CORRUPT] =
--		"CONFLICT (submodule corrupt)"
-+
-+	/* Something is seriously wrong; cannot even perform merge */
-+	[ERROR_SUBMODULE_CORRUPT] =
-+		"ERROR (submodule corrupt)",
+ 	NB_TOTAL_TYPES,
+@@ -615,6 +619,14 @@ static const char *type_short_descriptions[] = {
+ 	/* Something is seriously wrong; cannot even perform merge */
+ 	[ERROR_SUBMODULE_CORRUPT] =
+ 		"ERROR (submodule corrupt)",
++	[ERROR_THREEWAY_CONTENT_MERGE_FAILED] =
++		"ERROR (three-way content merge failed)",
++	[ERROR_OBJECT_WRITE_FAILED] =
++		"ERROR (object write failed)",
++	[ERROR_OBJECT_READ_FAILED] =
++		"ERROR (object read failed)",
++	[ERROR_OBJECT_NOT_A_BLOB] =
++		"ERROR (object is not a blob)",
  };
  
  struct logical_conflict_info {
-@@ -762,7 +778,8 @@ static void path_msg(struct merge_options *opt,
+@@ -2190,15 +2202,24 @@ static int handle_content_merge(struct merge_options *opt,
+ 					  pathnames, extra_marker_size,
+ 					  &result_buf);
  
- 	/* Sanity checks */
- 	assert(omittable_hint ==
--	       !starts_with(type_short_descriptions[type], "CONFLICT") ||
-+	       (!starts_with(type_short_descriptions[type], "CONFLICT") &&
-+		!starts_with(type_short_descriptions[type], "ERROR")) ||
- 	       type == CONFLICT_DIR_RENAME_SUGGESTED);
- 	if (opt->record_conflict_msgs_as_headers && omittable_hint)
- 		return; /* Do not record mere hints in headers */
-@@ -1817,9 +1834,9 @@ static int merge_submodule(struct merge_options *opt,
- 	/* check whether both changes are forward */
- 	ret2 = repo_in_merge_bases(&subrepo, commit_o, commit_a);
- 	if (ret2 < 0) {
--		path_msg(opt, CONFLICT_SUBMODULE_CORRUPT, 0,
-+		path_msg(opt, ERROR_SUBMODULE_CORRUPT, 0,
- 			 path, NULL, NULL, NULL,
--			 _("Failed to merge submodule %s "
-+			 _("error: failed to merge submodule %s "
- 			   "(repository corrupt)"),
- 			 path);
- 		ret = -1;
-@@ -1828,9 +1845,9 @@ static int merge_submodule(struct merge_options *opt,
- 	if (ret2 > 0)
- 		ret2 = repo_in_merge_bases(&subrepo, commit_o, commit_b);
- 	if (ret2 < 0) {
--		path_msg(opt, CONFLICT_SUBMODULE_CORRUPT, 0,
-+		path_msg(opt, ERROR_SUBMODULE_CORRUPT, 0,
- 			 path, NULL, NULL, NULL,
--			 _("Failed to merge submodule %s "
-+			 _("error: failed to merge submodule %s "
- 			   "(repository corrupt)"),
- 			 path);
- 		ret = -1;
-@@ -1848,9 +1865,9 @@ static int merge_submodule(struct merge_options *opt,
- 	/* Case #1: a is contained in b or vice versa */
- 	ret2 = repo_in_merge_bases(&subrepo, commit_a, commit_b);
- 	if (ret2 < 0) {
--		path_msg(opt, CONFLICT_SUBMODULE_CORRUPT, 0,
-+		path_msg(opt, ERROR_SUBMODULE_CORRUPT, 0,
- 			 path, NULL, NULL, NULL,
--			 _("Failed to merge submodule %s "
-+			 _("error: failed to merge submodule %s "
- 			   "(repository corrupt)"),
- 			 path);
- 		ret = -1;
-@@ -1867,9 +1884,9 @@ static int merge_submodule(struct merge_options *opt,
- 	}
- 	ret2 = repo_in_merge_bases(&subrepo, commit_b, commit_a);
- 	if (ret2 < 0) {
--		path_msg(opt, CONFLICT_SUBMODULE_CORRUPT, 0,
-+		path_msg(opt, ERROR_SUBMODULE_CORRUPT, 0,
- 			 path, NULL, NULL, NULL,
--			 _("Failed to merge submodule %s "
-+			 _("error: failed to merge submodule %s "
- 			   "(repository corrupt)"),
- 			 path);
- 		ret = -1;
-@@ -1901,9 +1918,9 @@ static int merge_submodule(struct merge_options *opt,
- 					 &merges);
- 	switch (parent_count) {
- 	case -1:
--		path_msg(opt, CONFLICT_SUBMODULE_CORRUPT, 0,
-+		path_msg(opt, ERROR_SUBMODULE_CORRUPT, 0,
- 			 path, NULL, NULL, NULL,
--			 _("Failed to merge submodule %s "
-+			 _("error: failed to merge submodule %s "
- 			   "(repository corrupt)"),
- 			 path);
- 		ret = -1;
-@@ -4646,6 +4663,7 @@ void merge_display_update_messages(struct merge_options *opt,
- 	struct hashmap_iter iter;
- 	struct strmap_entry *e;
- 	struct string_list olist = STRING_LIST_INIT_NODUP;
-+	FILE *o = stdout;
+-		if ((merge_status < 0) || !result_buf.ptr)
+-			ret = error(_("failed to execute internal merge"));
++		if ((merge_status < 0) || !result_buf.ptr) {
++			path_msg(opt, ERROR_THREEWAY_CONTENT_MERGE_FAILED, 0,
++				 pathnames[0], pathnames[1], pathnames[2], NULL,
++				 _("error: failed to execute internal merge for %s"),
++				 path);
++			ret = -1;
++		}
  
- 	if (opt->record_conflict_msgs_as_headers)
- 		BUG("Either display conflict messages or record them as headers, not both");
-@@ -4662,6 +4680,10 @@ void merge_display_update_messages(struct merge_options *opt,
- 	}
- 	string_list_sort(&olist);
- 
-+	/* Print to stderr if we hit errors rather than just conflicts */
-+	if (result->clean < 0)
-+		o = stderr;
+ 		if (!ret &&
+ 		    write_object_file(result_buf.ptr, result_buf.size,
+-				      OBJ_BLOB, &result->oid))
+-			ret = error(_("unable to add %s to database"), path);
+-
++				      OBJ_BLOB, &result->oid)) {
++			path_msg(opt, ERROR_OBJECT_WRITE_FAILED, 0,
++				 pathnames[0], pathnames[1], pathnames[2], NULL,
++				 _("error: unable to add %s to database"), path);
++			ret = -1;
++		}
+ 		free(result_buf.ptr);
 +
- 	/* Iterate over the items, printing them */
- 	for (int path_nr = 0; path_nr < olist.nr; ++path_nr) {
- 		struct string_list *conflicts = olist.items[path_nr].util;
-@@ -4669,25 +4691,31 @@ void merge_display_update_messages(struct merge_options *opt,
- 			struct logical_conflict_info *info =
- 				conflicts->items[i].util;
+ 		if (ret)
+ 			return -1;
+ 		if (merge_status > 0)
+@@ -3577,18 +3598,26 @@ static int sort_dirs_next_to_their_children(const char *one, const char *two)
+ 		return c1 - c2;
+ }
  
-+			/* On failure, ignore regular conflict types */
-+			if (result->clean < 0 &&
-+			    info->type < NB_REGULAR_CONFLICT_TYPES)
-+				continue;
-+
- 			if (detailed) {
--				printf("%lu", (unsigned long)info->paths.nr);
--				putchar('\0');
-+				fprintf(o, "%lu", (unsigned long)info->paths.nr);
-+				fputc('\0', o);
- 				for (int n = 0; n < info->paths.nr; n++) {
--					fputs(info->paths.v[n], stdout);
--					putchar('\0');
-+					fputs(info->paths.v[n], o);
-+					fputc('\0', o);
- 				}
--				fputs(type_short_descriptions[info->type],
--				      stdout);
--				putchar('\0');
-+				fputs(type_short_descriptions[info->type], o);
-+				fputc('\0', o);
- 			}
--			puts(conflicts->items[i].string);
-+			fputs(conflicts->items[i].string, o);
-+			fputc('\n', o);
- 			if (detailed)
--				putchar('\0');
-+				fputc('\0', o);
- 		}
+-static int read_oid_strbuf(const struct object_id *oid,
+-			   struct strbuf *dst)
++static int read_oid_strbuf(struct merge_options *opt,
++			   const struct object_id *oid,
++			   struct strbuf *dst,
++			   const char *path)
+ {
+ 	void *buf;
+ 	enum object_type type;
+ 	unsigned long size;
+ 	buf = repo_read_object_file(the_repository, oid, &type, &size);
+-	if (!buf)
+-		return error(_("cannot read object %s"), oid_to_hex(oid));
++	if (!buf) {
++		path_msg(opt, ERROR_OBJECT_READ_FAILED, 0,
++			 path, NULL, NULL, NULL,
++			 _("error: cannot read object %s"), oid_to_hex(oid));
++		return -1;
++	}
+ 	if (type != OBJ_BLOB) {
+ 		free(buf);
+-		return error(_("object %s is not a blob"), oid_to_hex(oid));
++		path_msg(opt, ERROR_OBJECT_NOT_A_BLOB, 0,
++			 path, NULL, NULL, NULL,
++			 _("error: object %s is not a blob"), oid_to_hex(oid));
  	}
- 	string_list_clear(&olist, 0);
+ 	strbuf_attach(dst, buf, size, size + 1);
+ 	return 0;
+@@ -3612,8 +3641,8 @@ static int blob_unchanged(struct merge_options *opt,
+ 	if (oideq(&base->oid, &side->oid))
+ 		return 1;
  
--	print_submodule_conflict_suggestion(&opti->conflicted_submodules);
-+	if (result->clean >= 0)
-+		print_submodule_conflict_suggestion(&opti->conflicted_submodules);
- 
- 	/* Also include needed rename limit adjustment now */
- 	diff_warn_rename_limit("merge.renamelimit",
+-	if (read_oid_strbuf(&base->oid, &basebuf) ||
+-	    read_oid_strbuf(&side->oid, &sidebuf))
++	if (read_oid_strbuf(opt, &base->oid, &basebuf, path) ||
++	    read_oid_strbuf(opt, &side->oid, &sidebuf, path))
+ 		goto error_return;
+ 	/*
+ 	 * Note: binary | is used so that both renormalizations are
+diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
+index b6db5c2cc36..9bf95249347 100755
+--- a/t/t6406-merge-attr.sh
++++ b/t/t6406-merge-attr.sh
+@@ -295,7 +295,7 @@ test_expect_success !WINDOWS 'custom merge driver that is killed with a signal o
+ 	>./please-abort &&
+ 	echo "* merge=custom" >.gitattributes &&
+ 	test_expect_code 2 git merge recursive-a 2>err &&
+-	grep "^error: failed to execute internal merge" err &&
++	grep "error: failed to execute internal merge" err &&
+ 	git ls-files -u >output &&
+ 	git diff --name-only HEAD >>output &&
+ 	test_must_be_empty output
 -- 
 gitgitgadget
-
