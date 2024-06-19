@@ -1,139 +1,284 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263C62139C7
-	for <git@vger.kernel.org>; Wed, 19 Jun 2024 03:38:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED3D54673
+	for <git@vger.kernel.org>; Wed, 19 Jun 2024 04:07:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718768286; cv=none; b=Z0yaNX3H4PlhZo4dokTACE61HQNAtuwtVK70aApj2a8JNGDYiVicM/ZCO0QWbqqTlwK9eC1qpkcwF9GkUXQky4WjGLGQlmrF0yNvY4c9/UsAEfsN4yWHkvAt7QzWNwKSN9cyuZ/72L0ZPYD/Ix/D31imFLhFMBcpVdfh1dDg4cI=
+	t=1718770059; cv=none; b=KWn15ta4M+/zSCFS9kL5RVbMBuXV6z5s/enHK1yS+BOjZnatfNV6cRmBwWOYmvCGIsvD2gikchDp+JZj0Mz//UWEWpm4DG6xRlZK8BmbBzkNtquQaoVclcqVKoVLXkF0kLWn3K+Cymwfg5FtRg2dyK5+FvIKvviQ3k6Y36ZSJT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718768286; c=relaxed/simple;
-	bh=6CZJFR+fIidJ/xAeuckx2JyCmy2B/XAtPMQ2QJ8sDgk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HY6aM+ukMluBDgNcWJsfX1OLRGRV2YHBJ9Lygm08YaMgUzg9izspjzs+Np7AxMg+vWA6qpyGOxzNsnmI/xKFxpJCmf94mCULTjBqu1VtUEJJBUPh9usXYCwNqBl5UGywn0Zu4bhMg5OzERCwJHIhIqwIjljsSDh3g2TXe6Rw5Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ky7un1zf; arc=none smtp.client-ip=209.85.167.45
+	s=arc-20240116; t=1718770059; c=relaxed/simple;
+	bh=m/s2Xjv/M8p4QynW9jqbTEB5kjBDDg6cE7f5LpIUGfQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=kQCfF8/wnbu1T/SxawRD6d8UUFT7vWGoQy5GmaGFNU07UuQqCK+AmpceKbY9iacI3UDIBDtFmqhpTxBIGFyh8D4YmJ5PqHuq4DHgsTwRNb5xLkxFgNI7Xba+6fSNk9AvdhnlnsJv/UuqusHeN8JQZfaNGrhtgvNl2XpTJ9uZkkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hexj4OCf; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ky7un1zf"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52bc29c79fdso8197430e87.1
-        for <git@vger.kernel.org>; Tue, 18 Jun 2024 20:38:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hexj4OCf"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42198492353so47140775e9.1
+        for <git@vger.kernel.org>; Tue, 18 Jun 2024 21:07:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718768283; x=1719373083; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eo35Wudtk6Od2dHkF95sfcy/vqUMH9vwNhd1b5Xefxw=;
-        b=ky7un1zfPHdO+av6aMHAtUVGoNALgJXexZbSX1pBMBr5estN9rvIpLtPhE2z+bUuP4
-         QN5pNUgpByxM0/AzNSEX6VYqDC2b3CCpUO4yZa/u/gvsKWDnYy8rTU52gFQpObazYJHJ
-         B6SAvBQjGqUgyO86NOIv4aPl+EZT9rWIdX281QwZjqDuTpw6+CP7jepgEP9gw1mltLBf
-         BPZUFsLcoTdBaWvhcwtZlXkUYsOtImFigZQWa+nM5WJ5S7SN+Z/hxsgXeaGDAzyXEGFK
-         wE0/Q8umcnQbLfaFdgHZt8u/LMPzA4g9s7ARUfqNiBU4iOu0+60BH9Glo89Cn3VCUct6
-         Ar8Q==
+        d=gmail.com; s=20230601; t=1718770056; x=1719374856; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k3TpcVFTGzmzKYtzM8bJCjchzrljmJbuwEoHTl9lbTY=;
+        b=hexj4OCfGecgOlsMI6OiauBEofPyDO9uu1hl5iGB9ZEAiHBzRukbq7k6+LOIw6wjGB
+         KHZBWGsQxnCYhSoPXjrmmi0bqO/CgqiAu35l/yEx1DMbm4MjRqWpXb2IYiZ4qGN38ghd
+         933B/6tpCHwh2u3CTBh+Z795DwMBTYGtDFcbO2ZJlCQuibuv8wxECy08SinVOXr4SjZg
+         tDIY7NKIOAknEkX2ctz+BBdaIlSVOHr/WxmbTW+VxVQyU1OyaqCCJSQ1RRndwehqdNwL
+         vSi3h7SLYybjPqAvSUVFhI8WNTnd/am/cdtrXufuMFPeeIaeaIp2MmR7L5+x2U2BFfrZ
+         zm+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718768283; x=1719373083;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eo35Wudtk6Od2dHkF95sfcy/vqUMH9vwNhd1b5Xefxw=;
-        b=EtVrl+kFajsIulx7io//db6bK6VcyNwSKZLhzHPNQuUJDVI9sID0ed5L3TxoDiMfFl
-         VuZmzXyOZ/fNbp96RzASRXYnjvpv8SdD4fYXYAlGA/XxiJW5qgO9sTQgCkkkzbPlhI5x
-         JIG6UhSbYxokZEfO3ELeQmns+zc7jvqeuu5EoJ8FPTsz9vOZbwJH0D/2/lXzqhjW+SXj
-         YVypARFdGWX7AJ/YTZHTxkPeye52BFY+TXGDMzrfiCM6ocIUs20SAoTY9ITXXfrXTeKU
-         j56/lTtJiSSTqFGZbFTaQ0Dl7jc2cv1aJg/qUUnB/5ezNf6ke2DHrtL47KgrvAojM2DY
-         NqSg==
-X-Forwarded-Encrypted: i=1; AJvYcCUH0Fbjcj1V4UKlMZYCkT/51cXSO86pfgbeRMD3JecH9LYDOj7I3uv8twshvkWjCq35mSW3uK+ttmKN139HRDy95AFs
-X-Gm-Message-State: AOJu0YwhCZPHPPySAUa2lzHdD1RDKCqfyaqq2vdjBNpgmDqxUqiuLNEn
-	0gdUwXZkNfG44RzrgLTvMst05sME5ox15V56PgI9Yy/glMLgwMldQcjFm5T2FXYlUkuC2FILPty
-	B5aBQdKz8WOAuxfQgU1C/ZGdWGY4A6Ddq
-X-Google-Smtp-Source: AGHT+IGWl8eJZaTeTsbGvJd0Y41KuQKu1pnhjxNXSgDnW5E71ZR9JqhYMYedLHaaLOar5v0th/qwS7MV+zkUAth6Z84=
-X-Received: by 2002:ac2:4308:0:b0:52c:c97:b591 with SMTP id
- 2adb3069b0e04-52ccaa3695dmr767133e87.32.1718768282729; Tue, 18 Jun 2024
- 20:38:02 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718770056; x=1719374856;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=k3TpcVFTGzmzKYtzM8bJCjchzrljmJbuwEoHTl9lbTY=;
+        b=MDEQdh81UCP7KadERyfAfUnVZJ1QiZ/PGTsXhBXeNkaSoJQTaGa3uB7XuuGbkw0Bn2
+         hzc5a/XI9FOYdCi09U/9JeMTFhJjMjN2/jBjLpxLpSCcBLhzlOE3D6YIfv76Y1JZ5s4I
+         8OzEDPa5rlCVUCPLbdi7MNeXeJVvvnCbGhB8z2p2JR8iMcbXPesHqO0XLlElZ8KTheQ1
+         7su3oEnCzHlkMAmAT80IdCU3UZDFZOfZVBqmPuAGBI/kBcNMzgKVJyu/jmJgavAIf75u
+         aLNdXdEW+/6MDM7CdncVZAJNVTr5dECJubT58k/BTdtERVWF8EnwI3uch9KQhs3Oqeds
+         AADQ==
+X-Gm-Message-State: AOJu0Yx2UrwnwdA9PxPe3Kzat9B6SGikehFzr+nIpUBpOt1jwDlOqUpN
+	YawYSvByowZeBisYEWHldiCwvNIYAO8WmlU8MlWjqQw4N5iWTLfR2vJPvw==
+X-Google-Smtp-Source: AGHT+IHyQ0xtuxxi9QjRR1aUPtS6uNKOlhtwz2bE19+E6aHulVdKjsnLb/ABC07TG1Y453E5KdkrnQ==
+X-Received: by 2002:a05:600c:2e09:b0:421:79c8:dd37 with SMTP id 5b1f17b1804b1-4247529d570mr7088825e9.40.1718770055797;
+        Tue, 18 Jun 2024 21:07:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42307d5b78fsm163773665e9.6.2024.06.18.21.07.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Jun 2024 21:07:35 -0700 (PDT)
+Message-Id: <pull.1730.v8.git.1718770053.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1730.v7.git.1718632535.gitgitgadget@gmail.com>
+References: <pull.1730.v7.git.1718632535.gitgitgadget@gmail.com>
+From: "blanet via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 19 Jun 2024 04:07:30 +0000
+Subject: [PATCH v8 0/3] object checking related additions and fixes for bundles in fetches
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANM0SV3CQPRyJCDanB8JFpkAMwuoo-mg3A=_L743_GXJtoFtQA@mail.gmail.com>
- <Zm8EqOfc_v4KBVVK@google.com> <20240618182415.GA178291@coredump.intra.peff.net>
-In-Reply-To: <20240618182415.GA178291@coredump.intra.peff.net>
-From: Devste Devste <devstemail@gmail.com>
-Date: Wed, 19 Jun 2024 05:37:51 +0200
-Message-ID: <CANM0SV2N3-uRbPG=VuEuUhL_BdgbCkoWPxzhwoa_g2s7ejujvA@mail.gmail.com>
-Subject: Re: Add warning when v0 protocol is used/downgraded
-To: Jeff King <peff@peff.net>
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Karthik Nayak <karthik.188@gmail.com>,
+    blanet <bupt_xingxin@163.com>
 
-At least for cases where there is a difference expected in output.
-e.g. we deal mostly in huge monorepos and there is a massive (= 2
-seconds per fetch!) difference between v0 and v2, since v0 returns
-tons of data in a fetch that you don't get included by default in v2.
+While attempting to fix a reference negotiation bug in bundle-uri, we
+identified that the fetch process lacks some crucial object validation
+checks when processing bundles. The primary issues are:
+
+ 1. In the bundle-uri scenario, object IDs were not validated before writing
+    bundle references. This was the root cause of the original negotiation
+    bug in bundle-uri and could lead to potential repository corruption.
+ 2. The existing "fetch.fsckObjects" and "transfer.fsckObjects"
+    configurations were not applied when directly fetching bundles or
+    fetching with bundle-uri enabled. In fact, there were no object
+    validation supports for unbundle.
+
+The first patch addresses the bundle-uri negotiation issue by removing the
+REF_SKIP_OID_VERIFICATION flag when writing bundle references.
+
+Patches 2 through 3 extend verify_bundle_flags for bundle.c:unbundle to add
+support for object validation (fsck) in fetch scenarios, mainly following
+the suggestions from Junio and Patrick on the mailing list.
+
+Xing Xin (3):
+  bundle-uri: verify oid before writing refs
+  fetch-pack: expose fsckObjects configuration logic
+  unbundle: extend object verification for fetches
+
+ bundle-uri.c                |   6 +-
+ bundle.c                    |   3 +
+ bundle.h                    |   1 +
+ fetch-pack.c                |  17 ++--
+ fetch-pack.h                |   5 +
+ t/t5558-clone-bundle-uri.sh | 187 +++++++++++++++++++++++++++++++++++-
+ t/t5607-clone-bundle.sh     |  35 +++++++
+ transport.c                 |   3 +-
+ 8 files changed, 243 insertions(+), 14 deletions(-)
 
 
-On Tue, 18 Jun 2024 at 20:24, Jeff King <peff@peff.net> wrote:
->
-> On Sun, Jun 16, 2024 at 03:33:41PM +0000, Jonathan Nieder wrote:
->
-> > Specifying protocol version is meant to be backward compatible, and
-> > there are cases where the old protocol still needs to be used - for
-> > example, if an SSH server doesn't support transmitting the
-> > GIT_PROTOCOL environment variable, then having the fallback to v0 is
-> > still useful there.
-> >
-> > So I'd be concerned that printing the protocol version in the default
-> > case would be overly disruptive for such cases.  This would be even
-> > more so for protocol v2 for push, which doesn't exist yet - once it
-> > exists, it wouldn't be great if all pushes using existing servers
-> > produced an extra piece of noisy output. :)
-> >
-> > That said, I'm sympathetic to the debugging use case you've described
-> > here.  Do tools like GIT_TRACE_PACKET, GIT_TRACE2_EVENT, and "git
-> > bugreport" produce the right information in these scenarios?  Would
-> > "git fetch -v" (i.e., when the user has explicitly asked git to be
-> > more verbose) be a good place to provide some additional diagnostic
-> > output?
->
-> You can certainly distinguish v2 with GIT_TRACE_PACKET; the first line
-> of the v2 response is "version 2". But recognizing v0 as "not v2" is
-> harder for the layman. Plus it generates a ton of otherwise confusing
-> output. I do agree that "fetch -v" might be a reasonable spot for this.
->
-> > > If
-> > > protocol.version is not explicitly set or v2
-> > > and both the local and server git version are >=2.26
-> > > and the reply is not in v2 protocol format
-> >
-> > Interesting!  We haven't previously used the "agent" field (server
-> > version) for anything other than logging it verbatim; I'd worry a bit
-> > about getting into the same kind of mess as User-Agent parsing on the
-> > web if we go that direction.  But I would expect the main obstacles to
-> > updating protocol version support to be in (a) reimplementations of
-> > git protocol rather than the standard git reference implementation and
-> > (b) plumbing such as httpd and sshd around git, rather than git
-> > itself.
->
-> Yeah, I'd really prefer if we can keep "agent" as purely informative, at
-> least by default. But having a debug/verbose mode that says "looks like
-> you should both support v2, but it wasn't used for some reason" seems
-> reasonable to me.
->
-> We don't distinguish right now between the default behavior and
-> explicitly setting "protocol.version" to "2". We could perhaps take the
-> latter as a hint to be a bit more chatty about falling back to v0.
->
-> I do think that v2 isn't going to make that big a difference in many
-> cases. For most clients the main benefit is the reduced advertisement,
-> but that's probably only meaningful if the server has a ton of refs
-> (often refs/changes or refs/pull, since you end up seeing all of "heads"
-> and "tags" anyway). There are other features (like fetching individual
-> blobs for partial clones) that some clients might care about, and where
-> finding the v0/v2 distinction would be valuable for debugging. But
-> complaining any time we fall back to v0 seems a bit excessive to me.
->
-> There may be some error messages we could improve there (e.g., if the
-> server comes back with "not our ref" and v0 is in use, we might give a
-> hint that the protocol version is the problem).
->
-> -Peff
+base-commit: b9cfe4845cb2562584837bc0101c0ab76490a239
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1730%2Fblanet%2Fxx%2Fbundle-uri-bug-using-bundle-list-v8
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1730/blanet/xx/bundle-uri-bug-using-bundle-list-v8
+Pull-Request: https://github.com/gitgitgadget/git/pull/1730
+
+Range-diff vs v7:
+
+ 1:  fc9f44fda00 ! 1:  d8fbde2dcd4 bundle-uri: verify oid before writing refs
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'fail to clone from non-bundle
+      +		git bundle create B.bundle topic &&
+      +
+      +		# Create a bundle with reference pointing to non-existent object.
+     -+		sed -e "/^$/q" -e "s/$(git rev-parse A) /$(git rev-parse B) /" \
+     ++		commit_a=$(git rev-parse A) &&
+     ++		commit_b=$(git rev-parse B) &&
+     ++		sed -e "/^$/q" -e "s/$commit_a /$commit_b /" \
+      +			<A.bundle >bad-header.bundle &&
+      +		convert_bundle_to_pack \
+      +			<A.bundle >>bad-header.bundle
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with path bundle' '
+      +	commit_b=$(git -C clone-from rev-parse B) &&
+      +	test_grep "trying to write ref '\''refs/bundles/topic'\'' with nonexistent object $commit_b" err &&
+      +	git -C clone-bad-header for-each-ref --format="%(refname)" >refs &&
+     -+	! grep "refs/bundles/" refs
+     ++	test_grep ! "refs/bundles/" refs
+      +'
+      +
+       test_expect_success 'clone with path bundle and non-default hash' '
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
+      +	test_write_lines refs/bundles/topic >expect &&
+      +	test_cmp expect actual &&
+      +	# Ensure that refs/bundles/topic are sent as "have".
+     -+	test_grep "clone> have $(git -C clone-from rev-parse A)" trace-packet.txt
+     ++	tip=$(git -C clone-from rev-parse A) &&
+     ++	test_grep "clone> have $tip" trace-packet.txt
+      +'
+      +
+      +test_expect_success 'negotiation: bundle with all wanted commits' '
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
+      +	test_write_lines refs/bundles/topic >expect &&
+      +	test_cmp expect actual &&
+      +	# We already have all needed commits so no "want" needed.
+     -+	! grep "clone> want " trace-packet.txt
+     ++	test_grep ! "clone> want " trace-packet.txt
+      +'
+      +
+      +test_expect_success 'negotiation: bundle list (no heuristic)' '
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
+      +	refs/bundles/left
+      +	EOF
+      +	test_cmp expect actual &&
+     -+	test_grep "clone> have $(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/left)" trace-packet.txt
+     ++	tip=$(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/left) &&
+     ++	test_grep "clone> have $tip" trace-packet.txt
+      +'
+      +
+      +test_expect_success 'negotiation: bundle list (creationToken)' '
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
+      +	refs/bundles/left
+      +	EOF
+      +	test_cmp expect actual &&
+     -+	test_grep "clone> have $(git -C nego-bundle-list-heuristic rev-parse refs/bundles/left)" trace-packet.txt
+     ++	tip=$(git -C nego-bundle-list-heuristic rev-parse refs/bundles/left) &&
+     ++	test_grep "clone> have $tip" trace-packet.txt
+      +'
+      +
+      +test_expect_success 'negotiation: bundle list with all wanted commits' '
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any m
+      +	EOF
+      +	test_cmp expect actual &&
+      +	# We already have all needed commits so no "want" needed.
+     -+	! grep "clone> want " trace-packet.txt
+     ++	test_grep ! "clone> want " trace-packet.txt
+      +'
+      +
+       #########################################################################
+ 2:  3dc0d9dd22f ! 2:  518584c8698 fetch-pack: expose fsckObjects configuration logic
+     @@ Commit message
+          "fetch.fsckObjects" to control checks for broken objects in received
+          packs during fetches. However, these configurations were only
+          acknowledged by `fetch-pack.c:get_pack` and did not take effect in
+     -    direct bundle fetches and fetches with _bundle-uri_ enabled.
+     +    direct bundle fetches or fetches with _bundle-uri_ enabled.
+      
+          This commit exposes the fetch-then-transfer configuration logic by
+          adding a new function `fetch_pack_fsck_objects` in fetch-pack.h. This
+          new function is used to replace the assignment for `fsck_objects` in
+     -    `fetch-pack.c:get_pack`. In the next commit, it will also be used by
+     -    `bundle.c:unbundle` to better fit fetching scenarios.
+     +    `fetch-pack.c:get_pack`. In the next commit, this function will also be
+     +    used to extend fsck support for bundle-involved fetches.
+      
+          Helped-by: Junio C Hamano <gitster@pobox.com>
+          Helped-by: Patrick Steinhardt <ps@pks.im>
+ 3:  2f15099bbb9 ! 3:  698dd6e49b7 unbundle: extend object verification for fetches
+     @@ bundle.h: int create_bundle(struct repository *r, const char *path,
+      
+       ## t/t5558-clone-bundle-uri.sh ##
+      @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'create bundle' '
+     - 		sed -e "/^$/q" -e "s/$(git rev-parse A) /$(git rev-parse B) /" \
+     + 		sed -e "/^$/q" -e "s/$commit_a /$commit_b /" \
+       			<A.bundle >bad-header.bundle &&
+       		convert_bundle_to_pack \
+      -			<A.bundle >>bad-header.bundle
+      +			<A.bundle >>bad-header.bundle &&
+      +
+     ++		tree_b=$(git rev-parse B^{tree}) &&
+      +		cat >data <<-EOF &&
+     -+		tree $(git rev-parse HEAD^{tree})
+     -+		parent $(git rev-parse HEAD)
+     ++		tree $tree_b
+     ++		parent $commit_b
+      +		author A U Thor
+      +		committer A U Thor
+      +
+      +		commit: this is a commit with bad emails
+      +
+      +		EOF
+     -+		git hash-object --literally -t commit -w --stdin <data >commit &&
+     -+		git branch bad $(cat commit) &&
+     ++		bad_commit=$(git hash-object --literally -t commit -w --stdin <data) &&
+     ++		git branch bad $bad_commit &&
+      +		git bundle create bad-object.bundle bad &&
+      +		git update-ref -d refs/heads/bad
+       	)
+       '
+       
+      @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with bundle that has bad header' '
+     - 	! grep "refs/bundles/" refs
+     + 	test_grep ! "refs/bundles/" refs
+       '
+       
+      +test_expect_success 'clone with bundle that has bad object' '
+     -+	# Unbundle succeeds if no fsckObjects confugured.
+     ++	# Unbundle succeeds if no fsckObjects configured.
+      +	git clone --bundle-uri="clone-from/bad-object.bundle" \
+      +		clone-from clone-bad-object-no-fsck &&
+      +	git -C clone-bad-object-no-fsck for-each-ref --format="%(refname)" >refs &&
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with bundle that has bad
+      +		clone-from clone-bad-object-fsck 2>err &&
+      +	test_grep "missingEmail" err &&
+      +	git -C clone-bad-object-fsck for-each-ref --format="%(refname)" >refs &&
+     -+	! grep "refs/bundles/" refs
+     ++	test_grep ! "refs/bundles/" refs
+      +'
+      +
+       test_expect_success 'clone with path bundle and non-default hash' '
+     @@ t/t5607-clone-bundle.sh: test_expect_success 'fetch SHA-1 from bundle' '
+      +	test_create_repo bundle-fsck &&
+      +	(
+      +		cd bundle-fsck &&
+     -+		test_commit first &&
+     ++		test_commit A &&
+     ++		commit_a=$(git rev-parse A) &&
+     ++		tree_a=$(git rev-parse A^{tree}) &&
+      +		cat >data <<-EOF &&
+     -+		tree $(git rev-parse HEAD^{tree})
+     -+		parent $(git rev-parse HEAD)
+     ++		tree $tree_a
+     ++		parent $commit_a
+      +		author A U Thor
+      +		committer A U Thor
+      +
+      +		commit: this is a commit with bad emails
+      +
+      +		EOF
+     -+		git hash-object --literally -t commit -w --stdin <data >commit &&
+     -+		git branch bad $(cat commit) &&
+     ++		bad_commit=$(git hash-object --literally -t commit -w --stdin <data) &&
+     ++		git branch bad $bad_commit &&
+      +		git bundle create bad.bundle bad
+      +	) &&
+      +
+
+-- 
+gitgitgadget
