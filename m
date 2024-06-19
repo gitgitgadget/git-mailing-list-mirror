@@ -1,64 +1,63 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BD415D5B3
-	for <git@vger.kernel.org>; Wed, 19 Jun 2024 21:58:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236E915D5D7
+	for <git@vger.kernel.org>; Wed, 19 Jun 2024 21:58:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718834308; cv=none; b=BDK5JKibWcKA4bw/Qy6pVLwa73Vn8KKLnTSaBP9wjhNRSnOao41zDg5FEq3OWVzahrWeUWmegpwcnQM9y71FbIpuauhztYHLsfUMCvIv7v8kf4muw5nNXLgJUVGj74IAHCYQ1CquSVBrlsjwdKopbtOqiTNdQfvlvQhvpkkBFAE=
+	t=1718834309; cv=none; b=U/x9QQmLt87al4u6DPwhZi2noZbqwPvYaXt4sRoU20toTM2yhqwujeL55vxhZtK38DZffwZXfX6S9XkW646E3/s993Mhx3Qwb6TNCD7Ndsd0OTu7bL5buc5e6MLHq7Olaj4pLhumlEj65tZld80p2fTg3pMpCvNi9VJmCQATUGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718834308; c=relaxed/simple;
-	bh=jcZMD+8RfTEOcB1+UKG0s/gAmNFV7KsJj1hSTvdFnqg=;
+	s=arc-20240116; t=1718834309; c=relaxed/simple;
+	bh=PRVd/xG7+6beWajA3bSpu/PNzCIJaDbT+QMzqieVCvo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=DGkjqww9ByTmyXG/JvZeAAEjyo4B699TRupMg5egBbNv+cEejmeGFOs8w9mcM+qom2UbBklBwNYR2V0+kyAd1OD4k0BmT7P0of6SBrmrBevLgBaM0WJFC9EuRwske9ipvRDpqwtPE8oqPgf+LSh2dW0qxPBkmkJD9Gf81IievUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aOPv2QOz; arc=none smtp.client-ip=209.85.221.54
+	 MIME-Version:To:Cc; b=TR/ac5KGSGgQbt+7ZMCasvYClAZH3XQURvIIxGPlx/UpX7KwSIAjbdOpPA6d8WJD7MUcornJgzgaGYSJCLpyJZVfg9WcgUFTjX8gTjw1O+q+0tVHkfhd/zjImMIzbWRv46n4VcAXTe9ZFN3yZRJY43GOfjODwqwQe6grjfRq3UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AkyUSaow; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aOPv2QOz"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-364a39824baso160421f8f.1
-        for <git@vger.kernel.org>; Wed, 19 Jun 2024 14:58:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AkyUSaow"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4218314a6c7so2646765e9.0
+        for <git@vger.kernel.org>; Wed, 19 Jun 2024 14:58:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718834304; x=1719439104; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718834306; x=1719439106; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=N8aWo1CHlqx8/5ZeKAeCnaltdbcBQkOzvetzcKsMhh8=;
-        b=aOPv2QOzOAAeS8WPuZPn/ZAvGU+Xwi0LeLxbDtvfmz3fRBhPRYEagNSw/FrVZ+zFXw
-         i/zGr4sXV/hVMXJLec/XL6YVpJLELXkUZ8BkkAoE46zsf6m+XV1AzIWB1Od3fTseCbMT
-         sTK/MoqfSMjA3hHG+ntd0DZ4Ac29FOvxqL38oFzc7xZSqJ3ztEcQtUiyY6TPNtCJ/zC7
-         iBL/ANTEgxGFd1jdbncqUMwhvER81HVO6xuSoy4Jzcl9UIsndIQNpXUFdX0OaE0aDy+V
-         kfyr/LxyU6P+k6o4GyAufXOfWctSuykP2mBMV1sGIRaxEZXGIjSEv+6NZtSFFd5W8lsf
-         RP1w==
+        bh=W1xjuy9nL0JZHkUaSByuJIWU3op6pW0/jKvj7oChM7k=;
+        b=AkyUSaowc6B9x74WlNmGc0kA1vcmMIPxQXgXFSXtFbSKMKu602JLpd1Pgc2pRciL96
+         1MpFL6VoPf/4PwFR1tTR4MyQNOjMsseaUvdQDtd1Tj13y78CVkcPvP1Ui6M2Y2wUkgw3
+         J8zAsA4V1rShyPBv9vQGjTsDDHqwet+pJo6YpnpZSuvOo9bIVE8deBhX+K15pUoCj9Om
+         N6aCxOHrzjzynUqlHjAvwoDi+aGrMYGNpiS0tP74981Pf+fQXXIfDOMZQCdG/zu44Xq0
+         LGn5ffQMm7M2X0Pc0oXwn9zE6yT3eRF0rhapmj/jBP61g810wKSgbCjmdzrj1b985l1i
+         8ERQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718834304; x=1719439104;
+        d=1e100.net; s=20230601; t=1718834306; x=1719439106;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=N8aWo1CHlqx8/5ZeKAeCnaltdbcBQkOzvetzcKsMhh8=;
-        b=LGMCwwDRf2zz+1LYV7SdZMYrU4BCmztf/D40woFh4Jxw7CUrSYcMsOgpR0kulAE/nU
-         HzSJVGCgR556z1cRHz4liEtHAPdCKF0pqrPFYQk1odwF9nhoO512nddoHQCrqCJJNIss
-         FX7MyWVHnSebGVzXiTHdx8FxWcFfQjUGROPAnQq5xNzcgtclPD7pCy2Xr7VhA7aIyV0Y
-         Gnx8z2uCOqUGZbXQNH8vivbAdhRI8QV4ig3djDlMRycE5c2WK2knN3UOlPbNv1+m5e3n
-         WdN4bXdZBKzi84h2Ogq20zV2np40zlMvpL2StVVyy8SwZzO4G8mO+AAZYo4G+11ZXl7W
-         u8Dw==
-X-Gm-Message-State: AOJu0YyO2UAaB2p5cx3ZnEL3NbLclpi5x+1G5SwoOfznurXCh08Aw5Ai
-	L7EQo0WR5LRs4tEDclgwKtqBtGKuyAF9YGI9MMLwQtkqqMC6ulgLOyxPXg==
-X-Google-Smtp-Source: AGHT+IExqKgpraiuhstAgaLW9ju1iXv7za4P5uQ4vt375O5gu3x5pZo6fp4yUTuaWcrmf909/QoEWQ==
-X-Received: by 2002:a05:600c:15cc:b0:421:8445:4f8d with SMTP id 5b1f17b1804b1-4247529e08amr23221825e9.38.1718834304472;
-        Wed, 19 Jun 2024 14:58:24 -0700 (PDT)
+        bh=W1xjuy9nL0JZHkUaSByuJIWU3op6pW0/jKvj7oChM7k=;
+        b=aWQIFkoa1A6p3OblsNRFAYdjX9ySpNb/6F839X8Rh6HYqWlENSyYBnJD1+5chia5Sk
+         XeWNQMaOe4dzC5NVqdVFGQsvY3PKJPKUvnQ+KaSTWhgQAr6U5S0aRkpN7kahnjJqjKG2
+         APA16w7Vb6YGCW4lMR5TzHPEoWO7zU8/8PAToR24VLDa1FJoy6Gjvjm64cEEt4pdORzV
+         zla62asgwQ6lkbIKlFHz2PxN/Da16i6/Qo3noHksx7MxZsSmx8Xb4KohXSxrJWazzCtw
+         ZsKZ77E4+PAuVJccQDLdpEhORFoFYp8eiyVERi1YezhCWMQBXYyLrpqkZp8sj+pEAFnd
+         rPiA==
+X-Gm-Message-State: AOJu0YyBOxJYasUvMwzKrgH4fJK7VGVXEq0HwfwBRNvh8PR92qQapyqZ
+	KNrr2XERuNPtiDjZhoLeTF0faOL1W66bAtOGfXh/NdENGEvGdVHywUgHVQ==
+X-Google-Smtp-Source: AGHT+IFO1D7InHSFOytuUAHZNiMIqW+Or3k2ozPzbMvvV6m9eORZPvHRMAEhcgYpMFpbgxwj2nqigw==
+X-Received: by 2002:a7b:cb93:0:b0:421:82ed:28d1 with SMTP id 5b1f17b1804b1-424752a3cbcmr22173945e9.41.1718834305799;
+        Wed, 19 Jun 2024 14:58:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d0c0f35sm3788815e9.18.2024.06.19.14.58.23
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d0c0d56sm3826815e9.13.2024.06.19.14.58.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jun 2024 14:58:23 -0700 (PDT)
-Message-Id: <56f28efff5404a3fa22bd544d6de8ce2d919b78a.1718834285.git.gitgitgadget@gmail.com>
+        Wed, 19 Jun 2024 14:58:24 -0700 (PDT)
+Message-Id: <6f6d78ae7acb35991afbeaef9b61af892af93ca1.1718834285.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1746.v2.git.1718834285.gitgitgadget@gmail.com>
 References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
 	<pull.1746.v2.git.1718834285.gitgitgadget@gmail.com>
 From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 19 Jun 2024 21:58:01 +0000
-Subject: [PATCH v2 13/17] mktree: use iterator struct to add tree entries to
- index
+Date: Wed, 19 Jun 2024 21:58:02 +0000
+Subject: [PATCH v2 14/17] mktree: add directory-file conflict hashmap
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,78 +75,96 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 
 From: Victoria Dye <vdye@github.com>
 
-Create 'struct tree_entry_iterator' to manage iteration through a 'struct
-tree_entry_array'. Using an iterator allows for conditional iteration; this
-functionality will be necessary in later commits when performing parallel
-iteration through multiple sets of tree entries.
+Create a hashmap member of a 'struct tree_entry_array' that contains all of
+the (de-duplicated) provided tree entries, indexed by the hash of their path
+with *no* trailing slash. This hashmap will be used in a later commit to
+avoid adding a file to an existing tree that has the same path as a
+directory, or vice versa.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/mktree.c | 39 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 36 insertions(+), 3 deletions(-)
+ builtin/mktree.c | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
 diff --git a/builtin/mktree.c b/builtin/mktree.c
-index 3ce8d3dc524..344c9b9b6fe 100644
+index 344c9b9b6fe..b4d71dcdd02 100644
 --- a/builtin/mktree.c
 +++ b/builtin/mktree.c
-@@ -139,6 +139,35 @@ static void sort_and_dedup_tree_entry_array(struct tree_entry_array *arr)
- 	QSORT_S(arr->entries, arr->nr, ent_compare, &ignore_mode);
+@@ -16,6 +16,8 @@
+ #include "object-store-ll.h"
+ 
+ struct tree_entry {
++	struct hashmap_entry ent;
++
+ 	/* Internal */
+ 	size_t order;
+ 
+@@ -33,8 +35,33 @@ static inline size_t df_path_len(size_t pathlen, unsigned int mode)
+ struct tree_entry_array {
+ 	size_t nr, alloc;
+ 	struct tree_entry **entries;
++
++	struct hashmap df_name_hash;
+ };
+ 
++static int df_name_hash_cmp(const void *cmp_data UNUSED,
++			    const struct hashmap_entry *eptr,
++			    const struct hashmap_entry *entry_or_key,
++			    const void *keydata UNUSED)
++{
++	const struct tree_entry *e1, *e2;
++	size_t e1_len, e2_len;
++
++	e1 = container_of(eptr, const struct tree_entry, ent);
++	e2 = container_of(entry_or_key, const struct tree_entry, ent);
++
++	e1_len = df_path_len(e1->len, e1->mode);
++	e2_len = df_path_len(e2->len, e2->mode);
++
++	return e1_len != e2_len ||
++	       name_compare(e1->name, e1_len, e2->name, e2_len);
++}
++
++static void tree_entry_array_init(struct tree_entry_array *arr)
++{
++	hashmap_init(&arr->df_name_hash, df_name_hash_cmp, NULL, 0);
++}
++
+ static void tree_entry_array_push(struct tree_entry_array *arr, struct tree_entry *ent)
+ {
+ 	ALLOC_GROW(arr->entries, arr->nr + 1, arr->alloc);
+@@ -48,6 +75,7 @@ static void tree_entry_array_clear(struct tree_entry_array *arr, int free_entrie
+ 			FREE_AND_NULL(arr->entries[i]);
+ 	}
+ 	arr->nr = 0;
++	hashmap_clear(&arr->df_name_hash);
  }
  
-+struct tree_entry_iterator {
-+	struct tree_entry *current;
+ static void tree_entry_array_release(struct tree_entry_array *arr, int free_entries)
+@@ -137,6 +165,14 @@ static void sort_and_dedup_tree_entry_array(struct tree_entry_array *arr)
+ 	/* Sort again to order the entries for tree insertion */
+ 	ignore_mode = 0;
+ 	QSORT_S(arr->entries, arr->nr, ent_compare, &ignore_mode);
 +
-+	/* private */
-+	struct {
-+		struct tree_entry_array *arr;
-+		size_t idx;
-+	} priv;
-+};
-+
-+static void tree_entry_iterator_init(struct tree_entry_iterator *iter,
-+				     struct tree_entry_array *arr)
-+{
-+	iter->priv.arr = arr;
-+	iter->priv.idx = 0;
-+	iter->current = 0 < arr->nr ? arr->entries[0] : NULL;
-+}
-+
-+/*
-+ * Advance the tree entry iterator to the next entry in the array. If no
-+ * entries remain, 'current' is set to NULL.
-+ */
-+static void tree_entry_iterator_advance(struct tree_entry_iterator *iter)
-+{
-+	iter->current = (iter->priv.idx + 1) < iter->priv.arr->nr
-+			? iter->priv.arr->entries[++iter->priv.idx]
-+			: NULL;
-+}
-+
- static int add_tree_entry_to_index(struct index_state *istate,
- 				   struct tree_entry *ent)
- {
-@@ -157,14 +186,18 @@ static int add_tree_entry_to_index(struct index_state *istate,
++	/* Finally, initialize the directory-file conflict hash map */
++	for (size_t i = 0; i < count; i++) {
++		struct tree_entry *curr = arr->entries[i];
++		hashmap_entry_init(&curr->ent,
++				   memhash(curr->name, df_path_len(curr->len, curr->mode)));
++		hashmap_put(&arr->df_name_hash, &curr->ent);
++	}
+ }
  
- static void write_tree(struct tree_entry_array *arr, struct object_id *oid)
- {
-+	struct tree_entry_iterator iter = { NULL };
- 	struct index_state istate = INDEX_STATE_INIT(the_repository);
- 	istate.sparse_index = 1;
+ struct tree_entry_iterator {
+@@ -311,6 +347,8 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
  
- 	sort_and_dedup_tree_entry_array(arr);
+ 	ac = parse_options(ac, av, prefix, option, mktree_usage, 0);
  
--	/* Construct an in-memory index from the provided entries */
--	for (size_t i = 0; i < arr->nr; i++) {
--		struct tree_entry *ent = arr->entries[i];
-+	tree_entry_iterator_init(&iter, arr);
++	tree_entry_array_init(&arr);
 +
-+	/* Construct an in-memory index from the provided entries & base tree */
-+	while (iter.current) {
-+		struct tree_entry *ent = iter.current;
-+		tree_entry_iterator_advance(&iter);
- 
- 		if (add_tree_entry_to_index(&istate, ent))
- 			die(_("failed to add tree entry '%s'"), ent->name);
+ 	do {
+ 		ret = read_index_info(nul_term_line, mktree_line, &mktree_line_data, &line);
+ 		if (ret < 0)
 -- 
 gitgitgadget
 
