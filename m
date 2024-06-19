@@ -1,228 +1,153 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB1E15E5B6
-	for <git@vger.kernel.org>; Wed, 19 Jun 2024 21:58:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F7377F10
+	for <git@vger.kernel.org>; Wed, 19 Jun 2024 22:46:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718834313; cv=none; b=EXdWhz1fwLlZ0VdJJG9KgV2nUHOa98gWP9V4woMIvK/LCfDGGikx5Dg9wm8Foq1J3PfSj4vY8t/nlQ2rzGdkj4ngvu14U1Maekdwqhwrjlonhx+mZ/YTqIHonS2wxHbkSUZq7QjlzlRXSIAFtn3J6Iv+r+McbNzCKm6eEndZ6Qk=
+	t=1718837185; cv=none; b=XxDp5isfTuiOEgtJl8/a6q26FqkIbLH3znieobqgCGb7OHEuRG+UkNq1g2ZBl36yQnUJOqT2ke23RjSR1C9ubg+5MGvZtfepmN95wtFp6g1QNxx1kVdboATmNOrtUJtxo1T4iPBZ3E0pdBhs/wcyuw8a/mU5Vq56wV4uPUInwzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718834313; c=relaxed/simple;
-	bh=1qdLIoFSUgyvssKL+DH0shSkFtdUFYfnIwnU85xRdZY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=GCGJ9jJmaYmjqcfIDnjPW8Lk3YgfUi2Is/8zkLhb0zbvsPONQcck44LUqIDO2wmUqNmmpLniVt52k1ULKsJcvScdIcI+fIeMIU8G6onWQRk48YQQkXQQXdinxAvalibG65S8UkaeRTE7VPuhHmHXgBZZyzTKhs8QWbAaJR1zzXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HFOlGt4Z; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718837185; c=relaxed/simple;
+	bh=Ign5TdU6G9M4MdMnZI47VXx3+msbjyd9rvxNtEj9LRo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ISPtugELQG/hj9CsbIwtV1JzPDrBFZ4pTfhGWDBTqOz+4goSiDFX+uxdCZDZ9w2kxQ/E9YWcVaH+CT9FQlbWsXgkXwVSc0Ug/cpJ0Govta/8maD1BP8JJ43iu0ko9WXPO+0pnVnALdxDAxx2dJssPQbfqejRls+OFGoDMve8tX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=trRZIDGT; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HFOlGt4Z"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-421f4d1c057so2684375e9.3
-        for <git@vger.kernel.org>; Wed, 19 Jun 2024 14:58:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718834310; x=1719439110; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OKVNq4r8msXSpCZMZ10W80EOKH6+V9QNxWEoviIrmrM=;
-        b=HFOlGt4ZF0sUpiI5Xhnozjrv+ScHKd4wnsCU+sGO0EWkqI8gwzdriAYPYy0zYGRxyG
-         aUbVoYVlSvEgWkHUy9oslEtDw/S3jx8T5Yi84HCnHOSrzQ9t37WTHyPR4Zbcr8+eooFT
-         eMh/5ja95UBVVt+17c9ZVaOm0NNhcLKWh/t4WNdusvf4bXtTpn5nKI/yFUglQAXF2JQe
-         2VCyplqC9r5r4M/eRFdIU04OKaOt0z4yxwdwQTmcZco0rVGM1nkCQr13cKLo6duZlTuz
-         SS/ha29bj83jtSDUUZDIvQuo0j5nnYYMpoNJdQCZS/4PsN9L9T3t0qFDn9dNDi/PPW9u
-         no5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718834310; x=1719439110;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OKVNq4r8msXSpCZMZ10W80EOKH6+V9QNxWEoviIrmrM=;
-        b=TJsiBvcdQ57TJ2iTGhJhb/GbDyLCXI/bVKvxq1toNjVMXwcL/RR1olXO8Ixus01HAG
-         y9ktf/FhG7tlnBBbONz3gjHFfgPZCl8xZqHzCPy9ilyuln6la7colLeWzYhu8ur1crYT
-         U6FL+wwD3K9KUf0eaKm7uSwR+HYhmgzwIQQKQmU/vKbB3BhzRmhzipEDxNVYXosP+9v3
-         erOR+wU3HEYkeVVJChLt5CyxZGrt3ZGHLfn90nMMfhux5Ot/3PSohH9ZsT30yei4JLN/
-         K3AKsr7k8FW0DEihjfuz6wbpyj2skGZujdMi8wrfsCUuC+qiAx/UOi8Skr6k/n7xkXJh
-         L4rg==
-X-Gm-Message-State: AOJu0Yx60/Rs9wkNi9AwnOjfVCW/WDp5XnvG8LdWo7wZzBQDerxQPyIs
-	vZaY3M/vf7XQoiOzqscJSI59Z/VfM6UnMgehxO07TejS4s7VqBniSix0JA==
-X-Google-Smtp-Source: AGHT+IEPP2F8/N+4wecG7jD/zqNAfbKIv2z2uSk0T0OH4jLu0suqEL9KDo6NAg3Qb2hADxqTwAE2dQ==
-X-Received: by 2002:a05:600c:214c:b0:422:615f:649c with SMTP id 5b1f17b1804b1-42475078374mr29183765e9.7.1718834309773;
-        Wed, 19 Jun 2024 14:58:29 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d0c0d56sm3828205e9.13.2024.06.19.14.58.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jun 2024 14:58:28 -0700 (PDT)
-Message-Id: <d392c440b8a243a9fa3e5b603c42a81f02c26e62.1718834285.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1746.v2.git.1718834285.gitgitgadget@gmail.com>
-References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
-	<pull.1746.v2.git.1718834285.gitgitgadget@gmail.com>
-From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 19 Jun 2024 21:58:05 +0000
-Subject: [PATCH v2 17/17] mktree: remove entries when mode is 0
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="trRZIDGT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1718837175;
+	bh=Ign5TdU6G9M4MdMnZI47VXx3+msbjyd9rvxNtEj9LRo=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=trRZIDGTON8vi3IlT+AJoP5P2jgWO1qy3d2A+I5P8WLEYaQHmH6EDu0x7cvFSeZGK
+	 LYGmxiv4DUO1g/O4NW4IC9oTXxs+bL+zqCpuwvNUA9WpyksaNt84mXPm8DuTtBulxZ
+	 PZXuaTtgahuiEqslVGlIOGqC0PCjyVBEKkk5dSg3o2fQ1Qz0i6wmwww71xkWXwZ1z7
+	 BPdNfgHDloh7bFJFYkDrtlP/rF4GF8GUCu5U3UQnFjHH2nQuY2VV8JMUKerDyKhviE
+	 QPFNQqaA+kAaJF51krnkmGkRDLFdSm/3J4iaWdIyMLSvgfYLBRLPJsCB/AS81rCINO
+	 HM/mWIPbtjErfaERw/64HvKZqWgQYqTmRsAfjyWfC3eR1u8SFcyFC6sgStYeu0VCT5
+	 cqoPGoxGbFIPdwc4hYsoy9BGKJc7U6aQb4kZuY3/jaCxNpGaQESBAN95bHVtRI+DDN
+	 F+60NTDqjUpDtLM5ikXIwHiPtNW+x9tjxSCCGc2EfyrlkJhhVfH
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 931692639E;
+	Wed, 19 Jun 2024 22:46:15 +0000 (UTC)
+Date: Wed, 19 Jun 2024 22:46:13 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Dragan Simic <dsimic@manjaro.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	John Cai <johncai86@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/3] Advertise OS version
+Message-ID: <ZnNftSO13KlmFbQ3@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	Dragan Simic <dsimic@manjaro.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	John Cai <johncai86@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20240619125708.3719150-1-christian.couder@gmail.com>
+ <0448495385b009f25a66b0712afb28f1@manjaro.org>
+ <20240619134533.GA943023@coredump.intra.peff.net>
+ <04b714d3e949c30bae0e26231e923fc4@manjaro.org>
+ <CAP8UFD2k9YBoKf_=fj1UKNK+=J-2vMenwt8QyTXXSaf=uX6Otg@mail.gmail.com>
+ <20240619145042.GA957055@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Victoria Dye <vdye@github.com>,
-    Victoria Dye <vdye@github.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ydtTt/UFbHMqDlzM"
+Content-Disposition: inline
+In-Reply-To: <20240619145042.GA957055@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-From: Victoria Dye <vdye@github.com>
 
-If tree entries are specified with a mode with value '0', remove them from
-the tree instead of adding/updating them. If the mode is '0', both the
-provided type string (if specified) and the object ID of the entry are
-ignored.
+--ydtTt/UFbHMqDlzM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Note that entries with mode '0' are added to the 'struct tree_ent_array'
-with a trailing slash so that it's always treated like a directory. This is
-a bit of a hack to ensure that the removal supercedes any preceding entries
-with matching names, as well as any nested inside a directory matching its
-name.
+On 2024-06-19 at 14:50:42, Jeff King wrote:
+> On Wed, Jun 19, 2024 at 04:01:57PM +0200, Christian Couder wrote:
+>=20
+> > One possibility is to send just the `sysname`, described as 'Operating
+> > system name (e.g., "Linux")', field of the struct utsname filled out
+> > by uname(2) by default.
+>=20
+> That would be better to me. I still don't love it, but I admit it's
+> coming more from a knee-jerk response than from some rational argument
+> against people knowing I run Linux.
+>=20
+> Since HTTP user-agent fields are common, we can look at those for prior
+> art. curl sends its own version but nothing else. Most browsers do seem
+> to include some OS information. My version of firefox gives its own
+> version along with "Linux x86_64". So basically "uname -sm".
 
-Signed-off-by: Victoria Dye <vdye@github.com>
----
- Documentation/git-mktree.txt |  4 ++++
- builtin/mktree.c             | 16 +++++++++++----
- t/t1010-mktree.sh            | 38 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 54 insertions(+), 4 deletions(-)
+If we choose to enable this, this is the right level of detail, yeah.
+We could also allow a distributor to set this value at compile time,
+much like Debian does for Postfix and OpenSSH.  For Postfix, it's simply
+"(Debian)", which doesn't give much information.
 
-diff --git a/Documentation/git-mktree.txt b/Documentation/git-mktree.txt
-index 43cd9b10cc7..52e6005c1d3 100644
---- a/Documentation/git-mktree.txt
-+++ b/Documentation/git-mktree.txt
-@@ -63,6 +63,10 @@ entries nested within one or more directories. These entries are inserted
- into the appropriate tree in the base tree-ish if one exists. Otherwise,
- empty parent trees are created to contain the entries.
- 
-+An entry with a mode of "0" will remove an entry of the same name from the
-+base tree-ish. If no tree-ish argument is given, or the entry does not exist
-+in that tree, the entry is ignored.
-+
- The order of the tree entries is normalized by `mktree` so pre-sorting the
- input by path is not required. Multiple entries provided with the same path
- are deduplicated, with only the last one specified added to the tree.
-diff --git a/builtin/mktree.c b/builtin/mktree.c
-index 74cec92a517..e7adcb384c8 100644
---- a/builtin/mktree.c
-+++ b/builtin/mktree.c
-@@ -32,7 +32,7 @@ struct tree_entry {
- 
- static inline size_t df_path_len(size_t pathlen, unsigned int mode)
- {
--	return S_ISDIR(mode) ? pathlen - 1 : pathlen;
-+	return (S_ISDIR(mode) || !mode) ? pathlen - 1 : pathlen;
- }
- 
- struct tree_entry_array {
-@@ -108,7 +108,7 @@ static void append_to_tree(unsigned mode, struct object_id *oid, const char *pat
- 		size_t len_to_copy = len;
- 
- 		/* Normalize and validate entry path */
--		if (S_ISDIR(mode)) {
-+		if (S_ISDIR(mode) || !mode) {
- 			while(len_to_copy > 0 && is_dir_sep(path[len_to_copy - 1]))
- 				len_to_copy--;
- 			len = len_to_copy + 1; /* add space for trailing slash */
-@@ -124,7 +124,7 @@ static void append_to_tree(unsigned mode, struct object_id *oid, const char *pat
- 			arr->has_nested_entries = 1;
- 
- 		/* Add trailing slash to dir */
--		if (S_ISDIR(mode))
-+		if (S_ISDIR(mode) || !mode)
- 			ent->name[len - 1] = '/';
- 	}
- 
-@@ -209,7 +209,7 @@ static void sort_and_dedup_tree_entry_array(struct tree_entry_array *arr)
- 
- 			if (!skip_entry) {
- 				arr->entries[arr->nr++] = curr;
--				if (S_ISDIR(curr->mode))
-+				if (S_ISDIR(curr->mode) || !curr->mode)
- 					tree_entry_array_push(&parent_dir_ents, curr);
- 			} else {
- 				FREE_AND_NULL(curr);
-@@ -270,6 +270,9 @@ static int build_index_from_tree(const struct object_id *oid,
- static int add_tree_entry_to_index(struct build_index_data *data,
- 				   struct tree_entry *ent)
- {
-+	if (!ent->mode)
-+		return 0;
-+
- 	if (ent->expand_dir) {
- 		int ret = 0;
- 		struct pathspec ps = { 0 };
-@@ -450,6 +453,10 @@ static int mktree_line(unsigned int mode, struct object_id *oid,
- 	if (stage)
- 		die(_("path '%s' is unmerged"), path);
- 
-+	/* OID ignored for zero-mode entries; append unconditionally */
-+	if (!mode)
-+		goto append_entry;
-+
- 	if (obj_type != OBJ_ANY && mode_type != obj_type)
- 		die("object type (%s) doesn't match mode type (%s)",
- 		    type_name(obj_type), type_name(mode_type));
-@@ -484,6 +491,7 @@ static int mktree_line(unsigned int mode, struct object_id *oid,
- 		}
- 	}
- 
-+append_entry:
- 	append_to_tree(mode, oid, path, data->arr, data->literally);
- 	return 0;
- }
-diff --git a/t/t1010-mktree.sh b/t/t1010-mktree.sh
-index 9b0e0cf302f..5ed4352054a 100755
---- a/t/t1010-mktree.sh
-+++ b/t/t1010-mktree.sh
-@@ -369,4 +369,42 @@ test_expect_success 'mktree fails on directory-file conflict' '
- 	test_grep "You have both folder/one and folder/one/deeper/deep" err
- '
- 
-+test_expect_success 'mktree with remove entries' '
-+	tree_oid="$(cat tree)" &&
-+	blob_oid="$(git rev-parse $tree_oid:folder.txt)" &&
-+
-+	{
-+		printf "100644 blob $blob_oid\ttest/deeper/deep.txt\n" &&
-+		printf "100644 blob $blob_oid\ttest.txt\n" &&
-+		printf "100644 blob $blob_oid\texample\n" &&
-+		printf "100644 blob $blob_oid\texample.a/file\n" &&
-+		printf "100644 blob $blob_oid\texample.txt\n" &&
-+		printf "040000 tree $tree_oid\tfolder\n" &&
-+		printf "0 $ZERO_OID\tfolder\n" &&
-+		printf "0 $ZERO_OID\tmissing\n"
-+	} | git mktree >tree.base &&
-+
-+	{
-+		printf "0 $ZERO_OID\texample.txt\n" &&
-+		printf "0 $ZERO_OID\ttest/deeper\n"
-+	} | git mktree $(cat tree.base) >tree.actual &&
-+
-+	{
-+		printf "100644 blob $blob_oid\texample\n" &&
-+		printf "100644 blob $blob_oid\texample.a/file\n" &&
-+		printf "100644 blob $blob_oid\ttest.txt\n"
-+	} >expect &&
-+	git ls-tree -r $(cat tree.actual) >actual &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'type and oid not checked if entry mode is 0' '
-+	# type and oid do not match
-+	printf "0 commit $EMPTY_TREE\tfolder.txt\n" |
-+	git mktree >tree.actual &&
-+
-+	test "$(cat tree.actual)" = $EMPTY_TREE
-+'
-+
- test_done
--- 
-gitgitgadget
+To me as a server administrator interested in statistics, it's useful to
+me to know OS name and version (as in, how many users are still using an
+ancient version of CentOS?), since that tells me about things like
+supported TLS versions which is helpful, but as a user I don't think
+that's an appropriate level of detail to share.  And I also worry about
+fingerprinting and tracking, which is a giant problem with HTTP
+user-agents.  This is especially true if you're using something like
+FreeBSD RISC-V, which is just not that common.
+
+> > And then there might be a knob to deactivate it completely or to make
+> > it more verbose (which might be useful for example in a corporate
+> > context).
+>=20
+> Yes, I think we should definitely have an option to suppress or override
+> it, just like we do for the user-agent string.
+
+I definitely think we should have both.  I'm sure we'll have some server
+maintainer or repository administrator who tries to reject "bad" OSes
+(like someone who doesn't like their employees using WSL, for example).
+We've already had people propose to reject access based on the version
+number in the name of "security", despite the fact that most Linux
+distros just backport security patches and thus the version number is
+not usually interesting in that regard.  Again, HTTP user-agents tell us
+that people will make access control decisions here even though they
+should not.
+
+We'll want to honour people's decisions to remain a mystery or to work
+around broken server implementations, or just to make it harder to track
+or fingerprint them.
+
+I also think the documentation should state that for the user-agent and
+os-version fields that they are merely informative, can be changed, and
+MUST NOT be used for access control.  That doesn't mean people will
+honour it, but it does mean that we can and should feel free to break
+implementations that don't comply.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--ydtTt/UFbHMqDlzM
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZnNftQAKCRB8DEliiIei
+gdqtAP9nIUmfaJK4d0fV2VPnRcTTzmjN5Q5obQ9O3FA9/m/y5AEAuXae/CTjQmPE
+rO1bRIZtMjgT2LLZIghyjr9FvtC+3wE=
+=VEtp
+-----END PGP SIGNATURE-----
+
+--ydtTt/UFbHMqDlzM--
