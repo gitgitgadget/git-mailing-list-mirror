@@ -1,98 +1,94 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CBC153BE8
-	for <git@vger.kernel.org>; Wed, 19 Jun 2024 17:24:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F81F152170
+	for <git@vger.kernel.org>; Wed, 19 Jun 2024 17:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718817898; cv=none; b=AX7zeCUZhFjEx+H7JoIv+z016FfP0GJ8d3jWXyXpy+sb4mIeHz0F1v2L5oELcKZh7NW5lssT/hqZAPIhZAcrBvPMcy90M52+3JUTMO7uHUPHW9jBF65tJrEvWKk2L99C1oYw6RFlrAsFeRWeUFY/CugXmN1S2OUZF1ElTSEgF8E=
+	t=1718818270; cv=none; b=bhHUgF8nmFNOOuviuJNimfepkF36WhU9Bv+rwcfL+78NxwCJOZjd1eUByH0isrqzX0noBG/Sdu/XUKiE8WTO9R8Y6FjnJdy0CXaHeRM02M6gzoLIeJzkxtjIe8Q81L+3qx08leRBQrJlMnBmaGaC0D8ekt4c83STSHP3usgY/No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718817898; c=relaxed/simple;
-	bh=Xb4Oh02eUQY2WOblaYYgsytwBHgtxm+XFssS+c+TJzE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hg3JaTkiPcMl+TCVN6HV+JzLaoljj36KmN+9nzxtpTPMjKIiUR0mpFMJIvYZoxbMv4dMeMqCBCR9IiwHC/uVMZtuL01VMX20iDoYPJnQIj2mmXOnH14rhKSoH7fZpuGzFHJiP1fiEUtOB8POzJDYc+FmNHm4nUE2EQ60Y1B+ZEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EAo+fewq; arc=none smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EAo+fewq"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3c9cc681ee0so3219596b6e.0
-        for <git@vger.kernel.org>; Wed, 19 Jun 2024 10:24:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718817896; x=1719422696; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2A3sk9lITjXshu2VtwQxj/eXexcG7SU2UmH3MJCsyaU=;
-        b=EAo+fewq0722dJguruOTmkxp0vjLBMrBIo3VTBQTJur/CgswkPWLXSLgZ180p3FhKe
-         bGvnh6m6K1bvrymt/1CnOm75kNkkiKRroYQ2jl8LChVooNq3fA6nrNJao0j52do1bMUk
-         UpQt0WaSevb061ti+R1NIRtZRKk/X9K4GVIamt4u4Be+eibYzaxRzfJEUzbLDbd3OiZX
-         4fGfcnS2MLabY1JuFKLU7QWUdzbVHoGUxFA9d8zmLUf2TKv7JpZEE3fIWMKJyDPAYQzm
-         tvLVuF775R7rEo0/1EzSK7I9wI258aAssoHusFuFlxltW09kC7J5d2Lqw7PIEip+vfS7
-         wcEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718817896; x=1719422696;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2A3sk9lITjXshu2VtwQxj/eXexcG7SU2UmH3MJCsyaU=;
-        b=GgCzqSlKegLuQZvubpkNohxzOc1vSdUdM+mI/OCgbhCiSamQO2N1nu1zCNit9Puutq
-         G26Sc6UaLsNyaz55s3uG6XR6nu7OEKariXDJ1jQoK44MQdn/bRZFXIBBYB5MW+tyzABa
-         oNH/6daT+W6TYWRYKmyQohQHiY7NDDSEWhKr2RbIc2UkqUd7Q13NtOE2FWWGZz/uCDw6
-         4eKOVDT3Wzbvvr/qdrDyij/5WDcvyN5N4vnuA1Hy5shoAEkUQDnlXYQIe4DoR2RsbCCd
-         UZNdoGM/oRzUcNILPHrZO72AM7XBJVqw1LGWSCl1cZ9Cw4rvdX3uOB/W785U9BtXcCCQ
-         164Q==
-X-Gm-Message-State: AOJu0YyDTOMtlPFj7yM7YkRYY//P+vqF1UMSDBil/din7cggbVIwIu10
-	MOdWP9HdKDlESl375wklqqErZiD07D0opKhs6vKz4s7OPbUA5Ot2ekeEsA==
-X-Google-Smtp-Source: AGHT+IHBtHVZ370EWAwXAI3QaWZHW44R8SvfO0oOnt7YHSB7hK8s+Q+8pvH0Zb7PfJ+jd0izL2vXoA==
-X-Received: by 2002:a05:6808:1293:b0:3d2:2a9c:8b70 with SMTP id 5614622812f47-3d51b9b4a55mr4130778b6e.15.1718817896500;
-        Wed, 19 Jun 2024 10:24:56 -0700 (PDT)
-Received: from localhost.localdomain ([2607:fea8:3f9b:a900:3da2:1b6a:eaa9:b88f])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-441f2fd334bsm66683371cf.69.2024.06.19.10.24.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jun 2024 10:24:56 -0700 (PDT)
-From: "Randall S. Becker" <the.n.e.key@gmail.com>
-X-Google-Original-From: "Randall S. Becker" <randall.becker@nexbridge.ca>
-To: git@vger.kernel.org
-Cc: "Randall S. Becker" <randall.becker@nexbridge.ca>,
-	"Randall S . Becker" <rsbecker@nexbridge.com>
-Subject: [PATCH v0 1/1] Teach git version --build-options about OpenSSL
-Date: Wed, 19 Jun 2024 13:24:21 -0400
-Message-ID: <20240619172421.33548-2-randall.becker@nexbridge.ca>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240619172421.33548-1-randall.becker@nexbridge.ca>
-References: <20240619172421.33548-1-randall.becker@nexbridge.ca>
+	s=arc-20240116; t=1718818270; c=relaxed/simple;
+	bh=RLAwQtRHRvLYNa9H1wFXCNtgjSbgxHUFx85i0qBQiT8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sKFagfE5AeVYAgOPe7iROcL3O7WwKSSqIp+DPJcBWmN/5n5SKjNv8M/JjJlAzCo9RRXnvRIhd6mVTspE2MoS1coc2UPRCU/b/bHN9AlDAgqLhSteTQDs+WApfl+DRhwyNqy8msNc132jeKpK8+O6QuPzPLWAbCqTrX5gvpsk1nU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 10500 invoked by uid 109); 19 Jun 2024 17:31:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 19 Jun 2024 17:31:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23386 invoked by uid 111); 19 Jun 2024 17:31:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 19 Jun 2024 13:31:05 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 19 Jun 2024 13:31:06 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>,
+	Chandra Pratap <chandrapratap376@gmail.com>,
+	Chandra Pratap <chandrapratap3519@gmail.com>,
+	Kyle Lippincott <spectral@google.com>,
+	John Cai <johncai86@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/2] commit: remove find_header_mem()
+Message-ID: <20240619173106.GA1519400@coredump.intra.peff.net>
+References: <ff0db7e3-abce-44ea-a1e3-16e1fdaf4c75@web.de>
+ <8b350cae-2180-4ac7-a911-d40043576445@web.de>
+ <0d85712c-5beb-4a64-a7f4-797782c26694@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <0d85712c-5beb-4a64-a7f4-797782c26694@web.de>
 
-This change uses the OpenSSL supplied OPENSSL_VERSION_TEXT #define supplied
-for this purpose by that project. If the #define is not present, the version
-is not reported.
+On Wed, Jun 19, 2024 at 07:13:19PM +0200, René Scharfe wrote:
 
-Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
----
- help.c | 3 +++
- 1 file changed, 3 insertions(+)
+> cfc5cf428b (receive-pack.c: consolidate find header logic, 2022-01-06)
+> introduced find_header_mem() and turned find_commit_header() into a thin
+> wrapper.  Since then, the latter has become the last remaining caller of
+> the former.  Remove it to restore find_commit_header() to the state
+> before cfc5cf428b, get rid of a strlen(3) call and resolve a NEEDSWORK
+> note in the process.
 
-diff --git a/help.c b/help.c
-index 1d057aa607..ce55aaa2c0 100644
---- a/help.c
-+++ b/help.c
-@@ -757,6 +757,9 @@ void get_version_info(struct strbuf *buf, int show_build_options)
- 
- 		if (fsmonitor_ipc__is_supported())
- 			strbuf_addstr(buf, "feature: fsmonitor--daemon\n");
-+#if defined OPENSSL_VERSION_TEXT
-+		strbuf_addf(buf, "OpenSSL: %s\n", OPENSSL_VERSION_TEXT);
-+#endif
- 	}
- }
- 
--- 
-2.43.0
+That of course made me wonder what happened to the other caller(s) of
+find_header_mem(). The answer is that it went away in your 020456cb74
+(receive-pack: use find_commit_header() in check_nonce(), 2024-02-09)
 
+> -const char *find_header_mem(const char *msg, size_t len,
+> -			const char *key, size_t *out_len)
+> +const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
+>  {
+>  	int key_len = strlen(key);
+>  	const char *line = msg;
+
+Not new in your patch, but assigning strlen() to int tingled my
+spider-sense. It's OK, though, because "key" is always a small string
+literal.
+
+> -	/*
+> -	 * NEEDSWORK: It's possible for strchrnul() to scan beyond the range
+> -	 * given by len. However, current callers are safe because they compute
+> -	 * len by scanning a NUL-terminated block of memory starting at msg.
+> -	 * Nonetheless, it would be better to ensure the function does not look
+> -	 * at msg beyond the len provided by the caller.
+> -	 */
+> -	while (line && line < msg + len) {
+> +	while (line) {
+>  		const char *eol = strchrnul(line, '\n');
+
+OK, we no longer know the length of the message, but we don't need to
+because it's NUL terminated, and strchrnul() will find the correct eol.
+The length check might have saved us if we accidentally pushed "line"
+past the NUL terminator, but it looks like we take care not to do so in
+the loop body:
+
+	line = *eol ? eol + 1 : NULL;
+
+So the conversion looks good to me.
+
+-Peff
