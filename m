@@ -1,72 +1,77 @@
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E80982495
-	for <git@vger.kernel.org>; Wed, 19 Jun 2024 18:08:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721BF157E88
+	for <git@vger.kernel.org>; Wed, 19 Jun 2024 18:40:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718820489; cv=none; b=fHulwUFniyWUcSHMs4ws3gGPDBVoAPxTcONectPASgMnebMcZw+8O1koXLyIfXaNiWHZkYLCNtYYWcreQsE6KWYNjyGBJFrMW/t7TiBJUcz1wis7E2V8Z2PQrOuZT0R9lFvKJNx6mkm1X48vxbKpTGiEoUDdzfD8AnbLky86+2g=
+	t=1718822429; cv=none; b=dkWWAtF+SWbuND7bP1Unk2b27dr2Rj8l3GKrJrJ/SiaNBG9Rh3WaPn4Y/8CG4u625iUitWqDiBrORfs8GGxBFMT4ruKKBKHO9HXj+Y1EQDsDhmxKmTLrkHOGHAMdzv7UOum0VzJcRUjWqX4gdWCkwqMMFvfFDUYiBREEGRHCQbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718820489; c=relaxed/simple;
-	bh=Ch+2m1e5o5sKKMRknlFgv23noOEXXl+UpIugtGRYIrA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dLRnobrgUM2XU06ACXrByIHAzAQIgZkIfC5Fzlm1fodVaQWihzPWgDro8wknZ1EB5BmcNx8VTXUSdyhPj1sL5Kt/5ukl2agJaRblyzo1AS9Fshnj3VH/taFqwn4MdcgDnVEjm1PGEvWrhMLeRd4wDDTXMtgbs7Z6IuNUlVVLiDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=15AhC5aI; arc=none smtp.client-ip=173.255.242.215
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="15AhC5aI"
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55DE7D48B4;
-	Wed, 19 Jun 2024 18:08:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-	s=selector1; t=1718820487;
-	bh=Ch+2m1e5o5sKKMRknlFgv23noOEXXl+UpIugtGRYIrA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=15AhC5aI4xA4Xmz2yxz3ItcKEMm8mWc1BRG2ZlN02u1WOoldckCf9SUfg2YihNe44
-	 VMKdY0rY9d86AE4KQ5m+8UKRddI+gC4D9Cz7dg81sAEJFBnLdll6NYWEKw6HvJfNEQ
-	 SsAn8dyYtVxhyGdPrirhSPFdCW+bcBS9a8W0O2fo=
-Date: Wed, 19 Jun 2024 18:08:07 +0000
-From: Eric Wong <e@80x24.org>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] t9700: ensure cat-file info isn't buffered by default
-Message-ID: <20240619180807.M97115@dcvr>
-References: <20240617104326.3522535-1-e@80x24.org>
- <20240617104326.3522535-3-e@80x24.org>
- <6e80eea5-b6ce-4218-8c43-dde2b5a698f5@gmail.com>
+	s=arc-20240116; t=1718822429; c=relaxed/simple;
+	bh=X+IL8x6qihGhtpPZnGFH6duyC3s3VxhZj5Bx+qu3afw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AOAmfnhOdIORMXke3CDrXCpES3TNLwjepfw/jxzRCvyZNT00JYRrdgJOa20sZjADvqdMBvgDdmlBAv6hPingnWY0lefsj5Q3P1xSS1lnuvReUv1K0dpsoWzM/QXCuqssvTO6hRUxQRZAqhl6wo796T6+ZIfyxs2OHOQPizG/El4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6b50c3aeb83so720356d6.1
+        for <git@vger.kernel.org>; Wed, 19 Jun 2024 11:40:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718822426; x=1719427226;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oPmwZgC/WZWIAffHB+xIgEYbxfrjxbwzYBCFS018pNE=;
+        b=dJe3oyPjWq5qCg9lZsM/u0hdnG7h4poGq+mkSCCFshQhtOCHdn4lF2wN38KveXYe8X
+         p8GsN28iKr20xRkYxljdwXXAY+S7VY1hQLbct12ghEGSxwxvow6EQ+5nwYvjVOX+Kral
+         gRXXa+loON1tn4xxZ48qIzvwIjiMEgm7wcGf1wrsTu8STIYh73KG+GzpIzzA0OtH4Wtd
+         5a1bVuISvxyrmpdfsvJ+RYGqm6Uk8R/AyyT4I6Vx4MeAA3YAZ7CP6ucSb5yb9IOs+n8R
+         OEY1GqUOo8S8KOWApXdM0W0neGTCxnf46dOH+Wm2ERKCtm92ucTZtTbynqTqM1W9d6hd
+         z91A==
+X-Gm-Message-State: AOJu0YwgCVGAoRQEs4J0mZdiuFLxaGGqb15nE2W5KlbC8tXrKSnUsQZa
+	9+1pup2ii29HvXVCHyBiyFnxKiC2EE/s9Rsfz1W+aRe35mvTrCvNitDPtqKBnrlyMZhmWWC904E
+	KAlDISyVJ4G/c2kW6o9/hAt95sgfIM3CW
+X-Google-Smtp-Source: AGHT+IG5WbBJzv5K6SHJS3Pe6YDEoh7JgQxgHmUxtM6jHsneVfVsiti1pBJRkTGxgprJmviVNCMFtqVHEljBGZyiYZE=
+X-Received: by 2002:ad4:58ad:0:b0:6b0:6711:851e with SMTP id
+ 6a1803df08f44-6b501e05d69mr28542316d6.7.1718822426372; Wed, 19 Jun 2024
+ 11:40:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6e80eea5-b6ce-4218-8c43-dde2b5a698f5@gmail.com>
+References: <20240619125708.3719150-1-christian.couder@gmail.com> <20240619125708.3719150-2-christian.couder@gmail.com>
+In-Reply-To: <20240619125708.3719150-2-christian.couder@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 19 Jun 2024 14:40:15 -0400
+Message-ID: <CAPig+cT4PUUH5XCvmioYA-M=bOTed5jM08MpruScOZyvk8VVnw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] version: refactor strbuf_sanitize()
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	John Cai <johncai86@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> wrote:
-> Hi Eric
-> 
-> On 17/06/2024 11:43, Eric Wong wrote:
-> > +# ensure --batch-check is unbuffered by default
-> > +my ($pid, $in, $out, $ctx) = $r->command_bidi_pipe(qw(cat-file --batch-check));
-> > +print $out $file1hash, "\n" or die $!;
-> 
-> It's been a while since I did any perl scripting and I'm not clear whether
-> $out is buffered or not and if it is whether it is guaranteed to be flushed
-> when we print "\n". It might be worth adding a explicit flush so it is clear
-> that any deadlocks come from cat-file and not our test code.
+On Wed, Jun 19, 2024 at 8:57=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
+> The git_user_agent_sanitized() function performs some sanitizing to
+> avoid special characters being sent over the line and possibly messing
+> up with the protocol or with the parsing on the other side.
+>
+> Let's extract this sanitizing into a new strbuf_sanitize() function, as
+> we will want to reuse it in a following patch.
+>
+> For now the new strbuf_sanitize() function is still static as it's only
+> needed locally.
+>
+> While at it, let's also make a few small improvements:
+>   - use 'size_t' for 'i' instead of 'int',
+>   - move the declaration of 'i' inside the 'for ( ... )',
+>   - use strbuf_detach() to explicitely detach the string contained by
+>     the 'buf' strbuf.
 
-Pipes and sockets created by Perl are always unbuffered since
-5.8, at least.  If they were buffered, Git.pm users (including
-git-svn) wouldn't have worked at all.
+s/explicitely/explicitly/
 
-> > +my $info = <$in>;
-> 
-> Is there an easy way to add a timeout to this read so that the failure mode
-> isn't "the test hangs without printing anything"? I'm not sure that failure
-> mode is easy to diagnose from our CI output as it is hard to tell which test
-> caused the CI to timeout and it takes ages for the CI to time out.
-
-Yeah, select() has been added in v2.
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
