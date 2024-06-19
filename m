@@ -1,128 +1,89 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7DC4A1D
-	for <git@vger.kernel.org>; Wed, 19 Jun 2024 06:10:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1179A1848
+	for <git@vger.kernel.org>; Wed, 19 Jun 2024 06:31:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718777403; cv=none; b=YSSJZ14vXYTZhn23sszpUpdC06At+EdQOxwmB4pC2YjeV6EK1RPzNwbzvQtfqDk8IwLaxqtTWc+IyGfA/9qpZqJXwv8NiuZmnPPpiIDFJMXytTFmmdP15TtwvXAzTnbrXncotlc13CHWRJBqecw5AFy365knY9TRaJ25DFn1sdg=
+	t=1718778680; cv=none; b=Mw+R4ykvtDXr4XTpy7gwhJp+di1vwYuOCgrPGZ2JmQzr3EPN5QI5j7yhVH8wwb2cy5XF29MZLAwyTKEDG0GH3BHsgLrMvQ8nejI+fhxiUjnA64wgi3H+C7Gk3ZdZNnUl/lZ0GBf57m+4DuYXdHucwtPQgFvS2rsg2NXv8xI5eeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718777403; c=relaxed/simple;
-	bh=+RDHK9jVP+yKzheJI0ezfjSdFl/nOth/MaVa950Sfeg=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=GECFSKjL16LHGPQesfznKdQS0c67zJDsv7ACg5IblO04bEOqU5QV1icYQBkGnPUcnmI45sXcBasZmAM7yV/8/BfJurJxjMJL+hH8tBQRpoHSoGuEk65goGviNCh6qTmkssJrFZcMRhKksHYsdQJYU943d0GFdbVMwCmw84Txffs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dQFQzkpf; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718778680; c=relaxed/simple;
+	bh=a6CA8H1DRERHRSFcu5mnNNPQXQBLpTe/yxjjku6Bsd4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=V9c1ru6cf74umFRikNO5rNxKlfgPvAnl1W0+ujH1tCZsXfrlPYopVmkwRdlm3MkbALt4itwEMswvqgWGwkksNy3Nuft2QSh8yvQdXO8hXMlg6P9SzKfZhVeiL5vhwemQ1OtIPY0cLk0jRCKgzfe6uculryP+AcqMvlbSL0Ud7s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=XUF4TFPx reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dQFQzkpf"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4217990f997so45035175e9.2
-        for <git@vger.kernel.org>; Tue, 18 Jun 2024 23:10:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718777400; x=1719382200; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=XEF1gw30YL9jJDlOkuh/aWCkMbD+nRSvjTBftD3FCYY=;
-        b=dQFQzkpfWntMRAEsFMIoHaYc9nUPj6L1DxRSpvxNYUmq1u4RFuiLPffev/LZ/kbr37
-         8Kj5uNVYquO8NSLRJtHMJvvhIY54XB+yrEU1F8Aqiqf6OSeQ2i0cMn5gbMbGKwJzHt5I
-         J696KUAa/3QSTy0ZPD2YpvkXdcIyopbN2kF3zhsbAq0VsQVFATtMhzo9ExySnyRSGDLV
-         WXb5XeNntfby8OOTb8319vKuQdUfW6lHeo/3PDfn4iwjZVaA3YjokCmhuuCInIrGt0tx
-         hoHnou5UE0Scs7l21dl3ApSPPLeMSxSct+2MgiMDLBnFcOlRt8wYIjgFY1xZjWS5i9Yg
-         y0Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718777400; x=1719382200;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XEF1gw30YL9jJDlOkuh/aWCkMbD+nRSvjTBftD3FCYY=;
-        b=LIHwQxv26bsNAnXt8o9ErFfoQ5Qq5UflqfRWud3BwiCxRzI8pfLaSu0GfWt2BSv8E8
-         5MEsI4WtNYELEVcYNyogdj0SRBNdLMztlrJ9YCCzrpPiiU0jZF3N//qmtjwnVsPhPtVn
-         MEnXLdE06BWvnpjvEg+QtgAfThmekToXOa+e9L19tx4ss1qXOSA72nsda7FqhXQcUeAR
-         8k2t/cuK3DItWfSY6LSdDtCqq0WsxThYaopnyFhWuYBBWjAzHmVerjOL3gdoWTCmynq4
-         IehknGkYIlBr1TDFwCCcyU8Q5GmDik68I39AYbMWE5mIo/Y/R8DsDmAgy0aRGmO1nFKD
-         1lVQ==
-X-Gm-Message-State: AOJu0YyiAZR8eIDa+YYy0aZWtCJ5Hknpo6PtD60bYd6kzKTeiqFl6GPN
-	4KBosbHb/6S5VHIFrdivgxxH/CujwSuX72EKpiYxLJzI/8ZZ2umRbawIdg==
-X-Google-Smtp-Source: AGHT+IFVXZdJZ/t26zWMMiwU2zC7lebAMf3uM3bKqObPgpnkKDcRR3YnaBhN0fVLiGlIoIp1JtN7TA==
-X-Received: by 2002:a7b:cc13:0:b0:424:784c:b13b with SMTP id 5b1f17b1804b1-424784cb209mr2631265e9.13.1718777399919;
-        Tue, 18 Jun 2024 23:09:59 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-422f6320b11sm216322855e9.29.2024.06.18.23.09.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jun 2024 23:09:59 -0700 (PDT)
-Message-Id: <pull.1752.git.1718777398765.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 19 Jun 2024 06:09:58 +0000
-Subject: [PATCH] mingw: drop bogus (and unneeded) declaration of `_pgmptr`
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="XUF4TFPx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=YHZxwLgYZyNYZ6zxspu3slMsVh3RbAvnc2emtbbvrXM=; b=X
+	UF4TFPx3gqIQtrja4QPYQZ7sQ3AdHR1KRJx5os8a8o+2L3jLecgbZ5VUZk3PYXjY
+	SLH+WZWoDsTTyqoxVyrCFLhfbCi6SyXcAUPnFsRMJZdF6Krh0as4fbC5d8bVoL9S
+	v5cA5eVW8M0B59YajjVDAYJHE4BZ3spti0aAIEdQfU=
+Received: from bupt_xingxin$163.com ( [122.224.123.146] ) by
+ ajax-webmail-wmsvr-40-134 (Coremail) ; Wed, 19 Jun 2024 14:30:34 +0800
+ (CST)
+Date: Wed, 19 Jun 2024 14:30:34 +0800 (CST)
+From: "Xing Xin" <bupt_xingxin@163.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"Patrick Steinhardt" <ps@pks.im>, 
+	"Karthik Nayak" <karthik.188@gmail.com>, 
+	"Xing Xin" <xingxin.xx@bytedance.com>
+Subject: Re:Re: [PATCH v7 1/3] bundle-uri: verify oid before writing refs
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+In-Reply-To: <xmqqr0cuyww9.fsf@gitster.g>
+References: <pull.1730.v6.git.1718109943.gitgitgadget@gmail.com>
+ <pull.1730.v7.git.1718632535.gitgitgadget@gmail.com>
+ <fc9f44fda0032ab1e5ee0c9bcc2886ddb8e17722.1718632536.git.gitgitgadget@gmail.com>
+ <xmqqr0cuyww9.fsf@gitster.g>
+X-NTES-SC: AL_Qu2aCvuct04o4iiZZukXn0oVhe85UMW2ufsg3YReP500miXX3hoMdERYMkbG6OexGx61iyOucypR8eZ1bY5JXIb3DembKJnk6ZbwbPchRkRO
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Message-ID: <ae431a7.611a.1902f30a243.Coremail.bupt_xingxin@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:_____wD3__YNe3JmGzxHAA--.40970W
+X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiYAEDbWV4HSI8NgADsk
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-
-In 08809c09aa13 (mingw: add a helper function to attach GDB to the
-current process, 2020-02-13), I added a declaration that was not needed.
-Back then, that did not matter, but now that the declaration of that
-symbol was changed in mingw-w64's headers, it causes the following
-compile error:
-
-      CC compat/mingw.o
-  compat/mingw.c: In function 'open_in_gdb':
-  compat/mingw.c:35:9: error: function declaration isn't a prototype [-Werror=strict-prototypes]
-     35 |         extern char *_pgmptr;
-        |         ^~~~~~
-  In file included from C:/git-sdk-64/usr/src/git/build-installers/mingw64/lib/gcc/x86_64-w64-mingw32/14.1.0/include/mm_malloc.h:27,
-                   from C:/git-sdk-64/usr/src/git/build-installers/mingw64/lib/gcc/x86_64-w64-mingw32/14.1.0/include/xmmintrin.h:34,
-                   from C:/git-sdk-64/usr/src/git/build-installers/mingw64/lib/gcc/x86_64-w64-mingw32/14.1.0/include/immintrin.h:31,
-                   from C:/git-sdk-64/usr/src/git/build-installers/mingw64/lib/gcc/x86_64-w64-mingw32/14.1.0/include/x86intrin.h:32,
-                   from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/winnt.h:1658,
-                   from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/minwindef.h:163,
-                   from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/windef.h:9,
-                   from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/windows.h:69,
-                   from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/winsock2.h:23,
-                   from compat/../git-compat-util.h:215,
-                   from compat/mingw.c:1:
-  compat/mingw.c:35:22: error: '__p__pgmptr' redeclared without dllimport attribute: previous dllimport ignored [-Werror=attributes]
-     35 |         extern char *_pgmptr;
-        |                      ^~~~~~~
-
-Let's just drop the declaration and get rid of this compile error.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    mingw: drop bogus (and unneeded) declaration of _pgmptr
-    
-    Ran into this in
-    https://github.com/git-for-windows/git-sdk-64/actions/runs/9558244721/job/26346637793.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1752%2Fdscho%2Fdrop-bogus-_pgmptr-declaration-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1752/dscho/drop-bogus-_pgmptr-declaration-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1752
-
- compat/mingw.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 6b36d0387aa..41d8ca335d2 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -16,7 +16,6 @@ static const int delay[] = { 0, 1, 10, 20, 40 };
- void open_in_gdb(void)
- {
- 	static struct child_process cp = CHILD_PROCESS_INIT;
--	extern char *_pgmptr;
- 
- 	argv_array_pushl(&cp.args, "mintty", "gdb", NULL);
- 	argv_array_pushf(&cp.args, "--pid=%d", getpid());
-
-base-commit: 08809c09aa1351b603e9c55734105cd2e3c24c41
--- 
-gitgitgadget
+QXQgMjAyNC0wNi0xOSAwMTozNzo1OCwgIkp1bmlvIEMgSGFtYW5vIiA8Z2l0c3RlckBwb2JveC5j
+b20+IHdyb3RlOgo+IlhpbmcgWGluIHZpYSBHaXRHaXRHYWRnZXQiIDxnaXRnaXRnYWRnZXRAZ21h
+aWwuY29tPiB3cml0ZXM6Cj4KPj4gQEAgLTMzLDYgKzQ2LDE2IEBAIHRlc3RfZXhwZWN0X3N1Y2Nl
+c3MgJ2Nsb25lIHdpdGggcGF0aCBidW5kbGUnICcKPj4gIAl0ZXN0X2NtcCBleHBlY3QgYWN0dWFs
+Cj4+ICAnCj4+ICAKPj4gK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2Nsb25lIHdpdGggYnVuZGxlIHRo
+YXQgaGFzIGJhZCBoZWFkZXInICcKPj4gKwkjIFdyaXRlIGJ1bmRsZSByZWYgZmFpbHMsIGJ1dCBj
+bG9uZSBjYW4gc3RpbGwgcHJvY2VlZC4KPj4gKwlnaXQgY2xvbmUgLS1idW5kbGUtdXJpPSJjbG9u
+ZS1mcm9tL2JhZC1oZWFkZXIuYnVuZGxlIiBcCj4+ICsJCWNsb25lLWZyb20gY2xvbmUtYmFkLWhl
+YWRlciAyPmVyciAmJgo+PiArCWNvbW1pdF9iPSQoZ2l0IC1DIGNsb25lLWZyb20gcmV2LXBhcnNl
+IEIpICYmCj4+ICsJdGVzdF9ncmVwICJ0cnlpbmcgdG8gd3JpdGUgcmVmICdcJydyZWZzL2J1bmRs
+ZXMvdG9waWMnXCcnIHdpdGggbm9uZXhpc3RlbnQgb2JqZWN0ICRjb21taXRfYiIgZXJyICYmCj4+
+ICsJZ2l0IC1DIGNsb25lLWJhZC1oZWFkZXIgZm9yLWVhY2gtcmVmIC0tZm9ybWF0PSIlKHJlZm5h
+bWUpIiA+cmVmcyAmJgo+PiArCSEgZ3JlcCAicmVmcy9idW5kbGVzLyIgcmVmcwo+Cj5XaHkgbm90
+ICJ0ZXN0X2dyZXAgISIgaGVyZT8gIFRoZXJlIGFyZSBvdGhlciB1c2VzIG9mIGJhcmUgZ3JlcCBp
+bgo+dGhlIG5ld2x5IGFkZGVkIGxpbmVzLCBidXQgSSB3b24ndCByZXBlYXQgdGhlbSBoZXJlOyB0
+aGUgc2FtZQo+Y29tbWVudCBhcHBsaWVzIHRvIHRoZW0uCgpCb3RoIGB0ZXN0X2dyZXAgIWAgYW5k
+IGAhIGdyZXBgIGFyZSB3aWRlbHkgdXNlZCBpbiB0ZXN0cy4gU29ycnkgZm9yIG5vdApyZWFsaXpp
+bmcgdGhhdCB0aGUgZm9ybWVyIGlzIHByZWZlcnJlZC4KCj4+ICsJdGVzdF93cml0ZV9saW5lcyBy
+ZWZzL2J1bmRsZXMvdG9waWMgPmV4cGVjdCAmJgo+PiArCXRlc3RfY21wIGV4cGVjdCBhY3R1YWwg
+JiYKPj4gKwkjIEVuc3VyZSB0aGF0IHJlZnMvYnVuZGxlcy90b3BpYyBhcmUgc2VudCBhcyAiaGF2
+ZSIuCj4+ICsJdGVzdF9ncmVwICJjbG9uZT4gaGF2ZSAkKGdpdCAtQyBjbG9uZS1mcm9tIHJldi1w
+YXJzZSBBKSIgdHJhY2UtcGFja2V0LnR4dAo+PiArJwo+Cj5DYW4gdGhpcyByZXYtcGFyc2UgZmFp
+bCAodGhlIGZhaWx1cmUgd291bGQgYmUgaGlkZGVuIGZyb20gdGhlIHRlc3QpPwo+SWYgc28sCj4K
+PgkuLi4KPgl0ZXN0X2NtcCBleHBlY3QgYWN0dWFsICYmCj4JIyBFbnN1cmUgdGhhdCByZWZzL2J1
+bmRsZXMvdG9waWMgaXMgc2VudCBhcyAiaGF2ZSIKPgl0aXA9JChnaXQgLUMgY2xvbmUtZnJvbSBy
+ZXYtcGFyc2UgQSkgJiYKPgl0ZXN0X2dyZXAgImNsb25lPiBoYXZlICR0aXAiIHRyYWNlLXBhY2tl
+dC50eHQKPgo+d291bGQgY2F0Y2ggc3VjaCBhIGZhaWx1cmUuICBZb3UgYXJlIGRvaW5nIHNvIGlu
+IHRoZSBwcmV2aW91cyB0ZXN0Cj5pbiB0aGUgaHVuayBzdGFydGluZyBhdCAzMy80NiBhYm92ZSB3
+aXRoIGNvbW1pdF9iIHZhcmlhYmxlIGFscmVhZHkuCj4KPlRoZXJlIGFyZSBvdGhlciB1c2VzIG9m
+IGdpdCBjb21tYW5kIGluICQoY29tbWFuZCBzdWJzdGl0dXRpb24pIHdob3NlCj5leGl0IHN0YXR1
+cyBhcmUgaWdub3JlZCBpbiB0aGUgbmV3bHkgYWRkZWQgbGluZXMsIGJ1dCBJIHdvbid0Cj5yZXBl
+YXQgdGhlbSBoZXJlOyB0aGUgc2FtZSBjb21tZW50IGFwcGxpZXMgdG8gdGhlbS4KCkZpeGVkIGlu
+IHRoZSBuZXcgc2VyaWVzLiBUaGFua3MuCgpYaW5nIFhpbgo=
