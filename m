@@ -1,123 +1,137 @@
-Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B07535DC
-	for <git@vger.kernel.org>; Wed, 19 Jun 2024 02:59:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0612594
+	for <git@vger.kernel.org>; Wed, 19 Jun 2024 03:00:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718765951; cv=none; b=gN39nAtDH0nMIMXaHPZUjww1mZnqh0Yse13LbylR8PkXW2bnz9IvzoPoPSutyfF3jABbnRup2inRxdBpU98Qg4HYx5O9v7PAjqo8OqvVBATKMmywAmJBpELPwMRJ0HI5B1FzfXfRe8/4FrO8d1o5dpMpDs+KJMS49YF8wHVg948=
+	t=1718766026; cv=none; b=MDoJYpMGJx7AaNeuQDgLGr2NEuPVXeC/mMPl7z8uXjgr4dCJuJqW5wW6nHVY4ybJmHvy9KD2kwGICTZ40HalYDswULxo9fQzHvQztGG0DM3aaCsHDflLj6Z2XC1U8meXvEuKyuqR6+OGanralNyk7SxlZBKeA0fVoS2aqsyna9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718765951; c=relaxed/simple;
-	bh=S2YIIYy38S2kty55/c6fL3RbAy/K97up2j92be+m1Hc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=osQoZHWK8o982m0SSZkm4Vwm9y0sYCzaiZeT4Qn4LKkadlO2AzDScbzpzQ3sNqjP9pzAtv0Al2hSZJ1bWjfruIjIGw5sJjYJyYkBApihnCtmiOwyZHWcJ14JxcKRiri96+aBa5L2q3MfSfpb2Fo1DJYxz5VHZEe1nlbQ4jXXyao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j9K+JQ2k; arc=none smtp.client-ip=209.85.166.46
+	s=arc-20240116; t=1718766026; c=relaxed/simple;
+	bh=URc+Xn1Nm1ZI4I4VEvem3okKDvwA1LUDYLqkZk+n/Nw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=qVWZgVRRyUEhhGqpP3xEcUba/KPEH/7D9ouJJf2WOZrJMfmyktwj9XUNgykxOBPAyxNHSBH/S2z0ElXsPafs9673JALFcBN+cPXzcOC2Zo0ynRSrU9PtIhpClzsiGW98whsa1RXKRq5ZRYC0dUtCnniRElO+tiIeCxdDEHtEdm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I5CHYUNs; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j9K+JQ2k"
-Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-7eb85e80661so254778639f.1
-        for <git@vger.kernel.org>; Tue, 18 Jun 2024 19:59:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I5CHYUNs"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-35f14af40c2so5135043f8f.0
+        for <git@vger.kernel.org>; Tue, 18 Jun 2024 20:00:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718765949; x=1719370749; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1718766023; x=1719370823; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vn8kYjL54nz04sLpMNrryZMqQ0+4Fuv3vXC/okackPQ=;
-        b=j9K+JQ2k6ENtOZ+ncWpRX8xvku0q0YCmAm+Y2NHocp0NOYW1cA3sWtrAtG/cANaK4V
-         tQ7L8Rqu96WRJGbWnn04K8t1Emahy3gD+8vwCnkH4XjSEbVqm1n7yCuy/fdoeczsJFR8
-         /JDD5COOMiadEEipBw/YzxQCSCt+9kNAcOlWKF2+eQcPKcCdNuq1h7JNOWWG9bg1kjzG
-         bh2MS03tlarGgEyU99ZoWX+tQryaV1J3FvZcJUsFAUz8tN3qOJev/rGcv9d+lyiBfGVM
-         cKhiB+YUBQnac9K7RNJFYkEW+TB+Y4zEZrPPGdYMaNJG8wXDHGWmGgOkpH+qbxScUHlI
-         OSyA==
+        bh=KVdZAMq+IYS2SrXDc0mge0VdZqsAN0YncneL5cyJhk8=;
+        b=I5CHYUNseBg8hnDnZ64b0kDONZirYsYGeF/RwcJ71cGxQav6rs2FSiv+Wv3Vc5Pukz
+         5tx71UlBGqJvdyAUZAN1ELhOHZmobgbgiDxow0lr74A5who0JV+jbQmbk6TiNpe/d1Qc
+         iXIcd1WM8ZnydVe5Bpy+0Fz3GVRla6naz2Jq9L2gCLZsf/TbwdzED+E94NF7HBl+YYm+
+         9mvB5gx48u+lU62CRF1Idu3453by8S93l7qmKw/4AY/9U73+5V6kwhab19NM5SmCPpSd
+         zjJCHHf2IpaDU+9/KhiTSwj85dGiUTQvy2Za2Pm7Oha9YYHdLjBz3EeqTkF50uOumCys
+         mfIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718765949; x=1719370749;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1718766023; x=1719370823;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vn8kYjL54nz04sLpMNrryZMqQ0+4Fuv3vXC/okackPQ=;
-        b=UjZxUiF45C7YRd3j/VoRKvaiEhcXa521KoaaV8BOBL2VuhR41yz7DbAfNtoRxUSEaU
-         iN9XwyHv7kPd8KOFnhLVye2x3ko0t5sN/0PdjHHFPYCd3UfY1sRHuJ3bZuF6GVTF2mTw
-         pnvA+ogdslHifhLf66LM6QVKcAZTPJouSCW2uuHI/lH7/0CKhGSHTYmB7fdNNNURxBRC
-         Db6lwIOBDd/uLIwILiCVfbMUZ03SQdKXrgqlYGeDLaAG2a0Mh7Z2RI7CdCIh6BsRDgM+
-         8aAKjPN5CToLFdGytm/QKa75sH/LA7Wy3kB/CDKeyXhgB7+fskvUxq3s0FGoJZzuZ9CR
-         3sxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW5poKx98w+Do9MfUECgxbN5IQS3hpW1B/yRfNStOOOwU55OgrTNbQG1IjTZPvRktU259A/tUfd8B2cT7zbciouzzp0
-X-Gm-Message-State: AOJu0YxFsvvd8/G0x2tnd3zPtF2HfzdSczPFKCdP5EjpsFiU0Z08BF2o
-	nT2IA73qoLb6coTda5ODOU9NTTrkY0/TE4xjU9DLv40SDfsISIEop60B/a9q28GnHM1q8zPeZqW
-	6byyJilDoJfpEwIGZfZUo6eZajQ915Q==
-X-Google-Smtp-Source: AGHT+IGkyQDrlZrRWeDTKp6vN4cYVyP1iR2dn/H5gDqnp0F7BDTQc9h7Czim8UZ6qZBEZ3WLEYr99oWMnvdud26PI84=
-X-Received: by 2002:a05:6602:14cb:b0:7e1:e022:9e46 with SMTP id
- ca18e2360f4ac-7f13ee9635cmr157351139f.21.1718765949530; Tue, 18 Jun 2024
- 19:59:09 -0700 (PDT)
+        bh=KVdZAMq+IYS2SrXDc0mge0VdZqsAN0YncneL5cyJhk8=;
+        b=bVrEBPx9i55LD838wWbYoWEsUESPvBUQhbT/I43EfkHZjG7AGUa05neTo07CeAfx0G
+         ZUSoJOIq9+v9L9W+hTFtarg5XS6Mn60n5XjHMvMko+uXdvAvwNzYCt/wZFmZg2HXuSFm
+         9ndTyvvAmJJf2Mo/OGdfsQMWCok9/AA9hAmaoH2uEKov5fd4AY3oXo67ffoOG6JgB3Uj
+         uruuLVp5kAQFHDl3LEHI5dPEEx5rnLzsUgBog/JzhDPsLge1+gXk+kl3fDe4lx8dzvvM
+         fWLQ7VQtuxJE6FmjXVKTy9U3XsGJIV/EhyvQbY2GanmeR2/jHf789aWUPXsv45KtO4XE
+         YQRw==
+X-Gm-Message-State: AOJu0Yxd9Q0mzftQ6uxpWtpInqx+1oMOBi9ZmIVPoH/oaKBnEnVyMtO3
+	tvBURunJPZgPevGYTmbUG8hXGk0aEFI1jBQOoc8uPX6j8tAYb1wSeiYqTQ==
+X-Google-Smtp-Source: AGHT+IFGJPJnjTdtZ2LRnWDgHuhQUQ/MiWUMCXWnA/7YExRYwWqueNqhu24B4LE2WJRNtWA1hsy/uQ==
+X-Received: by 2002:adf:f791:0:b0:362:3836:35e7 with SMTP id ffacd0b85a97d-363192cf052mr885475f8f.48.1718766022467;
+        Tue, 18 Jun 2024 20:00:22 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36075093d41sm15855429f8f.16.2024.06.18.20.00.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Jun 2024 20:00:22 -0700 (PDT)
+Message-Id: <5c50c0b3aadbefc7973a2e8d77890808c95875d6.1718766019.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1748.v2.git.1718766019.gitgitgadget@gmail.com>
+References: <pull.1748.git.1718310307.gitgitgadget@gmail.com>
+	<pull.1748.v2.git.1718766019.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 19 Jun 2024 03:00:13 +0000
+Subject: [PATCH v2 1/7] merge-ort: extract handling of priv member into
+ reusable function
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1748.git.1718310307.gitgitgadget@gmail.com>
- <71391b18c1a711fee1f5aff6eedbd3f631d37ded.1718310307.git.gitgitgadget@gmail.com>
- <CAPig+cSZPC=41w8kG6n5hdSCUC4+jYJ6cM8UC-WCO3Bcmb2iNA@mail.gmail.com>
-In-Reply-To: <CAPig+cSZPC=41w8kG6n5hdSCUC4+jYJ6cM8UC-WCO3Bcmb2iNA@mail.gmail.com>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>,
+    Eric Sunshine <sunshine@sunshineco.com>,
+    Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
+
 From: Elijah Newren <newren@gmail.com>
-Date: Tue, 18 Jun 2024 20:58:58 -0600
-Message-ID: <CABPp-BHAcXG=C5i0anuAxm0qb0i-i8AcbQXyQ4Rz4azWA0SU1A@mail.gmail.com>
-Subject: Re: [PATCH 6/7] merge-ort: upon merge abort, only show messages
- causing the abort
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 14, 2024 at 4:19=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
->
-> On Thu, Jun 13, 2024 at 4:25=E2=80=AFPM Elijah Newren via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > When something goes wrong enough that we need to abort early and not
-> > even attempt merging the remaining files, it probably does not make
-> > sense to report conflicts messages for the subset of files we processed
-> > before hitting the fatal error.  Instead, only show the messages
-> > associated with paths where we hit the fatal error.  Also, print these
-> > messages to stderr rather than stdout.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> > diff --git a/merge-ort.c b/merge-ort.c
-> > @@ -543,10 +543,24 @@ enum conflict_and_info_types {
-> > -       CONFLICT_SUBMODULE_CORRUPT,
-> > +
-> > +       /* INSERT NEW ENTRIES HERE */
-> > +       /*
-> > +        * Something is seriously wrong; cannot even perform merge;
-> > +        * Keep this group _last_ other than NB_CONFLICT_TYPES
-> > +        */
->
-> I'm probably missing something obvious, but here the new comment talks
-> about NB_CONFLICT_TYPES...
->
-> > +       ERROR_SUBMODULE_CORRUPT,
-> >
-> >         /* Keep this entry _last_ in the list */
-> > -       NB_CONFLICT_TYPES,
-> > +       NB_TOTAL_TYPES,
->
-> ... but NB_CONFLICT_TYPES gets removed here.
->
-> > @@ -1828,9 +1845,9 @@ static int merge_submodule(struct merge_options *=
-opt,
-> > -                        _("Failed to merge submodule %s "
-> > +                        _("error: failed to merge submodule %s "
-> > @@ -1848,7 +1865,7 @@ static int merge_submodule(struct merge_options *=
-opt,
-> >                          _("Failed to merge submodule %s "
-> >                            "(repository corrupt)"),
->
-> Do you also want to apply the same "error: failed..." transformation
-> to this error message as you did to other error messages?
+In preparation for a subsequent commit which will ensure we do not
+forget to maintain our invariants for the priv member in error
+codepaths, extract the necessary functionality out into a separate
+function.  This change is cosmetic at this point, and introduces no
+changes beyond an extra assertion sanity check.
 
-Doh, I tried to re-read through my patches after making numerous
-additional tweaks to try to catch stuff like this, but I clearly
-missed a few cases here.  Thanks for catching both of these issues;
-I'll fix them up.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-ort.c | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
+
+diff --git a/merge-ort.c b/merge-ort.c
+index eaede6cead9..700ddfccb90 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -5000,6 +5000,26 @@ static void merge_check_renames_reusable(struct merge_result *result,
+ 
+ /*** Function Grouping: merge_incore_*() and their internal variants ***/
+ 
++static void move_opt_priv_to_result_priv(struct merge_options *opt,
++					 struct merge_result *result)
++{
++	/*
++	 * opt->priv and result->priv are a bit weird.  opt->priv contains
++	 * information that we can re-use in subsequent merge operations to
++	 * enable our cached renames optimization.  The best way to provide
++	 * that to subsequent merges is putting it in result->priv.
++	 * However, putting it directly there would mean retrofitting lots
++	 * of functions in this file to also take a merge_result pointer,
++	 * which is ugly and annoying.  So, we just make sure at the end of
++	 * the merge (the outer merge if there are internal recursive ones)
++	 * to move it.
++	 */
++	assert(opt->priv && !result->priv);
++	result->priv = opt->priv;
++	result->_properly_initialized = RESULT_INITIALIZED;
++	opt->priv = NULL;
++}
++
+ /*
+  * Originally from merge_trees_internal(); heavily adapted, though.
+  */
+@@ -5060,11 +5080,8 @@ static void merge_ort_nonrecursive_internal(struct merge_options *opt,
+ 		/* existence of conflicted entries implies unclean */
+ 		result->clean &= strmap_empty(&opt->priv->conflicted);
+ 	}
+-	if (!opt->priv->call_depth) {
+-		result->priv = opt->priv;
+-		result->_properly_initialized = RESULT_INITIALIZED;
+-		opt->priv = NULL;
+-	}
++	if (!opt->priv->call_depth)
++		move_opt_priv_to_result_priv(opt, result);
+ }
+ 
+ /*
+-- 
+gitgitgadget
+
