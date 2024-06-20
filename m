@@ -1,81 +1,179 @@
-Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
+Received: from smtp-o-3.desy.de (smtp-o-3.desy.de [131.169.56.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9181AAE37
-	for <git@vger.kernel.org>; Thu, 20 Jun 2024 10:51:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF9A1AB34D
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 11:24:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=131.169.56.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718880678; cv=none; b=Bm1BjeSIILHYsbHPHh6kWldp8jxxIlWP3Nl7y2TjM8pTCWnfjXcTQTqOMIPLZNOvRLYPTjGlJsRtI7+q1qjp3F2x5J0t4tZSoFQtyMJWKNGZMAt+hkkdN8agTB8kA/k/d3uWWQzTBNtK1NGlmXfTHKXK6p47yIV7bvfBhdtn9aI=
+	t=1718882657; cv=none; b=dCnZn6kvWyoLabWVZidnA/vqVjMdqjuDdinmhtwKhi3qen21QmJxcQkf3brO9JX4p4InzyxoDE1mLaPaKRNt8wlqQlUete9KL8KsmY3ehFo7lGPMXWk0J73CI+TlSE74zkY93bFGqkd26jjlNQcMhOYDaMfw6v6jIOCyz3SczJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718880678; c=relaxed/simple;
-	bh=DC25NCc/xINKfRfwpN3mk5Ji8srTQELuHEcaqvM9SuU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rIcFXdPnNmbEvSxN4HLQUyBDm/XzhPBnOtLX+YI5hNJrRTZtkAOxX9HOYmDaV9Gq0eH6QGuUDa2MVyC+M209DU5g4PmN4JMpYAewVSuFiEDT4fFGHDWSeHRe1f+qW1I3VQKTcKBgmidxpnKV27wJ/hoIwzSsjZ3FzX/KHxLqRl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
-Received: from p3418120-ipxg00d01tokaisakaetozai.aichi.ocn.ne.jp ([114.171.163.120] helo=glandium.org)
-	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mh@glandium.org>)
-	id 1sKFNn-00DyCc-25;
-	Thu, 20 Jun 2024 10:51:12 +0000
-Received: from glandium by goemon.lan with local (Exim 4.96)
-	(envelope-from <mh@glandium.org>)
-	id 1sKFNh-007j5f-2L;
-	Thu, 20 Jun 2024 19:51:05 +0900
-Date: Thu, 20 Jun 2024 19:51:05 +0900
-From: Mike Hommey <mh@glandium.org>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] mingw: drop bogus (and unneeded) declaration of `_pgmptr`
-Message-ID: <20240620105105.5xv2ywxzzye4wjtk@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-References: <pull.1752.git.1718777398765.gitgitgadget@gmail.com>
+	s=arc-20240116; t=1718882657; c=relaxed/simple;
+	bh=qp8oNkSX8fsLBQ+kHbbXLhR3uvxN6+z7okMmsXuRuFU=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=ZsCyWbTok7IDFcGES8krjYQzWoGFWyxmc5dENMfjoyffvDT92nPREsrnu89eArJEFQGr4meMS1Q2h844MszZ+FLImoFMDGEGZDOpjk0xl496/8bGzKWpmm/ZAb+TYWPnyQmTmr45ywvw1nhCzGt0d1ooM+QYlf4sRQFDVey068E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=desy.de; spf=pass smtp.mailfrom=desy.de; dkim=pass (1024-bit key) header.d=desy.de header.i=@desy.de header.b=0GFKMshQ; arc=none smtp.client-ip=131.169.56.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=desy.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=desy.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=desy.de header.i=@desy.de header.b="0GFKMshQ"
+Received: from smtp-o-1.desy.de (smtp-o-1.desy.de [131.169.56.154])
+	by smtp-o-3.desy.de (Postfix) with ESMTP id EA59D11F75F
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 13:14:33 +0200 (CEST)
+Received: from smtp-buf-1.desy.de (smtp-buf-1.desy.de [131.169.56.164])
+	by smtp-o-1.desy.de (Postfix) with ESMTP id 396C611F741
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 13:14:26 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 smtp-o-1.desy.de 396C611F741
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=desy.de; s=default;
+	t=1718882066; bh=hQccVvBM0YmZq0zQb9kUBzV43dPczkgK92BmrUJCuco=;
+	h=Date:To:From:Subject:From;
+	b=0GFKMshQyWS9tapYzvnO3uWOqEkEC+8nL86RVo6tB7/3ZV5MTgeTbxRSRmDcrWmgR
+	 Z6IY+V6qoqXgV4I421/NEKJJIJOQe878btUEPkmyyQ7z40ToGHTYBcfc1G3cdkzt0K
+	 8GeptNgPKNXhlR/RjxC5vq+ytwiokz1eU2LMVZdg=
+Received: from smtp-m-1.desy.de (smtp-m-1.desy.de [IPv6:2001:638:700:1038::1:81])
+	by smtp-buf-1.desy.de (Postfix) with ESMTP id 3024420038
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 13:14:26 +0200 (CEST)
+Received: from c1722.mx.srv.dfn.de (c1722.mx.srv.dfn.de [194.95.239.47])
+	by smtp-m-1.desy.de (Postfix) with ESMTP id 276B940049
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 13:14:26 +0200 (CEST)
+Received: from smtp-intra-1.desy.de (smtp-intra-1.desy.de [131.169.56.82])
+	by c1722.mx.srv.dfn.de (Postfix) with ESMTP id 9AC82A003B
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 13:14:25 +0200 (CEST)
+Received: from z-prx-6.desy.de (z-prx-6.desy.de [131.169.10.30])
+	by smtp-intra-1.desy.de (Postfix) with ESMTP id 75BAEC008A
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 13:14:25 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by z-prx-6.desy.de (Postfix) with ESMTP id 6B69B2400EB
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 13:14:25 +0200 (CEST)
+Received: from z-prx-6.desy.de ([IPv6:::1])
+ by localhost (z-prx-6.desy.de [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id InnDfvmNra3s for <git@vger.kernel.org>;
+ Thu, 20 Jun 2024 13:14:25 +0200 (CEST)
+Received: from [192.168.178.50] (dslb-088-070-180-117.088.070.pools.vodafone-ip.de [88.70.180.117])
+	by z-prx-6.desy.de (Postfix) with ESMTPSA id 2B3C52400E4
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 13:14:24 +0200 (CEST)
+Message-ID: <0fd230f6-a5c5-463d-8584-651ceff3cf99@desy.de>
+Date: Thu, 20 Jun 2024 13:14:24 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1752.git.1718777398765.gitgitgadget@gmail.com>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: git@vger.kernel.org
+From: Paul Millar <paul.millar@desy.de>
+Subject: bug with git describe --dirty --broken
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jun 19, 2024 at 06:09:58AM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> In 08809c09aa13 (mingw: add a helper function to attach GDB to the
-> current process, 2020-02-13), I added a declaration that was not needed.
-> Back then, that did not matter, but now that the declaration of that
-> symbol was changed in mingw-w64's headers, it causes the following
-> compile error:
-> 
->       CC compat/mingw.o
->   compat/mingw.c: In function 'open_in_gdb':
->   compat/mingw.c:35:9: error: function declaration isn't a prototype [-Werror=strict-prototypes]
->      35 |         extern char *_pgmptr;
->         |         ^~~~~~
->   In file included from C:/git-sdk-64/usr/src/git/build-installers/mingw64/lib/gcc/x86_64-w64-mingw32/14.1.0/include/mm_malloc.h:27,
->                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/lib/gcc/x86_64-w64-mingw32/14.1.0/include/xmmintrin.h:34,
->                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/lib/gcc/x86_64-w64-mingw32/14.1.0/include/immintrin.h:31,
->                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/lib/gcc/x86_64-w64-mingw32/14.1.0/include/x86intrin.h:32,
->                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/winnt.h:1658,
->                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/minwindef.h:163,
->                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/windef.h:9,
->                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/windows.h:69,
->                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/winsock2.h:23,
->                    from compat/../git-compat-util.h:215,
->                    from compat/mingw.c:1:
->   compat/mingw.c:35:22: error: '__p__pgmptr' redeclared without dllimport attribute: previous dllimport ignored [-Werror=attributes]
->      35 |         extern char *_pgmptr;
->         |                      ^~~~~~~
-> 
-> Let's just drop the declaration and get rid of this compile error.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-I can only suppose it gets rid of the compiler error with close to 100%
-certainty because for some reason, it only happens intermittently for me
-and I don't know whether I'm lucky or if the issue is fixed for real,
-but what it absolutely sure is that it doesn't break anything.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Mike
+mkdir test-container
+cd test-container
+cat >Dockerfile <<EOF
+FROM docker.io/debian:bookworm-slim
+WORKDIR /work
+RUN apt-get update && apt-get -y install git
+EOF
+podman build -t test-image .
+
+mkdir test-repo
+cd test-repo
+git init echo "Hello, world" > README
+git add README
+git commit -m "Initial commit" README
+git tag v1.0.0
+
+git describe --tags --dirty --broken
+
+podman run -v `pwd`:/work --rm -it --entrypoint '["/usr/bin/git",
+    "describe", "--tags", "--dirty", "--broken"]' test-image
+
+
+What did you expect to happen? (Expected behavior)
+
+I expect git, when running in the container, to identify that the repo 
+is clean.
+
+What happened instead? (Actual behavior)
+
+When run within the container, git identifies the repo as dirty.  The 
+'podman run' command returns
+
+v1.0.0-dirty
+
+
+What's different between what you expected and what actually happened?
+
+The 'git' command is running within the container.
+
+Anything else you want to add:
+
+I believe the problem comes from two parts.
+
+First, when running within the container, the files seemed to be owned 
+by user root.
+
+
+12:51 $ ls -l
+total 4
+-rw-r--r-- 1 paul paul 13 Jun 20 12:45 README
+
+
+12:49 $ podman run -v `pwd`:/work --rm -it --entrypoint '["ls", "-l"]' 
+test-imag
+e
+total 4
+-rw-r--r-- 1 root root 13 Jun 20 10:45 README
+
+
+This results in an inconsistency between the ownership information 
+contained within the .git/index file and the ownership information on 
+the filesystem when git is run within the container.
+
+Second, when 'git describe' is run with the '--broken' flag then the 
+'.git/index' file is not updated.  The ownership inconsistency then 
+triggers git's belief that the repo is dirty.
+
+If the '--broken' flag is remove from the 'git describe' command then 
+running the command directly and from the container give the same output.
+
+12:51 $ git describe --tags --dirty
+v1.0.0
+
+12:55 $ podman run -v `pwd`:/work --rm -it --entrypoint '["/usr/bin/git",
+    "describe", "--tags", "--dirty"]' test-image
+v1.0.0
+
+In this case, running the 'git describe' command (both in the container 
+and directly) will update the '.git/index' file, and the correct output 
+is presented.
+
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.39.2
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 
+(2024-05-03)
+x86_64
+compiler info: gnuc: 12.2
+libc info: glibc: 2.36
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
+
+
