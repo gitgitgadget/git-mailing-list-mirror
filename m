@@ -1,52 +1,51 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55681D0554
-	for <git@vger.kernel.org>; Thu, 20 Jun 2024 17:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C397A1B47B0
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 18:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718906339; cv=none; b=Z37R1kieZezjkCcZV5fPZMUPULwFWEwOt0IBH4nwoYYpdu2XnfYIQ9JBWOKAsVvVgl/903e1T4lgpfO843WNK1dyZjncBygPQnkyqx0Iyf85rUUWHhlejoyt+8HsfUE0DejRs4I7GIkT3akn4bynrLaxApcOLgrBP8bnhnClSAI=
+	t=1718906810; cv=none; b=SbXe7mM85eQMPDbwMMSz7coB2n4NmBNqNT2rGR9rQW0ko6iz8j7lRJKtmMvsMvVhoh0QymLs5+2pxfYEy43duocMnb/OQQJt9D7s75tEXaegJhc7kJajPdHnMx0ViBp5eYi3HIUMRIp2f3HL9PIqMmInG+7xWhx+bGCNQnnmBFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718906339; c=relaxed/simple;
-	bh=d5+WJJDvhJoNimIhaT92zFAWxZA5N++QFIJ70Q6DYqE=;
+	s=arc-20240116; t=1718906810; c=relaxed/simple;
+	bh=VyOfoJ54F6r7unGMDlKIGpzKuDJ7DYWxc2v4P3xk0FI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aPQ+rja15AQUsatS4u4rYVOcpuqTi5AX51gK6rmAwzHBnWkGiyv2Piubg/2BqXiTqaeR8V9OuOpZNdpsLTzWUcO5Ob+19PW5oU6LHEDshmLBZHdyr3FhvE3dTKZbZxJVGU58e1PL8TGNFGJgKXt+lVtmG3I49eW2NwMMIhoRrcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xl0bKwvb; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=KGxQeXFxUCxcwRE31DHOb9eCFP+mC0WQto76QlT8M3v85yt+Uz7tEIj4UTIav+6diXweIwmnw5Wb/OuOAL+SfEjR1BiACv/GQzMRDfMkglHDU0lmrgLmQenQnO+zAKHubYC7cB5BSyDa19xch3L76XakSeOgkhZDb49qFFai5w4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vHJUNNYi; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xl0bKwvb"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vHJUNNYi"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4FB0F2EC6C;
-	Thu, 20 Jun 2024 13:58:57 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 741832EE16;
+	Thu, 20 Jun 2024 14:06:48 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=d5+WJJDvhJoNimIhaT92zFAWxZA5N++QFIJ70Q
-	6DYqE=; b=xl0bKwvbdZFz5SoKpMrSuSO+6b2gSAtL+gXnU6ylhtlQuk831NEAlb
-	gSNedmBtNau+iCDACYTTuGX6p+fi5M8eSqcZX3oKFmuoDI00wAKLzanDD6dVQ8OW
-	3QOi9MDT/djCb5KD9beCciFyJaiHWQXEXpNm6a3KIN7GNT0kGNQto=
+	:content-type; s=sasl; bh=VyOfoJ54F6r7unGMDlKIGpzKuDJ7DYWxc2v4P3
+	xk0FI=; b=vHJUNNYiUcWuRzaoolT8O24N6FU7f7+pnPOw7/sLdQ53iXt9RN6HOL
+	BAkskYf1RTD7LXgidG5EBgr5gg+2DuN76qB51f+wE1Gt9WddmnORAcubyvppPadW
+	QjmjxbtxR8qI4Zr/9HhKtIRBB1A3G0MZC0B0eKdXxOg9zMieR6jeY=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id CFBEC2EC6B;
-	Thu, 20 Jun 2024 13:58:56 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D5032EE15;
+	Thu, 20 Jun 2024 14:06:48 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 701222EC6A;
-	Thu, 20 Jun 2024 13:58:53 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0E5072EE14;
+	Thu, 20 Jun 2024 14:06:45 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Mike Hommey <mh@glandium.org>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] mingw: drop bogus (and unneeded) declaration of `_pgmptr`
-In-Reply-To: <20240620105105.5xv2ywxzzye4wjtk@glandium.org> (Mike Hommey's
-	message of "Thu, 20 Jun 2024 19:51:05 +0900")
-References: <pull.1752.git.1718777398765.gitgitgadget@gmail.com>
-	<20240620105105.5xv2ywxzzye4wjtk@glandium.org>
-Date: Thu, 20 Jun 2024 10:58:51 -0700
-Message-ID: <xmqqzfrfv6lg.fsf@gitster.g>
+To: Jonathan Nieder <jrnieder@gmail.com>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
+Subject: Re: [PATCH] t5500: fix mistaken $SERVER reference in helper function
+In-Reply-To: <ZnM3I11IRporu4sj@google.com> (Jonathan Nieder's message of "Thu,
+	20 Jun 2024 11:27:58 +0200")
+References: <20240619125255.GA346466@coredump.intra.peff.net>
+	<ZnM3I11IRporu4sj@google.com>
+Date: Thu, 20 Jun 2024 11:06:43 -0700
+Message-ID: <xmqqv823v68c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,13 +55,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- C19841CA-2F2E-11EF-9577-C38742FD603B-77302942!pb-smtp20.pobox.com
+ DAB07744-2F2F-11EF-9361-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-Mike Hommey <mh@glandium.org> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> I can only suppose it gets rid of the compiler error with close to 100%
-> certainty because for some reason, it only happens intermittently for me
-> and I don't know whether I'm lucky or if the issue is fixed for real,
-> but what it absolutely sure is that it doesn't break anything.
+> Alas, in a copy-and-paste gone wrong, 07ef3c6604 gets the name of the
+> blob (but not the commit) from "server" instead of $SERVER.  And this
+> happens to work because the first time we call this helper, $SERVER is
+> "server".  The only reason this happens to work at all is that we're
+> looking at a blob id; if we looked at the commit id, then the
+> timestamps wouldn't have matched.
+>
+> Thanks, the fix is obviously correct.
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+> Particularly telling that the author of 07ef3c6604 introduced this
+> typo while trying to make the tests _more_ robust.
 
-That is a curious vote of confidence ;-)  Will queue.  Thanks, both.
+;-)
+
+Thanks both.
