@@ -1,79 +1,81 @@
-Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5DB1EA91
-	for <git@vger.kernel.org>; Thu, 20 Jun 2024 10:15:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.13.153.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9181AAE37
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 10:51:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718878521; cv=none; b=DVG7BuIbkVq2rTPJJ9hOnJ7vRDWb0CdfCYRdY0NhD45Om5t+IWCdaV+y1dRBBnpjsGXtCwWPGicgBCjqNzw5i63/ZvQUMdWyszYDmS2ePPIY+h06rWIscLvP3x+Gt0m5rgqY+kvBFhnlZC03hAIrsjnQJnpoEH+8Pu/5alnxa7Y=
+	t=1718880678; cv=none; b=Bm1BjeSIILHYsbHPHh6kWldp8jxxIlWP3Nl7y2TjM8pTCWnfjXcTQTqOMIPLZNOvRLYPTjGlJsRtI7+q1qjp3F2x5J0t4tZSoFQtyMJWKNGZMAt+hkkdN8agTB8kA/k/d3uWWQzTBNtK1NGlmXfTHKXK6p47yIV7bvfBhdtn9aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718878521; c=relaxed/simple;
-	bh=P6bUYBlHXE6RLDWiPbQyJCwXopgLT482yHiFn8iA1zQ=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=R7+cTNMEINvPWQVQlCculSK6IW8z93Byqx51aWk0vEsRQEESe4VA4gieoYhIBZpxXFK5xse3mJ7mdU8RF2HTrQyx4T3mxEoXYi/xiXPkAep85YD2fyFywy/+7yFqyrI7Qgvo+6ajBjUCp8W59OcXWHOcxbhtmzqxo5Fr+OLxAmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de; spf=pass smtp.mailfrom=haller-berlin.de; dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b=Pnnw7Mpv; arc=none smtp.client-ip=85.13.153.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=haller-berlin.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="Pnnw7Mpv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
-	s=kas202402191026; t=1718877946;
-	bh=0k6I1UyPeJ+ClPq0Ux/I3sxyygp9HJkcXc86OKbkq4A=;
-	h=Date:To:From:Subject:From;
-	b=Pnnw7MpvGPn+/263sbPLEkDMVj0XagWM1bqC1rH5pZvL6oT9L+abFqRQqOtid677C
-	 RY+8XLidlL9W4Gr0vwPpqPTh8vqbueFIkaQiCIv+7Bi8YkwfJljD1Ubr2yNeXOqz3Q
-	 doS/YRxzIAp2Jn2ftwdynBp1Oew/h3EtmRXFC2iKY0itEu4a7V9x6vjscV6Rb+ZUda
-	 2C/d4o0S/qpAQb7tBeaw0jKeX/jn8UVvqAsdt2MkN/szA9kchmg50O2qCRr0FzgIBQ
-	 ozAgfIZ+dt6ECKStPjNBEbSUq4BRBF5y8S3z+0GnXfxYjTsFIyOeNH3chES5L6qbkc
-	 yV2HakhgOVcYA==
-Received: from [192.168.42.22] (69-99-142-46.pool.kielnet.net [46.142.99.69])
-	by dd36226.kasserver.com (Postfix) with ESMTPSA id 5F1453C053B
-	for <git@vger.kernel.org>; Thu, 20 Jun 2024 12:05:46 +0200 (CEST)
-Message-ID: <e60a8b1a-98c8-4ac7-b966-ff9635bb781d@haller-berlin.de>
-Date: Thu, 20 Jun 2024 12:05:45 +0200
+	s=arc-20240116; t=1718880678; c=relaxed/simple;
+	bh=DC25NCc/xINKfRfwpN3mk5Ji8srTQELuHEcaqvM9SuU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rIcFXdPnNmbEvSxN4HLQUyBDm/XzhPBnOtLX+YI5hNJrRTZtkAOxX9HOYmDaV9Gq0eH6QGuUDa2MVyC+M209DU5g4PmN4JMpYAewVSuFiEDT4fFGHDWSeHRe1f+qW1I3VQKTcKBgmidxpnKV27wJ/hoIwzSsjZ3FzX/KHxLqRl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
+Received: from p3418120-ipxg00d01tokaisakaetozai.aichi.ocn.ne.jp ([114.171.163.120] helo=glandium.org)
+	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <mh@glandium.org>)
+	id 1sKFNn-00DyCc-25;
+	Thu, 20 Jun 2024 10:51:12 +0000
+Received: from glandium by goemon.lan with local (Exim 4.96)
+	(envelope-from <mh@glandium.org>)
+	id 1sKFNh-007j5f-2L;
+	Thu, 20 Jun 2024 19:51:05 +0900
+Date: Thu, 20 Jun 2024 19:51:05 +0900
+From: Mike Hommey <mh@glandium.org>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] mingw: drop bogus (and unneeded) declaration of `_pgmptr`
+Message-ID: <20240620105105.5xv2ywxzzye4wjtk@glandium.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+References: <pull.1752.git.1718777398765.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: de-DE, en-US
-To: Git <git@vger.kernel.org>
-From: Stefan Haller <lists@haller-berlin.de>
-Subject: Thoughts about the -m option of cherry-pick and revert
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Bar: /
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1752.git.1718777398765.gitgitgadget@gmail.com>
 
-There are plenty of StackOverflow questions and blog posts about the
-error message that you get when you use git cherry-pick or git revert on
-a merge commit without specifying the -m option. Many people don't seem
-to understand what the error message means, or why they even get an
-error in the first place.
+On Wed, Jun 19, 2024 at 06:09:58AM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> In 08809c09aa13 (mingw: add a helper function to attach GDB to the
+> current process, 2020-02-13), I added a declaration that was not needed.
+> Back then, that did not matter, but now that the declaration of that
+> symbol was changed in mingw-w64's headers, it causes the following
+> compile error:
+> 
+>       CC compat/mingw.o
+>   compat/mingw.c: In function 'open_in_gdb':
+>   compat/mingw.c:35:9: error: function declaration isn't a prototype [-Werror=strict-prototypes]
+>      35 |         extern char *_pgmptr;
+>         |         ^~~~~~
+>   In file included from C:/git-sdk-64/usr/src/git/build-installers/mingw64/lib/gcc/x86_64-w64-mingw32/14.1.0/include/mm_malloc.h:27,
+>                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/lib/gcc/x86_64-w64-mingw32/14.1.0/include/xmmintrin.h:34,
+>                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/lib/gcc/x86_64-w64-mingw32/14.1.0/include/immintrin.h:31,
+>                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/lib/gcc/x86_64-w64-mingw32/14.1.0/include/x86intrin.h:32,
+>                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/winnt.h:1658,
+>                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/minwindef.h:163,
+>                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/windef.h:9,
+>                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/windows.h:69,
+>                    from C:/git-sdk-64/usr/src/git/build-installers/mingw64/include/winsock2.h:23,
+>                    from compat/../git-compat-util.h:215,
+>                    from compat/mingw.c:1:
+>   compat/mingw.c:35:22: error: '__p__pgmptr' redeclared without dllimport attribute: previous dllimport ignored [-Werror=attributes]
+>      35 |         extern char *_pgmptr;
+>         |                      ^~~~~~~
+> 
+> Let's just drop the declaration and get rid of this compile error.
 
-The answers to these questions patiently explain what the error means
-and why the -m option is necessary. Many of them contain example
-scenarios; but I haven't seen a single one that doesn't use -m1 to
-illustrate the usage.
+I can only suppose it gets rid of the compiler error with close to 100%
+certainty because for some reason, it only happens intermittently for me
+and I don't know whether I'm lucky or if the issue is fixed for real,
+but what it absolutely sure is that it doesn't break anything.
 
-I have two questions:
-
-- What are real-world scenarios where you would use a mainline number
-  other than 1? I could only come up with a single example myself, which
-  is that you have a topic branch, and right before merging it back to
-  main, you merge main into the topic branch; and then you merge it to
-  main with a fast-forward merge. If you then want to cherry-pick or
-  revert that topic, you'd have to use -m2 on that last merge from main.
-  Any other examples?
-- Wouldn't it make sense to default to -m1 when no -m option is given?
-  It seems that this would do the expected thing in the vast majority of
-  cases.
-
-For the GUI client that I'm co-maintaining (lazygit), I'm actually
-considering going so far as to not providing a choice at all, and always
-using -m1. I'm not fully decided yet if that's a good idea, but it seems
-that most people expect this, most of the time.
-
-I'm probably missing something though, but what?
-
--Stefan
+Mike
