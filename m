@@ -1,62 +1,62 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C65B1B29B9
-	for <git@vger.kernel.org>; Thu, 20 Jun 2024 16:11:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDEE1B29C2
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 16:11:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718899887; cv=none; b=Z36p9lVcLIhNied9JLJcmwnk0U9lDorkfFUB7XLcVknKe6Y8cJVSL6KZBVIyc/EU4BuPozrSY46dQyDryucSP8hWhG601FsNj1+19k9tiqdNITlgnJNjI06hyNk6DRMy9+IhflnSLAQq+gCQWkI2wBAPFlpyAwh0fc9fQ/R10gg=
+	t=1718899888; cv=none; b=R/rkF/YCdURvbbqI5xNH1c9OjCtQk33sPBBxLE9aAcBUUEiBuim2dw65ayFop/oOyWzc2y4dlHZD/kENf9jazgF68nCIqpjDxcxGpONfZijmIdyoduq/jTDP36K4KIrZ8BKWjVc5jrGY1C3d6z9fjhEW1QVBr6lA6RfmmEQJu3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718899887; c=relaxed/simple;
-	bh=/SiHuettgMHg8Ks/9mWvhpAqHOKYKIYZrFACrCV40KI=;
+	s=arc-20240116; t=1718899888; c=relaxed/simple;
+	bh=v7pEIAOQacxrKcSmfYu3MMPjIoqKiKMlpNo3w47ds7I=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=fV/G7Oegh1xk0n6zG+sAqzoPTvSrEFEItLD9TU2PWOdrmHXIEnceoQrvp2j/WqGUrvbne+4C7ZcKLT1VJBhksRozedqzhWZOzqgeGqlmvfoDxkojmg2p4FBjl3weNUV90Dor/2u1juV7+YM6LW+BRir/SmDYbJVAXYiXozE5RLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XUr/UMm4; arc=none smtp.client-ip=209.85.128.42
+	 MIME-Version:To:Cc; b=kDWrt2eDp8F4K7GdZ+lvZonj9ZbHccpj2PZ4Zht6FRVXJjACzX1AGcGSKkYDfMd+LlktlIZijL4Luajp2RcbrepzuGNN/YeP16kfKkU8GN1Z5hN50ys2UqHIsd7mrJWz8EMHjAt6zBifTuGIUGOwmQ6ucu/q3rNgRmbQ5t21eOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dHsfW5ev; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XUr/UMm4"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-42108856c33so13761305e9.1
-        for <git@vger.kernel.org>; Thu, 20 Jun 2024 09:11:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dHsfW5ev"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42278f3aea4so10596765e9.1
+        for <git@vger.kernel.org>; Thu, 20 Jun 2024 09:11:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718899883; x=1719504683; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718899882; x=1719504682; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xyEfFF4zOCU9gYDloKyPVM3FVbc/OWOLlCA9CrhoIEg=;
-        b=XUr/UMm4TunYfPRw/AAp38zl7hUb+OlqJxSnr2UrsAIReFSjgPkCcXSPEGIW+6/aHp
-         HDMaWzzcHOWCeTRQo1yPl3nrIFAHMy+OS9YbWwsK+f9FoppYc2LGlthkSeI+SZVhKDx5
-         miDG8d/Wme71io0d0Qp337zzVXQ35TiIZ9AkldZnhsLKu67v1uO4E8EHPypGSLJ0VsJ2
-         1KjqXhrywKa+Ilw9u+mLVxGfz4uBrOdNtiaC9f7EHON50xW2Do8tmHorZJIkZhjZSsCT
-         vjscJS9sGYRWg6D1gwe3uYPq1WOim4eJI+PL6erjK8G2bcYqxtNxzy5u4cGi3i0cokj2
-         h9fg==
+        bh=KauGz/GdUXdGho5U7fUDm2FdMS4nlt8MegpX3RmXHxs=;
+        b=dHsfW5evkM/gKe+MQSldyIFUuqm6ECFYNqLUd93Qj+gOuUaO0GB1bxhhcsd+HBbSZI
+         PmOQ0JFFGHrUj2bSg9hg5W5Z2L2NyIABHX+DSd7jMgmcmvr3s1myvTO7IM4MH19X8nWd
+         E3d+/S3bVLAFyEQpazH7HcO+75sIH+bj7dDhrEc1SmOyFaZ0fgO0fqiXaQIX4BwjJT+U
+         74eHT14sY8ZZoQcpWXnBGcGmJ/hxmTo7QYQ39D3INhHWcW9KUnMND+61Cn7X33TIXc1s
+         HppVQT3P7An7iit4GSWIu/0IiEscilFH7TDG0kglITvSF9eoevy05MzaHvNDJvvoaFXO
+         G6pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718899883; x=1719504683;
+        d=1e100.net; s=20230601; t=1718899882; x=1719504682;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xyEfFF4zOCU9gYDloKyPVM3FVbc/OWOLlCA9CrhoIEg=;
-        b=p3bZPhDwyl36yjtfFB4wi4+cgQBsceR9KUrKejMOpAAHtnHkVuSIgW2FuJufwYA6cg
-         Y4I/tfVigructnl9LQ/7+Wy3TNbAKazWeXJnkqM+C/g4vrO5ZpX10BPVVd6raEj6v0/X
-         uG7G38EXBgB2RSbF260ZCLc+ELfNF/WVN3I3Ow3rIqLxfMxeMfnXsbJQsElni15W1DB8
-         3m+zCjJnMKUuMlx79UZa0mPuMXJpFUVAUUjDnPqXeVwHZNqfXvKz2zdXWZKfPQ21GmEj
-         /a7EQWhpFpLoVIkOuM2I7G2aLAXd0FGN4ADJaETcJc5L2gSNZ+mBQNsZ9OPweq1+sXOI
-         PxQw==
-X-Gm-Message-State: AOJu0YyXBSXQyLwCBCYiOw9mI0b1cImF7bsL1oqV/kPeNuYEv5SebqkT
-	Em2XsOOxd43XKdcq21sJJTh9A4Wr3M1z2MXcGiBZa64BXv+9sH74Zba16Q==
-X-Google-Smtp-Source: AGHT+IG41lJIfbZEv8KzF9+tuLzpZxZ1X9g2GftvS21dMIhRcr3NnJBiwfzXraGE7DzEGLz37i/MyQ==
-X-Received: by 2002:a05:600c:4506:b0:422:291:6b3e with SMTP id 5b1f17b1804b1-4246f56d2b6mr86963085e9.1.1718899883200;
-        Thu, 20 Jun 2024 09:11:23 -0700 (PDT)
+        bh=KauGz/GdUXdGho5U7fUDm2FdMS4nlt8MegpX3RmXHxs=;
+        b=qhfZjtULVyas9NbedvjtC2iprNqw/+JU9rBAm8DCVpXrsKspfddvgPiWwDEmGL2Vbf
+         D7YxIUT1kOb8gtZyfTCGg1+/bVukxPJuN7FLbJ7fyZPya6JrwSIF7RyWZuSCUIf4kRjZ
+         TjYmTk0N/8ynPxYCS8lVxCSCQ+4rwnC7tq0q9EiM+20ep37RqTK1VbZUgstsjwN8DXAp
+         HkKyh3iCUEa1FlGQLNGaTOKEUC4kpo/+3SLmcEhpmqiLUmb0FaUzvQdMp1eGHn7CCybK
+         SikYfmwf2NugOR8kWq8TRB1Ko0NDxsMM5ZF8ppIJgC4UzURF8MzkMOdbdxcI9UNL8wsA
+         RIzw==
+X-Gm-Message-State: AOJu0YxFhsBr9kaCtk6FlxA97YK4Lh7Q7OMhGnUR6YdtLOrVzitFcFL8
+	4WBEFSwSKrdhHNNvfs4zzJ8x+9CdwaSo4dlfIpku4o8Wk5UsxY2FsQel1g==
+X-Google-Smtp-Source: AGHT+IHYoIRNeLtHZRszvvtc75jZsOXs+4ixSoWqYlZW5+vL5nUtaSUFZbhfoY8Z7NAds2K+BQBXWg==
+X-Received: by 2002:a5d:698f:0:b0:35f:1d7a:c41c with SMTP id ffacd0b85a97d-36319a85dfemr4471260f8f.60.1718899882404;
+        Thu, 20 Jun 2024 09:11:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-360917c264bsm12847882f8f.56.2024.06.20.09.11.22
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-360940d992fsm11861245f8f.116.2024.06.20.09.11.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 20 Jun 2024 09:11:22 -0700 (PDT)
-Message-Id: <2654fcb7142a606c5684c762ed28bb5e8d9b4712.1718899877.git.gitgitgadget@gmail.com>
+Message-Id: <88a3145e585169fde8cd7d43a435daa07eb82667.1718899877.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1754.git.1718899877.gitgitgadget@gmail.com>
 References: <pull.1754.git.1718899877.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 20 Jun 2024 16:11:17 +0000
-Subject: [PATCH 5/5] sparse-index: improve lstat caching of sparse paths
+Date: Thu, 20 Jun 2024 16:11:16 +0000
+Subject: [PATCH 4/5] sparse-index: count lstat() calls
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,246 +75,69 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-The clear_skip_worktree_from_present_files() method was first introduced
-in af6a51875a (repo_read_index: clear SKIP_WORKTREE bit from files
-present in worktree, 2022-01-14) to allow better interaction with the
-working directory in the presence of paths outside of the
-sparse-checkout cone. The initial implementation would lstat() every
-single sparse tree to see if it existed, and if one did, then the sparse
-index would expand and every sparse file would be checked.
+The clear_skip_worktree.. methods already report some statistics about
+how many cache entries are checked against path_found() due to having
+the skip-worktree bit set. However, due to path_found() performing some
+caching, this isn't the only information that would be helpful to
+report.
 
-Since these lstat() calls were very expensive, this was improved in
-d79d299352 (Accelerate clear_skip_worktree_from_present_files() by
-caching, 2022-01-14) by caching directories that do not exist. However,
-there are some inefficiencies in that caching mechanism.
-
-The caching mechanism stored only the parent directory as not existing,
-even if a higher parent directory also does not exist. This means that
-wasted lstat() calls would occur when the sparse files change immediate
-parent directories but within the same root directory that does not
-exist.
-
-To set up a scenario that triggers this code in an interesting way, we
-need a sparse-checkout in cone mode and a sparse index. To trigger the
-full index expansion and a call to the
-clear_skip_worktree_from_present_files_full() method, we need one of the
-sparse trees to actually exist on disk. The performance test script
-p2000-sparse-operations.sh takes the sample repository and copies its
-HEAD to several copies nested in directories of the form f<i>/f<j>/f<k>
-where i, j, and k are numbers from 1 to 4. The sparse-checkout cone is
-then selected as "f2/f4/". Creating "f1/f1/" will trigger the behavior
-and also lead to some interesting cases for the caching algorithm since
-"f1/f1/" exists but "f1/f2/" and "f3/" do not.
-
-This is difficult to notice when running performance tests using the Git
-repository (or a blow-up of the Git repository, as in
-p2000-sparse-operations.sh) because Git has a very shallow directory
-structure.
-
-This change reorganizes the caching algorithm to focus on storing both
-the deepest _existing_ directory and the next-level non-existing
-directory. By doing a little extra work on the first sparse file, we can
-short-circuit all of the sparse files that exist in that non-existing
-directory. When in a repository where the first sparse file is likely to
-have a much deeper path than the first non-existing directory, this can
-realize significant gains.
-
-The details of this algorithm require careful attention, so the new
-implementation of path_found() has detailed comments, including the use
-of a new max_common_dir_prefix() method that may be of independent
-interest.
-
-It's worth noting that this is not universally positive, since we are
-doing extra lstat() calls to establish the exact path to cache. In the
-blow-up of the Git repository, we can see that the lstat count
-_increases_ from 28 to 31. However, these numbers were already
-artificially low.
-
-Using an internal monorepo with over two million paths at HEAD and a
-typical sparse-checkout cone such that the index contains ~190,000
-entries (including over two thousand sparse trees), I was able to
-measure these lstat counts when one sparse directory actually exists on
-disk:
-
-  Sparse files in expanded index: 1,841,997
-       full_lstat_count (before):   173,259
-       full_lstat_count  (after):     6,521
-
-This resulted in this absolute time change, on a warm disk:
-
-      Time in full loop (before): 2.527 s
-      Time in full loop  (after): 0.071 s
-
-(These times were calculated on a Windows machine, where lstat() is
-slower than a similar Linux machine.)
+Add a new lstat_count member to the path_found_data struct to count the
+number of times path_found() calls lstat(). This will be helpful to help
+explain performance problems in this method as well as to demonstrate
+future changes to the caching algorithm in a more concrete way than
+end-to-end timings.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- sparse-index.c | 118 ++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 93 insertions(+), 25 deletions(-)
+ sparse-index.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/sparse-index.c b/sparse-index.c
-index 8577fa726b8..cccd8550dfe 100644
+index fec4f393360..8577fa726b8 100644
 --- a/sparse-index.c
 +++ b/sparse-index.c
-@@ -440,14 +440,21 @@ void ensure_correct_sparsity(struct index_state *istate)
- }
- 
+@@ -442,6 +442,7 @@ void ensure_correct_sparsity(struct index_state *istate)
  struct path_found_data {
-+	/**
-+	 * The path stored in 'dir', if non-empty, corresponds to the most-
-+	 * recent path that we checked where:
-+	 *
-+	 *   1. The path should be a directory, according to the index.
-+	 *   2. The path does not exist.
-+	 *   3. The parent path _does_ exist. (This may be the root of the
-+	 *      working directory.)
-+	 */
  	struct strbuf dir;
--	int dir_found;
- 	size_t lstat_count;
+ 	int dir_found;
++	size_t lstat_count;
  };
  
  #define PATH_FOUND_DATA_INIT { \
--	.dir = STRBUF_INIT, \
--	.dir_found = 1 \
-+	.dir = STRBUF_INIT \
- }
- 
- static void clear_path_found_data(struct path_found_data *data)
-@@ -455,50 +462,111 @@ static void clear_path_found_data(struct path_found_data *data)
- 	strbuf_release(&data->dir);
- }
- 
-+/**
-+ * Return the length of the largest common substring that ends in a
-+ * slash ('/') to indicate the largest common parent directory. Returns
-+ * zero if no common directory exists.
-+ */
-+static size_t max_common_dir_prefix(const char *path1, const char *path2)
-+{
-+	size_t common_prefix = 0;
-+	for (size_t i = 0; path1[i] && path2[i]; i++) {
-+		if (path1[i] != path2[i])
-+			break;
-+
-+		/*
-+		 * If they agree at a directory separator, then add one
-+		 * to make sure it is included in the common prefix string.
-+		 */
-+		if (path1[i] == '/')
-+			common_prefix = i + 1;
-+	}
-+
-+	return common_prefix;
-+}
-+
- static int path_found(const char *path, struct path_found_data *data)
- {
- 	struct stat st;
--	char *newdir;
-+	size_t common_prefix;
- 
+@@ -469,6 +470,7 @@ static int path_found(const char *path, struct path_found_data *data)
  	/*
--	 * If dirname corresponds to a directory that doesn't exist, and this
--	 * path starts with dirname, then path can't exist.
-+	 * If data->dir is non-empty, then it contains a path that doesn't
-+	 * exist, including an ending slash ('/'). If it is a prefix of 'path',
-+	 * then we can return 0.
+ 	 * If path itself exists, return 1.
  	 */
--	if (!data->dir_found && !memcmp(path, data->dir.buf, data->dir.len))
-+	if (data->dir.len && !memcmp(path, data->dir.buf, data->dir.len))
- 		return 0;
- 
- 	/*
--	 * If path itself exists, return 1.
-+	 * Otherwise, we must check if the current path exists. If it does, then
-+	 * return 1. The cached directory will be skipped until we come across
-+	 * a missing path again.
- 	 */
- 	data->lstat_count++;
++	data->lstat_count++;
  	if (!lstat(path, &st))
  		return 1;
  
- 	/*
--	 * Otherwise, path does not exist so we'll return 0...but we'll first
--	 * determine some info about its parent directory so we can avoid
--	 * lstat calls for future cache entries.
-+	 * At this point, we know that 'path' doesn't exist, and we know that
-+	 * the parent directory of 'data->dir' does exist. Let's set 'data->dir'
-+	 * to be the top-most non-existing directory of 'path'. If the first
-+	 * parent of 'path' exists, then we will act ast though 'path'
-+	 * corresponds to a directory (by adding a slash).
- 	 */
--	newdir = strrchr(path, '/');
--	if (!newdir)
--		return 0; /* Didn't find a parent dir; just return 0 now. */
-+	common_prefix = max_common_dir_prefix(path, data->dir.buf);
+@@ -493,6 +495,7 @@ static int path_found(const char *path, struct path_found_data *data)
+ 	strbuf_reset(&data->dir);
+ 	strbuf_add(&data->dir, path, newdir - path + 1);
  
- 	/*
--	 * If path starts with directory (which we already lstat'ed and found),
--	 * then no need to lstat parent directory again.
-+	 * At this point, 'path' and 'data->dir' have a common existing parent
-+	 * directory given by path[0..common_prefix] (which could have length 0).
-+	 * We "grow" the data->dir buffer by checking for existing directories
-+	 * along 'path'.
- 	 */
--	if (data->dir_found && data->dir.buf &&
--	    memcmp(path, data->dir.buf, data->dir.len))
--		return 0;
- 
--	/* Free previous dirname, and cache path's dirname */
--	strbuf_reset(&data->dir);
--	strbuf_add(&data->dir, path, newdir - path + 1);
-+	strbuf_setlen(&data->dir, common_prefix);
-+	while (1) {
-+		/* Find the next directory in 'path'. */
-+		const char *next_slash = strchr(path + data->dir.len, '/');
- 
--	data->lstat_count++;
--	data->dir_found = !lstat(data->dir.buf, &st);
-+		/*
-+		 * If there are no more slashes, then 'path' doesn't contain a
-+		 * non-existent _parent_ directory. Set 'data->dir' to be equal
-+		 * to 'path' plus an additional slash, so it can be used for
-+		 * caching in the future. The filename of 'path' is considered
-+		 * a non-existent directory.
-+		 *
-+		 * Note: if "{path}/" exists as a directory, then it will never
-+		 * appear as a prefix of other callers to this method, assuming
-+		 * the context from the clear_skip_worktree... methods. If this
-+		 * method is reused, then this must be reconsidered.
-+		 */
-+		if (!next_slash) {
-+			strbuf_addstr(&data->dir, path + data->dir.len);
-+			strbuf_addch(&data->dir, '/');
-+			break;
-+		}
- 
--	return 0;
-+		/*
-+		 * Now that we have a slash, let's grow 'data->dir' to include
-+		 * this slash, then test if we should stop.
-+		 */
-+		strbuf_add(&data->dir, path + data->dir.len,
-+			   (next_slash - path) - data->dir.len + 1);
-+
-+		/* If the path doesn't exist, then stop here. */
-+		data->lstat_count++;
-+		if (lstat(data->dir.buf, &st))
-+			return 0;
-+	}
-+
-+	/*
-+	 * At this point, 'data->dir' is equal to 'path' plus a slash character,
-+	 * and the parent directory of 'path' definitely exists. Let's return
-+	 * the case of whether 'path' exists.
-+	 */
-+
 +	data->lstat_count++;
-+	return !lstat(path, &st);
- }
+ 	data->dir_found = !lstat(data->dir.buf, &st);
  
- static int clear_skip_worktree_from_present_files_sparse(struct index_state *istate)
+ 	return 0;
+@@ -524,6 +527,8 @@ static int clear_skip_worktree_from_present_files_sparse(struct index_state *ist
+ 
+ 	trace2_data_intmax("index", istate->repo,
+ 			   "sparse_path_count", path_count);
++	trace2_data_intmax("index", istate->repo,
++			   "sparse_lstat_count", data.lstat_count);
+ 	trace2_region_leave("index", "clear_skip_worktree_from_present_files_sparse",
+ 			    istate->repo);
+ 	clear_path_found_data(&data);
+@@ -553,6 +558,8 @@ static void clear_skip_worktree_from_present_files_full(struct index_state *ista
+ 
+ 	trace2_data_intmax("index", istate->repo,
+ 			   "full_path_count", path_count);
++	trace2_data_intmax("index", istate->repo,
++			   "full_lstat_count", data.lstat_count);
+ 	trace2_region_leave("index", "clear_skip_worktree_from_present_files_full",
+ 			    istate->repo);
+ 	clear_path_found_data(&data);
 -- 
 gitgitgadget
+
