@@ -1,62 +1,62 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE971B1504
-	for <git@vger.kernel.org>; Thu, 20 Jun 2024 16:11:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFBA1B29A9
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 16:11:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718899885; cv=none; b=FGRiWRVjfFw8v3sdCwLeJJRHJrrH3pszdePVp9Dxt8KSo1dm7z8KYMpwIwg+mxBTqsdSnREUrnXgMaM+vITb/7FQjvzkd2qYmx28hwSvqP+7kHVR7+FQ/E/QzbLV6N4UT2MH6M/QNvtqL8H55oNPfaFQvWjRS2WNvSs9/tycjyk=
+	t=1718899885; cv=none; b=Au+eV+nzLLBSkubSUU1Wtd8jnUx6xOFLybFIABM5AsHFMx8XL4sTyzgqD80ttJh6Jz0cpDU/4Df2IR2rAmH9sGXoQzPPCiZ5N0HHTxIdthgNzr6sOwj34gsPRl9u2ltw2C2xCiSMXr8Fv3kFE5rkkf+X3/3IyyS7M5xSyQQtOUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1718899885; c=relaxed/simple;
-	bh=07NigRt+xJMRU0aPtLAADx+e6Ez/EWmQhryI9FrwenU=;
+	bh=mKI90b/YGFpefVFGNK/0fVqAD9pGjE9PJw08JNb6Gps=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=gbFLJ3a5wSi4R/WGVZpoxn8Y7KTEpxFKugBbuQrK+vOb761TTRvFtMjIIAOBjYiSMw3lFa0TFChAl7oOyznrm72tfL2ygDo7qcxnqIxcmMXvO2bohDMTlkwPYiMsx8C6QZ+58jEBuNMKvzPdujk1PKNoD+K0zozSf4tbVyMWbGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=COo640Yt; arc=none smtp.client-ip=209.85.128.43
+	 MIME-Version:To:Cc; b=a47+9UEvep+2mzgOVPdTpvEg8M9PoK6r5daozt4ZKrwXddzJHSkxiA70bWTJdVHstU4Acl0A0UWb248aqOiZhSTdC1T2qn9+IGRyy8wyznZt+Iu6rnfscx59LBAyIbReQNDfRoisGFaVMzWwOVLqNS82nNv754yb0G9Ul7heup4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lt8Nukdm; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="COo640Yt"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-424720e73e0so10847325e9.0
-        for <git@vger.kernel.org>; Thu, 20 Jun 2024 09:11:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lt8Nukdm"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ebe0a81dc8so12234491fa.2
+        for <git@vger.kernel.org>; Thu, 20 Jun 2024 09:11:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718899881; x=1719504681; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718899882; x=1719504682; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FKX2JwFsPPiLvIMv/wmeUwRInuRMu/l+CQXu3Cj+z+o=;
-        b=COo640YtdUt8qoZ2zzm0HcZAifOtzscL+NDD5UfttKmL9Ovurw+CESOtVjDmVCATXP
-         KI1mD1bTww82fGHcibD6MKOIo8WzUdLbABF5Cq3dRC/8Nx1UiwhtzK58jrX0QeDEE0lK
-         OKsIyEoqJmkHTyX+Y3HwloRrFyGkZ6hRO+dx/Evvey+5UgmZKApebxkjvq5LmRnzvrEc
-         FP9Lq0M5uTuo414e/aBbic1lfFTg9miBSADU4kevLuRdby0VdBv35G8H4e/orOpEz+pu
-         g6eKYTZZzOUTe1pNrDu5CqmNucSk4Ngf9i7Ditl+HriL3gKQK1XqLttP0U95/hLY/qUA
-         lQ3Q==
+        bh=xO1bF8/D+K6VmcsbNZerxp108u1S6w5egvhSyaxchUI=;
+        b=lt8Nukdm/VyejH/nls+g12CT4K1AHNqdXskVd2zaKYhftBIg7v+MaDL9R/PVIPP0C6
+         oBnY/IMjRFfPb9nHe+7PaVLiYfWBYd9f+kgaOvQk3I3VehkQDYt3LlbKZ1n1vG2vCOOD
+         XBy7bDALQdsExQSUg2b2XqTxCzffPL8r6juxS83KWCHUfqh1z5dSHURwqaivRfk3QcCb
+         Gg4PrTdi2X30q5GHy+3WpJhEGkwFypNs+QjqGV0Ijm9J9H7W8VFm1zNqOxRJH7230Xly
+         XrCVyt27SUxP0fWHqsGhjIkA0IBb1aFHKUrtGQOvkB9CJzI9KsDGuvNr7XVTDb2lKGQU
+         7Qkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718899881; x=1719504681;
+        d=1e100.net; s=20230601; t=1718899882; x=1719504682;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FKX2JwFsPPiLvIMv/wmeUwRInuRMu/l+CQXu3Cj+z+o=;
-        b=QcD6kJwWdkdcBJHpItP4IHJ4jo4hW7Xpohtd0UPoFipY3yXkSRzw7JNIqrzbjx6IqP
-         0Q5gL+TqY760Ivsb9o2c55h/lQ5BXOAd4f9RSFNdOHrjSigeAftufDNgblXSDtccriV+
-         8uZe9YXmPp2eMJmrhjXcfGbJSXbipE/x3lV9OEPBQ6KQiv3hl1TsPmyKQ7zY7qD2l7jl
-         VTN/O0RqBQRhYXDJmqpOx6qjTkoVW4NxBhP092ZoiP0jx/oFulYrjDyWp2KgsmjLvDJV
-         YFzNcI6+LVIqCTmi3m32uzL/v5sCRZKafs+3+pIsdgAvI8QPZSd4XmigW2sA7MDKSOaa
-         1hyA==
-X-Gm-Message-State: AOJu0YwLXR7dPmXRhVta/6fgbZROFSrzAfiPLgRuZ7p+/1Bk0MxbQueC
-	6e4v389rLcOv94rBvaDOdJ9ZFV4umaxFaKpnt+hY+y/DWrqFj0wO/6CXvA==
-X-Google-Smtp-Source: AGHT+IGxLPy9YTa6XApqDH037Wl9tCkjxWvcD9pqG4mT2Are4uJFDSI8sWNDgVdneegZ8wXxHYdMJA==
-X-Received: by 2002:a05:600c:3b87:b0:424:760d:75d3 with SMTP id 5b1f17b1804b1-424760d772cmr43243895e9.8.1718899880787;
-        Thu, 20 Jun 2024 09:11:20 -0700 (PDT)
+        bh=xO1bF8/D+K6VmcsbNZerxp108u1S6w5egvhSyaxchUI=;
+        b=ov3RPnTXix8Vtw7A9YS4v9w8C6BypFlZZ7EgA6+xKILsWxsXNYz7BQG99SNZQ9jPU7
+         Y7ePmOq5Bh2l6bfKt8C7HUMzKRdiUDmh8JUEqPI+SI3M4Netdltiseq8CkwKGksRWhOv
+         N/UF7DBn8cs3eA+3c73vaxJo9qSylRmjXRl6UYM006u0s+f7hsOxA5see2z4v4t4SFzN
+         aMVzkOVScouqv5srdo24Cimq8YCaV3dHne8HBQbRRZUfAR4AIDkwYgJB54kQcwLR2aMR
+         rXeEcMOMMMRqtwjAD4WsMxcVkHdBPPd6cRjkU7C9k7qN6YrCGMH81J8t7lrFE5SHiOX0
+         sdMQ==
+X-Gm-Message-State: AOJu0YwDXpakOmLKN+o4cdxa5Fo2jQTisSQj7oflyd/77QjZynyJtUkP
+	RALvZvWZPNlGjZ2LgasF/s2KX38V8u3XR+lEptM7O25y25IB8DiwTNL5zw==
+X-Google-Smtp-Source: AGHT+IG56n83uSNh5lOQBXb06vifRPGD7+uASq6D+3Vnt6BJtxTdRg8kld8WE5MGLGilqYECTCyoHQ==
+X-Received: by 2002:a2e:9612:0:b0:2eb:fda7:e366 with SMTP id 38308e7fff4ca-2ec3cee1278mr44798021fa.39.1718899881759;
+        Thu, 20 Jun 2024 09:11:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-364dac4e70dsm1909605f8f.5.2024.06.20.09.11.19
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d1f6da9sm30398715e9.44.2024.06.20.09.11.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jun 2024 09:11:20 -0700 (PDT)
-Message-Id: <7c3b545ee5ea3a0e6686594afe582fa1a19929f6.1718899877.git.gitgitgadget@gmail.com>
+        Thu, 20 Jun 2024 09:11:21 -0700 (PDT)
+Message-Id: <217594ffb103969c1a6debc07a6c7f72f6ee4749.1718899877.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1754.git.1718899877.gitgitgadget@gmail.com>
 References: <pull.1754.git.1718899877.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 20 Jun 2024 16:11:14 +0000
-Subject: [PATCH 2/5] sparse-index: refactor path_found()
+Date: Thu, 20 Jun 2024 16:11:15 +0000
+Subject: [PATCH 3/5] sparse-index: use strbuf in path_found()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,135 +75,85 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-In advance of changing the behavior of path_found(), take all of the
-intermediate data values and group them into a single struct. This
-simplifies the method prototype as well as the initialization. Future
-changes can be made directly to the struct and method without changing
-the callers with this approach.
+The path_found() method previously reused strings from the cache entries
+the calling methods were using. This prevents string manipulation in
+place and causes some odd reallocation before the final lstat() call in
+the method.
 
-Note that the clear_path_found_data() method is currently empty, as
-there is nothing to free. However, this will change in the future, so
-place the method and its callers for now.
+Refactor the method to use strbufs and copy the path into the strbuf,
+but also only the parent directory and not the whole path. This looks
+like extra copying when assigning the path to the strbuf, but we save an
+allocation by dropping the 'tmp' string, and we are "reusing" the copy
+from 'tmp' to put the data in the strbuf.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- sparse-index.c | 45 +++++++++++++++++++++++++++++----------------
- 1 file changed, 29 insertions(+), 16 deletions(-)
+ sparse-index.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
 diff --git a/sparse-index.c b/sparse-index.c
-index e0457c87fff..de6e727f5c1 100644
+index de6e727f5c1..fec4f393360 100644
 --- a/sparse-index.c
 +++ b/sparse-index.c
-@@ -439,8 +439,22 @@ void ensure_correct_sparsity(struct index_state *istate)
- 		ensure_full_index(istate);
+@@ -440,31 +440,30 @@ void ensure_correct_sparsity(struct index_state *istate)
  }
  
--static int path_found(const char *path, const char **dirname, size_t *dir_len,
--		      int *dir_found)
-+struct path_found_data {
-+	const char *dirname;
-+	size_t dir_len;
-+	int dir_found;
-+};
-+
-+#define PATH_FOUND_DATA_INIT { \
-+	.dir_found = 1 \
-+}
-+
-+static void clear_path_found_data(struct path_found_data *data)
-+{
-+	return;
-+}
-+
-+static int path_found(const char *path, struct path_found_data *data)
+ struct path_found_data {
+-	const char *dirname;
+-	size_t dir_len;
++	struct strbuf dir;
+ 	int dir_found;
+ };
+ 
+ #define PATH_FOUND_DATA_INIT { \
++	.dir = STRBUF_INIT, \
+ 	.dir_found = 1 \
+ }
+ 
+ static void clear_path_found_data(struct path_found_data *data)
+ {
+-	return;
++	strbuf_release(&data->dir);
+ }
+ 
+ static int path_found(const char *path, struct path_found_data *data)
  {
  	struct stat st;
  	char *newdir;
-@@ -450,7 +464,7 @@ static int path_found(const char *path, const char **dirname, size_t *dir_len,
+-	char *tmp;
+ 
+ 	/*
  	 * If dirname corresponds to a directory that doesn't exist, and this
  	 * path starts with dirname, then path can't exist.
  	 */
--	if (!*dir_found && !memcmp(path, *dirname, *dir_len))
-+	if (!data->dir_found && !memcmp(path, data->dirname, data->dir_len))
+-	if (!data->dir_found && !memcmp(path, data->dirname, data->dir_len))
++	if (!data->dir_found && !memcmp(path, data->dir.buf, data->dir.len))
  		return 0;
  
  	/*
-@@ -472,15 +486,16 @@ static int path_found(const char *path, const char **dirname, size_t *dir_len,
+@@ -486,17 +485,15 @@ static int path_found(const char *path, struct path_found_data *data)
  	 * If path starts with directory (which we already lstat'ed and found),
  	 * then no need to lstat parent directory again.
  	 */
--	if (*dir_found && *dirname && memcmp(path, *dirname, *dir_len))
-+	if (data->dir_found && data->dirname &&
-+	    memcmp(path, data->dirname, data->dir_len))
+-	if (data->dir_found && data->dirname &&
+-	    memcmp(path, data->dirname, data->dir_len))
++	if (data->dir_found && data->dir.buf &&
++	    memcmp(path, data->dir.buf, data->dir.len))
  		return 0;
  
  	/* Free previous dirname, and cache path's dirname */
--	*dirname = path;
--	*dir_len = newdir - path + 1;
-+	data->dirname = path;
-+	data->dir_len = newdir - path + 1;
+-	data->dirname = path;
+-	data->dir_len = newdir - path + 1;
++	strbuf_reset(&data->dir);
++	strbuf_add(&data->dir, path, newdir - path + 1);
  
--	tmp = xstrndup(path, *dir_len);
--	*dir_found = !lstat(tmp, &st);
-+	tmp = xstrndup(path, data->dir_len);
-+	data->dir_found = !lstat(tmp, &st);
- 	free(tmp);
+-	tmp = xstrndup(path, data->dir_len);
+-	data->dir_found = !lstat(tmp, &st);
+-	free(tmp);
++	data->dir_found = !lstat(data->dir.buf, &st);
  
  	return 0;
-@@ -488,9 +503,7 @@ static int path_found(const char *path, const char **dirname, size_t *dir_len,
- 
- static int clear_skip_worktree_from_present_files_sparse(struct index_state *istate)
- {
--	const char *last_dirname = NULL;
--	size_t dir_len = 0;
--	int dir_found = 1;
-+	struct path_found_data data = PATH_FOUND_DATA_INIT;
- 
- 	int path_count = 0;
- 	int to_restart = 0;
-@@ -502,7 +515,7 @@ static int clear_skip_worktree_from_present_files_sparse(struct index_state *ist
- 
- 		if (ce_skip_worktree(ce)) {
- 			path_count++;
--			if (path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
-+			if (path_found(ce->name, &data)) {
- 				if (S_ISSPARSEDIR(ce->ce_mode)) {
- 					to_restart = 1;
- 					break;
-@@ -516,14 +529,13 @@ static int clear_skip_worktree_from_present_files_sparse(struct index_state *ist
- 			   "sparse_path_count", path_count);
- 	trace2_region_leave("index", "clear_skip_worktree_from_present_files_sparse",
- 			    istate->repo);
-+	clear_path_found_data(&data);
- 	return to_restart;
  }
- 
- static void clear_skip_worktree_from_present_files_full(struct index_state *istate)
- {
--	const char *last_dirname = NULL;
--	size_t dir_len = 0;
--	int dir_found = 1;
-+	struct path_found_data data = PATH_FOUND_DATA_INIT;
- 
- 	int path_count = 0;
- 
-@@ -537,7 +549,7 @@ static void clear_skip_worktree_from_present_files_full(struct index_state *ista
- 
- 		if (ce_skip_worktree(ce)) {
- 			path_count++;
--			if (path_found(ce->name, &last_dirname, &dir_len, &dir_found))
-+			if (path_found(ce->name, &data))
- 				ce->ce_flags &= ~CE_SKIP_WORKTREE;
- 		}
- 	}
-@@ -546,6 +558,7 @@ static void clear_skip_worktree_from_present_files_full(struct index_state *ista
- 			   "full_path_count", path_count);
- 	trace2_region_leave("index", "clear_skip_worktree_from_present_files_full",
- 			    istate->repo);
-+	clear_path_found_data(&data);
- }
- 
- void clear_skip_worktree_from_present_files(struct index_state *istate)
 -- 
 gitgitgadget
 
