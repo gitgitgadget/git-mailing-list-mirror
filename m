@@ -1,89 +1,107 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC61859167
-	for <git@vger.kernel.org>; Thu, 20 Jun 2024 21:03:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB7A482ED
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 22:05:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718917413; cv=none; b=GE7coUcaBslJX8glbec1Bcy0qTXov81TakRrNeoVg4YhhfyXvSxTajwpDWbQxXdy1G0/uhPO806ulPRAbpGfVFMuQ7vT55Na4z6x3PYKcoKQuxXGEC2k9W/+qAW9Vid65NugXrwdUj0VNABhzT3OCBP4/jPkhI0vAb482cZ61hs=
+	t=1718921103; cv=none; b=qZJ1x8K6v7DCuiWIGuAdOgI440Kcd/7uBtsjcityKW0Dj02eYKG0F932v8pIcZf/W4z2sjMwoQPObzdJMpLuRDEmbLXeqJ9aWqG0UnrkE8gGAS57e07BjyspieKtc8+CkMJxpbT5dksmQ2cI7evxmL1MGpus36Cwaebh8Fftjy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718917413; c=relaxed/simple;
-	bh=fxMaWrMXE0Lrnz5wxgcxh5EVvVesLU9/qmd6tNrzQGU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H97wRxc/M9LCGxZeFE+pMyilXcIyq1uQcODE0TvFg9Fn5WeEFvhXtgFPKbb2eI5cDij7olIPfePs3uOmA1p1JxgRXOqfhca8oJNLUtP9ciQPmT3/wd4r+8OwdiW4Lot6tM5SSxiMcvqdY9ulw08UOMdCVoQvzIVsGxsNGLksi8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kg2htk5l; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kg2htk5l"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 34A8C1AA9B;
-	Thu, 20 Jun 2024 17:03:31 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=fxMaWrMXE0Lr
-	nz5wxgcxh5EVvVesLU9/qmd6tNrzQGU=; b=kg2htk5lHZH5rDARN3OtTbKejemQ
-	wWqih/GOB2ApHZ/4ZPoQTRwp2VjNmgpr77f5vb6z6OuwJAzPHKzhom6g/3XrvYac
-	Y2SkxK9Weruey1gW2YfWdOjK8V5gTvQL8z6/GXzzmQxejtZGsMaEjA9ID5+hJn0P
-	hOV1fVxrFlhtqd8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2AAC51AA9A;
-	Thu, 20 Jun 2024 17:03:31 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9B7241AA99;
-	Thu, 20 Jun 2024 17:03:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  Jeff King <peff@peff.net>,  Johannes
- Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] pager: die when paging to non-existing command
-In-Reply-To: <73b9a923-c3d6-46e8-b050-e8a93b9757a2@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Thu, 20 Jun 2024 22:22:30 +0200")
-References: <f7106878-5ec5-4fe7-940b-2fb1d9707f7d@gmail.com>
-	<xmqqsex7tp0c.fsf@gitster.g>
-	<73b9a923-c3d6-46e8-b050-e8a93b9757a2@gmail.com>
-Date: Thu, 20 Jun 2024 14:03:26 -0700
-Message-ID: <xmqq34p7tjhd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1718921103; c=relaxed/simple;
+	bh=l00O3vC1dsPdmrWwU9qg0CIU3XvRM3Ln93Tp5H0yLx8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Fg2GTHnexrqrwC7zrZux26nG9MTDbeDeHRt4q56S97Wod/VggasLJhmarVza0zydO8SfH/NqUeg8F0Uj2vxeNF7nCOwM9DJN3WlwVOXtYEKJvxiJgDNcCEZRDEmv5bXCzVwQjXs1S2vJULDzZza64k29UpJ62QKX8XWIoFSR9HQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.105] (unknown [93.83.142.38])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4W4vfp2fNJzRpKd;
+	Fri, 21 Jun 2024 00:04:50 +0200 (CEST)
+Message-ID: <0c845460-c211-48e6-af93-a0b483817420@kdbg.org>
+Date: Fri, 21 Jun 2024 00:04:50 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 8A519742-2F48-11EF-AC7B-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Fix default font scaling
+Content-Language: en-US
+To: Serhii Tereshchenko <serg.partizan@gmail.com>
+Cc: git@vger.kernel.org
+References: <20240615085345.47278-1-serg.partizan@gmail.com>
+ <5dd4de8a-255a-4f03-b4d8-fc160b3178e1@kdbg.org>
+ <Q1B6FS.FVKOG950Y3UN@gmail.com>
+ <abee589d-5bad-4376-ba91-3bd611936983@kdbg.org>
+ <N75EFS.1X38FZPYSV94@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <N75EFS.1X38FZPYSV94@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Am 20.06.24 um 20:11 schrieb Serhii Tereshchenko:
+> Yeah, I'm also testing this way.
+> 
+> No, fonts should not be independent from DPI, but now some fonts are
+> scaling just like the others.
+> 
+> To clearly see the result, set comfortable DPI, so fonts are reasonably
+> sized (if this value is close to 96, better use something larger, like
+> 130 or 200 to see the effect).
+> 
+> When you run "git-gui" from the master branch, look at the fonts for:
+> 
+> - menubar and menu (explicitly set, scaled with DPI - our baseline)
+> - buttons in the lower part (Commit, Rescan, etc), labels like "Current
+> branch" - (unscaled, visibly smaller than menubar)
+> - you can also open "Edit -> Options", and everything there will be
+> smaller size as well.
+> 
+> After applying patch, all fonts are scaled equally (e.q. - small DPI -
+> everything small, large DPI - everything big).
+> 
+> If, however - you see second behavior on both cases, I'm really
+> interested to get more details:
 
-> On Thu, Jun 20, 2024 at 12:04:03PM -0700, Junio C Hamano wrote:
->
->> > +		die("unable to start the pager: '%s'", pager);
->>=20
->> If this error string is not used elsewhere, it probably is a good
->> idea to "revert" to the original error message lost by ea27a18c,
->> which was:
->>=20
->> 		die("unable to execute pager '%s'", pager);
->
-> Makes sense.  Let me know if you need me to reroll.
->
->> Just in case there is a reason why we should instead silently return
->> on MinGW, I'll Cc the author of bfdd9ffd, though.
->
-> Yup.  I did notice the MINGW conditions in t7006 but, to be honest, I
-> hadn't thought about this.  Thank you for considering it and seeking
-> confirmation.
+I see the second behavior regardless of the patch, i.e. with small DPI
+all fonts are small, with large DPI all fonts are large.
 
-After these questions are answered satisfactory, can you send an
-updated version to conclude the topic?
+The label "Current branch" is the same size as other fonts except when I
+select a different font size in Edit->Options as "Main Font".
 
-Thanks.
+
+> - What OS and Tcl/Tk are you using?
+> 
+> I remember few years ago it worked fine on my ArchLinux, so if other
+> distros aren't updated something yet, it may still work.
+> 
+> On Arch we have Tcl/Tk 8.6.14.
+> 
+> And to go even deeper, we may compare results from `wish`:
+> 
+>> package require Tk 8.5
+> 8.6.14
+>> font configure TkDefaultFont
+> -family sans-serif -size -12 -weight normal -slant roman -underline 0
+> -overstrike 0
+>> font actual TkDefaultFont
+> -family {Nokia Sans S60} -size 9 -weight normal -slant roman -underline
+> 0 -overstrike 0
+
+I have this:
+
+% package require Tk 8.5
+8.6.12
+% font configure TkDefaultFont
+-family sans-serif -size -12 -weight normal -slant roman -underline 0
+-overstrike 0
+%
+% font actual TkDefaultFont
+-family Arial -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+%
+
+I am using openSUSE Leap 15.5 under KDE Frameworks 5.103.0
+
+-- Hannes
+
