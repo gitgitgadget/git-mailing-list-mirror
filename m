@@ -1,102 +1,146 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93FF1AED53
-	for <git@vger.kernel.org>; Thu, 20 Jun 2024 13:29:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9094048CCD
+	for <git@vger.kernel.org>; Thu, 20 Jun 2024 13:55:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718890158; cv=none; b=euwp7TU/B3p6gxKAZIa4bUcp/xHji7i4fIuGYzqIaYriOSkxmpF4O3vJ40H2S89lI2+DWkHlF5tFogmxiphke18FIIrVT27l0ymfD4CIrDaQZfnLbcDjyQJntll6tTh3ze6/fb3BMNxC3/0fO0esu8itXmm4p94geMfIGr7GVBs=
+	t=1718891740; cv=none; b=OmuVVeUlr4pK42IvAsNFtzo4nY5UMLUrDZpxicL/zGGdhv3tY5Fkh6gA82slrHxnbiYILpSloHnox7gWmsRlSabfSlFfAcApAvlzSpapKRta9PBR9gKPd+fOf59X2jNKKojDA1dsydNLKmouDb0Q3gzM2cYYSEOJP2UdaRkyakc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718890158; c=relaxed/simple;
-	bh=7be7WMcvfMaRtL1XwQ5TYOVXOEdIDMHf9QoONpoo9Wg=;
-	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=a9f0r/nQd0lJk9mC4Z/fMFouiPCHZY1roQzrHxB2tYljuvzxQQpkQuaeOfKreVSSlppJ+12x8hDsovGLYu1q/UUcmCGObA9OsDAS65eX8Xr5FqictX7YmA8vkJCUjJnLPrKv4iztIGeAQpTLVIxhtHFR2F5kSaaqEbjyQ3Yjhk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 45KDTAop3790344
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Jun 2024 13:29:11 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Clement Sello Tsetsa'" <clementsellotsetsa@gmail.com>,
-        <git@vger.kernel.org>
-References: <CAOqo0cWd5BK5zAgMmsWPYFuWscLvuOq0Gq_a5PH-oXJoGrPb_w@mail.gmail.com>
-In-Reply-To: <CAOqo0cWd5BK5zAgMmsWPYFuWscLvuOq0Gq_a5PH-oXJoGrPb_w@mail.gmail.com>
-Subject: RE: Feature Request
-Date: Thu, 20 Jun 2024 09:29:05 -0400
-Organization: Nexbridge Inc.
-Message-ID: <009e01dac315$d6399b40$82acd1c0$@nexbridge.com>
+	s=arc-20240116; t=1718891740; c=relaxed/simple;
+	bh=aM75mfuP9dcjzelurNZbhl0w9XajGRQUuIecf7nQm4U=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=CIZkba7VHZgv7XhqMFqJagjvo1FISGUltM5in05Q4KN+qat397jn8JXIS5G0dLnL3n1oWcY/6BThPS/4CMek9G62etTy5pbn3Ozq9Nni16GYh5aZyTY66Cn1Qc23uYE9QEYz7XpscyWS0168B6i8y/iyZ+ZIaymZ7o4GUS7y2EE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=U74yZ2mN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YmSkOqoD; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="U74yZ2mN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YmSkOqoD"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 82BAC1380118;
+	Thu, 20 Jun 2024 09:55:37 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Thu, 20 Jun 2024 09:55:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1718891737; x=1718978137; bh=mf4a3BdFznfWPa5+548olafRvaBVU7qX
+	Ar7uTQciH48=; b=U74yZ2mNhla77hJB3L1wfi8Ra+Jv448eAiW5NM+eCjWXSIb1
+	/wZJmpTMsnkkxKUKQfj1SJ+m/T2jd/KxCbx4BTgdSuYegD+HBGvN1uQ6mlv3VDg5
+	TXSDk8jFikyqP1gF9BmVICgGbDX1x6K53XfuC1Mr1vCQ/n2ZuRI83HuZgts8RrkV
+	Ez7S7PUdDqzMegcXIwrX9bHelnpMtTBf4ejoRAyjUC1dKRujDcO7Z8xvdmNXzRCC
+	YlgDKmD3hlfD4BcLaXaRYJHtjjINnjnkWG5eOZULjtErZwR+96Tdl8tATsW6gfSt
+	4xr503Aw8FmzPvFsV6QjM2V1El10sM5IijTc/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1718891737; x=
+	1718978137; bh=mf4a3BdFznfWPa5+548olafRvaBVU7qXAr7uTQciH48=; b=Y
+	mSkOqoDHCFSz+PNeuluUtsBmGiAnHDF6DIsYmSofm9+AEygTMW6aeTyfHPh5TENq
+	XE5hS/ulz7+b6RlkI7LISqv5rYionc3hPsPr1bWI8Mz8tWt9Q5BU082POE1/F5Ic
+	16fZ7H38i4hGz/mjIN94iYlG2z7N1QqtmXAyS3PNRfs66cjEP+TtjrUfNJ4r80VZ
+	2l3ajqCDe4Yf32rROHz8nNGwyNC/pMriTgPbul5nuFFPIv9HpPFxvFkiJ1PTt7NE
+	3d3vG/JKr4hBdaVPulgpPWjOoUG+JYHBGRQcwYKlYQWTfB6pG1V4C59NwvBCO3A5
+	rWP2O7svyCr+WM9DRPKHw==
+X-ME-Sender: <xms:2TR0ZrvGCsFhsbAlGEReo1yU70WTzhWK2Bu3tJHTH1D3FqJHy-Z-uMM>
+    <xme:2TR0Zse7fIa0BSuC4QTVbtfvvutEkBdbCir_q2bY87r4VtGTRAuMcqzdTpt-zRLn3
+    3pk3Omwoz0Pu15TuA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeefvddgjedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkeduvedthfelueevheffhedvveei
+    ueeiheehudehveegueetteduuddtfeelueenucffohhmrghinhepkhgvrhhnvghlrdhorh
+    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:2TR0ZuwVpfitRYtBrniXIo05252szDF9KOJxVCQHIOUfQhf52TMnxQ>
+    <xmx:2TR0ZqPJb1IHYjcQFYTdU3uuvenooAaPuXkSkDhD5_znLo7Yu3cy4g>
+    <xmx:2TR0Zr8QSQH152fY8tYRCfUwfa3PoJSwpreeMoAVH0TqxVWlNVc_Xw>
+    <xmx:2TR0ZqVXIsQby50MDvJkeCJvC7wTD1nwvdDWD_ny3y7x7Wih_mUzww>
+    <xmx:2TR0ZllGi4uuSqUD1kKStbZ9UEPCRzQcgth1l3YKLQ1YhLS5eZzTd17O>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 30CA715A0092; Thu, 20 Jun 2024 09:55:37 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-522-ga39cca1d5-fm-20240610.002-ga39cca1d
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+Message-Id: <665f77a0-f301-40ae-ab94-2920d15fcc8d@app.fastmail.com>
+In-Reply-To: 
+ <CAG=Um+0LXVRHmvKdTB9WHJujjh9agK_ZHdv45ffzMsqX65NLVw@mail.gmail.com>
+References: 
+ <CAG=Um+0LXVRHmvKdTB9WHJujjh9agK_ZHdv45ffzMsqX65NLVw@mail.gmail.com>
+Date: Thu, 20 Jun 2024 15:54:00 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Shubham Kanodia" <shubham.kanodia10@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Bug: Git Maintenance does not register multiple repos
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFAClqJm06o7b9xM6sibCRYCYbrGLMGFHrQ
-Content-Language: en-ca
 
-On Thursday, June 20, 2024 8:58 AM. Clement Sello Tsetsa wrote:
->My name is Clement and I am a second year student at NWU university in =
-South
->Africa studying towards a bachelor's degree in information technology, =
-i just
->recently learned about Git and it is a fascinating piece of technology. =
-This is my first
->time making a feature request for anything and please excuse me if it =
-is not up to
->your standards in any way. Please read the below text as it is the =
-feature request:
+Hi
+
+On Thu, Jun 20, 2024, at 15:15, Shubham Kanodia wrote:
+> When I run =E2=80=94 `git maintenance register` to register a particul=
+ar
+> repository for maintenance,
+> it appends a new entry to `~/.gitconfig` with the repo name.
 >
->When initializing a Git repository, allow specifying file types to =
-track using the
->command git init <file>. If no file type is specified, Git should track =
-all file types by
->default. Additionally, automatically create the .gitignore file during =
-initialization, and
->as new file types are created, add them to the ignore list. Later, when =
-adding files to
->the staging environment, Git will already know which types to include =
-or ignore
->using the git add <file> command.
+> ```
+> [maintenance]
+>        repo =3D /path/to/repo-1
+>        repo =3D /path/to/repo-2
+> ```
 >
->I think the user should not have to create the .gitignore file in the =
-future if this is
->implementable.
+> Now, since git uses the INI format for these files, this would imply t=
+hat
+> repo-2 actually overrides repo 1 for maintenance.
+>
+> This implies that a user can only register a single repository on
+> their system for
+> maintenance.
 
-Can you clarify what you mean by "file types"? In a cross-platform =
-distributed situation, file types can be interpreted as a combination of =
-file extensions, file encodings, and internal contents. .gitignore only =
-deals with name matching patterns, so cannot reflect inclusion of =
-exclusion of internal content types (for example *.doc with UTF-8 vs. =
-US-ASCII content).
+Imply? Did you test this? From memory this is a multi-valued config, and
+multi-valued configs are sometimes listed by using `=3D` multiple times
+for the same config variable. That=E2=80=99s also what [this] email says:
 
-This is an interesting idea but seems to require that git build a =
-generic mechanism for determining file types on all supported platforms =
-and extending .gitignore to represent internal types . This is =
-definitely non-trivial. In Linux, for example, the 'file' command can =
-determine the internal guts of some files, as in:
+  =E2=80=9C The 'git maintenance [un]register' commands set or unset the=
+ multi-
+    valued maintenance.repo config key with the absolute path of the
+    current repository. These are set in the global config file.
 
-$ file myfile
-myfile:    TNS/X PIC object format,64-bit data model,executable,NonStop =
-OSS target
+=F0=9F=94=97 this: https://lore.kernel.org/git/5aa9cc1d6b93b5ad3d66ac01a=
+4518a91ced39bcb.1664287021.git.gitgitgadget@gmail.com/
 
-Note that there is no file extension above.
+I=E2=80=99ve never seen that git config uses the INI format. I=E2=80=99v=
+e had the
+impression that it is a bespoke format that simply looks like the INI
+format. (But is the INI format even standardized?)
 
-Can you please clarify what you are looking for in this area?
+I have two repositories registered. When I run this:
 
-I would also suggest that you look into both git templates and git =
-hooks. The combination might help cover at least part of this. =
-Specifically, the pre-commit hook might help with management of the =
-.gitignore file.
+```
+git for-each-repo --config=3Dmaintenance.repo maintenance run
+```
 
-Regards,
-Randall
+Well, it doesn=E2=80=99t tell me what repositories are being manipulated=
+, but I do get two of these lines:
+
+```
+Enumerating objects: [=E2=80=A6]
+```
+
+So I surmise that this command is being run twice.
+
+--=20
+Kristoffer Haugsbakk
 
