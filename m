@@ -1,89 +1,217 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC7DB65F
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 23:21:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0566C8BFD
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 23:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719012108; cv=none; b=VUfcf8FOOCxgqTdkVPA9jBSA4z4eIRzjW8RiCoqw83rcz3vBKeUWb4aaJMQrfCbWNQxjZwLRTvpfV7Y9btJvCSL+RioE5tUmLM4QfLjW6L+EF5gHEP5a0tkzUf+tQNQXrpkmt3+NemuxjkoCj9RAX3DdZxy+AU7P0fiessyisKI=
+	t=1719012670; cv=none; b=LRQkZwfeAN0Y6DIiASLdzB4Gy7zrpJhp3OYgm3CF7tQcxP+jzH7sU2msv7mbebIvS0Ywl+AJZHUGpVc9tnzDOvalXa7zAGukg6VG87xYZgdQc+SiQwYONNO0F6tshRKojLSlWxb5Mcwj7T5Y3xGpVanUZkPegO96icf3oSJmi1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719012108; c=relaxed/simple;
-	bh=jno0eeU0k5NKTZ9X8/9Q6BekbV5ozm3JAQH3laj8kRg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bx3uwr6I7nMMAZFgNM9l5nkKn2lJr1OI3xciGXp156uhgzWMXj3KQOxFqZU6brItO0q8azWXMyrIq4kBSC18+yhqTQIvHcvN2uJPkISJW+JjCYu4oJtVP3/KaPALEewmwIZVvsjJah5y5cbcwlpGiWWlHfUet7ARNDoa11mnTN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QysJ/9NU; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1719012670; c=relaxed/simple;
+	bh=ZwAiB2FFBhVTGopsbvYO6Lu+ByJDTP6WJqTOSYJVlGY=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=TRbe6iqzbx8jsur/7YDuYWdFjQrx6fBhY6raznvz+A2pL49+cdtoEGMtjI+SjaizNeY7+XcnahklQOYgXRTGUWh9n3UyVqd+OjVJM3ZfusqyIwzBkpnI+Y9xHg7cbIoJUJalIpjVPtLVZooI6c7vADuCVN4fhVW4F7kqqSQQ4XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LTtc43Rl; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QysJ/9NU"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 052FA23CCC;
-	Fri, 21 Jun 2024 19:21:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=jno0eeU0k5NK
-	TZ9X8/9Q6BekbV5ozm3JAQH3laj8kRg=; b=QysJ/9NUvtExvx3j4eoam+cLwQ+F
-	yMp6Hg2ThB3dY4tK5nrflvQd1K0H4wg2wV448VIIgQifYYOJ7Ysr7uLerw3B0wvI
-	fJ3iynzE/3VxjMKCHsh6MxVyAMBLxAKteKpQAvQY3S+C+ckFxSVohXOqT6241wO8
-	4lbybIPbaYTgKT8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DF89A23CCB;
-	Fri, 21 Jun 2024 19:21:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 33B0723CCA;
-	Fri, 21 Jun 2024 19:21:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
- <git@vger.kernel.org>,  Jeff
- King <peff@peff.net>,  Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] pager: die when paging to non-existing command
-In-Reply-To: <ab50c9e6-e43a-47fb-b64a-136d6a768f75@gmail.com> (Phillip Wood's
-	message of "Fri, 21 Jun 2024 12:28:10 +0100")
-References: <f7106878-5ec5-4fe7-940b-2fb1d9707f7d@gmail.com>
-	<xmqqsex7tp0c.fsf@gitster.g>
-	<ab50c9e6-e43a-47fb-b64a-136d6a768f75@gmail.com>
-Date: Fri, 21 Jun 2024 16:21:44 -0700
-Message-ID: <xmqqed8pkhkn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LTtc43Rl"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3645e9839b3so1894964f8f.3
+        for <git@vger.kernel.org>; Fri, 21 Jun 2024 16:31:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719012667; x=1719617467; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=aUNeODFod3L6LXjV4E8gsS/TLM0Zla7C899gdPWEHkA=;
+        b=LTtc43RlXTvNwKH7xUbk1fM7f01x9lD44CD0Wi+U3eN+M75CRlfN9fj1owb0OIJrjQ
+         2LQB4kIau7jbj2G3e344vLflwomrdkWrsk+6CqJ1wWeXP7Y4acORPPSDwGEIhhGtun/B
+         GSzybHlK8WhCpNZ/5TxwEWoT1/CCHB9U0rrHCz0P+xcBXa1svLxW9Bhv50zL7s0p8hQl
+         GeMhqTUjPxebRs9ERSiTBenwc8zkUewFIhbykl58ZHfPvteAUGKSS7wyWgSTde4zGUdn
+         27ukBZtGWvyx4tin466CNc09M4wqp4ycPGkfnu80zChCV7VMrxwOYmLKISHixeE8488s
+         vwdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719012667; x=1719617467;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aUNeODFod3L6LXjV4E8gsS/TLM0Zla7C899gdPWEHkA=;
+        b=hassJh8evNbBHnkURMFU/ufW3Z48GtOXPCdR4Ndin1XrnCAhre4Tkqrpj8Ft92O5sN
+         Wgo7EcaBC9mqVMpSQJerMWxDgyzuJOtnIbNgyWvAeno8H8OcdtWUZSKdga8aHaobxN53
+         YILcSIGjReaSCJsKR5iFtZt19sNbOw22EtRSFtROSZk3KI8RHVIs+VGFYpz4YcYmxAEa
+         eeCuvVCDMeTsno0CDu5383RB6KIIDUNwD/pJfFfIGzj01Kdst8puSoB1s4uzCtlMwhCF
+         RbM60NWm1eFG7UVcmgpaaLnoMYj9BxCdl7KZ1/ojfoFRxHP2KXjWAIhw1qdLLDB+EHi+
+         ZJQw==
+X-Gm-Message-State: AOJu0YxlJDdAuUGdS42rbYeSyWMSgqcSdTl2Rptqy6/LDJLXHyjoC9uq
+	MEUYoLptYM79jjghkqM/5BwesW6ifnfrZVOHvw2FGgut9fqpYMprAxjcQA==
+X-Google-Smtp-Source: AGHT+IGaB3SUu0V+ZHlx+xSde1jVRSue+Uv80mNaPN9ZoyA4SLyfgb7+sO+37WXw+TzxFbBsVdwrXQ==
+X-Received: by 2002:a5d:6152:0:b0:360:9e06:c374 with SMTP id ffacd0b85a97d-36316ff8043mr6458180f8f.8.1719012667106;
+        Fri, 21 Jun 2024 16:31:07 -0700 (PDT)
+Received: from gmail.com (229.red-88-14-50.dynamicip.rima-tde.net. [88.14.50.229])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-366383f670csm3008055f8f.11.2024.06.21.16.31.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Jun 2024 16:31:06 -0700 (PDT)
+Message-ID: <6850f558-ad20-403a-ae1e-5b9826c53790@gmail.com>
+Date: Sat, 22 Jun 2024 01:31:05 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 0678E3F2-3025-11EF-959D-965B910A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH v3] pager: die when paging to non-existing command
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+To: Git List <git@vger.kernel.org>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+ Johannes Sixt <j6t@kdbg.org>, Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Dragan Simic <dsimic@manjaro.org>
+References: <f7106878-5ec5-4fe7-940b-2fb1d9707f7d@gmail.com>
+ <0df06a80-723f-4ad7-9f2e-74c8fb5b8283@gmail.com>
+Content-Language: en-US
+In-Reply-To: <0df06a80-723f-4ad7-9f2e-74c8fb5b8283@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+When trying to execute a non-existent program from GIT_PAGER, we display
+an error.  However, we also send the complete text to the terminal
+and return a successful exit code.  This can be confusing for the user
+and the displayed error could easily become obscured by a lengthy
+text.
 
-> On 20/06/2024 20:04, Junio C Hamano wrote:
->> Rub=C3=A9n Justo <rjusto@gmail.com> writes:
->>> --- a/pager.c
->>> +++ b/pager.c
->>> @@ -137,7 +137,7 @@ void setup_pager(void)
->>>   	pager_process.in =3D -1;
->>>   	strvec_push(&pager_process.env, "GIT_PAGER_IN_USE");
->>>   	if (start_command(&pager_process))
->>> -		return;
->>> +		die("unable to start the pager: '%s'", pager);
->> If this error string is not used elsewhere, it probably is a good
->> idea to "revert" to the original error message lost by ea27a18c,
->> which was:
->> 		die("unable to execute pager '%s'", pager);
->
-> Either way I think we want to mark the message for translation
+For example, here the error message would be very far above after
+sending 50 MB of text:
 
-Given that none of the die() message in this file is marked for
-localization, I would strongly prefer to see this patch not to do
-so.  Possibly as part of a larger clean-up patch series, but not as
-"while at it" item for this fix.
+    $ GIT_PAGER=non-existent t/test-terminal.perl git log | wc -c
+    error: cannot run non-existent: No such file or directory
+    50314363
 
-Thanks.
+Let's make the error clear by aborting the process and return an error
+so that the user can easily correct their mistake.
+
+This will be the result of the change:
+
+    $ GIT_PAGER=non-existent t/test-terminal.perl git log | wc -c
+    error: cannot run non-existent: No such file or directory
+    fatal: unable to start the pager: 'non-existent'
+    0
+
+The behavior change we're introducing in this commit affects two tests
+in t7006, which is a good sign regarding test coverage and requires us
+to address it.
+
+The first test is 'git skips paging non-existing command'.  This test
+comes from f7991f01f2 (t7006: clean up SIGPIPE handling in trace2 tests,
+2021-11-21,) where a modification was made to a test that was originally
+introduced in c24b7f6736 (pager: test for exit code with and without
+SIGPIPE, 2021-02-02).  That original test was, IMHO, in the same
+direction we're going in this commit.
+
+At any rate, this test obviously needs to be adjusted to check the new
+behavior we are introducing.  Do it.
+
+The second test being affected is: 'non-existent pager doesnt cause
+crash', introduced in f917f57f40 (pager: fix crash when pager program
+doesn't exist, 2021-11-24).  As its name states, it has the intention of
+checking that we don't introduce a regression that produces a crash when
+GIT_PAGER points to a nonexistent program.
+
+This test could be considered redundant nowadays, due to us already
+having several tests checking implicitly what a non-existent command in
+GIT_PAGER produces.  However, let's maintain a good belt-and-suspenders
+strategy; adapt it to the new world.
+
+Finally, it's worth noting that we are not changing the behavior if the
+command specified in GIT_PAGER is a shell command.  In such cases, it
+is:
+
+    $ GIT_PAGER=:\;non-existent t/test-terminal.perl git log
+    :;non-existent: 1: non-existent: not found
+    died of signal 13 at t/test-terminal.perl line 33.
+
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
+
+This is a response to
+https://lore.kernel.org/git/xmqqed8pkhkn.fsf@gitster.g/
+
+Range-diff against v2:
+1:  95a2f36d18 ! 1:  60e852bffb pager: die when paging to non-existing command
+    @@ Commit message
+         Signed-off-by: Rubén Justo <rjusto@gmail.com>
+     
+      ## pager.c ##
+    -@@
+    - #include "git-compat-util.h"
+    - #include "config.h"
+    - #include "editor.h"
+    -+#include "gettext.h"
+    - #include "pager.h"
+    - #include "run-command.h"
+    - #include "sigchain.h"
+     @@ pager.c: void setup_pager(void)
+      	pager_process.in = -1;
+      	strvec_push(&pager_process.env, "GIT_PAGER_IN_USE");
+      	if (start_command(&pager_process))
+     -		return;
+    -+		die(_("unable to execute pager '%s'"), pager);
+    ++		die("unable to execute pager '%s'", pager);
+      
+      	/* original process continues, but writes to the pipe */
+      	dup2(pager_process.in, 1);
+
+ pager.c          |  2 +-
+ t/t7006-pager.sh | 17 +++++------------
+ 2 files changed, 6 insertions(+), 13 deletions(-)
+
+diff --git a/pager.c b/pager.c
+index e9e121db69..be6f4ee59f 100644
+--- a/pager.c
++++ b/pager.c
+@@ -137,7 +137,7 @@ void setup_pager(void)
+ 	pager_process.in = -1;
+ 	strvec_push(&pager_process.env, "GIT_PAGER_IN_USE");
+ 	if (start_command(&pager_process))
+-		return;
++		die("unable to execute pager '%s'", pager);
+ 
+ 	/* original process continues, but writes to the pipe */
+ 	dup2(pager_process.in, 1);
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index e56ca5b0fa..932c26cb45 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -725,18 +725,11 @@ test_expect_success TTY 'git discards pager non-zero exit without SIGPIPE' '
+ 	test_path_is_file pager-used
+ '
+ 
+-test_expect_success TTY 'git skips paging nonexisting command' '
+-	test_when_finished "rm trace.normal" &&
++test_expect_success TTY 'git errors when asked to execute nonexisting pager' '
++	test_when_finished "rm -f err" &&
+ 	test_config core.pager "does-not-exist" &&
+-	GIT_TRACE2="$(pwd)/trace.normal" &&
+-	export GIT_TRACE2 &&
+-	test_when_finished "unset GIT_TRACE2" &&
+-
+-	test_terminal git log &&
+-
+-	grep child_exit trace.normal >child-exits &&
+-	test_line_count = 1 child-exits &&
+-	grep " code:-1 " child-exits
++	test_must_fail test_terminal git log 2>err &&
++	test_grep "unable to execute pager" err
+ '
+ 
+ test_expect_success TTY 'git returns SIGPIPE on propagated signals from pager' '
+@@ -762,7 +755,7 @@ test_expect_success TTY 'git returns SIGPIPE on propagated signals from pager' '
+ 
+ test_expect_success TTY 'non-existent pager doesnt cause crash' '
+ 	test_config pager.show invalid-pager &&
+-	test_terminal git show
++	test_must_fail test_terminal git show
+ '
+ 
+ test_done
+-- 
+2.45.1
