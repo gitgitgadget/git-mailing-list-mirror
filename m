@@ -1,133 +1,105 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-o-1.desy.de (smtp-o-1.desy.de [131.169.56.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553A3172BC7
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 11:58:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EA51527B6
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 12:07:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=131.169.56.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718971097; cv=none; b=WCkLN5tjkTtdAYJunxRu4C5Tu0KED/Pbnb54OkOsNgMKD3nFLppOBKHk1z7cZhX292pXUnxIwpUn3hZ/wqRJg1pwJtnrxCXTDBQZKzmjjgAt2cEVU1gkN3XsU0P/KAmMtqdCZ/RhIUzMXP/tl042QWoLP/Zt0BnTiV7kpyDg4HE=
+	t=1718971660; cv=none; b=tTx4V8J0wx14Y0n+R1QxaiErDAqzcMBBuPaJAImVz63aGPv2uBX7C355nX8c7jNvoZN9xhqEcyojJxAhJp9mN8fGxv2kCYgrwgXoOEEQ88J8mrJiNKPJa7R6SOXzVwALIAmlhHWJyyZHAnzupFSldMT258yfJYh3mlCJ+FdbpsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718971097; c=relaxed/simple;
-	bh=5HuxIaQtqJmWfQDU4ik/hynvUZHvVbK4jJ7+Ev5MtTo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8LQyknqwg5R2/XlzskWpjpvl+lZpbiYbVdaFiQJzjDoLsR8g6bx4iajIJ43qSJpaq3Fk/E1HdwlCV5Pe9QOtIc3H5tDjoMbV3bkF/PL+YD48qsUFdsg86NNl87AC8liZnG9joaErL01pZK/MfQcPAfd+YzxHgsd9YO1XTpV5aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cRJuUR6D; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718971660; c=relaxed/simple;
+	bh=99ud2qMsnfW9LGEEvYPdw4AubnaZWEDemlEe2KEeQMM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q3NehHLPFAZXy4Oxsh73VDHLshTcpuVZTpdQUK0CvOPPKS8jmBdnFHdUavaV4rgoagSvQQdWb8aTqpwWMZXs8AK7/JZRZHJUL2NsFHsRgpkaWm+j3ygRc8jWHDMjBssT92eOSkmKm9wQx6LrfmQ80ZXSxjobA52SzqcgcDNcsqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=desy.de; spf=pass smtp.mailfrom=desy.de; dkim=pass (1024-bit key) header.d=desy.de header.i=@desy.de header.b=B3Tp4VhR; arc=none smtp.client-ip=131.169.56.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=desy.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=desy.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cRJuUR6D"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-701b0b0be38so1703762b3a.0
-        for <git@vger.kernel.org>; Fri, 21 Jun 2024 04:58:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718971095; x=1719575895; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OunLGBMB2r/G8aJZ9CXDWZYdLx8suSo4CLsmg1lc9II=;
-        b=cRJuUR6DXOIfJC3Itki/DzxWGhxOcuFNWqd9hYExOA1LEU8AqrOu8+d47GEWHA70OJ
-         F372R0A/nlaobqsePlA332rCou44eQMZTyVPpFb/AIM2cwkMgkiUNkt9vls9f8AUjRNT
-         rilas4VfSeDoTWC2lk1eknHjJ2w4Jl++UbWKofhkLZVWazPENV8OtLnhuc8t19b1c5Xk
-         u0i3vupHd1S8UcbR9JKTD2b+1oqWjLv71u8IvcwKNalVKRGKf7lOTMdYMYJHXlh/okI0
-         4AnEZhs52ibOsIfk5S46HLM+x5a1OQFyd78OqmGpsgpexfbJAYbWIC2zK1J7YRuQ4er0
-         xg9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718971095; x=1719575895;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OunLGBMB2r/G8aJZ9CXDWZYdLx8suSo4CLsmg1lc9II=;
-        b=i6mJttrzhhhLrD1rFdsen5pP6XELtkuGu5R5zFvdQ5cy7eAkGl9xMoVHlTwrvj27Qq
-         vF5fmUAGmzgxIdOPrMWFMUbySDZL8APD5X4OpzsG2D4RD8H29af2zcBY+sgWk8HNxsZi
-         b0dQ5HMeDEusZepHFvOjRc32bSydaBdkNvivfZACYGmRKXK2QoXXEw914lezh2ZtfB48
-         c3lCZuU/5grUiUqbVIdr1pSFcnDdhw4ETCmNTsOi13OoWOz78yEyQhiO8hBBW5+EY8m3
-         n/l2mnBBLhO4Mdd2YtqILWwE+vuk1q32SIEqaABznGtBxW1fSwbPfzJKZJkaXEA0Sueo
-         gdpA==
-X-Gm-Message-State: AOJu0YxRt6jJPOxszq8Efe6jfAOf29NoQd9CsLA8nNi3fJEPqYGhe6bX
-	M4B8AswPK41XC6gpoPbFO9HUNN+4KhE0vGP0O7oBgxHrpsh31MCjdAkX8Q==
-X-Google-Smtp-Source: AGHT+IEMAKamZkUPVU+XD7Fs7FOIyCFai/Ksgd5cyYCwuIlzcTV8N2c7cuRG3/jRF6omO6FrA5fQgw==
-X-Received: by 2002:a05:6a20:47dd:b0:1b6:f34c:95b3 with SMTP id adf61e73a8af0-1bcbb60fca3mr7260862637.59.1718971095268;
-        Fri, 21 Jun 2024 04:58:15 -0700 (PDT)
-Received: from Ubuntu.. ([106.206.204.195])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1f9eb3c5ee9sm12407195ad.180.2024.06.21.04.58.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jun 2024 04:58:14 -0700 (PDT)
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-To: git@vger.kernel.org
-Cc: karthik188@gmail.com,
-	Chandra Pratap <chandrapratap3519@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 11/11] t-reftable-record: add tests for reftable_log_record_compare_key()
-Date: Fri, 21 Jun 2024 17:21:06 +0530
-Message-ID: <20240621115708.3626-12-chandrapratap3519@gmail.com>
-X-Mailer: git-send-email 2.45.2.404.g9eaef5822c
-In-Reply-To: <20240621115708.3626-1-chandrapratap3519@gmail.com>
-References: <20240621060018.12795-1-chandrapratap3519@gmail.com>
- <20240621115708.3626-1-chandrapratap3519@gmail.com>
+	dkim=pass (1024-bit key) header.d=desy.de header.i=@desy.de header.b="B3Tp4VhR"
+Received: from smtp-buf-1.desy.de (smtp-buf-1.desy.de [131.169.56.164])
+	by smtp-o-1.desy.de (Postfix) with ESMTP id 75CDA11F744
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 14:07:29 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 smtp-o-1.desy.de 75CDA11F744
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=desy.de; s=default;
+	t=1718971649; bh=ZTZO7k43KTnd0pmv68DXFQlVzrgfPwdBISsP0652fcs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=B3Tp4VhRDOZUdzDf22VkPzIFqhIMDwhmLxpUXXxL7nCLZlizx1b4Px/fI9Hg+x0Ga
+	 perfzP+OtvB1tlXqjEdjXoKpcx9yqz6FfkUZW3N4/7NTC/6Sxa8yaZ+skOq0Yw3AtS
+	 Muebpk0vCTMxfPEvAcScsDyRYOxfprRwXaqj6o+I=
+Received: from smtp-m-1.desy.de (smtp-m-1.desy.de [IPv6:2001:638:700:1038::1:81])
+	by smtp-buf-1.desy.de (Postfix) with ESMTP id 6A6ED20038;
+	Fri, 21 Jun 2024 14:07:29 +0200 (CEST)
+Received: from a1722.mx.srv.dfn.de (a1722.mx.srv.dfn.de [194.95.233.47])
+	by smtp-m-1.desy.de (Postfix) with ESMTP id 6096B40049;
+	Fri, 21 Jun 2024 14:07:29 +0200 (CEST)
+Received: from smtp-intra-3.desy.de (smtp-intra-3.desy.de [IPv6:2001:638:700:1038::1:45])
+	by a1722.mx.srv.dfn.de (Postfix) with ESMTP id EC934220043;
+	Fri, 21 Jun 2024 14:07:27 +0200 (CEST)
+Received: from z-prx-6.desy.de (z-prx-6.desy.de [131.169.10.30])
+	by smtp-intra-3.desy.de (Postfix) with ESMTP id C36CD80C63;
+	Fri, 21 Jun 2024 14:07:27 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by z-prx-6.desy.de (Postfix) with ESMTP id 9E735240109;
+	Fri, 21 Jun 2024 14:07:27 +0200 (CEST)
+Received: from z-prx-6.desy.de ([IPv6:::1])
+ by localhost (z-prx-6.desy.de [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id iCN_Bz0xlesZ; Fri, 21 Jun 2024 14:07:27 +0200 (CEST)
+Received: from [192.168.178.50] (dslb-088-070-180-117.088.070.pools.vodafone-ip.de [88.70.180.117])
+	by z-prx-6.desy.de (Postfix) with ESMTPSA id F3AD52400E9;
+	Fri, 21 Jun 2024 14:07:26 +0200 (CEST)
+Message-ID: <c4f5ae01-97fe-4e3a-94e2-72da75b9df83@desy.de>
+Date: Fri, 21 Jun 2024 14:07:26 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: bug with git describe --dirty --broken
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <0fd230f6-a5c5-463d-8584-651ceff3cf99@desy.de>
+ <xmqqwmmjwnzs.fsf@gitster.g>
+Content-Language: en-GB
+From: Paul Millar <paul.millar@desy.de>
+In-Reply-To: <xmqqwmmjwnzs.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-reftable_log_record_compare_key() is a function defined by
-reftable/record.{c, h} and is used to compare the keys of two
-log records when sorting multiple log records using 'qsort'.
-In the current testing setup, this function is left unexercised.
-Add a testing function for the same.
+Hi Junio,
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
----
- t/unit-tests/t-reftable-record.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+Thanks for your quick reply.
 
-diff --git a/t/unit-tests/t-reftable-record.c b/t/unit-tests/t-reftable-record.c
-index b949617c88..d480cc438a 100644
---- a/t/unit-tests/t-reftable-record.c
-+++ b/t/unit-tests/t-reftable-record.c
-@@ -214,6 +214,30 @@ static void test_reftable_log_record_comparison(void)
- 		reftable_record_release(&in[i]);
- }
- 
-+static void test_reftable_log_record_compare_key(void)
-+{
-+	struct reftable_log_record logs[14] = { 0 };
-+	size_t N = ARRAY_SIZE(logs), i;
-+
-+	for (i = 0; i < N; i++) {
-+		if (i < N / 2) {
-+			logs[i].refname = xstrfmt("%02"PRIuMAX, (uintmax_t)i);
-+			logs[i].update_index = i;
-+		} else {
-+			logs[i].refname = xstrdup("refs/heads/master");
-+			logs[i].update_index = i;
-+		}
-+	}
-+
-+	QSORT(logs, N, reftable_log_record_compare_key);
-+
-+	for (i = 1; i < N; i++)
-+		check(reftable_log_record_compare_key(&logs[i - 1], &logs[i]) < 0);
-+
-+	for (i = 0; i < N; i++)
-+		reftable_log_record_release(&logs[i]);
-+}
-+
- static void test_reftable_log_record_roundtrip(void)
- {
- 	struct reftable_log_record in[] = {
-@@ -519,6 +543,7 @@ int cmd_main(int argc, const char *argv[])
- 	TEST(test_reftable_index_record_comparison(), "comparison operations work on index record");
- 	TEST(test_reftable_obj_record_comparison(), "comparison operations work on obj record");
- 	TEST(test_reftable_ref_record_compare_name(), "reftable_ref_record_compare_name works");
-+	TEST(test_reftable_log_record_compare_key(), "reftable_log_record_compare_key works");
- 	TEST(test_reftable_log_record_roundtrip(), "record operations work on log record");
- 	TEST(test_reftable_ref_record_roundtrip(), "record operations work on ref record");
- 	TEST(test_varint_roundtrip(), "put_var_int and get_var_int work");
--- 
-2.45.2.404.g9eaef5822c
+> 	if (broken) {
+> 		run 'git diff-index' in a subprocess
+> 		use the result from 'diff-index' unless the command
+> 		aborted
+> 	} else if (dirty) {
+> 		refresh the index
+> 		run the equivalent of 'diff-index' in-core
+> 		use the result; if the in-core diff-index aborts,
+> 		you are dead already.
+> 	}
+
+Great.
+
+This matches my intuition from investigating this problem: the --broken 
+flag triggers a different code-path.  However, it's good to have this 
+confirmed.
+
+> I _think_ the "broken" codepath should be taught to also run "git
+> update-index --refresh" before it runs "git diff-index" (both in
+> their own subprocesses, or run in the same subprocess sequencially,
+> as if "git update-index --refresh && git diff-index" were run), and
+> your problem may disappear.
+
+For what it's worth, I agree.
+
+Also, just to mention it, fixing this problem isn't a priority (at 
+least, not for me).  Simply removing the --broken flag resolves the 
+problem and I can live without this functionality.
+
+Cheers,
+Paul.
 
