@@ -1,47 +1,47 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA3B6F2F1
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 23:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B29B6F2F1
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 23:18:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719011911; cv=none; b=iNmkWPDT7D3BtIgOPQPHTAwON9UiJjFIy+NmUsVdC9SLOXpOrHNr/E17NeudrjD0yyu+yIlXgLE5L8QkEriYO4Vq1tXtXisZ+KvaIAJyO2wlHRQFm5cjDh7oX0VsdgiICt1M7CKipp5cpLNqbxzlmfFDdBCmb4RJxMm0siZn4J8=
+	t=1719011917; cv=none; b=O77nfQTxU4//PT3y0Ev8+iwNYkf86O42R4nzF3c1xFD4p+yUQP72j8+G37BWRls9IqY9xUmu10zhGc0TjjJx5TVnLySf6GqM0i5VU4iZys7K1QCk5AjSM0NM7V1gFIM7pSuwsDEOpbFukBKx1KWLcwB5qZLEDOo39kPnFAeyapI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719011911; c=relaxed/simple;
-	bh=rwJD3pg3SWLZ/tJrkcRqx6duawt60WJC9U4Psd+hk/s=;
+	s=arc-20240116; t=1719011917; c=relaxed/simple;
+	bh=PZM0J0P24DxUfn9mym1XagGPVYbBHN5vU/bQu2tccGo=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HqEqpBE5lkolglmozXkOGs6nILKVbbAPW3rOuwBUkwVsePiO/f6gBOzdM8SEpeIv3tQb/38eyUutuzhhFLrzSMVpOj2spPffpFbgKQDbuJqS8Vuih5INYECK5nfPcYHX/5/iweTm+DWq62nCsaQQPkl7Y0bNepZImGNRgoqAPKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=pbXAEMer; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version; b=C65xoVCqLt50zOrUVBIWY/8Zmn1LMOh+b7OERRmLA88DLYEXxQX0FlB0nLIezoVLLDtaOcT2eduY5jKe/gRUb9nKNq46KKJPP0eou8iy8X14eTVt9bFkxQaF2rD25eafyz+CpgK61Q9maIVjDPwU91+rmIUpDZVk1FNis6BNmdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=UyYcC6U+; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pbXAEMer"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7718D27E26;
-	Fri, 21 Jun 2024 19:18:29 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UyYcC6U+"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2AACF23CA8;
+	Fri, 21 Jun 2024 19:18:31 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=rwJD3pg3SWLZ/tJrkcRqx6dua
-	wt60WJC9U4Psd+hk/s=; b=pbXAEMerWCEpdEsZjD+oKlm9uPcWRIj9m/XGkXBc9
-	mTY1aUb6vjrobm8la7WsxLEkJ9C+HVzSmDXNbgBZEZRxgW4P3jj4dPy2L2qK5ifo
-	MuqTDsOWLWW5dOIH51CY6Jgd6L8l8VC6LSKLrHK5KKvQIyiD61LhG/3faDLhIR1f
-	sE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 709FA27E25;
-	Fri, 21 Jun 2024 19:18:29 -0400 (EDT)
+	:content-transfer-encoding; s=sasl; bh=PZM0J0P24DxUfn9mym1XagGPV
+	YbBHN5vU/bQu2tccGo=; b=UyYcC6U+nDYF/brWMmSMTkej48Q0GsJFaeph//i+v
+	3euwqxpjjVpmKDLk8xHioHn541e8OkXJCBre7S3i9YzTPsM5z+7n534UbYKcCGus
+	zkiCOhiXZL7G9BqAXW/q9j16jlj6bHHyWFuhTxYpmvIJbu1Bwlti9fe/gLwKR9qR
+	ms=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2244C23CA7;
+	Fri, 21 Jun 2024 19:18:31 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E454527E24;
-	Fri, 21 Jun 2024 19:18:28 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8949E23CA6;
+	Fri, 21 Jun 2024 19:18:30 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH 1/5] t4204: patch-id supports various input format
-Date: Fri, 21 Jun 2024 16:18:22 -0700
-Message-ID: <20240621231826.3280338-2-gitster@pobox.com>
+Subject: [PATCH 2/5] patch-id: call flush_current_id() only when needed
+Date: Fri, 21 Jun 2024 16:18:23 -0700
+Message-ID: <20240621231826.3280338-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.45.2-786-g49444cbe9a
 In-Reply-To: <20240621231826.3280338-1-gitster@pobox.com>
 References: <20240621231826.3280338-1-gitster@pobox.com>
@@ -52,60 +52,49 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-Pobox-Relay-ID:
- 917ADA9C-3024-11EF-9E2B-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+ 927376D4-3024-11EF-AB43-965B910A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-"git patch-id" was first developed to read from "git diff-tree
---stdin -p" output.  Later it was enhanced to read from "git
-diff-tree --stdin -p -v", which was the downstream of an early
-imitation of "git log" ("git rev-list" run in the upstream of a pipe
-to feed the "diff-tree").  These days, we also read from "git
-format-patch".
-
-Their output begins slightly differently, but the patch-id computed
-over them for the same commit should be the same.  Ensure that we
-won't accidentally break this expectation.
+The caller passes a flag that is used to become no-op when calling
+flush_current_id().  Instead of calling something that becomes a
+no-op, teach the caller not to call it in the first place.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t4204-patch-id.sh | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ builtin/patch-id.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
-index a7fa94ce0a..1627fdda1b 100755
---- a/t/t4204-patch-id.sh
-+++ b/t/t4204-patch-id.sh
-@@ -114,6 +114,29 @@ test_expect_success 'patch-id supports git-format-pa=
-tch output' '
- 	test "$2" =3D $(git rev-parse HEAD)
- '
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index 3894d2b970..0f262e7a03 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -6,10 +6,9 @@
+ #include "hex.h"
+ #include "parse-options.h"
 =20
-+test_expect_success 'patch-id computes the same for various formats' '
-+	# This test happens to consider "git log -p -1" output
-+	# the canonical input format, so use it as the norm.
-+	git log -1 -p same >log-p.output &&
-+	git patch-id <log-p.output >expect &&
-+
-+	# format-patch begins with "From <commit object name>"
-+	git format-patch -1 --stdout same >format-patch.output &&
-+	git patch-id <format-patch.output >actual &&
-+	test_cmp actual expect &&
-+
-+	# "diff-tree --stdin -p" begins with "<commit object name>"
-+	same=3D$(git rev-parse same) &&
-+	echo $same | git diff-tree --stdin -p >diff-tree.output &&
-+	git patch-id <diff-tree.output >actual &&
-+	test_cmp actual expect &&
-+
-+	# "diff-tree --stdin -v -p" begins with "commit <commit object name>"
-+	echo $same | git diff-tree --stdin -p -v >diff-tree-v.output &&
-+	git patch-id <diff-tree-v.output >actual &&
-+	test_cmp actual expect
-+'
-+
- test_expect_success 'whitespace is irrelevant in footer' '
- 	get_patch_id main &&
- 	git checkout same &&
+-static void flush_current_id(int patchlen, struct object_id *id, struct =
+object_id *result)
++static void flush_current_id(struct object_id *id, struct object_id *res=
+ult)
+ {
+-	if (patchlen)
+-		printf("%s %s\n", oid_to_hex(result), oid_to_hex(id));
++	printf("%s %s\n", oid_to_hex(result), oid_to_hex(id));
+ }
+=20
+ static int remove_space(char *line)
+@@ -181,7 +180,8 @@ static void generate_id_list(int stable, int verbatim=
+)
+ 	oidclr(&oid);
+ 	while (!feof(stdin)) {
+ 		patchlen =3D get_one_patchid(&n, &result, &line_buf, stable, verbatim)=
+;
+-		flush_current_id(patchlen, &oid, &result);
++		if (patchlen)
++			flush_current_id(&oid, &result);
+ 		oidcpy(&oid, &n);
+ 	}
+ 	strbuf_release(&line_buf);
 --=20
 2.45.2-786-g49444cbe9a
 
