@@ -1,280 +1,103 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from sonic321-24.consmr.mail.ne1.yahoo.com (sonic321-24.consmr.mail.ne1.yahoo.com [66.163.185.205])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D013783CD4
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 02:24:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9B312BE9E
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 04:01:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.163.185.205
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718936687; cv=none; b=hDLvnU+QrLLQ0b/6SO6ROTexv7n0eUd+5hW4jnMhK5qR2zd506/cGQ6apml8RMsR3kKJNmFIUb5AuiyzgNiJRsGNu1HFYX3g7Rz3dJBGrn/M81vOyu7gyWFSRIwx8Lles/iPsqJzpK+Qw0lzZoLeJPBGwYVlDFwwmUUG1ROAILM=
+	t=1718942490; cv=none; b=LxoKESaftnLJt/yoJYYIv/3nYymEvqIsRLP+yFfez1v4k1ZW4jmkOFkl5mThsI3xAyTvAXVIqxJ6VMdSQE4Q00qRAyImfP+N+JCkx4LMV+IvD+AS0zrbBuTcwZStfs8O+DXowNqIJPw/Tek1TfX6QxUiSJ0VP0drR94WtEpzHl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718936687; c=relaxed/simple;
-	bh=6Yv8SgGIGNU3gWzChttUwDb/QReSexNO6aarZPh67qQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BlJUoKeFf2fJmw0DB8Yrm/LCOaBJwtO38pGCaiEgdzY4pOfsq37oONw1tWmbMZ0TUjTVshWkMzpDzKM8ce8avyqfHHx22H9hMB2A+3sZJg0glKMkaVD4HHI6etmbyUw0UG+NMauIPLliWtNxXdWXoNWUYuCs/A4PukMLUtfLNAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eQi4hLyg; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718942490; c=relaxed/simple;
+	bh=z9kcsJaEyDi9pkZ929lkGJcm6QFE9Tb7q51B9BRa13Q=;
+	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:
+	 References; b=GuJYQpWh5/Afc9VOArkgJ8vnt6iiQWpkJxAlxSYqUKYaquIvqrcJPlIlICbJhLj3HdpxMU3U/wC9hsw9rQ26L/2p1axvWJXDnUlkyGF82BV8Xc2tgi8XSYBH/42CVKGm2vYFboP8ztSL9G6soQSycZgs/zWP7oP+IzC2nVNo6t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=t+L0Ruqz; arc=none smtp.client-ip=66.163.185.205
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eQi4hLyg"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-70435f4c330so1387092b3a.1
-        for <git@vger.kernel.org>; Thu, 20 Jun 2024 19:24:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718936685; x=1719541485; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=97i7/gexoVi3bCYBzYbp8H5XYZ9OV+CpBR9iccDQ8tM=;
-        b=eQi4hLyg8LkUcjNHOGwC8021k7Jl6I7Iv4GpYgellGWWBcUx9q7HPY66tVFLa1JX7p
-         H2+VtFUlPpAzFf/b7RXj3kMbPlQDN7/iBdYuDv3utsSbeNKNniKPqdXwTwwoDQ8gmtjS
-         4yAQlqfdYT9GDBPFXYYNqrcsAp1O2EPfhdfvQk62aG2L74BXvFgcVdc/XQ6jtDUmhLEV
-         RSRh1XN3eO/ZqbpmB+g2oLESr7kLku/u1bOrzeRVt2L+mxsPqU736CpMSxX17drdLtot
-         fv6VuJakAX/k+FmzfnvXG3vMPBW18VIda62+QjtuU+NNCQEPsXZFq/NGmRK6Hz9V7UdL
-         lCAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718936685; x=1719541485;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=97i7/gexoVi3bCYBzYbp8H5XYZ9OV+CpBR9iccDQ8tM=;
-        b=IYeNoP7L6bgFGOkl+SUmvjIKV9oyLGakfnmca0KKYsG67wMOtqKSE8PJLbGp51tawK
-         0387mZxPUzzQWEFdRE9onjmmuK04bBcF8IdPT2K9kN7+0C7tS5grcU2q+Ws6d/zD1z0M
-         /klgVpAVGPcNWCvZbk5VSk8pGvLqAMQYGYuaKEzj0CEp5RTERf+ktTD9+MdVRXwdFd+b
-         Y94/LwG96j5LchKK7NU4uNC4Fy88XpPKZxnWYC6LGFeMlu+lgxafRGi8clR5nl3WFk7n
-         f3GWu/mmn2vGOTheN2vVeET7U2vFfyBA98QzWT9mu7870+pL3lultgdbhbzfZSr1jM4b
-         Jdzg==
-X-Gm-Message-State: AOJu0YwSJh1uQPHAVc8Epf7+QvE9+5rjgjgNSTWPj7F3/z6M0mCTJ0J0
-	wTFJ55KDOOniQbAgDd8kTQydCJmwC6M4FFKAWzHyH8IGYHbl7dcJ
-X-Google-Smtp-Source: AGHT+IEHGxZ6rkO5jRxvTc9GEKbXOEj1B/ioIslt4tK0xEgo1MknB2+AXQeShf0cf/dH2tgfl7q4UA==
-X-Received: by 2002:a05:6a20:2a21:b0:1b5:8ecf:4e7c with SMTP id adf61e73a8af0-1bcbb665465mr6802083637.62.1718936684875;
-        Thu, 20 Jun 2024 19:24:44 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c819a8f786sm390021a91.34.2024.06.20.19.24.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jun 2024 19:24:44 -0700 (PDT)
-Date: Fri, 21 Jun 2024 10:24:42 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC][PATCH v4 1/7] fsck: add refs check interfaces to interact
- with fsck error levels
-Message-ID: <ZnTkatbhit7vAwwO@ArchLinux>
-References: <ZnKKy52QFO2UhqM6@ArchLinux>
- <ZnKLja6bSNLukkTR@ArchLinux>
- <xmqqmsnfwmqy.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="t+L0Ruqz"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1718942482; bh=z9kcsJaEyDi9pkZ929lkGJcm6QFE9Tb7q51B9BRa13Q=; h=Date:From:To:Subject:References:From:Subject:Reply-To; b=t+L0RuqzRiPvBYXVra8LL8CBLSjjEyNo3BdTk7WUA0S7GMqwNJs15XNLh6AggqC8FaIFUBEvp8QnnuCmo+Pzln89BbGMN1s5NROgjuQxRj3foHgZFUoC/uMJXcAvHkR/KPM1G7AGGi28oL5B3QCsbkk28ZfexWqJoa0QGYf4YcHZ5XlZ+N6iH/eeTIBEqFXjA6+tuPR+QN3PtKFTqSV+CYn0BuYqcivaQIAGBceUSyqtVI08PPEnhjgk1w8ZVtoUliLdzlFX8Wz/LvCp5Vln+DxGw4EC95fUz5CGbzdcXD4DeHy3GRYXv0ajm4VYFAUaSRszUhiTOO5Zh9f17fV1uA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1718942482; bh=t0U1BHReKxEs4sXh+o1q6hYD2vz1KnCXlHANqtBoZlZ=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=ElRtoDIU0Lx/Drefcns9i8n2DMZvcVTEUlM2dyLDJCdm1InPRA3F1wLl9zqN1jvq+23RRoqIVjhigXmv6a8apkBCpHRU2VzYB5iH7KQ6V8K4L9GpGEXO1GhLy+jw4nWJQqZbuZm0J7xn8HvluY7WC/r+nSrr8xPecitH2QMdhldTHPSVNjL2ZCe9ZoW98HfqSohQMjmng8QcraRhvoyogJSmDUe3hSeXi698sPcu8AHZQNd+0ZKry/E+IhDIjup+hkV+0S62m9mDKoGQqnUdKqllRFQ0v4EUCz636inZd4hReAq3KEf6b4zeOxLyTCbcWj7z0X0elcbZ5MhS6iiX8w==
+X-YMail-OSG: FvQOTs8VM1nRgcI6tZCM18BWEpyJ8ZDPfrrnMAKciro2d0IH1VMwJEDRGYbgBpq
+ YBYGwJTaAkMjbssBzNpOFxIjnJa48fBmjfp7ffr6NfUqb_XPTtkl6LSpc0pS2U05gO4liZKAoVhO
+ im_K7nmQDzQkaoLcsG.SWhmjMHpQpap19cZae4dEKgYKAx1xFnA6vNyG7RLjdyySK90TC.98eowZ
+ dVGLiH8UCnYI2xxlWufriIQIOhLwYEkvkNg9gkJq8nODzLslCNi_j9dy.oMxyuV1m38xgIhrb7gR
+ pvDmlcpbexVwp5TCtmJIkTda_SVrCFHToko.pwNYbb.EgnDnnikxtQycjn.wGt6xcdQB1m13MvPv
+ EVoC8aOGWbDVqE_k5GTyTO91GG75ktczsYxc1o71vD9vZNzpiey3J8EMCxi56Jz7MlOESl_GYyXt
+ GS.gnh1wNU9Q81kGwpbsekysMRqSIdcFZS6BksrRor.s6.Y878CLASkha6dil3qBhi0cjYfwFInL
+ HK3PbUiLJj1BhCLkkbn13PHuK4kHyFD2Gz5A4MwZkIh77uwspY5CocZTM_OOut2LXVuSdyNtMhpt
+ N9tgtC9N9dU.p6QIYhlkkkXtoyTgU.Xp7yOLjWmDY64.gXMUjoM_CQ1bZ.fJvnPEqqvm9eaOzvd1
+ qdKQgS7vMdQl68iGS1FTomqm0HOruNx5_peLj0URlcAc01BLe_32p62moOEwqXd_.cJJvc2.6j4R
+ xUIM2vyvs5zfTpPpVhtf6iTYIEWTPvttZ1DeRQgj4nkIdG77VQid_reKbBRtNNe8ekp.c8UQDq4F
+ Lk6c5X3IWNeFvnScAnd6nmsW4Ay4mWZjJhoa8Je4_ZYSg8inCBYN9XZ2osNP.qXljvk.zxc6yzXO
+ .oY3pjDCiHq9S2ETpl.YTBdktFlamVULWb2taJuQ.qdkOxQRQA55Tiq0HZrwLogm8g4X0pVlNlEY
+ 5JCuZuNXht9eVBkPCl5vo4qn3VbVX0xVdjYgFTQuJAnMsqAH096L6yb5k0a6hwS9aoypYmyfDJmD
+ rQQQiaV784yc.TomX0.2Rp_Svo1l5jNjaGCCJBGTDuSkY8JW8Y38vE0kx6tY2G558_wTK9PYKDcj
+ imyFhyFT.77LSFMN7K3Hax_5Y5pxZASu0kkF_RDoi2IOaMBLK3s7Gr8z6beUdivBmiTTljbPKfBD
+ J9cXv0FJzx25deUFrZefS58eGjR5x0df4gMNTeMTmH9IvxjS4_Q6_jdG_IR034yXuDCOM8BIR8VX
+ whBic3Y9Mv5mh7w0D1s.mfCvHJECv37rqehdPYu5cv5gBbqT7l9dGPWu7ylufy1WyH8G_JQXlrL0
+ YyQFNjPBzoFz5otLnxxoQAEVYsdsuZLJbyJ7B7qDaJD._mUmHctJ5nGTKb_gQlDCoFBVfLOQY4JJ
+ hkZWvibPZS5DxBVqE88CXqgrXBYM1aGsnsf0NUjcHm9d.vZFBVDLbbeQxNQpqENcqa_CNFZVKOsK
+ zeAIslkFZvi6T_SC8DqptS6J88qQSYSVDn4A9ILTu1Wyf404tMLHQTwukG633_U2IvN6Wy.A9v9K
+ ryg3o4XLlnf9MS.QIqQzBv13pmp6sLEoDAeycSD9SDouwNMENdHQbcYv7zOKDKwqgbg.xOreEHQ8
+ 2O5.wMUTeP4EKEZWWqM5buwX5jfWQGVUsAWMKMI6NxNLIMtWge5erUF3VWOD_ps0WCWCKU9Cu1hK
+ HHDCOehieXt20SF0cPqSjYD796kcYoINTXLNiQsIAMmo4HInpdAWG4BTbxwk29c5jJRGolytm65i
+ Yvr5C5RSEQqSq08gqy2AW8RMiV4bzBv3EwjqDPqVrMWiFaMx.FYPiVkCBbkeF2fd6taM8rNamJZT
+ r8pEY1AHkmVckP.tfTJAgaWmXUfmo.H9Hp_rM_h5.r0cNQF9MFmFBwtlw8JsI21pCmnnDlvLGMRW
+ v4MVLM5IxaAnIlzXzWdEu.2czfALAbmjgbj8Jne2YSv9Mwp_jol4ARz4o9fknz7_hp6m0H3XWFGy
+ wc8462dqpLw6yXKtHKCWrhfisfZYBdEIUBzJ5TaudNE3u3Ml8UusfPoIwbnRWekGjqviwwarysah
+ Bp8VrpA6BXuHUq4e7OzdNiYiP2xsYIsTb6sGsuC43AGX3_zKnU6EBwGAkJ.L0hM1P5Nuf0gKKk_a
+ TWEA7WN7USN0zk93woWBjUUULsYnhCwghwZSxHYsSUJfBO9q_FchjDwCyhyk3Kky9XoMFSxFvlgb
+ uLruAlfbV3Ptc0o4-
+X-Sonic-MF: <gofronm@yahoo.com>
+X-Sonic-ID: 4ad6f98d-4492-4374-8462-a113af8df1d4
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic321.consmr.mail.ne1.yahoo.com with HTTP; Fri, 21 Jun 2024 04:01:22 +0000
+Date: Fri, 21 Jun 2024 03:51:11 +0000 (UTC)
+From: Michael Gofron <gofronm@yahoo.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <968676664.8436621.1718941871973@mail.yahoo.com>
+Subject: Git bisect skip
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqmsnfwmqy.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+References: <968676664.8436621.1718941871973.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.22407 YMailNorrin
 
-On Thu, Jun 20, 2024 at 10:24:37AM -0700, Junio C Hamano wrote:
-> shejialuo <shejialuo@gmail.com> writes:
+Hello,
 
-[snip]
+My question is can using `git bisect skip` cause a bisect to be indetermina=
+te and/or fail if the commits that are skipped couldn't have caused the iss=
+ue?=C2=A0
 
-> This seems to be doing too many things at once, making the result a
-> lot harder to review than necessary.  At this point, nobody checks
-> refs and reports problems with refs, so fsck_refs_report() has no
-> callers and it is impossible to tell if the function signature of
-> it, iow, the set of parameters it receives, is sufficient, for
-> example.
-> 
+Consider if my commits are like this:
 
-I will split this commit into multiple commits in the next version.
+1P - 2P - 3B - 4P - 5P - 6B - 7B - 8F - 9F.=C2=A0
+P for "Pass", B for "Broken", and F for "Fail".=C2=A0
+Broken commits are commits that we can't create a build for but wouldn't ca=
+use the issue.
+Failing commits are failing because of a bug.=C2=A0
 
-> Stepping back a bit, it is true that (1) all existing checks are
-> about "objects", and (2) all checks we want to implement around
-> "objects" and "refs" can be split cleanly into these two categories?
-> 
+In this case, 8F caused the bug.
+If you tell git bisect that 1P is good and 9F is bad, bisect picks a commit=
+ between the known newest Good commit (1P) and the known oldest Bad commit =
+(9F).
 
-I am sure that "objects" and "refs" checks cannot be split cleanly into
-two categories. Let me elaborate more about this. The git-fsck(1) has
-already implicitly checked refs. When executing git-fsck(1) with no
-arguments, it will call "builtin/fsck.c::get_default_heads()". It will
-traverse every raw ref and use "fsck_handle_ref" to check the refs.
+1P -- 2P - 3B - 4P - 5P - 6B - 7B - 8F - 9F
+G=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 B
+=C2=A0 =C2=A0 =C2=A0 <------------------------------>
+Perhaps 4P. That builds and passes, so it marks that as Good.
 
-	struct obj *obj;
-	obj = parse_object(the_repository, oid);
-	if (!obj) {
-		...
-		errors_found |= ERROR_REACHABLE;
-		return 0;
-	}
+If it then goes to 6B which is a Broken commit and we do `git bisect skip` =
+what happens next? It seems from the code it uses a psuedo random number ge=
+nerator with bias to determine the next commit. Would it ever get in a stat=
+e where it can't determine the commit that caused the issue even if these b=
+roken commits would never cause an issue?=C2=A0
 
-	if (obj->type != OBJ_COMMIT && is_branch(refname)) {
-		...
-		errors_found |= ERROR_REFS;
-	}
-	obj->flags |= USED;
-	mark_object_reachable(obj);
-	return 0;
-
-git-fsck(1) firstly scans the object directory to check every loose
-object. If everything is OK, it will set "obj->flags" like the
-following:
-
-	obj->flags &= ~(REACHABLE | SEEN);
-	obj->flags |= HAS_OBJ;
-
-When an object is marked with "UNREACHABLE" and "UNUSED", it will be
-dangling.
-
-When checking objects, git-fsck(1) still checks the refs. But from my
-understanding, the main motivation here is mark the "USED" flag
-because we want to tell whether an object is dangling and BTY we check
-refs. So, we cannot really classify into these two categories. But we can
-classify into these two categories from action view. When checking refs,
-we look at the refs options; when checking objects, we look at the
-objects options. Although we may implicitly check some other things,
-this should be OK.
-
-So, I think "fsck_options" is only about options. Because the nature of
-the connectivity between refs and commit objects, we cannot make the
-boundary so clear.
-
-> I am wondering if there are checks and reports that would benefit
-> from having access to both objects and refs (e.g. when checking a
-> ref, you may want to see both what the name of the ref is and what
-> object the ref points at), in which case, being forced to implement
-> such a check-and-report as "object" or "ref" that has access to only
-> different subset of information may turn out to be too limiting.
-> 
-
-Should "check-and-report" does this? I am doubt. There are some cases we
-do look at both object and ref. But "report" should not do this. The
-flow git-fsck(1) does is like the following:
-
-	if (some_thing_bad) {
-		ret = report(..., message);
-	}
-
-Here, "check" will provide dedicated message to report. So If we really
-both look at both object and ref, the caller should be responsible for
-that. Like the message "refs/heads/foo points at
-f665776185ad074b236c00751d666da7d1977dbe which is a tag". The caller
-should produce such message. It will call some APIs to get the
-information and pass it to the "report" function.
-
-> Yes, I am OK with having substructure in fsck_options, but I am
-> doubting if it is a good idea to have a separate fsck_refs_report()
-> that can only take "name" that is different from fsck.c::report().
-> 
-> For example, how would we ensure that refs/heads/foo is allowed to
-> point at a commit object and nothing else, and how would we report a
-> violation when we find that ref/heads/foo is pointing at a tag,
-> i.e., "refs/heads/foo points at
-> f665776185ad074b236c00751d666da7d1977dbe which is a tag".  The
-> fsck_refs_report() function is not equipped to do that; neither is
-> .refs_options.error_func() that only takes "name".
-> 
-
-Yes, I am not satisfied with current design either. Actually, there are
-many redundant code in new "fsck_refs_report" function. Let's look at
-"fsck.c::report()" closely to see what it does.
-
-	static int report(struct fsck_options *options,
-				const struct object_id *oid, enum object_type object_type,
-				enum fsck_msg_id msg_id, const char *fmt, ...)
-	{
-		va_list ap;
-		struct strbuf sb = STRBUF_INIT;
-		enum fsck_msg_type msg_type = fsck_msg_type(msg_id, options);
-		int result;
-
-		if (msg_type == FSCK_IGNORE)
-			return 0;
-
-		if (object_on_skiplist(options, oid))
-			return 0;
-
-		if (msg_type == FSCK_FATAL)
-			msg_type = FSCK_ERROR;
-		else if (msg_type == FSCK_INFO)
-			msg_type = FSCK_WARN;
-
-		prepare_msg_ids();
-		strbuf_addf(&sb, "%s: ", msg_id_info[msg_id].camelcased);
-
-		va_start(ap, fmt);
-		strbuf_vaddf(&sb, fmt, ap);
-		result = options->objs_options.error_func(options, oid, object_type,
-								msg_type, msg_id, sb.buf);
-		strbuf_release(&sb);
-		va_end(ap);
-
-		return result;
-	}
-
-It will get the current message "msg_type" which would be configured and
-it will convert the "FSCK_FATAL" to "FSCK_ERROR", and "FSCK_INFO" to
-"FSCK_WARN". From above code, we can easily know what would the error
-(warn) message be the following:
-
-	'object: fsck_describe_object(o, oid): FSCK_MESSAGE: message'.
-
-The "fsck_describe_object" aims to provide meaningful message about the
-oid. And "FSCK_MESSAGE" is "msg_id_info[msg_id]".The last field "message"
-is the caller-provided message.
-
-So the hardest part to reuse this function is that it receives the
-parameters related to object such as `oid` and `object_type`. Actually,
-the "fsck_refs_report" could generate such information "refs/heads/foo
-points at f665776185ad074b236c00751d666da7d1977dbe which is a tag" like
-the following (I use string literal for simplicity here):
-
-	if (some_thing_bad) {
-		...
-		ret = fsck_refs_report(o, "refs/heads/foo", FSCK_BAD_REF_CONTENT,
-			"points at f665776185ad074b236c00751d666da7d1977dbe which is a tag")
-	}
-
-It will generate the following output in the current design:
-
-	error: refs/heads/foo: badRefContent: points at
-	f665776185ad074b236c00751d666da7d1977dbe which is a tag
-
-So my idea is that we just reuse the "report" function here. The bad
-part for current "report" function is that it is highly coupled with the
-object check. However, my idea is just like the "fsck_refs_report".
-
-	<name>: <FSCK_MESSAGE_STRING>: <message>
-
-Thus, we may unify the report interface both for refs and objects. And
-we don't define two differtn interface:
-
-	1. "fsck_refs_error"
-	2. "fsck_objs_error"
-
-Also, we just need to use "fsck_refs_report" and "fsck_objs_report" to
-wrap the "report" function here to avoid redundance.
-
-> > +int fsck_refs_report(struct fsck_options *o,
-> > +		     const char *name,
-> > +		     enum fsck_msg_id msg_id,
-> > +		     const char *fmt, ...)
-> > ...
-> > +	va_start(ap, fmt);
-> > +	strbuf_vaddf(&sb, fmt, ap);
-> > +	ret = o->refs_options.error_func(o, name, msg_type, msg_id, sb.buf);
-> > +	strbuf_release(&sb);
-> > +	va_end(ap);
-> 
-> Perhaps the code and data structure of the entire series may be
-> capable of supporting such a check-and-report, but the primary point
-> I am making is that among what [1/7] adds, we cannot sanely judge if
-> these "refs" related additions are sensible by looking at [1/7].
-> 
-
-From my above reply, I guess the current design gives the caller
-extensibility to provide customize message. All we do is make code more
-clean without redundance.
-
-> Thanks.
-
-Thanks,
-Jialuo
+-Thank you
+Michael Gofron
