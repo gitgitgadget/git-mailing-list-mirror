@@ -1,59 +1,59 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA09CA936
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 13:03:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F851DDEE
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 13:24:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718975001; cv=none; b=qMg40G78pdcmKLfQiAKd4RP3LPC28mFU/CQTLhSc/J37gr8uJMkBThTwCTEqkk1BXLpoyTA/vYeBedsZdBUHXoFX2gQrGrojbRSM17NTVpOFSNYmWBjUaTu08Tx8AKiMJsVEe0pnvO6WDEAYpN8qh3h6iVKAtKGtfZFzN5zQTnU=
+	t=1718976249; cv=none; b=E1kMxatGy80kXqGxfH3t2oRYsKWfyItkJOUZrxqyCsfh0IrXPdf3Cj2iYCH4IWO5kaEhVusYhZ1Iu0mrLZoyTSzmJ6ggrrdE9xITLBXjy8efC1nw256lGldY+4+2kVYz2sc5U6nJjNQnJPiu+IAc9lGyzhqRTIHu8ssCr4GNe4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718975001; c=relaxed/simple;
-	bh=WWQt5m9lU5VT3lBv4Ork62Ht0oMtaTXld5Lwlcm4g6w=;
+	s=arc-20240116; t=1718976249; c=relaxed/simple;
+	bh=tP3Rrrsml+hfMNOgIDOo72/K16MkWdV9FeNAO/sT/8Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XkD7z8qbVKjhkQ2NallpnQe1Ldr0lC3FFVSKU5NKDdt6QRAIBTpbc4YQHG7uq7hSVEUZUzNEOsy2wjJ1sYLGpQWQ7Hmy8YawsldhtaPRGiPnC039vQXEUtk07ue5U58SOmGbCjfdKaQTBC1uiUIyXZrzOW7moOxuuzsEjUj09Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aont6PrF; arc=none smtp.client-ip=209.85.167.46
+	 In-Reply-To:Content-Type; b=KsHaRDmimF3F2aBp/7KawrOe+SG069qJ8Dxdvp2s2nAbBPyo+X+Ybu4uEnBXqcUd3vKOK0OipBA/Q9Wc1QzrXw3rIrlUh9unJ/oyxK1l7ie3JJB5m7mBlOsaQ3DhcxAJuVZ8PlBXhqhhZfwPH1cZgJd5ugUSFGW60PPtA1dqzxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JmsuavHm; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aont6PrF"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52c89d6b4adso1902273e87.3
-        for <git@vger.kernel.org>; Fri, 21 Jun 2024 06:03:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JmsuavHm"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4217c7eb6b4so19025655e9.2
+        for <git@vger.kernel.org>; Fri, 21 Jun 2024 06:24:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718974998; x=1719579798; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718976246; x=1719581046; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ljNTcb9uhCFrQCwiG13x1T8ug7qasxTtJCNgjuZbQu0=;
-        b=aont6PrFwzhTm9rABXjRp/CZOisdvbUq54V95/INXpOXbZ8zLQ5etl+HCF09ZF3cSy
-         IWy7uI5svXTNoM0kJs9jJhyq4rZx3VYmK3vnsuqYMOkrfsDqFi9qXOzhnGCophoCIma0
-         iCsZ53hDMbxyOYpIZYl7Ngc49HrInIqXBbq5gr7jdEI3Elx541h+JtNfzzno8DOainKo
-         zmZzXGkPoBKabxL3Ms6WCYh5jjgM9szJamenpP6FYpnZKhrtjtujOq5hBdbkrsALy454
-         JK+cZw42ZFW7pQBz5dFq1MciIisL9eBeE4GgFnHTGPnRNhO2zsnrO4wSu9K4ondjLOCo
-         8KYA==
+        bh=Wykz5d/QIgGwVbkU3E/FXs4PChmkLFFS+rk9aOZgaTo=;
+        b=JmsuavHmZwI/hnEkFdIFvkoZ8n6CiD6kiJPRFi7zE0S7hQeQNp8++crxkJelLNnHGe
+         DZ50wn23EhYKwPvm6cROP92dbGAA2lSrJ3iNs+nU2QkuKN+j1M/77rT9cbpkqFsZtOoV
+         CQUVUh2W5kXR+ggsc05fcn0Xa//f8vo4+Eb+3c8KBkvkm2C7+HFJW9sJOzyWjuQUYB2O
+         qiwAMY8he6J0XnWvbXp2OrqC8nDEi70ZnA3TSJbNjB9DBFsq5hI6SMMxe4j3lM6cEWT+
+         UiVPoLH5GGGNCCB0Kk7YlN7bNOl5bwYOtRf+KWPwo+lnmWr0ZD6QlZgl4hWMQ/YNkDu4
+         G3uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718974998; x=1719579798;
+        d=1e100.net; s=20230601; t=1718976246; x=1719581046;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ljNTcb9uhCFrQCwiG13x1T8ug7qasxTtJCNgjuZbQu0=;
-        b=wR2mHoD1UKiLwu4A5NhtLfivK+Suv8DlWdzSdDAgxYiKj/n8Pn2poOOFlmW3bBAaID
-         8PFPHqgtD4FslszBRn30/OO+Btd2k+/1B2xSIVToDcCK3LQJGbyi0VbuuVvIA4t8GDvd
-         yMLFmkchNGwYMjWqi4zl3AhlEaJmnRdXSMLlRUInTp4avEZc/iwwR6WWoN5ifiyw10LU
-         1XepF6xepE5wscBKo/7DWdOar9MJeqAH7reKjDzpcgYmL5wpM3IX9r8KVd1UgatlfTo4
-         igtVI7YfVB6BcZ8rv/Xefywg+6pXWcyEx3R6lDkWlF946ZDHq+wJyG1FXWK4uoFFl1+j
-         q3pQ==
-X-Gm-Message-State: AOJu0Yw+KtwM9qyzxhdWcRDvkWEZxeoCn809JUagl/bBFrGXwq6ZP/l4
-	lPuZT/0w1mDG9VWi8+7oZ4orxhocjcMKMTEzH8RLdg+98zSqWT9ZBQTx2w==
-X-Google-Smtp-Source: AGHT+IFD6YUaNg/GhJ7nZNgEitje0xnQPrkfeVuekTuogm7LYcWh2Pnqx4EnRVCcPR49l9I18j1Dug==
-X-Received: by 2002:a05:6512:138c:b0:51e:11d5:bca5 with SMTP id 2adb3069b0e04-52ccaa974c1mr5202132e87.54.1718974996113;
-        Fri, 21 Jun 2024 06:03:16 -0700 (PDT)
+        bh=Wykz5d/QIgGwVbkU3E/FXs4PChmkLFFS+rk9aOZgaTo=;
+        b=iU2z1It1bLaYQAWhbF0qeyDLx+vWkqihMkC9BXh6rsHELLQgBUnHm0s1NAiAm7P0k+
+         kCXiIxkZkMU+6DFrKCZrFgCjhUnj+eVIuKJjyIQ3zVFdufS+Lj6bpQ/Ze0nJY24i4mMY
+         O9VHcvfz1eI1pWfLjtUfab/QnvkN7xgpFQRjX7fU/sqEW/Nf+rsZzaBvBUTLU40iMwI2
+         LPyHLXRd2lmcYPirtsDBwxJv3aQWjEE6XzkQIR3Km10c8vjClkn9jJGWsQ7YKzn3Yh2B
+         0edQ1gYm6U4Tk/oM9y/+Em3iY8TIITjuXEKaYw4WPgxzb6fk51GQUTcMRQBxBGaHLLdB
+         8Clg==
+X-Gm-Message-State: AOJu0YxC5oiGuFdhxmN6bWjzhELUAUQ2BP0ViW0Jk1oDg1JN7l8Yodk/
+	keWV33eaaaVTvtzppvcFWQO6XqBCrZsHyKY/yhuqoHzLG66mMgJiHmX5/g==
+X-Google-Smtp-Source: AGHT+IGUtEA7y2tLF71UQ9cpv+G0Uxw2DKVgPpP2GMa1+quO68IMJ1wOeSsxadbJ+pheTPDvjimcdQ==
+X-Received: by 2002:a05:600c:3653:b0:421:8e64:5f72 with SMTP id 5b1f17b1804b1-42475182acfmr56247605e9.18.1718976245857;
+        Fri, 21 Jun 2024 06:24:05 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:64f:8901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:64f:8901:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3663a2f663bsm1717265f8f.83.2024.06.21.06.03.15
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4247d208e4dsm64477225e9.33.2024.06.21.06.24.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Jun 2024 06:03:15 -0700 (PDT)
-Message-ID: <d5dc3cbd-72ae-4f1a-bd9d-d2608364a08c@gmail.com>
-Date: Fri, 21 Jun 2024 14:03:14 +0100
+        Fri, 21 Jun 2024 06:24:05 -0700 (PDT)
+Message-ID: <3d43023c-ceb8-4e5c-9607-8448509fb599@gmail.com>
+Date: Fri, 21 Jun 2024 14:24:05 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,50 +62,109 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/2] t9700: ensure cat-file info isn't buffered by default
-To: Eric Wong <e@80x24.org>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <20240617104326.3522535-1-e@80x24.org>
- <20240617104326.3522535-3-e@80x24.org>
- <6e80eea5-b6ce-4218-8c43-dde2b5a698f5@gmail.com> <20240619180807.M97115@dcvr>
+Subject: Re: [PATCH] cat-file: reduce write calls for unfiltered blobs
+To: Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>
+Cc: git@vger.kernel.org
+References: <20240621020457.1081233-1-e@80x24.org>
+ <20240621062915.GA2105230@coredump.intra.peff.net>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <20240619180807.M97115@dcvr>
+In-Reply-To: <20240621062915.GA2105230@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 19/06/2024 19:08, Eric Wong wrote:
-> Phillip Wood <phillip.wood123@gmail.com> wrote:
->> Hi Eric
->>
->> On 17/06/2024 11:43, Eric Wong wrote:
->>> +# ensure --batch-check is unbuffered by default
->>> +my ($pid, $in, $out, $ctx) = $r->command_bidi_pipe(qw(cat-file --batch-check));
->>> +print $out $file1hash, "\n" or die $!;
->>
->> It's been a while since I did any perl scripting and I'm not clear whether
->> $out is buffered or not and if it is whether it is guaranteed to be flushed
->> when we print "\n". It might be worth adding a explicit flush so it is clear
->> that any deadlocks come from cat-file and not our test code.
+Hi Eric and Peff
+
+On 21/06/2024 07:29, Jeff King wrote:
+> On Fri, Jun 21, 2024 at 02:04:57AM +0000, Eric Wong wrote:
 > 
-> Pipes and sockets created by Perl are always unbuffered since
-> 5.8, at least.  If they were buffered, Git.pm users (including
-> git-svn) wouldn't have worked at all.
-
-Thanks for clarifying that
-
->>> +my $info = <$in>;
+>> While the --buffer switch is useful for non-interactive batch use,
+>> buffering doesn't work with processes using request-response loops since
+>> idle times are unpredictable between requests.
 >>
->> Is there an easy way to add a timeout to this read so that the failure mode
->> isn't "the test hangs without printing anything"? I'm not sure that failure
->> mode is easy to diagnose from our CI output as it is hard to tell which test
->> caused the CI to timeout and it takes ages for the CI to time out.
+>> For unfiltered blobs, our streaming interface now appends the initial
+>> blob data directly into the scratch buffer used for object info.
+>> Furthermore, the final blob chunk can hold the output delimiter before
+>> making the final write(2).
 > 
-> Yeah, select() has been added in v2.
+> So we're basically saving one write() per object. I'm not that surprised
+> you didn't see a huge time improvement. I'd think most of the effort is
+> spend zlib decompressing the object contents.
 
-That's much nicer.
+If I'm reading the changes correctly then I think we may be saving more 
+than one write far large objects we now seem to allocate a buffer large 
+enough to hold the whole object rather than using a fixed 16KB buffer. 
+The streaming read functions seem to try to fill the whole buffer before 
+returning so I think we'll try and write the whole object at once. I'm 
+not sure that approach is sensible for large blobs due to the extra 
+memory consumption and it does not seem to fit the behavior of the other 
+streaming functions.
 
-Thanks
+If the reason for this change is to reduce the number of read() calls 
+the consumer has to make isn't that going to be limited by the capacity 
+of the pipe? Does git to writing more than PIPE_BUF data at a time 
+really reduce the number of reads on the other side of the pipe?
+
+>> +
+>> +/*
+>> + * stdio buffering requires extra data copies, using strbuf
+>> + * allows us to read_istream directly into a scratch buffer
+>> + */
+>> +int stream_blob_to_strbuf_fd(int fd, struct strbuf *sb,
+>> +				const struct object_id *oid)
+>> +{
+> 
+> This is a pretty convoluted interface. Did you measure that avoiding
+> stdio actually provides a noticeable improvement?
+
+Yes this looks nasty especially as the gotcha of the caller being 
+responsible for writing any data left in the buffer when the function 
+returns is undocumented.
+
+Your suggestion below to avoid looking up the object twice sounds like a 
+nicer and hopefully more effective way of trying to improve the 
+performance of "git cat-file".
+
+Best Wishes
 
 Phillip
+
+
+> This function seems to mostly duplicate stream_blob_to_fd(). If we do
+> want to go this route, it feels like we should be able to implement the
+> existing function in terms of this one, just by passing in an empty
+> strbuf?
+> 
+> All that said, I think there's another approach that will yield much
+> bigger rewards. The call to _get_ the object-info line is separate from
+> the streaming code. So we end up finding and accessing each object
+> twice, which is wasteful, especially since most objects aren't big
+> enough that streaming is useful.
+> 
+> If we could instead tell oid_object_info_extended() to just pass back
+> the content when it's not huge, we could output it directly. I have a
+> patch that does this. You can fetch it from https://github.com/peff/git,
+> on the branch jk/object-info-round-trip. It drops the time to run
+> "cat-file --batch-all-objects --unordered --batch" on git.git from ~7.1s
+> to ~6.1s on my machine.
+> 
+> I don't remember all the details of why I didn't polish up the patch. I
+> think there was some refactoring needed in packed_object_info(), and I
+> never got around to cleaning it up.
+> 
+> But anyway, that's a much bigger improvement than what you've got here.
+> It does still require two write() calls, since you'll get the object
+> contents as a separate buffer. But it might be possible to teach
+> object_oid_info_extended() to write into a buffer of your choice (so you
+> could reserve some space at the front to format the metadata into, and
+> likewise you could reuse the buffer to avoid malloc/free for each).
+> 
+> I don't know that I'll have time to revisit it in the near future, but
+> if you like the direction feel free to take a look at the patch and see
+> if you can clean it up. (It was written years ago, but I rebase my
+> topics forward regularly and merge them into a daily driver, so it
+> should be in good working order).
+> 
+> -Peff
+> 
 
