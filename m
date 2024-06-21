@@ -1,86 +1,103 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451E020314
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 17:12:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D6315D1
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 17:18:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718989932; cv=none; b=X0m3JvLH6DfNDQP+jBjwYL/s5vLHv5rOSTJMaVrVlnOtP8ZQ7DY4YJEUQb5RYoJIvGXmVIvEc7+6LjDSpa9V5z+/4zSMKuBYJdUfwiXh3BpfD2ieq6cLDyQrTlwXBniAN92fZ5OOx6aGdR7l1XgAQGQEzg0s1SW3ZYosysRgzws=
+	t=1718990291; cv=none; b=CPEP4PBXFK5cAepmkjgDhyknIlMPUfUZXW87i0xwQiMh3Nm+2x85HDCuyU9qJ51uyesol16+yVEByK0oECSeSniTnl7/kLo3CctRDJQ0nTqN5jQ5QoPGb4D0eedqFUqCPBqqGavr7t9oXVB2PQL7haue2bBzAO6FAWAR1OZQYhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718989932; c=relaxed/simple;
-	bh=ZrSTDY+EUCkYAw83mhljSfEP2c2kdCGNiE1t0waimeM=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=g5DMZhPxq6Y4X6O0VnJ8cvv+TlpyDjCzR3gDXI4N3kz6/tQFpdCAaTafGqVk2rAdmbQWM18gTuUR8UZmCUEipIiSeiWxpTUa7gZOhVL483x8pvGoXJRaCoE5klP+Ou9TcQAfQwHmvaJ/LLJcTA5FQzIGhFg/r3h+U6REchfZP0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=QGLyr7gb; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="QGLyr7gb"
+	s=arc-20240116; t=1718990291; c=relaxed/simple;
+	bh=H/wl8o3eRes1d21cU6reL71uE3LMwJafnHfvXcFYZrs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TXgiEzcvDyj1GcBpTPXb+oXuOzWgLYCV89zOyaCDEl8SjZGhZsKxT9HhLTSJ1Bd2ru632uPsK9tPuanezyCN9mdacpcXxC70DmI8hdocjn0AssIxVhmCMW4bEvVaDNe7iTMKCgsgMms8D1Xa4R2X2VLDce8sC/mcmim9QkF7j5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6aedd5167d1so9320256d6.1
+        for <git@vger.kernel.org>; Fri, 21 Jun 2024 10:18:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718990288; x=1719595088;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NufKQHdqu2wG5aN5cyAROnBwN63O/bG1EQvw7PCOpGs=;
+        b=F7geY7yfXNSJQ2ZHDIFDdTRrqYsQaFhFVeyQspN4pjSKfnB5A8GqKmVR06tOjjOXdS
+         +0PAbMqxnf41ECe7wp1Myt09azcvrhrcNTeg2JkoW90dwQ0rU9+gSO0TxbHo1RIjg7Ra
+         IpsvUCO9qYsWcW3XojxrhBWM95hCBc7i+uv6rn4+yqflB4Eli+hLsDRvz2lxTdcGh7pa
+         MFFxCKAVPw9eInvJycHjpZXAZ4miIsOkzF0NUFOSdQEZ7ipxug1Nnz6j21mvD8aykDkn
+         0u6ncRNQGTtsGYHXz7z6yBKgcGfsZgL+ZMo83IwFIsPfm+2E5rptFqc2OJKT1ZGXqRB5
+         CDvA==
+X-Gm-Message-State: AOJu0YzBKOdRPYesVK101zrtjUe111EAYID8SPS+gf7y1RFfGc9uD8Ms
+	l10NwijskpZhVAdIFg78ehAbumde5pgaorpjLMJnJ0e+Ogcc1Vgh8Vgnpb8+KdlN76sagpsEIZR
+	19hNp9H7NifjFUVft29g+n3XMkrhwd0jb
+X-Google-Smtp-Source: AGHT+IEdB5e9ToLpkD5gJRIEPp780MQjsbysIPpU4Y3JE9D+f7AjER1aEAjYqC3BDNDZ+Tw6yUzv5N/w2ePzkvKwKBo=
+X-Received: by 2002:a0c:f307:0:b0:6b5:187:b4e7 with SMTP id
+ 6a1803df08f44-6b501e57f7cmr98764266d6.37.1718990288332; Fri, 21 Jun 2024
+ 10:18:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1718989919;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Ju2we8MIqeSDkzl5npSKp0hiC05TQpKwXEMgIYju6Pk=;
-	b=QGLyr7gb9FOkTPhCV08zC98tmTHReuoVggCMg3WRbcdZr4mrILrhomNz0/2oBMgHXU2X+r
-	B6dlvSk/dL1DPUwQP70GK3Hu+MmnK+hsvRpkowQICos/DCrKuX0rMIvpnznDs6qBCNG9xw
-	TloVLclWnNnAfgN1aGZFxCfE20741yYOGcdAP0yV9Fnbh8D9CVs0L2+s6R8D07nCEOu+Xt
-	zVh61plfMcOTX5rxKMarNWtK/4vW2Za2pw1UQC/4tgXDYR60NRqE1pqWY9kaFSDb+XcjuG
-	z3Ei5EBnAlq3Te3ruTchuYAN07x9svwUhipWMZWXA8s/QMN79OBte8SlHZUSXg==
-Date: Fri, 21 Jun 2024 19:11:59 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Sixt <j6t@kdbg.org>, =?UTF-8?Q?Rub=C3=A9n_Justo?=
- <rjusto@gmail.com>, Git List <git@vger.kernel.org>, Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH] pager: die when paging to non-existing command
-In-Reply-To: <xmqqplsbqm2l.fsf@gitster.g>
-References: <f7106878-5ec5-4fe7-940b-2fb1d9707f7d@gmail.com>
- <xmqqsex7tp0c.fsf@gitster.g> <ba5965c2-9f1c-4dd2-a2c5-e1bde832766c@kdbg.org>
- <xmqqplsbqm2l.fsf@gitster.g>
-Message-ID: <c9112fd358340cd4adce3cb65b00c444@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+References: <20240621092258.1557258-1-toon@iotcl.com>
+In-Reply-To: <20240621092258.1557258-1-toon@iotcl.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 21 Jun 2024 13:17:57 -0400
+Message-ID: <CAPig+cQ7y61LZW9zDMiHLmyEm=DLcBsuR_yPOzXiK6y9iXazWw@mail.gmail.com>
+Subject: Re: [PATCH] bundle-uri.c: Fix double increment in depth
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2024-06-21 00:35, Junio C Hamano wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
->> Am 20.06.24 um 21:04 schrieb Junio C Hamano:
->>> Just in case there is a reason why we should instead silently return
->>> on MinGW, I'll Cc the author of bfdd9ffd, though.
->> 
->> I don't think there is a reason. IIRC, originally on Windows, failing 
->> to
->> start a pager would still let Git operate normally, just without paged
->> output. I might have regarded this as better than to fail the 
->> operation.
-> 
-> The "better keep going than to fail" is what Rubén finds worse, so
-> both sides are quite understandable.
-> 
-> It is unlikely that real-world users are taking advantage of the
-> fact.  If they do not want their invocation of Git command paged,
-> "GIT_PAGER=cat git foo" is just as easy as "GIT_PAGER=no git foo",
-> and if it was done by mistake to configure a non-working pager
-> (e.g., configure core.pager to the program xyzzy and then
-> uninstalling xyzzy without realizing you still have users), fixing
-> it would be a one-time operation either way (you update core.pager
-> or you reinstall xyzzy), so I would say that it is better to make
-> the failure more stand out.
+On Fri, Jun 21, 2024 at 5:23=E2=80=AFAM Toon Claes <toon@iotcl.com> wrote:
+> A bundle URI can serve a gitformat-bundle(5) or a bundle list. This
+> plain text file is in the Git config format containing other bundle
+> URIs. To avoid these bundle lists to nest too deep, we've set a limit
+> with `max_bundle_uri_depth`. Although, when walk through the tree of
+> bundles, the current depth is incremented in download_bundle_list() and
+> then calls download_bundle_to_file(), which also increments the depth.
+> Remove the increment in download_bundle_to_file().
+>
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+> diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
+> @@ -259,6 +259,68 @@ test_expect_success 'clone bundle list (file, any mo=
+de, all failures)' '
+> +test_expect_success 'clone bundle list (file, above max depth)' '
+> +       cat >bundle-list-1 <<-EOF &&
+> +       [bundle]
+> +               version =3D 1
+> +               mode =3D any
+> +
+> +       [bundle "bundle-list-2"]
+> +               uri =3D file://$(pwd)/bundle-list-2
+> +       EOF
+> +
+> +       cat >bundle-list-2 <<-EOF &&
+> +       [bundle]
+> +               version =3D 1
+> +               mode =3D any
+> +
+> +       [bundle "bundle-list-3"]
+> +               uri =3D file://$(pwd)/bundle-list-3
+> +       EOF
+> + [...]
 
-To me, failing when the configured pager cannot be executed is the
-way to go.  Basically, if an invalid pager is configured, we're
-actually obliged to produce a failure, simply because we have to
-follow and apply the configuration strictly.  This also applies
-to (partially) invalid configurations.
+A very minor (and subjective) comment beyond those offered by other reviewe=
+rs...
+
+The above "setup" functionality can be collapsed to:
+
+    for i in $(test_seq 4)
+    do
+        cat >bundle-list-$i <<-EOF || return 1
+        [bundle]
+            version =3D 1
+            mode =3D any
+        [bundle "bundle-list-$(($i + 1))"]
+            uri =3D file://$(pwd)/bundle-list-$(($i + 1))
+        EOF
+    done
