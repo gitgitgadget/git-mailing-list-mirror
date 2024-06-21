@@ -1,53 +1,52 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EC1156227
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 16:34:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44B1161306
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 17:00:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718987670; cv=none; b=J/EzJ1FkpGkSSjYtygXwCTTjI1nV25OhmwThxtEhExR724NxzhLWR0Tc/u6uWv2fben2JOdXlgbqvYj0kP7olNj7ZNzhGmLmdFy265HC4rUHT/fg2/om6MH+iDKXGBufN1+/kZxERpyxaKJUATiy8v5v6zt+09viqgcGgYeLcnM=
+	t=1718989207; cv=none; b=c7vRkIzGolIDzIVPrKuE+xgBeZAr9AG4A7qi1hh/w6Ss7zU3RFl586ENZXZxytgQ1Yrp5EqBXuWT2JB8Ka9zLTk+uGfv8eWhPR5v45aBaNrAaEboP5HU3d4UrPFoh54SCfRGWdBB7FFZuRFGVNqb5uIMlHCSNBttf+w4OmBxsCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718987670; c=relaxed/simple;
-	bh=Wt2nEkaLdFDu/Pxpdy+L+lT3+2E+OdqsnS2zhv3zGbg=;
+	s=arc-20240116; t=1718989207; c=relaxed/simple;
+	bh=7FebUEdPTejPDUMSexAcDkU6+UevCZj/iqfIaqpCRS8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JlLyvMFVRn2+R2URKx+d6o09Xqm3Q1ZapY1FtyH/F15zQTS23Iv5PxbudJWuVIoDxLBM1vVcvLJA2oLzci60R0ZKMoziQcDElFe9s6OvJTr6GfrPcGwzuGOySqQQ4Di0ZBu1nAfSKxHGL2hzDO9YMeGqUy/zh7T1auj3BKhRUzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CWm8rMPu; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=st7IvpQMDXgY/C3ScLgx4z06ho8lPFGr3s+SbaU65NEcna2XGpps6UkHEgfx0JUJM/mNKV+6Q2Xry9lJ0Qdwc5exNdS9hlyH0wqQot1RFIlSAHJkLt9e9FKyZC807LgkfBlkD2EGVyBi7ThQsp8tWL4jleCXapYxt0sT1DwTm/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ozvxWSSz; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CWm8rMPu"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3A0C736FBA;
-	Fri, 21 Jun 2024 12:34:28 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ozvxWSSz"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 057B8214FD;
+	Fri, 21 Jun 2024 13:00:04 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Wt2nEkaLdFDu/Pxpdy+L+lT3+2E+OdqsnS2zhv
-	3zGbg=; b=CWm8rMPuAg8tvHAy1cLIAxVuAhiehmu88zMbfFMyVxxu/QAPa+WYVF
-	iKvB9J0pEBab5B3tPIzWH2seEwYZhSybdSFAdYzT66IV+9+uA/qqcoibQjWTWv2Z
-	Mtlgc3pwdLqL5wTHKVnjn4RspBZv+oL0uzp808VxHCgCBL7ohyCaU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 32AA236FB9;
-	Fri, 21 Jun 2024 12:34:28 -0400 (EDT)
+	:content-type:content-transfer-encoding; s=sasl; bh=7FebUEdPTejP
+	DUMSexAcDkU6+UevCZj/iqfIaqpCRS8=; b=ozvxWSSzTPOZDrmCaT9iaGRHodab
+	cMVbxRP1nnWNahSUYwawTaOwh4Z2b4GYbIQGIN3amo96phexVfy+aMp7LmeQF4w6
+	eH8uMhZoln+9dPywNxo46g55BxDPo1TNl9sddml/D1/RJMPogxyftAE+5cUbeqh1
+	4x0p3ak8ERMbXJc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CCFB2214F7;
+	Fri, 21 Jun 2024 13:00:03 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 55D9A36FB8;
-	Fri, 21 Jun 2024 12:34:24 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 15D3B214EA;
+	Fri, 21 Jun 2024 13:00:01 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Stefan Haller <lists@haller-berlin.de>,  Git <git@vger.kernel.org>
-Subject: Re: Thoughts about the -m option of cherry-pick and revert
-In-Reply-To: <6e71b1f3-599f-49c3-be37-e499f28983cf@gmail.com> (Phillip Wood's
-	message of "Fri, 21 Jun 2024 11:19:31 +0100")
-References: <e60a8b1a-98c8-4ac7-b966-ff9635bb781d@haller-berlin.de>
-	<xmqqa5jfoxvh.fsf@gitster.g>
-	<dd58a60d-a551-4726-85a7-f47b851914be@haller-berlin.de>
-	<6e71b1f3-599f-49c3-be37-e499f28983cf@gmail.com>
-Date: Fri, 21 Jun 2024 09:34:22 -0700
-Message-ID: <xmqqv822ntkh.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] bundle-uri.c: Fix double increment in depth
+In-Reply-To: <CAP8UFD3jGVaO2JdKE0H22mf4E8YBxrEwuGqJuyeRGBVh==23NQ@mail.gmail.com>
+	(Christian Couder's message of "Fri, 21 Jun 2024 17:24:35 +0200")
+References: <20240621092258.1557258-1-toon@iotcl.com>
+	<CAP8UFD3jGVaO2JdKE0H22mf4E8YBxrEwuGqJuyeRGBVh==23NQ@mail.gmail.com>
+Date: Fri, 21 Jun 2024 09:59:59 -0700
+Message-ID: <xmqqfrt6nsds.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,48 +54,72 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 1E957132-2FEC-11EF-87F5-C38742FD603B-77302942!pb-smtp20.pobox.com
+ B28D5F96-2FEF-11EF-8287-965B910A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> I can see why people want to revert merges but cherry-picking them
-> always feels strange to me - what is the advantage over actually
-> merging the branch and seeing the full history of that commit?
+> On Fri, Jun 21, 2024 at 11:23=E2=80=AFAM Toon Claes <toon@iotcl.com> wr=
+ote:
+>>
+>> A bundle URI can serve a gitformat-bundle(5) or a bundle list. This
+>> plain text file is in the Git config format containing other bundle
+>> URIs. To avoid these bundle lists to nest too deep, we've set a limit
+>> with `max_bundle_uri_depth`.
+>
+> Yeah, max_bundle_uri_depth seems to be hardcoded to 4.
+>
+>> Although, when walk through the tree of
+>
+> s/walk/walking/
 
-One case that comes to my mind is when you failed to plan ahead and
-used a wrong base when building a series to "fix" an old bug.  You
-built a 7-patch series to fix a bug that you introduced in release
-1.0, but instead of basing the fix on maint-1.0 maintenance track,
-you forked from the tip of master that is preparing for your next
-feature release that is release 1.4.
+While you are typofixing ...
 
-Even if you realized that the fix is important enough to warrant
-applying to the maint-1.0 maintenance track, you cannot merge the
-topic that houses 7-patch series down to the old maintenance track
-without bringing all the new features that happened since 1.0 on the
-master track.
+> Subject: Re: [PATCH] bundle-uri.c: Fix double increment in depth
 
-A kosher way may be to rebase the 7-patch series to maint-1.0 and
-merge the result into the maint-1.0 track (and upwards if needed).
-But cherry-picking the commit that merged the original "fix" topic
-into master _may_ be simpler, as you need to resolve a larger
-conflict but (hopefully) only once, instead of up to 7 times, once
-per each commit on the "fix" topic while rebasing.
+... also "Fix" -> "fix".
 
-But of course if something goes wrong, it makes the result
-impossible to bisect---exactly the same reason why you should think
-twice before doing a "merge --squash".  In addition, if you somehow
-figured out why the cherry-picked fix was inadequate, you'd now need
-to forward-port the fix for the fix to the master track or whereever
-the cherry-picked-merge was taken from.
 
-On the other hand, if the original "fix" branch was rebased on
-maint-1.0 and then further fixed, the result can be merged to
-maint-1.0 as well as all the way to the master track.
+>> bundles, the current depth is incremented in download_bundle_list() an=
+d
+>> then calls download_bundle_to_file(), which also increments the depth.
+>
+> s/and then calls/which then calls/
+>
+>> Remove the increment in download_bundle_to_file().
+>
+> The increment is removed by replacing:
+>
+>     fetch_bundle_uri_internal( ..., ctx->depth + 1, ...)
+>
+> with:
+>
+>     fetch_bundle_uri_internal( ..., ctx->depth, ...)
+>
+> in download_bundle_to_file(). Ok.
+>
+> It looks like there is another similar call to that function like this:
+>
+> fetch_bundle_uri_internal( ... , ctx.depth + 1, ... )
+>
+> in fetch_bundles_by_token() though.
 
-So, I can understand why people may want to cherry-pick a merge,
-I suspect it is a false economy.  Optimizing for picking, paying
-higher price when the result of (incorrect) picking has to be
-corrected later.
+I have to wonder if the code should pass the whole ctx around,
+instead of passing depth separately, and increment it at the single
+place that matters, in order to reduce the chance of similar problem
+happening.  The place that matters the recursion depth can be the
+download_bundle_list() function---that is the one that controls the
+recursion, and it is incrementing the depth for the calls it makes
+(via the for_all_* callback mechanism).  Alternatively, it can be
+the fetch_bundle_uri_internal() function where actual copying, for
+which we do want to enforce the depth limit, happens.  The function
+even has the code for depth limit, so having an increment next to it
+may make it more readable and understandable.
+
+So instead of taking ctx->r, ctx->depth+1, and ctx->list separately,
+shouldn't fetch_bundle_uri_internal() take the whole ctx and use
+ctx->depth (not +1---incrementing it is not its business) and the
+whole (current and future) problem like this goes away, no?
+
