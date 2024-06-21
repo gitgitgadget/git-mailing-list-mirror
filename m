@@ -1,98 +1,94 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443005820E
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 01:50:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28A8259C
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 02:03:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718934640; cv=none; b=TrJ69+c6zJJ5fwSeOaBBELg2hXPesKLHZ8yuFxhsGzFjHF2fqLLtBsNHXfJKV2Bgivd8cRO3jBuC2K1TT79lcxj8jyXDi6QIWcKFrx2h/WgBIDW5GwVRwJuYqlfJOsySO65JgcxIX/u05EN0Bhv0hBwgGldU9SzlW1ia7R2QH9U=
+	t=1718935443; cv=none; b=UNsd1t5SEwgQD7NTu4aQcnVfGAiNUaDX705WANYvTnwW7A5NuUy6uhTkUY7tKIhh/srECQbsc8P0XLE4MhRgHil0EBDdZiCDnhF3gPcyjlkGnpYh2TNpJCs484W1vrvfgORM3aHHudHl8RX+Ne/tolelcU7WSR0LwTMapGBjoiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718934640; c=relaxed/simple;
-	bh=pjWM+yH66PaTyEfspgBWSMlyFV3cDCNF0HmyiGsCxL4=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=F4TvwGz+5/ArDW7RiosR8ZaVcfA7VMq6WAeru30IQ27pSKAh44KQ5oAoCtnt4dAdTKnkLNKsz8u6x+3vk0XYw0MCGBOfnzxwS07S4gVKq9zWb+pNO8hQFMkiKJQQGyAiSu4LSsp1cCtLk4nArnVus7u/RznMRHhtTE/oeB2f+D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 45L1oYNd3928540
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Jun 2024 01:50:35 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-Cc: <git@vger.kernel.org>
-References: <20240619172421.33548-1-randall.becker@nexbridge.ca>	<20240619172421.33548-2-randall.becker@nexbridge.ca>	<xmqq8qyzv5a3.fsf@gitster.g> <xmqq34p7v4x1.fsf@gitster.g>	<DS0PR17MB60311D246BF2E89FAEB3C64DF4C82@DS0PR17MB6031.namprd17.prod.outlook.com>	<00ea01dac362$73935e20$5aba1a60$@nexbridge.com> <xmqqv823p3tz.fsf@gitster.g>
-In-Reply-To: <xmqqv823p3tz.fsf@gitster.g>
-Subject: RE: [PATCH v0 1/1] Teach git version --build-options about OpenSSL
-Date: Thu, 20 Jun 2024 21:50:29 -0400
-Organization: Nexbridge Inc.
-Message-ID: <010201dac37d$68a96070$39fc2150$@nexbridge.com>
+	s=arc-20240116; t=1718935443; c=relaxed/simple;
+	bh=qzXvfNQxIyuGZbNo0hBj2T7/5xVHglBOYXj8UkiYf8I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IOe28HdxTyobuQ0HsnNsmWXJ2I5ko+qJPDFq8Z3QIPoLrxDhgcHebukv6vxDveCnqqdiX41xaYW1uGPHwlpiAwYsZLvOgwAZ+IGrFeg+Rm6dhMhMnXPBnOo7C+4zNvS7Nq1AhLPfnFj7hKUXn3xleiBQkkLCdga8wPsEEN27Lz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hNLd9fpr; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hNLd9fpr"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7464C1C682;
+	Thu, 20 Jun 2024 22:03:51 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=qzXvfNQxIyuGZbNo0hBj2T7/5xVHglBOYXj8Uk
+	iYf8I=; b=hNLd9fprwAqOCzEoDmduvrL5B5nhfClZyDqBrW6IeUHVrzVM8C3sa0
+	AU/VAQRHEhYAKMpYsZZOMlRvK9iG6tuTB/CPxCrk4G0y7kBZNqwE8q3dryCLbQDx
+	BBGr4WCCae9fh4x0IZuFr5w7Ezjrsh8GnV7jllkPAC/rtlgRcUYj4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6D1871C681;
+	Thu, 20 Jun 2024 22:03:51 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0F6241C67D;
+	Thu, 20 Jun 2024 22:03:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Stefan Haller <lists@haller-berlin.de>
+Cc: Git <git@vger.kernel.org>
+Subject: Re: Thoughts about the -m option of cherry-pick and revert
+In-Reply-To: <e60a8b1a-98c8-4ac7-b966-ff9635bb781d@haller-berlin.de> (Stefan
+	Haller's message of "Thu, 20 Jun 2024 12:05:45 +0200")
+References: <e60a8b1a-98c8-4ac7-b966-ff9635bb781d@haller-berlin.de>
+Date: Thu, 20 Jun 2024 19:03:46 -0700
+Message-ID: <xmqqa5jfoxvh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHJzf2VYEwm4hh0XSc8aIHjA1bZKAIHfOa7AYuV3x4A2CtUcgIcwEvRAlfMlBQCCuJjNbGcCQnQ
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 7F5463C2-2F72-11EF-9FAD-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-On Thursday, June 20, 2024 7:55 PM, Junio C Hamano wrote:
-><rsbecker@nexbridge.com> writes:
->
->> I have another patch almost ready for zlib and libcurl, but it is
->> based on the OpenSSL change. Would you like a re-roll or should I wait
-for the
->merge?
->> I do not have the PCRE - not available on my system, so someone else
->> should do that one.
->
->A two-patch series for zlib and libcURL that builds on top of 8b731b8d
-(version: --
->build-options reports OpenSSL version information, 2024-06-19), which has
->already hit 'next', would be OK, but most likely, these three are
-independent "for X
->in (cURL, zlib, OpenSSL), append X if X is there", and when the three
-changes are
->merged together, it would result in
->
->    #if defined CURL_something
->	strbuf_add*(...libcurl thing...);
->    #endif
->    #if defined OPENSSL_something
->	strbuf_add*(...openssl thing...);
->    #endif
->    #if defined libz_something
->	strbuf_add*(...zlib thing...);
->    #endif
->
->with possible permutation of different ordering of them.  And in such a
-case, three
->parallel topics that build on the same base (i.e. some recent tip of
-'master') would
->be just fine, even though they _surely_ will introduce trivial textual
-conflicts.
->
->If you introduced a helper function or CPP macro to make it easy to add the
->OpenSSL version string in your OpenSSL patch, and the other two patches
-took
->advantage of the helper or CPP macro while adding the zlib or libcURL
-version
->string, then it would be a different story.  A two-patch series for zlib
-and libcURL that
->builds on top of the OpenSSL patch would become the best (and the only
-practical)
->approach in such a case, but there is nothing in the OpenSSL patch we have
->reviewed that these other two would want to depend on, so...
+Stefan Haller <lists@haller-berlin.de> writes:
 
-I think I would rather let each one stand. Embedding an #if defined inside a
-macro makes me nervous, considering it is compiler version dependent. Would
-putting each one in its own commit work for you?
---Randall
+> I have two questions:
+>
+> - What are real-world scenarios where you would use a mainline number
+>   other than 1? I could only come up with a single example myself, which
+>   is that you have a topic branch, and right before merging it back to
+>   main, you merge main into the topic branch; and then you merge it to
+>   main with a fast-forward merge. If you then want to cherry-pick or
+>   revert that topic, you'd have to use -m2 on that last merge from main.
+>   Any other examples?
 
+I do think your example is a real issue that is helped by using -m2;
+I do not think of any other cases offhand myself.
+
+> - Wouldn't it make sense to default to -m1 when no -m option is given?
+>   It seems that this would do the expected thing in the vast majority of
+>   cases.
+
+I do agree -m2 or higher would be rare when doing "git revert".  
+
+Given that the current behaviour was chosen to make sure that the
+user is aware that the commit being reverted/cherry-picked is a
+merge and has a chance to choose the right parent (as opposed to
+blindly picking the first parent that happened to be the right one
+by accident), I am not sure if it is prudent to change the
+behaviour.
+
+If I were simplifying this, I would probably
+
+ (1) disallow cherry-picking a merge (and suggest redoing the same
+     merge, possibly after rebasing the copy of the merged history
+     to an appropriate base as needed), and
+ (2) allowing reverting a merge only wrt the first parent,
+
+but that is a different story.
