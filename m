@@ -1,107 +1,104 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F6E63A
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 05:25:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E63B17BB9
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 06:01:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718947553; cv=none; b=JSCZ7+dPiIZYT0BmxmB2IGndJWSWfwPjLfjTQnOjrI8VDI9NTjS5jkXms22tG2FbiTS4G/aqmbKCDMuOv67/JzofEA3iiQlrddMIqFxe/iOzuIEOgSN+WwWdNxF+Y+zZuRqHLpa/iZME4OkJGrGYZOs6Zx6y1us5iHC+fsSXoE8=
+	t=1718949699; cv=none; b=iQPrG0Qq0Zlp3cPN7qN0T/fMHgKR4h4D3QX9XWdRmtlTKOa4ILU/7FA3zGEaFc8oew7FX57iKJU2mP+3EALJa69/nUMZJxj3retzBpSQL6PaOOFPcfzsaUfdrC55ZG0NOYeAMztb861sind0LJFn+K4zLOKmq2NyfUTrqIuOOpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718947553; c=relaxed/simple;
-	bh=0ilDKeMHV2c6irPIw2bdniR4rVnPTpcLL/AHwIDkErk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=dUbu+CUaT2wOUwtCLFd7/SWo4/zmwTWWNfj54L+D4H0DXO+tF5cdVgI9IRK7KJBKHSLUzYmFjQ45oGR6PUzwDCP65SL4Z7vebN/JXi5YLoaThRVOqA+b2DYHACvIAK1i3rkIhZg9l/HHP11s3yxpf3JlHz2DuR3+TPuhdR/Gn1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OzBWSjb5; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1718949699; c=relaxed/simple;
+	bh=jBinizWQCCoeYv2HFZSDGnb1j4pbhFBRnZpbx3pg/PE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=B2dL6rKQuj3muX87nwJ8Gz1bT8gEvZkV3j1AwJTm84gDIPvP1D1E7hoahugKKtUGc7n+JpvVw5pq3HFl/+3VMbNwviKNK55wkcr2iHlzKr66Xj5XfQhTFSpaXrkaBMWvjiNC9k2eLR4LOhcMrinz4+EFiLpMPcN74/gEzTdSEaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AMkPIvAv; arc=none smtp.client-ip=209.85.215.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OzBWSjb5"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-42108856c33so16267925e9.1
-        for <git@vger.kernel.org>; Thu, 20 Jun 2024 22:25:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AMkPIvAv"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-681bc7f50d0so2002501a12.0
+        for <git@vger.kernel.org>; Thu, 20 Jun 2024 23:01:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718947550; x=1719552350; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=GrpNWFS0eWPf2OBEFF/0Qb9CSq/baMPaR+R9/sZOqM0=;
-        b=OzBWSjb5UVEG8HRTSZLSfLljDdBy1T4FthjJxhykMR9X/ulBcZ0QlG9r8MBhB+nvLI
-         8mfWmhtaONaXdpPCFyYN34qrGH79kM8VKel3TZGPkWeeihgczen3782sG+zDLuDfQAXS
-         YJjlOytu8Ge8Pw7NfdkY+MY1HSZSnTHyqX7/8k+lBmtATRuSdVZmXJf5Lgy41y9q8ZwW
-         Il8cU1oHwdvv8X3Lws9Pj970U8x0R5gMYFroEqlYfKJ9E436CSTQvum5DXbDiEWy8Dt3
-         jmXUM6Unia5hAlnmzeujL7eZaOgD+GZM5rEwVj0/DjgtkGpXCecZGoOSY14O0aMrfDYU
-         e7sA==
+        d=gmail.com; s=20230601; t=1718949696; x=1719554496; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jqBRy5XwONuPr2SPndIO+2Gw/tQq/mBfot0XyFy5JLk=;
+        b=AMkPIvAvuYMnsd/u+rAxYmh7mOLYTElsmCyWYCMjgd09KKr+oOVDVHvLrg+IS5Xdg9
+         8niEpKYa4PQIZs5G7J0vykNstYathdb72WxZiH3SnVkaaxFWbcJOjemVIOajmv+2eI+o
+         IIzgW1y/xPm/X3pU2Uk0D3kItn9iS/472a2wV6uq2uIcnMXmkLwmY+lCtlTSpAt3lbw2
+         GxneWepEJ77vcgFW5tPTPSf271aY11XayFAzOJNhSls1pIGDozWHy2JdN3HhTLt1/XGP
+         MHI2qOdTEPYLTmLGKEGlo0UoWCIWid4zl49veiuNd4Ij+WUfM/fX4b8lEt7A4KT9h0wB
+         fa2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718947550; x=1719552350;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GrpNWFS0eWPf2OBEFF/0Qb9CSq/baMPaR+R9/sZOqM0=;
-        b=RwuhGK4mXkBv7jqmms3Q58xnvEPJ8DRGJeYyyGFirEVofwMWiSFtyyH4ILbkmRV1nB
-         zI6+XyU0lEDCFcQSKGYY9lDR4eV/Sx1BXbl0inPldgt0CK1CV+r5eqm3GJ90YXbp1k7v
-         uKOCzfz9qyjDIZJ2h6OidNj/ggRBCpnJZzkjmQc4qLbCSxG3GoZwwmsuMk0Xd3zvH05I
-         qFfvsSHj6uR7LtG09RMEgWBlrvmqwIikkeS8L7o0Cq8qk4E15bmcvMV7P4zfNYmfrr6P
-         w92ALVxPrLrX+dcadshkfqizhoA9Pv42ZeUkJ5T1jYeR8icr9x4owZibst0V93wpW1fx
-         ShUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVPLj4bgJd9ucHEOEeRyWk2ILR0XvcqMLn5AvIa8ZmDPMr71umXHE7n0LaOHY5Eqc6QMgh4UfuunutSseVslmbCEZcv
-X-Gm-Message-State: AOJu0Yyzn6XuAgLIwKP30DVhfpU7GDhPqgy8e6N5VR1GQ6rfXMWUf+No
-	U/vLRjHblMWFiHI3D0euPbcILe+KmrvMX/aN2EcS8smv7s/Icv9G
-X-Google-Smtp-Source: AGHT+IE+yU+Xb/sHZrwh1QDGbFIs4dclIdiyegwK6V98pJVDeil/QznUAuy5TAPHhW4PLWWBwhWnsw==
-X-Received: by 2002:a05:6000:45a7:b0:366:595c:ca0c with SMTP id ffacd0b85a97d-366595ccc2fmr395906f8f.24.1718947549443;
-        Thu, 20 Jun 2024 22:25:49 -0700 (PDT)
-Received: from gmail.com (179.red-88-14-203.dynamicip.rima-tde.net. [88.14.203.179])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3663ada00e7sm699929f8f.112.2024.06.20.22.25.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Jun 2024 22:25:48 -0700 (PDT)
-Message-ID: <8d903487-2479-432e-a171-931f264bf9f0@gmail.com>
-Date: Fri, 21 Jun 2024 07:25:47 +0200
+        d=1e100.net; s=20230601; t=1718949696; x=1719554496;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jqBRy5XwONuPr2SPndIO+2Gw/tQq/mBfot0XyFy5JLk=;
+        b=LAOsYhO8nruFO1civ7EI3/VsVKHcQ4ICFPGpZw5DMsQeKsvZXmx0p6MqwbjSNCdQIF
+         sir61LBnJ0CmzLMwyc/lyL5BxNTobrY+lBDnL2T972jnCtBC2aZ4x483IHhtzM9SI4WN
+         4AXyJa7k21Z4k4i9efLnwkIewdEdXEgaDT3rillP8LVkXq52E18qINNmDsAq14Uv0n/s
+         qaQRG59on3zsGVpUncWyqiT+0fr+UOrSve32nvIUg3MIQeXLRI8USs7UJxH2VlJX6h/1
+         uuIT3AdXoqFtQiHqZ5QIy/vmZE7lvzqofhtLBSexNzYcIkdmrDMFaNwMcd98lN32yPxB
+         diuw==
+X-Gm-Message-State: AOJu0YwEjtsIUdBtu9Lr/7DPE0qg3QfnjSc9ump//0EGPTkJ4lnBc4eM
+	duiKRemplwk/5vkj1TkBNEprGrGsWy8gKeGAQVyJyScEGWMjDGWOSivAkg==
+X-Google-Smtp-Source: AGHT+IFkJ7WViPDu/tkGicQakKS3YnJ+QZRb2IY5jKHxgjQafgGG7SJRIOVSZTFwxuLZynItDWPQjg==
+X-Received: by 2002:a17:90a:9a7:b0:2c7:d24b:57f with SMTP id 98e67ed59e1d1-2c7d24b0715mr8110460a91.19.1718949696169;
+        Thu, 20 Jun 2024 23:01:36 -0700 (PDT)
+Received: from Ubuntu.. ([106.206.192.103])
+        by smtp.googlemail.com with ESMTPSA id 98e67ed59e1d1-2c81fe88e0fsm498661a91.3.2024.06.20.23.01.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Jun 2024 23:01:35 -0700 (PDT)
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+To: git@vger.kernel.org
+Cc: karthik188@gmail.com,
+	Patrick Steinhardt <ps@pks.im>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: [GSoC][PATCH 0/11] t: port reftable/record_test.c to the unit testing framework
+Date: Fri, 21 Jun 2024 11:16:59 +0530
+Message-ID: <20240621060018.12795-1-chandrapratap3519@gmail.com>
+X-Mailer: git-send-email 2.45.2.404.g9eaef5822c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: What's cooking in git.git (Jun 2024, #07; Thu, 20)
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqfrt7p3ra.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqfrt7p3ra.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jun 20, 2024 at 04:56:41PM -0700, Junio C Hamano wrote:
+In the recent codebase update (commit 8bf6fbd, 2023-12-09), a new unit
+testing framework written entirely in C was introduced to the Git project
+aimed at simplifying testing and reducing test run times.
+Currently, tests for the reftable refs-backend are performed by a custom
+testing framework defined by reftable/test_framework.{c, h}. Port
+reftable/record_test.c to the unit testing framework and improve upon
+the ported test.
 
-> * rj/pager-die-upon-exec-failure (2024-06-20) 1 commit
->  - pager: die when paging to non-existing command
-> 
->  When GIT_PAGER failed to spawn, depending on the code path taken,
->  we failed immediately (correct) or just spew the payload to the
->  standard output (incorrect).  The code now always fail immediately
->  when GIT_PAGER fails.
-> 
->  Will merge to 'next'?
->  source: <f7106878-5ec5-4fe7-940b-2fb1d9707f7d@gmail.com>
+The first patch in the series moves the test to the unit testing framework,
+and the rest of the patches improve upon the ported test.
 
-I'll send an update later today, with the minor change suggested in the
-series thread.
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 
-> [Discarded]
-> 
-> * rj/add-p-pager (2024-06-04) 6 commits
->  . add-patch: introduce the command '|'
->  . test-terminal: introduce --no-stdin-pty
->  . pager: introduce setup_custom_pager
->  . pager: introduce wait_for_pager
->  . pager: do not close fd 2 unnecessarily
->  . add-patch: test for 'p' command
-> 
->  "git add -i" and friends learned a new '|' command that sends the
->  current hunk to the pager, instead of dumping it to the terminal.
-> 
->  Expecting a reroll to work well with jk/am-retry
->  source: <1ef0ac3a-3be5-4fc2-93f8-46610f3d1880@gmail.com>
+---
+CI/PR: https://github.com/gitgitgadget/git/pull/1750
 
-I apologize if the delay has given the impression that I lost interest
-in this series.  Due to problems on my end, I haven't been able to
-dedicate time to it.  I'll send an update soon.
+Chandra Pratap (11):
+t: move reftable/record_test.c to the unit testing framework
+t-reftable-record: add reftable_record_cmp() tests for log records
+t-reftable-record: add comparison tests for ref records
+t-reftable-record: add comparison tests for index records
+t-reftable-record: add comparison tests for obj records
+t-reftable-record: add reftable_record_is_deletion() test for ref records
+t-reftable-record: add reftable_record_is_deletion() test for log records
+t-reftable-record: add reftable_record_is_deletion() test for obj records
+t-reftable-record: add reftable_record_is_deletion() test for index records
+t-reftable-record: add tests for reftable_ref_record_compare_name()
+t-reftable-record: add tests for reftable_log_record_compare_key()
+
+Makefile                         |   2 +-
+reftable/record_test.c           | 382 -------------------------
+t/helper/test-reftable.c         |   1 -
+t/unit-tests/t-reftable-record.c | 554 +++++++++++++++++++++++++++++++++++++++++++++
