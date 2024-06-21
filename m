@@ -1,101 +1,118 @@
-Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C1612D76F
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 06:33:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.13.153.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7C726AD5
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 06:40:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718951608; cv=none; b=RrD1TXDG/9Sa6ANfz17bR4lWFx3cDTlJbcfAVkFP7qoPvES+hoU2nUu3+4iGPQbTMEgA65hIT9fs+f8/tx/1wD9h4R0FSDqb4LsYjnXtTXkhoKjP7LnBROp5PZMYBXxbZWVJp0u8Mk56gS/g/IYB3XLg7Rv/im9K6q3nlJejmS0=
+	t=1718952024; cv=none; b=CA+MhXYseS0cFI/C107YJCRR1q/CBMCO/z5GT1apzYi9j8vxnVl+iXizQ2cJOC5BAcoVT5IEfHtA7xTfOF2nsE35LmEILnS6WRsdEdRYfXkYJAKeFxYJH50111NDQqz+gApBBDFzHp+qifYBXK5if3N+ncVoFT4opi4061+/le0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718951608; c=relaxed/simple;
-	bh=Vy2SCW4luPGg2cbVHXdn8y65/87rAF4YHzYT0qPShHU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KpuXa7d/OVZNDtdFTMijycriWccnXAfmBdvh0pj8Us63Z6N+7i9CsATUg2c/BxB43wOsl2KYGI4MZ+pXg75hj/glHSYUOwwwoPj+9Y/kC3+qzfydWdXoPp/CuRPVLYB5Vtf354BoTPknA0ppYFZMWHn5QYdXdKsN/AS8kXB94YU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de; spf=pass smtp.mailfrom=haller-berlin.de; dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b=idIbH3Vc; arc=none smtp.client-ip=85.13.153.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=haller-berlin.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="idIbH3Vc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
-	s=kas202402191026; t=1718951603;
-	bh=5O5lYuoyssz4lNOhx+Em6TLyU6qz6RWsJ8aa2hF0Rpk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=idIbH3VchyQXtuJstxwfSjM3FKcSj3NQLW8i3BvUKI/gsjQf9NYSZ8HIED8ri02TR
-	 Wq2nmTHjzxBfvx5/vP7ysJOjkAoisPHxN/7nICUxejNkey0AjxgYQgigekbj7EwAQz
-	 xNHYfdKkMww0ru1m3CmYdSfgglq7VL1rQEgTUdzrR4yHbCzPaHdo5BqjNUxqIKEEwL
-	 5or/dYUHHW6UwFpsjsq/gqAI2paNSnCo/ynlp1iABofgWY84/MAmGtqcLKKJeNJIdL
-	 U0e70vw7YRsoZvt9G1VJs8N2qJ4lk54qGh9G/Fwj4AQGSjuen6fL2DVyHJybLlUBOk
-	 M9NRj3TQejeRw==
-Received: from [192.168.42.22] (i5C74DC1D.versanet.de [92.116.220.29])
-	by dd36226.kasserver.com (Postfix) with ESMTPSA id D3C633C09AB;
-	Fri, 21 Jun 2024 08:33:22 +0200 (CEST)
-Message-ID: <dd58a60d-a551-4726-85a7-f47b851914be@haller-berlin.de>
-Date: Fri, 21 Jun 2024 08:33:22 +0200
+	s=arc-20240116; t=1718952024; c=relaxed/simple;
+	bh=FoO0oYRG2Bjj+UeoVvvzvKkk1envdgoa409Oyc1/3mE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QHiREB6Ag0K3IdQL3HxQnRm0fgoitVYQrRtjObZmmZjKvgepWR9dRLvMiQCn/luIJfvdxmRp0UqUQ/oROhGxAQFtqwhW4W2+9nzPgBz6tmB98QXSsF1JnrFhqu552KrNh56MWHVaTRaLD5jz+CutUQr2kbYaNBs2hlkb8sV3nQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 26251 invoked by uid 109); 21 Jun 2024 06:40:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Jun 2024 06:40:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6494 invoked by uid 111); 21 Jun 2024 06:40:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Jun 2024 02:40:18 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 21 Jun 2024 02:40:20 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] pager: die when paging to non-existing command
+Message-ID: <20240621064020.GB2105230@coredump.intra.peff.net>
+References: <f7106878-5ec5-4fe7-940b-2fb1d9707f7d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Thoughts about the -m option of cherry-pick and revert
-Content-Language: de-DE, en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git <git@vger.kernel.org>
-References: <e60a8b1a-98c8-4ac7-b966-ff9635bb781d@haller-berlin.de>
- <xmqqa5jfoxvh.fsf@gitster.g>
-From: Stefan Haller <lists@haller-berlin.de>
-In-Reply-To: <xmqqa5jfoxvh.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Bar: /
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f7106878-5ec5-4fe7-940b-2fb1d9707f7d@gmail.com>
 
-On 21.06.24 04:03, Junio C Hamano wrote:
-> Stefan Haller <lists@haller-berlin.de> writes:
+On Thu, Jun 20, 2024 at 07:25:43PM +0200, Rubén Justo wrote:
+
+> When trying to execute a non-existent program from GIT_PAGER, we display
+> an error.  However, we also send the complete text to the terminal
+> and return a successful exit code.  This can be confusing for the user
+> and the displayed error could easily become obscured by a lengthy
+> text.
 > 
->> - Wouldn't it make sense to default to -m1 when no -m option is given?
+> For example, here the error message would be very far above after
+> sending 50 MB of text:
 > 
-> Given that the current behaviour was chosen to make sure that the
-> user is aware that the commit being reverted/cherry-picked is a
-> merge and has a chance to choose the right parent (as opposed to
-> blindly picking the first parent that happened to be the right one
-> by accident), I am not sure if it is prudent to change the
-> behaviour.
-
-Hm, in all example scenarios I experimented with, picking the wrong
-parent would result in an empty diff, and consequently an error message
-like this:
-
-   nothing to commit, working tree clean
-   The previous cherry-pick is now empty, possibly due to conflict
-   resolution.
-   If you wish to commit it anyway, use:
-
-       git commit --allow-empty
-
-   Otherwise, please use 'git cherry-pick --skip'
-
-I'm not sure if this error is easier or harder to understand than the
-one you get today when omitting -m, but we could probably improve it by
-mentioning the -m option if the cherry-picked commit was a merge.
-
-I'd be interested in example scenarios where both sides of the merge
-have non-empty diffs. Won't this only happen for evil merges?
-
-> If I were simplifying this, I would probably
+>     $ GIT_PAGER=non-existent t/test-terminal.perl git log | wc -c
+>     error: cannot run non-existent: No such file or directory
+>     50314363
 > 
->  (1) disallow cherry-picking a merge (and suggest redoing the same
->      merge, possibly after rebasing the copy of the merged history
->      to an appropriate base as needed), and
+> Let's make the error clear by aborting the process and return an error
+> so that the user can easily correct their mistake.
+> 
+> This will be the result of the change:
+> 
+>     $ GIT_PAGER=non-existent t/test-terminal.perl git log | wc -c
+>     error: cannot run non-existent: No such file or directory
+>     fatal: unable to start the pager: 'non-existent'
+>     0
 
-This seems unnecessarily restrictive to me. Cherry-picking merge commits
-using -m1 is useful, it's an important part of our release workflow at
-my day job.
+OK. My initial reaction was "eh, who care? execve() failing is only one
+error mode, and we might see all kinds of failure modes from a missing
+or broken pager".
 
->  (2) allowing reverting a merge only wrt the first parent,
+But this:
 
-Interesting, that's what I'm considering doing in lazygit (except for
-both revert and cherry-pick), but I kind of didn't expect much support
-for that idea. :-)
+> Finally, it's worth noting that we are not changing the behavior if the
+> command specified in GIT_PAGER is a shell command.  In such cases, it
+> is:
+> 
+>     $ GIT_PAGER=:\;non-existent t/test-terminal.perl git log
+>     :;non-existent: 1: non-existent: not found
+>     died of signal 13 at t/test-terminal.perl line 33.
 
--Stefan
+...shows what happens in those other cases, and you are making things
+more consistent. So that seems reasonable to me.
+
+> The behavior change we're introducing in this commit affects two tests
+> in t7006, which is a good sign regarding test coverage and requires us
+> to address it.
+> 
+> The first test is 'git skips paging non-existing command'.  This test
+> comes from f7991f01f2 (t7006: clean up SIGPIPE handling in trace2 tests,
+> 2021-11-21,) where a modification was made to a test that was originally
+> introduced in c24b7f6736 (pager: test for exit code with and without
+> SIGPIPE, 2021-02-02).  That original test was, IMHO, in the same
+> direction we're going in this commit.
+
+Yeah, the point of f7991f01f2 was just to clean up the tests. The
+modification was only documenting what Git happened to do for that case
+now, and not meant as an endorsement of the behavior. ;) So I have no
+problem changing it.
+
+> The second test being affected is: 'non-existent pager doesnt cause
+> crash', introduced in f917f57f40 (pager: fix crash when pager program
+> doesn't exist, 2021-11-24).  As its name states, it has the intention of
+> checking that we don't introduce a regression that produces a crash when
+> GIT_PAGER points to a nonexistent program.
+> 
+> This test could be considered redundant nowadays, due to us already
+> having several tests checking implicitly what a non-existent command in
+> GIT_PAGER produces.  However, let's maintain a good belt-and-suspenders
+> strategy; adapt it to the new world.
+
+OK. I would also be happy to see it go. The crash was about reusing the
+pager child_process struct, and no we know that cannot happen. Either we
+run the pager or we immediately bail. I think that the code change in
+that commit could also be reverted (to always re-init the child
+process), but it's probably more defensive to keep it.
+
+-Peff
