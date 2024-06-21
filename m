@@ -1,138 +1,138 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80F417B400
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 18:38:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBC28C1E
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 18:53:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718995086; cv=none; b=DOpENha+DpIUEfqezW/jPKKRFtIkiFGRLU18e6Hw7yrtR3D2hNk2BD3NMniBWwJoU/+RKBG8Z+a9akCm1zmSCjIEGQKINw0DgbTcj9g8uA9+SPh7bGtUcyOVwaDMD80rMs5acE3GMhjJnis7Qnph9ePzBFnnZVldufdVUauxHE0=
+	t=1718996020; cv=none; b=RHLFOwjv0BPupmwv9OEJtr9GaUYu9Lj2k9kNO6rnyLVNOcQ6osKEqP9RK6ykwI/IIiSL4fiHGQI5Ei4JUkbvEsik/Lm9RgYS264q3qZY/rp7NFsJIFE4abmSKPE0aVrTk3YRvgOX5uFTGWIPSuyRcYz4IiGpBHUHaIFalhC6j/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718995086; c=relaxed/simple;
-	bh=RHOKDkLqsGCfN+Y1WUhWowgf/Ea4WjSV8DV0ZsGdwfA=;
-	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:Mime-Version:
-	 References:In-Reply-To; b=WT0FhWNk5MZOf3dF/8zLvy+GqSf4GlcVrGhu8bQ6oBc/lDreOqx4y644DufCpf517P3njBr/g3gg67Du3+VH1CsfAZBzv3z5xAwrtoPXM69tv1h+FsQ4J2U6ey1N1K+2aj7CBEIoJnBp/HTS8Q05FVU2YPO+8g77IBQDmgT6CYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X14SrwM7; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718996020; c=relaxed/simple;
+	bh=64gYdU6FbGgVGK3HN8VRsECorLdXhY7i7TuyfqUuOLo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LE6/nZ4JT7CafkV00NBpE+HgSOv91aMbG0SMRWDqKEm2KXEt8my5ynPF1wyISK849jEd3norXRGc2fjvYs4Xf9TrL2S1gcA4cSomEoe30sh6nRPHDsU58cmeprStuddbVTfkLeCAp1qu0JBizijV44wGkjTVG5gBM4ycFSB83so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=slq8nWN5; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X14SrwM7"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1f47f07aceaso18976535ad.0
-        for <git@vger.kernel.org>; Fri, 21 Jun 2024 11:38:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718995084; x=1719599884; darn=vger.kernel.org;
-        h=in-reply-to:references:content-transfer-encoding:mime-version:to
-         :from:subject:cc:message-id:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i6k2hxRVQN4r/HSs3C5UkMX+oSv4YGL8AqE8k2pDBlE=;
-        b=X14SrwM7ZI9NVCdk5vSYkJ1RB2yqd97joo9oQeSxGs91r3btN+C2kYuJyp5MCRm4Wy
-         zfgKoFPBnPLCDwLyXgcyN6GCM1z0Y2pnVeAt/KvrplIazOQf57J5Z3rJ7QVWDjoafSrU
-         N9fXbjU+bM9bS05AsWF3W2utv20bfKmE8gHAW+eV7zVhmgaKlfzoOcevjc2TnyXdpv3E
-         5e81gEcEADlLusPo+QTUHK+moUIrORQ4mtWNeXmLpNcGKHx1Cs3CaitwXKCBuyGR/U4R
-         9tTs35auJB0u5x3o8k5um9ss+1ruk7Ju5pRVJ23jNOyoMsHWk9dDOmhI+W/LzltQrj/w
-         CfNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718995084; x=1719599884;
-        h=in-reply-to:references:content-transfer-encoding:mime-version:to
-         :from:subject:cc:message-id:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=i6k2hxRVQN4r/HSs3C5UkMX+oSv4YGL8AqE8k2pDBlE=;
-        b=vvMDYNyc3ui4SUqK3tMYn8AwgKb7Xho27aKgUAXUCaqjkC37NX+jWhAlYUSe3o4qms
-         UgxcG36wNXRDaHndqKeR5e7+fCSosDEgmWHUprF9wGVGxidrC/H1AlRGgA72jXdZEekW
-         burPfbSdMeGh+UNeRKFJf/C2cCbSxO/utQYIHTMvONXgLSqTvK+7duLGCtK3b+7QjKqb
-         NjdJsVuIevlqjuDlVFnS77zHXjNK6P/xu1j7N4a1s7tX8y0vI8HUBnwcSU4RodRmu/8L
-         jQjQnrXLam89JSzTMLBZClqJ5XziFLZm2123DoftPhilyVdgZxxjm49flq0HmHYTunWu
-         9WoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVsX6GEfu/Ab3UOUg62RMnZ+VYr/+chkPiMrpxx47FW/wgu6t1Owh015iXgHAppFa20nl+uml6A3LjZ90rH7xSm92Fd
-X-Gm-Message-State: AOJu0YywbtcjT/zfXod6Oi7YrLnEI/geu2v+zYCOM1atw688F2izM0QL
-	GG2MGm7teaVm5I9qJoCgUuOG5Pkv4lYQNom30cjTaD7HNREoJoWc
-X-Google-Smtp-Source: AGHT+IEMDPA31QT4vJVin2StAPnb+AqRbPBaEGTrJqe49aRLSH+22pqw6Mag2EvAUz/TXbGjpE+xFA==
-X-Received: by 2002:a17:902:ee94:b0:1f9:923b:259d with SMTP id d9443c01a7336-1f9aa47c7fbmr73192545ad.67.1718995083904;
-        Fri, 21 Jun 2024 11:38:03 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:b1ca:de8:cd9e:bf98])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f9ebbb589dsm17061175ad.269.2024.06.21.11.38.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Jun 2024 11:38:03 -0700 (PDT)
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 22 Jun 2024 00:07:58 +0530
-Message-Id: <D25WWD6D1KLF.YET0CQPHSAAL@gmail.com>
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Christian Couder"
- <christian.couder@gmail.com>, "Patrick Steinhardt" <ps@pks.im>,
- <ach.lumap@gmail.com>, <chriscool@tuxfamily.org>, <git@vger.kernel.org>,
- <kaartic.sivaraam@gmail.com>
-Subject: Re: [PATCH v3 2/3] t/: port helper/test-sha1.c to
- unit-tests/t-hash.c
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Jeff King" <peff@peff.net>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="slq8nWN5"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 066C6264B9;
+	Fri, 21 Jun 2024 14:53:38 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=64gYdU6FbGgVGK3HN8VRsECorLdXhY7i7Tuyfq
+	UuOLo=; b=slq8nWN5qOipul/z27UMZo5xKkIhVcvWy4AH7d4qWDAueMYfOHJ6q4
+	y9eOzEczwYq5n6AWFfkogWXQff3c4/xKa5Ir+vu+SN+NoHN19ZUPNeFYCsa/E+4u
+	7/EjtayGnXvCcOs3Xw7AUY34uOxiMDabmUzspNHfMheOFTtPeQp2I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F25FE264B8;
+	Fri, 21 Jun 2024 14:53:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 60648264B7;
+	Fri, 21 Jun 2024 14:53:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Rob Linden <rlinden@redhat.com>
+Cc: git@vger.kernel.org
+Subject: Re: problem with parsing of patch files for patch-id
+In-Reply-To: <xmqqbk3uns4s.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	21 Jun 2024 10:05:23 -0700")
+References: <CAP0H_AEd1jFNB_dO=HRjwEUKzFqnjntss_1wskKU6hE1VmBs+A@mail.gmail.com>
+	<xmqqbk3uns4s.fsf@gitster.g>
+Date: Fri, 21 Jun 2024 11:53:36 -0700
+Message-ID: <xmqq7ceiktzj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: aerc 0.17.0
-References: <20240229054004.3807-1-ach.lumap@gmail.com>
- <20240523235945.26833-1-shyamthakkar001@gmail.com>
- <20240523235945.26833-3-shyamthakkar001@gmail.com> <ZlCWcpcUkgUMWJYz@tanuki>
- <CAP8UFD1=yjZEZWvMYKq1RyY8fMSHze4XcLbCZMSFhCLBheaM+w@mail.gmail.com>
- <xmqqo78vnrba.fsf@gitster.g>
- <6fhpz4aqq7jr6ca2durig7e5a37g6ndzjjc2v46kjjkldohtja@tu7cdo4tu2r6>
- <20240616045259.GA17750@coredump.intra.peff.net>
-In-Reply-To: <20240616045259.GA17750@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9162D7BE-2FFF-11EF-A6A1-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-On Sun Jun 16, 2024 at 10:22 AM IST, Jeff King wrote:
-> On Sun, Jun 16, 2024 at 01:44:07AM +0530, Ghanshyam Thakkar wrote:
->
-> > On Fri, 24 May 2024, Junio C Hamano <gitster@pobox.com> wrote:
-> > > Christian Couder <christian.couder@gmail.com> writes:
-> > >=20
-> > > >> Can we refactor this test to stop doing that? E.g., would it work =
-if we
-> > > >> used git-hash-object(1) to check that SHA1DC does its thing? Then =
-we
-> > > >> could get rid of the helper altogether, as far as I understand.
-> > > >
-> > > > It could perhaps work if we used git-hash-object(1) instead of
-> > > > `test-tool sha1` in t0013-sha1dc to check that SHA1DC does its thin=
-g,
-> > > > but we could do that in a separate patch or patch series.
-> > >=20
-> > > Yeah, I think such a plan to make preliminary refactoring as a
-> > > separate series, and then have another series to get rid of
-> > > "test-tool sha1" (and "test-tool sha256" as well?) on top of it
-> > > would work well.
-> >=20
-> > It seems that git-hash-object does not die (or give an error) when
-> > providing t0013/shattered-1.pdf, and gives a different hash than the
-> > one explicitly mentioned t0013-sha1dc.sh. I suppose it is silently
-> > replacing the hash when it detects the collision. Is this an expected
-> > behaviour?
->
-> The shattered files do not create a collision (nor trigger the detection
-> in sha1dc) when hashed as Git objects. The reason is that Git objects
-> are not a straight hash of the contents, but have the object type and
-> size prepended.  One _could_ use the same techniques that created the
-> shattered files to create a colliding set of Git objects, but AFAIK
-> nobody has done so (and it probably costs tens of thousands of USD,
-> though perhaps getting cheaper every year).
->
-> So no, git-hash-object can't be used to test this. You have to directly
-> hash some contents with sha1, and I don't think there is any way to do
-> that with regular Git commands. Anything working with objects will use
-> the type+size format. We also use sha1 for the csum-file.[ch] mechanism,
-> where it is a straight hash of the contents (and we use this for
-> packfiles, etc). But there's not an easy way to feed an arbitrary file
-> to that system.
->
-> It's possible there might be a way to abuse hashfd_check() to feed an
-> arbitrary file. E.g., stick shattered-1.pdf into a .pack file or
-> something, then ask "index-pack --verify" to check it. But I don't think
-> even that works, because before we even get to the final checksum, we're
-> verifying the actual contents as we go.
->
-> So I think we need to keep some mechanism for computing the sha1 of
-> arbitrary contents.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thank you for the detailed explanation. Then I suppose we should keep
-these helpers (test-{sha1, sha256, hash}) as it is.
+> Rob Linden <rlinden@redhat.com> writes:
+>
+>> This patch (also attached) fixes it by only considering commit hashes
+>> in a "From xxxxx..." line:
+>
+> If I am not mistaken, "git patch-id" was designed to read from
+>
+>     git rev-list ... commit range ... | git diff-tree --stdin -p
+>
+> where we see
+>
+>     9005149a4a77e2d3409c6127bf4fd1a0893c3495
+>     diff --git a/path b/path
+>     index ...
+>     ... patch text here ...
+>
+> so I would suspect that limiting the commit object names only to
+> those that follow "From " (i.e. the format-patch output or output
+> with the "--format=email" option) would break existing use cases big
+> time.
 
+Let's do this to make sure we have a baseline that we will not
+break.
+
+------- >8 ------------- >8 ------------- >8 -------
+[PATCH] t4204: patch-id supports various input format
+
+"git patch-id" was first developed to read from "git diff-tree
+--stdin -p" output.  Later it was enhanced to read from "git
+diff-tree --stdin -p -v", which was the downstream of an early
+imitation of "git log" ("git rev-list" run in the upstream of a pipe
+to feed the "diff-tree").  These days, we also read from "git
+format-patch".
+
+Their output begins slightly differently, but the patch-id computed
+over them for the same commit should be the same.  Ensure that we
+won't accidentally break this expectation.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t4204-patch-id.sh | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git c/t/t4204-patch-id.sh w/t/t4204-patch-id.sh
+index 605faea0c7..ebce72b2ce 100755
+--- c/t/t4204-patch-id.sh
++++ w/t/t4204-patch-id.sh
+@@ -114,6 +114,29 @@ test_expect_success 'patch-id supports git-format-patch output' '
+ 	test "$2" = $(git rev-parse HEAD)
+ '
+ 
++test_expect_success 'patch-id computes the same for various formats' '
++	# This test happens to consider "git log -p -1" output
++	# the canonical input format, so use it as the norm.
++	git log -1 -p same >log-p.output &&
++	git patch-id <log-p.output >expect &&
++
++	# format-patch begins with "From <commit object name>"
++	git format-patch -1 --stdout same >format-patch.output &&
++	git patch-id <format-patch.output >actual &&
++	test_cmp actual expect &&
++
++	# "diff-tree --stdin -p" begins with "<commit object name>"
++	same=$(git rev-parse same) &&
++	echo $same | git diff-tree --stdin -p >diff-tree.output &&
++	git patch-id <diff-tree.output >actual &&
++	test_cmp actual expect &&
++
++	# "diff-tree --stdin -v -p" begins with "commit <commit object name>"
++	echo $same | git diff-tree --stdin -p -v >diff-tree-v.output &&
++	git patch-id <diff-tree-v.output >actual &&
++	test_cmp actual expect
++'
++
+ test_expect_success 'whitespace is irrelevant in footer' '
+ 	get_patch_id main &&
+ 	git checkout same &&
