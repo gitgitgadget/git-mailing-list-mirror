@@ -1,34 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7C726AD5
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 06:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6193912C48A
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 06:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718952024; cv=none; b=CA+MhXYseS0cFI/C107YJCRR1q/CBMCO/z5GT1apzYi9j8vxnVl+iXizQ2cJOC5BAcoVT5IEfHtA7xTfOF2nsE35LmEILnS6WRsdEdRYfXkYJAKeFxYJH50111NDQqz+gApBBDFzHp+qifYBXK5if3N+ncVoFT4opi4061+/le0=
+	t=1718952691; cv=none; b=H+ZRn23s6kjsdfKl8isw/wn6EbIwxrqAs59zblM/BixOp8JowJ5NN85chfZeBxvgUD0GbTVWpu8e0FVm303p/WrXtR3Hz2C2H2KydcxGT4Z7W/k4WZyf8arZK4Lr0Jb1/41J8/g+xqmgwM5uSaGBfA0RZ7m714d5llPAnjsxXlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718952024; c=relaxed/simple;
-	bh=FoO0oYRG2Bjj+UeoVvvzvKkk1envdgoa409Oyc1/3mE=;
+	s=arc-20240116; t=1718952691; c=relaxed/simple;
+	bh=Of8Oljs5qLe7nq9llDe5gaFR/Fjk0eEwvZfJvjesfFc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QHiREB6Ag0K3IdQL3HxQnRm0fgoitVYQrRtjObZmmZjKvgepWR9dRLvMiQCn/luIJfvdxmRp0UqUQ/oROhGxAQFtqwhW4W2+9nzPgBz6tmB98QXSsF1JnrFhqu552KrNh56MWHVaTRaLD5jz+CutUQr2kbYaNBs2hlkb8sV3nQQ=
+	 Content-Type:Content-Disposition:In-Reply-To; b=nTwq9YzffD2c61tV/wmYpm1xz/kQ0xIdHwIk2OT5SUpSAGxRhoCK8O423KCy1kHL6Fng6C1mWovAwVa/G3+6c5GNeH0U5Ech5Teg6xaNl7QU2xsP5l2v2I92y7O5REhLyN5RtqVdcQ/xEYJb2f178cj6crXxZ9IJpn3ZBzC1Tpc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 26251 invoked by uid 109); 21 Jun 2024 06:40:21 -0000
+Received: (qmail 26489 invoked by uid 109); 21 Jun 2024 06:51:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Jun 2024 06:40:21 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Jun 2024 06:51:28 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6494 invoked by uid 111); 21 Jun 2024 06:40:18 -0000
+Received: (qmail 6610 invoked by uid 111); 21 Jun 2024 06:51:25 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Jun 2024 02:40:18 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Jun 2024 02:51:25 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 21 Jun 2024 02:40:20 -0400
+Date: Fri, 21 Jun 2024 02:51:27 -0400
 From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	=?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>,
+	Git List <git@vger.kernel.org>
 Subject: Re: [PATCH] pager: die when paging to non-existing command
-Message-ID: <20240621064020.GB2105230@coredump.intra.peff.net>
+Message-ID: <20240621065127.GC2105230@coredump.intra.peff.net>
 References: <f7106878-5ec5-4fe7-940b-2fb1d9707f7d@gmail.com>
+ <xmqqsex7tp0c.fsf@gitster.g>
+ <ba5965c2-9f1c-4dd2-a2c5-e1bde832766c@kdbg.org>
+ <xmqqplsbqm2l.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,81 +43,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <f7106878-5ec5-4fe7-940b-2fb1d9707f7d@gmail.com>
+In-Reply-To: <xmqqplsbqm2l.fsf@gitster.g>
 
-On Thu, Jun 20, 2024 at 07:25:43PM +0200, Rubén Justo wrote:
+On Thu, Jun 20, 2024 at 03:35:46PM -0700, Junio C Hamano wrote:
 
-> When trying to execute a non-existent program from GIT_PAGER, we display
-> an error.  However, we also send the complete text to the terminal
-> and return a successful exit code.  This can be confusing for the user
-> and the displayed error could easily become obscured by a lengthy
-> text.
+> Johannes Sixt <j6t@kdbg.org> writes:
 > 
-> For example, here the error message would be very far above after
-> sending 50 MB of text:
+> > Am 20.06.24 um 21:04 schrieb Junio C Hamano:
+> >> Just in case there is a reason why we should instead silently return
+> >> on MinGW, I'll Cc the author of bfdd9ffd, though.
+> >
+> > I don't think there is a reason. IIRC, originally on Windows, failing to
+> > start a pager would still let Git operate normally, just without paged
+> > output. I might have regarded this as better than to fail the operation.
 > 
->     $ GIT_PAGER=non-existent t/test-terminal.perl git log | wc -c
->     error: cannot run non-existent: No such file or directory
->     50314363
+> The "better keep going than to fail" is what Rubén finds worse, so
+> both sides are quite understandable.
 > 
-> Let's make the error clear by aborting the process and return an error
-> so that the user can easily correct their mistake.
-> 
-> This will be the result of the change:
-> 
->     $ GIT_PAGER=non-existent t/test-terminal.perl git log | wc -c
->     error: cannot run non-existent: No such file or directory
->     fatal: unable to start the pager: 'non-existent'
->     0
+> It is unlikely that real-world users are taking advantage of the
+> fact.  If they do not want their invocation of Git command paged,
+> "GIT_PAGER=cat git foo" is just as easy as "GIT_PAGER=no git foo",
+> and if it was done by mistake to configure a non-working pager
+> (e.g., configure core.pager to the program xyzzy and then
+> uninstalling xyzzy without realizing you still have users), fixing
+> it would be a one-time operation either way (you update core.pager
+> or you reinstall xyzzy), so I would say that it is better to make
+> the failure more stand out.
 
-OK. My initial reaction was "eh, who care? execve() failing is only one
-error mode, and we might see all kinds of failure modes from a missing
-or broken pager".
+The compelling thing to me is that just about every other failure mode
+of the pager will result in a SIGPIPE, so the "be nice with a
+non-working pager" trick really only applies to the very narrow case of
+execve() failing.
 
-But this:
+I did assume that a bogus option like:
 
-> Finally, it's worth noting that we are not changing the behavior if the
-> command specified in GIT_PAGER is a shell command.  In such cases, it
-> is:
-> 
->     $ GIT_PAGER=:\;non-existent t/test-terminal.perl git log
->     :;non-existent: 1: non-existent: not found
->     died of signal 13 at t/test-terminal.perl line 33.
+  # oops, there is no -l option!
+  GIT_PAGER='less -l' git log
 
-...shows what happens in those other cases, and you are making things
-more consistent. So that seems reasonable to me.
+would be a plausible such misconfiguration, but to my surprise "less"
+prints "hey, there is no -l option" and then pages anyway. How helpful. :)
 
-> The behavior change we're introducing in this commit affects two tests
-> in t7006, which is a good sign regarding test coverage and requires us
-> to address it.
-> 
-> The first test is 'git skips paging non-existing command'.  This test
-> comes from f7991f01f2 (t7006: clean up SIGPIPE handling in trace2 tests,
-> 2021-11-21,) where a modification was made to a test that was originally
-> introduced in c24b7f6736 (pager: test for exit code with and without
-> SIGPIPE, 2021-02-02).  That original test was, IMHO, in the same
-> direction we're going in this commit.
+But something like:
 
-Yeah, the point of f7991f01f2 was just to clean up the tests. The
-modification was only documenting what Git happened to do for that case
-now, and not meant as an endorsement of the behavior. ;) So I have no
-problem changing it.
+  # oops, there is no -X option!
+  GIT_PAGER='cat -X' git log
 
-> The second test being affected is: 'non-existent pager doesnt cause
-> crash', introduced in f917f57f40 (pager: fix crash when pager program
-> doesn't exist, 2021-11-24).  As its name states, it has the intention of
-> checking that we don't introduce a regression that produces a crash when
-> GIT_PAGER points to a nonexistent program.
-> 
-> This test could be considered redundant nowadays, due to us already
-> having several tests checking implicitly what a non-existent command in
-> GIT_PAGER produces.  However, let's maintain a good belt-and-suspenders
-> strategy; adapt it to the new world.
+yields just:
 
-OK. I would also be happy to see it go. The crash was about reusing the
-pager child_process struct, and no we know that cannot happen. Either we
-run the pager or we immediately bail. I think that the code change in
-that commit could also be reverted (to always re-init the child
-process), but it's probably more defensive to keep it.
+  cat: invalid option -- 'X'
+  Try 'cat --help' for more information.
+
+with no other output. It's a little confusing if you don't realize that
+"cat" is the pager. We obviously don't want to complain about SIGPIPE,
+because it's common for the user to simply exit the pager without
+reading all of the possible data. It might be nice if we printed some
+message when the pager exits non-zero, but I'd worry there might be
+false positives, depending on the behavior of various pagers.
 
 -Peff
