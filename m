@@ -1,115 +1,154 @@
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1471155329
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 20:00:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1284842045
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 21:11:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719000005; cv=none; b=rSqqk/qhleE1uOrndQ56HkzHziooFIYS4cQyJQ5YsQHHUGzrOhNibfbZTjzxbjd61KkHc08fvjzXIC+SWyGlmO8e4QT35sqGAy6hTS9vwMGuwoL1LgAQzvkNAy0nl/nq127I9ZTGPTh5Mp0YLOYbbgoLVD90/L90EoSgFnMmF2k=
+	t=1719004272; cv=none; b=q6TgkyYt/Dq6eEBSWd6d5C82WlLJVNPtAOVobgUHE/GI2G75f9kzx81vhxTbGJOf1OkA6HP1zh8y6tsVcI91okGqZL0PmEFgtWqFnla2UPcWTS3WhMoCwuLLk2lu2zLCQAtAs4vTY/31WeQQc2ENXTvLopXiYbIC4sG1JPuRMoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719000005; c=relaxed/simple;
-	bh=bsR2zU3lYlDRQquxuBoiw0sFKiPCzPfepnMyksJF0Jg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tJnB0LpSHpQv3Kj1AWuNJ+wvQk0zLjEABZifxOjwPP2dPuI46QL3mghE//iOiPr0YL8J/a75GH5td1ivVajmu2ECBJYQyo1rGBUuA7rnfCOj8ZslokAMMLTi2jf6N0Z5fyalgcldmwTjJHdR+YKnPI64dhA8XGyJHGQmOnw8luc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=QXmSt3wz; arc=none smtp.client-ip=173.255.242.215
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
+	s=arc-20240116; t=1719004272; c=relaxed/simple;
+	bh=6y/uSJvsweT/ql83FanxpTNkShabQoCf+WnF781M1lU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZPXH8ogxhLTN6o6rB1rxKvOYicHX7KztOoyHTUy6iebxIpASkjIyeqEdFXRu+Y+bDa9+3i4oGPYoA+vaaT8CvFNm+bTuPGrG0+kz2QqjSMl5MVAiZWLKOhNqEH6qzZnh9edXbJVl2/r1CbUSiX7C6dRrXeCKOEbTkae0+p6gQMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dMYhgvJT; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="QXmSt3wz"
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7A961F7BE;
-	Fri, 21 Jun 2024 20:00:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-	s=selector1; t=1719000003;
-	bh=bsR2zU3lYlDRQquxuBoiw0sFKiPCzPfepnMyksJF0Jg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QXmSt3wzKj4d5Rie1f+/bLFu0Y6Xiq7+zwM4FpXj+6TzZQcoL9GVyvW4cebgWWETR
-	 WoFY/XoT1OZfvQuTcGLs8KwOjU9RFREZ4g2jz/BaVM+s/Fz1+qK6DgsMg7cjahtvd5
-	 +PLokX8pzUqA/83zDcLxReENERf/oZUli6uJ/VDg=
-Date: Fri, 21 Jun 2024 20:00:02 +0000
-From: Eric Wong <e@80x24.org>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] t1006: ensure cat-file info isn't buffered by
- default
-Message-ID: <20240621200002.M726804@dcvr>
-References: <20240617104326.3522535-1-e@80x24.org>
- <20240617104326.3522535-3-e@80x24.org>
- <xmqq1q4v5m5a.fsf@gitster.g>
- <20240618213041.M462972@dcvr>
- <20240621071640.GD2105230@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dMYhgvJT"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3650f2e540dso1535080f8f.0
+        for <git@vger.kernel.org>; Fri, 21 Jun 2024 14:11:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719004268; x=1719609068; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WFOxuRv9blbV/yrkmNvscDLkiqbtPVFH5EhXuMnN7Hc=;
+        b=dMYhgvJTDu9gasLryrh/H13Qrigt2lB5tqxCjZ9eKYID/yRR3TO6E9uNm7HPygsw1L
+         K0p680SsAicEg+51f+e6FgYIop2w7VxVtkpkmzvzOMhdMatR8ES4Yqk2gGA4tCMlqIer
+         pAJXRE0wFfVl3CgXIVrpyUU3Qn4J2W+DlFW+EqwLXsjoBBbdlfOqeVFfs9b/vzJJ2Iff
+         vjGYy+GV/EY8e8y9ZJ8wl8fsD6qI/j2B2I4z5wTUi7G5NfLn3m5I7ZVDR5k2IwFp1ZFx
+         NWPl0tI/AxusaZw3+iZ18D5fUHUgUDQJ/Zu/x/2tQ+rQj/tBAF6+6lrD3R2HCzUTUEVW
+         iwHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719004268; x=1719609068;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WFOxuRv9blbV/yrkmNvscDLkiqbtPVFH5EhXuMnN7Hc=;
+        b=sK2Gy0/IGsrxCSOrL1gKTtJFLbULMjKXjetjbpCkHGrMBBm/FaWJ2jUAVw2TA5dhSA
+         RoCuzCD63j5Uvjk9HspyhBpNxPANO12dbPFKsWnrf56tXFpfUrpMIJKRtDm1f0rz1Bs3
+         K0i8Kmtlc6CfKIWSFfzwpvE2+WTvSiepI5Z/1Y+AcpGBxSShBFt8io5zCNKKyADA5/6s
+         FIRZadYFSt8RUcRJoPwueq3yQvETiunWs/w9FUYl3U5PEEIS1jTl0c1kChKXZX1ogyBk
+         nS9n0Gd5wv9qGjksEvY1vsW+mtxczWLQvA+nQURnVTiI8Di0nH9YPS2QPV4MUMB9u7AT
+         tNAw==
+X-Gm-Message-State: AOJu0Yy4llWDSxoVwT4OuG7deMyUj0K4tq0F8qIJah2iTKb4+hkcu8k6
+	cD8Ge9K7T/reejbW65M4PevA7700/6Q0o+1j1F2YTyW+zQq550/bWTjAzA==
+X-Google-Smtp-Source: AGHT+IFuea/iajzlvBAl4NnDSi439+DHuk4QVsXg0y3sKu/s3pOsWPX9JB11Y8UYwHFN57lYmvQkIw==
+X-Received: by 2002:a5d:4390:0:b0:35f:2369:19f4 with SMTP id ffacd0b85a97d-36317b83148mr7020931f8f.34.1719004267950;
+        Fri, 21 Jun 2024 14:11:07 -0700 (PDT)
+Received: from gmail.com (179.red-88-14-203.dynamicip.rima-tde.net. [88.14.203.179])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-366389b863fsm2752707f8f.47.2024.06.21.14.11.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Jun 2024 14:11:07 -0700 (PDT)
+Message-ID: <7c749c2f-803d-4e97-b4f4-a97c681ed102@gmail.com>
+Date: Fri, 21 Jun 2024 23:11:06 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240621071640.GD2105230@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] pager: die when paging to non-existing command
+To: Jeff King <peff@peff.net>
+Cc: Git List <git@vger.kernel.org>
+References: <f7106878-5ec5-4fe7-940b-2fb1d9707f7d@gmail.com>
+ <20240621064020.GB2105230@coredump.intra.peff.net>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20240621064020.GB2105230@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Jeff King <peff@peff.net> wrote:
-> On Tue, Jun 18, 2024 at 09:30:41PM +0000, Eric Wong wrote:
+On Fri, Jun 21, 2024 at 02:40:20AM -0400, Jeff King wrote:
+
+> > When trying to execute a non-existent program from GIT_PAGER, we display
+> > an error.  However, we also send the complete text to the terminal
+> > and return a successful exit code.  This can be confusing for the user
+> > and the displayed error could easily become obscured by a lengthy
+> > text.
+> > 
+> > For example, here the error message would be very far above after
+> > sending 50 MB of text:
+> > 
+> >     $ GIT_PAGER=non-existent t/test-terminal.perl git log | wc -c
+> >     error: cannot run non-existent: No such file or directory
+> >     50314363
+> > 
+> > Let's make the error clear by aborting the process and return an error
+> > so that the user can easily correct their mistake.
+> > 
+> > This will be the result of the change:
+> > 
+> >     $ GIT_PAGER=non-existent t/test-terminal.perl git log | wc -c
+> >     error: cannot run non-existent: No such file or directory
+> >     fatal: unable to start the pager: 'non-existent'
+> >     0
 > 
-> > +script='
-
-<snip>
-
-> > +expect="$hello_oid blob $hello_size"
-> > +
-> > +test_expect_success PERL '--batch-check is unbuffered by default' '
-> > +	perl -e "$script" -- --batch-check $hello_oid "$expect"
-> > +'
+> OK. My initial reaction was "eh, who care? execve() failing is only one
+> error mode, and we might see all kinds of failure modes from a missing
+> or broken pager".
 > 
-> We often use "perl -e" for one-liners, etc, but this is pretty big.
-> Maybe:
+> But this:
 > 
->   cat >foo.pl <<-\EOF
->   ...
->   EOF
->   perl foo.pl -- ...
+> > Finally, it's worth noting that we are not changing the behavior if the
+> > command specified in GIT_PAGER is a shell command.  In such cases, it
+> > is:
+> > 
+> >     $ GIT_PAGER=:\;non-existent t/test-terminal.perl git log
+> >     :;non-existent: 1: non-existent: not found
+> >     died of signal 13 at t/test-terminal.perl line 33.
 > 
-> would be more readable? To be clear I don't think there's anything
-> incorrect about your usage, but it would match the style of our suite a
-> bit better.
-
-*shrug*  It doesn't save the nested quoting/expansion confusion;
-but it's Junio's call.  I don't think a v3 is worth the effort.
-
-> Likewise, it would be usual in our suite for the helper to do the
-> minimum that needs to be in perl, and use our normal functions for
-> things like comparing output (rather than taking its own "expect"
-> argument).
-
-<snip>
-
-> +test_expect_success PERL '--batch-check is unbuffered by default' '
-> +	echo "$hello_oid" |
-> +	perl run-and-wait.pl git cat-file --batch-check >out &&
-> +	echo "$hello_oid blob $hello_size" >expect &&
-> +	test_cmp expect out
-
-I prefer to avoid process spawning overhead from test_cmp;
-but that's a small drop in a big bucket.
-
-> I went for brevity above. Notably missing are:
+> ...shows what happens in those other cases, and you are making things
+> more consistent. So that seems reasonable to me.
 > 
->   - the use of strict/warnings. I think we've shied away from these in
->     the test suite because we want to run on any version of perl. In my
->     experience most strict/warnings output is actually telling you about
->     obvious garbage, but not always. IIRC perl got more strict about
->     "()" around lists in some contexts a few years back, and code which
->     used to be OK started generating warnings. OTOH, those warnings were
->     probably a sign of problems-to-come, anyway. Without "FATAL",
->     though, I think "use warnings" is not doing much good (nobody is
->     ever going to see its output if the test isn't failing).
+> > The behavior change we're introducing in this commit affects two tests
+> > in t7006, which is a good sign regarding test coverage and requires us
+> > to address it.
+> > 
+> > The first test is 'git skips paging non-existing command'.  This test
+> > comes from f7991f01f2 (t7006: clean up SIGPIPE handling in trace2 tests,
+> > 2021-11-21,) where a modification was made to a test that was originally
+> > introduced in c24b7f6736 (pager: test for exit code with and without
+> > SIGPIPE, 2021-02-02).  That original test was, IMHO, in the same
+> > direction we're going in this commit.
+> 
+> Yeah, the point of f7991f01f2 was just to clean up the tests. The
+> modification was only documenting what Git happened to do for that case
+> now, and not meant as an endorsement of the behavior. ;) So I have no
+> problem changing it.
+> 
+> > The second test being affected is: 'non-existent pager doesnt cause
+> > crash', introduced in f917f57f40 (pager: fix crash when pager program
+> > doesn't exist, 2021-11-24).  As its name states, it has the intention of
+> > checking that we don't introduce a regression that produces a crash when
+> > GIT_PAGER points to a nonexistent program.
+> > 
+> > This test could be considered redundant nowadays, due to us already
+> > having several tests checking implicitly what a non-existent command in
+> > GIT_PAGER produces.  However, let's maintain a good belt-and-suspenders
+> > strategy; adapt it to the new world.
+> 
+> OK. I would also be happy to see it go. The crash was about reusing the
+> pager child_process struct, and no we know that cannot happen. Either we
+> run the pager or we immediately bail. I think that the code change in
+> that commit could also be reverted (to always re-init the child
+> process), but it's probably more defensive to keep it.
 
-It may make problems easier to find if there are failures,
-so I think the potential benefits outweight any downsides.
+Yeah.  The name is what took most of my attention, I have to admit.  A
+test named like "check that it doesn't crash" is defensive. ;)
 
->   - I dropped the close/waitpid. I guess maybe it is valuable to confirm
->     that cat-file did not barf, but IMHO the important thing here is
->     testing that it produced the single line of output we expected.
+Let's keep it.
 
-I've found some unexpected bugs through excessive error checking
-in the past, so much preferred to keep them.
+Thanks for your review.
