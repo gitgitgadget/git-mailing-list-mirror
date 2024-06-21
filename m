@@ -1,59 +1,59 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2AB170849
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 10:10:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F809174EC3
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 10:12:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718964632; cv=none; b=fNRl1vx31kw0nK1wmE7/ch0nbHwl8OrEcHXcCNh9wzUohZfql9KTDHBzMI7XvdFtK7jWcXY6rp46PVBTH+byS0l8kXLksOos7SYyHm1xbtnggZdu0Rwxpd/SyuhzVvLCPR65yGAJ9uOLhaTr0vgDQLfmQRFdh2kRSlQNjvvm2po=
+	t=1718964746; cv=none; b=Yn8bXmJJdD6l4Dt+xB2Dyb40ivQ+wFAhDfui5iY0bD8VDnOACZlebCpnqjDys7bONivDs8O/DOfngi4VIWYW3BWTMOOCTCGqCJLX4Y1ecVc2x+LNFqiDeBGp0P2q47ae1+l+uXzrwLC5qwPyed85tH4MjKwIXBN4EUZNvErT1nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718964632; c=relaxed/simple;
-	bh=mdvOiTnoiFmmyF5/dZ6TMsT5rDTkCUmMSBaN5/eXfdo=;
+	s=arc-20240116; t=1718964746; c=relaxed/simple;
+	bh=guWzhm6e258mafNdrqaNSigWDGac4rcUrdtzx+Mz3Jk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZId0GGkGViLJMAznnc4yVEyKB+3uWclGASlS+IM5JvHYONGQMvt+Zx9Hhff9qBh1rmQAvGdKwZyLSSzmNatuG8GpfFPCIl8hEXkHkCAMvW+NwKFSsebekSksDZnRn9K89m6Itc+rkLbfBwScb8KU/nrQIdbRp4wESyJnMEMNl/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DsL7FoVu; arc=none smtp.client-ip=209.85.128.48
+	 In-Reply-To:Content-Type; b=cGjKxk+FCiNITGjsltKKbkfOy8bqDIcbJAp+ac2kQk0P+7CgVw5QLI37B0aJrY2VM3i9KZ99svDwKLRMK3WvIH5n1InawWRNhGWS0jpHouzgBLCZmNaJ2iki2wX+IVOwVHjISDiNF055JvK1LGFpJx68aoQywHHD9qWbCkCIVq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GHJ8B8Bo; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DsL7FoVu"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4217dbeb4caso16447245e9.1
-        for <git@vger.kernel.org>; Fri, 21 Jun 2024 03:10:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GHJ8B8Bo"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a6fd7bee2feso11313366b.1
+        for <git@vger.kernel.org>; Fri, 21 Jun 2024 03:12:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718964629; x=1719569429; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718964743; x=1719569543; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=aqg7uDsJC3d4kGwAZLbbtzIwjS88rBaQm/b4yM4aho8=;
-        b=DsL7FoVungQT1yJj4NINDpK8keSWtrcnezOP2ndagbkKoilXWvRO2g+obnY5S0d0pM
-         232tZ+epVpKSBn8NjouuSoc9U1ZrnsjrLIdOeN2lfUKweiCtpRUkBYHVA57lbLfnGi1D
-         w6dlDlXrNFje4Ck8/rTf2Pb5fwbDRUCio+3LhpRIYpfuNq8ozTbBqnvuK/J0ZmCAVf1O
-         DmPExKJ05dmNyuLcWjdELyCBzuyCXiNJkMU67XSHOsbh3+uwNdLIVcD+szhn+l2UpUNq
-         2N8c1XbIFDm6aYwNpQH85Yhpw7a5XdBVFFKccPC2GHrO8D2pxsXlg7gsgCVJr1ycNLHa
-         8Jag==
+        bh=oplGsNQYmyP8+YrT6yM8OlRIRh9RD7cuZJFBEQhgxAg=;
+        b=GHJ8B8Bo/wD6CZ8/2+IuJS8lPNcq4Pc9Wma0CTLhk1SLPBngI/BwCyJJDClxX67FVy
+         Xu7UtHBQDqAj4BUsU70bgFNOmbDRoIMVOSEUWOLT2/D9nbulbOqxBTcYxnMZFC/g5H2H
+         A17QrJ8ilepTxmemudfdTUjGZ0zF+9ePAfKH+zlb8O2wmtIM2qAv1FUGc0D4WZPmCuAA
+         nWl1YowSDSgfjCO1nIDvBLlOPI9Ct3yPvhg2+tjNIt5GILdidaSRX6K+k3IqBenELykR
+         CPAlg5GvtMwTM/KAGZdFhZD6HhjdRAA0b6onSJPPLdxoSWxFWDDs6hi2A316IVRXOKcl
+         3aww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718964629; x=1719569429;
+        d=1e100.net; s=20230601; t=1718964743; x=1719569543;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=aqg7uDsJC3d4kGwAZLbbtzIwjS88rBaQm/b4yM4aho8=;
-        b=QEwRB/Tm1MiL3wtgGTyvv6HyXfyYkqBVZ4Ri5RC/MXxwfD53L7gucR5WtzVW3HG4oO
-         tdX38kOJduUs8cPKDKnR2chf5g43/Y8TMDT/kY/e0ezjIIazfwzaxe9ZP9Cx7099sVE2
-         naiQQhfUTcqAg3WxNZfmmPgDTJWsSYHdZ5lrl8jjGk+s+KXXDIiJnCK8iHPnXdrpDvd1
-         DpwX/rCq5MOb7LtrmUJ4blGMVCUmcLP31NBYk6Hv3nOzPwG7+8m9lTfh0R+yzEfeD4Az
-         qY08KEFMWJQ3NIiLIB1xJCPR5Tt1VkdCgZGwelk1q4TRCvWx6XIaHaUy8NCilZFx9Lgf
-         E2vA==
-X-Gm-Message-State: AOJu0Yy716l4foJuXAhvSC2yISWYfBhPNgCOJBq1hwgTEqUBOFuX+Fat
-	mJic/Adbtp6unns3UewROB+DIaByzBYxp7vHmFthgLcNokfBJ38o
-X-Google-Smtp-Source: AGHT+IEDJgx6LpHxw/NoWOlrAudG7lIsNYOZiBoyedVq9/aQmvN2v9ZxURChOU9Sn+ZO/QeJI2p8Ow==
-X-Received: by 2002:a05:600c:492f:b0:421:7198:3d76 with SMTP id 5b1f17b1804b1-42475295f03mr58607405e9.28.1718964629049;
-        Fri, 21 Jun 2024 03:10:29 -0700 (PDT)
+        bh=oplGsNQYmyP8+YrT6yM8OlRIRh9RD7cuZJFBEQhgxAg=;
+        b=cZhWHKOBAXf84Ptgioiq8+/lVuZWTkZMJ9IVzgCzugiepPrECQ7IoERuuc5FC8YaAL
+         ihdFp0MMWivpPzT6rIS5h+23TQ3JsrIBwALcJFz5CTc6/Nf9F3pEqjhToaG+veL15sk5
+         wd/gA+0t7Vpw4din7gla0YJKN2bldT2EIqbxkYvShxcIk850fT5lH9ML0D+ak7Z4NInn
+         NBPOFJrVgoWxQYQJHM3VpHc9ZnwwjOyOlEIN8oKUGJWufama9m4udRKTiErP4HWj5hG/
+         IZ/cn+2udwlW76Zm/ZDMbBP0o8clhKiuLnSMfqEeZJSMUg9112RW67I/MvEmo+eeUf9C
+         raAA==
+X-Gm-Message-State: AOJu0YzcYHF4tosfSyG1APjGIX91sJXyWgLs6xJjZHuEwWiFBU2N0+ul
+	ggUoIXEqK21DdkYggFGJHWKvWXFoWM0O3saMq9ACa4x32Czp72UR
+X-Google-Smtp-Source: AGHT+IEPQ1wf6teTkEmteKUaY9nnx5yE9yjI7AlgyuQC+Ba6Zaso+0vdFZTigzrdG149nds1BppXXA==
+X-Received: by 2002:a17:906:c416:b0:a6f:1111:bd8 with SMTP id a640c23a62f3a-a6fab648728mr478531366b.46.1718964743164;
+        Fri, 21 Jun 2024 03:12:23 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:64f:8901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:64f:8901:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-36676e11337sm954758f8f.1.2024.06.21.03.10.28
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a6fcf48a1f2sm67153766b.58.2024.06.21.03.12.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Jun 2024 03:10:28 -0700 (PDT)
-Message-ID: <d0deaa08-2894-4e89-ba51-7bed8e785ef3@gmail.com>
-Date: Fri, 21 Jun 2024 11:10:27 +0100
+        Fri, 21 Jun 2024 03:12:22 -0700 (PDT)
+Message-ID: <919b40c6-9497-4646-b7ba-62c2236a4c79@gmail.com>
+Date: Fri, 21 Jun 2024 11:12:22 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,73 +62,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Bug: Git Maintenance does not register multiple repos
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>,
- Shubham Kanodia <shubham.kanodia10@gmail.com>
-Cc: git@vger.kernel.org
-References: <CAG=Um+0LXVRHmvKdTB9WHJujjh9agK_ZHdv45ffzMsqX65NLVw@mail.gmail.com>
- <665f77a0-f301-40ae-ab94-2920d15fcc8d@app.fastmail.com>
- <CAG=Um+1EyB08n7oH6rgqPmmn0OWndUdv4vEsY5Hcv3aaf-BHxg@mail.gmail.com>
- <4480de3f-851f-4cf7-889f-b5ab7c4e0223@app.fastmail.com>
+Subject: Re: Thoughts about the -m option of cherry-pick and revert
+To: Junio C Hamano <gitster@pobox.com>, Stefan Haller <lists@haller-berlin.de>
+Cc: Git <git@vger.kernel.org>
+References: <e60a8b1a-98c8-4ac7-b966-ff9635bb781d@haller-berlin.de>
+ <xmqqa5jfoxvh.fsf@gitster.g>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <4480de3f-851f-4cf7-889f-b5ab7c4e0223@app.fastmail.com>
+In-Reply-To: <xmqqa5jfoxvh.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 21/06/2024 07:58, Kristoffer Haugsbakk wrote:
-> On Thu, Jun 20, 2024, at 17:34, Shubham Kanodia wrote:
->> 1. What spec does the config file follow?
-> 
-> Apparently there isn’t a spec because it is bespoke.
+On 21/06/2024 03:03, Junio C Hamano wrote:
+> Stefan Haller <lists@haller-berlin.de> writes:
+>
+> Given that the current behaviour was chosen to make sure that the
+> user is aware that the commit being reverted/cherry-picked is a
+> merge and has a chance to choose the right parent (as opposed to
+> blindly picking the first parent that happened to be the right one
+> by accident), I am not sure if it is prudent to change the
+> behaviour.
 
-The syntax is documented on the "git config" man page.
 
->> 2. What is the correct way then to get an "effective" git config
->> value? Typically, I assumed that if a value appeared twice in the git
->> config, the second would override the first (for say, `core.editor`).
->>    How does git parse "overrides" vs "arrays" if they are defined using
->> the same syntax?
-> 
-> There are two dimensions
-> 
-> 1. How config variables are parsed
-> 2. What is expected of the specific config variable
-
-To expand a little on what Kristoffer has said - this means that you 
-need to know in advance what type of variable you are checking. You can 
-do that by reading the documentation for that variable on the "git 
-config" man page. "git config" also offers the --type=<type> option to 
-normalize values to the expected type.
+FWIW I agree with this, for me the main benefit of the current behavior 
+is stopping when I'm not expecting to cherry-pick a merge.
 
 Best Wishes
 
 Phillip
 
-> `core.editor` is a single value. You can test with
+> If I were simplifying this, I would probably
 > 
-> ```
-> [core]
-> 	editor=vim
-> 	editor=nano
-> ```
+>   (1) disallow cherry-picking a merge (and suggest redoing the same
+>       merge, possibly after rebasing the copy of the merged history
+>       to an appropriate base as needed), and
+>   (2) allowing reverting a merge only wrt the first parent,
 > 
-> The last one wins here. `core.editor` expects a single value.
-> 
-> But you can define a multi-valued variable
-> 
-> ```
-> [customsection]
->      mycustomvariable = value1
->      mycustomvariable = value2
->      mycustomvariable = value3
-> ```
-> 
-> ```
-> $ git config --global --get-all customsection.mycustomvariable
-> value1
-> value2
-> value3
-> ```
+> but that is a different story.
 > 
 
