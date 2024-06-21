@@ -1,53 +1,53 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFC415FA65
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 16:20:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EC1156227
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 16:34:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718986841; cv=none; b=Tixqm2pdstXefYjhEg8lKA/3/xcgC97aCq45hxejRlQxnssA/B0bqidqC60YZrkJSxcAjWJJ6RKoruxkvymjrLSaGdmevt27KnT+tb3E4OQ59fKCzG1A4oNZJRTVNIR1FYuUTgxOrsVcFBb76Mu45gz1JNk6g99jsA9bZAH4xdc=
+	t=1718987670; cv=none; b=J/EzJ1FkpGkSSjYtygXwCTTjI1nV25OhmwThxtEhExR724NxzhLWR0Tc/u6uWv2fben2JOdXlgbqvYj0kP7olNj7ZNzhGmLmdFy265HC4rUHT/fg2/om6MH+iDKXGBufN1+/kZxERpyxaKJUATiy8v5v6zt+09viqgcGgYeLcnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718986841; c=relaxed/simple;
-	bh=G16bIrGCmrMFeQCt93XMMEbd4HBpbdVMTLAZGl0GbH0=;
+	s=arc-20240116; t=1718987670; c=relaxed/simple;
+	bh=Wt2nEkaLdFDu/Pxpdy+L+lT3+2E+OdqsnS2zhv3zGbg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OIICBisqyrYTakILz+QJzF2mSiL5J4vV0+xA+i1S+wtYOBGyDsEHD/mO6yw0cB1zQjVKCadvB2tXRAjJ3yeY2dm2dW8ePGM5LzxeEZNXWCJBb4n+Mq5/BIpbjwkV4qC+PTEzFS7C+MUNFgrMbSV+ju3Yj5EBoQZnjLi4adnbnN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VBFxKuEg; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=JlLyvMFVRn2+R2URKx+d6o09Xqm3Q1ZapY1FtyH/F15zQTS23Iv5PxbudJWuVIoDxLBM1vVcvLJA2oLzci60R0ZKMoziQcDElFe9s6OvJTr6GfrPcGwzuGOySqQQ4Di0ZBu1nAfSKxHGL2hzDO9YMeGqUy/zh7T1auj3BKhRUzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CWm8rMPu; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VBFxKuEg"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B075925509;
-	Fri, 21 Jun 2024 12:20:38 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CWm8rMPu"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3A0C736FBA;
+	Fri, 21 Jun 2024 12:34:28 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=G16bIrGCmrMF
-	eQCt93XMMEbd4HBpbdVMTLAZGl0GbH0=; b=VBFxKuEgIw8fPW27bJDRLknJE3ky
-	EcdyE7P4Lg8R+yPEdBJHvAl/rXCAIktKRJjZOtdZ0jKWaN/CRsNZ80oS9dltmRJj
-	QvbW3a4vjDHzbxw99r6+mQlRAH+t28IKDXV50JBvu2qdrFglEkDHx9kbeCN7MPcF
-	ru1yWccgGtXA6CU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A8B4B25506;
-	Fri, 21 Jun 2024 12:20:38 -0400 (EDT)
+	:content-type; s=sasl; bh=Wt2nEkaLdFDu/Pxpdy+L+lT3+2E+OdqsnS2zhv
+	3zGbg=; b=CWm8rMPuAg8tvHAy1cLIAxVuAhiehmu88zMbfFMyVxxu/QAPa+WYVF
+	iKvB9J0pEBab5B3tPIzWH2seEwYZhSybdSFAdYzT66IV+9+uA/qqcoibQjWTWv2Z
+	Mtlgc3pwdLqL5wTHKVnjn4RspBZv+oL0uzp808VxHCgCBL7ohyCaU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 32AA236FB9;
+	Fri, 21 Jun 2024 12:34:28 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.204.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1636325505;
-	Fri, 21 Jun 2024 12:20:38 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 55D9A36FB8;
+	Fri, 21 Jun 2024 12:34:24 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jun 2024, #07; Thu, 20)
-In-Reply-To: <8d903487-2479-432e-a171-931f264bf9f0@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Fri, 21 Jun 2024 07:25:47 +0200")
-References: <xmqqfrt7p3ra.fsf@gitster.g>
-	<8d903487-2479-432e-a171-931f264bf9f0@gmail.com>
-Date: Fri, 21 Jun 2024 09:20:36 -0700
-Message-ID: <xmqq1q4qp8rv.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Stefan Haller <lists@haller-berlin.de>,  Git <git@vger.kernel.org>
+Subject: Re: Thoughts about the -m option of cherry-pick and revert
+In-Reply-To: <6e71b1f3-599f-49c3-be37-e499f28983cf@gmail.com> (Phillip Wood's
+	message of "Fri, 21 Jun 2024 11:19:31 +0100")
+References: <e60a8b1a-98c8-4ac7-b966-ff9635bb781d@haller-berlin.de>
+	<xmqqa5jfoxvh.fsf@gitster.g>
+	<dd58a60d-a551-4726-85a7-f47b851914be@haller-berlin.de>
+	<6e71b1f3-599f-49c3-be37-e499f28983cf@gmail.com>
+Date: Fri, 21 Jun 2024 09:34:22 -0700
+Message-ID: <xmqqv822ntkh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,27 +55,48 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- 3218503C-2FEA-11EF-9CDC-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ 1E957132-2FEC-11EF-87F5-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> [Discarded]
->>=20
->> * rj/add-p-pager (2024-06-04) 6 commits
->> ...
->>  Expecting a reroll to work well with jk/am-retry
->>  source: <1ef0ac3a-3be5-4fc2-93f8-46610f3d1880@gmail.com>
->
-> I apologize if the delay has given the impression that I lost interest
-> in this series.  Due to problems on my end, I haven't been able to
-> dedicate time to it.  I'll send an update soon.
+> I can see why people want to revert merges but cherry-picking them
+> always feels strange to me - what is the advantage over actually
+> merging the branch and seeing the full history of that commit?
 
-No need to apologize.  I'll drop topics that are known to need
-further work but they can come back when they are improved.
+One case that comes to my mind is when you failed to plan ahead and
+used a wrong base when building a series to "fix" an old bug.  You
+built a 7-patch series to fix a bug that you introduced in release
+1.0, but instead of basing the fix on maint-1.0 maintenance track,
+you forked from the tip of master that is preparing for your next
+feature release that is release 1.4.
 
-No need to rush, either.
+Even if you realized that the fix is important enough to warrant
+applying to the maint-1.0 maintenance track, you cannot merge the
+topic that houses 7-patch series down to the old maintenance track
+without bringing all the new features that happened since 1.0 on the
+master track.
 
-Thanks.
+A kosher way may be to rebase the 7-patch series to maint-1.0 and
+merge the result into the maint-1.0 track (and upwards if needed).
+But cherry-picking the commit that merged the original "fix" topic
+into master _may_ be simpler, as you need to resolve a larger
+conflict but (hopefully) only once, instead of up to 7 times, once
+per each commit on the "fix" topic while rebasing.
+
+But of course if something goes wrong, it makes the result
+impossible to bisect---exactly the same reason why you should think
+twice before doing a "merge --squash".  In addition, if you somehow
+figured out why the cherry-picked fix was inadequate, you'd now need
+to forward-port the fix for the fix to the master track or whereever
+the cherry-picked-merge was taken from.
+
+On the other hand, if the original "fix" branch was rebased on
+maint-1.0 and then further fixed, the result can be merged to
+maint-1.0 as well as all the way to the master track.
+
+So, I can understand why people may want to cherry-pick a merge,
+I suspect it is a false economy.  Optimizing for picking, paying
+higher price when the result of (incorrect) picking has to be
+corrected later.
