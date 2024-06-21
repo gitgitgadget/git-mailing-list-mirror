@@ -1,86 +1,134 @@
-Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B2B16E861
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 09:28:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2AB170849
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 10:10:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718962118; cv=none; b=tlaT1mTCQnhaUAj+FwZRnYkajmlIJ3dIG/cYVgkmUVJCGtulrgVR1Zjb+50K/U8bCUvu1RjdtrUcRz1wWZjTHnbKDx+uiujg0dinsnuGCHSucXOF7JrhnU1jkArBzKSshPcxu+QRq8X604guAQaqwEftUZZch58G9dowm4NwwXc=
+	t=1718964632; cv=none; b=fNRl1vx31kw0nK1wmE7/ch0nbHwl8OrEcHXcCNh9wzUohZfql9KTDHBzMI7XvdFtK7jWcXY6rp46PVBTH+byS0l8kXLksOos7SYyHm1xbtnggZdu0Rwxpd/SyuhzVvLCPR65yGAJ9uOLhaTr0vgDQLfmQRFdh2kRSlQNjvvm2po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718962118; c=relaxed/simple;
-	bh=5ZHjYM1ZHsp2bnDct75YeHibmfV+NHI8xWz8mZwrQ7Y=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=I2GfhDFWLo3DrlyoDzVzWzhUQtlw3iyt8bjlON77w02Sas8my0OTp7MlLITGcgc46R9rqjrh0vvAT9M1IFLjRxF3ZPyQwssymbm6Ew9CfpF5JBD6X9PsRjixNO+9GpcmJAncYnj2uzZS22yMg3IcNVy1uBWhKhheTzkEcsvxWAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=hx+ODuxJ; arc=none smtp.client-ip=193.68.50.107
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
+	s=arc-20240116; t=1718964632; c=relaxed/simple;
+	bh=mdvOiTnoiFmmyF5/dZ6TMsT5rDTkCUmMSBaN5/eXfdo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZId0GGkGViLJMAznnc4yVEyKB+3uWclGASlS+IM5JvHYONGQMvt+Zx9Hhff9qBh1rmQAvGdKwZyLSSzmNatuG8GpfFPCIl8hEXkHkCAMvW+NwKFSsebekSksDZnRn9K89m6Itc+rkLbfBwScb8KU/nrQIdbRp4wESyJnMEMNl/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DsL7FoVu; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="hx+ODuxJ"
-Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
-	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 6F42BA073F
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 11:28:32 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:from:from:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=mail; bh=U8xGVJJsCfrmMSaVSObf7bM6Z8N6x79Luf32EXbfvu0=; b=
-	hx+ODuxJ/D++FSsI1guK2ETpjAkA9+PmO/YKDJhx9A/lReCG2jx1PxKJ8Unnfvex
-	Kp/Iu6NVN5eAQ+XCXNv4ja4Na75ZaI4pzP5sujgFMq2Yfb16OM5eTVfIC/0lWuOh
-	Fh40AYPBasE2Yj0EWNnhqq9nqTrDj8RF8laRtfPvY5ya/9xXuU29tz137eB58nFS
-	jZZMkkNc/yaUorlzJSWIPIv4YL2KtMNc5z9+EPx1SjK4fUGftiZpX5wij3mo8UeY
-	3L/tf6KZTpIW1xTm+BALUE06LcK7q8NpS4Gmq/LcYP6vujuS+RrBOrbwdb9UjJiu
-	+2IMXn+ZJPHghNxBjQogQ3wYxK4bZFmUP+owilEs452+Uxo+QpqUdukDS3rISmhQ
-	evdpFpcwb1QDgfi2w5eWEwlFEBTuoob57eiopO7lt+mEzrGIASAe+uoMg4+JgF0p
-	pD33+Lp3VKvEG32GkwhueQ5k99WGG916KzrmW+BC9OUAxq7SwX33Un5G7LEOKCsf
-	FuBOn70wgIOSlFTbCBJqeORGqBJ7WqCN6+ZjcdCE5kqenS4jcCvnUvwEo6Iymfma
-	OkC9MlKIHF6Fc8Auwa0Sb4QEJ86POl2FV/AJ6lRo+RY+R4xK2gcszBdma9T98Z0F
-	pWJObeFzQbJjTmghSEH1vfvzq8z4wJwkM/Q+a46kAjw=
-From: =?UTF-8?q?Cs=C3=B3k=C3=A1s=2C=20Bence?= <csokas.bence@prolan.hu>
-To: <git@vger.kernel.org>
-CC: =?UTF-8?q?Cs=C3=B3k=C3=A1s=2C=20Bence?= <csokas.bence@prolan.hu>
-Subject: [PATCH resend] git-send-email: Use sanitized address when reading mbox body
-Date: Fri, 21 Jun 2024 11:27:22 +0200
-Message-ID: <20240621092721.2980939-2-csokas.bence@prolan.hu>
-X-Mailer: git-send-email 2.45.2.437.gf7de8c0566
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DsL7FoVu"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4217dbeb4caso16447245e9.1
+        for <git@vger.kernel.org>; Fri, 21 Jun 2024 03:10:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718964629; x=1719569429; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=aqg7uDsJC3d4kGwAZLbbtzIwjS88rBaQm/b4yM4aho8=;
+        b=DsL7FoVungQT1yJj4NINDpK8keSWtrcnezOP2ndagbkKoilXWvRO2g+obnY5S0d0pM
+         232tZ+epVpKSBn8NjouuSoc9U1ZrnsjrLIdOeN2lfUKweiCtpRUkBYHVA57lbLfnGi1D
+         w6dlDlXrNFje4Ck8/rTf2Pb5fwbDRUCio+3LhpRIYpfuNq8ozTbBqnvuK/J0ZmCAVf1O
+         DmPExKJ05dmNyuLcWjdELyCBzuyCXiNJkMU67XSHOsbh3+uwNdLIVcD+szhn+l2UpUNq
+         2N8c1XbIFDm6aYwNpQH85Yhpw7a5XdBVFFKccPC2GHrO8D2pxsXlg7gsgCVJr1ycNLHa
+         8Jag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718964629; x=1719569429;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aqg7uDsJC3d4kGwAZLbbtzIwjS88rBaQm/b4yM4aho8=;
+        b=QEwRB/Tm1MiL3wtgGTyvv6HyXfyYkqBVZ4Ri5RC/MXxwfD53L7gucR5WtzVW3HG4oO
+         tdX38kOJduUs8cPKDKnR2chf5g43/Y8TMDT/kY/e0ezjIIazfwzaxe9ZP9Cx7099sVE2
+         naiQQhfUTcqAg3WxNZfmmPgDTJWsSYHdZ5lrl8jjGk+s+KXXDIiJnCK8iHPnXdrpDvd1
+         DpwX/rCq5MOb7LtrmUJ4blGMVCUmcLP31NBYk6Hv3nOzPwG7+8m9lTfh0R+yzEfeD4Az
+         qY08KEFMWJQ3NIiLIB1xJCPR5Tt1VkdCgZGwelk1q4TRCvWx6XIaHaUy8NCilZFx9Lgf
+         E2vA==
+X-Gm-Message-State: AOJu0Yy716l4foJuXAhvSC2yISWYfBhPNgCOJBq1hwgTEqUBOFuX+Fat
+	mJic/Adbtp6unns3UewROB+DIaByzBYxp7vHmFthgLcNokfBJ38o
+X-Google-Smtp-Source: AGHT+IEDJgx6LpHxw/NoWOlrAudG7lIsNYOZiBoyedVq9/aQmvN2v9ZxURChOU9Sn+ZO/QeJI2p8Ow==
+X-Received: by 2002:a05:600c:492f:b0:421:7198:3d76 with SMTP id 5b1f17b1804b1-42475295f03mr58607405e9.28.1718964629049;
+        Fri, 21 Jun 2024 03:10:29 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:64f:8901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:64f:8901:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-36676e11337sm954758f8f.1.2024.06.21.03.10.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Jun 2024 03:10:28 -0700 (PDT)
+Message-ID: <d0deaa08-2894-4e89-ba51-7bed8e785ef3@gmail.com>
+Date: Fri, 21 Jun 2024 11:10:27 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Bug: Git Maintenance does not register multiple repos
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+ Shubham Kanodia <shubham.kanodia10@gmail.com>
+Cc: git@vger.kernel.org
+References: <CAG=Um+0LXVRHmvKdTB9WHJujjh9agK_ZHdv45ffzMsqX65NLVw@mail.gmail.com>
+ <665f77a0-f301-40ae-ab94-2920d15fcc8d@app.fastmail.com>
+ <CAG=Um+1EyB08n7oH6rgqPmmn0OWndUdv4vEsY5Hcv3aaf-BHxg@mail.gmail.com>
+ <4480de3f-851f-4cf7-889f-b5ab7c4e0223@app.fastmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <4480de3f-851f-4cf7-889f-b5ab7c4e0223@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ESET-AS: R=OK;S=0;OP=CALC;TIME=1718962059;VERSION=7972;MC=37261361;ID=1067371;TRN=0;CRV=0;IPC=;SP=0;SIPS=0;PI=3;F=0
-X-ESET-Antispam: OK
-X-EsetResult: clean, is OK
-X-EsetId: 37303A29916D3B546C7567
 
-Commas and other punctuation marks in 'Cc: ', 'Signed-off-by: '
-etc. lines mess with git-send-email. In parsing the mbox headers,
-this is handled by calling `sanitize_address()`. This function
-is called when parsing the message body as well, but was only
-used for comparing it to $author. Now we add it to @cc too.
+On 21/06/2024 07:58, Kristoffer Haugsbakk wrote:
+> On Thu, Jun 20, 2024, at 17:34, Shubham Kanodia wrote:
+>> 1. What spec does the config file follow?
+> 
+> Apparently there isn’t a spec because it is bespoke.
 
-Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
----
- git-send-email.perl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The syntax is documented on the "git config" man page.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index f0be4b4560..72044e5ef3 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1847,9 +1847,9 @@ sub pre_process_file {
- 					$what, $_) unless $quiet;
- 				next;
- 			}
--			push @cc, $c;
-+			push @cc, $sc;
- 			printf(__("(body) Adding cc: %s from line '%s'\n"),
--				$c, $_) unless $quiet;
-+				$sc, $_) unless $quiet;
- 		}
- 	}
- 	close $fh;
--- 
-2.34.1
+>> 2. What is the correct way then to get an "effective" git config
+>> value? Typically, I assumed that if a value appeared twice in the git
+>> config, the second would override the first (for say, `core.editor`).
+>>    How does git parse "overrides" vs "arrays" if they are defined using
+>> the same syntax?
+> 
+> There are two dimensions
+> 
+> 1. How config variables are parsed
+> 2. What is expected of the specific config variable
 
+To expand a little on what Kristoffer has said - this means that you 
+need to know in advance what type of variable you are checking. You can 
+do that by reading the documentation for that variable on the "git 
+config" man page. "git config" also offers the --type=<type> option to 
+normalize values to the expected type.
+
+Best Wishes
+
+Phillip
+
+> `core.editor` is a single value. You can test with
+> 
+> ```
+> [core]
+> 	editor=vim
+> 	editor=nano
+> ```
+> 
+> The last one wins here. `core.editor` expects a single value.
+> 
+> But you can define a multi-valued variable
+> 
+> ```
+> [customsection]
+>      mycustomvariable = value1
+>      mycustomvariable = value2
+>      mycustomvariable = value3
+> ```
+> 
+> ```
+> $ git config --global --get-all customsection.mycustomvariable
+> value1
+> value2
+> value3
+> ```
+> 
 
