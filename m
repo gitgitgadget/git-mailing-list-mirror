@@ -1,146 +1,86 @@
-Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
+Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BF112D1EB
-	for <git@vger.kernel.org>; Fri, 21 Jun 2024 09:23:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B2B16E861
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 09:28:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718961805; cv=none; b=clpmVvCiYBor7eEJKFhslLq5En5d1YqBOEmJHHNGqtlo5+lfCDchpOmx+ytAzxZeOXDMYjm5s5afLzIAdkjZCgCwyamG76lsTsbk+T6r1joGozS9EMaYeLgKwTUkig/j+01CHArdlE56Q4F+6CFlY9N/f8iIpNMUzXJunwPhrSI=
+	t=1718962118; cv=none; b=tlaT1mTCQnhaUAj+FwZRnYkajmlIJ3dIG/cYVgkmUVJCGtulrgVR1Zjb+50K/U8bCUvu1RjdtrUcRz1wWZjTHnbKDx+uiujg0dinsnuGCHSucXOF7JrhnU1jkArBzKSshPcxu+QRq8X604guAQaqwEftUZZch58G9dowm4NwwXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718961805; c=relaxed/simple;
-	bh=aUJBq4m25N3A8Ksotq7lmut6NNPcjLuGmb6yCpPZH1I=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rOtVmw1vgFtFgKQaDJArayiSRaelv3Xo4NY97uGTc4Qb9HMOYMgj/rUd4Nvj+MngEeERh291UovJtEzYmq1N42Dtzgjaj/wXxBDm54J5dxFMUoXLovqnanFAYnINHTjQjWl/+wbV7N0Wb8wTf9JpvhgMOlh75fLrTGXlJ+O5l3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=Lah5xY3F; arc=none smtp.client-ip=95.215.58.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1718962118; c=relaxed/simple;
+	bh=5ZHjYM1ZHsp2bnDct75YeHibmfV+NHI8xWz8mZwrQ7Y=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=I2GfhDFWLo3DrlyoDzVzWzhUQtlw3iyt8bjlON77w02Sas8my0OTp7MlLITGcgc46R9rqjrh0vvAT9M1IFLjRxF3ZPyQwssymbm6Ew9CfpF5JBD6X9PsRjixNO+9GpcmJAncYnj2uzZS22yMg3IcNVy1uBWhKhheTzkEcsvxWAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=hx+ODuxJ; arc=none smtp.client-ip=193.68.50.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="Lah5xY3F"
-X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1718961797;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=u3lKP325ZAFj9rmgpaRwuB35UChTcURfUYjmsZVEC80=;
-	b=Lah5xY3FMXQRxsPRNk3mZXmqIP/3o0chsnq+kmForBhxc7xvxYABkF6RIPf7n4vQyGOHzF
-	PLgasnGCt0aVnEdxXZthTJjs5a3WcAssaLot2r/qJLEWsGv2BvgwUAB0E0FcDoTCorV/ib
-	Yxq5ZjQ/NCZSraFIQoQuMh0SgXzAtMU=
-X-Envelope-To: toon@iotcl.com
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Toon Claes <toon@iotcl.com>
-To: git@vger.kernel.org
-Cc: Toon Claes <toon@iotcl.com>
-Subject: [PATCH] bundle-uri.c: Fix double increment in depth
-Date: Fri, 21 Jun 2024 11:22:58 +0200
-Message-ID: <20240621092258.1557258-1-toon@iotcl.com>
+	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="hx+ODuxJ"
+Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
+	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 6F42BA073F
+	for <git@vger.kernel.org>; Fri, 21 Jun 2024 11:28:32 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=mail; bh=U8xGVJJsCfrmMSaVSObf7bM6Z8N6x79Luf32EXbfvu0=; b=
+	hx+ODuxJ/D++FSsI1guK2ETpjAkA9+PmO/YKDJhx9A/lReCG2jx1PxKJ8Unnfvex
+	Kp/Iu6NVN5eAQ+XCXNv4ja4Na75ZaI4pzP5sujgFMq2Yfb16OM5eTVfIC/0lWuOh
+	Fh40AYPBasE2Yj0EWNnhqq9nqTrDj8RF8laRtfPvY5ya/9xXuU29tz137eB58nFS
+	jZZMkkNc/yaUorlzJSWIPIv4YL2KtMNc5z9+EPx1SjK4fUGftiZpX5wij3mo8UeY
+	3L/tf6KZTpIW1xTm+BALUE06LcK7q8NpS4Gmq/LcYP6vujuS+RrBOrbwdb9UjJiu
+	+2IMXn+ZJPHghNxBjQogQ3wYxK4bZFmUP+owilEs452+Uxo+QpqUdukDS3rISmhQ
+	evdpFpcwb1QDgfi2w5eWEwlFEBTuoob57eiopO7lt+mEzrGIASAe+uoMg4+JgF0p
+	pD33+Lp3VKvEG32GkwhueQ5k99WGG916KzrmW+BC9OUAxq7SwX33Un5G7LEOKCsf
+	FuBOn70wgIOSlFTbCBJqeORGqBJ7WqCN6+ZjcdCE5kqenS4jcCvnUvwEo6Iymfma
+	OkC9MlKIHF6Fc8Auwa0Sb4QEJ86POl2FV/AJ6lRo+RY+R4xK2gcszBdma9T98Z0F
+	pWJObeFzQbJjTmghSEH1vfvzq8z4wJwkM/Q+a46kAjw=
+From: =?UTF-8?q?Cs=C3=B3k=C3=A1s=2C=20Bence?= <csokas.bence@prolan.hu>
+To: <git@vger.kernel.org>
+CC: =?UTF-8?q?Cs=C3=B3k=C3=A1s=2C=20Bence?= <csokas.bence@prolan.hu>
+Subject: [PATCH resend] git-send-email: Use sanitized address when reading mbox body
+Date: Fri, 21 Jun 2024 11:27:22 +0200
+Message-ID: <20240621092721.2980939-2-csokas.bence@prolan.hu>
+X-Mailer: git-send-email 2.45.2.437.gf7de8c0566
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+X-ESET-AS: R=OK;S=0;OP=CALC;TIME=1718962059;VERSION=7972;MC=37261361;ID=1067371;TRN=0;CRV=0;IPC=;SP=0;SIPS=0;PI=3;F=0
+X-ESET-Antispam: OK
+X-EsetResult: clean, is OK
+X-EsetId: 37303A29916D3B546C7567
 
-A bundle URI can serve a gitformat-bundle(5) or a bundle list. This
-plain text file is in the Git config format containing other bundle
-URIs. To avoid these bundle lists to nest too deep, we've set a limit
-with `max_bundle_uri_depth`. Although, when walk through the tree of
-bundles, the current depth is incremented in download_bundle_list() and
-then calls download_bundle_to_file(), which also increments the depth.
-Remove the increment in download_bundle_to_file().
+Commas and other punctuation marks in 'Cc: ', 'Signed-off-by: '
+etc. lines mess with git-send-email. In parsing the mbox headers,
+this is handled by calling `sanitize_address()`. This function
+is called when parsing the message body as well, but was only
+used for comparing it to $author. Now we add it to @cc too.
 
-Signed-off-by: Toon Claes <toon@iotcl.com>
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
 ---
- bundle-uri.c                |  2 +-
- t/t5558-clone-bundle-uri.sh | 62 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 1 deletion(-)
+ git-send-email.perl | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/bundle-uri.c b/bundle-uri.c
-index 91b3319a5c..7b1a711919 100644
---- a/bundle-uri.c
-+++ b/bundle-uri.c
-@@ -436,7 +436,7 @@ static int download_bundle_to_file(struct remote_bundle_info *bundle, void *data
- 	if (ctx->mode == BUNDLE_MODE_ANY && ctx->count)
- 		return 0;
+diff --git a/git-send-email.perl b/git-send-email.perl
+index f0be4b4560..72044e5ef3 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1847,9 +1847,9 @@ sub pre_process_file {
+ 					$what, $_) unless $quiet;
+ 				next;
+ 			}
+-			push @cc, $c;
++			push @cc, $sc;
+ 			printf(__("(body) Adding cc: %s from line '%s'\n"),
+-				$c, $_) unless $quiet;
++				$sc, $_) unless $quiet;
+ 		}
+ 	}
+ 	close $fh;
+-- 
+2.34.1
 
--	res = fetch_bundle_uri_internal(ctx->r, bundle, ctx->depth + 1, ctx->list);
-+	res = fetch_bundle_uri_internal(ctx->r, bundle, ctx->depth, ctx->list);
 
- 	/*
- 	 * Only increment count if the download succeeded. If our mode is
-diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-index 1ca5f745e7..f3a8494297 100755
---- a/t/t5558-clone-bundle-uri.sh
-+++ b/t/t5558-clone-bundle-uri.sh
-@@ -259,6 +259,68 @@ test_expect_success 'clone bundle list (file, any mode, all failures)' '
- 	! grep "refs/bundles/" refs
- '
-
-+test_expect_success 'clone bundle list (file, above max depth)' '
-+	cat >bundle-list-1 <<-EOF &&
-+	[bundle]
-+		version = 1
-+		mode = any
-+
-+	[bundle "bundle-list-2"]
-+		uri = file://$(pwd)/bundle-list-2
-+	EOF
-+
-+	cat >bundle-list-2 <<-EOF &&
-+	[bundle]
-+		version = 1
-+		mode = any
-+
-+	[bundle "bundle-list-3"]
-+		uri = file://$(pwd)/bundle-list-3
-+	EOF
-+
-+	cat >bundle-list-3 <<-EOF &&
-+	[bundle]
-+		version = 1
-+		mode = any
-+
-+	[bundle "bundle-list-4"]
-+		uri = file://$(pwd)/bundle-list-4
-+	EOF
-+
-+	cat >bundle-list-4 <<-EOF &&
-+	[bundle]
-+		version = 1
-+		mode = any
-+
-+	[bundle "bundle-0"]
-+		uri = file://$(pwd)/clone-from/bundle-0.bundle
-+	EOF
-+
-+	git clone --bundle-uri="file://$(pwd)/bundle-list-1" \
-+		clone-from clone-too-deep 2>err &&
-+	! grep "fatal" err &&
-+	grep "warning: exceeded bundle URI recursion limit" err &&
-+
-+	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-+	git -C clone-too-deep cat-file --batch-check <oids &&
-+
-+	git -C clone-too-deep for-each-ref --format="%(refname)" >refs &&
-+	! grep "refs/bundles/" refs
-+'
-+
-+test_expect_success 'clone bundle list (file, below max depth)' '
-+	git clone --bundle-uri="file://$(pwd)/bundle-list-2" \
-+		clone-from clone-max-depth 2>err &&
-+	! grep "fatal" err &&
-+	! grep "warning: exceeded bundle URI recursion limit" err &&
-+
-+	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-+	git -C clone-max-depth cat-file --batch-check <oids &&
-+
-+	git -C clone-max-depth for-each-ref --format="%(refname)" >refs &&
-+	! grep "refs/bundles/" refs
-+'
-+
- #########################################################################
- # HTTP tests begin here
-
---
-2.45.0
