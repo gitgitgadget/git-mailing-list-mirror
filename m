@@ -1,67 +1,87 @@
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2189B2F34
-	for <git@vger.kernel.org>; Sat, 22 Jun 2024 04:36:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5F02F3B
+	for <git@vger.kernel.org>; Sat, 22 Jun 2024 05:08:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719031017; cv=none; b=fmyNuhrbSiRea2EJRuGTmH2MZ35QKHbUkiI/7+usLEMCblVXtN310a1QQ+mvgxX2Py7BfbrVkh0fe+v78Au9fwYa5rqmTdGAhSg4p4gt33oWq7VEXi/JUcRnzllKugIvEyYNMLfL3hthO5dlUL+/TfCKD/JRKUgPx++/+ISMzMs=
+	t=1719032930; cv=none; b=Ne4dQ+tcaEAQWQflLIw2wPg99f5G3nSdjN5NaPPssSUS8SbuipRFp8Mn5ZMaVN+qdJgb1CblwiJ6+q1J+pBXDnjYL6lWYRxBuftCLUrsAU5jmgg9jvC9vpuRAi2J5JdJtgYXBI+Rk3w+YptHqZBZy2xM1OBMVS/F1Fl7tTfCWwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719031017; c=relaxed/simple;
-	bh=oc935lFVkoC0itx/ZCsoGIKJbfGQ++qxjM/3yxsynWs=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=FdN9CzAYt4DmHIhk5VrkfUb34shEey0N84qEPyz7JncnTozBwiSPre0f2CmeLaa2UMS3A5ZGgdIrLy75n/+ATbotiZSUvmGF/TqRkLgOGQLKAuwOMyPn/5X6Ll6QJDxbWfstn11ksve2DOyF1DUWXLHlEyaTw3jGlGzi75VJFlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=gD6qExAb; arc=none smtp.client-ip=173.255.242.215
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
+	s=arc-20240116; t=1719032930; c=relaxed/simple;
+	bh=G0QMXo7hvkrp+ShtssxK1X7XN3dVDRBqpQztrKIkplg=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=SpsAeY/6eU4voTAibBc1jJ+5YW2ttNb9q6oEeDoT8QT9DmKwE0kcI4MovCFZcIp8oCrm5hKiWX7MAA93PsjkOxZuOteUd4cMBbdPAOEkDr5vZsy398GWx5F4UIhKmr0dDmMmsJS2SVemWtC/bB5ZTckIkZ1WeSOa/OjACud5xaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KeiE8kXj; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="gD6qExAb"
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28FEF1F7BE;
-	Sat, 22 Jun 2024 04:36:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-	s=selector1; t=1719031008;
-	bh=oc935lFVkoC0itx/ZCsoGIKJbfGQ++qxjM/3yxsynWs=;
-	h=Date:From:To:Subject:From;
-	b=gD6qExAbLQwqr5eRJs1tzjXkZpUBs/D4NP6nDR1sWxd8HUqzaKXLQoiNDwIzlr7qV
-	 jvv7QYbvXZi9g98aAiFbAVsZ2seaNNlWwNJmrwxTKlSxLEABGDAJmlUTlGwE6lT+Lw
-	 6BxcB0WgVGD3TEBzjSZvnwr26K6Mhpk0JXOGwpqQ=
-Date: Sat, 22 Jun 2024 04:36:48 +0000
-From: Eric Wong <e@80x24.org>
-To: "Eric W. Biederman" <ebiederm@xmission.com>, git@vger.kernel.org
-Subject: [PATCH] object-file: fix leak on conversion failure
-Message-ID: <20240622043648.M78681@dcvr>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KeiE8kXj"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 174503B25A;
+	Sat, 22 Jun 2024 01:08:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=G
+	0QMXo7hvkrp+ShtssxK1X7XN3dVDRBqpQztrKIkplg=; b=KeiE8kXjHSEdi5wR3
+	5ALB7BGRmg0wuWSTB8Su1rZg/xaX6TA0pqYwvy4AxTv4I5mNngi4KY2HaI9y70S/
+	oZr5Bmb6NnvwLJYwSm6aEpXVzNNvQCC1+/Q4ys8UBPx/2hw//r5uMuRJc/6YWW8A
+	UvXr0iJ+wt/yI/OpXdiE6TekNk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 10F893B259;
+	Sat, 22 Jun 2024 01:08:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3815A3B258;
+	Sat, 22 Jun 2024 01:08:44 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] fuzz: minimum fuzzers environment lacks libcURL
+Date: Fri, 21 Jun 2024 22:08:42 -0700
+Message-ID: <xmqqwmmhimxx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 7F92ADA6-3055-11EF-ACF2-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-I'm not sure exactly how to trigger the leak, but it seems fairly
-obvious that the `content' buffer should be freed even if
-convert_object_file() fails.  Noticed while working in this area
-on unrelated things.
+The "fuzz smoke test" job compiles various .o files to create
+libgit.a and others, but the final build product of the fuzzer build
+is *not* "git".  Since the job is not interested in building a
+working "git", it does not define any build flags, and among the
+notable ones that are missing is NO_CURL---even though the CI
+environment that runs the job does not have libcURL development
+package installed.
 
-Signed-off-by: Eric Wong <e@80x24.org>
+This obviously leads to a build failure.
+
+Pass NO_CURL=NoThanks to "make" to make sure things will build
+correctly, if we add any conditional compilation with "#ifdef
+NO_CURL ... #endif" in the codebase.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- object-file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ ci/run-build-and-minimal-fuzzers.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/object-file.c b/object-file.c
-index d3cf4b8b2e..00c8f1039b 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1711,9 +1711,9 @@ static int oid_object_info_convert(struct repository *r,
- 			ret = convert_object_file(&outbuf,
- 						  the_hash_algo, input_algo,
- 						  content, size, type, !do_die);
-+			free(content);
- 			if (ret == -1)
- 				return -1;
--			free(content);
- 			size = outbuf.len;
- 			content = strbuf_detach(&outbuf, NULL);
- 		}
+diff --git a/ci/run-build-and-minimal-fuzzers.sh b/ci/run-build-and-minimal-fuzzers.sh
+index a51076d18d..bcf2ed54d2 100755
+--- a/ci/run-build-and-minimal-fuzzers.sh
++++ b/ci/run-build-and-minimal-fuzzers.sh
+@@ -6,6 +6,7 @@
+ . ${0%/*}/lib.sh
+ 
+ group "Build fuzzers" make \
++	NO_CURL=NoThanks \
+ 	CC=clang \
+ 	CXX=clang++ \
+ 	CFLAGS="-fsanitize=fuzzer-no-link,address" \
+-- 
+2.45.2-789-g52a439864c
+
