@@ -1,143 +1,124 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4734779DF
-	for <git@vger.kernel.org>; Sat, 22 Jun 2024 10:01:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2502021373
+	for <git@vger.kernel.org>; Sat, 22 Jun 2024 19:41:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719050480; cv=none; b=ktKbXkNLzKNrDCG1BbVvMEyswk8G+JXhROiZJn6Epv1CExmONtT33+Vywx12pPMvcm+ZuT3xYLRv0gqq2SRNmII1wVhuCSuyvbR82xwyLIWjFw+km+ksndfUzFVCd5VK4IWVgkplws7UYQyMFV11c6EIvOkH2wZBIDyNhZvG7qI=
+	t=1719085295; cv=none; b=am/a5Wscn6y0AzqfIvj7h/O0cE4016cvZLbYf0rDZ4+Vt0Wn0ZmDrYoc7VF/9e/DEKYQSPoFtO/k4Zucfh35H3ZcUCE6XVWh9co1GKKJCCQ3yeXn7+hJ/fXgNqJkdftY/uHoEPksfJiMymXiiym5uG43lGEDTp2aUDfIRYtckCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719050480; c=relaxed/simple;
-	bh=BH+Kba6n5vGN43kYu1d/dT7pXmVp4DT9NF9iskH7eLI=;
-	h=MIME-Version:Message-ID:From:To:Subject:Content-Type:Date; b=CjWlclzDg1qysdx/Yc+NIwbs3PEH96J+Oww5/97JT8YqgLAxzSAtBclzD0vJPCOpWwSHp4PzcU1b+5UuCR/sz+cCsQsmtaFZ21GNUP+wZUAc9GgpfRGdvIUEO601JKuZj7Z6nYIpM2C//oQoHItpwK/oILWz+YtRtMxR3BxZv+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=lolligerhans@gmx.de header.b=Zp6skNys; arc=none smtp.client-ip=212.227.15.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1719085295; c=relaxed/simple;
+	bh=POztaSB27yM1nj7LKX3lJ3FUWWR6jh6yvp/n5H41Vvw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=jp7IbhTG4nbUyceDeT+VsJD8WQnnz68oDs/Ebo3o3T25MIELU058d6+1oqrRARDS4CKg/CsR0TR967Jt2k84JxjloG3Uhov6MBq+7mpMt91A/wqiXOwg3+Un0U9X0sHNLLG6EHxNJj6eon54tXCiXIX9uK+N8C0IZt9aktoBtig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=tpberX0A; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=lolligerhans@gmx.de header.b="Zp6skNys"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1719050476; x=1719655276; i=lolligerhans@gmx.de;
-	bh=zQT9+0CIjp8bB+kjrkK9TVbAc5V4n/EIMJSZPLXnKuY=;
-	h=X-UI-Sender-Class:MIME-Version:Message-ID:From:To:Subject:
-	 Content-Type:Date:cc:content-transfer-encoding:content-type:date:
-	 from:message-id:mime-version:reply-to:subject:to;
-	b=Zp6skNyszLMrm69ExZpBLJGtD0BySMn+YX6i6OpmIdWmK97M/HJGGYW4ULJeBaBQ
-	 UZz9kpZ6dYdZ2hgEi0a3q48zyM57I8MwDJhAIN/fTVRgjUKKOBSz/x+Q44kvGY7AP
-	 BT/5G/Dhw6fqjLH+CDXNTZfEdM6ZV3M67rBsjUaxW1bgdHG7rI5dERRgUqzqsWUbg
-	 liYmadNX2sBFq4KFV0ZxJ8FjVRM1VheBBzURwBfbMECnDS7MZ1YiioOyJRcoAlG88
-	 +UrwgU1AFG/Mw1GZTIKjoulXpeiD5ZEVxJPrgkFqCwlYQNasEIVJRpgrfdmcf1E3q
-	 NiY6BIQreScXGNClOQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [10.236.15.3] ([10.236.15.3]) by msvc-mesg-gmx004 (via HTTP);
- Sat, 22 Jun 2024 12:01:16 +0200
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="tpberX0A"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1719085290; x=1719690090; i=l.s.r@web.de;
+	bh=fVswwENxVX4k+XxsrEHteZz/sQ4r7YI5nEPo5Hbb1kw=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=tpberX0AV6Sga2uu/+PY7dMVaD3LQlekGjGR86ol6tX7/+/NYS4elms59VAv+Uv+
+	 RDab8k/nafwvwUi+ru7XNmO2lAdD9eOJokb3LwdV0+3cIES2rfjA5XTW66pyu1Ppk
+	 r5fnZIv72T34pIO8NV4bfw4pz+vpTXDT19bOz2ta8jBc+utAucuWNkDZvQv1g9IJn
+	 EGtCyD1vykLcP4A6dMgpuNHmQ7gqVf/ha6me2rGy3m8QRkmMNfa1QJ8SmNN49OJ9Z
+	 3EcUA3EV82vJ9elPKgVP6c4GQxXHWdg2AAaQDq33sCQHFfBi3K5HYRi+XvaqILFue
+	 5Z4TBXVhfsqbGO9gOQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N4vRY-1sSyqc3DBU-00v7Q0; Sat, 22
+ Jun 2024 21:41:30 +0200
+Message-ID: <8a8bd51e-9ce5-4a68-bfbe-f16dcbb7e89c@web.de>
+Date: Sat, 22 Jun 2024 21:41:30 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <trinity-acbdb8fc-3dc3-4dca-890c-8bcb37405782-1719050465639@msvc-mesg-gmx004>
-From: lolligerhans@gmx.de
-To: git@vger.kernel.org
-Subject: Bug: diff.external --no-ext-diff suppresses --color-moved
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH] diff: allow --color-moved with --no-ext-diff
+To: lolligerhans@gmx.de, git@vger.kernel.org
+References: <trinity-acbdb8fc-3dc3-4dca-890c-8bcb37405782-1719050465639@msvc-mesg-gmx004>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <trinity-acbdb8fc-3dc3-4dca-890c-8bcb37405782-1719050465639@msvc-mesg-gmx004>
 Content-Type: text/plain; charset=UTF-8
-Importance: normal
-Sensitivity: Normal
-Date: Sat, 22 Jun 2024 12:01:16 +0200
-X-Priority: 3
-X-Provags-ID: V03:K1:53x7l66wkhwA2G1yzeCzOchZWeCZrooyW58ZUxqx5+ix2l+/q3c+Yjy6AB56ZHvdAb/WS
- YdYOODUs8NrwTA8xCqpTYD4igDqPPx/BuIvShAriK0ue6htxYkJGF+6VgkWbnsZkapsmxldOY0gi
- ofJNBK8LgDLxxAeHSLwrttrxZ76m9D0xze7sFswDGQzYj6ZHOfmIwIhXEKcilO4IPEHUL+quslPm
- 8cxKu4ZCD4M4W1wIbSIcueSowZSuXRzejMCw92HPI9EMLl3ETaSg0G++0g4s67R1TjXeLRxbWZJm
- /E=
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:udRHzUf99Fyd1/SfZTfSADXgUyKQBnszu939GHsyDvrjIYh15Bw
+ jVfvGqcOOI+pu789d35r7CS1P3W+hdsz7n5Yy9hBJBmUV4wN/2/qkmkYJMit+p2g3GfCEqx
+ x2a9LITYBNWElnYtMj0QXZBZqNf+Hg59EiXJpprBYndOQc+pmYSut6Mkby8kFPBaElgmtNJ
+ OcFIhVUM69PkO7ckb7hWw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:a2UDVgx7r10=;mkGrRxIQHVMwM9sMRyJPaL0lg9+
- JehzoT+fgC5Ck81NGmnWVPO/f5dLstW9uzrRkee71Sxh8E0rVYtX8BD5kMisMruiuwyfn2gm/
- 7hZlkokmVbhovimfSHLgP+zoxV9NlTO337FcWwsXbNPh34nJg8dItdH6nJBkw6630Aydz2iQr
- jWW+ai9t05lWC8jBgwyaEIM8sc93D1mTY+BSQ60kwUBaFHuDwz+hpmHwuDMkI2HEoqsO3JKfu
- EQsBScBpGRuN4ValN6AdvjTSvtC3KjMW42olHCYCAInYm+dRny0oIArqom24HJ60NFxufTmlP
- zfOA2e4pYrhh1r8rYH4h2he92+c2m0UlhNKHY30YeFganNw7MLRwVFyPhF9z1VIAE14DdUMOi
- 748cWQFfQ0xpz9/N2+8c1oGqBkoF1kERh26FglAWhQNEgHlTy97gbmPypQgxSWmdjsxFCVJ3m
- 9bs9KipU+mMRPICLuWzAj/37JQNDnk7k6DLvdibKH6SNd7m7usIrrh4I0QD33AFin+K1jIZlO
- igHrI2nRczWEynedlx8okMSWnu0L427qPvzgJP/+xxXzEG19AFloRXbQzORKpLyLAAleZDqWR
- A2f+7yYRlF/vXhgFLYBa79I3pWnsMr2URBqc5nwluwxp4nYKBXFJcvTt414aalIC4Byic1X7c
- Wb/nVdRxgxnXrU+mB9E4n9NPUVdzRL+byBuOHvCv+w7vr4aqW5Jx/P6PGEgxaNA=
+UI-OutboundReport: notjunk:1;M01:P0:93tg3AQiChQ=;pgQbf9vG8qSexBKDZhBPRdgTbrI
+ fzhifIm8rOvWAZ+JD3ZhlvyzrmKce31wUUhAAtiG9kgr15fccxWKb0AKGbbNMxQFK3L99uvt/
+ FXLKUfNa1lkp0D9MSVBll5nZ9s0PZF2m8SZEo2/UAx/csN5N80cXKx6OAXQHWGcnwqpLfuj4g
+ bZFCMcPwrtAkT+1DUXClG2z14vSlux8gri/MDNxN0GNcf5VpMv0MYERtJWhdIkCC4F3GsV9X0
+ iH2rJw6+mai+bDCUFjUM1OzLZi2yOzTKjVzK9PKgnhZb4Sd4bs1BFX3nvyJDwqrKlVajq5JY2
+ wgGOM0YriIDJPTY0ZURKpXu86msf3bOK5cpntNVlTUXCQKRWkIiTiLTfukm9dTLEW1Gvjk/ro
+ HCsMZZTBof4OC1chyyOw/Y1Q2hzGiY3gpik+RNj9I+/83XvyNX6PUEXy9byexw3oVdb7U0dzu
+ i0BrQrKkf3R2OsgL+aKdj72K+Yk1QqjAW1yXgkDXrtF69B35pLCbwjoV1P5EdqJFsVtue07Nf
+ GXPhHHXzkIPyNSET7YABJJGKmXxAzDVayKjGPL7l9XC2kl5Se36L90dnIhFygZG2YbswNf9SS
+ NNIHghF9ZqEhcJ8inOQvLfrzdeGPtpESYibsQlHIyTXC72/yXFjP37gPJDSd4s6qXNBWq9NOL
+ /cbo3PM/EjpYOHqlB8vrmKBNcMebXyeE+H1r0lsHYXdVfEgzaSrh0t36ckK9a7p3oAOCjkJ4H
+ WmsIuNPU00VyWhyLOjzZxJtmnrOtl5OAqu/lcnp0C4OJr44x9rv+G7aNQAABsOFpnNKg5rwWb
+ uLu4feuvm9j0EyRt6AATc9NgsbhIoMKOlGVCvv0A12Y5Q=
 
-Hello,
+Since the option --color-moved was added by 2e2d5ac184 (diff.c: color
+moved lines differently, 2017-06-30) we have been ignoring it if an
+external diff program is configured, presumably because its overhead is
+unnecessary in that case.
 
-I configured "diff.extern" but use aliases for "diff --no-ext-diff". This combination suppresses --color-moved (as well as the corresponding config "diff.colorMoved").
+Do respect --color-moved if we don't actually use the configured
+external diff, though.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-  1. Prepare ~/.gitconfig:
-            [diff]
-               #external = echo
-  2. In some repository, create a moved-lines diff between index and working
-     directory.
-     For example, commit this file (the next 9 lines verbatim):
-            line 1 first one
-            line 2 second two
-            line 3 third three
-            line 4 fourth four
-            line 5 fifth five
-            line 6 sixth six
-            line 7 seventh seven
-            line 8 eighth eight
-            line 9 ninth nine
-     Then, edit it (moving lines exactly) to:
-            line 4 fourth four
-            line 5 fifth five
-            line 6 sixth six
-            line 7 seventh seven
-            line 8 eighth eight
-            line 9 ninth nine
-            line 1 first one
-            line 2 second two
-            line 3 third three
-     In this state, the command 'git diff --color-moved' should highlight
-     changes as line moves with default colors purple/cyan.
-  3. In ~/.gitconfig, uncomment 'external'.
-  4. In the same repository, trigger the bug by running:
-            git diff --no-ext-diff --color-moved
+Reported-by: lolligerhans@gmx.de
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ diff.c                     | 3 ++-
+ t/t4015-diff-whitespace.sh | 9 +++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-What did you expect to happen? (Expected behavior)
+diff --git a/diff.c b/diff.c
+index 6e432cb8fc..aa0fb77761 100644
+=2D-- a/diff.c
++++ b/diff.c
+@@ -4965,7 +4965,8 @@ void diff_setup_done(struct diff_options *options)
+ 	if (options->flags.follow_renames)
+ 		diff_check_follow_pathspec(&options->pathspec, 1);
 
-  The diff should be recognized as moving lines and colorized accordingly. By
-  default in purple/cyan.
-  The diff should NOT be colorized red/green.
+-	if (!options->use_color || external_diff())
++	if (!options->use_color ||
++	    (options->flags.allow_external && external_diff()))
+ 		options->color_moved =3D 0;
 
-What happened instead? (Actual behavior)
+ 	if (options->filter_not) {
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index b443626afd..a1478680b6 100755
+=2D-- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -1184,6 +1184,15 @@ test_expect_success 'detect moved code, complete fi=
+le' '
+ 	test_cmp expected actual
+ '
 
-  The diff is colorized in red/green.
-
-What's different between what you expected and what actually happened?
-
-  The colorization is expected to indicate moved lines.
-  The actual colorization indicates deletion/insertion, as if '--color-moved' is
-  ignored.
-
-Anything else you want to add:
-
-  - I assume this bug is up to date with the 'next' branch, because the command
-            git log v2.45.2..origin/next | grep "no-ext"
-    finds no match in the repository from github.
-  - Works the same in the older v2.25.1
-  - Works the same with 'diff.colorMoved' instead of --color-moved
-  - Works the same for other values of 'diff.external'
-  - Works the same when setting custom colors for 'color.diff.oldMoved' etc.
-  - Works not the same when using --no-ext-diff alone. Only when using
-    diff.external as well.
-
-[System Info]
-git version:
-git version 2.45.2
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.15.0-107-generic #117~20.04.1-Ubuntu SMP Tue Apr 30 00:00:00 2024 x86_64
-compiler info: gnuc: 9.4
-libc info: glibc: 2.31
-$SHELL (typically, interactive shell): /bin/bash
-
-[Enabled Hooks] (none)
++test_expect_success '--color-moved with --no-ext-diff' '
++	test_config color.diff.oldMoved "normal red" &&
++	test_config color.diff.newMoved "normal green" &&
++	cp actual.raw expect &&
++	git -c diff.external=3Dfalse diff HEAD --no-ext-diff \
++		--color-moved=3Dzebra --color --no-renames >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'detect malicious moved code, inside file' '
+ 	test_config color.diff.oldMoved "normal red" &&
+ 	test_config color.diff.newMoved "normal green" &&
+=2D-
+2.45.2
