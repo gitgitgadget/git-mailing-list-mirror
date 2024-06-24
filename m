@@ -1,125 +1,95 @@
-Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410F4FBEF
-	for <git@vger.kernel.org>; Mon, 24 Jun 2024 07:33:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.13.153.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72573B1BC
+	for <git@vger.kernel.org>; Mon, 24 Jun 2024 07:36:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719214418; cv=none; b=rmPhJyNLQLDj9wlB2jNIFNMyISFQBkyWWq173jHwMnAqc+bO/e7dRlriIIX24MmZPHijPAWq7zok6eId7N9Mv9eF48D3gWfd44XYkE8lMkLm7OEQF7Ja1lQt78WJaM3cvrx9L5iM7P9h9Zy+BaDvr3E7BbMGZZpIhv2Zg+umeaI=
+	t=1719214575; cv=none; b=IdcUBggBVpjE9y72Lr3wyWz08SqYiE+sx6hTNSfLOXsXdA/aI/pZi0vkI93FdzMXyT3ulqWcz2EolepshV92sD2U3YhJr66YLv2LKTBsHH8xyR4F8xkDK2Wv4xB2NTPp8Qp7x8tiJ3jFrwiaY6N0Qttc8apkDsErWe3fm9nfljg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719214418; c=relaxed/simple;
-	bh=r3nm1FOkNIaheBBeUNDy/S/M0Oa7YGBVw3Kqyax28Qc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=grBQVkyoVw3pmcOaZTPDTZOvNYkBMR/wtmmJgjMbLgRKvqq1In/CC7w5T38fMjKay1NNh5uu/PMvxLfBRvdaC4+OhK1/gyJrArnDTAR/fcm9kIutp76k7r2/bBViy6MH4YsL93OpDLN+ZFcyXbR7kM13XdHyNMKj+Mpe1E+MzhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de; spf=pass smtp.mailfrom=haller-berlin.de; dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b=BIt/lje5; arc=none smtp.client-ip=85.13.153.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=haller-berlin.de
+	s=arc-20240116; t=1719214575; c=relaxed/simple;
+	bh=PR3G2yJIdNtPJId15zxHrpqv0kNb+9Y7CaRtpu7Rvn4=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=fXnjxH7jIB15Sxn4n1Ip2hHtZzDTnVAfTsm+7oXHz2kNBH17l3oZfrgMAxRounXcm+L5U4XDwmVafoYlHELAbAzigOx+yvi1ZYIS1u/ayYpmSKwSYhH3xURwaTy6og2N+CxI3r7FFoPgizFk+7+j/Vq8/DPlXEXQ08oh3vd0DoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=mGvOObZE; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="BIt/lje5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
-	s=kas202402191026; t=1719214405;
-	bh=n/SWwLJVACQAFKvUd9SeuQnGKuy0TPWFs02/wdPMrG4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=BIt/lje5Tzw4UE2HS5YTofSQMz8fadh7IL9pOHZl5kOYbWnLlcivRwAuBE3v39EiN
-	 ReHq9bKf0yeBmT00G0prco5BkmHhpR4kh+2KX9vjQDrLE8hD2jl+w/B7TcLQPNoKmH
-	 fAchYuPIXjdvLUy1hsFvCHnxr7m+341A8Vu4yyMvOnLB58T2SvzR/L/KQKYBeXWBm4
-	 HFmCIqOSYEbTgN6J36D94rJ1zeowNsFJwk/UmoeO0dkkn0jqV83o/2EYma8wGuWxin
-	 qflpO2+fUq5T5TmGCtVj5agdiTf1WEGLyL31xxqb4nyz/BRUGWKQXqtA1AsH0+JS78
-	 x2uiSFCj+Vf1Q==
-Received: from [192.168.42.22] (i5C74DC1D.versanet.de [92.116.220.29])
-	by dd36226.kasserver.com (Postfix) with ESMTPSA id 470773C0F38;
-	Mon, 24 Jun 2024 09:33:25 +0200 (CEST)
-Message-ID: <0a948acf-ebe9-407e-8899-d714b6fcb528@haller-berlin.de>
-Date: Mon, 24 Jun 2024 09:33:24 +0200
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="mGvOObZE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1719214558; x=1719819358;
+	i=johannes.schindelin@gmx.de;
+	bh=PR3G2yJIdNtPJId15zxHrpqv0kNb+9Y7CaRtpu7Rvn4=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=mGvOObZEuIL0BcGjJ3L6qgVsA26QPC2jvfvpUgKZ0NWOAiNK6I2Is1OaXQyZXuYj
+	 lsa5sBGso+9xuOYruu1Sx1Z/Ym4S9HLrQWalLh0flOPZGhsu5IMtOwtD5OP26D7ZA
+	 NGruPWGEziHn7I/FXFAGRacD/BCn0hsB6XarsQ7Mv8nkLJoSrpPFRvXCOHDyKmydl
+	 EJ4Ta6/aAhWRZOgy7bH8txUpDHn2C0Cu1P4gxrk0jMe5hmAnfjoX7xWj56Mvqq+Qf
+	 voreXWrXPOIDbmlE5rUEySjzdaLWLJN5o8VgAV1MZn5eQX9AiAnXehbrP7W6KBsTP
+	 Cj6Dz1rIYUi8v/9d9g==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.215.26]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M6Daq-1sF4f02CKW-00AcPL; Mon, 24
+ Jun 2024 09:35:58 +0200
+Date: Mon, 24 Jun 2024 09:35:58 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+cc: Junio C Hamano <gitster@pobox.com>, 
+    =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>, 
+    Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pager: die when paging to non-existing command
+In-Reply-To: <ba5965c2-9f1c-4dd2-a2c5-e1bde832766c@kdbg.org>
+Message-ID: <ecf29882-c192-e6f5-64f9-ac4cedb5d85d@gmx.de>
+References: <f7106878-5ec5-4fe7-940b-2fb1d9707f7d@gmail.com> <xmqqsex7tp0c.fsf@gitster.g> <ba5965c2-9f1c-4dd2-a2c5-e1bde832766c@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Thoughts about the -m option of cherry-pick and revert
-Content-Language: de-DE, en-US
-To: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood123@gmail.com>
-Cc: Git <git@vger.kernel.org>
-References: <e60a8b1a-98c8-4ac7-b966-ff9635bb781d@haller-berlin.de>
- <xmqqa5jfoxvh.fsf@gitster.g>
- <dd58a60d-a551-4726-85a7-f47b851914be@haller-berlin.de>
- <6e71b1f3-599f-49c3-be37-e499f28983cf@gmail.com> <xmqqv822ntkh.fsf@gitster.g>
-From: Stefan Haller <lists@haller-berlin.de>
-In-Reply-To: <xmqqv822ntkh.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Bar: /
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Q2WyB3CxhKixeKH8HRHBXvUIhIs/9afd7K876sZ5BBKJ2ZjSlX3
+ +vlrR7+0Q0Sg02SGc3qB3DZzCcdbhl7FdhY8G3MlTH3nc4TpNfrT5jnqUi2LDOdupPB5jLP
+ TJvUEb5Mo82yCJkOTVMV+nnDsPfHiWPgUm8aFDsNdqKz1E2bVyxewwNKINHFRsFICstJmwe
+ 1zEdE5/CvAMkZiosq/1cg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:/2pVPTvYB3A=;Qssf6duwhlkGUF1pyGorMP4w68Y
+ YMxiYiehrVujKfubCNDTkcMTCBEWaz5KAvzQtorBep7c6Coe6rUkTCvL1olRdc1XYdxabkQ2a
+ owSTJ8gWggpCSbuwv/5rK59HnKNEN3cw32TtPpkzCGsneIppDGjHvpZzKPqFTS73DPPJzN939
+ tz3SXhHlpGi8i/o+nB8IWV7vO0CoP42nUG1p7OE1PP9W7VOxY79szj7VyldKASg9d5cfJR3Ha
+ IfsUJlhcBUoJg1SQ4Z+LG9DaeRCfB2JOZ/t5BhqDZppEopMP2wrPZnI4WZcLtwvY/kRGW3TEd
+ weRtQg4FkyKyAQRy3dPmV8Yvne+plCm+p+DqgBraGjNOJ6PjoB6CuG9DYgcwU79/K3BtBMKh8
+ MQuKi08CK0ekMdn3i00HGJaIixVgVkXiAKQF/jrvW3JYi1FfD4HF8/FIR/y4KpUEt6+QPiqRR
+ Hyo1fZaRFb5yi5jUCiVtOVn6wb2bCRHTtxcmIvCq1AKdMFOw4d2gIVMR2abWytCQffetbTp14
+ jdO+hHA5fmlOqmaktj/qCdiiCpuiemtKESkpQ7qoMztVNOS1gawsQ9Ip4LsZbK1dGQiHKwq8F
+ bgd+E6cOufWpp1LOH7t46sLMm68T5W+2xJFihuGJCPV1h1HvstWeLY6LO04He7xLwgHA2fsAu
+ jNw1j0lXtbH0tHwoK2yHYeAQrG8OApvKf02WXGqPI3YxIVHT3vvVcjc3vFxNxjeNM0lBdnnOq
+ e8EuuPWYogYrVVTAfCH6wYvomJi5LE59gjvjhdDgqjSU/2wk0zLUNKcT64V2JHrr+wHP4nXTH
+ +eS49nrzVv04/18UTomdihBDQDTJtaSrpb6+6D45Az8/I=
+Content-Transfer-Encoding: quoted-printable
 
-On 21.06.24 18:34, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> I can see why people want to revert merges but cherry-picking them
->> always feels strange to me - what is the advantage over actually
->> merging the branch and seeing the full history of that commit?
-> 
-> One case that comes to my mind is when you failed to plan ahead and
-> used a wrong base when building a series to "fix" an old bug.  You
-> built a 7-patch series to fix a bug that you introduced in release
-> 1.0, but instead of basing the fix on maint-1.0 maintenance track,
-> you forked from the tip of master that is preparing for your next
-> feature release that is release 1.4.
-> 
-> Even if you realized that the fix is important enough to warrant
-> applying to the maint-1.0 maintenance track, you cannot merge the
-> topic that houses 7-patch series down to the old maintenance track
-> without bringing all the new features that happened since 1.0 on the
-> master track.
-> 
-> A kosher way may be to rebase the 7-patch series to maint-1.0 and
-> merge the result into the maint-1.0 track (and upwards if needed).
-> But cherry-picking the commit that merged the original "fix" topic
-> into master _may_ be simpler, as you need to resolve a larger
-> conflict but (hopefully) only once, instead of up to 7 times, once
-> per each commit on the "fix" topic while rebasing.
-> 
-> But of course if something goes wrong, it makes the result
-> impossible to bisect---exactly the same reason why you should think
-> twice before doing a "merge --squash".  In addition, if you somehow
-> figured out why the cherry-picked fix was inadequate, you'd now need
-> to forward-port the fix for the fix to the master track or whereever
-> the cherry-picked-merge was taken from.
-> 
-> On the other hand, if the original "fix" branch was rebased on
-> maint-1.0 and then further fixed, the result can be merged to
-> maint-1.0 as well as all the way to the master track.
-> 
-> So, I can understand why people may want to cherry-pick a merge,
-> I suspect it is a false economy.  Optimizing for picking, paying
-> higher price when the result of (incorrect) picking has to be
-> corrected later.
+Hi Hannes,
 
-You may call this "failed to plan ahead", but for us it's a deliberate
-decision to work this way. Developers work exclusively on main, and
-merge their branches to main, always. Release management decides later
-(sometimes much later) which of these branches are cherry-picked to
-which release branches. We never merge back from a release branch to main.
+On Fri, 21 Jun 2024, Johannes Sixt wrote:
 
-And we prefer single-commit cherry-picks of the merge commits because it
-makes the history of the release branches easier to read. Bisectability
-is not an issue; developers bisect failures on the main branch. (Yes,
-I'm aware that there may be cases where a defect manifests itself
-differently (or not at all) on main than on the release branch, but
-these are so rare that it hasn't been an issue for us so far.)
+> Am 20.06.24 um 21:04 schrieb Junio C Hamano:
+> > Just in case there is a reason why we should instead silently return
+> > on MinGW, I'll Cc the author of bfdd9ffd, though.
+>
+> I don't think there is a reason. IIRC, originally on Windows, failing to
+> start a pager would still let Git operate normally, just without paged
+> output. I might have regarded this as better than to fail the operation.
 
-I'm not saying I'm very happy with this workflow, it wasn't my decision.
-And in particular I'm not trying to argue which workflow is better than
-the other; all I'm saying is that there are teams who decide they want
-to cherry-pick merge commits, so git should continue to allow it. This
-is only in response to your earlier "If I were simplifying this, I would
-probably [...] disallow cherry-picking a merge".
+I recall regarding this a much better idea back then, too, because it
+was quite finicky to convince the MinGW variant of Git to play nice with
+the MSys variant of the pager.
 
-(Side note: my main gripe about cherry-picking in general is, of course,
-that it makes it impossible to use "git branch --contains" or "git tag
---contains" to find out which releases contain a given bug fix; but
-that's a problem no matter whether you cherry-pick the merge commit, or
-replay the branch on maint and merge it there again.)
+In the meantime, things have become a lot more robust and consider it a
+net improvement to the change the behavior to _not_ silently continue if
+the pager failed to start.
 
--Stefan
+Ciao,
+Johannes
