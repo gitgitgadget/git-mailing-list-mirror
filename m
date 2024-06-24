@@ -1,89 +1,146 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A3238C
-	for <git@vger.kernel.org>; Mon, 24 Jun 2024 10:17:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0092F24
+	for <git@vger.kernel.org>; Mon, 24 Jun 2024 10:56:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719224258; cv=none; b=UriTQD5i89J5hw6W/3kceFK9JtcHNop32gftJuLMtKztdx/mWGseDMsZNiOm+GP2mTHlhJhNMyvxu7/+5YeHJVZiRm/ZNFLQkSRYsdcc1tEm4enYYe4in+Xl8Gfh55DM8PVA3NPyPoB2Z1T+Er2NjmtZhH6UOMMau8WzpculWtc=
+	t=1719226605; cv=none; b=U0mKLQTxuPA6QxQ2+1bbPMzPvLHbkBZL84C797tT2kxsHleVhxY0R383cqGYmpZURAuxo/tf6bEOP0CsYGSwKE2ltLV2hXiWL8c9syizQ4R83R1z+IxI4YZtRdjAK7PEmswrkr8iD1Bp1GLKeyNWsU1toy/Ko70p95hVVg2fgN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719224258; c=relaxed/simple;
-	bh=qjPhW9tbJmYLQbTGcyGzqhAyyKj570jKSMXTzIm1beQ=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=LwY6lMb3GOTZvfjBFr7mGAhqtE5lBIIFisD86OB9SYTxxOeBj8uF09OtRc8ImFl6rtyKXEMIEfqK41pGQERO+Vu5SffVw3qz1XdKaLHR5taNAmx5bYXAZrVxcQMLxk9N+SV49tT41FA7J2Ukf6XO6nFuCQXxt9mqEBVcH3BblsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xwrt+FLa; arc=none smtp.client-ip=209.85.215.179
+	s=arc-20240116; t=1719226605; c=relaxed/simple;
+	bh=+3tubUy7nXHuB6p2w61Eyx2GmriSzhVlX6YEeBFAAgs=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nxXinvdzBu/KibYxW1b55tyY/0ol11adInOPzntT78TTikOGGtpIgyqC0vPFAbsl3t0OJAHRAb207K77NxsRVoSEiLljNd5CSmIvZCFZqaYicX2kFz27IV3RakHd9wTA3S6iOgnMra9zLIPxZMzGiUZEQ7bKCKpZqQVibXwWzlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=df30ZWLk; arc=none smtp.client-ip=209.85.167.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xwrt+FLa"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-707040e3018so2889052a12.1
-        for <git@vger.kernel.org>; Mon, 24 Jun 2024 03:17:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="df30ZWLk"
+Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3d21b3da741so2270291b6e.2
+        for <git@vger.kernel.org>; Mon, 24 Jun 2024 03:56:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719224256; x=1719829056; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=0lhRUJ4XblMZkwc+LrEJfFR5LnHx3JwoEcX9ruzQYFo=;
-        b=Xwrt+FLaf5OqP7aroS1xkwdr7Uzj9VS9lUadmw+koNjPxziFtUZpX4H5OzfSE1nbM7
-         DAbzv9RxxirnxutVZO4B3F/uCtkDOC1j2aNIuiETgtHj6tBIjlSh5PCkhlyJ0m6omKJ0
-         1nsxqKS1G3YNbCqU7k8ejemcSTaaDoOLySdsrwKNVrb3i8UvxopZIa1fTgnLuWFMRF2o
-         btw2E8WYjVo5fNLYsgPOSR4EZBQb9EYEeJK1IWpn0nz1M3eLDsVrdwf/bk+mi1A73zoA
-         11R/ViJj7OH/UeF8anHKR7WkMtH3DIJvCmGgTRWAhEpqstqUw8DE9tiIJrfX6WM24dj9
-         EbBg==
+        d=gmail.com; s=20230601; t=1719226603; x=1719831403; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zN/gx9TLHE0HEe6+gbLBqezr9l2KcVvjOJpyJiLeuts=;
+        b=df30ZWLkqZDn2TYtrQ+m+MHHfaLZpxxHUuNkTuCXTk0nilLwNgpe2g6xkFR/AZ7qNm
+         yJecDAeqXVu5UkrNziprQVYzu+jXefQqehFfpCK0uJWbR9hEkb74V3IeABaszFe+Dtsk
+         K4/EadebMNssfNFq/P1umnnZ9bqM6wq5EY+iyPNSrwFr351KtG30J92MsSXevoDw6qHA
+         x0bE73RJ34CPpp2HcSQpSpnrDMdlUyRQfrxhjI0g9lXeK4049S9LsiXDZvTfDggQWJ7X
+         9DjCzm833rdU92qzt5uj91DvLdlZztIvGkRkd2aXcj+d7c28Ku3y5c89mckWE/DooOaG
+         UQNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719224256; x=1719829056;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0lhRUJ4XblMZkwc+LrEJfFR5LnHx3JwoEcX9ruzQYFo=;
-        b=N3kCxHH67FARSPUzffX0PzNR8fX339t6gdP3WFPlIaFzO89hPesizXuBlNDKbUg1n7
-         6TkAGwWUB/N4Ml5174ViCizSt6MVLBpXCga4Etuec8eYTw2Ex+IhXZcAfQXGo/uNq22o
-         2bxJMt3g2Swk12a8XgzdncLue1c7+dk3d+qhTA8hWKLU57FcF3KIERfGC/1TVtkTbERO
-         TMDq6lNX+vnuRQoy+VQkgBLYs37Y7sRSARxNcqsF9eaqddy+vlrhAh433IPbnH51ZUDi
-         9TBq+rYevxdvR/Kkd1UdJDhRafsdV4RP0i3yxJktsC3N9yitLsJHIFRl7EGpmMlesnUW
-         NINA==
-X-Gm-Message-State: AOJu0YwOrYkUdQr1/8fE3soD0sUs91fV+R/Q7dCHW4RT5Cv8FggK79Fd
-	oLJvIgnbFvpz5TF3+Mg20Ib7K+I4t2WCLhsFKmU9XbAvYRYTBuDAAlHYCkRNLeyG3oS6SxVbbTq
-	zhJTjjYDeolAdELwOzK4Eru7THivjJrVszWo=
-X-Google-Smtp-Source: AGHT+IFIq0mKQjjOAzQLAIuTOsYYzeLPqrX6Npcz3mjosCkx018Pw6qhofVsl8BdFfnV8aSeaCL79sYrpdugVv5x+KI=
-X-Received: by 2002:a17:90b:4c0a:b0:2c7:b3f3:f2cb with SMTP id
- 98e67ed59e1d1-2c861246c2dmr3264303a91.19.1719224256132; Mon, 24 Jun 2024
- 03:17:36 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719226603; x=1719831403;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zN/gx9TLHE0HEe6+gbLBqezr9l2KcVvjOJpyJiLeuts=;
+        b=tAf64J3TW27ir13aBAekmeP2okkTBe04oCnMk0uMVALvZ9TSQpV/gq4WVhVhh0vBNS
+         81B3RJcf885UqSJ5xuMh2mdHACWppD/dEdAfFnYOvLWfGPqj6noP4M8FYVA4Ug2Wufkv
+         WKzbcs5pbVcO2Urr3dQ1IEISFio5g76Dq5Loi6OqhLmZqoS2x0L+jqptK9Y0ShSFdP7P
+         t+JMghiY7u9XPgPvY+x1xSwSgYD2ykKOj/ApgU5muBjrTWDj1TiRJ/akOpPgx8VKom7R
+         ChFlj6O7m+2ohnsmsviPATiv3QO//bWqysgEfN4HNRfPvJMV3a6wAb3KFEFtHMkdMjI7
+         jyEw==
+X-Forwarded-Encrypted: i=1; AJvYcCVzgxDDeMg77F3l4l9GPKX5565iuDKsSQD6mp7/ncXo5G08W7tAvYQrAUTYSgkFNZUqqAKJiX17hz/spY4zfgeVJ+w8
+X-Gm-Message-State: AOJu0Yz9isG35jPaGImVdiPbs7auvEw0ZMLZpL93mFM6iOvK1cxN3ZFM
+	ia2j6TbHiHUNNXbqZavEMOhzXJIxN2LBYkPmNzkL7ikbXHDAA9SdMkGxkaCPZnn+AN+NjdFIKRz
+	vm8gWoPNuyNCc7ridJKlff87sXLHzLw==
+X-Google-Smtp-Source: AGHT+IEH5ttUaDRhILs7RTtqd/xCjkYzJmnIsXywMCM55E+uPw+zM8x9y64f65k3+ruRNR6MEUNX/Ep5wX3vJq3tF+Y=
+X-Received: by 2002:a05:6870:7014:b0:254:6eb5:ab2f with SMTP id
+ 586e51a60fabf-25d06b73f7dmr4635685fac.6.1719226602870; Mon, 24 Jun 2024
+ 03:56:42 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 24 Jun 2024 10:56:41 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20240623214301.143796-1-abhijeet.nkt@gmail.com>
+References: <20240623214301.143796-1-abhijeet.nkt@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Noam Yorav-Raphael <noamraph@gmail.com>
-Date: Mon, 24 Jun 2024 13:17:25 +0300
-Message-ID: <CAO8o=D5womGcsVsGT4h2=3qry05mMrd9dFDkZHrLtPCDw0+2Tg@mail.gmail.com>
-Subject: Regarding howto/revert-a-faulty-merge.txt - another way to revert a merge
-To: git@vger.kernel.org
+Date: Mon, 24 Jun 2024 10:56:41 +0000
+Message-ID: <CAOLa=ZRGramQ3MdzzXzZ19yeUB_rQZPbZ3u=eA=T2SfV3nhYOA@mail.gmail.com>
+Subject: Re: [PATCH] describe: refresh the index when 'broken' flag is used
+To: Abhijeet Sonar <abhijeet.nkt@gmail.com>, git@vger.kernel.org
+Cc: Paul Millar <paul.millar@desy.de>, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: multipart/mixed; boundary="000000000000f3eeff061ba0a2b5"
+
+--000000000000f3eeff061ba0a2b5
 Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+Abhijeet Sonar <abhijeet.nkt@gmail.com> writes:
 
-I was looking for a way to revert a merge, and found the document at
-howto/revert-a-faulty-merge.txt. It basically suggests that if you
-reverted a merge and want to re-merge, you should first revert the
-revert.
+> When describe is run with 'dirty' flag, we refresh the index
+> to make sure it is in sync with the filesystem before
+> determining if the working tree is dirty.  However, this is
+> not done for the codepath where the 'broken' flag is used.
+>
+> This causes `git describe --broken --dirty` to false
+> positively report the worktree being dirty.  Refreshing the
+> index before running diff-index fixes the problem.
+>
+> Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+> Reported-by: Paul Millar <paul.millar@desy.de>
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/describe.c | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>
+> diff --git a/builtin/describe.c b/builtin/describe.c
+> index e5287eddf2..2b443c155e 100644
+> --- a/builtin/describe.c
+> +++ b/builtin/describe.c
+> @@ -645,6 +645,20 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+>  	if (argc == 0) {
+>  		if (broken) {
+>  			struct child_process cp = CHILD_PROCESS_INIT;
+> +			struct lock_file index_lock = LOCK_INIT;
+> +			int fd;
+> +
+> +			setup_work_tree();
+> +			prepare_repo_settings(the_repository);
+> +			repo_read_index(the_repository);
+> +			refresh_index(the_repository->index, REFRESH_QUIET|REFRESH_UNMERGED,
+> +				      NULL, NULL, NULL);
+> +			fd = repo_hold_locked_index(the_repository,
+> +						    &index_lock, 0);
+> +			if (0 <= fd)
+> +				repo_update_index_if_able(the_repository, &index_lock);
+> +
+> +
+>
 
-This is fine, but it means that you must remember to revert the revert
-before the next merge, which may be hard to remember. I thought of
-another solution: In the source branch, add a commit reverting all the
-changes since the previous merge, then merge again from that brange to
-the master branch, and then revert the revert. In a diagram:
+I'm wondering why this needs to be done, as I can see, when we use the
+'--broken' flag, we create a child process to run `git diff-index
+--quiet HEAD`. As such, we shouldn't have to refresh the index here.
 
-----o---o---o---M---o---o------------W-------
-       /       /                    /
-------o---A---B---C-------!C!B!A---o----ABC--
+Could you perhaps state how you can reproduce the issue mentioned?
 
-(`!C!B!A` means a commit that reverts C, B and A, returning to `o`.
-`ABC` means a commit that applies A, B and C, thus returning to the
-tree after C.)
+Also apart from that, we should add a test to capture the changes.
 
-Now the W commit really reverts the M commit, and you can forget about it.
+>  			cp.git_cmd = 1;
+>  			cp.no_stdin = 1;
+> --
+> 2.45.GIT
 
-Would you be interested in a patch adding this to
-howto/revert-a-faulty-merge.txt?
+--000000000000f3eeff061ba0a2b5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 357254a4ff8f2826_0.1
 
-Thanks,
-Noam
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aNVVPY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meUE1Qy85NUdPR0haRE9XbTliREhVc0MrV3JYUWtFYwpmUS95azdSNkNK
+Ymd3aXFoUVluNkFKL0xLSTZndjVqOC9Gak9pcGs0N0hDM3I1NWVjUExMc3hWR1ZySHp1MmE1Ci9t
+N1RVZER2eFNWeUVlMUdzOTEzMURqdlhXT0pYYTRoQnRPc2wrQ2xZSW5CUFhrK1JvR0ppWXNKcnNW
+UVpzUFkKZGNBbjV0YTR2S1hEbVhsc3l0SjRnck5zNDNhSUkxTjU3SFJZeUVRMnVvcm91cmpSSkIz
+SytOV3JaTlRoM3krYQpSYUFQa1NZS0wwZi9OUHFsTnFDaXZmYzZSRnkwNWJOamsvMlEwYi9ua01O
+eXpvS2Y4dWV3c3RvWlUvaGE5eHFSCm1MQmFKVHZUaGs1WjdBZWNEZXQ5YUU5YytLa0cvWjl6OE5z
+R0g5elZwMG5yMUo3WDdVOEFTcmJ5MVNFQmZ0VDYKTWs4TERIbzl6TS95ZmFWaFlOU0orSk1UaUxQ
+MzlQWWdaazVDb0hGUjlWRVZyeWJPRU1ZdWtuRjhONzVMMHMwawpiS05memZZRnVPandmM3JKWjNx
+L0dnRFYxb3hEYUpxRVoyTTlHektKc1hVRmNKYmlVQlgxSjI2SXJEeHZaY1NXClpBOXo0cWR6clFm
+YStiK1RYUHdicVRSQmwxemRJUUNmR3pHREZoaz0KPXA2VkMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f3eeff061ba0a2b5--
