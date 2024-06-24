@@ -1,95 +1,109 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72573B1BC
-	for <git@vger.kernel.org>; Mon, 24 Jun 2024 07:36:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179543B1BC
+	for <git@vger.kernel.org>; Mon, 24 Jun 2024 07:38:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719214575; cv=none; b=IdcUBggBVpjE9y72Lr3wyWz08SqYiE+sx6hTNSfLOXsXdA/aI/pZi0vkI93FdzMXyT3ulqWcz2EolepshV92sD2U3YhJr66YLv2LKTBsHH8xyR4F8xkDK2Wv4xB2NTPp8Qp7x8tiJ3jFrwiaY6N0Qttc8apkDsErWe3fm9nfljg=
+	t=1719214685; cv=none; b=Jnchaniq6KQfIM/RVm+3VKalBd/AE4NHm6GLytTEUQ1sshrGXtjJVTlaVsxzd8hO6kmnQ8QveaXUggGyJnlj41IyCAWipxc2umdEhSo9LfagyEZdkGEredfidePesHVF60oSNdkoK965waSrK52BEpCncC82W+RgkLnTgfzPxw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719214575; c=relaxed/simple;
-	bh=PR3G2yJIdNtPJId15zxHrpqv0kNb+9Y7CaRtpu7Rvn4=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=fXnjxH7jIB15Sxn4n1Ip2hHtZzDTnVAfTsm+7oXHz2kNBH17l3oZfrgMAxRounXcm+L5U4XDwmVafoYlHELAbAzigOx+yvi1ZYIS1u/ayYpmSKwSYhH3xURwaTy6og2N+CxI3r7FFoPgizFk+7+j/Vq8/DPlXEXQ08oh3vd0DoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=mGvOObZE; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1719214685; c=relaxed/simple;
+	bh=k7+WfBw3oGV8FTIC77s1dIp28PJjr0djq0QuekIdnm4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=GISLLpFYBBHj0aoIqWNrYWOyhmcFaRCi/pJ3q7SHhc7dF56fCTtrEsExmg0xvK5Y/F3exIovPBJ/twOXhun4h4N6XN8Div6/4LeyTfim9EYqBUpBZPsaNJRmv7Qcyy3KEJzyfMKjPj/1cKpjUfTjQp/OJWhqn1YJjkZItz5SpDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=R5mMysf9; arc=none smtp.client-ip=193.68.50.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="mGvOObZE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1719214558; x=1719819358;
-	i=johannes.schindelin@gmx.de;
-	bh=PR3G2yJIdNtPJId15zxHrpqv0kNb+9Y7CaRtpu7Rvn4=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=mGvOObZEuIL0BcGjJ3L6qgVsA26QPC2jvfvpUgKZ0NWOAiNK6I2Is1OaXQyZXuYj
-	 lsa5sBGso+9xuOYruu1Sx1Z/Ym4S9HLrQWalLh0flOPZGhsu5IMtOwtD5OP26D7ZA
-	 NGruPWGEziHn7I/FXFAGRacD/BCn0hsB6XarsQ7Mv8nkLJoSrpPFRvXCOHDyKmydl
-	 EJ4Ta6/aAhWRZOgy7bH8txUpDHn2C0Cu1P4gxrk0jMe5hmAnfjoX7xWj56Mvqq+Qf
-	 voreXWrXPOIDbmlE5rUEySjzdaLWLJN5o8VgAV1MZn5eQX9AiAnXehbrP7W6KBsTP
-	 Cj6Dz1rIYUi8v/9d9g==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.215.26]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M6Daq-1sF4f02CKW-00AcPL; Mon, 24
- Jun 2024 09:35:58 +0200
-Date: Mon, 24 Jun 2024 09:35:58 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <j6t@kdbg.org>
-cc: Junio C Hamano <gitster@pobox.com>, 
-    =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>, 
-    Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pager: die when paging to non-existing command
-In-Reply-To: <ba5965c2-9f1c-4dd2-a2c5-e1bde832766c@kdbg.org>
-Message-ID: <ecf29882-c192-e6f5-64f9-ac4cedb5d85d@gmx.de>
-References: <f7106878-5ec5-4fe7-940b-2fb1d9707f7d@gmail.com> <xmqqsex7tp0c.fsf@gitster.g> <ba5965c2-9f1c-4dd2-a2c5-e1bde832766c@kdbg.org>
+	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="R5mMysf9"
+Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
+	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 3E073A0790;
+	Mon, 24 Jun 2024 09:37:52 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=mail; bh=Y6kQreBxD76dRTR6BfiM
+	RCPns9FvBGOQe5+k0R5VWpw=; b=R5mMysf9Y7dumwGGdMt09GfJbjKnsrfSZtKZ
+	nq3e+ylhcmo3ftWjL/AUBKslBMnn1pnTk/hlzSffvtSAtdCoS8ngrdFVAf1AncqN
+	1SpJDeXT/5GPipjQFqyb4ovpSaNG+Vq/aq/LL3KV2qYMpF530s8rjR86GJyrA2Kj
+	Ufei+RWgSVdXe1z4oU1+wLbf1zakoz2P96YcgnL61iEiO/ZKlrbqVsObIfVPpslP
+	Hx1WB7H3Vza4M66mVbE7qOUWVMACJztbZuc5kWVsff0w6SWguywDzZs/SY2UixjE
+	ziCdrkRHRZqbaF+ZHVrv3k2jKL8d2lp8iuAeVrZv7ypJlFiKCy242DeCo3XVhhi3
+	BbWZn7lxYlwXovauS5E5lsBK2TP0av8G/KliMeIBN3PBOHeaYNhL+8QgXsnKRF+g
+	QL3Z0t2XnBdcEwV+YBN3P0B5xcf5kI02BYuIRdceBSUu5OeD5pf4YP8xn+EC50Rs
+	THl4ptli8W6Ee+3fQeaRQ9QOL6+KEwNOxmLThbaNe/akZsooe4KU1XtJyQiYL+C9
+	QEcDWWnxinSThjBfXJDWRSRQIyZLXe+XiTogRLa+HRwTf8oZGHY+IWLYmIfeZOAP
+	xdoJGPW4vurMprLpRlOdxyyo/Xo5Cxhc2DXAqL601RSPXjmu1Flhdy3+AdJKV0wo
+	8bm9uHM=
+Message-ID: <a55cc932-98b0-43cd-9dfa-ea21a4340bf6@prolan.hu>
+Date: Mon, 24 Jun 2024 09:37:51 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Q2WyB3CxhKixeKH8HRHBXvUIhIs/9afd7K876sZ5BBKJ2ZjSlX3
- +vlrR7+0Q0Sg02SGc3qB3DZzCcdbhl7FdhY8G3MlTH3nc4TpNfrT5jnqUi2LDOdupPB5jLP
- TJvUEb5Mo82yCJkOTVMV+nnDsPfHiWPgUm8aFDsNdqKz1E2bVyxewwNKINHFRsFICstJmwe
- 1zEdE5/CvAMkZiosq/1cg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:/2pVPTvYB3A=;Qssf6duwhlkGUF1pyGorMP4w68Y
- YMxiYiehrVujKfubCNDTkcMTCBEWaz5KAvzQtorBep7c6Coe6rUkTCvL1olRdc1XYdxabkQ2a
- owSTJ8gWggpCSbuwv/5rK59HnKNEN3cw32TtPpkzCGsneIppDGjHvpZzKPqFTS73DPPJzN939
- tz3SXhHlpGi8i/o+nB8IWV7vO0CoP42nUG1p7OE1PP9W7VOxY79szj7VyldKASg9d5cfJR3Ha
- IfsUJlhcBUoJg1SQ4Z+LG9DaeRCfB2JOZ/t5BhqDZppEopMP2wrPZnI4WZcLtwvY/kRGW3TEd
- weRtQg4FkyKyAQRy3dPmV8Yvne+plCm+p+DqgBraGjNOJ6PjoB6CuG9DYgcwU79/K3BtBMKh8
- MQuKi08CK0ekMdn3i00HGJaIixVgVkXiAKQF/jrvW3JYi1FfD4HF8/FIR/y4KpUEt6+QPiqRR
- Hyo1fZaRFb5yi5jUCiVtOVn6wb2bCRHTtxcmIvCq1AKdMFOw4d2gIVMR2abWytCQffetbTp14
- jdO+hHA5fmlOqmaktj/qCdiiCpuiemtKESkpQ7qoMztVNOS1gawsQ9Ip4LsZbK1dGQiHKwq8F
- bgd+E6cOufWpp1LOH7t46sLMm68T5W+2xJFihuGJCPV1h1HvstWeLY6LO04He7xLwgHA2fsAu
- jNw1j0lXtbH0tHwoK2yHYeAQrG8OApvKf02WXGqPI3YxIVHT3vvVcjc3vFxNxjeNM0lBdnnOq
- e8EuuPWYogYrVVTAfCH6wYvomJi5LE59gjvjhdDgqjSU/2wk0zLUNKcT64V2JHrr+wHP4nXTH
- +eS49nrzVv04/18UTomdihBDQDTJtaSrpb6+6D45Az8/I=
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH resend] git-send-email: Use sanitized address when reading
+ mbox body
+To: Junio C Hamano <gitster@pobox.com>
+CC: <git@vger.kernel.org>
+References: <20240621092721.2980939-2-csokas.bence@prolan.hu>
+ <xmqqr0cqmck5.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?B?Q3PDs2vDoXMgQmVuY2U=?= <csokas.bence@prolan.hu>
+In-Reply-To: <xmqqr0cqmck5.fsf@gitster.g>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: ATLAS.intranet.prolan.hu (10.254.0.229) To
+ ATLAS.intranet.prolan.hu (10.254.0.229)
+X-EsetResult: clean, is OK
+X-EsetId: 37303A2945A129576C7661
 
-Hi Hannes,
+Hi!
 
-On Fri, 21 Jun 2024, Johannes Sixt wrote:
+On 6/21/24 19:27, Junio C Hamano wrote:
+> Hmph, there is this piece of code before the block:
+> 
+> 			if ($c !~ /.+@.+|<.+>/) {
+> 				printf("(body) Ignoring %s from line '%s'\n",
+> 					$what, $_) unless $quiet;
+> 				next;
+> 			}
+> 
+> This is to reject strings that do not even look like an e-mail
+> address, but we called sanitize_address() call on $c way before this
+> check.  I wonder if we should move this block way up, even before
+> the call to santize_address()?
+> 
+> That was a relatively unrelated tangent.
 
-> Am 20.06.24 um 21:04 schrieb Junio C Hamano:
-> > Just in case there is a reason why we should instead silently return
-> > on MinGW, I'll Cc the author of bfdd9ffd, though.
->
-> I don't think there is a reason. IIRC, originally on Windows, failing to
-> start a pager would still let Git operate normally, just without paged
-> output. I might have regarded this as better than to fail the operation.
+Hm, maybe. Should I add this to the patch as well?
 
-I recall regarding this a much better idea back then, too, because it
-was quite finicky to convince the MinGW variant of Git to play nice with
-the MSys variant of the pager.
+> In the same function, there is this snippet about Cc: (I didn't
+> check if the same issue is shared with other header fields):
 
-In the meantime, things have become a lot more robust and consider it a
-net improvement to the change the behavior to _not_ silently continue if
-the pager failed to start.
+Yes, I've seen that. However, the mbox headers are more likely to 
+conform to RFC 2047, or at least `git format-patch` generates correct 
+mbox headers. (Before sending the original patch, I was playing around 
+with purposefully broken mbox files, and at least Thunderbird seems to 
+correctly parse these non-conforming mbox headers in _most_ cases, but 
+that's probably just extra caution on Mozilla's side).
 
-Ciao,
-Johannes
+> It looks to me that there are many other places that we try to be as
+> faithful to the original as possible.  In the same block as the one
+> that handles "Cc:" I quoted above, an address on "From:" is also
+> sent intact into @cc and addresses on "To:" are handled the same
+> way.
+> 
+> The patch under discussion singles out the addresses on the trailers
+> in the message body and treat them differently from others, which I
+> am not sure is what we want to do.
+
+I think it is a reasonable assumption that the mbox headers will be 
+conforming, whereas the message body is just freeform text and no such 
+guarantees exist. But if we want to be paranoid about it, we could try 
+and sanitize everything.
+
+Bence
+
