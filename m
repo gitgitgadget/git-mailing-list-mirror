@@ -1,74 +1,83 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D3819E7F4
-	for <git@vger.kernel.org>; Mon, 24 Jun 2024 23:56:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B468A2AEFD
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 00:00:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719273364; cv=none; b=PIM1O/F7a47oOPjGmHwbAz2tcVW4i6NtDNY45tgN25gW+q8898ksvsMZM5X/kYr7nWz8KI+ivuFRgZujVGCfHA6CIFpXPY3ySYyVOirbKQXFW9K03BRBH6zB4/YHtXoURFaU2LJdkv1XQ5SSGrdHLpnkVHe1/F0lgB3btwptWQk=
+	t=1719273650; cv=none; b=nNGn2vdft+s4AotNrdkMCtwIaL+0AVukx7Q1+fV0SxCr5mJIvg4/VtvgxW0nn1sJJc9/QoSL3ytnDN0zFpTMBvEwgFMVUbhaEpGcAZl3ffHqPUn8PNOWKVOHas2hhg9YDU3wkgpnC7gqSopNTUXnRE9cqGmIvwb9rNkIwDJ3yxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719273364; c=relaxed/simple;
-	bh=tFWvU5kpgPaDgJJRza4X+c3SitM7/ZTDcTU1bYO9PTI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A3RjsYl7xaKA5P2WPtGyEJLmY/4N1sHSa0gGNf3EhY31ULowVeulhhRNmLSqbgntUJw1Ug4DIG7jjerHDBrAcKWb39uwzmEGEc7pS0zGw/LvuCLC3LBKOgvW9vkGrGd+dLqg8ZmRyj/PE21+68mj62XtV71Qyb/HJBAarvV3Fh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 4599 invoked by uid 109); 24 Jun 2024 23:56:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Jun 2024 23:56:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6252 invoked by uid 111); 24 Jun 2024 23:55:58 -0000
-Received: from Unknown (HELO coredump.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Jun 2024 19:55:58 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 24 Jun 2024 19:55:57 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Randall S. Becker" <the.n.e.key@gmail.com>, git@vger.kernel.org,
-	"Randall S. Becker" <randall.becker@nexbridge.ca>,
-	"Randall S . Becker" <rsbecker@nexbridge.com>
+	s=arc-20240116; t=1719273650; c=relaxed/simple;
+	bh=s91kZs7CO4SqfSpX2BgtQ9XlYuEXd9hKfr517A2eHg0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZvtS/kebKUzrpkkB4u2ojNytCwG8HUUTd6fsY+xAP1L1Ag1KIAND7R3dFSaDQRBKChUqp4j0tyPYHQXFaj7xFVj/BFpLF+OlsIvg8dZvJ3vdn3a4Z1MqQmq9IjBzXvlcM5kpoVE/+uRXmDYGlJUwmzxf/WGTgEZ2ZFiSekmQquo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=E23R3hu/; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="E23R3hu/"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id D2D4F32686;
+	Mon, 24 Jun 2024 20:00:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=s91kZs7CO4SqfSpX2BgtQ9XlYuEXd9hKfr517A
+	2eHg0=; b=E23R3hu/mhK/W37A6kMMgyoB11j/89aZyazrp41rXzshyqaivlaZpN
+	DlgYxDb2cSaUI3LBFTzHrcqwTIxmWWYL85Fq73zpMEWb70PPtRjdt7nJqTalGGSv
+	WZjFr7lFlpOwi4ukSaNinUEZgQ6pf3k5ID8sM5aHLruCMwDGKrgOg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C9D0A32685;
+	Mon, 24 Jun 2024 20:00:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EC52832682;
+	Mon, 24 Jun 2024 20:00:44 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  "Randall S. Becker"
+ <the.n.e.key@gmail.com>,  git@vger.kernel.org,  "Randall S. Becker"
+ <randall.becker@nexbridge.ca>,  "Randall S . Becker"
+ <rsbecker@nexbridge.com>
 Subject: Re: [PATCH v2 1/2] Teach git version --build-options about libcurl
-Message-ID: <20240624235557.GA2727@coredump.intra.peff.net>
+In-Reply-To: <20240624235557.GA2727@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 24 Jun 2024 19:55:57 -0400")
 References: <20240621180947.64419-1-randall.becker@nexbridge.ca>
- <20240621180947.64419-2-randall.becker@nexbridge.ca>
- <f44f1e25-41ca-0784-3186-f9e1bdae0d4f@gmx.de>
- <xmqqed8me36c.fsf@gitster.g>
+	<20240621180947.64419-2-randall.becker@nexbridge.ca>
+	<f44f1e25-41ca-0784-3186-f9e1bdae0d4f@gmx.de>
+	<xmqqed8me36c.fsf@gitster.g>
+	<20240624235557.GA2727@coredump.intra.peff.net>
+Date: Mon, 24 Jun 2024 17:00:43 -0700
+Message-ID: <xmqq1q4lc2ms.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqed8me36c.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F85089A2-3285-11EF-8904-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-On Mon, Jun 24, 2024 at 09:06:03AM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> > Wouldn't calling `curl_version()` make more sense here?
-> 
-> I wouldn't give that question an outright "no", but unless "git
-> version" is split out of the builtin suite of commands and made into
-> a standalone binary, I would *not* be able to give an unconditional
-> "yes".
-> 
-> For now, let's stop at the simplest solution---if the library
-> project gives us a CPP macro to use for _this exact purpose_, let's
-> take the offer.
+> But we could also have "git version --build-options" call "remote-https
+> --build-options" automatically, and just let it dump to the shared
+> stdout stream.
 
-Here's another point of view: libcurl is not a dependency of the git
-binary at all! It is a dependency of the "curl" remote helper. Would it
-make sense for "git remote-https --build-options" to exist?
+Yes, if we were to care the version of libcURL dynamic library that
+gets linked at runtime, what you describe does sound like the right
+way to go.  The separation between "git" (which does not depend on
+libcURL at all) and "git-remote-http" (which happens to depend on
+it) is our business and it is our responsibility to hide that from
+the end users.
 
-I'm not sure. It resolves the linking problem and matches how the actual
-programs are structured. But it is also not something that normal users
-would tend to think about (even if you are having trouble with https
-remotes, you might not know that is implemented as a remote helper).
+It certainly is MUCH better than making "git-help" a standalone
+binary that links with everything we link with, only for version
+reporting.
 
-But we could also have "git version --build-options" call "remote-https
---build-options" automatically, and just let it dump to the shared
-stdout stream.
-
--Peff
+Thanks.
