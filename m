@@ -1,103 +1,96 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE43C16C696
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 16:54:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6F11459E2
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 17:02:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719334449; cv=none; b=CnYcyjTzYG/miGkEHYP90PqN0QPG3hx/GgtiRtWqi0Sr38UnIJq9XNGZq2FM7uuuVLRBqQiUkZ+jSvEGwUDkwHQ9UqKvQnosutc/+9r3BacMrZvWjh6Fk/cM5PJvZ26R+RUb+cNVQTEN/DHKdzDQYx2ILcsQQO83bFVs6UeNHVg=
+	t=1719334933; cv=none; b=te1tL158WaBNw73KLwN4K+9XNSBrmquuF3hhGT6wmLjjsriKQHtKpToxgAqkgmuDIO+cFLWMI7HiERvFgIumeHglpPUyxNIucvvC871hc7V1z70g0xpoJqPoMbp80YuT0hDDNufopbpJOwWuaL3ADlDFUz0lonWKc5QP6AvnTTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719334449; c=relaxed/simple;
-	bh=7CUFBfV6+Rn4KZll7IkXW0jbuBrTgW561BkuvwtAOwc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h15yWDdKY8U7tqZoeGU5k+ZG2a7JvUylZV10pt3BvmjnFnRqvFokEIxIY42/GyOMlwA4dHZw5X0KlPIBl1BpurTy7mGWyn+W2zamZ6M1Wvd3irHhOWTgoCXvG/9RVrNmyzdLbBVUQilaxXa/X3LdoCdtLwDbuOWXksT3eURrY7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q5uWLUgN; arc=none smtp.client-ip=209.85.128.179
+	s=arc-20240116; t=1719334933; c=relaxed/simple;
+	bh=dRchbzRt5DIDFi/9gB77o6l/Cjf7Y+f/jN7Z1avA+MI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=p+6hUq8La3cvWCBUPC7jwczobKk8a8y6My5KkPe1u8LTiaR0NVKs9IWTrQpXOH2ieDzwq4Cn1eh3nhR47iAka9GQ2ZIlZeAflorlZ7SXePP/F7XfIOLqSSCvbNSY0joUyNqpjEKhUhSMAuUHXG6f4DmHeZy21PZ+Shv4DOo7Xlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Btz2tIuS; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q5uWLUgN"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-64546605546so25215197b3.1
-        for <git@vger.kernel.org>; Tue, 25 Jun 2024 09:54:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Btz2tIuS"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-424acfff613so41545e9.0
+        for <git@vger.kernel.org>; Tue, 25 Jun 2024 10:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719334447; x=1719939247; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZZdHlsjiEIMGudwibZFGk2XLvjmpwajzvGEuhYOwkhw=;
-        b=Q5uWLUgN5j3KQbdkdicYvPcf2MQqp3uSPY2hSiq1YeW1AdNRJkBVi1eE67vUzlw++n
-         V3omcnUe4YQlRZ8DnSbySWFsA4rjP2yLUX10GNZ4GIBD9IBn4X1dF7kzGQ1fHSI01Z8r
-         nsoSAhrBSfQNcbpEMASY20Y9Udo7DnF7vbWfwO9iYtSCoDbthBAyDD7srqDfQZoPuI8l
-         mOYuTsd44fPK5RcHiME4MPQjxPhLlxgR/m+VobSvpaDiwWxz3Br4rVPCZ8YcgbV7Xz71
-         u72+8/oklHD1RbyttLR62jxtf8IRJIjiDXgCotkkRAWI6koM/SXHOhAB4kAynovBSDyi
-         b2hw==
+        d=gmail.com; s=20230601; t=1719334930; x=1719939730; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZM/TioJPhDldoglcwA4Qp1PM9mcMtTSLo0Lq8lzGdZ0=;
+        b=Btz2tIuSodQpeO354WLcn7VpfplgML/i0lPOFZXrWNWIEITSFNoVJ0Wjnux69AC7Bb
+         phvXEXTC3bkXaBSDAXTEh8cb91UI9mYBhwS55nX4L7tGnWw3Rqq+0/rUZEiVHFex2Qoh
+         8gwvYyM+2lmBy1gCj3ChcEl0+NOXhyYXFX37r7sK5Calu4hC9lMJvSJuKD2H7BH2rBBF
+         oABPP87Zz8bBTdivRL11Kk8uhVjFW2s0+vs/Vo+fOLPihlsuO9P/hhsnh6/mlPMbKR6n
+         QX3ga8wc+TJJin19LZUr0kVxsl3nFKnPXSdfhTMdGOLOCmXjhLB35RuqbuI3dSMZ5gen
+         wLuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719334447; x=1719939247;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZZdHlsjiEIMGudwibZFGk2XLvjmpwajzvGEuhYOwkhw=;
-        b=Zb03MGGxiJLy/uCGTnhz7NmWwiT8S0SSt31u8efmHiHhGDnoxD9Dh4mUYnZkqm2VTM
-         0cp/MGcbENKlufnlTYUC7nepxfvYl6r7FXNhnl1SQ56klgjlYX0xZQbb7gx0XU1EvwvO
-         EirIlG9MSRps5ULvaMWQcnIGwflcDyZKXhrR2qEAtkyihrun2HQUuy8zk9sOICy+7PCd
-         GK1J9GGTZdjCiap1zlkU46U4iHfUWT7u0AfnxfGqJPhXawGZIrE8AdGVJDPB/rARvYjM
-         45UNDpvnMVhTy4/uIipNdUyj2ZbC3yQcOXJz8mM7y8xwACSip0lTuHTWjkOBIzja90DH
-         +Mpg==
-X-Gm-Message-State: AOJu0Yww0E27oy/P72U78OrobjjUCrQRaafbzrj11tg2p+gMwSXf6kXv
-	N8AQMWfbhVcYuKvDhSH4zl6+kLWdswS+Y93B15aNfvjUsRXRqXD83goiY3WSPjU6G35fk3DatGF
-	srz2o73ixHyoa8mgUJrJ3vcyUntUDRA==
-X-Google-Smtp-Source: AGHT+IEODGY760fvcF6UZn3Vicfne9Tr8pOn+7IR8VqzKY840D0kpm3jbZ5GsKJF0JeDscuZ2jkr2r2RWU1p48F6X2w=
-X-Received: by 2002:a05:690c:6f08:b0:618:95a3:70b9 with SMTP id
- 00721157ae682-643ac81d3b9mr89908317b3.36.1719334446794; Tue, 25 Jun 2024
- 09:54:06 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719334930; x=1719939730;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZM/TioJPhDldoglcwA4Qp1PM9mcMtTSLo0Lq8lzGdZ0=;
+        b=jUdfgIQ06hi65GrCD3ZvDs/C4FC+gjDue0Zm1h/9yzfcjqI41wh05hqFpQFV0rO1gn
+         TCChM3ZgqMW3spPaHBularxWH4KmLyCW+cJEu+jpCFvJXp1euIIYAx5isR5jw5SRla4h
+         +okV0h/QrHplG24PmXSMIDu+1l3Uv8PwgXA8Hn2XCIMTiQOChKATjPIFQ+xIJmpXaqTY
+         n/WzMEa67aZlb341hYbhInYjUBltiTOV17FfH7A8JRYjD8CZjhYPr/wB79KqsyZrp5um
+         Wk4SGVIJZsH7wvtN+laWjMq1qEZeT7oTJeXdJLCAerKyRVWOlaH5zlhP8/gziR+YIZuc
+         Ryow==
+X-Forwarded-Encrypted: i=1; AJvYcCW63WVfZhxYYgpwaHRXWcizHlQyHlto/1CcReNlmVCvjeb2ENzP11FvC8l4Pyg0JWUcEhQO/UW03hgXawU+V02y+CNc
+X-Gm-Message-State: AOJu0Ywor1ldyIp1clPiYPt2fZ8XbToTo4ldEvJKmaGCpAPkln6YjyrT
+	r5JsVagW7jfsV6WqSpuGNYCdjX3j6cs4a3UZob7pLUhWEv9KOTTI
+X-Google-Smtp-Source: AGHT+IGH8+iNHqtHKxi8155x1Zai5s/eguGxTbuGybqe8jeTATNWtLFJXT1i9I5/eMJvikYGaQ0fMQ==
+X-Received: by 2002:a05:600c:511e:b0:424:a587:4392 with SMTP id 5b1f17b1804b1-424a5874419mr16003455e9.18.1719334929585;
+        Tue, 25 Jun 2024 10:02:09 -0700 (PDT)
+Received: from gmail.com (123.red-88-14-208.dynamicip.rima-tde.net. [88.14.208.123])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-424819227a8sm185306375e9.48.2024.06.25.10.02.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Jun 2024 10:02:09 -0700 (PDT)
+Message-ID: <82f15196-9b44-4805-9560-fd5381e5c5b2@gmail.com>
+Date: Tue, 25 Jun 2024 19:02:08 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAF4erGWF+Lx=K09yFhd_abC2M5b5Ab0vM2uehkdVmridmsHqDg@mail.gmail.com>
- <20240625132001.GA535756@coredump.intra.peff.net>
-In-Reply-To: <20240625132001.GA535756@coredump.intra.peff.net>
-From: Ryan Vu <ryanvu87@gmail.com>
-Date: Tue, 25 Jun 2024 09:53:55 -0700
-Message-ID: <CAF4erGXkP3AR3dNvsqmo5FBLxOaGZhd9pHCHKsL8Q0BV5BiKJA@mail.gmail.com>
-Subject: Re: gitconfig - interaction between credential.helper and includeIf
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: What's cooking in git.git (Jun 2024, #08; Mon, 24)
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqbk3pakol.fsf@gitster.g>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <xmqqbk3pakol.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Thank you! I have the configurations working now.
+On Mon, Jun 24, 2024 at 06:13:46PM -0700, Junio C Hamano wrote:
 
-On Tue, Jun 25, 2024 at 6:20=E2=80=AFAM Jeff King <peff@peff.net> wrote:
->
-> On Mon, Jun 24, 2024 at 10:59:33PM -0700, Ryan Vu wrote:
->
-> > I created the following files:
-> >
-> > ``` ~/workspace/.gitconfig-workspace
-> > [credential]
-> >     helper =3D store --file ~/workspace/.git-credentials-workspace
-> > ```
-> >
-> > ``` ~/.gitconfig
-> > [credential]
-> >     helper =3D store
-> > [includeIf "gitdir:~/workspace/"]
-> >     path =3D ~/workspace/.gitconfig-workspace
-> > ```
->
-> credential.helper is a multi-valued config key that forms a list, and
-> Git will try each one in sequence. So in your ~/workspace repositories,
-> you've configured _two_ helpers: a vanilla "store" and one with the
-> --file option.
->
-> You can reset the list with an empty string. So putting:
->
->   [credential]
->   helper =3D
->   helper =3D store --file ~/workspace/.git-credentials-workspace
->
-> in your .gitconfig-workspace would do what you want.
->
-> -Peff
+> * rj/pager-die-upon-exec-failure (2024-06-21) 1 commit
+>  - pager: die when paging to non-existing command
+> 
+>  When GIT_PAGER failed to spawn, depending on the code path taken,
+>  we failed immediately (correct) or just spew the payload to the
+>  standard output (incorrect).  The code now always fail immediately
+>  when GIT_PAGER fails.
+> 
+>  Will merge to 'next'?
+>  source: <0df06a80-723f-4ad7-9f2e-74c8fb5b8283@gmail.com>
+
+The version queued is:
+<6850f558-ad20-403a-ae1e-5b9826c53790@gmail.com>
+
+Hannes pointed out a minor bug that's worth fixing.  I sent an update:
+
+https://lore.kernel.org/git/392deded-9eb2-42fa-b6f9-54c22d3ffd33@gmail.com
+
+Other than that, based on the comments received, I think it is ready to
+be merged.
+
+Thanks.
