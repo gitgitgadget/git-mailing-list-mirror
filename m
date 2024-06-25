@@ -1,58 +1,57 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FFEA135A69
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 17:39:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E0D135A69
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 17:39:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719337161; cv=none; b=Cu2fFAuJLOptJwDNyXU5egSu4VYh7OtdEslly7ORTAtWzP/Yrh8uJcw9cP6x770kPc9N085A2tdF267ubd0euSxg8KKKVtv4cX43eIlC2JCYpheFXi4Ake7qnOyw8KnkE1Dk5IBg4lOXRz8vDfu7qVkjtqs4Zsu6+XUH8DPYwtU=
+	t=1719337178; cv=none; b=GWFFbzfIHbA6DDuWSDdVzWTaeUby89xw3Zm7VV8G4Qyek5kli6sPvRF/2mdAMKa+qHG+OevHN+e28k8dlQEjLOC5p3aYfqlJjBe7QLPwbC3TtFeZSEm/BWlaVA9xmUQlF9kB2YqUrLxFI2b04K39xZdK7klIGPmxHx/k1eTLoG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719337161; c=relaxed/simple;
-	bh=67pqoho0rZtX6XgF1sZBla1YYQUDFKa4eaJtIUWpJLw=;
+	s=arc-20240116; t=1719337178; c=relaxed/simple;
+	bh=YmWOwAz4SB/hukFsI3KQur+L37M/LGRkoFUEk72JVv0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fMbaD7JkI1jb93JnqOK0crwwZkZhtxpUEg8m9oLHy9IhPDMsoUbVx9fWHIfRPbY0GW94IQGEniNyhjWvoy2FVRl/qlgRhTUF2adVA+PB41jyifQRkWU9nF7Dt3oMdgecV7gqvzyzOMxyF1QeumXB9W4G+WSGfYGla4AcDdXQncI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=1wFB1xcw; arc=none smtp.client-ip=209.85.219.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=YW2tCC5WMD4KRCyofP72++KHfEL1uKQsewfmSedHrJKyM3XeXi/wrkr2wbQgWta9KiY57x8JSEZ1Ga0nyBTVF6Oz15ZQYdQcJCKZsycHyMrxiFOgR4kZ8x/W5dWUL6pvsfDpr8wu6IszD9jDwWluldzGRG0dr54eaNKAuatjH2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=XFSVRpS5; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="1wFB1xcw"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dfab4779d95so5738541276.0
-        for <git@vger.kernel.org>; Tue, 25 Jun 2024 10:39:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="XFSVRpS5"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-79c03abfb18so55007085a.0
+        for <git@vger.kernel.org>; Tue, 25 Jun 2024 10:39:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1719337158; x=1719941958; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ni/yv9aus9DfElXlnyWyNuzjC9sTbva/aRjxmi0SH5w=;
-        b=1wFB1xcwQVwFxvI2DBAU2c8bi7p3A3JRF60Lqmb1LhOnPD/lb7YhdHHmg1s4ioYtlT
-         TqCGZ2tnYIL6XE803yHZPxf44VapKF/4NkfYX0Msfqw3NGdo6GGWuYP//nJO9ss38CWa
-         m69UdgISw/T55IPd9P2hOHfhv0iZI6wvng+hBhPARzjOZKL2THtPRnSVneB6Df3SlcvR
-         TLCCLm6XimJrhO6MC5bsEEmRJdJnK99lRVpCxNSpmucSLQXzfA+hPVON88zhH31mup+K
-         APFiO41ZzS0o15//uAOulbTIT+JlHBGAHBhB9p6KeIRqD7JkST4Vwb5Gm0q3keg2fAz9
-         VA7A==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1719337176; x=1719941976; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=S364uJfHiVxGn18CK1EUhoShH/JRj2hyg7M6i/YyePU=;
+        b=XFSVRpS5Y3plUGL/NcG+rwn+ztK16KR2OYB9kpL6F4mYIVFrQZWlVrq3MXvaynwuaT
+         7JkPCTha45H+or3HRC+z5Db0MrbtnLLPNnyT4fSQCzYhjKIFazdvWeOgbiFNkZbfUmv0
+         hKpq65I54W0iuYebpvEzqZqeyiGCrWmQHvRml6fNRxHN0lHVaQT+hrvHddGvNJDfusDJ
+         V5rj2ff6diPOQ6e8RlPNeSpdsER9CeUbkZRYjDZc1yj+IvdU7atu6JxU4bNbq3fm4GB8
+         tqYGGLisvOLfqTwnUEB+bH+fXckuF+iO/MaFoxdY2VrMGhrxQiLXI4kXp9LmZ3RbNt7k
+         dIMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719337158; x=1719941958;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ni/yv9aus9DfElXlnyWyNuzjC9sTbva/aRjxmi0SH5w=;
-        b=Xtyf9AVrUVkgXCY3SHHRB6kS9S8YBwb2x7oqnq5AJQY1zZdNll6rOBtfczX7YdWIlR
-         Nz7y/p3n/zfauvzrk4UeDO5SOJw+PIPxxzysFc1bzFH5q38s00bsQPwNaeVZPwLVawKT
-         tq3CeInI+9s+NIuIQ36Fii7s3FYUPhokwzhLAKo5qxX0XGczEA3gX4283dUQ2kt1YrSB
-         VBytzMNFrpI/FlhndhmLgy+4wSDvEH0MZCk24JDjzzACxJkBmx4uYHSwkACoJS0UWa45
-         9RpukgD35P5D2AeN37sObeqUV0/eZ3D9boEkA4YTUeoC30ScUSi78Y5da0bn5yFnvqgW
-         DEqQ==
-X-Gm-Message-State: AOJu0Yx9wP4NMQKfvwrsoGt1p7SMA3aMtmjgJc3Joh06rXjV+NsTaI5v
-	aUqbrpH+tbxRXMNT5TJo1v/hNcvz7T2DvoPJ9ZeR9rPDPjs2JvjapEc82Ge5R+9OfM1FGlJPxQR
-	xqiA=
-X-Google-Smtp-Source: AGHT+IFNJtabgRDAgzjZvTriBVEvHS7DcUzfv8s/L5mM1UxFSm9YbcNqVt4sNKacdEU4ycrVlh2LsQ==
-X-Received: by 2002:a25:2b89:0:b0:dff:af1:8976 with SMTP id 3f1490d57ef6-e030404eec7mr8272750276.64.1719337158024;
-        Tue, 25 Jun 2024 10:39:18 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719337176; x=1719941976;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S364uJfHiVxGn18CK1EUhoShH/JRj2hyg7M6i/YyePU=;
+        b=ByCNxg0PTJMCN2vL3um9c89HapubgJKU4T/asTEfAZWhwImiOWTlKGpr3hUlyake2O
+         Qu8M1nz4QgRCxKq/YOBHldejIgKw7gHhkfjj4dFyqrFUIe1g+8dj0mXjpnjiSx/QYBms
+         c9+RJe9Xv2fI8Lu2P0HeGIgBHz4DGy7CXbYN3F72eCAR90l7bAT2J+gOu494a/TVJ70r
+         FdZ2Ll07gCwyTGU8LCWKf72u8LfGbZAZGUDKh3dHXaTCAS/qadWMozFwHa5JkCjsAcqk
+         1I0nPS15s2qgqRAdhMWsRbw/fAhN60EuDyMIQCNyNuAsnneUY5qEsvTHEq0CrXbA1Jtt
+         349A==
+X-Gm-Message-State: AOJu0Yx0fd6nKrl/C1Ug6GDhw53x8x4Cbf7e8+/UeL2TzwS+W5TfzDGA
+	ysRl0sppRqXuWHQwBsZgDgGuSbwkYfU5k2t+6k7NFis/VlY90Tj/jVKyPj2XC23g+cfdY0wBaZf
+	Hyqo=
+X-Google-Smtp-Source: AGHT+IGsu7fL8ulf/iGkchgu1Pq+DS8fVyrVSJHfDw8JIfGcT3UeCLr3F2DKWrYjxIkJJrA6oQSofA==
+X-Received: by 2002:a05:620a:3727:b0:79b:f36e:831e with SMTP id af79cd13be357-79bf36e839emr736916385a.13.1719337176087;
+        Tue, 25 Jun 2024 10:39:36 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b51ef30eebsm46756436d6.97.2024.06.25.10.39.17
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-79bce89de24sm427024985a.23.2024.06.25.10.39.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jun 2024 10:39:17 -0700 (PDT)
-Date: Tue, 25 Jun 2024 13:39:16 -0400
+        Tue, 25 Jun 2024 10:39:35 -0700 (PDT)
+Date: Tue, 25 Jun 2024 13:39:34 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
@@ -61,9 +60,8 @@ Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
 	Elijah Newren <newren@gmail.com>
-Subject: [PATCH v7 03/16] commit-graph: ensure Bloom filters are read with
- consistent settings
-Message-ID: <f6cf5bfc4eae2945cf2811172ccdb1293d4b0499.1719333276.git.me@ttaylorr.com>
+Subject: [PATCH v7 04/16] gitformat-commit-graph: describe version 2 of BDAT
+Message-ID: <0041600f31d23f149c20a648bbb5cd61561d9488.1719333276.git.me@ttaylorr.com>
 References: <cover.1706741516.git.me@ttaylorr.com>
  <cover.1719333276.git.me@ttaylorr.com>
 Precedence: bulk
@@ -74,195 +72,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719333276.git.me@ttaylorr.com>
 
-The changed-path Bloom filter mechanism is parameterized by a couple of
-variables, notably the number of bits per hash (typically "m" in Bloom
-filter literature) and the number of hashes themselves (typically "k").
+From: Jonathan Tan <jonathantanmy@google.com>
 
-It is critically important that filters are read with the Bloom filter
-settings that they were written with. Failing to do so would mean that
-each query is liable to compute different fingerprints, meaning that the
-filter itself could return a false negative. This goes against a basic
-assumption of using Bloom filters (that they may return false positives,
-but never false negatives) and can lead to incorrect results.
+The code change to Git to support version 2 will be done in subsequent
+commits.
 
-We have some existing logic to carry forward existing Bloom filter
-settings from one layer to the next. In `write_commit_graph()`, we have
-something like:
-
-    if (!(flags & COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS)) {
-        struct commit_graph *g = ctx->r->objects->commit_graph;
-
-        /* We have changed-paths already. Keep them in the next graph */
-        if (g && g->chunk_bloom_data) {
-            ctx->changed_paths = 1;
-            ctx->bloom_settings = g->bloom_filter_settings;
-        }
-    }
-
-, which drags forward Bloom filter settings across adjacent layers.
-
-This doesn't quite address all cases, however, since it is possible for
-intermediate layers to contain no Bloom filters at all. For example,
-suppose we have two layers in a commit-graph chain, say, {G1, G2}. If G1
-contains Bloom filters, but G2 doesn't, a new G3 (whose base graph is
-G2) may be written with arbitrary Bloom filter settings, because we only
-check the immediately adjacent layer's settings for compatibility.
-
-This behavior has existed since the introduction of changed-path Bloom
-filters. But in practice, this is not such a big deal, since the only
-way up until this point to modify the Bloom filter settings at write
-time is with the undocumented environment variables:
-
-  - GIT_TEST_BLOOM_SETTINGS_BITS_PER_ENTRY
-  - GIT_TEST_BLOOM_SETTINGS_NUM_HASHES
-  - GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS
-
-(it is still possible to tweak MAX_CHANGED_PATHS between layers, but
-this does not affect reads, so is allowed to differ across multiple
-graph layers).
-
-But in future commits, we will introduce another parameter to change the
-hash algorithm used to compute Bloom fingerprints itself. This will be
-exposed via a configuration setting, making this foot-gun easier to use.
-
-To prevent this potential issue, validate that all layers of a split
-commit-graph have compatible settings with the newest layer which
-contains Bloom filters.
-
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-Original-test-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c       | 25 ++++++++++++++++
- t/t4216-log-bloom.sh | 68 +++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 92 insertions(+), 1 deletion(-)
+ Documentation/gitformat-commit-graph.txt | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 595a349c56..3d89febae4 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -543,6 +543,30 @@ static int validate_mixed_generation_chain(struct commit_graph *g)
- 	return 0;
- }
+diff --git a/Documentation/gitformat-commit-graph.txt b/Documentation/gitformat-commit-graph.txt
+index 31cad585e2..3e906e8030 100644
+--- a/Documentation/gitformat-commit-graph.txt
++++ b/Documentation/gitformat-commit-graph.txt
+@@ -142,13 +142,16 @@ All multi-byte numbers are in network byte order.
  
-+static void validate_mixed_bloom_settings(struct commit_graph *g)
-+{
-+	struct bloom_filter_settings *settings = NULL;
-+	for (; g; g = g->base_graph) {
-+		if (!g->bloom_filter_settings)
-+			continue;
-+		if (!settings) {
-+			settings = g->bloom_filter_settings;
-+			continue;
-+		}
-+
-+		if (g->bloom_filter_settings->bits_per_entry != settings->bits_per_entry ||
-+		    g->bloom_filter_settings->num_hashes != settings->num_hashes) {
-+			g->chunk_bloom_indexes = NULL;
-+			g->chunk_bloom_data = NULL;
-+			FREE_AND_NULL(g->bloom_filter_settings);
-+
-+			warning(_("disabling Bloom filters for commit-graph "
-+				  "layer '%s' due to incompatible settings"),
-+				oid_to_hex(&g->oid));
-+		}
-+	}
-+}
-+
- static int add_graph_to_chain(struct commit_graph *g,
- 			      struct commit_graph *chain,
- 			      struct object_id *oids,
-@@ -666,6 +690,7 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
- 	}
- 
- 	validate_mixed_generation_chain(graph_chain);
-+	validate_mixed_bloom_settings(graph_chain);
- 
- 	free(oids);
- 	fclose(fp);
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index cc6ebc8140..c1977961d0 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -421,8 +421,74 @@ test_expect_success 'Bloom generation backfills empty commits' '
- 	)
- '
- 
-+graph=.git/objects/info/commit-graph
-+graphdir=.git/objects/info/commit-graphs
-+chain=$graphdir/commit-graph-chain
-+
-+test_expect_success 'setup for mixed Bloom setting tests' '
-+	repo=mixed-bloom-settings &&
-+
-+	git init $repo &&
-+	for i in one two three
-+	do
-+		test_commit -C $repo $i file || return 1
-+	done
-+'
-+
-+test_expect_success 'ensure Bloom filters with incompatible settings are ignored' '
-+	# Compute Bloom filters with "unusual" settings.
-+	git -C $repo rev-parse one >in &&
-+	GIT_TEST_BLOOM_SETTINGS_NUM_HASHES=3 git -C $repo commit-graph write \
-+		--stdin-commits --changed-paths --split <in &&
-+	layer=$(head -n 1 $repo/$chain) &&
-+
-+	# A commit-graph layer without Bloom filters "hides" the layers
-+	# below ...
-+	git -C $repo rev-parse two >in &&
-+	git -C $repo commit-graph write --stdin-commits --no-changed-paths \
-+		--split=no-merge <in &&
-+
-+	# Another commit-graph layer that has Bloom filters, but with
-+	# standard settings, and is thus incompatible with the base
-+	# layer written above.
-+	git -C $repo rev-parse HEAD >in &&
-+	git -C $repo commit-graph write --stdin-commits --changed-paths \
-+		--split=no-merge <in &&
-+
-+	test_line_count = 3 $repo/$chain &&
-+
-+	# Ensure that incompatible Bloom filters are ignored.
-+	git -C $repo -c core.commitGraph=false log --oneline --no-decorate -- file \
-+		>expect 2>err &&
-+	git -C $repo log --oneline --no-decorate -- file >actual 2>err &&
-+	test_cmp expect actual &&
-+	grep "disabling Bloom filters for commit-graph layer .$layer." err
-+'
-+
-+test_expect_success 'merge graph layers with incompatible Bloom settings' '
-+	# Ensure that incompatible Bloom filters are ignored when
-+	# merging existing layers.
-+	>trace2.txt &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
-+		git -C $repo commit-graph write --reachable --changed-paths 2>err &&
-+	grep "disabling Bloom filters for commit-graph layer .$layer." err &&
-+	grep "{\"hash_version\":1,\"num_hashes\":7,\"bits_per_entry\":10,\"max_changed_paths\":512" trace2.txt &&
-+
-+	test_path_is_file $repo/$graph &&
-+	test_dir_is_empty $repo/$graphdir &&
-+
-+	git -C $repo -c core.commitGraph=false log --oneline --no-decorate -- \
-+		file >expect &&
-+	trace_out="$(pwd)/trace.perf" &&
-+	GIT_TRACE2_PERF="$trace_out" \
-+		git -C $repo log --oneline --no-decorate -- file >actual 2>err &&
-+
-+	test_cmp expect actual &&
-+	grep "statistics:{\"filter_not_present\":0," trace.perf &&
-+	test_must_be_empty err
-+'
-+
- corrupt_graph () {
--	graph=.git/objects/info/commit-graph &&
- 	test_when_finished "rm -rf $graph" &&
- 	git commit-graph write --reachable --changed-paths &&
- 	corrupt_chunk_file $graph "$@"
+ ==== Bloom Filter Data (ID: {'B', 'D', 'A', 'T'}) [Optional]
+     * It starts with header consisting of three unsigned 32-bit integers:
+-      - Version of the hash algorithm being used. We currently only support
+-	value 1 which corresponds to the 32-bit version of the murmur3 hash
++      - Version of the hash algorithm being used. We currently support
++	value 2 which corresponds to the 32-bit version of the murmur3 hash
+ 	implemented exactly as described in
+ 	https://en.wikipedia.org/wiki/MurmurHash#Algorithm and the double
+ 	hashing technique using seed values 0x293ae76f and 0x7e646e2 as
+ 	described in https://doi.org/10.1007/978-3-540-30494-4_26 "Bloom Filters
+-	in Probabilistic Verification"
++	in Probabilistic Verification". Version 1 Bloom filters have a bug that appears
++	when char is signed and the repository has path names that have characters >=
++	0x80; Git supports reading and writing them, but this ability will be removed
++	in a future version of Git.
+       - The number of times a path is hashed and hence the number of bit positions
+ 	      that cumulatively determine whether a file is present in the commit.
+       - The minimum number of bits 'b' per entry in the Bloom filter. If the filter
 -- 
 2.45.2.664.g446e6a2b1f
 
