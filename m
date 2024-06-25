@@ -1,157 +1,119 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86E549656
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 09:26:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55CD143721
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 09:32:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719307618; cv=none; b=LQ7TNp8TNIjm4U91HBEguDOODutdhXxadTDAoSDB5Z3fsiw6/kK0FKoYmEMO/sb+8l07iWL7YjStyS+9Io85vBMKfAw7iDxZXWeRZHm3OyDiAYFzwFZ2gXW0ty4sOBb7yrPDec6XVYRy4eK2Dv2jrrtTL1QsyjmGkNk27sj7cTY=
+	t=1719307923; cv=none; b=guSMONPJEu7nF5dYUPVlI3sRJmgBDVBIk4zmNTATkK2EDn6LO9hYTnfBHUZPl9zRpztQelgCQnXf+06o8WSl9cwzVpRdqehFU0ORkciSiNICNSt0k7+AgTLL9xocQdlzxn3gWRl9Ba74vwOuoE8FYjCa9jQWSXhLFD8UNfRIVHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719307618; c=relaxed/simple;
-	bh=09kv6puOuCzZGFoaV34hoH38Z7skHgnH+pjF/gtpSIg=;
+	s=arc-20240116; t=1719307923; c=relaxed/simple;
+	bh=YuiAm19w6ExWYsGeVKQOBG8fimkR8gxhORafv4DlY8E=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Sh8caFdaog3o4uDFvzinKBZrtvRCrrsdrCIgyEJPgOug0ZjsD7QRWE/xe/HJK1XHILHlE30Zwrnc2ejWTgVTZ4CgWahVhqW77tELs41Cs11hn4w0z788WOK8aI+BGuQWWZff3ko+MBcWVz7YNUSAqq46IQxWj2jVP67r4Eg5TPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oyt9/NMl; arc=none smtp.client-ip=209.85.167.180
+	 To:Cc:Content-Type; b=bFSwgp9Y/9C+iPO/FCGmAqUkSTXajy3hANBGiO8ctjOnm7SdcTt+Zi2mYjeQqqVx2LYScxujxvM6wNk3i1pOibqZNIsT29Cnc9kV1Jd+I6fsSyomfEEqgsL+NPAidVR3XU987A7i0w1Fi8KEFMYlGfZHsJvEMEc68BPuGh0kXIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SLPmY0/P; arc=none smtp.client-ip=209.85.167.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oyt9/NMl"
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3d24724514eso3138786b6e.0
-        for <git@vger.kernel.org>; Tue, 25 Jun 2024 02:26:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SLPmY0/P"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3d541d93127so1239149b6e.2
+        for <git@vger.kernel.org>; Tue, 25 Jun 2024 02:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719307616; x=1719912416; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719307921; x=1719912721; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vs4tfYSEwnXVxRVZz4ERTGMhsgnCdfMl/pyE24vgalc=;
-        b=Oyt9/NMlgVjI3cZAhFYo+9Y6+R517JN3hKXJINisJsXCg/9ET6VSX3IjO8F0fw2OB2
-         2R9kdcY2JXwBUH3SXzkamPxmdMuqkXAZ/MxM1sHxK4xxky3N4g+kIPnt31RMFpyTqEP2
-         Q13I+VgNp6vyLShwwtBuQtKUtmJuinpKotoyv6aroYGmydl3/eFyatWMpngyglbDv8Sa
-         O4F24lpNO+offiCG8RpyZkDJCwPmnV0YYb0FLpl/gjw4ldB8tg6Kch++Vc4BX4AvBxpt
-         z9VW+RFqsO/dlZO8M6kLCj+pu8oemZH9thW6fiSDeCQJUP1gFpdsppWqBaYrdW9IqxTP
-         t3Yw==
+        bh=YuiAm19w6ExWYsGeVKQOBG8fimkR8gxhORafv4DlY8E=;
+        b=SLPmY0/PVs8TCnE8H7Er3VCRiNA3KoCQlosbfkbZwH8pfkNCrlwkQMOiCu8a7TXFGw
+         ndu4do5KvRhbbFNwStrdD0pMc4CXACS2qsjpYmweI3hJarj9n6hFCnVRM1+IrHL23G2F
+         CAZ5H5u0XZHnJb2pnh5IAIzmlTgSDk9lEiZEVt8sE1DVEl/vAA+2+uFqVwUMv1mie+ZB
+         X0uafkhIuMvb72avf485JYfMryCYeEug38JpBSBPbXBXEfMgsuhlSq4oGCAqcSwUC1Ea
+         ZNgdA99Mvxm5OJyz6mYl+5x/qn1YEQ4qtEiGnhsHIvU2hLxYYDxI0S/QMcL37VuXZuVX
+         SELw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719307616; x=1719912416;
+        d=1e100.net; s=20230601; t=1719307921; x=1719912721;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vs4tfYSEwnXVxRVZz4ERTGMhsgnCdfMl/pyE24vgalc=;
-        b=f0Rozc2wCVTk6U5V/97DwWaOfyDd6Hn7BAv0gFxjRcLqsLVGn4/UlxBzuQdR3ErVXu
-         tv5ZXqHKathSTpLKQCZAn/Y+3+NV+r41sNG0/gnCxmKclmSp4vE8YIQLOZGV0kjyoXON
-         JVa532DK13yqZUO/Jbu1Laps+8FNrwDzp4sLA0YObOi0/X4rDvrXC7CBY+xBrJ5vfxjy
-         gOfZtYKq0q5X4LFSQum6p0h0I7/FyjldSYJTDkEohIt6PdItyvHwua1VBQj4dAf6pmsQ
-         ygacFwP7z2/MoEpXsZOaCEj6LAgeLxMCXv6lCrFUHZfQwIgqfK9y1/zOg+4lhirMV0kj
-         sRXA==
-X-Forwarded-Encrypted: i=1; AJvYcCUvWI3ojj4R+8CKFCh9Ny1XIWqVKl4uGkN8iVA6O19/NapKZ3h2lSEVxCuGH0wBHYvrdntTIEnqAVJg2yeYkPPrNZju
-X-Gm-Message-State: AOJu0YxS7xvHu6aXcX/xnUCrzE7Q/dZhh6BfvBMxW/nwEXjOjbsJalcM
-	YvpXSfCQ//IVFGgcin4vLVrFK4z0rKPwZvVWhLfGM7JHKsY2hv+QYNpLakGLzP95lfaKPlh4b86
-	vOkJHTliyBQDaMER4laU+R2o+UkoEDQUO
-X-Google-Smtp-Source: AGHT+IElBQYCEiRIT7vLx0EMSp3KDs1kVupr7/gT4f9Kj4uIn3iva91pLaoKVPB2QiCxdyv3UZwmT+9hYvvp1Hn7hX4=
-X-Received: by 2002:a05:6870:b50d:b0:254:b5b9:354e with SMTP id
- 586e51a60fabf-25d06c1c95bmr6800218fac.19.1719307615741; Tue, 25 Jun 2024
- 02:26:55 -0700 (PDT)
+        bh=YuiAm19w6ExWYsGeVKQOBG8fimkR8gxhORafv4DlY8E=;
+        b=Yu3/cTGrVLikPGUiCzwnLue698lQPvFRd6bjGFUI8bv4GTegTqIuUj48wQPqQhg5Ny
+         T2aWzUwBykvElnduwjclsesPIQdlDCYFbjoDgFGELItIp5aQaRNJD5d5pCotON4+UVL1
+         66Gw/GjKIT4vTe4OTk0MK9+Ud7OcvWqk6SeLtpp70kzs2GvMiadsTvoqGWSWFvADaJOc
+         LYykcMi+qgVIBiLV6mXV/qkmaIKnkvO/ZYXII2X+zy8oPsunou1FnTqYYnngwgrodlhL
+         sZUYFsXL80gC+oTpqDR8H5mInqALOrnNe1kNo9bXJ5jzegyhp+E1niTkMVp8RikzULh5
+         4TQw==
+X-Forwarded-Encrypted: i=1; AJvYcCV3HWG5wOtMpcqpZimd9nImRg1zi6TbntY+GCRdObo+povVuXv7o70TBlnwASuU70UKW+MhJWqzjDN1xnSMTGtBPxjs
+X-Gm-Message-State: AOJu0YzDqdjL8e2wnwRRPzxhUQkIzoHT/79i7nYAad8NHMnhFrd7RT1v
+	vHCads4fxnD497l25hLj8YxkcOM2pkTtEOSwxx4rKMUyq4J1Eg+ZCS6a4cK9g27Z5arN/tZdyTY
+	KfjbZq6GSFs4t9e6lXdVUpfcCiKw=
+X-Google-Smtp-Source: AGHT+IEedx8ixAia7jws1ecDjVK0HP86nb2fsCL4LGOya4+PtdBup+H48l8dZZ5yMuWKLfbjMVV/BGqSqKEenoZIBfY=
+X-Received: by 2002:a05:6870:89aa:b0:24f:dad3:97c with SMTP id
+ 586e51a60fabf-25d06e57b0bmr7661051fac.46.1719307920915; Tue, 25 Jun 2024
+ 02:32:00 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 25 Jun 2024 04:26:55 -0500
+ HTTPREST; Tue, 25 Jun 2024 04:32:00 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240621115708.3626-12-chandrapratap3519@gmail.com>
-References: <20240621060018.12795-1-chandrapratap3519@gmail.com>
- <20240621115708.3626-1-chandrapratap3519@gmail.com> <20240621115708.3626-12-chandrapratap3519@gmail.com>
+In-Reply-To: <20240621115708.3626-1-chandrapratap3519@gmail.com>
+References: <20240621060018.12795-1-chandrapratap3519@gmail.com> <20240621115708.3626-1-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 25 Jun 2024 04:26:55 -0500
-Message-ID: <CAOLa=ZTc9uako-WzhccRb-GxjfaA-BN21Q5jV_xzquVgSptYKA@mail.gmail.com>
-Subject: Re: [PATCH 11/11] t-reftable-record: add tests for reftable_log_record_compare_key()
+Date: Tue, 25 Jun 2024 04:32:00 -0500
+Message-ID: <CAOLa=ZR=jProEJYnTj0w0=gNyvz8PceVhjXKc+6sQFfUcW=v-Q@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 0/11] t: port reftable/record_test.c to the unit
+ testing framework
 To: Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org
 Cc: karthik188@gmail.com, Patrick Steinhardt <ps@pks.im>, 
 	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="000000000000b241cc061bb37ff6"
+Content-Type: multipart/mixed; boundary="000000000000e2dbe6061bb391a4"
 
---000000000000b241cc061bb37ff6
+--000000000000e2dbe6061bb391a4
 Content-Type: text/plain; charset="UTF-8"
 
 Chandra Pratap <chandrapratap3519@gmail.com> writes:
 
-> reftable_log_record_compare_key() is a function defined by
-> reftable/record.{c, h} and is used to compare the keys of two
-> log records when sorting multiple log records using 'qsort'.
-> In the current testing setup, this function is left unexercised.
-> Add a testing function for the same.
->
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
-> ---
->  t/unit-tests/t-reftable-record.c | 25 +++++++++++++++++++++++++
->  1 file changed, 25 insertions(+)
->
-> diff --git a/t/unit-tests/t-reftable-record.c b/t/unit-tests/t-reftable-record.c
-> index b949617c88..d480cc438a 100644
-> --- a/t/unit-tests/t-reftable-record.c
-> +++ b/t/unit-tests/t-reftable-record.c
-> @@ -214,6 +214,30 @@ static void test_reftable_log_record_comparison(void)
->  		reftable_record_release(&in[i]);
->  }
->
-> +static void test_reftable_log_record_compare_key(void)
-> +{
-> +	struct reftable_log_record logs[14] = { 0 };
-> +	size_t N = ARRAY_SIZE(logs), i;
-> +
-> +	for (i = 0; i < N; i++) {
-> +		if (i < N / 2) {
-> +			logs[i].refname = xstrfmt("%02"PRIuMAX, (uintmax_t)i);
-> +			logs[i].update_index = i;
-> +		} else {
-> +			logs[i].refname = xstrdup("refs/heads/master");
-> +			logs[i].update_index = i;
-> +		}
-> +	}
-> +
-> +	QSORT(logs, N, reftable_log_record_compare_key);
-> +
-> +	for (i = 1; i < N; i++)
-> +		check(reftable_log_record_compare_key(&logs[i - 1], &logs[i]) < 0);
-> +
-> +	for (i = 0; i < N; i++)
-> +		reftable_log_record_release(&logs[i]);
-> +}
-> +
+Hello Chandra,
 
-Same comments as those from the previous commit.
+> In the recent codebase update (commit 8bf6fbd, 2023-12-09), a new unit
+> testing framework written entirely in C was introduced to the Git project
+> aimed at simplifying testing and reducing test run times.
+> Currently, tests for the reftable refs-backend are performed by a custom
+> testing framework defined by reftable/test_framework.{c, h}. Port
+> reftable/record_test.c to the unit testing framework and improve upon
+> the ported test.
+>
+> The first patch in the series moves the test to the unit testing framework,
+> and the rest of the patches improve upon the ported test.
 
->  static void test_reftable_log_record_roundtrip(void)
->  {
->  	struct reftable_log_record in[] = {
-> @@ -519,6 +543,7 @@ int cmd_main(int argc, const char *argv[])
->  	TEST(test_reftable_index_record_comparison(), "comparison operations work on index record");
->  	TEST(test_reftable_obj_record_comparison(), "comparison operations work on obj record");
->  	TEST(test_reftable_ref_record_compare_name(), "reftable_ref_record_compare_name works");
-> +	TEST(test_reftable_log_record_compare_key(), "reftable_log_record_compare_key works");
->  	TEST(test_reftable_log_record_roundtrip(), "record operations work on log record");
->  	TEST(test_reftable_ref_record_roundtrip(), "record operations work on ref record");
->  	TEST(test_varint_roundtrip(), "put_var_int and get_var_int work");
-> --
-> 2.45.2.404.g9eaef5822c
+I did review the series, I must say I'm not too familiar with the
+'unit-tests' framework, so most of this code was new for me.
 
---000000000000b241cc061bb37ff6
+Tangential to this GSoC project, I was hoping for some documentation
+regarding writing/running 'unit-tests', something similar to how we have
+'t/README'. This would help formalize expected styling and tips around
+writing tests, and also how to run individual tests. I was mostly able
+to figure it out from the makefiles, but it would be easier if there was
+documentation too. (We did discuss this internally, but I think it's
+worthwhile stating on the list).
+
+--000000000000e2dbe6061bb391a4
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: f1eb7b3a5ac6536e_0.1
+X-Attachment-Id: 80837203ce7ea78e_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aNmpWd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM2hEREFDRVdNSGhDR01DOHQwTkZnWFgzUmxmbTRHOAo5VXRPaFhHcDRL
-SkhuM2lYb09mYlV4dFZ6Mys5QUgrVjFxTHk0RnZaUWxwZmpReGJqRS8welVMVngvYktoZ01BCkRx
-eGpDbnlkQUZOYTlBS1hkYW55UWZnTm51YzRyWjhHWHM4VjN2M0tyMFVtVm1UMmdrazlocENhSmlE
-QWFaTy8KMkJzYi9rMHozOFVPVmg0WlhCNkNhWFZaV0ZTWFkwYmNMaHI4RnlvV3lTeWdRcC9jcnBV
-ZUlGektJeWlJeXR6OQpWTnFHMGJOMlBIcTVOaVplWHhFUEhGMUJrRzNqN2hPL3JiNUdzN1dZVmps
-ejVKSkxERXArSXEyK2xOUlZGeU9WCm5DY01RSFpseW42MVF1Um01SE45KzhDZTBHQzdkaGJ2YVNl
-TjEzZm5YK3ZpblVqay9DZThEbEdqbHFXaXZmMmsKaVkrd0xGM3pOTnA0dVFwZjd5YVVrbmc3ZlJw
-MVdZNXlENTNWb0RVN2JJQmNwb3E2MkJRUmo1SFN2SHdoTDlGTQpLYmxFRU5FNU1QRUVkSDl2cGU5
-b2RLWVhEQVBCMFkyNElzWVpGcEdQNTBTTU9KeHlDRXNaT0tFYXRXeitONWk2Ci9sTGNFLytLWGxq
-bUUxaktub0VMYTdONWVvTGRDZUJQWjl4NEhVTT0KPTRWaHgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aNmpvMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL0Y1Qy85eWNucFV0S3p3MmRMWk45TW5kNjkwelhtUQpIdlMrUld0WmF4
+eUNMejdCalZCNk4xcDYwS0FxbitObE1ZSVFlejBlMXA5cVFNazNwWFdneXM3eGNEWUcrODZOCkRD
+NThjUGdiV0REZ052LzNkT2s1YlVIb2xpbUVoeWFwNkl2QjlBditKYmZNK2gvSE9pSHZWdDh2QnZj
+TlliWlUKd0V3YzJqMVhOR1N0YU1qWDliK1RhaEdVQmFnZzN3d2VvYW0zbUFxVEozN3NQaFpKaHFS
+YU8rd0M4ZXhqOElSYgp5STl5MThpWEh1VEtaRS9naXhNNHZrVHJrSVQrV3lIejJycGp5S2c2V2Fx
+bVVpb3F0Z0dlL043YjFpR0RYR3poCnhQY01zYWJxVndCY1UrTS9qUlhpTUlaY3liWmpuSi9ab2tT
+eXRYYWZwSmhkekNBeGZ2VE5zelB1cGxNNDJjaDEKODNpKytKS0h5WTNiYVFXVU9kR0hEamgramlz
+WWtmS0JKRE5VQXNlL3Rycm5NMzA2S1NKWEJpQkxhcGtXLzlwSwpMblJvRHRYVHF4c1ZSa1liM3Vr
+Z2hQSWxPMktrQTNkSGdTc1J4c0xKbWZaVldHZ0kxV29Gc1lyNkJPV1Z3Z1FVCmRrQllYdnNVWE5W
+aStkWW5JVk4rUVROQmxGcXg3Z0U5di9lREJFdz0KPUxFblQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000b241cc061bb37ff6--
+--000000000000e2dbe6061bb391a4--
