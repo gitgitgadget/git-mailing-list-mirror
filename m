@@ -1,67 +1,67 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B158F17C7B8
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 17:32:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408B0145320
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 17:33:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719336758; cv=none; b=ZsERO6lSVwaIUGBNvsDyzTa5/KMaI+6kqnrUSvT4TQRgDjZWk9LGFvUhIAyU6c1Ic0BKXzvCIV+UlBU8xOX3cWqVgZGRX4fmizkkjh0/zr5plxCUgaKYWhQMleGIuR2OT5RvfX0CEvbgOknUQUsQ3aA6iLgREgiMMH5qjToK2lA=
+	t=1719336835; cv=none; b=mavJ1gosWEgPi8aH8xMFfB2ewXq5T+EwAnDU8mkdG/hBbZbgB+dLRO1SMaVTcjHb5enMhnnczPEhB80yfwG7lRxYM4IZW2ITd8Ty2NCYnKOHrP/KqfhDJ5WwJ3BfmrXwV8/X9sYXdokT8mxmiSanYfCxI/xHr6AQDeqQuFGpbEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719336758; c=relaxed/simple;
-	bh=mpm+b2aVvWhfLlT5qKbHZQnXim3ok+o8uHDqMrKlJBQ=;
+	s=arc-20240116; t=1719336835; c=relaxed/simple;
+	bh=c9jO2hWdUJlSLUx5uTBdduEiAizNNZ1TsffLmrKN/MM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AR/iO6PP+jb/IqZcK7gNnucgO+WFPIYtoxSTTkflAEmvtWRReymeOZmBLRoYUUX9n/8juojVLV+SUO0wFn4zwisENdt3DWdseQhqEX+yhe46Y1+OJXZT+9u+d3PgnR2ADW9YT0N3z+PMA3oSFhLvWdTaZCqXXQaD3iesFDqVmmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fn9Uv1qo; arc=none smtp.client-ip=209.85.166.172
+	 To:Cc:Content-Type; b=uviWTPFBWEPAeqZeO5BDez2ki/hr3wf7mI1C7kbbYQv4lP8S+t5ztx0GrQt0TrbOEefclz1vbGhBv85d3z2zCCfIQ3RJcDS/9PiiDt7ug8OIPBzgZO6OmZCQwWylPSFMTnYjpeaF0S8r53Mc239GTdTDCf6mjVW5t+fMVeENY2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DrF1nEfY; arc=none smtp.client-ip=209.85.166.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fn9Uv1qo"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-376243a112cso22069605ab.3
-        for <git@vger.kernel.org>; Tue, 25 Jun 2024 10:32:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DrF1nEfY"
+Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-36da84df7adso16161075ab.1
+        for <git@vger.kernel.org>; Tue, 25 Jun 2024 10:33:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719336755; x=1719941555; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719336833; x=1719941633; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=O6V3y5KTH2aPzv6uPL0nxu919oGx9ZlPDtOs1kSYMQ0=;
-        b=fn9Uv1qoPlgooYN9oH+6XUWRqpI1nHwj8zIyJFkMaR9tdn3dY0EuMFobrdv3Fkwg8S
-         V5exakvs49TL3bdRLIAXLd2iheMpCgn4twVMuChFJKkXUOZ0HAQzJM7Ap5spbtBuF7Nk
-         8sanPRh/D0iwmUiFGzMShR9pZxvolpiwQhHMUZwPMBXRzBKh7I7JGVejEIVVmgVW/8Dy
-         dMZ7M8UvsoS2qgdDwm5fsxkKpJs4D60xnHkyLGwScunbxC9IUN6nlPMDaY4/SkgkLLlD
-         fwSE9VhcjAggsRHST/E01NwDaJ8Ia7GSlCScfRdg7Jigc9qL3iAa3fR+67n9YPVRUAUg
-         J/ew==
+        bh=ycfj1Auemq/I5GZc/Z+nI5R8MytVAVEHNO2gV6Yxsy0=;
+        b=DrF1nEfYNs6jYM/0NSkWMsi1Fp6Sh/jYzeSc/4E5+etJ4tzIlNB+ZLSeSTb5rkyTds
+         xdP6XxaYCrh6+8EEGMFkxM5o8okXyRMaDOe+WfFzPU9cYM4riFmoAqn5j4ijAKrtFQwv
+         4FnoMBZWCokXV6/ZR23/mv2/UtAAe0LtJ0J8CSY84wI+uQKJksgQtlKEIXAvL/bsrMtA
+         9SE7LwqzIbQZsoP/2CvF228ny10nUCi1MdzsriJSZEWGiyyGjY+JYb45YIEseFVfS6bv
+         437ddXI58wHlmJTlV6jY8HnaZDItvus1svjzI12cfFNSpiG80R7cNKwyZxl1ih9XFRKp
+         VQSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719336755; x=1719941555;
+        d=1e100.net; s=20230601; t=1719336833; x=1719941633;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=O6V3y5KTH2aPzv6uPL0nxu919oGx9ZlPDtOs1kSYMQ0=;
-        b=O87r9TCbxYMFbSqcdMIyUR0m2FR7Xf+23zETB7R+AJi8mzTKSa0pGTIQCHR30woNW4
-         HVO4OcQoMhrh3PL6At8jjqYFAeGCXAKmb4d3aX1j18Wb0vPLocIMaOnP46F5/KOOzykG
-         bQRdXLNsgng3vnAYacFsXtRpWOGM73BHleaYOoG+AzOym6L79clnci9vgr6M7rDMwQvu
-         +0nqxQVb0aePtmimwspuwtSRjYbCSg2tJKDGe8kxGhpZ44nJZLu6/tsq+IAQdLgGKaEo
-         R+I70gpEVJRYqDoajmpPA47Vao0IduqNhnifvoTCriZqI/JhEx2W3a/ObgA6CFAl8Ai4
-         NVsA==
-X-Forwarded-Encrypted: i=1; AJvYcCU6L/+wkilT1sUiKyp+cltNiixfaX93EJJEn2j2pT2zxE5EtIu5Mj6xpVCLMXBcHdVasFlZlvR0hPQPiMxPEQAj68Ba
-X-Gm-Message-State: AOJu0Ywcp3mvV6Ob4hDyUXyGgYISRrC7af8XSCAibvtIhsKYXEHSdB3m
-	97K0xBTiRynvyRis8hAWIjsE54Zxe9a6CdsIKLUUeb3lkqHDYpHEwrpr/B9fnqosxRA8s4cO93Z
-	Ka2W+j2Pk45axRhPq3QfNdMc/dq0=
-X-Google-Smtp-Source: AGHT+IEkQdkXhlLEZRkWPaaGaSOm5CfB6iwNxWDc5cV9FDdYsjsGiLIZjsZv2TuSdqG1Yoy7XbKSZgOiKrWGZkgaVHw=
-X-Received: by 2002:a05:6602:1688:b0:7eb:54ad:cf46 with SMTP id
- ca18e2360f4ac-7f3a4dcfdc2mr981024439f.6.1719336755645; Tue, 25 Jun 2024
- 10:32:35 -0700 (PDT)
+        bh=ycfj1Auemq/I5GZc/Z+nI5R8MytVAVEHNO2gV6Yxsy0=;
+        b=WW886plBqooVPNL5aWOzKn3NtaamtvDWp7fEXpoRlzzyty+j7G/syFgCaZXOqNt5fl
+         /ZztZbBoMe9BdCs3cQmxxK28OKIiE5pAXwxxql3/zK5YCl5u7svgUGb6YPVWg/PYZU60
+         RTbX0qZLii4dpW5mG8MrmGtFFGe3i9QQwpIhEO4o73LQBkjwvqmeaA9dDrwekATYBgh7
+         6tYUPA97KikuLOTG2i4xqOtYvgcce6EP4jtOgsK4amPUtSU62vF866dCEYN4KzxFlp0d
+         Kx9rZ8T4oHxii/TLCl5ghTQAio7OExcjfszdTR2SEsiIQPg1jsHtuwtJTQ9OOl9uCfcn
+         xWtw==
+X-Forwarded-Encrypted: i=1; AJvYcCX7gmpRhs3e20szR9wdGy2zRUYsNWtMKVjfOJb10Z3yZJD44pFHz56mHMSBspnvaz2vxQ573wmi4LBKXevYC00aCi9i
+X-Gm-Message-State: AOJu0YzUy/dkwPDbJDBb1MJB8EwC6r4w9jukkMV3CcQdAO7zXEWCrSvJ
+	QYHyjfyZhLxoxQuQk4WGNhiahLhBOUq3FPhUCoMR11+zwJSdEeCwFdRv/3pg+SbHbea/WM9iM/y
+	/39aQHkzmbWHzxHEd+Lb7+/UHksE=
+X-Google-Smtp-Source: AGHT+IEQZG+neYR6eQMM1hJXidTN7xvwf0/DgQXQd6L6FkWKbzdlB9qxsZubtoupfpCIuJo2vqStdhxXNINLYxbXABs=
+X-Received: by 2002:a92:d387:0:b0:375:daa0:ce46 with SMTP id
+ e9e14a558f8ab-37639fa0f28mr38623835ab.16.1719336833384; Tue, 25 Jun 2024
+ 10:33:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240614102439.GA222287@coredump.intra.peff.net> <20240614102801.GD222445@coredump.intra.peff.net>
-In-Reply-To: <20240614102801.GD222445@coredump.intra.peff.net>
+References: <20240614102439.GA222287@coredump.intra.peff.net> <20240614102909.GE222445@coredump.intra.peff.net>
+In-Reply-To: <20240614102909.GE222445@coredump.intra.peff.net>
 From: Elijah Newren <newren@gmail.com>
-Date: Tue, 25 Jun 2024 10:32:24 -0700
-Message-ID: <CABPp-BF0Gt5QsbfepJ-NEwdNs_YXeSwpbKXJEkjaXgO47OVx6g@mail.gmail.com>
-Subject: Re: [PATCH 04/11] remote: use strvecs to store remote url/pushurl
+Date: Tue, 25 Jun 2024 10:33:42 -0700
+Message-ID: <CABPp-BHFmNXyV-7S_CcQLqW=J+1fPA6xOVsYGQvY3quusbzD=g@mail.gmail.com>
+Subject: Re: [PATCH 05/11] remote: simplify url/pushurl selection
 To: Jeff King <peff@peff.net>
 Cc: Junio C Hamano <gitster@pobox.com>, Mathew George <mathewegeorge@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -69,39 +69,30 @@ Content-Transfer-Encoding: quoted-printable
 
 On Fri, Jun 14, 2024 at 3:32=E2=80=AFAM Jeff King <peff@peff.net> wrote:
 >
-> Now that the url/pushurl fields of "struct remote" own their strings, we
-> can switch from bare arrays to strvecs. This has a few advantages:
+[...]
+> There are two spots to pay special attention to here:
 >
->   - push/clear are now one-liners
+>   1. in builtin/remote.c's get_url(), we are selecting first based on
+>      push_mode and then falling back to "url" when we're in push_mode
+>      but no pushurl is defined. The updated code makes that much more
+>      clear, compared to the original which had an "else" fall-through.
 >
->   - likewise the free+assigns in alias_all_urls() can use
->     strvec_replace()
->
->   - we now use size_t for storage, avoiding possible overflow
->
->   - this will enable some further cleanups in future patches
->
-> There's quite a bit of fallout in the code that reads these fields, as
-> it tends to access these arrays directly. But it's mostly a mechanical
-> replacement of "url_nr" with "url.nr", and "url[i]" with "url.v[i]",
-> with a few variations (e.g. "*url" could become "*url.v", but I used
-> "url.v[0]" for consistency).
+>   2. likewise in that file's set_url(), we _only_ respect push_mode,
+>      sine the point is that we are adding to pushurl in that case
+
+s/sine/since/
+
+>      (whether it is empty or not). And thus it does not use our helper
+>      function.
 >
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  builtin/archive.c          |  4 +--
->  builtin/clone.c            |  4 +--
->  builtin/ls-remote.c        |  6 ++--
->  builtin/push.c             | 10 +++----
->  builtin/remote.c           | 56 +++++++++++++++++++-------------------
->  remote-curl.c              |  2 +-
->  remote.c                   | 52 ++++++++++++++---------------------
->  remote.h                   | 12 ++------
->  t/helper/test-bundle-uri.c |  2 +-
->  transport.c                |  4 +--
->  10 files changed, 68 insertions(+), 84 deletions(-)
+>  builtin/push.c   | 21 ++++-----------
+>  builtin/remote.c | 69 ++++++++++++++----------------------------------
+>  remote.c         |  5 ++++
+>  remote.h         |  1 +
+>  4 files changed, 31 insertions(+), 65 deletions(-)
 >
 [...]
 
-I really like the simplifications this provides in remote.[hc]; the
-rest all looks like straightforward translations.
+I like the simplifications in this patch; it all looks good to me.
