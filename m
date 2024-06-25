@@ -1,188 +1,120 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9518F14831E
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 08:36:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1B2146A81
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 09:03:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719304611; cv=none; b=qsAo0plvPiIwffSrDOlUKhs6Vy/4T+2hA4YcFNdZ6i9mmeW6OHG29f0Lw0r0LPcv7GpmB6IlBRD09huLAV2EEzAyZ1wk3CCVTy7sLDqRYv6RJIrqnZwxsfkN3Zx8sJ792xxRqtvp6Zx4mNh3rLBZZb25QGRWDw3/RZ/X1stVdPA=
+	t=1719306231; cv=none; b=MgLY5dKsijs7xvEKe1Pd5xQIfX1SBA0D3pIaXkL1eMF7mjmcPUutIb/xlz1gk/gn9w8NjbDX6R+Wmw9uCR3KWAdPkaC9VhdCn9oQb4wrnffMuZ6Mvw40fBowkd3Ewi450+ut+nZEVeJlpYxECxFo9tVSjZW2N9LE6aoCOUh2qGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719304611; c=relaxed/simple;
-	bh=9K6f7qVelniFT89DSvsu6ymhW/XZsGMswH/zqLcrOpM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iboHmHgsd9s3u2Me0hFT7GNjEZl7BfcE4VpmuuLXD81lD8BHhMGUUK5ecybdQbYfK/IK3B4C0owBzl9zgWmZRqzBaoc/Sc87Xl78V3F6Rg3qa6JMktlMe9vKEeaZWBhqzS2ropAd+W2S2ma3m7g7RuO63fbZDAXmQ43iC5AzXIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mvc/DYPE; arc=none smtp.client-ip=209.85.210.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1719306231; c=relaxed/simple;
+	bh=D9Og2xD7l9fONO92u0Z3M1kw+M8Nnev0XnA8AWP7efU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ROCvf/RYXrnbB3fwbfpQK0lR/IA0TXVEJiW0t0IpIQnCN1iJFWqvzeVOPEunfy8NxpawTn4DhzM7s0mKhAW6XFRBEX/j69uIpUXPI8Tv8LtgyMGq9NQz77ACesALD7r7MR3OLEFgxlUK5f4nrekLHvoTRUWXPFHYQZ0so4gOoWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=G52NJftN; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mvc/DYPE"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-6f8edde24b3so3260014a34.2
-        for <git@vger.kernel.org>; Tue, 25 Jun 2024 01:36:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719304608; x=1719909408; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tTs3+5kXraIQVSpDAbu6gAFkD3ytE+FEwsS0kVuSmTY=;
-        b=mvc/DYPEwIO3weu25YPN6Ce7Fcaox8CBe48TmDWihlZRkKiJtmD4QuYrP047mbzEO1
-         Wr93V4rtgbZAT0B16JHGW5d2b8D7ZX+yIgMVxwHc56xWOLgkRa/d2FpTdU0J4tbnywmj
-         u1invMlIYylL+988y08nt7tyTY9wN7unrUbZcwXMSZNQImCjefvfCsLpRunKEbWK9ckI
-         VYvXHSnKY45qfrqCh988sA2oZ5BOAde4VKfBEFbthSM0A3cZVX2K+UJkMpWAXEbM7g6u
-         W3HHOf/FaiBH77vu/gUXEE/ybuv9eTK9p2ZgR0MJRxxYd0old+lH9OUdLiqEFRn9YUY1
-         byVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719304608; x=1719909408;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tTs3+5kXraIQVSpDAbu6gAFkD3ytE+FEwsS0kVuSmTY=;
-        b=f07UmzM8MkfEKvIA4vQDK2G4bWkDIUXk8iv/xEuk/440oJ1/cUJu+SFE7r+NmDSL+a
-         VAgDKeTQnHSXv3QULL0h0iiZVMIlm/ufVztB/vBiQjSuqFHox0pDUpSXcVYiAyJF0y7F
-         jbmUm/qwmgkV9nI7vhJlkIuGTL1AY6YAwLyAdY9AY1HR79sGszsyBZ/L2rO9QDsqIarK
-         iUL5yAlACnPpQHbyAMhSi3UGaKyxavyo8J7+KTUfadRwO/BVQBf26vKQ1cQd8g/rU5I0
-         UE6tqkniILpAOgUORnT0aVRhTfJSBgEfBK5DsBXdDNv/ONEN5Oxa6E5YEeLLCMOEOMz+
-         3FLw==
-X-Forwarded-Encrypted: i=1; AJvYcCXoCJJUiBeqqYGwurGa9uhZcnJLcd2MyUiAuHaNjocLWf1VBjDC2vnBv7ZpR5a1tIMJ3ixb9MhnqQhLJdobegyefvKX
-X-Gm-Message-State: AOJu0YwWKt960JsJriCciLkOGCX1KyKDOCCYthpdDpq57VclsIPKH51k
-	p3yhZJYCAo/IKbmjDRrEP+ULi7srU0oRz4HOkdXo+B6UZ4VEzhsX3NsL1afJIIZxr5bABEscv0G
-	QAftKvGgYBl63eqTWf5vw/I2BkoRDm8Sy
-X-Google-Smtp-Source: AGHT+IFQ5tzIogqpuJt+gYaOwdcR3SzsZ2ULreOpBAo+SN8Z/rM060zVXMgJVFlZyY63GmEIUwX2Y2/o1Jia/BRhPIo=
-X-Received: by 2002:a05:6870:a714:b0:254:c777:6327 with SMTP id
- 586e51a60fabf-25d06e58cb4mr8146343fac.36.1719304608564; Tue, 25 Jun 2024
- 01:36:48 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 25 Jun 2024 03:36:47 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240621115708.3626-3-chandrapratap3519@gmail.com>
-References: <20240621060018.12795-1-chandrapratap3519@gmail.com>
- <20240621115708.3626-1-chandrapratap3519@gmail.com> <20240621115708.3626-3-chandrapratap3519@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="G52NJftN"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F1A83FE1F;
+	Tue, 25 Jun 2024 05:03:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=D9Og2xD7l9fONO92u0Z3M1kw+M8Nnev0XnA8AW
+	P7efU=; b=G52NJftN1o+XroygPhY/OlPGEHIMlaVcZR8tvlz8pCsHyy2Bd04SA6
+	CjPKCKjSV2qRM04t8BJ8gnLqOSF2AjAYY+Y5pZQ7WwIMwNnvYvnAmorye8TTXByB
+	dMeoht/IHo4b9GKR2fu/+jKehcXqtPNvxQsiGMk0F/6lOzb1MMwCw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 368FD3FE1E;
+	Tue, 25 Jun 2024 05:03:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9ED2F3FE1D;
+	Tue, 25 Jun 2024 05:03:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Noam Yorav-Raphael <noamraph@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Regarding howto/revert-a-faulty-merge.txt - another way to
+ revert a merge
+In-Reply-To: <CAO8o=D5womGcsVsGT4h2=3qry05mMrd9dFDkZHrLtPCDw0+2Tg@mail.gmail.com>
+	(Noam Yorav-Raphael's message of "Mon, 24 Jun 2024 13:17:25 +0300")
+References: <CAO8o=D5womGcsVsGT4h2=3qry05mMrd9dFDkZHrLtPCDw0+2Tg@mail.gmail.com>
+Date: Tue, 25 Jun 2024 02:03:46 -0700
+Message-ID: <xmqqo77p8kct.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 25 Jun 2024 03:36:47 -0500
-Message-ID: <CAOLa=ZTVv5wwNVUA_g2-t37+B=4i-Bs=kC2JxH3m9XMFGxi+Uw@mail.gmail.com>
-Subject: Re: [PATCH 02/11] t-reftable-record: add reftable_record_cmp() tests
- for log records
-To: Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org
-Cc: karthik188@gmail.com, Patrick Steinhardt <ps@pks.im>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="00000000000074936d061bb2ccdc"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D51C3EE4-32D1-11EF-9040-965B910A682E-77302942!pb-smtp2.pobox.com
 
---00000000000074936d061bb2ccdc
-Content-Type: text/plain; charset="UTF-8"
+Noam Yorav-Raphael <noamraph@gmail.com> writes:
 
-Chandra Pratap <chandrapratap3519@gmail.com> writes:
+> This is fine, but it means that you must remember to revert the revert
+> before the next merge, which may be hard to remember. I thought of
+> another solution: In the source branch, add a commit reverting all the
+> changes since the previous merge, then merge again from that brange to
+> the master branch, and then revert the revert. In a diagram:
+>
+> ----o---o---o---M---o---o------------W-------
+>        /       /                    /
+> ------o---A---B---C-------!C!B!A---o----ABC--
+>
+> (`!C!B!A` means a commit that reverts C, B and A, returning to `o`.
+> `ABC` means a commit that applies A, B and C, thus returning to the
+> tree after C.)
 
-> In the current testing setup for log records, only
-> reftable_log_record_equal() among log record's comparison functions
-> is tested.
->
-> Modify the existing tests to exercise reftable_log_record_cmp_void()
-> (using the wrapper function reftable_record_cmp()) alongside
-> reftable_log_record_equal().
-> Note that to achieve this, we'll need to replace instances of
-> reftable_log_record_equal() with the wrapper function
-> reftable_record_equal().
->
-> Rename the now modified test to reflect its nature of exercising
-> all comparison operations, not just equality.
->
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
-> ---
->  t/unit-tests/t-reftable-record.c | 40 +++++++++++++++++++++-----------
->  1 file changed, 27 insertions(+), 13 deletions(-)
->
-> diff --git a/t/unit-tests/t-reftable-record.c b/t/unit-tests/t-reftable-record.c
-> index 1b357e6c7f..0cf223e51b 100644
-> --- a/t/unit-tests/t-reftable-record.c
-> +++ b/t/unit-tests/t-reftable-record.c
-> @@ -123,24 +123,38 @@ static void test_reftable_ref_record_roundtrip(void)
->  	strbuf_release(&scratch);
->  }
->
-> -static void test_reftable_log_record_equal(void)
-> +static void test_reftable_log_record_comparison(void)
->  {
-> -	struct reftable_log_record in[2] = {
-> +	struct reftable_record in[3] = {
->  		{
-> -			.refname = xstrdup("refs/heads/master"),
-> -			.update_index = 42,
-> +			.type = BLOCK_TYPE_LOG,
-> +			.u.log.refname = xstrdup("refs/heads/master"),
-> +			.u.log.update_index = 42,
->  		},
->  		{
-> -			.refname = xstrdup("refs/heads/master"),
-> -			.update_index = 22,
-> -		}
-> +			.type = BLOCK_TYPE_LOG,
-> +			.u.log.refname = xstrdup("refs/heads/master"),
-> +			.u.log.update_index = 22,
-> +		},
-> +		{
-> +			.type = BLOCK_TYPE_LOG,
-> +			.u.log.refname = xstrdup("refs/heads/main"),
-> +			.u.log.update_index = 22,
-> +		},
->  	};
->
-> -	check(!reftable_log_record_equal(&in[0], &in[1], GIT_SHA1_RAWSZ));
-> -	in[1].update_index = in[0].update_index;
-> -	check(reftable_log_record_equal(&in[0], &in[1], GIT_SHA1_RAWSZ));
-> -	reftable_log_record_release(&in[0]);
-> -	reftable_log_record_release(&in[1]);
-> +	check(!reftable_record_equal(&in[0], &in[1], GIT_SHA1_RAWSZ));
-> +	check(!reftable_record_equal(&in[1], &in[2], GIT_SHA1_RAWSZ));
-> +	check_int(reftable_record_cmp(&in[1], &in[2]), >, 0);
-> +	/* comparison should be reversed for equal keys */
+These, we definitely do not want them [*].
 
-Nit: This is because we then compare the update-index, would be nice to
-add that detail too.
-
-> +	check_int(reftable_record_cmp(&in[0], &in[1]), <, 0);
-> +
-> +	in[1].u.log.update_index = in[0].u.log.update_index;
-> +	check(reftable_record_equal(&in[0], &in[1], GIT_SHA1_RAWSZ));
-> +	check(!reftable_record_cmp(&in[0], &in[1]));
-> +
-> +	for (size_t i = 0; i < ARRAY_SIZE(in); i++)
-> +		reftable_record_release(&in[i]);
->  }
+> Now the W commit really reverts the M commit, and you can forget about it.
 >
->  static void test_reftable_log_record_roundtrip(void)
-> @@ -362,7 +376,7 @@ static void test_reftable_index_record_roundtrip(void)
->
->  int cmd_main(int argc, const char *argv[])
->  {
-> -	TEST(test_reftable_log_record_equal(), "reftable_log_record_equal works");
-> +	TEST(test_reftable_log_record_comparison(), "comparison operations work on log record");
->  	TEST(test_reftable_log_record_roundtrip(), "record operations work on log record");
->  	TEST(test_reftable_ref_record_roundtrip(), "record operations work on ref record");
->  	TEST(test_varint_roundtrip(), "put_var_int and get_var_int work");
-> --
-> 2.45.2.404.g9eaef5822c
+> Would you be interested in a patch adding this to
+> howto/revert-a-faulty-merge.txt?
 
---00000000000074936d061bb2ccdc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 33f0e984d39579d1_0.1
+What you have above is a moral equivalent to the "On the other hand"
+senario.  In the picture in the existing document, the new
+incarnation of A'-B'-C' chain folks from the commit after W, but it
+does not have to (it could even be a fork from the original A^).
+IOW, there is no need for the A'-B'-C' chain to be strict descendant
+of the original C like the above picture.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aNmdaMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNXVzQy85N1l4QkpuczltR1h2bk1mOFdwWFcyZEJ6MgpyUUlIdmhJempB
-Z1BGd1d6alJPclJJcFA5eDFGSTBDTG91b1FLanp0Mkt5d05DZU1GdUM0VklxclZYTzdYYjBECnRa
-dlFwUG5vTGI1ZHdYWTNrdGtMcFk3SWNaVStXYkgzc2Zyd3pIVU5tbFBWRHMxejVNcGhvUTFNcTlM
-OFJMcjgKeXVnNlhUSFdZZzV2NmtRWG5hcXJ0ZGZzUERQaG96MTZZak9Wa2JoMjYvUG15cjdQSjZK
-RkdXL3ZJTkRONVN2dQpkR0hPQSsvUU1sYnZlYk0vUDJDb2Z0U2kxRS9NUjNvVHF4RDNaQ0VhTlVa
-bTJ2dnB2ZWZCSWt1eFM4K1BqOG5CCitJQ2cyWHd0dm5MTG96ckM4anZHc2VaNy9EWjU5eXp0OWg0
-TGovc2lhVzRqbDRyeVczVXlOK1dTZlNmbm5RQWYKNWcwc0k2ajF1OWkxYmRyZ2dzWS9rZ0VUVkNo
-RXRJQ29Nb3pESk5iT3lPK2I0K1JRNFdVQzNzQ1p5SFBYWVl1WApDc1M5L290aHZnSjlFdHZzWE1X
-RWxzSmRpREI0V2hLNGRXTSt2b09HLzJyQXZ6dnFsd3phN1Z2UHNHSndMN1ovCjF6Nkt5OUFvYVc5
-WkxCOW5sRldmZ1Zoclo3STVmTGExSFljd0d4dz0KPUhJejAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000074936d061bb2ccdc--
+What happens in practice (and I do this myself sometimes when I have
+to revert out a topic out of 'next') is
+
+ * Revert W of a merge M is made.
+
+ * At the very same time, the original A--B--C chain is discarded,
+   and the topic is rebased on some appropriate base (e.g. the
+   parent of original A in your picture, for example, or the commit
+   after W in the "On the other hand" part of the exicting document,
+   exact base chosen does not matter all that much) to create an
+   updated A'--B'--C' commits.  While this chain is being polished
+   (without getting merged into the integration branch to become a
+   descendant of W), you may rebase them again and again until they
+   are polished enough.  And then you merge the result, which will
+   lead to "If you reverted the revert in such a case" topology in
+   the existing document.
+
+So if you want to avoid "we can forget that we have reverted"
+problem, not reverting the revert, but rebuilding the entire chain,
+is a better approach that gives you cleanest history to work with,
+and that is what we already offer as an alternative of "reverting a
+revert", not "squashed revert and squashed reapply on the side
+branch".
+
+So, I dunno if we want to add yet another one.
+
+
+[Footnote]
+
+ * We do not want the squashed CBA!!! revert or ABC reapply, both of
+   which are large balls of wax that interferes with bisectability.
