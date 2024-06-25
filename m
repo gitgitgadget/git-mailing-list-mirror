@@ -1,62 +1,85 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAF58F48
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 22:03:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52AF149C6E
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 22:43:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719352997; cv=none; b=MemfsO+AMB0+UuEzlfnjP4bquupKB7YjBKQIE0T4G86ZM6hzSxwLpnUec8CRnqf4fh6E4p936tYArYfrfFvfycTVKwRT1APm88CC+v/obPltTEc7ci5d9TR5b+7fuOfuvcN8TJiebyF2Nd6QRB6PAstx47bcu+7LI5GqxbugRIQ=
+	t=1719355409; cv=none; b=TwqL9jJt0H5OTArD7zizRJN0maB7qDlh6eluvD5l1hoE5ZQHAkGZDpjpNZJafFF+4n1TFbcAmM10v3JmYRmbZgCrKi5vv+vCRl8H0K+1RIZUF4NqAernHmwo5GsjCprsmSaHfaVQleXkkjAWchWR/Ot4hPgo9NI70faEppMy6ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719352997; c=relaxed/simple;
-	bh=oZm6yNLpsm41yFkbgUl+q+qV4ndEUNjbrObyWBjNC+w=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eN02l6D335q0v81TqkGbWW3S3WZwMYsfoD8rBDUt5TI63DVJVEAqiJSMJG/jfYFvoUQzmm0jIFSGYRRagfFU27b9Kql27pshfUHECWMPYvOroZIpKeC8sp3g2B7hmocwWgvrTKz2mi6r0OOIvhseI8LnbRsVCylJ8A4vQaQakFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 45PM342p757709
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Jun 2024 22:03:04 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-Cc: <git@vger.kernel.org>
-References: <20240621154552.62038-1-randall.becker@nexbridge.ca>	<20240621154552.62038-2-randall.becker@nexbridge.ca>	<xmqqmsnekvir.fsf@gitster.g>	<016501dac409$7dd5bc00$79813400$@nexbridge.com>	<xmqqwmmijf6f.fsf@gitster.g> <xmqqplsaje6z.fsf@gitster.g>	<xmqqtthlimtr.fsf@gitster.g>	<03ef01dac735$f3496ac0$d9dc4040$@nexbridge.com> <xmqqmsn87n9x.fsf@gitster.g>
-In-Reply-To: <xmqqmsn87n9x.fsf@gitster.g>
-Subject: RE: [PATCH v0 1/1] Teach git version --build-options about zlib+libcurl
-Date: Tue, 25 Jun 2024 18:02:58 -0400
-Organization: Nexbridge Inc.
-Message-ID: <03f901dac74b$740c78e0$5c256aa0$@nexbridge.com>
+	s=arc-20240116; t=1719355409; c=relaxed/simple;
+	bh=4yk33Etr1XJhFTIvIOCW6lbhoKx7mUYJWK8Jk3SgNvI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mvLw44ul8HVShTYA9k4xPbLY/VeaYKvCG4Eo20AyJyjISkQbQYnsMVfQGHtCpiGWO2oGUVmbqwISpfqE2An6tbLUR+ickgCxk0JHoHNSDN9ljUGVdyhu9w3RqLnUUionJdCrHxfHvH7JCTDezMykm/PCG5J2e1M62yOL/1Q68eM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KqLFQLJX; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KqLFQLJX"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 60F762924A;
+	Tue, 25 Jun 2024 18:43:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=4yk33Etr1XJhFTIvIOCW6lbhoKx7mUYJWK8Jk3
+	SgNvI=; b=KqLFQLJXR409vvN8esacHK19fORp3MWrYXyx/h5PFKRWQFLEf0Fxbs
+	l0kE58Xpg3/Hb454hyjenGkBXcRB2jg2kdH2AyehyYTZTWMF9B2xwbZHpA/Pqe89
+	CMauMoT/KsT4RnkoBRK2aTqyBukNAJa5vdqyxBfxvXX1xJn1FkXyo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5822329249;
+	Tue, 25 Jun 2024 18:43:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C812D29248;
+	Tue, 25 Jun 2024 18:43:19 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Tom Scogland
+ <scogland1@llnl.gov>,  Tom
+ Scogland via GitGitGadget <gitgitgadget@gmail.com>
+Subject: Re: [PATCH] archive: document that --add-virtual-file takes full path
+In-Reply-To: <xmqq5xubfjuu.fsf_-_@gitster.g> (Junio C. Hamano's message of
+	"Fri, 14 Jun 2024 11:40:57 -0700")
+References: <pull.1719.git.git.1715721327429.gitgitgadget@gmail.com>
+	<pull.1719.v2.git.git.1715967267420.gitgitgadget@gmail.com>
+	<bc3711a7-37d5-46bc-979e-83bd0b2cf900@web.de>
+	<95B94723-BCBF-48B4-A02C-A5C61FB060DA@llnl.gov>
+	<01b21870-b37e-47fe-9bd7-225499ae5eaf@web.de>
+	<xmqqh6dvflea.fsf@gitster.g> <xmqq5xubfjuu.fsf_-_@gitster.g>
+Date: Tue, 25 Jun 2024 15:43:18 -0700
+Message-ID: <xmqq8qys7iex.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHq0XJehhOvdAHgpxm5+qQ6Ucb/ggE1bx9aAneMcGQCRemapwGCRHksAmkbpREC22/9igK65SwmAgk13kCxLQVPsA==
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 5200D81C-3344-11EF-8811-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-On Tuesday, June 25, 2024 4:58 PM, Junio C Hamano wrote:
-><rsbecker@nexbridge.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+>> It has been a few weeks since this discussion stalled.  Let me make
+>> an executive decision on the direction here---let's keep the behaviour
+>> and align the documentation so that we won't break existing users.
+>>
+>> Thanks.
 >
->> My take on the separate patches and discussion about reporting
->> run-time values of libcurl, zlib, and OpenSSL, is that these are being
->> added to --build-options not --runtime-options (does not exist yet). I
->> think that grabbing run-time values could be confusing to users who
->> expect the --build-options even if comparing the two values.
+> So here is to re-ignite the discussion.
 >
->Yup.  I thought that the consensus was to leave all those extra
-complexities like
->runtime versions for a later and separate topic done after the dust from
-this change
->settles.
+> ----- >8 -----
+> Subject: [PATCH] archive: document that --add-virtual-file takes full path
 
-So did I, but there was other chatter that made me think we did not.
+And it seems that nobody is interested in the topic all that much
+anymore?
 
+I've read the updated text once again, and didn't see anything
+glaringly wrong, so I'll mark it for 'next'.
+
+Thanks.
