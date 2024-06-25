@@ -1,155 +1,100 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F9A6A325
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 05:59:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C091A145FF6
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 06:40:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719295186; cv=none; b=pTpGev/XAxZgWh8Km1OXlLhviGP+/6HV/YxQkD+Mf1Ds3za6Fo1evqEZzBAzka4j+5tD0GSJV+0RKhNtllDfIztAnpa1fWi8UJVncd6lj9psOsTYBs4cIZp7b2Vmlu0CaDpvKuUmGAf7fjjT5vifF1hOKi4rKUbpTFzGlVryg7w=
+	t=1719297658; cv=none; b=nYGX9otRqJIH/dqppLRDtuVfxhw3IErIWHtENTFMs9zwIOeNVKuza2Na+WGxzJhilhm+969P/yiIGARHfx0RxlgDJ/sm16ryOwofiqG9SGQjaVhASfepOqDAS6yimvXP9SflNdm6PWlgP6buI3hLicQAzFPN7LTjWSSbPGgskL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719295186; c=relaxed/simple;
-	bh=kitgErR8gee5scHOnlCZuYODDR84NYc9yj3QSx3ZA7w=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=cdhTC400Zoy5FubWkOKUD5fSpMH5wcBJTAIV0x2v7k/JazmTGoQ86emeZ1gcqsvH63Vr+azyWnKyb5n+K/tSMzUnMe2WiirEhZ7Aa4j9ZowX7aqKC0vNQrcc1c9JtSthe9C848QRPQXy6o8CPq6WEizd4kxUhtVYq2YSPjeIDuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nYFz6sGv; arc=none smtp.client-ip=209.85.128.180
+	s=arc-20240116; t=1719297658; c=relaxed/simple;
+	bh=RsJZwKGuDDoIqoRThZQAR4UpMoU9lIm7tGLnQiGccjU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=C7CxbHjZD1ie/K4OkHZdCzohQ21vWb0MZ4qlLFiVTxGccOf8+6YjjKU2mhqIAAEerVTh3crUtv4dVY6iETQxwQnBVfToRb5f5ppuVY37a3KfH7t+SLFcRFrmkNRp2R1BO4LbsYezK2gHGkaz+xTIuziDrVZoyair1dyKQEIvzOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AmhwbhOi; arc=none smtp.client-ip=209.85.210.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nYFz6sGv"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-63186c222eeso48632157b3.2
-        for <git@vger.kernel.org>; Mon, 24 Jun 2024 22:59:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AmhwbhOi"
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-6f9b0e8877eso405083a34.2
+        for <git@vger.kernel.org>; Mon, 24 Jun 2024 23:40:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719295184; x=1719899984; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ML6DYW4pUL9a0xhpAiT0wPg8PFGUpVe8+zaKFCEGlCE=;
-        b=nYFz6sGvirQSYhilFjKny/fQUAZYcad64IeZYcN9aASh2cqileZtTKwL2IJqljOf8O
-         KRlc3uRsemlcwq5ns337ijw6aeTPuErmqwepmmJY/3ZzLEdEkx29yKHaxJ24vW6tkOuF
-         PfNtH5bNrLcd1zzJozEhRHoTitAAq+ckG3pPIGQhasJV9OZqJOt2DORGXpOa4B1tQdtd
-         tb6cp6h+cJOjZ3omeBdrzetrDUMHHl1RlKJGEVH6tJv7bisDKOf4JL/MRJ30TR59uIbI
-         ifZrZZe5zfxCYLhkT2sxjmdKytVDPD0ZvfRqbnnpiwXfx3j54fsfzk36O4pi42JM0Ewg
-         QBYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719295184; x=1719899984;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+        d=gmail.com; s=20230601; t=1719297656; x=1719902456; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ML6DYW4pUL9a0xhpAiT0wPg8PFGUpVe8+zaKFCEGlCE=;
-        b=F+2/W2Z5iFg09J6W6xVVbZxQUdOHYjl1nM0R3HMVnl7V43rbNKaoITW+4//fz2QHVk
-         96JHglvIkENdym7mx28iJuk3cH0NI4j8V+LwfFRL79UHD2rmVBKXZ2XNefraOmbq2pqu
-         MIcAI7LYgi4WzL6yRO5MNjyqXSeWse4P7Jvk39pyD1hDTSMR/2JdLd4JEVmAFhQrqdU+
-         RHkhFc0KnmaAixKC3Ip6AsBxB1jQwRrTI4jqofnosM1z3oPTMgGUBBPvkyN9qlW3rSXN
-         2bz/EQdghVOx27PNp4/xMXKuEmIsmWuCzWp5G2FCTlgEYxfrFpiUEPCDP+EUEro8t8FV
-         j8lg==
-X-Gm-Message-State: AOJu0YygbndSt3iXGxQAi/qmN1J4RMKcQNZDRKzhFTWv699zrqdCJph1
-	xHwKjJZ0TmsMKEMVR5kfMwVTa1Dtvx+R6H4BMs3MjYH8D+51g3yUup/0qyluUp6R/RvSjJ9J9Jp
-	8l3Yt4z+ux152VPaQfsuEJ4vJdfPlBcj8
-X-Google-Smtp-Source: AGHT+IG9p+1BXR2xUFQ0E4546Q6Y8kRkR59IBl1j5BKdE46iqDXEUD4nkIG4VaR0X+rOsDBT3LM9vQZuMuUF+OR6GPU=
-X-Received: by 2002:a81:69c4:0:b0:63b:ca6d:7b8b with SMTP id
- 00721157ae682-643ac81d0abmr57663277b3.37.1719295183845; Mon, 24 Jun 2024
- 22:59:43 -0700 (PDT)
+        bh=+ibCmiTBUUfiAzNkJOVjD0uBe1TfDDblKwZ741P1tRI=;
+        b=AmhwbhOisZKhw0Cnukf0ilWSqoHzP/1LAabZ4qY3kFa1n4EeaCebmh01uSvLVdEuDO
+         EcEKliWcQ8Ak1EpQVFIAc70t17xZ11kb9lsTN1CCiFBHKUScK2xEIipK7vzA5gLE2NMo
+         xnMg3ugVpEwpUaAD+YG/B6S719bE8e9PRKItMBVzQZHbysEhmmzjHFWA1xqDnoWDqJ4Z
+         oFUbTSLB8ghsQ3kW2FxwlIeZTLkigoP48CWc7OHMSSsYdqJAP17JfB00aTKJZ5Bo6pe0
+         YezlANKHu008tZbalpLl7aqGK8rEruTPGHG4d/HHWI4m9/rXGKz1lr0HkJGTNKIe2/+u
+         AfKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719297656; x=1719902456;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+ibCmiTBUUfiAzNkJOVjD0uBe1TfDDblKwZ741P1tRI=;
+        b=C55JT3eqmNgTVnKOtLUru/AeXddrqyTN3P3UKeHUTKVrDv0R/faqv0yxTSBWFOhI1M
+         oAzozmG0pp8+ZkjdEIhf3C6+/aH0IIsvCdXoM6sDvlUZApeDLBKpSaE0WeOJHxB9ZUq2
+         iDkesw6CaTZO5fbpZOLni95Y81OoAhPdn/hLQYKX9a4ACAqqRFV9fGc1kftj6dQfRuYJ
+         ZlxN12oQU3vn21iL7byITYeLcBCj0n+nW04O2/Rr2TCSfq/nZn2iSkTJWQfgqllDADK3
+         Z0xxURaheiXSpx6ZkLerST8qxGOqqUoHhz5fFRvSz8i9dZYASuSveWZy2BOnpmj2NQru
+         G5lQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXnnfNBoSfVN5H6CD4l6eRVy7KW2hV9FjjqI1mJf7S+VFUIMBI/qgm0qBImClmpJIbIsAjTD532c4l21YFJPAoAr687
+X-Gm-Message-State: AOJu0Ywa9VaIlQRD5qA6zPYkQZuJDdexB/JIxk3zrx3ZvgiGNDaDTVpW
+	AuGyTgHdoLY8OHzg2zPO3Ji3zSNg0AR9V5NBFV5diW8h6FvshZli
+X-Google-Smtp-Source: AGHT+IEC53vz8Ma9kz65p3QD8hYle7BMEYX/8HPEn2YRKL482I253wW6lN9T0Etmnmz4/2vI7NaxDw==
+X-Received: by 2002:a05:6870:41d5:b0:254:a7df:721b with SMTP id 586e51a60fabf-25cf40ae173mr8431280fac.5.1719297655529;
+        Mon, 24 Jun 2024 23:40:55 -0700 (PDT)
+Received: from ?IPV6:2409:40c2:3e:f8f9:ded9:1f2e:64c4:580a? ([2409:40c2:3e:f8f9:ded9:1f2e:64c4:580a])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7066f30caa6sm4935806b3a.119.2024.06.24.23.40.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Jun 2024 23:40:55 -0700 (PDT)
+Message-ID: <89951829-80f3-482f-87d1-d88c12a2575d@gmail.com>
+Date: Tue, 25 Jun 2024 12:10:49 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Ryan Vu <ryanvu87@gmail.com>
-Date: Mon, 24 Jun 2024 22:59:33 -0700
-Message-ID: <CAF4erGWF+Lx=K09yFhd_abC2M5b5Ab0vM2uehkdVmridmsHqDg@mail.gmail.com>
-Subject: gitconfig - interaction between credential.helper and includeIf
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] describe: refresh the index when 'broken' flag is used
+To: Junio C Hamano <gitster@pobox.com>
+Cc: phillip.wood@dunelm.org.uk, Karthik Nayak <karthik.188@gmail.com>,
+ git@vger.kernel.org, Paul Millar <paul.millar@desy.de>,
+ Jeff King <peff@peff.net>
+References: <20240623214301.143796-1-abhijeet.nkt@gmail.com>
+ <CAOLa=ZRGramQ3MdzzXzZ19yeUB_rQZPbZ3u=eA=T2SfV3nhYOA@mail.gmail.com>
+ <054c6ac1-4714-4600-afa5-7e9b6e9b0e72@gmail.com>
+ <69662b07-e216-421b-b947-afa52e56d7ec@gmail.com>
+ <735b4a95-fe8e-4bff-9dd3-10ddd4bdb5b5@gmail.com> <xmqqcyo6cnbb.fsf@gitster.g>
+ <4224c251-c6f7-4b2a-b182-b0a12ee300c8@gmail.com> <xmqqsex2b4ti.fsf@gitster.g>
+Content-Language: en-US
+From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+In-Reply-To: <xmqqsex2b4ti.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-I created the following files:
-
-``` ~/workspace/.gitconfig-workspace
-[credential]
-    helper = store --file ~/workspace/.git-credentials-workspace
-```
-
-``` ~/.gitconfig
-[credential]
-    helper = store
-[includeIf "gitdir:~/workspace/"]
-    path = ~/workspace/.gitconfig-workspace
-```
-
-I then tried to use my credentials in a repository under `~/workspace`.
-
-What did you expect to happen? (Expected behavior)
-
-I expected that within `~/workspace`, the credential file would be
-`~/workspace/.git-credentials-workspace`.
-
-I expected that outside `~/workspace`, the credential file would be
-`~/.git-credentials`.
-
-The two `.git-credentials*` files have different credentials to the same URL.
-
-What happened instead? (Actual behavior)
-
-The credentials within file `~/workspace/.git-credentials-workspace`
-are not being properly applied for repositories within `~/workspace`.
-
-What's different between what you expected and what actually happened?
-
-I expected that `~/.git-credentials` and
-`~/workspace/.git-credentials-workspace` would be isolated from each
-other. But there are interactions even though `includeIf` was used.
-
-Anything else you want to add:
-
-The following configuration works:
-
-``` ~/.gitconfig
-[credential]
-    helper = store
-[includeIf "gitdir:~/workspace/"]
-    path = ~/workspace/.gitconfig-workspace
-[includeIf "gitdir:~/another-workspace/"]
-    path = ~/another-workspace/.gitconfig-another-workspace
-```
-
-``` ~/another-workspace/.gitconfig-another-workspace
-[credential]
-    helper = store --file ~/another-workspace/.git-credentials-another-workspace
-```
-
-This is not ideal as repositories must be contained within these
-enumerated paths.
+ > So I still do not understand why you > want a second user in this 
+test. What I really wanted to do was closely mirror the environment in 
+reproduction steps mentioned in original bug report. Which I figured 
+could be done by changing the owner to a second user.
 
 
-This configuration has unexpected behavior:
+On 24/06/24 23:28, Junio C Hamano wrote:
 
-``` ~/.gitconfig
-[includeIf "gitdir:~/workspace/"]
-    path = ~/workspace/.gitconfig-workspace
-[credential]
-    helper = store
-```
+>      $ git describe --dirty --broken
+>      v2.45.2-862-g39ba10deb2
+>      $ cat COPYING >RENAMING && mv RENAMING COPYING
+>      $ git diff-index --abbrev=8 HEAD
+>      :100644 100644 536e5552 00000000 M	COPYING
+>      $ git describe --dirty --broken
+>      v2.45.2-862-g39ba10deb2-dirty
+>      $ git describe --dirty
+>      v2.45.2-862-g39ba10deb2
 
-The credential in `~/workspace/.git-credentials-workspace` will be
-accessed and then stored into `~/.git-credentials`. Git is interacting
-with both files.
+Thanks, I will use this in the tests.
 
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-[System Info]
-git version:
-git version 2.45.2
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Darwin 23.5.0 Darwin Kernel Version 23.5.0: Wed May  1 20:12:58
-PDT 2024; root:xnu-10063.121.3~5/RELEASE_ARM64_T6000 arm64
-compiler info: clang: 15.0.0 (clang-1500.3.9.4)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
-
-
-[Enabled Hooks]
