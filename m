@@ -1,82 +1,109 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00CA1B7F7
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 14:11:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B76225774
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 15:59:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719324678; cv=none; b=rlF7ZE0QmDcRGZyg1XwFTHBlGyXH/tM+k/A/b9dVi3VcFX+9YzYbnQ1XVyQXI6vpGkPJBg6M4iJGNAIrSQK13e4HxoVRikaLD4bwkJloL03APqGLVEKBst1VSYPeFTn6eqDb4SSItp3brXaXVhXcVK4vXZglXC5lDVfH+LiaDbA=
+	t=1719331188; cv=none; b=NN8FUrGzKmtzOMUWd1uAk+reU6H7/o2yVJLg9CgQe+sE/xvuszCJgqt1Qe2wBT8244oyHDnyrZ6ao+mXpZeMjXrMAn9NV+rE0lK8mJFbLHJ6CiyL+P31WK/7EvEL67JOD834JOUS8Ytz003nT68GGF15Rbau+c071f96sytDkmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719324678; c=relaxed/simple;
-	bh=mXroUE98udVVfQqjvk8cnWOS45OQuL1wzTFuubVPr1I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FJY8WO2X9PFkxivyF9uuq7ZWI9dV/GKcdbZKzIlq4i+rB4WBhAhhCv4wHmpgsXYw0nvx2a7shWU4oDnguGZu78NBMaOxPCE3VjP+wbM0daerlDGVf5Eq3CbQvN/Xh24pMQvwgFkSTLo6Tt4+oZ+UGCHgEI/o4SGnxNnM4UwHEUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y2hUfmDN; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1719331188; c=relaxed/simple;
+	bh=4bNiNTlQdpbmvhbQxDFtux6y0OWZfKKdEjDOEtLuPYU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t1IZl0L2zW/rkvuDIwnyPHhmoe/2RzSvoUAASmLkDq0zbtJhqCTHP3DueMvaEqJyIXn484mKhx29SdKZZ6tfshIwmBxL7cLmhplxk0xb0Fg8wBAnIo0yX2LovMY3lnPfBouDlkDLCVu/RKHPcVysDHMdVbPQqzOqxU33Z0ncEgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q+hCDdGu; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y2hUfmDN"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-57d0eca877cso6675966a12.2
-        for <git@vger.kernel.org>; Tue, 25 Jun 2024 07:11:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719324675; x=1719929475; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mXroUE98udVVfQqjvk8cnWOS45OQuL1wzTFuubVPr1I=;
-        b=Y2hUfmDNd8x//SP4XnOxsHB2MArSYFYyGqsVEeJt+FyiB2aqjKPpLfAJ1bV6JaAMLx
-         fJxndpQPZx73dc4As/z9WTwo2iwsbAOmcJStMnmHkr8s+PLidWVsGK8YI9uJH2wf1j7q
-         RYHdBLqnd2t4GyHVUCTQvENKKqgAxsJN0YiVqvlZ5GqsqVGhLT0qt7Bb6s78R7lA/tIN
-         plZ4M9/6+u7+i7/P4Avne1Symf7y+lOXYIikGiUBorWpb3+rHChrRBFEH/QMlP4hPHPO
-         zYYvs0glOHe43PKfPLsR4WyyFUY3y9WlUXzO8heSFK0QjgUETthP1vIMYVBBn1ywNmXK
-         uZ0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719324675; x=1719929475;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mXroUE98udVVfQqjvk8cnWOS45OQuL1wzTFuubVPr1I=;
-        b=PfE/6ymWNzoM7FaDJJu8R38HSxek5pZ5VR0p9G8IOA/Un6GKCDZKzqYu5rf5jKJdlp
-         sdlIoX3J9YAqQZn/Gt4yjBlQ5fl/bfdshPAPwA3s5nSSJEW2Q9ZBwl9RbKGsscZhGqeR
-         Vsh5rFpM6eNBrgzO9x4POUFZPBQUMOjI4ezAtGYJLfL+MjAfpHPsNKsKcRW14kJjyMPN
-         gKQNYPHF82L0FVx6llIEHSXMi6dbLScffRQIyvMnO62scvEw0l3L0vBlpeehSBtXQ9IY
-         xMODjP4Vhv6AAf3toAb8qvKha0j7xmtP1hDqRUJcjY55Hb7plKmvA5YDKaN3VMc90JIm
-         P+sA==
-X-Gm-Message-State: AOJu0YyZdTdyFl4Q1kxc7B7OWH0PQ1R+H0C8n8u6yJzlkF6wAjy3e4+U
-	oCC63lFRu4w2wlWDCaAKA9z4JgZ5wW3kwZRx6EVNLI5fqHLo5KMk2eLg88Q8Zv6uB6z2/O/UZ9F
-	IXIugbKOfHVXg1RRLD39jccXbnIfpsA==
-X-Google-Smtp-Source: AGHT+IHmdPoVFB4ABH4cxi7LvMiO3StLdY7FkuxO2kjTSE/NLLRWNE89HpLnqrx7TgbQRtWdCL+vJd8KIYMj5Eb83AM=
-X-Received: by 2002:a05:6402:340d:b0:582:5195:3a7a with SMTP id
- 4fb4d7f45d1cf-58251957777mr1571767a12.35.1719324674833; Tue, 25 Jun 2024
- 07:11:14 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q+hCDdGu"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8C69F29BEA;
+	Tue, 25 Jun 2024 11:59:45 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=4bNiNTlQdpbmvhbQxDFtux6y0OWZfKKdEjDOEt
+	LuPYU=; b=Q+hCDdGuauC13xQnJR0vNqJDBsl7F/IryJfjmWkGVQftD3nv9eHluJ
+	8tLhmIHaU7WxPN2rP7F+Qeam4j5+gEUh9AVf/k8bEsCoa67SlAKjzf/06bz0sC4h
+	qT0lyqdntRuonMqCgglc26AoMfRIZUTe5Qn26DtU/BjO0eh5kjw+A=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 84D8629BE9;
+	Tue, 25 Jun 2024 11:59:45 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.204.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2D1F029BE7;
+	Tue, 25 Jun 2024 11:59:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+Cc: git@vger.kernel.org,  karthik.188@gmail.com,  Paul Millar
+ <paul.millar@desy.de>,  Phillip Wood <phillip.wood123@gmail.com>,  Elijah
+ Newren <newren@gmail.com>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] describe: refresh the index when 'broken' flag is used
+In-Reply-To: <20240625133534.223579-1-abhijeet.nkt@gmail.com> (Abhijeet
+	Sonar's message of "Tue, 25 Jun 2024 19:05:19 +0530")
+References: <20240625133534.223579-1-abhijeet.nkt@gmail.com>
+Date: Tue, 25 Jun 2024 08:59:40 -0700
+Message-ID: <xmqq34p1813n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240621060018.12795-1-chandrapratap3519@gmail.com>
- <20240621115708.3626-1-chandrapratap3519@gmail.com> <20240621115708.3626-10-chandrapratap3519@gmail.com>
- <CAOLa=ZRTwCvuRFCrHoK9f+zaKqz-Bb2HNAqpD_1y3tPYgrvatA@mail.gmail.com>
-In-Reply-To: <CAOLa=ZRTwCvuRFCrHoK9f+zaKqz-Bb2HNAqpD_1y3tPYgrvatA@mail.gmail.com>
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Tue, 25 Jun 2024 19:41:02 +0530
-Message-ID: <CA+J6zkQ4z6AWsy2uxMQfmtjqN0b_i1njR_a5agcQrnd4o6tmsw@mail.gmail.com>
-Subject: Re: [PATCH 09/11] t-reftable-record: add index tests for reftable_record_is_deletion()
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, karthik188@gmail.com, Patrick Steinhardt <ps@pks.im>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EF2B0F6A-330B-11EF-B5B7-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-On Tue, 25 Jun 2024 at 14:49, Karthik Nayak <karthik.188@gmail.com> wrote:
->
-> Chandra Pratap <chandrapratap3519@gmail.com> writes:
->
-> > reftable_record_is_deletion() is a function defined in
-> > reftable/record.{c, h} that determines whether a record is of
-> > type deletion or not. In the current testing setup, this function
->
-> Nit: 'In the current testing setup' holds true for the series, but on a
-> commit level, this statement needs to be modified with each tackled
-> type.
+Abhijeet Sonar <abhijeet.nkt@gmail.com> writes:
 
-I'm not quite sure I follow. Could you explain this a bit further?
+>  		if (broken) {
+>  			struct child_process cp = CHILD_PROCESS_INIT;
+> +			strvec_pushv(&cp.args, update_index_args);
+> +			cp.git_cmd = 1;
+> +			cp.no_stdin = 1;
+> +			cp.no_stdout = 1;
+> +			run_command(&cp);
+> +			strvec_clear(&cp.args);
+
+Why clear .args here?
+
+Either "struct child_process" is reusable after finish_command()
+that is called as the last step of run_command() returns
+successfully, or it shouldn't be reused at all.  And when
+finish_command() is called, .args as well as .env are cleared
+because it calls child_process_clear().
+
+I am wondering if the last part need to be more like
+
+	...
+	cp.no_stdout = 1;
+	if (run_command(&cp))
+		child_process_clear(&cp);
+
+> +
+>  			strvec_pushv(&cp.args, diff_index_args);
+>  			cp.git_cmd = 1;
+>  			cp.no_stdin = 1;
+
+Thanks.
+
+
+(#leftoverbit)
+
+Outside the scope of this patch, I'd prefer to see somebody makes
+sure that it is truly equivalent to prepare a separate and new
+struct child_process for each run_command() call and to reuse the
+same struct child_process after calling child_process_clear() each
+time.  It is unclear if they are equivalent in general, even though
+in this particular case I think we should be OK.
+
+There _might_ be other things in the child_process structure that
+need to be reset to the initial state before it can be reused, but
+are not cleared by child_process_clear().  .git_cmd and other flags
+as well as in/out/err file descriptors do not seem to be cleared,
+and other callers of run_command() may even be depending on the
+current behaviour that they are kept.
