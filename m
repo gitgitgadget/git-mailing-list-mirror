@@ -1,198 +1,135 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57544147C74
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 17:40:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87315135A69
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 17:44:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719337219; cv=none; b=OZ7MSfRlATytIOKe5FwcukiTwrO990KVLaYYeRBgti/O8bK5eIRjPJRNEUWWhtHnsBtVuengW/o+UeC0DDKiTN5hIbZENE//0PrMs0RF/Qb4CefKn7DNFhP5XAZOpvYe5NIZ0jjm188EoGEjHJUsYhlD0INlVaUuGJZq8PqmSHc=
+	t=1719337456; cv=none; b=rIhbHL/oBzmEwsatiHuCYK1DOFrNVQLQ2BaXU7nzr3kADOPTRozMFeQNRMfJCWaBWXWq7uVxA0sfUX7uSc7CQBtsmuX1fQRQBn0sGnWT2y+TokwiRuO7geKfLJPNa46aQrIG++evWRpEGBo5Qc55IA88nzzfqdLRHwO+XiDCKx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719337219; c=relaxed/simple;
-	bh=ojcbMuB1E2tSdBKHQAD3AmRSmi3YgxAw3pW7HuOE/d0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EJup2CkUYv7dBD+NM1i+q4xbJBBhgQtLIaOap789DQ3E0eNVhflrEq7IHfO2GEfiOPwmHae0Hx3xhzcwDYgvEk1PpYMaxhqwDGbpQeDEnQFcQSWjBX0n1VSluPjxuAUPwfkY8aAF2qIyedGxFCn58XIK+JyrOoT4xRd5dqt98Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=d0OB/zzo; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1719337456; c=relaxed/simple;
+	bh=QqOQN796Ob8k9Jm28rh8xkQZWR1woCoWJ/pVJZayKeY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=C2WGd4ai0C7hSZAeC4OfaL9V7eSI1gUESlvXwkslYELgUnx6CPtSumrQQVhkWqHWLv1N2p5xoaB47mYUYjk3YLos+wIOT2Hj5GQ5uCxiW/rTFlPyhXzKNC3twCmwDnzfMErFy4Rkvg0ytkIvMxzBC4nyl9Pu7/JF6R/Xcv8NPCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y94BDqQn; arc=none smtp.client-ip=209.85.166.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="d0OB/zzo"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-79c10f03a5dso21373585a.0
-        for <git@vger.kernel.org>; Tue, 25 Jun 2024 10:40:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y94BDqQn"
+Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-36da84df7adso16192075ab.1
+        for <git@vger.kernel.org>; Tue, 25 Jun 2024 10:44:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1719337217; x=1719942017; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IfNKn3C7TDjPbsX5uodEZ/FaBSWhJexijVXkNTwpPow=;
-        b=d0OB/zzoZZ1wdgnOB5pQn0WgAw3bHcCR1IB9jSql9rHIAmCV9s2UnOkplOhus5NNAX
-         saYACm5gjiTOC50cY9mTVFSbbPYtgNeSjtg0necOo33lv8NsZExi2CSN8/41uXbnflOu
-         gcfausvHRq87HO4hLsjferuK6nPxjYiIegKDta/vqgs+AHXJeJ1AQ/wHsbhDR+CMVLqL
-         F5c2xpH3VeTc7KPj35lP0C/NDZQP8O6zOhEwn3q2m7MOrc9t5Q6UZ80VwIVbXobPbxqF
-         JoWXGqto5fnyotj8zNqoxttz0Y7XEXHVoJDeWmV31j8xVTwhDTcyZapYrfzUoAWTv+fS
-         5iBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719337217; x=1719942017;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1719337455; x=1719942255; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IfNKn3C7TDjPbsX5uodEZ/FaBSWhJexijVXkNTwpPow=;
-        b=RC5DHcHoxYyOZYr0HxHMlw3kPQ+8uxuS8kZyaC6IajtI68vGCds8dmfFC2Kn58iknB
-         Ghw+FxPGSIroPEX1H/TeC71CgERHl67SUhEVCmzrB2w58QDscGXWZck09Ibb/mBIeRcH
-         9eBVjiUrwAZ0LKxIs40db4VENnKGUWdTXc5Pg0gNL7yBWgufpzLBucM1Ev9uKaPkBvEr
-         8icOQcMFYl9fCZ5HeOR7d9xMU5DiTt8vT6xeWIwh6+1AGKT3a7Sheu1+Qcxh7ETquWAc
-         UBrS6UnMYvc4WlaW8GVt9/gNeZHAq1w05396SVaXmHzvN9K0ucKhWl+m0Jxv7goJS/66
-         WgyA==
-X-Gm-Message-State: AOJu0YwVtBdq3soSP7J2K9SVlUL3bzluNC1v9hacLGBTpl5CxUQHI1sC
-	MRWzTPg1TdLsvmDunMWzqJWTJGf6PTBU+al4vKEb0Ug+ooqYr1MwZtv3EbssfNyZpx/38dDFTaq
-	TFCE=
-X-Google-Smtp-Source: AGHT+IHoH75bcqnqrF3HsIqfsUz3TP4rpsabEL0/3+6IfSeGgYm5dXNQDEsch5X4GS5jQsdZ2E5Jzg==
-X-Received: by 2002:a0c:8bca:0:b0:6b0:7a47:ca7a with SMTP id 6a1803df08f44-6b540a92d85mr74417886d6.42.1719337216696;
-        Tue, 25 Jun 2024 10:40:16 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b51ef694fcsm46127716d6.131.2024.06.25.10.40.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jun 2024 10:40:16 -0700 (PDT)
-Date: Tue, 25 Jun 2024 13:40:15 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Jonathan Tan <jonathantanmy@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Elijah Newren <newren@gmail.com>
-Subject: [PATCH v7 16/16] bloom: introduce `deinit_bloom_filters()`
-Message-ID: <db9991f339377d64b3328cfc1b5e41548b2f8407.1719333276.git.me@ttaylorr.com>
-References: <cover.1706741516.git.me@ttaylorr.com>
- <cover.1719333276.git.me@ttaylorr.com>
+        bh=uF6h61T415IVoMcTnhJQcRrKXO1TYD2+OA4xRmWrm6k=;
+        b=Y94BDqQnB5rqjcsRq7bf0qhhTKpUtREIxRMSiNDNdpSnFKqxaUser09KGxXa0beehP
+         2EkroqRe8MQVU8kOKxItDSsri0plEolA+i/BmT1BhVGS9q7MOxNCbaa0qqwXAo3SdBsZ
+         uc7cP2QsdPKbKYJV+aGDgo1FDTmw3P8AtUHq8MlXNwcWUWGRBE4yEqRZCLmx9D7S9vlU
+         oCjRuH4hGW866U2E7bxM0deDsHQWRECuKvW4qHohdANdCpaRyCS1atNq8F51X96o+d9D
+         1goPTNeLfc6Ah4f1io2UKghMzTO/LVoKhOb5t4QUolnAdqcOteDM+9GVMmgCRFv7Yt+A
+         yuLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719337455; x=1719942255;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uF6h61T415IVoMcTnhJQcRrKXO1TYD2+OA4xRmWrm6k=;
+        b=XOap3UvK5yPtSUgsrCV3amzds7Ku3iEk4vMSO5PWJ5vI1OBxphvXs0yU98YJENPtvM
+         fyExWSaZAbS63vu5bu67I+ckrI+63KRPX3yYDpcmnVlv6MPdhlnLGNDNJISXynMO+xiU
+         9f/pxvFBuPAGhX5tDNagBXxkanBMaBYYE3LracA3POhLM1iMBehQSF5m2KMTluwTb/7i
+         IOTuTwUID465SAPJzVL46I5T/VGOuetkh9iPcjKlsySOkpx5oYzrwfriJaj6gd8yCMjS
+         utkDEYwe2Gs5raAv2YES2Sv9bRKHxTQg9SxgxtToorykABgaw0+BIBEEfb7EK+fak54E
+         6qGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXtDgKCschXxUuurkkNaUcI9vxuEikGtxro2zDCMn5uMfn/asjaFRhaF/rLRNunpisIh2It8iPOD9wDwYMFOhsI01h7
+X-Gm-Message-State: AOJu0Yx3ED5Lzo8jEkfRoju8QvkyS7Tnig41bvKTumn6ns2WNfMsVEEj
+	K/yFxW8Ut+SnKpdekUTXIvgsvt+yopqEz6EYYReRQAC4JCseZw5U/GKhOxFL4wkFMp7uInOMrSl
+	jetgnUphvWMgSQesur1NiPcAmHjaasA==
+X-Google-Smtp-Source: AGHT+IGxUGddwYacKaAQ9XP7lQa5OpwwZ5SeKi988z645+XcPOSP76bU9ItIBlK0MUoVpS/ONuARKtwNehXKRo/TjGg=
+X-Received: by 2002:a92:dccb:0:b0:375:e378:1014 with SMTP id
+ e9e14a558f8ab-37639ed83a1mr41540775ab.7.1719337454719; Tue, 25 Jun 2024
+ 10:44:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1719333276.git.me@ttaylorr.com>
+References: <83D801A8-3878-43C1-B7A7-78B3B7315FD8@gmail.com>
+ <20240611075137.GF3248245@coredump.intra.peff.net> <xmqq34pjxzva.fsf@gitster.g>
+ <20240613102409.GE817573@coredump.intra.peff.net> <20240614102439.GA222287@coredump.intra.peff.net>
+In-Reply-To: <20240614102439.GA222287@coredump.intra.peff.net>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 25 Jun 2024 10:44:03 -0700
+Message-ID: <CABPp-BEaFUH2QaAW+9B904cCN_h8oyxTaSDMkK=v_yZua=A1kA@mail.gmail.com>
+Subject: Re: [PATCH 0/11] allow overriding remote.*.url
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Mathew George <mathewegeorge@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-After we are done using Bloom filters, we do not currently clean up any
-memory allocated by the commit slab used to store those filters in the
-first place.
+On Fri, Jun 14, 2024 at 3:25=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Jun 13, 2024 at 06:24:09AM -0400, Jeff King wrote:
+>
+> > > I was expecting (with excitement) a mess, but the above is as clean
+> > > as we can make the idea, I would say.  Lack of documentation and
+> > > tests do count as incompleteness though of course.
+> >
+> > Yeah, and we should probably do the same for pushurl. And I think there
+> > could be some cleanup of the memory ownership handling of add_url().
+>
+> So as always with this crufty 2009-era code, there turned out to be some
+> subtleties. ;)
+>
+> The good news is that I think dealing with them left the code in a
+> better place. It's easier to reason about, and a few possible leaks have
+> been plugged (I don't know if they were triggered in the test suite or
+> not; if so they weren't enough to tip any scripts over to being
+> leak-free).
 
-Besides the bloom_filter structures themselves, there is mostly nothing
-to free() in the first place, since in the read-only path all Bloom
-filter's `data` members point to a memory mapped region in the
-commit-graph file itself.
+I agree with this good news after reviewing the series.
 
-But when generating Bloom filters from scratch (or initializing
-truncated filters) we allocate additional memory to store the filter's
-data.
+> We can split the series into segments:
+>
+>   [01/11]: archive: fix check for missing url
+>
+>     A nearby trivial bugfix.
+>
+>   [02/11]: remote: refactor alias_url() memory ownership
+>   [03/11]: remote: transfer ownership of memory in add_url(), etc
+>   [04/11]: remote: use strvecs to store remote url/pushurl
+>   [05/11]: remote: simplify url/pushurl selection
+>
+>     Fixing memory handling weirdness, which is a necessary prereq for
+>     the "reset" operation to avoid leaking. The switch to using a strvec
+>     isn't strictly necessary, but it does make the code (including the
+>     later patch 7) simpler.
+>
+>   [06/11]: config: document remote.*.url/pushurl interaction
+>   [07/11]: remote: allow resetting url list
+>
+>     The actual change is in patch 7 here, but it was hard to add new
+>     docs to the rather anemic existing ones. Hence patch 6.
+>
+>   [08/11]: t5801: make remote-testgit GIT_DIR setup more robust
+>   [09/11]: t5801: test remote.*.vcs config
+>   [10/11]: remote: always require at least one url in a remote
+>   [11/11]: remote: drop checks for zero-url case
+>
+>     This is a related cleanup I found while working in the area.
+>     Arguably it could be a separate topic, though it does depend
+>     textually on what came before.
 
-Keep track of when we need to free() this additional chunk of memory by
-using an extra pointer `to_free`. Most of the time this will be NULL
-(indicating that we are representing an existing Bloom filter stored in
-a memory mapped region). When it is non-NULL, free it before discarding
-the Bloom filters slab.
-
-Suggested-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- bloom.c        | 16 +++++++++++++++-
- bloom.h        |  3 +++
- commit-graph.c |  4 ++++
- 3 files changed, 22 insertions(+), 1 deletion(-)
-
-diff --git a/bloom.c b/bloom.c
-index 740c1767ea..d080a1b616 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -92,6 +92,7 @@ int load_bloom_filter_from_graph(struct commit_graph *g,
- 					sizeof(unsigned char) * start_index +
- 					BLOOMDATA_CHUNK_HEADER_SIZE);
- 	filter->version = g->bloom_filter_settings->hash_version;
-+	filter->to_free = NULL;
- 
- 	return 1;
- }
-@@ -264,6 +265,18 @@ void init_bloom_filters(void)
- 	init_bloom_filter_slab(&bloom_filters);
- }
- 
-+static void free_one_bloom_filter(struct bloom_filter *filter)
-+{
-+	if (!filter)
-+		return;
-+	free(filter->to_free);
-+}
-+
-+void deinit_bloom_filters(void)
-+{
-+	deep_clear_bloom_filter_slab(&bloom_filters, free_one_bloom_filter);
-+}
-+
- static int pathmap_cmp(const void *hashmap_cmp_fn_data UNUSED,
- 		       const struct hashmap_entry *eptr,
- 		       const struct hashmap_entry *entry_or_key,
-@@ -280,7 +293,7 @@ static int pathmap_cmp(const void *hashmap_cmp_fn_data UNUSED,
- static void init_truncated_large_filter(struct bloom_filter *filter,
- 					int version)
- {
--	filter->data = xmalloc(1);
-+	filter->data = filter->to_free = xmalloc(1);
- 	filter->data[0] = 0xFF;
- 	filter->len = 1;
- 	filter->version = version;
-@@ -482,6 +495,7 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 			filter->len = 1;
- 		}
- 		CALLOC_ARRAY(filter->data, filter->len);
-+		filter->to_free = filter->data;
- 
- 		hashmap_for_each_entry(&pathmap, &iter, e, entry) {
- 			struct bloom_key key;
-diff --git a/bloom.h b/bloom.h
-index e3a9b68905..d20e64bfbb 100644
---- a/bloom.h
-+++ b/bloom.h
-@@ -56,6 +56,8 @@ struct bloom_filter {
- 	unsigned char *data;
- 	size_t len;
- 	int version;
-+
-+	void *to_free;
- };
- 
- /*
-@@ -96,6 +98,7 @@ void add_key_to_filter(const struct bloom_key *key,
- 		       const struct bloom_filter_settings *settings);
- 
- void init_bloom_filters(void);
-+void deinit_bloom_filters(void);
- 
- enum bloom_filter_computed {
- 	BLOOM_NOT_COMPUTED = (1 << 0),
-diff --git a/commit-graph.c b/commit-graph.c
-index 2f0a08f302..c02bef7e72 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -831,6 +831,7 @@ void close_commit_graph(struct raw_object_store *o)
- 		return;
- 
- 	clear_commit_graph_data_slab(&commit_graph_data_slab);
-+	deinit_bloom_filters();
- 	free_commit_graph(o->commit_graph);
- 	o->commit_graph = NULL;
- }
-@@ -2647,6 +2648,9 @@ int write_commit_graph(struct object_directory *odb,
- 
- 	res = write_commit_graph_file(ctx);
- 
-+	if (ctx->changed_paths)
-+		deinit_bloom_filters();
-+
- 	if (ctx->split)
- 		mark_commit_graphs(ctx);
- 
--- 
-2.45.2.664.g446e6a2b1f
+I only managed to find a few typos in commit messages, but I looked
+through patches 1-8 pretty closely.  I only skimmed 9 & 10 -- I don't
+really have an opinion on the remote helpers.  I agree that the issue
+you bring up in the patches makes sense to discuss, and the route you
+picked looks reasonable to me, but I don't feel motivated to try to
+use or understand the remote helpers enough to form an opinion.
+However, I'm a fan of the cleanup in patch 11 that your changes in 9 &
+10 enabled, so if everyone's as ambivalent as me (and 15 years of
+things being broken suggests everyone is likely to be as ambivalent as
+me) then I'd say just go with your changes in 9 & 10 and call it a
+day.
