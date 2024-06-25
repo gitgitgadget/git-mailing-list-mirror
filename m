@@ -1,194 +1,103 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AED1CABB
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 16:12:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE43C16C696
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 16:54:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719331970; cv=none; b=Y6zNlYIpUWepOjzlO3TnxN0099vEq26Y3XZYIUqSIPPzp+Bptqh7ITDXk5q0q/6x+DOScAbIp2fKpypo+QMazwV8JMs6otN2WzfpuiZoIANtjBGNUBUiIF8ta7gwzMJaVsK4naNfQrrJyiYC0A4161FV4jHs+5N8+ZK3oXt72bg=
+	t=1719334449; cv=none; b=CnYcyjTzYG/miGkEHYP90PqN0QPG3hx/GgtiRtWqi0Sr38UnIJq9XNGZq2FM7uuuVLRBqQiUkZ+jSvEGwUDkwHQ9UqKvQnosutc/+9r3BacMrZvWjh6Fk/cM5PJvZ26R+RUb+cNVQTEN/DHKdzDQYx2ILcsQQO83bFVs6UeNHVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719331970; c=relaxed/simple;
-	bh=tQ/CiUjIlzAuS48z4MQwoAodRTXfNDR9C99eGJWo5cA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SdX8hC0L9qOqMYhkajC0mfGfeOofiwObEiJcsyDr8J5dFK4sjOueTGYUNaFoZBbdMjT5xdqM+vh8TDcSQK/bW0o+oguwxvWdURuTQ0uqE23D/VTEVIJE+KHsSiiRFUhv6LSp3WJa9iDVfZQAyWlYcLk8VYEvcM7jKo5MV53bVew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=c5sGoxAS; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1719334449; c=relaxed/simple;
+	bh=7CUFBfV6+Rn4KZll7IkXW0jbuBrTgW561BkuvwtAOwc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=h15yWDdKY8U7tqZoeGU5k+ZG2a7JvUylZV10pt3BvmjnFnRqvFokEIxIY42/GyOMlwA4dHZw5X0KlPIBl1BpurTy7mGWyn+W2zamZ6M1Wvd3irHhOWTgoCXvG/9RVrNmyzdLbBVUQilaxXa/X3LdoCdtLwDbuOWXksT3eURrY7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q5uWLUgN; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="c5sGoxAS"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id AAECC37E80;
-	Tue, 25 Jun 2024 12:12:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=tQ/CiUjIlzAu
-	S48z4MQwoAodRTXfNDR9C99eGJWo5cA=; b=c5sGoxASHZLGW33PJP3JoPY+lpiN
-	HhIp1xfZDoxGWOnot9nTNIDKG0FrGHSO7hjqueattIdO3H4VBEyzgYB/C0E2Mgxd
-	yJ+Dzs785I9br4+MfxhU9T44rZvcJpfVxM4i8eKyBbIzNBMA09t7UMnszdpTk3fw
-	RFa7VVFBTh88FIs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A447637E7F;
-	Tue, 25 Jun 2024 12:12:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.204.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 442A737E7E;
-	Tue, 25 Jun 2024 12:12:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>, "David C. Rankin"
- <drankinatty@gmail.com>,  git@vger.kernel.org
-Subject: Re: Local git server can't serve https until repos owned by http,
- can't serve ssh unless repos owned by user after 2.45.1
-In-Reply-To: <20240625072419.GU19642@kitsune.suse.cz> ("Michal =?utf-8?Q?S?=
- =?utf-8?Q?uch=C3=A1nek=22's?=
-	message of "Tue, 25 Jun 2024 09:24:19 +0200")
-References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
-	<xmqq8qz376fb.fsf@gitster.g> <20240617211513.GM19642@kitsune.suse.cz>
-	<20240625072419.GU19642@kitsune.suse.cz>
-Date: Tue, 25 Jun 2024 09:12:38 -0700
-Message-ID: <xmqqr0cl6lxl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q5uWLUgN"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-64546605546so25215197b3.1
+        for <git@vger.kernel.org>; Tue, 25 Jun 2024 09:54:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719334447; x=1719939247; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZZdHlsjiEIMGudwibZFGk2XLvjmpwajzvGEuhYOwkhw=;
+        b=Q5uWLUgN5j3KQbdkdicYvPcf2MQqp3uSPY2hSiq1YeW1AdNRJkBVi1eE67vUzlw++n
+         V3omcnUe4YQlRZ8DnSbySWFsA4rjP2yLUX10GNZ4GIBD9IBn4X1dF7kzGQ1fHSI01Z8r
+         nsoSAhrBSfQNcbpEMASY20Y9Udo7DnF7vbWfwO9iYtSCoDbthBAyDD7srqDfQZoPuI8l
+         mOYuTsd44fPK5RcHiME4MPQjxPhLlxgR/m+VobSvpaDiwWxz3Br4rVPCZ8YcgbV7Xz71
+         u72+8/oklHD1RbyttLR62jxtf8IRJIjiDXgCotkkRAWI6koM/SXHOhAB4kAynovBSDyi
+         b2hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719334447; x=1719939247;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZZdHlsjiEIMGudwibZFGk2XLvjmpwajzvGEuhYOwkhw=;
+        b=Zb03MGGxiJLy/uCGTnhz7NmWwiT8S0SSt31u8efmHiHhGDnoxD9Dh4mUYnZkqm2VTM
+         0cp/MGcbENKlufnlTYUC7nepxfvYl6r7FXNhnl1SQ56klgjlYX0xZQbb7gx0XU1EvwvO
+         EirIlG9MSRps5ULvaMWQcnIGwflcDyZKXhrR2qEAtkyihrun2HQUuy8zk9sOICy+7PCd
+         GK1J9GGTZdjCiap1zlkU46U4iHfUWT7u0AfnxfGqJPhXawGZIrE8AdGVJDPB/rARvYjM
+         45UNDpvnMVhTy4/uIipNdUyj2ZbC3yQcOXJz8mM7y8xwACSip0lTuHTWjkOBIzja90DH
+         +Mpg==
+X-Gm-Message-State: AOJu0Yww0E27oy/P72U78OrobjjUCrQRaafbzrj11tg2p+gMwSXf6kXv
+	N8AQMWfbhVcYuKvDhSH4zl6+kLWdswS+Y93B15aNfvjUsRXRqXD83goiY3WSPjU6G35fk3DatGF
+	srz2o73ixHyoa8mgUJrJ3vcyUntUDRA==
+X-Google-Smtp-Source: AGHT+IEODGY760fvcF6UZn3Vicfne9Tr8pOn+7IR8VqzKY840D0kpm3jbZ5GsKJF0JeDscuZ2jkr2r2RWU1p48F6X2w=
+X-Received: by 2002:a05:690c:6f08:b0:618:95a3:70b9 with SMTP id
+ 00721157ae682-643ac81d3b9mr89908317b3.36.1719334446794; Tue, 25 Jun 2024
+ 09:54:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- BEF30454-330D-11EF-864B-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
+References: <CAF4erGWF+Lx=K09yFhd_abC2M5b5Ab0vM2uehkdVmridmsHqDg@mail.gmail.com>
+ <20240625132001.GA535756@coredump.intra.peff.net>
+In-Reply-To: <20240625132001.GA535756@coredump.intra.peff.net>
+From: Ryan Vu <ryanvu87@gmail.com>
+Date: Tue, 25 Jun 2024 09:53:55 -0700
+Message-ID: <CAF4erGXkP3AR3dNvsqmo5FBLxOaGZhd9pHCHKsL8Q0BV5BiKJA@mail.gmail.com>
+Subject: Re: gitconfig - interaction between credential.helper and includeIf
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Dscho, the f4aa8c8b (fetch/clone: detect dubious ownership of local
-repositories, 2024-04-10) is your brainchild and people seem to be
-unhappy about having to adjust their settings.  Are there any advice
-you can offer them?
+Thank you! I have the configurations working now.
 
-Michal Such=C3=A1nek <msuchanek@suse.de> writes:
-
-> On Mon, Jun 17, 2024 at 11:15:13PM +0200, Michal Such=C3=A1nek wrote:
->> Hello,
->>=20
->> On Mon, Jun 17, 2024 at 11:47:20AM -0700, Junio C Hamano wrote:
->> > "David C. Rankin" <drankinatty@gmail.com> writes:
->> >=20
->> > >   Security enhancement in 2.45.1 have broken ability to serve git =
-over
->> > >   https and ssh from local git server running Apache. (web server =
-runs
->> > >   as http:http on Archlinux)
->> > >
->> > >   The fix of adding the following to gitconfig (system-wide and
->> > >   per-user in ~/.gitconfig) does not solve the problem:
->> > >
->> > > [safe]
->> > > 	directory =3D *
->> >=20
->> > It is not clear what you exactly meant "per-user" above, so just to
->> > make sure.  Is this set in the global configuration file for the
->> > httpd (or whoever Apache runs as) user?
->> >=20
->> > The purpose of "dubious ownershop" thing is to protect the user who
->> > runs Git from random repositories' with potentially malicious hooks
->> > and configuration files, so the user being protected (in this case,
->> > whoever Apache runs as) needs to declare "I trust these
->> > repositories" in its ~/.gitconfig file.  What individual owners of
->> > /srv/my-repo.git/ project has in their ~/.gitconfig file does not
->> > matter when deciding if Apache trusts these repositories.
->>=20
->>=20
->> looks like the semantic of 'dubious ownershop' changed recently.
->>=20
->> Disro backport of fixes for CVE-2024-32002 CVE-2024-32004 CVE-2024-320=
-20
->> CVE-2024-32021 CVE-2024-32465 to 2.35.3 broke git-daemon. No amount of
->> whitelisting makes the 'fixed' git serve the repository.
+On Tue, Jun 25, 2024 at 6:20=E2=80=AFAM Jeff King <peff@peff.net> wrote:
 >
-> Same regression between 2.45.0 and 2.45.2 which allegedly fixes the
-> same CVEs.
+> On Mon, Jun 24, 2024 at 10:59:33PM -0700, Ryan Vu wrote:
 >
-> Looks like downgrading to gaping hole version is needed to serve reposi=
-tories
-> in general.
+> > I created the following files:
+> >
+> > ``` ~/workspace/.gitconfig-workspace
+> > [credential]
+> >     helper =3D store --file ~/workspace/.git-credentials-workspace
+> > ```
+> >
+> > ``` ~/.gitconfig
+> > [credential]
+> >     helper =3D store
+> > [includeIf "gitdir:~/workspace/"]
+> >     path =3D ~/workspace/.gitconfig-workspace
+> > ```
 >
-> Please consider adjusting the fix so that repositories can still be ser=
-ved.
+> credential.helper is a multi-valued config key that forms a list, and
+> Git will try each one in sequence. So in your ~/workspace repositories,
+> you've configured _two_ helpers: a vanilla "store" and one with the
+> --file option.
 >
-> Thanks
+> You can reset the list with an empty string. So putting:
 >
-> Michal
+>   [credential]
+>   helper =3D
+>   helper =3D store --file ~/workspace/.git-credentials-workspace
 >
-> To reproduce:
+> in your .gitconfig-workspace would do what you want.
 >
-> cat /usr/local/bin/git-ping
-> #!/bin/sh -e
->
-> # Try connecting to one or more remote repository URLs
->
-> while true ; do
->         git ls-remote -h "$1" >/dev/null
->         shift
->         [ -n "$1" ] || break
-> done
->
-> mkdir -p /srv/git/some
-> chown hramrach /srv/git/some
-> su hramrach -c "git init --bare /srv/git/some/repo.git"
-> su hramrach -c "touch /srv/git/some/repo.git/git-daemon-export-ok"
-> version=3D2.35.3-150300.10.36.1 ; zypper in --oldpackage git-core-$vers=
-ion git-daemon-$version
-> systemctl start git-daemon.service
-> git ping git://localhost/some/repo.git
-> <nothing>
->
-> version=3D2.35.3-150300.10.39.1 ; zypper in --oldpackage git-core-$vers=
-ion git-daemon-$version
-> systemctl restart git-daemon.service
-> git ping git://localhost/some/repo.git
-> fatal: Could not read from remote repository.
->
-> Please make sure you have the correct access rights
-> and the repository exists.
->
->
-> systemctl status git-daemon.service
-> =E2=97=8F git-daemon.service - Git Daemon
->      Loaded: loaded (/usr/lib/systemd/system/git-daemon.service; disabl=
-ed; vendor preset: disabled)
->      Active: active (running) since Thu 2024-06-06 08:29:28 CEST; 6min =
-ago
->    Main PID: 31742 (git)
->       Tasks: 2 (limit: 4915)
->      CGroup: /system.slice/git-daemon.service
->              =E2=94=9C=E2=94=80 31742 git daemon --reuseaddr --base-pat=
-h=3D/srv/git/ --user=3Dgit-daemon --group=3Dnogroup
->              =E2=94=94=E2=94=80 31749 /usr/lib/git/git-daemon --reusead=
-dr --base-path=3D/srv/git/ --user=3Dgit-daemon --group=3Dnogroup
->
-> Jun 06 08:29:28 localhost.localdomain systemd[1]: Started Git Daemon.
-> Jun 06 08:29:39 localhost.localdomain git-daemon[31756]: fatal: detecte=
-d dubious ownership in repository at '/srv/git//some/repo.git'
-> Jun 06 08:29:39 localhost.localdomain git-daemon[31756]: To add an exce=
-ption for this directory, call:
-> Jun 06 08:29:39 localhost.localdomain git-daemon[31756]:         git co=
-nfig --global --add safe.directory /srv/git//some/repo.git
->
-> git config --global --add safe.directory /srv/git//some/repo.git
-> mv ~/.gitconfig /etc/gitconfig
-> git ping git://localhost/some/repo.git
-> fatal: Could not read from remote repository.
->
-> Please make sure you have the correct access rights
-> and the repository exists.
->
-> git config --global --add safe.directory /srv/git/some/repo.git
-> mv ~/.gitconfig /etc/gitconfig
-> git ping git://localhost/some/repo.git
-> fatal: Could not read from remote repository.
->
-> Please make sure you have the correct access rights
-> and the repository exists.
+> -Peff
