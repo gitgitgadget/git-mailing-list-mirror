@@ -1,202 +1,169 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161B81487C8
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 12:27:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AF3149DE2
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 12:28:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719318457; cv=none; b=WBfbSL4S8Lanql3MaCUpxdqlvb9Kq9zTWabxQu/Jfy/9aVb81qUZl8BK/TVfoTD43cbbcrqKYl8ofLXaZBwU1XCbENMIxY13/5IivQah6SxxOnDT8+xP8Q9GADu/Ux+30RqVnAK9nTpf1QI5ePTpUxdWAiQ4fhK8m605l3WpKPg=
+	t=1719318500; cv=none; b=M8fuHcmL5s41+HWTwol5rUrml87qilKeouk0ChDTfQsN1k7jImRuJfZpYIhpSLpQW4ZRFW0koJf4h7ZhFIY64fVjO+2rsBNqrKOmV6mCl+P3d4YLRv/O/5yBvcJIUtxeFAZ5D0x9/H6VhWcVL0DZHJZeZloIbXwA5r8AuAOBZhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719318457; c=relaxed/simple;
-	bh=Sm6a2dUtIDk/2AA9HKDLqbwOZ/30woxejBx9hcpergw=;
+	s=arc-20240116; t=1719318500; c=relaxed/simple;
+	bh=dSEyZXebjWxE5t7D6j/uE7eTJ0NS5vEFGzGvNjW/pr0=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JwMoec1xwvZEiO8wJrlRTLrphUd4X7RDN1awf5Kv4kXvBpm7r9nr6Kq9MiOyADSfco/HL+AW8HIpuCDyu9hJhDiJUS8Oo+ultVYrp4Qpv9N3kJgve4b6R8q+5y3ZzPNJ3OtLkBtzlg38UGeZfH0mrAeF1rc6ZS32rQuxt9VKDps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B57XIJO/; arc=none smtp.client-ip=209.85.210.52
+	 To:Cc:Content-Type; b=pl7defYhXZTLI/FoIJdEJ7qqoktuuJ5gvBWW4uXQ6xjW0OueqmlzTPZiSOE6pq2YCDITAgnb1bRX4HnziFR1fDP4yvHDHcyQwFIeShtVim85Da5OEpVUMnF4929c2/BhNqPznDeoeOEuEKRjXInCiWZyWPQPzeDzTgliFeb/P/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TqnDrSb5; arc=none smtp.client-ip=209.85.160.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B57XIJO/"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-700cd57a9fbso22400a34.1
-        for <git@vger.kernel.org>; Tue, 25 Jun 2024 05:27:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TqnDrSb5"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-2598f517a33so2861911fac.1
+        for <git@vger.kernel.org>; Tue, 25 Jun 2024 05:28:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719318455; x=1719923255; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719318498; x=1719923298; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=M+vhBCZExNXR/UkFw2YjJq9v0pWhSZqg2MOoawTBE5s=;
-        b=B57XIJO/7lfqYOXV1gLTraYTopMtsNCVqnOpeP557xf9D41Xl25HtTQfVy11a5yylz
-         C4sHKQNSEFRdCC9gx4TftvHqDL9Dv7iFaYU02zz2fKqgedqMzIN9c5GXfr4Xm/4oISDK
-         nWRDgqocR/J3EoA6WFmXZMS/+5OdRyTqis/8PqZceoXs1cEqhj1IWG8SFLRIhU6B//BI
-         2LwqHKssYaydZDRjWcEbid4Q47kE1SwYE39pA9GHHfvDtout2ZqLQ1VX1iXNko512u0x
-         B59XRYB3rirmWwleuyG6zl2KQDNWWHSDfERyfp3vK7Y33kyMx9WawhX1u7xLxYk1Jx3M
-         yVIw==
+        bh=6iRlnsWzyKDGMO3T14UZpwNuEGHrEwAS/KCZfcgTcV4=;
+        b=TqnDrSb52lt2OxeyFWp9CM8h7AJ9orC8FA77yWtgldwvnjEgDEWtGmOelDx7UPu526
+         JM0nHXVj9qQHZOs5vTq8J1OksZoYlC834XmIxpIGBGqXiPYsAKwIoBUzJLNJhQ7rzUDq
+         qylp6H34sE3ZkFsQDOo9n3jAGp0IUOLqnQMm9B0V12qK39uRAc16EKe49mav3Ylh5y5R
+         sTizR8SpHt9g/XfbjbB4KndQbEdJjCxrfk02aBejY1fKLbSBWLvEhHXJIxcU2hoPHoZa
+         ZZE7K0JQOLxy9wyX8Lsebj1gWSYOqkWrLoCJxx1Y0sTMXh0FN0Rrla8s+2Ge9WxQ+aJE
+         PUaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719318455; x=1719923255;
+        d=1e100.net; s=20230601; t=1719318498; x=1719923298;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M+vhBCZExNXR/UkFw2YjJq9v0pWhSZqg2MOoawTBE5s=;
-        b=UYpbPMDXjBASekGadzU721SqXpOOr6tTSpl7LRd1RM0m/8+NiVivRpE8phm2JBuozp
-         rIz0mQlmf/Em15lB1ABZYRHWxBKMqBW4TPEJVv0GAOFyRU2HHrreQukvw/bU6CSFkaI/
-         doCM9k07IjzU5mts8THTsFI4p1XpctSGHEuU5xlg5YHE7ftYn6ual83BawAMlBAyH8cW
-         zQto/I4ZlmdFZYLeZIHdEKwvEeg5klmrQJxDHxOUVXayOypBcLvHzmUH8H1TR4Kn86eF
-         FD8thnNe94IgVGdRbm2xNocCX40VigEmnsx3ibB+/q50iAkvgp7IZRCPtqdZl6Kf8FiQ
-         1QDA==
-X-Forwarded-Encrypted: i=1; AJvYcCU3e1iOfiKxAO735bx//POs+4qDW2POOJsALDIoxQSPTLzz5clOTqexqB4s4T63WIrIBY6grBgsBAZD5FLniuE6ocVH
-X-Gm-Message-State: AOJu0YyXOJeBeOqKXn0KTZqe4/SXQTONGJeTcLyhS4haBdyu8IejnO3Q
-	shZjjkHu0/KmkqV6jsBCjI/pDEkiMK3p7JNphOQ8R9+BEbunY6RHT2Tkqr/TzpsFJIo3LUtEycS
-	jWh+N1Pe9Xb9Jmg9oRaJpDh3gvtM=
-X-Google-Smtp-Source: AGHT+IF0yppja/gL5JGQN8kEnXSjGhSqcxWKhPV5ybu4J1m0E2G9FenvNoB5K5K59KWF2yfxiQJmu9xDMGJ8WymzyaU=
-X-Received: by 2002:a05:6871:8a7:b0:24f:d873:9f32 with SMTP id
- 586e51a60fabf-25d06c51287mr8774567fac.26.1719318454975; Tue, 25 Jun 2024
- 05:27:34 -0700 (PDT)
+        bh=6iRlnsWzyKDGMO3T14UZpwNuEGHrEwAS/KCZfcgTcV4=;
+        b=EbpoaClGXSccL7pPO53AyTHtMuSrKKEwFsxTimRNeydGCyEYjSPuekz4Qn6mdBbBAB
+         LijasKlimBB0m8bGldZgmMZky6akHE4IzbwnflDfs6ZijEM7mPo7O7rYGYOiDG9UbWhX
+         jHJm766mKLZPfIfh12b3LvhWJy3tRvzsxYnM8ZpksTUSKRpLA6Vo0rtux4mbw0BC72Fu
+         AFu1QOUP7uxz/LoWCfwMsByeKmpgvuirzwsmDnqrtC6oEBgJ3xYtHbf84B6PH77vszb7
+         N5M0mxuH8UiMGT9q+R3j6uAZf9DxeI0qQAdnyq+RApi4oQdKEaK9fGpKdddoYiQOgf06
+         pocQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU7f7k5IusIOvtbmoI0Z7GY7AAnzIsWeNossdSL6k39jApeGtWQ+stNmpfGtmFQpuUIYupmqcghZWyZgHWlLGVAzT0F
+X-Gm-Message-State: AOJu0YzuW3KvuQZqVlIq9x64/RSpY4kM758uYbkGwXUnaIM5NjVNnZfA
+	3rxoevvvQrgZH1cSKJCMjEF5uqTOZ1W+DoqrOwfBKKBljcjY8YK4IsG9FKPgUVZXAGdBaEzHepA
+	UdwUp5pPXCsO2Vakg3CdSiW2Atug=
+X-Google-Smtp-Source: AGHT+IHnl7PFdN+NPFkUf4JRPJETiWLhLheZjnqp9vIC8ubzDZ0/d1URpJWQHvBRCp4LhNFuKww6xBrTc+SNF+FMcnA=
+X-Received: by 2002:a05:6870:548c:b0:254:a588:ba9b with SMTP id
+ 586e51a60fabf-25d017b039fmr8813033fac.36.1719318498090; Tue, 25 Jun 2024
+ 05:28:18 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 25 Jun 2024 07:27:34 -0500
+ HTTPREST; Tue, 25 Jun 2024 07:28:16 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240625064504.58286-1-abhijeet.nkt@gmail.com>
-References: <xmqqsex2b4ti.fsf@gitster.g> <20240625064504.58286-1-abhijeet.nkt@gmail.com>
+In-Reply-To: <054c6ac1-4714-4600-afa5-7e9b6e9b0e72@gmail.com>
+References: <20240623214301.143796-1-abhijeet.nkt@gmail.com>
+ <CAOLa=ZRGramQ3MdzzXzZ19yeUB_rQZPbZ3u=eA=T2SfV3nhYOA@mail.gmail.com> <054c6ac1-4714-4600-afa5-7e9b6e9b0e72@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 25 Jun 2024 07:27:33 -0500
-Message-ID: <CAOLa=ZT5asAE8-=jY7iR2hsGGshjQtBvpjcVacQk5YFa0u3Sfg@mail.gmail.com>
-Subject: Re: [PATCH v2] describe: refresh the index when 'broken' flag is used
-To: Abhijeet Sonar <abhijeet.nkt@gmail.com>, git@vger.kernel.org
-Cc: Paul Millar <paul.millar@desy.de>, Junio C Hamano <gitster@pobox.com>, 
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: multipart/mixed; boundary="000000000000c3d7a2061bb60531"
+Date: Tue, 25 Jun 2024 07:28:16 -0500
+Message-ID: <CAOLa=ZQEhT02TXgymD20J49HwAAkTeTqDBruuebwjkMzj1kjmQ@mail.gmail.com>
+Subject: Re: [PATCH] describe: refresh the index when 'broken' flag is used
+To: phillip.wood@dunelm.org.uk, Abhijeet Sonar <abhijeet.nkt@gmail.com>, git@vger.kernel.org
+Cc: Paul Millar <paul.millar@desy.de>, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: multipart/mixed; boundary="00000000000055bd5d061bb6086f"
 
---000000000000c3d7a2061bb60531
+--00000000000055bd5d061bb6086f
 Content-Type: text/plain; charset="UTF-8"
 
-Abhijeet Sonar <abhijeet.nkt@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> When describe is run with 'dirty' flag, we refresh the index
-> to make sure it is in sync with the filesystem before
-> determining if the working tree is dirty.  However, this is
-> not done for the codepath where the 'broken' flag is used.
+> Hi Abhijeet and Karthik
 >
-> This causes `git describe --broken --dirty` to false
-> positively report the worktree being dirty if a file has
-> different stat info than what is recorded in the index.
-> Running `git update-index -q --refresh` to refresh the index
-> before running diff-index fixes the problem.
+> On 24/06/2024 11:56, Karthik Nayak wrote:
+>> Abhijeet Sonar <abhijeet.nkt@gmail.com> writes:
+>>
+>>> When describe is run with 'dirty' flag, we refresh the index
+>>> to make sure it is in sync with the filesystem before
+>>> determining if the working tree is dirty.  However, this is
+>>> not done for the codepath where the 'broken' flag is used.
+>>>
+>>> This causes `git describe --broken --dirty` to false
+>>> positively report the worktree being dirty.  Refreshing the
+>>> index before running diff-index fixes the problem.
 >
-> Also add tests to deliberately update stat info of a
-> file before running describe to verify it behaves correctly.
+> This is a good description of the problem the patch fixes.
 >
-> Reported-by: Paul Millar <paul.millar@desy.de>
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-> ---
->  builtin/describe.c  | 12 ++++++++++++
->  t/t6120-describe.sh | 32 ++++++++++++++++++++++++++++++++
->  2 files changed, 44 insertions(+)
+>>> Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+>>> Reported-by: Paul Millar <paul.millar@desy.de>
+>>> Suggested-by: Junio C Hamano <gitster@pobox.com>
+>>> ---
+>>>   builtin/describe.c | 14 ++++++++++++++
+>>>   1 file changed, 14 insertions(+)
+>>>
+>>> diff --git a/builtin/describe.c b/builtin/describe.c
+>>> index e5287eddf2..2b443c155e 100644
+>>> --- a/builtin/describe.c
+>>> +++ b/builtin/describe.c
+>>> @@ -645,6 +645,20 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+>>>   	if (argc == 0) {
+>>>   		if (broken) {
+>>>   			struct child_process cp = CHILD_PROCESS_INIT;
+>>> +			struct lock_file index_lock = LOCK_INIT;
+>>> +			int fd;
+>>> +
+>>> +			setup_work_tree();
+>>> +			prepare_repo_settings(the_repository);
+>>> +			repo_read_index(the_repository);
+>>> +			refresh_index(the_repository->index, REFRESH_QUIET|REFRESH_UNMERGED,
+>>> +				      NULL, NULL, NULL);
+>>> +			fd = repo_hold_locked_index(the_repository,
+>>> +						    &index_lock, 0);
+>>> +			if (0 <= fd)
+>>> +				repo_update_index_if_able(the_repository, &index_lock);
+>>> +
 >
-> diff --git a/builtin/describe.c b/builtin/describe.c
-> index e5287eddf2..3e751f1239 100644
-> --- a/builtin/describe.c
-> +++ b/builtin/describe.c
-> @@ -53,6 +53,10 @@ static const char *diff_index_args[] = {
->  	"diff-index", "--quiet", "HEAD", "--", NULL
->  };
+> As we're dealing with a repository that might be broken I suspect we'd
+> be better to run "git update-index --unmerged -q --refresh" as a
+> subprocess in the same way that we run "git diff-index" so that "git
+> describe --broken" does not die if the index cannot be refreshed.
 >
-> +static const char *update_index_args[] = {
-> +	"update-index", "--unmerged", "-q", "--refresh", NULL
-> +};
-> +
->  struct commit_name {
->  	struct hashmap_entry entry;
->  	struct object_id peeled;
-> @@ -645,6 +649,14 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
->  	if (argc == 0) {
->  		if (broken) {
->  			struct child_process cp = CHILD_PROCESS_INIT;
-> +			struct child_process update_index_cp = CHILD_PROCESS_INIT;
-> +
-> +			strvec_pushv(&update_index_cp.args, update_index_args);
-> +			update_index_cp.git_cmd = 1;
-> +			update_index_cp.no_stdin = 1;
-> +			update_index_cp.no_stdout = 1;
-> +			run_command(&update_index_cp);
-> +
-
-We should also call `strvec_clear(&update_index_cp.args);` to clear up
-used memory.
-
-Nit: we could actually `cp` for both the child processes here.
-
->  			strvec_pushv(&cp.args, diff_index_args);
->  			cp.git_cmd = 1;
->  			cp.no_stdin = 1;
-> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-> index e78315d23d..ac781a7b52 100755
-> --- a/t/t6120-describe.sh
-> +++ b/t/t6120-describe.sh
-> @@ -671,4 +671,36 @@ test_expect_success 'setup misleading taggerdates' '
+>> I'm wondering why this needs to be done, as I can see, when we use the
+>> '--broken' flag, we create a child process to run `git diff-index
+>> --quiet HEAD`. As such, we shouldn't have to refresh the index here.
 >
->  check_describe newer-tag-older-commit~1 --contains unique-file~2
+> "git diff-index" and "git diff-files" do not refresh the index. This is
+> by design so that a script can refresh the index once and run "git
+> diff-index" several times without wasting time updating the index each time.
 >
-> +test_expect_success 'describe --dirty with a file with changed stat' '
 
-It would be nice to cleanup the repo at the end of the test by adding
-`test_when_finished "rm -rf stat-dirty" &&` here
+I see. Thanks for correcting me!
 
-> +	git init stat-dirty &&
-> +	cd stat-dirty &&
-> +
-> +	echo A >file &&
-> +	git add file &&
-> +	git commit -m A &&
-> +	git tag A -a -m A &&
-> +
-> +	cat file >file.new &&
-> +	mv file.new file &&
-> +	git describe --dirty >actual &&
-> +	echo "A" >expected &&
-> +	test_cmp expected actual
-> +'
+>> Also apart from that, we should add a test to capture the changes.
+>
+> That would be nice
+>
+> Best Wishes
+>
+> Phillip
+>
+>
+>>>   			cp.git_cmd = 1;
+>>>   			cp.no_stdin = 1;
+>>> --
+>>> 2.45.GIT
 
-You want to do everything apart from the repo init in a subshell, this
-ensures we don't carry over the working directory to the next test.
-
-> +test_expect_success 'describe --dirty --broken with a file with changed stat' '
-> +	git init stat-dirty-broken &&
-> +	cd stat-dirty-broken &&
-> +
-> +	echo A >file &&
-> +	git add file &&
-> +	git commit -m A &&
-> +	git tag A -a -m A &&
-> +
-> +	cat file >file.new &&
-> +	mv file.new file &&
-> +	git describe --dirty --broken >actual &&
-> +	echo "A" >expected &&
-> +	test_cmp expected actual
-> +'
-
-Can't this be merged with the previous test?
-
---000000000000c3d7a2061bb60531
+--00000000000055bd5d061bb6086f
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 8b14af264b5e0eee_0.1
+X-Attachment-Id: 1dfcae68009d6e12_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1aNnQ3UVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMVNJQy80b2t2ZUhSMWQzWDJWMTFCQ216SjhFY2pmcApwZERCbjJYRE1z
-TlJjSE5WYTRrdG93d2FESnRaejB6dFcyZzVKSHhrZHVuVThiSzZRd0RDdy9iWGJaS09RNGloCkhm
-NDEzZUVCcWhkcytBSVdNOXVqSlU3Y0JlaEs3aVBPbHlmVzlIQWhiM3BCYmZ4M3M3RVkyQjhBdXlS
-bmhoRGIKdkVBQ1BLYVhjakRpRkZyazdrTDJhcnFuZTlPYVpwUzJiY0RPeXY1U2lZTW9GQ1l3WnRu
-cVFhM1NjczlGT1RPRwo5WFh2azZYelNSSzU1WWNIS2JudDVCQVVVMFhUcnlieUdGNGhySWFpNmhs
-UkhrVmxVYU42aHFpeE1tZEpxbXUvCkxOeWhTbHdwdDJldFBPV1lnSURRZWNZU3NiS0dvQnZWaGhw
-d3VZcnFYVDMrczdZMDVWZ0ordDBCNlBIWkt5elEKRlU1NUUwRnhzMjNuMFh6NFMybm41SXYxc0VQ
-STFGNzVkRGJUM2wvWkE2QkJselE3UUM2VXJxenM5SWVFRE9jUAphQUkyakNibktRRFY5WHMxQnd0
-NFVweUFKeXc0bld5M1gyZjNkeTlJN2hyRzV4Nkh6enRCeVVjVjNsTlpVOVdzClFra2lRWFY2ZHY4
-dzBqRUM3YkVZcStjTmJpMmcxd0VtRjJ1Ykg2ND0KPUxqcXkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aNnQ5OFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMFpxQy8wVkt4SWp6bVE1L1RoVE15S0RpSW94NGdaSwpjdVZmZnZ2bFR4
+bkp1bjVEbVZGQ2lJUmhVeDhhUlFRdUpycFZxRG9kanhBNzRWbVQ1NHFScWsvd1ZjZWU0azdnCmpm
+VytqYUVWRzM1MlZWam1WdzZSRzJmZWhNK003N29nQkYwUHh6bVRxUC83U2Y0MkF1ZzlJeEg3eTdZ
+QU1mMXIKNzU5QXRKYTVmbCtkeUtoMVNOUW9vZVdCQVgzZWE5QVJmYkJYV2tPZ1BPeHNpaVhLdml3
+bGM4S2IvZlQ4OHozZwpGcUpobThpdGx4SzBRb2NHS0NKQXFjcy8xdTN0bDVabEU5a3lxUHlGZzJx
+Wkh1K1FqWmZGM2Znb2dkTGNMcDhDCmJnT0FhOUo2YzY2Rm9SUVNPS09YQUZmcW5nZFRKNmZmTzNs
+ci9yU1BUK0VBRHFKSkVRMkYvZDVvS3VDRmwwVlMKY1A3bHhkUW9oajdNcW5XczRLS1B5WDR6N0R3
+OEN0NGZWcWx5aXZnR1NndkNxaDlTWW1UV1BzUWpuRFJ6eVpGbQpVaEFENnRUekZlQUNBNE8xcTR1
+RXIzM1JURzVBUDV0bkZEek5MRUpHVmZnZ0Y0SWloNFd6YlBURzVjTVZUQy9CCmFaR3hQNEtUNjBt
+NlVJL0w3R3paaEhSM1JndzVmZ2Yrc244S214OD0KPVNCcnAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000c3d7a2061bb60531--
+--00000000000055bd5d061bb6086f--
