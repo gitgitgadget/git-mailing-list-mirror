@@ -1,215 +1,426 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614101465B4
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 07:24:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D2A1487F6
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 08:26:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719300265; cv=none; b=H1KSqdw0Sm1eL5f11s6Ab++I8ELr9uL6Lt72/Ax6+w+pEF9V0Pd2w7b6hjeyDjAEzQSFSoACOq9gCOY9Vh/HIxVCa0dkLcKL4RoJmG6g3kcy1TpUxP479kh14Ixhd6UW1aAgxO/cMKgAgK41wCxPhN9t55Yq5qZ2D0YHaxznH5c=
+	t=1719303984; cv=none; b=CIJm6sNvVKwq8VQHZt5i3NGNcMzmYApu9NC8bNshAmuMOX8OFT3yDGZgFFmkJo4Rff5e3R+SVLsKPWH2T2UdI/GGZeUvN11id1kfnGbSNM/r5GYQI2x95YJ+higGOc1t2AnxBZCvDKRwGLZAMCWdlQrFqoMCGgYMQs5EMSuzvLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719300265; c=relaxed/simple;
-	bh=DrDmMLxSIwt8CPoc4qPNZBhPqHUSDiP6Z8XGRlznOBM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hCCeZV8f/kA5rQ+8yq/eXAsfwVo+b4RO6NVZnMXlKGqx7vRFbDBvesvQNDUDFiFm7CgZTcsf9xKEYky0Bo0o/4y8JupODTUpYYr1NrsbBE4wybSkpsbF7hg/a+YPewImY9SlKDD/GftdPT6D5bZk39LNsXnTUdPU7SgimDdmHmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=jyP8z2JR; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3w8Bj3ZZ; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=jyP8z2JR; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3w8Bj3ZZ; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1719303984; c=relaxed/simple;
+	bh=bb/LtFdSxxZkjEcoXDXOAL9f1NNUp1t7opf+QF9a9rk=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FjJibyGIz+9GYifvkMDTMZJ6zkqhzHovPHMRxDFnDySKrBFo0H+93qLjzvLAX+UtN0sArg2xflnMoGVw49OMGJKV8QhtU6JC5v+3yD3skoeYfB5ZF/6+yt4gohIy8+7rYwLpsn47QN6xGJCHxfQZI+XDtqOsJs9OE6xhjy5kHcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F68zI96W; arc=none smtp.client-ip=209.85.160.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="jyP8z2JR";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3w8Bj3ZZ";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="jyP8z2JR";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3w8Bj3ZZ"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 15BBB1F7D3;
-	Tue, 25 Jun 2024 07:24:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1719300261; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GEhzwzsEdzBvofgpagf0R/WGEdN2f8pp8CXRxd2DAgs=;
-	b=jyP8z2JRcd250q0ykBVmp1bqg1vGKhi5YbflXY/KXm+5o6RTsd0DOSyTwx/OK2HP0M54eZ
-	VGw98NevKyt8xclVUiOD8G24fmFipIAtYW4FcyP8i3Jmniyb+TTSC16QD3VVl2oFUV/yo4
-	3YCkxskk9J6RsdwbZxGDaGa6+0j5L6A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1719300261;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GEhzwzsEdzBvofgpagf0R/WGEdN2f8pp8CXRxd2DAgs=;
-	b=3w8Bj3ZZIeO0NpLq9bfCQNKOoU9e5jmE9JgFAfNKZ8NPVwOvZoaCXSlxnBsMs8YVuF3nEj
-	d/t7viKUrgT8nICg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1719300261; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GEhzwzsEdzBvofgpagf0R/WGEdN2f8pp8CXRxd2DAgs=;
-	b=jyP8z2JRcd250q0ykBVmp1bqg1vGKhi5YbflXY/KXm+5o6RTsd0DOSyTwx/OK2HP0M54eZ
-	VGw98NevKyt8xclVUiOD8G24fmFipIAtYW4FcyP8i3Jmniyb+TTSC16QD3VVl2oFUV/yo4
-	3YCkxskk9J6RsdwbZxGDaGa6+0j5L6A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1719300261;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GEhzwzsEdzBvofgpagf0R/WGEdN2f8pp8CXRxd2DAgs=;
-	b=3w8Bj3ZZIeO0NpLq9bfCQNKOoU9e5jmE9JgFAfNKZ8NPVwOvZoaCXSlxnBsMs8YVuF3nEj
-	d/t7viKUrgT8nICg==
-Date: Tue, 25 Jun 2024 09:24:19 +0200
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "David C. Rankin" <drankinatty@gmail.com>, git@vger.kernel.org
-Subject: Re: Local git server can't serve https until repos owned by http,
- can't serve ssh unless repos owned by user after 2.45.1
-Message-ID: <20240625072419.GU19642@kitsune.suse.cz>
-References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
- <xmqq8qz376fb.fsf@gitster.g>
- <20240617211513.GM19642@kitsune.suse.cz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F68zI96W"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-2598001aae7so2589304fac.2
+        for <git@vger.kernel.org>; Tue, 25 Jun 2024 01:26:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719303981; x=1719908781; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wx/Y+r00tnE2V9f3AmfTaXVOUra8yqYVHCJM9BGSRNE=;
+        b=F68zI96WXcGyU8+Ptr9P6/WoZachPoHySpZiSqMjBg1Mfsb7Kdx3r1E7cjAcRKN6qy
+         WYKPrssuVC2wdNIet4m5t5OTr2VidVeBMP7UruzlwOcn2s2HbwPduK3tVI+o8loLkEEQ
+         YFNyy3eWu6lOeAvSyLesovfJOfbR3nr4fW8sjJX6/VIKEj2AppO9QRy+H0jL73OZg7jp
+         t7m7GR3mOFgFHkdFDqEOVh0YWOH3xWIJM3o5sYmrG9iZL1d9BGnR1h/NNm/xcxCncUUO
+         VLpECPOyQnebe/XtrkMqVsnAQqIC7tT4GRPm/Be020Ay26NPL3lSHcfbZEGDcmsFhnKn
+         Ltlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719303981; x=1719908781;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wx/Y+r00tnE2V9f3AmfTaXVOUra8yqYVHCJM9BGSRNE=;
+        b=uMGPqMdU8afkH94xqjsEU0vQuTGFJ5Fvyn1HRQbr8rixeCie0lSmzZHvuy6dv/1SZc
+         7im0pn6TxfFcLfvMNZAOeN+EnV3u9/pxvDq49H0HiGI0fUhxGC0vpH1qgggpW5CXuHTY
+         IYysG6/bqF/TghRKvtyYSzQIlVLyiiUw1WrtNkUNkZyvSuD/UPp0u49maCgkGQNeOzxQ
+         wTDFogiFXeiZ4JW3vTK6ANnUG7mIW9BOed58HPTcEsaQfo/lClEH2NlkR8ylstXFvGHk
+         eelkncdRjCN4JalQuU2CmbRPy8/eVWBTzlExFRK4hopzqQM6R/gbSv0XHzFuvyWRa79J
+         9fnw==
+X-Forwarded-Encrypted: i=1; AJvYcCWV8h4aXMcAFHGZICvXbNa7mWBegBhWqQdcGijCazt7MuZWfiJY7jDdLjuINhr169jKgU/CCus/HKNL0BmI/F3wEQBY
+X-Gm-Message-State: AOJu0Yz5Auc/4gVc0u/VugDxWtZNA4x8e4qcJMuLQ53XxJgHcD7Y7rNu
+	OOfxYjtNkoCLEpURAmzIHpa2jxnqtEmpM2pBpJy/gr8hli0pAQ0MOh30ftB3TBmLqlaFELgKyRe
+	Wyqi6GVYzLSaH1JnkpHv2j6xVwNcFls7+
+X-Google-Smtp-Source: AGHT+IE/F1I3sH+4RY9cRM0e0BsxzVWGXqfe0Mh2qNADbPEc49dLHvhLo2fhpt0tHJLnJm8AtC+lWE1aMwXSMu3wLBs=
+X-Received: by 2002:a05:6870:d623:b0:25d:1c0:803e with SMTP id
+ 586e51a60fabf-25d01c080aemr7722354fac.7.1719303981212; Tue, 25 Jun 2024
+ 01:26:21 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 25 Jun 2024 03:26:20 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20240621115708.3626-2-chandrapratap3519@gmail.com>
+References: <20240621060018.12795-1-chandrapratap3519@gmail.com>
+ <20240621115708.3626-1-chandrapratap3519@gmail.com> <20240621115708.3626-2-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240617211513.GM19642@kitsune.suse.cz>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spamd-Result: default: False [-4.30 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-0.997];
-	MIME_GOOD(-0.10)[text/plain];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	ARC_NA(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	RCPT_COUNT_THREE(0.00)[3];
-	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_ZERO(0.00)[0];
-	TO_DN_SOME(0.00)[]
-X-Spam-Flag: NO
-X-Spam-Score: -4.30
-X-Spam-Level: 
+Date: Tue, 25 Jun 2024 03:26:20 -0500
+Message-ID: <CAOLa=ZSmnMLMoKKWMiM7M4Jw8CJ0Jvrs0oMLy18FHaLv_6s6yA@mail.gmail.com>
+Subject: Re: [PATCH 01/11] t: move reftable/record_test.c to the unit testing framework
+To: Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org
+Cc: karthik188@gmail.com, Patrick Steinhardt <ps@pks.im>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="0000000000000fca97061bb2a77b"
 
-On Mon, Jun 17, 2024 at 11:15:13PM +0200, Michal Suchánek wrote:
-> Hello,
-> 
-> On Mon, Jun 17, 2024 at 11:47:20AM -0700, Junio C Hamano wrote:
-> > "David C. Rankin" <drankinatty@gmail.com> writes:
-> > 
-> > >   Security enhancement in 2.45.1 have broken ability to serve git over
-> > >   https and ssh from local git server running Apache. (web server runs
-> > >   as http:http on Archlinux)
-> > >
-> > >   The fix of adding the following to gitconfig (system-wide and
-> > >   per-user in ~/.gitconfig) does not solve the problem:
-> > >
-> > > [safe]
-> > > 	directory = *
-> > 
-> > It is not clear what you exactly meant "per-user" above, so just to
-> > make sure.  Is this set in the global configuration file for the
-> > httpd (or whoever Apache runs as) user?
-> > 
-> > The purpose of "dubious ownershop" thing is to protect the user who
-> > runs Git from random repositories' with potentially malicious hooks
-> > and configuration files, so the user being protected (in this case,
-> > whoever Apache runs as) needs to declare "I trust these
-> > repositories" in its ~/.gitconfig file.  What individual owners of
-> > /srv/my-repo.git/ project has in their ~/.gitconfig file does not
-> > matter when deciding if Apache trusts these repositories.
-> 
-> 
-> looks like the semantic of 'dubious ownershop' changed recently.
-> 
-> Disro backport of fixes for CVE-2024-32002 CVE-2024-32004 CVE-2024-32020
-> CVE-2024-32021 CVE-2024-32465 to 2.35.3 broke git-daemon. No amount of
-> whitelisting makes the 'fixed' git serve the repository.
+--0000000000000fca97061bb2a77b
+Content-Type: text/plain; charset="UTF-8"
 
-Same regression between 2.45.0 and 2.45.2 which allegedly fixes the
-same CVEs.
+Chandra Pratap <chandrapratap3519@gmail.com> writes:
 
-Looks like downgrading to gaping hole version is needed to serve repositories
-in general.
+> reftable/record_test.c exercises the functions defined in
+> reftable/record.{c, h}. Migrate reftable/record_test.c to the
+> unit testing framework. Migration involves refactoring the tests
+> to use the unit testing framework instead of reftable's test
+> framework.
+> While at it, change the type of index variable 'i' to 'size_t'
+> from 'int'. This is because 'i' is used in comparison against
+> 'ARRAY_SIZE(x)' which is of type 'size_t'.
+>
+> Also, use set_hash() which is defined locally in the test file
+> instead of set_test_hash() which is defined by
+> reftable/test_framework.{c, h}. This is fine to do as both these
+> functions are similarly implemented, and
+> reftable/test_framework.{c, h} is not #included in the ported test.
+>
+> Mentored-by: Patrick Steinhardt <ps@pks.im>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+> ---
+>  Makefile                                      |   2 +-
+>  t/helper/test-reftable.c                      |   1 -
+>  .../unit-tests/t-reftable-record.c            | 106 ++++++++----------
+>  3 files changed, 50 insertions(+), 59 deletions(-)
+>  rename reftable/record_test.c => t/unit-tests/t-reftable-record.c (77%)
+>
+> diff --git a/Makefile b/Makefile
+> index f25b2e80a1..def3700b4d 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1338,6 +1338,7 @@ UNIT_TEST_PROGRAMS += t-hash
+>  UNIT_TEST_PROGRAMS += t-mem-pool
+>  UNIT_TEST_PROGRAMS += t-prio-queue
+>  UNIT_TEST_PROGRAMS += t-reftable-basics
+> +UNIT_TEST_PROGRAMS += t-reftable-record
+>  UNIT_TEST_PROGRAMS += t-strbuf
+>  UNIT_TEST_PROGRAMS += t-strcmp-offset
+>  UNIT_TEST_PROGRAMS += t-strvec
+> @@ -2678,7 +2679,6 @@ REFTABLE_TEST_OBJS += reftable/block_test.o
+>  REFTABLE_TEST_OBJS += reftable/dump.o
+>  REFTABLE_TEST_OBJS += reftable/merged_test.o
+>  REFTABLE_TEST_OBJS += reftable/pq_test.o
+> -REFTABLE_TEST_OBJS += reftable/record_test.o
+>  REFTABLE_TEST_OBJS += reftable/readwrite_test.o
+>  REFTABLE_TEST_OBJS += reftable/stack_test.o
+>  REFTABLE_TEST_OBJS += reftable/test_framework.o
+> diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+> index 9160bc5da6..aa6538a8da 100644
+> --- a/t/helper/test-reftable.c
+> +++ b/t/helper/test-reftable.c
+> @@ -5,7 +5,6 @@
+>  int cmd__reftable(int argc, const char **argv)
+>  {
+>  	/* test from simple to complex. */
+> -	record_test_main(argc, argv);
+>  	block_test_main(argc, argv);
+>  	tree_test_main(argc, argv);
+>  	pq_test_main(argc, argv);
+> diff --git a/reftable/record_test.c b/t/unit-tests/t-reftable-record.c
+> similarity index 77%
+> rename from reftable/record_test.c
+> rename to t/unit-tests/t-reftable-record.c
+> index 58290bdba3..1b357e6c7f 100644
+> --- a/reftable/record_test.c
+> +++ b/t/unit-tests/t-reftable-record.c
+> @@ -6,13 +6,9 @@
+>    https://developers.google.com/open-source/licenses/bsd
+>  */
+>
+> -#include "record.h"
+> -
+> -#include "system.h"
+> -#include "basics.h"
+> -#include "constants.h"
+> -#include "test_framework.h"
+> -#include "reftable-tests.h"
+> +#include "test-lib.h"
+> +#include "reftable/constants.h"
+> +#include "reftable/record.h"
+>
+>  static void test_copy(struct reftable_record *rec)
+>  {
+> @@ -24,9 +20,9 @@ static void test_copy(struct reftable_record *rec)
+>  	reftable_record_copy_from(&copy, rec, GIT_SHA1_RAWSZ);
+>  	/* do it twice to catch memory leaks */
 
-Please consider adjusting the fix so that repositories can still be served.
+I'm curious why we do this, and if it is still needed. The original
+commit (e303bf22f reftable: (de)serialization for the polymorphic record
+type) doesn't mention any particular reasoning.
 
-Thanks
+>  	reftable_record_copy_from(&copy, rec, GIT_SHA1_RAWSZ);
+> -	EXPECT(reftable_record_equal(rec, &copy, GIT_SHA1_RAWSZ));
+> +	check(reftable_record_equal(rec, &copy, GIT_SHA1_RAWSZ));
+>
+> -	puts("testing print coverage:\n");
+> +	test_msg("testing print coverage:");
+>  	reftable_record_print(&copy, GIT_SHA1_RAWSZ);
+>
 
-Michal
+This prints for any test that uses this function. As I see from the
+current usage of the testing library, we only print debug information
+when we encounter something unexpected.
 
-To reproduce:
+This also clogs up the unit-test's output. So I would remove this from
+here.
 
-cat /usr/local/bin/git-ping
-#!/bin/sh -e
+>  	reftable_record_release(&copy);
+> @@ -43,8 +39,8 @@ static void test_varint_roundtrip(void)
+>  			      4096,
+>  			      ((uint64_t)1 << 63),
+>  			      ((uint64_t)1 << 63) + ((uint64_t)1 << 63) - 1 };
+> -	int i = 0;
+> -	for (i = 0; i < ARRAY_SIZE(inputs); i++) {
+> +
+> +	for (size_t i = 0; i < ARRAY_SIZE(inputs); i++) {
+>  		uint8_t dest[10];
+>
+>  		struct string_view out = {
+> @@ -55,29 +51,26 @@ static void test_varint_roundtrip(void)
+>  		int n = put_var_int(&out, in);
+>  		uint64_t got = 0;
+>
+> -		EXPECT(n > 0);
+> +		check_int(n, >, 0);
+>  		out.len = n;
+>  		n = get_var_int(&got, &out);
+> -		EXPECT(n > 0);
+> +		check_int(n, >, 0);
+>
+> -		EXPECT(got == in);
+> +		check_int(got, ==, in);
+>  	}
+>  }
+>
+>  static void set_hash(uint8_t *h, int j)
+>  {
+> -	int i = 0;
+> -	for (i = 0; i < hash_size(GIT_SHA1_FORMAT_ID); i++) {
+> +	for (int i = 0; i < hash_size(GIT_SHA1_FORMAT_ID); i++)
+>  		h[i] = (j >> i) & 0xff;
+> -	}
+>  }
+>
+>  static void test_reftable_ref_record_roundtrip(void)
+>  {
+>  	struct strbuf scratch = STRBUF_INIT;
+> -	int i = 0;
+>
+> -	for (i = REFTABLE_REF_DELETION; i < REFTABLE_NR_REF_VALUETYPES; i++) {
+> +	for (int i = REFTABLE_REF_DELETION; i < REFTABLE_NR_REF_VALUETYPES; i++) {
+>  		struct reftable_record in = {
+>  			.type = BLOCK_TYPE_REF,
+>  		};
+> @@ -109,17 +102,17 @@ static void test_reftable_ref_record_roundtrip(void)
+>
+>  		test_copy(&in);
+>
+> -		EXPECT(reftable_record_val_type(&in) == i);
+> +		check_int(reftable_record_val_type(&in), ==, i);
+>
+>  		reftable_record_key(&in, &key);
+>  		n = reftable_record_encode(&in, dest, GIT_SHA1_RAWSZ);
+> -		EXPECT(n > 0);
+> +		check_int(n, >, 0);
+>
+>  		/* decode into a non-zero reftable_record to test for leaks. */
+>  		m = reftable_record_decode(&out, key, i, dest, GIT_SHA1_RAWSZ, &scratch);
+> -		EXPECT(n == m);
+> +		check_int(n, ==, m);
+>
+> -		EXPECT(reftable_ref_record_equal(&in.u.ref, &out.u.ref,
+> +		check(reftable_ref_record_equal(&in.u.ref, &out.u.ref,
+>  						 GIT_SHA1_RAWSZ));
+>  		reftable_record_release(&in);
+>
+> @@ -143,16 +136,15 @@ static void test_reftable_log_record_equal(void)
+>  		}
+>  	};
+>
+> -	EXPECT(!reftable_log_record_equal(&in[0], &in[1], GIT_SHA1_RAWSZ));
+> +	check(!reftable_log_record_equal(&in[0], &in[1], GIT_SHA1_RAWSZ));
+>  	in[1].update_index = in[0].update_index;
+> -	EXPECT(reftable_log_record_equal(&in[0], &in[1], GIT_SHA1_RAWSZ));
+> +	check(reftable_log_record_equal(&in[0], &in[1], GIT_SHA1_RAWSZ));
+>  	reftable_log_record_release(&in[0]);
+>  	reftable_log_record_release(&in[1]);
+>  }
+>
+>  static void test_reftable_log_record_roundtrip(void)
+>  {
+> -	int i;
+>  	struct reftable_log_record in[] = {
+>  		{
+>  			.refname = xstrdup("refs/heads/master"),
+> @@ -180,12 +172,12 @@ static void test_reftable_log_record_roundtrip(void)
+>  		}
+>  	};
+>  	struct strbuf scratch = STRBUF_INIT;
+> +	set_hash(in[0].value.update.new_hash, 1);
+> +	set_hash(in[0].value.update.old_hash, 2);
+> +	set_hash(in[2].value.update.new_hash, 3);
+> +	set_hash(in[2].value.update.old_hash, 4);
+>
+> -	set_test_hash(in[0].value.update.new_hash, 1);
+> -	set_test_hash(in[0].value.update.old_hash, 2);
+> -	set_test_hash(in[2].value.update.new_hash, 3);
+> -	set_test_hash(in[2].value.update.old_hash, 4);
+> -	for (i = 0; i < ARRAY_SIZE(in); i++) {
+> +	for (size_t i = 0; i < ARRAY_SIZE(in); i++) {
+>  		struct reftable_record rec = { .type = BLOCK_TYPE_LOG };
+>  		struct strbuf key = STRBUF_INIT;
+>  		uint8_t buffer[1024] = { 0 };
+> @@ -217,13 +209,13 @@ static void test_reftable_log_record_roundtrip(void)
+>  		reftable_record_key(&rec, &key);
+>
+>  		n = reftable_record_encode(&rec, dest, GIT_SHA1_RAWSZ);
+> -		EXPECT(n >= 0);
+> +		check_int(n, >=, 0);
+>  		valtype = reftable_record_val_type(&rec);
+>  		m = reftable_record_decode(&out, key, valtype, dest,
+>  					   GIT_SHA1_RAWSZ, &scratch);
+> -		EXPECT(n == m);
+> +		check_int(n, ==, m);
+>
+> -		EXPECT(reftable_log_record_equal(&in[i], &out.u.log,
+> +		check(reftable_log_record_equal(&in[i], &out.u.log,
+>  						 GIT_SHA1_RAWSZ));
+>  		reftable_log_record_release(&in[i]);
+>  		strbuf_release(&key);
+> @@ -252,14 +244,14 @@ static void test_key_roundtrip(void)
+>  	strbuf_addstr(&key, "refs/tags/bla");
+>  	extra = 6;
+>  	n = reftable_encode_key(&restart, dest, last_key, key, extra);
+> -	EXPECT(!restart);
+> -	EXPECT(n > 0);
+> +	check(!restart);
+> +	check_int(n, >, 0);
+>
+>  	strbuf_addstr(&roundtrip, "refs/heads/master");
+>  	m = reftable_decode_key(&roundtrip, &rt_extra, dest);
+> -	EXPECT(n == m);
+> -	EXPECT(0 == strbuf_cmp(&key, &roundtrip));
+> -	EXPECT(rt_extra == extra);
+> +	check_int(n, ==, m);
+> +	check(!strbuf_cmp(&key, &roundtrip));
+> +	check_int(rt_extra, ==, extra);
+>
+>  	strbuf_release(&last_key);
+>  	strbuf_release(&key);
+> @@ -289,9 +281,8 @@ static void test_reftable_obj_record_roundtrip(void)
+>  		},
+>  	};
+>  	struct strbuf scratch = STRBUF_INIT;
+> -	int i = 0;
+>
+> -	for (i = 0; i < ARRAY_SIZE(recs); i++) {
+> +	for (size_t i = 0; i < ARRAY_SIZE(recs); i++) {
+>  		uint8_t buffer[1024] = { 0 };
+>  		struct string_view dest = {
+>  			.buf = buffer,
+> @@ -311,13 +302,13 @@ static void test_reftable_obj_record_roundtrip(void)
+>  		test_copy(&in);
+>  		reftable_record_key(&in, &key);
+>  		n = reftable_record_encode(&in, dest, GIT_SHA1_RAWSZ);
+> -		EXPECT(n > 0);
+> +		check_int(n, >, 0);
+>  		extra = reftable_record_val_type(&in);
+>  		m = reftable_record_decode(&out, key, extra, dest,
+>  					   GIT_SHA1_RAWSZ, &scratch);
+> -		EXPECT(n == m);
+> +		check_int(n, ==, m);
+>
+> -		EXPECT(reftable_record_equal(&in, &out, GIT_SHA1_RAWSZ));
+> +		check(reftable_record_equal(&in, &out, GIT_SHA1_RAWSZ));
+>  		strbuf_release(&key);
+>  		reftable_record_release(&out);
+>  	}
+> @@ -352,16 +343,16 @@ static void test_reftable_index_record_roundtrip(void)
+>  	reftable_record_key(&in, &key);
+>  	test_copy(&in);
+>
+> -	EXPECT(0 == strbuf_cmp(&key, &in.u.idx.last_key));
+> +	check(!strbuf_cmp(&key, &in.u.idx.last_key));
+>  	n = reftable_record_encode(&in, dest, GIT_SHA1_RAWSZ);
+> -	EXPECT(n > 0);
+> +	check_int(n, >, 0);
+>
+>  	extra = reftable_record_val_type(&in);
+>  	m = reftable_record_decode(&out, key, extra, dest, GIT_SHA1_RAWSZ,
+>  				   &scratch);
+> -	EXPECT(m == n);
+> +	check_int(m, ==, n);
+>
+> -	EXPECT(reftable_record_equal(&in, &out, GIT_SHA1_RAWSZ));
+> +	check(reftable_record_equal(&in, &out, GIT_SHA1_RAWSZ));
+>
+>  	reftable_record_release(&out);
+>  	strbuf_release(&key);
+> @@ -369,14 +360,15 @@ static void test_reftable_index_record_roundtrip(void)
+>  	strbuf_release(&in.u.idx.last_key);
+>  }
+>
+> -int record_test_main(int argc, const char *argv[])
+> +int cmd_main(int argc, const char *argv[])
+>  {
+> -	RUN_TEST(test_reftable_log_record_equal);
+> -	RUN_TEST(test_reftable_log_record_roundtrip);
+> -	RUN_TEST(test_reftable_ref_record_roundtrip);
+> -	RUN_TEST(test_varint_roundtrip);
+> -	RUN_TEST(test_key_roundtrip);
+> -	RUN_TEST(test_reftable_obj_record_roundtrip);
+> -	RUN_TEST(test_reftable_index_record_roundtrip);
+> -	return 0;
+> +	TEST(test_reftable_log_record_equal(), "reftable_log_record_equal works");
+> +	TEST(test_reftable_log_record_roundtrip(), "record operations work on log record");
+> +	TEST(test_reftable_ref_record_roundtrip(), "record operations work on ref record");
+> +	TEST(test_varint_roundtrip(), "put_var_int and get_var_int work");
+> +	TEST(test_key_roundtrip(), "reftable_encode_key and reftable_decode_key work");
+> +	TEST(test_reftable_obj_record_roundtrip(), "record operations work on obj record");
+> +	TEST(test_reftable_index_record_roundtrip(), "record operations work on index record");
+> +
 
-# Try connecting to one or more remote repository URLs
+All other tests in the 'unit-tests/' folder use a `t_<name>` format for
+the tests. Here we seem to diverge and use a `test_<name>` format. I
+think the best outcome would be some documentation around this, but it
+would still be nice if we follow this pattern nevertheless.
 
-while true ; do
-        git ls-remote -h "$1" >/dev/null
-        shift
-        [ -n "$1" ] || break
-done
+> +	return test_done();
+>  }
+> --
+> 2.45.2.404.g9eaef5822c
 
-mkdir -p /srv/git/some
-chown hramrach /srv/git/some
-su hramrach -c "git init --bare /srv/git/some/repo.git"
-su hramrach -c "touch /srv/git/some/repo.git/git-daemon-export-ok"
-version=2.35.3-150300.10.36.1 ; zypper in --oldpackage git-core-$version git-daemon-$version
-systemctl start git-daemon.service
-git ping git://localhost/some/repo.git
-<nothing>
+--0000000000000fca97061bb2a77b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 53ee64a894ec1a5e_0.1
 
-version=2.35.3-150300.10.39.1 ; zypper in --oldpackage git-core-$version git-daemon-$version
-systemctl restart git-daemon.service
-git ping git://localhost/some/repo.git
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-
-
-systemctl status git-daemon.service
-● git-daemon.service - Git Daemon
-     Loaded: loaded (/usr/lib/systemd/system/git-daemon.service; disabled; vendor preset: disabled)
-     Active: active (running) since Thu 2024-06-06 08:29:28 CEST; 6min ago
-   Main PID: 31742 (git)
-      Tasks: 2 (limit: 4915)
-     CGroup: /system.slice/git-daemon.service
-             ├─ 31742 git daemon --reuseaddr --base-path=/srv/git/ --user=git-daemon --group=nogroup
-             └─ 31749 /usr/lib/git/git-daemon --reuseaddr --base-path=/srv/git/ --user=git-daemon --group=nogroup
-
-Jun 06 08:29:28 localhost.localdomain systemd[1]: Started Git Daemon.
-Jun 06 08:29:39 localhost.localdomain git-daemon[31756]: fatal: detected dubious ownership in repository at '/srv/git//some/repo.git'
-Jun 06 08:29:39 localhost.localdomain git-daemon[31756]: To add an exception for this directory, call:
-Jun 06 08:29:39 localhost.localdomain git-daemon[31756]:         git config --global --add safe.directory /srv/git//some/repo.git
-
-git config --global --add safe.directory /srv/git//some/repo.git
-mv ~/.gitconfig /etc/gitconfig
-git ping git://localhost/some/repo.git
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-
-git config --global --add safe.directory /srv/git/some/repo.git
-mv ~/.gitconfig /etc/gitconfig
-git ping git://localhost/some/repo.git
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aNmZ5b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNWZrQy85aXZFYlZFUDhGYUl2SXEycWZDTXZ1ZGY1SApoY1lPQ05TYUVC
+TW91TkpvKzhVZnRSS1Y0SUdOWFBUUG1GZmdnYlp1TVJOVytlNnRac0FJNmpUTWhMVUZEV0s3CkIv
+SlU4d0x3enJOVWtKQndYNFkwR0o0WXhVa2c0emlCOVcwT1NYbWc3OG04ZE5zWU90eUp2THVHbTJM
+aFJ3MnMKSFdoMnNaaysvRUtjUUtzb2oxR3pCdk0rRWppWG9iVlJLOUNQQ1RyOVpCdUhLbUR6Y1lQ
+MHBxZzF5dUl0cTVlTQpqRXZrSEs5WGcxL3lGZjBsVlpBSGhOK0wxRVdmWjdhVXJPY1JIaEE2czJY
+ZDhvTVNXZWZpSE9HVHArWXpMUkdQCmhaY1ZKeU5rMkpNKzhhdHFNcDJxeVVGUUIraHRaVms4MUZj
+VTdHVGhWdW1jOTFyUHhZeHJRWUswbzJOWXkyNDIKUTBkdE15NkhvVnNkWk1rQXNBSWJKRnNiTEcy
+b05XWW5JZS9tMy91VXJUUXJqNkNTNGxKbENOU2M1UUt4TnBpWgplN0hsZ2lRMk1icktpdnhhYzBC
+aVcwOHFCM051cnplLzRBRytENzNYeGs5SmRHSDhQVGpMa2dVWGdpS2ZreGk0Cjg2MmkzM3o2VVlT
+MkRFaHo1YUpHMzY2bjhpOVVPNGNzc3RIS2FwVT0KPVRBT24KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000000fca97061bb2a77b--
