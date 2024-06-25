@@ -1,171 +1,215 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5132581
-	for <git@vger.kernel.org>; Tue, 25 Jun 2024 06:45:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614101465B4
+	for <git@vger.kernel.org>; Tue, 25 Jun 2024 07:24:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719297934; cv=none; b=FudEJqJ8ZzMOCFdzFoCXtTITRFBJd8+PsaZXrEJlD+dbjW7r5t436ZR8e9grS1Xgt9hLFYS47ThfyJM8dQoyzIQD2ddDSth0F0qm20wt4jKwzn3xhcKmnETotPRfo0ZMVEAi7Fp8lGsiz58dR499GdeAoSSUuTMnhkN+2kicqtw=
+	t=1719300265; cv=none; b=H1KSqdw0Sm1eL5f11s6Ab++I8ELr9uL6Lt72/Ax6+w+pEF9V0Pd2w7b6hjeyDjAEzQSFSoACOq9gCOY9Vh/HIxVCa0dkLcKL4RoJmG6g3kcy1TpUxP479kh14Ixhd6UW1aAgxO/cMKgAgK41wCxPhN9t55Yq5qZ2D0YHaxznH5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719297934; c=relaxed/simple;
-	bh=LagV+j+BZYpo8Q94rZlwUFA55jwmOI51xhXyaEBbA68=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WvQuk7SxivsNG7GVj9JmBrtz3O+zIcVxXlbhsEkenSn/s1dOfLKzXsCkkMM2Bs2tuCuhbfpu2qQuT685nBFhZfXMGg/e2b0jtXdLYkFgM5eYV6Qy6EIeOMuGHrbgDw11mNbSmbn8YIltTG49UOd1aHWaaBI0NTr2nZFaTe+A6+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mjKIkTQ1; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1719300265; c=relaxed/simple;
+	bh=DrDmMLxSIwt8CPoc4qPNZBhPqHUSDiP6Z8XGRlznOBM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hCCeZV8f/kA5rQ+8yq/eXAsfwVo+b4RO6NVZnMXlKGqx7vRFbDBvesvQNDUDFiFm7CgZTcsf9xKEYky0Bo0o/4y8JupODTUpYYr1NrsbBE4wybSkpsbF7hg/a+YPewImY9SlKDD/GftdPT6D5bZk39LNsXnTUdPU7SgimDdmHmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=jyP8z2JR; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3w8Bj3ZZ; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=jyP8z2JR; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3w8Bj3ZZ; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mjKIkTQ1"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2c7aafe3094so943790a91.0
-        for <git@vger.kernel.org>; Mon, 24 Jun 2024 23:45:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719297932; x=1719902732; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sAZYBt+KiqaTc910eGSCgardqLXJPYb30GjZFgJWuTk=;
-        b=mjKIkTQ1G6FL600Pc3H2z7WZYC052E6xcAIRK80kG5Qe0Kep48TtyIR6s1kYfGfL36
-         TNaXbnUHnv9tQz6JYWzEUH8VUss0ZyGBSIoXXOEWllzUM4/1gwjgIwcz1ulhWxOS1bfx
-         Rs7Rm2rlsTnvUMDelYuuhGrQz/7yaFIkR9k5OmHuBlp612JW6OQN9hZJ39ooSMK/b9HH
-         EspCjacUzGgOEwzY5D9Kudf9OSsLDPleVwFZh5kd6fztvwnu7ShKNWgsxLjsgo8qbYPd
-         Neeaq193PNhk/d+f9hXp9oLHtmbYYh/uX0sksm7iZE8fy631PKsfSkqriDVSfGQNtxba
-         5YIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719297932; x=1719902732;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sAZYBt+KiqaTc910eGSCgardqLXJPYb30GjZFgJWuTk=;
-        b=fTn9uiJqMeyMQg6nMKv6L5tYZTKjh1ntAws4V5p47H6v1Rw2nLIxxbDR0hah/S48DL
-         QKrPmhtkZ3aBtXp7ortXThd8QsPzAvmq6vZQgVQQ+s7WKIhyQnqMuzTU9Xb2kZd2+sy5
-         rckG+BZ1KK1yEffQ84EgEMzuOi+Vhq3lJkvhfhNVduaUDfEkwEcVLEM5MhGRoSe9a3z2
-         x8V2bnDOKVSQJg9VyOQF3a8sSdEIQXtmZxM28vZJ/4AUgp3nlpvoEzxzYQQhvoAvOhE9
-         KLDIzHKpSKH9xY+T2lk92/FOjDJXo+RowtWdHaFWa6cVdOl14zf6gVzfWtx1H5w5SEZH
-         VdQQ==
-X-Gm-Message-State: AOJu0Yw7TcXh4FDiryIXzUw9vatjpxTNZUhJUFdPXAWh8Q7/0rOjM+HB
-	HdbxqJBw29uUzGIaEQ69xoKtdnzFAt1x3yT0m/pOCOHyLGajx0Aw4s2wsX6aGA4=
-X-Google-Smtp-Source: AGHT+IHfNtSFE5QPzebMfmZRsgXKej+EBF2MiCbV1QmXyBlPYvUL+noexJ+9/kvQ1vQ0hteCFI8+Zg==
-X-Received: by 2002:a17:90b:11d4:b0:2c6:de10:6ab9 with SMTP id 98e67ed59e1d1-2c845c3b9b6mr7161675a91.2.1719297932146;
-        Mon, 24 Jun 2024 23:45:32 -0700 (PDT)
-Received: from TTPL-LNV-0102.. ([2409:40c2:3e:f8f9:ded9:1f2e:64c4:580a])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c7e4ff97e2sm9845576a91.10.2024.06.24.23.45.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jun 2024 23:45:31 -0700 (PDT)
-From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-To: git@vger.kernel.org
-Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>,
-	Paul Millar <paul.millar@desy.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH v2] describe: refresh the index when 'broken' flag is used
-Date: Tue, 25 Jun 2024 12:14:41 +0530
-Message-ID: <20240625064504.58286-1-abhijeet.nkt@gmail.com>
-X-Mailer: git-send-email 2.45.2.606.g9005149a4a.dirty
-In-Reply-To: <xmqqsex2b4ti.fsf@gitster.g>
-References: <xmqqsex2b4ti.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="jyP8z2JR";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3w8Bj3ZZ";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="jyP8z2JR";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3w8Bj3ZZ"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 15BBB1F7D3;
+	Tue, 25 Jun 2024 07:24:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1719300261; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GEhzwzsEdzBvofgpagf0R/WGEdN2f8pp8CXRxd2DAgs=;
+	b=jyP8z2JRcd250q0ykBVmp1bqg1vGKhi5YbflXY/KXm+5o6RTsd0DOSyTwx/OK2HP0M54eZ
+	VGw98NevKyt8xclVUiOD8G24fmFipIAtYW4FcyP8i3Jmniyb+TTSC16QD3VVl2oFUV/yo4
+	3YCkxskk9J6RsdwbZxGDaGa6+0j5L6A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1719300261;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GEhzwzsEdzBvofgpagf0R/WGEdN2f8pp8CXRxd2DAgs=;
+	b=3w8Bj3ZZIeO0NpLq9bfCQNKOoU9e5jmE9JgFAfNKZ8NPVwOvZoaCXSlxnBsMs8YVuF3nEj
+	d/t7viKUrgT8nICg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1719300261; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GEhzwzsEdzBvofgpagf0R/WGEdN2f8pp8CXRxd2DAgs=;
+	b=jyP8z2JRcd250q0ykBVmp1bqg1vGKhi5YbflXY/KXm+5o6RTsd0DOSyTwx/OK2HP0M54eZ
+	VGw98NevKyt8xclVUiOD8G24fmFipIAtYW4FcyP8i3Jmniyb+TTSC16QD3VVl2oFUV/yo4
+	3YCkxskk9J6RsdwbZxGDaGa6+0j5L6A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1719300261;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GEhzwzsEdzBvofgpagf0R/WGEdN2f8pp8CXRxd2DAgs=;
+	b=3w8Bj3ZZIeO0NpLq9bfCQNKOoU9e5jmE9JgFAfNKZ8NPVwOvZoaCXSlxnBsMs8YVuF3nEj
+	d/t7viKUrgT8nICg==
+Date: Tue, 25 Jun 2024 09:24:19 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "David C. Rankin" <drankinatty@gmail.com>, git@vger.kernel.org
+Subject: Re: Local git server can't serve https until repos owned by http,
+ can't serve ssh unless repos owned by user after 2.45.1
+Message-ID: <20240625072419.GU19642@kitsune.suse.cz>
+References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
+ <xmqq8qz376fb.fsf@gitster.g>
+ <20240617211513.GM19642@kitsune.suse.cz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240617211513.GM19642@kitsune.suse.cz>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.997];
+	MIME_GOOD(-0.10)[text/plain];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	ARC_NA(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	RCPT_COUNT_THREE(0.00)[3];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_COUNT_ZERO(0.00)[0];
+	TO_DN_SOME(0.00)[]
+X-Spam-Flag: NO
+X-Spam-Score: -4.30
+X-Spam-Level: 
 
-When describe is run with 'dirty' flag, we refresh the index
-to make sure it is in sync with the filesystem before
-determining if the working tree is dirty.  However, this is
-not done for the codepath where the 'broken' flag is used.
+On Mon, Jun 17, 2024 at 11:15:13PM +0200, Michal Suchánek wrote:
+> Hello,
+> 
+> On Mon, Jun 17, 2024 at 11:47:20AM -0700, Junio C Hamano wrote:
+> > "David C. Rankin" <drankinatty@gmail.com> writes:
+> > 
+> > >   Security enhancement in 2.45.1 have broken ability to serve git over
+> > >   https and ssh from local git server running Apache. (web server runs
+> > >   as http:http on Archlinux)
+> > >
+> > >   The fix of adding the following to gitconfig (system-wide and
+> > >   per-user in ~/.gitconfig) does not solve the problem:
+> > >
+> > > [safe]
+> > > 	directory = *
+> > 
+> > It is not clear what you exactly meant "per-user" above, so just to
+> > make sure.  Is this set in the global configuration file for the
+> > httpd (or whoever Apache runs as) user?
+> > 
+> > The purpose of "dubious ownershop" thing is to protect the user who
+> > runs Git from random repositories' with potentially malicious hooks
+> > and configuration files, so the user being protected (in this case,
+> > whoever Apache runs as) needs to declare "I trust these
+> > repositories" in its ~/.gitconfig file.  What individual owners of
+> > /srv/my-repo.git/ project has in their ~/.gitconfig file does not
+> > matter when deciding if Apache trusts these repositories.
+> 
+> 
+> looks like the semantic of 'dubious ownershop' changed recently.
+> 
+> Disro backport of fixes for CVE-2024-32002 CVE-2024-32004 CVE-2024-32020
+> CVE-2024-32021 CVE-2024-32465 to 2.35.3 broke git-daemon. No amount of
+> whitelisting makes the 'fixed' git serve the repository.
 
-This causes `git describe --broken --dirty` to false
-positively report the worktree being dirty if a file has
-different stat info than what is recorded in the index.
-Running `git update-index -q --refresh` to refresh the index
-before running diff-index fixes the problem.
+Same regression between 2.45.0 and 2.45.2 which allegedly fixes the
+same CVEs.
 
-Also add tests to deliberately update stat info of a
-file before running describe to verify it behaves correctly.
+Looks like downgrading to gaping hole version is needed to serve repositories
+in general.
 
-Reported-by: Paul Millar <paul.millar@desy.de>
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
----
- builtin/describe.c  | 12 ++++++++++++
- t/t6120-describe.sh | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 44 insertions(+)
+Please consider adjusting the fix so that repositories can still be served.
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index e5287eddf2..3e751f1239 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -53,6 +53,10 @@ static const char *diff_index_args[] = {
- 	"diff-index", "--quiet", "HEAD", "--", NULL
- };
- 
-+static const char *update_index_args[] = {
-+	"update-index", "--unmerged", "-q", "--refresh", NULL
-+};
-+
- struct commit_name {
- 	struct hashmap_entry entry;
- 	struct object_id peeled;
-@@ -645,6 +649,14 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 	if (argc == 0) {
- 		if (broken) {
- 			struct child_process cp = CHILD_PROCESS_INIT;
-+			struct child_process update_index_cp = CHILD_PROCESS_INIT;
-+
-+			strvec_pushv(&update_index_cp.args, update_index_args);
-+			update_index_cp.git_cmd = 1;
-+			update_index_cp.no_stdin = 1;
-+			update_index_cp.no_stdout = 1;
-+			run_command(&update_index_cp);
-+
- 			strvec_pushv(&cp.args, diff_index_args);
- 			cp.git_cmd = 1;
- 			cp.no_stdin = 1;
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index e78315d23d..ac781a7b52 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -671,4 +671,36 @@ test_expect_success 'setup misleading taggerdates' '
- 
- check_describe newer-tag-older-commit~1 --contains unique-file~2
- 
-+test_expect_success 'describe --dirty with a file with changed stat' '
-+	git init stat-dirty &&
-+	cd stat-dirty &&
-+
-+	echo A >file &&
-+	git add file &&
-+	git commit -m A &&
-+	git tag A -a -m A &&
-+
-+	cat file >file.new &&
-+	mv file.new file &&
-+	git describe --dirty >actual &&
-+	echo "A" >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'describe --dirty --broken with a file with changed stat' '
-+	git init stat-dirty-broken &&
-+	cd stat-dirty-broken &&
-+
-+	echo A >file &&
-+	git add file &&
-+	git commit -m A &&
-+	git tag A -a -m A &&
-+
-+	cat file >file.new &&
-+	mv file.new file &&
-+	git describe --dirty --broken >actual &&
-+	echo "A" >expected &&
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-2.45.2.606.g9005149a4a.dirty
+Thanks
 
+Michal
+
+To reproduce:
+
+cat /usr/local/bin/git-ping
+#!/bin/sh -e
+
+# Try connecting to one or more remote repository URLs
+
+while true ; do
+        git ls-remote -h "$1" >/dev/null
+        shift
+        [ -n "$1" ] || break
+done
+
+mkdir -p /srv/git/some
+chown hramrach /srv/git/some
+su hramrach -c "git init --bare /srv/git/some/repo.git"
+su hramrach -c "touch /srv/git/some/repo.git/git-daemon-export-ok"
+version=2.35.3-150300.10.36.1 ; zypper in --oldpackage git-core-$version git-daemon-$version
+systemctl start git-daemon.service
+git ping git://localhost/some/repo.git
+<nothing>
+
+version=2.35.3-150300.10.39.1 ; zypper in --oldpackage git-core-$version git-daemon-$version
+systemctl restart git-daemon.service
+git ping git://localhost/some/repo.git
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+
+systemctl status git-daemon.service
+● git-daemon.service - Git Daemon
+     Loaded: loaded (/usr/lib/systemd/system/git-daemon.service; disabled; vendor preset: disabled)
+     Active: active (running) since Thu 2024-06-06 08:29:28 CEST; 6min ago
+   Main PID: 31742 (git)
+      Tasks: 2 (limit: 4915)
+     CGroup: /system.slice/git-daemon.service
+             ├─ 31742 git daemon --reuseaddr --base-path=/srv/git/ --user=git-daemon --group=nogroup
+             └─ 31749 /usr/lib/git/git-daemon --reuseaddr --base-path=/srv/git/ --user=git-daemon --group=nogroup
+
+Jun 06 08:29:28 localhost.localdomain systemd[1]: Started Git Daemon.
+Jun 06 08:29:39 localhost.localdomain git-daemon[31756]: fatal: detected dubious ownership in repository at '/srv/git//some/repo.git'
+Jun 06 08:29:39 localhost.localdomain git-daemon[31756]: To add an exception for this directory, call:
+Jun 06 08:29:39 localhost.localdomain git-daemon[31756]:         git config --global --add safe.directory /srv/git//some/repo.git
+
+git config --global --add safe.directory /srv/git//some/repo.git
+mv ~/.gitconfig /etc/gitconfig
+git ping git://localhost/some/repo.git
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+git config --global --add safe.directory /srv/git/some/repo.git
+mv ~/.gitconfig /etc/gitconfig
+git ping git://localhost/some/repo.git
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
