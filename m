@@ -1,58 +1,58 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79BAD53B
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 12:42:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA946181CEA
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 12:43:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719405735; cv=none; b=hUblhDHgSYSIR7S9ewyyU54i5lkgX2SOh5A9gtsfHxLe93+PxJMec58HLzidDJAJYT87AKzT+MyER4FvGPCaZYIxKtwkjpxDScV3dez2GXFDvkK/gggnLxwqEWoug3ztd/OH65ArUJNuVU5CLtIwcVvEvXmyLx88L/R5p+tTnuU=
+	t=1719405832; cv=none; b=ECLu6p0Lviy2dsoKZ7Ric2tJVcMl25+gImBx1EIHKVO9o2t2AGEF7Q5qBmiREB9+ns3MJVcDnWUfNAIKcAN3U/7D2HDxgAMobCRey/yjO9B08es7Zlf5wSvQZIz3jOkq8fB7fOZnynGC7Lt/l9pISoMf9RsMCgvSVGlG+9/rA6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719405735; c=relaxed/simple;
-	bh=s4pjhbLZfLHMfjUcswlrP7LupUipcMjaGer4hW8um64=;
+	s=arc-20240116; t=1719405832; c=relaxed/simple;
+	bh=fDmK3+3hoPoRM2K2fPHEquWcNrQUic5Sdoo0mNUn0YQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JsxqenI16m02/p3xdzXSkw0z9uVDganYlx5/5HZbM8NumiFHmt55YX65/2+CwJLeZUQGMTcDRaNxZExPWV0X3gEZQsKL4D5QKokaZ4sS7nWikjPkjhDVSgMv43RRsVoBB7FIdQvvs7jP5/ywKx5Pld5gN5DjCczG4JnnHdX5mEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lioXit93; arc=none smtp.client-ip=209.85.128.169
+	 In-Reply-To:Content-Type; b=NdgBYvCwfr0gt+q+Di/nB4+S0Ds8ytR7RPMfAa5hf/R5tHiWogVhxFlU13ptrvElfMrae9IduKV5e29xKwcUIIDe7iIeL0NE7Go7sGLV19rGtsfYMMRYTVr4jkslRFiWJpuCN4hbh1RlXhAv+enehq6hdozSH8GT48KvlPa+Oa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kw0Y720+; arc=none smtp.client-ip=209.85.219.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lioXit93"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-63b3a9ff064so62204117b3.1
-        for <git@vger.kernel.org>; Wed, 26 Jun 2024 05:42:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kw0Y720+"
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e02c4168e09so6418621276.2
+        for <git@vger.kernel.org>; Wed, 26 Jun 2024 05:43:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719405732; x=1720010532; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719405830; x=1720010630; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=4N97sW8uv5RsbSB2iElx0l2IXDOJIPyt35akNmy82V8=;
-        b=lioXit93E33n3BZpmGE5gnFUCkrozVBL5i0w13uoyDN9ffQrOpgTVlFo8u2FEWJTuw
-         kYilEMMbjQ9pWLiwxPUMwM5AyAB7l7u5ZYCdTdBArpva4o4HrsA6hZBPth9jeaS2NhNy
-         9ZUV6KDvAzk9xSSAc032zFIvREzG7yW4LDPyHb9vAuKaFr07cJqzRt/QSxZmE1uUF3ME
-         0kPEPD7yGTrKDgYkqKxV2Zjy8rOG13Ez90At9NpDAX8bVjrv8OqECaPQrpSZ0G5luOZX
-         tRLxN4wKciTDbttdYQmdhVvajUakr5zBzYjiMDvU2dI3hi0AkSRwof/L71DdY2/zMs7i
-         qsVg==
+        bh=WliSqZyc58ZPrGZk+VpjxIwJddXjG0rTnIrlUD7QkQY=;
+        b=Kw0Y720++rxFeafbXbXWCy378BdZFfTjyQkiAvYtXRoFpUaqBblIKr2C+qCtSVGSVS
+         8E76QRoIwqw33aoaR70M8sACZdRD7TFvC7/SFYJQ1n1DCo+fggAdY6L0Aw9G9bA2102J
+         jiB9p2YmD8TONXh6Iv4/9lMuGDzaOI4Py13of5YpkdmE4h8rlB/jM61ZYosSpqjFyImA
+         XTC/dWp/2Aw1KhDhl1B4hp4/Vs5cVHPQLN/YmR0ZOoMjdLiTFfLWtkC2OqyzeDicCJxT
+         rf9CuiQ+/YDJWzmAoLx+t8grcjDQIHaD4yFE04EAH4/c6nPp/lRFYuNZ6yDrlUZ585D4
+         sexw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719405732; x=1720010532;
+        d=1e100.net; s=20230601; t=1719405830; x=1720010630;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4N97sW8uv5RsbSB2iElx0l2IXDOJIPyt35akNmy82V8=;
-        b=fyvGzJK0kfZcSeBjIQ0YgKODt94EgVHjr94sGuagy/u9BoeH6hcSkjaCXigCiyZdfL
-         GskxYQZvFMBgmVsZgFxLNa/M7b2r2Dx60xcmDJACZgyFVz8xfMdVTSI90Rf7RJIfJSpO
-         +DjC1439/PufubKrEJpBw7VQlokoLndhCu8kk/8TXZMJeUL/VK2UQevIkgqOfuw+JGo4
-         Em51Z+VWW1KZhBt7NhjidIOV2B2kSumk2hPyH2sWykTQmF2JF13kqgssQ15mwuDMa5tP
-         dp9LdZITG7VOpCysVSkWqg12IA/fQadWMyiHkJYDMEXd+IvgzqhLyQDtlXamIjmF6STD
-         dULw==
-X-Gm-Message-State: AOJu0YwzcYvgs1qwNU/PEZwh0p8nl2TGlTjbz+0UBYK0m7guUjB3gZTy
-	ZgkrP+le8r/qLkUqFEz7YP85VphT7E8AIZX5LPM6sunE3+xqLxk1mdfCWw==
-X-Google-Smtp-Source: AGHT+IFTQstUW34/HXb8GhmOEn9wZ/rIg0G0CPjTOcMGCkhvCHnkriN/s7YHQktjUP+WoOArI23Row==
-X-Received: by 2002:a81:a20a:0:b0:61b:33c8:7bce with SMTP id 00721157ae682-643aab82cc5mr96150357b3.31.1719405732484;
-        Wed, 26 Jun 2024 05:42:12 -0700 (PDT)
+        bh=WliSqZyc58ZPrGZk+VpjxIwJddXjG0rTnIrlUD7QkQY=;
+        b=RqiP5ZeheIfCZJ/z4OvAocnCuMjogND01Das7f9p3P3kFVakGotVy7a5r1huxsQoCP
+         OGY/RWdHKwGOuYaafqcTQ7M1Bi9hyZ/pmSI9PL+r2adZ8a5SLmOcnsizTCGSSFdPK8/P
+         x/YUxR4rr8Ylf5ynhgT+XazDuiMRpqa41uXg/0ymiWV7DlSmV3h5nZ9/ctDEcym6qTEL
+         8KkuLFJGx2NnO/6bG/9zgWZ7cV8ocbn39gxw5PZI8eVFvZcF8B53+xmUUVdQ4wIQhXVn
+         w6krPdlTaJd0PARuozTlO6EEPvlj8aZT7pzEBZS11ZltodyCedrXE/HOuZcF3y21uh7b
+         rUwg==
+X-Gm-Message-State: AOJu0YyidGvud+XsU2DhqKtFGACRy7WUtRuGhkydaGx2ScyoaPWrIutI
+	NUctRfF9hvFXhHs1G8wZ10w90CitSvbOzRA3MjtdBD8iJ6X4YpIB
+X-Google-Smtp-Source: AGHT+IFtnwQ0152SrKxrGxMFSJdPGSsP6Zw4S9qNZojyAwuCeZkL0buW6gyUz+FYe7RxsOskYsGwig==
+X-Received: by 2002:a25:dc84:0:b0:dfb:bf0:59db with SMTP id 3f1490d57ef6-e0303fc13acmr11078537276.41.1719405829688;
+        Wed, 26 Jun 2024 05:43:49 -0700 (PDT)
 Received: from ?IPV6:2600:1700:60ba:9810:5cca:8078:1e70:3d3c? ([2600:1700:60ba:9810:5cca:8078:1e70:3d3c])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-64542cee8dasm17042557b3.132.2024.06.26.05.42.11
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e02e6116e96sm4280359276.1.2024.06.26.05.43.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jun 2024 05:42:11 -0700 (PDT)
-Message-ID: <a4edb8fb-5ed4-401f-819f-4034f67cd27e@gmail.com>
-Date: Wed, 26 Jun 2024 08:42:11 -0400
+        Wed, 26 Jun 2024 05:43:49 -0700 (PDT)
+Message-ID: <21977dab-31b9-405b-975b-6d022b080591@gmail.com>
+Date: Wed, 26 Jun 2024 08:43:48 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,48 +60,47 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] sparse-index: refactor skip worktree retry logic
+Subject: Re: [PATCH 2/5] sparse-index: refactor path_found()
 To: Elijah Newren <newren@gmail.com>,
  Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com, anh@canva.com
 References: <pull.1754.git.1718899877.gitgitgadget@gmail.com>
- <ddd8a9a90cea10be47eba4775bb90f01a9b80443.1718899877.git.gitgitgadget@gmail.com>
- <CABPp-BF=8y2yC0WvF7BhNFiyW10A_yKs5s6euEi3FwYSsmHnWg@mail.gmail.com>
+ <7c3b545ee5ea3a0e6686594afe582fa1a19929f6.1718899877.git.gitgitgadget@gmail.com>
+ <CABPp-BHnUpPgg_wP67q2eSB_j01urbEaPV2Dqk1L+gUfqbZtpA@mail.gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BF=8y2yC0WvF7BhNFiyW10A_yKs5s6euEi3FwYSsmHnWg@mail.gmail.com>
+In-Reply-To: <CABPp-BHnUpPgg_wP67q2eSB_j01urbEaPV2Dqk1L+gUfqbZtpA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 6/24/24 6:12 PM, Elijah Newren wrote:
+On 6/24/24 6:13 PM, Elijah Newren wrote:
 > On Thu, Jun 20, 2024 at 10:11 AM Derrick Stolee via GitGitGadget
 > <gitgitgadget@gmail.com> wrote:
 >>
 >> From: Derrick Stolee <stolee@gmail.com>
 >>
->> The clear_skip_worktree_from_present_files() method was introduced in
->> af6a51875a (repo_read_index: clear SKIP_WORKTREE bit from files present
->> in worktree, 2022-01-14) to help cases where the sparse index is enabled
+>> In advance of changing the behavior of path_found(), take all of the
+>> intermediate data values and group them into a single struct. This
+>> simplifies the method prototype as well as the initialization. Future
+>> changes can be made directly to the struct and method without changing
+>> the callers with this approach.
+>>
+>> Note that the clear_path_found_data() method is currently empty, as
+>> there is nothing to free. However, this will change in the future, so
+>> place the method and its callers for now.
 > 
-> s/index/checkout/; the code in af6a51875a made no assumptions about
-> sparse index being enabled.
-> 
->> but some paths outside of the sparse-checkout cone also exist on disk.
-> 
-> s/cone//; it wasn't specific to cone mode.
+> I can't parse the second half of the final sentence.  What was meant here?
 
-Thanks for the context that this is a generic sparse-checkout feature,
-and is not limited to the sparse index (which is limited to cone mode).
-I made assumptions based on the code's location in sparse-index.c.
+I was trying to point out how this method looks a bit silly:
 
-> Although I had a few wording quibbles with the commit message, overall
-> the commit message was clear about what you were trying to achieve.
-> Also, the change in this patch is a straightforward splitting of the
-> old function into three new functions (one of which is the overall
-> driver calling the other two).
+>> +static void clear_path_found_data(struct path_found_data *data)
+>> +{
+>> +       return;
+>> +}
 
-I have reworded locally and will have a v2 later today with a better
-message. Thanks for your attention to detail.
+It will be filled in with a meaningful implementation later on, but
+I wanted to establish its callers here. I'll try to find a better
+way to communicate this.
 
 Thanks,
 -Stolee
