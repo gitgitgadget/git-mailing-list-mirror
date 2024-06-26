@@ -1,155 +1,210 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C942418A925
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 15:26:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9712CA92F
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 15:34:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719415584; cv=none; b=IPZpb1/bjwoi2+APvpTMNE7YDOU5177Djv14nGt6VHXSfa/xA5OY3wXlkkTVZshajWmjYgaEwhNmw5S+hEDs5qeyU9TeXma/1JZ5gbak/1I/XAwmGzM6BtMyIv6iJ0sAlWSP9Z1ujZ4vVlczH/Y+PLOpCVnVg1Hsoi29FS74Ulw=
+	t=1719416052; cv=none; b=bHCW/DrOeG1D8ZyWA7aPxi5Et+x84FBg04oAbxqreHYFGIeNXuDDfuPf83D1pnnaKUQ+Wpb1DDYqctmvF4kisjqGd+DahbwmNavv32BKFASleg08mipVfTNg64LywcOxQ2elMCZJ/vhaGuts/jCZA5iwa/7wTtpEF8ifrRIoWQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719415584; c=relaxed/simple;
-	bh=E21abcYJ2XvbLmM1lvET+mnuQu9zYJMBKG54Pofy5ww=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Kdrk1o41B5Aclq6ne8Bxp+r43Qxfhe9bGBvIDZ93VUKsdoQo5oVOv0qkLZJn5yPxRMWk1p7HH50Ro7mwclSet93Onw21XOMIZWPMDEJCSuimUs74tB+kaogiJALOu2GKYrID4VBllwd/VgYUJeEkOfp7+uXjcVMt9rO+kMi/5i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=amKltBAT; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1719416052; c=relaxed/simple;
+	bh=ngoLqzRDvZpDmX00/gK66P7GJ7OV/1nuu0zRtBB293E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jtzeekxyck4ZNxtB6bZztV4UtX+fPF/7Tm4nm44PnqbcBpdhzb854UdUEmxlabPRTXspLotACSKHRxUBv96WqOOTGJm5nt8bWMSnsM4jucK/d9922tz9NgQGa8i4vfLN/bO85i3OvERVwsYvpHPRBGzhcCp7PyUdqU+usz5sCqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZEJw5hgP; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="amKltBAT"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-424f2b73629so8721085e9.2
-        for <git@vger.kernel.org>; Wed, 26 Jun 2024 08:26:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719415577; x=1720020377; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=byPw6U97rJ6CpMi7qZ5O/EqevYl8dRywLlkyhnxadgU=;
-        b=amKltBAT9VhOQZV30Xwj/TsabezYGORIE3/O6Vp4N5f1r5yfQ+JQMtqvAoSbrRP4aR
-         BPbwbBZusG4ZHaZqLz9Fq7itbNw6tz8Qn/b4712yXaomf5ldhKww3FVziDi9Y0KWH+xw
-         +zQTWmEfXhh6z9pDtVOpGCJPGO2607x97BQ7W5SNmNhN2X47I56mHF87WTIJJmTIOvav
-         yaqUeZr4S2lV4aUcyx923F2LS86Ig1ck2d79T4yhugf8KTrRT8pCjwV/KllsbZ/DN0hv
-         jg0EtmcxC/aKvo4JdywYceaTxxj8k7Hkl8DbxQZ9CXh3JpZajkhG5bkUt+T7B+GOdf3w
-         hCaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719415577; x=1720020377;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=byPw6U97rJ6CpMi7qZ5O/EqevYl8dRywLlkyhnxadgU=;
-        b=uoMMNNwoZS/SFeSa+AQ26bQ3FLxgd7S+91fr2ZilFCC2w2tpb1yDbqM9hbBHezaw5w
-         h3oTaefHfSV18CI+rGQeSGpPpF5Awn/YLRY6h9/lxOIvrf5p2B0C5FDSIJk2L6KXkHPF
-         /Jhnwei8YdZZwv48PVNw6eJKayzWoLIlIhosV7LibvUxb+g5g0mCNhGwKzxHhWse+bTS
-         ntaNlolh269Ov6lLPVY+tObaEiTe/Tb3zC3bVrUkUx/0kLg0hXOiBCbEUeo1LKjiFcZI
-         VojuEhAfaBRWI0utV6u/rq0clCirA5KSFCxSvPVUj/1g5txasos2zkqhG53QSv9m8mdJ
-         XhHA==
-X-Forwarded-Encrypted: i=1; AJvYcCVilcZq3sXFSRXyFsELihoasyga5lJHCgd1uVSW/A5SqTBmkh7+QzKYrn2qj7z/+/nzEayJxLeGCQSSIdhI9MtNAp/6
-X-Gm-Message-State: AOJu0YzpM7F4w0VUTWs0JmHLlOZ66mvfLGdVC8j5jJSnKYTRVTSzMgB1
-	4qzRJemvPymD/BSMG6MmUYwQjQXV3ZYlQe/oAY6RCGCLdWTK5YqVrfqi6w==
-X-Google-Smtp-Source: AGHT+IGaQct/Rnzn/MDo4lBbkwfQhPIsS67J1N4eKLWcPIYwcESSe5AmDpCv0WE8/MgMxSbZAdq0Qg==
-X-Received: by 2002:a05:600c:ad0:b0:424:ad83:ffb3 with SMTP id 5b1f17b1804b1-424ad8401bcmr19776915e9.4.1719415576922;
-        Wed, 26 Jun 2024 08:26:16 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-366383f668asm16081313f8f.20.2024.06.26.08.26.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jun 2024 08:26:16 -0700 (PDT)
-Message-ID: <72e42e9f-5b85-4863-8506-c99d658d7596@gmail.com>
-Date: Wed, 26 Jun 2024 16:26:15 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZEJw5hgP"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id D4AE91FD4B;
+	Wed, 26 Jun 2024 11:34:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=ngoLqzRDvZpDmX00/gK66P7GJ7OV/1nuu0zRtB
+	B293E=; b=ZEJw5hgPjp3YuB3CBYy3ODuTYIiep6oLLhUgRsDZ1F4jhNpyRI+OTV
+	UQvudse7eJN/cjGEYXKIMG9eyHrvUMFySNIGOy5fGzctN1xHfCbGKNp8IjxAGciB
+	iTBUgnnBh+EpBhneDyE4pq2nF8XIVj4LSt/y4uSmP/SkE5FcYh7Bg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id CDDBE1FD48;
+	Wed, 26 Jun 2024 11:34:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6C0D81FD12;
+	Wed, 26 Jun 2024 11:34:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  
+    git@vger.kernel.org,  Paul Millar <paul.millar@desy.de>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Elijah Newren <newren@gmail.com>,  Jeff King <peff@peff.net>
+Subject: Re* [PATCH v5] describe: refresh the index when 'broken' flag is used
+In-Reply-To: <2e80306e-2474-4254-95eb-c2902a56ffdd@gmail.com> (Abhijeet
+	Sonar's message of "Wed, 26 Jun 2024 17:36:25 +0530")
+References: <xmqq34p1813n.fsf@gitster.g>
+	<20240626065223.28154-1-abhijeet.nkt@gmail.com>
+	<CAOLa=ZRz2KEGiBnX1YP6JG1nXXHLfw9A3dHKO3s_ViLhq+bWww@mail.gmail.com>
+	<2e80306e-2474-4254-95eb-c2902a56ffdd@gmail.com>
+Date: Wed, 26 Jun 2024 08:34:04 -0700
+Message-ID: <xmqqikxv4t1v.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] setup: support GIT_IGNORE_INSECURE_OWNER environment
- variable
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Florian Schmaus <flo@geekplace.eu>, git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>
-References: <20240626123358.420292-1-flo@geekplace.eu>
- <20240626123358.420292-2-flo@geekplace.eu>
- <9e5b0cc6-e28c-4c51-ab48-663c61c00ee3@gmail.com>
-Content-Language: en-US
-In-Reply-To: <9e5b0cc6-e28c-4c51-ab48-663c61c00ee3@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 86355BFC-33D1-11EF-BDBB-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-On 26/06/2024 14:11, Phillip Wood wrote:
-> Hi Florian
-> 
-> On 26/06/2024 13:33, Florian Schmaus wrote:
->> Sometimes more flexibility to disable/ignore the ownership check, besides
->> the safe.directory configuration option, is required.
->>
->> For example, git-daemon running as nobody user, which typically has no
->> home directory. Therefore, we can not add the path to a user-global
->> configuration and adding the path to the system-wide configuration could
->> have negative security implications.
->>
->> Therefore, make the check configurable via an environment variable.
-> 
-> An alternative would be to allow safe.directory to be specified on the 
-> command line with "git -c safe.directory='*' daemon ..." rather than 
-> adding a dedicated environment variable.
+Abhijeet Sonar <abhijeet.nkt@gmail.com> writes:
 
-To expand an this a little - a couple of times I've wanted to checkout a 
-bare repository that is owned by a different user. It is a pain to have 
-to add a new config setting just for a one-off checkout. Being able to 
-adjust the config on the command line would be very useful in that case.
+> On 26/06/24 17:00, Karthik Nayak wrote:
+>> Not worth a reroll, but you don't have to create file.new twice.
+>
+> Actually, now that I think of it, those two were better off being
+> separate tests.  It might so happen the first call to describe
+> refreshes the index, due to which the second call with the --broken
+> option does not bug-out in the way it would if the command was run by
+> itself. Having them separate would give them enough isolation so that
+> previous command does not interfere with the later.
 
-> Or you could set $HOME to a 
-> suitable directory when running "git daemon" and put the user-global 
-> config file there. That directory and config file only need to be 
-> readable by the user that "git daemon" is running under it can be owned 
-> by root or whoever else you want.
+Good thinking.  Yes, we may end up having a few commands that are
+duplicated in these two tests (for setting the stage up, for
+example), but it would be better to test these two separately.
 
-The advantage of this approach is that there are no changes needed to 
-git, instead of setting GIT_IGNORE_INSECURE_OWNER one sets HOME to point 
-to a suitable config file. I found this useful when I was debugging the 
-issues with git-daemon earlier[1]
+>>> Range-diff against v4:
+>>> 1:  1da5fa48d9 ! 1:  52f590b70f describe: refresh the index when 'broken' flag is used
+>>>      @@ builtin/describe.c: int cmd_describe(int argc, const char **argv, const char *pr
+>>>       +			cp.git_cmd = 1;
+>>>       +			cp.no_stdin = 1;
+>>>       +			cp.no_stdout = 1;
+>>>      -+			run_command(&cp);
+>>>      -+			strvec_clear(&cp.args);
+>>>      ++			if (run_command(&cp))
+>>>      ++				child_process_clear(&cp);
+>>>       +
+>>>        			strvec_pushv(&cp.args, diff_index_args);
+>>>        			cp.git_cmd = 1;
+>>> --
+>>> 2.45.2.606.g9005149a4a.dirty
+>> Other than this, this looks good to me.
+> I am not sure if I follow this one.  Am I expected to not share the
+> struct child_process between the two sub-process calls?
 
-Best Wishes
+Without reusing and instead of using two, we do not have to worry
+about the reusablility of the child_process structure in the first
+place, which is a huge plus, but in the longer run we should make
+sure it is safe to reuse child_process and document the safe way to
+reuse it (run-command.h does document a way to use it once and then
+clean it up, but the "clean-up" extends only to not leaking
+resources after we are done---it does not guarantee that it is OK to
+reuse it).
 
-Phillip
+I think with the updated "we clear cp ourselves if run_command() fails",
+it should be safe to reuse, but it probably is even safer to do
+something like this:
 
-[1] 
-https://lore.kernel.org/git/834862fd-b579-438a-b9b3-5246bf27ce8a@gmail.com
+	... the first run ...
+	if (run_command(&cp))
+		child_process_clear(&cp);
+
+	child_process_init(&cp);
+	
+        ... setup for the second run ...
+	strvec_pushv(&cp.args, diff_index_args);
+	cp.git_cmd = 1;
+	... full set-up without relying on anything done earlier ...
+
+The extra child_process_init() call may serve as an extra
+documentation that we are reusing the same struct here (we often do
+"git grep" for use of a specific API function before tree wide code
+clean-up, and child_process_init() would be a good key to look for).
+
+... goes and looks ...
+
+Oh, I found an interesting one.  builtin/fsck.c:cmd_fsck() does this
+in a loop:
+
+	struct child_process verify = CHILD_PROCESS_INIT;
+
+	... setup ...
+	for (... loop ...) {
+		child_process_init(&verify);
+		... set up various .members of verify struct ...
+		strvec_pushl(&verify.args, ... command line ...);
+		if (run_command(&verify))
+			errors_found |= ...;
+	}
+
+This code clearly assumes that it is safe to reuse the child_process
+structure after you run_command() and let it clean-up if you do
+another child_process_init().  And I think that is a sensible
+assumption.
+
+The code in builtin/fsck.c:cmd_fsck() is buggy when run_command()
+fails, I think.  Without doing child_process_clear() there, doesn't
+it leak the strvec?
+
+------- >8 ------------- >8 ------------- >8 -------
+Subject: [PATCH] fsck: clear child_process after failed run_command()
+
+There are two loops that calls run_command() using the same
+child_process struct near the end of cmd_fsck().  4d0984be (fsck: do
+not reuse child_process structs, 2018-11-12) tightened these code
+paths to reinitialize the structure in order to safely reuse it.
+
+    The run-command API makes no promises about what is left in a struct
+    child_process after a command finishes, and it's not safe to simply
+    reuse it again for a similar command.
+
+Upon failure, run_command() can return without releasing the
+resource held by the child_process structure, which is done by
+calling finish_command() which in turn calls child_process_clear().
+
+Reinitializing the structure without calling child_process_clear()
+for the next round would leak the .args and .env strvecs.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/fsck.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git c/builtin/fsck.c w/builtin/fsck.c
+index d13a226c2e..398b492184 100644
+--- c/builtin/fsck.c
++++ w/builtin/fsck.c
+@@ -1078,8 +1078,10 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 				strvec_push(&commit_graph_verify.args, "--progress");
+ 			else
+ 				strvec_push(&commit_graph_verify.args, "--no-progress");
+-			if (run_command(&commit_graph_verify))
++			if (run_command(&commit_graph_verify)) {
++				child_process_clear(&commit_graph_verify);
+ 				errors_found |= ERROR_COMMIT_GRAPH;
++			}
+ 		}
+ 	}
+ 
+@@ -1096,8 +1098,10 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 				strvec_push(&midx_verify.args, "--progress");
+ 			else
+ 				strvec_push(&midx_verify.args, "--no-progress");
+-			if (run_command(&midx_verify))
++			if (run_command(&midx_verify)) {
++				child_process_clear(&midx_verify);
+ 				errors_found |= ERROR_MULTI_PACK_INDEX;
++			}
+ 		}
+ 	}
+ 
 
 
-> Best Wishes
-> 
-> Phillip
-> 
-> 
->> If the environment variable GIT_IGNORE_INSECURE_OWNER is set to true,
->> then ignore potentially insecure ownership of git-related path
->> components.
->>
->> Signed-off-by: Florian Schmaus <flo@geekplace.eu>
->> ---
->>   setup.c | 8 ++++++++
->>   1 file changed, 8 insertions(+)
->>
->> diff --git a/setup.c b/setup.c
->> index 3afa6fb09b28..da3f504fb536 100644
->> --- a/setup.c
->> +++ b/setup.c
->> @@ -1278,6 +1278,14 @@ static int ensure_valid_ownership(const char 
->> *gitfile,
->>        */
->>       git_protected_config(safe_directory_cb, &data);
->> +    if (data.is_safe)
->> +        return data.is_safe;
->> +
->> +    if (git_env_bool("GIT_IGNORE_INSECURE_OWNER", 0)) {
->> +        warning("ignoring dubious ownership in repository at '%s' 
->> (GIT_IGNORE_INSECURE_OWNER set)", data.path);
->> +        return 1;
->> +    }
->> +
->>       return data.is_safe;
->>   }
-> 
-> 
+
+
+
