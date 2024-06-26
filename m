@@ -1,59 +1,59 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEE7190670
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 18:35:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3EE18C34B
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 18:38:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719426936; cv=none; b=JEQHw+kyEB+c5+h7jH6HR/vN8X5PqUEC7k8nMgtUE7ChAAPL4MjhHRGJS17O0Jhrl171fDdqUsitn654QcCrvApp/8WxX/Sa0wVBHLg5SO6oUenN+b2PqMOtXpOhtd0P6ni+VKB7geNbRT11gvIN3jurvp1McfJwERGJF4eusQc=
+	t=1719427130; cv=none; b=Y4OIsqwV8EoBUX9HRvhKb8EICTee/VRMg6P8vKyQdjicsBCxLCQqFIITZdktYUkqF8SNEo0DtnChflc0BDMnIB/uCUoObSZVSMDrZnRi9QbEzN69coBAUY/n9umCEyrHzu84Ki3cItRdN9hNi1mbaaOWlYWTDExzrsqWsV8bZec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719426936; c=relaxed/simple;
-	bh=pgWB7Ossp2cs8kJxxyw236k+eXrfOKVoSgoTpUuxEl0=;
+	s=arc-20240116; t=1719427130; c=relaxed/simple;
+	bh=hPdOsnft/RStGmvfQDFwnJUzpZAPwq55Qe0nhiXupAM=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ntp1ZKfFYTGhDVCWJ/3QucShsWE+6OMClb+2V+y+wAdFPqkpRgtznifP6kSvDDOwlchbASykM+RpfLuMTBz76lJk1bPQbGAXKqjwz7HDLVARjes3/uR6xpIKas1KvWRZbIsVntFr0liN7ztkUqG3DfITlEpl5okCrFf7YjPqtGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lv9cam4x; arc=none smtp.client-ip=209.85.221.42
+	 In-Reply-To:Content-Type; b=CGzlfxZ3VoFT1g66zkDLlpPBYMjsU3duBbDTFyrQ7MixfrCCcAMjRpULShCyIDUcXDgnmws69cp/oiCUoZFQgToPWwqb1vXVt1iaQSAE49ezXEz1UtP4z+YOlTqm5KVYL8OppY9LmMcG8fde6pUezluQ2zyJ1iTnd0IO7/+jJVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PiScjV9d; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lv9cam4x"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-356c4e926a3so6299942f8f.1
-        for <git@vger.kernel.org>; Wed, 26 Jun 2024 11:35:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PiScjV9d"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-424adaa6ceeso8296665e9.1
+        for <git@vger.kernel.org>; Wed, 26 Jun 2024 11:38:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719426933; x=1720031733; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719427125; x=1720031925; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=b0EMJe3Le+CtEGGa/WEUUFGEnsZM5RFu/94heBB2KMs=;
-        b=Lv9cam4xOF1nsApbHbn2ob4cgR1BtALnryZ0RsvTynZePkHDjdI2ZtvyBCt5EGmSZ/
-         J8GxgCxAVE6+wbwdCxfSPRijqwrAx2tuz/T8SdyItnXTMfS24v/Ao06rqNv4L3Quzpcr
-         lMb8RvXRArM9Abw5OZAyPiiJQjIwj7g9yC8RF//v65FutSatn7wtkXth71JebZXdZX5h
-         nS7JZU9/6A5cBT+XuZU9ZyHgKD+GU5YBXptDqCPCxNarMndV2iStxMZeglO2AF1XSovD
-         lG8SMdpqwOPd21zM9A4N+Z4f72P04pbUl0VzU/7LLAU0I2I34dIDDhFeFvmacy5uff4P
-         wL1g==
+        bh=e1Nn5NDXE9BONFHwhHIv5HDYsPYyCG6K38NM/rcAcRE=;
+        b=PiScjV9dzRyG3o5rZTMK5TVXb+2gzrzINkGYFCVEWtbN78o6CP471gBRx3cgn2hPM7
+         pSDGIwiIdwGaeUfQjQ6AZ2Q5Ln9S6aEwqc70Rp41Rcd+5TY/MioYtCSCBnYG84vyD7m4
+         0GY8SC1LYmGySmmu7RXQDWnk9ue6utHrSGtQ/DjU4O8MhGRI1veq9mvrBx0lXe+PKbcB
+         x8ksy2c6NH1hPHiDxp+de+UIynCpLGmSNS7MDLqknnIG3YhF27Px08bwPYLgLFI3igSc
+         uNteBU1jqyQclqjCDj3bBq3y6ObXDE2YoPJzINivUnNbX5JGmiIIRjOpcFnDYPTW3nDq
+         Ovkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719426933; x=1720031733;
+        d=1e100.net; s=20230601; t=1719427125; x=1720031925;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b0EMJe3Le+CtEGGa/WEUUFGEnsZM5RFu/94heBB2KMs=;
-        b=RLXhXaqJvmhZFRekqNxVB+NufpoHBxnqu/qU1V0GkaJ7Kb+QNw48fiUKzq6JFqoECT
-         MkIEGmi/2Z5eMe6ZAYR/rAHoSNTbBRm+QfYNPy7a8oDWKQByi9CnOaQCIPhrhJdGrD6f
-         IeEwsCfqQFkVparwjdRcf+I13amPyQUwQ2TQwjt0Nme1eZEY4qJOrrtPjM6JamKL7zKQ
-         vgc3qWLNLAyhzoQRJ9k8F9Wr8CwaqE/aj1EdTH2AzonSA3JucGP4kMY4+PbOTk4O+1vG
-         fN3lVdrpn4898J8U6Xp5wnO3xzfv48BVYJoHnAhU+gXuEdbVJonjyyCVBa45a5N1JqMx
-         bGkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVxIITUPyOeTatSa7yDck0ILOedoyLtsjKPtQlua3xUqTjXADkqzE3tTxWCPlHbDqPZcdA3MbHa9d/WEcPNHCLt6NGS
-X-Gm-Message-State: AOJu0YyzzOa7kzCSv+mqY+P/yJY1WQ/RP6fbtoyvPKVImfQgUd9p74Ao
-	0HtNmhhuUWZjsdmeq67eHlauTCQDWGqN+4N3PvnGAEBntpSEEErQ
-X-Google-Smtp-Source: AGHT+IHMwxnkW3tYksYBe2QXreJrHhvp6q4CJgvVPFlkovmArGspk3J/0nMdhCMDXsihtN1Yvxhiwg==
-X-Received: by 2002:a05:6000:178c:b0:366:e9f2:a54c with SMTP id ffacd0b85a97d-366e9f2a65amr8430379f8f.47.1719426933034;
-        Wed, 26 Jun 2024 11:35:33 -0700 (PDT)
+        bh=e1Nn5NDXE9BONFHwhHIv5HDYsPYyCG6K38NM/rcAcRE=;
+        b=dl/aToHDqJuQ38qGfL4RDlbNNF7CZVS9xd0bql1Pk0Dnsdx4kSYthZ+hnkTX//d/sY
+         uJvUnkqodkMhMiY0Nvx1dQBVQG6LQ2kLeVkY6/yTyE1SRQTWX6h3/UfWNbiIe/+0h1Vd
+         rX4+avocc/6iKmyEOyE5/ORBNh4luywRk2kdM1Lu/uy9rubD3palMSl8BatvczAN/BeH
+         GQsLHI5EMXcD8aCoui+8zG+0xXffb3V/ZgfXRgDqtTCmsrN9XdQVrwFJejoSBCTmKCQ1
+         u9QKsre20gYbKPnWM6pTVJ1kkzTPQcgwXNU9iwiweAQ/TtvWEtezL5Eg2VbboHWhxZTM
+         rDDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWfsUlEWX0YpuAGCjCT4L0C4YIGruhtZ0GjQ1O5YrdO5qmj42nH/otKxdmnjSwTlvQxdeV/u+6pZRV1tKCqHPtJQAS8
+X-Gm-Message-State: AOJu0Yys0xJargUkL0BvNlMmxOUNOPKiPa7Zm8v4/J0uO7UJfdl/UozF
+	hHL6puximNZf5102a+Zcc0e8y/QRtenTIdhFuHxu+KlCUDPu4nwU
+X-Google-Smtp-Source: AGHT+IH7395cThyOPi7xROKOO+O4L3hjrVKiVJPbeQ0TPoiipFpI6vg8TBW8/B5Ff3UmwePHcRWKwg==
+X-Received: by 2002:a05:600c:491d:b0:424:fb2f:9d4b with SMTP id 5b1f17b1804b1-424fb2f9f55mr16205635e9.21.1719427124424;
+        Wed, 26 Jun 2024 11:38:44 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-366389b8597sm16503259f8f.36.2024.06.26.11.35.32
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-424c838c5besm33889645e9.48.2024.06.26.11.38.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jun 2024 11:35:32 -0700 (PDT)
-Message-ID: <aa94be27-60a5-42d9-adcc-f25f9a8d6ae5@gmail.com>
-Date: Wed, 26 Jun 2024 19:35:32 +0100
+        Wed, 26 Jun 2024 11:38:44 -0700 (PDT)
+Message-ID: <6094695a-6b23-412d-9b97-15a7aec6eaf8@gmail.com>
+Date: Wed, 26 Jun 2024 19:38:43 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,60 +61,74 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
+From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Local git server can't serve https until repos owned by http,
- can't serve ssh unless repos owned by user after 2.45.1
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- "David C. Rankin" <drankinatty@gmail.com>, git@vger.kernel.org
-References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
- <xmqq8qz376fb.fsf@gitster.g> <20240617211513.GM19642@kitsune.suse.cz>
- <20240625072419.GU19642@kitsune.suse.cz> <xmqqr0cl6lxl.fsf@gitster.g>
- <20240625183411.GW19642@kitsune.suse.cz>
- <834862fd-b579-438a-b9b3-5246bf27ce8a@gmail.com> <xmqq34oz1shc.fsf@gitster.g>
+Subject: Re: [PATCH] setup: support GIT_IGNORE_INSECURE_OWNER environment
+ variable
+To: rsbecker@nexbridge.com, phillip.wood@dunelm.org.uk,
+ 'Florian Schmaus' <flo@geekplace.eu>, git@vger.kernel.org
+Cc: 'Johannes Schindelin' <Johannes.Schindelin@gmx.de>,
+ 'Junio C Hamano' <gitster@pobox.com>
+References: <20240626123358.420292-1-flo@geekplace.eu>
+ <20240626123358.420292-2-flo@geekplace.eu>
+ <9e5b0cc6-e28c-4c51-ab48-663c61c00ee3@gmail.com>
+ <046501dac7dc$31d92d60$958b8820$@nexbridge.com>
 Content-Language: en-US
-In-Reply-To: <xmqq34oz1shc.fsf@gitster.g>
+In-Reply-To: <046501dac7dc$31d92d60$958b8820$@nexbridge.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 26/06/2024 19:14, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+On 26/06/2024 16:19, rsbecker@nexbridge.com wrote:
+> On Wednesday, June 26, 2024 9:12 AM, Phillip Wood wrote:
+>> On 26/06/2024 13:33, Florian Schmaus wrote:
+>> An alternative would be to allow safe.directory to be specified on the command line
+>> with "git -c safe.directory='*' daemon ..." rather than adding a dedicated
+>> environment variable. Or you could set $HOME to a suitable directory when
+>> running "git daemon" and put the user-global config file there. That directory and
+>> config file only need to be readable by the user that "git daemon" is running under it
+>> can be owned by root or whoever else you want.
 > 
->> ... What is happening is that
->> git-daemon checks that the repository path is listed as safe and then
->> changes into that directory and forks
->>
->> 	git upload-pack --strict .
->>
->> "git upload-pack" then checks "." against the list of safe directories
->> which fails. It fails because the safe directory check does not do any
->> normalization such as cleaning up "//" elements (as seen in your
->> example) or expanding relative paths on $git_dir before checking it
->> against the list of safe directories.
->> ...
->> I think the fix is probably to make the safe directory check use the
->> absolute path of $git_dir. In the mean time there is a workaround if
->> you're happy to add "." to the list of safe directories.
-> 
-> It still is curious why unnormalized "." does not pass "*"
+> I agree with this alternative. Our CI build environment already has so many environment variables (not just from git but all dependencies and the CI environment itself) that we are pushing the 56Kb platform limit (not kidding). Reducing dependence on environment variables is, in my opinion, a good and necessary thing.
 
-Sorry if I wasn't clear. "." is considered safe with "safe.directory = 
-*" but I was looking at why it was not considered safe when using 
-repository paths in safe.directory.
+"git -c" still ends up setting an environment variable internally to 
+ensure that the config setting is passed down to any child processes. 
+The advantage is that we're re-using an existing mechanism rather than 
+introducing a new environment variable.
 
 Best Wishes
 
 Phillip
 
-> (which is
-> not even a pattern matching, but is a declaration that says "don't
-> bother which path we are talking about"), though.  As long as the
-> value of that configuration is found to be '*' literally, safe
-> directory data is marked as "is_safe" (cf. setup.c:safe_directory_cb
-> and setup.c:ensure_valid_ownership; notice that data.path is not
-> even consulted if the value of the configuration variable is '*').
+>>> If the environment variable GIT_IGNORE_INSECURE_OWNER is set to true,
+>>> then ignore potentially insecure ownership of git-related path
+>>> components.
+>>>
+>>> Signed-off-by: Florian Schmaus <flo@geekplace.eu>
+>>> ---
+>>>    setup.c | 8 ++++++++
+>>>    1 file changed, 8 insertions(+)
+>>>
+>>> diff --git a/setup.c b/setup.c
+>>> index 3afa6fb09b28..da3f504fb536 100644
+>>> --- a/setup.c
+>>> +++ b/setup.c
+>>> @@ -1278,6 +1278,14 @@ static int ensure_valid_ownership(const char *gitfile,
+>>>    	 */
+>>>    	git_protected_config(safe_directory_cb, &data);
+>>>
+>>> +	if (data.is_safe)
+>>> +		return data.is_safe;
+>>> +
+>>> +	if (git_env_bool("GIT_IGNORE_INSECURE_OWNER", 0)) {
+>>> +		warning("ignoring dubious ownership in repository at '%s'
+>> (GIT_IGNORE_INSECURE_OWNER set)", data.path);
+>>> +		return 1;
+>>> +	}
+>>> +
+>>>    	return data.is_safe;
+>>>    }
+>>>
 > 
-> Anyway, thanks for digging.
+> Sincerely
+> --Randall
 > 
