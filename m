@@ -1,93 +1,73 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from zulu.geekplace.eu (zulu.geekplace.eu [5.45.100.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8F713D89B
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 12:18:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA2B1E51D
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 12:34:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.45.100.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719404287; cv=none; b=cB31qhFJJk3FmG8N4ZDcqReGn08ZqRZ2jRYDRKRmQFtjkz6oa1ez2hkCAxtpoGniwp7QrBKcQ/EGtJxyKkJj16eeE2Qyzlt/JiEBEVLK6/f1znUMSQYM5OkLWBunydm/we/TvwrNoAGhev1BK+eEKT9q+XO4ceHQ/lntWeV6p9A=
+	t=1719405253; cv=none; b=PYwCY3jvDaG9wvqK5p1WmB7mFqRYkK8UHJMFa2TEVm0WHXVi084sD2IFPv2gHshrgCzXxL0iuAmWuXZdNF3fdlJFajEowM6M3NwF8ndkH2WB4zzsBKn4bmaJo6z21PtdRfkLM00K+XVRQakCzCA1HtcPeKnUuMpbRf2HgweLCKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719404287; c=relaxed/simple;
-	bh=wphTVrJhWO3MJWr2vMGTdZWtf0OiV7VjXhqOM1f1feM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Hv7n87foI7/Fg1NuvmIfz0RMcSqmFoC/jSK53yVWcVr513x5E9zO4DDN6d5VI4fsSlMytxGbJ389CV2MWszahf2RjNaDHM6nWL1abN33uQS/Kc9c6mtMEZaSmniJX4n89Kyk7x+ltsnakeGNt9IWrT9g7PCg8F4qYU51/TvHAMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KJF29jX3; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KJF29jX3"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2c80637ee79so4675851a91.0
-        for <git@vger.kernel.org>; Wed, 26 Jun 2024 05:18:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719404286; x=1720009086; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SlTt5Yc/mnTG73OZ2FrscXg/g9E3LuAh2yxKUqT8WdE=;
-        b=KJF29jX3IaZ+l/gQPVe97qWk+8UumrF8wu7bkcC/moGPHDIm3zSHcOiblStvh5CCek
-         Vtr19IoB1CajXnLFcu2iZ80HiRI8rHihpPrtwbT3jKIFbHmrobgo3X8LXc+3vKeHsP43
-         9TpO96PsEnYtHiR1kLMHEhj1pqacqUyZoqSWYJ5qj5w/m14T0b07tV07uKKVeUliDLG1
-         69umeclEtu+rv78ZKsmui4AiMsRo/90VQ7zCYfhldbFIJpwWtw38z7cuiuBn4vSnv8Og
-         ZG2Iy9F3EH9LpXkbiqsIvYEwwa/jK3HSU+aUwNhANOjZyjqiysb1CnNMToCglJcxAx6N
-         ZKvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719404286; x=1720009086;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SlTt5Yc/mnTG73OZ2FrscXg/g9E3LuAh2yxKUqT8WdE=;
-        b=q0WGRUkN7gViqihDH0FsZQ4wZ5HOD9//GCLEeHWTmhqgwYEGDPTMH9wUg7h6hv16ua
-         4m0HtX2nCz+V/7mQlK4F4m+uLYTQLy9MvGbzeNuENxsBkCRbxY+H7A0C2bjAQHPwmAWS
-         aH+IlxgwqSctyXtYK17yxZIyg7G4YuUKnB+2q4BX06hENaJIrE+NL+gbZhjQyLiIlrQu
-         iLjCzzLRnRV5/lTNlBVvHWRILL8toBTOwdQ4128ybqszEcl4gD45KIKzuydcnuvWhaMC
-         1Wa6jT9fcdgP01XNGp51RNhI6OOqieQ10bBcF/kQCJKudqmYVFw9fTs4flUzE9lCeL/D
-         SqTw==
-X-Gm-Message-State: AOJu0YyWJ2AEZa1pSKdclRo1F/fU3v3MNbyctqz8FXvRFTEupjbyhspM
-	WeeL+xDR48m2kq1N4NQzPgN0EhYlVpFBpulPzvocfvi5ur0rPmRqKRSKWeQtrPcMrTM/mLKqWIb
-	ZIstCyyN/VgOOKvZr8B7i63lkIy4=
-X-Google-Smtp-Source: AGHT+IHTJKFw3J4CtKsCZiWdBnXW+wKDC1f1RXJZR5ltc6GxXTSLgrPlH/Ngha2W3EUFgEZLsvxdz5iZqg5Z9hnFQKU=
-X-Received: by 2002:a17:90a:9417:b0:2c8:e654:66a3 with SMTP id
- 98e67ed59e1d1-2c8e65467dfmr556462a91.9.1719404285517; Wed, 26 Jun 2024
- 05:18:05 -0700 (PDT)
+	s=arc-20240116; t=1719405253; c=relaxed/simple;
+	bh=t5jZs9qJrsCFHzEUVTH3ckypjR5FQ1LSmlheiOFSBgg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UsL6rkLR+px60KkPGT6HGl0N6Y1OnxIZ1AwaisMi2xg9tR9DFiFMqilgTzLcJnmYDkIHm4VM0DXp0pJsGdVDKnrAU2u/ZWbiVfEIsp41YW+qWh/CLMd9F6fE0/iTGlC/ZZa5uK+OEnY2pvd6MaPNcBZ6IHSHvP5YV9l/gdKudy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=geekplace.eu; spf=pass smtp.mailfrom=geekplace.eu; arc=none smtp.client-ip=5.45.100.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=geekplace.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geekplace.eu
+Received: from neo-pc.sch (unknown [IPv6:2001:4091:a242:8321:34fb:50ff:feac:591b])
+	by zulu.geekplace.eu (Postfix) with ESMTPA id 2F30A4A02F1;
+	Wed, 26 Jun 2024 14:34:03 +0200 (CEST)
+From: Florian Schmaus <flo@geekplace.eu>
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Florian Schmaus <flo@geekplace.eu>
+Subject: [PATCH 0/1] support GIT_IGNORE_INSECURE_OWNER environment variable
+Date: Wed, 26 Jun 2024 14:33:57 +0200
+Message-ID: <20240626123358.420292-1-flo@geekplace.eu>
+X-Mailer: git-send-email 2.44.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAO8o=D5womGcsVsGT4h2=3qry05mMrd9dFDkZHrLtPCDw0+2Tg@mail.gmail.com>
- <xmqqo77p8kct.fsf@gitster.g>
-In-Reply-To: <xmqqo77p8kct.fsf@gitster.g>
-From: Noam Yorav-Raphael <noamraph@gmail.com>
-Date: Wed, 26 Jun 2024 15:17:54 +0300
-Message-ID: <CAO8o=D5T8geKY98ep6YX+Pa-HVLNXtWznEFxEjTkW3Z+JCxJ_w@mail.gmail.com>
-Subject: Re: Regarding howto/revert-a-faulty-merge.txt - another way to revert
- a merge
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 25, 2024 at 12:03=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> These, we definitely do not want them [*].
->  * We do not want the squashed CBA!!! revert or ABC reapply, both of
->    which are large balls of wax that interferes with bisectability.
+I could imagine that the safe-directory check was deliberately not
+made controllable via an environment variable. However, git versions
+with the safe-directory check gained adoption and we can now see that
+there is some fallout caused by the check.
 
-> So if you want to avoid "we can forget that we have reverted"
-> problem, not reverting the revert, but rebuilding the entire chain,
-> is a better approach that gives you cleanest history to work with,
-> and that is what we already offer as an alternative of "reverting a
-> revert", not "squashed revert and squashed reapply on the side
-> branch".
+A prominent example is that git-daemon cannot export repos when
+running under nobody (see https://bugs.gentoo.org/932091). Since the
+'nobody' user typically has no home directory, the suggested fix
 
-If you don't mind rebasing the branch, what you're suggesting is fine.
-However, if it's a long-running branch, with multiple people working
-on it, rebasing is not an option. In that case, I think that my
-suggestion makes a lot of sense. A good idea would be to add the
-"large balls of wax" commits to a `.git-blame-ignore-revs` (or
-whatever you choose to call it) file.
+        git config --global --add safe.directory xxx.git
 
-Cheers,
-Noam
+does not work. Likewise, adding it to /etc/gitconfig is also not
+ideal, as it applies to every user.
+
+In Gentoo, the safe-directory check can be completely disabled via a
+USE-flag (i.e., Gentoo's mechanism for compile-time package
+customization). However, I recently suggested to Gentoo's git-package
+maintainers the following patch, introducing the
+GIT_IGNORE_INSECURE_OWNER environment variable, as an alternative.
+
+Being able to disable the safe directory check via an environment
+variable allows for more flexibility, solves the issue described
+above, and does *not* statically and globally disable the
+safe-directory check. This was received with a positive response and
+the patch will likely be applied by Gentoo.
+
+But downstream patchery is always the second-best option. Therefore,
+I hereby propose the patch to upstream.
+
+Florian Schmaus (1):
+  setup: support GIT_IGNORE_INSECURE_OWNER environment variable
+
+ setup.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+-- 
+2.44.2
+
