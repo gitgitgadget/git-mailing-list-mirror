@@ -1,104 +1,141 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59A81684B9
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 08:59:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A8716631D
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 11:16:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719392394; cv=none; b=kwX/ajeKxy0uNWSpOlN5BYZCJOwpGQR6dQAqUKh9RdSpP3babrDQ9ZLaRCoSYld/ZJ87cR0siUFyGeJWRyi2SMQi7Z7PauIT7tfOGBBqfTnI2Ijt3ehYqb//UfKJj0zacTepROyUJZBQlPzqMMPFF1+VTaqsBDaeozRbKbNzksU=
+	t=1719400599; cv=none; b=EPwStj8N4XfS1GD7vMJOmUhxZb1Z7IdSIwhABJVXIhKHw2xr3G/gsfSGd53eriLfAUd5dGcCaCxr13AtfzB60V9HS0KYvhq5/4s3u/zOh60bk1tCB0i6CNxlTw//oQ/IXFeu97Y1Th1ZY7NL62HFEgEL3AQo8dQDDRVKyEXWIHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719392394; c=relaxed/simple;
-	bh=iVf0XpLfhmAvTvCohjuHeA6tGxTaF3OHf3mhPKfP4UQ=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=clFCnqutRSbE+h+/0ts0lsTa66UjWidBeYpa3TrZNKY5Qp4OE669AXVoItptKNfeEsrjfhky9zAIV7cYfpQmnfu3ZVrrWabhMjunQ5JsqYJsOYawSPIq+HGIVYb31kyjzx1wnQim4blOW5c9AkuqyKlgVl/Lp1KhYjPjPd6I7mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lJUJUkWL; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1719400599; c=relaxed/simple;
+	bh=ROWBS70W1KxLhyhMH/4J0ANZEnFjoZxDK6QrWB5Cfak=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OmV534RFAyLazwdS6qhyovnNGiXuJHxN5jhgwcW1PhyIb0BB2YS2SAeYVNgBiPGBLVUtudP18ExSVaiAjoYwCuSMZKYRuHkHxBhD5LoQlz88toE7r/XPv1WHAl/5AqzgMn99rpjDFFthSRiYT5QxEvVNFaHkuuLd/SBH7lreybQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cGmNZSLW; arc=none smtp.client-ip=209.85.160.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lJUJUkWL"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-42108856c33so2001525e9.1
-        for <git@vger.kernel.org>; Wed, 26 Jun 2024 01:59:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cGmNZSLW"
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-25d57957b37so321959fac.2
+        for <git@vger.kernel.org>; Wed, 26 Jun 2024 04:16:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719392391; x=1719997191; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9wzVyOaseqZM17QH39cySt6x2TjBSFGdE8ey0JQC35w=;
-        b=lJUJUkWLbY2+44oQHCpZcQ/i3Nsq9RqGRk12I/8ouTqirBKM7xFmNBTQDf3VRVJdxB
-         uwUzgzmZaUwDWRGkBRGTtxAdxAc6M+s+xw2LzirZgOLlqeeWM0v9dxeDZFvCQ4lzEIrE
-         9rEXEkm2/sxcYLqe2KBMZcFyg8Wfxwdxro7t60TyC/uWb2iFVWkEdHWt0ya+piHd4df8
-         tKucUFdhMEgDldnjc6JuNH0oFSVsqkYIfBmGUOWo19v9eStSTZEWKxrIU9AC8V83r2Fo
-         mqsJooHft9HWwxhfTpNeN6nFrTlZRAqeKRWEbm92pSdDMQ8grXXOgQU04ucBZ9ie1Dxd
-         Cmyg==
+        d=gmail.com; s=20230601; t=1719400597; x=1720005397; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gobVs7CxWnVTDjLPjemjfUllxxOB4XtSiDGciS9G5r0=;
+        b=cGmNZSLWrNOZt3u55S+ivWJYp+dcqT8EKwTC1GSaW0v2omQ0VGh1ELQ5QULNWbp8oW
+         5XuJ5zMWtatZME8qu0WQK7jX9u479QBt8I42ctcDsWcsLpEcDVL9XJoqxa7p+jnEg8FZ
+         aV/mXDls4E5vYhM7OWBiCTWHwemjLmsbug8Wx/dNZG8XcLzqVY7vXQyv44Tmnxs38xUX
+         PNXTRNK13wnJ8ORM0FQYxmEtKlZQo+3EZngq5b8l/ykXh+ejGEoVWOxPApCUg8V9TB+R
+         TH0UM0oZK4Dvj9wZREvt183D3Im4p/50YhPa1LCx9Qjkg8D6barApxNwJnnfdJpQmLoD
+         abig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719392391; x=1719997191;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9wzVyOaseqZM17QH39cySt6x2TjBSFGdE8ey0JQC35w=;
-        b=i3yB5Nm1BJVRDuj0Fs8g1E/WYRj/eqPWq48NHSK7eFriDckImqePSwfT1s42U4PiHx
-         eFM4yR4I9ZOSGfZX7e2celc6wGp93MW6stGaFvcRwzXtPtRUGoFeRyAEkCEj4jRrhNcd
-         eHsmZvNIaz7fhl3hO2jhP39FG4i+2JQj9/vZRsuM3PUkUJ8pFrdK53Skl61f5tMHPtMy
-         fQYdtZTxguTzjvhXRLIMPkROieqWaHxVy0dYLNZnV0t7bHDMlxKmn6DNWpCLPa831B/2
-         qMcWLJXrE2oGApWmhM+8BSpABEt+TPNAdAmTII1PYhyqoLVEnEdE8vsS652iZSW079CG
-         UjQw==
-X-Gm-Message-State: AOJu0YzzxUJuAQTAJyfoU4BwN0yHXvg+lIhS4M6lXJ0YDeK25LR44gfq
-	a5TBbi3FduudppGFH5Nui/FEEYGuPFLC5Mk/nO0zUR3G2pzDdJqk
-X-Google-Smtp-Source: AGHT+IEguUki/pcIvB56aA3uzNVitjPD7qvULbB6iugj++hnkBORqMfqU+z6cbLcLfgG0zCo7tLICQ==
-X-Received: by 2002:a05:6000:178c:b0:366:e9f5:781b with SMTP id ffacd0b85a97d-366e9f5795emr9021898f8f.21.1719392390950;
-        Wed, 26 Jun 2024 01:59:50 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-366383f687dsm15187493f8f.15.2024.06.26.01.59.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jun 2024 01:59:50 -0700 (PDT)
-Message-ID: <360290b2-f9eb-4a12-9832-1bb53ff455ef@gmail.com>
-Date: Wed, 26 Jun 2024 09:59:49 +0100
+        d=1e100.net; s=20230601; t=1719400597; x=1720005397;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gobVs7CxWnVTDjLPjemjfUllxxOB4XtSiDGciS9G5r0=;
+        b=c3f2CiEbS31DXIzUMxD0RrwwlHVX2Uv1PGpz6holfuik7OEJDk2Cwwt1Dy8DuT3csM
+         v7f8lVUJtD4Oo7O/0wRoS1A76ZF5QNAVIp1sAj92jqJtm/YpGAytXzpIF4xrRYQQh3Vv
+         peD43fPtvLPhNq8ENpde64crzVXTKTNsStJjCZdNSsRAGZypTKDaqOFRDwA4u3p6F/Dk
+         1WQP6Tc2rBWr0/X60XZj5FwPQI9Cao9oUAFF5+Q1QgAE4FD6nzMgqMNvUVMN43BfKszb
+         y+7KAcOdZa2MrDgr3QKwQMPwKPqtrlxJgV/G9eRr0M4HY80G11GrOyfdvXu4gJRj5mpu
+         yrTA==
+X-Forwarded-Encrypted: i=1; AJvYcCVM6RswWJNhqhs12hT7gwKlACN46em68yVw14VAClb670oSso8RYZWmn1ZOd6gEqdrwwdc9QNtYf4UsN4TWLSty4k9/
+X-Gm-Message-State: AOJu0YySRNFqEAYHGNlk8AfEdkbUvtQqrnx1HNuz1P/Cd3LqagfKSEi7
+	PFOUpkLJnNgJeERmSQUIM/Kv/EpmEd95fyaOPTrV65ep/qgdlL4EhsGlOP8gV4iuRl/m1ZVXRjo
+	rLXYiHqefgxzfU7/4WZSYGmnni5U=
+X-Google-Smtp-Source: AGHT+IEhZRC6NYzeFAyGxZ/4MbAPBObyBUjfeYVFA6mWKfkGBs1DNsqzFGgDiSaD5VFQmAKpaZ+D0l6bqYBkTzOrlZo=
+X-Received: by 2002:a05:6870:a40a:b0:259:86ae:bd22 with SMTP id
+ 586e51a60fabf-25d06c1b572mr11448960fac.13.1719400597492; Wed, 26 Jun 2024
+ 04:16:37 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 26 Jun 2024 07:16:35 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqy16t6m8u.fsf@gitster.g>
+References: <20240625133534.223579-1-abhijeet.nkt@gmail.com>
+ <xmqq34p1813n.fsf@gitster.g> <xmqqy16t6m8u.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH] t: migrate helper/test-oidmap.c to
- unit-tests/t-oidmap.c
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
- phillip.wood@dunelm.org.uk, Jonathan Nieder <jrnieder@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
- Christian Couder <chriscool@tuxfamily.org>,
- Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
- Josh Steadmon <steadmon@google.com>
-References: <20240619175036.64291-1-shyamthakkar001@gmail.com>
- <ZnP6G6SSBynlBNUj@google.com>
- <827f6cea-2367-403f-ba8b-055c9c8a7259@gmail.com>
- <D29C89BS8UEJ.14F33FD8XJATD@gmail.com>
-Content-Language: en-US
-In-Reply-To: <D29C89BS8UEJ.14F33FD8XJATD@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Wed, 26 Jun 2024 07:16:35 -0400
+Message-ID: <CAOLa=ZTPm9CjMMyQ+nr8vLCSnEhnQMZwcMyu+7qbNKzo3ymM9w@mail.gmail.com>
+Subject: Re: [PATCH v3] describe: refresh the index when 'broken' flag is used
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>, git@vger.kernel.org, 
+	Paul Millar <paul.millar@desy.de>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: multipart/mixed; boundary="000000000000d73482061bc925e2"
 
-Hi Ghanshyam
+--000000000000d73482061bc925e2
+Content-Type: text/plain; charset="UTF-8"
 
-On 25/06/2024 20:16, Ghanshyam Thakkar wrote:
-> Phillip Wood <phillip.wood123@gmail.com> wrote:
->> When writing unit tests it is important to make sure that they fail,
->> rather than just return early if there is an error. There are a number
->> of places like this that return early without calling one of the check()
->> macros to make the test fail.
-> 
-> They do fail. `get_oid_arbitrary_hex()` from 'unit-tests/lib-oid.h' is
-> a function specifically built for the use in unit tests. And it
-> contains in built `check_*` to ensure that the tests fails if something
-> goes wrong and also prints diagnostic info. Maybe we can add a check here
-> as well to know the line number at which the call failed, but since we
-> already print queried hex value and other diagnostic info from
-> `get_oid_arbitrary_hex()`, I thought it would be enough.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Oh, sorry I didn't realize that. I agree that the check in 
-get_oid_arbitary_hex() should be sufficient.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> (#leftoverbit)
+>>
+>> Outside the scope of this patch, I'd prefer to see somebody makes
+>> sure that it is truly equivalent to prepare a separate and new
+>> struct child_process for each run_command() call and to reuse the
+>> same struct child_process after calling child_process_clear() each
+>> time.  It is unclear if they are equivalent in general, even though
+>> in this particular case I think we should be OK.
+>>
+>> There _might_ be other things in the child_process structure that
+>> need to be reset to the initial state before it can be reused, but
+>> are not cleared by child_process_clear().  .git_cmd and other flags
+>> as well as in/out/err file descriptors do not seem to be cleared,
+>> and other callers of run_command() may even be depending on the
+>> current behaviour that they are kept.
+>
+> Ahh, the reuse of the same struct came directly from Karthik's
+> review on the second iteration.  I guess Karthik volunteered himself
+> into this #leftoverbit task?  I am not convinced that
+>
 
-Best Wishes
+Hehe. I'll take it up!
 
-Phillip
+>  (1) the selective clearing done by current child_process_clear() is
+>      the best thing we can do to make child_process reusable, and
+>
+>  (2) among the current callers, there is nobody that depends on the
+>      state left by the previous use of child_process in another
+>      run_command() call that is left uncleared by child_process_clear().
+>
+> If (1) is false, then reusing child_process structure is not quite
+> safe, and if (2) is false, updating child_process_clear() to really
+> clear everything will first need to adjust some callers.
+>
+> Thanks.
+>
+
+I think it would be best to write some unit tests to capture the current
+behavior and based on the findings and as you suggested, we can decide
+the path forward.
+
+Karthik
+
+--000000000000d73482061bc925e2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 50dfd6ba845f8c23_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1aNytKRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1menZpQy85cHh6S1hXYWFQM2JxOThvd0FIMUdKU1pUZwpvMlJCUlV0NUZy
+aHBDS1FlTWhlOVdjc216SmlITVAvUnowbkFmUm1pOVYxU2l4UVlIbW5CekR6MVJEVi9DbzhYClZL
+RW1ObzFKT3liMzYrdW9Nbmt6OE4velJWZXFkYlJ1SDMvMFZFTWxDc2xNamdueXJ6TWRUOVZSOXJz
+L3N3M3AKLzVTUStxTzdJNkZzSUtHdlJJaDhmMEJ3MG5CZXduK214eWhXS0FXTVF5Q3JoeXNCZ2to
+QkRRRXVRc2ZFYWxOQQozNktwM3VmbkFwWkxHWVdWUjIrb3YwTGFad3pLU25oZytzdktDOVB5R2JV
+ZWtXc1RleG1oUmdRV091bkZZcGJCCmR6NDgzYi9tVG15VjV2Z1I2WHdWQXVySmhYNTdkcDB5TEdF
+cEpoWnZ6ZnJrT0Y3SDNVU0hMVVM0cjFXeGloWDgKRnIvNDNFQWRjSXJ6RFk5RnVGajFtUDJYVURG
+OGk3dmh1OFBBT1h4TEFtSmgxN1dsVWVFL3JNRldMRUo4d1BnSApXVFJGU050NThDSU13Y25KRTlR
+TVhTeVhJWjVJaG9jZi9wQ1ArL2RjMmF2MHQybThNTmtzY0Y5S0llOG5Mb0dYCnBiT1RINUZvQ2l1
+M2U2ZVBaMTlpY0x0T2g5RVh1Y0dEZC83LzB5dz0KPXlpeHMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000d73482061bc925e2--
