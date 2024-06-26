@@ -1,81 +1,120 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5326E611
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 18:32:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEE7190670
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 18:35:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719426775; cv=none; b=eQzOwsfBwL6JI43/Z8Z6R9u0HdldxoyNrQGlBLk8St/v6UKVYQEsSsZGzJrzkVVR64AJLU6i3JCm0RVo0/qlwj4P66wk0/sooYJnK0QK5l2S6LpLjDuaYOKHcGoRCP0fMWPdEE61UyMXLdiLRpdCouinKBsd32IueIgemdwyBVI=
+	t=1719426936; cv=none; b=JEQHw+kyEB+c5+h7jH6HR/vN8X5PqUEC7k8nMgtUE7ChAAPL4MjhHRGJS17O0Jhrl171fDdqUsitn654QcCrvApp/8WxX/Sa0wVBHLg5SO6oUenN+b2PqMOtXpOhtd0P6ni+VKB7geNbRT11gvIN3jurvp1McfJwERGJF4eusQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719426775; c=relaxed/simple;
-	bh=m8WmKVZ+Zk4Us4lZKEAlV34QcqtcvLlIK7NAlP90tSw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YzPxVoPKYw12KITAcR4XOIAm4cQnP+20LjPQJLwdTeUjZnmJTtRDVjHLsNNE6mZ5MWAsmAeCPO1VbOOk8sX5DAUB9L/ZccBF8rZmzRWpxQ9hqzeynAmr7R4GOWHGIpf72BvDFUGGWJBa51PLqHEfqYW4/AUHwK53w7x0YWkXchk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wINHTrKX; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1719426936; c=relaxed/simple;
+	bh=pgWB7Ossp2cs8kJxxyw236k+eXrfOKVoSgoTpUuxEl0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ntp1ZKfFYTGhDVCWJ/3QucShsWE+6OMClb+2V+y+wAdFPqkpRgtznifP6kSvDDOwlchbASykM+RpfLuMTBz76lJk1bPQbGAXKqjwz7HDLVARjes3/uR6xpIKas1KvWRZbIsVntFr0liN7ztkUqG3DfITlEpl5okCrFf7YjPqtGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lv9cam4x; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wINHTrKX"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E90B23926;
-	Wed, 26 Jun 2024 14:32:53 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=m8WmKVZ+Zk4Us4lZKEAlV34QcqtcvLlIK7NAlP
-	90tSw=; b=wINHTrKXv6I2qfpWQ6Gomv7lX/MMUGA7tQyHZIntUkRMyxsOKTCgMX
-	TAL5I/ZMaKAoqLPDg01I6l5JY3P8vUptThBhSrbAgLyPLHzphLi1AqbLVvlpJPIj
-	/YD6bzwiPqEJZw3VQtlcRHiet6OJTzhsnoH1oRSFhIHmBO9kjnzTY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9520A23925;
-	Wed, 26 Jun 2024 14:32:53 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0200423924;
-	Wed, 26 Jun 2024 14:32:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Darcy Burke <acednes@gmail.com>,  Karthik Nayak
- <karthik.188@gmail.com>,  "Randall S . Becker"
- <randall.becker@nexbridge.ca>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v4 0/2] Darcy's "date underflow fix" topic, final reroll
-In-Reply-To: <dedaa590-b9bf-498f-b743-ba058cba8486@gmail.com> (Phillip Wood's
-	message of "Wed, 26 Jun 2024 16:21:01 +0100")
-References: <20240625231248.4070257-1-gitster@pobox.com>
-	<dedaa590-b9bf-498f-b743-ba058cba8486@gmail.com>
-Date: Wed, 26 Jun 2024 11:32:51 -0700
-Message-ID: <xmqqle2rzh9o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lv9cam4x"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-356c4e926a3so6299942f8f.1
+        for <git@vger.kernel.org>; Wed, 26 Jun 2024 11:35:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719426933; x=1720031733; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=b0EMJe3Le+CtEGGa/WEUUFGEnsZM5RFu/94heBB2KMs=;
+        b=Lv9cam4xOF1nsApbHbn2ob4cgR1BtALnryZ0RsvTynZePkHDjdI2ZtvyBCt5EGmSZ/
+         J8GxgCxAVE6+wbwdCxfSPRijqwrAx2tuz/T8SdyItnXTMfS24v/Ao06rqNv4L3Quzpcr
+         lMb8RvXRArM9Abw5OZAyPiiJQjIwj7g9yC8RF//v65FutSatn7wtkXth71JebZXdZX5h
+         nS7JZU9/6A5cBT+XuZU9ZyHgKD+GU5YBXptDqCPCxNarMndV2iStxMZeglO2AF1XSovD
+         lG8SMdpqwOPd21zM9A4N+Z4f72P04pbUl0VzU/7LLAU0I2I34dIDDhFeFvmacy5uff4P
+         wL1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719426933; x=1720031733;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=b0EMJe3Le+CtEGGa/WEUUFGEnsZM5RFu/94heBB2KMs=;
+        b=RLXhXaqJvmhZFRekqNxVB+NufpoHBxnqu/qU1V0GkaJ7Kb+QNw48fiUKzq6JFqoECT
+         MkIEGmi/2Z5eMe6ZAYR/rAHoSNTbBRm+QfYNPy7a8oDWKQByi9CnOaQCIPhrhJdGrD6f
+         IeEwsCfqQFkVparwjdRcf+I13amPyQUwQ2TQwjt0Nme1eZEY4qJOrrtPjM6JamKL7zKQ
+         vgc3qWLNLAyhzoQRJ9k8F9Wr8CwaqE/aj1EdTH2AzonSA3JucGP4kMY4+PbOTk4O+1vG
+         fN3lVdrpn4898J8U6Xp5wnO3xzfv48BVYJoHnAhU+gXuEdbVJonjyyCVBa45a5N1JqMx
+         bGkw==
+X-Forwarded-Encrypted: i=1; AJvYcCVxIITUPyOeTatSa7yDck0ILOedoyLtsjKPtQlua3xUqTjXADkqzE3tTxWCPlHbDqPZcdA3MbHa9d/WEcPNHCLt6NGS
+X-Gm-Message-State: AOJu0YyzzOa7kzCSv+mqY+P/yJY1WQ/RP6fbtoyvPKVImfQgUd9p74Ao
+	0HtNmhhuUWZjsdmeq67eHlauTCQDWGqN+4N3PvnGAEBntpSEEErQ
+X-Google-Smtp-Source: AGHT+IHMwxnkW3tYksYBe2QXreJrHhvp6q4CJgvVPFlkovmArGspk3J/0nMdhCMDXsihtN1Yvxhiwg==
+X-Received: by 2002:a05:6000:178c:b0:366:e9f2:a54c with SMTP id ffacd0b85a97d-366e9f2a65amr8430379f8f.47.1719426933034;
+        Wed, 26 Jun 2024 11:35:33 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-366389b8597sm16503259f8f.36.2024.06.26.11.35.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jun 2024 11:35:32 -0700 (PDT)
+Message-ID: <aa94be27-60a5-42d9-adcc-f25f9a8d6ae5@gmail.com>
+Date: Wed, 26 Jun 2024 19:35:32 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 7FBDA16C-33EA-11EF-B014-965B910A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Local git server can't serve https until repos owned by http,
+ can't serve ssh unless repos owned by user after 2.45.1
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ "David C. Rankin" <drankinatty@gmail.com>, git@vger.kernel.org
+References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
+ <xmqq8qz376fb.fsf@gitster.g> <20240617211513.GM19642@kitsune.suse.cz>
+ <20240625072419.GU19642@kitsune.suse.cz> <xmqqr0cl6lxl.fsf@gitster.g>
+ <20240625183411.GW19642@kitsune.suse.cz>
+ <834862fd-b579-438a-b9b3-5246bf27ce8a@gmail.com> <xmqq34oz1shc.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqq34oz1shc.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On 26/06/2024 19:14, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> ... What is happening is that
+>> git-daemon checks that the repository path is listed as safe and then
+>> changes into that directory and forks
+>>
+>> 	git upload-pack --strict .
+>>
+>> "git upload-pack" then checks "." against the list of safe directories
+>> which fails. It fails because the safe directory check does not do any
+>> normalization such as cleaning up "//" elements (as seen in your
+>> example) or expanding relative paths on $git_dir before checking it
+>> against the list of safe directories.
+>> ...
+>> I think the fix is probably to make the safe directory check use the
+>> absolute path of $git_dir. In the mean time there is a workaround if
+>> you're happy to add "." to the list of safe directories.
+> 
+> It still is curious why unnormalized "." does not pass "*"
 
-> Hi Junio
->
-> On 26/06/2024 00:12, Junio C Hamano wrote:
->> So it has been some time since we discussed this topic.  Let's clean
->> up the messy "SQUASH???" patches I had to queue on top of the main
->> patch to keep the CI working and make them into a preliminary patch.
->> The tree at the end of the series is identical to what has been
->> queued in 'seen' for the past few weeks.  The only difference is
->> that we first lay groundwork to skip certain time-parsing tests on
->> 32-bit systems first, and then use Darcy's patch with minimum
->> adjustments for 32-bit systems.
->
-> I've had a read through this verison and I don't have anything to add
-> to Eric's comments.
->
-> Best Wishes
+Sorry if I wasn't clear. "." is considered safe with "safe.directory = 
+*" but I was looking at why it was not considered safe when using 
+repository paths in safe.directory.
 
-Thanks, let's mark it for 'next' then.
+Best Wishes
+
+Phillip
+
+> (which is
+> not even a pattern matching, but is a declaration that says "don't
+> bother which path we are talking about"), though.  As long as the
+> value of that configuration is found to be '*' literally, safe
+> directory data is marked as "is_safe" (cf. setup.c:safe_directory_cb
+> and setup.c:ensure_valid_ownership; notice that data.path is not
+> even consulted if the value of the configuration variable is '*').
+> 
+> Anyway, thanks for digging.
+> 
