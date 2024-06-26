@@ -1,60 +1,60 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DCF155A26
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 18:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE5014D2B8
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 18:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719427770; cv=none; b=RmJSottYc9IoCEidRLr6Yw/+LTz4iwPS692MEwtDztBLNEmD3o12wBlvccDOqMxmyrW9ub7kRl8kpBxfsD2HX09HcvPISfaRRh3O7HwQOJ1XJoAtYS+hwFq6OnRvkVjLefyF7dSP6LIKjEeq75Z2VR2UB6B9AYUEK2xzevwnY+Y=
+	t=1719427913; cv=none; b=qNu7H5ZKFZN4arTAgDVZyd5m5twG4x4BGrALtreRE3ifUvuQhVyZA+THIfnxCThJ1Y4WqJNsvXqo4t8pXLG0ByJTwDx6r53bxgHljHfeKARUPRkgdwtrmmf5DuM9fUzGo4taoyF2zHbbfwmtziEiKJBEXurFKY1s7mjWrEoZ3uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719427770; c=relaxed/simple;
-	bh=3DiwA5t3KK5gSqxrZHNRFGlzbeBAH21nwN2w7Y3IScc=;
+	s=arc-20240116; t=1719427913; c=relaxed/simple;
+	bh=IDK4tUGa763ECwU3AXh/wEukCF7cIc7f+TiGPqrxoJs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QjukMN/gqB38eXT/AkwMSxp7It8pWDVC97geU7TfDRRelM51IAcAhev8oQkNx28eufmp91Q1AlJonNBBWz0+mBdi+YrgNZYtDyfErpbyQQ8A9iwb5v1uYQ6B2vLhGHtS4tzIJKImW5b3HR+FVL2XRfObidTjl7mqoMv9Oxv5/ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=UepvsTiQ; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=ahKQJ81auXt077+c61wC8Wb3D+slnuOHkbZv7k7gQpxpvUzZ+csUbvh6YnOP+6Xf+qjrWS0so2U7DKC+X/yworqO54liO9tu4hHbu5Hd1sHWJQwEOz3Huc7j+Jl5/9VlSnpENPB8jbQfA75i1bNd5x2VvCOUzSqFqfnURQivz2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=MfKWMR/s; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UepvsTiQ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MfKWMR/s"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 430F02129A;
-	Wed, 26 Jun 2024 14:49:28 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8939A21339;
+	Wed, 26 Jun 2024 14:51:51 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=3DiwA5t3KK5gSqxrZHNRFGlzbeBAH21nwN2w7Y
-	3IScc=; b=UepvsTiQ1jqGSUpBGYTAaUPbpMG8z+6Ym0Wcg44O8GWo0ejb0WbgEX
-	DGWaXpAj2b1ehbTCHHKcq86NhlzcaO48KXbGFpWoo4gdbBojQ9U5yZMJZ5aNM1I2
-	RoyN74LI5fsxHi+1NSn180ajXtQ3Z5pa01jqOOpYO7iicLiAmZ6ks=
+	:content-type; s=sasl; bh=IDK4tUGa763ECwU3AXh/wEukCF7cIc7f+TiGPq
+	rxoJs=; b=MfKWMR/sGNO/frR1yoKXST8qALSr8LD0ZJfPZFUdbtcjg7kgtbaDfh
+	HzvBhWtPnibXOChX45uzNfB6pMWRKe0xTMOSf2pa47oVJwuFugHGSITi+Ev1yawJ
+	qwQyWyEzhHCjqOhm14fFzi8p3/PfenL9ULuwvQbX9z3hr3/4Ph8fw=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 39C7621299;
-	Wed, 26 Jun 2024 14:49:28 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8192121338;
+	Wed, 26 Jun 2024 14:51:51 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.219.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 51A1821297;
-	Wed, 26 Jun 2024 14:49:24 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 28A0F21336;
+	Wed, 26 Jun 2024 14:51:48 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,  Paul
- Millar <paul.millar@desy.de>,  Phillip Wood <phillip.wood123@gmail.com>,
-  Elijah Newren <newren@gmail.com>,  Jeff King <peff@peff.net>
-Subject: Re: Re* [PATCH v5] describe: refresh the index when 'broken' flag
- is used
-In-Reply-To: <f7d0abce-b389-45ae-992a-adbc7ec10d50@gmail.com> (Abhijeet
-	Sonar's message of "Wed, 26 Jun 2024 23:37:29 +0530")
-References: <xmqq34p1813n.fsf@gitster.g>
-	<20240626065223.28154-1-abhijeet.nkt@gmail.com>
-	<CAOLa=ZRz2KEGiBnX1YP6JG1nXXHLfw9A3dHKO3s_ViLhq+bWww@mail.gmail.com>
-	<2e80306e-2474-4254-95eb-c2902a56ffdd@gmail.com>
-	<xmqqikxv4t1v.fsf_-_@gitster.g> <xmqqcyo33cgu.fsf@gitster.g>
-	<bbc223a3-2c82-4108-adf1-5e8518ff776e@gmail.com>
-	<xmqqsewz1ua5.fsf@gitster.g>
-	<f7d0abce-b389-45ae-992a-adbc7ec10d50@gmail.com>
-Date: Wed, 26 Jun 2024 11:49:22 -0700
-Message-ID: <xmqq8qyrzgi5.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,  Johannes
+ Schindelin
+ <Johannes.Schindelin@gmx.de>,  "David C. Rankin" <drankinatty@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: Local git server can't serve https until repos owned by http,
+ can't serve ssh unless repos owned by user after 2.45.1
+In-Reply-To: <aa94be27-60a5-42d9-adcc-f25f9a8d6ae5@gmail.com> (Phillip Wood's
+	message of "Wed, 26 Jun 2024 19:35:32 +0100")
+References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
+	<xmqq8qz376fb.fsf@gitster.g> <20240617211513.GM19642@kitsune.suse.cz>
+	<20240625072419.GU19642@kitsune.suse.cz> <xmqqr0cl6lxl.fsf@gitster.g>
+	<20240625183411.GW19642@kitsune.suse.cz>
+	<834862fd-b579-438a-b9b3-5246bf27ce8a@gmail.com>
+	<xmqq34oz1shc.fsf@gitster.g>
+	<aa94be27-60a5-42d9-adcc-f25f9a8d6ae5@gmail.com>
+Date: Wed, 26 Jun 2024 11:51:46 -0700
+Message-ID: <xmqq4j9fzge5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -64,50 +64,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- CE9D59E2-33EC-11EF-BB68-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
+ 2458B03E-33ED-11EF-B8FE-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-Abhijeet Sonar <abhijeet.nkt@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On 26/06/24 23:05, Junio C Hamano wrote:
->> Abhijeet Sonar <abhijeet.nkt@gmail.com> writes:
->> 
->>> To me, this looks much better.  child_process_clear's name already
->>> suggests that is sort of like a destructor, so it makes sense to
->>> re-initialize everything here.  I even wonder why it was not that way to
->>> begin with.  I suppose no callers are assuming that it only clears args
->>> and env though?
->> 
->> I guess that validating that supposition is a prerequisite to
->> declare the change as "much better" and "makes sense".
->
-> OK.  I found one: at the end of submodule.c:push_submodule()
->
-> 	if (...) {
-> 		...some setup...
-> 		if (run_command(&cp))
-> 			return 0;
-> 		close(cp.out);
-> 	}
+> Sorry if I wasn't clear. "." is considered safe with "safe.directory =
+> *" but I was looking at why it was not considered safe when using
+> repository paths in safe.directory.
 
-This is curious.
+Ahh, OK.  We tell them /home/wood/repo/git is a good repository to
+visit, but daemon's call to ensure_valid_ownership() asks "I am in
+the '.' directory; does that match /home/wood/repo/git?"  
 
- * What is this thing trying to do?  When run_command() fails, it
-   wants to leave cp.out open, so that the caller this returns to
-   can write into it???  That cannot be the case, as cp itself is
-   internal.  So does this "close(cp.out)" really matter?
+That sucks.  I agree with your idea that we'd need to canonicalize
+both before comparing.
 
- * Even though we are running child_process_clear() to release the
-   resources in run_command() we are not closing the file descriptor
-   cp.out in the child_process_clear() and force the caller to close
-   it instead.  An open file descriptor is a resource, and a file
-   descriptor opened but forgotten is considered a leak.  I wonder
-   if child_process_clear() should be closing the file descriptor,
-   at least the ones it opened or dup2()ed.
-
-In any case, you found a case where child_process_clear() may not
-want to do the full re-initialization and at the same time it is not
-doing its job sufficiently well.  Let's decide, at least for now,
-not to do the reinitialization from child_process_clear(), then.
-
-Thanks.
-
+THanks.
