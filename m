@@ -1,151 +1,132 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F2718FDD0
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 17:28:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEF918FC63
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 17:29:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719422930; cv=none; b=EPGgMZRJswnrxUeIhu/uqKpFYZsNYuCR4kAa2OoeO5tkaznSspe8KyiCu1uPPee2Izjm2GFU5OgkE1yryCxHu0ZJkxy2JBa7hUO/2mBQw9MED1KkTUAKYNSjF9xW3aQaWdZtr9d0qBEPVoi1S522H/f90jn5tUzLW1IM3uX0R4A=
+	t=1719422970; cv=none; b=R52AKJ6QRFIZj8Ti6DKcVX215yMPiUtD/wR0dsHlN0f9rq+WAnCKEdbSHInIC+N8b+Ix3QrTy8ihEC3lPrtzAU4VzKB+Iu11ykd/MPw/P5NEd4RAH/NTbfZg6sYaG/WjpbSctClXXVOo39aoU1oixoMYlxDGaRR3MlhwGlrbf6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719422930; c=relaxed/simple;
-	bh=baSoUoR0tOG1v4J1PqoeKeeBv/geC+TLI93+ivfVfvg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PGdQ9g702TmhZlcRZKLXOeuktdMD+HEmGviKtfLCWDPA6b6YfB3i93JbinDT9LxVTJ9FXJoa1tzGBH0WrdAxG9gQq69pFcostprZoeankuW340JFkthROS1fYt31KUKNy0zakR646sMIWXMHq9+zOQttD+klpKR85lH9eznV6Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oPa/1Xc0; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1719422970; c=relaxed/simple;
+	bh=TZdSdsASr4BzHF3zmFeAkR3PQ5sWDIus1OULfjKn158=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZKiodVe8Mr+tNIuNxQqAxSRkm1ROqyDInx83TELnclUqaQhodjNQ2icdzDEUas5Vwzafhsfu9th5xzxScI3JCwdv1rJ3RYyfkolKXOFd9m++UUpDl80nYAcrXk/LnqVHRSj5Br8KoQCdisa6Ukcfb85pCF8/rlsyR3cYExo/AQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UL7w3Y+2; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oPa/1Xc0"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B1452FDA7;
-	Wed, 26 Jun 2024 13:28:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=baSoUoR0tOG1
-	v4J1PqoeKeeBv/geC+TLI93+ivfVfvg=; b=oPa/1Xc0dQQGPhFvOIjI1Nei41Gi
-	e2LxrcuXSQDxAgBZh1HFpgajXYf0OijsdJPFHzsDjpx4/zpORvB5LdWZ2Bg755zC
-	+NEKoG4J5PLBwbVTx5GrPtDREI7gEIZ9tTsoucro9AcCxMSzHI+dwrhMNcRLJo7T
-	GvtKgQ0Q6/+GlXw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3438C2FDA6;
-	Wed, 26 Jun 2024 13:28:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B1072FDA5;
-	Wed, 26 Jun 2024 13:28:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Cs=C3=B3k=C3=A1s=2C_Bence?= <csokas.bence@prolan.hu>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH v2] git-send-email: Use sanitized address when reading
- mbox body
-In-Reply-To: <20240626132440.3762363-2-csokas.bence@prolan.hu>
- (=?utf-8?B?IkNzw7Nrw6FzLA==?=
-	Bence"'s message of "Wed, 26 Jun 2024 15:24:41 +0200")
-References: <20240626132440.3762363-2-csokas.bence@prolan.hu>
-Date: Wed, 26 Jun 2024 10:28:45 -0700
-Message-ID: <xmqqy16r1ulu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UL7w3Y+2"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-70675c617e7so183924b3a.0
+        for <git@vger.kernel.org>; Wed, 26 Jun 2024 10:29:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719422968; x=1720027768; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ojaD2Lu8UXiOinWU0IRIn1em+CTwj/DY6HA/b8qB1is=;
+        b=UL7w3Y+21FP0YiT7LF55t9b5u599eyHm6d4n53NQBqI+ujrl597BhcHdjBJtniXvHh
+         lXyx0nLUJNLKVjpsUy3V3RM+E+G0QQQyVL1N1NlO+2ZIKvaAXhUb02O8dBML4nXF2L3m
+         sWftlsCyi7l2IK8DFS63Lf4mVtfx9xAtrJBdAKy0Wf2gHcSil0HyVvuCHRftRoWzSyG8
+         ZRzae4oWgd/LL/PC3FkYB9JuawaQGPQHdjJHiPNEc6rBte1zY58+K1fe5p+kynROcWwJ
+         MC7mmP+nOQBNbJuZgwsSx4fNVwEwqrCsE6e7IOKklxFlYDNVBEL474XbeprIm45xvCG4
+         4qOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719422968; x=1720027768;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ojaD2Lu8UXiOinWU0IRIn1em+CTwj/DY6HA/b8qB1is=;
+        b=fVmzrUceXjhwC8SPScMQnSf7oBkHHW5DivWNy1dI76iGNPXrCRd6VWrXpy0LvFIvie
+         lW27tu8W2CsVuZ1BP3YOleCRgUMbBZ8tizUq6FjSoEnQwXJlphYomaHBHKIh2lN6seZI
+         XJBi19oWFgxiJLDk7G01kxqyqII8OJWJKHJQO1F9kBcWPAFfG40i/14dYB0o7Th+s2+v
+         ZQt/UbsE2t3fmHV0A0nt0bLfGODZlMUPe2DMC9yVgHoCFbpFWrIymjp1piIcp1fViAmd
+         vFhbwRRoAzuLxR9O/zEY2r/23fciE++ZgMZ5cRFJTVjQh/Em+PcRVuB5nv5tHK40UE53
+         aRSw==
+X-Forwarded-Encrypted: i=1; AJvYcCVtN7x9cGmvkA8pJX8ogbqoHHue/cJrXsD3pO1rxKwWkSstUJ7DjQtxNA01DZ1ItCQUNBfv6IKq7d967VTcDrbTYn/c
+X-Gm-Message-State: AOJu0Yw9/90BVovKfKpC3iBOXh3FRZkh8djYquFf4ZuaGR9qMkN3grk2
+	Hh1aMY9jvm44hKzkJdcF3iULSnG0SlDW1WhS9s4WrUbxydlOAT6p
+X-Google-Smtp-Source: AGHT+IEk/HncyGbp2UHNfreL/1K0LCRha4iFkjW8/8SddYc7I3WW7Snui9OO39gUKQevnvEFziVwKw==
+X-Received: by 2002:a05:6a00:784:b0:706:32d1:f6c9 with SMTP id d2e1a72fcca58-70667dda8e2mr12847025b3a.2.1719422968097;
+        Wed, 26 Jun 2024 10:29:28 -0700 (PDT)
+Received: from ?IPV6:2409:40c2:205a:5198:c04f:bc01:50f8:f177? ([2409:40c2:205a:5198:c04f:bc01:50f8:f177])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70694606cefsm4053683b3a.8.2024.06.26.10.29.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jun 2024 10:29:27 -0700 (PDT)
+Message-ID: <bbc223a3-2c82-4108-adf1-5e8518ff776e@gmail.com>
+Date: Wed, 26 Jun 2024 22:59:22 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 8B1F3E5C-33E1-11EF-84A5-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: Re* [PATCH v5] describe: refresh the index when 'broken' flag is
+ used
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+ Paul Millar <paul.millar@desy.de>, Phillip Wood <phillip.wood123@gmail.com>,
+ Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
+References: <xmqq34p1813n.fsf@gitster.g>
+ <20240626065223.28154-1-abhijeet.nkt@gmail.com>
+ <CAOLa=ZRz2KEGiBnX1YP6JG1nXXHLfw9A3dHKO3s_ViLhq+bWww@mail.gmail.com>
+ <2e80306e-2474-4254-95eb-c2902a56ffdd@gmail.com>
+ <xmqqikxv4t1v.fsf_-_@gitster.g> <xmqqcyo33cgu.fsf@gitster.g>
+Content-Language: en-US, en-GB
+From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+In-Reply-To: <xmqqcyo33cgu.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-"Cs=C3=B3k=C3=A1s, Bence" <csokas.bence@prolan.hu> writes:
+On 26/06/24 21:47, Junio C Hamano wrote:
+> Or alternatively, we could do this to ensure that the child_process
+> structure is always reusable.
+> 
+>  run-command.c | 1 +
+>  run-command.h | 6 +++++-
+>  2 files changed, 6 insertions(+), 1 deletion(-)
+> 
+> diff --git c/run-command.c w/run-command.c
+> index 6ac1d14516..aba250fbe1 100644
+> --- c/run-command.c
+> +++ w/run-command.c
+> @@ -26,6 +26,7 @@ void child_process_clear(struct child_process *child)
+>  {
+>  	strvec_clear(&child->args);
+>  	strvec_clear(&child->env);
+> +	child_process_init(child);
+>  }
 
-> Commas and other punctuation marks in 'Cc: ', 'Signed-off-by: '
-> etc. lines mess with git-send-email. In parsing the mbox headers,
-> this is handled by calling `sanitize_address()`. This function
-> is called when parsing the message body as well, but was only
-> used for comparing it to $author. Now we add it to @cc too.
+To me, this looks much better.  child_process_clear's name already
+suggests that is sort of like a destructor, so it makes sense to
+re-initialize everything here.  I even wonder why it was not that way to
+begin with.  I suppose no callers are assuming that it only clears args
+and env though?
 
-The above is misleading, though.  We do use sanitize_address on
-addresses we find on e-mail headers, but the result is not used
-in @to or @cc, the addresses we use to actually send the message
-out.
+>  struct child_to_clean {
+> diff --git c/run-command.h w/run-command.h
+> index 55f6631a2a..6e203c22f6 100644
+> --- c/run-command.h
+> +++ w/run-command.h
+> @@ -204,7 +204,8 @@ int start_command(struct child_process *);
+>  
+>  /**
+>   * Wait for the completion of a sub-process that was started with
+> - * start_command().
+> + * start_command().  The child_process structure is cleared and
+> + * reinitialized.
+>   */
+>  int finish_command(struct child_process *);
+>  
+> @@ -214,6 +215,9 @@ int finish_command_in_signal(struct child_process *);
+>   * A convenience function that encapsulates a sequence of
+>   * start_command() followed by finish_command(). Takes a pointer
+>   * to a `struct child_process` that specifies the details.
+> + * The child_process structure is cleared and reinitialized,
+> + * even when the command fails to start or an error is detected
+> + * in finish_command().
+>   */
+>  int run_command(struct child_process *);
+>  
 
-Perhaps phrase it more like ...
 
-    When we check addresses found on the mbox headers to see if we
-    want to add them to Cc:, we use sanitize_address() function to
-    normalize the addresses before passing them to the suppression
-    mechanism, but we use the original addresses for the purpose of
-    sending the message out.
-
-    We use the same logic on the address-looking strings found on
-    trailer lines that appear in the message body.  Sanitized
-    addresses are used for Cc-suppression purposes, but the original
-    addresses as written by the end-user are used as the mail
-    destination.
-
-    There are certain quoting rules for e-mail addresses, and unlike
-    addresses on e-mail headers that are generated by format-patch,
-    hand-written addresses on the trailer lines are more likely to
-    violate them by mistake.
-
-    When adding the address found on a trailer line in the message
-    body, use the sanitized address for both sending the message
-    out, as well as checking with Cc-suppression mechanism, to
-    reduce the risk of malformed hand-written addresses to get the
-    message rejected (but keep using the original addresses found on
-    the e-mail headers in the input message for e-mail destination).
-
-... or something like that?
-
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 58699f8e4e..7e0b8ae57c 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-
-This test uses mixture of test_grep and grep, so use of "grep" below
-is fine (but in the longer term we should make sure the tests use
-the former for better debuggability).
-
-As I always say, we should resist the temptation to write our tests
-just to demonstrate our shiny new toy.  In this case, the test is
-too focused to show that the system will give a best-effort output
-when fed invalid and/or malformed addresses, but it does not see
-what happens to a well formed addresses (ideally they are passed
-intact, but is that what happens with the new code?).  Perhaps add
-one or two trailer lines with valid addresses (and non-address, like
-"BugId: 143421", that should not appear at all in the output) on
-them?
-
-Thanks.
-
-> +test_expect_success $PREREQ 'cc list is sanitized' '
-> +	clean_fake_sendmail &&
-> +	test_commit weird_cc_body &&
-> +	test_when_finished "git reset --hard HEAD^" &&
-> +	git commit --amend -F - <<-EOF &&
-> +	Test Cc: sanitization.
-> +
-> +	Cc: Person, One <one@example.com>
-> +	Reviewed-by: F=C3=BC=C3=B1n=C3=BD N=C3=A2m=C3=A9 <odd_?=3Dmail@exampl=
-e.com>
-> +	Signed-off-by: A. U. Thor <thor.au@example.com>
-> +	EOF
-> +	git send-email -1 --to=3Drecipient@example.com \
-> +		--smtp-server=3D"$(pwd)/fake.sendmail" >actual-show-all-headers &&
-> +	test_cmp expected-cc commandline1 &&
-> +	grep "^(body) Adding cc: \"Person, One\" <one@example.com>" actual-sh=
-ow-all-headers &&
-> +	grep "^(body) Adding cc: =3D?UTF-8?q?F=3DC3=3DBC=3DC3=3DB1n=3DC3=3DBD=
-=3D20N=3DC3=3DA2m=3DC3=3DA9?=3D"\
-> +" <odd_?=3Dmail@example.com>" actual-show-all-headers &&
-> +	grep "^(body) Adding cc: \"A. U. Thor\" <thor.au@example.com>" actual=
--show-all-headers
-> +'
-
->  test_expect_success $PREREQ 'sendemail.composeencoding works' '
->  	clean_fake_sendmail &&
->  	git config sendemail.composeencoding iso-8859-1 &&
