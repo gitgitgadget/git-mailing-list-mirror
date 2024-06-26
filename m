@@ -1,41 +1,44 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF81514F134
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 19:06:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E4514F134
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 19:06:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719428772; cv=none; b=j978hqQ/GP67rRiux24SELV+CxhLtzTdJs+ic772BVW31vxh7x4ToFHlqtncssm27SoHxXJ6G9Ytucs4Lmi/jI4094PoWDx37589rX+q4z2Oaak1d6KQywVaTnKbVt3GE08F5Nqv5rI8M4xO1k2+dA3dyiGOZ2AcXJVEWBC4RTQ=
+	t=1719428783; cv=none; b=Qf9wbsh8fZA9ANMBeS0Nngek6QdoyyQk4nhV1sw8OpUq77ktWCiVANEA2MLyQ/SrUyHLFr8WUCPiq5gXpx/TeG7DAyslimrXPKVIQ+Hms4jZuoBooMRrDHK7B9UHuChLqp1vDJD96qhNv/pHCu4lvUW6FHuogA62Wpek+/1lBG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719428772; c=relaxed/simple;
-	bh=7sDJXjvCQZaTNOwdwDHHS2G3fIf93uZmKwZ9cN1aKiE=;
+	s=arc-20240116; t=1719428783; c=relaxed/simple;
+	bh=b7DvMD8O66RQ43oFkxTnd98NJZ50MjvlEYCDLVu7zeM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YwUyuayZhSCk8Bfl0Pa9pc5UD6UIrukR8TR39Rk+1qN/tv1Hwv73v7RPHTQJsA2VDxh9JPZT1MGV7er45sYNABqPxBe/2LTi9kDu5Lp9PYKhL1/oimR2M/LFQW7zdaUOkTQWhyWu9Tz2zBkmM2ofx7jGg2q3FJdRchC2eAYA7vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=q+NnmS1Y; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="q+NnmS1Y"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1719428755; x=1720033555; i=l.s.r@web.de;
-	bh=eTmarDRcAigyg6Dtg0hxNu1BuLqCmZb9zCZE9rPMGYM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=q+NnmS1YLFdp6T/usvM79RJjT6qtTCIkDnfkWHFzZ0F3b0aV/vBhDk0GcOqr7ro4
-	 JD+dup5H6tWFzYmExuP2+eNK0uDUG2BZVJZuh5LNdREW7QTWOSBuPNanTARXULjGj
-	 CcUZYrRrg/Cbzw5TxBM8l8pK41jSKaf3WfvE5JsfRPXOEaDDFjnHvzDSgAJipMeoz
-	 TXd6+Cm6XQuXEqQnK/lH2O0dkmm60yYUecWaot40tUx0BPI/wb574NxMI2MvZOmor
-	 TaqpW0Cg5M+6NoLUPVHdLXUw0wmDp9cLy7AbZDAZkmDGMtFAuNgu6uFQc214LAJG0
-	 WoR/emPjNDFqS+FN7A==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.153.5]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MHmq2-1s8m3h2mxy-0085Z0; Wed, 26
- Jun 2024 21:05:55 +0200
-Message-ID: <d1842d42-6104-49f0-99b6-fc9095a61b6a@web.de>
-Date: Wed, 26 Jun 2024 21:05:54 +0200
+	 In-Reply-To:Content-Type; b=kXALkP10tZTAWF8xeRmpFtwaUuGHMn4Ti5iKjzJxI6/G9DfI/GpPthlskyd5nDrP7TFx9Tfcc2qVaMrAW7L41xMieBkESM8CZ0F3KG8TEraPMDbuz5mKdoHTv9ViLvkMWcY6mfnsILo0JiwWEQzGxiNolKjMtCVACVMU39CIi+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=geekplace.eu; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=geekplace.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3651ee582cfso3840081f8f.2
+        for <git@vger.kernel.org>; Wed, 26 Jun 2024 12:06:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719428773; x=1720033573;
+        h=in-reply-to:from:content-language:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=b7DvMD8O66RQ43oFkxTnd98NJZ50MjvlEYCDLVu7zeM=;
+        b=UEgji15Q7hgi0FHQPgGHWoOHtITHJDxcyDE7/UCNiOtzPXYgjqoTneDRa+7P2L26HT
+         NNlVgFNqTuJDBNclqMOM8FeboFQehpPWhbDQ0eDScbXNSExw0nIOivkDcjEMQpz069/X
+         u9dyb6hGwwxWh321bQb+/TvhIdPSFWbT7GRlEO/ly91QplV2BaK74mjUMPxKCVHn6oTM
+         qD8IZxlu+4JIVT2Glddyb+LfuapKCeBzN5NbsQBDTA4kDAWAArvVEy8B+pQMBsqjlZdh
+         za+rXJXbOreuMh4Mmw9s5DP6GGAKxmiAH9O/sVY5wAhWuvgaUx3zUdpPw+yXA9jc5p3F
+         PW9Q==
+X-Gm-Message-State: AOJu0YzqepqmlKUktjApndj/Mcvd1cNO/7NCmWMfrMgiDqtJwBpLVnYg
+	Y5YMedOFQrdOruplK5h4s4BwDyzVTV80pcFLFyRgZG6xg5DXOyIj
+X-Google-Smtp-Source: AGHT+IE5Ld1yOb3gz03j4S8LymrcATA1oMEWBLAen45PUo6Nw2ZG8HwL0MrD3v2lkEDkjzRae7NJGQ==
+X-Received: by 2002:a05:6000:a83:b0:360:781c:8241 with SMTP id ffacd0b85a97d-366e94cf1b1mr7015419f8f.40.1719428772813;
+        Wed, 26 Jun 2024 12:06:12 -0700 (PDT)
+Received: from ?IPV6:2001:4091:a242:8321:34fb:50ff:feac:591b? ([2001:4091:a242:8321:34fb:50ff:feac:591b])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-366389b85a2sm16544538f8f.42.2024.06.26.12.06.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jun 2024 12:06:12 -0700 (PDT)
+Message-ID: <a87a7131-3207-42f2-93c0-e6e9e02a2062@geekplace.eu>
+Date: Wed, 26 Jun 2024 21:06:10 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,73 +46,99 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] archive: document that --add-virtual-file takes full path
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc: Tom Scogland <scogland1@llnl.gov>,
- Tom Scogland via GitGitGadget <gitgitgadget@gmail.com>
-References: <pull.1719.git.git.1715721327429.gitgitgadget@gmail.com>
- <pull.1719.v2.git.git.1715967267420.gitgitgadget@gmail.com>
- <bc3711a7-37d5-46bc-979e-83bd0b2cf900@web.de>
- <95B94723-BCBF-48B4-A02C-A5C61FB060DA@llnl.gov>
- <01b21870-b37e-47fe-9bd7-225499ae5eaf@web.de> <xmqqh6dvflea.fsf@gitster.g>
- <xmqq5xubfjuu.fsf_-_@gitster.g> <xmqq8qys7iex.fsf@gitster.g>
+Subject: Re: [PATCH] setup: support GIT_IGNORE_INSECURE_OWNER environment
+ variable
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Phillip Wood <phillip.wood123@gmail.com>
+References: <20240626123358.420292-1-flo@geekplace.eu>
+ <20240626123358.420292-2-flo@geekplace.eu>
+ <9e5b0cc6-e28c-4c51-ab48-663c61c00ee3@gmail.com>
+ <72e42e9f-5b85-4863-8506-c99d658d7596@gmail.com> <xmqqa5j71snb.fsf@gitster.g>
 Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq8qys7iex.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:gdRvdr3lZcFmLEq8Akd1wgh0W9I4/h4iA+riLbxvc0vhr8gVN2N
- PWkS8iYcpPeEU6aCNycKoTWHG9Gfh2wdxLRAysAdw2io3jx7Px9ErAtoM+B34gz6hdM6gOP
- 5+iVsDzFVHnyy/QACdsJW7GL3BWYu/3iTsFpcEas1GIS6qqu+jFcbgo5Iq1nK26nnEVmu1p
- ikagMbtxp7wSwC/2zftdg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:lSgcjBuyiIA=;5P7ZDTPNEcFff4RGXNB3TI1/tAX
- Sp8dSnruyDMKCSHXFKTdGaYOhsRnjqztm6v7Dbq5UkkWbLKjDrr1HgaGIa8QZj5vklk/MWrud
- t2ifQ9GtdlxN4/Tr1nPySrAqHpUsCuU+c7SaxIetRLPAhWWK6xJ6Kbt4egYQCHbHLl5U96b4R
- XqUCcPGV12VnlbXSEsDMM6LrIMvCHEvKDXHskPbtcofeYt1moOXYNCGL4gQdqbV4QQi8/bV/j
- MnJCnsZjP84BdL3RmD0/nLVpVslVN4vaCgo1pX3p5q/aosY/PEwiSjB+/Y8j+SgkOMaiBZzkb
- WdyTMO1JNqGE4sv/tsv6VhJ44xHgfiZ7loGv5M+qqzihLK+EOBy+s1BSZZllCOKQ1FkjBCijF
- v3ZAd065RId3YX/UDojSbINxTIiuQCJyrSTDhBFJPKajjap8zNR1CVyNEEcEVtrA9gU+AyeRC
- rJ0PIsbQYILv5V/BSORPVZ4e/s2+bY0ueCyXNrCBcfrEHoJaToHV7ee7/2NTptSVOjgzwtubk
- 9Y7lq6t6nQ0sd0PYkCrCQM0Qy28yg2s7ftWw4mS+XYOR7QsU+98dN7/J8YpWoJYuvhXCU+3os
- I6+gwRxnq8anDyTj5FopEUUsW7BhaTqf36Nr8HhMeImclcRZAyGD8PmRXRW7OD8E99lAsAHOe
- PfFNR765UQgFzjpEEnznbbgk+Jq4aY9Np8uEGsyqznYRJPLa5job7DCWXxr6dN1swWwsGT3+X
- AagsGooQmaYF5IRb/dLudZKSze8hauFIjWTEhm2fxTAPz8vueEsuLyGAaml0YOhuBDo3EzRrD
- 3US0f6TjPbgKCqD3xpZtk0GXaApItZoy1Bng5R5DZ7EKA=
+From: Florian Schmaus <flo@geekplace.eu>
+In-Reply-To: <xmqqa5j71snb.fsf@gitster.g>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------Dapu1xjaXyF7tFSkgmBYH0EX"
 
-Am 26.06.24 um 00:43 schrieb Junio C Hamano:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>> It has been a few weeks since this discussion stalled.  Let me make
->>> an executive decision on the direction here---let's keep the behaviour
->>> and align the documentation so that we won't break existing users.
->>>
->>> Thanks.
->>
->> So here is to re-ignite the discussion.
->>
->> ----- >8 -----
->> Subject: [PATCH] archive: document that --add-virtual-file takes full p=
-ath
->
-> And it seems that nobody is interested in the topic all that much
-> anymore?
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------Dapu1xjaXyF7tFSkgmBYH0EX
+Content-Type: multipart/mixed; boundary="------------G0AroLgJNf1nK0kTeRYHTXsd";
+ protected-headers="v1"
+From: Florian Schmaus <flo@geekplace.eu>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <a87a7131-3207-42f2-93c0-e6e9e02a2062@geekplace.eu>
+Subject: Re: [PATCH] setup: support GIT_IGNORE_INSECURE_OWNER environment
+ variable
+References: <20240626123358.420292-1-flo@geekplace.eu>
+ <20240626123358.420292-2-flo@geekplace.eu>
+ <9e5b0cc6-e28c-4c51-ab48-663c61c00ee3@gmail.com>
+ <72e42e9f-5b85-4863-8506-c99d658d7596@gmail.com> <xmqqa5j71snb.fsf@gitster.g>
+In-Reply-To: <xmqqa5j71snb.fsf@gitster.g>
 
-I'm low-key pleased to see a documentation bug being stomped.
+--------------G0AroLgJNf1nK0kTeRYHTXsd
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Perhaps this saps the energy out of efforts to make --add-virtual-file
-respect --prefix, but we'd probably need a new option name for that
-anyway to keep backward compatibility (--add-prefix-file?), so the patch
-adds no technical obstacle for that at least.
+VGhhbmtzIGZvciBhbGwgeW91ciByZXBsaWVzLiBNdWNoIGFwcHJlY2lhdGVkLg0KDQpPbiAy
+Ni8wNi8yMDI0IDIwLjExLCBKdW5pbyBDIEhhbWFubyB3cm90ZToNCj4gUGhpbGxpcCBXb29k
+IDxwaGlsbGlwLndvb2QxMjNAZ21haWwuY29tPiB3cml0ZXM6DQo+PiBUbyBleHBhbmQgYW4g
+dGhpcyBhIGxpdHRsZSAtIGEgY291cGxlIG9mIHRpbWVzIEkndmUgd2FudGVkIHRvIGNoZWNr
+b3V0DQo+PiBhIGJhcmUgcmVwb3NpdG9yeSB0aGF0IGlzIG93bmVkIGJ5IGEgZGlmZmVyZW50
+IHVzZXIuIEl0IGlzIGEgcGFpbiB0bw0KPj4gaGF2ZSB0byBhZGQgYSBuZXcgY29uZmlnIHNl
+dHRpbmcganVzdCBmb3IgYSBvbmUtb2ZmIGNoZWNrb3V0LiBCZWluZw0KPj4gYWJsZSB0byBh
+ZGp1c3QgdGhlIGNvbmZpZyBvbiB0aGUgY29tbWFuZCBsaW5lIHdvdWxkIGJlIHZlcnkgdXNl
+ZnVsIGluDQo+PiB0aGF0IGNhc2UuDQo+IA0KPiBUcnVlLiAgQXMgbG9uZyBhcyBpdCBpcyBk
+ZWVtZWQgc2FmZSB0byBob25vciB0aGUgb25lLW9mZiAiZ2l0IC1jDQo+IHNhZmUuZGlyZWN0
+b3J5PS4uLiIgZnJvbSB0aGUgY29tbWFuZCBsaW5lLCBmb3IgdGhlIHB1cnBvc2Ugb2YgdGhp
+cw0KPiAiSSB3aG8gYW0gcnVubmluZyB0aGlzICdnaXQnIHByb2Nlc3MgaGVyZWJ5IGRlY2xh
+cmUgdGhhdCBJIHRydXN0DQo+IHRoaXMgYW5kIHRoYXQgcmVwb3NpdG9yeSIsIEkgdGhpbmsg
+aXQgd291bGQgYmUgdGhlIGJlc3Qgc29sdXRpb24NCj4gZm9yIHRoZSAiZ2l0IGRhZW1vbiIg
+dXNlIGNhc2UuDQoNCkhvdyBkb2VzIG9uZSBwYXNzICItYyBzYWZlLmRpcmVjdG9yeT3igKYi
+IHRvIGdpdC1odHRwLWJhY2tlbmQ/DQoNCkkgY3VycmVudGx5IGhhdmUgYW4gQXBhY2hlIGNv
+bmZpZyBzbmlwcGV0IGxpa2UNCg0KU2V0RW52IEdJVF9QUk9KRUNUX1JPT1QgL3Zhci93d3cv
+ZXhhbXBsZS5vcmcvaHRkb2NzL2dpdA0KU2V0RW52IEdJVF9IVFRQX0VYUE9SVF9BTEwNClNj
+cmlwdEFsaWFzIC9naXQvIC91c3IvbGliZXhlYy9naXQtY29yZS9naXQtaHR0cC1iYWNrZW5k
+Lw0KDQo8RmlsZXMgImdpdC1odHRwLWJhY2tlbmQiPg0KICAgUmVxdWlyZSBhbGwgZ3JhbnRl
+ZA0KICAgQWNjZXB0UGF0aEluZm8gT24NCjwvRmlsZXM+DQoNCnRvIHNlcnZlIGdpdCByZXBv
+c2l0b3JpZXMuDQoNCkdyYW50ZWQsIHRoZSBhcGFjaGUgdXNlciBoYXMgYSBob21lIGRpcmVj
+dG9yeSwgc28gSSBhbSBwcm9iYWJseSBhYmxlIHRvIA0Kc2V0IHNhdmUuZGlyZWN0b3J5IHZp
+YSB+Ly5naXRjb25maWcuDQoNCkhvd2V2ZXIsIHRoZSBwb2ludCBoZXJlIGlzIHRoYXQgZ2l0
+IGlzIG9mdGVuIGludm9rZWQgaW5kaXJlY3RseSwgd2l0aCBubyANCmNvbnRyb2wgb3ZlciB0
+aGUgY29tbWFuZCBsaW5lIGFyZ3VtZW50cyB0aGF0IGFyZSBwYXNzZWQgdG8gaXQuIE9uIHRo
+ZSANCm90aGVyIGhhbmQsIG9uZSBoYXMgdXN1YWxseSBjb250cm9sIG92ZXIgdGhlIGVudmly
+b25tZW50IHZhcmlhYmxlcy4NCg0KSSBhZ3JlZSB0aGF0ICItYyBzYWZlLmRpcmVjdG9yeT3i
+gKYiIGlzIHByZWZlcmFibGUgdG8gDQpHSVRfSUdOT1JFX0lOU0VDVVJFX09XTkVSLiBIb3dl
+dmVyLCBzb21ldGltZXMgdXNpbmcgIi1jIA0Kc2FmZS5kaXJlY3Rvcnk94oCmIiBpcyBjdW1i
+ZXJzb21lIGFuZCBtYXliZSBldmVuIGltcG9zc2libGUuDQoNCk9uZSBhbHRlcm5hdGl2ZSB0
+byBHSVRfSUdOT1JFX0lOU0VDVVJFX09XTkVSIHdvdWxkIGJlIGEgZ2VuZXJpYyANCkdJVF9F
+WFRSQV9BUkdTIGVudmlyb25tZW50IHZhcmlhYmxlLiBTbyBvbmUgY291bGQgc2V0DQoNCkdJ
+VF9FWFRSQV9BUkdTPSItYyBzYWZlLmRpcmVjdG9yeT3igKYiDQoNCk5vdCBzYXlpbmcgdGhh
+dCBJIGxpa2UgdGhlIGlkZWEsIGp1c3QgcG9pbnRpbmcgb3V0IHRoaXMgb3B0aW9uLg0KDQot
+IEZsb3JpYW4NCg==
 
-> I've read the updated text once again, and didn't see anything
-> glaringly wrong, so I'll mark it for 'next'.
+--------------G0AroLgJNf1nK0kTeRYHTXsd--
 
-The patch looks good to me.  I like the new paragraph about --prefix not
-being respected, in particular because I wouldn't thought of adding it,
-but it does look helpful.
+--------------Dapu1xjaXyF7tFSkgmBYH0EX
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-Perhaps add a Reported-by: line for Tom that's findable with trailer
-tooling, though?
+-----BEGIN PGP SIGNATURE-----
 
-Ren=C3=A9
+iQGTBAEBCgB9FiEEl3UFnzoh3OFr5PuuIjmn6PWFIFIFAmZ8ZqJfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+NzUwNTlGM0EyMURDRTE2QkU0RkJBRTIyMzlBN0U4RjU4NTIwNTIACgkQIjmn6PWF
+IFJf8Af/ZcQx8RamrndBoP3qToYDostH4sBY3FtRzOhsMhAytURcDca4a3WUqTqn
+4lnp2bpiveeJYMKLlnPgr2/cIimLBf8OH3wm3JNMGQ0ggFx5x3KR/CXMDmo/cCPs
+thyShBGAn3umFk4EHde55vqZ+EEe0N05VnjvjtcJ3URrZ+haa1R8xwDw7/5oJ3OM
+4FxPtRStV8iYQnaLOfyDzvmzSwoiGkMIoJsK57Vt/4jA59ULXVLOpY4/0cXJ4tYg
+PtjtZ78xLOsb9OhlTAeWd8lrBTvgl/bL36q7/TKA6vfpud1iusHhu2HrskA34RgY
+TFSqvx2kSqmfW4vMN6zQWGD3gIh8HA==
+=rEUW
+-----END PGP SIGNATURE-----
+
+--------------Dapu1xjaXyF7tFSkgmBYH0EX--
