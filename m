@@ -1,178 +1,98 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5936DC142
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 06:53:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6941D143C70
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 08:58:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719384785; cv=none; b=Nbt2LIcYL/MGZoaajOZN4mUvI88gyIQIimKwvFDH15WsLHCkWFQc/cO40i3U0bkSiDQCk31pD143xUZ8saiszAqJE9gMID7nd0Trg++7pFsEb7UH24ftf/UBIb4t8PHBs/+8b3LIVyF5kHouiiCCobrxtvYbxD81o/uEYMM3Jlo=
+	t=1719392292; cv=none; b=mVCmhiJZzW9etbUtlXLbIob4nkhwGfPKYvKrXaj35rs+zGcb6IfdpA+G+M71NEN1EB8/p+8l8nR8am8DHWKO2VfPGevE42H2dSPPc7+cpG1+zdwoFSQ1Pr/sf4KC/8FDZ2xXqzqehR4+4DNCd+WrvrjyvVjgKJPK2L7QHa8l8/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719384785; c=relaxed/simple;
-	bh=AuTHxbWZIJz4WHBWmD49FHnRioSGhaioJ09qqanDah8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kHbxMj3Ui3Q399YdBqxbz//evjPDcxpmnJfevAlocMf8+fGhh61vy6WMF84Jk2akz2mUODpQt76fFdDE0AkyhCQVU1BhLSforrXRaf9bVPl/ltwR8gU1hIq4OoyHtHY5ceZmO+woimvrUFYXhjEkSp31jM86TdQaWkZ5QGe2phE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VZBTdkhX; arc=none smtp.client-ip=209.85.167.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1719392292; c=relaxed/simple;
+	bh=FkisA85Uso68H6i4UVEuj4f85YvpIZhv5IHtRoXXAqY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=cGwCWrRVAScecesJ2DL5zkQGYHFk0M0t7M/8b8xt1EYJV3HPEhWoQJxBxonVeE3yWYobXU/S/voI2uXVyXm6XAlmWvbloUO/EnS3NOLlTZtMyFGvmyPpPsW0Gw2/NLkLbvlwMfEG9j5KxWbdybGpQ9V+iX1jxxf7vuyymg78nSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=pjsc7RjR; arc=none smtp.client-ip=193.68.50.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VZBTdkhX"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3d21e7aab20so409140b6e.3
-        for <git@vger.kernel.org>; Tue, 25 Jun 2024 23:53:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719384783; x=1719989583; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IzZG7pKmJ0/k1uxdFlFjaazcDnoq4+YZLD/09FsjhvQ=;
-        b=VZBTdkhXdr/q7HhRhb/swI034T05TcGDyFWncgkW+iadGPl/dw8C3Lzx5kzVBLkyfH
-         k9e76J4zb3KAI5oHfNMZRoistJZh1hpuuBgFnncWkDdheDHxk4rDR36uhS3oLrpyToBK
-         lv4I+ztVZOalMjE3yfZw5+UdQT5vJeNt2HBbZoJ7dYlj025nCEsz2JAip07UCPpn++2+
-         qivuQIjCqPLNKxf4p3b6oP74T1N6niLc679e1pmKZTGIYdllSHYN52DUsIbACAtJoDWX
-         /KqC9vHmwCCkOBRFXvhMrjwPBDgyY3UTpuc4xZVnYfGx5AEHnubcGrcoHnnD+tFTX4IA
-         3FbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719384783; x=1719989583;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IzZG7pKmJ0/k1uxdFlFjaazcDnoq4+YZLD/09FsjhvQ=;
-        b=mjHPS0Qj7G82j1ZsI31SPjjEpap8ke/fKN9DpcM5M0+MWB9ceUXPrlqdmt43Grayz0
-         4wAndK0M7G04c7KqP8a5IJuhNfzucywiX/Gw5C23mCeuIj/lz31sUJrqDYvrt1dPbOVY
-         n+ic0OY4Rv60YCVvqlG7ZrJ8GR0cW79xBzD9n8hRgIvNHgGyfa4iGEfT/HkPbFOHpBd3
-         Shd6JZoK7qGv/g3ZJGk85Nl8pEqiXn65OvrIrzdiXWfYI2vBZazFJKeiBgtgzAvG9pn0
-         h23L680tjyklTuJxZLnbteCUBXIUy1kZK0yJnbXqwP8FABmd046lPFnVmSzC8J9r2Mr6
-         lanQ==
-X-Gm-Message-State: AOJu0YxntiCzRJcVaxW7bTxjOSOyQn5prceGAo6OwXruVejgk2G5Qcf8
-	P/aLAbhImfWISEEfx/N/00QbpVsGX8ypinaxkRFFLfflP8T84cguM/auiGW6Mck=
-X-Google-Smtp-Source: AGHT+IHGFaibv4P7cPfAB6wtOqZ91FtgE+rJAos5sYpB8H2T5dJnFqPgD9AP+NcugY7nTO7dW2/+Yg==
-X-Received: by 2002:a05:6808:33c3:b0:3d5:4780:2d75 with SMTP id 5614622812f47-3d547803532mr8007094b6e.4.1719384781949;
-        Tue, 25 Jun 2024 23:53:01 -0700 (PDT)
-Received: from TTPL-LNV-0102.. ([2409:40c2:205a:5198:5a00:e7e1:cbf1:679])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-716bb22e148sm8122947a12.85.2024.06.25.23.52.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jun 2024 23:53:01 -0700 (PDT)
-From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-To: git@vger.kernel.org
-Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>,
-	Paul Millar <paul.millar@desy.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH v5] describe: refresh the index when 'broken' flag is used
-Date: Wed, 26 Jun 2024 12:22:11 +0530
-Message-ID: <20240626065223.28154-1-abhijeet.nkt@gmail.com>
-X-Mailer: git-send-email 2.45.2.606.g9005149a4a.dirty
-In-Reply-To: <xmqq34p1813n.fsf@gitster.g>
-References: <xmqq34p1813n.fsf@gitster.g>
+	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="pjsc7RjR"
+Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
+	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id C16BFA0403;
+	Wed, 26 Jun 2024 10:58:04 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=mail; bh=uqK2HWZzU5ABDaPLjH9G
+	30poCEIVKpieyUYzp5pmvRI=; b=pjsc7RjRRFgmnfh9zK5hRpNpeFBBo8W9075p
+	UpTNbhapCmrPKTeqzH/+cySrQfS6kGGzRaUw/TuOTBd7dPuuAzZfQ/0hRjF4pcZm
+	g3Fl/9qZqm3q3iCfp9l8/bYwGKDA2CFZaLHdiDHOb5H2CxabnTqRVTt7Q8QOdZcO
+	jMYNXSSUlXqkzIUDSfsyWM0FESc15TrdhvwqTbraDPz03c+J6QPSSYQKy0JiRLdY
+	l6LS0e5/bWc3x94RTNUgvZBCYSjl7e2+489bnkPdu16vEqkWH5h1TO/U6NnZX/mV
+	fs0qjU6DRxdm0elW11abU9ESl2yXZKO5+EDIyMo9az/Pmyv+W8fgiBM5a5RCD8Nt
+	kF9ptmdvXn5JpCKXU6wXjw89NgZLZsnHR62mvO5OfM/sIOnQ3dT/D33jQgDtwvGG
+	bGu0Fcn4BgFDtnYlm+DedbSYMaJ95USlcgY6c1YzPJd+Yy4jzMs8XOMnEakUWw7T
+	TYlhhxZgruMHmIcmOntTEUjbi4n7KeEOapGocwaJZyosRKflmNRxRn8+iFxI1OGd
+	piN9CFZ/kU/EkI9IeNYo8aw+0nUJyOdy1dACLfBKgzN08WgV3DcekGq2Z4z2kICa
+	i/0aPTVRCUMHu1T4dpDcyFXl+2+5K52R1/zvbg5XWPrEEUF5+me2nQ7eojLwVvAH
+	iYHRYIA=
+Message-ID: <202fc42e-c5be-4a4b-a135-302d8fbf6b2a@prolan.hu>
+Date: Wed, 26 Jun 2024 10:58:03 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH resend] git-send-email: Use sanitized address when reading
+ mbox body
+To: Junio C Hamano <gitster@pobox.com>
+CC: <git@vger.kernel.org>
+References: <20240621092721.2980939-2-csokas.bence@prolan.hu>
+ <xmqqr0cqmck5.fsf@gitster.g> <a55cc932-98b0-43cd-9dfa-ea21a4340bf6@prolan.hu>
+ <xmqqy16ue3vl.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?B?Q3PDs2vDoXMgQmVuY2U=?= <csokas.bence@prolan.hu>
+In-Reply-To: <xmqqy16ue3vl.fsf@gitster.g>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: ATLAS.intranet.prolan.hu (10.254.0.229) To
+ ATLAS.intranet.prolan.hu (10.254.0.229)
+X-EsetResult: clean, is OK
+X-EsetId: 37303A2945A129576C7065
 
-When describe is run with 'dirty' flag, we refresh the index
-to make sure it is in sync with the filesystem before
-determining if the working tree is dirty.  However, this is
-not done for the codepath where the 'broken' flag is used.
+Hi!
 
-This causes `git describe --broken --dirty` to false
-positively report the worktree being dirty if a file has
-different stat info than what is recorded in the index.
-Running `git update-index -q --refresh` to refresh the index
-before running diff-index fixes the problem.
+On 6/24/24 17:50, Junio C Hamano wrote:
+> another sensible choice coming from that "strings on trailers may
+> not even be addresses" position may be not to add the $c to the Cc:
+> list, if $sc (the sanitized address) and $c (the original address)
+> are different.  That is, "the simple regexp check currently used to
+> trigger 'Ignoring ...' message thought that the string looked like
+> an address, but when we ask sanitize_address, it turns out that it
+> was not, really."
 
-Also add tests to deliberately update stat info of a
-file before running describe to verify it behaves correctly.
+Maybe. Though we would need to run through the sanitized address through 
+`unquote_rfc2047()` first. But I don't think it's necessary; if someone 
+feeds us an "unsanitary" address (for instance, there is whitespace 
+between the angle brackets), we should try to make sense of it, and 
+worst case, the SMTP server rejects it, as it does now.
 
-Reported-by: Paul Millar <paul.millar@desy.de>
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
----
- builtin/describe.c  | 11 +++++++++++
- t/t6120-describe.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 35 insertions(+)
+> In any case, if we were to move forward with this topic (whether
+> "send to corrected $sc instead" or "$c is suspicious, do not add it
+> to $cc" is picked as the direction), the motivation behind the
+> design decision to treat the address taken from a trailer line
+> differently needs to be explained better, I think. [...]
+> Your proposed commit log message is the place to help them.
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index e5287eddf2..7cb9d50b36 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -53,6 +53,10 @@ static const char *diff_index_args[] = {
- 	"diff-index", "--quiet", "HEAD", "--", NULL
- };
- 
-+static const char *update_index_args[] = {
-+	"update-index", "--unmerged", "-q", "--refresh", NULL
-+};
-+
- struct commit_name {
- 	struct hashmap_entry entry;
- 	struct object_id peeled;
-@@ -645,6 +649,13 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 	if (argc == 0) {
- 		if (broken) {
- 			struct child_process cp = CHILD_PROCESS_INIT;
-+			strvec_pushv(&cp.args, update_index_args);
-+			cp.git_cmd = 1;
-+			cp.no_stdin = 1;
-+			cp.no_stdout = 1;
-+			if (run_command(&cp))
-+				child_process_clear(&cp);
-+
- 			strvec_pushv(&cp.args, diff_index_args);
- 			cp.git_cmd = 1;
- 			cp.no_stdin = 1;
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index e78315d23d..6c396e7abc 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -671,4 +671,28 @@ test_expect_success 'setup misleading taggerdates' '
- 
- check_describe newer-tag-older-commit~1 --contains unique-file~2
- 
-+test_expect_success 'describe --dirty with a file with changed stat' '
-+	git init stat-dirty &&
-+	(
-+		cd stat-dirty &&
-+
-+		echo A >file &&
-+		git add file &&
-+		git commit -m A &&
-+		git tag A -a -m A &&
-+
-+		cat file >file.new &&
-+		mv file.new file &&
-+		git describe --dirty >actual &&
-+		echo "A" >expected &&
-+		test_cmp expected actual &&
-+
-+		cat file >file.new &&
-+		mv file.new file &&
-+		git describe --dirty --broken >actual &&
-+		echo "A" >expected &&
-+		test_cmp expected actual
-+	)
-+'
-+
- test_done
+Okay. So in short, I should add justification for trusting mbox headers 
+and not the message body, correct?
 
-Range-diff against v4:
-1:  1da5fa48d9 ! 1:  52f590b70f describe: refresh the index when 'broken' flag is used
-    @@ builtin/describe.c: int cmd_describe(int argc, const char **argv, const char *pr
-     +			cp.git_cmd = 1;
-     +			cp.no_stdin = 1;
-     +			cp.no_stdout = 1;
-    -+			run_command(&cp);
-    -+			strvec_clear(&cp.args);
-    ++			if (run_command(&cp))
-    ++				child_process_clear(&cp);
-     +
-      			strvec_pushv(&cp.args, diff_index_args);
-      			cp.git_cmd = 1;
--- 
-2.45.2.606.g9005149a4a.dirty
+> Oh, before I forget, is this something we can test easily in t9001?
+> We would want to protect a new behaviour from accidental breakage,
+> so adding a test or two would be a good thing.
+
+Maybe, I'll look into it.
+
+Bence
 
