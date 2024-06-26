@@ -1,133 +1,141 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75B11802AC
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 13:11:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB32B181CE3
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 13:25:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719407497; cv=none; b=R6hpKLom4Q6aI2DCDiHN1ZySNkxnXkRcuGSZP+PKJMGp9y/zt3fWohv9uYY/FYCc+2KWdGmh1Zh1gVhrWOfmzQ/z2xkZvfaix4Qf3T2xDKoQbYidvo6/JqX36xkIHz9j+NPnc2tHyEN+zzq9KyU8opSRtCs9wI+ajMfdeIpW+Mk=
+	t=1719408318; cv=none; b=HYpfbWFgqtNL4qjS1mFRmM0uaGarH7suQU+zZT6ucCtgi3bfBa4/EQ2bPk6KqWSa9xxu4hpQCgKS3xCg991MufK5vo6HBr/YfZkfuuqLLQ9kc4zq2WmJeAd2qQFJzVA0okWT9sL9r+Uy3zf0W8Za/jXWuewbw7wXKaYCE7mw1rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719407497; c=relaxed/simple;
-	bh=WVPb5AXA63yO6u4tsmR6RpTFenSZWCHHsIptRmbes98=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=B8iA2wte40yy/ahcUj3AOmLDnGw2nqFmhpnmvoIA/QT0opZuKgh4FRwm6wMdYmm9no5g3l75LwrmpIUkaSOdscamMzzf2kJ+XN1KBAQwq790+FPx3wtbIE7YNQhbbjKs4hGb34yAjACPmK285oDAZLpiUpOi+JmYAyQijIntVhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=USg+Anw8; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1719408318; c=relaxed/simple;
+	bh=mxfU6rZXKnQLXPGiBjrUvB9BbNy+NPC4n/YO1liYfcI=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=R7FgRPE7dJA2hezsjjRd7hgFOg44vocm+d7u4XJeDGukzvzOb+kZcCe8kTI1NUX4osBiubRW88dDm1GfheMy02ByDJ3bbGiYHSeGoQRHveVjKcUrykkbiEaerGmkHZYDzxMcl+RSrON0fwLJ4azW7T9pn9uquhmLDkE0N6JlxJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=s262kGq6; arc=none smtp.client-ip=193.68.50.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="USg+Anw8"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ec408c6d94so75613631fa.3
-        for <git@vger.kernel.org>; Wed, 26 Jun 2024 06:11:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719407494; x=1720012294; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JtDq/xdFoOwJzs0YQnG1uIsnWZzFw6s8OsCHRHbva6U=;
-        b=USg+Anw8I6DRvfn5Flx8ZRqOiRHHWXqdddG/aUpNjxBqIR7qz9T0B3Kj56Qv5TzTxa
-         7anYmahg/UuErHxCo8nu0Zk7BM1lNHTnZNZCJA8Z/hZeAwpYex/PSKwC7z+7YMRGfULY
-         8gHnEfN1yPne01vl4sAbE7Vjq9jGvbETSJKnVW+BF+vlLroCshRbtEWIIOt9VuVdGbmu
-         SKewsfTCeZNEHvLKBvWtIn801Fhh6qqtEXLAbyDfkgQ/jSlldCvwq2tA5XOJhdAdtrPw
-         ip7MsyGijnCv6KcKEhmuZD2PTvoba3j2pAGo6Nk7CKAoUfvNTk8uIUVX0iAA4two4lCJ
-         RO5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719407494; x=1720012294;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JtDq/xdFoOwJzs0YQnG1uIsnWZzFw6s8OsCHRHbva6U=;
-        b=bhcGIRqZ141JlBdaxxQj5zMLRh3TIkuB1LiKyau3Di6oJzC77oTY5cktmX+70KxuQp
-         sEBrqMEVXQsYG4yegRwcnZVDJI2I+jl09fWPj3XN5X1WZJy9Dv7xnMG19WbQ4pWcx5Rb
-         N3XHKIyO84XysehF9i2SmM00bGQ2im9Awb/F4DPaoDxxy1SGZc5BnddJaUJgGiP1//tF
-         xr30om0e35zrdzSd43BtZUxkbJnq/Mug88fwAIvdjwV6NHwOsJHoFW4gxhj84gxSsbRH
-         n+nE4Yqezkjywpe7vM7OGIFHVw4nzGjqRNfWFj2mkpBe+byZGjXcLxOGKWMtIdGqLOUs
-         ejxg==
-X-Forwarded-Encrypted: i=1; AJvYcCVMYIoEJiyHdIEis7sE3333ahJ+5wKjWq6Y8iLH1mK4dTTodeBaR8JY++MriDyrV7mUGF2CphUnZ/bEGJbs7nLJs5Yl
-X-Gm-Message-State: AOJu0Ywqu4s7yiZYbQrBuBvodjyefZBggETmJSQBDxF19EeaczLVkpq+
-	WT1oaXhzNCMNt1qyZKtEZU7RN2kmJUvqX+CQUPxvR2iL5pEkGtWo
-X-Google-Smtp-Source: AGHT+IEEltRvmGpJEs+EHp3z8RjEuUSK6hhzFOgu2pPHMHuqAVFSPUwh8y7qwnoBEUocEVnTeysVXw==
-X-Received: by 2002:a2e:321a:0:b0:2ec:541b:4b53 with SMTP id 38308e7fff4ca-2ec59388353mr86419441fa.43.1719407493720;
-        Wed, 26 Jun 2024 06:11:33 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:64f:8901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:64f:8901:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-424c8280962sm25306145e9.34.2024.06.26.06.11.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jun 2024 06:11:33 -0700 (PDT)
-Message-ID: <9e5b0cc6-e28c-4c51-ab48-663c61c00ee3@gmail.com>
-Date: Wed, 26 Jun 2024 14:11:32 +0100
+	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="s262kGq6"
+Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
+	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 299A4A12D1
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 15:25:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=mail; bh=I9lzG7xgcojh3sMe17641Ljg0Kpd0sAdNU5dB6NNaas=; b=
+	s262kGq6F4l7N4nQZ9h8xwzGWhMa00LCpYg7e1VvJICqLzzKHJP16jpgqeAhQAfX
+	WiJP+YDl0ID1DscO1oPe5BRHHMChe6MOGoOiM+XG3wp2HqOtkvSpvQrrRDgYTDQM
+	S7nBJEKqX70ZpG6B97T8YhPSZzLO2Njwe/LkRvuu7EpR/2UxQjGmU7GMbm/0hmhO
+	tb3DJ3A7pZ0dnGUBhLqSXQ5zNAb2P6fAlUOPT3T8qPLOfg1fucfu5DA3yJnyZ2us
+	ZZDtOord3rlj1bNX1pQN3rF6XA941md5N4ppZdaM9Ls1AoA3dkGIjPMwk83OfOEQ
+	WrxvYkTE6zXLf48YcpQ+nzfOsiGSL2f6jRnVGaSBdEXK0iyecoWByA4KNOy+zAXj
+	6dAonsUQU+7k+29QPauQUXJBG+KjOO37SAUa11BsLvF6ZF6Wi9ikGQZ/hoWHdqv5
+	Fh+7cSJZO8q4gPB7W+6/vwKKM5csf5kfw9alk25L4SlXcJ4fSeI8b5hJTEtKN79N
+	Zr4zLm+UkpSO5yKw6G7vWbpPbRXfFCJRlhSKohoDFxTmnqSJ13OAPllThlUw5p97
+	UgpQN+tIlpKf9//OLqc4Iq0Wmd/hQswDl1C2FegKW19+GuyYG3xl6Bt5uoO/cf+T
+	cz0dsA4j55PfwuxLfj89DxtDcMoq+sBtroWMbJ3j4/Q=
+From: =?UTF-8?q?Cs=C3=B3k=C3=A1s=2C=20Bence?= <csokas.bence@prolan.hu>
+To: <git@vger.kernel.org>
+CC: =?UTF-8?q?Cs=C3=B3k=C3=A1s=2C=20Bence?= <csokas.bence@prolan.hu>
+Subject: [PATCH v2] git-send-email: Use sanitized address when reading mbox body
+Date: Wed, 26 Jun 2024 15:24:41 +0200
+Message-ID: <20240626132440.3762363-2-csokas.bence@prolan.hu>
+X-Mailer: git-send-email 2.45.2.437.gf7de8c0566
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] setup: support GIT_IGNORE_INSECURE_OWNER environment
- variable
-To: Florian Schmaus <flo@geekplace.eu>, git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>
-References: <20240626123358.420292-1-flo@geekplace.eu>
- <20240626123358.420292-2-flo@geekplace.eu>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20240626123358.420292-2-flo@geekplace.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ESET-AS: R=OK;S=0;OP=CALC;TIME=1719408305;VERSION=7975;MC=4240859846;ID=1242206;TRN=0;CRV=0;IPC=;SP=0;SIPS=0;PI=3;F=0
+X-ESET-Antispam: OK
+X-EsetResult: clean, is OK
+X-EsetId: 37303A2945A129576C706B
 
-Hi Florian
+Commas and other punctuation marks in 'Cc: ', 'Signed-off-by: '
+etc. lines mess with git-send-email. In parsing the mbox headers,
+this is handled by calling `sanitize_address()`. This function
+is called when parsing the message body as well, but was only
+used for comparing it to $author. Now we add it to @cc too.
 
-On 26/06/2024 13:33, Florian Schmaus wrote:
-> Sometimes more flexibility to disable/ignore the ownership check, besides
-> the safe.directory configuration option, is required.
-> 
-> For example, git-daemon running as nobody user, which typically has no
-> home directory. Therefore, we can not add the path to a user-global
-> configuration and adding the path to the system-wide configuration could
-> have negative security implications.
-> 
-> Therefore, make the check configurable via an environment variable.
+Note that sanitization is only done for the message body, as
+`git format-patch` already RFC 2047-encodes mbox headers, so
+those are generally trusted to be sane. Also note that
+`sanitize_address()` does not process the mailbox addresses,
+so it is up to `sendmail` to handle special characters there
+(e.g. there are mailboxes in rwgular use with '+'-es in them).
 
-An alternative would be to allow safe.directory to be specified on the 
-command line with "git -c safe.directory='*' daemon ..." rather than 
-adding a dedicated environment variable. Or you could set $HOME to a 
-suitable directory when running "git daemon" and put the user-global 
-config file there. That directory and config file only need to be 
-readable by the user that "git daemon" is running under it can be owned 
-by root or whoever else you want.
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
+---
 
-Best Wishes
+Notes:
+    Changes in v2:
+    * added testcase to t9001
+    * added rationale behind trusting mbox headers and the address-parts
 
-Phillip
+ git-send-email.perl   |  4 ++--
+ t/t9001-send-email.sh | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 2 deletions(-)
 
+diff --git a/git-send-email.perl b/git-send-email.perl
+index f0be4b4560..72044e5ef3 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1847,9 +1847,9 @@ sub pre_process_file {
+ 					$what, $_) unless $quiet;
+ 				next;
+ 			}
+-			push @cc, $c;
++			push @cc, $sc;
+ 			printf(__("(body) Adding cc: %s from line '%s'\n"),
+-				$c, $_) unless $quiet;
++				$sc, $_) unless $quiet;
+ 		}
+ 	}
+ 	close $fh;
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 58699f8e4e..7e0b8ae57c 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1299,6 +1299,36 @@ test_expect_success $PREREQ 'utf8 sender is not duplicated' '
+ 	test_line_count = 1 msgfrom
+ '
+ 
++test_expect_success $PREREQ 'setup expect for cc list' "
++cat >expected-cc <<\EOF
++!recipient@example.com!
++!author@example.com!
++!one@example.com!
++!odd_?=mail@example.com!
++!thor.au@example.com!
++EOF
++"
++
++test_expect_success $PREREQ 'cc list is sanitized' '
++	clean_fake_sendmail &&
++	test_commit weird_cc_body &&
++	test_when_finished "git reset --hard HEAD^" &&
++	git commit --amend -F - <<-EOF &&
++	Test Cc: sanitization.
++
++	Cc: Person, One <one@example.com>
++	Reviewed-by: Füñný Nâmé <odd_?=mail@example.com>
++	Signed-off-by: A. U. Thor <thor.au@example.com>
++	EOF
++	git send-email -1 --to=recipient@example.com \
++		--smtp-server="$(pwd)/fake.sendmail" >actual-show-all-headers &&
++	test_cmp expected-cc commandline1 &&
++	grep "^(body) Adding cc: \"Person, One\" <one@example.com>" actual-show-all-headers &&
++	grep "^(body) Adding cc: =?UTF-8?q?F=C3=BC=C3=B1n=C3=BD=20N=C3=A2m=C3=A9?="\
++" <odd_?=mail@example.com>" actual-show-all-headers &&
++	grep "^(body) Adding cc: \"A. U. Thor\" <thor.au@example.com>" actual-show-all-headers
++'
++
+ test_expect_success $PREREQ 'sendemail.composeencoding works' '
+ 	clean_fake_sendmail &&
+ 	git config sendemail.composeencoding iso-8859-1 &&
+-- 
+2.34.1
 
-> If the environment variable GIT_IGNORE_INSECURE_OWNER is set to true,
-> then ignore potentially insecure ownership of git-related path
-> components.
-> 
-> Signed-off-by: Florian Schmaus <flo@geekplace.eu>
-> ---
->   setup.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/setup.c b/setup.c
-> index 3afa6fb09b28..da3f504fb536 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1278,6 +1278,14 @@ static int ensure_valid_ownership(const char *gitfile,
->   	 */
->   	git_protected_config(safe_directory_cb, &data);
->   
-> +	if (data.is_safe)
-> +		return data.is_safe;
-> +
-> +	if (git_env_bool("GIT_IGNORE_INSECURE_OWNER", 0)) {
-> +		warning("ignoring dubious ownership in repository at '%s' (GIT_IGNORE_INSECURE_OWNER set)", data.path);
-> +		return 1;
-> +	}
-> +
->   	return data.is_safe;
->   }
->   
 
