@@ -1,95 +1,109 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A1A8F47
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 20:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCEE14D6EB
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 21:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719435470; cv=none; b=mD3YuhUsqdH4MHAD9smC5vN70jYai7sOyVSO3v6giWJmk76ybHzmShUGDQMocJPFVW1qDS9h+ezhf8vuBKf/w1AIu/9D4YlyOptUtrfFXLDXaGwryhL59w62neL1StHxV5XYIbBA35yJ8BKJ/9wYy8TAk8bNvkfKzxNmhU+u0EE=
+	t=1719436231; cv=none; b=dRWxwdi83+JcbrVnOq/3sg7ZRbRasSPUUO7USqd1tPIUJxvWoCz8FcB/36qGHuC3NrHZmEOiv1US3RYJMQl7BGNrZu0aN3epV45VWHEIhvL6pus6DlMBhxVnXTgqS8inkziEdBp8l7neJZxsFOKzZomJeZpcnW1kPRRQEXPddTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719435470; c=relaxed/simple;
-	bh=py/ZcYIsM2S62F8hMqJIi8l2VOb08GM12fGAJUoKrhQ=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VcwaWV7hrIgpC1o7wDnkpsTgqhMoKl2er/cRpfVchmSIsRs8pS/gEPq0HLkIgtK+3XigliZUgjjESOGIe9T9Y7jVWWl37yuMrM0E/dDXDmPIKKSX0ZadJxdu8ui2sB0ivc8HH+qA/DsP/+59FYR4uNAQYyrdX612kaiqc/G3Ne4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 26195 invoked by uid 109); 26 Jun 2024 20:57:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 26 Jun 2024 20:57:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25221 invoked by uid 111); 26 Jun 2024 20:57:46 -0000
-Received: from Unknown (HELO coredump.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Jun 2024 16:57:46 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 26 Jun 2024 16:57:45 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Subject: [PATCH 3/3] t/lib-bundle-uri: use local fake bundle URLs
-Message-ID: <20240626205745.GC1457138@coredump.intra.peff.net>
-References: <20240626205355.GA1009060@coredump.intra.peff.net>
+	s=arc-20240116; t=1719436231; c=relaxed/simple;
+	bh=oUidVu3GiHTtr+A4wQgYqYFcqDdV0iDroLPLE5BY7uY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ox0IDlnhIYjzeadSPOIvhtu6h6OW6WUf01NDhOqnfJ2UlbgFGR4eBDqKlmBuNtvmoYHuvQCvhXyNwSmiui6zz09e6YjxPjOCtERp/0Ue5+YTb4/6pzDT+N56gUsu+G4LsblBDwyDqxKvNTrquC/AlVkhG6jjDoexsOMDPB4FDEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=v1xPsM20; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="v1xPsM20"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6211622135;
+	Wed, 26 Jun 2024 17:10:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=oUidVu3GiHTtr+A4wQgYqYFcqDdV0iDroLPLE5
+	BY7uY=; b=v1xPsM20kqLIlBZzlfD5Zhb/t7g+okdGYwxZ/EUKW2IrpFYMKwAxrX
+	Stp4NCZu4bbPiO/Un6lWPf9TmsSYZrKaPIyoyMGALYS0XHH+G+qxrTuUZ/G2HXzD
+	v2LU003as0jxOTK2p/y0VeSAOWoaoiYUoEx2aXL5/9OOwfDuJDc3g=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A34422134;
+	Wed, 26 Jun 2024 17:10:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D89F6220E8;
+	Wed, 26 Jun 2024 17:10:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v2 13/17] mktree: use iterator struct to add tree
+ entries to index
+In-Reply-To: <56f28efff5404a3fa22bd544d6de8ce2d919b78a.1718834285.git.gitgitgadget@gmail.com>
+	(Victoria Dye via GitGitGadget's message of "Wed, 19 Jun 2024 21:58:01
+	+0000")
+References: <pull.1746.git.1718130288.gitgitgadget@gmail.com>
+	<pull.1746.v2.git.1718834285.gitgitgadget@gmail.com>
+	<56f28efff5404a3fa22bd544d6de8ce2d919b78a.1718834285.git.gitgitgadget@gmail.com>
+Date: Wed, 26 Jun 2024 14:10:23 -0700
+Message-ID: <xmqq8qyrxveo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240626205355.GA1009060@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 817F9274-3400-11EF-B96A-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-A few of the bundle URI tests point config at a fake bundle; they care
-only that the client has been configured with _some_ bundle, but it
-doesn't have to actually contain objects.
+"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-For the file:// tests, we use "$BUNDLE_URI_REPO_URI/fake.bdl", a
-non-existent file inside the actual remote repo. But for git:// and
-http:// tests, we use "https://example.com/fake.bdl". This works OK in
-practice, but it means we actually make a request to example.com (which
-returns a placeholder HTML response). That can be annoying when running
-the test suite on a spotty network (it doesn't produce a wrong result,
-since we expect it to fail, but it may introduce delays).
+> @@ -157,14 +186,18 @@ static int add_tree_entry_to_index(struct index_state *istate,
+>  
+>  static void write_tree(struct tree_entry_array *arr, struct object_id *oid)
+>  {
+> +	struct tree_entry_iterator iter = { NULL };
+>  	struct index_state istate = INDEX_STATE_INIT(the_repository);
+>  	istate.sparse_index = 1;
+>  
+>  	sort_and_dedup_tree_entry_array(arr);
+>  
+> -	/* Construct an in-memory index from the provided entries */
+> -	for (size_t i = 0; i < arr->nr; i++) {
+> -		struct tree_entry *ent = arr->entries[i];
+> +	tree_entry_iterator_init(&iter, arr);
+> +
+> +	/* Construct an in-memory index from the provided entries & base tree */
+> +	while (iter.current) {
+> +		struct tree_entry *ent = iter.current;
+> +		tree_entry_iterator_advance(&iter);
+>  
+>  		if (add_tree_entry_to_index(&istate, ent))
+>  			die(_("failed to add tree entry '%s'"), ent->name);
 
-We can reduce our dependency on the outside world by using a local URL.
-It would work to just do "file://$PWD/fake.bdl" here, since the bundle
-code does not care about the actual location. But in the long run I
-suspect we may have more restrictions on which protocols can be passed
-around as bundle URIs. So instead, let's stick with the file:// repo's
-pattern and just point to a bogus name based on the remote repo's URL.
+OK, looking good.
 
-For http this makes perfect sense; we'll make a request to the local
-http server and find that there's nothing there. For git:// it's a
-little weird, as you wouldn't normally access a bundle file over git://
-at all. But it's probably the most reasonable guess we can make for now,
-and anybody who tightens protocol selection later will know better
-what's the best path forward.
+If we make _iterator_init() and _iterator_advance to both return the
+current, then the loop can still be like so:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/lib-bundle-uri-protocol.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+	for (ent = tree_entry_iterator_init(&iter, arr);
+             ent;
+	     ent = tree_entry_iterator_advance(&iter)) {
+		... use ent ...
+	}
 
-diff --git a/t/lib-bundle-uri-protocol.sh b/t/lib-bundle-uri-protocol.sh
-index a4a1af8d02..de09b6b02e 100644
---- a/t/lib-bundle-uri-protocol.sh
-+++ b/t/lib-bundle-uri-protocol.sh
-@@ -18,15 +18,15 @@ git)
- 	start_git_daemon --export-all --enable=receive-pack
- 	BUNDLE_URI_PARENT="$GIT_DAEMON_DOCUMENT_ROOT_PATH/parent"
- 	BUNDLE_URI_REPO_URI="$GIT_DAEMON_URL/parent"
--	BUNDLE_URI_BUNDLE_URI="https://example.com/fake.bdl"
-+	BUNDLE_URI_BUNDLE_URI="$BUNDLE_URI_REPO_URI/fake.bdl"
- 	test_set_prereq BUNDLE_URI_GIT
- 	;;
- http)
- 	. "$TEST_DIRECTORY"/lib-httpd.sh
- 	start_httpd
- 	BUNDLE_URI_PARENT="$HTTPD_DOCUMENT_ROOT_PATH/http_parent"
- 	BUNDLE_URI_REPO_URI="$HTTPD_URL/smart/http_parent"
--	BUNDLE_URI_BUNDLE_URI="https://example.com/fake.bdl"
-+	BUNDLE_URI_BUNDLE_URI="$BUNDLE_URI_REPO_URL/fake.bdl"
- 	test_set_prereq BUNDLE_URI_HTTP
- 	;;
- *)
--- 
-2.45.2.1058.g2ff574fec9
+and .current does not need to be a non-private member, if we wanted
+to (I am not convinced it is necessarily a better interface to make
+.current as private---especially if we end up needing _peek() method
+to learn its value, i.e. the value the most recent call to _init()
+or _advance() returned.  If we need a write access to .current from
+outside the interator interface, then what I outlined above would
+not be a good match).
+
+
+Thanks.
