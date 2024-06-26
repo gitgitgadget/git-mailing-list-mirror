@@ -1,218 +1,236 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3711E87C
-	for <git@vger.kernel.org>; Wed, 26 Jun 2024 12:57:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF5B522A
+	for <git@vger.kernel.org>; Wed, 26 Jun 2024 13:03:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719406662; cv=none; b=EoF3NFSngLo9HT4q1FS4TTK2o1cTw2qIUpDqvzdpklzXl1NSt/G9WiAbpQEWXrPyAvPKEQz77QmEW+so2MFoyNFqag/lFh84MWzLEMWuTfMTYNKa8ZblND0k8GljZV/NlFTDkxFcU1DV4ZTdpNGEBlUb4rJfVXgDcbA9GckwfJ4=
+	t=1719407018; cv=none; b=JNBZv14woTPvuJULffLSTDuuwTdtPZ4glC0f+YmU8OVAHQsV+skg2guB+SRx/FnELvcFiUhHC8h//17EuCsPHihysUQ5VgS5np8GfhWp9NQccqmglmrNsTzraNwDFeXI5GcUC4uIjkBTbuQmKo3TjOmBGO1/Dz5QhiXi+LfBAEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719406662; c=relaxed/simple;
-	bh=IoQ1O5Q8zN5vBDspkvBLyu/S1jyqbt42q6gaJnongm0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JststsIP8YNUMvK87tvxel5DPzZQqPw1J8hgczATls0By8hxecpQkdWIG3h4mwInuQ8E2+4yt2DlYeXhqpg/Jd1WETYoEkzpKIzeguQI7rf7YtnawIFyartazpR21h6GsSdYiPMH6l2avbf+fIl3SxWoSmOGWk7CpsI5sVXc06A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EN5hWb3N; arc=none smtp.client-ip=209.85.208.181
+	s=arc-20240116; t=1719407018; c=relaxed/simple;
+	bh=FdVn6ONuzTDmgiZHQX/VIj1KLjy8m1rP3T76xmM5Uo8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lv+PgTs/GC0aENvZdxuemdmVkF7iJZ42zWXtMSf91h0sXGfVOORxQTOWKtcew0KGhiJZMmLrhur2BBZ9LJhs/8Jh0MGKdUbyu6joIl5pQYN76ig8ZMBVECwc6rDeOnEfT+8f/U6aw88xH75f7IvHZ63Sk/m2NjrtIwTvRBfgQjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fOBGPhEL; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EN5hWb3N"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ec5779b423so45196521fa.0
-        for <git@vger.kernel.org>; Wed, 26 Jun 2024 05:57:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fOBGPhEL"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-52cdcd26d61so4856538e87.2
+        for <git@vger.kernel.org>; Wed, 26 Jun 2024 06:03:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719406659; x=1720011459; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YmNChBO7ME9Ug6wogr6pkILXwG1ILvRrLdIfgTfJli0=;
-        b=EN5hWb3Nav7frIkYx+ecP3e14wUdoMZbyo/uxwy4GF9X/jdnAJPCJMb+OgABc/Ost/
-         FhIWuYGephhhZfzXbRc/1cx1O9/mCQhxKTBfNY0V6zlrxMi7KfeNaZcgbuvvOMUdHX2J
-         kxB+MGfTOXJgYzB20NkBMqDh3hgsq/9Q476Ql3dw7654aIzQImcGlDTk2yVLqv/eMj6g
-         0FdeK2X1OgPN18kifKHp5pAqAw2gsqr8cE61uF9vg7g4IeZSkvrTfp++KiLMOfvdIlmB
-         YrUc0GkKg1lZHw09wQgCR4me/8zBGycx22yh7NJSGuBcsjYOsERp/yVAbq9zdUn8NTfr
-         WvUg==
+        d=gmail.com; s=20230601; t=1719407015; x=1720011815; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=20ghrANxzM8RNMPX3DRPj6HwfFQzZ9p5NIHzqU+4/RA=;
+        b=fOBGPhELyU1fPv4QsZlsi7ZqVAkz8PY0GnYcLwLaGrydom5O/yydBXQMsR7zLJDoKK
+         n8J9+ONCalyKjySwx4YOeKHJfOki1XY/lB00cfV8jDU/XET1jtAPoAdeb5J/hkB2Kg5B
+         t9ybRqEaucBzBLlJPAAw7v0PVWgbPfkTqnql/8kC5UJKbClBJFlZCPRvpP1jskNm8FQb
+         hkxFZ/OmunXll9ow2A6tvaZgKaBxBBwY+f1Q1GAH8xhhbYJC5RFEScNo5aRLuYz6qRsE
+         IfYiVbDVnHUM2rkg/SEtSnDmYhoBN5firs/mFE/yYTYVX+iG4NjZ12bqo/18ROH86kL9
+         A/Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719406659; x=1720011459;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1719407015; x=1720011815;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YmNChBO7ME9Ug6wogr6pkILXwG1ILvRrLdIfgTfJli0=;
-        b=UKsR1raVUFyEvQegn9+tAZT3KXN3Duhgxw+453RJEFvWr7Q4Jddk/yBbu0uQPqvt4X
-         Zv2Lfpc+fMPkOw2F06OJRWmt4+rTcWei6WRYKSv0J1nfOL7Dr4fFSvVJiyugrcEEoN44
-         6yLMnmho3MjsgGc22+NKpqLgkBRHIQEMgg2s1qIlfLPnLJRUSbE18s7CjyO+EGe2csUe
-         uegbygaAIeVyYBBPzpzl+Bu7gGw7H1zknlcbEjZlK3OClidSrWqPviU+qxE/htHsEkZp
-         Na0jwNxl6pPNnZzDeSOYjrtUhqBFvkg6q0GgTmvWSA8NM93BcmjgUkcWhb6DTF7VQjl5
-         BUUw==
-X-Gm-Message-State: AOJu0YysvzPZ3/UZLeNw/kvGyU0N9AfOUT2kmpJBkdDLWWvrkHiq9TKx
-	abITAcAY3d9PSCQkSEoh/M40ic8asxVVn4rIRJSe2XKfvy8aCbiy0VQ+VdFCGtD0/eG3seU70DQ
-	pO8cVcuaxsoFzXleP1X9nmUKQSYzAMUjKA78=
-X-Google-Smtp-Source: AGHT+IHH0Fa4Ogaf0R9zgdMjKCRkCtGrdnDOH/nr/Tz5VxOoEUHgI+oM5Ulzgq0CBRn7lsZ7Atm7K28TJq38xQPGx40=
-X-Received: by 2002:a2e:97d5:0:b0:2eb:f86c:9d69 with SMTP id
- 38308e7fff4ca-2ec59329e9bmr81587581fa.29.1719406658676; Wed, 26 Jun 2024
- 05:57:38 -0700 (PDT)
+        bh=20ghrANxzM8RNMPX3DRPj6HwfFQzZ9p5NIHzqU+4/RA=;
+        b=JmRHKg5fJekC2mEQ6HwUSvmCg3/KmFvP2ZVYEURmi6ClTuoUuc83ZgGQdqESjxpEi9
+         8uLCXUegeM0Z9CmhEmPnCOPES3on0Ihr+ZARbHiwVy+/ZetF6DY6RcBGOoukXGog/wPw
+         mVUTL62IzD18EhUtydrjKsAA+V3VIGZFiq5aBFS5sVdEbHoXn0WY8Wi7KfveC0pmqA88
+         t1cZY8/xZRGR5heh44oQc9gaSjLAUrBJmNdqZYLxbErsTOsHmr88xtyEgmjUiZW33ECl
+         AtR/iNP1eIyXFongwjD7RKgApn7668ce0LGA9ZI/rOsUIAZTKeoWNHTDNi0KIaOx3/1p
+         iyvg==
+X-Forwarded-Encrypted: i=1; AJvYcCVKWeh9ycrpc7qtj9NJxjx9eOwBDJ3jszKn0WaepjPyzl7A9MJhY6vJNU6JZi3BvJPxakOKAMK+5eStiupEOAPRysPw
+X-Gm-Message-State: AOJu0Yw0DQcIKE+0+uY2tMSupbJNKLMWqdTTF/JcdMC7ukjVr9CMNgGh
+	PxiyYCmNHzub6v9g/q9UU3/n0LL1KjBi4b3lqD7jN4bjCynvNkLM
+X-Google-Smtp-Source: AGHT+IF3d4H48AIb93jvt9wvCle++BE3vBI4VLycfzRNRzGWY1kMYBMuUxCZX0mUdezZs7iT6/Jqjw==
+X-Received: by 2002:ac2:5299:0:b0:52c:c9ce:be8d with SMTP id 2adb3069b0e04-52ce186482cmr6705931e87.57.1719407014566;
+        Wed, 26 Jun 2024 06:03:34 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:64f:8901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:64f:8901:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-424c8468caesm25388195e9.44.2024.06.26.06.03.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jun 2024 06:03:34 -0700 (PDT)
+Message-ID: <834862fd-b579-438a-b9b3-5246bf27ce8a@gmail.com>
+Date: Wed, 26 Jun 2024 14:03:33 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240621060018.12795-1-chandrapratap3519@gmail.com>
- <20240621115708.3626-1-chandrapratap3519@gmail.com> <20240621115708.3626-2-chandrapratap3519@gmail.com>
- <CAOLa=ZSmnMLMoKKWMiM7M4Jw8CJ0Jvrs0oMLy18FHaLv_6s6yA@mail.gmail.com>
- <CA+J6zkSymKxSRnAVx7oeAoPpMxrRsVRPGO-X0tVbc0VtKOe3ig@mail.gmail.com> <CAOLa=ZQG4S6oJ_YTvc9LjV9C+THKcr_4xMsrOB2Mw6CZYfK9GA@mail.gmail.com>
-In-Reply-To: <CAOLa=ZQG4S6oJ_YTvc9LjV9C+THKcr_4xMsrOB2Mw6CZYfK9GA@mail.gmail.com>
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Wed, 26 Jun 2024 18:27:25 +0530
-Message-ID: <CA+J6zkSGyJ25dHSUgxF+-uEHBg13qaBwk_526QSqGN+FwRrMEQ@mail.gmail.com>
-Subject: Re: [PATCH 01/11] t: move reftable/record_test.c to the unit testing framework
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, karthik188@gmail.com, Patrick Steinhardt <ps@pks.im>, 
-	Christian Couder <chriscool@tuxfamily.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Local git server can't serve https until repos owned by http,
+ can't serve ssh unless repos owned by user after 2.45.1
+To: =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ "David C. Rankin" <drankinatty@gmail.com>, git@vger.kernel.org
+References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
+ <xmqq8qz376fb.fsf@gitster.g> <20240617211513.GM19642@kitsune.suse.cz>
+ <20240625072419.GU19642@kitsune.suse.cz> <xmqqr0cl6lxl.fsf@gitster.g>
+ <20240625183411.GW19642@kitsune.suse.cz>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20240625183411.GW19642@kitsune.suse.cz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, 26 Jun 2024 at 17:22, Karthik Nayak <karthik.188@gmail.com> wrote:
->
-> Chandra Pratap <chandrapratap3519@gmail.com> writes:
->
-> > On Tue, 25 Jun 2024 at 13:56, Karthik Nayak <karthik.188@gmail.com> wrote:
-> >>
-> >> Chandra Pratap <chandrapratap3519@gmail.com> writes:
-> >>
-> >> > reftable/record_test.c exercises the functions defined in
-> >> > reftable/record.{c, h}. Migrate reftable/record_test.c to the
-> >> > unit testing framework. Migration involves refactoring the tests
-> >> > to use the unit testing framework instead of reftable's test
-> >> > framework.
-> >> > While at it, change the type of index variable 'i' to 'size_t'
-> >> > from 'int'. This is because 'i' is used in comparison against
-> >> > 'ARRAY_SIZE(x)' which is of type 'size_t'.
-> >> >
-> >> > Also, use set_hash() which is defined locally in the test file
-> >> > instead of set_test_hash() which is defined by
-> >> > reftable/test_framework.{c, h}. This is fine to do as both these
-> >> > functions are similarly implemented, and
-> >> > reftable/test_framework.{c, h} is not #included in the ported test.
-> >> >
-> >> > Mentored-by: Patrick Steinhardt <ps@pks.im>
-> >> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> >> > Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
-> >> > ---
-> >> >  Makefile                                      |   2 +-
-> >> >  t/helper/test-reftable.c                      |   1 -
-> >> >  .../unit-tests/t-reftable-record.c            | 106 ++++++++----------
-> >> >  3 files changed, 50 insertions(+), 59 deletions(-)
-> >> >  rename reftable/record_test.c => t/unit-tests/t-reftable-record.c (77%)
-> >> >
-> >> > diff --git a/Makefile b/Makefile
-> >> > index f25b2e80a1..def3700b4d 100644
-> >> > --- a/Makefile
-> >> > +++ b/Makefile
-> >> > @@ -1338,6 +1338,7 @@ UNIT_TEST_PROGRAMS += t-hash
-> >> >  UNIT_TEST_PROGRAMS += t-mem-pool
-> >> >  UNIT_TEST_PROGRAMS += t-prio-queue
-> >> >  UNIT_TEST_PROGRAMS += t-reftable-basics
-> >> > +UNIT_TEST_PROGRAMS += t-reftable-record
-> >> >  UNIT_TEST_PROGRAMS += t-strbuf
-> >> >  UNIT_TEST_PROGRAMS += t-strcmp-offset
-> >> >  UNIT_TEST_PROGRAMS += t-strvec
-> >> > @@ -2678,7 +2679,6 @@ REFTABLE_TEST_OBJS += reftable/block_test.o
-> >> >  REFTABLE_TEST_OBJS += reftable/dump.o
-> >> >  REFTABLE_TEST_OBJS += reftable/merged_test.o
-> >> >  REFTABLE_TEST_OBJS += reftable/pq_test.o
-> >> > -REFTABLE_TEST_OBJS += reftable/record_test.o
-> >> >  REFTABLE_TEST_OBJS += reftable/readwrite_test.o
-> >> >  REFTABLE_TEST_OBJS += reftable/stack_test.o
-> >> >  REFTABLE_TEST_OBJS += reftable/test_framework.o
-> >> > diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-> >> > index 9160bc5da6..aa6538a8da 100644
-> >> > --- a/t/helper/test-reftable.c
-> >> > +++ b/t/helper/test-reftable.c
-> >> > @@ -5,7 +5,6 @@
-> >> >  int cmd__reftable(int argc, const char **argv)
-> >> >  {
-> >> >       /* test from simple to complex. */
-> >> > -     record_test_main(argc, argv);
-> >> >       block_test_main(argc, argv);
-> >> >       tree_test_main(argc, argv);
-> >> >       pq_test_main(argc, argv);
-> >> > diff --git a/reftable/record_test.c b/t/unit-tests/t-reftable-record.c
-> >> > similarity index 77%
-> >> > rename from reftable/record_test.c
-> >> > rename to t/unit-tests/t-reftable-record.c
-> >> > index 58290bdba3..1b357e6c7f 100644
-> >> > --- a/reftable/record_test.c
-> >> > +++ b/t/unit-tests/t-reftable-record.c
-> >> > @@ -6,13 +6,9 @@
-> >> >    https://developers.google.com/open-source/licenses/bsd
-> >> >  */
-> >> >
-> >> > -#include "record.h"
-> >> > -
-> >> > -#include "system.h"
-> >> > -#include "basics.h"
-> >> > -#include "constants.h"
-> >> > -#include "test_framework.h"
-> >> > -#include "reftable-tests.h"
-> >> > +#include "test-lib.h"
-> >> > +#include "reftable/constants.h"
-> >> > +#include "reftable/record.h"
-> >> >
-> >> >  static void test_copy(struct reftable_record *rec)
-> >> >  {
-> >> > @@ -24,9 +20,9 @@ static void test_copy(struct reftable_record *rec)
-> >> >       reftable_record_copy_from(&copy, rec, GIT_SHA1_RAWSZ);
-> >> >       /* do it twice to catch memory leaks */
-> >>
-> >> I'm curious why we do this, and if it is still needed. The original
-> >> commit (e303bf22f reftable: (de)serialization for the polymorphic record
-> >> type) doesn't mention any particular reasoning.
-> >
-> > Yeah, I was confused about this as well. I asked Patrick about it some time
-> > ago and it seems like he had no clue about it either:
-> > https://gitlab.slack.com/archives/C071PDKNCHM/p1717479205788209
-> >
->
-> Just to note, this is an internal GitLab link and not accessible to
-> others on the list.
->
-> But to summarize, seems like we're not sure why this was added. CC'ing
-> Han-Wen here incase he remembers the intent.
->
-> > Should we get rid of this after all?
->
-> The best solution would be to understand its reasoning and incorporate
-> that, but otherwise its best to remove it. We do have CI pipelines to
-> capture leaks in a general sense.
->
-> >> >       reftable_record_copy_from(&copy, rec, GIT_SHA1_RAWSZ);
-> >> > -     EXPECT(reftable_record_equal(rec, &copy, GIT_SHA1_RAWSZ));
-> >> > +     check(reftable_record_equal(rec, &copy, GIT_SHA1_RAWSZ));
-> >> >
-> >> > -     puts("testing print coverage:\n");
-> >> > +     test_msg("testing print coverage:");
-> >> >       reftable_record_print(&copy, GIT_SHA1_RAWSZ);
-> >> >
-> >>
-> >> This prints for any test that uses this function. As I see from the
-> >> current usage of the testing library, we only print debug information
-> >> when we encounter something unexpected.
-> >>
-> >> This also clogs up the unit-test's output. So I would remove this from
-> >> here.
-> >
-> > That's true, but that would also mean the print functions are no longer
-> > exercised. Is that a fine tradeoff?
-> >
->
-> I don't see it this way. Just exercising the function doesn't test it in
-> any way. Since the function just prints to stdout without an option to
-> pick any other file descriptor, there is no way to test it currently
-> either.
+Hi Michal
 
-While that is true, it makes me wonder the reason behind adding it
-in the original test. Maybe we're supposed to manually verify the output?
+On 25/06/2024 19:34, Michal Suchánek wrote:
+>
+> Adding the repository to the list of safe repositories is a known
+> concept that was already required for gitweb and for working with the
+> repository locally, and applying it to git-daemon as well is consistent
+> although it does require configuration changes for some users.
+> 
+> The real problem here is that adding the repository to the list of safe
+> repositories does not make it possible to serve it by git-daemon.
 
-> On the contrary if no one is using the function, perhaps we can even
-> remove it.
+That is indeed unexpected. I set up git-daemon on my laptop this morning 
+and in order to get it to work one has to add "."  as well as the 
+repository paths one wants to serve to the list of safe directories. 
+Clearly that is undesirable and does not really feel any safer that 
+using "safe.directory=*". What is happening is that git-daemon checks 
+that the repository path is listed as safe and then changes into that 
+directory and forks
 
-The thing is, all the 'print' functions defined in reftable/ directory are
-meant to be used for debugging. So while they're not used anywhere
-in production, they still serve an important purpose during development.
+	git upload-pack --strict .
+
+"git upload-pack" then checks "." against the list of safe directories 
+which fails. It fails because the safe directory check does not do any 
+normalization such as cleaning up "//" elements (as seen in your 
+example) or expanding relative paths on $git_dir before checking it 
+against the list of safe directories.
+
+I think the fix is probably to make the safe directory check use the 
+absolute path of $git_dir. In the mean time there is a workaround if 
+you're happy to add "." to the list of safe directories.
+
+Best Wishes
+
+Phillip
+
+
+> Thanks
+> 
+> Michal
+> 
+> 
+>>
+>> Michal Suchánek <msuchanek@suse.de> writes:
+>>
+>>> On Mon, Jun 17, 2024 at 11:15:13PM +0200, Michal Suchánek wrote:
+>>>> Hello,
+>>>>
+>>>> On Mon, Jun 17, 2024 at 11:47:20AM -0700, Junio C Hamano wrote:
+>>>>> "David C. Rankin" <drankinatty@gmail.com> writes:
+>>>>>
+>>>>>>    Security enhancement in 2.45.1 have broken ability to serve git over
+>>>>>>    https and ssh from local git server running Apache. (web server runs
+>>>>>>    as http:http on Archlinux)
+>>>>>>
+>>>>>>    The fix of adding the following to gitconfig (system-wide and
+>>>>>>    per-user in ~/.gitconfig) does not solve the problem:
+>>>>>>
+>>>>>> [safe]
+>>>>>> 	directory = *
+>>>>>
+>>>>> It is not clear what you exactly meant "per-user" above, so just to
+>>>>> make sure.  Is this set in the global configuration file for the
+>>>>> httpd (or whoever Apache runs as) user?
+>>>>>
+>>>>> The purpose of "dubious ownershop" thing is to protect the user who
+>>>>> runs Git from random repositories' with potentially malicious hooks
+>>>>> and configuration files, so the user being protected (in this case,
+>>>>> whoever Apache runs as) needs to declare "I trust these
+>>>>> repositories" in its ~/.gitconfig file.  What individual owners of
+>>>>> /srv/my-repo.git/ project has in their ~/.gitconfig file does not
+>>>>> matter when deciding if Apache trusts these repositories.
+>>>>
+>>>>
+>>>> looks like the semantic of 'dubious ownershop' changed recently.
+>>>>
+>>>> Disro backport of fixes for CVE-2024-32002 CVE-2024-32004 CVE-2024-32020
+>>>> CVE-2024-32021 CVE-2024-32465 to 2.35.3 broke git-daemon. No amount of
+>>>> whitelisting makes the 'fixed' git serve the repository.
+>>>
+>>> Same regression between 2.45.0 and 2.45.2 which allegedly fixes the
+>>> same CVEs.
+>>>
+>>> Looks like downgrading to gaping hole version is needed to serve repositories
+>>> in general.
+>>>
+>>> Please consider adjusting the fix so that repositories can still be served.
+>>>
+>>> Thanks
+>>>
+>>> Michal
+>>>
+>>> To reproduce:
+>>>
+>>> cat /usr/local/bin/git-ping
+>>> #!/bin/sh -e
+>>>
+>>> # Try connecting to one or more remote repository URLs
+>>>
+>>> while true ; do
+>>>          git ls-remote -h "$1" >/dev/null
+>>>          shift
+>>>          [ -n "$1" ] || break
+>>> done
+>>>
+>>> mkdir -p /srv/git/some
+>>> chown hramrach /srv/git/some
+>>> su hramrach -c "git init --bare /srv/git/some/repo.git"
+>>> su hramrach -c "touch /srv/git/some/repo.git/git-daemon-export-ok"
+>>> version=2.35.3-150300.10.36.1 ; zypper in --oldpackage git-core-$version git-daemon-$version
+>>> systemctl start git-daemon.service
+>>> git ping git://localhost/some/repo.git
+>>> <nothing>
+>>>
+>>> version=2.35.3-150300.10.39.1 ; zypper in --oldpackage git-core-$version git-daemon-$version
+>>> systemctl restart git-daemon.service
+>>> git ping git://localhost/some/repo.git
+>>> fatal: Could not read from remote repository.
+>>>
+>>> Please make sure you have the correct access rights
+>>> and the repository exists.
+>>>
+>>>
+>>> systemctl status git-daemon.service
+>>> ● git-daemon.service - Git Daemon
+>>>       Loaded: loaded (/usr/lib/systemd/system/git-daemon.service; disabled; vendor preset: disabled)
+>>>       Active: active (running) since Thu 2024-06-06 08:29:28 CEST; 6min ago
+>>>     Main PID: 31742 (git)
+>>>        Tasks: 2 (limit: 4915)
+>>>       CGroup: /system.slice/git-daemon.service
+>>>               ├─ 31742 git daemon --reuseaddr --base-path=/srv/git/ --user=git-daemon --group=nogroup
+>>>               └─ 31749 /usr/lib/git/git-daemon --reuseaddr --base-path=/srv/git/ --user=git-daemon --group=nogroup
+>>>
+>>> Jun 06 08:29:28 localhost.localdomain systemd[1]: Started Git Daemon.
+>>> Jun 06 08:29:39 localhost.localdomain git-daemon[31756]: fatal: detected dubious ownership in repository at '/srv/git//some/repo.git'
+>>> Jun 06 08:29:39 localhost.localdomain git-daemon[31756]: To add an exception for this directory, call:
+>>> Jun 06 08:29:39 localhost.localdomain git-daemon[31756]:         git config --global --add safe.directory /srv/git//some/repo.git
+>>>
+>>> git config --global --add safe.directory /srv/git//some/repo.git
+>>> mv ~/.gitconfig /etc/gitconfig
+>>> git ping git://localhost/some/repo.git
+>>> fatal: Could not read from remote repository.
+>>>
+>>> Please make sure you have the correct access rights
+>>> and the repository exists.
+>>>
+>>> git config --global --add safe.directory /srv/git/some/repo.git
+>>> mv ~/.gitconfig /etc/gitconfig
+>>> git ping git://localhost/some/repo.git
+>>> fatal: Could not read from remote repository.
+>>>
+>>> Please make sure you have the correct access rights
+>>> and the repository exists.
+> 
+
