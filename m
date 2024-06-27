@@ -1,84 +1,83 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CB319CD09
-	for <git@vger.kernel.org>; Thu, 27 Jun 2024 17:33:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D436B4C9A
+	for <git@vger.kernel.org>; Thu, 27 Jun 2024 17:50:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719509592; cv=none; b=W90VYsjxvMIWjuElHFwWdr8SKRIII2YLlnEbGqvRi5Nwe/txKk3fwiRqmeI1qiQPZZTTiguDhe8PtX7xNXzNHTYtRAouS454xnJEYLTsPIZw5dYP9C1p5Ker7kSJX4ViMVgKSVuOl7fGfCIG1u9PjAG8isSfYaMpZWE5RSjX3K0=
+	t=1719510624; cv=none; b=PgMATPSl30nUyv3BM9ykCOzW8khBEQyysXjKRpFlA2uuZUmPQlybdIPWjRu7JUagrDAPT4WevbwaYB6e1u8hcaPMK5q5FjDDYtoTOWSVHmnpSwnt1deC5AJ2goM8QZyaMPJu+iaDD/ddJHLuq4oD7zza2XZSuOyqNJLEA9vguNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719509592; c=relaxed/simple;
-	bh=AsI9MEiiNnQutxWvrTXFRQrt48WXwYklhf5OAt/qO9I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oL+yUG07sBNE6X5f8k6Oo7RubX5oYE2CghRRWWilMj/e31EJS1DW4Xf6D/Fz/WnBbEfSKou8bTnuKmApZlle01aLMMvWhfANHd7EvboxEB0sc4Khp+7vvb1cySf7IjuzVhQTFT27upuyEauQyCb/jk6jUGfzO3oZbKE7Suc0HEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XiEYVtaq; arc=none smtp.client-ip=209.85.216.51
+	s=arc-20240116; t=1719510624; c=relaxed/simple;
+	bh=odQWsovbg3kYWS+E6t3NVLPoHWIbkPvZ/ubAG8Pi4y8=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=gm8axsY15XZBmGJlAsgCZZRd1jSHB1QHu3YvGxb5prkyUj5jxJSsdiKToIJhwIt0M/kALVsa4VEEHZuj6DnXkzgoeJprpEjlFUvZhdrZN7Kwh7cZt2s56De3fJuvQpkjOI3LBN9atWPAgtPG+zm0qLt2guY0xXt3TSdLicxE0ZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ALAooj+P; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XiEYVtaq"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2c8000cac03so1287666a91.0
-        for <git@vger.kernel.org>; Thu, 27 Jun 2024 10:33:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ALAooj+P"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-57d0eca877cso2328526a12.2
+        for <git@vger.kernel.org>; Thu, 27 Jun 2024 10:50:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719509590; x=1720114390; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AsI9MEiiNnQutxWvrTXFRQrt48WXwYklhf5OAt/qO9I=;
-        b=XiEYVtaqhL3UuNrQgdGeiL7Ajp7kYr7+hsIrJFiWHLbD+yvU9sCSOYxFJa6XAVUapu
-         4Z4PQyeVGoWZMe1jkjdEzaPTRVi7WUsltUZBu8oOjhnh+uMjcpjBd1xFg6/r2kYH57yM
-         mMx6w9jw3j+EymfChSk5Juwn0vCeFjX9LbAhI1lZ7WQo1wNzyE7Pogl8KY23GxlCTcZm
-         zoTFINZGO8SIWA3c5MLZv3qDKY8q4CR2hLrvoHquuKt/m8xtKA6G8v0kTeSoL5VUh+xw
-         gWTJCzadr3F/PpGWaajrALyOHMwNxu26ybutegyYvz+Q5R3xKcY0T3DlyaNY2/4YoKFl
-         AhZg==
+        d=gmail.com; s=20230601; t=1719510620; x=1720115420; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=odQWsovbg3kYWS+E6t3NVLPoHWIbkPvZ/ubAG8Pi4y8=;
+        b=ALAooj+PaZ/8qvNkCrHot+hXUzqRuAGe/RxLrc8n+CD9XkrLQt+GiTBRrQnIwJDIvj
+         9xs5cKBe9a7Oj2YLtPwkA5TnC4RXYG9Ki2hcLeTw6iDalahdmu5xy6s2UT9Mg2XaCEfj
+         o4IIwHwc8kvS7m1ySgjI3OhKPgDEJwVMwGhe6g5msCXM0TQLJW8e3bCgXhRqZDA6dH8m
+         p57TeIIUTbAxLdFJBGjyBJ8RhSAQvFZ49IYYJQXD4BLeH6kqBeuALgquOOCFVmtq9tZP
+         McDJTGJcrlr9IjXsl4lC9Qe5jIiW4iXzXAeGbUx2UVfepTo9foSuejCFSVIsbSEdZLDl
+         9yhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719509590; x=1720114390;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AsI9MEiiNnQutxWvrTXFRQrt48WXwYklhf5OAt/qO9I=;
-        b=HQAuxGl9+QFAZZGU1hIBlg8ycRuv3mHX1HN95TG4EzD68YzdJVNaMRafSHiyLjQLVL
-         kpNyv+2YoQse6keWhF7l56ZxOIXLU+Vpm1CxroeQz21MVGkTEalcjEKZh0P4OGqwO/fC
-         b8CIpH4OWPVg+rEIDIEcmHMROSBWyRBpHT3i+7YLOAzh+E9bL8rG4PbmxGQeQSFXC92L
-         pED0zRgTs7DFD/A1zRDvII5x5iN1wPlyiqqLgV0lCZqnHB48OYjGMLfAS6Q6+HumR5q/
-         uSjEvy+TU06SnjtKWc3Y8FarIA3rh4AbvYYWDtTtmimapro9UoG3/JJq9+zclg44ewOk
-         KN2A==
-X-Gm-Message-State: AOJu0Yz16++d13tSqXjo/33th/ZR5HaTuv/qcT2ZdQ8VM6EB1isNbbJj
-	wGiAkA8lltJEy74Y/3sLpThhAuInfCPIBaNN2lLXd1ygKmsvv/9O
-X-Google-Smtp-Source: AGHT+IGhfSLGIYmXWGTGT80pNGN3kulyINyQKOwbbglT5qP5lw+jDrfmxai71/WYA1bGbOyA+sRrvw==
-X-Received: by 2002:a17:90a:8c9:b0:2c4:d63b:cde with SMTP id 98e67ed59e1d1-2c8459a1666mr14381536a91.1.1719509589849;
-        Thu, 27 Jun 2024 10:33:09 -0700 (PDT)
-Received: from ?IPV6:2409:40c2:205a:5198:5f27:d1e5:36bb:2297? ([2409:40c2:205a:5198:5f27:d1e5:36bb:2297])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c91ce17a77sm45739a91.6.2024.06.27.10.33.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jun 2024 10:33:09 -0700 (PDT)
-Message-ID: <90640733-a34e-4b3d-8019-a0ee53908946@gmail.com>
-Date: Thu, 27 Jun 2024 23:03:03 +0530
+        d=1e100.net; s=20230601; t=1719510620; x=1720115420;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=odQWsovbg3kYWS+E6t3NVLPoHWIbkPvZ/ubAG8Pi4y8=;
+        b=Xr/BBeumn0DI6b8jbWy1HH5VKUOYiheMOzCAl238M0pMF0LH0y1H2EAXHNfwnOWYim
+         VTX/CgwDnE3QSXAoVUK7h6S4AIWYXeSEi4SWgUR7uBg2RwfyFwX7wLmmgpTooMqL9PsB
+         rURCShmGxje7ZurDXjdiLa8pSThQPQUiIKX1zuCFNKZQ6gijtv6J22sYVkwwxi0L2CBR
+         5rfL2nFOo0o458/H19cXHy0yITReAOTmnlKLjeGpOOKISTjfwOrXeK16lNwy6kU01sjQ
+         wq78SBTFtKwyrGotKE5EHG8b4it2wFbEsd1xXjr/nllp+KGkQEZpovAoN+YQ1eAglpNH
+         OrBg==
+X-Gm-Message-State: AOJu0YwL+gvIWysmtJGuquOXXPL9SGLgbNVFnFW/Gu9FgwYFJrAk4uh6
+	irgE9xdIpzBGkWQUwvX7LId6Om4KvAZl4BhAnB71OJEf2F1vWjScLIvJd0dBqB1Th+Z5bPeKLh/
+	4N+hxj/t8otkQ6lhTpxMhTMo5z5fUJ2NttZs=
+X-Google-Smtp-Source: AGHT+IFya2sRjOyiSQn7oOpPlhozLei2s5IXehSSSe1oRMZ1MFf7RNEyBi5SpXB/uytVVfvoMwgN8H2M4FfWDrCUQQ8=
+X-Received: by 2002:a50:c081:0:b0:57d:519:ba3c with SMTP id
+ 4fb4d7f45d1cf-57d7004c60emr8327243a12.24.1719510620368; Thu, 27 Jun 2024
+ 10:50:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7] describe: refresh the index when 'broken' flag is used
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Paul Millar <paul.millar@desy.de>,
- Phillip Wood <phillip.wood123@gmail.com>, Elijah Newren <newren@gmail.com>,
- Jeff King <peff@peff.net>
-References: <xmqqpls3zhc2.fsf@gitster.g>
- <20240626190801.68472-1-abhijeet.nkt@gmail.com>
- <03628ece-4f47-40d5-a926-acce684a21e5@gmail.com> <xmqqfrsyv155.fsf@gitster.g>
-Content-Language: en-US, en-GB
-From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-In-Reply-To: <xmqqfrsyv155.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Date: Thu, 27 Jun 2024 10:50:07 -0700
+Message-ID: <CAE1pOi2ia9DTo6XkHF7-D7QJxiPhd6emEmRz+ZoQ1iUyiNJtPA@mail.gmail.com>
+Subject: Find commit of currently included subtree?
+To: Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 27/06/24 21:17, Junio C Hamano wrote:
+Hi all,
 
-> to avoid triggering an in-process error and instead run an
-> equivalent "update-index --refresh" via the run_command() interface,
-> so that we can catch potential errors.
+I have a subtree (from repo "Tools") included in our Git repo ("App")
+using "git subtree ...". This is all working fine.
 
-Thanks, I get it now.
+The next step is to automate checking whether that subtree (in "App")
+needs to be updated. Checking the remote "Tools" repo for its latest
+commit is easy with "git ls-remote" but I did not find an (obvious)
+way to check what subtree is currently part of our repo ("App").
 
+It looks like I could parse the message of the commit where the
+subtree was last updated. It contains a line like "git-subtree-split:
+1234..cdef" that appears to match the included commit in "Tools". That
+seems rather fragile and relatively complex.
+
+Or I could just run "git subtree" and parse its output (as it seems to
+notice if there is nothing to do)?
+
+Any suggestions for a better/simpler way?
+
+Cheers,
+Hilco
