@@ -1,64 +1,64 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CFF15EFA4
-	for <git@vger.kernel.org>; Thu, 27 Jun 2024 15:14:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599FF198A21
+	for <git@vger.kernel.org>; Thu, 27 Jun 2024 15:14:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719501268; cv=none; b=nyRlD/uOqoC1XJXGmDsdRqa+nlxmDVmd/SXrE2cDbkkswDY7RBHGkwIXjw6SFKMl6S/spNgr1YTnUVK+s9D8YI+YBVhB1i45Uzijc7WuSNOQ5UgKe7Agk8TcAgS+6fV1JDgP2SKGQkAcEEhcWhYovkeQWzpmr7fEwAB2fWzrGxs=
+	t=1719501299; cv=none; b=aQeky73OjPnBPwGa37FnoWn+I2WZ8XL8suXBYAR6GJm5BihBcpygiENUbCsiRytFFZaLeGANmpmcFH3awBb+YY90ueSln1pfNEWfZ/UPlCJw/Z3yiQb9mNnGACSkrrRwx5jSxDM2Y1OC5JosEwgezDlvxABwieDtEbb5TAz1a5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719501268; c=relaxed/simple;
-	bh=NtDlJ5yB9MRzU7FDHUytlNDi3DKpPtkIMakZ2KVgngU=;
+	s=arc-20240116; t=1719501299; c=relaxed/simple;
+	bh=gAYs8CyXA1H3bGEqVclb+J0L1NDMKEeYcPjei11IgsE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LwhnNqlhxCFpaKTBGZPipU1X8FllZl7oBXfsH0PdsLizeLAvFMEsjNWtp0bptvFl2sUwUHKme9XgYNRgte8K9cKNpDzEvsGE1YXRUpmdSGtK7c7m7AEY8Ktf1uDF6C6dSPOSXrR7y0GMm+yek0cJHnAqG2TDPM4aulAKWq9FG8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q3v1vK3h; arc=none smtp.client-ip=209.85.210.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=hZCvyjom8+Hib63ROl45eWKl5sVMXdNHAjutgsrke5PH9D2aejSyHHEFELiSU9VFTmawbKEai4xrgDExspsl1fzVUMYIcLtF1F47NTamCb70c07fxTtYhnMB6zVd8HDWoTYICHyUGDV8qIv7G2KX2QnRoS71WncF86EHgj6OjT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MDTbyO2E; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q3v1vK3h"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-70670188420so4290009b3a.2
-        for <git@vger.kernel.org>; Thu, 27 Jun 2024 08:14:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MDTbyO2E"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-710437d0affso5996562a12.3
+        for <git@vger.kernel.org>; Thu, 27 Jun 2024 08:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719501265; x=1720106065; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719501297; x=1720106097; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GnpUu6Vr4AQMBbj2weRVsZlDo0DFAbZ8DNczzdgCKYU=;
-        b=Q3v1vK3hAcwbVc5KmhxUCLlULsCzyHn3AoDe5BabHnOEkaYXZJiSkI0FHj37Esus2F
-         uabKfaXIrWllYC09m3uBmT89pLKKgbCen8aMG4+WnDaYAKx8NrcqUzeEYLFaYu2VUDT3
-         XV+QPcntrEKWKr7DpT+JQHI8jcwUBbxemVbzRQtfNtAUaqUQxXkSFfWrRSrbhz2DlRU0
-         87j2hN7oP47Qb64rjBIhwrT8YEW9Am+ydTD/Xihpp9Ch6F5hkHWo4+cNh4L3/PCUgm2q
-         cNBKYPONAh2XVaz9f1QF+EhrZBR4LnzMur+SwoARTl7OT6oPpn83mLQ1S2JzPfr6xTqQ
-         okQw==
+        bh=lPBTS4gkLF2FTufbmj7RqHbt4e8xUZlgv4Z+cV2JT9E=;
+        b=MDTbyO2EbTUBZNqMU87HJEgmqLPR9efeFnVxUAmQXu32IE8GUUYSqLrHyWwLEAYtci
+         kVRVBJk4Qpaud1qAPc6PI46nuA3sSpee9QN9dQLY3G61qjJumuOIA9JI4aJ0xjOUsj3D
+         /54yXc+jCoaneF38OGuXrMrAeC43jQHStz9GyF9NMgqW3brmxulY+wBl6LkDua3r99Ev
+         yQhrtTg4fP5JQRC0fuY2ZwFfIcX5dUUcT9VwdENTBI3QvcNPQHKa6IOglbX4Rj7AkLa7
+         byzP81tfewkfaGAOOIz/u1Joz8mapjXDWXmWR6j6UI4mNbBg2JMb2p1JDZrvUHOx4/pK
+         dWNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719501265; x=1720106065;
+        d=1e100.net; s=20230601; t=1719501297; x=1720106097;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GnpUu6Vr4AQMBbj2weRVsZlDo0DFAbZ8DNczzdgCKYU=;
-        b=xGyHz8+gTF4UVpT+TjxIMjvSade+BMsKwJwCY8P9y+b+VzrujSEOkSbfwQfvwGCZKq
-         ZZa3/56ZKalvoxu525PgM1XwyWguCsFHFGCVldHBCD8KICCyknaPRvfeyKLwmpo2slOe
-         Vv82FgQ2Z+mz0W4+lycAU+xh4A5RN4fgQ5ItZfvmhtF2Bef7nKRTg2aQiZELQrDlyJtl
-         qbZQNM90RSeCfCoMGrKCwqZ7GPrM8BiINqyHJh5xzgAullo+zUu2dPyKzeu4lgLOU2EJ
-         Ro9Tdzqo61PWh7XhKTwSv01fGYRjxNdaq9EYksTeORdjIbRWkSMz8hJbJS7Y4kn2n+Yl
-         M+OA==
-X-Gm-Message-State: AOJu0Yw9TFBcL55xamupTciAgxwBaPVTYcpSjBRJCCa63Mw9DLgTZ8Dn
-	HqyEN9GbmUdJgogB4bmDKWApJBTx+fw44W5AYFLvAdSc1rkMOd20876Cjw==
-X-Google-Smtp-Source: AGHT+IGh6rw/GdLkmUPF6HxMJ5TvWsZDTwZOMBJmwEzhwqM9xJqyC7RaMMLadqwy2/OXM7AK5LUPAw==
-X-Received: by 2002:a05:6a00:2f17:b0:704:2d7f:b61c with SMTP id d2e1a72fcca58-7066e4e69c5mr13996273b3a.7.1719501264863;
-        Thu, 27 Jun 2024 08:14:24 -0700 (PDT)
+        bh=lPBTS4gkLF2FTufbmj7RqHbt4e8xUZlgv4Z+cV2JT9E=;
+        b=onBKnLFJ35W6HUqP0qOefWd3ouL0MulFvz+cc7jQ57KBb1nX/7uFSeIfUk5IKLWZf/
+         AAZwsUOQ8zkqdYvKdPoh3hGsGnfGcOzdxhLVGt1X2OFqSJarH9adv9IgnStxNTsjENul
+         Aq6OVP2yUzA2QWv95dmJ03QISk1kkIWH4h3NpRmJUe92/M2/v3R/r+HiOg3i4k4FJc+F
+         aqhD5Lf5O8lnUzRtQl3F4eZkaAn0GQlvIx5GYOUc50APAJjMMBPWhSuayKUfD2P+x+Zu
+         E68pnyxYH6Ps6bLH1Kzk7pwFlt+m6pwPPDmC7e1N+2fudBKH/TGNk8UvbljsvRxNI9bg
+         f2fQ==
+X-Gm-Message-State: AOJu0YyyUpok2v0r6j+7W63D/OH4r9m/DdDOUfDsclm2eLGNxlUaW5yT
+	UjnxKeO7bKLtjM2x/R1MY7GXiKlnrq+HedLYbu6QyEBKiSgMDUPAXxadzQ==
+X-Google-Smtp-Source: AGHT+IG0Fy26pP3SLzEBN7Y4Yu5/ujsC7LwABn1znQR8B48ejLU1IWJ9O5N8LVDFDCxBD9cb7anwfA==
+X-Received: by 2002:a17:90a:c24a:b0:2c8:6a66:32bf with SMTP id 98e67ed59e1d1-2c86a663328mr10645247a91.39.1719501297055;
+        Thu, 27 Jun 2024 08:14:57 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-706b4a58ebfsm1466847b3a.196.2024.06.27.08.14.23
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c8fe8ce765sm1598238a91.21.2024.06.27.08.14.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jun 2024 08:14:24 -0700 (PDT)
-Date: Thu, 27 Jun 2024 23:14:21 +0800
+        Thu, 27 Jun 2024 08:14:56 -0700 (PDT)
+Date: Thu, 27 Jun 2024 23:14:54 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [GSoC][PATCH v5 05/12] fsck: add a unified interface for reporting
- fsck messages
-Message-ID: <Zn2BzdUa8tT6_WpN@ArchLinux>
+Subject: [GSoC][PATCH v5 06/12] fsck: add "fsck_refs_options" initialization
+ macros
+Message-ID: <Zn2B7q0Ai1c81lEf@ArchLinux>
 References: <Zn2Ah3WDhtOmzrzn@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,315 +70,93 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <Zn2Ah3WDhtOmzrzn@ArchLinux>
 
-The static function "report" provided by "fsck.c" aims at reporting the
-problems related to object database which cannot be reused for refs.
-In order to provide a unified interface which can report either objects
-or refs, create a new function "fsck_report" by adding two parameters
-"refs_options" and "checked_ref_name" following the "report" prototype.
-However, instead of using "...", provide "va_list" to allow more
-flexibility.
+Add "FSCK_REFS_OPTIONS_DEFAULT" and "FSCK_REFS_OPTIONS_STRICT" macros to
+create the "fsck_refs_options" easily. Add refs-specific "error_func"
+callback "fsck_refs_error_function".
 
-The "vfsck_report" function will use "error_func" registered in
-"fsck_options" function to report customized messages. Change
-"error_func" prototype to align with the "vfsck_report".
-
-Change "report" function to make it use "vfsck_report" to report
-objects-related messages. Add a new function called "fsck_refs_report"
-to use "vfsck_report" to report refs-related messages. Also, create a
-general function "fsck_report" for future use.
+"fsck_refs_error_function" will use the "oid" parameter. When the caller
+passed the oid, it will use "oid_to_hex" to get the corresponding hex
+value to report to the user.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- builtin/fsck.c  |  4 ++-
- builtin/mktag.c |  4 ++-
- fsck.c          | 88 ++++++++++++++++++++++++++++++++++++++++---------
- fsck.h          | 39 +++++++++++++++++++---
- object-file.c   | 14 ++++----
- 5 files changed, 122 insertions(+), 27 deletions(-)
+ fsck.c | 23 +++++++++++++++++++++++
+ fsck.h | 19 +++++++++++++++++++
+ 2 files changed, 42 insertions(+)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index c383125027..2a3b536c1b 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -89,9 +89,11 @@ static int objerror(struct object *obj, const char *err)
- 	return -1;
- }
- 
--static int fsck_error_func(struct fsck_objects_options *o UNUSED,
-+static int fsck_error_func(struct fsck_objects_options *objects_options UNUSED,
-+			   struct fsck_refs_options *refs_options UNUSED,
- 			   const struct object_id *oid,
- 			   enum object_type object_type,
-+			   const char *checked_ref_name UNUSED,
- 			   enum fsck_msg_type msg_type,
- 			   enum fsck_msg_id msg_id UNUSED,
- 			   const char *message)
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 76860f4c7c..0779a778e9 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -17,9 +17,11 @@ static int option_strict = 1;
- 
- static struct fsck_objects_options fsck_objects_options = FSCK_OBJECTS_OPTIONS_STRICT;
- 
--static int mktag_fsck_error_func(struct fsck_objects_options *o UNUSED,
-+static int mktag_fsck_error_func(struct fsck_objects_options *objects_options UNUSED,
-+				 struct fsck_refs_options *refs_options UNUSED,
- 				 const struct object_id *oid UNUSED,
- 				 enum object_type object_type UNUSED,
-+				 const char *checked_ref_name UNUSED,
- 				 enum fsck_msg_type msg_type,
- 				 enum fsck_msg_id msg_id UNUSED,
- 				 const char *message)
 diff --git a/fsck.c b/fsck.c
-index 7ac6e4587c..5184d17736 100644
+index 5184d17736..4869566d19 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -230,19 +230,23 @@ static int object_on_skiplist(const struct object_id *oid)
- 	return oid && oidset_contains(&fsck_configs.oid_skiplist, oid);
- }
- 
--__attribute__((format (printf, 5, 6)))
--static int report(struct fsck_objects_options *options,
--		  const struct object_id *oid, enum object_type object_type,
--		  enum fsck_msg_id msg_id, const char *fmt, ...)
-+static int vfsck_report(struct fsck_objects_options *objects_options,
-+			struct fsck_refs_options *refs_options,
-+			const struct object_id *oid,
-+			enum object_type object_type,
-+			const char *checked_ref_name,
-+			enum fsck_msg_id msg_id, const char *fmt, va_list ap)
- {
--	va_list ap;
-+	va_list ap_copy;
- 	struct strbuf sb = STRBUF_INIT;
- 	struct fsck_options *fsck_options;
- 	enum fsck_msg_type msg_type;
- 	int result;
- 
--	if (options)
--		fsck_options = &options->fsck_options;
-+	if (objects_options)
-+		fsck_options = &objects_options->fsck_options;
-+	else if (refs_options)
-+		fsck_options = &refs_options->fsck_options;
- 	else
- 		BUG("fsck_options is not set");
- 
-@@ -261,9 +265,10 @@ static int report(struct fsck_objects_options *options,
- 	prepare_msg_ids();
- 	strbuf_addf(&sb, "%s: ", msg_id_info[msg_id].camelcased);
- 
--	va_start(ap, fmt);
--	strbuf_vaddf(&sb, fmt, ap);
--	result = fsck_options->error_func(options, oid, object_type,
-+	va_copy(ap_copy, ap);
-+	strbuf_vaddf(&sb, fmt, ap_copy);
-+	result = fsck_options->error_func(objects_options, NULL,
-+					  oid, object_type, checked_ref_name,
- 					  msg_type, msg_id, sb.buf);
- 	strbuf_release(&sb);
- 	va_end(ap);
-@@ -271,6 +276,51 @@ static int report(struct fsck_objects_options *options,
- 	return result;
- }
- 
-+__attribute__((format (printf, 5, 6)))
-+static int report(struct fsck_objects_options *objects_options,
-+		  const struct object_id *oid, enum object_type object_type,
-+		  enum fsck_msg_id msg_id, const char *fmt, ...)
-+{
-+	va_list ap;
-+	int result;
-+	va_start(ap, fmt);
-+	result = vfsck_report(objects_options, NULL, oid, object_type, "",
-+			      msg_id, fmt, ap);
-+	va_end(ap);
-+	return result;
-+}
-+
-+int fsck_report(struct fsck_objects_options *objects_options,
-+		struct fsck_refs_options *refs_options,
-+		const struct object_id *oid,
-+		enum object_type object_type,
-+		const char *checked_ref_name,
-+		enum fsck_msg_id msg_id, const char *fmt, ...)
-+{
-+	va_list ap;
-+	int result;
-+	va_start(ap, fmt);
-+	result = vfsck_report(objects_options, refs_options, oid, object_type,
-+			      checked_ref_name, msg_id, fmt, ap);
-+	va_end(ap);
-+	return result;
-+
-+}
-+
-+int fsck_refs_report(struct fsck_refs_options *refs_options,
-+		     const struct object_id *oid,
-+		     const char *checked_ref_name,
-+		     enum fsck_msg_id msg_id, const char *fmt, ...)
-+{
-+	va_list ap;
-+	int result;
-+	va_start(ap, fmt);
-+	result = fsck_report(NULL, refs_options, oid, OBJ_NONE,
-+			     checked_ref_name, msg_id, fmt, ap);
-+	va_end(ap);
-+	return result;
-+}
-+
- void fsck_enable_object_names(struct fsck_objects_options *options)
- {
- 	if (!options->object_names)
-@@ -1216,18 +1266,22 @@ int fsck_buffer(const struct object_id *oid, enum object_type type,
- 		      type);
- }
- 
--int fsck_error_function(struct fsck_objects_options *o,
-+int fsck_error_function(struct fsck_objects_options *objects_options,
-+			struct fsck_refs_options *refs_options UNUSED,
- 			const struct object_id *oid,
- 			enum object_type object_type UNUSED,
-+			const char *checked_ref_name UNUSED,
- 			enum fsck_msg_type msg_type,
- 			enum fsck_msg_id msg_id UNUSED,
- 			const char *message)
- {
- 	if (msg_type == FSCK_WARN) {
--		warning("object %s: %s", fsck_describe_object(o, oid), message);
-+		warning("object %s: %s",
-+			fsck_describe_object(objects_options, oid), message);
- 		return 0;
- 	}
--	error("object %s: %s", fsck_describe_object(o, oid), message);
-+	error("object %s: %s",
-+	      fsck_describe_object(objects_options, oid), message);
+@@ -1285,6 +1285,29 @@ int fsck_error_function(struct fsck_objects_options *objects_options,
  	return 1;
  }
  
-@@ -1320,9 +1374,11 @@ int git_fsck_config(const char *var, const char *value,
-  * Custom error callbacks that are used in more than one place.
-  */
- 
--int fsck_error_cb_print_missing_gitmodules(struct fsck_objects_options *o,
-+int fsck_error_cb_print_missing_gitmodules(struct fsck_objects_options *objects_options,
-+					   struct fsck_refs_options *refs_options,
- 					   const struct object_id *oid,
- 					   enum object_type object_type,
-+					   const char *checked_ref_name,
- 					   enum fsck_msg_type msg_type,
- 					   enum fsck_msg_id msg_id,
- 					   const char *message)
-@@ -1331,5 +1387,7 @@ int fsck_error_cb_print_missing_gitmodules(struct fsck_objects_options *o,
- 		puts(oid_to_hex(oid));
- 		return 0;
- 	}
--	return fsck_error_function(o, oid, object_type, msg_type, msg_id, message);
-+	return fsck_error_function(objects_options, refs_options,
-+				   oid, object_type, checked_ref_name,
-+				   msg_type, msg_id, message);
- }
++int fsck_refs_error_function(struct fsck_objects_options *objects_options UNUSED,
++			     struct fsck_refs_options *refs_options,
++			     const struct object_id *oid,
++			     enum object_type object_type UNUSED,
++			     const char *checked_ref_name,
++			     enum fsck_msg_type msg_type,
++			     enum fsck_msg_id msg_id UNUSED,
++			     const char *message)
++{
++	static struct strbuf sb = STRBUF_INIT;
++
++	strbuf_addstr(&sb, checked_ref_name);
++	if (oid)
++		strbuf_addf(&sb, " -> (%s)", oid_to_hex(oid));
++
++	if (msg_type == FSCK_WARN) {
++		warning("%s: %s", sb.buf, message);
++		return 0;
++	}
++	error("%s: %s", sb.buf, message);
++	return 1;
++}
++
+ static int fsck_blobs(struct oidset *blobs_found, struct oidset *blobs_done,
+ 		      enum fsck_msg_id msg_missing, enum fsck_msg_id msg_type,
+ 		      struct fsck_objects_options *options,
 diff --git a/fsck.h b/fsck.h
-index a17fee30b4..70d5e78ae6 100644
+index 70d5e78ae6..e903845690 100644
 --- a/fsck.h
 +++ b/fsck.h
-@@ -93,6 +93,7 @@ enum fsck_msg_id {
- #undef MSG_ID
- 
- struct fsck_options;
-+struct fsck_refs_options;
- struct fsck_objects_options;
- struct object;
- 
-@@ -115,19 +116,27 @@ int is_valid_msg_type(const char *msg_id, const char *msg_type);
- typedef int (*fsck_walk_func)(struct object *obj, enum object_type object_type,
- 			      void *data, struct fsck_objects_options *options);
- 
--/* callback for fsck_object, type is FSCK_ERROR or FSCK_WARN */
--typedef int (*fsck_error)(struct fsck_objects_options *o,
-+/*
-+ * callback function for reporting errors when checking either objects or refs
-+ */
-+typedef int (*fsck_error)(struct fsck_objects_options *objects_options,
-+			  struct fsck_refs_options *refs_options,
- 			  const struct object_id *oid, enum object_type object_type,
-+			  const char *checked_ref_name,
- 			  enum fsck_msg_type msg_type, enum fsck_msg_id msg_id,
- 			  const char *message);
- 
--int fsck_error_function(struct fsck_objects_options *o,
-+int fsck_error_function(struct fsck_objects_options *objects_options,
-+			struct fsck_refs_options *refs_options,
- 			const struct object_id *oid, enum object_type object_type,
-+			const char *checked_ref_name,
- 			enum fsck_msg_type msg_type, enum fsck_msg_id msg_id,
- 			const char *message);
--int fsck_error_cb_print_missing_gitmodules(struct fsck_objects_options *o,
-+int fsck_error_cb_print_missing_gitmodules(struct fsck_objects_options *objects_options,
-+					   struct fsck_refs_options *refs_options,
- 					   const struct object_id *oid,
- 					   enum object_type object_type,
-+					   const char *checked_ref_name,
+@@ -140,6 +140,14 @@ int fsck_error_cb_print_missing_gitmodules(struct fsck_objects_options *objects_
  					   enum fsck_msg_type msg_type,
  					   enum fsck_msg_id msg_id,
  					   const char *message);
-@@ -223,6 +232,28 @@ int fsck_tag_standalone(const struct object_id *oid, const char *buffer,
-  */
- int fsck_finish(struct fsck_objects_options *options);
++int fsck_refs_error_function(struct fsck_objects_options *objects_options,
++			     struct fsck_refs_options *refs_options,
++			     const struct object_id *oid,
++			     enum object_type object_type,
++			     const char *checked_ref_name,
++			     enum fsck_msg_type msg_type,
++			     enum fsck_msg_id msg_id,
++			     const char *message);
  
-+/*
-+ * Provide a unified interface for either fscking refs or objects.
-+ * It will get the current msg error type and call the error_func callback
-+ * which is registered in the "fsck_options" struct. For refs, the caller
-+ * should pass NULL for "objs_options". For objects, the caller should pass
-+ * NULL for "refs_options".
-+ */
-+__attribute__((format (printf, 7, 8)))
-+int fsck_report(struct fsck_objects_options *objects_options,
-+		struct fsck_refs_options *refs_options,
-+		const struct object_id *oid,
-+		enum object_type object_type,
-+		const char *checked_ref_name,
-+		enum fsck_msg_id msg_id, const char *fmt, ...);
-+
-+__attribute__((format (printf, 5, 6)))
-+int fsck_refs_report(struct fsck_refs_options *refs_options,
-+		     const struct object_id *oid,
-+		     const char *checked_ref_name,
-+		     enum fsck_msg_id msg_id,
-+		     const char *fmt, ...);
-+
- /*
-  * Subsystem for storing human-readable names for each object.
-  *
-diff --git a/object-file.c b/object-file.c
-index 9eda05ee01..5cb9117fc4 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2472,12 +2472,14 @@ int repo_has_object_file(struct repository *r,
-  * report the minimal fsck error here, and rely on the caller to
-  * give more context.
-  */
--static int hash_format_check_report(struct fsck_objects_options *opts UNUSED,
--				     const struct object_id *oid UNUSED,
--				     enum object_type object_type UNUSED,
--				     enum fsck_msg_type msg_type UNUSED,
--				     enum fsck_msg_id msg_id UNUSED,
--				     const char *message)
-+static int hash_format_check_report(struct fsck_objects_options *objects_options UNUSED,
-+				    struct fsck_refs_options *refs_options UNUSED,
-+				    const struct object_id *oid UNUSED,
-+				    enum object_type object_type UNUSED,
-+				    const char *chekced_ref_name UNUSED,
-+				    enum fsck_msg_type msg_type UNUSED,
-+				    enum fsck_msg_id msg_id UNUSED,
-+				    const char *message)
- {
- 	error(_("object fails fsck: %s"), message);
- 	return 1;
+ struct fsck_options {
+ 	fsck_error error_func;
+@@ -150,6 +158,17 @@ struct fsck_options {
+ struct fsck_refs_options {
+ 	struct fsck_options fsck_options;
+ };
++#define FSCK_REFS_OPTIONS_DEFAULT { \
++	.fsck_options = { \
++		.error_func = fsck_refs_error_function, \
++	}, \
++}
++#define FSCK_REFS_OPTIONS_STRICT { \
++	.fsck_options = { \
++		.error_func = fsck_refs_error_function, \
++		.strict = 1, \
++	}, \
++}
+ 
+ struct fsck_objects_options {
+ 	struct fsck_options fsck_options;
 -- 
 2.45.2
 
