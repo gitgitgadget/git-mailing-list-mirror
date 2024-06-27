@@ -1,115 +1,91 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCEE20323
-	for <git@vger.kernel.org>; Thu, 27 Jun 2024 06:49:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A91770F9
+	for <git@vger.kernel.org>; Thu, 27 Jun 2024 08:43:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719470980; cv=none; b=TOCb/orxzShvkbSg3VTb6OhMB6eAMweHADhk18l2KyY2nxkyJFOc6qFu7QvgKaAbxM6b8C+MCf4ZH/mic3bn6ydQpRtd9CRv4Xr+QoAbTxtytix0D5/qCZY3v6I67xDJQGz8V+UcQT1Zr62Cf5Pcciv5P/syYrab1q2+MgVSwpE=
+	t=1719477827; cv=none; b=afBReDAfySe7HXmN48R15a8zA5gkZnxmxroImSsfm2dfVtceiswlbLBAoabohmwoGPbrhzMsnmTb/717fvahRVd04ZrKJkzEo7txRlpkxGPmB4RvTmHkHrdUBimXFdqpOkldhpEVBmnc7z/IgPbnDAZlADrDkfw5sQnXPciNcrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719470980; c=relaxed/simple;
-	bh=TFIbQIHq4kL/F8J5GCAciCRFd4naUx23CSZPgwlVMLY=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=T0R+Ap6Dl9RnwQSi8r8tqyxapSQ5uoNFfyxoCwHGiRqXs8vQi3Ymu9z0eLR6xs0WFnqYtq2S7Z3HDM1l/qaJOZJsTkRq0zA69iqgJUJ1crwQao2NjjWPi8QGG8qEB2l2edlBCSPD3zH7kY4ssf5jQ31EWR/jn5MfF8sUW0cPHJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=bZhbCWzx; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1719477827; c=relaxed/simple;
+	bh=juvkEcOSS3uiRcLdu/Y3vGLPTfFlEsWzs0DEMuyp63s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=UuAXQ0qoFVbwCyNbHjFn00R0rv5BleAItSR4ADWkrKXuYqZJ3tx/Sub0P+c/nKIoGyX2avowX9CLjNm2eJlBX3Cz52ut/YPm6xvcJ2DLAcoVWPCr6FplPCRp1wgjiqtFhf3PwsoMaBW3Llb3sLtEg0+0eLiKZuujIDfJRnydhHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=EYdz/u2v; arc=none smtp.client-ip=193.68.50.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="bZhbCWzx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1719470968; x=1720075768;
-	i=johannes.schindelin@gmx.de;
-	bh=TFIbQIHq4kL/F8J5GCAciCRFd4naUx23CSZPgwlVMLY=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=bZhbCWzxMoD4Wqh72lH+rydGBSXR3OMWQoqd7MwQZe/03MpEnwC4EmOJNZpaDdCM
-	 1g9tuIhYHv1bDILP52ANDwXrnopGQqVAB0TCcB928UWGo8cC/JiKb+bC4BrhFiBit
-	 j2KD1dkq3Bvq6V+XVdB91fLERui2qCIdLwScx1TXUoBCsdhvkRUbxVvFKyzD8+8LK
-	 sL9irGkt9N6wU+SlKdpqULJWh8M+xZV71xTEEcMOuTa64AQQwxadn2pYY/bgDNDX5
-	 oRwOGleTsqhFEP1XVq8cUUa8dltHUx4GISUDaB7HuGkodxF65voOhJGLPPAOKipny
-	 whdtSNTPgFsyfqxryQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.215.26]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M89Gt-1sIc4h3DWt-00CX7n; Thu, 27
- Jun 2024 08:49:28 +0200
-Date: Thu, 27 Jun 2024 08:49:27 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: Junio C Hamano <gitster@pobox.com>, 
-    Ghanshyam Thakkar <shyamthakkar001@gmail.com>, 
-    Achu Luma <ach.lumap@gmail.com>, git@vger.kernel.org, 
-    christian.couder@gmail.com, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [Outreachy][PATCH 2/2] Port helper/test-date.c to
- unit-tests/t-date.c
-In-Reply-To: <ZlbB_T8DkgmPeWQp@tanuki>
-Message-ID: <28c49738-002e-6a67-2000-cdcf1c892ab1@gmx.de>
-References: <20240205162506.1835-1-ach.lumap@gmail.com> <20240205162506.1835-2-ach.lumap@gmail.com> <tpaamfc3g5mrrbfufyvxi67ja2ko2hiihrptwxkbmdx4qpid3f@7aashrngiscn> <xmqqttkquxes.fsf@gitster.g> <ZlXaDWy0lQA1FM7d@tanuki> <xmqq7cfd7ut0.fsf@gitster.g>
- <ZlbB_T8DkgmPeWQp@tanuki>
+	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="EYdz/u2v"
+Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
+	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 53159A03B7;
+	Thu, 27 Jun 2024 10:37:07 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=mail; bh=0zoJ0qWb28M+vS/ma168
+	5T2iVWng+6dSJK3twuteox0=; b=EYdz/u2vxNIQjj04mh0RY7Pi3nd8SfS9zX20
+	Gp2Fx9QufI7oL2kLTbGeVi6qI929/0u9nn0ZDP4vcuFe5vo7+gc/lanc2un47suC
+	qiu70eWXEHlKx4malJITxmKh9AIjZgQHHqJ1n43tL1RHxBm9QnY3sTKigzEkjyCG
+	xQgSc8YFRlgjQj5Kb16vVm5oQiw/+hwk21BNwr/Op7HPfJMJh9S9buIFuZ0Fgxp6
+	8UCnIby9H76vQHP6EDVEAFPeiA+VWS4IiWsvMAq6W8jZ6CDgFOf+8WZW+vsEsIhC
+	PaZuN/KjXFQA0y0PpkF0sufBL0aAVC1SFGx1rEDKsT2ON/QPuoZPsHoyZKoosQJr
+	PI1WQKaFbNgk2k0nSUy2X7FX3KPfFBdL82WMS1F5iMjMwdVNaJsLoecjJZIG4/m2
+	JL0Fot2DV9PEZiZTtOXFUlUbEx+/itpHtTKHYMmLanhjGrua7uk0FGxQD/bnfbh+
+	19GVRM7dRHBvJz9yg8pPZooh1yfQTvdHO8M+yefRgmcMjHFtPtJrWFv2bDh6k5Lh
+	yasNblEBNnrKcCp+rICIGPb8JO2iFZ4VAyd4AACWxgzISe7XR3OGJu/NO9gip/rv
+	W5Ab+ecFUToHWUR0EFIsfny0uTnInpg39x0u1sLTvKW1GC89MmFIKsWSOAYEM8F7
+	JeDgXZk=
+Message-ID: <f245c5e8-b986-49f1-91fe-7e24593e8e85@prolan.hu>
+Date: Thu, 27 Jun 2024 10:37:06 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ITjL0/R/KhacmCadSVW4F/AmYMwNONYEFCk9s/O0tWj2vdKIV13
- fItPswcO58u+Q/8m7EzPcv6NPmK8x8QrYAfHUcyRrMCQr4XzRj8+RlmEeGC6P43kD3iYw8G
- BFZKgNXXBmHI7yYxa5+CTjZpk+3gw8tMC61cej/7rX4h1TSKxE/eX60aPKCez8rk2maGB+6
- fR1uWxaKBpjQEXn3VDvWg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:OLpGlrQkvuU=;N+0Kr/58MhuSxhxwfbNcxW1TnuX
- UZgef3zh3AR2f7A+aCX73Swn8qE5L7SmOGXT+U1R6O6g3IS7fJg2hMO+6SAgKHb+6VC18UNlU
- +61Ke8LJTY3CQq9C5jxd7WbgvgzTGyNOE+KB/ZNnw5sdKDhLguSkvVuy8cqg1Dw9JFdbJ8Dof
- dkQLbaHdtx8OfaWkIbUmWE7e6bQqTu3VOiNlhf9sjMDKz1DcMNp3ZMnInwJHRPCdl5c3MJlMc
- n59w+Z6v0pqcssT4usdDPIC/QpV0VrWGJvqwDYAmc3foU162ogWg4E8OUr8ZFRD++TRKFmkOL
- mr97NpSx9JOv+w2cKl9yrtAyZuNkRCuuXMcNEg5qWpau7SXfYbo/ViPOs4QD9VnmIb/p4Ax9K
- noOmlozKuIZU46Hy4f3NCeeU1Bievc0pXFy+7bAoOjQDg91+SJbq+C7rzfa0ZQQhnTORSXx+9
- Gkbc7ddKb1cIOHHRj0MR+sOS2q/CsqB1rZG1c+VsJGzccuGi0XUZV1q7iR22J4vLkpGj/DWBn
- WQsQ1+tmFVGIjcO2OiPuFT0/ZMOoVF9pTw61ynb6Rn9Nx5Zh+mTKk9okcefW2LdVEUUBDvH31
- jDB5pq/O9cbsVLC85H5RRuKUDvNqZ9S+y8qTZ+Kx15d8cOl8f8yLDqXb66HFheQJNpGsyMefe
- Xj2KUNflThQ5YLXfGRevIujllumyZDi9pMKVEF2NkIUXh2teSeh3skiIq35eesU0kelYMg+FL
- flPeJy3HOOohEfAkEuNF64hyMGeIiXBbBmBq5eMyP7DGw+Y0nmmrIq9+HgY1SYMyFpo1V57h9
- XcXnJJTjUC5D6ghNLlnVAnja5W8mPl36BgFSGmMy0WKNw=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] git-send-email: Use sanitized address when reading
+ mbox body
+To: Junio C Hamano <gitster@pobox.com>
+CC: <git@vger.kernel.org>
+References: <20240626132440.3762363-2-csokas.bence@prolan.hu>
+ <xmqqy16r1ulu.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?B?Q3PDs2vDoXMgQmVuY2U=?= <csokas.bence@prolan.hu>
+In-Reply-To: <xmqqy16r1ulu.fsf@gitster.g>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: ATLAS.intranet.prolan.hu (10.254.0.229) To
+ ATLAS.intranet.prolan.hu (10.254.0.229)
+X-EsetResult: clean, is OK
+X-EsetId: 37303A2945A129576C736B
 
-Hi Patrick,
+On 6/26/24 19:28, Junio C Hamano wrote:
+>> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+>> index 58699f8e4e..7e0b8ae57c 100755
+>> --- a/t/t9001-send-email.sh
+>> +++ b/t/t9001-send-email.sh
+> 
+> This test uses mixture of test_grep and grep, so use of "grep" below
+> is fine (but in the longer term we should make sure the tests use
+> the former for better debuggability).
 
-On Wed, 29 May 2024, Patrick Steinhardt wrote:
+Ok, I'll use test_grep everywhere.
 
-> Now the question is why we use `SetEnvironmentVariableW()` over
-> `_putenv_s`, and whether changing it would be safe.
+> As I always say, we should resist the temptation to write our tests
+> just to demonstrate our shiny new toy.  In this case, the test is
+> too focused to show that the system will give a best-effort output
+> when fed invalid and/or malformed addresses, but it does not see
+> what happens to a well formed addresses (ideally they are passed
+> intact, but is that what happens with the new code?).  Perhaps add
+> one or two trailer lines with valid addresses (and non-address, like
+> "BugId: 143421", that should not appear at all in the output) on
+> them?
 
-The reason is that Git for Windows internally uses UTF-8 _always_. But
-`_putenv_s()` knows nothing of that choice, it uses the "active code
-page", which -- you guessed it -- is not at all controlled by `LC_CTYPE`
-but requires its own call to a Win32 Console API function.
+Valid addresses are already tested by former tests. I don't immediately 
+see any tests that would cover non-Cc, non-*-by and non-email-address 
+tags, so I might add them; should they be a separate testcase or part of 
+this one? Or maybe even a separate patch?
 
-Now, there is theoretically that thing that you _could_ switch the active
-Win32 Console to CP_UTF8, i.e. the code page that corresponds to UTF-8.
-However, for that to work as well as Git for Windows' users deserve it, it
-would require a recent Windows 10 version, and Git for Windows still tries
-to support Windows 7 and Windows 8 [*1*].
+Bence
 
-For that reason, Git for Windows performs the conversion from UTF-8 to
-UTF-16 and then uses the `*W()` Win32 API function that accepts Unicode
-(no matter what the current code page is).
-
-With that in mind, I would love to find a solution that still uses that
-`*W()` Win32 API function.
-
-Ciao,
-Johannes
-
-Footnote *1*: That support was unfortunately already partially broken when
-Git LFS dropped support for Windows 7 and Windows 8, where it now fails
-with a segmentation fault (or "Access Violation" in Windows speak) and
-only prints a cryptic error message instead. For full details, see
-https://github.com/git-for-windows/git/issues/4996. You may note that this
-breakage was accepted and not reverted by the Git LFS team, citing
-security concerns ;-)
-
-So you could argue that Git for Windows is already somewhat broken for
-Windows versions prior to Windows 10, but that's not because of a
-carefully planned roadmap but instead due to forces that are outside my
-control.
