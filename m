@@ -1,42 +1,59 @@
-Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A91770F9
-	for <git@vger.kernel.org>; Thu, 27 Jun 2024 08:43:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F18132492
+	for <git@vger.kernel.org>; Thu, 27 Jun 2024 09:50:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719477827; cv=none; b=afBReDAfySe7HXmN48R15a8zA5gkZnxmxroImSsfm2dfVtceiswlbLBAoabohmwoGPbrhzMsnmTb/717fvahRVd04ZrKJkzEo7txRlpkxGPmB4RvTmHkHrdUBimXFdqpOkldhpEVBmnc7z/IgPbnDAZlADrDkfw5sQnXPciNcrE=
+	t=1719481841; cv=none; b=WRqNvgLRw6/HcgWkaauyI55L6oGsLYLAr5GzVhhygWXyfirN+jv8DulNMRlhORjGdab1vz+B8kUxkEdacovLl0nAHgdcXSEpH2zad9R3z/yjsfCLDHPPv1hZ5LKZtPjAUiNOA1afY0jZrJKvHTQEVhqtT+FuKAxfRP9q2V9EcrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719477827; c=relaxed/simple;
-	bh=juvkEcOSS3uiRcLdu/Y3vGLPTfFlEsWzs0DEMuyp63s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=UuAXQ0qoFVbwCyNbHjFn00R0rv5BleAItSR4ADWkrKXuYqZJ3tx/Sub0P+c/nKIoGyX2avowX9CLjNm2eJlBX3Cz52ut/YPm6xvcJ2DLAcoVWPCr6FplPCRp1wgjiqtFhf3PwsoMaBW3Llb3sLtEg0+0eLiKZuujIDfJRnydhHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=EYdz/u2v; arc=none smtp.client-ip=193.68.50.107
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
+	s=arc-20240116; t=1719481841; c=relaxed/simple;
+	bh=4dbmx8X4zN9bgBgRBXBd7j8GhZ/Wfow+046mr4I8qVk=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=gCRwhu0XWdaGhPH+6ivu9AxTvsbtdrhqn93Kxu6n71YRYWn2YxUjOC82QQ4huAYYQdZ16ZmcAOTNI5XF9udgWhE+DQjIgMFnznwjj9bHokG2ekUbDKTt7dYe2+EDT0taTGd2pumWtBTl87psgO4FQFQf5t3zT0HODWSPDUv/7iY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R/7lp/rO; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="EYdz/u2v"
-Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
-	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 53159A03B7;
-	Thu, 27 Jun 2024 10:37:07 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:from:from:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=mail; bh=0zoJ0qWb28M+vS/ma168
-	5T2iVWng+6dSJK3twuteox0=; b=EYdz/u2vxNIQjj04mh0RY7Pi3nd8SfS9zX20
-	Gp2Fx9QufI7oL2kLTbGeVi6qI929/0u9nn0ZDP4vcuFe5vo7+gc/lanc2un47suC
-	qiu70eWXEHlKx4malJITxmKh9AIjZgQHHqJ1n43tL1RHxBm9QnY3sTKigzEkjyCG
-	xQgSc8YFRlgjQj5Kb16vVm5oQiw/+hwk21BNwr/Op7HPfJMJh9S9buIFuZ0Fgxp6
-	8UCnIby9H76vQHP6EDVEAFPeiA+VWS4IiWsvMAq6W8jZ6CDgFOf+8WZW+vsEsIhC
-	PaZuN/KjXFQA0y0PpkF0sufBL0aAVC1SFGx1rEDKsT2ON/QPuoZPsHoyZKoosQJr
-	PI1WQKaFbNgk2k0nSUy2X7FX3KPfFBdL82WMS1F5iMjMwdVNaJsLoecjJZIG4/m2
-	JL0Fot2DV9PEZiZTtOXFUlUbEx+/itpHtTKHYMmLanhjGrua7uk0FGxQD/bnfbh+
-	19GVRM7dRHBvJz9yg8pPZooh1yfQTvdHO8M+yefRgmcMjHFtPtJrWFv2bDh6k5Lh
-	yasNblEBNnrKcCp+rICIGPb8JO2iFZ4VAyd4AACWxgzISe7XR3OGJu/NO9gip/rv
-	W5Ab+ecFUToHWUR0EFIsfny0uTnInpg39x0u1sLTvKW1GC89MmFIKsWSOAYEM8F7
-	JeDgXZk=
-Message-ID: <f245c5e8-b986-49f1-91fe-7e24593e8e85@prolan.hu>
-Date: Thu, 27 Jun 2024 10:37:06 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R/7lp/rO"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-367339bd00aso828725f8f.3
+        for <git@vger.kernel.org>; Thu, 27 Jun 2024 02:50:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719481838; x=1720086638; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vwOmP1uo3Bo47QA5K7NUDkQoxjP8zg4RwWh9s5Wa5tw=;
+        b=R/7lp/rOE3fGr2WRfAhicDzMp963KDD4q5beLbRfVFrpwNfyLJZIXIqCT+eWID/lTD
+         APwMXwBMiFE3JBA0Gq45Cp9Hq6KrwNa1LsgvWKmztD98ruoj/PlNTtCnB1pInrRkSVXw
+         Ni64lVkhoboZDecwA7hyJCCzeqiQPqUMbXyImUHbryK0HTTitu1t8GtZ6rlLfxJ7f7oH
+         rmuI+vgiTA0TBCaGEC0UTt+mPKT5TQBpx9+tQ9kDl0kkIwPMmnZGB7m2fvR9YDrj+daD
+         6PUk2U4tTwTQgQclYBLldfU/EanXSt1LGVxn7qgZqIxpahGx6RjRnqJswEKth/c79vjQ
+         cQvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719481838; x=1720086638;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vwOmP1uo3Bo47QA5K7NUDkQoxjP8zg4RwWh9s5Wa5tw=;
+        b=hYn59COkZa1IRM3WrLYLmecnOzqefWpmzFqR+vJixhj3KWhnbp9DWYq6EDEo3VlUFo
+         sPog+1HElsDIXX4zRBGm2P70TN6FSJ3EXPOXNToGAW3bASjCHMw4NkOBkdK8jB2TjHKu
+         roXrOf2h7/IlafUJhIZllBIr/Mc7NZKW/TDsU2ofG9VFAT9FjhlYXypEJSIsiFisDXvI
+         LCYRgFzAm88yc5MPBV8or9rnYBF+D4vHJ7OFDsyCEx9b6/iJ6E47rg3zftbhw8g2MgHb
+         mfoMQLpef+tFFij50SanbRYhsZqscP3L26kZGsgeuY9TnBuawW3SX89rv4V8wl10S0wc
+         s8BQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWfZa4tbypJ/39kgtuows1FoVLNpayMPhzwqm4Fo5QcJLsJbPcMmO0eByR36byIS4eg0tGTEQ4VbZLme/JamwQN2mxM
+X-Gm-Message-State: AOJu0YxQCizdwCCzB57molYcfxhIvsRPGydfLXABvMVz1mQtjzrNPwyS
+	EaTQNJEUyaqv6ZEZYoA7tWAyaGtU9YBiGdhtjcHqeePGm88npe+h
+X-Google-Smtp-Source: AGHT+IHSBU0IhEAaWxY20QpdgDxdbKnwp5rOB0dNwBG8FOpHVuZTQigmgygvl1vtWrJg7GoK3P7Osg==
+X-Received: by 2002:a5d:5384:0:b0:367:3fdd:632f with SMTP id ffacd0b85a97d-3673fdd6404mr1506639f8f.67.1719481837462;
+        Thu, 27 Jun 2024 02:50:37 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3674357c221sm1288365f8f.24.2024.06.27.02.50.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jun 2024 02:50:37 -0700 (PDT)
+Message-ID: <5742e728-a012-4960-a32d-bf3b65c3a2e3@gmail.com>
+Date: Thu, 27 Jun 2024 10:50:36 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,48 +61,67 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] git-send-email: Use sanitized address when reading
- mbox body
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] setup: support GIT_IGNORE_INSECURE_OWNER environment
+ variable
 To: Junio C Hamano <gitster@pobox.com>
-CC: <git@vger.kernel.org>
-References: <20240626132440.3762363-2-csokas.bence@prolan.hu>
- <xmqqy16r1ulu.fsf@gitster.g>
+Cc: Florian Schmaus <flo@geekplace.eu>, git@vger.kernel.org,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jeff King <peff@peff.net>
+References: <20240626123358.420292-1-flo@geekplace.eu>
+ <20240626123358.420292-2-flo@geekplace.eu>
+ <9e5b0cc6-e28c-4c51-ab48-663c61c00ee3@gmail.com>
+ <72e42e9f-5b85-4863-8506-c99d658d7596@gmail.com> <xmqqa5j71snb.fsf@gitster.g>
 Content-Language: en-US
-From: =?UTF-8?B?Q3PDs2vDoXMgQmVuY2U=?= <csokas.bence@prolan.hu>
-In-Reply-To: <xmqqy16r1ulu.fsf@gitster.g>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+In-Reply-To: <xmqqa5j71snb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: ATLAS.intranet.prolan.hu (10.254.0.229) To
- ATLAS.intranet.prolan.hu (10.254.0.229)
-X-EsetResult: clean, is OK
-X-EsetId: 37303A2945A129576C736B
 
-On 6/26/24 19:28, Junio C Hamano wrote:
->> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
->> index 58699f8e4e..7e0b8ae57c 100755
->> --- a/t/t9001-send-email.sh
->> +++ b/t/t9001-send-email.sh
+On 26/06/2024 19:11, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> This test uses mixture of test_grep and grep, so use of "grep" below
-> is fine (but in the longer term we should make sure the tests use
-> the former for better debuggability).
+>> To expand an this a little - a couple of times I've wanted to checkout
+>> a bare repository that is owned by a different user. It is a pain to
+>> have to add a new config setting just for a one-off checkout. Being
+>> able to adjust the config on the command line would be very useful in
+>> that case.
+> 
+> True.  As long as it is deemed safe to honor the one-off "git -c
+> safe.directory=..." from the command line, for the purpose of this
+> "I who am running this 'git' process hereby declare that I trust
+> this and that repository", I think it would be the best solution
+> for the "git daemon" use case.
 
-Ok, I'll use test_grep everywhere.
+This actually works already, the behavior was changed in 6061601d9f 
+(safe.directory: use git_protected_config(), 2022-07-14). The reason I 
+thought it didn't work was that I remember it failing on Debian bullseye 
+a few months ago but that used an older version of git. There is some 
+more rationale for the change in 779ea9303a7 (Documentation: define 
+protected configuration, 2022-07-14)
 
-> As I always say, we should resist the temptation to write our tests
-> just to demonstrate our shiny new toy.  In this case, the test is
-> too focused to show that the system will give a best-effort output
-> when fed invalid and/or malformed addresses, but it does not see
-> what happens to a well formed addresses (ideally they are passed
-> intact, but is that what happens with the new code?).  Perhaps add
-> one or two trailer lines with valid addresses (and non-address, like
-> "BugId: 143421", that should not appear at all in the output) on
-> them?
+Best Wishes
 
-Valid addresses are already tested by former tests. I don't immediately 
-see any tests that would cover non-Cc, non-*-by and non-email-address 
-tags, so I might add them; should they be a separate testcase or part of 
-this one? Or maybe even a separate patch?
+Phillip
 
-Bence
-
+> And it is much better than adding a one-off environment variable.
+> After all, if your "git daemon" user does not have a $HOME set in
+> its /etc/passwd entry, you cannot set such an environment variable
+> in $HOME/.profile so somewhere in your "git daemon" invocation would
+> have to be tweaked to have code snippet that sets and exports it
+> *anyway*.  You can tweak the "git" invocation to add the command
+> line tweak "-c safe.directory=..." at the place you would have set
+> and exported the variable, and using the well understood "git -c
+> var=val" mechanism would be more appropriate.
+> 
+>>> Or you could set $HOME to a suitable directory when running "git
+>> ...
+>> The advantage of this approach is that there are no changes needed to
+>> git, instead of setting GIT_IGNORE_INSECURE_OWNER one sets HOME to
+>> point to a suitable config file. I found this useful when I was
+>> debugging the issues with git-daemon earlier[1]
+> 
+> Yup, that sounds like a workable approach, if "git -c var=val"
+> approach turns out to be inappropriate for security purposes
+> for whatever reason.
+> 
+> Thanks.
