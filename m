@@ -1,86 +1,98 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D577722F1C
-	for <git@vger.kernel.org>; Thu, 27 Jun 2024 21:46:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DCB83FD4
+	for <git@vger.kernel.org>; Fri, 28 Jun 2024 00:10:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719524803; cv=none; b=u5Sars1RBC+n8G1T3+74ji+ZZxYgPEBIUSIDDlJXLM5lYSOWKOfqN2I6orSToNnq5rJE1RZ/gQfNs14e0U5aVfg3FSlcC4gExTnjRT/YuV6GNIYAjHBSjtkINrrLq4wLOCnLfdPlXZ1vPEJeOlJMOjzPvpidaV4wYWQTLuiPv3o=
+	t=1719533440; cv=none; b=ANH2zPLKEix9r6c9x50RZYhQM3suB7722VcEI/cjKmcwDPxTF4yNBy6yIBZTRz3vJsZW2G3qw0jpgQIG2R44B/am/LvHxzuQNp2tq4B9tflMGzkTjCYAdi8oTlIrBgQLfbz7ryIux6+qzx88qkwrWjKzqJ2mCkc10ZUYdbncr8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719524803; c=relaxed/simple;
-	bh=xqgYR53CzoUjv3tXcfJhRCqVr0JJTuZPQhVCpKPOa84=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=k1wCI5+r1KDPsudBR2aFNVnwCkFWvMigpXYswHlSIM5rgWypN/yoRWXpafvsvHVcEHaajIXU0cHlHIPA0XJkQ20v/yt2b+qbRUH5luBCDN2o9GB9IJ7sgavQQcyJOyh+ZhHBSJyLK10WUN0Oaolq4GDwDUl2lQD/kdkurb2exWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uJZVTZFr; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1719533440; c=relaxed/simple;
+	bh=ZqEmzpiYX6gci281+dTJfJv3wzNuO2Md1F2gp9Fz4zc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hQ2CunurRUPrMNv+eIRVsMGzAkIgwH9z/6odoks5kUZYawFeoiTqhxp0j9xs7Haaw7FXkr4jVuPVwwq99GesM76zpDi2NxGPDegjfs0s/qFIqQ374fJWcCywosBjMXRb+v7pnGMIAdWlrRLzY6cHXvEgcbEY1SyTu5qKEwVjDPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f4twNgne; arc=none smtp.client-ip=209.85.166.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uJZVTZFr"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B1E9F2D52C;
-	Thu, 27 Jun 2024 17:46:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=xqgYR53CzoUjv3tXcfJhRCqVr0JJTuZPQhVCpK
-	POa84=; b=uJZVTZFrwvcJ/OnI9d2fn2rYUz0EIxRtKgsBiQ0OUTL/8YrGsXDst1
-	q6QHlO8wlveyVUnPjfNPpHeo8lGEHv9F5sWC05LULzFIoAlFmWeFhnzj8TMDFG1B
-	OZFG844EEygIx3D2J3NgElppyjdSe35Ee41P1xr71TP1XxL+Wcf30=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A8D692D52B;
-	Thu, 27 Jun 2024 17:46:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 15DD32D52A;
-	Thu, 27 Jun 2024 17:46:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  newren@gmail.com,  anh@canva.com,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH v2 0/5] sparse-index: improve
- clear_skip_worktree_from_present_files()
-In-Reply-To: <pull.1754.v2.git.1719412192.gitgitgadget@gmail.com> (Derrick
-	Stolee via GitGitGadget's message of "Wed, 26 Jun 2024 14:29:46
-	+0000")
-References: <pull.1754.git.1718899877.gitgitgadget@gmail.com>
-	<pull.1754.v2.git.1719412192.gitgitgadget@gmail.com>
-Date: Thu, 27 Jun 2024 14:46:37 -0700
-Message-ID: <xmqqv81uqcsi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f4twNgne"
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-7eb01106015so651239f.1
+        for <git@vger.kernel.org>; Thu, 27 Jun 2024 17:10:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719533437; x=1720138237; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+QnUUqFnMa3Pl4PkTD6ooUt0vXtjNepNo/7d92y6Hi8=;
+        b=f4twNgneP3Pn2O1Cja/QZhUWQOLH2YsG7wGnrFs/3ZZmgnzfXZOJvJgSqnDJ0x12jF
+         u/Gg6tLilaW05II7hNW62dEUEgRW5rUvQ2aSNVfqumiGFW4RVtrYlYS0f09VLBuOka4v
+         90WnmFBNlQNbQP3NORGrTE651oYvk27ZRlhAJ4wtQEfwThjQ5fs9Z50f4d/L+/QzRAB0
+         xNRRSTE3flrxEnD73yGUHw8mcjHIil9ESX4h2sQkebD/HRhjnC1tBSuVZ72RLVBKdfEN
+         HvPUkLn/GzIY1DvBiGdDV9nW9e4GV0tVgesDWaBDpCqLfz5NtQqzXH8L3+I3A6X74+jB
+         Y/4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719533437; x=1720138237;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+QnUUqFnMa3Pl4PkTD6ooUt0vXtjNepNo/7d92y6Hi8=;
+        b=Wih/xZsnopVDEXO0rZIm5cFQXGCR9wRlbR0DFVcnlYKmHpH2zOwraBa61bDHpbTkAk
+         FaklDusgxuSf6OlEbJyQgnv4wDPGP1yh2V6uqvZ63IYqyZeclWVq8rA5IM9FSDlI3g5t
+         uY29ZrnIwO0SU89LIBCx0XEYergcAOE7Fr8Kw0Kmdzom0meMDvgbiS7vjNhERbcqbKux
+         dmp2ku90xguXt7KT36Xhbngdtwr6zrv1tvJIxD+pxvpEWzKWnuJQU56uEfLS+j1reRhx
+         hl0TKXoHSpvsqodMAFJlLYuGJWd40dpoLllX0h1XBumY2NRk4OZJ8tZG+yXIabw9I0/d
+         ilsg==
+X-Forwarded-Encrypted: i=1; AJvYcCVgy+NGjvw2KvgeOntYeQjYS7tYiVG1462boBRfXTCopzbD3fk8ivAx+go4EjJYRjONPn51SOhxasZ0UXdbD7O1Xakc
+X-Gm-Message-State: AOJu0YyWw+rAxgD48GLbpnGyk0UbaJwMZU/IOLQirQlp/V80tXcvH+mr
+	TeiFYQSxynJNQqD2Ne8iP3/F8prv07V2CriTZDYeIDydEuv/AJaVzlT1VIvmOJs6vSxEWaXRkSY
+	CxdxxeeonPLuOsQaEkX1wvRsQTbA=
+X-Google-Smtp-Source: AGHT+IHOei92HZEr3aY/LdWw7qPTEfmHjm+7g1qN1Z6n5ZYNO0qS4PLBeAnZUux8DlaiCTxudMSFbdB/8gq7hM6tI08=
+X-Received: by 2002:a05:6602:160a:b0:7f3:d326:1fa4 with SMTP id
+ ca18e2360f4ac-7f3d3262347mr844302139f.18.1719533437660; Thu, 27 Jun 2024
+ 17:10:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- BC6EFF72-34CE-11EF-BB3A-965B910A682E-77302942!pb-smtp2.pobox.com
+References: <pull.1754.git.1718899877.gitgitgadget@gmail.com>
+ <2654fcb7142a606c5684c762ed28bb5e8d9b4712.1718899877.git.gitgitgadget@gmail.com>
+ <CABPp-BFgg8DOy-SUUsXLyfsWr0DOUUc1vQKnPpihy-h+NAj_zg@mail.gmail.com> <cfb20e54-eee5-4043-abcb-63c8211635d3@gmail.com>
+In-Reply-To: <cfb20e54-eee5-4043-abcb-63c8211635d3@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 27 Jun 2024 17:10:26 -0700
+Message-ID: <CABPp-BEHP1h244etkRANCiY9Oz6qsQrNB+Sk4s=kXdE9vucfNQ@mail.gmail.com>
+Subject: Re: [PATCH 5/5] sparse-index: improve lstat caching of sparse paths
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, gitster@pobox.com, 
+	anh@canva.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> Updates in v2
-> =============
+On Wed, Jun 26, 2024 at 6:06=E2=80=AFAM Derrick Stolee <stolee@gmail.com> w=
+rote:
 >
-> Thanks to Elijah for a thorough review, leading to valuable improvements.
+> On 6/24/24 6:14 PM, Elijah Newren wrote:
+[...]
+> > Further, you can recompile the git version in use in another window,
+> > then come back to this one and run 'rm trace' followed by the last two
+> > commands to retest.
+> >
+> > The commands above create a 'gvfs-like-git-bomb' git directory that
+> > has 1,000,001 files in HEAD.
+> >
+> > With this test directory, before applying this patch, I see:
+> >      ..sparse_lstat_count:722011
+> > After applying this patch I see
+> >      ..sparse_lstat_count:135
+> > and with a slight tweak to your patch I see
+> >      ..sparse_lstat_count:125
+> > I'll comment on the slight tweak at the end of the patch.
 >
->  * I was mistaken that the sparse index was required for this logic to
->    happen. This has changed several descriptions across the commit messages.
->  * The final lstat() in path_found() was not needed, so is removed in v2.
->    This saves even more time and lstat() calls, updating the stats.
->  * Elijah created a particularly nasty example for testing, which I include
->    in my final patch. He gets a "Helped-by" credit for this.
->  * Several comments, variables, and other improvements based on Elijah's
->    recommendations.
->
-> Thanks, Stolee
+> Thanks for these numbers! Are you willing to keep that example repo
+> on GitHub so I can refer to it in the message?
 
-Thanks, both.  This round was a pleasant read.
-
-Let's mark it for 'next' soonish.
-
-
-        
+Sure, I've had it up for several years already without change (though
+the anachronistic 'gvfs' in the repository name feels like it should
+be updated...)
