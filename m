@@ -1,388 +1,766 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63E7158D7D
-	for <git@vger.kernel.org>; Fri, 28 Jun 2024 12:43:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A7F4C3BE
+	for <git@vger.kernel.org>; Fri, 28 Jun 2024 12:56:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719578617; cv=none; b=AX87wwZ5u67duKJxCQrTdoilCe4mGGlak3eAV5ZhFS/+YzmpF7rFMAgeJIOTpngAqMJ8WTO0Wnoq2QGq26GhuH4KEAeKGb2LsmJsKchHQ7gWVZIyU9eCMeKF+ufJw6RjERp9uleMbZuOR14pjAm4FplS3VIXkjOh9lSr4KAUgqE=
+	t=1719579421; cv=none; b=l+qyQPBYf+E7zEue1zHc6rJlnDh9uyFC8aKbY8XipC7ohROBdqycAPtgG2BdADKhcqXNCPmkbIFN0QxoWFMJhBZNffp2HeayBWN9ENTZ7J6nrC5qtM7JsMgOTTiOhAyVnsePot2aHJRS+mcrODL8elKKeepdJRcK9G2tZ5ml4Bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719578617; c=relaxed/simple;
-	bh=GS7+3isRBYjlXCv2rqCVhrgzzOewamGPzXuJROXLsIk=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=rCLC9e16+oQsgXsBeYvVFtMivHjoESCEML0fz21uwM8L0xRa4vkmHFkvBbDH6gL7VNrsq0Yc3ogu1wOU87IwYburS3QYqqqSPKM7JlF8ptBW4CSSaifWRt7oQmyMNHUm1YI1d2CnZ6Fl1vf4ikG6djAMmCiZK4tjO1ddTdVEzt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BeyiX5Y1; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1719579421; c=relaxed/simple;
+	bh=DHFzDU/tx6pKaS+i8dIbHvWfXCIX+eHSvfS7Gnf19y4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=S5003ElFgwfzzOYHm9MLLz0u0DaxsHzw9+QLEGdXSrzfr6+HMFUV9naV4jGAi/s7PqMH81ECn5cP+UhpFnKqUb6KFJ1TG0upUcyumpVC6L9Yx22qA/NhEvMXX3NN8j47b6HXE5QJWvr1j6KXPgzdKOvQ+sNi9kbcvi72eaOJHDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TGt4Go4e; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BeyiX5Y1"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4256eec963eso3574935e9.1
-        for <git@vger.kernel.org>; Fri, 28 Jun 2024 05:43:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TGt4Go4e"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1fa9f540f45so3275955ad.1
+        for <git@vger.kernel.org>; Fri, 28 Jun 2024 05:56:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719578614; x=1720183414; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SERYMe5VcXolwDXjtBggm7ICzEQaVY7eP5VLboZJyZw=;
-        b=BeyiX5Y1j64y701hYFaCjl2lpHPFmM35zI+/VqlXrSnfuk8sQPzfnfTWrjtJjYj9uW
-         jVaGT/ufjr9YNq/uEsD1SYGjQ+NdRowG5iNS7b3maeqz+4kpX30HB4Dupu3GbuWDZmA+
-         1/to4XTt2p6nXBYBHCZDuXjI2/A6vn63Jby7LPN3f4uUWoeCtPWXdeOHjOtTK9ui/Gw8
-         O6SzhILNNsVQ3M3j5mmQDmwMkPHGzfTNl3XaciQKEh4ZEzAcCnyHLuq27IfqvYkqJ4tu
-         6kb8aYY9E74qjfVuOPBNdZcY8RUS7P4GGW3SLKDOLsqKpmuooy+ivewefk3p4WR8hYjn
-         IP4w==
+        d=gmail.com; s=20230601; t=1719579414; x=1720184214; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=djIxhH7iDeq3teRZpzpVXF1HH/5rYOfnFe9eAlncGyo=;
+        b=TGt4Go4eSxFrjOCsFaKV/fBExEdoOJSRwqfhYWzLfQbIChjmioAiJ0opqMnEwZLbLc
+         a54nf0Rv2eNiJHUt3CtlNyqFGH28dAWc6WP7laiNm6FKlXnF2ybI22nCMC9HzfFq54BQ
+         WnSodY0MILgnrRyZOT4WqaEYfGIM4W2Y9tZJXai+Z6tPnqLnG8rrouYysqYARCCpAhxR
+         kamjFYIIIoEGv4LAVynUCjGegNlnF8PrUb9NXEbcCJRymf4jha0MGR3EUe0ZmrktMyl6
+         8sMxQKLBWjyzfkQtE2WKIXPiKRjwPjlHG4R7ysFKE41GRpDk3NmMRWFzpUyFq49YdEwz
+         QrnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719578614; x=1720183414;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SERYMe5VcXolwDXjtBggm7ICzEQaVY7eP5VLboZJyZw=;
-        b=k4II+vOfIBTVbQJv+nAEBJAIU8JX5CfwNIGfJ6EREbJhWRmz7v1WMrw5WHW8MmgDUn
-         SLzCXg1GbJWYsyiAUuPrFNW+JG4qZfW43zfXB5EQ49Dwi4Dmcs4FrgrPPEvOH/M0rCvz
-         QW+QxJduWIXtnsQfuW9OnIfnN8iFB23qAzpu4txfG3uOjmKCY/ziJCIgTh6MR4R4kOu6
-         2/flS5Sq17RTqq7h2u8thBIpQ+u1fQDJsuscXwhOEz1JzwYhwPt9ivok4RJyqZwNs728
-         m+ZrItbPnHcSak4G7eX0wm3TRPxCg/KCrrCEhm8/b5YtTICu2AWGovo08e0Jxm2npovA
-         YFUg==
-X-Gm-Message-State: AOJu0YwA8OhG5MnISDWR/1v8+G1i8HxnkyNZ5RFEOJzpKotiyZ2ttsLJ
-	C/4PlZRJx8Ilnpv9E3OUuOQVzMa6EoPCVrHdx40kU5VYOT+hEgH4FijSdw==
-X-Google-Smtp-Source: AGHT+IH9qe4GWucmqq5XMLE/1XFzHJnoQaXhO95OBC7MnYhhohfsI+XUNWKLcRx3POcDG5MBrWbvCg==
-X-Received: by 2002:a05:600c:43d4:b0:425:6526:73f4 with SMTP id 5b1f17b1804b1-42565267473mr33338655e9.38.1719578613752;
-        Fri, 28 Jun 2024 05:43:33 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a0fbbd4sm2225462f8f.84.2024.06.28.05.43.33
+        d=1e100.net; s=20230601; t=1719579414; x=1720184214;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=djIxhH7iDeq3teRZpzpVXF1HH/5rYOfnFe9eAlncGyo=;
+        b=cQlgqTdHP9kBFvVPFgvdkddi9gA7CKHUTn8B3YQ0w9PHjifZyBrduGK0V7XS5zxjiU
+         neSLiNcxzqqGyPTkzKz88EM0LE5YiTCoVUDslj/YSpZlUoTvvs+tk0azwK4+XAoBtnEl
+         vjsrO4mdSMUVSFnSk8S1sPyR44qZm+Qz6eRKe+jXmJRPkzVeaJ3YJrbcqegbibskcfKT
+         HiCDFVsjtGuwPQCX/y9i/55G5NmKDLYbQoMTbqBqnH42mh4DjzMUl1kA0d0Q+lduOb0/
+         XeHR2UbQ2FQaWFE9YERQ66aWH10SoF/Jv3QHhfFvNwRI7GGrGsjBfM03BAtGkWSXKbIT
+         XzIw==
+X-Gm-Message-State: AOJu0YyBzZdk+uVXSvcpoub4FDxvLcl0ozuILSjN9znxjlqKVpicCf54
+	vM6eikEvvOmpnHn5dK9b2mucG1s7ez8sDvACme7gIDRXxsjHsiP2/j6z9WMLHvI=
+X-Google-Smtp-Source: AGHT+IGANZkTViVD64hUXXxu6HDJ5jxN6qagCTnSNuUlNQ/0R+d4YshzHjUBJfrEJoug4IXMxGrDcw==
+X-Received: by 2002:a17:902:d48a:b0:1f9:cbe1:aee with SMTP id d9443c01a7336-1fa158d0d44mr173545825ad.7.1719579413324;
+        Fri, 28 Jun 2024 05:56:53 -0700 (PDT)
+Received: from localhost.localdomain ([2402:a00:401:a99b:b1ca:de8:cd9e:bf98])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac1535d4dsm14605905ad.177.2024.06.28.05.56.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jun 2024 05:43:33 -0700 (PDT)
-Message-Id: <1f58e19691f2dd6ff525cc19c98158861d6fe411.1719578605.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1754.v3.git.1719578605.gitgitgadget@gmail.com>
-References: <pull.1754.v2.git.1719412192.gitgitgadget@gmail.com>
-	<pull.1754.v3.git.1719578605.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 28 Jun 2024 12:43:25 +0000
-Subject: [PATCH v3 5/5] sparse-index: improve lstat caching of sparse paths
+        Fri, 28 Jun 2024 05:56:52 -0700 (PDT)
+From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+To: git@vger.kernel.org
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: [GSoC][PATCH] t: migrate helper/test-urlmatch-normalization to unit tests
+Date: Fri, 28 Jun 2024 18:26:24 +0530
+Message-ID: <20240628125632.45603-1-shyamthakkar001@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    newren@gmail.com,
-    anh@canva.com,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
 
-From: Derrick Stolee <stolee@gmail.com>
+helper/test-urlmatch-normalization along with
+t0110-urlmatch-normalization test the `url_normalize()` function from
+'urlmatch.h'. Migrate them to the unit testing framework for better
+performance. And also add different test_msg()s for better debugging.
 
-The clear_skip_worktree_from_present_files() method was first introduced
-in af6a51875a (repo_read_index: clear SKIP_WORKTREE bit from files
-present in worktree, 2022-01-14) to allow better interaction with the
-working directory in the presence of paths outside of the
-sparse-checkout. The initial implementation would lstat() every single
-SKIP_WORKTREE path to see if it existed; if it ran across a sparse
-directory that existed (when a sparse index was in use), then it would
-expand the index and then check every SKIP_WORKTREE path.
+In the migration, last two of the checks from `t_url_general_escape()`
+were slightly changed compared to the shellscript. This involves changing
 
-Since these lstat() calls were very expensive, this was improved in
-d79d299352 (Accelerate clear_skip_worktree_from_present_files() by
-caching, 2022-01-14) by caching directories that do not exist so it
-could avoid lstat()ing any files under such directories. However, there
-are some inefficiencies in that caching mechanism.
+'\'' -> '
+'\!' -> !
 
-The caching mechanism stored only the parent directory as not existing,
-even if a higher parent directory also does not exist. This means that
-wasted lstat() calls would occur when the paths passed to path_found()
-change immediate parent directories but within the same parent directory
-that does not exist.
+in the urls of those checks. This is because in C strings, we don't
+need to escape "'" and "!". Other than these two, all the urls were
+pasted verbatim from the shellscript.
 
-To create an example repository that demonstrates this problem, it helps
-to have a directory outside of the sparse-checkout that contains many
-deep paths. In particular, the first paths (in lexicographic order)
-underneath the sparse directory should have deep directory structures,
-maximizing the difference between the old caching algorithm that looks
-to a single parent and the new caching algorithm that looks to the
-top-most missing directory.
+Another change is the removal of MINGW prerequisite from one of the
+test. It was there because[1] on Windows, the command line is a Unicode
+string, it is not possible to pass arbitrary bytes to a program. But
+in unit tests we don't have this limitation.
 
-The performance test script p2000-sparse-operations.sh takes the sample
-repository and copies its HEAD to several copies nested in directories
-of the form f<i>/f<j>/f<k> where i, j, and k are numbers from 1 to 4.
-The sparse-checkout cone is then selected as "f2/f4/". Creating "f1/f1/"
-will trigger the behavior and also lead to some interesting cases for
-the caching algorithm since "f1/f1/" exists but "f1/f2/" and "f3/" do
-not.
+[1]: https://lore.kernel.org/git/53CAC8EF.6020707@gmail.com/
 
-This is difficult to notice when running performance tests using the Git
-repository (or a blow-up of the Git repository, as in
-p2000-sparse-operations.sh) because Git has a very shallow directory
-structure.
-
-This change reorganizes the caching algorithm to focus on storing the
-highest level leading directory that does not exist; specifically this
-means that that directory's parent _does_ exist. By doing a little extra
-work on a path passed to path_found(), we can short-circuit all of the
-paths passed to path_found() afterwards that match a prefix with that
-non-existing directory. When in a repository where the first sparse file
-is likely to have a much deeper path than the first non-existing
-directory, this can realize significant gains.
-
-The details of this algorithm require careful attention, so the new
-implementation of path_found() has detailed comments, including the use
-of a new max_common_dir_prefix() method that may be of independent
-interest.
-
-It's worth noting that this is not universally positive, since we are
-doing extra lstat() calls to establish the exact path to cache. In the
-blow-up of the Git repository, we can see that the lstat count
-_increases_ from 28 to 31. However, these numbers were already
-artificially low.
-
-Contributor Elijah Newren created a publicly-available test repository
-that demonstrates the difference in these caching algorithms in the most
-extreme way. To test, follow these steps:
-
-  git clone --sparse https://github.com/newren/gvfs-like-git-bomb
-  cd gvfs-like-git-bomb
-  ./runme.sh                   # NOTE: check scripts before running!
-
-At this point, assuming you do not have index.sparse=true set globally,
-the index has one million paths with the SKIP_WORKTREE bit and they will
-all be sent to path_found() in the sparse loop. You can measure this by
-running 'git status' with GIT_TRACE2_PERF=1:
-
-    Sparse files in the index: 1,000,000
-  sparse_lstat_count (before):   200,000
-   sparse_lstat_count (after):         2
-
-And here are the performance numbers:
-
-  Benchmark 1: old
-    Time (mean ± σ):     397.5 ms ±   4.1 ms
-    Range (min … max):   391.2 ms … 404.8 ms    10 runs
-
-  Benchmark 2: new
-    Time (mean ± σ):     252.7 ms ±   3.1 ms
-    Range (min … max):   249.4 ms … 259.5 ms    11 runs
-
-  Summary
-    'new' ran
-      1.57 ± 0.02 times faster than 'old'
-
-By modifying this example further, we can demonstrate a more realistic
-example and include the sparse index expansion. Continue by creating
-this directory, confusing both caching algorithms somewhat:
-
-  mkdir -p bomb/d/e/f/a/a
-
-Then re-run the 'git status' tests to see these statistics:
-
-    Sparse files in the index: 1,000,000
-  sparse_lstat_count (before):   724,010
-   sparse_lstat_count (after):       106
-
-  Benchmark 1: old
-    Time (mean ± σ):     753.0 ms ±   3.5 ms
-    Range (min … max):   749.7 ms … 760.9 ms    10 runs
-
-  Benchmark 2: new
-    Time (mean ± σ):     201.4 ms ±   3.2 ms
-    Range (min … max):   196.0 ms … 207.9 ms    14 runs
-
-  Summary
-    'new' ran
-      3.74 ± 0.06 times faster than 'old'
-
-Note that if this repository had a sparse index enabled, the additional
-cost of expanding the sparse index affects the total time of these
-commands by over four seconds, significantly diminishing the benefit of
-the caching algorithm. Having existing paths outside of the
-sparse-checkout is a known performance issue for the sparse index and is
-a known trade-off for the performance benefits given when no such paths
-exist.
-
-Using an internal monorepo with over two million paths at HEAD and a
-typical sparse-checkout cone such that the sparse index contains
-~190,000 entries (including over two thousand sparse trees), I was able
-to measure these lstat counts when one sparse directory actually exists
-on disk:
-
-  Sparse files in expanded index: 1,841,997
-       full_lstat_count (before): 1,188,161
-       full_lstat_count  (after):     4,404
-
-This resulted in this absolute time change, on a warm disk:
-
-      Time in full loop (before): 13.481 s
-      Time in full loop  (after):  0.081 s
-
-(These times were calculated on a Windows machine, where lstat() is
-slower than a similar Linux machine.)
-
-Helped-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 ---
- sparse-index.c | 114 ++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 90 insertions(+), 24 deletions(-)
+ Makefile                                      |   2 +-
+ t/helper/test-tool.c                          |   1 -
+ t/helper/test-tool.h                          |   1 -
+ t/helper/test-urlmatch-normalization.c        |  56 ----
+ t/t0110-urlmatch-normalization.sh             | 182 -----------
+ t/unit-tests/t-urlmatch-normalization.c       | 284 ++++++++++++++++++
+ .../t-urlmatch-normalization}/README          |   0
+ .../t-urlmatch-normalization}/url-1           | Bin
+ .../t-urlmatch-normalization}/url-10          | Bin
+ .../t-urlmatch-normalization}/url-11          | Bin
+ .../t-urlmatch-normalization}/url-2           | Bin
+ .../t-urlmatch-normalization}/url-3           | Bin
+ .../t-urlmatch-normalization}/url-4           | Bin
+ .../t-urlmatch-normalization}/url-5           | Bin
+ .../t-urlmatch-normalization}/url-6           | Bin
+ .../t-urlmatch-normalization}/url-7           | Bin
+ .../t-urlmatch-normalization}/url-8           | Bin
+ .../t-urlmatch-normalization}/url-9           | Bin
+ 18 files changed, 285 insertions(+), 241 deletions(-)
+ delete mode 100644 t/helper/test-urlmatch-normalization.c
+ delete mode 100755 t/t0110-urlmatch-normalization.sh
+ create mode 100644 t/unit-tests/t-urlmatch-normalization.c
+ rename t/{t0110 => unit-tests/t-urlmatch-normalization}/README (100%)
+ rename t/{t0110 => unit-tests/t-urlmatch-normalization}/url-1 (100%)
+ rename t/{t0110 => unit-tests/t-urlmatch-normalization}/url-10 (100%)
+ rename t/{t0110 => unit-tests/t-urlmatch-normalization}/url-11 (100%)
+ rename t/{t0110 => unit-tests/t-urlmatch-normalization}/url-2 (100%)
+ rename t/{t0110 => unit-tests/t-urlmatch-normalization}/url-3 (100%)
+ rename t/{t0110 => unit-tests/t-urlmatch-normalization}/url-4 (100%)
+ rename t/{t0110 => unit-tests/t-urlmatch-normalization}/url-5 (100%)
+ rename t/{t0110 => unit-tests/t-urlmatch-normalization}/url-6 (100%)
+ rename t/{t0110 => unit-tests/t-urlmatch-normalization}/url-7 (100%)
+ rename t/{t0110 => unit-tests/t-urlmatch-normalization}/url-8 (100%)
+ rename t/{t0110 => unit-tests/t-urlmatch-normalization}/url-9 (100%)
 
-diff --git a/sparse-index.c b/sparse-index.c
-index 8577fa726b8..9913a6078cd 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -440,14 +440,21 @@ void ensure_correct_sparsity(struct index_state *istate)
- }
- 
- struct path_found_data {
-+	/**
-+	 * The path stored in 'dir', if non-empty, corresponds to the most-
-+	 * recent path that we checked where:
-+	 *
-+	 *   1. The path should be a directory, according to the index.
-+	 *   2. The path does not exist.
-+	 *   3. The parent path _does_ exist. (This may be the root of the
-+	 *      working directory.)
-+	 */
- 	struct strbuf dir;
--	int dir_found;
- 	size_t lstat_count;
- };
- 
- #define PATH_FOUND_DATA_INIT { \
--	.dir = STRBUF_INIT, \
--	.dir_found = 1 \
-+	.dir = STRBUF_INIT \
- }
- 
- static void clear_path_found_data(struct path_found_data *data)
-@@ -455,49 +462,108 @@ static void clear_path_found_data(struct path_found_data *data)
- 	strbuf_release(&data->dir);
- }
- 
-+/**
-+ * Return the length of the longest common substring that ends in a
-+ * slash ('/') to indicate the longest common parent directory. Returns
-+ * zero if no common directory exists.
-+ */
-+static size_t max_common_dir_prefix(const char *path1, const char *path2)
+diff --git a/Makefile b/Makefile
+index 83bd9d13af..0fc0ee8c3e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -844,7 +844,6 @@ TEST_BUILTINS_OBJS += test-submodule.o
+ TEST_BUILTINS_OBJS += test-subprocess.o
+ TEST_BUILTINS_OBJS += test-trace2.o
+ TEST_BUILTINS_OBJS += test-truncate.o
+-TEST_BUILTINS_OBJS += test-urlmatch-normalization.o
+ TEST_BUILTINS_OBJS += test-userdiff.o
+ TEST_BUILTINS_OBJS += test-wildmatch.o
+ TEST_BUILTINS_OBJS += test-windows-named-pipe.o
+@@ -1343,6 +1342,7 @@ UNIT_TEST_PROGRAMS += t-strbuf
+ UNIT_TEST_PROGRAMS += t-strcmp-offset
+ UNIT_TEST_PROGRAMS += t-strvec
+ UNIT_TEST_PROGRAMS += t-trailer
++UNIT_TEST_PROGRAMS += t-urlmatch-normalization
+ UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
+ UNIT_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 93436a82ae..feed419cdd 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -84,7 +84,6 @@ static struct test_cmd cmds[] = {
+ 	{ "trace2", cmd__trace2 },
+ 	{ "truncate", cmd__truncate },
+ 	{ "userdiff", cmd__userdiff },
+-	{ "urlmatch-normalization", cmd__urlmatch_normalization },
+ 	{ "xml-encode", cmd__xml_encode },
+ 	{ "wildmatch", cmd__wildmatch },
+ #ifdef GIT_WINDOWS_NATIVE
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index d9033d14e1..0c80529604 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -77,7 +77,6 @@ int cmd__subprocess(int argc, const char **argv);
+ int cmd__trace2(int argc, const char **argv);
+ int cmd__truncate(int argc, const char **argv);
+ int cmd__userdiff(int argc, const char **argv);
+-int cmd__urlmatch_normalization(int argc, const char **argv);
+ int cmd__xml_encode(int argc, const char **argv);
+ int cmd__wildmatch(int argc, const char **argv);
+ #ifdef GIT_WINDOWS_NATIVE
+diff --git a/t/helper/test-urlmatch-normalization.c b/t/helper/test-urlmatch-normalization.c
+deleted file mode 100644
+index 86edd454f5..0000000000
+--- a/t/helper/test-urlmatch-normalization.c
++++ /dev/null
+@@ -1,56 +0,0 @@
+-#include "test-tool.h"
+-#include "git-compat-util.h"
+-#include "urlmatch.h"
+-
+-int cmd__urlmatch_normalization(int argc, const char **argv)
+-{
+-	const char usage[] = "test-tool urlmatch-normalization [-p | -l] <url1> | <url1> <url2>";
+-	char *url1 = NULL, *url2 = NULL;
+-	int opt_p = 0, opt_l = 0;
+-	int ret = 0;
+-
+-	/*
+-	 * For one url, succeed if url_normalize succeeds on it, fail otherwise.
+-	 * For two urls, succeed only if url_normalize succeeds on both and
+-	 * the results compare equal with strcmp.  If -p is given (one url only)
+-	 * and url_normalize succeeds, print the result followed by "\n".  If
+-	 * -l is given (one url only) and url_normalize succeeds, print the
+-	 * returned length in decimal followed by "\n".
+-	 */
+-
+-	if (argc > 1 && !strcmp(argv[1], "-p")) {
+-		opt_p = 1;
+-		argc--;
+-		argv++;
+-	} else if (argc > 1 && !strcmp(argv[1], "-l")) {
+-		opt_l = 1;
+-		argc--;
+-		argv++;
+-	}
+-
+-	if (argc < 2 || argc > 3)
+-		die("%s", usage);
+-
+-	if (argc == 2) {
+-		struct url_info info;
+-		url1 = url_normalize(argv[1], &info);
+-		if (!url1)
+-			return 1;
+-		if (opt_p)
+-			printf("%s\n", url1);
+-		if (opt_l)
+-			printf("%u\n", (unsigned)info.url_len);
+-		goto cleanup;
+-	}
+-
+-	if (opt_p || opt_l)
+-		die("%s", usage);
+-
+-	url1 = url_normalize(argv[1], NULL);
+-	url2 = url_normalize(argv[2], NULL);
+-	ret = (url1 && url2 && !strcmp(url1, url2)) ? 0 : 1;
+-cleanup:
+-	free(url1);
+-	free(url2);
+-	return ret;
+-}
+diff --git a/t/t0110-urlmatch-normalization.sh b/t/t0110-urlmatch-normalization.sh
+deleted file mode 100755
+index 12d817fbd3..0000000000
+--- a/t/t0110-urlmatch-normalization.sh
++++ /dev/null
+@@ -1,182 +0,0 @@
+-#!/bin/sh
+-
+-test_description='urlmatch URL normalization'
+-
+-TEST_PASSES_SANITIZE_LEAK=true
+-. ./test-lib.sh
+-
+-# The base name of the test url files
+-tu="$TEST_DIRECTORY/t0110/url"
+-
+-# Note that only file: URLs should be allowed without a host
+-
+-test_expect_success 'url scheme' '
+-	! test-tool urlmatch-normalization "" &&
+-	! test-tool urlmatch-normalization "_" &&
+-	! test-tool urlmatch-normalization "scheme" &&
+-	! test-tool urlmatch-normalization "scheme:" &&
+-	! test-tool urlmatch-normalization "scheme:/" &&
+-	! test-tool urlmatch-normalization "scheme://" &&
+-	! test-tool urlmatch-normalization "file" &&
+-	! test-tool urlmatch-normalization "file:" &&
+-	! test-tool urlmatch-normalization "file:/" &&
+-	test-tool urlmatch-normalization "file://" &&
+-	! test-tool urlmatch-normalization "://acme.co" &&
+-	! test-tool urlmatch-normalization "x_test://acme.co" &&
+-	! test-tool urlmatch-normalization "-test://acme.co" &&
+-	! test-tool urlmatch-normalization "0test://acme.co" &&
+-	! test-tool urlmatch-normalization "+test://acme.co" &&
+-	! test-tool urlmatch-normalization ".test://acme.co" &&
+-	! test-tool urlmatch-normalization "schem%6e://" &&
+-	test-tool urlmatch-normalization "x-Test+v1.0://acme.co" &&
+-	test "$(test-tool urlmatch-normalization -p "AbCdeF://x.Y")" = "abcdef://x.y/"
+-'
+-
+-test_expect_success 'url authority' '
+-	! test-tool urlmatch-normalization "scheme://user:pass@" &&
+-	! test-tool urlmatch-normalization "scheme://?" &&
+-	! test-tool urlmatch-normalization "scheme://#" &&
+-	! test-tool urlmatch-normalization "scheme:///" &&
+-	! test-tool urlmatch-normalization "scheme://:" &&
+-	! test-tool urlmatch-normalization "scheme://:555" &&
+-	test-tool urlmatch-normalization "file://user:pass@" &&
+-	test-tool urlmatch-normalization "file://?" &&
+-	test-tool urlmatch-normalization "file://#" &&
+-	test-tool urlmatch-normalization "file:///" &&
+-	test-tool urlmatch-normalization "file://:" &&
+-	! test-tool urlmatch-normalization "file://:555" &&
+-	test-tool urlmatch-normalization "scheme://user:pass@host" &&
+-	test-tool urlmatch-normalization "scheme://@host" &&
+-	test-tool urlmatch-normalization "scheme://%00@host" &&
+-	! test-tool urlmatch-normalization "scheme://%%@host" &&
+-	test-tool urlmatch-normalization "scheme://host_" &&
+-	test-tool urlmatch-normalization "scheme://user:pass@host/" &&
+-	test-tool urlmatch-normalization "scheme://@host/" &&
+-	test-tool urlmatch-normalization "scheme://host/" &&
+-	test-tool urlmatch-normalization "scheme://host?x" &&
+-	test-tool urlmatch-normalization "scheme://host#x" &&
+-	test-tool urlmatch-normalization "scheme://host/@" &&
+-	test-tool urlmatch-normalization "scheme://host?@x" &&
+-	test-tool urlmatch-normalization "scheme://host#@x" &&
+-	test-tool urlmatch-normalization "scheme://[::1]" &&
+-	test-tool urlmatch-normalization "scheme://[::1]/" &&
+-	! test-tool urlmatch-normalization "scheme://hos%41/" &&
+-	test-tool urlmatch-normalization "scheme://[invalid....:/" &&
+-	test-tool urlmatch-normalization "scheme://invalid....:]/" &&
+-	! test-tool urlmatch-normalization "scheme://invalid....:[/" &&
+-	! test-tool urlmatch-normalization "scheme://invalid....:["
+-'
+-
+-test_expect_success 'url port checks' '
+-	test-tool urlmatch-normalization "xyz://q@some.host:" &&
+-	test-tool urlmatch-normalization "xyz://q@some.host:456/" &&
+-	! test-tool urlmatch-normalization "xyz://q@some.host:0" &&
+-	! test-tool urlmatch-normalization "xyz://q@some.host:0000000" &&
+-	test-tool urlmatch-normalization "xyz://q@some.host:0000001?" &&
+-	test-tool urlmatch-normalization "xyz://q@some.host:065535#" &&
+-	test-tool urlmatch-normalization "xyz://q@some.host:65535" &&
+-	! test-tool urlmatch-normalization "xyz://q@some.host:65536" &&
+-	! test-tool urlmatch-normalization "xyz://q@some.host:99999" &&
+-	! test-tool urlmatch-normalization "xyz://q@some.host:100000" &&
+-	! test-tool urlmatch-normalization "xyz://q@some.host:100001" &&
+-	test-tool urlmatch-normalization "http://q@some.host:80" &&
+-	test-tool urlmatch-normalization "https://q@some.host:443" &&
+-	test-tool urlmatch-normalization "http://q@some.host:80/" &&
+-	test-tool urlmatch-normalization "https://q@some.host:443?" &&
+-	! test-tool urlmatch-normalization "http://q@:8008" &&
+-	! test-tool urlmatch-normalization "http://:8080" &&
+-	! test-tool urlmatch-normalization "http://:" &&
+-	test-tool urlmatch-normalization "xyz://q@some.host:456/" &&
+-	test-tool urlmatch-normalization "xyz://[::1]:456/" &&
+-	test-tool urlmatch-normalization "xyz://[::1]:/" &&
+-	! test-tool urlmatch-normalization "xyz://[::1]:000/" &&
+-	! test-tool urlmatch-normalization "xyz://[::1]:0%300/" &&
+-	! test-tool urlmatch-normalization "xyz://[::1]:0x80/" &&
+-	! test-tool urlmatch-normalization "xyz://[::1]:4294967297/" &&
+-	! test-tool urlmatch-normalization "xyz://[::1]:030f/"
+-'
+-
+-test_expect_success 'url port normalization' '
+-	test "$(test-tool urlmatch-normalization -p "http://x:800")" = "http://x:800/" &&
+-	test "$(test-tool urlmatch-normalization -p "http://x:0800")" = "http://x:800/" &&
+-	test "$(test-tool urlmatch-normalization -p "http://x:00000800")" = "http://x:800/" &&
+-	test "$(test-tool urlmatch-normalization -p "http://x:065535")" = "http://x:65535/" &&
+-	test "$(test-tool urlmatch-normalization -p "http://x:1")" = "http://x:1/" &&
+-	test "$(test-tool urlmatch-normalization -p "http://x:80")" = "http://x/" &&
+-	test "$(test-tool urlmatch-normalization -p "http://x:080")" = "http://x/" &&
+-	test "$(test-tool urlmatch-normalization -p "http://x:000000080")" = "http://x/" &&
+-	test "$(test-tool urlmatch-normalization -p "https://x:443")" = "https://x/" &&
+-	test "$(test-tool urlmatch-normalization -p "https://x:0443")" = "https://x/" &&
+-	test "$(test-tool urlmatch-normalization -p "https://x:000000443")" = "https://x/"
+-'
+-
+-test_expect_success 'url general escapes' '
+-	! test-tool urlmatch-normalization "http://x.y?%fg" &&
+-	test "$(test-tool urlmatch-normalization -p "X://W/%7e%41^%3a")" = "x://w/~A%5E%3A" &&
+-	test "$(test-tool urlmatch-normalization -p "X://W/:/?#[]@")" = "x://w/:/?#[]@" &&
+-	test "$(test-tool urlmatch-normalization -p "X://W/$&()*+,;=")" = "x://w/$&()*+,;=" &&
+-	test "$(test-tool urlmatch-normalization -p "X://W/'\''")" = "x://w/'\''" &&
+-	test "$(test-tool urlmatch-normalization -p "X://W?'\!'")" = "x://w/?'\!'"
+-'
+-
+-test_expect_success !MINGW 'url high-bit escapes' '
+-	test "$(test-tool urlmatch-normalization -p "$(cat "$tu-1")")" = "x://q/%01%02%03%04%05%06%07%08%0E%0F%10%11%12" &&
+-	test "$(test-tool urlmatch-normalization -p "$(cat "$tu-2")")" = "x://q/%13%14%15%16%17%18%19%1B%1C%1D%1E%1F%7F" &&
+-	test "$(test-tool urlmatch-normalization -p "$(cat "$tu-3")")" = "x://q/%80%81%82%83%84%85%86%87%88%89%8A%8B%8C%8D%8E%8F" &&
+-	test "$(test-tool urlmatch-normalization -p "$(cat "$tu-4")")" = "x://q/%90%91%92%93%94%95%96%97%98%99%9A%9B%9C%9D%9E%9F" &&
+-	test "$(test-tool urlmatch-normalization -p "$(cat "$tu-5")")" = "x://q/%A0%A1%A2%A3%A4%A5%A6%A7%A8%A9%AA%AB%AC%AD%AE%AF" &&
+-	test "$(test-tool urlmatch-normalization -p "$(cat "$tu-6")")" = "x://q/%B0%B1%B2%B3%B4%B5%B6%B7%B8%B9%BA%BB%BC%BD%BE%BF" &&
+-	test "$(test-tool urlmatch-normalization -p "$(cat "$tu-7")")" = "x://q/%C0%C1%C2%C3%C4%C5%C6%C7%C8%C9%CA%CB%CC%CD%CE%CF" &&
+-	test "$(test-tool urlmatch-normalization -p "$(cat "$tu-8")")" = "x://q/%D0%D1%D2%D3%D4%D5%D6%D7%D8%D9%DA%DB%DC%DD%DE%DF" &&
+-	test "$(test-tool urlmatch-normalization -p "$(cat "$tu-9")")" = "x://q/%E0%E1%E2%E3%E4%E5%E6%E7%E8%E9%EA%EB%EC%ED%EE%EF" &&
+-	test "$(test-tool urlmatch-normalization -p "$(cat "$tu-10")")" = "x://q/%F0%F1%F2%F3%F4%F5%F6%F7%F8%F9%FA%FB%FC%FD%FE%FF"
+-'
+-
+-test_expect_success 'url utf-8 escapes' '
+-	test "$(test-tool urlmatch-normalization -p "$(cat "$tu-11")")" = "x://q/%C2%80%DF%BF%E0%A0%80%EF%BF%BD%F0%90%80%80%F0%AF%BF%BD"
+-'
+-
+-test_expect_success 'url username/password escapes' '
+-	test "$(test-tool urlmatch-normalization -p "x://%41%62(^):%70+d@foo")" = "x://Ab(%5E):p+d@foo/"
+-'
+-
+-test_expect_success 'url normalized lengths' '
+-	test "$(test-tool urlmatch-normalization -l "Http://%4d%65:%4d^%70@The.Host")" = 25 &&
+-	test "$(test-tool urlmatch-normalization -l "http://%41:%42@x.y/%61/")" = 17 &&
+-	test "$(test-tool urlmatch-normalization -l "http://@x.y/^")" = 15
+-'
+-
+-test_expect_success 'url . and .. segments' '
+-	test "$(test-tool urlmatch-normalization -p "x://y/.")" = "x://y/" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/./")" = "x://y/" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/a/.")" = "x://y/a" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/a/./")" = "x://y/a/" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/.?")" = "x://y/?" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/./?")" = "x://y/?" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/a/.?")" = "x://y/a?" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/a/./?")" = "x://y/a/?" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/a/./b/.././../c")" = "x://y/c" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/a/./b/../.././c/")" = "x://y/c/" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/a/./b/.././../c/././.././.")" = "x://y/" &&
+-	! test-tool urlmatch-normalization "x://y/a/./b/.././../c/././.././.." &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/a/./?/././..")" = "x://y/a/?/././.." &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/%2e/")" = "x://y/" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/%2E/")" = "x://y/" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/a/%2e./")" = "x://y/" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/b/.%2E/")" = "x://y/" &&
+-	test "$(test-tool urlmatch-normalization -p "x://y/c/%2e%2E/")" = "x://y/"
+-'
+-
+-# http://@foo specifies an empty user name but does not specify a password
+-# http://foo  specifies neither a user name nor a password
+-# So they should not be equivalent
+-test_expect_success 'url equivalents' '
+-	test-tool urlmatch-normalization "httP://x" "Http://X/" &&
+-	test-tool urlmatch-normalization "Http://%4d%65:%4d^%70@The.Host" "hTTP://Me:%4D^p@the.HOST:80/" &&
+-	! test-tool urlmatch-normalization "https://@x.y/^" "httpS://x.y:443/^" &&
+-	test-tool urlmatch-normalization "https://@x.y/^" "httpS://@x.y:0443/^" &&
+-	test-tool urlmatch-normalization "https://@x.y/^/../abc" "httpS://@x.y:0443/abc" &&
+-	test-tool urlmatch-normalization "https://@x.y/^/.." "httpS://@x.y:0443/"
+-'
+-
+-test_done
+diff --git a/t/unit-tests/t-urlmatch-normalization.c b/t/unit-tests/t-urlmatch-normalization.c
+new file mode 100644
+index 0000000000..4f225802b0
+--- /dev/null
++++ b/t/unit-tests/t-urlmatch-normalization.c
+@@ -0,0 +1,284 @@
++#include "test-lib.h"
++#include "urlmatch.h"
++#include "strbuf.h"
++
++static void check_url_normalizable(const char *url, int normalizable)
 +{
-+	size_t common_prefix = 0;
-+	for (size_t i = 0; path1[i] && path2[i]; i++) {
-+		if (path1[i] != path2[i])
-+			break;
++	char *url_norm = url_normalize(url, NULL);
 +
-+		/*
-+		 * If they agree at a directory separator, then add one
-+		 * to make sure it is included in the common prefix string.
-+		 */
-+		if (path1[i] == '/')
-+			common_prefix = i + 1;
-+	}
-+
-+	return common_prefix;
++	if (!check_int(normalizable, ==, url_norm ? 1 : 0))
++		test_msg("input url: %s", url);
++	free(url_norm);
 +}
 +
- static int path_found(const char *path, struct path_found_data *data)
- {
- 	struct stat st;
--	char *newdir;
-+	size_t common_prefix;
- 
- 	/*
--	 * If dirname corresponds to a directory that doesn't exist, and this
--	 * path starts with dirname, then path can't exist.
-+	 * If data->dir is non-empty, then it contains a path that doesn't
-+	 * exist, including an ending slash ('/'). If it is a prefix of 'path',
-+	 * then we can return 0.
- 	 */
--	if (!data->dir_found && !memcmp(path, data->dir.buf, data->dir.len))
-+	if (data->dir.len && !memcmp(path, data->dir.buf, data->dir.len))
- 		return 0;
- 
- 	/*
--	 * If path itself exists, return 1.
-+	 * Otherwise, we must check if the current path exists. If it does, then
-+	 * return 1. The cached directory will be skipped until we come across
-+	 * a missing path again.
- 	 */
- 	data->lstat_count++;
- 	if (!lstat(path, &st))
- 		return 1;
- 
- 	/*
--	 * Otherwise, path does not exist so we'll return 0...but we'll first
--	 * determine some info about its parent directory so we can avoid
--	 * lstat calls for future cache entries.
-+	 * At this point, we know that 'path' doesn't exist, and we know that
-+	 * the parent directory of 'data->dir' does exist. Let's set 'data->dir'
-+	 * to be the top-most non-existing directory of 'path'. If the first
-+	 * parent of 'path' exists, then we will act as though 'path'
-+	 * corresponds to a directory (by adding a slash).
- 	 */
--	newdir = strrchr(path, '/');
--	if (!newdir)
--		return 0; /* Didn't find a parent dir; just return 0 now. */
-+	common_prefix = max_common_dir_prefix(path, data->dir.buf);
- 
- 	/*
--	 * If path starts with directory (which we already lstat'ed and found),
--	 * then no need to lstat parent directory again.
-+	 * At this point, 'path' and 'data->dir' have a common existing parent
-+	 * directory given by path[0..common_prefix] (which could have length 0).
-+	 * We "grow" the data->dir buffer by checking for existing directories
-+	 * along 'path'.
- 	 */
--	if (data->dir_found && data->dir.buf &&
--	    memcmp(path, data->dir.buf, data->dir.len))
--		return 0;
- 
--	/* Free previous dirname, and cache path's dirname */
--	strbuf_reset(&data->dir);
--	strbuf_add(&data->dir, path, newdir - path + 1);
-+	strbuf_setlen(&data->dir, common_prefix);
-+	while (1) {
-+		/* Find the next directory in 'path'. */
-+		const char *rest = path + data->dir.len;
-+		const char *next_slash = strchr(rest, '/');
- 
--	data->lstat_count++;
--	data->dir_found = !lstat(data->dir.buf, &st);
-+		/*
-+		 * If there are no more slashes, then 'path' doesn't contain a
-+		 * non-existent _parent_ directory. Set 'data->dir' to be equal
-+		 * to 'path' plus an additional slash, so it can be used for
-+		 * caching in the future. The filename of 'path' is considered
-+		 * a non-existent directory.
-+		 *
-+		 * Note: if "{path}/" exists as a directory, then it will never
-+		 * appear as a prefix of other callers to this method, assuming
-+		 * the context from the clear_skip_worktree... methods. If this
-+		 * method is reused, then this must be reconsidered.
-+		 */
-+		if (!next_slash) {
-+			strbuf_addstr(&data->dir, rest);
-+			strbuf_addch(&data->dir, '/');
-+			break;
-+		}
- 
-+		/*
-+		 * Now that we have a slash, let's grow 'data->dir' to include
-+		 * this slash, then test if we should stop.
-+		 */
-+		strbuf_add(&data->dir, rest, next_slash - rest + 1);
++static void check_normalized_url(const char *url, const char *expect)
++{
++	char *url_norm = url_normalize(url, NULL);
 +
-+		/* If the parent dir doesn't exist, then stop here. */
-+		data->lstat_count++;
-+		if (lstat(data->dir.buf, &st))
-+			return 0;
++	if (!check_str(url_norm, expect))
++		test_msg("input url: %s", url);
++	free(url_norm);
++}
++
++static void compare_normalized_urls(const char *url1, const char *url2,
++				    size_t equal)
++{
++	char *url1_norm = url_normalize(url1, NULL);
++	char *url2_norm = url_normalize(url2, NULL);
++
++	if (equal) {
++		if (!check_str(url1_norm, url2_norm))
++			test_msg("input url1: %s\n  input url2: %s", url1,
++				 url2);
++	} else if (!check_int(strcmp(url1_norm, url2_norm), !=, 0))
++		test_msg(" url1_norm: %s\n   url2_norm: %s\n"
++			 "  input url1: %s\n  input url2: %s",
++			 url1_norm, url2_norm, url1, url2);
++	free(url1_norm);
++	free(url2_norm);
++}
++
++static void check_normalized_url_from_file(const char *file, const char *expect)
++{
++	struct strbuf content = STRBUF_INIT, path = STRBUF_INIT;
++
++	strbuf_getcwd(&path);
++	strbuf_strip_suffix(&path, "/unit-tests/bin"); /* because 'unit-tests-test-tool' is run from 'bin' directory */
++	strbuf_addf(&path, "/unit-tests/t-urlmatch-normalization/%s", file);
++
++	if (!check_int(strbuf_read_file(&content, path.buf, 0), >, 0)) {
++		test_msg("failed to read from file '%s': %s", file, strerror(errno));
++	} else {
++		char *url_norm;
++
++		strbuf_trim_trailing_newline(&content);
++		url_norm = url_normalize(content.buf, NULL);
++		if (!check_str(url_norm, expect))
++			test_msg("input file: %s", file);
++		free(url_norm);
 +	}
 +
-+	/*
-+	 * At this point, 'data->dir' is equal to 'path' plus a slash character,
-+	 * and the parent directory of 'path' definitely exists. Moreover, we
-+	 * know that 'path' doesn't exist, or we would have returned 1 earlier.
-+	 */
- 	return 0;
- }
- 
++	strbuf_release(&content);
++	strbuf_release(&path);
++}
++
++static void check_normalized_url_length(const char *url, size_t len)
++{
++	struct url_info info;
++	char *url_norm = url_normalize(url, &info);
++
++	if (!check_int(info.url_len, ==, len))
++		test_msg("     input url: %s\n  normalized url: %s", url,
++			 url_norm);
++	free(url_norm);
++}
++
++/* Note that only file: URLs should be allowed without a host */
++static void t_url_scheme(void)
++{
++	check_url_normalizable("", 0);
++	check_url_normalizable("_", 0);
++	check_url_normalizable("scheme", 0);
++	check_url_normalizable("scheme:", 0);
++	check_url_normalizable("scheme:/", 0);
++	check_url_normalizable("scheme://", 0);
++	check_url_normalizable("file", 0);
++	check_url_normalizable("file:", 0);
++	check_url_normalizable("file:/", 0);
++	check_url_normalizable("file://", 1);
++	check_url_normalizable("://acme.co", 0);
++	check_url_normalizable("x_test://acme.co", 0);
++	check_url_normalizable("-test://acme.co", 0);
++	check_url_normalizable("0test://acme.co", 0);
++	check_url_normalizable("+test://acme.co", 0);
++	check_url_normalizable(".test://acme.co", 0);
++	check_url_normalizable("schem%6e://", 0);
++	check_url_normalizable("x-Test+v1.0://acme.co", 1);
++	check_normalized_url("AbCdeF://x.Y", "abcdef://x.y/");
++}
++
++static void t_url_authority(void)
++{
++	check_url_normalizable("scheme://user:pass@", 0);
++	check_url_normalizable("scheme://?", 0);
++	check_url_normalizable("scheme://#", 0);
++	check_url_normalizable("scheme:///", 0);
++	check_url_normalizable("scheme://:", 0);
++	check_url_normalizable("scheme://:555", 0);
++	check_url_normalizable("file://user:pass@", 1);
++	check_url_normalizable("file://?", 1);
++	check_url_normalizable("file://#", 1);
++	check_url_normalizable("file:///", 1);
++	check_url_normalizable("file://:", 1);
++	check_url_normalizable("file://:555", 0);
++	check_url_normalizable("scheme://user:pass@host", 1);
++	check_url_normalizable("scheme://@host", 1);
++	check_url_normalizable("scheme://%00@host", 1);
++	check_url_normalizable("scheme://%%@host", 0);
++	check_url_normalizable("scheme://host_", 1);
++	check_url_normalizable("scheme://user:pass@host/", 1);
++	check_url_normalizable("scheme://@host/", 1);
++	check_url_normalizable("scheme://host/", 1);
++	check_url_normalizable("scheme://host?x", 1);
++	check_url_normalizable("scheme://host#x", 1);
++	check_url_normalizable("scheme://host/@", 1);
++	check_url_normalizable("scheme://host?@x", 1);
++	check_url_normalizable("scheme://host#@x", 1);
++	check_url_normalizable("scheme://[::1]", 1);
++	check_url_normalizable("scheme://[::1]/", 1);
++	check_url_normalizable("scheme://hos%41/", 0);
++	check_url_normalizable("scheme://[invalid....:/", 1);
++	check_url_normalizable("scheme://invalid....:]/", 1);
++	check_url_normalizable("scheme://invalid....:[/", 0);
++	check_url_normalizable("scheme://invalid....:[", 0);
++}
++
++static void t_url_port(void)
++{
++	check_url_normalizable("xyz://q@some.host:", 1);
++	check_url_normalizable("xyz://q@some.host:456/", 1);
++	check_url_normalizable("xyz://q@some.host:0", 0);
++	check_url_normalizable("xyz://q@some.host:0000000", 0);
++	check_url_normalizable("xyz://q@some.host:0000001?", 1);
++	check_url_normalizable("xyz://q@some.host:065535#", 1);
++	check_url_normalizable("xyz://q@some.host:65535", 1);
++	check_url_normalizable("xyz://q@some.host:65536", 0);
++	check_url_normalizable("xyz://q@some.host:99999", 0);
++	check_url_normalizable("xyz://q@some.host:100000", 0);
++	check_url_normalizable("xyz://q@some.host:100001", 0);
++	check_url_normalizable("http://q@some.host:80", 1);
++	check_url_normalizable("https://q@some.host:443", 1);
++	check_url_normalizable("http://q@some.host:80/", 1);
++	check_url_normalizable("https://q@some.host:443?", 1);
++	check_url_normalizable("http://q@:8008", 0);
++	check_url_normalizable("http://:8080", 0);
++	check_url_normalizable("http://:", 0);
++	check_url_normalizable("xyz://q@some.host:456/", 1);
++	check_url_normalizable("xyz://[::1]:456/", 1);
++	check_url_normalizable("xyz://[::1]:/", 1);
++	check_url_normalizable("xyz://[::1]:000/", 0);
++	check_url_normalizable("xyz://[::1]:0%300/", 0);
++	check_url_normalizable("xyz://[::1]:0x80/", 0);
++	check_url_normalizable("xyz://[::1]:4294967297/", 0);
++	check_url_normalizable("xyz://[::1]:030f/", 0);
++}
++
++static void t_url_port_normalization(void)
++{
++	check_normalized_url("http://x:800", "http://x:800/");
++	check_normalized_url("http://x:0800", "http://x:800/");
++	check_normalized_url("http://x:00000800", "http://x:800/");
++	check_normalized_url("http://x:065535", "http://x:65535/");
++	check_normalized_url("http://x:1", "http://x:1/");
++	check_normalized_url("http://x:80", "http://x/");
++	check_normalized_url("http://x:080", "http://x/");
++	check_normalized_url("http://x:000000080", "http://x/");
++	check_normalized_url("https://x:443", "https://x/");
++	check_normalized_url("https://x:0443", "https://x/");
++	check_normalized_url("https://x:000000443", "https://x/");
++}
++
++static void t_url_general_escape(void)
++{
++	check_url_normalizable("http://x.y?%fg", 0);
++	check_normalized_url("X://W/%7e%41^%3a", "x://w/~A%5E%3A");
++	check_normalized_url("X://W/:/?#[]@", "x://w/:/?#[]@");
++	check_normalized_url("X://W/$&()*+,;=", "x://w/$&()*+,;=");
++	check_normalized_url("X://W/'", "x://w/'");
++	check_normalized_url("X://W?!", "x://w/?!");
++}
++
++static void t_url_high_bit(void)
++{
++	check_normalized_url_from_file("url-1",
++			    "x://q/%01%02%03%04%05%06%07%08%0E%0F%10%11%12");
++	check_normalized_url_from_file("url-2",
++			    "x://q/%13%14%15%16%17%18%19%1B%1C%1D%1E%1F%7F");
++	check_normalized_url_from_file("url-3",
++			    "x://q/%80%81%82%83%84%85%86%87%88%89%8A%8B%8C%8D%8E%8F");
++	check_normalized_url_from_file("url-4",
++			    "x://q/%90%91%92%93%94%95%96%97%98%99%9A%9B%9C%9D%9E%9F");
++	check_normalized_url_from_file("url-5",
++			    "x://q/%A0%A1%A2%A3%A4%A5%A6%A7%A8%A9%AA%AB%AC%AD%AE%AF");
++	check_normalized_url_from_file("url-6",
++			    "x://q/%B0%B1%B2%B3%B4%B5%B6%B7%B8%B9%BA%BB%BC%BD%BE%BF");
++	check_normalized_url_from_file("url-7",
++			    "x://q/%C0%C1%C2%C3%C4%C5%C6%C7%C8%C9%CA%CB%CC%CD%CE%CF");
++	check_normalized_url_from_file("url-8",
++			    "x://q/%D0%D1%D2%D3%D4%D5%D6%D7%D8%D9%DA%DB%DC%DD%DE%DF");
++	check_normalized_url_from_file("url-9",
++			    "x://q/%E0%E1%E2%E3%E4%E5%E6%E7%E8%E9%EA%EB%EC%ED%EE%EF");
++	check_normalized_url_from_file("url-10",
++			    "x://q/%F0%F1%F2%F3%F4%F5%F6%F7%F8%F9%FA%FB%FC%FD%FE%FF");
++}
++
++static void t_url_utf8_escape(void)
++{
++	check_normalized_url_from_file("url-11",
++			    "x://q/%C2%80%DF%BF%E0%A0%80%EF%BF%BD%F0%90%80%80%F0%AF%BF%BD");
++}
++
++static void t_url_username_pass(void)
++{
++	check_normalized_url("x://%41%62(^):%70+d@foo", "x://Ab(%5E):p+d@foo/");
++}
++
++static void t_url_length(void)
++{
++	check_normalized_url_length("Http://%4d%65:%4d^%70@The.Host", 25);
++	check_normalized_url_length("http://%41:%42@x.y/%61/", 17);
++	check_normalized_url_length("http://@x.y/^", 15);
++}
++
++static void t_url_dots(void)
++{
++	check_normalized_url("x://y/.", "x://y/");
++	check_normalized_url("x://y/./", "x://y/");
++	check_normalized_url("x://y/a/.", "x://y/a");
++	check_normalized_url("x://y/a/./", "x://y/a/");
++	check_normalized_url("x://y/.?", "x://y/?");
++	check_normalized_url("x://y/./?", "x://y/?");
++	check_normalized_url("x://y/a/.?", "x://y/a?");
++	check_normalized_url("x://y/a/./?", "x://y/a/?");
++	check_normalized_url("x://y/a/./b/.././../c", "x://y/c");
++	check_normalized_url("x://y/a/./b/../.././c/", "x://y/c/");
++	check_normalized_url("x://y/a/./b/.././../c/././.././.", "x://y/");
++	check_url_normalizable("x://y/a/./b/.././../c/././.././..", 0);
++	check_normalized_url("x://y/a/./?/././..", "x://y/a/?/././..");
++	check_normalized_url("x://y/%2e/", "x://y/");
++	check_normalized_url("x://y/%2E/", "x://y/");
++	check_normalized_url("x://y/a/%2e./", "x://y/");
++	check_normalized_url("x://y/b/.%2E/", "x://y/");
++	check_normalized_url("x://y/c/%2e%2E/", "x://y/");
++}
++
++/*
++ * http://@foo specifies an empty user name but does not specify a password
++ * http://foo  specifies neither a user name nor a password
++ * So they should not be equivalent
++ */
++static void t_url_equivalents(void)
++{
++	compare_normalized_urls("httP://x", "Http://X/", 1);
++	compare_normalized_urls("Http://%4d%65:%4d^%70@The.Host", "hTTP://Me:%4D^p@the.HOST:80/", 1);
++	compare_normalized_urls("https://@x.y/^", "httpS://x.y:443/^", 0);
++	compare_normalized_urls("https://@x.y/^", "httpS://@x.y:0443/^", 1);
++	compare_normalized_urls("https://@x.y/^/../abc", "httpS://@x.y:0443/abc", 1);
++	compare_normalized_urls("https://@x.y/^/..", "httpS://@x.y:0443/", 1);
++}
++
++int cmd_main(int argc UNUSED, const char **argv UNUSED)
++{
++	TEST(t_url_scheme(), "url scheme");
++	TEST(t_url_authority(), "url authority");
++	TEST(t_url_port(), "url port checks");
++	TEST(t_url_port_normalization(), "url port normalization");
++	TEST(t_url_general_escape(), "url general escapes");
++	TEST(t_url_high_bit(), "url high-bit escapes");
++	TEST(t_url_utf8_escape(), "url utf8 escapes");
++	TEST(t_url_username_pass(), "url username/password escapes");
++	TEST(t_url_length(), "url normalized lengths");
++	TEST(t_url_dots(), "url . and .. segments");
++	TEST(t_url_equivalents(), "url equivalents");
++	return test_done();
++}
+diff --git a/t/t0110/README b/t/unit-tests/t-urlmatch-normalization/README
+similarity index 100%
+rename from t/t0110/README
+rename to t/unit-tests/t-urlmatch-normalization/README
+diff --git a/t/t0110/url-1 b/t/unit-tests/t-urlmatch-normalization/url-1
+similarity index 100%
+rename from t/t0110/url-1
+rename to t/unit-tests/t-urlmatch-normalization/url-1
+diff --git a/t/t0110/url-10 b/t/unit-tests/t-urlmatch-normalization/url-10
+similarity index 100%
+rename from t/t0110/url-10
+rename to t/unit-tests/t-urlmatch-normalization/url-10
+diff --git a/t/t0110/url-11 b/t/unit-tests/t-urlmatch-normalization/url-11
+similarity index 100%
+rename from t/t0110/url-11
+rename to t/unit-tests/t-urlmatch-normalization/url-11
+diff --git a/t/t0110/url-2 b/t/unit-tests/t-urlmatch-normalization/url-2
+similarity index 100%
+rename from t/t0110/url-2
+rename to t/unit-tests/t-urlmatch-normalization/url-2
+diff --git a/t/t0110/url-3 b/t/unit-tests/t-urlmatch-normalization/url-3
+similarity index 100%
+rename from t/t0110/url-3
+rename to t/unit-tests/t-urlmatch-normalization/url-3
+diff --git a/t/t0110/url-4 b/t/unit-tests/t-urlmatch-normalization/url-4
+similarity index 100%
+rename from t/t0110/url-4
+rename to t/unit-tests/t-urlmatch-normalization/url-4
+diff --git a/t/t0110/url-5 b/t/unit-tests/t-urlmatch-normalization/url-5
+similarity index 100%
+rename from t/t0110/url-5
+rename to t/unit-tests/t-urlmatch-normalization/url-5
+diff --git a/t/t0110/url-6 b/t/unit-tests/t-urlmatch-normalization/url-6
+similarity index 100%
+rename from t/t0110/url-6
+rename to t/unit-tests/t-urlmatch-normalization/url-6
+diff --git a/t/t0110/url-7 b/t/unit-tests/t-urlmatch-normalization/url-7
+similarity index 100%
+rename from t/t0110/url-7
+rename to t/unit-tests/t-urlmatch-normalization/url-7
+diff --git a/t/t0110/url-8 b/t/unit-tests/t-urlmatch-normalization/url-8
+similarity index 100%
+rename from t/t0110/url-8
+rename to t/unit-tests/t-urlmatch-normalization/url-8
+diff --git a/t/t0110/url-9 b/t/unit-tests/t-urlmatch-normalization/url-9
+similarity index 100%
+rename from t/t0110/url-9
+rename to t/unit-tests/t-urlmatch-normalization/url-9
 -- 
-gitgitgadget
+2.45.2
+
