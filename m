@@ -1,148 +1,264 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080A013E029
-	for <git@vger.kernel.org>; Fri, 28 Jun 2024 12:43:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FEA15572B
+	for <git@vger.kernel.org>; Fri, 28 Jun 2024 12:43:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719578611; cv=none; b=L2l7XqTEiRmy9F3WoeUyysW3kFsziT3Uduf7sooV0bnOQ8lSZ0vyV3Sm5CqzClcoIQza2f7Y0oq4hhQKIN3bN9usKjll5wreKkQZSJYSMic7j1EJicUUtlTssBZFTNddLFCGDj5owWUPlbAEBjDixru92EWWonsOzJJezyo2B4Q=
+	t=1719578613; cv=none; b=bEQJtqa876MIZnQzTIyz25eKxJGSnudc9/MrCqWcQPFp0x/gioGx7LX74EL2/gWC9pktB23bf4nIU+f3dHhYTJXbxegWvTlr76Z1sp9UwJcZiM+7KioAOy/65BrRHGL4yjRoHDDDo2Lgw/HwnMLAtBNtBw2cd42wntMMqSZ7xBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719578611; c=relaxed/simple;
-	bh=2O/1ErdSNbeIeJGo366EFBNR0bpo7HxKXrkoDEz2xIc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=GZTXWa/5bW7hLXAQIH1pCfK+crlKCzZbFnQkUacnQpz0KcU0yI1NkiWPy/HVhlwQWFprwsWKtm+7b/tHj9Kch3ZwZ8Wz0+gGyYBkhxlElWgabVcJBJwc0O+r2wu/LxbuWyE1BZ+RmTSCLIwufWBPKeGTRZ4gWt9q9NxGvIoyZww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wh2mdY2M; arc=none smtp.client-ip=209.85.208.172
+	s=arc-20240116; t=1719578613; c=relaxed/simple;
+	bh=1+YfJ3KeIDNMytgJhgLc/jzlPo48qZI+007fZd8EAuE=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=XSCdILB5SbHLsnEJ3x+hIy9Hat8Us5BycujKzUPUOB6hjfYtJ7ma+ogywm6F2Epp4Z61b9XNYeaFKkF2JJyx+cbtvoLbGvlXxJxowEEO8XMfWOEgNksDk5dMsvHbp5KLtavk0Wn6hAaMPmixcMYDe6AaMAyPINadrAepYUwEkz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JuKU5m4z; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wh2mdY2M"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ec52fbb50aso6477011fa.3
-        for <git@vger.kernel.org>; Fri, 28 Jun 2024 05:43:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JuKU5m4z"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-42565cdf99cso5761635e9.3
+        for <git@vger.kernel.org>; Fri, 28 Jun 2024 05:43:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1719578608; x=1720183408; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ygU0Fe9nRkU4Xe2SUxwUGpAwqCrVeB7vYAPKMKvZg4Y=;
-        b=Wh2mdY2MXNBkzNxQ+Nn5mjJdOKu+N6NCleaGHzIX4ruXPaDN2YtvaMPyfZQOZpJp1L
-         irlwT0hyaCmxfFebSWIWP4DqtOKChoV2LctBaEzLkpk7ihF5OEEAjEQKaanZW5Q15ZhB
-         8V+SeTt4HXsCA9BQB628a0vmC1nJfUvmg4yFp6b13vWt6dILhNNIbJIe65lmfpeRjVbs
-         7sbBDeMSHaA2S4tizTNh3cB2QKdTHNs4cYOOTvAytIZh/R/VfZoggYI8Mz3LTxrDhpMP
-         126eZTG/+ryxSFPHGLbZuXCZpdJOBvO5ZAINEvmOv786xmoK1Q5OYqpGjLUf3PklAxm0
-         4pDg==
+        bh=CR8mOzRt4TH4V8VXf39UAZ4aSlUBCBjfZL+B2dW2tgw=;
+        b=JuKU5m4zVsSRIE1tMFe5pN/00uTYtUk9leakxXrIxvaJp4Ms37Vl3KWgsuDdIYK7TF
+         fGI8r8tjFGWNMlSbsscxxqedQ5SCgqNeL+XqZkD8GsVuW6Xe1wPedHlVul7+kpjTg7x4
+         JOt02IAwtb7Az9RqpXZB3KCZD9zuZGDZMhXiAPVlrL2S10A4nNMnxB89KWcboxIxLbKk
+         dKhZ4cfamuUWkVlWqccUUyPCYKq7IvK64UqoU0/CQ94CidU1fYUWQXsiInoWpE+6QTSJ
+         3kOCZo4KZ/HZPftTDPVMcuAQzgIj1+bmPN+69bTsAMe+lgED+Y6mYkDrtD0yx6dERGSu
+         kZ1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1719578608; x=1720183408;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ygU0Fe9nRkU4Xe2SUxwUGpAwqCrVeB7vYAPKMKvZg4Y=;
-        b=OWCM/v6J0wPrWTJsMCvlnFvT83N5QgbfHvDuEba90y+lpnkr9R22Bf0FgVEkVBeBRc
-         8HLBcEOs7cLWKZXzwrR6mZKCUeGd4FcEGP62Pdb5Mg1INebuMFPtYe98QslHtwNGXlzp
-         RdiNyUhAztGdMcygmhdPq9NEAK3nng71pw99E6lmXc1toiJjYlXeZXkhMUZzjtcKYuOs
-         5h3Xus3Q351f4RRuC+LRqrRyfYpy4SuqNgQ9vKKalH2LtrrFE5bPpU9OlEkV9SdBX+Gw
-         iMYuNHSMyjxlwIkZ330NG5wrFnEv3n3gl4Ik6xdVH90H9lZ5KVFe7Oj0ki6vslMqpWov
-         ZC5g==
-X-Gm-Message-State: AOJu0YyJQ3qxhqgJ2Fw9FmDJLPe12Zlh2o2GQlm/cdazfU2mUTDNDlk0
-	l2AJsnNZrr3KBnlZjuStBwzZe5i3En1gg5OFajW8o5nOk//kF2Mm33ADMQ==
-X-Google-Smtp-Source: AGHT+IGllVOo5Q4Ue2tUw/9flWejJ7DahNLj/cAvXdbYrp9kOR7fnJyHGFf8i7W8mEzqPca1nKwtFg==
-X-Received: by 2002:a2e:88c9:0:b0:2ec:57c7:c737 with SMTP id 38308e7fff4ca-2ec5b357a17mr124784071fa.40.1719578607363;
-        Fri, 28 Jun 2024 05:43:27 -0700 (PDT)
+        bh=CR8mOzRt4TH4V8VXf39UAZ4aSlUBCBjfZL+B2dW2tgw=;
+        b=BFmNsFskwwtrdPd98W+Z9LrtDk0YPgARmlGqRHp2PB5K3yR4DfE+GF9BuTDnBLEGXu
+         sowcQ/uTQxzWrQ1zlRgn50nAyuOzqEVoQWI0weCsgQ1VEvhmBZro5yDPPVEQ5d7E21eX
+         O16B9A7tvJGxoWc6yI+Rgh6p70HDpJT4SBB7eqQ8YS4Zj3/Dc5GAw7BUIvwGMN2aADu/
+         atuYrRTLzvG+xOFpn655KNapoCiMysWqO/rQYxEAnAOQgqnjEyMv5yzt21tmk/KqbBHG
+         zu3J0z2DXxT9PfGCaGmTVKQSyGW5pE8RkpgWJOWGp3kREPZrKiJEaea7P+IopFGky/Gm
+         m8rQ==
+X-Gm-Message-State: AOJu0YxT0FTlOCcwEwMjz2evvOwsn/0f+PLTAmVpw4ghH51i6iaTawVd
+	WvVSk3ToLApK1qENcH47h9nuwhXHwaAn4Vc00gc0ZxV81eEQKYyfPtas2w==
+X-Google-Smtp-Source: AGHT+IGUW21Yq3dC1x9y4W9MP9Z3EB2E/x4ghEmCgiBnzOVYBJ2GWrPZg4761E5+oBrO9UevwGZSyw==
+X-Received: by 2002:a1c:7716:0:b0:425:64c5:5780 with SMTP id 5b1f17b1804b1-42564c55995mr44681205e9.1.1719578608268;
+        Fri, 28 Jun 2024 05:43:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4256af3f14csm33672605e9.6.2024.06.28.05.43.26
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4256b065316sm33392575e9.26.2024.06.28.05.43.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jun 2024 05:43:26 -0700 (PDT)
-Message-Id: <pull.1754.v3.git.1719578605.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1754.v2.git.1719412192.gitgitgadget@gmail.com>
+        Fri, 28 Jun 2024 05:43:27 -0700 (PDT)
+Message-Id: <0844cda94cffd76ea9e86a0837731cfb4dc7bf88.1719578605.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1754.v3.git.1719578605.gitgitgadget@gmail.com>
 References: <pull.1754.v2.git.1719412192.gitgitgadget@gmail.com>
+	<pull.1754.v3.git.1719578605.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 28 Jun 2024 12:43:20 +0000
-Subject: [PATCH v3 0/5] sparse-index: improve clear_skip_worktree_from_present_files()
+Date: Fri, 28 Jun 2024 12:43:21 +0000
+Subject: [PATCH v3 1/5] sparse-checkout: refactor skip worktree retry logic
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
     newren@gmail.com,
     anh@canva.com,
+    Derrick Stolee <stolee@gmail.com>,
     Derrick Stolee <stolee@gmail.com>
 
-While doing some investigation in a private monorepo with sparse-checkout
-and a sparse index, I accidentally left a modified file outside of my
-sparse-checkout cone. This caused my Git commands to slow to a crawl, so I
-reran with GIT_TRACE2_PERF=1.
+From: Derrick Stolee <stolee@gmail.com>
 
-While I was able to identify clear_skip_worktree_from_present_files() as the
-culprit, it took longer than desired to figure out what was going on. This
-series intends to both fix the performance issue (as much as possible) and
-do some refactoring to make it easier to understand what is happening.
+The clear_skip_worktree_from_present_files() method was introduced in
+af6a51875a (repo_read_index: clear SKIP_WORKTREE bit from files present
+in worktree, 2022-01-14) to help cases where sparse-checkout is enabled
+but some paths outside of the sparse-checkout also exist on disk.  This
+operation can be slow as it needs to check path existence in a way not
+stored in the index, so caching was introduced in d79d299352 (Accelerate
+clear_skip_worktree_from_present_files() by caching, 2022-01-14).
 
-In the end, I was able to reduce the number of lstat() calls in my case from
-over 1.1 million to about 4,400, improving the time from 13.4s to 81ms on a
-warm disk cache. (These numbers are from a test after v2, which somehow hit
-the old caching algorithm even worse than my test in v1.)
+This check is particularly confusing in the presence of a sparse index,
+as a sparse tree entry corresponding to an existing directory must first
+be expanded to a full index before examining the paths within. This is
+currently implemented using a 'goto' and a boolean variable to ensure we
+restart only once.
 
+Even with that caching, it was noticed that this could take a long time
+to execute. 89aaab11a3 (index: add trace2 region for clear skip
+worktree, 2022-11-03) introduced trace2 regions to measure this time.
+Further, the way the loop repeats itself was slightly confusing and
+prone to breakage, so a BUG() statement was added in 8c7abdc596 (index:
+raise a bug if the index is materialised more than once, 2022-11-03) to
+be sure that the second run of the loop does not hit any sparse trees.
 
-Updates in v3
-=============
+One thing that can be confusing about the current setup is that the
+trace2 regions nest and it is not clear that a second loop is running
+after a sparse index is expanded. Here is an example of what the regions
+look like in a typical case:
 
- * Removed the incorrect paragraph in the commit message of patch 1.
- * Replaced "largest" with "longest" in the final patch.
+| region_enter | ... | label:clear_skip_worktree_from_present_files
+| region_enter | ... | ..label:update
+| region_leave | ... | ..label:update
+| region_enter | ... | ..label:ensure_full_index
+| region_enter | ... | ....label:update
+| region_leave | ... | ....label:update
+| region_leave | ... | ..label:ensure_full_index
+| data         | ... | ..sparse_path_count:1
+| data         | ... | ..sparse_path_count_full:269538
+| region_leave | ... | label:clear_skip_worktree_from_present_files
 
-Thanks, Stolee
+One thing that is particularly difficult to understand about these
+regions is that most of the time is spent between the close of the
+ensure_full_index region and the reporting of the end data. This is
+because of the restart of the loop being within the same region as the
+first iteration of the loop.
 
-Derrick Stolee (5):
-  sparse-checkout: refactor skip worktree retry logic
-  sparse-index: refactor path_found()
-  sparse-index: use strbuf in path_found()
-  sparse-index: count lstat() calls
-  sparse-index: improve lstat caching of sparse paths
+This change refactors the method into two separate methods that are
+traced separately. This will be more important later when we change
+other features of the methods, but for now the only functional change is
+the difference in the structure of the trace regions.
 
- sparse-index.c | 216 +++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 164 insertions(+), 52 deletions(-)
+After this change, the same telemetry section is split into three
+distinct chunks:
 
+| region_enter | ... | label:clear_skip_worktree_from_present_files_sparse
+| data         | ... | ..sparse_path_count:1
+| region_leave | ... | label:clear_skip_worktree_from_present_files_sparse
+| region_enter | ... | label:update
+| region_leave | ... | label:update
+| region_enter | ... | label:ensure_full_index
+| region_enter | ... | ..label:update
+| region_leave | ... | ..label:update
+| region_leave | ... | label:ensure_full_index
+| region_enter | ... | label:clear_skip_worktree_from_present_files_full
+| data         | ... | ..full_path_count:269538
+| region_leave | ... | label:clear_skip_worktree_from_present_files_full
 
-base-commit: 66ac6e4bcd111be3fa9c2a6b3fafea718d00678d
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1754%2Fderrickstolee%2Fclear-skip-speed-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1754/derrickstolee/clear-skip-speed-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1754
+Here, we see the sparse loop terminating early with its first sparse
+path being a sparse directory containing a file. Then, that loop's
+region terminates before ensure_full_index begins (in this case, the
+cache-tree must also be computed). Then, _after_ the index is expanded,
+the full loop begins with its own region.
 
-Range-diff vs v2:
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+ sparse-index.c | 77 ++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 53 insertions(+), 24 deletions(-)
 
- 1:  93d0baed0b0 ! 1:  0844cda94cf sparse-checkout: refactor skip worktree retry logic
-     @@ Commit message
-          stored in the index, so caching was introduced in d79d299352 (Accelerate
-          clear_skip_worktree_from_present_files() by caching, 2022-01-14).
-      
-     -    If users are having trouble with the performance of this operation and
-     -    don't care about paths outside of the sparse-checkout, they can disable
-     -    them using the sparse.expectFilesOutsideOfPatterns config option
-     -    introduced in ecc7c8841d (repo_read_index: add config to expect files
-     -    outside sparse patterns, 2022-02-25).
-     -
-          This check is particularly confusing in the presence of a sparse index,
-          as a sparse tree entry corresponding to an existing directory must first
-          be expanded to a full index before examining the paths within. This is
- 2:  69c3beaabf7 = 2:  c242e2c9168 sparse-index: refactor path_found()
- 3:  0a82e6b4183 = 3:  ad63bf746ca sparse-index: use strbuf in path_found()
- 4:  9549f5b8062 = 4:  db6ded0df0d sparse-index: count lstat() calls
- 5:  0cb344ac14f ! 5:  1f58e19691f sparse-index: improve lstat caching of sparse paths
-     @@ sparse-index.c: static void clear_path_found_data(struct path_found_data *data)
-       }
-       
-      +/**
-     -+ * Return the length of the largest common substring that ends in a
-     -+ * slash ('/') to indicate the largest common parent directory. Returns
-     ++ * Return the length of the longest common substring that ends in a
-     ++ * slash ('/') to indicate the longest common parent directory. Returns
-      + * zero if no common directory exists.
-      + */
-      +static size_t max_common_dir_prefix(const char *path1, const char *path2)
-
+diff --git a/sparse-index.c b/sparse-index.c
+index e48e40cae71..e0457c87fff 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -486,49 +486,78 @@ static int path_found(const char *path, const char **dirname, size_t *dir_len,
+ 	return 0;
+ }
+ 
+-void clear_skip_worktree_from_present_files(struct index_state *istate)
++static int clear_skip_worktree_from_present_files_sparse(struct index_state *istate)
+ {
+ 	const char *last_dirname = NULL;
+ 	size_t dir_len = 0;
+ 	int dir_found = 1;
+ 
+-	int i;
+-	int path_count[2] = {0, 0};
+-	int restarted = 0;
++	int path_count = 0;
++	int to_restart = 0;
+ 
+-	if (!core_apply_sparse_checkout ||
+-	    sparse_expect_files_outside_of_patterns)
+-		return;
+-
+-	trace2_region_enter("index", "clear_skip_worktree_from_present_files",
++	trace2_region_enter("index", "clear_skip_worktree_from_present_files_sparse",
+ 			    istate->repo);
+-restart:
+-	for (i = 0; i < istate->cache_nr; i++) {
++	for (int i = 0; i < istate->cache_nr; i++) {
+ 		struct cache_entry *ce = istate->cache[i];
+ 
+ 		if (ce_skip_worktree(ce)) {
+-			path_count[restarted]++;
++			path_count++;
+ 			if (path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
+ 				if (S_ISSPARSEDIR(ce->ce_mode)) {
+-					if (restarted)
+-						BUG("ensure-full-index did not fully flatten?");
+-					ensure_full_index(istate);
+-					restarted = 1;
+-					goto restart;
++					to_restart = 1;
++					break;
+ 				}
+ 				ce->ce_flags &= ~CE_SKIP_WORKTREE;
+ 			}
+ 		}
+ 	}
+ 
+-	if (path_count[0])
+-		trace2_data_intmax("index", istate->repo,
+-				   "sparse_path_count", path_count[0]);
+-	if (restarted)
+-		trace2_data_intmax("index", istate->repo,
+-				   "sparse_path_count_full", path_count[1]);
+-	trace2_region_leave("index", "clear_skip_worktree_from_present_files",
++	trace2_data_intmax("index", istate->repo,
++			   "sparse_path_count", path_count);
++	trace2_region_leave("index", "clear_skip_worktree_from_present_files_sparse",
++			    istate->repo);
++	return to_restart;
++}
++
++static void clear_skip_worktree_from_present_files_full(struct index_state *istate)
++{
++	const char *last_dirname = NULL;
++	size_t dir_len = 0;
++	int dir_found = 1;
++
++	int path_count = 0;
++
++	trace2_region_enter("index", "clear_skip_worktree_from_present_files_full",
+ 			    istate->repo);
++	for (int i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
++
++		if (S_ISSPARSEDIR(ce->ce_mode))
++			BUG("ensure-full-index did not fully flatten?");
++
++		if (ce_skip_worktree(ce)) {
++			path_count++;
++			if (path_found(ce->name, &last_dirname, &dir_len, &dir_found))
++				ce->ce_flags &= ~CE_SKIP_WORKTREE;
++		}
++	}
++
++	trace2_data_intmax("index", istate->repo,
++			   "full_path_count", path_count);
++	trace2_region_leave("index", "clear_skip_worktree_from_present_files_full",
++			    istate->repo);
++}
++
++void clear_skip_worktree_from_present_files(struct index_state *istate)
++{
++	if (!core_apply_sparse_checkout ||
++	    sparse_expect_files_outside_of_patterns)
++		return;
++
++	if (clear_skip_worktree_from_present_files_sparse(istate)) {
++		ensure_full_index(istate);
++		clear_skip_worktree_from_present_files_full(istate);
++	}
+ }
+ 
+ /*
 -- 
 gitgitgadget
+
