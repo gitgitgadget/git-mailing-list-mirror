@@ -1,97 +1,104 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AD01400A
-	for <git@vger.kernel.org>; Fri, 28 Jun 2024 02:12:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7963D17F8
+	for <git@vger.kernel.org>; Fri, 28 Jun 2024 02:38:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719540732; cv=none; b=VEnMR3zVVj/+10etCQNKCGSLt4MDve9l3J7KEQySiFK10FYPRz5HHvZEix+tlPZrEe0brgLDRYFq3ZMuXFHg4db/WUpQEqXLDQXGMvZBjuL1MsJ1p7LqRKpyek6aUYmBVdi7T+UDv4RKBYOm0gVHYkRS6YoNfy0+RxKuj7NtpgI=
+	t=1719542312; cv=none; b=S8vuTzYSt+ro1RD5D9x8huJS7iFUcILRkKt6diFaeBQoqq7f8it8s3yWqwJszJ3CvqtKbbe/D/UUN5NQvE94+zTbQDmLZ2wBtg/xkYwgujG401ztkgDYIdRfhyjBdeJDKW8p9bk095fmVxBtF3zk0Z2q1FLSNskeXcX5LGVI3Jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719540732; c=relaxed/simple;
-	bh=qy4Yv/lXaxWzA0S/BYFxCEv/utXp42C81V9WQalq+Sg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fqEzdgqemWbIQHNzYly+oNSIdCY1MxYb/GwPq8cHSP8wFcp7GjlKA3r8EBe520UEafrXWn/TC6MleKKcNfNOvyHtNjGg2Dcz1suJpErzVLsNUbt++9+UYDAdwUvHbKTPeRed9Cf7iuAvpG+c61FwDtGhNvGNsybmdTd5/5dWBFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mJfk9xzT; arc=none smtp.client-ip=209.85.128.173
+	s=arc-20240116; t=1719542312; c=relaxed/simple;
+	bh=e81RfO0Cpnsg0nzVstM8IGhFp0+WcPdRsocGy7b5XYU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JmbF7VvB4CvagkzeGrLZFKRbmqkKbK8oQTCmJ8fDRcnrKYaNiPP6QD9LB1yw5X7xhiIrpd5UIbY6YLhXQw4DbZk8VZkO0La6U00uVvospCyqbG8HSyCt1ZPPSRzwV+tniRLMTHbvqcKQAALs23wmjnIqi/bh1SdXxUNhZKkltfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lxCyVo/G; arc=none smtp.client-ip=209.85.166.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mJfk9xzT"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-643efaf0786so987357b3.1
-        for <git@vger.kernel.org>; Thu, 27 Jun 2024 19:12:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lxCyVo/G"
+Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-7f3d3919a4aso3341439f.1
+        for <git@vger.kernel.org>; Thu, 27 Jun 2024 19:38:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719540730; x=1720145530; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1PcYUZ4Pp97XRZlzCuD8ksYc2AFy69ONXWoihDH4FuU=;
-        b=mJfk9xzTBgg+VeGwYtfPUc+KmsReJSpVhLVfdkIlT5taaAJt5piPUKeFILuXHLKgPN
-         w9QwXB6dHJ6KYa1fcGVnh0KTDL287LL+35jFAJEwGPU9ebTuBDbfwpAaR2Oof9dlJsLG
-         JCIcqNllthO3seK7FNfOQWule8Pbr0CILejN+CfLzVweh8w0GHItbJ9xawiyUcE2lzoV
-         9WoNB8MPMHMYzoX78nbt1GZpm6zMTWuKyZ4kTqG10+9T4pZ2JuBgdTqOwvHUjsLX/Rwc
-         TAOUOz6e/2uTTEGpKefB9PzW04ppJ3ghNPwVTP3MIr3OK4sg17sW90sla/2P+0wzucc2
-         CEHA==
+        d=gmail.com; s=20230601; t=1719542310; x=1720147110; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NbEnSPkA8z6Br3f96+GJUwGxGZ/+//2Q55+Gu1e7e8w=;
+        b=lxCyVo/GF0aLyI9OekSur3aykuV5j/NMXyWLY2LSEN+5m2kBs1GvFUM+ufZF9p6fsL
+         iRIXXRC0KFydPifzZeYXPQbUTrst8hrkXVH+VHzv2+Kn/56zeyh8IhHjOc2+y4mUENCj
+         GjtVJeQ8FPw2F0uprtcI5CsSj5UkVag9xKRmOt7UVI5/FRqAdw71UnHiSdE01+N0yfOi
+         nsQmVb4u/q7LLsIBb0ePofKIBD/lShPFOAbE5FWu1UtHB9E0iHwmgZBt26oZe6Xc3WSX
+         JXVYGsU5bB3W62n5BWPDSpVI/pxJW+P8TRWtPtaUrDVub5oAC0J7JH5WkYp3W36T51TI
+         74xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719540730; x=1720145530;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1PcYUZ4Pp97XRZlzCuD8ksYc2AFy69ONXWoihDH4FuU=;
-        b=YAOUrTXYnWsc/Jaa+ri6qVbiBAq40LzFLGlcb+EZTH/y9xp7ymBEqlmRpAr2mgY+Mg
-         FHUoXCWT/q+vihnejVeF/P4Yj1P4XBrffwL4uQeggUwZ9MGfjBsTf66GBuXkr69Ntu0e
-         okawGBJdD03KQ0T68KWCsF3ewVeLXnRvLnHZ8Txek0M319xL6GVDm/ttsUHkDduVmYCk
-         sgsxkn82p62sk9IXX9D+FbCuxmwUwa+bVuVT0UWGFNcZXtoJ7PEPUEihDy35c+LdCSJl
-         BGWuBeiourdj7NY7gRobjk7Txfbt244eDV0tliSSxHcIm3NaOwpYDX1zJ6LoCvIUeWLQ
-         Kz9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWxowQ2V4fRiJslMSy9aN3CZUpyqPidp6Zx4yKVz6JxkCa8KD1Snv+eHqWAUgJoIRtuO1LfLjNmulyO7n3ynaNVDc+j
-X-Gm-Message-State: AOJu0YxsIxuwTawEG8t2aRbdVoZvXO65xS0oS77Q0Yp8hd9VZvEaRTA0
-	B+0tRwB2ZNLpvRCnVmji1/ee7WY685+GW2OW/gEdI/qKAgIDHUmn
-X-Google-Smtp-Source: AGHT+IFObpIE/j8qHWB0SkPEsyr45DAtFl5JtV0v+ZAuBCVK2bdXHiqADZh6c6+hQe/myr3wDd7njA==
-X-Received: by 2002:a0d:e890:0:b0:63b:f5ac:8cc5 with SMTP id 00721157ae682-6433f0e1f98mr154326337b3.18.1719540729739;
-        Thu, 27 Jun 2024 19:12:09 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:5cca:8078:1e70:3d3c? ([2600:1700:60ba:9810:5cca:8078:1e70:3d3c])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-64a9ba5ac60sm1761087b3.94.2024.06.27.19.12.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jun 2024 19:12:09 -0700 (PDT)
-Message-ID: <63caecb4-19cd-4b6f-91f0-bd00df2ecb54@gmail.com>
-Date: Thu, 27 Jun 2024 22:12:08 -0400
+        d=1e100.net; s=20230601; t=1719542310; x=1720147110;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NbEnSPkA8z6Br3f96+GJUwGxGZ/+//2Q55+Gu1e7e8w=;
+        b=gQwu2gh4hvDn44SwY5i+pohIOC0O5yiUVbLbz7cWKLUVMgxCyVB+FNDQ5Bt2kVnxx5
+         yGXYmiL6y49LZX6lw7KAjiUm8w13EoTk+O+0X7t/2un/UlUveR6ffud8A59Wtn2sPZAz
+         A9+0je/CrT1vIn3X7Sr0fK4mrPNm75+YOAzudonJo8GKoP3VHa7/hsY6lupGObtT8+zo
+         3GPgd7dBaQmMDUdBd49PhznhqzGuNIwdxLUVlIxP9IRodQSeHceS4jBD+ztq5hMgArf7
+         dy8T+BxiQWO3rm7JDJBugmzjnZ5078LCnMJnMUevJfy1naaYzaU8Ds9XweZDduNkpcV4
+         hCVw==
+X-Forwarded-Encrypted: i=1; AJvYcCVClLMlPSR2ip0qVW5qBCEUxSUxm5/UAvIw/jUYxEIW9sA7APaFV3b4ZX7VCJ9bIMQVAR9yOvGRCU0XKvRhC2/KGh6h
+X-Gm-Message-State: AOJu0YzQTGsYL1k3eVZSOuwLM01ULhAEpJ6tBCXQTWo10ad/GSmUGubf
+	zfodzlBICm7aFFl7EkRMaVMm8B7QR+oiZC69QgSiyOopfgvFG+2duHzJQL3AjSyyqmnJiY7p4/d
+	0goADgoEOR/qamrIKihYpJDnHfLw=
+X-Google-Smtp-Source: AGHT+IHCIiayFyVxy2aEHsSHHzfk6lkjgTaaGbmn92Fro1XiXzqqPCMxakQcSrsVwAQ+SmaWd3eDmFxX8WiJfQea35Q=
+X-Received: by 2002:a05:6602:6b89:b0:7eb:dc70:979c with SMTP id
+ ca18e2360f4ac-7f3a4e68497mr1847100039f.21.1719542310514; Thu, 27 Jun 2024
+ 19:38:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <pull.1748.git.1718310307.gitgitgadget@gmail.com>
+ <pull.1748.v2.git.1718766019.gitgitgadget@gmail.com> <2813a15b48b70ead7e3fd062d1b49baee665fc9d.1718766019.git.gitgitgadget@gmail.com>
+ <63caecb4-19cd-4b6f-91f0-bd00df2ecb54@gmail.com>
+In-Reply-To: <63caecb4-19cd-4b6f-91f0-bd00df2ecb54@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 27 Jun 2024 19:38:18 -0700
+Message-ID: <CABPp-BHgd1Diqaiqc+a+UinHb947iwEx99cpVFqckUGXjmGVsQ@mail.gmail.com>
 Subject: Re: [PATCH v2 4/7] merge-ort: clearer propagation of
  failure-to-function from merge_submodule
-To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>,
- Elijah Newren <newren@gmail.com>
-References: <pull.1748.git.1718310307.gitgitgadget@gmail.com>
- <pull.1748.v2.git.1718766019.gitgitgadget@gmail.com>
- <2813a15b48b70ead7e3fd062d1b49baee665fc9d.1718766019.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <2813a15b48b70ead7e3fd062d1b49baee665fc9d.1718766019.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/18/24 11:00 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> The 'clean' member variable is somewhat of a tri-state (1 = clean, 0 =
-> conflicted, -1 = failure-to-determine), but we often like to think of
-> it as binary (ignoring the possibility of a negative value) and use
-> constructs like '!clean' to reflect this.  However, these constructs
-> can make codepaths more difficult to understand, unless we handle the
-> negative case early and return pre-emptively; do that in
-> handle_content_merge() to make the code a bit easier to read.
+On Thu, Jun 27, 2024 at 7:12=E2=80=AFPM Derrick Stolee <stolee@gmail.com> w=
+rote:
+>
+> On 6/18/24 11:00 PM, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > The 'clean' member variable is somewhat of a tri-state (1 =3D clean, 0 =
+=3D
+> > conflicted, -1 =3D failure-to-determine), but we often like to think of
+> > it as binary (ignoring the possibility of a negative value) and use
+> > constructs like '!clean' to reflect this.  However, these constructs
+> > can make codepaths more difficult to understand, unless we handle the
+> > negative case early and return pre-emptively; do that in
+> > handle_content_merge() to make the code a bit easier to read.
+>
+> This patch is correct and valuable.
+>
+> Would it be valuable to go a bit further and turn 'clean' into
+> an enum that reflects these states? Perhaps that would prevent
+> future changes from slipping into this mistake.
 
-This patch is correct and valuable.
+That may make sense to investigate, but I suspect it may be a bigger
+change and would recommend making such a clean up a separate series.
 
-Would it be valuable to go a bit further and turn 'clean' into
-an enum that reflects these states? Perhaps that would prevent
-future changes from slipping into this mistake.
-
-Thanks,
--Stolee
+Also, I'm curious if it makes sense to finish off replacing recursive
+with ort first; as long as recursive exists, it has the same problem
+and in fact was the source of using a tri-state 'clean' variable and
+thus would need the same cleanup.  But if we replace recursive with
+ort (making explicit requests for 'recursive' be handled by 'ort', as
+originally designed and intended), that cuts the number of sites
+needing this cleanup in half.
