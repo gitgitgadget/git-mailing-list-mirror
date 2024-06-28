@@ -1,104 +1,134 @@
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7963D17F8
-	for <git@vger.kernel.org>; Fri, 28 Jun 2024 02:38:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789A61CFAF
+	for <git@vger.kernel.org>; Fri, 28 Jun 2024 02:44:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719542312; cv=none; b=S8vuTzYSt+ro1RD5D9x8huJS7iFUcILRkKt6diFaeBQoqq7f8it8s3yWqwJszJ3CvqtKbbe/D/UUN5NQvE94+zTbQDmLZ2wBtg/xkYwgujG401ztkgDYIdRfhyjBdeJDKW8p9bk095fmVxBtF3zk0Z2q1FLSNskeXcX5LGVI3Jc=
+	t=1719542685; cv=none; b=nJswLZ7ibP5FtGSM4cpdfqTeQ9HocbFcdLqm7kqxr5uUqlFVR9g4oVAMswal1r+bjXWB/CsU1l6tbCM+eOs4WMHE/ignBOWa/FDng2hGPvt46/nAohsGNgAGp5yE1p93ZZ6yO9hQ+X2Fm8eWRC9RPHyJTvDpw4cGBddy4tenG0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719542312; c=relaxed/simple;
-	bh=e81RfO0Cpnsg0nzVstM8IGhFp0+WcPdRsocGy7b5XYU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JmbF7VvB4CvagkzeGrLZFKRbmqkKbK8oQTCmJ8fDRcnrKYaNiPP6QD9LB1yw5X7xhiIrpd5UIbY6YLhXQw4DbZk8VZkO0La6U00uVvospCyqbG8HSyCt1ZPPSRzwV+tniRLMTHbvqcKQAALs23wmjnIqi/bh1SdXxUNhZKkltfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lxCyVo/G; arc=none smtp.client-ip=209.85.166.47
+	s=arc-20240116; t=1719542685; c=relaxed/simple;
+	bh=1fGyZcUtcRoVPYjXLp5PjByRcZylP8Vc88B02GyeVeg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KnIQwbwloSi5keEpa0+V+MbT85ud1668JogJ/g1wtn2pm1JmlSuXI2y3fHNjuVfII3TnYZRO8w2szuI6Pzug/j+sNNRNZu+YNLvbmu4DJiBag2Gdyfzij1G/kJk9zokNM0K5XVT1PnPVwGoaF0F/m1WQ7YqPbKdPo4BXz8oY/Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YDqsQlce; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lxCyVo/G"
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-7f3d3919a4aso3341439f.1
-        for <git@vger.kernel.org>; Thu, 27 Jun 2024 19:38:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YDqsQlce"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6325b04c275so1072837b3.3
+        for <git@vger.kernel.org>; Thu, 27 Jun 2024 19:44:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719542310; x=1720147110; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NbEnSPkA8z6Br3f96+GJUwGxGZ/+//2Q55+Gu1e7e8w=;
-        b=lxCyVo/GF0aLyI9OekSur3aykuV5j/NMXyWLY2LSEN+5m2kBs1GvFUM+ufZF9p6fsL
-         iRIXXRC0KFydPifzZeYXPQbUTrst8hrkXVH+VHzv2+Kn/56zeyh8IhHjOc2+y4mUENCj
-         GjtVJeQ8FPw2F0uprtcI5CsSj5UkVag9xKRmOt7UVI5/FRqAdw71UnHiSdE01+N0yfOi
-         nsQmVb4u/q7LLsIBb0ePofKIBD/lShPFOAbE5FWu1UtHB9E0iHwmgZBt26oZe6Xc3WSX
-         JXVYGsU5bB3W62n5BWPDSpVI/pxJW+P8TRWtPtaUrDVub5oAC0J7JH5WkYp3W36T51TI
-         74xw==
+        d=gmail.com; s=20230601; t=1719542683; x=1720147483; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IJaZII+6U29vO10b4JBDFjQC+fwZyWt7AXA9DM4XXrg=;
+        b=YDqsQlcewAU3c6yTqwjPtn75MrGlv9gxK10raKBZ9O7j8pj0kRRSNRhTFtGMjj6Fgv
+         vWPZErghNTdBOwUqssMXXLtSx16q7mAJDVXG3sdpXnivMkMQDXk2xZzbnVV0MsKxm0Kf
+         Imp41BvkB6M+p4Lk7w+du27kczZ5gIeWTEa941jyLMSjTIM/8T1dfg7SWoLgcH+TEWht
+         3mW4Cb8wVkgEqrJDQwfDe4+0WloqtwbjlM7sA8NV3tQIKgFxi7zQrgFeMRugk0TG24T/
+         BVSgCEMx9dwZNulos+xU6DPZ+S5ljN+zWwNVStv2hG9uj9jyWSCS+JhUXNLNMJ9Etntc
+         ot9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719542310; x=1720147110;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NbEnSPkA8z6Br3f96+GJUwGxGZ/+//2Q55+Gu1e7e8w=;
-        b=gQwu2gh4hvDn44SwY5i+pohIOC0O5yiUVbLbz7cWKLUVMgxCyVB+FNDQ5Bt2kVnxx5
-         yGXYmiL6y49LZX6lw7KAjiUm8w13EoTk+O+0X7t/2un/UlUveR6ffud8A59Wtn2sPZAz
-         A9+0je/CrT1vIn3X7Sr0fK4mrPNm75+YOAzudonJo8GKoP3VHa7/hsY6lupGObtT8+zo
-         3GPgd7dBaQmMDUdBd49PhznhqzGuNIwdxLUVlIxP9IRodQSeHceS4jBD+ztq5hMgArf7
-         dy8T+BxiQWO3rm7JDJBugmzjnZ5078LCnMJnMUevJfy1naaYzaU8Ds9XweZDduNkpcV4
-         hCVw==
-X-Forwarded-Encrypted: i=1; AJvYcCVClLMlPSR2ip0qVW5qBCEUxSUxm5/UAvIw/jUYxEIW9sA7APaFV3b4ZX7VCJ9bIMQVAR9yOvGRCU0XKvRhC2/KGh6h
-X-Gm-Message-State: AOJu0YzQTGsYL1k3eVZSOuwLM01ULhAEpJ6tBCXQTWo10ad/GSmUGubf
-	zfodzlBICm7aFFl7EkRMaVMm8B7QR+oiZC69QgSiyOopfgvFG+2duHzJQL3AjSyyqmnJiY7p4/d
-	0goADgoEOR/qamrIKihYpJDnHfLw=
-X-Google-Smtp-Source: AGHT+IHCIiayFyVxy2aEHsSHHzfk6lkjgTaaGbmn92Fro1XiXzqqPCMxakQcSrsVwAQ+SmaWd3eDmFxX8WiJfQea35Q=
-X-Received: by 2002:a05:6602:6b89:b0:7eb:dc70:979c with SMTP id
- ca18e2360f4ac-7f3a4e68497mr1847100039f.21.1719542310514; Thu, 27 Jun 2024
- 19:38:30 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719542683; x=1720147483;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IJaZII+6U29vO10b4JBDFjQC+fwZyWt7AXA9DM4XXrg=;
+        b=fehuxUNVpNc7eO0w6qLrsXoWVXMAzLR1bgEtAUgwQVXxT53AEYDwhCGpqEMWV6iD44
+         d9YXRn+YsgXyUtXREi/dpreyTeU2Nofthhw1YMl1nlak9ee/wAy5CLyNiEZGxzVd0L9L
+         J+j3pjpQhmwWcDtu2r9ws+jccXGSx6Zrs9FTJ9DJSnuVikKiaDbCplUnwy4oanySwNyW
+         ISFcsVjNbnRcprQtyr2ZVBzZe3IjgYt4lxS4TYFw068Em0mgspdINvEvy002pq/8uCPR
+         TAEfX9UMWJT3QZFmqHInsT1vnenwExhXQZmyyboHCRiPmWYJmCKdPm2qRGKi7vFeKHNH
+         SNhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUfbY2WshLKmDmcTkSHLXIJoQN5UyktV0nkL8iO8qwJ0G8od1560L1cXpS9Kz3mzI6ZzEoTlYWNdME8McY5NSAl8Mha
+X-Gm-Message-State: AOJu0Yx/0ZR2zrFr3Y9p9xA67a7IyVkH7p4AS9hpLm5X1tsGaR78jPE0
+	VKx/BpwNlEHaQ+mupcjRBsNQGnbnXlxnowvvPOubBic8NDDXhFYL
+X-Google-Smtp-Source: AGHT+IFkSuYy/dj48i/RSEdGxnayMpvy95tEM8m6Pem+SZCxQJdigxB+bNTjx7IWXvhDs/nbQ8vOgg==
+X-Received: by 2002:a05:690c:845:b0:631:2740:3882 with SMTP id 00721157ae682-643ace05438mr125828747b3.51.1719542683345;
+        Thu, 27 Jun 2024 19:44:43 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:5cca:8078:1e70:3d3c? ([2600:1700:60ba:9810:5cca:8078:1e70:3d3c])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-64a9a23b71asm1868827b3.50.2024.06.27.19.44.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jun 2024 19:44:42 -0700 (PDT)
+Message-ID: <6db979ed-3d08-4ac4-b1c6-65a76939de35@gmail.com>
+Date: Thu, 27 Jun 2024 22:44:42 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/7] merge-ort: fix type of local 'clean' var in
+ handle_content_merge()
+To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>,
+ Elijah Newren <newren@gmail.com>
 References: <pull.1748.git.1718310307.gitgitgadget@gmail.com>
- <pull.1748.v2.git.1718766019.gitgitgadget@gmail.com> <2813a15b48b70ead7e3fd062d1b49baee665fc9d.1718766019.git.gitgitgadget@gmail.com>
- <63caecb4-19cd-4b6f-91f0-bd00df2ecb54@gmail.com>
-In-Reply-To: <63caecb4-19cd-4b6f-91f0-bd00df2ecb54@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 27 Jun 2024 19:38:18 -0700
-Message-ID: <CABPp-BHgd1Diqaiqc+a+UinHb947iwEx99cpVFqckUGXjmGVsQ@mail.gmail.com>
-Subject: Re: [PATCH v2 4/7] merge-ort: clearer propagation of
- failure-to-function from merge_submodule
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ <pull.1748.v2.git.1718766019.gitgitgadget@gmail.com>
+ <034b91db1d2ed78995b52c014de313744972ff40.1718766019.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <034b91db1d2ed78995b52c014de313744972ff40.1718766019.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 27, 2024 at 7:12=E2=80=AFPM Derrick Stolee <stolee@gmail.com> w=
-rote:
->
-> On 6/18/24 11:00 PM, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > The 'clean' member variable is somewhat of a tri-state (1 =3D clean, 0 =
-=3D
-> > conflicted, -1 =3D failure-to-determine), but we often like to think of
-> > it as binary (ignoring the possibility of a negative value) and use
-> > constructs like '!clean' to reflect this.  However, these constructs
-> > can make codepaths more difficult to understand, unless we handle the
-> > negative case early and return pre-emptively; do that in
-> > handle_content_merge() to make the code a bit easier to read.
->
-> This patch is correct and valuable.
->
-> Would it be valuable to go a bit further and turn 'clean' into
-> an enum that reflects these states? Perhaps that would prevent
-> future changes from slipping into this mistake.
+On 6/18/24 11:00 PM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> handle_content_merge() returns an int.  Every caller of
+> handle_content_merge() expects an int.  However, we declare a local
+> variable 'clean' that we use for the return value to be unsigned.  To
+> make matters worse, we also assign 'clean' the return value of
+> merge_submodule() in one codepath, which is defined to return an int.
+> It seems that the only reason to have 'clean' be unsigned was to allow a
+> cutesy bit manipulation operation to be well-defined.  Fix the type of
+> the 'clean' local in handle_content_merge().
 
-That may make sense to investigate, but I suspect it may be a bigger
-change and would recommend making such a clean up a separate series.
+> @@ -2184,7 +2184,8 @@ static int handle_content_merge(struct merge_options *opt,
+>   		free(result_buf.ptr);
+>   		if (ret)
+>   			return -1;
+> -		clean &= (merge_status == 0);
+> +		if (merge_status > 0)
+> +			clean = 0;
+>   		path_msg(opt, INFO_AUTO_MERGING, 1, path, NULL, NULL, NULL,
+>   			 _("Auto-merging %s"), path);
+>   	} else if (S_ISGITLINK(a->mode)) {
 
-Also, I'm curious if it makes sense to finish off replacing recursive
-with ort first; as long as recursive exists, it has the same problem
-and in fact was the source of using a tri-state 'clean' variable and
-thus would need the same cleanup.  But if we replace recursive with
-ort (making explicit requests for 'recursive' be handled by 'ort', as
-originally designed and intended), that cuts the number of sites
-needing this cleanup in half.
+Even after this removal of this cute bitflip, there is one more
+subtle use still in the code:
+
+diff --git a/merge-ort.c b/merge-ort.c
+index 8dfe80f1009..569014eef31 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -2629,7 +2629,8 @@ static char *check_for_directory_rename(struct 
+merge_options *opt,
+  	new_path = handle_path_level_conflicts(opt, path, side_index,
+  					       rename_info,
+  					       &collisions[side_index]);
+-	*clean_merge &= (new_path != NULL);
++	if (*clean_merge && !new_path)
++		*clean_merge = 0;
+
+  	return new_path;
+  }
+
+I had to think very carefully about this cleverness to be sure
+that this conversion is right (and I'm only mostly sure). When
+(new_path != NULL) is false, then we definitely set *clean_merge
+to zero. Otherwise, we set it to 1 (but only when it was already
+1 or -1). Technically, this does change the behavior by not
+squashing -1 into 1, but that is less likely to be an existing
+value of *clean_merge.
+
+There are other uses of "clean &= collect_renames(...)" but that
+appears to be fine because collect_renames() never results in an
+abort state (returning -1).
+
+Thanks,
+-Stolee
