@@ -1,156 +1,149 @@
-Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72007200AE
-	for <git@vger.kernel.org>; Fri, 28 Jun 2024 15:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376581C8FB5
+	for <git@vger.kernel.org>; Fri, 28 Jun 2024 16:48:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719588700; cv=none; b=eb2/KPM9PxkNXbeOMpb05CJPHnV6cuLMyBHncqtqWJj33jgxg1rQKYfMV6p05TkBZ1/Bx4x+YCGctj1pOF+QpGeNf3kFi99Tv27Ay7T+qY+JvHHLM2hbmbbKHGmoRfhIAKzAieyhwbUnSzzmUqdHWAfUbaQgLzynQ5+8aGJnx4E=
+	t=1719593340; cv=none; b=VQiwA7vN9WX5u5bIrkY1LOWWKMDjejhXCLGBg/uI3GiAyyAtMSpHavAEuK18WwsUz4aCpk9CyFuI82M0ZCg5Z7+ClI2+mYV/uA3RF1jtXOhv6oAoaVtSTctEQRIYC8Wx+ZEJefU76LFGNEc+1BldUBo/NxgxzaU9ktf4UyY/LyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719588700; c=relaxed/simple;
-	bh=8WZIDk5PaUv/ZTFMJoyKKF1sntDtcVmcdCh2XF5XLCc=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=MjYy/mN1WqiFlLYJtsCswqEBBukSlChF9Z/tzjVO/E2rjitp5BHrsgRiOYmpL6X0VbJnPaq+TpVaIqDMVIEtoP6dXbH9ySHGR9q0kYdoVQ1t/QtRjABBYAoPmGMYy0OgFoj+hMt6G6OMu3l1soSptfpuCpeWkny/QiZDcp3Nd+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=JnvBZeGh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mAQ0EuAO; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1719593340; c=relaxed/simple;
+	bh=fky2MtS4IRdxkXMyqEm4sBosK5z15wM8nMxE62DEjA8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Qrq2Y6UqrJLFXhjvNVgL3ZSXL5DYPUCncZz29HWSeIHGt+vDOhS7eAAEJLrMFCUri1uELL/Joor6ODkzQpnr6wTKIeKaaaWsz6n9r6I7k9d51M/XWyxmym2rMjL6wtcMjyWJxUAoP2P8NiO3IrspD+37vc6JmGuUQa32DU08H2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=POmHdfUV; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="JnvBZeGh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mAQ0EuAO"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 6AEF3138023D;
-	Fri, 28 Jun 2024 11:31:37 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Fri, 28 Jun 2024 11:31:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1719588697; x=1719675097; bh=d/Z3miZDJT/qjnXXTA8mdtgFIml8oyVj
-	id2q/eh+iCk=; b=JnvBZeGhTa2hcxbMwTntTOq5PeQjotvAF1NVsurbImYg1cTe
-	Yb9FT7bixQ5PudQ/yKgR7EbnQptXLZmad6cgcfGTmlmQVkftaDL+Lj8mDaVtknGC
-	InPiLuEtkelcRnr6AJwhvnwgwNlR+DBjWya0bQMksQ+DIJTyRZMP1cqcMFiwMGfw
-	04hLj8N4/0lZVaVA3mYZnRDwgO8nfAvaALjkUNJgBt1QIO6FvZTBto6W/A15MujV
-	Hl2iBU3snAJmYBTrB4neKs4XAo8XEZefitHRprgTTN3aXL55nt7rufks3nzsleV/
-	yo8em06LR/e0kfxzQJNG2g4Fdjiz46W84FVRTA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1719588697; x=
-	1719675097; bh=d/Z3miZDJT/qjnXXTA8mdtgFIml8oyVjid2q/eh+iCk=; b=m
-	AQ0EuAOQig4QtKRPnou2X//KdBNL70Plf4UCzA+Jz0a89UU7yCw61MVOOrUYwR+t
-	YrxH/OtEBd9WAzcmXZaRTxPhGmfElIvNS7pjLeOnGB9w6eXJZm7u8+yj9UxXYgZR
-	gZPyVwnIob0c/URU/MbqtfNKsA/qEg8DhseV73CCbcr9sEt3QZo1rbSOSQ+lmFoh
-	Vh+UxAhx4VHStHT1DzfI86N+FN82wrCS2HogXgiyknjQ/omE/SMRIvrFirqfvi6I
-	d2cSZK9unJ419LqYE8hWqLz3nZkuirrk10l0WIzx04ueykgaEsxQwWFDemY8zMz2
-	GlvWEJSXxVnr5Fa3Q0mVQ==
-X-ME-Sender: <xms:WNd-Zh69o_4ctNauc0CiCY3w3j7sLXNNdvJegf6z0_zT_Mt6PIBmRJU>
-    <xme:WNd-Zu6VPisOpbZ57by252Su07WZIPHmOqV4k__0vHmbsallK6PP1ifiJLK6BdTVR
-    c7kvg1bXkPI57fwpw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrtdejgdefvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedfmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
-    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepjeetvdelleegfeefhfeuffevffeiudeh
-    leeiieevhfeguedugedttdeitddvfeevnecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
-    dpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehm
-    rghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:WNd-ZocCIjd2b5lCnB-htpg6IU2eFOEySwUUTUnF6MQLscXYYby5Ug>
-    <xmx:WNd-ZqLJF7NM8f3WQGUU-iuYZITmRGxjFQd9-JgJvW-3UoEUQqUnFg>
-    <xmx:WNd-ZlIq5DndEWNpC6OMbHJsTXlWgL7_WeXwubEFJ9qeIaos4aakgQ>
-    <xmx:WNd-ZjxNqkSOpOjh2zdAR7Cvfp9pOI1n6BacLSQLHupPY03XWQ1lbQ>
-    <xmx:Wdd-ZuWWGuPnhQxRDCtlXsppCLQWnkbiE4gJNpABJIkQ8h0hg4u2lzvc>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id B3A3C15A0092; Fri, 28 Jun 2024 11:31:36 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-538-g1508afaa2-fm-20240616.001-g1508afaa
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="POmHdfUV"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EA85033B6F;
+	Fri, 28 Jun 2024 12:48:55 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=fky2MtS4IRdxkXMyqEm4sBosK5z15wM8nMxE62
+	DEjA8=; b=POmHdfUVVkeWHY+yYV0X7KTY+c5hu+ChUYFbz8SIiOFMeHTvKIbxBs
+	6LEkfzXyppyjpR/Egy1fACvdfwkb90o8lT4UyARwqulG0e0Y10Qb1mpsgcNHwTYZ
+	DrjXNxQxL6siIyBIPmulUa4xMH7wp6x+XU6ITfI4WyZGwDdF55XZA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E229B33B6E;
+	Fri, 28 Jun 2024 12:48:55 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 55F0B33B6D;
+	Fri, 28 Jun 2024 12:48:55 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Florian Schmaus <flo@geekplace.eu>,  git@vger.kernel.org,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH] setup: support GIT_IGNORE_INSECURE_OWNER environment
+ variable
+In-Reply-To: <27cadffb-ca3f-487d-86b7-3508c45c446d@gmail.com> (Phillip Wood's
+	message of "Fri, 28 Jun 2024 10:35:25 +0100")
+References: <20240626123358.420292-1-flo@geekplace.eu>
+	<20240626123358.420292-2-flo@geekplace.eu>
+	<9e5b0cc6-e28c-4c51-ab48-663c61c00ee3@gmail.com>
+	<72e42e9f-5b85-4863-8506-c99d658d7596@gmail.com>
+	<xmqqa5j71snb.fsf@gitster.g>
+	<5742e728-a012-4960-a32d-bf3b65c3a2e3@gmail.com>
+	<xmqqpls2v1zx.fsf@gitster.g>
+	<27cadffb-ca3f-487d-86b7-3508c45c446d@gmail.com>
+Date: Fri, 28 Jun 2024 09:48:54 -0700
+Message-ID: <xmqq7ce96mix.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <f6abd59c-ea86-423f-9172-79779932418b@app.fastmail.com>
-In-Reply-To: <xmqqed99k7xo.fsf@gitster.g>
-References: <pull.1712.git.git.1717694800.gitgitgadget@gmail.com>
- <011c10f488610b0a795a843bff66723477783761.1717694801.git.gitgitgadget@gmail.com>
- <xmqq34pqlyou.fsf@gitster.g> <F64F4F3A-EF82-4281-8A75-0DDC8FA65D4B@gmail.com>
- <xmqqed99k7xo.fsf@gitster.g>
-Date: Fri, 28 Jun 2024 17:30:08 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org,
- "Phillip Wood" <phillip.wood123@gmail.com>, "Jeff King" <peff@peff.net>,
- "Patrick Steinhardt" <ps@pks.im>,
- =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>,
- "John Cai" <johncai86@gmail.com>, "Aryan Gupta" <garyan447@gmail.com>,
- "Linus Arver" <linusa@google.com>
-Subject: Re: [PATCH 1/4] refs: add referent parameter to refs_resolve_ref_unsafe
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4EA22D0C-356E-11EF-B674-965B910A682E-77302942!pb-smtp2.pobox.com
 
-On Fri, Jun 7, 2024, at 00:44, Junio C Hamano wrote:
-> I found the previous occurrences of the same problem:
->
->   https://lore.kernel.org/git/xmqqjzm3qumx.fsf@gitster.g/
->   https://lore.kernel.org/git/xmqqh6hkxox6.fsf@gitster.g/
->
-> The last message in the thread
->
->
-> https://lore.kernel.org/git/CAMbn=3DB7J4ODf9ybJQpL1bZZ7qdWSDGaLEyTmVv+=
-ZBiSeC9T+yw@mail.gmail.com/
->
-> says that the original user of GGG found what was wrong in the way
-> the user was using GGG to send and fixed it, but unfortunately we
-> didn't hear exactly *what* the breakage was and *how* it was fixed.
->
-> Aryan, do you remember what the problem was and more importantly
-> what the fix was?
->
-> Thanks.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Yes, Aryan didn=E2=80=99t explain what the issue was. But Linus Arver (+=
-CC) in
-that first thread/link figured out what was happening in his case:[1]
-
-> I realize now that it's because I copy/pasted the "Cc: ..." lines in t=
-he PR
-> description from
-> https://github.com/gitgitgadget/git/pull/1632#issue-2068188239, such
-> that when I pasted those in for the PR description for this series at
-> https://github.com/gitgitgadget/git/pull/1694#issue-2187804953, it
-> carried over the email addresses as Markdown-formatted hyperlinks.
-> Currently it reads
+>>     We may want to discuss who protects from whom with the
+>>     safe.directory mechanism and git-daemon-export-ok mechanism.  The
+>>     former is "the daemon trusts that repositories won't harm the
+>>     daemon user", while the latter is "the repository owner is OK for
+>>     it to be published".
 >
->    Cc: Christian Couder [chriscool@tuxfamily.org](mailto:chriscool@tux=
-family.org)
->    Cc: Junio C Hamano [gitster@pobox.com](mailto:gitster@pobox.com)
->    Cc: Emily Shaffer [nasamuffin@google.com](mailto:nasamuffin@google.=
-com)
->    cc: Josh Steadmon [steadmon@google.com](mailto:steadmon@google.com)
->    cc: Randall S. Becker [rsbecker@nexbridge.com](mailto:rsbecker@nexb=
-ridge.com)
->    cc: Christian Couder [christian.couder@gmail.com](mailto:christian.=
-couder@gmail.com)
->    cc: "Kristoffer Haugsbakk" [code@khaugsbakk.name](mailto:code@khaug=
-sbakk.name)
->    cc: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+> Yes that would be helpful
+
+OK, let's see if somebody volunteers for documentation updates in
+this area.
+
+> I think doing this would be more helpful than updating the
+> documentation to recommend adding "safe.directory=.". If we do this we
+> would also want to convert "//" -> "/" in the config keys as we've
+> been forcing users to add paths like "/srv/git//my-repo" if the
+> --base-path argument to git-daemon ended with a "/"
+
+OK, so the idea is to normalize both safe.directory and data->path
+(which might come from either worktree or gitdir) and then look for
+a match.  path needs to be normalized because it can say '.' and
+'/srv/git//my-repo', and values of safe.directory need to be
+normalized because the users may have written '.' --- oops, relative
+to what directory do we normalize safe.directory values?  That would
+not work.  Let me retry.
+
+ - Compare entries of safe.directory with data->path literally
+   without normalization, as the user may have written in the
+   configuration "safe.directory=.", expecting that data->path to be
+   '.' (the git-daemon use case).
+
+ - Normalize entries of safe.directory and data->path and then
+   compare them, turning path="." (the git-daemon use case) into
+   "/srv/git/my-repo" and a safe.directory entry "/srv/git//my-repo"
+   user wrote into "/srv/git/my-repo", so that they match.  
+
+Or we could treat "." on safe.directory as a synonym for "*"
+(i.e. "anything goes"), and compare all other cases only after
+normalization (which would save the cost of "literal" comparison for
+safe.directory entries that are not ".")?
+
+I may have missed some corner cases, but either of these would
+probably work.
+
+>>   * For "http-backend" invocations, we should think about potential
+>>     additions that would help users, similar to what I listed above
+>>     for "git daemon".
 >
-> when I click on "edit", where the last line must be from your manual
-> fix which GGG picked up. I've cleaned up the PR description manually
-> now, and for this message I'm also attempting to clean up those square
-> brackets.
+> That sounds sensible.
 
-When I read that I assumed that Aryan had made the same mistake.
+OK.
 
-=F0=9F=94=97 1: https://lore.kernel.org/git/owly4jd741ph.fsf@fine.c.goog=
-lers.com/
+>> Having said all that, I do not think I mind GIT_SAFE_DIRECTORIES
+>> that is a ":" separated list of paths that is honored just like the
+>> multi-valued configuration variable safe.directory.  Once an
+>> attacker can influence your environment variables, it already is
+>> game over, so trusting it does not make the attack surface any
+>> worse.
+>
+> Indeed in that case the attacker can influence the path that we read
+> the protected config from by setting $HOME (and do far worse by
+> setting $PATH)
+> ...
+> Yes having to set all the GIT_CONFIG_* variables can be rather confusing
 
---=20
-Kristoffer Haugsbakk
+OK.  
+
+So an independent effort may be to introduce the said environment
+variable, and have it split at ':' and feed into the same machinery
+used to check paths against safe.directory configuration.  It may
+need a minor refactoring to lift the current comparison logic that
+assumes it is _only_ driven by the git_config() callback, and we
+would probably want to define how these two sources of whitelist
+entries interact (who overrides what, is "an empty element clears
+all the previous entries" still true, etc.).
+
+So, I think we have three actionable items here.
+
+Thanks.
+
 
