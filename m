@@ -1,140 +1,156 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5612380C0C
-	for <git@vger.kernel.org>; Fri, 28 Jun 2024 06:37:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9C72139D4
+	for <git@vger.kernel.org>; Fri, 28 Jun 2024 08:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719556661; cv=none; b=orDCMeTZMeXt2+asfp69xSiNsUB+fuS1U7jAQ8s48H9iZVRiE57k0/1R4zu8n1llF/RnHOgqSrKWoy8CBCzTcd/UR/CwLUDnw0D4mVb3AZaCwSVil4ekdiRO3pjzAaID6fmwRCDWKV6eg+BoElT7GmfbVzaBIqVvZXkNEO/nSmA=
+	t=1719564560; cv=none; b=jn0SIh9qX2NxH5+yflI0oDLBF934TDIe/hoV5JyBEdeQP2eoGLzTBz+/jSg/vsxxwsNTwYIRjPbhcjdz2+BHOi0+TFRiAw82j8XuOzu/1DClblP88yvPfdocBtSBZbLneP3AqpI/HeGBF//NJT9ERsg2EbZFhkZ3E3Onn0HrJi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719556661; c=relaxed/simple;
-	bh=T+1tfK67SzEbhuCd9Z0woKSeZywierHZz0RNb4XgviU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSfjJKu7EURvQSmYdQr9t8UDjJJNfk3KtdF+hR1LSu3rS0nhEcCUyIpVChF/q9GBUhvHG6bC6QbI/dRaxrravvGeGkZ+r9lzJ/yFnAoJfK7znou8VIHZycE1xVB67XvYged+Vl1xvuxn8PcMbpHPbgnIrLB3j8kfV4MUpHlErQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e4ydsD7G; arc=none smtp.client-ip=209.85.160.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1719564560; c=relaxed/simple;
+	bh=YoYCwPngLONUlS+NDc6SH40FvYSZyL/tyaon2moqzEU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dZOgJwG1rC/7G3OALKGlDbu9PhMa1VNbUB9SM2seFdqHi5QxcDffxXzdrMKnOV6E9G+cwKpKnvNvdDM5/+9dBtMYCJ/ly6FmsgHtbs1WMSpEQjg0aUEkNe1g5SV8za3DcmCZYY5/vasrYasoXQxObU5J46j7dVCkGJOEVubUm3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=iTfM5htJ; arc=none smtp.client-ip=193.68.50.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e4ydsD7G"
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-2598ae41389so134370fac.3
-        for <git@vger.kernel.org>; Thu, 27 Jun 2024 23:37:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719556659; x=1720161459; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZHPJSar1HmgdZVZs1GFo6+wyK1RzKRckDCfAbp/EbXE=;
-        b=e4ydsD7GcBl3N2Dg9i1D78HtUvX745lmQTTYR+SbManNhuoxcnClIP9WNkExhFONsy
-         YMvgXoNFH7lRB9nf4r4EjanghQzQ5VwZLkIZTtb2Q+Edf86zsiDFLI8KPPaFYI92WUrE
-         IBCRQVBcdBpeuPrve0/nuCCdK6HZ2Gwt59NTKLab0mYwNeB/0+YkFxLLTuSaxT9QNFzl
-         Vd4hQifOkL5a/mExvXymZnshnbAF4BqBVUPe+sCzMga40JQE1xMmqMvM7dPZrjOtUs2V
-         Gh5EEBGZw7Wyt3czILbR2I18NhFU74sksiLsDfoDLVC8qYmdmgtQF1J5mO2zY+Dl7pKd
-         YDqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719556659; x=1720161459;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZHPJSar1HmgdZVZs1GFo6+wyK1RzKRckDCfAbp/EbXE=;
-        b=I9BJRCiDdzrCas6u5c782E73H1rZ3TBO8xiBCbNiiELs5uBUTBmOuMI8KSy5IsmZP/
-         iwdMQJmFI2Pc4Jns8A7gX2V0DoXSbBTE8tL7vM/njkhh1Iw1ho8D4hqQKoLWztMRfIL0
-         pwFSqcS0SmKyUC3TjO8gDwZauC9H246PnMZokKXrqlBdjnOXzZV0XfFQhLULFWjAYsIu
-         uHCZu5X3PFsynSp2O1C0wX/+3nY+difNu1FNv6q9XzqN1FBnOoH0Y2RUPHV0fNP//JEm
-         iJHIWdptPFTU7FMF0b4J+NHYmCgtIw7tKkfAk0EQEzfVmZ7fbmo6OqdwmjKqIL6M8EYG
-         3SoA==
-X-Gm-Message-State: AOJu0YzvlhLPdC4FVCFhThfmbZFj4ww6d9MGIVNyHG4oeTgoPBtmJZCS
-	2ovXcJfbLkGgCpNKfD7MKI74Et1ewXupf+j2yQoTgPpMJBnfcMziZ4DKHUSXs/g=
-X-Google-Smtp-Source: AGHT+IH9WJKfNBNMUfPQn6D93Rb+mbseAJ1B4Db4QpTbxLXVf+4KetIegO+zaK/EPOB2mx7aBuhk7g==
-X-Received: by 2002:a05:6870:c68d:b0:254:aada:cc8b with SMTP id 586e51a60fabf-25d06ce3ab7mr15586734fac.31.1719556658675;
-        Thu, 27 Jun 2024 23:37:38 -0700 (PDT)
-Received: from Ubuntu.. ([117.99.235.160])
-        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-70804a93ce7sm786003b3a.207.2024.06.27.23.37.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jun 2024 23:37:38 -0700 (PDT)
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-To: git@vger.kernel.org
-Cc: karthik188@gmail.com,
-	Chandra Pratap <chandrapratap3519@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 11/11] t-reftable-record: add tests for reftable_log_record_compare_key()
-Date: Fri, 28 Jun 2024 11:49:41 +0530
-Message-ID: <20240628063625.4092-12-chandrapratap3519@gmail.com>
-X-Mailer: git-send-email 2.45.2.404.g9eaef5822c
-In-Reply-To: <20240628063625.4092-1-chandrapratap3519@gmail.com>
-References: <20240621060018.12795-1-chandrapratap3519@gmail.com>
- <20240628063625.4092-1-chandrapratap3519@gmail.com>
+	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="iTfM5htJ"
+Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
+	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id D9E3DA0608
+	for <git@vger.kernel.org>; Fri, 28 Jun 2024 10:49:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=mail; bh=ftjaDmGHMQjchhDX6Im63E2bh4XPOg/eEWb9sMX/IoY=; b=
+	iTfM5htJgq9abxA39QVx7N3O/nfeUMjm1sAVcGDDkgKjnGqnPpvhwoxU1tIpTxyd
+	0ta4dPTBPdKcAG0wz66WyXzPLKJvxCMCN93XEOSDPjt8e2HPgAICr5q/UHbfXpqU
+	IfC8UX6VIfthsvl8DkrSRAqeYLdOZ15Di8/O52y/E8Jezqu4/HTUW09t2J//RaNk
+	14rB8syqommznIoJphKi6a11EP+xfO0YhGmwgwjWZIkYVO8xFyVRy33qs1qHdmjj
+	Gz1RHgSNVAmNWT5hBBhV9ftEerVFaFz/SpMrx/W5g0+7seRUy3qB06WcB6r/NNrs
+	aj1Fqudb3OuStAKwDHw7HkwJ09VglMeHlXMlK/z5fHyJEcyoX5Wk+MalxQXeRcDs
+	amjeTEVbTpjgl3iqmvLDFc28ImGdlBhAgeEE6CwhrQ0frlNSlbT6OnXSRZyel4VJ
+	SHUl1RvFFG8aejJrPAAJyWzX2yYFV+s4bTIF2lx2mfW5dJy2r/NEvRDAUAx+jg9g
+	hH2y+xthszVz0AbuiXDldJ+52c/3fyuky94RNJ5HOOAEpoaIaugc2eyLDp9KXCk2
+	fzXRYcgdQxQDRXPwSf19R6euzUB+vlZRg3Z+x9C9QAGdqUpUKItnVibYHh4eLerD
+	D4OUoUtIXZ033fpF0VI/fXlGQIYVA32lh4nH1ZQf7G8=
+From: =?UTF-8?q?Cs=C3=B3k=C3=A1s=2C=20Bence?= <csokas.bence@prolan.hu>
+To: <git@vger.kernel.org>
+CC: =?UTF-8?q?Cs=C3=B3k=C3=A1s=2C=20Bence?= <csokas.bence@prolan.hu>
+Subject: [PATCH v3] git-send-email: Use sanitized address when reading mbox body
+Date: Fri, 28 Jun 2024 10:48:25 +0200
+Message-ID: <20240628084824.65007-2-csokas.bence@prolan.hu>
+X-Mailer: git-send-email 2.45.2.437.gf7de8c0566
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+X-ESET-AS: R=OK;S=0;OP=CALC;TIME=1719564546;VERSION=7975;MC=496046040;ID=261091;TRN=0;CRV=0;IPC=;SP=0;SIPS=0;PI=3;F=0
+X-ESET-Antispam: OK
+X-EsetResult: clean, is OK
+X-EsetId: 37303A29916D3B546C7D63
 
-reftable_log_record_compare_key() is a function defined by
-reftable/record.{c, h} and is used to compare the keys of two
-log records when sorting multiple log records using 'qsort'.
-In the current testing setup, this function is left unexercised.
-Add a testing function for the same.
+Commas and other punctuation marks in 'Cc: ', 'Signed-off-by: '
+etc. lines mess with git-send-email. This is handled by calling
+`sanitize_address()` before adding addresses to @cc. This function
+was already being called, but was only used for comparing it to
+$author for suppression purposes.
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+Note that sanitization is only done for the message body, as
+`git format-patch` already RFC 2047-encodes mbox headers, so
+those are generally trusted to be sane. Also note that
+`sanitize_address()` does not process the mailbox addresses,
+so it is up to `sendmail` to handle special characters there
+(e.g. there are mailboxes in regular use with '+'-es in them).
+
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
 ---
- t/unit-tests/t-reftable-record.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ git-send-email.perl   |  4 ++--
+ t/t9001-send-email.sh | 51 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+), 2 deletions(-)
 
-diff --git a/t/unit-tests/t-reftable-record.c b/t/unit-tests/t-reftable-record.c
-index f45f2fdef2..cac8f632f9 100644
---- a/t/unit-tests/t-reftable-record.c
-+++ b/t/unit-tests/t-reftable-record.c
-@@ -208,6 +208,37 @@ static void test_reftable_log_record_comparison(void)
- 	check(!reftable_record_cmp(&in[0], &in[1]));
- }
+diff --git a/git-send-email.perl b/git-send-email.perl
+index f0be4b4560..72044e5ef3 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1847,9 +1847,9 @@ sub pre_process_file {
+ 					$what, $_) unless $quiet;
+ 				next;
+ 			}
+-			push @cc, $c;
++			push @cc, $sc;
+ 			printf(__("(body) Adding cc: %s from line '%s'\n"),
+-				$c, $_) unless $quiet;
++				$sc, $_) unless $quiet;
+ 		}
+ 	}
+ 	close $fh;
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 58699f8e4e..0d62097c5a 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1299,6 +1299,57 @@ test_expect_success $PREREQ 'utf8 sender is not duplicated' '
+ 	test_line_count = 1 msgfrom
+ '
  
-+static void test_reftable_log_record_compare_key(void)
-+{
-+	struct reftable_log_record logs[14] = { 0 };
-+	size_t N = ARRAY_SIZE(logs), i;
++test_expect_success $PREREQ 'setup expect for cc list' "
++cat >expected-cc <<\EOF
++!recipient@example.com!
++!author@example.com!
++!one@example.com!
++!odd_?=mail@example.com!
++!doug@example.com!
++!thor.au@example.com!
++EOF
++"
 +
-+	for (i = 0; i < N; i++) {
-+		if (i < N / 2) {
-+			logs[i].refname = xstrfmt("%02"PRIuMAX, (uintmax_t)i);
-+			logs[i].update_index = i;
-+		} else {
-+			logs[i].refname = xstrdup("refs/heads/master");
-+			logs[i].update_index = i;
-+		}
-+	}
++test_expect_success $PREREQ 'cc list is sanitized' '
++	clean_fake_sendmail &&
++	test_commit weird_cc_body &&
++	test_when_finished "git reset --hard HEAD^" &&
++	git commit --amend -F - <<-EOF &&
++	Test Cc: sanitization.
 +
-+	QSORT(logs, N, reftable_log_record_compare_key);
++	Cc: Person, One <one@example.com>
++	Reviewed-by: Füñný Nâmé <odd_?=mail@example.com>
++	Reported-by: Douglas Reporter <doug@example.com> [from Jira profile]
++	Reported-by: bugger on Jira
++	BugID: 12345
++	Signed-off-by: A. U. Thor <thor.au@example.com>
++	EOF
++	git send-email -1 --to=recipient@example.com \
++		--smtp-server="$(pwd)/fake.sendmail" >actual-show-all-headers &&
++	test_cmp expected-cc commandline1 &&
++	test_grep "^(body) Adding cc: \"Person, One\" <one@example.com>" actual-show-all-headers &&
++	test_grep "^(body) Adding cc: =?UTF-8?q?F=C3=BC=C3=B1n=C3=BD=20N=C3=A2m=C3=A9?="\
++" <odd_?=mail@example.com>" actual-show-all-headers &&
++	test_grep "^(body) Adding cc: Douglas Reporter <doug@example.com>" actual-show-all-headers &&
++	test_grep "^(body) Adding cc: \"A. U. Thor\" <thor.au@example.com>" actual-show-all-headers
++'
 +
-+	for (i = 1; i < N / 2; i++)
-+		check_int(strcmp(logs[i - 1].refname, logs[i].refname), <, 0);
-+	for (i = N / 2 + 1; i < N; i++)
-+		check_int(logs[i - 1].update_index, >, logs[i].update_index);
++test_expect_success $PREREQ 'quotes are sanitized in cc list' "
++	clean_fake_sendmail &&
++	test_commit quote_in_cc_body &&
++	test_when_finished \"git reset --hard HEAD^\" &&
++	git commit --amend -F - <<-EOF &&
++	Quotation marks sanitization in Cc:.
 +
-+	for (i = 0; i < N - 1; i++) {
-+		check_int(reftable_log_record_compare_key(&logs[i], &logs[i]), ==, 0);
-+		check_int(reftable_log_record_compare_key(&logs[i + 1], &logs[i]), >, 0);
-+	}
++	Cc: P'erson, One <one@example.com>
++	Reported-by: \"Douglas 'Bug' Reporter\" <doug@example.com>
++	EOF
++	git send-email -1 --to=recipient@example.com \
++		--smtp-server=\"$(pwd)/fake.sendmail\" >actual-show-all-headers &&
++	test_grep \"^(body) Adding cc: \\\"P'erson, One\\\" <one@example.com>\" actual-show-all-headers &&
++	test_grep \"^(body) Adding cc: \\\"Douglas 'Bug' Reporter\\\" <doug@example.com>\" actual-show-all-headers
++"
 +
-+	for (i = 0; i < N; i++)
-+		reftable_log_record_release(&logs[i]);
-+}
-+
- static void test_reftable_log_record_roundtrip(void)
- {
- 	struct reftable_log_record in[] = {
-@@ -513,6 +544,7 @@ int cmd_main(int argc, const char *argv[])
- 	TEST(test_reftable_index_record_comparison(), "comparison operations work on index record");
- 	TEST(test_reftable_obj_record_comparison(), "comparison operations work on obj record");
- 	TEST(test_reftable_ref_record_compare_name(), "reftable_ref_record_compare_name works");
-+	TEST(test_reftable_log_record_compare_key(), "reftable_log_record_compare_key works");
- 	TEST(test_reftable_log_record_roundtrip(), "record operations work on log record");
- 	TEST(test_reftable_ref_record_roundtrip(), "record operations work on ref record");
- 	TEST(test_varint_roundtrip(), "put_var_int and get_var_int work");
+ test_expect_success $PREREQ 'sendemail.composeencoding works' '
+ 	clean_fake_sendmail &&
+ 	git config sendemail.composeencoding iso-8859-1 &&
 -- 
-2.45.2.404.g9eaef5822c
+2.34.1
+
 
