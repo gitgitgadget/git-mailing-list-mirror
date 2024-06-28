@@ -1,149 +1,80 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017892032D
-	for <git@vger.kernel.org>; Fri, 28 Jun 2024 03:43:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2261F36AFE
+	for <git@vger.kernel.org>; Fri, 28 Jun 2024 04:21:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719546239; cv=none; b=evyVHhdH+4VVoJ0lpu70z1SF7LgDeo6bVjAGkF9CUbgHrcMlH799/mMbbwZurBUNKDWxLXWbyzcOjzNYRdSBGmnf1B/OQLc/w4ziUkyt1FtGYQK+ZE3RtUMkOf1lBesujkbZ6laoBwdbhzcxLdcYn+qI780wXFdgp4EsMutmBb8=
+	t=1719548479; cv=none; b=e6YUb1z9+K2P20GG3tW5cuf8m3slzOuSjdy+sn6pZ7z7PqA8Z5YXyOWxV6RDHmwwUxF79JbVal0df6aYgnMXeurBu7sUKoHStpp3LAt6Qc2tne8aJg8SYfN1PZC6pW0LsbkoWC1qP4fhZjAOEiSzz8NVEkREVYTy3NxKkis+sjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719546239; c=relaxed/simple;
-	bh=zJ4BAZ+hajQJTtSxmG6V5b2rJcHk4rxnbJKhLR0wPoE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hf3GpeZVRjJqJYEWuHFOMbWn8ZnutZhtiJSG5lgxSQ/6iAbCPoV6IhRBqSYgzTekZLQL0ew0NXSzHyNGdHC9fHKW7x9i8Xw3doGjCn6tOhJy693M9PZRukufQHYwQIVDkmNYw0pytrEOp9lUB4Ew70MRoNspFVKfXZICjqqLft4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N0rwZQ1J; arc=none smtp.client-ip=209.85.214.177
+	s=arc-20240116; t=1719548479; c=relaxed/simple;
+	bh=yN2v5yTdxEMfsrl4kwZzGzlrrudNhwMDVootTJqQ87I=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=k20A/14kGu+MWTY6eiGaoCA6Rh+4QJEdRDrjFnLKjK7WFdSbML/4+SCLH0tUsdjpfljWu9gpCsa+8ug7C3lsW68BC7+aEsUuaRk5ehiWfoZsWD6oP+tKnXSZnzrVXd5VT0D0JvKlEahdhfpxo5d9EJi41wtWh14XmnQJ0dZeiFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GfQxKA5B; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N0rwZQ1J"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1f4a5344ec7so1348235ad.1
-        for <git@vger.kernel.org>; Thu, 27 Jun 2024 20:43:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GfQxKA5B"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-57d20d89748so161053a12.0
+        for <git@vger.kernel.org>; Thu, 27 Jun 2024 21:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719546237; x=1720151037; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=amPr0hVhEk7QlAaRXLKrv1DNHteqxWdeVESWhlVczSU=;
-        b=N0rwZQ1JJ7juGcfXFi7QCOegaD/ix41jbvB1S7j399wuKGdEvtzaSLKuOKThreuzZ4
-         RNeyYFrDIbZq0GHC3JFTSNTO3KcSCk5xLPbe2Phi4tNCPehMDU/1XMFUynuc5V6JDexq
-         SJyLLqhwY5lA3EZgqrIdZq1cKPos/xMXHmjD1BICWzS5kYbepMU8JCtJ2fufPxFMwgis
-         bUlak7y1k0f0d5DADmu2EWTL1mx7reo3Kc4j9tiKtnxcqBiVLHvxTjpLUTkNGOIHtlwh
-         WI++DVnB+GoPDSE9JFKimsSU4kE6Yv23eIu3hAmYgwDeN0+HLOG6mfaTapFwRv/1ifeD
-         VjWg==
+        d=gmail.com; s=20230601; t=1719548476; x=1720153276; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=yN2v5yTdxEMfsrl4kwZzGzlrrudNhwMDVootTJqQ87I=;
+        b=GfQxKA5BpcHYozXoTCapdmjHTUav6DqnuhizKdL2PUnQqwjykGvDPDSAHYgByuyYCY
+         l5xQCjCiijWLgC2/aNpq+ukYG+KXIte5CZZTE6LyaxWMFbeazdS2hismA8agmuaMBrnc
+         T/qIcvnRZDBaZUDPfDAqJ/JD35vYd8ePW6r+irVmHJFA0x5Yj/tLFi6FBJMtlJ7qLINh
+         aZgL+z4MiKPe/gvknPuiCcjEa+VjbhfzKxK1GwcV04hJP4WNr7GWVgNldzSiM0Tj/ncz
+         IBvWLZOuDgPJbIZdTtGy6nez1ugKabCeRd0ehSPgcvWttzB37VcoyKTruvH+8nAt1QmI
+         Lvvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719546237; x=1720151037;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=amPr0hVhEk7QlAaRXLKrv1DNHteqxWdeVESWhlVczSU=;
-        b=EH9XByCLBimALfLmSCGzPkWLhDcXKEhEo2gMD2TChZiXS1ZK3C8Dv5DV/cgAo0fl0U
-         2ULhrXNCnIo7XqHXcYbLd/YVysDO8aQDzYRSfGW6dbxU53SO4QkxcUVFcKmFH96Oax3S
-         mEzMiqMy7qFZZaTd+/jeiS+We5v6BeGJhll348+KKCnhUx+I9a/8l0rDDbDw/8U2l9t2
-         V0Ppn2D9kZp4nw0LjQ+5DKX+8w6koffJ/Y46zVVJWQoq2Sa+Z5Hz86zqxhJfe6W7S0/q
-         lZu5+QSXsIsWaUdcAKDQEmHMpZl8bEhp3cWHu4WZrylAmrPPJ2I5V+JmphR3II3eEOVM
-         wRyA==
-X-Gm-Message-State: AOJu0Yw5rNbCncgbR0ceX1lGOA9mOO2/JjG2FhEvQBmdRrg9wDT1odZe
-	5DNlDAbva5rnoLFpNJXZougCYHdBpjQ73wS2rYzH2xFSm60Ur73J
-X-Google-Smtp-Source: AGHT+IFmSM97q1Z9+evnqrkvrQ/qw9xJSccOXMY7dZJwnz94yWHKU4QwVhtQUgByFk21HPUeVVrjAA==
-X-Received: by 2002:a17:902:ec8c:b0:1f0:8c5e:ffdd with SMTP id d9443c01a7336-1fac7e729a2mr6131585ad.4.1719546237089;
-        Thu, 27 Jun 2024 20:43:57 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac10e37a8sm5426915ad.88.2024.06.27.20.43.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jun 2024 20:43:56 -0700 (PDT)
-Date: Fri, 28 Jun 2024 11:43:54 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC][PATCH v5 01/12] fsck: rename "fsck_options" to
- "fsck_objects_options"
-Message-ID: <Zn4xeoqhCeBCSNvg@ArchLinux>
-References: <Zn2Ah3WDhtOmzrzn@ArchLinux>
- <Zn2BXRatUdX16PD3@ArchLinux>
- <xmqqa5j6rs03.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1719548476; x=1720153276;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yN2v5yTdxEMfsrl4kwZzGzlrrudNhwMDVootTJqQ87I=;
+        b=skOKudSXRLYPkk3B6Vzp2m2/O8xjY6B+RQpbGZG8r8USjAKEWcL/7Av1tZf7ashhGE
+         /7upy7PmzrZ8mPTFc50PTUoUmglDDTxMKLmUdYtOTqm6fqJ8NdGErqp/Fc5YtDX8ORCW
+         L1o9GZDZ5jRm61pP+S7rzjXmtHv35CdLaVXBSQw7f8AQgs6XdqKvnOLKgffv+dar6Rnd
+         7hquRvAXNUXJPZz/l5xsiDnPmlEfU+YstZc/vnOzfdk/489ZJaeAai/smDNKMgLxx6K5
+         3oRA1pRW3zkYN70DCnmemTN4uP3y25+fOOeb89TRMea91+qYQFOY45jBZiqVks01Hf7S
+         2N4g==
+X-Gm-Message-State: AOJu0YyYtedvvrAp+hzGhl5zoZf9I9EjYE82nGSJjjFgexZtIHAO2z5Q
+	KdIWVwRFqdqOCRt9bg/2nGWLGwmo/FUhYXeGdk78iJ7DffSmM/96dhi7OL7yqw3UvD9yDQRDxhR
+	A9gSXYuOzKasBcfFfWoZd8rR7fHWj532ViNs=
+X-Google-Smtp-Source: AGHT+IHETbbxSnNhDJPQXfXNlAlnndIAbrVhuX2aqEkAvhsLpE/qxR/tmV6M1XQN04pq0jQmLEergATJJbbkCOfp/oE=
+X-Received: by 2002:a17:906:6d16:b0:a6f:5a48:7b90 with SMTP id
+ a640c23a62f3a-a7242cb7253mr919243366b.38.1719548475877; Thu, 27 Jun 2024
+ 21:21:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa5j6rs03.fsf@gitster.g>
+From: Ajith Sakharia <ajithk.sakharia@gmail.com>
+Date: Fri, 28 Jun 2024 09:51:04 +0530
+Message-ID: <CA+8M_AZTtqSU7ugZ-w8yyOKeP+opambD08DSOGko8akL_CXQqQ@mail.gmail.com>
+Subject: Usage of `-u` flag in `git status` cli
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jun 27, 2024 at 02:32:44PM -0700, Junio C Hamano wrote:
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > -static int fsck_error_func(struct fsck_options *o UNUSED,
-> > +static int fsck_error_func(struct fsck_objects_options *o UNUSED,
-> >  			   const struct object_id *oid,
-> >  			   enum object_type object_type,
-> >  			   enum fsck_msg_type msg_type,
-> 
-> It is curious that the addition/renaming of fsck_objects_options is
-> presumably to allow fsck_${xyzzy}_options to be added for different
-> $xyzzy (the first one being "refs"), and this function is only about
-> fsck_objects_options.  What name would the corresponding error
-> function, called by checkers that take fsck_${xyzzy}_options, be
-> given?  fsck_${xyzzy}_error_func()?  Shouldn't this be then become
-> fsck_objects_error_func() or something?
-> 
-
-Yes, it should be definitely changed here. Will improve in the next
-version.
-
-> Having said that.
-> 
-> Do we really need such a parallel system between "objects" and other
-> kinds of things being checked that you are introducing with this
-> step?  What benefit are we getting from this additional complexity?
-> 
-
-I am agree that the most simple way to handle for this series is add
-some ref-related new members. Thus, we can reuse existing code. However,
-it makes me feel so weird when implementing the code using this idea.
-For example,
-
-  struct fsck_options {
-    struct fsck_refs_options;
-    ...
-  }
-
-When we create a new "fsck_options", it will be so misleading that the
-caller may think we will handle both refs and objects checks by using
-"fsck_options". So I just introduce this parallel system. When checking
-objects, caller should explicitly create "fsck_objects_options", when
-checking refs, caller should explicitly create "fsck_refs_options".
-
-Because in semantics, we introduce a new check here. Combination means
-we will check the both. Although it is simple, but it will cause a lot
-of trouble in the future.
-
-> I would have expected that adding ref-related new members that
-> object consistency checkers has no interest in to the fsck_options
-> structure would be sufficient for the purpose of this series.  Or if
-> we really wanted to prepare for more complex future, use of the
-> "union of variants, switched with a tag" pattern to arrange the data
-> this way:
-> 
-> 	struct fsck_options {
-> 		enum fsck_type {
-> 			FSCK_OBJECTS,
-> 			FSCK_REFS,
-> 			...
-> 		} t;
-> 		union {
-> 			struct fsck_objects_options objects;
-> 			struct fsck_refs_options refs;
-> 		} u;
-> 	};
-> 
-> would still allow functions like fsck_error_func(), and
-> fsck_set_msg_types(), etc. to work on the common "fsck_options".
-> 
-
-I agree that we could use this pattern, using union will make the
-semantics more clear.
-
-> I dunno.
+Hello,
+I have recently been working on some performance initiatives on git
+status cli and its usages. As a result I found something confusing and
+wanted a confirmation on the expected behaviour.
+Based on documentation the status cli has a `-u/--untracked-files flag
+with 3 potential values `no` `normal` and `all`. The `true`is expected
+to be treated as `normal`. But from my experiments it looks like there
+is a difference in `git status --untracked-files` vs `git status
+--untracked-files=true` (notice the existence of `true` being
+explicitly mentioned), where the `git status --untracked-files` gets
+treated as `git status --untracked-files=all` as suppose to `normal`.
+Additionally, `--untracked-files=all` doesn't seem to use the benefits
+of `fsmonitor` and `untracked cache`. From some additional
+investigations the impact seems to also scale to git plugins across
+tooling like vscode, warp etc that use the `-u` flag as part of their
+syncing logic.
+Could you please help me understand if this is expected ?
+Regards,
+Ajith K S
