@@ -1,121 +1,376 @@
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394C84C74
-	for <git@vger.kernel.org>; Fri, 28 Jun 2024 00:31:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8219D1E489
+	for <git@vger.kernel.org>; Fri, 28 Jun 2024 00:37:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719534691; cv=none; b=d2BomkG5/5BWebjmKSs7SRulk5AowMLgbCAhYRoCpeOyR37tPJEV8cWZdDNeTYBEC6i7F1BXh+VZhDOuh+C6qYZ9C81HuZgC/bYQWejxa0ZiNaAdG+f7Ilrdi4bokwRaC+vAcGXn1lMBmX8I5szj5mkYk2pjWaQikkDC47az3pU=
+	t=1719535059; cv=none; b=XDo40+PfoLcP+mMN+3nrJ5aVzk4oqd8CDCXZHw46/jsHLJVygpW40skR5u4xdT13dY3krgxQ5RzIJitcIslOIDIt7SKOVfdf3dDv3/Kliq1wb3+2SsPyQAGNPzEva5N4sKELg9ZCVvGC7ecgdDtu41n1n+iMQWzkEyYVegZaMsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719534691; c=relaxed/simple;
-	bh=/AJXcc2zxBMG8NQAp4bSk/PXYtHwJhHx4V2S5n9wJdU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CH0L89ptAMphUidvU1lI0Jq7+k/f5juFkHZAKEyx7pMtuABZIYeIK9gRwYnvVKAA6J3lXDtk7V0AIu36IDkURi4RoSAfNKClxdjgExdV18PedjjdcbDQ11uOpJgPaANSgHIdHSVoorYd1Nw1sA0+VO0hCWQTVUZsqlemj4yF2bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UnZbnsH0; arc=none smtp.client-ip=209.85.166.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1719535059; c=relaxed/simple;
+	bh=AQ3uBqfRePE8Mwoh8kbgl4ERKhjs1BbZMYn43w+sWMo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=DyBCBNqjb/2Pu0ZxCuWLC2hsRaGoIUXiqRzX1pLui7OZYuCs7pkdlzLxVgK6vzw2WYQYqZODOksxzlVNieCRcjTJNqScYFizZKRUqpeklVgbx9mfoUBXKV5CL2i7lGnREsufdEFlZzwqt8ODMuFpJ0DqGiL5MGAAZiV5Mf5uB2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Pw9HrJLq; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UnZbnsH0"
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-7f38da3800aso1267239f.0
-        for <git@vger.kernel.org>; Thu, 27 Jun 2024 17:31:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719534689; x=1720139489; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+6BIfIQRTYGbv+8rraQ3J8kyoy2+pToz9wXh24WPzHg=;
-        b=UnZbnsH0dfciKmiRG4VfGRWZHUh271cUzwz89UQXyyW4QKIxjmlFz+b27LbR+Hd5ZS
-         K+hNQWF+apf8vlt5hF42aloWwr5hwRErLgRLCIK/Thg9lQtwQ1ln0gXeYlD8U/Y4FVOj
-         Xge2kQaGjXLDPjHYX3FYHE6KOtznE7FHp4AjZCg4ONi/8bisgtnNv726NSwEJbeKaH05
-         jDambywl/dhu2UueG6NNueysztpLfnrfrlzxSwGGFuYH55/tQO3ofquSP0qpBS/4Vxom
-         1ptmNNGGnLCx2mP+Ts19WI21VKWIH7rFWA3EkNRZojC7QF6375HFsEM8/PRIGVnMQ7kW
-         XTug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719534689; x=1720139489;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+6BIfIQRTYGbv+8rraQ3J8kyoy2+pToz9wXh24WPzHg=;
-        b=Y6xAN+QTKASKKsEV4XVgVslgmNH2CTuUXnGbI4xClnANQxTrRmDRKkrxJ/5JfE802t
-         XZFwCt1E1JJZBryfNl/cqArkN7mbQjCbyp1t7hVvEbLSCf1YDz5Boll0MTfVUaO/DkjU
-         SGQxRGXIYuWDr1P/WYFa5n8iTlpDWoIJ39tU9L07yTQKFKHieiZ9/9kdcW0kWJNIH/PZ
-         uUlx9xXOakpwwdi6BWEZlRpQozkWLbYiYFH+8vRooEtf4ytFcSOaiMVrVErZ2Nq8pS60
-         iepnxOQzRRoemJPkPmKYM/ZdPIeizu2/IEw8Y/Vp7MHEPQfZ+G2LiY6KXfLmL8Rm9guv
-         tRvw==
-X-Gm-Message-State: AOJu0Yw5EXPXQ7nZNmViN5xHh3fxG3qbBEHvVv++lLvM6RsIpI9va9+2
-	9FGDV6gwcgqQ4kbvesRXvqPG+E/YIjPDd2q0orlbRuGtztnmwoOyzbz9VLoVSN+66Flo7o+NhYk
-	0uzqgmo2m1d9vWWQqqjimDwUXKuY=
-X-Google-Smtp-Source: AGHT+IEjHBbqs+aNxFhHs/0TlSpRznjcPiYiQ0BaHeLR9CSzbmVbtlgEKYQN86klJgDben5bbsLRedkbU3nmOrwLgik=
-X-Received: by 2002:a6b:4a0a:0:b0:7f6:1e6b:e8db with SMTP id
- ca18e2360f4ac-7f61e6befaamr55495239f.18.1719534689249; Thu, 27 Jun 2024
- 17:31:29 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Pw9HrJLq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1719534467;
+	bh=AQ3uBqfRePE8Mwoh8kbgl4ERKhjs1BbZMYn43w+sWMo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=Pw9HrJLqgikYNrAWrya/wRURK3TQ+zEbDKL4mvA/W47xVTG/5xGkf+PoAlunqPH+d
+	 2P/9NYQHGZ2CQjmmFG2aoA1lkIv/7KaUMqsM+LNioTDSjf7V1UD1ApobP5XLq6V5nW
+	 lwVH97iKPD7hYyNfaPFiWCAhszco9uwl8qKAht/JMU2eu6gXRnUoTZWXSV+/1ZGxQF
+	 2paQg11Tn028dv/Z1MLZEfySbw3TYpPfjp1B6ufZ+jAmcUdDBseB+NUzkwkOTYcyFG
+	 emhB6FAQDJXqNtgouf1O/Ia6I2WZ8S7dhcZ0NXn+cQJ2FpDJbbBKylT3xdzCydav3b
+	 7Kx2Tt/3hM6imRnnVwg9SVxlX10sLRKZDF+/HtYD04n2ba0v5vx3ekw7XyIXzrgPB/
+	 yZqwoL/rohYYffCnsPZ0NEfuMAgwk710fG00bAIpKyGONdZ+3rvzUeg4H+drvkjOjL
+	 7HINJXREVpcl+wHCMqLB0nSUBkgbWfRfiqRs8zryKdfkqZdnp4x
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 46A63263AA;
+	Fri, 28 Jun 2024 00:27:47 +0000 (UTC)
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/1] http: allow authenticating proactively
+Date: Fri, 28 Jun 2024 00:27:42 +0000
+Message-ID: <20240628002742.3421311-2-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.45.2.753.g447d99e1c3b
+In-Reply-To: <20240628002742.3421311-1-sandals@crustytoothpaste.net>
+References: <20240628002742.3421311-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1754.git.1718899877.gitgitgadget@gmail.com>
- <pull.1754.v2.git.1719412192.gitgitgadget@gmail.com> <93d0baed0b0f435e5656cef04cf103b5e2e0f41a.1719412192.git.gitgitgadget@gmail.com>
-In-Reply-To: <93d0baed0b0f435e5656cef04cf103b5e2e0f41a.1719412192.git.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 27 Jun 2024 17:31:18 -0700
-Message-ID: <CABPp-BFzxOjGto+1GGk1xq3XX7OQ3mmmRYm0zU+2mCYZ6h_OfQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] sparse-checkout: refactor skip worktree retry logic
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, anh@canva.com, 
-	Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jun 26, 2024 at 7:29=E2=80=AFAM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <stolee@gmail.com>
->
-[...]
-> If users are having trouble with the performance of this operation and
-> don't care about paths outside of the sparse-checkout, they can disable
-> them using the sparse.expectFilesOutsideOfPatterns config option
-> introduced in ecc7c8841d (repo_read_index: add config to expect files
-> outside sparse patterns, 2022-02-25).
+When making a request over HTTP(S), Git only sends authentication if it
+receives a 401 response.  Thus, if a repository is open to the public
+for reading, Git will typically never ask for authentication for fetches
+and clones.
 
-So, I had some heartburn with this paragraph when reading v1, but
-decided to focus on other stuff.  But it still really bugs me while
-reading v2.  So...
+However, there may be times when a user would like to authenticate
+nevertheless.  For example, a forge may give higher rate limits to users
+who authenticate because they are easier to contact in case of excessive
+use.  Or it may be useful for a known heavy user, such as an internal
+service, to proactively authenticate so its use can be monitored and, if
+necessary, throttled.
 
-The purpose for the sparse.expectFilesOutsideOfPatterns option is very
-specifically for the virtual-filesystem usecase (Google, specifically)
-where sparse files aren't meant to stay sparse but be brought to life
-the instant they are accessed (via a specialized filesystem and kernel
-modules and whatnot).  Using it for any other reason, such as a
-workaround for performance issues here, seems risky to me and I don't
-like seeing it suggested.  The "if users...don't care about paths
-outside of the sparse-checkout" really doesn't do it justice.  See the
-"User-facing issues" section of
-https://lore.kernel.org/git/b263cc75b7d4f426fb051d2cae5ae0fabeebb9c9.164209=
-2230.git.gitgitgadget@gmail.com/;
-we're foisting all those bugs back on users if they don't have such a
-specialized filesystem and turn this knob on.  And then we'll get many
-bug reports that are close to impossible to track down, and virtually
-impossible to fix even if we do track it down.  I had for a while
-suggested numerous fixes we needed in order to make
-SKIP_WORKTREE-but-actually-present files work better, which required
-fixes all over the codebase and which was serving as an impediment
-e.g. to Victoria's desired sparse-index changes.  We gave up on those
-other efforts long ago in favor of this much cleaner and simpler
-solution of just clearing the SKIP_WORKTREE bit if the file wasn't
-missing.
+Let's make this possible with a new option, "http.proactiveAuth".  This
+option specifies a type of authentication which can be used to
+authenticate against the host in question.  This is necessary because we
+lack the WWW-Authenticate header to provide us details; similarly, we
+cannot accept certain types of authentication because we require
+information from the server, such as a nonce or challenge, to
+successfully authenticate.
 
-Further, I've seen people read git.git commit messages on Stack
-Overflow and make suggestions based off them, so I'm a bit worried
-this paragraph as worded will end up causing active harm, when I think
-it's original intent was merely to provide full context around the
-history of the clear_skip_worktree_from_present_files_sparse()
-function.  While this bit of information is part of the history of
-this function, I'm not sure it's really all that relevant to your
-series.
+Note that the existing http_proactive_auth variable signifies proactive
+auth if there are already credentials, which is different from the
+functionality we're adding, which always seeks credentials even if none
+are provided.  Nonetheless, t5540 tests the existing behavior for
+WebDAV-based pushes to an open repository without credentials, so we
+preserve it.  While at first this may seem an insecure and bizarre
+decision, it may be that authentication is done with TLS certificates,
+in which case it might actually provide a quite high level of security.
+Expand the variable to use an enum to handle the additional cases and a
+helper function to distinguish our new cases from the old ones.
 
-Could we omit this paragraph, or if you want to keep it, reword it in
-some way that doesn't make it look like some tradeoff that isn't that
-big of a deal for non-specialized-vfs users?
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ Documentation/config/http.txt |  15 +++++
+ http.c                        |  59 +++++++++++++++--
+ t/t5563-simple-http-auth.sh   | 116 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 184 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
+index 2d4e0c9b86..2bacb2b862 100644
+--- a/Documentation/config/http.txt
++++ b/Documentation/config/http.txt
+@@ -56,6 +56,21 @@ http.emptyAuth::
+ 	a username in the URL, as libcurl normally requires a username for
+ 	authentication.
+ 
++http.proactiveAuth::
++	Attempt authentication without first making an unauthenticated attempt and
++	receiving a 401 response. This can be used to ensure that all requests are
++	authenticated. If `http.emptyAuth` is set to true, this value has no effect.
+++
++If the credential helper used specifies an authentication scheme (i.e., via the
++`authtype` field), that value will be used; if a username and password is
++provided without a scheme, then Basic authentication is used.  The value of the
++option determines the scheme requested from the helper. Possible values are:
+++
++--
++* `basic` - Request Basic authentication from the helper.
++* `auto` - Don't request any scheme from the helper.
++--
++
+ http.delegation::
+ 	Control GSSAPI credential delegation. The delegation is disabled
+ 	by default in libcurl since version 7.21.7. Set parameter to tell
+diff --git a/http.c b/http.c
+index 2dea2d03da..2e54eddb45 100644
+--- a/http.c
++++ b/http.c
+@@ -106,12 +106,19 @@ static struct {
+ };
+ #endif
+ 
++enum proactive_auth {
++	PROACTIVE_AUTH_NONE,
++	PROACTIVE_AUTH_IF_CREDENTIALS,
++	PROACTIVE_AUTH_AUTO,
++	PROACTIVE_AUTH_BASIC,
++};
++
+ static struct credential proxy_auth = CREDENTIAL_INIT;
+ static const char *curl_proxyuserpwd;
+ static char *curl_cookie_file;
+ static int curl_save_cookies;
+ struct credential http_auth = CREDENTIAL_INIT;
+-static int http_proactive_auth;
++static enum proactive_auth http_proactive_auth;
+ static char *user_agent;
+ static int curl_empty_auth = -1;
+ 
+@@ -146,6 +153,11 @@ static int http_schannel_check_revoke = 1;
+  */
+ static int http_schannel_use_ssl_cainfo;
+ 
++static int always_auth_proactively(void)
++{
++	return http_proactive_auth != PROACTIVE_AUTH_NONE && http_proactive_auth != PROACTIVE_AUTH_IF_CREDENTIALS;
++}
++
+ size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+ {
+ 	size_t size = eltsize * nmemb;
+@@ -537,6 +549,18 @@ static int http_options(const char *var, const char *value,
+ 		return 0;
+ 	}
+ 
++	if (!strcmp("http.proactiveauth", var)) {
++		if (value && !strcmp(value, "auto"))
++			http_proactive_auth = PROACTIVE_AUTH_AUTO;
++		else if (value && !strcmp(value, "basic"))
++			http_proactive_auth = PROACTIVE_AUTH_BASIC;
++		else if (!value)
++			http_proactive_auth = PROACTIVE_AUTH_NONE;
++		else
++			warning(_("Unknown value %s for http.proactiveauth"), value);
++		return 0;
++	}
++
+ 	/* Fall back on the default ones */
+ 	return git_default_config(var, value, ctx, data);
+ }
+@@ -578,14 +602,29 @@ static void init_curl_http_auth(CURL *result)
+ {
+ 	if ((!http_auth.username || !*http_auth.username) &&
+ 	    (!http_auth.credential || !*http_auth.credential)) {
+-		if (curl_empty_auth_enabled())
++		int empty_auth = curl_empty_auth_enabled();
++		if ((empty_auth != -1 && !always_auth_proactively()) || empty_auth == 1) {
+ 			curl_easy_setopt(result, CURLOPT_USERPWD, ":");
+-		return;
++			return;
++		} else if (!always_auth_proactively()) {
++			return;
++		} else if (http_proactive_auth == PROACTIVE_AUTH_BASIC) {
++			strvec_push(&http_auth.wwwauth_headers, "Basic");
++		}
+ 	}
+ 
+ 	credential_fill(&http_auth, 1);
+ 
+ 	if (http_auth.password) {
++		if (always_auth_proactively()) {
++			/*
++			 * We got a credential without an authtype and we don't
++			 * know what's available.  Since our only two options at
++			 * the moment are auto (which defaults to basic) and
++			 * basic, use basic for now.
++			 */
++			curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
++		}
+ 		curl_easy_setopt(result, CURLOPT_USERNAME, http_auth.username);
+ 		curl_easy_setopt(result, CURLOPT_PASSWORD, http_auth.password);
+ 	}
+@@ -1048,7 +1087,7 @@ static CURL *get_curl_handle(void)
+ #endif
+ 	}
+ 
+-	if (http_proactive_auth)
++	if (http_proactive_auth != PROACTIVE_AUTH_NONE)
+ 		init_curl_http_auth(result);
+ 
+ 	if (getenv("GIT_SSL_VERSION"))
+@@ -1292,7 +1331,8 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 	if (curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK)
+ 		die("curl_global_init failed");
+ 
+-	http_proactive_auth = proactive_auth;
++	if (proactive_auth && http_proactive_auth == PROACTIVE_AUTH_NONE)
++		http_proactive_auth = PROACTIVE_AUTH_IF_CREDENTIALS;
+ 
+ 	if (remote && remote->http_proxy)
+ 		curl_http_proxy = xstrdup(remote->http_proxy);
+@@ -1788,6 +1828,8 @@ static int handle_curl_result(struct slot_results *results)
+ 				return HTTP_REAUTH;
+ 			}
+ 			credential_reject(&http_auth);
++			if (always_auth_proactively())
++				http_proactive_auth = PROACTIVE_AUTH_NONE;
+ 			return HTTP_NOAUTH;
+ 		} else {
+ 			http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
+@@ -2184,7 +2226,12 @@ static int http_request_reauth(const char *url,
+ 			       struct http_get_options *options)
+ {
+ 	int i = 3;
+-	int ret = http_request(url, result, target, options);
++	int ret;
++
++	if (always_auth_proactively())
++		credential_fill(&http_auth, 1);
++
++	ret = http_request(url, result, target, options);
+ 
+ 	if (ret != HTTP_OK && ret != HTTP_REAUTH)
+ 		return ret;
+diff --git a/t/t5563-simple-http-auth.sh b/t/t5563-simple-http-auth.sh
+index 4af796de67..ba03f6a09f 100755
+--- a/t/t5563-simple-http-auth.sh
++++ b/t/t5563-simple-http-auth.sh
+@@ -178,6 +178,122 @@ test_expect_success 'access using basic auth invalid credentials' '
+ 	EOF
+ '
+ 
++test_expect_success 'access using basic proactive auth' '
++	test_when_finished "per_test_cleanup" &&
++
++	set_credential_reply get <<-EOF &&
++	username=alice
++	password=secret-passwd
++	EOF
++
++	# Basic base64(alice:secret-passwd)
++	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
++	id=1 creds=Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++	EOF
++
++	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
++	id=1 status=200
++	id=default status=403
++	EOF
++
++	test_config_global credential.helper test-helper &&
++	test_config_global http.proactiveAuth basic &&
++	git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
++
++	expect_credential_query get <<-EOF &&
++	capability[]=authtype
++	capability[]=state
++	protocol=http
++	host=$HTTPD_DEST
++	wwwauth[]=Basic
++	EOF
++
++	expect_credential_query store <<-EOF
++	protocol=http
++	host=$HTTPD_DEST
++	username=alice
++	password=secret-passwd
++	EOF
++'
++
++test_expect_success 'access using auto proactive auth with basic default' '
++	test_when_finished "per_test_cleanup" &&
++
++	set_credential_reply get <<-EOF &&
++	username=alice
++	password=secret-passwd
++	EOF
++
++	# Basic base64(alice:secret-passwd)
++	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
++	id=1 creds=Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++	EOF
++
++	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
++	id=1 status=200
++	id=default status=403
++	EOF
++
++	test_config_global credential.helper test-helper &&
++	test_config_global http.proactiveAuth auto &&
++	git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
++
++	expect_credential_query get <<-EOF &&
++	capability[]=authtype
++	capability[]=state
++	protocol=http
++	host=$HTTPD_DEST
++	EOF
++
++	expect_credential_query store <<-EOF
++	protocol=http
++	host=$HTTPD_DEST
++	username=alice
++	password=secret-passwd
++	EOF
++'
++
++test_expect_success 'access using auto proactive auth with authtype from credential helper' '
++	test_when_finished "per_test_cleanup" &&
++
++	set_credential_reply get <<-EOF &&
++	capability[]=authtype
++	authtype=Bearer
++	credential=YS1naXQtdG9rZW4=
++	EOF
++
++	# Basic base64(a-git-token)
++	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
++	id=1 creds=Bearer YS1naXQtdG9rZW4=
++	EOF
++
++	CHALLENGE="$HTTPD_ROOT_PATH/custom-auth.challenge" &&
++
++	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
++	id=1 status=200
++	id=default status=403
++	EOF
++
++	test_config_global credential.helper test-helper &&
++	test_config_global http.proactiveAuth auto &&
++	git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
++
++	expect_credential_query get <<-EOF &&
++	capability[]=authtype
++	capability[]=state
++	protocol=http
++	host=$HTTPD_DEST
++	EOF
++
++	expect_credential_query store <<-EOF
++	capability[]=authtype
++	authtype=Bearer
++	credential=YS1naXQtdG9rZW4=
++	protocol=http
++	host=$HTTPD_DEST
++	EOF
++'
++
+ test_expect_success 'access using basic auth with extra challenges' '
+ 	test_when_finished "per_test_cleanup" &&
+ 
