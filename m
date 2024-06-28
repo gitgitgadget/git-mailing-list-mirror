@@ -1,65 +1,65 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05AD6F30E
-	for <git@vger.kernel.org>; Fri, 28 Jun 2024 06:37:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311A37F7CA
+	for <git@vger.kernel.org>; Fri, 28 Jun 2024 06:37:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719556644; cv=none; b=AzZ4Mb4mB3G+DCPLsLmKC68NrhYDqDFC76Vo/0yiyu7UZ0VbvYBzAXgL7oJQTATM5rqe+wTGKfhVNfiHOAlCEgLa9iANbJrpG6fLdUG8dnviVdhJbsSwige08Ei5tPwkm+bn5xK/OGDbRJgFxZEdZo/fYL5ffp1kKgLsrsjHYkk=
+	t=1719556646; cv=none; b=XI3pStyYvWe0T4nemnIYx0cAgRgRyPYij4oMuktUBsTsC7Tyuv0NjULZ3A18UIfFvFYOMFHV8ij7mrQYYAMvv7RSuGS+FB/ZaqEh1juRtOdOgfr6Yzy62NZERpxTj9LXHnGFQec6tG7+7YlhKqR8/nij4MD8B59bR8d4xy8ixCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719556644; c=relaxed/simple;
-	bh=C6FME0k7ynPldudu0jkCQRgGAEjpyrUAR9OvFTILbRU=;
+	s=arc-20240116; t=1719556646; c=relaxed/simple;
+	bh=J6fRcqA9KNuIkIUbPTwYxCsvDGvdQNDbL1BjmF+9fKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pdo0xbvLXp32llz7i0JR9AhP5x1dH2sf+ChBUMyo/ACbXybLBRFAkcq0CRYAGTd2St0fKz27X1CZ554tkmP/gx2RsME7vg+hmIfW7CniXd3GIaCwl7pn/Bkz/9VmBL8gQAbqLuXlDFNESoDMx0oQEcvM7b6U6zGwy0WfK+8l3a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ab4Js9bJ; arc=none smtp.client-ip=209.85.167.173
+	 MIME-Version; b=bpTCqVqCiwqscpbrxCYSNxHDYSGcStYaNT0BtuJ6ITKSk7o9+B0ObeS9DyDJnS3KiTtgatNouhz26qj+zWLC/4H4/2RGdZMvXcCCFLgDRu0zMOpVfiAS0jUCZyJ8JtOJL1S1rckA+f3r9HcRzZQdQBu/ZWR3lJd/mMnC34sEnog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IIEaUqi0; arc=none smtp.client-ip=209.85.210.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ab4Js9bJ"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3d55ed47cc6so161155b6e.2
-        for <git@vger.kernel.org>; Thu, 27 Jun 2024 23:37:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IIEaUqi0"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-706524adf91so230479b3a.2
+        for <git@vger.kernel.org>; Thu, 27 Jun 2024 23:37:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719556641; x=1720161441; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719556644; x=1720161444; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rDijk4fdcZL1Vh6O5OQRHk5Kw7/talJd4QVeXB0hW2I=;
-        b=Ab4Js9bJnj/dNeUdFi4HjIOAzb4VDO30XZDDhud5R3x++ZLl6zBwWVDL9Q03vnNAbT
-         cE2of7vTeGliHl+jXv0QCa+Olsdjgt+CkRKRhwfJHhu0gn99eMThAkPOnTEVJXF25G4K
-         Yq4980UN8zf7NDFkU6lG/N4GkzMk/vun7CqA5AH6SNturdBf2KTjmzucxEUFDI0yzp1c
-         dAqSti/L7dG1mkCVJnAwJ7r5xs99pH+YuwGtU010Wdcs9tvZYhGEmqN1MTxTXG7QOyE+
-         IiFQbjd4rHu5jkXHGCJCOTwTD+4VV8WqT3T76UzwguExak4phZ9LErDRYF6Jwf0yCRYo
-         Yy5Q==
+        bh=mR1gYwxf1gvJkrmxV64urSShT49X2F6oNEtOnMdN/bs=;
+        b=IIEaUqi0TTdzlwjqLsI4MAZw/yMY60WqLokmo4sawOSS12UKDR0vaJzcDNXpFlrsTv
+         azXNwZt5P6LqNxpBjPylUtKPnVD2rIgTXB6S980fG9Tmxa+1+/V7ZcAf5ir4+VxVWFHW
+         lnN6gYhE0oftUILGg/2obbeVufYEUtBtawfZx6CcMZ20cOF7Aao+Fjzzd1gf88GBANaY
+         4o4WcYP9O3/ASw3NB0j95JJKAhYFFnF7IJRezp92FUpT305WAuNgTvC6uBPbogpjrNN+
+         KKwuzbm6cyNzJ+IP6FiLjr6+EIBNGwwryZzusrnYKQ5ugPXUQYMWCjej6ECV229yEmlt
+         Hddw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719556641; x=1720161441;
+        d=1e100.net; s=20230601; t=1719556644; x=1720161444;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rDijk4fdcZL1Vh6O5OQRHk5Kw7/talJd4QVeXB0hW2I=;
-        b=DkckSTb1pvBK7hs/LlCLnwzWamvVq8TNC6JWFU0swtg1XfmiNY43yzUZhc4Jr0/LFx
-         Qpyz86oSncRJkzp0t86C3dkg14I1XLudeBql7fk4Dph8pF/UxH/O++g+l8TgYMauQpVU
-         WkmaTPrIa6qn2NKwytOMSmYE08qEuV7fKXYDh1GRDfNkDeqPxvaHjq2/3p6rkzA6CfSF
-         cswyFPuYFth6LNbIocDmFLpm9gjdo0GIcGZNEzubz4z4m4AwltzBjyOeDo/9qAWOokwu
-         sYDjfkV4x579HQcFiqKVcDyda5WBzlph3aMAacm5J4DnP4H8RYhPFa4i6MA73wdAliWk
-         sAdw==
-X-Gm-Message-State: AOJu0YxAPIUvZuGOeXuzVQOZaGfE5tYYG/LbFpbU1lnMrur0ioVCQyir
-	O3waR4B/a+B+3JkRkHwB5ga/8V+A8OgxxRg/fyfF74QE39OXjcbZ6RxUi3GRp/4=
-X-Google-Smtp-Source: AGHT+IGZtHGAtoKLwKpIFggqyv1Bdv4gKKFH7k9QLFTg7NOfgCYP5aaBpe6Jc0xrQq9X1oWX4BalLw==
-X-Received: by 2002:a05:6808:2018:b0:3d6:2d45:a791 with SMTP id 5614622812f47-3d62d45dd73mr3400845b6e.32.1719556640829;
-        Thu, 27 Jun 2024 23:37:20 -0700 (PDT)
+        bh=mR1gYwxf1gvJkrmxV64urSShT49X2F6oNEtOnMdN/bs=;
+        b=JqZsdbUrvdnXVCXMwW5GbhblC01qqYyYfI2wnLq9CwHAzIS/iPmsuMlICW0ZOGxKmU
+         ZxXQK768ebX2CAv9rWHzq3Obiom9WX83RLoYxz4psCnnsbYhgXh6XX2O9KM/K+ibfPEx
+         iPbTXubiKHvLjEfvqN5gspJGEtiFmuWk/4ErdeYh9bZwBQY4QbZR4awenEnLbnEiAUZY
+         R6jGAcdyrpSDn3nr+3sQVN3ZHJCbOW6Jiz8COpsIpdT9EeAB20HFeF7GRjsMUUWTgd3P
+         EDCl7mXCXrCryHEBaPKnx8dkcxyb2MZo+RdYa2fFJCCOHZel7M7djg2wlHWo0Allbre0
+         +8Aw==
+X-Gm-Message-State: AOJu0Yx0gTKTs+3jzD4w+S14ztuPXfDsZSdgfFj6Z8OfI48ULo0IoJU/
+	N93YSTBkr67RKuOQy7jGCpu7LSsD8pr8xReKYSNOsfXRltZj0br+c+jEAQ5HJMg=
+X-Google-Smtp-Source: AGHT+IG4eeMNHQfdtLl/8AZuMcIUnIQOFBgUHhA72CkZPDAk3A1ap3P7ECAHSjJEtgRo+rY2UKBXOA==
+X-Received: by 2002:a05:6a00:6816:b0:704:2d99:9ee0 with SMTP id d2e1a72fcca58-70671084e1bmr15516903b3a.33.1719556643778;
+        Thu, 27 Jun 2024 23:37:23 -0700 (PDT)
 Received: from Ubuntu.. ([117.99.235.160])
-        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-70804a93ce7sm786003b3a.207.2024.06.27.23.37.18
+        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-70804a93ce7sm786003b3a.207.2024.06.27.23.37.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jun 2024 23:37:20 -0700 (PDT)
+        Thu, 27 Jun 2024 23:37:23 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: karthik188@gmail.com,
 	Chandra Pratap <chandrapratap3519@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 05/11] t-reftable-record: add comparison tests for obj records
-Date: Fri, 28 Jun 2024 11:49:35 +0530
-Message-ID: <20240628063625.4092-6-chandrapratap3519@gmail.com>
+Subject: [PATCH v3 06/11] t-reftable-record: add ref tests for reftable_record_is_deletion()
+Date: Fri, 28 Jun 2024 11:49:36 +0530
+Message-ID: <20240628063625.4092-7-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.2.404.g9eaef5822c
 In-Reply-To: <20240628063625.4092-1-chandrapratap3519@gmail.com>
 References: <20240621060018.12795-1-chandrapratap3519@gmail.com>
@@ -72,79 +72,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the current testing setup for obj records, the comparison
-functions for obj records, reftable_obj_record_cmp_void() and
-reftable_obj_record_equal_void() are left untested.
+reftable_record_is_deletion() is a function defined in
+reftable/record.{c, h} that determines whether a record is of
+type deletion or not. In the current testing setup, this function
+is left untested for all the four record types (ref, log, obj, index).
 
-Add tests for the same by using the wrapper functions
-reftable_record_cmp() and reftable_record_equal() for
-reftable_index_record_cmp_void() and reftable_index_record_equal_void()
-respectively.
+Add tests for this function in the case of ref records.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- t/unit-tests/t-reftable-record.c | 39 ++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ t/unit-tests/t-reftable-record.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/t/unit-tests/t-reftable-record.c b/t/unit-tests/t-reftable-record.c
-index e242a3923c..bdd54ad265 100644
+index bdd54ad265..99dad75fb1 100644
 --- a/t/unit-tests/t-reftable-record.c
 +++ b/t/unit-tests/t-reftable-record.c
-@@ -299,6 +299,44 @@ static void test_key_roundtrip(void)
- 	strbuf_release(&roundtrip);
- }
+@@ -102,6 +102,7 @@ static void test_reftable_ref_record_roundtrip(void)
+ 	for (int i = REFTABLE_REF_DELETION; i < REFTABLE_NR_REF_VALUETYPES; i++) {
+ 		struct reftable_record in = {
+ 			.type = BLOCK_TYPE_REF,
++			.u.ref.value_type = i,
+ 		};
+ 		struct reftable_record out = { .type = BLOCK_TYPE_REF };
+ 		struct strbuf key = STRBUF_INIT;
+@@ -132,6 +133,7 @@ static void test_reftable_ref_record_roundtrip(void)
+ 		test_copy(&in);
  
-+static void test_reftable_obj_record_comparison(void)
-+{
-+
-+	uint8_t id_bytes[] = { 0, 1, 2, 3, 4, 5, 6 };
-+	uint64_t offsets[] = { 0, 16, 32, 48, 64, 80, 96, 112};
-+	struct reftable_record in[3] = {
-+		{
-+			.type = BLOCK_TYPE_OBJ,
-+			.u.obj.hash_prefix = id_bytes,
-+			.u.obj.hash_prefix_len = 7,
-+			.u.obj.offsets = offsets,
-+			.u.obj.offset_len = 8,
-+		},
-+		{
-+			.type = BLOCK_TYPE_OBJ,
-+			.u.obj.hash_prefix = id_bytes,
-+			.u.obj.hash_prefix_len = 7,
-+			.u.obj.offsets = offsets,
-+			.u.obj.offset_len = 5,
-+		},
-+		{
-+			.type = BLOCK_TYPE_OBJ,
-+			.u.obj.hash_prefix = id_bytes,
-+			.u.obj.hash_prefix_len = 5,
-+		},
-+	};
-+
-+	check(!reftable_record_equal(&in[0], &in[1], GIT_SHA1_RAWSZ));
-+	check(!reftable_record_cmp(&in[0], &in[1]));
-+
-+	check(!reftable_record_equal(&in[1], &in[2], GIT_SHA1_RAWSZ));
-+	check_int(reftable_record_cmp(&in[1], &in[2]), >, 0);
-+
-+	in[1].u.obj.offset_len = in[0].u.obj.offset_len;
-+	check(reftable_record_equal(&in[0], &in[1], GIT_SHA1_RAWSZ));
-+	check(!reftable_record_cmp(&in[0], &in[1]));
-+}
-+
- static void test_reftable_obj_record_roundtrip(void)
- {
- 	uint8_t testHash1[GIT_SHA1_RAWSZ] = { 1, 2, 3, 4, 0 };
-@@ -443,6 +481,7 @@ int cmd_main(int argc, const char *argv[])
- 	TEST(test_reftable_ref_record_comparison(), "comparison operations work on ref record");
- 	TEST(test_reftable_log_record_comparison(), "comparison operations work on log record");
- 	TEST(test_reftable_index_record_comparison(), "comparison operations work on index record");
-+	TEST(test_reftable_obj_record_comparison(), "comparison operations work on obj record");
- 	TEST(test_reftable_log_record_roundtrip(), "record operations work on log record");
- 	TEST(test_reftable_ref_record_roundtrip(), "record operations work on ref record");
- 	TEST(test_varint_roundtrip(), "put_var_int and get_var_int work");
+ 		check_int(reftable_record_val_type(&in), ==, i);
++		check_int(reftable_record_is_deletion(&in), ==, i == REFTABLE_REF_DELETION);
+ 
+ 		reftable_record_key(&in, &key);
+ 		n = reftable_record_encode(&in, dest, GIT_SHA1_RAWSZ);
 -- 
 2.45.2.404.g9eaef5822c
 
