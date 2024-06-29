@@ -1,91 +1,104 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02AB77F10
-	for <git@vger.kernel.org>; Fri, 28 Jun 2024 22:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261EA36D
+	for <git@vger.kernel.org>; Sat, 29 Jun 2024 00:23:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719613122; cv=none; b=WPB/611Bd9EOQNy26sg+q7wpQbjLPDIuIj98c9sfIbw/K6HnIGekwL+FS+ZfD74jWoPTrfj4HmJBlWF/nSFZ0F3jl204FhqEnwSlaGZHGtNZmpSBe27hhwinYMLrr72Am9MwdrvSyMnv9bVUtiAHk229OULkJulUrB80IXc9Z08=
+	t=1719620641; cv=none; b=ag9PUM09cGgNSLnDhVPtE9/nQzNfmoRByOq+T4Qd6pCecik1O5bHyLEe7InIaeMvwUKQRpDPf9zPtZavVxo0dZERK6RunpTCPXdP4OPcpeFLQtHYjSIFH53GiRUcg1NpdmO7v0jNkmlxcE3ke/I9JKdO+Y7FqZsUNpNhclp2zQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719613122; c=relaxed/simple;
-	bh=xD/NVjfJP8ZQqXHX9tg7FPVO0Njan/pYeFcEg39CZMM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=C2luJdwl9Us9TbABXlbd+W/yqEB3/AyjQdJ7amMgd8H8iMXPZrxB8d6KC+VosxJBMtB4Ai69b+Q7Ea/HTAHgCkfPQ60OE578KRXvQbRU5cBxzDhN+U8xTk5BWyV7zM20i08qS+27PDWqiB9O2vanoPJl1qIqfgR3xohbuXeadB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xzV0lpeb; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1719620641; c=relaxed/simple;
+	bh=jq9nXzxeCkvxB8Ob+Dmha3eM5c3jNxV91Wr2jry8zcU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jmmexU4s1I9KVWnOmHCKtTAP0eY8AjxRyfmDN2CzqtHtJA3frNdzg+Cz7bkWfr1PbGnBioEU4qMdwDpQC/H0f51sSMMfMFIHwVtxp8HJFLyy7LUIrZXLNf+fxIufrUecpkzaqEwmrk/ZJFupa8g1GVWkQdDS37suZdN9p7g9Ktc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=yiFvzTGp; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xzV0lpeb"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6725C234A9;
-	Fri, 28 Jun 2024 18:18:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=xD/NVjfJP8ZQqXHX9tg7FPVO0Njan/pYeFcEg3
-	9CZMM=; b=xzV0lpebz9lNcf4rlyWxPNHV7cNWc8qeA4CMELL2o/8pEsigDj6do0
-	jvyXA6sYCmrS+8te7+w9zb72PPIsaqY+9G5U9YK1msVS2ggtStD1ISd+BpDY4S35
-	s1I9uq50Mqrzs3+16Onv7VukWm1v+yRNIyqF/C8bxBIeakQTardro=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5DE34234A8;
-	Fri, 28 Jun 2024 18:18:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="yiFvzTGp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1719620637;
+	bh=jq9nXzxeCkvxB8Ob+Dmha3eM5c3jNxV91Wr2jry8zcU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=yiFvzTGpJ5Q9GAh0HfzgzyJ8cD/1hcpcZu7ElhkN8OW/P4QtBgD8nj2HuDAmesZZR
+	 rsfsROtjSs0CMB1vhMykMi03Mrm/LC85ZOdu+PFagCPZtTCJHIFsQrzuRS6FJOlIVE
+	 qFMipNwWWcFQTkn3XQbkS74pY+JB8jZ3fZTP7krEZey2KCzCq548w4See7aYjrLawB
+	 t+xWhxzh6yGVITH+6SOQdpYTtbygPZqsg2N5TA+FuUin9wjg1tanjBmKF8RD0hrqhE
+	 qP05ff5RR70ucNadxEXGi4NHhJh7m8bjx7hQ3m/UzcKK9P1seMyl/kqdVjxX5JUthn
+	 CpyuTgwuVeNaGG5hY+BfUc33/1iU1AJmO0jnLe2Rmbj1ocT9KDvWWRxRucEsy/8Teu
+	 wUs0vP/SPVdjXau5SYHeNG0+3BtT1koyEMSlD6Yjfir7pf+2kzBmsC/sxEM+OtDtm3
+	 iOVmxgSgj3SfNw0bqLAxpmsixuT5+qIDGWMWBKLu1r950foIGTC
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C377C234A7;
-	Fri, 28 Jun 2024 18:18:38 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D35542638C;
+	Sat, 29 Jun 2024 00:23:57 +0000 (UTC)
+Date: Sat, 29 Jun 2024 00:23:55 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Subject: Re: [PATCH 1/1] http: allow authenticating proactively
-In-Reply-To: <Zn8yhdN6henrIqgD@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 28 Jun 2024 22:00:37 +0000")
+Message-ID: <Zn9UGwMQ4Ur-peI6@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <20240628002742.3421311-1-sandals@crustytoothpaste.net>
-	<20240628002742.3421311-2-sandals@crustytoothpaste.net>
-	<xmqqa5j53pbo.fsf@gitster.g>
-	<Zn8yhdN6henrIqgD@tapette.crustytoothpaste.net>
-Date: Fri, 28 Jun 2024 15:18:37 -0700
-Message-ID: <xmqqh6dc1zk2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20240628002742.3421311-2-sandals@crustytoothpaste.net>
+ <xmqqa5j53pbo.fsf@gitster.g>
+ <Zn8yhdN6henrIqgD@tapette.crustytoothpaste.net>
+ <xmqqh6dc1zk2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 5E7C4784-359C-11EF-8B0F-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tqo0BSpQcHNn7cos"
+Content-Disposition: inline
+In-Reply-To: <xmqqh6dc1zk2.fsf@gitster.g>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
->> > +* `basic` - Request Basic authentication from the helper.
->> > +* `auto` - Don't request any scheme from the helper.
->> > +--
->> 
->> What does "don't request" exactly mean?  It is not like we are
->> telling the helper "Don't give us anything", right?  Are we telling
->> the helper "Give us any username/password for the URL in any
->> authentication scheme you know about?"
->
-> It means we don't send a `wwwauth[]` entry in the request.  We are
-> giving the helper carte blanche to decide what scheme is best (maybe it
-> knows we want Bearer, for example).
+--tqo0BSpQcHNn7cos
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Well, at least I couldn't read the proposed document update and read
-that much out of it, and I suspect there may be other readers who
-will share my confusion.  I think the source of the confusion is
-that "don't request" does not automatically imply "allow the helper
-to pick any scheme as it sees fit" if you do not know how helper is
-designed to behave when it is not requested "any scheme".
+On 2024-06-28 at 22:18:37, Junio C Hamano wrote:
+> Well, at least I couldn't read the proposed document update and read
+> that much out of it, and I suspect there may be other readers who
+> will share my confusion.  I think the source of the confusion is
+> that "don't request" does not automatically imply "allow the helper
+> to pick any scheme as it sees fit" if you do not know how helper is
+> designed to behave when it is not requested "any scheme".
+>=20
+>     `basic` - Request Basic authentication from the helper.
+>     `auto`  - Ask the helper to pick an appropriate scheme.
+>     `none`  - Disable proactive authentication.
+>=20
+> or something, perhaps?
 
-    `basic` - Request Basic authentication from the helper.
-    `auto`  - Ask the helper to pick an appropriate scheme.
-    `none`  - Disable proactive authentication.
+That sounds good.  I appreciate you providing some language that would
+be less confusing to you, because it will probably be less confusing to
+others as well.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-or something, perhaps?
+--tqo0BSpQcHNn7cos
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZn9UGwAKCRB8DEliiIei
+gTc5AP4mXl/zvNeFiJzJDcHwjLRz5gaM4xnB3aa/YQbsh26feAEAyEMryzkRkH12
+L4obIln6T+g9cmvIqOLhVwUMUy1RDQI=
+=CxSc
+-----END PGP SIGNATURE-----
+
+--tqo0BSpQcHNn7cos--
