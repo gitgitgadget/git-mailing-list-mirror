@@ -1,92 +1,96 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2007080046
-	for <git@vger.kernel.org>; Sat, 29 Jun 2024 19:31:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1742D1CF8D
+	for <git@vger.kernel.org>; Sat, 29 Jun 2024 21:42:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719689510; cv=none; b=D3YTItPszU+en95SoUlymniQt81peag9Fntvgt6KgaHKLKBK0tn5jyZhvyjYm/k+SbzrlwJguvt0Eaa76cwk3Dwhjtl3TgHq04RS7LTcEQsmguXpQjmSzSbtKSg/6bfRtOgU9G6xqL9Xf0Zt3uGagSd1xZLmAxfJ9qwjmNyLf04=
+	t=1719697357; cv=none; b=SPX0Cqs8eGmYlEUABNdwEDNhmMf12qbBvqKKa2HvsXBIiNnvL1imAoVr7jXiPAyWaZk8g4lKiMpTOffGs/Gew3INhhmExQZ3Fi+L/typtdGWrheFPShFJIaGWsVqZeQfTgK0Ew1EBg+7gE05iqxFjoXiV0Q/6LqgvoBglv96E6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719689510; c=relaxed/simple;
-	bh=+zO7l8zDkg9z9zSEhqdfH1Jc7VU06HjyUbKDdWSedEg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Eo1WmgjsnSuqx6s6OB3hlI7bI8J3hF7aPyNFGJt+MWr4gaIcZTIhGOLvVxC4Jlpy167RRlrgXMU0tEfvkHEqR2DCW2BM488uxr+b/EvTT7qu9y4kan2X/lWkI4bUbZ2amuQ0MDjw9Rsds70vDGurFtCqJip75n1GonMWUrW8k0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b9KXR5lU; arc=none smtp.client-ip=209.85.210.174
+	s=arc-20240116; t=1719697357; c=relaxed/simple;
+	bh=Y7XEGuQ3WTyq3quxAjr806wLHMmfwfYgI30xsfNIRS4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=fdPkXoV3jGIoGs3Iy6+O0Kgs3Rohdox94t6zw9iRzxGtoB93yMjWD8oqY5voIh5B/H7L453w9YhbJGqmCdqohb/+/B0lvsRMOoWGnJg/0nxN1aiH8zthRjfyyINm2U5Lzos448BKlaYo8x95qpyjSVW5D679i51DoH+HRiSQWBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mdv/Ts2N; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b9KXR5lU"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-706798e7ceeso60868b3a.3
-        for <git@vger.kernel.org>; Sat, 29 Jun 2024 12:31:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mdv/Ts2N"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-57d06101d76so2032016a12.3
+        for <git@vger.kernel.org>; Sat, 29 Jun 2024 14:42:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719689508; x=1720294308; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KqIZ/Anh7xEqmnJRX0kwd3886Y3D+KQYt4/0cMHM5kI=;
-        b=b9KXR5lUWhhCPbitXf7FeqtUZkdlR5XrW/SejngSttCIZgsJYL1clbDjTH5sonUszO
-         uNb0izYcjx4z7KuIJWjp/W9ieI8vPY2wQRbUH2Ch6yIUlJndhEbB8vzL37GOq2nVTJ5T
-         9bMQOi0vtOf3ea3DLjA1Jhvdnx4SORX0eDtUhTlCMLxPazitvYnw8/aEzJLGZXVf6+d4
-         zMxKYotMRuYsy8dE4nnh87bKGsdA3BuTTf5IxIQLLLcUeM6MgIoeGD2F9VcpVIx93rzZ
-         59kuCtSAsDqGRuUSmvG+8wwZMAlGhrgH3Tg0z0nKCSxF/oHhrvvEz+sUm4yH9h3R3+F/
-         vhmg==
+        d=gmail.com; s=20230601; t=1719697354; x=1720302154; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=pvFEB8vKRRmQY1Uc31OV/ad37QLodGWrD0gN7ow+tb8=;
+        b=mdv/Ts2NIt5hIO+hOTEH9//JkkMV8uF2GCkG5MO+O0nl9PbTwxGNOCnYhR2jJ+sqlR
+         l3AbD670G/k2pJHuU2oPPc+H0q8rtOVogO5DJwRZYGM+A/OXkPzQ6wBbsEx7oYbXod+B
+         Ns41QevQTKBY6AQvzqpKMNzmVSTzPG3I6tUUHL++G09RVtCf0skxR41UOHtVqYFGEPRb
+         SDDDof8FfXHQarkin1VaqA0hAkAcPgyNvQCxHyD0m0y5BHQNKH81/6BbOMmyaCnyl0MA
+         7Uj0hRxLERzg8aDscBifpwAcOhMmkfSkoo1gpl0BadVrHR47cskDB4lcqi9ucHOFhr2Z
+         OvBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719689508; x=1720294308;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KqIZ/Anh7xEqmnJRX0kwd3886Y3D+KQYt4/0cMHM5kI=;
-        b=I9aZVgrSBWKdApiOguKChrNGVIdZZ1wPfqBuDYBb83VSCELFvJMofkE5wLSz6KxWpx
-         iF0233/gnlVBXuN08bCYpWbNRBoUfIQOpX/qRE6uHsVrqNLsxdif5CTTcsp8K47jJ4J4
-         zora8hItDwGjqtHUX9g/mqmbwcC3VRCdUuEDm2vm1U9Eyg5jwfadmAXhbFXfvgh/FEjP
-         /2yRakbVQaKMzj2WZOzAJhIHbphXfWCPMpyZ4dtpaI0dWakzG1lH/OJoTPwDqNkGQbYj
-         0ex/bKo81OcuAxDzIEaajfA9Y8CHp4pTI2VVmwbqwLWp7GaIx6U0D5U+uqSg70SkOG7H
-         /1FQ==
-X-Gm-Message-State: AOJu0YxdlQMpsz5i/YMzvde6MYnjSVj5KtiAEVBrPBhPtD2XVb2mMW0C
-	V+yiEaTLsgI9y6J6/tra/vNOlQNkH+pK9owonDzTKwv2fs+nxm6JL1/YRqxR
-X-Google-Smtp-Source: AGHT+IExJ2BBa4UzryGpefiXUQAUOEmay6pfUnh9zG6P/BTG1WeskgAs9MKuDpC7bw1bnoHZW76tmQ==
-X-Received: by 2002:a05:6a00:8a07:b0:704:173c:5111 with SMTP id d2e1a72fcca58-70aaaf2f594mr1682147b3a.3.1719689507684;
-        Sat, 29 Jun 2024 12:31:47 -0700 (PDT)
-Received: from TTPL-LNV-0102.. ([2409:40c2:100a:731d:f4f4:e39d:d24a:1f70])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70803ecfb84sm3611910b3a.134.2024.06.29.12.31.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Jun 2024 12:31:47 -0700 (PDT)
-From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-To: git@vger.kernel.org
-Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>,
-	Heba Waly <heba.waly@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] pathspec: fix typo "glossary-context.txt" -> "glossary-content.txt"
-Date: Sun, 30 Jun 2024 01:01:37 +0530
-Message-ID: <20240629193137.54037-1-abhijeet.nkt@gmail.com>
-X-Mailer: git-send-email 2.45.2.606.g9005149a4a.dirty
+        d=1e100.net; s=20230601; t=1719697354; x=1720302154;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pvFEB8vKRRmQY1Uc31OV/ad37QLodGWrD0gN7ow+tb8=;
+        b=vopAhrRUe7p/SsFTPXaqF9D/ZNcAAlDmpxRFgnJBfJqHG6weXUdld8I9hdoI5UKnWk
+         Q/9JAsVtF4hnUDgcP+dN+c1ENsjZeWDksr4acJ6YDDjHli/PBb4bIMAzdjrgirqp0TAi
+         7l/JsSaRSlYUBo2C3GSYR9kfAglpSxqrF59D8KqF5ke5N25QslwJL2SLGek9ms9NafFf
+         5/gxjfsu4cmwxO78++NW1iYjDYA0nLxXeMpLkRs2HV8mK41qLmRPWUxg77ElCYuke60H
+         iwWN9B4KHLfy0FP3RDH49m/S3LPk3fdQqCkvbQ7lduFqUcUXxdZvV/vhGy3AhESQGWY3
+         MVZg==
+X-Gm-Message-State: AOJu0Ywc4QNWLTNll0AT1hv5r2fm4pLqp+mdlFu0K8eHZ/a8RHamWYvm
+	c4T1irCpj6VmncebVouyNsed3Fy2jSaTBHaxzw5IzI2Z+EyDVAJ5Wwtg1Zr7YQIZIcQieGsHPG/
+	KBvs94sdJFjUzIL/hN9ahakGL8Nzm/xYSvbo=
+X-Google-Smtp-Source: AGHT+IGDO7jrSsoHIj9qhxbkfCeaaAMLtt2jO0gsCcKtaLW9HDtSE6Og5X4P9/OYJsS3frVU5UblQIjTfSONiLENEYo=
+X-Received: by 2002:a17:906:c9d4:b0:a6c:7181:4ffe with SMTP id
+ a640c23a62f3a-a7514498a9cmr117606666b.66.1719697353246; Sat, 29 Jun 2024
+ 14:42:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Christian Couder <christian.couder@gmail.com>
+Date: Sat, 29 Jun 2024 23:42:20 +0200
+Message-ID: <CAP8UFD1eH8GXn=aER56FVvrh90f_c+VdxdtopJmDYwPend52gQ@mail.gmail.com>
+Subject: Draft of Git Rev News edition 112
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Todd Zullinger <tmz@pobox.com>, Dragan Simic <dsimic@manjaro.org>, 
+	Justin Tobler <jltobler@gmail.com>, Karthik Nayak <karthik.188@gmail.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-The pathspec syntax is explained in the file "glossary-content.txt".
-Moreover, no file named "glossary-context.txt" exists in the repository.
+Hi everyone,
 
-Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
----
- pathspec.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+A draft of a new Git Rev News edition is available here:
 
-diff --git a/pathspec.h b/pathspec.h
-index fec4399bbc..de537cff3c 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -23,7 +23,7 @@ struct index_state;
- #define PATHSPEC_ONESTAR 1	/* the pathspec pattern satisfies GFNM_ONESTAR */
- 
- /**
-- * See glossary-context.txt for the syntax of pathspec.
-+ * See glossary-content.txt for the syntax of pathspec.
-  * In memory, a pathspec set is represented by "struct pathspec" and is
-  * prepared by parse_pathspec().
-  */
--- 
-2.45.2.606.g9005149a4a.dirty
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-112.md
 
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
+
+  https://github.com/git/git.github.io/issues/714
+
+You can also reply to this email.
+
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition on
+Monday July 1st, 2024.
+
+Thanks,
+Christian.
