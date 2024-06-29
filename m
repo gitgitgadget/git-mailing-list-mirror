@@ -1,92 +1,134 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341A25660
-	for <git@vger.kernel.org>; Sat, 29 Jun 2024 16:29:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7586C22331
+	for <git@vger.kernel.org>; Sat, 29 Jun 2024 18:01:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719678597; cv=none; b=ivZuInfWBx/1mcV0Xlf5vczr1kTfnx7Is5y9r/qSiR8h9DhPkn1isClx2K7Zz/VPG1v68QPLz33OqgcBEYg8rEQjCZGUR4aUioTXXISlHU/YGbFBMDP15MAfjHRSCSgC5WU+PjYURdA33iMuXlnCITrNG6I3Y6ySYGCMApeuerY=
+	t=1719684090; cv=none; b=IQ9OYXgrovrv87Rw1cCOQqDaBqLDq1nXhmn4eJdFSei75Va/m5fJ4MrIokMboga0IU8A+RZXL/fwAPKQTIlJE6dCQ6Cq0i0k7FML/UARqaT6DhhwAIi3CHxjGWPQZrLjk4Gd84/MX1HKC3rA+fCLoYIa9FU/gTwg/Saz0+jGtx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719678597; c=relaxed/simple;
-	bh=otHkhsUuK/zPzSFl617GyCAZYf8bClV/0o3Rq645Hx0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rmKGdpbgs45aN9YQ2ipP0gwQbPIieGwTBH3uCVqB8XmPjRyuy9YPkuoJZoe8OD3uWIbvEHw58cbqVWXvyOmg2iKmsSonDLSXQemMnCpbAvZSwp+Rf+etFFYbbCuUG5R4/PlaBuVwWc7B1QFhbncZm3gZcg38VigbOeYNX8aVIL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IxnNIXpP; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1719684090; c=relaxed/simple;
+	bh=2c8L7XtlDk28RnlsVjOl6AYrhUHmH8xl7EotSZIHm2w=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Te3G13jg7+27419eSIDsdUEGw6fJbj9N3124u5I1VSl3dwpDWV69JpZm4f4+6CAR2scJlWSxVndbnvdGQV1WqWfPQpNi1n73a66i+TZAppLG4GhUO7iY3gdixYRAs7YtpJgfwzbga6Sg8PwCBtQvb2xhJ3DK72rmx+dbdN5bqno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=Pn+hhM+2; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IxnNIXpP"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a72420e84feso184659766b.0
-        for <git@vger.kernel.org>; Sat, 29 Jun 2024 09:29:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719678594; x=1720283394; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=otHkhsUuK/zPzSFl617GyCAZYf8bClV/0o3Rq645Hx0=;
-        b=IxnNIXpPijopF2kqP0P+p9fYzzYOW0huw3qIVWq1uLzn2YK5zhDU4Dj5nAdLQZSKdr
-         pe3DHAhGTQThcMbEUzy3x8LLnpxeGsFARsR6z48r8HIwM0pjiGviaLet9QD2pgOgTtvz
-         SnevpZLhtYb0B403KMGFLVtEzojxco64rcx+J3GpgAt4PWShu9IZFWTpd42BckVQDJz7
-         K8qP3L5F+vZQrXcA8Dw6thhXu4DKR4YDfA2x7DFTy2zIi3YfI6/FHvBsT7okW7+zhdfb
-         p8KDkX1ceTCAUih42om8jga+8mksHwzoEscNRxhly5Nw5i+xeVIpFv1TNq1W/dLTOFAb
-         sBQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719678594; x=1720283394;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=otHkhsUuK/zPzSFl617GyCAZYf8bClV/0o3Rq645Hx0=;
-        b=ENeXhpmn1ssPlElRngMCBOfXV59pTS9QFmAv1gFdP0mFTosr3EsTv3wprvXwx+E2zj
-         Q9SOFkh7HVMd8OYPf0wNKkPpQgo5+bL9czE6hNHyyUTi7T1gFlT6MGdWPcuIM8Eq9plD
-         ta5gFYi3dwn2HBYUKMCpHYU/scQYjFo6rIwKx9CXpdpLjU9HRBuU5iNrYT3yfQ4s8NI7
-         41QultyA3zRXz7eXb0UOlqCm4xGdAGTm6n+bzfURHbj1K7DaWt8WgAckVR04ryB/D34u
-         ld9r8XUQi6eLWk47LHbsVYSdM5Ox0Qlq62EN9fud3sL5AmMINPv3Ig5S8vOSka0p2KJ6
-         9IbA==
-X-Gm-Message-State: AOJu0Yzs1UcJ4iyDNahe3gPzjs6AyaE6JkaeY6wbMqJuBB9EVOw/B2ZE
-	dwS35rnIKWnp+W79pE34G9x3JFMdf9ce4yTnRJgVwrHo09Kb5QKxH1HBm1KdvhZGkTla8xFB6B3
-	lOc6rs0aXmyTUy68MziHzISn+1As=
-X-Google-Smtp-Source: AGHT+IE1nRW0Ot9f2tdJPRc/MDf5YU7Q9XhlBy9JfvSaO6HVQVnBlWQNscw5gv7XydCV8xWNXMk626cucBJy8nYr/Gw=
-X-Received: by 2002:a17:906:c141:b0:a68:b73d:30d0 with SMTP id
- a640c23a62f3a-a751446804amr109096266b.6.1719678594027; Sat, 29 Jun 2024
- 09:29:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Pn+hhM+2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1719684085; x=1720288885; i=l.s.r@web.de;
+	bh=ux2/lgyOczPFKVWN/h3X981ofSqFziefyE2XOu7Chw0=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
+	 Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=Pn+hhM+2KUbFca/jbMMgN2w9FOVlCBPleLbwR5QrIwsoL73jrYPcZaa2wFXTC535
+	 wYdWs9g1vaYedJUYkuTTW58l77Wby+FEAXdPu8TUCa1CpogkHZ62SMAfhCCsPfBP2
+	 4Dl6bMiRybmMwzgaDM+JEgWFeOuuKKWNUqJ1TZJqyAUKj9vtIxIRSYBGQjwKrYIN3
+	 qsKw+KcgllIXh0ljndF4rhoDDOJOzwlKxsfDPSKwvH6OwvXlveZlz7VXC5jWwdc5l
+	 +MgTjzFAtwDxvqlhcQSmhPebZs8iJfI4BkH4bpyBCe+voocRTD5rtkRsRXPdskcnk
+	 zLDOvBGxWsIqnhnJPQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.19.151]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M7usy-1sSaCF1KiY-00Bh82 for
+ <git@vger.kernel.org>; Sat, 29 Jun 2024 20:01:25 +0200
+Message-ID: <fb79ebc4-5ecf-4257-ac2e-39f98db5649c@web.de>
+Date: Sat, 29 Jun 2024 20:01:24 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOLTT8Sb4+_L7TrP8zZvvSqFu0MqbDanOhi6jfxfRLQKRimYzw@mail.gmail.com>
-In-Reply-To: <CAOLTT8Sb4+_L7TrP8zZvvSqFu0MqbDanOhi6jfxfRLQKRimYzw@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sat, 29 Jun 2024 18:29:41 +0200
-Message-ID: <CAP8UFD04cvb8k2ZkUYM20B5ym6e8q=KGL4PEDNF8_4x6G32SnQ@mail.gmail.com>
-Subject: Re: [QUESTION]: How to get uploading git objects via a git command in
- a pre-receive-hook
-To: ZheNing Hu <adlternative@gmail.com>
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
-	Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Git List <git@vger.kernel.org>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] submodule--helper: use strvec_pushf() for --super-prefix
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:WQcE/q8ZLWDFBMa/BUJuxWArBAMITSifOrauUcuvnavPftNzH6K
+ k//HM5jT0QG4VtdqGFkup8Mqo/N1PHVeaSsLw0M2PrEGomzVdm7GUuFkIBIpY43euG90xWB
+ qWIK7KrateDHM84Ra30hFZDS/KNxS6iGiIcIxjFqSK99f1D+LUMQ+xeZt7G5vqyV0JCMIus
+ TMZpuiQHWBfQO4FJgmBQA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:S5SJCvua6Lc=;1cbMF7ZYXOe5yWywS4tHvy6bCzb
+ 6/ZsDUDlnQEWaxIBG2bHmCiadDy8reDgC3zVsFfjgKMqT6rEnpvfRJCw1EeQtdMi4+0nb04UY
+ n4r2cb4Q2OSat6+W7U166wAM+qOUgurj6+AifB1P/YLUfibBIsBwUYwBJxjILdZI/zZwB8xq9
+ NaI0JdwlOlbSqMGHuYouL1oDofmMmMs8aD3H6byDNBDc/ZbfKAXGTt6tljO3WjakGaJOo4qzG
+ k6tSfX4qQ0FaMbPMZAII11FRGgQpN4OkjIC/aZiZsyIRbc8PRpiDmy8aujjcMtmpnuYCLQ0RN
+ u6MYojVrGaCK9AZZAvE6+7pzd4L1B45d4yCK093+Jv0Alf4QjPTw45bDijcxZn+m6f9jtFls0
+ V9+KUVcSUKcBnIRpMVYO9qanF4XbxV2NhYZREyBGtAxdQjPv299bF667oDc379VwRQzm/4hYh
+ eZ+pcAaCkEm/MmtDENkc9i2Xeub1gHFISCwSMGNfTHfHpjgOfv0V8qNfQ0mY98e3ldXlN4rKu
+ oGorqm2yrJTDJYHIIodjA+IdmQmgzD8JMZ2VX9xVfvm0Ci8TRSJngXtYcXGEcQF7Gbxp47AzO
+ U9cCaxpPLJs6sOdnmOaRmRekpKwu+z2bVFEeBAWr7NIL0hQj9tHCSIi7cBdcR6FDL75pLvAhT
+ uYjB40plsl9NLWieh8ylQuA9LpgvlZOnLfq/VXBR/EUpl9uYri1vZDYzwwmzApS15xNlTySAR
+ 7/XqibmLVNjuSAPbe2xdGC3ZmqyXHVM3KPuFWcBkOLKPBdy9YvEAiFnsfnwU5LirrVp7eSiGN
+ uIx+vOsWCC7me4yHdrh4Nw5d80dkE1VXLO7AM5yjCmOXs=
 
-Hi ZheNing,
+Use the strvec_pushf() call that already appends a slash to also produce
+the stuck form of the option --super-prefix instead of adding the option
+name in a separate call of strvec_push() or strvec_pushl().  This way we
+can more easily see that these parts make up a single option with its
+argument and save a function call.
 
-On Sat, Jun 29, 2024 at 4:42=E2=80=AFPM ZheNing Hu <adlternative@gmail.com>=
- wrote:
->
-> Hi,
->
-> I want to check the uploaded Git LFS objects in the pre-receive hook
-> of the Git server. Assuming that the Git repository during the upload
-> process is A.git, my current approach is to create an empty repository
-> B.git and then use
-> GIT_ALTERNATE_OBJECT_DIRECTORIES=3D"A.git/objects/tmp_objdir-incoming-**"
-> followed by executing git -C B.git cat-file --batch-check
-> --batch-all-objects to obtain the objects being uploaded, then filter
-> out the LFS objects. This process is very time-consuming, taking
-> roughly more than 10 seconds. I wonder if there's a simpler method?
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ builtin/submodule--helper.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-I wonder if it's possible to use `git verify-pack --verbose` on the
-received packfile.
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 880ab4456e..f1218a1995 100644
+=2D-- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -376,8 +376,7 @@ static void runcommand_in_submodule_cb(const struct ca=
+che_entry *list_item,
 
-Best,
-Christian.
+ 		strvec_pushl(&cpr.args, "submodule--helper", "foreach", "--recursive",
+ 			     NULL);
+-		strvec_pushl(&cpr.args, "--super-prefix", NULL);
+-		strvec_pushf(&cpr.args, "%s/", displaypath);
++		strvec_pushf(&cpr.args, "--super-prefix=3D%s/", displaypath);
+
+ 		if (info->quiet)
+ 			strvec_push(&cpr.args, "--quiet");
+@@ -702,8 +701,7 @@ static void status_submodule(const char *path, const s=
+truct object_id *ce_oid,
+
+ 		strvec_pushl(&cpr.args, "submodule--helper", "status",
+ 			     "--recursive", NULL);
+-		strvec_push(&cpr.args, "--super-prefix");
+-		strvec_pushf(&cpr.args, "%s/", displaypath);
++		strvec_pushf(&cpr.args, "--super-prefix=3D%s/", displaypath);
+
+ 		if (flags & OPT_CACHED)
+ 			strvec_push(&cpr.args, "--cached");
+@@ -1304,9 +1302,7 @@ static void sync_submodule(const char *path, const c=
+har *prefix,
+
+ 		strvec_pushl(&cpr.args, "submodule--helper", "sync",
+ 			     "--recursive", NULL);
+-		strvec_push(&cpr.args, "--super-prefix");
+-		strvec_pushf(&cpr.args, "%s/", displaypath);
+-
++		strvec_pushf(&cpr.args, "--super-prefix=3D%s/", displaypath);
+
+ 		if (flags & OPT_QUIET)
+ 			strvec_push(&cpr.args, "--quiet");
+@@ -2534,10 +2530,9 @@ static void update_data_to_args(const struct update=
+_data *update_data,
+ 	enum submodule_update_type update_type =3D update_data->update_default;
+
+ 	strvec_pushl(args, "submodule--helper", "update", "--recursive", NULL);
+-	if (update_data->displaypath) {
+-		strvec_push(args, "--super-prefix");
+-		strvec_pushf(args, "%s/", update_data->displaypath);
+-	}
++	if (update_data->displaypath)
++		strvec_pushf(args, "--super-prefix=3D%s/",
++			     update_data->displaypath);
+ 	strvec_pushf(args, "--jobs=3D%d", update_data->max_jobs);
+ 	if (update_data->quiet)
+ 		strvec_push(args, "--quiet");
+=2D-
+2.45.2
