@@ -1,102 +1,131 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FE8257D
-	for <git@vger.kernel.org>; Sun, 30 Jun 2024 06:16:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6976C38DD9
+	for <git@vger.kernel.org>; Sun, 30 Jun 2024 06:42:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719728187; cv=none; b=jI9eEwGXCqs7jZPF/7BV65pRUu4BfVDPgKvG0pWeMxLIJRQRyudzGD7MMwlxJQcthhAM5ZRmacz6jZi1ZAYn5ifW8nOHTYILe+0iLaSCfsxIPs8T0FH4h7/LQsrku+YWbDQfuA4Jr1GtvTRvsBsT0bykinppSRlHvTEWds934VU=
+	t=1719729732; cv=none; b=aDpim0rXRy10l+ADjjc/qJSADmUoglec5QorJ8nvx27Yh6bjiN6O/EarUGyHDHqXu7hhSqGKgJjJq/pHQQhTnjdWVmPhjlVKC1JdJsoCB/2dWq2Aw/el6OpbWAjLz78WkiQ4ltJpCRiPusRZAc6pIeKF15ZHGQisj0umyAoDx1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719728187; c=relaxed/simple;
-	bh=BgLJvWiZKKZYsv+Q64BXoDVv+04LbMWU6hGf06o+zZY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eJNvdb3MYX+tfhOe74cZ00mAarrS5zvndlyfU6xS9yFEEniGV+R2/t0GHy0jUVw9BfMO7MoqIMnHe7HzKQgGjhyHIX2pJBWd6sVDqRdD3fg47jdT8drPf/iEsU5pz3EHrVNMcZd2RsN2R5uMddovFfsFJJR1BMwwxwh4M0gfMR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W1XAU/RE; arc=none smtp.client-ip=209.85.218.52
+	s=arc-20240116; t=1719729732; c=relaxed/simple;
+	bh=5HLuNaYOxl0THVU4Lik+DqxsNHaKXO0OXGjcJ8OEJsQ=;
+	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=qzv4lolg8rmmJuPf/Wu5lMJYgoAcsIOsNDcO58QSgTkwEe+fI93BiXgEHKY1D2NAAdTBI9uHB/brrO3mWiFnSecAgyH7ojmpb6IdYvyMIvQfuHR/YGYtrDLcIuDuNpqD90m/OIEAzHbeuHPQCxAYEW80/l0EzKnXZBAm32caJTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AXfyj28M; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W1XAU/RE"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a7245453319so306917366b.1
-        for <git@vger.kernel.org>; Sat, 29 Jun 2024 23:16:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AXfyj28M"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-364a39824baso991911f8f.1
+        for <git@vger.kernel.org>; Sat, 29 Jun 2024 23:42:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719728184; x=1720332984; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1719729728; x=1720334528; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:cc:to:content-language:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=olHVxVdSVtXkhyv8wcsFRCfnWW+LZWTZvJg7FWK0GSY=;
-        b=W1XAU/RE4gYWMOu275yvVG1qMMb79TM4ykDoSl8I+2lDEiQWNEC6rHCgubLAS8xFV8
-         +Xqt9ZPeRjQuRae/UdJF6BbXnKqUogAJd/6u9DUUFX7NPATCs2MPQWtPX4+FvpwQK4Ao
-         9zo5VsqJNuqO1rQQlHpxYlSsq9tENn7bEYDjySggeqWllT1JcbryeIIHp7JR6PfoLNMu
-         uk8jUt8xzR30WGBENGbirb8stiCksQ9JCk7pj2V7BiPpfw4oP6LWw4GVlFwT8NUTEe+k
-         bZAQtXqVcYEBqnnV8QS3EUjsen+DL7b8IKRA/VTXJb/wqwr2iybney7dkSXIybTS0E9q
-         GbBw==
+        bh=9eKOMlJPY8/eglxH6Mde4jaLjh6HqYP5VHYKz0Nooz0=;
+        b=AXfyj28MGtdd7iVZc8QAwkTcTfwr59TQqkz7tOB0QHddxel/qGEcXwa8hqgwAaULD0
+         vKt1JgSrhns9gwrLT1pWjee5bPVtWoBMxsyw/vtt8/sytaxteN1djS2SBWm6s/qBW2Nx
+         Ucz6JOnojvCpFjz365rxudG252J+DXPQ4lj1KXwyPr9u7lQ/8RlN0flOE/hjoGQ0RQpP
+         4ims8j/yZ9l008Yv/jRpUNC+GM59Ttedt48U29k0PRqjG5mynN/u7cmngyhu5CtK8Otk
+         ALmSr0BMv4c3V71/cTpns3xQZUNzbb+lP4/TfYE9qRANwM25hTsMT7ta1ORvJtsqRICs
+         /ntg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719728184; x=1720332984;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=olHVxVdSVtXkhyv8wcsFRCfnWW+LZWTZvJg7FWK0GSY=;
-        b=oIsfDmzyRGoYRtOpRGST0QJaHpwZnW5yLwZBE13Ize0bsdY50LUUlgsVyvpyPqBF95
-         CS/XElLclKTIEeA7cDuOtlSmxAQMHf9fdZIr3Ca/LbkNKvDA8xggNznASZrUkXvDrKc+
-         SGnavprAhY/otyr4YVggYXJi0k5V9/2kBe6VUIMmB+y0dwzEsGkbeZf5LSZYpEbJcw/x
-         /l6E35doLHf3LDWc+EuFlOi+/09KZ0buNQZV0S5pBagTEhtmwUSzqfyFo5SVk88zTb0t
-         0YgM1rHlBAqNY+jUztYnziSZRrLJcdRCDyK1yT2dGFSY1dJdywR0/rXf4LDINW9BFyPM
-         9sdg==
-X-Gm-Message-State: AOJu0Yy8zy3XpcYqq6DjsafnlQM2k9Y5TJv2HaBKa3O/oCa6Fs8wk5Kr
-	YsWEsYQCSuowPPbx4+KhatBYCgFKIY3q0gwvzzzpxpjHPtYQfMGE6e40n/KXBLGGbGEZ41MNxYv
-	DktzabXH6dSPbfyWNvU+e/we6wRE=
-X-Google-Smtp-Source: AGHT+IEED4Uo/pIWYR+arFEpcEZd11rS446ttpf0bYvWWiauDzO/bfUvWHO8QwHyk8iTZfNrsMe9ZhAjuriA/Z+u3xw=
-X-Received: by 2002:a17:906:71d6:b0:a72:75a5:bb42 with SMTP id
- a640c23a62f3a-a7513936891mr181079366b.29.1719728183876; Sat, 29 Jun 2024
- 23:16:23 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719729728; x=1720334528;
+        h=content-transfer-encoding:subject:cc:to:content-language:from
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9eKOMlJPY8/eglxH6Mde4jaLjh6HqYP5VHYKz0Nooz0=;
+        b=qLdThGwMUj4DK6qLeL02cilxs8ZhecumVRVhnjn9+T3y4gnKsGSfyIMeNReZawi5YD
+         xLIaAmDgwGyEktmwLKmJDlVyJqo/c6AWgm5iK7gNL1egCpSS/Y1KinHGm4o8fku7cEz4
+         438RIq8SHSi3CyVE3qrmYW+ZiSpQyszlSzzD1667BEY9vd4m6YApDxGRRNLv/NaOoVe8
+         PDoaODhNJd839BdGoxPCvl6v81BtpYgyItCPwjkvn2VL4ejt91GjIfNbWzkf6zxwUQ0y
+         Iku3Z+x8DESnulsFhUh3IyegiMtKjO/TYC/bueZeJW8yeWBVT+Jf7DCiNS8ACQZcV0Sq
+         NhiQ==
+X-Gm-Message-State: AOJu0YwTJUQhe+9xkkxrzM+uYdbNgdhsF76HJK6wrdFcsWh3vAhjTtjp
+	nd0R02TLk9KOoUWw/Vz4S0SRWe6A7HCcUbiNFVa9D1NrwNp+Jn6+QsP7VA==
+X-Google-Smtp-Source: AGHT+IFsFFI8RlZWPKQN3nxx8hizG2f2N4te7ush61OWKVax0+9MoDjYcEKcHE6yEt1x62V3pIc5bA==
+X-Received: by 2002:adf:f04e:0:b0:366:f323:f59b with SMTP id ffacd0b85a97d-36775699f37mr1821511f8f.1.1719729727930;
+        Sat, 29 Jun 2024 23:42:07 -0700 (PDT)
+Received: from gmail.com (123.red-88-14-208.dynamicip.rima-tde.net. [88.14.208.123])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a0fb950sm6605717f8f.83.2024.06.29.23.42.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 29 Jun 2024 23:42:07 -0700 (PDT)
+Message-ID: <f4ae6e2a-218a-419c-b6c4-59a08be247a0@gmail.com>
+Date: Sun, 30 Jun 2024 08:42:06 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAP8UFD1eH8GXn=aER56FVvrh90f_c+VdxdtopJmDYwPend52gQ@mail.gmail.com>
- <b38543d735b2c14d82523300b8c6c84c@manjaro.org>
-In-Reply-To: <b38543d735b2c14d82523300b8c6c84c@manjaro.org>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sun, 30 Jun 2024 08:16:11 +0200
-Message-ID: <CAP8UFD29quACuPBuOggPTwHvVvdii155ZnX0AWfSVzinH7mTrA@mail.gmail.com>
-Subject: Re: Draft of Git Rev News edition 112
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
-	Jakub Narebski <jnareb@gmail.com>, Markus Jansen <mja@jansen-preisler.de>, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, =?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Todd Zullinger <tmz@pobox.com>, Justin Tobler <jltobler@gmail.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+To: Git List <git@vger.kernel.org>
+Cc: Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+ Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] test-lib: fix GIT_TEST_SANITIZE_LEAK_LOG
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Dragan,
+In the if-else's chain we have in "check_test_results_san_file_", we
+consider three variables: $passes_sanitize_leak, $sanitize_leak_check
+and, implicitly, GIT_TEST_SANITIZE_LEAK_LOG (always set to "true" at
+that point).
 
-On Sun, Jun 30, 2024 at 6:57=E2=80=AFAM Dragan Simic <dsimic@manjaro.org> w=
-rote:
->
-> Hello Christian,
->
-> On 2024-06-29 23:42, Christian Couder wrote:
-> > A draft of a new Git Rev News edition is available here:
-> >
-> > https://github.com/git/git.github.io/blob/master/rev_news/drafts/editio=
-n-112.md
-> >
-> > Everyone is welcome to contribute in any section either by editing the
-> > above page on GitHub and sending a pull request, or by commenting on
-> > this GitHub issue:
-> >
-> >   https://github.com/git/git.github.io/issues/714
-> >
-> > You can also reply to this email.
->
-> Thanks for the draft!  There's a small typo in it:
->
-> s/who add participated/who participated/
-> or maybe s/who add participated/who also participated/
+For the first two variables we have different considerations depending
+on the value of $test_failure, which makes sense.  However, for the
+third, GIT_TEST_SANITIZE_LEAK_LOG, we don't;  regardless of
+$test_failure, we use "invert_exit_code=t" to produce a non-zero
+return value.
 
-Thanks for noticing! It should be fixed now.
+That assumes "$test_failure" is always zero at that point.  But it
+may not be:
+
+   $ git checkout v2.40.1
+   $ make test SANITIZE=leak T=t3200-branch.sh # this fails
+   $ make test SANITIZE=leak GIT_TEST_SANITIZE_LEAK_LOG=true T=t3200-branch.sh # this succeeds
+   [...]
+   With GIT_TEST_SANITIZE_LEAK_LOG=true, our logs revealed a memory leak, exiting with a non-zero status!
+   # faked up failures as TODO & now exiting with 0 due to --invert-exit-code
+
+We need to use "invert_exit_code=t" only when "$test_failure" is zero.
+
+Let's add the missing conditions in the if-else's chain to make it work
+as expected.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
+
+This has already been sent: 
+https://lore.kernel.org/git/54253e98-10d5-55ef-a3ac-1f1a8cfcdec9@gmail.com/
+
+I have simplified the message a little, but the change remains the same.
+
+Thanks.
+
+ t/test-lib.sh | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 79d3e0e7d9..7ed6d3fc47 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1269,9 +1269,12 @@ check_test_results_san_file_ () {
+ 	then
+ 		say "As TEST_PASSES_SANITIZE_LEAK=true isn't set the above leak is 'ok' with GIT_TEST_PASSING_SANITIZE_LEAK=check" &&
+ 		invert_exit_code=t
+-	else
++	elif test "$test_failure" = 0
++	then
+ 		say "With GIT_TEST_SANITIZE_LEAK_LOG=true our logs revealed a memory leak, exit non-zero!" &&
+ 		invert_exit_code=t
++	else
++		say "With GIT_TEST_SANITIZE_LEAK_LOG=true our logs revealed a memory leak..."
+ 	fi
+ }
+ 
+-- 
+2.45.1
