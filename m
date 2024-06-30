@@ -1,55 +1,55 @@
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F20E4EB45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DCF14D8C0
 	for <git@vger.kernel.org>; Sun, 30 Jun 2024 21:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719783241; cv=pass; b=Y1Gu5q8YuRlBmJPMkFnwMf6GEJTRoLQWju9P4pvX7l3VV8fwpBdFrysNnGkHxJiqKaLVQz25u9Ot0Byy4rY3crc/2spLr6vQA3UeO9Gggjpf5QxH/c/VGhkBuYh/2uiXo2p7DMOLPrpQ2ZJ7O9xVVp4UjlP9xnaQsEvaOAW2pS4=
+	t=1719783241; cv=pass; b=I7KsoAh3WN7b/pI3SqWHEA0BEY++clIS+K0UbUKjbOU/lw90nR6UHRZ8usd4gu4Ii8mP3PdXZPa71am1NsHdzXNl/JmMASRW2F4U2HWHu3FjU0gneHgiBq3aprCENBx8/Dvg73egc3/yCZTjmRCSRg6D1TLPZWL3mOjtrEcXoqY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1719783241; c=relaxed/simple;
-	bh=2JpsppeJlxUTSQvF6P/lGS0FLy5XicRlxxrmDgcuWXA=;
+	bh=pVlB+9gKjf0seZ//k/4se+cjewKEXONKg4WiLxa1qeM=;
 	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Kz6KGHyIfGMVUSox//CYF56kgSKp2PqlhJxezPxNh/6LQM4yVYlYFMuItYNSuyR3lTqRnydcu9xdNrNZ9QVqBfDRucIyLcC3AjsKU/kXk7kyDxTnHMFIQZPl9S0Z90iud3gq45+TXoSKgXxIGLSCpPgHTUL1PYrb0GsTDZVVeuQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=cX2fgOVb; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=daV1s3KLP2QBpdFzcxfyLhNP0KChw+/tysU0pdQOKV0pDUVYujQubko5DUWv18R3nCBPMSjJ7brrgV7KhJ1Y4LsolP9QQ1nfU820b8lv6FeMrDTFHNk+pJVLJx524pv19KwotZaA1/+hXsYy3kUckIZjqgTkv8EJq1WHlA8zWBo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=mTC+yw/S; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="cX2fgOVb"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="mTC+yw/S"
 Received: from localhost.localdomain (unknown [IPv6:2001:1ba8:120c:f201:e842:876:cf00:268])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: mikko.koivunalho)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4WC2VR4bN1zyZr;
-	Mon,  1 Jul 2024 00:33:51 +0300 (EEST)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4WC2VS0Spnzyb5;
+	Mon,  1 Jul 2024 00:33:52 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1719783231;
+	t=1719783232;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Te7k+Jd5Kh39uBqgh0YpTQ6o3sbJd9j9ufcyHJyzW4M=;
-	b=cX2fgOVbiDpfBwHzrT+T5tH4fy34FYmiY2A5PJbqovP4TBNTNtAvzbjr0bzQAwr9peuUHA
-	zovxwW1zKaUs1KRzRo97yIaEawPxeqZsYYiEtFVMWGAYZMdMVWCEtcooc4aBzKvERB+M10
-	I4byQSNRLqHEGsRc4+NLu6bXnOqDqnA=
+	bh=7FR499vg9BrCgWoctGbNKJOP1OKBe1kCeckfLuABgFI=;
+	b=mTC+yw/S5bVZFAQWub8znrF/931ODbJNuI1YzDGR3zU0ANr6e38MB3RBwlV4fJf9aknA8w
+	KC2QoZgFxrHddAPow92iGwmI1wunqQYBbU0/7wYr6hZJhFcKd61ebI+y78HZlp2aG50Xxi
+	ELPEu9+PeedZbJvDCHVMxPwwHaamLgU=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1719783231;
+	s=meesny; t=1719783232;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Te7k+Jd5Kh39uBqgh0YpTQ6o3sbJd9j9ufcyHJyzW4M=;
-	b=YKpJZuZiSvZamsdpBrTzlz8wfd5bhB938+65M0UqWuAivmhQCey+ABZVO3oUR5TPpsVPit
-	bP4aOu4LW594q/YH35ITHIxHKFBTLsYQ+isIIOU5Yy5Lnt0FX/w04P9pCY02bzGOsW1c9k
-	lV5bhyD1AGorJKupN2V+V3EMvPvmmto=
+	bh=7FR499vg9BrCgWoctGbNKJOP1OKBe1kCeckfLuABgFI=;
+	b=rE7JQzUFjVMwzNuViQmxAJk7VS+SGwgGdNp1nuoYahHKL6B0A7a+8Nrnni47SOJJD4NBfg
+	GUTKgpGNELIxItkAh2sqIBZ0mCyt2rqMX3QMCCm2WlDoNEi76fY+42yGNOqMlozHLxrqFG
+	6uKbZyXeZ0cspoqcKaif59TNdk+s6zY=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=mikko.koivunalho smtp.mailfrom=mikko.koivunalho@iki.fi
-ARC-Seal: i=1; s=meesny; d=iki.fi; t=1719783231; a=rsa-sha256; cv=none;
-	b=Lqqx3fo6eWDd3ksWjlpOVYLv5OhB2ZH+OMKyOufI64xSoShBCl2XynWIUfH6pMtErXn7RJ
-	ReMtl/OlL+dhxZq6mQjAky7jsMXAHoQZZeRvuFA3Gf9BXkoQsLFa4OI+j9dNFj2bifV6hJ
-	GJ8ur6Ah0i3HklCI6pxhYppByz1HLVk=
+ARC-Seal: i=1; s=meesny; d=iki.fi; t=1719783232; a=rsa-sha256; cv=none;
+	b=WPRnN49pAp056hWrOuaYtwN9F60kCrcG1b2J+Lt9EK7fGF78cuT4sjFlwe1T3oI7s8W2Ny
+	3ESLkC00+yQQDsYKs35qv9f3jW0pCCdYKUOPmObOCcIApNtvqzYyxkb0NvmWzxyS6uYeWA
+	mOT4hSpEXE94X+YNUPakJGr49hOpboU=
 From: Mikko Johannes Koivunalho <mikko.koivunalho@iki.fi>
 To: git@vger.kernel.org,
 	Mikko Johannes Koivunalho <mikko.koivunalho@iki.fi>,
@@ -58,9 +58,9 @@ To: git@vger.kernel.org,
 	Roland Hieber <rhi@pengutronix.de>,
 	=?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>,
 	Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH 2/3] completion: Add hook in Bash completion for commit message; docs
-Date: Sun, 30 Jun 2024 23:33:35 +0200
-Message-Id: <20240630213336.2212166-3-mikko.koivunalho@iki.fi>
+Subject: [PATCH 3/3] completion: Add hook in Bash completion for commit message; tests
+Date: Sun, 30 Jun 2024 23:33:36 +0200
+Message-Id: <20240630213336.2212166-4-mikko.koivunalho@iki.fi>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20240630213336.2212166-1-mikko.koivunalho@iki.fi>
 References: <20240630213336.2212166-1-mikko.koivunalho@iki.fi>
@@ -74,28 +74,88 @@ Content-Transfer-Encoding: 8bit
 
 Signed-off-by: Mikko Johannes Koivunalho <mikko.koivunalho@iki.fi>
 ---
- Documentation/config/completion.txt | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ t/t9902-completion.sh | 68 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
-diff --git a/Documentation/config/completion.txt b/Documentation/config/completion.txt
-index 4d99bf33c9..5032eab5da 100644
---- a/Documentation/config/completion.txt
-+++ b/Documentation/config/completion.txt
-@@ -5,3 +5,14 @@ completion.commands::
- 	can add more commands, separated by space, in this
- 	variable. Prefixing the command with '-' will remove it from
- 	the existing list.
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 932d5ad759..4ea80fddd2 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -146,6 +146,74 @@ else
+ 	ROOT="$(pwd)"
+ fi
+ 
++test_expect_success 'setup for commit message completion' "
++    commit-msg-callback-function () { echo HelloFromCallbackFunction; } &&
++    printf '#!/usr/bin/env sh\necho HelloFromCallbackExe\n' >.git/hooks/commit-callback &&
++    chmod +x .git/hooks/commit-callback
++"
 +
-+completion.commitMessageCallback::
-+    This is only used by git-completion.bash for declaring an executable
-+    or a shell function which will be used when user types
-+    `git commit --message=` and then presses completion key (TAB).
-+    The callback must return one string for commit message.
-+    This can be used when all commit messages must have, for example,
-+    same prefix, e.g. a work order number.
-+    Instead of this configuration variable, environment variable
-+    GIT_COMPLETION_COMMIT_MESSAGE_CALLBACK can be used.
-+    Environment variable overrides the configuration variable.
++test_expect_success 'git commit --message= (empty)' "
++    test_completion 'git commit --message=' ' '
++"
++
++test_expect_success 'setup for commit message completion (run a shell function)' '
++    git config --local completion.commitMessageCallback commit-msg-callback-function
++'
++
++test_expect_success 'git commit --message=HelloFromCallbackFunction' '
++    test_completion "git commit --message=" "HelloFromCallbackFunction"
++'
++
++test_expect_success 'setup for commit message completion (run an executable file)' "
++    git config --local completion.commitMessageCallback \"${PWD}/.git/hooks/commit-callback\"
++"
++
++test_expect_success 'git commit --message=HelloFromCallbackExe' '
++    test_completion "git commit --message=" "HelloFromCallbackExe"
++'
++
++test_expect_success 'setup for commit message completion (do completion in a subdir)' '
++    mkdir -p commit_message_completion_subdir &&
++    cd commit_message_completion_subdir
++'
++
++test_expect_success 'git commit --message=HelloFromCallbackExe' '
++    test_completion "git commit --message=" "HelloFromCallbackExe"
++'
++
++test_expect_success 'teardown from commit message completion (do completion in a subdir)' '
++    cd .. &&
++    rm -r commit_message_completion_subdir
++'
++
++test_expect_success 'setup for commit message completion (run an executable file with ENV var set)' "
++    GIT_COMPLETION_COMMIT_MESSAGE_CALLBACK=commit-msg-callback-function &&
++    export GIT_COMPLETION_COMMIT_MESSAGE_CALLBACK
++"
++
++test_expect_success 'git commit --message=HelloFromCallbackFunction (ENV var overrides config)' '
++    test_completion "git commit --message=" "HelloFromCallbackFunction"
++'
++
++test_expect_success 'setup for commit message completion (completion begins with quote char)' '
++    commit-msg-callback-function-with-quote () { echo \"HelloFromCallbackFunctionWithQuote; } &&
++    GIT_COMPLETION_COMMIT_MESSAGE_CALLBACK=commit-msg-callback-function-with-quote &&
++    export GIT_COMPLETION_COMMIT_MESSAGE_CALLBACK
++'
++
++test_expect_success 'git commit --message=HelloFromCallbackFunction (completion begins with quote char)' '
++    test_completion "git commit --message=" "\"HelloFromCallbackFunctionWithQuote"
++'
++
++test_expect_success 'teardown after commit message completion' '
++    unset -v GIT_COMPLETION_COMMIT_MESSAGE_CALLBACK &&
++    git config --local --unset completion.commitMessageCallback &&
++    unset -f commit-msg-callback-function &&
++    unset -f commit-msg-callback-function-with-quote &&
++    rm .git/hooks/commit-callback
++
++'
++
+ test_expect_success 'setup for __git_find_repo_path/__gitdir tests' '
+ 	mkdir -p subdir/subsubdir &&
+ 	mkdir -p non-repo &&
 -- 
 2.30.2
 
