@@ -1,131 +1,131 @@
-Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E320B13D24D
-	for <git@vger.kernel.org>; Sun, 30 Jun 2024 16:12:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10985B1E0
+	for <git@vger.kernel.org>; Sun, 30 Jun 2024 16:24:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719763936; cv=none; b=KAmb0iSMuBqkz0P+0OjcCM1Gxm6VvPxIG/uT+YdXU45shq8I2Upx4F/M4z19nDtWTXPELPHCcOp0yQ2DMksrFjgef/mWvUY0vdhs24vLCC4lflCdN7tA4NMqgzApgLl3729RfjUu2rn7shmvdqeq/lypWoxUMEqh2mRVwGmFBog=
+	t=1719764670; cv=none; b=oexUllXnwoRWArsumjM1wUoIu8X0NGuiwT+H0FEquTFlOwwndCLR0Gh6Ppi67GZPuSk5wjJWdA3JJGb0+3EIRviPhu79JQFxPPkHvVEOytht2RYPat6b1sqSu8cHe6wp+ooL7gecnnDfffYZLSCxnAvigFbZegVxhsPOCqX8s54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719763936; c=relaxed/simple;
-	bh=uzSeYCVnU5X2IMU3+7UHxhLNdyrMtT2ISgs7pGo4R5s=;
+	s=arc-20240116; t=1719764670; c=relaxed/simple;
+	bh=IUmDVLCa8FR2acbyx9/9ZkpaUEQzu9aSIY+qv3k7CzU=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hpsjkrO0bQnPVEM+DUdKy4KUia7R+OApqoWr8xzeSVpw3GCSauJ1iLH8sIKygmjC4ubF/kLxGn7/1LzEwg5wKPb01fM6RanpwS0Lv9DpqNllIn4J12GrbwrzoXXXmNYg7yU6HyZRpNGoDdFX9BnKuoIY2gJpNUJfC4qut65HXXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SVaSvhD6; arc=none smtp.client-ip=209.85.161.47
+	 To:Cc:Content-Type; b=EMQaAzDlYBLj0hqe+Lg4CwFSRILwXhD2eeXXr5Dl52Lypck9yfYS5pO9KHwCBqdl5jyh/VX6O5pwam/3VT7KZvsPvl3iq8oWNj4nTp0o6JzTBvMthXLGamfg9Lt5PYkqgxhN9R9F4i2kH0nxliDxoXvbToAHLpa/H2z1XBC1E3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KevoMXFe; arc=none smtp.client-ip=209.85.210.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SVaSvhD6"
-Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-5c40a0ad3a8so1796102eaf.1
-        for <git@vger.kernel.org>; Sun, 30 Jun 2024 09:12:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KevoMXFe"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-701f0cb8486so1388621a34.1
+        for <git@vger.kernel.org>; Sun, 30 Jun 2024 09:24:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719763934; x=1720368734; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719764667; x=1720369467; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9pAx81JE/KhPQLetjjaU7KtXQUOreVWmz6ZIFMNo4+4=;
-        b=SVaSvhD6zPhiPTBwTT8cMNPyde0gWHfpuiByCSJ/b3mZ0ipfdmWh+nHOCPSnvdY2ON
-         2pghmeNHuVuYKGBNwobJTLRDTyQzKY7bIQwiFiKATy8dvfZoR465ppMFYNwMZIPJA4Or
-         4rO6pronJbLPtYqNlWjLABmlGnDYSsADgG7SCJei4/hUAXi12JWUqucwSor1UO5qKnOr
-         JZ24VqRnkp86VmZtVLFoD1kLGuoJ1hQTLfUFtq0QY1JA1lhf9GeVOM02S8uUZdeo1CBM
-         3+081lev+v/qh+pfrGzxsB1v3FTEX9sorCkiGyQioaHUtd8S6vFm2MCTiqAEaHmvR5D4
-         oy1Q==
+        bh=+Ujvd9XQgiNsj6S9hcfJqTyQtejo2KKVFjfEgPXycWQ=;
+        b=KevoMXFeN6NxmfM4oJs14k/EHMLQ6v0aCKvqTVKJH81DhzroEsyqXK2L7Dyv11ilZe
+         9X+mJ4qGOc2c/wPBSOes1NjeQnNFVqKNleu4aNvnO+Kiuqx+NaNvoZ+l90fnRspvO/Bq
+         okYycjGf7td1DRvKMHUry1QR4/dsjgh4Y+wSVQ0NvTjsDJViuMnsgoZgnA0/dEydlGKA
+         cNz8Iz73MzrfL0F+bXoPaxFvYlGVNS8yBSdOeqxWgz8Dr4ige7s+Ja/idqLtPCuZHJXU
+         X6tEhy3gh6LjVPKPuTWPVe9MuwCKb4z37v2ofkgvE03+xEgh1Fh8IEdVr5Tj7fwAnkXz
+         oa1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719763934; x=1720368734;
+        d=1e100.net; s=20230601; t=1719764667; x=1720369467;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9pAx81JE/KhPQLetjjaU7KtXQUOreVWmz6ZIFMNo4+4=;
-        b=XriTXzqPhyzr2OazpGqArE1hgA61iv+CEAcWIIhkGZvSkY7SkerrlqklHqNR+A0C9H
-         w6AfFlj6e0Gv95BkwsktL5fCFHfYY2tAbvI5YOZBbr10xnEBFRjgmkditPHlGrND5jPO
-         0Zlzgc/do8Dqx/b7we+c1LfOmCC3jMJVpXC5T4w2r8iHm+rpbdQZzJs3zOtMyeQrzP4e
-         /9/P5d4TKJUauVOY0xt1XMcgTHzAGtb/G892iQruqWICwI+Z1fFkTGEdFSk6dVmJYA6K
-         gLB9fj4nK1rLv98pU59sD6oymM2/b98Nf7n5jR7j9qmACEz483JKWRuOxWs4fYkvD7Zg
-         yYzQ==
-X-Gm-Message-State: AOJu0YyNMEd1S5oeVvJI4xSiHM5rOKVtObod8hi9w+dfc26x7wshQByL
-	8eQR52ugauMILRGLw9vVLPiFeLd0RXY4BToxgnXtLxb0ZPFgEK/QPIjJ0gzDCvyTRK4fpkGcLwD
-	YTFzbUZ9DEgV94loeYotLqv4v6lc=
-X-Google-Smtp-Source: AGHT+IEA13dfls3vv3EQSk/wYo4+8XTJm2LzK2UeXRfUgBml/TeSQRRa06V8O+HPIhu4WaqBPjIwlB19EoRVJf7u0Ok=
-X-Received: by 2002:a05:6870:7194:b0:25c:b030:d07e with SMTP id
- 586e51a60fabf-25d97033ab8mr3274196fac.3.1719763933949; Sun, 30 Jun 2024
- 09:12:13 -0700 (PDT)
+        bh=+Ujvd9XQgiNsj6S9hcfJqTyQtejo2KKVFjfEgPXycWQ=;
+        b=iRYHj5H2C2StycGhrdH6puxL4anjQoCZ6eFr4X83r7oB3UDEe+8eSOKCl7M0sTHAqg
+         6ReNwiOp4ZXPzYRApQcXfw4W8DWUEbMUGeHexLo/DFDsPJj/puRl2BvOF6XCqUEskDns
+         GQb8hJnxJJDlSVg49x/zCjHDk7B4yBwuAgD83y0dpy3k6nMJ7I4f6xDGFwzysOOFSbQk
+         i3wjBfU0Siv3cbBdE0ex5yltOaYAxNUVaCtUupw8X+3SnwJl5Ho1S1lzCaGlpEla1AYr
+         qbAeaNkBe+lCh9LOWS7VDHmYcDvPeaoOiwXkG2JCfZ/yNhiTaTUfonlYMyILcC3YbYEN
+         5Nmg==
+X-Forwarded-Encrypted: i=1; AJvYcCUFGgeakVWWX2tEpoSk1M1VTknQXOVS6IxbvdvQsye1J6ZcjxDNcgN9q9BFfH5eVFwMxcaTB9c+WUB5tRZ8fGtBtewz
+X-Gm-Message-State: AOJu0YwYCw8gYyW87Kc8SvUjC0PFBU7HlmcUU6TXHd0blW6e59wbdYsm
+	DjOhlkZXf7HN0MsbVP9sO3sGmlTa72W1wgqmaOYBtFZtPgfJrDCu67iTYbq1/9d0fLTP04O0/hB
+	58etLq3gKNPSP23uarbPOfpWTxoCAigl7
+X-Google-Smtp-Source: AGHT+IFEJku6++2i041xwuzFGTFG32BLduZPRGfLqH5DTX5GIzVFoyVJ5GQwN+uCxOvy4Ll1xJRQfHTfiJs7vKURPEs=
+X-Received: by 2002:a05:6870:a11d:b0:25d:7d7d:c96a with SMTP id
+ 586e51a60fabf-25db252388cmr1868794fac.16.1719764667495; Sun, 30 Jun 2024
+ 09:24:27 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 30 Jun 2024 12:12:12 -0400
+ HTTPREST; Sun, 30 Jun 2024 12:24:26 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqfrsyv155.fsf@gitster.g>
-References: <xmqqpls3zhc2.fsf@gitster.g> <20240626190801.68472-1-abhijeet.nkt@gmail.com>
- <03628ece-4f47-40d5-a926-acce684a21e5@gmail.com> <xmqqfrsyv155.fsf@gitster.g>
+In-Reply-To: <20240628063625.4092-2-chandrapratap3519@gmail.com>
+References: <20240621060018.12795-1-chandrapratap3519@gmail.com>
+ <20240628063625.4092-1-chandrapratap3519@gmail.com> <20240628063625.4092-2-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 30 Jun 2024 12:12:12 -0400
-Message-ID: <CAOLa=ZS359bMtUd+ktvJgHsiG-0=VVdGWYA2mKCNjc_1BrzcvQ@mail.gmail.com>
-Subject: Re: [PATCH v7] describe: refresh the index when 'broken' flag is used
-To: Junio C Hamano <gitster@pobox.com>, Abhijeet Sonar <abhijeet.nkt@gmail.com>
-Cc: git@vger.kernel.org, Paul Millar <paul.millar@desy.de>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: multipart/mixed; boundary="0000000000006193db061c1dbe56"
+Date: Sun, 30 Jun 2024 12:24:26 -0400
+Message-ID: <CAOLa=ZSrSnOaOf02f-+BsZi79=+t-AAuMdieqH_jAi3j19tdtw@mail.gmail.com>
+Subject: Re: [PATCH v3 01/11] t: move reftable/record_test.c to the unit
+ testing framework
+To: Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org
+Cc: karthik188@gmail.com, Patrick Steinhardt <ps@pks.im>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="0000000000001a982b061c1deafc"
 
---0000000000006193db061c1dbe56
+--0000000000001a982b061c1deafc
 Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Chandra Pratap <chandrapratap3519@gmail.com> writes:
 
-> Abhijeet Sonar <abhijeet.nkt@gmail.com> writes:
->
->> I have a question:
->>
->> Why does --dirty code path also not call git-update-index and instead does
->>
->> 	setup_work_tree();
->> 	prepare_repo_settings(the_repository);
->> 	the_repository->settings.command_requires_full_index = 0;
->> 	repo_read_index(the_repository);
->> 	refresh_index(...);
->> 	fd = repo_hold_locked_index(...);
->> 	if (0 <= fd)
->> 		repo_update_index_if_able(the_repository, &index_lock);
->>
->> I assume they are equivalent?
->
-> Now we are going back full circles ;-)?
->
-> Your earliest attempt indeed copied the above to the code paths used
-> to handle "--broken", but then Phillip corrected the course
->
->   https://lore.kernel.org/git/054c6ac1-4714-4600-afa5-7e9b6e9b0e72@gmail.com/
->
-> to avoid triggering an in-process error and instead run an
-> equivalent "update-index --refresh" via the run_command() interface,
-> so that we can catch potential errors.  The code in the more recent
-> rounds of your patch uses that, no?
->
+[snip]
 
-This explains for why 'broken' must use a subprocess, but there is
-nothing stopping 'dirty' from also using a subprocess, right? It
-currently uses an in-process index refresh but it _could_ be a
-subprocess too.
+> @@ -369,14 +357,15 @@ static void test_reftable_index_record_roundtrip(void)
+>  	strbuf_release(&in.u.idx.last_key);
+>  }
+>
+> -int record_test_main(int argc, const char *argv[])
+> +int cmd_main(int argc, const char *argv[])
+>  {
+> -	RUN_TEST(test_reftable_log_record_equal);
+> -	RUN_TEST(test_reftable_log_record_roundtrip);
+> -	RUN_TEST(test_reftable_ref_record_roundtrip);
+> -	RUN_TEST(test_varint_roundtrip);
+> -	RUN_TEST(test_key_roundtrip);
+> -	RUN_TEST(test_reftable_obj_record_roundtrip);
+> -	RUN_TEST(test_reftable_index_record_roundtrip);
+> -	return 0;
+> +	TEST(test_reftable_log_record_equal(), "reftable_log_record_equal works");
+> +	TEST(test_reftable_log_record_roundtrip(), "record operations work on log record");
+> +	TEST(test_reftable_ref_record_roundtrip(), "record operations work on ref record");
+> +	TEST(test_varint_roundtrip(), "put_var_int and get_var_int work");
+> +	TEST(test_key_roundtrip(), "reftable_encode_key and reftable_decode_key work");
+> +	TEST(test_reftable_obj_record_roundtrip(), "record operations work on obj record");
+> +	TEST(test_reftable_index_record_roundtrip(), "record operations work on index record");
+> +
+> +	return test_done();
+>  }
+> --
+> 2.45.2.404.g9eaef5822c
 
-Does it need to be a subprocess? I can't think of any reason to make it.
+I think it would be nice to be consistent with the naming of the tests
+with other unit-tests as mentioned in the previous version too [1].
 
---0000000000006193db061c1dbe56
+[1]: https://lore.kernel.org/r/CAOLa=ZSmnMLMoKKWMiM7M4Jw8CJ0Jvrs0oMLy18FHaLv_6s6yA@mail.gmail.com
+
+--0000000000001a982b061c1deafc
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: b4f4e25050de4c37_0.1
+X-Attachment-Id: 25a4aa64016d3480_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hQmc5c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNnErREFDYWlOak1EaHhsK2JYeFI5ZTRxTjZEY1BCegpPbWFuR2lkc1oy
-Y1l0MmVoRzc1NkQ0bi8ySHFSd2RLQWk0VXJKYXpvQkhCbVA2OU1tQTd6ZXhXQ1h3NHlVdE5aCk9v
-WTd0eVFLTmNrNWhuN00vdUxhejFndFNrbDVDa09KOGVtSlpUNGdzZUpWdDNENXFLVW5GaFBKb0pw
-QUpudGkKVGlkSHNKWmI5S3c5dy9YZ1lpQ3JEamlTNG16TVNwZnMyeGdDd2dYcktndlIrd1NNRUo4
-b1VXTjVZdG50d1o1QQpmT3dCWDZRTEtINkoyTktjUElMNjRHRnZyb04zM1NtbzA1OW9XS1lKTW5X
-U2UzOTNHbGp5VDN1QldPU25FN1dPCm1wcGVFczYzeEFtUTVIRUh1YzdvWTFGZXZFVEZPUEFXdzRo
-d1hjZSt4K2ZrSjlPZDJnTEh1VTEwa1ovMlVtcnkKVXFYQU9SZzlkbElsSjhRcS9sM1BjbzJLTHIz
-OVBRK1YzbkU2WFp4Yzk0eWJWQ3lpVGVDMVBacVROUXpCcVAwMgpPc0xsWDQwV29TbGtyU1gxY25N
-U0N0ajZGRDU4QmJ5RG43YW1USnJUNU40cFEwOGRRYVhYU2wxQnNEVk9JTG9MCmlWVWRpTTdxeU5z
-M0h4STFYRDY0WGthT0h2S0hZZTBoVG9SZTdZZz0KPVRCc04KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hQmhyZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMFB1Qy80KyswRTZOQ3BqSnFrbXBYSEs1UDdZK2VQVAoxdDZtR2pNZlh0
+dlFVY3I1N2xQNXpodGZHY0xvZDFtVlg3TTM5ajVkQU14bHJ4NjRwT2lvaEozZ2huMHVXcUVTCi80
+RmFMK2pFQ29KWWE3cGdGS1pzbzBWUTNWcE1EODlOMXoxNFA2ck05M3lpaldvNDluTy8rNVVqeit0
+M2ZvSXMKS2Y2RFRlLytHdkkzcndDdVhld2Q0aTE2OG5kOU9GaWZKdFFIbmhNbzA3NTd0eTJmV3NN
+N21ybDlMOXFHemF1bgo1cTl4QXlSblJhdW5ESnRtNWIvWVpRMUpMVmZhTDUvMGlQM3hOdjdlazNL
+dERVSG5iYndmTUltYUpaVHRubXR5CnNPL3lURnNpalpRZE8wQ1F4LzAyWFhIQldXanB5MGZwMStS
+dVp1ZkJxSHIxWFFBUE1sRnBRSUlydkU5ZE5jQkMKcTdINVNmVDJudHJrRFA1YzE3NWdwOHE2RVF1
+OTh2c0VwelF0YUd3TU1rTjFVb0N0WDJlcnNSbWFSTndaNW85QgpIejJNTExHNmNORHNKSksxR0p6
+SFFhanM5UHR0RnVINDAzMElSZWIxQm8ySjQvdHFLTGtkUkRUYjAwNmxVblBRCnI3ejZyQmNobTgv
+bjgrVktqaU01emFpUWtlQ3p0MHJLb0hxNzB3ST0KPUorRloKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000006193db061c1dbe56--
+--0000000000001a982b061c1deafc--
