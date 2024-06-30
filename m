@@ -1,57 +1,57 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6976C38DD9
-	for <git@vger.kernel.org>; Sun, 30 Jun 2024 06:42:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C15F139F
+	for <git@vger.kernel.org>; Sun, 30 Jun 2024 06:46:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719729732; cv=none; b=aDpim0rXRy10l+ADjjc/qJSADmUoglec5QorJ8nvx27Yh6bjiN6O/EarUGyHDHqXu7hhSqGKgJjJq/pHQQhTnjdWVmPhjlVKC1JdJsoCB/2dWq2Aw/el6OpbWAjLz78WkiQ4ltJpCRiPusRZAc6pIeKF15ZHGQisj0umyAoDx1w=
+	t=1719730005; cv=none; b=gwiFSNdVyE6JPuvMNl5Qi2qwJkuVESLrtpYqHVx+lRhI70Zowf6weNe6zUZ+/l6iQSpNvz7Bmw+l1x3Rmm+6EOC+N1yLwbQLKpSgTUuySH51jr7swNnxF0OKkajveHnxk8kgyQU0Y3S12ZlqXLdCqYB1YIOzFPIhZYh6T0tQomg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719729732; c=relaxed/simple;
-	bh=5HLuNaYOxl0THVU4Lik+DqxsNHaKXO0OXGjcJ8OEJsQ=;
-	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=qzv4lolg8rmmJuPf/Wu5lMJYgoAcsIOsNDcO58QSgTkwEe+fI93BiXgEHKY1D2NAAdTBI9uHB/brrO3mWiFnSecAgyH7ojmpb6IdYvyMIvQfuHR/YGYtrDLcIuDuNpqD90m/OIEAzHbeuHPQCxAYEW80/l0EzKnXZBAm32caJTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AXfyj28M; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1719730005; c=relaxed/simple;
+	bh=0C6sViryx9NRZt4y6Fe7uXpk0sDC3zzfyJXJgeYmi9A=;
+	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=ZHVh2h3zxQnaMa/C3VJ81vXHilcMaejaBL5t/0uwIWzqBoOX5JDiqGdylRkvIyuVmIN/xuv1wsSPeJ6Kp/BwiM6UyJEhyBxJ3yfDqGgAWFhdqT1fDMWYdE0951Vj/3QJ/h+6DOlpvf4QhRK1mXRSviZfrPFmscGrQPpXYsLw6Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k8CC6fh1; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AXfyj28M"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-364a39824baso991911f8f.1
-        for <git@vger.kernel.org>; Sat, 29 Jun 2024 23:42:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k8CC6fh1"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-52ce674da85so2135700e87.2
+        for <git@vger.kernel.org>; Sat, 29 Jun 2024 23:46:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719729728; x=1720334528; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719730001; x=1720334801; darn=vger.kernel.org;
         h=content-transfer-encoding:subject:cc:to:content-language:from
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9eKOMlJPY8/eglxH6Mde4jaLjh6HqYP5VHYKz0Nooz0=;
-        b=AXfyj28MGtdd7iVZc8QAwkTcTfwr59TQqkz7tOB0QHddxel/qGEcXwa8hqgwAaULD0
-         vKt1JgSrhns9gwrLT1pWjee5bPVtWoBMxsyw/vtt8/sytaxteN1djS2SBWm6s/qBW2Nx
-         Ucz6JOnojvCpFjz365rxudG252J+DXPQ4lj1KXwyPr9u7lQ/8RlN0flOE/hjoGQ0RQpP
-         4ims8j/yZ9l008Yv/jRpUNC+GM59Ttedt48U29k0PRqjG5mynN/u7cmngyhu5CtK8Otk
-         ALmSr0BMv4c3V71/cTpns3xQZUNzbb+lP4/TfYE9qRANwM25hTsMT7ta1ORvJtsqRICs
-         /ntg==
+        bh=7qneql8RHIG0c8Vq23lXDgpb/7zYGTofMKHd7Gn7PCE=;
+        b=k8CC6fh1vfBVAJCvxxlsbsqoBYR1QOwoZhGGPkNqSm62UZXYTOaO+elSF3g0M5XQln
+         M1UKVGSVkL1rAY7gvaslZNUmrU6QjNeAwq1lmGaYwZAA1mMt1kl1Jxbx/KzrH1Q3AG5C
+         c0zTpy31AHGiHKDV6m1fyOIAbni5QiSA7HbOmHYACmhbXJBIOzuQiofaN89GF0dvdqr9
+         +4GETzVqv6cqjBRGjimTe1dVyov9ZMfesRPk4ezWRYbIAMTgVIqP/COi07LGmdcgU+pD
+         bfUCda2OKbPS3c24m1bT3p2DtXQynBdNYnAxPkXHoXeQpGqd44FT7kYazVdcSMFlfNkn
+         5P5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719729728; x=1720334528;
+        d=1e100.net; s=20230601; t=1719730001; x=1720334801;
         h=content-transfer-encoding:subject:cc:to:content-language:from
          :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=9eKOMlJPY8/eglxH6Mde4jaLjh6HqYP5VHYKz0Nooz0=;
-        b=qLdThGwMUj4DK6qLeL02cilxs8ZhecumVRVhnjn9+T3y4gnKsGSfyIMeNReZawi5YD
-         xLIaAmDgwGyEktmwLKmJDlVyJqo/c6AWgm5iK7gNL1egCpSS/Y1KinHGm4o8fku7cEz4
-         438RIq8SHSi3CyVE3qrmYW+ZiSpQyszlSzzD1667BEY9vd4m6YApDxGRRNLv/NaOoVe8
-         PDoaODhNJd839BdGoxPCvl6v81BtpYgyItCPwjkvn2VL4ejt91GjIfNbWzkf6zxwUQ0y
-         Iku3Z+x8DESnulsFhUh3IyegiMtKjO/TYC/bueZeJW8yeWBVT+Jf7DCiNS8ACQZcV0Sq
-         NhiQ==
-X-Gm-Message-State: AOJu0YwTJUQhe+9xkkxrzM+uYdbNgdhsF76HJK6wrdFcsWh3vAhjTtjp
-	nd0R02TLk9KOoUWw/Vz4S0SRWe6A7HCcUbiNFVa9D1NrwNp+Jn6+QsP7VA==
-X-Google-Smtp-Source: AGHT+IFsFFI8RlZWPKQN3nxx8hizG2f2N4te7ush61OWKVax0+9MoDjYcEKcHE6yEt1x62V3pIc5bA==
-X-Received: by 2002:adf:f04e:0:b0:366:f323:f59b with SMTP id ffacd0b85a97d-36775699f37mr1821511f8f.1.1719729727930;
-        Sat, 29 Jun 2024 23:42:07 -0700 (PDT)
+        bh=7qneql8RHIG0c8Vq23lXDgpb/7zYGTofMKHd7Gn7PCE=;
+        b=qGy2zvCS7jF5pkkBQoq9kFqwAWqo8UxeT339xV7bjFI1PxgoVwVHLbDPhfUVJjlvJT
+         y5XzBjnHdmiN1vFJBJoYInTPrzi4vOsEHUdmAaIMWvqj1kXduhsmJ06pmQ+TI+tQ1Wii
+         khnVHDKLo/CQE2w8GYM3RTZFtSaNXjliDb5hWkZ/5anHyL8ry3d392Wra833rpkvZtX8
+         pI+pMArR3xsYG3qPTMlNh88hjrYZ1uniDlMluK/sNIH6whOBLre9tf52LaFzoCosThXX
+         K+jt/ZU7uu7CyF7oYJnbkfDUugBRkLPu5f1dHQvttdhCfTeEybRVQfISuYRnSXtNQ1zx
+         7how==
+X-Gm-Message-State: AOJu0Yy9eaU974e0e0e7diLrm6O3JOKDCrwgxlFvGN1osf+Tqwro03EJ
+	qnHVbB4A8Q/B9KrO6n/DBQ/j8gnxJkPqLyzFQxXC/qhvkL4wJI7Fx8BQww==
+X-Google-Smtp-Source: AGHT+IG7QjDzrGczw66Z7zJ1XlI9C/kIUAQsb+ZEqCaPkIlgxbzrRYNOYicxxbohzHogaVxDSwNH2g==
+X-Received: by 2002:a05:6512:ea8:b0:52c:8e00:486a with SMTP id 2adb3069b0e04-52e82708fc9mr2077461e87.55.1719729999811;
+        Sat, 29 Jun 2024 23:46:39 -0700 (PDT)
 Received: from gmail.com (123.red-88-14-208.dynamicip.rima-tde.net. [88.14.208.123])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a0fb950sm6605717f8f.83.2024.06.29.23.42.07
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4256af3912asm103890785e9.10.2024.06.29.23.46.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 29 Jun 2024 23:42:07 -0700 (PDT)
-Message-ID: <f4ae6e2a-218a-419c-b6c4-59a08be247a0@gmail.com>
-Date: Sun, 30 Jun 2024 08:42:06 +0200
+        Sat, 29 Jun 2024 23:46:39 -0700 (PDT)
+Message-ID: <23d41343-54fd-46c6-9d78-369e8009fa0b@gmail.com>
+Date: Sun, 30 Jun 2024 08:46:38 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,70 +62,59 @@ User-Agent: Mozilla Thunderbird
 From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
 Content-Language: en-US
 To: Git List <git@vger.kernel.org>
-Cc: Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
- Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] test-lib: fix GIT_TEST_SANITIZE_LEAK_LOG
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH] t0613: mark as leak-free
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-In the if-else's chain we have in "check_test_results_san_file_", we
-consider three variables: $passes_sanitize_leak, $sanitize_leak_check
-and, implicitly, GIT_TEST_SANITIZE_LEAK_LOG (always set to "true" at
-that point).
+We can mark t0613 as leak-free:
 
-For the first two variables we have different considerations depending
-on the value of $test_failure, which makes sense.  However, for the
-third, GIT_TEST_SANITIZE_LEAK_LOG, we don't;  regardless of
-$test_failure, we use "invert_exit_code=t" to produce a non-zero
-return value.
+    $ make test SANITIZE=leak GIT_TEST_PASSING_SANITIZE_LEAK=check GIT_TEST_SANITIZE_LEAK_LOG=true T=t0613-reftable-write-options.sh
+    [...]
+    *** t0613-reftable-write-options.sh ***
+    in GIT_TEST_PASSING_SANITIZE_LEAK=check mode, setting --invert-exit-code for TEST_PASSES_SANITIZE_LEAK != true
+    ok 1 - default write options
+    ok 2 - disabled reflog writes no log blocks
+    ok 3 - many refs results in multiple blocks
+    ok 4 - tiny block size leads to error
+    ok 5 - small block size leads to multiple ref blocks
+    ok 6 - small block size fails with large reflog message
+    ok 7 - block size exceeding maximum supported size
+    ok 8 - restart interval at every single record
+    ok 9 - restart interval exceeding maximum supported interval
+    ok 10 - object index gets written by default with ref index
+    ok 11 - object index can be disabled
+    # passed all 11 test(s)
+    1..11
+    # faking up non-zero exit with --invert-exit-code
+    make[2]: *** [Makefile:75: t0613-reftable-write-options.sh] Error 1
 
-That assumes "$test_failure" is always zero at that point.  But it
-may not be:
+Do it.
 
-   $ git checkout v2.40.1
-   $ make test SANITIZE=leak T=t3200-branch.sh # this fails
-   $ make test SANITIZE=leak GIT_TEST_SANITIZE_LEAK_LOG=true T=t3200-branch.sh # this succeeds
-   [...]
-   With GIT_TEST_SANITIZE_LEAK_LOG=true, our logs revealed a memory leak, exiting with a non-zero status!
-   # faked up failures as TODO & now exiting with 0 due to --invert-exit-code
-
-We need to use "invert_exit_code=t" only when "$test_failure" is zero.
-
-Let's add the missing conditions in the if-else's chain to make it work
-as expected.
-
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
 
-This has already been sent: 
-https://lore.kernel.org/git/54253e98-10d5-55ef-a3ac-1f1a8cfcdec9@gmail.com/
+I'm not sure why this simple change has fallen through the cracks.
+Therefore, it's possible that I'm missing something.
 
-I have simplified the message a little, but the change remains the same.
+I'd appreciate if someone could double-check.
 
 Thanks.
 
- t/test-lib.sh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ t/t0613-reftable-write-options.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 79d3e0e7d9..7ed6d3fc47 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1269,9 +1269,12 @@ check_test_results_san_file_ () {
- 	then
- 		say "As TEST_PASSES_SANITIZE_LEAK=true isn't set the above leak is 'ok' with GIT_TEST_PASSING_SANITIZE_LEAK=check" &&
- 		invert_exit_code=t
--	else
-+	elif test "$test_failure" = 0
-+	then
- 		say "With GIT_TEST_SANITIZE_LEAK_LOG=true our logs revealed a memory leak, exit non-zero!" &&
- 		invert_exit_code=t
-+	else
-+		say "With GIT_TEST_SANITIZE_LEAK_LOG=true our logs revealed a memory leak..."
- 	fi
- }
+diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-options.sh
+index e2708e11d5..b1c6c97524 100755
+--- a/t/t0613-reftable-write-options.sh
++++ b/t/t0613-reftable-write-options.sh
+@@ -16,6 +16,7 @@ export GIT_TEST_DEFAULT_HASH
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'default write options' '
 -- 
 2.45.1
