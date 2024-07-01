@@ -1,95 +1,75 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D3B2BB04
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 18:16:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F31D2A1D1
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 18:19:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719857818; cv=none; b=J9IG9mTvzF7uAsH1kpb18cSp+HEqwZDBC7Jo/KSQOO1sbBpora9hMeIMOdWWrgL7mbMtXEvnLgGDkmh0fcyQ96LJz1nlyYpMm+xT/JrgFfNrKYOQLPZRiw3C1GonIGryO32ciQKQvReLhuI7mrdMlcBcNKdc4JVs/pLuHzJBvYc=
+	t=1719857963; cv=none; b=mVZSh61Wdl/NRrY/D5KJsRueQCZSRR4PLSxHSecBT0NM1rOEqZTKUOR+VezRDFrycB4cl93PTSXtd91yrRCaju/+qlf97RNPGY5Ra7qQ9hqWhMe2uanDSMF6tTqCdtlVjck40asn0emJykrpsnzUUIuLkWpltTlPFF42e5oMH1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719857818; c=relaxed/simple;
-	bh=s84dThdhke/+fuGs7N9POP8Y64a7Me4I5DxfAWyDaiU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=J6Omygy/Y7GaACsRWsuHqqGCvhxpJAE6xQYyqEB9KpIp5NGL7G+tPgGe9OlChRkh3teag18JEQfsoaMKLcBKAyJd5pNwF7LQlaSIhzwjOHBB6umSe9/SPFZWeM1QBbEX78K73XyjyTbgB9mM7eNL4jjcoHTKara5olLYgXj0ZR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=UQy+EDr7; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UQy+EDr7"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id BCE0529FF0;
-	Mon,  1 Jul 2024 14:16:56 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=s84dThdhke/+fuGs7N9POP8Y64a7Me4I5DxfAW
-	yDaiU=; b=UQy+EDr7/ssnaekzVor7ZWgjzfDyEd956Z9S+DFdv2FZbkdmU+/JOH
-	z0HfphIF99ukelh54HYez+uDyPLY+OjUkdYtV71Bgnes/71mRIvbV8E+/i7zM74+
-	1iJB2YagjOJQe7zIsp0w62FIk/NjEhM/KZC66UyYyHPemXCkdexyk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id ADC8029FEF;
-	Mon,  1 Jul 2024 14:16:56 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 55B6629FEE;
-	Mon,  1 Jul 2024 14:16:53 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pavel Rappo <pavel.rappo@gmail.com>
-Cc: Git mailing list <git@vger.kernel.org>
-Subject: Re: Determining if a merge was produced automatically
-In-Reply-To: <CAChcVu=bWR_DvR==b7L0tn8PmK+9KOWWw+e7RtjMhywMv3W+qA@mail.gmail.com>
-	(Pavel Rappo's message of "Mon, 1 Jul 2024 17:08:13 +0100")
-References: <CAChcVu=Kwqj7JhXqQW6Ni9+3TdSfdmHfSTJQWm1_uO2kczSm8g@mail.gmail.com>
-	<xmqqle2lyvdd.fsf@gitster.g>
-	<CAChcVu=bWR_DvR==b7L0tn8PmK+9KOWWw+e7RtjMhywMv3W+qA@mail.gmail.com>
-Date: Mon, 01 Jul 2024 11:16:51 -0700
-Message-ID: <xmqqbk3hx9ik.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1719857963; c=relaxed/simple;
+	bh=N+/owwyQHI2YkM4rv/Uukio1hN7ZSopCD5GU0qOvfcA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OcNtvCwhZxsOjuCj8FN9Q9qmd9B1UpTxFh8OXrQeQFEotf0QSQHn3G6/p3gxxcvAYQWcu7MHeJOzfbky5jhIjHHgMnX0cTOzvPGjFjM0o3wqW/3aXxQBFVO6FzH3hvONJwNiIuGhQ/EKae8p5TGGVz2itLe1+Plc43hktFwBxpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 25490 invoked by uid 109); 1 Jul 2024 18:19:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 01 Jul 2024 18:19:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14827 invoked by uid 111); 1 Jul 2024 18:19:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 01 Jul 2024 14:19:16 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 1 Jul 2024 14:19:16 -0400
+From: Jeff King <peff@peff.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: phillip.wood@dunelm.org.uk, Florian Schmaus <flo@geekplace.eu>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] setup: support GIT_IGNORE_INSECURE_OWNER environment
+ variable
+Message-ID: <20240701181916.GD3199@coredump.intra.peff.net>
+References: <20240626123358.420292-1-flo@geekplace.eu>
+ <20240626123358.420292-2-flo@geekplace.eu>
+ <9e5b0cc6-e28c-4c51-ab48-663c61c00ee3@gmail.com>
+ <72e42e9f-5b85-4863-8506-c99d658d7596@gmail.com>
+ <ae658244-877f-c5cf-8947-83b87b66d01f@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 17CDE7CA-37D6-11EF-AE0D-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ae658244-877f-c5cf-8947-83b87b66d01f@gmx.de>
 
-Pavel Rappo <pavel.rappo@gmail.com> writes:
+On Mon, Jul 01, 2024 at 06:34:10PM +0200, Johannes Schindelin wrote:
 
-> it for such merge commits produced automatically because of the
-> assumption that nothing bad can happen there.
+> The `local_repo_env` array _specifically_ lists `GIT_CONFIG_PARAMETERS` in
+> https://github.com/git/git/blob/v2.45.2/environment.c#L129 to be removed
+> from the environment when spawning the `git upload-pack` process.
+> 
+> It was not originally listed, but added via
+> https://lore.kernel.org/git/20100824064114.GA20724@burratino/, where the
+> commit message does not really shed light into the question why this was
+> desirable, and there is no discussion in that mail thread about this
+> aspect of the patch, but at least the added test case reveals the
+> intention in some sort of way: The `-c` option allows to specify
+> `receive.denyDeletes`, and in the described scenario the idea was that it
+> would only apply to the client side of a local `receive-pack` but not the
+> "remote" one. As the example above illustrates, that patch might have
+> been overly focused on one specific, particular scenario.
 
-I do not think that assumption holds in the first place, though.  A
-typical and often cited example is when one side changed a helper
-function's behaviour while the other side added new callers to the
-helper function, still assuming the original behaviour.  In such a
-case there may not even be an textual conflict but the end results
-may be broken, and if the breakage is subtle, it may take weeks or
-months before somebody notices such a semantic mismerge.
+One reason we haven't loosened local_repo_env for the local transport is
+that it would make it inconsistent with all of the other transports.
+I.e., "git -c foo.bar=baz fetch" would still be ignored over ssh, https,
+and so on, because those transports don't pass environment variables.
 
-Your "review a conflicted-and-resolved merge on one integration
-branch once, and skip the re-review as long as the resolution is the
-same way as the original one when the same branch gets merged into
-another integration branch" is a neat idea (and the integration
-branches we have in our project are run more-or-less like that).
+There's some more discussion from a similar case that came up a month
+ago:
 
-But there, you'd need more than "both are cleanly auto-merged"; more
-like "both may have conflicted but they are resolved the same way"
-is what you are interested, no?  Since at that point, your primary
-interest shouldn't be "does it cleanly auto-merge?" but "do these
-two merges do the same thing?", determining if a merge was created
-automatically becomes a problem you do not need to solve, or solving
-it would not further your true goal.
+  https://lore.kernel.org/git/20240529102307.GF1098944@coredump.intra.peff.net/
 
-If you have two integration branches A and B, and a topic branch T
-first gets merged to A and then after proving its worth it gets
-merged down to B, I wonder if you can verify somebody's merge of B
-into T by comparing the result with your "verification merge", which
-you preform locally and on a throw-away branch by using "git rebase
---rebase-merges" or some mechanism, to replay the original merge of
-T into A on top of B (before the merge of T you are verifying).
-
+-Peff
