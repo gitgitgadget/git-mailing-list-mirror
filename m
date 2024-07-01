@@ -1,74 +1,87 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BDA16CD3B
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 15:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7741EB2A
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 16:08:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719848631; cv=none; b=auBB0liuD/3YDrl1Fjv8jdX2n77pirE4+yueXjESRenaoQ3Omx+TkoGBE6QhTmCgeENQW2D0f9YDekYnv0wL1PtSbb8qVJLB5g5i0rWyJI+DfXF4OWWhPOrLoINsFnmfs5Xbw8hGlawJzIEC6BfWh236SAcdxQsYrJxHM4JWPx0=
+	t=1719850107; cv=none; b=qoxrz+/p6azeKuERoG57H5y/VWBXmCfI4r299sJwTs15PVTLhjO6Nspq4yO4YCXFQoQQRVfd5b9yCw3Yd8zuy52dm6Y9zUFPIwxtc4SV8wR34YuKW/c5azHoC/yacDaV1KaCChddFEpttFP642ATipEFSt+/Crvzqrm8rffU9mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719848631; c=relaxed/simple;
-	bh=GbrG+/cDlaFTaKSrRbGg1HtaJn74TR5eM0zuuQnZtAc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IiMgVBgjHw2Qu9ukuUQ+1UI6VlNywSU84mXieZqEGBwzD1mByQP2gi/5GjPqEEQO1ealMCT2qL9nMJhe893RTRUBf+z27gXmrFld/hN+7Mw0EPMm51b1Y5Fu2Lj2FDFe8u3xfwIgqjYKjQOLz9gi0AR6C20Uvfk2UVS24K00Mns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GWPFfCDa; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1719850107; c=relaxed/simple;
+	bh=o2zXhMYY3W0JUzb0PV5fE8jKLcv34bbEmhoN6kgAp6E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fvd3o7ESU/jDMPiAXxEoVYCzc4nyIv5v1NSEMYurhoOF9a4jyKTX2SBGSc6aHS0ML/F9P1ctIAOizi4tQrp+zl7/l+DPVFWEGr8TlGYqCWUUBpbVevoxzqBxQ6AN9hQxYrVvlu2woy4y6ROdwUN+eoVBuJpkDrZ2HiKqwGx/AL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HeIOU0Zp; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GWPFfCDa"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 25D8C28FB3;
-	Mon,  1 Jul 2024 11:43:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=GbrG+/cDlaFTaKSrRbGg1HtaJn74TR5eM0zuuQ
-	nZtAc=; b=GWPFfCDaM7ocAI3llCJJbZkFrwt9IBfzVN54gV5PHPO+z08YB0BLkL
-	bNKipnyN5LCLKI249peUnNTrKEy0QGaNA8oZR0ynLZ/H5rChzKHPBcTFQ2phkHWA
-	KsnRcrhHCDPbZgGP7iYrPJiv42mIUxGq9J53V+5kvpxK0kHdu8F3o=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1E66F28FB2;
-	Mon,  1 Jul 2024 11:43:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B7D0128FB1;
-	Mon,  1 Jul 2024 11:43:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-Cc: Pavel Rappo <pavel.rappo@gmail.com>,  Git mailing list
- <git@vger.kernel.org>
-Subject: Re: Determining if a merge was produced automatically
-In-Reply-To: <ZoKXt0jPphoM5nmJ@google.com> (Jonathan Nieder's message of "Mon,
-	1 Jul 2024 13:49:11 +0200")
-References: <CAChcVu=Kwqj7JhXqQW6Ni9+3TdSfdmHfSTJQWm1_uO2kczSm8g@mail.gmail.com>
-	<ZoKXt0jPphoM5nmJ@google.com>
-Date: Mon, 01 Jul 2024 08:43:45 -0700
-Message-ID: <xmqqh6d9yv66.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HeIOU0Zp"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-64b417e1511so28209487b3.3
+        for <git@vger.kernel.org>; Mon, 01 Jul 2024 09:08:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719850104; x=1720454904; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=o2zXhMYY3W0JUzb0PV5fE8jKLcv34bbEmhoN6kgAp6E=;
+        b=HeIOU0Zp05cyLHQBdINg9G5YX3JW9/BBkz3gtG4ZCBXMutCr1gpMoxme/liRGxmRtI
+         K/bGMDvZ9EU2kmX6IQJYYEulLjbStah7aRRjf9bXkJtFISb0kd8L+ofxjzjX4xy7pMAD
+         WvalUoESRP5OqPE4yXVzG3lDQtwILUQx4mLeV2EZF0TJI1Q/j1sn4+1ZoMi2gA7q41JQ
+         BGXD+BgQUiEIQHxH5rF2sBKfNLBzSIrxWDD1gYmzpTxn9ySnuSB4Hd5q4qJEdon+Ydet
+         eyLaGuI4bkwuAkIRE7Q+FSthhZq/ynkYG7KCNqk5A907nr2UngqAiZ8OZpGfBJog7hbE
+         HwvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719850104; x=1720454904;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=o2zXhMYY3W0JUzb0PV5fE8jKLcv34bbEmhoN6kgAp6E=;
+        b=wW6n1Fu1s174wpJzgJi4lYjO3lk/eUfeRdKq6WaGpXQDTHEcv4wwcE5oewCysT86wi
+         rhK4FlYq0O/OktpRuEaXTNo0ZOrs5/7zAvuIyHizw0RCIRQmpelzNl2M4NObCAg5nyoL
+         uRDTIQaENyTsh4rJsUlSEl2itr33o8iHPi7/eRDCpjiERy0/ffBG+VlHOxS9/BCLH8em
+         F0cSm2+r6TehTRrTrgrcK6RedTFaGs197Du7g3Y1LDslIYjgm3lnVHzaBUSbXyFYklpi
+         A42BiDuHCeqiPJu4wfrTqC3wX538RhowO3a5VgOG3T3+Ipynag3ZWowc9LiksVu75TNd
+         9xig==
+X-Gm-Message-State: AOJu0YwpyrkpzhmcGxMbbdxUBR4wJNQQVzBAuhuvIDRHBOTif9t0vDuT
+	T4bpRataDWFN6Ai3olugU4RRutavj7WG0ImWvfqwek/NXhBS5ekbCwJ8Z2TQAoJ8s6kpoCoE5zr
+	HVvm0ox333XItTCfaYtme6JVWPdA=
+X-Google-Smtp-Source: AGHT+IGBc5ZCz7azLTxUTImH3OBP5yVUv+Q8TbmP1xIKGuUFwCB3U0501wkf+5bho4FpUzgIJXz+Af4gk7AXI+clAxM=
+X-Received: by 2002:a81:7785:0:b0:64b:2cf2:391c with SMTP id
+ 00721157ae682-64c71803a7amr61030427b3.18.1719850104438; Mon, 01 Jul 2024
+ 09:08:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B42A3DB4-37C0-11EF-B6E7-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
+References: <CAChcVu=Kwqj7JhXqQW6Ni9+3TdSfdmHfSTJQWm1_uO2kczSm8g@mail.gmail.com>
+ <xmqqle2lyvdd.fsf@gitster.g>
+In-Reply-To: <xmqqle2lyvdd.fsf@gitster.g>
+From: Pavel Rappo <pavel.rappo@gmail.com>
+Date: Mon, 1 Jul 2024 17:08:13 +0100
+Message-ID: <CAChcVu=bWR_DvR==b7L0tn8PmK+9KOWWw+e7RtjMhywMv3W+qA@mail.gmail.com>
+Subject: Re: Determining if a merge was produced automatically
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+I can see that I used "robustly" misleadingly. My intent was to get
+robust automation, not a robust boolean classifier; sorry.
 
->> However, this bit means that I shouldn't entirely trust its output:
->>
->>> The output emitted when this option is used is subject to change, and so is its interaction with other options (unless explicitly documented).
->>
->> What is my best course of action?
->
-> I'd encourage proposing a patch to make the documentation say what you
-> wish it said.
+Here's my use case. In our project, every commit to a PR means that
+the PR needs to be re-reviewed. During a PR's lifetime, the PR's
+target branch might be merged into the PR multiple times. Since
+re-reviewing is costly, I'm exploring the possibility of not requiring
+it for such merge commits produced automatically because of the
+assumption that nothing bad can happen there.
 
-I do not think that was what Pavel wanted to get suggestion on, but
-it is certainly something that would benefit not just a single
-person but other users ;-)
+In that use case, both false positives and false negatives are _fine_,
+if only annoying. If it's false positive, meaning that a PR has been
+truly merged, but the check couldn't figure it out, re-review will be
+required. Not a big deal. If it's false negative, meaning that a PR
+has been tampered with, but looks like it hasn't, then it's okay. Why?
+Because the result will be the _same_ [^*] if that PR is eventually,
+automatically merged into the target branch by that very Git that
+performed the merge check.
+
+[*]: Or very, very similar.
