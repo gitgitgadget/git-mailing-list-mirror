@@ -1,117 +1,110 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D5916F903
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 20:19:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C0915821D
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 20:32:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719865181; cv=none; b=iOnxqpiIFf3FlezcxuB+yvL1ak9XS4F5bUqm04fgArgxE2rs0B6g2Y1S9Ox84Z7K1bxfJ+MRurMtWeW2ZEriktoIEWqlooX7djmIFGsDeV/mERHRV53s2AubC8btJB1GXhpK4yc9/6vuBDl+QlLOvN8Y9IjJ6gsknEsIl5pHnEw=
+	t=1719865958; cv=none; b=ejjd3A8eLciLN7m1upMk04gU1etp2MHxv/NL0pHu4yywNppRJP8rz2d9hbJYqDTAPBc7LNodfnlPYFRdXkocu0zceobqqF/cuxAo5M11VBooGD+xtDGMmQz8Osve8W2k02bH7D5IhyFcZ1Lsuqy/UxWl6VABqhnHWQbsh9ER46o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719865181; c=relaxed/simple;
-	bh=uUnr/dYZp52hJaPnqTqqA58esJL9rmHNngdi+I1RyUM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PvZCdYhLBKD1MdWhVP6jTf70VEA1XQAnWYwCzrf79yw4aVq2H3sTPq9Vzzvc+WaPR/M/JIKgiZNa3DuHXMmZS1GhouGdWz9QyU5MUSx+4TpNacn/XlHJEBDdYeeYutDq4BmC+MNmXSnGuVxHo8MCN0w2LE1X9UQcuZOZjPUdDHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mxjz6fyw; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1719865958; c=relaxed/simple;
+	bh=mhZV1wxxocRUnxdqWR2FN+BEbD9A43tvzCOC+RvdY4I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=brdPR0kpMEK+fd3XnGGfCNIG65nIQkFWRAEnH44Mji9y2KD21/1OPyUaCc+SQ1Lj0N2/glBI/NekRMxblbiPVil6333Je8EVCuzrbSlkMTodP4KmKa9LM4FLhawd08Dbs9UcfpSxlF5JiWBzBd+ogt1QWmtuSZwy4bOBzxHZGYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MWxbE00z; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mxjz6fyw"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id E2B462ABBE;
-	Mon,  1 Jul 2024 16:19:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=uUnr/dYZp52h
-	JaPnqTqqA58esJL9rmHNngdi+I1RyUM=; b=mxjz6fywFduUOHQWoQF3EnMmegOR
-	7b/wAcIc087kBwTZ2fJ8JcJO7b0PO6CE4hFBLk7vPlR/8F3EjAUE39QAIqqgGFBu
-	ggcVWIEJIzQMKaNjaShiT9GAXFd7JaQV9S6oTwp6GtdKe9Nr5aBeWP9oJ9FNijtc
-	XJqJIm/U5DziVsM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id DB75E2ABBD;
-	Mon,  1 Jul 2024 16:19:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 702B72ABBC;
-	Mon,  1 Jul 2024 16:19:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  Jeff King <peff@peff.net>,  Eric
- Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] test-lib: fix GIT_TEST_SANITIZE_LEAK_LOG
-In-Reply-To: <f4ae6e2a-218a-419c-b6c4-59a08be247a0@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Sun, 30 Jun 2024 08:42:06 +0200")
-References: <f4ae6e2a-218a-419c-b6c4-59a08be247a0@gmail.com>
-Date: Mon, 01 Jul 2024 13:19:34 -0700
-Message-ID: <xmqqv81ovp9l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MWxbE00z"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1f9b52ef481so16619145ad.1
+        for <git@vger.kernel.org>; Mon, 01 Jul 2024 13:32:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1719865956; x=1720470756; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=c6W7V91ScYKoaIg/G3/Bvqh8xmjC5M+MALZe95nYFEI=;
+        b=MWxbE00zoOTXH1Sh2WjYOwh54cg9qXiMCbW++MPadQtv33y6a8nNrM1cMftPHbfwK+
+         XyaT5/ZLOl15nQ70rQnFbZA8xt5iksf/6TgObSr6DKTXy9bee+M9aNgtCobDtf6o26Dn
+         urXHwwKNtFA/41oXTIOTul+ZsUp7fzhSgzrbmzF23aZwJuiRjYpkHwM6XRQcX2eD+WWE
+         aHQ5omddxScg+fI34i3kHJM3mKJ1oJQ+Up7snsXHF7wr7yrTAP0l/uZHBfDQxqalZhkf
+         eELfax7cCFi8bC22N+uqKBIBe3DcJCGbDVhhO2A+dLIk4nKIcFJ/uUW2lNlIGmTyCu3f
+         jkUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719865956; x=1720470756;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=c6W7V91ScYKoaIg/G3/Bvqh8xmjC5M+MALZe95nYFEI=;
+        b=KWb7cZZW+LbZuN/SKNhEY50qnI9OFEMOLmZPfCes/tANl6IYRqvF5TVS+xAmd3pgdi
+         otDhsQ0jDg+gOtgBo92FV8h6psIf3Jqgohgq4DGKZySdlvvQYPv1NbzRVL6TtE1V/8/R
+         9d5WoZuprrwbKRF8NN8+uF4KLqn7Bbv2TVK+e5TbvJsDcu8pGCWCVCwpGAVElQ4iuyhl
+         7OpvZ3obq9040DjMw4MrboRp4i6Ge0Xng5531VMfwaeM/7eLVIjc8ZUhRQh4zVX8VjzW
+         BQeM2TcIlvMZSGv/F04rTRJDSHjqKg6hxwkzAmkkOuUvkSg/M1HXIrWK9BFnr+sesgfl
+         fyNQ==
+X-Gm-Message-State: AOJu0YyCrg4Bj2ByikEceclhAyFJ8oN5cZWNDJk8o6qCq20M066eOVAj
+	tvLOQFKaQgY++KNVgtuwcTgHTqS4wtKV3kLx+L0SrJHxFqBkVVusS+ilDBY4woGF8rKyXtpoytn
+	/fA==
+X-Google-Smtp-Source: AGHT+IGmFI0UocaJ3TmOUD2snp+fi9b4rS+H4Gh3Pp9rfgF4CdDvWxIMhzyLk4HJQ0FxVeYYtua1AA==
+X-Received: by 2002:a17:902:db08:b0:1f6:8ae4:510d with SMTP id d9443c01a7336-1fadbcb799amr38376605ad.39.1719865956147;
+        Mon, 01 Jul 2024 13:32:36 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:e464:1819:7745:be03])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac159680csm69437635ad.265.2024.07.01.13.32.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jul 2024 13:32:35 -0700 (PDT)
+Date: Mon, 1 Jul 2024 13:32:30 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, christian.couder@gmail.com, 
+	Phillip Wood <phillip.wood123@gmail.com>, Christian Couder <chriscool@tuxfamily.org>, 
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [GSoC][PATCH v2] t: migrate helper/test-oidmap.c to
+ unit-tests/t-oidmap.c
+Message-ID: <hxld3ldxomitv6hjuxq7munhppzie2nm3eworng6jnhf3suikx@rh6cunbz4vcz>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Ghanshyam Thakkar <shyamthakkar001@gmail.com>, git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, christian.couder@gmail.com, 
+	Phillip Wood <phillip.wood123@gmail.com>, Christian Couder <chriscool@tuxfamily.org>, 
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+References: <20240619175036.64291-1-shyamthakkar001@gmail.com>
+ <20240628122030.41554-1-shyamthakkar001@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 3C8F1EBA-37E7-11EF-ABD7-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240628122030.41554-1-shyamthakkar001@gmail.com>
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+On 2024.06.28 17:50, Ghanshyam Thakkar wrote:
+> helper/test-oidmap.c along with t0016-oidmap.sh test the oidmap.h
+> library which is built on top of hashmap.h.
+> 
+> Migrate them to the unit testing framework for better performance,
+> concise code and better debugging. Along with the migration also plug
+> memory leaks and make the test logic independent for all the tests.
+> The migration removes 'put' tests from t0016, because it is used as
+> setup to all the other tests, so testing it separately does not yield
+> any benefit.
+> 
+> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+> ---
+> This version addresses Phillip's review about detecting duplicates in
+> oidmap when iterating over it and removing put_and_check_null() to move
+> the relevant code to setup() instead. And contains some grammer fixes
+> in the comment.
 
-> In the if-else's chain we have in "check_test_results_san_file_", we
-> consider three variables: $passes_sanitize_leak, $sanitize_leak_check
-> and, implicitly, GIT_TEST_SANITIZE_LEAK_LOG (always set to "true" at
-> that point).
+IIUC this corrects all of the issues that Phillip noted in his earlier
+review, except for checking for duplicates, is that right?
 
-Before this paragraph, we'd probably want to say what problem we are
-fixing.  Using the verb "fix" on the subject line without saying what
-broken behaviour you see around GIT_TEST_SANITIZE_LEAK_LOG does not
-help, either.
+Personally I think this version is OK even without that check, and I'll
+be away from email for the rest of this week, so I'll go ahead and sign
+off:
 
-Your patch from September 2023 [*] did mention it upfront:
-
-    GIT_TEST_SANITIZE_LEAK_LOG=3Dtrue with a test that leaks, will
-    make the test return zero unintentionally.
-
-With that inserted in front of the proposed log message, the
-resulting explanation looks reasonable to me.
-
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 79d3e0e7d9..7ed6d3fc47 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1269,9 +1269,12 @@ check_test_results_san_file_ () {
->  	then
->  		say "As TEST_PASSES_SANITIZE_LEAK=3Dtrue isn't set the above leak is=
- 'ok' with GIT_TEST_PASSING_SANITIZE_LEAK=3Dcheck" &&
->  		invert_exit_code=3Dt
-> -	else
-> +	elif test "$test_failure" =3D 0
-> +	then
->  		say "With GIT_TEST_SANITIZE_LEAK_LOG=3Dtrue our logs revealed a memo=
-ry leak, exit non-zero!" &&
->  		invert_exit_code=3Dt
-> +	else
-> +		say "With GIT_TEST_SANITIZE_LEAK_LOG=3Dtrue our logs revealed a memo=
-ry leak..."
->  	fi
->  }
-
-This is outside the scope of this patch simply because it is
-inherited from the original, but does ", exit non-zero!"  part of
-the message really add any value?  I am wondering if
-
-	else
--		say "With GIT_TEST_SANITIZE_LEAK_LOG=3Dtrue ..., exit non-zero!"
-+		say "With GIT_TEST_SANITIZE_LEAK_LOG=3Dtrue our logs revealed a leak."
-+		test "$test_failure" !=3D 0 || invert_exit_code=3Dt
-	fi
-
-might be what we eventually want to end up with, after the dust
-settles from this fix.
-
-Thanks.
+Reviewed-by: Josh Steadmon <steadmon@google.com>
