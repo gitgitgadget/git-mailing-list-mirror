@@ -1,81 +1,124 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8622916F8F7
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 20:42:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038681366
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 20:52:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719866559; cv=none; b=RLg/JNDRjF2P6c1bEyF28ouR0K5laVrlgLDsGKiSA4WsNr+OYCy4HpuuoogeQeswm72CTwH7mjB69Xu8BBwTxGZtM+2KlRTksbaFCSg2VUCQuSjq8Ko98SanJ3D5cswHn52qngVT9ICHVLiHVPAZQqiONbuQQfLbDg6ClUGPK54=
+	t=1719867149; cv=none; b=EVJ64mfJwokYPK7AvUX/R2M8SBK6lVTurYi83/nYnzK+oaqNBJBMgH8BrjeA6uKQ7Zg0J+uU6NrvQOspXeqaog/Kfq/DYvHN15DMf18WOzzlN+Q9454USx4H1Fd0vvjEEVKBJEnLMT1rBiQscQlJIHY83Bm256QN1fxPRTXI/Sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719866559; c=relaxed/simple;
-	bh=BT023mWPQ2ED6x5UI2+DkGboYXeQg4Jgzo439TZz1ss=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fiD48im4y9k7PZyldeIj+jzc4oINTK+7C/h7lBjUNG+FbBlWWkoM5wNhvjkt4mVqUSFAvwRlpbm2/4iQ1LjIT0ftiwYdK5+5X9tn7OSz7g5iWqN0G9V5HOh5hTIuaImIoaJcSQ3CkY0/v8uoDSxzcog8aCjfs8dj6720jpYug1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mb+SsDvI; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mb+SsDvI"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0F4761E837;
-	Mon,  1 Jul 2024 16:42:38 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=BT023mWPQ2ED6x5UI2+DkGboYXeQg4Jgzo439T
-	Zz1ss=; b=mb+SsDvI2uvhenpbDJOLjMrIgRvFP4SVJGLgwsihUFkKh1hRHkV5lL
-	EXajZvFiXoDXoouKySfXzT7wpn7kQ8g3VYQacuBhbLQKDQnl8Cu5+/m4tdvPUWTF
-	82cBNoQwBFOSg3vljpXAnIoRCD9r4dN/H0enGOaivCy24tMRQU/Y4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 073861E836;
-	Mon,  1 Jul 2024 16:42:38 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 929841E835;
-	Mon,  1 Jul 2024 16:42:34 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Alex Riesen
- <raa.lkml@gmail.com>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/1] do not pass "git -c foo=bar" params to transport
- helpers
-In-Reply-To: <20100824064114.GA20724@burratino> (Jonathan Nieder's message of
-	"Tue, 24 Aug 2010 01:41:14 -0500")
-References: <7viq3119yn.fsf@alter.siamese.dyndns.org>
-	<20100823183857.GA22386@coredump.intra.peff.net>
-	<20100823191600.GA2523@coredump.intra.peff.net>
-	<20100824064114.GA20724@burratino>
-Date: Mon, 01 Jul 2024 13:42:32 -0700
-Message-ID: <xmqqh6d8vo7b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1719867149; c=relaxed/simple;
+	bh=oUXE8rzFk5FV19KGE0nEZl3iMNav8YUvWu5Dhfu8r+w=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CsxgS61F19E2JuTcO5fUy6VZyPpo7Px1Nzak6Ae5NI7jOSPpjrxaZoprsP/c5kzo+cg1pGbHaB94R1kPEEq1phvief7/uj4OC8amMg6AFfKrfdhSrzQx5MJJLKxtGVCDweK6DjQHaVHkG6bRNEMEdDTaU/Xx+ZxdwG2wxFWJu2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 461Kgo3R1862414
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 1 Jul 2024 20:42:51 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        "'Alec Sanders'" <aws022@bucknell.edu>
+Cc: <git@vger.kernel.org>
+References: <CA+Gods=0N9yYZ2tMSiV2GRO2uwpQTvvWB=Gcv9CfS4XrMYWN=A@mail.gmail.com> <ZoMOLz--NK_U6sst@tapette.crustytoothpaste.net>
+In-Reply-To: <ZoMOLz--NK_U6sst@tapette.crustytoothpaste.net>
+Subject: RE: Trouble with Gaia binary files
+Date: Mon, 1 Jul 2024 16:42:44 -0400
+Organization: Nexbridge Inc.
+Message-ID: <073501dacbf7$3d4825b0$b7d87110$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 71FED362-37EA-11EF-AC60-C38742FD603B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQE12DISOZyGV7goV5i0+caV3/nbDgKA/yXjsxg1PVA=
+Content-Language: en-ca
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Like $GIT_CONFIG, $GIT_CONFIG_PARAMETERS needs to be suppressed by
-> "git push" and its cousins when running local transport helpers to
-> imitate remote transport well.
+On Monday, July 1, 2024 4:15 PM, brian m. carlson wrote:
+>On 2024-07-01 at 15:34:04, Alec Sanders wrote:
+>> Hello,
+>>
+>> I am running into an issue with Git and Gaia files This error =
+persists
+>> when I perform a git checkout or git merge.
+>> The error is as follows
+>>
+>> error: Your local changes to the following files would be overwritten
+>> by checkout:
+>>
+>> *Insert filepath here*
+>> Filepath directs the user to the project folder and within it, =
+Assets,
+>> Gaia User Data, Sessions, ... , Terrain data, etc
+>>
+>> Please commit your changes or stash them before you switch branches.
+>> aborting
 >
-> Noticed-by: Jeff King <peff@peff.net>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> Jeff King wrote:
+>This message isn't particular to any given type of file.  What it means =
+is that your
+>files are modified in the working tree and the operation you want to =
+perform (a
+>checkout or a merge) will modify the working tree.  Because doing that =
+operation
+>would destroy data, Git asks you to do something specific to make your =
+working
+>tree clean before you can do that operation.
 >
->> Here's a first attempt. No idea if it has any bad side effects. :)
+>I'm not familiar with Gaia, but in the case that you're using Git LFS, =
+this could be
+>caused by using Git LFS incorrectly, whether by you or someone else, =
+that can lead
+>to files being perpetually marked modified.
+>If a file is tracked as a Git LFS file (that is, the file type is =
+listed as `filter=3Dlfs` in
+>`.gitattributes`), but someone has checked in the file without =
+installing or enabling
+>Git LFS (that is, as a regular file), then the file will end up always =
+modified.
+
+I have seen this situation resulting from security attribute mismatches =
+under Windows. If the Gaia generated files are executable and =
+core.filemode=3Dtrue and/or the files are not added with --chmod=3D+x, =
+this can be persistent. This sometimes gets past git status in a Cygwin =
+shell but shows up as a difference in ECLIPSE.
+
+>That happens because if the file is updated in the working tree, Git =
+tries to run the
+>clean filter to turn it into a pointer file, and since that differs =
+from what's in the
+>repository (which is the full file), Git marks it as modified.  =
+Attempting to check out
+>or reset the file causes the same thing to occur, resulting in the same =
+situation.
 >
-> Here's the transport boundary.
+>In any event, if you _do_ want to keep the changes, you should run `git =
+stash` to
+>stash the changes, and then checkout or merge.  If you _don't_ want the =
+changes
+>and you are really certain you want to destroy all of them, you can run =
+`git reset --
+>hard` (this really does destroy them, so be careful).
+>
+>If you have the Git LFS problem I mentioned above, `git reset --hard` =
+will not fix the
+>problem.  In such a case, you will need to do `git add --renormalize .` =
+and then `git
+>commit` to fix the state of the branch.
+>You'll need to do this to every affected branch.  You can also run `git =
+lfs fsck --
+>pointers BASE..HEAD` (substituting `BASE` and `HEAD`) in your CI =
+system, which will
+>exit nonzero and print an error if someone does this again.
 
-FYI: there is a follow-up discussion recently.
+--Randall
 
-https://lore.kernel.org/git/20240701181916.GD3199@coredump.intra.peff.net/
