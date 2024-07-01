@@ -1,233 +1,172 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61A212BF30
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 09:51:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6110239FD0
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 11:46:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719827481; cv=none; b=HeFghPRXgSsIjYF+cJXcKrxhrsvTU0lv6znbSd+/VKfxIRdn11Xg6sG4pxnszkIscfqN41v0O+/VUkOeqXI1DcMgP82HpFVkT0p8kqBTDdpG+meTDy0414p8hcCGKi/+JEJKli2soOi42XjNwKP0kquvWJKVnKmWUhy+4pNtpZc=
+	t=1719834368; cv=none; b=JXh947K/QooE+GwIn76saM0ZKlz+pAIsXAP11NJaH1rJcPQGGWPX/hn9iIkzsrgNiTTJAvWkZHlH+H8etq5IFsXLts+/glb9d0P6+fc8EcitRFaAixHDvU96rX1t/q48SK7RPpBVmQvyvg8eXhI+kw8O3GKWtukV6Uh2FIXRo5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719827481; c=relaxed/simple;
-	bh=apMaHRr1B0L8iNAvOOlkw4wGqUOGYsduMLLeSsSiwFg=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qZH9OWZuaBO2MPhZPzfy2d9vb2U8Bm73vw47CWYzQtBKMmBz8Q+K6J3y55bDR9GfzFU2vlzTR30DKgcgXsRuTSZ69kxWEz86uti2jnfZtkfql4XuSgRxUjylIAEjOmXXCp0yeGfpxVjmhq9do+/MupklW5FA9l7TSmhRQoU8wZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GEN82KqC; arc=none smtp.client-ip=209.85.208.175
+	s=arc-20240116; t=1719834368; c=relaxed/simple;
+	bh=8AFunC1q3AeHqi3Wqy2hFeTG0jBk7DPOLVhp+t4dCo0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rzuHw+kJ3VIlPUDNOzh21G9KTMIEvkAE5GNxU9ke2YcPPisJuKzLHSyJiy/7bVYCnASTO7+1cqVnklP5jFzBZh8+vu70iyMD5vCaUcde7XvuAahIzq5QPhOXmo9ww/hpW76aPednYvhRWSs78wfW60+2Q8jCimVh+6OLjyPWF+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JOgKQsoc; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GEN82KqC"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2ebec2f11b7so30928741fa.2
-        for <git@vger.kernel.org>; Mon, 01 Jul 2024 02:51:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JOgKQsoc"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-7066c9741fbso2356714b3a.2
+        for <git@vger.kernel.org>; Mon, 01 Jul 2024 04:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719827478; x=1720432278; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0TnznhEPqN/h3TQsqEAmubUsdHfCoku+ysXFlrRcWu0=;
-        b=GEN82KqCOfYu06Sf5ifN9cD3hNDTAAenhMQZhe3tNPAJGw21hgvm+I1JCSUiTTKjpP
-         3Uskb5RBt5xOoivZx/p8WpdXkmoxWVCyoqZzrva3F9AcmzD2SBPiuibcMJ3t4o3mfdsL
-         pH1yAohP0w2mZ6NYgIGKTi6eeEOL0qnn412zK1EsUKC4vDcGypUcr2xz3b5b/kaesp/P
-         rqJd7j4gLn66XQT8V12sR4Irrg32sD2dR6dwkPAd8s9p6YEDkN5WTalIG6dE4q1yHwth
-         o3d015UOAYO2pU6Sfy3LmgAdzjhNuuf0uV5Qp79YuDs1Kt7muHaj/8uMYMAZ0RYOAuh5
-         Fa9Q==
+        d=gmail.com; s=20230601; t=1719834366; x=1720439166; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=krh1qpSvKWBYkJK9og4qfM8EiRjFJuwqS5jPdEwx85o=;
+        b=JOgKQsoc+AdCLOgy8+bvRxH/LBfhbE8nBPd0uRSX7Rne9PyTkRDSIIfUBu4wSuTfcq
+         gzOazc7b3rklFJttxULttJawq05Zz/BWzeKJEBv/wmkF2QW+Fi+rNDTpjFKFDJ2JySJG
+         qX1pxppnDLyRXEFEPipObGBbTuy72OSsDIdkBBa7UoN5edVeqA/nUKE0YbwOZMCFze7X
+         gF6VqyCgR+CnVWDrK26THNgM7UZqkggidpfyw9hIaAjRaEvrVvMbIC/6IkKrt2Pz+fzw
+         9lccJHDc9flsCtV2z0jMShaviZ/w+mw3kcJRJVFfToaLOA/BFVWhKvPkXzrlnpG/gSGi
+         XLtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719827478; x=1720432278;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0TnznhEPqN/h3TQsqEAmubUsdHfCoku+ysXFlrRcWu0=;
-        b=O3VruBSAkNWpFEjjCAedao4QYE61ddO033DnkR/epati+US3K0OnRwut1EQmhO1vw/
-         fYdmm4AwNccqHtvp1zQBF8Up3p9Pt9doB+tEyOk208Z4HIitm3o15eWHbYG3b6zNvBP+
-         UpGnz9HBnNbfjpTm0MrQSxJ/nPRRPneQsPRDDzdyoMAcIixOm5rDLMbuMbXWMDjVYmnm
-         lHqRr7kz+V1MXD51Y/4rDo4LuukKiA7yb7NMhnLFMmAENvk0CCajg0mJag3Ad4ZA7JH5
-         cfWmdACmFemL8O4g+BIKNybZ5oZoxZNx9fuYTPCnD/S6L1cZq9Rx79ZkC9gFdWDedcGK
-         K/jg==
-X-Gm-Message-State: AOJu0YxUIXW4Zm3wvhjsmOF204dCbl42fJlNAP/Z5oJW/2z4jGG00tSZ
-	63fuj+NSAVqPUWliR8hGJzUGOul3v8CKuCI2eMrQwKcU8WajezBHRi0HtAdL7J/NuxoVUaA71wP
-	MZ5oR48/UPgKB3oo7MR5Nz0GoQPLHlcAH
-X-Google-Smtp-Source: AGHT+IEHaW/E11l7oqph+I9o5XLgFNyFQxswSvIUIh72laAklCfPThj6IKF/BtaMEgU5WuTJj1Fl2NsccCmhmT7b3qg=
-X-Received: by 2002:a2e:bc04:0:b0:2ec:6755:a0cf with SMTP id
- 38308e7fff4ca-2ee5e4c7b53mr31103421fa.32.1719827477484; Mon, 01 Jul 2024
- 02:51:17 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 1 Jul 2024 02:51:15 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <CA+J6zkSfGrfpgAMdm_zHX9C0vhpv_802O487WgbB5XXMw1Mc=g@mail.gmail.com>
-References: <20240621060018.12795-1-chandrapratap3519@gmail.com>
- <20240628063625.4092-1-chandrapratap3519@gmail.com> <20240628063625.4092-11-chandrapratap3519@gmail.com>
- <CAOLa=ZRx6LQ26U-00UUttjo7sitLZ+gWA7FX0m3p1nQGhGF7Zw@mail.gmail.com> <CA+J6zkSfGrfpgAMdm_zHX9C0vhpv_802O487WgbB5XXMw1Mc=g@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1719834366; x=1720439166;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=krh1qpSvKWBYkJK9og4qfM8EiRjFJuwqS5jPdEwx85o=;
+        b=iQ7wGueJFsGWXeBEFXRVVgMqcy9TjOCgUk2nhlAKpZkfZFJroyeC89otW/8KSKCInU
+         jFR7LMHPNJPUSPfDfys8S5TQbZYcM49JgyTmka1t92pcfQzW9Iep2sXF17AOMgcTqeyl
+         81RnS+aVuSQg5bju6xR0g6n7HR2vumXt3pXo0Z2TI2xSRNhMlNy1TfKKdNbs1Hltkq30
+         YIW14mzbQnd3WrkMb7byeFtIHVUhqduSze8nqo7oE+Ek2M0Vfyw0MSqLwIC77rjogl6V
+         wXJ0gxPNuEvQ774GKl0AqldeIZ/Kd1flNYARaDlLehTEWpTQ5hoZ8V3sEk7ozZuf/y3Q
+         3EMw==
+X-Gm-Message-State: AOJu0YxI0cVrZ4uCShkZ5gO1pcw+JT09w4i7jvAN/LNz03w11EkWfyEX
+	OX2Sa/8W0AJi7JFMHD2/oCkIv3DTluVvFBpsye0OKOwfNDmWfs5cmsJoR5Up
+X-Google-Smtp-Source: AGHT+IHtKZiXOG28eBZtDyzHf2+C1G0M1OVgYa4UbcRwA+iuxTedNOQWqxfnOMJrFJCRNMUNfjyfiQ==
+X-Received: by 2002:a05:6a20:9186:b0:1be:d299:d818 with SMTP id adf61e73a8af0-1bef6109d16mr8779286637.14.1719834366136;
+        Mon, 01 Jul 2024 04:46:06 -0700 (PDT)
+Received: from google.com (202.168.16.34.bc.googleusercontent.com. [34.16.168.202])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac1598cfbsm62812055ad.250.2024.07.01.04.46.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jul 2024 04:46:05 -0700 (PDT)
+Date: Mon, 1 Jul 2024 13:46:03 +0200
+From: Jonathan Nieder <jrnieder@gmail.com>
+To: limin <1159309551xcz@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Git remote origin leaks user access token
+Message-ID: <ZoKW-yDJMsz9JPSI@google.com>
+References: <CALFtjBBvk+JPmU_GzrnM=ANwaQDdiLtzh4YkZFbcVENyCu9fxA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 1 Jul 2024 02:51:15 -0700
-Message-ID: <CAOLa=ZTsA624-T_Kqh3Nn9+_arCg93r-re3qHN9MGibgBP+LLQ@mail.gmail.com>
-Subject: Re: [PATCH v3 10/11] t-reftable-record: add tests for reftable_ref_record_compare_name()
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org, karthik188@gmail.com, Patrick Steinhardt <ps@pks.im>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="000000000000df23b1061c2c894d"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALFtjBBvk+JPmU_GzrnM=ANwaQDdiLtzh4YkZFbcVENyCu9fxA@mail.gmail.com>
 
---000000000000df23b1061c2c894d
-Content-Type: text/plain; charset="UTF-8"
+(+cc: git@vger.kernel.org, git-security -> bcc)
+Hi!
 
-Chandra Pratap <chandrapratap3519@gmail.com> writes:
+limin wrote:
 
-> On Mon, 1 Jul 2024 at 00:29, Karthik Nayak <karthik.188@gmail.com> wrote:
->>
->> Chandra Pratap <chandrapratap3519@gmail.com> writes:
->>
->> > reftable_ref_record_compare_name() is a function defined by
->> > reftable/record.{c, h} and is used to compare the refname of two
->> > ref records when sorting multiple ref records using 'qsort'.
->> > In the current testing setup, this function is left unexercised.
->> > Add a testing function for the same.
->> >
->> > Mentored-by: Patrick Steinhardt <ps@pks.im>
->> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
->> > Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
->> > ---
->> >  t/unit-tests/t-reftable-record.c | 23 +++++++++++++++++++++++
->> >  1 file changed, 23 insertions(+)
->> >
->> > diff --git a/t/unit-tests/t-reftable-record.c b/t/unit-tests/t-reftable-record.c
->> > index 55b8d03494..f45f2fdef2 100644
->> > --- a/t/unit-tests/t-reftable-record.c
->> > +++ b/t/unit-tests/t-reftable-record.c
->> > @@ -95,6 +95,28 @@ static void test_reftable_ref_record_comparison(void)
->> >       check(!reftable_record_cmp(&in[0], &in[1]));
->> >  }
->> >
->> > +static void test_reftable_ref_record_compare_name(void)
->> > +{
->> > +     struct reftable_ref_record recs[14] = { 0 };
->> > +     size_t N = ARRAY_SIZE(recs), i;
->> > +
->> > +     for (i = 0; i < N; i++)
->> > +             recs[i].refname = xstrfmt("%02"PRIuMAX, (uintmax_t)i);
->>
->> This needs to be free'd too right?
->>
->> So we create an array of 14 records, with refnames "00", "01", "02" ...
->> "13", here.
->>
->> > +
->> > +     QSORT(recs, N, reftable_ref_record_compare_name);
->> > +
->>
->> We then use `reftable_ref_record_compare_name` as the comparison
->> function to sort them.
->>
->> > +     for (i = 1; i < N; i++) {
->> > +             check_int(strcmp(recs[i - 1].refname, recs[i].refname), <, 0);
->> > +             check_int(reftable_ref_record_compare_name(&recs[i], &recs[i]), ==, 0);
->> > +     }
->>
->> Here we use `strcmp` to ensure that the ordering done by
->> `reftable_ref_record_compare_name` is correct. This makes sense,
->> although I would have expected this to be done the other way around.
->> i.e. we should use `strcmp` as the function used in `QSORT` and in this
->> loop we validate that `reftable_ref_record_compare_name` also produces
->> the same result when comparing.
+> Hi, I found a potential security issue when running a tool in my private
+> project. I think this exposes my personal access token to danger when using
+> "git remote get-url origin".
+
+I'm moving this conversation to the public Git mailing list, as this
+behavior is well known.
+
+I look forward to working together on ways to reduce the impact (for
+example, ways to encourage people to use their system's password
+keychain instead of including credentials in URLs).
+
+Report left unsnipped below, for reference.
+
+Thanks,
+Jonathan
+
+> Version
 >
-> The first parameter to QSORT is an array of 'struct reftable_record' so I don't
-> think it's possible to use strcmp() as the comparison function. We do, however,
-> use strcmp() internally to compare the ref records.
+> 2.45.2
 >
-
-Well, yes, not directly, but you can create your own function and pass
-it to QSORT. This will mostly replicate what
-`reftable_ref_record_compare_name` is doing. But I think you're missing
-what I'm trying to say however.
-
-I'm not really talking about the semantics of it. I'm talking more about
-the concept of it. See the next section...
-
->> > +
->> > +     for (i = 0; i < N - 1; i++)
->> > +             check_int(reftable_ref_record_compare_name(&recs[i + 1], &recs[i]), >, 0);
->> > +
->>
->> Also, with the current setup, we use `reftable_ref_record_compare_name`
->> to sort the first array and then use `reftable_ref_record_compare_name`
->> to check if it is correct? This doesn't work, we need to isolate the
->> data creation from the inference, if the same function can influence
->> both, then we are not really testing the function.
+> Description
 >
-> The validity of `reftable_ref_record_compare_name()` is checked by the first
-> loop. Since we're already sure of the order of 'recs' at this point (increasing
-> order), this loop is supposed to test the function for ' > 0' case.
+> Lots of people are using personal access token to clone their private
+> repository. To use a access token, you can include your username and token
+> in https url to clone projects on github, gitlab or any other DevOps
+> Platform:
 >
-
-Yes, the first loop uses 'strcmp' to validate and that's perfectly
-correct. But this operation here is kinda pointless in my opinion. My
-point being that if there is a list x[] and you use a function f() to
-sort that list, validating that x[] is sorted with f() again, doesn't
-test f().
-
-It might be much simpler to just test
-`reftable_ref_record_compare_name()` as so:
-
-    static void test_reftable_ref_record_compare_name(void)
-    {
-    	struct reftable_ref_record recs[3] = {
-    		{
-    			.refname = (char *) "refs/heads/a"
-    		},
-    		{
-    			.refname = (char *) "refs/heads/b"
-    		},
-    		{
-    			.refname = (char *) "refs/heads/a"
-    		},
-    	};
-
-    	check_int(reftable_ref_record_compare_name(&recs[0], &recs[1]), ==, -1);
-    	check_int(reftable_ref_record_compare_name(&recs[1], &recs[0]), ==, 1);
-    	check_int(reftable_ref_record_compare_name(&recs[0], &recs[2]), ==, 0);
-    }
-
->> > +     for (i = 0; i < N; i++)
->> > +             reftable_ref_record_release(&recs[i]);
->> > +}
->> > +
->>
->> Nit: The top three loops could possibly be combined.
+> git clone https://<username>:<token>@github.com/username/repository.git
 >
-> The limiting as well as initial value for the array indices are all
-> different so I'm not sure how to go about this.
+> However, we can get the token back easily by just using git remote get-url
+> origin.
 >
->> >  static void test_reftable_ref_record_roundtrip(void)
->> >  {
->> >       struct strbuf scratch = STRBUF_INIT;
->> > @@ -490,6 +512,7 @@ int cmd_main(int argc, const char *argv[])
->> >       TEST(test_reftable_log_record_comparison(), "comparison operations work on log record");
->> >       TEST(test_reftable_index_record_comparison(), "comparison operations work on index record");
->> >       TEST(test_reftable_obj_record_comparison(), "comparison operations work on obj record");
->> > +     TEST(test_reftable_ref_record_compare_name(), "reftable_ref_record_compare_name works");
->> >       TEST(test_reftable_log_record_roundtrip(), "record operations work on log record");
->> >       TEST(test_reftable_ref_record_roundtrip(), "record operations work on ref record");
->> >       TEST(test_varint_roundtrip(), "put_var_int and get_var_int work");
->> > --
->> > 2.45.2.404.g9eaef5822c
-
---000000000000df23b1061c2c894d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: b71959499d41b9c7_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hQ2ZCRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNmVWQy8wY3o4NUR1ck52TStjRGdDVmNPMU05UGs4RgpsYlRFeGo1YWwr
-TlRGMXFBdE4xTlhyNEtmK29vSjlEV3VVTVQ5MXJLcjI2VUp2Ym00N2JlMXhjd2QrcEM5TnBsCjd2
-amljRDNBU2JaRWJFc0hLT1lhZm4wK1luOUFmcUtxcXdJdUVGYmU5UjBEbi9TTkNHWHJ5K0QzUGs2
-ZWMvdXIKREtEVnIrVk9XSEhMeURocDVRVnI2cDJRUVV5M3ZQeTBReEd4MHRYWWJIVitMUktJSzg2
-OVRMNC9NT1NRR0NPVQovVEc3Kytabi9XSkVGYU1XanBRTGJ1SVRjcHdvZDNJY2c3SWJiaVAwdzBy
-ODhyTHFQZ1ZrcTY3S0FHNTdnL3prCkJPY2ZNZmpVTHlxbVpUVWVvMzM3NStNckRzdkhONjMyaXow
-cFcvSnRBSkl5R21TVHJnZHdMVVBuSEFGRHpjMWQKMG1FcVVUci9kejRaZW5TQ09VakZWZ1F1SDRu
-QjU4MHNzNXZxamxOdGk2VzhEektiSmpmdURnU3NzOHZSaC82ZQpQS29aVlJxaEtuamRFUkh5TFdN
-MUIzejBUcTRZajVaRUlYbDdQOWdhV0hmVzBGTWJUaTNIUXJUaUMrUnVuOTNTCnUwTUpDU1dUbjFz
-NVBXelhqdGVTZW5VZ294cXhhbmpJem1kcmRsRT0KPUlFM0kKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000df23b1061c2c894d--
+> cd privateProject
+> git remote get-url origin
+> > https://username:ghp_xxxxx@github.com/username/repository.git
+>
+> This can be dangerous, because we often run third party tools in our
+> private repository. If a malicious tool runs git remote get-url origin, it
+> can steal our personal access token of github/gitlab. In this case, our
+> github/gitlab will be controlled by attackers which can have severe
+> consequences.
+>
+> I found this issue during code auditing via safety tool
+> <https://github.com/pyupio/safety>. After scanning a project using safety
+> check -r requirements.txt --save-json test.json, safety saved results into
+> test.json file. However, when I looked into test.json, I found my personal
+> access token in this file.
+>
+> "report_meta": {
+>     "scan_target": "files",
+>     "scanned": [
+>         "/home/kali/huntr/azure-sdk-for-python/tools/azure-sdk-tools/ci_tools/versioning/requirements.txt"
+>     ],
+>     "target_languages": [
+>         "python"
+>     ],
+>     "git": {
+>         "branch": "main",
+>         "tag": "",
+>         "commit": "b182b0c4f9d07d18f118130bc941c3b7a75667b1",
+>         "dirty": false,
+>         "origin": "https://outh2:ghp_xxxx@github.com/sunriseXu/xxxx.git"
+>     },
+> }
+>
+> So, I looked into the source code of safety. The class GIT
+> <https://github.com/pyupio/safety/blob/f15d7908d27fd887dcc6b31237b8e3df79a9359b/safety/scan/util.py#L49>
+> is
+> responsible for collecting repository information in current repo where
+> safety runs.
+>
+> class GIT:
+>     ORIGIN_CMD: Tuple[str, ...] = ("remote", "get-url", "origin")
+>     def __run__(self, cmd: Tuple[str, ...], env_var: Optional[str] =
+> None) -> Optional[str]:
+>         if env_var and os.environ.get(env_var):
+>             return os.environ.get(env_var)
+>
+>         try:
+>             return subprocess.run(self.git + cmd, stdout=subprocess.PIPE,
+>
+> stderr=subprocess.DEVNULL).stdout.decode('utf-8').strip()
+>         except Exception as e:
+>             LOG.exception(e)
+>
+>         return None
+>     def origin(self) -> Optional[str]:
+>         # get the origin of repository
+>         return self.__run__(self.ORIGIN_CMD, env_var="SAFETY_GIT_ORIGIN")
+>
+> Impact
+>
+> This can have severe consequences. *Any* tools running in private
+> repositories have ability to steal personal access token if the token is
+> written in git remote url explicitly. Git should mask user’s access token
+> when using cli command git remote get-url origin.
