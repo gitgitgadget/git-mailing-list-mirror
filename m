@@ -1,90 +1,88 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B064A16132E
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 15:26:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD041667E1
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 15:34:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719847582; cv=none; b=RJTDfwWmqs9nqQDuhnvAX1lmJYiHuQsF/TGXHKqxJ7isvKO17qU90lEPLxp3DxQHaUgg8TODF9XsCH+ESJYahmNjBZHwe4hpeLMlovocKU1UxdQfK2WdQ3iVsfOnFx0GtHTnPjSFvXQPrNMMAGvOxnjEr9eD3MNNOkHa9bwjYHs=
+	t=1719848056; cv=none; b=tEH/N13SJEvZNBAmLLuK7kdn5Ij7C7WiyBzYgqIHt/m26CpF73c9FpApxdeV2ySolDPVVfMzeUdgm3sqNAYpvW0748tJbEOor/eN30PtrgbZnHOxA1AB8Lw7oeqK0KCxC8RyUE506yyrcqsv9adXd34PQceMAX9DB/B6vPYYGF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719847582; c=relaxed/simple;
-	bh=9A2kpYVsrqOT0THNEKXRrsltQDxRTEpwQdzsSJZbyP8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HDvpFYA0kbXaE5eaEZkvRC8kb7UmzRqmLtXFANt45hEgZMzx8iBKrdx1K2W6eGG9Z0cXS+QuJfGgQ8aDa3AvkNEVuifNydyfkoG8hC3yEy+UIl0CA0/A999FLf+7BQ0rct552dRIJ3LVDCbKmmTt14KA0h6Y2rFWvmOyf5yhNeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=klAPfGCx; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1719848056; c=relaxed/simple;
+	bh=KQlk6AZVdY1mQVBSw/82dzflPauCL6nhEXreHivnUeI=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=uaeUs7p2k5L+3EcbVvribWrG51xTl4qPa3hLC0M+iqH/WR4qgHkr9LfU0wDQNcbahvv3x0zsB3FbkdjJtEyKACVNBjqcXhJwq+VhNju1Z80FARa7XfM7cLt2iU2N1cXILw8UGlQLUmZNgQaeqaZHdEL5YoROA4bkiGEC5qUX6Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bucknell.edu; spf=pass smtp.mailfrom=bucknell.edu; dkim=pass (1024-bit key) header.d=bucknell.edu header.i=@bucknell.edu header.b=UmOeuETj; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bucknell.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bucknell.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="klAPfGCx"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8BEF41C705;
-	Mon,  1 Jul 2024 11:26:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=9A2kpYVsrqOT0THNEKXRrsltQDxRTEpwQdzsSJ
-	ZbyP8=; b=klAPfGCxgj8gTFTwDZPH3l8pmLfRDStVL3yNEEkpJLedvZe/mUHzH9
-	ukLgmC9uz8oM0//9irMW17LbrzDJ6ww1QXKcBCqJ3RVi/wRO6+sy+wuNYWbRw8Y+
-	Ys639oisUDe1k4s44fSIvWL1eDtfJpEHYQnnBuDM4cJPwGzMlp16o=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 84DEE1C704;
-	Mon,  1 Jul 2024 11:26:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 244481C6FB;
-	Mon,  1 Jul 2024 11:26:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/1] http: allow authenticating proactively
-In-Reply-To: <Zn9UGwMQ4Ur-peI6@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Sat, 29 Jun 2024 00:23:55 +0000")
-References: <20240628002742.3421311-1-sandals@crustytoothpaste.net>
-	<20240628002742.3421311-2-sandals@crustytoothpaste.net>
-	<xmqqa5j53pbo.fsf@gitster.g>
-	<Zn8yhdN6henrIqgD@tapette.crustytoothpaste.net>
-	<xmqqh6dc1zk2.fsf@gitster.g>
-	<Zn9UGwMQ4Ur-peI6@tapette.crustytoothpaste.net>
-Date: Mon, 01 Jul 2024 08:26:09 -0700
-Message-ID: <xmqqr0cdyvzi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=bucknell.edu header.i=@bucknell.edu header.b="UmOeuETj"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a724b3a32d2so358185266b.2
+        for <git@vger.kernel.org>; Mon, 01 Jul 2024 08:34:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bucknell.edu; s=google; t=1719848053; x=1720452853; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=DPxGMdSN2Uz6AIZBvUzKTgEOy3lwO2wq6BzSZgPxpdQ=;
+        b=UmOeuETjqMeOQLdQbX+7dILjvu4PxOXEFzpAL7bF1bdcjKA91RrwdVi4HCbuZToV0K
+         Urp3JWM1S9+CXVH0K7ffYkdOmn4msYN4qkPuo7JOy9J1KiEpXbba4592DifkG+2v3Xz2
+         v6SEHN0C/k2qFdKRiCXJ1HlEPp5qmqp60gY9k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719848053; x=1720452853;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DPxGMdSN2Uz6AIZBvUzKTgEOy3lwO2wq6BzSZgPxpdQ=;
+        b=wmmr+qtDD7zjgYY13KCHpaXfp9DSFIkhrhfF3r7/OqQIb2zAeUHrBkSa3HjvKMpPCw
+         P6CpGbE65AxA4lABLXJtipgnITpKNL7rUU4pG1XvmdBJLC5PqnJIUPUD2LrmULWWgVpF
+         yBCFvstO77c2UEaT7LZCFw6rOZQcbFNGpFpHdQz3dnJg6jL6xJvyDoF1G4vbNFKbxu6M
+         hx5InplZu8HqrCQdb/pvAi/Z6ojZUVABL4uaUjABVcoygGiaUYCnEr3DMsd32zozglmz
+         Nin8s25pmBbHfQidmemzmg4wMI59Io6KJz9AvYmzq0ky5a4NxSGoSdUJgA2YZ9Z4xQw4
+         IlEw==
+X-Gm-Message-State: AOJu0YxfWgY6Sft/S7nhj+WdU6LUb4TwHZO2lU6TqgPzMiXLrosPA2s2
+	Bmxi2J8J4FJFHf92FCOfOL4SY5G0ypeufO5FN2MQscb8oA0UWrv9Lh3fFD4E6EZf1lLWZ33JQYF
+	1CtTI0TAhBJbQM7exPBV4PaO6fgX/t+g5axqnzSQpZHsAWahP/7P5T/aPZSJi8UBIeaUaVc0+gZ
+	CWzkHi974TEoMEKWpowylVCyONCFWJXV9Y7iNN6uLGD4avGbIRd4xCDIYQIYODCtNUMFcgHjTkz
+	+DOAFfu65a3/U37rBIuvaC7m6Jb7NvbQIQOz3dkS6kSKrWjRuKF5A==
+X-Google-Smtp-Source: AGHT+IGWO79twga1KBYPF8yVv7/KIF0T6hZarNY6b3+tVFr17Fhqp4/nColN1k7mdcsVDYnSad6HU3Dk+xeGfDA5bSo=
+X-Received: by 2002:a17:906:1e0b:b0:a6f:38:6968 with SMTP id
+ a640c23a62f3a-a751448587cmr336480266b.32.1719848053008; Mon, 01 Jul 2024
+ 08:34:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 3EF99DB6-37BE-11EF-99ED-C38742FD603B-77302942!pb-smtp20.pobox.com
+From: Alec Sanders <aws022@bucknell.edu>
+Date: Mon, 1 Jul 2024 11:34:04 -0400
+Message-ID: <CA+Gods=0N9yYZ2tMSiV2GRO2uwpQTvvWB=Gcv9CfS4XrMYWN=A@mail.gmail.com>
+Subject: Trouble with Gaia binary files
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-CLOUD-SEC-AV-Sent: true
+X-CLOUD-SEC-AV-Info: bucknell,google_mail,monitor
+X-Gm-Spam: 0
+X-Gm-Phishy: 0
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Hello,
 
-> On 2024-06-28 at 22:18:37, Junio C Hamano wrote:
->> Well, at least I couldn't read the proposed document update and read
->> that much out of it, and I suspect there may be other readers who
->> will share my confusion.  I think the source of the confusion is
->> that "don't request" does not automatically imply "allow the helper
->> to pick any scheme as it sees fit" if you do not know how helper is
->> designed to behave when it is not requested "any scheme".
->> 
->>     `basic` - Request Basic authentication from the helper.
->>     `auto`  - Ask the helper to pick an appropriate scheme.
->>     `none`  - Disable proactive authentication.
->> 
->> or something, perhaps?
->
-> That sounds good.  I appreciate you providing some language that would
-> be less confusing to you, because it will probably be less confusing to
-> others as well.
+I am running into an issue with Git and Gaia files
+This error persists when I perform a git checkout or git merge.
+The error is as follows
 
-Thanks.
+error: Your local changes to the following files would be overwritten
+by checkout:
 
-Giving a possible alternative, when you are certain you understood
-what you originally found confusing, is probably one of the things
-we should add as a tip to ReviewingPatches document (do we have one
-already--- #leftoverbits ?).
+*Insert filepath here*
+Filepath directs the user to the project folder and within it, Assets,
+Gaia User Data, Sessions, ... , Terrain data, etc
 
+Please commit your changes or stash them before you switch branches.
+aborting
+
+Thank you
+
+
+-- 
+Alec Sanders
+B.S. Computer Science
+Bucknell University 2025
+College of Arts and Sciences
