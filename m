@@ -1,89 +1,106 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63520535D4
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 12:20:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F8015AD9C
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 13:13:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719836404; cv=none; b=oD9gUMSZ5nJwKklYCFuhUGYRFzgzUQb/sJFCVjOqIA6JT+Ka42v/EVPekxjRm01xoV+GAuuBR8YmpzHELpB8UpFFhBtpVa+d2jdod0woXSxU2lY/yiEIuUnujJ9PRcrlLlqPjEzsDY+mQZV6DXXMSVUrqGBGMQSDMUTspuCI8sQ=
+	t=1719839619; cv=none; b=ICRWx67zrCp3oySMucNKfZVh3hcnAl7h4DVS4BJ555KwQ+hqA5zLt2uO2iFRG7393PjCGFYq9ghVrWaXlie60ZDDx/w+rK9sjwck98Cnz2TxOGWu7hrFsO40rt8EA4f8O8aiC4+Vc+W1cjbQLjvR019mzVDW3iNdV0k5iDfXJkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719836404; c=relaxed/simple;
-	bh=bbJTzdr6ip+dtn0S85r3kHy+6jE3TyD7RfUkQehPdOM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=eRw+217N1TNDW2i/a8sB/YlClOb2KVen1aZGNFAywhrGGlwgujTJbPq1JmTMJEk3NqFWtZfsLxrTwIESUTxyxTMbw1u9S0w8ZMLunvZNt2zCU6D0DU5xpaglkHutvpoNXQGuDOEe6iwLvse8xqNmxsjzaiN3kXUSNZ5q5oFNNfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K7XIhHwd; arc=none smtp.client-ip=209.85.208.53
+	s=arc-20240116; t=1719839619; c=relaxed/simple;
+	bh=H44ry/s/MrtJLiO1iY38V/cT1/Xq67cfrSIfc6sn0xg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hbsT+NcECHzugKWoSIVuHoNpkup81oqpzkq2HrRPWxraoO1lGAdKrA2stre+/jHtsK2cq3daYNoLAdZOc8osCB6kmkKmT3PBgYp+lx9HrA//waj7thNCj1YrRFRAl3LpC33kHd1F+ceOYF1UG4AULyC1K/70HC1fbO4uc9cAJdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QV74M3gr; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K7XIhHwd"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-585e774fd3dso262300a12.0
-        for <git@vger.kernel.org>; Mon, 01 Jul 2024 05:20:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QV74M3gr"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-64a6b66c1adso26591507b3.3
+        for <git@vger.kernel.org>; Mon, 01 Jul 2024 06:13:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719836401; x=1720441201; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719839617; x=1720444417; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fWpocJGAPETV0GS5i2+AY6LPnI6WjCwfjbc7GQR65Ic=;
-        b=K7XIhHwdhm7DTS+L8Wdq+GHLuX6I+AneQ/XSve+W94JeKjFSdne8uqAmKwbxw/SG+N
-         9HLaTlG3e5ZD7bmslQdGVBoiPhNLxAdH1OufqNwOG+hUv4lAL4Dm7JPBc4FDJRivIF4o
-         GpfWe2YEks6n7e+JdLL5n/GJT+DlbxWSDfrtfT8g4/UOmdpjGnOrZxsCpz5Z8+ak1meC
-         unh6WO5GYDrLVEaAjNexsNPay2AZbMEkPY2RNpcZKN6uGDmvLtqxF4+42XHwEtOXFhfS
-         nxS/0/mCz4ZrHn4taG+CuZy/O8PMPCwK5N6dvwjY1HumsGIwnMTzXTzwH78ipVY/bFjK
-         Vb1Q==
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oCzlYcmkzYDAK1syn1RNSFZ+xaZVMnd4bG5bKDqFWM0=;
+        b=QV74M3grnRe8v7lb6l4W7065JvxxW6i3VNJEwA+YtAl1/87V099iiE1QjZGIIHmgjG
+         LWUCdtXbkCy+Oz9R3vsGlmNFJAs75EZQy29LqHKFyYfLParERpvDr/ZmlsRxz7teGOif
+         4HwE9Sc96BjGyDhkONFx09dFOxCHNFMhSrkgYXLBM5+uzDA/aiJy9S6kIwgpHH+rAp7f
+         7tXSBvH2AIXSGDuf9LcperKCIu72DCSXHSC7qE0PbPGjl/2HMLy64Tmq0eUY+Y6y3X7v
+         S4c6wrBFwrE7ZMqR0o2TT3xdGIPktOoqsOu4CWys95CPXEUBGZ1f3nK5yehZjYkj00zo
+         7bOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719836401; x=1720441201;
+        d=1e100.net; s=20230601; t=1719839617; x=1720444417;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fWpocJGAPETV0GS5i2+AY6LPnI6WjCwfjbc7GQR65Ic=;
-        b=rfPAi9ns8NFKODSImOdKmCrrcqKrMSHkBLvCZxdNRWDqDYz0x1y6F1MLA1U8V+FyBx
-         dOLLAhWt0vVI8u4on0xGohq3M8hFDKSfx+Qc51ItKwdpt9Q7jlh+RvNRzxrv+L9IEEaY
-         WGCbynMUygW51hn4DlNiqpsutqmExkUqI02A6j5J52bm0t3roh/HJlZjRB0WL1OYXMtZ
-         /8lAS9m9o4esAhO/3qhQdqRrUMBZYUVXmGPhTjXmxaoVbLlTvIA6ommeRQdG9uJGlKOC
-         ub0qrtbIOziIBWKFzDl+SWKuuohsQVPcEZ3qylpSq+Ip+sakiG1lT0Evm3BLl3kyOCVa
-         Xw4A==
-X-Gm-Message-State: AOJu0Yz7dkVPfiH6kYn+BnPVUXgL+IT5piyfImw3LwzyM/U2P4aYjsbs
-	CPc/K2BT2dXwE9UbPe3zOJOD1DesT8c98aivAcIBe0vSpYceQRwpeDNggss9RwR39/2PkoqmSgf
-	aCEX9irx2keYgVotFCOj8wZCuZsuYqtyab10=
-X-Google-Smtp-Source: AGHT+IEuI8j5rkzcK501jkF3ivajCTB7PLPcJwhq2OQacM9cWHFg8yNco/XnDchlNsX2DP7Ozi2bJV4F6N/J+UMgxJQ=
-X-Received: by 2002:a17:906:5851:b0:a72:6b08:ab1a with SMTP id
- a640c23a62f3a-a75144545f4mr321436166b.46.1719836400561; Mon, 01 Jul 2024
- 05:20:00 -0700 (PDT)
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oCzlYcmkzYDAK1syn1RNSFZ+xaZVMnd4bG5bKDqFWM0=;
+        b=ViPlxAENr4Di2/Y2aniMpyaFLl/4JqtUiaNX7loOEy3zzm7JWomNg0y9XZqDSGOd9n
+         1TnSg0lXHvOzDtAN59QXt4tFBJOQAyXNp9MV0ElDEDUv75Ql+rYn4u1mwgaBy1NIjlWd
+         GmLJG25SPlqHhK8w1By+k+6z5/LMr3C23I8NcHrTQYymgTMLyVmdfde5Zi+y1iHimAt6
+         cs0aZDdYfPB6LsB0eXyGRzJCfk5e2MrbJYDATFH91veOVyrS+pBChBXnKQrW5MLH2fSV
+         N8X5f6bMX9g5Oy4eJQwhumknxhAlT9kXiRdaG5Yea2QQHNCqUwUySW6vV2aZxypyfkQ6
+         qNJg==
+X-Gm-Message-State: AOJu0YzqmrJV4pW2tGv2itV2t+RXec/iqwwG/CSGPvn1eU0mfZPqcsSY
+	SXkFbs2pXGreiuLT/XygcihGurgGVil6zCzVPJMRRKVyH096keTpIP4vP9b67JKhGaQuqe2g597
+	crrZG3s4cQDEove+LNvriTwh+pV4=
+X-Google-Smtp-Source: AGHT+IEirRN1GLj61VsTz8DDbcV8KiBdY8K0R8rblYbUunNPheMhhnlulDmNLmNYVFKQ40y1kFdJCjcAd4+9Z1AuiGA=
+X-Received: by 2002:a81:844e:0:b0:63b:b829:dcdc with SMTP id
+ 00721157ae682-64c7123c021mr48087507b3.1.1719839617273; Mon, 01 Jul 2024
+ 06:13:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 1 Jul 2024 14:19:48 +0200
-Message-ID: <CAP8UFD3v2o=3wg+1g=4pt6bpeKWT3T7z1z8DX6hyuiBnEKQdPw@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 112
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Todd Zullinger <tmz@pobox.com>, Dragan Simic <dsimic@manjaro.org>, 
-	Justin Tobler <jltobler@gmail.com>, Karthik Nayak <karthik.188@gmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Bruno Brito <bruno@git-tower.com>, 
-	David Aguilar <davvid@gmail.com>, Brandon Pugh <bp@brandonpugh.com>, lwn@lwn.net
+References: <CAChcVu=Kwqj7JhXqQW6Ni9+3TdSfdmHfSTJQWm1_uO2kczSm8g@mail.gmail.com>
+ <ZoKXt0jPphoM5nmJ@google.com>
+In-Reply-To: <ZoKXt0jPphoM5nmJ@google.com>
+From: Pavel Rappo <pavel.rappo@gmail.com>
+Date: Mon, 1 Jul 2024 14:13:26 +0100
+Message-ID: <CAChcVunPFBPmZ-NxBTAD56Gf_WcSXDHkFM_CzhbkULzDDo2NSA@mail.gmail.com>
+Subject: Re: Determining if a merge was produced automatically
+To: Jonathan Nieder <jrnieder@gmail.com>
+Cc: Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi everyone,
+I think the documentation is quite clear. It's just that it makes that
+feature unhelpful for my use case, as output from the following
+command is subject to change:
 
-The 112th edition of Git Rev News is now published:
+    git show --remerge-diff --pretty=3Dformat:%b <merge-commit>
 
-  https://git.github.io/rev_news/2024/06/30/edition-112/
+Now, if that's untrue, and the output from the above command cannot
+change, then yes, the documentation should be improved.
 
-Thanks a lot to =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec, Bruno Brito, David Aguila=
-r, Brandon Pugh
-and Dragan Simic who helped this month!
+-Pavel
 
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
-
-PS: An issue for the next edition is already opened and contributions
-are welcome:
-
-  https://github.com/git/git.github.io/issues/721
+On Mon, Jul 1, 2024 at 12:49=E2=80=AFPM Jonathan Nieder <jrnieder@gmail.com=
+> wrote:
+>
+> Hi Pavel,
+>
+> Pavel Rappo wrote:
+>
+> > However, this bit means that I shouldn't entirely trust its output:
+> >
+> >> The output emitted when this option is used is subject to change, and =
+so is its interaction with other options (unless explicitly documented).
+> >
+> > What is my best course of action?
+>
+> I'd encourage proposing a patch to make the documentation say what you
+> wish it said.  What guarantees would you like it to make?  That will
+> help with others in the project being able to decide what it should
+> guarantee and what it shouldn't, and regardless of the outcome of
+> discussion it would make the documentation more helpful for the next
+> person.
+>
+> See Documentation/MyFirstContribution for some more details on how
+> proposing a patch works.
+>
+> Thanks and hope that helps,
+> Jonathan
