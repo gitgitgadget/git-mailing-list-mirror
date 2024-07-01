@@ -1,104 +1,129 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909ED16FF48
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 22:25:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36A9133987
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 22:26:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719872745; cv=none; b=DlBcU+5DqJIMZjnKD1MWwHB4/9Bv/oFLwpL4WIVRtGjY04PF4e4lW5b88i7kcgs5dcT+g4KRLg2FDvrrttFai/pEb9Lmj+fX+7WhhptYdgAlBkygEpvqEk2Db7iSVHdmCfDBIZUa+ieI3sQzz+t9f+0gX8HwO86fdllsEFJ4xVc=
+	t=1719872797; cv=none; b=Yi/HCald5UgDZXb0Vlvs9VX3g6MCGWqRLXWkAWoi6bbWhvTvN11zQb1HHo9poG3DO5OLdjQ84lVBz48wHPduc8FO/KmHLwB7kZLJ2SO1OcC6Rguy+dH2disKU8LWZ/F2q40j4lgeiy6VYyQ1m6sdMMnk2Mkue27lIwdO0yuPyug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719872745; c=relaxed/simple;
-	bh=TDyiJlFdVz4PienHYUmG2AKwINdUZpS9CiZQH91MLvw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o9wBcV6dQkAVlVrfzvL5AN27Z8NVrONtUWgAk0jkcQLqt+z4h6j+caAK0LzHHzNsRji2qau1YbAxhbSEjP47x+vJtY2dol/cGPHhCVImBO7YB2VAaDtxqIT+R1L/JNERpGruEKocje3oAvBncdnTYAJJLEs6eVmfP6+kC0qNQ8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 29701 invoked by uid 109); 1 Jul 2024 22:25:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 01 Jul 2024 22:25:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18207 invoked by uid 111); 1 Jul 2024 22:25:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 01 Jul 2024 18:25:40 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 1 Jul 2024 18:25:41 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Wong <e@80x24.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	phillip.wood@dunelm.org.uk, Florian Schmaus <flo@geekplace.eu>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] setup: support GIT_IGNORE_INSECURE_OWNER environment
- variable
-Message-ID: <20240701222541.GC20683@coredump.intra.peff.net>
-References: <20240626123358.420292-1-flo@geekplace.eu>
- <20240626123358.420292-2-flo@geekplace.eu>
- <9e5b0cc6-e28c-4c51-ab48-663c61c00ee3@gmail.com>
- <72e42e9f-5b85-4863-8506-c99d658d7596@gmail.com>
- <ae658244-877f-c5cf-8947-83b87b66d01f@gmx.de>
- <20240701181916.GD3199@coredump.intra.peff.net>
- <xmqqplrwvob1.fsf@gitster.g>
+	s=arc-20240116; t=1719872797; c=relaxed/simple;
+	bh=vs0OQz+idCQQDqE/cG4ahIHwyJyWeeM0kF8B2Oyl7/8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PXDAdqpvVZmphlbavbWW4F3F2B0Xbhum7EsmsyjEN8S1STsdW+Fnt5US2Nr+ph4SOglTqDmY0TpqQ0wVthzqZG2DFKxg6llGl1sxZ6R+TYHtGzVnUeB4C7ZqTcGyHNq4ZYRNhbHkeJRobTEKfvr8nJ0+kPir27jhdPdFGXonr9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KkZV36qA; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KkZV36qA"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-64b5617ba47so28341437b3.3
+        for <git@vger.kernel.org>; Mon, 01 Jul 2024 15:26:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719872795; x=1720477595; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fOxxX49QFnrwpun1DUTLoVrJWTCAUeN4kwJfsyoRhy8=;
+        b=KkZV36qA4NK8/Piv791BFC2MNpzkURE7tDNJBFNmGhTEm3nqyAr4zIAadUk6J70lOh
+         UWuIgt86e0+8ek9jZofyPmmKpKlDrATVS5wm61VwmKtKscd3dpuDAXI01LIKWWwllVf3
+         ewzGaVfXOS4Vaa0UGYVUBUGWWmTU3nFJJOL9/Q8OAoZvDw6dVqI8BIToO8nPMmt3fiVL
+         097H7wzQSiRcbIfwvflCPWBGl/YJ+7i32y3G6WYvY3UEN50JrNMYHnTVZeE8a52GEXh2
+         dOorWwotkQquuJBclrS29pWa7w5FGn5T9+YTn1scr0ue1VUeA7n3ErG7TNwqgHBeENfn
+         F18g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719872795; x=1720477595;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fOxxX49QFnrwpun1DUTLoVrJWTCAUeN4kwJfsyoRhy8=;
+        b=XQDX66NDH6yql3VcMHjqQSEJVKG6p7MDh9PEXMGdmI/1iTatcghVVIIMUXqkm5cMV1
+         uWuKcxDJISeIYYNwx6F7wUKFXkDRtPP9zy98sxA9gupYBdoO7MTya1+siqg11fqeqbaE
+         HCfqlBRkZd+0Y/HlTXcByeX1JNJM5+ji0ttGtWyGfUCUImhgmIBpUUZwbFPfy3bXD92v
+         iEQSH5Eh+GID4qo9GCi3eKEdo84ShkbvhFlnKOcVCr9+cMCNqBwQdbKhrG0Sab12FvcM
+         NOCPRmZbPi6rUIIynuMvUyEFV9x7Sd3J2kt6E/D/uXlUymo/9dpMBjinilzZodE5bRF7
+         XMxQ==
+X-Gm-Message-State: AOJu0YzNRQLUtnQ85vrO8O0auDsiOUouVLX0MqRdaooZnJLH5xqUkQhF
+	6raUsVduSrNZ/4MnJHdL34mGW8ONdxlRNfLGS1Y7pyEyvj073PjlIRYxeobGCB51g9zvSakkoqA
+	0dmwbr/bKoAAcpcp/BXAZC9z3cmpWH/lHOxI=
+X-Google-Smtp-Source: AGHT+IEnmssEwAEQ9uxGb3hJxquIUs9MdsPOJSfPRpi1zOA+VoeWxW9YuBGSjj25uWs3r4xoxfXqnfoJllpFyN3/YxY=
+X-Received: by 2002:a81:9c0c:0:b0:63b:ca6d:7bb8 with SMTP id
+ 00721157ae682-64c71145749mr50679057b3.11.1719872794714; Mon, 01 Jul 2024
+ 15:26:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqplrwvob1.fsf@gitster.g>
+References: <CAChcVu=Kwqj7JhXqQW6Ni9+3TdSfdmHfSTJQWm1_uO2kczSm8g@mail.gmail.com>
+ <xmqqle2lyvdd.fsf@gitster.g> <CAChcVu=bWR_DvR==b7L0tn8PmK+9KOWWw+e7RtjMhywMv3W+qA@mail.gmail.com>
+ <xmqqbk3hx9ik.fsf@gitster.g>
+In-Reply-To: <xmqqbk3hx9ik.fsf@gitster.g>
+From: Pavel Rappo <pavel.rappo@gmail.com>
+Date: Mon, 1 Jul 2024 23:26:23 +0100
+Message-ID: <CAChcVukZbVVE0jHGJt44w8D5Pi60+wYXn6Wz3gs+kGd3xmaw8A@mail.gmail.com>
+Subject: Re: Determining if a merge was produced automatically
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-[+cc Eric for some possible public-inbox wisdom]
+On Mon, Jul 1, 2024 at 7:16=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Pavel Rappo <pavel.rappo@gmail.com> writes:
+>
+> > it for such merge commits produced automatically because of the
+> > assumption that nothing bad can happen there.
+>
+> I do not think that assumption holds in the first place, though.  A
+> typical and often cited example is when one side changed a helper
+> function's behaviour while the other side added new callers to the
+> helper function, still assuming the original behaviour.  In such a
+> case there may not even be an textual conflict but the end results
+> may be broken, and if the breakage is subtle, it may take weeks or
+> months before somebody notices such a semantic mismerge.
 
-On Mon, Jul 01, 2024 at 01:40:18PM -0700, Junio C Hamano wrote:
+Junio, I'm under no illusion that Git can resolve semantic conflicts,
+such as the one you described. When I said "nothing bad can happen" I
+didn't mean broken code, I meant unreviewed, possibly malicious
+changes making their way into the target branch.
 
-> > There's some more discussion from a similar case that came up a month
-> > ago:
-> >
-> >   https://lore.kernel.org/git/20240529102307.GF1098944@coredump.intra.peff.net/
-> 
-> Thanks.  I wonder if there is a way to add this kind of pieces of
-> information to old commits and discussion threads around it after
-> the fact, and if it helps us (like Dscho who wondered why we decided
-> if it is a good idea, and more importantly if we still think it is a
-> good idea and why).
-> 
->     ... and then goes back to see the original discussion thread,
->     with the "bright idea" that I could just follow up on 14-year
->     old discussion thread.  Only to find that despite what Dscho
->     said, the commit message does say why it is desirable ("to
->     imitate remote transport well") already.
-> 
-> So, I guess we do not really need to do such a post-annotation in
-> this particular case, but I think after seeing somebody posting a
-> message like the one I am responding to and finding it helpful, it
-> would be helpful if somebody can post a message pointing at it as a
-> response to the old thread that wants a post-annotation.
+Suppose, we have the master branch and a PR against that branch. If a
+new commit is pushed into the PR branch, we want it to be reviewed,
+unless that commit is a merge from master to the PR branch. In that
+case, we try to replicate the merge to see if it yields the same
+result. If the result is the same, we will not require re-review.
 
-Usually I find myself digging backwards in history, following links to
-old threads. But I guess what you are asking is how would somebody
-looking at old thread XYZ know that it was mentioned much later.
+Why do we not require a re-review in that case? Because when a PR is
+integrated, it is merged with the master anyway. That merge is
+unsupervised and unreviewed. If we flip sides, it means that we may
+want to not require a review for merging from master to the PR. It's
+this sense that "nothing bad can happen".
 
-And I think the solution is for the new thread to just link to the old
-one by message-id (i.e., the usual lore links). And then searching for
-that message-id in the archive could turn up the later threads. I don't
-know how well public-inbox handles that in practice, though:
+> But there, you'd need more than "both are cleanly auto-merged"; more
+> like "both may have conflicted but they are resolved the same way"
+> is what you are interested, no?  Since at that point, your primary
+> interest shouldn't be "does it cleanly auto-merge?" but "do these
+> two merges do the same thing?", determining if a merge was created
+> automatically becomes a problem you do not need to solve, or solving
+> it would not further your true goal.
 
-  1. Do things that look like message-ids get searched for in message
-     bodies? I'd think so if you don't explicitly say "this is a message
-     id".
+Automatic merge is just a merge made by git merge or another command
+that I expect authors to use for occasional merge from master into
+their PRs. It's not a special merge. It's just a reference merge.
 
-  2. It's really a multi-element search. If I have a thread with 10
-     messages, I'd really like to know of more recent threads that
-     linked back to _any_ message in the thread. You'd probably have to
-     feed them all manually. But in theory indexing could generate some
-     kind of bidirectional "related" link.
+Sorry, I'm not good at writing text. I really hope this email
+clarifies my use case and what I am trying to do about it.
 
-I don't often do this with message-ids, but I frequently do find other
-references by doing a full-text search for commit hashes, or phrases
-from commit subjects. I usually do so with my local notmuch archive,
-rather than using public-inbox, but I think you should be able to do
-phrase searches there, too.
+> If you have two integration branches A and B, and a topic branch T
+> first gets merged to A and then after proving its worth it gets
+> merged down to B, I wonder if you can verify somebody's merge of B
+> into T by comparing the result with your "verification merge", which
+> you preform locally and on a throw-away branch by using "git rebase
+> --rebase-merges" or some mechanism, to replay the original merge of
+> T into A on top of B (before the merge of T you are verifying).
 
--Peff
+That sounds like my first idea with extra steps; not sure.
+
+-Pavel
