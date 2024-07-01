@@ -1,88 +1,102 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD041667E1
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 15:34:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19AA16CD03
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 15:39:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719848056; cv=none; b=tEH/N13SJEvZNBAmLLuK7kdn5Ij7C7WiyBzYgqIHt/m26CpF73c9FpApxdeV2ySolDPVVfMzeUdgm3sqNAYpvW0748tJbEOor/eN30PtrgbZnHOxA1AB8Lw7oeqK0KCxC8RyUE506yyrcqsv9adXd34PQceMAX9DB/B6vPYYGF0=
+	t=1719848379; cv=none; b=g56w9rt+Y2ry/wVthjnIg0Bzsw/+pKRLEjSHx7CPXwg2/CW4KBpalcbaR7y1AFymcC2bRWOAm7zMsCT7fibUFXl5PbmEXd/vK6QtFARxwEBAChct6GnFjmyNvoKMlnqhGe6zqvYDpXq3dvu3hY1Jd2Xzy6ldSQDP8ilEYwX5TIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719848056; c=relaxed/simple;
-	bh=KQlk6AZVdY1mQVBSw/82dzflPauCL6nhEXreHivnUeI=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=uaeUs7p2k5L+3EcbVvribWrG51xTl4qPa3hLC0M+iqH/WR4qgHkr9LfU0wDQNcbahvv3x0zsB3FbkdjJtEyKACVNBjqcXhJwq+VhNju1Z80FARa7XfM7cLt2iU2N1cXILw8UGlQLUmZNgQaeqaZHdEL5YoROA4bkiGEC5qUX6Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bucknell.edu; spf=pass smtp.mailfrom=bucknell.edu; dkim=pass (1024-bit key) header.d=bucknell.edu header.i=@bucknell.edu header.b=UmOeuETj; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bucknell.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bucknell.edu
+	s=arc-20240116; t=1719848379; c=relaxed/simple;
+	bh=eiMDjiv1DYFKEte6F3oltFDACj6BNSmxIRN+B+bIHrU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tGvCWfwVnVUgIm9WLGZlSEGwCmG6r3gvbn9qgDMNC4yvTpGy37XCX4KkdKucnoHvUDf4z62YZPMNTU6BkxdVpauy8v2x7EOru0cdGCVlKufAyXKkqEW36ms/83wJqcn/6IzLnpqHFhws2XaM+ifQM9D/4ezTml/i2G+9IQImasU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TAwRUPtn; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=bucknell.edu header.i=@bucknell.edu header.b="UmOeuETj"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a724b3a32d2so358185266b.2
-        for <git@vger.kernel.org>; Mon, 01 Jul 2024 08:34:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bucknell.edu; s=google; t=1719848053; x=1720452853; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=DPxGMdSN2Uz6AIZBvUzKTgEOy3lwO2wq6BzSZgPxpdQ=;
-        b=UmOeuETjqMeOQLdQbX+7dILjvu4PxOXEFzpAL7bF1bdcjKA91RrwdVi4HCbuZToV0K
-         Urp3JWM1S9+CXVH0K7ffYkdOmn4msYN4qkPuo7JOy9J1KiEpXbba4592DifkG+2v3Xz2
-         v6SEHN0C/k2qFdKRiCXJ1HlEPp5qmqp60gY9k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719848053; x=1720452853;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DPxGMdSN2Uz6AIZBvUzKTgEOy3lwO2wq6BzSZgPxpdQ=;
-        b=wmmr+qtDD7zjgYY13KCHpaXfp9DSFIkhrhfF3r7/OqQIb2zAeUHrBkSa3HjvKMpPCw
-         P6CpGbE65AxA4lABLXJtipgnITpKNL7rUU4pG1XvmdBJLC5PqnJIUPUD2LrmULWWgVpF
-         yBCFvstO77c2UEaT7LZCFw6rOZQcbFNGpFpHdQz3dnJg6jL6xJvyDoF1G4vbNFKbxu6M
-         hx5InplZu8HqrCQdb/pvAi/Z6ojZUVABL4uaUjABVcoygGiaUYCnEr3DMsd32zozglmz
-         Nin8s25pmBbHfQidmemzmg4wMI59Io6KJz9AvYmzq0ky5a4NxSGoSdUJgA2YZ9Z4xQw4
-         IlEw==
-X-Gm-Message-State: AOJu0YxfWgY6Sft/S7nhj+WdU6LUb4TwHZO2lU6TqgPzMiXLrosPA2s2
-	Bmxi2J8J4FJFHf92FCOfOL4SY5G0ypeufO5FN2MQscb8oA0UWrv9Lh3fFD4E6EZf1lLWZ33JQYF
-	1CtTI0TAhBJbQM7exPBV4PaO6fgX/t+g5axqnzSQpZHsAWahP/7P5T/aPZSJi8UBIeaUaVc0+gZ
-	CWzkHi974TEoMEKWpowylVCyONCFWJXV9Y7iNN6uLGD4avGbIRd4xCDIYQIYODCtNUMFcgHjTkz
-	+DOAFfu65a3/U37rBIuvaC7m6Jb7NvbQIQOz3dkS6kSKrWjRuKF5A==
-X-Google-Smtp-Source: AGHT+IGWO79twga1KBYPF8yVv7/KIF0T6hZarNY6b3+tVFr17Fhqp4/nColN1k7mdcsVDYnSad6HU3Dk+xeGfDA5bSo=
-X-Received: by 2002:a17:906:1e0b:b0:a6f:38:6968 with SMTP id
- a640c23a62f3a-a751448587cmr336480266b.32.1719848053008; Mon, 01 Jul 2024
- 08:34:13 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TAwRUPtn"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A638E28F72;
+	Mon,  1 Jul 2024 11:39:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=eiMDjiv1DYFKEte6F3oltFDACj6BNSmxIRN+B+
+	bIHrU=; b=TAwRUPtn3P6UTtxDcnkwa1mX8ANCTOZLfu+DMnaTFebizDl9mIKgsT
+	tFNonpF5KEj9Kr7Tyrr+AHPzUvnX9Vgibow+3flVZOquthnHQna2NYEl20VspAfD
+	2kaoaVXlBJJRR/k9Bhst95wZ7zJSRh1G5Mma5cxE3FpySSuZwBUKg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9F65F28F71;
+	Mon,  1 Jul 2024 11:39:31 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 46F4428F70;
+	Mon,  1 Jul 2024 11:39:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pavel Rappo <pavel.rappo@gmail.com>
+Cc: Git mailing list <git@vger.kernel.org>
+Subject: Re: Determining if a merge was produced automatically
+In-Reply-To: <CAChcVu=Kwqj7JhXqQW6Ni9+3TdSfdmHfSTJQWm1_uO2kczSm8g@mail.gmail.com>
+	(Pavel Rappo's message of "Sun, 30 Jun 2024 19:06:24 +0100")
+References: <CAChcVu=Kwqj7JhXqQW6Ni9+3TdSfdmHfSTJQWm1_uO2kczSm8g@mail.gmail.com>
+Date: Mon, 01 Jul 2024 08:39:26 -0700
+Message-ID: <xmqqle2lyvdd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Alec Sanders <aws022@bucknell.edu>
-Date: Mon, 1 Jul 2024 11:34:04 -0400
-Message-ID: <CA+Gods=0N9yYZ2tMSiV2GRO2uwpQTvvWB=Gcv9CfS4XrMYWN=A@mail.gmail.com>
-Subject: Trouble with Gaia binary files
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-CLOUD-SEC-AV-Sent: true
-X-CLOUD-SEC-AV-Info: bucknell,google_mail,monitor
-X-Gm-Spam: 0
-X-Gm-Phishy: 0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1A1B85E8-37C0-11EF-9025-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-Hello,
+Pavel Rappo <pavel.rappo@gmail.com> writes:
 
-I am running into an issue with Git and Gaia files
-This error persists when I perform a git checkout or git merge.
-The error is as follows
+> I'm looking for a robust way to determine if a given merge commit
+> could've been produced automatically by `git merge`, without any
+> manual intervention or tampering, such as:
+>
+>   - resolving conflicts,
+>   - stopping (`--no-commit`) and modifying,
+>   - amending the commit.
 
-error: Your local changes to the following files would be overwritten
-by checkout:
+This fundamentally cannot be done perfectly and it is by design.
 
-*Insert filepath here*
-Filepath directs the user to the project folder and within it, Assets,
-Gaia User Data, Sessions, ... , Terrain data, etc
+The automated merge algorithms, backends, and strategies will
+improve over time, so a merge attempted 7 years ago with the
+then-current version of Git may have conflicted and required manual
+resolution, but a newer Git you use to "look for manual intervention
+or tampering" may have improved enough to resolve the same merge
+cleanly and automatically.  Even if the person who created the merge
+originally and you are using with the same version of Git, the former
+may be using a custom low-level merge driver to resolve conflicts in
+certain types of files better than the barebones textual merge driver,
+while you do not have access to the same driver.
 
-Please commit your changes or stash them before you switch branches.
-aborting
+So you'd need to tighten the definition a bit more, at bit more like
+constraints like "using the same version of Git" and "without any
+low-level merge driver customization".
 
-Thank you
+Now, with problem narrowed down a bit with tightened constraints.
+
+> My initial idea was to re-enact the merge. If the merge failed, ...
+> My second idea was to use `git show --diff-merges=dense-combined` ...
+> My third idea was to use a recently added feature, `git show --remerge-diff`...
+
+The first and the third are equivalent (the latter is an automation
+of what the former would do).  The --cc output, as you said, is
+about showing resolution that is different from any of the parents,
+and serves the need quite different from what you are trying to do
+(e.g., if the merge was created with "git merge -s ours", there is
+nothing _interesting_ in the result from the "--cc"'s point of view),
+but it is likely that you are interested in noticing such an unusual
+"cauterizing the history" merge.
 
 
--- 
-Alec Sanders
-B.S. Computer Science
-Bucknell University 2025
-College of Arts and Sciences
+
