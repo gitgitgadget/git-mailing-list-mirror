@@ -1,86 +1,138 @@
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8D416DEDD
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 16:44:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9516416D9D8
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 17:32:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719852252; cv=none; b=ZY3Dm2CbV/VIdP2KPkS+LHVZZpGMSHquc4uCIkKaYCBavsXjvtrdns+iTI8em+vf8Kn9T4vg1tqHOlJGVeu54Vn2MrnMn+2f3J8/difcevDfcwvUPdv3F4uSYpFyvd2H4TH4aLl5T743T9hoMm2Md/HUirzHLCejEnR9QVuCR6I=
+	t=1719855165; cv=none; b=dMmb1Kh8/YbwupXrA3bKKg5t5MS0YaLL5gcHkZmL2s6A9C43Kyb4/5PAHpZFB8mdc6mQ5Q/iL7GsActMlQ6Ay3s9Uo2qe4H4uHuOodZzm3wH4cuv44k2FCobNCdzeqmjnigGgySLzSxLRiFJwZroQNEUg7Q1DKl/K1Vhv4B964U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719852252; c=relaxed/simple;
-	bh=ROOH1KfGVI99KJry/JhrBAFYvX21onZH74U8phMkQ2w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l/xgEgNRLFsw+Eyemu0G8L0pDhWbbpf/4Z7LdUDiKZKZbVbFk2CSKjYF/QSm8BnxN8YzIjO8txCtCLh6AnSFtBkr8FFekdp//+7Vqq5Bgxi7ufxH+66zhxq2NWgkUuArRKcmiYOIElwhYnthdjwCiR7a2uRCh+8FErt8MzMe/8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k6TCXWpG; arc=none smtp.client-ip=209.85.217.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1719855165; c=relaxed/simple;
+	bh=Rz1g7wH+YTmMpaal1GLyEXBrateSjRce9OmkahEKdRc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SW1bL4qwf4QU+FL04uvxwju/CeyNyti/WWAmXel1IlV+QNK6kPngxN19lRYBzfzHp9f6B6YcPqR+Y3jQgzEctpxgriIcroZl7z77YIf6qmAXG84+AP5ZuY2eiig77nKzKsPG27345hHKAG2btUJSYN8Jha8xazNJvzJPR7KNKDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KEwtHavZ; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k6TCXWpG"
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-48f5295f81cso1078553137.2
-        for <git@vger.kernel.org>; Mon, 01 Jul 2024 09:44:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719852249; x=1720457049; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0GXAZZGMnvLOjaI8os8X0/6blGVtfdGBfd08W3MU1Lk=;
-        b=k6TCXWpG3F4ND493eJyklS9eGmZWVf6RnvwbozwSJEvmhbJAemNLx3XP8YALB+tftp
-         wUQuukc18Z03OPA9AFjyr85xEGrh4STgAXOtAzb81sAewfrPkZrHzYL6buq+90NI74Em
-         f+xMLOMtRa7dRbykeeZhjaVmBB0O6+1YcbRY7CE+8ZsKi0T32/Cof5MetvD759ocEUYh
-         dIn2LAqvgGzq+9tHoMiYnVT0OXDuEllyfQ4Ua44Wz3l59b1Hem+0UUUg1xN8+qyh4i2p
-         D7F5sxcPPO6st6XJF3B0mvmHp6JFgj5pkNROtfnVLaSqJ9rCUfNIpCwlCKuC7aN0AgFi
-         YpKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719852249; x=1720457049;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0GXAZZGMnvLOjaI8os8X0/6blGVtfdGBfd08W3MU1Lk=;
-        b=R+T9yGejT5DYVhLijEPxTwWNu5I2a3yqs3/CvpA/yGyZ/qB5HN8VMisDLxMJPJ6cQW
-         rohAoWfdU3WxAn1bh3zjXfH0gUA9Oo9ETpkVcTwyNkspxephMhDtl13UsHDeYaPNsv6H
-         GPRKPCj9FtoVHQETPXIEbVCTG98kEhQ12qJUDTv+VmULmP2vwqSHMaCqJ4qbeoiosaOA
-         SiBoE+8zv/wYWkE7nqAGtYCqTdOffMbUmte+7wTW3kEZ/Ru6B8TBHi7GBMLYczzW5g56
-         ShfNUAH4rQkFL4tfR/d/xjpZ0adURt2LKw0/kecf1LmKJIC7NTc4eilzEfUNqiS5mzX7
-         oc5A==
-X-Forwarded-Encrypted: i=1; AJvYcCXRTj69o4BctlRFstNAUs9DyPVADW0040yrGlpqeJX8965TeOjEDooDD4zIayYVv7AtR6vDPpC4jWKCNb0ktwTaNMnd
-X-Gm-Message-State: AOJu0Yykji/Mdrm5JyjuRqfXlYqzUeC06HvLOHqSAFu7x9pWfznxVMap
-	qL3hqTK4xVbS26tEJrEYbixIf7XQ0QOiGoSYFVMmO8ntJbKmuoqzp8FSrgoB9RAAPZ+PLUSrcKh
-	bJDCwdKISWr38uxZrmgkEwX3MeKdnY4j4y7E=
-X-Google-Smtp-Source: AGHT+IEUkoAl4C0ruUotKqhAq45l0YM8TcTtQbwfuvml3N8c1bUWFfXvgOcG2fPvVMdTP08w2GnNkkzEiZVHl2jZTB4=
-X-Received: by 2002:a67:c40b:0:b0:48f:8b56:6c12 with SMTP id
- ada2fe7eead31-48faf08f75amr7385666137.13.1719852248701; Mon, 01 Jul 2024
- 09:44:08 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KEwtHavZ"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4A08C2A9EA;
+	Mon,  1 Jul 2024 13:32:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Rz1g7wH+YTmMpaal1GLyEXBrateSjRce9Omkah
+	EKdRc=; b=KEwtHavZ5q9jeABKRXkyNXNl9h6kbx4LT9mN/MXcYOGfpFeh/doUH+
+	IrfIp+l22ALKsGNGhM8H/Ze2OsLXZhjX8V0kxkdrx0OvuHDP7LrtJjzKryWAHlXC
+	sMA17ZdJlq/4tri9O4Nf+UtKdYZ//wscD+iCu/UBBELBmdTJqqlxg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4235D2A9E9;
+	Mon,  1 Jul 2024 13:32:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A84BE2A9E8;
+	Mon,  1 Jul 2024 13:32:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Florian Schmaus <flo@geekplace.eu>,  git@vger.kernel.org,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH] setup: support GIT_IGNORE_INSECURE_OWNER environment
+ variable
+In-Reply-To: <6d5b75a6-639d-429b-bd37-232fc6f475af@gmail.com> (Phillip Wood's
+	message of "Mon, 1 Jul 2024 16:24:00 +0100")
+References: <20240626123358.420292-1-flo@geekplace.eu>
+	<20240626123358.420292-2-flo@geekplace.eu>
+	<9e5b0cc6-e28c-4c51-ab48-663c61c00ee3@gmail.com>
+	<72e42e9f-5b85-4863-8506-c99d658d7596@gmail.com>
+	<xmqqa5j71snb.fsf@gitster.g>
+	<5742e728-a012-4960-a32d-bf3b65c3a2e3@gmail.com>
+	<xmqqpls2v1zx.fsf@gitster.g>
+	<27cadffb-ca3f-487d-86b7-3508c45c446d@gmail.com>
+	<xmqq7ce96mix.fsf@gitster.g>
+	<6d5b75a6-639d-429b-bd37-232fc6f475af@gmail.com>
+Date: Mon, 01 Jul 2024 10:32:40 -0700
+Message-ID: <xmqqtth9xbk7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAChcVu=Kwqj7JhXqQW6Ni9+3TdSfdmHfSTJQWm1_uO2kczSm8g@mail.gmail.com>
- <CANiSa6hVbrCpPtBCL_W8+43uWGL0LFJkFhSJYGtfFgxX75zE8w@mail.gmail.com>
- <CANiSa6g9L8PM8wLhrH_3TYFBh7FwgGXXAk9qVpFkSM3zdcKqKw@mail.gmail.com> <CABPp-BG2p=0US9t-3DzPn8oCbPUXAg6HPciona8x8NNVyyowbw@mail.gmail.com>
-In-Reply-To: <CABPp-BG2p=0US9t-3DzPn8oCbPUXAg6HPciona8x8NNVyyowbw@mail.gmail.com>
-From: Pavel Rappo <pavel.rappo@gmail.com>
-Date: Mon, 1 Jul 2024 17:43:57 +0100
-Message-ID: <CAChcVu=5z2-Q=80zzzwY9eCV68=g-+uEy5u3Y94vb4-STKkRwQ@mail.gmail.com>
-Subject: Re: Determining if a merge was produced automatically
-To: Elijah Newren <newren@gmail.com>
-Cc: Martin von Zweigbergk <martinvonz@gmail.com>, Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EB4A86B4-37CF-11EF-B6E1-965B910A682E-77302942!pb-smtp2.pobox.com
 
-On Mon, Jul 1, 2024 at 4:11=E2=80=AFPM Elijah Newren <newren@gmail.com> wro=
-te:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> However, this wording was not intended to detract from the main point
-> that "empty output means clean merge and non-empty output means
-> conflicted merge" (it never even occurred to me that someone might
-> read that part of the documentation and assume that it presents a
-> problem for checking-if-diff-is-empty).  I use it for the same
-> purpose, and that's absolutely a guarantee we want to provide.  If you
-> want to guarantee output format beyond that, though, then I object.
+>>   - Compare entries of safe.directory with data->path literally
+>>     without normalization, as the user may have written in the
+>>     configuration "safe.directory=.", expecting that data->path to be
+>>     '.' (the git-daemon use case).
 >
+> I'm not sure this is a good idea because it is not clear which
+> directory the user wanted to mark as safe when they added a relative
+> directory to safe.directory. In the case of git-daemon one needs both
+> the absolute path to the repository and "." to be present in
+> safe.directory so we can ignore "." and match the absolute path.
 
-That's good to know; thanks! Back to Jonathan's suggestion: I don't
-know how to express that in documentation. I cannot suggest any good
-wording at this time.
+IOW, we do not bend over backwards to try to be backward compatible
+on this point?  I can go with that, especially because it smells
+like (I haven't thought deeply about it yet, though) that approach
+can simplify the checks.
+
+>>   - Normalize entries of safe.directory and data->path and then
+>>     compare them, turning path="." (the git-daemon use case) into
+>>     "/srv/git/my-repo" and a safe.directory entry "/srv/git//my-repo"
+>>     user wrote into "/srv/git/my-repo", so that they match.
+>
+> We have several of normalization functions available:
+>
+>  - normalize_path_copy() does a textual normalization which cleans up
+>    "//", "/./" and "/../".
+>
+>  - absolute_pathdup() which prepends the current directory to relative
+>    paths attempting to use $PWD for the current directory where possible
+>    but does not expand symbolic links and does not clean up the path
+>    passed to it.
+>
+>  - real_pathdup() which expands symbolic links
+>
+> One way forward would be to clean up the entries in safe.directory
+> with normalize_path_copy() and compare them to the result of
+> normalizing $git_dir with absolute_pathdup() followed by
+> normalize_path_copy(). That will ensure that we're always comparing
+> the safe.directory entries against an absolute path and both sides of
+> the comparison are textually normalized. I'm not sure whether we'd be
+> better to use absolute_pathdup() or real_pathdup() or if we'd be safer
+> comparing the output of both against safe.directory if they give
+> different results. If this sounds reasonable I'll try and put a patch
+> together later this week.
+
+Hmph.  Are runtime-detected (not from $GIT_DIR environment and
+friends) gitdir and/or worktree paths always relative?  If we let
+getcwd() involved in the process of turning them absolute, these
+paths may already have symbolic links "expanded", so we have no
+choice other than expanding symbolic links before using paths in
+safe.directory to compare with them.
+
+For example, the paths from safe.directory come from the end-user,
+and may say things like "/home/phillip/repos/*", because phillip and
+everybody else on the system think /home/$USER should be where their
+home directories ought to be, but that was based on the niceness of
+sysadmins to arrange "/home/phillip" to be a symbolic link to
+"/home1/phillip" because the "/home" partition has already run out
+of space to add more users.  When gitdir and/or worktree paths are
+computed using getcwd(), they would be paths somewhere under the
+"/home1/phillip/repos/" directory.  Letting real_pathdup() to deal
+with the symbolic links may be the only usable way in such a set-up
+available for us.
+
+But we will of course make tons more synonymous paths by using
+real_pathdup() to normalize both the safe.directory entries and the
+gitdir and/or worktree paths---are there security downsides in doing
+so?
