@@ -1,64 +1,65 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3672116F0E4
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 15:14:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790D816C860
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 15:18:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719846847; cv=none; b=onObFRSW+d+tgCM9PAaaS+iCE8rrhAPRHDZ8iPbVSRb66xgioDN5Rd6gUh33nJJohOh3ngbDhBSzHgBJ5LY1mSHMyuaNhkDAYZQyYcN2QBkUqYReuTi4jbWHDj6nucUP54St/0cLTc/FgXw95wpdVods0Y1IU2qwacn+61iOqaw=
+	t=1719847087; cv=none; b=YgAeDg0NGSSbhdkU+RFcBSNO0dKb9ru5HZu70wMuHL19qpmywi/R/3qSOcI7AgIABjmT6pqlm2GZfWcXe0yXlAE8FBDx710MQOqs1k8WyeKuItXXhUznWQkPbPJ1EwM6JVAslzdqN1nigclnQ6IcfpNHPXjwOjlY8NrxyS7BW24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719846847; c=relaxed/simple;
-	bh=7ubLbWTGl2orJ5eoJ2X7j9O5Y8VF6fXNkDLkQONYE9E=;
+	s=arc-20240116; t=1719847087; c=relaxed/simple;
+	bh=HjxRamwIBVDBrJTCPShcqSfW/l9ZybOknzzMbo8NvQc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YBskogUdoA63pEEZnLbD4Gg2cxqB7RMMKGFf1b2F5TyXrF3bMzHI9At6AZDWIn3mHrBRBtkUx2hS/HwVLr0CESIkLc54kMyYZ0H8TaroxrNqfqhHDs9mEuOO3wz7UdKv+Iz9rsYbH44MRIkmd8dszgrG8wgYOhgHiocwZLFUgBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JF03oN9y; arc=none smtp.client-ip=209.85.214.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=XDarlLyzWJGAL2u2iPHG3Y26dy50LHIPxMPzd8dQo2yUWjA4aWCUER1hINXDCgIJa5uPrQZqmwy9u0EuzoK8KLKQ26ZB6DFP5Pz/unalgyqtRNQF5/foVsSVS4p+/3YO9BWOB8e7HbWgeQLLCq2Ewnd2m3HSagikJuwXsxSKYNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=frZyZ0Xx; arc=none smtp.client-ip=209.85.215.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JF03oN9y"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1fa07e4f44eso20188395ad.2
-        for <git@vger.kernel.org>; Mon, 01 Jul 2024 08:14:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="frZyZ0Xx"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-72c03d2926eso1652419a12.2
+        for <git@vger.kernel.org>; Mon, 01 Jul 2024 08:18:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719846843; x=1720451643; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719847084; x=1720451884; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ws4hzTLqlmT2e0bQk4la+9TBffy1WJmIb6Fhh3tgfl4=;
-        b=JF03oN9yLzyTYod2eYoeuq2SvQr5Q4AqhGjHtqY9Eq4Ky8EBwQiTuO0V+DmDpzBWvQ
-         lB1Y/K/fytKTwYvapWuDtIG/EnPiB3tRmMXvNLE+KyOLU23NVjW8UhhP8uQd8iocKFV6
-         czHIrX4DKksSEDjBqYp2R3SI/Q4sOruBcbVv4id25tGmLhrrUJ7Pl4rJ5a2v64Yv00U3
-         5PJkPmEsQijmS9uiICWPlMxZcG3zkBnyiBe4OaK3kzPXCFcnlgdhintAphoX1qlenxce
-         GSc3URuUfBenXa5eZJZElDpW66Ex+XXxYDgz/TlmNYWu+WI8GfAPMhkph4K1bLXIDICu
-         SBGA==
+        bh=KB31NTTQHNW1UpY1yrRGZGvafu+mlGx18fdC0Two3Xo=;
+        b=frZyZ0Xx5ul2zDJQrOiBcWWt2jL7xjT0ZWM9+GlsNDyR0ZALo2IKfGzsoVokJWmxIP
+         73LUvxKt8pXCGpDK69fTuDVK6GVXe+KR3kDONU/MltWw06FYQXP7Ji2FuaBMxqITB6R0
+         XVbV3xhYOIL13thuiJYfhTt24F50RKY8p6Flj4MXZSTkbbnnwIg+gLuj6zPdBUKqPaFb
+         l2oaSU9Z5DXZ0D0RCBGFPT6EWY+F8t88Gwm4nurIbWII/6lZzXZ762sOaNAr0jCveXqX
+         jxMriPJ7YU2OSqzNl34/dyXbJSWNqsxSlXJqRGZpwqyim69XgXnsJAeNqWbrlLdXZRXO
+         9CYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719846843; x=1720451643;
+        d=1e100.net; s=20230601; t=1719847084; x=1720451884;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ws4hzTLqlmT2e0bQk4la+9TBffy1WJmIb6Fhh3tgfl4=;
-        b=ngIM8Kr6TRIoP34WBXY/vBV3aZEF54TMIb8AQYbe8hspHPfjcZFvgPRo+keN+F+290
-         /smjs/I/gZAjU1ZTC/6euFfm+XQZfbJ6XCYv+Z5YE8Mb/Y4rl4blls3Gri9cRuYDCBfo
-         dsVHT3Wyf3tgbO82/RNh+3hKtpr/IzNb7go+zPAgzT0VGUKM4isxKCyXD0glKy3vOTq3
-         fYg2qAoRjD/WbTN2WT9in4E/H9NLHIIYwpGvgOQBIgvGaAAs/0Yinv9gWVTVGJvjvUFm
-         PjE8jZJHdDzPORUyNuf3Te91NOTnfq+OdU89f8yt8vxpO3NPny9Z2PFVEoCGlNxMNObK
-         bqtg==
-X-Gm-Message-State: AOJu0YzFw5BDiukZhVBqrpspU/gDuslpooJ2OThqBXN3s5YDSWCKhXrj
-	ql975uPM65gZaE46Tb3MpTdNphG3C/E7pDOb5ODJfIITC792xcRDWVVNFQ==
-X-Google-Smtp-Source: AGHT+IGeuj2OJd7rK56t/OJ+RNaVwdy4WwCQfTTg0XFUxtdFLSsHNyeKbxGkV7y6Mn6I+8vsGMxo5Q==
-X-Received: by 2002:a17:902:ce8e:b0:1f6:81f9:cf34 with SMTP id d9443c01a7336-1fadbca338fmr49274095ad.34.1719846841874;
-        Mon, 01 Jul 2024 08:14:01 -0700 (PDT)
+        bh=KB31NTTQHNW1UpY1yrRGZGvafu+mlGx18fdC0Two3Xo=;
+        b=eI/PCIbeuE/XW0eQsteEccRsSiXbrhz9uxNzDoaBb8jfDDIHAiqnoFoMei75caluxX
+         8jugRaVP77Dka4XLdAvdar9h2PKu7AvQvkZEHAGO/4mmfQI6DQR1UTZKtZr6hgrmk9L0
+         xvO8/1ZcLX5pqPLTJId1j7sUX72Pc8ymcvgoEkXHp6Ythd30e7w41Ic3J0L+9MEkhUiv
+         b4jsy/XA2To22SLFMzUYoY3kWOfZ5t4TN2ROc1a9zN2npk+yT47GNFkPzE8BGKpWskLG
+         l6U3iQGv324g0c22U54gpNSaVVLvCWyAyycUbBy62KGCX0Jgi3PLAcXjx4Y2kIE4w444
+         Xs4A==
+X-Gm-Message-State: AOJu0YwWJqNEheH+CkDFgN60c0MdvFTMURcyriIlIteWEy5H8ywGinda
+	p5JNTwlqYXLhnQhrmjKEnhYDblJWEFH7xCVv6YeA+J7DVKwfUg77co0HMA==
+X-Google-Smtp-Source: AGHT+IG/jMmSgBgE1vQsEeuvXbpdfneFxoUseo3OPjC+sB23LtSwCRzU8BJ5JmNNOAwK9+qU/G6tLA==
+X-Received: by 2002:a17:90a:1089:b0:2c8:f3b4:421 with SMTP id 98e67ed59e1d1-2c93d6edaffmr2757459a91.4.1719847083599;
+        Mon, 01 Jul 2024 08:18:03 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac1569f83sm65702915ad.204.2024.07.01.08.14.00
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c91d3eed7csm6873716a91.55.2024.07.01.08.18.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jul 2024 08:14:01 -0700 (PDT)
-Date: Mon, 1 Jul 2024 23:13:58 +0800
+        Mon, 01 Jul 2024 08:18:02 -0700 (PDT)
+Date: Mon, 1 Jul 2024 23:18:00 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [GSoC][PATCH v6 00/11] ref consistency check infra setup
-Message-ID: <ZoLHtmOKTfxMSxvw@ArchLinux>
-References: <Zn2Ah3WDhtOmzrzn@ArchLinux>
+Subject: [PATCH v6 01/11] fsck: add "fsck_objects_options" to hold
+ objects-related options
+Message-ID: <ZoLIqOB_X01zdTVi@ArchLinux>
+References: <ZoLHtmOKTfxMSxvw@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,398 +68,441 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zn2Ah3WDhtOmzrzn@ArchLinux>
+In-Reply-To: <ZoLHtmOKTfxMSxvw@ArchLinux>
 
-Hi All:
+The git-fsck(1) focuses on object database consistency check. It relies
+on the "fsck_options" to interact with fsck error levels. However,
+"fsck_options" aims at checking the object database which contains a lot
+of fields only related to object database.
 
-This version follows the Junio's advice. Instead of creating the
-following data structure:
+In order to add ref operations, remove the options related to objects in
+"fsck_options" to "fsck_objects_options" and let the "fsck_options"
+incorporate "fsck_objects_options". Change the macros and influenced
+code to adapt into the above design.
 
-	struct fsck_options {
-		enum fsck_type {
-			FSCK_OBJECTS,
-			FSCK_REFS,
-			...
-		} t;
-		union {
-			struct fsck_objects_options objects;
-			struct fsck_refs_options refs;
-		} u;
-	};
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: shejialuo <shejialuo@gmail.com>
+---
+ builtin/fsck.c           | 12 +++++-----
+ builtin/index-pack.c     |  4 ++--
+ builtin/mktag.c          |  2 +-
+ builtin/unpack-objects.c |  4 ++--
+ fetch-pack.c             | 10 ++++----
+ fsck.c                   | 51 +++++++++++++++++++++------------------
+ fsck.h                   | 52 ++++++++++++++++++++++++----------------
+ object-file.c            |  2 +-
+ 8 files changed, 77 insertions(+), 60 deletions(-)
 
-I simply use the combination idea where "fsck_options" will incorporate
-"fsck_objects_options" and "fsck_refs_options". Karthik has told me that
-I should balance the job I should does and the extensibility for future.
-So I use the most clear way to do this. Also Junio has said:
-
-> I would have expected that adding ref-related new members that
-> object consistency checkers has no interest in to the fsck_options
-> structure would be sufficient for the purpose of this series.
-
-So this patch makes the design simple here.
-
-Thanks for every reviewer.
-
-Jialuo.
-
-shejialuo (11):
-  fsck: add "fsck_objects_options" to hold objects-related options
-  fsck: rename "skiplist" to "oid_skiplist"
-  fsck: add "fsck_refs_options" into "fsck_options"
-  fsck: add a unified interface for reporting fsck messages
-  fsck: add "fsck_refs_options" initialization macros
-  refs: set up ref consistency check infrastructure
-  builtin/refs: add verify subcommand
-  builtin/fsck: add `git-refs verify` child process
-  files-backend: add unified interface for refs scanning
-  fsck: add ref name check for files backend
-  fsck: add ref content check for files backend
-
- Documentation/fsck-msgids.txt |  12 ++
- Documentation/git-refs.txt    |  13 ++
- builtin/fsck.c                |  44 ++++--
- builtin/index-pack.c          |   4 +-
- builtin/mktag.c               |   3 +-
- builtin/refs.c                |  44 ++++++
- builtin/unpack-objects.c      |   4 +-
- fetch-pack.c                  |  10 +-
- fsck.c                        | 158 +++++++++++++++------
- fsck.h                        | 115 ++++++++++-----
- object-file.c                 |  13 +-
- refs.c                        |   7 +-
- refs.h                        |   8 ++
- refs/debug.c                  |  11 ++
- refs/files-backend.c          | 255 +++++++++++++++++++++++++++++++++-
- refs/packed-backend.c         |   8 ++
- refs/refs-internal.h          |  11 +-
- refs/reftable-backend.c       |   8 ++
- t/t0602-reffiles-fsck.sh      | 211 ++++++++++++++++++++++++++++
- 19 files changed, 824 insertions(+), 115 deletions(-)
- create mode 100755 t/t0602-reffiles-fsck.sh
-
-Range-diff against v5:
- 1:  d83b5797cb <  -:  ---------- fsck: rename "fsck_options" to "fsck_objects_options"
- 2:  88000b092a <  -:  ---------- fsck: use "fsck_configs" to set up configs
- 3:  65093bae64 <  -:  ---------- fsck: abstract common options for reusing
- 4:  403750da30 <  -:  ---------- fsck: add "fsck_refs_options" struct
- 5:  8dea5654d5 <  -:  ---------- fsck: add a unified interface for reporting fsck messages
- -:  ---------- >  1:  d32ae41a4d fsck: add "fsck_objects_options" to hold objects-related options
- -:  ---------- >  2:  589a7a6fac fsck: rename "skiplist" to "oid_skiplist"
- -:  ---------- >  3:  bab97d7c82 fsck: add "fsck_refs_options" into "fsck_options"
- -:  ---------- >  4:  276da52a6b fsck: add a unified interface for reporting fsck messages
- 6:  8fb62b54c6 !  5:  e93940c50c fsck: add "fsck_refs_options" initialization macros
-    @@ Commit message
-         fsck: add "fsck_refs_options" initialization macros
-     
-         Add "FSCK_REFS_OPTIONS_DEFAULT" and "FSCK_REFS_OPTIONS_STRICT" macros to
-    -    create the "fsck_refs_options" easily. Add refs-specific "error_func"
-    -    callback "fsck_refs_error_function".
-    +    create the refs options easily. Add refs-specific "error_func" callback
-    +    "fsck_refs_error_function".
-     
-         "fsck_refs_error_function" will use the "oid" parameter. When the caller
-         passed the oid, it will use "oid_to_hex" to get the corresponding hex
-    @@ Commit message
-         Signed-off-by: shejialuo <shejialuo@gmail.com>
-     
-      ## fsck.c ##
-    -@@ fsck.c: int fsck_error_function(struct fsck_objects_options *objects_options,
-    +@@ fsck.c: int fsck_objects_error_function(struct fsck_options *o,
-      	return 1;
-      }
-      
-    -+int fsck_refs_error_function(struct fsck_objects_options *objects_options UNUSED,
-    -+			     struct fsck_refs_options *refs_options,
-    ++int fsck_refs_error_function(struct fsck_options *options UNUSED,
-     +			     const struct object_id *oid,
-     +			     enum object_type object_type UNUSED,
-     +			     const char *checked_ref_name,
-    @@ fsck.c: int fsck_error_function(struct fsck_objects_options *objects_options,
-     +
-      static int fsck_blobs(struct oidset *blobs_found, struct oidset *blobs_done,
-      		      enum fsck_msg_id msg_missing, enum fsck_msg_id msg_type,
-    - 		      struct fsck_objects_options *options,
-    + 		      struct fsck_options *options, const char *blob_type)
-     
-      ## fsck.h ##
-    -@@ fsck.h: int fsck_error_cb_print_missing_gitmodules(struct fsck_objects_options *objects_
-    - 					   enum fsck_msg_type msg_type,
-    - 					   enum fsck_msg_id msg_id,
-    - 					   const char *message);
-    -+int fsck_refs_error_function(struct fsck_objects_options *objects_options,
-    -+			     struct fsck_refs_options *refs_options,
-    +@@ fsck.h: int fsck_objects_error_cb_print_missing_gitmodules(struct fsck_options *o,
-    + 						   enum fsck_msg_type msg_type,
-    + 						   enum fsck_msg_id msg_id,
-    + 						   const char *message);
-    ++int fsck_refs_error_function(struct fsck_options *options,
-     +			     const struct object_id *oid,
-     +			     enum object_type object_type,
-     +			     const char *checked_ref_name,
-    @@ fsck.h: int fsck_error_cb_print_missing_gitmodules(struct fsck_objects_options *
-     +			     enum fsck_msg_id msg_id,
-     +			     const char *message);
-      
-    - struct fsck_options {
-    - 	fsck_error error_func;
-    -@@ fsck.h: struct fsck_options {
-      struct fsck_refs_options {
-    - 	struct fsck_options fsck_options;
-    - };
-    + 	unsigned verbose:1;
-    +@@ fsck.h: struct fsck_options {
-    + 		.gitattributes_done = OIDSET_INIT, \
-    + 	} \
-    + }
-     +#define FSCK_REFS_OPTIONS_DEFAULT { \
-    -+	.fsck_options = { \
-    -+		.error_func = fsck_refs_error_function, \
-    -+	}, \
-    ++	.error_func = fsck_refs_error_function, \
-     +}
-     +#define FSCK_REFS_OPTIONS_STRICT { \
-    -+	.fsck_options = { \
-    -+		.error_func = fsck_refs_error_function, \
-    -+		.strict = 1, \
-    -+	}, \
-    ++	.strict = 1, \
-    ++	.error_func = fsck_refs_error_function, \
-     +}
-      
-    - struct fsck_objects_options {
-    - 	struct fsck_options fsck_options;
-    + /* descend in all linked child objects
-    +  * the return value is:
- 7:  2ecd1f5407 !  6:  85aa953f6d refs: set up ref consistency check infrastructure
-    @@ refs.c: int check_refname_format(const char *refname, int flags)
-      	return check_or_sanitize_refname(refname, flags, NULL);
-      }
-      
-    -+int refs_fsck(struct ref_store *refs, struct fsck_refs_options *o)
-    ++int refs_fsck(struct ref_store *refs, struct fsck_options *o)
-     +{
-     +	return refs->be->fsck(refs, o);
-     +}
-    @@ refs.h
-      
-      #include "commit.h"
-      
-    -+struct fsck_refs_options;
-    ++struct fsck_options;
-      struct object_id;
-      struct ref_store;
-      struct repository;
-    @@ refs.h: int refs_for_each_reflog(struct ref_store *refs, each_reflog_fn fn, void
-     + * reflogs are consistent, and non-zero otherwise. The errors will be
-     + * written to stderr.
-     + */
-    -+int refs_fsck(struct ref_store *refs, struct fsck_refs_options *o);
-    ++int refs_fsck(struct ref_store *refs, struct fsck_options *o);
-     +
-      /*
-       * Apply the rules from check_refname_format, but mutate the result until it
-    @@ refs/debug.c: static int debug_reflog_expire(struct ref_store *ref_store, const
-      }
-      
-     +static int debug_fsck(struct ref_store *ref_store,
-    -+		      struct fsck_refs_options *o)
-    ++		      struct fsck_options *o)
-     +{
-     +	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
-     +	int res = drefs->refs->be->fsck(drefs->refs, o);
-    @@ refs/files-backend.c: static int files_ref_store_remove_on_disk(struct ref_store
-      }
-      
-     +static int files_fsck(struct ref_store *ref_store,
-    -+		      struct fsck_refs_options *o)
-    ++		      struct fsck_options *o)
-     +{
-     +	int ret;
-     +	struct files_ref_store *refs =
-    @@ refs/packed-backend.c: static struct ref_iterator *packed_reflog_iterator_begin(
-      }
-      
-     +static int packed_fsck(struct ref_store *ref_store,
-    -+		       struct fsck_refs_options *o)
-    ++		       struct fsck_options *o)
-     +{
-     +	return 0;
-     +}
-    @@ refs/refs-internal.h: typedef int read_raw_ref_fn(struct ref_store *ref_store, c
-      				 struct strbuf *referent);
-      
-     +typedef int fsck_fn(struct ref_store *ref_store,
-    -+		    struct fsck_refs_options *o);
-    ++		    struct fsck_options *o);
-     +
-      struct ref_storage_be {
-      	const char *name;
-    @@ refs/reftable-backend.c: static int reftable_be_reflog_expire(struct ref_store *
-      }
-      
-     +static int reftable_be_fsck(struct ref_store *ref_store,
-    -+			    struct fsck_refs_options *o)
-    ++			    struct fsck_options *o)
-     +{
-     +	return 0;
-     +}
- 8:  534a3d00af !  7:  ce7adc7372 builtin/refs: add verify subcommand
-    @@ builtin/refs.c: static int cmd_refs_migrate(int argc, const char **argv, const c
-      
-     +static int cmd_refs_verify(int argc, const char **argv, const char *prefix)
-     +{
-    -+	struct fsck_refs_options fsck_refs_options = FSCK_REFS_OPTIONS_DEFAULT;
-    ++	struct fsck_options fsck_refs_options = FSCK_REFS_OPTIONS_DEFAULT;
-     +	const char * const verify_usage[] = {
-     +		REFS_VERIFY_USAGE,
-     +		NULL,
-    @@ builtin/refs.c: static int cmd_refs_migrate(int argc, const char **argv, const c
-     +		OPT_BOOL(0, "strict", &strict, N_("enable strict checking")),
-     +		OPT_END(),
-     +	};
-    ++	int ret = 0;
-     +
-     +	argc = parse_options(argc, argv, prefix, options, verify_usage, 0);
-     +	if (argc)
-     +		usage(_("too many arguments"));
-     +
-     +	if (verbose)
-    -+		fsck_refs_options.fsck_options.verbose = 1;
-    ++		fsck_refs_options.refs_options.verbose = 1;
-     +	if (strict)
-    -+		fsck_refs_options.fsck_options.strict = 1;
-    ++		fsck_refs_options.strict = 1;
-     +
-    -+	git_config(git_fsck_config, &fsck_refs_options.fsck_options);
-    ++	git_config(git_fsck_config, &fsck_refs_options);
-     +	prepare_repo_settings(the_repository);
-     +
-    -+	return refs_fsck(get_main_ref_store(the_repository), &fsck_refs_options);
-    ++	ret = refs_fsck(get_main_ref_store(the_repository), &fsck_refs_options);
-    ++
-    ++	/*
-    ++	 * Explicitly free the allocated array and "oid_skiplist"
-    ++	 */
-    ++	free(fsck_refs_options.msg_type);
-    ++	oidset_clear(&fsck_refs_options.oid_skiplist);
-    ++	return ret;
-     +}
-     +
-      int cmd_refs(int argc, const char **argv, const char *prefix)
- 9:  054c8cea89 =  8:  035eafe10b builtin/fsck: add `git-refs verify` child process
-10:  7f87c6a26e !  9:  9398bf3f0d files-backend: add unified interface for refs scanning
-    @@ refs/files-backend.c: static int files_ref_store_remove_on_disk(struct ref_store
-     + * the whole directory. This function is used as the callback for each
-     + * regular file or symlink in the directory.
-     + */
-    -+typedef int (*files_fsck_refs_fn)(struct fsck_refs_options *o,
-    ++typedef int (*files_fsck_refs_fn)(struct fsck_options *o,
-     +				  const char *gitdir,
-     +				  const char *refs_check_dir,
-     +				  struct dir_iterator *iter);
-     +
-     +static int files_fsck_refs_dir(struct ref_store *ref_store,
-    -+			       struct fsck_refs_options *o,
-    ++			       struct fsck_options *o,
-     +			       const char *refs_check_dir,
-     +			       files_fsck_refs_fn *fsck_refs_fns)
-     +{
-    @@ refs/files-backend.c: static int files_ref_store_remove_on_disk(struct ref_store
-     +			continue;
-     +		} else if (S_ISREG(iter->st.st_mode) ||
-     +			   S_ISLNK(iter->st.st_mode)) {
-    -+			if (o->fsck_options.verbose)
-    ++			if (o->refs_options.verbose)
-     +				fprintf_ln(stderr, "Checking %s/%s",
-     +					   refs_check_dir, iter->relative_path);
-     +			for (size_t i = 0; fsck_refs_fns[i]; i++) {
-    @@ refs/files-backend.c: static int files_ref_store_remove_on_disk(struct ref_store
-     +}
-     +
-     +static int files_fsck_refs(struct ref_store *ref_store,
-    -+			   struct fsck_refs_options *o)
-    ++			   struct fsck_options *o)
-     +{
-     +	int ret;
-     +	files_fsck_refs_fn fsck_refs_fns[]= {
-     +		NULL
-     +	};
-     +
-    -+	if (o->fsck_options.verbose)
-    ++	if (o->refs_options.verbose)
-     +		fprintf_ln(stderr, "Checking references consistency");
-     +
-     +	ret = files_fsck_refs_dir(ref_store, o, "refs", fsck_refs_fns);
-    @@ refs/files-backend.c: static int files_ref_store_remove_on_disk(struct ref_store
-     +}
-     +
-      static int files_fsck(struct ref_store *ref_store,
-    - 		      struct fsck_refs_options *o)
-    + 		      struct fsck_options *o)
-      {
-     @@ refs/files-backend.c: static int files_fsck(struct ref_store *ref_store,
-      	struct files_ref_store *refs =
-11:  7d78014e5f ! 10:  046773e35c fsck: add ref name check for files backend
-    @@ fsck.h: enum fsck_msg_type {
-      	FUNC(BAD_TREE_SHA1, ERROR) \
-     
-      ## refs/files-backend.c ##
-    -@@ refs/files-backend.c: typedef int (*files_fsck_refs_fn)(struct fsck_refs_options *o,
-    +@@ refs/files-backend.c: typedef int (*files_fsck_refs_fn)(struct fsck_options *o,
-      				  const char *refs_check_dir,
-      				  struct dir_iterator *iter);
-      
-    -+static int files_fsck_refs_name(struct fsck_refs_options *o,
-    ++static int files_fsck_refs_name(struct fsck_options *o,
-     +				const char *gitdir UNUSED,
-     +				const char *refs_check_dir,
-     +				struct dir_iterator *iter)
-    @@ refs/files-backend.c: typedef int (*files_fsck_refs_fn)(struct fsck_refs_options
-     +}
-     +
-      static int files_fsck_refs_dir(struct ref_store *ref_store,
-    - 			       struct fsck_refs_options *o,
-    + 			       struct fsck_options *o,
-      			       const char *refs_check_dir,
-     @@ refs/files-backend.c: static int files_fsck_refs(struct ref_store *ref_store,
-      {
-12:  16209a73ed ! 11:  c9b9599589 fsck: add ref content check for files backend
-    @@ refs/files-backend.c: int parse_loose_ref_contents(const char *buf, struct objec
-      	return 0;
-      }
-      
-    -@@ refs/files-backend.c: static int files_fsck_refs_name(struct fsck_refs_options *o,
-    +@@ refs/files-backend.c: static int files_fsck_refs_name(struct fsck_options *o,
-      	return ret;
-      }
-      
-    @@ refs/files-backend.c: static int files_fsck_refs_name(struct fsck_refs_options *
-     + * would be the content after "refs:". For symblic link, "pointee_name" would
-     + * be the relative path agaignst "gitdir".
-     + */
-    -+static int files_fsck_symref_target(struct fsck_refs_options *o,
-    ++static int files_fsck_symref_target(struct fsck_options *o,
-     +				    const char *refname,
-     +				    const char *pointee_name,
-     +				    const char *pointee_path)
-    @@ refs/files-backend.c: static int files_fsck_refs_name(struct fsck_refs_options *
-     +	return ret;
-     +}
-     +
-    -+static int files_fsck_refs_content(struct fsck_refs_options *o,
-    ++static int files_fsck_refs_content(struct fsck_options *o,
-     +				   const char *gitdir,
-     +				   const char *refs_check_dir,
-     +				   struct dir_iterator *iter)
-    @@ refs/files-backend.c: static int files_fsck_refs_name(struct fsck_refs_options *
-     +}
-     +
-      static int files_fsck_refs_dir(struct ref_store *ref_store,
-    - 			       struct fsck_refs_options *o,
-    + 			       struct fsck_options *o,
-      			       const char *refs_check_dir,
-     @@ refs/files-backend.c: static int files_fsck_refs(struct ref_store *ref_store,
-      	int ret;
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index d13a226c2e..13b64f723f 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -42,8 +42,8 @@ static int check_full = 1;
+ static int connectivity_only;
+ static int check_strict;
+ static int keep_cache_objects;
+-static struct fsck_options fsck_walk_options = FSCK_OPTIONS_DEFAULT;
+-static struct fsck_options fsck_obj_options = FSCK_OPTIONS_DEFAULT;
++static struct fsck_options fsck_walk_options = FSCK_OBJECTS_OPTIONS_DEFAULT;
++static struct fsck_options fsck_obj_options = FSCK_OBJECTS_OPTIONS_DEFAULT;
+ static int errors_found;
+ static int write_lost_and_found;
+ static int verbose;
+@@ -214,7 +214,7 @@ static int mark_used(struct object *obj, enum object_type type UNUSED,
+ 
+ static void mark_unreachable_referents(const struct object_id *oid)
+ {
+-	struct fsck_options options = FSCK_OPTIONS_DEFAULT;
++	struct fsck_options options = FSCK_OBJECTS_OPTIONS_DEFAULT;
+ 	struct object *obj = lookup_object(the_repository, oid);
+ 
+ 	if (!obj || !(obj->flags & HAS_OBJ))
+@@ -233,7 +233,7 @@ static void mark_unreachable_referents(const struct object_id *oid)
+ 			object_as_type(obj, type, 0);
+ 	}
+ 
+-	options.walk = mark_used;
++	options.objects_options.walk = mark_used;
+ 	fsck_walk(obj, NULL, &options);
+ 	if (obj->type == OBJ_TREE)
+ 		free_tree_buffer((struct tree *)obj);
+@@ -936,8 +936,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, prefix, fsck_opts, fsck_usage, 0);
+ 
+-	fsck_walk_options.walk = mark_object;
+-	fsck_obj_options.walk = mark_used;
++	fsck_walk_options.objects_options.walk = mark_object;
++	fsck_obj_options.objects_options.walk = mark_used;
+ 	fsck_obj_options.error_func = fsck_error_func;
+ 	if (check_strict)
+ 		fsck_obj_options.strict = 1;
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 856428fef9..59eb8c0355 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -127,7 +127,7 @@ static int nr_threads;
+ static int from_stdin;
+ static int strict;
+ static int do_fsck_object;
+-static struct fsck_options fsck_options = FSCK_OPTIONS_MISSING_GITMODULES;
++static struct fsck_options fsck_options = FSCK_OBJECTS_OPTIONS_MISSING_GITMODULES;
+ static int verbose;
+ static const char *progress_title;
+ static int show_resolving_progress;
+@@ -1746,7 +1746,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 		usage(index_pack_usage);
+ 
+ 	disable_replace_refs();
+-	fsck_options.walk = mark_link;
++	fsck_options.objects_options.walk = mark_link;
+ 
+ 	reset_pack_idx_option(&opts);
+ 	opts.flags |= WRITE_REV;
+diff --git a/builtin/mktag.c b/builtin/mktag.c
+index 4767f1a97e..c6fbeb58d4 100644
+--- a/builtin/mktag.c
++++ b/builtin/mktag.c
+@@ -15,7 +15,7 @@ static char const * const builtin_mktag_usage[] = {
+ };
+ static int option_strict = 1;
+ 
+-static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
++static struct fsck_options fsck_options = FSCK_OBJECTS_OPTIONS_STRICT;
+ 
+ static int mktag_fsck_error_func(struct fsck_options *o UNUSED,
+ 				 const struct object_id *oid UNUSED,
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index f1c85a00ae..53cff0a91c 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -25,7 +25,7 @@ static unsigned int offset, len;
+ static off_t consumed_bytes;
+ static off_t max_input_size;
+ static git_hash_ctx ctx;
+-static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
++static struct fsck_options fsck_options = FSCK_OBJECTS_OPTIONS_STRICT;
+ static struct progress *progress;
+ 
+ /*
+@@ -239,7 +239,7 @@ static int check_object(struct object *obj, enum object_type type,
+ 		die("Whoops! Cannot find object '%s'", oid_to_hex(&obj->oid));
+ 	if (fsck_object(obj, obj_buf->buffer, obj_buf->size, &fsck_options))
+ 		die("fsck error in packed object");
+-	fsck_options.walk = check_object;
++	fsck_options.objects_options.walk = check_object;
+ 	if (fsck_walk(obj, NULL, &fsck_options))
+ 		die("Error on reachable objects of %s", oid_to_hex(&obj->oid));
+ 	write_cached_object(obj, obj_buf);
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 42f48fbc31..adce10fb4c 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -46,7 +46,7 @@ static int server_supports_filtering;
+ static int advertise_sid;
+ static struct shallow_lock shallow_lock;
+ static const char *alternate_shallow_file;
+-static struct fsck_options fsck_options = FSCK_OPTIONS_MISSING_GITMODULES;
++static struct fsck_options fsck_options = FSCK_OBJECTS_OPTIONS_MISSING_GITMODULES;
+ static struct strbuf fsck_msg_types = STRBUF_INIT;
+ static struct string_list uri_protocols = STRING_LIST_INIT_DUP;
+ 
+@@ -1222,7 +1222,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 	} else
+ 		alternate_shallow_file = NULL;
+ 	if (get_pack(args, fd, pack_lockfiles, NULL, sought, nr_sought,
+-		     &fsck_options.gitmodules_found))
++		     &fsck_options.objects_options.gitmodules_found))
+ 		die(_("git fetch-pack: fetch failed."));
+ 	if (fsck_finish(&fsck_options))
+ 		die("fsck failed");
+@@ -1782,7 +1782,8 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 
+ 			if (get_pack(args, fd, pack_lockfiles,
+ 				     packfile_uris.nr ? &index_pack_args : NULL,
+-				     sought, nr_sought, &fsck_options.gitmodules_found))
++				     sought, nr_sought,
++				     &fsck_options.objects_options.gitmodules_found))
+ 				die(_("git fetch-pack: fetch failed."));
+ 			do_check_stateless_delimiter(args->stateless_rpc, &reader);
+ 
+@@ -1825,7 +1826,8 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 
+ 		packname[the_hash_algo->hexsz] = '\0';
+ 
+-		parse_gitmodules_oids(cmd.out, &fsck_options.gitmodules_found);
++		parse_gitmodules_oids(cmd.out,
++				      &fsck_options.objects_options.gitmodules_found);
+ 
+ 		close(cmd.out);
+ 
+diff --git a/fsck.c b/fsck.c
+index e193930ae7..e9848f2678 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -259,20 +259,20 @@ static int report(struct fsck_options *options,
+ 
+ void fsck_enable_object_names(struct fsck_options *options)
+ {
+-	if (!options->object_names)
+-		options->object_names = kh_init_oid_map();
++	if (!options->objects_options.object_names)
++		options->objects_options.object_names = kh_init_oid_map();
+ }
+ 
+ const char *fsck_get_object_name(struct fsck_options *options,
+ 				 const struct object_id *oid)
+ {
+ 	khiter_t pos;
+-	if (!options->object_names)
++	if (!options->objects_options.object_names)
+ 		return NULL;
+-	pos = kh_get_oid_map(options->object_names, *oid);
+-	if (pos >= kh_end(options->object_names))
++	pos = kh_get_oid_map(options->objects_options.object_names, *oid);
++	if (pos >= kh_end(options->objects_options.object_names))
+ 		return NULL;
+-	return kh_value(options->object_names, pos);
++	return kh_value(options->objects_options.object_names, pos);
+ }
+ 
+ void fsck_put_object_name(struct fsck_options *options,
+@@ -284,15 +284,16 @@ void fsck_put_object_name(struct fsck_options *options,
+ 	khiter_t pos;
+ 	int hashret;
+ 
+-	if (!options->object_names)
++	if (!options->objects_options.object_names)
+ 		return;
+ 
+-	pos = kh_put_oid_map(options->object_names, *oid, &hashret);
++	pos = kh_put_oid_map(options->objects_options.object_names,
++			     *oid, &hashret);
+ 	if (!hashret)
+ 		return;
+ 	va_start(ap, fmt);
+ 	strbuf_vaddf(&buf, fmt, ap);
+-	kh_value(options->object_names, pos) = strbuf_detach(&buf, NULL);
++	kh_value(options->objects_options.object_names, pos) = strbuf_detach(&buf, NULL);
+ 	va_end(ap);
+ }
+ 
+@@ -342,14 +343,14 @@ static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_options *op
+ 			if (name && obj)
+ 				fsck_put_object_name(options, &entry.oid, "%s%s/",
+ 						     name, entry.path);
+-			result = options->walk(obj, OBJ_TREE, data, options);
++			result = options->objects_options.walk(obj, OBJ_TREE, data, options);
+ 		}
+ 		else if (S_ISREG(entry.mode) || S_ISLNK(entry.mode)) {
+ 			obj = (struct object *)lookup_blob(the_repository, &entry.oid);
+ 			if (name && obj)
+ 				fsck_put_object_name(options, &entry.oid, "%s%s",
+ 						     name, entry.path);
+-			result = options->walk(obj, OBJ_BLOB, data, options);
++			result = options->objects_options.walk(obj, OBJ_BLOB, data, options);
+ 		}
+ 		else {
+ 			result = error("in tree %s: entry %s has bad mode %.6o",
+@@ -380,7 +381,7 @@ static int fsck_walk_commit(struct commit *commit, void *data, struct fsck_optio
+ 		fsck_put_object_name(options, get_commit_tree_oid(commit),
+ 				     "%s:", name);
+ 
+-	result = options->walk((struct object *) repo_get_commit_tree(the_repository, commit),
++	result = options->objects_options.walk((struct object *) repo_get_commit_tree(the_repository, commit),
+ 			       OBJ_TREE, data, options);
+ 	if (result < 0)
+ 		return result;
+@@ -423,7 +424,7 @@ static int fsck_walk_commit(struct commit *commit, void *data, struct fsck_optio
+ 			else
+ 				fsck_put_object_name(options, oid, "%s^", name);
+ 		}
+-		result = options->walk((struct object *)parents->item, OBJ_COMMIT, data, options);
++		result = options->objects_options.walk((struct object *)parents->item, OBJ_COMMIT, data, options);
+ 		if (result < 0)
+ 			return result;
+ 		if (!res)
+@@ -441,7 +442,7 @@ static int fsck_walk_tag(struct tag *tag, void *data, struct fsck_options *optio
+ 		return -1;
+ 	if (name)
+ 		fsck_put_object_name(options, &tag->tagged->oid, "%s", name);
+-	return options->walk(tag->tagged, OBJ_ANY, data, options);
++	return options->objects_options.walk(tag->tagged, OBJ_ANY, data, options);
+ }
+ 
+ int fsck_walk(struct object *obj, void *data, struct fsck_options *options)
+@@ -598,6 +599,7 @@ static int fsck_tree(const struct object_id *tree_oid,
+ 	unsigned o_mode;
+ 	const char *o_name;
+ 	struct name_stack df_dup_candidates = { NULL };
++	struct fsck_objects_options *objects_options = &options->objects_options;
+ 
+ 	if (init_tree_desc_gently(&desc, tree_oid, buffer, size,
+ 				  TREE_DESC_RAW_MODES)) {
+@@ -628,7 +630,7 @@ static int fsck_tree(const struct object_id *tree_oid,
+ 
+ 		if (is_hfs_dotgitmodules(name) || is_ntfs_dotgitmodules(name)) {
+ 			if (!S_ISLNK(mode))
+-				oidset_insert(&options->gitmodules_found,
++				oidset_insert(&objects_options->gitmodules_found,
+ 					      entry_oid);
+ 			else
+ 				retval += report(options,
+@@ -639,7 +641,7 @@ static int fsck_tree(const struct object_id *tree_oid,
+ 
+ 		if (is_hfs_dotgitattributes(name) || is_ntfs_dotgitattributes(name)) {
+ 			if (!S_ISLNK(mode))
+-				oidset_insert(&options->gitattributes_found,
++				oidset_insert(&objects_options->gitattributes_found,
+ 					      entry_oid);
+ 			else
+ 				retval += report(options, tree_oid, OBJ_TREE,
+@@ -666,7 +668,7 @@ static int fsck_tree(const struct object_id *tree_oid,
+ 				has_dotgit |= is_ntfs_dotgit(backslash);
+ 				if (is_ntfs_dotgitmodules(backslash)) {
+ 					if (!S_ISLNK(mode))
+-						oidset_insert(&options->gitmodules_found,
++						oidset_insert(&objects_options->gitmodules_found,
+ 							      entry_oid);
+ 					else
+ 						retval += report(options, tree_oid, OBJ_TREE,
+@@ -1107,11 +1109,11 @@ static int fsck_blob(const struct object_id *oid, const char *buf,
+ 	if (object_on_skiplist(options, oid))
+ 		return 0;
+ 
+-	if (oidset_contains(&options->gitmodules_found, oid)) {
++	if (oidset_contains(&options->objects_options.gitmodules_found, oid)) {
+ 		struct config_options config_opts = { 0 };
+ 		struct fsck_gitmodules_data data;
+ 
+-		oidset_insert(&options->gitmodules_done, oid);
++		oidset_insert(&options->objects_options.gitmodules_done, oid);
+ 
+ 		if (!buf) {
+ 			/*
+@@ -1137,10 +1139,10 @@ static int fsck_blob(const struct object_id *oid, const char *buf,
+ 		ret |= data.ret;
+ 	}
+ 
+-	if (oidset_contains(&options->gitattributes_found, oid)) {
++	if (oidset_contains(&options->objects_options.gitattributes_found, oid)) {
+ 		const char *ptr;
+ 
+-		oidset_insert(&options->gitattributes_done, oid);
++		oidset_insert(&options->objects_options.gitattributes_done, oid);
+ 
+ 		if (!buf || size > ATTR_MAX_FILE_SIZE) {
+ 			/*
+@@ -1255,12 +1257,15 @@ static int fsck_blobs(struct oidset *blobs_found, struct oidset *blobs_done,
+ 
+ int fsck_finish(struct fsck_options *options)
+ {
++	struct fsck_objects_options *objects_options = &options->objects_options;
+ 	int ret = 0;
+ 
+-	ret |= fsck_blobs(&options->gitmodules_found, &options->gitmodules_done,
++	ret |= fsck_blobs(&objects_options->gitmodules_found,
++			  &objects_options->gitmodules_done,
+ 			  FSCK_MSG_GITMODULES_MISSING, FSCK_MSG_GITMODULES_BLOB,
+ 			  options, ".gitmodules");
+-	ret |= fsck_blobs(&options->gitattributes_found, &options->gitattributes_done,
++	ret |= fsck_blobs(&objects_options->gitattributes_found,
++			  &objects_options->gitattributes_done,
+ 			  FSCK_MSG_GITATTRIBUTES_MISSING, FSCK_MSG_GITATTRIBUTES_BLOB,
+ 			  options, ".gitattributes");
+ 
+diff --git a/fsck.h b/fsck.h
+index 6085a384f6..37b6f6676f 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -131,12 +131,8 @@ int fsck_error_cb_print_missing_gitmodules(struct fsck_options *o,
+ 					   enum fsck_msg_id msg_id,
+ 					   const char *message);
+ 
+-struct fsck_options {
++struct fsck_objects_options {
+ 	fsck_walk_func walk;
+-	fsck_error error_func;
+-	unsigned strict:1;
+-	enum fsck_msg_type *msg_type;
+-	struct oidset skiplist;
+ 	struct oidset gitmodules_found;
+ 	struct oidset gitmodules_done;
+ 	struct oidset gitattributes_found;
+@@ -144,29 +140,43 @@ struct fsck_options {
+ 	kh_oid_map_t *object_names;
+ };
+ 
+-#define FSCK_OPTIONS_DEFAULT { \
++struct fsck_options {
++	unsigned strict:1;
++	enum fsck_msg_type *msg_type;
++	struct oidset skiplist;
++	fsck_error error_func;
++	struct fsck_objects_options objects_options;
++};
++
++#define FSCK_OBJECTS_OPTIONS_DEFAULT { \
+ 	.skiplist = OIDSET_INIT, \
+-	.gitmodules_found = OIDSET_INIT, \
+-	.gitmodules_done = OIDSET_INIT, \
+-	.gitattributes_found = OIDSET_INIT, \
+-	.gitattributes_done = OIDSET_INIT, \
+-	.error_func = fsck_error_function \
++	.error_func = fsck_error_function, \
++	.objects_options = { \
++		.gitmodules_found = OIDSET_INIT, \
++		.gitmodules_done = OIDSET_INIT, \
++		.gitattributes_found = OIDSET_INIT, \
++		.gitattributes_done = OIDSET_INIT, \
++	} \
+ }
+-#define FSCK_OPTIONS_STRICT { \
++#define FSCK_OBJECTS_OPTIONS_STRICT { \
+ 	.strict = 1, \
+-	.gitmodules_found = OIDSET_INIT, \
+-	.gitmodules_done = OIDSET_INIT, \
+-	.gitattributes_found = OIDSET_INIT, \
+-	.gitattributes_done = OIDSET_INIT, \
+ 	.error_func = fsck_error_function, \
++	.objects_options = { \
++		.gitmodules_found = OIDSET_INIT, \
++		.gitmodules_done = OIDSET_INIT, \
++		.gitattributes_found = OIDSET_INIT, \
++		.gitattributes_done = OIDSET_INIT, \
++	} \
+ }
+-#define FSCK_OPTIONS_MISSING_GITMODULES { \
++#define FSCK_OBJECTS_OPTIONS_MISSING_GITMODULES { \
+ 	.strict = 1, \
+-	.gitmodules_found = OIDSET_INIT, \
+-	.gitmodules_done = OIDSET_INIT, \
+-	.gitattributes_found = OIDSET_INIT, \
+-	.gitattributes_done = OIDSET_INIT, \
+ 	.error_func = fsck_error_cb_print_missing_gitmodules, \
++	.objects_options = { \
++		.gitmodules_found = OIDSET_INIT, \
++		.gitmodules_done = OIDSET_INIT, \
++		.gitattributes_found = OIDSET_INIT, \
++		.gitattributes_done = OIDSET_INIT, \
++	} \
+ }
+ 
+ /* descend in all linked child objects
+diff --git a/object-file.c b/object-file.c
+index d3cf4b8b2e..4e10dd9804 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2507,7 +2507,7 @@ static int index_mem(struct index_state *istate,
+ 		}
+ 	}
+ 	if (flags & HASH_FORMAT_CHECK) {
+-		struct fsck_options opts = FSCK_OPTIONS_DEFAULT;
++		struct fsck_options opts = FSCK_OBJECTS_OPTIONS_DEFAULT;
+ 
+ 		opts.strict = 1;
+ 		opts.error_func = hash_format_check_report;
 -- 
 2.45.2
 
