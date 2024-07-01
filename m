@@ -1,37 +1,34 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0DA17BD9
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 03:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D7328F4
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 03:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719804060; cv=none; b=iJtZGcYpTGpKgpRXEx/oqI0MIpCjqCI8jNgXEsQMcLSL8KWJS/9z4iibPKg9rAGF5dQOodc3rVkSYuwLZvm+2v15yl6+fQmTCbDgy08barxKstEMs5D/+dJ8tvuztM1ilG1Q7aOzfidbsLO5EYcw8ZeVyCU7oefT2EN7nwM7dJo=
+	t=1719804709; cv=none; b=J2yuj8UdhfsBOTMpuezExxeAcwEbmv11Tq29bduSQ+ba9XXQcEqjqizTPmfofvOxVUC/rCb8n6Mn+lVblHJfsODOg8KOzLc3whOH+a6dybgrQ6kPTqCie7OK3CMAJlxIJWJZnhBF9eIaB8l7QU3IU+txE2x61bID8PHyiJpOLCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719804060; c=relaxed/simple;
-	bh=TbTUIXuV5Sc3ICLfHA6PXrkjejBBLRlM2LpTUiICNqo=;
+	s=arc-20240116; t=1719804709; c=relaxed/simple;
+	bh=lrZAZbSTZ0b+vU6AJg4poEZRpoyHmpuEQMqF4+9xWUU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rZRw8F8g0SWJvT4LaIxn3IOalmqcEyVqja8kru6qwk2YopuzHSThqcc2vuLGiajGh6SY5GP/Ik1cO100YCMpLCmO51spizgT3ECrGsbc1O+2DJUqC0lzTZnbPqe9ugOYcd1osoqqIDLg0gKIE/bZBslAEV+iE5/gmpk0Y3EXDoA=
+	 Content-Type:Content-Disposition:In-Reply-To; b=CNSfHOv77R3cAJxTLEP3+2jUUSQo+rxkTnjb5MP+E4nQzQ+ItH6y94MBhV1Yzidyj5oau/+J7/IiWANrBeY9FOSDXUntjMIBQbBjg7rMPTYtyagS9NZPOLGMto8FCJ0uUtET6Bj9kOFZu24GIp1GTBKn20dzjPmYt9AQTtQz3zI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 16865 invoked by uid 109); 1 Jul 2024 03:20:51 -0000
+Received: (qmail 16880 invoked by uid 109); 1 Jul 2024 03:31:46 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 01 Jul 2024 03:20:51 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 01 Jul 2024 03:31:46 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8352 invoked by uid 111); 1 Jul 2024 03:20:46 -0000
+Received: (qmail 8403 invoked by uid 111); 1 Jul 2024 03:31:44 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 30 Jun 2024 23:20:46 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 30 Jun 2024 23:31:44 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sun, 30 Jun 2024 23:20:47 -0400
+Date: Sun, 30 Jun 2024 23:31:45 -0400
 From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH 1/6] t0080: move expected output to a file
-Message-ID: <20240701032047.GA610406@coredump.intra.peff.net>
-References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
- <c60c78c7-a029-48e8-840a-45dcc785a6e5@web.de>
+To: Julia Evans <julia@jvns.ca>
+Cc: git@vger.kernel.org
+Subject: Re: Confusing treatment of "head" in worktree on case-insensitive FS
+Message-ID: <20240701033145.GB610406@coredump.intra.peff.net>
+References: <A72DCB1B-8D81-4DD7-93AD-BF37E88E9D63@jvns.ca>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,43 +37,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c60c78c7-a029-48e8-840a-45dcc785a6e5@web.de>
+In-Reply-To: <A72DCB1B-8D81-4DD7-93AD-BF37E88E9D63@jvns.ca>
 
-On Sat, Jun 29, 2024 at 05:35:31PM +0200, René Scharfe wrote:
+On Sat, Jun 29, 2024 at 10:39:29AM -0400, Julia Evans wrote:
 
-> Provide the expected output of "test-tool example-tap" verbatim instead
-> of as a here-doc, to avoid distractions due to quoting, variables
-> containing quotes and indentation.
+> When I run `git rev-parse head` inside a worktree on a case insensitive filesystem,
+> the result is different from `git rev-parse HEAD`.
 
-I'm not really opposed to this patch, but I wondered...
+This is a known issue in general. It can get even more confusing when
+you pack refs, since we do case-sensitive matches within the packed-refs
+file, and then the filesystem gives us case-insensitive matching for
+loose refs.
 
->  test_expect_success 'TAP output from unit tests' '
-> -	cat >expect <<-EOF &&
-> -	ok 1 - passing test
-> -	ok 2 - passing test and assertion return 1
+I don't know of a good short-term solution, but the long-term one is for
+us to eventually move to ref storage that doesn't rely on the filesystem
+(like the recent reftables work).
 
-If you could take the test input on stdin, like so:
+With the current tip of 'master', you can do:
 
-  test_expect_success 'TAP output from unit tests' - <<-\EOT
-	cat >expect <<-\EOF
-	ok 1 - passing test
-	ok 2 - passing test and assertion return 1
-	[...]
-	# check "'a' == '\n'" failed at t/helper/test-example-tap.c:64
-	#    left: 'a'
-	#   right: '\012'
-	[...]
-	EOF
-  EOT
+  git init --ref-format=reftable
 
-would that be preferable to moving it to its own file? I kind of like
-keeping everything in the test scripts themselves so related changes can
-happen side-by-side, though I admit in this case it is intimately tied
-to the separate test-example-tap.c source anyway.
+I think initial support there shipped in v2.45.0, and I think things
+should mostly work. But I won't be too surprised if you find a corner
+case or rough edge somewhere. Bug reports welcome. ;)
 
-But I do have such an "EOT" patch which I've been meaning to send out,
-since it makes many of these quoting annoyances go away (though of
-course it leaves the indentation).
+> Steps to reproduce, on a case insensitive filesystem:
+> 
+> $ git init
+> $ git commit --allow-empty -m'test'
+> $ git worktree add /tmp/myworktree
+> $ cd /tmp/myworktree
+> $ git commit --allow-empty -m'test'
+> $ git rev-parse head
+> adf59ca8da0ee5c4eb455f87efecc6c79eaf030f
+> $ git rev-parse hEAd
+> adf59ca8da0ee5c4eb455f87efecc6c79eaf030f
+> $ git rev-parse HEAD
+> fbb28196d08d74aa61f65e5cee3cb11cc24c338a
+
+I admit this is an unexpected case, as I'd expect both on-disk files to
+be spelled "HEAD". I didn't dig into the details, though, so it's
+possible there's something we could be doing differently or better. But
+I do think it's mostly the tip of the iceberg for case-insensitivity
+issues with refs.
 
 -Peff
