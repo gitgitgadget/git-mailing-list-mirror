@@ -1,63 +1,64 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5080F15A84A
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 15:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A06A15A84A
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 15:21:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719847253; cv=none; b=d3y9aClMWMDPfGaIjCxcyWBIMpuEQAjwwu9iQeZ/PG7WesFmN07K7G9IHafi4JUXHO9AHlTrv3zAE7GPhkxFtCl8rHWWZWYGfPX34Y94gAsGr9eTxdsHjC5s3isYOM+4TxTa1PvJ2hHsrvpmxqCMS1pUFuNSK+3dwzO0P9AYo2o=
+	t=1719847276; cv=none; b=tf5Yj5BLTYr7MAg1U7sNAgo7M73AwqjARo3ddCOeQPgcntpIhmFrt7hM7LNwTJJgoTJWJYeKtKhyaPqzYw/56POrVTVyhSpXf7BXLt41hcruwO15/oCESOHygM45tCDVM1WiprKwzn3ZxrCyMN/kf9pD3vuPZoBCF2OR6KJFocY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719847253; c=relaxed/simple;
-	bh=N+5AK2TMcZvgnkSoO5vGTo33oNwPi/2ZyJpiTQorZyk=;
+	s=arc-20240116; t=1719847276; c=relaxed/simple;
+	bh=0479d8Robjnw9VfgGsAQjtWbMj7HQSHTxjLgP1mruuI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KxwgEilXm1ZONvEq3Ay/H9ljI6T5m7rLwKgJBPzvLViSLrE9iWupJP1il4/51ov4L8GFnhJWaUc1ixcWuQmtDFQH5/bUAXXANGWyIOWKadtRsD8pFF7PY252BuCn5gN9O/TuOheRk0RWga+FqMjfQBKFlKKDLIx8tgm52EsOmRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T2dtSkRx; arc=none smtp.client-ip=209.85.214.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=inCwLguGR0GSzH+FM/Q0kweeLYxyGwwSWaaeLY8WYC4oAW14AXeMItq81sDxCehRSDxHUDXN7SHnRQqm92pTFinWqbfwFxD2NSiUiDAd1+GQh7Rv1lLhXFRViGKV92vZzq/dm6d7FN9sfZiflJIl7khtMNiPMNStZFPfR6S28MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=THUwV3Vb; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T2dtSkRx"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1f9aa039327so17084575ad.2
-        for <git@vger.kernel.org>; Mon, 01 Jul 2024 08:20:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="THUwV3Vb"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1fa3bdd91c1so23881955ad.2
+        for <git@vger.kernel.org>; Mon, 01 Jul 2024 08:21:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719847251; x=1720452051; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719847274; x=1720452074; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QjsZoLtXp2baCjFDVQFv5b+O8fbHb6Fh+G4q54LKTlY=;
-        b=T2dtSkRxQ1SvZpnhhRLfjmmH8YZJle+j5As/ZYyHiHbMP8Te8c2sVlN3XK2dzITJlH
-         P7R8N37RnYiRrkMjwrVtEgstPzhGtNBteZsmsiA1YmlIB1N2PYx4pAsmCysucwJgoqM3
-         D7kbPFqF5T53bNvNpsVHu4YZAhfImM8K0cOIiUxCbvSawl+eq6fJocMPLMf8kkYn4EYh
-         m4OuK8iWTaz3UeNN3J709bIoXA8OnzGBav46pDrkBCBOnLRUfRrPIyw9ZzqDQQvJqW9O
-         h2xY4POsN4pdguJsa8k4F0vojoiDXBkJf4nMGerAev4YJP7L8ozYaJtGC2pZ1Gy00ewB
-         SPtA==
+        bh=F34P474Se0eWjNRjL0aCCuMLLmdx/sNHOXqR74pYVWw=;
+        b=THUwV3Vb5DlFV7LQoyeoUsPtVny7+iouuNafzfsNJY4WKxgtl8RmGs0DInVy/ezGET
+         ioBQhC1naZuTdlIgj3Cx2s2Q/4L4g9Dkrra+7gEZmg5KM+N199DoqfqJhLZIALLNVYVL
+         NqjufZIhjUwBkHq22ZKmT3hmTC8xUgFNRUIh6UXCKSxcdYRh1M0/aB7ciVhQEMP8aORI
+         vN7J4PoFhP1wHSUetEjpb9+35lyoGdOOs7iT7N9rTqgf+fMelbCBMx3iE0UuQ5Nmp0Xt
+         e+IGxuuzDPjOUKRgnkGY1RaAs+tqfsWfwvPHHU+KBo4dN1TqALfUKifVSZOHIX7MeO8O
+         3CiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719847251; x=1720452051;
+        d=1e100.net; s=20230601; t=1719847274; x=1720452074;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QjsZoLtXp2baCjFDVQFv5b+O8fbHb6Fh+G4q54LKTlY=;
-        b=Fjjilm4KVp5xwLSeKY6yjxOxKihiQMcmYkOyHXKb8ziWIqoo8h3KuWscWpsocNPxzU
-         x5cYJTyJnjBRdt6lBVjpD91mpADcSpbP+ZYczFioY3zzBsMu+p/Pu2ykPqm14UoPIx4m
-         gm8gzS0gypSiTqp2k9gQ4dsiw2/iW6rmCSleYw8rXpZZrIFMXAsx8ejpotG4+rLrIL5Z
-         kV9CQ4W0nlsOLTEorcFTutiJCovcjXtWKKwg2Xf/v3QdnVqNHc/AuvuB9HrZBiRbRdvB
-         mMyPKOr6SdrXZ183+MtdK5F/kchEE+zZpaeZOPSRi74AUWv+KiaF7Mggt9lUsLodTDeL
-         fjMQ==
-X-Gm-Message-State: AOJu0YxAHDiEQcL0SQwVi84muFG1a9FH9Qr+g4+qXVt6bUc8/EsSLilU
-	gS35IV5wfiR2PUBuWvPxHqpQSbTuozgxGTu2b7qYvVW31x+J6i1ckR1CRQ==
-X-Google-Smtp-Source: AGHT+IG11I4zYm482sHnlxp0vjVOpzZ8G/ozLM4z0uQQ+TqDDAIw60umwwzx23lHWnGsdDIX3ywxbg==
-X-Received: by 2002:a17:902:e74d:b0:1f7:2135:ce6d with SMTP id d9443c01a7336-1fadbc746a8mr36568885ad.18.1719847251021;
-        Mon, 01 Jul 2024 08:20:51 -0700 (PDT)
+        bh=F34P474Se0eWjNRjL0aCCuMLLmdx/sNHOXqR74pYVWw=;
+        b=dC6V2otM09MqBpQeh+Fr3LirbNBuUli4RPo5QJdfcmdVgvGp7TgeVIu6DgYHKEUCKr
+         dvHf0ZuGfepGRUuwma5zOPxTXjA4QAlZZ+n8vWXyYvCnR10Iw4kQvGQBekUrJoCXQcBt
+         T4H7OiogU7M2u9uskaUN4C81BcvnqHg/WkdGQ2jKkZe01ip7NqHhv+k1mdCdlCR1LBQS
+         d8y0lx69QwxY2B4/QuAb/yz+jPy/99LiFDjJRMc1g+5gh0RTRKv30phXOWSA5Stk8fZP
+         zSzHer317DbS1rp8/tyCsuAWh84U/iBbkpdBoMAZHeNYweFbCna8NInJbFslmM4s+aTz
+         r+Xw==
+X-Gm-Message-State: AOJu0Yyve9TlXujmfcSCn9Q5+7YVrrifUcF8Et66ejyq4+SOHbwAE0s3
+	luzP7XmoMM6gKoM/qaH8Id47F3UF0Ynw5eOHpR+NtQZRUMegLCoz9ZgDMw==
+X-Google-Smtp-Source: AGHT+IFD3fBZwEz5tbeB4T9i92loWzlUg1IAU/mXJ2ju7T0QNbWYk6eoVJwNtzIZY5PvLRQLgH6oAA==
+X-Received: by 2002:a17:902:6546:b0:1fa:1599:385b with SMTP id d9443c01a7336-1fadbc74913mr45877385ad.22.1719847274260;
+        Mon, 01 Jul 2024 08:21:14 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac10e2197sm66199865ad.63.2024.07.01.08.20.50
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac10d1c78sm67594695ad.23.2024.07.01.08.21.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jul 2024 08:20:50 -0700 (PDT)
-Date: Mon, 1 Jul 2024 23:20:48 +0800
+        Mon, 01 Jul 2024 08:21:13 -0700 (PDT)
+Date: Mon, 1 Jul 2024 23:21:11 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [GSoC][PATCH v6 07/11] builtin/refs: add verify subcommand
-Message-ID: <ZoLJUOy7LLbWj3k0@ArchLinux>
+Subject: [GSoC][PATCH v6 08/11] builtin/fsck: add `git-refs verify` child
+ process
+Message-ID: <ZoLJZ0HGOofz3-cl@ArchLinux>
 References: <ZoLHtmOKTfxMSxvw@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -69,130 +70,50 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <ZoLHtmOKTfxMSxvw@ArchLinux>
 
-Introduce a new subcommand "verify" in git-refs(1) to allow the user to
-check the reference database consistency.
+Introduce a new function "fsck_refs" that initializes and runs a child
+process to execute the "git-refs verify" command.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- Documentation/git-refs.txt | 13 +++++++++++
- builtin/refs.c             | 44 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 57 insertions(+)
+ builtin/fsck.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/Documentation/git-refs.txt b/Documentation/git-refs.txt
-index 5b99e04385..1244a85b64 100644
---- a/Documentation/git-refs.txt
-+++ b/Documentation/git-refs.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git refs migrate' --ref-format=<format> [--dry-run]
-+'git refs verify' [--strict] [--verbose]
- 
- DESCRIPTION
- -----------
-@@ -22,6 +23,9 @@ COMMANDS
- migrate::
- 	Migrate ref store between different formats.
- 
-+verify::
-+	Verify reference database consistency.
-+
- OPTIONS
- -------
- 
-@@ -39,6 +43,15 @@ include::ref-storage-format.txt[]
- 	can be used to double check that the migration works as expected before
- 	performing the actual migration.
- 
-+The following options are specific to 'git refs verify':
-+
-+--strict::
-+	Enable more strict checking, every WARN severity for the `Fsck Messages`
-+	be seen as ERROR. See linkgit:git-fsck[1].
-+
-+--verbose::
-+	When verifying the reference database consistency, be chatty.
-+
- KNOWN LIMITATIONS
- -----------------
- 
-diff --git a/builtin/refs.c b/builtin/refs.c
-index 46dcd150d4..34371573f7 100644
---- a/builtin/refs.c
-+++ b/builtin/refs.c
-@@ -1,4 +1,6 @@
- #include "builtin.h"
-+#include "config.h"
-+#include "fsck.h"
- #include "parse-options.h"
- #include "refs.h"
- #include "repository.h"
-@@ -7,6 +9,9 @@
- #define REFS_MIGRATE_USAGE \
- 	N_("git refs migrate --ref-format=<format> [--dry-run]")
- 
-+#define REFS_VERIFY_USAGE \
-+	N_("git refs verify [--strict] [--verbose]")
-+
- static int cmd_refs_migrate(int argc, const char **argv, const char *prefix)
- {
- 	const char * const migrate_usage[] = {
-@@ -58,15 +63,54 @@ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix)
- 	return err;
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index cdf2218dfd..aea635ea00 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -897,6 +897,21 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
+ 	return res;
  }
  
-+static int cmd_refs_verify(int argc, const char **argv, const char *prefix)
++static void fsck_refs(void)
 +{
-+	struct fsck_options fsck_refs_options = FSCK_REFS_OPTIONS_DEFAULT;
-+	const char * const verify_usage[] = {
-+		REFS_VERIFY_USAGE,
-+		NULL,
-+	};
-+	unsigned int verbose = 0, strict = 0;
-+	struct option options[] = {
-+		OPT__VERBOSE(&verbose, N_("be verbose")),
-+		OPT_BOOL(0, "strict", &strict, N_("enable strict checking")),
-+		OPT_END(),
-+	};
-+	int ret = 0;
-+
-+	argc = parse_options(argc, argv, prefix, options, verify_usage, 0);
-+	if (argc)
-+		usage(_("too many arguments"));
-+
++	struct child_process refs_verify = CHILD_PROCESS_INIT;
++	child_process_init(&refs_verify);
++	refs_verify.git_cmd = 1;
++	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
 +	if (verbose)
-+		fsck_refs_options.refs_options.verbose = 1;
-+	if (strict)
-+		fsck_refs_options.strict = 1;
++		strvec_push(&refs_verify.args, "--verbose");
++	if (check_strict)
++		strvec_push(&refs_verify.args, "--strict");
 +
-+	git_config(git_fsck_config, &fsck_refs_options);
-+	prepare_repo_settings(the_repository);
-+
-+	ret = refs_fsck(get_main_ref_store(the_repository), &fsck_refs_options);
-+
-+	/*
-+	 * Explicitly free the allocated array and "oid_skiplist"
-+	 */
-+	free(fsck_refs_options.msg_type);
-+	oidset_clear(&fsck_refs_options.oid_skiplist);
-+	return ret;
++	if (run_command(&refs_verify))
++		errors_found |= ERROR_REFS;
 +}
 +
- int cmd_refs(int argc, const char **argv, const char *prefix)
- {
- 	const char * const refs_usage[] = {
- 		REFS_MIGRATE_USAGE,
-+		REFS_VERIFY_USAGE,
- 		NULL,
- 	};
- 	parse_opt_subcommand_fn *fn = NULL;
- 	struct option opts[] = {
- 		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
-+		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
- 		OPT_END(),
- 	};
+ static char const * const fsck_usage[] = {
+ 	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
+ 	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
+@@ -1066,6 +1081,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 
+ 	check_connectivity();
+ 
++	fsck_refs();
++
+ 	if (the_repository->settings.core_commit_graph) {
+ 		struct child_process commit_graph_verify = CHILD_PROCESS_INIT;
  
 -- 
 2.45.2
