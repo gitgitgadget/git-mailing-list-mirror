@@ -1,149 +1,231 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3DC16F0C2
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 19:51:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA24171096
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 19:58:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719863510; cv=none; b=fW2DMlYyfZuzHafC2W6ldBrJbUq0s8W/+aVO4uq304fNOjflOTe+TV2iqU2G4nmjco25hnI4pEXmWKC8nub/S4/oB3He4gseKH31Ea84H7COCLs932WeIEEeTEGVuCpTHQdb4tuXKauSoV2/2qqDS1DMZEgNK0xn80ttDaq5dlA=
+	t=1719863913; cv=none; b=kratzGTnqqc3AVkh1IWClzKFQqfX3lDqtt1DPlJyBLoAAfQD+dYYhApqnKG+hCKQht87tSIXTqmcKLw9xmgloRbPEgagbDaKjtTXc0Ob44yJSSsH6suJampNRTQgMSAzuunnC9UA/K9t4QNbCY8dfJFBnXzXDemZxR/8S0I6pUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719863510; c=relaxed/simple;
-	bh=TrUJneWwnBmS5pWWcCKv9EEOgB4Nc9wHgnj4S5dmvdY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=P8p1uQOUpgwtKkA2KQSEfG8YSJNA9vbTdJZQhy0X57Am3fFj6CLrZM2CPtFfvyw9JDKJ36KYFMu03lJ1P0JxfCofLOypvGwFM4TP9WXCEC8AqCToFRa1mTGKSBa9WnvRmzouyG4Lpog32xelZJ9qKY6uygxv0vJ/ciA6Uv3nhUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=W60w42Gn; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1719863913; c=relaxed/simple;
+	bh=qxywq5x+uHNH1x9T8wcQm4W9BfSzxVwF0aUrmx9P7ns=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pwb/eDJ+efMQHzcFgVhWK4uP0eRnJbsN1YtvRtk4bj5O+Rb8QaNlozHZkRcuMaZKQlpxn6UnGnYWoMvxjfjDkCxTbkoLIFRaphO+ZpVTh+OuYTcOudZ+v/geUcP0dQjShUibQGTkSbqxYaFGOvfmxPzUGTfuBkXKJQ/swfcOnV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=c2VbAK0p; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="W60w42Gn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1719863492; x=1720468292; i=l.s.r@web.de;
-	bh=/UdynI0ewmIh3pbQ6HtezynRvnLwIMDJKT81ID48I5g=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=W60w42GngLMRb17xlCrAu727ctPo7sQeJCatHa3QcY7/Jj90dOhGF18Ue7v5BOww
-	 2665yF01GB3trLLdInTKMXmyoHw/w8Kpxzx3N8W7htX99CeQK2PdEb8aJ2I2yhWgw
-	 pte8P6ujM8dBLBqC9wktlMEgysuPLlBOgAqDGWpcC4ILCa9DNITd4rJ1Sx3vtZr4K
-	 JbMfz8NRfXWB7EcPVFdCfu1t7n4H6jdmwB41/pvmpCzgpFbEZq2e+3CrkHvIiWBRs
-	 IwcJZC7JQtiBEkR324jSgGpjt2tJVkyV/jk6Z9Zvcx/mrjBUeV8Q7DIutWsstK/5X
-	 ktraEb/z1Sgj31Ydag==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.19.151]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mo6Jl-1s3vlH2fsJ-00eAKS; Mon, 01
- Jul 2024 21:51:32 +0200
-Message-ID: <177e98da-803e-4839-9484-fd24828bd21b@web.de>
-Date: Mon, 1 Jul 2024 21:51:31 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="c2VbAK0p"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1faad2f1967so33594095ad.0
+        for <git@vger.kernel.org>; Mon, 01 Jul 2024 12:58:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1719863910; x=1720468710; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8Ob8NQf37Z74n5eDm7x/8NJNtMhfzBzvr09vSqG7TIk=;
+        b=c2VbAK0ppnKSqyAfuiVU//S5c/KTSa1kB1ceb4W2SC2ec4i04qAed1JbMJcRVdqDUE
+         2DuMz3Ctc/maZ+eII75vvZNoSf6ojBZ+WkEyGqraK43VTKuMOQZoTYfWKckodWSP7XGt
+         LSKVBneUhuAnMXZ+sTZh4sNy2qoPJ1oP9igqMeLFmJU84x/aqiSMWF/WW/LXamUXMwTj
+         hrNSaJNOCiTcN6sG60IqLCiPoYx6ZV8g90+VMkdhREkHBh+Nty5f+HkiZqIaf34e6xx1
+         kApXlPC5f8OB1umY6/D/OPdm0xbVdKhXxn0b+K8X6suoNoBPevMBxNr+cYKPqDLYl7r9
+         ibWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719863910; x=1720468710;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8Ob8NQf37Z74n5eDm7x/8NJNtMhfzBzvr09vSqG7TIk=;
+        b=Bx3yyiaChMePrHLwsyNIuPHeKJ26DusYMkikUDoT21KOUJ94/y5k+gQu5RAAvqBNKA
+         3MnnilSXtXY4BgHF9FpgYI17UpPmATtw3K+yt4tLSQFcXeIt8sUnmdX9DPupPMMzNlW5
+         FaxtUA1GRqwV7lMhi7vpOHpezY3A3CUDB+SE2Rs5jDLY6ZZBqohWTIwikVSzjnzc3yU0
+         x2LCpLWzMzzefTzfCTI/MHFDz//zwpDMuz64IOPpXRTK8hq5Qn8Mv0v3ZEQP48AnP8Gb
+         6JQw3lg0GGV21pXG/odYYbBMXUYFtPqk2YTxNR0oIEQ+DG5RNzcfQxzpq5VZyUVoRksQ
+         wqdg==
+X-Gm-Message-State: AOJu0Yy4zo0e0cejrAIL2v5bQ5PsG8oszrEiD/Vc8CRzdllVuTcgLgf5
+	C7bfQ4OGSVDi+O/GHvOgI0Zjh58sSq0W+FfIYXGau1uMlVxSCU7JYEp8QEvP6w==
+X-Google-Smtp-Source: AGHT+IHxZ1W9dI/0sGlcbwYcqMa0Mra+t/pFY4lWqjJ6MAR1UnfMNWlC5P3Hc3v8f9RkZK56zR8ArA==
+X-Received: by 2002:a17:902:da89:b0:1f9:c52f:d9a6 with SMTP id d9443c01a7336-1fac7e27ea6mr168666205ad.2.1719863909694;
+        Mon, 01 Jul 2024 12:58:29 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:e464:1819:7745:be03])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac10e3fb9sm69059585ad.96.2024.07.01.12.58.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jul 2024 12:58:28 -0700 (PDT)
+Date: Mon, 1 Jul 2024 12:58:24 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 6/6] t-strbuf: use TEST_RUN
+Message-ID: <bh5ectgtwdaeltflggzwnwhobewvcqqelforr4sfcmq47rnnrl@mzspptlhpofx>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, Git List <git@vger.kernel.org>, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
+ <1bf053ae-957e-4e9a-90f0-11cc76848ce9@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] t0080: move expected output to a file
-To: Jeff King <peff@peff.net>
-Cc: Git List <git@vger.kernel.org>, Phillip Wood
- <phillip.wood@dunelm.org.uk>, Josh Steadmon <steadmon@google.com>
-References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
- <c60c78c7-a029-48e8-840a-45dcc785a6e5@web.de>
- <20240701032047.GA610406@coredump.intra.peff.net>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20240701032047.GA610406@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:UvlNMJJcgcrVhiIJ2cqsElMIpR+orOI6zMj0iiSgIoP1o0+9Nd8
- MzQRW7HONrj1BBpHrKQr/72MHu395C5/SHW9J1/vw5pUMlm3aLsIIWdU787V4uPxTwzh3EK
- lVqggS+j8aTqCZeFzaZvryGBHZRTDG1BEYTTLAjrkuf/82Gknf1Tm6H1+7PzgJSxATlEI7/
- 1xsAhi5IjfysKXL+r8HvQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:JvrApzfTG0o=;gtheZIJNjcqDRGmWf42nGuAwXnx
- 6VMQt443enc1DjGvNJjS5xQg2rHSe5hPIIalJOchuVWP+342F4OEhxb3E9tOE2cNE7Q1ElpsD
- j1kB8Q13+VvWYUirwewi1lprdempf+FTRrH7JVF3w+K2pqbTYDrmwXConVd+AXcBT+7zQumoe
- Ju/LDSetpX4ZHKKh42bbphbzP5YyYqTPDZbnpgUl002dZa9aIlTiArGn1ymDZQi+wQc6vrKYS
- 9uoB+dgdQ9eG269mo9FW8OGkgcxuV4M1l1AuNXUIyY+4K6CqH8YiRvrolUGscNPA9fA4q5DnS
- UL2CDI0txNyoE7nusd4e3kPULDYEe44Uh+sBvJJ4QB5JJzi01HF0nF78FxlYLCOw33VB9DTl4
- Po22RrahwaralWyGEqbQ2zZO1uamA70ORmLCqvXl9doLJyPyJDUJtoPY9lu924sM7YGZmEqXy
- PopN4nquhS2EtkaaGqg1gzjHnpTtb+ppZ7d2aMxXJM1I3ae3wTrnDWGIni9f88oF31q2JlUYd
- LrpLdmKbE8GufB8y57nJcTWbPsDk/m+C1GlzDWB+5bjCgfJ/lWsq/ddve7z1FDr5wkA8atq8N
- ND179YWpiLEPdPFHCCdlue6jjG0AHmZQ/1OYAsiNgSyUkLOn4V8x46GP/HkGFb0f+lDlBrLCR
- VapgncGLodNIlRjvjkplGtEJSqeEQ70+Vd8UA3dlp6vtPLT7F7uSHVB3Kfy1pic7TGhm0w/0/
- vecRGYjQW/7bnp6jdt0YoB6B9mM3nJ236E0TbFgB1D3TICUACd0aDSGbWaBD7rUOmBvfUFjr8
- Zo+dRfPlmUYkI7GLIten5wU4YbN+Dbq8s7BWr4orkz0Ws=
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1bf053ae-957e-4e9a-90f0-11cc76848ce9@web.de>
 
-Am 01.07.24 um 05:20 schrieb Jeff King:
-> On Sat, Jun 29, 2024 at 05:35:31PM +0200, Ren=C3=A9 Scharfe wrote:
->
->> Provide the expected output of "test-tool example-tap" verbatim instead
->> of as a here-doc, to avoid distractions due to quoting, variables
->> containing quotes and indentation.
->
-> I'm not really opposed to this patch, but I wondered...
->
->>  test_expect_success 'TAP output from unit tests' '
->> -	cat >expect <<-EOF &&
->> -	ok 1 - passing test
->> -	ok 2 - passing test and assertion return 1
->
-> If you could take the test input on stdin, like so:
->
->   test_expect_success 'TAP output from unit tests' - <<-\EOT
-> 	cat >expect <<-\EOF
-> 	ok 1 - passing test
-> 	ok 2 - passing test and assertion return 1
-> 	[...]
-> 	# check "'a' =3D=3D '\n'" failed at t/helper/test-example-tap.c:64
-> 	#    left: 'a'
-> 	#   right: '\012'
-> 	[...]
-> 	EOF
->   EOT
->
-> would that be preferable to moving it to its own file? I kind of like
-> keeping everything in the test scripts themselves so related changes can
-> happen side-by-side, though I admit in this case it is intimately tied
-> to the separate test-example-tap.c source anyway.
+On 2024.06.29 17:47, René Scharfe wrote:
+> The macro TEST takes a single expression.  If a test requires multiple
+> statements then they need to be placed in a function that's called in
+> the TEST expression.  The functions setup() and setup_populated() here
+> are used for that purpose and take another function as an argument,
+> making the control flow hard to follow.
+> 
+> Remove the overhead of these functions by using TEST_RUN instead.  Move
+> their duplicate post-condition checks into a new helper, t_release(),
+> and let t_addch() and t_addstr() accept properly typed input parameters
+> instead of void pointers.
+> 
+> Use the fully checking t_addstr() for adding initial values instead of
+> only doing only a length comparison -- there's no need for skipping the
+> other checks.
+> 
+> This results in test cases that look much more like strbuf usage in
+> production code, only with checked strbuf functions replaced by checking
+> wrappers.
+> 
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+>  t/unit-tests/t-strbuf.c | 79 +++++++++++++++++++++--------------------
+>  1 file changed, 41 insertions(+), 38 deletions(-)
+> 
+> diff --git a/t/unit-tests/t-strbuf.c b/t/unit-tests/t-strbuf.c
+> index 6027dafef7..c8e39ddda7 100644
+> --- a/t/unit-tests/t-strbuf.c
+> +++ b/t/unit-tests/t-strbuf.c
+> @@ -1,32 +1,6 @@
+>  #include "test-lib.h"
+>  #include "strbuf.h"
+> 
+> -/* wrapper that supplies tests with an empty, initialized strbuf */
+> -static void setup(void (*f)(struct strbuf*, const void*),
+> -		  const void *data)
+> -{
+> -	struct strbuf buf = STRBUF_INIT;
+> -
+> -	f(&buf, data);
+> -	strbuf_release(&buf);
+> -	check_uint(buf.len, ==, 0);
+> -	check_uint(buf.alloc, ==, 0);
+> -}
+> -
+> -/* wrapper that supplies tests with a populated, initialized strbuf */
+> -static void setup_populated(void (*f)(struct strbuf*, const void*),
+> -			    const char *init_str, const void *data)
+> -{
+> -	struct strbuf buf = STRBUF_INIT;
+> -
+> -	strbuf_addstr(&buf, init_str);
+> -	check_uint(buf.len, ==, strlen(init_str));
+> -	f(&buf, data);
+> -	strbuf_release(&buf);
+> -	check_uint(buf.len, ==, 0);
+> -	check_uint(buf.alloc, ==, 0);
+> -}
+> -
+>  static int assert_sane_strbuf(struct strbuf *buf)
+>  {
+>  	/* Initialized strbufs should always have a non-NULL buffer */
+> @@ -66,10 +40,8 @@ static void t_dynamic_init(void)
+>  	strbuf_release(&buf);
+>  }
+> 
+> -static void t_addch(struct strbuf *buf, const void *data)
+> +static void t_addch(struct strbuf *buf, int ch)
+>  {
+> -	const char *p_ch = data;
+> -	const char ch = *p_ch;
+>  	size_t orig_alloc = buf->alloc;
+>  	size_t orig_len = buf->len;
+> 
+> @@ -85,9 +57,8 @@ static void t_addch(struct strbuf *buf, const void *data)
+>  	check_char(buf->buf[buf->len], ==, '\0');
+>  }
+> 
+> -static void t_addstr(struct strbuf *buf, const void *data)
+> +static void t_addstr(struct strbuf *buf, const char *text)
+>  {
+> -	const char *text = data;
+>  	size_t len = strlen(text);
+>  	size_t orig_alloc = buf->alloc;
+>  	size_t orig_len = buf->len;
+> @@ -105,18 +76,50 @@ static void t_addstr(struct strbuf *buf, const void *data)
+>  	check_str(buf->buf + orig_len, text);
+>  }
+> 
+> +static void t_release(struct strbuf *sb)
+> +{
+> +	strbuf_release(sb);
+> +	check_uint(sb->len, ==, 0);
+> +	check_uint(sb->alloc, ==, 0);
+> +}
+> +
+>  int cmd_main(int argc, const char **argv)
+>  {
+>  	if (!TEST(t_static_init(), "static initialization works"))
+>  		test_skip_all("STRBUF_INIT is broken");
+>  	TEST(t_dynamic_init(), "dynamic initialization works");
 
-I can't think of an example where we keep test definitions in the same
-file as the code to be tested.  It would be somewhat cool to empower the
-unit test framework to test itself, but I suspect that this nesting
-ability would be hard to achieve and not very useful otherwise.  And
-would we be able to trust such a self-test?
+IIUC you're leaving t_static_init() as-is so that we can determine
+whether or not to skip the rest of the tests, but is there a reason you
+didn't convert t_dynamic_init() here?
 
+> -	TEST(setup(t_addch, "a"), "strbuf_addch adds char");
+> -	TEST(setup(t_addch, ""), "strbuf_addch adds NUL char");
+> -	TEST(setup_populated(t_addch, "initial value", "a"),
+> -	     "strbuf_addch appends to initial value");
+> -	TEST(setup(t_addstr, "hello there"), "strbuf_addstr adds string");
+> -	TEST(setup_populated(t_addstr, "initial value", "hello there"),
+> -	     "strbuf_addstr appends string to initial value");
+> +
+> +	if (TEST_RUN("strbuf_addch adds char")) {
+> +		struct strbuf sb = STRBUF_INIT;
+> +		t_addch(&sb, 'a');
+> +		t_release(&sb);
+> +	}
+> +
+> +	if (TEST_RUN("strbuf_addch adds NUL char")) {
+> +		struct strbuf sb = STRBUF_INIT;
+> +		t_addch(&sb, '\0');
+> +		t_release(&sb);
+> +	}
+> +
+> +	if (TEST_RUN("strbuf_addch appends to initial value")) {
+> +		struct strbuf sb = STRBUF_INIT;
+> +		t_addstr(&sb, "initial value");
+> +		t_addch(&sb, 'a');
+> +		t_release(&sb);
+> +	}
+> +
+> +	if (TEST_RUN("strbuf_addstr adds string")) {
+> +		struct strbuf sb = STRBUF_INIT;
+> +		t_addstr(&sb, "hello there");
+> +		t_release(&sb);
+> +	}
+> +
+> +	if (TEST_RUN("strbuf_addstr appends string to initial value")) {
+> +		struct strbuf sb = STRBUF_INIT;
+> +		t_addstr(&sb, "initial value");
+> +		t_addstr(&sb, "hello there");
+> +		t_release(&sb);
+> +	}
+> 
+>  	return test_done();
+>  }
+> --
+> 2.45.2
 
-We could cheese it by putting the expected output into a special comment
-before (or after) the TEST invocations and letting the test script piece
-them together to build the expect file, something like:
-
-	/* expect
-	ok 1 - passing test
-	 */
-	test_res =3D TEST(check_res =3D check_int(1, =3D=3D, 1), "passing test");
-
-That would be a bit annoying if we change something because some
-messages contain line numbers and the comments would affect those due
-to their existence alone.  And there would be a ripple effect if we
-change the number of output lines of a test to the output of later
-tests.
-
-
-The only downside of keeping the expected output of t0080 separate that
-I can think of is that it might get confusing if we'd ever add more
-test_expect_success calls to it, but I can't imagine why we'd want to
-do that.
-
-> But I do have such an "EOT" patch which I've been meaning to send out,
-> since it makes many of these quoting annoyances go away (though of
-> course it leaves the indentation).
-
-Being able to pass the test code to test_expect_success as a here-doc or
-file to avoid nested shell quoting sounds useful in general.  For t0080
-we could achieve the same effect already by creating the expect file
-before calling test_expect_success.  That has the downside of passing
-even when the disk is full and the files are created empty, but we can
-throw in a "test -s" to rule it out.
-
-Ren=C3=A9
+I think this commit in particular shows how TEST_RUN() is more
+convenient than TEST(). (Although, arguably we shouldn't have allowed
+the setup() + callback situation to start with.)
