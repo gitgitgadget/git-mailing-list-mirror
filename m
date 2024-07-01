@@ -1,95 +1,134 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A61816EB71
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 20:05:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA6716F908
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 20:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719864303; cv=none; b=MlBtEFosNldKmnkoKEbasIwLxnNvFH/c+WynIW3fGXBmSG51A/JyM8zcOWTGKpFxfsgz28f3dZUqOGHlPrLo0I7wJLZ8FRxZeC1tQzDsZEFRO+8BqpkKq9Pvhsdi0IT34M5yOoCwRtejeAOyPu5D6uG0tuzyX14YgfqTqrExyR8=
+	t=1719864886; cv=none; b=e51w7RknVg+59MHJ+ENEtcchw0vkiNtpZibaHq7TJRTxkOVgHKUhCYyhaQvGODfakgo/zgsh2HzNc+DJtKs764znjXL0qSm4PMh/SpqBWYEsyHXGnL8SEZ25tLXutS2KxESSWKmWLZ2RSgMFZk2JILU4ygO9jZmnnhgThP7cEi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719864303; c=relaxed/simple;
-	bh=C8xUrvIftfFy2Nd1V318yyXTurzkIj4447sH4HUGI3E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=eoeJ4c5m8kaLBYvQx2UyzLefLmNyyZ5zaBg4kEeKppcd1y4oGtRQZzodqAyaNj/gNCe/DNR6CmB5BgEVPik+s6nrhywFADblmrEKsQlHzz1tjOynunOu3bVee44EREysWzoRCnLnNCYA4m5/UwrzQ/6Ffx0BpfF6AOo3x7V/UEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=N6iFdhgP; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1719864886; c=relaxed/simple;
+	bh=Z59ci9ye7F9B/8xx0ZXz4kuVyme9iDeHwGZLNo/vVcQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xff6xXgozPRm2nFpf/TTrsaB4Kvu0sN1XyoD/juaSbVr0ZDAR7iL4G13vRrRq+CdpQUWpa2k5UWMZWqZiYSlXLVFlHHTDmIKn4wDQXJTBM/BxWjeM9z5jxAhXsWCCSqQPKYnz9HixpMzC6CSgNoGtGS0plkXgywuJhLJsJI8C1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=T08W6kNx; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="N6iFdhgP"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1719864292; x=1720469092; i=l.s.r@web.de;
-	bh=YFei5lC9hegioVN/2YedXhE168wFDdBNW+vUpSWChtM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=N6iFdhgP5Q7btdphz+d6e6oKtC2LSoYDuoPAtl/p2VCyMysPwtGCGIHH3/O/VqQa
-	 sHpoO7o7xBK2F6F1NkHHKXTn8HzNaRNvfA0+BhmOr4Pnu/lKzxIPU7Vh3ZvPAR6+v
-	 GlPe6Beobh5lH4XJkTgUKbj75c/kek86VrQ/eoliCokh04DdU9v6xcOml6/4v/9Wx
-	 bZDEZhmlWgByZcWbR4yfHzaxInFgo93GSwZhU7At9OW32dCOOYSDn54kJTsrYjtri
-	 8I+KoQFx9n/5/QufaeZKkHn2XV4HaTqHTAfxInkhQ+SX1xuCjN2ttwcCBZybpnySM
-	 233LYN7SpqurjDkWMQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.19.151]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MYtx4-1stIBQ30Ea-00K39l; Mon, 01
- Jul 2024 22:04:52 +0200
-Message-ID: <1a9c7351-68c2-4f2a-b00f-b4c8422ebe08@web.de>
-Date: Mon, 1 Jul 2024 22:04:52 +0200
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="T08W6kNx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1719864882;
+	bh=Z59ci9ye7F9B/8xx0ZXz4kuVyme9iDeHwGZLNo/vVcQ=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=T08W6kNxNxPRAAmesGN5NcxDgFqce6d2YOFiyD7A9uQeDWMhwp8DtnMvrq74WsxUH
+	 4Eu09WF+40t7SayonxOlol2A7NIdVNouSWbPfH3HoIuni6TT2T9LjVnJNOTm2LSHN+
+	 NsufmnSEdXzMiDtUjlM0q3B0digWSlFKtgNm7zTmA/CkR4v0MCLspousETXNXCOhAx
+	 6JmtGGlRxMJMOW1fUQJXd8YB+XZVVVimQgchroNgnx9UUiJPt144Vji2FRDbfidrF4
+	 HjCuU81DuyHxRQg/usiU0M6S/7PXgJVctPmqqvQrws98zeLDNtuiHTYQkfKPo/PMMs
+	 Qk6YkwvHcsK2UNR+0ttPj0NsRjijDBrUf8aVMS8bClPLst3AWUMycrSmn8FDw24kG6
+	 BwN1Q+plIuplOmNffAiSeMXHfngqf8VSdtWP/c6D3Hqee9uN7sZTfeP3vKHfLrOTu+
+	 lx5o2tBY+XMaNkTrEdong8Qn2l+qC/d+C5616WVhWW2GaCPEr+K
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7266420992;
+	Mon,  1 Jul 2024 20:14:42 +0000 (UTC)
+Date: Mon, 1 Jul 2024 20:14:39 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Alec Sanders <aws022@bucknell.edu>
+Cc: git@vger.kernel.org
+Subject: Re: Trouble with Gaia binary files
+Message-ID: <ZoMOLz--NK_U6sst@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Alec Sanders <aws022@bucknell.edu>, git@vger.kernel.org
+References: <CA+Gods=0N9yYZ2tMSiV2GRO2uwpQTvvWB=Gcv9CfS4XrMYWN=A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] t-ctype: use TEST_RUN
-To: Josh Steadmon <steadmon@google.com>, Git List <git@vger.kernel.org>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
- <abb96bfc-ed97-4c8e-a99a-0dadce45398e@web.de>
- <eh556xjlxipeyumm3gchiiggyogpcuznil5kwvudcpyecj4uxq@uy5tk66blzsl>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <eh556xjlxipeyumm3gchiiggyogpcuznil5kwvudcpyecj4uxq@uy5tk66blzsl>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Kki9hNMFOyJVQ09o"
+Content-Disposition: inline
+In-Reply-To: <CA+Gods=0N9yYZ2tMSiV2GRO2uwpQTvvWB=Gcv9CfS4XrMYWN=A@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--Kki9hNMFOyJVQ09o
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Bxe0U1NHGovIiEakfRe+mT+2rYeycb7s9Ble5bUOFytHCI6Wkxk
- y8SDfN/ZA13E8LZJd9Ng/9aIoyf2MAPM3RiVNG3q/OnLtbO9si/FzsEm5Kn9Hzap3tGK7Ge
- eCCwCxUVcPlDadsEui+UUv3eiMOX1vO0MihaqpN64iLr+RW2BKeUfMYH5r0AecORG3VImPb
- 9e5SJGbXLfg6FxenPOwQw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:S5Fc3VXdvoo=;XgHSORXo2wVcNiscT22leT+xfWx
- u4A19WBNCQpNszofI0imkCuzRLOVkxtA0rclqrvo10uIJPowt9jhupBafpMph0FzJJTCrrGZ8
- tegxjVlUXpcFLWTNt0wSgNp+xAdp5AtGwGAhC7JT1z8M9pacVK4+v9GGxBwQmpFW6teR6XxYy
- 60l5B1CWMQaaJvqg8n/ZVS8a0GDG7vWPT7DHjD+VhsD7yqbwAWEbnLdliQfRz8bRcvXsl9Orj
- S2GAIG0ZwpNi8vwF493BJAjjrGqQSlOdnO+CvcsZeg/hkjfYS4n6BsOffQ6GTwCof/dZa/eD0
- bccw5DjmpAeakvlIJv4xmCEtOhE4esoBo96T+2enTfnQGUQFogduziG3iN97o/BeSLViccjqf
- BaRfOHA2oaRmCyvxtTZtvR02pN7zN+yxj3sRFyW/Za8hAs16ojQJdp0CILjzV3HkOvyTx6aFF
- uKkOq1KxHpnKQvjdgxKrfz2LTaSV2HTSNORj5AYVULXIvrzK/h5LJyGXtwgA7L876FtpK81j9
- BwBZSSFXddyclPVghu8uG4gj1KcR5Wn6LPuM+N9eVHWGxSdOvU+e2yI0J86/GhMwmi6FPrJpS
- 9SPm3/A2a0mE4tpTtHkVZclnWWx9Nt8scc0Q63CJU2wjgE5cAp+4w+TdlroGQjJpi2df8dprK
- 1zOCYWI4SGn2bYAYrzd+oIuJwfKZ9khTZsVaR+9FCogaU44p2O7R67h2s5Y6Klm74xHs+vhFJ
- vD0mr3lRgAtLk6qyXPT7MJFa601MpWBQAIRmCXj73/A5LXAV4D0MlNfCAsWtxIVId5j5/Al33
- 0bsGBqupHRb+U0Uwt1EnuD1STSP5HCrb+3gzT0JpnQAc4=
 
-Am 01.07.24 um 21:49 schrieb Josh Steadmon:
-> On 2024.06.29 17:44, Ren=C3=A9 Scharfe wrote:
->> Use the macro TEST_RUN instead of the internal functions
->> test__run_begin() and test__run_end().
->>
->> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
->
-> Nitpick: please expand the commit message here as you did for the
-> following patches.
+On 2024-07-01 at 15:34:04, Alec Sanders wrote:
+> Hello,
+>=20
+> I am running into an issue with Git and Gaia files
+> This error persists when I perform a git checkout or git merge.
+> The error is as follows
+>=20
+> error: Your local changes to the following files would be overwritten
+> by checkout:
+>=20
+> *Insert filepath here*
+> Filepath directs the user to the project folder and within it, Assets,
+> Gaia User Data, Sessions, ... , Terrain data, etc
+>=20
+> Please commit your changes or stash them before you switch branches.
+> aborting
 
-There is not much more to it: Use of internal functions is discouraged,
-so this patch replaces their calls with the new public feature.  Perhaps
-a "Kinda-requested-by: Phillip Wood <phillip.wood@dunelm.org.uk>" would
-be appropriate?
+This message isn't particular to any given type of file.  What it means
+is that your files are modified in the working tree and the operation
+you want to perform (a checkout or a merge) will modify the working
+tree.  Because doing that operation would destroy data, Git asks you to
+do something specific to make your working tree clean before you can do
+that operation.
 
-Unlike in the later patches the tests themselves are unchanged, so this
-has no consequence for people that want to add or modify character
-classifier tests.
+I'm not familiar with Gaia, but in the case that you're using Git LFS,
+this could be caused by using Git LFS incorrectly, whether by you or
+someone else, that can lead to files being perpetually marked modified.
+If a file is tracked as a Git LFS file (that is, the file type is listed
+as `filter=3Dlfs` in `.gitattributes`), but someone has checked in the
+file without installing or enabling Git LFS (that is, as a regular
+file), then the file will end up always modified.
 
-Ren=C3=A9
+That happens because if the file is updated in the working tree, Git
+tries to run the clean filter to turn it into a pointer file, and since
+that differs from what's in the repository (which is the full file), Git
+marks it as modified.  Attempting to check out or reset the file causes
+the same thing to occur, resulting in the same situation.
+
+In any event, if you _do_ want to keep the changes, you should run `git
+stash` to stash the changes, and then checkout or merge.  If you _don't_
+want the changes and you are really certain you want to destroy all of
+them, you can run `git reset --hard` (this really does destroy them, so
+be careful).
+
+If you have the Git LFS problem I mentioned above, `git reset --hard`
+will not fix the problem.  In such a case, you will need to do `git add
+--renormalize .` and then `git commit` to fix the state of the branch.
+You'll need to do this to every affected branch.  You can also run `git
+lfs fsck --pointers BASE..HEAD` (substituting `BASE` and `HEAD`) in your
+CI system, which will exit nonzero and print an error if someone does
+this again.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--Kki9hNMFOyJVQ09o
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZoMOLgAKCRB8DEliiIei
+gYRzAP9Ug92TL8ibgcFGghLX4TiFLoKKkI5E4kVGLolZLbC7nAD+LMkYNiOINTrV
+K4kc0v7ZCauw3ZG3stsQ9Ujj4lve1wU=
+=f2JG
+-----END PGP SIGNATURE-----
+
+--Kki9hNMFOyJVQ09o--
