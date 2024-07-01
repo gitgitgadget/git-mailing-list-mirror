@@ -1,80 +1,107 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16E516F836
-	for <git@vger.kernel.org>; Mon,  1 Jul 2024 19:29:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B068016D9BA
+	for <git@vger.kernel.org>; Mon,  1 Jul 2024 19:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719862174; cv=none; b=RwTTbIHW8k9qZjX9/taioupvVu2TpDvto4W330KTsGUKdc9Sm80Ilw5804Ws0HoJ/xf1qOblNKczv3VXq8Z9i1j7Q3OMmqYYpH5CX6gTBSz/vjeKR6POeUIVaTIwaypcDZ2l8oviww4f072Hb3RWNjzP/T1qTeQ+rxouSaBrGlk=
+	t=1719862561; cv=none; b=PIjWUv3J+IiuqDvt3TmSOaYXHGdl/GnOPrOq8PVehuila9ZxvTFVg4oCTo6ojVbsevOlP4N6dxF/mZjpinYHauHv9q+CES/RGDlRWpK+NXIZ7M0hBdE580nbEQ4c6Q1VYLGHvb4dh80Fg+dK7RwZ4fUxSELW8gI0di/2PGUrMeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719862174; c=relaxed/simple;
-	bh=zzQYKC1A2TWxowzIGr6HzdyV/pg40fzz9zOqTVq9oQA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RgeXob4Y4+Zfc5SPsol8pkBzsG8hJDGc7Vr5dV78I455Gzz6WCIudHZxeTry4ShuLR/NIrUGUVTp7qwFphzGzSJMAX3I51jp+9UUIcsiYj0w26p+j4z2e7uAY0TK2+ZhilQbDR6+XfB9KIRotWpQBVY1mhMaiHtzD+NpBDCT/pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=npDiAqgn; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1719862561; c=relaxed/simple;
+	bh=MF/F9GXIifAAH5cG36G25pV8L56mLjadYUUFZshh5I4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JWRZ7K/8koIxGxNTl1dG43FxWnT3oxnAxoeEKl782g/rFDkZQuTsnUC7+Z2zRsUhoWdjhVuJGcy1wXpzJDTPiij3MK+O6tjXwQ9Subzwm3BpmVYaQf0Jrv2n3MALpIpzSknpEUbHnAEDOwjZe11/z96t5jxzWGAhuApb3Zb0mNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IBWoSkNC; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="npDiAqgn"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9109E1DFD3;
-	Mon,  1 Jul 2024 15:29:32 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=zzQYKC1A2TWx
-	owzIGr6HzdyV/pg40fzz9zOqTVq9oQA=; b=npDiAqgnT8GcNh9/XSLNiDIxfzyD
-	k3uQNtpyJq2sw518iY3S8bsW3iSpAebXHMWlqoMLuGi8legDuLRzRRY7AEvRkrpj
-	iAPY/zQfhLZ1LAWdRbKJo883N6DZsfnMd+eZL1rUd7OdUMAunfOWP8IlsdRW44XJ
-	ZwVTNwZylslCZdI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8A12E1DFD2;
-	Mon,  1 Jul 2024 15:29:32 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 53BFB1DFD1;
-	Mon,  1 Jul 2024 15:29:28 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
- <git@vger.kernel.org>,  Eric
- Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] test-lib: fix GIT_TEST_SANITIZE_LEAK_LOG
-In-Reply-To: <20240701034911.GE610406@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 30 Jun 2024 23:49:11 -0400")
-References: <f4ae6e2a-218a-419c-b6c4-59a08be247a0@gmail.com>
-	<20240701034911.GE610406@coredump.intra.peff.net>
-Date: Mon, 01 Jul 2024 12:29:26 -0700
-Message-ID: <xmqq5xtox65l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IBWoSkNC"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4256742f67fso25008625e9.3
+        for <git@vger.kernel.org>; Mon, 01 Jul 2024 12:35:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719862558; x=1720467358; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dzK+YBkcvx7qtnr+AkTek9mzAAx4kMVUfdEo7xCxH7I=;
+        b=IBWoSkNCX2SNMbdP/GExYh7Ohef2MhMcG92zOTrFe1YutSpMsc/iHhvYT8ALQJFvk8
+         1RLvtswz0HHAEeSWFdYcsbn7UA+/Ug0SKakc/J8AZHyuf6H4YYPS75zZmciETCIW84m8
+         qYsrcHbBGLkx2N6PdprEzH0xe86ufwGR4blNyiix1aihs/YwGin5vW1oxMy7AqEwH49M
+         ZfeUdaWqPU+9+epqFgHfD/jyIRpVAznugBapaarplN++lm66nr7QRWnJX8GqgQiDet1r
+         rydDdMlKtX/e7YPDxKR2YTdaqakQDlq6ca1Ef8o/yNOzm5okTHJ5OfxRJ9DCN+okmulC
+         A1dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719862558; x=1720467358;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dzK+YBkcvx7qtnr+AkTek9mzAAx4kMVUfdEo7xCxH7I=;
+        b=DZQs7NX/R9y57Eel3SkeokJIpFymUxz8rfKqo17qj5L/wH4stnwupxpjyv1zODW5n3
+         0p+EHadheOGAvhmVZgLndrNxQRF4xPT/aeJSDE7oOdY/bLREb+XKXO0sEwgSMbYzLvRI
+         v/XRdcjwlN+0QVBVUumCuMxqELsAWhZUBns7leHJWXtY3HFkEMBizh+glaHnFiMvzznf
+         6yn1Fp4zdA5wnjxlF83fd0BOoihm3cwMkTMJARGPPFQoiTWeJKvTHZAtXk5wWCTYPfBq
+         2WBPuxhzr9HXzDHD3dsgdN6HbzznATk+gfva6kC6YMPLfVZAI83eK2lDupeOKhxz1tbP
+         qMxw==
+X-Gm-Message-State: AOJu0YzeXjNZ9l6OxZkjtUueBa96deIQJoauCe/T5hsNZTT0DEmTrRCj
+	KXRlSQNVGWzjXk+vsV5burta9Ex7A1UXosRegDocMunbhaj4M0aB
+X-Google-Smtp-Source: AGHT+IGJy4lUbf+PWVldeq72YoWYfQrYLYRuq7jSHzZouap6tI3r9yrqIK3Ieu7Tv4rAWLBwM/wmyw==
+X-Received: by 2002:a05:600c:4707:b0:425:8392:49fb with SMTP id 5b1f17b1804b1-42583924ad3mr22922595e9.16.1719862557978;
+        Mon, 01 Jul 2024 12:35:57 -0700 (PDT)
+Received: from gmail.com (82.red-88-14-59.dynamicip.rima-tde.net. [88.14.59.82])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4256d664052sm155919955e9.27.2024.07.01.12.35.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Jul 2024 12:35:57 -0700 (PDT)
+Message-ID: <7ef69875-b18f-4ccb-be83-e994315636bd@gmail.com>
+Date: Mon, 1 Jul 2024 21:35:56 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 3B946396-37E0-11EF-805C-C38742FD603B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] t0613: mark as leak-free
+Content-Language: en-US
+To: Jeff King <peff@peff.net>
+Cc: Git List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>
+References: <23d41343-54fd-46c6-9d78-369e8009fa0b@gmail.com>
+ <20240701035759.GF610406@coredump.intra.peff.net>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <20240701035759.GF610406@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+On Sun, Jun 30, 2024 at 11:57:59PM -0400, Jeff King wrote:
+> On Sun, Jun 30, 2024 at 08:46:38AM +0200, Rubén Justo wrote:
+> 
+> > We can mark t0613 as leak-free:
+> > [...]
+> > I'm not sure why this simple change has fallen through the cracks.
+> > Therefore, it's possible that I'm missing something.
+> > 
+> > I'd appreciate if someone could double-check.
+> 
+> I'd noticed it, too, while doing recent leak fixes. But since Patrick
+> has been working on leaks and is the go-to person for reftables, I
+> assumed he had already seen it and there was something clever going on. ;)
+> 
+> I also get a passing result from t0612 (and I do have JGit available, so
+> it actually runs the tests).
 
-> On Sun, Jun 30, 2024 at 08:42:06AM +0200, Rub=C3=A9n Justo wrote:
->
->> This has already been sent:=20
->> https://lore.kernel.org/git/54253e98-10d5-55ef-a3ac-1f1a8cfcdec9@gmail=
-.com/
->
-> Thanks for that link. As soon as I read the subject, I thought "Uh oh,
-> wasn't there some tricky complexity here?". But going back to that
-> thread explained it all. :)
->
-> I think the patch you've sent here covers what was discussed there, and
-> is the right thing to do.
+I have no idea how JGit works, and I didn't have it installed either. 
+But after a quick test, I can confirm that t0612 can also be marked as
+leak-free.
 
-Thanks, both.
-Will queue.
+I'll respond to this message shortly with a patch to fix that.
+
+> 
+> I also get funny results from t4255, but I think we can ignore them.
+> It's known breakages vanishing, which I guess is just some sub-program
+> returning failure due to a leak and changing the test results.
+> 
+> So anyway, this patch looks good to me, but probably we could squash
+> t0612 into it, as well.
+> 
+> -Peff
+
+Thank you!
