@@ -1,172 +1,117 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6B6205E05
-	for <git@vger.kernel.org>; Tue,  2 Jul 2024 20:55:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B2E1CE0A1
+	for <git@vger.kernel.org>; Tue,  2 Jul 2024 21:12:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719953734; cv=none; b=efLlMd0XircAfGeH4idGjgqAaCIYjVmQXMw6/uLDY4fi1XU4zXzuvZxCeOxoLbFC4Xh1m38A50tJO2OTEwQqyyAEknKSCpYFH3lor4Ssj82UMjJ7j1CXzUWA2cRyuHErYj/KrL6YG9npYsdVLi7tNPIXD108AuU7yI4fqwORtOo=
+	t=1719954723; cv=none; b=AEkk+fHy5EToAPPf+My4H1yrI1hlO+I1jexuHa5pevTmO/Z7Gw1A17hT+TuD2+NjKxXZW3Uv7R553QdYcEVTKRxD2gI0qRxF9vc5RBhpo0m37AO3x5MgeH/n1gBihY7k6PlTJkvoKwVSv2SrdTeUUI/vSA0mFMWdmsgA2p2WxRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719953734; c=relaxed/simple;
-	bh=+Bzz3KVOI5NHXkC+4ol9QmT6vy/mkJhoT64DlszKmlg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gEqfr0ZGp1dl3r6XZPd58yieWB9J5+v1aVEpVwF36dP2HVeN+uONHQhHlDB70Z7R4LMkRYasy1hPsF0SLLfBx8pd9+M4hiHlqw1tQilGaxYLz1jFdcjJwi9Alnw80irsfAUdbKMVs5wlJvQyhEafulKNcklih+PDhg/i5O6fIwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=NrDXG44U; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="NrDXG44U"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1719953722; x=1720558522; i=l.s.r@web.de;
-	bh=5VwsTbfD+V4X/qc77Nwb71wl+N4MCu4+mpmBclFs2k8=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=NrDXG44U5/uscJnrQdhKFjXikRKdOSbOPZ2KLejd5JEtUreKgMdgEcofsPvQbUW3
-	 DoXA6eU4i1wkQLRGd1T6qGwYd2vY797crrVtkWjzAUhcmKzvnpqxJTcXd/EV5tkIB
-	 yQnwSs8sF7vf+xzZc+7DrQm0THEOV5Nlq2ijMtwYE0PCQWsY92j3iGaDBqxIiMNhw
-	 /s+muOA3I3dQ7NHBauTxmvdzbJ7c2xvZXzDbzlXBFeuGnjLx4KhyqIpEfJm11Swy4
-	 JHOjWxbiAYGF/AstPOYTfkT7Fz8KJDztNg/qFhpMtA1J/6yWlm0oOqTgd+nFMxutc
-	 37/0V/99a5x5gbfpBA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.19.151]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MqZMK-1s2s6E142i-00gtMh; Tue, 02
- Jul 2024 22:55:22 +0200
-Message-ID: <c690e0ad-21e1-4b51-b594-70f4b2527df8@web.de>
-Date: Tue, 2 Jul 2024 22:55:21 +0200
+	s=arc-20240116; t=1719954723; c=relaxed/simple;
+	bh=K2UB1AfzTHBTvwY0YZotkdSW8dk4fQ//hkWfUOfTj+w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xt6FAaUm5ISMsTljVFCD1NFSRfDm//2szezxFI6VXnuF+ZCLB5eXumdiPjEIsLdQM6Td5nDq/R7IsRU3yblp4CnKI2vNRWRO+9ffgcf06W/3hVCARRan94H/8020Vo6k9/l5K3A5+UhLsOL/rRQuE/ghCX0B6BMuX3qo4FkjRXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 8539 invoked by uid 109); 2 Jul 2024 21:11:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 Jul 2024 21:11:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28838 invoked by uid 111); 2 Jul 2024 21:11:51 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Jul 2024 17:11:51 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 2 Jul 2024 17:11:51 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] push: avoid showing false negotiation errors
+Message-ID: <20240702211151.GA120950@coredump.intra.peff.net>
+References: <xmqqo77fr2h0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] t-strbuf: use TEST_RUN
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
- Josh Steadmon <steadmon@google.com>, Git List <git@vger.kernel.org>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: Phillip Wood <phillip.wood123@gmail.com>
-References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
- <1bf053ae-957e-4e9a-90f0-11cc76848ce9@web.de>
- <bh5ectgtwdaeltflggzwnwhobewvcqqelforr4sfcmq47rnnrl@mzspptlhpofx>
- <D2F8BS39IFC4.WJ9TNK3IDFBV@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <D2F8BS39IFC4.WJ9TNK3IDFBV@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:orl23+uZkFbKpSMyvnvSMsZqz2yo81vF02t7fzaznkUPRg8PFG/
- JtabuTSRi2Bpw9cj5ZpUI+bMW0gUpZTO7Xr04ookp/+La9CmswqOuEZPJ1V7JbjY/UNZaJF
- yNOkqro4MpRyH+5dvCxOBEpTaMl25AcglfZCWwpfVnbj/al5VE+0mp6biosESUJ/Ud/oU4z
- 6XsrnscSIp8F8h08LBCrA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:d2MLJoSZEV0=;ICGao1o4pD3RcNAI1mobtrRRScz
- 6M5MgbS8ALtFZF32vF4dfYez6Kmt9AH+xJw8z6RTg2VSDqy0iYroPAJUh7DLMFgXa4RTAnmxV
- WP6tAzhrXMlkAgvDWUwdvpQb8n6hYcrRl70bmy8o/WyHsVuMmPDgjy21dnPeZ5hjZJTgcFceO
- Ur8huXnHbW+FmOJgCJFcEFMw2o1ID3OpbtqbeKyIC44Xkz9YTeer/s41S2LZQn1IfTzSFoOTz
- 9u7c51R85MHYu9mjdqKC+LaPj7uhjOfb+P7O8B586W7Yc4PH/GUJmYGrkreORl+1hJUX5dDyC
- 9cURbKXbfTIPI8rHKyQa+0NxdC21XwOUpuohfgmWL0bDgzlFDQzfbni8uxRhzQyiraur+dC/w
- ThM3l4sweV1zU72zpe8xZwffXRnNkPHZ1ZGZiP1XPvgg+OUhL81mrjxT2usWXA0Nxe81ncEoZ
- X+E3Xq/2VG+uPIUzH2ht2xw9ApzzrDLkFoCyjpzYH9IvIgJsbg1tgcpFnYNkBydZ//LCEYwLN
- 0v7RqRCpcKFmKvovDJQ7oMYMNdarzTU5boGKQBPdNycj4ZlXuUHKi66YuleP8/Ah7CAKxAfvD
- npKRdlmVDsq7eM3h/GBaLNqdzo0IY2dIFka5Pcwt+xFjLFUxVdpR3EdtAmLumvcx5rB9ZKXwR
- 9G4mxPtpIvc9FRbIcWnFtYxMchHfx7KPOQVuR/DIipzDVudA+Vims1jDyfI9ynZWJBx5Y5FvQ
- qYgSea5ei/HQwfV5RyNAcZforzM6P7eiN5lYpz6tu4w27fam9yxzIh05zasRbs6+V0WUOz/Vp
- Yu1b7h4E/QqRI6HZ56UzpL27AABeXwosi0y7yHpXXPMQs=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqo77fr2h0.fsf@gitster.g>
 
-Am 02.07.24 um 19:29 schrieb Ghanshyam Thakkar:
-> Josh Steadmon <steadmon@google.com> wrote:
->>> -	TEST(setup(t_addch, "a"), "strbuf_addch adds char");
->>> -	TEST(setup(t_addch, ""), "strbuf_addch adds NUL char");
->>> -	TEST(setup_populated(t_addch, "initial value", "a"),
->>> -	     "strbuf_addch appends to initial value");
->>> -	TEST(setup(t_addstr, "hello there"), "strbuf_addstr adds string");
->>> -	TEST(setup_populated(t_addstr, "initial value", "hello there"),
->>> -	     "strbuf_addstr appends string to initial value");
->>> +
->>> +	if (TEST_RUN("strbuf_addch adds char")) {
->>> +		struct strbuf sb =3D STRBUF_INIT;
->>> +		t_addch(&sb, 'a');
->>> +		t_release(&sb);
->>> +	}
->>> +
->>> +	if (TEST_RUN("strbuf_addch adds NUL char")) {
->>> +		struct strbuf sb =3D STRBUF_INIT;
->>> +		t_addch(&sb, '\0');
->>> +		t_release(&sb);
->>> +	}
->>> +
->>> +	if (TEST_RUN("strbuf_addch appends to initial value")) {
->>> +		struct strbuf sb =3D STRBUF_INIT;
->>> +		t_addstr(&sb, "initial value");
->>> +		t_addch(&sb, 'a');
->>> +		t_release(&sb);
->>> +	}
->>> +
->>> +	if (TEST_RUN("strbuf_addstr adds string")) {
->>> +		struct strbuf sb =3D STRBUF_INIT;
->>> +		t_addstr(&sb, "hello there");
->>> +		t_release(&sb);
->>> +	}
->>> +
->>> +	if (TEST_RUN("strbuf_addstr appends string to initial value")) {
->>> +		struct strbuf sb =3D STRBUF_INIT;
->>> +		t_addstr(&sb, "initial value");
->>> +		t_addstr(&sb, "hello there");
->>> +		t_release(&sb);
->>> +	}
->>>
->>>  	return test_done();
->>>  }
->>> --
->>> 2.45.2
->>
->> I think this commit in particular shows how TEST_RUN() is more
->> convenient than TEST(). (Although, arguably we shouldn't have allowed
->> the setup() + callback situation to start with.)
->
-> Could you expand a bit on why the setup() + callback thing shouldn't be
-> allowed? I think it is a nice way of avoiding boilerplate and having
-> independent state. And, I see the true potential of TEST_RUN() in
-> testcases defined through macros rather than replacing functions. I
-> actually think that the previous version with the functions was not
-> particularly bad, and I agree with Phillip that the previous version's
-> main() provided nice overview of the tests and it was easier to
-> verify the independence between each testcase.
+On Tue, Jul 02, 2024 at 12:57:47PM -0700, Junio C Hamano wrote:
 
-Each test uses its own strbuf and the t_ functions don't use global or
-static variables, so how does the doubt about their independence creep
-in?
+> When "git push" is configured to use the push negotiation, a push of
+> deletion of a branch (without pushing anything else) may end up not
+> having anything to negotiate for the common ancestor discovery.
+> 
+> In such a case, we end up making an internal invocation of "git
+> fetch --negotiate-only" without any "--negotiate-tip" parameters
+> that stops the negotiate-only fetch from being run, which by itself
+> is not a bad thing (one fewer round-trip), but the end-user sees a
+> "fatal: --negotiate-only needs one or more --negotiation-tip=*"
+> message that the user cannot act upon.
+> 
+> Teach "git push" to notice the situation and omit performing the
+> negotiate-only fetch to begin with.  One fewer process spawned, one
+> fewer "alarming" message given the user.
 
-With tests specified as above I now notice that we never check the
-resulting string.  t_addch and t_addstr check the tail matches their
-argument, but strbuf_addch and strbuf_addstr could overwrite the old
-content and we wouldn't notice.  Perhaps it's not worth checking, but
-now that tests look more like test_expect_success and all steps are
-visible I somehow miss the equivalent of test_cmp; didn't see that
-in the original version.
+Makes sense.
 
-> Perhaps, the code snippets inside the functions are small enough to
-> perceive TEST_RUN() as more convenient than TEST() in this test, but,
-> for future reference, I definitely don't think TEST_RUN() should be
-> looked at as a replacement for TEST(), and more like 'when we have to
-> use macro magic which requires us to use internal test__run_*
-> functions, using TEST_RUN() is more convenient. Patch [3/6] is a good> e=
-xample of that.
+> @@ -427,17 +427,26 @@ static void get_commons_through_negotiation(const char *url,
+>  	struct child_process child = CHILD_PROCESS_INIT;
+>  	const struct ref *ref;
+>  	int len = the_hash_algo->hexsz + 1; /* hash + NL */
+> +	int nr_negotiation_tip = 0;
+>  
+>  	child.git_cmd = 1;
+>  	child.no_stdin = 1;
+>  	child.out = -1;
+>  	strvec_pushl(&child.args, "fetch", "--negotiate-only", NULL);
+>  	for (ref = remote_refs; ref; ref = ref->next) {
+> -		if (!is_null_oid(&ref->new_oid))
+> -			strvec_pushf(&child.args, "--negotiation-tip=%s", oid_to_hex(&ref->new_oid));
+> +		if (!is_null_oid(&ref->new_oid)) {
+> +			strvec_pushf(&child.args, "--negotiation-tip=%s",
+> +				     oid_to_hex(&ref->new_oid));
+> +			nr_negotiation_tip++;
+> +		}
+>  	}
+>  	strvec_push(&child.args, url);
+>  
+> +	if (!nr_negotiation_tip) {
+> +		child_process_clear(&child);
+> +		return;
+> +	}
 
-Sure, not all tests will be improved by using TEST_RUN.  If TEST fits
-better, use it.
+OK, this works as advertised. "nr_negotiation_tip" is really a boolean
+here, as we never care about the actual count. I'd probably have written
+it as "have_negotiation_tip = 1", but I don't think there is any real
+reason to prefer one over the other.
 
-> But, I also don't mind if patches 4, 5, or 6 get
-> merged as I don't see any difference between using TEST_RUN() or
-> TEST() in those patches, besides moving everything inside main().
+And we can't just check for a non-NULL remote_refs, since we are looking
+for non-deletions.
 
-The difference is that in the original version test description and
-definition are separated, only linked by a function name.  The new
-version brings them together and does away with function name.  A small
-change, for sure, just to get rid of the artificial divide and the need
-for that link.
+> diff --git c/t/t5516-fetch-push.sh w/t/t5516-fetch-push.sh
+> index 2e7c0e1648..a3f18404d9 100755
+> --- c/t/t5516-fetch-push.sh
+> +++ w/t/t5516-fetch-push.sh
+> @@ -230,6 +230,17 @@ test_expect_success 'push with negotiation proceeds anyway even if negotiation f
+>  	test_grep "push negotiation failed" err
+>  '
+>  
+> +test_expect_success 'push deletion with negotiation' '
+> +	mk_empty testrepo &&
+> +	git push testrepo $the_first_commit:refs/heads/master &&
+> +	git ls-remote testrepo >ls-remote &&
+> +	git -c push.negotiate=1 push testrepo \
+> +		:master $the_first_commit:refs/heads/next 2>errors-2 &&
+> +	test_grep ! "negotiate-only needs one or " errors-2 &&
+> +	git -c push.negotiate=1 push testrepo :next 2>errors-1 &&
+> +	test_grep ! "negotiate-only needs one or " errors-1
+> +'
 
-Ren=C3=A9
+The test mostly makes sense, though is the ls-remote bit leftover
+debugging cruft?
+
+-Peff
