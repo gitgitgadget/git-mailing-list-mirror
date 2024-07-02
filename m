@@ -1,65 +1,65 @@
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBB314A4ED
-	for <git@vger.kernel.org>; Tue,  2 Jul 2024 07:50:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204DB14B941
+	for <git@vger.kernel.org>; Tue,  2 Jul 2024 07:50:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719906608; cv=none; b=Hblyb1hCks6oXgNJr1G4nAoiZDS84QiInC4P4OmMuBpRtoJotpvZ7rEa85BdFMbX3InavMQqy+ST6gFBpauJFPr6WSG+Z3pn4FwWdiGW/ms16hc4Q3/OyUltLw3aVn+bkTAhxjNehu0RoUV0KeDP4BVFIEHXxGk+sTnf5Y+ozfQ=
+	t=1719906612; cv=none; b=IugOlhYS2LoL/XB1z1hMOaF0y3i3PtEvtIpmLyUX91zhB+BU9SBz4u/f4Ra6ZPXnsRlFg+Ld3O+g3Mb9rgZ0bFWyLFTRtk1lB4gfUWZWxjL3ve0qOObC/3AYmX+Hx7f3e/A55FMGOEdfvk3F0gNzFPjZasFo9nFcS6nVOf4Kdn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719906608; c=relaxed/simple;
-	bh=iv+3fFdtLIdU+4u6UlJ5P3cnS7lOA4o9C5D2O6OyAHk=;
+	s=arc-20240116; t=1719906612; c=relaxed/simple;
+	bh=lbxxZWov7krDvfRPREguqlu+nMVALJZ1VvdGFEKSvag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CHAI3mCi+bxdblBn6ve0UhiVNTft0l9XQz8e7PHMrB+D0c0tPM5TBxtPBSN7Zmt5QC+n7vKwtKyzMb72Vz5zbMRtamDTwRMtCBODeTtuqn9UGA1MCmMz9X/5bMiwuceu6vNykrWc4xnu7t5lCtT1p3t2klLlZPYinnwb7NpHGZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M14zifMC; arc=none smtp.client-ip=209.85.167.176
+	 MIME-Version; b=M8LCRTt3vFhzuBipFiF5FGsv4GfNwVEyQ/0TNZyRx3Z64A2FdrEhf2xhcGNI0tCD7kLouG088LFs6trvHmu/3ol4geI5IEhKaCSjp0vNMk6wm1UxejjdWP6DNpEsf+oIQjmeSSTuQk0aZs12EEvkhJUIRetQngw3SEkQROhUpJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bCueunpB; arc=none smtp.client-ip=209.85.167.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M14zifMC"
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3d5666a4860so2277960b6e.2
-        for <git@vger.kernel.org>; Tue, 02 Jul 2024 00:50:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bCueunpB"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3d55e2e032dso2338288b6e.3
+        for <git@vger.kernel.org>; Tue, 02 Jul 2024 00:50:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719906605; x=1720511405; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719906609; x=1720511409; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=F72auR7oyKgzk8C5heFV/L/7fLzB79XOdeFqoq/Kf0g=;
-        b=M14zifMCcE8+4p9DM8TXXNKQCI3Gr3lwyU4fLkwWB0ii+t6FaNau0SFI87MQfqZ8T3
-         wMttfthN9GXMDGxig1Ih9/KbrqH1P3mje8rEWMj0bVVWifrcUo6KpHeAXjCHJLK6zLRU
-         zBvQMLgwmDAQ3TDaCmO+zVLV2yNKIBwA9C+83SbeGNsQoMIIgHoF/HOlee3W8qth8ZVq
-         zE+77hJvC1b7XOLHi8JvaQdYUc/fGYZl1s3Jsx8aWr0GxDUDK3Me23ZW0x53p8W6CgK7
-         tlbsKs32PZQWhWZ0gcq3W3UvUJbcylzTTbMN0Ffo9n2m7h/pUgTVwNt4RDf6NI963dVf
-         tdqQ==
+        bh=8SjjoWcrN9Uaxxpmx4FAHcpdNLcALiOKRRA5v3KYKuc=;
+        b=bCueunpBC3LH60VfepbGLT0tCbC8wB8niWTwyNscICLVdaEHrIn/dwut2wgpnUWadV
+         QsR5psYG24GzaXQI33xWf/eueLu/evEb1CxccEJAKZJPy4oQo4wSeq9tdTpZj3Puqupo
+         u4mCi9xsXkQZk5KFm66FqWrZ70PyqnF6MWW4wSRqqROQS41RSLnpALCBLpoUcSbgOPYT
+         dFqZOAps+EEoZuApnp/K7qMSaUtr94MnDFnID3fhCg5k+WIb9HUGTCuDaE00THasNvks
+         YvYqqomNaeJkv71tTz15gksxfYowBzWvY1G8+jHUgJU3/yxNfLVanS2UqQEZ3DAqY6gC
+         hOgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719906605; x=1720511405;
+        d=1e100.net; s=20230601; t=1719906609; x=1720511409;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=F72auR7oyKgzk8C5heFV/L/7fLzB79XOdeFqoq/Kf0g=;
-        b=fm3EXIh9dRaE5wU0PQLhYxPN47Mz9snHWhAELZxYSlWR+TIyrUmpbcMDZ/KmHSD8Gq
-         vzgVtsHmM3nsBtk6O+kJy2ooDfeQF2+zXuHP5yzeSF0r147/Wc0PyLnm8pBMEEgh2cTm
-         rQkYAAmUo+a1sLibARTPHLz7GjUGOKKiS/uhil+nYhHUiXrnVjXIpB4lO1HG4+3Z5BTf
-         /d9RG6fdQn5LsBAuF019UMYCXwswdqF+V9SLQG++O7tOiVT2gfuZKrB8knu6tWUACAqh
-         u3OPaEjYiaYr8jet4aL4eqC29mVcQZuL6BTnz9po4iyk3hhgopSET+NddrmkNH6/T3nC
-         223g==
-X-Gm-Message-State: AOJu0YxkY65ZHcys5e6rX0e3h0Tb+Y4QFteVb2xxCk0cVE4KczN0lzHA
-	DwEsQrTWcsNNN1HOOz23BgPhLAcO/9h2cTRK6B58pH1z5sx+W0I7uJhXVyIvay4=
-X-Google-Smtp-Source: AGHT+IFlE65zoQGihcxPLX6rtiEgKMCQXjonLhKPKrCGaK6mlWfURyR1nGoVrPlWvhpmgyR4LLuuuA==
-X-Received: by 2002:a05:6808:308f:b0:3d2:24d3:80f3 with SMTP id 5614622812f47-3d6b4de2410mr10626182b6e.43.1719906605477;
-        Tue, 02 Jul 2024 00:50:05 -0700 (PDT)
+        bh=8SjjoWcrN9Uaxxpmx4FAHcpdNLcALiOKRRA5v3KYKuc=;
+        b=oVfwA98ug54QJYdtj/v4YPGg6g7dN7+m5K4WGtUMxkk1sLKzXNtkSjP85kjkAiz4xY
+         379Ip1dtaZzlshIEw5aGS6DDRRLmH2BGHXT0WV710vVVwzGH62uxAeRMtBrS9Rvwqrbd
+         eunnj0WFbiBPy7xx3jKxQjP6lHn/SA4TSyGAL65pC0lGX2s1x/+26iT+tbgQKS5/Awmm
+         6CJ0+Rkyg8l163rrleIEH0YHIG6/8O3ARKBVaXqlpfMqM66yF4FJHVf2Vg2p2+TotB9M
+         eR2Y8KccSWx3JO0RKnIwyhrw+SoC6ZDeIE32HCj3mQbpbZutlP2mg2hwXrJDnOVn1H2n
+         p/eA==
+X-Gm-Message-State: AOJu0YzaAxUhwzLFuohfm/oaFHfwtlKdVVVLBPfdFL2WLUBJE3FYoSzO
+	mb5RUR3YCOfJDQT/0Xp3aYRO6lsT7w0pDRFmm4poQhkN94vhZJTBQFSIEN7Kqzk=
+X-Google-Smtp-Source: AGHT+IHvG3JrcHwEdt/leAnmsECLZhsOGTXm/5CNWQQSXWi4cdwGc71iDTgc8QNopJrsauVbyLmkbQ==
+X-Received: by 2002:a05:6808:1408:b0:3d5:5fbe:b31a with SMTP id 5614622812f47-3d6b55925e4mr11968397b6e.51.1719906608922;
+        Tue, 02 Jul 2024 00:50:08 -0700 (PDT)
 Received: from Ubuntu.. ([106.206.197.80])
-        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-708044ac424sm7772626b3a.161.2024.07.02.00.50.02
+        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-708044ac424sm7772626b3a.161.2024.07.02.00.50.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jul 2024 00:50:05 -0700 (PDT)
+        Tue, 02 Jul 2024 00:50:08 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: karthik.188@gmail.com,
 	Chandra Pratap <chandrapratap3519@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 07/11] t-reftable-record: add log tests for reftable_record_is_deletion()
-Date: Tue,  2 Jul 2024 12:52:20 +0530
-Message-ID: <20240702074906.5587-8-chandrapratap3519@gmail.com>
+Subject: [PATCH v4 08/11] t-reftable-record: add obj tests for reftable_record_is_deletion()
+Date: Tue,  2 Jul 2024 12:52:21 +0530
+Message-ID: <20240702074906.5587-9-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.2.404.g9eaef5822c
 In-Reply-To: <20240702074906.5587-1-chandrapratap3519@gmail.com>
 References: <20240628063625.4092-1-chandrapratap3519@gmail.com>
@@ -75,32 +75,31 @@ Content-Transfer-Encoding: 8bit
 reftable_record_is_deletion() is a function defined in
 reftable/record.{c, h} that determines whether a record is of
 type deletion or not. In the current testing setup, this function
-is left untested for three of the four record types (log, obj, index).
+is left untested for two of the four record types (obj, index).
 
-Add tests for this function in the case of log records.
+Add tests for this function in the case of obj records.
+Note that since obj records cannot be of type deletion, this function
+must always return '0' when called on an obj record.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- t/unit-tests/t-reftable-record.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ t/unit-tests/t-reftable-record.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/t/unit-tests/t-reftable-record.c b/t/unit-tests/t-reftable-record.c
-index 170c804825..6ece76e416 100644
+index 6ece76e416..1b52085f46 100644
 --- a/t/unit-tests/t-reftable-record.c
 +++ b/t/unit-tests/t-reftable-record.c
-@@ -220,6 +220,10 @@ static void t_reftable_log_record_roundtrip(void)
- 	set_hash(in[2].value.update.new_hash, 3);
- 	set_hash(in[2].value.update.old_hash, 4);
+@@ -384,6 +384,7 @@ static void t_reftable_obj_record_roundtrip(void)
+ 		int n, m;
+ 		uint8_t extra;
  
-+	check(!reftable_log_record_is_deletion(&in[0]));
-+	check(reftable_log_record_is_deletion(&in[1]));
-+	check(!reftable_log_record_is_deletion(&in[2]));
-+
- 	for (size_t i = 0; i < ARRAY_SIZE(in); i++) {
- 		struct reftable_record rec = { .type = BLOCK_TYPE_LOG };
- 		struct strbuf key = STRBUF_INIT;
++		check(!reftable_record_is_deletion(&in));
+ 		t_copy(&in);
+ 		reftable_record_key(&in, &key);
+ 		n = reftable_record_encode(&in, dest, GIT_SHA1_RAWSZ);
 -- 
 2.45.2.404.g9eaef5822c
 
