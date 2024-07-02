@@ -1,63 +1,63 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C6985298
-	for <git@vger.kernel.org>; Tue,  2 Jul 2024 19:07:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A481C9EB1
+	for <git@vger.kernel.org>; Tue,  2 Jul 2024 19:07:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719947277; cv=none; b=o5DfjxIkA5nLVtYxe4ZaKQMJH4pmOcMWf+hushhtHfogzWSLNupwKzBaF02HosGjtmncGl4HwBnMyNjzVJMa72ZjCNLKwYtN3zVJmY+PyI2GO9XuOU7aDiQ+hqsiGS26gMfUKNVTYAuSNfvZ0mQWtXjJyQMUzyLJSy7ZFr/Y5fc=
+	t=1719947279; cv=none; b=Rzz30h4HZjIocYehxe0kQVH4NbZhGCt1RAknZtHtEMJ2N67SgvgfTsRO8NM4x2bMkrY2tNAQVI4yfD475pTnlNShEnnKL/vzK1XnhWBPaYtG2jv86wSZLGjtybpXG45h1tarsvwsJ7ommIM3FNk0Edtyn5yyCf1R+Vx2ADfDKsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719947277; c=relaxed/simple;
-	bh=DbbXB4zEaszazM4bkLylTQ+K8t7C6fNK8vE/z9aKkUQ=;
+	s=arc-20240116; t=1719947279; c=relaxed/simple;
+	bh=w3eeKQnUxHtohCqmqjZyYq1WXJjqdQyY5NsPWuBZ5vY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=GzcF8SUJmS9Zt/2Cwtk6cofBdY1sL2uIzuCkGwPvhXn653a7eSB64Lt4IDOfOtsskhgu34cBnv25hmOHL44sq1U8nACd1LOO1TIuSoc4VwYI/qzcnE5T/iSW8FD5vhqitlke4J8hJaEIt5VQSggK5BGiV4CIzASSiMwvKf+JzOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cn55PaJR; arc=none smtp.client-ip=209.85.221.52
+	 MIME-Version:To:Cc; b=HiNALRY+X/QFoNbNB3MeGhJ92BpKQ3KjIm2Xx0whx0eJzLxPZ0D4i624EYmCClscq5kavWMVRdMb5TLjs/LV/C4Ju2SkV6V6xUaiRgvA1lasO7UgZaqIK1xYfUQR4UK//EjBJyebxB6k+lggPdp/HHo6W2veF+wDOQaFPQ/ZlM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U9PwU2gm; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cn55PaJR"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-356c4e926a3so2702969f8f.1
-        for <git@vger.kernel.org>; Tue, 02 Jul 2024 12:07:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U9PwU2gm"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-52db11b1d31so6379874e87.0
+        for <git@vger.kernel.org>; Tue, 02 Jul 2024 12:07:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719947273; x=1720552073; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719947276; x=1720552076; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+/6Vnk/p8wybyE9A664a4l2znMy22d7ABH+o0EWPwsY=;
-        b=Cn55PaJRBeD36isowa509f1OKaZF+VE19X2V/YrXBm9KvFGXiD250Le/WlSErvBxYy
-         1TNv5YFt40IMsyOquYYvMFv0fn+E0QdH7AzEbBbxJg5qgUegDeGg+YSMsmeCsSAhYxwH
-         1FgQe5f0++jj5dtQRYnuRLPIQllBQXKVEle9xFySbkGoKS/euGJRl3UL7DIcWBloUOD3
-         KqXC+dTBHt9IDgpRMSBUNgP61jEFg+aFBKRcRN2ub/qvJP8iB7m75zfcmNndkrw3guvv
-         TBbgaqtCFATpcpowhmAA309V6bB6j583dVZUJhliLJ9fFOgJkEOCCbVVs62WfuX4cWmt
-         C2Ow==
+        bh=UxeMZDpDKO+CCinf2JC5NAnqcaCSOnczVeTFe7e4RPA=;
+        b=U9PwU2gmVJVgt9d6NOhAeUAgyum6xPRY4oDJo0AmLGtLmHrn2LjwDpsPSfm2y5/Mle
+         KLcJoFpOapDeOsY4h10zA3Jq28VgiLdRVtFA5KX6eP8aFKbjmiLBf9GI6gD4ERHCMimv
+         b5nMxwrKld/prHFKuC9pPrM8RF2YVfNeOXVTizPSghU6VvgVLQBTnwCfcamyvhNElefk
+         ukB6ZWdP57bWRzTfstk9cpahe6pL5CsDKLJQGslNGFgT0uxoDe5DyH9M44QpYDEmgO4+
+         6Ed8u4D5oQrP7vpaCNsA+dLwj6ye+a63dixSjfexPEEw/chgmp7VjRF7v8vRRXLl80XW
+         F4gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719947273; x=1720552073;
+        d=1e100.net; s=20230601; t=1719947276; x=1720552076;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+/6Vnk/p8wybyE9A664a4l2znMy22d7ABH+o0EWPwsY=;
-        b=WFDCaQGv98vWoPmldo2yucoBavvf9pEgcCJAa18WsWF0A4UlZ2vnZDcN3KHk9HbEwd
-         JNNxnq+RgtWmkkMkbsBXilViZp8ILx8Dk2nwTNGNnwiMxiAXcqXYRf3CCgOeId5ME+KX
-         2SL96kFen1dJvsksQf93ghTkIdXxgAooVov/Jmh8g//ok51v8luC7eXBzFObNLj+v7k+
-         wOIDP+jTgJtsurIIUCX9uYKrR7wz9ftEeHRHM3cxn/2L8xxOhLk7Nj/exUw+4gEMteIM
-         ahex7v6PRTaBI6iPjG6pD6yeQUF1VjZe9rAJHGraswD0VSAJS3Wz3ZeC1nJqk0AjzQ9r
-         og6w==
-X-Gm-Message-State: AOJu0YxKfXx3t9cCPcRLTqZmocuAbT4Fs8FM5jPGhnYna8Wu31phQ9WF
-	USlOQUkP2WjE7GzkFWDsfnvasPlI8uRRR1hv4aeyZNFjUOZcZLLdNTvDAA==
-X-Google-Smtp-Source: AGHT+IF39ZeBv8SZO/5oHfmw+I6llSeurUNYBIUA5hZreV+Mdeo++tLOXnPZf9K63SJjj+cs1NdfNg==
-X-Received: by 2002:a05:6000:400c:b0:365:980c:d281 with SMTP id ffacd0b85a97d-367757248e5mr6926251f8f.45.1719947273113;
+        bh=UxeMZDpDKO+CCinf2JC5NAnqcaCSOnczVeTFe7e4RPA=;
+        b=Ydp13jA3nPB5A0wRC7Km6kS3XNptpngxH4Jn+/rfPMw699LlaaAMzI/beGSutBfWdk
+         2JGSQhWi87fcUw6HrXBrAyA6u589QM8XTdc6FG5Os+IWLDFPxjeq1ldALOcZyN5L2TkR
+         SQ5ig497tcY8e2J+FTBDEbDU6sG9u2LfAxLVtv94GFvi0R4Rva0N+7iRVhv1sGosC6df
+         85goYfErKzXqxGoj0O3j8/reVtFmGoklX8THQDYNULghJ0np456oxYaTYT6spR2w8v2/
+         APCLPnABGQ8I+EHuw3mmf7yHD6g507vIM8AwXj3UyioGQn1YevE//T8j484dUodRzITk
+         9fhQ==
+X-Gm-Message-State: AOJu0YxoPLDoSd1futCobyyUnGAP4PyK/YETHor40tW9TCpfFO4naIoe
+	Y01dCq8rawDdRISfuHgzcnqaTh8LuWEUd6INwvYUaJyzlJrsxMlq2yX4BA==
+X-Google-Smtp-Source: AGHT+IF0NlJEC3c1RSTfWHXJG/TxvFYoJcE04Z6kQsGU+ouhruf4rivHecbR2Hbr3decqX1DmZ/lxA==
+X-Received: by 2002:a05:6512:e97:b0:52c:cd7d:4e7d with SMTP id 2adb3069b0e04-52e8264bcc0mr5545330e87.5.1719947273865;
         Tue, 02 Jul 2024 12:07:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a103366sm13921967f8f.102.2024.07.02.12.07.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4257d0d38bbsm125855575e9.38.2024.07.02.12.07.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jul 2024 12:07:52 -0700 (PDT)
-Message-Id: <3e57c2eacfcd604510404481f366cf3755260c2c.1719947271.git.gitgitgadget@gmail.com>
+        Tue, 02 Jul 2024 12:07:53 -0700 (PDT)
+Message-Id: <1679ab7b7a0db40733ad60ada8b226657782d33e.1719947271.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1740.git.git.1719947271.gitgitgadget@gmail.com>
 References: <pull.1740.git.git.1719947271.gitgitgadget@gmail.com>
 From: "Bruce Perry via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 02 Jul 2024 19:07:49 +0000
-Subject: [PATCH 1/2] clone: shallow-submodules should be single-branch by
- default
+Date: Tue, 02 Jul 2024 19:07:50 +0000
+Subject: [PATCH 2/2] clone: no-shallow-submodules clone overrides option in
+ gitmodules
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,210 +75,71 @@ Cc: Stefan Beller <stefanbeller@gmail.com>,
 
 From: Bruce Perry <bruce.perry@nrel.gov>
 
-Recursive cloning with with the `--shallow-submodules` command
-line option (or the `shallow = true` option in .gitmodules) and
-no specification of `--[no-]single-branch` does result in a
-shallow submodule clone, but obtains all available branches.
-This behavior is unexpected because in other circumstances
-shallow clones imply single-branch clones. It also violates the
-documented behavior: the documentation states that performing a
-clone with `--recurse-submodules` is equivalent to doing a
-nonrecursive clone then immediately running `git submodule
-update --init --recursive`. However, with the `shallow = true`
-option in .gitmodules, the former results in a shallow but not
-single-branch clone of the submodules, while the latter results
-submodules that are both shallow and single-branch.
-
-Modify the logic for git clone with `--recurse-submodules` so
-that if no option is specified for `--[no-]single-branch`, then
-no `--[no-]single-branch` option is passed to the internal call
-to `git submodule update --init --recursive`. As a result, the
-default will be used, which is to make shallow clones also
-single-branch and non-shallow clones multi-branch.
-
-Modify the tests for shallow-submodules so that the submodule
-has multiple branches and the expected behavior in terms of
-obtaining branches is validated: shallow submodules must also
-be single-branch, while non-shallow submodules must obtain
-both branches.
-
-Make a slight clarification to the documentation regarding
-the above behavior, although primarily the effect is to bring
-the behavior in line with the present documentation.
+When the `--no-shallow-submodules` option is used for cloning, pass
+the `--no-recommend-shallow` option to the internal submodule update
+command, which will override an option for shallow in .gitmodules
+if present. This allows the user to force a non-shallow clone of
+the submodules if desired. It brings the behavior in line with
+the present documentation, which states the option in gitmodules is
+used unless explitcitly overridden by the user. Add a test to confirm
+that the override is done when using the clone command (similar to
+a current test that validates similar behavior for the submodule
+update command).
 
 Signed-off-by: Bruce Perry <bruce.perry@nrel.gov>
 ---
- Documentation/git-clone.txt         |  3 +++
- Documentation/gitmodules.txt        |  4 ++--
- builtin/clone.c                     |  6 +++--
- t/t5614-clone-submodules-shallow.sh | 36 ++++++++++++++++++++---------
- 4 files changed, 34 insertions(+), 15 deletions(-)
+ builtin/clone.c                     |  4 +++-
+ t/t5614-clone-submodules-shallow.sh | 16 ++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 5de18de2ab8..69248421390 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -297,6 +297,9 @@ or `--mirror` is given)
- 
- `--`[`no-`]`shallow-submodules`::
- 	All submodules which are cloned will be shallow with a depth of 1.
-+	Also implies `--single-branch` for the submodule clones
-+	unless `--no-single-branch` is passed, in which case histories near
-+	the tips of all branches of the cloned submodules are fetched.
- 
- `--`[`no-`]`remote-submodules`::
- 	All submodules which are cloned will use the status of the submodule's
-diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-index d9bec8b1875..c8160cd1df7 100644
---- a/Documentation/gitmodules.txt
-+++ b/Documentation/gitmodules.txt
-@@ -95,8 +95,8 @@ affected by this setting.
- 
- submodule.<name>.shallow::
- 	When set to true, a clone of this submodule will be performed as a
--	shallow clone (with a history depth of 1) unless the user explicitly
--	asks for a non-shallow clone.
-+	shallow clone (single branch with a history depth of 1) unless the
-+	user explicitly asks for a non-shallow clone.
- 
- NOTES
- -----
 diff --git a/builtin/clone.c b/builtin/clone.c
-index b28f88eb43d..50ccce8902d 100644
+index 50ccce8902d..63cfb48484c 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -58,6 +58,7 @@ static const char * const builtin_clone_usage[] = {
- };
- 
- static int option_no_checkout, option_bare, option_mirror, option_single_branch = -1;
-+static int option_single_branch_submodules;
+@@ -61,7 +61,7 @@ static int option_no_checkout, option_bare, option_mirror, option_single_branch
+ static int option_single_branch_submodules;
  static int option_local = -1, option_no_hardlinks, option_shared;
  static int option_no_tags;
- static int option_shallow_submodules;
-@@ -816,8 +817,8 @@ static int checkout(int submodule_progress, int filter_submodules)
- 			strvec_pushf(&cmd.args, "--filter=%s",
- 				     expand_list_objects_filter_spec(&filter_options));
+-static int option_shallow_submodules;
++static int option_shallow_submodules = -1;
+ static int option_reject_shallow = -1;    /* unspecified */
+ static int config_reject_shallow = -1;    /* unspecified */
+ static int deepen;
+@@ -798,6 +798,8 @@ static int checkout(int submodule_progress, int filter_submodules)
  
--		if (option_single_branch >= 0)
--			strvec_push(&cmd.args, option_single_branch ?
-+		if (option_single_branch_submodules >= 0)
-+			strvec_push(&cmd.args, option_single_branch_submodules ?
- 					       "--single-branch" :
- 					       "--no-single-branch");
+ 		if (option_shallow_submodules == 1)
+ 			strvec_push(&cmd.args, "--depth=1");
++		else if (option_shallow_submodules == 0)
++			strvec_push(&cmd.args, "--no-recommend-shallow");
  
-@@ -997,6 +998,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 
- 	if (option_depth || option_since || option_not.nr)
- 		deepen = 1;
-+	option_single_branch_submodules = option_single_branch;
- 	if (option_single_branch == -1)
- 		option_single_branch = deepen ? 1 : 0;
- 
+ 		if (max_jobs != -1)
+ 			strvec_pushf(&cmd.args, "--jobs=%d", max_jobs);
 diff --git a/t/t5614-clone-submodules-shallow.sh b/t/t5614-clone-submodules-shallow.sh
-index c2a2bb453ee..b23c7d085aa 100755
+index b23c7d085aa..8e2965248a2 100755
 --- a/t/t5614-clone-submodules-shallow.sh
 +++ b/t/t5614-clone-submodules-shallow.sh
-@@ -14,10 +14,14 @@ test_expect_success 'setup' '
- 	mkdir sub &&
- 	(
- 		cd sub &&
--		git init &&
-+		git init -b main &&
- 		test_commit subcommit1 &&
- 		test_commit subcommit2 &&
--		test_commit subcommit3
-+		test_commit subcommit3 &&
-+		git checkout -b branch &&
-+		test_commit branchcommit1 &&
-+		test_commit branchcommit2 &&
-+		git checkout main
- 	) &&
- 	git submodule add "file://$pwd/sub" sub &&
- 	git commit -m "add submodule"
-@@ -30,16 +34,18 @@ test_expect_success 'nonshallow clone implies nonshallow submodule' '
- 	git -C super_clone log --oneline >lines &&
- 	test_line_count = 3 lines &&
- 	git -C super_clone/sub log --oneline >lines &&
--	test_line_count = 3 lines
-+	test_line_count = 3 lines &&
-+	git -C super_clone/sub log --oneline --all >lines &&
-+	test_line_count = 5 lines
+@@ -102,6 +102,22 @@ test_expect_success 'clone follows shallow recommendation' '
+ 	)
  '
  
- test_expect_success 'shallow clone with shallow submodule' '
++test_expect_success 'no-shallow-submodules clone option overrides gitmodules' '
++	test_when_finished "rm -rf super_clone" &&
++	test_config_global protocol.file.allow always &&
++	git clone --recurse-submodules --no-shallow-submodules --no-local "file://$pwd/." super_clone &&
++	(
++		cd super_clone &&
++		git log --oneline >lines &&
++		test_line_count = 4 lines
++	) &&
++	(
++		cd super_clone/sub &&
++		git log --oneline --all >lines &&
++		test_line_count = 5 lines
++	)
++'
++
+ test_expect_success 'get unshallow recommended shallow submodule' '
  	test_when_finished "rm -rf super_clone" &&
  	test_config_global protocol.file.allow always &&
- 	git clone --recurse-submodules --depth 2 --shallow-submodules "file://$pwd/." super_clone &&
--	git -C super_clone log --oneline >lines &&
-+	git -C super_clone log --oneline --all >lines &&
- 	test_line_count = 2 lines &&
--	git -C super_clone/sub log --oneline >lines &&
-+	git -C super_clone/sub log --oneline --all >lines &&
- 	test_line_count = 1 lines
- '
- 
-@@ -50,7 +56,9 @@ test_expect_success 'shallow clone does not imply shallow submodule' '
- 	git -C super_clone log --oneline >lines &&
- 	test_line_count = 2 lines &&
- 	git -C super_clone/sub log --oneline >lines &&
--	test_line_count = 3 lines
-+	test_line_count = 3 lines  &&
-+	git -C super_clone/sub log --oneline --all >lines &&
-+	test_line_count = 5 lines
- '
- 
- test_expect_success 'shallow clone with non shallow submodule' '
-@@ -60,7 +68,9 @@ test_expect_success 'shallow clone with non shallow submodule' '
- 	git -C super_clone log --oneline >lines &&
- 	test_line_count = 2 lines &&
- 	git -C super_clone/sub log --oneline >lines &&
--	test_line_count = 3 lines
-+	test_line_count = 3 lines  &&
-+	git -C super_clone/sub log --oneline --all >lines &&
-+	test_line_count = 5 lines
- '
- 
- test_expect_success 'non shallow clone with shallow submodule' '
-@@ -69,7 +79,7 @@ test_expect_success 'non shallow clone with shallow submodule' '
- 	git clone --recurse-submodules --no-local --shallow-submodules "file://$pwd/." super_clone &&
- 	git -C super_clone log --oneline >lines &&
- 	test_line_count = 3 lines &&
--	git -C super_clone/sub log --oneline >lines &&
-+	git -C super_clone/sub log --oneline --all >lines &&
- 	test_line_count = 1 lines
- '
- 
-@@ -87,7 +97,7 @@ test_expect_success 'clone follows shallow recommendation' '
- 	) &&
- 	(
- 		cd super_clone/sub &&
--		git log --oneline >lines &&
-+		git log --oneline --all >lines &&
- 		test_line_count = 1 lines
- 	)
- '
-@@ -105,7 +115,9 @@ test_expect_success 'get unshallow recommended shallow submodule' '
- 	(
- 		cd super_clone/sub &&
- 		git log --oneline >lines &&
--		test_line_count = 3 lines
-+		test_line_count = 3 lines &&
-+		git log --oneline --all >lines &&
-+		test_line_count = 5 lines
- 	)
- '
- 
-@@ -124,7 +136,9 @@ test_expect_success 'clone follows non shallow recommendation' '
- 	(
- 		cd super_clone/sub &&
- 		git log --oneline >lines &&
--		test_line_count = 3 lines
-+		test_line_count = 3 lines &&
-+		git log --oneline --all >lines &&
-+		test_line_count = 5 lines
- 	)
- '
- 
 -- 
 gitgitgadget
-
