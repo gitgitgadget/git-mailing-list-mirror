@@ -1,58 +1,59 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0668E1BB69C
-	for <git@vger.kernel.org>; Tue,  2 Jul 2024 15:17:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDB11AD9E7
+	for <git@vger.kernel.org>; Tue,  2 Jul 2024 15:24:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719933481; cv=none; b=AOVxqAoSzi9uDnJqejR9FjsXtvDn3sgIDTp4sSh7n9zgFYCywQW4hpmEk6p5n3i8m3TQlX3hn0vQNUIwrWruPhqYqD6RDd28FzpGZW2u8OVmevZvXFW6Yrirem2I488nV9Np7J14wR1Q3qmHa17Dbt2gpHZ9WCAxIgbPMN4WyNA=
+	t=1719933898; cv=none; b=RdySS5QHMlYEnn0ZjHT/CoolTpxbAcSjO5lkrW1bIfVhNVcMup4o8tju4zsZhZ3vGughSD/iOQfgW/FBxG7H9wzrp1MzDG02MdAZIUIk7b6DTphsPZzX17YP+5Qv61QASi1IHI6FvjDgRfEczAUEbtefEuvfhkiGFt4Xhs0dCgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719933481; c=relaxed/simple;
-	bh=mqEwZFavdILk4/E5447iBwUimyCyA7HVpxgAX7xLtE0=;
+	s=arc-20240116; t=1719933898; c=relaxed/simple;
+	bh=IrJarU1pETUWkHcMaeldtNG4ZNWJKDP/w8D4PkbtZQA=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=fVPPq9aX3pyotkxsEVWXyfmMfXACwdr8cXgJMKuVvep0TJO3rRWoEb14vVlZUXxUFbPkEuPP/6TzeGRqBt9WcJ2e6Bv6HP2KVh+2xbJc1o/bCVf6oxv4+4LUNwtfvfF4+5eMw6Pw9haSuKABgaKRWom/IP91BuJppb82iluQGbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ks9qx8GJ; arc=none smtp.client-ip=209.85.167.48
+	 In-Reply-To:Content-Type; b=BswKdjGqJ3kJLHteqdCHNrCFlrb+G4hXc6DsP+W3pHSpIPDv/Xl0o0H5Tn1a2pvIoElcB3TubJc7PwTyl+8zmQ3i+Mpt8fTF3JjP9V6pafl0Fm6m2ZDcUeH+OwLu3rJmLQlmwUgKg/yfvvhX1W/vtNUT+vDdAliSrnEAvTD/IN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Udy1X89E; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ks9qx8GJ"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-52cdf9f934fso4528771e87.1
-        for <git@vger.kernel.org>; Tue, 02 Jul 2024 08:17:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Udy1X89E"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-425624255f3so26616305e9.0
+        for <git@vger.kernel.org>; Tue, 02 Jul 2024 08:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719933478; x=1720538278; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719933895; x=1720538695; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+vRCGc0j9rflmRtLOMLZsyG1BXw8sIs+nEW9R+m1tAc=;
-        b=Ks9qx8GJbrtNKQgr+BKnnSYwLlp1iQ6bxNl7OJugCP0ehF7Xck1aOrt9UZ6B/KvECh
-         B6Dy6bS7HUqAqRJ1dYN3xv1dpwA7ZB7mZjk8cWrjYqL7gyuLQ7lAy+qjsHJfwcNXhmjU
-         NCU1NqCHgWFUNe9MIPnIaMptrWOLnUxuwEYCTiHiuZUpQ5HIFtHE6ban879LE08sQI7T
-         eWCM1ZCC94oA7ndKg0WhCaXA65MyubRtTvGWvhy11TP0JqFAZbAtQBkIaZ+3DiPK21/3
-         Wc3T4/NDtGYlJORUWB25j/ffTgk04gNaFDie7HTwk8Pk+UMPvFK5VZWNiZqWI5c65TdD
-         SiRw==
+        bh=BIT7tFTJYC+wPopyc9GIUN9SdIj/BSClIqmtDHEY4ic=;
+        b=Udy1X89EFvLPw9uro5bkqPJnWSC5DTnncSL2FHPgktQQJx3MIzFS9MpXvTX2qv6b/4
+         IKv9piQ++gRmCWvDIDOMFIRLBiCQghPwYwZW0E0wVuUgphYRoTxoP2PmfQKbJfj6tSn4
+         f3O4OvsdqTSDTJKdQKTe1HS2K1K4kxJG+/noQduuZzs2ySrem41XeNCzbSNqHW2r6z3G
+         RcsFA9LcA8aZMQysG3m9y2jQPvtCGRSvA01oHZUqsJn1Xe5KlIKN77DXV9zVtsGA6qCG
+         bPE7ZcJGVVIDoJJUXz5yTbXiUG7az9DDIGBwHJM683myVaTZ7+ylxbyMMpNcGT8/iHtb
+         8aNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719933478; x=1720538278;
+        d=1e100.net; s=20230601; t=1719933895; x=1720538695;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+vRCGc0j9rflmRtLOMLZsyG1BXw8sIs+nEW9R+m1tAc=;
-        b=ZyYHXNB27Mwu8ivos/ojwbi/LW+PVC5v3q/iK081zMxNk5iiGu5vLLPGeHBqiSZ1NG
-         54moNaJm7FkCP6QzNSn+Euofy03fHMQN8zBqoz91bAUGe20ll4Hmp8Z3TbIYgoAbj341
-         HmOhJsQQzYsnT2EGbd7fFw9TVPv2T8xDHNIIfMAPYaVe+7xpMS9B3BjNC2v0MPmQqo6x
-         UJTwEkRmM17ljTytIx3aIepZjxll59y0xwZAFkJJzi3KLfLYSpFW6dm0YfmfSzpn4GXV
-         zEJNASsie7jY24iFmsOKbN/2d+4dp27z6yxVoEmLONeybD8BF9CkosIRsnOMsewXDehv
-         sjUg==
-X-Gm-Message-State: AOJu0YxkK+YYeSLK0gXNaFlF8KPEGyQCbQffl1p/4tRetoncjKbbRo8d
-	yHdikqXuYDBMGo9X0QuiRO0n24tLJULrAmAn5rgfr6lzRPToFWfJ
-X-Google-Smtp-Source: AGHT+IF9zT8D1hAqJlllH6RcrgxeEbDJ+IACMpZ4zTCRR0yQcobIhegpiwFmIKwzoqKZcG7xXd2z1A==
-X-Received: by 2002:a05:6512:1107:b0:52e:8475:7c2a with SMTP id 2adb3069b0e04-52e8475c155mr5218769e87.15.1719933475860;
-        Tue, 02 Jul 2024 08:17:55 -0700 (PDT)
+        bh=BIT7tFTJYC+wPopyc9GIUN9SdIj/BSClIqmtDHEY4ic=;
+        b=vIvPzQ4BBkW5A4XC8G9ZqmijTf7zs0TFMkh4Yv1AYWi/o8C9tAgJ//ufyZLzMSKVGO
+         KDJTMiKqlKZbnsfOABCcS9LNfVte9ULp0QhqG9YWQs1h8h3UOu5kNJNawkhSEU3ULo0h
+         4xwXPveQv8GYP4vAaJ8X/1Mp8z5v/WcsE3JCKNrcXTlFHeD/PZ2bdYU676gmBvessoAx
+         4L+CZNelP1GVm6ax7QTCDtxo7MFHjWuVhKYeKB9GZ60xdjlVImjR32AcSNiosxO7LgSC
+         MNeQ4Rf836d84NjzOtexUdQp+/4sIfIUs7IX9DSGVb4PRy50QLJClwtRvlvlJA8yduOo
+         LYYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVsWgUBzwMyqsDOOLLBrHjtvdhjW7+kxjFtfARGxVmJe/YVXX52HlLhlBAyj1vViF8iDQOF0D93ijRTxcC/Q2UB2Yu6
+X-Gm-Message-State: AOJu0Yz7fOLJ9tdKEgZVnIms/UukIRsGw4wGXNWOdBMOfph9fohjKibU
+	w6PFZ5zdAfPTsccB5SDMNN+VL3BKAGCl9Itc4feEO6mT6jp3YEbj
+X-Google-Smtp-Source: AGHT+IGwrSFZ/qxV78hcnAuAtCglZflwHDA/WcWS6hba5kVVNsP0y890C/WViylfkHYFezJXf20w8A==
+X-Received: by 2002:a05:600c:84ca:b0:425:6da9:51 with SMTP id 5b1f17b1804b1-4256da90069mr105740885e9.4.1719933895470;
+        Tue, 02 Jul 2024 08:24:55 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4256b09abbfsm201028015e9.35.2024.07.02.08.17.55
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4257c4e1112sm130516915e9.3.2024.07.02.08.24.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Jul 2024 08:17:55 -0700 (PDT)
-Message-ID: <add972f8-7f9f-4bb5-b053-be135a66b024@gmail.com>
-Date: Tue, 2 Jul 2024 16:17:54 +0100
+        Tue, 02 Jul 2024 08:24:55 -0700 (PDT)
+Message-ID: <16e06a6d-5fd0-4132-9d82-5c6f13b7f9ed@gmail.com>
+Date: Tue, 2 Jul 2024 16:24:54 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -64,101 +65,98 @@ From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [GSoC][PATCH v2] t: migrate helper/test-oidmap.c to
  unit-tests/t-oidmap.c
-To: Junio C Hamano <gitster@pobox.com>,
- Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
- Josh Steadmon <steadmon@google.com>, christian.couder@gmail.com,
- Christian Couder <chriscool@tuxfamily.org>,
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>, git@vger.kernel.org
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Josh Steadmon
+ <steadmon@google.com>, Junio C Hamano <gitster@pobox.com>,
+ christian.couder@gmail.com, Christian Couder <chriscool@tuxfamily.org>,
  Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 References: <20240619175036.64291-1-shyamthakkar001@gmail.com>
  <20240628122030.41554-1-shyamthakkar001@gmail.com>
- <xmqq4j98vmpw.fsf@gitster.g> <xmqqjzi4u52u.fsf@gitster.g>
 Content-Language: en-US
-In-Reply-To: <xmqqjzi4u52u.fsf@gitster.g>
+In-Reply-To: <20240628122030.41554-1-shyamthakkar001@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Junio
+Hi Ghanshyam
 
-On 01/07/2024 23:20, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On 28/06/2024 13:20, Ghanshyam Thakkar wrote:
+> helper/test-oidmap.c along with t0016-oidmap.sh test the oidmap.h
+> library which is built on top of hashmap.h.
 > 
->> Hmph.  You seem to overwrite key_val[i][1] ...
->> ...
->> ... in this test, rendering the key_val[] array unusuable for
->> further tests.  Is that intended and desirable?
->> ...
->> The TEST(setup(t_foo)) pattern is done so nicely to make sure that
->> everybody is independent from everybody else, preparing the oidmap
->> used for each specific test from scratch.  It is a bit disappointing
->> that we are now invalidating this nice property.
+> Migrate them to the unit testing framework for better performance,
+> concise code and better debugging. Along with the migration also plug
+> memory leaks and make the test logic independent for all the tests.
+> The migration removes 'put' tests from t0016, because it is used as
+> setup to all the other tests, so testing it separately does not yield
+> any benefit.
 > 
-> It may be just the matter of doing something silly like this to
-> restore the "different tests are independent and the source of truth
-> array is intact" property.
-> 
-> The first hunk should be reindented properly, if you are going to
-> take this and squash into your patch, by the way.
+> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+> ---
+> This version addresses Phillip's review about detecting duplicates in
+> oidmap when iterating over it and removing put_and_check_null() to move
+> the relevant code to setup() instead. And contains some grammer fixes
+> in the comment.
 
-This looks good - we should definitely avoid overwriting key_val.
+This version with Junio's fixup addresses my previous comments. One more 
+thing occurred to me as I was reading it again
+
+> +static void t_iterate(struct oidmap *map)
+> +{
+> +	struct oidmap_iter iter;
+> +	struct test_entry *entry;
+
+I wonder if we want to add a bit of paranoia with
+
+	int count = 0;
+
+> +	oidmap_iter_init(map, &iter);
+> +	while ((entry = oidmap_iter_next(&iter))) {
+> +		int ret;
+> +		if (!check_int((ret = key_val_contains(entry)), ==, 0)) {
+> +			switch (ret) {
+> +			case -1:
+> +				break; /* error message handled by get_oid_arbitrary_hex() */
+> +			case 1:
+> +				test_msg("obtained entry was not given in the input\n"
+> +					 "  name: %s\n   oid: %s\n",
+> +					 entry->name, oid_to_hex(&entry->entry.oid));
+> +				break;
+> +			case 2:
+> +				test_msg("duplicate entry detected\n"
+> +					 "  name: %s\n   oid: %s\n",
+> +					 entry->name, oid_to_hex(&entry->entry.oid));
+> +				break;
+> +			default:
+> +				test_msg("BUG: invalid return value (%d) from key_val_contains()",
+> +					 ret);
+> +				break;
+> +			}
+> +		} 
+		} else {
+			count++;
+		}
+> +	}
+	check_int(count, ARRAY_SIZE(key_val));
+
+to check that we iterate over all the entries as well as checking the 
+size of the hashmap here.
+
+ > +	check_int(hashmap_get_size(&map->map), ==, ARRAY_SIZE(key_val));
 
 Best Wishes
 
 Phillip
 
-> Thanks.
-> 
->   t/unit-tests/t-oidmap.c | 11 ++++++-----
->   1 file changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git c/t/unit-tests/t-oidmap.c w/t/unit-tests/t-oidmap.c
-> index 13532aa98b..be2741c6c7 100644
-> --- c/t/unit-tests/t-oidmap.c
-> +++ w/t/unit-tests/t-oidmap.c
-> @@ -14,7 +14,7 @@ struct test_entry {
->   	char name[FLEX_ARRAY];
->   };
->   
-> -static const char *key_val[][2] = { { "11", "one" },
-> +static const char * const key_val[][2] = { { "11", "one" },
->   				    { "22", "two" },
->   				    { "33", "three" } };
->   
-> @@ -116,7 +116,7 @@ static void t_remove(struct oidmap *map)
->   	check(oidmap_remove(map, &oid) == NULL);
->   }
->   
-> -static int key_val_contains(struct test_entry *entry)
-> +static int key_val_contains(struct test_entry *entry, char seen[])
->   {
->   	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
->   		struct object_id oid;
-> @@ -125,9 +125,9 @@ static int key_val_contains(struct test_entry *entry)
->   			return -1;
->   
->   		if (oideq(&entry->entry.oid, &oid)) {
-> -			if (!strcmp(key_val[i][1], "USED"))
-> +			if (seen[i])
->   				return 2;
-> -			key_val[i][1] = "USED";
-> +			seen[i] = 1;
->   			return 0;
->   		}
->   	}
-> @@ -138,11 +138,12 @@ static void t_iterate(struct oidmap *map)
->   {
->   	struct oidmap_iter iter;
->   	struct test_entry *entry;
-> +	char seen[ARRAY_SIZE(key_val)] = { 0 };
->   
->   	oidmap_iter_init(map, &iter);
->   	while ((entry = oidmap_iter_next(&iter))) {
->   		int ret;
-> -		if (!check_int((ret = key_val_contains(entry)), ==, 0)) {
-> +		if (!check_int((ret = key_val_contains(entry, seen)), ==, 0)) {
->   			switch (ret) {
->   			case -1:
->   				break; /* error message handled by get_oid_arbitrary_hex() */
-> 
-> 
-> 
+> +}
+> +
+> +int cmd_main(int argc UNUSED, const char **argv UNUSED)
+> +{
+> +	TEST(setup(t_replace), "replace works");
+> +	TEST(setup(t_get), "get works");
+> +	TEST(setup(t_remove), "remove works");
+> +	TEST(setup(t_iterate), "iterate works");
+> +	return test_done();
+> +}
