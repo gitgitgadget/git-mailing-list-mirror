@@ -1,115 +1,150 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F37171AF
-	for <git@vger.kernel.org>; Tue,  2 Jul 2024 10:13:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69B22AD17
+	for <git@vger.kernel.org>; Tue,  2 Jul 2024 10:33:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719915214; cv=none; b=n7rrMExvzUq+xE/R2fKbxeoGu4wZf0a603udAkj5KTgmIhg+RZEFrqaL5ctlICThyqTn+V1BhHq8AQC8naBgkQ6SxHKWEfEOH1ybn2gVJ/gqzXB8+LkcNa5/vztj/Jy4BlevsgVygsbcGnUvaM/Y8P6vnz+4wExENWxjUo6U2JU=
+	t=1719916420; cv=none; b=i1plk2Ya2vUUP/XlxuTe1hXdgBMr22vsPWHVc74/ePhI1b68d095H8RhtB65+IlzVBavFfkAiFIYZmJ4XIlvPl/fr8Q1JW3gfMgSKzMqhnsYsmlG0/sq5NaE8mFFHieUnetSQzRIoZofSg5gA368wq9KbTUXuTqMv6Lz8fzVh5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719915214; c=relaxed/simple;
-	bh=jMkVRBeTWaGfVdyhRqcJE6qaQZGNNl1x2YDR5nkFidI=;
+	s=arc-20240116; t=1719916420; c=relaxed/simple;
+	bh=kWM8cHoAEhc0K2tmysHNvCXfm7GNI8YdJjeRgeqtp9E=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZDvFA6Z6Uex7XdHN4/1VxiAXrOBdDecmTGySWZ+Bz/wrDVaK4jx6P1s35LvkQtf+8gbjF1pq4GhB5jmZFfI1WSJdM4sDgPKdtLsy3QNBBJ4gkpxzc5sDN1VPAI0gqJ0RnCdZ/2XNzYpKFxt8zeGbqVcOCG3wnLW/Z0IHvc4kWX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SHL/y5rU; arc=none smtp.client-ip=209.85.160.54
+	 To:Cc:Content-Type; b=O3gJrRelTDPyKVr0a9YzwFkWvPdyhp7pctENI7pjk8mx0XT7fRFW6cLFuIiqHNHkpBk0P1BECBDSFQZ9lOekvqDms7iiTvCx/CBs7PK6Rx+Y971loN6woXhbnkaE3R1sOGo5n4WeoCpr/24dzM5K6xXN5UAjUkJ1EYPfz1wYV8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BTp9IH2l; arc=none smtp.client-ip=209.85.210.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHL/y5rU"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-25cc6962c24so1890273fac.3
-        for <git@vger.kernel.org>; Tue, 02 Jul 2024 03:13:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BTp9IH2l"
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-70224a923fcso89733a34.1
+        for <git@vger.kernel.org>; Tue, 02 Jul 2024 03:33:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719915212; x=1720520012; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719916418; x=1720521218; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=29HUVb/PkfZpiKKuvRHRklDKgP+uLRD10yl1N9Uug8c=;
-        b=SHL/y5rUMK9+05Len1CQ4IWjUJGQdvkZTpbIY+qxj1ZQxGDFyrxXhU655BPLPDWdC2
-         ZFkFhnSUBI76JrXtbEuk0hDI8ePmdscgoFj2FLTo9g7uaa3XMGmMW9O4ndbLY1kaY8Dg
-         Tp6h8Ff8geuc47SWO+0xyeB8NZCw8HwieuMT1DF5q6u/kS20vp2J4mCzNwTQzsplHGuG
-         GsDzW0ve9rrqO0R34vYYVNk1mX9lWXMcKwZPFxysUVXhx1lkFoBbObCXAskrxzAnDqAZ
-         mZQ59gwqx8gLvNGE/JY9hYQpMoXivmD/JT62dgzC3Y6eXCfUFI2fuekKfUeyGA0TtXCi
-         9t4g==
+        bh=3xcOIReju24nk7RklPkxS/vRHbT0P3DgAG2ql2jjDHI=;
+        b=BTp9IH2lQAM/xOPc6lCzms4qsg9OwL29/gjF9zWAnv3ltZ7EqnaawRqVZGlTUf3OcM
+         JQVkfBCYlCoM9BX7UUtIl+hddHX9sz5kKMEpwqIc9Hs9qdfAC78myr0mbXbLAUyMrU5C
+         L3+2ZDolDCNe2AOutWTWkUFB6ZNh9Ok2mBRJI50W7rTbSRbzKMtC9FJipbpgVFzEO07X
+         oUAquuu/eanF3eCkiKe+DCuLgBwdrBT4fwvsxQniFtPeQK4AeoMKN9W6xIEy3KZbKpaJ
+         SgwTkULbKRVjCTL1d0jit9vVjcdKpdhWAGUUJkF/XF5++AASV5goiLzcqbk3gspP8o31
+         HBgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719915212; x=1720520012;
+        d=1e100.net; s=20230601; t=1719916418; x=1720521218;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=29HUVb/PkfZpiKKuvRHRklDKgP+uLRD10yl1N9Uug8c=;
-        b=VLYPkECAn9wa4AA8KD9YPMmFwfMrcQp0pHhu31tVJMhRhY6aNyfwys9PQ8zKNnqfcm
-         fqO1msRlbI6+daNUYee1j9lMzbchJ0QJirlvKgtQEnj5LhOTA0AEr8LyQnY3CcL0Hi+x
-         L3G3M+hInCHoN8iJByDJH1Un9sR1pgW72vYGqGNEfKb26velW1XCeIgqdxNa+II98mKS
-         agZw1YShRGljpOTqRjiie67/k40SvoeGGBuWUiKZBxz0oxLTh4M6qsUIXFWHXTVmyrq+
-         dFyOgIAhYgVVtZDkaPCrog0iDAKz+nOPjRix7lWuTCcNbfqtAgdtrZBmMwoxrfI8jLgF
-         eegA==
-X-Forwarded-Encrypted: i=1; AJvYcCWCrAVEMEklTFp5X7NEOVjA7rXkrY66XATfApwjkYLc6LF0TRu/5l6QJ9zOTpTpQUCGvKN0ID631XNSLsPzyb6G65jO
-X-Gm-Message-State: AOJu0YxvIpnfFkvMBumrdj+pBhdXGpe0uaR0h3feTtr6VgXP3xHI2m5q
-	soF/zgu7xDzqwCTNFzYzARGs/RIjJ3b1VO0xc+/0CkVJOZyCDoiKGZsWwG+sk3M0iHOUG21f/Ip
-	bZOErjyt6tn+jtFAhohMoqdIJ4WzrIByD
-X-Google-Smtp-Source: AGHT+IFqo2C1LtJXpAJkW9zi7pde7FT4F66GQYwBKB+/2hSkb65u61YoDW/ctkdUVr+WjNC1B/Vtlh7eF/SNevyLins=
-X-Received: by 2002:a05:6871:24de:b0:25d:ff1b:3793 with SMTP id
- 586e51a60fabf-25dff1b5532mr232125fac.35.1719915211507; Tue, 02 Jul 2024
- 03:13:31 -0700 (PDT)
+        bh=3xcOIReju24nk7RklPkxS/vRHbT0P3DgAG2ql2jjDHI=;
+        b=gpEcWYue/7fxdT70oxgxF+ygHmfNuYHmuuSWdhDZkEXNWkfMqY1ukusvbMbJqDgKT3
+         veCQxVH4Ztox5woNnvxuzTOC32490F/4VY7ry6oSNwNiz6ywfxeoe8eDXD29I21Cq2Tr
+         FJZ4nov7MwNhC1zIloeOnzMuiqLtJWMqe7dNOV/cxfVN6t1CxMVda6wBgz4R5xOUl5r0
+         viCc13rX64PousaS4TDNV/JtEz4lyJQffPdSunv1K1nzIUSWsOBQEI3/iQDC0QTfyIje
+         +Kl6QT6o5uk/5ghg+jny1BoSKOX0MJYfkJ9u5DWmjpIjW9tIA/yFDPmLY3tmbb0shmo1
+         DdIg==
+X-Forwarded-Encrypted: i=1; AJvYcCWDatmR7BExN8PAQ06yCvNnDYfpavjDHsamn3eMlVy78exiLgefgK/OXYqrZ3+XhTwJH+tMLopoFyrHJvBt2+UY5zBE
+X-Gm-Message-State: AOJu0Ywne1G2I6ZQKXJmpdHOFLPvcWsvAk6R3Hrmyj2JYfPHa5/ud1Ro
+	O0JUrO+vCcbwSI/T/qB8pL8O7GCl6AH9mdZQqq/bkil/JRTZzr/E2WKR+AKjL3zwaGWtOp68/d3
+	bRSGduTMGj1EV6lJWcxBKIeDH6Tw=
+X-Google-Smtp-Source: AGHT+IFMdqIGt+ZD8Lp2PkeXmHBhrX/cOypL2Ab173f2OnPN5d9czIikTBW+6LU7bt87cA5LgZyro6Nauz8j4GV4Szs=
+X-Received: by 2002:a05:6870:611e:b0:254:a168:cd61 with SMTP id
+ 586e51a60fabf-25db35f163fmr7257498fac.58.1719916417686; Tue, 02 Jul 2024
+ 03:33:37 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Jul 2024 10:13:30 +0000
+ HTTPREST; Tue, 2 Jul 2024 10:33:36 +0000
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqle2lvsmz.fsf@gitster.g>
-References: <xmqqpls3zhc2.fsf@gitster.g> <20240626190801.68472-1-abhijeet.nkt@gmail.com>
- <03628ece-4f47-40d5-a926-acce684a21e5@gmail.com> <xmqqfrsyv155.fsf@gitster.g>
- <CAOLa=ZS359bMtUd+ktvJgHsiG-0=VVdGWYA2mKCNjc_1BrzcvQ@mail.gmail.com> <xmqqle2lvsmz.fsf@gitster.g>
+In-Reply-To: <ZoLHtmOKTfxMSxvw@ArchLinux>
+References: <Zn2Ah3WDhtOmzrzn@ArchLinux> <ZoLHtmOKTfxMSxvw@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 2 Jul 2024 10:13:30 +0000
-Message-ID: <CAOLa=ZR-g4G0FaxnQjjkOST-zeRxBXXK1gpJ=P3xdbi_9eN_rg@mail.gmail.com>
-Subject: Re: [PATCH v7] describe: refresh the index when 'broken' flag is used
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>, git@vger.kernel.org, 
-	Paul Millar <paul.millar@desy.de>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: multipart/mixed; boundary="00000000000039e656061c40f748"
+Date: Tue, 2 Jul 2024 10:33:36 +0000
+Message-ID: <CAOLa=ZSFTcMn+CsEcE1G5hnW37rw81zcUaXBywVY7xbBN7mhkA@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v6 00/11] ref consistency check infra setup
+To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: multipart/mixed; boundary="0000000000001eb959061c413f2e"
 
---00000000000039e656061c40f748
+--0000000000001eb959061c413f2e
 Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hello,
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
+shejialuo <shejialuo@gmail.com> writes:
+
+> Hi All:
 >
->> This explains for why 'broken' must use a subprocess, but there is
->> nothing stopping 'dirty' from also using a subprocess, right? It
->> currently uses an in-process index refresh but it _could_ be a
->> subprocess too.
+> This version follows the Junio's advice. Instead of creating the
+> following data structure:
 >
-> Correct, except that it does not make sense to do any and all things
-> that you _could_ do.  So...
+> 	struct fsck_options {
+> 		enum fsck_type {
+> 			FSCK_OBJECTS,
+> 			FSCK_REFS,
+> 			...
+> 		} t;
+> 		union {
+> 			struct fsck_objects_options objects;
+> 			struct fsck_refs_options refs;
+> 		} u;
+> 	};
+>
+> I simply use the combination idea where "fsck_options" will incorporate
+> "fsck_objects_options" and "fsck_refs_options". Karthik has told me that
+> I should balance the job I should does and the extensibility for future.
+> So I use the most clear way to do this. Also Junio has said:
+>
 
-Well, In this context, I think there is some merit though. There are two
-blocks of code `--broken` and `--dirty` one after the other which both
-need to refresh the index. With this patch, 'broken' will use a child
-process to do so while 'dirty' will use `refresh_index(...)`. To someone
-reading the code it would seem a bit confusing. I agree there is no
-merit in using a child process in 'dirty' by itself. But I also think we
-should leave a comment there for readers to understand the distinction.
+If I understood Junio's comments correctly, he was drawing out the point
+about if we even need the separation of options for refs. Since the only
+option we're adding is a verbose:
 
---00000000000039e656061c40f748
+    struct fsck_refs_options {
+    	unsigned verbose:1;
+    };
+
+wouldn't it be better if we simply amended `fsck_options` as so:
+
+    diff --git a/fsck.h b/fsck.h
+    index 6085a384f6..ea97f48acc 100644
+    --- a/fsck.h
+    +++ b/fsck.h
+    @@ -135,6 +135,7 @@ struct fsck_options {
+     	fsck_walk_func walk;
+     	fsck_error error_func;
+     	unsigned strict:1;
+    +	unsigned verbose_refs:1;
+     	enum fsck_msg_type *msg_type;
+     	struct oidset skiplist;
+     	struct oidset gitmodules_found;
+
+Your approach seems to take a different path though, where we create a
+new route of creating two new structs, one for refs and another for
+objects and adding both to fsck_objects. If we're doing this, wouldn't
+it be better to use the enum+union idea, like Junio mentioned? That way
+we would have clarity around which type it represents.
+
+[snip]
+
+--0000000000001eb959061c413f2e
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: a597e59fba5fda59_0.1
+X-Attachment-Id: 7875832d9f2718bd_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hRDBzY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meExRQy80azlnMkxzakxBRFdRSStRRHZ1Sm4yNkJENgpCLzY3ZzlvT2Vn
-ekluWk9nNExGQzFnZ0lLUmJOajRDcVczUUdBcWlMS0doUHVNc1FWS2VVMTNnUW90WkpiRFR4CkhU
-QSt0RGZkZjV5RVNtZVh6NU9zQk9BSWQrL21zL0VRb2Z1ZlRHNkdVZWdzVTlNdHR0d2hqRExQdndV
-YklyemQKR2x2a3Y4VThSRERQWlRTOFEzOW5Kcmg5YUdtbHVnUEtnRnBSVlUxN1RBaUg2YVJQZ2kz
-VFl3UXkrb0tpd045eQpLTGw0WjRtYytLSFJGbHRZUW9UZ1F1endoUGR1NGNrTSttSUFqVmlwTExY
-MW14TlFaWUoxQ1pkVDhKVkRKeXhmCmhuRGRuR242Y3MyaXNZU0kxbWYreWpiVTdIUnc1alVsTFc0
-M2djWWdjb0ZLb0dKclpUdmE4V0Fnb01vK2h4bWwKai9uZFpzc1l0bnVNY2RWb1dpMk8yZHVweUxK
-b3l4ZXUxTkdVKytnWWFRYWhtVktWYzh1aUM0bDFQQ2x3VlhKMApVYnFUTTl5T3dLMmdJZlpJVVpw
-bFNhM3ZZQWdQSitMNDF3U3RIU3VjS2hsaEJPVEkwenRjNEZrYWtkVndpcjFOCmkzaDRTSE5ubTc2
-S1VOT0xhb1ZNRDJCTXA1b1lOaTc5Nk1xd1E5RT0KPXZyaTgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hRDEzOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNFNsQy80cmdyei9TbmR1ZUIzaTdDVzBjU1p4cytYZAo2SUFvNUJzbHpw
+cVdVZ3B1MytvTjd3bEMySTBvTkcxTkI5eHNURkZadDYwL252QlkxSUx6RGI3czd3elhDV1hRCnIw
+aFNLSklBMlM5eTk2YnNEcWFmS0kwbGorTU9jK1k1bUpEQU1pdmRaQmQ3RHlJdFcxQU9RdUdHaWJx
+Y0lsY2EKdjlwUTI1ZldPN3VmMGcvcnh3T2lWbzlwMXNvVFFLZ3JmLzNUTHZncHgwNTJXVUtlTjdE
+L0k3Vzc2N0VJZ1VobgpDOW02UmFkdEYwOU1oYmJCdWdqTUcrTzIxQ3F6RHU5eUlBeHFKMUxZQWEw
+bmZHTW1BWFgweG53MUJSVEkwVDNFCm1NTllNSGY4TzRoOUdoVDR5aEt5eFpESzRGUkpkVGpSdkxF
+VmpnY1NnVXJSZXVkRjNlTEZKN21jcGEzSDhCZU8Kak1QdGJHcGNXWlg3ZWJFN2YranFBbXdxUDFT
+SXpzUUtHQ3RERmdCWFpLMVhFNkVnK09oZTBBUWVTdGRRd0t2dApxeDZaYXpKaWpUU1AxV2JBSW11
+YzBJLzNlV3I3ZzhyeHF2dEhHV0xkemV1ZXpTQWR2SnB1M3hnQmFJZTFTM0FzCm44V2p6QmdHc0tB
+YVVSL3J2dlNvbnNLb1NudVAyWkFOaWg1K0hsMD0KPUhGVzQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000039e656061c40f748--
+--0000000000001eb959061c413f2e--
