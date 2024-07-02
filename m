@@ -1,139 +1,115 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B91156228
-	for <git@vger.kernel.org>; Tue,  2 Jul 2024 09:37:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F37171AF
+	for <git@vger.kernel.org>; Tue,  2 Jul 2024 10:13:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719913056; cv=none; b=Q9MlmDwqfvAqBEQIz0litccrvGTWb8Ru47v0EC+vuROWJAR+sGPlOMIoB3fq8AeUY50nEpOMK/XsGMRAgBO46njaZPf4pGsvAB/nuc2y2c3OKYgcU5WUcgfE+dp9D82/TnIdCmqYIsaJR/CyHoub/d3vKDEjxZRnl3wROzMK7m8=
+	t=1719915214; cv=none; b=n7rrMExvzUq+xE/R2fKbxeoGu4wZf0a603udAkj5KTgmIhg+RZEFrqaL5ctlICThyqTn+V1BhHq8AQC8naBgkQ6SxHKWEfEOH1ybn2gVJ/gqzXB8+LkcNa5/vztj/Jy4BlevsgVygsbcGnUvaM/Y8P6vnz+4wExENWxjUo6U2JU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719913056; c=relaxed/simple;
-	bh=B451bwtHCVP8sdTpRgkWTHdCSoseKDcG58v+NcP+KA8=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=pXCjD/tP1eehpXVfeQ4mSYahPTNFq+14REO78w281Gmnd6DLOIUJJEcVUfnYP8rSrmVR3pRdKW7MxeqEouilo8p4oWJHOpRzzBV/9/08SPjN0ISjwrLxVjUo38wU22gui0rnoeqa4afMhkSsbKAyWLP9hnXtZ/XTHH6owzyJUQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=DQfgwTjN; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1719915214; c=relaxed/simple;
+	bh=jMkVRBeTWaGfVdyhRqcJE6qaQZGNNl1x2YDR5nkFidI=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZDvFA6Z6Uex7XdHN4/1VxiAXrOBdDecmTGySWZ+Bz/wrDVaK4jx6P1s35LvkQtf+8gbjF1pq4GhB5jmZFfI1WSJdM4sDgPKdtLsy3QNBBJ4gkpxzc5sDN1VPAI0gqJ0RnCdZ/2XNzYpKFxt8zeGbqVcOCG3wnLW/Z0IHvc4kWX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SHL/y5rU; arc=none smtp.client-ip=209.85.160.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="DQfgwTjN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1719913034; x=1720517834;
-	i=johannes.schindelin@gmx.de;
-	bh=TCTNOc8G6mCO+yeBhtYXl0oyC6K8LDIbEHswbZ+tQXc=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=DQfgwTjN0WipTRP0g+xl+sXRjJBiKIiMC0HrKFsZTU/YPM2zZUBX+zldFN884Fxy
-	 yuu60Ztqg/tqvR8YWBRolGhOa9Qpq2A8yq8gld36e0UqavtY9o1UzMUAwaVQgmft/
-	 qMfG63M554M2N7O8VRWS7AnmoXDdmGhvkLV9itcl1iluQvbV2wxl0YfV0mAojfYDj
-	 yFQ4gbFqhF228d9Ldws8LB5nMyCWv8x/vqw6KvxIqmvqFQKcPTyoeUiCSOrLquDJc
-	 aOgxngXwdrSp2UbHKkUhtczqGANvt3natUImeOA8dqvKWGI48nu0r72I3rX5MMYYm
-	 TywNUvn1e1soMWWekQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.212.58]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MmlT2-1ryd8G1L9i-00i8Ie; Tue, 02
- Jul 2024 11:37:14 +0200
-Date: Tue, 2 Jul 2024 11:37:13 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Linus Arver <linusa@google.com>
-cc: Junio C Hamano <gitster@pobox.com>, 
-    Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-    Christian Couder <chriscool@tuxfamily.org>, 
-    Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
-    "Randall S. Becker" <rsbecker@nexbridge.com>, 
-    Christian Couder <christian.couder@gmail.com>, 
-    Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH 0/5] Unify trailer formatting functions
-In-Reply-To: <owly4jd741ph.fsf@fine.c.googlers.com>
-Message-ID: <efdda91a-1118-ea54-d28f-dd6fa6df67c5@gmx.de>
-References: <pull.1694.git.1710485706.gitgitgadget@gmail.com> <xmqqjzm3qumx.fsf@gitster.g> <owly4jd741ph.fsf@fine.c.googlers.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHL/y5rU"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-25cc6962c24so1890273fac.3
+        for <git@vger.kernel.org>; Tue, 02 Jul 2024 03:13:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719915212; x=1720520012; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=29HUVb/PkfZpiKKuvRHRklDKgP+uLRD10yl1N9Uug8c=;
+        b=SHL/y5rUMK9+05Len1CQ4IWjUJGQdvkZTpbIY+qxj1ZQxGDFyrxXhU655BPLPDWdC2
+         ZFkFhnSUBI76JrXtbEuk0hDI8ePmdscgoFj2FLTo9g7uaa3XMGmMW9O4ndbLY1kaY8Dg
+         Tp6h8Ff8geuc47SWO+0xyeB8NZCw8HwieuMT1DF5q6u/kS20vp2J4mCzNwTQzsplHGuG
+         GsDzW0ve9rrqO0R34vYYVNk1mX9lWXMcKwZPFxysUVXhx1lkFoBbObCXAskrxzAnDqAZ
+         mZQ59gwqx8gLvNGE/JY9hYQpMoXivmD/JT62dgzC3Y6eXCfUFI2fuekKfUeyGA0TtXCi
+         9t4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719915212; x=1720520012;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=29HUVb/PkfZpiKKuvRHRklDKgP+uLRD10yl1N9Uug8c=;
+        b=VLYPkECAn9wa4AA8KD9YPMmFwfMrcQp0pHhu31tVJMhRhY6aNyfwys9PQ8zKNnqfcm
+         fqO1msRlbI6+daNUYee1j9lMzbchJ0QJirlvKgtQEnj5LhOTA0AEr8LyQnY3CcL0Hi+x
+         L3G3M+hInCHoN8iJByDJH1Un9sR1pgW72vYGqGNEfKb26velW1XCeIgqdxNa+II98mKS
+         agZw1YShRGljpOTqRjiie67/k40SvoeGGBuWUiKZBxz0oxLTh4M6qsUIXFWHXTVmyrq+
+         dFyOgIAhYgVVtZDkaPCrog0iDAKz+nOPjRix7lWuTCcNbfqtAgdtrZBmMwoxrfI8jLgF
+         eegA==
+X-Forwarded-Encrypted: i=1; AJvYcCWCrAVEMEklTFp5X7NEOVjA7rXkrY66XATfApwjkYLc6LF0TRu/5l6QJ9zOTpTpQUCGvKN0ID631XNSLsPzyb6G65jO
+X-Gm-Message-State: AOJu0YxvIpnfFkvMBumrdj+pBhdXGpe0uaR0h3feTtr6VgXP3xHI2m5q
+	soF/zgu7xDzqwCTNFzYzARGs/RIjJ3b1VO0xc+/0CkVJOZyCDoiKGZsWwG+sk3M0iHOUG21f/Ip
+	bZOErjyt6tn+jtFAhohMoqdIJ4WzrIByD
+X-Google-Smtp-Source: AGHT+IFqo2C1LtJXpAJkW9zi7pde7FT4F66GQYwBKB+/2hSkb65u61YoDW/ctkdUVr+WjNC1B/Vtlh7eF/SNevyLins=
+X-Received: by 2002:a05:6871:24de:b0:25d:ff1b:3793 with SMTP id
+ 586e51a60fabf-25dff1b5532mr232125fac.35.1719915211507; Tue, 02 Jul 2024
+ 03:13:31 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 2 Jul 2024 10:13:30 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqle2lvsmz.fsf@gitster.g>
+References: <xmqqpls3zhc2.fsf@gitster.g> <20240626190801.68472-1-abhijeet.nkt@gmail.com>
+ <03628ece-4f47-40d5-a926-acce684a21e5@gmail.com> <xmqqfrsyv155.fsf@gitster.g>
+ <CAOLa=ZS359bMtUd+ktvJgHsiG-0=VVdGWYA2mKCNjc_1BrzcvQ@mail.gmail.com> <xmqqle2lvsmz.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ee8nFiLv9fBNbZEVIbyRvkDsbQQtG7EdWupnywTxLy0yRnwIiZJ
- 06izcPZ/kQB7zkrOuG0RGFtlhq61aNdfmmwJDJzsV8tzRp1+1HymoCbSXkqIwZsV8OW4fdB
- F/sFfl4Zw++pzdx+w/Wfe8HmJmzUemJIVmSqBzBWUncK8rSFU4Wc48cNUKi3JW90Qr34AJP
- F7miuY/EPnKksv1ro4Xgg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:tFlze7+KMwY=;HxPtEDJmlsvO2FlLG7t6xTSAco9
- xFGU1LymCjsNVlrXRxPk/Au1IAgBaU7mDaMH1d6iTuc8YXdJe4NicF16NeOZTlLAbIG7KT0GW
- LDkQtrgDRBmoJZdnH8AFaSqZN/KRKDGzDAmcmA1zAMAFUIsmDyHpRs8o3vg8XdEIN2yXV9AGC
- IFgnXIm7EFeMdRWQSyhCUAz+cVeR6uKHpQ0l80Bo3nRQ1DKW349Yl17aGGoqjK2qTpeHu+Npn
- 4TqNNvHAiKWch9idF+PJ4Mf86A+B3cRjk22AhkDCGsG+b0cnowNZQaDZZxDx/6WqN6x94IjhX
- bCs9bkNx4fhZSwrEHiERqq3WAq8dvcq/OkZYEPM6zzCm1xM2TCDg5KU0wnFVVi16zclGx/tRP
- Y6X0hXGAbckYJZIKq8MbfcpwbFViGwH5ENJdK5H6v3Frq4axOhwf56pxPnvi7Kwz9LiV2Mx/B
- ThjhmaNRfpsRvXvkHkAhwRwanNe3yh1kWKHOxRIBLCJ45W11vAXlH1RqrFMmi/jetGck/ccWM
- tK8JDvkwWWUNRcXHjtggpDC6dIWyfnT7eoafV4HSNfuqHI+CXhBcWIYlE1e6c2L41gHZbo8ms
- OV6+qN93dwBrBkMeLrDAH4zNIYhOVhYvIF7W38512QA8TmlIZeHm1m9GCPALK+eE/5ZeVtg6u
- 3vUsG5rNT69+jJn9p45XW2DAk7VD4xmdAknt0kA3ucGDQXviLMSVdalN56vgdwMS3RLfVe/b6
- oa9p3ACNHVOAS0oXE3mbqKYNZxvhSGdrMPRXrtP1gESDAFwgnn/JZPGmoKJOeQCMoP8BtbwgB
- y2GOI1pM/Kj9spSsH2vQGeKwKXfIuBIJx9/Zo9qaACxkk=
-Content-Transfer-Encoding: quoted-printable
+Date: Tue, 2 Jul 2024 10:13:30 +0000
+Message-ID: <CAOLa=ZR-g4G0FaxnQjjkOST-zeRxBXXK1gpJ=P3xdbi_9eN_rg@mail.gmail.com>
+Subject: Re: [PATCH v7] describe: refresh the index when 'broken' flag is used
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>, git@vger.kernel.org, 
+	Paul Millar <paul.millar@desy.de>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: multipart/mixed; boundary="00000000000039e656061c40f748"
 
-Hi,
+--00000000000039e656061c40f748
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 15 Mar 2024, Linus Arver wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> > Not about the series, but about the way it was sent.
-> >
-> > The messages in this series have exactly the same kind of breakages
-> > in the recipient names/addresses we recently saw:
-> >
-> >     https://lore.kernel.org/git/xmqqh6hkxox6.fsf@gitster.g/
-> >
-> > Human-readable names with a SP inside [square bracket] pair
-> > appended, and one of the addresses had that square bracket applied
-> > inside <angle bracket> pair and breaking MTAs (I manually fixed
-> > khaugsbakk's address before sending this response, so replying to
-> > this messages should be OK).
+>> This explains for why 'broken' must use a subprocess, but there is
+>> nothing stopping 'dirty' from also using a subprocess, right? It
+>> currently uses an in-process index refresh but it _could_ be a
+>> subprocess too.
 >
-> UGH, I'm so sorry about that.
->
-> > What are you and Aryan's pull.1675.v3 did differently from other
-> > series sent via GGG to trigger this, I have to wonder?
->
-> I realize now that it's because I copy/pasted the "Cc: ..." lines in the=
- PR
-> description from
-> https://github.com/gitgitgadget/git/pull/1632#issue-2068188239, such
-> that when I pasted those in for the PR description for this series at
-> https://github.com/gitgitgadget/git/pull/1694#issue-2187804953, it
-> carried over the email addresses as Markdown-formatted hyperlinks.
-> Currently it reads
->
->     Cc: Christian Couder [chriscool@tuxfamily.org](mailto:chriscool@tuxf=
-amily.org)
->     Cc: Junio C Hamano [gitster@pobox.com](mailto:gitster@pobox.com)
->     Cc: Emily Shaffer [nasamuffin@google.com](mailto:nasamuffin@google.c=
-om)
->     cc: Josh Steadmon [steadmon@google.com](mailto:steadmon@google.com)
->     cc: Randall S. Becker [rsbecker@nexbridge.com](mailto:rsbecker@nexbr=
-idge.com)
->     cc: Christian Couder [christian.couder@gmail.com](mailto:christian.c=
-ouder@gmail.com)
->     cc: "Kristoffer Haugsbakk" [code@khaugsbakk.name](mailto:code@khaugs=
-bakk.name)
->     cc: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
->
-> when I click on "edit", where the last line must be from your manual fix
-> which GGG picked up. I've cleaned up the PR description manually now,
-> and for this message I'm also attempting to clean up those square
-> brackets.
+> Correct, except that it does not make sense to do any and all things
+> that you _could_ do.  So...
 
-I would love to let myself be nerdsniped into working on this, alas,
-I cannot afford that before I learn the trick to stretch time.
+Well, In this context, I think there is some merit though. There are two
+blocks of code `--broken` and `--dirty` one after the other which both
+need to refresh the index. With this patch, 'broken' will use a child
+process to do so while 'dirty' will use `refresh_index(...)`. To someone
+reading the code it would seem a bit confusing. I agree there is no
+merit in using a child process in 'dirty' by itself. But I also think we
+should leave a comment there for readers to understand the distinction.
 
-So I did the next-best thing and jotted down pointers for any volunteer
-who wants to work on this:
-https://github.com/gitgitgadget/gitgitgadget/issues/1645#issuecomment-2202=
-545542
+--00000000000039e656061c40f748
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: a597e59fba5fda59_0.1
 
-Ciao,
-Johannes
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hRDBzY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meExRQy80azlnMkxzakxBRFdRSStRRHZ1Sm4yNkJENgpCLzY3ZzlvT2Vn
+ekluWk9nNExGQzFnZ0lLUmJOajRDcVczUUdBcWlMS0doUHVNc1FWS2VVMTNnUW90WkpiRFR4CkhU
+QSt0RGZkZjV5RVNtZVh6NU9zQk9BSWQrL21zL0VRb2Z1ZlRHNkdVZWdzVTlNdHR0d2hqRExQdndV
+YklyemQKR2x2a3Y4VThSRERQWlRTOFEzOW5Kcmg5YUdtbHVnUEtnRnBSVlUxN1RBaUg2YVJQZ2kz
+VFl3UXkrb0tpd045eQpLTGw0WjRtYytLSFJGbHRZUW9UZ1F1endoUGR1NGNrTSttSUFqVmlwTExY
+MW14TlFaWUoxQ1pkVDhKVkRKeXhmCmhuRGRuR242Y3MyaXNZU0kxbWYreWpiVTdIUnc1alVsTFc0
+M2djWWdjb0ZLb0dKclpUdmE4V0Fnb01vK2h4bWwKai9uZFpzc1l0bnVNY2RWb1dpMk8yZHVweUxK
+b3l4ZXUxTkdVKytnWWFRYWhtVktWYzh1aUM0bDFQQ2x3VlhKMApVYnFUTTl5T3dLMmdJZlpJVVpw
+bFNhM3ZZQWdQSitMNDF3U3RIU3VjS2hsaEJPVEkwenRjNEZrYWtkVndpcjFOCmkzaDRTSE5ubTc2
+S1VOT0xhb1ZNRDJCTXA1b1lOaTc5Nk1xd1E5RT0KPXZyaTgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000039e656061c40f748--
