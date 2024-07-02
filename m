@@ -1,139 +1,71 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C092157495
-	for <git@vger.kernel.org>; Tue,  2 Jul 2024 12:15:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696701BA063
+	for <git@vger.kernel.org>; Tue,  2 Jul 2024 14:13:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719922512; cv=none; b=sdnnwj8i5ReFCnXW+pNStrVnTlaBDkXnee8piQ5o/pzv9viwCKd6wMZBOnMwZgToftFtfROw4FK66ZULoFmoZx+dp5pYvaDtDJ9T8SYrn/ikjwBlmcnBRHQOkQZyzAjNW5NgBNFdybY9Ic9E5OPht77BGONlWgFiuCHbuJaVPf8=
+	t=1719929624; cv=none; b=SLDsAEWcKVxjNUO4q/BtA4Gq8GOKJnvIPDCiRg7rTlvor+JEY5w6Jid03EfPuRNhdupk77nc7gUGTruUwS/RxztlEI2l94bmreLpiSPijDUOCN0lA1EO741i9goSu2udwBOeywANCMOgvHSu/aYFf76tTBmXXZCTXrPHShWC8PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719922512; c=relaxed/simple;
-	bh=EsLj9jqOh9dhI/BDXBk+KXj8/WpaH7nZ5kpuRur+LsI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n0fV1Ah328bwpjryx0Vi7KVz7kIJvIethxzdtLgPvTLL7YuCMZD0cpM1TfeJOv41qo2kik7cGzRkvkok3tQz39dOMJPCJ2vbhG9L6QXv7UvKAcVoUIgjPsuFJiN2eMEZGeSmUzm5rRbS+XfWAlvGuie5clLfZB4MzihvcEgGwb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AbdGi0wP; arc=none smtp.client-ip=209.85.160.41
+	s=arc-20240116; t=1719929624; c=relaxed/simple;
+	bh=oQVrm4JM1X0wDCMXvmOHv4D9tQl39pOLC72bTquZ9bE=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:Cc:To; b=F4Jk85Ds/nyrYyoKAb2HHN2piMYgFvtjmBh7g6Wa4ZJSzk6BvtBC2HY9laL7hUw+0PrCCmTAzFEA9T5mPSf3xTxgqAnz1HD9+AUH5FTW8tWLcVuq4ALuQ2vYmwmIYkSD0I8FvOsCv1ErqPVzfOvX6QiGBtC2IrLJq9dTMuOaO0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Iu1zOrL3; arc=none smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AbdGi0wP"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-25c9ef2701fso1967647fac.1
-        for <git@vger.kernel.org>; Tue, 02 Jul 2024 05:15:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Iu1zOrL3"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-64a6bf15db9so36450247b3.0
+        for <git@vger.kernel.org>; Tue, 02 Jul 2024 07:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719922510; x=1720527310; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6fYDCx18C5BVNJZlGHmwPPAd5UE8zgOzz9rSVtagF90=;
-        b=AbdGi0wPK8ZG+5Agg9TTOLc20XN+eWrr4aWZ+ycBz3YFRDt49awiOtx+VgL9cMFjLY
-         VIfM7Bmn2Ew3LUNFPoBxDORjo8hn6ep11dLzrrNub4M+/5u97TgmZgiAFfvQKztfISd5
-         9pw0tOTOvFQwdMjRh0OY3EQtJt14cXNC9iZsjydmaffhJ27AVpgzVfBD2AnWpQZ8Awm2
-         9A1AirXmCd8yd1JlcOuq2xLKepsxocmFDWUpESgwdRXEIzGc6ISnsv1DJFSoAESYHUeg
-         r59gJ48neG9lijAiA1Zyt+8SDVo5Ra9FbwZ1J/s0MjgTQn5fsKNtjiVQ7B4y5pYDt+pl
-         7+jQ==
+        d=gmail.com; s=20230601; t=1719929622; x=1720534422; darn=vger.kernel.org;
+        h=to:cc:message-id:subject:date:mime-version:from
+         :content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oQVrm4JM1X0wDCMXvmOHv4D9tQl39pOLC72bTquZ9bE=;
+        b=Iu1zOrL3KnfjWQ2fFOLrJJTdzWBXcSQHQi/G0KEgJUKy/FzfeLrynOkndBQdTjaL75
+         taGAdTOr0kp8XRuf0HktsV4TMGcSL6+sILYm1yhQHcczcJeKOlQ0wd8wBN8KfhYqed5b
+         GSOSuKeZD1dJ5mvk4LCnwe8OEmvwri70KrF9gtUclTPqowQz2P7ZuA9RNGn5acOYGmlt
+         LFubsDpe7vZ/d+eouRj2TiyNiLMj1UJEpVpFBTT1RqEpfS8ypB7cyE7mEeZLSqmXXrpP
+         zSDXgM/aDgkgxLS+oEE1nYf/OdFp2xM0i2xBliQgOCiUaCHrV5pHt5MLisIi42oZZZBE
+         NDmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719922510; x=1720527310;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6fYDCx18C5BVNJZlGHmwPPAd5UE8zgOzz9rSVtagF90=;
-        b=GArnTfQdpD1ux32o7rNeY3tA+WE6Z0Kjsm7OcLYWvys0EWhV4uMAE1yS7AVZzzQnyB
-         zvyUZEqPXPMScsvE3L+SYXnIEX/t+RuMaU3rj7cW43m3PLti6I9xTrDFZalCdQzlXHD0
-         ecThBA35VOgzd5rqQ5mnykR0oc10Iep/E2dgwUbX5sI/n1C/5V4grrLrlyuGM95fGZ0G
-         kzzDFJfOij7YDZM/X2DTdKcrGJMbUOu+NjxGO4AiiuCSF1lEKEbU0VBd4MSY7hbyhr1p
-         qoE328QFmhLu5MJXLQTyX5E1jyVnHv4MCLawuVLFbdO1ka9fqBuc1bMY+EfqM7MLsgPr
-         pAQg==
-X-Gm-Message-State: AOJu0Yw978YX7rll19MW+xJ1rwqDJDC/66Pzf4uqBxvzRavhB8lR0a0X
-	oagoqzV9oHRanOybYBNgQrhFYA66I4RSfDQYo13lQVRG6zQncHxH
-X-Google-Smtp-Source: AGHT+IHlfdbKv2lDUJJEvDzOSLjNNfV15sXC8vZmFtCEBDG5NKwFGDFIi31vpEVQnRx59KzfpWqESA==
-X-Received: by 2002:a05:6870:8a0b:b0:254:96ec:bc44 with SMTP id 586e51a60fabf-25db3579836mr5080568fac.28.1719922509735;
-        Tue, 02 Jul 2024 05:15:09 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70801e63250sm8349625b3a.29.2024.07.02.05.15.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jul 2024 05:15:09 -0700 (PDT)
-Date: Tue, 2 Jul 2024 20:15:08 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC][PATCH v6 00/11] ref consistency check infra setup
-Message-ID: <ZoPvTKU4A73PXqf6@ArchLinux>
-References: <Zn2Ah3WDhtOmzrzn@ArchLinux>
- <ZoLHtmOKTfxMSxvw@ArchLinux>
- <CAOLa=ZSFTcMn+CsEcE1G5hnW37rw81zcUaXBywVY7xbBN7mhkA@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1719929622; x=1720534422;
+        h=to:cc:message-id:subject:date:mime-version:from
+         :content-transfer-encoding:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=oQVrm4JM1X0wDCMXvmOHv4D9tQl39pOLC72bTquZ9bE=;
+        b=pPG6FIGUHLtkOyxosTudifECL58M1HMTHsX32IHSjKd8mRH8DgeoA8nR/YbQIrxL7Q
+         olf62JD5MTz8ItC1wR7d3NcsNgc6ATz1vF80Hi1oYEcz+P/0q88Cg86nwhugEmOzi2sd
+         yDpbGC02MZGCQb5BblMOKuOx2CkytQZF3FjnfqFSrWx+UYrapTfQADm7TblE0sgz0EaK
+         W/5kn4Sd4b7EqeIbZNCTYuf3Sd2NjBD3gCyauTWEjv4A+xIv4bmv1uDMTCoW4Xy8BC05
+         T6DyM61FRrgF+cTXcO1AL6CbNXlY6OGEW39O02Dci6890Bc6mC3td8bmUVWLmTVWzigC
+         zFLA==
+X-Gm-Message-State: AOJu0Yzjo0xr4T1S2dBXgsaIg8fsq+e3Wq2DqgyrqER3p+mJblJDYR6a
+	Mx4kAw/ky4GBzvW9ZJMuNstZzsC/cWLNEyKHEcgELVgzjFvH+vxXzpTzjw==
+X-Google-Smtp-Source: AGHT+IFXZHwf5vzd2nTJsxiUuvnWfEMXkbbLaK1wTn43nNUU9B2fA3Ufl42U6pNjVFogPdjkEqNG8w==
+X-Received: by 2002:a81:8385:0:b0:62d:1eb6:87bf with SMTP id 00721157ae682-64c71144f5emr68400467b3.5.1719929622051;
+        Tue, 02 Jul 2024 07:13:42 -0700 (PDT)
+Received: from smtpclient.apple ([2600:1700:8f50:4030:2c7f:753d:4dae:4029])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-64a9a2394f6sm17644247b3.33.2024.07.02.07.13.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Jul 2024 07:13:41 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+From: Kenneth Porter <klowflynno36@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZSFTcMn+CsEcE1G5hnW37rw81zcUaXBywVY7xbBN7mhkA@mail.gmail.com>
-
-On Tue, Jul 02, 2024 at 10:33:36AM +0000, Karthik Nayak wrote:
-> Hello,
-> 
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > Hi All:
-> >
-> > This version follows the Junio's advice. Instead of creating the
-> > following data structure:
-> >
-> > 	struct fsck_options {
-> > 		enum fsck_type {
-> > 			FSCK_OBJECTS,
-> > 			FSCK_REFS,
-> > 			...
-> > 		} t;
-> > 		union {
-> > 			struct fsck_objects_options objects;
-> > 			struct fsck_refs_options refs;
-> > 		} u;
-> > 	};
-> >
-> > I simply use the combination idea where "fsck_options" will incorporate
-> > "fsck_objects_options" and "fsck_refs_options". Karthik has told me that
-> > I should balance the job I should does and the extensibility for future.
-> > So I use the most clear way to do this. Also Junio has said:
-> >
-> 
-> If I understood Junio's comments correctly, he was drawing out the point
-> about if we even need the separation of options for refs. Since the only
-> option we're adding is a verbose:
-> 
->     struct fsck_refs_options {
->     	unsigned verbose:1;
->     };
-> 
-> wouldn't it be better if we simply amended `fsck_options` as so:
-> 
->     diff --git a/fsck.h b/fsck.h
->     index 6085a384f6..ea97f48acc 100644
->     --- a/fsck.h
->     +++ b/fsck.h
->     @@ -135,6 +135,7 @@ struct fsck_options {
->      	fsck_walk_func walk;
->      	fsck_error error_func;
->      	unsigned strict:1;
->     +	unsigned verbose_refs:1;
->      	enum fsck_msg_type *msg_type;
->      	struct oidset skiplist;
->      	struct oidset gitmodules_found;
-> 
-> Your approach seems to take a different path though, where we create a
-> new route of creating two new structs, one for refs and another for
-> objects and adding both to fsck_objects. If we're doing this, wouldn't
-> it be better to use the enum+union idea, like Junio mentioned? That way
-> we would have clarity around which type it represents.
-> 
-
-I agree. Let's give up breaking the structs. I will send a new version
-immediately.
-
-Thanks.
-
-> [snip]
+Mime-Version: 1.0 (1.0)
+Date: Tue, 2 Jul 2024 10:13:30 -0400
+Subject: Re: A few usability question about git diff --cached
+Message-Id: <DB7B2FDB-535D-4845-B3A7-7F19CF5F4303@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, paolo.ciarrocchi@gmail.com,
+ vmiklos@frugalware.org
+To: m.mahmeed911@icloud.com
+X-Mailer: iPhone Mail (21F90)
 
 
+Sent from my iPhone
