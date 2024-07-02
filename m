@@ -1,138 +1,139 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A6C14D42C
-	for <git@vger.kernel.org>; Tue,  2 Jul 2024 07:50:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B91156228
+	for <git@vger.kernel.org>; Tue,  2 Jul 2024 09:37:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719906621; cv=none; b=RN6gWoQYj822vRBFnwuOSVEFAL6fuG0/3R/D1HlwK0P2arCVJOBaRg2q30PjOHk+VcvoZI0a5U+fDYFi6ijPIfYDNf/f9bSnmn/4PU2YkJzPD3C7A/RdUZD1+gne6Jq3deNxb+9eX96vzsXfpQLG1AOBAyBe9aQdGIaqxQrhohs=
+	t=1719913056; cv=none; b=Q9MlmDwqfvAqBEQIz0litccrvGTWb8Ru47v0EC+vuROWJAR+sGPlOMIoB3fq8AeUY50nEpOMK/XsGMRAgBO46njaZPf4pGsvAB/nuc2y2c3OKYgcU5WUcgfE+dp9D82/TnIdCmqYIsaJR/CyHoub/d3vKDEjxZRnl3wROzMK7m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719906621; c=relaxed/simple;
-	bh=Oz7FLGLPnsDV+1o1uOShkAwc+m5xj3WMKalwkxe/NpI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c1zetxVBqN464OOuUo9DcL8g/E7JaLqi6SuT1YgH2rSMDeHNzBzz6YUYU/7TzIQfYs8AjBc8U+zdeOaGkiylhHf2h6ELx9wJVVWUz7tP+cbvKx4VJ2xtdanh2weOMwKPCA8Zt2jqnBJHatRUR1gDu27ppKj8IIdmGOtaHeSQ/Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JxHNl1oF; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1719913056; c=relaxed/simple;
+	bh=B451bwtHCVP8sdTpRgkWTHdCSoseKDcG58v+NcP+KA8=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=pXCjD/tP1eehpXVfeQ4mSYahPTNFq+14REO78w281Gmnd6DLOIUJJEcVUfnYP8rSrmVR3pRdKW7MxeqEouilo8p4oWJHOpRzzBV/9/08SPjN0ISjwrLxVjUo38wU22gui0rnoeqa4afMhkSsbKAyWLP9hnXtZ/XTHH6owzyJUQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=DQfgwTjN; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JxHNl1oF"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-701b0b0be38so3129962b3a.0
-        for <git@vger.kernel.org>; Tue, 02 Jul 2024 00:50:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719906619; x=1720511419; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WkmOFTD/g7Ed01jSdr/oGiWRDpD+kvQlw386TLsQwVk=;
-        b=JxHNl1oF5u2NiPjhZTFvEENEWwRf1111BHdn3Luj9wk7Tdx/EwZc3DTBva1Z6fxgjC
-         wDhuOpOV2Zl07vOvdfg8TuOTRsbECowxuoe3xHL+pWv0l8uUWqfO1h8jlgp76PIcNPMp
-         cnoioGTIy+Z894u/GVg4i444MBNG5XTfGQgge7qpmVMyyDj8lx2/S/xFZMXQOoB4Bd8B
-         eZrc8TV15jnK7Ptt4lCH+ro2sasgzzTZ7cczPNVsBpXkCleMfl3SV7bTUoMB0LHOlwA7
-         rzmqygkk8rOtv0QP4HIMZASwnG3FJpWU0zt+O9eokNGVypFRuLh0Im2itLL02EgDrHRD
-         sQkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719906619; x=1720511419;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WkmOFTD/g7Ed01jSdr/oGiWRDpD+kvQlw386TLsQwVk=;
-        b=ZkX4qbAnV8V1H1KZluJ9rmXmCv1W+QNY+R/fFPdL9FBKKvJ67j6snoNoVQI00EKkNl
-         MJz66/t0J6eJ++1L/2OjQAGxi4kPtTof6bJFEQiinXaDxEKQC/fr/iq2GUO0tui/uOA4
-         IOaKVsUJXM/fjnigBhfPE1LbceHIyoHT68FewLro/e0emy70ALPZX3T5vDcS5hTWIP52
-         mO65PpRdsK0mkfdnDXijY7YtjxCK/6GRkBWJ6mGBtpAJyauQ0NxlFqxv6XESL93m3Wog
-         sZaHvzQmtrukFnuJzK9y5TJ/X09StZEuhviqyGmmP54Ki4kmjzYsCZL8z19ZyXvqOloX
-         QhEw==
-X-Gm-Message-State: AOJu0Yw/lDdMHA6BolfbMG41ekqdnq+BZGpK9x2IktoNepfetxYA3NF6
-	cPs9s16wuuoVsnDY/SWEmIhHiaqgALFc7+aH2qDllahJbFh5a5HgobO/hu1r454=
-X-Google-Smtp-Source: AGHT+IFqCl0aC9xVexbe2vb66XyUF72dS0B7IS03ehkoRO9Fcpt6c47wHiWWKF6PFxBpVn/4vlpCHg==
-X-Received: by 2002:a05:6a00:240d:b0:706:251d:d98 with SMTP id d2e1a72fcca58-70aaad2c0femr9018118b3a.4.1719906619440;
-        Tue, 02 Jul 2024 00:50:19 -0700 (PDT)
-Received: from Ubuntu.. ([106.206.197.80])
-        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-708044ac424sm7772626b3a.161.2024.07.02.00.50.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jul 2024 00:50:19 -0700 (PDT)
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-To: git@vger.kernel.org
-Cc: karthik.188@gmail.com,
-	Chandra Pratap <chandrapratap3519@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 11/11] t-reftable-record: add tests for reftable_log_record_compare_key()
-Date: Tue,  2 Jul 2024 12:52:24 +0530
-Message-ID: <20240702074906.5587-12-chandrapratap3519@gmail.com>
-X-Mailer: git-send-email 2.45.2.404.g9eaef5822c
-In-Reply-To: <20240702074906.5587-1-chandrapratap3519@gmail.com>
-References: <20240628063625.4092-1-chandrapratap3519@gmail.com>
- <20240702074906.5587-1-chandrapratap3519@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="DQfgwTjN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1719913034; x=1720517834;
+	i=johannes.schindelin@gmx.de;
+	bh=TCTNOc8G6mCO+yeBhtYXl0oyC6K8LDIbEHswbZ+tQXc=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=DQfgwTjN0WipTRP0g+xl+sXRjJBiKIiMC0HrKFsZTU/YPM2zZUBX+zldFN884Fxy
+	 yuu60Ztqg/tqvR8YWBRolGhOa9Qpq2A8yq8gld36e0UqavtY9o1UzMUAwaVQgmft/
+	 qMfG63M554M2N7O8VRWS7AnmoXDdmGhvkLV9itcl1iluQvbV2wxl0YfV0mAojfYDj
+	 yFQ4gbFqhF228d9Ldws8LB5nMyCWv8x/vqw6KvxIqmvqFQKcPTyoeUiCSOrLquDJc
+	 aOgxngXwdrSp2UbHKkUhtczqGANvt3natUImeOA8dqvKWGI48nu0r72I3rX5MMYYm
+	 TywNUvn1e1soMWWekQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.212.58]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MmlT2-1ryd8G1L9i-00i8Ie; Tue, 02
+ Jul 2024 11:37:14 +0200
+Date: Tue, 2 Jul 2024 11:37:13 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Linus Arver <linusa@google.com>
+cc: Junio C Hamano <gitster@pobox.com>, 
+    Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+    Christian Couder <chriscool@tuxfamily.org>, 
+    Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
+    "Randall S. Becker" <rsbecker@nexbridge.com>, 
+    Christian Couder <christian.couder@gmail.com>, 
+    Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH 0/5] Unify trailer formatting functions
+In-Reply-To: <owly4jd741ph.fsf@fine.c.googlers.com>
+Message-ID: <efdda91a-1118-ea54-d28f-dd6fa6df67c5@gmx.de>
+References: <pull.1694.git.1710485706.gitgitgadget@gmail.com> <xmqqjzm3qumx.fsf@gitster.g> <owly4jd741ph.fsf@fine.c.googlers.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ee8nFiLv9fBNbZEVIbyRvkDsbQQtG7EdWupnywTxLy0yRnwIiZJ
+ 06izcPZ/kQB7zkrOuG0RGFtlhq61aNdfmmwJDJzsV8tzRp1+1HymoCbSXkqIwZsV8OW4fdB
+ F/sFfl4Zw++pzdx+w/Wfe8HmJmzUemJIVmSqBzBWUncK8rSFU4Wc48cNUKi3JW90Qr34AJP
+ F7miuY/EPnKksv1ro4Xgg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:tFlze7+KMwY=;HxPtEDJmlsvO2FlLG7t6xTSAco9
+ xFGU1LymCjsNVlrXRxPk/Au1IAgBaU7mDaMH1d6iTuc8YXdJe4NicF16NeOZTlLAbIG7KT0GW
+ LDkQtrgDRBmoJZdnH8AFaSqZN/KRKDGzDAmcmA1zAMAFUIsmDyHpRs8o3vg8XdEIN2yXV9AGC
+ IFgnXIm7EFeMdRWQSyhCUAz+cVeR6uKHpQ0l80Bo3nRQ1DKW349Yl17aGGoqjK2qTpeHu+Npn
+ 4TqNNvHAiKWch9idF+PJ4Mf86A+B3cRjk22AhkDCGsG+b0cnowNZQaDZZxDx/6WqN6x94IjhX
+ bCs9bkNx4fhZSwrEHiERqq3WAq8dvcq/OkZYEPM6zzCm1xM2TCDg5KU0wnFVVi16zclGx/tRP
+ Y6X0hXGAbckYJZIKq8MbfcpwbFViGwH5ENJdK5H6v3Frq4axOhwf56pxPnvi7Kwz9LiV2Mx/B
+ ThjhmaNRfpsRvXvkHkAhwRwanNe3yh1kWKHOxRIBLCJ45W11vAXlH1RqrFMmi/jetGck/ccWM
+ tK8JDvkwWWUNRcXHjtggpDC6dIWyfnT7eoafV4HSNfuqHI+CXhBcWIYlE1e6c2L41gHZbo8ms
+ OV6+qN93dwBrBkMeLrDAH4zNIYhOVhYvIF7W38512QA8TmlIZeHm1m9GCPALK+eE/5ZeVtg6u
+ 3vUsG5rNT69+jJn9p45XW2DAk7VD4xmdAknt0kA3ucGDQXviLMSVdalN56vgdwMS3RLfVe/b6
+ oa9p3ACNHVOAS0oXE3mbqKYNZxvhSGdrMPRXrtP1gESDAFwgnn/JZPGmoKJOeQCMoP8BtbwgB
+ y2GOI1pM/Kj9spSsH2vQGeKwKXfIuBIJx9/Zo9qaACxkk=
+Content-Transfer-Encoding: quoted-printable
 
-reftable_log_record_compare_key() is a function defined by
-reftable/record.{c, h} and is used to compare the keys of two
-log records when sorting multiple log records using 'qsort'.
-In the current testing setup, this function is left unexercised.
-Add a testing function for the same.
+Hi,
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
----
- t/unit-tests/t-reftable-record.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+On Fri, 15 Mar 2024, Linus Arver wrote:
 
-diff --git a/t/unit-tests/t-reftable-record.c b/t/unit-tests/t-reftable-record.c
-index c0668cd8b4..cb649ee419 100644
---- a/t/unit-tests/t-reftable-record.c
-+++ b/t/unit-tests/t-reftable-record.c
-@@ -205,6 +205,35 @@ static void t_reftable_log_record_comparison(void)
- 	check(!reftable_record_cmp(&in[0], &in[1]));
- }
- 
-+static void t_reftable_log_record_compare_key(void)
-+{
-+	struct reftable_log_record logs[3] = {
-+		{
-+			.refname = (char *) "refs/heads/a",
-+			.update_index = 1,
-+		},
-+		{
-+			.refname = (char *) "refs/heads/b",
-+			.update_index = 2,
-+		},
-+		{
-+			.refname = (char *) "refs/heads/a",
-+			.update_index = 3,
-+		},
-+	};
-+
-+	check_int(reftable_log_record_compare_key(&logs[0], &logs[1]), <, 0);
-+	check_int(reftable_log_record_compare_key(&logs[1], &logs[0]), >, 0);
-+
-+	logs[1].update_index = logs[0].update_index;
-+	check_int(reftable_log_record_compare_key(&logs[0], &logs[1]), <, 0);
-+
-+	check_int(reftable_log_record_compare_key(&logs[0], &logs[2]), >, 0);
-+	check_int(reftable_log_record_compare_key(&logs[2], &logs[0]), <, 0);
-+	logs[2].update_index = logs[0].update_index;
-+	check_int(reftable_log_record_compare_key(&logs[0], &logs[2]), ==, 0);
-+}
-+
- static void t_reftable_log_record_roundtrip(void)
- {
- 	struct reftable_log_record in[] = {
-@@ -510,6 +539,7 @@ int cmd_main(int argc, const char *argv[])
- 	TEST(t_reftable_index_record_comparison(), "comparison operations work on index record");
- 	TEST(t_reftable_obj_record_comparison(), "comparison operations work on obj record");
- 	TEST(t_reftable_ref_record_compare_name(), "reftable_ref_record_compare_name works");
-+	TEST(t_reftable_log_record_compare_key(), "reftable_log_record_compare_key works");
- 	TEST(t_reftable_log_record_roundtrip(), "record operations work on log record");
- 	TEST(t_reftable_ref_record_roundtrip(), "record operations work on ref record");
- 	TEST(t_varint_roundtrip(), "put_var_int and get_var_int work");
--- 
-2.45.2.404.g9eaef5822c
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Not about the series, but about the way it was sent.
+> >
+> > The messages in this series have exactly the same kind of breakages
+> > in the recipient names/addresses we recently saw:
+> >
+> >     https://lore.kernel.org/git/xmqqh6hkxox6.fsf@gitster.g/
+> >
+> > Human-readable names with a SP inside [square bracket] pair
+> > appended, and one of the addresses had that square bracket applied
+> > inside <angle bracket> pair and breaking MTAs (I manually fixed
+> > khaugsbakk's address before sending this response, so replying to
+> > this messages should be OK).
+>
+> UGH, I'm so sorry about that.
+>
+> > What are you and Aryan's pull.1675.v3 did differently from other
+> > series sent via GGG to trigger this, I have to wonder?
+>
+> I realize now that it's because I copy/pasted the "Cc: ..." lines in the=
+ PR
+> description from
+> https://github.com/gitgitgadget/git/pull/1632#issue-2068188239, such
+> that when I pasted those in for the PR description for this series at
+> https://github.com/gitgitgadget/git/pull/1694#issue-2187804953, it
+> carried over the email addresses as Markdown-formatted hyperlinks.
+> Currently it reads
+>
+>     Cc: Christian Couder [chriscool@tuxfamily.org](mailto:chriscool@tuxf=
+amily.org)
+>     Cc: Junio C Hamano [gitster@pobox.com](mailto:gitster@pobox.com)
+>     Cc: Emily Shaffer [nasamuffin@google.com](mailto:nasamuffin@google.c=
+om)
+>     cc: Josh Steadmon [steadmon@google.com](mailto:steadmon@google.com)
+>     cc: Randall S. Becker [rsbecker@nexbridge.com](mailto:rsbecker@nexbr=
+idge.com)
+>     cc: Christian Couder [christian.couder@gmail.com](mailto:christian.c=
+ouder@gmail.com)
+>     cc: "Kristoffer Haugsbakk" [code@khaugsbakk.name](mailto:code@khaugs=
+bakk.name)
+>     cc: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+>
+> when I click on "edit", where the last line must be from your manual fix
+> which GGG picked up. I've cleaned up the PR description manually now,
+> and for this message I'm also attempting to clean up those square
+> brackets.
 
+I would love to let myself be nerdsniped into working on this, alas,
+I cannot afford that before I learn the trick to stretch time.
+
+So I did the next-best thing and jotted down pointers for any volunteer
+who wants to work on this:
+https://github.com/gitgitgadget/gitgitgadget/issues/1645#issuecomment-2202=
+545542
+
+Ciao,
+Johannes
