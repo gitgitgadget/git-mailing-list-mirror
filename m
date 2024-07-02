@@ -1,166 +1,119 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C08163
-	for <git@vger.kernel.org>; Tue,  2 Jul 2024 00:08:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FAB20E3
+	for <git@vger.kernel.org>; Tue,  2 Jul 2024 00:29:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719878905; cv=none; b=oGlSJytqskp9FfmXb6KLyBDhnppxoHDlRnuBEjnV8Kts1CrXTtckEZCH3It3m/OG0x7I1QHAf6eRh/PsMqCNCQGE3/YPs7Qn47SA25GC24iFVf9+PQZ17N4aqOlhc0xrvztBnWf1/1ZHO/UpDM7aaUNI0LFMURmpnBQqOUB/MCM=
+	t=1719880143; cv=none; b=Cv1bG1PvzehTZXEfExOuJbc6FeBbdDrzcGDkpN1Sc6d1r7W8qSALsaFPXTFa3F+ocE5DlAU7RduBDJ0JYrwupaR1qbUKqYDmv0+fbULWSEINo0DDIEjGYt0RKmBz0x3CGw40ruvNzydj6yf+9gnH7TWF6n2cLfsAXpF5mBGs0A4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719878905; c=relaxed/simple;
-	bh=znnP8fU7ly7vhWOxyfIsubeAUGuaU5Ls8WsiEWu4hoQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=UpcSZk8z17UZZV4ZIymrrRlvy/Kzpi3TETzIGvoA8WZMV6TOu5XrxNkeFx+v1PQUr0WmCyrTpmzzeaOTJf+ltTG/Jgky2KpzYsMHEfF/G4qRvRv4HWBeGKHxKnIOO1Z98ackLtYEYutRJ4G0XOQYwqEN03Tv+tY/kHaJjIPS7s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bmKU64jP; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1719880143; c=relaxed/simple;
+	bh=pCg8sZceehQHTzMWGSb9tQOQ8x0VHTWUd7fyc1+XnR0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dTS6rrvjpBKhcNaVWAOX5vcy2e3V6eDjOd4mANuSp6Zi5C9qFET9naHq5MzVMwkPtdB8nGCeGOwmQIlbnZ9Ght6C14U/yu3skgVDLaoRh8DTUFSfsSMHtwaRuFnAeeW3KnyBgdsPwJcmj541RyRkmHk0gbxRtjazYi2FqHZqjd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=SsiNTTr+; arc=none smtp.client-ip=173.255.242.215
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bmKU64jP"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a7541fad560so4974466b.0
-        for <git@vger.kernel.org>; Mon, 01 Jul 2024 17:08:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719878902; x=1720483702; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=O1T/f5nzOv+5jzgV9AIq/KRO9DdfUSR9mPKsKeW4iEc=;
-        b=bmKU64jPcK4wuaWDXMnYoL3IcYuGv0JYKB+oc39ploYhT0V7IT+PRtnpn2HODtCjG7
-         KynODRIuKdPphgTn+Ldk94u5OzPXXFLOJn2p19/XXGwSe9ppflvKjSeqsZIZqtEXf9YO
-         ANle0nBOjL6nm2UX7wLRVSTZ9VRiBP679a98OfGyxP2sgdW4GxB+fxQMLrxUOuhIp7LQ
-         SJHP+xHd8SLQiZ3M5LvV/1VPhBKuaMKtc7qLQokn2CtzzpbXfP0HqxD6GCGj15CEgTjD
-         ctCFYqWUmJpZQrntK3NZNijRhkdpzvWp+Ua5r9F9JgihmowYid0doKwYSP7piW9Tfz35
-         MZ2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719878902; x=1720483702;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=O1T/f5nzOv+5jzgV9AIq/KRO9DdfUSR9mPKsKeW4iEc=;
-        b=G0W04r3rNFEHVPgocCVnlIYd4ihZEOJ2CIXmMX2dHmDM63z268xCUsNIxfIp8gLVZR
-         95ClRPfutSBhjYKp5P3LG6Yxxu09+6tBp4L/UgpW/iDfveoaprRpmagjzMX/YlnX+hZ9
-         /dVAt8K9EU2Gxo4Z5PwiYPAr3c692qdBkbC2ucoURRzqauyJAZCN9VKonTX5elGDU7Hd
-         q7zMSJvnOMiTZsjqDJ11o5KZJGc9ucJA4QAkmckDNnDqpMXwKkBqC2v5RmYhvo5fdRg0
-         jeyd7IJAlvz3Tv62vidkJ9MTjJ2O/XQ1n7BgD9VpiOj9jdfyNana5gDxZhvQ5o4hu+J9
-         t0bw==
-X-Gm-Message-State: AOJu0Yzb93o+6SX2BbKMTogr8E+/Rl6kuHKmeooifg33FbDasEOo8Tee
-	bG3GUzgp+y2ExiPuQiP2K85h0SulbOGW/rt3G0RlScT0sOSEnGkW/9os7Ie/OhR9yGI4xEXC4zg
-	P83c/LVoJLPNoEExDh/+M4LQbroJcWGo5efo=
-X-Google-Smtp-Source: AGHT+IEJRFtMQI7h3tqkKqERZgPGLHeAD/0vTHV2SRxuQNPdPGlbac9ka9InDUI5fh8rPwrHBkSmIxQ0q3MBywE9xWU=
-X-Received: by 2002:a17:907:868c:b0:a6f:63c7:3083 with SMTP id
- a640c23a62f3a-a751441f03bmr568423266b.13.1719878901451; Mon, 01 Jul 2024
- 17:08:21 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="SsiNTTr+"
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2934A1F7BE;
+	Tue,  2 Jul 2024 00:19:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+	s=selector1; t=1719879593;
+	bh=pCg8sZceehQHTzMWGSb9tQOQ8x0VHTWUd7fyc1+XnR0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=SsiNTTr+RRyjMptiLjUsen3XPJCkiJ1AzuU7JWQnU4yVNegLvZK0nfkL7u2JlfdJp
+	 7qH1DuYpT2yJlaq0sxFMlSMEnRPcWBn7qNhIZoT7kZMMXBQr5fw/K9qJHHJs6ptxFM
+	 VPRe4jHnggVzJR2pT2FDqLbpELN6SlncWijb+5zc=
+Date: Tue, 2 Jul 2024 00:19:52 +0000
+From: Eric Wong <e@80x24.org>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	phillip.wood@dunelm.org.uk, Florian Schmaus <flo@geekplace.eu>,
+	git@vger.kernel.org
+Subject: Re: [PATCH] setup: support GIT_IGNORE_INSECURE_OWNER environment
+ variable
+Message-ID: <20240702001953.M35917@dcvr>
+References: <20240626123358.420292-1-flo@geekplace.eu>
+ <20240626123358.420292-2-flo@geekplace.eu>
+ <9e5b0cc6-e28c-4c51-ab48-663c61c00ee3@gmail.com>
+ <72e42e9f-5b85-4863-8506-c99d658d7596@gmail.com>
+ <ae658244-877f-c5cf-8947-83b87b66d01f@gmx.de>
+ <20240701181916.GD3199@coredump.intra.peff.net>
+ <xmqqplrwvob1.fsf@gitster.g>
+ <20240701222541.GC20683@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+osTZWaDpH_ZcEhHKrzcaWmHjTAiiWfPmf6C9u3NnzmY0PghQ@mail.gmail.com>
-In-Reply-To: <CA+osTZWaDpH_ZcEhHKrzcaWmHjTAiiWfPmf6C9u3NnzmY0PghQ@mail.gmail.com>
-From: =?UTF-8?B?SmVwcGUgw5hsYW5k?= <joland@gmail.com>
-Date: Mon, 1 Jul 2024 17:08:11 -0700
-Message-ID: <CA+osTZVMiZDihhiALb7fDO=Q5ntSmUFe6q1YpL=pkzC_tsmoBw@mail.gmail.com>
-Subject: Re: Problem with multiples levels of submodules
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240701222541.GC20683@coredump.intra.peff.net>
 
-Hi again,
+Jeff King <peff@peff.net> wrote:
+> On Mon, Jul 01, 2024 at 01:40:18PM -0700, Junio C Hamano wrote:
+> > Thanks.  I wonder if there is a way to add this kind of pieces of
+> > information to old commits and discussion threads around it after
+> > the fact, and if it helps us (like Dscho who wondered why we decided
+> > if it is a good idea, and more importantly if we still think it is a
+> > good idea and why).
+> > 
+> >     ... and then goes back to see the original discussion thread,
+> >     with the "bright idea" that I could just follow up on 14-year
+> >     old discussion thread.  Only to find that despite what Dscho
+> >     said, the commit message does say why it is desirable ("to
+> >     imitate remote transport well") already.
+> > 
+> > So, I guess we do not really need to do such a post-annotation in
+> > this particular case, but I think after seeing somebody posting a
+> > message like the one I am responding to and finding it helpful, it
+> > would be helpful if somebody can post a message pointing at it as a
+> > response to the old thread that wants a post-annotation.
 
-So I made a repro - it even fails locally (you have to explicitly
-allow submodules to work with "file" transport).
+I think adding code comments referencing commit OIDs and URLs
+with Message-IDs can help.  I've noticed many people (usually in
+other projects) haven't learned to use git (log|blame) :<
 
-Try the following:
-git config --global protocol.file.allow always
+> Usually I find myself digging backwards in history, following links to
+> old threads. But I guess what you are asking is how would somebody
+> looking at old thread XYZ know that it was mentioned much later.
+> 
+> And I think the solution is for the new thread to just link to the old
+> one by message-id (i.e., the usual lore links). And then searching for
+> that message-id in the archive could turn up the later threads. I don't
+> know how well public-inbox handles that in practice, though:
+> 
+>   1. Do things that look like message-ids get searched for in message
+>      bodies? I'd think so if you don't explicitly say "this is a message
+>      id".
 
-mkdir bottom
-cd bottom
-git init
-echo hello > bottom.txt
-git add .
-git commit -m Bottom
-cd ..
+Yes, encapsulating via double-quotes to turn it into a phrase
+search may help if the Message-ID contains dashes and such.
 
-mkdir middle
-cd middle
-git init
-echo hello > middle.txt
-git add .
-git commit -m Middle
-git submodule add ../bottom bottom
-git commit -m MiddleSub
-cd ..
+>   2. It's really a multi-element search. If I have a thread with 10
+>      messages, I'd really like to know of more recent threads that
+>      linked back to _any_ message in the thread. You'd probably have to
+>      feed them all manually. But in theory indexing could generate some
+>      kind of bidirectional "related" link.
 
-mkdir top
-cd top
-git init
-echo hello > top.txt
-git add .
-git commit -m Top
-git submodule add ../middle middle
-git commit -m TopSub
-cd ..
+You can also join a bunch of Message-IDs (or any other query)
+via `OR' elements to ensure you don't miss things.
 
-git clone --recurse-submodules top clone_ok
+<https://xapian.org/docs/queryparser.html> has a lot more
+details on combining things which apply to notmuch, too.
 
-git config --global submodule.recurse true
-git config --global submodule.active .
+> I don't often do this with message-ids, but I frequently do find other
+> references by doing a full-text search for commit hashes, or phrases
+> from commit subjects. I usually do so with my local notmuch archive,
+> rather than using public-inbox, but I think you should be able to do
+> phrase searches there, too.
 
-git clone --recurse-submodules top clone_err
-
-Note: If those submodule settings are set initially, then even
-creating the top repository fails.
-
-Regards,
--Jeppe
-
-On Tue, Jun 25, 2024 at 3:54=E2=80=AFPM Jeppe =C3=98land <joland@gmail.com>=
- wrote:
->
-> Hi there,
->
-> I'm seeing a strange thing with multi-level submodules.
-> Not sure what's going on, but it feels like a bug.
-> (I'm doing this on git "2.45.2.windows.1").
->
-> For a while, I've been globally setting the recursive and active config o=
-ptions:
->     git config --global submodule.recurse true
->     git config --global submodule.active .
-> This has the benefit that I don't need to "git submodule init" new
-> modules since everything is active.
->
-> The weirdness happens when there are submodules within a submodule.
->
-> I can reproduce it by just creating 3 git repositories (I have only
-> tried with GH hosted repos, maybe its different if done locally).
-> Each repo has a directory within it, and that directory is a submodule
-> of the next one.
->     top -> middle -> bottom
->
-> Now, if I don't set the global config above, I can:
->     "git clone --recurse-submodules <PATH>" to get everything.
-> Or:
->     "git clone <PATH>", "cd", "git submodule init", "git pull" etc. to
-> again get everything.
->
-> But if I set the global options, I can do:
->     "git clone <PATH>" to clone the top level.
->     "cd top" to go in there.
->     "git pull" to update everything, including submodules.
-> But while cloning "middle", it gives me an error:
->     fatal: not a git repository: ../../.git/modules/middle/modules/bottom
->
-> Something is getting confused and thinks there are worktrees involved:
->     ".git/modules/middle/config" has "worktree" line in the [core]
-> section (this appears to be normal).
->     ".git/modules/middle/modules/bottom/config" is not a repository,
-> but just a "[core] worktree" section (definitely not normal).
->
-> This all works fine if there is only one level of submodules (top->middle=
-).
->
-> Any ideas?
->
-> Regards,
-> -Jeppe
+Yeah.  That's fairly easy to do for Junio's git <=> git@vger
+mirror.  It's more challenging to make work (and presentable)
+for hundreds of kernel list archives and linux.git mirrors,
+especially on my 15 year old hardware, but progress is being
+made since I'm resorting to using C++ for Xapian :x
