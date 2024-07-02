@@ -1,57 +1,57 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074D8BA3F
-	for <git@vger.kernel.org>; Tue,  2 Jul 2024 16:25:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87261BE857
+	for <git@vger.kernel.org>; Tue,  2 Jul 2024 17:29:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719937556; cv=none; b=cDKh2IUSyeNF6lyHsw7SamsEBU99Xn9t6rMp+iUNzEqo7upKZr3dPL1LVaB4yuItwEPHyh7QLFjfP7uYvTophSPyD67xHohEaF+PrxEphRZljV4zwzoKBkmBx3wDMTrwM7LYDNBOoRF9s12V3964f0QE2b+nCADKRMf5o8vo1tI=
+	t=1719941365; cv=none; b=lX0V9JAUK7FkdCC+KQqp459XHl92ona9w37eCNCXKoIZGMVSwAlgUrSq6z3Bc1Pwb2TUZIM93tzhz/bCGs32hrVn5AIBxhOKqSjVvqwR7ZO3iUvPn9eAUFmYEdIUahRuRlqbLM2tvUybR7HBYEFVSyB9HIhBjYbnQ0CixCxWJUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719937556; c=relaxed/simple;
-	bh=+MPhcbWIzLj3WVn10osfjIo8L5dKbwA+Poo5BPqskdg=;
+	s=arc-20240116; t=1719941365; c=relaxed/simple;
+	bh=3MGqPoZ2WytiPRkk9B8HDemCs+qv0nxJA6FTH8mgDGs=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=prc0mprm7a9qHhD3eDIHZt2aFP1W3wps6eqXO06agXvEQOVKLpk9wsgQn5qSdbQLDEmGo2U1zB6QxwpG8IB+9tT1o1d//XLtx3dVMdYD9WyIuDat3S1UURRe6ZflKZAzc68xjYp21c5cZEjEUg+i/wLNqf8tpU43p8MK0h2jtOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IcuqYy5t; arc=none smtp.client-ip=209.85.210.177
+	 References:In-Reply-To; b=tXQ8VIPO6mTqbQiuOHfzgV2rhrpwibSvf/7jM+5oP+vbvJjVVb69v82Qr22E6HDy5bu4mmJE327KgAr55ctbQm1MILJX2FhrLWZMe7HggrbzNtRjMKOnl7kAKhz58U+cLSlkOdx4y+hJfCgsVLDhe5yvrwazSjytVM4Y6xkR8P4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nYzjPVJk; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IcuqYy5t"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-706524adf91so3592851b3a.2
-        for <git@vger.kernel.org>; Tue, 02 Jul 2024 09:25:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nYzjPVJk"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-7065e2fe7d9so3462763b3a.3
+        for <git@vger.kernel.org>; Tue, 02 Jul 2024 10:29:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719937554; x=1720542354; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719941363; x=1720546163; darn=vger.kernel.org;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=M+8HkjdjI0qFuJ1hdtMwvAPtoTgnpyX8Mh9fX37R5tU=;
-        b=IcuqYy5ts44KXBOvZRGYfxVP3DZO9HOcJJCXcEhFtLKhUrKKxusl+DR4o15Zre2zPY
-         vnCv1tZ/TN9TbJY15R1TUKHaqnXJevuMBbWJjBSQkhA0wIGvjUtN2RBSQIPa5FYOpytA
-         KiKA90VMAjr6EcTlvRWgXzRAZNdfNc8MJWEsUkSoyHr0k/gjp7vgexldbGJ2FELnvWHt
-         kwCX/L3XBpAZ0ayhPo7Y9hCzuK7mU/3z9OFJSPk8+HH/YrR/jgaLbKuquoiHmOOMI8iL
-         YMe6nZmBzv9foeGM6LatxgpYPTfunrF3wogonoMlE0eeOZF7H/MH3YZnq7CZZCPRdgge
-         ln6w==
+        bh=1iHdxJqVyijZe0Vs6nMj7/NapwpSDmcw5lC/RBgmt4c=;
+        b=nYzjPVJkBevUgQLXj7aQqO0MJKRrsRL4bKtonhDyqSLntwxJHi84h/NUGTjbsFTgX1
+         /FHLLojDXihKkfdo0xFHQ92IrHSynUp9N00MRnBVEUfTJf/494VgGUZiDvykc2CmfVk5
+         heNdGgfFALlKFYXrVMe33N19neKVWex9fKcjxHIgslqwpzPWRVM8LS/QbnXgP6c+vLNV
+         Cf51V1QGCN90JSBJYrRraBwClucaLM1dNJCDAspzRnEQcJb0LxTKVJObLxzcWVGbbwOV
+         F70dOih0kZtzrOlKCze9WM9K0rhMsK8iVoAkuoVbvQ9mhpWa7EP66lukGhZ+x1aAGuUp
+         XB9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719937554; x=1720542354;
+        d=1e100.net; s=20230601; t=1719941363; x=1720546163;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=M+8HkjdjI0qFuJ1hdtMwvAPtoTgnpyX8Mh9fX37R5tU=;
-        b=Pe50HIJ34KFDS405DL6DMSt6VIkI823xj1ROw5Na8Sg0obNGW22ev7teFuQkplUoUN
-         NZe1NgvB+DSH5qb6sEtntpwMNFcCIiGbvEUGBrK3aStLPQCe3o1VnmtS1a7WQd9O1ukm
-         jpKuzuzts4HgSEpzN5/aIjcrDm3nK/xRRBISy5r9iN2hWDQwSx/QWLEBbT5XPGkoaqCU
-         FFG1oETXLpIYhlOYO+XnxKgfax1x/7+9/e9JBp654vdMhIrhRwbB8uSKYLWfoo9fdBKh
-         oYA70eNcnqZwrJDDq/6SlORuZpYGpUWgwE9B1PIjd6TRQuNCZrEc5sScqqKjQKeLAohM
-         cJEw==
-X-Forwarded-Encrypted: i=1; AJvYcCXOoo06rh3Jdn5dB+975oYy4YfsVzqjCj5LHougAFQhyvelZ//YrZS66fXIGMvdPALgGWLjEw0aaFGwUutbLLic5yOh
-X-Gm-Message-State: AOJu0YxOaAogWq0XaK+K3QRs3kRav388czR0oQ7mQSy7zG1Hq+gm8P8x
-	oL91wWxetghehCYfiV5aUCOXBrLteyfTm623HrA0SLtmpVhQDmcMJh0hFc9hWIU=
-X-Google-Smtp-Source: AGHT+IFfy0KomlPRqTEholA/1LiOtg+jSBl8HkaQYGxuuOHoGzOKqTDxP2IcdVqvCWNezAykTgeIzg==
-X-Received: by 2002:a05:6a20:7489:b0:1bd:d5ba:e163 with SMTP id adf61e73a8af0-1bef60fd0b3mr13811570637.26.1719937553987;
-        Tue, 02 Jul 2024 09:25:53 -0700 (PDT)
+        bh=1iHdxJqVyijZe0Vs6nMj7/NapwpSDmcw5lC/RBgmt4c=;
+        b=E+3W36OODRC/WImgym6+17RSoZrrSxJ5+K/WxX0MT81IDay1tqQBn7Tmr/MOjvch/Q
+         G3YwtRAAR1E1CaNqXfQT5G+OagRpqJIMhyXNqCHXJAwL3FIAOBUGEbe44gIMhZOW8FMb
+         Kkb9UacilAJ5FZVBf5twyCIXFMcgNMxoCS0TFqhw6IZIdWOrYxx5RLmezSS7oNW4tx8F
+         3SiN2jy8nA2XzOhbY5gzxleX+rFnjaAVBDJ9LK5K/nRhDAiIIDGEDvKizljm7mdt+R1g
+         frui6Wm7v7zjPc/rtWGjLkaUNIxcV9YhriCzLBLKKl7qhP0g6DTL+rB+sxjhznLemHnz
+         1HbA==
+X-Forwarded-Encrypted: i=1; AJvYcCUTfYaG32UUNqJSLdH+SnHR687yj4B0EFSgUfqEGDzdCtKtudkj7GqP8jvJeFI8SHo6yhH4c5AYAz6ZBHewjiocVDPd
+X-Gm-Message-State: AOJu0YyfD4RaOsMbt3sHOM7eSayg1f7V5WXOrF7mcbnhGLPHUXC32wLg
+	UG/8hka/yIMcLn9U3XzrSdvoPnK1t2QXdG2W8urFTXAy4z+YQEGq
+X-Google-Smtp-Source: AGHT+IE8TT45AncCa9sElC5GmRsU312qOFscTQ2UOwRWwvt3VczpBEKTGgdvakrabrbtKjdR2V/vKA==
+X-Received: by 2002:a05:6a00:3cc6:b0:706:6bf8:bd7 with SMTP id d2e1a72fcca58-70aaaeec9a5mr12062746b3a.21.1719941362865;
+        Tue, 02 Jul 2024 10:29:22 -0700 (PDT)
 Received: from localhost ([2402:a00:401:a99b:b1ca:de8:cd9e:bf98])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac15388bdsm86320255ad.168.2024.07.02.09.25.50
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7080246c662sm8810670b3a.61.2024.07.02.10.29.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Jul 2024 09:25:53 -0700 (PDT)
+        Tue, 02 Jul 2024 10:29:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,91 +60,86 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 02 Jul 2024 21:55:48 +0530
-Message-Id: <D2F6Z5WUBKKQ.2A00IY9IF37SI@gmail.com>
-Cc: "Jonathan Nieder" <jrnieder@gmail.com>, "Josh Steadmon"
- <steadmon@google.com>, "Junio C Hamano" <gitster@pobox.com>,
- <christian.couder@gmail.com>, "Christian Couder" <chriscool@tuxfamily.org>,
- "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][PATCH v2] t: migrate helper/test-oidmap.c to
- unit-tests/t-oidmap.c
+Date: Tue, 02 Jul 2024 22:59:18 +0530
+Message-Id: <D2F8BS39IFC4.WJ9TNK3IDFBV@gmail.com>
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 6/6] t-strbuf: use TEST_RUN
 From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>
-References: <20240619175036.64291-1-shyamthakkar001@gmail.com>
- <20240628122030.41554-1-shyamthakkar001@gmail.com>
- <16e06a6d-5fd0-4132-9d82-5c6f13b7f9ed@gmail.com>
-In-Reply-To: <16e06a6d-5fd0-4132-9d82-5c6f13b7f9ed@gmail.com>
+To: "Josh Steadmon" <steadmon@google.com>, =?utf-8?q?Ren=C3=A9_Scharfe?=
+ <l.s.r@web.de>, "Git List" <git@vger.kernel.org>, "Phillip Wood"
+ <phillip.wood@dunelm.org.uk>
+References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
+ <1bf053ae-957e-4e9a-90f0-11cc76848ce9@web.de>
+ <bh5ectgtwdaeltflggzwnwhobewvcqqelforr4sfcmq47rnnrl@mzspptlhpofx>
+In-Reply-To: <bh5ectgtwdaeltflggzwnwhobewvcqqelforr4sfcmq47rnnrl@mzspptlhpofx>
 
-Phillip Wood <phillip.wood123@gmail.com> wrote:
-> Hi Ghanshyam
->
-> On 28/06/2024 13:20, Ghanshyam Thakkar wrote:
-> > helper/test-oidmap.c along with t0016-oidmap.sh test the oidmap.h
-> > library which is built on top of hashmap.h.
-> >=20
-> > Migrate them to the unit testing framework for better performance,
-> > concise code and better debugging. Along with the migration also plug
-> > memory leaks and make the test logic independent for all the tests.
-> > The migration removes 'put' tests from t0016, because it is used as
-> > setup to all the other tests, so testing it separately does not yield
-> > any benefit.
-> >=20
-> > Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> > Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> > Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-> > ---
-> > This version addresses Phillip's review about detecting duplicates in
-> > oidmap when iterating over it and removing put_and_check_null() to move
-> > the relevant code to setup() instead. And contains some grammer fixes
-> > in the comment.
->
-> This version with Junio's fixup addresses my previous comments. One more
-> thing occurred to me as I was reading it again
->
-> > +static void t_iterate(struct oidmap *map)
-> > +{
-> > +	struct oidmap_iter iter;
-> > +	struct test_entry *entry;
->
-> I wonder if we want to add a bit of paranoia with
->
-> int count =3D 0;
->
-> > +	oidmap_iter_init(map, &iter);
-> > +	while ((entry =3D oidmap_iter_next(&iter))) {
-> > +		int ret;
-> > +		if (!check_int((ret =3D key_val_contains(entry)), =3D=3D, 0)) {
-> > +			switch (ret) {
-> > +			case -1:
-> > +				break; /* error message handled by get_oid_arbitrary_hex() */
-> > +			case 1:
-> > +				test_msg("obtained entry was not given in the input\n"
-> > +					 "  name: %s\n   oid: %s\n",
-> > +					 entry->name, oid_to_hex(&entry->entry.oid));
-> > +				break;
-> > +			case 2:
-> > +				test_msg("duplicate entry detected\n"
-> > +					 "  name: %s\n   oid: %s\n",
-> > +					 entry->name, oid_to_hex(&entry->entry.oid));
-> > +				break;
-> > +			default:
-> > +				test_msg("BUG: invalid return value (%d) from key_val_contains()",
-> > +					 ret);
-> > +				break;
-> > +			}
-> > +		}=20
-> } else {
-> count++;
-> }
+Josh Steadmon <steadmon@google.com> wrote:
+> > -	TEST(setup(t_addch, "a"), "strbuf_addch adds char");
+> > -	TEST(setup(t_addch, ""), "strbuf_addch adds NUL char");
+> > -	TEST(setup_populated(t_addch, "initial value", "a"),
+> > -	     "strbuf_addch appends to initial value");
+> > -	TEST(setup(t_addstr, "hello there"), "strbuf_addstr adds string");
+> > -	TEST(setup_populated(t_addstr, "initial value", "hello there"),
+> > -	     "strbuf_addstr appends string to initial value");
+> > +
+> > +	if (TEST_RUN("strbuf_addch adds char")) {
+> > +		struct strbuf sb =3D STRBUF_INIT;
+> > +		t_addch(&sb, 'a');
+> > +		t_release(&sb);
 > > +	}
-> check_int(count, ARRAY_SIZE(key_val));
+> > +
+> > +	if (TEST_RUN("strbuf_addch adds NUL char")) {
+> > +		struct strbuf sb =3D STRBUF_INIT;
+> > +		t_addch(&sb, '\0');
+> > +		t_release(&sb);
+> > +	}
+> > +
+> > +	if (TEST_RUN("strbuf_addch appends to initial value")) {
+> > +		struct strbuf sb =3D STRBUF_INIT;
+> > +		t_addstr(&sb, "initial value");
+> > +		t_addch(&sb, 'a');
+> > +		t_release(&sb);
+> > +	}
+> > +
+> > +	if (TEST_RUN("strbuf_addstr adds string")) {
+> > +		struct strbuf sb =3D STRBUF_INIT;
+> > +		t_addstr(&sb, "hello there");
+> > +		t_release(&sb);
+> > +	}
+> > +
+> > +	if (TEST_RUN("strbuf_addstr appends string to initial value")) {
+> > +		struct strbuf sb =3D STRBUF_INIT;
+> > +		t_addstr(&sb, "initial value");
+> > +		t_addstr(&sb, "hello there");
+> > +		t_release(&sb);
+> > +	}
+> >=20
+> >  	return test_done();
+> >  }
+> > --
+> > 2.45.2
 >
-> to check that we iterate over all the entries as well as checking the
-> size of the hashmap here.
->
-> > + check_int(hashmap_get_size(&map->map), =3D=3D, ARRAY_SIZE(key_val));
+> I think this commit in particular shows how TEST_RUN() is more
+> convenient than TEST(). (Although, arguably we shouldn't have allowed
+> the setup() + callback situation to start with.)
 
-Yeah, good idea. I'll include it in v3.
+Could you expand a bit on why the setup() + callback thing shouldn't be
+allowed? I think it is a nice way of avoiding boilerplate and having
+independent state. And, I see the true potential of TEST_RUN() in
+testcases defined through macros rather than replacing functions. I
+actually think that the previous version with the functions was not
+particularly bad, and I agree with Phillip that the previous version's
+main() provided nice overview of the tests and it was easier to
+verify the independence between each testcase.
+
+Perhaps, the code snippets inside the functions are small enough to
+perceive TEST_RUN() as more convenient than TEST() in this test, but,
+for future reference, I definitely don't think TEST_RUN() should be
+looked at as a replacement for TEST(), and more like 'when we have to
+use macro magic which requires us to use internal test__run_*
+functions, using TEST_RUN() is more convenient'. Patch [3/6] is a good
+example of that. But, I also don't mind if patches 4, 5, or 6 get
+merged as I don't see any difference between using TEST_RUN() or
+TEST() in those patches, besides moving everything inside main().
 
 Thanks.
