@@ -1,64 +1,64 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4B01E869
-	for <git@vger.kernel.org>; Wed,  3 Jul 2024 13:58:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E556F1E869
+	for <git@vger.kernel.org>; Wed,  3 Jul 2024 13:58:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720015102; cv=none; b=QAa/LQdp/1qgOcO7x6X8zYqtuKPnUxzamiHXyAdnzFM9Nt1iEdtnk5DvrlaB1wSRrHiRK9JOa6GElPW/Xea9OKJDt3AQS+B/JGeRBhqbNhrmRWLJBvV7fPsRzpvJ+RwX7gO6M8W/2FtWOMo1knkyjHNoozHsFmsTY/FZcJuiKKY=
+	t=1720015131; cv=none; b=r+bLGbiifVkEBExnOTNdJQaTJVULEFkCmH5AfLHWcrN7zczvr99Jj2GrUHSZYkKEpEzfgmdgO4/WxCSyI3olJCLpPJofZ5OWcssbxVYWEt14AWAPVm27E6C6S+wXuIpKPFXOxzlGCCF99LBjULIRzOj+RfcBTCVK2rE1+Cw678A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720015102; c=relaxed/simple;
-	bh=GPo+wJphr/bQOMx/lM4LzA7A2cyA6HvGGdXEE2sIFAw=;
+	s=arc-20240116; t=1720015131; c=relaxed/simple;
+	bh=S0bP3/AX3MX3DxFnCOPiXKJrLhQV20Me5gL9Jqq5Gbo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Uxr6K/s2RQyZW2VOljWcNYGdiw2AAaf3G7E3Sk9Bk/1ih/D2yAHm7ftFO3EwMlDvO/DZH2047vArv2KltxPjjYjkJnK/KHY7DLpv5N0ATzZKqhBcS8ZFprznX6umt8B2DNtnqfVxScYM26Qvlef+RKtrunphVDjiXyVzBPSv4Gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C0OUbqR6; arc=none smtp.client-ip=209.85.214.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qa/9vPzim3hnwfoW+k5DCycoEySHw+6Nwt0GTfBqXDhOnL5xWjXe+CIjHkzTT9H51RO1AxaRdL4Y6tGInH8FawzHQzJCg4z8/lp9xuZ2ue7eQoVqslAxzI4bk9+o0fzpRZ0q4IkRZZrLmvd8glpPdOmQSDp/e7KRRNy///cbmeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nW5ewd4o; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C0OUbqR6"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1f9de13d6baso35316585ad.2
-        for <git@vger.kernel.org>; Wed, 03 Jul 2024 06:58:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nW5ewd4o"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2c98b22638bso118807a91.1
+        for <git@vger.kernel.org>; Wed, 03 Jul 2024 06:58:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720015100; x=1720619900; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720015129; x=1720619929; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4RAjRwOw8tT55AuT39YuPxyEG/zw/RdiUBjfj6NkTC4=;
-        b=C0OUbqR6d4H4tA44iWdWF50CKfYNoDUcK6jGQyfhvbqsw8HhkroTYwd2hqxmP82pkd
-         2B/30D+lqwDPajwaK4tVSqlSgDwFgiO1HuMMm6Q/mxv7+4rNnYSl72LVNxSImQCsRGbg
-         M4ss9cK8czv5BV/4lm824VvS7hfTJI6qK03ObORpG+WJ5l/n8yjEocuZXtqMrd4oyrdh
-         B9AC2DOXAkdWvBMqDyoB9LCMYg1KBHN2f7brt5H3XaxhWFc64OoVfwShZZjGeH013vgc
-         GH3QWxFl7tgAY7+vU7yuv6oHq7GQ08lL4kaF86vE84UE4I29cNaFxXyHC/2qOc9XcFUb
-         D0xg==
+        bh=57TGoVIpBiCRGE1WDkAeGjYn5Dq+phJkTaZrEfb0Ta0=;
+        b=nW5ewd4ocJjkpT3KBdYCv0DLx6Um6gSEPBU3n4c40GLCJSTnwSgB66bxWUz7GE6rVq
+         k0UmRP1la0lmOWNqMxj95l5pcs2bC2a9m/TCv4F2Nc6kZSBckJDcEGAnA7Ds5S9b4oAV
+         0Mvrc3GlANdsNJ+SPx+sDfa1MnOqwJjxs32D7Ep3ApA8IflBluUTShGaGfucZHWCfRgI
+         9zfORqeUmZs4iYZmr77ebf7TvyO0WTmQsnB+22LAEeJ0FdziYguLpJyAxNzhzsTObHVo
+         pAQQzDfpxlnuLcv+Z+HFX0n6OzacKjh8UhWCdw0vGHHPP0XQf3tWVRO8TBJ+nz900Od8
+         0rdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720015100; x=1720619900;
+        d=1e100.net; s=20230601; t=1720015129; x=1720619929;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4RAjRwOw8tT55AuT39YuPxyEG/zw/RdiUBjfj6NkTC4=;
-        b=ftjAvL95x4HtmOFR0kLwRnxOI5yonhPPVC/SzvsIqsFWTdH78f61PdlWNJC1AzmqlA
-         +dwLtnH/2+CwEkVtKT0ASmUS2AZu6bBZqVQv+OycZ9nskU3qN1HhjGlJEtCioYLLqc7f
-         gpj+a46cFh60Bfx9V67RlDYGrIxCd9/9SL44T71GX3qweFdinEltfSxJwureB6bVPUZX
-         OR6RgQ7rXnjKa4+mE4U64bHWM5osCY0n5WLOR0UTtzylti8QKMBGmQYrcrXQwIgzhsDQ
-         C83Y2kGTGq97j+UWpR28tPNLFL4opBDYUaJnjeD8+NK+49vbVg4uYD951SJJQQyJLclz
-         2MkA==
-X-Gm-Message-State: AOJu0YwnagvXExx083A2pK7uik4YcYQ+KHx/LZCv/lj5cQUtq7T7fPuf
-	csOwzCth77aZID00EvFAuXxZkXPoiOZJEZSqzfRlCGS1eBdX8Z0qmJCyAkh9
-X-Google-Smtp-Source: AGHT+IGqyij6FvxnYBjKxrDiCcH/EAa9bJaJsB80YBvdo4gCwyoRyndvUn9lXdnxZjaHaURrR+AoGA==
-X-Received: by 2002:a17:90b:33c4:b0:2c9:649c:5e07 with SMTP id 98e67ed59e1d1-2c9649c6a5dmr3138227a91.8.1720015099779;
-        Wed, 03 Jul 2024 06:58:19 -0700 (PDT)
+        bh=57TGoVIpBiCRGE1WDkAeGjYn5Dq+phJkTaZrEfb0Ta0=;
+        b=D2taEQA5tbkNkvWiACJ0rWF8cb/QWNFaN6wcsVMEL8YBNLM/b8vPi5daR2RA8QP9aO
+         vC/2VTM4TuvG4oC3lk88JUfh6V0SAgNKYUGZ4PtdOp8jkF9sAPb5HBFxWJL1eL/tn659
+         hRTs1Ri5BKE+nWEvuOTfTvJCl1YR8Z98Eu2l3PThUz1fn3PZQ4G2bBwmrIl392XRAHz8
+         otjyWzjmlPm6FpAeN4bDHfQZxWPfkA89IKVjJr84xYjfeCo1g5pS2ObutjP42a3U/dF/
+         x3KUD+85UNbIiqOsb7zV7AUDavFwux62xfFfkALYz0NKWsJJ6i5rajLWbdxv/YJe0/WM
+         dOlg==
+X-Gm-Message-State: AOJu0YyxcOs1ESwtPk6iXBBcU/aVZUxkV037VqmSZil3YWbulwm72bl6
+	L1jPr6qOyFwRhoiMif44m1FFbYhibjfy2SQ3WsVuggvXvPHXnfs3xsV5wU6C
+X-Google-Smtp-Source: AGHT+IGXNrGno+4w0I8P0EYqiymJKUIu2yOz9CAgtS3c8H+JAdovBtIv3Nfs3m8PT5frPCq41roE3Q==
+X-Received: by 2002:a17:90a:e291:b0:2c9:648f:f0ef with SMTP id 98e67ed59e1d1-2c97acf5810mr2919588a91.9.1720015128629;
+        Wed, 03 Jul 2024 06:58:48 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c91d3bc540sm10748751a91.44.2024.07.03.06.58.19
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c91d3e7fe9sm10768155a91.50.2024.07.03.06.58.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jul 2024 06:58:19 -0700 (PDT)
-Date: Wed, 3 Jul 2024 21:58:19 +0800
+        Wed, 03 Jul 2024 06:58:48 -0700 (PDT)
+Date: Wed, 3 Jul 2024 21:58:47 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [GSoC][PATCH v7 6/9] builtin/fsck: add `git-refs verify` child
- process
-Message-ID: <ZoVY-0NDEoD6A1HU@ArchLinux>
+Subject: [GSoC][PATCH v7 7/9] files-backend: add unified interface for refs
+ scanning
+Message-ID: <ZoVZF0h_5VGVyuNI@ArchLinux>
 References: <ZoVX6sn2C9VIeZ38@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,50 +70,119 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <ZoVX6sn2C9VIeZ38@ArchLinux>
 
-Introduce a new function "fsck_refs" that initializes and runs a child
-process to execute the "git-refs verify" command.
+For refs and reflogs, we need to scan its corresponding directories to
+check every regular file or symbolic link which shares the same pattern.
+Introduce a unified interface for scanning directories for
+files-backend.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- builtin/fsck.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ refs/files-backend.c | 77 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 76 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index de34538c4f..ec3357722c 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -897,6 +897,21 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
- 	return res;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index d89eeda8ef..84acb58782 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -6,6 +6,7 @@
+ #include "../gettext.h"
+ #include "../hash.h"
+ #include "../hex.h"
++#include "../fsck.h"
+ #include "../refs.h"
+ #include "refs-internal.h"
+ #include "ref-cache.h"
+@@ -3408,6 +3409,78 @@ static int files_ref_store_remove_on_disk(struct ref_store *ref_store,
+ 	return ret;
  }
  
-+static void fsck_refs(void)
-+{
-+	struct child_process refs_verify = CHILD_PROCESS_INIT;
-+	child_process_init(&refs_verify);
-+	refs_verify.git_cmd = 1;
-+	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
-+	if (verbose)
-+		strvec_push(&refs_verify.args, "--verbose");
-+	if (check_strict)
-+		strvec_push(&refs_verify.args, "--strict");
++/*
++ * For refs and reflogs, they share a unified interface when scanning
++ * the whole directory. This function is used as the callback for each
++ * regular file or symlink in the directory.
++ */
++typedef int (*files_fsck_refs_fn)(struct fsck_options *o,
++				  const char *gitdir,
++				  const char *refs_check_dir,
++				  struct dir_iterator *iter);
 +
-+	if (run_command(&refs_verify))
-+		errors_found |= ERROR_REFS;
++static int files_fsck_refs_dir(struct ref_store *ref_store,
++			       struct fsck_options *o,
++			       const char *refs_check_dir,
++			       files_fsck_refs_fn *fsck_refs_fns)
++{
++	const char *gitdir = ref_store->gitdir;
++	struct strbuf sb = STRBUF_INIT;
++	struct dir_iterator *iter;
++	int iter_status;
++	int ret = 0;
++
++	strbuf_addf(&sb, "%s/%s", gitdir, refs_check_dir);
++
++	iter = dir_iterator_begin(sb.buf, 0);
++
++	if (!iter) {
++		ret = error_errno("cannot open directory %s", sb.buf);
++		goto out;
++	}
++
++	while ((iter_status = dir_iterator_advance(iter)) == ITER_OK) {
++		if (S_ISDIR(iter->st.st_mode)) {
++			continue;
++		} else if (S_ISREG(iter->st.st_mode) ||
++			   S_ISLNK(iter->st.st_mode)) {
++			if (o->verbose_refs)
++				fprintf_ln(stderr, "Checking %s/%s",
++					   refs_check_dir, iter->relative_path);
++			for (size_t i = 0; fsck_refs_fns[i]; i++) {
++				if (fsck_refs_fns[i](o, gitdir, refs_check_dir, iter))
++					ret = -1;
++			}
++		} else {
++			ret = error(_("unexpected file type for '%s'"),
++				    iter->basename);
++		}
++	}
++
++	if (iter_status != ITER_DONE)
++		ret = error(_("failed to iterate over '%s'"), sb.buf);
++
++out:
++	strbuf_release(&sb);
++	return ret;
 +}
 +
- static char const * const fsck_usage[] = {
- 	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
- 	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
-@@ -1066,6 +1081,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 
- 	check_connectivity();
- 
-+	fsck_refs();
++static int files_fsck_refs(struct ref_store *ref_store,
++			   struct fsck_options *o)
++{
++	int ret;
++	files_fsck_refs_fn fsck_refs_fns[]= {
++		NULL
++	};
 +
- 	if (the_repository->settings.core_commit_graph) {
- 		struct child_process commit_graph_verify = CHILD_PROCESS_INIT;
++	if (o->verbose_refs)
++		fprintf_ln(stderr, "Checking references consistency");
++
++	ret = files_fsck_refs_dir(ref_store, o, "refs", fsck_refs_fns);
++
++	return ret;
++}
++
+ static int files_fsck(struct ref_store *ref_store,
+ 		      struct fsck_options *o)
+ {
+@@ -3415,7 +3488,9 @@ static int files_fsck(struct ref_store *ref_store,
+ 	struct files_ref_store *refs =
+ 		files_downcast(ref_store, REF_STORE_READ, "fsck");
+ 
+-	ret = refs->packed_ref_store->be->fsck(refs->packed_ref_store, o);
++	ret = refs->packed_ref_store->be->fsck(refs->packed_ref_store, o)
++	    | files_fsck_refs(ref_store, o);
++
+ 	return ret;
+ }
  
 -- 
 2.45.2
