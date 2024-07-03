@@ -1,115 +1,115 @@
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89ABA1836EE
-	for <git@vger.kernel.org>; Wed,  3 Jul 2024 16:22:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B919E1822DF
+	for <git@vger.kernel.org>; Wed,  3 Jul 2024 16:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720023780; cv=none; b=CGrp1uSW38/c0AQmcz9F5c+HtWqE5XxfeiMP2HTnTUHXQZ4xu5NtWuPgmlrRm1yB6/FuFbNOANkrCdWovNAv3OJjiffdyt7WoIG98lXrkcNz4yj8U4HY4OBtn3kM/fErVThAjyQm8wfS58vzwi6JJs6HckoPCUi4h75rUeUHMSo=
+	t=1720024185; cv=none; b=O3+q8152yCNqrHjTEQtMJ4GLkLCrOcWaiG5tybnP9SRJRVAYxcFus4R+ZTyjcjnxGpi4Iuq1GFMGmvr4rg+yjpfmxxNuFy4JB6lM8Fw/54dbH8pHxlxffFHc/S0GN2Sz5A+x/OiOEKni5KSJQPDL1Vnm6wLbEwSsE3xkDUdkHTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720023780; c=relaxed/simple;
-	bh=q9RDYjrchSN03BxlCMt7C6raWo0g+R8v77aS5MeD8C0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=cjY71kKtfFeuFUNYG47sEoPPDL9xaptqWiB6t83xewyT+0EgDd+q77K28bj6/qUoL6HmoeBA/huV8qMCCsTgi4Vr7GWeGPHaKqBkeEM1FX6GdNpCGFrmHALLaF+uC70Uwucjl2TuDgvKNtTQEuZD8D4z8HhkIsMoxD4Bieadd7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cA1ZNI1o; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720024185; c=relaxed/simple;
+	bh=nT2/7iIu1b2d7bHRvLkDOo83uuMrhdMwG9dJAuUADaY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pVKf5RJ2my6o1yDZRnz1oj5/rfgqWLaXj2bSKWkf4pVJuGOMkaLa7b0M8lJNKWmEd5zwx60xyLji7hJ+2T93xEOLWoZ34iS0dk9AAzy8Uv5xwvWEifo535X+N0u7uYheXpeKnV4fhYXNLr0+xpUl/JUVAppHYRQe2e7Qf+yvk7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XfObCqoc; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cA1ZNI1o"
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e039be89de9so2030110276.2
-        for <git@vger.kernel.org>; Wed, 03 Jul 2024 09:22:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720023777; x=1720628577; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GOzOLFyKvHYHOiAgR2WXPo3mlXwg4UfCEA9gW2jqUtQ=;
-        b=cA1ZNI1oIDZb/nIGVxbJFKSpF9a5maP6d9bx8hXvlTFjoMQXkb7VaAEvIUAMQ6T6yj
-         PwL4rNR7yqkj/WdoQBSFOPpAjwQgHaajFdM9nVZyzy7XICssfmvlvAklz5/FBymJDzEc
-         dcT6+zfbWT7X7x2iMrpwtKsgNonWMjuaEVxoIo3Fb3Bhwbymq1DkRgfjZmsqZZi1T5mt
-         5ehKcO2I11No+CH1G+piqsf+Xywvk4D8JKxGF649LR0G70xE7F9SzBDmH67otOoX3/1j
-         274C9PoMI0jvDpeaIwzlOo6sIiOpQ0CcK873IYI6hOeuTOQV9hH7Smekw1p+MfHisJoS
-         3OiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720023777; x=1720628577;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GOzOLFyKvHYHOiAgR2WXPo3mlXwg4UfCEA9gW2jqUtQ=;
-        b=WX5EwFjaSpgg3m2qSVwOdGezJ5vBqRu0h+yenmeZrrOmXn1Gk1Hjs688x1zmw4o/Ec
-         xVqQXO2IJBruEN46DTUD3DmFoduWPrZK3k8cR9JDGNwiXO0sPwba0xtW5C4NcqwV/nfx
-         qZKLb0hm8a4wAbVgYpIC8XkTNt+NDi086TkM0+bIL0cqOOb1bJruPc6IRtyryiWr+8RO
-         d9YCkJ4Ge4CXEgvhuHthmYU6L60cy4Rc2oS8CCZA06BUlIaFG1izaPyeOQC+0MQWNEsp
-         ggsIoQmZHr2zCFyD2+NnU5A0Sezv+TJCzs98JObVU2SOdkTYlwuxOfGS2nsdbIYU5gjD
-         o2Sw==
-X-Gm-Message-State: AOJu0YzPhBtcUsOiOfxaFPzRNjukOW+HmxWdmhjyZr55ZM4JiaYKMwxU
-	0GmHD+d4qOrwvFulkroraEvfMVfaaI2H0aN+o3AyDWbsthtAnimaZkNqF7W/o1ojYsZ2FS/6333
-	xgTuSRfsJB4eOPsrIoadLYHgJDOhokw==
-X-Google-Smtp-Source: AGHT+IGpeOT8NiOXgzfs1GTkld7J25HZZdRR/4wi+V/5SXMeGtvBzX4EY1Xq4UrCz0NwTKVA9w0dsZJ0f0XDsZ38ncE=
-X-Received: by 2002:a5b:70f:0:b0:e03:4648:5248 with SMTP id
- 3f1490d57ef6-e036eb779e2mr13701674276.31.1720023777664; Wed, 03 Jul 2024
- 09:22:57 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XfObCqoc"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1EF823AA95;
+	Wed,  3 Jul 2024 12:29:43 -0400 (EDT)
+	(envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
+	:to:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=sasl; bh=nT2/7iIu1b2d7bHRvLkDOo83uuMrhdMwG9dJAuU
+	ADaY=; b=XfObCqochJ+egkbeGSqvHsC+JkD7KeypJD1Aq32KyFYUEne/WSCEzYq
+	mZHbe66DyGFsEmdqF5WfFihD3y0Md373wcCDdWRgYWGmiMiy5iGs8nF8WqxCJp9K
+	r5Es+UZ78edgb7zSWZxPBTTHcxhXwc3rRJu6EbNHmO8v+ZDXHJUs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 16EAE3AA94;
+	Wed,  3 Jul 2024 12:29:43 -0400 (EDT)
+	(envelope-from tmz@pobox.com)
+Received: from teonanacatl.net (unknown [71.254.194.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 840863AA93;
+	Wed,  3 Jul 2024 12:29:38 -0400 (EDT)
+	(envelope-from tmz@pobox.com)
+Date: Wed, 3 Jul 2024 12:29:35 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: git@vger.kernel.org
+Cc: Kousik Sanagavarapu <five231003@gmail.com>,
+	"Eric W . Biederman" <ebiederm@xmission.com>
+Subject: Re: [PATCH 0/2] t/lib-gpg: ensure GNUPGHOME is created as needed
+Message-ID: <ZoV8b2RvYxLOotSJ@teonanacatl.net>
+References: <20240703153738.916469-1-tmz@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFjaU5sAVaNHZ0amPXJcbSvsnaijo+3X5Otg_Mntkx2GbikZMA@mail.gmail.com>
- <082b01dacd61$81174a80$8345df80$@nexbridge.com>
-In-Reply-To: <082b01dacd61$81174a80$8345df80$@nexbridge.com>
-From: Emanuel Attila Czirai <corre.a.buscar@gmail.com>
-Date: Wed, 3 Jul 2024 18:22:46 +0200
-Message-ID: <CAFjaU5vvk-nNLvCyXAgU9C3ScKBNRPFB7=1PXejmLZi+r7EbNQ@mail.gmail.com>
-Subject: Re: `git diff`/`git apply` can generate/apply ambiguous hunks (ie. in
- the wrong place) (just like gnu diff/patch)
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240703153738.916469-1-tmz@pobox.com>
+X-Pobox-Relay-ID:
+ 715270C0-3959-11EF-8717-DFF1FEA446E2-09356542!pb-smtp21.pobox.com
 
-> >I consider that I don't know enough to understand how `git diff`/`git apply` works
-> >internally (and similarly, gnu `diff`/`patch`) to actually change them and make them
-> >generate unambiguous hunks where only the hunks that would've been ambiguous
-> >have increased context size, instead of the whole patch have increased context size
-> >for all hunks(which is what I did for `diffy` too so far, in that proof of concept patch),
-> >therefore if a "fix" is deemed necessary(it may not be, as I might've missed
-> >something and I'm unaware of it, so a fix may be messing other things up, who
-> >knows?!) then I hope someone much more knowledgeable could implement
-> >it(maybe even for gnu diff/patch too), and while I don't think that a "please" would
-> >be enough, I'm still gonna say it: please do so, if so inclined.
-> >
-> >Thank you for your time and consideration.
->
-> You make good points, but Rust code should not be put into the main git code base as it will break many non-GNU platforms. Perhaps rewriting it is C to be compatible with the git code-base.
-> --Randall
->
-Ah, definitely whoever writes the fix would do it in C for the git
-code base, I didn't mean to imply it would be or should be done in
-rust, therefore please excuse my failure to communicate that clearly.
-The `diffy` proof-of-concept patch, is just for `diffy`, in rust, and
-it's just to show a way this could be done and that "it works" that
-way. It was easier for me to do it for `diffy` in rust, than in C for
-git diff/apply or gnu diff/patch.
-If a fix is to be implemented for `git diff/apply`, it would
-definitely not be in rust by any means, but C, as you mentioned.
-Thank you for your reply.
+I wrote:
+> 92 of the 202 tests in t1016-compatObjectFormat.sh are skipped due to
+> the GNUPGHOME directory missing, e.g.:
+> 
+>     ok 5 # SKIP create a sha1 signed commit (missing GPG2)
+>     ok 6 # SKIP create a sha1 signed tag (missing GPG2)
+>     ok 8 # SKIP create another sha1 signed tag (missing GPG2)
+>     ok 9 # SKIP merge the sha1 branches together (missing GPG2)
+> 
+> With these changes, they are all run (successfully). :)
+> 
+> I presume that they have been skipped in the Github CI runs as well,
+> but I don't know that the logs show enough detail to confirm that.
 
-Also, I notice that I made a mistake when pasting the patch with the
-context length of 4, it was a real patch not the one I used in the
-examples, here's the corrected unambiguous patch:
-```diff
---- original
-+++ modified
-@@ -1114,8 +1114,12 @@
-                     self.config.shell().warn(msg)?
-                 }
-             }
-         }
-+        if seen_any_warnings {
-+            //comment
-+            bail!("reasons");
-+        }
-         Ok(())
-     }
+D'oh!  I spoke too soon.  I'd run the test suite on several
+different rpm-based hosts (Fedora 39 and Rocky 9).  Waiting
+for the Github actions to run is what I should have done.
 
-     pub fn set_target_dir(&mut self, target_dir: Filesystem) {
-```
+A number of these fail, e.g.:
 
-Cheers, have a great day everyone!
+https://github.com/tmzullinger/git/actions/runs/9780387020/job/27001952643#step:4:1871
+
+    Error: failed: t1016.173 Verify commit signedcommit4's sha1 oid
+    failure: t1016.173 Verify commit signedcommit4's sha1 oid 
+	    git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} > ${name}_sha1 &&
+	    test_cmp ${name}_sha1 ${name}_sha1_expected
+      
+      + git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 5d70155cc40e4c16515c89ad0b11d8c691436fc4a4d3ca246669a4c21f07e454
+      + test_cmp signedcommit4_sha1 signedcommit4_sha1_expected
+      + test 2 -ne 2
+      + eval diff -u "$@"
+      + diff -u signedcommit4_sha1 signedcommit4_sha1_expected
+      --- signedcommit4_sha1	2024-07-03 15:11:05.597537579 +0000
+      +++ signedcommit4_sha1_expected	2024-07-03 15:11:05.553537766 +0000
+      @@ -1 +1 @@
+      -9179ccc5b15588bc3a45c5cc75bdec380f8ccb86
+      +c6c46f92bc2cfda57ad6bf7981fa654825376b24
+      error: last command exited with $?=1
+      not ok 173 - Verify commit signedcommit4's sha1 oid
+      #	
+      #		git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} > ${name}_sha1 &&
+      #		test_cmp ${name}_sha1 ${name}_sha1_expected
+      #	
+
+This seems like it's just exposing a pre-existing failure,
+as I can't imagine how creating GNUPGHOME would cause the
+actual and expected SHA's to differ. :)
+
+Perhaps the intended gpg wrapper script which sets
+`--faked-system-time` isn't being used?
+
+I'm not sure why that would differ in the Github actions
+from my local builds, but I don't know what else differs in
+the Ubuntu images and/or environment used by the actions.
+
+-- 
+Todd
