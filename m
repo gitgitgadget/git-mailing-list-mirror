@@ -1,170 +1,164 @@
-Received: from impout008.msg.chrl.nc.charter.net (impout008aa.msg.chrl.nc.charter.net [47.43.20.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1702D15B10B
-	for <git@vger.kernel.org>; Tue,  2 Jul 2024 23:52:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.43.20.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3C017996
+	for <git@vger.kernel.org>; Wed,  3 Jul 2024 03:42:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719964364; cv=none; b=mnOFOGWNdD1lXwzs89uF5aoX4AS5AzrVR2+dzt7WFZvBLYEN8JMiegTcvGy2BqZ9jorWMUK4GVjP50kUi1JwBfjPeGfabluJM7MkOXE8uGeiU8b72zu3XRRINtW3Ni0NORtE7Pt2NX/SdB8banDmCBF5NFwDsOFebeBRiOQtMyM=
+	t=1719978166; cv=none; b=QvzLNniHr2mZLAFp7+RpgX1gGC6aSfFGeVtpiYzZGXCOTRqx5fW0AzO5N2Zz18KMYpUC6AeG1Rs4f9KbkIslmanSkkDr+aYw5ue55yeq1YR0UpIsj/E+YaDr91FEADL++5qEQJlXvjurB0auB4klO1FiLI519isG5djGTQvYUTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719964364; c=relaxed/simple;
-	bh=B5fBxzZuO/0xbgk+2/HGwd1r1WXAwcU47ktgH5AggZ0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j44E/ICd3upkiM92OaS6wmy2lbz02nq4PWKHBGGdQ1/cOh6qRM1lH5L66OEF1tXnqNNiNPp9rHXNEwXQjTD49czEvHLe5dp1k4W2IV66yUT9Q7e8npXSCAayEzM2cuWy8IEwHVRtvUbFbNZ8UmF+gs2J6Y53yANugAVWA/TjjY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=charter.net; spf=pass smtp.mailfrom=charter.net; dkim=pass (2048-bit key) header.d=charter.net header.i=@charter.net header.b=W27ftf/q; arc=none smtp.client-ip=47.43.20.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=charter.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=charter.net
+	s=arc-20240116; t=1719978166; c=relaxed/simple;
+	bh=ynUHYJOWSVoOhN80tNrOzX5Puf6c0JsbL1FgcY7VTMM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=MUSxhJCz09Ziwb/sIH9Dm6OKju4wcCKa7ty+4/j/S1GJ5Zb9zLltO1AwJpiQjZguRWCeRltFoH6XXGMWioDHedYUE3USEMSQrMnwoKSNXbcFNYaL4zgIBxE8f+xwrLrIaM+dgpmeqckziej8X9VuEXDPScZ8giQnP1RhQFpdqkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SnPnQ8ij; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=charter.net header.i=@charter.net header.b="W27ftf/q"
-Received: from localhost.localdomain ([97.71.114.58])
-	by cmsmtp with ESMTPA
-	id OnGys2KAA6kyQOnH7sNSM3; Tue, 02 Jul 2024 23:51:06 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=charter.net;
-	s=c20240129; t=1719964266;
-	bh=B5fBxzZuO/0xbgk+2/HGwd1r1WXAwcU47ktgH5AggZ0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W27ftf/qlQ7cEwhWWOm39zteCvwOFS9GpgN73G0ibesoO/62BF8tJgDdskN7FJvvt
-	 s+PjNF0MAuMEePiCg5XsCsQb8AaCHpBxKzmHzcIT9CC6niUkDnqJu5ilRTXOxVqW5I
-	 CSs+whNlvG/naWajdvLA7ZLZNGsz952FYdXyum+vlgyajcOuOiuWEBr51lwRCK6k0D
-	 +gCyOhq09enRhrkEuNBjxrwZfvvED87BRSJ38fe4Pf15/p8mzz/y/KVNap3h5ZJ/6m
-	 +maZ1QMoOgPthha2/YcnIGuNn/UUO5qR1riKFKC2JOtem1jbDYasE7z12kl7vzvVhS
-	 5stipCTpt5q2Q==
-Authentication-Results: charter.net; auth=pass (LOGIN)
- smtp.auth=ericsunshine@charter.net
-X-Authority-Analysis: v=2.4 cv=bKkQIu+Z c=1 sm=1 tr=0 ts=6684926a
- a=4h87Vkt5vDwEBqoyvSX4iA==:117 a=4h87Vkt5vDwEBqoyvSX4iA==:17 a=BCjA09oAAAAA:8
- a=VwQbUJbxAAAA:8 a=PKzvZo6CAAAA:8 a=EOXPgkXvZlImvmqjUjYA:9
- a=0bXxn9q0MV6snEgNplNhOjQmxlI=:19 a=jYKBPJSq9nmHKCndOPe9:22
- a=AjGcO6oz07-iQ99wixmX:22 a=q92HNjYiIAC_jH7JDaYf:22
-From: Eric Sunshine <ericsunshine@charter.net>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] chainlint.pl: recognize test bodies defined via heredoc
-Date: Tue,  2 Jul 2024 19:50:34 -0400
-Message-ID: <20240702235034.88219-1-ericsunshine@charter.net>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240701220815.GA20293@coredump.intra.peff.net>
-References: <20240701220815.GA20293@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SnPnQ8ij"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-70abb539f41so2636071b3a.2
+        for <git@vger.kernel.org>; Tue, 02 Jul 2024 20:42:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719978164; x=1720582964; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CIyXR3bzfLT7moeDV4WOX17o/Qi//QPxJinzvlzzAvU=;
+        b=SnPnQ8ijbvxD14Vh/5aNQMYrVvBRaYUpLI6fw3IA1yvLFxFpgBywOemptvw5cZJoUl
+         bEmVdZdH3M3hBmbH5ivDHy4i+8PvezW38n9uFbSN3IlReps+BUoes2TWmIcSWuziWEno
+         00q7m8JcTMnTNjFKu4APE5S8tiODqyDDqUa7aoR08oGtW+T4goYCU7Vk2HZUhh56XYz3
+         JsPtoSTflcOltOB3N/6VWFheZ/rn+6VWJkMmW6Cha73BlFwTLhiXitcW49+w+GBzngl4
+         b6mTTh3S9Zoel8s1LlyzD4IxxsSrvhtiqYlgZRJcfiHxW0SvBvBaP5ygcFDjPDk+orYE
+         Sdiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719978164; x=1720582964;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=CIyXR3bzfLT7moeDV4WOX17o/Qi//QPxJinzvlzzAvU=;
+        b=EjyatfcN4OuCqfpTzY4IBaAhilkQ80/UqZkNRUBpwsZMmm+hvEdMhbJQZS3/bUnvVI
+         nV2I74o/SnnyBhCLppajG+rWx+RtqILmWtfUT0QZBIcuZidUTIb2Gi+ObjXVEkKzNTLd
+         C80jcJ1YHWE/W7EezD647YuOF/QTDWBKCm4OPBSjKkoWVUGjXK/k62pf3zgk/JRW2f3I
+         bhaurKiP9mP9+Pi+Mt4yX7GfMGlflX/go1sU4XgoeYWv3BW2a+CTTnKl1NTsBcABmd1q
+         J4QYimPJUbG/zRTwUPLBO0xXRiACJ7hvd7+DCYoGquvdmdglGjusKfzQl+vSembEpUME
+         1U4A==
+X-Forwarded-Encrypted: i=1; AJvYcCWLEbwa0a3VCDEV/kSqw/gcT4KSJ6pjDhPxQF+M7u0FmCIwiaVedJMllzPSDpNA8Hvnde1IUu3FnEbobE7xrRB0ZDx8
+X-Gm-Message-State: AOJu0YwHFKjOrpI1LcaOfzPqzy1UYA084NBBn6DpLPYC0+zsqulc/1IM
+	zmPKSOFLfAC2D6X13xDxcSJTl8XVj/yQvW4VzWWijdRx6X/aN7YfF4jXsfJT
+X-Google-Smtp-Source: AGHT+IE3iFqN4rS+Wx3UxxFtvuV6naytMd13g7AMCqIlwgnCXSIQVRIjgwd6Q0Bfm7grxfjfLKRqZA==
+X-Received: by 2002:a05:6a00:1801:b0:706:68fc:8299 with SMTP id d2e1a72fcca58-70aaaf08daamr13164356b3a.27.1719978164188;
+        Tue, 02 Jul 2024 20:42:44 -0700 (PDT)
+Received: from localhost ([2402:a00:401:a99b:b1ca:de8:cd9e:bf98])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70804a97ae3sm9337272b3a.206.2024.07.02.20.42.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Jul 2024 20:42:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfOUHoFBqsqG9+Bn1JyA61cudzGQODumGUuDu2UBEUXGhyNn0ddsu1lm51GrbvOjV/v76Q7b9cT0rxMztmw2ep6BWCIuehIk/sc+JXiZtSei8YHB3+gKo
- 7kYS3Icpx67jJK3yG/eGFDy4H7CfyHFvwoLcYsg6fPQm18GCH+m80f6sz9aM3S5sUNbYAGr/Fn26tKAkMi5u0IV35rfXulRjEaL5PERJDuneHZZ+RRQWCGZT
- EbuFug2jaBWufz/cCthxAyae10pYQA8KzvkZKKTpuu9N9Faq1VD/wATtediDwEer+saO+WyEYoqtVOrq+8/z8Q==
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 03 Jul 2024 09:12:39 +0530
+Message-Id: <D2FLDECC9DTC.3KYX81M4JKOAR@gmail.com>
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 6/6] t-strbuf: use TEST_RUN
+From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
+To: =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, "Josh Steadmon"
+ <steadmon@google.com>, "Git List" <git@vger.kernel.org>, "Phillip Wood"
+ <phillip.wood@dunelm.org.uk>
+References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
+ <1bf053ae-957e-4e9a-90f0-11cc76848ce9@web.de>
+ <bh5ectgtwdaeltflggzwnwhobewvcqqelforr4sfcmq47rnnrl@mzspptlhpofx>
+ <D2F8BS39IFC4.WJ9TNK3IDFBV@gmail.com>
+ <c690e0ad-21e1-4b51-b594-70f4b2527df8@web.de>
+In-Reply-To: <c690e0ad-21e1-4b51-b594-70f4b2527df8@web.de>
 
-From: Eric Sunshine <sunshine@sunshineco.com>
+Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> Am 02.07.24 um 19:29 schrieb Ghanshyam Thakkar:
+> > Josh Steadmon <steadmon@google.com> wrote:
+> >>> -	TEST(setup(t_addch, "a"), "strbuf_addch adds char");
+> >>> -	TEST(setup(t_addch, ""), "strbuf_addch adds NUL char");
+> >>> -	TEST(setup_populated(t_addch, "initial value", "a"),
+> >>> -	     "strbuf_addch appends to initial value");
+> >>> -	TEST(setup(t_addstr, "hello there"), "strbuf_addstr adds string");
+> >>> -	TEST(setup_populated(t_addstr, "initial value", "hello there"),
+> >>> -	     "strbuf_addstr appends string to initial value");
+> >>> +
+> >>> +	if (TEST_RUN("strbuf_addch adds char")) {
+> >>> +		struct strbuf sb =3D STRBUF_INIT;
+> >>> +		t_addch(&sb, 'a');
+> >>> +		t_release(&sb);
+> >>> +	}
+> >>> +
+> >>> +	if (TEST_RUN("strbuf_addch adds NUL char")) {
+> >>> +		struct strbuf sb =3D STRBUF_INIT;
+> >>> +		t_addch(&sb, '\0');
+> >>> +		t_release(&sb);
+> >>> +	}
+> >>> +
+> >>> +	if (TEST_RUN("strbuf_addch appends to initial value")) {
+> >>> +		struct strbuf sb =3D STRBUF_INIT;
+> >>> +		t_addstr(&sb, "initial value");
+> >>> +		t_addch(&sb, 'a');
+> >>> +		t_release(&sb);
+> >>> +	}
+> >>> +
+> >>> +	if (TEST_RUN("strbuf_addstr adds string")) {
+> >>> +		struct strbuf sb =3D STRBUF_INIT;
+> >>> +		t_addstr(&sb, "hello there");
+> >>> +		t_release(&sb);
+> >>> +	}
+> >>> +
+> >>> +	if (TEST_RUN("strbuf_addstr appends string to initial value")) {
+> >>> +		struct strbuf sb =3D STRBUF_INIT;
+> >>> +		t_addstr(&sb, "initial value");
+> >>> +		t_addstr(&sb, "hello there");
+> >>> +		t_release(&sb);
+> >>> +	}
+> >>>
+> >>>  	return test_done();
+> >>>  }
+> >>> --
+> >>> 2.45.2
+> >>
+> >> I think this commit in particular shows how TEST_RUN() is more
+> >> convenient than TEST(). (Although, arguably we shouldn't have allowed
+> >> the setup() + callback situation to start with.)
+> >
+> > Could you expand a bit on why the setup() + callback thing shouldn't be
+> > allowed? I think it is a nice way of avoiding boilerplate and having
+> > independent state. And, I see the true potential of TEST_RUN() in
+> > testcases defined through macros rather than replacing functions. I
+> > actually think that the previous version with the functions was not
+> > particularly bad, and I agree with Phillip that the previous version's
+> > main() provided nice overview of the tests and it was easier to
+> > verify the independence between each testcase.
+>
+> Each test uses its own strbuf and the t_ functions don't use global or
+> static variables, so how does the doubt about their independence creep
+> in?
 
-In order to check tests for semantic problems, chainlint.pl scans test
-scripts, looking for tests defined as:
+Ah, apologies. I should clarify that I meant in general terms about the
+future uses of TEST_RUN() and not about this particular patch. But I see
+it being less of a problem now that I think about it more. And for the
+record, I see no problems in this patch. But on a side note, with what
+Phillip was suggesting to remove having TEST_RUN() inside if(), it
+would definitely make verifying state independence more harder.
 
-    test_expect_success [prereq] title '
-        body
-    '
+<snip>
+> > But, I also don't mind if patches 4, 5, or 6 get
+> > merged as I don't see any difference between using TEST_RUN() or
+> > TEST() in those patches, besides moving everything inside main().
+>
+> The difference is that in the original version test description and
+> definition are separated, only linked by a function name. The new
+> version brings them together and does away with function name. A small
+> change, for sure, just to get rid of the artificial divide and the need
+> for that link.
 
-where `body` is a single string which is then treated as a standalone
-chunk of code and "linted" to detect semantic issues. (The same happens
-for `test_expect_failure` definitions.)
+Yeah, but I didn't mind that divide (and I don't mind bringing them
+together either). :)
 
-The introduction of test definitions in which the test body is instead
-presented via a heredoc rather than as a single string creates a blind
-spot in the linting process since such invocations are not recognized by
-chainlint.pl.
-
-Address this shortcoming by also recognizing tests defined as:
-
-    test_expect_success [prereq] title - <<\EOT
-        body
-    EOT
-
-A minor complication is that chainlint.pl has never considered heredoc
-bodies significant since it doesn't scan them for semantic problems,
-thus it has always simply thrown them away. However, with the new
-`test_expect_success` calling sequence, heredoc bodies become
-meaningful, thus need to be captured.
-
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
-
-This is a clean-room implementation which serves the same purpose as a
-change proposed[1] by Peff; it was created before I looked at Peff's
-proposal. The two independent implementations turned out quite similar,
-but the one implemented by this patch takes a more formal and paranoid
-stance. In particular, unlike Peff's patch, it doesn't trust that the
-most-recently-seen heredoc body is one associated with the
-`test_expect_success` invocation.
-
-This patch can sit either at the top or bottom of Peff's series[2].
-
-There was also related discussion of improving the chainlint self-test
-infrastructure[3], however, such proposed changes needn't hold up Peff's
-series[2]; such improvements can be applied after the dust settles. On
-the other hand, Peff, if you plan to reroll for some reason, feel free
-to incorporate this patch into your series.
-
-[1]: https://lore.kernel.org/git/20240702005144.GA27170@coredump.intra.peff.net/
-[2]: https://lore.kernel.org/git/20240701220815.GA20293@coredump.intra.peff.net/
-[3]: https://lore.kernel.org/git/20240702211913.GB120950@coredump.intra.peff.net/
-
- t/chainlint.pl | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
-
-diff --git a/t/chainlint.pl b/t/chainlint.pl
-index 1bbd985b78..eba509b8e1 100755
---- a/t/chainlint.pl
-+++ b/t/chainlint.pl
-@@ -174,6 +174,8 @@ sub swallow_heredocs {
- 		$$b =~ /(?:\G|\n)$indent\Q$$tag[0]\E(?:\n|\z)/gc;
- 		if (pos($$b) > $start) {
- 			my $body = substr($$b, $start, pos($$b) - $start);
-+			$self->{parser}->{heredocs}->{$$tag[0]} =
-+			    substr($body, 0, length($body) - length($&));
- 			$self->{lineno} += () = $body =~ /\n/sg;
- 			next;
- 		}
-@@ -232,7 +234,8 @@ sub new {
- 	my $self = bless {
- 		buff => [],
- 		stop => [],
--		output => []
-+		output => [],
-+		heredocs => {},
- 	} => $class;
- 	$self->{lexer} = Lexer->new($self, $s);
- 	return $self;
-@@ -616,7 +619,9 @@ sub unwrap {
- 
- sub check_test {
- 	my $self = shift @_;
--	my ($title, $body) = map(unwrap, @_);
-+	my $title = unwrap(shift @_);
-+	my $body = unwrap(shift @_);
-+	$body = shift @_ if $body eq '-';
- 	$self->{ntests}++;
- 	my $parser = TestParser->new(\$body);
- 	my @tokens = $parser->parse();
-@@ -649,8 +654,13 @@ sub parse_cmd {
- 	return @tokens unless @tokens && $tokens[0]->[0] =~ /^test_expect_(?:success|failure)$/;
- 	my $n = $#tokens;
- 	$n-- while $n >= 0 && $tokens[$n]->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
--	$self->check_test($tokens[1], $tokens[2]) if $n == 2; # title body
--	$self->check_test($tokens[2], $tokens[3]) if $n > 2;  # prereq title body
-+	my $herebody;
-+	if ($n >= 2 && $tokens[$n-1]->[0] eq '-' && $tokens[$n]->[0] =~ /^<<-?(.+)$/) {
-+		$herebody = $self->{heredocs}->{$1};
-+		$n--;
-+	}
-+	$self->check_test($tokens[1], $tokens[2], $herebody) if $n == 2; # title body
-+	$self->check_test($tokens[2], $tokens[3], $herebody) if $n > 2;  # prereq title body
- 	return @tokens;
- }
- 
--- 
-2.45.2
-
+Thanks.
