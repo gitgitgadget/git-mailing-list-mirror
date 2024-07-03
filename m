@@ -1,115 +1,96 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B919E1822DF
-	for <git@vger.kernel.org>; Wed,  3 Jul 2024 16:29:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6F918412E
+	for <git@vger.kernel.org>; Wed,  3 Jul 2024 17:12:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720024185; cv=none; b=O3+q8152yCNqrHjTEQtMJ4GLkLCrOcWaiG5tybnP9SRJRVAYxcFus4R+ZTyjcjnxGpi4Iuq1GFMGmvr4rg+yjpfmxxNuFy4JB6lM8Fw/54dbH8pHxlxffFHc/S0GN2Sz5A+x/OiOEKni5KSJQPDL1Vnm6wLbEwSsE3xkDUdkHTY=
+	t=1720026735; cv=none; b=Zky/+TkQJMJRpt2SZw1ztNbMfPSeSVlqbFYZyU5cPNImlglYek3zNN8HgqwHT3LGYGjpcmx8cdjQTrk4fGwiQb9IiICc41aFNg31hogi70Egfz5QwaS8r8Ykub35583PdE+wRDbp5tCEGbAwXglyAll81M3/Slh1KkW/Nn2JNko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720024185; c=relaxed/simple;
-	bh=nT2/7iIu1b2d7bHRvLkDOo83uuMrhdMwG9dJAuUADaY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pVKf5RJ2my6o1yDZRnz1oj5/rfgqWLaXj2bSKWkf4pVJuGOMkaLa7b0M8lJNKWmEd5zwx60xyLji7hJ+2T93xEOLWoZ34iS0dk9AAzy8Uv5xwvWEifo535X+N0u7uYheXpeKnV4fhYXNLr0+xpUl/JUVAppHYRQe2e7Qf+yvk7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XfObCqoc; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1720026735; c=relaxed/simple;
+	bh=jxOe524H50N/zz8vtNiZWuvJV/tc2FXrLRiHkWBNDF4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pIPmX2QjA+HXpsB0S4sn/sjraZZsr/xAkRCBjWvVl2POc+hUDncfd+ZcCqC58j0InVJEoP2HkeXzz17D0HFqljT3BLdf9jnkRy33AHiKQZixSRb74fexPYq1PGKwI7eE6MBolrfPtQKKLX/of22P7j1hWG0h82X2OXAP89AKo3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mK/gh3E0; arc=none smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XfObCqoc"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1EF823AA95;
-	Wed,  3 Jul 2024 12:29:43 -0400 (EDT)
-	(envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
-	:to:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=sasl; bh=nT2/7iIu1b2d7bHRvLkDOo83uuMrhdMwG9dJAuU
-	ADaY=; b=XfObCqochJ+egkbeGSqvHsC+JkD7KeypJD1Aq32KyFYUEne/WSCEzYq
-	mZHbe66DyGFsEmdqF5WfFihD3y0Md373wcCDdWRgYWGmiMiy5iGs8nF8WqxCJp9K
-	r5Es+UZ78edgb7zSWZxPBTTHcxhXwc3rRJu6EbNHmO8v+ZDXHJUs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 16EAE3AA94;
-	Wed,  3 Jul 2024 12:29:43 -0400 (EDT)
-	(envelope-from tmz@pobox.com)
-Received: from teonanacatl.net (unknown [71.254.194.198])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 840863AA93;
-	Wed,  3 Jul 2024 12:29:38 -0400 (EDT)
-	(envelope-from tmz@pobox.com)
-Date: Wed, 3 Jul 2024 12:29:35 -0400
-From: Todd Zullinger <tmz@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mK/gh3E0"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-6eab07ae82bso3459108a12.3
+        for <git@vger.kernel.org>; Wed, 03 Jul 2024 10:12:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720026733; x=1720631533; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rOmo2uzavXsg/4jln3HiFm5IiogYXwkvvQHBx6XCNdk=;
+        b=mK/gh3E0TdABStYFWA1nFJt6VIkojA2dEKx1apTjQhioi8197dufboO/++geL9W9Fz
+         wjVyreTJdhRqddo8MBsxAGSyKW2bqHsrSNaHjmNb/hT3QCUQO4g8eZs/q6h2+Rdt1YPP
+         le9jq3ajnKR8J5ClHke/ED8bwDKrdz690tNDIxHHEHiV1bmrKNDLZ1lGQOL2bKCIzV8Q
+         lTlArrHvVE+jSLI6vjb9trmIjErBZUEt2GxMK2jHxoXUoTSuwZBNmpqvCGlXD395KCYo
+         uDY0TZ/xIh8bUClhoFeJAvMwoUTcCkyZHYrZL14n2JNxd76EIZRwnn/Mliq6AYGBk6OL
+         tNkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720026733; x=1720631533;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rOmo2uzavXsg/4jln3HiFm5IiogYXwkvvQHBx6XCNdk=;
+        b=CVv/bjqtwxdjtpAY1zBCf4oXt8N3IjMv0G8cZCpGOjLZnGe/14sMgL3ewN0iIx6F/P
+         6uVX7Ppb/gp6umeh6SnhtHLC7eqY7Io/Mgi4v8JfuKdNo9uPR6p7/75yHJPDYeN7VM3/
+         lEVePcK+T62hhJE29lzNwLEDjxQiYfSd4w8qx5vqGHvO3IOktdmzvQzRYijAXrIxSxLf
+         a/AbEFdsDWl0MEbznNmzVWGZIWjPUl1g11cenqaNnNwvP55bXdyJoM6bBibY6iTfL4fW
+         GnOvQ4ovjpd1vYySrbQpyTLWv7Ke2E/Tnn/6DLdpwsvnpIVOSJb9Q1kPU5El89523wj/
+         mq1g==
+X-Gm-Message-State: AOJu0YyOyIYsfACVCUIF7SvWZ5sSkGC99Fsm/2lTGkvlJSZ1YMami3Pc
+	QVJcVf5EhUond6mlGyZ7b27uGq2AuFaakqIFGcFe70ykitpCos2UIWV/4A==
+X-Google-Smtp-Source: AGHT+IHcQFsQmrWY7i1oOgj5ao/hZN8kF+d3hFpZ8pQNAZxbhyFPn7Mey0WCEiyhMQks0Rlk8SCSJw==
+X-Received: by 2002:a05:6a20:daa7:b0:1bd:1972:3720 with SMTP id adf61e73a8af0-1bef6206623mr11448620637.42.1720026732394;
+        Wed, 03 Jul 2024 10:12:12 -0700 (PDT)
+Received: from Ubuntu.. ([223.176.57.184])
+        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-70803ecf966sm10678860b3a.124.2024.07.03.10.12.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jul 2024 10:12:11 -0700 (PDT)
+From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
-Cc: Kousik Sanagavarapu <five231003@gmail.com>,
-	"Eric W . Biederman" <ebiederm@xmission.com>
-Subject: Re: [PATCH 0/2] t/lib-gpg: ensure GNUPGHOME is created as needed
-Message-ID: <ZoV8b2RvYxLOotSJ@teonanacatl.net>
-References: <20240703153738.916469-1-tmz@pobox.com>
+Cc: karthik.188@gmail.com,
+	chriscool@tuxfamily.org
+Subject: [GSoC][PATCH 0/5] t: port reftable/merged_test.c to the unit testing framework
+Date: Wed,  3 Jul 2024 22:31:40 +0530
+Message-ID: <20240703171131.3929-1-chandrapratap3519@gmail.com>
+X-Mailer: git-send-email 2.45.2.404.g9eaef5822c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240703153738.916469-1-tmz@pobox.com>
-X-Pobox-Relay-ID:
- 715270C0-3959-11EF-8717-DFF1FEA446E2-09356542!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 
-I wrote:
-> 92 of the 202 tests in t1016-compatObjectFormat.sh are skipped due to
-> the GNUPGHOME directory missing, e.g.:
-> 
->     ok 5 # SKIP create a sha1 signed commit (missing GPG2)
->     ok 6 # SKIP create a sha1 signed tag (missing GPG2)
->     ok 8 # SKIP create another sha1 signed tag (missing GPG2)
->     ok 9 # SKIP merge the sha1 branches together (missing GPG2)
-> 
-> With these changes, they are all run (successfully). :)
-> 
-> I presume that they have been skipped in the Github CI runs as well,
-> but I don't know that the logs show enough detail to confirm that.
+In the recent codebase update (commit 8bf6fbd, 2023-12-09), a new unit
+testing framework written entirely in C was introduced to the Git project
+aimed at simplifying testing and reducing test run times.
+Currently, tests for the reftable refs-backend are performed by a custom
+testing framework defined by reftable/test_framework.{c, h}. Port
+reftable/merged_test.c to the unit testing framework and improve upon
+the ported test.
 
-D'oh!  I spoke too soon.  I'd run the test suite on several
-different rpm-based hosts (Fedora 39 and Rocky 9).  Waiting
-for the Github actions to run is what I should have done.
+The first patch in the series moves the test to the unit testing framework,
+and the rest of the patches improve upon the ported test.
 
-A number of these fail, e.g.:
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 
-https://github.com/tmzullinger/git/actions/runs/9780387020/job/27001952643#step:4:1871
+---
+CI/PR: https://github.com/gitgitgadget/git/pull/1755
 
-    Error: failed: t1016.173 Verify commit signedcommit4's sha1 oid
-    failure: t1016.173 Verify commit signedcommit4's sha1 oid 
-	    git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} > ${name}_sha1 &&
-	    test_cmp ${name}_sha1 ${name}_sha1_expected
-      
-      + git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 5d70155cc40e4c16515c89ad0b11d8c691436fc4a4d3ca246669a4c21f07e454
-      + test_cmp signedcommit4_sha1 signedcommit4_sha1_expected
-      + test 2 -ne 2
-      + eval diff -u "$@"
-      + diff -u signedcommit4_sha1 signedcommit4_sha1_expected
-      --- signedcommit4_sha1	2024-07-03 15:11:05.597537579 +0000
-      +++ signedcommit4_sha1_expected	2024-07-03 15:11:05.553537766 +0000
-      @@ -1 +1 @@
-      -9179ccc5b15588bc3a45c5cc75bdec380f8ccb86
-      +c6c46f92bc2cfda57ad6bf7981fa654825376b24
-      error: last command exited with $?=1
-      not ok 173 - Verify commit signedcommit4's sha1 oid
-      #	
-      #		git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} > ${name}_sha1 &&
-      #		test_cmp ${name}_sha1 ${name}_sha1_expected
-      #	
+Chandra Pratap (5):
+[PATCH 1/5] t: move reftable/merged_test.c to the unit testing framework
+[PATCH 2/5] t: harmonize t-reftable-merged.c with coding guidelines
+[PATCH 3/5] t-reftable-merged: add test for reftable_merged_table_max_update_index()
+[PATCH 4/5] t-reftable-merged: use reftable_ref_record_equal to compare ref records
+[PATCH 5/5] t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
 
-This seems like it's just exposing a pre-existing failure,
-as I can't imagine how creating GNUPGHOME would cause the
-actual and expected SHA's to differ. :)
-
-Perhaps the intended gpg wrapper script which sets
-`--faked-system-time` isn't being used?
-
-I'm not sure why that would differ in the Github actions
-from my local builds, but I don't know what else differs in
-the Ubuntu images and/or environment used by the actions.
-
--- 
-Todd
+Makefile                                                   |   2 +-
+t/helper/test-reftable.c                                   |   1 -
+reftable/merged_test.c => t/unit-tests/t-reftable-merged.c | 170 +++++++++++++++----------------
+3 files changed, 86 insertions(+), 87 deletions(-)
