@@ -1,143 +1,134 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA691854
-	for <git@vger.kernel.org>; Wed,  3 Jul 2024 14:21:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E9F1EB27
+	for <git@vger.kernel.org>; Wed,  3 Jul 2024 14:41:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720016474; cv=none; b=eg9j1hSjmfetHj+hrY2STm2ecBtgUwCmUr1nZiuNgQcUPfG5Gmi8nDvOUj8xsf0GYRN/HC5cP+pPBBHCa0Tdt1mrvRylFELrN6ElDRNVuSK0t4N76VOhkyooYwQw7wBlbz7Wfr/ue5WgtVLOqGW3QOotvKAOpjetcpxyyk9gZl0=
+	t=1720017707; cv=none; b=a6rWz4E3wqFzcYPDq4V2aDd+fNQyoh2Z51BaurJGHCcfTg06u1RqT8rxYidOcNKg6VjCadT4P+7dFhty4sSbsvOLe2rjcVim7juit7Ay6CaeNnzKfe/N8lV2eRK4VaRTyod0XzjrOZ1i9iR/w/TDyJmy+LppC2GJRFTpghM1CKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720016474; c=relaxed/simple;
-	bh=lizgcMyO91SF6F3o1ED2dJ/VJWnXKuuI4XV9fHOYEec=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=gM5PphAp0oBd5bDvnfLWjlljGMTsvI9bBdg+smSiizpz3fyzjcbyvg2hUXzeihpU0QzoBxdtpBkfFJPYUBEfeGwTHSH/WdTH5z7T+ERqTiDdNOsZMCuhdyOBucTyPt1WGZ6vrf/aVVoziHowIG+zPSPPjmElrZl8oYTex+mFmIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D8Gu/kuO; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1720017707; c=relaxed/simple;
+	bh=FLsk7YkBgZ+HRCOM0ckoH32gqsQLaxP99jQvrZIeqEI=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=mgVIPi4mB5I9fC2c4m4Y1sJDPer03Wqr4ZwNYzRalTsANL8DNmRHQfYGpLz9K8vsdUZ6FWP70CfdSnZlFhvs7WaDLgBxc8ayq0wBfbojlo6eKAQBdGOSQAPRe/ncFLRkJUlybLXOgQthPoHPpZx5KpVKLJ/Dqi7T14Pjm0zRhsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HQCVor5i; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D8Gu/kuO"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42574064b16so35115375e9.2
-        for <git@vger.kernel.org>; Wed, 03 Jul 2024 07:21:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HQCVor5i"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-58b447c5112so2612972a12.3
+        for <git@vger.kernel.org>; Wed, 03 Jul 2024 07:41:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720016471; x=1720621271; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=YosOVadv8SNaDP/bRGwBlCciF15U8cDf/FAAhe/nOhE=;
-        b=D8Gu/kuOUtULoomV41j02TQTesk/I2Uu1XU+6vsRvmD6UZuz7IfwJEhONYjD1R+K7X
-         iECNWRBISQmj2/Lt1TgIf2mDdkSAR1NLMVjsijtFAo8eMOuupEDSDJ6RyLO0l2cPh4iF
-         scQ9SNKicJ3XdwMupkag9snAR6gc3MCBy2Moyz7+TsI6OFqvoeAdCl91QC1dHc9DyqZP
-         L2bZVOkORgZGlMMp8Rp3SC0YJmDnP14PHHMPmtBeIvtonzsHBbAgwzEHoXQR3CjNw4gf
-         O4oPSqXL2fkdO5ixKTiPXIiWioNvzLGhkro5W7qdF2Ldc+24cjDVR7OWfC9SyYr1MBrb
-         RtwQ==
+        d=gmail.com; s=20230601; t=1720017704; x=1720622504; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:content-language:to
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Q/n+vxpOVc32taW2pZfVxWR70A4CFrCntdWO40K7YM0=;
+        b=HQCVor5iYh9qSeZZpc6+iNUfZeqrk+fsGdT8ZDbTGfwHsHdiN+07+DScM1BnMIYkPx
+         oM9NFyZUzRip6tNTWYdX7R0DQh66pKkxWiKw4iTS0cKo8rg2xelATkibckevIhC06L0H
+         R5yZauBNdU2wv/NxsNLbZMfasAyQjRsJMElUT+D2l37qh94QD1QLlRbb5Dk/enU5jCL9
+         5NzcwcR9yv8OFBDmwWrSem2lTXJSWglCK/ZENvJY8T6p74wP5dr3Bebw+5rOdKCrkzbU
+         HyeYbf9eu5fVSYYMb0dRh+xBTjyS6+pQ1yrUqf7nt1gHkCV2g0jfSntkVZ8PC9I27Pmv
+         HATw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720016471; x=1720621271;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YosOVadv8SNaDP/bRGwBlCciF15U8cDf/FAAhe/nOhE=;
-        b=qzzqlVTvpHtArJ5wAlRtbvRZ+8NzJGbGOaFEj72qEcxet/b0etms9tGLam7i0auEQb
-         R3PpTwlMB+HiFUUvpYDLZI6pLYpLxhJ0fN3i0wFu2dkIEBKHBETz0AYHv+XgsrQXCJed
-         dN2xVyje1YXrHPkVDUbOTQaMPqre5oDFAOKdQbQUugRfRLRqL+K7FsIHViz2or27I/0h
-         N4Mb/w1Wyr6of6Y2x0uaQHLejsDfhS37xmYviXPT2EsYiHtYKomiP0yiMSvL0oJOOIRY
-         l1CCvrxklf+EwS/rSci/NMvhZ3vKs6H8c6+lRHwn3+DFsoYnN0C4T9ow8rlTXkxNHYHK
-         fEaQ==
-X-Gm-Message-State: AOJu0YzVn0YXi6WJLwW7d18bB4QV/kSECd36m4L683K7GYloSLXjhvqM
-	eZx0FnzNmmLjlDDLqZ75F+4ptEtw5r32fFhtfCu3b21SGDmzepYSbwlfAQ==
-X-Google-Smtp-Source: AGHT+IEVKB3KaMBOF2tdmv74Fy/GzPtcXdW3c037G2esC0omdKhncKo37igy2yVbPyvZnqJbmkcg+w==
-X-Received: by 2002:a7b:c84d:0:b0:424:a2be:c161 with SMTP id 5b1f17b1804b1-42588d5c98amr43135665e9.20.1720016470492;
-        Wed, 03 Jul 2024 07:21:10 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4256af3cff9sm238685855e9.3.2024.07.03.07.21.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jul 2024 07:21:10 -0700 (PDT)
-Message-Id: <pull.1741.git.git.1720016469254.gitgitgadget@gmail.com>
-From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 03 Jul 2024 14:21:09 +0000
-Subject: [PATCH] merge-file: warn for implicit 'myers' algorithm
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1720017704; x=1720622504;
+        h=content-transfer-encoding:subject:from:content-language:to
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Q/n+vxpOVc32taW2pZfVxWR70A4CFrCntdWO40K7YM0=;
+        b=s/VPSnS0oaJZ+n8Llbj1IIHjLywxpR0lEMkJ2lJEJxfaMVv3UyaY6qfQ4hK9v4WM+M
+         rWkMCZhn8fIyU2pSiv/dT0WqxK2URdMAu4wM6KO07lhlT9D5iVnL4aiqevGTydLwfOKP
+         2B//TiDpNkRaVASby2u1/IabDq9Xa7QNMy1rpkIF+wBWmRbPGGnhjzCFLNd/Im1xFX3E
+         T9FZbXhWQkIDcg5XiHRhbRAQviInMKgyC5RN1E2RJxIlhLKsUH1AP+xzyHoKvq+2D1Vz
+         /cze7D56fZ9rbiK4ogyoTPQbHORGK/2bjSBk9U/feLCHW/aoKns/zay1a6EqNKflTFLs
+         ayfg==
+X-Gm-Message-State: AOJu0YxYO9Mvp2YxgUcTe1G4GuQ7G9h7k4Mns4NwlQcEN1jge0N8RH61
+	WQguNQxOQJCgdkMJMG7y+tBsaNAHVkl1JopQ3w6CLGt3lQs31jaamlehEJk=
+X-Google-Smtp-Source: AGHT+IEIJLu2gmjIVzn2qheDq0KQDr+toAdPx4bdToN5UF51ujSAZec6E6Ovq9ri78PllaI/0kEF5A==
+X-Received: by 2002:a17:907:26c7:b0:a72:603f:1ea2 with SMTP id a640c23a62f3a-a75144baeb3mr915215566b.62.1720017703307;
+        Wed, 03 Jul 2024 07:41:43 -0700 (PDT)
+Received: from [10.13.100.2] ([77.238.255.73])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a72ab06565csm513155166b.103.2024.07.03.07.41.42
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jul 2024 07:41:42 -0700 (PDT)
+Message-ID: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
+Date: Wed, 3 Jul 2024 17:41:40 +0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-    Antonin Delpeuch <antonin@delpeuch.eu>,
-    Antonin Delpeuch <antonin@delpeuch.eu>
+Content-Language: en-US, ru-RU
+From: Ilya Tumaykin <itumaykin@gmail.com>
+Subject: git crashes in `git commit --patch` with diff.suppressBlankEmpty =
+ true
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Antonin Delpeuch <antonin@delpeuch.eu>
+Hello.
 
-The current default diff algorithm for the merge-file command is
-'myers', despite the default for the 'ort' strategy being 'histogram'.
-Since 2.44.0 it is possible to specify a different diff algorithm via
-the --diff-algorithm option. As a preparation for changing the default
-to 'histogram', we warn the user about the different behaviour this
-may cause.
+`git commit --patch` crashes with diff.suppressBlankEmpty option enabled 
+under certain conditions.
 
-Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
----
-    merge-file: warn for implicit 'myers' algorithm
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1741%2Fwetneb%2Fexplicit_diff_algorithm-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1741/wetneb/explicit_diff_algorithm-v1
-Pull-Request: https://github.com/git/git/pull/1741
+Steps to reproduce:
+1. Prepare .gitconfig:
+[user]
+	name = User
+	email = user@example.com
+[diff]
+	suppressBlankEmpty = true
 
- builtin/merge-file.c  | 8 ++++++++
- t/t6403-merge-file.sh | 5 +++--
- 2 files changed, 11 insertions(+), 2 deletions(-)
+2. Initialize repo:
+$ mkdir git_bug && cd git_bug
+$ git init
+$ echo -e 'test\n\n test \n\ntest' > test.txt
+$ git add test.txt
+$ git commit test.txt -m 'initial'
 
-diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-index 1f987334a31..dce2676415e 100644
---- a/builtin/merge-file.c
-+++ b/builtin/merge-file.c
-@@ -29,6 +29,8 @@ static int label_cb(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
-+static int explicit_diff_algorithm = 0;
+3. Make changes:
+$ echo -e 'test\n\n test\ntest\n \n' > test.txt
+
+4. Try to commit new changes
+$ git commit --patch test.txt
+
+5. Try to split the first hunk, press 's' in the git-commit interactive 
+interface.
+
+
+Actual results:
+diff --git a/test.txt b/test.txt
+index 366cd4b..611ca9d 100644
+--- a/test.txt
++++ b/test.txt
+@@ -1,5 +1,6 @@
+  test
+
+- test
+-
++ test
+  test
 +
- static int set_diff_algorithm(xpparam_t *xpp,
- 			      const char *alg)
- {
-@@ -50,6 +52,8 @@ static int diff_algorithm_cb(const struct option *opt,
- 		return error(_("option diff-algorithm accepts \"myers\", "
- 			       "\"minimal\", \"patience\" and \"histogram\""));
- 
-+	explicit_diff_algorithm = 1;
 +
- 	return 0;
- }
- 
-@@ -103,6 +107,10 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 			return error_errno("failed to redirect stderr to /dev/null");
- 	}
- 
-+	if (!explicit_diff_algorithm) {
-+		warning(_("--diff-algorithm not provided, defaulting to \"myers\". This default will change to \"histogram\" in a future version."));
-+	}
-+
- 	if (object_id)
- 		setup_git_directory();
- 
-diff --git a/t/t6403-merge-file.sh b/t/t6403-merge-file.sh
-index fb872c5a113..9d0045be955 100755
---- a/t/t6403-merge-file.sh
-+++ b/t/t6403-merge-file.sh
-@@ -540,8 +540,9 @@ test_expect_success 'merging C files with "myers" diff algorithm creates some sp
- 	}
- 	EOF
- 
--	test_must_fail git merge-file -p --diff3 --diff-algorithm myers ours.c base.c theirs.c >myers_output.c &&
--	test_cmp expect.c myers_output.c
-+	test_must_fail git merge-file -p --diff3 ours.c base.c theirs.c >myers_output.c 2> err &&
-+	test_cmp expect.c myers_output.c &&
-+	grep "diff-algorithm not provided" err
- '
- 
- test_expect_success 'merging C files with "histogram" diff algorithm avoids some spurious conflicts' '
+(1/1) Stage this hunk [y,n,q,a,d,s,e,p,?]? s
+BUG: add-patch.c:994: unhandled diff marker: '
+'
+Aborted (core dumped)
 
-base-commit: 06e570c0dfb2a2deb64d217db78e2ec21672f558
+
+Expected results:
+git-commit splits the hunk and continues.
+
+
+Comment:
+If I set diff.suppressBlankEmpty = false, then I get the expected behavior.
+
+git --version: 2.45.2
+OS: up-to-date Fedora 40
+
 -- 
-gitgitgadget
+Best regards.
+Ilya Tumaykin.
