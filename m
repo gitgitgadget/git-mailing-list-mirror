@@ -1,113 +1,115 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BB217C7C
-	for <git@vger.kernel.org>; Wed,  3 Jul 2024 16:20:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89ABA1836EE
+	for <git@vger.kernel.org>; Wed,  3 Jul 2024 16:22:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720023652; cv=none; b=igQyUx3BQarJ66ohwTgXbXEc4cMBgcbmw5PZqNSs1M2+nf47H1M6lvxMuJntPgQrea5SEz/sZst6KTGZTnfjH3penuWNOBlNj0UwTFPyT2OxN/fC68fzvkgJgMRhbq/u8q6v20fZj4QBIJ0DjOW/VuM5ENXBLOo9u5CnaTXbpJk=
+	t=1720023780; cv=none; b=CGrp1uSW38/c0AQmcz9F5c+HtWqE5XxfeiMP2HTnTUHXQZ4xu5NtWuPgmlrRm1yB6/FuFbNOANkrCdWovNAv3OJjiffdyt7WoIG98lXrkcNz4yj8U4HY4OBtn3kM/fErVThAjyQm8wfS58vzwi6JJs6HckoPCUi4h75rUeUHMSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720023652; c=relaxed/simple;
-	bh=p3m3bZKppkj52lMR836XdfnP7gp1hS0XJHoaGGrp8pc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nWc9aro9cYaO05HHHXNbP6lsTkAGtwmkMAK4g+xHcM43jb5w8MalUd8TXSsp2EUZnFBCNwC9xO8zQM3+oCfJqAtiD34G1l++T2dRWb9YCOX17GPJ5OuUW3ObxGpsWYJJUU4oMCyvIHiyfooMHedBE5rd1F/7widiFwdgO2w5Jmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZPGQIIdG; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1720023780; c=relaxed/simple;
+	bh=q9RDYjrchSN03BxlCMt7C6raWo0g+R8v77aS5MeD8C0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=cjY71kKtfFeuFUNYG47sEoPPDL9xaptqWiB6t83xewyT+0EgDd+q77K28bj6/qUoL6HmoeBA/huV8qMCCsTgi4Vr7GWeGPHaKqBkeEM1FX6GdNpCGFrmHALLaF+uC70Uwucjl2TuDgvKNtTQEuZD8D4z8HhkIsMoxD4Bieadd7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cA1ZNI1o; arc=none smtp.client-ip=209.85.219.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZPGQIIdG"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D685F2AE84;
-	Wed,  3 Jul 2024 12:20:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=p3m3bZKppkj52lMR836XdfnP7gp1hS0XJHoaGG
-	rp8pc=; b=ZPGQIIdGi6zXVLopJrnxE3K71YFyF5QoisFNad2ph1WzaO2Bh9NRxE
-	acAFc71cPlIafN5ufhoHmzkHY1aflMw7NS3ru2GaF4mxuAH+0dl9nnXYTlqxNqtH
-	kYQV7X83SG0d34RPGwaJnC87iK1d9E6Vnn3j2AUyEnTK47k5xyP3w=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CCA752AE83;
-	Wed,  3 Jul 2024 12:20:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 103142AE82;
-	Wed,  3 Jul 2024 12:20:48 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org,  Christian Couder <christian.couder@gmail.com>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Josh Steadmon
- <steadmon@google.com>,  Christian Couder <chriscool@tuxfamily.org>,
-  Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][PATCH v3] t: migrate helper/test-oidmap.c to
- unit-tests/t-oidmap.c
-In-Reply-To: <20240703062958.23262-2-shyamthakkar001@gmail.com> (Ghanshyam
-	Thakkar's message of "Wed, 3 Jul 2024 11:59:53 +0530")
-References: <20240703062958.23262-2-shyamthakkar001@gmail.com>
-Date: Wed, 03 Jul 2024 09:20:47 -0700
-Message-ID: <xmqqle2ie9b4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cA1ZNI1o"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e039be89de9so2030110276.2
+        for <git@vger.kernel.org>; Wed, 03 Jul 2024 09:22:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720023777; x=1720628577; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GOzOLFyKvHYHOiAgR2WXPo3mlXwg4UfCEA9gW2jqUtQ=;
+        b=cA1ZNI1oIDZb/nIGVxbJFKSpF9a5maP6d9bx8hXvlTFjoMQXkb7VaAEvIUAMQ6T6yj
+         PwL4rNR7yqkj/WdoQBSFOPpAjwQgHaajFdM9nVZyzy7XICssfmvlvAklz5/FBymJDzEc
+         dcT6+zfbWT7X7x2iMrpwtKsgNonWMjuaEVxoIo3Fb3Bhwbymq1DkRgfjZmsqZZi1T5mt
+         5ehKcO2I11No+CH1G+piqsf+Xywvk4D8JKxGF649LR0G70xE7F9SzBDmH67otOoX3/1j
+         274C9PoMI0jvDpeaIwzlOo6sIiOpQ0CcK873IYI6hOeuTOQV9hH7Smekw1p+MfHisJoS
+         3OiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720023777; x=1720628577;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GOzOLFyKvHYHOiAgR2WXPo3mlXwg4UfCEA9gW2jqUtQ=;
+        b=WX5EwFjaSpgg3m2qSVwOdGezJ5vBqRu0h+yenmeZrrOmXn1Gk1Hjs688x1zmw4o/Ec
+         xVqQXO2IJBruEN46DTUD3DmFoduWPrZK3k8cR9JDGNwiXO0sPwba0xtW5C4NcqwV/nfx
+         qZKLb0hm8a4wAbVgYpIC8XkTNt+NDi086TkM0+bIL0cqOOb1bJruPc6IRtyryiWr+8RO
+         d9YCkJ4Ge4CXEgvhuHthmYU6L60cy4Rc2oS8CCZA06BUlIaFG1izaPyeOQC+0MQWNEsp
+         ggsIoQmZHr2zCFyD2+NnU5A0Sezv+TJCzs98JObVU2SOdkTYlwuxOfGS2nsdbIYU5gjD
+         o2Sw==
+X-Gm-Message-State: AOJu0YzPhBtcUsOiOfxaFPzRNjukOW+HmxWdmhjyZr55ZM4JiaYKMwxU
+	0GmHD+d4qOrwvFulkroraEvfMVfaaI2H0aN+o3AyDWbsthtAnimaZkNqF7W/o1ojYsZ2FS/6333
+	xgTuSRfsJB4eOPsrIoadLYHgJDOhokw==
+X-Google-Smtp-Source: AGHT+IGpeOT8NiOXgzfs1GTkld7J25HZZdRR/4wi+V/5SXMeGtvBzX4EY1Xq4UrCz0NwTKVA9w0dsZJ0f0XDsZ38ncE=
+X-Received: by 2002:a5b:70f:0:b0:e03:4648:5248 with SMTP id
+ 3f1490d57ef6-e036eb779e2mr13701674276.31.1720023777664; Wed, 03 Jul 2024
+ 09:22:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 3597E07A-3958-11EF-B68E-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+References: <CAFjaU5sAVaNHZ0amPXJcbSvsnaijo+3X5Otg_Mntkx2GbikZMA@mail.gmail.com>
+ <082b01dacd61$81174a80$8345df80$@nexbridge.com>
+In-Reply-To: <082b01dacd61$81174a80$8345df80$@nexbridge.com>
+From: Emanuel Attila Czirai <corre.a.buscar@gmail.com>
+Date: Wed, 3 Jul 2024 18:22:46 +0200
+Message-ID: <CAFjaU5vvk-nNLvCyXAgU9C3ScKBNRPFB7=1PXejmLZi+r7EbNQ@mail.gmail.com>
+Subject: Re: `git diff`/`git apply` can generate/apply ambiguous hunks (ie. in
+ the wrong place) (just like gnu diff/patch)
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
-
-> helper/test-oidmap.c along with t0016-oidmap.sh test the oidmap.h
-> library which is built on top of hashmap.h.
+> >I consider that I don't know enough to understand how `git diff`/`git apply` works
+> >internally (and similarly, gnu `diff`/`patch`) to actually change them and make them
+> >generate unambiguous hunks where only the hunks that would've been ambiguous
+> >have increased context size, instead of the whole patch have increased context size
+> >for all hunks(which is what I did for `diffy` too so far, in that proof of concept patch),
+> >therefore if a "fix" is deemed necessary(it may not be, as I might've missed
+> >something and I'm unaware of it, so a fix may be messing other things up, who
+> >knows?!) then I hope someone much more knowledgeable could implement
+> >it(maybe even for gnu diff/patch too), and while I don't think that a "please" would
+> >be enough, I'm still gonna say it: please do so, if so inclined.
+> >
+> >Thank you for your time and consideration.
 >
-> Migrate them to the unit testing framework for better performance,
-> concise code and better debugging. Along with the migration also plug
-> memory leaks and make the test logic independent for all the tests.
-> The migration removes 'put' tests from t0016, because it is used as
-> setup to all the other tests, so testing it separately does not yield
-> any benefit.
+> You make good points, but Rust code should not be put into the main git code base as it will break many non-GNU platforms. Perhaps rewriting it is C to be compatible with the git code-base.
+> --Randall
 >
+Ah, definitely whoever writes the fix would do it in C for the git
+code base, I didn't mean to imply it would be or should be done in
+rust, therefore please excuse my failure to communicate that clearly.
+The `diffy` proof-of-concept patch, is just for `diffy`, in rust, and
+it's just to show a way this could be done and that "it works" that
+way. It was easier for me to do it for `diffy` in rust, than in C for
+git diff/apply or gnu diff/patch.
+If a fix is to be implemented for `git diff/apply`, it would
+definitely not be in rust by any means, but C, as you mentioned.
+Thank you for your reply.
 
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-> Reviewed-by: Josh Steadmon <steadmon@google.com>
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Also, I notice that I made a mistake when pasting the patch with the
+context length of 4, it was a real patch not the one I used in the
+examples, here's the corrected unambiguous patch:
+```diff
+--- original
++++ modified
+@@ -1114,8 +1114,12 @@
+                     self.config.shell().warn(msg)?
+                 }
+             }
+         }
++        if seen_any_warnings {
++            //comment
++            bail!("reasons");
++        }
+         Ok(())
+     }
 
-The trailer lines should come more-or-less in chronological order.
-I do not know exact sequence of events, but mentoring would have
-happened first before the initial iteration was posted, then Phillip
-helped to improve it during iterations, the latest was reviewed by
-Josh and then you folded the little test improvement from me and
-Phillip?  And to seal the whole thing off, you add your sign-off at
-the end.
+     pub fn set_target_dir(&mut self, target_dir: Filesystem) {
+```
 
-Technically speaking, any change after a review invalidates an
-earlier "Reviewed-by", but the updates we see here, relative to the
-iteration that received the "Reviewed-by", are not significant or
-large enough to warrant that, so let's pretend that Josh would be
-happy with the end result, even with our little additions.
-
-Which leads us to the trailer lines ordered like so:
-
-    Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-    Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-    Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-    Helped-by: Junio C Hamano <gitster@pobox.com>
-    Reviewed-by: Josh Steadmon <steadmon@google.com>
-    Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-
-The changes since the previous round look exactly as expected.
-Looking very good.
-
-Will queue.  Let's mark it for 'next'.
-
-Thanks.
-
-
+Cheers, have a great day everyone!
