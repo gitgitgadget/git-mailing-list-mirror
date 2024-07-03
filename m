@@ -1,52 +1,58 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7721836CB
-	for <git@vger.kernel.org>; Wed,  3 Jul 2024 18:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2AC17B4E8
+	for <git@vger.kernel.org>; Wed,  3 Jul 2024 18:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720030610; cv=none; b=vGm/C8gJdj8mf1+gpnQiP03ttSrWCu2vhE9+ykds6tt64XRx9qN2x46IOKL9HbrQ4navqzbHh4tcDk4m3XSJY88/vPBlu5oARXoMjSSOUGsQnbV6RSzM/lEQAbw2ie2FzWXJcJji1dBB5fRsMilLpepAofa/eRmzwOJ0nUVnlqA=
+	t=1720030628; cv=none; b=a5iHq/Th8MagkjreiHxtHjQs+NogOgwCfC2zRwV7B08HE1BR6GX31q1lIwjs9Zo1PunO7Op6guq9FnbKu5bneqZ6FePNNAadEVU27N3nQbfWxr+R13Y+UAh2831OHVzSXG2stVsZqYb1pDBuZJSVLh9jytkO05wzxez6aLI1zoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720030610; c=relaxed/simple;
-	bh=AuH0iM8Tv6E4dFZOqE0n3hHiFQeaf7b1P+Fg2S+BuJA=;
+	s=arc-20240116; t=1720030628; c=relaxed/simple;
+	bh=AY/xs7J8lTM/PTF32TTg7wune9q5/KCf6iUusoRy8oo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pl3j/i4cIJC7+G7ce5IoLWF8fxsJXzyZsquulKRgA9CNByJY1KB0+eOgXfNjcxdN7FDYyju+xOiVkwYn5rwA0ShSgiVT/1VyLe2MmMU+JHy5B8HKQpuftWz9LvpfJyIqR4IqXAoK9FMVBJtL27stcxwPG71rEcWP5afOCH/2dWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GNEAUHNe; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=GZQiNLx5Fx2wy6mB4BkEU7pXBivhkDb1UKvjwxTix9IDLF9xRIZ7mZab+BBjaQxxkMoWLjKu7Ma8ODyk2dV8iptI5Lx9U34MazynSSbApYHS67IScivYPfpLjYRBF4sqwj8WCNW3CtCDUOW0zunQFH+Pyqxn1BvvbxE4NYB6TIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AlbEwgPT; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GNEAUHNe"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AlbEwgPT"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BBA52BB0B;
-	Wed,  3 Jul 2024 14:16:48 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4497E2BB16;
+	Wed,  3 Jul 2024 14:17:06 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=AuH0iM8Tv6E4dFZOqE0n3hHiFQeaf7b1P+Fg2S
-	+BuJA=; b=GNEAUHNeYcTvu+jtjPjlIrxxe36PQXPkR4oIQDnc1MxcMoHgU5ZVq5
-	kp+n4X9EnAMMpADe6xTFsR8hvMyzPH2SNuC0/5orR8I6O40V6eWJl1EkIEGpKPna
-	GbG9mkNXH3jx+MwuaqbUTWOE+TxuXAfA8Q43r0noE2vxaRoQZJ2TY=
+	:content-type; s=sasl; bh=AY/xs7J8lTM/PTF32TTg7wune9q5/KCf6iUuso
+	Ry8oo=; b=AlbEwgPTSCDrsIOzhMp5y4vbNe9Gb122KnQeaMRQWm9Dtvslf0DObc
+	Llgep246QnrqAAvdD4yvOQa7GiaZN6y5iWzi2Jki38D3Tk77EhQy/SrQTJgs+yTA
+	8KykHi8CUPDlm0pb6g3J5WF3pqWn0BXbnIETypTo1dlcx4NBt4DKw=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 13CD62BB0A;
-	Wed,  3 Jul 2024 14:16:48 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3672B2BB15;
+	Wed,  3 Jul 2024 14:17:06 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.219.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 72C802BB09;
-	Wed,  3 Jul 2024 14:16:47 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8DE692BB13;
+	Wed,  3 Jul 2024 14:17:05 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  newren@gmail.com,  vdye@github.com,  Derrick
- Stolee <stolee@gmail.com>
-Subject: Re: [PATCH] advice: warn when sparse index expands
-In-Reply-To: <pull.1756.git.1720019679517.gitgitgadget@gmail.com> (Derrick
-	Stolee via GitGitGadget's message of "Wed, 03 Jul 2024 15:14:39
-	+0000")
-References: <pull.1756.git.1720019679517.gitgitgadget@gmail.com>
-Date: Wed, 03 Jul 2024 11:16:46 -0700
-Message-ID: <xmqq8qyicpdd.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>,  git@vger.kernel.org,  Paul
+ Millar <paul.millar@desy.de>,  Phillip Wood <phillip.wood123@gmail.com>,
+  Elijah Newren <newren@gmail.com>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v7] describe: refresh the index when 'broken' flag is used
+In-Reply-To: <CAOLa=ZR-g4G0FaxnQjjkOST-zeRxBXXK1gpJ=P3xdbi_9eN_rg@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 2 Jul 2024 10:13:30 +0000")
+References: <xmqqpls3zhc2.fsf@gitster.g>
+	<20240626190801.68472-1-abhijeet.nkt@gmail.com>
+	<03628ece-4f47-40d5-a926-acce684a21e5@gmail.com>
+	<xmqqfrsyv155.fsf@gitster.g>
+	<CAOLa=ZS359bMtUd+ktvJgHsiG-0=VVdGWYA2mKCNjc_1BrzcvQ@mail.gmail.com>
+	<xmqqle2lvsmz.fsf@gitster.g>
+	<CAOLa=ZR-g4G0FaxnQjjkOST-zeRxBXXK1gpJ=P3xdbi_9eN_rg@mail.gmail.com>
+Date: Wed, 03 Jul 2024 11:17:04 -0700
+Message-ID: <xmqq1q4acpcv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,36 +62,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 6920D1E4-3968-11EF-865A-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+ 73EBA586-3968-11EF-98A7-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> From: Derrick Stolee <stolee@gmail.com>
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Typically, forcing a sparse index to expand to a full index means that
-> Git could not determine the status of a file outside of the
-> sparse-checkout and needed to expand sparse trees into the full list of
-> sparse blobs. This operation can be very slow when the sparse-checkout
-> is much smaller than the full tree at HEAD.
+>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>
+>>> This explains for why 'broken' must use a subprocess, but there is
+>>> nothing stopping 'dirty' from also using a subprocess, right? It
+>>> currently uses an in-process index refresh but it _could_ be a
+>>> subprocess too.
+>>
+>> Correct, except that it does not make sense to do any and all things
+>> that you _could_ do.  So...
 >
-> When users are in this state, it is common that 'git status' will report
-> the problem. Usually there is a modified or untracked file outside of
-> the sparse-checkout mentioned by the 'git status' output. There are a
-> number of reasons why this is insufficient:
+> Well, In this context, I think there is some merit though. There are two
+> blocks of code `--broken` and `--dirty` one after the other which both
+> need to refresh the index. With this patch, 'broken' will use a child
+> process to do so while 'dirty' will use `refresh_index(...)`. To someone
+> reading the code it would seem a bit confusing.
 
-Nicely written to explain why giving an advice message is a good
-idea to cover this situation.
+Yes, that much I very much agree.
 
-Making it possible to squelch comes with no cost (once the code to
-do so is written), so I do not have a huge problem with the use of
-advise_if_enabled(), but I offhand do not know if the users would
-ever want to squelch it.  Is this something that users would choose
-to say "yes, I know what I am doing is making my sparse working tree
-unusuably slow and I've heard how to whip my sparse working tree
-into a better shape already---please do not tell it to me ever
-again; because I need to leave these crufts outside the sparse cone
-anyway, I am willing to accept the unusually slow response,
-overhead, and wasted cycles and power" to?
+> I agree there is no
+> merit in using a child process in 'dirty' by itself.
 
-Other than that, nicely done.
+Yes, that made me puzzled why you brought it up, as it was way too
+oblique suggestion to ...
 
+> But I also think we
+> should leave a comment there for readers to understand the distinction.
+
+... improve the "documentation" to help future developers who wonder
+why the code are in the shape as it is.
+
+In this particular case, I think it is borderline if the issue
+warrants in-code comment or if it is a bit too much.  Describing the
+same thing in the log message would probably be a valid alternative,
+as "git blame" can lead those readers to the commit that introduced
+the distinction (in other words, this one).
+
+Thanks.
+
+diff --git i/builtin/describe.c w/builtin/describe.c
+index e936d2c19f..bc2ad60b35 100644
+--- i/builtin/describe.c
++++ w/builtin/describe.c
+@@ -648,6 +648,14 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 
+ 	if (argc == 0) {
+ 		if (broken) {
++			/* 
++			 * Avoid doing these "update-index --refresh"
++			 * and "diff-index" operations in-process
++			 * (like how the code path for "--dirty"
++			 * without "--broken" does so below), as we
++			 * are told to prepare for a broken repository
++			 * where running these may lead to die().
++			 */
+ 			struct child_process cp = CHILD_PROCESS_INIT;
+ 
+ 			strvec_pushv(&cp.args, update_index_args);
