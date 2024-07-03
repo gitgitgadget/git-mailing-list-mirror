@@ -1,41 +1,58 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C68C187549
-	for <git@vger.kernel.org>; Wed,  3 Jul 2024 18:53:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.75
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB8328379
+	for <git@vger.kernel.org>; Wed,  3 Jul 2024 19:18:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720032791; cv=none; b=hG2fsV/Yzknq5/gLPW7OnS/TSSQhp7UaX2bBdM25hvqJ0G3+fguUEz6GGwMlffeOX3+TTWiYmNLMCHxm392LExe9kTI7K+cPni5H/JKZEP49coAJGb2AIVunwNDxkRCOtkG5PzdkdTrxq4Y1Ti16Sa4tQZhWN6UAS+MhAdTmS3U=
+	t=1720034291; cv=none; b=ONKOVbRfyrCPBCwCe7MULYFR+R6qByYxC4s/LBNYpo4aWrT9UEuiWNgDYS+TtBLdAZJpNAWj2Pao3uH8/MPOa3idwA/O1D5gs2ZkxMlyq/viA+7DMwc3aA8yivYeMNQ/qbNWZcHeCRCZdlLTCY8q36rbeWLnPGWRIYzEmVNft4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720032791; c=relaxed/simple;
-	bh=Bawwdmx2EqFulHdbDwtUxQuUhbYOeO4XcwZYrJdikGc=;
+	s=arc-20240116; t=1720034291; c=relaxed/simple;
+	bh=fUP7mhWKjuqh+p1QrT3Zeae8Px+Ju4K4TVqbTPotGcE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Qe9M4WNtzQuyM2eGAiuLzAYfvSCLDrVA+rHxmpC07PNztCgHns8Pj4YvqU+1QIo4r+JBfrrvfnZWqpVfYPxqwi/fm2H/J7FJk3deNljOck673gpvNAXjR+XRqm7nhSIH9glnwYd5xMG/xRX5r7QsztU/ovfe2nig9YGx9zI5Ztw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu; spf=pass smtp.mailfrom=delpeuch.eu; dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b=xKVxjAOw; arc=none smtp.client-ip=217.72.192.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delpeuch.eu
+	 In-Reply-To:Content-Type; b=ka5nP9k0CglNBd26yfCYYg338fWa330WU/AVTQ2X3KqmQPLgM640IvvHPz2X7nglB3JnQDMxekzIzkCscZ1WQcmwiYNBzc2W7LLVxMGlOZJhJ/YzB6OjHzakKQo5XkN+eLYwjAizOjQlExAkZFsClxthyqIzrV/u/ZhebcBoIY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GJPBoAdH; arc=none smtp.client-ip=209.85.167.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b="xKVxjAOw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delpeuch.eu;
-	s=s1-ionos; t=1720032786; x=1720637586; i=antonin@delpeuch.eu;
-	bh=UeuRTCxhpcOUE3+dxjjbn2Q289tYDl83LPHDdNFr6qM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=xKVxjAOwn7VzeX8ZrLobex6SBWj2zOfPqFWJ3wyk4A4z8m5LezoscfpgBfHRmVKw
-	 wal26C3xHTLYuDoDmB/1GnlUpkgXXhDziCi21YCdMwObd72qU/E6LNCGZ/MkH4Vx0
-	 RmrntUvvXBHnietP0k56Xa3/jjSDmOTNMb1oCshdPf+g0T4Dlt0+cINyJGp48OXKH
-	 5ZelSqRxMe8BzWhUcOqFP8EWgU1gM0aPH66KH9fIO8LKJVCwH7Ku4VXrcjvev5HEQ
-	 m5zGAW4ByI5O1EDCgIQPr3P4Ry1zIUp3TcV6cmNOJq+Dk0PvhcK2+9dX+Mvh85weB
-	 kaXZzjzj/zZ7dPaW+A==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.178.21] ([79.246.85.203]) by mrelayeu.kundenserver.de
- (mreue109 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1M8hMt-1sTBS50kQD-00G3qY; Wed, 03 Jul 2024 20:28:16 +0200
-Message-ID: <dd1f768f-a137-428c-8a60-c5e875b66592@delpeuch.eu>
-Date: Wed, 3 Jul 2024 20:28:15 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GJPBoAdH"
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3d639f967b0so2376802b6e.0
+        for <git@vger.kernel.org>; Wed, 03 Jul 2024 12:18:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720034288; x=1720639088; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1hX/zw4WWl1QJPoJh8TJqS7YtQgzFdVpYVInKkWFuY8=;
+        b=GJPBoAdHJ6ciulDTLXOlNmJCRx0hv531XohRFD8++jnn9oZlRWUzNbmAK9DyHkz/Fi
+         wQb5XQeu//JXWIlXKSSpWSKYpEMymoRN52lbouKJaXCpHRkFfosB7gC0tQ4PbxlgBg9z
+         gS9KbTy/+q/2Ojk0LtfzuTNDz06AqyBXGHsKpHZnMV+LGHUjyAjdlCrHa0NjNHuyXP7u
+         f448GN/wzOmJ7RKbJtEj8zHLCWZNPtftIkzpxJM/1wIe9Qsll2yFkPLjfpG0PdHaoG64
+         jJJ6GTN9Gta2xCloVx/lm0NT4kZbmLRwQJNfgwaHq+LkJVcG398oIVwVugKQgg5A96rK
+         u8Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720034288; x=1720639088;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1hX/zw4WWl1QJPoJh8TJqS7YtQgzFdVpYVInKkWFuY8=;
+        b=vWn5UOZCCUm56ggikbgvhddN0CV0VeIYwWDZKW7U6f143IMMNuSXXejnhykm0f91VB
+         I/Zp4Y1Rv9Y+dRaGTHTuKmLFS4s7cb7YG7ecawJ0ZoTtApb0Cx+/aGa/tLkesqi17/NY
+         PfVzHThMjKq7VyooMsUWn+jK/YU5zan+M8bwAtK7Eg/iqcxWNaXTPYaVJzwz6cX6TGaO
+         0jTwJwgtslD8Os0vqN4LF/PyI3Mtgk2WvdJgTCF30H4Hy3cas7L1CHsunWPckeqCCIh7
+         +TN+h3GGCfbJ0YCwWrk+AB8f2IPRJxbheJ9J2j89xf8svwEuteoO51ckDbCyzY2iuUob
+         jCzQ==
+X-Gm-Message-State: AOJu0YzPJYl//CVXzweWpgmPxvZL3jkeyQjH/gcVSj5yymrRGHKl6rae
+	vzNnuWGBPtbSTHvkWJvgEavyJIZvMtPEkiDTM9wbhZVLpcngD4b0
+X-Google-Smtp-Source: AGHT+IFqt52B1sd4Vx1Y4G4//3ocF5cisDokFTpSOlvwWHURbY1Wy+V0bvdIj5VVUvHfIN7S6zX9dQ==
+X-Received: by 2002:a05:6808:f07:b0:3d5:1f50:188a with SMTP id 5614622812f47-3d6b31eb9eemr12705168b6e.24.1720034288326;
+        Wed, 03 Jul 2024 12:18:08 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:bdac:f074:23e1:5a96? ([2600:1700:60ba:9810:bdac:f074:23e1:5a96])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-3d62fa4164csm2189167b6e.46.2024.07.03.12.18.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jul 2024 12:18:07 -0700 (PDT)
+Message-ID: <068752a3-4140-4b30-803a-1c409afb01e1@gmail.com>
+Date: Wed, 3 Jul 2024 15:18:06 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,59 +60,55 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] merge-file: warn for implicit 'myers' algorithm
+Subject: Re: [PATCH] advice: warn when sparse index expands
 To: Junio C Hamano <gitster@pobox.com>,
- Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-References: <pull.1741.git.git.1720016469254.gitgitgadget@gmail.com>
- <xmqqmsmycriv.fsf@gitster.g>
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, newren@gmail.com, vdye@github.com
+References: <pull.1756.git.1720019679517.gitgitgadget@gmail.com>
+ <xmqq8qyicpdd.fsf@gitster.g>
 Content-Language: en-US
-From: Antonin Delpeuch <antonin@delpeuch.eu>
-In-Reply-To: <xmqqmsmycriv.fsf@gitster.g>
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqq8qyicpdd.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:yLhwb7HBDl+S5fBxP+1w+gWy606th55ptCMkEBZD0e7AlrvUzZT
- pRJ6rJaCu6y23Mcds8mUpndiCNmuyF0pJiWqt6oivStKhnGs6OYMZGwbpj3Od3seOwd1nFh
- 3euKCEpImSlEWrbXhYLGIv/q0GpR321x9T3UN3WdagAYo0koVdOsBQ/RMp04/agkHd7vqtT
- pCyMPVaCpeUEQPu0WBU5A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:BncGhTQTobM=;/4TSdsDLZhAZCFLg4H2PsDe5jqv
- k7F90GUBtr8wdCmFSSZFxHdf4O/C52biZkbrraHA2Tu/QBmXxCDvmp1Wh1Ze0JouKPNuTGgwm
- +O3RCRijBC7bGjMG757tJC2SkpWBHN6HIC6uABHFvh4dftsXYnsUgK1IsNE1CiwpNXc1mlyhx
- HRaxour0FqTE7B25uNlNIA+n3RERJG+bJ8hwrEF8/dywLHqprd74rfhgQAT5GlfjCx3dytL4/
- lg5jl3t/csbL4y9buKaxYg1gxIJBiN1D6JmyNwTps9Di4v6srRQZCRBG0oD8va0q3ujjN4D6j
- XmDqcCJodLB1Lkx4Vwfsc6kkcM4sP2jbmY9j2jjNmwRgUm30Wz70kfIW+QkHE6pjJatidSLIp
- iMD4nc5e+zZ1Es/53mN8FbmtHjtOAtiDmkwSdLb5Kl1WLSHqCNheINkzSlTfN35NMMpn9RYcC
- 434IMeE+muYykQV0Mu3t1TLQPBk7Em3LZ1Az7tT5vHVts40Jk+8Se3YP5iHZewGWmMyv7WT01
- jfO4JdPu31b27kBAkAzbbPcVxXErzCRAtANn+ToiX8j5d4nfxpic9z9WoEIqv3gZ/fy2GTaIx
- 1B7Lw2YaIclok9jVLzMUBU4nBoWFaUxyEpz6JfsC60i8nAJw64ciNLJ9XYH4dVY7GESOSlS+0
- p00CdMmBuTWIJfCviW2EOLIvjyf4d8QYMo0CtD29STmOpJdSJrbnogBjl0cRo+5mxrRPC/hLi
- qhPLW5IbUXXIJ8/p4tc63O6SXkt0vF5POEZfSiBUBEbbCvIrCVeFug=
 
-Hi Junio,
+On 7/3/24 2:16 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Derrick Stolee <stolee@gmail.com>
+>>
+>> Typically, forcing a sparse index to expand to a full index means that
+>> Git could not determine the status of a file outside of the
+>> sparse-checkout and needed to expand sparse trees into the full list of
+>> sparse blobs. This operation can be very slow when the sparse-checkout
+>> is much smaller than the full tree at HEAD.
+>>
+>> When users are in this state, it is common that 'git status' will report
+>> the problem. Usually there is a modified or untracked file outside of
+>> the sparse-checkout mentioned by the 'git status' output. There are a
+>> number of reasons why this is insufficient:
+> 
+> Nicely written to explain why giving an advice message is a good
+> idea to cover this situation.
+> 
+> Making it possible to squelch comes with no cost (once the code to
+> do so is written), so I do not have a huge problem with the use of
+> advise_if_enabled(), but I offhand do not know if the users would
+> ever want to squelch it.  Is this something that users would choose
+> to say "yes, I know what I am doing is making my sparse working tree
+> unusuably slow and I've heard how to whip my sparse working tree
+> into a better shape already---please do not tell it to me ever
+> again; because I need to leave these crufts outside the sparse cone
+> anyway, I am willing to accept the unusually slow response,
+> overhead, and wasted cycles and power" to?
 
-I'm really sorry, I thought the switch of default and migration plan had already been agreed on in our discussion of my earlier patch.
-Specifically, you wrote (https://lore.kernel.org/git/xmqq7cmdpbhq.fsf@gitster.g):
+I currently can't imagine a case where a user would want to disable
+this advice, but I defaulted to allowing it. I suppose it is more
+difficult to remove that option later, so I should have defaulted
+to not having it removable via config.
 
-    First allow to configure the
-    custom algorithm from the command line option (and optionally via a
-    configuration variable) and ship it in a release, start giving a
-    warning if the using script did not specify the configuration or the
-    command line option and used the current default and ship it in the
-    next release, wait for a few releases and then finally flip the
-    default, or something like that.
+I can send a v2 without the config option present. (I'll wait a
+day or two to see if others have strong opinions.)
 
-So I thought it would be helpful to follow-up with a patch that implements the approach you outlined.
-But I totally understand that it might be worth discussing this more.
-Actually, I do agree with your assessment that this warning is not great UX.
-
-I think relying on `diff.algorithm` is a natural idea, but it might also be confusing for users.
-At least to me, the name `diff.algorithm` suggests that it's the algorithm used for "git diff",
-but I might not realize that it also influences how my merges are done.
-It's probably common to want different algorithms for those situations as they require different speed and accuracy trade-offs.
-
-In any case, I'm happy to withdraw this patch. Would it be helpful if I start a new thread on the mailing list, independently from this patch, to discuss if and how the default should be switched?
-
-Best,
-Antonin
-
+Thanks,
+-Stolee
