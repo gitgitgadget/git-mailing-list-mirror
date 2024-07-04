@@ -1,69 +1,70 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557C62E62F
-	for <git@vger.kernel.org>; Thu,  4 Jul 2024 05:21:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E78C2E62F
+	for <git@vger.kernel.org>; Thu,  4 Jul 2024 05:22:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720070518; cv=none; b=Hycp2Oj4H6m7v/60RTjjghSVVtitpEh7brJgAEVXYns31NPed6pfpH8lQ4WZG8nyxLew3jmKpfiHTk3Ka2p6jNOFeJqXf4nU8IDM0fZncL3N6HDc1/QWAskCoEL5/TF3GDNMr7wGO/t8R6h7JHbRjUPHStD2gTzdmmLv3eloAxI=
+	t=1720070536; cv=none; b=uhE9+5jQInMqZeCPyWOCt11i4tnYqDOmgcWMP48xm5p+jp9dwPPe+glUz8h1CDYNScEXSirtEKZ6shCenaq2Du1ZT/tMd0yWZwvehCfKRZAbSIsZu+ifmbLCHjIn2z16rar0P3zEsQ6msNOrzKwMJ/UD5vRmhlOVvsMrAPMxWnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720070518; c=relaxed/simple;
-	bh=FjDJfAgmD/6sGp03/ip9Bpz9gTMqyY9Nlz4+OK+NwuE=;
+	s=arc-20240116; t=1720070536; c=relaxed/simple;
+	bh=24ugwcJAxA8SAf5+QY4tRhUwhnxZ0OV7fTUKC5EQXKg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JKUxBJqPe+qz5j/hXVBXChrR+hpAZfE00UNKYwnYoljoS4RcRaCVEuR/A7wsZREm0t9O1fq5XBZZTSLjNrXuo59H8wRuwxDoHxpK1P5pUq5uEGyfmy2zSYIfd4AUxXGT+1QvwIZnZ8lug6X1Qfa3bkNJlzTTKz2aB6TWdC7yI8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GmlLvmS0; arc=none smtp.client-ip=209.85.167.171
+	 MIME-Version:Content-Type; b=tTYAsFk65ikxnlFDyxaT0UBxd4lRqi+CcEkiePacid6qBjkopIkTI1mvSZG29YRzhXsiudCYgkNUhrnLMMfmdfAUrjXMABghYJ/aYNJXx4o0GR2Zs126kyVekHBOmyBH83wv/4lTS8CdOkCO7FKnXPy25kOi2ABasLhlXScdbYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m6WRT4ZW; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GmlLvmS0"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3d853305abfso175254b6e.2
-        for <git@vger.kernel.org>; Wed, 03 Jul 2024 22:21:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m6WRT4ZW"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1fab03d2eecso1475275ad.0
+        for <git@vger.kernel.org>; Wed, 03 Jul 2024 22:22:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720070516; x=1720675316; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=aWCwgTdqSM0iMxFFdFm9R0HDjkPCkP0hbj3vaOSCF40=;
-        b=GmlLvmS0bl4k+MMIwD3vuErV53Owkh25D9KcgIXjqDJw3QfYM859bsd9jHWXEk07BD
-         UBrFuMz72phMlKVP2GSDFnITbIgBBjwffqBezxwmnoCHQEZXtJtG1GKal75l2F+lKbXd
-         3rfN5H18KKlA3ufAFtpHmPxFyKoJ5UNecCHD7n3uCwaGZC8Cc57mFiZ8a3fCTLAeDIlu
-         nm3oMoFY253g251cIdDcuzaoP5QFtIwbv2NhsLDu1/47hqZFRXX3KXWFsL9Mq74VWEeY
-         /NlWkv66Rqo/F8dBVHLFfrSAv3OD/8VJqJ3LK4UiKX9h19F4CSfb8O9aTfOZpF47IOkO
-         +EEQ==
+        d=gmail.com; s=20230601; t=1720070534; x=1720675334; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Usq9Ee0OaZCJO3rK3FQ4sFQvEM7FXYCXyMqERsDTUQI=;
+        b=m6WRT4ZW9wL9kInCGWY8pyDMIvw+NlQATZEus6pymOq2XlLDJfbIN5BZlsOBRTh2Oc
+         YyVTELejFOBXRrpzfDVBSY8kikpGoCdiSHvN4mKe0CjI6+wMDqfdeV77cHPFdo+hoBNk
+         OTJ2kO18zSP+Sfsmbw30872vP68SloEAbldQFP/9yBVuAWBVv3mKZhUbVV8HetTt14Ym
+         BV5SjXxpq7eXq1HJi/B+LUopoRQOuRgAZQytYA7U2fslAEsL+RzOa4G2fK2ZvxHIDrVF
+         JIaXZcmCba8u0+Vsisf883eN66xJ6AuSUfgAOydydxnXFHx4iEYpByf9xYIhkhVuMAdS
+         XBwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720070516; x=1720675316;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aWCwgTdqSM0iMxFFdFm9R0HDjkPCkP0hbj3vaOSCF40=;
-        b=BL0wYq1yvFFevQUYlhBggYia5oS8ilZVndSBbc5gFlag7OfJ0k73YUVXN+ymxGX44n
-         zHBvKeRMr8X2F1lWlsnOlYDZ0JJu+fH8DRzp2YbKJXUmSfrm0GW73CVDyOSnXhh2uEPl
-         2sFV7wuKsujPUw8MOEaEJJMDJmz7gra819bShRQ750c1sW4YMQ/IP7LYFbSC5OVYJA23
-         v6X6U2XmiVbiHgoEKPENFJF9o8dGP0W3wAeJtONULNKk71oO4jgTPDvsdItdH+ezVWel
-         3uBts9MlGFB1NACFf1L2GHQyo2gEFtRaajcJYKExBcSm0Pju79LWarkKqiTnB95VHa49
-         qZjA==
-X-Gm-Message-State: AOJu0YxVm6uCM656ajaKonC20T+1w4oV82C1c03+8bPxbLr3C9iEQhRy
-	PTSCn3xBDP/CLmRAjmgZukSMtCm5Q7yx3c7i1RhqWksxxCjHKxvJ
-X-Google-Smtp-Source: AGHT+IF1odg+1GDjEnC2IoUFuXSOPX4gDfLB3/8BTUj7WqqVTPwoRqkvo/IA/Erozz+oWOg0hKGP6A==
-X-Received: by 2002:a05:6808:a8c:b0:3d5:5ed9:b92 with SMTP id 5614622812f47-3d914eae90amr512943b6e.56.1720070516209;
-        Wed, 03 Jul 2024 22:21:56 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720070534; x=1720675334;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Usq9Ee0OaZCJO3rK3FQ4sFQvEM7FXYCXyMqERsDTUQI=;
+        b=JwB3Syl0N6SzDiYYEeYzJvw5yc9TXU95yKpvl7IdtHoZoh62Sozr6xIrXETz+qy04e
+         TImGZ8JFd/O2gVRVovxnNOW2AvB7HQmuil+il11xnly4poFu2rjE4bj46W6y1vZ/ev8b
+         5n4ZVL47Sz7vBH/D251xRWe/4vHjiJHJZ5t4ram0OWC33WcGARNEF2Fj+Sh4WFmGi6h6
+         MKCxaEg7rlhllYSg3p+m8PsIjGrSlyplBRvli4TAuhOZAVvVh1i3eRNfvhsXXYkCYNjU
+         fOC97e4luG086xR+3l4sM+D+kx3bPYzx6/u3LggF9KFRbkskdLBOOQyjNGKvn6/vKoyn
+         ai7Q==
+X-Gm-Message-State: AOJu0YzEOVEP8UL2l99+wwLLTpAf3zYoNEqnjN2c97zVdaoWFhrGARnI
+	7lFK2GgREdwoKmKqP2Bm0XiA5Wkopwof7dHmP1wUQHxsUG2UdtJw
+X-Google-Smtp-Source: AGHT+IHZwEP5acuFDFEYu5dr8L8yOTAxGpg3gQVB/Z81vzaeCJK+KmYg8YcmpFFXsetZaNceFevfSg==
+X-Received: by 2002:a17:902:d481:b0:1fa:2e45:bcbe with SMTP id d9443c01a7336-1fb33e971femr6715215ad.31.1720070534156;
+        Wed, 03 Jul 2024 22:22:14 -0700 (PDT)
 Received: from localhost (236.219.125.34.bc.googleusercontent.com. [34.125.219.236])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70803ecfafesm11297886b3a.137.2024.07.03.22.21.55
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac15389b3sm112894085ad.121.2024.07.03.22.22.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jul 2024 22:21:55 -0700 (PDT)
+        Wed, 03 Jul 2024 22:22:13 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: <git@vger.kernel.org>,  Johannes Schindelin
  <Johannes.Schindelin@gmx.de>,  Eric Sunshine <sunshine@sunshineco.com>,
   Derrick Stolee <stolee@gmail.com>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 3/4] gitfaq: add entry about syncing working trees
-In-Reply-To: <20240704003818.750223-4-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 4 Jul 2024 00:38:17 +0000")
+Subject: Re: [PATCH v3 2/4] gitfaq: give advice on using eol attribute in
+ gitattributes
+In-Reply-To: <20240704003818.750223-3-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 4 Jul 2024 00:38:16 +0000")
 References: <20240704003818.750223-1-sandals@crustytoothpaste.net>
-	<20240704003818.750223-4-sandals@crustytoothpaste.net>
-Date: Wed, 03 Jul 2024 22:21:55 -0700
-Message-ID: <xmqqjzi191fw.fsf@gitster.g>
+	<20240704003818.750223-3-sandals@crustytoothpaste.net>
+Date: Wed, 03 Jul 2024 22:22:13 -0700
+Message-ID: <xmqqcynt91fe.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -71,44 +72,72 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
 "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> -Credentials
-> ------------
-> +Credentials and Transfers
-> +-------------------------
+> In the FAQ, we tell people how to use the text attribute, but we fail to
+> explain what to do with the eol attribute.  As we ourselves have
+> noticed, most shell implementations do not care for carriage returns,
+> and as such, people will practically always want them to use LF endings.
+> Similar things can be said for batch files on Windows, except with CRLF
+> endings.
 
-I can see (and appreciate) that you struggled to find a good section
-to piggyback on, instead of giving this topic its own section.  But
-do these two make a good mix?  They seem to be totally different
-topics.
+Sounds good.
 
-> +It is important not to use a cloud syncing service to sync any portion of a Git
-> +repository, since this can cause corruption, such as missing objects, changed
-> +or added files, broken refs, and a wide variety of other corruption.  These
-> +services tend to sync file by file on a continuous basis and don't understand
-> +the structure of a Git repository.  This is especially bad if they sync the
-> +repository in the middle of it being updated, since that is very likely to
-> +cause incomplete or partial updates and therefore data loss.
+> Since these are common things to have in a repository, let's help users
+> make a good decision by recommending that they use the gitattributes
+> file to correctly check out the endings.
+>
+> In addition, let's correct the cross-reference to this question, which
+> originally referred to "the following entry", even though a new entry
+> has been inserted in between.  The cross-reference notation should
+> prevent this from occurring and provide a link in formats, such as HTML,
+> which support that.
 
-A naïve reader may say "but isn't it the point of these cloud
-syncing service that they will eventually catch up???" and we may
-want to have a good story why it does not work.
+Thanks for being forward-looking and extra careful.
 
-    You create many objects in one repository in loose form, cloud
-    syncing service kicks in to transfer them to the second
-    repository, and then in the original repository an auto-gc kicks
-    in so some of the loose objects fail to propagate.  The packfile
-    that is the result of auto-gc will eventually propagate to the
-    second repository, but before it completes, the second
-    repository would be in an inconsistent state, and especially if
-    the ref updates are propagated before objects, then the second
-    repository will be in a corrupt state.  It would be a disaster
-    if another auto-gc kicked in there.
+> +With text files, Git will generally ensure that LF endings are used in the
+> +repository, and will honor `core.autocrlf` and `core.eol` to decide what options
+> +to use when checking files out.  You can also override this by specifying a
+> +particular line ending such as `eol=lf` or `eol=crlf` if those files must always
 
-is one scenario I came up with.
+"this" being ... Not what gets stored in the object database but
+what is done to the working tree.
 
+What is being "overridden" is that the earlier two mentioned here
+are configuration variables that apply to _all_ text files in
+general, and the attribute mechanism is a way to give settings that
+are more tailored for each path.  I think the reason I found the
+above a bit hard to understand when I read it for the first time was
+because it didn't "click" that this paragraph was about configuration
+giving the general default and attributes overriding it.  Perhaps...
 
+    ... are used in the repository.  The `core.autocrlf` and
+    `core.eol` configuration variables specify what line-ending
+    convention is followed when any text file is checked out.  You
+    can also use the `eol` attribute (e.g., "eol=crlf") to override
+    which files get what line-ending treatment.
+
+or something?
+
+> +have that ending in the working tree (e.g., for functionality reasons).
+
+I'd strike "(e.g., for functionality reasons)" out, as the next
+paragraph makes it sufficiently clear.
+
+> +For example, generally shell files must have LF endings and batch files must
+> +have CRLF endings, so the following might be appropriate in some projects:
+>  +
+>  ----
+>  # By default, guess.
+>  *	text=auto
+>  # Mark all C files as text.
+>  *.c	text
+> +# Ensure all shell files have LF endings and all batch files have CRLF
+> +# endings in the working tree and both have LF in the repo.
+> +*.sh text eol=lf
+> +*.bat text eol=crlf
+>  # Mark all JPEG files as binary.
+>  *.jpg	binary
+>  ----
