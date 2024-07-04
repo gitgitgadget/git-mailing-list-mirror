@@ -1,126 +1,74 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29743747F
-	for <git@vger.kernel.org>; Wed,  3 Jul 2024 22:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64532802
+	for <git@vger.kernel.org>; Thu,  4 Jul 2024 00:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720046436; cv=none; b=murtgqwf77OPI+7kOk2eFdBtWDBsW9b50pGw7SMktiV/t8ZeKK9UbSkGCW+a2M7lg0VVnkwXZOKgnI7thqW8NIxY+n19hWeX39wBzm8vcXXw5FH4ejM/LZTvOcv0iqRYUC4xSctHjl/JGINQ0Ja/vSsgOev+UIlO0aOLsjhtct4=
+	t=1720052279; cv=none; b=iB/4fdS8QpQSwTtpmX0rjqOCD8jan5cjxPQN+BK8+wPO/ejujfmN5vUEJQT7Jyb5RfbzHAtElzwCwJbDxMZ0pTCb3DH0i+cRCe7qIhixk4J/6tRKkArKOy1GckdQ3pmts6lsOYv0NIIiqETZ4xTzmHGefoEAFRIuIxC1RBDceLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720046436; c=relaxed/simple;
-	bh=PuFpoKc3KZOYN/Hz5Rq7HFeRJ7d6r+/slLkA9YkLG1o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZkLSGReh47VA38bIo2SIy3r9Fc3iihl9/4sET9hbvV8PeWeQk1Bi1tj92Q6FZ1Z3TCMm4CsQyYoJtkChjCEGLQOD7CkEOW+mFCr9+M/GcitajNUSRR0laXjaYSzWqmGfQrvPH6LLjsQuUNmEcQ/3DBoiPTqQCGxJxzuDCcmdBRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=VPQhkg8V; arc=none smtp.client-ip=172.105.7.114
+	s=arc-20240116; t=1720052279; c=relaxed/simple;
+	bh=Vc2qlnnlzHrzB0lquBllUrryQ6bIVbuHIwBVwLluvtg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AfQOmqgAgnkrTqowK2X+AL8mI9qALSYglhnFCbyE+quPGaPvsyCbNQbFGF/Py3kwTeWSkH1zCVsUKu+XD0gd8L78hqt9+cW+m9O+QOZnjNaZPrfAy/GKUzTchnMUaWz/vXOGpctU5QyH6v0SsjdHapGc24yJuxI2FxLv8xFSYSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=scjaB3lz; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="VPQhkg8V"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="scjaB3lz"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1720046426;
-	bh=PuFpoKc3KZOYN/Hz5Rq7HFeRJ7d6r+/slLkA9YkLG1o=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=VPQhkg8VVG5zsueW9w87n4YXaN4FmwPmobRhbnIqm1LOMYAg4oaZGgxr0mKgF+kBl
-	 f5SknmMSzD1ynHpUmXVExYC74DuitzP/7Ak25oBgoXeIFzdiFDmUyDddgJjMpBLGkt
-	 jH6mTo5Hk9qMdK/ffnLl7seOXvBl35Ptii3Z/ZtWGpgiF+2KIU2wbEZC8NNesGQr6l
-	 kn6an81jjktf60XamJyCfZOu6oI4QvyEUywh4H4pMr4HlL26WFM70fqUzLGADqRDMb
-	 vLnSD/r3pU1K0ghPoNOyqZ+q4sL6koEuvNrPj6V9w4RKsCh8zlu8eRKH9c0zoRT5p2
-	 pXFABvNuIzYaJE3bnOD59tz8h8ZmekgG2GIx3tfTGPr9YSFItWHReDKT84dbZCRjcj
-	 cVrJS4xvKmBQYIJbSfwpPdW1MxwWsmF545e0TFUqxuMgmveE6a3wYEGU4kdvdB0W7B
-	 yrZXL+1xl8ZBnH9kogfmNCLSbt6+sVaeLQppEqwqWDoDWBdgxYE
+	s=default; t=1720052276;
+	bh=Vc2qlnnlzHrzB0lquBllUrryQ6bIVbuHIwBVwLluvtg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=scjaB3lzTH63ajlljg7pG9WnDzI08wAchthG6a/Q36dzIYsx0TWzmBB28tSKu6b8z
+	 umUyFO83qO9nomNpfBlUpvpII2IabJ+D5oW2t+mw43mLOTFvjR/NeV9IhwaMCw+7ws
+	 9WH5CitqWi5w7XuUjBDUyDbbmB0iaULP1g5ixWCfXuxAoGLlbnsd3tJr/+uN8i9Iyo
+	 igGqTCOxC6Dvelt7vt7g48oajXwo2Zj+RtI7ImzFk60UE5d6jtZWgXXx2+fRTLQp29
+	 +HlgtbmkOwy2eCLzpYqZqwCP/G+MqA06ZAGZExk4q4bwGjCsXNJwl6EabXOSIYwjgM
+	 vz1aTFLHV3cF7zMlHj4icT3LnQU0Lfz/au4o1tR/bFArRn1ucIU84KpLCg9q9i775E
+	 19d0Q89897FtM7WV44EHA1wl993C+2W5UrPilz1a49w6IioWKMOOvuSuWVRbgvX16M
+	 gdnWDlcRh7yM32Nj6EzPBlHlTgwjbgdI927dRnquseslCBN14MZ
 Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B56AF20992;
-	Wed,  3 Jul 2024 22:40:26 +0000 (UTC)
-Date: Wed, 3 Jul 2024 22:40:24 +0000
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4735C20993;
+	Thu,  4 Jul 2024 00:17:56 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Ivan Pozdeev <vano@mail.mipt.ru>
-Cc: git@vger.kernel.org, "Eric W. Biederman" <ebiederm@xmission.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] unpack-objects: Fix EACCES pushing to remote on vmhgfs
-Message-ID: <ZoXTWECfLzaA-tmU@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ivan Pozdeev <vano@mail.mipt.ru>, git@vger.kernel.org,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Junio C Hamano <gitster@pobox.com>
-References: <20240703134028.876-1-vano@mail.mipt.ru>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/1] Proactive authentication over HTTP
+Date: Thu,  4 Jul 2024 00:17:47 +0000
+Message-ID: <20240704001748.746429-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.45.2.753.g447d99e1c3b
+In-Reply-To: <20240628002742.3421311-1-sandals@crustytoothpaste.net>
+References: <20240628002742.3421311-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AG6iM2oIgoKpf8iK"
-Content-Disposition: inline
-In-Reply-To: <20240703134028.876-1-vano@mail.mipt.ru>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Transfer-Encoding: 8bit
 
+Currently Git only sends authentication over HTTP once it's received a
+401 response from the server.  This series allows users to indicate that
+they (or the credential helper) know what kind of authentication is to
+be performed and avoid the extra round trip.
 
---AG6iM2oIgoKpf8iK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Changes since v1:
+* Add a `none` option to explicitly reset the value.
+* Improve explanation of `auto`.
+* Improve commit message to explain tricky edge case.
+* Note that TLS should always be used.
 
-On 2024-07-03 at 13:40:28, Ivan Pozdeev wrote:
-> Creating files with 0444 mode causes EACCES opening them for writing
-> in some setups where the creating user does not automatically have
-> write access.
-> E.g. on a vmhgfs (VMWare shared folders) with Windows host, this causes
-> the file on the host to be created with the read-only attribute set
-> which prohibits writing for everyone.
->=20
-> Change the mode to 0644, explicitly signaling we want write access.
+brian m. carlson (1):
+  http: allow authenticating proactively
 
-But we don't.  We don't want people to write to these files, since
-they're objects and modifying them corrupts the repository.  The 0444
-mode is completely intentional here.
+ Documentation/config/http.txt |  20 ++++++
+ http.c                        |  60 ++++++++++++++++--
+ t/t5563-simple-http-auth.sh   | 116 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 190 insertions(+), 6 deletions(-)
 
-What you're reporting actually also occurs on some broken NFS
-implementations as well.  POSIX requires that implementations accept
-O_RDWR with 0444[0], and we require POSIX compliance from file systems.
-The solution here is to fix this in the file system so it behaves as
-POSIX requires[1], which I admit may be difficult.
-
-In addition, I'll mention that what you're doing is likely to cause you
-a bunch of pain.  A Unix system is going to store different data in the
-index from a Windows system, so when you do `git status` on one system
-after having done it on the other, Git is going to re-read the entire
-working tree, including re-hashing it, to fix the data in the index.
-That's one of the reasons we don't recommend sharing a working tree
-between different OSes.
-
-[0] From https://pubs.opengroup.org/onlinepubs/9699919799/functions/open.ht=
-ml:
-
-    =E2=80=9CThe argument following the oflag argument does not affect whet=
-her the
-    file is open for reading, writing, or for both.=E2=80=9D
-
-[1] There are a lot of instances where Git fails when the file system is
-    not POSIX compliant on Unix.  Notably, I believe chmod operations fail
-    under WSL for Windows partitions, so doing a `git init` under WSL on a
-    Windows mount tends to fail when it writes the config since the file
-    system isn't POSIX compliant.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---AG6iM2oIgoKpf8iK
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZoXTVwAKCRB8DEliiIei
-gdF6AP4nzCgWxM0NEX1vMoeoQSyNBbK9eylHeyu/I7EK/huW/wD/cD2Hwj1F7COL
-oCb7c91GlESZtOOomNLhN7jbivVBBgo=
-=J1sX
------END PGP SIGNATURE-----
-
---AG6iM2oIgoKpf8iK--
