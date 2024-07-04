@@ -1,135 +1,139 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D61444C9E
-	for <git@vger.kernel.org>; Thu,  4 Jul 2024 21:23:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094C86A039
+	for <git@vger.kernel.org>; Thu,  4 Jul 2024 21:38:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720128214; cv=none; b=UZgma6I6Qfg2+s+EclJaxTDsok/QDjd2D/B5x1XMsPBlPuK9pQgzZjs777TFgfrdFTlxofNKI9NWUSke6D/NLH6sTsO3XcoSlE1XMI5lrY1m+ADfPKwaYi1Otf+SYSiU46HG5vrh64HXUVO9Ee9i/dxnphvzAcZ8bA/gd8fCWVU=
+	t=1720129134; cv=none; b=SkF7liy1qxgdvYGaNK7M0e8Elcx4MpJNAaOerdHkmuxsXZyw7Qt4YzalLuom9b5aHCGbRVidIptrNNwRhmKYDzEwRN+Epc8voIJ9h6Q9SIEQEdlbNvF+/DjLPeyvIr8UoFDoEowF8G+pDHPTYD+me/1uBclpWA7/mQEDpl7jj1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720128214; c=relaxed/simple;
-	bh=Dz8TXF6zvYtbGc8BZIlcpYQ6o0k8x5J2TLe/kxQfSx4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SuK4rGeX8isLr8yIx2cQmDmrDRZmqCkhla1xJVcIx+Ipm/2sYSHTBpxoLRawZan6+FgOs7Bmn3bo+OoLE5WSJfiugiok2mYGoi3RLblPpsNqH0SV7CqpTw0rhSeKZBA7Kb1NOqMSNtzicRVmjqUFVHpfaRDWjJfR7VNmB/h9A/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=uT2+SrJ2; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1720129134; c=relaxed/simple;
+	bh=djICmpHI40sal3yCyK/cJ4+rS0zi6x/IwxRKbWBPNg0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=PVgR/QAncJUTnzTr75GJhP84DKzezHt4PNyWYOpxqvdGLpuDIkgu2ANgNEze+dZvvQqiNwMCrSQd7QwMbdlZ+fL14partVnKfluydmoNNkNnwyjegT+Xuvc/XAIDE3oup5gHgXXZdVrsmJdWV4pmQJzZ9pE8rtp8Y9SrilcFv5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m8t5tihb; arc=none smtp.client-ip=209.85.219.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="uT2+SrJ2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1720128209;
-	bh=Dz8TXF6zvYtbGc8BZIlcpYQ6o0k8x5J2TLe/kxQfSx4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=uT2+SrJ2KF0HztZNhB1WDQUQFPIXCwNmwIt4GUmfA6zaFoN/JE8OTjfhrVFEPsXir
-	 2TwTX977TMphdpymdDNCX7JIke0H7gVKmqlyCtLRd2q1AqD10OePydMEX/7dhyJOW9
-	 E81HwBKMfMj/hdFKvgIFQ6ZUkArD6JyxskoW8b4f5JWqLg8mOjJYqdR6DYWGFvd3+8
-	 OkYnWJM6gcll0W6JdUZypX+em2gVaTjC6iRgLBk2uWMFUwzXpvNl4E1YqiWYnZbRVS
-	 A0h+JYGrNPncyqHbegvK6T78zqsVghKxOt0lxnPrgND/yAq6NvvqEeJLHelIefh5El
-	 XdMevxmZy2iANZh1FfSkJH+trkhYCOgrIPn1NLNdtfDMgMV7ga4RXzPYoy2viNFT+7
-	 nE0hLgYBkvACEiks/suLc7JnGc/XHCdTCYuSxX/FjSze33L3sYfN4qKcUPfz12P0tF
-	 qT0EH+8BmpNkrivoOa4GEtL7YVNxalUIrahItJSxPOxrQ8TkUy/
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7938720992;
-	Thu,  4 Jul 2024 21:23:29 +0000 (UTC)
-Date: Thu, 4 Jul 2024 21:23:28 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/4] Additional FAQ entries
-Message-ID: <ZocS0NgiAbg5Mnzp@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
-References: <20240704003818.750223-1-sandals@crustytoothpaste.net>
- <xmqqzfqx7muk.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m8t5tihb"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e03609bd52dso1022388276.1
+        for <git@vger.kernel.org>; Thu, 04 Jul 2024 14:38:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720129132; x=1720733932; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=A/t+buHedDaFcMDk9N1FTNywehOmXAV/+FAJ4D6o9bg=;
+        b=m8t5tihbMDHkKS6qG5s2VJ08r4m2QVxTe5ox/oRbBGPJLjH5N4/4vEparG9wd2z+zx
+         lcWhQKBso79su4CgjTy9IGDOYGQT2pHZ/VNvCYfC/P8+fyM/ogNDTPFp8/mQceTGUtMq
+         2Kuq6ivlPCfOeLZ8ZfuEaFNOYsZYaVHC6HyvksygkntbbHblPEPT+BKkNqFlqTtjA9ix
+         XMbIi3jg2enTF6yx1um/phSFQXOOELfLId1Q+2l5kE5Nd6aSy8mA7VPb70pgxx9D1aAR
+         gkm1hlM6rmAqS8QbR9yAe2UvCMHf6t9yZBqP8HNaDjuidLfFNbIy/ERJGiK1aHM/tfmn
+         knZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720129132; x=1720733932;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=A/t+buHedDaFcMDk9N1FTNywehOmXAV/+FAJ4D6o9bg=;
+        b=cFjIGwB/AwTS2z4b++cReyUt4265pOUpCf9iyaR6y76og4bQqescYlaJUCigXul20C
+         T4i4Izjg+5VMnQzj4J4rKyEKfA84SwHkwb6oVDzb9sW6xooMUgz6m2nrIaHpcY5Jjqb9
+         RSijuCSLbh3+77dRbwq37VnS1aCoL4IbdZQsIS75GGQNcq0Ui6gnJGqbdrELi6xVg6n/
+         cWc/56SWD4uVCeH9oC6Sr+J06RnB2pe/c+1WtvsbTrzHyoc60z4FbIy7EAo1KY1GAL0h
+         G1GS1SuFoQeljACwW9/BKKqADYKKOF57ZgNrKLHPcICIihhFH0CLNLL1b+f0PRn5mPZn
+         A3/w==
+X-Gm-Message-State: AOJu0Yw/qKvjnMb9v3/s1/lGisbsYIjqletqN4kjcIExTZar120LRhev
+	34TS67GLqdKxNA3Z3luYla1kSgHyBhNonqRb33Q9kr7hrQEYmwL75LdJCAK3Uc5k22FkYPZJ58e
+	DUEzY0JVYNUNQ0RpeO0J5k0E1A+ETug==
+X-Google-Smtp-Source: AGHT+IG3yw/FYNp7D5TXBIaqTX4+hxX2S21fBvqUp/qj3nbrRHcqjFxvaobrYUaxJFYLw/ucqMLBIJuqji5LOsmzOJ4=
+X-Received: by 2002:a25:6983:0:b0:e03:5bca:aee6 with SMTP id
+ 3f1490d57ef6-e03c1a1eed4mr3102677276.54.1720129131916; Thu, 04 Jul 2024
+ 14:38:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Z+HzzQhFVBYIirUI"
-Content-Disposition: inline
-In-Reply-To: <xmqqzfqx7muk.fsf@gitster.g>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-
-
---Z+HzzQhFVBYIirUI
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <CAFjaU5sAVaNHZ0amPXJcbSvsnaijo+3X5Otg_Mntkx2GbikZMA@mail.gmail.com>
+ <CABPp-BGVdQZCr=0NzY9vpUJqaH+5yxJdpvfUqqhtWB4V=nkwDw@mail.gmail.com>
+In-Reply-To: <CABPp-BGVdQZCr=0NzY9vpUJqaH+5yxJdpvfUqqhtWB4V=nkwDw@mail.gmail.com>
+From: Emanuel Czirai <correabuscar+gitML@gmail.com>
+Date: Thu, 4 Jul 2024 23:38:41 +0200
+Message-ID: <CAFjaU5vC--bGWBBPP=6YW43sXR6rDgLA7sTL4G81xVeBKsgFrg@mail.gmail.com>
+Subject: Re: `git diff`/`git apply` can generate/apply ambiguous hunks (ie. in
+ the wrong place) (just like gnu diff/patch)
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-07-04 at 05:22:27, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > This series introduces some additional Git FAQ entries on various
-> > topics.  They are all things I've seen in my professional life or on
-> > Stack Overflow, so I've written documentation.
+On Thu, Jul 4, 2024 at 10:08=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
+ote:
+>
+> On Wed, Jul 3, 2024 at 8:25=E2=80=AFAM Emanuel Czirai
+> <correabuscar+gitML@gmail.com> wrote:
 > >
-> > There were some suggestions in the past that the text "modify, tamper
-> > with, or buffer" might be somewhat redundant, but I've chosen to keep
-> > the text as it is to avoid arguments like, "Well, buffering the entire
-> > request or response isn't really modifying it, so Git should just work
-> > in that situation," when we already know that doesn't work.
->=20
-> Buffering the entire thing will break because ...?  Deadlock?  Or is
-> there anything more subtle going on?
+> > Subject: `git diff`/`git apply` can generate/apply ambiguous hunks (ie.=
+ in the wrong place) (just like gnu diff/patch)
+>
+> Yes, this is already known.  In fact, it was one of the big reasons we
+> changed the default backend in rebase from apply to merge.  From the
+> git-rebase manpage:
+>
+> ```
+>    Context
+>        The apply backend works by creating a sequence of patches (by call=
+ing
+>        format-patch internally), and then applying the patches in sequenc=
+e
+>        (calling am internally). Patches are composed of multiple hunks, e=
+ach
+>        with line numbers, a context region, and the actual changes. The l=
+ine
+>        numbers have to be taken with some fuzz, since the other side will
+>        likely have inserted or deleted lines earlier in the file. The con=
+text
+>        region is meant to help find how to adjust the line numbers in ord=
+er to
+>        apply the changes to the right lines. However, if multiple areas o=
+f the
+>        code have the same surrounding lines of context, the wrong one can=
+ be
+>        picked. There are real-world cases where this has caused commits t=
+o be
+>        reapplied incorrectly with no conflicts reported. Setting diff.con=
+text
+>        to a larger value may prevent such types of problems, but increase=
+s the
+>        chance of spurious conflicts (since it will require more lines of
+>        matching context to apply).
+>
+>        The merge backend works with a full copy of each relevant file,
+>        insulating it from these types of problems.
+> ```
+>
+> > This doesn't affect `git rebase` as it's way more robust than simply
+> > extracting the commits as patches and re-applying them. (I haven't look=
+ed
+> > into `git merge` though, but I doubt it's affected)
+>
+> This was not always true; and, in fact, rebase is actually still
+> partially affected today -- if you pick the `apply` backend or pick
+> arguments that imply that backend, then you can still run into this
+> problem.  The merge backend (the default) is unaffected, and this
+> problem was one of the big reasons for us switching to make the merge
+> backend the default instead of the apply backend.
+>
+> git merge is unaffected.
 
-When we use the smart HTTP protocol, the server sends keep-alive and
-status messages as one of the data streams, which is important because
-(a) the user is usually impatient and wants to know what's going on and
-(b) it may take a long time to pack the data, especially for large
-repositories, and sending no data may result in the connection being
-dropped or the client being served a 500 by an intermediate layer.  We
-know this does happen and I've seen reports of it.
+Thank you very much, I really appreciate knowing this very interesting
+info! Cheers!
 
-We've also seen some cases where proxies refuse to accept
-Transfer-Encoding: chunked (let's party like it's 1999) and send a 411
-back since there's no Content-Length header.  That's presumably because
-they want to scan the contents for "bad" data all in one chunk, but Git
-has to stream the contents unless the data fits in the buffer size.
-(This is the one case where http.postBuffer actually makes a
-difference.)  I very much doubt that the appliance actually wants to get
-a 2 GiB payload to scan, since it probably doesn't have tons of memory
-in the first place, but that is what it's asking for.
+This also tells me that I shouldn't expect a solution for `git
+diff`/`git apply` any time soon, else it would've been done at that
+time, I suppose.
+It's all good, I'll find some kind of workaround for my use case.
+(probably something based on `diffy` as it's simpler for me to grasp
+than the C code)
 
-> Are we affected by any frame boundary (do we even notice?) that
-> happens at layer lower than our own pkt-line layer at all (i.e. we
-> sent two chunks and we fail to work on them correctly if the network
-> collapses them into one chunk, without changing a single byte, just
-> changing the number of read() system calls that reads them?)?
-
-No, that's not a problem.  We read four bytes for the pkt-line header,
-and then we read the entire body based on that length until we get all
-of it.  This is also the way OpenSSL works for TLS packets and is known
-to work well.  If the underlying TCP connection provides a partial or
-incomplete packet (which can happen due to MTU), we'll just block until
-the rest comes in, which is fine.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---Z+HzzQhFVBYIirUI
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZocSzwAKCRB8DEliiIei
-gZeXAQCHp80EHtjjylk5OUf5G2PllYCDwdQB8VqgikWaqfEyJwEA/joyAe3KECLe
-ZungrGO2MRNCknnT22aNb+M7V8JJ3Qo=
-=zSVK
------END PGP SIGNATURE-----
-
---Z+HzzQhFVBYIirUI--
+Thanks everyone. All the best!
