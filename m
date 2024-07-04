@@ -1,153 +1,89 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B65846F
-	for <git@vger.kernel.org>; Thu,  4 Jul 2024 13:14:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4506D1ABC25
+	for <git@vger.kernel.org>; Thu,  4 Jul 2024 13:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720098900; cv=none; b=mYMCr+rrcxpP37GJWYk8hb13Q9oECvhV9j3MZRs11xRYDbWTQxxY2WrvnwF6esdPqLkSKmCkAtVwLw0NaK5ulwmtfLqK0kzBZbTNNrJ9sO1yh4hyXX+vyoPl2gu308Q3Xu0ehuk5R89m2yKlr+lkYFzNrgrKb/nMv2oO74FgBIo=
+	t=1720101391; cv=none; b=rx0Ka9tYDqUPY1G9wZ9VaPidpFLq5h9K5/7fxNYM5iiRWJ+6brzmwv3KAifVSrCKvPL0JI+ZslN3JFyYhb9NcZ8xAk/y5+1zADXhauP4froE/NG0cUY7bl6waBSHTX/b/VECjzYd0efyfHRPhnGTWGcfuHSQz8HtMf17icqOeO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720098900; c=relaxed/simple;
-	bh=oLPhw3EIy1WpKw/01kAChdgYXX3moRNFBMar+d1lq7U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=bGEOqoO8x4A9nXKSh8iVErW0c4ilQrZhYM6rqEmjN0CoLulgzTArl4AaJE92MUvRNHq3JWxqwyT6gxTbaxYI/S9Sgp1KTfLdSGKHdqQVmbbSCL41jd2AL3OGYcHz+N1w31gbqT3Fjtz1oITxlVFAkVkH5MO5vqUTdRK6TJIXUzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bTmcsaUh; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1720101391; c=relaxed/simple;
+	bh=AqhYgqxxvRMq4h6Rn/8UsPSY6x70ahPDg/7eAD4QqQo=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=QwahmsY0OxUrPksz7E+TAUivFhePfVbh93lG18QfznL77Ntn451z/rUPYnCZNBVSpbxjBwuNEWJGR/QQgT8nUYCI1DnfqOKgWTrWdv767DAvpG8uJjwqlD+odikcaEGEkbwtD3RspxIhfU4dqX9b3SwOrCxFKfsWX1k/v8D9opQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bI/VoGoV; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bTmcsaUh"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-424ad289949so4147855e9.2
-        for <git@vger.kernel.org>; Thu, 04 Jul 2024 06:14:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bI/VoGoV"
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-52e98087e32so719940e87.2
+        for <git@vger.kernel.org>; Thu, 04 Jul 2024 06:56:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720098897; x=1720703697; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=eoUeZ3s/mup1kK03nM2Vyf0PKGIwNq5rImHLq2Jqumk=;
-        b=bTmcsaUhPE++1DFbRkNWMaZOnkZBcrSi4V+SNwYQVkM4fth56jYt94Gxp0QGazj+wC
-         KMWi0ToNF7kBkY3cF0Y7iVRAWrWhUn7E8IP6m0kX4BtTpnXoon6oi/F/ccmulHgXGtlw
-         Ttzvk9/tmJv2M26vgh8FnbqRzHLmygav8tfRAf8DIluYgW3X/L0UHmvYz8sv1DZQkRN9
-         ZnMFo7vrcKkzklCzgXfINHcT7AKtXO3jrVusiNcEzgKqLTylIZ8jrnEJ2Qb9rHQ6B7eR
-         E7V8TsCwawBPDfQnFDZG+hFOU0d/KlzzOFzipBHyq+0MfXpII0GY8AUUrGRqWSbSJf2P
-         XnWg==
+        d=gmail.com; s=20230601; t=1720101388; x=1720706188; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=AqhYgqxxvRMq4h6Rn/8UsPSY6x70ahPDg/7eAD4QqQo=;
+        b=bI/VoGoVDmf/2t+cvU7PbpmwRAdxTxBB2KYjX7OtRQdvlTMDNqgyrEtQBAFdaXqMhk
+         9r6VJwRKufNvJPYCX0txwL+/qot0ub6LJIPsXGLWBF1IoJ5+jfuV9XHwgEf3X0Kcd2QK
+         tQ5Wqm92WLLgsc7GVYzwQBRaO/hCY6QKrAVd4qQCazRCGWljEDgT0DEOsnN8CVZAqxzX
+         M1H0NlOqgwI+bGSdLvCl1n4iWqLbndzFpI0EWZzguBN1j5k4Ixx3qsLeCdKPnvKh/lRX
+         oA4zS7fDit0Ma9McItOta5OfqCgkixIxRaOTzXiLm9kYs2HJVQGm2o57EdoW3E+ZAkw9
+         Wpkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720098897; x=1720703697;
-        h=content-transfer-encoding:in-reply-to:cc:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eoUeZ3s/mup1kK03nM2Vyf0PKGIwNq5rImHLq2Jqumk=;
-        b=X6ATW5Yq9Ww9ymr8qcl0ryvuqwxbdB2XN8+TAXI9IUsflSCLgHx9JngRtQ5CnvVOYQ
-         wlB1q5V3JPSE82+2PhUfRCjj/ZSCqcoUF7OIQVhfvPCl13fCzBEfDXeTLEZEeYaz2w4a
-         /zsIOT7qAT9ARowJLS/qPwSCfevtx/RwNyWDbTDOgmaWdUypUZPQteA7a2sI07zK4MWs
-         kkRedSfeuqhtZBwJdd61TCoKYArjyCL4aWUWP2Q7jSU75d/ZMHeXEKUELgKIW+Yi2QsV
-         pUBxtMd/eY0JThDPFsiZoLUNILvWfQ5avQsW2/OvtsMdhcPWCj30gPTidM52r0E1yREW
-         /qUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV2JloBFJQkKcNzoeLbUqFw3bzh6iBNGrJrGGqIe/Nk024U1c1xkMVE2XaA1Fvyr+fQUdKQkfhzfzRA3f8iHmrJHoIn
-X-Gm-Message-State: AOJu0YzSMnY6Gvo0SJdqJiDG0ChZpfUn6GXcfqFnerB8u8NkbqMN8xLm
-	MWUDQprVfGNGzhc2OXznKu/UNKjKRVClVbyK53fxu3eNOdV23YSO
-X-Google-Smtp-Source: AGHT+IEWKGrva0AS3ZY0URhuS2L/izOWKZEWWeaTpC7keecQYl70RpSjWuELalTCqh9fB+1iwzwgkQ==
-X-Received: by 2002:a05:600c:28a:b0:424:9f28:22ff with SMTP id 5b1f17b1804b1-4264a3cf814mr11136245e9.5.1720098897295;
-        Thu, 04 Jul 2024 06:14:57 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4264a1d50c3sm24229585e9.2.2024.07.04.06.14.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jul 2024 06:14:57 -0700 (PDT)
-Message-ID: <ab974e62-098c-4200-bee3-7de8d9115516@gmail.com>
-Date: Thu, 4 Jul 2024 14:14:56 +0100
+        d=1e100.net; s=20230601; t=1720101388; x=1720706188;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AqhYgqxxvRMq4h6Rn/8UsPSY6x70ahPDg/7eAD4QqQo=;
+        b=wQ3CqsMT9Ioxl54rS3G2x8FXRKIC8sVQ1mPmEtvz5MCftSpPLrguVcGf8/Aa4opkQ1
+         M6SFWK+MB2J+8xLXEuZV44tROy090qNr6SFqFkRZll98VPm/7aV8TP5zmlx3/+TXHsy5
+         kYLAGi0mxCJCcXnt5aXiN8Bk6Zmu2mFJZhA4tVlso+9m3fEbctOlGDZ9s74p/Du/GB/N
+         wnE52Zlzi8JUeU6g2ucu7mjgFE/XA2DcTn6gfEF0tBapH9exEoC5FHuQDm1pny+9SHn0
+         YdXoFsHfC4nQI26GON5bE6H+CJ7642WpFxTvpoXFJUM6LXo3sSnf9FAT9HyCrBs/v1fi
+         RfhQ==
+X-Gm-Message-State: AOJu0YxIC92DpIgukBB96B+Gg/nOKykmBTJcMFMWiMuk13M+3cy/YhCr
+	/17NZfLIi3amz0fRIaAKSEBq9Lqg65WocWsqEZRK7KgQvz0XouWmsTLsUr20HjV93mk02eOwSNK
+	hCaVkT1Nv2M0yIh8FnzRuAzY3GpdX2Bv6+BIfNA==
+X-Google-Smtp-Source: AGHT+IHu1jpkgzzXBdEuhiwsfQx3LxEUKJONhGdjQxwJaZuxMtJ7N37b836D7osXXq2+kwywiemHWSiJLQoTU5V4xU8=
+X-Received: by 2002:a19:ca13:0:b0:52c:dbe2:69ba with SMTP id
+ 2adb3069b0e04-52ea0637929mr1104055e87.33.1720101387739; Thu, 04 Jul 2024
+ 06:56:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: git crashes in `git commit --patch` with diff.suppressBlankEmpty
- = true
-To: Ilya Tumaykin <itumaykin@gmail.com>, git@vger.kernel.org
-References: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
- Johannes Schindelin <johannes.schindelin@gmx.de>
-In-Reply-To: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Abraham Zsombor Nagy <abrahamzsombornagy@gmail.com>
+Date: Thu, 4 Jul 2024 15:56:15 +0200
+Message-ID: <CANoqcKYwgA5sT0fAgSp4atpuPOaUSDALRVcf9XoajOe0g6xibQ@mail.gmail.com>
+Subject: Unable to push to git server
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Ilya
+Hello Git Team,
 
-Thanks for reporting this and for the example reproduction. The problem 
-is that the code that splits hunks expects context lines to begin with ' 
-'. We could fix that fairly simply but I wonder if we should change 
-'diff-index' and 'diff-files' to ignore diff.suppressBlankEmpty instead. 
-The plumbing diff commands already ignore most of the options that 
-change diff output so I'm not quite sure why they respect this 
-particular config setting. I've cc'd a few people to see what they think.
+I hope you can help me.
 
-Best Wishes
+I'm trying to push my code to GitHub, however I'm unable to do so:
 
-Phillip
+abris@dell:~/Projects/maradandohalo/server$ git push --set-upstream origin main
+Username for 'https://github.com': nazsombor
+Password for 'https://nazsombor@github.com':
+fatal: protocol error: bad line length 175
+send-pack: unexpected disconnect while reading sideband packet
+error: failed to push some refs to
+'https://github.com/nazsombor/maradandohalo.git'
+Enumerating objects: 31, done.
+Counting objects: 100% (31/31), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (22/22), done.
 
-On 03/07/2024 15:41, Ilya Tumaykin wrote:
-> Hello.
-> 
-> `git commit --patch` crashes with diff.suppressBlankEmpty option enabled 
-> under certain conditions.
-> 
-> 
-> Steps to reproduce:
-> 1. Prepare .gitconfig:
-> [user]
->      name = User
->      email = user@example.com
-> [diff]
->      suppressBlankEmpty = true
-> 
-> 2. Initialize repo:
-> $ mkdir git_bug && cd git_bug
-> $ git init
-> $ echo -e 'test\n\n test \n\ntest' > test.txt
-> $ git add test.txt
-> $ git commit test.txt -m 'initial'
-> 
-> 3. Make changes:
-> $ echo -e 'test\n\n test\ntest\n \n' > test.txt
-> 
-> 4. Try to commit new changes
-> $ git commit --patch test.txt
-> 
-> 5. Try to split the first hunk, press 's' in the git-commit interactive 
-> interface.
-> 
-> 
-> Actual results:
-> diff --git a/test.txt b/test.txt
-> index 366cd4b..611ca9d 100644
-> --- a/test.txt
-> +++ b/test.txt
-> @@ -1,5 +1,6 @@
->   test
-> 
-> - test
-> -
-> + test
->   test
-> +
-> +
-> (1/1) Stage this hunk [y,n,q,a,d,s,e,p,?]? s
-> BUG: add-patch.c:994: unhandled diff marker: '
-> '
-> Aborted (core dumped)
-> 
-> 
-> Expected results:
-> git-commit splits the hunk and continues.
-> 
-> 
-> Comment:
-> If I set diff.suppressBlankEmpty = false, then I get the expected behavior.
-> 
-> git --version: 2.45.2
-> OS: up-to-date Fedora 40
-> 
+I use Debian 12. I tried this with the git installed via apt as well
+with the git compiled from source code. Git version: 2.45.GIT
+
+I also asked this question first on StackOverflow:
+https://stackoverflow.com/questions/78670914/git-fatal-protocol-error-bad-line-length-173
+
+Thank you for your help.
+
+Sincerely,
+Abraham
