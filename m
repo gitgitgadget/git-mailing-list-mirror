@@ -1,186 +1,91 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEE3170836
-	for <git@vger.kernel.org>; Thu,  4 Jul 2024 07:15:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293791AB514
+	for <git@vger.kernel.org>; Thu,  4 Jul 2024 09:44:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720077348; cv=none; b=ihAw13SdY8Evoneh8vzcApNGtsd1ZsCk5fljWb2giYr0rZhrUWniuZyYduxFUk/mvxSov1Wf/ozLFC8UmhC5J8mlSaZez5uWuGo/C2L+ozCfMua5Q2WknJLuT6Uk7isxp9K31dmRWVNpboJMAHZ6nTXIR7g9JfafMhxAd07zKPQ=
+	t=1720086271; cv=none; b=Pc1lnS78qDZp04dOWqo3GUTSfarKz57Zceu19ZCn7LxwCccPdj2diKUIZ4YrX0SowKf0Riuq9qvwqKQTBILIxI4BiKhOexc2Kw9tl5hoeSYSMd4XZ7okPl7CNYnpl3Qet9r8XBh6Zcv8+Onqd1Vr5AgnxfZ/VkHMKff2CkBsRKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720077348; c=relaxed/simple;
-	bh=B7FnEoxoLHZjeAtbB76Id9Xsmur/YePJpWKHbrUN2dU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=tiCpTCcisAzoHHcQPcprimZEr1aBePkV7Cd6I2r7x/AY3GrnG90RChXCZPMCPt6+mO31wknzWb0k9Gi22+XwR6KFhVaF9LbGzaIiJCwtl/uDVEe6Qt2X3JEy+nxlEaD772MhooapVOV9aA7gDsv3sBLfY3bpLNQA4JlLame6khk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eUYNrKQN; arc=none smtp.client-ip=209.85.219.175
+	s=arc-20240116; t=1720086271; c=relaxed/simple;
+	bh=spRxUvYSH8ugbFwbp8WmRu0iZzICp51v94sXYZQBzBc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ASwT/Q/kl2uGpprScvkDX7WUl7NUrNv8AmnexT2a1B/BSXGYqXUeXmjHKtRfasRW1TZKG5YEPTq5jyPGcph3K042wPOHpIRl2i894kVuWGQGdvLPRra2N3SktNuI8e6m1XmZ3ACqWcBWJaWT8hKPOHTXc/SS/AjaDxP55AZiU3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UU+Do5pf; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eUYNrKQN"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dfa71ded97bso258004276.1
-        for <git@vger.kernel.org>; Thu, 04 Jul 2024 00:15:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UU+Do5pf"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ee8911b451so4600521fa.2
+        for <git@vger.kernel.org>; Thu, 04 Jul 2024 02:44:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720077346; x=1720682146; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pza5ZefLJY3G/i7vSOrLotWXK7jVVrC8y5bfdAGHuo8=;
-        b=eUYNrKQNCirnfrnCO5asvzu1pcf2881gBotmDvn40gMoym3DCEjQf+lbksvsI1XVjz
-         CYlW9LSK2FJuUyaxPbqb6eYyfBtBc5WZxr3KUBatTUQUpIy3QpBNebOktLqW1koNyCk0
-         3Ar/9ez6/m+7VqoAYywz7whM7n67RNabh04wMdtRQrvRjhCPJ4ILLxvD+ZTo5DRDp183
-         4h3wPtPqI/BkBmBHPiVLuwRcSS0CX0AliXxEweHwzoPGRbNQuQe7WoIg2ZresLFZSrUQ
-         xxRSi1ASp+G2qrX1G+J22TD3J9L9oOQwcBZtQ4xUMoUFDODY/oNZkNYPfdNctiV7t9uz
-         oIqw==
+        d=gmail.com; s=20230601; t=1720086268; x=1720691068; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=yP2WseTt/smjGyTNcgCd7oD8pSNvu2SbvYwIZCYNook=;
+        b=UU+Do5pferwjwJ2fUfo1NZRQKby2FhHnBJhGusE1cQ56QU5RcRClhEmTUU5eJNfZkt
+         g9eBakmv88bvYLIVQHB7c6KPFy/UzscS1pNnRJHntCvNNNSqs+6SHxK41e4cvhz6cQKc
+         JrMt4Vi3wxQg29UKZyKrxMqp8bqVh/4+ABJ31cC6wNXIawb0hZ6CiPtNUWmrZ6w2kQKj
+         q80dXvVqFfXkRfyL7A9GtaQtpgVVdmH/bTGzEAfRmi8yUbpo3TTo0xayvcCZk576e+v5
+         1DJ42pjHcWXCd6sDr+bsl+jDagC9Dv6Zxqgl0egal2FpU9SLneninTUc6drrMijktrFB
+         e+Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720077346; x=1720682146;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pza5ZefLJY3G/i7vSOrLotWXK7jVVrC8y5bfdAGHuo8=;
-        b=WJH+9m3HRQVHMB12owtag5u/0HH0/ED/bop59qPkJDDIYgWvI/fCONQo/1x+rOOnFr
-         0B5DoBKjiQmt0Om09wopuuXlP7PAyA+3voCgC6nbOlg5osTlRoZyCIdsSl7hTUs0lPu0
-         nbSWsyN9PFojveiN+JQDoa9jItaO3wlIoqa0PL9PDjCIYB5dvh/PY7UykG38pdLR0ZZm
-         bUJuVWtkPdVT/owc1nE4dMPNBUPo33pEObSrMI/QAVx4NwYad1UXDyy7PmCXzAUVqIb8
-         kkO6flmdC0J6Mf4i8aDXsM2nyZKjboY7weXtmyB/fcU6ye9HhC+z9jFrbU09/9+ziq3c
-         lNsA==
-X-Gm-Message-State: AOJu0YzLMoQ0i8jBEj5ojFU4wQVZGT1cE8Zbebm8f5RXutsybM24LIkp
-	tUa4LgscxVi+LfnE+V27eP77+lAxQBvNE4PNgmvza38pYSR8sNwo3zNwtLUcUF8n4OOdO8SGaRv
-	But6cCkoT/Ga/0WC/vBDrA96oIYdgZQ==
-X-Google-Smtp-Source: AGHT+IE/leAJ9IAD2180chLpDXMBW6QxHa7iwB4vYC+Y3pxXxpal3pcfrlln0l3YUyKxTESwewljItpargHHi6AxG1Q=
-X-Received: by 2002:a25:2647:0:b0:e02:c458:c70f with SMTP id
- 3f1490d57ef6-e03c2a67ac9mr318253276.22.1720077345792; Thu, 04 Jul 2024
- 00:15:45 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720086268; x=1720691068;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yP2WseTt/smjGyTNcgCd7oD8pSNvu2SbvYwIZCYNook=;
+        b=hqSnW6RPTXju0Wnd7iLcNh9ahQd06PpnTPzepQo+HklYqCOhEC3BUS4Tjli2F6i5jn
+         0U058PSlV+MB2cFlMAp5wC2vLnQ3u90YbQrkY4MbsLh78aNOfLhClMvapGAj5iS8KoBB
+         unJBDbuD8D6cr893OMQFGVUuxpWnIsVBrzu/KWjirio3blU+IPuG1oPiAUz1sLmPDjtP
+         Bb+Xl7CvWwyXmCQx3BZtYXKmPoGaZHbYx43AbkTu5x6kDFbaU1CEN1bb0Qu2bi//yaFL
+         7TDpKZTr9GYIkCCv8z8F5rRFfprw/7xH4ds+a2ForQ0uG9LVa2jHaVAyeSgDWbi2rb1O
+         rJkw==
+X-Gm-Message-State: AOJu0YzcEnbp7kWHgHXNFLTR7UpJGFVUoJ7imJATkebEgNulWSPxtNoV
+	kAeQNddQzK2QUhtb5yxSejbzZce6hIL1Igz+umaft0k1iCPnYq0F
+X-Google-Smtp-Source: AGHT+IGhn6F+V2RF4iMTtpPoFcsykNeKsZa8bmA5lw5TGtoo5f/c4/p6p5hPaE3nLUlo3j2/cxYJ3g==
+X-Received: by 2002:a2e:2c0b:0:b0:2ec:5b10:685a with SMTP id 38308e7fff4ca-2ee8ed8847bmr6814211fa.17.1720086267887;
+        Thu, 04 Jul 2024 02:44:27 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4264a2fca8bsm17134245e9.47.2024.07.04.02.44.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jul 2024 02:44:27 -0700 (PDT)
+Message-ID: <6d747a7d-9091-4ec1-b059-6ecf16d89846@gmail.com>
+Date: Thu, 4 Jul 2024 10:44:26 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFjaU5sAVaNHZ0amPXJcbSvsnaijo+3X5Otg_Mntkx2GbikZMA@mail.gmail.com>
- <772a1bd2-dd21-459a-8b95-7605fd7f52dc@kdbg.org>
-In-Reply-To: <772a1bd2-dd21-459a-8b95-7605fd7f52dc@kdbg.org>
-From: Emanuel Czirai <correabuscar+gitML@gmail.com>
-Date: Thu, 4 Jul 2024 09:15:35 +0200
-Message-ID: <CAFjaU5tmurBrTu_oGu526c362bi9eEgKWV9unwbBGmm9r7Dznw@mail.gmail.com>
-Subject: Re: `git diff`/`git apply` can generate/apply ambiguous hunks (ie. in
- the wrong place) (just like gnu diff/patch)
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH v3] t: migrate helper/test-oidmap.c to
+ unit-tests/t-oidmap.c
+To: Junio C Hamano <gitster@pobox.com>,
+ Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+ Josh Steadmon <steadmon@google.com>,
+ Christian Couder <chriscool@tuxfamily.org>,
+ Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+References: <20240703062958.23262-2-shyamthakkar001@gmail.com>
+ <xmqqle2ie9b4.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqle2ie9b4.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 3, 2024 at 11:01=E2=80=AFPM Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Am 03.07.24 um 17:24 schrieb Emanuel Czirai:
-> > With the aforementioned `diffy` patch, the generated diff would actuall=
-y be
-> > with a context of 4, to make it unambiguous, so it would've been this:
-> > ```diff
-> > --- original
-> > +++ modified
-> > @@ -1186,8 +1186,12 @@
-> >                      self.gctx.shell().warn(msg)?
-> >                  }
-> >              }
-> >          }
-> > +        if seen_any_warnings {
-> > +            //use anyhow::bail;
-> > +            bail!("reasons");
-> > +        }
-> >          Ok(())
-> >      }
-> >
-> >      pub fn emit_lints(&self, pkg: &Package, path: &Path) ->
-> > CargoResult<()> {
-> > ```
-> > this hunk is now unambiguous because it cannot be applied in more than =
-1
-> > place in the original file,
->
-> This assertion is wrong, assuming that the patch is to be applied to a
-> modified version of 'original'. There is nothing that can be done at the
-> time when a patch is generated to make it unambiguous, not even if the
-> entire file becomes context. The reason is that the modified 'original'
-> could now have the part duplicated that is the context in the patch, and
-> it would be possible to apply the patch any one of the duplicates. Which
-> one?
->
-> -- Hannes
->
+On 03/07/2024 17:20, Junio C Hamano wrote:
+> Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
+> 
+> The changes since the previous round look exactly as expected.
+> Looking very good.
 
-tl;dr: you're correct indeed, a hunk is truly unambiguous only when
-`git apply` determines that, and it thus depends on the target file to
-apply to; `git diff` can generate unambiguous hunks only with respect
-to the unchanged original file, but applying that hunk to a changed
-original file  only determines if a hunk is relatively unambiguous,
-that is, unambiguous with respect to that changed original file. Both
-diff-ing and patch application are needed to ensure unambiguity.
+Yes this is looking really good now
 
-That is correct, which is why it's necessary to have `git apply` also
-modified so that it tries to apply each hunk independently to the
-now-modified original to see if it can be applied in more than 1
-place, and if so, fail with the proper error message; in addition,
-after applying it, it would try to apply it again, just in case
-applying it created a new spot for it to be reapplied, and if it
-succeeds to re-apply it, it would fail again. I kind of mentioned this
-I believe, if not, my bad.
-Both `git diff` and `git apply` would have to each ensure that the
-hunks are unambiguous for the hunks to be considered unambiguous,
-therefore you're correct in your statement that my stating that the
-hunk is unambiguous right after generation via a fixed `git diff` is
-wrong. It's merely unambiguous only in the context of applying it to
-the original file, but as soon as a new modified original file is
-presented, it can be ambiguous as it is, unless `git apply` can
-determine that indeed it cannot be applied in more than 1 place in
-this new modified original file, but both: applied independently(just
-to be sure) and during the application of all previous hunks until
-then, maybe even more than these 2, because the following hunks can
-create new spots for it, so a reapply could make that hunk succeed
-even if all others would fail. Not entirely sure here, how to properly
-ensure this, that's why someone more knowledgeable might.
+Best Wishes
 
-Ah, I see that I actually tried to say this(the above) after that
-statement  but I used wrong wording "will fail" instead of "should
-fail" or "would fail" (if fixed, that is):
-> this hunk is now unambiguous because it cannot be applied in more than 1
-> place in the original file, furthermore patching a modified future file
-> will fail(with that `diffy` patch, and ideally, with `git apply` if any
-> changes are implemented to "fix" this issue) if any of the hunks can be
-> independently(and during the full patch application too) applied in more
-> than 1 place.
-
-For what's worth, barring my lack of explaining, the `diffy` patch
-I've mentioned already does this: makes sure the generated hunks are
-unambiguous at diff generation, and unambiguous at the time of the
-application of the patch. But definitely both are required.
-
-I guess, I call the hunks unambiguous at diff generation but it
-implies they're only unambiguous on the original file, and because
-patching is also "fixed", patching can ensure the hunks cannot be
-applied in more than in 1 spot and I thus call them unambiguous at
-patching as well. But both are required (diffing+patching) to ensure
-that indeed a hunk is truly unambiguous, therefore, you'd be right to
-say that any static diff file even if it had the whole file as context
-cannot or shouldn't be called unambiguous, because that's only half of
-it; because applying that diff as patch(which is the second half of
-it) is necessary to see if it's unambiguous as it depends on the
-target that it's applied on. Thus even if the generated hunks(or
-patch) is unambiguous from the point of view of having generated it,
-applying it to a modified original file can cause the patching to fail
-if ambiguity is detected. Seems better to fail(either at diff
-generation, if context length is too high, or at patch application if
-ambiguity is detected) than to silently succeed and hope that a
-compilation will catch it, or worse a runtime behavior is eventually
-spotted to be wrong. Rust files appear to be far more prone to this
-ambiguous diff generation due to rustfmt which formats them like seen
-above with 1 brace per line, and having the possibility of consecutive
-such braces...
-
-Thanks for your reply. Definitely need to think more about calling
-hunks unambiguous, without also specifying that they're truly only so
-only when applied(which really makes them only as strong as
-_relatively_ unambiguous, since they depend on the target file to be
-applied to). Maybe call them semi-unambiguous, or unambiguous with
-respect to original file, unclear yet. Perhaps whoever decides to make
-a patch for this issue can call them differently, or just be aware of
-this.
-
-Cheers! Have a great day everyone!
+Phillip
