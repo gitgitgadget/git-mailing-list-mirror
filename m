@@ -1,59 +1,60 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243ED1A0AE5
-	for <git@vger.kernel.org>; Thu,  4 Jul 2024 13:09:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B65846F
+	for <git@vger.kernel.org>; Thu,  4 Jul 2024 13:14:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720098585; cv=none; b=GYMloNmMiui0EfGd33gvUK6qOZnOxjA4qVMgm5hCnkfF7eAsKee0nOEB5wwdQWECFNrMSkxjCc2us9j6SOXDPOTPD+z9thlKrz8/bLfEDMTrFuNMsSvzPw3Q+a7lHvJYe270EHCCn9FbGTb7NDgDCJfVGycMEtFiUYM/4tO89vM=
+	t=1720098900; cv=none; b=mYMCr+rrcxpP37GJWYk8hb13Q9oECvhV9j3MZRs11xRYDbWTQxxY2WrvnwF6esdPqLkSKmCkAtVwLw0NaK5ulwmtfLqK0kzBZbTNNrJ9sO1yh4hyXX+vyoPl2gu308Q3Xu0ehuk5R89m2yKlr+lkYFzNrgrKb/nMv2oO74FgBIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720098585; c=relaxed/simple;
-	bh=ibY8adP2Suxosi270ttg5fpAiDsAXpdDLPMLNSytwSA=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
-	 In-Reply-To:Content-Type; b=VZ+sn0hBlBdkKLlO/vGmObEJROB2qrTS7PEaUBjmY/UD0POhPb8iFgmIGbYgUU0ij1SiSoubJgprF9N6+v1McL63k0wuDAuRIrzj5CzkkdlCWICcKu1SQDOnJwagXajZHpTe3+Y83DgNF1TFaQnVxfteZxp0iw2j3ilTFOPmrm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JBw2CjTQ; arc=none smtp.client-ip=209.85.128.53
+	s=arc-20240116; t=1720098900; c=relaxed/simple;
+	bh=oLPhw3EIy1WpKw/01kAChdgYXX3moRNFBMar+d1lq7U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=bGEOqoO8x4A9nXKSh8iVErW0c4ilQrZhYM6rqEmjN0CoLulgzTArl4AaJE92MUvRNHq3JWxqwyT6gxTbaxYI/S9Sgp1KTfLdSGKHdqQVmbbSCL41jd2AL3OGYcHz+N1w31gbqT3Fjtz1oITxlVFAkVkH5MO5vqUTdRK6TJIXUzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bTmcsaUh; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JBw2CjTQ"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-424acf3226fso4377825e9.1
-        for <git@vger.kernel.org>; Thu, 04 Jul 2024 06:09:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bTmcsaUh"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-424ad289949so4147855e9.2
+        for <git@vger.kernel.org>; Thu, 04 Jul 2024 06:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720098582; x=1720703382; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fDt0eZprWVI3MGPgS92WT4IjuKtzsbWCaeJhWvfyaNo=;
-        b=JBw2CjTQCngIkxY8HRm0umDFsQ4vFHYS6RDz+GJDYd+O/tkLe3f3Ld3Lj/r+hg0uek
-         HpLlwV/iXDnXcWrSx7AHZhgJdcjK9amt6LMgQZmChVc23UB/MbpNp9u4l0iv2OHS6b49
-         dIowm2DEm3JNwjAJa0+qth3XT3y5aXQ0x28Fk90i8F95hpGcU1f0U12LgrmjmSHGV/8J
-         cLgf3ar3xp+8U0dykNx19bIyTrFN21oQRR8DUYvVsl67kxAh0W6V7Bwmc9ldmfbXIYVF
-         E8CZo5uZXY/kX9PmVXVWo8+2x/UHnj9ozCLSFXzOQaByyhljz03LZwf5/o2XU22rbEMf
-         GQMA==
+        d=gmail.com; s=20230601; t=1720098897; x=1720703697; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=eoUeZ3s/mup1kK03nM2Vyf0PKGIwNq5rImHLq2Jqumk=;
+        b=bTmcsaUhPE++1DFbRkNWMaZOnkZBcrSi4V+SNwYQVkM4fth56jYt94Gxp0QGazj+wC
+         KMWi0ToNF7kBkY3cF0Y7iVRAWrWhUn7E8IP6m0kX4BtTpnXoon6oi/F/ccmulHgXGtlw
+         Ttzvk9/tmJv2M26vgh8FnbqRzHLmygav8tfRAf8DIluYgW3X/L0UHmvYz8sv1DZQkRN9
+         ZnMFo7vrcKkzklCzgXfINHcT7AKtXO3jrVusiNcEzgKqLTylIZ8jrnEJ2Qb9rHQ6B7eR
+         E7V8TsCwawBPDfQnFDZG+hFOU0d/KlzzOFzipBHyq+0MfXpII0GY8AUUrGRqWSbSJf2P
+         XnWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720098582; x=1720703382;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fDt0eZprWVI3MGPgS92WT4IjuKtzsbWCaeJhWvfyaNo=;
-        b=QlaW96yA6++VUtz/fWJGlq6nQaXrJHrh5dPnXP/+GCXZZNRifTJhXPyUN/Amb7xrl8
-         ypeC4JWs/jiWpg97KmmY/2Xo1IIw+VZVpR8ByHEGxyjUqsKeSf9qKuV+VGUDbk6N8dZD
-         2avBKSUDcA2gKrBTKnCriFcfbH8O5mFR0a0mX9W+23fq353PHNRqPEymnEWouGAi9UIg
-         ne8TaVLI/5k6YPa4Lu4Mwpm3casNpm7kZ//yEBRCckthgsseU0aGT7vUPiFzy5a3ecqZ
-         dCalHO6qshf6gKzw9NxGQumDtcRinQBleBUmarIXDPnw0TbFFVqLjuKypDX8N28TSnnY
-         14hQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXcejDsBo4noj2LMmWMMFTknxfB8dm2ofC5VTgTG04HNxmaPksM/28CsnMRKMI4DTu3vH0CiD9K9vpwTmSsw95S1jeG
-X-Gm-Message-State: AOJu0Yx3sutez912tq3b9jS9Gb3jDK0pQVrzp95qrc8erLyueenb/m4e
-	+qy6FKNw2/uC+4myngpirdxJ4mvPJWdJKN0jSiwOhfxDh6BzvDNx
-X-Google-Smtp-Source: AGHT+IFFwRzjKc/FMcdH8bYhFknGoIwoY3yBOOdyBdAtn4N7zhOgF5CiYI183b5ZWicjsjDsujGO8A==
-X-Received: by 2002:a5d:6182:0:b0:367:9409:f7f7 with SMTP id ffacd0b85a97d-3679dd34158mr1181001f8f.31.1720098582176;
-        Thu, 04 Jul 2024 06:09:42 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720098897; x=1720703697;
+        h=content-transfer-encoding:in-reply-to:cc:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eoUeZ3s/mup1kK03nM2Vyf0PKGIwNq5rImHLq2Jqumk=;
+        b=X6ATW5Yq9Ww9ymr8qcl0ryvuqwxbdB2XN8+TAXI9IUsflSCLgHx9JngRtQ5CnvVOYQ
+         wlB1q5V3JPSE82+2PhUfRCjj/ZSCqcoUF7OIQVhfvPCl13fCzBEfDXeTLEZEeYaz2w4a
+         /zsIOT7qAT9ARowJLS/qPwSCfevtx/RwNyWDbTDOgmaWdUypUZPQteA7a2sI07zK4MWs
+         kkRedSfeuqhtZBwJdd61TCoKYArjyCL4aWUWP2Q7jSU75d/ZMHeXEKUELgKIW+Yi2QsV
+         pUBxtMd/eY0JThDPFsiZoLUNILvWfQ5avQsW2/OvtsMdhcPWCj30gPTidM52r0E1yREW
+         /qUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV2JloBFJQkKcNzoeLbUqFw3bzh6iBNGrJrGGqIe/Nk024U1c1xkMVE2XaA1Fvyr+fQUdKQkfhzfzRA3f8iHmrJHoIn
+X-Gm-Message-State: AOJu0YzSMnY6Gvo0SJdqJiDG0ChZpfUn6GXcfqFnerB8u8NkbqMN8xLm
+	MWUDQprVfGNGzhc2OXznKu/UNKjKRVClVbyK53fxu3eNOdV23YSO
+X-Google-Smtp-Source: AGHT+IEWKGrva0AS3ZY0URhuS2L/izOWKZEWWeaTpC7keecQYl70RpSjWuELalTCqh9fB+1iwzwgkQ==
+X-Received: by 2002:a05:600c:28a:b0:424:9f28:22ff with SMTP id 5b1f17b1804b1-4264a3cf814mr11136245e9.5.1720098897295;
+        Thu, 04 Jul 2024 06:14:57 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476? ([2a0a:ef40:64f:8901:b1e3:645a:b3c0:7476])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3679dd5ea09sm1543537f8f.65.2024.07.04.06.09.41
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4264a1d50c3sm24229585e9.2.2024.07.04.06.14.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jul 2024 06:09:41 -0700 (PDT)
-Message-ID: <c2de7f4e-e5dc-4324-8238-1d06795a2107@gmail.com>
-Date: Thu, 4 Jul 2024 14:09:40 +0100
+        Thu, 04 Jul 2024 06:14:57 -0700 (PDT)
+Message-ID: <ab974e62-098c-4200-bee3-7de8d9115516@gmail.com>
+Date: Thu, 4 Jul 2024 14:14:56 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,67 +62,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 6/6] t-strbuf: use TEST_RUN
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, phillip.wood@dunelm.org.uk,
- Josh Steadmon <steadmon@google.com>, Git List <git@vger.kernel.org>
-References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
- <1bf053ae-957e-4e9a-90f0-11cc76848ce9@web.de>
- <bh5ectgtwdaeltflggzwnwhobewvcqqelforr4sfcmq47rnnrl@mzspptlhpofx>
- <d768f700-654a-4030-bd45-e8e3dea351b5@gmail.com>
- <e4da5c4d-2900-4d62-b855-7c4382a2b949@web.de>
+Subject: Re: git crashes in `git commit --patch` with diff.suppressBlankEmpty
+ = true
+To: Ilya Tumaykin <itumaykin@gmail.com>, git@vger.kernel.org
+References: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <e4da5c4d-2900-4d62-b855-7c4382a2b949@web.de>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+ Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 02/07/2024 21:55, René Scharfe wrote:
-> Am 02.07.24 um 17:14 schrieb phillip.wood123@gmail.com:
->> Hi Josh and René
->>
->> On 01/07/2024 20:58, Josh Steadmon wrote:
->>> On 2024.06.29 17:47, René Scharfe wrote:
->>>
->>> I think this commit in particular shows how TEST_RUN() is more
->>> convenient than TEST(). (Although, arguably we shouldn't have allowed
->>> the setup() + callback situation to start with.)
->>
->> I think the counterargument to that is that using TEST_RUN() makes
->> the tests noisier and more error prone because each one has to be
->> wrapped in an if() statement and has more boiler plate initializing
->> and freeing the strbuf rather than getting that for free by calling
->> the test function via setup().
-> 
-> I guess these are two sides of the same coin.  Explicit initialization
-> and cleanup is closer to what real strbuf users do, more idiomatic.
-> Which helps to see what the tests are actually doing.
-> 
-> The wrapping if is less annoying than a wrapping function that I have
-> to name and call.  The condition is just !ctx.skip_all, though, (for
-> now at least) so we could do something like:
-> 
->     #define TEST_START(...) if (!TEST_RUN(__VA_ARGS__)) return test_done()
-> 
-> ... and tests could look like that then:
-> 
->     TEST_START("this and that");
->     check(this);
->     check(that);
-> 
->     TEST_START("whatever");
->     check(whatever);
-> 
-> Perhaps a bit too much magic, though?
+Hi Ilya
 
-I think so. It's an interesting idea, but at some point someone will 
-probably want to be able to run a subset of the tests in a file like 
-"--run" does for the integration tests so I don't think we want to 
-assume we can skip all the tests just because any particular test should 
-be skipped.
+Thanks for reporting this and for the example reproduction. The problem 
+is that the code that splits hunks expects context lines to begin with ' 
+'. We could fix that fairly simply but I wonder if we should change 
+'diff-index' and 'diff-files' to ignore diff.suppressBlankEmpty instead. 
+The plumbing diff commands already ignore most of the options that 
+change diff output so I'm not quite sure why they respect this 
+particular config setting. I've cc'd a few people to see what they think.
 
 Best Wishes
 
 Phillip
 
-> René
+On 03/07/2024 15:41, Ilya Tumaykin wrote:
+> Hello.
+> 
+> `git commit --patch` crashes with diff.suppressBlankEmpty option enabled 
+> under certain conditions.
+> 
+> 
+> Steps to reproduce:
+> 1. Prepare .gitconfig:
+> [user]
+>      name = User
+>      email = user@example.com
+> [diff]
+>      suppressBlankEmpty = true
+> 
+> 2. Initialize repo:
+> $ mkdir git_bug && cd git_bug
+> $ git init
+> $ echo -e 'test\n\n test \n\ntest' > test.txt
+> $ git add test.txt
+> $ git commit test.txt -m 'initial'
+> 
+> 3. Make changes:
+> $ echo -e 'test\n\n test\ntest\n \n' > test.txt
+> 
+> 4. Try to commit new changes
+> $ git commit --patch test.txt
+> 
+> 5. Try to split the first hunk, press 's' in the git-commit interactive 
+> interface.
+> 
+> 
+> Actual results:
+> diff --git a/test.txt b/test.txt
+> index 366cd4b..611ca9d 100644
+> --- a/test.txt
+> +++ b/test.txt
+> @@ -1,5 +1,6 @@
+>   test
+> 
+> - test
+> -
+> + test
+>   test
+> +
+> +
+> (1/1) Stage this hunk [y,n,q,a,d,s,e,p,?]? s
+> BUG: add-patch.c:994: unhandled diff marker: '
+> '
+> Aborted (core dumped)
+> 
+> 
+> Expected results:
+> git-commit splits the hunk and continues.
+> 
+> 
+> Comment:
+> If I set diff.suppressBlankEmpty = false, then I get the expected behavior.
+> 
+> git --version: 2.45.2
+> OS: up-to-date Fedora 40
+> 
