@@ -1,103 +1,122 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3408818AED
-	for <git@vger.kernel.org>; Thu,  4 Jul 2024 20:02:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FC22F23
+	for <git@vger.kernel.org>; Thu,  4 Jul 2024 20:08:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720123346; cv=none; b=iH5EdPj7R75vu0wkhY53UJbCuTNeEJ2jqxY/O97RZkqvt+SE4MOVLgGg1pauZkyylysWpvFZv3oZPGM7Bk4smdT9XGev76HiglfXqM08PttyKtaMXWpP8OJLeUbfHt47YGCa3wqsgkQmiYmBy4VtU2FSNRtAO2SGOv5PSS9nZNI=
+	t=1720123686; cv=none; b=A8a7ALExdxPKIrD1qxWNNSdMwC+nrApQF03li6vvdU95uafQ4ho8nnZyhEPQz2N335ZGROD3UegognK3i59E+VSuFcYXtnzf1N4YhTb4+Kkrm870N91woZ3YbgRvUzyJjgamgU6omWRCgRGKmA5YF8pyD2v22CQS3pbGDjZe17U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720123346; c=relaxed/simple;
-	bh=38qDBlZLlnfC3tcRH/BvpSz5TwsEmat5y8nZ0ZSFOq0=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=pETIVvrpakKddL763qpvMkDYurKgbpzircwnQg3K+jO7HgvAXnO16MDWhsUs9LeK9n0cTLOQSN3X5Pj2OWky0NSkNeN9qsaw6X2vX0sMLqFyt+N0MvFbMXQ1K9MD7I15gqnZ/JhglRKfHsXB01Yc/o+9WKIqcpeNcEzTkqnf0Kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e7TFf8WW; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1720123686; c=relaxed/simple;
+	bh=fHwt5HzSrQt565RPkV+L3b2WdHLc0drgRfsBUTVhSxw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RECyN474RN2ii/ARd3NnMtgHNDOppmTNppzrzTqR3z+AMO5U0FgouezIAjGp/xNfFXYxazLM/VWpCag3UejGA8mRLVv0SI+YCzN3IJnfT/mN/UObvQNCCMr8bTX2BwErtbGmTJVFatCjIp4UcqBd+v6F/k4vjpbUsMMxSkpQKTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MQt6CJ71; arc=none smtp.client-ip=209.85.166.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e7TFf8WW"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-425814992aeso6395235e9.1
-        for <git@vger.kernel.org>; Thu, 04 Jul 2024 13:02:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MQt6CJ71"
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-7f65a32a58fso32114039f.1
+        for <git@vger.kernel.org>; Thu, 04 Jul 2024 13:08:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720123343; x=1720728143; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ILcFlOMAi9kG9NzfT2rwD0eNKOAN4sfWc9VgjgjRbrs=;
-        b=e7TFf8WWPBg9U7JjDYimxYSEG+Y+EB0b9/7DI9lTYykn+fn9fAG0f8f9ntTDqgwN8L
-         bDupHUizn7Z88EIJdArP6Y+F4diCtNxYsitt4tolAnLvTvpwVw6Y0T9srUoyH+iuWDbA
-         LwFSkv+LWVgRByAwwsg1boFVfEOKwRiwtD+dHxyK6rcbBOS3l7QTwW0pyMQ4d+YkGrPp
-         ymNx/PhlZZsuVvIh+/eVHj6j1WVzrH3zTY5MBePF+zzWCOA05SG540dI6Xv/3ruBoFTx
-         h+CzkqCWqq6zu68Bpf+CcB666//nE0ChCKqyenyMMFQ/J/5virgrHzAiIctRrpBn9K14
-         AfYg==
+        d=gmail.com; s=20230601; t=1720123684; x=1720728484; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lzIlimJVIVTffUQnHV3cnjA4xIcGKTstj3EF+lh55WA=;
+        b=MQt6CJ71PxkawJwbcKqmA+hHQl189k2Zn/uZCTmQcGQK3b8JsnI4sMHkI6Tl4DvAcX
+         WDdLjFFTm2mDgBPIUQICqIzuekN/CO1PQrDUIaVs+QjJdA52bvL6Gwu9h3qruDpRg5+d
+         wvZB3Vwd18IZj1IkAi28qh2TctkPBttFURYpgB5bWeE3fskJLxX5WnD2cfRfebQuI+OA
+         dXI6kO5gwggiSxsPz/a5kJkJgtsxy58vNLUxobPjag73jloDZ/OXf5kPxuZxMtnGRw1B
+         jmg8O3XHMEGGPBjr8+FKy12LPuXRqNz+W0DQqY7zWyOL2jbAyt3ljCdXmWrydWhEcRfd
+         sR6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720123343; x=1720728143;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ILcFlOMAi9kG9NzfT2rwD0eNKOAN4sfWc9VgjgjRbrs=;
-        b=smebx1raqBQygC27piGfMRsOuM+TUcbG9ZJdK8HuwegfSbKUUeizmv2SSXgEAXX7m9
-         zZNDeSd+56plvY4F89YZTU2d9EIVTzoegzUMNClvSXnY1oDDEpO1F32fSM6YYBojwW+S
-         uxK5ZO5rVeO44M015+NkWBX8MKNtrUuszEEAlXSfd0vpLQe4j1mkGFwb7AXhCUbFm4lK
-         WiYPPtlnRUosnWWLtrRl5rZBMqw+rDurChiMxPsMJPtMJCOorD1/XeqeRPngr+0qB0YQ
-         nUTfx71LvfInpvKsn8wio48oQTOHGMU7GtckcL8CRDyIDClSfLRHgEUCp6rtCc5mXOvi
-         lbzg==
-X-Gm-Message-State: AOJu0YzEs9iwUzICqEk+MjoRAjSS4pnO6jJU2sJKbFDAO8BLE9+Arj1L
-	FKRKqiJtmMoNjcbFfHdr9PSadvWcpUvSdF2kRYKtJrBOkleAMHHnzzhGrQ==
-X-Google-Smtp-Source: AGHT+IFMLGkkTaJ6KHvYSikLGGGBLlHdrlLnHTdzeLENB9EOzfOOCn9+A5rAktNB3w7zTURVhtYStQ==
-X-Received: by 2002:a5d:574e:0:b0:364:6c08:b9b2 with SMTP id ffacd0b85a97d-3679dd66e59mr1783690f8f.45.1720123342439;
-        Thu, 04 Jul 2024 13:02:22 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36783e9faa8sm8109532f8f.64.2024.07.04.13.02.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jul 2024 13:02:22 -0700 (PDT)
-Message-Id: <pull.1758.git.1720123341342.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 04 Jul 2024 20:02:21 +0000
-Subject: [PATCH] merge-ort: fix missing early return
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1720123684; x=1720728484;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lzIlimJVIVTffUQnHV3cnjA4xIcGKTstj3EF+lh55WA=;
+        b=Toc1VLiqp+jRG7/6b06xeusIVxu6Kq6LY55zWk8Qpc0N9QpYQbN3VEpEgy3PPKaXAd
+         iJ0ZbqEhxI0QCuejZUoA+ZUOgAy6syvYr9QF7S3qc57asWPAi2rdtRMA0JLldl4JiA25
+         dmyVAt4NC3J6tG3arb8+h02SisH+B7Wjfzf6oVZ87w6IyUhFyn/OnBGfivyv4TnasHAQ
+         SiHlAwQpT3zGUECs2O+PzqJEwj9EdZBAF4m0+OeEk4WlJ3F0DQwVSCWNUlKShwZBDdIL
+         nV7BQN5L7Mw+b8R/6CSeGFP01mu5Ep1E0iW+yRRWgcvMtUpzW+rIrOPjxuIOTfIeI/IH
+         7qXg==
+X-Gm-Message-State: AOJu0YzCJdBxVAUakACP1yB7NTaIehOdGfW/fYKV+8Et9k3m3k9aN6Qu
+	cH950ClM2u1w+SiBaDgSCZnfFld69EOs6HgHTEqAv1mVTCg+Z1bjChxs4h43S3UmtoVbWVDRXLf
+	C5zrJTvFxDxtsetHY2hR1MO1Xs3BGLPBx
+X-Google-Smtp-Source: AGHT+IFGJZ4tfmuXOKApbm3fdfq65ofmh/qbdpCGZqjfc/CR8dOkkGANdxhH0G8YwhMwJhgPIxs7pj55q4EWIWA7EfM=
+X-Received: by 2002:a5d:81cf:0:b0:7eb:db06:e067 with SMTP id
+ ca18e2360f4ac-7f66debe0b4mr291600139f.9.1720123683745; Thu, 04 Jul 2024
+ 13:08:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
-
+References: <CAFjaU5sAVaNHZ0amPXJcbSvsnaijo+3X5Otg_Mntkx2GbikZMA@mail.gmail.com>
+In-Reply-To: <CAFjaU5sAVaNHZ0amPXJcbSvsnaijo+3X5Otg_Mntkx2GbikZMA@mail.gmail.com>
 From: Elijah Newren <newren@gmail.com>
+Date: Thu, 4 Jul 2024 13:07:52 -0700
+Message-ID: <CABPp-BGVdQZCr=0NzY9vpUJqaH+5yxJdpvfUqqhtWB4V=nkwDw@mail.gmail.com>
+Subject: Re: `git diff`/`git apply` can generate/apply ambiguous hunks (ie. in
+ the wrong place) (just like gnu diff/patch)
+To: Emanuel Czirai <correabuscar+gitML@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-One of the conversions in 500433edf49 ("merge-ort: convert more error()
-cases to path_msg()", 2024-06-10) accidentally lost the early return.
-Restore it.
+On Wed, Jul 3, 2024 at 8:25=E2=80=AFAM Emanuel Czirai
+<correabuscar+gitML@gmail.com> wrote:
+>
+> Subject: `git diff`/`git apply` can generate/apply ambiguous hunks (ie. i=
+n the wrong place) (just like gnu diff/patch)
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    merge-ort: fix missing early return
-    
-    This is a patch on top of en/ort-inner-merge-error-fix which is in next.
+Yes, this is already known.  In fact, it was one of the big reasons we
+changed the default backend in rebase from apply to merge.  From the
+git-rebase manpage:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1758%2Fnewren%2Ffix-fix-error-cases-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1758/newren/fix-fix-error-cases-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1758
+```
+   Context
+       The apply backend works by creating a sequence of patches (by callin=
+g
+       format-patch internally), and then applying the patches in sequence
+       (calling am internally). Patches are composed of multiple hunks, eac=
+h
+       with line numbers, a context region, and the actual changes. The lin=
+e
+       numbers have to be taken with some fuzz, since the other side will
+       likely have inserted or deleted lines earlier in the file. The conte=
+xt
+       region is meant to help find how to adjust the line numbers in order=
+ to
+       apply the changes to the right lines. However, if multiple areas of =
+the
+       code have the same surrounding lines of context, the wrong one can b=
+e
+       picked. There are real-world cases where this has caused commits to =
+be
+       reapplied incorrectly with no conflicts reported. Setting diff.conte=
+xt
+       to a larger value may prevent such types of problems, but increases =
+the
+       chance of spurious conflicts (since it will require more lines of
+       matching context to apply).
 
- merge-ort.c | 1 +
- 1 file changed, 1 insertion(+)
+       The merge backend works with a full copy of each relevant file,
+       insulating it from these types of problems.
+```
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 8dfe80f1009..d9ba6e3e523 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -3618,6 +3618,7 @@ static int read_oid_strbuf(struct merge_options *opt,
- 		path_msg(opt, ERROR_OBJECT_NOT_A_BLOB, 0,
- 			 path, NULL, NULL, NULL,
- 			 _("error: object %s is not a blob"), oid_to_hex(oid));
-+		return -1;
- 	}
- 	strbuf_attach(dst, buf, size, size + 1);
- 	return 0;
+> This doesn't affect `git rebase` as it's way more robust than simply
+> extracting the commits as patches and re-applying them. (I haven't looked
+> into `git merge` though, but I doubt it's affected)
 
-base-commit: f19b9165351a4058832bb43560178474c7501925
--- 
-gitgitgadget
+This was not always true; and, in fact, rebase is actually still
+partially affected today -- if you pick the `apply` backend or pick
+arguments that imply that backend, then you can still run into this
+problem.  The merge backend (the default) is unaffected, and this
+problem was one of the big reasons for us switching to make the merge
+backend the default instead of the apply backend.
+
+git merge is unaffected.
