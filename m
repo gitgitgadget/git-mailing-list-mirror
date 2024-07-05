@@ -1,69 +1,64 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49892208A7
-	for <git@vger.kernel.org>; Fri,  5 Jul 2024 20:56:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CD279F3
+	for <git@vger.kernel.org>; Fri,  5 Jul 2024 21:01:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720213007; cv=none; b=HvIwxzpyPuvQYMp+oePL+AfEOm/B1kobpxvLKxrSnte2XHWTTFBuzPU6aEi/zcS4OjKwbSOhc62D9ppgq4esXHFPNkQ9eT2z1VDA8iskTTeOjSkb1ISHkYIkn7XmT4T0e1B+vR7H8xEWwPaHK31+flmOLrA6TYyjHR8/FOjKauY=
+	t=1720213311; cv=none; b=UyMEM+Oz3XC0meMXUyfL1FYtom3W6ZSfUFG+VKyQ1L8/U8vOWIxaM0N1viFZGKyVlXm0SuKwX3CIm7pVJyK2QBxATimR5IF6jqaGi+as43qBIc6yT1rt7AF0EQUpdbH0BT3YABqQrMXmIjTp6S7fojakUCoNgLxa8D4yu03hrLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720213007; c=relaxed/simple;
-	bh=XUzmYG1h58OSkWkREglr0DSltzINQWZZWzV1YHQWe2k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=T6ChZOUKbmW+sR7IDfp97MqPyIeLY1qklnVOQUoAJvnCcaXs9RIyz1uysobEhMrLtqVAFhTaKZYt5qUT7FX+l/2KLlwt/V+zn28G3U+QiZEsjnJceC9H0fXg9qXd8FUea7Dg1LYjixnRUhT37LUWUI+2A2sD4dnOTgskdEnWTLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DrUAG8Z8; arc=none smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720213311; c=relaxed/simple;
+	bh=+MO8IDwmI88WRYPdWlZqtel3rv4inc7bvnYUcpqtcy8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uZXPvT+9kDE/a0R1wVZoMdGYN8b4i2H5rnrelZa51xCDDwgK2mVR+uGtcPA5EfJH0EMdZIQymvpFsd9VD7r6rgyGn3jpdNNYTgR1PL//Gx7nQhv+abgtQKhGEbDO7/TJpq9jSNPLTfvWZpIMG3M29y6n1v25jGzo0l7IA4Ql8pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=hd6zN2Pc; arc=none smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DrUAG8Z8"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-64be6442539so1703697b3.3
-        for <git@vger.kernel.org>; Fri, 05 Jul 2024 13:56:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="hd6zN2Pc"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-70224a923fcso1278014a34.1
+        for <git@vger.kernel.org>; Fri, 05 Jul 2024 14:01:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720213005; x=1720817805; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=c+XamF1ST0S14iWXHeknyhydHMGxQ0bqLGch3Rr0ALU=;
-        b=DrUAG8Z8NZb4Ruqb1A1zINCZDXRZu5NpKOhtHb1h8mA2/0hww5jss1yNuT4PhT0UC+
-         TWvHbrUDDCGjd6nCZPlesZKWDeV5rqBH6jd/LTvGvvxhGTOpwiHFAOb+LXfpbMVLNJ+t
-         1wS9Qjb/DRc5GnlXU5IldhxGBUbvSqn47wBrk8nSY7h78krB5iZfwG6+ovEB20iqkOhY
-         J46MJcKNLGH/x37pxFuCstsAFrM4aq3E/CSLEUj0SREsXAUv60M3dJzrloNWHiFsPxeT
-         lI+N7z+zb8z2SNhTtdW7SlLf4Pe6Ymc2X1WWIgckiAWjciCdmYNJL6+pAwBHxPZezP62
-         xH5g==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1720213309; x=1720818109; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+MO8IDwmI88WRYPdWlZqtel3rv4inc7bvnYUcpqtcy8=;
+        b=hd6zN2PcvOgiOorwSOBKOy89hXiSIYhNiU9nwEtrJ7UvD0b4opMIOfW5nyXT0/0Svg
+         lvVOilHEvPWZ2Rq4+4zKQvsqiNdWuFute/Yc9r7PpCl3rq6lj7hu+IYZJ9EYCFHLbpSn
+         R7gqhxDe7uU6QVfBaJCTNiixH8I5nijHT/pz8SWLWOwUyIm+a/CoqnmMryhTsa0NVKSH
+         3RdB60cXQEgnRV0//knT0VhtIQGhh3ZhcyBTU3vggtEfsRLzhQLR0uR35RcFcILU1W3l
+         9KlLUsAT9IsJritrh1jH+B2OUOeCCuGuKaJLNctG5hDV7117UgJWyR5leunxt8ak5QAw
+         cTEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720213005; x=1720817805;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=c+XamF1ST0S14iWXHeknyhydHMGxQ0bqLGch3Rr0ALU=;
-        b=cTYm+w35N86ELVS+mSKHWhMbutuXisBwip0G8mENRaWZQ5xximrlMeuZAtMNMhaRQc
-         secYwAmiI696j/F24x9/QJ3IGRF0i597NOcjl9bnsmIBQZsr8ZigPLL7DfOxCvWzQqZh
-         ZNVLyGb1sNxvegu1GhuAYJC+70XGs8LGOs/992GfQBUa2XJ/mxiRuO+77nEK5K39idhM
-         RkW7MRjGIefAv1f+l1ZkM+kHxW/KjnCDNNMI16E2ydVAgyIEbMbKgDn90kXeDdDIR4lk
-         67TT5GJ+Rctp17YtoDISEdrQ/kVd1qrSDlQHhHA1BOGWhh8HZrw/YoJNhRruR67EGyIQ
-         V46Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXqg3ILTEzdtuFdbGJGPauxVL+WLZWvpoYuvwSAsVhULe09QhhD9gNoQLqb39sQZj9d/m+JmCLczHOmw8rfJ5lFNabM
-X-Gm-Message-State: AOJu0YxH8Z7/ItaNAZvuw4oRjasXVfllEhHuNPCNj7NFkoQ5C8tqHcSP
-	m3UiMsLCiKiA3d4lR28GOpqkfUQ1Dsd2Yt5UWjIQjlAFD/N2zcF/
-X-Google-Smtp-Source: AGHT+IE+iduLgMXf/Le+htQSp66vBE79+VEgqccFPlA9670nGAFxX7kJ9zryxZYS1bDOGhmF55KdOg==
-X-Received: by 2002:a81:8390:0:b0:630:b000:f548 with SMTP id 00721157ae682-652d95c39famr44379267b3.3.1720213005026;
-        Fri, 05 Jul 2024 13:56:45 -0700 (PDT)
-Received: from epic96565.epic.com (pat-verona-h.epic.com. [199.204.56.213])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-654c79b9b06sm1637817b3.36.2024.07.05.13.56.44
+        d=1e100.net; s=20230601; t=1720213309; x=1720818109;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+MO8IDwmI88WRYPdWlZqtel3rv4inc7bvnYUcpqtcy8=;
+        b=LcW5xuhAN7r2kqFNzewK1hlCVWgvBPwifM8smLrk/KF4yyZQavJ7vcGxa6oQxKdKue
+         XZwpK66qf0FTsUZJs03xh+SL9KH9rYuzS1e9W0jvra0ZpHzEHKKk5ymMP8ZKRTHCe1VS
+         +8r9hHygH4QjqDjM6oIE5NHaavOPxZcY1ON0eWLw3Hh2OjNMMMNzoVSGmnkEjjHj9krs
+         sjDC3WnAlCVIMPMHCRCXQulPcWnGOi019BJjkBXhzJJh01ug9kH4X9zGGI9p6Ihq+1tD
+         RDR0FltxPz+6VGlYU6ggJkFejZopFvYg1A9L64mrM71UjIVLyGBRz/dly0DBcDcRz6Uy
+         G+NQ==
+X-Gm-Message-State: AOJu0YyqGwTFUp+5Q625wCT8anv3ijqFS6SZIG1EP06Jyg/oNpuf0F/E
+	0Oi7FvVaRVsQDLK7A7hC1Ktw7Isrf9DVIVkNraa0zCYGV/7HMagTEbUVTUBXEn6oKP+vUNNP02C
+	Rsmo=
+X-Google-Smtp-Source: AGHT+IFgUEXyVxt4U+hJm80a3AAZvDIbk95xUXBSxiB2SMlHTtxOFF+MnqTqQIJ1gVNt56IxT/HsDg==
+X-Received: by 2002:a9d:7382:0:b0:701:f4b0:bef9 with SMTP id 46e09a7af769-7034a74cdebmr5992852a34.14.1720213308752;
+        Fri, 05 Jul 2024 14:01:48 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-79d69307c42sm804042685a.122.2024.07.05.14.01.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jul 2024 13:56:44 -0700 (PDT)
-From: Sean Allred <allred.sean@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: brianmlyles <brianmlyles@gmail.com>,  git@vger.kernel.org,  Johannes
- Sixt <j6t@kdbg.org>
-Subject: Re: [BUG REPORT] git-gui invokes prepare-commit-msg hook incorrectly
-In-Reply-To: <CAPig+cRQPrtGBTxM49nUeHvsVr0qEOnKZ5W_4by=A9mXEsR3DA@mail.gmail.com>
- (Eric
-	Sunshine's message of "Fri, 5 Jul 2024 15:57:09 -0400")
-References: <17df67804ef7a3c8.df629cdadcf4ea15.524a056283063601@EPIC94403>
-	<CAPig+cRQPrtGBTxM49nUeHvsVr0qEOnKZ5W_4by=A9mXEsR3DA@mail.gmail.com>
-Date: Fri, 05 Jul 2024 15:56:43 -0500
-Message-ID: <m034onpng4.fsf@epic96565.epic.com>
+        Fri, 05 Jul 2024 14:01:48 -0700 (PDT)
+Date: Fri, 5 Jul 2024 17:01:43 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Aditya Sirish A Yelgundhalli <aditya.sirish@nyu.edu>
+Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+Subject: Re: [ANNOUNCE] Git Merge 2024, September 19-20, 2024, Berlin
+Message-ID: <ZohfN6V/PGdi4SQh@nand.local>
+References: <Zj0JyL1b+g1G3zWx@nand.local>
+ <7e506cb4-b47b-44ac-9e08-ff783f18e5dd@nyu.edu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,69 +66,25 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <7e506cb4-b47b-44ac-9e08-ff783f18e5dd@nyu.edu>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-> On Fri, Jul 5, 2024 at 3:23=E2=80=AFPM brianmlyles <brianmlyles@gmail.com=
-> wrote:
->> I noticed that commits from certain users were ending up in our
->> repository with comment-like lines in the commit message. [...]
->> [...]
->> This seems like a bug in git-gui. I see two fixes, but I'm not sure
->> which is more correct:
->> [...]
->> - Have git-gui create the commit in a way that causes the message to be
->>   washed
->>
->> The latter seems like it would be more consistent with other workflows
->> where the user is seeing the message in an editor, so my instinct is
->> that it would be the better fix.
+Hi Aditya,
 
-There is a third option -- new plumbing in git (a la
-git-interpret-trailers) to expose the logic of `cleanup_message`. This
-comes with some nice flexibility, but introduces complexity around
-transferring state (e.g. passed options to git-commit) that would
-probably be best to avoid.
-
-The second option above does seem simpler.
-
-> A patch to make git-gui strip comment lines had been previously
-> applied[1,2], however, it badly broke git-gui when running with old
-> Tcl versions, such as on macOS[3,4]. The breakage was not
-> insurmountable, and a patch[5,6] was submitted to resolve it.
-> Unfortunately, the then-maintainer of git-gui lost interest in the
-> project about that point, thus left the issue hanging. Thus, to this
-> day, git-gui still doesn't strip comment lines.
+On Fri, Jul 05, 2024 at 10:12:16AM -0400, Aditya Sirish A Yelgundhalli wrote:
+> Hey!
 >
-> Resurrecting these patches would be one way forward, assuming the new
-> git-gui maintainer[7] (who is Cc:'d) would be interested.
+> A co-speaker and I submitted a talk, looking forward to hearing back and
+> attending! :D
 >
-> [1]: v2: https://lore.kernel.org/git/20210218181937.83419-1-me@yadavpraty=
-ush.com/
-> [2]: v1: https://lore.kernel.org/git/20210202200301.44282-1-me@yadavpraty=
-ush.com/
-> [3]: https://lore.kernel.org/git/CAPig+cT-sfgMDi9-6AEKF85NtOiXeqddJjk-pYu=
-hDtTVAE-UEw@mail.gmail.com/
-> [4]: https://lore.kernel.org/git/CAPig+cSC8uNfoAjDKdBNheod9_0-pCD-K_2kwt+=
-J8USnoyQ7Aw@mail.gmail.com/
-> [5]: https://lore.kernel.org/git/20210228231110.24076-1-sunshine@sunshine=
-co.com/
-> [6]: https://lore.kernel.org/git/CAPig+cRQN4PjfxEOZ8ZBA_uttsRPS8DPDgToM_J=
-FvichDDh_HQ@mail.gmail.com/
-> [7]: https://lore.kernel.org/git/0241021e-0b17-4031-ad9f-8abe8e0c0097@kdb=
-g.org/
+> I was curious: is there any clarity on the timeline for when the CFP will
+> close and the accepted talks are released? I need to apply for a visa in
+> order to attend, and having a conference program, etc. would be very
+> helpful!
 
-I haven't looked super closely at the patches you've linked, Eric, but
-it seems like those are specific to stripping comment characters. As
-I've noted elsewhere[1], there's potentially more to strip than just
-comments (like patch scissors). I suspect the only paths forward to
-guarantee that message-washing happens would either be an option to
-git-commit to explicitly enable it OR (probably preferred) have git-gui
-invoke git-commit with an appropriate editor instead of using -F.
+Scott and I are meeting to discuss this shortly and should have an
+update for the list in the next few days. In the meantime, thank you for
+your patience!
 
-[1]: https://lore.kernel.org/git/m0h6d3pphu.fsf@epic96565.epic.com/T/#u
-
--Sean
-
---=20
-Sean Allred
+Thanks,
+Taylor
