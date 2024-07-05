@@ -1,56 +1,52 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9314610B
-	for <git@vger.kernel.org>; Fri,  5 Jul 2024 00:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70CFECF
+	for <git@vger.kernel.org>; Fri,  5 Jul 2024 01:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720140593; cv=none; b=V8S/eiDcGVh/7g8bsAf+zLPowe9vHA9IIq5xzc73gcC7lIAOfDqjIdr8ZNWTgbmv06LuezuV2ADIBmClaEpKJI4/kz/C/cy6Cu5piDUGhVCv/0GaE3BxB+rhnZE584devcm/QVhXDQJQ/8lFOew8lQICwXsr0tRDVpXUNoo4mCA=
+	t=1720144208; cv=none; b=erER+nrRTK2wsTS/e5VKMlzhVKatR7Iv6Qdz/bCklgByr5ZIbAEPhxEDtUNlNgs1zRUQHkGwtqx6fB6qWlUfgM92POE43L/QX6xCGSP/fHfUoxxwKN7DGSJiLhDJtpwRtr5VQub+u/hxSVsMBe4dbl8g5srvgE6MVpJXHEOrYrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720140593; c=relaxed/simple;
-	bh=NZRIlrs2rRG9LzuoHsfzp5l3Bh6ZIhnRMldez7Zxlvo=;
+	s=arc-20240116; t=1720144208; c=relaxed/simple;
+	bh=sPgM2BmYH3+/oz10Hxqs2rIv3FkNdG8WzCdvOMfZa0E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M17vpcy9/Uuzj2ef62uy8HnpIqIp8PC4IMSLP7SaAKsRfdTC69/BwekJLcGdHaKbkwA3MUjyqvNCusyqAuFsvnIbjdb0n496r1FwB+stYnMQ6ATlJsIvQcH6AkxVwYZLCA+cYsWeb1RCyFUa25+G5nv9kFazSFXWHlmffZipbaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=kQZORbRs; arc=none smtp.client-ip=172.105.7.114
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zh3E7wZ64BkHLTcyjvzgMAHC201hVp+amqdvm6nXP7kGeWJH7I3BsRTStGOR9BrrKZIrdwX+Fu5O6dABEPT0s9enjgQPjMzbIIJrhHTYWKUHTuj+X9Lz0qTpILRJgBbtshhTDQ8Btyz9yXhdc4CvoD1HitXailxcIkEzpoR0h34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=eZZg3GDP; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kQZORbRs"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="eZZg3GDP"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1720140584;
-	bh=NZRIlrs2rRG9LzuoHsfzp5l3Bh6ZIhnRMldez7Zxlvo=;
+	s=default; t=1720144204;
+	bh=sPgM2BmYH3+/oz10Hxqs2rIv3FkNdG8WzCdvOMfZa0E=;
 	h=Date:From:To:Cc:Subject:References:Content-Type:
 	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
 	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
 	 Content-Type:Content-Disposition;
-	b=kQZORbRsEi3WHm3c4aeRxpXEGYPsCfXRAWuDyKQyHcrN025G2M8hA1lud1Dtaml61
-	 uMSqdr3jMVf2M58HJsVD/h0DXkDkcF+0NAFYNIdTxwvBjoajj0tdO0qqhIGcCBAoeD
-	 hT/QKBw4KJ88MFhBYVrBryj8c/JE+cXnytk4/9yuZHc+qMacdEgMCkGN11fm0nncG+
-	 JN1KNGj9e0eMSMuUhtQ68sStlFWh59mwtYJTrBMFbMTYAcantaipBhr3KyRvTXhHPY
-	 s1DVKt5VQ+2PAijbIybwf2sEEU8pT8j0OhMr7oISgEHxt7iihR2iOxY3QnOPdOUiF1
-	 rShk1bb6PvvUp2PDSF5tQQ8/+dUUdF7lMFl3Aaay7QppYmW6IsGv3xG7VEK9lleyIq
-	 sLUlRw7eL/hzk7cVQMglLCob5hlxW+xJG3slYg1IWMzbXdK6lljixaxXP3Aa8MgrZM
-	 VE/zjrTXfTSWVyKxffGxknHkWes2TSK1cuXE3NZMt9oYqenVALQ
+	b=eZZg3GDP9Agwen5GjO6MbKP+n08+5hndBQrsXdnNIYDZdFic7jAclWXeqQTt1tc6b
+	 9S0+Qz8wdSyKe2qQH9q0CQsRm1A5lQombJ2ZjUw1K6rf4hR1j2PUKlvgTuzO0S/zjK
+	 FPM3bm/QDhWKnq5r0lZ8kvsB8SNaDzhcwLRrylZXsHVKidZOs3BjgBHNN4X6CPJArB
+	 O1WSAUZ0jAWSDKB0kIBMW2FuLt8f4QLd+HYIvKjIfeS62nRWMcOTWd08+gphtEBOK+
+	 W6BWNCS8TUul6Q8vJetCvSh3R7x9hnSE+RAmRZXEni8xx6XO2fiRhFNVVlUi413xVq
+	 2UXUvlTki7Sc/XT9PMOwbzDBXYJ7HFTW/5wYHJ9ipbS0VksTWYTSXrUneR6qp1EzJS
+	 PQd6pkXyHbmeKmmQfLWvTJJ2zeKffUBKfQ3yrykm4tJzGEvuKUItCnLGdHnirgXtdw
+	 ILUR75MvPJrwnphML5bz8aQSiQ+2qgZwJC1lVlKbQ4JI/xXsRrR
 Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5CCB220993;
-	Fri,  5 Jul 2024 00:49:44 +0000 (UTC)
-Date: Fri, 5 Jul 2024 00:49:42 +0000
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9E7B620993;
+	Fri,  5 Jul 2024 01:50:04 +0000 (UTC)
+Date: Fri, 5 Jul 2024 01:50:03 +0000
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Dmytro Ovdiienko <Dmytro.Ovdiienko@iongroup.com>
-Cc: Elijah Newren <newren@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Losing the file during rebase
-Message-ID: <ZodDJq_SzONsP83m@tapette.crustytoothpaste.net>
+To: Abraham Zsombor Nagy <abrahamzsombornagy@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Unable to push to git server
+Message-ID: <ZodRSw9LEwLa_nOG@tapette.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Dmytro Ovdiienko <Dmytro.Ovdiienko@iongroup.com>,
-	Elijah Newren <newren@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <SA3PR14MB6519B74CA58C9AE49DC28513E7DE2@SA3PR14MB6519.namprd14.prod.outlook.com>
- <CABPp-BGE1aDb5Nch8kQx+uZkCvbTz6sN0m2Yad=1D4=z0C9JNA@mail.gmail.com>
- <SA3PR14MB65191BDFF1F6E867969A678AE7DE2@SA3PR14MB6519.namprd14.prod.outlook.com>
+	Abraham Zsombor Nagy <abrahamzsombornagy@gmail.com>,
+	git@vger.kernel.org
+References: <CANoqcKYwgA5sT0fAgSp4atpuPOaUSDALRVcf9XoajOe0g6xibQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -58,72 +54,72 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VyOciXetmGasrlUN"
+	protocol="application/pgp-signature"; boundary="M9kA6evIOEWr423e"
 Content-Disposition: inline
-In-Reply-To: <SA3PR14MB65191BDFF1F6E867969A678AE7DE2@SA3PR14MB6519.namprd14.prod.outlook.com>
+In-Reply-To: <CANoqcKYwgA5sT0fAgSp4atpuPOaUSDALRVcf9XoajOe0g6xibQ@mail.gmail.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
 
 
---VyOciXetmGasrlUN
+--M9kA6evIOEWr423e
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-07-04 at 21:45:25, Dmytro Ovdiienko wrote:
-> Hello Elijah,
+On 2024-07-04 at 13:56:15, Abraham Zsombor Nagy wrote:
+> Hello Git Team,
 >=20
-> Thank you for reply.
+> I hope you can help me.
 >=20
-> I guess the simpler explanation of what is happened would be the followin=
-g:
+> I'm trying to push my code to GitHub, however I'm unable to do so:
 >=20
-> Let's say there are three commits: add_c1, del_c2 and add_c3.
+> abris@dell:~/Projects/maradandohalo/server$ git push --set-upstream origi=
+n main
+> Username for 'https://github.com': nazsombor
+> Password for 'https://nazsombor@github.com':
+> fatal: protocol error: bad line length 175
+> send-pack: unexpected disconnect while reading sideband packet
+> error: failed to push some refs to
+> 'https://github.com/nazsombor/maradandohalo.git'
+> Enumerating objects: 31, done.
+> Counting objects: 100% (31/31), done.
+> Delta compression using up to 16 threads
+> Compressing objects: 100% (22/22), done.
 >=20
-> When they go like this "add_c1 + del_c2 + add_c3" at the end of
-> execution you end up with 2.cpp. That is the case before I do rebase.
+> I use Debian 12. I tried this with the git installed via apt as well
+> with the git compiled from source code. Git version: 2.45.GIT
 >=20
-> When I change the order of commits into  "add_c3 + add_c1 + del_c2"
-> (the case when I do rebase), I end up with no 2.cpp as add_c1 after
-> add_c3 does nothing, because the file already exists. However, would
-> be great for Git to return an error that it cannot create one more
-> file. That is probably would be the best solution to this issue.
+> I also asked this question first on StackOverflow:
+> https://stackoverflow.com/questions/78670914/git-fatal-protocol-error-bad=
+-line-length-173
 
-Unfortunately, that would cause a lot of spurious conflicts, since one
-technique that many teams use to incorporate changes is to rebase them.
-Thus, if Alice has added file X to branch A and Bob has also added file
-X to branch B, and branch A gets incorporated into main, then Bob has a
-conflict.  If the contents of the file are the same, then the user will
-not appreciate resolving this spurious conflict.
+I know you've got this working with SSH, but I'll just mention that
+usually this message "protocol error: bad line length" means that you
+have some sort of proxy (such as an antivirus or a TLS-intercepting
+device) that's tampering with the data.  TLS, which is the protocol used
+for encryption on HTTPS URLs, has built-in mechanisms to detect any sort
+of accidental or intentional modification of the data, so if we assume
+that both your version of Git and GitHub sent valid protocol data, then
+this means that if it came out bad on the other side, it was tampered
+with in the middle by something that can decrypt the data (which would
+have to be something trusted by your machine).
 
-Note that the behaviour you get for rebases is also the same one as you
-get for merges (which isn't exactly surprising because rebases now
-usually use the merge machinery).  If Alice creates branch A as above
-and Bob creates branch B, then once A is merged into main, B won't
-conflict for file X.  That's because if both heads in a merge contain
-the same file with the same blob object ID (and thus the same contents),
-Git short-circuits the entire merge machinery and just incorporates that
-version into the result, which is much faster and more efficient.
-
-It may be that you're thinking about this process as applying one patch
-on top of another, which is the way that the older git am-based approach
-used to work.  However, the modern rebase functionality is designed
-around merges internally, since this tends to avoid the brittleness of
-patches (such as misapplied hunks), it's faster, and it tends to be a
-lot more robust in a lot of cases, including with renames.
+That's why SSH works for you: because the types of proxies that
+typically know how to process HTTPS data don't know how to decrypt or
+intercept SSH connections, so your data doesn't get corrupted.
 --=20
 brian m. carlson (they/them or he/him)
 Toronto, Ontario, CA
 
---VyOciXetmGasrlUN
+--M9kA6evIOEWr423e
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.4.4 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZodDJgAKCRB8DEliiIei
-gYvCAQDHI+wSHUXg3Mt0x0L+1hYoPFnbIKFTp0CWhZurMFRtpwEAjEf+Npe63ga7
-N74GdTLCKxc32IiS+rpBZATG/nmwPwQ=
-=cEsz
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZodRSgAKCRB8DEliiIei
+gXVLAQDRcF7310c9BjgtCuXEekrqb5WbWo2D5AERaIeFincozAEAufZDigF+TBUU
+5994BRaccGtOpK63xnUg2EK/UbgC1QM=
+=yWTr
 -----END PGP SIGNATURE-----
 
---VyOciXetmGasrlUN--
+--M9kA6evIOEWr423e--
