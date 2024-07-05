@@ -1,147 +1,113 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F38A16EB47
-	for <git@vger.kernel.org>; Fri,  5 Jul 2024 17:03:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073D516DC19
+	for <git@vger.kernel.org>; Fri,  5 Jul 2024 17:39:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720199034; cv=none; b=bynDddge7r4/6ehMPM8CueJoTtM0HkljneF4m7p5++9lDuDRpJqEefJxYXsbpbkkfMWXdePmrLZDvXBU4ixN2YfsaYfqegf/3yv56C9IU/sw9xRh292K0kyz8HK9Y23ANnTure2N6o2XRF1jsHaSE5AVw/zInqnjhNCowQO1LGg=
+	t=1720201201; cv=none; b=fxqKPVhrA/mGvLmoQaLqHgphekOV6TvY2muF/k8S1WEl0OI4vtN0WZw3e+sJ02OBY1AJMVqDWsGay+vZLQXx0l7WwDIZcH2c8s0bwBdnqOC/GsRkhfdO8TRwVM21poqaAPK4VvRJsQrY7WePUcnlb/z5oFId0XUzGADqTlU8/18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720199034; c=relaxed/simple;
-	bh=p5Hl3qr626AhKrktHJJPZqcpJC3SbyWSZ+JCcQglROs=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=nw54z5plEjlG+HNGNycQb1inEluglitQen29iJL3i3/tlf7T8G7dn4rfzjhrAuFXAgxL5+5lHqmIMBBoD8K3gYT5671741ofUk94Gq0ceJN6pSp6A7JTXdjv8F5unOJGr8GSQOjRF0gCoWv95bLkjTdiRh/HBo2QVXQhQOFXTYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=O/4hsOGQ; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1720201201; c=relaxed/simple;
+	bh=X6Q0Wk1BybE/lqbQRhua1UIRjqBMGfA/VX27U5k9bc0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ra1aPKEThIqTZs3NA4ywE94uxa4X2TYkO+waRS64xgzXImsXOnhjQtxVyeUnd5GCBQDKV6Fh8q7E1FvGBIgSD20p20c5Ux/+A+GPgne+z1Mgn+Al1Hvmfz1UZ0mwdKyYKMAZBAZiqbC4aTREz6yOplfI/BuWJxCtqtr403V4CTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eZn+Bzll; arc=none smtp.client-ip=209.85.166.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="O/4hsOGQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1720199017; x=1720803817; i=l.s.r@web.de;
-	bh=b980dtSMZZc8e7eL62Y8/iZ204knM1gUohktE3WshL8=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
-	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=O/4hsOGQp5UQGg/81l7OksyCf8vxRJab6W+OtL95mW58hVVkUPVCEuwccR0nbFPG
-	 vkcud1Z+Iksl+fZoc5F8Rys0G7pMG1GUn45UuEc6j9Zla4T80lrHAPwR+kJs9oyRr
-	 Nkd8spaZ94X0LhTgvELpH71C5iJQ6pMYLk/VRbuZHctLD87ZGtgoNDYwXYfG+xFBM
-	 RwGBnqmLkmVon9YKhH0Fmg2lCbooQVbE6KjX+GeurWwoWd72/vjCRhuO+TIiTJPwq
-	 ur2BoRCSv9XwK2nreXDI+BC16Y6fQjudCpjEXq6421c36l5VN5kglqsmo/LLCWd+2
-	 WaKeUDqXXnv8BFhpuQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.153.221]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MeDQj-1rsdWI1ra3-00qYQR; Fri, 05
- Jul 2024 19:03:37 +0200
-Message-ID: <983be396-f47c-4573-8c33-af8367f8ddbe@web.de>
-Date: Fri, 5 Jul 2024 19:03:36 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eZn+Bzll"
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-7f6846df21fso10393739f.0
+        for <git@vger.kernel.org>; Fri, 05 Jul 2024 10:39:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720201199; x=1720805999; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AWZilmDGvM/KsCsFxsurCbg1jzR7rO5JFqiUoEa+cqM=;
+        b=eZn+BzllhGDn63Qk0mCMQHhxEd46mZblZnYj/R6hfkjw7+oaA5uOLM5RLXEMt2Fyi+
+         F2Leo3FHso02PGUVsFeZOSNnIRrSYCRrd8EhyhBKOKg4/LqYnN3ONI/TmFTSsmPRnawf
+         CTB7f2MrEvPI84C9bvdmC7QneTrcVOM2z8OLqOwzOtiCcsGDai6ijqHxYDFxPnrvBhgK
+         BjgOOIBO0ZDNxacElaYszOWnKWSP001wc+2U8/2H5Rsructir1v3akks26e7ESwzYGXZ
+         LFqM1sX/ibK+Kb6ZyP8EBBqSc4DNHfETP13XQi9Ik8WHOpjk0d1LRfj5c95tbEd+qOj5
+         Cf2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720201199; x=1720805999;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AWZilmDGvM/KsCsFxsurCbg1jzR7rO5JFqiUoEa+cqM=;
+        b=QLypGz4Csgp6xp4G/sqc0NaQWxI709Vsi/TanvZVDnwk0GPWWGXn06wPNx8qyBcTnU
+         Xos5idrYg+6HW63mNuI55B4MtC1NMil+GjX4P9iEosH+rworqucYMZWQi5WqffMavFAl
+         6M7gGtDXOGjml5uGJXD2bJOBd8fVaplQFbwp4Jx5TjbkSkb9KBdo+aWDGOZAm71Yhyl1
+         mMhOwUAZ22u4E2rw5S4N8BJgV4EZWhZP5TI7Yo1nYGl3vfD69Ds8i9/GAS4Z8x0dj2Sm
+         E6Nnoj2MjH6nYyqfNhGacBRz6t09WjQHWtKLAw3MooZwZIQDUA1ROrBjkfsdL2rT8COp
+         gp2g==
+X-Forwarded-Encrypted: i=1; AJvYcCXNM8g8mR0M4D5vBJDQm+L7HJOc5kkKxm5NhinyHFEQVbEaPOqvTQZu17IzdV8o0sagY+x1w1x7NUEuiq+AgtyV0Hdt
+X-Gm-Message-State: AOJu0YyGXXNd3diIv/20WEVUi7s3uF1Ugx2K71COMWS6GIWXneW2P1SB
+	D8kA7rLMIWZqe9urnCEt90soGRp1pdUAezkdATCIYTB8y15Jb5KmuJYucLYLnk7ZPWs50gCa34p
+	V+SfQwdJ+JN07Sg7DzCtIQcBDthk=
+X-Google-Smtp-Source: AGHT+IF1aYG+xrZffWnPztmoZClL+Kbb3wHZZ1XD462NOYCLPO6aXjwILfdG/soX8pGwvNvoS5bnGXlC78oSUFbnjJA=
+X-Received: by 2002:a05:6602:600b:b0:7eb:de88:48ce with SMTP id
+ ca18e2360f4ac-7f66f985eb2mr361460139f.2.1720201199003; Fri, 05 Jul 2024
+ 10:39:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2] t-strvec: use test_msg()
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-To: Git List <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>, Phillip Wood
- <phillip.wood@dunelm.org.uk>, Eric Sunshine <sunshine@sunshineco.com>
-References: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
-Content-Language: en-US
-In-Reply-To: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
-Content-Type: text/plain; charset=UTF-8
+References: <pull.1741.git.git.1720016469254.gitgitgadget@gmail.com>
+ <xmqqmsmycriv.fsf@gitster.g> <dd1f768f-a137-428c-8a60-c5e875b66592@delpeuch.eu>
+ <xmqqr0ca9qkj.fsf@gitster.g>
+In-Reply-To: <xmqqr0ca9qkj.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 5 Jul 2024 10:39:46 -0700
+Message-ID: <CABPp-BEspjHqNXSAwptgxP059qOFU6MzwAd23-893Nw99ft_Ew@mail.gmail.com>
+Subject: Re: [PATCH] merge-file: warn for implicit 'myers' algorithm
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Antonin Delpeuch <antonin@delpeuch.eu>, 
+	Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:xV+O5o00taNiOMfMtRnU0ydMvZQjIOq3VnnDSlr2PBOzqTzqRKx
- RQ2/ktJQtLdnMNCNSJq/kIbYSHZcHsoIkZHJEWOdE0RC4IT9WFW8S6e0ovgUdPVw8AKCw87
- /MQ2PiugwtZQ5gE0+E2x1gdh0T9Gab3jo2WHAoTWNhBks3e7QkJa0XFrILZ/1xGDFAP7Xm7
- DyWhcGkMkEuub5rq1wnIQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:9mxSvAoCODk=;qw7i+M5faa+ZEvopxafahhoV0qb
- JDb7iZOzozof+O81Kc85Cr/S2SzsORbXiiGoNJeTE2Q7keD7Np6j7Qgd1GlJYqVc9tL2xBVYm
- DOcghroEtxR1bcdyCtSdNgFrauHKSkR1wy8pgaSuz/s+10JZbUYPNNzIRw293RuCNbXME0Ggy
- odS8fD9CutBQig5ILb6/HjXfnTfkMs05yJp6cdWv1e81cwyfER29FMIVpf57sPMKT8xaz/iTX
- Ouxu/S89NgC8E3edKiayMWPjtIa7ur7Wpi89ItYhgVPqQQNDWfmSI/VeB0CCkSlDmG0iwLMQB
- xEi+9ybyC7UyEp6mpJU4qO8N0/Ogc/14G1ncKpRB/7awAMl53e9K1h4oN8aHesNiYRUg9GEEf
- Tu/1G2MtPbmDqqqQyoHhchI7kv+TnTROAkmyscUF2EnJewec+QhbLWwv2W66ah5h3H+8g+XO6
- 7Nb8mvRRp5b1XhqjsHaXS9Ch5C/tY6GBST7Tr4wLz/IsnmY94N1N40n/gXR3oEGqKcqtR3SCo
- FQJu4j7X9UGmXLyKz8kRQEegcwWe772UkuOUZALxiSfqQSivAcWNGBX1EyPgesezmoVXVLgXd
- ue+StqcMZAsZOaXcztDuzTAjsZM8cu7UKSfqMhPGOtda/msxH/Dt2gCZqz7fpxqCyQSJ0FP8X
- zk9tcuNURK5hBaGs0S7cju+3lWdTVDPdop3mb4ddmBoSlruiegICVYdSmHmvWU5WyNkhYWI8Y
- /RUx94tKaxgD3LB87xZUYh2xvlRhKMCdfqTl4WwEqJP2VKdaVH4s6Ed3C3MEGd8P17ZTIE9HP
- ZUtUUHCdIXFc9AmZO/O5h+PLzx+eSogQWi6iME69tSjSo=
 
-check_strvec_loc() checks each strvec item by looping through them and
-comparing them with expected values.  If a check fails then we'd like
-to know which item is affected.  It reports that information by building
-a strbuf and delivering its contents using a failing assertion, e.g.
-if there are fewer items in the strvec than expected:
+On Wed, Jul 3, 2024 at 1:24=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Antonin Delpeuch <antonin@delpeuch.eu> writes:
+>
+> > I'm really sorry, I thought the switch of default and migration
+> > plan had already been agreed on in our discussion of my earlier
+> > patch.
+>
+> Ahh, OK.
+>
+> So we did some time ago floated the idea.  I do not remember how
+> widely accepted the proposal was, though.  Having a such reference
+> and an explicit mention of what we have and not have yet reached
+> consensus on (either in cover letter or after the three-dash line)
+> would have been very much helpful.
 
-   # check "vec->nr > nr" failed at t/unit-tests/t-strvec.c:19
-   #    left: 1
-   #   right: 1
-   # check "strvec index 1" failed at t/unit-tests/t-strvec.c:71
+There's been a few discussions, the other most recent one I remember
+was the thread over at
+https://lore.kernel.org/git/Y+zzh80fybq8Tn66@coredump.intra.peff.net/.
+(And beyond the git community, there's
+https://lkml.org/lkml/2023/5/7/206 in the kernel community, and if
+others know of discussions in other large developer communities I'd be
+interested in links.)
 
-Note that the index variable is "nr" and thus the interesting value is
-reported twice in that example (in lines three and four).
-
-Stop printing the index explicitly for checks that already report it.
-The message for the same condition as above becomes:
-
-   # check "vec->nr > nr" failed at t/unit-tests/t-strvec.c:19
-   #    left: 1
-   #   right: 1
-
-For the string comparison, whose error message doesn't include the
-index, report it using the simpler and more appropriate test_msg()
-instead.  Report the index using its actual variable name and format the
-line like the preceding ones.  The message for an unexpected string
-value becomes:
-
-   # check "!strcmp(vec->v[nr], str)" failed at t/unit-tests/t-strvec.c:24
-   #    left: "foo"
-   #   right: "bar"
-   #      nr: 0
-
-Reported-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Changes since v1:
-- Typo fix.
-- Grammar fix.
-- Reworded problem description for brevity.
-- Qualify "name" in the last paragraph for clarity.
-- Add sign-off.
-- No code changes.
-
-Thank you, Eric!
-
- t/unit-tests/t-strvec.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/t/unit-tests/t-strvec.c b/t/unit-tests/t-strvec.c
-index d4615ab06d..236203af61 100644
-=2D-- a/t/unit-tests/t-strvec.c
-+++ b/t/unit-tests/t-strvec.c
-@@ -17,12 +17,12 @@ static void check_strvec_loc(const char *loc, struct s=
-trvec *vec, ...)
- 			break;
-
- 		if (!check_uint(vec->nr, >, nr) ||
--		    !check_uint(vec->alloc, >, nr) ||
--		    !check_str(vec->v[nr], str)) {
--			struct strbuf msg =3D STRBUF_INIT;
--			strbuf_addf(&msg, "strvec index %"PRIuMAX, (uintmax_t) nr);
--			test_assert(loc, msg.buf, 0);
--			strbuf_release(&msg);
-+		    !check_uint(vec->alloc, >, nr)) {
-+			va_end(ap);
-+			return;
-+		}
-+		if (!check_str(vec->v[nr], str)) {
-+			test_msg("     nr: %"PRIuMAX, (uintmax_t)nr);
- 			va_end(ap);
- 			return;
- 		}
-=2D-
-2.45.2
+The previous discussions felt to me like we were moving towards
+consensus, but while I found that encouraging since I think histogram
+would eventually be a better default, I did not make any actual
+proposals and try to push further towards consensus because there are
+a couple known issues that I think should be fixed before we consider
+flipping the default.  I have some work-in-progress that was put on
+the backburner a few years ago that I would like to pick up again, and
+if successful, investigate how much that helps general cases in a
+format that can help people make educated decisions, and then again
+float the idea of changing the default.  If consensus is reached, then
+we'd change the default across the board -- diff/log/merge-file/etc.
+rather than just the somewhat rarely used merge-file.  At least,
+that's my current plan in this area; if others think I should
+investigate things in a different order or would like to see
+additional steps planned into this journey, please do let me know.
