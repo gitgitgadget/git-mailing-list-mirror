@@ -1,141 +1,131 @@
-Received: from mx0a-00256a01.pphosted.com (mx0a-00256a01.pphosted.com [148.163.150.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F311487D8
-	for <git@vger.kernel.org>; Fri,  5 Jul 2024 14:28:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.150.240
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E83F2F32
+	for <git@vger.kernel.org>; Fri,  5 Jul 2024 16:39:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720189729; cv=none; b=kfr/ayP24avUg5f9+2MAJnlkVMLU542xtrBXcdFFxWnxso7B4eD4FiSSo4lMYYCuT1Q1XbytI9PVPet7l/sKSzK/FZpt7uF7XAMnXvsT0LNooH31tR2NL1w3zuoj+B+YR6cEZNsurbfjK76DM6Alr3QDdM0GVCeRm3tQfhpBu8E=
+	t=1720197595; cv=none; b=cYaklu69NiDa4AvfK0uYFhFUZwqAOI0irGYL57utSH5t4k5FUsKLcTSe07M/bFkYnFupkGPXK7EpPpYIZhQWaa5YQZS/KHcidCZ7k003WB58NRry4PixAMipKsgXq59JZi4kazOvtIVIZcZ4aghYORUBa/pxv3wOuhxIbWzdF58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720189729; c=relaxed/simple;
-	bh=Y4YS5ugg+E8l5hKCL29WhUqMUmMLxDWQvdxlJgv0uBg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rJ3a6DES1laCVxzIort7FgTiuRk8w7OSjTgwRcV7PkTfmJU8y4F8ZTbQz+MQ06lhaa4KENS5uJ80CFOM75ot6DaWmQ7qMNH2S4wCfZ4K4tf9QOf1yp+OlLWMV1Y5fSbABVwajbWNSOeyoiv2lYk0hfjNijoqwk/rIt84uhEDVzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nyu.edu; spf=pass smtp.mailfrom=nyu.edu; dkim=pass (2048-bit key) header.d=nyu.edu header.i=@nyu.edu header.b=Dlq4c4io; arc=none smtp.client-ip=148.163.150.240
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nyu.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nyu.edu
+	s=arc-20240116; t=1720197595; c=relaxed/simple;
+	bh=tjmCFihq0BLQcq0E8jVb6RNZbRiL7CJb/NCTTVYLWBc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Gn9yQcnPsDFxD+B7Jf5gF84iSMCy1c42iAqgRnuo3uuxD4SA62yJL/WMsABG2/0V+FlZxWM+f+tnxrAfHAslRKPzknT/4DECtXlQykFkMHc1mXF7pMJ3w4tYcz/Asyad0LnuvNzq4AGpLBV7tEKAhYNq+h37X1DeutfM6cHlk6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LbyoMFYK; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nyu.edu header.i=@nyu.edu header.b="Dlq4c4io"
-Received: from pps.filterd (m0355795.ppops.net [127.0.0.1])
-	by mx0b-00256a01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 465D1wAb004772
-	for <git@vger.kernel.org>; Fri, 5 Jul 2024 10:12:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=20180315; bh=t
-	NPwI9gtPi+s3K5sgWB6AvdLyelOMoWNHR3voR5eirg=; b=Dlq4c4io3PfMxEa+L
-	zBjgWpnOfVaX8ZlKLJWFixLs1+RmlphoPfMqVLCW0PIQ8YYkaBD4zsUmEwp2HZ33
-	jr7kY40g8DCxChrzQ4AFJGHtDqVltOx+FEWpdHq1GAIzSkrVU5ikRA9f78VvGIOu
-	NIbSiK37bNvP99bnQgxiTv8+31zPt583E6rsNkW5pHtl8g1QuBfyRu7TrmfubUsC
-	bHfGq/r339W+kYfDTNkwVrSZtVDjZCxjSo+sFgxHagEXneLJ03ZagnUUBbVvs9Lx
-	Q8wiOdxyhN8vBulcsKCarDCV3wwbWrAaUKwet1tRNdzNxb3jWRc1f4wpGUtAHLpk
-	szXOQ==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0b-00256a01.pphosted.com (PPS) with ESMTPS id 4057pn3039-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Fri, 05 Jul 2024 10:12:19 -0400 (EDT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6b5f61c0cc1so10989226d6.2
-        for <git@vger.kernel.org>; Fri, 05 Jul 2024 07:12:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LbyoMFYK"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-70b07f27788so946183b3a.2
+        for <git@vger.kernel.org>; Fri, 05 Jul 2024 09:39:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720197594; x=1720802394; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UhYhfSmbnBfJwB7B/TAhavGbpclIKagu03Fvyf1XGYw=;
+        b=LbyoMFYK5ejLgxaw2NoJK9A/axkXW+GOkHmi6Zk3o6O2m5LulF3iT+m1Bj9Mqw8SLj
+         9CgJ9XO8v/bv251w6a/uKyCIqYV4F3OAvwYGiV8TGBUACtyn6Com9PnF5ECHWGE/NbHM
+         P13ri+qOvVcJipj4gi/66+NPJDw+68l61c9l4+H7Lhzyg7oMqErZzR1/5wH/AYU14LAD
+         vOwBW7pvajqRYsOPE6f3URM+22UOVybCYnE+cBXugaNpEvtkMEK+M0WN5SZHkGluR9KA
+         MGES+k/aLkjLpi5GqoVDNqP8dv2eqXr53Nw0Xcw4ModjNAHd4qllhyw2ZDC1F0rMevj8
+         WV/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720188738; x=1720793538;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tNPwI9gtPi+s3K5sgWB6AvdLyelOMoWNHR3voR5eirg=;
-        b=EgdYgtbBKXQJpw59JZYEpNAZMFidoS1bjvRK2DOB+CT+llB+JmHbysbVpOMiJJF1hh
-         DMFnHcAgTFV/+8dVqWBumEH9c4VrK7mY4D4HRJEmpMKwXd3eLlD1pGmOYh11swHVsxw8
-         cedSfHjG198qO1f6l3qEf4dFApA/GHqf8ibACB1slbYMem1HGeI0FljGixCNDa6v3uIY
-         IzpJeQs6V/Mr+/M/W849Kxvcs5EiPxCisyS0ejMGLAReZ80BAgOBDaypqVNhtb0qEhQE
-         uN4QMhZXhNye4tr+EGIyGDajiRpCAgV940gNzytO9eOciSAWEKbdhBId83d7DRGLeNBj
-         YZhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU7r02YbPnXHwF1FYM1LvfU/gFivJPneRZpZwnWynDqTJQonEA+dwx4zcdYnUEhrfSI/LJZl/dsbDYiKg9RENDfjrST
-X-Gm-Message-State: AOJu0YyKm7tu9B5wBnPUHSs54lAageGdKOUIaXQ9vVvnc39fC8B4gqlP
-	jUj3mnl8prKxm0ZMSXZ4NliiC1qlHp2TAZesfgdkUXZubOWXnQejuNsZ9+YQ/tBFHt/PM50nq7x
-	iiw/rhZhLeCQY521MgOVA75PxDsi6KERZJwQnDsJSCOuwx1k=
-X-Received: by 2002:a05:6214:c23:b0:6b5:4125:415d with SMTP id 6a1803df08f44-6b5ecf8ef48mr47265756d6.13.1720188738335;
-        Fri, 05 Jul 2024 07:12:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGVE2E7QWooOx9166YBEfXsdVDgdpqKEiySxIoUtoXsfrtgelACyLoVaCNN3j0b1IL1Xhjn5g==
-X-Received: by 2002:a05:6214:c23:b0:6b5:4125:415d with SMTP id 6a1803df08f44-6b5ecf8ef48mr47265586d6.13.1720188738004;
-        Fri, 05 Jul 2024 07:12:18 -0700 (PDT)
-Received: from [192.168.0.114] ([162.84.196.136])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b59e5642fesm73522496d6.40.2024.07.05.07.12.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Jul 2024 07:12:17 -0700 (PDT)
-Message-ID: <7e506cb4-b47b-44ac-9e08-ff783f18e5dd@nyu.edu>
-Date: Fri, 5 Jul 2024 10:12:16 -0400
+        d=1e100.net; s=20230601; t=1720197594; x=1720802394;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=UhYhfSmbnBfJwB7B/TAhavGbpclIKagu03Fvyf1XGYw=;
+        b=MwFSq85h99to/4sqcj+H+yZhPGJuA1RnjaK4m+8CfW1u5sKQE/1Ve7OSn+S/29NxRV
+         rs8xGG8QNxAH5ArwhDRD1TqlRZYMDRY8+84Pq4qqCQEzdrMA0/tUNI1cR1fM1G4YHF13
+         9WrF0ROY4DaZnBctAbWfZfg8bNcnAfDKuWSF3DwijX/A5DSRuJRWBfK+QKUe3lJzKR5H
+         Z20B4zhDZAvK2dOdBWTBNe41SgGOjWDNqVgHDo/yWWtyZ/ejCbxRF5UjSmUjLUXLjdtw
+         yLnYuGTSAssetLumRyhwcWB/5zwrCjl9Dj0blEg+0ALTwklGWlLrgTUvq7s1fwaTneIT
+         qinw==
+X-Forwarded-Encrypted: i=1; AJvYcCW5pp8IrAlr8U8YHYhftB+RtZr2/R1GwiuuoBLBy+pxCZ+tB+LUQrxG6AbKrzlq7wKdG0PTOqljpxJkbi2vMTjXsMVj
+X-Gm-Message-State: AOJu0Yzq4e0nVbOBmxAu2XAsm1PtuhDXuv6qOPYKUnraXYtIu6eEHAox
+	V6MhfxEW+Ayw6eFu89RTDr20gg+H3LybBpgHrJ0hLeuw3jEgEANi
+X-Google-Smtp-Source: AGHT+IH47ngANasGGMjPxyinZEWa1P0is6KRIUrA1Oq7DK55uyUwXF38QniKMMjNbxIP8nhcstRy1g==
+X-Received: by 2002:a05:6a20:da95:b0:1bd:1a06:7ef3 with SMTP id adf61e73a8af0-1c0cc737360mr5806250637.3.1720197593573;
+        Fri, 05 Jul 2024 09:39:53 -0700 (PDT)
+Received: from localhost (236.219.125.34.bc.googleusercontent.com. [34.125.219.236])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-72c6c7f76fbsm11430898a12.73.2024.07.05.09.39.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jul 2024 09:39:53 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Ilya Tumaykin <itumaykin@gmail.com>,  git@vger.kernel.org,  Jeff King
+ <peff@peff.net>,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: git crashes in `git commit --patch` with
+ diff.suppressBlankEmpty = true
+In-Reply-To: <ab974e62-098c-4200-bee3-7de8d9115516@gmail.com> (Phillip Wood's
+	message of "Thu, 4 Jul 2024 14:14:56 +0100")
+References: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
+	<ab974e62-098c-4200-bee3-7de8d9115516@gmail.com>
+Date: Fri, 05 Jul 2024 09:39:52 -0700
+Message-ID: <xmqq4j937pyf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [ANNOUNCE] Git Merge 2024, September 19-20, 2024, Berlin
-To: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc: Scott Chacon <schacon@gmail.com>
-References: <Zj0JyL1b+g1G3zWx@nand.local>
-Content-Language: en-US
-From: Aditya Sirish A Yelgundhalli <aditya.sirish@nyu.edu>
-In-Reply-To: <Zj0JyL1b+g1G3zWx@nand.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: Er-36IDeoh5XPmo-KHzGsCxjjU6SNF-v
-X-Proofpoint-GUID: Er-36IDeoh5XPmo-KHzGsCxjjU6SNF-v
-X-Orig-IP: 209.85.219.70
-X-Proofpoint-Spam-Details: rule=outbound_bp_notspam policy=outbound_bp score=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 adultscore=0 impostorscore=0
- phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407050102
+Content-Type: text/plain
 
-On 5/9/24 1:37 PM, Taylor Blau wrote:
-> Git Merge 2024 is happening in-person on September 19th and 20th in
-> Berlin!
-> 
-> GitButler and GitHub are co-hosting the event, which will take place
-> over two days in Berlin and allow developers and community members to
-> get together and talk about the future of Git.
-> 
-> Here are the details for the main conference:
-> 
->    When: September 19th and 20th
->    Where: Location TBD (in Berlin, Germany)
->    What: Talks on the 19th, birds of a feather discussions on the 20th.
-> 
-> This email is just to announce the date so people can start planning for
-> the main conference and BOF discussions.
-> 
-> Registration for the event is still being set up, but it should
-> hopefully be live in the next short while. I'll reply to this email when
-> I have some more details.
-> 
-> In the meantime, the CFP site is up and running. If you have any
-> interest in giving a talk, please consider submitting a proposal here:
-> 
->    https://bit.ly/git-merge-2024-cfp
-> 
-> If you'd like to come but need financial assistance with travel costs,
-> please reach out to the Git PLC at <git@sfconservancy.org>. We'll
-> collect requests and try to make decisions and notify people by
-> mid-August, which would hopefully still leave time for making travel
-> arrangements.
-> 
-> Other than that, please be thinking about (and feel free to discuss in
-> this thread) topics you'd like to discuss, or any general thoughts on
-> the format, venue setup, etc.
-> 
-> Thanks,
-> Scott Chacon (GitButler)
-> Taylor Blau (GitHub)
-> 
-Hey!
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-A co-speaker and I submitted a talk, looking forward to hearing back and 
-attending! :D
+> ... but I wonder if we
+> should change 'diff-index' and 'diff-files' to ignore
+> diff.suppressBlankEmpty instead. The plumbing diff commands already
+> ignore most of the options that change diff output so I'm not quite
+> sure why they respect this particular config setting.
 
-I was curious: is there any clarity on the timeline for when the CFP 
-will close and the accepted talks are released? I need to apply for a 
-visa in order to attend, and having a conference program, etc. would be 
-very helpful!
+Very true.  Even though POSIX adopted the text:
 
-Thanks,
-Aditya
+    It is implementation-defined whether an empty unaffected line is
+    written as an empty line or a line containing a single <space>
+    character.
+
+it merely allows the implementation to show an empty unaffected line
+as an empty line (where traditionally such an output was not allowed),
+and we probably want to give priority to consistent and stable output.
+If the addition of diff.suppressBlankEmpty were done in the usually
+recommended way to first add command line option to prove that the
+feature is useful and then add configuration variable to pretend as
+if it were passed, then it would have been perfect.  We then could
+have made the plumbing to completely ignore the configuration to
+make the output more stable, while allowing script writers a choice
+to invoke plumbing commands with explicit comand line options.
+
+But that was not what happened, unfortunately.
+
+If we really wanted to force the world line to where we did what we
+should have done back then, I would say we need to do a two-step
+transition.
+
+ - Add the --[no-]suppress-blank-empty option from the command line
+   to all commands in the diff family.  Plumbing diff trio will
+   still pay attention to diff.suppressBlankEmpty but when they see
+   it is set to any non-default value (i.e. true) without being set
+   by the new command line option, we loudly warn that we will fix
+   this historical mistake in Git 3.0 and encourage script writers
+   to update their invocation of plumbing diff trio to use the
+   command line to custimze.
+
+ - At Git 3.0, plumbing diff trio stops paying attention to the
+   diff.suppressBlankEmpty configuration.  By this time, the warning
+   we gave in earlier versions would have helped existing scripts to
+   migrate away from relying on it and if they want they would
+   instead explicitly pass the command line option, so we stop
+   warning.
+
+As to the "commit -p" issue, I think the patch parser is in the
+wrong and needs to be corrected, period.  As long as the patches
+given as input are well-formed, we should be prepared to grok
+them (we even allow manual editing of patches, right?).
+
+Thanks.
+
+https://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
