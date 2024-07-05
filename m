@@ -1,92 +1,126 @@
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17EC79F3
-	for <git@vger.kernel.org>; Fri,  5 Jul 2024 21:04:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12D3145B28
+	for <git@vger.kernel.org>; Fri,  5 Jul 2024 21:08:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720213489; cv=none; b=rZVEyIfUCI5VfsgwdYhl0yJnpLQLLrz8DHkKmI8poLtEFa0nIsZY4LhAyJTM0CQkbIpnH9p0/x+oLGkp/HV/wqc28dHNJKplJmM4H4oGaTuYGwX096QOEy3Tzkm5lzT8uLtiDkd+vRPQ2OycYkfXbCJCtyI1Vc7gPQMgOPrpopk=
+	t=1720213738; cv=none; b=WqrJ8AeiJbvVo4T7pE5uSuyx2o1HnTZfx2ZYbW89aLZXrRsEp0pXc6UCn4H9djGUm/sx9276+HiQZI930nycwjkinYkyJNwTRz2t0sEksDL6w7NOSPe0c3FGvhyiNSzStS1CyfxfYR9fvT8/+9ri2uOklFPDKJXhdLJtOoBy4wU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720213489; c=relaxed/simple;
-	bh=tCFyRNgclf5ePLkk/5S3TXQxQMLMhXdpL10AEf98Gfw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V+OiawNb1n/ZDkxK0iXm1grAY4W3c9dp1bDUB7dfQEDRPo2r7V33jzJbtJNYgCtRbJx8Tkt2bbyoLWIX/pZ9J5E7zrHIJK38QiA/IAsPK1xNTyY+2bhJcR5pQAueVdmUA7p0qu4yhXp0lDA1a+EIN5y7W4NQoK0VVl5m0Y8iGlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=vUD2HXLg; arc=none smtp.client-ip=209.85.167.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1720213738; c=relaxed/simple;
+	bh=UMjjz1Hz4DYZIsdf41XJOgHEZeMrU6b8Gw2YFYxcpOs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=U3nlZ1LbbGd9mbF14A4YceC61zWHypxx8W/5ccTvdpBHoUq5H8vuXwv1T73dsCGJy0ZwwS8mwoNl5daSy46ncMiiTCdHvI8NQh6MDZ6MFZmt3oKY0/Lcx0Fmbu7qt/DkePvpMauAp4xouPDa1EiB7KVMnn30U2fCunP2dLFckLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ST80Ctvl; arc=none smtp.client-ip=209.85.166.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="vUD2HXLg"
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3d9229486efso284885b6e.3
-        for <git@vger.kernel.org>; Fri, 05 Jul 2024 14:04:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ST80Ctvl"
+Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-7f65715fe2cso72400939f.0
+        for <git@vger.kernel.org>; Fri, 05 Jul 2024 14:08:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1720213487; x=1720818287; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tCFyRNgclf5ePLkk/5S3TXQxQMLMhXdpL10AEf98Gfw=;
-        b=vUD2HXLg1kySVE7P7mQBwP3hoRVnh+qsWh/bqYJ1jNTE8hzRfvEVkoTIPYchX7U4zV
-         nr532Bf+jIdcPkSozRy+caP7RTu/g5c6YNDTxvyiR1giBXA+W/YLhDyqrpLH4t5XzwQL
-         Z4aQVp3hMyh5KhIcfz/h1WWMV61p9ZzZd/mJEFXONyjUcXt7s583/RyjWD9Z4NtTLgTw
-         F8h9xnrJ7LHsyRZv5L0vkCzEwG0/24dYJghc2Xg44IvNvhbGTPIdI7XQKyEYlwiXIzXp
-         MPvux0K5rUALVwweO7E+cawN/QLEtpihgC+9B9rc5vqJUAObmQKJEEDBloLxZEsw2OGa
-         uCug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720213487; x=1720818287;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1720213736; x=1720818536; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tCFyRNgclf5ePLkk/5S3TXQxQMLMhXdpL10AEf98Gfw=;
-        b=ieBYbF9iKvtcLgXf8M7T+c9imgAH885bkskSiGe/SgPWTGtS7jZ2azCEGp93A1YuyV
-         ibAbd6g5kab+WxpijslymuwdMVl5R+HH6cmYcyTm5CynWqzxSJaox97EMxeSrKfFAGuZ
-         7HzEaNdAZL6e3e6jRldnX5fmvHzLGY2kUvANi9X/g67qSyTZS2QbNij66/i84LOdvsEx
-         K3uxLcZIncNoH31rOfYSsxmLnFkEaS0YQ+ktV3Ean2crl2uPtlonf+F0MoNnGcSK4/R4
-         7qP4XAu/411Wuov9yAl8ihLfVa3UvszT7HNqV5lZfKtECmXtY1PGbctMNlUPW0EYTlDy
-         gZ2A==
-X-Gm-Message-State: AOJu0Yxl+4Oj5Ci3Oc/GKS7fQWPWkV+U6gQ8ANlVMRVsA3oL/sttxgRN
-	3NufzriACQ0OYqdRIkzyJC88pBa25TsCWgcUnCNgZptAYXZslHRQlHFTGU3JlDK3Cv2hdy691nH
-	NsLE=
-X-Google-Smtp-Source: AGHT+IED0Hof8Qae/n5VAnhwYdYYshs7gdqlaqiOxDmSh5WInROKnjx2665IoA7ui7c1BltBoePXZw==
-X-Received: by 2002:a05:6808:1593:b0:3c7:3106:e2e1 with SMTP id 5614622812f47-3d914c51bb7mr6494471b6e.8.1720213486835;
-        Fri, 05 Jul 2024 14:04:46 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4465149bad4sm72163021cf.65.2024.07.05.14.04.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jul 2024 14:04:46 -0700 (PDT)
-Date: Fri, 5 Jul 2024 17:04:44 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Tiago de Bem Natel de Moura <t.nateldemoura@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: git diff-tree do not honor diff.orderfile config
-Message-ID: <Zohf7LzaRHaG9vX6@nand.local>
-References: <CAJFVNCfz_-Dvd0ctc4w-2jsthyPFxy=HOutj=3PbNnQ-Gsz84A@mail.gmail.com>
+        bh=oIVUXIMBZZGDhR2MDFvLv/OG3atgDg5Uv6hWnQk6HYk=;
+        b=ST80CtvlcKSJbdegvDGHSauSWvZTRJi+y3Gmk9uPFhGG8oyxR15m4uaNK+q0EG1vMA
+         DrXsY2045uisnO1UXxkaybA+JbzGpB0p2qPvhjKTcJl6mI71t7hYCeRzHuFE+5ygqGvH
+         c+XNasGtfTYIljIdcW1FVieES7NbYJMYLcmPDR2fNNiIGGpVGfIlAORyGh9vDUiIMRrF
+         EHzHDWs4DGN3RZZKmKg22ofX+sssRHRUTM2XXL7IRw8qXRvwdUJLmIMS6tb09gktyQaR
+         DxHgGN4cs+mC6qYG5bU1eZiebrti2cYpZ0gb4oT50BZxRwDwOttT/6bBGa4sIpaUCaIm
+         TYrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720213736; x=1720818536;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oIVUXIMBZZGDhR2MDFvLv/OG3atgDg5Uv6hWnQk6HYk=;
+        b=dcNJS5gREvtseZOsgZUfjuTs3AMkCD+TbLKcMY1PtLTm9MltHi6CIo4GwZwpjbta0y
+         X8JojYm9nP0pkLHVW5HtHPMZGfSNtfqgqZFdDl8xOM54l4aBssat+IsVzZ8EdCazUgQf
+         WZpb+YoMTbtG61WZSY0Ozwd9glKzZdWw/mZbrwdUMnkh/4QoVgaGhlFqdepQkAoO1uhb
+         ZbJWHr2QDmQIl/TnNCyd7gmUvzbvJ6pqsF9NunVpfBw81jNq6x922iTiZHyGfzXybjFB
+         ebj9wScEk8oLyd9B+dhITHeur/58iSFVmokdTSsm3Um3ukd8PtTRLbFJC1V48meBrZc+
+         TveQ==
+X-Gm-Message-State: AOJu0YxT5qu1+SHitqE4M/Gov7nRqMCd8qnqe97ODRa2ibKQizv6lrMT
+	euA2FOvFZhI/KQ1DQCn1N1I1zIkcQdRAQgyEIGWF0cFNqQsFdSvlxGu+9wDy4SnnkhgNOXTm17r
+	kbbBZgNNXG4VmXLe2vTeDPfiGiic=
+X-Google-Smtp-Source: AGHT+IGDdmZ0ErWoTJZJQtQfj//z53RGOCdimVjKzIJY8RYohoY4p9keERjEfSFh+N/1fFcY9UE88+hR4FET6XpEsJE=
+X-Received: by 2002:a5d:8e0c:0:b0:7f5:bd0c:aada with SMTP id
+ ca18e2360f4ac-7f66e026dc4mr687920939f.18.1720213735957; Fri, 05 Jul 2024
+ 14:08:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJFVNCfz_-Dvd0ctc4w-2jsthyPFxy=HOutj=3PbNnQ-Gsz84A@mail.gmail.com>
+References: <cbc9446b1b0f2453b96aa9c0d89b9ec086a619bd.1720205457.git.me@ttaylorr.com>
+In-Reply-To: <cbc9446b1b0f2453b96aa9c0d89b9ec086a619bd.1720205457.git.me@ttaylorr.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 5 Jul 2024 14:08:44 -0700
+Message-ID: <CABPp-BErBRQckm9HnM9xm67z65rM0oaxrJ_w3RtGqWXJ-sdZgQ@mail.gmail.com>
+Subject: Re: [PATCH] config.mak.dev: fix typo when enabling -Wpedantic
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
+	=?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 05, 2024 at 11:28:23AM +0100, Tiago de Bem Natel de Moura wrote:
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> The config `diff.orderfile` is not being honored in the `git diff-tree` command
-> as stated by the documentation.
+On Fri, Jul 5, 2024 at 11:51=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> In ebd2e4a13a (Makefile: restrict -Wpedantic and -Wno-pedantic-ms-format
+> better, 2021-09-28), we tightened our Makefile's behavior to only enable
+> -Wpedantic when compiling with either gcc5/clang4 or greater as older
+> compiler versions did not have support for -Wpedantic.
+>
+> Commit ebd2e4a13a was looking for either "gcc5" or "clang4" to appear in
+> the COMPILER_FEATURES variable, combining the two "$(filter ...)"
+> searches with an "$(or ...)".
+>
+> But ebd2e4a13a has a typo where instead of writing:
+>
+>     ifneq ($(or ($filter ...),$(filter ...)),)
+>
+> we wrote:
+>
+>     ifneq (($or ($filter ...),$(filter ...)),)
+>
+> Causing our Makefile (when invoked with DEVELOPER=3D1, and a sufficiently
+> recent compiler version) to barf:
+>
+>     $ make DEVELOPER=3D1
+>     config.mak.dev:13: extraneous text after 'ifneq' directive
+>     [...]
+>
+> Correctly combine the results of the two "$(filter ...)" operations by
+> using "$(or ...)", not "$or".
+>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  config.mak.dev | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/config.mak.dev b/config.mak.dev
+> index 1ce4c70613..5229c35484 100644
+> --- a/config.mak.dev
+> +++ b/config.mak.dev
+> @@ -10,7 +10,7 @@ endif
+>  DEVELOPER_CFLAGS +=3D -Wall
+>  ifeq ($(filter no-pedantic,$(DEVOPTS)),)
+>  DEVELOPER_CFLAGS +=3D -pedantic
+> -ifneq (($or $(filter gcc5,$(COMPILER_FEATURES)),$(filter clang4,$(COMPIL=
+ER_FEATURES))),)
+> +ifneq ($(or $(filter gcc5,$(COMPILER_FEATURES)),$(filter clang4,$(COMPIL=
+ER_FEATURES))),)
+>  DEVELOPER_CFLAGS +=3D -Wpedantic
+>  ifneq ($(filter gcc10,$(COMPILER_FEATURES)),)
+>  ifeq ($(uname_S),MINGW)
+> --
+> 2.45.2.705.gad6bdba207.dirty
 
-Makes sense... the diff.orderFile configuration is part of the "UI" set
-of diff.* configuration options, which are honored by porcelain commands
-like commit, diff, log, etc., but not by plumbing commands like
-diff-tree.
-
-I think from 6d8940b562 (diff: add diff.orderfile configuration
-variable, 2013-12-18) adding it to the UI-only configuration set was
-intentional, but it is somewhat awkward that we respect -O but not the
-configuration it falls back on.
-
-So I suppose the question is whether supporting -O from diff-tree is
-sensible. If it is, then reading the diff.orderFile configuration option
-is a no-brainer. But if it isn't, then we should probably not make a bad
-situation worse by adding support for it.
-
-Thanks,
-Taylor
+Best viewed using `--color-words=3D.`, so you can see that it's just one
+parenthesis that is moving, and in particular just moves to the right
+one spot.  (Which you already called out nicely in the commit
+message.)  Anyway, looks good to me.
