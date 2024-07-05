@@ -1,116 +1,101 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4E913A879
-	for <git@vger.kernel.org>; Fri,  5 Jul 2024 18:51:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7D918AF4
+	for <git@vger.kernel.org>; Fri,  5 Jul 2024 19:23:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720205476; cv=none; b=E/252s7c+JVgJJFDLPDVS17DcNCfw+w2DORyN2PXyOl4h0F8G/3n42S7priAxvWCCc9G3HAxrrPqXroK8IT6kFLkp+KeuASIaOfNEhzTcNIGnAcyp//aX931iaChk4d2JaWw+xTwxeWShbyY2YJdrnXFYZwJsZb5rHrdRoAggsc=
+	t=1720207387; cv=none; b=FPSvXzP2r7w1b4xa8K/IvrYfvBMSzt8rrHGTJyPr9MzaLMYrTHQWSu92mQxnh69IRxK8sBBFNIyBfJ6g83MpN/jGIvDf+gsvokVLsXvKhUfbmxwK0YyG93T0/Wd59wQpMTt6mCQrNG2unLAxetfAJHd+6tvqoLn45i3IE+c1wPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720205476; c=relaxed/simple;
-	bh=83y8HxdIHbwXVRGudH20XE6BYQubLRefas/FRr/SJiM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=bL6hfodw79rd9/Hmla9vs/HhXGHII2vQH7V32rG8KP5pecgqt1UE+s3tdAnj2b/WjqHhZXmQCRYpRsapsurY5HpicEFg6nf8blN0klCTx5uTor8/kHCLnIIw4hEqeSpWt2fjF1m3KaiHzn8SYjMNA9TcE075e0MbY218uwjo0mA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=kryqgrYC; arc=none smtp.client-ip=209.85.210.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1720207387; c=relaxed/simple;
+	bh=NrMCFcqRkyTU7JoDJ9Br0IqY/LcXxdxRBUQlChN+Qn4=;
+	h=MIME-Version:From:To:Subject:Message-ID:Date:Content-Type; b=fAQ9TPBUbGR0qnmYt10/iiCSzT/0U0AaT+sw70/gTJ1S6TLEXMOAJ9m4Uk55c9dNwwNb5O2pSPGtg6yFJPfxrk3hwlpaXT0t7PUn7pjb6cjvJnRwFPSl7x/4LUYlhdq9BJNTx/eyT4VxO8vbTEYw/kGzKfWXcI52Az9h9Z6JzVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h4SeiR4q; arc=none smtp.client-ip=209.85.219.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="kryqgrYC"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-701f3ca4c8aso1079672a34.1
-        for <git@vger.kernel.org>; Fri, 05 Jul 2024 11:51:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h4SeiR4q"
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e0360f890a1so2485309276.0
+        for <git@vger.kernel.org>; Fri, 05 Jul 2024 12:23:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1720205473; x=1720810273; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=b1BDWoYjuCLMSoQZcIHXnKJgtRMhNza4ITWQNtlNTp4=;
-        b=kryqgrYCK0KO/W+8Ocn7FLowUcWcp6l95bLfDJR0KxVrTiyY/dq9jeHRh9VmPMY8aL
-         8GgxZitkpfjr7KXs+t3UOfhCvY6mcpE3YvlnwYJrIabQ0hBqwCtWx0+zQvcTXurLB8ZB
-         QC8dTYC58PnHNgJFTOkvPCPFEmuIiyAaVqjzAoHNQkQqdhxGePqcQJP9v2azkidOqy28
-         DsvvD0+zABs11WMdYzwesM6is8z7go0/+DdpGvJ51BN6uUmgzur1ao/Sg44Z7wKBtclZ
-         C9njY85GROTcdAy9JZpbXkAEomFvZsxnRt6F8h1lf2/j3y0ZX/9EfG0qZ92CK45RK6qC
-         9BQg==
+        d=gmail.com; s=20230601; t=1720207384; x=1720812184; darn=vger.kernel.org;
+        h=content-transfer-encoding:date:message-id:subject:to:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=RT5rqzGqvzghZ5r51avWOrZEmDxLsZPUr5XRmGG8HGQ=;
+        b=h4SeiR4qPrWzE6CIN9eZwLbtQ5So3877awq6JCL/4hqpuo5Ykq3nYJOUu5pnXKShvh
+         nniLhubWvc9FKihs+z1damKyfhN7Qll4R+OSjDhrcqPWx0CKOY9Nse/3ggXuMveQFzSK
+         nPZx23eOb5oqA1ONO5WhEI8cX9SXYBUPfnuEkiB88Gfx3eEMEN65SEjAy/a9H18EH7lz
+         yHmyDBk69mPzt9xoEjAjCaJ3DtSd8657k0qa35+47m7OL69O4d8EjyPn0lKwokfCUJ19
+         I61pP9beUXFZPixls881bMRpuzBXSMPKKs3vH8SFkotrrFUbR6Le3YBNOXCus71Rk+lK
+         Z0fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720205473; x=1720810273;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b1BDWoYjuCLMSoQZcIHXnKJgtRMhNza4ITWQNtlNTp4=;
-        b=TgnAA5HE7tPmPuBYIi5algbZgp4l1/+JU+AmicB65Mbhpuory0A2S1zdyOmIWIopxc
-         6AjcyEqMFFrFc93O7wW0FTBjsoRkFHRzdTWHdfNOy/gRhhZFrPM8O4iGIRVuyAKrsbGB
-         3pQAPLu2uaJlsfqCsYuLz6xQ5gE07wyQv42jWyzlyACuLT6ZhCBRInPiGrISmLmAZnnD
-         SqX/Cj5FVaZH1eM3vMyLG4WeT9IE0U5zm7lSt49TlFb+EO7Q0Jiua6lTOxCIslLp/2Sx
-         hu4q/XE5NKKKiOyc7sLGZfecbggRjZ3tkccWbpf6u9UlGGDkRi4evTGhnZvnjb1Knw+T
-         Mo2A==
-X-Gm-Message-State: AOJu0YxYxpa1ZLCLK1CO3WezmB+5lxVBhuV0c4kTXAJkQSgmGOszOB3c
-	v/bFI9mkCChXaw6DWsLTcZb7SWQfLxSuS9kRsc630SrzvANIiWGSdvIh+JCGEZOAvD+o3SD1qSm
-	PIO8=
-X-Google-Smtp-Source: AGHT+IEU7X0dgDdhtkI0elkYa/AeloheDf2BUjvL/n8jnlNyO5aL1ymk6SmKIBk5rF0jVctsl6SzFg==
-X-Received: by 2002:a9d:5f1a:0:b0:6f9:9a98:a6a6 with SMTP id 46e09a7af769-7034a7709demr5910058a34.19.1720205471885;
-        Fri, 05 Jul 2024 11:51:11 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-79d692f255esm796190885a.87.2024.07.05.11.51.11
+        d=1e100.net; s=20230601; t=1720207384; x=1720812184;
+        h=content-transfer-encoding:date:message-id:subject:to:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RT5rqzGqvzghZ5r51avWOrZEmDxLsZPUr5XRmGG8HGQ=;
+        b=ssVpeK2HxvNO9aOygoCz+SPQlnE3krBXMENDpqLt1ybKjCsWKqoVIeZi3E9AhbTryo
+         8Arkc4zFfUm7p8nrS4aYEqJNGEDh60mp0S/XaF45R5ubjVhjhY6Jw/Q37xdBu46LCr94
+         8alhM0NDB2OPF89csvJJLnk8CBLNWa0VOVIODOHyj/NWixE1IGon+/RwMPggp0uDThbB
+         AyGwKzFaOoBadvpKGnN8+KNzwZIhrkeIAK+4SmzK0hFrmrvUvHnU6GX1KgwnDayswBJt
+         ZeeHpjbmraRi/mp9150HgNtr/SxRpB3Fy8v8QADJTx2vl9hy7t+/vcjkvlPV6pPPYTx6
+         FM3A==
+X-Gm-Message-State: AOJu0YxYfH8nwnL/0lyNCTfPVfLwnr7CCf7Yi75LxEpVkcYAsCl3RxTo
+	n8oamShs2UHZlobojPJZRDZfQQZaeoR6GHJX8si6uIpQvRaQr7yzuvV03A==
+X-Google-Smtp-Source: AGHT+IFu4LZbdnq+JivEtAkb2Me6BQ65yhWqEcu0aZhWLHh0P06sprRQL7xzLuNyaNdO7T3L801nQA==
+X-Received: by 2002:a05:690c:6d8e:b0:63b:b473:1b91 with SMTP id 00721157ae682-652f6ccafb0mr36479177b3.23.1720207384278;
+        Fri, 05 Jul 2024 12:23:04 -0700 (PDT)
+Received: from EPIC94403 ([2620:72:0:1f14:b026:2206:d6e2:81e9])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-64a9c4fdb78sm29298587b3.145.2024.07.05.12.23.03
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jul 2024 11:51:11 -0700 (PDT)
-Date: Fri, 5 Jul 2024 14:51:09 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-Subject: [PATCH] config.mak.dev: fix typo when enabling -Wpedantic
-Message-ID: <cbc9446b1b0f2453b96aa9c0d89b9ec086a619bd.1720205457.git.me@ttaylorr.com>
+        Fri, 05 Jul 2024 12:23:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+From: "brianmlyles" <brianmlyles@gmail.com>
+To: <git@vger.kernel.org>
+Subject: [BUG REPORT] git-gui invokes prepare-commit-msg hook incorrectly
+Message-ID: <17df67804ef7a3c8.df629cdadcf4ea15.524a056283063601@EPIC94403>
+Date: Fri, 5 Jul 2024 19:23:03 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-In ebd2e4a13a (Makefile: restrict -Wpedantic and -Wno-pedantic-ms-format
-better, 2021-09-28), we tightened our Makefile's behavior to only enable
--Wpedantic when compiling with either gcc5/clang4 or greater as older
-compiler versions did not have support for -Wpedantic.
+I noticed that commits from certain users were ending up in our
+repository with comment-like lines in the commit message. I traced the
+cause back to the combination of:
 
-Commit ebd2e4a13a was looking for either "gcc5" or "clang4" to appear in
-the COMPILER_FEATURES variable, combining the two "$(filter ...)"
-searches with an "$(or ...)".
+- Those users are using git-gui to make their commits
+- A `prepare-commit-msg` hook is adding a dynamic commit message
+  template using comment lines starting with `#`
+- git-gui creates the commit in a way that circumvents the message
+  washing similar to if one used `git commit -F`, but invokes the
+  `prepare-commit-msg` hook without any additional arguments like
+  "message" [1] that would tell the hook that `-F` is being used
 
-But ebd2e4a13a has a typo where instead of writing:
+[1]: https://git-scm.com/docs/githooks#_prepare_commit_msg
 
-    ifneq ($(or ($filter ...),$(filter ...)),)
+The result here is that even though the `prepare-commit-msg` hook is
+already correctly short-circuiting when given the "message" parameter,
+it is providing these comment lines when called by git-gui, and thus the
+commits have these comment lines in them.
 
-we wrote:
+This seems like a bug in git-gui. I see two fixes, but I'm not sure
+which is more correct:
 
-    ifneq (($or ($filter ...),$(filter ...)),)
+- Have git-gui pass "message" as an argument to the
+  `prepare-commit-msg` hook so that the hook knows that `-F`-like
+  behavior is being used
+- Have git-gui create the commit in a way that causes the message to be
+  washed
 
-Causing our Makefile (when invoked with DEVELOPER=1, and a sufficiently
-recent compiler version) to barf:
+The latter seems like it would be more consistent with other workflows
+where the user is seeing the message in an editor, so my instinct is
+that it would be the better fix.
 
-    $ make DEVELOPER=1
-    config.mak.dev:13: extraneous text after 'ifneq' directive
-    [...]
-
-Correctly combine the results of the two "$(filter ...)" operations by
-using "$(or ...)", not "$or".
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- config.mak.dev | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/config.mak.dev b/config.mak.dev
-index 1ce4c70613..5229c35484 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -10,7 +10,7 @@ endif
- DEVELOPER_CFLAGS += -Wall
- ifeq ($(filter no-pedantic,$(DEVOPTS)),)
- DEVELOPER_CFLAGS += -pedantic
--ifneq (($or $(filter gcc5,$(COMPILER_FEATURES)),$(filter clang4,$(COMPILER_FEATURES))),)
-+ifneq ($(or $(filter gcc5,$(COMPILER_FEATURES)),$(filter clang4,$(COMPILER_FEATURES))),)
- DEVELOPER_CFLAGS += -Wpedantic
- ifneq ($(filter gcc10,$(COMPILER_FEATURES)),)
- ifeq ($(uname_S),MINGW)
--- 
-2.45.2.705.gad6bdba207.dirty
+--=20
+Thank you,
+Brian Lyles
