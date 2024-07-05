@@ -1,148 +1,103 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A512144D34
-	for <git@vger.kernel.org>; Fri,  5 Jul 2024 09:44:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6C51474A8
+	for <git@vger.kernel.org>; Fri,  5 Jul 2024 10:28:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720172685; cv=none; b=j36YHN5e8XQYgBwqqA3rQWAICqVaXL+Q+CQS6CkXzRWVV3wDXoMuZKiI6p3/Rw8wwHJT9K5PkBRfF2uS1in5kx6pCrZ+0Choq+Udt/8uLReKlV+pr2l8qxBNnqWcQHR/uiQX1PN9SkbcsmpscSVVdvTosFleJ7oRL0QoSuwu53I=
+	t=1720175318; cv=none; b=qeP9KoUjwnfcrq+JWal2hSKfkwH3+SVsAslCn4OTshk4z0qNoUWRb969G/fuE4HBKsTak33tRw9Dad/UySBovB2XPSAR1VDMWROptjnVONl80CmMexANbDQhWDnhvKJYTrKkulGGfcdUM+j5NKy+tKY1q3CMi3Qt0bwvLoahf1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720172685; c=relaxed/simple;
-	bh=VvOooZog/zUINlmmcO/nPbWWVWahkolM/vPt8b4LoY0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=t/HC2E+Jk56Ab4TCdtUbeOxFYF/VeZn26d1jKdHQwfBG/t7KToa9M2dL103AdKL10xNGGa04DnJjPO1Zxrw68DHBd53ucXhiwphfmp5RVy45RBnSeitTnP6jB54m/LMBrfa1o+yaG1KrjckN+geTEIKi2WSgiLoPl1o8qAe3dMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fl0o052u; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1720175318; c=relaxed/simple;
+	bh=pitMDZ4sEy6Dv2CY+YiacJ7IbQhB0Ah5aWxVT3G7PFQ=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Or4m/sMggga5N7ZBDRB8nc9GedRyTaY7hZeddY7hB3v6u0HmCjG5fMuzv/UFcASZyR0N0lNHWRNzU0SMpaOL066qdarjrYqTVTtGGGvVa+KkUWtVFno8Dn4GWTnUoN7h7SE0mojRk0fji6ERZmdQpfcJs6LRQBLdA16Qhq9p4wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kewRDWb7; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fl0o052u"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-367a081d1cdso784239f8f.1
-        for <git@vger.kernel.org>; Fri, 05 Jul 2024 02:44:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kewRDWb7"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-57d05e0017aso1842396a12.1
+        for <git@vger.kernel.org>; Fri, 05 Jul 2024 03:28:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720172682; x=1720777482; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jg7/yYfoA5iZaW8Z5F6wmp2p9gf0TYTntVQ8HZ/+mKY=;
-        b=fl0o052uj5wNRQaTcfK9n14dGDOZUa4XkFOFwlUe/quNTUI095BFO9K39t/ErZwVxz
-         n0fBrzh3iM3ErR8mhHf5yC/bxrxBp5JvfRTDAiOfWsx0cBeZ+8Argwd8v1r/ujz9uCUC
-         7+ZDlUhpmVXFflU4eTVCTAspnqb/3TN1iVF++hGYorTq8n5fw4PThDKWlwc5oz5gUUWB
-         sJeLESM28y4LebhJf8Jd3NPvUGipvRi/8EV6z/DewRH1tHIXTx+dwyb9m7OUImKmIiRY
-         HxCbSuk00UYBQGwu0D3Y2dkqdT5GOY5JCUM0HJKbztba0SCwn5ZSkvjn1lnBzdIVQvMR
-         +Orw==
+        d=gmail.com; s=20230601; t=1720175315; x=1720780115; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OYzAropKXlN2SVt+6IDZSDJuSwl2SixQ0w9D2lmUE1o=;
+        b=kewRDWb7UluSKvRIDv+uXBGrSHZGIZlDaZqR6hkNRk5lTJNlqUkS4MX9Zwo2lDUaGn
+         RS/jQxlatO2z6uhcgtC0cbvmAheViMGo4e/JVa6qzTeTACpvygNfRET0DTQO/F2zLsXE
+         p7CyxzLQvmTEmPSRfag4WEVeQHEcJXg+UeNqd67di3BY0UJnHpYvKWgwRqaNBpEKaOgf
+         XTUg+ncMhip0IzETiyrZ8+2zSx3Iv4kF4yK+m0WbO+B1mQidyGDcJEK2rYU2Vi3Fz8Bd
+         MRwrJfcW9O9Mq0dFMLk8PvspWJWHWs4fvL2Xg2QYH1H0atSrUb6AuEIOGsmIIVmsCmgB
+         etZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720172682; x=1720777482;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jg7/yYfoA5iZaW8Z5F6wmp2p9gf0TYTntVQ8HZ/+mKY=;
-        b=PuaJsWisu/ihqPrVIakcdFBTg7U6BThC6ANtJfWjrd/kDbDv9iPPcF3tnG8LrmA87C
-         tI41vHK4GUclnbU+RzhH78f16SzFnUaJe0q/XzMcF00LBEs9mkxRrhn0AT9xZKkhw3cP
-         YfHB2jx8B86uNXiN9s1nx0iJKHl1k/CZ3v0/FnVMzxFh0S3lhzi0kmm8OKElxYj2bXlS
-         AFeUtED/WK6C2vu3p9c2jr/0OIq403Y81ZIs0yluimHClp1ANaF5QcNQOS+ntGAMI4oo
-         OAAmRi+3445cuzKsnIs5GeG+iQEG8cgU1MXz17cgZuT9vkDin6gO1+IYHAHuob4mmPSF
-         gVvg==
-X-Forwarded-Encrypted: i=1; AJvYcCUUKO74/neGyvVoCTmwWPsDV1hGJPYGLzsEJOH15+Z3WD/O+4XMq2UiiZoabTbcYIwYr9TYc/9R7vXRghga3wcubonu
-X-Gm-Message-State: AOJu0YwZjJHfFCEsIM8pYmPh5Vo9/MHMqONd7UUJ+lT4QIrRhS1L7AsQ
-	RG/hev5wrQT8Y7qwVrNu7q1MruH2vKV8ZR4yL4/VFJroda6C+k16nlFSgw==
-X-Google-Smtp-Source: AGHT+IF5nNHdqfbWUKRsZwhapLALxoIEJ5zEnXU4TPPVAHrb6jZyBnLQ1MOcRsnx+8Wbd4XkrwEN/Q==
-X-Received: by 2002:adf:f2d2:0:b0:367:9792:8bd4 with SMTP id ffacd0b85a97d-3679dd65208mr2749001f8f.43.1720172681379;
-        Fri, 05 Jul 2024 02:44:41 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:61c:a601:7f88:feb2:513a:4c20? ([2a0a:ef40:61c:a601:7f88:feb2:513a:4c20])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36799a54215sm4084966f8f.68.2024.07.05.02.44.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Jul 2024 02:44:41 -0700 (PDT)
-Message-ID: <3add9624-4f3a-4f70-bc15-2357920dbc9f@gmail.com>
-Date: Fri, 5 Jul 2024 10:44:40 +0100
+        d=1e100.net; s=20230601; t=1720175315; x=1720780115;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OYzAropKXlN2SVt+6IDZSDJuSwl2SixQ0w9D2lmUE1o=;
+        b=LOzEgF2upAIxK7OEldy5LQ/IJPaP/toz3IJUwE7iCuZjgnJzrZ4WOvCS5WMAZIje5N
+         J9V4GEBfVRGCgb1DGZi+d3RnbiI37xcH4BlolgiE5eMn6buG+lJrzyM+O6O3penVsZK3
+         Id6x+WfnIV9LE4QFyEH+85JEscjGyXZWLjq4JL4Rry3LaoyEy7k1oFMgzABhjKElIu7P
+         AgAvBwdPptXF6HuZGmDJu568fHsxZBZnEAYM9i3b7zrtZ8+rhMZGE+fQovqaxXwIUC3m
+         5e8LP0AW5IMuksyxFG39eHoydzkpWV4NDp20XwFHh21zlGTdaePkhdvIEwcUCBowlHUA
+         st8A==
+X-Gm-Message-State: AOJu0Yx4baGPldFf26OpV/WuhiC+XIbG97MplHIbGdedPNEhNvhUBaBf
+	3eguDMNyvIKpZ4yy/EKktxKA3lfmq4ayYAviRO17E1NKJwCcDRS6UaWIpcYGVLc8354v04iO6MO
+	5r6xMLiW2FUvJpaUXn1R64RekWmvtZQpS
+X-Google-Smtp-Source: AGHT+IHZxDfSi0zRDHN2IETm6KeM7iwt4N1GHIYbzraQis7njuXj9CGuX0abpZjYsWyWqeG5WUIuFZ7kzOrFmVX7reg=
+X-Received: by 2002:a05:6402:2106:b0:57c:6188:875a with SMTP id
+ 4fb4d7f45d1cf-58e5c73066emr3154264a12.26.1720175315036; Fri, 05 Jul 2024
+ 03:28:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] t-strvec: use test_msg()
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Git List <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
-Content-Language: en-US
-In-Reply-To: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Tiago de Bem Natel de Moura <t.nateldemoura@gmail.com>
+Date: Fri, 5 Jul 2024 11:28:23 +0100
+Message-ID: <CAJFVNCfz_-Dvd0ctc4w-2jsthyPFxy=HOutj=3PbNnQ-Gsz84A@mail.gmail.com>
+Subject: git diff-tree do not honor diff.orderfile config
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi René
+What did you do before the bug happened? (Steps to reproduce your issue)
+The config `diff.orderfile` is not being honored in the `git diff-tree` command
+as stated by the documentation.
 
-Thanks for working on this, this looks good modulo Eric's suggestions
+What did you expect to happen? (Expected behavior)
+The output ordered by the pattern file.
 
-Best Wishes
+What happened instead? (Actual behavior)
+Output has normal order.
 
-Phillip
+What's different between what you expected and what actually happened?
 
-On 04/07/2024 19:04, René Scharfe wrote:
-> check_strvec_loc() checks each the strvec item by looping through them
-> and comparing them with expected values.  If a check fails then we'd
-> like to know which item is affected.  It reports that information by
-> building a strbuf and delivering its contents using a failing assertion.
-> 
-> Here's an example in which there are less items in the strvec than
-> expected; the index of the missing item is reported in the last line:
-> 
->     # check "vec->nr > nr" failed at t/unit-tests/t-strvec.c:19
->     #    left: 1
->     #   right: 1
->     # check "strvec index 1" failed at t/unit-tests/t-strvec.c:71
-> 
-> Note that it is also reported in the third line, i.e. the variable
-> "nr" contains that index.
-> 
-> Stop printing the index explicitly for checks that already report it.
-> The message for the same condition as above becomes:
-> 
->     # check "vec->nr > nr" failed at t/unit-tests/t-strvec.c:19
->     #    left: 1
->     #   right: 1
-> 
-> For the string comparison, whose error message doesn't include the
-> index, report it using the simpler and more appropriate test_msg()
-> instead.  Report the index using its actual name and format the line
-> like the preceding ones.  The message for an unexpected string value
-> becomes:
-> 
->     # check "!strcmp(vec->v[nr], str)" failed at t/unit-tests/t-strvec.c:24
->     #    left: "foo"
->     #   right: "bar"
->     #      nr: 0
-> 
-> Reported-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->   t/unit-tests/t-strvec.c | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/t/unit-tests/t-strvec.c b/t/unit-tests/t-strvec.c
-> index d4615ab06d..236203af61 100644
-> --- a/t/unit-tests/t-strvec.c
-> +++ b/t/unit-tests/t-strvec.c
-> @@ -17,12 +17,12 @@ static void check_strvec_loc(const char *loc, struct strvec *vec, ...)
->   			break;
-> 
->   		if (!check_uint(vec->nr, >, nr) ||
-> -		    !check_uint(vec->alloc, >, nr) ||
-> -		    !check_str(vec->v[nr], str)) {
-> -			struct strbuf msg = STRBUF_INIT;
-> -			strbuf_addf(&msg, "strvec index %"PRIuMAX, (uintmax_t) nr);
-> -			test_assert(loc, msg.buf, 0);
-> -			strbuf_release(&msg);
-> +		    !check_uint(vec->alloc, >, nr)) {
-> +			va_end(ap);
-> +			return;
-> +		}
-> +		if (!check_str(vec->v[nr], str)) {
-> +			test_msg("     nr: %"PRIuMAX, (uintmax_t)nr);
->   			va_end(ap);
->   			return;
->   		}
-> --
-> 2.45.2
+The order.
+
+Anything else you want to add:
+
+The complete command that I'm running is:
+git diff-tree -r --relative --name-only HEAD main
+
+if I provide -O ~/ordefile it works but if I add it to my config it does not.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.44.0
+cpu: arm64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Darwin 23.5.0 Darwin Kernel Version 23.5.0: Wed May  1 20:14:38
+PDT 2024; root:xnu-10063.121.3~5/RELEASE_ARM64_T6020 arm64
+compiler info: clang: 15.0.0 (clang-1500.1.0.2.5)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]
