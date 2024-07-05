@@ -1,131 +1,147 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E83F2F32
-	for <git@vger.kernel.org>; Fri,  5 Jul 2024 16:39:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F38A16EB47
+	for <git@vger.kernel.org>; Fri,  5 Jul 2024 17:03:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720197595; cv=none; b=cYaklu69NiDa4AvfK0uYFhFUZwqAOI0irGYL57utSH5t4k5FUsKLcTSe07M/bFkYnFupkGPXK7EpPpYIZhQWaa5YQZS/KHcidCZ7k003WB58NRry4PixAMipKsgXq59JZi4kazOvtIVIZcZ4aghYORUBa/pxv3wOuhxIbWzdF58=
+	t=1720199034; cv=none; b=bynDddge7r4/6ehMPM8CueJoTtM0HkljneF4m7p5++9lDuDRpJqEefJxYXsbpbkkfMWXdePmrLZDvXBU4ixN2YfsaYfqegf/3yv56C9IU/sw9xRh292K0kyz8HK9Y23ANnTure2N6o2XRF1jsHaSE5AVw/zInqnjhNCowQO1LGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720197595; c=relaxed/simple;
-	bh=tjmCFihq0BLQcq0E8jVb6RNZbRiL7CJb/NCTTVYLWBc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Gn9yQcnPsDFxD+B7Jf5gF84iSMCy1c42iAqgRnuo3uuxD4SA62yJL/WMsABG2/0V+FlZxWM+f+tnxrAfHAslRKPzknT/4DECtXlQykFkMHc1mXF7pMJ3w4tYcz/Asyad0LnuvNzq4AGpLBV7tEKAhYNq+h37X1DeutfM6cHlk6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LbyoMFYK; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720199034; c=relaxed/simple;
+	bh=p5Hl3qr626AhKrktHJJPZqcpJC3SbyWSZ+JCcQglROs=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=nw54z5plEjlG+HNGNycQb1inEluglitQen29iJL3i3/tlf7T8G7dn4rfzjhrAuFXAgxL5+5lHqmIMBBoD8K3gYT5671741ofUk94Gq0ceJN6pSp6A7JTXdjv8F5unOJGr8GSQOjRF0gCoWv95bLkjTdiRh/HBo2QVXQhQOFXTYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=O/4hsOGQ; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LbyoMFYK"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-70b07f27788so946183b3a.2
-        for <git@vger.kernel.org>; Fri, 05 Jul 2024 09:39:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720197594; x=1720802394; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UhYhfSmbnBfJwB7B/TAhavGbpclIKagu03Fvyf1XGYw=;
-        b=LbyoMFYK5ejLgxaw2NoJK9A/axkXW+GOkHmi6Zk3o6O2m5LulF3iT+m1Bj9Mqw8SLj
-         9CgJ9XO8v/bv251w6a/uKyCIqYV4F3OAvwYGiV8TGBUACtyn6Com9PnF5ECHWGE/NbHM
-         P13ri+qOvVcJipj4gi/66+NPJDw+68l61c9l4+H7Lhzyg7oMqErZzR1/5wH/AYU14LAD
-         vOwBW7pvajqRYsOPE6f3URM+22UOVybCYnE+cBXugaNpEvtkMEK+M0WN5SZHkGluR9KA
-         MGES+k/aLkjLpi5GqoVDNqP8dv2eqXr53Nw0Xcw4ModjNAHd4qllhyw2ZDC1F0rMevj8
-         WV/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720197594; x=1720802394;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=UhYhfSmbnBfJwB7B/TAhavGbpclIKagu03Fvyf1XGYw=;
-        b=MwFSq85h99to/4sqcj+H+yZhPGJuA1RnjaK4m+8CfW1u5sKQE/1Ve7OSn+S/29NxRV
-         rs8xGG8QNxAH5ArwhDRD1TqlRZYMDRY8+84Pq4qqCQEzdrMA0/tUNI1cR1fM1G4YHF13
-         9WrF0ROY4DaZnBctAbWfZfg8bNcnAfDKuWSF3DwijX/A5DSRuJRWBfK+QKUe3lJzKR5H
-         Z20B4zhDZAvK2dOdBWTBNe41SgGOjWDNqVgHDo/yWWtyZ/ejCbxRF5UjSmUjLUXLjdtw
-         yLnYuGTSAssetLumRyhwcWB/5zwrCjl9Dj0blEg+0ALTwklGWlLrgTUvq7s1fwaTneIT
-         qinw==
-X-Forwarded-Encrypted: i=1; AJvYcCW5pp8IrAlr8U8YHYhftB+RtZr2/R1GwiuuoBLBy+pxCZ+tB+LUQrxG6AbKrzlq7wKdG0PTOqljpxJkbi2vMTjXsMVj
-X-Gm-Message-State: AOJu0Yzq4e0nVbOBmxAu2XAsm1PtuhDXuv6qOPYKUnraXYtIu6eEHAox
-	V6MhfxEW+Ayw6eFu89RTDr20gg+H3LybBpgHrJ0hLeuw3jEgEANi
-X-Google-Smtp-Source: AGHT+IH47ngANasGGMjPxyinZEWa1P0is6KRIUrA1Oq7DK55uyUwXF38QniKMMjNbxIP8nhcstRy1g==
-X-Received: by 2002:a05:6a20:da95:b0:1bd:1a06:7ef3 with SMTP id adf61e73a8af0-1c0cc737360mr5806250637.3.1720197593573;
-        Fri, 05 Jul 2024 09:39:53 -0700 (PDT)
-Received: from localhost (236.219.125.34.bc.googleusercontent.com. [34.125.219.236])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-72c6c7f76fbsm11430898a12.73.2024.07.05.09.39.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jul 2024 09:39:53 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Ilya Tumaykin <itumaykin@gmail.com>,  git@vger.kernel.org,  Jeff King
- <peff@peff.net>,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: git crashes in `git commit --patch` with
- diff.suppressBlankEmpty = true
-In-Reply-To: <ab974e62-098c-4200-bee3-7de8d9115516@gmail.com> (Phillip Wood's
-	message of "Thu, 4 Jul 2024 14:14:56 +0100")
-References: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
-	<ab974e62-098c-4200-bee3-7de8d9115516@gmail.com>
-Date: Fri, 05 Jul 2024 09:39:52 -0700
-Message-ID: <xmqq4j937pyf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="O/4hsOGQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1720199017; x=1720803817; i=l.s.r@web.de;
+	bh=b980dtSMZZc8e7eL62Y8/iZ204knM1gUohktE3WshL8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=O/4hsOGQp5UQGg/81l7OksyCf8vxRJab6W+OtL95mW58hVVkUPVCEuwccR0nbFPG
+	 vkcud1Z+Iksl+fZoc5F8Rys0G7pMG1GUn45UuEc6j9Zla4T80lrHAPwR+kJs9oyRr
+	 Nkd8spaZ94X0LhTgvELpH71C5iJQ6pMYLk/VRbuZHctLD87ZGtgoNDYwXYfG+xFBM
+	 RwGBnqmLkmVon9YKhH0Fmg2lCbooQVbE6KjX+GeurWwoWd72/vjCRhuO+TIiTJPwq
+	 ur2BoRCSv9XwK2nreXDI+BC16Y6fQjudCpjEXq6421c36l5VN5kglqsmo/LLCWd+2
+	 WaKeUDqXXnv8BFhpuQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.153.221]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MeDQj-1rsdWI1ra3-00qYQR; Fri, 05
+ Jul 2024 19:03:37 +0200
+Message-ID: <983be396-f47c-4573-8c33-af8367f8ddbe@web.de>
+Date: Fri, 5 Jul 2024 19:03:36 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH v2] t-strvec: use test_msg()
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+To: Git List <git@vger.kernel.org>
+Cc: Patrick Steinhardt <ps@pks.im>, Phillip Wood
+ <phillip.wood@dunelm.org.uk>, Eric Sunshine <sunshine@sunshineco.com>
+References: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
+Content-Language: en-US
+In-Reply-To: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:xV+O5o00taNiOMfMtRnU0ydMvZQjIOq3VnnDSlr2PBOzqTzqRKx
+ RQ2/ktJQtLdnMNCNSJq/kIbYSHZcHsoIkZHJEWOdE0RC4IT9WFW8S6e0ovgUdPVw8AKCw87
+ /MQ2PiugwtZQ5gE0+E2x1gdh0T9Gab3jo2WHAoTWNhBks3e7QkJa0XFrILZ/1xGDFAP7Xm7
+ DyWhcGkMkEuub5rq1wnIQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:9mxSvAoCODk=;qw7i+M5faa+ZEvopxafahhoV0qb
+ JDb7iZOzozof+O81Kc85Cr/S2SzsORbXiiGoNJeTE2Q7keD7Np6j7Qgd1GlJYqVc9tL2xBVYm
+ DOcghroEtxR1bcdyCtSdNgFrauHKSkR1wy8pgaSuz/s+10JZbUYPNNzIRw293RuCNbXME0Ggy
+ odS8fD9CutBQig5ILb6/HjXfnTfkMs05yJp6cdWv1e81cwyfER29FMIVpf57sPMKT8xaz/iTX
+ Ouxu/S89NgC8E3edKiayMWPjtIa7ur7Wpi89ItYhgVPqQQNDWfmSI/VeB0CCkSlDmG0iwLMQB
+ xEi+9ybyC7UyEp6mpJU4qO8N0/Ogc/14G1ncKpRB/7awAMl53e9K1h4oN8aHesNiYRUg9GEEf
+ Tu/1G2MtPbmDqqqQyoHhchI7kv+TnTROAkmyscUF2EnJewec+QhbLWwv2W66ah5h3H+8g+XO6
+ 7Nb8mvRRp5b1XhqjsHaXS9Ch5C/tY6GBST7Tr4wLz/IsnmY94N1N40n/gXR3oEGqKcqtR3SCo
+ FQJu4j7X9UGmXLyKz8kRQEegcwWe772UkuOUZALxiSfqQSivAcWNGBX1EyPgesezmoVXVLgXd
+ ue+StqcMZAsZOaXcztDuzTAjsZM8cu7UKSfqMhPGOtda/msxH/Dt2gCZqz7fpxqCyQSJ0FP8X
+ zk9tcuNURK5hBaGs0S7cju+3lWdTVDPdop3mb4ddmBoSlruiegICVYdSmHmvWU5WyNkhYWI8Y
+ /RUx94tKaxgD3LB87xZUYh2xvlRhKMCdfqTl4WwEqJP2VKdaVH4s6Ed3C3MEGd8P17ZTIE9HP
+ ZUtUUHCdIXFc9AmZO/O5h+PLzx+eSogQWi6iME69tSjSo=
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+check_strvec_loc() checks each strvec item by looping through them and
+comparing them with expected values.  If a check fails then we'd like
+to know which item is affected.  It reports that information by building
+a strbuf and delivering its contents using a failing assertion, e.g.
+if there are fewer items in the strvec than expected:
 
-> ... but I wonder if we
-> should change 'diff-index' and 'diff-files' to ignore
-> diff.suppressBlankEmpty instead. The plumbing diff commands already
-> ignore most of the options that change diff output so I'm not quite
-> sure why they respect this particular config setting.
+   # check "vec->nr > nr" failed at t/unit-tests/t-strvec.c:19
+   #    left: 1
+   #   right: 1
+   # check "strvec index 1" failed at t/unit-tests/t-strvec.c:71
 
-Very true.  Even though POSIX adopted the text:
+Note that the index variable is "nr" and thus the interesting value is
+reported twice in that example (in lines three and four).
 
-    It is implementation-defined whether an empty unaffected line is
-    written as an empty line or a line containing a single <space>
-    character.
+Stop printing the index explicitly for checks that already report it.
+The message for the same condition as above becomes:
 
-it merely allows the implementation to show an empty unaffected line
-as an empty line (where traditionally such an output was not allowed),
-and we probably want to give priority to consistent and stable output.
-If the addition of diff.suppressBlankEmpty were done in the usually
-recommended way to first add command line option to prove that the
-feature is useful and then add configuration variable to pretend as
-if it were passed, then it would have been perfect.  We then could
-have made the plumbing to completely ignore the configuration to
-make the output more stable, while allowing script writers a choice
-to invoke plumbing commands with explicit comand line options.
+   # check "vec->nr > nr" failed at t/unit-tests/t-strvec.c:19
+   #    left: 1
+   #   right: 1
 
-But that was not what happened, unfortunately.
+For the string comparison, whose error message doesn't include the
+index, report it using the simpler and more appropriate test_msg()
+instead.  Report the index using its actual variable name and format the
+line like the preceding ones.  The message for an unexpected string
+value becomes:
 
-If we really wanted to force the world line to where we did what we
-should have done back then, I would say we need to do a two-step
-transition.
+   # check "!strcmp(vec->v[nr], str)" failed at t/unit-tests/t-strvec.c:24
+   #    left: "foo"
+   #   right: "bar"
+   #      nr: 0
 
- - Add the --[no-]suppress-blank-empty option from the command line
-   to all commands in the diff family.  Plumbing diff trio will
-   still pay attention to diff.suppressBlankEmpty but when they see
-   it is set to any non-default value (i.e. true) without being set
-   by the new command line option, we loudly warn that we will fix
-   this historical mistake in Git 3.0 and encourage script writers
-   to update their invocation of plumbing diff trio to use the
-   command line to custimze.
+Reported-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Changes since v1:
+- Typo fix.
+- Grammar fix.
+- Reworded problem description for brevity.
+- Qualify "name" in the last paragraph for clarity.
+- Add sign-off.
+- No code changes.
 
- - At Git 3.0, plumbing diff trio stops paying attention to the
-   diff.suppressBlankEmpty configuration.  By this time, the warning
-   we gave in earlier versions would have helped existing scripts to
-   migrate away from relying on it and if they want they would
-   instead explicitly pass the command line option, so we stop
-   warning.
+Thank you, Eric!
 
-As to the "commit -p" issue, I think the patch parser is in the
-wrong and needs to be corrected, period.  As long as the patches
-given as input are well-formed, we should be prepared to grok
-them (we even allow manual editing of patches, right?).
+ t/unit-tests/t-strvec.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-Thanks.
+diff --git a/t/unit-tests/t-strvec.c b/t/unit-tests/t-strvec.c
+index d4615ab06d..236203af61 100644
+=2D-- a/t/unit-tests/t-strvec.c
++++ b/t/unit-tests/t-strvec.c
+@@ -17,12 +17,12 @@ static void check_strvec_loc(const char *loc, struct s=
+trvec *vec, ...)
+ 			break;
 
-https://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
+ 		if (!check_uint(vec->nr, >, nr) ||
+-		    !check_uint(vec->alloc, >, nr) ||
+-		    !check_str(vec->v[nr], str)) {
+-			struct strbuf msg =3D STRBUF_INIT;
+-			strbuf_addf(&msg, "strvec index %"PRIuMAX, (uintmax_t) nr);
+-			test_assert(loc, msg.buf, 0);
+-			strbuf_release(&msg);
++		    !check_uint(vec->alloc, >, nr)) {
++			va_end(ap);
++			return;
++		}
++		if (!check_str(vec->v[nr], str)) {
++			test_msg("     nr: %"PRIuMAX, (uintmax_t)nr);
+ 			va_end(ap);
+ 			return;
+ 		}
+=2D-
+2.45.2
