@@ -1,203 +1,139 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B99117623C
-	for <git@vger.kernel.org>; Fri,  5 Jul 2024 20:29:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49892208A7
+	for <git@vger.kernel.org>; Fri,  5 Jul 2024 20:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720211381; cv=none; b=Q010ZlUH07WcwYpEC+3AOlGfGF/quTZZJqeLbMbozBebBfk68oEIng4ZRGQfuwblGD9pAw1NEbJDcEpM8Vayd9QhQXlIIIAqwF++3AKm+qHKaCSnbvQMoO6c3HmzCfi7fHGfpYmRph3wAIyw0RODzlGvXslD4TKOiuQPcxnBFmM=
+	t=1720213007; cv=none; b=HvIwxzpyPuvQYMp+oePL+AfEOm/B1kobpxvLKxrSnte2XHWTTFBuzPU6aEi/zcS4OjKwbSOhc62D9ppgq4esXHFPNkQ9eT2z1VDA8iskTTeOjSkb1ISHkYIkn7XmT4T0e1B+vR7H8xEWwPaHK31+flmOLrA6TYyjHR8/FOjKauY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720211381; c=relaxed/simple;
-	bh=igD6IMXaJnDwewjeoupNJnYu4CrAlty/Wm18qub83LY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X+lUkQ/QTMK56WDga8xCuU7+iksl3XjoaqBeJELu78fTwjO5IXldSl9msgHykYgl7og/PQVcpnll6zmjpTIdfOhE5f2Gw3MlShl79aNALlysl9L60cJWJcnGj1n/x+xzfFq4NqzPyOHq6pgu7laVSTClSfbWuTVNQ0bbPeOxV84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WEHx+s4z; arc=none smtp.client-ip=209.85.166.51
+	s=arc-20240116; t=1720213007; c=relaxed/simple;
+	bh=XUzmYG1h58OSkWkREglr0DSltzINQWZZWzV1YHQWe2k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=T6ChZOUKbmW+sR7IDfp97MqPyIeLY1qklnVOQUoAJvnCcaXs9RIyz1uysobEhMrLtqVAFhTaKZYt5qUT7FX+l/2KLlwt/V+zn28G3U+QiZEsjnJceC9H0fXg9qXd8FUea7Dg1LYjixnRUhT37LUWUI+2A2sD4dnOTgskdEnWTLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DrUAG8Z8; arc=none smtp.client-ip=209.85.128.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WEHx+s4z"
-Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-7f684850b11so17637739f.3
-        for <git@vger.kernel.org>; Fri, 05 Jul 2024 13:29:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DrUAG8Z8"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-64be6442539so1703697b3.3
+        for <git@vger.kernel.org>; Fri, 05 Jul 2024 13:56:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720211378; x=1720816178; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dOF/aAu9+uBZAACOwF/4DzU2XpBaRwNytHnp1wFPSQE=;
-        b=WEHx+s4zCJ5QJ5Gu5sE4KRtpH0QKQ5qD++BENpZY1q6PqN0q63jF4HKlpkzwTxtLJV
-         ERi473z6MK+O1v6bDvvLO6ngIajUIgFybZlAQqGW+Xa62TxP2PtSBK1USGRxWAaMJZo9
-         o1PbZ8iCrJIyK7xGBM+5xXVmcODXu+mXERfSM2fqSmGtOTqx7QvWp1MWVZrI/xsjxQ81
-         HUr8m3waEeRBSHn6MMOqFJJqNjSagSoRRfgCcIg0cE8U3/7yPAauyb50pKW3SSBu7h9l
-         oSIAipEwbal1tJpGodJF6BeOTh/IUDzQHwh0xIxWDzddu7xXeVEFlpEXsEZOiP5IJFhX
-         Qt4Q==
+        d=gmail.com; s=20230601; t=1720213005; x=1720817805; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:references
+         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=c+XamF1ST0S14iWXHeknyhydHMGxQ0bqLGch3Rr0ALU=;
+        b=DrUAG8Z8NZb4Ruqb1A1zINCZDXRZu5NpKOhtHb1h8mA2/0hww5jss1yNuT4PhT0UC+
+         TWvHbrUDDCGjd6nCZPlesZKWDeV5rqBH6jd/LTvGvvxhGTOpwiHFAOb+LXfpbMVLNJ+t
+         1wS9Qjb/DRc5GnlXU5IldhxGBUbvSqn47wBrk8nSY7h78krB5iZfwG6+ovEB20iqkOhY
+         J46MJcKNLGH/x37pxFuCstsAFrM4aq3E/CSLEUj0SREsXAUv60M3dJzrloNWHiFsPxeT
+         lI+N7z+zb8z2SNhTtdW7SlLf4Pe6Ymc2X1WWIgckiAWjciCdmYNJL6+pAwBHxPZezP62
+         xH5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720211378; x=1720816178;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1720213005; x=1720817805;
+        h=content-transfer-encoding:mime-version:message-id:date:references
+         :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dOF/aAu9+uBZAACOwF/4DzU2XpBaRwNytHnp1wFPSQE=;
-        b=A4/7EtZhMwZ5sADrs4eXOQO1bX32nQrPlE04SBq8jy+WXxs4mlMZE6omtyXXU3uaY3
-         FRIB0/s+iL3e2SbS1IpfcrHlRMAQeATy9+DU8pGg1Cv0/loM5wWelir9wGjrNc8+mXGI
-         to5Bsga7LLo51hW81mX09zynbXgqEFvvFJ3RGMUa5iaMvTadRr1MOOT/k2BXdW+IE3iB
-         gBhci5SbECEsMS/j2kyyEUSYgU/oH/r9mVzD3uwDJMK2klszL71RUgil0EpKfoTvx36v
-         ereW5Z+AHS9YQu7iEz4bUa8zHgEiTA/Tv5EZtaYqpdFyavCNvMzLdovfCIFr4GcWVn0i
-         BDDQ==
-X-Gm-Message-State: AOJu0Yx8zCUPtOofy5MoQlLVihyvm3wcRJEVcl5GSeok4bAo0/2kF4+a
-	+mvN+civazSxQ5VfNkVY+yET10BF43VTjO3B2XpQVYxktVr61rl4XeDJ/W8bPmoMfPDjZBLaNNB
-	MpfBtzc0Lfug/HEZ/+Y2aIKuoniZ6PBHX
-X-Google-Smtp-Source: AGHT+IFYo/92lG8DC2euPVFxMpnp/h77R1eiKD7zCgKFrdvogyvlyElUdsJxKsvmQFuKksEYjZOc7WgyTrdnAAA9DWM=
-X-Received: by 2002:a05:6602:1231:b0:7e1:8a93:48ef with SMTP id
- ca18e2360f4ac-7f66df1d30amr652083939f.21.1720211378573; Fri, 05 Jul 2024
- 13:29:38 -0700 (PDT)
+        bh=c+XamF1ST0S14iWXHeknyhydHMGxQ0bqLGch3Rr0ALU=;
+        b=cTYm+w35N86ELVS+mSKHWhMbutuXisBwip0G8mENRaWZQ5xximrlMeuZAtMNMhaRQc
+         secYwAmiI696j/F24x9/QJ3IGRF0i597NOcjl9bnsmIBQZsr8ZigPLL7DfOxCvWzQqZh
+         ZNVLyGb1sNxvegu1GhuAYJC+70XGs8LGOs/992GfQBUa2XJ/mxiRuO+77nEK5K39idhM
+         RkW7MRjGIefAv1f+l1ZkM+kHxW/KjnCDNNMI16E2ydVAgyIEbMbKgDn90kXeDdDIR4lk
+         67TT5GJ+Rctp17YtoDISEdrQ/kVd1qrSDlQHhHA1BOGWhh8HZrw/YoJNhRruR67EGyIQ
+         V46Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXqg3ILTEzdtuFdbGJGPauxVL+WLZWvpoYuvwSAsVhULe09QhhD9gNoQLqb39sQZj9d/m+JmCLczHOmw8rfJ5lFNabM
+X-Gm-Message-State: AOJu0YxH8Z7/ItaNAZvuw4oRjasXVfllEhHuNPCNj7NFkoQ5C8tqHcSP
+	m3UiMsLCiKiA3d4lR28GOpqkfUQ1Dsd2Yt5UWjIQjlAFD/N2zcF/
+X-Google-Smtp-Source: AGHT+IE+iduLgMXf/Le+htQSp66vBE79+VEgqccFPlA9670nGAFxX7kJ9zryxZYS1bDOGhmF55KdOg==
+X-Received: by 2002:a81:8390:0:b0:630:b000:f548 with SMTP id 00721157ae682-652d95c39famr44379267b3.3.1720213005026;
+        Fri, 05 Jul 2024 13:56:45 -0700 (PDT)
+Received: from epic96565.epic.com (pat-verona-h.epic.com. [199.204.56.213])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-654c79b9b06sm1637817b3.36.2024.07.05.13.56.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jul 2024 13:56:44 -0700 (PDT)
+From: Sean Allred <allred.sean@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: brianmlyles <brianmlyles@gmail.com>,  git@vger.kernel.org,  Johannes
+ Sixt <j6t@kdbg.org>
+Subject: Re: [BUG REPORT] git-gui invokes prepare-commit-msg hook incorrectly
+In-Reply-To: <CAPig+cRQPrtGBTxM49nUeHvsVr0qEOnKZ5W_4by=A9mXEsR3DA@mail.gmail.com>
+ (Eric
+	Sunshine's message of "Fri, 5 Jul 2024 15:57:09 -0400")
+References: <17df67804ef7a3c8.df629cdadcf4ea15.524a056283063601@EPIC94403>
+	<CAPig+cRQPrtGBTxM49nUeHvsVr0qEOnKZ5W_4by=A9mXEsR3DA@mail.gmail.com>
+Date: Fri, 05 Jul 2024 15:56:43 -0500
+Message-ID: <m034onpng4.fsf@epic96565.epic.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1756.git.1720019679517.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1756.git.1720019679517.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 5 Jul 2024 13:29:26 -0700
-Message-ID: <CABPp-BG_udtdv1aCfJ7T_WmRExdD29ZVXD+cA6xOZYHofHDtTQ@mail.gmail.com>
-Subject: Re: [PATCH] advice: warn when sparse index expands
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, vdye@github.com, 
-	Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Eric Sunshine <sunshine@sunshineco.com> writes:
+> On Fri, Jul 5, 2024 at 3:23=E2=80=AFPM brianmlyles <brianmlyles@gmail.com=
+> wrote:
+>> I noticed that commits from certain users were ending up in our
+>> repository with comment-like lines in the commit message. [...]
+>> [...]
+>> This seems like a bug in git-gui. I see two fixes, but I'm not sure
+>> which is more correct:
+>> [...]
+>> - Have git-gui create the commit in a way that causes the message to be
+>>   washed
+>>
+>> The latter seems like it would be more consistent with other workflows
+>> where the user is seeing the message in an editor, so my instinct is
+>> that it would be the better fix.
 
-On Wed, Jul 3, 2024 at 8:14=E2=80=AFAM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+There is a third option -- new plumbing in git (a la
+git-interpret-trailers) to expose the logic of `cleanup_message`. This
+comes with some nice flexibility, but introduces complexity around
+transferring state (e.g. passed options to git-commit) that would
+probably be best to avoid.
+
+The second option above does seem simpler.
+
+> A patch to make git-gui strip comment lines had been previously
+> applied[1,2], however, it badly broke git-gui when running with old
+> Tcl versions, such as on macOS[3,4]. The breakage was not
+> insurmountable, and a patch[5,6] was submitted to resolve it.
+> Unfortunately, the then-maintainer of git-gui lost interest in the
+> project about that point, thus left the issue hanging. Thus, to this
+> day, git-gui still doesn't strip comment lines.
 >
-> From: Derrick Stolee <stolee@gmail.com>
+> Resurrecting these patches would be one way forward, assuming the new
+> git-gui maintainer[7] (who is Cc:'d) would be interested.
 >
-> Typically, forcing a sparse index to expand to a full index means that
-> Git could not determine the status of a file outside of the
-> sparse-checkout and needed to expand sparse trees into the full list of
-> sparse blobs. This operation can be very slow when the sparse-checkout
-> is much smaller than the full tree at HEAD.
+> [1]: v2: https://lore.kernel.org/git/20210218181937.83419-1-me@yadavpraty=
+ush.com/
+> [2]: v1: https://lore.kernel.org/git/20210202200301.44282-1-me@yadavpraty=
+ush.com/
+> [3]: https://lore.kernel.org/git/CAPig+cT-sfgMDi9-6AEKF85NtOiXeqddJjk-pYu=
+hDtTVAE-UEw@mail.gmail.com/
+> [4]: https://lore.kernel.org/git/CAPig+cSC8uNfoAjDKdBNheod9_0-pCD-K_2kwt+=
+J8USnoyQ7Aw@mail.gmail.com/
+> [5]: https://lore.kernel.org/git/20210228231110.24076-1-sunshine@sunshine=
+co.com/
+> [6]: https://lore.kernel.org/git/CAPig+cRQN4PjfxEOZ8ZBA_uttsRPS8DPDgToM_J=
+FvichDDh_HQ@mail.gmail.com/
+> [7]: https://lore.kernel.org/git/0241021e-0b17-4031-ad9f-8abe8e0c0097@kdb=
+g.org/
 
-Yep, I'm with you here.
+I haven't looked super closely at the patches you've linked, Eric, but
+it seems like those are specific to stripping comment characters. As
+I've noted elsewhere[1], there's potentially more to strip than just
+comments (like patch scissors). I suspect the only paths forward to
+guarantee that message-washing happens would either be an option to
+git-commit to explicitly enable it OR (probably preferred) have git-gui
+invoke git-commit with an appropriate editor instead of using -F.
 
-> When users are in this state, it is common that 'git status' will report
-> the problem.
+[1]: https://lore.kernel.org/git/m0h6d3pphu.fsf@epic96565.epic.com/T/#u
 
-I struggled to understand this sentence in combination with your later
-statements, though that may only be because I had some difficulty with
-later parts of the commit message.  Perhaps addressing the later parts
-will make this sentence fine as-is, but it's possible this sentence
-could do with a bit more detail.
+-Sean
 
-> Usually there is a modified or untracked file outside of
-> the sparse-checkout mentioned by the 'git status' output. There are a
-> number of reasons why this is insufficient:
-
-Fair enough; let's focus on why the output of git status is insufficient...
-
->  1. Users may not have a full understanding of which files are inside or
->     outside of their sparse-checkout. This is more common in monorepos
->     that manage the sparse-checkout using custom tools that map build
->     dependencies into sparse-checkout definitions.
-
-Having sparse-checkout patterns managed by custom tools is a really
-good point, but doesn't this statement of yours about needing to know
-particular files or directories suggest that...
-
-> diff --git a/sparse-index.c b/sparse-index.c
-> index e48e40cae71..1e517f696dd 100644
-> --- a/sparse-index.c
-> +++ b/sparse-index.c
-> @@ -12,6 +12,21 @@
->  #include "config.h"
->  #include "dir.h"
->  #include "fsmonitor-ll.h"
-> +#include "advice.h"
-> +
-> +/**
-> + * This global is used by expand_index() to determine if we should give =
-the
-> + * advice for advice.sparseIndexExpanded when expanding a sparse index t=
-o a full
-> + * one. However, this is sometimes done on purpose, such as in the spars=
-e-checkout
-> + * builtin, even when index.sparse=3Dfalse. This may be disabled in
-> + * convert_to_sparse().
-> + */
-> +static int give_advice_on_expansion =3D 1;
-> +#define ADVICE_MSG \
-> +       "The sparse index is expanding to a full index, a slow operation.=
-\n" \
-> +       "This likely means that you have files in your working directory\=
-n"  \
-> +       "that are outside of your sparse-checkout patterns. Remove them\n=
-"   \
-> +       "to recover performance expectations, such as with 'git clean'."
-
-...this is an insufficient solution?
-
-I was a bit surprised you'd list your first reason for git status
-being insufficient, that users need to know which files/directories
-are the problem and then provide a solution that doesn't attempt to
-identify any files or directories.
-
->  2. In some cases, an empty directory could exist outside the
->     sparse-checkout and these empty directories are not reported by 'git
->     status' and friends.
-
-This is a really good point too...but given this point, shouldn't your
-added advice message also mention "directories" instead of just
-mentioning "files" so that users are aware they need to look for those
-too?
-
->  3. If the user has '.gitignore' or 'exclude' files, then 'git status'
->     will squelch the warnings and not demonstrate any problems.
-
-Your solution does help the user to know that there is a problem (even
-if they don't know which files -- or directories -- are the problem),
-so this patch is making things better.
-
-Two other small comments...
-
-> diff --git a/advice.c b/advice.c
-> index 558a46fc0b3..7845e427c89 100644
-> --- a/advice.c
-> +++ b/advice.c
-> @@ -77,6 +77,7 @@ static struct {
->         [ADVICE_RM_HINTS]                               =3D { "rmHints" }=
-,
->         [ADVICE_SEQUENCER_IN_USE]                       =3D { "sequencerI=
-nUse" },
->         [ADVICE_SET_UPSTREAM_FAILURE]                   =3D { "setUpstrea=
-mFailure" },
-> +       [ADVICE_SPARSE_INDEX_EXPANDED]                  =3D { "sparseInde=
-xExpanded" },
->         [ADVICE_SKIPPED_CHERRY_PICKS]                   =3D { "skippedChe=
-rryPicks" },
-
-The rest of the list is in alphabetical order, so the new entry
-probably should be too.
-
->         [ADVICE_STATUS_AHEAD_BEHIND_WARNING]            =3D { "statusAhea=
-dBehindWarning" },
->         [ADVICE_STATUS_HINTS]                           =3D { "statusHint=
-s" },
-> diff --git a/advice.h b/advice.h
-> index 5105d90129d..572272fa0da 100644
-> --- a/advice.h
-> +++ b/advice.h
-> @@ -44,6 +44,7 @@ enum advice_type {
->         ADVICE_RM_HINTS,
->         ADVICE_SEQUENCER_IN_USE,
->         ADVICE_SET_UPSTREAM_FAILURE,
-> +       ADVICE_SPARSE_INDEX_EXPANDED,
->         ADVICE_SKIPPED_CHERRY_PICKS,
-
-Again, the rest of the entries are in alphabetical order.
-
-
-Anyway, I've nit-picked on the little things I saw, but overall this
-is a good patch that moves things in a good direction; with a few
-small touch-ups it'll probably be good to go.
+--=20
+Sean Allred
