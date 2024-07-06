@@ -1,71 +1,70 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6713A134B1
-	for <git@vger.kernel.org>; Sat,  6 Jul 2024 05:50:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427B918645
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 05:59:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720245009; cv=none; b=R8kB4rvbIYQyMrewkQnTXnhIKeIXoGUCET2NBz9gJIfco2uZX/j/klSY/TsQxD2Wlb3tuPK0sN0NOWDvPyqNyDzFqF2kKevf/oZmGabiB9tlrCixkn/zQujtkxsihq7Sfjf/zITvkfjthSDi3v0VdGhuaxcZjyeXgtxjd3Q4RfM=
+	t=1720245600; cv=none; b=Sc0UFQMPa7BQKT/rvwxEjFOIKcyZqcQPraeJ3ttGusUQNs5bbbNxB2HUb9oYkXLFxMQxZKplMflApia2xlFNZk5Q2thH369D8AofgIjuK4KiIL+0PT6S/PBv3ZMNl86iWwjrHoW4cq4AF/JlSV3MnAQ53ntOgV3/snKpaGoDymc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720245009; c=relaxed/simple;
-	bh=mJkjBu9clpd94p8Ht7RRTGb7Fxjv1bPPH0Vq1rrKd9A=;
+	s=arc-20240116; t=1720245600; c=relaxed/simple;
+	bh=kCtDSIeQBoQPZ5UQfUd8Yr7NWpECzdxaOi+J2BHfvHw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FCCShotWZEmxoksm1w0cjfrNLC08OzCJusVGbKYCjjvULfm3btEhXBU4yEy+PireZoY+stN1XgmHPb7QCVytGSOtO0Nd7CZL75jTSEkY2G0jPZ7yG5kshmCDAYBAVcpD/uwY+gng5VqmRDCfRV2l5qL2+aSTioWVa1i1l5bppro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jmUkSigJ; arc=none smtp.client-ip=209.85.215.180
+	 MIME-Version:Content-Type; b=oQGjhrPNow8ZHGNXnvCYCHJzJPkbEIAt190ZVx854IqP6jc2iUbhUeJgp6hMyuIvogeiwU13YIJxabE/6C6PfjeASoolPCHTNTmdfkOdF9W/cpt4ixLs8fZ7s4a1ThKiuAAcCzGwlB6ll2UWLO0jPF++jV6mkg5zNxPDjWVKm7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h+oph1Hd; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jmUkSigJ"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-767506e1136so857068a12.0
-        for <git@vger.kernel.org>; Fri, 05 Jul 2024 22:50:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+oph1Hd"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-754d2b05db5so1329379a12.0
+        for <git@vger.kernel.org>; Fri, 05 Jul 2024 22:59:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720245007; x=1720849807; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720245598; x=1720850398; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eOEsu++E0rL1buwolpmw0aazlcwnlrQh6Jsq6xa2+S0=;
-        b=jmUkSigJ2kG308Y7Pxzze+TrH+9bPGSniyr8AWVmcJIj0stWZbhzxY4S6/CHbo6bew
-         TMOKIpw9ECVJNzjx6bNfxhhYEcnQQYZL/r5mH32qGUPQirh14gkr5V7zbFr1pTTidBX6
-         WBLTm3kcF5ceBmBD4eQcPuzg9ScuffVcZI9YeEfuvZv/oUjfzC7Mtmwxgl+6iFvuzxPS
-         yoP0PN6BmynrA7Z/P2VfK990ov1hYgyVa8z3xN04Iivm0bdAF4he8xbevLAKXCaoQbfx
-         jmhNS+5QaQdWlEsLIYtfG2dAxfGilAyy2xyeL4oMjEggm2aw5h6QL8XlSsTENpPp5F9N
-         JHUQ==
+        bh=uNhh5MNZWqU0w7ySLLtrDFLRtq3s2XHSNCioqz0r9kY=;
+        b=h+oph1HddQQfORjvOz5erx0Yp8Yi0dXvu1pCk7PJ3P9VseQURnlIpTO0yceb188GVY
+         XZQU9mNGfPz939iNVCcYDgLYNr8O5YSvdfwg5ciHO3GYKE1cMP7PUDNA0ZKotTN/YTHW
+         S5goT3HDcCxuJ2D4QIPoPNwHoqdviRRhIV3mtggZnFT9t0SOF4Ln7rVq/8d0FOPJv/LR
+         zxAzoJa0PYUXW+KO4ebCqO35XdzbePkVMzv5388OVOwUVheRmd6OnqdLy4Z0ZGfafQLW
+         dDPbQ2ehbUb/VtNVTX8gob9Q56EXAoXlXabsFxKn4px25yironlujHmAttXM0KEcliiX
+         IEdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720245007; x=1720849807;
+        d=1e100.net; s=20230601; t=1720245598; x=1720850398;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=eOEsu++E0rL1buwolpmw0aazlcwnlrQh6Jsq6xa2+S0=;
-        b=jPGBOw2/zhymIhyB4/Elbv/zY1QUGqDYlIk9EZsD5TyMwtmtajl6ijH7eGAZy+er64
-         0GIN6sootR0s2OewIdxujYcU6Fey5SWVDL196cKAXxAlSrM3CJYKUrbsaj5JDBBEE12P
-         iF1yn5d40x/xEQlS12nv8fary/z5h7PLwn4JObKBRPfZc38YTi3NTIkOK33I+aXLLsFb
-         HbyWs7t9c7OSQRLF3XbyDzsjxYXmLMmJ6RVuaUxq/OP0YUwNtkc5lNY9ubLlmoi/TRwg
-         yLzGB+/7qiRttsRHDepzlE4cLJXjXdVRmrDacr3g5odqvA0KPvH610T3zjwcbIZKyvyy
-         7ZYQ==
-X-Gm-Message-State: AOJu0Yz3eXdc+KSmmpLupxp6bT0wRpgV7P1tr+ZSEMff46u0ba05VTUa
-	rNReI1t4KLV5umeaND3JUpvZ2ZuCLA/kua43x3RfrQAncOLCKaIp
-X-Google-Smtp-Source: AGHT+IEwI8mmERsICU9OkDsrFfrJHzq6Ql+wP6cVpCJb6d/kvB6o2+b3Wdl2021X7zNrOzvCwhPm9Q==
-X-Received: by 2002:a17:90a:ce15:b0:2c8:3e89:bbab with SMTP id 98e67ed59e1d1-2c99f3c0834mr9001830a91.22.1720245006545;
-        Fri, 05 Jul 2024 22:50:06 -0700 (PDT)
+        bh=uNhh5MNZWqU0w7ySLLtrDFLRtq3s2XHSNCioqz0r9kY=;
+        b=YA/KaoqXXrFmnNRWUJVGvKav5hYRsCRniDebxM6UG5OHWW7bij7zjO2ZtgUig7Nqpa
+         aVvMiUxI+B5emIWfve2/MVsSSjtkYh3vJorEmYzK2KIGXKeIpCARSR70i44mUDpvEt0T
+         rxJ7eBjHdPohSBjXxqv8+3m/YYcCC+OCTSs0ul+W4Fh9+/cyY8wKCjUPGRlKuogOm9QV
+         vMAGL4j0O4lJoFwpAfPOdIWlm+m/h1IXmkiLFlF4zUGy2O12W8j4fIf/zBMfvwM6Mp9I
+         41Ke7uIzwEb35OBNGd+9KfO8pdUWiBxJzITfDg6DNbk04TrXQT6dJiopqsUgexUGNYs6
+         4QMA==
+X-Gm-Message-State: AOJu0Ywo5sc6iKrP/jIr8yYdiFcR7eZGafb8mFmq5JuRBQnJjB8lHD/i
+	0UVfArJOTSTT8pVG4aiZR+T70xegXtRIGd5gV0ZSV7+40PjD9OqVFfK6cQ==
+X-Google-Smtp-Source: AGHT+IHdlJkG/fDFGCUmmd9qJbyH2E7UaCNvYBsaZnFsYm7Hn4d4ADjLIN1kmLS8+ufrJ7CMmrDSSw==
+X-Received: by 2002:a17:90a:fe0a:b0:2c9:6ad9:b75b with SMTP id 98e67ed59e1d1-2c99c6b8f2dmr4300061a91.40.1720245598371;
+        Fri, 05 Jul 2024 22:59:58 -0700 (PDT)
 Received: from localhost (236.219.125.34.bc.googleusercontent.com. [34.125.219.236])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c99aa1a89fsm4325611a91.52.2024.07.05.22.50.06
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c99a984507sm4342414a91.32.2024.07.05.22.59.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jul 2024 22:50:06 -0700 (PDT)
+        Fri, 05 Jul 2024 22:59:57 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
   Eric Sunshine <sunshine@sunshineco.com>,  Derrick Stolee
  <stolee@gmail.com>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 3/4] gitfaq: add entry about syncing working trees
-In-Reply-To: <ZocPYKyVzSDIekTK@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 4 Jul 2024 21:08:48 +0000")
+Subject: Re: [PATCH v3 0/4] Additional FAQ entries
+In-Reply-To: <ZocS0NgiAbg5Mnzp@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 4 Jul 2024 21:23:28 +0000")
 References: <20240704003818.750223-1-sandals@crustytoothpaste.net>
-	<20240704003818.750223-4-sandals@crustytoothpaste.net>
-	<xmqqjzi191fw.fsf@gitster.g>
-	<ZocPYKyVzSDIekTK@tapette.crustytoothpaste.net>
-Date: Fri, 05 Jul 2024 22:50:05 -0700
-Message-ID: <xmqqv81j3w8i.fsf@gitster.g>
+	<xmqqzfqx7muk.fsf@gitster.g>
+	<ZocS0NgiAbg5Mnzp@tapette.crustytoothpaste.net>
+Date: Fri, 05 Jul 2024 22:59:57 -0700
+Message-ID: <xmqqo77b3vs2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,35 +76,35 @@ Content-Type: text/plain
 
 "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> The most common situation we see is that refs tend to be renamed to
-> things like "refs/heads/main 2", which is obviously not a valid refname
-> and doesn't work, or the ref gets rolled back to an older version.
-> Working trees also get stuck into weird states where files keep coming
-> back or getting deleted, or the index gets two differently named copies,
-> neither of which is "index".
+>> Buffering the entire thing will break because ...?  Deadlock?  Or is
+>> there anything more subtle going on?
 >
-> It is _less_ likely that objects are renamed, but it could be that the
-> tool thinks they've been legitimately deleted if the loose objects get
-> packed and then they do get deleted elsewhere without another source of
-> those objects existing.
+> When we use the smart HTTP protocol, the server sends keep-alive and
+> status messages as one of the data streams, which is important because
+> (a) the user is usually impatient and wants to know what's going on and
+> (b) it may take a long time to pack the data, especially for large
+> repositories, and sending no data may result in the connection being
+> dropped or the client being served a 500 by an intermediate layer.  We
+> know this does happen and I've seen reports of it.
 
-Yeah, any time two repositories that are "cloud synched" are
-accessed simultaneously, all h*ll can easily break loose.  You may
-move your 'master' branch to a commit while the other one may move
-their 'master' branch to a different commit.  You may end up having
-"master" that points at one of these commits but one of you may have
-already lost the only reference to the commit you wanted to have at
-the tip of your 'master' branch.  One of you may even trigger auto-gc
-to spread the damage.
+And this is an example of "a proxy that buffers the data, without
+modifying or tampering with, would still break transport"?
 
-> If we have users who ask about this, I'm happy to answer them on the
-> list.  I don't want to explain the various and sundry scenarios in the
-> FAQ entry in order to keep it short, but I can find several examples of
-> problems if need be.
+> We've also seen some cases where proxies refuse to accept
+> Transfer-Encoding: chunked (let's party like it's 1999) and send a 411
+> back since there's no Content-Length header.
 
-OK, that approach would work as long as you are still involved in
-the project, but having even one concrete example would help in the
-longer term to (1) reduce the bus factor and (2) save time you do
-not have to spend responding to every such question.
+This is "a proxy that wanted to buffer the data but failed to do so"
+that ended up modifying the data Gits sitting at both ends of the
+connection can observe, so it is a bit different issue.  It clearly
+falls into "modify or tampering with" category.
+
+I forgot to say this clearly when I wrote the message you are
+responding to, but I am trying to see if we can clarify the "or
+buffer" part in "modify, tamper with, or buffer", as offhand I did
+not think of a reason why a proxy would break the Git communication
+if it receives a segment that was 2MB originally from upload-pack,
+and forwards the contents of the segment in two 1MB segments without
+tampering or modifying the payload bytes at all to fetch-pack.
 
 Thanks.
