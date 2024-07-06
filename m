@@ -1,54 +1,53 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF7F1C2A3
-	for <git@vger.kernel.org>; Sat,  6 Jul 2024 22:15:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D941C6A3
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 22:35:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720304136; cv=none; b=WrLXUPAiTZb+KRvykix6RMRqkAs0+W34VP9sxTqM54Y9x3ZnPtqWYWJzEGAMVjf4BbRHi0IW/GNucNokvz2uAdLLOACMIkBnsxd8GMUX3sSemx4KX4yoy3c09aNlLFf6MF8facK4/F/wKmG/JGyNXe1mLO8o+P89/pRkzwCMLTI=
+	t=1720305357; cv=none; b=se4UNHEic5y8LYEhm0gbq+kAHEbqLYuoKe8u8zxJVjpekPplV8IEB/Z7dL3kwGMbLdTtiCTo6He5octAqvqmoCvqZdXcXLgcbUn/ITV10P9fh6qH1V1QLcVgBBluuW4qTAoNk+FcUF4zVzeYFC8k/C05AjuvBeeINF0uFu/DQys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720304136; c=relaxed/simple;
-	bh=pUwtKdPdApjswnLiXe7B4saZeRZ9w+m2I0T9pwGPVq4=;
+	s=arc-20240116; t=1720305357; c=relaxed/simple;
+	bh=FVIasHqFsmv6bfpGon0cQu+tArfmghmqlUsa/9QdNkQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OOzEInn12x1hqu6GiiXJlRpm5I3Mwfv+7m3fslXlVtV9mzfp+sNgI/9nujFwos7280bJJApT79IjOPPy2ryKNgOfxbe9KEbKZtXpvFmlGoeef2ao4DGYcOMalO+XHb8yBitjeGrfiFWGfcoFFCv5OUeNRP2OZS9EcZFpIcL01zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=D31uw4Ql; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=uwwQFlqfmQujLMuiFJLAeV1WNiEDtxXJ6OgFZDy1LeilM8nEkZqLVgHqK0orfkPsG4ieI+cIrBIb2VxLhB0moZlg2q49abFtOUQvnPgOOPytKUb/wJudbGFO/obW2JRxh1FqhtBafEg1jcQFZQyJJFYHZjwgN5FBZZsWFaRw+bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=iYqW1F79; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D31uw4Ql"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 22D7C33B40;
-	Sat,  6 Jul 2024 18:15:34 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iYqW1F79"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8E55B27CDB;
+	Sat,  6 Jul 2024 18:35:54 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=pUwtKdPdApjswnLiXe7B4saZeRZ9w+m2I0T9pw
-	GPVq4=; b=D31uw4QleI3RMIGzGo9EHqCO75nIRIpekW5zVXisoDn5IXhRKAtxwW
-	X0ECtJfNB9klroUa3agWQbORcG6nf9XuVPDITeHdnFe3MfMO+gqQ8jzD030NiF+x
-	RkmrO2Zo/HpgUaD2BALi45nxKe5pCOXCKklpIFWzkRYSnBHPwmG3I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1B2E833B3E;
-	Sat,  6 Jul 2024 18:15:34 -0400 (EDT)
+	:content-type; s=sasl; bh=FVIasHqFsmv6bfpGon0cQu+tArfmghmqlUsa/9
+	QdNkQ=; b=iYqW1F79TpbAxyvAcL3lX1MoTSHiJ/cQ2nhnqsIBng1Lg2oxua0hDP
+	k8E9naVgMUuXP/KpMyhioPd0sCKoyem3RYChsGePcLWKHlFJrYrIGTscISts0W0b
+	eJ/hy5SOSCZRUJON2H3V2ahgPrmQ1EAYHMWGw/m8mETuWgzT6Xhxo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 798AE27CDA;
+	Sat,  6 Jul 2024 18:35:54 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.219.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 80D5733B3D;
-	Sat,  6 Jul 2024 18:15:33 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EB0DA27CD9;
+	Sat,  6 Jul 2024 18:35:50 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Eric Sunshine <ericsunshine@charter.net>,  git@vger.kernel.org,
-  =?utf-8?Q?Ren=C3=A9?=
- Scharfe <l.s.r@web.de>,  Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] chainlint.pl: recognize test bodies defined via heredoc
-In-Reply-To: <20240706060143.GD698153@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 6 Jul 2024 02:01:43 -0400")
-References: <20240701220815.GA20293@coredump.intra.peff.net>
-	<20240702235034.88219-1-ericsunshine@charter.net>
-	<20240706060143.GD698153@coredump.intra.peff.net>
-Date: Sat, 06 Jul 2024 15:15:32 -0700
-Message-ID: <xmqqr0c6makb.fsf@gitster.g>
+To: Ariel Cabello Mateos <080ariel@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] gitweb: rss/atom change published/updated date to
+ committer date
+In-Reply-To: <xmqq8qyenpsz.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+	06 Jul 2024 15:01:00 -0700")
+References: <20240704164547.94341-1-080ariel@gmail.com>
+	<CALRJROB7gGWok-YPGTjPe+TXkU5Y_MhqcPSiCGoPDzJ=WGHoKA@mail.gmail.com>
+	<xmqq8qyenpsz.fsf@gitster.g>
+Date: Sat, 06 Jul 2024 15:35:49 -0700
+Message-ID: <xmqqle2em9mi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,20 +57,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 435C1B6A-3BE5-11EF-A6AE-965B910A682E-77302942!pb-smtp2.pobox.com
+ 1901C60A-3BE8-11EF-8F95-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I'll post some patches in a moment:
+> Ariel Cabello Mateos <080ariel@gmail.com> writes:
 >
->   [1/3]: chainlint.pl: fix line number reporting
->   [2/3]: t/chainlint: add test_expect_success call to test snippets
->   [3/3]: t/chainlint: add tests for test body in heredoc
->
-> with the idea that we'd apply your patch here on top of what Junio has
-> queued in jk/test-body-in-here-doc, and then these three on top.
+>> Currently the value used is the author date. Change it to the
 
-Would the final form be to have Eric's preparatory enhancement to
-chainlint and then these three first, and finally the "here-docs"
-conversion I queued from you earlier?
+It is left unsaid what "the value" is used for.  Let's rewrite the
+first sentence like so:
+
+    The author date is used for published/updated date in the
+    rss/atom feed stream.  Change it to ...
+
+Another thing that is curious is why the mention of author_epoch is
+left as is before the hunk.
+
+Shouldn't we use the same committer time for loop cut-off and also
+for display?
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index e66eb3d9ba..c1151544cc 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -8324,10 +8324,10 @@ sub git_feed {
+ 		my %co = %{$commitlist[$i]};
+ 		my $commit = $co{'id'};
+ 		# we read 150, we always show 30 and the ones more recent than 48 hours
+-		if (($i >= 20) && ((time - $co{'author_epoch'}) > 48*60*60)) {
++		if (($i >= 20) && ((time - $co{'committer_epoch'}) > 48*60*60)) {
+ 			last;
+ 		}
+-		my %cd = parse_date($co{'author_epoch'}, $co{'author_tz'});
++		my %cd = parse_date($co{'committer_epoch'}, $co{'committer_tz'});
+ 
+ 		# get list of changed files
+ 		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-- 
+2.45.2-899-gfb4fe62777
 
