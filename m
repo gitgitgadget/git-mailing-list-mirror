@@ -1,145 +1,124 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48293481DB
-	for <git@vger.kernel.org>; Sat,  6 Jul 2024 09:53:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB846D1A8
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 11:20:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720259604; cv=none; b=CkJgHii9vmcshAlcqv44eJ0EmI9MuajxrP8AUkeKklfwxYuUxsDnt2nJsLz7mzd7/Yj/i4S3jG65is5d7a+BbIiMx7c0Av+ot7yyEj1Vkk70Uav6FLda9hTuCQnNC8yKtQLH4ORXdKb2J6yO3F3ijXusJKNUEU34bmbUEdlOD0g=
+	t=1720264842; cv=none; b=AwAuYqIMPoFwp2RtIHEzHUbN0sakUzzzpnShc3fFSgcFtt5sxp3hXRuj8VOtTho+svht1lfNK6CowJIxnxMJjreAWJDxTJgC4Cq28ek+lJYWFnCMvN3MHUXZ9zA9M2pSLJiiZ0VkLA2uVa4AYuGSMaBZxP/GcFGN0V7qlzX8GzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720259604; c=relaxed/simple;
-	bh=tR9Vcvi0xvGJ8s9R1/CrvV58aQyaDHkDko37/IABRgM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=D57AjEHwLMe3YfKOmaswK34SHvS+NjpmynuL9u1B9KxTQ6Js/n/idnazTY2WRc2I1ps+q3+vSWwQeO/bRDIukzbh+HA5C7xRB5tEJCGSXMUaVQ0ACgAkrLXd07QKkYpV2rZbkLP7GRr1bne8/CbWeSVpxVDJihY051yZpDR7clw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FMVftCiy; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1720264842; c=relaxed/simple;
+	bh=S6TqR7MopMtpi33HfjV4sgUAgG2U0ezDmk4JUUexmfw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=F/tnSuXeC3I1VQsfCAwHBMfsid4ogGusiYH8RMYYqXEZxYWElWhJwHlv1SFd044rHC3LnNB/7jZQyHhFJuFvtMbrVvKYofjnyiZpyVADqHRunV5tUJUnFb8uF28peCmPMDptUJ3Cp/327Ztd8kpTALKw2ggO6lI4aEqYI1C9IZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HdDIQnL4; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FMVftCiy"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-367990aaef3so1602216f8f.0
-        for <git@vger.kernel.org>; Sat, 06 Jul 2024 02:53:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HdDIQnL4"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2ee7a1ad286so25614221fa.2
+        for <git@vger.kernel.org>; Sat, 06 Jul 2024 04:20:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720259601; x=1720864401; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UkP0siNCEA4BAuUQmMbb/BhWZRFlysV1X/xMvGeR28Y=;
-        b=FMVftCiyr+nS+oyRQijkWoH2bkGck32NuAWe2pSVDOW+v8svvESb6PNT8TB/ftTCgb
-         7STtU5i77YhPgy6jgAZJsU2dChhTbuynzrhZbmr79h2sqEdyarxqp8p2usN3gaiXazUi
-         MIn3DGkio+xsUMe7ux4BimuvWlf7GjR4x1AHInML8GZui2UYxaRNk1P3i6G6UQ9Gw8gd
-         WmcmclUaghb080x1Z9U9VK4ckLJMKwVOzemV0fULxJoTCRetDI61YhQBBL+SeKrzs5sj
-         POwe6Hol/rECY833Se/pwg1cuc03Udwt0ejDombrKc5vcgAtC/R2REgqZfCcflY5wXsn
-         oHpg==
+        d=gmail.com; s=20230601; t=1720264839; x=1720869639; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nGviB0zBD6EgkZAVbceJ2St3Z7lw4k05FOMK9+AYvJA=;
+        b=HdDIQnL4mBDw8ZE4vu2DBrXHvbUAfpAn330PHm+eNs2r6shZZuP3a/s9LS458ULkqI
+         Kd2LBO0mgRSPZX8xDdbU6YZxmH+0dPJZTuWU7zWxWQuGvJm5qslJZhc8bOAVTaVc40qx
+         8bD6SYYG/kU1m0iNFi4B8J6+RNGOLc+SsiYemf3wiWoOb7dKAW47/cTFxxIWtFuU4KLs
+         SwuqM1WrU1v2UwJVTNkCyfy06ivgD6+biP2AqDcUy6UXXjNQVveQoa7peVX2LhJnLNAs
+         p33ib/0W9PyyqA24KRwfyFFbhLFpeLoyc3IkmteUaB8MkDvtFCpB8rnPKXNLnM/NbCFR
+         rzrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720259601; x=1720864401;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UkP0siNCEA4BAuUQmMbb/BhWZRFlysV1X/xMvGeR28Y=;
-        b=Zxm5r8VDHqrpz4fAFRaPEUmW9MJIJY4RDvia8/Mg2WAP/p3lDOgY+d89SZihcjuEVx
-         hEMKygILtIQ3RdTFZSDvdFeYgUgv7hHh4h/Q4eW8TnRBe9kUzx/ijvWx171/yNCWxf+u
-         0SMFG4QC8XNYpEDmRunA+QNOWo1JunwrCLpbdCbZ+Y/N1eXspO0zknz6wYW7qk7tjiNF
-         JpyBbIqONFqI4qG6JGT9VR3DASbOx+DEtwaKGA1E4VKnlDrprTCfVLkzT4nfflZpi6PI
-         pRjYsD7YPMt/5BWYA7VcNBD3RDlsLlv2W/2LXw3qAfKaqM+6G/2Xt/79rBZWrqmUS/Ii
-         id2Q==
-X-Gm-Message-State: AOJu0YzivaLznNZd+ILONycZIThIB74fnzZc4zsVFU9TT7ec7n9BjlDV
-	57JC5Mv6L51TOLFRpwj72jQHRWxT4hyn2MIgD7hX0KPuux1+L8WezyK3Sw==
-X-Google-Smtp-Source: AGHT+IGv0tUop3YjbOSNzhkoK7n1amWMhCq0KJ09VZT4bPsVsTNR7tzNVPu4qMhlvhcHD8YnMseJ/A==
-X-Received: by 2002:a05:6000:d89:b0:35f:276c:f3ad with SMTP id ffacd0b85a97d-3679dd34e29mr4416847f8f.40.1720259600778;
-        Sat, 06 Jul 2024 02:53:20 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-367a2ee695csm4856352f8f.98.2024.07.06.02.53.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Jul 2024 02:53:20 -0700 (PDT)
-Message-Id: <pull.1757.v2.git.1720259599119.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1757.git.1720046185710.gitgitgadget@gmail.com>
-References: <pull.1757.git.1720046185710.gitgitgadget@gmail.com>
-From: "wonda-tea-coffee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 06 Jul 2024 09:53:18 +0000
-Subject: [PATCH v2] doc: fix the max number of git show-branches shown
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1720264839; x=1720869639;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nGviB0zBD6EgkZAVbceJ2St3Z7lw4k05FOMK9+AYvJA=;
+        b=hhg08gjIgGcfU2jf9hGtf3+anAUiv3S4bglwJYdaOpdefNrJ34LIMdecjjzTGMbKDb
+         O68yFkkem1RsIgTfoEvka5FQpoClbxc41qd9e0dLC4uXAajTNVF3eI+PFCGlr6oSj+zt
+         VOAnP9pq669ryjvBiqVLhxAPxuupboeRBTPLgvxmB0/Msfw4ONN38o8ULE3qKuJtrHuC
+         TXe+eoLVYhaNuTR20RovkfnzExoY3lx36yzvLWI8JIbIk322JQ/7SVbRQ6GVtiSzoJt7
+         DfgIbSececosj1bzpzmpPwc/69a9AER/3fFRxWSNy7pHWLo/PCgEmJftUR37sVy38SsC
+         kQAA==
+X-Forwarded-Encrypted: i=1; AJvYcCVWdFqcSG4WtrWL9x0VeAwtxp33Y1UfwhapF9VqUXh6Br1yEzyuUIedt70cTLMFYc4bw4C5n6xlXXmGuuWP8eeC2egV
+X-Gm-Message-State: AOJu0Yzb+qjliYrcnEPqhKQ+vAVt1MVVRpX6/tYJXwxoD2Q7rxmc/G98
+	tIMR7W09khCtCC5whDoTsYRaulMo+gmkbAvxf2xI08dQniUBvMux
+X-Google-Smtp-Source: AGHT+IElUpthO9y9nj9x9vW1npFIA6tpzL0wLMu6Bl/qnksyX9Ef+3NUhrMnhlmO5u861vPgTs95dA==
+X-Received: by 2002:a2e:a4d1:0:b0:2ee:868e:e281 with SMTP id 38308e7fff4ca-2ee8ed90b66mr54282991fa.14.1720264838357;
+        Sat, 06 Jul 2024 04:20:38 -0700 (PDT)
+Received: from gmail.com (89.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.89])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3678877f19dsm11484550f8f.43.2024.07.06.04.20.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 06 Jul 2024 04:20:37 -0700 (PDT)
+Message-ID: <75a635b9-7622-42f7-b202-6991775e75f0@gmail.com>
+Date: Sat, 6 Jul 2024 13:20:36 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    wonda-tea-coffee <lagrange.resolvent@gmail.com>,
-    wonda-tea-coffee <lagrange.resolvent@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] test-lib: fix GIT_TEST_SANITIZE_LEAK_LOG
+Content-Language: en-US
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+ Eric Sunshine <sunshine@sunshineco.com>
+References: <f4ae6e2a-218a-419c-b6c4-59a08be247a0@gmail.com>
+ <xmqqv81ovp9l.fsf@gitster.g> <bda01080-1231-476a-9770-88b62a75ffe2@gmail.com>
+ <72b69a20-3f51-4f51-8ebc-ead20e3eebcb@gmail.com>
+ <20240706061850.GB700645@coredump.intra.peff.net>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <20240706061850.GB700645@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: wonda-tea-coffee <lagrange.resolvent@gmail.com>
+On Sat, Jul 06, 2024 at 02:18:50AM -0400, Jeff King wrote:
+> On Wed, Jul 03, 2024 at 11:44:33PM +0200, Rubén Justo wrote:
+> 
+> > > Explicitly indicating that the error is being forced due to
+> > > "GIT_TEST_SANITIZE_LEAK_LOG=true", for a test that doesn't fail when run
+> > > normally or even when run with just
+> > > "GIT_TEST_PASSING_SANITIZE_LEAK=yes", could save us some confusion.
+> > > 
+> > > So, I dunno.
+> > > 
+> > > Anyway, I agree that this can be addressed later.
+> > > 
+> > > Thanks.
+> > 
+> > Maybe what we should do is integrate "GIT_TEST_SANITIZE_LEAK_LOG" into
+> > "GIT_TEST_PASSING_SANITIZE_LEAK" because I'm not sure what value we get
+> > by keeping them separate (test performance?).  But that's another topic,
+> > even further out of scope of this patch :-)
+> 
+> I don't think we want to integrate them, but I'd suggest that
+> SANITIZE_LEAK_LOG should be the default/only option.
+> 
+> Without it, you are potentially missing leaks in programs whose failing
+> exit codes do not trigger a test failure. So there is no point in
+> running PASSING_SANITIZE_LEAK=check without also checking the logs. But
+> it is still useful to set SANITIZE_LEAK_LOG just for normal runs to look
+> for leaks.
+> 
+> I don't know of any reason we couldn't always check the logs (for a
+> leak-checking build), and I didn't see anything in the history. I think
+> it was written that way only because there is otherwise no affirmative
+> action by the user to say "and btw, look for leaks" (and if we are not
+> looking for leaks, there might not be any logs!).
+> 
+> But really, if you have done a leak-checking build, then every run of
+> the tests is looking for leaks, whether you check the logs or not. So we
+> should able to just check that $SANITIZE_LEAK is set.
 
-The number to be displayed is calculated by the
-following defined in object.h.
+> And then there would be one less thing for people checking for leaks
+> to remember to set.
 
-```
-  #define REV_SHIFT        2
-  #define MAX_REVS        (FLAG_BITS - REV_SHIFT)
-```
+I completely agree.
 
-FLAG_BITS is currently 28, so 26 is the correct
-number.
+Let's wait for the dust to settle after the fix in this series, and then
+I'll address the change as you described.
 
-Signed-off-by: Rikita Ishikawa <lagrange.resolvent@gmail.com>
----
-    doc: fix the max number of git show-branches shown
-    
-    Changes since v1:
-    
-     * Explain in the commit message why "26" is the correct number.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1757%2Fwonda-tea-coffee%2Fupdate-git-show-branch-description-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1757/wonda-tea-coffee/update-git-show-branch-description-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1757
-
-Range-diff vs v1:
-
- 1:  b809d610a36 ! 1:  6fc335807d2 doc: fix the max number of git show-branches shown
-     @@ Metadata
-       ## Commit message ##
-          doc: fix the max number of git show-branches shown
-      
-     -    Contrary to the number listed in the current document,
-     -    only 26 are actually shown.
-     +    The number to be displayed is calculated by the
-     +    following defined in object.h.
-      
-     -    Signed-off-by: wonda-tea-coffee <lagrange.resolvent@gmail.com>
-     +    ```
-     +      #define REV_SHIFT        2
-     +      #define MAX_REVS        (FLAG_BITS - REV_SHIFT)
-     +    ```
-     +
-     +    FLAG_BITS is currently 28, so 26 is the correct
-     +    number.
-     +
-     +    Signed-off-by: Rikita Ishikawa <lagrange.resolvent@gmail.com>
-      
-       ## Documentation/git-show-branch.txt ##
-      @@ Documentation/git-show-branch.txt: Shows the commit ancestry graph starting from the commits named
-
-
- Documentation/git-show-branch.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index c771c897707..bc31d8b6d33 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -22,7 +22,7 @@ Shows the commit ancestry graph starting from the commits named
- with <rev>s or <glob>s (or all refs under refs/heads
- and/or refs/tags) semi-visually.
- 
--It cannot show more than 29 branches and commits at a time.
-+It cannot show more than 26 branches and commits at a time.
- 
- It uses `showbranch.default` multi-valued configuration items if
- no <rev> or <glob> is given on the command line.
-
-base-commit: 06e570c0dfb2a2deb64d217db78e2ec21672f558
--- 
-gitgitgadget
+Thanks.
