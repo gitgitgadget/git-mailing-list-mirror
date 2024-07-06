@@ -1,37 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA06291E
-	for <git@vger.kernel.org>; Sat,  6 Jul 2024 06:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A99291E
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 06:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720245707; cv=none; b=MQuMQySuB0xZtbAMAyN+24DpnXHG4II4fvDMbS65bhoVAdxKi4lFUYHU8N5KrwPo6oXjhpUFgT71oyvmcGTteOdh4zS9b02ztWlN2fSjDPgdyieIAqa9Xo3ooK87MXSxk6xWF//Ftu3UaBcc74JU4ne1/xsK56pQxXLfpQff0bA=
+	t=1720245919; cv=none; b=GH5HJnggisHL6QqyxrmENZzhadXa/Vanry/Z0vIZ5DtMJS3XnRI3GuHmxFZpkaWVvlLbiXH+YAyL7KxqvkPB/RVcrI04TswP9Oj4EgHdIlk78fLzRQ5XHfRx06KiaKdgJguF88ecCpg7cel4gi4zzY2QQVO331IfVCQzEb2xWXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720245707; c=relaxed/simple;
-	bh=gs195MXwWfi+HBQ+NaXgEcdq+maeceK0DP+QUXh5pho=;
+	s=arc-20240116; t=1720245919; c=relaxed/simple;
+	bh=5d6DrvMS0z2xFd2dCkinbgHnfz/Q/X0wSIYWcI+A3rI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IfHY2mL6FBrCpB6/tf8/FsRJYu51UST4XClbkNwavxyGQHtDPMdN3RrU+AoozEoZDojDLxkzh+DB9KNo5Hr8xfrCAcYnruiOltImOWEBTMcXEnkmgOnr1Afo92euX/WWj3zLzW7C9G6rI2GG3ge1rqICbT3f/Q1LO36qYJTymMM=
+	 Content-Type:Content-Disposition:In-Reply-To; b=d037PGo5f8Vwdlx05JXtLMNvGbkuiTTIQ3nAbwmirUCw2rb+eAD22jVUuzkuYsyx9WDh4ysYb2lYiErS1nWT24CKDzKO8moiv6Te35/nChfMBeYW84O3YQqNNa2LZGIfB/+xIGfmwezJb7B9y3/yfQuLRHIiQFZAGF7z+KsKsQM=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 23206 invoked by uid 109); 6 Jul 2024 06:01:44 -0000
+Received: (qmail 23290 invoked by uid 109); 6 Jul 2024 06:05:17 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 06 Jul 2024 06:01:44 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 06 Jul 2024 06:05:17 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31108 invoked by uid 111); 6 Jul 2024 06:01:41 -0000
+Received: (qmail 31147 invoked by uid 111); 6 Jul 2024 06:05:14 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Jul 2024 02:01:41 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Jul 2024 02:05:14 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 6 Jul 2024 02:01:43 -0400
+Date: Sat, 6 Jul 2024 02:05:15 -0400
 From: Jeff King <peff@peff.net>
 To: Eric Sunshine <ericsunshine@charter.net>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] chainlint.pl: recognize test bodies defined via heredoc
-Message-ID: <20240706060143.GD698153@coredump.intra.peff.net>
-References: <20240701220815.GA20293@coredump.intra.peff.net>
- <20240702235034.88219-1-ericsunshine@charter.net>
+Subject: [PATCH 1/3] chainlint.pl: fix line number reporting
+Message-ID: <20240706060515.GA700151@coredump.intra.peff.net>
+References: <20240706060143.GD698153@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,154 +39,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240702235034.88219-1-ericsunshine@charter.net>
+In-Reply-To: <20240706060143.GD698153@coredump.intra.peff.net>
 
-On Tue, Jul 02, 2024 at 07:50:34PM -0400, Eric Sunshine wrote:
+The previous commit taught chainlint.pl to handle test bodies in
+heredocs, but there are two small bugs related to line numbers:
 
-> This is a clean-room implementation which serves the same purpose as a
-> change proposed[1] by Peff; it was created before I looked at Peff's
-> proposal. The two independent implementations turned out quite similar,
-> but the one implemented by this patch takes a more formal and paranoid
-> stance. In particular, unlike Peff's patch, it doesn't trust that the
-> most-recently-seen heredoc body is one associated with the
-> `test_expect_success` invocation.
+  1. Prior to that commit, we'd leave the title and body untouched in
+     @_. So we could later pull the line number out of the $_[1] array
+     element. Now we shift off the front of the array, so we have to
+     remember that element to grab the line number. This is a regression
+     even for regular:
 
-Thanks for working on this! I think this is better than the patch I
-showed earlier. But I am still glad to have worked on that one, because
-there is no way I'd be able to intelligently review that one without
-having poked at the code so much myself.
+       test_expect_success 'title' '
+               test body
+       '
 
-> This patch can sit either at the top or bottom of Peff's series[2].
-> 
-> There was also related discussion of improving the chainlint self-test
-> infrastructure[3], however, such proposed changes needn't hold up Peff's
-> series[2]; such improvements can be applied after the dust settles. On
-> the other hand, Peff, if you plan to reroll for some reason, feel free
-> to incorporate this patch into your series.
+     invocations; the lines for ever test started fresh at 0.
 
-IMHO we want it all to come together. We should not allow "<<\EOT"
-without making sure we can chainlint the test bodies, and we should not
-make such a big change to chainlint.pl without tests to make sure it
-works.
+  2. For an invocation like the one above, if the test_expect_success
+     line is X, then "test body" would correctly start at X+1, since the
+     hanging newline at the start of the single-quoted test body
+     increments the count. But for a here-doc, there is an implicit
+     newline at the end of the token stream before the here-doc starts.
+     We have to increment "lineno" to account for this.
 
-I'll post some patches in a moment:
+     Actually, this is not _quite_ correct, as there could be multiple
+     here-docs, like:
 
-  [1/3]: chainlint.pl: fix line number reporting
-  [2/3]: t/chainlint: add test_expect_success call to test snippets
-  [3/3]: t/chainlint: add tests for test body in heredoc
+       test_expect_success "$(cat <<END_OF_TITLE)" - <<END_OF_TEST
+       this is the title
+       END_OF_TITLE
+       this is the test
+       END_OF_TEST
 
-with the idea that we'd apply your patch here on top of what Junio has
-queued in jk/test-body-in-here-doc, and then these three on top. For
-Junio's sanity, I'll roll it all up into one series. But I wanted to
-show it to you incrementally first, especially because I think the fixes
-from patch 1/3 above should probably just get squashed in (or even
-rewritten). I'll discuss the bugs they fix below.
+     in which case we'd need to skip past END_OF_TITLE. Given how
+     unlikely it is for anybody to do this, and since it would only
+     affect line numbers, it's probably not worth caring about too much.
+     The solution would probably be to record the starting line number
+     of each here-doc section in the lexer/shellparser stage.
 
-> diff --git a/t/chainlint.pl b/t/chainlint.pl
-> index 1bbd985b78..eba509b8e1 100755
-> --- a/t/chainlint.pl
-> +++ b/t/chainlint.pl
-> @@ -174,6 +174,8 @@ sub swallow_heredocs {
->  		$$b =~ /(?:\G|\n)$indent\Q$$tag[0]\E(?:\n|\z)/gc;
->  		if (pos($$b) > $start) {
->  			my $body = substr($$b, $start, pos($$b) - $start);
-> +			$self->{parser}->{heredocs}->{$$tag[0]} =
-> +			    substr($body, 0, length($body) - length($&));
->  			$self->{lineno} += () = $body =~ /\n/sg;
->  			next;
->  		}
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Note to the maintainer: do not worry about applying these yet! The
+parent message describes where they'd go in the series, but I'll send a
+full series once Eric and I have worked out the details. Review comments
+welcome, of course. :)
 
-OK, this part looks familiar. :)
+I actually suspect the "record the heredoc line number" thing would not
+be too hard. I.e., turn ShellParser's "heredoc" hash to point to
+hashrefs like: "{ content => ..., lineno => ... }". And that would give
+us a good spot to stick an "interpolate" boolean later if we want.
 
-> @@ -232,7 +234,8 @@ sub new {
->  	my $self = bless {
->  		buff => [],
->  		stop => [],
-> -		output => []
-> +		output => [],
-> +		heredocs => {},
->  	} => $class;
->  	$self->{lexer} = Lexer->new($self, $s);
->  	return $self;
+ t/chainlint.pl | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-I think initializing is not strictly necessary here, since we'd only try
-to read tags if we saw a here-doc. But there might be some invalid cases
-where we could convince higher-level code to look for tags even though
-there were none (and generate a perl warning about trying to dereference
-undef as a hashref).
+diff --git a/t/chainlint.pl b/t/chainlint.pl
+index eba509b8e1..c9ab79b6b0 100755
+--- a/t/chainlint.pl
++++ b/t/chainlint.pl
+@@ -620,15 +620,19 @@ sub unwrap {
+ sub check_test {
+ 	my $self = shift @_;
+ 	my $title = unwrap(shift @_);
+-	my $body = unwrap(shift @_);
+-	$body = shift @_ if $body eq '-';
++	my $body = shift @_;
++	my $lineno = $body->[3];
++	$body = unwrap($body);
++	if ($body eq '-') {
++		$body = shift @_;
++		$lineno++;
++	}
+ 	$self->{ntests}++;
+ 	my $parser = TestParser->new(\$body);
+ 	my @tokens = $parser->parse();
+ 	my $problems = $parser->{problems};
+ 	return unless $emit_all || @$problems;
+ 	my $c = main::fd_colors(1);
+-	my $lineno = $_[1]->[3];
+ 	my $start = 0;
+ 	my $checked = '';
+ 	for (sort {$a->[1]->[2] <=> $b->[1]->[2]} @$problems) {
+-- 
+2.45.2.1178.gaaad15bb7b
 
-On the flip side, what about cleaning up? The "heretags" array is
-emptied as we parse the heredocs in swallow_heredocs(). But I think once
-a ShellParser's $self->{heredocs}->{FOO} is written, it will hang around
-forever (even though it's valid only for that one command). Probably not
-a big deal, but there's probably some correct spot to reset it.
-
-> @@ -616,7 +619,9 @@ sub unwrap {
->  
->  sub check_test {
->  	my $self = shift @_;
-> -	my ($title, $body) = map(unwrap, @_);
-> +	my $title = unwrap(shift @_);
-> +	my $body = unwrap(shift @_);
-> +	$body = shift @_ if $body eq '-';
->  	$self->{ntests}++;
->  	my $parser = TestParser->new(\$body);
->  	my @tokens = $parser->parse();
-
-This has two problems related to line numbers. You can't see it in the
-context, but we later do:
-
-  my $lineno = $_[1]->[3];
-
-Now that we're shifting @_, that array item is gone.
-
-The second is that the line number for the here-doc is actually one past
-the initial line number of the test_expect_success. That works
-automatically for hanging single-quotes, since the newline from that
-line is inside the quoted area. But for a here-doc, we have to account
-for it manually. In my original patch I prepended "\n", but you can also
-just increment $lineno (which is what I did in the fix I'm about to
-send).
-
-> @@ -649,8 +654,13 @@ sub parse_cmd {
->  	return @tokens unless @tokens && $tokens[0]->[0] =~ /^test_expect_(?:success|failure)$/;
->  	my $n = $#tokens;
->  	$n-- while $n >= 0 && $tokens[$n]->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
-> -	$self->check_test($tokens[1], $tokens[2]) if $n == 2; # title body
-> -	$self->check_test($tokens[2], $tokens[3]) if $n > 2;  # prereq title body
-> +	my $herebody;
-> +	if ($n >= 2 && $tokens[$n-1]->[0] eq '-' && $tokens[$n]->[0] =~ /^<<-?(.+)$/) {
-> +		$herebody = $self->{heredocs}->{$1};
-> +		$n--;
-> +	}
-> +	$self->check_test($tokens[1], $tokens[2], $herebody) if $n == 2; # title body
-> +	$self->check_test($tokens[2], $tokens[3], $herebody) if $n > 2;  # prereq title body
->  	return @tokens;
->  }
-
-OK, mostly as expected. I think the check for "-" here is redundant with
-what's in check_test(). We could just feed the heredoc body either way,
-and in the nonsense case of:
-
-  test_expect_success 'title' 'test body' <<EOT
-  nobody reads this!
-  EOT
-
-the heredoc data would just be ignored.
-
-Requiring "<<" at the end is somewhat limiting. E.g. this is valid:
-
-  test_expect_success <<EOT 'title' -
-  the test body
-  EOT
-
-I don't expect anybody to do that, but it would be nice to be more
-robust if we can. I think the tokens are still wrapped at this point, so
-we could read through all of them looking for "<<" anywhere, without
-getting confused by "$(cat <<INNER_HEREDOC)". I think, anyway (I didn't
-test).
-
-I didn't address either of those comments in the patches I'm about to
-send.
-
--Peff
