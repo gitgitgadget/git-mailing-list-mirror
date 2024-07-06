@@ -1,145 +1,93 @@
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A73E1367
-	for <git@vger.kernel.org>; Sat,  6 Jul 2024 16:16:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BED12AAFD
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 17:18:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720282588; cv=none; b=jGdeJEBSZTqijszhRJs8+ZLR7OuY+wj+J4Ugwz/WdKkvL6T9gEIU6EX3QvX0arnPcwyhuTcF/hHHPyLjNVIjGakSenr455AHe2bv4AIXBme6Sox0w4mZXNruLDpCW017sOR+lC4sKJoGf+ptGS6I/p/yjkVm0oynbbmZxNUYfKg=
+	t=1720286306; cv=none; b=qDPkCUEiMf1D9eLRDkClGDXVOO0W09STerwNyNquWmzVrwWVljc4uBk0nL1uxOKmuYY41nQ9ZgwAjqofS1pIsnwrkiJFHiACqK9sxz3MWd4vMhtBJImN2qpUDh5R0TjvExCblj8co2lVo7t49Y5F5zmcooF28HVjrMqJUFLBP6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720282588; c=relaxed/simple;
-	bh=08ZruECtPBYENoDptjMTwCVAhV65bwW/NOyIFddejic=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iS4MpwhwvwRSGmthX6H287/o9frIb55IMWcVkYjb6zFX8kGvyPgTxmeoL08wZJDTujdLZcg/Mxv53czAaxiKDtsJd3ekssKGGitJYMWURvwv7Owj0TB7pJi4iZDbR7twyhR+SbmoPkbDZ1Ca8wLqEKPMizGbn5uwcAlKqMSfxKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cDfx5Enj; arc=none smtp.client-ip=209.85.221.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720286306; c=relaxed/simple;
+	bh=wUXPA+V37pPCahqhgnq/H9VszezFokn77s+FTjZqtJE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XxERDQVJnl6yJbs0xdx4WhQo22RMX4DwWcERcMs0HZkY8uZsFbYHzgJBpo1riLfHNcGJk7bN0NATc/pM8HSyYmotTxYAm0cX2nsW8xC0lv1x0BVeWqoV22onYVTA6elQDB+etTeR332zHkN4CQGOfyF8rXuCzf6Vq4j/Bw8fD0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gHq9E9wo; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cDfx5Enj"
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-4f2ff9f5c30so506121e0c.2
-        for <git@vger.kernel.org>; Sat, 06 Jul 2024 09:16:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720282586; x=1720887386; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pGIJ8clUZpo4wgoTGPjsg00Q6bvZJHa/+GMbRScpbCI=;
-        b=cDfx5EnjADrHxsplF0pWsUrtkcjWMwEN4djVpfW2l6Kdh0YgcSbCeey5Pzj+jiXFse
-         HxTzNnBixE3IelIvg8H+py3xZZNOgp5CubZT0fLvcAqeBY4wUFlQTYjFYiQga3y2nNcA
-         eYUOx4mCiZHN3L2LPSseVO2YivRlK4dZfCsAzNwkt/FRF6N3sj1GijNWOTD1MMGVuuQ/
-         HyZsnLo8WcMdS/4RSdwS8X/LfcGMNRWwct+Fiy6Io7wPe2H0nShdF2mEmHJeYShnXGhQ
-         wiCBkLWmiLjxcBg1kSNPggZDIfIO7z6H6M15MHpHtEFSO3DYX2Obte3pAEl0x4USMj6A
-         +lGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720282586; x=1720887386;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pGIJ8clUZpo4wgoTGPjsg00Q6bvZJHa/+GMbRScpbCI=;
-        b=LVazupuPmUxwjL2o9zjTIktyaTJaVkhIkYthKrtgYUPvQmjC8mxSeNiNyWPHis87f0
-         qQfmqxG7/SS4JMLNZEevR1muJrQdwRaBxrRy6rO5V7X0KlBt+3zX8ng3UwEIQwK5vDJz
-         fX5RkLKF/IxpUCP3Ys8c6MxQEoS1L3sW5No0J5EDNWwng7R97UxXDHMTalVb03I9jR1C
-         sxPV093qBORE2fdBK0jMPloZB6+V4+uVbpjR9fmV5B06bCSoBm9jeXVwxnpVTv6zqycP
-         i0MpGlAwR282hHpGu0SiirgN9SL40X2W0Qbk7tgr7EnvC41DAIm0UNlyU9x0ksmhW1SY
-         xZKA==
-X-Gm-Message-State: AOJu0Yy99f6WiE3gyT5zPUlEGE0/hSmPCjEBgll4W+W8NAOYxlRkpTtZ
-	P5laeHY6TT72lsjKc60m8PeLTbL0AIfZB853fPC/yJ+LdlhhB0boQjRxs6EADK5k7iq4arUDG4h
-	qbmeCEo4TvY8a0vH6xdEpMtZKcWuMJVZr2aw=
-X-Google-Smtp-Source: AGHT+IEsVGfo6vh7PcDQOvbJCPaHYiHOi/H3D/ehVOU8ssBUwsRZa9mtXc8/cT10vuiggjY2E+7Flne9z3KEDDXCpEE=
-X-Received: by 2002:a05:6122:388c:b0:4e9:7e39:cc9c with SMTP id
- 71dfb90a1353d-4f2f40531bfmr8482431e0c.11.1720282586011; Sat, 06 Jul 2024
- 09:16:26 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gHq9E9wo"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 0AA6A2ACA5;
+	Sat,  6 Jul 2024 13:18:18 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=wUXPA+V37pPCahqhgnq/H9VszezFokn77s+FTj
+	ZqtJE=; b=gHq9E9wofek/DXZmuxJOhDNoOjwzV/2m9x0LQZNymqjO6RR7c8YVuG
+	3o7QsPryND5NlK5R63AVEEbt3tonNDwksLrV5yHgtXQ4gxyc55+NhFuZQp3E8lLP
+	yLJ6gtE9qP//Md2aTMqe7Lc1L+n8LMI67/90okwZttXZt+DebR40I=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 023C32ACA4;
+	Sat,  6 Jul 2024 13:18:18 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 837AB2ACA3;
+	Sat,  6 Jul 2024 13:18:14 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 0/4] Additional FAQ entries
+In-Reply-To: <20240706064758.GG700645@coredump.intra.peff.net> (Jeff King's
+	message of "Sat, 6 Jul 2024 02:47:58 -0400")
+References: <20240704003818.750223-1-sandals@crustytoothpaste.net>
+	<xmqqzfqx7muk.fsf@gitster.g>
+	<ZocS0NgiAbg5Mnzp@tapette.crustytoothpaste.net>
+	<20240706064758.GG700645@coredump.intra.peff.net>
+Date: Sat, 06 Jul 2024 10:18:12 -0700
+Message-ID: <xmqqjzhyqw17.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240704164547.94341-1-080ariel@gmail.com>
-In-Reply-To: <20240704164547.94341-1-080ariel@gmail.com>
-From: Ariel Cabello Mateos <080ariel@gmail.com>
-Date: Sat, 6 Jul 2024 16:16:15 +0000
-Message-ID: <CALRJROB7gGWok-YPGTjPe+TXkU5Y_MhqcPSiCGoPDzJ=WGHoKA@mail.gmail.com>
-Subject: [PATCH v2] gitweb: rss/atom change published/updated date to
- committer date
-To: git@vger.kernel.org
-Cc: "gitster@pobox.com" <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BA7EAD9A-3BBB-11EF-906C-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-Currently the value used is the author date. Change it to the
-committer date that betters reflect the "published/updated" definition
-and makes rss/atom feeds more linear. Gitlab/Github rss/atom feeds use
-the committer date.
+Jeff King <peff@peff.net> writes:
 
-The committer date is already used to determine if more items should be fet=
-ched.
-
-Signed-off-by: Jes=C3=BAs Ariel Cabello Mateos <080ariel@gmail.com>
----
-Changes since v1:
-- Typo fix in the commit message.
-- Semantic fixes in the commit message.
-
-Thank you, Junio!
-
- gitweb/gitweb.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index ccd14e0e30..0ef5707557 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -8329,7 +8329,7 @@ sub git_feed {
-                if (($i >=3D 20) && ((time - $co{'author_epoch'}) > 48*60*6=
-0)) {
-                        last;
-                }
--               my %cd =3D parse_date($co{'author_epoch'}
-, $co{'author_tz'});
-+               my %cd =3D parse_date($co{'committer_epoch'},
-$co{'committer_tz'});
-
-                # get list of changed files
-                open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts=
-,
---
-2.45.2
-
-On Thu, Jul 4, 2024 at 4:46=E2=80=AFPM Jes=C3=BAs Ariel Cabello Mateos
-<080ariel@gmail.com> wrote:
+> On Thu, Jul 04, 2024 at 09:23:28PM +0000, brian m. carlson wrote:
 >
-> Currently the published(in rss) and the updated(in atom) date
-> used is the authored date. Change it to the committed date
-> that betters reflect the "published/updated" definition and
-> makes rss/atom feeds more lineal. Gitlab/Github rss/atom feeds
-> use the commited date.
+>> > Buffering the entire thing will break because ...?  Deadlock?  Or is
+>> > there anything more subtle going on?
+>> 
+>> When we use the smart HTTP protocol, the server sends keep-alive and
+>> status messages as one of the data streams, which is important because
+>> (a) the user is usually impatient and wants to know what's going on and
+>> (b) it may take a long time to pack the data, especially for large
+>> repositories, and sending no data may result in the connection being
+>> dropped or the client being served a 500 by an intermediate layer.  We
+>> know this does happen and I've seen reports of it.
 >
-> The committed date is already used to determine if more items
-> should be fetched.
->
-> Signed-off-by: Jes=C3=BAs Ariel Cabello Mateos <080ariel@gmail.com>
-> ---
->  gitweb/gitweb.perl | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index ccd14e0e30..0ef5707557 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -8329,7 +8329,7 @@ sub git_feed {
->                 if (($i >=3D 20) && ((time - $co{'author_epoch'}) > 48*60=
-*60)) {
->                         last;
->                 }
-> -               my %cd =3D parse_date($co{'author_epoch'}, $co{'author_tz=
-'});
-> +               my %cd =3D parse_date($co{'committer_epoch'}, $co{'commit=
-ter_tz'});
->
->                 # get list of changed files
->                 open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_op=
-ts,
-> --
-> 2.45.2
->
+> Additionally, I think for non-HTTP transports (think proxying ssh
+> through socat or similar), buffering the v0 protocol is likely a total
+> disaster. The fetch protocol assumes both sides spewing at each other in
+> real time.
+
+Yeah, beyond one "window" that a series of "have"s are allowed to be
+in flight, no further "have"s are sent before seeing an "ack/nack"
+response, so if you buffer too much, they can deadlock fairly easily.
+
+> ... So I'm OK
+> with just telling people "make sure your proxies aren't buffering" as a
+> general rule, rather than trying to get into the nitty gritty of what is
+> going to break and how.
+
+Sounds fair.  Thanks.
