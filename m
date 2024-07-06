@@ -1,38 +1,34 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31A41A277
-	for <git@vger.kernel.org>; Sat,  6 Jul 2024 06:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584C019BBA
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 06:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720246734; cv=none; b=fns2cxYtuRvzQBD0DD/GOX7eOauwlU783J0fmwYnsG7FtSrTrqJsszhOloB9E0ZB0IF0p/wZuu3ib5z9oVCjxJtr5eNoCncr90VQQ7fjlZH2/i5s/dvwuq3gB/Zl8iLfs1b6ptUSG/+Ze+7cMrM1MBlZVhO7ceLZWXpClOckI+0=
+	t=1720247225; cv=none; b=GI7TyjDaYb+pu9rBwFWUZiq/qUnDKNmXnEbeYuadXrfGg41yL/xepfN/yJFSyc9wm3yWMnGz65W49ll50j/t4aejbQNBng9im9quDvLqKeXuve0TBYs7UsCLKC6pQiPBC6Ulz3KNSr1K3mZYcQpkANq4mib8jXYnZv+0RPjmj1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720246734; c=relaxed/simple;
-	bh=EFaJD00dKah7q+1G+I9l6F9oGsrlZEM1ErmWwwONeRM=;
+	s=arc-20240116; t=1720247225; c=relaxed/simple;
+	bh=fxN1dqLyqv0TQ2lkjG4uqFolzUykz8JDCbUu5+exmlw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K8agZeuSEKpXB0tnSiE/Ezu4VBClvqBfUiiRem/OjFkrTzVkFunYyqbCPyhj3kQqxPSatGMD1B9eVLAhFcH9NenBxkhYaTc7BnIe6rQ3A1lEjjr/Whcx7k6U6aQeSmvuLXBxvLxy5WL4dWEPLVSCDqrKz0vWXAmUil3BYakZZkE=
+	 Content-Type:Content-Disposition:In-Reply-To; b=jr5SdEOF3+dYHWDOJNy9bBTsENuaTcE53HeaALt3690qlz3xdOvV/EbGWb4ajJ4Iahu3XINYU5ggX3jtsQJ6Y47MokPiZZFVsebaq2r7i1rmg+BRKpazcMgkN1IjHMof2F9DBZhaN/4s7/0Sfr/SkXXaKW2t0oETYh6uZoIO4xI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 23555 invoked by uid 109); 6 Jul 2024 06:18:52 -0000
+Received: (qmail 23711 invoked by uid 109); 6 Jul 2024 06:27:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 06 Jul 2024 06:18:52 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 06 Jul 2024 06:27:03 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31308 invoked by uid 111); 6 Jul 2024 06:18:49 -0000
+Received: (qmail 31364 invoked by uid 111); 6 Jul 2024 06:27:00 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Jul 2024 02:18:49 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Jul 2024 02:27:00 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 6 Jul 2024 02:18:50 -0400
+Date: Sat, 6 Jul 2024 02:27:01 -0400
 From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] test-lib: fix GIT_TEST_SANITIZE_LEAK_LOG
-Message-ID: <20240706061850.GB700645@coredump.intra.peff.net>
-References: <f4ae6e2a-218a-419c-b6c4-59a08be247a0@gmail.com>
- <xmqqv81ovp9l.fsf@gitster.g>
- <bda01080-1231-476a-9770-88b62a75ffe2@gmail.com>
- <72b69a20-3f51-4f51-8ebc-ead20e3eebcb@gmail.com>
+To: wonda-tea-coffee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, wonda-tea-coffee <lagrange.resolvent@gmail.com>
+Subject: Re: [PATCH] doc: fix the max number of git show-branches shown
+Message-ID: <20240706062701.GC700645@coredump.intra.peff.net>
+References: <pull.1757.git.1720046185710.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,46 +37,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <72b69a20-3f51-4f51-8ebc-ead20e3eebcb@gmail.com>
+In-Reply-To: <pull.1757.git.1720046185710.gitgitgadget@gmail.com>
 
-On Wed, Jul 03, 2024 at 11:44:33PM +0200, Rubén Justo wrote:
+On Wed, Jul 03, 2024 at 10:36:25PM +0000, wonda-tea-coffee via GitGitGadget wrote:
 
-> > Explicitly indicating that the error is being forced due to
-> > "GIT_TEST_SANITIZE_LEAK_LOG=true", for a test that doesn't fail when run
-> > normally or even when run with just
-> > "GIT_TEST_PASSING_SANITIZE_LEAK=yes", could save us some confusion.
-> > 
-> > So, I dunno.
-> > 
-> > Anyway, I agree that this can be addressed later.
-> > 
-> > Thanks.
+> From: wonda-tea-coffee <lagrange.resolvent@gmail.com>
 > 
-> Maybe what we should do is integrate "GIT_TEST_SANITIZE_LEAK_LOG" into
-> "GIT_TEST_PASSING_SANITIZE_LEAK" because I'm not sure what value we get
-> by keeping them separate (test performance?).  But that's another topic,
-> even further out of scope of this patch :-)
+> Contrary to the number listed in the current document,
+> only 26 are actually shown.
 
-I don't think we want to integrate them, but I'd suggest that
-SANITIZE_LEAK_LOG should be the default/only option.
+The commit message would be a good place to explain how we know "26" is
+the right number. ;)
 
-Without it, you are potentially missing leaks in programs whose failing
-exit codes do not trigger a test failure. So there is no point in
-running PASSING_SANITIZE_LEAK=check without also checking the logs. But
-it is still useful to set SANITIZE_LEAK_LOG just for normal runs to look
-for leaks.
+It looks like this is computed at build-time based on FLAG_BITS:
 
-I don't know of any reason we couldn't always check the logs (for a
-leak-checking build), and I didn't see anything in the history. I think
-it was written that way only because there is otherwise no affirmative
-action by the user to say "and btw, look for leaks" (and if we are not
-looking for leaks, there might not be any logs!).
+  #define REV_SHIFT        2
+  #define MAX_REVS        (FLAG_BITS - REV_SHIFT) /* should not exceed bits_per_int - REV_SHIFT */
 
-But really, if you have done a leak-checking build, then every run of
-the tests is looking for leaks, whether you check the logs or not. So we
-should able to just check that $SANITIZE_LEAK is set. And then there
-would be one less thing for people checking for leaks to remember to
-set.
+That's defined in object.h. Looking at "git log -GFLAG_BITS object.h",
+it seems it was 27, then 29, and now 28. So I'm not sure how it was ever
+29, but 26 makes sense now.
+
+It is unfortunate that it _could_ change again without us realizing the
+documentation is now stale. But I don't think it's something we'd touch
+very often, so this is probably OK in practice (and as the TODO above
+those lines says, ultimately this should use a commit-slab to handle an
+arbitrary number of refs).
+
+> Signed-off-by: wonda-tea-coffee <lagrange.resolvent@gmail.com>
+
+We generally want a real name here, since this is certifying that you
+agree to the DCO. See:
+
+  https://git-scm.com/docs/SubmittingPatches#sign-off
 
 -Peff
