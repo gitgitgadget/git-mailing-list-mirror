@@ -1,110 +1,193 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427B918645
-	for <git@vger.kernel.org>; Sat,  6 Jul 2024 05:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA06291E
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 06:01:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720245600; cv=none; b=Sc0UFQMPa7BQKT/rvwxEjFOIKcyZqcQPraeJ3ttGusUQNs5bbbNxB2HUb9oYkXLFxMQxZKplMflApia2xlFNZk5Q2thH369D8AofgIjuK4KiIL+0PT6S/PBv3ZMNl86iWwjrHoW4cq4AF/JlSV3MnAQ53ntOgV3/snKpaGoDymc=
+	t=1720245707; cv=none; b=MQuMQySuB0xZtbAMAyN+24DpnXHG4II4fvDMbS65bhoVAdxKi4lFUYHU8N5KrwPo6oXjhpUFgT71oyvmcGTteOdh4zS9b02ztWlN2fSjDPgdyieIAqa9Xo3ooK87MXSxk6xWF//Ftu3UaBcc74JU4ne1/xsK56pQxXLfpQff0bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720245600; c=relaxed/simple;
-	bh=kCtDSIeQBoQPZ5UQfUd8Yr7NWpECzdxaOi+J2BHfvHw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oQGjhrPNow8ZHGNXnvCYCHJzJPkbEIAt190ZVx854IqP6jc2iUbhUeJgp6hMyuIvogeiwU13YIJxabE/6C6PfjeASoolPCHTNTmdfkOdF9W/cpt4ixLs8fZ7s4a1ThKiuAAcCzGwlB6ll2UWLO0jPF++jV6mkg5zNxPDjWVKm7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h+oph1Hd; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+oph1Hd"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-754d2b05db5so1329379a12.0
-        for <git@vger.kernel.org>; Fri, 05 Jul 2024 22:59:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720245598; x=1720850398; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uNhh5MNZWqU0w7ySLLtrDFLRtq3s2XHSNCioqz0r9kY=;
-        b=h+oph1HddQQfORjvOz5erx0Yp8Yi0dXvu1pCk7PJ3P9VseQURnlIpTO0yceb188GVY
-         XZQU9mNGfPz939iNVCcYDgLYNr8O5YSvdfwg5ciHO3GYKE1cMP7PUDNA0ZKotTN/YTHW
-         S5goT3HDcCxuJ2D4QIPoPNwHoqdviRRhIV3mtggZnFT9t0SOF4Ln7rVq/8d0FOPJv/LR
-         zxAzoJa0PYUXW+KO4ebCqO35XdzbePkVMzv5388OVOwUVheRmd6OnqdLy4Z0ZGfafQLW
-         dDPbQ2ehbUb/VtNVTX8gob9Q56EXAoXlXabsFxKn4px25yironlujHmAttXM0KEcliiX
-         IEdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720245598; x=1720850398;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=uNhh5MNZWqU0w7ySLLtrDFLRtq3s2XHSNCioqz0r9kY=;
-        b=YA/KaoqXXrFmnNRWUJVGvKav5hYRsCRniDebxM6UG5OHWW7bij7zjO2ZtgUig7Nqpa
-         aVvMiUxI+B5emIWfve2/MVsSSjtkYh3vJorEmYzK2KIGXKeIpCARSR70i44mUDpvEt0T
-         rxJ7eBjHdPohSBjXxqv8+3m/YYcCC+OCTSs0ul+W4Fh9+/cyY8wKCjUPGRlKuogOm9QV
-         vMAGL4j0O4lJoFwpAfPOdIWlm+m/h1IXmkiLFlF4zUGy2O12W8j4fIf/zBMfvwM6Mp9I
-         41Ke7uIzwEb35OBNGd+9KfO8pdUWiBxJzITfDg6DNbk04TrXQT6dJiopqsUgexUGNYs6
-         4QMA==
-X-Gm-Message-State: AOJu0Ywo5sc6iKrP/jIr8yYdiFcR7eZGafb8mFmq5JuRBQnJjB8lHD/i
-	0UVfArJOTSTT8pVG4aiZR+T70xegXtRIGd5gV0ZSV7+40PjD9OqVFfK6cQ==
-X-Google-Smtp-Source: AGHT+IHdlJkG/fDFGCUmmd9qJbyH2E7UaCNvYBsaZnFsYm7Hn4d4ADjLIN1kmLS8+ufrJ7CMmrDSSw==
-X-Received: by 2002:a17:90a:fe0a:b0:2c9:6ad9:b75b with SMTP id 98e67ed59e1d1-2c99c6b8f2dmr4300061a91.40.1720245598371;
-        Fri, 05 Jul 2024 22:59:58 -0700 (PDT)
-Received: from localhost (236.219.125.34.bc.googleusercontent.com. [34.125.219.236])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c99a984507sm4342414a91.32.2024.07.05.22.59.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jul 2024 22:59:57 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Eric Sunshine <sunshine@sunshineco.com>,  Derrick Stolee
- <stolee@gmail.com>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/4] Additional FAQ entries
-In-Reply-To: <ZocS0NgiAbg5Mnzp@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 4 Jul 2024 21:23:28 +0000")
-References: <20240704003818.750223-1-sandals@crustytoothpaste.net>
-	<xmqqzfqx7muk.fsf@gitster.g>
-	<ZocS0NgiAbg5Mnzp@tapette.crustytoothpaste.net>
-Date: Fri, 05 Jul 2024 22:59:57 -0700
-Message-ID: <xmqqo77b3vs2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1720245707; c=relaxed/simple;
+	bh=gs195MXwWfi+HBQ+NaXgEcdq+maeceK0DP+QUXh5pho=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IfHY2mL6FBrCpB6/tf8/FsRJYu51UST4XClbkNwavxyGQHtDPMdN3RrU+AoozEoZDojDLxkzh+DB9KNo5Hr8xfrCAcYnruiOltImOWEBTMcXEnkmgOnr1Afo92euX/WWj3zLzW7C9G6rI2GG3ge1rqICbT3f/Q1LO36qYJTymMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 23206 invoked by uid 109); 6 Jul 2024 06:01:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 06 Jul 2024 06:01:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31108 invoked by uid 111); 6 Jul 2024 06:01:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Jul 2024 02:01:41 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 6 Jul 2024 02:01:43 -0400
+From: Jeff King <peff@peff.net>
+To: Eric Sunshine <ericsunshine@charter.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] chainlint.pl: recognize test bodies defined via heredoc
+Message-ID: <20240706060143.GD698153@coredump.intra.peff.net>
+References: <20240701220815.GA20293@coredump.intra.peff.net>
+ <20240702235034.88219-1-ericsunshine@charter.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240702235034.88219-1-ericsunshine@charter.net>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Tue, Jul 02, 2024 at 07:50:34PM -0400, Eric Sunshine wrote:
 
->> Buffering the entire thing will break because ...?  Deadlock?  Or is
->> there anything more subtle going on?
->
-> When we use the smart HTTP protocol, the server sends keep-alive and
-> status messages as one of the data streams, which is important because
-> (a) the user is usually impatient and wants to know what's going on and
-> (b) it may take a long time to pack the data, especially for large
-> repositories, and sending no data may result in the connection being
-> dropped or the client being served a 500 by an intermediate layer.  We
-> know this does happen and I've seen reports of it.
+> This is a clean-room implementation which serves the same purpose as a
+> change proposed[1] by Peff; it was created before I looked at Peff's
+> proposal. The two independent implementations turned out quite similar,
+> but the one implemented by this patch takes a more formal and paranoid
+> stance. In particular, unlike Peff's patch, it doesn't trust that the
+> most-recently-seen heredoc body is one associated with the
+> `test_expect_success` invocation.
 
-And this is an example of "a proxy that buffers the data, without
-modifying or tampering with, would still break transport"?
+Thanks for working on this! I think this is better than the patch I
+showed earlier. But I am still glad to have worked on that one, because
+there is no way I'd be able to intelligently review that one without
+having poked at the code so much myself.
 
-> We've also seen some cases where proxies refuse to accept
-> Transfer-Encoding: chunked (let's party like it's 1999) and send a 411
-> back since there's no Content-Length header.
+> This patch can sit either at the top or bottom of Peff's series[2].
+> 
+> There was also related discussion of improving the chainlint self-test
+> infrastructure[3], however, such proposed changes needn't hold up Peff's
+> series[2]; such improvements can be applied after the dust settles. On
+> the other hand, Peff, if you plan to reroll for some reason, feel free
+> to incorporate this patch into your series.
 
-This is "a proxy that wanted to buffer the data but failed to do so"
-that ended up modifying the data Gits sitting at both ends of the
-connection can observe, so it is a bit different issue.  It clearly
-falls into "modify or tampering with" category.
+IMHO we want it all to come together. We should not allow "<<\EOT"
+without making sure we can chainlint the test bodies, and we should not
+make such a big change to chainlint.pl without tests to make sure it
+works.
 
-I forgot to say this clearly when I wrote the message you are
-responding to, but I am trying to see if we can clarify the "or
-buffer" part in "modify, tamper with, or buffer", as offhand I did
-not think of a reason why a proxy would break the Git communication
-if it receives a segment that was 2MB originally from upload-pack,
-and forwards the contents of the segment in two 1MB segments without
-tampering or modifying the payload bytes at all to fetch-pack.
+I'll post some patches in a moment:
 
-Thanks.
+  [1/3]: chainlint.pl: fix line number reporting
+  [2/3]: t/chainlint: add test_expect_success call to test snippets
+  [3/3]: t/chainlint: add tests for test body in heredoc
+
+with the idea that we'd apply your patch here on top of what Junio has
+queued in jk/test-body-in-here-doc, and then these three on top. For
+Junio's sanity, I'll roll it all up into one series. But I wanted to
+show it to you incrementally first, especially because I think the fixes
+from patch 1/3 above should probably just get squashed in (or even
+rewritten). I'll discuss the bugs they fix below.
+
+> diff --git a/t/chainlint.pl b/t/chainlint.pl
+> index 1bbd985b78..eba509b8e1 100755
+> --- a/t/chainlint.pl
+> +++ b/t/chainlint.pl
+> @@ -174,6 +174,8 @@ sub swallow_heredocs {
+>  		$$b =~ /(?:\G|\n)$indent\Q$$tag[0]\E(?:\n|\z)/gc;
+>  		if (pos($$b) > $start) {
+>  			my $body = substr($$b, $start, pos($$b) - $start);
+> +			$self->{parser}->{heredocs}->{$$tag[0]} =
+> +			    substr($body, 0, length($body) - length($&));
+>  			$self->{lineno} += () = $body =~ /\n/sg;
+>  			next;
+>  		}
+
+OK, this part looks familiar. :)
+
+> @@ -232,7 +234,8 @@ sub new {
+>  	my $self = bless {
+>  		buff => [],
+>  		stop => [],
+> -		output => []
+> +		output => [],
+> +		heredocs => {},
+>  	} => $class;
+>  	$self->{lexer} = Lexer->new($self, $s);
+>  	return $self;
+
+I think initializing is not strictly necessary here, since we'd only try
+to read tags if we saw a here-doc. But there might be some invalid cases
+where we could convince higher-level code to look for tags even though
+there were none (and generate a perl warning about trying to dereference
+undef as a hashref).
+
+On the flip side, what about cleaning up? The "heretags" array is
+emptied as we parse the heredocs in swallow_heredocs(). But I think once
+a ShellParser's $self->{heredocs}->{FOO} is written, it will hang around
+forever (even though it's valid only for that one command). Probably not
+a big deal, but there's probably some correct spot to reset it.
+
+> @@ -616,7 +619,9 @@ sub unwrap {
+>  
+>  sub check_test {
+>  	my $self = shift @_;
+> -	my ($title, $body) = map(unwrap, @_);
+> +	my $title = unwrap(shift @_);
+> +	my $body = unwrap(shift @_);
+> +	$body = shift @_ if $body eq '-';
+>  	$self->{ntests}++;
+>  	my $parser = TestParser->new(\$body);
+>  	my @tokens = $parser->parse();
+
+This has two problems related to line numbers. You can't see it in the
+context, but we later do:
+
+  my $lineno = $_[1]->[3];
+
+Now that we're shifting @_, that array item is gone.
+
+The second is that the line number for the here-doc is actually one past
+the initial line number of the test_expect_success. That works
+automatically for hanging single-quotes, since the newline from that
+line is inside the quoted area. But for a here-doc, we have to account
+for it manually. In my original patch I prepended "\n", but you can also
+just increment $lineno (which is what I did in the fix I'm about to
+send).
+
+> @@ -649,8 +654,13 @@ sub parse_cmd {
+>  	return @tokens unless @tokens && $tokens[0]->[0] =~ /^test_expect_(?:success|failure)$/;
+>  	my $n = $#tokens;
+>  	$n-- while $n >= 0 && $tokens[$n]->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
+> -	$self->check_test($tokens[1], $tokens[2]) if $n == 2; # title body
+> -	$self->check_test($tokens[2], $tokens[3]) if $n > 2;  # prereq title body
+> +	my $herebody;
+> +	if ($n >= 2 && $tokens[$n-1]->[0] eq '-' && $tokens[$n]->[0] =~ /^<<-?(.+)$/) {
+> +		$herebody = $self->{heredocs}->{$1};
+> +		$n--;
+> +	}
+> +	$self->check_test($tokens[1], $tokens[2], $herebody) if $n == 2; # title body
+> +	$self->check_test($tokens[2], $tokens[3], $herebody) if $n > 2;  # prereq title body
+>  	return @tokens;
+>  }
+
+OK, mostly as expected. I think the check for "-" here is redundant with
+what's in check_test(). We could just feed the heredoc body either way,
+and in the nonsense case of:
+
+  test_expect_success 'title' 'test body' <<EOT
+  nobody reads this!
+  EOT
+
+the heredoc data would just be ignored.
+
+Requiring "<<" at the end is somewhat limiting. E.g. this is valid:
+
+  test_expect_success <<EOT 'title' -
+  the test body
+  EOT
+
+I don't expect anybody to do that, but it would be nice to be more
+robust if we can. I think the tokens are still wrapped at this point, so
+we could read through all of them looking for "<<" anywhere, without
+getting confused by "$(cat <<INNER_HEREDOC)". I think, anyway (I didn't
+test).
+
+I didn't address either of those comments in the patches I'm about to
+send.
+
+-Peff
