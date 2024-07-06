@@ -1,59 +1,41 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB846D1A8
-	for <git@vger.kernel.org>; Sat,  6 Jul 2024 11:20:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D604126281
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 13:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720264842; cv=none; b=AwAuYqIMPoFwp2RtIHEzHUbN0sakUzzzpnShc3fFSgcFtt5sxp3hXRuj8VOtTho+svht1lfNK6CowJIxnxMJjreAWJDxTJgC4Cq28ek+lJYWFnCMvN3MHUXZ9zA9M2pSLJiiZ0VkLA2uVa4AYuGSMaBZxP/GcFGN0V7qlzX8GzI=
+	t=1720272660; cv=none; b=nzc3XHhM/Z/1AwIx9qEtpYmwjPMsHN8GySaiCHTbGtW1L3LtRLRsanMcfpbJXe44+uNmOzHjb4ENqIVYp1CxVcc7CZnT6oJbmRY5YexaTeX3SjXDr0RZFHT6i6pwcIzp80Jm8h1ylJUfv4gCHLCZK5tmwIc4y6JHgSgJhQJcCew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720264842; c=relaxed/simple;
-	bh=S6TqR7MopMtpi33HfjV4sgUAgG2U0ezDmk4JUUexmfw=;
+	s=arc-20240116; t=1720272660; c=relaxed/simple;
+	bh=ddoxElNtLT822iEy39XBaMgh+FZw0NOUELPzN2KefS8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F/tnSuXeC3I1VQsfCAwHBMfsid4ogGusiYH8RMYYqXEZxYWElWhJwHlv1SFd044rHC3LnNB/7jZQyHhFJuFvtMbrVvKYofjnyiZpyVADqHRunV5tUJUnFb8uF28peCmPMDptUJ3Cp/327Ztd8kpTALKw2ggO6lI4aEqYI1C9IZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HdDIQnL4; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=UWZLScZH2Ae0XMu41RuZwLbIimYleHs1LO9biRsHW27rkq+R9YtcaLsol6nqUDBM8jigLavh/gB7OuUj7L3u08QT7WAr3s5bEuFykRi80QpHOPIaYiQMTD340nMw5qC0yXMF4576AssmKqh05pQuhEJehiZqk0/e2zn+iw1DnXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu; spf=pass smtp.mailfrom=delpeuch.eu; dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b=K7klWAC9; arc=none smtp.client-ip=212.227.126.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delpeuch.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HdDIQnL4"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2ee7a1ad286so25614221fa.2
-        for <git@vger.kernel.org>; Sat, 06 Jul 2024 04:20:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720264839; x=1720869639; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nGviB0zBD6EgkZAVbceJ2St3Z7lw4k05FOMK9+AYvJA=;
-        b=HdDIQnL4mBDw8ZE4vu2DBrXHvbUAfpAn330PHm+eNs2r6shZZuP3a/s9LS458ULkqI
-         Kd2LBO0mgRSPZX8xDdbU6YZxmH+0dPJZTuWU7zWxWQuGvJm5qslJZhc8bOAVTaVc40qx
-         8bD6SYYG/kU1m0iNFi4B8J6+RNGOLc+SsiYemf3wiWoOb7dKAW47/cTFxxIWtFuU4KLs
-         SwuqM1WrU1v2UwJVTNkCyfy06ivgD6+biP2AqDcUy6UXXjNQVveQoa7peVX2LhJnLNAs
-         p33ib/0W9PyyqA24KRwfyFFbhLFpeLoyc3IkmteUaB8MkDvtFCpB8rnPKXNLnM/NbCFR
-         rzrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720264839; x=1720869639;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nGviB0zBD6EgkZAVbceJ2St3Z7lw4k05FOMK9+AYvJA=;
-        b=hhg08gjIgGcfU2jf9hGtf3+anAUiv3S4bglwJYdaOpdefNrJ34LIMdecjjzTGMbKDb
-         O68yFkkem1RsIgTfoEvka5FQpoClbxc41qd9e0dLC4uXAajTNVF3eI+PFCGlr6oSj+zt
-         VOAnP9pq669ryjvBiqVLhxAPxuupboeRBTPLgvxmB0/Msfw4ONN38o8ULE3qKuJtrHuC
-         TXe+eoLVYhaNuTR20RovkfnzExoY3lx36yzvLWI8JIbIk322JQ/7SVbRQ6GVtiSzoJt7
-         DfgIbSececosj1bzpzmpPwc/69a9AER/3fFRxWSNy7pHWLo/PCgEmJftUR37sVy38SsC
-         kQAA==
-X-Forwarded-Encrypted: i=1; AJvYcCVWdFqcSG4WtrWL9x0VeAwtxp33Y1UfwhapF9VqUXh6Br1yEzyuUIedt70cTLMFYc4bw4C5n6xlXXmGuuWP8eeC2egV
-X-Gm-Message-State: AOJu0Yzb+qjliYrcnEPqhKQ+vAVt1MVVRpX6/tYJXwxoD2Q7rxmc/G98
-	tIMR7W09khCtCC5whDoTsYRaulMo+gmkbAvxf2xI08dQniUBvMux
-X-Google-Smtp-Source: AGHT+IElUpthO9y9nj9x9vW1npFIA6tpzL0wLMu6Bl/qnksyX9Ef+3NUhrMnhlmO5u861vPgTs95dA==
-X-Received: by 2002:a2e:a4d1:0:b0:2ee:868e:e281 with SMTP id 38308e7fff4ca-2ee8ed90b66mr54282991fa.14.1720264838357;
-        Sat, 06 Jul 2024 04:20:38 -0700 (PDT)
-Received: from gmail.com (89.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.89])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3678877f19dsm11484550f8f.43.2024.07.06.04.20.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Jul 2024 04:20:37 -0700 (PDT)
-Message-ID: <75a635b9-7622-42f7-b202-6991775e75f0@gmail.com>
-Date: Sat, 6 Jul 2024 13:20:36 +0200
+	dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b="K7klWAC9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delpeuch.eu;
+	s=s1-ionos; t=1720272646; x=1720877446; i=antonin@delpeuch.eu;
+	bh=ddoxElNtLT822iEy39XBaMgh+FZw0NOUELPzN2KefS8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=K7klWAC9YtMnMrkoQuXvSjkqEJFWqs35A1GSaJlkhNmvaHgQSaJDSiwE/x+4yFmQ
+	 hUEcfqJ5Slw2Fvs1BUT40yVtcvpbdELx5Y93TluV1V4i2qw6LvBxGaKsKZVZTOdha
+	 2P+Gwpw2pcvXSi3QUjY4N7uriCtzt+9NvO0bUoGXNY0+p5UOnX38MUWWaKC807nd8
+	 pvUOkvD26iKRSrn83yALBAB/s+om8cw9IPAjJX9YDnTtJ4IHXwamH+X+kTApm10Om
+	 2y2JQbUXEQzpCw6yXjQyFgrADT+qv4P9sPz+RCYFWop3rM3+ZIzpJihdhBYNZrspq
+	 MkkE0IZyxuH39noC7g==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.100.42] ([84.184.28.147]) by mrelayeu.kundenserver.de
+ (mreue010 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1M9nlN-1sVKAF2Cvd-00G6s4; Sat, 06 Jul 2024 15:30:46 +0200
+Message-ID: <7bc2ff20-98b8-45d7-95b8-e1b09bdeda07@delpeuch.eu>
+Date: Sat, 6 Jul 2024 15:30:45 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,64 +43,114 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] test-lib: fix GIT_TEST_SANITIZE_LEAK_LOG
+Subject: Re: [PATCH] merge-file: warn for implicit 'myers' algorithm
 Content-Language: en-US
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
- Eric Sunshine <sunshine@sunshineco.com>
-References: <f4ae6e2a-218a-419c-b6c4-59a08be247a0@gmail.com>
- <xmqqv81ovp9l.fsf@gitster.g> <bda01080-1231-476a-9770-88b62a75ffe2@gmail.com>
- <72b69a20-3f51-4f51-8ebc-ead20e3eebcb@gmail.com>
- <20240706061850.GB700645@coredump.intra.peff.net>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <20240706061850.GB700645@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>
+Cc: Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+References: <pull.1741.git.git.1720016469254.gitgitgadget@gmail.com>
+ <xmqqmsmycriv.fsf@gitster.g>
+ <dd1f768f-a137-428c-8a60-c5e875b66592@delpeuch.eu>
+ <xmqqr0ca9qkj.fsf@gitster.g>
+ <CABPp-BEspjHqNXSAwptgxP059qOFU6MzwAd23-893Nw99ft_Ew@mail.gmail.com>
+ <xmqqed873vgn.fsf@gitster.g>
+From: Antonin Delpeuch <antonin@delpeuch.eu>
+In-Reply-To: <xmqqed873vgn.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:7zfR8KvNIMG8lauIyaWfcuhETAAcrnG/YhjkfRQ6bYJKyiMQ3Lx
+ CeeWkes/nNwMwoQJck9KCrSBhxon8zB/yz/SrKRQijDcxDfInl23/9NHY7Mt40jsYsD+fup
+ QGE/rjITYQWXH4/bCt3E6VwuVdx53TGhr7SP9Z8QR/F7/6XK9uURqQsw7DWe5/xCMxPW8FA
+ WNQ0sp+MSbOugZIEsM3Tg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:U98oC3dc0jM=;CredqRHfeKPbFLOTIFuIaw3f5ZN
+ md6fhRbhsj66sBlQiLKGkO6RDu41zxdVgmiZ18+CyFlokuWuiSphYG0JsP4fzu34IyceOzqsB
+ Hup+kCpCJeStRh+XTdm0a0Uf+hcreVhRQF6+sNrnFCRDbCpz4Cqff+khRHlvsFctKFivM4usS
+ zf2bwPgzq7MlNQ86adgzhk0b6DEQoNigXZoN6PzGtpt2JZtHbudWGgKJEkPEjXUCHnbX9YU4P
+ l5QfsdPybkGay6+mKpFT+/LSgUWVrOtJm/HijRco2F7VLCVTictgTZxwAZr2s2e2iO0ZIWKJ6
+ qiDgHDw4B07+FC4xrf38ROgzNPIFBH9lwtVQK0FKDyDXP7lOlh/3X58cpacHDSOpZ+AzHivKJ
+ ytJtTECDtqYAe0PVbPYZqPR9RzZdq3VdREw/95wJ9JUmq/kX27jJ0mFqsXISFlC0JJ/YeZFD7
+ avF2CLPhVY1I9BOpfnbuEf4KCDFomG9nBmd7sDwPouwYtze7lUXunidXy6deciv4QgH6jPOxh
+ D+ANrRKjU/02CASE4J+0aieBvNROv2808IFSnmDMDBiVvM9skNK3hCrEupqvsUlJWPWJdi/io
+ OLidMGbBpMPo2UPzU6+2xNKU5oAb1+WYgOf8Zkz3RR03Rzrt0vpwb23ITs6dLJUx4aYbyGUSF
+ O3SD9LQYfa28Smq4Nxy7B0oWeRizZ8qO8UeRmyTxXNpLdjwYg4F9gTFsa/1d4Ks8cY9dNtjoM
+ wHxzwzgYhrl6uqQn2s1IOyHisZ8utCzqcQd2tsufzytw29ct8xdkvU=
 
-On Sat, Jul 06, 2024 at 02:18:50AM -0400, Jeff King wrote:
-> On Wed, Jul 03, 2024 at 11:44:33PM +0200, Rubén Justo wrote:
-> 
-> > > Explicitly indicating that the error is being forced due to
-> > > "GIT_TEST_SANITIZE_LEAK_LOG=true", for a test that doesn't fail when run
-> > > normally or even when run with just
-> > > "GIT_TEST_PASSING_SANITIZE_LEAK=yes", could save us some confusion.
-> > > 
-> > > So, I dunno.
-> > > 
-> > > Anyway, I agree that this can be addressed later.
-> > > 
-> > > Thanks.
-> > 
-> > Maybe what we should do is integrate "GIT_TEST_SANITIZE_LEAK_LOG" into
-> > "GIT_TEST_PASSING_SANITIZE_LEAK" because I'm not sure what value we get
-> > by keeping them separate (test performance?).  But that's another topic,
-> > even further out of scope of this patch :-)
-> 
-> I don't think we want to integrate them, but I'd suggest that
-> SANITIZE_LEAK_LOG should be the default/only option.
-> 
-> Without it, you are potentially missing leaks in programs whose failing
-> exit codes do not trigger a test failure. So there is no point in
-> running PASSING_SANITIZE_LEAK=check without also checking the logs. But
-> it is still useful to set SANITIZE_LEAK_LOG just for normal runs to look
-> for leaks.
-> 
-> I don't know of any reason we couldn't always check the logs (for a
-> leak-checking build), and I didn't see anything in the history. I think
-> it was written that way only because there is otherwise no affirmative
-> action by the user to say "and btw, look for leaks" (and if we are not
-> looking for leaks, there might not be any logs!).
-> 
-> But really, if you have done a leak-checking build, then every run of
-> the tests is looking for leaks, whether you check the logs or not. So we
-> should able to just check that $SANITIZE_LEAK is set.
+On 06/07/2024 08:06, Junio C Hamano wrote:
+> Everybody uses diff.c::diff_algorithm somehow, will be affected by
+> the diff.algorithm configuration variable, and everybody should
+> honor "--diff-algorithm=3D<choice>" command line option to override?
 
-> And then there would be one less thing for people checking for leaks
-> to remember to set.
+I have looked into writing a patch to implement this, but it looks like
+the situation is quite messy. There are already half a dozen of commands
+which claim to honour the diff.algorithm configuration variable, but
+ignore it entirely.
 
-I completely agree.
+In the documentation of the recursive merge strategy (for instance in
+"man git-merge"), it is claimed that "recursive defaults to the
+diff.algorithm config setting". As far as I can tell, both from my
+reading of the code and my interactive testing, this is wrong. This
+affects the "merge", "rebase" and "pull" commands, which all three
+mention this configuration variable in their man page without respecting
+it. Ouch!
 
-Let's wait for the dust to settle after the fix in this series, and then
-I'll address the change as you described.
+I have looked for all commands which mention diff.algorithm in their man
+page and checked whether they indeed respect it. The "diff-index",
+"diff-tree" and "diff-files" commands also make this erroneous claim.
+The --diff-algorithm CLI option (as well as the --histogram and
+siblings) are respected, but not the diff.algorithm config variable.
+Those inconsistencies seem to be caused by the inclusion of the
+`diff-options.txt` file in the man pages, which leads their man pages to
+documenting a bunch of config variables which are in fact ignored. From
+a user perspective, I would say that those commands should indeed honour
+diff.algorithm, so I would be tempted to fix the code rather than the
+documentation. That being said, the man pages of those commands also
+mention other options which are in fact ignored, such as
+"diff.relative". I think it's likely that for some of those variables,
+the contrary is desirable: remove them from the docs because they indeed
+shouldn't be relied on by the command (because it does not make sense
+for that particular command). I don't have (yet) a good enough
+understanding of those commands and those options to judge this
+immediately, but it looks like there is some cleaning up to do.
 
-Thanks.
+In diff.c, the code that is responsible for reading diff.* configuration
+variables for commands like "log", "diff" or "diff-index" divides diff.*
+variables into two categories: the ones that are "basic" (parsed by
+"git_diff_basic_config") and the ones only relevant to the "ui" (parsed
+by the "git_diff_ui_config" function). Surprisingly to me, the
+"diff.algorithm" variable belongs to the "ui" category, and is therefore
+skipped by commands such as "diff-index". It seems natural to me to move
+diff.algorithm to the "basic" section. However, that alone will not fix
+the problem (in my opinion much more serious) that the recursive merge
+strategy ignores the variable. To fix this, the parsing of this variable
+could either be added to "merge_recursive_config" (in
+merge-recursive.c), or in fact directly to "git_xmerge_config" (in
+xdiff-interface.c), which would then not only fix the recursive merge
+strategy, but also a range of other commands such as "rerere" or
+"merge-file". Given that I started looking into this with a specific
+interest in "merge-file", I would obviously be tempted to fix this bug
+directly at the xmerge level, and I think it would indeed make sense for
+other affected commands (surely "rerere" should benefit from using merge
+options that are consistent with the ones used for "git merge" or "git
+rebase", no?), but I can imagine that it's too bold a step and could
+have unwanted consequences I am not aware of - especially since Junio
+recommended to add support for diff.algorithm at the diff.c level. What
+do you think?
+
+In any case, I would of course make sure the "ort" strategy continues to
+ignore diff.algorithm for now, given its current default value.
+
+If you want to try this out for yourself, I have set up a test
+repository at https://git.kanthaus.online/antonin/testrepo. It has two
+branches "master" and "theirs", which you can try to merge/rebase, for
+instance "git merge -s recursive theirs" while being on master and
+having "diff.algorithm" set to "histogram". The merge scenario is
+designed to fail with a conflict if the myers algorithm is used, and
+succeed if histogram is used. You should be able to see that "git merge
+-s recursive theirs" will fail but "git merge -s recursive
+-Xdiff-algorithm=3Dhistogram theirs" should work.
+
+Best,
+
+Antonin
+
