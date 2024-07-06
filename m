@@ -1,41 +1,27 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D604126281
-	for <git@vger.kernel.org>; Sat,  6 Jul 2024 13:30:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A64874070
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 14:04:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720272660; cv=none; b=nzc3XHhM/Z/1AwIx9qEtpYmwjPMsHN8GySaiCHTbGtW1L3LtRLRsanMcfpbJXe44+uNmOzHjb4ENqIVYp1CxVcc7CZnT6oJbmRY5YexaTeX3SjXDr0RZFHT6i6pwcIzp80Jm8h1ylJUfv4gCHLCZK5tmwIc4y6JHgSgJhQJcCew=
+	t=1720274650; cv=none; b=o2YG6X1p8ZTIPnadnaCKeUKKd/fPvqXEl3m0jfykSdlNzTQrA1CB1GGOwECAKHWqI5aq8g5+TnoSUnbV/J1uIY6N6oix0YR39AaVpfrD2N4oqKr2gS8/sMkndwVCiO00qxJJd/HyLss7R6cvOwp1Su1Y01sZ4aH/vmMPr1kvUBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720272660; c=relaxed/simple;
-	bh=ddoxElNtLT822iEy39XBaMgh+FZw0NOUELPzN2KefS8=;
+	s=arc-20240116; t=1720274650; c=relaxed/simple;
+	bh=tq+4FKE7h3MfQOM3NWkXbHPCrLA5vEfnVpeo1Q/j4wg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UWZLScZH2Ae0XMu41RuZwLbIimYleHs1LO9biRsHW27rkq+R9YtcaLsol6nqUDBM8jigLavh/gB7OuUj7L3u08QT7WAr3s5bEuFykRi80QpHOPIaYiQMTD340nMw5qC0yXMF4576AssmKqh05pQuhEJehiZqk0/e2zn+iw1DnXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu; spf=pass smtp.mailfrom=delpeuch.eu; dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b=K7klWAC9; arc=none smtp.client-ip=212.227.126.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delpeuch.eu
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b="K7klWAC9"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delpeuch.eu;
-	s=s1-ionos; t=1720272646; x=1720877446; i=antonin@delpeuch.eu;
-	bh=ddoxElNtLT822iEy39XBaMgh+FZw0NOUELPzN2KefS8=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=K7klWAC9YtMnMrkoQuXvSjkqEJFWqs35A1GSaJlkhNmvaHgQSaJDSiwE/x+4yFmQ
-	 hUEcfqJ5Slw2Fvs1BUT40yVtcvpbdELx5Y93TluV1V4i2qw6LvBxGaKsKZVZTOdha
-	 2P+Gwpw2pcvXSi3QUjY4N7uriCtzt+9NvO0bUoGXNY0+p5UOnX38MUWWaKC807nd8
-	 pvUOkvD26iKRSrn83yALBAB/s+om8cw9IPAjJX9YDnTtJ4IHXwamH+X+kTApm10Om
-	 2y2JQbUXEQzpCw6yXjQyFgrADT+qv4P9sPz+RCYFWop3rM3+ZIzpJihdhBYNZrspq
-	 MkkE0IZyxuH39noC7g==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.100.42] ([84.184.28.147]) by mrelayeu.kundenserver.de
- (mreue010 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1M9nlN-1sVKAF2Cvd-00G6s4; Sat, 06 Jul 2024 15:30:46 +0200
-Message-ID: <7bc2ff20-98b8-45d7-95b8-e1b09bdeda07@delpeuch.eu>
-Date: Sat, 6 Jul 2024 15:30:45 +0200
+	 In-Reply-To:Content-Type; b=rr3IUi/rLawX/GHpw980WeAm+xualvr9xW+gaAvfaU+1c7Vq1S1c4RpzenRtD2CFWgcgto288LTwoMBq1w7KGzCrqIyjJcTn3BwXfveKqtQBjs8fii4/M0mEMm3Jb0FVENC09dZQU7Gc6BUMDEHJsv2bmH79jxnpEFE8kW2w8DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp.bon.at (unknown [192.168.181.101])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4WGXDc15TPz5wDj
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 16:04:00 +0200 (CEST)
+Received: from [192.168.0.105] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4WGXDR6BFmzRpKn;
+	Sat,  6 Jul 2024 16:03:51 +0200 (CEST)
+Message-ID: <752d41f9-6ce3-4c31-a0a2-4960c7dc1b2b@kdbg.org>
+Date: Sat, 6 Jul 2024 16:03:51 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,114 +29,91 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] merge-file: warn for implicit 'myers' algorithm
+Subject: Re: [BUG REPORT] git-gui invokes prepare-commit-msg hook incorrectly
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: brianmlyles <brianmlyles@gmail.com>, git@vger.kernel.org,
+ Sean Allred <allred.sean@gmail.com>
+References: <17df67804ef7a3c8.df629cdadcf4ea15.524a056283063601@EPIC94403>
+ <CAPig+cRQPrtGBTxM49nUeHvsVr0qEOnKZ5W_4by=A9mXEsR3DA@mail.gmail.com>
+ <m034onpng4.fsf@epic96565.epic.com>
+ <CAPig+cS2r-b22ikZZ6QHpzfneQ07n6s=E40Sb+QYmCnezVFAww@mail.gmail.com>
 Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>
-Cc: Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-References: <pull.1741.git.git.1720016469254.gitgitgadget@gmail.com>
- <xmqqmsmycriv.fsf@gitster.g>
- <dd1f768f-a137-428c-8a60-c5e875b66592@delpeuch.eu>
- <xmqqr0ca9qkj.fsf@gitster.g>
- <CABPp-BEspjHqNXSAwptgxP059qOFU6MzwAd23-893Nw99ft_Ew@mail.gmail.com>
- <xmqqed873vgn.fsf@gitster.g>
-From: Antonin Delpeuch <antonin@delpeuch.eu>
-In-Reply-To: <xmqqed873vgn.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:7zfR8KvNIMG8lauIyaWfcuhETAAcrnG/YhjkfRQ6bYJKyiMQ3Lx
- CeeWkes/nNwMwoQJck9KCrSBhxon8zB/yz/SrKRQijDcxDfInl23/9NHY7Mt40jsYsD+fup
- QGE/rjITYQWXH4/bCt3E6VwuVdx53TGhr7SP9Z8QR/F7/6XK9uURqQsw7DWe5/xCMxPW8FA
- WNQ0sp+MSbOugZIEsM3Tg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:U98oC3dc0jM=;CredqRHfeKPbFLOTIFuIaw3f5ZN
- md6fhRbhsj66sBlQiLKGkO6RDu41zxdVgmiZ18+CyFlokuWuiSphYG0JsP4fzu34IyceOzqsB
- Hup+kCpCJeStRh+XTdm0a0Uf+hcreVhRQF6+sNrnFCRDbCpz4Cqff+khRHlvsFctKFivM4usS
- zf2bwPgzq7MlNQ86adgzhk0b6DEQoNigXZoN6PzGtpt2JZtHbudWGgKJEkPEjXUCHnbX9YU4P
- l5QfsdPybkGay6+mKpFT+/LSgUWVrOtJm/HijRco2F7VLCVTictgTZxwAZr2s2e2iO0ZIWKJ6
- qiDgHDw4B07+FC4xrf38ROgzNPIFBH9lwtVQK0FKDyDXP7lOlh/3X58cpacHDSOpZ+AzHivKJ
- ytJtTECDtqYAe0PVbPYZqPR9RzZdq3VdREw/95wJ9JUmq/kX27jJ0mFqsXISFlC0JJ/YeZFD7
- avF2CLPhVY1I9BOpfnbuEf4KCDFomG9nBmd7sDwPouwYtze7lUXunidXy6deciv4QgH6jPOxh
- D+ANrRKjU/02CASE4J+0aieBvNROv2808IFSnmDMDBiVvM9skNK3hCrEupqvsUlJWPWJdi/io
- OLidMGbBpMPo2UPzU6+2xNKU5oAb1+WYgOf8Zkz3RR03Rzrt0vpwb23ITs6dLJUx4aYbyGUSF
- O3SD9LQYfa28Smq4Nxy7B0oWeRizZ8qO8UeRmyTxXNpLdjwYg4F9gTFsa/1d4Ks8cY9dNtjoM
- wHxzwzgYhrl6uqQn2s1IOyHisZ8utCzqcQd2tsufzytw29ct8xdkvU=
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <CAPig+cS2r-b22ikZZ6QHpzfneQ07n6s=E40Sb+QYmCnezVFAww@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 06/07/2024 08:06, Junio C Hamano wrote:
-> Everybody uses diff.c::diff_algorithm somehow, will be affected by
-> the diff.algorithm configuration variable, and everybody should
-> honor "--diff-algorithm=3D<choice>" command line option to override?
+Am 05.07.24 um 23:47 schrieb Eric Sunshine:
+> On Fri, Jul 5, 2024 at 4:56 PM Sean Allred <allred.sean@gmail.com> wrote:
+>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>>> On Fri, Jul 5, 2024 at 3:23 PM brianmlyles <brianmlyles@gmail.com> wrote:
+>>>> - Have git-gui create the commit in a way that causes the message to be
+>>>>   washed
+>>>
+>>> A patch to make git-gui strip comment lines had been previously
+>>> applied[1,2], however, it badly broke git-gui when running with old
+>>> Tcl versions, such as on macOS[3,4]. The breakage was not
+>>> insurmountable, and a patch[5,6] was submitted to resolve it.
+>>> Unfortunately, the then-maintainer of git-gui lost interest in the
+>>> project about that point, thus left the issue hanging. Thus, to this
+>>> day, git-gui still doesn't strip comment lines.
+>>
+>> There is a third option -- new plumbing in git (a la
+>> git-interpret-trailers) to expose the logic of `cleanup_message`. This
+>> comes with some nice flexibility, but introduces complexity around
+>> transferring state (e.g. passed options to git-commit) that would
+>> probably be best to avoid.
+> 
+> Could the cleanup_message() functionality be exposed as a new option
+> of git-stripspace?
+> 
+>> I haven't looked super closely at the patches you've linked, Eric, but
+>> it seems like those are specific to stripping comment characters. As
+>> I've noted elsewhere[1], there's potentially more to strip than just
+>> comments (like patch scissors). I suspect the only paths forward to
+>> guarantee that message-washing happens would either be an option to
+>> git-commit to explicitly enable it OR (probably preferred) have git-gui
+>> invoke git-commit with an appropriate editor instead of using -F.
+>>
+>> [1]: https://lore.kernel.org/git/m0h6d3pphu.fsf@epic96565.epic.com/T/#u
+> 
+> You're correct that my interest in the issue was strictly due to the
+> annoyance of git-gui failing to strip comments (in particular, the
+> list of conflicted files automatically inserted into
+> .git/MERGE_MSG)[*]. The subject of patch scissors did not come up in
+> the linked discussions, and it wasn't apparent from Brian's message
+> which started this thread that he was also concerned about patch
+> scissors (his message mentioned only comments).
+> 
+> I responded separately to the message you cited above.
+> 
+> [*]: https://lore.kernel.org/git/CAPig+cTQaPTNnGcd583B=xoVUR1qPb372Y_x9szROfMcA5h+tA@mail.gmail.com/
 
-I have looked into writing a patch to implement this, but it looks like
-the situation is quite messy. There are already half a dozen of commands
-which claim to honour the diff.algorithm configuration variable, but
-ignore it entirely.
+Let's take a step back and ask why is there cruft in a commit message
+that needs to be cleaned in the first place? It is because with the
+command line `git commit` there is no side-channel that could
+communicate the circumstances that lead up to a commit. This is not the
+case in git gui. There are many instruments that can be used at the same
+time that the commit message is authored; there is no reason to have a
+list of conflicted files or the commit's patch text in the commit message.
 
-In the documentation of the recursive merge strategy (for instance in
-"man git-merge"), it is claimed that "recursive defaults to the
-diff.algorithm config setting". As far as I can tell, both from my
-reading of the code and my interactive testing, this is wrong. This
-affects the "merge", "rebase" and "pull" commands, which all three
-mention this configuration variable in their man page without respecting
-it. Ouch!
+My take-away is:
 
-I have looked for all commands which mention diff.algorithm in their man
-page and checked whether they indeed respect it. The "diff-index",
-"diff-tree" and "diff-files" commands also make this erroneous claim.
-The --diff-algorithm CLI option (as well as the --histogram and
-siblings) are respected, but not the diff.algorithm config variable.
-Those inconsistencies seem to be caused by the inclusion of the
-`diff-options.txt` file in the man pages, which leads their man pages to
-documenting a bunch of config variables which are in fact ignored. From
-a user perspective, I would say that those commands should indeed honour
-diff.algorithm, so I would be tempted to fix the code rather than the
-documentation. That being said, the man pages of those commands also
-mention other options which are in fact ignored, such as
-"diff.relative". I think it's likely that for some of those variables,
-the contrary is desirable: remove them from the docs because they indeed
-shouldn't be relied on by the command (because it does not make sense
-for that particular command). I don't have (yet) a good enough
-understanding of those commands and those options to judge this
-immediately, but it looks like there is some cleaning up to do.
+- The commit message that is entered in the edit box must appear in the
+commit unmodified. There is no such concept as "comment lines" in git
+gui's commit message edit box. The commit-msg hook can overrule
+nevertheless as a means to enforce message hygiene, but otherwise the
+user must have full authority.
 
-In diff.c, the code that is responsible for reading diff.* configuration
-variables for commands like "log", "diff" or "diff-index" divides diff.*
-variables into two categories: the ones that are "basic" (parsed by
-"git_diff_basic_config") and the ones only relevant to the "ui" (parsed
-by the "git_diff_ui_config" function). Surprisingly to me, the
-"diff.algorithm" variable belongs to the "ui" category, and is therefore
-skipped by commands such as "diff-index". It seems natural to me to move
-diff.algorithm to the "basic" section. However, that alone will not fix
-the problem (in my opinion much more serious) that the recursive merge
-strategy ignores the variable. To fix this, the parsing of this variable
-could either be added to "merge_recursive_config" (in
-merge-recursive.c), or in fact directly to "git_xmerge_config" (in
-xdiff-interface.c), which would then not only fix the recursive merge
-strategy, but also a range of other commands such as "rerere" or
-"merge-file". Given that I started looking into this with a specific
-interest in "merge-file", I would obviously be tempted to fix this bug
-directly at the xmerge level, and I think it would indeed make sense for
-other affected commands (surely "rerere" should benefit from using merge
-options that are consistent with the ones used for "git merge" or "git
-rebase", no?), but I can imagine that it's too bold a step and could
-have unwanted consequences I am not aware of - especially since Junio
-recommended to add support for diff.algorithm at the diff.c level. What
-do you think?
+- A commit message template and the MERGE_MSG file are populated in a
+manner that is suitable for `git commit`, i.e. can (and do) contain
+comment lines. It is, therefore, necessary to remove them when their
+text is used to populate git gui's edit box.
 
-In any case, I would of course make sure the "ort" strategy continues to
-ignore diff.algorithm for now, given its current default value.
+I suggest that removing comment lines ("message-washing") should not
+happen as a post-processing step, but as a preprocessing step when text
+is gathered from particular sources that are known to contain
+inessential cruft.
 
-If you want to try this out for yourself, I have set up a test
-repository at https://git.kanthaus.online/antonin/testrepo. It has two
-branches "master" and "theirs", which you can try to merge/rebase, for
-instance "git merge -s recursive theirs" while being on master and
-having "diff.algorithm" set to "histogram". The merge scenario is
-designed to fail with a conflict if the myers algorithm is used, and
-succeed if histogram is used. You should be able to see that "git merge
--s recursive theirs" will fail but "git merge -s recursive
--Xdiff-algorithm=3Dhistogram theirs" should work.
-
-Best,
-
-Antonin
+-- Hannes
 
