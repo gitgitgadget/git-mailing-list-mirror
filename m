@@ -1,69 +1,38 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7989C1CD35
-	for <git@vger.kernel.org>; Sat,  6 Jul 2024 06:08:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D31B179BD
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 06:09:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720246109; cv=none; b=Qq9ATgduqbVjfBs54nIdBsivMHNKXkLZagWqqWnfyZ3iVhpnehPGNNxbFxR/iGnghdQjLUjpvElprVCowsk8AU5SuVm3wsYsKteOTzM7O/fSD4rGgrkaLvYbx350zdndYDfXmy3Z9gID+UqBGfRo1LoAORf3hd3zOsXt2LjO608=
+	t=1720246194; cv=none; b=DF1xvsh2vtQ+kNBCPMiD/BM9Xg54OuS/yXVW02ioGC2K1oXt04T9IjCFwAYVYhQx9enMgVkMEaWd0HBpLIZhaGjQfhYCmbFnzcXx76FLhWaHzliJ9PKD96F712Ldl1cTRvonkpt5M6QGyxR3K5s/LtZ5i7FbP7JRQDCGz1nNrQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720246109; c=relaxed/simple;
-	bh=c5OvGykVVMvxinr5zh59v0/89KcQ+zsiSIaOq5ygQf8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=luuKVVN23QVeHAR8MGod8+RH7Iyfjjy5xvW2w/eIlozRa1phRU7B4eX8AJVL5WceMqepaCkEHsCGROFrMu2K+4F41ntx1cCw8qKYlVlT/xN6SBJwJuYu4xW4w50a4f1aof8l9kZu2+Wj2j463NjWQk8DMpItnJ+wMA2cKi39Vfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m/5WVRP1; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m/5WVRP1"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1fb472eacf4so8015395ad.1
-        for <git@vger.kernel.org>; Fri, 05 Jul 2024 23:08:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720246108; x=1720850908; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=D6TU/f4DK8z41x9nMQv3kpcK9Qy3+kWRgQs577VTwjk=;
-        b=m/5WVRP1+U1/tr7oJoyh6DfDsHNzl41LWzsCzX+QcOchnStPy3ZFsKJWkVlxqnTAub
-         y039qkTjFjHwbQ8zvl4x+1wtMW1i9r4Xjv1rupUvMrftdZEsJdD4G1yLSzKTVbQp8M7a
-         vgRcFZpv5fqyr4Mo/ASmlnLWiIKcFKL9cyvAOVDSLCekfFMuhua9N2YlthUVjjejHl+t
-         z38nUFIBqGDnYgt3TyGg8UwczZ+eDdBxUTvObi2eb4RgG6AZm94nf2zYC4CVs5diQmK8
-         3uIv7ZLGC7O/RHY310Q5Zup02lueFP3IKBIn/3RVH7P4SReXT4jV3zHW8hb/zz/PTtTa
-         HY7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720246108; x=1720850908;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=D6TU/f4DK8z41x9nMQv3kpcK9Qy3+kWRgQs577VTwjk=;
-        b=K7SnEfQu7Nn5Blx4jKdI8IR/5n1XN9N9UEy34L3s0lzR3I9ibmzBR/4MtCyR/D33xY
-         V8eg4YMvLAkIHzBJLgt3kpjZYgr3v7W3WT7vOXuVygRvnE54976hhsO6GTjldIWLptQ8
-         UDHdFsOrjE1oXqsuegkgL9yaVn4br7mJXIvMFDRa0KGrW+MYe87ooKbwBIU4MwF+VJAl
-         3ELEa9qkqhg6KNihMsY5Z7XNigiyZKPDGN8MoJHOzfzycoZ9v0FvTADQCBEwrHYe6UBx
-         re2YUm5w9/MnjsnWZnNICKr2vmI4x71eNc+FhUZIcjtlwJnz1UE5j4EzqKjzfAvr5Bsp
-         tFow==
-X-Gm-Message-State: AOJu0YyYMtzfmo7OKdv31LbW7q0XwnIjjDeQIZBvdeK3ZwKKKkgmgLYb
-	ixehXWIyA4Zk4ZHqxcDzHsUb4HojcpO1QXfmYyNospOyeyrjj2EM
-X-Google-Smtp-Source: AGHT+IGbGM4Ze3A9GXiBJl1NFXK12iRlHbB/X41M9Wcywan9mjjMcK+/fryZ4sLxbdQNwwiUlGVHfA==
-X-Received: by 2002:a17:902:f688:b0:1f9:cdb2:df4a with SMTP id d9443c01a7336-1fb33e098dcmr50217665ad.9.1720246107524;
-        Fri, 05 Jul 2024 23:08:27 -0700 (PDT)
-Received: from localhost (236.219.125.34.bc.googleusercontent.com. [34.125.219.236])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fb67ee6ebesm4868155ad.244.2024.07.05.23.08.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jul 2024 23:08:27 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jes=C3=BAs?= Ariel Cabello Mateos <080ariel@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] gitweb: rss/atom change published/updated date to
- committed date
-In-Reply-To: <20240704164547.94341-1-080ariel@gmail.com> (=?utf-8?Q?=22Jes?=
- =?utf-8?Q?=C3=BAs?= Ariel Cabello
-	Mateos"'s message of "Thu, 4 Jul 2024 16:45:35 +0000")
-References: <20240704164547.94341-1-080ariel@gmail.com>
-Date: Fri, 05 Jul 2024 23:08:26 -0700
-Message-ID: <xmqq7cdz3vdx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1720246194; c=relaxed/simple;
+	bh=1u2G6QGJJAmE3Iq3WCPecekur51CbswU8B0Hnx9IbQ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AMFsc3LUjDPxScwcNc/bRJ3FK9xScCyAhRmDc4w0RupOAA8vh5uY0fff4os2oM7L/vx/J8yRrzxq4kxJNbwn7E/q8yO9YwdbfrbisVIccBgle21sDdQ83dJSAg8rn24HJiAly7dCBbxzacx9Eoy1ghp6g0kqksWsk/y/qfiNoFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 23419 invoked by uid 109); 6 Jul 2024 06:09:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 06 Jul 2024 06:09:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31192 invoked by uid 111); 6 Jul 2024 06:09:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Jul 2024 02:09:49 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 6 Jul 2024 02:09:51 -0400
+From: Jeff King <peff@peff.net>
+To: Eric Sunshine <ericsunshine@charter.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/3] t/chainlint: add test_expect_success call to test
+ snippets
+Message-ID: <20240706060951.GA700433@coredump.intra.peff.net>
+References: <20240706060143.GD698153@coredump.intra.peff.net>
+ <20240706060639.GB700151@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,51 +40,27 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <20240706060639.GB700151@coredump.intra.peff.net>
 
-Jesús Ariel Cabello Mateos <080ariel@gmail.com> writes:
+On Sat, Jul 06, 2024 at 02:06:39AM -0400, Jeff King wrote:
 
-> Currently the published(in rss) and the updated(in atom) date
-> used is the authored date. Change it to the committed date 
-> that betters reflect the "published/updated" definition and 
-> makes rss/atom feeds more lineal. Gitlab/Github rss/atom feeds 
-> use the commited date.
->
-> The committed date is already used to determine if more items
-> should be fetched.
+> --- a/t/Makefile
+> +++ b/t/Makefile
+> @@ -109,9 +109,7 @@ clean-chainlint:
+>  check-chainlint:
+>  	@mkdir -p '$(CHAINLINTTMP_SQ)' && \
+>  	for i in $(CHAINLINTTESTS); do \
+> -		echo "test_expect_success '$$i' '" && \
+> -		sed -e '/^# LINT: /d' chainlint/$$i.test && \
+> -		echo "'"; \
+> +		sed -e '/^# LINT: /d' chainlint/$$i.test; \
+>  	done >'$(CHAINLINTTMP_SQ)'/tests && \
+>  	{ \
+>  		echo "# chainlint: $(CHAINLINTTMP_SQ)/tests" && \
 
-Even though "authored" and "committed" date may be grammatically
-correct if you use "to author" and "to commit" as verbs, the name we
-use for these two timestamps are "author date" and "committer date"
-(in other words, "author" and "committer" are not used as verbs but
-as nouns for possibly two distinct people).  So
+BTW, not new in my patch, but I found it ironic that the shell snippet
+here itself violates &&-chain rules. It should "|| exit 1" inside the
+loop if a sed call fails.
 
- * "committed date" (on the title and elsewhere) and "commited date"
-   -> "committer date".
-
- * "authored date" -> "author date".
-
- * "lineal" -> "linear"?
-
-But your reasoning is absolutely correct about the concept of
-"publish" more closely corresponds to the committer date than the
-author date, and the change looks sensible.
-
-> Signed-off-by: Jesús Ariel Cabello Mateos <080ariel@gmail.com>
-> ---
->  gitweb/gitweb.perl | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index ccd14e0e30..0ef5707557 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -8329,7 +8329,7 @@ sub git_feed {
->  		if (($i >= 20) && ((time - $co{'author_epoch'}) > 48*60*60)) {
->  			last;
->  		}
-> -		my %cd = parse_date($co{'author_epoch'}, $co{'author_tz'});
-> +		my %cd = parse_date($co{'committer_epoch'}, $co{'committer_tz'});
->  
->  		# get list of changed files
->  		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-Peff
