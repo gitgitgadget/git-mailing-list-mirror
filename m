@@ -1,40 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8822B9D2
-	for <git@vger.kernel.org>; Sat,  6 Jul 2024 23:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8DE20B12
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 23:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720307617; cv=none; b=OmlsQbsegEHKvbWdLMbKWhcV1usTjJbRemO8gxs9j+88GkryPxag4OG7GSgTlucc0UstudHv613Jbarwx19VsNjysa2UzfYEEKdJcaJO7PtpAa4iKNrlhoRtkh2LADvDXF+BDYy34j/lHz3sS6U0recxf+9p4In/NsS88JqTc/s=
+	t=1720307694; cv=none; b=jmm+PwMmmmnHoyr8r0hKckyud2farxa+2c4ikP9XP/E+czUfxLyhm/jHwus6wHkMaR0GkvN9BdiFHDRCJbUkhP6PsIYUQ/co9Ux0p2rQVP5WnKpQEqPxuhkT+oo++enAUtUSo71DfOyTsB7ZoSfnEPKykcBYgsY9z993GtVdjd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720307617; c=relaxed/simple;
-	bh=j3Q9uaHHgqvk6Upv8Li9gIFS+QcEgS24Z7M4HB8wzbY=;
+	s=arc-20240116; t=1720307694; c=relaxed/simple;
+	bh=8hgGj+tAVjvzEo43M3t0KxNP6z3R4PX9Dt5B5A6nWjs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HqdMII+A7cYzd8UsqLRXILzG35xNJ6mJ6qoGO/NF8Ok89DhNNg6B9n9DROj14egFHRN75vkIjF28riG5O3wMMz6Qaje3Rlx3tIBdcq57QEYJqtzeJ7z5lF9rW5q+n083io7JCB/G671tnCrWvICP8kE2aYl/7m/0J7knoHp+KBE=
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qhur7aUywgWuC2rzVEiZozEhUbPqhi6wXBgX0nzjwOwQlMJh2yoXbJlt26HxkvdorY5TrSx6CCZvhD0sPKIpMDWCSSlnKTmZBnUy5+H/Ub/xMzTegPihNU3a4y+pEu545FAfyH5gVnomrRxiPwsFMgNBGKkjwODsrCPrs7mrYB4=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 31883 invoked by uid 109); 6 Jul 2024 23:13:35 -0000
+Received: (qmail 31909 invoked by uid 109); 6 Jul 2024 23:14:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 06 Jul 2024 23:13:35 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 06 Jul 2024 23:14:52 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7068 invoked by uid 111); 6 Jul 2024 23:13:33 -0000
+Received: (qmail 7074 invoked by uid 111); 6 Jul 2024 23:14:50 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Jul 2024 19:13:33 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Jul 2024 19:14:50 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 6 Jul 2024 19:13:34 -0400
+Date: Sat, 6 Jul 2024 19:14:51 -0400
 From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] test-lib: fix GIT_TEST_SANITIZE_LEAK_LOG
-Message-ID: <20240706231334.GC746087@coredump.intra.peff.net>
-References: <f4ae6e2a-218a-419c-b6c4-59a08be247a0@gmail.com>
- <xmqqv81ovp9l.fsf@gitster.g>
- <bda01080-1231-476a-9770-88b62a75ffe2@gmail.com>
- <72b69a20-3f51-4f51-8ebc-ead20e3eebcb@gmail.com>
- <20240706061850.GB700645@coredump.intra.peff.net>
- <75a635b9-7622-42f7-b202-6991775e75f0@gmail.com>
+To: wonda-tea-coffee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, wonda-tea-coffee <lagrange.resolvent@gmail.com>
+Subject: Re: [PATCH v2] doc: fix the max number of git show-branches shown
+Message-ID: <20240706231451.GD746087@coredump.intra.peff.net>
+References: <pull.1757.git.1720046185710.gitgitgadget@gmail.com>
+ <pull.1757.v2.git.1720259599119.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,20 +38,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <75a635b9-7622-42f7-b202-6991775e75f0@gmail.com>
+In-Reply-To: <pull.1757.v2.git.1720259599119.gitgitgadget@gmail.com>
 
-On Sat, Jul 06, 2024 at 01:20:36PM +0200, Rubén Justo wrote:
+On Sat, Jul 06, 2024 at 09:53:18AM +0000, wonda-tea-coffee via GitGitGadget wrote:
 
-> > I don't think we want to integrate them, but I'd suggest that
-> > SANITIZE_LEAK_LOG should be the default/only option.
-> [...]
+> From: wonda-tea-coffee <lagrange.resolvent@gmail.com>
 > 
-> I completely agree.
+> The number to be displayed is calculated by the
+> following defined in object.h.
 > 
-> Let's wait for the dust to settle after the fix in this series, and then
-> I'll address the change as you described.
+> ```
+>   #define REV_SHIFT        2
+>   #define MAX_REVS        (FLAG_BITS - REV_SHIFT)
+> ```
+> 
+> FLAG_BITS is currently 28, so 26 is the correct
+> number.
+> 
+> Signed-off-by: Rikita Ishikawa <lagrange.resolvent@gmail.com>
 
-That sounds great. Thanks!
+Thanks, this version looks good to me. As Junio noted, we'd generally
+want the "From" to match the Sign-off (where the former is coming from
+the author name in the commit). You can either re-send, or if you give
+the OK, he might just fix it up as he applies.
 
 -Peff
