@@ -1,37 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D0E847A
-	for <git@vger.kernel.org>; Sat,  6 Jul 2024 06:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E545EAD5
+	for <git@vger.kernel.org>; Sat,  6 Jul 2024 06:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720247860; cv=none; b=fYcHKojxIOnFb5VilL2/cH1QY6uBh8lpVSJ40ZzYal66gOu+Y417bwYnSCGd8LYF4Ni0uq8o8MBEdKVGUt8Yo0Wq42h+j2TKr0ytoGazlIJAR1ieC0BNNgfzfuL+lCpOGsglzF0f3/btEtfcKJXLMS6qvPOt40qhLrSilQe5KUk=
+	t=1720248482; cv=none; b=Zi2iyXvcQAjFr/s8sQAYsolAs0TvYG5YxMXYG1OGSbssQU4jdjE04CsM1fmWAC/e2hyDO9eIa29iuEXJV8zLUTier4nlawGowJgJOSlQ5OWP8ZU98g2PT05rgwB312cuejuriw1bRyOlShrfWCfTcVi76Hh3D05w1IbcwMxd820=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720247860; c=relaxed/simple;
-	bh=mXQ8UmgTl8c+NrJEu2P/ecbYNczPuDWCi9wzHDitSAc=;
+	s=arc-20240116; t=1720248482; c=relaxed/simple;
+	bh=tXjjTmGL9/AKQUIKe9Yit852aT5tCm/ICIYHfsY+aRM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=faxuUTbeVrDcjkQrS3xmV97po01Im3XUdHPsIBdu7nv9zntvk4TV+pSaskg5bPtxDt7nJGAAg8yFHtd4Nh+NXGtJn7Haa4Jr6Uc4S2Dj+bM+hs8LDDgzbvspeZvdo1wNTuVZrkc2OIwnoGJD721S5GutRn6Hg3QiNZI1ZvGbVXE=
+	 Content-Type:Content-Disposition:In-Reply-To; b=bKHwXGpbVC7S+CybXSAPZLF2tADJrcjvZgaJPFSGuEwE/Gl27YrqYhapCddF54t/R+LY2GQYVT91cdpKpuE3p0+IvbH7rMPDUFnQh3z/WNNHCkZOIj7pxrNruNWKxj6KVgkbSFL8xLcQf8uHs0d4uZcOyviWt8787WpgXHcIFeI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 23984 invoked by uid 109); 6 Jul 2024 06:37:38 -0000
+Received: (qmail 24208 invoked by uid 109); 6 Jul 2024 06:48:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 06 Jul 2024 06:37:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 06 Jul 2024 06:48:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31438 invoked by uid 111); 6 Jul 2024 06:37:35 -0000
+Received: (qmail 31527 invoked by uid 111); 6 Jul 2024 06:47:57 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Jul 2024 02:37:35 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Jul 2024 02:47:57 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 6 Jul 2024 02:37:37 -0400
+Date: Sat, 6 Jul 2024 02:47:58 -0400
 From: Jeff King <peff@peff.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Sean Allred <allred.sean@gmail.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: Should commit-msg hook receive the washed message?
-Message-ID: <20240706063737.GF700645@coredump.intra.peff.net>
-References: <m0h6d3pphu.fsf@epic96565.epic.com>
- <CAPig+cTpxXNwy8MYWjcDTa5QPoq5Mod3_LZ=+F16-gF5QVbrkg@mail.gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 0/4] Additional FAQ entries
+Message-ID: <20240706064758.GG700645@coredump.intra.peff.net>
+References: <20240704003818.750223-1-sandals@crustytoothpaste.net>
+ <xmqqzfqx7muk.fsf@gitster.g>
+ <ZocS0NgiAbg5Mnzp@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,40 +42,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPig+cTpxXNwy8MYWjcDTa5QPoq5Mod3_LZ=+F16-gF5QVbrkg@mail.gmail.com>
+In-Reply-To: <ZocS0NgiAbg5Mnzp@tapette.crustytoothpaste.net>
 
-On Fri, Jul 05, 2024 at 05:35:25PM -0400, Eric Sunshine wrote:
+On Thu, Jul 04, 2024 at 09:23:28PM +0000, brian m. carlson wrote:
 
-> > This seems like a bug to me; is there something I'm missing? I would
-> > propose adding a call to `cleanup_message` (with the appropriate
-> > arguments) inside `prepare_to_commit` right before `commit-msg` is
-> > invoked.
+> > Buffering the entire thing will break because ...?  Deadlock?  Or is
+> > there anything more subtle going on?
 > 
-> The idea of calling cleanup_message() has been discussed before[1]. My
-> takeaway from reading that message is that calling cleanup_message()
-> unconditionally before invoking the hook could potentially throw away
-> information that the hook might want to consult. It's possible to
-> imagine a workflow in which a specialized comment is inserted in a
-> commit message to control/augment behavior of the hook in some
-> fashion.
+> When we use the smart HTTP protocol, the server sends keep-alive and
+> status messages as one of the data streams, which is important because
+> (a) the user is usually impatient and wants to know what's going on and
+> (b) it may take a long time to pack the data, especially for large
+> repositories, and sending no data may result in the connection being
+> dropped or the client being served a 500 by an intermediate layer.  We
+> know this does happen and I've seen reports of it.
 
-Yeah, looking over that earlier discussion, I think the main takeaway is
-that the unsanitized version might have useful information for the hook.
-I don't know of any real workflow that relies on that, but it does seem
-possible that somebody has one.
+Additionally, I think for non-HTTP transports (think proxying ssh
+through socat or similar), buffering the v0 protocol is likely a total
+disaster. The fetch protocol assumes both sides spewing at each other in
+real time.
 
-> The idea you proposed in a different thread[2] of exposing
-> cleanup_message() functionality as a user-facing utility which a hook
-> can call on an as-needed basis may make more sense(?).
-
-So yes, I like that approach much better. But as noted elsewhere, the
-hook has to understand which cleanup mechanism is going to be used.
-Which could get complicated.
-
-It would be nice if we could just provide _both_ forms to the hook. It
-looks like commit-msg just takes the filename as the first parameter.
-Perhaps we could extend it by passing a second one? It does mean
-sanitizing and writing out the message twice, even if the hook might not
-look at it, but I doubt the overhead is all that high.
+HTTP, even v0, follows a request/response model, so we're safer there. I
+do think some amount of buffering is often going to be OK in practice.
+You'd get delayed keep-alives and progress reports, which may range from
+"annoying" to "something in the middle decided to time out". So I'm OK
+with just telling people "make sure your proxies aren't buffering" as a
+general rule, rather than trying to get into the nitty gritty of what is
+going to break and how.
 
 -Peff
