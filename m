@@ -1,131 +1,129 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E9722EE5
-	for <git@vger.kernel.org>; Sun,  7 Jul 2024 14:58:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0A638DE8
+	for <git@vger.kernel.org>; Sun,  7 Jul 2024 15:04:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720364329; cv=none; b=NAJWSTQ1unztz+jRJPrzdaV2htJ5Of3KzkyISSzqEfIdZU8Rtiahn2wo6yn87pxoNrcxFOQVShHugBtdr7N0ANGzUN7DFRWb6zwF20oFY+PxkqYwxs+CGvGD0uZqk6vKAYRmsLUHO91EpnT6lrH8KHyDwICP9/QY3RFqSwI6/bc=
+	t=1720364695; cv=none; b=G2/N6WXyg4Ol0sXrBPRZJLZ+kGWvQLyzr+0ftfDCiub7adYb3sm5u4hT6BrGO6RloFZjXuzatEvpi34xRvXgK9hPhueiQjwKgqBXD1V4wInSkjxdxjD6bR5nJHkjCANslCU6xcpzEopvAZxG9Kw7s07puvqaWNs5kB5mMVBhxPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720364329; c=relaxed/simple;
-	bh=feTx+N7Bn1DExL2Wm5lDlpsTWCxG12bKK4xITgddaZc=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SOEqyordgUEVQv6+LIGGrp6b3AKh4LRd7GaDuUQrUqtiNfGjvuvhXMYhk19P9VXNsQ9WiJkRGfrSWjuU4hXrEzVkNJXcb65t40cEsd4Emh0essSFJCtcTFrQmSFIJ3jpnMBgJe7e8JZfWuJJ2SYqd2GGY1ECxA4bx1OnhVESZqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=1CbSzWA8; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1720364695; c=relaxed/simple;
+	bh=Xzw4IYB9D+hUoiREtcnEW6OutuER/DH0lmFY7HCW8eY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pBe3vKOcmkowkTiMy2J6Edm8Vhghiq8bQBOfs6g4/U/OEQ8eHCcvg9U5WYmvP3CuXfPYDilYuUiQ6pzkW+UOfnd52LKDXdQOvaVbTCFbs7fyS4sezJYZCUdCrKaV4p5C6PS2qhEBZGcrmOKxMAQJ/XJQY9AmiQTbeO3UM9HzbZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bSoJFqBT; arc=none smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="1CbSzWA8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1720364320;
-	bh=feTx+N7Bn1DExL2Wm5lDlpsTWCxG12bKK4xITgddaZc=;
-	h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
-	 In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
-	 Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=1CbSzWA8EO/pcM+2Tgghsfqx0Prws0BO2rhfxhQ8K/tvLImB9YBLsRowxRNsk9ggu
-	 K80bEzp8dZlW66/JLxTIaSRnULk9x9KwumlKztQC2G/5Tib55BzRPcVZOXgc6m98mz
-	 5/+PObXw2RKdKYSL2MERzwOwBnHpVWNFsPmJ2SV0Fk++pDOoz0PswUm5LUMi2UgpCX
-	 39NF8g13Ak8wM+TWnAasZ1CsSe0IVrHdfxUOkbg/8fg+05kROXMM+mjwOo0u4HhrWt
-	 Km+YytoPoeoqXkaoj4jT4c5x7UNgciVT+nOv+IDhXDB0cQwnXz7i4XVZblBHJylFPg
-	 Nkscgl9VME+yzP1TH/EYUx5b3/6EX9S04UiIaVo0g1ZYzBUOue26c3Vnv53Lm/aJrT
-	 pmdCloJ1DMMvaVL4+F4R6T8c7PCNbXZE1vn921xNMshLcee0fCEk2jLa7eta2W4E6B
-	 n5Wfz4yjq2nX8zLw/UpY1htb3DpEBy9hy1XheKPx5nFQbqCd/Zf
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7EEFE2099A
-	for <git@vger.kernel.org>; Sun,  7 Jul 2024 14:58:40 +0000 (UTC)
-Date: Sun, 7 Jul 2024 14:58:38 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: git@vger.kernel.org
-Subject: Re: Re: Remove your ZSH completion in favor of the completion script
- distributed and maintained by ZSH
-Message-ID: <ZoqtHrKcdliM4Uf9@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-References: <mrn75pj663u6ikkwfnoq6c342l7w5plfeju4ji7norsmlzx4jn@3se3fmuqes4p>
- <87cynpnv8m.fsf@igel.home>
- <e4ylt2rihvm2uc22irsxbeid57ijblioekit3o4xpufflrqwal@5t67kr2a5ahq>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bSoJFqBT"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7036daa0704so13596a34.3
+        for <git@vger.kernel.org>; Sun, 07 Jul 2024 08:04:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720364692; x=1720969492; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=19GfXQ4gCSpV5JWwULkcpnq78IfaiOil9XAtPHvwLyg=;
+        b=bSoJFqBTCEBw2ccgm+uzdppifurkp4B8kzu6u/02gVEU9g5/0a2kY6WcWYRe/4A0Zj
+         8XG5cZse319xHJkXDJ21FKU6SRnbJAfLFCU2F8q5tsNqJ42Dxvf72CBX5uMPJnAU1vwp
+         R1rXo2UQM/kFnvA+p6g3cW6cUYekeB1pkrtYqBBLaikAqNYLak3eQWdgJAV6V1vfOQLi
+         OqhXOIuCnNCnS3h2R06n3vCcSn7XANo4lyd1VcyLrCWYaHkAfyo/iEZGVTfdENT7cwDa
+         vhJ8C2Y9Jf0wTnx7LA6uxkaSOzKgooTVs63jguZi8+uKxIN9PArmwgP/Xf8lMegIBEO4
+         9VTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720364692; x=1720969492;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=19GfXQ4gCSpV5JWwULkcpnq78IfaiOil9XAtPHvwLyg=;
+        b=ajh7WUcO7Aqq/l+PGWU7YdyR8Hc4b8F2GsQA2OUxTdHsm55a6XV0vqVHdm3+uUI+9i
+         yMn/BPswfw3ZL4Arr3kcp5dkSMbf2sba40JhMH5E3tdbw6V3XYWRUnKpbXcVMOr3i83L
+         JWkwUgqtFDAYeDIY4qo38BCZyaNEfcSVkbtf/YEWw2ZVfpmkNSdBx3Zn1i1N4ZTRg06x
+         ktDWTxHLjXR0FSeYpj5A04FlZ1B3YZ9ZpdAWApL0l7NUxSGS4lWkBI3oxKDnC7v5N+JD
+         2NepSv0LlLy+mDSqoXGR7O9Hkaoo5Exm5O7xCabkE5sese7nwjXVnhsewse374dRTnF+
+         a84A==
+X-Forwarded-Encrypted: i=1; AJvYcCWP4MpL6O+X9eGWsyAebWw8EfyEv8i+5chovhW709uGfYcTWO9x91VjDEJiF2agxIvy9hhkxfbZyJyppzGHDa8bhsNo
+X-Gm-Message-State: AOJu0Yw7hd+POBm1IjiGQPiiSpviW3JK7dQiBzVmwhyj8WGEk6IX43YW
+	ztGP6eJIu39r4TtDx/shRkRCjWcGPCrR/8WosBaO/TasynQCePtZ
+X-Google-Smtp-Source: AGHT+IFFLwxVl414au8wv99D0JGMks/VT4ajP8CATyTDkTY7UvL47fYRYadw54BgxzcMi8vQNcP+Nw==
+X-Received: by 2002:a05:6358:988e:b0:1a6:1ed1:2366 with SMTP id e5c5f4694b2df-1aa98c244b0mr941061355d.16.1720364692460;
+        Sun, 07 Jul 2024 08:04:52 -0700 (PDT)
+Received: from [192.168.208.37] ([106.51.25.252])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-75daf9b7da5sm5571400a12.85.2024.07.07.08.04.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 07 Jul 2024 08:04:51 -0700 (PDT)
+Message-ID: <12ce5c39-a7c5-4abd-a558-a789bde4de22@gmail.com>
+Date: Sun, 7 Jul 2024 20:34:46 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="93khK1Pa7ciTH6+S"
-Content-Disposition: inline
-In-Reply-To: <e4ylt2rihvm2uc22irsxbeid57ijblioekit3o4xpufflrqwal@5t67kr2a5ahq>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC] Blog: move and improve reftable tests in the unit testing
+ framework
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Christian Couder
+ <chriscool@tuxfamily.org>, git@vger.kernel.org
+References: <CA+J6zkRxnvnybM3vnPXX2YwpW1k-as03+A8kxiJoA8GrA4FSMg@mail.gmail.com>
+ <CA+J6zkQaV9o7eUaD2bshH7zEmF115BbYv_uCFctySQNMgGQc+g@mail.gmail.com>
+ <CA+J6zkRzM33MbMr4-U56M1SFLykx029+SzEeo8vBicBd9Xs8RQ@mail.gmail.com>
+ <CA+J6zkSFCUYLRTRE0Gwug4-fF9f9-YbfRz_atArmMLLCtQDr1g@mail.gmail.com>
+ <CA+J6zkSxcogPXdAdr7VL0B3MnQxQNYwOT5Kw2iK_YfPLW7CMcg@mail.gmail.com>
+ <CA+J6zkTyVDJcOoZC-thRAOYNudVWB1wgye0Ezj3o1AO_5HOS6A@mail.gmail.com>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <CA+J6zkTyVDJcOoZC-thRAOYNudVWB1wgye0Ezj3o1AO_5HOS6A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Chandra,
 
---93khK1Pa7ciTH6+S
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 7 July 2024 12:45:53 pm IST, Chandra Pratap 
+<chandrapratap3519@gmail.com> wrote:>Hello everyone, here is my blog 
+post for the sixth week of GSoC's
+ >official Coding period:
+ >https://chand-ra.github.io/2024/07/07/Coding-Period-Week-6.html
+Thank you for consistently writing up these blog posts!
 
-On 2024-07-07 at 14:47:06, Doron Behar wrote:
-> They don't perform any version checks as far as I can see in their
-> implementation.
+It gives a good overview of the progress of your GSoC project. That 
+said, it would be even more helpful and interesting if you could also 
+elaborate on the technical aspects in your blog. For instance, you mention:
 
-This is true as far as I can tell.  In many cases, the built-in
-completion can take advantage of --help output to find the proper
-commands, and usually it can intuit expected arguments and such.
+ > I did face some roadblocks but was able to get over them due to the
+ > experience I accumulated from the work I performed in the last few 
+weeks.
 
-> Almost all commands that the ZSH team maintains completions for, don't
-> perform version checks and the maintainers of the commands themselves
-> don't bother taking responsibility for that and usually users don't
-> complain. If a ZSH user notices a new command or new option missing from
-> such a completion function, they can submit a patch to the ZSH project,
-> and setup a workaround until there is a new ZSH release with their patch
-> included.
+You could possibly elaborate on what the challenge was and how you
+tackled the same.
 
-The only downside of this is that zsh releases very infrequently, so it
-may take a year to get these changes into distros.  I submitted a change
-to zsh after some Git version changed one of the rebase files, which
-broke rebase detection, and it took some time to get that out the door.
+To add to this, Patrick gave a helpful overview elsewhere on what could 
+be covered in these blogs. I'm sharing it here just in case:
 
-> Besides the option of living with this potential version mismatch
-> imperfection, you could also ask the ZSH team to remove their
-> implementation and start maintain their implementation here. However,
-> they might object because not all distributions will accommodate to this
-> change in both projects...
+ > The intent of the blog posts is to document what you have been doing
+ > in the past week. So questions like the following:
+ >
+ >  - Did you learn something new?
+ >  - Did you read through particular parts of Git?
+ >  - Do you have questions and/or blockers that keep you from advancing?
+ >  - Did you manage to remove any blockers that you had before?
+ >  - Did you make progress on the implementation?
+ >
+ > Communication is of huge importance in GSoC as it helps the mentors,
+ > but also others to evaluate your progress overall. It helps us to find
+ > out early in case there's anything that you need help with and makes sure
+ > that you're on track overall. Overall, it ensures that you get the help
+ > that you need to make the project go as smooth as possible.You may want
+ > to search through the Git mailing list. Past students in GSoC always
+ > announced their new blog posts to the community, so you should be able
+ > to find some inspiration when reading through their blogs 
+:slightly_smiling_face:
 
-No, please don't do that.  I use the built-in zsh functionality for
-completion and things like version control usage and it works very
-nicely.  One of the advantages to using zsh is that it has completion
-built in and doesn't require external dependencies for most of it.
+Hope that helps!
 
-The only time I've seen problems in the zsh built-in completion was when
-I was dealing with a large repository where getting the list of files in
-a repository to complete a filename (e.g., HEAD:<tab>foo) took too long,
-and I've just made it use local files instead, which is acceptable.
+--
+Sivaraam
 
-> I personally think that Git is a stable enough project that the commands
-> and options don't deviate enough between the different versions of it,
-> So it'd be easier for you and for the distributions if you'd let go of
-> your implementation.
-
-I don't think it's super necessary to get rid of either one.  The Git
-functionality is primarily based around bash, which does need this
-functionality.  zsh doesn't, but it can be used there if you want things
-to work exactly as it does in bash and want to have the latest version.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---93khK1Pa7ciTH6+S
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZoqtHgAKCRB8DEliiIei
-gbpPAPwNEOuMRHCorhLhwSL3awdPL3uch0eM5eZF9vbFAPgQ/gEAsNOXFRv0kFbO
-QUv/SNsUYQjH7FkEfHfqdNNrBIaXQwU=
-=PjV7
------END PGP SIGNATURE-----
-
---93khK1Pa7ciTH6+S--
+PS: I hope Patrick will excuse me for posting this here without his 
+consent :-)
