@@ -1,131 +1,74 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E354A1D
-	for <git@vger.kernel.org>; Sun,  7 Jul 2024 02:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04C133EA
+	for <git@vger.kernel.org>; Sun,  7 Jul 2024 07:16:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720320636; cv=none; b=YDTUH21oxf3ozMkBy4pyGj5SCwFz2pvsJNSNRZ5/IkvalnFomJOjKnL+b89qSF6fnSgYHKtWVJWVRJYeqbU0wsIwUi7g8Ib3Zi6kYWb69MATiBixUAQ8FZDWxrkBVgFNa0AbEEpzHfBnHLkb7Tg4fh9GfPIdi8EjtoXiYm9fiFI=
+	t=1720336568; cv=none; b=TYD9C0Zl6SMgJVUia3JtaH1rOb4GnR7IGaT83nqOocdQtVHbH/eKOLBgB4LNZSwgN532r4v2z7Uyq90q7mw1PODyp/HFJfOeLsauCQMrdlFI2XBD13c/9JtCioyHJzI9eTlGzCdicPZnVp39fdrQsmG9fB5DXmIy8VRe1gNfqKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720320636; c=relaxed/simple;
-	bh=KWATkfOlUx3O3zg5SE4oOZ7QMcVU4kZltwa6dDGC5xY=;
+	s=arc-20240116; t=1720336568; c=relaxed/simple;
+	bh=egIM29KJH2QUcWsY5GPqA4DnwZV5g0d++K4VCkJnmmo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uxclDgTEcOTrERUNL/OkC4JLuVZ1S3+Iqo+Es1K/i39YLTd/6AExVeO9yX1ZW0Bgy9ZqHM9WWjxaMSnbK4y7xUBWG84mWeYdmB4tu2U0o8zLkkIKOs9F+aEqjix6/FJ553TNobPq3muTij8Z4FlQPq42qxf+i1JwwQGmHspHLo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ClXpFeNx; arc=none smtp.client-ip=209.85.160.42
+	 To:Cc:Content-Type; b=qfuaK6OfN2+OOmGzrXkTH9cVEGUzmZbflS0vVgRlD6pHF7wrj0yiOvt2rvghTE5Ieeed2R8YKsOxKlWco8FrFhlNJw//F62BieMj31iIK1PEn5OeMqT9m/dVVhBun2w0YPuKXG69efkRMaUBXwf5ssjWQjB8Ew1xXC60bovwtRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iBom4IF1; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ClXpFeNx"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-25cba5eea69so1336852fac.2
-        for <git@vger.kernel.org>; Sat, 06 Jul 2024 19:50:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iBom4IF1"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-58ef19aa69dso2956178a12.3
+        for <git@vger.kernel.org>; Sun, 07 Jul 2024 00:16:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720320633; x=1720925433; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ritv6KK6mzUL8yJBouwQen0BvNpKUX7vLP5BRBOBNBI=;
-        b=ClXpFeNx/zuIfI9Gbi4MbE0jk6lJGU8TE0v1Y/evTvQtoUFK7aIbG5+t7YA+65DbLm
-         wYaL42eVrURqANAZCj/yZBYW+iThSHFHGpOFth6HAIbheI0yzeoEogiATyBxx+dculh7
-         3k3uVFbD9mwtrOYmzt4eprfdbwUCZEZLOlCCD0hm3jKjRKefSJ+iSL6GtMMEdDpKf83r
-         T8uJlEC9lkzHEzRZvhiAGJUAsHQ++Becll75s5J0hJSh6RssZo8RDQ/KNLxPkVo8f7eD
-         fYliZJP+x5CE6ykxPBR0Zq/bM/E46DSoLG+FyFWXGmb/djQdeK1Ws+kwvMRa+9KIXn7p
-         Ttqg==
+        d=gmail.com; s=20230601; t=1720336565; x=1720941365; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=egIM29KJH2QUcWsY5GPqA4DnwZV5g0d++K4VCkJnmmo=;
+        b=iBom4IF1gu9uvifrbGyicW6/pe//iSAIS152zaofDGGYKPvFqVC3CSDmrsjqusrrZj
+         SQ6KkderIrM/GjHRBAg0WYKj8y/LI1V0qlorX3Gkrzs9TEZHwK8vicz6MFM9lwFtgthN
+         xmWfz/oXm6zl8ZzTLUsnemx1QlW74o+QtbAXshxoNgNq2fKf5f8e7uMNfP/CYS/HvuLN
+         VikApQyFFD+MTEyGcSxFo3Nm4tr/wkfnbztOGYxqfZirFlIde4dWPKStZMrAqOp29wfo
+         QspxuaK5cKQ5beWIbWoU33MCQyFK4zr00gbOkWjNP/Hc+OGnQzdtmPrctjOwn77xMuKl
+         7bOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720320633; x=1720925433;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ritv6KK6mzUL8yJBouwQen0BvNpKUX7vLP5BRBOBNBI=;
-        b=kO/ROC9jGpft02RyYIAbVGmaMTvNjYfOVJbXsHV980Yu9PeHyUe9Prf+B+bzMfflw6
-         9kYPjKLfy/fvkEr/wpR79lAvJeCMMge5dH6g9TUdUmNAwIti3NOJ5H6yiWUQvwHORgV4
-         ddp/88CCROVuFD+SxzqtcYxT7xqNdKIJnZPaczZbbX35XxT7fNuiQom243z4Zcs1qgD2
-         TgaVFOSO0SYmD6ExYuVWujzdmfArPQPNJ4omcP3stf6TW/n6b60fqR2m+VQyenrHSydu
-         lu9TxG8anWtW+RYSDmhcGMfGoJQaOHbqLvxmvJBijvrFV72QDW0hylK/ygFA9DH4Dx2M
-         LEQg==
-X-Forwarded-Encrypted: i=1; AJvYcCUsB7lXMew29z5EFuMRv9qv8NviHTbQJEbgMZvVEM23HDU5UlKCdMaGM0IRVikPbpfjO+pNW/suRuhWf5Tx6MuYLte3
-X-Gm-Message-State: AOJu0YwEZDQ9lGDpaGNANic6GcxAGQsErqHtbJ40PXQyW0Q4u6Wmvt3m
-	AD6yMai/ZxM2ZH7JxauYfatoSNA766Y00M9BcJteUciXYQBYjLEZOQaH6RpWOsW/DpElvfQ/Rku
-	WLtLbA0gxxMjZwU9VVOgcoOy0nptAMA==
-X-Google-Smtp-Source: AGHT+IGFxfX1iLxE+jo3o3h0xnJYNPu76uV7T+XBDBPfk5Zk1ZhoxYGQgREncg5JJr8A5PQ2n8aPZo3z06OMiWdMsD4=
-X-Received: by 2002:a05:6871:24d7:b0:25e:24b:e662 with SMTP id
- 586e51a60fabf-25e2bdac0eamr7576313fac.34.1720320633524; Sat, 06 Jul 2024
- 19:50:33 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720336565; x=1720941365;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=egIM29KJH2QUcWsY5GPqA4DnwZV5g0d++K4VCkJnmmo=;
+        b=YpHBevBaR+onziFj47DiSv2oD25FHVauNInco+KSBZ+EhX0RziSa00pfw33I3971Cw
+         7DvBNZeAUTzGfZQW9dqSGis8IoOF3Q2gDcii+malG9Ac0jSPS/vY1Xn3E/grxIar+8Mi
+         TH/z2KAc/JntliHibSDvl+bkREReiV9bqu+lRmXm6bQCvri0ZH8wOHfF0hNXKu0AGB1l
+         WNxH5iH0p7+/616bZlzeiq5ljXOMkW1sLgAkOUENxVuxv4T1bTLcX/g278R6IEu9HTWP
+         Jg0oJjSuOorlCyZ9Cira3vYriTd5RJNvYI0WhAhtwteVCuvBHU8zHh0/B3H+3gC1NAjw
+         gxQw==
+X-Gm-Message-State: AOJu0YxIJzVEnNTgwxliyE0IQKXiwM8vgc4l6nzM3ozAfJVYt92ymSEn
+	panqgKvRCmqmFGGKBjEXe/pv4o7no6HuccZ/Te8Cg+Ruh3Ysb48HcLyLUN6vcWCk4guGMD6k5y7
+	lCxsGz0IDX6kkOuWhJ9at5SDBsz9mkFmt98Wfcw==
+X-Google-Smtp-Source: AGHT+IGtXqshNi10Fqv3wBjlKwuo78BmSzKALnT7VIFdq3XfATG4VHTY+QHuIyU8yvtd1U8RdBfnb5hseN1N9Eg+3E4=
+X-Received: by 2002:a05:6402:4409:b0:57c:b7c3:99f1 with SMTP id
+ 4fb4d7f45d1cf-58e59557a55mr6548127a12.11.1720336564579; Sun, 07 Jul 2024
+ 00:16:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1758.git.1720123341342.gitgitgadget@gmail.com> <xmqqr0c6nzjl.fsf@gitster.g>
-In-Reply-To: <xmqqr0c6nzjl.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Sat, 6 Jul 2024 19:50:21 -0700
-Message-ID: <CABPp-BEXgZ=igvNT2RFjYTAEappx-q=8oW3RD8+FFZDx1JxfJQ@mail.gmail.com>
-Subject: Re: [PATCH] merge-ort: fix missing early return
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <CA+J6zkRxnvnybM3vnPXX2YwpW1k-as03+A8kxiJoA8GrA4FSMg@mail.gmail.com>
+ <CA+J6zkQaV9o7eUaD2bshH7zEmF115BbYv_uCFctySQNMgGQc+g@mail.gmail.com>
+ <CA+J6zkRzM33MbMr4-U56M1SFLykx029+SzEeo8vBicBd9Xs8RQ@mail.gmail.com>
+ <CA+J6zkSFCUYLRTRE0Gwug4-fF9f9-YbfRz_atArmMLLCtQDr1g@mail.gmail.com> <CA+J6zkSxcogPXdAdr7VL0B3MnQxQNYwOT5Kw2iK_YfPLW7CMcg@mail.gmail.com>
+In-Reply-To: <CA+J6zkSxcogPXdAdr7VL0B3MnQxQNYwOT5Kw2iK_YfPLW7CMcg@mail.gmail.com>
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+Date: Sun, 7 Jul 2024 12:45:53 +0530
+Message-ID: <CA+J6zkTyVDJcOoZC-thRAOYNudVWB1wgye0Ezj3o1AO_5HOS6A@mail.gmail.com>
+Subject: Re: [GSoC] Blog: move and improve reftable tests in the unit testing framework
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jul 6, 2024 at 11:30=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > One of the conversions in 500433edf49 ("merge-ort: convert more error()
-> > cases to path_msg()", 2024-06-10) accidentally lost the early return.
->
-> f19b9165 (merge-ort: convert more error() cases to path_msg(),
-> 2024-06-19) is what I have, date is different (and object name is,
-> too, obviously).
-
-Doh, sorry, I forgot to update the reference after rebasing.
-
-> And funny thing is that your base-commit points at the latter.  I
-> briefly wondered if we can somehow automate the generation of
-> reference in the log message, but the base is likely to be the tip
-> of the topic branch that has been accepted upstream, and the commit
-> being fixed up can be something below, not at, that tip, so it
-> wouldn't be like a simple and silly "compare base-commit and the
-> commit we talk about in the proposed log message".
->
-> A commit-msg hook that scans for names that look like commit object names=
- in the
-> message, and
->
->  - makes sure that these commits are reachable from HEAD (the goal
->    is to make sure they are reachable from the resulting commit),
->    and possibly
->
->  - makes sure that these commits are reachable from @{u} (the goal
->    is to catch references of unpublished commits)
->
-> might be a possibility, but such criteria are probably highly
-> workflow specific, so needs to be highly customizable if we wanted
-> to make such a feature as a part of what we ship.
-
-Right, and a commit-hook might not catch it either.  Since my original
-commit was based on the one I referenced in my commit message, the
-original commit creation was fine, but I realized after creating it
-that I should have created my commit on top of your applied copy, so I
-needed to rebase it.  Since rebase sometimes tries to avoid invoking
-`git commit` (as per sequencer.c's try_to_commit()), that'd likely
-bypass the check anyway.
-
-An alternative here is that I've thought about adding an ability for
-rebase to update commit references in the commit messages it
-rebases...but that may not have helped either in this particular case
-since I was only rebasing the tip commit rather than the few commits
-behind it as well.
-
-> > Restore it.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
->
-> Thanks.  I saw Peff's earlier message and the change exactly matches
-> my expectation.  Will queue (with adjustments to the log message).
-
-Thanks.
+Hello everyone, here is my blog post for the sixth week of GSoC's
+official Coding period:
+https://chand-ra.github.io/2024/07/07/Coding-Period-Week-6.html
+Please let me know if you have any sort of feedback.
+Posts for the rest of the weeks can be found here: https://chand-ra.github.io/
