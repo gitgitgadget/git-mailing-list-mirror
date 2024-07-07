@@ -1,92 +1,113 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0250F3A8D8
-	for <git@vger.kernel.org>; Sun,  7 Jul 2024 18:17:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D741429B
+	for <git@vger.kernel.org>; Sun,  7 Jul 2024 18:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720376270; cv=none; b=KgzYbg0/dpWcv6xgPqU9bHUHwJWO/DyT2/X8zSi2YfAf12y/AQuJoKvwOEZhDmgEnMtzLy737RQ0JVFoWZRhfYIp+p+Ep9I3MPlqNtk+ii1EKBmMuTOvaFD6IyJp2aRH4ezzzvCHK47jYoV/snS39ShGKSdc4qMKw1kIKl9XP/s=
+	t=1720378100; cv=none; b=To72Y7SA0nLsydyBl/jvzeaciAwYzAXirIwzIarG+DSdfCjySvPBkxsGDE/9J6FpWogbf7pDdHuqXSFtxJmxLGzriieuBEzKrZIwrFX8phASzyQ4mCxewJb4u+0gzULopauTYTeiSecDFRx6F4z7yVwNokpwv23V0HfhwIlxp7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720376270; c=relaxed/simple;
-	bh=etpd2bOraW3AHhMxJ3GRbFergVkDN9gf/sYO7xbybN8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lb39qIkZR0rx1snPAT0gcqhM5JSHL2GqylVV5Cqz+P/79NJxCpZCaPphGQOP7xH66PdK1HBz9CZnUELcn0/ishLySPkYOCsA61ZJXVXBnQloOPeCkptxfD/HGmeOItotEdUeac09BJ7fZbzvbUyU10acfkB7VSjUtmyfQG6hOks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HpjNosdq; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1720378100; c=relaxed/simple;
+	bh=vyUpFUCMDmRE9Yv/oxJkuoMk1YXvd3kM1mtZ9ZD2hzw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=tv539DRZ6UWJyUXpxg/UP7O9AyVQhP/6PISXcNjJ3m/iYISNIHG9ZO+ga+kRhKYIAJCCNJqp0zG4TWvOpZbkHgvVWMHLHce5tghMvcHENwD9HBN5qD2LNNCUaRv6qx/1gwQ5dU11kzHjkDrH49A7cFodAEoCeJa5GW7EGF9nvIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I+7a+TaM; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HpjNosdq"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4256788e13bso21762205e9.2
-        for <git@vger.kernel.org>; Sun, 07 Jul 2024 11:17:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I+7a+TaM"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-356c4e926a3so1970191f8f.1
+        for <git@vger.kernel.org>; Sun, 07 Jul 2024 11:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720376266; x=1720981066; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=j85/LhThLgT9lF9Cxsm387utFXgGL2h94i7UGhfKYLk=;
-        b=HpjNosdqW3xQ2h0aSWYGl5U16X22QIDwBOowKpSjZ5GFYln58SZt5TFKm3IDVBVlbK
-         UcrUitKfQSYSL9BcjcaMfDY32L1PuyqkCAOwXLHXLYiaAFUYvBA1TLxbAw4XBiEI/kZw
-         Yuhm1gVY2yRG/uagTZhDI/ORWVZ3H/M51XIQappyR3Dd/DjjhRxuGzWdLW0iBnzxswz6
-         WbMm/oprT4jDHA5JzGC3wA/mdE4mCdJ90+a2B/oNi+AnTmwup6slONUrtClQFLBGhO0l
-         sPaX51IIlckwCE+k3ZUx05IXOlImMzfq/zjU2Bjq3ut5IxowvoXYPifafJo3lAEqQrm3
-         1chA==
+        d=gmail.com; s=20230601; t=1720378097; x=1720982897; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=L85iWjle6+r6fzASrXk2gQYH8NY9w+xdChjssxFgto8=;
+        b=I+7a+TaMR0Ztf8knyjpmIXHdZTZObFVHUydV0+JsXK5KjA8Ojqx+Y35P/QFF8bmJ8K
+         MJLDpRquAf2aZhWbmyI8kCC4+tgwF/G2hJf0pvxgF3wMBf0OeEwBzj7EwIwuHmz6F366
+         Gz4j3uVOz0DDOmM50bZus+f10vIxEXW5hexhaRnJpbUVQMs8WKja8mBqjPJVYl3XvzRA
+         fxas+c5Q1SzsyGwq19XGGmiRoZ9XYLTtJzwF9TSxXpngc65UYh4GcQaXzAy7pYtjR/sV
+         cyp1rNhLNptZMSa6UkeRLMrAwKejMisg3Kya/56aCSMXLTVGxQV92kYiLGfsmRVKqv7O
+         IjbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720376266; x=1720981066;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=j85/LhThLgT9lF9Cxsm387utFXgGL2h94i7UGhfKYLk=;
-        b=Ck0MjyjYE2008iYfnfUs1GkqaO19rBqy9b0PVVkNE6r4mmlO7hQ16GlQCRyvIPhXRQ
-         /IoDw5K3w75pWd16FGRklr+6Gxlc99ArkGed0klUhIVI0VlL+DnUcWsJPrYqaa6oVp/U
-         0umTLiWusDJ5JjMUVAwlycxb5FnMsB0xWS05RDjkLDAmXuQ0Qk1DpdpazwsQ8pVPYNgH
-         65qlD/Nmmh3hmoV5SGTCb5JISVDmU8rZPoWg7O2nUUUN9ucow+pOhKbPhGbASEo9l1n8
-         /dE34JSQpk5kYNTl8Cz8ZmX+eZs6qgtXUu+Syrl5l5Vdn12loOS9KGpcAioIJdLoA0j1
-         FF+Q==
-X-Gm-Message-State: AOJu0Ywp21liCTM3keba9i69M8r6Hn/TwVH5GYfi0eJvvrgclXKBSXKX
-	quRH4KptmO3F/yeH++eUol0DPEUcHvSQ4AQT16vwJYrd86B9/E4v17i/fA==
-X-Google-Smtp-Source: AGHT+IEMjP4BODTrXGWCL3d1WCqADlLeHOINE2mh0nDan5as3FnR01Twm2YxjQOk2bhbIkYjR5Kmmg==
-X-Received: by 2002:a05:600c:4311:b0:426:60e4:c691 with SMTP id 5b1f17b1804b1-42660e4c88amr24278635e9.11.1720376266346;
-        Sun, 07 Jul 2024 11:17:46 -0700 (PDT)
-Received: from localhost (85-250-79-88.bb.netvision.net.il. [85.250.79.88])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42650b26c48sm102711045e9.17.2024.07.07.11.17.44
+        d=1e100.net; s=20230601; t=1720378097; x=1720982897;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=L85iWjle6+r6fzASrXk2gQYH8NY9w+xdChjssxFgto8=;
+        b=CvLb7G876CuMoo+3jrpL+GxFkdzL3ZENf5hhxSAidlkQGhT0Cr79NUElWmz5ipvcUk
+         G8qNYMYbVzAKw07wFw4N3Ow8NNBt8zF6WsiCamuGDqnhpF24g4ODbOtO7l7SGEZAGxLH
+         /N4tBlcrVX6ORJ36DuZ3eZ4U5D6zuRbr+2bRrJ3p5lhOdVFW5NYa3ypR/7efeRPA57I+
+         RMetdUSfo5KljweYLNqUWkhDyzkDjlnLksQ7iCObI/1e1SnRr17adtfBHRqETn5971qB
+         l1Fw6JxtuxSthQOXo5TOXome6k+BdhaSx++tNfs6QigYrHbBvZbRYDGW/2mYpnmNRZW0
+         5pyg==
+X-Gm-Message-State: AOJu0Yw5na/Nt3k6OvuEOXditOivKn2TNKQaBRBD6difR1ugzXdBE1fW
+	sRq9r8RDmcDDa6qJ7RYRNtstbVtino6/iKJJtNp3r6xk/egBJL0EndttPPm+
+X-Google-Smtp-Source: AGHT+IECuVfUjy0Yls9OM4QSnNHA4TBuG5UG6QX8aiI5819AC+GeXja8EpZ7Q30teh/cjtH/xSC/4w==
+X-Received: by 2002:adf:ce81:0:b0:366:ddc2:a14a with SMTP id ffacd0b85a97d-3679dd30f51mr6576027f8f.40.1720378097215;
+        Sun, 07 Jul 2024 11:48:17 -0700 (PDT)
+Received: from archlinux.. (237.red-83-61-184.dynamicip.rima-tde.net. [83.61.184.237])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36796a6053fsm10856654f8f.57.2024.07.07.11.48.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Jul 2024 11:17:45 -0700 (PDT)
-Date: Sun, 7 Jul 2024 21:17:28 +0300
-From: Doron Behar <doron.behar@gmail.com>
+        Sun, 07 Jul 2024 11:48:16 -0700 (PDT)
+From: =?UTF-8?q?Jes=C3=BAs=20Ariel=20Cabello=20Mateos?= <080ariel@gmail.com>
 To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Re: Re: Remove your ZSH completion in favor of the completion
- script distributed and maintained by ZSH
-Message-ID: <peuc54wlxnhga5vy7rdnx4roudtngoztpodhs3f7ggbjfyzjdh@lgocxezv5tlv>
-Mail-Followup-To: git@vger.kernel.org, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-References: <mrn75pj663u6ikkwfnoq6c342l7w5plfeju4ji7norsmlzx4jn@3se3fmuqes4p>
- <87cynpnv8m.fsf@igel.home>
- <e4ylt2rihvm2uc22irsxbeid57ijblioekit3o4xpufflrqwal@5t67kr2a5ahq>
- <ZoqtHrKcdliM4Uf9@tapette.crustytoothpaste.net>
+Cc: gitster@pobox.com,
+	=?UTF-8?q?Jes=C3=BAs=20Ariel=20Cabello=20Mateos?= <080ariel@gmail.com>
+Subject: [PATCH v3] gitweb: rss/atom change published/updated date to committer date
+Date: Sun,  7 Jul 2024 18:48:13 +0000
+Message-ID: <20240707184813.33166-1-080ariel@gmail.com>
+In-Reply-To: <20240704164547.94341-1-080ariel@gmail.com>
+References: <20240704164547.94341-1-080ariel@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZoqtHrKcdliM4Uf9@tapette.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> > I personally think that Git is a stable enough project that the
-> > commands and options don't deviate enough between the different
-> > versions of it, So it'd be easier for you and for the distributions
-> > if you'd let go of your implementation.
-> 
-> I don't think it's super necessary to get rid of either one.  The Git
-> functionality is primarily based around bash, which does need this
-> functionality.  zsh doesn't, but it can be used there if you want things
-> to work exactly as it does in bash and want to have the latest version.
+The author date is used for published/updated date in the rss/atom
+feed stream. Change it to the committer date that betters reflect
+the "published/updated" definition and makes rss/atom feeds more
+linear. Gitlab/Github rss/atom feeds use the committer date.
 
-Indeed it would have been ideal if it was possible to use a `zstyle`
-variable to control which _git implementation to use. However, that's
-not trivial, as it somewhat depends on which _git implementation is
-found first in `$fpath`... I'm pretty sure that creating such a
-consistent interface (no matter which `_git` is found first) will
-require submitting a patch also to the ZSH implementation.
+Additionally, to be consistent, also use the committer date to 
+determine the date of the last commit to send in the feed 
+instead of the author date.
+
+Signed-off-by: Jesús Ariel Cabello Mateos <080ariel@gmail.com>
+---
+Changes since v2:
+
+- Fix line wrapping in patch
+- Also use authored date for processing loop.
+- Rewrite commit message for clarity.
+
+Thank you, Junio!
+
+ gitweb/gitweb.perl | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ccd14e0e30..b09a8d0523 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -8326,10 +8326,10 @@ sub git_feed {
+ 		my %co = %{$commitlist[$i]};
+ 		my $commit = $co{'id'};
+ 		# we read 150, we always show 30 and the ones more recent than 48 hours
+-		if (($i >= 20) && ((time - $co{'author_epoch'}) > 48*60*60)) {
++		if (($i >= 20) && ((time - $co{'committer_epoch'}) > 48*60*60)) {
+ 			last;
+ 		}
+-		my %cd = parse_date($co{'author_epoch'}, $co{'author_tz'});
++		my %cd = parse_date($co{'committer_epoch'}, $co{'committer_tz'});
+ 
+ 		# get list of changed files
+ 		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-- 
+2.45.2
+
