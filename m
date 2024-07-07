@@ -1,110 +1,131 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E620D2263A
-	for <git@vger.kernel.org>; Sun,  7 Jul 2024 14:47:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E9722EE5
+	for <git@vger.kernel.org>; Sun,  7 Jul 2024 14:58:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720363654; cv=none; b=Zan0t3RPGRR7iPab9UjutKTAprSd3H3HOfFPgn1vYquz2veL5b1IrlvS0O7pfSxa8w3DcZ6r1G7gjftG2s7XUVEjjojXdTXM+hT6LE7Zn2MU+1T92j0uR1FMXSqDZekK0f0iMyMN+0ezzvYFtWF/f0gynmGPykCI3E3QQtfjjQA=
+	t=1720364329; cv=none; b=NAJWSTQ1unztz+jRJPrzdaV2htJ5Of3KzkyISSzqEfIdZU8Rtiahn2wo6yn87pxoNrcxFOQVShHugBtdr7N0ANGzUN7DFRWb6zwF20oFY+PxkqYwxs+CGvGD0uZqk6vKAYRmsLUHO91EpnT6lrH8KHyDwICP9/QY3RFqSwI6/bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720363654; c=relaxed/simple;
-	bh=MTg9c30x2uRztB7qsmd7NyKEiz1Dc5U3OXhw+5bI7sA=;
+	s=arc-20240116; t=1720364329; c=relaxed/simple;
+	bh=feTx+N7Bn1DExL2Wm5lDlpsTWCxG12bKK4xITgddaZc=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ut57OVx1gvD0dVkJqxetYQYsUJK1LIWpDTThdUrfSJ5VIylQBbSZEBcvDPVEXp+Q1BK9SH0nFDqEzVGwvufS42YV4GigNm7Ncm5095HpaLxD9OdCKnbLcZkBRj1SHUjc55Gc6IFfn295Xon2bW1NntrmelhuWGuIb9mWhNjwvTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NNtoqUuS; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=SOEqyordgUEVQv6+LIGGrp6b3AKh4LRd7GaDuUQrUqtiNfGjvuvhXMYhk19P9VXNsQ9WiJkRGfrSWjuU4hXrEzVkNJXcb65t40cEsd4Emh0essSFJCtcTFrQmSFIJ3jpnMBgJe7e8JZfWuJJ2SYqd2GGY1ECxA4bx1OnhVESZqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=1CbSzWA8; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NNtoqUuS"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52e9944764fso3520603e87.3
-        for <git@vger.kernel.org>; Sun, 07 Jul 2024 07:47:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720363650; x=1720968450; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=LxD3qtlc3eTsglKkAFP8qIP1/oI8s+jVYnfJ8rAPfVs=;
-        b=NNtoqUuSsVS1x4Ju1nNOtAIPeDPC6pyb/ktDPN3ItsGIKbp0HjLE4fZMajb6XNFENA
-         /lo2kyjbQKOAUPm1ytXZSitvisC0S3gDGdeUV/WqcEVJOoFMQJ4XPB/czkEDK8AztCgC
-         W5W/7IrLiWRx0gHkNl1RdX63srWm1G9/M5SbdRw3pe/XFjN6lTOq3vUUMGIuFN1VkMXc
-         DStlOphu1n6D9hNUnMJjvx0p+ZV5KdCcR+jvZGgn7FhPKGWf1VTI8Z75MfrV8kFW2Dtj
-         X2U4Oy/c4vJpD2bc8rOL9sCwRbKuyhJqWVzEhd5CNfcbcTlvgPq0FOuGqOCFkX9m0Qd6
-         C0Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720363650; x=1720968450;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LxD3qtlc3eTsglKkAFP8qIP1/oI8s+jVYnfJ8rAPfVs=;
-        b=MndAFO+uVl79G2H4dtt7mLJ+da0lkDTQqw+lv3bvtbkXXqkf8XV43oSpVPKTzPQ72n
-         ge0g/QKxs0BWxbm+8dgYkf9FYcqlGjDO7vMlfdUeGf6zEbYx2C6jTlx+/YLguQ9a2oBD
-         PtBG8rugu38YdOYOSs7bvE5Y9f1Kjaa8nwE3GuimHIx7JGAj2BWoTIFy6RVnI4l4QJSC
-         e+gJSN5s9jtQ3xgxeX/Bkm6OWbgYF3glzePlrnUl343ZcnGiSD+C76HYuW/i687GJCOW
-         bJQ8dBmn58U47YNPy/6S3grZhXbUD3H3IrfeBCWMtrYzGgFCa0ISVJvHiv3ScaQ4cNme
-         VMfA==
-X-Gm-Message-State: AOJu0Yy1VkV+MrE87yoYtwg6YJ/Xxbcplo8oLi6BSNHfSG0WszkjwLwY
-	/5yXHDaweMuXwyxZhMuDDOGsuhOW41wxmJy7X1MfOP2YL+1RnGXvSMFz+w==
-X-Google-Smtp-Source: AGHT+IHZCZA5PBSU+zM30fr+Y3iHlrSdqZZCyCMjMitPbsIrbMsmJiV1oNbentG3Plnjmi3UqgxJ/g==
-X-Received: by 2002:a05:6512:484e:b0:52e:9df2:7de0 with SMTP id 2adb3069b0e04-52ea063a83amr6847525e87.40.1720363649912;
-        Sun, 07 Jul 2024 07:47:29 -0700 (PDT)
-Received: from localhost (85-250-79-206.bb.netvision.net.il. [85.250.79.206])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4264a1d69d8sm130275335e9.19.2024.07.07.07.47.28
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Jul 2024 07:47:28 -0700 (PDT)
-Date: Sun, 7 Jul 2024 17:47:06 +0300
-From: Doron Behar <doron.behar@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="1CbSzWA8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1720364320;
+	bh=feTx+N7Bn1DExL2Wm5lDlpsTWCxG12bKK4xITgddaZc=;
+	h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
+	 In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
+	 Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=1CbSzWA8EO/pcM+2Tgghsfqx0Prws0BO2rhfxhQ8K/tvLImB9YBLsRowxRNsk9ggu
+	 K80bEzp8dZlW66/JLxTIaSRnULk9x9KwumlKztQC2G/5Tib55BzRPcVZOXgc6m98mz
+	 5/+PObXw2RKdKYSL2MERzwOwBnHpVWNFsPmJ2SV0Fk++pDOoz0PswUm5LUMi2UgpCX
+	 39NF8g13Ak8wM+TWnAasZ1CsSe0IVrHdfxUOkbg/8fg+05kROXMM+mjwOo0u4HhrWt
+	 Km+YytoPoeoqXkaoj4jT4c5x7UNgciVT+nOv+IDhXDB0cQwnXz7i4XVZblBHJylFPg
+	 Nkscgl9VME+yzP1TH/EYUx5b3/6EX9S04UiIaVo0g1ZYzBUOue26c3Vnv53Lm/aJrT
+	 pmdCloJ1DMMvaVL4+F4R6T8c7PCNbXZE1vn921xNMshLcee0fCEk2jLa7eta2W4E6B
+	 n5Wfz4yjq2nX8zLw/UpY1htb3DpEBy9hy1XheKPx5nFQbqCd/Zf
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7EEFE2099A
+	for <git@vger.kernel.org>; Sun,  7 Jul 2024 14:58:40 +0000 (UTC)
+Date: Sun, 7 Jul 2024 14:58:38 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: git@vger.kernel.org
 Subject: Re: Re: Remove your ZSH completion in favor of the completion script
  distributed and maintained by ZSH
-Message-ID: <e4ylt2rihvm2uc22irsxbeid57ijblioekit3o4xpufflrqwal@5t67kr2a5ahq>
-Mail-Followup-To: git@vger.kernel.org
+Message-ID: <ZoqtHrKcdliM4Uf9@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
 References: <mrn75pj663u6ikkwfnoq6c342l7w5plfeju4ji7norsmlzx4jn@3se3fmuqes4p>
  <87cynpnv8m.fsf@igel.home>
+ <e4ylt2rihvm2uc22irsxbeid57ijblioekit3o4xpufflrqwal@5t67kr2a5ahq>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="93khK1Pa7ciTH6+S"
+Content-Disposition: inline
+In-Reply-To: <e4ylt2rihvm2uc22irsxbeid57ijblioekit3o4xpufflrqwal@5t67kr2a5ahq>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--93khK1Pa7ciTH6+S
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87cynpnv8m.fsf@igel.home>
+Content-Transfer-Encoding: quoted-printable
 
-They don't perform any version checks as far as I can see in their
-implementation.
+On 2024-07-07 at 14:47:06, Doron Behar wrote:
+> They don't perform any version checks as far as I can see in their
+> implementation.
 
-Almost all commands that the ZSH team maintains completions for, don't
-perform version checks and the maintainers of the commands themselves
-don't bother taking responsibility for that and usually users don't
-complain. If a ZSH user notices a new command or new option missing from
-such a completion function, they can submit a patch to the ZSH project,
-and setup a workaround until there is a new ZSH release with their patch
-included.
+This is true as far as I can tell.  In many cases, the built-in
+completion can take advantage of --help output to find the proper
+commands, and usually it can intuit expected arguments and such.
 
-Besides the option of living with this potential version mismatch
-imperfection, you could also ask the ZSH team to remove their
-implementation and start maintain their implementation here. However,
-they might object because not all distributions will accommodate to this
-change in both projects...
+> Almost all commands that the ZSH team maintains completions for, don't
+> perform version checks and the maintainers of the commands themselves
+> don't bother taking responsibility for that and usually users don't
+> complain. If a ZSH user notices a new command or new option missing from
+> such a completion function, they can submit a patch to the ZSH project,
+> and setup a workaround until there is a new ZSH release with their patch
+> included.
 
-I personally think that Git is a stable enough project that the commands
-and options don't deviate enough between the different versions of it,
-So it'd be easier for you and for the distributions if you'd let go of
-your implementation.
+The only downside of this is that zsh releases very infrequently, so it
+may take a year to get these changes into distros.  I submitted a change
+to zsh after some Git version changed one of the rebase files, which
+broke rebase detection, and it took some time to get that out the door.
 
-On Sun, Jul 07, 2024 at 04:15:53PM +0200, Andreas Schwab wrote:
-> On Jul 07 2024, Doron Behar wrote:
-> 
-> > ZSH completion is almost always distributed with every distribution of
-> > ZSH, so there is no need for the two projects to maintain two completion
-> > functions for the same program :).
-> 
-> How do they keep it in sync with the particular version of git installed
-> in the system?
-> 
-> -- 
-> Andreas Schwab, schwab@linux-m68k.org
-> GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-> "And now for something completely different."
-> 
+> Besides the option of living with this potential version mismatch
+> imperfection, you could also ask the ZSH team to remove their
+> implementation and start maintain their implementation here. However,
+> they might object because not all distributions will accommodate to this
+> change in both projects...
+
+No, please don't do that.  I use the built-in zsh functionality for
+completion and things like version control usage and it works very
+nicely.  One of the advantages to using zsh is that it has completion
+built in and doesn't require external dependencies for most of it.
+
+The only time I've seen problems in the zsh built-in completion was when
+I was dealing with a large repository where getting the list of files in
+a repository to complete a filename (e.g., HEAD:<tab>foo) took too long,
+and I've just made it use local files instead, which is acceptable.
+
+> I personally think that Git is a stable enough project that the commands
+> and options don't deviate enough between the different versions of it,
+> So it'd be easier for you and for the distributions if you'd let go of
+> your implementation.
+
+I don't think it's super necessary to get rid of either one.  The Git
+functionality is primarily based around bash, which does need this
+functionality.  zsh doesn't, but it can be used there if you want things
+to work exactly as it does in bash and want to have the latest version.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--93khK1Pa7ciTH6+S
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZoqtHgAKCRB8DEliiIei
+gbpPAPwNEOuMRHCorhLhwSL3awdPL3uch0eM5eZF9vbFAPgQ/gEAsNOXFRv0kFbO
+QUv/SNsUYQjH7FkEfHfqdNNrBIaXQwU=
+=PjV7
+-----END PGP SIGNATURE-----
+
+--93khK1Pa7ciTH6+S--
