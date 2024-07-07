@@ -1,113 +1,103 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D741429B
-	for <git@vger.kernel.org>; Sun,  7 Jul 2024 18:48:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC3139AD5
+	for <git@vger.kernel.org>; Sun,  7 Jul 2024 19:54:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720378100; cv=none; b=To72Y7SA0nLsydyBl/jvzeaciAwYzAXirIwzIarG+DSdfCjySvPBkxsGDE/9J6FpWogbf7pDdHuqXSFtxJmxLGzriieuBEzKrZIwrFX8phASzyQ4mCxewJb4u+0gzULopauTYTeiSecDFRx6F4z7yVwNokpwv23V0HfhwIlxp7I=
+	t=1720382049; cv=none; b=SyLOejl7xwV0HHxppGx8EU7x6QscUYBoyqXGqUCXp7pNrn2p6jhN4SGawdbUiOl728qnqQVAEPLp4N6FvADWaYUKm9ZkZm7sPtdvtm+uxtPVkEpFFn+n7J1785rvOO7g17VYrza4J/U6NkDUKKrMve4MhjGmENYYCnXfsQaAGRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720378100; c=relaxed/simple;
-	bh=vyUpFUCMDmRE9Yv/oxJkuoMk1YXvd3kM1mtZ9ZD2hzw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tv539DRZ6UWJyUXpxg/UP7O9AyVQhP/6PISXcNjJ3m/iYISNIHG9ZO+ga+kRhKYIAJCCNJqp0zG4TWvOpZbkHgvVWMHLHce5tghMvcHENwD9HBN5qD2LNNCUaRv6qx/1gwQ5dU11kzHjkDrH49A7cFodAEoCeJa5GW7EGF9nvIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I+7a+TaM; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720382049; c=relaxed/simple;
+	bh=2jVYVkQpnoM3EeJ7HMEkwbL5aavNbv4AgN/qBk56YL8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dAneTbTGoqFnlnQBaEL6UZY0Dyswt28K1AY57abR7xnPelpbJINIkWtxm8TF8vKA7kp5sKKme6udySz3goPP9zspRjN6fI9Y7ca9PSLREWnPpERvAr2p3GVa+O/jk1c2L9SiAoFgML1n3okYeAjrCyLkKAFi+NCC9B3hxWjDhIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=z2Iz94Mi; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I+7a+TaM"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-356c4e926a3so1970191f8f.1
-        for <git@vger.kernel.org>; Sun, 07 Jul 2024 11:48:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720378097; x=1720982897; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L85iWjle6+r6fzASrXk2gQYH8NY9w+xdChjssxFgto8=;
-        b=I+7a+TaMR0Ztf8knyjpmIXHdZTZObFVHUydV0+JsXK5KjA8Ojqx+Y35P/QFF8bmJ8K
-         MJLDpRquAf2aZhWbmyI8kCC4+tgwF/G2hJf0pvxgF3wMBf0OeEwBzj7EwIwuHmz6F366
-         Gz4j3uVOz0DDOmM50bZus+f10vIxEXW5hexhaRnJpbUVQMs8WKja8mBqjPJVYl3XvzRA
-         fxas+c5Q1SzsyGwq19XGGmiRoZ9XYLTtJzwF9TSxXpngc65UYh4GcQaXzAy7pYtjR/sV
-         cyp1rNhLNptZMSa6UkeRLMrAwKejMisg3Kya/56aCSMXLTVGxQV92kYiLGfsmRVKqv7O
-         IjbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720378097; x=1720982897;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L85iWjle6+r6fzASrXk2gQYH8NY9w+xdChjssxFgto8=;
-        b=CvLb7G876CuMoo+3jrpL+GxFkdzL3ZENf5hhxSAidlkQGhT0Cr79NUElWmz5ipvcUk
-         G8qNYMYbVzAKw07wFw4N3Ow8NNBt8zF6WsiCamuGDqnhpF24g4ODbOtO7l7SGEZAGxLH
-         /N4tBlcrVX6ORJ36DuZ3eZ4U5D6zuRbr+2bRrJ3p5lhOdVFW5NYa3ypR/7efeRPA57I+
-         RMetdUSfo5KljweYLNqUWkhDyzkDjlnLksQ7iCObI/1e1SnRr17adtfBHRqETn5971qB
-         l1Fw6JxtuxSthQOXo5TOXome6k+BdhaSx++tNfs6QigYrHbBvZbRYDGW/2mYpnmNRZW0
-         5pyg==
-X-Gm-Message-State: AOJu0Yw5na/Nt3k6OvuEOXditOivKn2TNKQaBRBD6difR1ugzXdBE1fW
-	sRq9r8RDmcDDa6qJ7RYRNtstbVtino6/iKJJtNp3r6xk/egBJL0EndttPPm+
-X-Google-Smtp-Source: AGHT+IECuVfUjy0Yls9OM4QSnNHA4TBuG5UG6QX8aiI5819AC+GeXja8EpZ7Q30teh/cjtH/xSC/4w==
-X-Received: by 2002:adf:ce81:0:b0:366:ddc2:a14a with SMTP id ffacd0b85a97d-3679dd30f51mr6576027f8f.40.1720378097215;
-        Sun, 07 Jul 2024 11:48:17 -0700 (PDT)
-Received: from archlinux.. (237.red-83-61-184.dynamicip.rima-tde.net. [83.61.184.237])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36796a6053fsm10856654f8f.57.2024.07.07.11.48.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Jul 2024 11:48:16 -0700 (PDT)
-From: =?UTF-8?q?Jes=C3=BAs=20Ariel=20Cabello=20Mateos?= <080ariel@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	=?UTF-8?q?Jes=C3=BAs=20Ariel=20Cabello=20Mateos?= <080ariel@gmail.com>
-Subject: [PATCH v3] gitweb: rss/atom change published/updated date to committer date
-Date: Sun,  7 Jul 2024 18:48:13 +0000
-Message-ID: <20240707184813.33166-1-080ariel@gmail.com>
-In-Reply-To: <20240704164547.94341-1-080ariel@gmail.com>
-References: <20240704164547.94341-1-080ariel@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="z2Iz94Mi"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1720382045;
+	bh=2jVYVkQpnoM3EeJ7HMEkwbL5aavNbv4AgN/qBk56YL8=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=z2Iz94MiFba36VxAP9HaNIoTL1lji63gedTPOpfeI0pohZz/JwZY/i/8bUDJTnJYh
+	 RPeSJjkQUtYdkCWr+bBkoHIvF/iw3S9979M3yhrbfDT0unOMm34jeekyF+v7/ySZAz
+	 lBIlfYdFgcEbHUvJDuovQnml9m5Bv54tlGJ7b1K6PQAblGe1rjTHwbZj2PZrvqRyEJ
+	 sumM9gBKYmJQwChiv0n94hkrja3C0cj4qEwICFwmhZ1pYucejgeUFaaE4FZfMdgnH+
+	 9t0WSwZpi5brvTvnzcpgM6K6J4KajrX0u5pSk5OILyl/H9IFL77yQY306YBZVAc7ci
+	 rGn5k5UDI/uepHgJ//jZu+kKT19Y1fiOLckGMCuTFfXiExgdI3eLeiGooVG8oIWItN
+	 QE+FARzF15xDY7ZtdrchOhdID4oBkmG7bfWp+cWAALpULj+74E00lJk0VbM4hqy73j
+	 ZSskwP5LsbvnU2ppw0yEKqkMoVsq9PnEJn5W9TU+Alct9KvqsiX
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7014E20991;
+	Sun,  7 Jul 2024 19:54:05 +0000 (UTC)
+Date: Sun, 7 Jul 2024 19:54:02 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: github@online.ms
+Cc: git@vger.kernel.org
+Subject: Re: linux git init/clone on Netapp NTFS security style volumes
+Message-ID: <ZoryWtGqsD9iIafI@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	github@online.ms, git@vger.kernel.org
+References: <trinity-ea5945a3-0663-4e48-b995-913003b5e932-1720294530422@msvc-mesg-web002>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="P9JuhglkZmWNdHjt"
+Content-Disposition: inline
+In-Reply-To: <trinity-ea5945a3-0663-4e48-b995-913003b5e932-1720294530422@msvc-mesg-web002>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-The author date is used for published/updated date in the rss/atom
-feed stream. Change it to the committer date that betters reflect
-the "published/updated" definition and makes rss/atom feeds more
-linear. Gitlab/Github rss/atom feeds use the committer date.
 
-Additionally, to be consistent, also use the committer date to 
-determine the date of the last commit to send in the feed 
-instead of the author date.
+--P9JuhglkZmWNdHjt
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Jesús Ariel Cabello Mateos <080ariel@gmail.com>
----
-Changes since v2:
+On 2024-07-06 at 19:35:30, github@online.ms wrote:
+> Hello,
+> =C2=A0
+> I'm trying to execute git init and git clone operations on a linux
+> client that mounts a Netapp volume with NTFS Security Style. Meaning
+> the client is Linux based but the filesystem is managed from Windows
+> side - especially linux chmod operations are not permitted.
+> =C2=A0
+> Maybe a new CLI option might be helpful to skip those chmod operations.
 
-- Fix line wrapping in patch
-- Also use authored date for processing loop.
-- Rewrite commit message for clarity.
+I'm not surprised by this, because Windows volumes under WSL also have
+the same problem.  However, I don't see the behaviour you describe when
+creating a new file system with NTFS on Linux and using ntfs-3g to
+mount with default options.  In my case, everything works just fine.
 
-Thank you, Junio!
+Note that I didn't try using the old non-FUSE driver because that's
+deprecated and I don't believe it's available anymore in Debian sid.
 
- gitweb/gitweb.perl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+What OS (including version) are you using and how are you mounting the
+file system?
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index ccd14e0e30..b09a8d0523 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -8326,10 +8326,10 @@ sub git_feed {
- 		my %co = %{$commitlist[$i]};
- 		my $commit = $co{'id'};
- 		# we read 150, we always show 30 and the ones more recent than 48 hours
--		if (($i >= 20) && ((time - $co{'author_epoch'}) > 48*60*60)) {
-+		if (($i >= 20) && ((time - $co{'committer_epoch'}) > 48*60*60)) {
- 			last;
- 		}
--		my %cd = parse_date($co{'author_epoch'}, $co{'author_tz'});
-+		my %cd = parse_date($co{'committer_epoch'}, $co{'committer_tz'});
- 
- 		# get list of changed files
- 		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
--- 
-2.45.2
+--P9JuhglkZmWNdHjt
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZoryWQAKCRB8DEliiIei
+gZAIAQD2qwT/5dDdEUL6VgBpYrE+UWk1AUy/bUgIHbLLSmciRAEAt7LvBjexg9eF
++5BFxDHSIrQv1CrmS987vXmNxsGRVg8=
+=8uY1
+-----END PGP SIGNATURE-----
+
+--P9JuhglkZmWNdHjt--
