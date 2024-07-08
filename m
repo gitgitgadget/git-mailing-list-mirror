@@ -1,41 +1,41 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B91B64C
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 03:40:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A12812
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 03:51:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720410034; cv=none; b=c+iIuRFGDpBCsGfFQkuMgTyqtrGFkBnfHtw1/ve2ZCdE9QTLzWNFWpwtSUgMpiTO1NUO6KaHnknGAHxLppH8KvOXRXbbI6WRUNrI9hGzJidg9wnGkLrg8C0TljNP5sdbg4XuZAd6RSyByWSBeWmEKGxLDVjeOemC0J5eAfWFTC8=
+	t=1720410689; cv=none; b=sTLXFJe8DnTBS4FTDXrthdArQJkMgkxw0dmD771KA4NeZaEZ5FxWFsncGGAblD850cMDDF7uEB1Gqk9+L5hbEB3pkP22/e/QXyi1hcMtt63QEEi9WjSEToKfwtki6ZFij5BmqLph6qsmYSjjyM9veFIi/XSfCmr4Pn7S5TsDL9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720410034; c=relaxed/simple;
-	bh=mz4pD/WYJyPXnzBIPD+RAZjsT9pStHzS2M9w6RPoMts=;
+	s=arc-20240116; t=1720410689; c=relaxed/simple;
+	bh=H08E2eqg8iVGoZn0yXrKOyB7Socihith7CeIBhamkZc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sFytNJJ1pTP+nK8kSQDll2J1y3Wfjoat68bwIj90irkeMxY8Yok1yWbAFPDCkLrlamqrsyDsI43RdXAf43epV5EqL8l/zw+uNdqBdYBvi3j/9TPElGdvsGJlpygoUvS9WNZKnyWIeQlKMGISh8G11efmJc70+k8i3laIjKpyHWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.47
+	 To:Cc:Content-Type; b=H41czhem69SqwJa6SvkqN0IMHF2LTVbv8lR/IEBl40SvbtzZ5kvd2gNLT6oyG0QCEkTA74OXbeQ+b7SU2ROx7hnkI3OABiCksCnFqXd2OOecf2sPhkDYhaGqqs0IdRcHTt2MmhG+vbQ175Ixnlmo2EvP5MELOJdGshWOWNge3Ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6b5daf5ea91so20304736d6.1
-        for <git@vger.kernel.org>; Sun, 07 Jul 2024 20:40:31 -0700 (PDT)
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6b5da2730efso22251386d6.2
+        for <git@vger.kernel.org>; Sun, 07 Jul 2024 20:51:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720410031; x=1721014831;
+        d=1e100.net; s=20230601; t=1720410686; x=1721015486;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2QjBu+tvZJK3DibipYrn6etZAFDbTVG10C5ITg1wZ34=;
-        b=UiF0ueQZ9izxReR8yOWnuohao5211tGK8JyrnJigOS4wlRT0IODxj9oR6MG+EwNXJk
-         M8eoKZjkAc4zvFEfQjPciUrbK5MefrNGOxJz6mKQVAPsqiZB0/nJCnKgFR9mXeB7M4NV
-         Ug7Jg1odzyldoU060H9p054dR3Jnw6j4rl/uJ+hqJhZTCXsP7VEgGzfORqkwL0CMrZkg
-         rBBLBtzYG900dhNcfLb5FK8NyBCIMRe9XFTxzqNhEsRlvwREUS23juzs/YVe/4HfFf65
-         8w2lYOghkGP2YNtSkif3qClBDbPU2Az0da6yGejopHYd+KT1qqy7qAxOZQzSG0TRxLGi
-         sjdA==
-X-Forwarded-Encrypted: i=1; AJvYcCUMbu414dLTaEhSPsxw8Y2EJBiiiQy6mqALc1KIPDHQwOfYFRK1/bejTj8amHm2lPmKcBVP2Wro/WtoBiYMob3zNiaT
-X-Gm-Message-State: AOJu0Yx6AA7ijGN1RBRBAAAA0rBvYmguuJP02gPSqlOEUXAVijwNmbUH
-	wIIss0JF3Ha5d7EszztcH5gKJCYF7pmgW7XLorto7EI8fJZRW5OPlXdYzayJUvaw6UaR7CMjaN3
-	shgxylwTUGC6+Pk65y/23AJN76vs=
-X-Google-Smtp-Source: AGHT+IERM+IE0uiXGjeoDfT6NZ3xJXJvJ5OlT4ET1ZJj6kxbn7WTKNSaxUAKIELir8iZvQNyToIaydTlgdmeuli8sNM=
-X-Received: by 2002:a05:6214:3986:b0:6b5:a945:ec51 with SMTP id
- 6a1803df08f44-6b5ed2549cemr132265176d6.51.1720410031065; Sun, 07 Jul 2024
- 20:40:31 -0700 (PDT)
+        bh=2WO1MNwBmPYv26gdqFWCSkNIrTs/YSwA995w8Zc+dGo=;
+        b=RtOqH4uM3r1V7ce9x8SZau6X6Tde58KEw9QObq93G3zyBTtZwWib9zb5XBGba3d7CB
+         8aLC6hGmMS/Wh6R+yHBNg0YgPdkbADN4hrJ+ssXjtCHOx//mLWPonqAbPbQU+yBAMdAH
+         v2DzkNPSKAzy324BiZqVZDkPpwaWIJHjnUaCWPBCLoYVJ1UEQ5uZtU7mXTNsPSk6QOIg
+         5R7TVxFdcxTQnGXSCOxZgxBgNSX1LhFq1STbMMjXgOZOFr9wIpmaEc2N6fiIE60Yxw8P
+         AR3YODMKjkC4j+iIVEmiBOO/OAJCG3pAOWmrMpLDqmr0gv19MpQTycTVglMPUhfsuJW+
+         4WjA==
+X-Forwarded-Encrypted: i=1; AJvYcCVTCRJPhyTbAGJZRY/ENqHDdPqxt+q6pn+t4ME8aVxIUt80XTTRBshzpjfIarASLXq0SGorFH8YpX/x+mqhCNyKdghb
+X-Gm-Message-State: AOJu0Yz1+9AXLbUXsdSvLr3U4kfZ3ukwXVeXC1avCBZ+Fhf7gBG4z3WI
+	mX2JQ23Mr5YBD3SQPjNaFda8ej9YDXcTLu5KrzkBJlQBZAxtn8KOA/+FzGVME1Aql9R59DwZmjI
+	aL8wrSSWkl8OpW5UBAJFKm07E11c=
+X-Google-Smtp-Source: AGHT+IEOXfeDcqrplyEz3mNQXwbJ/CYBz7Vjvp5Z/fzVQn5pLrujp8XNEyErN37zv+zqhaE/GquGou2cHl+0XZR865Q=
+X-Received: by 2002:a05:6214:d6d:b0:6b2:da7e:5cb7 with SMTP id
+ 6a1803df08f44-6b5ecf8eef1mr147308566d6.5.1720410686653; Sun, 07 Jul 2024
+ 20:51:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,190 +44,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240701220815.GA20293@coredump.intra.peff.net>
  <20240702235034.88219-1-ericsunshine@charter.net> <20240706060143.GD698153@coredump.intra.peff.net>
-In-Reply-To: <20240706060143.GD698153@coredump.intra.peff.net>
+ <xmqqr0c6makb.fsf@gitster.g> <20240706231128.GA746087@coredump.intra.peff.net>
+In-Reply-To: <20240706231128.GA746087@coredump.intra.peff.net>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 7 Jul 2024 23:40:19 -0400
-Message-ID: <CAPig+cRUOSHuNezZfVUT43JGT5BWA3LTbQvKCkD37DxXn=L6Jg@mail.gmail.com>
+Date: Sun, 7 Jul 2024 23:51:15 -0400
+Message-ID: <CAPig+cTv-DaGRmwWWCk8b33MKzV25vfP2zPKd2VOAEOtz4FZ2A@mail.gmail.com>
 Subject: Re: [PATCH] chainlint.pl: recognize test bodies defined via heredoc
 To: Jeff King <peff@peff.net>
-Cc: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Junio C Hamano <gitster@pobox.com>, Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jul 6, 2024 at 2:01=E2=80=AFAM Jeff King <peff@peff.net> wrote:
-> On Tue, Jul 02, 2024 at 07:50:34PM -0400, Eric Sunshine wrote:
-> I'll post some patches in a moment:
+On Sat, Jul 6, 2024 at 7:11=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+> My biggest question is around my patch 1 above:
 >
->   [1/3]: chainlint.pl: fix line number reporting
->   [2/3]: t/chainlint: add test_expect_success call to test snippets
->   [3/3]: t/chainlint: add tests for test body in heredoc
+>   - is it worth squashing in to Eric's patch? I didn't want to do that
+>     without getting his OK on the approach.
+
+Given the effort you put into the commit message and diagnosing my
+bugs, my knee-jerk response is that it would be nice to keep your
+patch separate so you retain authorship. But it also would be
+irresponsible for us to let my buggy patch into the project history
+as-is since you caught the problems at review time. So, squashing your
+fixes in seems like the correct approach.
+
+>   - instead of bumping the line number in the caller, should the lexer
+>     record the line number of the here-doc to be used later?
+
+It would be more robust to do so, but I suspect things will be fine
+for a long time even without such an enhancement. But I also agree
+with your commentary in patch [1/3] that it probably would be easy to
+latch the line number at the point at which the heredoc body is
+latched.
+
+>   - the test harness in the Makefile strips the line numbers from the
+>     chainlint output, so it's hard to verify those fixes. I saw them
+>     only because the combination of the two bugs meant that the here-doc
+>     had a "line 0" in it, which was enough to confuse the "sed"
+>     invocation in the Makefile.
 >
-> with the idea that we'd apply your patch here on top of what Junio has
-> queued in jk/test-body-in-here-doc, and then these three on top. For
-> Junio's sanity, I'll roll it all up into one series. But I wanted to
-> show it to you incrementally first, especially because I think the fixes
-> from patch 1/3 above should probably just get squashed in (or even
-> rewritten). I'll discuss the bugs they fix below.
+>     I did manually verify that it is OK after my fix, but do we want
+>     that to be part of the chainlint tests? Just leaving the line
+>     numbers in is a maintenance nightmare, since it depends on the order
+>     of concatenating all of the tests together (so our "expect" files
+>     would depend on all of the previous tests). But if we wanted to get
+>     fancy, we could perhaps store relative offsets in the expect file. I
+>     think it gets pretty complicated, though, since we print only
+>     problematic lines.
 
-Considering the excellent explanation you crafted in your patch, I'd
-like to say that it should remain separate from mine. However, since
-you caught the problems in review, it would be irresponsible of us to
-let my patch into the permanent history as-is. So, feel free to squash
-your fixes into my patch. Perhaps add a Co-authored-by:? The bit from
-your [1/3] commit message about incrementing $lineno for the
-heredoc-body case might be worth squashing in too?
+Given the way the Makefile currently concatenates all the self-tests,
+it would indeed be a nightmare to retain the line numbers. In the long
+run, we probably ought someday to adopt =C3=86var's idea of checking the
+self-test files individually[*] rather than en masse. With that
+approach, it may make sense to revisit whether or not line numbers
+should be present in the "expected" files.
 
-I wrote one minor (perhaps non-actionable) comment in response to
-patch [3/3]. The patches all looked fine to me, so:
-
-    Acked-by: Eric Sunshine <sunshine@sunshineco.com>
-
-> > @@ -232,7 +234,8 @@ sub new {
-> >       my $self =3D bless {
-> >               buff =3D> [],
-> >               stop =3D> [],
-> > -             output =3D> []
-> > +             output =3D> [],
-> > +             heredocs =3D> {},
-> >       } =3D> $class;
-> >       $self->{lexer} =3D Lexer->new($self, $s);
-> >       return $self;
->
-> I think initializing is not strictly necessary here, since we'd only try
-> to read tags if we saw a here-doc. But there might be some invalid cases
-> where we could convince higher-level code to look for tags even though
-> there were none (and generate a perl warning about trying to dereference
-> undef as a hashref).
-
-You're right, it's not necessary to initialize here, but it feels more
-consistent to do so. That said, I don't feel strongly either way.
-
-> On the flip side, what about cleaning up? The "heretags" array is
-> emptied as we parse the heredocs in swallow_heredocs(). But I think once
-> a ShellParser's $self->{heredocs}->{FOO} is written, it will hang around
-> forever (even though it's valid only for that one command). Probably not
-> a big deal, but there's probably some correct spot to reset it.
-
-There are a few reasons I wasn't overly concerned about cleaning up in
-this case:
-
-(1) The parsers are all short-lived, so the collected heredoc bodies
-won't stick around long anyhow. For each test checked, a TestParser is
-created and destroyed. For each script mentioned on the command-line,
-a ScriptParser is created and destroyed. None of these parsers stick
-around for long, though, a ScriptParser outlives a TestParser.
-
-(2) The heredoc bodies in question tend to be pretty small, so it's
-not consuming an inordinate amount of memory even if a single parser
-latches bodies of multiple heredocs.
-
-(3) We tend to be quite consistent about naming our heredoc tag (i.e.
-"EOF", "EOT"), so a latched body in the parser's %heredocs hash is
-very likely to get overwritten, thus the hash is probably not going to
-eat up a lot of memory. Given the entire test suite, I'd be quite
-surprised if any one parser ever latches more than three heredoc
-bodies at a time, and the vast majority of parsers are likely latching
-zero or one heredoc body.
-
-(4) I couldn't really think of a correct spot to reset %heredocs.
-
-That said, after reading your message, I did try implementing an
-approach in which the heredoc body gets attached to the `<<` or `<<-`
-token. That way, a heredoc body would be cleaned along with its
-associated lexer token. However, the implementation got too ugly and
-increased cognitive load too much for my liking, so I abandoned it.
-
-> >  sub check_test {
-> >       my $self =3D shift @_;
-> > -     my ($title, $body) =3D map(unwrap, @_);
-> > +     my $title =3D unwrap(shift @_);
-> > +     my $body =3D unwrap(shift @_);
-> > +     $body =3D shift @_ if $body eq '-';
-> >       $self->{ntests}++;
-> >       my $parser =3D TestParser->new(\$body);
-> >       my @tokens =3D $parser->parse();
->
-> This has two problems related to line numbers. You can't see it in the
-> context, but we later do:
->
->   my $lineno =3D $_[1]->[3];
->
-> Now that we're shifting @_, that array item is gone.
-
-Ugh, this is embarrassing. I did run chainlint.pl on t0600 in which I
-had intentionally broken some &&-chains, so I saw the output, but
-somehow I overlooked that it broke the line numbering entirely.
-
-> The second is that the line number for the here-doc is actually one past
-> the initial line number of the test_expect_success. That works
-> automatically for hanging single-quotes, since the newline from that
-> line is inside the quoted area. But for a here-doc, we have to account
-> for it manually. In my original patch I prepended "\n", but you can also
-> just increment $lineno (which is what I did in the fix I'm about to
-> send).
-
-Nicely spotted. Simply incrementing $lineno does feel a bit hacky, but
-I agree that it is probably good enough for now; it doesn't seem
-likely that it will break any time soon. But I also agree with the
-commentary you wrote in patch [1/3] that it probably would be easy
-enough to latch the line number of the beginning of the heredoc body
-and employ that value. That would certainly be more robust.
-
-> > @@ -649,8 +654,13 @@ sub parse_cmd {
-> >       return @tokens unless @tokens && $tokens[0]->[0] =3D~ /^test_expe=
-ct_(?:success|failure)$/;
-> >       my $n =3D $#tokens;
-> >       $n-- while $n >=3D 0 && $tokens[$n]->[0] =3D~ /^(?:[;&\n|]|&&|\|\=
-|)$/;
-> > -     $self->check_test($tokens[1], $tokens[2]) if $n =3D=3D 2; # title=
- body
-> > -     $self->check_test($tokens[2], $tokens[3]) if $n > 2;  # prereq ti=
-tle body
-> > +     my $herebody;
-> > +     if ($n >=3D 2 && $tokens[$n-1]->[0] eq '-' && $tokens[$n]->[0] =
-=3D~ /^<<-?(.+)$/) {
-> > +             $herebody =3D $self->{heredocs}->{$1};
-> > +             $n--;
-> > +     }
-> > +     $self->check_test($tokens[1], $tokens[2], $herebody) if $n =3D=3D=
- 2; # title body
-> > +     $self->check_test($tokens[2], $tokens[3], $herebody) if $n > 2;  =
-# prereq title body
-> >       return @tokens;
-> >  }
->
-> OK, mostly as expected. I think the check for "-" here is redundant with
-> what's in check_test(). We could just feed the heredoc body either way,
-> and in the nonsense case of:
->
->   test_expect_success 'title' 'test body' <<EOT
->   nobody reads this!
->   EOT
->
-> the heredoc data would just be ignored.
-
-Right. I went back and forth with this, never sure if this code was
-overkill. On the other hand, we could make this more paranoid and
-complain if we see either of these cases:
-
-(1) "-" but no heredoc
-(2) heredoc present but something other than "-"
-
-> Requiring "<<" at the end is somewhat limiting. E.g. this is valid:
->
->   test_expect_success <<EOT 'title' -
->   the test body
->   EOT
-
-True, I didn't even think about that.
-
-> I don't expect anybody to do that, but it would be nice to be more
-> robust if we can. I think the tokens are still wrapped at this point, so
-> we could read through all of them looking for "<<" anywhere, without
-> getting confused by "$(cat <<INNER_HEREDOC)". I think, anyway (I didn't
-> test).
-
-Correct. The stuff inside "$(...)" does get parsed and linted, but by
-the time ScriptParser::parse_cmd() sees it, `$(cat <<INNER_HEREDOC)`
-is just a single (string) token.
+[*] https://lore.kernel.org/git/CAPig+cSBjsosRqoAafYN94Cco8+7SdUt0ND_jHS+jV=
+PoM4K0JA@mail.gmail.com/
