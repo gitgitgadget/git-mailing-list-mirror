@@ -1,56 +1,46 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE4D1CD1F
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 19:34:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896F61CD1F
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 19:35:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720467274; cv=none; b=LRxZW5wgMBOdSfB9wLCG8ETZsliYy7RNlZzsNbvI1lCYLEKtxUHxG0W4EvlNUArKfNCBr897jYwQO+o62DBQdrQa10XuSEqicZrQ+HS+z1kh5PXFIVQMkfaH44IZKY46pcgpLAWoWLZqHqJPfQjCzUR2ChcNhIsDxj4dGklyv8U=
+	t=1720467316; cv=none; b=kQCSBGbb3a4NLL6B8Qa44k8vui+VjQvgczSBB/DMrsM3k8Zzsra0I466L+APZ/ZJfzT080kA0H27Gz6BylYB+l8ujFBcZ0a2uLKb3S7mUxKitT/V2PT9scLkcsikKfs5VOr+rI/q94WroJSWYCJjHimVJPdHhLU+pY0xv+wq8Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720467274; c=relaxed/simple;
-	bh=BkVb58WFBwiRr/36MczebTJeMD22UPoLX2DbC6DpmHY=;
+	s=arc-20240116; t=1720467316; c=relaxed/simple;
+	bh=utFeiw5QO6inkXySuEGzYst17FVK1TRtSP/Dm3qTnNs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=quFJInMW2vU2LfzugSTaL13ukpquFmKdjd9rdV5/fbnDY4CX+q0k9FDGsCZKzdKrvNbEeDk6TbEDMoiShkSRrVIj26BwMEZQrckbCTvMR+OYKELwzug34l3FAqAOB7HCXSH3utJImzi/ae618NET38HTbwbbMND3g2wBTiTJAc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SQQM4XH5; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=AgzJbAZcNr8RATsBeo4S57+gTtmvnlcC2s9JjHKsZ8uDdHMhbRlP8XH66HM2tNYjhNLngboFSKox59Ci+RUtHchdDXpQXYBTdGbyKw8QyCXB9+iPL5TfIMl5Z5swLkkvM51B+TIbFsTT/zSAauXg/9erEnYjJpjhkhMrJKpHYmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net; spf=pass smtp.mailfrom=posteo.net; dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b=LIvpdG5K; arc=none smtp.client-ip=185.67.36.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SQQM4XH5"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA26F2C586;
-	Mon,  8 Jul 2024 15:34:25 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=BkVb58WFBwiRr/36MczebTJeMD22UPoLX2DbC6
-	DpmHY=; b=SQQM4XH59pYtQNf01ljJ7xhcyL45ims3KS28GGgNriMnE32vnnU9FT
-	MavUex0u7HZXZe2JInLPa/urKO/kUDqloqUBgU6DpJErEUw19iX/kb32tJX19NyT
-	A9RckE0VK+AeTsrKor+kp/Wo+7xeT4IKalyvT+VGyLLS2aK65lfDI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E1FBB2C585;
-	Mon,  8 Jul 2024 15:34:25 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 58E282C584;
-	Mon,  8 Jul 2024 15:34:25 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  newren@gmail.com,  vdye@github.com,
-  rsbecker@nexbridge.com,  =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
-  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH v2] advice: warn when sparse index expands
-In-Reply-To: <pull.1756.v2.git.1720448038745.gitgitgadget@gmail.com> (Derrick
-	Stolee via GitGitGadget's message of "Mon, 08 Jul 2024 14:13:58
-	+0000")
-References: <pull.1756.git.1720019679517.gitgitgadget@gmail.com>
-	<pull.1756.v2.git.1720448038745.gitgitgadget@gmail.com>
-Date: Mon, 08 Jul 2024 12:34:24 -0700
-Message-ID: <xmqqo777ekzj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b="LIvpdG5K"
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout01.posteo.de (Postfix) with ESMTPS id 3A7C8240029
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 21:35:05 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
+	t=1720467305; bh=utFeiw5QO6inkXySuEGzYst17FVK1TRtSP/Dm3qTnNs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:
+	 From;
+	b=LIvpdG5KZb6bgsNhJJSVXulCgrBsIs6ubm8nHF1WUMN89EH1MpgsmYg7tq+azEJjv
+	 U7AH/F2jQvxiViGC7wS04QUeBkWoWjO6G7cWEkd8ocU4wpRus73T2MToEzt+w1f1gH
+	 0MXHem2oqj5huVOS6MZaQBIxb4gZPBb315Ko3x4EdgqcZHsvxOweVp9sozZOOAKGrh
+	 5cjIoLi/Mssx4vPvlem1bdz0azD1EdiGQ9+367ocqXUKevJetbWF3IvmMgLyyIrfT/
+	 KEols04lLD8MN0WM9KV2Q9EM2V1MfwcvBoGpkrleTUIwfYm1UJRFYbWf1Y8i8y0UQ0
+	 UpBiGs34rUUPQ==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4WHvTh3jWHz6txr;
+	Mon,  8 Jul 2024 21:35:04 +0200 (CEST)
+From: Tomas Nordin <tomasn@posteo.net>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: Unbalanced closing paren in help of git commit
+In-Reply-To: <20240708085440.GA819809@coredump.intra.peff.net>
+References: <87o7792xgu.fsf@posteo.net>
+ <20240708085440.GA819809@coredump.intra.peff.net>
+Date: Mon, 08 Jul 2024 19:35:03 +0000
+Message-ID: <87le2b3cew.fsf@posteo.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -58,21 +48,31 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID:
- 1582FD94-3D61-11EF-8C68-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->     ... This idea has always been in the back of my
->     mind since the sparse index was created, but it didn't make sense
->     initially when only a few builtins could operate without immediately
->     expanding a sparse index to a full one.
+> On Sun, Jul 07, 2024 at 12:33:21PM +0000, Tomas Nordin wrote:
+>
+>> The second line of the help message for git commit looks like this:
+>> 
+>>     [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]
+>> 
+>> See for example https://gitirc.eu/git-commit.html. It has two opening
+>> parens and three closing parens. <commit> ends with a closing paren
+>> before the closing bracket. Me and gsish (on IRC) suspect this is a
+>> misstake.
+>> 
+>> What do you think?
+>
+> Yep, looks like a typo introduced by 00ea64ed7a (doc/git-commit: add
+> documentation for fixup=[amend|reword] options, 2021-03-15).
 
-Yeah, if this triggered for a command whose operation does require
-expanding, then that would be annoying to the users.
+I stumbled upon it while working on a synopsis parsing tool, similar to
+the Python docopt if familiar.
 
-The phrasing that suggests "git clean" used in this version does
-look better.  I wonder if "git clean" would also have to expand and
-then trigger this warning, though ;-)
+> Want to try your hand at producing a patch? (It's OK if the answer is
+> no; it just seems like a good opportunity for somebody to get their feet
+> wet on contributing).
 
-Thanks.
+I can try, why not? Should I hang it up on this thread so to say. Is
+this a bug report?
