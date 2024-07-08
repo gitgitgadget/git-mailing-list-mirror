@@ -1,99 +1,133 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6751149DEF
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 19:17:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF27C18E1E
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 19:30:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720466265; cv=none; b=jTMT9MJTUara5byHcnn5oY9TNV/mkfK62ieTwxohoL5FSxIR7XCn0hDy7sZNxUy6sqLmRx3E3UiDEx1GplMEYHhS59lcMU3KWW4y9IAzLiU7nbfgeu/Q1/Zso8trYsMzQTvlwXkwKIKujKwuoX7fwGhpbfS1pC9Z4OslJwElJwI=
+	t=1720467007; cv=none; b=Kqw2A6K6TKAQrlAwu0PrC4fjDepA4ABsFBxiKABUIsdPEy9nlE27bApXT2C0xEtS0pDqH8RSQH6JGBlVegJWl2VL/e1C4aMP3WfvUOWCPfpQtsQpzcVazGERwiyIPOA7NfBRD7SpSqxFJ7BVPe/gwO7TBruHvHf6WDF2rFAgHEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720466265; c=relaxed/simple;
-	bh=oLaYk8vwd1R8jUx8dRR9aYic5SRyhzQpSEQWZT70nTo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=C9k6Mjo5ntDSVaej9OfFMt0IJ8uAjxO9URsie4TSMISxMPIM4HEKGqLphzuKq4GXbmqgXvE/cD2+BCaxGlwYH2WUAQhnfg6Zdz3zmaTrd4vJFP/GLv1g/7CvMwOo9gu8xELaBUrCZdbug6Dr2SLoM73g7tDstYcQDwwANFb66fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=C0uvTLTg; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1720467007; c=relaxed/simple;
+	bh=LOEcCf2RZZyLJhSsGePNYzmh0/wDdgZqzaakQWd9BOE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ksUJSbi/isLqpZXXrQ1OxTjaryVZcvN5t0usm2OXmdV4fm65MxgphZtcYi9EYbO88sckkZuMgiDOElRh3BdWlpKPSaR+bUKQS5qTMiDFbSzW713cQzW+7yBdv/BHLf4t5LHX6qFZwab+pzwkM47i6L6nCpm48GjLt9lePRhHfHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YCPLrp1y; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="C0uvTLTg"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7732B35ABB;
-	Mon,  8 Jul 2024 15:17:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=oLaYk8vwd1R8jUx8dRR9aYic5SRyhzQpSEQWZT
-	70nTo=; b=C0uvTLTg9rQaY6nZVyOX4XZBIZCTtsf/4TAKeCfiv7wyKa3IRcxS35
-	boYN5TwjkzRQCT6kL4YrNxweG2jppnMMVhrDbl33o3/5s+j2QzI+dskPc1uEt7q6
-	MMZqWJgkJrlLYCg4ys3EXwCdfTTJYTdPTA6Mu89i6Wn3E08ei9MNM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5BEA435ABA;
-	Mon,  8 Jul 2024 15:17:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DE99C35AB9;
-	Mon,  8 Jul 2024 15:17:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  peff@peff.net
-Subject: Re: [PATCH] builtin/push: call set_refspecs after validating remote
-In-Reply-To: <20240708140350.622986-1-karthik.188@gmail.com> (Karthik Nayak's
-	message of "Mon, 8 Jul 2024 16:03:50 +0200")
-References: <20240708140350.622986-1-karthik.188@gmail.com>
-Date: Mon, 08 Jul 2024 12:17:38 -0700
-Message-ID: <xmqqsewjelrh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YCPLrp1y"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-367a081d1cdso2484082f8f.1
+        for <git@vger.kernel.org>; Mon, 08 Jul 2024 12:30:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720467004; x=1721071804; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OjyeCLxeuiZz+Z8RwWfrm3srvFkur7ur6OqjnjrA+oI=;
+        b=YCPLrp1ywZ2lFY117KJPb7yz+Ya+hC9h3MLGYjoJyZKqZooAP3kzSjRxUfpEWMWsSf
+         S5eJKST9PbCex+nVPYpNCP1ifSv2prhj2UuXdJnSH68W3t0Kr96Tv9BePf8r2jmgUqL9
+         55Qva6zA/ey84rx8uFqQ2U6e6PhVEhlgYdIB88jYH4I/vcNdto1kDhWhn6Nf0jCDIG3p
+         7n5W/X5eB3iu3w5oPgTp7xF4TkQdurvh/z7fMqMy4WnIBfWZP6fmxRAYHnEzHKaX3zdu
+         qIFPo84Eh3S8TLcuL7o0izb5ITjOJA/2QdRMmWdh7ZqAOV9DaQXtS5B7XcfN1bAi820O
+         mDdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720467004; x=1721071804;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OjyeCLxeuiZz+Z8RwWfrm3srvFkur7ur6OqjnjrA+oI=;
+        b=YrwTqmRkGld1pAs+qCXxyUWK4t3VDu9IWZcW9nqIPWi3Vu8S7HpwwahySOLvnurel/
+         cOXwwcPX0HafWSz3+JHKcArdwSvxAfvSDZoKQ+SkVTbkkArdfkWKsQTSAVRM/lXTNtnr
+         C/MP9YmDy6GE+9Bffx3+U01zcbdhkzlbp6R6fCdGG8rxRgmots++U0rdxx5eEAkhoUxQ
+         gyd9o1dB44NJ3pBZSejMvl8whxPd4k2nRlrZ4OTY5ZxnUW9UlnEQVTV8iX38rbJOTZvd
+         SQbR2BsbqoxaxVCQpaAyf07ORsh5HdNEhHpXkyyCq+1Za/Ec6Mj4Yp7cid7Ec9RtoMaD
+         +eqw==
+X-Forwarded-Encrypted: i=1; AJvYcCXIPm9qcqCzIRuE3zGlBGs1UFOTp3YQY7YqUwXlYUKVYvRdNkhYAr9vabt2AxIB0D5Q4zisJILMzLS506bozqe4vmiU
+X-Gm-Message-State: AOJu0YyMcz/vwxHpxKGyI5zOsJY+C3IL5OUid5+utAdIU9pWG/3fVkM+
+	Ah+sShsnvWFwOfug5PS2e7p5unUL3zQWIgNJSdlsxQY6wW0Lt79tHYAxIHubxoSN2bqLX0Ylpp8
+	UeK8WqfgmOxBzmj19qEmA0+kZNvY=
+X-Google-Smtp-Source: AGHT+IHlCx/Mw+yBwyDqDc4ike8AxAL+HvyynWlE6O6CcEiNCXBhfwN/K8a6JGFKlibXdR8Vie7dxhVcSKutNP4tgYo=
+X-Received: by 2002:a05:6000:2c5:b0:367:96b5:784e with SMTP id
+ ffacd0b85a97d-367ceac4900mr450545f8f.50.1720467003941; Mon, 08 Jul 2024
+ 12:30:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- BE373052-3D5E-11EF-BC32-C38742FD603B-77302942!pb-smtp20.pobox.com
+References: <17df67804ef7a3c8.df629cdadcf4ea15.524a056283063601@EPIC94403>
+ <CAPig+cRQPrtGBTxM49nUeHvsVr0qEOnKZ5W_4by=A9mXEsR3DA@mail.gmail.com>
+ <m034onpng4.fsf@epic96565.epic.com> <CAPig+cS2r-b22ikZZ6QHpzfneQ07n6s=E40Sb+QYmCnezVFAww@mail.gmail.com>
+ <752d41f9-6ce3-4c31-a0a2-4960c7dc1b2b@kdbg.org> <xmqqtth2petz.fsf@gitster.g> <028ae5d6-b587-4ffe-b837-38f2c13992ae@kdbg.org>
+In-Reply-To: <028ae5d6-b587-4ffe-b837-38f2c13992ae@kdbg.org>
+From: Brian Lyles <brianmlyles@gmail.com>
+Date: Mon, 8 Jul 2024 14:29:26 -0500
+Message-ID: <CAHPHrSfVLLn_djR1eo06fr5OPaz2RAChv8dBJ8eJKB6b6snWnA@mail.gmail.com>
+Subject: Re: [BUG REPORT] git-gui invokes prepare-commit-msg hook incorrectly
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org, 
+	Sean Allred <allred.sean@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Hi Johannes,
 
-> Since 9badf97c4 (remote: allow resetting url list),
+Johannes Sixt <j6t@kdbg.org> wrote:
+> My take-away is:
+>
+> - The commit message that is entered in the edit box must appear in the
+>   commit unmodified. There is no such concept as "comment lines" in git
+>   gui's commit message edit box. The commit-msg hook can overrule
+>   nevertheless as a means to enforce message hygiene, but otherwise the
+>   user must have full authority.
 
-Please do not be original in places where it shouldn't matter.  Use
-"git show -s --format=reference" that includes the datestamp to help
-readers judge how old the problem is.
+Could you elaborate on why git-gui's commit message edit box should
+behave differently than any other commit message editor? Why is there no
+concept as "comment lines" in git-gui?
 
-> we reset the remote
-> URL if the provided URL is empty. This means any caller of
-> `remotes_remote_get()` would now get a NULL remote.
+Johannes Sixt <j6t@kdbg.org> wrote:
+> - A commit message template and the MERGE_MSG file are populated in a
+> manner that is suitable for `git commit`, i.e. can (and do) contain
+> comment lines. It is, therefore, necessary to remove them when their
+> text is used to populate git gui's edit box.
 
-"NULL remote" meaning?
+> I suggest that removing comment lines ("message-washing") should not
+> happen as a post-processing step, but as a preprocessing step when text
+> is gathered from particular sources that are known to contain
+> inessential cruft.
 
-If you have this:
+While I agree in theory that it would be ideal for git-gui to wash only
+content from sources that are known to contain content meant to be
+washed, but I don't think that's possible since git-gui can't possibly
+know *why* a given line appears in the message, in particular when
+running the prepare-commit-msg hook.
 
- [remote "multi"]
-	url = wrong-one
-	url = wrong-two
-	url =
+I think that whatever path forward is taken, it needs to be predictable
+and consistent with normal `git commit` behaviors. I think that's the
+root problem here in my mind: From the perspective of the
+prepare-commit-msg hook, it's impossible to do the right thing because
+git-gui is invoking the hook consistent with normal `git commit`
+behaviors, but then creating the commit with `git commit -F` behaviors.
+This is an inconsistency with git-gui specifically.
 
-and ask "remotes_remote_get()" to give you the remote "multi", you'd
-get a remote whose URL array has no elements.  Is that what you are
-referring to?
+So it still seems like we have two real options:
 
-> The 'builtin/push.c' code, calls 'set_refspecs' before validating the
-> remote.
+- Start washing the message, allowing the prepare-commit-msg hook to
+  provide template-like guidance to the user regardless of if they are
+  using git-gui or some other editor, or
+- Pass the "message" argument along to the prepare-commit-msg hook so
+  that it can at least avoid adding template-like content (but of course
+  then lose the value added by that template).
 
-There is a comment about "lazily grab remote", so it is very
-understandable.
+The former seems most intuitive to me, though I have admittedly little
+context for git-gui. Hopefully the elaboration I requested further up in
+this message will shed some light things if you still disagree with
+washing the message.
 
-> This worked earlier since we would get a remote, albeit with an
-> empty URL. With the new changes, we get a NULL remote and this crashes.
+I'm certainly open to other ideas as well so long as they allow the hook
+author the ability to add comments when the message will be washed and
+not add comments when it won't be washed, regardless of whether git-gui
+is in use.
 
-You'd really really need to clarify what you mean by "a NULL remote"
-if you want the proposed log message and the change to be
-understood.  The change made by 9badf97c (remote: allow resetting
-url list, 2024-06-14), as far as I can tell, can make the strvecs
-that hold URL and pushURL in a remote structure empty, but it does
-not otherwise destroy the remote structure, or nullify a pointer
-that points at the remote structure.  So I am completely lost here.
+-- 
+Thank you,
+Brian Lyles
