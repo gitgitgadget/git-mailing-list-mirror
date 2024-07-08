@@ -1,87 +1,132 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54938146D49
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 16:52:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E22B14532B
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 16:54:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720457549; cv=none; b=qNGQ1mFBsM6WvULLTtabCOXs+fqS8PeylL9hQ8a8dyhTSlz33dbLtekYg8xYuwNIiXlEYM3rCh2nkHKxKFlcIcaovbJ+wx34bHy29G6rtoT7WccuuiYseJGhN2rrBkgColHmi6US/I1n/cIQ3C1n2nTyxfQFyrM5WYAEkNCoR+o=
+	t=1720457681; cv=none; b=FjBUITVyyayQpo1NJtxoCBgZ7zWskWGe2Vsg7WgFABvsgereFqPV2JGTfGTXfMsb594GxdZfMAJfdpcVgU11b2BLDgkFNofMIaBarrwJUfvieQGSyr4vc13VcfOICTqjbLcxbUr4ab/XibXqmxjFHLcsJ0c6wCoE1Zx8yDNSQzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720457549; c=relaxed/simple;
-	bh=myJRPnGYmGkM1r4UBgUhdh9k41wH5L3yQiAXAKc8PBU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RhizxD9g7JdKbOMKDw3zn6pnfqeCaJPgbSBH/hxOePvPytn3R7bozZdEe8ngTGb/R1ccd+5Hv+0WGYEDXV/mKUEoVrN3eeSc/mF5Q9QfkYCACyU1ZPcNTCj5Au+1dVIKZ5NAlSmuUmF3WLKH0hnXuB9ezTI9y7oYd1U2mboMnaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-651961563d6so33399157b3.0
-        for <git@vger.kernel.org>; Mon, 08 Jul 2024 09:52:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720457546; x=1721062346;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=myJRPnGYmGkM1r4UBgUhdh9k41wH5L3yQiAXAKc8PBU=;
-        b=Cxhi9ZBrtma/bg3nmePyu4X8mjRj8C1X6BfUkQn1nJLV7Wdda2h68EtSeiG1j5ZSMr
-         9L9xYrKf9FQYOkHwYVcZYwIZhqsxyzIVOqEYSwEmvDPammNjmNY4QEdK+O2B0u1ZgUrm
-         WhhrBnWzCLygt2Fdb0Df0LQ2vbLWi2o5jEN8OPY/QmT2iNFnDIfWRoOM5iI3FBwlXyVy
-         qb2RLITVvPROke6+MDBebowlIiPoffY3s7Ga2LMOKPCT3cKEbTGfDxdPkTBOZ8JXjwPC
-         y/Qw5h0Or3n1ReXyChicmCvgF1WPaGHVfLf3iagMw8CWRCzW82txIfZfeVoAOdOwYGsI
-         W5kA==
-X-Gm-Message-State: AOJu0Yw7FXFpOnvVzzhjX7Uze2JnszBd68WMbeinIwO5b42rXX0T16c4
-	5XdsG3M1k9gZkv3RvjYS3xab43mFhgE/syeMqhhYPSVhKqlCD0oHUjEN1yQWyfS1aQmfmvCbnIU
-	PXKWCBvS7u+GgEAMr61nnGWREZx27ZoOp
-X-Google-Smtp-Source: AGHT+IFUe2f7Af7NP6S1dpK8aWGI+8nwgKswm9z5yo+V1XIB0ZK3Rq9QGC66mgi20JOLzuEQP6eMFBk24Jg+I22/khA=
-X-Received: by 2002:a81:5cc1:0:b0:630:f6b0:6c3d with SMTP id
- 00721157ae682-658ef249721mr3228597b3.23.1720457546115; Mon, 08 Jul 2024
- 09:52:26 -0700 (PDT)
+	s=arc-20240116; t=1720457681; c=relaxed/simple;
+	bh=T3f/F1TqQBFxsMa47gSO7C148gczKEI/6YNRvhoVGiY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=d5tvRSZDvELMBFDUE+LwluaF3udG0PuK8VENvHPkMS0Yi68RrSh356Cnlj2zmsnaLyNRArixlySfUt75pm5q7ApcwRE4tZ63U+1u1x1a/oT60327iP1FtXJOhHYOR+fB6HAZWDsZ8BMExNLMckrTKP4oL5DQ0VZ37HyIEXRbZXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=sT4a3Bug; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sT4a3Bug"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9EB791AEDD;
+	Mon,  8 Jul 2024 12:54:39 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=T3f/F1TqQBFxsMa47gSO7C148gczKEI/6YNRvh
+	oVGiY=; b=sT4a3BugpfILBjjmqL8bGyKlQalIAN4ZUSkNQvqQX3Az5gmQnSu1by
+	WsEx4m5wOif+srkfmPb1Rti+AnR9zJXQVaYIQxhtse6OZGaAb7aS7lfo1B8BIWeq
+	KDCDQ4fCib3Ov7Ph6TVrCX3Qe6XzWgW9KcgHgG5Tv1e14khETrClE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 987961AEDC;
+	Mon,  8 Jul 2024 12:54:39 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 262171AEDA;
+	Mon,  8 Jul 2024 12:54:36 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  jltobler@gmail.com,  chriscool@tuxfamily.org
+Subject: Re: [PATCH 6/8] clang-format: formalize some of the spacing rules
+In-Reply-To: <20240708092317.267915-7-karthik.188@gmail.com> (Karthik Nayak's
+	message of "Mon, 8 Jul 2024 11:23:14 +0200")
+References: <20240708092317.267915-1-karthik.188@gmail.com>
+	<20240708092317.267915-7-karthik.188@gmail.com>
+Date: Mon, 08 Jul 2024 09:54:34 -0700
+Message-ID: <xmqq8qybj039.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALaQ_hoDqD6CXEDy0YT8no3SaoJSqV6toMtyRHdJr6h3RZUiLA@mail.gmail.com>
-In-Reply-To: <CALaQ_hoDqD6CXEDy0YT8no3SaoJSqV6toMtyRHdJr6h3RZUiLA@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 8 Jul 2024 12:52:14 -0400
-Message-ID: <CAPig+cSB0d7aAwMpToLCa+6Be5JFqLAr+0pvBXQxg_=DEk7p2A@mail.gmail.com>
-Subject: Re: FR: Provide Out-Of-Tree Building; Provide Cross-Compile Parameters
-To: Nathan Royce <nroycea+kernel@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C1E5F3B4-3D4A-11EF-9D6F-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-On Mon, Jul 8, 2024 at 12:38=E2=80=AFPM Nathan Royce <nroycea+kernel@gmail.=
-com> wrote:
-> For projects I built, up to the git project (think LFS steps
-> (altered)), they've all provided OOT builds so the source directory
-> remains pristine (albeit those that needed autoconf to be run for
-> `configure` generation).
->
-> They've also all provided `--{build,host,target,with-sysroot}=3D`
-> parameters for ease of cross-compiling.
->
-> Looking at what the git project offers, and I'm not seeing either feature=
-s.
->
-> Looking at the Makefile, I see mention of `HOST_CPU` which looks
-> pertinent, but being able to point to the path of the target root for
-> files to link is important and I'm not noticing anything for that.
->
-> Grepping through Documentation for `HOST_CPU` comes up with nothing.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Indeed, HOST_CPU was chosen intentionally for compatibility with
-`autotools` in the event that support for cross-compilation was ever
-added[*].
+> There are some spacing rules that we follow in the project and it makes
+> sen to formalize them:
+> * Ensure there is no space inserted after the logical not '!' operator.
 
-A few years ago, I had started adding cross-compilation support to the
-project but never finished the task. I'm pretty sure I still have the
-patches sitting around somewhere. I'll look for them, but I'm not sure
-how much they will help. Aside from the obvious patch adding
-`config.guess` and `config.sub`, I recall creating a patch to fool
-`autoconf` into not demanding that the project also carry the bunch of
-other scripts/tools `autoconf` normally wants (since we don't use
-those tools in our build process).
+Shouldn't the rule be more like "no space between any single operand
+prefix or postfix operator and its operand"?  "foo++", "--foo", "~0"
+are the examples that come to my mind.
 
-[*] https://lore.kernel.org/git/20171209094310.GA60808@flurp.local/
+> * Ensure there is no space before the case statement's color.
+
+"color" -> "colon".
+
+> * Ensure there is no space before the first bracket '[' of an array.
+> * Ensure there is no space in empty blocks.
+
+Hmph, I actually thought we preferred to be more explicit, using
+
+	if (foo)
+		; /* nothing */
+
+instead of any of
+
+	if (foo) {}
+	if (foo) { }
+	if (foo) { ; }
+	if (foo) { ; /* nothing */ }
+
+to write an empty statement.
+
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  .clang-format | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>
+> diff --git a/.clang-format b/.clang-format
+> index 1a5f0c9046..05036f610b 100644
+> --- a/.clang-format
+> +++ b/.clang-format
+> @@ -126,11 +126,18 @@ RemoveBracesLLVM: true
+>  # x = (int32)y;    not    x = (int32) y;
+>  SpaceAfterCStyleCast: false
+>  
+> +# No space is inserted after the logical not operator
+> +SpaceAfterLogicalNot: false
+> +
+>  # Insert spaces before and after assignment operators
+>  # int a = 5;    not    int a=5;
+>  # a += 42;             a+=42;
+>  SpaceBeforeAssignmentOperators: true
+>  
+> +# Spaces will be removed before case colon.
+> +# case 1: break;    not     case 1 : break;
+> +SpaceBeforeCaseColon: false
+> +
+>  # Put a space before opening parentheses only after control statement keywords.
+>  # void f() {
+>  #   if (true) {
+> @@ -139,6 +146,13 @@ SpaceBeforeAssignmentOperators: true
+>  # }
+>  SpaceBeforeParens: ControlStatements
+>  
+> +# No space before first '[' in arrays
+> +# int a[5][5];     not      int a [5][5];
+> +SpaceBeforeSquareBrackets: false
+> +
+> +# No space will be inserted into {}
+> +# while (true) {}    not    while (true) { }
+> +SpaceInEmptyBlock: false
+>  
+>  # The number of spaces before trailing line comments (// - comments).
+>  # This does not affect trailing block comments (/* - comments).
