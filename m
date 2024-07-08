@@ -1,138 +1,66 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CCC482D7
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 15:01:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1F878C9D
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 15:03:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720450881; cv=none; b=MTpxR9/HtuboA2pJjR3Q/HjLeozQi9MJGkvemGn/vsFqMqCNCOj2XAYc9RqKt8VjTRiGGyeNRtoGkEsxbSWug+a2W+jvmzyaQU5hjQRJHMcR2TZxud3mKNR8YbWIviJIRFmF73811wk/lauKMkWOmfm38a+WoIUYOiDe3MbBjFM=
+	t=1720450985; cv=none; b=Sm0I4MRWFAL2XsQLUQGvLWqoTn/hcnTlRBJZvblstNAUoLYnNwwvyd2rGWIK66ohze6giKF5j3q6jfCSElzclZSeF+Z6pPOzy/pOkJ0ZrqdgkQptbmYUKBM6749rrdGnEVR8/TEXMqav2/52w0xDEbu230l4rDi0Z8PZm6pUt7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720450881; c=relaxed/simple;
-	bh=X/dqQxXsoHdP3IE/ri0ax3KF6iI9ft6seC7fTsp4GHo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g2Ex/EOZSey5tJW5Ewuq6L12AENgwou4hnPLB6nmppsihvvkqyjJQWozoiomcw4uEoSr/inGgZPqDvu3ElgkOGMpVR4UtD2ejNoTkf3+QIaMHalSKaftFooCDxICYuRTjL+2/BWbPRVhYwGUSoNI/pxIAdlxJq0uVXJZeYYSHwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RazFwuWp; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RazFwuWp"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2c2dee9d9cfso2237661a91.3
-        for <git@vger.kernel.org>; Mon, 08 Jul 2024 08:01:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720450879; x=1721055679; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TEJM3DbWqRNszWK6tmzbd44n0pBjlaqqq7fjtr84wsg=;
-        b=RazFwuWpqtUzEZOtrucfW/0n73s++7US19wkoB3g+2EX/w39MR+7J+HVovNv1b1UAV
-         BNCDMFxqoyUPm6/S5/GDnKcsnpYfpLMqnN+rLREsa3HV9rI2Rg+WtdHB8BZDPTSCy1il
-         v++tMUMRteZ5emtuWm6gVfrEVNd94Ua1M+fQLmy7zo6ZUNA7PXNwYxXKhuDf4VfGhEHc
-         SqtLBUSeptY20Vfxf7npHFqCKEHzROy75GWD9VGIEoBFubvwbIHQiMI7k4dX64f7v+aV
-         v9mCzleMedFOd1+57gM+kzXiauqXkXQ8mO93byQ6uNwJIcZQ68IoacG0P4b3U13a725T
-         67eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720450879; x=1721055679;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TEJM3DbWqRNszWK6tmzbd44n0pBjlaqqq7fjtr84wsg=;
-        b=u14aJTx0zHMwq0Xa4GkuA/ocYWjoRPffpj/uEdw/bCPGoiAxd4q6n0ZPmWUq+b2LiO
-         qVZ44aaBHwKnbl/Jpfz7FEcGPuSUrNtg8kuhP2dJsX8QsZSDOOIEl9kwYeEeFol8Mfu/
-         lUKotrgP/hcJSwYRNdOsgJdqbA5VjDSIvE6zWBoetrMYy2iHUHQ4uOaq3q/xruqze4ui
-         YQVwXfgAEzlx8RADg2i2nYrJz5KIc14ICxkk6G5yVPMPxDz2FbBcCzBXEEqSy6vVDx98
-         7BfKjUoD6cgqY6txCWnnLHPL6JNKJvCq6OuN6m++WJMQ2K/rbJEwbNyynFpuRWuKC9es
-         ypZg==
-X-Gm-Message-State: AOJu0YypHeC8kP0+HAUjHu/7o5/DwLy1mTrVpe8LxWsaXbAzNbtsIXOR
-	aQCnAzBIfmqvTXOj0UAWhuLqJvsBNEi69o9sn7nY+X9q9j2kIi0X
-X-Google-Smtp-Source: AGHT+IGkdGiCrnxY5fRARO6U8CMV/Zlt7Z05sGiEjIRbirj3b02LhytCcfV5J1nYWTIUBWtNMYVMgg==
-X-Received: by 2002:a17:90a:5106:b0:2c9:75fd:298a with SMTP id 98e67ed59e1d1-2c99c81ec3fmr7007021a91.42.1720450878875;
-        Mon, 08 Jul 2024 08:01:18 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c99aa66582sm8242366a91.37.2024.07.08.08.01.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jul 2024 08:01:18 -0700 (PDT)
-Date: Mon, 8 Jul 2024 23:01:17 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [GSoC][PATCH v8 2/9] fsck: add a unified interface for reporting
- fsck messages
-Message-ID: <Zov_PaaxF1Mbp_dP@ArchLinux>
-References: <ZoVX6sn2C9VIeZ38@ArchLinux>
- <ZovrFCzRg06pq5eI@ArchLinux>
- <CAOLa=ZRPaiHK+NezigXEyWceriHZ7rb6msR51zcit9X=8rHFyQ@mail.gmail.com>
+	s=arc-20240116; t=1720450985; c=relaxed/simple;
+	bh=5bGz9rb/MQ3wqP2fa9cN5EpIwm9X3cLvMbV/K0eyv3s=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uyP9LbX0vWWvMZroxxAs1aq7izEYHi81iCQNwyUtD6H37I2DsSmoDcqn9JEPR7vKEhAaumARROq71kEL8n7NHrWRx9ucgdhaC6Mv5m9u/4SBsqdTY3SCKFQnTm73T2mw5He+hUds3PaNz77pxGVa+yz1GDM0hrAszqDyebuyXfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 468F2uNE3210561
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Jul 2024 15:02:57 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Konstantin Khomoutov'" <kostix@bswap.ru>, "'ellie'" <el@horse64.org>
+Cc: <git@vger.kernel.org>
+References: <15bb8955-8ef6-4d83-b10c-e8593f65790c@horse64.org> <793a0c16-c2e5-4fbb-9e97-297c096fe42f@horse64.org> <20240708143239.vq47dg7mgh33hykf@carbon>
+In-Reply-To: <20240708143239.vq47dg7mgh33hykf@carbon>
+Subject: RE: With big repos and slower connections, git clone can be hard to work with
+Date: Mon, 8 Jul 2024 11:02:50 -0400
+Organization: Nexbridge Inc.
+Message-ID: <001201dad147$e9fdf9b0$bdf9ed10$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZRPaiHK+NezigXEyWceriHZ7rb6msR51zcit9X=8rHFyQ@mail.gmail.com>
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIOcuJNQOiJMkQZvscuPTyr1NeGY7GFqdrw
+Content-Language: en-ca
 
-On Mon, Jul 08, 2024 at 10:36:38AM -0400, Karthik Nayak wrote:
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > The static function "report" provided by "fsck.c" aims at checking fsck
-> > error type and calling the callback "error_func" to report the message.
-> > However, "report" function is only related to object database which
-> > cannot be reused for refs. In order to provide a unified interface which
-> > can report either objects or refs, create a new function "vfsck_report"
-> > by adding "checked_ref_name" parameter following the "report" prototype.
-> > Instead of using "...", provide "va_list" to allow more flexibility.
-> >
-> > Like "report", the "vfsck_report" function will use "error_func"
-> > registered in "fsck_options" to report customized messages. Change
-> > "error_func" prototype to align with the new "vfsck_report".
-> >
-> > Then, change "report" function to use "vfsck_report" to report objects
-> > related messages. Add a new function called "fsck_refs_report" to use
-> > "vfsck_report" to report refs related messages.
-> >
-> 
-> Not sure I really understand why we need to do this. Why can't we simply
-> add `const char *checked_ref_name` to the existing 'report' and
-> propagate this also to 'error_func'. Why do we need all this parallel
-> flows?
-> 
+On Monday, July 8, 2024 10:33 AM, Konstantin Khomoutov wrote:
+>On Mon, Jul 08, 2024 at 04:28:25AM +0200, ellie wrote:
+>
+>[...]
+>> error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly:
+>> CANCEL (err 8)
+>[...]
+>> It seems extremely unlikely to me to be possibly an ISP issue, for
+>> which I already listed the reasons. An additional one is HTTPS
+>> downloads from github outside of git, e.g. from zip archives, for way
+>> larger files work fine as well.
+>[...]
+>
+>What if you explicitly disable HTTP/2 when cloning?
+>
+>  git -c http.version=HTTP/1.1 clone ...
+>
+>should probably do this.
 
-Yes, we could just add a parameter "const char *checked_ref_name" to the
-existing "report". This may seem the simplest way to do. However, it
-will also introduce some trouble below:
+I can verify that this works in my environment.
 
-1. "report" function should be exported to the outside, we need to
-rename it to "fsck_report". Well, we need to change a lot of code here.
-And we MUST do this, because "report" is a general name. When exporting
-to the outside, it's not proper.
-2. When we add a new parameter in "report", for all the "report" calls,
-we need to pass this new parameter with NULL.
-
-Use this way, we could do not change "report" function prototype and the
-corresponding calls. Most importantly, we could let the caller feel
-transparent. Using "report", caller can just ignore "checked_ref_name".
-Also for "fsck_refs_report", we could ignore some UNUSED parameters.
-
-So I think this design is more elegant than just adding a new parameter
-in the existing "report" function.
-
-> Apart from that, what does 'v' in 'vfsck_report' signify?
-> 
-
-Because I use "va_list" parameter, I want to emphasis on this. And this
-provides flexibility that we could add a "fsck_report" function later.
-There are many codes in git code base using this way. I just followed
-this.
-
-> Perhaps it is also because this commit is doing a lot of things and we
-> could have simplified it into smaller commits?
-> 
-
-Actually, this commit is very clear. I just want to provide a unified
-function "vfsck_report" here. And let the "report" use this function and
-"fsck_refs_report" function use this.
-
-So I don't know whether we should split this commit into multiple
-commits. They are just tied together.
