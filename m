@@ -1,205 +1,81 @@
-Received: from mail.ekdawn.com (mail.ekdawn.com [159.69.120.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0F980BF5
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 12:41:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.120.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48987E0EA
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 12:49:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720442515; cv=none; b=dHMn6kYEhb01+JGUqfjiXHsFxxbpjPFtEe9RjmWRf7VkM3Tl2f+r4+1fzHTukbEp9uBOrEL6SxqAfFeeW7Lb5xTPwODMqFSqVlMopfHVh4/TmcoIamyUayk6Z+mv1zCNHbor0IW2HSbl++QXLK2H2fUW3Q0v+15GuDWqmmTSOJQ=
+	t=1720442981; cv=none; b=SgOAPLyEQMtEgnYJUIGKe3FyIk+tN44yLxNlEJvOrvqaNQ81qURi6RVz71G576kW9yvhtA/ZbL2Qd/3ft0Zt6HHnnPZgo2oOss2XKCYGL5zXqomS0g0kLYDTOxgB/N+YceCU77lG9ZCP9EqMc0gjMxFfMQ4a9SK/1mvZBgrGCkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720442515; c=relaxed/simple;
-	bh=uStTbkmi8eez8PBg6NS6h+pQf/1xugb3r7E1QXzz4G8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=sPyTp8/ytWsBz0FXf7CoDmfnYngae+u4BeXz8XsYtnsejYWFfYSmDgMkTm3zJWJuspCTjoVXfbIo6vN+IS+9hn+hWK9d5+zoEEOZjy/YjV0YZXNxLvC9mtuPORnq6g7lnusp5QfIz8pBWKUPY1SdjSQbwoKFjd3Dtb/E2Nvf3sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=horse64.org; spf=pass smtp.mailfrom=mail.ekdawn.com; arc=none smtp.client-ip=159.69.120.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=horse64.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ekdawn.com
-Received: from [10.42.0.97] (dynamic-176-003-149-048.176.3.pool.telefonica.de [176.3.149.48])
-	by mail.ekdawn.com (Postfix) with ESMTPSA id 5F93F1806D3;
-	Mon,  8 Jul 2024 12:41:49 +0000 (UTC)
-Message-ID: <793a0c16-c2e5-4fbb-9e97-297c096fe42f@horse64.org>
-Date: Mon, 8 Jul 2024 14:41:48 +0200
+	s=arc-20240116; t=1720442981; c=relaxed/simple;
+	bh=paF7cxIu7m9QLHqh6JWBtM8Zgc+Hw/Y9ZSl05iUcOCc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YKdfEl9Mzlc+/dR4JpVha/Ay7d01uE0dGFAjB6ZaD8nuK4pK0M+ZiHsvTa/ZoAmfvDUuZu8FiBfsRyX+CaKTMfS4vho7GOuxCdkJyjXL9G+RvRRdtRs5evPkO+KtoBl0HhDE2tf+MOeu+vV46Y7mCfM7olXd7LyGmSiW+nVeBgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K7BmO9RB; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K7BmO9RB"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-58b447c513aso4473031a12.2
+        for <git@vger.kernel.org>; Mon, 08 Jul 2024 05:49:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720442978; x=1721047778; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=paF7cxIu7m9QLHqh6JWBtM8Zgc+Hw/Y9ZSl05iUcOCc=;
+        b=K7BmO9RBRflnn2S6P6FgewqEVI67KRm5GB/awNsnH3cj0UrF6iAy814ZIUoQVX56xO
+         pt49Rh/HfUY+0JvtIL8rrkxk48YhezmripMlK9MhUs4AI+/XXmxqqgGpe+TICFvosiG5
+         dgNCKvP2nMdnhYT3cvtD0g4jcOCSyvHXi1b+4EWMfbEXmMduzI9x4hhvS64DILHQwoOE
+         44r3FGpPY+0hQJAzNwfRsEB5Xcn5GeQCJlVRb6jHEiP9vKiA7bjKg8CjbSQVxfBX08Je
+         58W3BCSMODwnR2yNcQg+VPjRUl/dzFpbgmqo9KpjROHLT3c9w2aF6/OiFqH7t7VPqgLS
+         Z1zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720442978; x=1721047778;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=paF7cxIu7m9QLHqh6JWBtM8Zgc+Hw/Y9ZSl05iUcOCc=;
+        b=vdZHkZvvwCnaJJw8HMDpz68og+pci18VCpChi2xF4jRLcJq3Ied7ONAqez6ymz8+fO
+         8gUsAvd3SSjVLk1YqyMFXda4NvpZgx7tOzTWew4bLHwjnUQiJnpOnr4mg3zKfm/n19TY
+         TFkDO0fezBoONAqTfGhPe/5sA96uiT5d5n22xyeBWtTyP5AojumW4DyLOjQMpXBJyVER
+         74uvdzvHESvDAtwY4qmH3xDnR/X4gPIbbd8Ndu3Kyez6oAS7eoX1dMTQqQKfUgXCPy9E
+         rYev+Hq4INyZ0sFZSi6LS6BaBfePC+BCxpXAlH+PxAhOYUhQ2jXe2pZWdlIggEEUx6uY
+         YHhg==
+X-Forwarded-Encrypted: i=1; AJvYcCXOMnQuEm00fdQE+gnEljhzs97JD1oDZquah7/ejH5WXHzjqwxaelO9SNqVeQNEsAPOV+MI9n7h/BVhnQrKiIIh4/JS
+X-Gm-Message-State: AOJu0YyZMDsisSHRTQRysV+E9aQYrWaDHRomOd+QmDdC7v463Gd5JjAs
+	dNRcpN0o1EyBwRtkJv7W6dFOno40tRBb+UZbD72wcXOcAes6eeJa+ecvrzk2OiCDZmMts/grOZx
+	1RChZGfKK2nWmEt+xL4N2LMLy2SE7RtPP
+X-Google-Smtp-Source: AGHT+IGR7lW2lzVO+jjUSb5g199eIGNiK34QGsya8PvWZvZYRM0X0izJ5Wa42nLk77onf5p7jvUJkC1/KIb6iGrHZls=
+X-Received: by 2002:a05:6402:350d:b0:58e:13e8:dc6b with SMTP id
+ 4fb4d7f45d1cf-58e5b4a791cmr7948753a12.24.1720442977869; Mon, 08 Jul 2024
+ 05:49:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: With big repos and slower connections, git clone can be hard to
- work with
-To: rsbecker@nexbridge.com, git@vger.kernel.org
-References: <fec6ebc7-efd7-4c86-9dcc-2b006bd82e47@horse64.org>
- <0be201dab933$17c02530$47406f90$@nexbridge.com>
- <fdb869ef-4ce9-4859-9e36-445fd9200776@horse64.org>
- <0beb01dab93b$c01dfa10$4059ee30$@nexbridge.com>
- <200c3bd2-6aa9-4bb2-8eda-881bb62cd064@horse64.org>
- <d3b3c9bb-fa2a-422d-99a7-4add5f98326e@horse64.org>
- <0a7401dad0d6$10d27e20$32777a60$@nexbridge.com>
- <15bb8955-8ef6-4d83-b10c-e8593f65790c@horse64.org>
- <000001dad132$a9339170$fb9ab450$@nexbridge.com>
-Content-Language: en-US
-From: ellie <el@horse64.org>
-In-Reply-To: <000001dad132$a9339170$fb9ab450$@nexbridge.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CAJFVNCfz_-Dvd0ctc4w-2jsthyPFxy=HOutj=3PbNnQ-Gsz84A@mail.gmail.com>
+ <Zohf7LzaRHaG9vX6@nand.local> <xmqqy16ematj.fsf@gitster.g>
+In-Reply-To: <xmqqy16ematj.fsf@gitster.g>
+From: Tiago de Bem Natel de Moura <t.nateldemoura@gmail.com>
+Date: Mon, 8 Jul 2024 13:49:26 +0100
+Message-ID: <CAJFVNCcrURr7h25BE76jd19=qO0e3umP5_Hhp1mHFrhXDB+DLA@mail.gmail.com>
+Subject: Re: git diff-tree do not honor diff.orderfile config
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+I agree with pretty much everything said here but then the
+documentation must be fixed here:
+https://git-scm.com/docs/git-diff-tree#Documentation/git-diff-tree.txt--Oltorderfilegt
 
+I use diff-tree in a Go program[1] and I expected it to be plumbing
+but I got an error report that was hard to reproduce then I read in
+the documentation that diff-tree also relies on the configuration but
+when I tried it didn't work, hence this report.
+If you folks say it does not depend on the config and never will, then all good.
 
-On 7/8/24 2:30 PM, rsbecker@nexbridge.com wrote:
-> On Sunday, July 7, 2024 10:28 PM, ellie wrote:
->> I was intending to suggest that depending on the largest object in the repository,
->> resume may remain a concern for lower end users. My apologies for being unclear.
->>
->> As for my concrete problem, I can only guess what's happening, maybe github's
->> HTTPS proxy too eagerly discarding slow connections:
->>
->> $ git clone https://github.com/maliit/keyboard maliit-keyboard Cloning into 'maliit-
->> keyboard'...
->> remote: Enumerating objects: 23243, done.
->> remote: Counting objects: 100% (464/464), done.
->> remote: Compressing objects: 100% (207/207), done.
->> error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly:
->> CANCEL (err 8)
->> error: 2507 bytes of body are still expected
->> fetch-pack: unexpected disconnect while reading sideband packet
->> fatal: early EOF
->> fatal: fetch-pack: invalid index-pack output
->>
->> A deepen seems to fail for this repo since one deepen step already gets killed off. Git
->> HTTPS clones from any other hoster I tried, including gitlab.com, work fine, as do git
->> SSH clones from github.com.
->>
->> Sorry for the long tangent. Basically, my point was just that resume still seems like a
->> good idea even with deepen existing.
->>
->> Regards,
->>
->> Ellie
->>
->> On 7/8/24 3:27 AM, rsbecker@nexbridge.com wrote:
->>> On Sunday, July 7, 2024 7:42 PM, ellie wrote:
->>>> I have now encountered a repository where even --deepen=1 is bound to
->>>> be failing because it pulls in something fairly large that takes a
->>>> few minutes. (Possibly, the server proxy has a faulty timeout setting
->>>> that punishes slow connections, but for connections unreliable on the
->>>> client side the problem would be the same.)
->>>>
->>>> So this workaround sadly doesn't seem to cover all cases of resume.
->>>>
->>>> Regards,
->>>>
->>>> Ellie
->>>>
->>>> On 6/8/24 2:46 AM, ellie wrote:
->>>>> The deepening worked perfectly, thank you so much! I hope a resume
->>>>> will still be considered however, if even just to help out newcomers.
->>>>>
->>>>> Regards,
->>>>>
->>>>> Ellie
->>>>>
->>>>> On 6/8/24 2:35 AM, rsbecker@nexbridge.com wrote:
->>>>>> On Friday, June 7, 2024 8:03 PM, ellie wrote:
->>>>>>> Subject: Re: With big repos and slower connections, git clone can
->>>>>>> be hard to work with
->>>>>>>
->>>>>>> Thanks, this is very helpful as an emergency workaround!
->>>>>>>
->>>>>>> Nevertheless, I usually want the entire history, especially since
->>>>>>> I wouldn't mind waiting half an hour. But without resume, I've
->>>>>>> encountered it regularly that it just won't complete even if I
->>>>>>> give it the time, while way longer downloads in the browser would.
->>>>>>> The key problem here seems to be the lack of any resume.
->>>>>>>
->>>>>>> I hope this helps to understand why I made the suggestion.
->>>>>>>
->>>>>>> Regards,
->>>>>>>
->>>>>>> Ellie
->>>>>>>
->>>>>>> On 6/8/24 1:33 AM, rsbecker@nexbridge.com wrote:
->>>>>>>> On Friday, June 7, 2024 7:28 PM, ellie wrote:
->>>>>>>>> I'm terribly sorry if this is the wrong place, but I'd like to
->>>>>>>>> suggest a potential issue with "git clone".
->>>>>>>>>
->>>>>>>>> The problem is that any sort of interruption or connection
->>>>>>>>> issue, no matter how brief, causes the clone to stop and leave nothing
->> behind:
->>>>>>>>>
->>>>>>>>> $ git clone https://github.com/Nheko-Reborn/nheko
->>>>>>>>> Cloning into 'nheko'...
->>>>>>>>> remote: Enumerating objects: 43991, done.
->>>>>>>>> remote: Counting objects: 100% (6535/6535), done.
->>>>>>>>> remote: Compressing objects: 100% (1449/1449), done.
->>>>>>>>> error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly:
->>>>>>>>> CANCEL (err 8)
->>>>>>>>> error: 2771 bytes of body are still expected
->>>>>>>>> fetch-pack: unexpected disconnect while reading sideband packet
->>>>>>>>> fatal: early EOF
->>>>>>>>> fatal: fetch-pack: invalid index-pack output $ cd nheko
->>>>>>>>> bash: cd: nheko: No such file or director
->>>>>>>>>
->>>>>>>>> In my experience, this can be really impactful with 1. big
->>>>>>>>> repositories and 2.
->>>>>>>>> unreliable internet - which I would argue isn't unheard of! E.g.
->>>>>>>>> a developer may work via mobile connection on a business trip.
->>>>>>>>> The result can even be that a repository is uncloneable for some users!
->>>>>>>>>
->>>>>>>>> This has left me in the absurd situation where I was able to
->>>>>>>>> download a tarball via HTTPS from the git hoster just fine, even
->>>>>>>>> way larger binary release items, thanks to the browser's HTTPS
->>>>>>>>> resume. And yet a simple git clone of the same project failed repeatedly.
->>>>>>>>>
->>>>>>>>> My deepest apologies if I missed an option to fix or address this.
->>>>>>>>> But summed up, please consider making git clone recover from hiccups.
->>>>>>>>>
->>>>>>>>> Regards,
->>>>>>>>>
->>>>>>>>> Ellie
->>>>>>>>>
->>>>>>>>> PS: I've seen git hosters have apparent proxy bugs, like timing
->>>>>>>>> out slower git clone connections from the server side even if
->>>>>>>>> the transfer is ongoing. A git auto-resume would reduce the
->>>>>>>>> impact of that, too.
->>>>>>>>
->>>>>>>> I suggest that you look into two git topics: --depth, which
->>>>>>>> controls how much
->>>>>>> history is obtained in a clone, and sparse-checkout, which
->>>>>>> describes the part of the repository you will retrieve. You can
->>>>>>> prune the contents of the repository so that clone is faster, if
->>>>>>> you do not need all of the history, or all of the files. This is
->>>>>>> typically done in complex large repositories, particularly those
->>>>>>> used for production support as release repositories.
->>>>>>
->>>>>> Consider doing the clone with --depth=1 then using git fetch
->>>>>> --depth=n as the resume. There are other options that effectively
->>>>>> give you a resume, including --deepen=n.
->>>>>>
->>>>>> Build automation, like Jenkins, uses this to speed up the clone/checkout.
->>>
->>> Can you please provide more details on this? It is difficult to understand your issue
->> without knowing what situation is failing? What size file? Is this a large single pack
->> file? Can you reproduce this with a script we can try?
->>>
-> 
-> First, for this mailing list, please put your replies at the bottom.
-> 
-> Second, the full clone takes under 5 seconds on my system and does not experience any error that you are seeing. I suggest that your ISP may be throttling your account. I have seen this happen on some ISPs under SSH but few under HTTPS. It is likely a firewall or as you said, a proxy setting. GitHub has no proxy.
-> 
-> My suggestion is that this is more of a communication issue instead of than a large repo issue. 133Mb is a relatively small a repository and clones quickly. This might be something to take up on the GitHub support forums rather that for git - since it seems like something in the path outside of git is not working correctly. None of the files in this repository, including pack-files is larger than 100 blocks, so there is not much point with a mid-pack restart.
-> 
+Thank you.
 
-I apologize for not placing the responses where expected.
-
-It seems extremely unlikely to me to be possibly an ISP issue, for which 
-I already listed the reasons. An additional one is HTTPS downloads from 
-github outside of git, e.g. from zip archives, for way larger files work 
-fine as well.
-
-Nevertheless, this irrelevant to my initial request. Since even if it's 
-not caused by a Github server side issue, a resume would still help.
-
-Regards,
-
-Ellie
+1: https://github.com/terramate-io/terramate/blob/af73c2b688fae94360169da6ab8de49ea5b07649/git/git.go#L466-L482
