@@ -1,101 +1,113 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CE614659F
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 18:33:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7BD14A614
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 18:54:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720463592; cv=none; b=EfV/gxK2NSNO6tTnvASn2hB6fKjmeBn3Ks1U/bPJK+WYOgH51QqmEN0I4U7x+i1yUHQDOY+1VBiNvS79/3855UIa3XnvGQjWFBCyU6O5PIYtFpTVy0IEBfrE4qLGv1hAHB/8m9YcslOCxnmAc/ksmZgzVCpdRYwMm18d2BrY62Y=
+	t=1720464888; cv=none; b=HOX+azHMp2NH//NPqxgK8Jn5tLPiTfxY6vVzA04UkhgRnO3EC9iBxTUX4VlqkhF0RuWZVn3lLUMm3YaicA8fC1nr3v6d9FZYq1qO5A3wFnKCbOl3XGLCse+hqF0g5+3MN0pIXgCk7MWBcpTU1x1RvFkCtTL8qYfL2ow86/DN9JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720463592; c=relaxed/simple;
-	bh=3qSN8BK+K+VVBKtYNuCzVeM0mD2eaQIUxukdJb+yDjk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lvYagWHelvbnNfb0IRddRwvtY9tbiCpf+sG0N9/x+8scqbWp0jTMtwC9Q5q22Qw8JIRhZDWQmN8sglZNdbV2eHN9OhokMDS8nKTnLUI9HV6kOOGWh+EGEekA08sx8+cm3bjE+BRLw870RJY21PHZTZEZIkgwylijRUoMjMPt5CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RT4afok+; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720464888; c=relaxed/simple;
+	bh=QjJzEXiGGY5hB0pCYaVJV6B1bCfCaBK1fZJOYEx0HE8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bboq1bMP+xiKM4n/owfamxS1LW66FmPuTzm9Why0G5KnXLjr1SNw4R2Hp+a8+AHtULvbpw/GqSn4ergneQk30qZzyvYd8mTE29zQTbhJ1GaRZqO7cwnoVcRXygqZMxNSH4Er6XS0nxwZ4tg4uYcmJ+0LkoML0hn4DCnomuo/GEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=N5XH3szQ; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RT4afok+"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-63036fa87dbso29019207b3.1
-        for <git@vger.kernel.org>; Mon, 08 Jul 2024 11:33:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720463590; x=1721068390; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3qSN8BK+K+VVBKtYNuCzVeM0mD2eaQIUxukdJb+yDjk=;
-        b=RT4afok+p38UqfTkvK4EhHHSWBj83Gaq8xbvNyC5PCEAgvc86RUr8QwklGq51FSy89
-         onYHTRoJpXR46o6wG8+64mi6c8/5LA4P//YR/MY/k6nzCQe2A0B9uA7sj90eiFXDnw5P
-         XM4hdHalrf8w3COFULK224E2JAxIQxNZzoMbpwZKZWw3L5Cq+5mIw7Leo+l+jIcB4wmU
-         IQHHmcx4atq5hagN1eXq172kQmsCPP7Rh9keO7X6IjOCTdJP5lBgBCif6nqbrx0wuo2S
-         rIj86upJ7V9KM+BQ4J7SOv9Y1jdIhq5esTfXVa4oFt44rvD4QCFjFG4LvPTYHu33alaq
-         1j3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720463590; x=1721068390;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3qSN8BK+K+VVBKtYNuCzVeM0mD2eaQIUxukdJb+yDjk=;
-        b=NuziaCxymSbKa9EWUxfarAhW0djwN8WsJ9hvr0Cv6O1gnXXwgBW6gUkD7NI7U3av6D
-         ZHCRkKOAHGhQaimJT+HOZl2zomgrOgXnky7p+NVE/HlpaUv0VyIYtxmmqWTn7XN5ZYVB
-         zbNZKsyg3M5zqKfc2V1n9Qz1mfhGRbnf4arQM7I/V9O9JSNV2l+sG+sS9a+4NeRUuiow
-         s7NpbTM8tyCKtyZylsovzy83DG1gGQEq12OK03mq5M/9Hwdsgl8NMQmUkjMGUewwwndg
-         jbi3HKIxuHGToGbiwyQ/V+uCD3Zqjoe4+L/7F/g9vQKSF/DosfxQbg8B/pMtiL5jP9Gq
-         ihbQ==
-X-Gm-Message-State: AOJu0Ywm4qLFxnWRwDIUM6SBHMqGMDF/M9mXJxcAoonBQf77Fw2brLD4
-	mTHBY7e8Co4/bsg5d/auNisNcqtJYobqzwA5TPDtYZfXCSk8HKHn4Slkg1Q9E9Hfpbk0prDTI3/
-	pEC+Dv8p9sbRVOFGv1Vt2c0reAolK7+Gy
-X-Google-Smtp-Source: AGHT+IGtgqs0+4wHrnJ53OkcV7ngyUZfSU76Rv6Xq6AmmQG+TbEWAJkky6Hm8hmt3tAneBnJF58oqjCyMRK7EweFD0k=
-X-Received: by 2002:a81:ae04:0:b0:627:7592:ced7 with SMTP id
- 00721157ae682-659180a2100mr587417b3.10.1720463590435; Mon, 08 Jul 2024
- 11:33:10 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="N5XH3szQ"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id BA108358FF;
+	Mon,  8 Jul 2024 14:54:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=QjJzEXiGGY5h
+	B0pCYaVJV6B1bCfCaBK1fZJOYEx0HE8=; b=N5XH3szQ3cdq5h/3KMM8AqjYFFkh
+	JweXRecZjUEstLhs2P0Kdl1S2oR8pjbQMa2rarjvkKWGbc1rOvzAHc4TrMOKNX0U
+	MfIjEw8iJocX8kJz5YxDylGrOfKP+5WAK2+1ukdFRacof8ct55FLqs6bmtCeMwV6
+	yZ92MbCOgQOLLRA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id B34EC358FE;
+	Mon,  8 Jul 2024 14:54:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 41794358FD;
+	Mon,  8 Jul 2024 14:54:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] var(win32): do report the GIT_SHELL_PATH that is
+ actually used
+In-Reply-To: <pull.1760.git.1720443778074.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Mon, 08 Jul 2024 13:02:57
+	+0000")
+References: <pull.1760.git.1720443778074.gitgitgadget@gmail.com>
+Date: Mon, 08 Jul 2024 11:54:41 -0700
+Message-ID: <xmqqed83g1e6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALaQ_hoDqD6CXEDy0YT8no3SaoJSqV6toMtyRHdJr6h3RZUiLA@mail.gmail.com>
- <CAPig+cSB0d7aAwMpToLCa+6Be5JFqLAr+0pvBXQxg_=DEk7p2A@mail.gmail.com>
-In-Reply-To: <CAPig+cSB0d7aAwMpToLCa+6Be5JFqLAr+0pvBXQxg_=DEk7p2A@mail.gmail.com>
-From: Nathan Royce <nroycea+kernel@gmail.com>
-Date: Mon, 8 Jul 2024 13:32:34 -0500
-Message-ID: <CALaQ_hr2Hzri6y4KwYOPmGzfvM8EjJpddvLL7CQ=d3H4QLCzJw@mail.gmail.com>
-Subject: Re: FR: Provide Out-Of-Tree Building; Provide Cross-Compile Parameters
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 89ABC13E-3D5B-11EF-B53C-C38742FD603B-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-Well goodness me, seems I spoke too soon.
-I found the that zlib was required (looking for "zlib.h"), so I built
-that first and that too wasn't all that cross-compile friendly.
-I saw "CHOST" is used, and was surprised that it didn't seem to need
-anything to link against from the target sysroot, so that turned out
-better than I thought it would.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-I then used `configure` prefixed with
-the`CFLAGS=3D"--sysroot=3D<pathToSysroot>"`, along with `HOST_CPU=3D<tuple>=
-`
-for `make`, and it worked out fine.
-Before moving it to my device, I just nspawned/chrooted into it and
-`git --help` worked. So looks good and easy steps. Of course, it'll
-depend on whether or not a git function using zlib also passes (hoping
-zlib actually built fine without needing any outside linkage).
-
-I'd still suggest and prefer that git (and zlib) follows what others
-have settled on doing to be cross-compile-friendly.
-
-On Mon, Jul 8, 2024 at 11:52=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
+> On Windows, Unix-like paths like `/bin/sh` make very little sense. In
+> the best case, they simply don't work, in the worst case they are
+> misinterpreted as absolute paths that are relative to the drive
+> associated with the current directory.
 >
-> A few years ago, I had started adding cross-compilation support to the
-> project but never finished the task. I'm pretty sure I still have the
-> patches sitting around somewhere. I'll look for them, but I'm not sure
-> how much they will help. Aside from the obvious patch adding
-> `config.guess` and `config.sub`, I recall creating a patch to fool
-> `autoconf` into not demanding that the project also carry the bunch of
-> other scripts/tools `autoconf` normally wants (since we don't use
-> those tools in our build process).
->
-> [*] https://lore.kernel.org/git/20171209094310.GA60808@flurp.local/
+> To that end, Git does not actually use the path `/bin/sh` that is
+> recorded e.g. in Unix shell scripts' hash-bang lines. Instead, as of
+> 776297548e (Do not use SHELL_PATH from build system in prepare_shell_cm=
+d
+> on Windows, 2012-04-17), it re-interprets `/bin/sh` as "look up `sh` on
+> the `PATH` and use the result instead".
+
+This asks for a few na=C3=AFve questions.
+
+If there is a fixed path the "git" binary was compiled for, which
+can be referenced with a single variable GIT_SHELL_PATH, even though
+on non-POSIX systems it won't be like /bin/sh, wouldn't there be a
+path like "C:\Program Files\Git for Windows\bin\sh" (I do not do
+Windows, so you may be installing somewhere completely different)
+and wouldn't such a path work regardless of which drive is
+associated with the current directory?
+
+I would actually understand that, with relocatable build where
+everything is relative to the installed directory, a single
+GIT_SHELL_PATH that is defined at the compile-time may not make much
+sense, and when you need to interpret a shell script, you may need
+to recompute the actual path, relative to the installation
+directory.
+
+But I wonder why the replacement shell that is spawned is searched
+for in PATH, not where you installed it (which of course would be
+different from /bin/sh).  In other words, when running script that
+calls for "#!/bin/sh", looking for "sh" on PATH might be a workable
+hack, and it might even yield the same result, especially if you
+prepend the path you installed git and bash as part of your
+installation package to the user's PATH, but wouldn't it make more
+sense to compute it just like how "git --exec-path" is recomputed
+with the relocatable build?
+
+The "look on the %PATH%" strategy does not make any sense as an
+implementation for getting GIT_SHELL_PATH, which answers "what is
+the shell this instanciation of Git was built to work with?", at
+least to me.  Maybe I am missing some knowledge on limitations on
+Windows and Git for Windows why it is done that way.
+
+Thanks.
+
+
