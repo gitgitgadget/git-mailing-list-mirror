@@ -1,111 +1,169 @@
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867FA15217A
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 23:18:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590B18C06
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 23:32:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720480694; cv=none; b=DjykCpMfKmRNguXOWks2FBfn00MKdj41ofkuwvzqK0c3B6Lm+2hLnAcULedKzuBCKorBmoSXyVYxpv8sCId6uNM473FoJmo7f2Y56BVfeLyjdccQqi3Ovllird3ojY00BOGhQmkAQPPpf1zInOQKVYpYSpcn6x3Pnu12LkGb+3E=
+	t=1720481545; cv=none; b=MHZSgvWNvqZEV00jtxBYx3zeUD1dr3dLS4dNpAnb2OtsAybY0Rox4hZ8WIrbcsFFyL/5lLUGUO8ILkSnXw7O1dC6jVQVIp/9zZxoaBv4svZ3YkWHLUtSRMFYHddkKWsQpbHVj2Uo8VHBC9TJUeRPezQk/ghthz2C7jzB4PnC8pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720480694; c=relaxed/simple;
-	bh=C+WC1WvUaY605kNi+RmuVibrbrclYgEdAOJaU4Obr9U=;
+	s=arc-20240116; t=1720481545; c=relaxed/simple;
+	bh=pQXm11Dp51dQKMGe+S8B3tHOOcEkOnu0oMD/CQtIblI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lyswUr0uCMKAy9CZ1maM/3gK29hIGxZvenQ+IbrDbnQnIxs64RYqiIPsXOqMrYZYOHZsthM4ENVxGl2SVmyQa0YdeFHj/q/DPBcLTOI044r/hYd6Y5U6BmXVTTFyRRCkDR6bnT8WSTAEBhaRpGHBYVOFEBduS34UnwANLtAlqyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KiBrYTNt; arc=none smtp.client-ip=209.85.167.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KiBrYTNt"
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3d9306100b5so1029736b6e.1
-        for <git@vger.kernel.org>; Mon, 08 Jul 2024 16:18:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720480692; x=1721085492; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y2yBkFO5RBfOQIbKAJOLUrNxHJKaTEupUQC7IxxC7hA=;
-        b=KiBrYTNtpenK/AUxPoAU3bMk4wzh6tlIRAXvfzBvgUQ2zZN5fvkdPSIeIgOs/+nZej
-         Qi944dbsXEDYBGnB86mgczbpCGOnT19g2UhFv9oLCdAhE8+VNrCjm7a26IpiIXvTOg7B
-         sxSUxkHdlRZnDIuHhqh4P7kcF1cBYWnF7EXZjFUQVLFpH9EBRT+Kc2qiM1xvF/NJOuyX
-         rWZ5YJQr2jpArdQSaMWcZkOukplkaJhDu83r9es9XZZr03rbN+/oexofdxCh38izFHnz
-         w82qnvDLS3KMLqp0S4suU4BQYij7sFUsEQP4rrdG/+gBrk/pSTwQoeGoGE1NsZlFX9np
-         ke8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720480692; x=1721085492;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Y2yBkFO5RBfOQIbKAJOLUrNxHJKaTEupUQC7IxxC7hA=;
-        b=VjQAvjms1siv0D4mI3IKn8UgJzoxvwiKi4zFWZc3zoBlJ+jgXJZWH0GOGylIoOyFPx
-         ViVxxr7We+Vn0MCOP0OsTkCEFQbeopZ6PD+R/6+vHP2tnwrkgQgqg1wW9bdoy9o8DDmV
-         EU/mhUEfaNDBOP7oE+H0MXLkXqiw/srJvw/eqJHJo0qzPY4fHpwP6G33jImfjiaqMc8S
-         wOW95RNkX1ma7WimXT7vN1bjnV0imGlJsiJh05tkH1reM6KmdwEBmovEBZ2xa1FnEous
-         MDBKgkJI/Miy/kl9hL+7IS9c1EDo5qj33+KVmaUIi3Nj3BZEoyldiRmst6BzsfEQWY1g
-         H1hA==
-X-Gm-Message-State: AOJu0Yzad8IJ2BQR6UHbe8ft4gtZWuEp6imaP7JVyBvuoGpqRRdsxCHM
-	5XzK2uNheHmIzLcO0VWxVFTa373PlWAXozZeHJLHuym5kD3Er5i8uxDQErRX
-X-Google-Smtp-Source: AGHT+IHZCQwd46pEoQGnpKdVIFs5kZI8D7UnXYFy/AMcik9OM0Ew5ExnSgrinXC8J8iA7vW1X6o3iQ==
-X-Received: by 2002:a05:6808:2128:b0:3d9:2043:e170 with SMTP id 5614622812f47-3d93c0b333bmr894568b6e.57.1720480692572;
-        Mon, 08 Jul 2024 16:18:12 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3d93ad2593bsm177571b6e.27.2024.07.08.16.18.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jul 2024 16:18:12 -0700 (PDT)
-Date: Mon, 8 Jul 2024 18:17:43 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	chriscool@tuxfamily.org
-Subject: Re: Re* [PATCH 7/8] ci: run style check on GitHub and GitLab
-Message-ID: <pcyr4eb52de67j7idzfklbeg5d5jbfmgkt6loqhkbxppvjvnco@3b2lmbd7nt3b>
-References: <20240708092317.267915-1-karthik.188@gmail.com>
- <20240708092317.267915-8-karthik.188@gmail.com>
- <xmqqr0c3hkjs.fsf@gitster.g>
- <xmqqwmlvcx9g.fsf_-_@gitster.g>
+	 Content-Type:Content-Disposition:In-Reply-To; b=W3cg3P8cynYN9/JRbuXH4wyNz4TBHKddY/bG0fulcv983DMKayUknq+7v5uetSHifVsDmm6t7hRJKaJ2bJo/Y86kiSDDNUKat9L0sIIeuV379snMOSdpPUtSi7Cj08ySjJ1DLXjyu23R6Lw5dhOxBsrHYpW4KW+TIuoEiGvaTwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 19947 invoked by uid 109); 8 Jul 2024 23:32:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Jul 2024 23:32:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28060 invoked by uid 111); 8 Jul 2024 23:32:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Jul 2024 19:32:19 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 8 Jul 2024 19:32:20 -0400
+From: Jeff King <peff@peff.net>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] builtin/push: call set_refspecs after validating remote
+Message-ID: <20240708233220.GA934035@coredump.intra.peff.net>
+References: <20240708140350.622986-1-karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqwmlvcx9g.fsf_-_@gitster.g>
+In-Reply-To: <20240708140350.622986-1-karthik.188@gmail.com>
 
-On 24/07/08 03:52PM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > I think the consensus from the last discussion we had was to allow
-> > scripts that rely on bash-isms to say "#!/usr/bin/env bash" because
-> > we know /bin/sh can legitimately be not bash and we assume bash may
-> > not be installed as /bin/bash.
-> 
-> Let's do this before we forget.
-> 
-> ------- >8 ------------- >8 ------------- >8 -------
-> Subject: [PATCH] ci: unify bash calling convention
-> 
-> Under ci/ hierarchy, we run scripts under either "sh" (any Bourne
-> compatible POSIX shell would work) or specifically "bash" (as they
-> require features from bash, e.g., $(parameter/pattern/string}
-> expansion).  As we have the CI envionment under our control, we can
+On Mon, Jul 08, 2024 at 04:03:50PM +0200, Karthik Nayak wrote:
 
-s/envionment/environment
-
-> expect that /bin/sh will always be fine to run the scripts that only
-> require Bourne, but we may not know where "bash" gets installed
-> depending on distros.
+> Since 9badf97c4 (remote: allow resetting url list), we reset the remote
+> URL if the provided URL is empty. This means any caller of
+> `remotes_remote_get()` would now get a NULL remote.
 > 
-> So let's make sure we start these scripts with either one of these:
-> 
-> 	#!/bin/sh
-> 	#!/usr/bin/env bash
-> 
-> Yes, the latter has to assume that everybody installs "env" at that
-> path and not as /bin/env or /usr/local/bin/env, but this currently
-> is the best we could do.
+> The 'builtin/push.c' code, calls 'set_refspecs' before validating the
+> remote. This worked earlier since we would get a remote, albeit with an
+> empty URL. With the new changes, we get a NULL remote and this crashes.
 
-Makes sense to me to be consistent and I also think `#!/usr/bin/env bash`
-is probably the best route. Other than the small typo this looks good to
-me.
+Interesting. I think this was always a bit buggy, in the sense that the
+some of the code was prepared for pushremote_get() to return NULL, but
+the set_refspecs() call was not. So in theory _any_ problem with the
+remote that caused pushremote_get() to bail out would be a problem. But
+in practice, I'm not sure there was a way to do so, since the remote.c
+code usually falls back on the given name as the url if needed, rather
+than returning NULL.
 
--Justin
+And 9badf97c4 does something a bit unexpected here, since the fallback
+calls the same add_url() function that we feed the config values to, and
+so it respects the same "empty means reset" logic. Which means that an
+empty-string remote name will no longer fall back in that way.
+
+It's a little surprising that we hit the "empty means reset" logic here.
+I wonder if that fallback path should be avoiding it. OTOH, an empty
+string URL is nonsense, and it's not going to work, so maybe returning a
+NULL remote is a good thing. The issue here is mostly just calling BUG()
+for something that is bogus input.
+
+> Do a simple fix by doing remote validation first and also add a test to
+> validate the bug fix.
+
+OK, so we push it further down, past the "if (!remote)" check in the
+caller. I think that's a good fix. It does make me wonder why
+set_refspecs() does not simply take the remote struct in the first
+place? I.e.:
+
+diff --git a/builtin/push.c b/builtin/push.c
+index 992f603de7..ae787f1f63 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -96,9 +96,8 @@ static void refspec_append_mapped(struct refspec *refspec, const char *ref,
+ 	refspec_append(refspec, ref);
+ }
+ 
+-static void set_refspecs(const char **refs, int nr, const char *repo)
++static void set_refspecs(const char **refs, int nr, struct remote *remote)
+ {
+-	struct remote *remote = NULL;
+ 	struct ref *local_refs = NULL;
+ 	int i;
+ 
+@@ -127,12 +126,6 @@ static void set_refspecs(const char **refs, int nr, const char *repo)
+ 			if (count_refspec_match(ref, local_refs, &matched) != 1) {
+ 				refspec_append(&rs, ref);
+ 			} else {
+-				/* lazily grab remote */
+-				if (!remote)
+-					remote = remote_get(repo);
+-				if (!remote)
+-					BUG("must get a remote for repo '%s'", repo);
+-
+ 				refspec_append_mapped(&rs, ref, remote, matched);
+ 			}
+ 		} else
+@@ -648,7 +641,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (argc > 0)
+-		set_refspecs(argv + 1, argc - 1, repo);
++		set_refspecs(argv + 1, argc - 1, remote);
+ 
+ 	if (remote->mirror)
+ 		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
+
+which is now possible after your patch. Note that set_refspecs()
+currently calls remote_get(), but the caller will use pushremote_get()
+to get the remote. I think that set_refspecs() is actually wrong here,
+but it doesn't matter in practice because "repo" is always non-NULL at
+this point.
+
+But with the patch above, this kind of error would be impossible to
+trigger (but again, your patch is still necessary to get the ordering
+right in the first place).
+
+> I noticed that this was breaking on master. We run tests on Git master
+> for Gitaly at GitLab and I noticed a SEFAULT. I could also reproduce the
+> bug by simply doing 'git push "" refs/heads/master' on master, next and
+> seen. 
+
+I don't see a segfault, but rather a BUG() that triggers SIGABRT. Does
+that match what you see?
+
+> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> +
+>  TEST_PASSES_SANITIZE_LEAK=true
+>  . ./test-lib.sh
+>  
+> @@ -38,6 +41,11 @@ test_expect_success 'detect missing sha1 expressions early' '
+>  	test_cmp expect rp-ran
+>  '
+>  
+> +test_expect_success 'detect empty remote' '
+> +	test_must_fail git push "" main 2> stderr &&
+> +	grep "fatal: bad repository ''" stderr
+> +'
+
+The test makes sense. Your single-quotes are not doing what you expect,
+though (they are closing and re-opening the outer test body, so end up
+as the empty string). You can use $SQ$SQ instead (I'm also working on
+patches to allow you to specify the body as a here-doc to avoid exactly
+this kind of situation, but I don't think we should depend on that yet).
+
+I was a little surprised you needed to use the name "main" and not just
+"HEAD" or something neutral (avoiding the INITIAL_BRANCH_NAME stuff).
+But we only hit the problematic code path when we match a local name.
+
+Also, minor style nit: use "2>stderr" with no space.
+
+
+Anyway, thanks for catching my bug! I think your fix is the right
+approach, and we just need to adjust the test. I do think we should do
+the patch I suggested above on top. I'd be happy if you want to add it
+in to your series, but let me know if you want me to write a commit
+message or just send it separately afterwards.
+
+-Peff
