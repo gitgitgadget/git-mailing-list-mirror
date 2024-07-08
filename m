@@ -1,41 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDDA433DF
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 09:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70B253E22
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 09:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720429721; cv=none; b=TMOS2WS2WAraCHScWOi0zI9No28yuWDmbxBUftfFk94XSOdrkKlNkQrjU6riuYHbmLdr6NW/W+tH9AEFVan4QYtleGdCi+asXqh+rAGWtmCfVMocBMBVEArF65bRC/9ScWFW3Ff+O0SrRr2r1RQUI35mpyJdks3XUCdUJYyBPks=
+	t=1720429829; cv=none; b=BXTuPJb+UGxGyzS4so1BjMgh8jz0Q1+Fiz4gBOsaXQjgSvjMR4CJcTInJpnI0l2Z/vmjLMyUiPM2n0spZIoHH9Fl8yZtyPiBQwWpzOtPAFKWeVekL2V3xJTpKf+0/norEDslnM/ARbfDKkHgHwETRET5LsReNyF3oPqSVVRaYnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720429721; c=relaxed/simple;
-	bh=htPZ4BiWb6B7EEV2qR53BwnKU/ZBEOJ1+jf4BCQO8gI=;
+	s=arc-20240116; t=1720429829; c=relaxed/simple;
+	bh=tvf1roaN/NqGxRZDI9xWxJAw0De7PQjyOONgZE9eItI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=om/b+5S9Qn8fOn4oDCTGp9kJHdjlrmSRYenJzxHdHF0/lVK5US3EUB5eFYU2M9+StJk+A/LEs/yCMJRRDKxnSJRf/ErMLz4+VmA2OY8v18W970FZzBrdZR5oS4NG88sN4lkPxLKjL0VVuPB1sqnF8mUINKa0j6MyRUZSPuH8dfQ=
+	 Content-Type:Content-Disposition:In-Reply-To; b=fVeoIn72bpAQ/6/3jQV7Ivoi9tLWBTLUK+E+CcQv51ClCm6oUP+jGJ6mhskTExlSNd6dfrhGxNF7ewavo++AJt+fTdz/u/fWCVHK5t/xz9EvLYHm5W3EtzAMDvM7wE7t5p2680KOnksGW3/KIPkREaqcMJm+j0N/xPExq+o9Z5c=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 14174 invoked by uid 109); 8 Jul 2024 09:08:38 -0000
+Received: (qmail 14186 invoked by uid 109); 8 Jul 2024 09:10:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Jul 2024 09:08:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Jul 2024 09:10:27 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20695 invoked by uid 111); 8 Jul 2024 09:08:36 -0000
+Received: (qmail 20731 invoked by uid 111); 8 Jul 2024 09:10:24 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Jul 2024 05:08:36 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Jul 2024 05:10:24 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 8 Jul 2024 05:08:37 -0400
+Date: Mon, 8 Jul 2024 05:10:26 -0400
 From: Jeff King <peff@peff.net>
 To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org,
+Cc: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH] chainlint.pl: recognize test bodies defined via heredoc
-Message-ID: <20240708090837.GD819809@coredump.intra.peff.net>
-References: <20240701220815.GA20293@coredump.intra.peff.net>
- <20240702235034.88219-1-ericsunshine@charter.net>
- <20240706060143.GD698153@coredump.intra.peff.net>
- <xmqqr0c6makb.fsf@gitster.g>
- <20240706231128.GA746087@coredump.intra.peff.net>
- <CAPig+cTv-DaGRmwWWCk8b33MKzV25vfP2zPKd2VOAEOtz4FZ2A@mail.gmail.com>
+Subject: Re: [PATCH 1/3] chainlint.pl: fix line number reporting
+Message-ID: <20240708091026.GE819809@coredump.intra.peff.net>
+References: <20240706060143.GD698153@coredump.intra.peff.net>
+ <20240706060515.GA700151@coredump.intra.peff.net>
+ <CAPig+cRxnpG9Yfix09EnJAbnzwN=yoUtSeYxt7S-Od+xBgfaYQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,34 +41,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cTv-DaGRmwWWCk8b33MKzV25vfP2zPKd2VOAEOtz4FZ2A@mail.gmail.com>
+In-Reply-To: <CAPig+cRxnpG9Yfix09EnJAbnzwN=yoUtSeYxt7S-Od+xBgfaYQ@mail.gmail.com>
 
-On Sun, Jul 07, 2024 at 11:51:15PM -0400, Eric Sunshine wrote:
+On Mon, Jul 08, 2024 at 01:08:02AM -0400, Eric Sunshine wrote:
 
-> >     I did manually verify that it is OK after my fix, but do we want
-> >     that to be part of the chainlint tests? Just leaving the line
-> >     numbers in is a maintenance nightmare, since it depends on the order
-> >     of concatenating all of the tests together (so our "expect" files
-> >     would depend on all of the previous tests). But if we wanted to get
-> >     fancy, we could perhaps store relative offsets in the expect file. I
-> >     think it gets pretty complicated, though, since we print only
-> >     problematic lines.
+> > I actually suspect the "record the heredoc line number" thing would not
+> > be too hard. I.e., turn ShellParser's "heredoc" hash to point to
+> > hashrefs like: "{ content => ..., lineno => ... }". And that would give
+> > us a good spot to stick an "interpolate" boolean later if we want.
 > 
-> Given the way the Makefile currently concatenates all the self-tests,
-> it would indeed be a nightmare to retain the line numbers. In the long
-> run, we probably ought someday to adopt Ævar's idea of checking the
-> self-test files individually[*] rather than en masse. With that
-> approach, it may make sense to revisit whether or not line numbers
-> should be present in the "expected" files.
-> 
-> [*] https://lore.kernel.org/git/CAPig+cSBjsosRqoAafYN94Cco8+7SdUt0ND_jHS+jVPoM4K0JA@mail.gmail.com/
+> It turned out to be quite easy. See below for an implementation atop
+> your patch [1/3] (modulo Gmail whitespace damage). Given how simple
+> this ended up being, it probably makes sense to squash this change in,
+> as well.
 
-I took a look at running each test individually. It's surprisingly quite
-a bit slower! About 4s instead of 200ms. There's a bit of low-hanging
-fruit to get it down to ~1.7s (which I'll include in my series). But in
-the end I punted on that for now, but did add line-number checks. Each
-expect file just knows its own numbers, and I use a bit of perl to
-handle the running offset.
+Very nice! I was hoping it would be something like this. I've squashed
+this in, and confirmed that it fixes the line numbers in my "double"
+case:
+
+  test_expect_success "$(cat <<END_OF_PREREQS)" 'here-doc-double' - <<\EOT
+  SOME
+  PREREQS
+  END_OF_PREREQS
+  	echo "actual test commands"
+  	echo "that should be checked"
+  EOT
+
+The bogus line was incorrectly reported as line 2, because we did not
+account for the first here-doc.
 
 -Peff
