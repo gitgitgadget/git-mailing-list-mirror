@@ -1,328 +1,82 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908823F9F9
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 09:34:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408577407A
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 10:06:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720431294; cv=none; b=e85PNRvcc6ExpPNq5KMXfKm7cflDgAmENWpmI7nf49fElibCxT9S7anLHC+LwrfGncdby0lsIa6wNFL325o9FSjUfYJu0DG68+LJSrJQ/Lm/j1hYq/8h/06w9qsydts7RW7qF7saq584ZMPjs96VCH4Kb0ONR1NfE36g5axILLc=
+	t=1720433211; cv=none; b=GW0bWx/hGb30zs+4bDqspv8SpbqxkYGk735eQLk5LAkVj+8ju+pPY5z1B+0m7YusTxtgzZpAr4z0nu8mgpf+BXr7l7F9xLSLF0qPcf4g12ktTwglSFyp38hBpAPafeqaln298o2nFSldAbOY8wNt2Wmla0yO/UwkHrWjbxlAbCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720431294; c=relaxed/simple;
-	bh=K95yzm2a/C+iZKKx7sVplqrPSZ7ZhQxwr1GKWjxORS0=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ZO15yNwlY85uBn6kAf2v5EaIJdsIIVCNYZlFfXT2k5g5Cwhl9ETeFVTIcbY+WzBd8cu66lrO+YqGZsPbxjJ5LaI0znoRwetBquxPU/1tDuMCW7+aMeyTKZBcKMjHuazfy5p8vU4wvSb6RevsbpoDC44GK9LmAaHWuue5Qqnlxys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ab31LQAz; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1720433211; c=relaxed/simple;
+	bh=wvgLTlQh1To59FfAbhBki9YuUeA5MFage27I6kZbBFU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Dk9pTnyhKpwLm2UUlF2w6bP/1gorjqU63Ce4DhL4bMyPWUauwTFVvXRadoz/AEei5AwBgwW2Rv94MwV5z4n1QGFTKeSaGNCWRm/LAdw7OlzE09yL+Vi43ZuRN6z5IyC0i5a2unrTQw76xm9FK5we70nroJBQeukNHKH3ihqpXoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fujg1/q7; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ab31LQAz"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-367a9ab4d81so1612396f8f.1
-        for <git@vger.kernel.org>; Mon, 08 Jul 2024 02:34:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fujg1/q7"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a75131ce948so449793966b.2
+        for <git@vger.kernel.org>; Mon, 08 Jul 2024 03:06:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720431290; x=1721036090; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=p01aN8X+DEXXwHtgFZYD+1ZPNzNQlsvKMddTJesP6pE=;
-        b=ab31LQAz69LljM2OHKKyxbQDg/Z7Soz3nE9aHehR+sGK1uIuwesovSNyeASgdsdk2l
-         gHjQkm1h/YJVe66Z0ZmqP6/8IFFVTz1TS1Xzqr2SxINUUMqikS2yZ5qpjel+gzjStJxt
-         NnqXxGhBnWe4/0IP2kdrSPbpE1et1oYVSD40DoQ+S4UZBScRY032PFAyDPkEYZkTNVt+
-         z6WnsGS20iC69q3mulWDbpQfPHYXf9Rw2o8vD/OtjM+YdAcvELCGQV1ai7ufy4JVMOG7
-         0dURPtLONkQNIy7lRAn6DROEPy2cepIjIecJ1uRNqBm1FQKARF4dIirq4Pji9dmbd/HF
-         DF0A==
+        d=gmail.com; s=20230601; t=1720433208; x=1721038008; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7+Y0wxuLXVYYBhfPsj0Rm4/sVw57FNZDNII3OcHUc/o=;
+        b=Fujg1/q7DyK6+D3m4O4zEG/WIYvYfmKQZJc4uCBTnbggeDk5NAkUQVm/vJkaWAnlbB
+         G/El65yePQvu2kNgdSM3G5vdxYPnMrlQ201dIJjPPsDlJYKdqNJQ3TzcO3dqwnfo6ovf
+         ljnmNIM6HSyeF/hvaLlhSJSXAAXhRNA36i8rl9+QUK5qygzHQWeycQUA2pWlV3tBdcCr
+         bICRYwcVxMP3xP5rnGFDy3fbsRfdyGCJGOD1Tw6PH7BG9sRWGFre88/5SfEQlL4pEk47
+         qm4RgPKjdUb44lsUDI8tpoaRBK1i9yy0Yj7sUklmC/ScvxpXgX2a34CPpdyuNMorVCm4
+         md/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720431290; x=1721036090;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=p01aN8X+DEXXwHtgFZYD+1ZPNzNQlsvKMddTJesP6pE=;
-        b=BViyqM+nwp17sv/gIY0yJUMlAp0w1BTQn4Czb8MWM3N4domPDne5GBGYZPouDxPfIW
-         kmIgwTf/YNdmacR8y1d0fh7epVbdkVg14+mlnmU3ld2ULIItRbqdWjQE/MKaB41RJEGX
-         LMWRgfqg7ftl0CcSkHYfZre59B0VjSavNoGNSsZ1bFgqgjBxdrGZHYg3QBHLkfVknLOg
-         cMx/CstcivvzMvU1utGd3sut6fTHBwmo+MeVyA7lCQKupj0pAKBJvW3iVoZ95V4BLS6T
-         jvlfCsQdvuKsOsiV8nHZg6gn4J4UFYi92YoGLU8Z1UGxlClMT877nVFXhUZlRJojuGI/
-         1XLw==
-X-Gm-Message-State: AOJu0YzpfULIUVgqvzXedXaDnyouvYRFF6FU8Rk/QwEmBlzhgHOoNuUS
-	1G9xIWw3u5ovtlrhW630LeGQImRVTdxEZlqTmsdnaoUGTisepDtJ8fP9kA==
-X-Google-Smtp-Source: AGHT+IEfLzdbfxNvE1sSgHV0kTnSVQdTadB2IMVmTixUk20HJAYNgkYnusQBOI6wZpduRAC4tpfuUA==
-X-Received: by 2002:adf:fccf:0:b0:367:9854:791d with SMTP id ffacd0b85a97d-3679dd723d2mr8012698f8f.43.1720431289863;
-        Mon, 08 Jul 2024 02:34:49 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3679224d11dsm13221782f8f.12.2024.07.08.02.34.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jul 2024 02:34:49 -0700 (PDT)
-Message-Id: <pull.1743.git.git.1720431288496.gitgitgadget@gmail.com>
-From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 08 Jul 2024 09:34:48 +0000
-Subject: [PATCH] merge-recursive: honor diff.algorithm
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1720433208; x=1721038008;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7+Y0wxuLXVYYBhfPsj0Rm4/sVw57FNZDNII3OcHUc/o=;
+        b=wydI151Mlsjuw6ajkD3jYMO5hyxP4YW9oNfHceLUMt+jCkPjpuEe7QWiNO9hn9o9jO
+         GvYzBsEqpRnYYJzGRk525WIOrDJvQWZQQN6x4yEWobb68TVL+37LUBRJVM/1fJgDvroe
+         1Lt6IQdWH0jFqtdnNe5+i7YnLiphFKb2u+dvSTm/mhSMBHuLnVS+aqqF0WcZF0Wvlpea
+         OY+VIpZIbJB1Bj36M7kJQg5HYaBRat9sEFi4QSGNGjBNSJzDHOMdnGC8owZBzBceb344
+         ucv30iovWtkJHHfOJ2PpkINJpmM1mbayaqpyZK7mrHXCMdbyZGXboLgOCfHRnjRcjH9i
+         SgLA==
+X-Gm-Message-State: AOJu0Yw8DUbBE51KhUGQS9PLZAa5mMlhEloi3XNNIMLHTCtI7gwndXnC
+	Xm0lucbwGhd8+Vek+BSaFMlGxzBb7hw7BUFsxzaraAkQbxE/rmG1vqYzNEehPJ6d3+t09yVWmu1
+	2d0yincb2MwqdgHRbZRdzc7upn7Y=
+X-Google-Smtp-Source: AGHT+IHzfFUfiDN+ISxuKqf1K5NMGBAzwQygf0TgkofrAwJYfjhwu6IAOXjXkUWt1FGCdXoButX+dY2GXDjw/nj0Z3I=
+X-Received: by 2002:a17:907:980c:b0:a77:cf09:9c4c with SMTP id
+ a640c23a62f3a-a77cf099e47mr686922866b.67.1720433208277; Mon, 08 Jul 2024
+ 03:06:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Antonin Delpeuch <antonin@delpeuch.eu>,
-    Antonin Delpeuch <antonin@delpeuch.eu>
+References: <20240708092317.267915-1-karthik.188@gmail.com>
+In-Reply-To: <20240708092317.267915-1-karthik.188@gmail.com>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Mon, 8 Jul 2024 03:06:36 -0700
+Message-ID: <CAPx1GveNmpM=v2Kymi7euuerciZKHqPmmexqPdMxKUEA7oAEkQ@mail.gmail.com>
+Subject: Re: [PATCH 0/8] clang-format: add more rules and enable on CI
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, chriscool@tuxfamily.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Antonin Delpeuch <antonin@delpeuch.eu>
+On Mon, Jul 8, 2024 at 2:23=E2=80=AFAM Karthik Nayak <karthik.188@gmail.com=
+> wrote:
+> The series was mostly inspired by a patch sent recently to 'include
+> kh_foreach* macros in ForEachMacros' [1]. I was wondering why we don't
+> run the formatting on CI and reduce some of the workload of reviewers.
 
-The documentation claims that "recursive defaults to the diff.algorithm
-config setting", but this is currently not the case. This fixes it,
-ensuring that diff.algorithm is used when -Xdiff-algorithm is not
-supplied. This affects the following porcelain commands: "merge",
-"rebase", "cherry-pick", "pull", "stash", "log", "am" and "checkout".
-It also affects the "merge-tree" ancillary interrogator.
+As a big fan of automated formatting, I scanned through all of these.
+I did not spot anything problematic and had just a few minor comments.
+I'm not an expert on clang-format directives, nor on GitHub/GitLab CI,
+though.  Anyway if you want it you can have a reviewed-by from me. :-)
 
-This change also affects the "replay" and "merge-recursive" plumbing
-commands, which happen to call 'merge_recursive_config' and therefore
-are also affected by other configuration variables read in this
-function. For instance theay read "diff.renames", classified in diff.c
-as a diff "UI" config variable. Removing the reliance of those
-commands on this set of configuration variables feels like a bigger
-change and introducing an argument to 'merge_recursive_config' to
-prevent only the newly added diff.algorithm to be read by plumbing
-commands feels like muddying the architecture, as this function
-should likely not be called at all by plumbing commands.
+(Comments stuck on individual patches)
 
-Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
----
-    merge-recursive: honor diff.algorithm
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1743%2Fwetneb%2Frecursive_respects_diff.algorithm-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1743/wetneb/recursive_respects_diff.algorithm-v1
-Pull-Request: https://github.com/git/git/pull/1743
-
- builtin/merge-recursive.c   |  4 ++++
- builtin/replay.c            |  4 ++++
- merge-recursive.c           |  7 ++++++
- t/t3515-cherry-pick-diff.sh | 41 +++++++++++++++++++++++++++++++++++
- t/t3515/base.c              | 17 +++++++++++++++
- t/t3515/ours.c              | 17 +++++++++++++++
- t/t3515/theirs.c            | 17 +++++++++++++++
- t/t7615-merge-diff.sh       | 43 +++++++++++++++++++++++++++++++++++++
- 8 files changed, 150 insertions(+)
- create mode 100755 t/t3515-cherry-pick-diff.sh
- create mode 100644 t/t3515/base.c
- create mode 100644 t/t3515/ours.c
- create mode 100644 t/t3515/theirs.c
- create mode 100755 t/t7615-merge-diff.sh
-
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index c2ce044a201..c14158fd1db 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -31,6 +31,10 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix UNUSED)
- 	char *better1, *better2;
- 	struct commit *result;
- 
-+	/*
-+	 * FIXME: This reads various config variables,
-+	 * which 'merge-recursive' should ignore as a plumbing command
-+	 */
- 	init_merge_options(&o, the_repository);
- 	if (argv[0] && ends_with(argv[0], "-subtree"))
- 		o.subtree_shift = "";
-diff --git a/builtin/replay.c b/builtin/replay.c
-index 6bf0691f15d..98feb6f6320 100644
---- a/builtin/replay.c
-+++ b/builtin/replay.c
-@@ -373,6 +373,10 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 		goto cleanup;
- 	}
- 
-+	/*
-+	 * FIXME: This reads various config variables,
-+	 * which 'replay' should ignore as a plumbing command
-+	 */
- 	init_merge_options(&merge_opt, the_repository);
- 	memset(&result, 0, sizeof(result));
- 	merge_opt.show_rename_progress = 0;
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 46ee364af73..205fb8aa72d 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -3930,6 +3930,13 @@ static void merge_recursive_config(struct merge_options *opt)
- 		} /* avoid erroring on values from future versions of git */
- 		free(value);
- 	}
-+	if (!git_config_get_string("diff.algorithm", &value)) {
-+		long diff_algorithm = parse_algorithm_value(value);
-+		if (diff_algorithm < 0)
-+			die(_("unknown value for config '%s': %s"), "diff.algorithm", value);
-+		opt->xdl_opts = (opt->xdl_opts & ~XDF_DIFF_ALGORITHM_MASK) | diff_algorithm;
-+		free(value);
-+	}
- 	git_config(git_xmerge_config, NULL);
- }
- 
-diff --git a/t/t3515-cherry-pick-diff.sh b/t/t3515-cherry-pick-diff.sh
-new file mode 100755
-index 00000000000..caeaa01c590
---- /dev/null
-+++ b/t/t3515-cherry-pick-diff.sh
-@@ -0,0 +1,41 @@
-+#!/bin/sh
-+
-+test_description='git cherry-pick
-+
-+Testing the influence of the diff algorithm on the merge output.'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	cp "$TEST_DIRECTORY"/t3515/base.c file.c &&
-+	git add file.c &&
-+	git commit -m c0 &&
-+	git tag c0 &&
-+	cp "$TEST_DIRECTORY"/t3515/ours.c file.c &&
-+	git add file.c &&
-+	git commit -m c1 &&
-+	git tag c1 &&
-+	git reset --hard c0 &&
-+	cp "$TEST_DIRECTORY"/t3515/theirs.c file.c &&
-+	git add file.c &&
-+	git commit -m c2 &&
-+	git tag c2
-+'
-+
-+test_expect_success 'cherry-pick c2 to c1 with recursive merge strategy fails with the current default myers diff algorithm' '
-+	git reset --hard c1 &&
-+	test_must_fail git cherry-pick -s recursive c2
-+'
-+
-+test_expect_success 'cherry-pick c2 to c1 with recursive merge strategy succeeds with -Xdiff-algorithm=histogram' '
-+	git reset --hard c1 &&
-+	git cherry-pick --strategy recursive -Xdiff-algorithm=histogram c2
-+'
-+
-+test_expect_success 'cherry-pick c2 to c1 with recursive merge strategy succeeds with diff.algorithm = histogram' '
-+	git reset --hard c1 &&
-+	git config diff.algorithm histogram &&
-+	git cherry-pick --strategy recursive c2
-+'
-+test_done
-diff --git a/t/t3515/base.c b/t/t3515/base.c
-new file mode 100644
-index 00000000000..c64abc59366
---- /dev/null
-+++ b/t/t3515/base.c
-@@ -0,0 +1,17 @@
-+int f(int x, int y)
-+{
-+        if (x == 0)
-+        {
-+                return y;
-+        }
-+        return x;
-+}
-+
-+int g(size_t u)
-+{
-+        while (u < 30)
-+        {
-+                u++;
-+        }
-+        return u;
-+}
-diff --git a/t/t3515/ours.c b/t/t3515/ours.c
-new file mode 100644
-index 00000000000..44d82513970
---- /dev/null
-+++ b/t/t3515/ours.c
-@@ -0,0 +1,17 @@
-+int g(size_t u)
-+{
-+        while (u < 30)
-+        {
-+                u++;
-+        }
-+        return u;
-+}
-+
-+int h(int x, int y, int z)
-+{
-+        if (z == 0)
-+        {
-+                return x;
-+        }
-+        return y;
-+}
-diff --git a/t/t3515/theirs.c b/t/t3515/theirs.c
-new file mode 100644
-index 00000000000..85f02146fee
---- /dev/null
-+++ b/t/t3515/theirs.c
-@@ -0,0 +1,17 @@
-+int f(int x, int y)
-+{
-+        if (x == 0)
-+        {
-+                return y;
-+        }
-+        return x;
-+}
-+
-+int g(size_t u)
-+{
-+        while (u > 34)
-+        {
-+                u--;
-+        }
-+        return u;
-+}
-diff --git a/t/t7615-merge-diff.sh b/t/t7615-merge-diff.sh
-new file mode 100755
-index 00000000000..be335c7c3d1
---- /dev/null
-+++ b/t/t7615-merge-diff.sh
-@@ -0,0 +1,43 @@
-+#!/bin/sh
-+
-+test_description='git merge
-+
-+Testing the influence of the diff algorithm on the merge output.'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	cp "$TEST_DIRECTORY"/t3515/base.c file.c &&
-+	git add file.c &&
-+	git commit -m c0 &&
-+	git tag c0 &&
-+	cp "$TEST_DIRECTORY"/t3515/ours.c file.c &&
-+	git add file.c &&
-+	git commit -m c1 &&
-+	git tag c1 &&
-+	git reset --hard c0 &&
-+	cp "$TEST_DIRECTORY"/t3515/theirs.c file.c &&
-+	git add file.c &&
-+	git commit -m c2 &&
-+	git tag c2
-+'
-+
-+GIT_TEST_MERGE_ALGORITHM=recursive
-+
-+test_expect_success 'merge c2 to c1 with recursive merge strategy fails with the current default myers diff algorithm' '
-+	git reset --hard c1 &&
-+	test_must_fail git merge -s recursive c2
-+'
-+
-+test_expect_success 'merge c2 to c1 with recursive merge strategy succeeds with -Xdiff-algorithm=histogram' '
-+	git reset --hard c1 &&
-+	git merge --strategy recursive -Xdiff-algorithm=histogram c2
-+'
-+
-+test_expect_success 'merge c2 to c1 with recursive merge strategy succeeds with diff.algorithm = histogram' '
-+	git reset --hard c1 &&
-+	git config diff.algorithm histogram &&
-+	git merge --strategy recursive c2
-+'
-+test_done
-
-base-commit: 06e570c0dfb2a2deb64d217db78e2ec21672f558
--- 
-gitgitgadget
+Chris
