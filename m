@@ -1,180 +1,174 @@
-Received: from mail.ekdawn.com (mail.ekdawn.com [159.69.120.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA21778C73
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 17:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.120.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C5414E2DF
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 17:11:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720458378; cv=none; b=iHP98JoRDXcPvK3WZ9k1BTu1hhuHQkZ2OrxdnxMgCXb8A1m6FuyT5m7QiEuiXsH/eEiuigZvZy58/dObmxO/ptQd7zizgsACQDEjGXytBtp0q5ukAMAHzCqIzixClI5MJ74QndJHjDyzMkozDe+c6U6E6u2oh5n4HDHn0kzguwY=
+	t=1720458707; cv=none; b=Aw5vsBM9Uvs7Yb3eHq+fpoy8MyweAJF/godYbqoOxXkQ73luFviaSDhgIfwiVCXSjavoD5QDuS7sDLpqhW5YVy8VTZY97I2NdmJ141Lt2lnT2/C8YLk9lvFuqbOHAqUbpSDygHOYr7wAxZ8PLZQBQ1pXUU5mUsMd2PfdS1x/nEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720458378; c=relaxed/simple;
-	bh=hwpD7ZwHnf1m4vU2fS3vWxI5MRfP/mYfxgZhX/odo+w=;
-	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:References:
-	 From:In-Reply-To; b=QtS2j/iWnKkWyjc95ZbpWdJ6PJ1wSiJeDrwf+K/kdyZHRaZwm3smhmeU1S8V3QtLtfCPb7OEMBzSAZt+SdeoIFbOrGQLq5LuEuDqXKqTyiAM9TofW6WpzLYWlQiJH1GadQvaZcJ8OQs5b5vcznb9x78vSU8QOfD/+mLsfgzXyEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=horse64.org; spf=pass smtp.mailfrom=mail.ekdawn.com; arc=none smtp.client-ip=159.69.120.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=horse64.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ekdawn.com
-Received: from [10.42.0.97] (dynamic-176-003-149-048.176.3.pool.telefonica.de [176.3.149.48])
-	by mail.ekdawn.com (Postfix) with ESMTPSA id 3B35D18069C;
-	Mon,  8 Jul 2024 17:06:12 +0000 (UTC)
-Content-Type: multipart/mixed; boundary="------------0vPRx4qNwdbLEL7HLtdqVpsX"
-Message-ID: <ff50859c-8e67-46ed-a8bd-ad7f836374c1@horse64.org>
-Date: Mon, 8 Jul 2024 19:06:12 +0200
+	s=arc-20240116; t=1720458707; c=relaxed/simple;
+	bh=gTn79Y22Mc/ui5r0wMkwlVJRM9OaZCd/uEOV0epf2b4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MealJyLq6mqsfsjQpLwWH/wp6ayanFAirysqT8tCKqdv4UXX0IdExl0nhSylklGIAJSUyzK/EJjI5sn8tLcQuOLTGC/iv7wRcOBj1UyKkqNiu+Ln42HxisJduJXPDC6fapuu+XM+BidcnfGJKpIhNWhkN/uSnhn30RekWxcnWA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=heh1OFck; arc=none smtp.client-ip=209.85.167.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="heh1OFck"
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3c9cc681ee4so2360892b6e.0
+        for <git@vger.kernel.org>; Mon, 08 Jul 2024 10:11:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720458705; x=1721063505; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gTn79Y22Mc/ui5r0wMkwlVJRM9OaZCd/uEOV0epf2b4=;
+        b=heh1OFckWD29yWCPavwSXQAUbSfxwRkbYQvEy3EhXsaAlof8iO/+j7wiPb5uH3ACTC
+         zwMI2hS63Kr6RLgnhp52jH1jS5/d6Op5Krf2i/Ddt72cmMwJzoWCkohdW3tvSYFYhOZw
+         gSN1TMggLuA2QFgayZOJoc8hbC+AjH8ega+v7ftD8kB1jpIqn6AfXc8N5ez9Zan2BtzE
+         svyJfV47bG4i01hna0suV2raA6BhDWZ3iIsxPfujju46q7+eWXZ8HIeQiRrYY7L8xEQz
+         VfVVsMDnvBMyQdQ3SsPXEpdi6q4+xb51DvQ4QdTfUxTytHj9ieHXjckvkSr8yAIFyQOS
+         Dm5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720458705; x=1721063505;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gTn79Y22Mc/ui5r0wMkwlVJRM9OaZCd/uEOV0epf2b4=;
+        b=dlxZXUbPSOIWsAwL94Lew40YNBDFtun4or+1fZ2j3hVpnccXJmgvgfNjlfwh8uLnVN
+         nWg1JlWZNDs95ivcRRDUa1ArSTZJCOTOxJdfm2E2E3XBdaw3a/ZZRdWT7AIsaDEG2apj
+         crbRM2KrMI0mb+QV7xVKhHJd5uXN1ciC5u7tE2E8gjPh/21rdpn6+k1gSfvNijsY9beu
+         ywbhbPkJK78KdwQDEPnYI4uxX5pp7bpVHUYNEAIrMXxsrN4uMEZ1KOlLcPawy75lH71N
+         NKNUj5eNHbTcegxjrlskAD5zjfhDRKXkjwBz+/M5TFJkiTuWcnhmaAHMcQeP54NEhRpT
+         RckA==
+X-Gm-Message-State: AOJu0Yxa5vx9k3z/DHZcUwBAnMB9vjZMQIO0IFJmKkzgvfIMrbSqp9ei
+	f7Mw6WLjUSMnpDVD/8AiaPi0PxHH6kFe/Z4GZSI3/iuCXeDSk/y4gH1tiw3bwBOu5LueiCrJjyg
+	0rYXF9U7zgX8aJncw7xh1DdzrX5l9jXIn
+X-Google-Smtp-Source: AGHT+IHLn/omtN1Bq+VfEteHhinPQJDX8bvqyQs2hFCOm2oVyNh1NQovHpnMDS0j3G/IOA/P5VFXoG6ZcvGQqhacZbY=
+X-Received: by 2002:a05:6870:ec8a:b0:25e:29fa:41e7 with SMTP id
+ 586e51a60fabf-25eae755275mr14677fac.5.1720458704676; Mon, 08 Jul 2024
+ 10:11:44 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 8 Jul 2024 10:11:43 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <Zov_PaaxF1Mbp_dP@ArchLinux>
+References: <ZoVX6sn2C9VIeZ38@ArchLinux> <ZovrFCzRg06pq5eI@ArchLinux>
+ <CAOLa=ZRPaiHK+NezigXEyWceriHZ7rb6msR51zcit9X=8rHFyQ@mail.gmail.com> <Zov_PaaxF1Mbp_dP@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: With big repos and slower connections, git clone can be hard to
- work with
-To: rsbecker@nexbridge.com, git@vger.kernel.org
-References: <20240708143239.vq47dg7mgh33hykf@carbon>
- <2e10070f-2720-4d70-aa15-d4c008cc57bf@horse64.org>
- <001301dad14b$f8f0e460$ead2ad20$@nexbridge.com>
- <47799635-7832-4c89-b4d3-e992d49ad40c@horse64.org>
- <001a01dad153$271c2e60$75548b20$@nexbridge.com>
-Content-Language: en-US
-From: ellie <el@horse64.org>
-In-Reply-To: <001a01dad153$271c2e60$75548b20$@nexbridge.com>
+Date: Mon, 8 Jul 2024 10:11:43 -0700
+Message-ID: <CAOLa=ZR5mGOVsf8RSKxvQkT-9Ndm40CNuSEOY3Pbeu-2F0uqew@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v8 2/9] fsck: add a unified interface for reporting
+ fsck messages
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000f1800d061cbf8126"
 
-This is a multi-part message in MIME format.
---------------0vPRx4qNwdbLEL7HLtdqVpsX
-Content-Type: text/plain; charset=UTF-8; format=flowed
+--000000000000f1800d061cbf8126
+Content-Type: text/plain; charset="UTF-8"
+
+shejialuo <shejialuo@gmail.com> writes:
+
+> On Mon, Jul 08, 2024 at 10:36:38AM -0400, Karthik Nayak wrote:
+>> shejialuo <shejialuo@gmail.com> writes:
+>>
+>> > The static function "report" provided by "fsck.c" aims at checking fsck
+>> > error type and calling the callback "error_func" to report the message.
+>> > However, "report" function is only related to object database which
+>> > cannot be reused for refs. In order to provide a unified interface which
+>> > can report either objects or refs, create a new function "vfsck_report"
+>> > by adding "checked_ref_name" parameter following the "report" prototype.
+>> > Instead of using "...", provide "va_list" to allow more flexibility.
+>> >
+>> > Like "report", the "vfsck_report" function will use "error_func"
+>> > registered in "fsck_options" to report customized messages. Change
+>> > "error_func" prototype to align with the new "vfsck_report".
+>> >
+>> > Then, change "report" function to use "vfsck_report" to report objects
+>> > related messages. Add a new function called "fsck_refs_report" to use
+>> > "vfsck_report" to report refs related messages.
+>> >
+>>
+>> Not sure I really understand why we need to do this. Why can't we simply
+>> add `const char *checked_ref_name` to the existing 'report' and
+>> propagate this also to 'error_func'. Why do we need all this parallel
+>> flows?
+>>
+>
+> Yes, we could just add a parameter "const char *checked_ref_name" to the
+> existing "report". This may seem the simplest way to do. However, it
+> will also introduce some trouble below:
+>
+> 1. "report" function should be exported to the outside, we need to
+> rename it to "fsck_report". Well, we need to change a lot of code here.
+> And we MUST do this, because "report" is a general name. When exporting
+> to the outside, it's not proper.
+>
+
+agreed.
+
+> 2. When we add a new parameter in "report", for all the "report" calls,
+> we need to pass this new parameter with NULL.
+>
+
+agreed too.
+
+> Use this way, we could do not change "report" function prototype and the
+> corresponding calls. Most importantly, we could let the caller feel
+> transparent. Using "report", caller can just ignore "checked_ref_name".
+> Also for "fsck_refs_report", we could ignore some UNUSED parameters.
+>
+> So I think this design is more elegant than just adding a new parameter
+> in the existing "report" function.
+>
+
+I understand what you're saying, I also checked and can see that there
+are 60 references to the `report()` function. So perhaps there is some
+merit in keeping it as is and adding a new 'report_refs()'.
+
+>> Apart from that, what does 'v' in 'vfsck_report' signify?
+>>
+>
+> Because I use "va_list" parameter, I want to emphasis on this. And this
+> provides flexibility that we could add a "fsck_report" function later.
+> There are many codes in git code base using this way. I just followed
+> this.
+>
+
+I see. Makes sense.
+
+>> Perhaps it is also because this commit is doing a lot of things and we
+>> could have simplified it into smaller commits?
+>>
+>
+> Actually, this commit is very clear. I just want to provide a unified
+> function "vfsck_report" here. And let the "report" use this function and
+> "fsck_refs_report" function use this.
+>
+> So I don't know whether we should split this commit into multiple
+> commits. They are just tied together.
+
+--000000000000f1800d061cbf8126
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
+X-Attachment-Id: 49a1d924d9fc1930_0.1
 
-DQoNCk9uIDcvOC8yNCA2OjIzIFBNLCByc2JlY2tlckBuZXhicmlkZ2UuY29tIHdyb3RlOg0K
-PiBPbiBNb25kYXksIEp1bHkgOCwgMjAyNCAxMTo0OSBBTSwgZWxsaWUgd3JvdGU6DQo+PiBP
-biA3LzgvMjQgNTozMSBQTSwgcnNiZWNrZXJAbmV4YnJpZGdlLmNvbSB3cm90ZToNCj4+PiBP
-biBNb25kYXksIEp1bHkgOCwgMjAyNCAxMToxNSBBTSwgZWxsaWUgd3JvdGU6DQo+Pj4+IE9u
-IDcvOC8yNCA0OjMyIFBNLCBLb25zdGFudGluIEtob21vdXRvdiB3cm90ZToNCj4+Pj4+IE9u
-IE1vbiwgSnVsIDA4LCAyMDI0IGF0IDA0OjI4OjI1QU0gKzAyMDAsIGVsbGllIHdyb3RlOg0K
-Pj4+Pj4NCj4+Pj4+IFsuLi5dDQo+Pj4+Pj4gZXJyb3I6IFJQQyBmYWlsZWQ7IGN1cmwgOTIg
-SFRUUC8yIHN0cmVhbSA1IHdhcyBub3QgY2xvc2VkIGNsZWFubHk6DQo+Pj4+Pj4gQ0FOQ0VM
-IChlcnIgOCkNCj4+Pj4+IFsuLi5dDQo+Pj4+Pj4gSXQgc2VlbXMgZXh0cmVtZWx5IHVubGlr
-ZWx5IHRvIG1lIHRvIGJlIHBvc3NpYmx5IGFuIElTUCBpc3N1ZSwgZm9yDQo+Pj4+Pj4gd2hp
-Y2ggSSBhbHJlYWR5IGxpc3RlZCB0aGUgcmVhc29ucy4gQW4gYWRkaXRpb25hbCBvbmUgaXMg
-SFRUUFMNCj4+Pj4+PiBkb3dubG9hZHMgZnJvbSBnaXRodWIgb3V0c2lkZSBvZiBnaXQsIGUu
-Zy4gZnJvbSB6aXAgYXJjaGl2ZXMsIGZvcg0KPj4+Pj4+IHdheSBsYXJnZXIgZmlsZXMgd29y
-ayBmaW5lIGFzIHdlbGwuDQo+Pj4+PiBbLi4uXQ0KPj4+Pj4NCj4+Pj4+IFdoYXQgaWYgeW91
-IGV4cGxpY2l0bHkgZGlzYWJsZSBIVFRQLzIgd2hlbiBjbG9uaW5nPw0KPj4+Pj4NCj4+Pj4+
-ICAgICAgZ2l0IC1jIGh0dHAudmVyc2lvbj1IVFRQLzEuMSBjbG9uZSAuLi4NCj4+Pj4+DQo+
-Pj4+PiBzaG91bGQgcHJvYmFibHkgZG8gdGhpcy4NCj4+Pj4+DQo+Pj4+DQo+Pj4+IFRoYW5r
-cyBmb3IgdGhlIGlkZWEhIEkgdGVzdGVkIGl0Og0KPj4+Pg0KPj4+PiAkICBnaXQgLWMgaHR0
-cC52ZXJzaW9uPUhUVFAvMS4xIGNsb25lDQo+Pj4+IGh0dHBzOi8vZ2l0aHViLmNvbS9tYWxp
-aXQva2V5Ym9hcmQNCj4+Pj4gbWFsaWl0LWtleWJvYXJkDQo+Pj4+IENsb25pbmcgaW50byAn
-bWFsaWl0LWtleWJvYXJkJy4uLg0KPj4+PiByZW1vdGU6IEVudW1lcmF0aW5nIG9iamVjdHM6
-IDIzMjQzLCBkb25lLg0KPj4+PiByZW1vdGU6IENvdW50aW5nIG9iamVjdHM6IDEwMCUgKDQ2
-NC80NjQpLCBkb25lLg0KPj4+PiByZW1vdGU6IENvbXByZXNzaW5nIG9iamVjdHM6IDEwMCUg
-KDIwNy8yMDcpLCBkb25lLg0KPj4+PiBlcnJvcjogUlBDIGZhaWxlZDsgY3VybCAxOCB0cmFu
-c2ZlciBjbG9zZWQgd2l0aCBvdXRzdGFuZGluZyByZWFkIGRhdGENCj4+Pj4gcmVtYWluaW5n
-DQo+Pj4+IGVycm9yOiA1MzYxIGJ5dGVzIG9mIGJvZHkgYXJlIHN0aWxsIGV4cGVjdGVkDQo+
-Pj4+IGZldGNoLXBhY2s6IHVuZXhwZWN0ZWQgZGlzY29ubmVjdCB3aGlsZSByZWFkaW5nIHNp
-ZGViYW5kIHBhY2tldA0KPj4+PiBmYXRhbDogZWFybHkgRU9GDQo+Pj4+IGZhdGFsOiBmZXRj
-aC1wYWNrOiBpbnZhbGlkIGluZGV4LXBhY2sgb3V0cHV0DQo+Pj4+DQo+Pj4+IFNhZGx5LCBp
-dCBzZWVtcyBsaWtlIHRoZSBlcnJvciBpcyBvbmx5IHNsaWdodGx5IGRpZmZlcmVudC4gSXQg
-d2FzDQo+Pj4+IHN0aWxsIHdvcnRoIGEgdHJ5LiBJIGNvbnRhY3RlZCBHaXRIdWIgc3VwcG9y
-dCBhIHdoaWxlIGFnbyBidXQgaXQgZ290DQo+Pj4+IHN0dWNrLiBJZiB0aGVyZSB3ZXJlIHJl
-c3VtZSBhdmFpbGFibGUgc3VjaCBoaWNjdXBzIHdvdWxkbid0IG1hdHRlciwgSQ0KPj4+PiBo
-b3BlIHRoYXQgZXhwbGFpbnMgd2h5IEkgc3VnZ2VzdGVkIHRoYXQgZmVhdHVyZS4NCj4+Pg0K
-Pj4+IEkgZG9uJ3QgcmVhbGx5IHVuZGVyc3RhbmQgd2hhdCAiaXQgZ290IHN0dWNrIiBtZWFu
-cy4gSXMgdGhhdCBhIGNvbGxvcXVpYWxpc20/IFdoYXQNCj4+IGdvdCBzdHVjaz8gVGhhdCBj
-YXNlIGF0IEdpdEh1Yj8NCj4+Pg0KPj4+IEhhdmUgeW91IHRyaWVkIGdpdCBjb25maWcgLS1n
-bG9iYWwgaHR0cC5wb3N0QnVmZmVyIDUyNDI4ODAwMA0KPj4+DQo+Pj4gSXQgbWlnaHQgaGVs
-cC4gVGhlIGZlYXR1cmUgYmVpbmcgcmVxdWVzdGluZywgZXZlbiBpZiBwb3NzaWJsZSwgd2ls
-bCBwcm9iYWJseSBub3QNCj4+IGhhcHBlbiBxdWlja2x5LCB1bmxlc3Mgc29tZW9uZSBoYXMg
-YSBzb2xpZCBhbmQgc2ltcGxlIGRlc2lnbiBmb3IgdGhpcy4gVGhhdCBpcyB3aHkNCj4+IHdl
-IGFyZSB0cnlpbmcgdG8gZmlndXJlIG91dCB0aGUgcm9vdCBjYXVzZSBvZiB5b3VyIHNpdHVh
-dGlvbiwgd2hpY2ggaXMgbm90IGNsZWFyIHRvIG1lDQo+PiBhcyB0byB3aGF0IGV4YWN0bHkg
-aXMgZmFpbGluZyAocG9zc2libHkgYSBidWZmZXIgc2l6ZSBpc3N1ZSwgaWYgdGhpcyBpcyBj
-b25zaXN0ZW50bHkgZmFpbGluZykuDQo+PiBNeSBleHBlcmllbmNlLCBhcyBJIHNhaWQgYmVm
-b3JlLCBvbiB0aGVzZSBzeW1wdG9tcywgaXMgYSBwcm94eSAoZXZlbiBhIGxvY2FsIG9uZSkN
-Cj4+IHRoYXQgaXMgaW4gdGhlIHdheS4gSWYgeW91IGhhdmUgeW91ciBsaW51eCBpbnN0YW5j
-ZSBvbiBhIFZNLCB0aGUgaHlwZXJ2aXNvciBtYXkgbm90DQo+PiBiZSBjb25maWd1cmVkIGNv
-cnJlY3RseS4gTGFjayBvZiBmdXJ0aGVyIGV2aWRlbmNlIChhbGwgd2UgcmVhbGx5IGhhdmUg
-aXMgdGhlIGN1cmwgUlBDDQo+PiBmYWlsdXJlKSBtYWtlcyBkaWFnbm9zaW5nIHRoaXMgdmVy
-eSBkaWZmaWN1bHQuDQo+Pj4NCj4+DQo+PiBUaGFua3MgZm9yIHlvdXIgcmVzcG9uc2UsIEkg
-YXBwcmVjaWF0ZSBpdC4gSSBkb24ndCBrbm93IHdoYXQgdGhlIGhvbGQgdXAgaXMgZm9yIHRo
-ZW0sDQo+PiBidXQgSSdtIHByb2JhYmx5IHRvbyB1bmltcG9ydGFudCwgd2hpY2ggSSB1bmRl
-cnN0YW5kLiBJJ20gbm90IGFuIGVudGVycHJpc2UgdXNlciwNCj4+IGFuZCA+OTklIG9mIG90
-aGVycyBoYXZlIGZhc3RlciBjb25uZWN0aW9ucyB0aGFuIG1lIHdoaWNoIGlzIHBlcmhhcHMg
-d2h5IHRoZXkNCj4+IGRvZGdlIHRoaXMgY29uZmlnKD8pIGlzc3VlLg0KPj4NCj4+IEFuZCB0
-aGFua3MgZm9yIHlvdXIgc3VnZ2VzdGlvbiwgYnV0IHNhZGx5IGl0IHNlZW1zIHRvIGhhdmUg
-bm8gZWZmZWN0Og0KPj4NCj4+ICQgZ2l0IGNvbmZpZyAtLWdsb2JhbCBodHRwLnBvc3RCdWZm
-ZXIgNTI0Mjg4MDAwICQgZ2l0IC1jIGh0dHAudmVyc2lvbj1IVFRQLzEuMQ0KPj4gY2xvbmUg
-aHR0cHM6Ly9naXRodWIuY29tL21hbGlpdC9rZXlib2FyZA0KPj4gbWFsaWl0LWtleWJvYXJk
-DQo+PiBDbG9uaW5nIGludG8gJ21hbGlpdC1rZXlib2FyZCcuLi4NCj4+IHJlbW90ZTogRW51
-bWVyYXRpbmcgb2JqZWN0czogMjMyNDMsIGRvbmUuDQo+PiByZW1vdGU6IENvdW50aW5nIG9i
-amVjdHM6IDEwMCUgKDQ2NC80NjQpLCBkb25lLg0KPj4gcmVtb3RlOiBDb21wcmVzc2luZyBv
-YmplY3RzOiAxMDAlICgyMDcvMjA3KSwgZG9uZS4NCj4+IGVycm9yOiBSUEMgZmFpbGVkOyBj
-dXJsIDE4IHRyYW5zZmVyIGNsb3NlZCB3aXRoIG91dHN0YW5kaW5nIHJlYWQgZGF0YSByZW1h
-aW5pbmcNCj4+IGVycm9yOiAyNDQ0IGJ5dGVzIG9mIGJvZHkgYXJlIHN0aWxsIGV4cGVjdGVk
-DQo+PiBmZXRjaC1wYWNrOiB1bmV4cGVjdGVkIGRpc2Nvbm5lY3Qgd2hpbGUgcmVhZGluZyBz
-aWRlYmFuZCBwYWNrZXQNCj4+IGZhdGFsOiBlYXJseSBFT0YNCj4+IGZhdGFsOiBmZXRjaC1w
-YWNrOiBpbnZhbGlkIGluZGV4LXBhY2sgb3V0cHV0DQo+Pg0KPj4gSSdtIGRvdWJ0ZnVsIHRo
-aXMgaXMgc29sdmFibGUgd2l0aG91dCBlaXRoZXIgc29tZSByZXN1bWUgb3IgYSBmaXggZnJv
-bSBHaXRodWIncyBlbmQuDQo+PiBCdXQgSSBjYW4gdXNlIFNTSCBjbG9uZSBzbyB0aGlzIGlz
-bid0IHVyZ2VudC4NCj4+DQo+PiBSZXN1bWUganVzdCBzZWVtZWQgbGlrZSBhbiBpZGVhIHRo
-YXQgd291bGQgYWxzbyBoZWxwIG90aGVycywgYW5kIGl0J3Mgd2hhdCBtYWtlcw0KPj4gbWFu
-eSBvdGhlciBpbnRlcm5ldCBzZXJ2aWNlcyB3b3JrIG11Y2ggYmV0dGVyIGZvciBtZS4NCj4g
-DQo+IEkgZG8gbm90IGtub3cgd2hpY2ggcGFjayBmaWxlIGlzIGhhdmluZyB0aGUgaXNzdWUg
-LSBpdCBtYXkgYmUgdGhlIGZpcnN0IG9uZS4gVHJ5IHJ1bm5pbmcgd2l0aCB0aGUgZm9sbG93
-aW5nIGVudmlyb25tZW50IHZhcmlhYmxlcyBHSVRfVFJBQ0U9dHJ1ZSBhbmQgR0lUX1BBQ0tF
-VF9UUkFDRT10cnVlLiBUaGlzIHdpbGwgbm90IGNvcnJlY3QgdGhlIHByb2JsZW0gYnV0IG1p
-Z2h0IGdpdmUgYWRkaXRpb25hbCBoZWxwZnVsIGluZm9ybWF0aW9uLiBnaXQgdXNlcyBsaWJj
-dXJsIHRvIHBlcmZvcm0gaHR0cHMgdHJhbnNmZXJzIC0gd2hpY2ggYXBwZWFycyB0byBiZSB3
-aGVyZSB0aGUgZXJyb3IgaXMgY29taW5nIGZyb20uIEl0IGlzIG15IG9waW5pb24sIGdpdmVu
-IHRoZSBpc3N1ZSBpcyB2ZXJ5IGxpa2VseSBpbiBjdXJsLCB0aGF0IGEgcmVzdGFydCBjYXBh
-YmlsaXR5IHdpbGwgbm90IGhlbHAgYXQgYWxsIC0gYXQgbGVhc3Qgbm90IHVudGlsIHdlIGZp
-bmQgdGhlIGFjdHVhbCByb290IGNhdXNlIChzdGlsbCBtb3N0bHkgYW4gdW5rbm93biwgYWx0
-aG91Z2ggdGhpcyBlcnJvciBpcyB3aWRlbHkgZGlzY3Vzc2VkIG9ubGluZSBpbiBvdGhlciBu
-b24tZ2l0IHBsYWNlcykuIFRoZSBmYWlsdXJlIGFwcGVhcnMgdG8gYmUgdHJhbnNmZXJyaW5n
-IGEgc2luZ2xlIHBhY2sgZmlsZSAoMTM5ODI0NDQyIGJ5dGVzKSBzaXplIG1heSBiZSBhbiBp
-c3N1ZSwgYnV0IHJlc3RhcnRpbmcgaW4gdGhlIG1pZGRsZSBvZiBhIHBhY2sgZmlsZSBtYXkg
-bm90IHNvbHZlIHRoZSBwcm9ibGVtIChkaXNjdXNzZWQgaW4gb3RoZXIgdGhyZWFkcykgYXMg
-dGhlIGZpbGUgaXMgcG90ZW50aWFsbHkgYnVpbHQgb24gZGVtYW5kIChhcyBJIHVuZGVyc3Rh
-bmQgaXQgZnJvbSBHaXRIdWIpIGFuZCBtYXkgbm90IGJlIHRoZSBzYW1lIG9uIHRoZSBuZXh0
-IGNsb25lIGF0dGVtcHQuIFdoYXQgd2UgcHJvYmFibHkgd2lsbCBmaW5kIGlzIHRoYXQgYSBy
-ZXN0YXJ0IHdpbGwgYmUgc3R1Y2sgaW4gdGhlIHNhbWUgc3BvdCBhbmQgbm90IG1vdmUgZm9y
-d2FyZCBiZWNhdXNlIHRoZSBmYWlsdXJlIGlzIG5vdCBhdCBhIGZpbGUgYm91bmRhcnkuDQo+
-IA0KPiBJbiBhZGRpdGlvbiB0byB0aGlzLCBHaXRIdWIgbWF5IGhhdmUgbGltaXRzIG9uIHRo
-ZSBzaXplIG9mIGZpbGVzIHRoYXQgY2FuIGJlIHRyYW5zZmVycmVkLCB3aGljaCB5b3UgbWln
-aHQgYmUgaGl0dGluZyAodW5saWtlbHkgYnV0IHBvc3NpYmxlKS4gQ2hlY2sgeW91ciBwbGFu
-IG9wdGlvbnMuIEkgdHJpZWQgb24gYSBsaWdodCBwbGFuLCBzbyB0aGlzIGlzIHVubGlrZWx5
-IGJ1dCBJIHdhbnQgdG8gZXhjbHVkZSBpdC4NCj4gDQo+IA0KSSBhdHRhY2hlZCB0aGUgb3V0
-cHV0IG9mIHRoaXMgY29tbWFuZDoNCg0KJCBHSVRfVFJBQ0U9dHJ1ZSBHSVRfUEFDS0VUX1RS
-QUNFPXRydWUgZ2l0IC1jIGh0dHAudmVyc2lvbj1IVFRQLzEuMSANCmNsb25lIGh0dHBzOi8v
-Z2l0aHViLmNvbS9tYWxpaQ0KdC9rZXlib2FyZCBtYWxpaXQta2V5Ym9hcmQgPiBsb2cudHh0
-IDI+JjENCg0KTXkgYmVzdCBndWVzcyBpcyBzdGlsbCB0aGF0IGR1ZSB0byBzb21lIHVuZm9y
-dHVuYXRlIHRpbWVvdXQgY2hvaWNlLCANCkdpdGh1YidzIGVuZCBzaW1wbHkgYmVjb21lcyBp
-bXBhdGllbnQgYW5kIGNsb3NlcyB0aGUgY29ubmVjdGlvbi4NCg0KUmVnYXJkcywNCg0KRWxs
-aWUNCg==
---------------0vPRx4qNwdbLEL7HLtdqVpsX
-Content-Type: text/plain; charset=UTF-8; name="log.txt"
-Content-Disposition: attachment; filename="log.txt"
-Content-Transfer-Encoding: base64
-
-MTg6NDQ6MzMuMTgyOTA3IGdpdC5jOjQ2NSAgICAgICAgICAgICAgIHRyYWNlOiBidWlsdC1p
-bjogZ2l0IGNsb25lIGh0dHBzOi8vZ2l0aHViLmNvbS9tYWxpaXQva2V5Ym9hcmQgbWFsaWl0
-LWtleWJvYXJkCkNsb25pbmcgaW50byAnbWFsaWl0LWtleWJvYXJkJy4uLgoxODo0NDozMy4x
-ODY5MjYgcnVuLWNvbW1hbmQuYzo2NTcgICAgICAgdHJhY2U6IHJ1bl9jb21tYW5kOiBnaXQg
-cmVtb3RlLWh0dHBzIG9yaWdpbiBodHRwczovL2dpdGh1Yi5jb20vbWFsaWl0L2tleWJvYXJk
-CjE4OjQ0OjMzLjE4ODY2OCBnaXQuYzo3NTAgICAgICAgICAgICAgICB0cmFjZTogZXhlYzog
-Z2l0LXJlbW90ZS1odHRwcyBvcmlnaW4gaHR0cHM6Ly9naXRodWIuY29tL21hbGlpdC9rZXli
-b2FyZAoxODo0NDozMy4xODg3MjggcnVuLWNvbW1hbmQuYzo2NTcgICAgICAgdHJhY2U6IHJ1
-bl9jb21tYW5kOiBnaXQtcmVtb3RlLWh0dHBzIG9yaWdpbiBodHRwczovL2dpdGh1Yi5jb20v
-bWFsaWl0L2tleWJvYXJkCjE4OjQ0OjM0Ljc1Nzc0MCBydW4tY29tbWFuZC5jOjY1NyAgICAg
-ICB0cmFjZTogcnVuX2NvbW1hbmQ6IGdpdCBpbmRleC1wYWNrIC0tc3RkaW4gLS1maXgtdGhp
-biAnLS1rZWVwPWZldGNoLXBhY2sgMTQyNjEgb24gZWxsaWVkZWNrJyAtLWNoZWNrLXNlbGYt
-Y29udGFpbmVkLWFuZC1jb25uZWN0ZWQKMTg6NDQ6MzQuNzU5MzA1IGdpdC5jOjQ2NSAgICAg
-ICAgICAgICAgIHRyYWNlOiBidWlsdC1pbjogZ2l0IGluZGV4LXBhY2sgLS1zdGRpbiAtLWZp
-eC10aGluICctLWtlZXA9ZmV0Y2gtcGFjayAxNDI2MSBvbiBlbGxpZWRlY2snIC0tY2hlY2st
-c2VsZi1jb250YWluZWQtYW5kLWNvbm5lY3RlZAplcnJvcjogUlBDIGZhaWxlZDsgY3VybCAx
-OCB0cmFuc2ZlciBjbG9zZWQgd2l0aCBvdXRzdGFuZGluZyByZWFkIGRhdGEgcmVtYWluaW5n
-CmVycm9yOiA1ODU4IGJ5dGVzIG9mIGJvZHkgYXJlIHN0aWxsIGV4cGVjdGVkCmZldGNoLXBh
-Y2s6IHVuZXhwZWN0ZWQgZGlzY29ubmVjdCB3aGlsZSByZWFkaW5nIHNpZGViYW5kIHBhY2tl
-dApmYXRhbDogZWFybHkgRU9GCmZhdGFsOiBmZXRjaC1wYWNrOiBpbnZhbGlkIGluZGV4LXBh
-Y2sgb3V0cHV0Cg==
-
---------------0vPRx4qNwdbLEL7HLtdqVpsX--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hTUhjMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL1MwQy93Smp0dkhGQWFEMTRaSXZJb2pOcEU1MzFnZwpxZkt3dnRMQVg3
+dDhkeXdRa3hhSlBMcGo3QjFyWXJWUHE2dHA3OTgzNHRBWUg3OWxLdm96Sjc4VjZzdkVDNUNWCkdB
+Mk05TlRXZEZCNHhvRGhLRjJkRVBubXBUdTczWlhLK1JxSUZkOXQxY1BBQ0ZZdTFEZWtMVVd1R1Vp
+TzlNQ0IKOFJSdk9FNDV5NlcrOWFMSE5wTkszNnFscldZbVFGc1NST1VySStKajdyaTNndDZRaTdx
+aFBwVmMzSXc2UmNWTApOQzBHSlVmUDhxYW5aOWRjYmdsNzZJWFBXNGIyWGRVcXhucWJTRkNZNWFr
+eTdGR1E4OHhPYWpQd0JibDFaVlhJCjVYRWRZcUQ5T3RoQjZ1bzJ4ZkdxejlhVDJXV2xGM3h4WjE4
+R21tN282RWRQVmFxYk9zdjl3cnVveFVlbXdyR08KbTJWQ01HSzA0cXRZNjExa2dFc2NDaVBhN0lz
+cW5jVFYyT0JyTGVYZU5LNmR3UnE1cDg5M2ZHUDl1T242RTBJZwpMQXFjNVlpYUErNEZ4TFMxVTFw
+Mk03c21zeGJ3cVVYUXVVYnlKK292UW9mSzdNRVN0Nmp0STBqK2EvN1FKNFF1CnFPUzRDc0xZSnF0
+azkvc0w0QllHRjN2STBOdi9lakZJWUtWMGU3bz0KPWp6SEMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f1800d061cbf8126--
