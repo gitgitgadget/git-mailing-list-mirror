@@ -1,137 +1,130 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E8C3FB94
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 13:08:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02C23FB94
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 13:09:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720444085; cv=none; b=T1lGF69pWEceH7vjQp40y/RGakDd//BRPbB920AiV5d/cSTAoXJ+0qwSTk01mpKtshPLwlxEvNanaWC6OZ0nmPeQHXzRHZM2jI9XF9fF0rzfqO5PPIkZCvXyGAQumnmHG094rHatHzJwnfSiONCrTZuW6vGmG8f/nUZKW2teXlk=
+	t=1720444148; cv=none; b=AkczKJMc50y6rqRSzG2ebSJKCuUJdQUHwrhWiFr4cr7jZukywk8mvmbSYqHGecC9/GqF1SOYqMZ3he+/B6Gx+KPd9pyKcExahxouezyTeTkKPPdJRVz851Fq4zB81LufA0zFcKXj954FERM1B1WZ1M5wl6AujhQ3SjB85Tq9E4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720444085; c=relaxed/simple;
-	bh=c3i1kyfiiZwi8mZlLC1iTdCTCXvAB9yS9S4SAt7Y7dk=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=aE30GVwN3Vk6y+wUXso35bjbmr3NXqyeFXLjrt874B9tnLH1TWolt0BtPVpySFg9CjIJA0zrLsDXlWIP+H4eVRcM2ab6soxxDpKGzXdGD1BrtS6WSu6T2BL/DYGKKhfrIhbEjVRG7zAKDaoobq4q1gdNi8WWOHZeaejYCSaidQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d5E+m97x; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720444148; c=relaxed/simple;
+	bh=Avsh2vN2ZHzfnKR15DhlOR/9qP9+H8TsnCpHjErKdWQ=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=NVlfFAiB6d7QCtkz0Osy68rvI3N5Q8ifd5UBD1466G5/1QxDdtiBk4cWkE2drQaQhqLBDV9+4XRz9Xg+eMsvLHP46gIFlNAMcR2kuzzvH3E7XaJBHrxUwh3fGG45QvB5Dl9m33bNg6pvCcds0FWqL0G5QHsZM0YdoTzPnDvptIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=HsfW8TCQ; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d5E+m97x"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-426636ef8c9so9693165e9.2
-        for <git@vger.kernel.org>; Mon, 08 Jul 2024 06:08:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720444081; x=1721048881; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aBusxxIbnCSMsaFaUhLjikW/DK0t+/cYMNzUyZYAIAQ=;
-        b=d5E+m97xK6n4gGzT7W9hpU2bwLEunbxa6IDGMsk3fZJ5zYqErlhfWbou1VrBV9uWSB
-         tPr3u4vheVA4anlmUCW/NXPg7JOvZe1t3JaWK9DdAE3uHbAFOHYD0Bol8QJG7jXGuH1I
-         TdfIgw2arQkR2hkYj48BvcY7343IRuMRuIpDge28kRkT4gSSXl4sOif4Rk8H/dfmkT3E
-         Ji0NfnrOg249TTSGw/3K01fDY6ndmFdem2R1y8DyRRVfFbuI4QbM4YH8uji1g2YwiwPW
-         rv5UGeixUSTlz3LttbEQvJhYOHPNwjS1oEsefLVat3YKlviK/Hncb1coDQL0EnkgmaAk
-         4KHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720444081; x=1721048881;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aBusxxIbnCSMsaFaUhLjikW/DK0t+/cYMNzUyZYAIAQ=;
-        b=vHl7c9abkxRS9ZWQC62qYPfXCwOjeQKt5u0kjchRSADPQVO/FnO/VOvrXS65kK6WMK
-         G6zaTdw015NM4H/7yIa8mFiWGa/3M0gW5r5HhoVIOEvUCOWeiIWvw0TQ9hELMM+g/Jmx
-         gxx4Z32rRVxcND3jBAHBseZpDrag1tU11gKJPgM9hn0VIQMDZr7rLKZcrYFfcz2ohBwq
-         1KZMj4Rn7C6aEu5PHNLEHGxkI3pzUMRyBYDDtz+r0TwmdwWg/i1P7yY4+F1NNcnUpfdn
-         Jkakf7pFx9oifVXWfvuGXzxp5XuiAUeja4+H12exz3pAp2/tjPLnySB3Y/LT0yzCf/wl
-         2rqA==
-X-Gm-Message-State: AOJu0YwGM725QC5XYBW1ZFeTuHXNQSBwtG0nDDOG9+YUNHCUC5IQGjab
-	ceh4WWKmWNAe7vI/6JZmfk7xVagoe0CYnuPagSfzbo++KMYg9B/hs/NOvA==
-X-Google-Smtp-Source: AGHT+IFp5wqV1BXWj4csG0yiF6qwrWOpmJ8n9n3gtKcfXZrMv+VvHiq5UZhIVg0j/nZ+1pDT4qbSEQ==
-X-Received: by 2002:a05:600c:4f14:b0:426:5f06:5462 with SMTP id 5b1f17b1804b1-4265f06546amr47202705e9.37.1720444081257;
-        Mon, 08 Jul 2024 06:08:01 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4266a38f5a5sm37059415e9.43.2024.07.08.06.08.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jul 2024 06:08:00 -0700 (PDT)
-Message-Id: <pull.1757.v5.git.1720444080034.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1757.v4.git.1720319311301.gitgitgadget@gmail.com>
-References: <pull.1757.v4.git.1720319311301.gitgitgadget@gmail.com>
-From: "Rikita Ishikawa via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 08 Jul 2024 13:07:59 +0000
-Subject: [PATCH v5] doc: fix the max number of git show-branches shown
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="HsfW8TCQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1720444133; x=1721048933;
+	i=johannes.schindelin@gmx.de;
+	bh=5IDtbBmemtT79ns6ed0VtMbOp2XOhhdu2mI7rNq9BOM=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=HsfW8TCQbJY1PDrxvvBkOWejU7w+FSohEcFoWLmSBulHZ8hkP+G3un6keKE7QHWv
+	 vaPzDo8vlvLshW7makOvBLrjVWe5bldX0IKLXyr1jJhOT0qQvoxe0bdEn31PMV0oA
+	 gcmpEeRbNvDqfpXtd83jVWfUW4Rf7Jr3GR+0lWKffTqyMw5zU/IK/pFKw7g1KdXgW
+	 e874r1GeiVMzO3oxJV5sqiIJYHmzai67ihJFKlRPQK+wR1QSVxVqpOg3V9gmbM6Ho
+	 z8On+wyd4XTeSN29cc/NqqXj6yR2TWGZzheEoy1XvMyEQxzM1wLhAXahfJaaKVlnX
+	 ArsmtH5HLyt0wJgeDw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.212.58]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MxDp4-1sBE8j1mPI-010Pgs; Mon, 08
+ Jul 2024 15:08:53 +0200
+Date: Mon, 8 Jul 2024 15:08:52 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+cc: phillip.wood@dunelm.org.uk, Git Mailing List <git@vger.kernel.org>, 
+    Johannes Sixt <j6t@kdbg.org>
+Subject: Re: BUG: "git var GIT_SHELL_PATH" is broken on Windows
+In-Reply-To: <ZovDPbgBS7WJIipz@tapette.crustytoothpaste.net>
+Message-ID: <cbdae028-db3d-b43e-57ef-52182452f49d@gmx.de>
+References: <cc267962-ca2d-4c4a-9ed8-d40c4d282522@gmail.com> <ZovDPbgBS7WJIipz@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    Rikita Ishikawa <lagrange.resolvent@gmail.com>,
-    Rikita Ishikawa <lagrange.resolvent@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:WAdNmE6ItdJhpIoRF3XQQswH8eB5PuyrFttVm+TjcKcd585FjOs
+ jmB41nIgc9W6nH0/eSPKuleSpf9INQj0JTy1BCvdWLSIy5ACXm2CgKdozvcRmY62qvhTLvx
+ zckPUjbCC4a3YByEPLtsL37HPLfBiVlNqGlW2uWhZDvE7pE1Aatn+6tTGv1KgyoD7jXGjZx
+ zOVimFeR6oJ5Lbg8LyLFQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Zff/lDatUiI=;JrwFMPbdYbfzcCtEhXZ6zWmpDfY
+ tthpCk5o18X7qr7VyMT+YwxRx8rnDG34Lkk4IEJi9HpBBKlDe0gl3Ey4TwVPF1Ukqw1nVoW0c
+ j2fYVvCCRzWtXN90psx5XRdXuZIP94ucr4/P4rbgFxTZ81l6WLeGh9+z17D+YwFpWlpP3Zt01
+ dEgtW8BwYDSjscr9g0ZLQyZIQbIxwQWtns6+DBJY9VE81OfxcQdKMH5WystSoMqM2Ajzht14x
+ Bjt0UGZnuSkeIoUTnF5TctXmVJ1nJ0yPoPWPuqs7d9jXRkv506o06OjqS6QmWB6jHq/KN+EFt
+ dkVriiQRKUFd5AVyeGZvntPKP3MaPAykhdKP1qYnlrEEvn4l9rSbe1vLVGQ4wtwUExgiLtRaz
+ Uyd623P1Sm2JgrpUZ6noOgBHw8Sq939l4bg9XjqrE4Wa/gFm7fS4sSRx8fLCmn5IkPU+Y+0QZ
+ qb1JFfpzB8Xmzd7hSa+YR+ugWSTns0cFYshpX/+h7oibh/0QR4o/HYIyI54cTZUFOp/MLudHq
+ OX7GVSyackxlM4ZcQxOAwL2ycV7Yd+LrWbGekRWC434XBkFOWJgbRR8I79+lp9jfeCJKG8JQ7
+ 0ulCSJqAtB5FNCJYtaWjYGAJp9X0uO9V/nbWBsoOiAkL8okIqzxYATq8sU/5X4j8TdycYKvrZ
+ 3h06s6nH+R07z/jRkXVmEn5MVgwVGvW+GthbWDioMbMhI4rwLDmfbNJnvCN/6frgw8TO9ydRF
+ c3Vf+qT417wTL+DMGDEjxxNVO60LUNmSFJ0X0ngf3s14qe+LVGfY1HAGCPfMwvjoTjxTZAeJT
+ 936tBJAhi2TgPKiAwTlIkbCWSokrn6KJHxfl0XOTHtbUs=
+Content-Transfer-Encoding: quoted-printable
 
-From: Rikita Ishikawa <lagrange.resolvent@gmail.com>
+Hi Phillip & brian,
 
-The number to be displayed is calculated by the
-following defined in object.h.
+On Mon, 8 Jul 2024, brian m. carlson wrote:
 
-    #define REV_SHIFT        2
-    #define MAX_REVS        (FLAG_BITS - REV_SHIFT)
+> On 2024-07-08 at 10:07:17, Phillip Wood wrote:
+> > Running "git var GIT_SHELL_PATH" on Windows prints "/bin/sh" which is =
+not
+> > very helpful when the path to the shell is actually
+> > "C:\Users\gitlab_runner\scoop\apps\mingit-busybox\2.45.2\mingw64\bin\a=
+sh.exe"
+> >
+> > Support for GIT_SHELL_PATH was added to "git var" in 1e65721227 (var: =
+add
+> > support for listing the shell, 2023-06-27) with the aim of making it
+> > possible for external programs to learn the location of the shell used=
+ to
+> > run the command returned by "git var GIT_EDITOR". As the commit messag=
+e
+> > notes this is especially helpful on Windows where the shell isn't
+> > necessarily in $PATH. Unfortunately the implementation simply prints
+> > SHELL_PATH which is unused on Windows. As 776297548e (Do not use SHELL=
+_PATH
+> > from build system in prepare_shell_cmd on Windows, 2012-04-17) explain=
+s the
+> > location of the shell depends on git's installation prefix. For the
+> > git-for-windows builds it looks like the shell is always in
+> > "$GIT_EXEC_PATH/../../bin/" but I'm not sure if that is universally tr=
+ue.
+> >
+> > It is possible to work around the bug by doing
+> >
+> >     git -c 'alias.run-editor=3D!$(git var GIT_EDITOR)' run-editor
+> >
+> > but it would be good to fix "git var GIT_SHELL_PATH" or at least docum=
+ent
+> > that it is broken on Windows
+>
+> Ugh.  This was indeed supposed to work, but I no longer have access to a
+> Windows machine, so we'd need someone who does have one to write up a
+> patch.
 
-FLAG_BITS is currently 28, so 26 is the correct
-number.
+Funnily enough, the test suite specifically tested for the faulty `sh`
+suffix.
 
-Signed-off-by: Rikita Ishikawa <lagrange.resolvent@gmail.com>
----
-    doc: fix the max number of git show-branches shown
-    
-    Changes since v1:
-    
-     * Explain in the commit message why "26" is the correct number.
-     * No change (to rename GitHub and re-send).
-     * Change the author of the commit.
-     * Fixed code block in commit message.
+Also, pro-tip: With GitHub Actions and
+https://github.com/mxschmitt/action-tmate you can fix compile errors and
+other problems directly on the hosted runners, including Windows ones. If
+you do not have any access to Windows machines anymore, that's how you can
+gain it back. I use this, too, to ensure that my patches work on macOS as
+intended, as I do not have access to any other macOS machine.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1757%2Fwonda-tea-coffee%2Fupdate-git-show-branch-description-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1757/wonda-tea-coffee/update-git-show-branch-description-v5
-Pull-Request: https://github.com/gitgitgadget/git/pull/1757
+As to the issue at hand, I offer
+https://lore.kernel.org/git/pull.1760.git.1720443778074.gitgitgadget@gmail=
+.com
+to address it.
 
-Range-diff vs v4:
-
- 1:  76ab2f17015 ! 1:  7c0af41794f doc: fix the max number of git show-branches shown
-     @@ Commit message
-          The number to be displayed is calculated by the
-          following defined in object.h.
-      
-     -    ```
-     -      #define REV_SHIFT        2
-     -      #define MAX_REVS        (FLAG_BITS - REV_SHIFT)
-     -    ```
-     +        #define REV_SHIFT        2
-     +        #define MAX_REVS        (FLAG_BITS - REV_SHIFT)
-      
-          FLAG_BITS is currently 28, so 26 is the correct
-          number.
-
-
- Documentation/git-show-branch.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index c771c897707..bc31d8b6d33 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -22,7 +22,7 @@ Shows the commit ancestry graph starting from the commits named
- with <rev>s or <glob>s (or all refs under refs/heads
- and/or refs/tags) semi-visually.
- 
--It cannot show more than 29 branches and commits at a time.
-+It cannot show more than 26 branches and commits at a time.
- 
- It uses `showbranch.default` multi-valued configuration items if
- no <rev> or <glob> is given on the command line.
-
-base-commit: 06e570c0dfb2a2deb64d217db78e2ec21672f558
--- 
-gitgitgadget
+Ciao,
+Johannes
