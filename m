@@ -1,107 +1,166 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA662E851
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 20:17:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85507146A98
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 20:25:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720469880; cv=none; b=FR7fqHkWtZSJq8EflD2m2ZVl0ZZ2XwkkgaqG5O8nRLMcoh+57ntlI1cvB9sR8Y88YaOCTV8R7oCYs0VqykajML5c1NaloIaZVcDDoY+S11r/NveeWqzJiabgE6+8FPMrDSA5j71CdBKWScMLkrmZ1orarWVw1K6TkCsQcatk3Do=
+	t=1720470336; cv=none; b=AmgvMX4gluTL8jqtXSbSLVQf14P5gYl/uaxvI43tKhPd45vQL/EUTwpAdjV7wkHOfQMymg21yDKZi2fGNYrDTWf0VrwMUYEi7yNLq3v4HcNYpUX4ZlY/k41zSETgyGfQzBEuy5+Yw9CTrcZmMKmMRBRaAUj7S257o26qSwwTjvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720469880; c=relaxed/simple;
-	bh=fCbmIPeDPI2WxwTDdMepyNX2z/V+IAN1HlU0F7r+iv0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UnSFH/znqevB0KWfOG5qfp0FkgaM5qAfqAQY9LjHfUGgJ0ERg+UCrIR7HL5twG7cckOdoSadsfdumO3qDnmwuv5mbxXudMMWAoy621D11Gy2iMyguTl32NY2+KLY1zFGYbKK8uml4dAzdp2IzaOZiTKEnGu8hvGUC3lK6PXDJx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1720470336; c=relaxed/simple;
+	bh=BA5mj8EXRp46ndvzsouQYvPxI7dxY9wAOuE4LOfNTlA=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XbVbdNTZq9udBfTXSP10/Hx7ihVq1MOLxdlaqCc5ipgCyZf5aLZIACMqKYOA+gBugtFWIWVRxkDk+f+knuhPl+4hzbSOJfDIho2qWNLQMdwb+tSJ4IAjZieBccT2eUy/gYfIo4JJxrx3vXVxJy532MNgejg8rD+zl+dZRsd9n2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mCePZUid; arc=none smtp.client-ip=209.85.167.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6b5f90373d4so25785186d6.0
-        for <git@vger.kernel.org>; Mon, 08 Jul 2024 13:17:57 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mCePZUid"
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3cabac56b38so2857225b6e.3
+        for <git@vger.kernel.org>; Mon, 08 Jul 2024 13:25:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720470333; x=1721075133; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wme3ZkMJB1fxcTbaUrqbcRtQ0Y2EQsVGBL6GUMaUUHA=;
+        b=mCePZUidmUvJyzBWtSRX6mU1IY2OK32/TDmmGuClzTh3SghGPpI7+QHnJ4XdDyErq+
+         wGL2VsiQewm2/B8u55xSxKLu0Rt+hTqXbtRyXWtl+etxzwNHbFjdV3VWtbLPkYFuYkqO
+         enj7L8mJjbeyzMmKsRUHo2kEg+k4qKDuszN66mydk5abYM/VjMrzqPUuaVfAKmwtCx8h
+         g5QnGdM8LHQwKkWHXM15RNcc7Nzk1v02QsFBVel10FOGgk7RLm3JkyXdg/H2ZHat8r+D
+         nUli1vp7fLwI4LK8X/4q/XVVQuhur7lIy/knXU64mmm3AtiJdXKKU9UU3PqVt+mYy/YB
+         m4BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720469877; x=1721074677;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=f7y22GVntKS4sm4JzEwj6o2K/ecFLCNXDxSLWRshmIw=;
-        b=Sp8zpt6nWk7n93AL3j3hav+KsLWPrijDW7A+bMpdGh/AmQF3E9+XFdyCrUf5EZVr1I
-         cB14pM+81COKe/H9QOoZegrAjSCzBI63LjyjEPAGPGQpa8KQC1IFoj+3UrW7rNns0Cdl
-         M9L/U1KXorI9RFxSEtcUj812glZXycMid4okvaPOT5MxZCi/7OON16FEo6pe05UYyHxL
-         AHBgozLI/TfkGAZBo8ZkUygB8Yz0QtwswjR5cnNxX0DFKe6RwIwkWV9kP2X9sCg4TPED
-         XSucryhNYD4Bsqpsu7tUWDJwYeC9enUVicsZEuLhYhlYv7ZkyLy3TRkwYEQRc5CWTZX1
-         Z5qw==
-X-Forwarded-Encrypted: i=1; AJvYcCXWl+1q53qNhkE/t8HwrTvXq02gylHBnESnK+ab9Q/hpe0sGqzpNVCswvs4Yz0h6wCmgERyoOkJoMuNUDwK851rfy+d
-X-Gm-Message-State: AOJu0YzWEOxXUsaFaXhrqSEVwyJDP7PBDagzKv4W8n+CoAtvEjZIBZPP
-	dcmAyAMFoQya+K9WyEuCThY/JQoFoxdROK/gT855+gqZHVKUnAdYNfnjwnqnLQxeh2/oBlKJr0h
-	BM+VvWcit9rnoJAwUPG9uyfmp9tA=
-X-Google-Smtp-Source: AGHT+IFI2fss7XmQcuQfPoyO7dPh4AmJx/KevgOQ8YXA3jAbLOnGHlZAWPF1AHlIpzhn88cpC5u7kMT5JFcOFeWbAIQ=
-X-Received: by 2002:ad4:4f10:0:b0:6b5:2c82:7d7d with SMTP id
- 6a1803df08f44-6b61da71233mr4989476d6.24.1720469877132; Mon, 08 Jul 2024
- 13:17:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720470333; x=1721075133;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wme3ZkMJB1fxcTbaUrqbcRtQ0Y2EQsVGBL6GUMaUUHA=;
+        b=AyZe/SADjm1ixBSI61HS7j+nMbopbSOO55knAyktCjH0jErwwUrl6ew6/anbW/ClMS
+         XgThSqxQZ2k5vY/0IumgpE+rr6VORpZSyKyT2riqM8ClolnEXM0IaNtswHzRTSeWdUK0
+         jEneGHak4gF2qbp3DEO7r9THgNjfYM79pdk8xDclU+4rgCkcnVrvmwsjK7S9ud4jpsvN
+         bbQ9JFi6qygbRFX3/Jaul6Z01ANu0wEjaZoRXUXjtl7qfFs02KspTgaQGQZkDaiNi/A3
+         cJpDicT6yAJNzt1F14F6UY2PeKRCCj6ttNo+tEW3gahb86bkh/QSPxTlCA3UvZ5AwnFX
+         KcJg==
+X-Gm-Message-State: AOJu0YzRFi5xo9zYl1uxEBSJwhGmkxVXGdFnpR507P4kC1QNfnWrnpF1
+	I8bgK4WDWlEQUmB4Q5u0kqykMBzBMq4kO/vnf0nqIv3QTPUc2iS73em/6UIHKgPibnD/k4HL3ly
+	FBKWxOJlDPZpmKCh8GK4bFNCit3c=
+X-Google-Smtp-Source: AGHT+IHlhHJeSDndMgbpb6eJQPGr+A8eB786L9mvLUoXRsVFekjOP54azWPBNPXpuJgcLCYwfjCbL6vZT4JGqccKIOo=
+X-Received: by 2002:a05:6870:658d:b0:25e:1be2:a163 with SMTP id
+ 586e51a60fabf-25eaec17215mr409579fac.47.1720470333476; Mon, 08 Jul 2024
+ 13:25:33 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 8 Jul 2024 16:25:32 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqle2bj0dl.fsf@gitster.g>
+References: <20240708092317.267915-1-karthik.188@gmail.com>
+ <20240708092317.267915-6-karthik.188@gmail.com> <xmqqle2bj0dl.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240701220815.GA20293@coredump.intra.peff.net>
- <20240702235034.88219-1-ericsunshine@charter.net> <20240706060143.GD698153@coredump.intra.peff.net>
- <xmqqr0c6makb.fsf@gitster.g> <20240706231128.GA746087@coredump.intra.peff.net>
- <CAPig+cTv-DaGRmwWWCk8b33MKzV25vfP2zPKd2VOAEOtz4FZ2A@mail.gmail.com>
- <20240708090837.GD819809@coredump.intra.peff.net> <CAPig+cRzJXPa07wBXibCjfZ_uYtbAnRnOsXFrbMbCqRfwSxszg@mail.gmail.com>
-In-Reply-To: <CAPig+cRzJXPa07wBXibCjfZ_uYtbAnRnOsXFrbMbCqRfwSxszg@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 8 Jul 2024 16:17:46 -0400
-Message-ID: <CAPig+cTUsLHnCKcVMGTGUFXX85bDgMOAuvb6uXmDqpB3XswHcQ@mail.gmail.com>
-Subject: Re: [PATCH] chainlint.pl: recognize test bodies defined via heredoc
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Date: Mon, 8 Jul 2024 16:25:32 -0400
+Message-ID: <CAOLa=ZSb_S7X7pdFPp0r5bfNc3o95mGe5pU+rC1T_yM89NRqCw@mail.gmail.com>
+Subject: Re: [PATCH 5/8] clang-format: avoid braces on simple single-statement bodies
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, chriscool@tuxfamily.org
+Content-Type: multipart/mixed; boundary="00000000000012e797061cc23755"
+
+--00000000000012e797061cc23755
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jul 8, 2024 at 3:46=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
-> On Mon, Jul 8, 2024 at 5:08=E2=80=AFAM Jeff King <peff@peff.net> wrote:
-> > I took a look at running each test individually. It's surprisingly quit=
-e
-> > a bit slower! About 4s instead of 200ms.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> I'm not surprised. As currently implemented, `make test` chainlints
-> the self-tests and the Git test scripts unconditionally, even if none
-> of them have changed. As I understand it, =C3=86var idea was that the
-> costly initial `make test` would be offset by subsequent `make test`
-> invocations since `make` will only recheck the self-test files and Git
-> test scripts if they have been changed. His particular use-case, as I
-> recall, was when running the full `make test` repeatedly, such as with
-> `git rebase --exec 'make test' HEAD~n` to ensure that the entire test
-> suite passes for each patch of a multi-patch series prior to
-> submitting the series; the repeated cost of linting unchanged files
-> adds up, especially when the series is long.
+>> Set the 'RemoveBracesLLVM' to 'true' which ensures that we avoid curly
+>> braces for single-statement bodies in conditional blocks.
+>
+> Hmph, two warnings in its documentation [*] sound ominous, especially
+> the second one that says:
+>
+>     Warning
+>
+>     Setting this option to true could lead to incorrect code
+>     formatting due to clang-format=E2=80=99s lack of complete semantic
+>     information. As such, extra care should be taken to review code
+>     changes made by this option.
+>
+> which implies it may not necessarily a good idea to add to
+> automation without telling contributors that they may get hit with a
+> false positive (or incorrect rewrite).
+>
 
-By the way, regarding your 4s instead of 200ms result, I don't think
-that is necessarily reflective of what can be achieved. In particular,
-to properly measure the effect, you also need to remove all the
-threading support from chainlint.pl since using "ithreads" adds a
-not-insignificant amount of time to script startup, especially on
-Windows, but even on Unix it is quite noticeable.
+Agreed on this one. I'm a bit skeptical to be honest too. I think I
+should have added information about the warning in the commit too. I
+will for next round. Overall, this also contributes to the reason why I
+decided these CI jobs need to be allowed to fail.
 
-To test this, I think you can just replace this block:
+>
+> Reading from the examples in that documentation page, it was unclear
+> how it would handle if/else if/.../else cascade where not all branches
+> are multi-statement blocks, e.g.,
+>
+> 	if (A) {
+> 		do_A_thing();
+> 	} else if (B) {
+> 		do_B_thing();
+> 	} else {
+> 		do_C_things();
+> 		do_other_things();
+> 	}
+>
+> but looking around I am getting a feeling that the tool would do the
+> right thing, i.e., to match our preference that is to use {braces}
+> around all branches, if I am not mistaken.
+>
 
-    unless ($Config{useithreads} && eval {
-        require threads; threads->import();
-        require Thread::Queue; Thread::Queue->import();
-        1;
-        }) {
-        push(@stats, check_script(1, sub { shift(@scripts); }, sub {
-print(@_); }));
-        show_stats($start_time, \@stats) if $show_stats;
-        exit(exit_code(\@stats));
-    }
+Yup, that was my understanding and what I could see from some quick
+trials that I did too.
 
-with:
+It would be a great win to have this though, because it is one of the
+things that always get me.
 
-    if (1) {
-        push(@stats, check_script(1, sub { shift(@scripts); }, sub {
-print(@_); }));
-        show_stats($start_time, \@stats) if $show_stats;
-        exit(exit_code(\@stats));
-    }
+>
+> [Reference]
+>
+>  * https://releases.llvm.org/16.0.0/tools/clang/docs/ClangFormatStyleOpti=
+ons.html#:~:text=3DRemoveBracesLLVM
+>
+>> +# Remove optional braces of control statements (if, else, for, and whil=
+e)
+>> +# according to the LLVM coding style
+>> +# This avoids braces on simple single-statement bodies of statements.
+>
+> "... but keeps braces if one side of if/else if/.../else cascade has
+> multi-statement body."
+>
+
+Makes sense, will add.
+
+>> +RemoveBracesLLVM: true
+
+Overall I must say, I'd be okay if this patch is also dropped from this
+series.
+
+--00000000000012e797061cc23755
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 58b33af22c6f2284_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hTVN6b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOTZhQy85Mll2TG5ldlE5aStNWlVQNzh2Q21OUzBwagpCamRSaEhBb2h6
+UVRSVDdPYk1WU29HaXduNzRIcUgzRU8zdnN3RCtGc3ZUN2FwVThVZXlKTnRIVXk5YUc3TytuCjJK
+S0p5TlpCTmROZU4yK1J4dkJ5ZXJFd3BkbW9kR3ZPbVdoTWgzWVB2TWhRaXN0S0V3OXg3bW1zUWZz
+WnlRTDMKU014NC9OTU5kZnJmQVptN1ZQYzdaSTJRRjR0WWRuL1A4S245bUtxaHZpWkQ3WnBuQ25s
+REVkQUVUYUN5UDZRSApwbFdmejYzd2U2YXRIZkFqVUVNM0NPUktoMkRHaXlSTXZrQThGUDg4LzlB
+dUlVSWhyK2hrdmxZdjBpSUluc29YCjFMUFRYZ3R6endpWE5qTkxlVHR3akFBcjQ4S0VHa2ZkQ0Yv
+QklWSkZXZG93WXUrcjM2ODdiYVVpU1JzdGlZbk4KcmhFQWJSdHFNVFdJY0FUQnFXTFdkSmcwNklZ
+ZG1kQStJZnhZUnIwbTJhSnBCS3pSdnFwNDdZM2VCQVFJL3RGbwptcVdpMEQxZ21HQjl2aGprVHZk
+RlFmd3Zvb09HYUZSRi9rL0twVDFoeWwyNGdrYmxZWTk4dVhJcUlLN0h1MzBSCkxpU25xcW5zUFJJ
+dWRTY3MvUVMvYUtnNUFYRDZhTTAzQmRXUzlTcz0KPWxpOEIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000012e797061cc23755--
