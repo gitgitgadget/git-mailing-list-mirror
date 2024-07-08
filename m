@@ -1,132 +1,81 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E22B14532B
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 16:54:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF30146D49
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 16:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720457681; cv=none; b=FjBUITVyyayQpo1NJtxoCBgZ7zWskWGe2Vsg7WgFABvsgereFqPV2JGTfGTXfMsb594GxdZfMAJfdpcVgU11b2BLDgkFNofMIaBarrwJUfvieQGSyr4vc13VcfOICTqjbLcxbUr4ab/XibXqmxjFHLcsJ0c6wCoE1Zx8yDNSQzM=
+	t=1720457794; cv=none; b=kl6uViJBcSok6opY+i8BvP+m/ChCdeoJJJi+lJAHDs9w6b9q0ZhOF/gvox9t2TqTAYTK7qD08/CarV2DRxN03lNCrFFWDBq3GH865hVT8ndFzcemN+GCdTQtmMCk3YSXuNzDetjzhjKkRYw9czk/wTql4P2eyKItVS3QJjJMqak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720457681; c=relaxed/simple;
-	bh=T3f/F1TqQBFxsMa47gSO7C148gczKEI/6YNRvhoVGiY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=d5tvRSZDvELMBFDUE+LwluaF3udG0PuK8VENvHPkMS0Yi68RrSh356Cnlj2zmsnaLyNRArixlySfUt75pm5q7ApcwRE4tZ63U+1u1x1a/oT60327iP1FtXJOhHYOR+fB6HAZWDsZ8BMExNLMckrTKP4oL5DQ0VZ37HyIEXRbZXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=sT4a3Bug; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1720457794; c=relaxed/simple;
+	bh=fpDt8s5QOBDi8DxhLGD+xFQ3o/QXuTXcNF9DUqHthWs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DIwrpYEiN0khYQGUw8EY533OEazWfco1J9CFYrOJbQdyBg6nprRQbgUVLMvBYl/b6V1jGayDNQe2Srq0F3CPMhPV5TR8Yg2xpDmzSPQqw/+Re+x2T8bufTFV53lReo/8najgLe8oWvRWX6D4iSkOBPIxta7xWcq+SG8GMrlJIng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CQngjiMy; arc=none smtp.client-ip=209.85.167.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sT4a3Bug"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9EB791AEDD;
-	Mon,  8 Jul 2024 12:54:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=T3f/F1TqQBFxsMa47gSO7C148gczKEI/6YNRvh
-	oVGiY=; b=sT4a3BugpfILBjjmqL8bGyKlQalIAN4ZUSkNQvqQX3Az5gmQnSu1by
-	WsEx4m5wOif+srkfmPb1Rti+AnR9zJXQVaYIQxhtse6OZGaAb7aS7lfo1B8BIWeq
-	KDCDQ4fCib3Ov7Ph6TVrCX3Qe6XzWgW9KcgHgG5Tv1e14khETrClE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 987961AEDC;
-	Mon,  8 Jul 2024 12:54:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 262171AEDA;
-	Mon,  8 Jul 2024 12:54:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CQngjiMy"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3c9cc681ee4so2352116b6e.0
+        for <git@vger.kernel.org>; Mon, 08 Jul 2024 09:56:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720457792; x=1721062592; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fpDt8s5QOBDi8DxhLGD+xFQ3o/QXuTXcNF9DUqHthWs=;
+        b=CQngjiMyOMsPm1e04Q7X6bPSCTu1f4jc5oPTGlzVa57hJMin+grnSQWb/s3Vwuz7SC
+         wtErCPxyTTxN5zQG3q0XgmQg+KPA+Iln1uUyOAcjdbo5ESlsEnS58IV21X0Gi0dxvrne
+         VxKZ6ve7X/+lJy3iPbjeVpqUHJ1Z0a7G4iiGEg9rmIuAXIyGSFPf/j0CRNbPzT8jR2bx
+         rqfP+Te2Xt/olsIc6eGOloleNeHz9+5kPQVDFavW0hXizHMAf5spHfLmUqhcb24aSJv/
+         efJ2wBAZqytacjdsm4v7UbXWb1wL6FRnYJeSwLH2TFB+psR0+WfI1Dmk+cilCQh35rwE
+         pbNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720457792; x=1721062592;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fpDt8s5QOBDi8DxhLGD+xFQ3o/QXuTXcNF9DUqHthWs=;
+        b=B9BsJL81Dfi5wcv53Z7GVxfqQ3XFm6GhFkuiaOCrYUZOlM1ZTpf6ptMIbD/Qwgjo5O
+         3SwpH+1USGjFMHBFV9xCSgmqWTY1T7ozvo/tFw0lk1p52dlU22UeTkpq4uGZGJkH5DzT
+         GfzZ/mvjTASI1SU7JnrmUh3/UNKfk6My+wQwWMnWFRnnKqYlVIrero8uaODG+r14OadZ
+         5SrVhNFfK/tOl6C1o+f4Lcqh3fLY4So7ji9vl+b/gxlTccHMCfRA5LpWbw/+4E0wORlw
+         Z5FbbnXfXg08JFTblvT05DTK+7PkHRcbfWA5749yogSMh0I+Q9ukeYpuYfX9/dqIDyGe
+         TcxA==
+X-Gm-Message-State: AOJu0YzfgEF3zYCWgtaVQzyZrH2KLtouBwcpjjp/o/BB36D/WOBdyel4
+	caBtbAyytFuAN7Vzx1b449ptSM9TmTsIIFKuc3EZVvjf3LA/X8XlY/wBaQ==
+X-Google-Smtp-Source: AGHT+IFn2yAyDd+5hoW2sTRuj//6wyWV8pzqL2zK5oGYsGJRUKslHRR4oy+1Pnr42FzikUxd6M8Naw==
+X-Received: by 2002:a05:6808:2f10:b0:3d9:22ac:f1ea with SMTP id 5614622812f47-3d922acf2f7mr11381218b6e.16.1720457792140;
+        Mon, 08 Jul 2024 09:56:32 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-70374f6b5easm61642a34.14.2024.07.08.09.56.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Jul 2024 09:56:31 -0700 (PDT)
+Date: Mon, 8 Jul 2024 11:56:03 -0500
+From: Justin Tobler <jltobler@gmail.com>
 To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  jltobler@gmail.com,  chriscool@tuxfamily.org
+Cc: git@vger.kernel.org, chriscool@tuxfamily.org
 Subject: Re: [PATCH 6/8] clang-format: formalize some of the spacing rules
-In-Reply-To: <20240708092317.267915-7-karthik.188@gmail.com> (Karthik Nayak's
-	message of "Mon, 8 Jul 2024 11:23:14 +0200")
+Message-ID: <saa7uz2ovecdwg4ruhnusgebmexocq3qinlp5x5oz5sb2a3vqp@v4iupsp2ovwh>
 References: <20240708092317.267915-1-karthik.188@gmail.com>
-	<20240708092317.267915-7-karthik.188@gmail.com>
-Date: Mon, 08 Jul 2024 09:54:34 -0700
-Message-ID: <xmqq8qybj039.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20240708092317.267915-7-karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C1E5F3B4-3D4A-11EF-9D6F-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240708092317.267915-7-karthik.188@gmail.com>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
-
+On 24/07/08 11:23AM, Karthik Nayak wrote:
 > There are some spacing rules that we follow in the project and it makes
 > sen to formalize them:
 > * Ensure there is no space inserted after the logical not '!' operator.
-
-Shouldn't the rule be more like "no space between any single operand
-prefix or postfix operator and its operand"?  "foo++", "--foo", "~0"
-are the examples that come to my mind.
-
 > * Ensure there is no space before the case statement's color.
 
-"color" -> "colon".
+s/color/colon
 
 > * Ensure there is no space before the first bracket '[' of an array.
 > * Ensure there is no space in empty blocks.
 
-Hmph, I actually thought we preferred to be more explicit, using
-
-	if (foo)
-		; /* nothing */
-
-instead of any of
-
-	if (foo) {}
-	if (foo) { }
-	if (foo) { ; }
-	if (foo) { ; /* nothing */ }
-
-to write an empty statement.
-
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  .clang-format | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
->
-> diff --git a/.clang-format b/.clang-format
-> index 1a5f0c9046..05036f610b 100644
-> --- a/.clang-format
-> +++ b/.clang-format
-> @@ -126,11 +126,18 @@ RemoveBracesLLVM: true
->  # x = (int32)y;    not    x = (int32) y;
->  SpaceAfterCStyleCast: false
->  
-> +# No space is inserted after the logical not operator
-> +SpaceAfterLogicalNot: false
-> +
->  # Insert spaces before and after assignment operators
->  # int a = 5;    not    int a=5;
->  # a += 42;             a+=42;
->  SpaceBeforeAssignmentOperators: true
->  
-> +# Spaces will be removed before case colon.
-> +# case 1: break;    not     case 1 : break;
-> +SpaceBeforeCaseColon: false
-> +
->  # Put a space before opening parentheses only after control statement keywords.
->  # void f() {
->  #   if (true) {
-> @@ -139,6 +146,13 @@ SpaceBeforeAssignmentOperators: true
->  # }
->  SpaceBeforeParens: ControlStatements
->  
-> +# No space before first '[' in arrays
-> +# int a[5][5];     not      int a [5][5];
-> +SpaceBeforeSquareBrackets: false
-> +
-> +# No space will be inserted into {}
-> +# while (true) {}    not    while (true) { }
-> +SpaceInEmptyBlock: false
->  
->  # The number of spaces before trailing line comments (// - comments).
->  # This does not affect trailing block comments (/* - comments).
