@@ -1,104 +1,73 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A12812
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 03:51:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF9111712
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 03:59:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720410689; cv=none; b=sTLXFJe8DnTBS4FTDXrthdArQJkMgkxw0dmD771KA4NeZaEZ5FxWFsncGGAblD850cMDDF7uEB1Gqk9+L5hbEB3pkP22/e/QXyi1hcMtt63QEEi9WjSEToKfwtki6ZFij5BmqLph6qsmYSjjyM9veFIi/XSfCmr4Pn7S5TsDL9k=
+	t=1720411182; cv=none; b=TkwvHGJNyXSrV8VA97HoGv9cIUiUxkROyAFQ1u6+iYquoVerxVQoxJFj4J9O81icm0+x67J3226InCtowA4fUPuaYbk9J1OrZHJAEAHfsRS5p0Lm/vJalnz0avd7nKm6kxj/sqsZMsW5LHo6fPFc5H6cTGwaoUE/Wy+0U31vknc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720410689; c=relaxed/simple;
-	bh=H08E2eqg8iVGoZn0yXrKOyB7Socihith7CeIBhamkZc=;
+	s=arc-20240116; t=1720411182; c=relaxed/simple;
+	bh=wgaWxzrcJcszxTHe50bwGT13INTwLAEMT2o1f7500Yk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H41czhem69SqwJa6SvkqN0IMHF2LTVbv8lR/IEBl40SvbtzZ5kvd2gNLT6oyG0QCEkTA74OXbeQ+b7SU2ROx7hnkI3OABiCksCnFqXd2OOecf2sPhkDYhaGqqs0IdRcHTt2MmhG+vbQ175Ixnlmo2EvP5MELOJdGshWOWNge3Ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
+	 To:Cc:Content-Type; b=HJ2XHzFRew23Ir3bQTxn0E0UxbigQFXZYcTdcBMG34EQGc5kSlN29dSl9aBWxxyg0XG3f1T88uFS6I6g8sWWiGb67YAdpEVlK8mcYNxR+/A/GyOK9CW7FBLDViwpRkfTo+awF9CqKcsXvFhhcUVs4b5HTkHGO1as601mnngADcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6b5da2730efso22251386d6.2
-        for <git@vger.kernel.org>; Sun, 07 Jul 2024 20:51:27 -0700 (PDT)
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6b5f90373d4so19160466d6.0
+        for <git@vger.kernel.org>; Sun, 07 Jul 2024 20:59:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720410686; x=1721015486;
+        d=1e100.net; s=20230601; t=1720411178; x=1721015978;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2WO1MNwBmPYv26gdqFWCSkNIrTs/YSwA995w8Zc+dGo=;
-        b=RtOqH4uM3r1V7ce9x8SZau6X6Tde58KEw9QObq93G3zyBTtZwWib9zb5XBGba3d7CB
-         8aLC6hGmMS/Wh6R+yHBNg0YgPdkbADN4hrJ+ssXjtCHOx//mLWPonqAbPbQU+yBAMdAH
-         v2DzkNPSKAzy324BiZqVZDkPpwaWIJHjnUaCWPBCLoYVJ1UEQ5uZtU7mXTNsPSk6QOIg
-         5R7TVxFdcxTQnGXSCOxZgxBgNSX1LhFq1STbMMjXgOZOFr9wIpmaEc2N6fiIE60Yxw8P
-         AR3YODMKjkC4j+iIVEmiBOO/OAJCG3pAOWmrMpLDqmr0gv19MpQTycTVglMPUhfsuJW+
-         4WjA==
-X-Forwarded-Encrypted: i=1; AJvYcCVTCRJPhyTbAGJZRY/ENqHDdPqxt+q6pn+t4ME8aVxIUt80XTTRBshzpjfIarASLXq0SGorFH8YpX/x+mqhCNyKdghb
-X-Gm-Message-State: AOJu0Yz1+9AXLbUXsdSvLr3U4kfZ3ukwXVeXC1avCBZ+Fhf7gBG4z3WI
-	mX2JQ23Mr5YBD3SQPjNaFda8ej9YDXcTLu5KrzkBJlQBZAxtn8KOA/+FzGVME1Aql9R59DwZmjI
-	aL8wrSSWkl8OpW5UBAJFKm07E11c=
-X-Google-Smtp-Source: AGHT+IEOXfeDcqrplyEz3mNQXwbJ/CYBz7Vjvp5Z/fzVQn5pLrujp8XNEyErN37zv+zqhaE/GquGou2cHl+0XZR865Q=
-X-Received: by 2002:a05:6214:d6d:b0:6b2:da7e:5cb7 with SMTP id
- 6a1803df08f44-6b5ecf8eef1mr147308566d6.5.1720410686653; Sun, 07 Jul 2024
- 20:51:26 -0700 (PDT)
+        bh=sUbFpEYxb5kZSVYJcgA1yICiLWmzA/qymcErdXZSgic=;
+        b=C4e/mCNCFgnK7q2Zw2QF4WUBOmp3V3+QHhnc97SDKbr2anfQWhs8d5/Pkh/GvjNNTb
+         kTo2xxmbULnXDbSZBxHPxRuWl3LMt6WzagRAqN84Kw6h7sEBqZuc/02Tv6PSCmYPd6VR
+         /rhfCwftOZj3mqt4acWO5bf5K2GXFo3I8EncONEBYChzCNwR568JWCHoja2BkwZ/Kd2f
+         6WNHagnQUrjVYIDHLz90pQ4dDDq/iLSiPLIRPF0VKmNtre3VL7KbxW4KCCS5MyhMe74f
+         I3F9O2ciCGrIEsgnNkHlhjO15lENfsxJEkOujsVbs82edwE5BrzkBOapEZDOoDJfZ5//
+         HVOw==
+X-Forwarded-Encrypted: i=1; AJvYcCWxLvn1NbUrQG5u85ylOFC5idETGItD/r5b/N+ji7AvF6Vg5rESmmMWv1Hqh+zIuc1tHmH1tNfyzB1UpTlPzf2/MEnX
+X-Gm-Message-State: AOJu0YxPHAofuemXx8tjjK9Zo/9Npp6PqLhFB42s1nWcRvQcAgWFuqxR
+	N1SEXVDGhn8sQ5iaBkgrahkU4mrY1KSO7qjFH9lmS0qXiPHoyxZr2x4nPS5L3Af+8Jzypu2WWFP
+	rHvYJ5YowRNfBxDOcw61S33h+95UTqg==
+X-Google-Smtp-Source: AGHT+IHzj4P691tanxlGqJrSlN4bh8s89ywbgxx3tskYeQXpTvoT53P96Rj4hpoqvFQsm4aotNiS+IIZr2InB29ep1U=
+X-Received: by 2002:a05:6214:cab:b0:6b0:8991:a2f7 with SMTP id
+ 6a1803df08f44-6b5ee5cd243mr169742416d6.12.1720411178662; Sun, 07 Jul 2024
+ 20:59:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240701220815.GA20293@coredump.intra.peff.net>
- <20240702235034.88219-1-ericsunshine@charter.net> <20240706060143.GD698153@coredump.intra.peff.net>
- <xmqqr0c6makb.fsf@gitster.g> <20240706231128.GA746087@coredump.intra.peff.net>
-In-Reply-To: <20240706231128.GA746087@coredump.intra.peff.net>
+References: <20240706060143.GD698153@coredump.intra.peff.net>
+ <20240706060639.GB700151@coredump.intra.peff.net> <20240706060951.GA700433@coredump.intra.peff.net>
+In-Reply-To: <20240706060951.GA700433@coredump.intra.peff.net>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 7 Jul 2024 23:51:15 -0400
-Message-ID: <CAPig+cTv-DaGRmwWWCk8b33MKzV25vfP2zPKd2VOAEOtz4FZ2A@mail.gmail.com>
-Subject: Re: [PATCH] chainlint.pl: recognize test bodies defined via heredoc
+Date: Sun, 7 Jul 2024 23:59:27 -0400
+Message-ID: <CAPig+cTfMf_t93arsTCq-7fSooiBKRw1L=DVmSX8Pp7xMJM9Sw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] t/chainlint: add test_expect_success call to test snippets
 To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jul 6, 2024 at 7:11=E2=80=AFPM Jeff King <peff@peff.net> wrote:
-> My biggest question is around my patch 1 above:
+On Sat, Jul 6, 2024 at 2:09=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+> >       for i in $(CHAINLINTTESTS); do \
+> > -             echo "test_expect_success '$$i' '" && \
+> > -             sed -e '/^# LINT: /d' chainlint/$$i.test && \
+> > -             echo "'"; \
+> > +             sed -e '/^# LINT: /d' chainlint/$$i.test; \
+> >       done >'$(CHAINLINTTMP_SQ)'/tests && \
 >
->   - is it worth squashing in to Eric's patch? I didn't want to do that
->     without getting his OK on the approach.
+> BTW, not new in my patch, but I found it ironic that the shell snippet
+> here itself violates &&-chain rules. It should "|| exit 1" inside the
+> loop if a sed call fails.
 
-Given the effort you put into the commit message and diagnosing my
-bugs, my knee-jerk response is that it would be nice to keep your
-patch separate so you retain authorship. But it also would be
-irresponsible for us to let my buggy patch into the project history
-as-is since you caught the problems at review time. So, squashing your
-fixes in seems like the correct approach.
-
->   - instead of bumping the line number in the caller, should the lexer
->     record the line number of the here-doc to be used later?
-
-It would be more robust to do so, but I suspect things will be fine
-for a long time even without such an enhancement. But I also agree
-with your commentary in patch [1/3] that it probably would be easy to
-latch the line number at the point at which the heredoc body is
-latched.
-
->   - the test harness in the Makefile strips the line numbers from the
->     chainlint output, so it's hard to verify those fixes. I saw them
->     only because the combination of the two bugs meant that the here-doc
->     had a "line 0" in it, which was enough to confuse the "sed"
->     invocation in the Makefile.
->
->     I did manually verify that it is OK after my fix, but do we want
->     that to be part of the chainlint tests? Just leaving the line
->     numbers in is a maintenance nightmare, since it depends on the order
->     of concatenating all of the tests together (so our "expect" files
->     would depend on all of the previous tests). But if we wanted to get
->     fancy, we could perhaps store relative offsets in the expect file. I
->     think it gets pretty complicated, though, since we print only
->     problematic lines.
-
-Given the way the Makefile currently concatenates all the self-tests,
-it would indeed be a nightmare to retain the line numbers. In the long
-run, we probably ought someday to adopt =C3=86var's idea of checking the
-self-test files individually[*] rather than en masse. With that
-approach, it may make sense to revisit whether or not line numbers
-should be present in the "expected" files.
-
-[*] https://lore.kernel.org/git/CAPig+cSBjsosRqoAafYN94Cco8+7SdUt0ND_jHS+jV=
-PoM4K0JA@mail.gmail.com/
+Indeed, what an embarrassing oversight, especially since this loop was
+added in preparation for chainlint.pl which diagnoses missing `||
+exit` (or `|| return`) in loops in tests (unlike chainlint.sed which
+didn't).
