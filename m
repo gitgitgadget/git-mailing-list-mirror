@@ -1,157 +1,177 @@
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2104.outbound.protection.outlook.com [40.107.21.104])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3708B665
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 13:20:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.21.104
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720444821; cv=fail; b=Q2lE6guk2Sb9Lt4wbUNmVuFyDzehJ6rRl4CUFJqz7fNAAiRD3y+hoVT65q7hvs1npkSVXhzZj/QVi3q4PCjuF4jYN+Kvq59sGBnsUE692jD4sMWlDOQHg9N1LFHFwshrzAQ3CRtonvKmB17R5XZj8tpMT8ntCImiRFSdMtezRfo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720444821; c=relaxed/simple;
-	bh=O9A8Veo7/60ThsAfIHfIUtwJD56p150Nj31k+uytDZE=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=q+5df8hWD4FIDMHxKlMANuo6oYZspNMgqsHsMkWtJcrHx1jdwu3POXOHQR51A1nzdb1884sxsprJ8fENHbJkPOC2wVhkHZOLcGoaoXAH3Jn1DLxmzrUdfnv94QKs0JEtatAhhARQZ0T4wPLM+opQ8+44qYZn7FehsUdnZB6d1dQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=envirovent.com; spf=pass smtp.mailfrom=envirovent.com; dkim=pass (1024-bit key) header.d=spvg.onmicrosoft.com header.i=@spvg.onmicrosoft.com header.b=TAI8xqNB; arc=fail smtp.client-ip=40.107.21.104
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=envirovent.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=envirovent.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF33D1E495
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 13:32:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1720445544; cv=none; b=PEAUWHlAbttpPtyicQzPQDyy2N+2GhMxoJci+2nQEHoK1Xxx9OaHKtNr40EwtHsYQ8ixQahXQbQCCPXbdz1gu7PS7IGFhk/WULOvSYFWA6UmnFoFQ9W7aJHT1QkXt8AbVmW7UlLzcfJfypAxXz74rWY7E2SPp5dxR4DYjkSboMA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1720445544; c=relaxed/simple;
+	bh=RDmnLrMIvr569Z8417UuXoeTkzuLdnGlmxkTAOG2r0I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CPDDKk/M9LjtONyD8Lu/C8oddvTjpieV1S8OCImLGGc31F+lKqoiljsG3DLncs5+e6AKfcecmNI7i7H5ATpTxo7IlxlnCAfvYRLDqVaeJ504IjOCMXpzIwvN4FjP0E/DDWkNxpjHj1o1Ai0/s4/JGuWhD8+uMttbZSgGBGAMLYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LIc/NqG5; arc=none smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spvg.onmicrosoft.com header.i=@spvg.onmicrosoft.com header.b="TAI8xqNB"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GD172/v0S2ZWH/g4zgwr98OZ4VZG6Arhws5emdlmrVbhMdka0ge5xv0aTv8ui518Bi6K7KrNnGRp8N7DBEo6BEJOViQNHRBKbp6rR7DN/P10FIDT2xjbGpEFMd0jUzV9unLte8uXNpxqIjpgeKG5lajFAWSF+TUOt/TUDvuMEIpkO1eYX08wYYzUup0yABeqHqH16/13EHW93gcBVRlHacDzuEcMSuqxcqNJwDZyj9XVXUl/nB2HL2VjCxhDLLZzwoMLUKoaLE4cG9+WQ9VpYDnTYz6k1cY2J3ZuJ8kJqtBTGUWQhmB01TuJccFKNrNjtIzTYYJvoEL4gKzpNybrBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=O9A8Veo7/60ThsAfIHfIUtwJD56p150Nj31k+uytDZE=;
- b=HvG7HQV8QbDXEdjmLebdanqYhje/qN7FuLwNHAHmA+Jj9wpUIdm7kVad+deYKHmdhExt93GLwLccXdThjuh1F1eHUypjIGJmDca0Z6W2DYckts0SErSvVSbXvRJX6vi0ZGes/apdWz0faGDp3x11lU/t57H4M+5uH96c5zcoBJfgWfWqvUvc0wLz5VlkyuQ2sKbs1wrEAriZpXVaIZWuylBootQqBamd9Ch6KZjiFWLxyKTA5NALrE2he5LBXf4PagzDo9mBUo1hbz78z7UyNGbCrYg64pNTDi+2ssmTOWxN5q65CU3lz9KBgxoblvZzr/Sosyf/b6YDiraXpNhNng==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=envirovent.com; dmarc=pass action=none
- header.from=envirovent.com; dkim=pass header.d=envirovent.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spvg.onmicrosoft.com;
- s=selector1-spvg-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=O9A8Veo7/60ThsAfIHfIUtwJD56p150Nj31k+uytDZE=;
- b=TAI8xqNB9OFUzs39XC7JQhoUPCs11dHSu7fUoQ3f6MQUVU/Yb8ZGZW2LxFxTZBgK3Q+PgzBCIB2QAqZWW6MEiTu6twdSWyPjbOxkPWc+rSCJiraxMB1FYoneTfNARG6afAvGRFmtPlsJMKyUiqYWGz5S8RLLlCEXdl/oTBTDA9Q=
-Received: from DU0PR02MB9942.eurprd02.prod.outlook.com (2603:10a6:10:449::18)
- by DBBPR02MB10795.eurprd02.prod.outlook.com (2603:10a6:10:53d::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.35; Mon, 8 Jul
- 2024 13:20:12 +0000
-Received: from DU0PR02MB9942.eurprd02.prod.outlook.com
- ([fe80::baf3:8eac:68d8:5652]) by DU0PR02MB9942.eurprd02.prod.outlook.com
- ([fe80::baf3:8eac:68d8:5652%3]) with mapi id 15.20.7741.033; Mon, 8 Jul 2024
- 13:20:12 +0000
-From: Adam Pickett <apickett@envirovent.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Git Update for Windows - Cloudflare Direct IP
-Thread-Topic: Git Update for Windows - Cloudflare Direct IP
-Thread-Index: AdrROEHkn/MB1lnUTc+FPo5r16SQYQ==
-Date: Mon, 8 Jul 2024 13:20:12 +0000
-Message-ID:
- <DU0PR02MB9942C645E78AC23619F05D0CA0DA2@DU0PR02MB9942.eurprd02.prod.outlook.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=envirovent.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DU0PR02MB9942:EE_|DBBPR02MB10795:EE_
-x-ms-office365-filtering-correlation-id: cdb53f9c-0111-469e-7942-08dc9f50b2af
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|376014|366016|1800799024|38070700018;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?dUgMgVg0PnZxFntkJNDZ7RtOXnAZDB6kWL7lvLccVKGJSftAnQkSgc2P4CGn?=
- =?us-ascii?Q?0c8UfqOFGZIfUIHiwbrVv8f5/zNAsjult7ta5MwKX1US4z0pN+ek28t8BlU2?=
- =?us-ascii?Q?v+VnQiHdW1pspr+O2g/NcysPU512p1zGZJf1wTRI1lI2Psdm8S8qGXQi7n5E?=
- =?us-ascii?Q?T3JRj6Kpke1sVo6QIQYU0SX/BjT8tIgq99tVzFn9f9J2AKiYndxH9Kw1X+gr?=
- =?us-ascii?Q?WSzfSMXQ8CPPbJc83YLjFYV0QXKcoNlWpdoRz/7iHS380ebRLz3e1ibLnPkP?=
- =?us-ascii?Q?42uOnq+VFl4FO7+5sXWWBJnHuT1MWdv9H7Z+Px3Bd4L78qgQitU2FW+66Dex?=
- =?us-ascii?Q?g1TpwAEqNYkOe56LS0qf53Nh+9CLmaYe38VI0QSJ5CTNqRfzPJiJG3S694+i?=
- =?us-ascii?Q?2loz5hOmIaeEXhbwy+FXajyXwZOixmO1EITg8HyjszgI1cBCl1TlDvEZICei?=
- =?us-ascii?Q?ReyXpLUWRRXaJMaq9aenMrDHGBQX9yaP1XJaTi4mdgaegz7aWwa2KXI22Q+Y?=
- =?us-ascii?Q?eeuRouPGj40yzYO/ZRp2UiksXumf/dYeKM4fWnJ0ckY5nEdsmC9EodYjO4yH?=
- =?us-ascii?Q?6LsPAuQUqw0rMb4gy19aDAwGtVvpQSI0PBg4KctgQ4++8AB1Y+ug91P5Hw+x?=
- =?us-ascii?Q?2DFG/340itRuk+Z2oGVTujPHbC5c0QqqOOGMZEzbRpZt0zgoTZXAYqXICqXE?=
- =?us-ascii?Q?sYPQbkR8/VPnBxKrB8yRCwa9CU/BQBAe3P4Me3V93fEi7zfuj0g5JJPswG/c?=
- =?us-ascii?Q?MQtpMEGZoeSVw6rCMF8kYK0SETp46Vymvr1+vlYsfi1Ilpugloo+Qyw2bl3r?=
- =?us-ascii?Q?PHQ2Fdta2KUTp1j3hwIa2RQ9i3+iGHcfOjf306irKIYTpFHkmqMrO9+CYO3q?=
- =?us-ascii?Q?9vENKQ9rIuVx3kDLmTzgkBejvtL33jVpA724aSd1ZiCVuedNp5kciIdXRXdX?=
- =?us-ascii?Q?vnH+Z9fjO6UKOvq0u+EWiTqEskuHMd6x3DIiisqpk6E6JTIMSzotG8UCVM4Q?=
- =?us-ascii?Q?iMGYMzOFyTpxN2KFpgMvw/PvGy37RCsCZy4faRIqA9uB10MKGJTD8UhSErb2?=
- =?us-ascii?Q?1kSzXdT6nNO12p20aeLyYUFUuZI0mc0N4ru4kdeRlAaW7Xcgo5C/5rWGVrzY?=
- =?us-ascii?Q?145p2qI1KGtW2oxZEseYlmYsmzTXUl50fO9+HaZScqpSLWHQvxCSH4yf2m6j?=
- =?us-ascii?Q?YJZdaTG1h7DIRfBCBhh7Z8LBbR74GfWPpiHdxHYGLKybu39hScZnUjV8wp3N?=
- =?us-ascii?Q?15+rpzjEUeVWKBVRxLwZVhf5SC4Hgt1Dk/etMHamOgCCp9CROANPoGJvRfRb?=
- =?us-ascii?Q?faBX3JIV0xIsmzhGMnyRhTBUj38xskidX5AWAlXLDpJVAgTCuLiMM8SqXhMi?=
- =?us-ascii?Q?xfsER5tRCpZPZ+Wab1OvPr02GG2L1bg3FnVDGLHXf+FOaiMrRw=3D=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU0PR02MB9942.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?NUSw8pVzHrb+nh5Qhk8dgPu1vPe1ec7RKAFUr95L+xYyMgM+e5aJ45M+Ey0S?=
- =?us-ascii?Q?hIUJnEPENJwLoIEkD5qXCF3lfL+dM6oekpZRli7LE45o0RiaxvoiNMy+wkan?=
- =?us-ascii?Q?Nghu2zot/CUhsNT3f9sNnVCy/Bx55QU8TtiKjwH7Nwi2i3J9k359y8hHRwek?=
- =?us-ascii?Q?ay4+3yIohhdGx+l31K4Y+liAmHOGX0dY2E6vASqkhVd+Bc8DVSMuqeMjAvKU?=
- =?us-ascii?Q?K8vEl62vs5VrI+GouZ1z3dbENfZ8d1JMaWv1dlPDz4kxNu9EwRp7wx+x8KBv?=
- =?us-ascii?Q?VaQGZu5oPALCuaTyO+sv87RKw3Y37DryWuf2UdhBQkzsPiidXGtDVbZBtr1g?=
- =?us-ascii?Q?RudVDpDmNwilY47NC8Lrv7AqwPsVLCl602Ecm9Oj9+0QtnfE/mJ8n8kbYo4z?=
- =?us-ascii?Q?rYLdI/qJ57OK8mVzU3EkU9Cx1r+JNV24dRLFruMz7GhWz6j3LArma4I3zlhw?=
- =?us-ascii?Q?bftuXlRGF6vGeup1tQGsP4A/5EjYxBOu3uvt9s5ePc434lUPYCCwfoV7zuYa?=
- =?us-ascii?Q?IdAnjpyY1b2IHCtB6/91pZprwoEZ+aNdKwCy/PD5oehBqIbZtTQNWWya7OK1?=
- =?us-ascii?Q?Uk7t6ApUq80CALO5CUthe0teg/63ghARDhfiCvv2rQm7tDehqAXahcKv6qoE?=
- =?us-ascii?Q?0m7oTkjhDWxVR7FVPoOB4E3d6MuLuv+5xQu7wQp8+LegZ1XiSlp2pIGgkGG6?=
- =?us-ascii?Q?KAK4Yk4fDHBS8z50RiR8K1bdLVN/VPu9CaRlbacDWx6jIlaGIkFdygmKieMc?=
- =?us-ascii?Q?oYOJbGprncx6FBSqfATpzjh+K698aloDCMnvjH/QfaJMf1P+sYUo3IruNEtd?=
- =?us-ascii?Q?qEOPmSR03+3KqOaermS+dZuxAe4PPCxXEsOaUeoL8funTH89e6val1rggFG9?=
- =?us-ascii?Q?VopA7jMm2/35XYfIaOaGrR1wTWmAHXpo1GgwjfIJTlkYYI0aCdLxrh84+C0r?=
- =?us-ascii?Q?WAjs1J51eXNZCS6Qr+cva/dIPIa6hg3DH5WR2WyDs+Mo7sLjBdN5nlmArfnD?=
- =?us-ascii?Q?PDWe+rQylRl0ZqLNxGKtztox9Pr9CM10iFFCrpt7OiSjCF+cIvXp80JMFX8t?=
- =?us-ascii?Q?4NG8Qv0gEE4AFB9gGCjfpMuyqfUmIVcDcG9tRKHnmypi5GsxDlJsRmeeUUSZ?=
- =?us-ascii?Q?jnzan2+3H5wIEemEB/+PLXMHH8d2WauzfH1ZVLe7dXO7dGzPFOMcQA4TV3oF?=
- =?us-ascii?Q?gyHNRmFMM7zEFMMIaI+rRnLFk2bqqCWjH7PUHk16OApCVo2cRwnlsn6pSAQA?=
- =?us-ascii?Q?qdnJDyUctPIcyy8VBhPNExR0G2B9FXBt5s7z4GWv+4M6yjXi68XiMEMojVcl?=
- =?us-ascii?Q?74CIpKBqnxsYoDdGjxsn3a0WSSnryC/6C7rGlHcDuYZ9kn1wdESdXv7GUh7Z?=
- =?us-ascii?Q?j92nMRd12TEtOpy4y9uTu0epOOFXQoFgJl0E4VASqYZ0Hm3kRgW2Ym2D4M3k?=
- =?us-ascii?Q?C6rjXIwVp7m8vDAzZ47dbr42vn/Uifj1M+JbFqm808YfhSyyDCqg/zM+gp7Y?=
- =?us-ascii?Q?+pAs3yV8cG/69bkKPylEqswb+lcdbVdtJAOa6OBNA4mZu9OhMMtL/Mh3F41h?=
- =?us-ascii?Q?ZUWTkBmhkyk4CCe1IBZFOBaBXfGfKt7It7lIaEGH?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LIc/NqG5"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-75cda3719efso1791008a12.3
+        for <git@vger.kernel.org>; Mon, 08 Jul 2024 06:32:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720445541; x=1721050341; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PCUGeMyTqolPUh9pYobf6bWMXOZsI0tNWbqcagMd16Q=;
+        b=LIc/NqG58aewI1YTIQGotZogo3k63uUu71RJkqEYYREcJtOGMxtWvVQpDmOcLttE/j
+         OvF0bX8hImrEmEN2Ul9uMi1ManxIRgxkbMZ8w+hwr903zl44JtzfSVblfOnc4KHwoHbY
+         P/hOpbyq02UjShUFKvzF8TcYKVrVKwenDrhr+nteYfNjD3ngDKrqvRwCDAV5AKWi8BKF
+         +Ocj8XcAZz41kPCyaglP67ywgvYuAGJXfhr4gnsxatuRcIWI6evn7qqfBB2oKIRbpFhl
+         CZo0FjFf74BP8K7kYCM99wQLDJLdnM/uiTRQsIjqEVPNk8ETzrR4ykjyl8hv/xcnUiDV
+         tImw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720445541; x=1721050341;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PCUGeMyTqolPUh9pYobf6bWMXOZsI0tNWbqcagMd16Q=;
+        b=IPRYOwBLKpn15SgzAbsZ1ORdWguX6jWADqGW7uw6VkPlLsopYn8QGxvWnbsnO4Bu+o
+         SCWmOQ6dPwnIgl0VpqoX34aQsFGCgQS8GJ23ixz0BrEZcbLzvAveaRsNL1xmnYUrKiyd
+         FiIFTbT8Sl37K0p5YMie9POA7toGw1knPRKJH/ec4LXPWIoE354JMeGaPu8082A+zG4a
+         /xc53+3l1kkKVgbxGr3WkKXB4zlK8MKiidqcsN5F5pHFzgK4z7DOWK8CDTE7IMVHVJnB
+         UHrhbN2fPPtIenHaOhYQiH70vxVob/AtpH8pBen45ReZAyx79uhALADBMRI/TBMkvlfF
+         xQdg==
+X-Gm-Message-State: AOJu0YxXIBqTFsIoQDfgPzXf4dcuVv0oqwUpJy8v8LC2hYLQ/64O3lTU
+	tmWq/FtqZnw2eza00hnv+7e7OsuYouNdRdF7mwImTdhrsA8bhiZIfNVJqGgc
+X-Google-Smtp-Source: AGHT+IGD0D+ho7OaFrZMCyrfPgWk1FfNkgRR03K60f1vwEk0hI5s+fKHb1OPOnon3YPR9RI7avm0hw==
+X-Received: by 2002:a05:6a20:1591:b0:1c2:8cc4:908a with SMTP id adf61e73a8af0-1c28cc492d9mr1698059637.46.1720445541324;
+        Mon, 08 Jul 2024 06:32:21 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b2203a058sm3849013b3a.195.2024.07.08.06.32.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Jul 2024 06:32:20 -0700 (PDT)
+Date: Mon, 8 Jul 2024 21:32:19 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [GSoC][PATCH v8 0/9] ref consistency check infra setup
+Message-ID: <ZovqY4vQnQBAs7PH@ArchLinux>
+References: <ZoVX6sn2C9VIeZ38@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: envirovent.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DU0PR02MB9942.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cdb53f9c-0111-469e-7942-08dc9f50b2af
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jul 2024 13:20:12.3378
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 89f218fb-501e-4768-9b1f-d1fc4a69cb9a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: +oEMdm7vXaOxMcSnuPSxH8/N/Q7y/mGGgK/EKxVhK8H3WhBCplKitCVaC9SwPMwHu4mXtOcPaHYl3vSV3HnPqQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR02MB10795
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZoVX6sn2C9VIeZ38@ArchLinux>
 
-Hello Everyone,
+Hi All:
 
-I'm having an issue running 'git update-git-for-windows'
+This version enhances the patch 1 and patch 2 commit messages according
+to the review of Justin.
 
-I get the following error; curl: (35) Recv failure: Connection was reset.
+Thanks,
+Jialuo
 
-When speaking to my network team that have advised that they are seeing and=
- error from Cloudflare.
+shejialuo (9):
+  fsck: rename "skiplist" to "oid_skiplist"
+  fsck: add a unified interface for reporting fsck messages
+  fsck: add refs-related options and error report function
+  refs: set up ref consistency check infrastructure
+  builtin/refs: add verify subcommand
+  builtin/fsck: add `git-refs verify` child process
+  files-backend: add unified interface for refs scanning
+  fsck: add ref name check for files backend
+  fsck: add ref content check for files backend
 
-Error 1003 - Direct IP access not allowed
-A valid host header must be supplied to reach the desired website.
-172.67.12.172
+ Documentation/fsck-msgids.txt |  12 ++
+ Documentation/git-refs.txt    |  13 ++
+ builtin/fsck.c                |  32 ++++-
+ builtin/mktag.c               |   1 +
+ builtin/refs.c                |  44 ++++++
+ fsck.c                        | 107 +++++++++++---
+ fsck.h                        |  63 ++++++---
+ object-file.c                 |  11 +-
+ refs.c                        |   7 +-
+ refs.h                        |   8 ++
+ refs/debug.c                  |  11 ++
+ refs/files-backend.c          | 255 +++++++++++++++++++++++++++++++++-
+ refs/packed-backend.c         |   8 ++
+ refs/refs-internal.h          |  11 +-
+ refs/reftable-backend.c       |   8 ++
+ t/t0602-reffiles-fsck.sh      | 211 ++++++++++++++++++++++++++++
+ 16 files changed, 745 insertions(+), 57 deletions(-)
+ create mode 100755 t/t0602-reffiles-fsck.sh
 
-Can anyone confirm if this is a general issue or limited to our network.
-
-Kind Regards
-
-Adam Pickett
-
+Range-diff against v7:
+ 1:  f5fcf36132 !  1:  61e475840f fsck: rename "skiplist" to "oid_skiplist"
+    @@ Metadata
+      ## Commit message ##
+         fsck: rename "skiplist" to "oid_skiplist"
+     
+    -    Because we introduce ref consistency check. The original "skiplist" is a
+    -    common option which is set up during handling user configs. To avoid
+    -    causing ambiguity, rename "skiplist" to "oid_skiplist".
+    +    The "skiplist" field in "fsck_options" is related to objects. Because we
+    +    are going to introduce ref consistency check, the "skiplist" name is too
+    +    general which will make the caller think "skiplist" is related to both
+    +    the refs and objects.
+    +
+    +    It may seem that for both refs and objects, we should provide a general
+    +    "skiplist" here. However, the type for "skiplist" is `struct oidset`
+    +    which is totally unsuitable for refs.
+    +
+    +    To avoid above ambiguity, rename "skiplist" to "oid_skiplist".
+     
+         Mentored-by: Patrick Steinhardt <ps@pks.im>
+         Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+ 2:  c81b5b6fba !  2:  f2576d88a9 fsck: add a unified interface for reporting fsck messages
+    @@ Metadata
+      ## Commit message ##
+         fsck: add a unified interface for reporting fsck messages
+     
+    -    The static function "report" provided by "fsck.c" aims at reporting the
+    -    problems related to object database which cannot be reused for refs.
+    -    In order to provide a unified interface which can report either objects
+    -    or refs, create a new function "vfsck_report" by adding
+    -    "checked_ref_name" parameter following the "report" prototype. However,
+    -    instead of using "...", provide "va_list" to allow more flexibility.
+    +    The static function "report" provided by "fsck.c" aims at checking fsck
+    +    error type and calling the callback "error_func" to report the message.
+    +    However, "report" function is only related to object database which
+    +    cannot be reused for refs. In order to provide a unified interface which
+    +    can report either objects or refs, create a new function "vfsck_report"
+    +    by adding "checked_ref_name" parameter following the "report" prototype.
+    +    Instead of using "...", provide "va_list" to allow more flexibility.
+     
+    -    The "vfsck_report" function will use "error_func" registered in
+    -    "fsck_options" function to report customized messages. Change
+    -    "error_func" prototype to align with the "vfsck_report".
+    +    Like "report", the "vfsck_report" function will use "error_func"
+    +    registered in "fsck_options" to report customized messages. Change
+    +    "error_func" prototype to align with the new "vfsck_report".
+     
+    -    Change "report" function to make it use "vfsck_report" to report
+    -    objects-related messages. Add a new function called "fsck_refs_report"
+    -    to use "vfsck_report" to report refs-related messages.
+    +    Then, change "report" function to use "vfsck_report" to report objects
+    +    related messages. Add a new function called "fsck_refs_report" to use
+    +    "vfsck_report" to report refs related messages.
+     
+         Mentored-by: Patrick Steinhardt <ps@pks.im>
+         Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+ 3:  53156dc847 =  3:  c3c2dda50c fsck: add refs-related options and error report function
+ 4:  358f4a1be9 =  4:  e826dc17ec refs: set up ref consistency check infrastructure
+ 5:  e632859df6 =  5:  33cac4882b builtin/refs: add verify subcommand
+ 6:  5d7a6261ae =  6:  32668e3543 builtin/fsck: add `git-refs verify` child process
+ 7:  33311af1b1 =  7:  df83b2a990 files-backend: add unified interface for refs scanning
+ 8:  02bd3ac952 =  8:  c696c15651 fsck: add ref name check for files backend
+ 9:  94d123471d =  9:  8b0f3aeb9c fsck: add ref content check for files backend
+-- 
+2.45.2
 
