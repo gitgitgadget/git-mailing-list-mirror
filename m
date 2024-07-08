@@ -1,64 +1,63 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39038149C40
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 17:59:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27C0148FE4
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 18:11:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720461553; cv=none; b=BSMSUZlm/ag+JqzqS9eaYl9kiiGY6Osysf1sIQq9M72IL1JPvlpcEUo0E3MlKqhUoKgfds/fzNdjEQvpNem0jOhM90BiuDaaGgxPGiL4OujFbV23zjM5TBopY9j4pS1EYihMPyu/aVM3x6VfW/MxKQjzoGkSm6v5D9yqZk31HSk=
+	t=1720462265; cv=none; b=BNoc+5UTKJh537htaJN9knO+5ggiWdt8PsvtFxdI0JILQ/2uHa+H086IDIQzP6p7r+a1K3RyMYP2x4RXYZueBjJ6IQFszE2rTHABQotNFR8RysTDzbrOgvxQy716eM7rj/ngLlaldPHBYzIqhIQEbPEXnWlDo8zVXMGpuxz1v84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720461553; c=relaxed/simple;
-	bh=GkVGkQDIj04eDh7PKo5fEeOXrS8FiE8/fPH/vW4DICs=;
+	s=arc-20240116; t=1720462265; c=relaxed/simple;
+	bh=RIgetEjd0SWAo178CFOD+IIHQJ6sw+3kUe0Mg+y8C20=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ENvBDCIPasrt3Q49ZUhvNAgkrTRbec9ThMN9TmO3oFah31/rq/n1xY1U76Err7zH0VfFP2SChQhRyGqfR2DtV+5i8AqGDYOL64Lub7hdctjLvIA/IgCRGg+yth5Zo3a+2vXptM2VRFOunoJDaxK75GA0QY8//5HkKLW8DH9x4dM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OLhOATzE; arc=none smtp.client-ip=209.85.210.46
+	 Content-Type:Content-Disposition:In-Reply-To; b=nZClkQQ3B0hd9uJnbTjhEDELucXvZSNJvH+BS450zD39c1i6nIeZ+Tx3O1E6zVr+t3cd/U3D7o/Dm7DETDdKBUqmuXMEUGtGmFQCoRbYoViaMv1P4+GgfJzc+slFoyIxJobU8d26QFWl8mN/g1ueKVwax6i6eOeeRxLFhd1tJ8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SgFDEVjK; arc=none smtp.client-ip=209.85.210.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OLhOATzE"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7035d9edcd9so1661114a34.1
-        for <git@vger.kernel.org>; Mon, 08 Jul 2024 10:59:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SgFDEVjK"
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-7036e383089so668456a34.2
+        for <git@vger.kernel.org>; Mon, 08 Jul 2024 11:11:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720461551; x=1721066351; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720462263; x=1721067063; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=H4U7OJdVJehuwgzU30ul0qCLy0MBSE3PH2E5XrN7K68=;
-        b=OLhOATzEEtHASDlpL29e4MXsCE/ntpUx9mLTvbNw7nw451Ad9SyYyMTOZtlXYLk/vJ
-         YjfkhuhzcXOFW+BxfgBLbIJyOaqW/sgqszDmq8CrT6lwKGvQKGAr7LqCOZgqUQ3ic2Gv
-         4qhj6MGYlLWp0Xd3PUpSOudVVOcNvDwmMLb49ZsgonJxj+UVTyl8JhJdar9ZP9EtiQFf
-         3kw7xV3Xt0WOMWNrDMtVS/I9ZhkM+jJo6metgLGhuInxk42uV8CvHnbZC5oh1N3O7dtL
-         ULKe227MBD24Np92sYeIZij7/Dh9+qo5lQFkM8eMIVEm5sHwhgQGnQ9NolFwnzWLIJ26
-         rPQQ==
+        bh=EOmQQHvr48EfPcY7CrvF22nbL/cDdkRL3c5SJJBydK8=;
+        b=SgFDEVjKbi8TTmVQjZOlRIDziZPigHNM1WwufMqwQ3Jw0R+EH9TPVBk3usB6nF9I0A
+         nxkT7AIQHmP06QxhUb7Q66TRJ6V52g63zm+hEejtVUJxQbKEcOnLeS73cXs9WQhRJzlJ
+         WwNX7u/w+fnNFZyG9icWy0rY1RN8ZV9DOk/dzjV8RnvlogH9ncNL4yVpQFSAKXeNFZGf
+         0BbOwj5C1x7fU6ZXbtPxy/T97CH4kzn4mQVdcI/TYyAq3K+ju1iYn9idYYbFHTj+hfws
+         i+eB+8x2oF6og2aIOZsuOGE7ldlpvA5UAbPNq/KhaI7D7EO8tskkZ0FLgDO9TZFWQsUM
+         esiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720461551; x=1721066351;
+        d=1e100.net; s=20230601; t=1720462263; x=1721067063;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=H4U7OJdVJehuwgzU30ul0qCLy0MBSE3PH2E5XrN7K68=;
-        b=Xn6YpM0TnrCGvaadlPMuFVSrdEftWiyDQfOg5wKyyaBt3OLxSo68bqRRKycdFl4FrB
-         +bCGIzYhQxB4DXu2Uc3D90mHO0XW3LoqsOGWaQA3wVHrgr9m2/dynRIA8sLtXQRsaahK
-         1vx29Da5ZXrbvOK+qla2w2z44LMqFVhtbI8NJk4GHj0gQhpK29O6Q4l2RcbC9bIpHgrx
-         LyR7+sY/TjVMAgRBVDqIm/9ACc8gfGe21ObUORLHM3zrx6C468ywhNqP8FXWWrUpfaWd
-         Zi22AVHlPO2hDp7FjdDPWdrj7iIEHRp/3Hh5BxDZ23CcCaWBkF03kgvDe6c7TOj0pAqa
-         eSPQ==
-X-Gm-Message-State: AOJu0Yx12A1B9x68/EuDkXmYilSnCN6F22UHkhdnrcNyO8bP0+5hiuRy
-	G1p1dkSCoW5Bal6B+b7ngRWk6CJ4YIj9Zad3gNkvGXkpGZsGEJ1E1j6n7Q==
-X-Google-Smtp-Source: AGHT+IEfzQa1Z33OJYP69RRdtxA2l4sLmjHCYCUpTOfY+/fd5a/ueME+KDPK+8xBiLbNEA4VbchWbA==
-X-Received: by 2002:a05:6830:1244:b0:702:222d:e57e with SMTP id 46e09a7af769-70375a0550cmr229813a34.1.1720461551193;
-        Mon, 08 Jul 2024 10:59:11 -0700 (PDT)
+        bh=EOmQQHvr48EfPcY7CrvF22nbL/cDdkRL3c5SJJBydK8=;
+        b=WiyFgc0yhX3pfDWHWqTV5yy/FjoRoZEbmEPWt0sl92xA0gJhXHgPMyQzTZMdlepSV7
+         jp4cBv67CayczPIdiiwYWrrXtomfiqDqqchY61u0WPP19yuqmQFeXCDyujtM3slYSNsV
+         5wVVI7cwIhDV21mFrcJMMjOzZnolSIFgHma14Gd+lG7f9tQhpK89v+t4ivNlpkOGfuDj
+         oMVYtwuFC4uBSSt9fp/l0f2GlhOBG4sXPXaHrwo5BchsKbqEmb0IuLWx9LnsBlrJg2Kq
+         NzqSs7mYpYWJwVAwfQjAslL/YV3T3coFnZb2fJeiK3u+6TykbT9W38XDPJqsErWFP2+6
+         oX1Q==
+X-Gm-Message-State: AOJu0YyhdvQopi1eiZ9zOZPYMNGrzUXJ1ngAhtlZVif+MelmNcFHeYLq
+	18w3NH5Gv3mRqiJi8O5vl6fQR7VLQPwpIuSbnDHGLC3Q2Of8EKG03Ryh5g==
+X-Google-Smtp-Source: AGHT+IH3NzgXefAmkqENXMP50LByijLdAnaknqadKtL4WSwiui8sJ0OcTOuSDGEgEQ6KfhK91hebTg==
+X-Received: by 2002:a05:6830:22fb:b0:703:6dce:3ad5 with SMTP id 46e09a7af769-70375a17ad6mr259818a34.22.1720462262974;
+        Mon, 08 Jul 2024 11:11:02 -0700 (PDT)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-70374fcbd04sm81556a34.69.2024.07.08.10.59.10
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-70374f882absm90497a34.40.2024.07.08.11.11.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jul 2024 10:59:10 -0700 (PDT)
-Date: Mon, 8 Jul 2024 12:58:42 -0500
+        Mon, 08 Jul 2024 11:11:02 -0700 (PDT)
+Date: Mon, 8 Jul 2024 13:10:34 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, chriscool@tuxfamily.org
-Subject: Re: [PATCH 8/8] check-whitespace: detect if no base_commit is
- provided
-Message-ID: <tl66b35ytbri4dep3cnppdexebblep6avyuhj4moc4mnsolnp2@xpqqwyl4oo2y>
+Subject: Re: [PATCH 7/8] ci: run style check on GitHub and GitLab
+Message-ID: <7wc2ucdbirqgtrxgij3i4eqwfib334kdogbfxtiyifje6clsat@3p3xnqkoj3ic>
 References: <20240708092317.267915-1-karthik.188@gmail.com>
- <20240708092317.267915-9-karthik.188@gmail.com>
+ <20240708092317.267915-8-karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,120 +66,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240708092317.267915-9-karthik.188@gmail.com>
+In-Reply-To: <20240708092317.267915-8-karthik.188@gmail.com>
 
 On 24/07/08 11:23AM, Karthik Nayak wrote:
-> The 'check-whitespace' CI script exists gracefully if no base commit is
-> provided or if an invalid revision is provided. This is not good because
-> if a particular CI provides an incorrect base_commit, it would fail
-> successfully.
+> We don't run style checks on our CI, even though we have a
+> '.clang-format' setup in the repository. Let's add one, the job will
+> validate only against the new commits added and will only run on merge
+> requests. Since we're introducing it for the first time, let's allow
+> this job to fail, so we can validate if this is useful and eventually
+> enforce it.
 
-s/exists/exits
+[snip]
 
-If no base commit is provided, we already fail. Here is an example
-GitLab CI job demonstrating this:
-https://gitlab.com/gitlab-org/git/-/jobs/7289543498#L2370
-
-If the base commit does not exist though, it currently prints that error occured
-but still exits with 0. Makes sense to update and fail the job accordingly.
-
-> 
-> This is exactly the case with the GitLab CI. The CI is using the
-> "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA" variable to get the base commit
-> SHA, but variable is only defined for _merged_ pipelines. So it is empty
-> for regular pipelines [1]. This should've failed the check-whitespace
-> job.
-
-The CI for this project is configured to use merged pipelines. So 
-$CI_MERGE_REQUEST_TARGET_BRANCH_SHA is defined. The downside with using 
-$CI_MERGE_REQUEST_DIFF_BASE_SHA is that it will include other commits in
-the check that are not part of the MR, but are included in the merge for
-merge pipelines. With this change, the job can now fail due to unrelated
-changes.
-
-If we feel inclined to also support regular pipelines, one option would
-be to simply fallback to $CI_MERGE_REQUEST_DIFF_BASE_SHA if a merge
-pipeline is not in use.
-
-GitLab CI pipeline showing $CI_MERGE_REQUEST_TARGET_BRANCH_SHA defined:
-https://gitlab.com/gitlab-org/git/-/jobs/7289331488#L2371
-
-> 
-> Let's fix the variable used in the GitLab CI. Let's also add a check for
-> incorrect base_commit in the 'check-whitespace.sh' script. While here,
-> fix a small typo too.
-> 
-> [1]: https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#predefined-variables-for-merge-request-pipelines
-> 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  .gitlab-ci.yml         |  2 +-
->  ci/check-whitespace.sh | 13 ++++++++++---
->  2 files changed, 11 insertions(+), 4 deletions(-)
-> 
 > diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-> index 65fd261e5e..36199893d8 100644
+> index 37b991e080..65fd261e5e 100644
 > --- a/.gitlab-ci.yml
 > +++ b/.gitlab-ci.yml
-> @@ -119,7 +119,7 @@ check-whitespace:
->    before_script:
->      - ./ci/install-dependencies.sh
->    script:
-> -    - ./ci/check-whitespace.sh "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
-> +    - ./ci/check-whitespace.sh "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+> @@ -123,6 +123,18 @@ check-whitespace:
 >    rules:
 >      - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 >  
-> diff --git a/ci/check-whitespace.sh b/ci/check-whitespace.sh
-> index db399097a5..ab023f9519 100755
-> --- a/ci/check-whitespace.sh
-> +++ b/ci/check-whitespace.sh
-> @@ -9,12 +9,19 @@ baseCommit=$1
->  outputFile=$2
->  url=$3
->  
-> -if test "$#" -ne 1 && test "$#" -ne 3
-> +if { test "$#" -ne 1 && test "$#" -ne 3; } || test -z "$1"
+> +check-style:
+> +  image: ubuntu:latest
+> +  allow_failure: true
+> +  variables:
+> +    CC: clang
+> +  before_script:
+> +    - ./ci/install-dependencies.sh
+> +  script:
+> +    - ./ci/run-style-check.sh "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
 
-I might be misunderstanding, but this additional check seems redundant to me.
+One downside to using $CI_MERGE_REQUEST_DIFF_BASE_SHA is that for GitLab
+merge pipeines, commits from the merge that are not part of the MR
+changes are also included. This could lead to somewhat confusing
+failures.
 
->  then
->  	echo "USAGE: $0 <BASE_COMMIT> [<OUTPUT_FILE> <URL>]"
->  	exit 1
->  fi
->  
-> +gitLogOutput=$(git log --check --pretty=format:"---% h% s" "${baseCommit}"..)
-> +if test $? -ne 0
-> +then
-> +	echo -n $gitLogOutput
-> +	exit 1
-> +fi
+Example failure occuring on this patch series:
+https://gitlab.com/gitlab-org/git/-/jobs/7284442220
+
+It might be best to use $CI_MERGE_REQUEST_TARGET_BRANCH_SHA instead.
+
+> +  rules:
+> +    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 > +
->  problems=()
->  commit=
->  commitText=
-> @@ -58,7 +65,7 @@ do
->  		echo "${dash} ${sha} ${etc}"
->  		;;
->  	esac
-> -done <<< "$(git log --check --pretty=format:"---% h% s" "${baseCommit}"..)"
-> +done <<< "$gitLogOutput"
->  
->  if test ${#problems[*]} -gt 0
->  then
-> @@ -67,7 +74,7 @@ then
->  		goodParent=${baseCommit: 0:7}
->  	fi
->  
-> -	echo "A whitespace issue was found in onen of more of the commits."
-> +	echo "A whitespace issue was found in one of more of the commits."
-There is another preexisting typo:
-
-s/one of/one or/
-
->  	echo "Run the following command to resolve whitespace issues:"
->  	echo "git rebase --whitespace=fix ${goodParent}"
->  
-> -- 
-> 2.45.1
-> 
