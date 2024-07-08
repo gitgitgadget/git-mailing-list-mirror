@@ -1,507 +1,145 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312B16A022
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 13:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDC1365
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 14:03:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720445825; cv=none; b=cDCmWAotHJlot/ZHW42u0FcQT86UA1xo1D+nHJcALaXlstjHuZCgVnGDxFwLrMk38kMA2r+EcZw9Yvvmeo7Iehtw31UXYVmphkXRqEYuZNwZqLlGabsVR11Kv0UmSPeDNNt0D4ggKnYPakutBb7B38kFTrhoT3uvZhghB9Pki+E=
+	t=1720447436; cv=none; b=PtdpVecIyrq8MJRP8P0jOOuMtdin89qQtcX5SdtU82Gyxnt9EO/gbc5EZfP9qL0GK2USCghPm1JNMLwNQW0GkAL7h66ed/t+5Htl6qvQ8CSZGpWhyeAx4JMTU8niq2ewxSL4/TDB3cDXYqzw5UYXaYkQqRG8l4NvzTnu6ESK7uU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720445825; c=relaxed/simple;
-	bh=0LQLtXU1B78QCv8dBUyImGLhsgDqkwwSbL0XSVYc9PM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MnqANvLjrjEJK7BxVZAb9+SvbP6q0195MM5h+anTzd0v003Vngqz28xpxN0rzLOAfkpm0IsfV1Glft6LsqsPapytqZ7BQ+D4kgyTkCVSZlWmGkLZIxn+XlnD3Bz+aY0RlEkXT96rIt4UZ6hUzae81zuWaAjrfGWWLWzp3n0PfR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TCJSHAdK; arc=none smtp.client-ip=209.85.210.169
+	s=arc-20240116; t=1720447436; c=relaxed/simple;
+	bh=N1CxjlagXxBn20oIC3Pjntcn9LAJaLqubbdi7Dwr7hs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FzrK1phxo71rzgii2vJyUmyI8Q4qeZiGUAvslAg3v4Q6P82WDl7XEvl03H7upVHVeO/PQ/fJ0nvG7Cuh8U0BwUABV2jf1axQ+yiDvQqI/ApObcFMWvJs/FoHjgheR91odJ9/VuHZo+kB5SCvVdbXibJLD52LdDHBhSXLY45MVb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kbLwuV1T; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TCJSHAdK"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-70b0bc1ef81so1731787b3a.1
-        for <git@vger.kernel.org>; Mon, 08 Jul 2024 06:37:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kbLwuV1T"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-36798e62aeeso2670661f8f.1
+        for <git@vger.kernel.org>; Mon, 08 Jul 2024 07:03:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720445822; x=1721050622; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HIpbU0AiSI7yFv6vUKnqZB2UhQlcLbis3BsFeoUROSk=;
-        b=TCJSHAdKhbnbzdG4u1A9pqdsWv35JtafTT8sXYLyLxJzntHMQb151BClQj6ifhBf+w
-         OlgIcyJFVri+npkhYDsHJLU3LhiA+C9AvNtbJFCc+iBvs6Fyfo+jHW4umWmJ9k1HEE8k
-         r9sJjUJOPoRiZ5UK8jtiiZnFEzGeSer+NgkjuHTASBTKciXG+Cp0nGSzkKYQOBP56YeF
-         Lz2OqY2N8oOAZRXxZJPP6jv8xPH/BisjsNGXPQPoTtDi2k5Aoj+F/Uvhb1D3fgKBTh3u
-         5LWtDZ+Sml8+aTosuGzpA9/SCi16th9oak7AUUzPVOtmEz2vz+qh7aVpoV0vKlWT6e2n
-         7MOg==
+        d=gmail.com; s=20230601; t=1720447433; x=1721052233; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=abk342ENXmB5pi2uOFmvMNxcY7aZzqJwGtnLhihASG8=;
+        b=kbLwuV1TrY66NlHtbtx1E6yMhMQT5wZ5SiuwxH1+TiCOkzn5AtDaJTuhJ1h0PjRwbD
+         HF2iWkdTevLdJTbB/1iWIaOsGnMuQd5ZA+nTV1XP54vusPAyXzk6x86jT/z4MxzGnHqA
+         xASZ0Pq3hZmwofD9tiOXB6Sk6hk1bNehAcJgRJ3qzbOkG7w/Qlj2aoWkhjHBbz68UaeZ
+         6urrFi2BayEHBMxuc6+GkdKUf6ifUaPDNE3e6mKWpnN71HlpHB8/oM9nc4jZzyAIFJiE
+         7h5CVt51fNJGmw32xy4yVReNPBPPN+qx7AUDMcD19fUnW8r/PZMQ0CFPj8JUOU+vjATM
+         dPFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720445822; x=1721050622;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HIpbU0AiSI7yFv6vUKnqZB2UhQlcLbis3BsFeoUROSk=;
-        b=SXnRGvYpqcThzqthzoeT7+QIpehMRfNtBZyz+PPJBY77bjf/yKtKcLRMCZJsfZ87Up
-         0hWdv6abR7lArOswI+WE7YlaWxVl8zB48gFqpDtfRnUKOpB3s94WziV0vq6C3MW/h9j8
-         fpixsvzo/hDyP/lht2h3kwCfl1zlkOZt9dkosGHik1/g1Xn55P5BAFQ0LHfWVHkxIE4N
-         xp05HQkhbtPhhB6I+7aWaVXXCjaVetU1yeKugTyxWrueVE9UPweWBeo3gvk1Rbs47G5L
-         tI978+yKHxGMCM7ZF64vMTKB+o45YE8ItQg+qrxghzSd7oNH2iROx1ziw6Q8xeW5smY3
-         yZWw==
-X-Gm-Message-State: AOJu0YzS7Uc9qT+HhlO2DGqqFLfzGCfw5aA0haP1rp6O3Y1EX+gT4bHy
-	dp5g4zvA6JSPcGoEeVFwxHHlPtxmOGBFsRZasG2CClgLGWDv58rzY5iG9prX
-X-Google-Smtp-Source: AGHT+IEC8kTXZ5fz0DX+TUyjVS8opeuZtKk7yUQYG+z9Q4veBSwEDqeDtx4qI9burr+yJi3A/enPtw==
-X-Received: by 2002:a05:6a00:3d4e:b0:704:20b3:fe21 with SMTP id d2e1a72fcca58-70b0094ba39mr10758724b3a.11.1720445821742;
-        Mon, 08 Jul 2024 06:37:01 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b030d5d0bsm8123830b3a.14.2024.07.08.06.37.00
+        d=1e100.net; s=20230601; t=1720447433; x=1721052233;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=abk342ENXmB5pi2uOFmvMNxcY7aZzqJwGtnLhihASG8=;
+        b=qS3ykdg5b98i0kt39qz97Fs0wNz9eXP1sedRMpUiCCOA1eLL0awSsJ5dZWloRSj7L3
+         DSREZ+WCp3gWPppPqmKhqA+/UcpC0fKmo3am6Gtwc1p/uCz7ljiYroldDijyhqVGJEfi
+         v7YMV9Ns03l3btVwZcw4n3j/B9b1F3kQiGPtdVeRYrJG8xtuZUBiJZTzCVXbo0KoHHH3
+         /02Dva0pbKnyAmJ5RFkeXlPInyRiqMqimr4eITDPErH5NUI5oNbMB5Zeiyvh2cdQumAX
+         o86iu74woaks5IsAf70x6kVReL9KYOHpx9FLUWMmXFY14hAb1Pv4fWfONu5kjL4gsX4L
+         iuNw==
+X-Gm-Message-State: AOJu0YwIOrEFQk1IcjQow0dcQ2QifL5mh28oKvzTQ8B2/Am1qiGdhL7u
+	jOCbXXzQ6CkjQoDZVnFt4cOaSlwdRJ+kpiOXIICCCxyfRM6v6sb+OXRHDKB5
+X-Google-Smtp-Source: AGHT+IE+Vj6hKpzNSy60Z2qg1ZJQiFQLJAsXrJs/F8TkBKfO9nr1OxNuIcSZndHRxxoHJVmU4FzjPQ==
+X-Received: by 2002:a05:6000:12c3:b0:367:96b5:7852 with SMTP id ffacd0b85a97d-3679de7ca88mr7436989f8f.55.1720447433002;
+        Mon, 08 Jul 2024 07:03:53 -0700 (PDT)
+Received: from laptop.fritz.box ([2a02:2455:826e:4900:5fea:3983:97ad:fb61])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36794954c97sm13617529f8f.32.2024.07.08.07.03.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jul 2024 06:37:01 -0700 (PDT)
-Date: Mon, 8 Jul 2024 21:37:00 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [GSoC][PATCH v8 9/9] fsck: add ref content check for files backend
-Message-ID: <ZovrfD-lvHI2t9NN@ArchLinux>
-References: <ZoVX6sn2C9VIeZ38@ArchLinux>
+        Mon, 08 Jul 2024 07:03:52 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: karthik.188@gmail.com
+Cc: git@vger.kernel.org,
+	peff@peff.net
+Subject: [PATCH] builtin/push: call set_refspecs after validating remote
+Date: Mon,  8 Jul 2024 16:03:50 +0200
+Message-ID: <20240708140350.622986-1-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZoVX6sn2C9VIeZ38@ArchLinux>
+Content-Transfer-Encoding: 8bit
 
-Enhance the git-fsck(1) command by adding a check for reference content
-in the files backend. The new functionality ensures that symrefs, real
-symbolic link and regular refs are validated correctly.
+Since 9badf97c4 (remote: allow resetting url list), we reset the remote
+URL if the provided URL is empty. This means any caller of
+`remotes_remote_get()` would now get a NULL remote.
 
-In order to check the trailing content of the regular refs, add a new
-parameter `trailing` to `parse_loose_ref_contents`.
+The 'builtin/push.c' code, calls 'set_refspecs' before validating the
+remote. This worked earlier since we would get a remote, albeit with an
+empty URL. With the new changes, we get a NULL remote and this crashes.
 
-For symrefs, `parse_loose_ref_contents` will set the "referent".
-However, symbolic link could be either absolute or relative. Use
-"strbuf_add_real_path" to read the symbolic link and convert the
-relative path to absolute path. Then use "skip_prefix" to make it align
-with symref "referent".
+Do a simple fix by doing remote validation first and also add a test to
+validate the bug fix.
 
-Thus, the symrefs and symbolic links could share the same interface. Add
-a new function "files_fsck_symref_target" which aims at checking the
-following things:
-
-1. whether the pointee is under the `refs/` directory.
-2. whether the pointee name is correct.
-3. whether the pointee path is a wrong type in filesystem.
-
-Last, add the following FSCK MESSAGEs:
-
-1. "badRefContent(ERROR)": A ref has a bad content
-2. "badSymrefPointee(ERROR)": The pointee of a symref is bad.
-3. "trailingRefContent(WARN)": A ref content has trailing contents.
-
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: shejialuo <shejialuo@gmail.com>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/fsck-msgids.txt |   9 +++
- fsck.h                        |   3 +
- refs.c                        |   2 +-
- refs/files-backend.c          | 145 +++++++++++++++++++++++++++++++++-
- refs/refs-internal.h          |   5 +-
- t/t0602-reffiles-fsck.sh      | 110 ++++++++++++++++++++++++++
- 6 files changed, 269 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-index dab4012246..b1630a478b 100644
---- a/Documentation/fsck-msgids.txt
-+++ b/Documentation/fsck-msgids.txt
-@@ -19,9 +19,15 @@
- `badParentSha1`::
- 	(ERROR) A commit object has a bad parent sha1.
+I noticed that this was breaking on master. We run tests on Git master
+for Gitaly at GitLab and I noticed a SEFAULT. I could also reproduce the
+bug by simply doing 'git push "" refs/heads/master' on master, next and
+seen. 
+
+ builtin/push.c         | 7 ++++---
+ t/t5529-push-errors.sh | 8 ++++++++
+ 2 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/push.c b/builtin/push.c
+index 8260c6e46a..992f603de7 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -630,10 +630,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	if (tags)
+ 		refspec_append(&rs, "refs/tags/*");
  
-+`badRefContent`::
-+	(ERROR) A ref has a bad content.
-+
- `badRefName`::
- 	(ERROR) A ref has a bad name.
+-	if (argc > 0) {
++	if (argc > 0)
+ 		repo = argv[0];
+-		set_refspecs(argv + 1, argc - 1, repo);
+-	}
  
-+`badSymrefPointee`::
-+	(ERROR) The pointee of a symref is bad.
-+
- `badTagName`::
- 	(INFO) A tag has an invalid format.
- 
-@@ -167,6 +173,9 @@
- `nullSha1`::
- 	(WARN) Tree contains entries pointing to a null sha1.
- 
-+`trailingRefContent`::
-+	(WARN) A ref content has trailing contents.
-+
- `treeNotSorted`::
- 	(ERROR) A tree is not properly sorted.
- 
-diff --git a/fsck.h b/fsck.h
-index 90457d1a1f..637f596930 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -32,6 +32,8 @@ enum fsck_msg_type {
- 	FUNC(BAD_OBJECT_SHA1, ERROR) \
- 	FUNC(BAD_PARENT_SHA1, ERROR) \
- 	FUNC(BAD_REF_NAME, ERROR) \
-+	FUNC(BAD_REF_CONTENT, ERROR) \
-+	FUNC(BAD_SYMREF_POINTEE, ERROR) \
- 	FUNC(BAD_TIMEZONE, ERROR) \
- 	FUNC(BAD_TREE, ERROR) \
- 	FUNC(BAD_TREE_SHA1, ERROR) \
-@@ -72,6 +74,7 @@ enum fsck_msg_type {
- 	FUNC(HAS_DOTDOT, WARN) \
- 	FUNC(HAS_DOTGIT, WARN) \
- 	FUNC(NULL_SHA1, WARN) \
-+	FUNC(TRAILING_REF_CONTENT, WARN) \
- 	FUNC(ZERO_PADDED_FILEMODE, WARN) \
- 	FUNC(NUL_IN_COMMIT, WARN) \
- 	FUNC(LARGE_PATHNAME, WARN) \
-diff --git a/refs.c b/refs.c
-index 410919246b..eb82fb7d4e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1760,7 +1760,7 @@ static int refs_read_special_head(struct ref_store *ref_store,
+ 	remote = pushremote_get(repo);
+ 	if (!remote) {
+@@ -649,6 +647,9 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		    "    git push <name>\n"));
  	}
  
- 	result = parse_loose_ref_contents(content.buf, oid, referent, type,
--					  failure_errno);
-+					  failure_errno, NULL);
++	if (argc > 0)
++		set_refspecs(argv + 1, argc - 1, repo);
++
+ 	if (remote->mirror)
+ 		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
  
- done:
- 	strbuf_release(&full_path);
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 69a76048d3..d98ef45403 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1,6 +1,7 @@
- #define USE_THE_REPOSITORY_VARIABLE
+diff --git a/t/t5529-push-errors.sh b/t/t5529-push-errors.sh
+index 0247137cb3..771f5f8ae8 100755
+--- a/t/t5529-push-errors.sh
++++ b/t/t5529-push-errors.sh
+@@ -2,6 +2,9 @@
  
- #include "../git-compat-util.h"
-+#include "../abspath.h"
- #include "../copy.h"
- #include "../environment.h"
- #include "../gettext.h"
-@@ -553,7 +554,7 @@ static int read_ref_internal(struct ref_store *ref_store, const char *refname,
- 	strbuf_rtrim(&sb_contents);
- 	buf = sb_contents.buf;
+ test_description='detect some push errors early (before contacting remote)'
  
--	ret = parse_loose_ref_contents(buf, oid, referent, type, &myerr);
-+	ret = parse_loose_ref_contents(buf, oid, referent, type, &myerr, NULL);
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
  
- out:
- 	if (ret && !myerr)
-@@ -589,7 +590,7 @@ static int files_read_symbolic_ref(struct ref_store *ref_store, const char *refn
- 
- int parse_loose_ref_contents(const char *buf, struct object_id *oid,
- 			     struct strbuf *referent, unsigned int *type,
--			     int *failure_errno)
-+			     int *failure_errno, const char **trailing)
- {
- 	const char *p;
- 	if (skip_prefix(buf, "ref:", &buf)) {
-@@ -611,6 +612,10 @@ int parse_loose_ref_contents(const char *buf, struct object_id *oid,
- 		*failure_errno = EINVAL;
- 		return -1;
- 	}
-+
-+	if (trailing)
-+		*trailing = p;
-+
- 	return 0;
- }
- 
-@@ -3438,6 +3443,141 @@ static int files_fsck_refs_name(struct fsck_options *o,
- 	return ret;
- }
- 
-+/*
-+ * Check the symref "pointee_name" and "pointee_path". The caller should
-+ * make sure that "pointee_path" is absolute. For symbolic ref, "pointee_name"
-+ * would be the content after "refs:". For symblic link, "pointee_name" would
-+ * be the relative path agaignst "gitdir".
-+ */
-+static int files_fsck_symref_target(struct fsck_options *o,
-+				    const char *refname,
-+				    const char *pointee_name,
-+				    const char *pointee_path)
-+{
-+	const char *p = NULL;
-+	struct stat st;
-+	int ret = 0;
-+
-+	if (!skip_prefix(pointee_name, "refs/", &p)) {
-+
-+		ret = fsck_refs_report(o, NULL, refname,
-+				       FSCK_MSG_BAD_SYMREF_POINTEE,
-+				       "point to target out of refs hierarchy");
-+		goto out;
-+	}
-+
-+	if (check_refname_format(pointee_name, 0)) {
-+		ret = fsck_refs_report(o, NULL, refname,
-+				       FSCK_MSG_BAD_SYMREF_POINTEE,
-+				       "point to invalid refname");
-+	}
-+
-+	if (lstat(pointee_path, &st) < 0)
-+		goto out;
-+
-+	if (!S_ISREG(st.st_mode) && !S_ISLNK(st.st_mode)) {
-+		ret = fsck_refs_report(o, NULL, refname,
-+				       FSCK_MSG_BAD_SYMREF_POINTEE,
-+				       "point to invalid target");
-+		goto out;
-+	}
-+out:
-+	return ret;
-+}
-+
-+static int files_fsck_refs_content(struct fsck_options *o,
-+				   const char *gitdir,
-+				   const char *refs_check_dir,
-+				   struct dir_iterator *iter)
-+{
-+	struct strbuf pointee_path = STRBUF_INIT,
-+		      ref_content = STRBUF_INIT,
-+		      abs_gitdir = STRBUF_INIT,
-+		      referent = STRBUF_INIT,
-+		      refname = STRBUF_INIT;
-+	const char *trailing = NULL;
-+	int failure_errno = 0;
-+	unsigned int type = 0;
-+	struct object_id oid;
-+	int ret = 0;
-+
-+	strbuf_addf(&refname, "%s/%s", refs_check_dir, iter->relative_path);
-+
-+	/*
-+	 * If the file is a symlink, we need to only check the connectivity
-+	 * of the destination object.
-+	 */
-+	if (S_ISLNK(iter->st.st_mode)) {
-+		const char *pointee_name = NULL;
-+
-+		strbuf_add_real_path(&pointee_path, iter->path.buf);
-+
-+		strbuf_add_absolute_path(&abs_gitdir, gitdir);
-+		strbuf_normalize_path(&abs_gitdir);
-+		if (!is_dir_sep(abs_gitdir.buf[abs_gitdir.len - 1]))
-+			strbuf_addch(&abs_gitdir, '/');
-+
-+		if (!skip_prefix(pointee_path.buf,
-+				 abs_gitdir.buf, &pointee_name)) {
-+			ret = fsck_refs_report(o, NULL, refname.buf,
-+					       FSCK_MSG_BAD_SYMREF_POINTEE,
-+					       "point to target outside gitdir");
-+			goto clean;
-+		}
-+
-+		ret = files_fsck_symref_target(o, refname.buf, pointee_name,
-+					       pointee_path.buf);
-+		goto clean;
-+	}
-+
-+	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0) {
-+		ret = error_errno(_("%s/%s: unable to read the ref"),
-+				  refs_check_dir, iter->relative_path);
-+		goto clean;
-+	}
-+
-+	if (parse_loose_ref_contents(ref_content.buf, &oid,
-+				     &referent, &type,
-+				     &failure_errno, &trailing)) {
-+		ret = fsck_refs_report(o, NULL, refname.buf,
-+				       FSCK_MSG_BAD_REF_CONTENT,
-+				       "invalid ref content");
-+		goto clean;
-+	}
-+
-+	/*
-+	 * If the ref is a symref, we need to check the destination name and
-+	 * connectivity.
-+	 */
-+	if (referent.len && (type & REF_ISSYMREF)) {
-+		strbuf_addf(&pointee_path, "%s/%s", gitdir, referent.buf);
-+		strbuf_rtrim(&referent);
-+
-+		ret = files_fsck_symref_target(o, refname.buf, referent.buf,
-+					       pointee_path.buf);
-+		goto clean;
-+	} else {
-+		/*
-+		 * Only regular refs could have a trailing garbage. Should
-+		 * be reported as a warning.
-+		 */
-+		if (trailing && (*trailing != '\0' && *trailing != '\n')) {
-+			ret = fsck_refs_report(o, NULL, refname.buf,
-+					       FSCK_MSG_TRAILING_REF_CONTENT,
-+					       "trailing garbage in ref");
-+			goto clean;
-+		}
-+	}
-+
-+clean:
-+	strbuf_release(&abs_gitdir);
-+	strbuf_release(&pointee_path);
-+	strbuf_release(&refname);
-+	strbuf_release(&ref_content);
-+	strbuf_release(&referent);
-+	return ret;
-+}
-+
- static int files_fsck_refs_dir(struct ref_store *ref_store,
- 			       struct fsck_options *o,
- 			       const char *refs_check_dir,
-@@ -3490,6 +3630,7 @@ static int files_fsck_refs(struct ref_store *ref_store,
- 	int ret;
- 	files_fsck_refs_fn fsck_refs_fns[]= {
- 		files_fsck_refs_name,
-+		files_fsck_refs_content,
- 		NULL
- 	};
- 
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index a905e187cd..2fabf41d14 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -709,11 +709,12 @@ struct ref_store {
- 
- /*
-  * Parse contents of a loose ref file. *failure_errno maybe be set to EINVAL for
-- * invalid contents.
-+ * invalid contents. Also *trailing is set to the first character after the
-+ * refname or NULL if the referent is not empty.
-  */
- int parse_loose_ref_contents(const char *buf, struct object_id *oid,
- 			     struct strbuf *referent, unsigned int *type,
--			     int *failure_errno);
-+			     int *failure_errno, const char **trailing);
- 
- /*
-  * Fill in the generic part of refs and add it to our collection of
-diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-index b2db58d2c6..35bf40ee64 100755
---- a/t/t0602-reffiles-fsck.sh
-+++ b/t/t0602-reffiles-fsck.sh
-@@ -98,4 +98,114 @@ test_expect_success 'ref name check should be adapted into fsck messages' '
- 	)
+@@ -38,6 +41,11 @@ test_expect_success 'detect missing sha1 expressions early' '
+ 	test_cmp expect rp-ran
  '
  
-+test_expect_success 'regular ref content should be checked' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	branch_dir_prefix=.git/refs/heads &&
-+	tag_dir_prefix=.git/refs/tags &&
-+	(
-+		cd repo &&
-+		git commit --allow-empty -m initial &&
-+		git checkout -b branch-1 &&
-+		git tag tag-1 &&
-+		git commit --allow-empty -m second &&
-+		git checkout -b branch-2 &&
-+		git tag tag-2 &&
-+		git checkout -b a/b/tag-2
-+	) &&
-+	(
-+		cd repo &&
-+		printf "%s garbage" "$(git rev-parse branch-1)" > $branch_dir_prefix/branch-1-garbage &&
-+		git fsck 2>err &&
-+		cat >expect <<-EOF &&
-+		warning: refs/heads/branch-1-garbage: trailingRefContent: trailing garbage in ref
-+		EOF
-+		rm $branch_dir_prefix/branch-1-garbage &&
-+		test_cmp expect err
-+	) &&
-+	(
-+		cd repo &&
-+		printf "%s garbage" "$(git rev-parse tag-1)" > $tag_dir_prefix/tag-1-garbage &&
-+		test_must_fail git -c fsck.trailingRefContent=error fsck 2>err &&
-+		cat >expect <<-EOF &&
-+		error: refs/tags/tag-1-garbage: trailingRefContent: trailing garbage in ref
-+		EOF
-+		rm $tag_dir_prefix/tag-1-garbage &&
-+		test_cmp expect err
-+	) &&
-+	(
-+		cd repo &&
-+		printf "%s    " "$(git rev-parse tag-2)" > $tag_dir_prefix/tag-2-garbage &&
-+		git fsck 2>err &&
-+		cat >expect <<-EOF &&
-+		warning: refs/tags/tag-2-garbage: trailingRefContent: trailing garbage in ref
-+		EOF
-+		rm $tag_dir_prefix/tag-2-garbage &&
-+		test_cmp expect err
-+	) &&
-+	(
-+		cd repo &&
-+		printf "xfsazqfxcadas" > $tag_dir_prefix/tag-2-bad &&
-+		test_must_fail git refs verify 2>err &&
-+		cat >expect <<-EOF &&
-+		error: refs/tags/tag-2-bad: badRefContent: invalid ref content
-+		EOF
-+		rm $tag_dir_prefix/tag-2-bad &&
-+		test_cmp expect err
-+	) &&
-+	(
-+		cd repo &&
-+		printf "xfsazqfxcadas" > $branch_dir_prefix/a/b/branch-2-bad &&
-+		test_must_fail git refs verify 2>err &&
-+		cat >expect <<-EOF &&
-+		error: refs/heads/a/b/branch-2-bad: badRefContent: invalid ref content
-+		EOF
-+		rm $branch_dir_prefix/a/b/branch-2-bad &&
-+		test_cmp expect err
-+	)
++test_expect_success 'detect empty remote' '
++	test_must_fail git push "" main 2> stderr &&
++	grep "fatal: bad repository ''" stderr
 +'
 +
-+test_expect_success 'symbolic ref content should be checked' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	branch_dir_prefix=.git/refs/heads &&
-+	tag_dir_prefix=.git/refs/tags &&
-+	(
-+		cd repo &&
-+		git commit --allow-empty -m initial &&
-+		git checkout -b branch-1 &&
-+		git tag tag-1
-+	) &&
-+	(
-+		cd repo &&
-+		printf "ref: refs/heads/.branch" > $branch_dir_prefix/branch-2-bad &&
-+		test_must_fail git refs verify 2>err &&
-+		cat >expect <<-EOF &&
-+		error: refs/heads/branch-2-bad: badSymrefPointee: point to invalid refname
-+		EOF
-+		rm $branch_dir_prefix/branch-2-bad &&
-+		test_cmp expect err
-+	) &&
-+	(
-+		cd repo &&
-+		printf "ref: refs/heads" > $branch_dir_prefix/branch-2-bad &&
-+		test_must_fail git refs verify 2>err &&
-+		cat >expect <<-EOF &&
-+		error: refs/heads/branch-2-bad: badSymrefPointee: point to invalid target
-+		EOF
-+		rm $branch_dir_prefix/branch-2-bad &&
-+		test_cmp expect err
-+	) &&
-+	(
-+		cd repo &&
-+		printf "ref: logs/maint-v2.45" > $branch_dir_prefix/branch-2-bad &&
-+		test_must_fail git refs verify 2>err &&
-+		cat >expect <<-EOF &&
-+		error: refs/heads/branch-2-bad: badSymrefPointee: point to target out of refs hierarchy
-+		EOF
-+		rm $branch_dir_prefix/branch-2-bad &&
-+		test_cmp expect err
-+	)
-+'
-+
- test_done
+ test_expect_success 'detect ambiguous refs early' '
+ 	git branch foo &&
+ 	git tag foo &&
 -- 
-2.45.2
+2.45.1
 
