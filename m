@@ -1,90 +1,116 @@
-Received: from 3gy.de (3gy.de [202.61.255.100])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CCD482D7
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 10:44:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.255.100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B176BFA5
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 10:45:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720435490; cv=none; b=p3kT4tTD1MQ6W5QIuRAOCVqf1WRYWDyNqn28ky9LjLN0+I26zSnQSVxBJ/eADzJmIKQsjCslbZ75U58YEjBqoLJOPEV3FnhAnA8rVNepuBcHHXVORf3vTC5TL9YXhkHep0vt1hLuh4h4IDJ+cykfZ1aoYTuqxmoDPG7zUuiHqH8=
+	t=1720435523; cv=none; b=JN7VeXcAd+w4zOScGxrUsKoEPCezc4eDYrY4MJYbnBuGk+u2ZOhevHnEehRHNkhbigtwd8YZyxKYiUOKHjXsfSUbS9DcZvdfHpLkBH+YpssNJonqkI60sD3AbmldM1zQvSMwPXmaTfIb4AIwVDwD5NIyyGMO9QiQtPEo/BtUjbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720435490; c=relaxed/simple;
-	bh=nZPOpUiryeY2DvwJz+ptu8zFo++/ChY2ngif37apI6Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kRU+VRmMkLPchuhUNoxW0QF1zwfZ7jCxc5zC9mWrP4VXKkRY2WfXShEXBskf647nox8f6OMFW8Gw9GlLdyG1oH1hk80bqXl+TQA8tsPUgcAx5cvPrzu5h0yL3aeTc8d8nv+7HI8pBMxnYgqNsRarxLSmgyOWBzr0/ldJ01uYgj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=syscid.com; spf=pass smtp.mailfrom=syscid.com; dkim=pass (2048-bit key) header.d=syscid.com header.i=@syscid.com header.b=I5Llh/8M; arc=none smtp.client-ip=202.61.255.100
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=syscid.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=syscid.com
+	s=arc-20240116; t=1720435523; c=relaxed/simple;
+	bh=5Wp0nYqYM07QuIoUeuha5252lrURu/1oJ0it8urcYbU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I7m2PYNfHIajyb9ydwO0Lg9Vs8zzabHRbkQKVZT4f95YMRt3pmgInLB4KCrdhVvNLZAK5JxEYEv/WKEYAMN6WYljuohBid1A32qjURf+V2cYYQ52tgy2I/NcUYbs/oDvPkSM9YLoXnsb5yM1BRJVNXSb+ilBe5AGs1MHS55KG6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=vlp5YnmB; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=syscid.com header.i=@syscid.com header.b="I5Llh/8M"
-Received: from [192.168.5.158] (lysergic.at [185.68.249.200])
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="vlp5YnmB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1720435518;
+	bh=5Wp0nYqYM07QuIoUeuha5252lrURu/1oJ0it8urcYbU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=vlp5YnmBMv/hfbAa880FO8WtWq9SZfEqxyClXwwRG1fclej9+FcUCgkdJ9VV29KLT
+	 m1Mbjm8n/zZDscOLniq9cTAlitSBZBimk6YY4IS6+8byB22thW8C2p7k7IIwd841R4
+	 UwPfQDHqtq/bwaladrUumhyGgF8As5V6V5NqkQ/K87dU6WZOpqhTD+A5+nsfv4gyfE
+	 j5Zo2SJlQ0brq/Z1HgPe5sSI/bHMM+HA5eh1XBhHm0P5ogGBs+AY5zFYX27FsG797a
+	 j/tjn6GEhbX/O84LuetV64KV6OQdqSg5MNSOuHZkWVBiG3XvZdQ/cjBh1cJRZS7sHB
+	 IS3g762ii4aSE57MC2s8HJhODF762jkAy6RMMphGI94LWo610seCZ9Zbp+P/aLaq4A
+	 ZAO+ODwXqSGg+K1MnbqqNbY+QV9ACsfeiXVQvrtrnOJY9+Qa/Ofeq8peuzCszqjPOn
+	 a8w6US/4mBhqpM35F7TSdEsBrX1R8VBSvI6f54wg9u1I8DzFTAW
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-384))
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	(Authenticated sender: georg@syscid.com)
-	by 3gy.de (FREEDOM) with ESMTPSA id 04EA73540796;
-	Mon,  8 Jul 2024 12:35:49 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syscid.com; s=light;
-	t=1720434950; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references:autocrypt;
-	bh=9NBHBaL524Q5AXNuDb6sokceIfsF4EjZN0l0ewpGsNM=;
-	b=I5Llh/8MV8XMmkPXRu1ho/BWiBupyCvwgNU7POtkOW1wwIIi2x7T8MLeSgg46gswNtx0jo
-	k5Sb5UmbEMPe6/CmppkIKfsvu8SkcJtYPPa7Q0SjHMLu3wZ3Lqpd4BwnEXHUf4KSmkB5ss
-	AfvIne13G4AzyQtqqWdm+Ddj5C8cYoBvLW0RpFwSRaUQA4IQkNmsJxQk7CI3RUxd4xdJZU
-	jSlSq1uNJynkvc+ya0Nn8KJ3eQ+sRgA0KXyPh2wzobIPDSTw2YPsZpsgmAG+dMZSM/djeJ
-	PzCWmpttlUR7Zx+NDlnMFFenRtPFBTJd6Mt4VXDdY8Vg5tgiHDDe3f+OGXnEqQ==
-Message-ID: <d3921679-eeb8-4cca-bc0d-967e9e567fd4@syscid.com>
-Date: Mon, 8 Jul 2024 12:35:49 +0200
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 96D2A20998;
+	Mon,  8 Jul 2024 10:45:18 +0000 (UTC)
+Date: Mon, 8 Jul 2024 10:45:17 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: phillip.wood@dunelm.org.uk
+Cc: Git Mailing List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: BUG: "git var GIT_SHELL_PATH" is broken on Windows
+Message-ID: <ZovDPbgBS7WJIipz@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	phillip.wood@dunelm.org.uk, Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <cc267962-ca2d-4c4a-9ed8-d40c4d282522@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] check-whitespace: detect if no base_commit is
- provided
-To: Chris Torek <chris.torek@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, chriscool@tuxfamily.org
-References: <20240708092317.267915-1-karthik.188@gmail.com>
- <20240708092317.267915-9-karthik.188@gmail.com>
- <CAPx1GvfkC0rv_8_q5_HfduhuKX4csO+sBZiZqV+Sh+Q0dV8+4w@mail.gmail.com>
-Content-Language: en-US
-From: Georg Pfuetzenreuter <georg@syscid.com>
-Autocrypt: addr=georg@syscid.com; keydata=
- xjMEYP4ABBYJKwYBBAHaRw8BAQdAGRcet1cOGT+IejiQ4pe4FLnoQjFlftdc7RQcy1GXYAvN
- J0dlb3JnIFBmdWV0emVucmV1dGVyIDxnZW9yZ0BzeXNjaWQuY29tPsKRBBMWCAA5FiEEP8y5
- xN1VTzTg6AyMPa/ybD555YgFAmD+AAQFCQWjmoACGwMFCwkIBwIGFQgJCgsCBRYCAwEAAAoJ
- ED2v8mw+eeWIUJAA/1la/PBCwI2SCzryFSkO9GBVkmr+T0bNDLRgRGpFH2/DAP9brlOfg3jd
- ypCRS4E2i/angkiZtrm7308U4JOcA9ODA844BGD+AAQSCisGAQQBl1UBBQEBB0BdKJwL2WgH
- sH4xx+ZhWkw4kF6pRpJmG79K8cvhpS8wCAMBCAfCfgQYFggAJhYhBD/MucTdVU804OgMjD2v
- 8mw+eeWIBQJg/gAEBQkFo5qAAhsMAAoJED2v8mw+eeWIdjcA/R7NYDoA23hdax6XPKrjeM9H
- 4N2JhY/CO8+qHVtClUjUAP9erXFrEtTmuB1fXOjruD3EPbO6tj75gk8QZbeHFxTnDA==
-In-Reply-To: <CAPx1GvfkC0rv_8_q5_HfduhuKX4csO+sBZiZqV+Sh+Q0dV8+4w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="TE/g/W6R5rsqQqbl"
+Content-Disposition: inline
+In-Reply-To: <cc267962-ca2d-4c4a-9ed8-d40c4d282522@gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
 
+--TE/g/W6R5rsqQqbl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 7/8/24 12:18 PM, Chris Torek wrote:
-> The `test` command has AND and OR operators of its own,
-> which give `-a` (AND) higher precedence than `-o` (OR).  In
-> addition, `$#` can only expand to an integer value, so quotes
-> are not required, and the whole thing can be written as:
-> 
->      if test $# -ne 1 -a $# -ne 3 -o -z "$1"
-> 
-> (which is what I would do myself, unless I wanted a separate
-> error message for an empty "$1").  It's fine as is though.
+On 2024-07-08 at 10:07:17, Phillip Wood wrote:
+> Running "git var GIT_SHELL_PATH" on Windows prints "/bin/sh" which is not
+> very helpful when the path to the shell is actually
+> "C:\Users\gitlab_runner\scoop\apps\mingit-busybox\2.45.2\mingw64\bin\ash.=
+exe"
+>=20
+> Support for GIT_SHELL_PATH was added to "git var" in 1e65721227 (var: add
+> support for listing the shell, 2023-06-27) with the aim of making it
+> possible for external programs to learn the location of the shell used to
+> run the command returned by "git var GIT_EDITOR". As the commit message
+> notes this is especially helpful on Windows where the shell isn't
+> necessarily in $PATH. Unfortunately the implementation simply prints
+> SHELL_PATH which is unused on Windows. As 776297548e (Do not use SHELL_PA=
+TH
+> from build system in prepare_shell_cmd on Windows, 2012-04-17) explains t=
+he
+> location of the shell depends on git's installation prefix. For the
+> git-for-windows builds it looks like the shell is always in
+> "$GIT_EXEC_PATH/../../bin/" but I'm not sure if that is universally true.
+>=20
+> It is possible to work around the bug by doing
+>=20
+>     git -c 'alias.run-editor=3D!$(git var GIT_EDITOR)' run-editor
+>=20
+> but it would be good to fix "git var GIT_SHELL_PATH" or at least document
+> that it is broken on Windows
 
-Hi,
+Ugh.  This was indeed supposed to work, but I no longer have access to a
+Windows machine, so we'd need someone who does have one to write up a
+patch.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-https://pubs.opengroup.org/onlinepubs/9699919799/utilities/test.html states
+--TE/g/W6R5rsqQqbl
+Content-Type: application/pgp-signature; name="signature.asc"
 
-"The XSI extensions specifying the -a and -o binary primaries and the 
-'(' and ')' operators have been marked obsolescent."
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
-suggesting "&&" being preferred over "-a".
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZovDPAAKCRB8DEliiIei
+gYq8AQDsxNDfcbt9hV0EYcoXlge8+Cz9vcdfaaSqq6XhXtE9RQEAwPCmq/MyYeim
+w3an3M13CpJmJ/+lDsxBZtD7anPvEQs=
+=rj07
+-----END PGP SIGNATURE-----
 
-> Chris
-> 
+--TE/g/W6R5rsqQqbl--
