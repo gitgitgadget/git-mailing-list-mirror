@@ -1,130 +1,157 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2104.outbound.protection.outlook.com [40.107.21.104])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02C23FB94
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 13:09:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720444148; cv=none; b=AkczKJMc50y6rqRSzG2ebSJKCuUJdQUHwrhWiFr4cr7jZukywk8mvmbSYqHGecC9/GqF1SOYqMZ3he+/B6Gx+KPd9pyKcExahxouezyTeTkKPPdJRVz851Fq4zB81LufA0zFcKXj954FERM1B1WZ1M5wl6AujhQ3SjB85Tq9E4Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720444148; c=relaxed/simple;
-	bh=Avsh2vN2ZHzfnKR15DhlOR/9qP9+H8TsnCpHjErKdWQ=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=NVlfFAiB6d7QCtkz0Osy68rvI3N5Q8ifd5UBD1466G5/1QxDdtiBk4cWkE2drQaQhqLBDV9+4XRz9Xg+eMsvLHP46gIFlNAMcR2kuzzvH3E7XaJBHrxUwh3fGG45QvB5Dl9m33bNg6pvCcds0FWqL0G5QHsZM0YdoTzPnDvptIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=HsfW8TCQ; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3708B665
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 13:20:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.21.104
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1720444821; cv=fail; b=Q2lE6guk2Sb9Lt4wbUNmVuFyDzehJ6rRl4CUFJqz7fNAAiRD3y+hoVT65q7hvs1npkSVXhzZj/QVi3q4PCjuF4jYN+Kvq59sGBnsUE692jD4sMWlDOQHg9N1LFHFwshrzAQ3CRtonvKmB17R5XZj8tpMT8ntCImiRFSdMtezRfo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1720444821; c=relaxed/simple;
+	bh=O9A8Veo7/60ThsAfIHfIUtwJD56p150Nj31k+uytDZE=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=q+5df8hWD4FIDMHxKlMANuo6oYZspNMgqsHsMkWtJcrHx1jdwu3POXOHQR51A1nzdb1884sxsprJ8fENHbJkPOC2wVhkHZOLcGoaoXAH3Jn1DLxmzrUdfnv94QKs0JEtatAhhARQZ0T4wPLM+opQ8+44qYZn7FehsUdnZB6d1dQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=envirovent.com; spf=pass smtp.mailfrom=envirovent.com; dkim=pass (1024-bit key) header.d=spvg.onmicrosoft.com header.i=@spvg.onmicrosoft.com header.b=TAI8xqNB; arc=fail smtp.client-ip=40.107.21.104
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=envirovent.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=envirovent.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="HsfW8TCQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1720444133; x=1721048933;
-	i=johannes.schindelin@gmx.de;
-	bh=5IDtbBmemtT79ns6ed0VtMbOp2XOhhdu2mI7rNq9BOM=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=HsfW8TCQbJY1PDrxvvBkOWejU7w+FSohEcFoWLmSBulHZ8hkP+G3un6keKE7QHWv
-	 vaPzDo8vlvLshW7makOvBLrjVWe5bldX0IKLXyr1jJhOT0qQvoxe0bdEn31PMV0oA
-	 gcmpEeRbNvDqfpXtd83jVWfUW4Rf7Jr3GR+0lWKffTqyMw5zU/IK/pFKw7g1KdXgW
-	 e874r1GeiVMzO3oxJV5sqiIJYHmzai67ihJFKlRPQK+wR1QSVxVqpOg3V9gmbM6Ho
-	 z8On+wyd4XTeSN29cc/NqqXj6yR2TWGZzheEoy1XvMyEQxzM1wLhAXahfJaaKVlnX
-	 ArsmtH5HLyt0wJgeDw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.212.58]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MxDp4-1sBE8j1mPI-010Pgs; Mon, 08
- Jul 2024 15:08:53 +0200
-Date: Mon, 8 Jul 2024 15:08:52 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-cc: phillip.wood@dunelm.org.uk, Git Mailing List <git@vger.kernel.org>, 
-    Johannes Sixt <j6t@kdbg.org>
-Subject: Re: BUG: "git var GIT_SHELL_PATH" is broken on Windows
-In-Reply-To: <ZovDPbgBS7WJIipz@tapette.crustytoothpaste.net>
-Message-ID: <cbdae028-db3d-b43e-57ef-52182452f49d@gmx.de>
-References: <cc267962-ca2d-4c4a-9ed8-d40c4d282522@gmail.com> <ZovDPbgBS7WJIipz@tapette.crustytoothpaste.net>
+	dkim=pass (1024-bit key) header.d=spvg.onmicrosoft.com header.i=@spvg.onmicrosoft.com header.b="TAI8xqNB"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GD172/v0S2ZWH/g4zgwr98OZ4VZG6Arhws5emdlmrVbhMdka0ge5xv0aTv8ui518Bi6K7KrNnGRp8N7DBEo6BEJOViQNHRBKbp6rR7DN/P10FIDT2xjbGpEFMd0jUzV9unLte8uXNpxqIjpgeKG5lajFAWSF+TUOt/TUDvuMEIpkO1eYX08wYYzUup0yABeqHqH16/13EHW93gcBVRlHacDzuEcMSuqxcqNJwDZyj9XVXUl/nB2HL2VjCxhDLLZzwoMLUKoaLE4cG9+WQ9VpYDnTYz6k1cY2J3ZuJ8kJqtBTGUWQhmB01TuJccFKNrNjtIzTYYJvoEL4gKzpNybrBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=O9A8Veo7/60ThsAfIHfIUtwJD56p150Nj31k+uytDZE=;
+ b=HvG7HQV8QbDXEdjmLebdanqYhje/qN7FuLwNHAHmA+Jj9wpUIdm7kVad+deYKHmdhExt93GLwLccXdThjuh1F1eHUypjIGJmDca0Z6W2DYckts0SErSvVSbXvRJX6vi0ZGes/apdWz0faGDp3x11lU/t57H4M+5uH96c5zcoBJfgWfWqvUvc0wLz5VlkyuQ2sKbs1wrEAriZpXVaIZWuylBootQqBamd9Ch6KZjiFWLxyKTA5NALrE2he5LBXf4PagzDo9mBUo1hbz78z7UyNGbCrYg64pNTDi+2ssmTOWxN5q65CU3lz9KBgxoblvZzr/Sosyf/b6YDiraXpNhNng==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=envirovent.com; dmarc=pass action=none
+ header.from=envirovent.com; dkim=pass header.d=envirovent.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spvg.onmicrosoft.com;
+ s=selector1-spvg-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=O9A8Veo7/60ThsAfIHfIUtwJD56p150Nj31k+uytDZE=;
+ b=TAI8xqNB9OFUzs39XC7JQhoUPCs11dHSu7fUoQ3f6MQUVU/Yb8ZGZW2LxFxTZBgK3Q+PgzBCIB2QAqZWW6MEiTu6twdSWyPjbOxkPWc+rSCJiraxMB1FYoneTfNARG6afAvGRFmtPlsJMKyUiqYWGz5S8RLLlCEXdl/oTBTDA9Q=
+Received: from DU0PR02MB9942.eurprd02.prod.outlook.com (2603:10a6:10:449::18)
+ by DBBPR02MB10795.eurprd02.prod.outlook.com (2603:10a6:10:53d::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.35; Mon, 8 Jul
+ 2024 13:20:12 +0000
+Received: from DU0PR02MB9942.eurprd02.prod.outlook.com
+ ([fe80::baf3:8eac:68d8:5652]) by DU0PR02MB9942.eurprd02.prod.outlook.com
+ ([fe80::baf3:8eac:68d8:5652%3]) with mapi id 15.20.7741.033; Mon, 8 Jul 2024
+ 13:20:12 +0000
+From: Adam Pickett <apickett@envirovent.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Git Update for Windows - Cloudflare Direct IP
+Thread-Topic: Git Update for Windows - Cloudflare Direct IP
+Thread-Index: AdrROEHkn/MB1lnUTc+FPo5r16SQYQ==
+Date: Mon, 8 Jul 2024 13:20:12 +0000
+Message-ID:
+ <DU0PR02MB9942C645E78AC23619F05D0CA0DA2@DU0PR02MB9942.eurprd02.prod.outlook.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=envirovent.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DU0PR02MB9942:EE_|DBBPR02MB10795:EE_
+x-ms-office365-filtering-correlation-id: cdb53f9c-0111-469e-7942-08dc9f50b2af
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|376014|366016|1800799024|38070700018;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?dUgMgVg0PnZxFntkJNDZ7RtOXnAZDB6kWL7lvLccVKGJSftAnQkSgc2P4CGn?=
+ =?us-ascii?Q?0c8UfqOFGZIfUIHiwbrVv8f5/zNAsjult7ta5MwKX1US4z0pN+ek28t8BlU2?=
+ =?us-ascii?Q?v+VnQiHdW1pspr+O2g/NcysPU512p1zGZJf1wTRI1lI2Psdm8S8qGXQi7n5E?=
+ =?us-ascii?Q?T3JRj6Kpke1sVo6QIQYU0SX/BjT8tIgq99tVzFn9f9J2AKiYndxH9Kw1X+gr?=
+ =?us-ascii?Q?WSzfSMXQ8CPPbJc83YLjFYV0QXKcoNlWpdoRz/7iHS380ebRLz3e1ibLnPkP?=
+ =?us-ascii?Q?42uOnq+VFl4FO7+5sXWWBJnHuT1MWdv9H7Z+Px3Bd4L78qgQitU2FW+66Dex?=
+ =?us-ascii?Q?g1TpwAEqNYkOe56LS0qf53Nh+9CLmaYe38VI0QSJ5CTNqRfzPJiJG3S694+i?=
+ =?us-ascii?Q?2loz5hOmIaeEXhbwy+FXajyXwZOixmO1EITg8HyjszgI1cBCl1TlDvEZICei?=
+ =?us-ascii?Q?ReyXpLUWRRXaJMaq9aenMrDHGBQX9yaP1XJaTi4mdgaegz7aWwa2KXI22Q+Y?=
+ =?us-ascii?Q?eeuRouPGj40yzYO/ZRp2UiksXumf/dYeKM4fWnJ0ckY5nEdsmC9EodYjO4yH?=
+ =?us-ascii?Q?6LsPAuQUqw0rMb4gy19aDAwGtVvpQSI0PBg4KctgQ4++8AB1Y+ug91P5Hw+x?=
+ =?us-ascii?Q?2DFG/340itRuk+Z2oGVTujPHbC5c0QqqOOGMZEzbRpZt0zgoTZXAYqXICqXE?=
+ =?us-ascii?Q?sYPQbkR8/VPnBxKrB8yRCwa9CU/BQBAe3P4Me3V93fEi7zfuj0g5JJPswG/c?=
+ =?us-ascii?Q?MQtpMEGZoeSVw6rCMF8kYK0SETp46Vymvr1+vlYsfi1Ilpugloo+Qyw2bl3r?=
+ =?us-ascii?Q?PHQ2Fdta2KUTp1j3hwIa2RQ9i3+iGHcfOjf306irKIYTpFHkmqMrO9+CYO3q?=
+ =?us-ascii?Q?9vENKQ9rIuVx3kDLmTzgkBejvtL33jVpA724aSd1ZiCVuedNp5kciIdXRXdX?=
+ =?us-ascii?Q?vnH+Z9fjO6UKOvq0u+EWiTqEskuHMd6x3DIiisqpk6E6JTIMSzotG8UCVM4Q?=
+ =?us-ascii?Q?iMGYMzOFyTpxN2KFpgMvw/PvGy37RCsCZy4faRIqA9uB10MKGJTD8UhSErb2?=
+ =?us-ascii?Q?1kSzXdT6nNO12p20aeLyYUFUuZI0mc0N4ru4kdeRlAaW7Xcgo5C/5rWGVrzY?=
+ =?us-ascii?Q?145p2qI1KGtW2oxZEseYlmYsmzTXUl50fO9+HaZScqpSLWHQvxCSH4yf2m6j?=
+ =?us-ascii?Q?YJZdaTG1h7DIRfBCBhh7Z8LBbR74GfWPpiHdxHYGLKybu39hScZnUjV8wp3N?=
+ =?us-ascii?Q?15+rpzjEUeVWKBVRxLwZVhf5SC4Hgt1Dk/etMHamOgCCp9CROANPoGJvRfRb?=
+ =?us-ascii?Q?faBX3JIV0xIsmzhGMnyRhTBUj38xskidX5AWAlXLDpJVAgTCuLiMM8SqXhMi?=
+ =?us-ascii?Q?xfsER5tRCpZPZ+Wab1OvPr02GG2L1bg3FnVDGLHXf+FOaiMrRw=3D=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU0PR02MB9942.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(38070700018);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?NUSw8pVzHrb+nh5Qhk8dgPu1vPe1ec7RKAFUr95L+xYyMgM+e5aJ45M+Ey0S?=
+ =?us-ascii?Q?hIUJnEPENJwLoIEkD5qXCF3lfL+dM6oekpZRli7LE45o0RiaxvoiNMy+wkan?=
+ =?us-ascii?Q?Nghu2zot/CUhsNT3f9sNnVCy/Bx55QU8TtiKjwH7Nwi2i3J9k359y8hHRwek?=
+ =?us-ascii?Q?ay4+3yIohhdGx+l31K4Y+liAmHOGX0dY2E6vASqkhVd+Bc8DVSMuqeMjAvKU?=
+ =?us-ascii?Q?K8vEl62vs5VrI+GouZ1z3dbENfZ8d1JMaWv1dlPDz4kxNu9EwRp7wx+x8KBv?=
+ =?us-ascii?Q?VaQGZu5oPALCuaTyO+sv87RKw3Y37DryWuf2UdhBQkzsPiidXGtDVbZBtr1g?=
+ =?us-ascii?Q?RudVDpDmNwilY47NC8Lrv7AqwPsVLCl602Ecm9Oj9+0QtnfE/mJ8n8kbYo4z?=
+ =?us-ascii?Q?rYLdI/qJ57OK8mVzU3EkU9Cx1r+JNV24dRLFruMz7GhWz6j3LArma4I3zlhw?=
+ =?us-ascii?Q?bftuXlRGF6vGeup1tQGsP4A/5EjYxBOu3uvt9s5ePc434lUPYCCwfoV7zuYa?=
+ =?us-ascii?Q?IdAnjpyY1b2IHCtB6/91pZprwoEZ+aNdKwCy/PD5oehBqIbZtTQNWWya7OK1?=
+ =?us-ascii?Q?Uk7t6ApUq80CALO5CUthe0teg/63ghARDhfiCvv2rQm7tDehqAXahcKv6qoE?=
+ =?us-ascii?Q?0m7oTkjhDWxVR7FVPoOB4E3d6MuLuv+5xQu7wQp8+LegZ1XiSlp2pIGgkGG6?=
+ =?us-ascii?Q?KAK4Yk4fDHBS8z50RiR8K1bdLVN/VPu9CaRlbacDWx6jIlaGIkFdygmKieMc?=
+ =?us-ascii?Q?oYOJbGprncx6FBSqfATpzjh+K698aloDCMnvjH/QfaJMf1P+sYUo3IruNEtd?=
+ =?us-ascii?Q?qEOPmSR03+3KqOaermS+dZuxAe4PPCxXEsOaUeoL8funTH89e6val1rggFG9?=
+ =?us-ascii?Q?VopA7jMm2/35XYfIaOaGrR1wTWmAHXpo1GgwjfIJTlkYYI0aCdLxrh84+C0r?=
+ =?us-ascii?Q?WAjs1J51eXNZCS6Qr+cva/dIPIa6hg3DH5WR2WyDs+Mo7sLjBdN5nlmArfnD?=
+ =?us-ascii?Q?PDWe+rQylRl0ZqLNxGKtztox9Pr9CM10iFFCrpt7OiSjCF+cIvXp80JMFX8t?=
+ =?us-ascii?Q?4NG8Qv0gEE4AFB9gGCjfpMuyqfUmIVcDcG9tRKHnmypi5GsxDlJsRmeeUUSZ?=
+ =?us-ascii?Q?jnzan2+3H5wIEemEB/+PLXMHH8d2WauzfH1ZVLe7dXO7dGzPFOMcQA4TV3oF?=
+ =?us-ascii?Q?gyHNRmFMM7zEFMMIaI+rRnLFk2bqqCWjH7PUHk16OApCVo2cRwnlsn6pSAQA?=
+ =?us-ascii?Q?qdnJDyUctPIcyy8VBhPNExR0G2B9FXBt5s7z4GWv+4M6yjXi68XiMEMojVcl?=
+ =?us-ascii?Q?74CIpKBqnxsYoDdGjxsn3a0WSSnryC/6C7rGlHcDuYZ9kn1wdESdXv7GUh7Z?=
+ =?us-ascii?Q?j92nMRd12TEtOpy4y9uTu0epOOFXQoFgJl0E4VASqYZ0Hm3kRgW2Ym2D4M3k?=
+ =?us-ascii?Q?C6rjXIwVp7m8vDAzZ47dbr42vn/Uifj1M+JbFqm808YfhSyyDCqg/zM+gp7Y?=
+ =?us-ascii?Q?+pAs3yV8cG/69bkKPylEqswb+lcdbVdtJAOa6OBNA4mZu9OhMMtL/Mh3F41h?=
+ =?us-ascii?Q?ZUWTkBmhkyk4CCe1IBZFOBaBXfGfKt7It7lIaEGH?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:WAdNmE6ItdJhpIoRF3XQQswH8eB5PuyrFttVm+TjcKcd585FjOs
- jmB41nIgc9W6nH0/eSPKuleSpf9INQj0JTy1BCvdWLSIy5ACXm2CgKdozvcRmY62qvhTLvx
- zckPUjbCC4a3YByEPLtsL37HPLfBiVlNqGlW2uWhZDvE7pE1Aatn+6tTGv1KgyoD7jXGjZx
- zOVimFeR6oJ5Lbg8LyLFQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Zff/lDatUiI=;JrwFMPbdYbfzcCtEhXZ6zWmpDfY
- tthpCk5o18X7qr7VyMT+YwxRx8rnDG34Lkk4IEJi9HpBBKlDe0gl3Ey4TwVPF1Ukqw1nVoW0c
- j2fYVvCCRzWtXN90psx5XRdXuZIP94ucr4/P4rbgFxTZ81l6WLeGh9+z17D+YwFpWlpP3Zt01
- dEgtW8BwYDSjscr9g0ZLQyZIQbIxwQWtns6+DBJY9VE81OfxcQdKMH5WystSoMqM2Ajzht14x
- Bjt0UGZnuSkeIoUTnF5TctXmVJ1nJ0yPoPWPuqs7d9jXRkv506o06OjqS6QmWB6jHq/KN+EFt
- dkVriiQRKUFd5AVyeGZvntPKP3MaPAykhdKP1qYnlrEEvn4l9rSbe1vLVGQ4wtwUExgiLtRaz
- Uyd623P1Sm2JgrpUZ6noOgBHw8Sq939l4bg9XjqrE4Wa/gFm7fS4sSRx8fLCmn5IkPU+Y+0QZ
- qb1JFfpzB8Xmzd7hSa+YR+ugWSTns0cFYshpX/+h7oibh/0QR4o/HYIyI54cTZUFOp/MLudHq
- OX7GVSyackxlM4ZcQxOAwL2ycV7Yd+LrWbGekRWC434XBkFOWJgbRR8I79+lp9jfeCJKG8JQ7
- 0ulCSJqAtB5FNCJYtaWjYGAJp9X0uO9V/nbWBsoOiAkL8okIqzxYATq8sU/5X4j8TdycYKvrZ
- 3h06s6nH+R07z/jRkXVmEn5MVgwVGvW+GthbWDioMbMhI4rwLDmfbNJnvCN/6frgw8TO9ydRF
- c3Vf+qT417wTL+DMGDEjxxNVO60LUNmSFJ0X0ngf3s14qe+LVGfY1HAGCPfMwvjoTjxTZAeJT
- 936tBJAhi2TgPKiAwTlIkbCWSokrn6KJHxfl0XOTHtbUs=
-Content-Transfer-Encoding: quoted-printable
+X-OriginatorOrg: envirovent.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DU0PR02MB9942.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cdb53f9c-0111-469e-7942-08dc9f50b2af
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jul 2024 13:20:12.3378
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 89f218fb-501e-4768-9b1f-d1fc4a69cb9a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: +oEMdm7vXaOxMcSnuPSxH8/N/Q7y/mGGgK/EKxVhK8H3WhBCplKitCVaC9SwPMwHu4mXtOcPaHYl3vSV3HnPqQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR02MB10795
 
-Hi Phillip & brian,
+Hello Everyone,
 
-On Mon, 8 Jul 2024, brian m. carlson wrote:
+I'm having an issue running 'git update-git-for-windows'
 
-> On 2024-07-08 at 10:07:17, Phillip Wood wrote:
-> > Running "git var GIT_SHELL_PATH" on Windows prints "/bin/sh" which is =
-not
-> > very helpful when the path to the shell is actually
-> > "C:\Users\gitlab_runner\scoop\apps\mingit-busybox\2.45.2\mingw64\bin\a=
-sh.exe"
-> >
-> > Support for GIT_SHELL_PATH was added to "git var" in 1e65721227 (var: =
-add
-> > support for listing the shell, 2023-06-27) with the aim of making it
-> > possible for external programs to learn the location of the shell used=
- to
-> > run the command returned by "git var GIT_EDITOR". As the commit messag=
-e
-> > notes this is especially helpful on Windows where the shell isn't
-> > necessarily in $PATH. Unfortunately the implementation simply prints
-> > SHELL_PATH which is unused on Windows. As 776297548e (Do not use SHELL=
-_PATH
-> > from build system in prepare_shell_cmd on Windows, 2012-04-17) explain=
-s the
-> > location of the shell depends on git's installation prefix. For the
-> > git-for-windows builds it looks like the shell is always in
-> > "$GIT_EXEC_PATH/../../bin/" but I'm not sure if that is universally tr=
-ue.
-> >
-> > It is possible to work around the bug by doing
-> >
-> >     git -c 'alias.run-editor=3D!$(git var GIT_EDITOR)' run-editor
-> >
-> > but it would be good to fix "git var GIT_SHELL_PATH" or at least docum=
-ent
-> > that it is broken on Windows
->
-> Ugh.  This was indeed supposed to work, but I no longer have access to a
-> Windows machine, so we'd need someone who does have one to write up a
-> patch.
+I get the following error; curl: (35) Recv failure: Connection was reset.
 
-Funnily enough, the test suite specifically tested for the faulty `sh`
-suffix.
+When speaking to my network team that have advised that they are seeing and=
+ error from Cloudflare.
 
-Also, pro-tip: With GitHub Actions and
-https://github.com/mxschmitt/action-tmate you can fix compile errors and
-other problems directly on the hosted runners, including Windows ones. If
-you do not have any access to Windows machines anymore, that's how you can
-gain it back. I use this, too, to ensure that my patches work on macOS as
-intended, as I do not have access to any other macOS machine.
+Error 1003 - Direct IP access not allowed
+A valid host header must be supplied to reach the desired website.
+172.67.12.172
 
-As to the issue at hand, I offer
-https://lore.kernel.org/git/pull.1760.git.1720443778074.gitgitgadget@gmail=
-.com
-to address it.
+Can anyone confirm if this is a general issue or limited to our network.
 
-Ciao,
-Johannes
+Kind Regards
+
+Adam Pickett
+
+
