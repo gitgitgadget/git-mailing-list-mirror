@@ -1,169 +1,111 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fallback2.i.mail.ru (fallback2.i.mail.ru [79.137.243.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418081459F6
-	for <git@vger.kernel.org>; Mon,  8 Jul 2024 16:23:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A6C80027
+	for <git@vger.kernel.org>; Mon,  8 Jul 2024 16:24:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720455809; cv=none; b=qVqB2bQwMP4s4d+/32nia+pAe13UXhn+CJuoyrb6Ls5lPm9Vz9YhRlVttjWYmtWNx7PD7FYg/l/1/4LcQ4khqzSG6/enJE6y52S7KJEuxqCQSFZoOqXadAahCSPRR611rEQwcydHzIt1+jgLhJgRU2VB3BN0IHHlDqAUNnle870=
+	t=1720455888; cv=none; b=firr4M0KH8lnI6OvDveiJqsnHKb+BezVGUysZ/h8VRDGI2MrFPnnK1gqjCU62KyuwjTHwtutzzklSdlaFUgUDFxBsmujGXRoibm5v1iGSDb+iqtP+rSOl6QO/uv2B/52DrEkKtwfa/y6LFxWSp4xNfQxcXtgeRbKF2JdoNM3o4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720455809; c=relaxed/simple;
-	bh=l2OgbDxdRkNwX9puSaSotwWTSFG6f1REBIkhAGt7R4k=;
-	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LFkJIYVob6Y2IrP80cT3vKXqLVnlxJpEELpHBW3P9y59Rm0n9x6gJ5UhfKdf7JR8rkLDd/wbr1oM8yPsG4WO6qESLu6iIyoOagfs7jBlo8lVoUb/4rZFe9rV1gBHJhwZIZOdasa/53gdDVjJmsV/hSa/NNf0ngqyqWaR0beQDJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 468GNNWT3228273
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Jul 2024 16:23:24 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'ellie'" <el@horse64.org>, <git@vger.kernel.org>
-References: <20240708143239.vq47dg7mgh33hykf@carbon> <2e10070f-2720-4d70-aa15-d4c008cc57bf@horse64.org> <001301dad14b$f8f0e460$ead2ad20$@nexbridge.com> <47799635-7832-4c89-b4d3-e992d49ad40c@horse64.org>
-In-Reply-To: <47799635-7832-4c89-b4d3-e992d49ad40c@horse64.org>
-Subject: RE: With big repos and slower connections, git clone can be hard to work with
-Date: Mon, 8 Jul 2024 12:23:17 -0400
-Organization: Nexbridge Inc.
-Message-ID: <001a01dad153$271c2e60$75548b20$@nexbridge.com>
+	s=arc-20240116; t=1720455888; c=relaxed/simple;
+	bh=ttTsZZL6NyY//KqX8c/ELLQo/woiHTn3+xHEZdaKySQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p+ziMJmakps13rABHfHEcXxurPT3fqtY4pQ+KLvhnrw24uCJnuyrlu+JQse+LYlClgvYbFFc8BcQGs9sUxXHsczBqUdwVlNbuXOWtNUEmbKgZXmSvPs0Quq7+aLF/jE8hoi2DWJChWxW+NODGxO8+7cNBzM2wHfvmpg3LsBXfgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru; spf=pass smtp.mailfrom=bswap.ru; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=nCliylCw; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=I2c76ruo; arc=none smtp.client-ip=79.137.243.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bswap.ru
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="nCliylCw";
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="I2c76ruo"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=UYJbkKtvfOMUajethEtMY8JxwVJSB6WL61K0VuOiYrQ=;
+	t=1720455883;x=1720545883; 
+	b=nCliylCw2sk4IRVK/9MoPBo6pjEWSULGVx/HGuLGG8zuCl7ZgDancggoYZm1MaACyFyokvbFAn55lX/54eONWFHhb7hCeHFT4KQKwF5IRhk20CTfKISQHnJQWJGtQnVHvrmA4LPMuFDupvPHdgQ61YIXLG05uP9wM4wDfB7mSr4=;
+Received: from [10.12.4.23] (port=33688 helo=smtp49.i.mail.ru)
+	by fallback2.i.mail.ru with esmtp (envelope-from <kostix@bswap.ru>)
+	id 1sQqYA-00GqOe-M2
+	for git@vger.kernel.org; Mon, 08 Jul 2024 18:45:11 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
+	s=mailru; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:From:Sender:Reply-To:To:Cc:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=UYJbkKtvfOMUajethEtMY8JxwVJSB6WL61K0VuOiYrQ=; t=1720453510; x=1720543510; 
+	b=I2c76ruo5/xBQkS+RsnxZAWYFj9x5L7Zp8I1hRsoMabYSVajCVn+Jkw9Gh5/bixKMwKMSKq/QiM
+	srO294Z/B2FIpF0p/LCuPSg6NZnGKXWQp7STpU+aOVGYkg78LA8HfnL5RmBytiV1G4BNWwykqaqZP
+	sTpo8hx5Vqqx0dYUB5k=;
+Received: by exim-smtp-6ccc45cc7c-stttf with esmtpa (envelope-from <kostix@bswap.ru>)
+	id 1sQqXx-00000000KQU-3WlC; Mon, 08 Jul 2024 18:44:58 +0300
+Date: Mon, 8 Jul 2024 18:44:57 +0300
+From: Konstantin Khomoutov <kostix@bswap.ru>
+To: ellie <el@horse64.org>
+Cc: rsbecker@nexbridge.com, git@vger.kernel.org
+Subject: Re: With big repos and slower connections, git clone can be hard to
+ work with
+Message-ID: <20240708154457.jpt2aa5orzxy6kqh@carbon>
+Mail-Followup-To: ellie <el@horse64.org>, rsbecker@nexbridge.com,
+	git@vger.kernel.org
+References: <20240708143239.vq47dg7mgh33hykf@carbon>
+ <2e10070f-2720-4d70-aa15-d4c008cc57bf@horse64.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIOcuJNQOiJMkQZvscuPTyr1NeGYwK0gGVSAXyLYmMBl/NYr7FXcptg
-Content-Language: en-ca
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2e10070f-2720-4d70-aa15-d4c008cc57bf@horse64.org>
+X-Mailru-Src: smtp
+X-4EC0790: 10
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD91AFB032D31068B0BF5197D7FA2DDF2C528FE831051E13707CD62213F67905E7A85DFFE3EF12E3BA2467E0AF6781A1FAE18163C91075B2C772DC6BBA2608E75A1660823B2EEFD31DC
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE71BDE6A359BD5B800EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637FF37B1FF54E2C7C48638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D84E605563A24D9BF04BBC948534253DDF897703288BAD9C52CC7F00164DA146DAFE8445B8C89999728AA50765F7900637CAEE156C82D3D7D9389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC81D471462564A2E19F6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C67F1C1C3ABB44F3AAD7EC71F1DB884274AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3FA79E84ED94DD554BA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF3D321E7403792E342EB15956EA79C166A417C69337E82CC275ECD9A6C639B01B78DA827A17800CE7BB1D8AFE8C29F51C731C566533BA786AA5CC5B56E945C8DA
+X-C1DE0DAB: 0D63561A33F958A5F5F3DBF04F8670B75002B1117B3ED696C89BE0F4F74EF25E30C8F815570A3530823CB91A9FED034534781492E4B8EEAD5DF1C2DF01CE7211BDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742424CF958EAFF5D571004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D340CB2836B82369449AA2E220778BE8753AE47075DDAFB0D17868B79840CF587FEAA4015BFDFC6DA9C1D7E09C32AA3244CC7E84B00B244EA5E77DD89D51EBB77423DBF3CC02F61D6ADEA455F16B58544A2557BDE0DD54B35903871D1C702CBDB0A9665A0FD7AD89E8F722DFA761B3F797A
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojmLqsEm9OWA7CSJeY+ZImFw==
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD138089DEF6AAE07DCD6BC5A20191D90C84F6A6CEE3ED3A7016006A01E13019A1B252F0A6AF357119A4D04176AAE5055CC72595A8557D9C981F4633CE835492D9647D182D770C8C7E642B4A721A3011E896F
+X-Mras: Ok
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B49EE4DAAFE034007AC2C4F99DC9EFCB53AB8B427C0B4092C3049FFFDB7839CE9E0089B5866B8777F8200F60132F1FF3CC74A86503AAF015093350903AC6BF4C88
+X-7FA49CB5: 0D63561A33F958A53EB16FF2BD7CA8858F01BF39ABBE28F48F7A5CB9C1AC98588941B15DA834481FA18204E546F3947CDB8A315C1FF4794D117882F4460429724CE54428C33FAD30A8DF7F3B2552694AC26CFBAC0749D213D2E47CDBA5A9658378DA827A17800CE7ECC8AC47CD0EDEFF8941B15DA834481F9449624AB7ADAF3735872C767BF85DA227C277FBC8AE2E8BE355FB2A6EFF69C575ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojmLqsEm9OWA6pFy7RbjAkKw==
+X-Mailru-MI: 8000000000000800
+X-Mras: Ok
 
-On Monday, July 8, 2024 11:49 AM, ellie wrote:
->On 7/8/24 5:31 PM, rsbecker@nexbridge.com wrote:
->> On Monday, July 8, 2024 11:15 AM, ellie wrote:
->>> On 7/8/24 4:32 PM, Konstantin Khomoutov wrote:
->>>> On Mon, Jul 08, 2024 at 04:28:25AM +0200, ellie wrote:
->>>>
->>>> [...]
->>>>> error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly:
->>>>> CANCEL (err 8)
->>>> [...]
->>>>> It seems extremely unlikely to me to be possibly an ISP issue, for
->>>>> which I already listed the reasons. An additional one is HTTPS
->>>>> downloads from github outside of git, e.g. from zip archives, for
->>>>> way larger files work fine as well.
->>>> [...]
->>>>
->>>> What if you explicitly disable HTTP/2 when cloning?
->>>>
->>>>     git -c http.version=3DHTTP/1.1 clone ...
->>>>
->>>> should probably do this.
->>>>
->>>
->>> Thanks for the idea! I tested it:
->>>
->>> $  git -c http.version=3DHTTP/1.1 clone
->>> https://github.com/maliit/keyboard
->>> maliit-keyboard
->>> Cloning into 'maliit-keyboard'...
->>> remote: Enumerating objects: 23243, done.
->>> remote: Counting objects: 100% (464/464), done.
->>> remote: Compressing objects: 100% (207/207), done.
->>> error: RPC failed; curl 18 transfer closed with outstanding read =
-data
->>> remaining
->>> error: 5361 bytes of body are still expected
->>> fetch-pack: unexpected disconnect while reading sideband packet
->>> fatal: early EOF
->>> fatal: fetch-pack: invalid index-pack output
->>>
->>> Sadly, it seems like the error is only slightly different. It was
->>> still worth a try. I contacted GitHub support a while ago but it got
->>> stuck. If there were resume available such hiccups wouldn't matter, =
-I
->>> hope that explains why I suggested that feature.
->>
->> I don't really understand what "it got stuck" means. Is that a =
-colloquialism? What
->got stuck? That case at GitHub?
->>
->> Have you tried git config --global http.postBuffer 524288000
->>
->> It might help. The feature being requesting, even if possible, will =
-probably not
->happen quickly, unless someone has a solid and simple design for this. =
-That is why
->we are trying to figure out the root cause of your situation, which is =
-not clear to me
->as to what exactly is failing (possibly a buffer size issue, if this is =
-consistently failing).
->My experience, as I said before, on these symptoms, is a proxy (even a =
-local one)
->that is in the way. If you have your linux instance on a VM, the =
-hypervisor may not
->be configured correctly. Lack of further evidence (all we really have =
-is the curl RPC
->failure) makes diagnosing this very difficult.
->>
->
->Thanks for your response, I appreciate it. I don't know what the hold =
-up is for them,
->but I'm probably too unimportant, which I understand. I'm not an =
-enterprise user,
->and >99% of others have faster connections than me which is perhaps why =
-they
->dodge this config(?) issue.
->
->And thanks for your suggestion, but sadly it seems to have no effect:
->
->$ git config --global http.postBuffer 524288000 $ git -c =
-http.version=3DHTTP/1.1
->clone https://github.com/maliit/keyboard
->maliit-keyboard
->Cloning into 'maliit-keyboard'...
->remote: Enumerating objects: 23243, done.
->remote: Counting objects: 100% (464/464), done.
->remote: Compressing objects: 100% (207/207), done.
->error: RPC failed; curl 18 transfer closed with outstanding read data =
-remaining
->error: 2444 bytes of body are still expected
->fetch-pack: unexpected disconnect while reading sideband packet
->fatal: early EOF
->fatal: fetch-pack: invalid index-pack output
->
->I'm doubtful this is solvable without either some resume or a fix from =
-Github's end.
->But I can use SSH clone so this isn't urgent.
->
->Resume just seemed like an idea that would also help others, and it's =
-what makes
->many other internet services work much better for me.
+On Mon, Jul 08, 2024 at 05:14:33PM +0200, ellie wrote:
 
-I do not know which pack file is having the issue - it may be the first =
-one. Try running with the following environment variables =
-GIT_TRACE=3Dtrue and GIT_PACKET_TRACE=3Dtrue. This will not correct the =
-problem but might give additional helpful information. git uses libcurl =
-to perform https transfers - which appears to be where the error is =
-coming from. It is my opinion, given the issue is very likely in curl, =
-that a restart capability will not help at all - at least not until we =
-find the actual root cause (still mostly an unknown, although this error =
-is widely discussed online in other non-git places). The failure appears =
-to be transferring a single pack file (139824442 bytes) size may be an =
-issue, but restarting in the middle of a pack file may not solve the =
-problem (discussed in other threads) as the file is potentially built on =
-demand (as I understand it from GitHub) and may not be the same on the =
-next clone attempt. What we probably will find is that a restart will be =
-stuck in the same spot and not move forward because the failure is not =
-at a file boundary.
+[...]
+> > > error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly: CANCEL
+> > > (err 8)
+> > [...]
+> > > It seems extremely unlikely to me to be possibly an ISP issue, for which I
+> > > already listed the reasons. An additional one is HTTPS downloads from github
+> > > outside of git, e.g. from zip archives, for way larger files work fine as
+> > > well.
+> > [...]
+> > What if you explicitly disable HTTP/2 when cloning?
+[...]
+> Thanks for the idea! I tested it:
+> 
+> $  git -c http.version=HTTP/1.1 clone https://github.com/maliit/keyboard
 
-In addition to this, GitHub may have limits on the size of files that =
-can be transferred, which you might be hitting (unlikely but possible). =
-Check your plan options. I tried on a light plan, so this is unlikely =
-but I want to exclude it.
+Over there at SO people are trying all sorts of black magic to combat a
+problem which manifests itself in a way very similar to yours [1]. I'm not
+sure anything from there could be of help but maybe worth trying anyway as you
+can override any (or almost any) Git's configuration setting using that "-c"
+command-line option, so basically test round-trips should not be painstakingly
+long.
 
+[...]
+> fetch-pack: unexpected disconnect while reading sideband packet
+[...]
+> Sadly, it seems like the error is only slightly different.
+
+I actually find it interesting that in each case a sideband packet is
+mentioned. But quite possibly it's a red herring anyway.
+
+ 1. https://stackoverflow.com/questions/66366582
 
