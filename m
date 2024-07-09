@@ -1,63 +1,63 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3C0139563
-	for <git@vger.kernel.org>; Tue,  9 Jul 2024 05:39:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A3F13C699
+	for <git@vger.kernel.org>; Tue,  9 Jul 2024 05:39:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720503564; cv=none; b=mcfxb7I/6LpyB+sb7xq9DgUigwsYhbstrzQxaBjTfkNwEOiF9PVwUQ+5TZx9q2t6dqpLgITdY/5OnH11qv9dZk2pGbXviY8Xj/5L7zudeLs1PHsgac/xfvZmaFOoeEP+q09/UEIxCNNGdE+IMLttSfr4EFz9oR66Kzd5PMe53Og=
+	t=1720503566; cv=none; b=sTbaxoKAOtWqBso3U6TDb9GbiPpsnUxAJd6Eu3WuInEXfQuYRPe2tRsAP0vNT4zZnkVRqvnjKjr0h4ZMuYv2yr5oTCjSIQjAKd1WNOkKQ1JddaWAAzVMXeWZ14x7cx2wxr7nppVZkbWxnjOpAqeLsQN0muZTfYCK/QiHcghXx68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720503564; c=relaxed/simple;
-	bh=BGoYmDZMRBN9f62ol2h2jxzdaePCk4fGsxAyDnv5Zao=;
+	s=arc-20240116; t=1720503566; c=relaxed/simple;
+	bh=itnQfu0Oi8TL0VxbM6VKsYi7tx9KSFBzORCo2kprD5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QePej0YMY5k/sWc05T8TxYto7BK/sTnZ6YY+teQCsp8vjL8drG2mj/4TaKpCyYoom/vm2O2U2EJbUD8B3wXeeZug+kSzHhBIipqanhTDG+9FRayQR6cmk9pX/ulYvdOm6SEcNIGcaozumhMe0WAsO2XV9BnhLYPWcABivX9pKh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m5IGH3Tu; arc=none smtp.client-ip=209.85.210.177
+	 MIME-Version; b=oKI9Vu1e4YIn8vvDIicGsoQNOoxYb1fhz1RR9RvzvFs7HJyIz9SvQolpDZQaw8z3853pfG4dXGnKT0Ua7kvnb6XkoS9AyRtWujDoHgCRPqWO+alPgj+ZPTvWI19X8l62hTsyVU0NrkeFChwdrRCBJSjCuA5dFY10TXZZtKPBp/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Weg2WsS/; arc=none smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m5IGH3Tu"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-70b0e7f6f6fso2978333b3a.2
-        for <git@vger.kernel.org>; Mon, 08 Jul 2024 22:39:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Weg2WsS/"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-64f4c11d2c9so37395147b3.2
+        for <git@vger.kernel.org>; Mon, 08 Jul 2024 22:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720503561; x=1721108361; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720503563; x=1721108363; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hE1uixrePdArOl6yviRu+ZD9Ce0jxKnobOl1Fs4ne6A=;
-        b=m5IGH3TuhEHxp/2B278L6d+A0lV2jwu9SQViI1ARiaaBJ9HxrJdwqu8jwf6xpkM8c3
-         UmgAFyQl7xVFW5kCDfBNShkV9Uw+ep9RPK0TaBplyPZ0g+OfgW1oJOb6NYmj7Vx7EiTK
-         2U/vJn8uTrOx4gsKNuOLpupyNPcnIKvql7vq9D6s0ZgAplunzLSOpe6gixRrOixt8/nH
-         gS9ZqdJcVQE/NpOow+z7GFwKWwj/R7FAxSy5iRogbJ3ajvNCO34m/3GO+KhaZ7Wt7j9a
-         wfG+W9xn4l39E81OXFDyt1W4QqBfA6a6GrM/WAc44b7MHHnv7Q30sOTNw9BRtD9E7av2
-         Udgw==
+        bh=Yvk7yyAF333g6TbWR0aaykoBlxXr8ejFrK6DYgyVXh4=;
+        b=Weg2WsS/QYECk3Eu/BcmhxzFRIY2wj8ajK5Ub/85R1djGKK0GVbiXk6kDBAWOBAw0c
+         4mTwkCDZT7hWpQ77d7sNby+W/Y6Isg3Pgq2IAvI5iw9vp4qZaxt2xlguRfNx+By9NUEV
+         vXeQpxuUWTmdBLL7ilVWMsKQQMai6V1IsgwhetIbHa+LnC3ubvgi+NYYstlJglaJbeV1
+         KaR6V3aj2UIL1cVsHstUEsQCBqBZaP7cZD1vhHRGeE6apETgVcXBtl6QGQDLhqFBLTev
+         c9MfW5otJeRP/X3OzclYQ9lokV5YPUQr9Qrjr+dF4m829LgNuaCFB3sY1fB2QDBGyF+w
+         uCEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720503561; x=1721108361;
+        d=1e100.net; s=20230601; t=1720503563; x=1721108363;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hE1uixrePdArOl6yviRu+ZD9Ce0jxKnobOl1Fs4ne6A=;
-        b=W2EoR3s70/gOCiunO2B76hkw6+P/yM5HEauBe7klaHgLupSG7dwzsfpJulsrymhdse
-         a+M376XeNNfJjGDb93Lj961a7U29hp2nXtwWa8TOUhey2I/+f8iL5m81oM2BFA3EQrYp
-         pAaEm/DUjnBKxmr8fVoA7SzWLfkRofq/BqiAAH6pwB85nrvRiVN4/sbfms9u7CPks8A0
-         62PqmK7NNdSt4rfAlvRic0xmCeNLN9+uJ8PPADxnqe8hVfkMX1j5Tk76SViSUebylTyB
-         Gn7OHJVKpjCoU6MsFlS+UMaifTLa1HYnueQqq56Xbe0DCfl7nu5NmsZgI7hECKIvjQ2V
-         yDtQ==
-X-Gm-Message-State: AOJu0YzCdwo8M34/XRlDsrTJCdBID+BCzUQ2lcE67U2dq5jzvjobj2dR
-	Zp93yTUWWcA/hDCu6tJ2u3wP3qTIPbpRQqe/ZLqnNeLm/kmz+wAE13c+bQ==
-X-Google-Smtp-Source: AGHT+IHdyNsCSSi/r3Z1mxxCIPG3kQ83AiScpd9oRa0yCX97PTnYkbzkWZhnFIn9d1OZQE/pY2nz3w==
-X-Received: by 2002:a05:6a00:2d84:b0:70b:a46:7dd6 with SMTP id d2e1a72fcca58-70b434f3333mr2311323b3a.3.1720503560848;
-        Mon, 08 Jul 2024 22:39:20 -0700 (PDT)
+        bh=Yvk7yyAF333g6TbWR0aaykoBlxXr8ejFrK6DYgyVXh4=;
+        b=Y+7aw9PeTDiNIX5wSd+e9maJpMCOVX4Dkd31L/4EhGhcPGCL30fb33/S7y8MJmyk97
+         3TIlZclzdmDcBvRq7pqStB88c9YEoCT2PhhkRgaEiAgxiOH6q3+1F8PwNqoxI1/lIvbS
+         fFZUkroFj1/fK21fRGDyBjl61I8s3/WqOfjhEFpJFS3EpvC2VQUS/XLJj5atHPym9vP1
+         f9ibW0w+bdvQ2YnyBlZJaa4aGkfmJM+pgasenL2GHKdt7u61bH7Ea7HNR6I3f1m1jlt0
+         H2pNSSboI0tvGmxMEmbipPOEHNN8zXKqD669M2Xw1ljTpgUxKV+3zJmEGAr9DqFEpg/I
+         FoOg==
+X-Gm-Message-State: AOJu0Yz9n2T/XYsPYl377iDUju3phmUkoOZcp2SBOIkkbMtf+dxyMZmn
+	VXNrl8Hy+Ld0x92a63iDroc1oMhD5eZnA2eMzQvZHy8Q6EeooSwO7vR+CQ==
+X-Google-Smtp-Source: AGHT+IGwukvIqcsRyGCN546k6vro4TGhvt5i0E7iKvcybaUyrpYwpA8qjc88XwShYuGvk+k1vg/9zg==
+X-Received: by 2002:a05:690c:b8d:b0:650:11d9:b65a with SMTP id 00721157ae682-658f09d2252mr23397907b3.32.1720503563355;
+        Mon, 08 Jul 2024 22:39:23 -0700 (PDT)
 Received: from Ubuntu.. ([117.96.144.60])
-        by smtp.googlemail.com with ESMTPSA id 41be03b00d2f7-77d61922ee6sm718448a12.46.2024.07.08.22.39.18
+        by smtp.googlemail.com with ESMTPSA id 41be03b00d2f7-77d61922ee6sm718448a12.46.2024.07.08.22.39.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jul 2024 22:39:20 -0700 (PDT)
+        Mon, 08 Jul 2024 22:39:22 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: chriscool@tuxfamily.org,
 	karthik.188@gmail.com
-Subject: [PATCH v2 1/7] t: move reftable/merged_test.c to the unit testing framework
-Date: Tue,  9 Jul 2024 10:58:40 +0530
-Message-ID: <20240709053847.4453-2-chandrapratap3519@gmail.com>
+Subject: [PATCH v2 2/7] t: harmonize t-reftable-merged.c with coding guidelines
+Date: Tue,  9 Jul 2024 10:58:41 +0530
+Message-ID: <20240709053847.4453-3-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.2.404.g9eaef5822c
 In-Reply-To: <20240709053847.4453-1-chandrapratap3519@gmail.com>
 References: <20240703171131.3929-1-chandrapratap3519@gmail.com>
@@ -70,325 +70,198 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-reftable/merged_test.c exercises the functions defined in
-reftable/merged.{c, h}. Migrate reftable/merged_test.c to the unit
-testing framework. Migration involves refactoring the tests
-to use the unit testing framework instead of reftable's test
-framework and renaming the tests according to unit-tests' naming
-conventions.
-
-Also, move strbuf_add_void() and noop_flush() from
-reftable/test_framework.c to the ported test. This is because
-both these functions are used in the merged tests and
-reftable/test_framework.{c, h} is not #included in the ported test.
+Harmonize the newly ported test unit-tests/t-reftable-merged.c
+with the following guidelines:
+- Single line control flow statements like 'for' and 'if'
+  must omit curly braces.
+- Structs must be 0-initialized with '= { 0 }' instead of '= { NULL }'.
+- Array indices must be of type 'size_t', not 'int'.
+- It is fine to use C99 initial declaration in 'for' loop.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- Makefile                                      |   2 +-
- t/helper/test-reftable.c                      |   1 -
- .../unit-tests/t-reftable-merged.c            | 113 +++++++++---------
- 3 files changed, 60 insertions(+), 56 deletions(-)
- rename reftable/merged_test.c => t/unit-tests/t-reftable-merged.c (84%)
+ t/unit-tests/t-reftable-merged.c | 52 ++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 32 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 3eab701b10..e5d1b53991 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1340,6 +1340,7 @@ UNIT_TEST_PROGRAMS += t-mem-pool
- UNIT_TEST_PROGRAMS += t-oidtree
- UNIT_TEST_PROGRAMS += t-prio-queue
- UNIT_TEST_PROGRAMS += t-reftable-basics
-+UNIT_TEST_PROGRAMS += t-reftable-merged
- UNIT_TEST_PROGRAMS += t-strbuf
- UNIT_TEST_PROGRAMS += t-strcmp-offset
- UNIT_TEST_PROGRAMS += t-strvec
-@@ -2679,7 +2680,6 @@ REFTABLE_OBJS += reftable/writer.o
- 
- REFTABLE_TEST_OBJS += reftable/block_test.o
- REFTABLE_TEST_OBJS += reftable/dump.o
--REFTABLE_TEST_OBJS += reftable/merged_test.o
- REFTABLE_TEST_OBJS += reftable/pq_test.o
- REFTABLE_TEST_OBJS += reftable/record_test.o
- REFTABLE_TEST_OBJS += reftable/readwrite_test.o
-diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-index 9160bc5da6..0357718fa8 100644
---- a/t/helper/test-reftable.c
-+++ b/t/helper/test-reftable.c
-@@ -10,7 +10,6 @@ int cmd__reftable(int argc, const char **argv)
- 	tree_test_main(argc, argv);
- 	pq_test_main(argc, argv);
- 	readwrite_test_main(argc, argv);
--	merged_test_main(argc, argv);
- 	stack_test_main(argc, argv);
- 	return 0;
- }
-diff --git a/reftable/merged_test.c b/t/unit-tests/t-reftable-merged.c
-similarity index 84%
-rename from reftable/merged_test.c
-rename to t/unit-tests/t-reftable-merged.c
-index a9d6661c13..78a864a54f 100644
---- a/reftable/merged_test.c
+diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
+index 78a864a54f..a984116619 100644
+--- a/t/unit-tests/t-reftable-merged.c
 +++ b/t/unit-tests/t-reftable-merged.c
-@@ -6,20 +6,25 @@ license that can be found in the LICENSE file or at
- https://developers.google.com/open-source/licenses/bsd
- */
- 
--#include "merged.h"
--
--#include "system.h"
-+#include "test-lib.h"
-+#include "reftable/blocksource.h"
-+#include "reftable/constants.h"
-+#include "reftable/merged.h"
-+#include "reftable/reader.h"
-+#include "reftable/reftable-generic.h"
-+#include "reftable/reftable-merged.h"
-+#include "reftable/reftable-writer.h"
-+
-+static ssize_t strbuf_add_void(void *b, const void *data, size_t sz)
-+{
-+	strbuf_add(b, data, sz);
-+	return sz;
-+}
- 
--#include "basics.h"
--#include "blocksource.h"
--#include "constants.h"
--#include "reader.h"
--#include "record.h"
--#include "test_framework.h"
--#include "reftable-merged.h"
--#include "reftable-tests.h"
--#include "reftable-generic.h"
--#include "reftable-writer.h"
-+static int noop_flush(void *arg)
-+{
-+	return 0;
-+}
- 
- static void write_test_table(struct strbuf *buf,
- 			     struct reftable_ref_record refs[], int n)
-@@ -49,12 +54,12 @@ static void write_test_table(struct strbuf *buf,
+@@ -40,12 +40,10 @@ static void write_test_table(struct strbuf *buf,
+ 	struct reftable_writer *w = NULL;
  	for (i = 0; i < n; i++) {
- 		uint64_t before = refs[i].update_index;
- 		int n = reftable_writer_add_ref(w, &refs[i]);
--		EXPECT(n == 0);
--		EXPECT(before == refs[i].update_index);
-+		check_int(n, ==, 0);
-+		check_int(before, ==, refs[i].update_index);
+ 		uint64_t ui = refs[i].update_index;
+-		if (ui > max) {
++		if (ui > max)
+ 			max = ui;
+-		}
+-		if (ui < min) {
++		if (ui < min)
+ 			min = ui;
+-		}
  	}
  
- 	err = reftable_writer_close(w);
--	EXPECT_ERR(err);
-+	check(!err);
+ 	w = reftable_new_writer(&strbuf_add_void, &noop_flush, buf, &opts);
+@@ -68,7 +66,6 @@ static void write_test_log_table(struct strbuf *buf,
+ 				 struct reftable_log_record logs[], int n,
+ 				 uint64_t update_index)
+ {
+-	int i = 0;
+ 	int err;
  
- 	reftable_writer_free(w);
- }
-@@ -76,11 +81,11 @@ static void write_test_log_table(struct strbuf *buf,
+ 	struct reftable_write_options opts = {
+@@ -79,7 +76,7 @@ static void write_test_log_table(struct strbuf *buf,
+ 	w = reftable_new_writer(&strbuf_add_void, &noop_flush, buf, &opts);
+ 	reftable_writer_set_limits(w, update_index, update_index);
  
- 	for (i = 0; i < n; i++) {
+-	for (i = 0; i < n; i++) {
++	for (int i = 0; i < n; i++) {
  		int err = reftable_writer_add_log(w, &logs[i]);
--		EXPECT_ERR(err);
-+		check(!err);
+ 		check(!err);
  	}
+@@ -121,8 +118,7 @@ merged_table_from_records(struct reftable_ref_record **refs,
  
- 	err = reftable_writer_close(w);
--	EXPECT_ERR(err);
-+	check(!err);
- 
- 	reftable_writer_free(w);
- }
-@@ -105,12 +110,12 @@ merged_table_from_records(struct reftable_ref_record **refs,
- 
- 		err = reftable_new_reader(&(*readers)[i], &(*source)[i],
- 					  "name");
--		EXPECT_ERR(err);
-+		check(!err);
- 		reftable_table_from_reader(&tabs[i], (*readers)[i]);
- 	}
- 
- 	err = reftable_new_merged_table(&mt, tabs, n, GIT_SHA1_FORMAT_ID);
--	EXPECT_ERR(err);
-+	check(!err);
- 	return mt;
- }
- 
-@@ -122,7 +127,7 @@ static void readers_destroy(struct reftable_reader **readers, size_t n)
+ static void readers_destroy(struct reftable_reader **readers, size_t n)
+ {
+-	int i = 0;
+-	for (; i < n; i++)
++	for (size_t i = 0; i < n; i++)
+ 		reftable_reader_free(readers[i]);
  	reftable_free(readers);
  }
- 
--static void test_merged_between(void)
-+static void t_merged_single_record(void)
- {
- 	struct reftable_ref_record r1[] = { {
- 		.refname = (char *) "b",
-@@ -150,11 +155,11 @@ static void test_merged_between(void)
+@@ -148,9 +144,8 @@ static void t_merged_single_record(void)
+ 	struct reftable_reader **readers = NULL;
+ 	struct reftable_merged_table *mt =
+ 		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 2);
+-	int i;
+-	struct reftable_ref_record ref = { NULL };
+-	struct reftable_iterator it = { NULL };
++	struct reftable_ref_record ref = { 0 };
++	struct reftable_iterator it = { 0 };
+ 	int err;
  
  	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
- 	err = reftable_iterator_seek_ref(&it, "a");
--	EXPECT_ERR(err);
-+	check(!err);
- 
- 	err = reftable_iterator_next_ref(&it, &ref);
--	EXPECT_ERR(err);
--	EXPECT(ref.update_index == 2);
-+	check(!err);
-+	check_int(ref.update_index, ==, 2);
- 	reftable_ref_record_release(&ref);
+@@ -164,9 +159,8 @@ static void t_merged_single_record(void)
  	reftable_iterator_destroy(&it);
  	readers_destroy(readers, 2);
-@@ -165,7 +170,7 @@ static void test_merged_between(void)
+ 	reftable_merged_table_free(mt);
+-	for (i = 0; i < ARRAY_SIZE(bufs); i++) {
++	for (size_t i = 0; i < ARRAY_SIZE(bufs); i++)
+ 		strbuf_release(&bufs[i]);
+-	}
  	reftable_free(bs);
  }
  
--static void test_merged(void)
-+static void t_merged_refs(void)
- {
- 	struct reftable_ref_record r1[] = {
- 		{
-@@ -230,9 +235,9 @@ static void test_merged(void)
+@@ -226,12 +220,12 @@ static void t_merged_refs(void)
+ 	struct reftable_reader **readers = NULL;
+ 	struct reftable_merged_table *mt =
+ 		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 3);
+-	struct reftable_iterator it = { NULL };
++	struct reftable_iterator it = { 0 };
+ 	int err;
+ 	struct reftable_ref_record *out = NULL;
+ 	size_t len = 0;
+ 	size_t cap = 0;
+-	int i = 0;
++	size_t i;
  
  	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
  	err = reftable_iterator_seek_ref(&it, "a");
--	EXPECT_ERR(err);
--	EXPECT(reftable_merged_table_hash_id(mt) == GIT_SHA1_FORMAT_ID);
--	EXPECT(reftable_merged_table_min_update_index(mt) == 1);
-+	check(!err);
-+	check_int(reftable_merged_table_hash_id(mt), ==, GIT_SHA1_FORMAT_ID);
-+	check_int(reftable_merged_table_min_update_index(mt), ==, 1);
+@@ -240,7 +234,7 @@ static void t_merged_refs(void)
+ 	check_int(reftable_merged_table_min_update_index(mt), ==, 1);
  
  	while (len < 100) { /* cap loops/recursion. */
- 		struct reftable_ref_record ref = { NULL };
-@@ -245,9 +250,9 @@ static void test_merged(void)
- 	}
+-		struct reftable_ref_record ref = { NULL };
++		struct reftable_ref_record ref = { 0 };
+ 		int err = reftable_iterator_next_ref(&it, &ref);
+ 		if (err > 0)
+ 			break;
+@@ -251,18 +245,15 @@ static void t_merged_refs(void)
  	reftable_iterator_destroy(&it);
  
--	EXPECT(ARRAY_SIZE(want) == len);
-+	check_int(ARRAY_SIZE(want), ==, len);
- 	for (i = 0; i < len; i++) {
--		EXPECT(reftable_ref_record_equal(want[i], &out[i],
-+		check(reftable_ref_record_equal(want[i], &out[i],
+ 	check_int(ARRAY_SIZE(want), ==, len);
+-	for (i = 0; i < len; i++) {
++	for (i = 0; i < len; i++)
+ 		check(reftable_ref_record_equal(want[i], &out[i],
  						 GIT_SHA1_RAWSZ));
- 	}
- 	for (i = 0; i < len; i++) {
-@@ -283,16 +288,16 @@ merged_table_from_log_records(struct reftable_log_record **logs,
+-	}
+-	for (i = 0; i < len; i++) {
++	for (i = 0; i < len; i++)
+ 		reftable_ref_record_release(&out[i]);
+-	}
+ 	reftable_free(out);
  
- 		err = reftable_new_reader(&(*readers)[i], &(*source)[i],
- 					  "name");
--		EXPECT_ERR(err);
-+		check(!err);
- 		reftable_table_from_reader(&tabs[i], (*readers)[i]);
- 	}
- 
- 	err = reftable_new_merged_table(&mt, tabs, n, GIT_SHA1_FORMAT_ID);
--	EXPECT_ERR(err);
-+	check(!err);
- 	return mt;
- }
- 
--static void test_merged_logs(void)
-+static void t_merged_logs(void)
- {
- 	struct reftable_log_record r1[] = {
- 		{
-@@ -362,9 +367,9 @@ static void test_merged_logs(void)
+-	for (i = 0; i < 3; i++) {
++	for (i = 0; i < 3; i++)
+ 		strbuf_release(&bufs[i]);
+-	}
+ 	readers_destroy(readers, 3);
+ 	reftable_merged_table_free(mt);
+ 	reftable_free(bs);
+@@ -358,12 +349,12 @@ static void t_merged_logs(void)
+ 	struct reftable_reader **readers = NULL;
+ 	struct reftable_merged_table *mt = merged_table_from_log_records(
+ 		logs, &bs, &readers, sizes, bufs, 3);
+-	struct reftable_iterator it = { NULL };
++	struct reftable_iterator it = { 0 };
+ 	int err;
+ 	struct reftable_log_record *out = NULL;
+ 	size_t len = 0;
+ 	size_t cap = 0;
+-	int i = 0;
++	size_t i = 0;
  
  	merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
  	err = reftable_iterator_seek_log(&it, "a");
--	EXPECT_ERR(err);
--	EXPECT(reftable_merged_table_hash_id(mt) == GIT_SHA1_FORMAT_ID);
--	EXPECT(reftable_merged_table_min_update_index(mt) == 1);
-+	check(!err);
-+	check_int(reftable_merged_table_hash_id(mt), ==, GIT_SHA1_FORMAT_ID);
-+	check_int(reftable_merged_table_min_update_index(mt), ==, 1);
+@@ -372,7 +363,7 @@ static void t_merged_logs(void)
+ 	check_int(reftable_merged_table_min_update_index(mt), ==, 1);
  
  	while (len < 100) { /* cap loops/recursion. */
- 		struct reftable_log_record log = { NULL };
-@@ -377,19 +382,19 @@ static void test_merged_logs(void)
- 	}
+-		struct reftable_log_record log = { NULL };
++		struct reftable_log_record log = { 0 };
+ 		int err = reftable_iterator_next_log(&it, &log);
+ 		if (err > 0)
+ 			break;
+@@ -383,10 +374,9 @@ static void t_merged_logs(void)
  	reftable_iterator_destroy(&it);
  
--	EXPECT(ARRAY_SIZE(want) == len);
-+	check_int(ARRAY_SIZE(want), ==, len);
- 	for (i = 0; i < len; i++) {
--		EXPECT(reftable_log_record_equal(want[i], &out[i],
-+		check(reftable_log_record_equal(want[i], &out[i],
+ 	check_int(ARRAY_SIZE(want), ==, len);
+-	for (i = 0; i < len; i++) {
++	for (i = 0; i < len; i++)
+ 		check(reftable_log_record_equal(want[i], &out[i],
  						 GIT_SHA1_RAWSZ));
- 	}
+-	}
  
  	merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
  	err = reftable_iterator_seek_log_at(&it, "a", 2);
--	EXPECT_ERR(err);
-+	check(!err);
- 	reftable_log_record_release(&out[0]);
- 	err = reftable_iterator_next_log(&it, &out[0]);
--	EXPECT_ERR(err);
--	EXPECT(reftable_log_record_equal(&out[0], &r3[0], GIT_SHA1_RAWSZ));
-+	check(!err);
-+	check(reftable_log_record_equal(&out[0], &r3[0], GIT_SHA1_RAWSZ));
+@@ -397,14 +387,12 @@ static void t_merged_logs(void)
+ 	check(reftable_log_record_equal(&out[0], &r3[0], GIT_SHA1_RAWSZ));
  	reftable_iterator_destroy(&it);
  
- 	for (i = 0; i < len; i++) {
-@@ -405,7 +410,7 @@ static void test_merged_logs(void)
+-	for (i = 0; i < len; i++) {
++	for (i = 0; i < len; i++)
+ 		reftable_log_record_release(&out[i]);
+-	}
+ 	reftable_free(out);
+ 
+-	for (i = 0; i < 3; i++) {
++	for (i = 0; i < 3; i++)
+ 		strbuf_release(&bufs[i]);
+-	}
+ 	readers_destroy(readers, 3);
+ 	reftable_merged_table_free(mt);
  	reftable_free(bs);
- }
- 
--static void test_default_write_opts(void)
-+static void t_default_write_opts(void)
- {
- 	struct reftable_write_options opts = { 0 };
- 	struct strbuf buf = STRBUF_INIT;
-@@ -426,36 +431,36 @@ static void test_default_write_opts(void)
- 	reftable_writer_set_limits(w, 1, 1);
- 
- 	err = reftable_writer_add_ref(w, &rec);
--	EXPECT_ERR(err);
-+	check(!err);
- 
- 	err = reftable_writer_close(w);
--	EXPECT_ERR(err);
-+	check(!err);
- 	reftable_writer_free(w);
- 
- 	block_source_from_strbuf(&source, &buf);
- 
- 	err = reftable_new_reader(&rd, &source, "filename");
--	EXPECT_ERR(err);
-+	check(!err);
- 
- 	hash_id = reftable_reader_hash_id(rd);
--	EXPECT(hash_id == GIT_SHA1_FORMAT_ID);
-+	check_int(hash_id, ==, GIT_SHA1_FORMAT_ID);
- 
- 	reftable_table_from_reader(&tab[0], rd);
- 	err = reftable_new_merged_table(&merged, tab, 1, GIT_SHA1_FORMAT_ID);
--	EXPECT_ERR(err);
-+	check(!err);
- 
- 	reftable_reader_free(rd);
- 	reftable_merged_table_free(merged);
- 	strbuf_release(&buf);
- }
- 
--/* XXX test refs_for(oid) */
- 
--int merged_test_main(int argc, const char *argv[])
-+int cmd_main(int argc, const char *argv[])
- {
--	RUN_TEST(test_merged_logs);
--	RUN_TEST(test_merged_between);
--	RUN_TEST(test_merged);
--	RUN_TEST(test_default_write_opts);
--	return 0;
-+	TEST(t_default_write_opts(), "merged table with default write opts");
-+	TEST(t_merged_logs(), "merged table with multiple log updates for same ref");
-+	TEST(t_merged_refs(), "merged table with multiple updates to same ref");
-+	TEST(t_merged_single_record(), "ref ocurring in only one record can be fetched");
-+
-+	return test_done();
- }
+@@ -422,7 +410,7 @@ static void t_default_write_opts(void)
+ 		.update_index = 1,
+ 	};
+ 	int err;
+-	struct reftable_block_source source = { NULL };
++	struct reftable_block_source source = { 0 };
+ 	struct reftable_table *tab = reftable_calloc(1, sizeof(*tab));
+ 	uint32_t hash_id;
+ 	struct reftable_reader *rd = NULL;
 -- 
 2.45.2.404.g9eaef5822c
 
