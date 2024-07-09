@@ -1,110 +1,108 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761BB1FA3
-	for <git@vger.kernel.org>; Tue,  9 Jul 2024 23:05:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101CF81AC8
+	for <git@vger.kernel.org>; Tue,  9 Jul 2024 23:05:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720566338; cv=none; b=Va0T8XbIgU0TJdLkrpBOxfRe1joFsieHa8cXno5lCVaHdqOdqyamxr4sD7/s0IXshfusS/jWVSmBsArrJo1S0t32hkmA7P1fUqiCPIlRZD7xqo5ZmdeB1x8LkNTHTDIl5A+ZfUKlw2jmm9XmsFPzuMImAk+u9ToaG740irGXubA=
+	t=1720566345; cv=none; b=sLjS4GsspMuJdfigr5wmVtHBNJJhUAFWQDEQTHTL20QlhnS1W2RnJhZbEJxyt8pN+LAVlEAThjeSN4v8DWvgYrjswUQCI+LI6t80N7NbS1Af7bJPsTb9i0vVtVT2h/Cq2L+Z/4ze14cjdnBdiNzhdS846Rp2MACMH7CrvkqGDbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720566338; c=relaxed/simple;
-	bh=8ZdtUtgXvLsCiHt/mfOc7acrYgAdDYX+Axd1S9YCzCM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ADxNteJxpCg71R/vICJrGRMWiU9vyDWbNiQzpuMAaX4Jh5qA1k8Owe5462zI9s8bU3J6LF+8v5CLItcJogfoESlM0I4H9wfu+csz3Ty3mbSov9LPWdFDfDW5KehGcSVeMq2fGkLGzWB0n+2X57M+5w5GJp2RMe/WgAc5cPEJNnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZQ1F2Ay+; arc=none smtp.client-ip=209.85.160.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720566345; c=relaxed/simple;
+	bh=1T55LRw69lHZGXW4erJpZ419bSNI3LtL3ShveoAwQDk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tY4n5c826OPxYHnLcB0Id/XbdRkaW4Z5LtoCYfQOUIB2ZTGOhMxQRpus3JFRLqJt1/VW+ix8upL1Ejhr8DF1HT2GathMsIvcO9TvkNaLFWOiUsQ2gympfY/9vTQ/ZBlmrtRLanZujd1MJ+lGAArjEcwWvqhIhiLPwQDWXOgkV8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rYqadHCd; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZQ1F2Ay+"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-25982aa59efso2741535fac.3
-        for <git@vger.kernel.org>; Tue, 09 Jul 2024 16:05:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720566336; x=1721171136; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jeXah0wOlAHXbcCkHdkrGL56tkOBBRJWN8LXEH/bwDE=;
-        b=ZQ1F2Ay++chylQ01NjIYrX2Fv7Mt3i9svN6XCxFb2GpWo+DxwEpbE/JP/UDKpSt9uT
-         mWUsQq2M2KsUVLgMRjewaVR5JyA2DmhTpzMOa8njVoqs9qfmaQfznaePOUL+aAb6Sdg4
-         8g0DgfImYyubl16casyIWs5dObJmjhd670yuYYWEuuYnsPtId08Lo4eB/FBIXi6B6Dud
-         87oOseOqN8MItc3P4IqtMi81h5F276VBrRxyKH/W3VUbim9FKUPCsM5rxlak5AR0LvGd
-         Ria0qTtct8C9QjHVxW4OacqGymxoanVihqvukLzU35jVNFrxbbKUaM8qSLLjomrYZJy5
-         Xr3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720566336; x=1721171136;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jeXah0wOlAHXbcCkHdkrGL56tkOBBRJWN8LXEH/bwDE=;
-        b=D47m8nk0e+Iv0YNRr2fA9Um3c2YLdM8ntmQWwj0nRFmOQxMMj+9s1q3h/hwixgqo40
-         jK/3cEUfKXxgoMHYeda6FtFC0PgFHTTWGloQdZ4+31LrdaZDkb/HnRw2RJbvuPqA1nyw
-         pjVbqUGJI8qJgIXuCUyG8U3AAL9Gzr3PE8474ssBiVymBQOducJcC6RX+N/VfA97FMjV
-         9qUqhTv8HXq07PQwvyN5DBCt/FTHOu6/ubbDeWMo0DeDmFPszSSYsahjVtG9L+pdITNi
-         VLYGifXU9MXlwx65U2LtE1ARjylLBB1rxR3kDxNLdHKX03/NS6rhjjpBqoCapOT6gS3e
-         iAhg==
-X-Gm-Message-State: AOJu0Ywb1izg21aP/IDCdorK/DeY0l02jtv31H4eupQb24ks2ya08VPZ
-	u/X2GmSVPlRo/cVdP8lx4D2OehmFccE++sThaBFgIx+aj4PWsN/q
-X-Google-Smtp-Source: AGHT+IEk5tXcPRUf67kFKZE7z6gIn16yuU13YA/2kqSsjg2kRIKbizKPwNwFqTNcvKF7Th/9ZdLi2Q==
-X-Received: by 2002:a05:6870:c110:b0:24f:cabc:4f6b with SMTP id 586e51a60fabf-25eae764c84mr3161916fac.8.1720566336379;
-        Tue, 09 Jul 2024 16:05:36 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-25eaa078407sm870708fac.27.2024.07.09.16.05.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jul 2024 16:05:35 -0700 (PDT)
-Date: Tue, 9 Jul 2024 18:05:06 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, karthik.188@gmail.com
-Subject: Re: [PATCH v2 1/7] t: move reftable/merged_test.c to the unit
- testing framework
-Message-ID: <f5j7warzbamijaog6ur6uovr6i7fqwadrjbevnyyocz3orjux4@wugw42cut5oi>
-References: <20240703171131.3929-1-chandrapratap3519@gmail.com>
- <20240709053847.4453-1-chandrapratap3519@gmail.com>
- <20240709053847.4453-2-chandrapratap3519@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rYqadHCd"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 96FFB3CCB3;
+	Tue,  9 Jul 2024 19:05:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=1T55LRw69lHZGXW4erJpZ419bSNI3LtL3Shveo
+	AwQDk=; b=rYqadHCd5nqk9bcBupP9DuszEyZ1MUxeov1xzeDuEopvD2dsFqpjSA
+	5ibwmmupv2tFNXUCAGRgrfVEpL59bSW6Urq8iCS9o60vqi9qmeQYQZ7yHBWqbbS2
+	6d9ACjN/EIOrX6qExNj/gunshaq+8IykbFH2p9gnA5f7FXMl+pl4k=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 902E93CCB2;
+	Tue,  9 Jul 2024 19:05:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3732F3CCB0;
+	Tue,  9 Jul 2024 19:05:38 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Piotr Szlazak via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Piotr Szlazak <piotr.szlazak@gmail.com>
+Subject: Re: [PATCH] doc: update http.cookieFile with in-memory cookie
+ processing
+In-Reply-To: <pull.1733.git.git.1719177846725.gitgitgadget@gmail.com> (Piotr
+	Szlazak via GitGitGadget's message of "Sun, 23 Jun 2024 21:24:06
+	+0000")
+References: <pull.1733.git.git.1719177846725.gitgitgadget@gmail.com>
+Date: Tue, 09 Jul 2024 16:05:36 -0700
+Message-ID: <xmqq4j8ycgjj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240709053847.4453-2-chandrapratap3519@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C18A2482-3E47-11EF-9D12-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-On 24/07/09 10:58AM, Chandra Pratap wrote:
-> reftable/merged_test.c exercises the functions defined in
-> reftable/merged.{c, h}. Migrate reftable/merged_test.c to the unit
-> testing framework. Migration involves refactoring the tests
-> to use the unit testing framework instead of reftable's test
-> framework and renaming the tests according to unit-tests' naming
-> conventions.
-> 
-> Also, move strbuf_add_void() and noop_flush() from
-> reftable/test_framework.c to the ported test. This is because
-> both these functions are used in the merged tests and
-> reftable/test_framework.{c, h} is not #included in the ported test.
-> 
-[snip]
->  
-> -int merged_test_main(int argc, const char *argv[])
+"Piotr Szlazak via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Since we are removing this function definition, should we also remove
-`merged_test_main` from "reftable/reftable-tests.h"?
+>  http.cookieFile::
+>  	The pathname of a file containing previously stored cookie lines,
+> -	which should be used
+> -	in the Git http session, if they match the server. The file format
+> -	of the file to read cookies from should be plain HTTP headers or
+> -	the Netscape/Mozilla cookie file format (see `curl(1)`).
+> +	which should be used in the Git http session, if they match the server.
+> +	The file format of the file to read cookies from should be plain HTTP
+> +	headers or the Netscape/Mozilla cookie file format (see `curl(1)`).
 
-> +int cmd_main(int argc, const char *argv[])
->  {
-> -	RUN_TEST(test_merged_logs);
-> -	RUN_TEST(test_merged_between);
-> -	RUN_TEST(test_merged);
-> -	RUN_TEST(test_default_write_opts);
-> -	return 0;
-> +	TEST(t_default_write_opts(), "merged table with default write opts");
-> +	TEST(t_merged_logs(), "merged table with multiple log updates for same ref");
-> +	TEST(t_merged_refs(), "merged table with multiple updates to same ref");
-> +	TEST(t_merged_single_record(), "ref ocurring in only one record can be fetched");
-> +
-> +	return test_done();
->  }
-> -- 
-> 2.45.2.404.g9eaef5822c
-> 
-> 
+With line wrapping it is hard to see if there is any change above
+here, but I assume there is none?
+
+> +	Set it to empty value, to enable in-memory cookies processing.
+
+Is it understandable what "in-memory cookies processing" means to
+expected audience of this manual page?  I somehow doubt it (I
+certainly do not know what you wanted it to mean).
+
+https://curl.se/libcurl/c/CURLOPT_COOKIEFILE.html has this to say:
+
+    By passing the empty string ("") to this option, you enable the
+    cookie engine without reading any initial cookies.
+
+But http.cookiefile is also used for CURLOPT_COOKIEJAR when
+http.savecookies is true.  Its documentation page does not say what
+would happen if you give an empty string to it.
+
+So, a casual one-line mention you added is a bit irresponsible.  At
+least you should warn against setting http.savecookies if the user
+chooses to use "" for this, or better yet, fix the codepath to use
+http.savecookies to prevent us from writing to a file with an empty
+filename.
+
+Also the libcURL documentation for CURLOPT_COOKIEFILE has another
+thing that is a bit worrysome:
+
+    If you tell libcurl the filename is "-" (just a single minus
+    sign), libcurl instead reads from stdin.
+
+So you can easily get your git get stuck by doing
+
+    git -c http.cookiefile=- fetch https://.....
+
+as libcURL will want to read from your stdin, while you are waiting
+for the fetch to finish and are not typing anything?
