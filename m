@@ -1,53 +1,42 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101CF81AC8
-	for <git@vger.kernel.org>; Tue,  9 Jul 2024 23:05:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025BB1FA3
+	for <git@vger.kernel.org>; Tue,  9 Jul 2024 23:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720566345; cv=none; b=sLjS4GsspMuJdfigr5wmVtHBNJJhUAFWQDEQTHTL20QlhnS1W2RnJhZbEJxyt8pN+LAVlEAThjeSN4v8DWvgYrjswUQCI+LI6t80N7NbS1Af7bJPsTb9i0vVtVT2h/Cq2L+Z/4ze14cjdnBdiNzhdS846Rp2MACMH7CrvkqGDbs=
+	t=1720566481; cv=none; b=ocSUjjhtQ9Oyt/Ko3uCv9InUXRXTwm2eETelDIZ11QpIpAnSM7rdy/VVAoy3VTq3vXgXan+MGy4/VckVRz9DotOR29FV9qOmUqJdWjDOB38WPnwFHmIaNVoF36Hl2yWc3VJFLCleAS4mJcqnn4z+hWhovD+QYbWtrCHxWR++hwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720566345; c=relaxed/simple;
-	bh=1T55LRw69lHZGXW4erJpZ419bSNI3LtL3ShveoAwQDk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tY4n5c826OPxYHnLcB0Id/XbdRkaW4Z5LtoCYfQOUIB2ZTGOhMxQRpus3JFRLqJt1/VW+ix8upL1Ejhr8DF1HT2GathMsIvcO9TvkNaLFWOiUsQ2gympfY/9vTQ/ZBlmrtRLanZujd1MJ+lGAArjEcwWvqhIhiLPwQDWXOgkV8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rYqadHCd; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1720566481; c=relaxed/simple;
+	bh=UlHJBr0qnFofhlOpEb5IM4AbwdHH4aNh0ER/OBpyxJE=;
+	h=From:To:Subject:References:Date:Message-ID:MIME-Version:
+	 Content-Type; b=bW0qb6IG3t5YY8yT14le6eUHfSfZxgykVbw0SgW8/0mXa8+81DuhMx49qpS3tmYo0R/AwSvtFFGxi0Ltn9ox3ZyQW3xSPssIQ2ODROtQK2eUT5CQc7WKLtfqHQETrrPiOpgwY4v/qeiPFKF4WsCUVBzRvo9t2rLupWphZiNrVk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net; spf=pass smtp.mailfrom=posteo.net; dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b=p/q9zDAJ; arc=none smtp.client-ip=185.67.36.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rYqadHCd"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 96FFB3CCB3;
-	Tue,  9 Jul 2024 19:05:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=1T55LRw69lHZGXW4erJpZ419bSNI3LtL3Shveo
-	AwQDk=; b=rYqadHCd5nqk9bcBupP9DuszEyZ1MUxeov1xzeDuEopvD2dsFqpjSA
-	5ibwmmupv2tFNXUCAGRgrfVEpL59bSW6Urq8iCS9o60vqi9qmeQYQZ7yHBWqbbS2
-	6d9ACjN/EIOrX6qExNj/gunshaq+8IykbFH2p9gnA5f7FXMl+pl4k=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 902E93CCB2;
-	Tue,  9 Jul 2024 19:05:43 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3732F3CCB0;
-	Tue,  9 Jul 2024 19:05:38 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Piotr Szlazak via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Piotr Szlazak <piotr.szlazak@gmail.com>
-Subject: Re: [PATCH] doc: update http.cookieFile with in-memory cookie
- processing
-In-Reply-To: <pull.1733.git.git.1719177846725.gitgitgadget@gmail.com> (Piotr
-	Szlazak via GitGitGadget's message of "Sun, 23 Jun 2024 21:24:06
-	+0000")
-References: <pull.1733.git.git.1719177846725.gitgitgadget@gmail.com>
-Date: Tue, 09 Jul 2024 16:05:36 -0700
-Message-ID: <xmqq4j8ycgjj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b="p/q9zDAJ"
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout01.posteo.de (Postfix) with ESMTPS id 11791240027
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 01:07:50 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
+	t=1720566471; bh=UlHJBr0qnFofhlOpEb5IM4AbwdHH4aNh0ER/OBpyxJE=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+	b=p/q9zDAJgMGb7IN/0tpSEKOhanySneu3g5Qhb32Lx1lRlMwQXcSxuEwA47eClQN7a
+	 UNzvg9ayqS3eRI+jaPb/2GJ4/hMJx+Cc3BDN5Cj+YrARJZ63xh4CbmMTFfNyYed6Xw
+	 vCk08VwdvwdkD05+bw3DwwnY9e1BnQk6CuFjBBWddZf7pahPt5elj39pFE89/kK946
+	 wQBmVjmRdXiCjVszI78bX+t21EL8vfO19qmQJ2tFeyisjnkJ0xYMFnR5HTE70isZkC
+	 g1x4tuWb0U7H/ANMD+V//YFcsTZ0Kw9/uo2gNifRDfz6bYcPogDuNSgeiihbJvmfhS
+	 L5i9qrdxQXMIA==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4WJc8k3M8Bz6tvs
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 01:07:50 +0200 (CEST)
+From: Tomas Nordin <tomasn@posteo.net>
+To: git@vger.kernel.org
+Subject: [Tomas Nordin] Re: Unbalanced closing paren in help of git commit
+References: <8734oj7fnv.fsf@posteo.net>
+Date: Tue, 09 Jul 2024 23:07:49 +0000
+Message-ID: <878qyauptm.fsf@posteo.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,54 +44,49 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID:
- C18A2482-3E47-11EF-9D12-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-"Piotr Szlazak via GitGitGadget" <gitgitgadget@gmail.com> writes:
+[Sorry, I think I forgot to CC the list when I sent the below message]
 
->  http.cookieFile::
->  	The pathname of a file containing previously stored cookie lines,
-> -	which should be used
-> -	in the Git http session, if they match the server. The file format
-> -	of the file to read cookies from should be plain HTTP headers or
-> -	the Netscape/Mozilla cookie file format (see `curl(1)`).
-> +	which should be used in the Git http session, if they match the server.
-> +	The file format of the file to read cookies from should be plain HTTP
-> +	headers or the Netscape/Mozilla cookie file format (see `curl(1)`).
+-------------------- Start of forwarded message --------------------
+From: Tomas Nordin <tomasn@posteo.net>
+To: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Unbalanced closing paren in help of git commit
+Date: Mon, 08 Jul 2024 23:11:16 +0200
 
-With line wrapping it is hard to see if there is any change above
-here, but I assume there is none?
+Junio C Hamano <gitster@pobox.com> writes:
 
-> +	Set it to empty value, to enable in-memory cookies processing.
+> Tomas Nordin <tomasn@posteo.net> writes:
+>
+>> Hello List
+>>
+>> The second line of the help message for git commit looks like this:
+>
+> This seems to have come from 00ea64ed (doc/git-commit: add
+> documentation for fixup=[amend|reword] options, 2021-03-15),
+> if "git blame" is to be trusted.
+>
+>>     [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]
+>
+> We can have --dry-run but we do not have to, we can have only one of
+>
+>     "-c <commit>"
+>     "-C <commit>",
+>     "--squash <commit>",
+>     "--fixup amend:<commit>"
+>     "--fixup reword:<commit>", or
+>     "--fixup <commit>"
+>
+> as they are mutually exclusive, but it is OK if we have none of
+> them.
+>
+> The last closing parenthesis after <commit> but before the closing
+> square bracket is unwanted, I think, as you pointed out.
 
-Is it understandable what "in-memory cookies processing" means to
-expected audience of this manual page?  I somehow doubt it (I
-certainly do not know what you wanted it to mean).
+Maybe explicit grouping of the mutually exclusive option-argument pairs
+is better? Like this:
 
-https://curl.se/libcurl/c/CURLOPT_COOKIEFILE.html has this to say:
+[--dry-run] [((-c | -C | --squash) <commit>) | (--fixup [(amend|reword):]<commit>)]
 
-    By passing the empty string ("") to this option, you enable the
-    cookie engine without reading any initial cookies.
-
-But http.cookiefile is also used for CURLOPT_COOKIEJAR when
-http.savecookies is true.  Its documentation page does not say what
-would happen if you give an empty string to it.
-
-So, a casual one-line mention you added is a bit irresponsible.  At
-least you should warn against setting http.savecookies if the user
-chooses to use "" for this, or better yet, fix the codepath to use
-http.savecookies to prevent us from writing to a file with an empty
-filename.
-
-Also the libcURL documentation for CURLOPT_COOKIEFILE has another
-thing that is a bit worrysome:
-
-    If you tell libcurl the filename is "-" (just a single minus
-    sign), libcurl instead reads from stdin.
-
-So you can easily get your git get stuck by doing
-
-    git -c http.cookiefile=- fetch https://.....
-
-as libcURL will want to read from your stdin, while you are waiting
-for the fetch to finish and are not typing anything?
+The closing paren would then make sense. I /think/ this is the way I
+would have written it.
+-------------------- End of forwarded message --------------------
