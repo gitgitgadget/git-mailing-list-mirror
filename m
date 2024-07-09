@@ -1,733 +1,539 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9751B86D8
-	for <git@vger.kernel.org>; Tue,  9 Jul 2024 19:01:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DF21B86D5
+	for <git@vger.kernel.org>; Tue,  9 Jul 2024 19:34:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720551708; cv=none; b=vGbtNDoHqMOYkofH05UqHkSi3aKY97N59yBiDmmoqIlkgqaZMdZh8ejJN9Zw4YzCqbQa1s+L4Rocwqf6C2XMuV0tPFeVutC6qLEDdRffbCgUyP63wCuo3nX/dozQUBjYBwoc5UxqlLdCDk/i1Ce74Ycf87noeBFgXl5irri1uEk=
+	t=1720553696; cv=none; b=cbv3MUwdIO1x5JxleRdufLqB72d7Oj0flv1cjkc8fIBMb6WzUH9tAVGGuG1E+2oWWMMYYQZtmkhI90ldjloidJZKTXX5fNcwNJTau8wmds5lEf+H2Tj8l+a6Qau79h/Eo6vjQjxr9RR7WZkU4H0kcaYva8oRaQn3blL82ETR58M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720551708; c=relaxed/simple;
-	bh=A+rMmpaUMTD6Ha3LyERoI2ZGeGPmyIYPazb5HoOCgGQ=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=pxhMGgN6LUrINpA+hwDigA4P6TR8d1/tV4xtxopNowEC75VIbuqErRB/w/RrEyM5sRY1zhlaqQCdIgmOtPqn6oCB0dPzvqzjZOn3UKSW861e4LB2/0JcE8BcBC1tAtT6NwMIs6ixuxwuDnZACJbj1e4Bfst1Jh2YTIPaR4bMHs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=apS3S1qy; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720553696; c=relaxed/simple;
+	bh=BQBegHGjs0+BHrZyTIfBzhYTtpK0YbYdWum1nPCI3dc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fKcPik3lqgIENwZ57RuOXKAtsB/b9TgcB+dR0RGyP7IaxBc9j+3piYQrxSaBirsWuiqNAwQsThff5TnlkFtySO4b+DBbEosdSc8iFJv4sexOP+8/JokumhjdRFVlutzZHn49OXmaAvAA0nUR0anfDtvluQa3lhQWWl8FSfCz+Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WzUkEL4J; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apS3S1qy"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-426685732dcso17988945e9.1
-        for <git@vger.kernel.org>; Tue, 09 Jul 2024 12:01:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WzUkEL4J"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-70b3c0a00f2so1403530b3a.3
+        for <git@vger.kernel.org>; Tue, 09 Jul 2024 12:34:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720551704; x=1721156504; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kmrnB72ZvlRY8A+jS/R7SLJ3ANLYgLjHe6uEljn682w=;
-        b=apS3S1qyls7DcGt1Cml5MOM0FtU06et9C7JDDe338N/0tpzf6vDkFoGcnLRvLwEhFK
-         ag0dApYOQhiIG1UGxPwCql6qSCMrx2dG+BCFKSsGEv/vea1ZHwikeiKKgRpA6auEDe2+
-         hJfrrta5uZQ458X7xJjtU/WNbVSQDhg8G5+5XtJJFvSptJS0ASY20DigtZREhHWBbRKI
-         hchXleY8boAH+OTnYMiMrjtSNvA+SmDzHEqa4DT//KnEw/Oai6wdoq1vR7kgUTkiaigD
-         gAKLK7/bsBwz0IgEFBQu42PA9VqrZYwqcXsDmWFTkCsnmwzbrNnSAdc65GGF1dTXqlsn
-         npwA==
+        d=google.com; s=20230601; t=1720553694; x=1721158494; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=X6vVnf1kBUg4NoDOyiQEl0toGS39zwuhBDZ2w/cqCTQ=;
+        b=WzUkEL4J3eOOvoxNwUvLrxIJCTxiumAFLzfQLv00TWDFJueVktq/1zEX9G8g55/jMC
+         gMQGtnW/tgAxwT1y1RPGgIzcB65HaJlgtUi1G4RX5Z0NQnyga7TkaJBnZLmSXRbSgJw5
+         VZ/RcKQptgsqRffhIn83CYfz+oBQ2M4udWsx8P/gmK66wPhM6B3UPyJda00Rz6F+AD7F
+         efyS1mtRVpJVM3gtFpUfs1r5DOpuwE0a/rv2oQiE/VyJYE61nzEMtpynO0XhAXK3/nhv
+         U/edc3g/CqDYunyzzbUdxNGp+OiVcC4XpEGgw3jlMEp0dpR2PHuuL/8o/5zTP6NdmkS4
+         QpCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720551704; x=1721156504;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kmrnB72ZvlRY8A+jS/R7SLJ3ANLYgLjHe6uEljn682w=;
-        b=gBZBzXc+615GXmXTTvdg3V2X2BnyZlwgQW1YEisBr11EMVgwLeEhO4EFIUTBEqiI7S
-         1DZptAZaSjHHmu1zLaeGGLogGD1cc8mu/iifmuFUIky6WWCBJJ6aqPIvIckQimECKJDD
-         EQBYDrggP5FhysEoosSpT6zLLVGReAUrQAoVHIIf0LN88Htq5nMJOjgjXFTRyE7noqHp
-         PwvXT6DnebxNpth5NhH7+S22VtEYKeV7xI/6c//4Gh2+MtxCecA6u2Yng4Ez+nUPX47D
-         BejCJVwcpE/Z5cfgGRhpPrxFU/kxRVqsym8Y0eILCjo1pyUMiHCjgRdBNXnWzhiwQEXV
-         /KQg==
-X-Gm-Message-State: AOJu0YzXizqNB180KSmuwZMVGxwpWzuLXIG8p1fv23Gb/CLD9agWY+dU
-	8rrtRr9GW78PuehXBnsmKiiwTOOzo5eVkEw3fQywwt5tp3MQ929V6UpBrg==
-X-Google-Smtp-Source: AGHT+IG44wo1C3W6b0RMYyrye5TdN5MZ+6PONsPb8z8BgLE3Rl/UR5bAVVGtq8Zf4UDFYxLYxPYwMA==
-X-Received: by 2002:a05:6000:546:b0:367:926f:5419 with SMTP id ffacd0b85a97d-367cea680b6mr2552066f8f.16.1720551703414;
-        Tue, 09 Jul 2024 12:01:43 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-367cdfb2281sm3269387f8f.115.2024.07.09.12.01.42
+        d=1e100.net; s=20230601; t=1720553694; x=1721158494;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=X6vVnf1kBUg4NoDOyiQEl0toGS39zwuhBDZ2w/cqCTQ=;
+        b=TXF8aVkmf3/29nMrSAqDkykR1I/N2YeOyIiq2OsalRzw17iXIzRM/qA48Ru9XV1diV
+         Wp3CTYEP2Q8I1VLAsIFZA+0av6m/eq+YONd0GFVZidWyLFswBddxkd1X3DITw6WHG2iU
+         gb6zQd7X3ujEZe2naqZ6YxLo++WVN4HPOJa17MlozErEAiupVLNMtmSkxpj0bMcmnYq0
+         10txCgm6lObTOQ5H+1+R/OyPf4WVGK4+WTw1HLalgKr5KDUazDOlD3AG25YSM+sZrs82
+         M7gW3uy03V4ZTeyRdmK1rRsBPlvNvi+H6SE0a5KpOV61RkCDQ6rNDdetVtEcMtWe0vcT
+         /NzQ==
+X-Gm-Message-State: AOJu0YzWuJvpgIgMelCXtJaR3W4JBtoBqdaW6MC0Dq75fkxGke/6EIOE
+	Npa+jLm01Bdirplqek9DotJ0quEOud+IK58v9Q8cKZIqygVsjgZzaIlA3orGEV1Mhy4ynXNVbp3
+	X9w==
+X-Google-Smtp-Source: AGHT+IGgeTiWdkm+fM0DEd3OU6X2JQ1R+ZG6iJiAcSTKuG1do264bnH4lSVEB5weUIXIzeqUj0iIkQ==
+X-Received: by 2002:a05:6a20:918c:b0:1c2:8904:14c2 with SMTP id adf61e73a8af0-1c29824364dmr4172529637.37.1720553693682;
+        Tue, 09 Jul 2024 12:34:53 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:d734:a15:9ca7:2896])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c99aa607e4sm10421862a91.40.2024.07.09.12.34.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jul 2024 12:01:42 -0700 (PDT)
-Message-Id: <pull.1743.v2.git.git.1720551701648.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1743.git.git.1720431288496.gitgitgadget@gmail.com>
-References: <pull.1743.git.git.1720431288496.gitgitgadget@gmail.com>
-From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 09 Jul 2024 19:01:41 +0000
-Subject: [PATCH v2] merge-recursive: honor diff.algorithm
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 09 Jul 2024 12:34:53 -0700 (PDT)
+Date: Tue, 9 Jul 2024 12:34:47 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Christian Couder <chriscool@tuxfamily.org>, 
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [GSoC][PATCH v2] t: port helper/test-hashmap.c to
+ unit-tests/t-hashmap.c
+Message-ID: <mlnerj7j6knamzj3ipnd7rgqd6xm5xrjep35rldhv6sikzipu5@72szgbso6cpo>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Ghanshyam Thakkar <shyamthakkar001@gmail.com>, git@vger.kernel.org, 
+	Christian Couder <christian.couder@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Christian Couder <chriscool@tuxfamily.org>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+References: <20240628124149.43688-1-shyamthakkar001@gmail.com>
+ <20240708161641.10335-2-shyamthakkar001@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "Junio C Hamano [ ]" <gitster@pobox.com>,
-    Antonin Delpeuch <antonin@delpeuch.eu>,
-    Antonin Delpeuch <antonin@delpeuch.eu>
-
-From: Antonin Delpeuch <antonin@delpeuch.eu>
-
-The documentation claims that "recursive defaults to the diff.algorithm
-config setting", but this is currently not the case. This fixes it,
-ensuring that diff.algorithm is used when -Xdiff-algorithm is not
-supplied. This affects the following porcelain commands: "merge",
-"rebase", "cherry-pick", "pull", "stash", "log", "am" and "checkout".
-It also affects the "merge-tree" ancillary interrogator.
-
-This change refactors the initialization of merge options to introduce
-two functions, "init_merge_ui_options" and "init_merge_basic_options"
-instead of just one "init_merge_options". This design follows the
-approach used in diff.c, providing initialization methods for
-porcelain and plumbing commands respectively. Thanks to that, the
-"replay" and "merge-recursive" plumbing commands remain unaffected by
-diff.algorithm.
-
-Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
----
-    merge-recursive: honor diff.algorithm
-    
-    Changes since v1:
-    
-     * introduce separate initialization methods for porcelain and plumbing
-       commands
-     * adapt commit message accordingly
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1743%2Fwetneb%2Frecursive_respects_diff.algorithm-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1743/wetneb/recursive_respects_diff.algorithm-v2
-Pull-Request: https://github.com/git/git/pull/1743
-
-Range-diff vs v1:
-
- 1:  798b1612189 ! 1:  9c1907fad43 merge-recursive: honor diff.algorithm
-     @@ Commit message
-          "rebase", "cherry-pick", "pull", "stash", "log", "am" and "checkout".
-          It also affects the "merge-tree" ancillary interrogator.
-      
-     -    This change also affects the "replay" and "merge-recursive" plumbing
-     -    commands, which happen to call 'merge_recursive_config' and therefore
-     -    are also affected by other configuration variables read in this
-     -    function. For instance theay read "diff.renames", classified in diff.c
-     -    as a diff "UI" config variable. Removing the reliance of those
-     -    commands on this set of configuration variables feels like a bigger
-     -    change and introducing an argument to 'merge_recursive_config' to
-     -    prevent only the newly added diff.algorithm to be read by plumbing
-     -    commands feels like muddying the architecture, as this function
-     -    should likely not be called at all by plumbing commands.
-     +    This change refactors the initialization of merge options to introduce
-     +    two functions, "init_merge_ui_options" and "init_merge_basic_options"
-     +    instead of just one "init_merge_options". This design follows the
-     +    approach used in diff.c, providing initialization methods for
-     +    porcelain and plumbing commands respectively. Thanks to that, the
-     +    "replay" and "merge-recursive" plumbing commands remain unaffected by
-     +    diff.algorithm.
-      
-          Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
-      
-     + ## builtin/am.c ##
-     +@@ builtin/am.c: static int fall_back_threeway(const struct am_state *state, const char *index_pa
-     + 	 * changes.
-     + 	 */
-     + 
-     +-	init_merge_options(&o, the_repository);
-     ++	init_ui_merge_options(&o, the_repository);
-     + 
-     + 	o.branch1 = "HEAD";
-     + 	their_tree_name = xstrfmt("%.*s", linelen(state->msg), state->msg);
-     +
-     + ## builtin/checkout.c ##
-     +@@ builtin/checkout.c: static int merge_working_tree(const struct checkout_opts *opts,
-     + 
-     + 			add_files_to_cache(the_repository, NULL, NULL, NULL, 0,
-     + 					   0);
-     +-			init_merge_options(&o, the_repository);
-     ++			init_ui_merge_options(&o, the_repository);
-     + 			o.verbosity = 0;
-     + 			work = write_in_core_index_as_tree(the_repository);
-     + 
-     +
-       ## builtin/merge-recursive.c ##
-      @@ builtin/merge-recursive.c: int cmd_merge_recursive(int argc, const char **argv, const char *prefix UNUSED)
-       	char *better1, *better2;
-       	struct commit *result;
-       
-     -+	/*
-     -+	 * FIXME: This reads various config variables,
-     -+	 * which 'merge-recursive' should ignore as a plumbing command
-     -+	 */
-     - 	init_merge_options(&o, the_repository);
-     +-	init_merge_options(&o, the_repository);
-     ++	init_basic_merge_options(&o, the_repository);
-       	if (argv[0] && ends_with(argv[0], "-subtree"))
-       		o.subtree_shift = "";
-     + 
-     +
-     + ## builtin/merge-tree.c ##
-     +@@ builtin/merge-tree.c: int cmd_merge_tree(int argc, const char **argv, const char *prefix)
-     + 	};
-     + 
-     + 	/* Init merge options */
-     +-	init_merge_options(&o.merge_options, the_repository);
-     ++	init_ui_merge_options(&o.merge_options, the_repository);
-     + 
-     + 	/* Parse arguments */
-     + 	original_argc = argc - 1; /* ignoring argv[0] */
-     +
-     + ## builtin/merge.c ##
-     +@@ builtin/merge.c: static int try_merge_strategy(const char *strategy, struct commit_list *common,
-     + 			return 2;
-     + 		}
-     + 
-     +-		init_merge_options(&o, the_repository);
-     ++		init_ui_merge_options(&o, the_repository);
-     + 		if (!strcmp(strategy, "subtree"))
-     + 			o.subtree_shift = "";
-     + 
-      
-       ## builtin/replay.c ##
-      @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix)
-       		goto cleanup;
-       	}
-       
-     -+	/*
-     -+	 * FIXME: This reads various config variables,
-     -+	 * which 'replay' should ignore as a plumbing command
-     -+	 */
-     - 	init_merge_options(&merge_opt, the_repository);
-     +-	init_merge_options(&merge_opt, the_repository);
-     ++	init_basic_merge_options(&merge_opt, the_repository);
-       	memset(&result, 0, sizeof(result));
-       	merge_opt.show_rename_progress = 0;
-     + 	last_commit = onto;
-     +
-     + ## builtin/stash.c ##
-     +@@ builtin/stash.c: static int do_apply_stash(const char *prefix, struct stash_info *info,
-     + 		}
-     + 	}
-     + 
-     +-	init_merge_options(&o, the_repository);
-     ++	init_ui_merge_options(&o, the_repository);
-     + 
-     + 	o.branch1 = "Updated upstream";
-     + 	o.branch2 = "Stashed changes";
-     +
-     + ## log-tree.c ##
-     +@@ log-tree.c: static int do_remerge_diff(struct rev_info *opt,
-     + 	struct strbuf parent2_desc = STRBUF_INIT;
-     + 
-     + 	/* Setup merge options */
-     +-	init_merge_options(&o, the_repository);
-     ++	init_ui_merge_options(&o, the_repository);
-     + 	o.show_rename_progress = 0;
-     + 	o.record_conflict_msgs_as_headers = 1;
-     + 	o.msg_header_prefix = "remerge";
-      
-       ## merge-recursive.c ##
-     +@@ merge-recursive.c: int merge_recursive_generic(struct merge_options *opt,
-     + 	return clean ? 0 : 1;
-     + }
-     + 
-     +-static void merge_recursive_config(struct merge_options *opt)
-     ++static void merge_recursive_config(struct merge_options *opt, int ui)
-     + {
-     + 	char *value = NULL;
-     + 	int renormalize = 0;
-      @@ merge-recursive.c: static void merge_recursive_config(struct merge_options *opt)
-       		} /* avoid erroring on values from future versions of git */
-       		free(value);
-       	}
-     -+	if (!git_config_get_string("diff.algorithm", &value)) {
-     -+		long diff_algorithm = parse_algorithm_value(value);
-     -+		if (diff_algorithm < 0)
-     -+			die(_("unknown value for config '%s': %s"), "diff.algorithm", value);
-     -+		opt->xdl_opts = (opt->xdl_opts & ~XDF_DIFF_ALGORITHM_MASK) | diff_algorithm;
-     -+		free(value);
-     ++	if (ui) {
-     ++		if (!git_config_get_string("diff.algorithm", &value)) {
-     ++			long diff_algorithm = parse_algorithm_value(value);
-     ++			if (diff_algorithm < 0)
-     ++				die(_("unknown value for config '%s': %s"), "diff.algorithm", value);
-     ++			opt->xdl_opts = (opt->xdl_opts & ~XDF_DIFF_ALGORITHM_MASK) | diff_algorithm;
-     ++			free(value);
-     ++		}
-      +	}
-       	git_config(git_xmerge_config, NULL);
-       }
-       
-     +-void init_merge_options(struct merge_options *opt,
-     +-			struct repository *repo)
-     ++static void init_merge_options(struct merge_options *opt,
-     ++			struct repository *repo, int ui)
-     + {
-     + 	const char *merge_verbosity;
-     + 	memset(opt, 0, sizeof(struct merge_options));
-     +@@ merge-recursive.c: void init_merge_options(struct merge_options *opt,
-     + 
-     + 	opt->conflict_style = -1;
-     + 
-     +-	merge_recursive_config(opt);
-     ++	merge_recursive_config(opt, ui);
-     + 	merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
-     + 	if (merge_verbosity)
-     + 		opt->verbosity = strtol(merge_verbosity, NULL, 10);
-     +@@ merge-recursive.c: void init_merge_options(struct merge_options *opt,
-     + 		opt->buffer_output = 0;
-     + }
-     + 
-     ++void init_ui_merge_options(struct merge_options *opt,
-     ++			struct repository *repo)
-     ++{
-     ++	init_merge_options(opt, repo, 1);
-     ++}
-     ++
-     ++void init_basic_merge_options(struct merge_options *opt,
-     ++			struct repository *repo)
-     ++{
-     ++	init_merge_options(opt, repo, 0);
-     ++}
-     ++
-     + /*
-     +  * For now, members of merge_options do not need deep copying, but
-     +  * it may change in the future, in which case we would need to update
-     +
-     + ## merge-recursive.h ##
-     +@@ merge-recursive.h: struct merge_options {
-     + 	struct merge_options_internal *priv;
-     + };
-     + 
-     +-void init_merge_options(struct merge_options *opt, struct repository *repo);
-     ++/* for use by porcelain commands */
-     ++void init_ui_merge_options(struct merge_options *opt, struct repository *repo);
-     ++/* for use by plumbing commands */
-     ++void init_basic_merge_options(struct merge_options *opt, struct repository *repo);
-     + 
-     + void copy_merge_options(struct merge_options *dst, struct merge_options *src);
-     + void clear_merge_options(struct merge_options *opt);
-     +
-     + ## sequencer.c ##
-     +@@ sequencer.c: static int do_recursive_merge(struct repository *r,
-     + 
-     + 	repo_read_index(r);
-     + 
-     +-	init_merge_options(&o, r);
-     ++	init_ui_merge_options(&o, r);
-     + 	o.ancestor = base ? base_label : "(empty tree)";
-     + 	o.branch1 = "HEAD";
-     + 	o.branch2 = next ? next_label : "(empty tree)";
-     +@@ sequencer.c: static int do_merge(struct repository *r,
-     + 	bases = reverse_commit_list(bases);
-     + 
-     + 	repo_read_index(r);
-     +-	init_merge_options(&o, r);
-     ++	init_ui_merge_options(&o, r);
-     + 	o.branch1 = "HEAD";
-     + 	o.branch2 = ref_name.buf;
-     + 	o.buffer_output = 2;
-      
-       ## t/t3515-cherry-pick-diff.sh (new) ##
-      @@
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240708161641.10335-2-shyamthakkar001@gmail.com>
 
 
- builtin/am.c                |  2 +-
- builtin/checkout.c          |  2 +-
- builtin/merge-recursive.c   |  2 +-
- builtin/merge-tree.c        |  2 +-
- builtin/merge.c             |  2 +-
- builtin/replay.c            |  2 +-
- builtin/stash.c             |  2 +-
- log-tree.c                  |  2 +-
- merge-recursive.c           | 29 +++++++++++++++++++++----
- merge-recursive.h           |  5 ++++-
- sequencer.c                 |  4 ++--
- t/t3515-cherry-pick-diff.sh | 41 +++++++++++++++++++++++++++++++++++
- t/t3515/base.c              | 17 +++++++++++++++
- t/t3515/ours.c              | 17 +++++++++++++++
- t/t3515/theirs.c            | 17 +++++++++++++++
- t/t7615-merge-diff.sh       | 43 +++++++++++++++++++++++++++++++++++++
- 16 files changed, 174 insertions(+), 15 deletions(-)
- create mode 100755 t/t3515-cherry-pick-diff.sh
- create mode 100644 t/t3515/base.c
- create mode 100644 t/t3515/ours.c
- create mode 100644 t/t3515/theirs.c
- create mode 100755 t/t7615-merge-diff.sh
+This looks like a good conversion to me. There are a few small
+improvements that could be made, but mostly LGTM. Comments are inline
+below.
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 8f9619ea3a3..b821561b15a 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1630,7 +1630,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 	 * changes.
- 	 */
- 
--	init_merge_options(&o, the_repository);
-+	init_ui_merge_options(&o, the_repository);
- 
- 	o.branch1 = "HEAD";
- 	their_tree_name = xstrfmt("%.*s", linelen(state->msg), state->msg);
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 3cf44b4683a..5769efaca00 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -884,7 +884,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 
- 			add_files_to_cache(the_repository, NULL, NULL, NULL, 0,
- 					   0);
--			init_merge_options(&o, the_repository);
-+			init_ui_merge_options(&o, the_repository);
- 			o.verbosity = 0;
- 			work = write_in_core_index_as_tree(the_repository);
- 
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index c2ce044a201..9e9d0b57158 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -31,7 +31,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix UNUSED)
- 	char *better1, *better2;
- 	struct commit *result;
- 
--	init_merge_options(&o, the_repository);
-+	init_basic_merge_options(&o, the_repository);
- 	if (argv[0] && ends_with(argv[0], "-subtree"))
- 		o.subtree_shift = "";
- 
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 1082d919fd1..aab0843ff5a 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -570,7 +570,7 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	/* Init merge options */
--	init_merge_options(&o.merge_options, the_repository);
-+	init_ui_merge_options(&o.merge_options, the_repository);
- 
- 	/* Parse arguments */
- 	original_argc = argc - 1; /* ignoring argv[0] */
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 66a4fa72e1c..686326bc1d3 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -720,7 +720,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
- 			return 2;
- 		}
- 
--		init_merge_options(&o, the_repository);
-+		init_ui_merge_options(&o, the_repository);
- 		if (!strcmp(strategy, "subtree"))
- 			o.subtree_shift = "";
- 
-diff --git a/builtin/replay.c b/builtin/replay.c
-index 6bf0691f15d..d90ddd0837d 100644
---- a/builtin/replay.c
-+++ b/builtin/replay.c
-@@ -373,7 +373,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 		goto cleanup;
- 	}
- 
--	init_merge_options(&merge_opt, the_repository);
-+	init_basic_merge_options(&merge_opt, the_repository);
- 	memset(&result, 0, sizeof(result));
- 	merge_opt.show_rename_progress = 0;
- 	last_commit = onto;
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 7859bc0866a..86803755f03 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -574,7 +574,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 		}
- 	}
- 
--	init_merge_options(&o, the_repository);
-+	init_ui_merge_options(&o, the_repository);
- 
- 	o.branch1 = "Updated upstream";
- 	o.branch2 = "Stashed changes";
-diff --git a/log-tree.c b/log-tree.c
-index 101079e8200..5d8fb6ff8df 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -1025,7 +1025,7 @@ static int do_remerge_diff(struct rev_info *opt,
- 	struct strbuf parent2_desc = STRBUF_INIT;
- 
- 	/* Setup merge options */
--	init_merge_options(&o, the_repository);
-+	init_ui_merge_options(&o, the_repository);
- 	o.show_rename_progress = 0;
- 	o.record_conflict_msgs_as_headers = 1;
- 	o.msg_header_prefix = "remerge";
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 46ee364af73..cd9bd3c03ef 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -3901,7 +3901,7 @@ int merge_recursive_generic(struct merge_options *opt,
- 	return clean ? 0 : 1;
- }
- 
--static void merge_recursive_config(struct merge_options *opt)
-+static void merge_recursive_config(struct merge_options *opt, int ui)
- {
- 	char *value = NULL;
- 	int renormalize = 0;
-@@ -3930,11 +3930,20 @@ static void merge_recursive_config(struct merge_options *opt)
- 		} /* avoid erroring on values from future versions of git */
- 		free(value);
- 	}
-+	if (ui) {
-+		if (!git_config_get_string("diff.algorithm", &value)) {
-+			long diff_algorithm = parse_algorithm_value(value);
-+			if (diff_algorithm < 0)
-+				die(_("unknown value for config '%s': %s"), "diff.algorithm", value);
-+			opt->xdl_opts = (opt->xdl_opts & ~XDF_DIFF_ALGORITHM_MASK) | diff_algorithm;
-+			free(value);
-+		}
-+	}
- 	git_config(git_xmerge_config, NULL);
- }
- 
--void init_merge_options(struct merge_options *opt,
--			struct repository *repo)
-+static void init_merge_options(struct merge_options *opt,
-+			struct repository *repo, int ui)
- {
- 	const char *merge_verbosity;
- 	memset(opt, 0, sizeof(struct merge_options));
-@@ -3953,7 +3962,7 @@ void init_merge_options(struct merge_options *opt,
- 
- 	opt->conflict_style = -1;
- 
--	merge_recursive_config(opt);
-+	merge_recursive_config(opt, ui);
- 	merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
- 	if (merge_verbosity)
- 		opt->verbosity = strtol(merge_verbosity, NULL, 10);
-@@ -3961,6 +3970,18 @@ void init_merge_options(struct merge_options *opt,
- 		opt->buffer_output = 0;
- }
- 
-+void init_ui_merge_options(struct merge_options *opt,
-+			struct repository *repo)
-+{
-+	init_merge_options(opt, repo, 1);
-+}
-+
-+void init_basic_merge_options(struct merge_options *opt,
-+			struct repository *repo)
-+{
-+	init_merge_options(opt, repo, 0);
-+}
-+
- /*
-  * For now, members of merge_options do not need deep copying, but
-  * it may change in the future, in which case we would need to update
-diff --git a/merge-recursive.h b/merge-recursive.h
-index e67d38c3030..85a5c332bbb 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -54,7 +54,10 @@ struct merge_options {
- 	struct merge_options_internal *priv;
- };
- 
--void init_merge_options(struct merge_options *opt, struct repository *repo);
-+/* for use by porcelain commands */
-+void init_ui_merge_options(struct merge_options *opt, struct repository *repo);
-+/* for use by plumbing commands */
-+void init_basic_merge_options(struct merge_options *opt, struct repository *repo);
- 
- void copy_merge_options(struct merge_options *dst, struct merge_options *src);
- void clear_merge_options(struct merge_options *opt);
-diff --git a/sequencer.c b/sequencer.c
-index b4f055e5a85..3608374166a 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -762,7 +762,7 @@ static int do_recursive_merge(struct repository *r,
- 
- 	repo_read_index(r);
- 
--	init_merge_options(&o, r);
-+	init_ui_merge_options(&o, r);
- 	o.ancestor = base ? base_label : "(empty tree)";
- 	o.branch1 = "HEAD";
- 	o.branch2 = next ? next_label : "(empty tree)";
-@@ -4308,7 +4308,7 @@ static int do_merge(struct repository *r,
- 	bases = reverse_commit_list(bases);
- 
- 	repo_read_index(r);
--	init_merge_options(&o, r);
-+	init_ui_merge_options(&o, r);
- 	o.branch1 = "HEAD";
- 	o.branch2 = ref_name.buf;
- 	o.buffer_output = 2;
-diff --git a/t/t3515-cherry-pick-diff.sh b/t/t3515-cherry-pick-diff.sh
-new file mode 100755
-index 00000000000..caeaa01c590
---- /dev/null
-+++ b/t/t3515-cherry-pick-diff.sh
-@@ -0,0 +1,41 @@
-+#!/bin/sh
-+
-+test_description='git cherry-pick
-+
-+Testing the influence of the diff algorithm on the merge output.'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	cp "$TEST_DIRECTORY"/t3515/base.c file.c &&
-+	git add file.c &&
-+	git commit -m c0 &&
-+	git tag c0 &&
-+	cp "$TEST_DIRECTORY"/t3515/ours.c file.c &&
-+	git add file.c &&
-+	git commit -m c1 &&
-+	git tag c1 &&
-+	git reset --hard c0 &&
-+	cp "$TEST_DIRECTORY"/t3515/theirs.c file.c &&
-+	git add file.c &&
-+	git commit -m c2 &&
-+	git tag c2
-+'
-+
-+test_expect_success 'cherry-pick c2 to c1 with recursive merge strategy fails with the current default myers diff algorithm' '
-+	git reset --hard c1 &&
-+	test_must_fail git cherry-pick -s recursive c2
-+'
-+
-+test_expect_success 'cherry-pick c2 to c1 with recursive merge strategy succeeds with -Xdiff-algorithm=histogram' '
-+	git reset --hard c1 &&
-+	git cherry-pick --strategy recursive -Xdiff-algorithm=histogram c2
-+'
-+
-+test_expect_success 'cherry-pick c2 to c1 with recursive merge strategy succeeds with diff.algorithm = histogram' '
-+	git reset --hard c1 &&
-+	git config diff.algorithm histogram &&
-+	git cherry-pick --strategy recursive c2
-+'
-+test_done
-diff --git a/t/t3515/base.c b/t/t3515/base.c
-new file mode 100644
-index 00000000000..c64abc59366
---- /dev/null
-+++ b/t/t3515/base.c
-@@ -0,0 +1,17 @@
-+int f(int x, int y)
-+{
-+        if (x == 0)
-+        {
-+                return y;
-+        }
-+        return x;
-+}
-+
-+int g(size_t u)
-+{
-+        while (u < 30)
-+        {
-+                u++;
-+        }
-+        return u;
-+}
-diff --git a/t/t3515/ours.c b/t/t3515/ours.c
-new file mode 100644
-index 00000000000..44d82513970
---- /dev/null
-+++ b/t/t3515/ours.c
-@@ -0,0 +1,17 @@
-+int g(size_t u)
-+{
-+        while (u < 30)
-+        {
-+                u++;
-+        }
-+        return u;
-+}
-+
-+int h(int x, int y, int z)
-+{
-+        if (z == 0)
-+        {
-+                return x;
-+        }
-+        return y;
-+}
-diff --git a/t/t3515/theirs.c b/t/t3515/theirs.c
-new file mode 100644
-index 00000000000..85f02146fee
---- /dev/null
-+++ b/t/t3515/theirs.c
-@@ -0,0 +1,17 @@
-+int f(int x, int y)
-+{
-+        if (x == 0)
-+        {
-+                return y;
-+        }
-+        return x;
-+}
-+
-+int g(size_t u)
-+{
-+        while (u > 34)
-+        {
-+                u--;
-+        }
-+        return u;
-+}
-diff --git a/t/t7615-merge-diff.sh b/t/t7615-merge-diff.sh
-new file mode 100755
-index 00000000000..be335c7c3d1
---- /dev/null
-+++ b/t/t7615-merge-diff.sh
-@@ -0,0 +1,43 @@
-+#!/bin/sh
-+
-+test_description='git merge
-+
-+Testing the influence of the diff algorithm on the merge output.'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	cp "$TEST_DIRECTORY"/t3515/base.c file.c &&
-+	git add file.c &&
-+	git commit -m c0 &&
-+	git tag c0 &&
-+	cp "$TEST_DIRECTORY"/t3515/ours.c file.c &&
-+	git add file.c &&
-+	git commit -m c1 &&
-+	git tag c1 &&
-+	git reset --hard c0 &&
-+	cp "$TEST_DIRECTORY"/t3515/theirs.c file.c &&
-+	git add file.c &&
-+	git commit -m c2 &&
-+	git tag c2
-+'
-+
-+GIT_TEST_MERGE_ALGORITHM=recursive
-+
-+test_expect_success 'merge c2 to c1 with recursive merge strategy fails with the current default myers diff algorithm' '
-+	git reset --hard c1 &&
-+	test_must_fail git merge -s recursive c2
-+'
-+
-+test_expect_success 'merge c2 to c1 with recursive merge strategy succeeds with -Xdiff-algorithm=histogram' '
-+	git reset --hard c1 &&
-+	git merge --strategy recursive -Xdiff-algorithm=histogram c2
-+'
-+
-+test_expect_success 'merge c2 to c1 with recursive merge strategy succeeds with diff.algorithm = histogram' '
-+	git reset --hard c1 &&
-+	git config diff.algorithm histogram &&
-+	git merge --strategy recursive c2
-+'
-+test_done
 
-base-commit: 06e570c0dfb2a2deb64d217db78e2ec21672f558
--- 
-gitgitgadget
+On 2024.07.08 21:45, Ghanshyam Thakkar wrote:
+> helper/test-hashmap.c along with t0011-hashmap.sh test the hashmap.h
+> library. Migrate them to the unit testing framework for better
+> debugging, runtime performance and consice code.
+
+Typo: s/consice/concise/
+
+> Along with the migration, make 'add' tests from the shellscript order
+> agnostic in unit tests, since they iterate over entries with the same
+> keys and we do not guarantee the order.
+> 
+> The helper/test-hashmap.c is still not removed because it contains a
+> performance test meant to be run by the user directly (not used in
+> t/perf). And it makes sense for such a utility to be a helper.
+> 
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+> ---
+> The changes in v2 are inspired from the review of another similar
+> test t-oidmap: https://lore.kernel.org/git/16e06a6d-5fd0-4132-9d82-5c6f13b7f9ed@gmail.com/
+> 
+> The v2 also includes some formatting corrections and one of the
+> testcases, t_add(), was changed to be more similar to the original.
+> 
+>  Makefile                 |   1 +
+>  t/helper/test-hashmap.c  | 100 +----------
+>  t/t0011-hashmap.sh       | 260 ----------------------------
+>  t/unit-tests/t-hashmap.c | 359 +++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 362 insertions(+), 358 deletions(-)
+>  delete mode 100755 t/t0011-hashmap.sh
+>  create mode 100644 t/unit-tests/t-hashmap.c
+
+[snip]
+
+> diff --git a/t/unit-tests/t-hashmap.c b/t/unit-tests/t-hashmap.c
+> new file mode 100644
+> index 0000000000..1c951fcfd8
+> --- /dev/null
+> +++ b/t/unit-tests/t-hashmap.c
+> @@ -0,0 +1,359 @@
+> +#include "test-lib.h"
+> +#include "hashmap.h"
+> +#include "strbuf.h"
+> +
+> +struct test_entry {
+> +	int padding; /* hashmap entry no longer needs to be the first member */
+> +	struct hashmap_entry ent;
+> +	/* key and value as two \0-terminated strings */
+> +	char key[FLEX_ARRAY];
+> +};
+> +
+> +static int test_entry_cmp(const void *cmp_data,
+> +			  const struct hashmap_entry *eptr,
+> +			  const struct hashmap_entry *entry_or_key,
+> +			  const void *keydata)
+> +{
+> +	const int ignore_case = cmp_data ? *((int *)cmp_data) : 0;
+> +	const struct test_entry *e1, *e2;
+> +	const char *key = keydata;
+> +
+> +	e1 = container_of(eptr, const struct test_entry, ent);
+> +	e2 = container_of(entry_or_key, const struct test_entry, ent);
+> +
+> +	if (ignore_case)
+> +		return strcasecmp(e1->key, key ? key : e2->key);
+> +	else
+> +		return strcmp(e1->key, key ? key : e2->key);
+> +}
+> +
+> +static const char *get_value(const struct test_entry *e)
+> +{
+> +	return e->key + strlen(e->key) + 1;
+> +}
+> +
+> +static struct test_entry *alloc_test_entry(unsigned int ignore_case,
+> +					   const char *key, const char *value)
+> +{
+> +	size_t klen = strlen(key);
+> +	size_t vlen = strlen(value);
+> +	unsigned int hash = ignore_case ? strihash(key) : strhash(key);
+> +	struct test_entry *entry = xmalloc(st_add4(sizeof(*entry), klen, vlen, 2));
+> +
+> +	hashmap_entry_init(&entry->ent, hash);
+> +	memcpy(entry->key, key, klen + 1);
+> +	memcpy(entry->key + klen + 1, value, vlen + 1);
+> +	return entry;
+> +}
+
+So we're duplicating `struct test_entry`, `test_entry_cmp()`, and
+`alloc_test_entry()`, which have (almost) identical definitions in
+t/helper/test-hashmap.c. I wonder if it's worth splitting these into a
+separate .c file. Maybe it's too much of a pain to add Makefile rules to
+share objects across the test helper and the unit tests. Something to
+keep in mind I guess, if we find that we want to share more code than
+this.
+
+
+> +static struct test_entry *get_test_entry(struct hashmap *map,
+> +					 unsigned int ignore_case, const char *key)
+> +{
+> +	return hashmap_get_entry_from_hash(
+> +		map, ignore_case ? strihash(key) : strhash(key), key,
+> +		struct test_entry, ent);
+> +}
+> +
+> +static int key_val_contains(const char *key_val[][3], size_t n,
+> +			    struct test_entry *entry)
+> +{
+> +	for (size_t i = 0; i < n; i++) {
+> +		if (!strcmp(entry->key, key_val[i][0]) &&
+> +		    !strcmp(get_value(entry), key_val[i][1])) {
+> +			if (!strcmp(key_val[i][2], "USED"))
+> +				return 2;
+> +			key_val[i][2] = "USED";
+> +			return 0;
+> +		}
+> +	}
+> +	return 1;
+> +}
+> +
+> +static void setup(void (*f)(struct hashmap *map, int ignore_case),
+> +		  int ignore_case)
+> +{
+> +	struct hashmap map = HASHMAP_INIT(test_entry_cmp, &ignore_case);
+> +
+> +	f(&map, ignore_case);
+> +	hashmap_clear_and_free(&map, struct test_entry, ent);
+> +}
+
+As I mentioned in my review [1] on René's TEST_RUN series, I don't think
+we get much value out of having a setup + callback approach when the
+setup is minimal. Would you consider rewriting a v2 using TEST_RUN once
+that is ready in `next`?
+
+[1] https://lore.kernel.org/git/tswyfparvchgi7qxrjxbx4eb7cohypzekjqzbnkbffsesaiazs@vtewtz7o6twi/
+
+> +static void t_put(struct hashmap *map, int ignore_case)
+> +{
+> +	struct test_entry *entry;
+> +	const char *key_val[][2] = { { "key1", "value1" },
+> +				     { "key2", "value2" },
+> +				     { "fooBarFrotz", "value3" } };
+> +
+> +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+> +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+> +		check(hashmap_put_entry(map, entry, ent) == NULL);
+> +	}
+> +
+> +	entry = alloc_test_entry(ignore_case, "foobarfrotz", "value4");
+> +	entry = hashmap_put_entry(map, entry, ent);
+> +	check(ignore_case ? entry != NULL : entry == NULL);
+> +	free(entry);
+> +
+> +	check_int(map->tablesize, ==, 64);
+> +	check_int(hashmap_get_size(map), ==,
+> +		  ignore_case ? ARRAY_SIZE(key_val) : ARRAY_SIZE(key_val) + 1);
+> +}
+
+Ahhh, so you're using the same function for both case-sensitive and
+-insensitive tests. So I guess TEST_RUN isn't useful here after all.
+Personally I'd still rather get rid of setup(), but I don't feel super
+strongly about it.
+
+
+> +static void t_replace(struct hashmap *map, int ignore_case)
+> +{
+> +	struct test_entry *entry;
+> +
+> +	entry = alloc_test_entry(ignore_case, "key1", "value1");
+> +	check(hashmap_put_entry(map, entry, ent) == NULL);
+> +
+> +	entry = alloc_test_entry(ignore_case, ignore_case ? "Key1" : "key1",
+> +				 "value2");
+> +	entry = hashmap_put_entry(map, entry, ent);
+> +	if (check(entry != NULL))
+> +		check_str(get_value(entry), "value1");
+> +	free(entry);
+> +
+> +	entry = alloc_test_entry(ignore_case, "fooBarFrotz", "value3");
+> +	check(hashmap_put_entry(map, entry, ent) == NULL);
+> +
+> +	entry = alloc_test_entry(ignore_case,
+> +				 ignore_case ? "foobarfrotz" : "fooBarFrotz",
+> +				 "value4");
+> +	entry = hashmap_put_entry(map, entry, ent);
+> +	if (check(entry != NULL))
+> +		check_str(get_value(entry), "value3");
+> +	free(entry);
+> +}
+> +
+> +static void t_get(struct hashmap *map, int ignore_case)
+> +{
+> +	struct test_entry *entry;
+> +	const char *key_val[][2] = { { "key1", "value1" },
+> +				     { "key2", "value2" },
+> +				     { "fooBarFrotz", "value3" },
+> +				     { ignore_case ? "key4" : "foobarfrotz", "value4" } };
+> +	const char *query[][2] = {
+> +		{ ignore_case ? "Key1" : "key1", "value1" },
+> +		{ ignore_case ? "keY2" : "key2", "value2" },
+> +		{ ignore_case ? "foobarfrotz" : "fooBarFrotz", "value3" }
+> +	};
+> +
+> +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+> +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+> +		check(hashmap_put_entry(map, entry, ent) == NULL);
+> +	}
+> +
+> +	for (size_t i = 0; i < ARRAY_SIZE(query); i++) {
+> +		entry = get_test_entry(map, ignore_case, query[i][0]);
+> +		if (check(entry != NULL))
+> +			check_str(get_value(entry), query[i][1]);
+> +	}
+> +
+> +	check(get_test_entry(map, ignore_case, "notInMap") == NULL);
+> +}
+> +
+> +static void t_add(struct hashmap *map, int ignore_case)
+> +{
+> +	struct test_entry *entry;
+> +	const char *key_val[][3] = {
+> +		{ "key1", "value1", "UNUSED" },
+> +		{ ignore_case ? "Key1" : "key1", "value2", "UNUSED" },
+> +		{ "fooBarFrotz", "value3", "UNUSED" },
+> +		{ ignore_case ? "Foobarfrotz" : "fooBarFrotz", "value4", "UNUSED" }
+> +	};
+> +	const char *queries[] = { "key1",
+> +				  ignore_case ? "Foobarfrotz" : "fooBarFrotz" };
+> +
+> +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+> +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+> +		hashmap_add(map, &entry->ent);
+> +	}
+> +
+> +	for (size_t i = 0; i < ARRAY_SIZE(queries); i++) {
+
+Since we only have one query, can we remove the loop and simplify the
+following block of code?
+
+Also (here and elsewhere), it might be less confusing to say "UNSEEN" /
+"SEEN" instead of "UNUSED" / "USED". The latter makes it sound to me
+like there's some API requirement to have a 3-item array that we don't
+actually need, but in this case those fields are actually used in
+key_val_contains() to track duplicates.
+
+
+> +		int count = 0;
+> +		entry = hashmap_get_entry_from_hash(map,
+> +			ignore_case ? strihash(queries[i]) :
+> +				      strhash(queries[i]),
+> +			queries[i], struct test_entry, ent);
+> +
+> +		hashmap_for_each_entry_from(map, entry, ent)
+> +		{
+> +			int ret;
+> +			if (!check_int((ret = key_val_contains(
+> +						key_val, ARRAY_SIZE(key_val),
+> +						entry)), ==, 0)) {
+> +				switch (ret) {
+> +				case 1:
+> +					test_msg("found entry was not given in the input\n"
+> +						 "    key: %s\n  value: %s",
+> +						 entry->key, get_value(entry));
+> +					break;
+> +				case 2:
+> +					test_msg("duplicate entry detected\n"
+> +						 "    key: %s\n  value: %s",
+> +						 entry->key, get_value(entry));
+> +					break;
+> +				}
+> +			} else {
+> +				count++;
+> +			}
+> +		}
+> +		check_int(count, ==, 2);
+> +	}
+> +	check_int(hashmap_get_size(map), ==, ARRAY_SIZE(key_val));
+> +	check(get_test_entry(map, ignore_case, "notInMap") == NULL);
+> +}
+> +
+> +static void t_remove(struct hashmap *map, int ignore_case)
+> +{
+> +	struct test_entry *entry, *removed;
+> +	const char *key_val[][2] = { { "key1", "value1" },
+> +				     { "key2", "value2" },
+> +				     { "fooBarFrotz", "value3" } };
+> +	const char *remove[][2] = { { ignore_case ? "Key1" : "key1", "value1" },
+> +				    { ignore_case ? "keY2" : "key2", "value2" } };
+> +
+> +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+> +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+> +		check(hashmap_put_entry(map, entry, ent) == NULL);
+> +	}
+> +
+> +	for (size_t i = 0; i < ARRAY_SIZE(remove); i++) {
+> +		entry = alloc_test_entry(ignore_case, remove[i][0], "");
+> +		removed = hashmap_remove_entry(map, entry, ent, remove[i][0]);
+> +		if (check(removed != NULL))
+> +			check_str(get_value(removed), remove[i][1]);
+> +		free(entry);
+> +		free(removed);
+> +	}
+> +
+> +	entry = alloc_test_entry(ignore_case, "notInMap", "");
+> +	check(hashmap_remove_entry(map, entry, ent, "notInMap") == NULL);
+> +	free(entry);
+> +}
+
+Is there a reason why you don't check the table size as the shell test
+did? (similar to what you have in t_put())
+
+> +static void t_iterate(struct hashmap *map, int ignore_case)
+> +{
+> +	struct test_entry *entry;
+> +	struct hashmap_iter iter;
+> +	const char *key_val[][3] = { { "key1", "value1", "UNUSED" },
+> +				     { "key2", "value2", "UNUSED" },
+> +				     { "fooBarFrotz", "value3", "UNUSED" } };
+> +	int count = 0;
+> +
+> +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+> +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+> +		check(hashmap_put_entry(map, entry, ent) == NULL);
+> +	}
+> +
+> +	hashmap_for_each_entry(map, &iter, entry, ent /* member name */)
+> +	{
+> +		int ret;
+> +		if (!check_int((ret = key_val_contains(key_val, ARRAY_SIZE(key_val),
+> +						       entry)), ==, 0)) {
+> +			switch (ret) {
+> +			case 1:
+> +				test_msg("found entry was not given in the input\n"
+> +					 "    key: %s\n  value: %s",
+> +					 entry->key, get_value(entry));
+> +				break;
+> +			case 2:
+> +				test_msg("duplicate entry detected\n"
+> +					 "    key: %s\n  value: %s",
+> +					 entry->key, get_value(entry));
+> +				break;
+> +			}
+> +		} else {
+> +			count++;
+> +		}
+> +	}
+> +	check_int(count, ==, ARRAY_SIZE(key_val));
+> +	check_int(hashmap_get_size(map), ==, ARRAY_SIZE(key_val));
+> +}
+> +
+> +static void t_alloc(struct hashmap *map, int ignore_case)
+> +{
+> +	struct test_entry *entry, *removed;
+> +
+> +	for (int i = 1; i <= 51; i++) {
+> +		char *key = xstrfmt("key%d", i);
+> +		char *value = xstrfmt("value%d", i);
+> +		entry = alloc_test_entry(ignore_case, key, value);
+> +		check(hashmap_put_entry(map, entry, ent) == NULL);
+> +		free(key);
+> +		free(value);
+> +	}
+> +	check_int(map->tablesize, ==, 64);
+> +	check_int(hashmap_get_size(map), ==, 51);
+> +
+> +	entry = alloc_test_entry(ignore_case, "key52", "value52");
+> +	check(hashmap_put_entry(map, entry, ent) == NULL);
+> +	check_int(map->tablesize, ==, 256);
+> +	check_int(hashmap_get_size(map), ==, 52);
+> +
+> +	for (int i = 1; i <= 12; i++) {
+> +		char *key = xstrfmt("key%d", i);
+> +		char *value = xstrfmt("value%d", i);
+> +
+> +		entry = alloc_test_entry(ignore_case, key, "");
+> +		removed = hashmap_remove_entry(map, entry, ent, key);
+> +		if (check(removed != NULL))
+> +			check_str(value, get_value(removed));
+> +		free(key);
+> +		free(value);
+> +		free(entry);
+> +		free(removed);
+> +	}
+> +	check_int(map->tablesize, ==, 256);
+> +	check_int(hashmap_get_size(map), ==, 40);
+> +
+> +	entry = alloc_test_entry(ignore_case, "key40", "");
+> +	removed = hashmap_remove_entry(map, entry, ent, "key40");
+> +	if (check(removed != NULL))
+> +		check_str("value40", get_value(removed));
+> +	check_int(map->tablesize, ==, 64);
+> +	check_int(hashmap_get_size(map), ==, 39);
+> +	free(entry);
+> +	free(removed);
+> +}
+> +
+> +static void t_intern(struct hashmap *map, int ignore_case)
+> +{
+> +	const char *values[] = { "value1", "Value1", "value2", "value2" };
+> +
+> +	for (size_t i = 0; i < ARRAY_SIZE(values); i++) {
+> +		const char *i1 = strintern(values[i]);
+> +		const char *i2 = strintern(values[i]);
+> +
+> +		if (!check(!strcmp(i1, values[i])))
+
+Should we use check_str() here? Or does that add too much extraneous
+detail when the test_msg() below is what we really care about?
+
+> +			test_msg("strintern(%s) returns %s\n", values[i], i1);
+> +		else if (!check(i1 != values[i]))
+
+Similarly, check_pointer_eq() here?
+
+
+> +			test_msg("strintern(%s) returns input pointer\n",
+> +				 values[i]);
+> +		else if (!check(i1 == i2))
+
+And check_pointer_eq() here as well.
+
+
+> +			test_msg("address('%s') != address('%s'), so strintern('%s') != strintern('%s')",
+> +				 i1, i2, values[i], values[i]);
+> +		else
+> +			check_str(i1, values[i]);
+> +	}
+> +}
+> +
+> +int cmd_main(int argc UNUSED, const char **argv UNUSED)
+> +{
+> +	TEST(setup(t_put, 0), "put works");
+> +	TEST(setup(t_put, 1), "put (case insensitive) works");
+> +	TEST(setup(t_replace, 0), "replace works");
+> +	TEST(setup(t_replace, 1), "replace (case insensitive) works");
+> +	TEST(setup(t_get, 0), "get works");
+> +	TEST(setup(t_get, 1), "get (case insensitive) works");
+> +	TEST(setup(t_add, 0), "add works");
+> +	TEST(setup(t_add, 1), "add (case insensitive) works");
+> +	TEST(setup(t_remove, 0), "remove works");
+> +	TEST(setup(t_remove, 1), "remove (case insensitive) works");
+> +	TEST(setup(t_iterate, 0), "iterate works");
+> +	TEST(setup(t_iterate, 1), "iterate (case insensitive) works");
+> +	TEST(setup(t_alloc, 0), "grow / shrink works");
+> +	TEST(setup(t_intern, 0), "string interning works");
+> +	return test_done();
+> +}
+> -- 
+> 2.45.2
+> 
+> 
