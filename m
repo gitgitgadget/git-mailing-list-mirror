@@ -1,88 +1,168 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55020187861
-	for <git@vger.kernel.org>; Tue,  9 Jul 2024 21:40:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96F11B86D4
+	for <git@vger.kernel.org>; Tue,  9 Jul 2024 21:42:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720561222; cv=none; b=MQ2kWxtmQ4jML9RCeVS8RQ+mAKUQC5kEa3jT7cS7MMZZJswCU8WWzIOolQak90WkEqbm24s2Vq4tqrdDtyfIJ3obWfx0sxTCQ4ntiiXn94AVHq4PTG3N5GobIJ+Uoy8HFQZvVIiDZLcg3UcFHorj8XOMEJdpAddqkYiIXn/wNdU=
+	t=1720561372; cv=none; b=e8omTwbY+TI9riWE0ArGCk8F4UR2xfEzG4FZuTq0hD+OoMAiaTN14bwysqo9cux7EWWk0q/zGzMDItIiUPvcOvFo8kKDZPfh85YXnDYlSQu4VAPZViYJ1mruyjkkxt5hoFoEHA/bT0JHom+QmANxSWZylhJsQvOo/q1Nvtlztb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720561222; c=relaxed/simple;
-	bh=qrISDgOSv3REir5KrPPo1bIj8zpg20GYye2bpiMJauQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jvKfOU0hl0f0rqSbj/ZdvpeER3PNUI0RX+90Rt7ztOsZIbY1eT7FwTfLqy0LYeE56QprwZxEDL9JvgEUgZOLXevZ3bLfIPr5xQWugfchzhdrb7PcDKBwY3Tx99KQ21EdAYue0MWrex/3gNl9Vazwlbj9XZmItGzCGCny+5tKudI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6b06e63d288so28660876d6.0
-        for <git@vger.kernel.org>; Tue, 09 Jul 2024 14:40:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720561219; x=1721166019;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CAYPQLW37E25J9oaZErpQffMT8GtHVbt6lbrj5ZA3N8=;
-        b=OFrcSvlhBMcFlaDon7KWFlm+pZr8mKpv7xT1OwKnrCJyJL2uwJJiTtk7qEfBqXdKvT
-         a8rglEy7sRv+NSWFp1eJJGV8u3EnU49DA/LLpnnrVhBhDJMHH/GdJJSrVv2lM7D4ABAA
-         IOozUQqaFIeNx6XmGt6lmBrSGPaTP56ZVMZ8cfz/WRj/ZV6pXCSYALHpkxDt9otZ3PEJ
-         oHcXlAEtbU84s58jVvqzY2tjQPHfakQ29Owa0CGUWx4DZ2+Yv36qJKKSejpPJkFXwOtc
-         0v7six3ePLWvYAgdPZI0CuvyhISX+fAFZdEuxeCz5RM2TQOscFZ0hUq/LVY9/37ondym
-         pnSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWxLIptVSb2HDQwp9WoL1D/x58csq4PLGcYC91ntlW4Bj5ocvhgowTHorJBWZdbycgQcLL/S8mOQq3YSWTneQd+7m3S
-X-Gm-Message-State: AOJu0Yxfj1nRFaTbdVSJuwT+hsnLtnCPGQq+ts7Pfl+5ZMTGxWL+TMgI
-	D7NWC4KceK+OHea2TgxyUlZWfJgjDEW01FMlqdwX8/j2v1seKgB1cZu4fUZGvk6Ny69gm/m6y+w
-	ETbYY5kbFPmKi2x1XOnJbIe5nC4w=
-X-Google-Smtp-Source: AGHT+IF2/Z0gTfY+isQlrLYS9YEO26LYjpDC37H9wGLOxjXx2g06OflKLNuM1iyAyZ6l8krkJj209z/ZAYaUQ2QugT0=
-X-Received: by 2002:a05:6214:482:b0:6b5:5002:11bf with SMTP id
- 6a1803df08f44-6b61bf610ddmr45440526d6.39.1720561219289; Tue, 09 Jul 2024
- 14:40:19 -0700 (PDT)
+	s=arc-20240116; t=1720561372; c=relaxed/simple;
+	bh=rxl6kJ+RjBQO5Ae5stmAut1SSku7h4qPWTLuxy/4Ue4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TjlNOGS56QvG7l5L16FUUd/PCHht0TZXJwQ/nwXWFU/CNbfcRyDof7WfJzflmA6Oe+Zus+2PydY2xtIFuwtGWsUy4rgcT+Nr4D1Pm4poDol9MPir/2Cq6phbEs3n9BeLSeBfOV+O/MhoRiz1NhC9s/w+I/RUYslnLeiLZYv01CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=yfQ9zGd0; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yfQ9zGd0"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3B9083C453;
+	Tue,  9 Jul 2024 17:42:50 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=rxl6kJ+RjBQO5Ae5stmAut1SSku7h4qPWTLuxy
+	/4Ue4=; b=yfQ9zGd0GDMgAi2Pu26JGLgaUPSkV8ZQ2wLCMuSvhAMT2e8AKCnyf5
+	7jyOh7kD4VcIm5C28TCcQO+wqgCWRk53UI1TIxvPYSa1aCai8Rned8wUg+vXwEZD
+	KI2Aw2YgogMPcrj3Rx78va8E9aLXRYYTsN8SZ82gFX2LXkQRVFZuE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3347C3C452;
+	Tue,  9 Jul 2024 17:42:50 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B93503C451;
+	Tue,  9 Jul 2024 17:42:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,  git@vger.kernel.org,
+  Christian Couder <christian.couder@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Christian Couder <chriscool@tuxfamily.org>,
+  Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [GSoC][PATCH v2] t: port helper/test-hashmap.c to
+ unit-tests/t-hashmap.c
+In-Reply-To: <mlnerj7j6knamzj3ipnd7rgqd6xm5xrjep35rldhv6sikzipu5@72szgbso6cpo>
+	(Josh Steadmon's message of "Tue, 9 Jul 2024 12:34:47 -0700")
+References: <20240628124149.43688-1-shyamthakkar001@gmail.com>
+	<20240708161641.10335-2-shyamthakkar001@gmail.com>
+	<mlnerj7j6knamzj3ipnd7rgqd6xm5xrjep35rldhv6sikzipu5@72szgbso6cpo>
+Date: Tue, 09 Jul 2024 14:42:45 -0700
+Message-ID: <xmqqcynmdyy2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <Zo0sQCBqyxX8dJ-f@ArchLinux> <Zo0uiz1y6hJld2Rv@ArchLinux> <oan7pcamqpi2z4jzfshff2sfziqgisd3jcbpzfoiuyks5g57mk@7isgeztkcgmy>
-In-Reply-To: <oan7pcamqpi2z4jzfshff2sfziqgisd3jcbpzfoiuyks5g57mk@7isgeztkcgmy>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 9 Jul 2024 17:40:08 -0400
-Message-ID: <CAPig+cR=RgMeaAy1PRGgHu6_Ak+7=_-5tGvBZRekKRxi7GtdHw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v9 3/9] fsck: add refs-related options and error
- report function
-To: Justin Tobler <jltobler@gmail.com>
-Cc: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2E503892-3E3C-11EF-BB68-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-On Tue, Jul 9, 2024 at 5:30=E2=80=AFPM Justin Tobler <jltobler@gmail.com> w=
-rote:
-> On 24/07/09 08:35PM, shejialuo wrote:
-> > +int fsck_refs_error_function(struct fsck_options *options UNUSED,
-> > +                          const struct object_id *oid,
-> > +                          enum object_type object_type UNUSED,
-> > +                          const char *checked_ref_name,
-> > +                          enum fsck_msg_type msg_type,
-> > +                          enum fsck_msg_id msg_id UNUSED,
-> > +                          const char *message)
-> > +{
-> > +     static struct strbuf sb =3D STRBUF_INIT;
-> > +
-> > +     strbuf_reset(&sb);
+Josh Steadmon <steadmon@google.com> writes:
+
+>> +static void t_put(struct hashmap *map, int ignore_case)
+>> +{
+>> +	struct test_entry *entry;
+>> +	const char *key_val[][2] = { { "key1", "value1" },
+>> +				     { "key2", "value2" },
+>> +				     { "fooBarFrotz", "value3" } };
+>> +
+>> +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+>> +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+>> +		check(hashmap_put_entry(map, entry, ent) == NULL);
+>> +	}
+>> +
+>> +	entry = alloc_test_entry(ignore_case, "foobarfrotz", "value4");
+>> +	entry = hashmap_put_entry(map, entry, ent);
+>> +	check(ignore_case ? entry != NULL : entry == NULL);
+>> +	free(entry);
+>> +
+>> +	check_int(map->tablesize, ==, 64);
+>> +	check_int(hashmap_get_size(map), ==,
+>> +		  ignore_case ? ARRAY_SIZE(key_val) : ARRAY_SIZE(key_val) + 1);
+>> +}
 >
-> Naive question, is there reason to reset `sb` immediately after
-> `STRBUF_INIT`? My understanding is that because we initialize the
-> buffer, the other fields should also be zeroed. If so, resetting the
-> buffer here seems redundant.
+> Ahhh, so you're using the same function for both case-sensitive and
+> -insensitive tests. So I guess TEST_RUN isn't useful here after all.
+> Personally I'd still rather get rid of setup(), but I don't feel super
+> strongly about it.
 
-This particular strbuf is static, so it needs to be cleared each time
-the function is called.
+Consulting the table with "fooBarFrotz" and checking what gets
+returned (expect "value3" for !icase, or "value4" for icase) is one
+of the things that are missing.  In fact, the values stored are not
+even checked with the above test at all.
 
-The cover letter provides an argument for making it static: that this
-will be called often, and we don't want to make a lot of repeated
-allocations. Personally, I find that argument rather weak. Why would
-an error function be called frequently? Is this really a hot path that
-needs to worry about a few extra allocations? Also, importantly, every
-static added makes the code harder to "libify", so making it static
-requires a very strong reason, but there doesn't seem to be such a
-reason in this case.
+>> +static void t_replace(struct hashmap *map, int ignore_case)
+>> +{
+>> +	struct test_entry *entry;
+>> +
+>> +	entry = alloc_test_entry(ignore_case, "key1", "value1");
+>> +	check(hashmap_put_entry(map, entry, ent) == NULL);
+>> +
+>> +	entry = alloc_test_entry(ignore_case, ignore_case ? "Key1" : "key1",
+>> +				 "value2");
+>> +	entry = hashmap_put_entry(map, entry, ent);
+>> +	if (check(entry != NULL))
+>> +		check_str(get_value(entry), "value1");
+>> +	free(entry);
+>> +
+>> +	entry = alloc_test_entry(ignore_case, "fooBarFrotz", "value3");
+>> +	check(hashmap_put_entry(map, entry, ent) == NULL);
+>> +
+>> +	entry = alloc_test_entry(ignore_case,
+>> +				 ignore_case ? "foobarfrotz" : "fooBarFrotz",
+>> +				 "value4");
+
+Curious.  If the hashmap is set up for icase use, do callers still
+need to downcase the key?  Shouldn't the library take care of that?
+After all, test_entry_cmp() when the hashmap is being used in icase
+mode does strcasecmp() anyway.
+
+>> +	entry = hashmap_put_entry(map, entry, ent);
+>> +	if (check(entry != NULL))
+>> +		check_str(get_value(entry), "value3");
+
+Here the stored value is checked, which is good.
+
+>> +	free(entry);
+>> +}
+>> +
+>> +static void t_get(struct hashmap *map, int ignore_case)
+>> +{
+>> +	struct test_entry *entry;
+>> +	const char *key_val[][2] = { { "key1", "value1" },
+>> +				     { "key2", "value2" },
+>> +				     { "fooBarFrotz", "value3" },
+>> +				     { ignore_case ? "key4" : "foobarfrotz", "value4" } };
+>> +	const char *query[][2] = {
+>> +		{ ignore_case ? "Key1" : "key1", "value1" },
+>> +		{ ignore_case ? "keY2" : "key2", "value2" },
+>> +		{ ignore_case ? "foobarfrotz" : "fooBarFrotz", "value3" }
+>> +	};
+>> +
+>> +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+>> +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+>> +		check(hashmap_put_entry(map, entry, ent) == NULL);
+>> +	}
+>> +
+>> +	for (size_t i = 0; i < ARRAY_SIZE(query); i++) {
+>> +		entry = get_test_entry(map, ignore_case, query[i][0]);
+>> +		if (check(entry != NULL))
+>> +			check_str(get_value(entry), query[i][1]);
+>> +	}
+>> +
+>> +	check(get_test_entry(map, ignore_case, "notInMap") == NULL);
+>> +}
+
+It is getting dubious if it is worth having t_put, when t_get does
+so similar things and more.
+
+Same comment applies wrt icase, and not limited to t_get() but all
+the remaining test functions (elided).
+
+Thanks.
+
