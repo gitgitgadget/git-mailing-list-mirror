@@ -1,65 +1,64 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A824B152160
-	for <git@vger.kernel.org>; Tue,  9 Jul 2024 12:35:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B16155A53
+	for <git@vger.kernel.org>; Tue,  9 Jul 2024 12:35:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720528543; cv=none; b=TiHcdK5lhANGtRTgnviQzo95z8HGBVVYCPxgyNmhhBgZbMi6IZCTE1jHUJMFBkCBp8/vSvFbdN0sl9mMnu87SMeDRJ81bFDPypi4A+wvRrcXh7LbxjWZE5JJkUcC2hchszIaWTdQRduFsfglwIEJZ7hghjz2HaRsfrPX1qwFcVs=
+	t=1720528557; cv=none; b=iD5nV2fboXaTTEjtxRFESzclPxL49EqwadhNtTtbyM8fic/bBYwKGnynWtHKh6vCtlV4S3yjAECOEfJxer8qN9EnfIEhAazJq1qLAKRTYYDTDhyBRTGzTdPNXOEKw3/r3j6VuFsPlBfET09DeHgzk3CvzfY9B/+l87kjNtV9iIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720528543; c=relaxed/simple;
-	bh=UrDMzI/fDR/GyLZnZt8IH1yAlAowxGIlDTM2eXKL51A=;
+	s=arc-20240116; t=1720528557; c=relaxed/simple;
+	bh=6d61Anp3Kp/9/1huA3xDxnt+MvLHoIELZi8n9WaVS6M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TDHQ/6zBUTSq4xG1xr19HfmBfQIfUNKi99/Uv7mPPzI3bqwkLf7XI4Giu970UHBZ41Is8/vAyqfTsrhbeTLtJViLtI+PuHDReSCYchyv+sUQzHlfE6snT5K0EFoVX6tFfqFhbQbFl5OTAdWG2rocnSuLZCcQeJLAuULfyBjbYfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j+3SFrwZ; arc=none smtp.client-ip=209.85.214.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=PdoeXyk28pbzEThgVUTAQsAMvvhACGxNOfnD56nVZx0ym+aAdFUc+WtrwFTqCABrU6tzClcDhQ0pK7hgInXrMKQ9bYXzs+XLLezLh7HtLrNzA0eX429K+yafK2NYF3RjEnRetoKbhHQkTEYQi9/gL5S/eCyWWWaVTEWrKmfWRGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C1GtE8Dr; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j+3SFrwZ"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1fa9ecfb321so29720085ad.0
-        for <git@vger.kernel.org>; Tue, 09 Jul 2024 05:35:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C1GtE8Dr"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1fb72eb3143so18846995ad.1
+        for <git@vger.kernel.org>; Tue, 09 Jul 2024 05:35:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720528540; x=1721133340; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720528555; x=1721133355; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tRS82vf6Xog1qs7YecMOL10IUWpS6A53mOBHrDZUGGM=;
-        b=j+3SFrwZQn34lBJCbUasaOHUMJF0JdC4qg64sChBVyn5a8TrAeoAU/cp412ajVotiE
-         E9vjoN6yBTVFxwLhbD4R6TSv8CsoQCKKwUjBajpVumTLYn21RZD5R480W2QRv28DmCTF
-         2E27BFJgxtzBLRc18KGwcYiFmrZB2URBjdh0WDBAgAQvQ5i2Es4M62eDaxHao+jIYP+O
-         iYnVF3EjpslsRoSif1TVnYESaNFJCBox43bTqfHvCormpKzI0tPDCJvDHZprOeS4c5F9
-         YzEfXVxTCHqGm6kUuBzPBt5ohA/gGgA/99mh7cbljIsq7YVBTO6Qg82z1oK5/CUo4Adk
-         5YiQ==
+        bh=V9IXlDPlVIOI4L2itB+k7ZM0AF8EoOJdC+X4nNdkM1A=;
+        b=C1GtE8DrFIfdSEcwAYzBoiGhrRzLWI2g/QCzuTORsCd/sXKNp2t+7no2CKm03WxzgU
+         zWJ+NKiQsHnhSDKLyJptOwK53NagMoQkK3cW0GkxQQ1Q6jbSMkJN0CKZdKIGaFiKl7Nw
+         CjUi34bOt73FJ71l6q0dRxqq2hDoqbpB/fNyliC5fBFLvZ8ILiKM9jHnFZM6M5+QkTj4
+         rXeQ5cX0Fb+9Eba3qRGvBTpiiVk22U8TyJIo3cWSiS3+CPj7+I15Ngl65mjJU3OLaX8O
+         HxREW5wZxRNNWkAkmpx8sX4ghH1SenupD2Yh+X62Oigg/jZQHNB8WjVjxKmaCW+P8pRd
+         z5Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720528540; x=1721133340;
+        d=1e100.net; s=20230601; t=1720528555; x=1721133355;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tRS82vf6Xog1qs7YecMOL10IUWpS6A53mOBHrDZUGGM=;
-        b=W2FVmAj1hWA1Gj4NaQ+/SVki0EH63vAbUGtmlNScAYetjiBhJoCpMAnEEYerlDLkpR
-         sCbVQ4cwBPIwH/DAaZ/AAK/RL7Pjajz5idMgERMioz+hTb5+dpDk8CetwHfz2eUBrujO
-         d3K2JD2sRoVJq3WabA9OkpXRixtKeKhmuKfLbfoEgxZ87KbTqYw6tmJpud5gTXdWez4S
-         Gyq1i5VlwU5dBxi6S+yGM165LQ06DqX3XgcGgiBIaWMIRP61S+4xLITEYmS5sHALIU3j
-         UpChDUDdopw5kDGg0Vhbuvw2BvqiBwSI0c8Vd7fiu4ZAAQ+QmebOFWnhqdBMXEWL0Que
-         KQ9A==
-X-Gm-Message-State: AOJu0YysbWyrNtaX0MyTivaN+hRAJ1i6vNYLiStilNig360iUGEYZuUS
-	PSwKPkAdwW1GgaWvXICmQqRWlK2M1HV1L8Xuuu+NrN8bYrGn7PfX+uExZBD/
-X-Google-Smtp-Source: AGHT+IE7fyKgSeZNrbz4JaBLmSzbuOZHMVJ530Bj7+AG1q5XCUnP8ZZoF1sl6oegQwdGAVF6Sw8yNw==
-X-Received: by 2002:a17:902:e5cd:b0:1fb:6794:b474 with SMTP id d9443c01a7336-1fbb6edfa99mr19019455ad.60.1720528540382;
-        Tue, 09 Jul 2024 05:35:40 -0700 (PDT)
+        bh=V9IXlDPlVIOI4L2itB+k7ZM0AF8EoOJdC+X4nNdkM1A=;
+        b=scB738lPxZAWovmdfyskO1DnaiqTCamRH8s1uZUP/GahOWiwcgURNLhUGlYYuoNfQU
+         rLH1K9oXYHK1zg/jtgIkUlTY/xYGMvD5iR23g81s5mjqsAJVRfy6BgMy0nJrgDU6CJfi
+         dEkOzt/exBX+NoApkzXxbBXORbwY5h2QeECH771crnQDWi8PgwF96UrcoN3naxgOCXT7
+         Jdt2GwISRyc/npo7Vpt1+WKRixK+WlzsSk5agPnI8UoTSYgdVuPrtiYoCJe2xKZ5OCYw
+         Jt/xGk3PTghG4E/m+UTj6Qt2/TDrTveym0r/4jwJZLL5DKwNPrHN0wd5ZJRjaBO1688l
+         vAzQ==
+X-Gm-Message-State: AOJu0YzX7kgPmpKkcLDvdEMN54ZRtA0f3KgsiY/vNnUhFkXgNpY3lpXl
+	AvqLLWJN1ci76bbqrxV9q/52oZciUgOnF/HpewAGHndLO19v8s9/LR+Mrz95
+X-Google-Smtp-Source: AGHT+IEe6nqVa2bnijzo8WrM2XoLQY0D8xHX+ylkZzr44PVw72zfRpXTVi0pbpHOndofvEIsnIqTfQ==
+X-Received: by 2002:a17:902:c411:b0:1fb:2ebc:d17a with SMTP id d9443c01a7336-1fbb801cec1mr32680995ad.23.1720528552931;
+        Tue, 09 Jul 2024 05:35:52 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fbb6abfc56sm15042555ad.196.2024.07.09.05.35.38
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fbb6ab6e1fsm15025395ad.133.2024.07.09.05.35.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jul 2024 05:35:39 -0700 (PDT)
-Date: Tue, 9 Jul 2024 20:35:37 +0800
+        Tue, 09 Jul 2024 05:35:52 -0700 (PDT)
+Date: Tue, 9 Jul 2024 20:35:51 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [GSoC][PATCH v9 4/9] refs: set up ref consistency check
- infrastructure
-Message-ID: <Zo0umVPABD1wkxQG@ArchLinux>
+Subject: [GSoC][PATCH v9 5/9] builtin/refs: add verify subcommand
+Message-ID: <Zo0up3jKBHy-6GRh@ArchLinux>
 References: <Zo0sQCBqyxX8dJ-f@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -71,212 +70,131 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <Zo0sQCBqyxX8dJ-f@ArchLinux>
 
-The interfaces defined in the `ref_storage_be` are carefully structured
-in semantic. It's organized as the five parts:
-
-1. The name and the initialization interfaces.
-2. The ref transaction interfaces.
-3. The ref internal interfaces (pack, rename and copy).
-4. The ref filesystem interfaces.
-5. The reflog related interfaces.
-
-To keep consistent with the git-fsck(1), add a new interface named
-"fsck_refs_fn" to the end of "ref_storage_be". This semantic cannot be
-grouped into any above five categories. Explicitly add blank line to
-make it different from others.
+Introduce a new subcommand "verify" in git-refs(1) to allow the user to
+check the reference database consistency.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- refs.c                  |  5 +++++
- refs.h                  |  8 ++++++++
- refs/debug.c            | 11 +++++++++++
- refs/files-backend.c    | 15 ++++++++++++++-
- refs/packed-backend.c   |  8 ++++++++
- refs/refs-internal.h    |  6 ++++++
- refs/reftable-backend.c |  8 ++++++++
- 7 files changed, 60 insertions(+), 1 deletion(-)
+ Documentation/git-refs.txt | 13 +++++++++++
+ builtin/refs.c             | 44 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+)
 
-diff --git a/refs.c b/refs.c
-index bb90a18875..410919246b 100644
---- a/refs.c
-+++ b/refs.c
-@@ -318,6 +318,11 @@ int check_refname_format(const char *refname, int flags)
- 	return check_or_sanitize_refname(refname, flags, NULL);
- }
+diff --git a/Documentation/git-refs.txt b/Documentation/git-refs.txt
+index 5b99e04385..1244a85b64 100644
+--- a/Documentation/git-refs.txt
++++ b/Documentation/git-refs.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git refs migrate' --ref-format=<format> [--dry-run]
++'git refs verify' [--strict] [--verbose]
  
-+int refs_fsck(struct ref_store *refs, struct fsck_options *o)
-+{
-+	return refs->be->fsck(refs, o);
-+}
+ DESCRIPTION
+ -----------
+@@ -22,6 +23,9 @@ COMMANDS
+ migrate::
+ 	Migrate ref store between different formats.
+ 
++verify::
++	Verify reference database consistency.
 +
- void sanitize_refname_component(const char *refname, struct strbuf *out)
- {
- 	if (check_or_sanitize_refname(refname, REFNAME_ALLOW_ONELEVEL, out))
-diff --git a/refs.h b/refs.h
-index 0ecba21b4a..804d6a7fce 100644
---- a/refs.h
-+++ b/refs.h
-@@ -4,6 +4,7 @@
- #include "commit.h"
+ OPTIONS
+ -------
+ 
+@@ -39,6 +43,15 @@ include::ref-storage-format.txt[]
+ 	can be used to double check that the migration works as expected before
+ 	performing the actual migration.
+ 
++The following options are specific to 'git refs verify':
++
++--strict::
++	Enable more strict checking, every WARN severity for the `Fsck Messages`
++	be seen as ERROR. See linkgit:git-fsck[1].
++
++--verbose::
++	When verifying the reference database consistency, be chatty.
++
+ KNOWN LIMITATIONS
+ -----------------
+ 
+diff --git a/builtin/refs.c b/builtin/refs.c
+index 46dcd150d4..baa96f5b3f 100644
+--- a/builtin/refs.c
++++ b/builtin/refs.c
+@@ -1,4 +1,6 @@
+ #include "builtin.h"
++#include "config.h"
++#include "fsck.h"
+ #include "parse-options.h"
+ #include "refs.h"
  #include "repository.h"
+@@ -7,6 +9,9 @@
+ #define REFS_MIGRATE_USAGE \
+ 	N_("git refs migrate --ref-format=<format> [--dry-run]")
  
-+struct fsck_options;
- struct object_id;
- struct ref_store;
- struct strbuf;
-@@ -541,6 +542,13 @@ int refs_for_each_reflog(struct ref_store *refs, each_reflog_fn fn, void *cb_dat
-  */
- int check_refname_format(const char *refname, int flags);
- 
-+/*
-+ * Check the reference database for consistency. Return 0 if refs and
-+ * reflogs are consistent, and non-zero otherwise. The errors will be
-+ * written to stderr.
-+ */
-+int refs_fsck(struct ref_store *refs, struct fsck_options *o);
++#define REFS_VERIFY_USAGE \
++	N_("git refs verify [--strict] [--verbose]")
 +
- /*
-  * Apply the rules from check_refname_format, but mutate the result until it
-  * is acceptable, and place the result in "out".
-diff --git a/refs/debug.c b/refs/debug.c
-index 547d9245b9..45e2e784a0 100644
---- a/refs/debug.c
-+++ b/refs/debug.c
-@@ -419,6 +419,15 @@ static int debug_reflog_expire(struct ref_store *ref_store, const char *refname,
- 	return res;
+ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix)
+ {
+ 	const char * const migrate_usage[] = {
+@@ -58,15 +63,54 @@ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix)
+ 	return err;
  }
  
-+static int debug_fsck(struct ref_store *ref_store,
-+		      struct fsck_options *o)
++static int cmd_refs_verify(int argc, const char **argv, const char *prefix)
 +{
-+	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
-+	int res = drefs->refs->be->fsck(drefs->refs, o);
-+	trace_printf_key(&trace_refs, "fsck: %d\n", res);
-+	return res;
-+}
++	struct fsck_options fsck_refs_options = FSCK_REFS_OPTIONS_DEFAULT;
++	const char * const verify_usage[] = {
++		REFS_VERIFY_USAGE,
++		NULL,
++	};
++	unsigned int verbose = 0, strict = 0;
++	struct option options[] = {
++		OPT__VERBOSE(&verbose, N_("be verbose")),
++		OPT_BOOL(0, "strict", &strict, N_("enable strict checking")),
++		OPT_END(),
++	};
++	int ret = 0;
 +
- struct ref_storage_be refs_be_debug = {
- 	.name = "debug",
- 	.init = NULL,
-@@ -451,4 +460,6 @@ struct ref_storage_be refs_be_debug = {
- 	.create_reflog = debug_create_reflog,
- 	.delete_reflog = debug_delete_reflog,
- 	.reflog_expire = debug_reflog_expire,
++	argc = parse_options(argc, argv, prefix, options, verify_usage, 0);
++	if (argc)
++		usage(_("too many arguments"));
 +
-+	.fsck = debug_fsck,
- };
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index aa52d9be7c..d89eeda8ef 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3408,6 +3408,17 @@ static int files_ref_store_remove_on_disk(struct ref_store *ref_store,
- 	return ret;
- }
- 
-+static int files_fsck(struct ref_store *ref_store,
-+		      struct fsck_options *o)
-+{
-+	int ret;
-+	struct files_ref_store *refs =
-+		files_downcast(ref_store, REF_STORE_READ, "fsck");
++	if (verbose)
++		fsck_refs_options.verbose_refs = 1;
++	if (strict)
++		fsck_refs_options.strict = 1;
 +
-+	ret = refs->packed_ref_store->be->fsck(refs->packed_ref_store, o);
++	git_config(git_fsck_config, &fsck_refs_options);
++	prepare_repo_settings(the_repository);
++
++	ret = refs_fsck(get_main_ref_store(the_repository), &fsck_refs_options);
++
++	/*
++	 * Explicitly free the allocated array and "oid_skiplist"
++	 */
++	free(fsck_refs_options.msg_type);
++	oidset_clear(&fsck_refs_options.skip_oids);
 +	return ret;
 +}
 +
- struct ref_storage_be refs_be_files = {
- 	.name = "files",
- 	.init = files_ref_store_init,
-@@ -3434,5 +3445,7 @@ struct ref_storage_be refs_be_files = {
- 	.reflog_exists = files_reflog_exists,
- 	.create_reflog = files_create_reflog,
- 	.delete_reflog = files_delete_reflog,
--	.reflog_expire = files_reflog_expire
-+	.reflog_expire = files_reflog_expire,
-+
-+	.fsck = files_fsck,
- };
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index a0666407cd..5209b0b212 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1735,6 +1735,12 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
- 	return empty_ref_iterator_begin();
- }
+ int cmd_refs(int argc, const char **argv, const char *prefix)
+ {
+ 	const char * const refs_usage[] = {
+ 		REFS_MIGRATE_USAGE,
++		REFS_VERIFY_USAGE,
+ 		NULL,
+ 	};
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option opts[] = {
+ 		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
++		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
+ 		OPT_END(),
+ 	};
  
-+static int packed_fsck(struct ref_store *ref_store,
-+		       struct fsck_options *o)
-+{
-+	return 0;
-+}
-+
- struct ref_storage_be refs_be_packed = {
- 	.name = "packed",
- 	.init = packed_ref_store_init,
-@@ -1762,4 +1768,6 @@ struct ref_storage_be refs_be_packed = {
- 	.create_reflog = NULL,
- 	.delete_reflog = NULL,
- 	.reflog_expire = NULL,
-+
-+	.fsck = packed_fsck,
- };
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index fa975d69aa..a905e187cd 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -4,6 +4,7 @@
- #include "refs.h"
- #include "iterator.h"
- 
-+struct fsck_options;
- struct ref_transaction;
- 
- /*
-@@ -650,6 +651,9 @@ typedef int read_raw_ref_fn(struct ref_store *ref_store, const char *refname,
- typedef int read_symbolic_ref_fn(struct ref_store *ref_store, const char *refname,
- 				 struct strbuf *referent);
- 
-+typedef int fsck_fn(struct ref_store *ref_store,
-+		    struct fsck_options *o);
-+
- struct ref_storage_be {
- 	const char *name;
- 	ref_store_init_fn *init;
-@@ -677,6 +681,8 @@ struct ref_storage_be {
- 	create_reflog_fn *create_reflog;
- 	delete_reflog_fn *delete_reflog;
- 	reflog_expire_fn *reflog_expire;
-+
-+	fsck_fn *fsck;
- };
- 
- extern struct ref_storage_be refs_be_files;
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index fbe74c239d..b5a1a526df 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -2303,6 +2303,12 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
- 	return ret;
- }
- 
-+static int reftable_be_fsck(struct ref_store *ref_store,
-+			    struct fsck_options *o)
-+{
-+	return 0;
-+}
-+
- struct ref_storage_be refs_be_reftable = {
- 	.name = "reftable",
- 	.init = reftable_be_init,
-@@ -2330,4 +2336,6 @@ struct ref_storage_be refs_be_reftable = {
- 	.create_reflog = reftable_be_create_reflog,
- 	.delete_reflog = reftable_be_delete_reflog,
- 	.reflog_expire = reftable_be_reflog_expire,
-+
-+	.fsck = reftable_be_fsck,
- };
 -- 
 2.45.2
 
