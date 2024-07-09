@@ -1,92 +1,154 @@
-Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025BB1FA3
-	for <git@vger.kernel.org>; Tue,  9 Jul 2024 23:07:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D9E13DB92
+	for <git@vger.kernel.org>; Tue,  9 Jul 2024 23:16:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720566481; cv=none; b=ocSUjjhtQ9Oyt/Ko3uCv9InUXRXTwm2eETelDIZ11QpIpAnSM7rdy/VVAoy3VTq3vXgXan+MGy4/VckVRz9DotOR29FV9qOmUqJdWjDOB38WPnwFHmIaNVoF36Hl2yWc3VJFLCleAS4mJcqnn4z+hWhovD+QYbWtrCHxWR++hwU=
+	t=1720566985; cv=none; b=Q5OS0QbBcnZccug8g0W5dc5X77p970dyL5F7zBUnHW51TpLFb2XcugdFDkNVn/A+VcQGajGOV0+Bf89Yi7GKv+RIS9uXx9/ebvhAew88YzBPRf5gqY78LRnzdb7Pi4Ut4NBXtOZsZtr2N3pSrumO4/+6WKtL7Thz68DDYTgcQzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720566481; c=relaxed/simple;
-	bh=UlHJBr0qnFofhlOpEb5IM4AbwdHH4aNh0ER/OBpyxJE=;
-	h=From:To:Subject:References:Date:Message-ID:MIME-Version:
-	 Content-Type; b=bW0qb6IG3t5YY8yT14le6eUHfSfZxgykVbw0SgW8/0mXa8+81DuhMx49qpS3tmYo0R/AwSvtFFGxi0Ltn9ox3ZyQW3xSPssIQ2ODROtQK2eUT5CQc7WKLtfqHQETrrPiOpgwY4v/qeiPFKF4WsCUVBzRvo9t2rLupWphZiNrVk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net; spf=pass smtp.mailfrom=posteo.net; dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b=p/q9zDAJ; arc=none smtp.client-ip=185.67.36.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.net
+	s=arc-20240116; t=1720566985; c=relaxed/simple;
+	bh=TibTpXTJ99imUxl/6wT7N8FDsZqiQqUL1nSvo2T1V30=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kdjac+shUKvwbmvOc0QvbV4xAhHP3sh6fsO6meRA9EjRVXXQajM0elimDNp8t8srZHT6IxvOab5mCG20QH9EpHVtEaIUQP+74L5tXZvU5Tk/UBoWRt4wUd5WX5iHVeiUQWG9BzcEU8xcDq8/9ui0JjscGfbklyG4t0cCnVRouik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=MFCDM4hc; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b="p/q9zDAJ"
-Received: from submission (posteo.de [185.67.36.169]) 
-	by mout01.posteo.de (Postfix) with ESMTPS id 11791240027
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 01:07:50 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
-	t=1720566471; bh=UlHJBr0qnFofhlOpEb5IM4AbwdHH4aNh0ER/OBpyxJE=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
-	b=p/q9zDAJgMGb7IN/0tpSEKOhanySneu3g5Qhb32Lx1lRlMwQXcSxuEwA47eClQN7a
-	 UNzvg9ayqS3eRI+jaPb/2GJ4/hMJx+Cc3BDN5Cj+YrARJZ63xh4CbmMTFfNyYed6Xw
-	 vCk08VwdvwdkD05+bw3DwwnY9e1BnQk6CuFjBBWddZf7pahPt5elj39pFE89/kK946
-	 wQBmVjmRdXiCjVszI78bX+t21EL8vfO19qmQJ2tFeyisjnkJ0xYMFnR5HTE70isZkC
-	 g1x4tuWb0U7H/ANMD+V//YFcsTZ0Kw9/uo2gNifRDfz6bYcPogDuNSgeiihbJvmfhS
-	 L5i9qrdxQXMIA==
-Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4WJc8k3M8Bz6tvs
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 01:07:50 +0200 (CEST)
-From: Tomas Nordin <tomasn@posteo.net>
-To: git@vger.kernel.org
-Subject: [Tomas Nordin] Re: Unbalanced closing paren in help of git commit
-References: <8734oj7fnv.fsf@posteo.net>
-Date: Tue, 09 Jul 2024 23:07:49 +0000
-Message-ID: <878qyauptm.fsf@posteo.net>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MFCDM4hc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1720566976;
+	bh=TibTpXTJ99imUxl/6wT7N8FDsZqiQqUL1nSvo2T1V30=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=MFCDM4hcmv3NRNjYw6JGF2ZiLHj/pmW48aexa8Wxf7ejT9yQR9cw2efWhkZydqUYT
+	 RpM7O6EzFNMQHSg7TuGxHjpgiION1aoEGo0SsMar/qBH9Wqt9A5b/XO5sZ7irtcUne
+	 /CB+qkYHSVi/O4ml/jcaS0giiPRVJYWP9gjkhE7c7f8F1OZdx1CIx4rxYaco96+UXK
+	 O2/5dtQOdvHodCAB3wQajbN+gSwNh8SdhRZtjdrwpgA+sYP+/EqqORvMSxZpDFf8YB
+	 UGDXUR4TEGPFJUD3s/6hVyXLSV5zkB+4QXjefx8rUM/G1kmkK11awWkDNA6cYSeaU1
+	 BxLYI5yuptXceRBuqtvNKToim89SuStgf6/tuK1ppLT4Eqczj7U49l9j5pp2GoIrxz
+	 TyM8H11d0DNP29tixbrSao4MRVRqeaeboRDUfbY3w3uX43U8PPY4CuQZEO3sM1GMef
+	 gSVYQrnukYWjquXIhL+mlkNsp3BRZ4GkF/q4Srz3bDbu2VMJRCl
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 628DC20991;
+	Tue,  9 Jul 2024 23:16:16 +0000 (UTC)
+Date: Tue, 9 Jul 2024 23:16:14 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Emily Shaffer <emilyshaffer@google.com>
+Cc: git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>,
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	Emily Shaffer <nasamuffin@google.com>
+Subject: Re: [PATCH] Documentation: add platform support policy
+Message-ID: <Zo3EvvSI999ngrLn@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
+	"Randall S. Becker" <rsbecker@nexbridge.com>,
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	Emily Shaffer <nasamuffin@google.com>
+References: <20240709225042.2005233-1-emilyshaffer@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Xir7JRLiByc+N5+n"
+Content-Disposition: inline
+In-Reply-To: <20240709225042.2005233-1-emilyshaffer@google.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-[Sorry, I think I forgot to CC the list when I sent the below message]
 
--------------------- Start of forwarded message --------------------
-From: Tomas Nordin <tomasn@posteo.net>
-To: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Unbalanced closing paren in help of git commit
-Date: Mon, 08 Jul 2024 23:11:16 +0200
+--Xir7JRLiByc+N5+n
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 2024-07-09 at 22:50:42, Emily Shaffer wrote:
+> Right now, this doc talks about "guarantees." I used that phrasing based =
+on
+> what I've observed to be an implicit expectation that we guarantee suppor=
+t; it
+> could be this isn't actually a guarantee that the community is willing to=
+ make,
+> so I am hoping we can discuss it and come up with the right term.
 
-> Tomas Nordin <tomasn@posteo.net> writes:
->
->> Hello List
->>
->> The second line of the help message for git commit looks like this:
->
-> This seems to have come from 00ea64ed (doc/git-commit: add
-> documentation for fixup=[amend|reword] options, 2021-03-15),
-> if "git blame" is to be trusted.
->
->>     [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]
->
-> We can have --dry-run but we do not have to, we can have only one of
->
->     "-c <commit>"
->     "-C <commit>",
->     "--squash <commit>",
->     "--fixup amend:<commit>"
->     "--fixup reword:<commit>", or
->     "--fixup <commit>"
->
-> as they are mutually exclusive, but it is OK if we have none of
-> them.
->
-> The last closing parenthesis after <commit> but before the closing
-> square bracket is unwanted, I think, as you pointed out.
+I think it might be helpful to look at what some other projects do. Rust
+has a concept of tiered support, and it requires platforms to have
+maintainers who will commit to support an OS.  I don't think we
+necessarily need to be so formal, but if nobody's stepping up to monitor
+an OS or architecture, it may break at any time and we won't be able to
+consider it when deciding on features we require from the platform (such
+as Rust, C versions, or POSIX versions).
 
-Maybe explicit grouping of the mutually exclusive option-argument pairs
-is better? Like this:
+I think it's also worth discussing what we require from a platform we're
+willing to support.  For example, we might require that the platform
+pass the entire testsuite (ignoring irrelevant tests or tests for things
+that platform doesn't use, such as Perl) or be actively pursuing an
+attempt to do so.  We may also want to require that an OS be actively
+receiving security support so that we don't have people asking us to
+carry patches for actively obsolete OSes, such as CentOS 6.  Finally,
+some sort of time limit may be helpful, since some Linux vendors are now
+offering 15 years of support, and we really may not want to target
+really ancient versions of things like libcurl.
 
-[--dry-run] [((-c | -C | --squash) <commit>) | (--fixup [(amend|reword):]<commit>)]
+At the same time, we do have people actively building Git on a variety
+of platforms and a huge number of architectures, including most Linux
+distros and the BSDs, and we will want to be cognizant that we should
+avoid breaking those environments when possible, even though, say, the
+porters for some of those OSes or architectures may not actively follow
+the list (due to limited porters and lots of porting work).  I imagine
+we might say that released architectures on certain distros (Debian
+comes to mind as a very portable option) might be implicitly supported.
 
-The closing paren would then make sense. I /think/ this is the way I
-would have written it.
--------------------- End of forwarded message --------------------
+> +Compatible on `next`
+> +--------------------
+> +
+> +To guarantee that `next` will work for your platform, avoiding reactive
+> +debugging and fixing:
+> +
+> +* You should add a runner for your platform to the GitHub Actions CI sui=
+te.
+> +This suite is run when any Git developer proposes a new patch, and havin=
+g a
+> +runner for your platform/configuration means every developer will know i=
+f they
+> +break you, immediately.
+
+I think this is a particularly helpful approach.  I understand the Linux
+runners support nested virtualization, so it's possible to run tests in
+a VM on a Linux runner on OSes that Actions doesn't natively support.  I
+do this for several of my Rust projects[0] on FreeBSD and NetBSD, for
+example, and it should work on platforms that support Vagrant and run on
+x86-64.
+
+That won't catch things like alignment problems which don't affect
+x86-64, but it does catch a lot of general portability problems that are
+OS-related.
+
+I'm in agreement with all of your suggestions, by the way, and I
+appreciate you opening this discussion.
+
+[0] An example for the curious is muter: https://github.com/bk2204/muter.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--Xir7JRLiByc+N5+n
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZo3EvgAKCRB8DEliiIei
+gQhzAQDqsYutoCUUBaTqYYn1Khqbipy19RWkTo2kxNlY9HUtzgD9E/X5l3zivl9I
+dnSNwRfpZ99pmLhEd3gn2PNKhZpO9AI=
+=8WXS
+-----END PGP SIGNATURE-----
+
+--Xir7JRLiByc+N5+n--
