@@ -1,304 +1,117 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E13E13211E
-	for <git@vger.kernel.org>; Tue,  9 Jul 2024 22:50:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C7C1FA3
+	for <git@vger.kernel.org>; Tue,  9 Jul 2024 23:03:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720565449; cv=none; b=pnICrTQD6sap9p04u2uAS0R2anFRef3qJtixqhR3g9H4wli6elpy3KdVid9/c+t7R38AR5AVeG8fM7l6rP2nMoSTsera1NSun5wwooMClBkVr6LzxpGySHWftTojGBe8unVgxre1GaAktptalGTy73UjbTvfnqdyOLAdWmXCgX8=
+	t=1720566236; cv=none; b=Kot5OU5YvuuasqaDKLkTmeanPyeji0s8LZGdN8Rv/KXCWZYUbwl2KedqtsiaYp4KrwrrIHxXmsNUOJq1iJ+kCyBGeLPHRgo72EdlNHnheirscxvqVzYT5u5Zvz+vYJ25y9ZiOIvSMPM9mffkb+3RbEmxMammDTQbzq6TwG0BZUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720565449; c=relaxed/simple;
-	bh=UVpBFBQta91k+k/1IgLL4Ql4WSp+xWAtQUOb1aMjyVM=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=QsifIYYX78SiY87m1ht1s+3Il6pLTW55owJXuDLdFKBVQ14VXtD5cV3MfrXrgvhHLCAzowd9V2AWa3/xthMD77gD0Xx68oStX86bW7s+rLthNf842Fp6hHJ5n5mlWnR9wvxv6CzPPYwPmqglEgw8Z1TmE5b/mOw/AdVFPdsF8lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--emilyshaffer.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=yzo0N5k0; arc=none smtp.client-ip=209.85.128.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--emilyshaffer.bounces.google.com
+	s=arc-20240116; t=1720566236; c=relaxed/simple;
+	bh=MqljLcypEfN1LUpxpjd4hadFXxrEqMsGT6KWyxnDs6E=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BP1jjs+ycFhrDOmC0swKzkW/jipZJXf0UttiR5pl09f9HlG6lS7x64mR+o+qSL7e0UlEHx+BvP39pOpTF4RwHCByFZ00P7c5GbhRLjBWyqolISrmpCxN5wvW0zYSSBBC07h+qh4fc9t5CsD7RWM8FEkaMg5DHE96GKIQCwkEeJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QIT5orG/; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="yzo0N5k0"
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-64b5588bcafso92385377b3.1
-        for <git@vger.kernel.org>; Tue, 09 Jul 2024 15:50:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1720565446; x=1721170246; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LXnQGN+gdDwqa+lsxo9Eo9HREDTWRSuPNktcPEBHRDE=;
-        b=yzo0N5k0rkCl7Q3I04VJE82bGXAjP6nusUvP4Z8h0I92Dq0xPqwiyYJ5YUBoanO0Xz
-         YAX5Dc4GCoCgN+RwDNXJHXdtSXXRNkkjzgeFSBYXqwM+yHfXQ1Lks5d7F939+tbGb+qw
-         Mo/t/uCwXU+tBPfvcVQFsiVX052YWnavmyTgbN/hgMg82yhVwvG/G8DE5zBUXnHDRf87
-         TvyxA5VKrS3AkK2jA3bUd2WmBIYkqtuGAR0G6ZQ7omRnxqlwIC1RllPr5Stlg2Qw2Vgs
-         rTgAQ12slhH+ChBC1+ovgx6Jc8k49wpTW62U9XXyS1aInslm/wmo+XjmpxHbggEWBGLS
-         lQIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720565446; x=1721170246;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LXnQGN+gdDwqa+lsxo9Eo9HREDTWRSuPNktcPEBHRDE=;
-        b=X+KaPNXuIRiwyJTVZayW7pLo3DAXns2WIfI9M+FV7hmvIKh7KSf+u//ZN8aqVf4Thu
-         qDPOcF5O6ZG3bm6t71CLT8YKAT0Aa1DuEVPjdH6ocRvqDpkq503sfTmq/5BCd3TS6AT8
-         0ul92XCt9H51MTFqn6+O4S39BzLSfyQqy0Yvm77jBXBYDDS2V66uUBrMurrwz0+Rhd9j
-         OIuPRI5mLnKzR5qzVZLkJctVzjO0cS0oyuJhPEd49NM8UXBdEK9kVw2mnk/FqizJ3j/8
-         SLNo7KznJ8NLYWpYhSTBpPmse++tKG8iKFdNkXiOyYakRgGrL/do4WM1RNK+1QLiT7xL
-         wcSw==
-X-Gm-Message-State: AOJu0Yw8Ku2qaOMBuS1JYNWHS8RK2lsF/ifr4utrYeZ/G0J2J6Jr36q3
-	nrRnoEaM9RLKJwlziAfikGvR/YhCvPPcheHSdYP4TWM+QJRPABAs/je/aedhw5BIFSkrFYDzUfU
-	vftxPV/kCfB+V44zGIOMYAIV3sdK2UhrSWkFVX2u5tXGUtjRilJRtlGLJjqq0ByFdEdooVgKNO4
-	Tm0R0LZGnI8hkMKgJzU07FOpWkNc4juIK8AD2wc3EWMdTj2kNi4tZDluJ6Me0z
-X-Google-Smtp-Source: AGHT+IH5Hy3RsfLC3hxDN6GZ5NkfhWbbuAcs9C1SaNpDmiJ6DNIbEDnnUtj/R5DBj7kwyzrx1vS8fUdRZLga1bH6Yiw=
-X-Received: from podkayne.svl.corp.google.com ([2620:15c:2d3:204:43f2:e007:a76c:f287])
- (user=emilyshaffer job=sendgmr) by 2002:a05:6902:2311:b0:dff:2d92:d94e with
- SMTP id 3f1490d57ef6-e041b112defmr8155276.9.1720565446404; Tue, 09 Jul 2024
- 15:50:46 -0700 (PDT)
-Date: Tue,  9 Jul 2024 15:50:42 -0700
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QIT5orG/"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0F7473CC8E;
+	Tue,  9 Jul 2024 19:03:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=M
+	qljLcypEfN1LUpxpjd4hadFXxrEqMsGT6KWyxnDs6E=; b=QIT5orG/jZfz/EZCr
+	zyYank2lFtb47ePgIAyhV0SMEKkoj/SGBYqSfHnhBWsDUkDkvek90IwEvWGxt6tN
+	Kna/2Cnj2V8ckaUgAZeAEOdhbifpQznSmV6Kfj6T2TShFlgYjrrBPFmoDx7kUglG
+	vL+N4AtyhH1Y/SlLOO3CoZnjqs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0676B3CC8D;
+	Tue,  9 Jul 2024 19:03:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2E6CD3CC8C;
+	Tue,  9 Jul 2024 19:03:50 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+    "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Piotr Szlazak <piotr.szlazak@gmail.com>
+Subject: [PATCH/RFC] http.c: cookie file tightening
+Date: Tue, 09 Jul 2024 16:03:48 -0700
+Message-ID: <xmqqed82cgmj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.45.2.803.g4e1b14247a-goog
-Message-ID: <20240709225042.2005233-1-emilyshaffer@google.com>
-Subject: [PATCH] Documentation: add platform support policy
-From: Emily Shaffer <emilyshaffer@google.com>
-To: git@vger.kernel.org
-Cc: Emily Shaffer <emilyshaffer@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>, 
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, 
-	Emily Shaffer <nasamuffin@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 8124AB92-3E47-11EF-AE15-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-Supporting many platforms is only easy when we have the right tools to
-ensure that support.
+The http.cookiefile configuration variable is used to call
+curl_easy_setopt() to set CURLOPT_COOKIEFILE and if http.savecookies
+is set, the same value is used for CURLOPT_COOKIEJAR.  The former is
+used only to read cookies at startup, the latter is used to write
+cookies at the end.
 
-Teach platform maintainers how they can help us to help them, by
-explaining what kind of tooling support we would like to have, and what
-level of support becomes available as a result. Provide examples so that
-platform maintainers can see what we're asking for in practice.
+The manual pages https://curl.se/libcurl/c/CURLOPT_COOKIEFILE.html
+and https://curl.se/libcurl/c/CURLOPT_COOKIEJAR.html talk about two
+interesting special values.
 
-With this policy in place, we can make changes with stronger assurance
-that we are not breaking anybody we promised not to. Instead, we can
-feel confident that our existing testing and integration practices
-protect those who care from breakage.
+ * "" (an empty string) given to CURLOPT_COOKIEFILE means not to
+   read cookies from any file upon startup.
 
-Signed-off-by: Emily Shaffer <nasamuffin@google.com>
+ * It is not specified what "" (an empty string) given to
+   CURLOPT_COOKIEJAR does; presumably open a file whose name is an
+   empty string and write cookies to it?  In any case, that is not
+   what we want to see happen, ever.
 
+ * "-" (a dash) given to CURLOPT_COOKIEFILE makes cURL read cookies
+   from the standard input, and given to CURLOPT_COOKIEJAR makes
+   cURL write cookies to the standard output.  Neither of which we
+   want ever to happen.
+
+So, let's make sure we avoid these nonsense cases.  Specifically,
+when http.cookies is set to "-", ignore it with a warning, and when
+it is set to "" and http.savecookies is set, ignore http.savecookies
+with a warning.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
-Hi folks,
+ * I have no confidence in me doing http correctly, so I am asking
+   from folks who have touched http.c in the past 6 months for help.
 
-Some months ago, I branched the Rust discussion to talk about platform
-support[1]. That discussion didn't go far, but with libification efforts
-touching the Makefile and worrying about compatibility, it seems like a wor=
-thy
-discussion to have.=C2=A0
+   A proposed documentation update to talk about an empty string by
+   Piotr, who is also on CC:, triggered this update.
 
-My goal with this document is that if we claim to support a given platform,
-that platform should be easy for contributors to test against. And the
-corollary, if we can't test against a given platform easily, we shouldn't b=
-e
-assuring users on that platform that it will always work. I'm thinking of
-platforms which rely on recent Git binaries but which we don't test against=
- by
-default, like NonStop[2] or AIX[3].
+ http.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Right now, this doc talks about "guarantees." I used that phrasing based on
-what I've observed to be an implicit expectation that we guarantee support;=
- it
-could be this isn't actually a guarantee that the community is willing to m=
-ake,
-so I am hoping we can discuss it and come up with the right term.
-
-I'm hoping that this policy (or one like it) can clarify a "help us help yo=
-u"
-relationship with platform maintainers. If we can clearly define the resour=
-ces
-we need in order to guarantee that we're supporting a platform, then we can
-make changes more confidently; if, instead, we make a serious effort to fix=
- any
-and all reported breakages, then all patches are at risk of breaking a plat=
-form
-we didn't know exists but care about providing first-class support for and
-being rolled back. I think there is some space in between those two extreme=
-s,
-too, that might be suitable for some less-used platforms, or platforms whic=
-h
-follow new releases less closely.
-
-Looking forward to discussing.
-
-=C2=A0- Emily
-
-1: https://lore.kernel.org/git/CAJoAoZnHGTFhfR6e6r=3DGMSfVbSNgLoHF-opaWYLbH=
-ppiuzi+Rg@mail.gmail.com/=C2=A0
-2: https://lore.kernel.org/git/01bd01da681a$b8d70a70$2a851f50$@nexbridge.co=
-m/=C2=A0
-3: https://lore.kernel.org/git/CAHd-oW6X4cwD_yLNFONPnXXUAFPxgDoccv2SOdpeLrq=
-mHCJB4Q@mail.gmail.com/
----
- Documentation/Makefile                       |   1 +
- Documentation/technical/platform-support.txt | 102 +++++++++++++++++++
- 2 files changed, 103 insertions(+)
- create mode 100644 Documentation/technical/platform-support.txt
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index dc65759cb1..462af0311f 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -118,6 +118,7 @@ TECH_DOCS +=3D technical/multi-pack-index
- TECH_DOCS +=3D technical/pack-heuristics
- TECH_DOCS +=3D technical/parallel-checkout
- TECH_DOCS +=3D technical/partial-clone
-+TECH_DOCS +=3D technical/platform-support
- TECH_DOCS +=3D technical/racy-git
- TECH_DOCS +=3D technical/reftable
- TECH_DOCS +=3D technical/scalar
-diff --git a/Documentation/technical/platform-support.txt b/Documentation/t=
-echnical/platform-support.txt
-new file mode 100644
-index 0000000000..23ab708144
---- /dev/null
-+++ b/Documentation/technical/platform-support.txt
-@@ -0,0 +1,102 @@
-+Platform Support Policy
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+diff --git c/http.c w/http.c
+index 13fa94bef3..86ccca49f0 100644
+--- c/http.c
++++ w/http.c
+@@ -1466,7 +1466,16 @@ struct active_request_slot *get_active_slot(void)
+ 	slot->finished = NULL;
+ 	slot->callback_data = NULL;
+ 	slot->callback_func = NULL;
 +
-+Git has a history of providing broad "support" for exotic platforms and ol=
-der
-+platforms, without an explicit commitment. This support becomes easier to
-+maintain (and possible to commit to) when Git developers are providing wit=
-h
-+adequate tooling to test for compatibility. Variouis levels of tooling wil=
-l
-+allow us to make more solid commitments around Git's compatibility with yo=
-ur
-+platform.
-+
-+Compatible by vN+1 release
-+--------------------------
-+
-+To increase probability that compatibility issues introduced in a point re=
-lease
-+will be fixed by the next point release:
-+
-+* You should send a bug report as soon as you notice the breakage on your
-+platform. The sooner you notice, the better; it's better for you to watch =
-`seen`
-+than to watch `master`. See linkgit:gitworkflows[7] under "Graduation" for=
- an
-+overview of which branches are used in git.git, and how.
-+* The bug report should include information about what platform you are us=
-ing.
-+* You should also use linkgit:git-bisect[1] and determine which commit
-+introduced the breakage.
-+* Please include any information you have about the nature of the breakage=
-: is
-+it a memory alignment issue? Is an underlying library missing or broken fo=
-r
-+your platform? Is there some quirk about your platform which means typical
-+practices (like malloc) behave strangely?
-+* Once we begin to fix the issue, please work closely with the contributor
-+working on it to test the proposed fix against your platform.
-+
-+Example: NonStop
-+https://lore.kernel.org/git/01bd01da681a$b8d70a70$2a851f50$@nexbridge.com/=
-[reports
-+problems] when they're noticed.
-+
-+Compatible on `master` and point releases
-+-----------------------------------------
-+
-+To guarantee that `master` and all point releases work for your platform t=
-he
-+first time:
-+
-+* You should run nightly tests against the `next` branch and publish break=
-age
-+reports to the mailing list immediately when they happen.
-+* It may make sense to automate these; if you do, make sure they are not n=
-oisy
-+(you don't need to send a report when everything works, only when somethin=
-g
-+breaks).
-+* Breakage reports should be actionable - include clear error messages tha=
-t can
-+help developers who may not have access to test directly on your platform.
-+* You should use git-bisect and determine which commit introduced the brea=
-kage;
-+if you can't do this with automation, you should do this yourself manually=
- as
-+soon as you notice a breakage report was sent.
-+* You should either:
-+** Provide VM access on-demand to a trusted developer working to fix the i=
-ssue,
-+so they can test their fix, OR
-+** Work closely with the developer fixing the issue - testing turnaround t=
-o
-+check whether the fix works for your platform should not be longer than a
-+business day.
-+
-+Example:
-+https://lore.kernel.org/git/CAHd-oW6X4cwD_yLNFONPnXXUAFPxgDoccv2SOdpeLrqmH=
-CJB4Q@mail.gmail.com/[AIX]
-+provides a build farm and runs tests against release candidates.
-+
-+Compatible on `next`
-+--------------------
-+
-+To guarantee that `next` will work for your platform, avoiding reactive
-+debugging and fixing:
-+
-+* You should add a runner for your platform to the GitHub Actions CI suite=
-.
-+This suite is run when any Git developer proposes a new patch, and having =
-a
-+runner for your platform/configuration means every developer will know if =
-they
-+break you, immediately.
-+* If you rely on Git avoiding a specific pattern that doesn't work well wi=
-th
-+your platform (like a certain malloc pattern), if possible, add a cocciche=
-ck
-+rule to ensure that pattern is not used.
-+* If you rely on some configuration or behavior, add a test for it. You ma=
-y
-+find it easier to add a unit test ensuring the behavior you need than to a=
-dd an
-+integration test; either one works. Untested behavior is subject to breaka=
-ge at
-+any time.
-+** Clearly label these tests as necessary for platform compatibility. Add =
-them
-+to an isolated compatibility-related test suite, like a new t* file or uni=
-t test
-+suite, so that they're easy to remove when compatibility is no longer requ=
-ired.
-+If the specific compatibility need is gated behind an issue with another
-+project, link to documentation of that issue (like a bug or email thread) =
-to
-+make it easier to tell when that compatibility need goes away.
-+
-+Example: We run our
-+https://git.kernel.org/pub/scm/git/git.git/tree/.github/workflows/main.yml=
-[CI
-+suite] on Windows, Ubuntu, Mac, and others.
-+
-+Getting help writing platform support patches
-+---------------------------------------------
-+
-+In general, when sending patches to fix platform support problems, follow
-+these guidelines to make sure the patch is reviewed with the appropriate l=
-evel
-+of urgency:
-+
-+* Clearly state in the commit message that you are fixing a platform break=
-age,
-+and for which platform.
-+* Use the CI and test suite to ensure that the fix for your platform doesn=
-'t
-+break other platforms.
-+* If possible, add a test ensuring this regression doesn't happen again. I=
-f
-+it's not possible to add a test, explain why in the commit message.
---=20
-2.45.2.803.g4e1b14247a-goog
-
++	if (curl_cookie_file && !strcmp(curl_cookie_file, "-")) {
++		warning(_("refusing to read cookies from http.cookiefile '-'"));
++		FREE_AND_NULL(curl_cookie_file);
++	}
+ 	curl_easy_setopt(slot->curl, CURLOPT_COOKIEFILE, curl_cookie_file);
++	if (curl_save_cookies && (!curl_cookie_file || !curl_cookie_file[0])) {
++		curl_save_cookies = 0;
++		warning(_("ignoring http.savecookies for empty http.cookiefile"));
++	}
+ 	if (curl_save_cookies)
+ 		curl_easy_setopt(slot->curl, CURLOPT_COOKIEJAR, curl_cookie_file);
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, pragma_header);
