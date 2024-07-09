@@ -1,106 +1,225 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563B518C325
-	for <git@vger.kernel.org>; Tue,  9 Jul 2024 13:53:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224AC1586F2
+	for <git@vger.kernel.org>; Tue,  9 Jul 2024 14:44:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720533190; cv=none; b=IRnPNOvcI3b3zypVv34hInxsc3gI3E7TD3a7KolPGyDaq3godq6hdbh5XmnZqT7NX/zRVkJjaCIL5CGJjq40hQ2Jq5FObh/JcYN2F3TDkeVY96pcu5KyC54Xw7D2pfIr63fW6G1hiP5rpLH0pOBbcU98PiFcCwHFJaGtRDuWRxQ=
+	t=1720536301; cv=none; b=OgMVFQ51LBO4lIeVMHVfKm3lYp5b4ye1cDZTnjXlFhzF7n6tG4fst27v9twz15bNPfQ+6qRsi9AT/eXdDjvtLOLl6m3oQLPYadRvkATSVWKb7xXDDTxsK6Xv/YsJCT8lLw9sCEgQpgv4pcAQ74BlUAvQgudPOWsnWx8dMybNK7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720533190; c=relaxed/simple;
-	bh=rK/taRnXZY0MHa4/56kG/us7N+pLvXb7MUoAOBGUZ1Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=JMV4IvfskXmUs+itBapTKe/R21VD5tJA/o56GSijOmR0p5AwhdDaWdga5jNAbulcbYiO6xfBGIEv/gfD9z2IOf1zMaIRe0GL4J2SyxPjOjMCRFOCdU62gs5KfzTw60/qJrVK+uBIpfhuXZI6wnXvgKJ6VS9LodXbUfkgL/0fV8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fVALKDG0; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1720536301; c=relaxed/simple;
+	bh=V1pFqqhtUpahblBKknhceRamraEBLao3Xc0SMCGxmhA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OLJ3Q5n9IakVqyQmpJxL+YE//k0+f4AVz2C25HACKPBj71/ELQEVSNLBcZRSBy8T/MdVmBaah9xJFi2nuh3KSzueYJRrUEPNDfmILUbFtDiI/1uHg0yF1jE7meOSN0ct1tkgLDtZA5B4sl86sV3nOh89xmnsP0NoyMN22Ez/I6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EtFvJ7x7; arc=none smtp.client-ip=209.85.167.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fVALKDG0"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-367a464e200so2798375f8f.2
-        for <git@vger.kernel.org>; Tue, 09 Jul 2024 06:53:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EtFvJ7x7"
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3d938024c67so702671b6e.2
+        for <git@vger.kernel.org>; Tue, 09 Jul 2024 07:44:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720533188; x=1721137988; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9v60KtVQq3tjrNd1kWk3rrP11sdgowRmbcQsJEn7+Qo=;
-        b=fVALKDG0nAh2w00z8M/jya/o8XUEVoKdYFGdMP9E3wVW0Xrxy4bwZ8xvFdPZuv4xXY
-         99GKV3aQw4WNBk6k9RMpg72ZZcSaTtZiUvsoYyEF14DmyRRGbKDNr37g1VqJvrDLbW+9
-         Atm3LllknCkkRZ86N7ReFXWGJTDyqQ1Yjg/7zFOWw6NGb9poM0m3a3ihUQWua0Cr8Is5
-         EZobw4b0wa5sgRiA8ICRNJdN5ZPkhLVkaxW9Q7lpJn6dTzAn6X6yFLr8CxbDXoK0E5r5
-         QOQEFPoUZlWll7xC7XT6MlXVDUIdGlbOZWVmeQgh8+kT0doy36gKkHPbMA9NwJlKQYZn
-         1D8Q==
+        d=gmail.com; s=20230601; t=1720536299; x=1721141099; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=RAqPCZ9oLL4mPM/zskSyL98bKSPDFqmguz3nkbpFfIc=;
+        b=EtFvJ7x7sxEOei7D4JxPoZ7cmiJAzpKMr4ukzBuxFDzftGakmknrE8Ij40a6GOcRD+
+         JFBBvC8Isiqpy+m2cBsU26joZiHG9etbC6UBI3FyNEvcCPQBFBkdHjs94Kg6XWOdq2vT
+         iu/YBKEjYkCbWThLSJiFK1EcbA3Ps3iKEUc+KpJGRsNYP542IpHzHCnOSn7ACyCi9LOD
+         JC/5y6eNb+4u04q/9eT3ilyvUzHqnMq96We2Wf7YBWzVKlKFOQGtddJfMiSt26/U8t3C
+         j2/KZqUp8BsD+4YGCkEqlbBZj4ARVov6ESuH9OyGEGXu8xfdglCBFYha/X/dE2u6njiP
+         TxtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720533188; x=1721137988;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9v60KtVQq3tjrNd1kWk3rrP11sdgowRmbcQsJEn7+Qo=;
-        b=VrK+9FVFx3Mthui33Qc9SPYB3MyPER9cbDTFLvKDmRmLnBJDpIVIJusisoJtNjhkVB
-         k6re5QnYKHCBZksBpjR+9us/bngv2ifMncB95Knr9OwNaVZMvgGvwwI43r8nwTDKFfzN
-         8QTDDF6FHrugxHUyaVWf0G5F4htQe9k8G52T9vzvTvmMaHvf1WpyGNqVCPz4hkHb34kD
-         51eQbFVk9CdBAH9opZKgifSTY8tLbLOwVBZ0mQpUxKR3bn+Xg9rzs2i7aisKwfvzBVZy
-         V6R60KiYsDc0jPZHeqOEdBKD6hqtpUuCvoTnI8AW9ziXfnDax0ivr57AHQES+ys1YgbS
-         PPkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVaRsSFesYtpcUjx6auYZPMXaDcm6ZZVKMycfr8ix4y4Zd0UgZlAx4kmDCe9F8D3jMnKqQ8dTJ1Vlvv8Kvh7juY+SPi
-X-Gm-Message-State: AOJu0YxQr8QJTcmHuUsrBb9yxZabNHCshJhgda5a/LGx+191R5pwfGYG
-	nJicwqpK4qB/d6T9TzxDGRZ8Gcsamzmi29wlCC6NSha7FcS+eAN8
-X-Google-Smtp-Source: AGHT+IEw0oq6zpCyeyJhyiHMCbxem03WAvyAoU+YzOVm+f9Jd037UAKCyewQX1YJV2kXSN/gZ9sPug==
-X-Received: by 2002:a5d:5f51:0:b0:366:e685:d0cb with SMTP id ffacd0b85a97d-367cea46907mr2384407f8f.6.1720533187429;
-        Tue, 09 Jul 2024 06:53:07 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:600:8501:575d:f6b:be83:bc74? ([2a0a:ef40:600:8501:575d:f6b:be83:bc74])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-367cdfab0bfsm2630907f8f.99.2024.07.09.06.53.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jul 2024 06:53:07 -0700 (PDT)
-Message-ID: <9e2e32d2-4f52-43db-b2bd-8cf2df1af10c@gmail.com>
-Date: Tue, 9 Jul 2024 14:53:11 +0100
+        d=1e100.net; s=20230601; t=1720536299; x=1721141099;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RAqPCZ9oLL4mPM/zskSyL98bKSPDFqmguz3nkbpFfIc=;
+        b=nH899LvnRTmlxGgSVzRqI0k0C1INPYIIUi4Z7EyRnu4y45GsOw/IpADnOYmzP5ycez
+         g4JD8E4Gq83H+FllqWHK9W8zYOsWJ7AlnlHnP/QT1TCJIyq/EXLBHyc2V3LEsb9h6VGb
+         zAGfbCJdPcaBwtBWtI+1PP3lhYpLDB+5kJHpxCFPDx39702I8oIL0x7QBTGZZ1p4tb3X
+         DndSgUHt3g5ffFspFzZgOcQmVfvhDEMH1qOXduxK0XFSs09GAbcFPhieuQ8VO31ONIZk
+         4wGFobGM4sgaYtivd6T1zW3F/Z4Wec2evfZyHsTcRG7rvb4cmtDJEk4BYEZo6z44kk4i
+         SEqA==
+X-Gm-Message-State: AOJu0YzAzYOnXLqtzP95Nsz14mI5Iu/Qwtrz7bkQ9xpuBfFlgatGysaC
+	qek5AWa63J3qoY6pGHsImdnsuuj1lgWi4SjWZhlicRqsOGB36w6f
+X-Google-Smtp-Source: AGHT+IGKuIchYWoaM6/R9a/9H3wJgyhdO/aGyrN5t8g7TQC+NaaQYkqcZfufIS7kPbdoBM807ak4LA==
+X-Received: by 2002:a05:6808:14c5:b0:3d6:32be:a8a5 with SMTP id 5614622812f47-3d93bee56ddmr3182765b6e.4.1720536298866;
+        Tue, 09 Jul 2024 07:44:58 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-3d93acff107sm435644b6e.7.2024.07.09.07.44.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jul 2024 07:44:58 -0700 (PDT)
+Date: Tue, 9 Jul 2024 09:44:28 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, chriscool@tuxfamily.org
+Subject: Re: [PATCH 7/8] ci: run style check on GitHub and GitLab
+Message-ID: <q4mixa3suepyjrp5lkd3wio2pcsdbjch757n2p55fzxpk3sc4u@lysauvdyiq4c>
+References: <20240708092317.267915-1-karthik.188@gmail.com>
+ <20240708092317.267915-8-karthik.188@gmail.com>
+ <7wc2ucdbirqgtrxgij3i4eqwfib334kdogbfxtiyifje6clsat@3p3xnqkoj3ic>
+ <CAOLa=ZTuBziBPY1B0P3gTWMhqThuyFsFW1aWtwUconYN4gH+aA@mail.gmail.com>
+ <lu7o24bwwh5ntarnpfjkmceuvzxs6rdykcrojonqkhfcvq7vka@7h3rev4n7wxr>
+ <CAOLa=ZQiHcCU9G6BFO98Y1VAPYgTDdJzbWC5bnMQwx9jsTJ0tg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] var(win32): do report the GIT_SHELL_PATH that is actually
- used
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Junio C Hamano <gitster@pobox.com>,
- Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1760.git.1720443778074.gitgitgadget@gmail.com>
- <xmqqed83g1e6.fsf@gitster.g> <Zox48sVp-PybvLxi@tapette.crustytoothpaste.net>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <Zox48sVp-PybvLxi@tapette.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQiHcCU9G6BFO98Y1VAPYgTDdJzbWC5bnMQwx9jsTJ0tg@mail.gmail.com>
 
-On 09/07/2024 00:40, brian m. carlson wrote:
-> On 2024-07-08 at 18:54:41, Junio C Hamano wrote:
->> The "look on the %PATH%" strategy does not make any sense as an
->> implementation for getting GIT_SHELL_PATH, which answers "what is
->> the shell this instanciation of Git was built to work with?", at
->> least to me.  Maybe I am missing some knowledge on limitations on
->> Windows and Git for Windows why it is done that way.
+On 24/07/09 01:44AM, Karthik Nayak wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
 > 
-> Well, it may be that that's the approach that Git for Windows takes to
-> look up the shell.  (I don't know for certain.)  If that _is_ what it
-> does, then that's absolutely the value we want because we want to use
-> whatever shell Git for Windows uses.
+> > On 24/07/08 02:16PM, Karthik Nayak wrote:
+> >> Justin Tobler <jltobler@gmail.com> writes:
+> >>
+> >> > On 24/07/08 11:23AM, Karthik Nayak wrote:
+> >> >> We don't run style checks on our CI, even though we have a
+> >> >> '.clang-format' setup in the repository. Let's add one, the job will
+> >> >> validate only against the new commits added and will only run on merge
+> >> >> requests. Since we're introducing it for the first time, let's allow
+> >> >> this job to fail, so we can validate if this is useful and eventually
+> >> >> enforce it.
+> >> >
+> >> > [snip]
+> >> >
+> >> >> diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+> >> >> index 37b991e080..65fd261e5e 100644
+> >> >> --- a/.gitlab-ci.yml
+> >> >> +++ b/.gitlab-ci.yml
+> >> >> @@ -123,6 +123,18 @@ check-whitespace:
+> >> >>    rules:
+> >> >>      - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+> >> >>
+> >> >> +check-style:
+> >> >> +  image: ubuntu:latest
+> >> >> +  allow_failure: true
+> >> >> +  variables:
+> >> >> +    CC: clang
+> >> >> +  before_script:
+> >> >> +    - ./ci/install-dependencies.sh
+> >> >> +  script:
+> >> >> +    - ./ci/run-style-check.sh "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+> >> >
+> >> > One downside to using $CI_MERGE_REQUEST_DIFF_BASE_SHA is that for GitLab
+> >> > merge pipeines, commits from the merge that are not part of the MR
+> >> > changes are also included. This could lead to somewhat confusing
+> >> > failures.
+> >> >
+> >>
+> >> I'm not sure I follow.
+> >>
+> >> > Example failure occuring on this patch series:
+> >> > https://gitlab.com/gitlab-org/git/-/jobs/7284442220
+> >> >
+> >>
+> >> If you notice this job, it points to the commit: 1c6551488, and the
+> >> parent commit of that commit is: 614dff2011.
+> >>
+> >> The parent commit [1] is a test commit I added to check the failures. So
+> >> isn't this working as expected?
+> >
+> > Ah ok, I misunderstood the setup of that CI job, but the problem is
+> > still present. Here is an example CI job I've run demonstrating it:
+> >
+> > CI - https://gitlab.com/gitlab-org/git/-/jobs/7291829941
+> > MR - https://gitlab.com/gitlab-org/git/-/merge_requests/174
+> >
+> > For the MR that spawned this CI job, This patch series is the source
+> > branch and the target branch is a version of master one commit ahead
+> > containing a clang format error. Because this is a merge pipeline, using
+> > $CI_MERGE_REQUEST_DIFF_BASE_SHA will include changes from either side of
+> > the base commit. This means it would be possible for the CI job to fail
+> > due to commits ahead in the target branch, but not in the source branch.
+> > For the check-whitespace CI job, I specifically chose
+> > $CI_MERGE_REQUEST_TARGET_BRANCH_SHA for this reason.j
+> >
+> 
+> You're right indeed. I did some more reading about this and I think the
+> solution lies somewhere in between..
+> 
+> >>
+> >> > It might be best to use $CI_MERGE_REQUEST_TARGET_BRANCH_SHA instead.
+> >> >
+> >>
+> >> I actually started with $CI_MERGE_REQUEST_TARGET_BRANCH_SHA, it didn't
+> >> work, because the value was undefined.
+> >>
+> >> See: https://gitlab.com/gitlab-org/git/-/jobs/7283724903
+> >>
+> >> This is why I also decided to fix and change the whitespace check.
+> >
+> > I'm not seeing $CI_MERGE_REQUEST_TARGET_BRANCH_SHA as undefined in the
+> > job. Here is a modified version on the check-style CI job printing the
+> > environment variables:
+> >
+> 
+> You can see the output
+> 
+>     $ ./ci/run-style-check.sh "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
+>     fatal: ambiguous argument '': unknown revision or path not in the
+> working tree.
+>     Use '--' to separate paths from revisions, like this:
+>     'git <command> [<revision>...] -- [<file>...]'
+> 
+> This only happens if "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA" is empty.
 
-As I understand it this is the approach Git for Windows takes
+Ya I noticed this failure, but was wondering if it was maybe due to
+something else. I have been unable to reproduce it and in all the jobs I
+was running resulted in a merge pipeline with the variable defined. But 
+maybe sometimes a regular pipeline gets run for some reason and 
+consequently $CI_MERGE_REQUEST_TARGET_BRANCH_SHA is not defined? Was the
+pipeline triggered directly from the source branch?
 
-> I will say it's a risky approach
-> because it could well also find a Cygwin or MINGW shell (or, if it were
-> called bash, WSL), but we really want whatever Git for Windows does
-> here.
+> 
+> > https://gitlab.com/gitlab-org/git/-/jobs/7291792329#L2470
+> >
+> > Do you have an example of the check-whitespace job failing in GitLab CI?
+> > Maybe I'm missing something, but I don't see a problem.
+> >
+> > -Justin
+> 
+> So I think I get the issue, GitLab has two kinds of pipelines it runs:
+> 1. merge pipeline: Here the pipeline runs on the source branch (the
+> feature branch which has to be merged).
+> 2. merged pipeline: Here the pipeline creates a merge commit using the
+> source and target branch and then runs the pipeline on the merged
+> commit.
+> 
 
-Git for Windows prepends the MINGW system directories to $PATH via some 
-extra downstream code in setup_windows_environment() so looking up the 
-shell in $PATH will find the correct executable.
+Correct, this is my understanding.
 
-Best Wishes
+> And "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA" is only defined in the 'merged
+> pipeline'. If you see the pipelines for my branch on GitLab [1]. You'll
+> see only one of them is marked as 'merge results' and the others being
+> marked as 'merged results'. The former includes the job I mentioned
+> above, where "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA" is not defined.
+> 
+> I'm still not sure why it marked only one of the pipelines as such, but
+> this means there is chance that it could happen.
 
-Phillip
+Huh, I'm guessing the CI job must have been triggered from the source
+branch directly. Did you manually run the CI job? I wonder if that could
+have caused it.
+
+> 
+> So I guess the best outcome is to use
+> "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA", but fallback to
+> "$CI_MERGE_REQUEST_DIFF_BASE_SHA", if the former is not defined.
+
+This is exactly what I think we should do too. For merge pipelines we 
+will want to use $CI_MERGE_REQUEST_TARGET_BRANCH_SHA so that only the 
+commits included in the MR are scanned in CI. If that variable is not 
+defined, it makes sense to fallback to $CI_MERGE_REQUEST_DIFF_BASE_SHA.
+Since it's not a merge pipeline it will only scan commits included from
+the MR and therefore work as expected.
+
+This should handle both cases correctly. :)
+
+-Justin
+
