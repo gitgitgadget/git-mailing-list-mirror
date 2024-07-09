@@ -1,31 +1,31 @@
-Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F4B1DA303
-	for <git@vger.kernel.org>; Tue,  9 Jul 2024 07:16:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCA01DA303
+	for <git@vger.kernel.org>; Tue,  9 Jul 2024 07:16:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720509375; cv=none; b=s4SjJbUYnwz+/Pfz7eP/yfLjJOO5V2I9z9WZ+0X1Wp2+PIWUGrNLNntWxNwTPzUyQL5LV2LxtgEl2c+wDRDJt7/PYer4nNg1ZJj/6pVDzghP9HaicXxiQGElXGvGh8SOrWsLyiD4m+69pI1x/FF7J7N3NDPePjUw0NdvX9uyguM=
+	t=1720509403; cv=none; b=VgvEOYi+hUScccyNfRX06h3RAr8NmjcXO1znghDK+vmNZ3c4SheZzDBXZZoF1iQYM8sUwaCVm/LEzrPQGPoCu7Q5AI1E7ntB5hEdMv/ySpWUEZj1sWGQcN+uv+aZWo3Zs2b5i9rI4Q1bQ/MOceZA1LXxXZFFSsu7GHFqlqXlmAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720509375; c=relaxed/simple;
-	bh=5+zd0SALJicEhdPHpqTmsPekmMBUvt0yTHA1NpWpdx0=;
+	s=arc-20240116; t=1720509403; c=relaxed/simple;
+	bh=qJ65cBaFDPQ3FH57NcfvUbXaZ2eY13fdng1NIQJcQLE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DX478mCRXGQnR16wUScKZB60Ov6y1KpcQ6S5eCQ9mMzK5bE7UBtPubCXWmPN5pa7lQMYAxiHVQWHa/tKfq6yAn9GbywU+ISnignfMYciaQRDPrOjGdeX6L/s91QL38OrdRaMjZR/oytVdzxpakE4Uz5/L5GhbZb7K0nFYTtHghU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=ae6yqaTo; arc=none smtp.client-ip=95.215.58.183
+	 MIME-Version:Content-Type; b=rbrtM8v5LmjGUTLs+BtVYuu37Y79MJZiwBv+dEWgYUCIyZ1Q2bbrgW8DqxCwr5aAECWTP5mjgmyuWbSSq5BAE5q8SpWgPqLUZJlIltKZuQBzODCyOMevPz9DaYs0xH012RAVHIk+6XzpdQKw4ey5GKndzSHGWWAtenlJdJIiWbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=GbMnqJsy; arc=none smtp.client-ip=91.218.175.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="ae6yqaTo"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="GbMnqJsy"
 X-Envelope-To: eric.peijian@gmail.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1720509369;
+	t=1720509398;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=HpGT2aq9pFqSOdwDhT+N43qgwoAIZg3k88Qd9iFMjDs=;
-	b=ae6yqaToROI5b9d1IYi8A5cRHZJHjiQ1+WqGDGy3T58HqsiYZdS4sOsfah054RkGxAcHlN
-	n54qdEY1DpAbLu0AivxsPhNBU9xU2GcscYvJRAlm1vJn0YZnrxVfR0cM82YBrZQzMhHkvO
-	rYFgIKsd9gAfCtFvz3hAr7VRgOeu66s=
+	bh=+lWoeHQbkuawKXpRQhgrxS14L84Z/MHI7ebx7ND+ZR0=;
+	b=GbMnqJsy8v20Dlxh2vU8H8C7/JIQ+PpH0nykJKaICHqwyd7snO5KyIRjLgd3+1WHMtuFmX
+	XHWKu9zdAviVbWvtZDqr1zowpt4WAuqG5B6M6QrVB2ubfi1uqpi5NCSGbBa/6o8p0KCJbA
+	FDV9tQrQTR+CsvhFb9wZCqbOwNeUDh4=
 X-Envelope-To: git@vger.kernel.org
 X-Envelope-To: chriscool@tuxfamily.org
 X-Envelope-To: calvinwan@google.com
@@ -38,12 +38,12 @@ To: Eric Ju <eric.peijian@gmail.com>, git@vger.kernel.org
 Cc: Christian Couder <chriscool@tuxfamily.org>, Calvin Wan
  <calvinwan@google.com>, Jonathan Tan <jonathantanmy@google.com>, John Cai
  <johncai86@gmail.com>, Eric Ju <eric.peijian@gmail.com>
-Subject: Re: [PATCH 4/6] transport: add client support for object-info
-In-Reply-To: <20240628190503.67389-5-eric.peijian@gmail.com>
+Subject: Re: [PATCH 6/6] cat-file: add remote-object-info to batch-command
+In-Reply-To: <20240628190503.67389-7-eric.peijian@gmail.com>
 References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20240628190503.67389-5-eric.peijian@gmail.com>
-Date: Tue, 09 Jul 2024 09:15:58 +0200
-Message-ID: <87ikxfqbm9.fsf@iotcl.com>
+ <20240628190503.67389-7-eric.peijian@gmail.com>
+Date: Tue, 09 Jul 2024 09:16:23 +0200
+Message-ID: <87h6czqblk.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,100 +55,51 @@ X-Migadu-Flow: FLOW_OUT
 
 Eric Ju <eric.peijian@gmail.com> writes:
 
-> diff --git a/transport.c b/transport.c
-> index 83ddea8fbc..2847aa3f3c 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -436,11 +504,27 @@ static int fetch_refs_via_pack(struct transport *transport,
->  	args.server_options = transport->server_options;
->  	args.negotiation_tips = data->options.negotiation_tips;
->  	args.reject_shallow_remote = transport->smart_options->reject_shallow;
-> -
-> -	if (!data->finished_handshake) {
-> -		int i;
-> +	args.object_info = transport->smart_options->object_info;
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index 72a78cdc8c..34958a1747 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> ...
+> +static int get_remote_info(struct batch_options *opt, int argc, const char **argv)
+> +{
+> +	int retval = 0;
+> +	struct remote *remote = NULL;
+> +	struct object_id oid;
+> +	struct string_list object_info_options = STRING_LIST_INIT_NODUP;
+> +	static struct transport *gtransport;
 > +
-> +	if (transport->smart_options && transport->smart_options->object_info) {
-> +		struct ref *ref = object_info_refs;
+> +	/*
+> +	 * Change the format to "%(objectname) %(objectsize)" when
+> +	 * remote-object-info command is used. Once we start supporting objecttype
+> +	 * the default format should change to DEFAULT_FORMAT
+> +	*/
+
+I believe this comment has become outdated, or got moved around
+incorrectly.
+
+> diff --git a/t/t1017-cat-file-remote-object-info.sh b/t/t1017-cat-file-remote-object-info.sh
+> new file mode 100755
+> index 0000000000..7a7bdfeb91
+> --- /dev/null
+> +++ b/t/t1017-cat-file-remote-object-info.sh
+> ...
+> +stop_git_daemon
 > +
-> +		if (!fetch_object_info(transport, data->options.object_info_data))
-> +			goto cleanup;
-> +		args.object_info_data = data->options.object_info_data;
-> +		args.quiet = 1;
-> +		args.no_progress = 1;
-> +		for (size_t i = 0; i < transport->smart_options->object_info_oids->nr; i++) {
-> +			struct ref *temp_ref = xcalloc(1, sizeof (struct ref));
-> +			temp_ref->old_oid = *(transport->smart_options->object_info_oids->oid + i);
+> +# Test --batch-command remote-object-info with 'http://' transport
+> +
+> +. "$TEST_DIRECTORY"/lib-httpd.sh
+> +start_httpd
 
-Any reason why you're not using the subscript operator (square brackets)
-like this:
+start_httpd skips the remainder of the tests if it fails to start the
+httpd server. That's why I see various other tests which have this at
+the end:
 
-+			temp_ref->old_oid = transport->smart_options->object_info_oids->oid[i];
+  # DO NOT add non-httpd-specific tests here, because the last part of this
+  # test script is only executed when httpd is available and enabled.
 
-> +			temp_ref->exact_oid = 1;
-> +			ref->next = temp_ref;
-> +			ref = ref->next;
-> +		}
-> +		transport->remote_refs = object_info_refs->next;
+So I would suggest to add this comment as well, and move the file://
+tests above start_httpd.
 
-I find it a bit weird you're allocating object_info_refs, only to use it
-to point to the next. Can I suggest a little refactor:
-
-----8<-----8<----
-diff --git a/transport.c b/transport.c
-index 662faa004e..56cb3a1693 100644
---- a/transport.c
-+++ b/transport.c
-@@ -479,7 +479,7 @@ static int fetch_refs_via_pack(struct transport *transport,
-        struct ref *refs = NULL;
-        struct fetch_pack_args args;
-        struct ref *refs_tmp = NULL;
--       struct ref *object_info_refs = xcalloc(1, sizeof (struct ref));
-+       struct ref *object_info_refs = NULL;
-
-        memset(&args, 0, sizeof(args));
-        args.uploadpack = data->options.uploadpack;
-@@ -509,7 +509,7 @@ static int fetch_refs_via_pack(struct transport *transport,
-        args.object_info = transport->smart_options->object_info;
-
-        if (transport->smart_options && transport->smart_options->object_info) {
--               struct ref *ref = object_info_refs;
-+               struct ref *ref = object_info_refs = xcalloc(1, sizeof (struct ref));
-
-                if (!fetch_object_info(transport, data->options.object_info_data))
-                        goto cleanup;
-@@ -517,13 +517,12 @@ static int fetch_refs_via_pack(struct transport *transport,
-                args.quiet = 1;
-                args.no_progress = 1;
-                for (size_t i = 0; i < transport->smart_options->object_info_oids->nr; i++) {
--                       struct ref *temp_ref = xcalloc(1, sizeof (struct ref));
--                       temp_ref->old_oid = *(transport->smart_options->object_info_oids->oid + i);
--                       temp_ref->exact_oid = 1;
--                       ref->next = temp_ref;
-+                       ref->old_oid = transport->smart_options->object_info_oids->oid[i];
-+                       ref->exact_oid = 1;
-+                       ref->next = xcalloc(1, sizeof (struct ref));
-                        ref = ref->next;
-                }
--               transport->remote_refs = object_info_refs->next;
-+               transport->remote_refs = object_info_refs;
-        } else if (!data->finished_handshake) {
-                int must_list_refs = 0;
-                for (int i = 0; i < nr_heads; i++) {
-@@ -565,7 +564,7 @@ static int fetch_refs_via_pack(struct transport *transport,
-
-        data->finished_handshake = 0;
-        if (args.object_info) {
--               struct ref *ref_cpy_reader = object_info_refs->next;
-+               struct ref *ref_cpy_reader = object_info_refs;
-                for (int i = 0; ref_cpy_reader; i++) {
-                        oid_object_info_extended(the_repository, &ref_cpy_reader->old_oid, &(*args.object_info_data)[i], OBJECT_INFO_LOOKUP_REPLACE);
-                        ref_cpy_reader = ref_cpy_reader->next;
-----8<-----8<----
-
-To be honest, I'm not sure it works, because fetch_object_info() always
-seem to return a non-zero value. I'm not sure this is due to missing
-code coverage, or a bug. I guess it's worth looking into.
 
 -- 
 Toon
