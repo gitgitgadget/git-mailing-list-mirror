@@ -1,135 +1,124 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B53E17C61
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 03:02:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D7B17756
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 03:20:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720580536; cv=none; b=ptCstau10Tm3A/nUhoxTL+f1BKNrDA0oSV4KRI/yz7+sFTC+dYSHQJMKHN7mEdEnrFRMl6mKLYWrlRhKwHPCDgaPQrEbgM7OSV3VNzWj7802KSO10tgjq6QeHbOkaB3ysmZw5sI7vvj+LQjl93fRjUoQ2rGGtSydLrIjlCfw070=
+	t=1720581659; cv=none; b=nSfHN/vMHx0duXffurKxj23QjE3EOs0eJFZe8Ad553+OWYFAbXpPiHFhWjsjK0EDg1LCMcBpgZ5qejgUvLu4cJeIzEasAFVq+uBI/C+Vi0ob28R+DaWnABUq+paGcSnmTmZfgOuwNxsKElXhtAyashcn7GAt4NL/4eBYhHKCAOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720580536; c=relaxed/simple;
-	bh=i/o4tTYsdhKuMzFkvO1/3VRX8/9woLy5lMjREzVN+fI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f9WKy8xp0uzDbLztoJPeLJuHuRDluXPq90263+g4kNoFbxjmdXbVPpW3fhcJms43iXedQv9UmZWqLqiY0MnBiNsWF61uwjVhaQ0fk/jTLAdqHlXe1su0rXzkk8LJZDaJCZGPy5esy7F2/LzVReV6OV78kl8HqkWIt2A0IDEzjOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1720581659; c=relaxed/simple;
+	bh=xySIMXZ9r5aHXd8Gz4YN9iXeSSwUYkpbgPUswoAIV9w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FqhgjinJgjIWj7OMjQKIoFo3b5RPzcJUGf2ltd2LifUzlujn03ylajpjnzCvZTRdLXiXbcVeNtFmTzhliVof16Qy0hUcnATefQW3tt11J3IRG9mZZv3ktYW7i85ZuaSJfMTdKyH1rHoP+bQBW1IT1LBB2LzTnaiBSRgLNg7g5Yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NzEzUEbc; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6b5eb69e04cso34969256d6.1
-        for <git@vger.kernel.org>; Tue, 09 Jul 2024 20:02:14 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NzEzUEbc"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-70b04cb28acso285788b3a.0
+        for <git@vger.kernel.org>; Tue, 09 Jul 2024 20:20:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720581657; x=1721186457; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cLZW1UICnO4kF4vQLJO2z7HOd+lq8HqDNm/2HmXGsyU=;
+        b=NzEzUEbcsEDCeVOlWDvSRz6c2Z/v4X1VuiJZs4uhc8t5NL6ViCXStncIY5ciOV7uyj
+         YJRfgFeqUdgp6nedlAUYlnOkSxhYftyFQX1Nzo0iwbGVGgt32ib/ocri+fUPgIsoxXU0
+         ImB3BkyqcZ6YEZbPpxaGkbUKBWFqrXAPuxZmj1R7JdniOwDP4vQ5xkiefqgc0mg807Yj
+         rE9G7JZRmJ/qHdMPqQaGrz53yXMe8TCCvBAW6NF7hbVSebqUi7efB1glqmDZCPPwWk0v
+         gKUp7iTO+OnoXPmxm0gxDdr9Pka3PR1BU+w8iqCq6sjW92jojLrAt9f5oxqMrD76X8qd
+         rfzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720580533; x=1721185333;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mf0WFk28dqScgB8C9DRwJgnOIjsAr4rOd0y2e+gicug=;
-        b=Vb6QbEY/6FVM5FaL6bb67HHGXjYbX1r2CJ65NR9hwJq0q4xcnEX6pzegh2J4CEWDv3
-         gkY4rVfIOoSrMhoyytOd1V5UyPiakIPKFIovXtJosEQh5kIKDMhFOSG/d4sh0FsXUP74
-         DFi+cZlX+IHLK56UbxIU7GyWRy33ePgQusaEsO3z4h/uI8Fvv6rpUpZpwwV5GyhFknM7
-         h8VhUDxgPgoEN3fmajFdJpQxWN05P98lpIPZGEXGd8M9+kbssgiAc0WhGfVEoOQi5pe/
-         9mu25HgP7gYdEhAd1a/Cjfqne08CW3OoR2v4OvWU8sf7tWXmM+eb/M1J/nZ+vrUjwXZG
-         9RKQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWvYy+bNNpt4+Djk3k5A9i7/FoPay0gGw8Zzav6qEIfEfKL9E9dp+8amM+/+DdlpVFdp6lpbXsuDlzUxA0UY7UoiEiV
-X-Gm-Message-State: AOJu0YzntFHkmYXonYK93yg6toWwAvRu2egSuruGIVKQoHsgopqKKY16
-	WV8fvtOfEDjb36xZUknxoMCp7I2KW2tVwxsFzMGD92Pzs7S0nWvtyxaApwPsVTvdVXq7RbuxKvJ
-	pt9DvR5emR8TfAAlwJPPTOQSiYcQ=
-X-Google-Smtp-Source: AGHT+IGsWqy5fJgdNc4hig6rOlgX8m7M4PUDKCjBfi2uILILJoghjnezhCSBM4juHDZTmy5ze3dSZWj7sbh24mYP2VE=
-X-Received: by 2002:a05:6214:c86:b0:6ae:116b:ef6a with SMTP id
- 6a1803df08f44-6b61c1ed50amr45284006d6.60.1720580533569; Tue, 09 Jul 2024
- 20:02:13 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720581657; x=1721186457;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cLZW1UICnO4kF4vQLJO2z7HOd+lq8HqDNm/2HmXGsyU=;
+        b=wRnkT0rs3jnecg0PL4qkS1tT7OKakkYao4K6NeiyWtK3fIGjEgjTmYA6P2D0FJkvj+
+         +NP93ldojydzqGXZHIUz782A/luhjADOj42eaoXhaCncUQNfs+yMUX5gEsAI/T+kJDa8
+         YHKT5DpXftNycafk5LACrAor/qpQLy1ypUoNQtMYDJCLCf3Nfk5OEO+7tiOQPa43xvrf
+         daqY6anKkWSVgJy81laYXGFqNWKmH37AtUbyiIhyW7LnrueVdKSLFQXvJ6O2A1paZA+U
+         +aBuZ6u1tTQiaubvu8uInYqreSrExLu3zVgPi1NNqiO3EbCbw8s4+4IBAR4afCabIMha
+         vlSg==
+X-Forwarded-Encrypted: i=1; AJvYcCVeHjszfQ5y2bPop52ck8hANgtSKXIDAVtLPp6XdqI4dTW2PSNTJJRA/j0sIuX+j1SnzPmj3+I6iKF8Zpk6Ei3mfiP4
+X-Gm-Message-State: AOJu0Yy+LDrUeB057bM2K21oqPNaeRvqPB5vUozR7MuH1dVx0zz74eUP
+	AkKIAmwzMeXjtVXfbLKsedSFoNBF1WTGWj9iTJFfr6YP476tXtoR
+X-Google-Smtp-Source: AGHT+IGLh8txbYE43axSqkwiGN3yDgJF2ZSKYwdZoGmldqnYb96NvghciOXLjw02gi0YieVcKQHuDg==
+X-Received: by 2002:a05:6a00:1791:b0:706:3d61:4b21 with SMTP id d2e1a72fcca58-70b44d46073mr6369326b3a.3.1720581656804;
+        Tue, 09 Jul 2024 20:20:56 -0700 (PDT)
+Received: from localhost ([14.191.223.217])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b439b5f86sm2597090b3a.181.2024.07.09.20.20.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jul 2024 20:20:56 -0700 (PDT)
+Date: Wed, 10 Jul 2024 10:20:53 +0700
+From: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Nathan Royce <nroycea+kernel@gmail.com>, git@vger.kernel.org
+Subject: Re: FR: Provide Out-Of-Tree Building; Provide Cross-Compile
+ Parameters
+Message-ID: <Zo3-FVT5EFyKsdGc@danh.dev>
+References: <CALaQ_hoDqD6CXEDy0YT8no3SaoJSqV6toMtyRHdJr6h3RZUiLA@mail.gmail.com>
+ <CAPig+cSB0d7aAwMpToLCa+6Be5JFqLAr+0pvBXQxg_=DEk7p2A@mail.gmail.com>
+ <CALaQ_hr2Hzri6y4KwYOPmGzfvM8EjJpddvLL7CQ=d3H4QLCzJw@mail.gmail.com>
+ <CAPig+cTaH+TiD9Ut5Q_BPinqdAirW51J56R_tUTSnL=XGzxvfg@mail.gmail.com>
+ <xmqqjzhvejye.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240701220815.GA20293@coredump.intra.peff.net>
- <20240702235034.88219-1-ericsunshine@charter.net> <20240706060143.GD698153@coredump.intra.peff.net>
- <xmqqr0c6makb.fsf@gitster.g> <20240706231128.GA746087@coredump.intra.peff.net>
- <CAPig+cTv-DaGRmwWWCk8b33MKzV25vfP2zPKd2VOAEOtz4FZ2A@mail.gmail.com>
- <20240708090837.GD819809@coredump.intra.peff.net> <20240710010927.GA1529709@coredump.intra.peff.net>
-In-Reply-To: <20240710010927.GA1529709@coredump.intra.peff.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 9 Jul 2024 23:02:01 -0400
-Message-ID: <CAPig+cRXkOesS_ctvxY2X=rwesTzgrBB0=5fvQLQsG3hZVY9TQ@mail.gmail.com>
-Subject: Re: [PATCH] chainlint.pl: recognize test bodies defined via heredoc
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqjzhvejye.fsf@gitster.g>
 
-On Tue, Jul 9, 2024 at 9:09=E2=80=AFPM Jeff King <peff@peff.net> wrote:
-> The chainlint.pl parser chokes on CRLF line endings. So Windows CI
-> produces:
->
->   runneradmin@fv-az1390-742 MINGW64 /d/a/git/git/t
->   # perl chainlint.pl chainlint/for-loop.test
->   'nternal error scanning character '
+On 2024-07-08 12:56:41-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+> >> I'd still suggest and prefer that git (and zlib) follows what others
+> >> have settled on doing to be cross-compile-friendly.
+> >
+> > I can't speak for the zlib project, but for this to happen in Git,
+> > someone with an interest in seeing such an outcome will need to submit
+> > patches.
+> 
+> Sure.  
+> 
+> Somebody unknown to the community suddenly coming here and
+> suggesting a feature alone would not achieve anything.  If there
+> were infinite engineering resources and motivated contributors, and
+> if sufficient number of contributors thought something is worth
+> doing, it would already have been done.  And "cross compilation" is
+> one of the things that is so obvious "isn't it nice if we had..."
+> items.  At least the offer has to be a bit more, like "I'll help in
+> this and that area (e.g., organizing the effort, keeping track of
+> progress, researching dependencies, ...).  Any others who want to
+> join forces?"
 
-As far as I understand, chainlint is disabled in the Windows CI. Did
-you manually re-enable it for testing? Or are you just running it
-manually in the Windows CI?
+I thought in Git project, Makefile is the official build system, and
+the autotools build system is only an after-thought, no?
 
-> We really just want to have perl handle the line endings on read. And doi=
-ng
-> this works:
->
->   # PERLIO=3D:crlf perl chainlint.pl chainlint/for-loop.test
->   # chainlint: chainlint/for-loop.test
->   # chainlint: for-loop
->   [...etc, normal output...]
->
-> Which gives me all sorts of questions:
->
->   - isn't crlf handling usually the default for perl builds on Windows?
->     I guess this is probably getting into weird mingw vs native Windows
->     distinctions that generally leave me perplexed.
+For cross-compilation, I think various project has been
+cross-compiling Git from forever.  They only need to provide a file
+named `config.mak' with proper information for that platform, e.g:
 
-Could be. I'm not sure how the Windows CI is provisioned, whether with
-some native-compiled Perl or with msys2/mingw Perl.
+	cat <<-EOF
+	prefix = /usr
+	CC = $CC
+	CFLAGS = $CFLAGS
+	LDFLAGS = $LDFLAGS
+	USE_LIBPCRE2 := $(if true; then echo Yes; fi)
+	perllibdir=/usr/share/perl5/vendor_perl
+	HOST_CPU = $(config.guess | cut -d- -f1)
+	ICONV_OMITS_BOM = Yes
+	NO_REGEX = Yes
+	EOF
 
->   - why wasn't this a problem before? I'm guessing again in the "weird
->     mingw stuff" hand-waving way that when we used "sed" to assemble
->     everything, it stripped the CR's in the "chainlinttmp/tests" file.
->     And in my series, that "cat" is replaced with a perl script (that
->     writes the "tests" and "expect" files together).
+Those last values need to be specified manually because they can't be
+detected by running a test program anyway.  Those keys are already
+listed in Makefile.
 
-Assuming you manually re-enabled chaintlint in the Windows CI for this
-testing or are running it manually, it may be the case that
-chainlint.pl has never been run in the Windows CI. Specifically,
-chainlint in Windows CI was disabled by a87e427e35 (ci: speed up
-Windows phase, 2019-01-29) which predates the switchover from
-chainlint.sed to chainlint.pl by d00113ec34 (t/Makefile: apply
-chainlint.pl to existing self-tests, 2022-09-01). So, it's quite
-possible that chainlint.pl has never run in Windows CI. But, perhaps
-I'm misunderstanding or missing some piece of information.
-
-That said, I did thoroughly test chainlint.pl on Windows using Git For
-Windows, and it did run in that environment. (But if the Windows CI
-environment is somehow different, then that might explain the
-problem?)
-
->   - why doesn't "PERLIO=3D:crlf make check-chainlint" work? It seems that
->     perl spawned from "make" behaves differently. More mingw weirdness?
-
-That could indeed be an msys2 issue. It will automatically convert
-colon ":" to semicolon ";" in environment variables since the PATH
-separator on Windows is ";", not ":" as it is on Unix. Moreover, the
-":" to ";" switcheroo logic is not restricted only to PATH since there
-are other PATH-like variables in common use, so it's applied to all
-environment variables.
-
-> I'm tempted to just do this:
->
->         while (my $path =3D $next_script->()) {
->                 $nscripts++;
->                 my $fh;
-> -               unless (open($fh, "<", $path)) {
-> +               unless (open($fh, "<:unix:crlf", $path)) {
->
-> It feels like a hack, but it makes the parser's assumptions explicit,
-> and it should just work everywhere.
-
-Yep, if this makes it work, then it seems like a good way forward,
-especially since I don't think there's any obvious way to work around
-the ":" to ";" switcheroo performed by msys2.
+-- 
+Danh
