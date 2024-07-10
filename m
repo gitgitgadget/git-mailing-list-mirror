@@ -1,198 +1,345 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C61195F28
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 17:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333DC6F31C
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 18:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720634294; cv=none; b=S73MYUHJ/bm7Y6/f1iJtO/XDGT42Id0fpA4oKB6a9gC3T0eqANeuUCEbK+U2gXg5D083bE8lFx5+UpMU0tNKC3ZaXxMUChpy+z/NqO5lMtFxiWc0vIC575e8h+2KDjQTswi7p76VXkcctoYmENCkRhkuU4x772+fAHuySqGBdTY=
+	t=1720637763; cv=none; b=O9rL5sBXYf6zUW9pxNQnI9Gv0yx5uT78GxJPT/QmyWhSqpBUPiKrKePu7GRv4sYHh/CflEh8HALLMMtSMBh6JZ0tmNXmn3uKOSpLGB95bGB19fXaeZHZOUiU8Y8m60vgVii01ehFALQTpuTUg++nnmE2+3pCYguIy4FHorWxDME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720634294; c=relaxed/simple;
-	bh=/nk7k1TmeELaU/SHzxLVD2HMTQs1UcHyKiHv7330AOE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K8tqFR0SQSCsQSGlBDA0+c90iKfDvWl7bWAiU72KYTfvp51QyNHTh3fw2H0SEUj1czImg5ZJQER17OdoH2SyAxN6tQ+CLWZ5Z1xgsorN5DfS9OApMmDX2MGd+Tweks62lFis3p9tmR49lbih/JFrLPcdVNfgDMpd/dUOtx0vz/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=k0kuoNEa; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1720637763; c=relaxed/simple;
+	bh=41fM41En7Fr5NQFlKYd41G0JYims/0OIQNAHjFzNXII=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=C4YqqeBbsG5suhetaY83r9SyIrERZTl4Xm7toGlW/h0KkxJk8BPsD2vvUEEQ4SO++J32S3d9ThNHBS886U36loOTF3sjLR+THkDJqCoQqSwaizYYiXuP00eXgsocn4RgTUVyotyrjuRKsLl1e/RbJPhL1efEIKeKjR+96+qXCro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DpRzlwVk; arc=none smtp.client-ip=209.85.160.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="k0kuoNEa"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0950A1EC20;
-	Wed, 10 Jul 2024 13:58:10 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=/nk7k1TmeELaU/SHzxLVD2HMTQs1UcHyKiHv73
-	30AOE=; b=k0kuoNEaIAmHj5So/Bnu1VNk1hDllVGMN5tISOiCmpZBk1+s1UjtFi
-	2VP5ogWReF7J17FQk7okNdrxqYHqQ0jjGLmSLy6iqj9AXv+zkSw0Ns7nOH0eZhRF
-	G4R3KBsDhYVMjDlUz85VuspkFVKpR2WeGU8qfKAeFuH/s+jgqGxqY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 00E781EC1F;
-	Wed, 10 Jul 2024 13:58:10 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3A3351EC1E;
-	Wed, 10 Jul 2024 13:58:08 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Antonin Delpeuch <antonin@delpeuch.eu>,
-    Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2] merge-recursive: honor diff.algorithm
-In-Reply-To: <pull.1743.v2.git.git.1720551701648.gitgitgadget@gmail.com>
-	(Antonin Delpeuch via GitGitGadget's message of "Tue, 09 Jul 2024
-	19:01:41 +0000")
-References: <pull.1743.git.git.1720431288496.gitgitgadget@gmail.com>
-	<pull.1743.v2.git.git.1720551701648.gitgitgadget@gmail.com>
-Date: Wed, 10 Jul 2024 10:58:06 -0700
-Message-ID: <xmqqmsmpw2mp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DpRzlwVk"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-44664ad946eso36591cf.1
+        for <git@vger.kernel.org>; Wed, 10 Jul 2024 11:56:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1720637760; x=1721242560; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=E6MaZfocuqsa4AfAWjXdblZ1CxVLlgPZhnThCkBh/bY=;
+        b=DpRzlwVk0YLUCfi+WUUDC6oC4k+GuONeHWNy16s2P8jFvYG1/u428Zw59vAbHfhCfZ
+         0yxEf+9CrtvOK9Zggsq8eteo+flUHzyGGKhsnffTQ8anJSP5iWfl7CbMMBFqwLDA62NY
+         mgXiNTOQUdzBWMI2LSOsekPB163lzpwEebmXY3eF55Od4LKbDYQjKtkn/6aYnqZflum7
+         ynmG2OpqSsu/ZmFeKMUzbaP6aKehPFUs/ydivfHS87ZHUSRHuv9CdFCPA/GwYzlQ4Yev
+         CssIayzhN/QLe4oWPq6EYNzObh8bqt7vsdSzt9T6QiKlV4jxgcgO5akChHZt+JpkVe1d
+         4jnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720637760; x=1721242560;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=E6MaZfocuqsa4AfAWjXdblZ1CxVLlgPZhnThCkBh/bY=;
+        b=v7G6apaoky9UTYpYYzEOZoqLLOdqLgELjaYPuI01RN/cxFar3pH5TE2bdRQMbeXjlv
+         Fl4n/WAGt5aAfoYqsRczPjkBBXQLHBuvUtMiHgxkK0kOfk5BphLrV+451x3XgkZlk733
+         eoVnk18nYaTS7pE7k2QwhhdzkoglIurUEm90PAGg/4WhMhrsASQFozKaLeoereglyZMv
+         WK2WEaY4p/kJ3GX6KfKOok/G8wu7J7CXB15JOJflDHXSw5gKqBpdSULtIrjR58lXnfxM
+         x2ZKT9l28S5JZl/55gz7UJRfc48kLcogWmJdqS5q1aznmKkCXAZatZ5K5nZObcEnCi0N
+         jY1Q==
+X-Gm-Message-State: AOJu0Yygkn1UuXb6CPQLrdWY+wE8AtUuTsCVmWKQ91TATI28Y53ywZdC
+	VJHZXrxvBF88cXLsU0za9/M/sZu2bfzixsu9iSztN3Lo2a0MQ8JvIeSL0Ym0Hkm9g4gT30dm8Qq
+	yTPSiXj9keckw0CTlujCyn60zrAQVM7+3Av4QkpWJW91R3EENV+E6
+X-Google-Smtp-Source: AGHT+IEY45a5bag4olcdBET/c/ZR1qJ57JoGfQwiX8Feg1Hgh99LTCOJkut3endi2dBSjEFHvRMj5vyhORkRBEWgC80=
+X-Received: by 2002:a05:622a:44c5:b0:447:e393:fed1 with SMTP id
+ d75a77b69052e-44d118931afmr317401cf.7.1720637759706; Wed, 10 Jul 2024
+ 11:55:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- F6E7A67E-3EE5-11EF-9B17-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+References: <20240709225042.2005233-1-emilyshaffer@google.com> <xmqqfrsi9i8y.fsf@gitster.g>
+In-Reply-To: <xmqqfrsi9i8y.fsf@gitster.g>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Wed, 10 Jul 2024 11:55:45 -0700
+Message-ID: <CAJoAoZn6zB+e5x6FEvesu173dHhgWBt7ZQ51H8ebp31kQKFCgw@mail.gmail.com>
+Subject: Re: [PATCH] Documentation: add platform support policy
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>, 
+	Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Antonin Delpeuch <antonin@delpeuch.eu>
+On Tue, Jul 9, 2024 at 5:57=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> The documentation claims that "recursive defaults to the diff.algorithm
-> config setting", but this is currently not the case. This fixes it,
-> ensuring that diff.algorithm is used when -Xdiff-algorithm is not
-> supplied. This affects the following porcelain commands: "merge",
-> "rebase", "cherry-pick", "pull", "stash", "log", "am" and "checkout".
-> It also affects the "merge-tree" ancillary interrogator.
+> Emily Shaffer <emilyshaffer@google.com> writes:
+>
+> > +Platform Support Policy
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +Git has a history of providing broad "support" for exotic platforms an=
+d older
+> > +platforms, without an explicit commitment. This support becomes easier=
+ to
+> > +maintain (and possible to commit to) when Git developers are providing=
+ with
+>
+> "providing"?  "provided"?
+>
+> > +adequate tooling to test for compatibility. Variouis levels of tooling=
+ will
+>
+> "Variouis"?
 
-Unfortunate.
+Thanks, fixed both for next time there's a reroll ready.
 
-Since be733e12 (Merge branch 'en/merge-tree', 2022-07-14),
-merge-tree is no longer an interrogator but works as an manipulator.
-As it is meant to be used as a building block that gives a reliable
-and repeatable output, I am tempted to say it should be categorized
-as a plumbing, but second opinions do count.  Elijah Cc'ed as it was
-his "fault" to add "--write-tree" mode to the command and forgetting
-to update command-list.txt ;-)
+>
+> > +allow us to make more solid commitments around Git's compatibility wit=
+h your
+> > +platform.
+> > +
+> > +Compatible by vN+1 release
+> > +--------------------------
+>
+> I couldn't quite tell what you meant by vN+1 on the title.  If Git
+> v2.45.X were working fine on an un(der)maintained platform, and some
+> changes went into Git v2.46.0 were incompatible with it, then vN
+> would obviously be v2.46.0 but what is vN+1?  v2.47.0 or v2.46.1?
+>
+> howto/maintain-git.txt calls v2.47.0 "the next feature release"
+> after v2.46.0, while v2.46.1 is "the first maintenance release".
+>
+> > +To increase probability that compatibility issues introduced in a poin=
+t release
+> > +will be fixed by the next point release:
+>
+> So you meant "by v2.46.1 (or if you fail to notice breakage then it
+> might slip until v2.46.2)".  Is the procedure for the platform folks
+> any different if they target the next feature release?
+>
+> I think what they need to do would not change all that much between
+> these two cases, so I'd suggest dropping a mention of "point
+> release".  I.e, "introduced in an earlier release will be fixed by a
+> future release".
+>
+> A point release cannot introduce compatibility issues or any
+> breakages, but mistakes happen ;-) But for a receiver of a new bug,
+> it does not matter an iota if a point release or a major release
+> introduced an issue.
+>
+> To recap, my suggestions for the above part are:
+>
+>  - retitle to "Compatible by the next release"
+>
+>  - "introduced in an earlier release will be fixed by a future
+>    release" without mentioning the nature of releases like point,
+>    feature, and maintenance.
 
-But I agree with the direction of this patch and the structure of
-the solution (i.e. have two variants of init_*_options()).
+Thanks for the thorough clarification, I hadn't thought in as much
+detail as this :) Will make those edits.
 
-> This change refactors the initialization of merge options to introduce
-> two functions, "init_merge_ui_options" and "init_merge_basic_options"
-> instead of just one "init_merge_options". This design follows the
-> approach used in diff.c, providing initialization methods for
-> porcelain and plumbing commands respectively. Thanks to that, the
-> "replay" and "merge-recursive" plumbing commands remain unaffected by
-> diff.algorithm.
+>
+> > +* You should send a bug report as soon as you notice the breakage on y=
+our
+> > +platform. The sooner you notice, the better; it's better for you to wa=
+tch `seen`
+> > +than to watch `master`.
+>
+> Let's clarify what goal they want to achieve by "watching".
 
-In other words, these two are the only ones that use the _basic
-variant.
+Fixed for next reroll.
 
-I am unsure (read: do not take this as my recommendation to change
-your patch) which one merge-tree should use, but other than that,
-nicely done.
+>
+>     ... for you to watch `seen` to prevent changes that break your
+>     platform from getting merged into `next`, than to watch `master`.
+>
+> > See linkgit:gitworkflows[7] under "Graduation" for an
+> > +overview of which branches are used in git.git, and how.
+>
+> Or "The Policy" section of howto/maintain-git.txt where the use of
+> each branch makes it a bit more clear what 'next' is for, and why
+> 'seen' may be worth looking at by these people.
 
-> diff --git a/log-tree.c b/log-tree.c
-> index 101079e8200..5d8fb6ff8df 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -1025,7 +1025,7 @@ static int do_remerge_diff(struct rev_info *opt,
->  	struct strbuf parent2_desc = STRBUF_INIT;
->  
->  	/* Setup merge options */
-> -	init_merge_options(&o, the_repository);
-> +	init_ui_merge_options(&o, the_repository);
->  	o.show_rename_progress = 0;
->  	o.record_conflict_msgs_as_headers = 1;
->  	o.msg_header_prefix = "remerge";
+Thanks, yeah, changed the link to point there instead.
 
-Isn't log-tree shared with things like "git diff-tree" porcelain?
+>
+>
+> > +Compatible on `master` and point releases
+> > +-----------------------------------------
+> > +
+> > +To guarantee that `master` and all point releases work for your platfo=
+rm the
+> > +first time:
+>
+> OK, as most of the changes go to `master` before getting merged down
+> to `maint` to become part of the next maintenance release, actively
+> protecting `master` from bugs is worthwhile.  What about changes
+> that do not come via the `master` branch?  Should they also join the
+> security list and have an early access to the cabal material?
 
-> -static void merge_recursive_config(struct merge_options *opt)
-> +static void merge_recursive_config(struct merge_options *opt, int ui)
->  {
->  	char *value = NULL;
->  	int renormalize = 0;
-> @@ -3930,11 +3930,20 @@ static void merge_recursive_config(struct merge_options *opt)
->  		} /* avoid erroring on values from future versions of git */
->  		free(value);
->  	}
-> +	if (ui) {
-> +		if (!git_config_get_string("diff.algorithm", &value)) {
-> +			long diff_algorithm = parse_algorithm_value(value);
-> +			if (diff_algorithm < 0)
-> +				die(_("unknown value for config '%s': %s"), "diff.algorithm", value);
-> +			opt->xdl_opts = (opt->xdl_opts & ~XDF_DIFF_ALGORITHM_MASK) | diff_algorithm;
-> +			free(value);
-> +		}
-> +	}
->  	git_config(git_xmerge_config, NULL);
->  }
+Good question, I actually am not sure of the answer. Does that make it
+too easy for anybody to claim they maintain some random platform and
+therefore they'd like to see all the RCE howtos weeks before they are
+fixed? I guess that we already have distro packagers in security
+list/cabal, so it may not be worse exposure than that.
 
-This looks sensible.  Even though we have a single merge_recursive()
-that is internally callable, depending on the callers, they may or
-may not want to be affected by configuration.
+>
+> > +* You should run nightly tests against the `next` branch and publish b=
+reakage
+> > +reports to the mailing list immediately when they happen.
+> > +* It may make sense to automate these; if you do, make sure they are n=
+ot noisy
+> > +(you don't need to send a report when everything works, only when some=
+thing
+> > +breaks).
+> > +* Breakage reports should be actionable - include clear error messages=
+ that can
+> > +help developers who may not have access to test directly on your platf=
+orm.
+> > +* You should use git-bisect and determine which commit introduced the =
+breakage;
+> > +if you can't do this with automation, you should do this yourself manu=
+ally as
+> > +soon as you notice a breakage report was sent.
+>
+> All of the above are actually applicable to any active contributors
+> on any platforms.  If your group feeds custom builds of Git out of
+> "master" to your $CORP customers, you want to ensure you catch
+> badness while it is still in "next" (or better yet, before it hits
+> "next").  If your internal builds are based on "next", you'd want to
+> ensure that "next" stays clean, which means you'd need to watch
+> "seen" (or better yet, patches floating on the list before they hit
+> "seen").  Your group may build with unusual toolchain internal to
+> your $CORP and may link with specialized libraries, etc., in which
+> case maintaining such a build is almost like maintaining an exotic
+> platform.
 
-As to the tests, it felt a bit unnatural and error prone to make
-t7615 depend on material that appears to be made only for t3515 (by
-naming the directory as such).
+Hits close to home ;)
 
-We have not done "a test-material directory that is shared among
-multiple tests" in t/, but we have plenty of "test helpers that are
-shared across multiple tests" named lib-foo.sh.  I wonder if
-doing something like
+Does this mean that this part of the document should go somewhere else
+and we should just use a pointer here? Is there a guide handy for "how
+to soft-fork Git"?
 
-	... in t/lib-histogram-merge-history.sh ...
-	# prepare history for merges that depend on diff.algorithm
-	setup_history_for_histogram () {
-		cat >file.c <<\EOF &&
-		... contents of base.c ...
-		EOF
-		git add file.c &&
-		git commit -m c0 &&
-		git tag c0 &&
+>
+> > +* You should either:
+> > +** Provide VM access on-demand to a trusted developer working to fix t=
+he issue,
+> > +so they can test their fix, OR
+> > +** Work closely with the developer fixing the issue - testing turnarou=
+nd to
+> > +check whether the fix works for your platform should not be longer tha=
+n a
+> > +business day.
+>
+> These are very specific, especially for minority platform folks.  I
+> agree with the direction, but "not be longer than" might be too
+> strong.  Longer turnaround time will certainly make the issue
+> resolution slower, but if the platform maintainer can stand it, that
+> is their choice.  Finding some volunteers among our developers who
+> are familiar with the code to help their problem with more patience
+> and can wait for more than a business day is also up to them.
 
-		cat >file.c <<\EOF &&
-		... contents of ours.c ...
-		EOF
-		...
-                git tag c2
-	}		
+Maybe something like this is better?
 
-and make the setup step in t3515 (and t7615) use that shared set-up
-function like so:
+"Work closely with the developer fixing the issue; the turnaround to
+check that a proposed fix works for your platform should be fast
+enough that it doesn't hinder the developer working on that fix. If
+the turnaround is too slow, fixing the issue may miss the next release
+or the developer may lose interest in working on the fix at all."
 
-	. ./test-lib.sh
-	. "$TEST_DIRECTORY/test-lib-histogram-merge/history.sh"
+This last bit seems harsh but might be a good reminder - in this
+situation, the developer is a volunteer, and if that volunteer work is
+artificially annoying, they can decide to stop doing it. Open to
+rephrasing.
 
-	test_expect_success setup '
-		setup_history_for_histogram
-	'
+>
+> > +Compatible on `next`
+> > +--------------------
+> > +
+> > +To guarantee that `next` will work for your platform, avoiding reactiv=
+e
+> > +debugging and fixing:
+> > +
+> > +* You should add a runner for your platform to the GitHub Actions CI s=
+uite.
+> > +This suite is run when any Git developer proposes a new patch, and hav=
+ing a
+> > +runner for your platform/configuration means every developer will know=
+ if they
+> > +break you, immediately.
+>
+> This would be nice even if the platform maintainer do not care about
+> `next` occasionally breaking (i.e. keep `master` working, in the
+> previous section, or even find breakages on `master` before the next
+> feature release, in the section before that).
 
-may be cleaner?  I am mostly afraid of mistakes like "now we are
-done with the area 3515 covered let's remove all the traces of it,
-like t3515-cherry-pick-diff.sh and t3515/ directory", breaking an
-seemingly unrelated t7615.
+I agree that it would be nice for any scenario :)
 
-Even better.  Can't we save the scarce resource that is test number
-and make these not about "I test cherry-pick" and "I test merge"?
-You are testing how mergy operations are affected by the choice of
-diff.algorithm, so perhaps create a single test file and name it
-after that single shared aspect of the tests you are adding?
-Perhaps t/t7615-diff-algo-with-mergy-operations.sh that has all
-three of these:
+I was trying to link lower quality of service with lower investment;
+it would be nice to have things from the "higher investment" tier, but
+it's not really necessary for Git to be providing that worse quality
+of service.
 
- * the setup_history_for_histogram() helper function as described
-   above;
+Would it be worth mentioning at the very beginning of the doc that
+"it's OK if you pick and choose between different tiers, and we
+appreciate anything that takes a higher investment, but these lists
+should give you an impression of what you'll get from the level of
+effort you want to provide yourself"? Probably not with that exact
+phrasing, but to try and get that concept across, at least.
 
- * the test for cherry-pick in this patch;
+>
+> > +* If you rely on Git avoiding a specific pattern that doesn't work wel=
+l with
+> > +your platform (like a certain malloc pattern), if possible, add a cocc=
+icheck
+> > +rule to ensure that pattern is not used.
+>
+> Sorry, but I do not quite follow you here.
+>
+> In general, it is a bad idea to promise that we are willing to tie
+> our hands with coccicheck to satisfy needs by exotic platforms,
+> without first having a chance to see and evaluate such needs.
+>
+> "if possible, add" -> "sometimes it may turn out to be a good idea
+> to add", perhaps?
 
- * the test for merge in this patch.
+Maybe it is better to ask them to discuss it with us on-list, and that
+the result of that discussion may be that they should add some such
+test? Or, do we want to firmly say, no coccicheck restrictions based
+on platform, give us a CI runner or bust? I don't feel super strongly
+either way - writing this section I was trying to come up with any way
+to get on-demand ~instant (<1hr) feedback to any contributor, and this
+seemed like one someone could do. That doesn't mean we have to let
+them, if we don't like this way.
 
-Thanks.
+>
+> > +* If you rely on some configuration or behavior, add a test for it. Yo=
+u may
+> > +find it easier to add a unit test ensuring the behavior you need than =
+to add an
+> > +integration test; either one works. Untested behavior is subject to br=
+eakage at
+> > +any time.
+>
+> A unit test may be easier to add than an end-to-end test, but given
+> that end-users and platform maintainers want to see Git work as a
+> whole (e.g., if you prepare two repositories and do "git push there
+> :refs/heads/foo" then it removes the 'foo' branch), an end-to-end
+> test would probably be more useful and robust way to ensure that a
+> feature you care about will keep working.
+>
+> In any case, I am not sure the sentence that ends with "either one
+> works" is worth existing here in this document.  Two important points
+> to stress here are (1) add test to protect what you care about and (2)
+> otherwise you can keep both halves.
+>
+
+Thanks, will do.
+
+
+I've got a couple of changes locally but I'll hold off on the reroll
+til the open phrasing questions get resolved, and I get through
+brian's review as well, and maybe another day to see if Randall makes
+a response, since I cc'd him too. Will aim to send out v2 Friday
+latest (barring any combustion events at $dayjob). Thanks much for the
+quick and thorough reply.
+
+ - Emily
