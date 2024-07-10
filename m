@@ -1,140 +1,281 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C71D535
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 08:21:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2757D3F5
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 08:34:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720599719; cv=none; b=leQzs4ZUKQSF37dcI1PSCN/gfkqOPY31nnbCE24f6C0VCrTVKpWE5WY9vi5A2BsZ4v4FXEwk4Dzg1mUm8KT6Rn2y/nQ87mAQjV9LPkxktzo+pv+VKrpEXh+1bA5HpAT8wpY/T36r1qIFW89mUay9eeolLptvGZfq0E8NXTtDcGI=
+	t=1720600461; cv=none; b=QSXrwmjuu1dctNrxztzUq1OJ4IUVFe/2kPqlcVPWQLJH16HWLzATKf0IjR1TUtaM0EBUbhO+8wDJUCel2x0CJAXwpWas2wVuJ6pEj76lDJYCW2c0AQM8UfSFhOKZCbbUjKGvT1yrdGDM3UtX7QN6847qOkVW2nBLkfpQWBmTqbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720599719; c=relaxed/simple;
-	bh=ZmeHxpLKOgM+/gey/kzQ8XFDHVfn72Blt0tRhBdu9B8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TCjwpEwp8DXdpYEx0TrIGLXM70zqw6u5J40BRlkBRu1j0I5i1eTkCNQKc4mRyIhF017xxxlXzqbgHWUTYCZwskyt49hWNHT/GyLcA+BZu5jobCPQQ37SS55A7T/3i7lhmnp9slgVihXEAql33SDNeEnknPKgw7WSVMT5X4Dr5D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W6QL+Oe1; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W6QL+Oe1"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-65011d9bd75so51880427b3.2
-        for <git@vger.kernel.org>; Wed, 10 Jul 2024 01:21:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720599717; x=1721204517; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+xdAG5LB+N/97m3x6tPXbwXESBNzd6bFHAbUlaSrXWA=;
-        b=W6QL+Oe19V0rf4luuiSk4rNOBTx424ChbuJV2YA3gO5wKCNqM8t/JESFtMf6Qcp7ZV
-         2w49JbT3WLLKmbDF7dPS1Zduj3/6n7aIdiCVOZF58aK3KPmHHwiAyaIaNezyHR6J9xKd
-         otQsyq6X41bs11Nyem+hrT0NHyz/SOj0GEhNuyPmvlcxn8Twav4A0bz8acfyGHVyRY8j
-         NfqeCCtJDIYcLmtVqb2h+DhWtdGgRWXYonTHfp+MoG9C2tPsWAPDn+7HZoVr0MrOP8jv
-         nh169/GH65dAqJfDl3Dwk1Qgj1kDPeSQPXyGwc4oH4SV57bYM0XWHzG3bCVMXNWb3pMu
-         J/4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720599717; x=1721204517;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+xdAG5LB+N/97m3x6tPXbwXESBNzd6bFHAbUlaSrXWA=;
-        b=sqpjXUa23ZBykCPzzp5ksDtGQzhzY9kzU2Uh0m0aLE1HE8b8gbf9n5L4nT67F6CaSs
-         bZRkZZXd6jYdWpdE41KIraxvh6GE/o1FKODgBcXdIOWTpRtBGGELOmV3rlrFcqnr+xrO
-         TjxiKd/kzOQfTmlaHnVmO+rTeyPWGRQapGA7JE90V2+tWSV5KqeKHFqricy9Gbd3Ln2M
-         LvoVukItGSv+TIymdTcg1bMSuCnWyqkNIpM+sbei1qk2zG8MJvWBPKm6+fI5aCI5AMKb
-         KjpnGXaow5XJ49t4JNRU1og9TEPXS0ngIZR7FQ+JokZbhLWRnc8fyon94Q6HNuJ4XiQB
-         sY0w==
-X-Forwarded-Encrypted: i=1; AJvYcCUQVOw5SlsOHSjea5yU5c3p2riWz8tWQUXJGuk0J4jZijmD/baISE0iK/2zim3MQ7rJRV3l+QHbzFIWtUbXrp7RxwUQ
-X-Gm-Message-State: AOJu0YzF+2l4vMvXSiCehyRi7cx3HokmToYT+tUFkQ1k2lRmO/HKEeoB
-	n61NjVEOPVU++0d+hNH0qUKpxYfy/p2BIjWgjwTCdwKuQAKr9QAGnomO/k9Yuzk/hmWKZTRnoN7
-	of7hVKRjMebTuwW2zITmcV608VV4=
-X-Google-Smtp-Source: AGHT+IGg3Rh+8wY1HCZzV+Wu1WnTmr4V3qxB1JgOVsDNfPWyl9ssg8RoXOfZGWftvtaMPMz6BomprwZ5ncVpEgmSWnI=
-X-Received: by 2002:a05:690c:6ac1:b0:627:e963:2bcf with SMTP id
- 00721157ae682-658f09d671bmr51878657b3.51.1720599716500; Wed, 10 Jul 2024
- 01:21:56 -0700 (PDT)
+	s=arc-20240116; t=1720600461; c=relaxed/simple;
+	bh=8VFTy6kRh5gnKTt2YR6zZHc30VWofvqdm0madhiIJt0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JyhfCwukRTOBO+sy63iQnwz5MmeLZAhJ9c9IKPzdzsVGn49sBO9ln1ssUaq7J3nMTOHpCqkDOKPsz53MEXZoGclparhfurZAcJsSeCaQCzPIqKfhgoDb9GPjNkpnfzxITDIRtChBDsO0Dm4BF3EvK9l01tgEy0VZ1924iGKv564=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 1614 invoked by uid 109); 10 Jul 2024 08:34:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Jul 2024 08:34:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10372 invoked by uid 111); 10 Jul 2024 08:34:15 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Jul 2024 04:34:15 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 10 Jul 2024 04:34:16 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: [PATCH v2 0/9] here-doc test bodies (now with 100% more chainlinting)
+Message-ID: <20240710083416.GA2060328@coredump.intra.peff.net>
+References: <20240701220815.GA20293@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALaQ_hoDqD6CXEDy0YT8no3SaoJSqV6toMtyRHdJr6h3RZUiLA@mail.gmail.com>
- <CAPig+cSB0d7aAwMpToLCa+6Be5JFqLAr+0pvBXQxg_=DEk7p2A@mail.gmail.com>
- <CALaQ_hr2Hzri6y4KwYOPmGzfvM8EjJpddvLL7CQ=d3H4QLCzJw@mail.gmail.com>
- <CAPig+cTaH+TiD9Ut5Q_BPinqdAirW51J56R_tUTSnL=XGzxvfg@mail.gmail.com>
- <xmqqjzhvejye.fsf@gitster.g> <Zo3-FVT5EFyKsdGc@danh.dev>
-In-Reply-To: <Zo3-FVT5EFyKsdGc@danh.dev>
-From: Nathan Royce <nroycea+kernel@gmail.com>
-Date: Wed, 10 Jul 2024 03:21:20 -0500
-Message-ID: <CALaQ_hrhZ7qr2D+2q5ygQYG+M8=feMiYJYyuN7C+7b7gdkCZ=g@mail.gmail.com>
-Subject: Re: FR: Provide Out-Of-Tree Building; Provide Cross-Compile Parameters
-To: =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240701220815.GA20293@coredump.intra.peff.net>
 
-On Tue, Jul 9, 2024 at 10:20=E2=80=AFPM =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4=
-ng Danh
-<congdanhqx@gmail.com> wrote:
->
-> I thought in Git project, Makefile is the official build system, and
-> the autotools build system is only an after-thought, no?
->
-> For cross-compilation, I think various project has been
-> cross-compiling Git from forever.  They only need to provide a file
-> named `config.mak' with proper information for that platform, e.g:
->
->         cat <<-EOF
->         prefix =3D /usr
->         CC =3D $CC
->         CFLAGS =3D $CFLAGS
->         LDFLAGS =3D $LDFLAGS
->         USE_LIBPCRE2 :=3D $(if true; then echo Yes; fi)
->         perllibdir=3D/usr/share/perl5/vendor_perl
->         HOST_CPU =3D $(config.guess | cut -d- -f1)
->         ICONV_OMITS_BOM =3D Yes
->         NO_REGEX =3D Yes
->         EOF
->
-> Those last values need to be specified manually because they can't be
-> detected by running a test program anyway.  Those keys are already
-> listed in Makefile.
->
-> --
-> Danh
+On Mon, Jul 01, 2024 at 06:08:15PM -0400, Jeff King wrote:
 
-(noted the "top-most" comment earlier, I didn't realize that was a
-thing. Even "ticket/issue" emails always say "Don't write *below* this
-line")
+> This is a re-post of an idea from 2021:
+> 
+>   https://lore.kernel.org/git/YHDUg6ZR5vu93kGm@coredump.intra.peff.net/
+> 
+> that people seemed mostly positive on, and I just never got around to
+> following up. Mostly because it's not life-changing, but I think it is a
+> small quality of life improvement, and it came up again recently in:
+> 
+>   https://lore.kernel.org/git/20240701032047.GA610406@coredump.intra.peff.net/
+> 
+> So I thought it was worth considering again.
 
-Danh, I was referring to the "--' parameters that is common amongst
-most of the configure/make-based projects.
-While I believe I had already had a "config.auto.mak" file generated,
-it didn't appear that I could do OOT builds with it.
-If perhaps there was some var I could pass into "make" where I could
-point to the file, that'd be good (though I'd still question whether
-that would even be enough to get OOT builds).
+And here's a v2 that addresses the chainlint issue mentioned by Eric.
+There were a lot of patches flying around, but this is only the second
+posting of the whole topic. This can replace all of what's in
+jk/test-body-in-here-doc.
 
-Someone on the IRC channel pointed out to me that there IS a
-CMakeLists.txt file and I found it is included in
-"contrib/buildsystems".
-Awesome, right? So I thought and hoped...
-Before I get into it, it might be nice to have that mentioned in INSTALL/RE=
-ADME.
+I bailed on trying to notice:
 
-While that gets me the OOT builds, it seems it forces the use of
-pcre2, even when it isn't installed in sysroot.
-If it's installed in the build system, it'll find it there and say
-things are good to go even though the actual "make" will fail because
-of it.
-"configure" defaults pcre2 to "no", so it builds fine (apart from not
-being OOT and other stuff I have to do).
+  test_expect_success 'oops, forgot the dash' <<\EOT
 
-Getting closer (after manually commenting that USE_PCRE2 stuff in the
-file (which I also don't like since source is no longer pristine),
-though I just now got:
-*****
-...
-[ 76%] Built target scalar
-make[2]: *** No rule to make target 'git-remote-http', needed by
-'git-add'.  Stop.
-*****
-so I'll have to peek as to what that's about.
+or:
+
+  test_expect_success 'oops, forgot the here doc' -
+
+or:
+
+  test_expect_success <<\EOT 'here-doc tag comes first' -
+
+As those all require some big refactoring ScriptParser::check_test(),
+etc, and this topic has already grown quite a lot.
+
+I won't bother with a range diff; patches 8 and 9 are just the original
+v1 patches verbatim, and everything else is new.
+
+  [1/9]: chainlint.pl: add test_expect_success call to test snippets
+
+    Test refactoring for chainlint before we change it.
+
+  [2/9]: chainlint.pl: only start threads if jobs > 1
+  [3/9]: chainlint.pl: do not spawn more threads than we have scripts
+
+    These two aren't strictly necessary, but some easy speedups I hit
+    along the way (they depend on patch 1 for showing the speedup).
+
+  [4/9]: chainlint.pl: force CRLF conversion when opening input files
+  [5/9]: chainlint.pl: check line numbers in expected output
+
+    These two make the chainlint tests more robust against the
+    line-number bugs we hit while developing patch 6.
+
+  [6/9]: chainlint.pl: recognize test bodies defined via heredoc
+
+    This is Eric's fix (thanks!) for chainlint to recognize the new
+    format, including the line-number fixes that we discussed.
+
+  [7/9]: chainlint.pl: add tests for test body in heredoc
+
+    And then I kept my tests of the new feature split into their own
+    commit.
+
+  [8/9]: test-lib: allow test snippets as here-docs
+  [9/9]: t: convert some here-doc test bodies
+
+    And then this is the actual purpose of the series. ;)
+
+ t/Makefile                                    |  16 +-
+ t/README                                      |   8 +
+ t/chainlint-cat.pl                            |  29 +++
+ t/chainlint.pl                                |  33 ++-
+ t/chainlint/arithmetic-expansion.expect       |  18 +-
+ t/chainlint/arithmetic-expansion.test         |   2 +
+ t/chainlint/bash-array.expect                 |  20 +-
+ t/chainlint/bash-array.test                   |   2 +
+ t/chainlint/blank-line-before-esac.expect     |  36 ++--
+ t/chainlint/blank-line-before-esac.test       |   2 +
+ t/chainlint/blank-line.expect                 |  16 +-
+ t/chainlint/blank-line.test                   |   2 +
+ t/chainlint/block-comment.expect              |  16 +-
+ t/chainlint/block-comment.test                |   2 +
+ t/chainlint/block.expect                      |  46 ++--
+ t/chainlint/block.test                        |   2 +
+ t/chainlint/broken-chain.expect               |  12 +-
+ t/chainlint/broken-chain.test                 |   2 +
+ t/chainlint/case-comment.expect               |  22 +-
+ t/chainlint/case-comment.test                 |   2 +
+ t/chainlint/case.expect                       |  38 ++--
+ t/chainlint/case.test                         |   2 +
+ t/chainlint/chain-break-background.expect     |  18 +-
+ t/chainlint/chain-break-background.test       |   2 +
+ t/chainlint/chain-break-continue.expect       |  24 +--
+ t/chainlint/chain-break-continue.test         |   2 +
+ t/chainlint/chain-break-false.expect          |  18 +-
+ t/chainlint/chain-break-false.test            |   2 +
+ t/chainlint/chain-break-return-exit.expect    |  38 ++--
+ t/chainlint/chain-break-return-exit.test      |   2 +
+ t/chainlint/chain-break-status.expect         |  18 +-
+ t/chainlint/chain-break-status.test           |   2 +
+ t/chainlint/chained-block.expect              |  18 +-
+ t/chainlint/chained-block.test                |   2 +
+ t/chainlint/chained-subshell.expect           |  20 +-
+ t/chainlint/chained-subshell.test             |   2 +
+ .../close-nested-and-parent-together.expect   |   6 +-
+ .../close-nested-and-parent-together.test     |   2 +
+ t/chainlint/close-subshell.expect             |  52 ++---
+ t/chainlint/close-subshell.test               |   2 +
+ .../command-substitution-subsubshell.expect   |   4 +-
+ .../command-substitution-subsubshell.test     |   2 +
+ t/chainlint/command-substitution.expect       |  18 +-
+ t/chainlint/command-substitution.test         |   2 +
+ t/chainlint/comment.expect                    |  16 +-
+ t/chainlint/comment.test                      |   2 +
+ t/chainlint/complex-if-in-cuddled-loop.expect |  18 +-
+ t/chainlint/complex-if-in-cuddled-loop.test   |   2 +
+ t/chainlint/cuddled-if-then-else.expect       |  12 +-
+ t/chainlint/cuddled-if-then-else.test         |   2 +
+ t/chainlint/cuddled-loop.expect               |   8 +-
+ t/chainlint/cuddled-loop.test                 |   2 +
+ t/chainlint/cuddled.expect                    |  34 +--
+ t/chainlint/cuddled.test                      |   2 +
+ t/chainlint/double-here-doc.expect            |  24 +--
+ t/chainlint/double-here-doc.test              |   2 +
+ t/chainlint/dqstring-line-splice.expect       |  10 +-
+ t/chainlint/dqstring-line-splice.test         |   2 +
+ t/chainlint/dqstring-no-interpolate.expect    |  24 +--
+ t/chainlint/dqstring-no-interpolate.test      |   2 +
+ t/chainlint/empty-here-doc.expect             |   8 +-
+ t/chainlint/empty-here-doc.test               |   2 +
+ t/chainlint/exclamation.expect                |   8 +-
+ t/chainlint/exclamation.test                  |   2 +
+ t/chainlint/exit-loop.expect                  |  48 ++---
+ t/chainlint/exit-loop.test                    |   2 +
+ t/chainlint/exit-subshell.expect              |  10 +-
+ t/chainlint/exit-subshell.test                |   2 +
+ t/chainlint/for-loop-abbreviated.expect       |  10 +-
+ t/chainlint/for-loop-abbreviated.test         |   2 +
+ t/chainlint/for-loop.expect                   |  28 +--
+ t/chainlint/for-loop.test                     |   2 +
+ t/chainlint/function.expect                   |  22 +-
+ t/chainlint/function.test                     |   2 +
+ t/chainlint/here-doc-body-indent.expect       |   2 +
+ t/chainlint/here-doc-body-indent.test         |   4 +
+ t/chainlint/here-doc-body-pathological.expect |   7 +
+ t/chainlint/here-doc-body-pathological.test   |   9 +
+ t/chainlint/here-doc-body.expect              |   7 +
+ t/chainlint/here-doc-body.test                |   9 +
+ t/chainlint/here-doc-close-subshell.expect    |   8 +-
+ t/chainlint/here-doc-close-subshell.test      |   2 +
+ t/chainlint/here-doc-double.expect            |   2 +
+ t/chainlint/here-doc-double.test              |  10 +
+ t/chainlint/here-doc-indent-operator.expect   |  22 +-
+ t/chainlint/here-doc-indent-operator.test     |   2 +
+ .../here-doc-multi-line-command-subst.expect  |  16 +-
+ .../here-doc-multi-line-command-subst.test    |   2 +
+ t/chainlint/here-doc-multi-line-string.expect |  14 +-
+ t/chainlint/here-doc-multi-line-string.test   |   2 +
+ t/chainlint/here-doc.expect                   |  50 ++---
+ t/chainlint/here-doc.test                     |   2 +
+ t/chainlint/if-condition-split.expect         |  14 +-
+ t/chainlint/if-condition-split.test           |   2 +
+ t/chainlint/if-in-loop.expect                 |  24 +--
+ t/chainlint/if-in-loop.test                   |   2 +
+ t/chainlint/if-then-else.expect               |  44 ++--
+ t/chainlint/if-then-else.test                 |   2 +
+ t/chainlint/incomplete-line.expect            |  20 +-
+ t/chainlint/incomplete-line.test              |   2 +
+ t/chainlint/inline-comment.expect             |  16 +-
+ t/chainlint/inline-comment.test               |   2 +
+ t/chainlint/loop-detect-failure.expect        |  30 +--
+ t/chainlint/loop-detect-failure.test          |   2 +
+ t/chainlint/loop-detect-status.expect         |  36 ++--
+ t/chainlint/loop-detect-status.test           |   2 +
+ t/chainlint/loop-in-if.expect                 |  24 +--
+ t/chainlint/loop-in-if.test                   |   2 +
+ t/chainlint/loop-upstream-pipe.expect         |  20 +-
+ t/chainlint/loop-upstream-pipe.test           |   2 +
+ ...ti-line-nested-command-substitution.expect |  36 ++--
+ ...ulti-line-nested-command-substitution.test |   2 +
+ t/chainlint/multi-line-string.expect          |  28 +--
+ t/chainlint/multi-line-string.test            |   2 +
+ t/chainlint/negated-one-liner.expect          |  10 +-
+ t/chainlint/negated-one-liner.test            |   2 +
+ t/chainlint/nested-cuddled-subshell.expect    |  50 ++---
+ t/chainlint/nested-cuddled-subshell.test      |   2 +
+ t/chainlint/nested-here-doc.expect            |  60 +++---
+ t/chainlint/nested-here-doc.test              |   2 +
+ t/chainlint/nested-loop-detect-failure.expect |  62 +++---
+ t/chainlint/nested-loop-detect-failure.test   |   2 +
+ t/chainlint/nested-subshell-comment.expect    |  22 +-
+ t/chainlint/nested-subshell-comment.test      |   2 +
+ t/chainlint/nested-subshell.expect            |  26 +--
+ t/chainlint/nested-subshell.test              |   2 +
+ t/chainlint/not-heredoc.expect                |  28 +--
+ t/chainlint/not-heredoc.test                  |   2 +
+ t/chainlint/one-liner-for-loop.expect         |  18 +-
+ t/chainlint/one-liner-for-loop.test           |   2 +
+ t/chainlint/one-liner.expect                  |  18 +-
+ t/chainlint/one-liner.test                    |   2 +
+ t/chainlint/p4-filespec.expect                |   8 +-
+ t/chainlint/p4-filespec.test                  |   2 +
+ t/chainlint/pipe.expect                       |  20 +-
+ t/chainlint/pipe.test                         |   2 +
+ t/chainlint/return-loop.expect                |  10 +-
+ t/chainlint/return-loop.test                  |   2 +
+ t/chainlint/semicolon.expect                  |  38 ++--
+ t/chainlint/semicolon.test                    |   2 +
+ t/chainlint/sqstring-in-sqstring.expect       |   8 +-
+ t/chainlint/sqstring-in-sqstring.test         |   2 +
+ t/chainlint/subshell-here-doc.expect          |  60 +++---
+ t/chainlint/subshell-here-doc.test            |   2 +
+ t/chainlint/subshell-one-liner.expect         |  38 ++--
+ t/chainlint/subshell-one-liner.test           |   2 +
+ t/chainlint/t7900-subtree.expect              |  44 ++--
+ t/chainlint/t7900-subtree.test                |   2 +
+ t/chainlint/token-pasting.expect              |  54 ++---
+ t/chainlint/token-pasting.test                |   2 +
+ t/chainlint/unclosed-here-doc-indent.expect   |   8 +-
+ t/chainlint/unclosed-here-doc-indent.test     |   2 +
+ t/chainlint/unclosed-here-doc.expect          |  14 +-
+ t/chainlint/unclosed-here-doc.test            |   2 +
+ t/chainlint/while-loop.expect                 |  28 +--
+ t/chainlint/while-loop.test                   |   2 +
+ t/t0600-reffiles-backend.sh                   |  38 ++--
+ t/t1404-update-ref-errors.sh                  | 196 +++++++++---------
+ t/test-lib-functions.sh                       |  32 ++-
+ 159 files changed, 1285 insertions(+), 1025 deletions(-)
+ create mode 100644 t/chainlint-cat.pl
+ create mode 100644 t/chainlint/here-doc-body-indent.expect
+ create mode 100644 t/chainlint/here-doc-body-indent.test
+ create mode 100644 t/chainlint/here-doc-body-pathological.expect
+ create mode 100644 t/chainlint/here-doc-body-pathological.test
+ create mode 100644 t/chainlint/here-doc-body.expect
+ create mode 100644 t/chainlint/here-doc-body.test
+ create mode 100644 t/chainlint/here-doc-double.expect
+ create mode 100644 t/chainlint/here-doc-double.test
+
