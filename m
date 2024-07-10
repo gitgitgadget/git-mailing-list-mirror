@@ -1,246 +1,185 @@
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E63D7D08D
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 09:19:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F5F17FD
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 09:36:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720603174; cv=none; b=rHdN22oyJSF1i3pvgiB6zVTIxZ6Q8oXLJWDzej+Xg4Hylf3OPFyiW9Zf/125dKZGn3a0WqI775bZ+1+SBYGYOjX/T5ZM8by2165KXySIBJehrPN+rrsCg5SV75KvCtXazKmGWpMGGTm8A/R44lJx7FxZJ0HnsHCyQ8aAg7a2eLY=
+	t=1720604174; cv=none; b=JSJ1eOxzhoPJCvxMlBidukdGaTZ4yafv7jt8WsE7AZX7E6h1SexebRTyQeoVnSCtjbJ6eOdLEYYE5kOe05J28EclcZoX40TykvLBDXnnYShzj+01NqRswy+zuVy98jFITXlja6r03UJEUz0wD3aaroJsNhtg3moDl3gtf829vSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720603174; c=relaxed/simple;
-	bh=hPtgLny7fdqWWpWfa8tK/TIov2sGKfI+JS43tO5ju/U=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mVIxHFuNxEvnAf+KQYvJPnm+GMp+AXA9C6vmYmWIHljQeyK5GNOndZydcUAUMh64TIIqWbL399A9qo/kDN5g1jmJii/J0a/Gx5M6PMrpRUcQmdHg5cKWe/DfrrTE4NeYJBoZXyHKH7T+emZp78PW0pxu9H4XOYWSX9jV210yzEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V0CjEIQj; arc=none smtp.client-ip=209.85.161.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V0CjEIQj"
-Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-5c66ffadb7aso1767331eaf.1
-        for <git@vger.kernel.org>; Wed, 10 Jul 2024 02:19:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720603172; x=1721207972; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PR/6eWjMdnB5iuhWWwYKHt8Ly6HZf3ieHmhAwN6lDDo=;
-        b=V0CjEIQjtOf+od0WOV5Lkol/B0KHm8BsAqx6y2YtZWRek92B4JAXou74U+3hn5SRFo
-         t5ukpyQnK6WUXlQfWaMdg7ZNuVB8RSPT7eo/eyvukQhEfYQHv+pZBOMV4OeMSV0esRFA
-         0sr1TtrtuOh60odEICPPeFYBGz/yVuvWre+VLOaBcL07f1EkULpESe+obnqw8PtGNRKT
-         QnGjmR3y31CJA/X4HueFGqgEAKQ4hiGhnwH1Vk1vJz/mpAM5rC3SKi7mVQqAm3NTkFoS
-         TRVmTn/+1c21OIncAS/Fva+ERBmnoJ2tCk5/kklC8Z5jW658E0E0W6aF6vQMyeqPd9jY
-         PV0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720603172; x=1721207972;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PR/6eWjMdnB5iuhWWwYKHt8Ly6HZf3ieHmhAwN6lDDo=;
-        b=QUjZVsBpsW69qHgz3/IHCd+VTRW7oy6wQvb2c4kkddTfDmh4Zlff6mMi10Y8wvq6gA
-         L7o3ASiYzL3v+ZsQWFNg9sAOZq67Yun0voLf1B0LIF6JwWKRDbaD0rzAC64D0jY0+Qfb
-         2Whfiuljx4clnef+OdJppSCj1q6PrlMcfFTMNoery4XMXixnHz4cDBBnN5iMJ8jw3J+8
-         4e15/u9+vb0zZkADzS19ED+g5aN5ud+xShHSDvOhQ7VmtlSf1C6C6zkWHSsujHIgGlkJ
-         RVoSdqjaEhTTrP2kjQD0pkKwikFn0vwP9xJIb5izpwhAUPwiIgT0tEbdvqSCTKyzUuFf
-         iPkA==
-X-Forwarded-Encrypted: i=1; AJvYcCV7Nane942OQu484DvrjE45P/SuWLXV8MG9jUA/xsgYuNfsM2VYUkjKqiXWsou+axZ5Eid5b259y5O3IA53TLViWrDq
-X-Gm-Message-State: AOJu0YyPybxXS9N1XR5XMIUak1f/Xb5dUDGUKUlxS1ID40wBmswVOReM
-	Qh+hPxv74V7zER1CARRFs4ObqUwvDIGccL3HXZfoN6N0JnWwvJ6GWkP6uDLRZ4cfpjuVuFqPBqf
-	YXz2CYRvQhgjufprM/gBvS/MFzQI=
-X-Google-Smtp-Source: AGHT+IGGF9HAnrO6A3+DUnczihn7OTTPohwXezsY7XiDM1LM0eXN8PKULxzRY3AAwvYwUagSz9uRDKdenwMX4el21Uc=
-X-Received: by 2002:a05:6870:658f:b0:254:b14c:35e5 with SMTP id
- 586e51a60fabf-25eaec15f3amr4189623fac.36.1720603172074; Wed, 10 Jul 2024
- 02:19:32 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 10 Jul 2024 02:19:31 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240709053847.4453-1-chandrapratap3519@gmail.com>
-References: <20240703171131.3929-1-chandrapratap3519@gmail.com> <20240709053847.4453-1-chandrapratap3519@gmail.com>
+	s=arc-20240116; t=1720604174; c=relaxed/simple;
+	bh=W5jbaQl7veG4IR1Paez/GbUzL+mbGOlZeL+ni1QCrQc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IHndHWAHtCpynKYHRN69R0rQbEZUkDDO2REjCVsnyRibdHH3MulxUc4lNcahxeamXkCf9c0iC/6vYH5ith2t8k5A2oTLpRzyzVioSv2adC5lGgYTM74i3K/22Wqn2pZjfccHD83WrC/cByzLvy/W98EVxOJUw961qVe91IfEMp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 1872 invoked by uid 109); 10 Jul 2024 09:36:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Jul 2024 09:36:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11041 invoked by uid 111); 10 Jul 2024 09:36:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Jul 2024 05:36:08 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 10 Jul 2024 05:36:10 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+	Ilya Tumaykin <itumaykin@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [RFC/PATCH] add-patch: handle splitting hunks with
+ diff.suppressBlankEmpty
+Message-ID: <20240710093610.GA2076910@coredump.intra.peff.net>
+References: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
+ <ab974e62-098c-4200-bee3-7de8d9115516@gmail.com>
+ <xmqq4j937pyf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 10 Jul 2024 02:19:31 -0700
-Message-ID: <CAOLa=ZR4jZhwzyQtJ=zC0wYJ9=u2CPKDgps57e-zCgQ279mYVQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v2 0/7] t: port reftable/merged_test.c to the unit
- testing framework
-To: Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org
-Cc: chriscool@tuxfamily.org
-Content-Type: multipart/mixed; boundary="000000000000df09e4061ce12485"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4j937pyf.fsf@gitster.g>
 
---000000000000df09e4061ce12485
-Content-Type: text/plain; charset="UTF-8"
+On Fri, Jul 05, 2024 at 09:39:52AM -0700, Junio C Hamano wrote:
 
-Chandra Pratap <chandrapratap3519@gmail.com> writes:
+> As to the "commit -p" issue, I think the patch parser is in the
+> wrong and needs to be corrected, period.  As long as the patches
+> given as input are well-formed, we should be prepared to grok
+> them (we even allow manual editing of patches, right?).
 
-> In the recent codebase update (commit 8bf6fbd, 2023-12-09), a new unit
-> testing framework written entirely in C was introduced to the Git project
-> aimed at simplifying testing and reducing test run times.
-> Currently, tests for the reftable refs-backend are performed by a custom
-> testing framework defined by reftable/test_framework.{c, h}. Port
-> reftable/merged_test.c to the unit testing framework and improve upon
-> the ported test.
->
-> The first patch in the series moves the test to the unit testing framework,
-> and the rest of the patches improve upon the ported test.
->
+Maybe this?
 
-This series looks good now, sans a typo and Justin's comment!
-Thanks!
+-- >8 --
+Subject: add-patch: handle splitting hunks with diff.suppressBlankEmpty
 
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
->
-> ---
-> Changes in v2:
-> - Rename test functions & description to be more explanatory
-> - Remove a redundant comment in patch 1
-> - Add the 3rd patch which makes improvements to a test
-> - Add the 4th patch which makes apt function parameters 'const'
-> - Remove a redundant check in patch 6
->
-> CI/PR: https://github.com/gitgitgadget/git/pull/1755
->
-> Chandra Pratap (7):
-> [PATCH 1/7] t: move reftable/merged_test.c to the unit testing framework
-> [PATCH 2/7] t: harmonize t-reftable-merged.c with coding guidelines
-> [PATCH 3/7] t-reftable-merged: improve the test for t_merged_single_record()
-> [PATCH 4/7] t-reftable-merged: improve the const-correctness of helper functions
-> [PATCH 5/7] t-reftable-merged: add tests for reftable_merged_table_max_update_index
-> [PATCH 6/7] t-reftable-merged: use reftable_ref_record_equal to compare ref records
-> [PATCH 7/7] t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
->
-> Makefile                                                   |   2 +-
-> t/helper/test-reftable.c                                   |   1 -
-> reftable/merged_test.c => t/unit-tests/t-reftable-merged.c | 202 +++++++++++++++----------------
-> 3 files changed, 103 insertions(+), 102 deletions(-)
->
-> Range-diff against v2:
-> 1:  f4d5da52f5 ! 1:  0d71deffad t: move reftable/merged_test.c to the unit testing framework
->     @@ t/unit-tests/t-reftable-merged.c: static void readers_destroy(struct reftable_re
->       }
->
->      -static void test_merged_between(void)
->     -+static void t_merged_between(void)
->     ++static void t_merged_single_record(void)
->       {
->       	struct reftable_ref_record r1[] = { {
->       		.refname = (char *) "b",
->     @@ t/unit-tests/t-reftable-merged.c: static void test_merged_between(void)
->       }
->
->      -static void test_merged(void)
->     -+static void t_merged(void)
->     ++static void t_merged_refs(void)
->       {
->       	struct reftable_ref_record r1[] = {
->       		{
->     @@ t/unit-tests/t-reftable-merged.c: static void test_default_write_opts(void)
->
->       	reftable_reader_free(rd);
->       	reftable_merged_table_free(merged);
->     -@@ t/unit-tests/t-reftable-merged.c: static void test_default_write_opts(void)
->     + 	strbuf_release(&buf);
->     + }
->
->     - /* XXX test refs_for(oid) */
->     +-/* XXX test refs_for(oid) */
->
->      -int merged_test_main(int argc, const char *argv[])
->      +int cmd_main(int argc, const char *argv[])
->     @@ t/unit-tests/t-reftable-merged.c: static void test_default_write_opts(void)
->      -	RUN_TEST(test_merged);
->      -	RUN_TEST(test_default_write_opts);
->      -	return 0;
->     -+	TEST(t_merged_logs(), "merged table with log records");
->     -+	TEST(t_merged_between(), "seek ref in a merged table");
->     -+	TEST(t_merged(), "merged table with multiple updates to same ref");
->      +	TEST(t_default_write_opts(), "merged table with default write opts");
->     ++	TEST(t_merged_logs(), "merged table with multiple log updates for same ref");
->     ++	TEST(t_merged_refs(), "merged table with multiple updates to same ref");
->     ++	TEST(t_merged_single_record(), "ref ocurring in only one record can be fetched");
->      +
->      +	return test_done();
->       }
-> 2:  fb0f0946b4 ! 2:  a449e2edcf t: harmonize t-reftable-merged.c with coding guidelines
->     @@ t/unit-tests/t-reftable-merged.c: merged_table_from_records(struct reftable_ref_
->       		reftable_reader_free(readers[i]);
->       	reftable_free(readers);
->       }
->     -@@ t/unit-tests/t-reftable-merged.c: static void t_merged_between(void)
->     +@@ t/unit-tests/t-reftable-merged.c: static void t_merged_single_record(void)
->       	struct reftable_reader **readers = NULL;
->       	struct reftable_merged_table *mt =
->       		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 2);
->     @@ t/unit-tests/t-reftable-merged.c: static void t_merged_between(void)
->       	int err;
->
->       	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
->     -@@ t/unit-tests/t-reftable-merged.c: static void t_merged_between(void)
->     +@@ t/unit-tests/t-reftable-merged.c: static void t_merged_single_record(void)
->       	reftable_iterator_destroy(&it);
->       	readers_destroy(readers, 2);
->       	reftable_merged_table_free(mt);
->     @@ t/unit-tests/t-reftable-merged.c: static void t_merged_between(void)
->       	reftable_free(bs);
->       }
->
->     -@@ t/unit-tests/t-reftable-merged.c: static void t_merged(void)
->     +@@ t/unit-tests/t-reftable-merged.c: static void t_merged_refs(void)
->       	struct reftable_reader **readers = NULL;
->       	struct reftable_merged_table *mt =
->       		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 3);
->     @@ t/unit-tests/t-reftable-merged.c: static void t_merged(void)
->
->       	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
->       	err = reftable_iterator_seek_ref(&it, "a");
->     -@@ t/unit-tests/t-reftable-merged.c: static void t_merged(void)
->     +@@ t/unit-tests/t-reftable-merged.c: static void t_merged_refs(void)
->       	check_int(reftable_merged_table_min_update_index(mt), ==, 1);
->
->       	while (len < 100) { /* cap loops/recursion. */
->     @@ t/unit-tests/t-reftable-merged.c: static void t_merged(void)
->       		int err = reftable_iterator_next_ref(&it, &ref);
->       		if (err > 0)
->       			break;
->     -@@ t/unit-tests/t-reftable-merged.c: static void t_merged(void)
->     +@@ t/unit-tests/t-reftable-merged.c: static void t_merged_refs(void)
->       	reftable_iterator_destroy(&it);
->
->       	check_int(ARRAY_SIZE(want), ==, len);
-> -:  ---------- > 3:  bba993bb26 t-reftable-merged: improve the test t_merged_single_record()
-> -:  ---------- > 4:  4d508eaa02 t-reftable-merged: improve the const-correctness of helper functions
-> 3:  85731b6358 ! 5:  1c9ba26c22 t-reftable-merged: add tests for reftable_merged_table_max_update_index
->     @@ Commit message
->          Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
->
->       ## t/unit-tests/t-reftable-merged.c ##
->     -@@ t/unit-tests/t-reftable-merged.c: static void t_merged(void)
->     +@@ t/unit-tests/t-reftable-merged.c: static void t_merged_refs(void)
->       	check(!err);
->       	check_int(reftable_merged_table_hash_id(mt), ==, GIT_SHA1_FORMAT_ID);
->       	check_int(reftable_merged_table_min_update_index(mt), ==, 1);
-> 4:  5d6fd842ac < -:  ---------- t-reftable-merged: use reftable_ref_record_equal to compare ref records
-> -:  ---------- > 6:  309c7f412e t-reftable-merged: use reftable_ref_record_equal to compare ref records
-> 5:  d8cbb73533 = 7:  2cd7f5b0b4 t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
+When "add -p" parses diffs, it looks for context lines starting with a
+single space. But when diff.suppressBlankEmpty is in effect, an empty
+context line will omit the space, giving us a true empty line. This
+confuses the parser, which is unable to split based on such a line.
 
---000000000000df09e4061ce12485
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: bf19a10224cdc7a7_0.1
+It's tempting to say that we should just make sure that we generate a
+diff without that option. But we may parse diffs not only generated by
+Git, but ones that users have manually edited. And POSIX calls the
+decision of whether to print the space here "implementation-defined".
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hT1VpRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOTdFQy80eWF5OFkvaE8vWWxjdnlvbXZQOGRPQVl6QwpPd2UwalY1V3FT
-ZFJlaUdrRnh6ZW1xOEREcFBOWUpIZHEwczcvcnFaUHpBZGQrUzZVc25qK2F4S3RmbWx4QTN0ClVY
-NXhkTmI2VjBINVVRNHpjWmJwSXR6SFdVMTc3ZmZNV0hwVzA0c1d1ZkJ4SG1zNkRNbjRCeng3eEdW
-VlZtSDEKdWFvUzNpYVNTS0Z4eVpNV2V0K0ozUjE0c0NvVlpvOU1UQ1VXeTZGTDk3SVJ5L2NKUzBV
-Tkc0emFsMHFqakl2VApOMHMvbzRaMjVHY3lKSHlQZTVrVHlJeFZabkhFVDI2YUlQcWhxOXZrWENN
-SjExeUVqRUFncGx1cnUrZGlPWjduCjFlUDBoZ2EraUx1L3c5Y0JwUmY4elp0cmx2aUpZMDVjZjFz
-Sm1RMll5TlZ4NXVCWUoreVlaL2ZMOWxkZUpjZG8KcWFvTGQ1dE5jRnNLZ2pVN2VjQTZ0ODQrU3F1
-MzcwdHFtdGdBeFZJU0RudjNGZzhUTnpBL2kvWktFaThKaHZ5RApWaGZINjlGZXZDVzZzVGNwOFlh
-Z3Ard0tiV0NoeWlPcEVCbU9wRjJOQ1ZvUHF0YzZmUEUxWmFJbDVycFJZOTVoCk9Bc2d3Uk0zSEhq
-c0N4NVI3T0pkZzZDaE1JcnVrYWlBMXRVZHlGMD0KPTZabXQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000df09e4061ce12485--
+So let's handle both cases: a context line either starts with a space or
+consists of a totally empty line.
+
+Reported-by: Ilya Tumaykin <itumaykin@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I'm a little worried that this creates ambiguities, since I don't think
+we are careful about following the hunk header's line counts. Imagine
+you had an input like this:
+
+  @@ -1,2 +1,2 @@
+  -old
+  +new
+   stuff
+
+  some garbage
+
+We obviously know that "some garbage" is not a context line and is just
+trailing junk, because it does not begin with "-", "+" or space. But
+what about the blank line in between? It looks like an empty context
+line, but we can only know that it is not by respecting the counts in
+the hunk header.
+
+I don't think we'd ever generate this ourselves, but could somebody
+manually edit a hunk into this shape? When I tried it in practice, it
+looks like we fail to apply the result even before my patch, though. I'm
+not sure why that is. If I put "some garbage" without the blank line, we
+correctly realize it should be discarded. It's possible I'm just holding
+it wrong.
+
+ add-patch.c                |  8 ++++----
+ t/t3701-add-interactive.sh | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 4 deletions(-)
+
+diff --git a/add-patch.c b/add-patch.c
+index 6e176cd21a..7beead1d0a 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -588,7 +588,7 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 			    (int)(eol - (plain->buf + file_diff->head.start)),
+ 			    plain->buf + file_diff->head.start);
+ 
+-		if ((marker == '-' || marker == '+') && *p == ' ')
++		if ((marker == '-' || marker == '+') && (*p == ' ' || *p == '\n'))
+ 			hunk->splittable_into++;
+ 		if (marker && *p != '\\')
+ 			marker = *p;
+@@ -964,7 +964,7 @@ static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
+ 		 * Is this the first context line after a chain of +/- lines?
+ 		 * Then record the start of the next split hunk.
+ 		 */
+-		if ((marker == '-' || marker == '+') && ch == ' ') {
++		if ((marker == '-' || marker == '+') && (ch == ' ' || ch == '\n')) {
+ 			first = 0;
+ 			hunk[1].start = current;
+ 			if (colored)
+@@ -979,14 +979,14 @@ static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
+ 		 * Then just increment the appropriate counter and continue
+ 		 * with the next line.
+ 		 */
+-		if (marker != ' ' || (ch != '-' && ch != '+')) {
++		if ((marker != ' ' && marker != '\n') || (ch != '-' && ch != '+')) {
+ next_hunk_line:
+ 			/* Comment lines are attached to the previous line */
+ 			if (ch == '\\')
+ 				ch = marker ? marker : ' ';
+ 
+ 			/* current hunk not done yet */
+-			if (ch == ' ')
++			if (ch == ' ' || ch == '\n')
+ 				context_line_count++;
+ 			else if (ch == '-')
+ 				header->old_count++;
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 5d78868ac1..92c8e6dc8c 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -1164,4 +1164,36 @@ test_expect_success 'reset -p with unmerged files' '
+ 	test_must_be_empty staged
+ '
+ 
++test_expect_success 'splitting handles diff.suppressBlankEmpty' '
++	test_when_finished "git reset --hard" &&
++	cat >file <<-\EOF &&
++	1
++	2
++
++	3
++	4
++	EOF
++	git add file &&
++
++	cat >file <<-\EOF &&
++	one
++	two
++
++	three
++	four
++	EOF
++	test_write_lines s n y |
++	git -c diff.suppressBlankEmpty=true add -p &&
++
++	git cat-file blob :file >actual &&
++	cat >expect <<-\EOF &&
++	1
++	2
++
++	three
++	four
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.45.2.1249.gb036353db5
+
