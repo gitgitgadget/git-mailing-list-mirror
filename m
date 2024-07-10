@@ -1,53 +1,56 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8667BE4E
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 16:33:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871DA1957EA
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 17:06:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720629233; cv=none; b=Nnc6/PMqu7tZ9ROtAUD6Gn0IT8paqW5oxT5m5kRlVLdniwhQhRDKLQ6qyjI+9/HmliQuTRQj6cs9207gEK+lQ4iFbAm61tWiR63mZ9MvfwsnDPIeHOH6Q3YRLTO4Ao+mm4JTCOab0NUTAIG5YsgtuaVIuCOZMl97XJH7tnkT/QE=
+	t=1720631201; cv=none; b=mVRyles6YL/FJiwehnZCmQJSTL80+gSIP4rAv6UX6kedQigRln8Oma8FDkkaEctafwQK1hi6CeeHdi5ORQU7wf4rB9Wh+ziqGfcDZ1RggESe4xZCtf9d9SQI1Bu0QdwCmGlViFgYBbH9tCvdJq1H0wcO9QIZQ6JWEJKTkq6o7Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720629233; c=relaxed/simple;
-	bh=JBMlZSHHT3rZwaRPAluaGRFgBGVZ+G7GR71wXsIEmcw=;
+	s=arc-20240116; t=1720631201; c=relaxed/simple;
+	bh=OLmxEhcU3Ab3tYYabGTQbM9/4QOcvbhi/Czjn8Y2xlg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O+AhIm8bVzlG+En7HasPgYoEalc2gtzN6CS3MzzAf/lGHB9RwtBPPKUZP4P0IPf8ZXKZVfkjMxaQewgAwU4VhL2QJn4Igrf+JoR87L0MAucSFftCzqxsob2MTjO89x2AasLgCRa+T7FwVdKRUwrQIsfh27LJ1IO1XPuRQXIMzqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ns3jDX58; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=dFp0G+Hmuic0oswsEBfl4MMfDnR1QvPKTRuHYtd0d1CDq5S38SZqAPO1aIYqXnKEI16UTuzLNaTc4Tw3vgfgddSU31+n1joay7HgZHlHOlOmEK7qCfzc12BRcoNGLkFpzce7atyPc9Xmyff1NQy6ttnZqCSHvxpYIujURtZJ8v8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=D/Krjbuh; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ns3jDX58"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3EF092DF6D;
-	Wed, 10 Jul 2024 12:33:51 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D/Krjbuh"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id C63511BDF6;
+	Wed, 10 Jul 2024 13:06:33 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=JBMlZSHHT3rZwaRPAluaGRFgBGVZ+G7GR71wXs
-	IEmcw=; b=ns3jDX58jAGXkMajeT7PByL3zvQ0oYJDQZ0vOzxUEXxrruVI9PhkXP
-	7W7bQe5FUDez5KLe0mohx1o9Av5SBw4DdIBxxKUfNA3yx+3MmUUA79vNQ2i8opCT
-	7h6WRIRZITa5jNz2oXXtuV6tJ6tvMY+D1iJVaHdAYtHDs5tzKyAdQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 33B462DF6C;
-	Wed, 10 Jul 2024 12:33:51 -0400 (EDT)
+	:content-type; s=sasl; bh=OLmxEhcU3Ab3tYYabGTQbM9/4QOcvbhi/Czjn8
+	Y2xlg=; b=D/KrjbuhTNc9Wi6gNur50YyG4W4PNQ5McdVfc9mM09qFB7zb3CV/M3
+	21awdIqibUxnmUsfr7cx7qqQtV84S1kK83t4rCQmIcQS3VCTQrg1YOFXlfo2mLxf
+	Ukz6JzGSXFkdKD8reFLN1gTCXtzbJ73xsY+nHq4AiAZLyDR+SBh8U=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id BEA9C1BDF5;
+	Wed, 10 Jul 2024 13:06:33 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.219.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B1EDD2DF6B;
-	Wed, 10 Jul 2024 12:33:47 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4774A1BDF4;
+	Wed, 10 Jul 2024 13:06:30 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Piotr Szlazak <piotr.szlazak@gmail.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  "brian m. carlson"
- <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH/RFC] http.c: cookie file tightening
-In-Reply-To: <2d76e43e-db79-4572-8f41-60fbbea10af6@gmail.com> (Piotr Szlazak's
-	message of "Wed, 10 Jul 2024 12:35:02 +0200")
-References: <xmqqed82cgmj.fsf@gitster.g>
-	<20240709234941.GA1525171@coredump.intra.peff.net>
-	<2d76e43e-db79-4572-8f41-60fbbea10af6@gmail.com>
-Date: Wed, 10 Jul 2024 09:33:46 -0700
-Message-ID: <xmqqy169xl3p.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  Ilya Tumaykin
+ <itumaykin@gmail.com>,  git@vger.kernel.org,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] add-patch: handle splitting hunks with
+ diff.suppressBlankEmpty
+In-Reply-To: <20240710093610.GA2076910@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 10 Jul 2024 05:36:10 -0400")
+References: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
+	<ab974e62-098c-4200-bee3-7de8d9115516@gmail.com>
+	<xmqq4j937pyf.fsf@gitster.g>
+	<20240710093610.GA2076910@coredump.intra.peff.net>
+Date: Wed, 10 Jul 2024 10:06:28 -0700
+Message-ID: <xmqqed81xjl7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,39 +60,133 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 2E9AAC44-3EDA-11EF-B659-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
+ C0621F64-3EDE-11EF-860A-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-Piotr Szlazak <piotr.szlazak@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On the other hand there is no problem if http.cookieFile='' and
-> http.saveCookies=true is used together. Git operation is
-> successful. But if GIT_TRACE_CURL=1 GIT_TRACE_CURL_NO_DATA=1 is
-> enabled, I can see following warning it the output:
->> 12:19:56.280263 http.c:820 == Info: WARNING: failed to save cookies in
-> It comes from:
-> https://github.com/curl/curl/blob/master/lib/cookie.c#L1758
-> But cookies were accepted by the client and sent back to the server.
+> I'm a little worried that this creates ambiguities, since I don't think
+> we are careful about following the hunk header's line counts. Imagine
+> you had an input like this:
+>
+>   @@ -1,2 +1,2 @@
+>   -old
+>   +new
+>    stuff
+>
+>   some garbage
 
-Thanks for your experiments.
+True.  Especially if you allow editing of hunks, the only thing you
+could make available to you are the version you gave the user and
+the version you got back from the user, but comparing them would not
+help resolve the ambiguity to correct the hunk header all that much.
+"diff" edit mode various editors may have _could_ help as they know
+each and every keystroke by the user and how the modified patch was
+constructed to guess the intention better than a mere comparison of
+before- and after- shape of the patch (but the last time I checked,
+diff edit mode of GNU Emacs did not adjust the hunk header correctly
+in some corner cases).
 
-I do not know if it is safe to call the above observed sympotom
-"there is no problem".  What does it even mean to set cookieFile to
-an empty string and ask the cookies to be saved?  What does the user
-who makes such a pair of requests
+> I don't think we'd ever generate this ourselves, but could somebody
+> manually edit a hunk into this shape? When I tried it in practice, it
+> looks like we fail to apply the result even before my patch, though. I'm
+> not sure why that is. If I put "some garbage" without the blank line, we
+> correctly realize it should be discarded. It's possible I'm just holding
+> it wrong.
 
-	[http]
-		saveCookies = yes
-		cookieFile = ""
+I've given up on the "hunk edit" doing wrong things to a patch
+already.  
 
-expect to happen?  The session begins with an empty set of cookies,
-cookies that come from the other side are maintained in-core during
-the session, and then at the very end of the session what do they
-want to happen to their cookies?  "The system will try to save them
-but without finding a sensible place to save, it gives a warning
-without molesting the main goal of the process (which is to interact
-with the other side)" sounds like a rather strange wish.
+The "edit" codepath used to be a lot less careless before Phillip
+whipped it into a much better shape with the series that ended at
+436d18f2 (Merge branch 'pw/add-p-recount', 2018-03-14), that
+introduced recount_edited_hunk() that special cases "+/-/ ".  It
+already knows that a completely empty line in a patch is an empty
+and unmodified line (which was ported from f4d35a6b (add -p: fix
+counting empty context lines in edited patches, 2018-06-11)), so
+this patch does not have to do anything new there.
 
-I'd consider "The system notices that there is no sensible place to
-store, so it warns about the conflicting request and ignores
-http.saveCookies" a bit more sensible behaviour in such a situation,
-but obviously I am biased.
+But "recounting" will be fooled by garbage left in the edited
+result, so I think we have done all we can do to resolve possible
+ambiguities.  The patch under discussion is not adding anything new
+and making it any worse, I would say.
+
+> diff --git a/add-patch.c b/add-patch.c
+> index 6e176cd21a..7beead1d0a 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -588,7 +588,7 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+>  			    (int)(eol - (plain->buf + file_diff->head.start)),
+>  			    plain->buf + file_diff->head.start);
+>  
+> -		if ((marker == '-' || marker == '+') && *p == ' ')
+> +		if ((marker == '-' || marker == '+') && (*p == ' ' || *p == '\n'))
+>  			hunk->splittable_into++;
+>  		if (marker && *p != '\\')
+>  			marker = *p;
+> @@ -964,7 +964,7 @@ static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
+>  		 * Is this the first context line after a chain of +/- lines?
+>  		 * Then record the start of the next split hunk.
+>  		 */
+> -		if ((marker == '-' || marker == '+') && ch == ' ') {
+> +		if ((marker == '-' || marker == '+') && (ch == ' ' || ch == '\n')) {
+>  			first = 0;
+>  			hunk[1].start = current;
+>  			if (colored)
+> @@ -979,14 +979,14 @@ static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
+>  		 * Then just increment the appropriate counter and continue
+>  		 * with the next line.
+>  		 */
+> -		if (marker != ' ' || (ch != '-' && ch != '+')) {
+> +		if ((marker != ' ' && marker != '\n') || (ch != '-' && ch != '+')) {
+>  next_hunk_line:
+>  			/* Comment lines are attached to the previous line */
+>  			if (ch == '\\')
+>  				ch = marker ? marker : ' ';
+>  
+>  			/* current hunk not done yet */
+> -			if (ch == ' ')
+> +			if (ch == ' ' || ch == '\n')
+>  				context_line_count++;
+>  			else if (ch == '-')
+>  				header->old_count++;
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index 5d78868ac1..92c8e6dc8c 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -1164,4 +1164,36 @@ test_expect_success 'reset -p with unmerged files' '
+>  	test_must_be_empty staged
+>  '
+>  
+> +test_expect_success 'splitting handles diff.suppressBlankEmpty' '
+> +	test_when_finished "git reset --hard" &&
+> +	cat >file <<-\EOF &&
+> +	1
+> +	2
+> +
+> +	3
+> +	4
+> +	EOF
+> +	git add file &&
+> +
+> +	cat >file <<-\EOF &&
+> +	one
+> +	two
+> +
+> +	three
+> +	four
+> +	EOF
+> +	test_write_lines s n y |
+> +	git -c diff.suppressBlankEmpty=true add -p &&
+> +
+> +	git cat-file blob :file >actual &&
+> +	cat >expect <<-\EOF &&
+> +	1
+> +	2
+> +
+> +	three
+> +	four
+> +	EOF
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
