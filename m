@@ -1,103 +1,172 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC6012C530
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 13:36:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C2012C530
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 13:38:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720618610; cv=none; b=kCfTC4EoRS2gSyig6S+Qd1uCdVsdbBY3zqPwYXzYcHTEVwiYAjovxlNqYqwokm/s3BzYfLUp9C7UKiboQJzbYA90G+lc0lSwa0yFUw2JvCuaE2BVhr7XoP12DCvNMcZu56Ag87Dh/ud9mNhP2voqWh+mjn/uclsVLYKLuj+QvRg=
+	t=1720618719; cv=none; b=WVMqv2XjeBfNE+Fb3hqK+g8iXhKkc1obvMXHI1aHImZfhgMcZQCucuTVYMeGW4aRHJVHwNUKAFCgAsz5F6w8ATfOvrsxG4pvxvOACJb6nY3DuKJ3nbkOoaioCoJX7M7GNOUlCTK5rphSaTcBC5PNTT5dReD9b1QPGk56lCjn8zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720618610; c=relaxed/simple;
-	bh=KR0G9hWRuEu8o1mplgFzMvdJHnzwznr80TclFVpQcCE=;
+	s=arc-20240116; t=1720618719; c=relaxed/simple;
+	bh=oFf5xuZP+UzY1mxPZTVk0ft617QOD2SRVXuizwV0bT0=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FMiBHy1fPwjkpSetnUvccYDV3aCXMFcCWFhNJPy+qCj+3NYaRpPuus6ZvgkESUF7cofGBpE/UqYjUTlGGQ8EFUoviV9pF+16/m92cgFpTnmOC091qBrCJ9zELMPHGlF6y5CS3aOaCZKQjriBThExtoxvQjxVNJdLigHZe2cT21U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V/NgDNRv; arc=none smtp.client-ip=209.85.210.41
+	 To:Cc:Content-Type; b=Z62WoSCUWy2gHAkD6AvKVO2b0kde6Zoqk3Gs/hRSLAvXzTRiUhenQjjkAheDV16EGf0xNn5uqaQopqGztuhujiHKK3mbSl3rM7tMmaW0WYAAef7AVs4/ZH5SI9IxyIvRoF2+2o4HaiJwc5zDDyJjI1aMSX4R8nwP36eCO8hwh3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D5gjDcSN; arc=none smtp.client-ip=209.85.160.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V/NgDNRv"
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7044c085338so337117a34.2
-        for <git@vger.kernel.org>; Wed, 10 Jul 2024 06:36:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D5gjDcSN"
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-25e0663de76so3045116fac.1
+        for <git@vger.kernel.org>; Wed, 10 Jul 2024 06:38:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720618608; x=1721223408; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720618717; x=1721223517; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KR0G9hWRuEu8o1mplgFzMvdJHnzwznr80TclFVpQcCE=;
-        b=V/NgDNRvSrCIWKXlYyADD3vBtQGxu4QVF1GJS9nDqJfsqLDn0Oxx7u6hXjDfft2kuT
-         hEWniWftuGdKRceBcbdCLpHGRonGgtsnGLFbgq3Myj+t/FvT866mqXcosMBpxgnkVs5L
-         Rk+CkjHHLdNWreRfCpUrTCcJIB5WthY2gdz8Zfn1s4Z2wCNV62P/NacWpnbyLQw/viRg
-         xM2m6QM43HCbqywu8LBGBsx+GlULduqpkbGhU5qRfJyRJzLOrcIcaT7VRk+Yj37QFz2W
-         8f7ivaeVGJv1s8/4gs7Tuld6P5vxclPxtgBsU8kVPM7+pX/GuN73MCQBK1KxZABwSuzc
-         G+fA==
+        bh=asR8NSBhHDssxaCX1KC2sjGGwhpqN1D2Km5fs9vGsfQ=;
+        b=D5gjDcSNSoXx6iXOe2kDOEmwzsHz55mhJifCZMdmZqopwHf4AueM3OFJJeQPKZIQHl
+         Dm8EJxNOhX+QrXjXmkNcB596VwJbYRyR/VV51emAx8BkwXdU+bcrl3jxcSZ4qF54q/8g
+         EjzH+wywXR7BrXzoZ8NrSGJYZNaOM+bUccdYrpRSiyZSJQ7JiC3sSQHZFvgAyFHvMgSk
+         /osKbwARdqqk4CyJCSBNeIL5PZQ5yueTTYoqvNJ7Wt+1zuCQ3LRCkYNJoWT3qTMZk/Gj
+         O37zTcmle+E3WLAO/IhW5AZ2l+gcIKkHUyfcsAEFugZYAdA/6ZFWgvgNoPN575JPjIVh
+         OCXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720618608; x=1721223408;
+        d=1e100.net; s=20230601; t=1720618717; x=1721223517;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KR0G9hWRuEu8o1mplgFzMvdJHnzwznr80TclFVpQcCE=;
-        b=mehOiNi3B4ruCGAyauZpMNWHg2DGepn0qMcQu4P326QvfteJgrPH+4GzkgP7yBCHn5
-         SS6cIh0Jk5Fq6Z9ydDOk6o89QQod+9z9+qIEwoTTyLpdZ6CjWDGPHkBaBC0T8XypYVQE
-         Z/9/KwiJBgji1yOYDjQoiqOvzOWgaxiexyGdyo/oK6CLOW2vDSXBJuXwNVcQE2bKT8jY
-         KmueaRHp9apq30CJA2mkB3efKl7d3m5n4oXJvb7giVwY/pZifVB9n2Ky07e5TL+D1ev9
-         mEI9vTlQpfH4QbSvBic3XMnEZ1XSFczE5aEddCxOzIYsT+Wdh6aFLCgyDcrI7aSjb81a
-         YCow==
-X-Gm-Message-State: AOJu0Yxqla+UdwLju7n1GiTCXDWfGFFV0G2bHEvjKxnKQTljOcRHmz4F
-	2+HnlSeJp338Z/7HA6rxGa69Tx/Kml79gBE7F/6uJMGFNtUTmzcvNSiqnmRSjGIy01yGv3FvGpv
-	DVrQlRlHQlyaSXIRnSgSKx2bPck/t/dmB
-X-Google-Smtp-Source: AGHT+IEc/bqcIrDsJCgvJCMqp3gPKsetEPWEfr5qmGPuMxBvAAXpaltLt3bTEoUXOOm9iL0CZeE7Umoz2Ao5Is9A5qg=
-X-Received: by 2002:a05:6870:304a:b0:254:c617:a9a0 with SMTP id
- 586e51a60fabf-25eaec3f819mr4621902fac.50.1720618607863; Wed, 10 Jul 2024
- 06:36:47 -0700 (PDT)
+        bh=asR8NSBhHDssxaCX1KC2sjGGwhpqN1D2Km5fs9vGsfQ=;
+        b=Bt8vqEeQWPPzqO/CIkPOop5k9mCGvNCqZV2jxyCDJDulw37NbBRBqGvYZjJ7ybnVrk
+         dFKqqfCxv6FwcndmpRt7vKwuZHsoZNK4UPWyijh1xDYD995E4zx2ahSUXYxjKJ3kTRvv
+         dfh07AT+bsPlVQoBekQ4QlUbCHdBmeUs6F7RDSbtIe28M+Ua9j7zvD6hxRW0FzOwyUmH
+         CefHwkULkB7cigpo95XCWEEcKJmu1FaTmWGA8GOgFnKCqPlpEfaDGhoH2bMdqRe5WUG+
+         bQ2kriogWBOAcPdut/7FDeH6nytS/CSWOmfuS3+dkJhE2PtewkLyHHKmHqUCviltN9hK
+         n8hg==
+X-Gm-Message-State: AOJu0YykgXhJ0w9zwqeFt4f4gDzGD7q+g+dx0ORGgmaaZopqklBfckTQ
+	5e/WAQEBP2Aq2KpIbVpxfeshn20SFHXOYJXkIJHl0h+31gLfLi2j6faR6KMwO9zyiJ5d0N/OSBP
+	IvdsuLQ0BJ6sYimy/G52Fzed2ELfz/4wA
+X-Google-Smtp-Source: AGHT+IEoQW2hAls+qbv23QrDAj9bsSUiwsv87Rfu2+6MAm20ZnOixH83qXCMlB/ORues95kMf3gRsVnSLcBmAp/lFsg=
+X-Received: by 2002:a05:6870:a10c:b0:25e:11f4:f691 with SMTP id
+ 586e51a60fabf-25eaebdb73amr4768176fac.47.1720618716722; Wed, 10 Jul 2024
+ 06:38:36 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 10 Jul 2024 06:36:47 -0700
+ HTTPREST; Wed, 10 Jul 2024 06:38:36 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <CAPig+cRvz7ctW8K7QbZyDSTTG_qxdU9uRmJYrXPW64OuydH4VA@mail.gmail.com>
+In-Reply-To: <q4mixa3suepyjrp5lkd3wio2pcsdbjch757n2p55fzxpk3sc4u@lysauvdyiq4c>
 References: <20240708092317.267915-1-karthik.188@gmail.com>
- <20240708092317.267915-7-karthik.188@gmail.com> <CAPig+cRvz7ctW8K7QbZyDSTTG_qxdU9uRmJYrXPW64OuydH4VA@mail.gmail.com>
+ <20240708092317.267915-8-karthik.188@gmail.com> <7wc2ucdbirqgtrxgij3i4eqwfib334kdogbfxtiyifje6clsat@3p3xnqkoj3ic>
+ <CAOLa=ZTuBziBPY1B0P3gTWMhqThuyFsFW1aWtwUconYN4gH+aA@mail.gmail.com>
+ <lu7o24bwwh5ntarnpfjkmceuvzxs6rdykcrojonqkhfcvq7vka@7h3rev4n7wxr>
+ <CAOLa=ZQiHcCU9G6BFO98Y1VAPYgTDdJzbWC5bnMQwx9jsTJ0tg@mail.gmail.com> <q4mixa3suepyjrp5lkd3wio2pcsdbjch757n2p55fzxpk3sc4u@lysauvdyiq4c>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 10 Jul 2024 06:36:47 -0700
-Message-ID: <CAOLa=ZTkA8jP8MD-pt-OXb-SdzkL=ByC4bsUyuvMBD3DO4zEgQ@mail.gmail.com>
-Subject: Re: [PATCH 6/8] clang-format: formalize some of the spacing rules
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, chriscool@tuxfamily.org
-Content-Type: multipart/mixed; boundary="000000000000ea881d061ce4bc57"
+Date: Wed, 10 Jul 2024 06:38:36 -0700
+Message-ID: <CAOLa=ZQZchY=1crbF8xjZknJkJ1feeR80Swk0k7TR530Gw_6FA@mail.gmail.com>
+Subject: Re: [PATCH 7/8] ci: run style check on GitHub and GitLab
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, chriscool@tuxfamily.org
+Content-Type: multipart/mixed; boundary="0000000000006791cf061ce4c3d4"
 
---000000000000ea881d061ce4bc57
+--0000000000006791cf061ce4c3d4
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Justin Tobler <jltobler@gmail.com> writes:
 
-> On Mon, Jul 8, 2024 at 5:24=E2=80=AFAM Karthik Nayak <karthik.188@gmail.c=
-om> wrote:
->> There are some spacing rules that we follow in the project and it makes
->> sen to formalize them:
+[snip]
+
+>>
+>> You can see the output
+>>
+>>     $ ./ci/run-style-check.sh "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
+>>     fatal: ambiguous argument '': unknown revision or path not in the
+>> working tree.
+>>     Use '--' to separate paths from revisions, like this:
+>>     'git <command> [<revision>...] -- [<file>...]'
+>>
+>> This only happens if "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA" is empty.
 >
-> Since nobody else pointed it out: s/sen/sense/
+> Ya I noticed this failure, but was wondering if it was maybe due to
+> something else. I have been unable to reproduce it and in all the jobs I
+> was running resulted in a merge pipeline with the variable defined. But
+> maybe sometimes a regular pipeline gets run for some reason and
+> consequently $CI_MERGE_REQUEST_TARGET_BRANCH_SHA is not defined? Was the
+> pipeline triggered directly from the source branch?
+>
 
-Will fix in v2.
+Just a regular push. Not sure at all why this happened. I was testing
+different types of style issues on the CI and this happened once.
 
---000000000000ea881d061ce4bc57
+>>
+>> > https://gitlab.com/gitlab-org/git/-/jobs/7291792329#L2470
+>> >
+>> > Do you have an example of the check-whitespace job failing in GitLab CI?
+>> > Maybe I'm missing something, but I don't see a problem.
+>> >
+>> > -Justin
+>>
+>> So I think I get the issue, GitLab has two kinds of pipelines it runs:
+>> 1. merge pipeline: Here the pipeline runs on the source branch (the
+>> feature branch which has to be merged).
+>> 2. merged pipeline: Here the pipeline creates a merge commit using the
+>> source and target branch and then runs the pipeline on the merged
+>> commit.
+>>
+>
+> Correct, this is my understanding.
+>
+>> And "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA" is only defined in the 'merged
+>> pipeline'. If you see the pipelines for my branch on GitLab [1]. You'll
+>> see only one of them is marked as 'merge results' and the others being
+>> marked as 'merged results'. The former includes the job I mentioned
+>> above, where "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA" is not defined.
+>>
+>> I'm still not sure why it marked only one of the pipelines as such, but
+>> this means there is chance that it could happen.
+>
+> Huh, I'm guessing the CI job must have been triggered from the source
+> branch directly. Did you manually run the CI job? I wonder if that could
+> have caused it.
+>
+
+Not that I remember.
+
+>>
+>> So I guess the best outcome is to use
+>> "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA", but fallback to
+>> "$CI_MERGE_REQUEST_DIFF_BASE_SHA", if the former is not defined.
+>
+> This is exactly what I think we should do too. For merge pipelines we
+> will want to use $CI_MERGE_REQUEST_TARGET_BRANCH_SHA so that only the
+> commits included in the MR are scanned in CI. If that variable is not
+> defined, it makes sense to fallback to $CI_MERGE_REQUEST_DIFF_BASE_SHA.
+> Since it's not a merge pipeline it will only scan commits included from
+> the MR and therefore work as expected.
+>
+> This should handle both cases correctly. :)
+>
+> -Justin
+
+Yeah seems like the best solution at this point, let me implement this.
+
+--0000000000006791cf061ce4c3d4
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 6617879c4a72f737_0.1
+X-Attachment-Id: bb72b466e873201a_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hT2ptMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK2NtQy80bm9ZN2IwTEtQSkVnZUx4OHlTelppMDg2bApLWVZnb3hCVWRY
-ZkQ5dTNjQmZybGxFTFVCWU5pYWFGRzlxWXN5ZmNKZWVOM2FkNmdRTlFlYURVcHFZUWFjWmc4CjRy
-QXovbHluNE9lK2ZYc3NZTTlEbjJJeEtyZ2NycGNIZnFjZDFCZDdmaFFOU08vZE5xekx1Rnh1cklm
-eTEra0MKVzBlc3M2RWhOYlYrbjJhREV1QlZvZXJhZWFIQU5MRkhyNC8xUXJadzV6eHVtMVNCeFdS
-UHlQeHd6NXVoNmFGegp5Z1QyUnVveWphaE5LWlh4ZUlldFJJMHBwOW0rcjNoTW9LZDVheFJOOWkx
-N3VLeTNtNEFGd3VUS3VFaisweXNjCnAvREYrNFJYeW1HTnNHWmM5ckpqcFZ6elpOSVdCa0k2SEEy
-NnBwRHpPSklIbytEUHI1K09kOWZDOWVvVHc2d3gKTEE1b0piekdPT3NTalJ3RTlBRWNWTVlXS3Az
-UG12d3NZZjBkekE3ZERFc1NhMXVLWGdtWGFIa25HeE84ZnM5awpHWi9JS1JzS1RaMXM5dzBVSFhJ
-cmdndFdTTzN4ZHRBWjNsZkpyTkY5ZGlYL2l4M2k3bE53MHpuZGRYMURsTDFqCnFMb1BLMTZTY3d4
-SjVSdGZWTm1VSnN4Rk1xZDJxOWxLcTRkNU1NVT0KPUZTLysKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hT2p0b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK3NIREFDZHZRMnREMkRpY2JPaG9mN0paV1R0YjZBZQplcmp4M3BSd1FS
+ZnYvV0haUHBxaTMvblViNldHQWltcGZZMFBZU1hmemh2UnVqT0NWVkF3dmNidU91VGxoZGNoCmpz
+UGpHWUV0dlZESy9KVmUzOXBKWUVqSlJTT3NoMEhybVZSY3JGUmxOWitSeXdFQTBOckhXQk1ReUgx
+c1IwYkwKdXZ0UmV5UlB4NHhUb0d5Mmdqc0NHQ2VxblhCbGlraEgwZ29FRTRuS21IK1F3bEIwZFp0
+K0NVYnptcUI2aTBvbQpOSE5JeGhqMk8wTVhSTytjcysvMnZ2WWl1Ym5nQlRZdUl5N2p6RzBNMDF5
+WHJUTzdzQ1pHY0UrbGpjOWNDb0l1CmI1eUgzeVpBNGFNWjhpQ0NXZEozNU5BdVA3VXhQN2hrYVYx
+VitZT2Z6dnZxNkVtbFNRQktXd0NmMEZYYVZOR1YKczQ3WXFjS3RTOG9ya01UWU0vdTdEQWxlODhp
+aE9NeCtrdzBGVUpqOWJLZjgreEYzWWN2NVdBNnJUOWxQemVRbQpOYzNvTHdzZCtsSWFNSThUYnZK
+aUNaQS81Zy9rOU5HaE05SjNjb0hNcW02MExlclpsNG0xNUpjdGJKM3ErK3paCm52QjFxcEE4NC9J
+ZkI0N0FtdUQ1TnY0dFdTZzVZaG5UeDdOaEkvVT0KPWJFdmUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000ea881d061ce4bc57--
+--0000000000006791cf061ce4c3d4--
