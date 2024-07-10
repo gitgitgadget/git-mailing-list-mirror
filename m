@@ -1,179 +1,116 @@
 Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FF318562C
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 12:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32CE189F54
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 12:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720613386; cv=none; b=UY0C+hxY4gHbqRf6UYDIEHneCricwp+ipM2WBDOb5BjMbdnIqe+OSONdKnpuLtPLF03snR6sYVkdAQvTFeLDx5wx1AvT8EtqyyOOFTyNjt8gsmyCKrQ1srmqNixoH8/tHle2Zvn9TuJvHFNJeoEv9eT52TqpLeUQmXfEbi2WPSA=
+	t=1720613624; cv=none; b=GjhJgeXO807jZEV4jjQEKhA7CREgGFOiLn1aEIj1qaaMYxIPaSQVtzDOktgBphHDhVneg+KFiDKh8ALhA/1T+NN/zVIvb6Asv8tGfnZm+XoQ5fB7cVPLCEpH4SelD6JoXY2EsSDMYmGtlHxvqxcqB0Ovljq6id57k4MEHxCuulU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720613386; c=relaxed/simple;
-	bh=bM6d1clfxvNvmF/2Vs6m6IwVgF1Vcys9ScOWihIQn7o=;
+	s=arc-20240116; t=1720613624; c=relaxed/simple;
+	bh=kPB8xOw61VsagmK/RVlor+aluRGohzz5zXJYuziNIT0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kGxoNEaLu5e7XTicaV3wMXu+yYYoT/tPaNGG168gvTEl7sAc53Of0uchYYQnmPzzNkh3Fcls1Gl8MS04Y2NxKejN7mzchm55DD22YRio+guMQutqJOJ5p53XQGSWEKWE/f2VARFi6R8yh/UusUzxTlutLCF2+leasSz+OiGxygU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lVkyBH+3; arc=none smtp.client-ip=209.85.210.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=NbAz1wrAyyaflrEZ57qZsSJMgRZBf33CBYvhDPoI3cFhrhKe5E0aN9Q2oSoHtYYTSqMHm/FscJqFerHOovjSzFsRvQOMPjUwtl36eQw7IFLrZpK2uckD8wUOer2OQPcTtam08UdYV/KOxyAS6a+pO0so/NsFEGp6FBW8T+ASqeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H4G1eCMb; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lVkyBH+3"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-70b0e9ee7bcso3845834b3a.1
-        for <git@vger.kernel.org>; Wed, 10 Jul 2024 05:09:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H4G1eCMb"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-70b09c2ade6so3391594b3a.3
+        for <git@vger.kernel.org>; Wed, 10 Jul 2024 05:13:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720613385; x=1721218185; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cz02wSS/NJNoj8WvtWNKBm8QRM32ogMSiVkmx0KrlcA=;
-        b=lVkyBH+3ZJTdXqWbGU9XRjkynsjd+L6vTtP2UmLKm74dvPIwS+tel0FMONxj+k+pSy
-         yIAZPKpslVjuXGHkjT+o/YiSzmj1PpNUkRh1WMEdX13JFSEfd9EVXiSOM5zUq31/6UtW
-         Vzgn6jawDuMuCalwuQ9eQsfEBzgRqYyDdmhDMgRoW1xMejxOILtFooRdpmHHoAmKOvgw
-         bD7BQ8wYYCqDFBO/QtEexWqXQNe7WJofO4Md+ip6cjWsw4mYIh5EqPjUgNzMgtDvIEyQ
-         b+yQmyVVcG3G1CJVw/k5oT3DwZXK9FbYiJNpExeUlONg1j20kXZhS76ClmsswRd6sx9s
-         q4AQ==
+        d=gmail.com; s=20230601; t=1720613622; x=1721218422; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=l7oVWE7W/skgdzTrFM4ZD/SFjGeAYUwPIV8YCxb0+hA=;
+        b=H4G1eCMbmhzppAOtJTHf6pfuD2RmRQyuP3HbQIVV4ACuXpa5X05/wmP8H6x2Bb5HDy
+         CvzfTO6MMbeion31h2cLzCN+LEUmnE7np8XulaByVoe+OQgIxEFfgH07JPib9px4B/Sx
+         YGfjqW54lrk7VECqCKKjeDXKFbk3qXnbk9LtCcBVxUsNi0g/fnFnboY+lkuF3XZoMn/+
+         X+9KKfuYXTBRK6f+JRmHCAGFwDU9D8HfGz+p6eZzlEUS2Vwi0sSIl4HGJ9Vd5g3mZbgQ
+         S8/AiEf8iQfyNG4GtTO0TVH/sWa4yPxMlLwAzpHRmFNWHuHutM8GWk2qrOeOB38OOPcV
+         +u6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720613385; x=1721218185;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cz02wSS/NJNoj8WvtWNKBm8QRM32ogMSiVkmx0KrlcA=;
-        b=XeX442CW4Xk+niWdbXZhSpftxQVreVnlWxw5j00tATatHQWvMrlZQigLwCUTJpyq+p
-         GbKO0de0Vy8fe/hiqGgWho/1CTROzvVS1BESFjSEExa0UsOAAeLg10EXpkVs+5gx6n0w
-         1VP4CN7Ev6bvgdLpXkiGKJT2PLWUYRSeM/v2+W4uzPa7EMfcEyWEv4SSDld8SC1LQAl+
-         LrFuemkcOQR8tZ/AV6E9GRhSpTh9FN/kjC0jyxtCozLTsn/LGGhCe6bwCDXnJ40MicnZ
-         OmNsTQnAYo0UptaFgWuIEFR7Risq8WXE+eOlp28JDStw7J422GEdZnqRevVAMbAeAgjf
-         WGOw==
-X-Gm-Message-State: AOJu0YwlONTyo/igoiSQME9SZ0p45dVqXipbGbtGeyNU+zHJMKhd1oFx
-	NxOSZW+cg8adYsIYp4HVo4+Oxener55Kd+SzNXEML+8ggu62YZ7y
-X-Google-Smtp-Source: AGHT+IFXCF/II1yZfNEdoYa2GHNuTdZmko/pGr/BGPLNi8YMl3BmGKExbejWl149kRnulfNqxSniOA==
-X-Received: by 2002:a05:6a00:3d0b:b0:706:5dfc:7b73 with SMTP id d2e1a72fcca58-70b435660d9mr6779295b3a.16.1720613384438;
-        Wed, 10 Jul 2024 05:09:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720613622; x=1721218422;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=l7oVWE7W/skgdzTrFM4ZD/SFjGeAYUwPIV8YCxb0+hA=;
+        b=YPvT+IOFlvBTtsJIpAlnTf1YxOCXSHC1h7k++KOBSwA01KdjKk6bt9Bn1norpF1yn9
+         GGzrIU4MCjuOlqX79Noumc4xOcCqEOTWpEhov67j4HZp3lCwkg/z7igS3vf5DmSgqaPM
+         hsqxkTiiEcjF0bV6VHr6RBf29g/+cpY0+PIeUu4z3PjYQYPsGMm0XTxz+h38Voh/S+RX
+         kcJv/YjTW+xwbcd48AUv+9BRTmhGUD914NVqBy6EsLWJEqi4jD38HFF6idD1D6boIYVk
+         8ImR8pucVOyZyjACLAn2YS7zOCddP7z2tAOV3WVFVxW7GGYj314+hk6Ri35J2aq0HqAF
+         aoJg==
+X-Forwarded-Encrypted: i=1; AJvYcCVGo2lNj91pGi5HGdLpfNN1I3PXawcwYg5u/02m1bClJa0pF0nvz7/qR5zac5HW6EsX6lfoFRSJ9d+gBy7PLhTf8cBn
+X-Gm-Message-State: AOJu0YwF9X0m8V47jTe191SqPa7dQNOOY08PQzFr38314shDsCqwEyXN
+	CICeI0fl6B0c1GfKwsi1cmIBpScvZ9VoibVb/oJ7GidyOWguTmlE
+X-Google-Smtp-Source: AGHT+IEFiZuNDj7WqsERFbc6dyPdro40OzRBy873BbX3RZj2KAmuaQZwyGd5cSEJvo/GfFCB5S7+Fw==
+X-Received: by 2002:a05:6a21:9993:b0:1c2:8d72:67ce with SMTP id adf61e73a8af0-1c29821e0dfmr5448155637.15.1720613621886;
+        Wed, 10 Jul 2024 05:13:41 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b43967350sm3610501b3a.103.2024.07.10.05.09.43
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fbb6ad089dsm32082625ad.271.2024.07.10.05.13.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jul 2024 05:09:43 -0700 (PDT)
-Date: Wed, 10 Jul 2024 20:09:44 +0800
+        Wed, 10 Jul 2024 05:13:41 -0700 (PDT)
+Date: Wed, 10 Jul 2024 20:13:43 +0800
 From: shejialuo <shejialuo@gmail.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>,
 	Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC][PATCH v9 2/9] fsck: add a unified interface for reporting
- fsck messages
-Message-ID: <Zo56CEdLdQywXgBI@ArchLinux>
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC][PATCH v9 3/9] fsck: add refs-related options and error
+ report function
+Message-ID: <Zo5695Ig1q6ronkg@ArchLinux>
 References: <Zo0sQCBqyxX8dJ-f@ArchLinux>
- <Zo0ufgFhREKlmBFG@ArchLinux>
- <cu3ypjpzpdkazg7w7ho5njcrzvqklzycba3oipwhztlh6lvu6t@wtjew4mj6ku4>
+ <Zo0uiz1y6hJld2Rv@ArchLinux>
+ <oan7pcamqpi2z4jzfshff2sfziqgisd3jcbpzfoiuyks5g57mk@7isgeztkcgmy>
+ <CAPig+cR=RgMeaAy1PRGgHu6_Ak+7=_-5tGvBZRekKRxi7GtdHw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cu3ypjpzpdkazg7w7ho5njcrzvqklzycba3oipwhztlh6lvu6t@wtjew4mj6ku4>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cR=RgMeaAy1PRGgHu6_Ak+7=_-5tGvBZRekKRxi7GtdHw@mail.gmail.com>
 
-On Tue, Jul 09, 2024 at 03:24:50PM -0500, Justin Tobler wrote:
-> On 24/07/09 08:35PM, shejialuo wrote:
-> > The static function "report" provided by "fsck.c" aims at checking fsck
-> > error type and calling the callback "error_func" to report the message.
-> > However, "report" function is only related to object database which
-> > cannot be reused for refs. In order to provide a unified interface which
-> > can report either objects or refs, create a new function "vfsck_report"
-> > by adding "checked_ref_name" parameter following the "report" prototype.
-> > Instead of using "...", provide "va_list" to allow more flexibility.
-> > 
-> > Like "report", the "vfsck_report" function will use "error_func"
-> > registered in "fsck_options" to report customized messages. Change
-> > "error_func" prototype to align with the new "vfsck_report".
-> > 
-> > Then, change "report" function to use "vfsck_report" to report objects
-> > related messages. Add a new function called "fsck_refs_report" to use
-> > "vfsck_report" to report refs related messages.
-> > 
-> > Mentored-by: Patrick Steinhardt <ps@pks.im>
-> > Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> > Signed-off-by: shejialuo <shejialuo@gmail.com>
-> > ---
-> >  builtin/fsck.c  | 15 ++++-----
-> >  builtin/mktag.c |  1 +
-> >  fsck.c          | 81 ++++++++++++++++++++++++++++++++++++-------------
-> >  fsck.h          | 40 +++++++++++++++---------
-> >  object-file.c   | 11 ++++---
-> >  5 files changed, 101 insertions(+), 47 deletions(-)
-> > 
-> > diff --git a/builtin/fsck.c b/builtin/fsck.c
-> > index d13a226c2e..de34538c4f 100644
-> > --- a/builtin/fsck.c
-> > +++ b/builtin/fsck.c
-> > @@ -89,12 +89,13 @@ static int objerror(struct object *obj, const char *err)
-> >  	return -1;
-> >  }
-> >  
-> > -static int fsck_error_func(struct fsck_options *o UNUSED,
-> > -			   const struct object_id *oid,
-> > -			   enum object_type object_type,
-> > -			   enum fsck_msg_type msg_type,
-> > -			   enum fsck_msg_id msg_id UNUSED,
-> > -			   const char *message)
-> > +static int fsck_objects_error_func(struct fsck_options *o UNUSED,
-> > +				   const struct object_id *oid,
-> > +				   enum object_type object_type,
-> > +				   const char *checked_ref_name UNUSED,
-> > +				   enum fsck_msg_type msg_type,
-> > +				   enum fsck_msg_id msg_id UNUSED,
-> > +				   const char *message)
+On Tue, Jul 09, 2024 at 05:40:08PM -0400, Eric Sunshine wrote:
+> On Tue, Jul 9, 2024 at 5:30 PM Justin Tobler <jltobler@gmail.com> wrote:
+> > On 24/07/09 08:35PM, shejialuo wrote:
+> > > +int fsck_refs_error_function(struct fsck_options *options UNUSED,
+> > > +                          const struct object_id *oid,
+> > > +                          enum object_type object_type UNUSED,
+> > > +                          const char *checked_ref_name,
+> > > +                          enum fsck_msg_type msg_type,
+> > > +                          enum fsck_msg_id msg_id UNUSED,
+> > > +                          const char *message)
+> > > +{
+> > > +     static struct strbuf sb = STRBUF_INIT;
+> > > +
+> > > +     strbuf_reset(&sb);
+> >
+> > Naive question, is there reason to reset `sb` immediately after
+> > `STRBUF_INIT`? My understanding is that because we initialize the
+> > buffer, the other fields should also be zeroed. If so, resetting the
+> > buffer here seems redundant.
 > 
-> This is just a suggestion, but I think it would be slightly easier to
-> review if the `*_error_func()` renames were done in a separate preceding
-> patch. That way the purpose of the renames can also be clearly
-> explained.
+> This particular strbuf is static, so it needs to be cleared each time
+> the function is called.
 > 
+> The cover letter provides an argument for making it static: that this
+> will be called often, and we don't want to make a lot of repeated
+> allocations. Personally, I find that argument rather weak. Why would
+> an error function be called frequently? Is this really a hot path that
+> needs to worry about a few extra allocations? Also, importantly, every
+> static added makes the code harder to "libify", so making it static
+> requires a very strong reason, but there doesn't seem to be such a
+> reason in this case.
 
-I agree with this, will change in the next version.
-
-> >  {
-> >  	switch (msg_type) {
-> >  	case FSCK_WARN:
-> > @@ -938,7 +939,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
-> >  
-> >  	fsck_walk_options.walk = mark_object;
-> >  	fsck_obj_options.walk = mark_used;
-> > -	fsck_obj_options.error_func = fsck_error_func;
-> > +	fsck_obj_options.error_func = fsck_objects_error_func;
-> >  	if (check_strict)
-> >  		fsck_obj_options.strict = 1;
-> >  
-> [snip]
-> > @@ -166,7 +171,7 @@ struct fsck_options {
-> >  	.gitmodules_done = OIDSET_INIT, \
-> >  	.gitattributes_found = OIDSET_INIT, \
-> >  	.gitattributes_done = OIDSET_INIT, \
-> > -	.error_func = fsck_error_cb_print_missing_gitmodules, \
-> > +	.error_func = fsck_objects_error_cb_print_missing_gitmodules, \
-> >  }
-> >  
-> >  /* descend in all linked child objects
-> > @@ -209,6 +214,13 @@ int fsck_tag_standalone(const struct object_id *oid, const char *buffer,
-> >   */
-> >  int fsck_finish(struct fsck_options *options);
-> >  
-> > +__attribute__((format (printf, 5, 6)))
-> > +int fsck_refs_report(struct fsck_options *options,
-> > +		     const struct object_id *oid,
-> > +		     const char *checked_ref_name,
-> > +		     enum fsck_msg_id msg_id,
-> > +		     const char *fmt, ...);
-> > +
-> 
-> I think I mentioned this in a previous reply, but it was missed. Not a
-> big deal, but it might be nice to document `int fsck_refs_report()`
-> here.
-> 
-
-I will improve this in the next version.
-
-> -Justin
+I didn't consider the issue of libify. I just want to reduce some memory
+allocations. I will change this in the next version.
 
 Thanks,
 Jialuo
