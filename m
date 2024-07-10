@@ -1,179 +1,171 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D48418FC89
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 10:35:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D21B127B57
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 11:26:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720607709; cv=none; b=pMqCD49Y643zOHJpftmyXenIvcgaFRIY86267SMA7ZJXqXqgA/UYGgNLO6PRcwNG6fFD1nTH2ijJ+n5VmqidyTQC3mbkdSJPYLvjfKCFhnsGa3VwGTxmTEVmvEme2xCd2QEVrTJ2i7oTbAuZ5D17nMQYLuvSgoL4C/KpEtS77Ac=
+	t=1720610798; cv=none; b=L/V8empt4W4APre1qPWuhoxvrIHhRgyYjUYMYPOj67tvozOnwf+GESHk+V0hU2Rz6WRyr/FpCEl3xBJM6ODY1FuTtzB/yIfoIgEGZh8JDWlCPws2XzZ3VXwqQwXy0G4g8eG0KgK5CJxU2DB8/k/J5ebTFblaDw8GJyYIfqFe/OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720607709; c=relaxed/simple;
-	bh=HPPgzJ0P4r2mxRADaWXiOsUWu6tvQYuF7BsmzQ4JFFc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CzCOiUA/WVqxMTchdxLn+Ex2APR5+dKRC0FZ8KoNEKFZb5RIoveOcf0ffTuMIWNnFjVpsfgXHXkp1DKG00o9H8qABM+LYMqSkKwh3I+sHsqWOWCp2SZ6otcL6yCvWoKV/1Vy5TJIglNfgW+NAuLPXaWgn0xsBMwsIIlKqm4Rwck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UiA8WVh8; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720610798; c=relaxed/simple;
+	bh=d4Vq1eHWSd49xpieHZFlH1hmccY3AuMIekOm+buft5Y=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=tRiJsQDklSS7q7LuMWg8ARP7JCkdloF70s0wZDp6tZTM9jv64pc5SsQcTw0qcjR0gpGIhkXHd8OT+LAiqiQj2Fzvb0bfHqworbU7CyjPYZpDd1nhZh++6N3nfe3f2TfDX1cm/Ibt7AY9Ka/VpnKYMq+vmLU15T1KnNyq36LaY5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=NMvgnjw7; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UiA8WVh8"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2ee75ffce77so74369871fa.3
-        for <git@vger.kernel.org>; Wed, 10 Jul 2024 03:35:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720607705; x=1721212505; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:reply-to
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=iaIKm93XWBw84D8XVOdQEgMPkB0djBtWArE98Xeu/+I=;
-        b=UiA8WVh8egoWX4ni/vJlciAl+d48sx+pNZ9ofAfwmYt/UFoZzpOpqOSaL9Cc2aLwLq
-         mVSJf9Tbok2rmbnLTxNksQ0nPNFhMndjgxt0A/XIzLLRPoKL+y8ukPnrXCVLCbmz+Oli
-         z5hEPgKdXS4s1vfpt92Qs7F0EYJj7GZKCLVyd1QXOGZrVFtc1ywvHP4WJclLMa3prPtQ
-         O72fQhotuoIzjfc9KbtiAKJ1cibBqlN8WwQvkjDafB0kiaECfwwfuaOUBwUN9fk0h9fB
-         5vr2OlHBJqKyg2MN68bP8fuleSpACqDXl0DD1G2171Zf8WmuFhqoUlyF+QuErT2N19Sn
-         S0Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720607705; x=1721212505;
-        h=content-transfer-encoding:in-reply-to:from:reply-to
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iaIKm93XWBw84D8XVOdQEgMPkB0djBtWArE98Xeu/+I=;
-        b=Z+5zp4Qc6p9oR0Tho7PpxNJpzfD0B0ou15nYVR3aHI4AqMCkM0Rn7bODRkLEqolIcS
-         f2ARGWVeixLR7IsXkmNGMZ8jPtBFkLONovM58soyAOIxssEop0YA7FMs3bHEuM/XJUJQ
-         FIB0HzII9xeGnKd9iNBxbfebhO3HIFg4oLiZba9R/PbdHjGFHn+izlXUZNzhKJe19o5z
-         WelgFh2YTvTmtEsTMQdijJ0Vgqy9dzaL7pcCWsTEA4Gjux4+jodxxV7J2BMCy2LQAvv9
-         xwqJfwgsB3j3ajH223aTW44wv/zUT+xOuLM2dZ2zvRcUhxT5luGv7a7+sj9d+43I4BLA
-         1dBA==
-X-Gm-Message-State: AOJu0YyIlKbuDv2LhtYJEa5XysG3ZW+LRQrxta50g8DjfTTg06+XEEnp
-	ve2LtRH/59wOc3Hgv7o44ObSYllAJniB/IcwFam/Rg8QT2Mpd9EUTFAFgMtESvQ=
-X-Google-Smtp-Source: AGHT+IFQCdy+7JcyoJjDZoFgWR3pHX6Axyfa/GqVF+K8AaDm6xhmr+aQazo3qLaY7GJMkHusoEI97Q==
-X-Received: by 2002:a2e:9b84:0:b0:2ee:849b:576a with SMTP id 38308e7fff4ca-2eeb30bb3b5mr39817571fa.11.1720607705133;
-        Wed, 10 Jul 2024 03:35:05 -0700 (PDT)
-Received: from [172.30.9.9] ([131.228.32.169])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a86ec75sm146567566b.191.2024.07.10.03.35.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jul 2024 03:35:04 -0700 (PDT)
-Message-ID: <2d76e43e-db79-4572-8f41-60fbbea10af6@gmail.com>
-Date: Wed, 10 Jul 2024 12:35:02 +0200
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="NMvgnjw7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1720610792; x=1721215592;
+	i=johannes.schindelin@gmx.de;
+	bh=l5dZjZhCFXH97K6RgtYymevj4Z54YBuJ6AxzvUwziZ0=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=NMvgnjw7VDT057pYBAwhMkEeCvD9EqMznW2xq4iKwSZidHpllEajoUNJ1zpptdSO
+	 G2i6kaoqvAAwVauGZV+1SEBEde5mMv4ZKknFKAp4CEduS4u+/4KMR3blNZTHLk2P9
+	 av5kW4xTozLFHRU9VyY+2JfUJegTI4l1epUy821VmNC41rFXA1rUJYPBudoHpD0N/
+	 dx7DgzKK+G7NwsXnA1zXIhXpN6ne0FskB5UA/su2xlfaLcJLyfow8uibyHqIUjXJ5
+	 M6cDZZiJeDmAFBm05Li6gXhnfSQrVoftYwzOQAl07lFzr/8OWxirHNMSZPMLxsXoi
+	 MoxxI02TzkitsgrA2w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.84]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N2mBQ-1sFQaS31jQ-00tiK0; Wed, 10
+ Jul 2024 13:26:32 +0200
+Date: Wed, 10 Jul 2024 13:26:32 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: "Schoonderwaldt, Michel" <michel.schoonderwaldt@sittard-geleen.nl>
+cc: "git@vger.kernel.org" <git@vger.kernel.org>, 
+    "git-security@googlegroups.com" <git-security@googlegroups.com>
+Subject: Re: Request to Update OpenSSH Version in Git due to Security
+ Vulnerabilities (CVE-2006-5051, CVE-2024-6387
+In-Reply-To: <AM9PR07MB71854BD4C1CE7E517203FFB6B1DF2@AM9PR07MB7185.eurprd07.prod.outlook.com>
+Message-ID: <ffe00b81-5f19-a073-9a9e-ee84b7d3845b@gmx.de>
+References: <AM9PR07MB71854BD4C1CE7E517203FFB6B1DF2@AM9PR07MB7185.eurprd07.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH/RFC] http.c: cookie file tightening
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
- Junio C Hamano <gitster@pobox.com>
-References: <xmqqed82cgmj.fsf@gitster.g>
- <20240709234941.GA1525171@coredump.intra.peff.net>
-Content-Language: en-US
-Reply-To: 20240709234941.GA1525171@coredump.intra.peff.net
-From: Piotr Szlazak <piotr.szlazak@gmail.com>
-In-Reply-To: <20240709234941.GA1525171@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:s6K2PkHB40laDXvJm6WAmZB8x2WRqLBFnO6jg2DuPUNXIMWNNmB
+ ArpQdACKMLRTW4hXdxJtHVMw3L5w8ur/K5fZSSaEe8j0VqQFMGB5gdmAnWqmwyq3NrdjItG
+ 7kQJIgjZ72bDU7wQnUIguBJD3X9GYLTBL3UvoH9/iaDofS3ELTELfwdaCoYkPgIS/GzSOGv
+ 1Xz5DyGscYb1Q26/1Tkgw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:tJoDOdtDeZ4=;ImKAUfAprmwIA9QsYb0pxT9YPsR
+ TT5gF2bepnElQLgkplyKb+cECSI5Pq7U52wjbZfhCZSUJ9S51pvZ1GyV3T40ISMtGxQqWH5Es
+ YIFk04yRoisk3ckqyhDwFFrkfSW/vWvqW+m5RTUl0dCWYiRZGr6+3zYMpZzmC7NIVQSSFlnby
+ OPUSd2NvRYeEZFFO/XImB4fgIsvIUl4rYmwWp7YJXqMGxiPajQp3mtWbcOa7zizi8O5Fbazmi
+ xZKYWdyBaelm6f3xCiQEJwcVBmGtDfQe50/UFaedE0pM6XwZT2PfgYWPNzN4mIHDnsVqKYPiL
+ 3r12yR4BZhqbs6t1RXaS94GUio4KWJtq5hSTo3qPvkvpa8EORPfRkZCXgc0y9YjI8vdci5T0b
+ hy8Cf1U/TR6nENXwOGzeba5WBqgErJh/dz/W6qUjWs6mlz2URUp91jv0Ih9kJ7RDfrX4E7u5g
+ 5zv6P+DB75o06IdNzOswZqx9T39UiEbDMRW4RY6Yc9RmD/uMXT3+OBV0Q2Wu1Dz6gtn+RXfYH
+ kyMQKdqy/BypJAMCMUhP/CNK6DvpTaXRJIEcNxCReTyO04zk1nJRIk8bO/5wdYQWJ0Gl2bTyK
+ WubD22UcEUNo7OKFDW+0P9c+1Y+bYpyhd9vqV5Vcb+fidbm9Qd74SpNmQMZno1WGFkGHQI+9X
+ sO44FfF9BJF56wJfRNV8jRg39JspWupGyujItpOfzMMQkprzKQ8wh1asjhaXThkgg0DUNgu+m
+ FZ6tmVVcP4GFLVIejyd1QiajLkc2duXbdpitPR0yZpZMq0jbGJnEbs2GtGqXE0XhTcMc7wcfT
+ OpdWkKzcBuDU+tXsU8fOgIZA==
+Content-Transfer-Encoding: quoted-printable
 
-On 10.07.2024 01:49, Jeff King wrote:
-> On Tue, Jul 09, 2024 at 04:03:48PM -0700, Junio C Hamano wrote:
->
->> The manual pages https://curl.se/libcurl/c/CURLOPT_COOKIEFILE.html
->> and https://curl.se/libcurl/c/CURLOPT_COOKIEJAR.html talk about two
->> interesting special values.
->>
->>   * "" (an empty string) given to CURLOPT_COOKIEFILE means not to
->>     read cookies from any file upon startup.
->>
->>   * It is not specified what "" (an empty string) given to
->>     CURLOPT_COOKIEJAR does; presumably open a file whose name is an
->>     empty string and write cookies to it?  In any case, that is not
->>     what we want to see happen, ever.
->>
->>   * "-" (a dash) given to CURLOPT_COOKIEFILE makes cURL read cookies
->>     from the standard input, and given to CURLOPT_COOKIEJAR makes
->>     cURL write cookies to the standard output.  Neither of which we
->>     want ever to happen.
->>
->> So, let's make sure we avoid these nonsense cases.  Specifically,
->> when http.cookies is set to "-", ignore it with a warning, and when
->> it is set to "" and http.savecookies is set, ignore http.savecookies
->> with a warning.
->>
->> [...]
->>
->>   * I have no confidence in me doing http correctly, so I am asking
->>     from folks who have touched http.c in the past 6 months for help.
-> I don't have any experience with any of the cookie options, but your
-> explanation here all makes sense. It might be worth including a test,
-> though the interesting part is probably how things broke _before_ this
-> patch. After it, it's pretty obvious what should happen.
->
-> So I'll try to comment from the general http.c perspective.
+Hi Michel,
 
-Hello!
-I'm able to perform some checks as I have Git repository behind HAProxy 
-load balancer which sets HTTP cookie to record which backend should 
-process consecutive requests.
+On Fri, 5 Jul 2024, 'Schoonderwaldt, Michel' via Git Security wrote:
 
-Indeed, if http.cookieFile='-' is used, git stops and waits for input. 
-It does *not* work even if I do:
-$ echo '/path/to/file' | git -c http.cookieFile='-' ...
+> I am writing to bring to your attention a critical issue regarding the
+> version of OpenSSH included in the Git for Windows package. Recently, a
+> severe vulnerability (CVE-2024-6387) was disclosed, affecting versions
+> of OpenSSH from 8.5p1 up to and including 9.7p1. This vulnerability is a
+> regression of the earlier CVE-2006-5051, which was initially resolved in
+> OpenSSH version 4.4p1 but reintroduced in 8.5p1.
 
-On the other hand there is no problem if http.cookieFile='' and 
-http.saveCookies=true is used together. Git operation is successful. But 
-if GIT_TRACE_CURL=1 GIT_TRACE_CURL_NO_DATA=1 is enabled, I can see 
-following warning it the output:
- > 12:19:56.280263 http.c:820 == Info: WARNING: failed to save cookies in
-It comes from:
-https://github.com/curl/curl/blob/master/lib/cookie.c#L1758
-But cookies were accepted by the client and sent back to the server.
+This description, while correct, is incomplete.
+https://nvd.nist.gov/vuln/detail/CVE-2024-6387 has this to say:
 
-PS. I'm using Git 2.42.0.
+	A security regression (CVE-2006-5051) was discovered in OpenSSH's
+	server (sshd). There is a race condition which can lead to sshd to
+	handle some signals in an unsafe manner. An unauthenticated,
+	remote attacker may be able to trigger it by failing to
+	authenticate within a set time period.
 
-Regards!
--- 
-Piotr Szlazak
+The crucial part is the `sshd` part. Git for Windows does distribute the
+`sshd.exe` binary, but it is in no way used by default, nor is there
+support how to set it up to run an SSH server.
 
+Git for Windows is therefore not affected by this vulnerability, and
+therefore it is not crucial to get a new version out as quickly as
+possible. See also my assessment at
+https://github.com/git-for-windows/git/issues/5031#issuecomment-2199722969
+
+I take security very seriously. In some cases that dictates that I do
+_not_ rush out security bug-fix releases: Too many updates cause update
+fatigue, with the counterintuitive consequence that too many security
+bug-fix releases _decrease_ security. Therefore I assess carefully whether
+or not any given CVE in any given component that is distributed with Git
+for Windows merits an out-of-band release. The regreSSHion CVE in question
+does not.
+
+Having said that, the next official version is scheduled for July 29th (or
+soon thereafter): https://gh.io/gitCal. This will contain the OpenSSH
+version 9.8 that addressed that CVE.
+
+If this is not soon enough for you, feel warmly welcome to install the
+most recent snapshot from
+https://wingit.blob.core.windows.net/files/index.html; Git for Windows is
+kept in an always-releasable state, therefore I consider those snapshots
+to be equivalent to official releases with the only exception that they do
+not have an official-looking version number (and aren't announced as
+prominently, either).
+
+Ciao,
+Johannes
+
+> Given the popularity and widespread use of Git, it is crucial to ensure
+> that all included components are secure and up to date. Systems using
+> the affected versions of OpenSSH are at risk of exploitation, which
+> could lead to unauthorized access and other serious security issues.
 >
->> diff --git c/http.c w/http.c
->> index 13fa94bef3..86ccca49f0 100644
->> --- c/http.c
->> +++ w/http.c
->> @@ -1466,7 +1466,16 @@ struct active_request_slot *get_active_slot(void)
->>   	slot->finished = NULL;
->>   	slot->callback_data = NULL;
->>   	slot->callback_func = NULL;
->> +
->> +	if (curl_cookie_file && !strcmp(curl_cookie_file, "-")) {
->> +		warning(_("refusing to read cookies from http.cookiefile '-'"));
->> +		FREE_AND_NULL(curl_cookie_file);
->> +	}
->>   	curl_easy_setopt(slot->curl, CURLOPT_COOKIEFILE, curl_cookie_file);
->> +	if (curl_save_cookies && (!curl_cookie_file || !curl_cookie_file[0])) {
->> +		curl_save_cookies = 0;
->> +		warning(_("ignoring http.savecookies for empty http.cookiefile"));
->> +	}
->>   	if (curl_save_cookies)
->>   		curl_easy_setopt(slot->curl, CURLOPT_COOKIEJAR, curl_cookie_file);
-> This all looks OK to me. A few things I wondered while reading:
+> I would like to kindly request that the OpenSSH version included in the
+> Git for Windows package be updated to version 9.8/9.8p1 or higher, which
+> addresses these vulnerabilities. This update will help ensure the
+> security of all users who rely on Git for their development and
+> operational needs.
 >
->    - is curl_cookie_file always an allocated string? The answer is yes,
->      because it comes from git_config_pathname(). Good.
+> Thank you for your attention to this matter. Please let me know if there
+> is any additional information you require.
 >
->    - get_active_slot() will be called a lot of times, as we reuse the
->      curl handles over and over (the "slot" terminology is due to the
->      parallelism for dumb-http fetch; smart-http just reuses the one
->      handle each time). So is this the best place to put the check?
+> Met vriendelijke groet,
 >
->      You actually unset the options when issuing the warning, so we'd
->      never see the warning multiple times, even if this code is run
->      repeatedly. Good.
+> Michel Schoonderwaldt
+> Senior ICT-specialist technische applicatie- en integratiebeheer  |  Tea=
+m Informatiemanagement en ICT  |  Unit ICT
+> 046 477 71 96
 >
->      I do suspect these curl_easy_setopt() calls for cookies could just
->      go into get_curl_handle(), which sets up the handle initially. But
->      it's possible there's some subtle reason why they're here, and
->      certainly moving them is orthogonal to your goal. And in the
->      meantime, putting your new checks alongside the use of the variables
->      makes sense.
+> Werkdagen: maandag tot en met vrijdag, 08:30 - 17:00 uur
 >
-> -Peff
+> Gemeente Sittard-Geleen  |  www.sittard-geleen.nl<http://www.sittard-gel=
+een.nl/>
+> Adressen en openingstijden<https://www.sittard-geleen.nl/adressen>
+>
+> [cid:image001.png@01DACEEF.84479400]<http://www.facebook.com/sittardgele=
+en>     [cid:image002.png@01DACEEF.84479400] <https://www.instagram.com/ge=
+meentesittardgeleen/>      [cid:image003.png@01DACEEF.84479400] <http://tw=
+itter.com/sittardgeleen>      [cid:image004.png@01DACEEF.84479400] <https:=
+//www.linkedin.com/company/sittard-geleen/>      [cid:image005.png@01DACEE=
+F.84479400] <http://www.youtube.com/user/sittardgeleenonline>
+>
+> [cid:image006.jpg@01DACEEF.84479400]<https://www.sittard-geleen.nl/>
+>
+>
+> --
+> You received this message because you are subscribed to the Google Group=
+s "Git Security" group.
+> To unsubscribe from this group and stop receiving emails from it, send a=
+n email to git-security+unsubscribe@googlegroups.com.
+> To view this discussion on the web visit https://groups.google.com/d/msg=
+id/git-security/AM9PR07MB71854BD4C1CE7E517203FFB6B1DF2%40AM9PR07MB7185.eur=
+prd07.prod.outlook.com.
+>
