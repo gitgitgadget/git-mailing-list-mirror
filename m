@@ -1,137 +1,202 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EC01EB2B
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 19:11:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B9F19538B
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 19:42:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720638677; cv=none; b=JP0fLDG1F9rqXb7jXA6/qiQcxJwGQygzNOvbh23HRdN5N6HA07KyaIun8irIXJmDRuvMhoPqPzBUbEUKr7tMD/vD/ZANDtIhmyiM8zy9Wf/RljhBwVTYWY8ydrlNI7C8u0Gj7rGaX19d//9sgWn3213ZN7gl9dsYVOpI6SjrO6Y=
+	t=1720640524; cv=none; b=Gy9PkEYaCSJ/AKNzAuKkWAUwichsK/MjF8yfcEcbUQA5eLhx5CeQDH9A48UeKWCqUlBqLW51efSAwWWWPTKU+8Ny55763Q4dLb9f3u+93AEV3VZQ8iz3L1rg6PB5vhg2ZPwLySvATSEZ+mgXZoeWL5GlJs+zPeSa+QzepnvV9Po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720638677; c=relaxed/simple;
-	bh=wwyOjqrQY522NqxdOWuwmYCDxyoC5TlenfGOe4iIdiI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RROGrQ3XJVbgSM3KBqh59NYI1gct739tn4XMoBMVgvHi8dATXid+8KhUer2MBZGDP9dkp1gOkEBD1xw5qbjmXBnCbfwVaGcwSpTZWSKNQY/JgjQOtSAd7jsV5GZN3Tg4BjB2W6cSS9Fb/bLzWpoD5fJ+2Vsuki/vDQ5wWISLWUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=FpeQjeor; arc=none smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1720640524; c=relaxed/simple;
+	bh=eHMrQHy/mio/1rYBro3WBuReVdbz1sLVtPrpfpRTqjw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=YcS2e5AjitAvjMOU69ryPTJi79XRdeI3q26CUbOrL1SUKui+pQVg//g7OPhdow4PrVXkn6/WJlgBogSEsG+7gXBuZWg6QRkb5c/mVWjZeGJecaoK+Q/QJNUxTtB+q+OLFi4gHRmqDOeNukcbGNckmI51TfzDmXID9boQBM+/4sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hiL0+oVM; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="FpeQjeor"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7036e383089so27036a34.2
-        for <git@vger.kernel.org>; Wed, 10 Jul 2024 12:11:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hiL0+oVM"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2c9785517c0so153999a91.0
+        for <git@vger.kernel.org>; Wed, 10 Jul 2024 12:42:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1720638675; x=1721243475; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1720640523; x=1721245323; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wwyOjqrQY522NqxdOWuwmYCDxyoC5TlenfGOe4iIdiI=;
-        b=FpeQjeorf65dYL5ifPA33jq+H1CPJGkNhxBDH+IlL4H0I++VKlDu0ppTJoEIsuJkNC
-         2igSCfyYASWdzQ+uP4R+KUq5TwHhT4JYf4AyS2hiD3s0ZKjK34Mzi9j7pw5ytw4U4tmP
-         9Pran2tP2NSYOqWr6ymU5HKYwYeFOHx5sgfOlu1vA24EKFa4DiD/LwVz4ETbhysoxuGL
-         SHKJyPwHO+SU2Xt5UUsNo53eB9cA6QqyWJ6Tp3ZBHERC4ipjlVu2K7MI4XrhrTeQy3kY
-         0ulud/7pe3w8TdoEvtaJDsaL0vO+Pvvd2HOA7Krze4FJUCFoz4XkxGimPjGB5co/KaL4
-         bd7A==
+        bh=TY8dyw65wAE8IFa/p0wAT80mnx7vq5msaqvTyqFk3XY=;
+        b=hiL0+oVMA4Pqlpk6T47JCXf+1yT///lzxRruIT8YsJ2rbVbfCcPdNpg2FCBtLDttFv
+         BkdGZSWSo2ZEFZYlhFWrxPeVGyuMuqGneg3VWh5YVTlZ01AVqhYzGrk30qZOd1pG8l4H
+         EYdvY8Vhs3uXYxS3/YSfHe/QcFq1WDGn56NGFiV5Jd0KdNFCpIVnHtzZ/Up5iEq/Jxnj
+         Woy5toYr1oJ3BVRA0YYbVHaWqxKHTBzdUPWeQCRczFr5yc+YYashU1Uw/VOZZQt3qqoo
+         4qLxDbgt5vji3Jbev03OFcdbnZn7nvkWvzPjlwY2mEQstPni64MFg4LEN8n6/SBlRpOI
+         TySA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720638675; x=1721243475;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wwyOjqrQY522NqxdOWuwmYCDxyoC5TlenfGOe4iIdiI=;
-        b=o7EZ6GeOkB8dsHa9PHJgs9ClSQTFerncC+09Qhq43axWN5hl2NYsXiadxblOXGNRMw
-         pD5qDUqXB93CbIQdqc9Ao/jnu2TcSkciPs1IpJoABPca4n+GRXQy3SC/bqLrdFbZylfR
-         4f1orSwWvLSTv0rITBhIEJo66Sh0UTgBpW+FPM4Odt5DxZjKv7v3bO+8g8OoccS+hOIY
-         tohGmU/RkYRBA6CaJRwmvysyqyhN/Xei6XKK7ESokMli6Q6zXo4/DvjR5v7ITgX65tNC
-         jEnG355AsCFf8EOKs4m8KPUSAV/XFqFHosqZR/GNfcyuOpjrBj7TZqmgUwVUPRo8i5yH
-         CEUA==
-X-Gm-Message-State: AOJu0Yx/CfmSrff1yzE5d8XljdFBJ80Ar4p+QknApPltw440alF6OW2X
-	cAGqwdQJ84HMEwDXCkbS7P6fp1J9+uKG5RSzhoFu46qO1PqDrD93bCFbzdbezyzvuknEswGhIAa
-	yDfISC8gdTVm0/ZPcU9r7j1JFw6cyR6l1UCIt
-X-Google-Smtp-Source: AGHT+IHEq/eTfVnw9EgIkLt38RWRP8L6BBrH+fAVC7m+sdaURhKtwxY2m9ix2RP4rBiS9GMOw34jv2gIu/L2JOWBO1Q=
-X-Received: by 2002:a05:6870:45a4:b0:25e:1817:e4a3 with SMTP id
- 586e51a60fabf-25eaec16bc9mr5458524fac.40.1720638674765; Wed, 10 Jul 2024
- 12:11:14 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720640523; x=1721245323;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TY8dyw65wAE8IFa/p0wAT80mnx7vq5msaqvTyqFk3XY=;
+        b=O664TcsY0kZKO6jnUKl0NyUEnq4xoo7TC+Cz3c8JgBM1uPXZ0y+dPE7yK1N6+oUifo
+         LN5sWR8tDrVYNaMaHpeynQQL0dS/pc3beRH6jUAerQoBsHftFqoYeS0OjnDeMkBKuTTF
+         pi1gLtaIJNf9YHfOcdb3vCodDk56MagSKLKwuNhJcKPK40zVHWyGKOsSpKjVA8dVThIr
+         /71r5uDbDcOR1VQMa6GDXRtHlw/niEpTgl6JT1OczxJamBviP9wRwsef+vV2hinyTiWr
+         Nv81LqHWrAl2RF3liEzEmfhZG94iy5WnKyyLyXia7C8FTJqGlQAeZSNjZ/DQZpDEe5bP
+         kPow==
+X-Gm-Message-State: AOJu0YxReRw/zWGyTQFSsyitnyDDlOsyeC3dfZOHFpzm3Jgt8fuweXDL
+	QfcSA4a0VmEhXVH4aKZG+Qa5r0BdGsZB8QffVRPRjAS+TAs149kz
+X-Google-Smtp-Source: AGHT+IHxDOs7EaIqN5+SzseXgVv9n0JB9FuhcmQHCsb266b4dGeb4uvxZIGirUiCc1jR6dGRIy9gMQ==
+X-Received: by 2002:a17:90a:c702:b0:2c2:db95:80bd with SMTP id 98e67ed59e1d1-2ca35d928f6mr4599396a91.49.1720640522548;
+        Wed, 10 Jul 2024 12:42:02 -0700 (PDT)
+Received: from localhost ([2402:a00:401:a99b:b1ca:de8:cd9e:bf98])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ca352c5a18sm4152218a91.41.2024.07.10.12.41.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jul 2024 12:42:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20240709225042.2005233-1-emilyshaffer@google.com>
-In-Reply-To: <20240709225042.2005233-1-emilyshaffer@google.com>
-From: Kyle Lippincott <spectral@google.com>
-Date: Wed, 10 Jul 2024 12:11:01 -0700
-Message-ID: <CAO_smVjZ7DSPdL+KYCm2mQ=q55XbEH7Vu_jLxkAa5WTcD9rq8A@mail.gmail.com>
-Subject: Re: [PATCH] Documentation: add platform support policy
-To: Emily Shaffer <emilyshaffer@google.com>
-Cc: git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>, 
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, 
-	Emily Shaffer <nasamuffin@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 11 Jul 2024 01:11:56 +0530
+Message-Id: <D2M45OWGEGU8.2TWYW1FQ2X3I@gmail.com>
+Cc: <git@vger.kernel.org>, "Christian Couder" <christian.couder@gmail.com>,
+ "Phillip Wood" <phillip.wood123@gmail.com>, "Christian Couder"
+ <chriscool@tuxfamily.org>, "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>
+Subject: Re: [GSoC][PATCH v2] t: port helper/test-hashmap.c to
+ unit-tests/t-hashmap.c
+From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Josh Steadmon"
+ <steadmon@google.com>
+References: <20240628124149.43688-1-shyamthakkar001@gmail.com>
+ <20240708161641.10335-2-shyamthakkar001@gmail.com>
+ <mlnerj7j6knamzj3ipnd7rgqd6xm5xrjep35rldhv6sikzipu5@72szgbso6cpo>
+ <xmqqcynmdyy2.fsf@gitster.g>
+In-Reply-To: <xmqqcynmdyy2.fsf@gitster.g>
 
-On Tue, Jul 9, 2024 at 3:50=E2=80=AFPM Emily Shaffer <emilyshaffer@google.c=
-om> wrote:
-> +* If you rely on some configuration or behavior, add a test for it. You =
-may
-> +find it easier to add a unit test ensuring the behavior you need than to=
- add an
-> +integration test; either one works. Untested behavior is subject to brea=
-kage at
-> +any time.
+Junio C Hamano <gitster@pobox.com> wrote:
+> Josh Steadmon <steadmon@google.com> writes:
+>
+> >> +static void t_put(struct hashmap *map, int ignore_case)
+> >> +{
+> >> +	struct test_entry *entry;
+> >> +	const char *key_val[][2] =3D { { "key1", "value1" },
+> >> +				     { "key2", "value2" },
+> >> +				     { "fooBarFrotz", "value3" } };
+> >> +
+> >> +	for (size_t i =3D 0; i < ARRAY_SIZE(key_val); i++) {
+> >> +		entry =3D alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1=
+]);
+> >> +		check(hashmap_put_entry(map, entry, ent) =3D=3D NULL);
+> >> +	}
+> >> +
+> >> +	entry =3D alloc_test_entry(ignore_case, "foobarfrotz", "value4");
+> >> +	entry =3D hashmap_put_entry(map, entry, ent);
+> >> +	check(ignore_case ? entry !=3D NULL : entry =3D=3D NULL);
+> >> +	free(entry);
+> >> +
+> >> +	check_int(map->tablesize, =3D=3D, 64);
+> >> +	check_int(hashmap_get_size(map), =3D=3D,
+> >> +		  ignore_case ? ARRAY_SIZE(key_val) : ARRAY_SIZE(key_val) + 1);
+> >> +}
+> >
+> > Ahhh, so you're using the same function for both case-sensitive and
+> > -insensitive tests. So I guess TEST_RUN isn't useful here after all.
+> > Personally I'd still rather get rid of setup(), but I don't feel super
+> > strongly about it.
+>
+> Consulting the table with "fooBarFrotz" and checking what gets
+> returned (expect "value3" for !icase, or "value4" for icase) is one
+> of the things that are missing. In fact, the values stored are not
+> even checked with the above test at all.
 
-Should we state that we reserve the right to reject these tests if
-they would put what we feel is an excessive burden on the git
-developers? i.e. a requirement to use C89 would be rejected
-(obviously). a requirement to support 16-bit platforms would also be
-rejected. I don't know that we need to list examples for what we'd
-reject, they could be implied that we're likely to accept anything
-else.
+Yeah, I tried to replicate the 'put' tests from the shellscript.
+However, t_get() does the same thing as you mentioned below, so I'll
+just remove it and rename t_get() to t_put_get(), and add some
+missing checks from t_put() to t_put_get().
 
-> +** Clearly label these tests as necessary for platform compatibility. Ad=
-d them
-> +to an isolated compatibility-related test suite, like a new t* file or u=
-nit test
-> +suite, so that they're easy to remove when compatibility is no longer re=
-quired.
-> +If the specific compatibility need is gated behind an issue with another
-> +project, link to documentation of that issue (like a bug or email thread=
-) to
-> +make it easier to tell when that compatibility need goes away.
+>
+> >> +static void t_replace(struct hashmap *map, int ignore_case)
+> >> +{
+> >> +	struct test_entry *entry;
+> >> +
+> >> +	entry =3D alloc_test_entry(ignore_case, "key1", "value1");
+> >> +	check(hashmap_put_entry(map, entry, ent) =3D=3D NULL);
+> >> +
+> >> +	entry =3D alloc_test_entry(ignore_case, ignore_case ? "Key1" : "key1=
+",
+> >> +				 "value2");
+> >> +	entry =3D hashmap_put_entry(map, entry, ent);
+> >> +	if (check(entry !=3D NULL))
+> >> +		check_str(get_value(entry), "value1");
+> >> +	free(entry);
+> >> +
+> >> +	entry =3D alloc_test_entry(ignore_case, "fooBarFrotz", "value3");
+> >> +	check(hashmap_put_entry(map, entry, ent) =3D=3D NULL);
+> >> +
+> >> +	entry =3D alloc_test_entry(ignore_case,
+> >> +				 ignore_case ? "foobarfrotz" : "fooBarFrotz",
+> >> +				 "value4");
+>
+> Curious. If the hashmap is set up for icase use, do callers still
+> need to downcase the key? Shouldn't the library take care of that?
+> After all, test_entry_cmp() when the hashmap is being used in icase
+> mode does strcasecmp() anyway.
 
-I think that we likely won't have the ability to investigate whether
-it's _truly_ gone away ourselves, and there's no guarantee that the
-person that added these tests will be able to vet it either (maybe
-they've switched jobs, for example).
+Of course we don't need to downcase. But the idea is to insert
+"fooBarFrotz" then insert "foobarfrotz" to check if it is considered the
+same or not. In a way, it is also testing test_entry_cmp() and
+alloc_test_entry(). If we pass "fooBarFrotz" both the times
+we can't be sure if it downcases or not, as both are same, we'd
+pass even if it didn't downcase. After all, we are testing the
+library rather than using it.
 
-I think we should take a stance that may be considered hostile, but I
-can't really think of a better one:
-- there needs to be a regular (6 month? 12 month? no longer than 12
-month surely...) reaffirmation by the interested party that this is
-still a requirement for them. This comes in the form of updating a
-date in the codebase, not just a message on the list. If this
-reaffirmation does not happen, we are allowed to assume that this is
-not needed anymore and remove the test that's binding us to supporting
-that. We should probably go a step further and intentionally violate
-the test condition, so that any builds done by the interested parties
-break immediately (which should be caught by the other processes
-documented here; if they don't break, then it was correct to remove
-the restriction).
-- _most_ of these restrictions should probably have a limited number
-of reaffirmations? I feel like this needs to be handled on a
-case-by-case basis, but I want us to be clear that just because we
-accepted these restrictions in the past doesn't mean we will accept
-them indefinitely.
-- Just because there's a reaffirmation doesn't mean we're guaranteeing
-we won't delete the test before the affirmation "expires". If there's
-an urgent security need to do something, and it can't be done without
-breaking this, we'll choose to break this test. If there's general
-consensus to do something (adopt a new language standard version, for
-example), there's no guarantee we'll wait until all the existing
-affirmations expire.
+Thanks.
 
-The thinking here is that this test is imposing a restriction on the
-git developers that we've agreed to take on as a favor: we are going
-to restrict ourselves from doing X _for the time being_ not
-necessarily because it'll break you, but because it's a bad experience
-for the git developers to create a patch series that lands and then
-gets backed out when the breakage on $non_standard_platform is
-detected on seen/next/master.
+>
+> >> +	entry =3D hashmap_put_entry(map, entry, ent);
+> >> +	if (check(entry !=3D NULL))
+> >> +		check_str(get_value(entry), "value3");
+>
+> Here the stored value is checked, which is good.
+>
+> >> +	free(entry);
+> >> +}
+> >> +
+> >> +static void t_get(struct hashmap *map, int ignore_case)
+> >> +{
+> >> +	struct test_entry *entry;
+> >> +	const char *key_val[][2] =3D { { "key1", "value1" },
+> >> +				     { "key2", "value2" },
+> >> +				     { "fooBarFrotz", "value3" },
+> >> +				     { ignore_case ? "key4" : "foobarfrotz", "value4" } };
+> >> +	const char *query[][2] =3D {
+> >> +		{ ignore_case ? "Key1" : "key1", "value1" },
+> >> +		{ ignore_case ? "keY2" : "key2", "value2" },
+> >> +		{ ignore_case ? "foobarfrotz" : "fooBarFrotz", "value3" }
+> >> +	};
+> >> +
+> >> +	for (size_t i =3D 0; i < ARRAY_SIZE(key_val); i++) {
+> >> +		entry =3D alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1=
+]);
+> >> +		check(hashmap_put_entry(map, entry, ent) =3D=3D NULL);
+> >> +	}
+> >> +
+> >> +	for (size_t i =3D 0; i < ARRAY_SIZE(query); i++) {
+> >> +		entry =3D get_test_entry(map, ignore_case, query[i][0]);
+> >> +		if (check(entry !=3D NULL))
+> >> +			check_str(get_value(entry), query[i][1]);
+> >> +	}
+> >> +
+> >> +	check(get_test_entry(map, ignore_case, "notInMap") =3D=3D NULL);
+> >> +}
+>
+> It is getting dubious if it is worth having t_put, when t_get does
+> so similar things and more.
+>
+> Same comment applies wrt icase, and not limited to t_get() but all
+> the remaining test functions (elided).
+>
+> Thanks.
+
