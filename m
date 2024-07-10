@@ -1,106 +1,183 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65431381AA
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 10:16:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5167543156
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 10:19:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720606569; cv=none; b=rv5eUaJvkeRisyFJqLbhXoE3TDRUt8GIlboE+GSh4eWpC9VeOGA6tYe0mwUKkT1+95Jod1WrDGGWbgeADLS7m9dp7EhNl5zMdyI63PopRELadYPFfJiKw+dw/SGeU03pHUFZbFxRrQMzgBQnop3nJnx4PUMR3SXWgqJ3laOZ7OY=
+	t=1720606776; cv=none; b=JH+86DhijEcchf007/W51HTcyQCIe2VxdkLJZVEzamcrqXC5jCAcFrvIt8PCBeciy4nj8F/FrWE4I4cmDxObMgp5nG7s4t1xz250NC1x2oEsn8j7nDKTnxC97cW9qlyXiV6SNF5oqnc/3+yiLABU2BiAoYonrgPqW+KRHyLdNsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720606569; c=relaxed/simple;
-	bh=kBrXx8CVx4J9Kn35lG2cTLXwZhAkc4uJcukTKkPP/4s=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OYsdOqrs8IeeiYVlOfCvu+Ip4hdC53xpGyLyBgje7JrW+11BCog3hPL2yf6AY1pa5QTlQGdGB8LQla5FnqfgoIaugQqT9mIGcYCoDR7u3r4fg8QF7waL7PaDfYOkjl+LX4ccksj5q4kAvGsgQDcjLunldIScpMwvf4hqhuYTn90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UKHGIL3G; arc=none smtp.client-ip=209.85.160.54
+	s=arc-20240116; t=1720606776; c=relaxed/simple;
+	bh=yInHHOtt4weBQgGSR1La7L10ykEUCfSN8CmmOn35mc4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=l1Zm6cc1a5MyA/9DmqbW7f24SVqL9nQNhxqPSTBeauLdiFc7mw3A93rFasmkdEjcqQ2pAQpq0qwFSsJeKW7/Vn6vZjxXYbH+SawiOs9UzMHH4Ity52tldKBMOXOEeas8XzsbSPgL6zUSpagjyeU6l+gFF+9cL+HrRBD62u1C7Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JPwDCtY7; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UKHGIL3G"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-25e24900a82so3232049fac.3
-        for <git@vger.kernel.org>; Wed, 10 Jul 2024 03:16:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JPwDCtY7"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4266edee10cso14755755e9.2
+        for <git@vger.kernel.org>; Wed, 10 Jul 2024 03:19:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720606567; x=1721211367; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kBrXx8CVx4J9Kn35lG2cTLXwZhAkc4uJcukTKkPP/4s=;
-        b=UKHGIL3G6qHWbVASzywrshx/Fh0jawg6+X8fmJmBjy8lr4ZSwq3x7eyoToAIN3Ne4Z
-         UApK/P94zDq04s/bjRnOM3Qm5FC5fdYDWiRVJoRYl4z9KIbodz3xx/3UnLpvV7LRqlWQ
-         CpaEJrlEClK0nBp4PELwTcOHgHvkxdZKSKxh2epwIXE1rv6PGBWdwGEqR14t3iJqNZaf
-         teeGaEJBqjjLJwiglJpEQUIqMV67iW/4b2wt8QKJ5wIg5tGxyEnJk6Q+syNqjlgDhvy2
-         E4m+xaF05EFB9K2xIqrFUPnNf8NiVsrlbAqFN0B71BjYGBF6wJCww304vyH7s/FMO6Af
-         eCoA==
+        d=gmail.com; s=20230601; t=1720606772; x=1721211572; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ek2492lEzXMCvXgUWwr7Bj29vRy1pyCcFTqiZNQ+nqY=;
+        b=JPwDCtY7t7CB4g4607vcTtgNxKE74K/DkcU3sVjCUExgREnzn9L3evpPtfLZbsPPVb
+         0oUTvcIu2+/Wy37dwx1e8P+iv4qRFdluXiaTh+BWdgk253kVZh87Ha/uIIVR7WZeJi5w
+         /hjyvse/0vAvBeKZ4RAUDOYdcwKQlMq1WneswK5dcvIHYzDchsMj6bLEnI9GdwMcUjpo
+         LzodQtY1qxqFrQk45DoVT0iCInsGbWyuKVGsnMhzSE8QxgYEHS/Hys+oSxZkAIh34RMC
+         waT9co6JtNOAkfP/qxskPa5BjqndbmYogILpcQME0GJrRzDc14nrZzMHI+3E52YKBsMl
+         QFLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720606567; x=1721211367;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kBrXx8CVx4J9Kn35lG2cTLXwZhAkc4uJcukTKkPP/4s=;
-        b=GHb3UGWXP3i2TKyXnYx6NwD5fFeQsQs7g6HXLZj3W9Xb6k1wGy930OGgBtpk0DkZee
-         dlsT+j0yGmrAugv4V74x4plP9d5GwyaP01f7mk31yhTRZ4eJGXtWFpxdlNjeIEdszJgB
-         l7STY0zi9ecSjjbEQXTdRbCbCIiX4YI/E6vbof38QeZKEMvkt84vZzgeOv8FrWHYIf7+
-         iozb4Bn2IZLT9NB27Yiv2XfjTEnM/ySfqNZjtoxRzBsPzPYSuP6kcfi1Bax+iuLVIyPY
-         LUHY+ehR8WqnK/PznerQwRhj91Ss/YTBhdWEH/BHDUj0JezNJcAvr4SjSHd1MgILtfAP
-         zgbg==
-X-Forwarded-Encrypted: i=1; AJvYcCWasnpgTM6ZZ0ywUewJbOklcrnkVoRan4zPXYFoYH0NFyl5Hn4oQ9aXuDNVxOrzVAYXR6rt9vu5x9JpXEQDInwAEmdu
-X-Gm-Message-State: AOJu0YwAz4NyV3IcSNPz0B0TFpAKzlmkXOwt+YMS+IkemD9XbyGaLZ9+
-	t0NG9YRK/bBMz2fsULqBb3aVTvOImFtQYa/K8AH2FWBJT0rpzffBNba9YDgUeg9oehm4+TcSZcm
-	HOD+GBHl5vSYhDDWL9DlDZ00Pqk0vxLR/
-X-Google-Smtp-Source: AGHT+IFGYT84gDV/ElHNx5YfsJ9ekuW4wEYUCy/NhMfVbaX46iUAiZvtHzzvVdxs+lbrgbcU/o9z1V1UKAOYtnTSh8M=
-X-Received: by 2002:a05:6870:41d0:b0:25e:bd3d:624a with SMTP id
- 586e51a60fabf-25ebd3d6256mr2802213fac.7.1720606567179; Wed, 10 Jul 2024
- 03:16:07 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 10 Jul 2024 06:16:06 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240628190503.67389-6-eric.peijian@gmail.com>
-References: <20240628190503.67389-1-eric.peijian@gmail.com> <20240628190503.67389-6-eric.peijian@gmail.com>
+        d=1e100.net; s=20230601; t=1720606772; x=1721211572;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ek2492lEzXMCvXgUWwr7Bj29vRy1pyCcFTqiZNQ+nqY=;
+        b=QfZQHbCa2v7lr5/xoRPFySKm7nq9oNNA/bNLHiGPjVzRnGm2radgc4ZBQzXdL3gKnQ
+         FKyPpP4XhVrQhNPr81YKxZ6N6M2Cj41oM470mals9DTBvKyczcKxMt+W7KruDKJdBB8R
+         juZ6S4TT1EqvHbyR+ud0/qg4uBdVgyStbut0gZ36k7hUiwFsw9uCZkOmW8/HvA8iMYm9
+         /FhIEuD72LuH4EyYyRFtfgVTBpdb71A5RosjlEjbHAr05GlbUybSUb6wLG5+krpVKgtS
+         7h5aLVIQLRM/wq75zHW15cOfkvNpISaE2pdjRJfzdiSkQepeBdnHPTMkOK6RU8pESFCA
+         iPdw==
+X-Forwarded-Encrypted: i=1; AJvYcCUwna2hMqmQmyijH/JOJwjmAu179RB8Rp3e3eVG5lO6KWsdAhH3dn+hYuKnvBzgJFwJAmo1uTBzK7SPdjjQEMJWETBf
+X-Gm-Message-State: AOJu0YynR13r983JJ4EIljV3BXyy0A2tZ7eXlhFbWLKKAb39HgPOxYSV
+	eFQnkrceQYKsEMTM4dLtabHaEYEa1bbYCYxnCFYfkBFUXO4ChpiD
+X-Google-Smtp-Source: AGHT+IG9q348Oev0oChR++Se3/scwmNV72vs0WY36VZAXkjfOI+iT5HcGfI+t9LmYxJplbVuHCVTiw==
+X-Received: by 2002:a05:600c:3042:b0:426:6eb9:2643 with SMTP id 5b1f17b1804b1-426707d890amr32595795e9.11.1720606772312;
+        Wed, 10 Jul 2024 03:19:32 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:600:8501:d2c6:37ff:fef6:7b1? ([2a0a:ef40:600:8501:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-42795cdaff9sm16494135e9.44.2024.07.10.03.19.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jul 2024 03:19:32 -0700 (PDT)
+Message-ID: <2d7fd61d-0b2c-465f-9f24-47c99ab5b56c@gmail.com>
+Date: Wed, 10 Jul 2024 11:19:31 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 10 Jul 2024 06:16:06 -0400
-Message-ID: <CAOLa=ZRH7=Uj77Wd4WQW=KR8ppKw6nXZRH7pNZpHBPz4HhX8MQ@mail.gmail.com>
-Subject: Re: [PATCH 5/6] cat-file: add declaration of variable i inside its
- for loop
-To: Eric Ju <eric.peijian@gmail.com>, git@vger.kernel.org
-Cc: Christian Couder <chriscool@tuxfamily.org>, Calvin Wan <calvinwan@google.com>, 
-	Jonathan Tan <jonathantanmy@google.com>, John Cai <johncai86@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000003c54de061ce1ef14"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH v2] t: port helper/test-hashmap.c to
+ unit-tests/t-hashmap.c
+To: Josh Steadmon <steadmon@google.com>,
+ Ghanshyam Thakkar <shyamthakkar001@gmail.com>, git@vger.kernel.org,
+ Christian Couder <christian.couder@gmail.com>,
+ Christian Couder <chriscool@tuxfamily.org>,
+ Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+References: <20240628124149.43688-1-shyamthakkar001@gmail.com>
+ <20240708161641.10335-2-shyamthakkar001@gmail.com>
+ <mlnerj7j6knamzj3ipnd7rgqd6xm5xrjep35rldhv6sikzipu5@72szgbso6cpo>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <mlnerj7j6knamzj3ipnd7rgqd6xm5xrjep35rldhv6sikzipu5@72szgbso6cpo>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---0000000000003c54de061ce1ef14
-Content-Type: text/plain; charset="UTF-8"
+On 09/07/2024 20:34, Josh Steadmon wrote:
+> On 2024.07.08 21:45, Ghanshyam Thakkar wrote:
 
-Eric Ju <eric.peijian@gmail.com> writes:
+>> +static void t_put(struct hashmap *map, int ignore_case)
+>> +{
+>> +	struct test_entry *entry;
+>> +	const char *key_val[][2] = { { "key1", "value1" },
+>> +				     { "key2", "value2" },
+>> +				     { "fooBarFrotz", "value3" } };
+>> +
+>> +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+>> +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+>> +		check(hashmap_put_entry(map, entry, ent) == NULL);
+>> +	}
+>> +
+>> +	entry = alloc_test_entry(ignore_case, "foobarfrotz", "value4");
+>> +	entry = hashmap_put_entry(map, entry, ent);
+>> +	check(ignore_case ? entry != NULL : entry == NULL);
+>> +	free(entry);
+>> +
+>> +	check_int(map->tablesize, ==, 64);
+>> +	check_int(hashmap_get_size(map), ==,
+>> +		  ignore_case ? ARRAY_SIZE(key_val) : ARRAY_SIZE(key_val) + 1);
+>> +}
+> 
+> Ahhh, so you're using the same function for both case-sensitive and
+> -insensitive tests. So I guess TEST_RUN isn't useful here after all.
+> Personally I'd still rather get rid of setup(), but I don't feel super
+> strongly about it.
 
-> Some code declares variable i and only uses it
-> in a for loop, not in any other logic outside the loop.
->
-> Change the declaration of i to be inside the for loop for readability.
->
+I'm not sure - we have to pass ignore_case to HASHMAP_INIT and the test 
+function so using setup() means we cannot pass different values to the 
+two different functions.
 
-If we're doing this anyways, we could replace the 'int' with 'size_t'
-too.
+For parameterized tests where we calling the same function with 
+different inputs using a setup function allows us to
+  - write more concise test code
+  - easily change the setup of all the tests if the api changes in the
+    future.
+  - consistently free resources at the end of a test making it easier to
+    write leak-free tests
+  - assert pre- and post- conditions on all tests
 
-[snip]
+Using TEST_RUN is useful to declare the different inputs for each test. 
+For example in the oid-array tests it allows us to write
 
---0000000000003c54de061ce1ef14
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 29d5edeab93f781d_0.1
+     TEST_RUN("ordered enumeration") {
+         const char *input[] = { "88", "44", "aa", "55" };
+         const char *expected[] = { "44", "55", "88", "aa" };
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hT1gyVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL0dTQy80bzRLY3pRUGVlbGQ2aytVOU1paFo2V1dFVApPTTY0cG9lOHQx
-L3hhd3JlSndmaW1nKzhuTmRKcjhDbHFhWStHTkR5UEdEQXVIQXN2V2d4dWlOVnJNaU11V24zClJo
-YUVmR0NEdGNFWUxHYlZxVzVYUmsya3Y4Tmg2UDdKdWVHeVpNWEVHNDBuZ0VWRlpBazBEcUlyK3ho
-WTBYVlAKaWRpSWh1d25ucm9OdlNnd1RkSnhLWndwNllGMzhTdkRVeWJXNWdkRFRKK1hXbExZVC9x
-elM2MER1Vk5BWlJBRApuTWN0YjV0cysxUm96NHpQTkw5M1ViY2dSSGl5NituVUVub0Vua0J3YTRx
-MUgyZS9ZQkRwMG90ZjhWZ0Z6L3BMCjdXN0NJZVJZQy9EdkRHS2kyd3FJcFpFTk5EUnBJbUxZa0JS
-SHZ3NnduQm9CRWVtRGlkTlRLMEtnd0pNYUNsTlYKWWQyTHhVQkVsRkVDaklwMk9jSEpSZjdNUHkr
-ZTZwWnZ2alFLVk1LUHI3QUpvYmhDSTN2K2ExbmdyTWlGRXd0TgowR2RtUzVoaWlLUTQ4UW9ncHUr
-WW9mM0R6d3ZITnppU3Z5ZkdFeWlIaW5iVzJDK1dyZi94UnphVGJVdWN5eHFBCnJLU1pBODRNUSs2
-SnlYOWhpV3F0U3JqMW5SeVpybDJESFY3TEtTaz0KPXpZVEgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000003c54de061ce1ef14--
+         TEST_ENUMERATION(input, expected)
+     }
+
+rather than declaring a bunch of variables up front a long way from 
+where they are used.
+
+>> +static void t_add(struct hashmap *map, int ignore_case)
+>> +{
+>> +	struct test_entry *entry;
+>> +	const char *key_val[][3] = {
+>> +		{ "key1", "value1", "UNUSED" },
+>> +		{ ignore_case ? "Key1" : "key1", "value2", "UNUSED" },
+>> +		{ "fooBarFrotz", "value3", "UNUSED" },
+>> +		{ ignore_case ? "Foobarfrotz" : "fooBarFrotz", "value4", "UNUSED" }
+>> +	};
+>> +	const char *queries[] = { "key1",
+>> +				  ignore_case ? "Foobarfrotz" : "fooBarFrotz" };
+>> +
+>> +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+>> +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+>> +		hashmap_add(map, &entry->ent);
+>> +	}
+>> +
+>> +	for (size_t i = 0; i < ARRAY_SIZE(queries); i++) {
+> 
+> Since we only have one query, can we remove the loop and simplify the
+> following block of code?
+> 
+> Also (here and elsewhere), it might be less confusing to say "UNSEEN" /
+> "SEEN" instead of "UNUSED" / "USED". The latter makes it sound to me
+> like there's some API requirement to have a 3-item array that we don't
+> actually need, but in this case those fields are actually used in
+> key_val_contains() to track duplicates.
+
+The third element just needs to be a boolean flag so it might be better 
+to use a struct
+
+	const struct {
+		char *key;
+		char *val;
+		char seen;
+	} key_val[] = {
+		{ .key = "key1", .val = "value1" },
+		{ .key = ignore_case ? "Key1" : "key1" .val = "value2" },		{ .key = 
+"fooBarFrotz" .val = "value3" },
+		{ .key = ignore_case ? "Foobarfrotz" : "fooBarFrotz", .value = "value4" }
+	};
+
+Best Wishes
+
+Phillip
+
