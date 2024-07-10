@@ -1,81 +1,133 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C483AC0C
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 08:47:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903BA16D4F9
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 09:18:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720601227; cv=none; b=El7A46VtnFGS4YDwbQORqAr0ixyX+bHe6C/1zxnMCB78Y/KK1VWJydPcy2pHECvX8Mil/8AJMi3864kkY1/Cj6xKfZ3IrgnU0QC/Pvpsc1zjR5qrBWp6vw6AJY5cSgBhTByw8xMNlIT82ypaFr5fw7+11VDQOhPMWnJ53kBB+B8=
+	t=1720603115; cv=none; b=Qg5bZ4Fq9CB7v+wPDiNq+iCeirr+XMJyJ/Y65Za8QZ/VcBJVJAlrXkgdasxLVgCEL+5LhbIxMTivaC4EaRwooEx+CYK63goJBqPqO17NQ1l92AanhlXyO45ul9gc2uT98HtXx+TVIXWAYEeJivIrWk5yT1UmD23OjmWZh+eIGag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720601227; c=relaxed/simple;
-	bh=eArgSZ/5sF9q6c5u8kXLW1ndsq1tLa0XAefdghjwToM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pbeg2X9Xp3rKOftTWbw1SpE8V3lbsw/FpnG+tc7hIsay9oS3viyS0qQwzDCB9yHLkIzvrRZkCOr9OE6Wy4og2vKjLfWOhXJVSdR4uBrwfLuwurkJGr5Sb32bH6ac0GTC1I6r6SbU/51CWCRYra2BzQBiRwUE9liB26gwHqRB2F8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 1742 invoked by uid 109); 10 Jul 2024 08:47:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Jul 2024 08:47:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10572 invoked by uid 111); 10 Jul 2024 08:47:02 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Jul 2024 04:47:02 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 10 Jul 2024 04:47:04 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v2 10/9] t/.gitattributes: ignore whitespace in chainlint
- expect files
-Message-ID: <20240710084704.GA2061142@coredump.intra.peff.net>
-References: <20240701220815.GA20293@coredump.intra.peff.net>
- <20240710083416.GA2060328@coredump.intra.peff.net>
+	s=arc-20240116; t=1720603115; c=relaxed/simple;
+	bh=KDBaljPNPIckH0k/xmUD7324W2WxZx3lyAjao6lzqLg=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tyv0z6X6rPCqkKXmHpTo8ZKYxX5za2dsjLas0DXtgTvK/lfI/lOjaNYMCxp5Tc6XGCL/X5dOizzVCLYUdvqN4M6tqjN5GwktlWL29aw7JoqpzDX2+XoxkJFRA4ub4Z1P1QM/kw++c9CDst+S/TH+LcJlROlsHoKgI+AQJXuTalA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D0alAlOV; arc=none smtp.client-ip=209.85.160.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D0alAlOV"
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-25e15406855so3681173fac.0
+        for <git@vger.kernel.org>; Wed, 10 Jul 2024 02:18:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720603112; x=1721207912; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=j3tE/xg8gxA3QHwFibUEAE00EnkcNaMe6hT/cIj1IsY=;
+        b=D0alAlOVG3kW38tfWxLCpLYlIECo4IaonSVYYHXbrMqvO7W91QjN8FUthetv4x9l5e
+         QD5WpMo2gLhtnw0detwlmn2zh0j6F78KDBQJWpQzr2MEmLXyzGRlC5LMWZyy6486e4vu
+         Q3azbOQ1dvWa7VeRemjRT0l/hl0pu+FuUI27ah7hlnV7hsRyHc1AmWds5psghsupo572
+         1fWPFUBuqwtsCFlXETqjE5ncTePaIOygkrhytDKFIIkSraGBWRE8KgkLuOACVs0UWeSu
+         88jhsjg1M2mttmkQNfn2q0QaZE44MfwJkXpKD8qtTkI/vHYycJwz9IVbxmo9TTo2oCZ/
+         BtkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720603112; x=1721207912;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=j3tE/xg8gxA3QHwFibUEAE00EnkcNaMe6hT/cIj1IsY=;
+        b=DefD+ukdV3EW2yqVq6ueKJ7ZgZTvjnk+rEFj4n9qAU0jA41FNJQcjbQTEY/JvGcet7
+         K2HiapRsBsIBeeqfBzMfZEdoZRh1mSPSsTH2h0nTjtcb1XNjAwLqK8kLLj+i2xo9Gabr
+         9o71LjqF9PY3Y522t+31ni7+0tFviVYLKLV8c4aH485AixUOQ4Q2KU6K1ay9ybVrEbRN
+         TA91/JdcG3LoUd1g1UgBDx1kBANyBxFd6flRtipZAeMJ1P8QS1NNCyLgc8UY3b2pUwU4
+         CpDv/Qj3zQTZPfL3HyoUuOBonOYti+ieriDEtIrYP84OcsFBjpUFycZUp0SzOM8OYgGb
+         ePZw==
+X-Forwarded-Encrypted: i=1; AJvYcCUBrfUrPM4AdGgTD7MhSMKp3vShvtnOtLNlCFeWMuPOtkLYFgW2rpSC53QLgL2WEkm9JyYeHNXOvT+9+C8ppCMnDW8y
+X-Gm-Message-State: AOJu0YyGkSoV+3DBq7jtIIPNY24K3pW7OtuchtMsSWZyFvpYfgOxZqD5
+	wD8EDscMkVR3CVqrAt1HrcHqwGHIIZmb/mLIPc136oY3b8XgjppD5n/PSARi3ldGUPzspYAtR7o
+	BNvcr5SFTbQbq73Oz4Y51YDhy260=
+X-Google-Smtp-Source: AGHT+IGHIphvKLpwXQi6aYdvZLuE/P3hHEeD0TBOcTrjEHVIAvMf2/hD/u3EgypTjGLvcu4bS+AfNLZeXXHrQTY2sTg=
+X-Received: by 2002:a05:6871:611:b0:25e:1610:9705 with SMTP id
+ 586e51a60fabf-25eae784630mr4196312fac.2.1720603112492; Wed, 10 Jul 2024
+ 02:18:32 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 10 Jul 2024 02:18:31 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20240709053847.4453-8-chandrapratap3519@gmail.com>
+References: <20240703171131.3929-1-chandrapratap3519@gmail.com>
+ <20240709053847.4453-1-chandrapratap3519@gmail.com> <20240709053847.4453-8-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240710083416.GA2060328@coredump.intra.peff.net>
+Date: Wed, 10 Jul 2024 02:18:31 -0700
+Message-ID: <CAOLa=ZQOdH4cTQ4iymZAZu0Q_WYTepF0y6zWKQAxtBVirfhsgw@mail.gmail.com>
+Subject: Re: [PATCH v2 7/7] t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
+To: Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org
+Cc: chriscool@tuxfamily.org
+Content-Type: multipart/mixed; boundary="00000000000051f532061ce12103"
 
-On Wed, Jul 10, 2024 at 04:34:17AM -0400, Jeff King wrote:
+--00000000000051f532061ce12103
+Content-Type: text/plain; charset="UTF-8"
 
->   [5/9]: chainlint.pl: check line numbers in expected output
+Chandra Pratap <chandrapratap3519@gmail.com> writes:
 
-I just noticed that this one throws off a bunch of whitespace errors
-when you apply it. We might want this on top of the series:
+> When calling reftable_new_merged_table(), if the hash ID of the
+> passsed reftable_table parameter doesn't match the passed hash_id
 
--- >8 --
-Subject: t/.gitattributes: ignore whitespace in chainlint expect files
+s/passsed/passed
 
-The ".expect" files in t/chainlint/ are snippets of expected output from
-the chainlint script, and do not necessarily conform to our usual code
-style. Especially with the recent change to retain line numbers, blank
-lines in the input script end up with trailing whitespace as we print
-"3 " for line 3, for example. The point of these files is to match the
-output verbatim, so let's not complain about the trailing spaces.
+> parameter, a REFTABLE_FORMAT_ERROR is thrown. This case is
+> currently left unexercised, so add a test for the same.
+>
+> Mentored-by: Patrick Steinhardt <ps@pks.im>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+> ---
+>  t/unit-tests/t-reftable-merged.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
+> index e0054e379e..50047aa90b 100644
+> --- a/t/unit-tests/t-reftable-merged.c
+> +++ b/t/unit-tests/t-reftable-merged.c
+> @@ -11,6 +11,7 @@ license that can be found in the LICENSE file or at
+>  #include "reftable/constants.h"
+>  #include "reftable/merged.h"
+>  #include "reftable/reader.h"
+> +#include "reftable/reftable-error.h"
+>  #include "reftable/reftable-generic.h"
+>  #include "reftable/reftable-merged.h"
+>  #include "reftable/reftable-writer.h"
+> @@ -440,6 +441,8 @@ static void t_default_write_opts(void)
+>  	check_int(hash_id, ==, GIT_SHA1_FORMAT_ID);
+>
+>  	reftable_table_from_reader(&tab[0], rd);
+> +	err = reftable_new_merged_table(&merged, tab, 1, GIT_SHA256_FORMAT_ID);
+> +	check_int(err, ==, REFTABLE_FORMAT_ERROR);
+>  	err = reftable_new_merged_table(&merged, tab, 1, GIT_SHA1_FORMAT_ID);
+>  	check(!err);
+>
+> --
+> 2.45.2.404.g9eaef5822c
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/.gitattributes | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+--00000000000051f532061ce12103
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: fac8675f127bc208_0.1
 
-diff --git a/t/.gitattributes b/t/.gitattributes
-index b9cea1795d..7664c6e027 100644
---- a/t/.gitattributes
-+++ b/t/.gitattributes
-@@ -1,5 +1,5 @@
- t[0-9][0-9][0-9][0-9]/* -whitespace
--/chainlint/*.expect eol=lf
-+/chainlint/*.expect eol=lf -whitespace
- /t0110/url-* binary
- /t3206/* eol=lf
- /t3900/*.txt eol=lf
--- 
-2.45.2.1249.gb036353db5
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hT1VlWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mek1zQy80c3FmODFDZUs0TnRnN0NzTmFsZW1JcHgrdgpGZkhYb2ZrZjVM
+MjdQNVNpWXE2am1lc0pPTHFTczlJbmRGeXJWUEhiS1BDeEhiODU4MTJ4YmgxZ3BjZFBOdnFGCm5w
+ejRYaU50THpiRkJ1WE9iQ2RxM09yK3JsV3EraFNieUpFV21Zbi96MTZkbEYxVmFUN3FUeFRSV3Ny
+YnVtcUYKRUU0eW5OVHNxOTR2VWtUWUNua0REWlJSWHJXVWRKWlJPNnZyOTRRTS9LK2poMkRmZWRw
+Z0hYVVFHNytrT1hRcApKV2FwQk03SitscGR2QmF4ekltaGRzc3l6am1nSFZFbldrQWVlYkFpSFFE
+RVRtLzI3aFh4V0JWNTlDOVZBa1prCkRmaGFkdjdFU2NabEVHV0lYVm54NnZRZWQ2Znl3Q2JOMWVu
+Zm43QVQxMmJuMktaUmZGenN1M0JVZmRQZGw0YXIKRlBVbWtwWEJ0aFAzdmtYTlNaa29LQndDb05T
+emRoQUV3c1NIL1F1c2RSZzNIUSt0YUMvQ2FBOXpReDZCNkZpeApWTDE4REZzL3E3QlBjS3JwSWxW
+UzJhVGRFeVZFSENXUWJNcmVSK1QrazBtMXBFNlpWZ2VvanMzazAxUFRySUM4CnEwNlBwQ3N5dlov
+amkwNUk0STI3YlhsR3JJVEg4bzUvMTkxWlpzYz0KPW5mOTYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000051f532061ce12103--
