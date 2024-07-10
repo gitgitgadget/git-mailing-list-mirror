@@ -1,227 +1,224 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BED193078
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 13:56:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5B7190075
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 14:06:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720619763; cv=none; b=G1iXDIW7qKBIqXLIdfUePQ9Rk6AAQzY2MFSZM8DsZBkcYPSaw9MvTAlq9BqF6upqwCIVnf1pPEkXAIqpDbcTYgWpz+STGRviFb5mIOMABtRye28HI+n68G0db7uiimz6VCzqaU7DhxJni/Vu3ccBvxhQ0HQTDGhW/2QM1taqOXM=
+	t=1720620389; cv=none; b=tdTqq5gmOqfHSfgRe0E5IqC8qQhbiQuCxlsQVbJSRcI3A/xrb+hDDdufGyCjbbKzwK/0Govpo79/MA1MvRjRf4LC0ohV6+4LX9L3CsoYEUqVTfCuJJv9SPRXNTQeuAjfNHvKpfU7PDSksbXWfxX/1/Qc+tn57z2okn4bZaHXFSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720619763; c=relaxed/simple;
-	bh=Vu9LiJqw2Sj8E+COvnQ11zLEBbrWcwGjbujFDvM9Iro=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:Cc:
-	 In-Reply-To:Content-Type; b=qlbDMfScmZojVy4TIjgLFFPo4YYFqUpfwRTY4lRY3FnCnh6M6YVZy8tTk64Y4dwjKLmDv8GVn2Yx6ucE3r/DJYDw0hUpRsiThowNqPIzcY9NWK3BsjNsSq0fyS9fk7RJqouud6lCuXPWRoe1KNcoCT6/6yw91m9gqt1IobcdOJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l9RqAq7U; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1720620389; c=relaxed/simple;
+	bh=DmfAAo2orS4o2evN9X0SR6OB2o0WloRAaQRc85/ONEc=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Yj8OJMsnXtBIrsJ3+EyiSqCe6ElYjUwZ8tTd9wP+WBnyyeOzK1rYGWaN7Iz8w2gYt3LpAMmcCm116iXKNMEWpJQETpe4saXuYEp9GKi8PCmtGxMHY6vOCC+5WEdK7y216KRmyMaEkHOw8HcU3M+ZjUk5lE6FQSfyMWjsUTcLYmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oa4Anvkd; arc=none smtp.client-ip=209.85.160.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l9RqAq7U"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4266fd39527so16400695e9.1
-        for <git@vger.kernel.org>; Wed, 10 Jul 2024 06:56:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oa4Anvkd"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-25e0d750b73so3150562fac.3
+        for <git@vger.kernel.org>; Wed, 10 Jul 2024 07:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720619760; x=1721224560; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:content-language
-         :references:to:from:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=WWEB4pehH4l1Y4FVFpVUTJxteC4vgDSmmatJUvQNJ9M=;
-        b=l9RqAq7Ub0Z51FAfJsdcR2jqQCUrZVrM3z+jZdd3K16tfD1LSEUm1coiAtHS79va4X
-         FnwNUG+c2nHSCmpL2s3a54WE1S5NoM3pqTwwWCust/BNNpZ6TtSdSDHhdAmPAbdjz4D3
-         hGHGXS3NUlXwv07sI6A4M6H+jVXuz0tRlzZSa7m7JQtJaO0kr/qRIyNQEfQzGb+2s30S
-         8Z/R4gM0XkJtbaw7FIY1zN06Qpze/FZwOjp/wJD1ce0wRgyJOnQq7Y0GVNvjAWyiCh9G
-         J2VXHYCYCOq08r+y+mSXbhVvQkurtfqkp/2FgiSioQPLqByJCPKBYerd/lqQ0ayx6j6t
-         F4Kw==
+        d=gmail.com; s=20230601; t=1720620387; x=1721225187; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=F56IeB13ibjce4lumAnR9U9t+dQr3FIvTKXwIeBLjVE=;
+        b=Oa4Anvkd+RYnKUU7Lq6d0j79ZC41H1ikp0/ifRNXtqu6fnC7LxBslN5usQsy1cu6O/
+         yC8Kh9pmYNQOn09ZC7/gVaFE6hhvQ2ubOcv5bIYRGCxMXur1F5COiliqjhBWT2QKnFWL
+         GgOlFVdfy7QUqBSM6EKuC3Net+At4Oqw7o/E22w5OTQ82jsywaKSJil5I1rnKuxbeNv5
+         rrY6QOX1+zs7SuflnwX1NkTrsP/NbBVPFfxyPW/04HIzRqQGd1y0a7sk/0UZ7YuS1lON
+         Tp1D68d6MJEbw1OJAXgR65omb5jtiEwgFfcdjsczS1HT02Pb3D26N/+O1c+BYvYKQ2o+
+         phwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720619760; x=1721224560;
-        h=content-transfer-encoding:in-reply-to:cc:content-language
-         :references:to:from:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WWEB4pehH4l1Y4FVFpVUTJxteC4vgDSmmatJUvQNJ9M=;
-        b=mInyFH72OrCgUuNOVzQLsOfEBQHQ7MG5f1NB+hP5sXm4pb+XrjqDO7rwHGkvwmyZIw
-         2CctHXh8I6VQxJzeGeHAwNwIaasxuY3eyiglC5CMKBLP9m6nE2789B6CjpzAhdQtyEpr
-         NPq1gnWOLXx0IhuflR5ftbCx6cWWX9Ir787K+gsXXUoomzcCt4+/IkUvJUHqDETsTlwk
-         xcJs98u5g/mzxArtcUs/gjP1SDQ0ExZl4UZYpCBCkPOjXh3Dv3MeirpNSJ1XMtxCDt0w
-         T4tNoM3+gzEK8LjkZJCXY5P5gt4wXLgkgFuqOodSA8t/KxHPWr1x5g4P5h68ngSTiv+U
-         vSHA==
-X-Forwarded-Encrypted: i=1; AJvYcCWIDHwSlA3EvXjuYRMFZczekYUtpvECpmFTYF5kQMzQ2N3z00n+XRPjipynjpOPZQk3d1moaybSSWGpAJzeEqpv262k
-X-Gm-Message-State: AOJu0YwE5alP11ILNoPg3vdo85b7tYmoGrHRxWkewue8a/Et9hTlWTrJ
-	j6/pLscVXlN/UjJ93jKqFKSKnfYE9obGwavnuARuLhQVJtgj2SvT
-X-Google-Smtp-Source: AGHT+IE5la/5lD0Pj6Jfod01Y88mZLHb9sFkGGeFGPXZzaVR81wIyBZDkCD9jrM0nUKHBYrZkA0q1w==
-X-Received: by 2002:adf:e412:0:b0:367:9bc8:8c0a with SMTP id ffacd0b85a97d-367cead844bmr3493899f8f.64.1720619759588;
-        Wed, 10 Jul 2024 06:55:59 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:600:8501:575d:f6b:be83:bc74? ([2a0a:ef40:600:8501:575d:f6b:be83:bc74])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42797ba4acesm2641065e9.19.2024.07.10.06.55.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jul 2024 06:55:59 -0700 (PDT)
-Message-ID: <35f828d3-6d3d-4b86-b6bb-a35753d91b9b@gmail.com>
-Date: Wed, 10 Jul 2024 14:55:58 +0100
+        d=1e100.net; s=20230601; t=1720620387; x=1721225187;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=F56IeB13ibjce4lumAnR9U9t+dQr3FIvTKXwIeBLjVE=;
+        b=MmbW3+eu15grNHj6lnDU3NzR6bhs+FgNw4c24TqJ1K93h1rddaM4Hd1dxCpo0Qir0p
+         rEmWE5wUdjefBNEXeSu+OGibwMUKictSg4vBJOs9yjlmSw/oNB0Mcvn1RgpEgVdwtga8
+         QJ26BjXiMQxlEaCWKa/QZcJJMcYLU6ojhhBeFUxoE4ElMsc38AjTq/cqBw0DL0+BSejy
+         j9gbb78m2r3L/eOm7YdJZO6u9LrwM85IsmXprPiOzIZv6hVm1Fil7LnITeLaK51KvYjr
+         LraXgwtzBqNgrMuOfk8nn0il3PgRYcIjLxpgpXT2BvMdhEAcB6TkqZUD91PEQ1KsbMO7
+         /8cA==
+X-Gm-Message-State: AOJu0YycqX39km7eqPmlZrnQV2W081ckEHt8JeUUxEzoZJYstzruNxXt
+	AEJFF2TsXFv2OY6FHwMQl8LN/2uqrvGkWY+kiTEDTvb9Zd+etkGgfoPKNID+iFcQu8Ahp1v7uCn
+	NQX0jns69s8n5Qt41syyzC4wrS2JNtSgr
+X-Google-Smtp-Source: AGHT+IHvKfxlrj96Od1y/00RQIMuf+5Ut+Lm1/WsTzAwj9YM7WU4x4PgIFrcwRPsWPpPpld/4d6/6BXdqzL2aFm2v9I=
+X-Received: by 2002:a05:6870:7185:b0:254:c7f6:3294 with SMTP id
+ 586e51a60fabf-25eaebdb1f1mr4474159fac.47.1720620386666; Wed, 10 Jul 2024
+ 07:06:26 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 10 Jul 2024 07:06:25 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqbk37hjma.fsf@gitster.g>
+References: <20240708092317.267915-1-karthik.188@gmail.com>
+ <20240708092317.267915-9-karthik.188@gmail.com> <xmqqbk37hjma.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 6/6] t-strbuf: use TEST_RUN
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Josh Steadmon <steadmon@google.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?=
- <l.s.r@web.de>, Git List <git@vger.kernel.org>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
- <1bf053ae-957e-4e9a-90f0-11cc76848ce9@web.de>
- <bh5ectgtwdaeltflggzwnwhobewvcqqelforr4sfcmq47rnnrl@mzspptlhpofx>
- <d768f700-654a-4030-bd45-e8e3dea351b5@gmail.com>
-Content-Language: en-US
-Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-In-Reply-To: <d768f700-654a-4030-bd45-e8e3dea351b5@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Wed, 10 Jul 2024 07:06:25 -0700
+Message-ID: <CAOLa=ZQdPTnLp63eFiq1oOkgukBGsug==Cam0hGW_9koCefhGA@mail.gmail.com>
+Subject: Re: [PATCH 8/8] check-whitespace: detect if no base_commit is provided
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, chriscool@tuxfamily.org
+Content-Type: multipart/mixed; boundary="000000000000f0e445061ce526e6"
 
-On 02/07/2024 16:14, phillip.wood123@gmail.com wrote:
-> Getting rid of the untyped test arguments is 
-> definitely a benefit of this approach.
+--000000000000f0e445061ce526e6
+Content-Type: text/plain; charset="UTF-8"
 
-That got me thinking how we might make type-safe setup()
-functions. The diff below shows how we could define a macro to
-generate the functions. DEFINE_SETUP_FN(char, ch) defines setup_ch()
-that takes a test function and a char that is passed to the test with
-the initialized strbuf. I'm not sure that's the way we want to go for
-this test file but I thought I'd post it in case it is useful for
-future tests.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Best Wishes
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> The 'check-whitespace' CI script exists gracefully if no base commit is
+>
+> "exists" -> "exits"
+>
 
-Phillip
+Will fix.
 
----- >8 ----
-diff --git a/t/unit-tests/t-strbuf.c b/t/unit-tests/t-strbuf.c
-index 6027dafef70..8fc9a8b38df 100644
---- a/t/unit-tests/t-strbuf.c
-+++ b/t/unit-tests/t-strbuf.c
-@@ -1,27 +1,60 @@
-  #include "test-lib.h"
-  #include "strbuf.h"
-  
--/* wrapper that supplies tests with an empty, initialized strbuf */
--static void setup(void (*f)(struct strbuf*, const void*),
--		  const void *data)
--{
--	struct strbuf buf = STRBUF_INIT;
--
--	f(&buf, data);
--	strbuf_release(&buf);
--	check_uint(buf.len, ==, 0);
--	check_uint(buf.alloc, ==, 0);
--}
--
--/* wrapper that supplies tests with a populated, initialized strbuf */
--static void setup_populated(void (*f)(struct strbuf*, const void*),
--			    const char *init_str, const void *data)
--{
--	struct strbuf buf = STRBUF_INIT;
--
--	strbuf_addstr(&buf, init_str);
--	check_uint(buf.len, ==, strlen(init_str));
--	f(&buf, data);
-+/*
-+ * Define a type safe wrapper function that supplies test functions
-+ * with an initialized strbuf populated with an optional string and
-+ * some data and then frees the strbuf when the test function
-+ * returns. For example given the test function
-+ *
-+ *      t_foo(struct strbuf *buf, struct foo *data)
-+ *
-+ * the type safe wrapper function
-+ *
-+ *     setup_foo(void(*)(struct strbuf*, const struct foo*),
-+ *     		 const char *init_str, const struct foo*)
-+ *
-+ * can be defined with
-+ *
-+ *     DEFINE_SETUP_FN(const struct foo*, foo)
-+ *
-+ * and used to run t_foo() with
-+ *
-+ *     TEST(setup_foo(t_foo, "initial string", &my_foo), "test foo");
-+ */
-+#define DEFINE_SETUP_FN(type, suffix) \
-+	static void marshal_##suffix(void(*test_fn)(void),		     \
-+				      struct strbuf *buf, const void *ctx)   \
-+	{								     \
-+		type data = *(type *)ctx;				     \
-+		((void(*)(struct strbuf*, type)) test_fn)(buf, data);	     \
-+	}								     \
-+									     \
-+	static void setup_##suffix(void(*test_fn)(struct strbuf*, type),     \
-+				   const char *init_str, type data)	     \
-+	{								     \
-+		void *ctx = &data;					     \
-+		do_setup(init_str, (void(*)(void)) test_fn, ctx,	     \
-+			 marshal_##suffix);				     \
-+	}
-+
-+/*
-+ * Helper function for DEFINE_SETUP_FN() that initializes the strbuf,
-+ * calls the test function and releases the strbuf
-+ */
-+static void do_setup(const char* init_str, void(*f)(void), const void *ctx,
-+		     void(*marshal)(void(*)(void), struct strbuf*, const void*))
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	if (init_str) {
-+		strbuf_addstr(&buf, init_str);
-+		if (!check_uint(buf.len, ==, strlen(init_str))) {
-+			strbuf_release(&buf);
-+			return;
-+		}
-+	}
-+	marshal(f, &buf, ctx);
-  	strbuf_release(&buf);
-  	check_uint(buf.len, ==, 0);
-  	check_uint(buf.alloc, ==, 0);
-@@ -66,10 +99,9 @@ static void t_dynamic_init(void)
-  	strbuf_release(&buf);
-  }
-  
--static void t_addch(struct strbuf *buf, const void *data)
-+DEFINE_SETUP_FN(char, ch)
-+static void t_addch(struct strbuf *buf, char ch)
-  {
--	const char *p_ch = data;
--	const char ch = *p_ch;
-  	size_t orig_alloc = buf->alloc;
-  	size_t orig_len = buf->len;
-  
-@@ -85,9 +117,9 @@ static void t_addch(struct strbuf *buf, const void *data)
-  	check_char(buf->buf[buf->len], ==, '\0');
-  }
-  
--static void t_addstr(struct strbuf *buf, const void *data)
-+DEFINE_SETUP_FN(const char*, str)
-+static void t_addstr(struct strbuf *buf, const char *text)
-  {
--	const char *text = data;
-  	size_t len = strlen(text);
-  	size_t orig_alloc = buf->alloc;
-  	size_t orig_len = buf->len;
-@@ -110,12 +142,12 @@ int cmd_main(int argc, const char **argv)
-  	if (!TEST(t_static_init(), "static initialization works"))
-  		test_skip_all("STRBUF_INIT is broken");
-  	TEST(t_dynamic_init(), "dynamic initialization works");
--	TEST(setup(t_addch, "a"), "strbuf_addch adds char");
--	TEST(setup(t_addch, ""), "strbuf_addch adds NUL char");
--	TEST(setup_populated(t_addch, "initial value", "a"),
-+	TEST(setup_ch(t_addch, NULL, 'a'), "strbuf_addch adds char");
-+	TEST(setup_ch(t_addch, NULL, '\0'), "strbuf_addch adds NUL char");
-+	TEST(setup_ch(t_addch, "initial value", 'a'),
-  	     "strbuf_addch appends to initial value");
--	TEST(setup(t_addstr, "hello there"), "strbuf_addstr adds string");
--	TEST(setup_populated(t_addstr, "initial value", "hello there"),
-+	TEST(setup_str(t_addstr, NULL, "hello there"), "strbuf_addstr adds string");
-+	TEST(setup_str(t_addstr, "initial value", "hello there"),
-  	     "strbuf_addstr appends string to initial value");
-  
-  	return test_done();
+>> provided or if an invalid revision is provided...
+>> ...
+>> Let's fix the variable used in the GitLab CI. Let's also add a check for
+>> incorrect base_commit in the 'check-whitespace.sh' script. While here,
+>> fix a small typo too.
+>>
+>> [1]: https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#predefined-variables-for-merge-request-pipelines
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>  .gitlab-ci.yml         |  2 +-
+>>  ci/check-whitespace.sh | 13 ++++++++++---
+>>  2 files changed, 11 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+>> index 65fd261e5e..36199893d8 100644
+>> --- a/.gitlab-ci.yml
+>> +++ b/.gitlab-ci.yml
+>> @@ -119,7 +119,7 @@ check-whitespace:
+>>    before_script:
+>>      - ./ci/install-dependencies.sh
+>>    script:
+>> -    - ./ci/check-whitespace.sh "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
+>> +    - ./ci/check-whitespace.sh "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+>>    rules:
+>>      - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+>>
+>> diff --git a/ci/check-whitespace.sh b/ci/check-whitespace.sh
+>> index db399097a5..ab023f9519 100755
+>> --- a/ci/check-whitespace.sh
+>> +++ b/ci/check-whitespace.sh
+>> @@ -9,12 +9,19 @@ baseCommit=$1
+>>  outputFile=$2
+>>  url=$3
+>>
+>> -if test "$#" -ne 1 && test "$#" -ne 3
+>> +if { test "$#" -ne 1 && test "$#" -ne 3; } || test -z "$1"
+>
+> You can just add || test -z "$1" after the existing one, making the
+> thing A && B || C which evaulates left to right with the same
+> precedence for && and ||.
+>
 
+Well, I prefer making it explicit so one does not have to remember the
+precedence ordering, but it could just be my lack of shell knowledge.
+I'm okay with this change, I'll add it in the next version.
+
+>>  then
+>>  	echo "USAGE: $0 <BASE_COMMIT> [<OUTPUT_FILE> <URL>]"
+>>  	exit 1
+>>  fi
+>>
+>> +gitLogOutput=$(git log --check --pretty=format:"---% h% s" "${baseCommit}"..)
+>
+> That is a large string to hold in a variable for a potentially large
+> series with lots of breakages.  I didn't quite read the reasoning
+> behind this change in the proposed log message.  Under what
+> condition do you expect the command to exit with non-zero status?
+> $basecommit being a non-empty string but does not name a valid
+> commit object or something, in which case shouldn't "git log
+> --oneline $baseCommit.."  or something simpler should suffice?
+>
+
+Yeah, makes sense. I think I'll simply add in
+
+    if ! git rev-parse --quiet --verify "${baseCommit}"
+    then
+        echo "Invalid <BASE_COMMIT> '${baseCommit}'"
+        exit 1
+    fi
+
+instead
+
+>> +if test $? -ne 0
+>> +then
+>> +	echo -n $gitLogOutput
+>
+> What is "-n" doing here?  Why are you squashing run of spaces in the
+> $gitLogOutput variable into a space by not "quoting" inside a dq-pair?
+>
+
+I actually didn't know about this. Thanks for informing.
+
+>> +	exit 1
+>> +fi
+>
+> Looking for "--check" in
+>
+> 	$ git log --help
+>
+> tells me that the command exits with non-zero status if problems are
+> found, so wouldn't that mean the cases with problems always exit
+> early, bypassing the while loop with full of bash-ism that comes
+> after this block?
+>
+
+It should exist with a non-zero code, but since we're capturing it in
+the while loop, it doesn't stop the slow. A consequence of which is that
+it'll print the stderr from the `git log` failing, but the script itself
+will still exit with a zero exit code. This marks a success on the CI.
+
+>>  problems=()
+>>  commit=
+>>  commitText=
+>> @@ -58,7 +65,7 @@ do
+>>  		echo "${dash} ${sha} ${etc}"
+>>  		;;
+>>  	esac
+>> -done <<< "$(git log --check --pretty=format:"---% h% s" "${baseCommit}"..)"
+>> +done <<< "$gitLogOutput"
+>>
+>>  if test ${#problems[*]} -gt 0
+>>  then
+>> @@ -67,7 +74,7 @@ then
+>>  		goodParent=${baseCommit: 0:7}
+>>  	fi
+>>
+>> -	echo "A whitespace issue was found in onen of more of the commits."
+>> +	echo "A whitespace issue was found in one of more of the commits."
+>>  	echo "Run the following command to resolve whitespace issues:"
+>>  	echo "git rebase --whitespace=fix ${goodParent}"
+
+--000000000000f0e445061ce526e6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d424d89c5c4e616a_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hT2xXQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNFBxQy80dWZRSGxsNGdzVXJPTXpVM0JUS1FjQXdqNgplanZIN1hSRVFP
+MTkxOWtLZi9jd1lQQjRHTGtqUWJ6VTB3MFZuejVFQmF1clJLRHRMSHZvZkVEdGc1SXFFOHhjClBh
+UVgydVlMNGpOWHEzMlBhYWtVNGNzc08rb0VZd252RHMxZ0VFdkI0NVRuS0dxSHNyampDK21oS2R2
+TmlGL0cKSGdMZWdZMTVtNTcxbzhmVC80Z1BVWmoxUHU3MjcvLzhTN25vd3FyOXI2MHhLbG04Wisw
+UEF6OE1iTEVOVzc2Nwp3MllST25yMjFzVHdBSFNpWEtQRFRLenlSSDc0dmRHTnZlUXprU052YmQv
+UC9ocmVMNXhJdTdXa080c2NVZDVPCmNsMXFFUjhGcTJJOUt4UldjYzJhTEFiQnlHRTY0NHF6VDR2
+bENNbTlHOTdJNXErQlM0aDJmTG8zSEtmZjBLS24KNHNIaWFiSngvTlQ3aTlaNDBXNEdIK0lKSUhM
+QkNLblBxMUR4Wk01WDVzcWJIbVJOY05ydGtLT1JiSlRlQ1dweApubDVBTi8yZVgyYmYwb01YR1Vu
+UTg1aVlVQmVYbmJKUzVsdnFtandMdmk1QzBCeGhFWVpLZlNQMVl3WXRET3pNCkt0eGY2V08zclBO
+YWhYdFUxd1JDaUFmTEdDVXNVNVdmbXBxYmRWdz0KPVRpQWcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f0e445061ce526e6--
