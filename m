@@ -1,132 +1,226 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0491B86DD
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 00:52:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1823623A0
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 00:57:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720572723; cv=none; b=bXTSlF18jpLdyMkgZh2KXU4eaTLl1mKaFtB51/9ImNGesgLtfRHCC1umLwgo37YonMOO60qXDDkGf4dqafKbBbpd6LltaNh6SDPYUmIuNGuc7ULDNeF/+WSuGF1isSDHPMUrR4KjLS1hsazJlq9nKLrvTopruRzTVPLFue+RM/M=
+	t=1720573028; cv=none; b=kSnTb9JU1MqwYR0vml3G7iwxwIIFeLKexEW869c2zr/BT4Si//AgFuXQwSXLWZDwVSCCFfiriFFdjr2o0F8gOrudePJBfkhSK/76bdEHYtb7IFMjguNP/M2ZLZReyVvky9y+OuG6InCZ7XefzcIEWmPpVA5gjk9I0SO1vpJC4Mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720572723; c=relaxed/simple;
-	bh=6Tzq996+lBrFse1iIrBJbnKqd4qjfROuGnl8po1ERSM=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=qEv5hztILwwe3tmQR4pgw3wTNVehjYvTnRsg20QxbW8sbGmGXguLWho3GXE0QWa2YNFsVODNrto9UVtSCLMSiOnbU3+8gMJMTcEbnPj0bF38iQ9NHQYgIXhbbhtge+X3BaU+/RRJJwm/lG1l1WCzvClv6mBL2lHYWU/rkaRzELY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=juFsZoHx; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720573028; c=relaxed/simple;
+	bh=+Sedd5YH0RyIObE7S9sUtMV3+Mnbjx1SJTwy7epuXYY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jaHw2W/ud6NGhHj34125ztWQmYL0fBoHFwJBWqTMBgju2j/7MUA7fEBjN52W/vlKHhQDdsH86K1LLsJD+EBsIijcf/Op/qPCw1WPeTM1Ts97f2DX15zd2pipmHYl23nsxYqfvxuwjJRZbXTZlpQ/BpN7KoFqfHFPKtemGzm0bvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Uh+TJSDO; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="juFsZoHx"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1fb53bfb6easo26704275ad.2
-        for <git@vger.kernel.org>; Tue, 09 Jul 2024 17:52:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720572722; x=1721177522; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UxOOpAUqwDtXidGseopFNoNxgDBP5o42WgCUFERti+A=;
-        b=juFsZoHxNsaM1gftGPXQU4+2yc4NrRaggTgU/uFVorTuLmlHhgadJ4ByTVEUiLTIp6
-         i8xmrg90e7Em4ycBWpC5LVh3PVyWwZH1PR0jQ35rbULdfgDyvZKPgLNE8zo5Hn2cl2Rg
-         YVi1CCdKjt2Gw3ecVq8nRK2k6PbEaVjWtxZE2H0sEKnCFyDKsyjXTXn5iHHYeNzqRdJF
-         1SURNHVFq5lmEPJ7kRPJ6k0zjTxodFSQ0pXLn2tsRNLwR+Pl9Hq4AzJEx9oedWIc36h5
-         FsghnTlWRWO6cr6eXzbVcZ1DLCHjoL6eo3Cd15zUZfjnc7rZkcDZ1P3iZ5fzk5Wu3Vyp
-         SDoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720572722; x=1721177522;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=UxOOpAUqwDtXidGseopFNoNxgDBP5o42WgCUFERti+A=;
-        b=E2NV+XRDHrj9aTTpFRxCyJK0uIRbOfi4H22VCV8FX37iFy+iEl+Hy+ZmzrpjVhMW8I
-         dyu/xYVbqxOHP+HVotFYOlcnn8nYDqKWuTj5K5pSYemZABfaR5Xx9nuG1nKqPRT7e5ns
-         ZaVEPs32gQbciGBwRxrhS4e9D3ePqPud3dHk9C7zek4xw7kHM/U0CPKJkO8OcvegFmda
-         /+dz0vfKKTq8ANSB/OArzBHBvNPKYz87+3cT8nfnsgqPHwuwcDF3Nap8O8S0M5S6SxED
-         sf7MLXlHQyhdqb0eizweqpbHkIPCnD/hLSsWoM03z3IhqRhZgayDUoZSJiysCm7MBlJ4
-         O4bw==
-X-Gm-Message-State: AOJu0YzqFmsfwlgoKO9HYY24cDy/XJgM2ty8eYalIoEIoBEFqbiq1GfG
-	7sQpNWdACghyVBa/1piQ2Clz6zayXYfWSFVeHBz5lYZTr2SJ9QNdUKW11g==
-X-Google-Smtp-Source: AGHT+IELgDzPIHT3PCxSe2lEtVe9VJvxl5bDDT+6Ldj5CpYAnsCmaKl60fhnPsA8ZeRl8DxW7jPRJg==
-X-Received: by 2002:a17:902:ce85:b0:1fb:5b83:48e4 with SMTP id d9443c01a7336-1fbb6ce52e0mr35746625ad.9.1720572721594;
-        Tue, 09 Jul 2024 17:52:01 -0700 (PDT)
-Received: from ?IPV6:2401:4d40:b860:500:a755:7cf0:2dda:1f39? ([2401:4d40:b860:500:a755:7cf0:2dda:1f39])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fbb6a12223sm21966435ad.33.2024.07.09.17.52.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jul 2024 17:52:01 -0700 (PDT)
-Message-ID: <598149bf-6541-4c9e-8c94-a108e3ee7fd7@gmail.com>
-Date: Wed, 10 Jul 2024 02:51:58 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Uh+TJSDO"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7BFA53D86C;
+	Tue,  9 Jul 2024 20:57:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=+Sedd5YH0RyIObE7S9sUtMV3+Mnbjx1SJTwy7e
+	puXYY=; b=Uh+TJSDONIJX8/ltEFJLXXbhPpI08wzlwW8r3+ZuuU4a4bAK4N2lMP
+	zX8VIQJauH9PjUozTg2elWKwkB8oqOzgQpZ/dnCAoWsHQCmhGFhYdd5CoSbxAUUX
+	v7DExEHSUSZPN8a2mOmSnFjuvYEkoMuMzDOwCV0ZUJkR/GL6NDoeI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 622503D86B;
+	Tue,  9 Jul 2024 20:57:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E07B33D86A;
+	Tue,  9 Jul 2024 20:57:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Emily Shaffer <emilyshaffer@google.com>
+Cc: git@vger.kernel.org,  "Randall S. Becker" <rsbecker@nexbridge.com>,
+  Taylor Blau <me@ttaylorr.com>,  Emily Shaffer <nasamuffin@google.com>
+Subject: Re: [PATCH] Documentation: add platform support policy
+In-Reply-To: <20240709225042.2005233-1-emilyshaffer@google.com> (Emily
+	Shaffer's message of "Tue, 9 Jul 2024 15:50:42 -0700")
+References: <20240709225042.2005233-1-emilyshaffer@google.com>
+Date: Tue, 09 Jul 2024 17:57:01 -0700
+Message-ID: <xmqqfrsi9i8y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Subject: [PATCH] test-lib: GIT_TEST_SANITIZE_LEAK_LOG enabled by default
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 51ED37DA-3E57-11EF-8831-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-As we describe in t/README, it can happen that:
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-     Some tests run "git" (or "test-tool" etc.) without properly checking
-     the exit code, or git will invoke itself and fail to ferry the
-     abort() exit code to the original caller.
+> +Platform Support Policy
+> +=======================
+> +
+> +Git has a history of providing broad "support" for exotic platforms and older
+> +platforms, without an explicit commitment. This support becomes easier to
+> +maintain (and possible to commit to) when Git developers are providing with
 
-Therefore, GIT_TEST_SANITIZE_LEAK_LOG must be set to true to capture all
-memory leaks triggered by the tests when SANITIZE=leak.
+"providing"?  "provided"?
 
-Set it to true by default, and stop worrying about someone checking for
-leaks who isn't aware of this option and might be missing some leaks.
+> +adequate tooling to test for compatibility. Variouis levels of tooling will
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
-  ci/lib.sh     | 1 -
-  t/README      | 4 ++--
-  t/test-lib.sh | 2 +-
-  3 files changed, 3 insertions(+), 4 deletions(-)
+"Variouis"?
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index ff66ad356b..fe52954828 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -374,7 +374,6 @@ linux-musl)
-  linux-leaks|linux-reftable-leaks)
-  	export SANITIZE=leak
-  	export GIT_TEST_PASSING_SANITIZE_LEAK=true
--	export GIT_TEST_SANITIZE_LEAK_LOG=true
-  	;;
-  linux-asan-ubsan)
-  	export SANITIZE=address,undefined
-diff --git a/t/README b/t/README
-index d9e0e07506..1c97bc3331 100644
---- a/t/README
-+++ b/t/README
-@@ -382,10 +382,10 @@ mapping between "TEST_PASSES_SANITIZE_LEAK=true" 
-and those tests that
-  pass under "SANITIZE=leak". This is especially useful when testing a
-  series that fixes various memory leaks with "git rebase -x".
+> +allow us to make more solid commitments around Git's compatibility with your
+> +platform.
+> +
+> +Compatible by vN+1 release
+> +--------------------------
 
--GIT_TEST_SANITIZE_LEAK_LOG=true will log memory leaks to
-+GIT_TEST_SANITIZE_LEAK_LOG=<boolean> controls logging of memory leaks to
-  "test-results/$TEST_NAME.leak/trace.*" files. The logs include a
-  "dedup_token" (see +"ASAN_OPTIONS=help=1 ./git") and other options to
--make logs +machine-readable.
-+make logs +machine-readable.  Defaults to "true" when SANITIZE=leak.
+I couldn't quite tell what you meant by vN+1 on the title.  If Git
+v2.45.X were working fine on an un(der)maintained platform, and some
+changes went into Git v2.46.0 were incompatible with it, then vN
+would obviously be v2.46.0 but what is vN+1?  v2.47.0 or v2.46.1?
 
-  With GIT_TEST_SANITIZE_LEAK_LOG=true we'll look at the leak logs
-  before exiting and exit on failure if the logs showed that we had a
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 7ed6d3fc47..1dd2ea4e07 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1578,7 +1578,7 @@ then
-  		test_done
-  	fi
+howto/maintain-git.txt calls v2.47.0 "the next feature release"
+after v2.46.0, while v2.46.1 is "the first maintenance release".
 
--	if test_bool_env GIT_TEST_SANITIZE_LEAK_LOG false
-+	if test_bool_env GIT_TEST_SANITIZE_LEAK_LOG true
-  	then
-  		if ! mkdir -p "$TEST_RESULTS_SAN_DIR"
-  		then
--- 
-2.45.1
+> +To increase probability that compatibility issues introduced in a point release
+> +will be fixed by the next point release:
+
+So you meant "by v2.46.1 (or if you fail to notice breakage then it
+might slip until v2.46.2)".  Is the procedure for the platform folks
+any different if they target the next feature release?
+
+I think what they need to do would not change all that much between
+these two cases, so I'd suggest dropping a mention of "point
+release".  I.e, "introduced in an earlier release will be fixed by a
+future release".
+
+A point release cannot introduce compatibility issues or any
+breakages, but mistakes happen ;-) But for a receiver of a new bug,
+it does not matter an iota if a point release or a major release
+introduced an issue.
+
+To recap, my suggestions for the above part are:
+
+ - retitle to "Compatible by the next release"
+
+ - "introduced in an earlier release will be fixed by a future
+   release" without mentioning the nature of releases like point,
+   feature, and maintenance.
+
+> +* You should send a bug report as soon as you notice the breakage on your
+> +platform. The sooner you notice, the better; it's better for you to watch `seen`
+> +than to watch `master`.
+
+Let's clarify what goal they want to achieve by "watching".
+
+    ... for you to watch `seen` to prevent changes that break your
+    platform from getting merged into `next`, than to watch `master`.
+
+> See linkgit:gitworkflows[7] under "Graduation" for an
+> +overview of which branches are used in git.git, and how.
+
+Or "The Policy" section of howto/maintain-git.txt where the use of
+each branch makes it a bit more clear what 'next' is for, and why
+'seen' may be worth looking at by these people.
+
+
+> +Compatible on `master` and point releases
+> +-----------------------------------------
+> +
+> +To guarantee that `master` and all point releases work for your platform the
+> +first time:
+
+OK, as most of the changes go to `master` before getting merged down
+to `maint` to become part of the next maintenance release, actively
+protecting `master` from bugs is worthwhile.  What about changes
+that do not come via the `master` branch?  Should they also join the
+security list and have an early access to the cabal material?
+
+> +* You should run nightly tests against the `next` branch and publish breakage
+> +reports to the mailing list immediately when they happen.
+> +* It may make sense to automate these; if you do, make sure they are not noisy
+> +(you don't need to send a report when everything works, only when something
+> +breaks).
+> +* Breakage reports should be actionable - include clear error messages that can
+> +help developers who may not have access to test directly on your platform.
+> +* You should use git-bisect and determine which commit introduced the breakage;
+> +if you can't do this with automation, you should do this yourself manually as
+> +soon as you notice a breakage report was sent.
+
+All of the above are actually applicable to any active contributors
+on any platforms.  If your group feeds custom builds of Git out of
+"master" to your $CORP customers, you want to ensure you catch
+badness while it is still in "next" (or better yet, before it hits
+"next").  If your internal builds are based on "next", you'd want to
+ensure that "next" stays clean, which means you'd need to watch
+"seen" (or better yet, patches floating on the list before they hit
+"seen").  Your group may build with unusual toolchain internal to
+your $CORP and may link with specialized libraries, etc., in which
+case maintaining such a build is almost like maintaining an exotic
+platform.
+
+> +* You should either:
+> +** Provide VM access on-demand to a trusted developer working to fix the issue,
+> +so they can test their fix, OR
+> +** Work closely with the developer fixing the issue - testing turnaround to
+> +check whether the fix works for your platform should not be longer than a
+> +business day.
+
+These are very specific, especially for minority platform folks.  I
+agree with the direction, but "not be longer than" might be too
+strong.  Longer turnaround time will certainly make the issue
+resolution slower, but if the platform maintainer can stand it, that
+is their choice.  Finding some volunteers among our developers who
+are familiar with the code to help their problem with more patience
+and can wait for more than a business day is also up to them.
+
+> +Compatible on `next`
+> +--------------------
+> +
+> +To guarantee that `next` will work for your platform, avoiding reactive
+> +debugging and fixing:
+> +
+> +* You should add a runner for your platform to the GitHub Actions CI suite.
+> +This suite is run when any Git developer proposes a new patch, and having a
+> +runner for your platform/configuration means every developer will know if they
+> +break you, immediately.
+
+This would be nice even if the platform maintainer do not care about
+`next` occasionally breaking (i.e. keep `master` working, in the
+previous section, or even find breakages on `master` before the next
+feature release, in the section before that).
+
+> +* If you rely on Git avoiding a specific pattern that doesn't work well with
+> +your platform (like a certain malloc pattern), if possible, add a coccicheck
+> +rule to ensure that pattern is not used.
+
+Sorry, but I do not quite follow you here.
+
+In general, it is a bad idea to promise that we are willing to tie
+our hands with coccicheck to satisfy needs by exotic platforms,
+without first having a chance to see and evaluate such needs.
+
+"if possible, add" -> "sometimes it may turn out to be a good idea
+to add", perhaps?
+
+> +* If you rely on some configuration or behavior, add a test for it. You may
+> +find it easier to add a unit test ensuring the behavior you need than to add an
+> +integration test; either one works. Untested behavior is subject to breakage at
+> +any time.
+
+A unit test may be easier to add than an end-to-end test, but given
+that end-users and platform maintainers want to see Git work as a
+whole (e.g., if you prepare two repositories and do "git push there
+:refs/heads/foo" then it removes the 'foo' branch), an end-to-end
+test would probably be more useful and robust way to ensure that a
+feature you care about will keep working.
+
+In any case, I am not sure the sentence that ends with "either one
+works" is worth existing here in this document.  Two important points
+to stress here are (1) add test to protect what you care about and (2)
+otherwise you can keep both halves.
+
