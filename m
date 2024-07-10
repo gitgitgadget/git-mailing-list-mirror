@@ -1,116 +1,150 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32CE189F54
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 12:13:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27931922D6
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 12:28:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720613624; cv=none; b=GjhJgeXO807jZEV4jjQEKhA7CREgGFOiLn1aEIj1qaaMYxIPaSQVtzDOktgBphHDhVneg+KFiDKh8ALhA/1T+NN/zVIvb6Asv8tGfnZm+XoQ5fB7cVPLCEpH4SelD6JoXY2EsSDMYmGtlHxvqxcqB0Ovljq6id57k4MEHxCuulU=
+	t=1720614494; cv=none; b=tD69hPkecMOGCox9CUXmxjY8meNInA2SQg9qEBoYq16ccCJmgSdVUYlcHA1ftLuXv6DM4P9RuE1zpCSROcpEVnuxEQlFfCqbN/D3D8j0mdapTTXM2FR2cHqDSP1EftI+URcqiNJ/jKRZ5oTTkgHcYcj0VS77Yvtnq+lfk8LkBow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720613624; c=relaxed/simple;
-	bh=kPB8xOw61VsagmK/RVlor+aluRGohzz5zXJYuziNIT0=;
+	s=arc-20240116; t=1720614494; c=relaxed/simple;
+	bh=b4GEIujnFcs90u7x3GrR6xoao/3/6InURGfYFGh7Cjo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NbAz1wrAyyaflrEZ57qZsSJMgRZBf33CBYvhDPoI3cFhrhKe5E0aN9Q2oSoHtYYTSqMHm/FscJqFerHOovjSzFsRvQOMPjUwtl36eQw7IFLrZpK2uckD8wUOer2OQPcTtam08UdYV/KOxyAS6a+pO0so/NsFEGp6FBW8T+ASqeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H4G1eCMb; arc=none smtp.client-ip=209.85.210.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=JH5ALIYZpIOIarpFqSRKfRYkRxmQGz+85d8p+Nq+xg1xBeTf88/GH7UBostbQBU3bskRgqjMHfW2PK0BLf/L/TPl87LdZLoXBT7ArEHALkMirImLebwToFSgTVIC93ncPxPnuvOdRSn5TTR1sOPTPaeDPWDTKyHRliuQdHiOJzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fyK5gKa5; arc=none smtp.client-ip=209.85.215.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H4G1eCMb"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-70b09c2ade6so3391594b3a.3
-        for <git@vger.kernel.org>; Wed, 10 Jul 2024 05:13:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fyK5gKa5"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-78135be2d46so1079557a12.0
+        for <git@vger.kernel.org>; Wed, 10 Jul 2024 05:28:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720613622; x=1721218422; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=l7oVWE7W/skgdzTrFM4ZD/SFjGeAYUwPIV8YCxb0+hA=;
-        b=H4G1eCMbmhzppAOtJTHf6pfuD2RmRQyuP3HbQIVV4ACuXpa5X05/wmP8H6x2Bb5HDy
-         CvzfTO6MMbeion31h2cLzCN+LEUmnE7np8XulaByVoe+OQgIxEFfgH07JPib9px4B/Sx
-         YGfjqW54lrk7VECqCKKjeDXKFbk3qXnbk9LtCcBVxUsNi0g/fnFnboY+lkuF3XZoMn/+
-         X+9KKfuYXTBRK6f+JRmHCAGFwDU9D8HfGz+p6eZzlEUS2Vwi0sSIl4HGJ9Vd5g3mZbgQ
-         S8/AiEf8iQfyNG4GtTO0TVH/sWa4yPxMlLwAzpHRmFNWHuHutM8GWk2qrOeOB38OOPcV
-         +u6g==
+        d=gmail.com; s=20230601; t=1720614492; x=1721219292; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5TmEOJlDxAftTVNISdpxzkwUzLlPnhq8YG9NI3N98+w=;
+        b=fyK5gKa5tCkQsclxSjTvoMkOhs7/6OB5EmFxH3N2qOUCs0GwSTE2dFGqn05QuUWuou
+         6pahy+j/gDA90H6JRc0LjimsH058FnIBWZFJyVf7ZCyAP6yaP8Rs+06yWOBzQGWLA9hu
+         y5bDMlFoCoOyX7LBfbpOFeArHZddeop8QXzaerMy/m0nYDWvMZuHdMkAY/T/mrGWZGqu
+         Oxec9lOumxkVOkzwcIk20KC9rfMuVAK8/9BOVPaaPZ0Q1QgS+cNLcAB9bIrx+4oMFj/Y
+         L5yMRGhAiq80UdDMnYWHbNCzIEugsZtC8CES/w9RftKatLp0akNRliVzMXPzUREim8jS
+         hViA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720613622; x=1721218422;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=l7oVWE7W/skgdzTrFM4ZD/SFjGeAYUwPIV8YCxb0+hA=;
-        b=YPvT+IOFlvBTtsJIpAlnTf1YxOCXSHC1h7k++KOBSwA01KdjKk6bt9Bn1norpF1yn9
-         GGzrIU4MCjuOlqX79Noumc4xOcCqEOTWpEhov67j4HZp3lCwkg/z7igS3vf5DmSgqaPM
-         hsqxkTiiEcjF0bV6VHr6RBf29g/+cpY0+PIeUu4z3PjYQYPsGMm0XTxz+h38Voh/S+RX
-         kcJv/YjTW+xwbcd48AUv+9BRTmhGUD914NVqBy6EsLWJEqi4jD38HFF6idD1D6boIYVk
-         8ImR8pucVOyZyjACLAn2YS7zOCddP7z2tAOV3WVFVxW7GGYj314+hk6Ri35J2aq0HqAF
-         aoJg==
-X-Forwarded-Encrypted: i=1; AJvYcCVGo2lNj91pGi5HGdLpfNN1I3PXawcwYg5u/02m1bClJa0pF0nvz7/qR5zac5HW6EsX6lfoFRSJ9d+gBy7PLhTf8cBn
-X-Gm-Message-State: AOJu0YwF9X0m8V47jTe191SqPa7dQNOOY08PQzFr38314shDsCqwEyXN
-	CICeI0fl6B0c1GfKwsi1cmIBpScvZ9VoibVb/oJ7GidyOWguTmlE
-X-Google-Smtp-Source: AGHT+IEFiZuNDj7WqsERFbc6dyPdro40OzRBy873BbX3RZj2KAmuaQZwyGd5cSEJvo/GfFCB5S7+Fw==
-X-Received: by 2002:a05:6a21:9993:b0:1c2:8d72:67ce with SMTP id adf61e73a8af0-1c29821e0dfmr5448155637.15.1720613621886;
-        Wed, 10 Jul 2024 05:13:41 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720614492; x=1721219292;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5TmEOJlDxAftTVNISdpxzkwUzLlPnhq8YG9NI3N98+w=;
+        b=Kbpopkng15GepgUqK6fPuf+BsUTXPqudD0aIstL6Vj0td5inlsNqm1EoGjSeDZQsOz
+         dyD6+zjPXL92sreGFXJkyu2gflPYe7XHY0h1wjP1//u/0zSf9h07PLZiKz/q93u1JKmw
+         ugp1/Nw5yoks1qspmmo0QFkkJfNBVKjsV25jb2UqWWTNmAusfh5Pb9rnAEzRjj0+qLmd
+         tlOUlEETerftYvFjltdDLzHLwULiwF0DCr+wNGysObsxttmTqmDdspJMa/ITyNlQFoWb
+         QqGDdR3K57ZiztXi3/1Jg4FXsCg9Pj91elBI5y2GvS1VC0E4Jx34lfp1EH8IZdPVw+oV
+         nJ3w==
+X-Gm-Message-State: AOJu0YxFPAq1bhYzPN6frf+hjLpuG7jhEgnEOxvSpG0Tiivrvm1JNSUh
+	t+6tR1X/pwyROovBEOl24HtITEBcyFNy3/ltrIOv8uG9dtpLifzfUBmymg==
+X-Google-Smtp-Source: AGHT+IHVY5IxwC3CYGeHih8pdQtyscl2KGDkFGt1vt5HqnZ7hvWd3neA7KpadPfVn4Ts0+q/j5DAPw==
+X-Received: by 2002:a05:6a20:9f0a:b0:1c0:f2ee:7dc0 with SMTP id adf61e73a8af0-1c2984c9dc7mr5444758637.55.1720614492159;
+        Wed, 10 Jul 2024 05:28:12 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fbb6ad089dsm32082625ad.271.2024.07.10.05.13.41
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fbb6a1094dsm32589395ad.22.2024.07.10.05.28.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jul 2024 05:13:41 -0700 (PDT)
-Date: Wed, 10 Jul 2024 20:13:43 +0800
+        Wed, 10 Jul 2024 05:28:11 -0700 (PDT)
+Date: Wed, 10 Jul 2024 20:28:12 +0800
 From: shejialuo <shejialuo@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>,
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
 	Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [GSoC][PATCH v9 3/9] fsck: add refs-related options and error
  report function
-Message-ID: <Zo5695Ig1q6ronkg@ArchLinux>
+Message-ID: <Zo5-XAzqt3YxWJ-v@ArchLinux>
 References: <Zo0sQCBqyxX8dJ-f@ArchLinux>
  <Zo0uiz1y6hJld2Rv@ArchLinux>
  <oan7pcamqpi2z4jzfshff2sfziqgisd3jcbpzfoiuyks5g57mk@7isgeztkcgmy>
- <CAPig+cR=RgMeaAy1PRGgHu6_Ak+7=_-5tGvBZRekKRxi7GtdHw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cR=RgMeaAy1PRGgHu6_Ak+7=_-5tGvBZRekKRxi7GtdHw@mail.gmail.com>
+In-Reply-To: <oan7pcamqpi2z4jzfshff2sfziqgisd3jcbpzfoiuyks5g57mk@7isgeztkcgmy>
 
-On Tue, Jul 09, 2024 at 05:40:08PM -0400, Eric Sunshine wrote:
-> On Tue, Jul 9, 2024 at 5:30 PM Justin Tobler <jltobler@gmail.com> wrote:
-> > On 24/07/09 08:35PM, shejialuo wrote:
-> > > +int fsck_refs_error_function(struct fsck_options *options UNUSED,
-> > > +                          const struct object_id *oid,
-> > > +                          enum object_type object_type UNUSED,
-> > > +                          const char *checked_ref_name,
-> > > +                          enum fsck_msg_type msg_type,
-> > > +                          enum fsck_msg_id msg_id UNUSED,
-> > > +                          const char *message)
-> > > +{
-> > > +     static struct strbuf sb = STRBUF_INIT;
-> > > +
-> > > +     strbuf_reset(&sb);
-> >
-> > Naive question, is there reason to reset `sb` immediately after
-> > `STRBUF_INIT`? My understanding is that because we initialize the
-> > buffer, the other fields should also be zeroed. If so, resetting the
-> > buffer here seems redundant.
+On Tue, Jul 09, 2024 at 04:29:24PM -0500, Justin Tobler wrote:
+> On 24/07/09 08:35PM, shejialuo wrote:
+> > Add refs-related options to the "fsck_options", create refs-specific
+> > "error_func" callback "fsck_refs_error_function".
+> > 
+> > "fsck_refs_error_function" will use the "oid" parameter. When the caller
+> > passes the oid, it will use "oid_to_hex" to get the corresponding hex
+> > value to report to the caller.
 > 
-> This particular strbuf is static, so it needs to be cleared each time
-> the function is called.
+> Out of curiousity, under what circumstances would the caller want to
+> also pass the oid? Would it simply be to optionally provide additional
+> context?
 > 
-> The cover letter provides an argument for making it static: that this
-> will be called often, and we don't want to make a lot of repeated
-> allocations. Personally, I find that argument rather weak. Why would
-> an error function be called frequently? Is this really a hot path that
-> needs to worry about a few extra allocations? Also, importantly, every
-> static added makes the code harder to "libify", so making it static
-> requires a very strong reason, but there doesn't seem to be such a
-> reason in this case.
 
-I didn't consider the issue of libify. I just want to reduce some memory
-allocations. I will change this in the next version.
+Because when we check the refs, we will use "parse_loose_ref_contents"
+here to check the ref contents. Below is the prototype:
 
-Thanks,
-Jialuo
+  int parse_loose_ref_contents(const char *buf,
+                               struct object_id *oid,
+                               ...)
+
+So we could get a oid here. However, we don't know the type of the oid.
+It may not be commit object but rather a tag object. And I want to
+provide more flexible operations for caller. When caller passes the oid.
+The message could be the following:
+
+  ref_name -> (oid) : fsck_error_type: user-passed message.
+
+So, actually we have provided additional context for the caller. From
+another perspective, the object check needs the "oid" parameter, we
+cannot remove it from the callback "error_func" prototype. So why not
+just reuse this parameter? It truly provides the caller more flexibility
+without big changes.
+
+> >  struct fsck_options {
+> >  	fsck_walk_func walk;
+> >  	fsck_error error_func;
+> >  	unsigned strict:1;
+> > +	unsigned verbose_refs:1;
+> 
+> What is the purpose of adding `verbose_refs` in this patch? At this
+> point, I'm not seeing it used. If there is a reason to be included in
+> this patch, it might be nice to mention in the commit message.
+> 
+
+The reason is that fsck builtin handles the object check but we want to
+use "git refs verify" command to handle ref check and we put all the
+real functionality into each file backend. And there is only one entry
+point in the "git refs verify" command. So we need to use "fsck_options"
+as the parameter to maintain this state across the ref checks.
+
+Actually, "git-fsck(1)" maintains "verbose" global variable. I think I
+should not add this option in this patch which may cause a lot of
+confusion here. I will improve this in the next version.
+
+> >  	enum fsck_msg_type *msg_type;
+> >  	struct oidset skip_oids;
+> >  	struct oidset gitmodules_found;
+> > @@ -173,6 +181,13 @@ struct fsck_options {
+> >  	.gitattributes_done = OIDSET_INIT, \
+> >  	.error_func = fsck_objects_error_cb_print_missing_gitmodules, \
+> >  }
+> > +#define FSCK_REFS_OPTIONS_DEFAULT { \
+> > +	.error_func = fsck_refs_error_function, \
+> > +}
+> > +#define FSCK_REFS_OPTIONS_STRICT { \
+> > +	.strict = 1, \
+> > +	.error_func = fsck_refs_error_function, \
+> > +}
+> >  
+> >  /* descend in all linked child objects
+> >   * the return value is:
+> > -- 
+> > 2.45.2
+> > 
