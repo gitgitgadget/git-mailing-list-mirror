@@ -1,185 +1,135 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F5F17FD
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 09:36:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A6C84A28
+	for <git@vger.kernel.org>; Wed, 10 Jul 2024 09:39:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720604174; cv=none; b=JSJ1eOxzhoPJCvxMlBidukdGaTZ4yafv7jt8WsE7AZX7E6h1SexebRTyQeoVnSCtjbJ6eOdLEYYE5kOe05J28EclcZoX40TykvLBDXnnYShzj+01NqRswy+zuVy98jFITXlja6r03UJEUz0wD3aaroJsNhtg3moDl3gtf829vSs=
+	t=1720604378; cv=none; b=W680hkiJQXWOjYG3Bo/Mq/+ZjbuI5CB+qC3vD7KyXXzJrarlJGn47P9sCFNgImOjq0O3l8lAjoPb8dB/82/2wHKC4hA4hXsNDN4djsSieKPdoS/QMSebfa1CsUGOuKk3OGMugCLG2VR+pTDJffbyrE5cI0Dbl4fubHNq+0scb4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720604174; c=relaxed/simple;
-	bh=W5jbaQl7veG4IR1Paez/GbUzL+mbGOlZeL+ni1QCrQc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IHndHWAHtCpynKYHRN69R0rQbEZUkDDO2REjCVsnyRibdHH3MulxUc4lNcahxeamXkCf9c0iC/6vYH5ith2t8k5A2oTLpRzyzVioSv2adC5lGgYTM74i3K/22Wqn2pZjfccHD83WrC/cByzLvy/W98EVxOJUw961qVe91IfEMp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 1872 invoked by uid 109); 10 Jul 2024 09:36:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Jul 2024 09:36:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11041 invoked by uid 111); 10 Jul 2024 09:36:08 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Jul 2024 05:36:08 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 10 Jul 2024 05:36:10 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-	Ilya Tumaykin <itumaykin@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [RFC/PATCH] add-patch: handle splitting hunks with
- diff.suppressBlankEmpty
-Message-ID: <20240710093610.GA2076910@coredump.intra.peff.net>
-References: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
- <ab974e62-098c-4200-bee3-7de8d9115516@gmail.com>
- <xmqq4j937pyf.fsf@gitster.g>
+	s=arc-20240116; t=1720604378; c=relaxed/simple;
+	bh=MpEIKN8EwV9PLHxP8kMcMNIw1+fliU4pgt5Ea5KQnuo=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hnSBmpKkGbKemnTvjUnA68LF4A4qCLGG8t358E8bIUUIFkdGzhSI28D2dM2hRa5b8UFqk1RJdwoOeK6C2i3I1cHTyKqb2H7ouG/AsIqHRiOyaeg/TwCg8aK0/LYAyNWIiKsSoM9irH+JL8hhdoyU4cGe0ihB7f8Ds92c2PBS/mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cyN6lYD3; arc=none smtp.client-ip=209.85.161.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cyN6lYD3"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-5c667b28c82so302334eaf.1
+        for <git@vger.kernel.org>; Wed, 10 Jul 2024 02:39:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720604376; x=1721209176; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=o93cC/pUdJ4G4wvuuQd78/vR5l6IyKdU1zrC+ZGV0TQ=;
+        b=cyN6lYD3X41l9e4TD0Jjs8tZfAbRyhastBW3HGVEGkHQXKio/VPv9G8J+rMjEs9MBa
+         itgyNSgBnwNopazruBvtuE5vJqALujXGBizy/YcOifa9OQkkMUhGHNvR1SZAoR8K4Xz2
+         cLkhNkPe1XvCKBaU/oyC8WQxIK1ixXx9L9Vu8WsA+vC90/MVAisxrmA1hMWSvOdrpXPa
+         r6dDWDXD0sBCp9vZ5S4LmSWMjRJPtcJxAo/T2w0gjhH4gOXwzVHibQCC4fgC4mhhJif3
+         My3KPOZSUaKNAu3erOVYA4xaXzCsdVQGRzn4Lal+Utg3LJUMmMMLcCqPBBQhuCzfa2a0
+         /edA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720604376; x=1721209176;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=o93cC/pUdJ4G4wvuuQd78/vR5l6IyKdU1zrC+ZGV0TQ=;
+        b=uDfltzBt++sKdE0wKFnPU2djII5Oxi3CaVWF+9uY/NOi1iNwC6DocvAx8M9tt5CBwZ
+         xDMGln9VncT6oNXfDfu4FHXG5vcPUYTZY8aG/dvju03r7mxggT8FoJ9+PGp34hAWpjK1
+         XnCkNNebl/k6fqaRff3sGKbSC1xRVRlPusWw1QeszcUkllu5pwLsm35hhcbppPQdrwnx
+         ztGOe/s4MwPy/Qq8C34BX0OIhRDNqvwt0qyR+Yt91tQW6QGjFHebzjWIopl1csdmM0og
+         aTVdIVjVx+c1Xx7y6fMOFxR16CGGhzfZ95nU+wDBKsW7Ts0J/aDtKWbEuxQu4yfqDOVT
+         Fd9A==
+X-Gm-Message-State: AOJu0YysDlTyPbUxL0H4dd8Zg16k8mPmlhg87bBwfw/bxxvv5G9l13Z6
+	XldkbU0yddRkrd3i1b79zJYahFyuHuj0KbUNWbE7C9LGJBuwxaJhqNyCOG6nWlTKpdL5CyLSACt
+	5XPFrJYbIuREciN8uNgF2ti2RYV/PcsVo
+X-Google-Smtp-Source: AGHT+IHvi8nSTOyWSBZuTntLRLG2ejgKSdkSEhqw0wE141K9UhAtZr2aY5NsfkyJHx+cDiFgi8I2PSvnhyFAnoetqX4=
+X-Received: by 2002:a05:6870:1653:b0:25d:f950:f18c with SMTP id
+ 586e51a60fabf-25eafb532f5mr2070363fac.26.1720604375625; Wed, 10 Jul 2024
+ 02:39:35 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 10 Jul 2024 02:39:34 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <CAN2LT1Ctwdij9-DujKeuzPX71mzEoMVbdrTkJ8bpRnX9NAZy9Q@mail.gmail.com>
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20240628190503.67389-2-eric.peijian@gmail.com> <CAOLa=ZSY1y4wz6M9mOLvTCPoeCmceD-HKqT5tomF+BzbL5yp4Q@mail.gmail.com>
+ <CAN2LT1Ctwdij9-DujKeuzPX71mzEoMVbdrTkJ8bpRnX9NAZy9Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq4j937pyf.fsf@gitster.g>
+Date: Wed, 10 Jul 2024 02:39:34 -0700
+Message-ID: <CAOLa=ZRi2w_CXovpg3h1mfMsOiLWrpS8vL+NzS5o_NwhFdysTg@mail.gmail.com>
+Subject: Re: [PATCH 1/6] fetch-pack: refactor packet writing
+To: Peijian Ju <eric.peijian@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
+	Calvin Wan <calvinwan@google.com>, Jonathan Tan <jonathantanmy@google.com>, 
+	John Cai <johncai86@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000009be798061ce16ca7"
 
-On Fri, Jul 05, 2024 at 09:39:52AM -0700, Junio C Hamano wrote:
+--0000000000009be798061ce16ca7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> As to the "commit -p" issue, I think the patch parser is in the
-> wrong and needs to be corrected, period.  As long as the patches
-> given as input are well-formed, we should be prepared to grok
-> them (we even allow manual editing of patches, right?).
+Peijian Ju <eric.peijian@gmail.com> writes:
+[snip]
 
-Maybe this?
+>> Right, this commit in itself looks good. But I was curious why we need
+>> this, so I did a sneak peak into the following commits.
+>>
+>> To summarize, we want to call:
+>>    `write_command_and_capabilities(..., "object-info");`
+>> in the upcoming patches to get the object-info details from the server.
+>> But isn't this function too specific to the "fetch" command to be
+>> generalized to be for "object-info" too?
+>>
+>> Wouldn't it make sense to add a custom function for 'object-info' in
+>> 'connect.c'? Like how we currently have `get_remote_bundle_uri()` for
+>> 'bundle-uri' and `get_remote_refs` for 'ls-refs'?
+>
+> Thank you. I am reading through the old comments left by Taylor
+> at https://lore.kernel.org/git/YkOPyc9tUfe2Tozx@nand.local/
+>
+>   " Makes obvious sense, and this was something that jumped out to me whe=
+n I
+>   looked at the first and second versions of this patch. I'm glad that
+>   this is getting factored out."
+>
+>
+> It seems refactoring this into a more general function is on purpose.
+> It is encouraged to use this general function to request capability
+> rather than adding a custom function.
+> Taylor=E2=80=99s comment was 2 years ago, but I think refactoring this in=
+to a
+> more general function to
+> enforce DRY still makes sense.
 
--- >8 --
-Subject: add-patch: handle splitting hunks with diff.suppressBlankEmpty
+It would make sense then to move the existing users to also use
+`write_command_and_capabilities` eventually. I guess this could be done
+in a follow up series.
 
-When "add -p" parses diffs, it looks for context lines starting with a
-single space. But when diff.suppressBlankEmpty is in effect, an empty
-context line will omit the space, giving us a true empty line. This
-confuses the parser, which is unable to split based on such a line.
+Then I would say `write_command_and_capabilities()` should be moved to
+`transport.c`, no?
 
-It's tempting to say that we should just make sure that we generate a
-diff without that option. But we may parse diffs not only generated by
-Git, but ones that users have manually edited. And POSIX calls the
-decision of whether to print the space here "implementation-defined".
+--0000000000009be798061ce16ca7
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f0b3659efc72a19b_0.1
 
-So let's handle both cases: a context line either starts with a space or
-consists of a totally empty line.
-
-Reported-by: Ilya Tumaykin <itumaykin@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
-I'm a little worried that this creates ambiguities, since I don't think
-we are careful about following the hunk header's line counts. Imagine
-you had an input like this:
-
-  @@ -1,2 +1,2 @@
-  -old
-  +new
-   stuff
-
-  some garbage
-
-We obviously know that "some garbage" is not a context line and is just
-trailing junk, because it does not begin with "-", "+" or space. But
-what about the blank line in between? It looks like an empty context
-line, but we can only know that it is not by respecting the counts in
-the hunk header.
-
-I don't think we'd ever generate this ourselves, but could somebody
-manually edit a hunk into this shape? When I tried it in practice, it
-looks like we fail to apply the result even before my patch, though. I'm
-not sure why that is. If I put "some garbage" without the blank line, we
-correctly realize it should be discarded. It's possible I'm just holding
-it wrong.
-
- add-patch.c                |  8 ++++----
- t/t3701-add-interactive.sh | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+), 4 deletions(-)
-
-diff --git a/add-patch.c b/add-patch.c
-index 6e176cd21a..7beead1d0a 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -588,7 +588,7 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- 			    (int)(eol - (plain->buf + file_diff->head.start)),
- 			    plain->buf + file_diff->head.start);
- 
--		if ((marker == '-' || marker == '+') && *p == ' ')
-+		if ((marker == '-' || marker == '+') && (*p == ' ' || *p == '\n'))
- 			hunk->splittable_into++;
- 		if (marker && *p != '\\')
- 			marker = *p;
-@@ -964,7 +964,7 @@ static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
- 		 * Is this the first context line after a chain of +/- lines?
- 		 * Then record the start of the next split hunk.
- 		 */
--		if ((marker == '-' || marker == '+') && ch == ' ') {
-+		if ((marker == '-' || marker == '+') && (ch == ' ' || ch == '\n')) {
- 			first = 0;
- 			hunk[1].start = current;
- 			if (colored)
-@@ -979,14 +979,14 @@ static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
- 		 * Then just increment the appropriate counter and continue
- 		 * with the next line.
- 		 */
--		if (marker != ' ' || (ch != '-' && ch != '+')) {
-+		if ((marker != ' ' && marker != '\n') || (ch != '-' && ch != '+')) {
- next_hunk_line:
- 			/* Comment lines are attached to the previous line */
- 			if (ch == '\\')
- 				ch = marker ? marker : ' ';
- 
- 			/* current hunk not done yet */
--			if (ch == ' ')
-+			if (ch == ' ' || ch == '\n')
- 				context_line_count++;
- 			else if (ch == '-')
- 				header->old_count++;
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 5d78868ac1..92c8e6dc8c 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -1164,4 +1164,36 @@ test_expect_success 'reset -p with unmerged files' '
- 	test_must_be_empty staged
- '
- 
-+test_expect_success 'splitting handles diff.suppressBlankEmpty' '
-+	test_when_finished "git reset --hard" &&
-+	cat >file <<-\EOF &&
-+	1
-+	2
-+
-+	3
-+	4
-+	EOF
-+	git add file &&
-+
-+	cat >file <<-\EOF &&
-+	one
-+	two
-+
-+	three
-+	four
-+	EOF
-+	test_write_lines s n y |
-+	git -c diff.suppressBlankEmpty=true add -p &&
-+
-+	git cat-file blob :file >actual &&
-+	cat >expect <<-\EOF &&
-+	1
-+	2
-+
-+	three
-+	four
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.45.2.1249.gb036353db5
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hT1Z0VVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mekR3Qy80NUNMSUNmQWY3RGJMbnZqWU5tK2JCSVNBNgo3K1cxOXVFdmhC
+WUVldE9EZ2d5TzlKK0JteUlKVmdPWUg1NEdoY1F2MllaeUhSczEyRmNnc3BocWhVeFYzSzZ0CmNw
+U01ZSVc5UStxdDVlWWx0UDhYanZMeVdxMnJVN2ZaZDcwWWduMHNZWlhSNUNnQktnUGprVnZjZzB0
+SWNPRmkKakRkQ1Zzd29rUmJJNDlXSEhQRm1neGRoUzBKWFdCRjdQQVEvN0dHdy9zdjArNWk4Q3VN
+VW9OalIrdlBPc3YzRgp0ejNCcEtpNUQ2N2xNWEhBSDd1U3pGQ29aaW9pUGp6Skt2STh1TUFFekht
+T0lLSG5iWmtBLzMvdEZvV29yUVBnClRqeE5FQy9sdkhJZkVoMFFpbkNSQzBvTXVRU3hzNVprWSt2
+QUtDM3BtcGE0NlRnYmttcHVhZXZacFg5dmpCRmMKeHBOTVlYTHpkclY2SVU4VUhOVlpDSk5xRlZI
+eTdkeU9SOGd3Qk8rb0twZmd1QXFWQzVJZVFmSkpoUVRMWnlRNAovaEwwLzNXYUswbndIcFVzUy9L
+MmMvNi92cGVOcUlxaHdvY29EZVQvajB3My9tMkxuTXdsT3NvRTByUGtrSnhECjhsYU5qbUpWWUM2
+Ym9nL1R4Z1JCMFlLSEdoVGtFN1IxNHBRTWFwaz0KPUhtWEkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000009be798061ce16ca7--
