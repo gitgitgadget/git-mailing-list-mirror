@@ -1,205 +1,185 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B56E12B171
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 20:26:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB3A38DD9
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 20:38:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720729563; cv=none; b=VWUo+6vg8eDgSv4nGRG9MvThx6e9aGU+2Cn2DAXKWnSlGN0TQiljkQkxRM+EyenWttxxUQ9OqNDzPCbUb/sQUDr6SRHpxxN9XvwT2rEhoxieaKl+g6idPQqi3/lJpAlFUd8Eh1rwTt1QFBBJBBD3rViZ3vb7LzDPfMZPTtXa63o=
+	t=1720730294; cv=none; b=tizDfloOGLg/ml7Y210ZtV7/Vw+1AEQ61vLsdJj24ASA9W+z2hllZ91eetuA+GcnbIgpAYk9sDh5wDodNV7I/YBJXONLzA8JnOAdvzBBcU6EDBW3mcqewtvoB0OBVuuk/1L7O45xdWkyhO4O5nViqFza/FXI1ZQrnHlN9wDi2sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720729563; c=relaxed/simple;
-	bh=zwfNw0ls1M8QokhDbS/B4SoO9NjaWP2wtNbkdA4a8PQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QISZaHs0c7SEg7sJLjGkHfu9uTeY8HK5TTpPFdpmomAxUk4GLOGRL1C3KGOWwTjitypP6jGmBC6MM2dRdHZKtq8HZKiiJr12QUcA6C2pwIKYi8pJVS3oYcIoreHWfSdrJfKU6NQPceDAy7QHqHZORKEUEJb5yG408VWmR/eHY4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=klOGL3ks; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1720730294; c=relaxed/simple;
+	bh=KHBBekLaNWv80fi7/6Wv/dq9va9hKWbvP9BBCMOUL24=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EW2Z7IPURMeE5GkKUEZnl+s67/Nthm/JrmJWPqsrjaHJ4hgFEfDqpiUBeijAZy1ZW3Cb+vGmgOD5WS2PXkfNLioTK8kf/RyOaZM7GaUwh5nFo/KVEKowPlS4lZ+qiATCHpKS4fd5XjUVznBz7e+irofVG/Z+esJ1i4ec5NOlm9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gHkhx/Mr; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="klOGL3ks"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-58b0dddab8cso2390167a12.0
-        for <git@vger.kernel.org>; Thu, 11 Jul 2024 13:26:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1720729559; x=1721334359; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zwfNw0ls1M8QokhDbS/B4SoO9NjaWP2wtNbkdA4a8PQ=;
-        b=klOGL3ksvCfCugKjT0A4di0IizkU7xE/IF+ACSn9f/Y+KNRahwmI5cJAYkYEaBYbpe
-         xBHtFB03PnSOrDiwqYXoOY26b5BjX8Q8TgF+DKKCjGrOMr8hm9W1HP7eBNdgukZoNWRo
-         djMF3l1XM6wNJeTofPFpEgG9FSo0ch1l4t1WedM6cwkMOL3EdDO9zKO2rjQeVPzPPc7B
-         k5buL0BERQFJv8kHZ3Pmabw7rjwdLcEuXnZx9/9/EaUR+u766y6Fgjrs5CBSPIbcCgEA
-         3gxH93sZupeCc5Q4nb0X7vX7v5pqyvrXOA6dAifZPeyrBmwChaeY2VKbHmqiJKzzHKko
-         nAjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720729559; x=1721334359;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zwfNw0ls1M8QokhDbS/B4SoO9NjaWP2wtNbkdA4a8PQ=;
-        b=dz0uZmcgmdkFJmue9uOqSPD/MHajp91GJuF+10p3znUMSbVPTOzP6jKE6STnIibUsE
-         xefKFWXxUw7IeixWYc5/dM6ZMcZu2vGTsjvPPXrjc+C1Bill1h/x/xIQS35PWQ7IDmRZ
-         iyq5tkfGcqcdM9b7m0SgGsS6QEJmca+RmS/XdsRV2VXxzKjFPcbQIWdPdm4x/WlCNZCB
-         qcETA1RpgTF3oB8wy8+edOJK7Gk5ThDQ7/sOTaYJax3Dm+kGuYo6WdEmjr9ByJsaU5j8
-         Hj+/H5xv9uBCD0rSj6wCbapu6Q8ZSXE6PE7eJ++97pKiGJmXDl6dCey+6ZWW7JY9yrdV
-         /5Eg==
-X-Gm-Message-State: AOJu0YzeB/nUi584VHSGWk4Lx4kMcarlI+seYmwBNynQxoF3nAWgeKyd
-	sLgHMp5UnKS6+3E9zFT7szBZbGUqgOOUzgf2Z1I7U//Bpj44Q6kPb8sa1i9rg+tXaJYQfXixlvJ
-	4SeJ1Tpd6JonDhYSStmujnW9umjLy3MwHzkYjXeCaRy4giZG/EQ==
-X-Google-Smtp-Source: AGHT+IHj8zMp4GLNnrYxPGJscaBb3usNMBm4xOquhlKlEf5D16bwD205aFSYL4w4+TbewS6wOYpy8Bxvvlhc1ANgo9s=
-X-Received: by 2002:a17:907:9496:b0:a72:7f22:5f9e with SMTP id
- a640c23a62f3a-a780b88062bmr810516666b.57.1720729559079; Thu, 11 Jul 2024
- 13:25:59 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gHkhx/Mr"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D8F693FA79;
+	Thu, 11 Jul 2024 16:38:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=KHBBekLaNWv80fi7/6Wv/dq9va9hKWbvP9BBCM
+	OUL24=; b=gHkhx/MrO2AIvD6SmICvRH+CIK2uOlSWRY0HDY5JJD1JT3PcWNipIY
+	ZsxBNVSUvICV/3m5+jMJc1LgKId2/SXZ8jGK28E9EpQMMhT3dehT+UDaarsnm/ff
+	9C1IyZJe4+JtQabsDmEmtZ7IowJK7+Cw44fchgByx6DA4ifY6ez6M=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CE1833FA78;
+	Thu, 11 Jul 2024 16:38:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3355E3FA76;
+	Thu, 11 Jul 2024 16:38:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: git@vger.kernel.org,  karthik.188@gmail.com,  chriscool@tuxfamily.org
+Subject: Re: [PATCH v3 2/7] t: harmonize t-reftable-merged.c with coding
+ guidelines
+In-Reply-To: <20240711040854.4602-3-chandrapratap3519@gmail.com> (Chandra
+	Pratap's message of "Thu, 11 Jul 2024 09:28:31 +0530")
+References: <20240709053847.4453-1-chandrapratap3519@gmail.com>
+	<20240711040854.4602-1-chandrapratap3519@gmail.com>
+	<20240711040854.4602-3-chandrapratap3519@gmail.com>
+Date: Thu, 11 Jul 2024 13:38:09 -0700
+Message-ID: <xmqq7cdrr7f2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240709225042.2005233-1-emilyshaffer@google.com>
- <CAO_smVjZ7DSPdL+KYCm2mQ=q55XbEH7Vu_jLxkAa5WTcD9rq8A@mail.gmail.com> <CAJoAoZmo6ey1RAqgtM098LLLrdKODf2OYyV=YqyFH5VXiSB6RQ@mail.gmail.com>
-In-Reply-To: <CAJoAoZmo6ey1RAqgtM098LLLrdKODf2OYyV=YqyFH5VXiSB6RQ@mail.gmail.com>
-From: Kyle Lippincott <spectral@google.com>
-Date: Thu, 11 Jul 2024 13:25:42 -0700
-Message-ID: <CAO_smVjpsVZj29s9dKQNy8Jos8HvxmRcc4S25WmngGb2HQB88w@mail.gmail.com>
-Subject: Re: [PATCH] Documentation: add platform support policy
-To: Emily Shaffer <nasamuffin@google.com>
-Cc: git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>, 
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 7D22C446-3FC5-11EF-98AD-965B910A682E-77302942!pb-smtp2.pobox.com
 
-On Thu, Jul 11, 2024 at 11:37=E2=80=AFAM Emily Shaffer <nasamuffin@google.c=
-om> wrote:
->
-> On Wed, Jul 10, 2024 at 12:11=E2=80=AFPM Kyle Lippincott <spectral@google=
-.com> wrote:
-> >
-> > On Tue, Jul 9, 2024 at 3:50=E2=80=AFPM Emily Shaffer <emilyshaffer@goog=
-le.com> wrote:
-> > > +* If you rely on some configuration or behavior, add a test for it. =
-You may
-> > > +find it easier to add a unit test ensuring the behavior you need tha=
-n to add an
-> > > +integration test; either one works. Untested behavior is subject to =
-breakage at
-> > > +any time.
-> >
-> > Should we state that we reserve the right to reject these tests if
-> > they would put what we feel is an excessive burden on the git
-> > developers? i.e. a requirement to use C89 would be rejected
-> > (obviously). a requirement to support 16-bit platforms would also be
-> > rejected. I don't know that we need to list examples for what we'd
-> > reject, they could be implied that we're likely to accept anything
-> > else.
->
-> brian mentioned something similar in their review, to which I proposed
-> a minimum requirements field[1]; I think this would work for that too?
-> Thoughts?
->
-> > > +** Clearly label these tests as necessary for platform compatibility=
-. Add them
-> > > +to an isolated compatibility-related test suite, like a new t* file =
-or unit test
-> > > +suite, so that they're easy to remove when compatibility is no longe=
-r required.
-> > > +If the specific compatibility need is gated behind an issue with ano=
-ther
-> > > +project, link to documentation of that issue (like a bug or email th=
-read) to
-> > > +make it easier to tell when that compatibility need goes away.
-> >
-> > I think that we likely won't have the ability to investigate whether
-> > it's _truly_ gone away ourselves, and there's no guarantee that the
-> > person that added these tests will be able to vet it either (maybe
-> > they've switched jobs, for example).
-> >
-> > I think we should take a stance that may be considered hostile, but I
-> > can't really think of a better one:
-> > - there needs to be a regular (6 month? 12 month? no longer than 12
-> > month surely...) reaffirmation by the interested party that this is
-> > still a requirement for them. This comes in the form of updating a
-> > date in the codebase, not just a message on the list. If this
-> > reaffirmation does not happen, we are allowed to assume that this is
-> > not needed anymore and remove the test that's binding us to supporting
-> > that.
->
-> I like the idea of the date in code, because that's "polled" rather
-> than "pushed" - when I break the test, I can go look at it, and see a
-> condition like "Until July 1st, 2024" and say "well it's July 11th, so
-> I don't care, deleted!" - or, more likely, I can see that date expired
-> a year and a half ago :)
->
-> > We should probably go a step further and intentionally violate
-> > the test condition, so that any builds done by the interested parties
-> > break immediately (which should be caught by the other processes
-> > documented here; if they don't break, then it was correct to remove
-> > the restriction).
->
-> ...but this seems harder to keep track of. Where are we remembering
-> these "due dates" and remembering to break them on purpose? I'm not
-> sure that there's a good way to enforce this.
+Chandra Pratap <chandrapratap3519@gmail.com> writes:
 
-Ah, I was unclear - I was saying when we remove the test, we should
-intentionally add a use of the thing the test was preventing us from
-using. So if there's a test saying "you can't use printf()", when
-removing that test, we should add a use of printf in the same series.
-I was intentionally being vague about "when" we should remove these
-tests, and how long we should consider the newly added printf
-provisional (and possibly going to be rolled back), like in our
-current test balloons. Just: if you're removing an expired
-platform-support-policy test, add something to the codebase (possibly
-just another test) that exercises the previously forbidden aspect, if
-possible.
+It is very nice that the steps [1/7] and [2/7] are split this way.
 
-This is likely to happen organically: most people aren't going to
-notice an expired platform-support-policy test and remove it just
-because. They'll trip over it while attempting to work on a feature,
-notice it's expired, and remove it as part of the series that makes
-use of it. But if someone is trying to be helpful and clean up expired
-platform-support-policy tests without having the goal of immediately
-using it, they should be encouraged to invert the test so that we
-don't have potentially months of time difference between "implicitly
-allowed again [since there's no test preventing its use]" and the
-actual usage being added.
+> Harmonize the newly ported test unit-tests/t-reftable-merged.c
+> with the following guidelines:
+> - Single line control flow statements like 'for' and 'if'
+>   must omit curly braces.
 
->
-> > - _most_ of these restrictions should probably have a limited number
-> > of reaffirmations? I feel like this needs to be handled on a
-> > case-by-case basis, but I want us to be clear that just because we
-> > accepted these restrictions in the past doesn't mean we will accept
-> > them indefinitely.
-> > - Just because there's a reaffirmation doesn't mean we're guaranteeing
-> > we won't delete the test before the affirmation "expires". If there's
-> > an urgent security need to do something, and it can't be done without
-> > breaking this, we'll choose to break this test. If there's general
-> > consensus to do something (adopt a new language standard version, for
-> > example), there's no guarantee we'll wait until all the existing
-> > affirmations expire.
->
-> I honestly like this point more than the previous one. Limiting by a
-> number, even one that changes, feels less flexible than allowing
-> ourselves to say "enough of this nonsense, it's the Century of the
-> Fruitbat, we really want to use <C11 feature> so you can get
-> maintenance updates instead now".
+OK.
 
-Yeah, that's fair. Let's withdraw my suggestion of a limited number of
-reaffirmations. :) That works well if the goal is to have a temporary
-restriction while work is actively happening to remove its necessity,
-but that's less likely to be the case here. If we can't move to C42
-because it's not supported on Linux Distro 2050=E2=84=A2 yet, users of Linu=
-x
-Distro 2050=E2=84=A2 aren't able to promise eventual support of C42 or
-accelerate that happening.
+> - Structs must be 0-initialized with '= { 0 }' instead of '= { NULL }'.
 
->
-> >
-> > The thinking here is that this test is imposing a restriction on the
-> > git developers that we've agreed to take on as a favor: we are going
-> > to restrict ourselves from doing X _for the time being_ not
-> > necessarily because it'll break you, but because it's a bad experience
-> > for the git developers to create a patch series that lands and then
-> > gets backed out when the breakage on $non_standard_platform is
-> > detected on seen/next/master.
->
-> 1: https://lore.kernel.org/git/CAO_smVjZ7DSPdL+KYCm2mQ=3Dq55XbEH7Vu_jLxkA=
-a5WTcD9rq8A@mail.gmail.com/T/#m9d7656905be500a97ee6f86b030e94c91a79507a
+Correct.
+
+> - Array indices must be of type 'size_t', not 'int'.
+
+OK, but "must be" is probably a bit too strong (see below).
+
+> - It is fine to use C99 initial declaration in 'for' loop.
+
+Yes, it is fine.  You do not have to, but you can.
+
+> @@ -68,7 +66,6 @@ static void write_test_log_table(struct strbuf *buf,
+>  				 struct reftable_log_record logs[], int n,
+>  				 uint64_t update_index)
+>  {
+> -	int i = 0;
+>  	int err;
+>  
+>  	struct reftable_write_options opts = {
+> @@ -79,7 +76,7 @@ static void write_test_log_table(struct strbuf *buf,
+>  	w = reftable_new_writer(&strbuf_add_void, &noop_flush, buf, &opts);
+>  	reftable_writer_set_limits(w, update_index, update_index);
+>  
+> -	for (i = 0; i < n; i++) {
+> +	for (int i = 0; i < n; i++) {
+>  		int err = reftable_writer_add_log(w, &logs[i]);
+
+Did you mean size_t instead of int here?  Probably not, because the
+iteration goes up to "int n" that is supplied by the caller of this
+test, so iterating with "int" is perfectly fine here.
+
+So, "must be size_t" is already violated here.  You could update the
+type of the incoming parameter "n", but given that this is a test
+program that deals with a known logs[] array of a small bounded
+size, that may be way overkill and "int" can be justified, too.
+On the other hand, if it does not require too much investigation,
+you may want to check the caller and if it can be updated to use
+"size_t" instead of "int".
+
+The general rule is probably "think twice before using 'int' as an
+array index; otherwise use 'size_t'", which covers what I said in
+the above paragraph.
+
+> @@ -121,8 +118,7 @@ merged_table_from_records(struct reftable_ref_record **refs,
+>  
+>  static void readers_destroy(struct reftable_reader **readers, size_t n)
+>  {
+> -	int i = 0;
+> -	for (; i < n; i++)
+> +	for (size_t i = 0; i < n; i++)
+>  		reftable_reader_free(readers[i]);
+>  	reftable_free(readers);
+>  }
+
+Much better.
+
+> @@ -148,9 +144,8 @@ static void t_merged_single_record(void)
+>  	struct reftable_reader **readers = NULL;
+>  	struct reftable_merged_table *mt =
+>  		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 2);
+> -	int i;
+> -	struct reftable_ref_record ref = { NULL };
+> -	struct reftable_iterator it = { NULL };
+> +	struct reftable_ref_record ref = { 0 };
+> +	struct reftable_iterator it = { 0 };
+>  	int err;
+>  
+>  	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
+> @@ -164,9 +159,8 @@ static void t_merged_single_record(void)
+>  	reftable_iterator_destroy(&it);
+>  	readers_destroy(readers, 2);
+>  	reftable_merged_table_free(mt);
+> -	for (i = 0; i < ARRAY_SIZE(bufs); i++) {
+> +	for (size_t i = 0; i < ARRAY_SIZE(bufs); i++)
+>  		strbuf_release(&bufs[i]);
+> -	}
+
+OK.  size_t is overkill here because bufs[] is a function local
+array with only two elements in it, but once the patch to use
+"size_t" (i.e., this one) is written, it is not worth to go in and
+make it use "int" again.
+
+> @@ -226,12 +220,12 @@ static void t_merged_refs(void)
+>  	struct reftable_reader **readers = NULL;
+>  	struct reftable_merged_table *mt =
+>  		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 3);
+> -	struct reftable_iterator it = { NULL };
+> +	struct reftable_iterator it = { 0 };
+>  	int err;
+>  	struct reftable_ref_record *out = NULL;
+>  	size_t len = 0;
+>  	size_t cap = 0;
+> -	int i = 0;
+> +	size_t i;
+
+OK.  It is good that we got rid of useless initialization, as this
+is used to drive more than one loops below.
+
+> @@ -358,12 +349,12 @@ static void t_merged_logs(void)
+>  	struct reftable_reader **readers = NULL;
+>  	struct reftable_merged_table *mt = merged_table_from_log_records(
+>  		logs, &bs, &readers, sizes, bufs, 3);
+> -	struct reftable_iterator it = { NULL };
+> +	struct reftable_iterator it = { 0 };
+>  	int err;
+>  	struct reftable_log_record *out = NULL;
+>  	size_t len = 0;
+>  	size_t cap = 0;
+> -	int i = 0;
+> +	size_t i = 0;
+
+Lose the useless initialization here, too.
